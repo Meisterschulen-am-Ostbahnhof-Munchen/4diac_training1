@@ -13,31 +13,6 @@
 		</SubAppEventInputs>
 	</SubAppInterfaceList>
 	<SubAppNetwork>
-		<FB Name="Hutschienenmoped_XL_8_DO" Type="Hutschienenmoped_XL_8_DO" Comment="" x="-3333.3333333333335" y="2400.0">
-			<Parameter Name="QI" Value="TRUE" Comment=""/>
-			<Parameter Name="u8SAMember" Value="255" Comment=""/>
-			<Parameter Name="u16ObjId" Value="65535" Comment=""/>
-			<Parameter Name="DigitalOutput_Q1" Value="'Ventilsteuerung.functions.DigitalOutput_Q1'" Comment=""/>
-			<Parameter Name="DigitalOutput_Q2" Value="'Ventilsteuerung.functions.DigitalOutput_Q2'" Comment=""/>
-			<Parameter Name="DigitalOutput_Q3" Value="'Ventilsteuerung.functions.DigitalOutput_Q3'" Comment=""/>
-			<Parameter Name="DigitalOutput_Q4" Value="'Ventilsteuerung.functions.DigitalOutput_Q4'" Comment=""/>
-		</FB>
-		<FB Name="Hutschienenmoped_XL_8_DI" Type="Hutschienenmoped_XL_8_DI" Comment="" x="-3333.3333333333335" y="-1066.6666666666667">
-			<Parameter Name="QI" Value="TRUE" Comment=""/>
-			<Parameter Name="u8SAMember" Value="255" Comment=""/>
-			<Parameter Name="u16ObjId" Value="65535" Comment=""/>
-			<Parameter Name="DigitalInput_I1" Value="'Ventilsteuerung.functions.DigitalInput_I1'" Comment=""/>
-			<Parameter Name="DigitalInput_I2" Value="'Ventilsteuerung.functions.DigitalInput_I2'" Comment=""/>
-			<Parameter Name="DigitalInput_I3" Value="'Ventilsteuerung.functions.DigitalInput_I3'" Comment=""/>
-			<Parameter Name="DigitalInput_I4" Value="'Ventilsteuerung.functions.DigitalInput_I4'" Comment=""/>
-		</FB>
-		<FB Name="Hutschienenmoped_XL_8_DI_SINGLE_CLICK" Type="Hutschienenmoped_XL_8_DI_SINGLE_CLICK" Comment="" x="-3333.3333333333335" y="666.6666666666667">
-			<Parameter Name="QI" Value="TRUE" Comment=""/>
-			<Parameter Name="u8SAMember" Value="255" Comment=""/>
-			<Parameter Name="u16ObjId" Value="65535" Comment=""/>
-			<Parameter Name="DigitalInput_I1" Value="'Ventilsteuerung.functions.DigitalInput_I1_CLK'" Comment=""/>
-			<Parameter Name="DigitalInput_I2" Value="'Ventilsteuerung.functions.DigitalInput_I2_CLK'" Comment=""/>
-		</FB>
 		<FB Name="UT_SoftkeyMapping" Type="UT_SoftkeyMapping" Comment="" x="666.6666666666667" y="-1066.6666666666667">
 			<Parameter Name="QI" Value="TRUE" Comment=""/>
 			<Parameter Name="u8SAMember" Value="255" Comment=""/>
@@ -60,16 +35,31 @@
 			<Parameter Name="u16ObjId_2" Value="SoftKey_F2" Comment=""/>
 			<Parameter Name="DigitalInput_2" Value="'Ventilsteuerung.functions.SoftKey_F2_UP'" Comment=""/>
 		</FB>
+		<FB Name="Hutschienenmoped_XL_8_DI" Type="Hutschienenmoped_3_DI" Comment="" x="-3333.3333333333335" y="-1066.6666666666667">
+			<Parameter Name="QI" Value="TRUE" Comment=""/>
+			<Parameter Name="u8SAMember" Value="255" Comment=""/>
+			<Parameter Name="u16ObjId" Value="65535" Comment=""/>
+			<Parameter Name="DigitalInput_I1" Value="'Ventilsteuerung.functions.DigitalInput_I1'" Comment=""/>
+			<Parameter Name="DigitalInput_I2" Value="'Ventilsteuerung.functions.DigitalInput_I2'" Comment=""/>
+			<Parameter Name="DigitalInput_I3" Value="'Ventilsteuerung.functions.DigitalInput_I3'" Comment=""/>
+		</FB>
+		<FB Name="Hutschienenmoped_XL_8_DI_SINGLE_CLICK" Type="Hutschienenmoped_3_DI_SINGLE_CLICK" Comment="" x="-3333.3333333333335" y="666.6666666666667">
+			<Parameter Name="QI" Value="TRUE" Comment=""/>
+			<Parameter Name="u8SAMember" Value="255" Comment=""/>
+			<Parameter Name="u16ObjId" Value="65535" Comment=""/>
+			<Parameter Name="DigitalInput_I1" Value="'Ventilsteuerung.functions.DigitalInput_I1_CLK'" Comment=""/>
+			<Parameter Name="DigitalInput_I2" Value="'Ventilsteuerung.functions.DigitalInput_I2_CLK'" Comment=""/>
+		</FB>
+		<FB Name="Hutschienenmoped_XL_8_DO" Type="Hutschienenmoped_4_DO" Comment="" x="-3333.3333333333335" y="2400.0">
+			<Parameter Name="QI" Value="TRUE" Comment=""/>
+			<Parameter Name="u8SAMember" Value="255" Comment=""/>
+			<Parameter Name="u16ObjId" Value="65535" Comment=""/>
+			<Parameter Name="DigitalOutput_Q1" Value="'Ventilsteuerung.functions.DigitalOutput_Q1'" Comment=""/>
+			<Parameter Name="DigitalOutput_Q2" Value="'Ventilsteuerung.functions.DigitalOutput_Q2'" Comment=""/>
+			<Parameter Name="DigitalOutput_Q3" Value="'Ventilsteuerung.functions.DigitalOutput_Q3'" Comment=""/>
+			<Parameter Name="DigitalOutput_Q4" Value="'Ventilsteuerung.functions.DigitalOutput_Q4'" Comment=""/>
+		</FB>
 		<EventConnections>
-			<Connection Source="COLD" Destination="Hutschienenmoped_XL_8_DI.INIT" Comment="" dx1="80.0">
-				<Attribute Name="Visible" Type="STRING" Value="false"/>
-			</Connection>
-			<Connection Source="COLD" Destination="Hutschienenmoped_XL_8_DO.INIT" Comment="" dx1="80.0">
-				<Attribute Name="Visible" Type="STRING" Value="false"/>
-			</Connection>
-			<Connection Source="COLD" Destination="Hutschienenmoped_XL_8_DI_SINGLE_CLICK.INIT" Comment="" dx1="80.0">
-				<Attribute Name="Visible" Type="STRING" Value="false"/>
-			</Connection>
 			<Connection Source="COLD" Destination="UT_SoftkeyMapping.INIT" Comment="" dx1="3133.3333333333335">
 				<Attribute Name="Visible" Type="STRING" Value="false"/>
 			</Connection>
@@ -77,6 +67,18 @@
 				<Attribute Name="Visible" Type="STRING" Value="false"/>
 			</Connection>
 			<Connection Source="COLD" Destination="UT_SoftkeyMapping_UP.INIT" Comment="" dx1="4800.0" dx2="4800.0" dy="0.0">
+				<Attribute Name="Visible" Type="STRING" Value="false"/>
+			</Connection>
+			<Connection Source="COLD" Destination="Hutschienenmoped_XL_8_DI.INIT" Comment="" dx1="80.0" dx2="80.0" dy="0.0">
+				<Attribute Name="Visible" Type="STRING" Value="false"/>
+			</Connection>
+			<Connection Source="COLD" Destination="Hutschienenmoped_XL_8_DI_SINGLE_CLICK.INIT" Comment="" dx1="80.0" dx2="80.0" dy="0.0">
+				<Attribute Name="Visible" Type="STRING" Value="false"/>
+			</Connection>
+			<Connection Source="COLD" Destination="Hutschienenmoped_XL_8_DO.INIT" Comment="" dx1="80.0" dx2="80.0" dy="0.0">
+				<Attribute Name="Visible" Type="STRING" Value="false"/>
+			</Connection>
+			<Connection Source="COLD" Destination="Hutschienenmoped_XL_8_DI.INIT" Comment="" dx1="80.0" dx2="80.0" dy="0.0">
 				<Attribute Name="Visible" Type="STRING" Value="false"/>
 			</Connection>
 		</EventConnections>
