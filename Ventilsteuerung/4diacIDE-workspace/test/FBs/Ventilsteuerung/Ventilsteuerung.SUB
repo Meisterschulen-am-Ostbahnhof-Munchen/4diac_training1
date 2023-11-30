@@ -15,12 +15,24 @@
 	<SubAppNetwork>
 		<SubApp Name="mapping" Type="mapping" Comment="" x="133.33333333333334" y="-1066.6666666666667">
 		</SubApp>
-		<SubApp Name="Schieber" Type="TimedFunc" Comment="" x="133.33333333333334" y="-533.3333333333334">
+		<SubApp Name="Schieber" Type="TimedFunc" Comment="" x="133.33333333333334" y="-333.33333333333337">
 			<Parameter Name="u16ObjId" Value="SoftKey_F1" Comment=""/>
 			<Parameter Name="u16ObjIdA" Value="AuxFunction2_X1" Comment=""/>
 		</SubApp>
 		<FB Name="QX" Type="QX" Comment="" x="2133.3333333333335" y="-533.3333333333334">
 			<Parameter Name="QI" Value="TRUE" Comment=""/>
+		</FB>
+		<SubApp Name="Uebung_022" Type="Uebung_022" Comment="" x="133.33333333333334" y="400.0">
+		</SubApp>
+		<SubApp Name="Uebung_023" Type="Uebung_022" Comment="" x="133.33333333333334" y="933.3333333333334">
+		</SubApp>
+		<SubApp Name="Uebung_024" Type="Uebung_022" Comment="" x="133.33333333333334" y="1466.6666666666667">
+		</SubApp>
+		<SubApp Name="Uebung_025" Type="Uebung_022" Comment="" x="133.33333333333334" y="2000.0">
+		</SubApp>
+		<SubApp Name="Uebung_026" Type="Uebung_022" Comment="" x="133.33333333333334" y="2533.3333333333335">
+		</SubApp>
+		<FB Name="IX" Type="IX" Comment="" x="-2000.0" y="400.0">
 		</FB>
 		<EventConnections>
 			<Connection Source="COLD" Destination="mapping.COLD" Comment="" dx1="733.3333333333334">
@@ -33,9 +45,34 @@
 				<Attribute Name="Visible" Type="STRING" Value="false"/>
 			</Connection>
 			<Connection Source="Schieber.CNF" Destination="QX.REQ" Comment="" dx1="646.6666666666667"/>
+			<Connection Source="IX.IND" Destination="Uebung_022.REQ" Comment="" dx1="720.0"/>
+			<Connection Source="IX.IND" Destination="Uebung_023.REQ" Comment="" dx1="720.0"/>
+			<Connection Source="IX.IND" Destination="Uebung_024.REQ" Comment="" dx1="720.0"/>
+			<Connection Source="IX.IND" Destination="Uebung_025.REQ" Comment="" dx1="720.0"/>
+			<Connection Source="IX.IND" Destination="Uebung_026.REQ" Comment="" dx1="720.0"/>
+			<Connection Source="COLD" Destination="Uebung_022.COLD" Comment="" dx1="2066.666666666667">
+				<Attribute Name="Visible" Type="STRING" Value="false"/>
+			</Connection>
+			<Connection Source="COLD" Destination="Uebung_023.COLD" Comment="" dx1="2066.666666666667">
+				<Attribute Name="Visible" Type="STRING" Value="false"/>
+			</Connection>
+			<Connection Source="COLD" Destination="Uebung_024.COLD" Comment="" dx1="2066.666666666667">
+				<Attribute Name="Visible" Type="STRING" Value="false"/>
+			</Connection>
+			<Connection Source="COLD" Destination="Uebung_025.COLD" Comment="" dx1="2066.666666666667">
+				<Attribute Name="Visible" Type="STRING" Value="false"/>
+			</Connection>
+			<Connection Source="COLD" Destination="Uebung_026.COLD" Comment="" dx1="2066.666666666667">
+				<Attribute Name="Visible" Type="STRING" Value="false"/>
+			</Connection>
 		</EventConnections>
 		<DataConnections>
 			<Connection Source="Schieber.OUT" Destination="QX.OUT" Comment="" dx1="646.6666666666667"/>
+			<Connection Source="IX.IN" Destination="Uebung_022.HAND" Comment="" dx1="586.6666666666667"/>
+			<Connection Source="IX.IN" Destination="Uebung_023.HAND" Comment="" dx1="586.6666666666667"/>
+			<Connection Source="IX.IN" Destination="Uebung_024.HAND" Comment="" dx1="586.6666666666667"/>
+			<Connection Source="IX.IN" Destination="Uebung_025.HAND" Comment="" dx1="586.6666666666667"/>
+			<Connection Source="IX.IN" Destination="Uebung_026.HAND" Comment="" dx1="586.6666666666667"/>
 		</DataConnections>
 	</SubAppNetwork>
 </SubAppType>
