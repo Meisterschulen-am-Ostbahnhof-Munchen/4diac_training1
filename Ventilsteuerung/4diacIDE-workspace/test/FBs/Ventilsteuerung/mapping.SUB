@@ -13,7 +13,7 @@
 		</SubAppEventInputs>
 	</SubAppInterfaceList>
 	<SubAppNetwork>
-		<FB Name="Hutschienenmoped_XL_8_DO" Type="Hutschienenmoped_XL_8_DO" Comment="" x="-3333.3333333333335" y="2400.0">
+		<FB Name="Hutschienenmoped_XL_8_DO" Type="Hutschienenmoped_XL_8_DO" Comment="" x="1600.0" y="4666.666666666667">
 			<Parameter Name="QI" Value="TRUE" Comment=""/>
 			<Parameter Name="u8SAMember" Value="255" Comment=""/>
 			<Parameter Name="u16ObjId" Value="65535" Comment=""/>
@@ -22,7 +22,7 @@
 			<Parameter Name="DigitalOutput_Q3" Value="'Ventilsteuerung.functions.DigitalOutput_Q3'" Comment=""/>
 			<Parameter Name="DigitalOutput_Q4" Value="'Ventilsteuerung.functions.DigitalOutput_Q4'" Comment=""/>
 		</FB>
-		<FB Name="Hutschienenmoped_XL_8_DI" Type="Hutschienenmoped_XL_8_DI" Comment="" x="-3333.3333333333335" y="-1066.6666666666667">
+		<FB Name="Hutschienenmoped_XL_8_DI" Type="Hutschienenmoped_XL_8_DI" Comment="" x="-3733.3333333333335" y="-1066.6666666666667">
 			<Parameter Name="QI" Value="TRUE" Comment=""/>
 			<Parameter Name="u8SAMember" Value="255" Comment=""/>
 			<Parameter Name="u16ObjId" Value="65535" Comment=""/>
@@ -31,14 +31,16 @@
 			<Parameter Name="DigitalInput_I3" Value="'Ventilsteuerung.functions.DigitalInput_I3'" Comment=""/>
 			<Parameter Name="DigitalInput_I4" Value="'Ventilsteuerung.functions.DigitalInput_I4'" Comment=""/>
 		</FB>
-		<FB Name="Hutschienenmoped_XL_8_DI_SINGLE_CLICK" Type="Hutschienenmoped_XL_8_DI_SINGLE_CLICK" Comment="" x="-3333.3333333333335" y="666.6666666666667">
+		<FB Name="Hutschienenmoped_XL_8_DI_SINGLE_CLICK" Type="Hutschienenmoped_XL_8_DI_SINGLE_CLICK" Comment="" x="-3733.3333333333335" y="6266.666666666667">
 			<Parameter Name="QI" Value="TRUE" Comment=""/>
 			<Parameter Name="u8SAMember" Value="255" Comment=""/>
 			<Parameter Name="u16ObjId" Value="65535" Comment=""/>
 			<Parameter Name="DigitalInput_I1" Value="'Ventilsteuerung.functions.DigitalInput_I1_CLK'" Comment=""/>
 			<Parameter Name="DigitalInput_I2" Value="'Ventilsteuerung.functions.DigitalInput_I2_CLK'" Comment=""/>
+			<Parameter Name="DigitalInput_I3" Value="'Ventilsteuerung.functions.DigitalInput_I3_CLK'" Comment=""/>
+			<Parameter Name="DigitalInput_I4" Value="'Ventilsteuerung.functions.DigitalInput_I4_CLK'" Comment=""/>
 		</FB>
-		<FB Name="UT_SoftkeyMapping" Type="UT_SoftkeyMapping" Comment="" x="666.6666666666667" y="-1066.6666666666667">
+		<FB Name="UT_SoftkeyMapping" Type="UT_SoftkeyMapping" Comment="" x="1600.0" y="-1066.6666666666667">
 			<Parameter Name="QI" Value="TRUE" Comment=""/>
 			<Parameter Name="u8SAMember" Value="255" Comment=""/>
 			<Parameter Name="u16ObjId_1" Value="SoftKey_F1" Comment=""/>
@@ -46,13 +48,13 @@
 			<Parameter Name="u16ObjId_2" Value="SoftKey_F2" Comment=""/>
 			<Parameter Name="DigitalInput_2" Value="'Ventilsteuerung.functions.SoftKey_F2'" Comment=""/>
 		</FB>
-		<FB Name="UT_NumericValueInputMapping" Type="UT_NumericValueInputMapping" Comment="" x="800.0" y="1600.0">
+		<FB Name="UT_NumericValueInputMapping" Type="UT_NumericValueInputMapping" Comment="" x="1600.0" y="1600.0">
 			<Parameter Name="QI" Value="TRUE" Comment=""/>
 			<Parameter Name="u8SAMember" Value="255" Comment=""/>
 			<Parameter Name="u16ObjId_1" Value="InputNumber_I1" Comment=""/>
 			<Parameter Name="NumericValueInput_1" Value="'Ventilsteuerung.functions.InputNumber_I1'" Comment=""/>
 		</FB>
-		<FB Name="UT_SoftkeyMapping_UP" Type="UT_SoftkeyMapping_UP" Comment="" x="4000.0" y="-1066.6666666666667">
+		<FB Name="UT_SoftkeyMapping_UP" Type="UT_SoftkeyMapping_UP" Comment="" x="1600.0" y="6800.0">
 			<Parameter Name="QI" Value="TRUE" Comment=""/>
 			<Parameter Name="u8SAMember" Value="255" Comment=""/>
 			<Parameter Name="u16ObjId_1" Value="SoftKey_F1" Comment=""/>
@@ -60,6 +62,69 @@
 			<Parameter Name="u16ObjId_2" Value="SoftKey_F2" Comment=""/>
 			<Parameter Name="DigitalInput_2" Value="'Ventilsteuerung.functions.SoftKey_F2_UP'" Comment=""/>
 		</FB>
+		<FB Name="Hutschienenmoped_XL_8_DI_DOWN" Type="Hutschienenmoped_XL_8_DI_DOWN" Comment="" x="-3733.3333333333335" y="666.6666666666667">
+			<Parameter Name="QI" Value="TRUE" Comment=""/>
+			<Parameter Name="u8SAMember" Value="255" Comment=""/>
+			<Parameter Name="u16ObjId" Value="65535" Comment=""/>
+			<Parameter Name="DigitalInput_I1" Value="'Ventilsteuerung.functions.DigitalInput_I1_DOWN'" Comment=""/>
+			<Parameter Name="DigitalInput_I2" Value="'Ventilsteuerung.functions.DigitalInput_I2_DOWN'" Comment=""/>
+			<Parameter Name="DigitalInput_I3" Value="'Ventilsteuerung.functions.DigitalInput_I3_DOWN'" Comment=""/>
+			<Parameter Name="DigitalInput_I4" Value="'Ventilsteuerung.functions.DigitalInput_I4_DOWN'" Comment=""/>
+		</FB>
+		<Comment Comment="    BUTTON_PRESS_NORMAL = 0,&amp;#10;    BUTTON_PRESS_DOWN,&amp;#10;    BUTTON_PRESS_UP,&amp;#10;    BUTTON_PRESS_REPEAT,&amp;#10;    BUTTON_PRESS_REPEAT_DONE,&amp;#10;    BUTTON_SINGLE_CLICK,&amp;#10;    BUTTON_DOUBLE_CLICK,&amp;#10;    BUTTON_MULTIPLE_CLICK,&amp;#10;    BUTTON_LONG_PRESS_START,&amp;#10;    BUTTON_LONG_PRESS_HOLD,&amp;#10;    BUTTON_LONG_PRESS_UP,&amp;#10;    BUTTON_EVENT_MAX,&amp;#10;    BUTTON_NONE_PRESS," x="-8800.0" y="-933.3333333333334" width="2006.6666666666667" height="1406.6666666666667"/>
+		<Comment Comment="BUTTON_PRESS_NORMAL" x="-5333.333333333334" y="-666.6666666666667" width="1300.0" height="226.66666666666669"/>
+		<FB Name="Hutschienenmoped_XL_8_DI_UP" Type="Hutschienenmoped_XL_8_DI_UP" Comment="" x="-3733.3333333333335" y="2400.0">
+			<Parameter Name="QI" Value="TRUE" Comment=""/>
+			<Parameter Name="u8SAMember" Value="255" Comment=""/>
+			<Parameter Name="u16ObjId" Value="65535" Comment=""/>
+			<Parameter Name="DigitalInput_I1" Value="'Ventilsteuerung.functions.DigitalInput_I1_UP'" Comment=""/>
+			<Parameter Name="DigitalInput_I2" Value="'Ventilsteuerung.functions.DigitalInput_I2_UP'" Comment=""/>
+			<Parameter Name="DigitalInput_I3" Value="'Ventilsteuerung.functions.DigitalInput_I3_UP'" Comment=""/>
+			<Parameter Name="DigitalInput_I4" Value="'Ventilsteuerung.functions.DigitalInput_I4_UP'" Comment=""/>
+		</FB>
+		<FB Name="Hutschienenmoped_XL_8_DI_REPEAT" Type="Hutschienenmoped_XL_8_DI_REPEAT" Comment="" x="-3733.3333333333335" y="4266.666666666667">
+			<Parameter Name="QI" Value="TRUE" Comment=""/>
+			<Parameter Name="u8SAMember" Value="255" Comment=""/>
+			<Parameter Name="u16ObjId" Value="65535" Comment=""/>
+			<Parameter Name="DigitalInput_I1" Value="'Ventilsteuerung.functions.DigitalInput_I1_REPEAT'" Comment=""/>
+			<Parameter Name="DigitalInput_I2" Value="'Ventilsteuerung.functions.DigitalInput_I2_REPEAT'" Comment=""/>
+			<Parameter Name="DigitalInput_I3" Value="'Ventilsteuerung.functions.DigitalInput_I3_REPEAT'" Comment=""/>
+			<Parameter Name="DigitalInput_I4" Value="'Ventilsteuerung.functions.DigitalInput_I4_REPEAT'" Comment=""/>
+		</FB>
+		<FB Name="Hutschienenmoped_XL_8_DI_DOUBLE_CLICK" Type="Hutschienenmoped_XL_8_DI_DOUBLE_CLICK" Comment="" x="-3733.3333333333335" y="8000.0">
+			<Parameter Name="QI" Value="TRUE" Comment=""/>
+			<Parameter Name="u8SAMember" Value="255" Comment=""/>
+			<Parameter Name="u16ObjId" Value="65535" Comment=""/>
+			<Parameter Name="DigitalInput_I1" Value="'Ventilsteuerung.functions.DigitalInput_I1_DBLCLK'" Comment=""/>
+			<Parameter Name="DigitalInput_I2" Value="'Ventilsteuerung.functions.DigitalInput_I2_DBLCLK'" Comment=""/>
+			<Parameter Name="DigitalInput_I3" Value="'Ventilsteuerung.functions.DigitalInput_I3_DBLCLK'" Comment=""/>
+			<Parameter Name="DigitalInput_I4" Value="'Ventilsteuerung.functions.DigitalInput_I4_DBLCLK'" Comment=""/>
+		</FB>
+		<FB Name="Hutschienenmoped_XL_8_DI_LONG_PRESS_START" Type="Hutschienenmoped_XL_8_DI_LONG_PRESS_START" Comment="" x="-3733.3333333333335" y="9866.666666666668">
+			<Parameter Name="QI" Value="TRUE" Comment=""/>
+			<Parameter Name="u8SAMember" Value="255" Comment=""/>
+			<Parameter Name="u16ObjId" Value="65535" Comment=""/>
+			<Parameter Name="DigitalInput_I1" Value="'Ventilsteuerung.functions.DigitalInput_I1_LS'" Comment=""/>
+			<Parameter Name="DigitalInput_I2" Value="'Ventilsteuerung.functions.DigitalInput_I2_LS'" Comment=""/>
+			<Parameter Name="DigitalInput_I3" Value="'Ventilsteuerung.functions.DigitalInput_I3_LS'" Comment=""/>
+			<Parameter Name="DigitalInput_I4" Value="'Ventilsteuerung.functions.DigitalInput_I4_LS'" Comment=""/>
+		</FB>
+		<FB Name="Hutschienenmoped_XL_8_DI_LONG_PRESS_HOLD" Type="Hutschienenmoped_XL_8_DI_LONG_PRESS_HOLD" Comment="" x="-3733.3333333333335" y="11600.0">
+			<Parameter Name="QI" Value="TRUE" Comment=""/>
+			<Parameter Name="u8SAMember" Value="255" Comment=""/>
+			<Parameter Name="u16ObjId" Value="65535" Comment=""/>
+			<Parameter Name="DigitalInput_I1" Value="'Ventilsteuerung.functions.DigitalInput_I1_LH'" Comment=""/>
+			<Parameter Name="DigitalInput_I2" Value="'Ventilsteuerung.functions.DigitalInput_I2_LH'" Comment=""/>
+			<Parameter Name="DigitalInput_I3" Value="'Ventilsteuerung.functions.DigitalInput_I3_LH'" Comment=""/>
+			<Parameter Name="DigitalInput_I4" Value="'Ventilsteuerung.functions.DigitalInput_I4_LH'" Comment=""/>
+		</FB>
+		<Comment Comment="BUTTON_PRESS_DOWN" x="-5333.333333333334" y="800.0" width="1300.0" height="226.66666666666669"/>
+		<Comment Comment="BUTTON_PRESS_UP" x="-5333.333333333334" y="2533.3333333333335" width="1300.0" height="226.66666666666669"/>
+		<Comment Comment="BUTTON_PRESS_REPEAT" x="-5333.333333333334" y="4400.0" width="1300.0" height="226.66666666666669"/>
+		<Comment Comment="BUTTON_SINGLE_CLICK" x="-5333.333333333334" y="6400.0" width="1300.0" height="226.66666666666669"/>
+		<Comment Comment="BUTTON_DOUBLE_CLICK" x="-5333.333333333334" y="8133.333333333334" width="1300.0" height="226.66666666666669"/>
+		<Comment Comment="BUTTON_LONG_PRESS_START" x="-5333.333333333334" y="10000.0" width="1300.0" height="226.66666666666669"/>
+		<Comment Comment="BUTTON_LONG_PRESS_HOLD" x="-5333.333333333334" y="11600.0" width="1300.0" height="226.66666666666669"/>
 		<EventConnections>
 			<Connection Source="COLD" Destination="Hutschienenmoped_XL_8_DI.INIT" Comment="" dx1="80.0">
 				<Attribute Name="Visible" Type="STRING" Value="false"/>
@@ -76,7 +141,25 @@
 			<Connection Source="COLD" Destination="UT_NumericValueInputMapping.INIT" Comment="" dx1="3466.666666666667">
 				<Attribute Name="Visible" Type="STRING" Value="false"/>
 			</Connection>
-			<Connection Source="COLD" Destination="UT_SoftkeyMapping_UP.INIT" Comment="" dx1="4800.0" dx2="4800.0" dy="0.0">
+			<Connection Source="COLD" Destination="UT_SoftkeyMapping_UP.INIT" Comment="" dx1="6600.0">
+				<Attribute Name="Visible" Type="STRING" Value="false"/>
+			</Connection>
+			<Connection Source="COLD" Destination="Hutschienenmoped_XL_8_DI_DOWN.INIT" Comment="" dx1="2800.0">
+				<Attribute Name="Visible" Type="STRING" Value="false"/>
+			</Connection>
+			<Connection Source="COLD" Destination="Hutschienenmoped_XL_8_DI_UP.INIT" Comment="" dx1="2800.0">
+				<Attribute Name="Visible" Type="STRING" Value="false"/>
+			</Connection>
+			<Connection Source="COLD" Destination="Hutschienenmoped_XL_8_DI_REPEAT.INIT" Comment="" dx1="2800.0">
+				<Attribute Name="Visible" Type="STRING" Value="false"/>
+			</Connection>
+			<Connection Source="COLD" Destination="Hutschienenmoped_XL_8_DI_DOUBLE_CLICK.INIT" Comment="" dx1="2800.0">
+				<Attribute Name="Visible" Type="STRING" Value="false"/>
+			</Connection>
+			<Connection Source="COLD" Destination="Hutschienenmoped_XL_8_DI_LONG_PRESS_START.INIT" Comment="" dx1="2800.0">
+				<Attribute Name="Visible" Type="STRING" Value="false"/>
+			</Connection>
+			<Connection Source="COLD" Destination="Hutschienenmoped_XL_8_DI_LONG_PRESS_HOLD.INIT" Comment="" dx1="2800.0">
 				<Attribute Name="Visible" Type="STRING" Value="false"/>
 			</Connection>
 		</EventConnections>
