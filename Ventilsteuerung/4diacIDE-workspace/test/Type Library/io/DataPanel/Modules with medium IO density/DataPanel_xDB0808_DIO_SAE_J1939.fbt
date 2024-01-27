@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<FBType Name="DataPanel_xDB_08_DO_SAE_J1939" Comment="Service Interface Function Block Type">
-	<Identification Standard="SAE J1939" Function="All Outputs: Digital" Type="DP-40044-05-000" Description="this maps to QX" >
+<FBType Name="DataPanel_xDB0808_DIO_SAE_J1939" Comment="Service Interface Function Block Type">
+	<Identification Standard="SAE J1939" Function="Combo Block: 8 Inputs/8 Outputs (includes all input/output types)" Type="DP-34044-1-000" Description="this maps to IX/QX" >
 	</Identification>
 	<VersionInfo Version="1.0" Author="Jose Cabral" Date="2018-12-05">
 	</VersionInfo>
@@ -22,6 +22,18 @@
 				<With Var="DigitalOutput_3B"/>
 				<With Var="DigitalOutput_4A"/>
 				<With Var="DigitalOutput_4B"/>
+				<With Var="DigitalInput_5A"/>
+				<With Var="DigitalInput_5B"/>
+				<With Var="DigitalInput_7A"/>
+				<With Var="DigitalInput_6A"/>
+				<With Var="DigitalInput_6B"/>
+				<With Var="DigitalInput_7B"/>
+				<With Var="DigitalInput_8A"/>
+				<With Var="DigitalInput_8B"/>
+				<With Var="Input_Power_Port_5"/>
+				<With Var="Input_Power_Port_6"/>
+				<With Var="Input_Power_Port_7"/>
+				<With Var="Input_Power_Port_8"/>
 			</Event>
 		</EventInputs>
 		<EventOutputs>
@@ -55,8 +67,8 @@
 		</EventOutputs>
 		<InputVars>
 			<VarDeclaration Name="QI" Type="BOOL" Comment="Event Input Qualifier"/>
-			<VarDeclaration Name="u8SAMember" Type="USINT" Comment="Node SA 217..224" InitialValue="217"/>
-			<VarDeclaration Name="u16ObjId" Type="UINT" Comment="Dummy ! set to 65535 if in Doubt. 0 deactivates FB." InitialValue="65535"/>
+			<VarDeclaration Name="u8SAMember" Type="USINT" Comment="Node SA 224..239" InitialValue="MI_00"/>
+			<VarDeclaration Name="u16ObjId" Type="UINT" Comment="Dummy ! set to ID_NULL if in Doubt. ID_OFF deactivates FB." InitialValue="ID_NULL"/>
 			<VarDeclaration Name="DigitalOutput_1A" Type="STRING" Comment=""/>
 			<VarDeclaration Name="DigitalOutput_1B" Type="STRING" Comment=""/>
 			<VarDeclaration Name="DigitalOutput_2A" Type="STRING" Comment=""/>
@@ -65,6 +77,18 @@
 			<VarDeclaration Name="DigitalOutput_3B" Type="STRING" Comment=""/>
 			<VarDeclaration Name="DigitalOutput_4A" Type="STRING" Comment=""/>
 			<VarDeclaration Name="DigitalOutput_4B" Type="STRING" Comment=""/>
+			<VarDeclaration Name="DigitalInput_5A" Type="STRING" Comment=""/>
+			<VarDeclaration Name="DigitalInput_5B" Type="STRING" Comment=""/>
+			<VarDeclaration Name="DigitalInput_6A" Type="STRING" Comment=""/>
+			<VarDeclaration Name="DigitalInput_6B" Type="STRING" Comment=""/>
+			<VarDeclaration Name="DigitalInput_7A" Type="STRING" Comment=""/>
+			<VarDeclaration Name="DigitalInput_7B" Type="STRING" Comment=""/>
+			<VarDeclaration Name="DigitalInput_8A" Type="STRING" Comment=""/>
+			<VarDeclaration Name="DigitalInput_8B" Type="STRING" Comment=""/>
+			<VarDeclaration Name="Input_Power_Port_5" Type="STRING" Comment=""/>
+			<VarDeclaration Name="Input_Power_Port_6" Type="STRING" Comment=""/>
+			<VarDeclaration Name="Input_Power_Port_7" Type="STRING" Comment=""/>
+			<VarDeclaration Name="Input_Power_Port_8" Type="STRING" Comment=""/>
 		</InputVars>
 		<OutputVars>
 			<VarDeclaration Name="QO" Type="BOOL" Comment="Event Output Qualifier"/>
