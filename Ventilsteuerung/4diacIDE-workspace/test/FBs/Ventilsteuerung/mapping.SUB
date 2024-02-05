@@ -60,14 +60,20 @@
 			<Parameter Name="u16ObjId_2" Value="SoftKey_F2" Comment=""/>
 			<Parameter Name="DigitalInput_2" Value="'Ventilsteuerung.functions.SoftKey_F2_UP'" Comment=""/>
 		</FB>
+		<FB Name="UT_SoftkeyMapping_DOWN" Type="UT_SoftkeyMapping_DOWN" Comment="" x="8000.0" y="-1000.0">
+			<Parameter Name="QI" Value="TRUE" Comment=""/>
+			<Parameter Name="u8SAMember" Value="255" Comment=""/>
+			<Parameter Name="u16ObjId_2" Value="SoftKey_F2" Comment=""/>
+			<Parameter Name="DigitalInput_2" Value="'Ventilsteuerung.functions.SoftKey_F2_DOWN'" Comment=""/>
+		</FB>
 		<EventConnections>
-			<Connection Source="COLD" Destination="Hutschienenmoped_XL_8_DI.INIT" Comment="" dx1="80.0">
+			<Connection Source="COLD" Destination="Hutschienenmoped_XL_8_DI.INIT" Comment="" dx1="75.0">
 				<Attribute Name="Visible" Type="STRING" Value="false"/>
 			</Connection>
-			<Connection Source="COLD" Destination="Hutschienenmoped_XL_8_DO.INIT" Comment="" dx1="80.0">
+			<Connection Source="COLD" Destination="Hutschienenmoped_XL_8_DO.INIT" Comment="" dx1="75.0">
 				<Attribute Name="Visible" Type="STRING" Value="false"/>
 			</Connection>
-			<Connection Source="COLD" Destination="Hutschienenmoped_XL_8_DI_SINGLE_CLICK.INIT" Comment="" dx1="80.0">
+			<Connection Source="COLD" Destination="Hutschienenmoped_XL_8_DI_SINGLE_CLICK.INIT" Comment="" dx1="75.0">
 				<Attribute Name="Visible" Type="STRING" Value="false"/>
 			</Connection>
 			<Connection Source="COLD" Destination="UT_SoftkeyMapping.INIT" Comment="" dx1="3133.3333333333335">
@@ -77,6 +83,9 @@
 				<Attribute Name="Visible" Type="STRING" Value="false"/>
 			</Connection>
 			<Connection Source="COLD" Destination="UT_SoftkeyMapping_UP.INIT" Comment="" dx1="4800.0" dx2="4800.0" dy="0.0">
+				<Attribute Name="Visible" Type="STRING" Value="false"/>
+			</Connection>
+			<Connection Source="COLD" Destination="UT_SoftkeyMapping_DOWN.INIT" Comment="" dx1="5666.666666666667">
 				<Attribute Name="Visible" Type="STRING" Value="false"/>
 			</Connection>
 		</EventConnections>
