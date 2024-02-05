@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SubAppType Name="Uebung_022" Comment="Subapplication Type">
+	<Identification Standard="61499-2">
+	</Identification>
+	<VersionInfo Version="1.0" Author="franz" Date="2023-10-23">
+	</VersionInfo>
+	<CompilerInfo>
+	</CompilerInfo>
+	<SubAppInterfaceList>
+		<SubAppEventInputs>
+			<SubAppEvent Name="COLD" Type="Event" Comment="">
+			</SubAppEvent>
+		</SubAppEventInputs>
+	</SubAppInterfaceList>
+	<SubAppNetwork>
+		<FB Name="DigitalOutput_Q1" Type="QX" Comment="" x="-2833.3333333333335" y="-500.0">
+			<Parameter Name="QI" Value="TRUE" Comment=""/>
+		</FB>
+		<FB Name="SoftKey_F1_UP" Type="IE" Comment="" x="-6833.333333333334" y="-500.0">
+			<Parameter Name="QI" Value="TRUE" Comment=""/>
+		</FB>
+		<FB Name="E_SR_Ausfahren_Cyl_1" Type="E_SR" Comment="" x="-5000.0" y="-300.0">
+		</FB>
+		<FB Name="SoftKey_F2_DOWN" Type="IE" Comment="" x="-6833.333333333334" y="1000.0">
+			<Parameter Name="QI" Value="TRUE" Comment=""/>
+		</FB>
+		<Comment Comment="START-Knopf" x="-8500.0" y="-333.33333333333337" width="1375.0" height="366.6666666666667"/>
+		<Comment Comment="Endlage Ausfahren_Cyl_1&amp;#10;" x="-8500.0" y="1166.6666666666667" width="1375.0" height="366.6666666666667"/>
+		<FB Name="DigitalOutput_Q2" Type="QX" Comment="" x="-2833.3333333333335" y="1166.6666666666667">
+			<Parameter Name="QI" Value="TRUE" Comment=""/>
+		</FB>
+		<FB Name="E_SR_Ausfahren_Cyl_2" Type="E_SR" Comment="" x="-4833.333333333334" y="1366.6666666666667">
+		</FB>
+		<Comment Comment="Endlage Ausfahren_Cyl_2&amp;#10;" x="-8500.0" y="2500.0" width="1375.0" height="366.6666666666667"/>
+		<FB Name="SoftKey_F3_DOWN" Type="IE" Comment="" x="-6833.333333333334" y="2333.3333333333335">
+			<Parameter Name="QI" Value="TRUE" Comment=""/>
+		</FB>
+		<Comment Comment="Ausfahren_Cyl_1" x="-3500.0" y="333.33333333333337" width="1375.0" height="366.6666666666667"/>
+		<Comment Comment="Ausfahren_Cyl_2" x="-3500.0" y="2000.0" width="1375.0" height="366.6666666666667"/>
+		<EventConnections>
+			<Connection Source="COLD" Destination="SoftKey_F1_UP.INIT" Comment="" dx1="750.0">
+				<Attribute Name="Visible" Type="STRING" Value="false"/>
+			</Connection>
+			<Connection Source="COLD" Destination="DigitalOutput_Q1.INIT" Comment="" dx1="2758.3333333333335">
+				<Attribute Name="Visible" Type="STRING" Value="false"/>
+			</Connection>
+			<Connection Source="SoftKey_F1_UP.IND" Destination="E_SR_Ausfahren_Cyl_1.S" Comment=""/>
+			<Connection Source="COLD" Destination="SoftKey_F2_DOWN.INIT" Comment="" dx1="750.0">
+				<Attribute Name="Visible" Type="STRING" Value="false"/>
+			</Connection>
+			<Connection Source="SoftKey_F2_DOWN.IND" Destination="E_SR_Ausfahren_Cyl_1.R" Comment="" dx1="558.3333333333334"/>
+			<Connection Source="E_SR_Ausfahren_Cyl_1.EO" Destination="DigitalOutput_Q1.REQ" Comment="" dx1="816.6666666666667"/>
+			<Connection Source="COLD" Destination="DigitalOutput_Q2.INIT" Comment="" dx1="4341.666666666667">
+				<Attribute Name="Visible" Type="STRING" Value="false"/>
+			</Connection>
+			<Connection Source="E_SR_Ausfahren_Cyl_2.EO" Destination="DigitalOutput_Q2.REQ" Comment="" dx1="641.6666666666667"/>
+			<Connection Source="SoftKey_F2_DOWN.IND" Destination="E_SR_Ausfahren_Cyl_2.S" Comment="" dx1="741.6666666666667"/>
+			<Connection Source="COLD" Destination="SoftKey_F3_DOWN.INIT" Comment="" dx1="2350.0">
+				<Attribute Name="Visible" Type="STRING" Value="false"/>
+			</Connection>
+			<Connection Source="SoftKey_F3_DOWN.IND" Destination="E_SR_Ausfahren_Cyl_2.R" Comment="" dx1="808.3333333333334"/>
+		</EventConnections>
+		<DataConnections>
+			<Connection Source="E_SR_Ausfahren_Cyl_1.Q" Destination="DigitalOutput_Q1.OUT" Comment=""/>
+			<Connection Source="E_SR_Ausfahren_Cyl_2.Q" Destination="DigitalOutput_Q2.OUT" Comment=""/>
+		</DataConnections>
+	</SubAppNetwork>
+</SubAppType>
