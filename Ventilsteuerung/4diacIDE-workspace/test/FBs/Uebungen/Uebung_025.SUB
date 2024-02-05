@@ -69,6 +69,14 @@
 		</FB>
 		<FB Name="E_REND_Einfahren_Cyl_1" Type="E_REND" Comment="" x="-5466.666666666667" y="6400.0">
 		</FB>
+		<FB Name="E_SWITCH_Q1" Type="E_SWITCH" Comment="" x="-2800.0" y="-1066.6666666666667">
+		</FB>
+		<FB Name="E_SWITCH_Q2" Type="E_SWITCH" Comment="" x="-2800.0" y="533.3333333333334">
+		</FB>
+		<FB Name="E_SWITCH_Q3" Type="E_SWITCH" Comment="" x="-2666.666666666667" y="3200.0">
+		</FB>
+		<FB Name="E_SWITCH_Q4" Type="E_SWITCH" Comment="" x="-2666.666666666667" y="4800.0">
+		</FB>
 		<EventConnections>
 			<Connection Source="COLD" Destination="SoftKey_F1_UP.INIT" Comment="" dx1="746.6666666666667">
 				<Attribute Name="Visible" Type="STRING" Value="false"/>
@@ -118,16 +126,24 @@
 			<Connection Source="SoftKey_F2_DOWN.IND" Destination="E_REND_Ausfahren_Cyl_2.R" Comment="" dx1="120.0"/>
 			<Connection Source="E_DELAY.EO" Destination="E_REND_Einfahren_Cyl_2.R" Comment="" dx1="100.0"/>
 			<Connection Source="SoftKey_F8_DOWN.IND" Destination="E_REND_Einfahren_Cyl_1.R" Comment="" dx1="140.0"/>
-			<Connection Source="E_SR_Ausfahren_Cyl_1.EO" Destination="E_REND_Ausfahren_Cyl_1.EI1" Comment="" dx1="80.0" dx2="80.0" dy="480.0"/>
-			<Connection Source="E_SR_Ausfahren_Cyl_2.EO" Destination="E_REND_Ausfahren_Cyl_2.EI1" Comment="" dx1="80.0" dx2="300.0" dy="420.0"/>
-			<Connection Source="E_SR_Einfahren_Cyl_2.EO" Destination="E_REND_Einfahren_Cyl_2.EI1" Comment="" dx1="80.0" dx2="273.33333333333337" dy="446.6666666666667"/>
-			<Connection Source="E_SR_Einfahren_Cyl_1.EO" Destination="E_REND_Einfahren_Cyl_1.EI1" Comment="" dx1="80.0" dx2="413.33333333333337" dy="486.6666666666667"/>
+			<Connection Source="E_SR_Einfahren_Cyl_1.EO" Destination="E_SWITCH_Q4.EI" Comment="" dx1="620.0"/>
+			<Connection Source="E_SR_Einfahren_Cyl_2.EO" Destination="E_SWITCH_Q3.EI" Comment="" dx1="580.0"/>
+			<Connection Source="E_SR_Ausfahren_Cyl_2.EO" Destination="E_SWITCH_Q2.EI" Comment="" dx1="666.6666666666667"/>
+			<Connection Source="E_SR_Ausfahren_Cyl_1.EO" Destination="E_SWITCH_Q1.EI" Comment="" dx1="746.6666666666667"/>
+			<Connection Source="E_SWITCH_Q1.EO1" Destination="E_REND_Ausfahren_Cyl_1.EI1" Comment="" dx1="80.0" dx2="80.0" dy="1100.0"/>
+			<Connection Source="E_SWITCH_Q2.EO1" Destination="E_REND_Ausfahren_Cyl_2.EI1" Comment="" dx1="80.0" dx2="80.0" dy="1186.6666666666667"/>
+			<Connection Source="E_SWITCH_Q3.EO1" Destination="E_REND_Einfahren_Cyl_2.EI1" Comment="" dx1="486.6666666666667" dx2="80.0" dy="906.6666666666667"/>
+			<Connection Source="E_SWITCH_Q4.EO1" Destination="E_REND_Einfahren_Cyl_1.EI1" Comment="" dx1="320.0" dx2="80.0" dy="1153.3333333333335"/>
 		</EventConnections>
 		<DataConnections>
 			<Connection Source="E_SR_Ausfahren_Cyl_1.Q" Destination="DigitalOutput_Q1.OUT" Comment=""/>
 			<Connection Source="E_SR_Ausfahren_Cyl_2.Q" Destination="DigitalOutput_Q2.OUT" Comment=""/>
 			<Connection Source="E_SR_Einfahren_Cyl_1.Q" Destination="DigitalOutput_Q4.OUT" Comment=""/>
 			<Connection Source="E_SR_Einfahren_Cyl_2.Q" Destination="DigitalOutput_Q3.OUT" Comment="" dx1="580.0"/>
+			<Connection Source="E_SR_Einfahren_Cyl_1.Q" Destination="E_SWITCH_Q4.G" Comment="" dx1="620.0"/>
+			<Connection Source="E_SR_Einfahren_Cyl_2.Q" Destination="E_SWITCH_Q3.G" Comment="" dx1="580.0"/>
+			<Connection Source="E_SR_Ausfahren_Cyl_2.Q" Destination="E_SWITCH_Q2.G" Comment="" dx1="666.6666666666667"/>
+			<Connection Source="E_SR_Ausfahren_Cyl_1.Q" Destination="E_SWITCH_Q1.G" Comment="" dx1="746.6666666666667"/>
 		</DataConnections>
 	</SubAppNetwork>
 </SubAppType>
