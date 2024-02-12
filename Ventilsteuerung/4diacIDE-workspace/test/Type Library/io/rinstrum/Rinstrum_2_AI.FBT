@@ -31,8 +31,8 @@
 		</EventOutputs>
 		<InputVars>
 			<VarDeclaration Name="QI" Type="BOOL" Comment="Event Input Qualifier"/>
-			<VarDeclaration Name="u8SAMember" Type="USINT" Comment="Dummy !, set to 255 if in doubt. 0 deactivates FB." InitialValue="255"/>
-			<VarDeclaration Name="u16ObjId" Type="UINT" Comment="Dummy ! set to 65535 if in Doubt. 0 deactivates FB." InitialValue="65535"/>
+			<VarDeclaration Name="u8SAMember" Type="USINT" Comment="Dummy !, set to GLOBAL if in doubt. OFF deactivates FB." InitialValue="GLOBAL"/>
+			<VarDeclaration Name="u16ObjId" Type="UINT" Comment="Dummy ! set to ID_NULL if in Doubt. ID_OFF deactivates FB." InitialValue="ID_NULL"/>
 			<VarDeclaration Name="Loadcell_Channel_1" Type="STRING" Comment="Identifier for Loadcell Channel 1"/>
 			<VarDeclaration Name="Loadcell_Channel_2" Type="STRING" Comment="Identifier for Loadcell Channel 2"/>
 		</InputVars>
