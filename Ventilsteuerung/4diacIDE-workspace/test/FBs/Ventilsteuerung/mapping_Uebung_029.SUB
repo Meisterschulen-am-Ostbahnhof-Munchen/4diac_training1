@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SubAppType Name="mapping_Uebung_029" Comment="Subapplication Type">
+	<Identification Standard="61499-2">
+	</Identification>
+	<VersionInfo Version="1.0" Author="franz" Date="2023-10-23">
+	</VersionInfo>
+	<CompilerInfo>
+	</CompilerInfo>
+	<SubAppInterfaceList>
+		<SubAppEventInputs>
+			<SubAppEvent Name="COLD" Type="Event" Comment="">
+			</SubAppEvent>
+		</SubAppEventInputs>
+	</SubAppInterfaceList>
+	<SubAppNetwork>
+		<FB Name="Hutschienenmoped_XL_8_DI" Type="Hutschienenmoped_XL_8_DI" Comment="" x="-3280.0" y="-1066.6666666666667">
+			<Parameter Name="QI" Value="TRUE" Comment="">
+				<Attribute Name="Visible" Type="STRING" Value="false"/>
+			</Parameter>
+			<Parameter Name="u8SAMember" Value="GLOBAL" Comment="">
+				<Attribute Name="Visible" Type="STRING" Value="false"/>
+			</Parameter>
+			<Parameter Name="u16ObjId" Value="ID_NULL" Comment="">
+				<Attribute Name="Visible" Type="STRING" Value="false"/>
+			</Parameter>
+			<Parameter Name="DigitalInput_I1" Value="'Ventilsteuerung.functions.DigitalInput_I1'" Comment=""/>
+			<Parameter Name="DigitalInput_I2" Value="'Ventilsteuerung.functions.DigitalInput_I2'" Comment=""/>
+			<Parameter Name="DigitalInput_I3" Value="'Ventilsteuerung.functions.DigitalInput_I3'" Comment=""/>
+			<Parameter Name="DigitalInput_I4" Value="" Comment="">
+				<Attribute Name="Visible" Type="STRING" Value="false"/>
+			</Parameter>
+			<Parameter Name="DigitalInput_I5" Value="" Comment="">
+				<Attribute Name="Visible" Type="STRING" Value="false"/>
+			</Parameter>
+			<Parameter Name="DigitalInput_I6" Value="" Comment="">
+				<Attribute Name="Visible" Type="STRING" Value="false"/>
+			</Parameter>
+			<Parameter Name="DigitalInput_I7" Value="" Comment="">
+				<Attribute Name="Visible" Type="STRING" Value="false"/>
+			</Parameter>
+			<Parameter Name="DigitalInput_I8" Value="" Comment="">
+				<Attribute Name="Visible" Type="STRING" Value="false"/>
+			</Parameter>
+		</FB>
+		<FB Name="Hutschienenmoped_XL_1_LED_DO" Type="Hutschienenmoped_XL_1_LED_DO" Comment="" x="-3466.666666666667" y="0.0">
+			<Parameter Name="QI" Value="TRUE" Comment=""/>
+			<Parameter Name="u8SAMember" Value="Output_Q1" Comment=""/>
+			<Parameter Name="u16ObjId" Value="ID_NULL" Comment=""/>
+			<Parameter Name="LED_5HZ" Value="'Ventilsteuerung.functions.LED_Q1_5HZ'" Comment=""/>
+			<Parameter Name="LED_1HZ" Value="'Ventilsteuerung.functions.LED_Q1_1HZ'" Comment=""/>
+			<Parameter Name="LED_ON" Value="'Ventilsteuerung.functions.LED_Q1_ON'" Comment=""/>
+		</FB>
+		<EventConnections>
+			<Connection Source="COLD" Destination="Hutschienenmoped_XL_8_DI.INIT" Comment="" dx1="73.33333333333334">
+				<Attribute Name="Visible" Type="STRING" Value="false"/>
+			</Connection>
+			<Connection Source="COLD" Destination="Hutschienenmoped_XL_1_LED_DO.INIT" Comment="" dx1="1600.0">
+				<Attribute Name="Visible" Type="STRING" Value="false"/>
+			</Connection>
+		</EventConnections>
+	</SubAppNetwork>
+</SubAppType>
