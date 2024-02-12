@@ -13,32 +13,32 @@
 		</SubAppEventInputs>
 	</SubAppInterfaceList>
 	<SubAppNetwork>
-		<FB Name="DigitalInput_I1_CLK" Type="IE" Comment="" x="-4533.333333333334" y="133.33333333333334">
+		<FB Name="DigitalInput_I1_CLK" Type="IE" Comment="" x="-5733.333333333334" y="626.6666666666667">
 			<Parameter Name="QI" Value="TRUE" Comment=""/>
 		</FB>
-		<FB Name="DigitalInput_I2_CLK" Type="IE" Comment="" x="-4533.333333333334" y="-1066.6666666666667">
+		<FB Name="DigitalInput_I2_CLK" Type="IE" Comment="" x="-5733.333333333334" y="-326.6666666666667">
 			<Parameter Name="QI" Value="TRUE" Comment=""/>
 		</FB>
-		<FB Name="strip_set_pixel" Type="strip_set_pixel" Comment="" x="133.33333333333334" y="233.33333333333334">
+		<FB Name="strip_set_pixel" Type="strip_set_pixel" Comment="" x="-1066.6666666666667" y="400.0">
 			<Parameter Name="index" Value="0" Comment=""/>
 		</FB>
-		<FB Name="hsv2rgb" Type="hsv2rgb" Comment="" x="-2000.0" y="533.3333333333334">
+		<FB Name="hsv2rgb" Type="hsv2rgb" Comment="" x="-3200.0" y="740.0">
 			<Parameter Name="hue" Value="100" Comment=""/>
 			<Parameter Name="saturation" Value="100" Comment=""/>
 			<Parameter Name="value" Value="100" Comment=""/>
 		</FB>
 		<EventConnections>
-			<Connection Source="COLD" Destination="DigitalInput_I1_CLK.INIT" Comment="" dx1="1120.0">
+			<Connection Source="COLD" Destination="DigitalInput_I1_CLK.INIT" Comment="" dx1="960.0">
 				<Attribute Name="Visible" Type="STRING" Value="false"/>
 			</Connection>
-			<Connection Source="COLD" Destination="DigitalInput_I2_CLK.INIT" Comment="" dx1="1120.0">
+			<Connection Source="COLD" Destination="DigitalInput_I2_CLK.INIT" Comment="" dx1="826.6666666666667">
 				<Attribute Name="Visible" Type="STRING" Value="false"/>
 			</Connection>
 			<Connection Source="COLD" Destination="strip_set_pixel.INIT" Comment="" dx1="2533.3333333333335">
 				<Attribute Name="Visible" Type="STRING" Value="false"/>
 			</Connection>
-			<Connection Source="DigitalInput_I2_CLK.IND" Destination="strip_set_pixel.clear" Comment="" dx1="3266.666666666667"/>
-			<Connection Source="hsv2rgb.CNF" Destination="strip_set_pixel.set_pixel" Comment="" dx1="746.6666666666667"/>
+			<Connection Source="DigitalInput_I2_CLK.IND" Destination="strip_set_pixel.clear" Comment="" dx1="2553.3333333333335"/>
+			<Connection Source="hsv2rgb.CNF" Destination="strip_set_pixel.set_pixel" Comment="" dx1="1413.3333333333335"/>
 			<Connection Source="DigitalInput_I1_CLK.IND" Destination="hsv2rgb.REQ" Comment="" dx1="873.3333333333334"/>
 		</EventConnections>
 		<DataConnections>
