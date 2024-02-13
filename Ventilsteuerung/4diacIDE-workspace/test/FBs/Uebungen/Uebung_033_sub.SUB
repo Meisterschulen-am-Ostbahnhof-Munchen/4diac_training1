@@ -8,7 +8,7 @@
 	</CompilerInfo>
 	<SubAppInterfaceList>
 		<SubAppEventInputs>
-			<SubAppEvent Name="COLD" Type="Event" Comment="">
+			<SubAppEvent Name="INIT" Type="Event" Comment="">
 			</SubAppEvent>
 		</SubAppEventInputs>
 	</SubAppInterfaceList>
@@ -20,7 +20,7 @@
 			<Parameter Name="QI" Value="TRUE" Comment=""/>
 		</FB>
 		<EventConnections>
-			<Connection Source="COLD" Destination="BUTTON.INIT" Comment="" dx1="1073.3333333333335">
+			<Connection Source="INIT" Destination="BUTTON.INIT" Comment="" dx1="1073.3333333333335">
 				<Attribute Name="Visible" Type="STRING" Value="false"/>
 			</Connection>
 			<Connection Source="BUTTON.INITO" Destination="LED.INIT" Comment="" dx1="1200.0"/>

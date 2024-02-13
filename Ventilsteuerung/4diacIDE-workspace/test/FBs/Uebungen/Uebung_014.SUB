@@ -8,7 +8,7 @@
 	</CompilerInfo>
 	<SubAppInterfaceList>
 		<SubAppEventInputs>
-			<SubAppEvent Name="COLD" Type="Event" Comment="">
+			<SubAppEvent Name="INIT" Type="Event" Comment="">
 			</SubAppEvent>
 		</SubAppEventInputs>
 	</SubAppInterfaceList>
@@ -25,10 +25,10 @@
 			<Parameter Name="u16ObjId" Value="Container_B" Comment=""/>
 		</FB>
 		<EventConnections>
-			<Connection Source="COLD" Destination="SoftKey_F1_UP.INIT" Comment="" dx1="1113.3333333333335">
+			<Connection Source="INIT" Destination="SoftKey_F1_UP.INIT" Comment="" dx1="1113.3333333333335">
 				<Attribute Name="Visible" Type="STRING" Value="false"/>
 			</Connection>
-			<Connection Source="COLD" Destination="SoftKey_F2_UP.INIT" Comment="" dx1="1206.6666666666667">
+			<Connection Source="INIT" Destination="SoftKey_F2_UP.INIT" Comment="" dx1="1206.6666666666667">
 				<Attribute Name="Visible" Type="STRING" Value="false"/>
 			</Connection>
 			<Connection Source="SoftKey_F1_UP.IND" Destination="E_SR.S" Comment="" dx1="520.0"/>

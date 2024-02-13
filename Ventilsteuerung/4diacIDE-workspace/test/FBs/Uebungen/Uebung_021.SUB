@@ -8,7 +8,7 @@
 	</CompilerInfo>
 	<SubAppInterfaceList>
 		<SubAppEventInputs>
-			<SubAppEvent Name="COLD" Type="Event" Comment="">
+			<SubAppEvent Name="INIT" Type="Event" Comment="">
 			</SubAppEvent>
 		</SubAppEventInputs>
 	</SubAppInterfaceList>
@@ -27,14 +27,14 @@
 		<Comment Comment="START-Knopf" x="-8500.0" y="-333.33333333333337" width="1373.3333333333335" height="366.6666666666667"/>
 		<Comment Comment="Endlage &amp;#10;" x="-8500.0" y="1166.6666666666667" width="1373.3333333333335" height="366.6666666666667"/>
 		<EventConnections>
-			<Connection Source="COLD" Destination="SoftKey_F1_UP.INIT" Comment="" dx1="746.6666666666667">
+			<Connection Source="INIT" Destination="SoftKey_F1_UP.INIT" Comment="" dx1="746.6666666666667">
 				<Attribute Name="Visible" Type="STRING" Value="false"/>
 			</Connection>
-			<Connection Source="COLD" Destination="DigitalOutput_Q1.INIT" Comment="" dx1="2753.3333333333335">
+			<Connection Source="INIT" Destination="DigitalOutput_Q1.INIT" Comment="" dx1="2753.3333333333335">
 				<Attribute Name="Visible" Type="STRING" Value="false"/>
 			</Connection>
 			<Connection Source="SoftKey_F1_UP.IND" Destination="E_SR.S" Comment="" dx1="573.3333333333334"/>
-			<Connection Source="COLD" Destination="SoftKey_F2_DOWN.INIT" Comment="" dx1="746.6666666666667">
+			<Connection Source="INIT" Destination="SoftKey_F2_DOWN.INIT" Comment="" dx1="746.6666666666667">
 				<Attribute Name="Visible" Type="STRING" Value="false"/>
 			</Connection>
 			<Connection Source="SoftKey_F2_DOWN.IND" Destination="E_SR.R" Comment="" dx1="553.3333333333334"/>

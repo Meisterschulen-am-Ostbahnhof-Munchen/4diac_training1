@@ -8,7 +8,7 @@
 	</CompilerInfo>
 	<SubAppInterfaceList>
 		<SubAppEventInputs>
-			<SubAppEvent Name="COLD" Type="Event" Comment="">
+			<SubAppEvent Name="INIT" Type="Event" Comment="">
 			</SubAppEvent>
 		</SubAppEventInputs>
 	</SubAppInterfaceList>
@@ -32,10 +32,10 @@
 			<Parameter Name="u16ObjId" Value="OutputNumber_N1" Comment=""/>
 		</FB>
 		<EventConnections>
-			<Connection Source="COLD" Destination="DigitalOutput_Q1.INIT" Comment="" dx1="1813.3333333333335">
+			<Connection Source="INIT" Destination="DigitalOutput_Q1.INIT" Comment="" dx1="1813.3333333333335">
 				<Attribute Name="Visible" Type="STRING" Value="false"/>
 			</Connection>
-			<Connection Source="COLD" Destination="E_CYCLE.START" Comment="" dx1="193.33333333333334">
+			<Connection Source="INIT" Destination="E_CYCLE.START" Comment="" dx1="193.33333333333334">
 				<Attribute Name="Visible" Type="STRING" Value="false"/>
 			</Connection>
 			<Connection Source="E_CYCLE.EO" Destination="E_SWITCH.EI" Comment=""/>
@@ -45,7 +45,7 @@
 			<Connection Source="E_SR.EO" Destination="E_PERMIT.EI" Comment="" dx1="480.0"/>
 			<Connection Source="E_PERMIT.EO" Destination="E_CTUD_UDINT.CU" Comment=""/>
 			<Connection Source="E_CTUD_UDINT.CO" Destination="Q_NumericValue.REQ" Comment="" dx1="333.33333333333337"/>
-			<Connection Source="COLD" Destination="Q_NumericValue.INIT" Comment="" dx1="4986.666666666667">
+			<Connection Source="INIT" Destination="Q_NumericValue.INIT" Comment="" dx1="4986.666666666667">
 				<Attribute Name="Visible" Type="STRING" Value="false"/>
 			</Connection>
 		</EventConnections>

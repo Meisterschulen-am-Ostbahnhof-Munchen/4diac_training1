@@ -8,7 +8,7 @@
 	</CompilerInfo>
 	<SubAppInterfaceList>
 		<SubAppEventInputs>
-			<SubAppEvent Name="COLD" Type="Event" Comment="">
+			<SubAppEvent Name="INIT" Type="Event" Comment="">
 			</SubAppEvent>
 		</SubAppEventInputs>
 	</SubAppInterfaceList>
@@ -20,10 +20,10 @@
 			<Parameter Name="u16ObjId" Value="InputNumber_I1" Comment=""/>
 		</SubApp>
 		<EventConnections>
-			<Connection Source="COLD" Destination="CbVtStatus.INIT" Comment="" dx1="326.6666666666667">
+			<Connection Source="INIT" Destination="CbVtStatus.INIT" Comment="" dx1="326.6666666666667">
 				<Attribute Name="Visible" Type="STRING" Value="false"/>
 			</Connection>
-			<Connection Source="COLD" Destination="Uebung_012a_sub.COLD" Comment="" dx1="1466.6666666666667">
+			<Connection Source="INIT" Destination="Uebung_012a_sub.INIT" Comment="" dx1="1466.6666666666667">
 				<Attribute Name="Visible" Type="STRING" Value="false"/>
 			</Connection>
 			<Connection Source="CbVtStatus.IND" Destination="Uebung_012a_sub.IND" Comment="" dx1="893.3333333333334"/>

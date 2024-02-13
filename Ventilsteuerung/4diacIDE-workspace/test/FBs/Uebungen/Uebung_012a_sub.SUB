@@ -8,7 +8,7 @@
 	</CompilerInfo>
 	<SubAppInterfaceList>
 		<SubAppEventInputs>
-			<SubAppEvent Name="COLD" Type="Event" Comment="">
+			<SubAppEvent Name="INIT" Type="Event" Comment="">
 			</SubAppEvent>
 			<SubAppEvent Name="IND" Type="Event" Comment="">
 			</SubAppEvent>
@@ -35,10 +35,10 @@
 			<Connection Source="NVS_UDINT.INITO" Destination="NVS_UDINT.GET" Comment="" dx1="80.0" dx2="480.0" dy="-253.33333333333334"/>
 			<Connection Source="NVS_UDINT.INITO" Destination="Q_NumericValue.INIT" Comment="" dx1="513.3333333333334"/>
 			<Connection Source="NVS_UDINT.GETO" Destination="Q_NumericValue.REQ" Comment=""/>
-			<Connection Source="COLD" Destination="InputNumber_I1.INIT" Comment="" dx1="333.33333333333337">
+			<Connection Source="INIT" Destination="InputNumber_I1.INIT" Comment="" dx1="333.33333333333337">
 				<Attribute Name="Visible" Type="STRING" Value="false"/>
 			</Connection>
-			<Connection Source="COLD" Destination="NVS_UDINT.INIT" Comment="" dx1="733.3333333333334">
+			<Connection Source="INIT" Destination="NVS_UDINT.INIT" Comment="" dx1="733.3333333333334">
 				<Attribute Name="Visible" Type="STRING" Value="false"/>
 			</Connection>
 			<Connection Source="IND" Destination="Q_NumericValue.REQ" Comment="" dx1="1600.0">

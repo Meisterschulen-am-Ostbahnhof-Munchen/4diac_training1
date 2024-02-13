@@ -8,7 +8,7 @@
 	</CompilerInfo>
 	<SubAppInterfaceList>
 		<SubAppEventInputs>
-			<SubAppEvent Name="COLD" Type="Event" Comment="">
+			<SubAppEvent Name="INIT" Type="Event" Comment="">
 			</SubAppEvent>
 		</SubAppEventInputs>
 	</SubAppInterfaceList>
@@ -29,10 +29,10 @@
 			<Parameter Name="DigitalInput_2" Value="'Ventilsteuerung.functions.SoftKey_F2'" Comment=""/>
 		</FB>
 		<EventConnections>
-			<Connection Source="COLD" Destination="DualOut_2_DO.INIT" Comment="" dx1="1066.6666666666667">
+			<Connection Source="INIT" Destination="DualOut_2_DO.INIT" Comment="" dx1="1066.6666666666667">
 				<Attribute Name="Visible" Type="STRING" Value="false"/>
 			</Connection>
-			<Connection Source="COLD" Destination="UT_SoftkeyMapping.INIT" Comment="" dx1="1066.6666666666667">
+			<Connection Source="INIT" Destination="UT_SoftkeyMapping.INIT" Comment="" dx1="1066.6666666666667">
 				<Attribute Name="Visible" Type="STRING" Value="false"/>
 			</Connection>
 		</EventConnections>

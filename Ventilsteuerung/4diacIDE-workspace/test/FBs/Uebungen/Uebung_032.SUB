@@ -8,7 +8,7 @@
 	</CompilerInfo>
 	<SubAppInterfaceList>
 		<SubAppEventInputs>
-			<SubAppEvent Name="COLD" Type="Event" Comment="">
+			<SubAppEvent Name="INIT" Type="Event" Comment="">
 			</SubAppEvent>
 		</SubAppEventInputs>
 	</SubAppInterfaceList>
@@ -38,22 +38,22 @@
 			<Parameter Name="QI" Value="TRUE" Comment=""/>
 		</FB>
 		<EventConnections>
-			<Connection Source="COLD" Destination="BUTTON_GREEN.INIT" Comment="" dx1="1073.3333333333335">
+			<Connection Source="INIT" Destination="BUTTON_GREEN.INIT" Comment="" dx1="1073.3333333333335">
 				<Attribute Name="Visible" Type="STRING" Value="false"/>
 			</Connection>
 			<Connection Source="BUTTON_GREEN.INITO" Destination="LED_GREEN_5HZ.INIT" Comment="" dx1="1200.0"/>
 			<Connection Source="BUTTON_GREEN.IND" Destination="LED_GREEN_5HZ.REQ" Comment=""/>
-			<Connection Source="COLD" Destination="BUTTON_YELLOW.INIT" Comment="" dx1="1073.3333333333335" dx2="1073.3333333333335" dy="0.0">
+			<Connection Source="INIT" Destination="BUTTON_YELLOW.INIT" Comment="" dx1="1073.3333333333335" dx2="1073.3333333333335" dy="0.0">
 				<Attribute Name="Visible" Type="STRING" Value="false"/>
 			</Connection>
 			<Connection Source="BUTTON_YELLOW.IND" Destination="LED_YELLOW_5HZ.REQ" Comment=""/>
 			<Connection Source="BUTTON_YELLOW.INITO" Destination="LED_YELLOW_5HZ.INIT" Comment="" dx1="1200.0" dx2="1200.0" dy="0.0"/>
-			<Connection Source="COLD" Destination="BUTTON_RED.INIT" Comment="" dx1="1073.3333333333335" dx2="1073.3333333333335" dy="0.0">
+			<Connection Source="INIT" Destination="BUTTON_RED.INIT" Comment="" dx1="1073.3333333333335" dx2="1073.3333333333335" dy="0.0">
 				<Attribute Name="Visible" Type="STRING" Value="false"/>
 			</Connection>
 			<Connection Source="BUTTON_RED.IND" Destination="LED_RED_5HZ.REQ" Comment=""/>
 			<Connection Source="BUTTON_RED.INITO" Destination="LED_RED_5HZ.INIT" Comment="" dx1="1200.0" dx2="1200.0" dy="0.0"/>
-			<Connection Source="COLD" Destination="BUTTON_BLUE.INIT" Comment="" dx1="1066.6666666666667">
+			<Connection Source="INIT" Destination="BUTTON_BLUE.INIT" Comment="" dx1="1066.6666666666667">
 				<Attribute Name="Visible" Type="STRING" Value="false"/>
 			</Connection>
 			<Connection Source="BUTTON_BLUE.IND" Destination="LED_BLUE_5HZ.REQ" Comment=""/>

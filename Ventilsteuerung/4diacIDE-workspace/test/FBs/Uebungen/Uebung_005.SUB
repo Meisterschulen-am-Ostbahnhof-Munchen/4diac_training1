@@ -8,7 +8,7 @@
 	</CompilerInfo>
 	<SubAppInterfaceList>
 		<SubAppEventInputs>
-			<SubAppEvent Name="COLD" Type="Event" Comment="">
+			<SubAppEvent Name="INIT" Type="Event" Comment="">
 			</SubAppEvent>
 		</SubAppEventInputs>
 	</SubAppInterfaceList>
@@ -25,7 +25,7 @@
 		</FB>
 		<EventConnections>
 			<Connection Source="E_T_FF.EO" Destination="DigitalOutput_Q1.REQ" Comment="" dx1="400.0"/>
-			<Connection Source="COLD" Destination="DigitalInput_I1.INIT" Comment="" dx1="340.0">
+			<Connection Source="INIT" Destination="DigitalInput_I1.INIT" Comment="" dx1="340.0">
 				<Attribute Name="Visible" Type="STRING" Value="false"/>
 			</Connection>
 			<Connection Source="DigitalInput_I1.INITO" Destination="DigitalOutput_Q1.INIT" Comment="" dx1="1933.3333333333335"/>

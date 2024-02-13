@@ -8,7 +8,7 @@
 	</CompilerInfo>
 	<SubAppInterfaceList>
 		<SubAppEventInputs>
-			<SubAppEvent Name="COLD" Type="Event" Comment="">
+			<SubAppEvent Name="INIT" Type="Event" Comment="">
 			</SubAppEvent>
 		</SubAppEventInputs>
 	</SubAppInterfaceList>
@@ -32,7 +32,7 @@
 			<Parameter Name="DT" Value="T#250ms" Comment=""/>
 		</FB>
 		<EventConnections>
-			<Connection Source="COLD" Destination="SoftKey_F1_UP.INIT" Comment="" dx1="1113.3333333333335">
+			<Connection Source="INIT" Destination="SoftKey_F1_UP.INIT" Comment="" dx1="1113.3333333333335">
 				<Attribute Name="Visible" Type="STRING" Value="false"/>
 			</Connection>
 			<Connection Source="SoftKey_F1_UP.INITO" Destination="Q_CtrlAudioSignal.INIT" Comment=""/>

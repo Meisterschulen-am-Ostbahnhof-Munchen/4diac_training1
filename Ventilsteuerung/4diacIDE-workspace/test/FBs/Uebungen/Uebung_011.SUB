@@ -8,7 +8,7 @@
 	</CompilerInfo>
 	<SubAppInterfaceList>
 		<SubAppEventInputs>
-			<SubAppEvent Name="COLD" Type="Event" Comment="">
+			<SubAppEvent Name="INIT" Type="Event" Comment="">
 			</SubAppEvent>
 		</SubAppEventInputs>
 	</SubAppInterfaceList>
@@ -20,7 +20,7 @@
 		</FB>
 		<EventConnections>
 			<Connection Source="InputNumber_I1.IND" Destination="F_DWORD_TO_UDINT.REQ" Comment="" dx1="486.6666666666667"/>
-			<Connection Source="COLD" Destination="InputNumber_I1.INIT" Comment="" dx1="833.3333333333334">
+			<Connection Source="INIT" Destination="InputNumber_I1.INIT" Comment="" dx1="833.3333333333334">
 				<Attribute Name="Visible" Type="STRING" Value="false"/>
 			</Connection>
 		</EventConnections>

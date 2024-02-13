@@ -8,7 +8,7 @@
 	</CompilerInfo>
 	<SubAppInterfaceList>
 		<SubAppEventInputs>
-			<SubAppEvent Name="COLD" Type="Event" Comment="">
+			<SubAppEvent Name="INIT" Type="Event" Comment="">
 			</SubAppEvent>
 		</SubAppEventInputs>
 	</SubAppInterfaceList>
@@ -44,13 +44,13 @@
 		<EventConnections>
 			<Connection Source="DigitalInput_I1.IND" Destination="DigitalOutput_Q1.REQ" Comment=""/>
 			<Connection Source="DigitalInput_I1.INITO" Destination="DigitalOutput_Q1.INIT" Comment="" dx1="1200.0"/>
-			<Connection Source="COLD" Destination="DigitalInput_I1.INIT" Comment="" dx1="1180.0">
+			<Connection Source="INIT" Destination="DigitalInput_I1.INIT" Comment="" dx1="1180.0">
 				<Attribute Name="Visible" Type="STRING" Value="false"/>
 			</Connection>
-			<Connection Source="COLD" Destination="AnalogInput_I4.INIT" Comment="" dx1="2740.0">
+			<Connection Source="INIT" Destination="AnalogInput_I4.INIT" Comment="" dx1="2740.0">
 				<Attribute Name="Visible" Type="STRING" Value="false"/>
 			</Connection>
-			<Connection Source="COLD" Destination="AnalogInput_I7.INIT" Comment="" dx1="2733.3333333333335">
+			<Connection Source="INIT" Destination="AnalogInput_I7.INIT" Comment="" dx1="2733.3333333333335">
 				<Attribute Name="Visible" Type="STRING" Value="false"/>
 			</Connection>
 			<Connection Source="AnalogInput_I7.IND" Destination="F_DWORD_TO_UDINT_I7.REQ" Comment="" dx1="960.0"/>

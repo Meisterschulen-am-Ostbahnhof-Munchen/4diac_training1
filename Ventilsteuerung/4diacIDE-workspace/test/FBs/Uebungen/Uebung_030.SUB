@@ -8,7 +8,7 @@
 	</CompilerInfo>
 	<SubAppInterfaceList>
 		<SubAppEventInputs>
-			<SubAppEvent Name="COLD" Type="Event" Comment="">
+			<SubAppEvent Name="INIT" Type="Event" Comment="">
 			</SubAppEvent>
 		</SubAppEventInputs>
 	</SubAppInterfaceList>
@@ -38,24 +38,24 @@
 			<Parameter Name="QI" Value="TRUE" Comment=""/>
 		</FB>
 		<EventConnections>
-			<Connection Source="COLD" Destination="DigitalInput_I1.INIT" Comment="" dx1="1073.3333333333335">
+			<Connection Source="INIT" Destination="DigitalInput_I1.INIT" Comment="" dx1="1073.3333333333335">
 				<Attribute Name="Visible" Type="STRING" Value="false"/>
 			</Connection>
 			<Connection Source="DigitalInput_I1.INITO" Destination="LED_Q1_5HZ.INIT" Comment="" dx1="1200.0"/>
 			<Connection Source="DigitalInput_I1.IND" Destination="LED_Q1_5HZ.REQ" Comment=""/>
 			<Connection Source="DigitalInput_I2.IND" Destination="LED_Q1_1HZ.REQ" Comment=""/>
-			<Connection Source="COLD" Destination="DigitalInput_I2.INIT" Comment="" dx1="1073.3333333333335">
+			<Connection Source="INIT" Destination="DigitalInput_I2.INIT" Comment="" dx1="1073.3333333333335">
 				<Attribute Name="Visible" Type="STRING" Value="false"/>
 			</Connection>
 			<Connection Source="DigitalInput_I2.INITO" Destination="LED_Q1_1HZ.INIT" Comment="" dx1="1186.6666666666667"/>
-			<Connection Source="COLD" Destination="DigitalInput_I3.INIT" Comment="" dx1="1073.3333333333335">
+			<Connection Source="INIT" Destination="DigitalInput_I3.INIT" Comment="" dx1="1073.3333333333335">
 				<Attribute Name="Visible" Type="STRING" Value="false"/>
 			</Connection>
 			<Connection Source="DigitalInput_I3.IND" Destination="LED_Q1_breathing_05HZ.REQ" Comment=""/>
 			<Connection Source="DigitalInput_I3.INITO" Destination="LED_Q1_breathing_05HZ.INIT" Comment="" dx1="1186.6666666666667"/>
 			<Connection Source="DigitalInput_I4.IND" Destination="LED_Q1_ON_1.REQ" Comment=""/>
 			<Connection Source="DigitalInput_I4.INITO" Destination="LED_Q1_ON_1.INIT" Comment="" dx1="1186.6666666666667"/>
-			<Connection Source="COLD" Destination="DigitalInput_I4.INIT" Comment="" dx1="1073.3333333333335">
+			<Connection Source="INIT" Destination="DigitalInput_I4.INIT" Comment="" dx1="1073.3333333333335">
 				<Attribute Name="Visible" Type="STRING" Value="false"/>
 			</Connection>
 		</EventConnections>

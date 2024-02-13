@@ -8,7 +8,7 @@
 	</CompilerInfo>
 	<SubAppInterfaceList>
 		<SubAppEventInputs>
-			<SubAppEvent Name="COLD" Type="Event" Comment="">
+			<SubAppEvent Name="INIT" Type="Event" Comment="">
 			</SubAppEvent>
 		</SubAppEventInputs>
 	</SubAppInterfaceList>
@@ -25,11 +25,11 @@
 		<FB Name="E_SR" Type="E_SR" Comment="" x="-2800.0" y="-733.3333333333334">
 		</FB>
 		<EventConnections>
-			<Connection Source="COLD" Destination="DigitalInput_I1_CLK.INIT" Comment="" dx1="1113.3333333333335">
+			<Connection Source="INIT" Destination="DigitalInput_I1_CLK.INIT" Comment="" dx1="1113.3333333333335">
 				<Attribute Name="Visible" Type="STRING" Value="false"/>
 			</Connection>
 			<Connection Source="DigitalInput_I1_CLK.INITO" Destination="DigitalOutput_Q1.INIT" Comment=""/>
-			<Connection Source="COLD" Destination="DigitalInput_I2_CLK.INIT" Comment="" dx1="1206.6666666666667">
+			<Connection Source="INIT" Destination="DigitalInput_I2_CLK.INIT" Comment="" dx1="1206.6666666666667">
 				<Attribute Name="Visible" Type="STRING" Value="false"/>
 			</Connection>
 			<Connection Source="DigitalInput_I1_CLK.IND" Destination="E_SR.S" Comment="" dx1="473.33333333333337"/>
