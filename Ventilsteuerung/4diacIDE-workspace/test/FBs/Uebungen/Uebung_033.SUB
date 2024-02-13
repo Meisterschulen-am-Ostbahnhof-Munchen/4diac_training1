@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SubAppType Name="Uebung_033" Comment="LED Strip Blinkende LED">
+	<Identification Standard="61499-2">
+	</Identification>
+	<VersionInfo Version="1.0" Author="franz" Date="2023-10-23">
+	</VersionInfo>
+	<CompilerInfo>
+	</CompilerInfo>
+	<SubAppInterfaceList>
+		<SubAppEventInputs>
+			<SubAppEvent Name="COLD" Type="Event" Comment="">
+			</SubAppEvent>
+		</SubAppEventInputs>
+	</SubAppInterfaceList>
+	<SubAppNetwork>
+		<SubApp Name="GREEN" Type="Uebung_033_sub" Comment="" x="-4533.333333333334" y="-946.6666666666667">
+		</SubApp>
+		<SubApp Name="YELLOW" Type="Uebung_033_sub" Comment="" x="-4533.333333333334" y="-533.3333333333334">
+		</SubApp>
+		<SubApp Name="RED" Type="Uebung_033_sub" Comment="" x="-4533.333333333334" y="-133.33333333333334">
+		</SubApp>
+		<SubApp Name="BLUE" Type="Uebung_033_sub" Comment="" x="-4533.333333333334" y="266.6666666666667">
+		</SubApp>
+		<EventConnections>
+			<Connection Source="COLD" Destination="GREEN.COLD" Comment="" dx1="1066.6666666666667">
+				<Attribute Name="Visible" Type="STRING" Value="false"/>
+			</Connection>
+			<Connection Source="COLD" Destination="YELLOW.COLD" Comment="" dx1="1086.6666666666667">
+				<Attribute Name="Visible" Type="STRING" Value="false"/>
+			</Connection>
+			<Connection Source="COLD" Destination="RED.COLD" Comment="" dx1="1080.0">
+				<Attribute Name="Visible" Type="STRING" Value="false"/>
+			</Connection>
+			<Connection Source="COLD" Destination="BLUE.COLD" Comment="" dx1="1066.6666666666667">
+				<Attribute Name="Visible" Type="STRING" Value="false"/>
+			</Connection>
+		</EventConnections>
+	</SubAppNetwork>
+</SubAppType>
