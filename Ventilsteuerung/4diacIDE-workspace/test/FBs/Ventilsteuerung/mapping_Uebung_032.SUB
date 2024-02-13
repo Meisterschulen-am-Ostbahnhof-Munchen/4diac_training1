@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SubAppType Name="mapping_Uebung_032" Comment="LED Strip Blinkende LED">
+	<Identification Standard="61499-2">
+	</Identification>
+	<VersionInfo Version="1.0" Author="franz" Date="2023-10-23">
+	</VersionInfo>
+	<CompilerInfo>
+	</CompilerInfo>
+	<SubAppInterfaceList>
+		<SubAppEventInputs>
+			<SubAppEvent Name="COLD" Type="Event" Comment="">
+			</SubAppEvent>
+		</SubAppEventInputs>
+	</SubAppInterfaceList>
+	<SubAppNetwork>
+		<FB Name="Hutschienenmoped_XL_8_DI" Type="Hutschienenmoped_XL_8_DI" Comment="" x="-3273.3333333333335" y="-933.3333333333334">
+			<Parameter Name="QI" Value="TRUE" Comment="">
+				<Attribute Name="Visible" Type="STRING" Value="false"/>
+			</Parameter>
+			<Parameter Name="u8SAMember" Value="GLOBAL" Comment="">
+				<Attribute Name="Visible" Type="STRING" Value="false"/>
+			</Parameter>
+			<Parameter Name="u16ObjId" Value="ID_NULL" Comment="">
+				<Attribute Name="Visible" Type="STRING" Value="false"/>
+			</Parameter>
+			<Parameter Name="DigitalInput_I1" Value="'Ventilsteuerung.functions.BUTTON_GREEN'" Comment=""/>
+			<Parameter Name="DigitalInput_I2" Value="'Ventilsteuerung.functions.BUTTON_YELLOW'" Comment=""/>
+			<Parameter Name="DigitalInput_I3" Value="'Ventilsteuerung.functions.BUTTON_RED'" Comment=""/>
+			<Parameter Name="DigitalInput_I4" Value="'Ventilsteuerung.functions.BUTTON_BLUE'" Comment=""/>
+			<Parameter Name="DigitalInput_I5" Value="" Comment="">
+				<Attribute Name="Visible" Type="STRING" Value="false"/>
+			</Parameter>
+			<Parameter Name="DigitalInput_I6" Value="" Comment="">
+				<Attribute Name="Visible" Type="STRING" Value="false"/>
+			</Parameter>
+			<Parameter Name="DigitalInput_I7" Value="" Comment="">
+				<Attribute Name="Visible" Type="STRING" Value="false"/>
+			</Parameter>
+			<Parameter Name="DigitalInput_I8" Value="" Comment="">
+				<Attribute Name="Visible" Type="STRING" Value="false"/>
+			</Parameter>
+		</FB>
+		<FB Name="Hutschienenmoped_XL_1_LED_YELLOW" Type="Hutschienenmoped_XL_1_LED_strip" Comment="" x="-3600.0" y="933.3333333333334">
+			<Parameter Name="QI" Value="TRUE" Comment="">
+				<Attribute Name="Visible" Type="STRING" Value="false"/>
+			</Parameter>
+			<Parameter Name="u8SAMember" Value="Output_strip" Comment="">
+				<Attribute Name="Visible" Type="STRING" Value="false"/>
+			</Parameter>
+			<Parameter Name="u16ObjId" Value="LED_YELLOW" Comment=""/>
+			<Parameter Name="LED_5HZ" Value="'Ventilsteuerung.functions.LED_YELLOW_5HZ'" Comment=""/>
+			<Parameter Name="LED_2HZ" Value="" Comment="">
+				<Attribute Name="Visible" Type="STRING" Value="false"/>
+			</Parameter>
+			<Parameter Name="LED_1HZ" Value="" Comment="">
+				<Attribute Name="Visible" Type="STRING" Value="false"/>
+			</Parameter>
+			<Parameter Name="LED_05HZ" Value="" Comment="">
+				<Attribute Name="Visible" Type="STRING" Value="false"/>
+			</Parameter>
+			<Parameter Name="LED_ON" Value="" Comment="">
+				<Attribute Name="Visible" Type="STRING" Value="false"/>
+			</Parameter>
+		</FB>
+		<FB Name="Hutschienenmoped_XL_1_LED_GREEN" Type="Hutschienenmoped_XL_1_LED_strip" Comment="" x="-3600.0" y="133.33333333333334">
+			<Parameter Name="QI" Value="TRUE" Comment="">
+				<Attribute Name="Visible" Type="STRING" Value="false"/>
+			</Parameter>
+			<Parameter Name="u8SAMember" Value="Output_strip" Comment="">
+				<Attribute Name="Visible" Type="STRING" Value="false"/>
+			</Parameter>
+			<Parameter Name="u16ObjId" Value="LED_GREEN" Comment=""/>
+			<Parameter Name="LED_5HZ" Value="'Ventilsteuerung.functions.LED_GREEN_5HZ'" Comment=""/>
+			<Parameter Name="LED_2HZ" Value="" Comment="">
+				<Attribute Name="Visible" Type="STRING" Value="false"/>
+			</Parameter>
+			<Parameter Name="LED_1HZ" Value="" Comment="">
+				<Attribute Name="Visible" Type="STRING" Value="false"/>
+			</Parameter>
+			<Parameter Name="LED_05HZ" Value="" Comment="">
+				<Attribute Name="Visible" Type="STRING" Value="false"/>
+			</Parameter>
+			<Parameter Name="LED_ON" Value="" Comment="">
+				<Attribute Name="Visible" Type="STRING" Value="false"/>
+			</Parameter>
+		</FB>
+		<FB Name="Hutschienenmoped_XL_1_LED_RED" Type="Hutschienenmoped_XL_1_LED_strip" Comment="" x="-3600.0" y="1733.3333333333335">
+			<Parameter Name="QI" Value="TRUE" Comment="">
+				<Attribute Name="Visible" Type="STRING" Value="false"/>
+			</Parameter>
+			<Parameter Name="u8SAMember" Value="Output_strip" Comment="">
+				<Attribute Name="Visible" Type="STRING" Value="false"/>
+			</Parameter>
+			<Parameter Name="u16ObjId" Value="LED_RED" Comment=""/>
+			<Parameter Name="LED_5HZ" Value="'Ventilsteuerung.functions.LED_RED_5HZ'" Comment=""/>
+			<Parameter Name="LED_2HZ" Value="" Comment="">
+				<Attribute Name="Visible" Type="STRING" Value="false"/>
+			</Parameter>
+			<Parameter Name="LED_1HZ" Value="" Comment="">
+				<Attribute Name="Visible" Type="STRING" Value="false"/>
+			</Parameter>
+			<Parameter Name="LED_05HZ" Value="" Comment="">
+				<Attribute Name="Visible" Type="STRING" Value="false"/>
+			</Parameter>
+			<Parameter Name="LED_ON" Value="" Comment="">
+				<Attribute Name="Visible" Type="STRING" Value="false"/>
+			</Parameter>
+		</FB>
+		<FB Name="Hutschienenmoped_XL_1_LED_BLUE" Type="Hutschienenmoped_XL_1_LED_strip" Comment="" x="-3600.0" y="2533.3333333333335">
+			<Parameter Name="QI" Value="TRUE" Comment="">
+				<Attribute Name="Visible" Type="STRING" Value="false"/>
+			</Parameter>
+			<Parameter Name="u8SAMember" Value="Output_strip" Comment="">
+				<Attribute Name="Visible" Type="STRING" Value="false"/>
+			</Parameter>
+			<Parameter Name="u16ObjId" Value="LED_BLUE" Comment=""/>
+			<Parameter Name="LED_5HZ" Value="'Ventilsteuerung.functions.LED_BLUE_5HZ'" Comment=""/>
+			<Parameter Name="LED_2HZ" Value="" Comment="">
+				<Attribute Name="Visible" Type="STRING" Value="false"/>
+			</Parameter>
+			<Parameter Name="LED_1HZ" Value="" Comment="">
+				<Attribute Name="Visible" Type="STRING" Value="false"/>
+			</Parameter>
+			<Parameter Name="LED_05HZ" Value="" Comment="">
+				<Attribute Name="Visible" Type="STRING" Value="false"/>
+			</Parameter>
+			<Parameter Name="LED_ON" Value="" Comment="">
+				<Attribute Name="Visible" Type="STRING" Value="false"/>
+			</Parameter>
+		</FB>
+		<EventConnections>
+			<Connection Source="COLD" Destination="Hutschienenmoped_XL_8_DI.INIT" Comment="" dx1="73.33333333333334">
+				<Attribute Name="Visible" Type="STRING" Value="false"/>
+			</Connection>
+			<Connection Source="COLD" Destination="Hutschienenmoped_XL_1_LED_YELLOW.INIT" Comment="" dx1="1600.0">
+				<Attribute Name="Visible" Type="STRING" Value="false"/>
+			</Connection>
+			<Connection Source="COLD" Destination="Hutschienenmoped_XL_1_LED_GREEN.INIT" Comment="" dx1="1600.0">
+				<Attribute Name="Visible" Type="STRING" Value="false"/>
+			</Connection>
+			<Connection Source="COLD" Destination="Hutschienenmoped_XL_1_LED_RED.INIT" Comment="" dx1="1600.0">
+				<Attribute Name="Visible" Type="STRING" Value="false"/>
+			</Connection>
+			<Connection Source="COLD" Destination="Hutschienenmoped_XL_1_LED_BLUE.INIT" Comment="" dx1="1600.0">
+				<Attribute Name="Visible" Type="STRING" Value="false"/>
+			</Connection>
+		</EventConnections>
+	</SubAppNetwork>
+</SubAppType>
