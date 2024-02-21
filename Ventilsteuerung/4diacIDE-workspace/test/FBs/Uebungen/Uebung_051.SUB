@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SubAppType Name="Uebung_051" Comment="DigitalInput_I1-_I4 auf DigitalOutput_Q1-_Q4">
+	<Identification Standard="61499-2">
+	</Identification>
+	<VersionInfo Version="1.0" Author="franz" Date="2023-10-23">
+	</VersionInfo>
+	<CompilerInfo>
+	</CompilerInfo>
+	<SubAppInterfaceList>
+		<SubAppEventInputs>
+			<SubAppEvent Name="INIT" Type="Event" Comment="">
+				<Attribute Name="YPOSITION" Value="0"/>
+			</SubAppEvent>
+		</SubAppEventInputs>
+	</SubAppInterfaceList>
+	<SubAppNetwork>
+		<FB Name="DigitalOutput_Q1" Type="QX" Comment="" x="-1846.6666666666667" y="20.0">
+			<Parameter Name="QI" Value="TRUE" Comment=""/>
+		</FB>
+		<FB Name="DigitalInput_I1" Type="IX" Comment="" x="-6040.0" y="-1086.6666666666667">
+			<Parameter Name="QI" Value="TRUE" Comment=""/>
+		</FB>
+		<FB Name="DigitalOutput_Q2" Type="QX" Comment="" x="-1846.6666666666667" y="1000.0">
+			<Parameter Name="QI" Value="TRUE" Comment=""/>
+		</FB>
+		<FB Name="DigitalInput_I2" Type="IX" Comment="" x="-6040.0" y="20.0">
+			<Parameter Name="QI" Value="TRUE" Comment=""/>
+		</FB>
+		<FB Name="DigitalOutput_Q3" Type="QX" Comment="" x="-1846.6666666666667" y="1980.0">
+			<Parameter Name="QI" Value="TRUE" Comment=""/>
+		</FB>
+		<FB Name="DigitalInput_I3" Type="IX" Comment="" x="-6040.0" y="1140.0">
+			<Parameter Name="QI" Value="TRUE" Comment=""/>
+		</FB>
+		<FB Name="DigitalOutput_Q4" Type="QX" Comment="" x="-1846.6666666666667" y="2960.0">
+			<Parameter Name="QI" Value="TRUE" Comment=""/>
+		</FB>
+		<FB Name="DigitalInput_I4" Type="IX" Comment="" x="-6040.0" y="2253.3333333333335">
+			<Parameter Name="QI" Value="TRUE" Comment=""/>
+		</FB>
+		<FB Name="STRUCT_MUX" Type="STRUCT_MUX" Comment="" x="-4800.0" y="133.33333333333334">
+			<Attribute Name="StructuredType" Type="STRING" Value="st4b"/>
+			<Parameter Name="b0" Value="" Comment="BIT 00"/>
+			<Parameter Name="b1" Value="" Comment="BIT 01"/>
+			<Parameter Name="b2" Value="" Comment="BIT 02"/>
+			<Parameter Name="b3" Value="" Comment="BIT 03"/>
+		</FB>
+		<FB Name="STRUCT_DEMUX" Type="STRUCT_DEMUX" Comment="" x="-3506.666666666667" y="133.33333333333334">
+			<Attribute Name="StructuredType" Type="STRING" Value="st4b"/>
+			<Parameter Name="b0" Value="" Comment="BIT 00"/>
+			<Parameter Name="b1" Value="" Comment="BIT 01"/>
+			<Parameter Name="b2" Value="" Comment="BIT 02"/>
+			<Parameter Name="b3" Value="" Comment="BIT 03"/>
+		</FB>
+		<EventConnections>
+			<Connection Source="INIT" Destination="DigitalInput_I1.INIT" Comment="" dx1="1073.3333333333335">
+				<Attribute Name="Visible" Type="STRING" Value="false"/>
+			</Connection>
+			<Connection Source="INIT" Destination="DigitalInput_I2.INIT" Comment="" dx1="1146.6666666666667">
+				<Attribute Name="Visible" Type="STRING" Value="false"/>
+			</Connection>
+			<Connection Source="INIT" Destination="DigitalInput_I3.INIT" Comment="" dx1="1073.3333333333335" dx2="1073.3333333333335" dy="0.0">
+				<Attribute Name="Visible" Type="STRING" Value="false"/>
+			</Connection>
+			<Connection Source="INIT" Destination="DigitalInput_I4.INIT" Comment="" dx1="1140.0">
+				<Attribute Name="Visible" Type="STRING" Value="false"/>
+			</Connection>
+			<Connection Source="INIT" Destination="DigitalOutput_Q1.INIT" Comment="" dx1="3946.666666666667">
+				<Attribute Name="Visible" Type="STRING" Value="false"/>
+			</Connection>
+			<Connection Source="INIT" Destination="DigitalOutput_Q2.INIT" Comment="" dx1="3946.666666666667">
+				<Attribute Name="Visible" Type="STRING" Value="false"/>
+			</Connection>
+			<Connection Source="INIT" Destination="DigitalOutput_Q3.INIT" Comment="" dx1="3946.666666666667">
+				<Attribute Name="Visible" Type="STRING" Value="false"/>
+			</Connection>
+			<Connection Source="INIT" Destination="DigitalOutput_Q4.INIT" Comment="" dx1="3946.666666666667">
+				<Attribute Name="Visible" Type="STRING" Value="false"/>
+			</Connection>
+			<Connection Source="DigitalInput_I1.CNF" Destination="STRUCT_MUX.REQ" Comment="" dx1="80.0"/>
+			<Connection Source="DigitalInput_I2.CNF" Destination="STRUCT_MUX.REQ" Comment=""/>
+			<Connection Source="DigitalInput_I3.CNF" Destination="STRUCT_MUX.REQ" Comment="" dx1="80.0"/>
+			<Connection Source="DigitalInput_I4.CNF" Destination="STRUCT_MUX.REQ" Comment="" dx1="80.0"/>
+			<Connection Source="STRUCT_MUX.CNF" Destination="STRUCT_DEMUX.REQ" Comment=""/>
+			<Connection Source="STRUCT_DEMUX.CNF" Destination="DigitalOutput_Q1.REQ" Comment=""/>
+			<Connection Source="STRUCT_DEMUX.CNF" Destination="DigitalOutput_Q2.REQ" Comment="" dx1="273.33333333333337"/>
+			<Connection Source="STRUCT_DEMUX.CNF" Destination="DigitalOutput_Q3.REQ" Comment="" dx1="273.33333333333337"/>
+			<Connection Source="STRUCT_DEMUX.CNF" Destination="DigitalOutput_Q4.REQ" Comment="" dx1="273.33333333333337"/>
+		</EventConnections>
+		<DataConnections>
+			<Connection Source="DigitalInput_I1.IN" Destination="STRUCT_MUX.b0" Comment="" dx1="146.66666666666669"/>
+			<Connection Source="DigitalInput_I2.IN" Destination="STRUCT_MUX.b1" Comment="" dx1="146.66666666666669"/>
+			<Connection Source="DigitalInput_I3.IN" Destination="STRUCT_MUX.b2" Comment="" dx1="213.33333333333334"/>
+			<Connection Source="DigitalInput_I4.IN" Destination="STRUCT_MUX.b3" Comment="" dx1="280.0"/>
+			<Connection Source="STRUCT_MUX.OUT" Destination="STRUCT_DEMUX.IN" Comment="" dx1="73.33333333333334"/>
+			<Connection Source="STRUCT_DEMUX.b0" Destination="DigitalOutput_Q1.OUT" Comment="" dx1="366.6666666666667"/>
+			<Connection Source="STRUCT_DEMUX.b1" Destination="DigitalOutput_Q2.OUT" Comment="" dx1="206.66666666666669"/>
+			<Connection Source="STRUCT_DEMUX.b2" Destination="DigitalOutput_Q3.OUT" Comment="" dx1="140.0"/>
+			<Connection Source="STRUCT_DEMUX.b3" Destination="DigitalOutput_Q4.OUT" Comment="" dx1="73.33333333333334"/>
+		</DataConnections>
+	</SubAppNetwork>
+</SubAppType>
