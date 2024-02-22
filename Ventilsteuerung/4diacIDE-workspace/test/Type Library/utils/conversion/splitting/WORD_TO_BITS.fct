@@ -33,7 +33,7 @@
 			</Event>
 		</EventOutputs>
 		<InputVars>
-			<VarDeclaration Name="IN" Type="WORD" Comment=""/>
+			<VarDeclaration Name="IN" Type="WORD" Comment="WORD Input"/>
 		</InputVars>
 		<OutputVars>
 			<VarDeclaration Name="OUT_00" Type="BOOL" Comment="BIT 00"/>
@@ -58,7 +58,7 @@
 		<ST><![CDATA[FUNCTION WORD_TO_BITS
 
 VAR_INPUT
-	IN : WORD;
+	IN : WORD;    // WORD Input
 END_VAR
 
 VAR_OUTPUT

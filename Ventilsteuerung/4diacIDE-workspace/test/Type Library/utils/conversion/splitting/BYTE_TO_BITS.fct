@@ -25,7 +25,7 @@
 			</Event>
 		</EventOutputs>
 		<InputVars>
-			<VarDeclaration Name="IN" Type="BYTE" Comment=""/>
+			<VarDeclaration Name="IN" Type="BYTE" Comment="BYTE Input"/>
 		</InputVars>
 		<OutputVars>
 			<VarDeclaration Name="OUT_00" Type="BOOL" Comment="BIT 00"/>
@@ -42,7 +42,7 @@
 		<ST><![CDATA[FUNCTION BYTE_TO_BITS
 
 VAR_INPUT
-	IN : BYTE;
+	IN : BYTE;    // BYTE Input
 END_VAR
 
 VAR_OUTPUT
