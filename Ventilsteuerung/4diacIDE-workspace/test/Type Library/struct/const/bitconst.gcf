@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<GlobalConstants Name="bitconst" Comment="Global constants">
+	<Identification Standard="61499-1">
+	</Identification>
+	<VersionInfo Version="1.0" Author="franz" Date="2024-02-22">
+	</VersionInfo>
+	<CompilerInfo>
+	</CompilerInfo>
+	<GlobalConstants>
+		<VarDeclaration Name="BOOL_BIT_ZZ" Type="BOOL" Comment="ZERO Constant" InitialValue="2#0"/>
+		<VarDeclaration Name="BOOL_BIT_00" Type="BOOL" Comment="Bit 0 Constant" InitialValue="2#1"/>
+		<VarDeclaration Name="BYTE_BIT_ZZ" Type="BYTE" Comment="ZERO Constant" InitialValue="2#0000_0000"/>
+		<VarDeclaration Name="BYTE_BIT_00" Type="BYTE" Comment="Bit 0 Constant" InitialValue="2#0000_0001"/>
+	</GlobalConstants>
+	<OriginalSource><![CDATA[// Constants for Datatype BOOL
+VAR_GLOBAL CONSTANT
+	BOOL_BIT_ZZ : BOOL := 2#0;    // ZERO Constant
+	BOOL_BIT_00 : BOOL := 2#1;    // Bit 0 Constant
+END_VAR
+
+// Constants for Datatype BYTE
+VAR_GLOBAL CONSTANT
+	BYTE_BIT_ZZ : BYTE := 2#0000_0000;    // ZERO Constant
+	BYTE_BIT_00 : BYTE := 2#0000_0001;    // Bit 0 Constant
+END_VAR
+
+]]></OriginalSource>
+</GlobalConstants>
