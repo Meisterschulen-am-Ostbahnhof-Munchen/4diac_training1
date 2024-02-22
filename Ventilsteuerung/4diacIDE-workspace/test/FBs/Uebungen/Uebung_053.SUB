@@ -38,9 +38,9 @@
 		<FB Name="DigitalInput_I4" Type="IX" Comment="" x="-6040.0" y="2853.3333333333335">
 			<Parameter Name="QI" Value="TRUE" Comment=""/>
 		</FB>
-		<FB Name="BITS_TO_BYTE" Type="BITS_TO_BYTE" Comment="" x="-4800.0" y="1966.6666666666667">
+		<FB Name="BOOLS_TO_BYTE" Type="BOOLS_TO_BYTE" Comment="" x="-4800.0" y="1966.6666666666667">
 		</FB>
-		<FB Name="BYTE_TO_BITS" Type="BYTE_TO_BITS" Comment="" x="-3413.3333333333335" y="1966.6666666666667">
+		<FB Name="BYTE_TO_BOOLS" Type="BYTE_TO_BOOLS" Comment="" x="-3413.3333333333335" y="1966.6666666666667">
 		</FB>
 		<EventConnections>
 			<Connection Source="INIT" Destination="DigitalInput_I1.INIT" Comment="" dx1="1073.3333333333335">
@@ -67,26 +67,26 @@
 			<Connection Source="INIT" Destination="DigitalOutput_Q4.INIT" Comment="" dx1="3946.666666666667">
 				<Attribute Name="Visible" Type="STRING" Value="false"/>
 			</Connection>
-			<Connection Source="BITS_TO_BYTE.CNF" Destination="BYTE_TO_BITS.REQ" Comment=""/>
-			<Connection Source="DigitalInput_I1.IND" Destination="BITS_TO_BYTE.REQ" Comment="" dx1="80.0"/>
-			<Connection Source="DigitalInput_I2.IND" Destination="BITS_TO_BYTE.REQ" Comment="" dx1="80.0"/>
-			<Connection Source="DigitalInput_I3.IND" Destination="BITS_TO_BYTE.REQ" Comment=""/>
-			<Connection Source="DigitalInput_I4.IND" Destination="BITS_TO_BYTE.REQ" Comment="" dx1="80.0"/>
-			<Connection Source="BYTE_TO_BITS.CNF" Destination="DigitalOutput_Q1.REQ" Comment="" dx1="206.66666666666669"/>
-			<Connection Source="BYTE_TO_BITS.CNF" Destination="DigitalOutput_Q2.REQ" Comment="" dx1="206.66666666666669"/>
-			<Connection Source="BYTE_TO_BITS.CNF" Destination="DigitalOutput_Q3.REQ" Comment="" dx1="206.66666666666669"/>
-			<Connection Source="BYTE_TO_BITS.CNF" Destination="DigitalOutput_Q4.REQ" Comment=""/>
+			<Connection Source="BOOLS_TO_BYTE.CNF" Destination="BYTE_TO_BOOLS.REQ" Comment=""/>
+			<Connection Source="DigitalInput_I1.IND" Destination="BOOLS_TO_BYTE.REQ" Comment="" dx1="80.0"/>
+			<Connection Source="DigitalInput_I2.IND" Destination="BOOLS_TO_BYTE.REQ" Comment="" dx1="80.0"/>
+			<Connection Source="DigitalInput_I3.IND" Destination="BOOLS_TO_BYTE.REQ" Comment=""/>
+			<Connection Source="DigitalInput_I4.IND" Destination="BOOLS_TO_BYTE.REQ" Comment="" dx1="80.0"/>
+			<Connection Source="BYTE_TO_BOOLS.CNF" Destination="DigitalOutput_Q1.REQ" Comment="" dx1="206.66666666666669"/>
+			<Connection Source="BYTE_TO_BOOLS.CNF" Destination="DigitalOutput_Q2.REQ" Comment="" dx1="206.66666666666669"/>
+			<Connection Source="BYTE_TO_BOOLS.CNF" Destination="DigitalOutput_Q3.REQ" Comment="" dx1="206.66666666666669"/>
+			<Connection Source="BYTE_TO_BOOLS.CNF" Destination="DigitalOutput_Q4.REQ" Comment=""/>
 		</EventConnections>
 		<DataConnections>
-			<Connection Source="BITS_TO_BYTE.OUT" Destination="BYTE_TO_BITS.IN" Comment="" dx1="73.33333333333334"/>
-			<Connection Source="BYTE_TO_BITS.OUT_00" Destination="DigitalOutput_Q1.OUT" Comment="" dx1="73.33333333333334"/>
-			<Connection Source="BYTE_TO_BITS.OUT_01" Destination="DigitalOutput_Q2.OUT" Comment="" dx1="140.0"/>
-			<Connection Source="BYTE_TO_BITS.OUT_02" Destination="DigitalOutput_Q3.OUT" Comment="" dx1="273.33333333333337"/>
-			<Connection Source="BYTE_TO_BITS.OUT_03" Destination="DigitalOutput_Q4.OUT" Comment="" dx1="340.0"/>
-			<Connection Source="DigitalInput_I4.IN" Destination="BITS_TO_BYTE.IN_03" Comment="" dx1="146.66666666666669"/>
-			<Connection Source="DigitalInput_I3.IN" Destination="BITS_TO_BYTE.IN_02" Comment="" dx1="146.66666666666669"/>
-			<Connection Source="DigitalInput_I2.IN" Destination="BITS_TO_BYTE.IN_01" Comment="" dx1="146.66666666666669"/>
-			<Connection Source="DigitalInput_I1.IN" Destination="BITS_TO_BYTE.IN_00" Comment="" dx1="213.33333333333334"/>
+			<Connection Source="BOOLS_TO_BYTE.OUT" Destination="BYTE_TO_BOOLS.IN" Comment="" dx1="73.33333333333334"/>
+			<Connection Source="BYTE_TO_BOOLS.OUT_00" Destination="DigitalOutput_Q1.OUT" Comment="" dx1="73.33333333333334"/>
+			<Connection Source="BYTE_TO_BOOLS.OUT_01" Destination="DigitalOutput_Q2.OUT" Comment="" dx1="140.0"/>
+			<Connection Source="BYTE_TO_BOOLS.OUT_02" Destination="DigitalOutput_Q3.OUT" Comment="" dx1="273.33333333333337"/>
+			<Connection Source="BYTE_TO_BOOLS.OUT_03" Destination="DigitalOutput_Q4.OUT" Comment="" dx1="340.0"/>
+			<Connection Source="DigitalInput_I4.IN" Destination="BOOLS_TO_BYTE.IN_03" Comment="" dx1="146.66666666666669"/>
+			<Connection Source="DigitalInput_I3.IN" Destination="BOOLS_TO_BYTE.IN_02" Comment="" dx1="146.66666666666669"/>
+			<Connection Source="DigitalInput_I2.IN" Destination="BOOLS_TO_BYTE.IN_01" Comment="" dx1="146.66666666666669"/>
+			<Connection Source="DigitalInput_I1.IN" Destination="BOOLS_TO_BYTE.IN_00" Comment="" dx1="213.33333333333334"/>
 		</DataConnections>
 	</SubAppNetwork>
 </SubAppType>

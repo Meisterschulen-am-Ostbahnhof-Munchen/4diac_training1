@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<Function Name="BITS_TO_ST08B" Comment="">
+<Function Name="BOOLS_TO_ST08B" Comment="">
 	<Identification Standard="61499-1">
 	</Identification>
 	<VersionInfo Version="1.0" Author="franz" Date="2024-02-22">
@@ -39,7 +39,7 @@
 		</OutputVars>
 	</InterfaceList>
 	<FunctionBody>
-		<ST><![CDATA[FUNCTION BITS_TO_ST08B
+		<ST><![CDATA[FUNCTION BOOLS_TO_ST08B
 
 VAR_INPUT
 	IN_00 : BOOL;    // BIT 00
@@ -56,7 +56,7 @@ VAR_OUTPUT
 	OUT : ST08B;    // ST08B Output
 END_VAR
 
-(* this Function extracts the 8 Bits from a byte *)
+(* this Function extracts the 8 BOOLS from a byte *)
 OUT.B_00 := IN_00;
 OUT.B_01 := IN_01;
 OUT.B_02 := IN_02;

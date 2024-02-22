@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<Function Name="LWORD_TO_BITS" Comment="">
+<Function Name="LWORD_TO_BOOLS" Comment="">
 	<Identification Standard="61499-1">
 	</Identification>
 	<VersionInfo Version="1.0" Author="franz" Date="2024-02-22">
@@ -151,7 +151,7 @@
 		</OutputVars>
 	</InterfaceList>
 	<FunctionBody>
-		<ST><![CDATA[FUNCTION LWORD_TO_BITS
+		<ST><![CDATA[FUNCTION LWORD_TO_BOOLS
 
 VAR_INPUT
 	IN : LWORD;    // LWORD Input
@@ -224,7 +224,7 @@ VAR_OUTPUT
 	OUT_63 : BOOL;    // BIT 63
 END_VAR
 
-(* this Function extracts the 64 Bits from a lword *)
+(* this Function extracts the 64 BOOLS from a lword *)
 OUT_00 := IN.0;
 OUT_01 := IN.1;
 OUT_02 := IN.2;

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<Function Name="DWORD_TO_BITS" Comment="">
+<Function Name="DWORD_TO_BOOLS" Comment="">
 	<Identification Standard="61499-1">
 	</Identification>
 	<VersionInfo Version="1.0" Author="franz" Date="2024-02-22">
@@ -87,7 +87,7 @@
 		</OutputVars>
 	</InterfaceList>
 	<FunctionBody>
-		<ST><![CDATA[FUNCTION DWORD_TO_BITS
+		<ST><![CDATA[FUNCTION DWORD_TO_BOOLS
 
 VAR_INPUT
 	IN : DWORD;    // DWORD Input
@@ -128,7 +128,7 @@ VAR_OUTPUT
 	OUT_31 : BOOL;    // BIT 31
 END_VAR
 
-(* this Function extracts the 32 Bits from a dword *)
+(* this Function extracts the 32 BOOLS from a dword *)
 OUT_00 := IN.0;
 OUT_01 := IN.1;
 OUT_02 := IN.2;

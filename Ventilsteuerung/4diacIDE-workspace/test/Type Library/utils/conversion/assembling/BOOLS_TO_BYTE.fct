@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<Function Name="BITS_TO_ARR08B" Comment="">
+<Function Name="BOOLS_TO_BYTE" Comment="">
 	<Identification Standard="61499-1">
 	</Identification>
 	<VersionInfo Version="1.0" Author="franz" Date="2024-02-22">
@@ -35,11 +35,11 @@
 			<VarDeclaration Name="IN_07" Type="BOOL" Comment="BIT 07"/>
 		</InputVars>
 		<OutputVars>
-			<VarDeclaration Name="OUT" Type="BOOL" Comment="ARR08B Output" ArraySize="0..7"/>
+			<VarDeclaration Name="OUT" Type="BYTE" Comment="BYTE Output"/>
 		</OutputVars>
 	</InterfaceList>
 	<FunctionBody>
-		<ST><![CDATA[FUNCTION BITS_TO_ARR08B
+		<ST><![CDATA[FUNCTION BOOLS_TO_BYTE
 
 VAR_INPUT
 	IN_00 : BOOL;    // BIT 00
@@ -53,18 +53,18 @@ VAR_INPUT
 END_VAR
 
 VAR_OUTPUT
-	OUT : ARRAY[0..7] OF BOOL;    // ARR08B Output
+	OUT : BYTE;    // BYTE Output
 END_VAR
 
-(* this Function extracts the 8 Bits from a byte *)
-OUT[0] := IN_00;
-OUT[1] := IN_01;
-OUT[2] := IN_02;
-OUT[3] := IN_03;
-OUT[4] := IN_04;
-OUT[5] := IN_05;
-OUT[6] := IN_06;
-OUT[7] := IN_07;
+(* this Function combines the 8 BOOLS to a byte *)
+OUT.0 := IN_00;
+OUT.1 := IN_01;
+OUT.2 := IN_02;
+OUT.3 := IN_03;
+OUT.4 := IN_04;
+OUT.5 := IN_05;
+OUT.6 := IN_06;
+OUT.7 := IN_07;
 
 END_FUNCTION
 ]]></ST>

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<Function Name="BITS_TO_BYTE" Comment="">
+<Function Name="BOOLS_TO_WORD" Comment="">
 	<Identification Standard="61499-1">
 	</Identification>
 	<VersionInfo Version="1.0" Author="franz" Date="2024-02-22">
@@ -17,6 +17,14 @@
 				<With Var="IN_05"/>
 				<With Var="IN_06"/>
 				<With Var="IN_07"/>
+				<With Var="IN_08"/>
+				<With Var="IN_09"/>
+				<With Var="IN_10"/>
+				<With Var="IN_11"/>
+				<With Var="IN_12"/>
+				<With Var="IN_13"/>
+				<With Var="IN_14"/>
+				<With Var="IN_15"/>
 			</Event>
 		</EventInputs>
 		<EventOutputs>
@@ -33,13 +41,21 @@
 			<VarDeclaration Name="IN_05" Type="BOOL" Comment="BIT 05"/>
 			<VarDeclaration Name="IN_06" Type="BOOL" Comment="BIT 06"/>
 			<VarDeclaration Name="IN_07" Type="BOOL" Comment="BIT 07"/>
+			<VarDeclaration Name="IN_08" Type="BOOL" Comment="BIT 08"/>
+			<VarDeclaration Name="IN_09" Type="BOOL" Comment="BIT 09"/>
+			<VarDeclaration Name="IN_10" Type="BOOL" Comment="BIT 10"/>
+			<VarDeclaration Name="IN_11" Type="BOOL" Comment="BIT 11"/>
+			<VarDeclaration Name="IN_12" Type="BOOL" Comment="BIT 12"/>
+			<VarDeclaration Name="IN_13" Type="BOOL" Comment="BIT 13"/>
+			<VarDeclaration Name="IN_14" Type="BOOL" Comment="BIT 14"/>
+			<VarDeclaration Name="IN_15" Type="BOOL" Comment="BIT 15"/>
 		</InputVars>
 		<OutputVars>
-			<VarDeclaration Name="OUT" Type="BYTE" Comment="BYTE Output"/>
+			<VarDeclaration Name="OUT" Type="WORD" Comment="WORD Output"/>
 		</OutputVars>
 	</InterfaceList>
 	<FunctionBody>
-		<ST><![CDATA[FUNCTION BITS_TO_BYTE
+		<ST><![CDATA[FUNCTION BOOLS_TO_WORD
 
 VAR_INPUT
 	IN_00 : BOOL;    // BIT 00
@@ -50,13 +66,21 @@ VAR_INPUT
 	IN_05 : BOOL;    // BIT 05
 	IN_06 : BOOL;    // BIT 06
 	IN_07 : BOOL;    // BIT 07
+	IN_08 : BOOL;    // BIT 08
+	IN_09 : BOOL;    // BIT 09
+	IN_10 : BOOL;    // BIT 10
+	IN_11 : BOOL;    // BIT 11
+	IN_12 : BOOL;    // BIT 12
+	IN_13 : BOOL;    // BIT 13
+	IN_14 : BOOL;    // BIT 14
+	IN_15 : BOOL;    // BIT 15
 END_VAR
 
 VAR_OUTPUT
-	OUT : BYTE;    // BYTE Output
+	OUT : WORD;    // WORD Output
 END_VAR
 
-(* this Function combines the 8 Bits to a byte *)
+(* this Function combines the 16 BOOLS to a word *)
 OUT.0 := IN_00;
 OUT.1 := IN_01;
 OUT.2 := IN_02;
@@ -65,6 +89,14 @@ OUT.4 := IN_04;
 OUT.5 := IN_05;
 OUT.6 := IN_06;
 OUT.7 := IN_07;
+OUT.8 := IN_08;
+OUT.9 := IN_09;
+OUT.10 := IN_10;
+OUT.11 := IN_11;
+OUT.12 := IN_12;
+OUT.13 := IN_13;
+OUT.14 := IN_14;
+OUT.15 := IN_15;
 
 END_FUNCTION
 ]]></ST>
