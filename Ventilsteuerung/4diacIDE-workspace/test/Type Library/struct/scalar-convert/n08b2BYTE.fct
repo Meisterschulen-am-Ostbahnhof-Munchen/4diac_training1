@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Function Name="n08b2BYTE" Comment="">
+	<Identification Standard="61499-1">
+	</Identification>
+	<VersionInfo Version="1.0" Author="franz" Date="2024-02-22">
+	</VersionInfo>
+	<CompilerInfo>
+	</CompilerInfo>
+	<InterfaceList>
+		<EventInputs>
+			<Event Name="REQ" Type="Event" Comment="">
+				<With Var="b00"/>
+				<With Var="b01"/>
+				<With Var="b02"/>
+				<With Var="b03"/>
+				<With Var="b04"/>
+				<With Var="b05"/>
+				<With Var="b06"/>
+				<With Var="b07"/>
+			</Event>
+		</EventInputs>
+		<EventOutputs>
+			<Event Name="CNF" Type="Event" Comment="">
+				<With Var="BQ"/>
+			</Event>
+		</EventOutputs>
+		<InputVars>
+			<VarDeclaration Name="b00" Type="BOOL" Comment="BIT 00"/>
+			<VarDeclaration Name="b01" Type="BOOL" Comment="BIT 01"/>
+			<VarDeclaration Name="b02" Type="BOOL" Comment="BIT 02"/>
+			<VarDeclaration Name="b03" Type="BOOL" Comment="BIT 03"/>
+			<VarDeclaration Name="b04" Type="BOOL" Comment="BIT 04"/>
+			<VarDeclaration Name="b05" Type="BOOL" Comment="BIT 05"/>
+			<VarDeclaration Name="b06" Type="BOOL" Comment="BIT 06"/>
+			<VarDeclaration Name="b07" Type="BOOL" Comment="BIT 07"/>
+		</InputVars>
+		<OutputVars>
+			<VarDeclaration Name="BQ" Type="BYTE" Comment=""/>
+		</OutputVars>
+	</InterfaceList>
+	<FunctionBody>
+		<ST><![CDATA[FUNCTION n08b2BYTE
+
+VAR_INPUT
+	b00 : BOOL;    // BIT 00
+	b01 : BOOL;    // BIT 01
+	b02 : BOOL;    // BIT 02
+	b03 : BOOL;    // BIT 03
+	b04 : BOOL;    // BIT 04
+	b05 : BOOL;    // BIT 05
+	b06 : BOOL;    // BIT 06
+	b07 : BOOL;    // BIT 07
+END_VAR
+
+VAR_OUTPUT
+	BQ : BYTE;
+END_VAR
+
+END_FUNCTION
+]]></ST>
+	</FunctionBody>
+</Function>
