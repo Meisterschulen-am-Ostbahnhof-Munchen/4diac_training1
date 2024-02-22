@@ -16,6 +16,19 @@
 		<VarDeclaration Name="BYTE_QUARTER_02" Type="BYTE" Comment="quarter byte 02 Constant" InitialValue="2#0011_0000"/>
 		<VarDeclaration Name="SHFT_QUARTER_03" Type="SINT" Comment="shift 6 bits" InitialValue="6"/>
 		<VarDeclaration Name="BYTE_QUARTER_03" Type="BYTE" Comment="quarter byte 03 Constant" InitialValue="2#1100_0000"/>
+		<VarDeclaration Name="WORD_QUARTER_ZZ" Type="WORD" Comment="ZERO Constant" InitialValue="2#0000_0000_0000_0000"/>
+		<VarDeclaration Name="WORD_QUARTER_00" Type="WORD" Comment="quarter WORD 00 Constant" InitialValue="2#0000_0000_0000_0011"/>
+		<VarDeclaration Name="WORD_QUARTER_01" Type="WORD" Comment="quarter WORD 01 Constant" InitialValue="2#0000_0000_0000_1100"/>
+		<VarDeclaration Name="WORD_QUARTER_02" Type="WORD" Comment="quarter WORD 02 Constant" InitialValue="2#0000_0000_0011_0000"/>
+		<VarDeclaration Name="WORD_QUARTER_03" Type="WORD" Comment="quarter WORD 03 Constant" InitialValue="2#0000_0000_1100_0000"/>
+		<VarDeclaration Name="SHFT_QUARTER_04" Type="SINT" Comment="shift 8 bits" InitialValue="8"/>
+		<VarDeclaration Name="WORD_QUARTER_04" Type="WORD" Comment="quarter WORD 04 Constant" InitialValue="2#0000_0011_0000_0000"/>
+		<VarDeclaration Name="SHFT_QUARTER_05" Type="SINT" Comment="shift 10 bits" InitialValue="10"/>
+		<VarDeclaration Name="WORD_QUARTER_05" Type="WORD" Comment="quarter WORD 05 Constant" InitialValue="2#0000_1100_0000_0000"/>
+		<VarDeclaration Name="SHFT_QUARTER_06" Type="SINT" Comment="shift 12 bits" InitialValue="12"/>
+		<VarDeclaration Name="WORD_QUARTER_06" Type="WORD" Comment="quarter WORD 06 Constant" InitialValue="2#0011_0000_0000_0000"/>
+		<VarDeclaration Name="SHFT_QUARTER_07" Type="SINT" Comment="shift 14 bits" InitialValue="14"/>
+		<VarDeclaration Name="WORD_QUARTER_07" Type="WORD" Comment="quarter WORD 07 Constant" InitialValue="2#1100_0000_0000_0000"/>
 	</GlobalConstants>
 	<OriginalSource><![CDATA[
 
@@ -30,6 +43,27 @@ VAR_GLOBAL CONSTANT
 	BYTE_QUARTER_02 : BYTE := 2#0011_0000;    // quarter byte 02 Constant
 	SHFT_QUARTER_03 : SINT := 6;    // shift 6 bits
 	BYTE_QUARTER_03 : BYTE := 2#1100_0000;    // quarter byte 03 Constant
+END_VAR
+
+// Constants for Datatype WORD
+VAR_GLOBAL CONSTANT
+	WORD_QUARTER_ZZ : WORD := 2#0000_0000_0000_0000;    // ZERO Constant
+	// shift 0 bits
+	WORD_QUARTER_00 : WORD := 2#0000_0000_0000_0011;    // quarter WORD 00 Constant
+	// shift 2 bits
+	WORD_QUARTER_01 : WORD := 2#0000_0000_0000_1100;    // quarter WORD 01 Constant
+	// shift 4 bits
+	WORD_QUARTER_02 : WORD := 2#0000_0000_0011_0000;    // quarter WORD 02 Constant
+	// shift 6 bits
+	WORD_QUARTER_03 : WORD := 2#0000_0000_1100_0000;    // quarter WORD 03 Constant
+	SHFT_QUARTER_04 : SINT := 8;    // shift 8 bits
+	WORD_QUARTER_04 : WORD := 2#0000_0011_0000_0000;    // quarter WORD 04 Constant
+	SHFT_QUARTER_05 : SINT := 10;    // shift 10 bits
+	WORD_QUARTER_05 : WORD := 2#0000_1100_0000_0000;    // quarter WORD 05 Constant
+	SHFT_QUARTER_06 : SINT := 12;    // shift 12 bits
+	WORD_QUARTER_06 : WORD := 2#0011_0000_0000_0000;    // quarter WORD 06 Constant
+	SHFT_QUARTER_07 : SINT := 14;    // shift 14 bits
+	WORD_QUARTER_07 : WORD := 2#1100_0000_0000_0000;    // quarter WORD 07 Constant
 END_VAR
 
 ]]></OriginalSource>
