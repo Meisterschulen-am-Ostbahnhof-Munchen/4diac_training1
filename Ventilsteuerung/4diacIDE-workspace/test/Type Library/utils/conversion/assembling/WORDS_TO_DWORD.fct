@@ -39,8 +39,8 @@ VAR_OUTPUT
 END_VAR
 
 (* this Function combines the 2 WORDS to a dword *)
-OUT := SHL(IN_01, 16) 
-	OR     IN_00;
+OUT := SHL(IN_01, SHIFT_WORD_01) 
+	OR SHL(IN_00, SHIFT_WORD_00);
 
 END_FUNCTION
 ]]></ST>
