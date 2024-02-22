@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<GlobalConstants Name="quarterconst" Comment="Global constants">
+	<Identification Standard="61499-1">
+	</Identification>
+	<VersionInfo Version="1.0" Author="franz" Date="2024-02-22">
+	</VersionInfo>
+	<CompilerInfo>
+	</CompilerInfo>
+	<GlobalConstants>
+		<VarDeclaration Name="BYTE_QUARTER_ZZ" Type="BYTE" Comment="ZERO Constant" InitialValue="2#0000_0000"/>
+		<VarDeclaration Name="BYTE_QUARTER_00" Type="BYTE" Comment="quarter byte 00 Constant" InitialValue="2#0000_0011"/>
+		<VarDeclaration Name="BYTE_QUARTER_01" Type="BYTE" Comment="quarter byte 01 Constant" InitialValue="2#0000_1100"/>
+		<VarDeclaration Name="BYTE_QUARTER_02" Type="BYTE" Comment="quarter byte 02 Constant" InitialValue="2#0011_0000"/>
+		<VarDeclaration Name="BYTE_QUARTER_03" Type="BYTE" Comment="quarter byte 03 Constant" InitialValue="2#1100_0000"/>
+	</GlobalConstants>
+	<OriginalSource><![CDATA[
+
+// Constants for Datatype BYTE
+VAR_GLOBAL CONSTANT
+	BYTE_QUARTER_ZZ : BYTE := 2#0000_0000;    // ZERO Constant
+	BYTE_QUARTER_00 : BYTE := 2#0000_0011;    // quarter byte 00 Constant
+	BYTE_QUARTER_01 : BYTE := 2#0000_1100;    // quarter byte 01 Constant
+	BYTE_QUARTER_02 : BYTE := 2#0011_0000;    // quarter byte 02 Constant
+	BYTE_QUARTER_03 : BYTE := 2#1100_0000;    // quarter byte 03 Constant
+END_VAR
+
+]]></OriginalSource>
+</GlobalConstants>
