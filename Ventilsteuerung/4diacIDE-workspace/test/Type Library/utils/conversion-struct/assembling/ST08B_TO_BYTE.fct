@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<Function Name="BYTE_TO_ST08B" Comment="">
+<Function Name="ST08B_TO_BYTE" Comment="">
 	<Identification Standard="61499-1">
 	</Identification>
 	<VersionInfo Version="1.0" Author="franz" Date="2024-02-22">
@@ -18,32 +18,32 @@
 			</Event>
 		</EventOutputs>
 		<InputVars>
-			<VarDeclaration Name="IN" Type="BYTE" Comment="BYTE Input"/>
+			<VarDeclaration Name="IN" Type="ST08B" Comment="ST08B Input"/>
 		</InputVars>
 		<OutputVars>
-			<VarDeclaration Name="OUT" Type="ST08B" Comment="ST08B Output"/>
+			<VarDeclaration Name="OUT" Type="BYTE" Comment="BYTE Output"/>
 		</OutputVars>
 	</InterfaceList>
 	<FunctionBody>
-		<ST><![CDATA[FUNCTION BYTE_TO_ST08B
+		<ST><![CDATA[FUNCTION ST08B_TO_BYTE
 
 VAR_INPUT
-	IN : BYTE;    // BYTE Input
+	IN : ST08B;    // ST08B Input
 END_VAR
 
 VAR_OUTPUT
-	OUT : ST08B;    // ST08B Output
+	OUT : BYTE;    // BYTE Output
 END_VAR
 
 (* this Function extracts the 8 Bits from a byte *)
-OUT.B_00 := IN.0;
-OUT.B_01 := IN.1;
-OUT.B_02 := IN.2;
-OUT.B_03 := IN.3;
-OUT.B_04 := IN.4;
-OUT.B_05 := IN.5;
-OUT.B_06 := IN.6;
-OUT.B_07 := IN.7;
+OUT.0 := IN.B_00;
+OUT.1 := IN.B_01;
+OUT.2 := IN.B_02;
+OUT.3 := IN.B_03;
+OUT.4 := IN.B_04;
+OUT.5 := IN.B_05;
+OUT.6 := IN.B_06;
+OUT.7 := IN.B_07;
 
 END_FUNCTION
 ]]></ST>
