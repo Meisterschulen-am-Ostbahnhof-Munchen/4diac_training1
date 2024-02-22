@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<Function Name="BYTE_TO_ST08B" Comment="">
+<Function Name="BYTE_TO_ARR08B" Comment="">
 	<Identification Standard="61499-1">
 	</Identification>
 	<VersionInfo Version="1.0" Author="franz" Date="2024-02-22">
@@ -21,29 +21,29 @@
 			<VarDeclaration Name="IN" Type="BYTE" Comment="BYTE Input"/>
 		</InputVars>
 		<OutputVars>
-			<VarDeclaration Name="OUT" Type="ST08B" Comment="ST08B Output"/>
+			<VarDeclaration Name="OUT" Type="BOOL" Comment="ARR08B Output" ArraySize="0..7"/>
 		</OutputVars>
 	</InterfaceList>
 	<FunctionBody>
-		<ST><![CDATA[FUNCTION BYTE_TO_ST08B
+		<ST><![CDATA[FUNCTION BYTE_TO_ARR08B
 
 VAR_INPUT
 	IN : BYTE;    // BYTE Input
 END_VAR
 
 VAR_OUTPUT
-	OUT : ST08B;    // ST08B Output
+	OUT : ARRAY[0..7] OF BOOL;    // ARR08B Output
 END_VAR
 
 (* this Function extracts the 8 Bits from a byte *)
-OUT.B_00 := IN.0;
-OUT.B_01 := IN.1;
-OUT.B_02 := IN.2;
-OUT.B_03 := IN.3;
-OUT.B_04 := IN.4;
-OUT.B_05 := IN.5;
-OUT.B_06 := IN.6;
-OUT.B_07 := IN.7;
+OUT[0] := IN.0;
+OUT[1] := IN.1;
+OUT[2] := IN.2;
+OUT[3] := IN.3;
+OUT[4] := IN.4;
+OUT[5] := IN.5;
+OUT[6] := IN.6;
+OUT[7] := IN.7;
 
 END_FUNCTION
 ]]></ST>
