@@ -20,42 +20,46 @@
 			</Event>
 		</EventOutputs>
 		<OutputVars>
-			<VarDeclaration Name="Q" Type="BOOL" Comment="BOOL Output"/>
+			<VarDeclaration Name="Q" Type="BOOL" Comment="BOOL Output" InitialValue="FALSE"/>
 			<VarDeclaration Name="QB" Type="BYTE" Comment="2bit (quarter Byte) Output with 4 States" InitialValue="COMMAND_DISABLE"/>
 		</OutputVars>
 	</InterfaceList>
 	<BasicFB>
+		<InternalVars>
+			<VarDeclaration Name="old_Q" Type="BOOL" Comment="old BOOL Output" InitialValue="FALSE"/>
+			<VarDeclaration Name="old_QB" Type="BYTE" Comment="old 2bit (quarter Byte) Output with 4 States" InitialValue="COMMAND_DISABLE"/>
+		</InternalVars>
 		<ECC>
 			<ECState Name="START" Comment="Initial State" x="133.33333333333334" y="1466.6666666666667">
 			</ECState>
-			<ECState Name="SET" Comment="" x="1200.0" y="400.0">
-				<ECAction Algorithm="SET" Output="EO"/>
+			<ECState Name="SET" Comment="" x="1600.0" y="400.0">
+				<ECAction Algorithm="SET"/>
 			</ECState>
-			<ECState Name="RESET" Comment="" x="1200.0" y="1200.0">
-				<ECAction Algorithm="RESET" Output="EO"/>
+			<ECState Name="RESET" Comment="" x="1600.0" y="1200.0">
+				<ECAction Algorithm="RESET"/>
 			</ECState>
-			<ECState Name="Error" Comment="" x="1200.0" y="1866.6666666666667">
-				<ECAction Algorithm="ERROR" Output="EO"/>
+			<ECState Name="Error" Comment="" x="1600.0" y="1866.6666666666667">
+				<ECAction Algorithm="ERROR"/>
 			</ECState>
-			<ECState Name="none" Comment="" x="1200.0" y="2533.3333333333335">
-				<ECAction Algorithm="NONE" Output="EO"/>
+			<ECState Name="none" Comment="" x="1600.0" y="2533.3333333333335">
+				<ECAction Algorithm="NONE"/>
 			</ECState>
-			<ECTransition Source="START" Destination="SET" Condition="S" Comment="" x="700.0" y="853.3333333333334"/>
-			<ECTransition Source="SET" Destination="RESET" Condition="R" Comment="" x="1113.3333333333335" y="953.3333333333334"/>
-			<ECTransition Source="RESET" Destination="SET" Condition="S" Comment="" x="1600.0" y="840.0"/>
-			<ECTransition Source="START" Destination="RESET" Condition="R" Comment="" x="806.6666666666667" y="1273.3333333333335"/>
-			<ECTransition Source="START" Destination="Error" Condition="ERR" Comment="" x="846.6666666666667" y="1686.6666666666667"/>
-			<ECTransition Source="START" Destination="none" Condition="NONE" Comment="" x="733.3333333333334" y="2120.0"/>
-			<ECTransition Source="RESET" Destination="Error" Condition="ERR" Comment="" x="1213.3333333333335" y="1580.0"/>
-			<ECTransition Source="Error" Destination="RESET" Condition="R" Comment="" x="1486.6666666666667" y="1566.6666666666667"/>
-			<ECTransition Source="Error" Destination="none" Condition="NONE" Comment="" x="1206.6666666666667" y="2226.666666666667"/>
-			<ECTransition Source="none" Destination="Error" Condition="ERR" Comment="" x="1493.3333333333335" y="2260.0"/>
-			<ECTransition Source="SET" Destination="Error" Condition="ERR" Comment="" x="2600.0" y="1153.3333333333335"/>
-			<ECTransition Source="RESET" Destination="none" Condition="NONE" Comment="" x="2720.0" y="2020.0"/>
-			<ECTransition Source="Error" Destination="SET" Condition="S" Comment="" x="3000.0" y="1133.3333333333335"/>
-			<ECTransition Source="none" Destination="RESET" Condition="R" Comment="" x="3126.666666666667" y="2093.3333333333335"/>
-			<ECTransition Source="SET" Destination="none" Condition="NONE" Comment="" x="4200.0" y="1386.6666666666667"/>
-			<ECTransition Source="none" Destination="SET" Condition="S" Comment="" x="4720.0" y="1566.6666666666667"/>
+			<ECState Name="FireEvent" Comment="" x="5333.333333333334" y="1333.3333333333335">
+				<ECAction Output="EO"/>
+			</ECState>
+			<ECTransition Source="START" Destination="SET" Condition="S" Comment="" x="1200.0" y="546.6666666666667"/>
+			<ECTransition Source="START" Destination="RESET" Condition="R" Comment="" x="1313.3333333333335" y="1080.0"/>
+			<ECTransition Source="START" Destination="Error" Condition="ERR" Comment="" x="1460.0" y="1600.0"/>
+			<ECTransition Source="SET" Destination="FireEvent" Condition="[old_Q &lt;&gt; Q OR old_QB &lt;&gt; QB]" Comment="" x="3966.666666666667" y="1006.6666666666667"/>
+			<ECTransition Source="RESET" Destination="FireEvent" Condition="[old_Q &lt;&gt; Q OR old_QB &lt;&gt; QB]" Comment="" x="4020.0" y="1373.3333333333335"/>
+			<ECTransition Source="Error" Destination="FireEvent" Condition="[old_Q &lt;&gt; Q OR old_QB &lt;&gt; QB]" Comment="" x="3946.666666666667" y="1646.6666666666667"/>
+			<ECTransition Source="none" Destination="FireEvent" Condition="[old_Q &lt;&gt; Q OR old_QB &lt;&gt; QB]" Comment="" x="3893.3333333333335" y="1926.6666666666667"/>
+			<ECTransition Source="FireEvent" Destination="START" Condition="1" Comment="" x="906.6666666666667" y="3266.666666666667"/>
+			<ECTransition Source="SET" Destination="START" Condition="1" Comment="" x="993.3333333333334" y="993.3333333333334"/>
+			<ECTransition Source="RESET" Destination="START" Condition="1" Comment="" x="1033.3333333333335" y="1393.3333333333335"/>
+			<ECTransition Source="Error" Destination="START" Condition="1" Comment="" x="1060.0" y="1713.3333333333335"/>
+			<ECTransition Source="none" Destination="START" Condition="1" Comment="" x="926.6666666666667" y="2066.666666666667"/>
+			<ECTransition Source="START" Destination="none" Condition="NONE" Comment="" x="1200.0" y="1946.6666666666667"/>
 		</ECC>
 		<Algorithm Name="SET" Comment="">
 			<ST><![CDATA[ALGORITHM SET
@@ -85,6 +89,14 @@ END_ALGORITHM]]></ST>
 ALGORITHM NONE
 // Q Don't care/take no action (leave function as is)
 QB := COMMAND_NO_ACTION;
+END_ALGORITHM]]></ST>
+		</Algorithm>
+		<Algorithm Name="HOLD" Comment="">
+			<ST><![CDATA[
+
+ALGORITHM HOLD
+old_Q := Q;
+old_QB := QB;
 END_ALGORITHM
 
 ]]></ST>
