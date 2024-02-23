@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<FBType Name="E_SH_BYTE" Comment="Sample-and-Hold for BOOL">
+	<Identification Standard="61499-2">
+	</Identification>
+	<VersionInfo Version="1.0" Author="franz" Date="2024-02-23">
+	</VersionInfo>
+	<CompilerInfo>
+	</CompilerInfo>
+	<InterfaceList>
+		<EventInputs>
+			<Event Name="REQ" Type="Event" Comment="Normal Execution Request">
+			</Event>
+		</EventInputs>
+		<EventOutputs>
+			<Event Name="CNF" Type="Event" Comment="Execution Confirmation">
+			</Event>
+		</EventOutputs>
+		<InputVars>
+			<VarDeclaration Name="IN" Type="BYTE" Comment="Sample"/>
+		</InputVars>
+		<OutputVars>
+			<VarDeclaration Name="OUT" Type="BYTE" Comment="Hold"/>
+		</OutputVars>
+	</InterfaceList>
+	<BasicFB>
+		<ECC>
+			<ECState Name="START" Comment="Initial State" x="546.6666666666667" y="420.0">
+			</ECState>
+			<ECState Name="HOLD" Comment="" x="2620.0" y="493.33333333333337">
+				<ECAction Algorithm="HOLD" Output="CNF"/>
+			</ECState>
+			<ECTransition Source="START" Destination="HOLD" Condition="REQ[IN &lt;&gt; OUT]" Comment="" x="1780.0" y="140.0"/>
+			<ECTransition Source="HOLD" Destination="START" Condition="1" Comment="" x="1760.0" y="760.0"/>
+		</ECC>
+		<Algorithm Name="HOLD" Comment="">
+			<ST><![CDATA[ALGORITHM HOLD
+OUT := IN;
+END_ALGORITHM
+
+]]></ST>
+		</Algorithm>
+	</BasicFB>
+</FBType>
