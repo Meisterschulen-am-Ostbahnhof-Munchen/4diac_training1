@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <FBType Name="E_SREN" Comment="Event-driven bistable">
-	<Identification Standard="61499-1 Annex A" Description="Copyright (c) 2024 HR Agrartechnik GmbH&#10;  &#10;This program and the accompanying materials are made &#10;available under the terms of the Eclipse Public License 2.0 &#10;which is available at https://www.eclipse.org/legal/epl-2.0/ &#10; &#10;SPDX-License-Identifier: EPL-2.0&#10;&#10;The Output Q will be TRUE only at S. &#10;The Output Q will be FALSE only at R and ERR. &#10;The Output Q will be not changed at NONE" >
+	<Identification Standard="61499-1 Annex A" Description="Copyright (c) 2024 HR Agrartechnik GmbH &#10;   &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10;  &#10;SPDX-License-Identifier: EPL-2.0 &#10; &#10;The Output Q will be TRUE only at S.  &#10;The Output Q will be FALSE only at R and ERR.  &#10;The Output Q will be not changed at NONE" >
 	</Identification>
 	<InterfaceList>
 		<EventInputs>
@@ -54,8 +54,8 @@
 			<ECTransition Source="RESET" Destination="none" Condition="NONE" Comment="" x="2720.0" y="2020.0"/>
 			<ECTransition Source="Error" Destination="SET" Condition="S" Comment="" x="3000.0" y="1133.3333333333335"/>
 			<ECTransition Source="none" Destination="RESET" Condition="R" Comment="" x="3126.666666666667" y="2093.3333333333335"/>
-			<ECTransition Source="SET" Destination="none" Condition="NONE" Comment="" x="3733.3333333333335" y="1606.6666666666667"/>
-			<ECTransition Source="none" Destination="SET" Condition="S" Comment="" x="3960.0" y="1600.0"/>
+			<ECTransition Source="SET" Destination="none" Condition="NONE" Comment="" x="4200.0" y="1386.6666666666667"/>
+			<ECTransition Source="none" Destination="SET" Condition="S" Comment="" x="4720.0" y="1566.6666666666667"/>
 		</ECC>
 		<Algorithm Name="SET" Comment="">
 			<ST><![CDATA[ALGORITHM SET
