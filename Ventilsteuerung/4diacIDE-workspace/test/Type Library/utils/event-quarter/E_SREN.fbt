@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<FBType Name="E_SREN" Comment="Event-driven bistable">
+	<Identification Standard="61499-1 Annex A" Description="Copyright (c) 2024 HR Agrartechnik GmbH&#10;  &#10;This program and the accompanying materials are made &#10;available under the terms of the Eclipse Public License 2.0 &#10;which is available at https://www.eclipse.org/legal/epl-2.0/ &#10; &#10;SPDX-License-Identifier: EPL-2.0&#10;&#10;The Output Q will be TRUE only at S. &#10;The Output Q will be FALSE only at R and ERR. &#10;The Output Q will be not changed at NONE" >
+	</Identification>
+	<InterfaceList>
+		<EventInputs>
+			<Event Name="S" Type="Event" Comment="Enabled (on, active, etc.)">
+			</Event>
+			<Event Name="R" Type="Event" Comment="Disabled (off, passive, etc.)">
+			</Event>
+			<Event Name="ERR" Type="Event" Comment="Error indicator">
+			</Event>
+			<Event Name="NONE" Type="Event" Comment="Not available or not installed">
+			</Event>
+		</EventInputs>
+		<EventOutputs>
+			<Event Name="EO" Type="Event" Comment="Output Q has changed">
+				<With Var="Q"/>
+				<With Var="QB"/>
+			</Event>
+		</EventOutputs>
+		<OutputVars>
+			<VarDeclaration Name="Q" Type="BOOL" Comment="BOOL Output"/>
+			<VarDeclaration Name="QB" Type="BYTE" Comment="2bit (quarter Byte) Output with 4 States" InitialValue="COMMAND_DISABLE"/>
+		</OutputVars>
+	</InterfaceList>
+	<BasicFB>
+		<ECC>
+			<ECState Name="START" Comment="Initial State" x="133.33333333333334" y="1466.6666666666667">
+			</ECState>
+			<ECState Name="SET" Comment="" x="1200.0" y="400.0">
+				<ECAction Algorithm="SET" Output="EO"/>
+			</ECState>
+			<ECState Name="RESET" Comment="" x="1200.0" y="1200.0">
+				<ECAction Algorithm="RESET" Output="EO"/>
+			</ECState>
+			<ECState Name="Error" Comment="" x="1200.0" y="1866.6666666666667">
+				<ECAction Algorithm="ERROR" Output="EO"/>
+			</ECState>
+			<ECState Name="none" Comment="" x="1200.0" y="2533.3333333333335">
+				<ECAction Algorithm="NONE" Output="EO"/>
+			</ECState>
+			<ECTransition Source="START" Destination="SET" Condition="S" Comment="" x="700.0" y="853.3333333333334"/>
+			<ECTransition Source="SET" Destination="RESET" Condition="R" Comment="" x="1113.3333333333335" y="953.3333333333334"/>
+			<ECTransition Source="RESET" Destination="SET" Condition="S" Comment="" x="1600.0" y="840.0"/>
+			<ECTransition Source="START" Destination="RESET" Condition="R" Comment="" x="806.6666666666667" y="1273.3333333333335"/>
+			<ECTransition Source="START" Destination="Error" Condition="ERR" Comment="" x="846.6666666666667" y="1686.6666666666667"/>
+			<ECTransition Source="START" Destination="none" Condition="NONE" Comment="" x="733.3333333333334" y="2120.0"/>
+			<ECTransition Source="RESET" Destination="Error" Condition="ERR" Comment="" x="1213.3333333333335" y="1580.0"/>
+			<ECTransition Source="Error" Destination="RESET" Condition="R" Comment="" x="1486.6666666666667" y="1566.6666666666667"/>
+			<ECTransition Source="Error" Destination="none" Condition="NONE" Comment="" x="1206.6666666666667" y="2226.666666666667"/>
+			<ECTransition Source="none" Destination="Error" Condition="ERR" Comment="" x="1493.3333333333335" y="2260.0"/>
+			<ECTransition Source="SET" Destination="Error" Condition="ERR" Comment="" x="2600.0" y="1153.3333333333335"/>
+			<ECTransition Source="RESET" Destination="none" Condition="NONE" Comment="" x="2720.0" y="2020.0"/>
+			<ECTransition Source="Error" Destination="SET" Condition="S" Comment="" x="3000.0" y="1133.3333333333335"/>
+			<ECTransition Source="none" Destination="RESET" Condition="R" Comment="" x="3126.666666666667" y="2093.3333333333335"/>
+			<ECTransition Source="SET" Destination="none" Condition="NONE" Comment="" x="3733.3333333333335" y="1606.6666666666667"/>
+			<ECTransition Source="none" Destination="SET" Condition="S" Comment="" x="3960.0" y="1600.0"/>
+		</ECC>
+		<Algorithm Name="SET" Comment="">
+			<ST><![CDATA[ALGORITHM SET
+Q := TRUE;
+QB := COMMAND_ENABLE;
+END_ALGORITHM]]></ST>
+		</Algorithm>
+		<Algorithm Name="RESET" Comment="">
+			<ST><![CDATA[
+
+ALGORITHM RESET
+Q := FALSE;
+QB := COMMAND_DISABLE;
+END_ALGORITHM]]></ST>
+		</Algorithm>
+		<Algorithm Name="ERROR" Comment="">
+			<ST><![CDATA[
+
+ALGORITHM ERROR
+Q := FALSE;
+QB := STATUS_ERROR;
+END_ALGORITHM]]></ST>
+		</Algorithm>
+		<Algorithm Name="NONE" Comment="">
+			<ST><![CDATA[
+
+ALGORITHM NONE
+// Q Don't care/take no action (leave function as is)
+QB := COMMAND_NO_ACTION;
+END_ALGORITHM
+
+]]></ST>
+		</Algorithm>
+	</BasicFB>
+</FBType>
