@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<FBType Name="E_SH" Comment="Sample-and-Hold for BOOL">
-	<Identification Standard="61499-2" Description="Copyright (c) 2024 HR Agrartechnik GmbH&#10; &#10;This program and the accompanying materials are made&#10;available under the terms of the Eclipse Public License 2.0&#10;which is available at https://www.eclipse.org/legal/epl-2.0/&#10;&#10;SPDX-License-Identifier: EPL-2.0" >
+<FBType Name="E_SH_DWORD" Comment="Sample-and-Hold for DWORD">
+	<Identification Standard="61499-2" Description="Copyright (c) 2024 HR Agrartechnik GmbH &#10;   &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10;  &#10;SPDX-License-Identifier: EPL-2.0 " >
 	</Identification>
 	<VersionInfo Version="1.0" Author="franz" Date="2024-02-23">
 	</VersionInfo>
@@ -16,10 +16,10 @@
 			</Event>
 		</EventOutputs>
 		<InputVars>
-			<VarDeclaration Name="IN" Type="ANY_MAGNITUDE" Comment="Sample"/>
+			<VarDeclaration Name="IN" Type="DWORD" Comment="Sample"/>
 		</InputVars>
 		<OutputVars>
-			<VarDeclaration Name="OUT" Type="ANY_MAGNITUDE" Comment="Hold"/>
+			<VarDeclaration Name="OUT" Type="DWORD" Comment="Hold"/>
 		</OutputVars>
 	</InterfaceList>
 	<BasicFB>
@@ -40,4 +40,12 @@ END_ALGORITHM
 ]]></ST>
 		</Algorithm>
 	</BasicFB>
+	<Attribute Name="Documentation" Type="CDATA"><![CDATA[<p>Copyright (c) 2024 HR Agrartechnik GmbH<br />
+&nbsp;&nbsp;<br />
+This program and the accompanying materials are made&nbsp;<br />
+available under the terms of the Eclipse Public License 2.0&nbsp;<br />
+which is available at <a href="https://www.eclipse.org/legal/epl-2.0/">https://www.eclipse.org/legal/epl-2.0/</a>&nbsp;<br />
+&nbsp;<br />
+SPDX-License-Identifier: EPL-2.0</p>
+]]></Attribute>
 </FBType>
