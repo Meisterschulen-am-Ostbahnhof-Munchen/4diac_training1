@@ -16,8 +16,14 @@
 		<FB Name="SETPOINT_CONDENSED_WORK_STATE_1_16" Type="ID" Comment="" x="-553.3333333333334" y="-313.33333333333337">
 			<Parameter Name="QI" Value="TRUE" Comment=""/>
 		</FB>
+		<FB Name="DWORD_TO_QUARTERS" Type="DWORD_TO_QUARTERS" Comment="" x="1600.0" y="-133.33333333333334">
+		</FB>
 		<EventConnections>
 			<Connection Source="INIT" Destination="SETPOINT_CONDENSED_WORK_STATE_1_16.INIT" Comment="" dx1="393.33333333333337"/>
+			<Connection Source="SETPOINT_CONDENSED_WORK_STATE_1_16.IND" Destination="DWORD_TO_QUARTERS.REQ" Comment="" dx1="506.6666666666667"/>
 		</EventConnections>
+		<DataConnections>
+			<Connection Source="SETPOINT_CONDENSED_WORK_STATE_1_16.IN" Destination="DWORD_TO_QUARTERS.IN" Comment="" dx1="506.6666666666667"/>
+		</DataConnections>
 	</SubAppNetwork>
 </SubAppType>
