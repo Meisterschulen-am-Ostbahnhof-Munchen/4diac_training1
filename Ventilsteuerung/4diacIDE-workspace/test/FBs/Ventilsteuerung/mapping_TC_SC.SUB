@@ -29,11 +29,23 @@
 			<Parameter Name="wDDI_1" Value="DDI_ACTUAL_CONDENSED_WORK_STATE_1_16" Comment=""/>
 			<Parameter Name="Output_1" Value="'Ventilsteuerung.functions.ACTUAL_CONDENSED_WORK_STATE_1_16'" Comment=""/>
 		</FB>
+		<FB Name="Hutschienenmoped_XL_8_DI" Type="Hutschienenmoped_XL_8_DI" Comment="" x="-3066.666666666667" y="1200.0">
+			<Parameter Name="QI" Value="TRUE" Comment=""/>
+			<Parameter Name="u8SAMember" Value="GLOBAL" Comment=""/>
+			<Parameter Name="u16ObjId" Value="ID_NULL" Comment=""/>
+			<Parameter Name="DigitalInput_I1" Value="'Ventilsteuerung.functions.DigitalInput_I1'" Comment=""/>
+			<Parameter Name="DigitalInput_I2" Value="'Ventilsteuerung.functions.DigitalInput_I2'" Comment=""/>
+			<Parameter Name="DigitalInput_I3" Value="'Ventilsteuerung.functions.DigitalInput_I3'" Comment=""/>
+			<Parameter Name="DigitalInput_I4" Value="'Ventilsteuerung.functions.DigitalInput_I4'" Comment=""/>
+		</FB>
 		<EventConnections>
 			<Connection Source="INIT" Destination="TC_InputMapping.INIT" Comment="" dx1="2066.666666666667">
 				<Attribute Name="Visible" Type="STRING" Value="false"/>
 			</Connection>
 			<Connection Source="INIT" Destination="TC_OutputMapping.INIT" Comment="" dx1="2066.666666666667">
+				<Attribute Name="Visible" Type="STRING" Value="false"/>
+			</Connection>
+			<Connection Source="INIT" Destination="Hutschienenmoped_XL_8_DI.INIT" Comment="" dx1="1800.0">
 				<Attribute Name="Visible" Type="STRING" Value="false"/>
 			</Connection>
 		</EventConnections>
