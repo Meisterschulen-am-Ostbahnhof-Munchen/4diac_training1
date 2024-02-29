@@ -8,13 +8,13 @@
 	</CompilerInfo>
 	<InterfaceList>
 		<EventInputs>
-			<Event Name="REQ" Type="Event" Comment="Normal Execution Request">
+			<Event Name="REQ" Type="Event" Comment="">
 				<With Var="IN_00"/>
 				<With Var="IN_01"/>
 			</Event>
 		</EventInputs>
 		<EventOutputs>
-			<Event Name="CNF" Type="Event" Comment="Execution Confirmation">
+			<Event Name="CNF" Type="Event" Comment="">
 				<With Var="OUT"/>
 			</Event>
 		</EventOutputs>
@@ -39,8 +39,8 @@ VAR_OUTPUT
 END_VAR
 
 (* this Function combines the 2 BYTES to a word *)
-OUT := SHL(IN_01, SHFT_BYTE_01) 
-	OR SHL(IN_00, SHFT_BYTE_00);
+OUT := SHL(BYTE_TO_WORD(IN_01), SHFT_BYTE_01) 
+	OR SHL(BYTE_TO_WORD(IN_00), SHFT_BYTE_00);
 
 END_FUNCTION
 ]]></ST>
