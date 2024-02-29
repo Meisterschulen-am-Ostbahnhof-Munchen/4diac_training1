@@ -13,7 +13,7 @@
 		</SubAppEventInputs>
 	</SubAppInterfaceList>
 	<SubAppNetwork>
-		<FB Name="TC_InputMapping" Type="TC_InputMapping" Comment="" x="1006.6666666666667" y="153.33333333333334">
+		<FB Name="TC_InputMapping" Type="TC_InputMapping" Comment="" x="133.33333333333334" y="-800.0">
 			<Parameter Name="QI" Value="TRUE" Comment=""/>
 			<Parameter Name="u8SAMember" Value="GLOBAL" Comment=""/>
 			<Parameter Name="u16ObjId" Value="ID_NULL" Comment=""/>
@@ -21,8 +21,21 @@
 			<Parameter Name="wDDI_1" Value="DDI_SETPOINT_CONDENSED_WORK_STATE_1_16" Comment=""/>
 			<Parameter Name="Input_1" Value="'Ventilsteuerung.functions.SETPOINT_CONDENSED_WORK_STATE_1_16'" Comment=""/>
 		</FB>
+		<FB Name="TC_OutputMapping" Type="TC_OutputMapping" Comment="" x="133.33333333333334" y="2933.3333333333335">
+			<Parameter Name="QI" Value="TRUE" Comment=""/>
+			<Parameter Name="u8SAMember" Value="GLOBAL" Comment=""/>
+			<Parameter Name="u16ObjId" Value="ID_NULL" Comment=""/>
+			<Parameter Name="wDevElementNumb_1" Value="DE_NUM_DEVICE" Comment=""/>
+			<Parameter Name="wDDI_1" Value="DDI_ACTUAL_CONDENSED_WORK_STATE_1_16" Comment=""/>
+			<Parameter Name="Output_1" Value="'Ventilsteuerung.functions.ACTUAL_CONDENSED_WORK_STATE_1_16'" Comment=""/>
+		</FB>
 		<EventConnections>
-			<Connection Source="INIT" Destination="TC_InputMapping.INIT" Comment="" dx1="1173.3333333333335" dx2="1173.3333333333335" dy="0.0"/>
+			<Connection Source="INIT" Destination="TC_InputMapping.INIT" Comment="" dx1="2066.666666666667">
+				<Attribute Name="Visible" Type="STRING" Value="false"/>
+			</Connection>
+			<Connection Source="INIT" Destination="TC_OutputMapping.INIT" Comment="" dx1="2066.666666666667">
+				<Attribute Name="Visible" Type="STRING" Value="false"/>
+			</Connection>
 		</EventConnections>
 	</SubAppNetwork>
 </SubAppType>
