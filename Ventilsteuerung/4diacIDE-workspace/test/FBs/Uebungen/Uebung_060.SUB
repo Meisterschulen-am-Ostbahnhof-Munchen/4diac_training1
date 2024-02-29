@@ -29,8 +29,6 @@
 		</FB>
 		<FB Name="BOOL_TO_QUARTER_I1" Type="BOOL_TO_QUARTER" Comment="" x="-2133.3333333333335" y="-533.3333333333334">
 		</FB>
-		<FB Name="BOOL_TO_QUARTER_I2" Type="BOOL_TO_QUARTER" Comment="" x="-2133.3333333333335" y="580.0">
-		</FB>
 		<FB Name="DigitalInput_I2" Type="IX" Comment="" x="-3373.3333333333335" y="353.33333333333337">
 			<Parameter Name="QI" Value="TRUE" Comment=""/>
 		</FB>
@@ -39,10 +37,12 @@
 		<FB Name="DigitalInput_I3" Type="IX" Comment="" x="-3373.3333333333335" y="1466.6666666666667">
 			<Parameter Name="QI" Value="TRUE" Comment=""/>
 		</FB>
-		<FB Name="BOOL_TO_QUARTER_I4" Type="BOOL_TO_QUARTER" Comment="" x="-2133.3333333333335" y="2806.666666666667">
-		</FB>
 		<FB Name="DigitalInput_I4" Type="IX" Comment="" x="-3373.3333333333335" y="2580.0">
 			<Parameter Name="QI" Value="TRUE" Comment=""/>
+		</FB>
+		<FB Name="BOOL_TO_QUARTER_I2" Type="BOOL_TO_QUARTER" Comment="" x="-2133.3333333333335" y="580.0">
+		</FB>
+		<FB Name="BOOL_TO_QUARTER_I4" Type="BOOL_TO_QUARTER" Comment="" x="-2133.3333333333335" y="2806.666666666667">
 		</FB>
 		<EventConnections>
 			<Connection Source="INIT" Destination="SETPOINT_CONDENSED_WORK_STATE_1_16.INIT" Comment="" dx1="393.33333333333337">
@@ -58,8 +58,6 @@
 			</Connection>
 			<Connection Source="DigitalInput_I1.IND" Destination="BOOL_TO_QUARTER_I1.REQ" Comment=""/>
 			<Connection Source="BOOL_TO_QUARTER_I1.CNF" Destination="QUARTERS_TO_DWORD.REQ" Comment="" dx1="73.33333333333334"/>
-			<Connection Source="DigitalInput_I2.IND" Destination="BOOL_TO_QUARTER_I2.REQ" Comment=""/>
-			<Connection Source="BOOL_TO_QUARTER_I2.CNF" Destination="QUARTERS_TO_DWORD.REQ" Comment="" dx1="73.33333333333334"/>
 			<Connection Source="INIT" Destination="DigitalInput_I2.INIT" Comment="" dx1="320.0" dx2="320.0" dy="0.0">
 				<Attribute Name="Visible" Type="STRING" Value="false"/>
 			</Connection>
@@ -68,23 +66,25 @@
 			<Connection Source="INIT" Destination="DigitalInput_I3.INIT" Comment="" dx1="273.33333333333337">
 				<Attribute Name="Visible" Type="STRING" Value="false"/>
 			</Connection>
-			<Connection Source="DigitalInput_I4.IND" Destination="BOOL_TO_QUARTER_I4.REQ" Comment=""/>
-			<Connection Source="BOOL_TO_QUARTER_I4.CNF" Destination="QUARTERS_TO_DWORD.REQ" Comment="" dx1="73.33333333333334"/>
 			<Connection Source="INIT" Destination="DigitalInput_I4.INIT" Comment="" dx1="340.0">
 				<Attribute Name="Visible" Type="STRING" Value="false"/>
 			</Connection>
+			<Connection Source="DigitalInput_I2.IND" Destination="BOOL_TO_QUARTER_I2.REQ" Comment=""/>
+			<Connection Source="BOOL_TO_QUARTER_I2.CNF" Destination="QUARTERS_TO_DWORD.REQ" Comment="" dx1="73.33333333333334" dx2="73.33333333333334" dy="0.0"/>
+			<Connection Source="DigitalInput_I4.IND" Destination="BOOL_TO_QUARTER_I4.REQ" Comment=""/>
+			<Connection Source="BOOL_TO_QUARTER_I4.CNF" Destination="QUARTERS_TO_DWORD.REQ" Comment="" dx1="73.33333333333334" dx2="73.33333333333334" dy="0.0"/>
 		</EventConnections>
 		<DataConnections>
 			<Connection Source="SETPOINT_CONDENSED_WORK_STATE_1_16.IN" Destination="DWORD_TO_QUARTERS.IN" Comment="" dx1="966.6666666666667"/>
 			<Connection Source="QUARTERS_TO_DWORD.OUT" Destination="ACTUAL_CONDENSED_WORK_STATE_1_16.OUT" Comment="" dx1="513.3333333333334"/>
 			<Connection Source="DigitalInput_I1.IN" Destination="BOOL_TO_QUARTER_I1.I" Comment="" dx1="80.0"/>
 			<Connection Source="BOOL_TO_QUARTER_I1.QB" Destination="QUARTERS_TO_DWORD.IN_00" Comment="" dx1="273.33333333333337"/>
-			<Connection Source="DigitalInput_I2.IN" Destination="BOOL_TO_QUARTER_I2.I" Comment="" dx1="80.0"/>
 			<Connection Source="DigitalInput_I3.IN" Destination="BOOL_TO_QUARTER_I3.I" Comment="" dx1="80.0"/>
-			<Connection Source="DigitalInput_I4.IN" Destination="BOOL_TO_QUARTER_I4.I" Comment="" dx1="80.0"/>
-			<Connection Source="BOOL_TO_QUARTER_I2.QB" Destination="QUARTERS_TO_DWORD.IN_01" Comment="" dx1="206.66666666666669"/>
-			<Connection Source="BOOL_TO_QUARTER_I3.QB" Destination="QUARTERS_TO_DWORD.IN_14" Comment="" dx1="140.0"/>
-			<Connection Source="BOOL_TO_QUARTER_I4.QB" Destination="QUARTERS_TO_DWORD.IN_15" Comment="" dx1="73.33333333333334"/>
+			<Connection Source="BOOL_TO_QUARTER_I3.QB" Destination="QUARTERS_TO_DWORD.IN_04" Comment="" dx1="140.0"/>
+			<Connection Source="DigitalInput_I2.IN" Destination="BOOL_TO_QUARTER_I2.I" Comment="" dx1="80.0" dx2="80.0" dy="0.0"/>
+			<Connection Source="BOOL_TO_QUARTER_I2.QB" Destination="QUARTERS_TO_DWORD.IN_01" Comment="" dx1="206.66666666666669" dx2="206.66666666666669" dy="0.0"/>
+			<Connection Source="DigitalInput_I4.IN" Destination="BOOL_TO_QUARTER_I4.I" Comment="" dx1="80.0" dx2="80.0" dy="0.0"/>
+			<Connection Source="BOOL_TO_QUARTER_I4.QB" Destination="QUARTERS_TO_DWORD.IN_15" Comment="" dx1="73.33333333333334" dx2="73.33333333333334" dy="0.0"/>
 		</DataConnections>
 	</SubAppNetwork>
 </SubAppType>

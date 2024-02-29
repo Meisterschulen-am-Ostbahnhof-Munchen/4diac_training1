@@ -68,11 +68,11 @@
 		</FB>
 		<FB Name="BOOL_TO_Q_I1" Type="BOOL_TO_QUARTER" Comment="" x="-8633.333333333334" y="173.33333333333334">
 		</FB>
-		<FB Name="BOOL_TO_Q_I3" Type="BOOL_TO_QUARTER" Comment="" x="-8633.333333333334" y="2333.3333333333335">
-		</FB>
 		<FB Name="BOOL_TO_Q_I2" Type="BOOL_TO_QUARTER" Comment="" x="-8633.333333333334" y="1253.3333333333335">
 		</FB>
 		<FB Name="BOOL_TO_Q_I4" Type="BOOL_TO_QUARTER" Comment="" x="-8633.333333333334" y="3513.3333333333335">
+		</FB>
+		<FB Name="BOOL_TO_Q_I3" Type="BOOL_TO_QUARTER" Comment="" x="-8633.333333333334" y="2333.3333333333335">
 		</FB>
 		<EventConnections>
 			<Connection Source="INIT" Destination="DigitalInput_I1.INIT" Comment="" dx1="593.3333333333334">
@@ -117,13 +117,13 @@
 			<Connection Source="DigitalInput_I1.IND" Destination="BOOL_TO_Q_I1.REQ" Comment="" dx1="853.3333333333334" dx2="853.3333333333334" dy="0.0"/>
 			<Connection Source="BOOL_TO_Q_I1.CNF" Destination="QUARTERS_TO_BYTE.REQ" Comment="" dx1="273.33333333333337" dx2="273.33333333333337" dy="380.0"/>
 			<Connection Source="BOOL_TO_Q_I1.CNF" Destination="Q_TO_STR_STATUS_I1.REQ" Comment=""/>
-			<Connection Source="DigitalInput_I3.IND" Destination="BOOL_TO_Q_I3.REQ" Comment="" dx1="853.3333333333334" dx2="853.3333333333334" dy="0.0"/>
-			<Connection Source="BOOL_TO_Q_I3.CNF" Destination="QUARTERS_TO_BYTE.REQ" Comment="" dx1="186.66666666666669" dx2="186.66666666666669" dy="0.0"/>
 			<Connection Source="DigitalInput_I2.IND" Destination="BOOL_TO_Q_I2.REQ" Comment="" dx1="840.0" dx2="840.0" dy="0.0"/>
 			<Connection Source="BOOL_TO_Q_I2.CNF" Destination="QUARTERS_TO_BYTE.REQ" Comment="" dx1="1546.6666666666667" dx2="1546.6666666666667" dy="0.0"/>
 			<Connection Source="DigitalInput_I4.IND" Destination="BOOL_TO_Q_I4.REQ" Comment="" dx1="853.3333333333334" dx2="853.3333333333334" dy="0.0"/>
 			<Connection Source="BOOL_TO_Q_I4.CNF" Destination="QUARTERS_TO_BYTE.REQ" Comment="" dx1="186.66666666666669" dx2="186.66666666666669" dy="0.0"/>
 			<Connection Source="BOOL_TO_Q_I4.CNF" Destination="Q_TO_STR_STATUS_I4.REQ" Comment=""/>
+			<Connection Source="DigitalInput_I3.IND" Destination="BOOL_TO_Q_I3.REQ" Comment="" dx1="853.3333333333334" dx2="853.3333333333334" dy="0.0"/>
+			<Connection Source="BOOL_TO_Q_I3.CNF" Destination="QUARTERS_TO_BYTE.REQ" Comment="" dx1="186.66666666666669" dx2="186.66666666666669" dy="0.0"/>
 		</EventConnections>
 		<DataConnections>
 			<Connection Source="QUARTERS_TO_BYTE.OUT" Destination="BYTE_TO_QUARTERS.IN" Comment=""/>
@@ -144,13 +144,13 @@
 			<Connection Source="DigitalInput_I1.IN" Destination="BOOL_TO_Q_I1.I" Comment="" dx1="853.3333333333334" dx2="853.3333333333334" dy="0.0"/>
 			<Connection Source="BOOL_TO_Q_I1.QB" Destination="QUARTERS_TO_BYTE.IN_00" Comment="" dx1="240.0" dx2="240.0" dy="186.66666666666669"/>
 			<Connection Source="BOOL_TO_Q_I1.QB" Destination="Q_TO_STR_STATUS_I1.IB" Comment=""/>
-			<Connection Source="DigitalInput_I3.IN" Destination="BOOL_TO_Q_I3.I" Comment="" dx1="853.3333333333334" dx2="853.3333333333334" dy="0.0"/>
-			<Connection Source="BOOL_TO_Q_I3.QB" Destination="QUARTERS_TO_BYTE.IN_02" Comment="" dx1="220.0" dx2="220.0" dy="0.0"/>
 			<Connection Source="DigitalInput_I2.IN" Destination="BOOL_TO_Q_I2.I" Comment="" dx1="873.3333333333334" dx2="873.3333333333334" dy="0.0"/>
 			<Connection Source="BOOL_TO_Q_I2.QB" Destination="QUARTERS_TO_BYTE.IN_01" Comment="" dx1="946.6666666666667" dx2="946.6666666666667" dy="0.0"/>
 			<Connection Source="DigitalInput_I4.IN" Destination="BOOL_TO_Q_I4.I" Comment="" dx1="853.3333333333334" dx2="853.3333333333334" dy="0.0"/>
 			<Connection Source="BOOL_TO_Q_I4.QB" Destination="QUARTERS_TO_BYTE.IN_03" Comment="" dx1="253.33333333333334" dx2="253.33333333333334" dy="0.0"/>
 			<Connection Source="BOOL_TO_Q_I4.QB" Destination="Q_TO_STR_STATUS_I4.IB" Comment=""/>
+			<Connection Source="DigitalInput_I3.IN" Destination="BOOL_TO_Q_I3.I" Comment="" dx1="853.3333333333334" dx2="853.3333333333334" dy="0.0"/>
+			<Connection Source="BOOL_TO_Q_I3.QB" Destination="QUARTERS_TO_BYTE.IN_02" Comment="" dx1="220.0" dx2="220.0" dy="0.0"/>
 		</DataConnections>
 	</SubAppNetwork>
 </SubAppType>
