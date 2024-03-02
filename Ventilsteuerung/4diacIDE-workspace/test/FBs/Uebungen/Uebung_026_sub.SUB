@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SubAppType Name="Uebung_026_sub" Comment="Spiegelabfolge (6)">
+	<Identification Standard="61499-2">
+	</Identification>
+	<VersionInfo Version="1.0" Author="franz" Date="2024-02-05">
+	</VersionInfo>
+	<CompilerInfo>
+	</CompilerInfo>
+	<SubAppInterfaceList>
+		<SubAppEventInputs>
+			<SubAppEvent Name="INIT" Type="Event" Comment="">
+				<Attribute Name="YPOSITION" Value="29"/>
+			</SubAppEvent>
+			<SubAppEvent Name="SET" Type="Event" Comment="">
+				<Attribute Name="YPOSITION" Value="20"/>
+			</SubAppEvent>
+			<SubAppEvent Name="RESET" Type="Event" Comment="">
+				<Attribute Name="YPOSITION" Value="29"/>
+			</SubAppEvent>
+		</SubAppEventInputs>
+		<SubAppEventOutputs>
+			<SubAppEvent Name="EO1" Type="Event" Comment="">
+				<Attribute Name="YPOSITION" Value="235"/>
+			</SubAppEvent>
+		</SubAppEventOutputs>
+	</SubAppInterfaceList>
+	<SubAppNetwork>
+		<FB Name="E_SR" Type="E_SR" Comment="" x="133.33333333333334" y="-800.0">
+		</FB>
+		<FB Name="DigitalOutput" Type="QX" Comment="" x="1420.0" y="-900.0">
+			<Parameter Name="QI" Value="TRUE" Comment=""/>
+		</FB>
+		<FB Name="E_SWITCH" Type="E_SWITCH" Comment="" x="1333.3333333333335" y="33.333333333333336">
+		</FB>
+		<EventConnections>
+			<Connection Source="E_SR.EO" Destination="DigitalOutput.REQ" Comment="" dx1="406.6666666666667"/>
+			<Connection Source="E_SR.EO" Destination="E_SWITCH.EI" Comment="" dx1="140.0"/>
+			<Connection Source="SET" Destination="E_SR.S" Comment="" dx1="473.33333333333337">
+				<Attribute Name="Visible" Type="STRING" Value="false"/>
+			</Connection>
+			<Connection Source="RESET" Destination="E_SR.R" Comment="" dx1="406.6666666666667">
+				<Attribute Name="Visible" Type="STRING" Value="false"/>
+			</Connection>
+			<Connection Source="INIT" Destination="DigitalOutput.INIT" Comment="" dx1="1086.6666666666667">
+				<Attribute Name="Visible" Type="STRING" Value="false"/>
+			</Connection>
+			<Connection Source="E_SWITCH.EO1" Destination="EO1" Comment="" dx1="1453.3333333333335"/>
+		</EventConnections>
+		<DataConnections>
+			<Connection Source="E_SR.Q" Destination="DigitalOutput.OUT" Comment="" dx1="73.33333333333334"/>
+			<Connection Source="E_SR.Q" Destination="E_SWITCH.G" Comment="" dx1="73.33333333333334"/>
+		</DataConnections>
+	</SubAppNetwork>
+</SubAppType>

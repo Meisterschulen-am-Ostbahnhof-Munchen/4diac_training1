@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SubAppType Name="mapping_Uebung_028" Comment="Analog-Eingang">
+	<Identification Standard="61499-2">
+	</Identification>
+	<VersionInfo Version="1.0" Author="franz" Date="2023-10-23">
+	</VersionInfo>
+	<CompilerInfo>
+	</CompilerInfo>
+	<SubAppInterfaceList>
+		<SubAppEventInputs>
+			<SubAppEvent Name="INIT" Type="Event" Comment="">
+			</SubAppEvent>
+		</SubAppEventInputs>
+	</SubAppInterfaceList>
+	<SubAppNetwork>
+		<FB Name="Hutschienenmoped_XL_8_DO" Type="Hutschienenmoped_XL_8_DO" Comment="" x="-3466.666666666667" y="0.0">
+			<Parameter Name="QI" Value="TRUE" Comment=""/>
+			<Parameter Name="u8SAMember" Value="GLOBAL" Comment="">
+				<Attribute Name="Visible" Type="STRING" Value="false"/>
+			</Parameter>
+			<Parameter Name="u16ObjId" Value="ID_NULL" Comment="">
+				<Attribute Name="Visible" Type="STRING" Value="false"/>
+			</Parameter>
+			<Parameter Name="DigitalOutput_Q1" Value="'Ventilsteuerung.functions.DigitalOutput_Q1'" Comment=""/>
+			<Parameter Name="DigitalOutput_Q2" Value="'Ventilsteuerung.functions.DigitalOutput_Q2'" Comment=""/>
+			<Parameter Name="DigitalOutput_Q3" Value="'Ventilsteuerung.functions.DigitalOutput_Q3'" Comment=""/>
+			<Parameter Name="DigitalOutput_Q4" Value="" Comment="">
+				<Attribute Name="Visible" Type="STRING" Value="false"/>
+			</Parameter>
+			<Parameter Name="DigitalOutput_Q5" Value="" Comment="">
+				<Attribute Name="Visible" Type="STRING" Value="false"/>
+			</Parameter>
+			<Parameter Name="DigitalOutput_Q6" Value="" Comment="">
+				<Attribute Name="Visible" Type="STRING" Value="false"/>
+			</Parameter>
+			<Parameter Name="DigitalOutput_Q7" Value="" Comment="">
+				<Attribute Name="Visible" Type="STRING" Value="false"/>
+			</Parameter>
+			<Parameter Name="DigitalOutput_Q8" Value="" Comment="">
+				<Attribute Name="Visible" Type="STRING" Value="false"/>
+			</Parameter>
+		</FB>
+		<FB Name="Hutschienenmoped_XL_8_DI" Type="Hutschienenmoped_XL_8_DI" Comment="" x="-3466.666666666667" y="-1066.6666666666667">
+			<Parameter Name="QI" Value="TRUE" Comment="">
+				<Attribute Name="Visible" Type="STRING" Value="false"/>
+			</Parameter>
+			<Parameter Name="u8SAMember" Value="GLOBAL" Comment="">
+				<Attribute Name="Visible" Type="STRING" Value="false"/>
+			</Parameter>
+			<Parameter Name="u16ObjId" Value="ID_NULL" Comment="">
+				<Attribute Name="Visible" Type="STRING" Value="false"/>
+			</Parameter>
+			<Parameter Name="DigitalInput_I1" Value="'Ventilsteuerung.functions.DigitalInput_I1'" Comment=""/>
+			<Parameter Name="DigitalInput_I2" Value="'Ventilsteuerung.functions.DigitalInput_I2'" Comment=""/>
+			<Parameter Name="DigitalInput_I3" Value="'Ventilsteuerung.functions.DigitalInput_I3'" Comment=""/>
+			<Parameter Name="DigitalInput_I4" Value="" Comment="">
+				<Attribute Name="Visible" Type="STRING" Value="false"/>
+			</Parameter>
+			<Parameter Name="DigitalInput_I5" Value="" Comment="">
+				<Attribute Name="Visible" Type="STRING" Value="false"/>
+			</Parameter>
+			<Parameter Name="DigitalInput_I6" Value="" Comment="">
+				<Attribute Name="Visible" Type="STRING" Value="false"/>
+			</Parameter>
+			<Parameter Name="DigitalInput_I7" Value="" Comment="">
+				<Attribute Name="Visible" Type="STRING" Value="false"/>
+			</Parameter>
+			<Parameter Name="DigitalInput_I8" Value="" Comment="">
+				<Attribute Name="Visible" Type="STRING" Value="false"/>
+			</Parameter>
+		</FB>
+		<FB Name="Hutschienenmoped_XL_8_AI" Type="Hutschienenmoped_XL_8_AI" Comment="" x="-3640.0" y="1200.0">
+			<Parameter Name="QI" Value="TRUE" Comment="">
+				<Attribute Name="Visible" Type="STRING" Value="false"/>
+			</Parameter>
+			<Parameter Name="u8SAMember" Value="GLOBAL" Comment="">
+				<Attribute Name="Visible" Type="STRING" Value="false"/>
+			</Parameter>
+			<Parameter Name="u16ObjId" Value="ID_NULL" Comment="">
+				<Attribute Name="Visible" Type="STRING" Value="false"/>
+			</Parameter>
+			<Parameter Name="AnalogInput_I1" Value="" Comment="">
+				<Attribute Name="Visible" Type="STRING" Value="false"/>
+			</Parameter>
+			<Parameter Name="AnalogInput_I1_hysteresis" Value="" Comment="">
+				<Attribute Name="Visible" Type="STRING" Value="false"/>
+			</Parameter>
+			<Parameter Name="AnalogInput_I2" Value="" Comment="">
+				<Attribute Name="Visible" Type="STRING" Value="false"/>
+			</Parameter>
+			<Parameter Name="AnalogInput_I2_hysteresis" Value="" Comment="">
+				<Attribute Name="Visible" Type="STRING" Value="false"/>
+			</Parameter>
+			<Parameter Name="AnalogInput_I3" Value="" Comment="">
+				<Attribute Name="Visible" Type="STRING" Value="false"/>
+			</Parameter>
+			<Parameter Name="AnalogInput_I3_hysteresis" Value="" Comment="">
+				<Attribute Name="Visible" Type="STRING" Value="false"/>
+			</Parameter>
+			<Parameter Name="AnalogInput_I4" Value="'Ventilsteuerung.functions.AnalogInput_I4'" Comment=""/>
+			<Parameter Name="AnalogInput_I4_hysteresis" Value="50" Comment=""/>
+			<Parameter Name="AnalogInput_I5" Value="" Comment="">
+				<Attribute Name="Visible" Type="STRING" Value="false"/>
+			</Parameter>
+			<Parameter Name="AnalogInput_I5_hysteresis" Value="" Comment="">
+				<Attribute Name="Visible" Type="STRING" Value="false"/>
+			</Parameter>
+			<Parameter Name="AnalogInput_I6" Value="" Comment="">
+				<Attribute Name="Visible" Type="STRING" Value="false"/>
+			</Parameter>
+			<Parameter Name="AnalogInput_I6_hysteresis" Value="" Comment="">
+				<Attribute Name="Visible" Type="STRING" Value="false"/>
+			</Parameter>
+			<Parameter Name="AnalogInput_I7" Value="'Ventilsteuerung.functions.AnalogInput_I7'" Comment=""/>
+			<Parameter Name="AnalogInput_I7_hysteresis" Value="50" Comment=""/>
+			<Parameter Name="AnalogInput_I8" Value="" Comment="">
+				<Attribute Name="Visible" Type="STRING" Value="false"/>
+			</Parameter>
+			<Parameter Name="AnalogInput_I8_hysteresis" Value="" Comment="">
+				<Attribute Name="Visible" Type="STRING" Value="false"/>
+			</Parameter>
+		</FB>
+		<EventConnections>
+			<Connection Source="INIT" Destination="Hutschienenmoped_XL_8_DI.INIT" Comment="" dx1="73.33333333333334">
+				<Attribute Name="Visible" Type="STRING" Value="false"/>
+			</Connection>
+			<Connection Source="INIT" Destination="Hutschienenmoped_XL_8_DO.INIT" Comment="" dx1="73.33333333333334">
+				<Attribute Name="Visible" Type="STRING" Value="false"/>
+			</Connection>
+			<Connection Source="INIT" Destination="Hutschienenmoped_XL_8_AI.INIT" Comment="" dx1="1600.0">
+				<Attribute Name="Visible" Type="STRING" Value="false"/>
+			</Connection>
+		</EventConnections>
+	</SubAppNetwork>
+</SubAppType>

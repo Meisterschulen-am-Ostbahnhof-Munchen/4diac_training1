@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <GlobalConstants Name="FIELDBUS_SIGNAL" Comment="">
+	<Identification Standard="SAE J1939; ISO 11783" Description="Copyright (c) 2023 HR Agrartechnik GmbH   &#10;   &#10;This program and the accompanying materials are made    &#10;available under the terms of the Eclipse Public License 2.0    &#10;which is available at https://www.eclipse.org/legal/epl-2.0/    &#10;    &#10;SPDX-License-Identifier: EPL-2.0" >
+	</Identification>
 	<CompilerInfo packageName="signalprocessing">
 	</CompilerInfo>
 	<GlobalConstants>
@@ -28,11 +30,11 @@
 		<VarDeclaration Name="FIELDBUS_ERROR_INDI_WM" Type="WORD" Comment="16 bit error indicator max" InitialValue="WORD#16#FEFF"/>
 		<VarDeclaration Name="FIELDBUS_NOT_AVAILABLE_WM" Type="WORD" Comment="16 bit not available max" InitialValue="WORD#16#FFFF"/>
 		<VarDeclaration Name="FIELDBUS_DONT_CARE_W" Type="WORD" Comment="16 bit dont care" InitialValue="WORD#16#FFFF"/>
-		<VarDeclaration Name="FIELDBUS_VALID_SIGNAL_DW" Type="DWORD" Comment="32 bit max value of valid signal" InitialValue="DWORD#16#FAFFFFFF"/>
-		<VarDeclaration Name="FIELDBUS_ERROR_INDI_DW" Type="DWORD" Comment="32 bit error indicator min" InitialValue="DWORD#16#FE000000"/>
-		<VarDeclaration Name="FIELDBUS_NOT_AVAILABLE_DW" Type="DWORD" Comment="32 bit not available min" InitialValue="DWORD#16#FF000000"/>
-		<VarDeclaration Name="FIELDBUS_ERROR_INDI_DWM" Type="DWORD" Comment="32 bit error indicator max" InitialValue="DWORD#16#FEFFFFFF"/>
-		<VarDeclaration Name="FIELDBUS_NOT_AVAILABLE_DM" Type="DWORD" Comment="32 bit not available max" InitialValue="DWORD#16#FFFFFFFF"/>
+		<VarDeclaration Name="FIELDBUS_VALID_SIGNAL_DW" Type="DWORD" Comment="32 bit max value of valid signal" InitialValue="DWORD#16#FAFF_FFFF"/>
+		<VarDeclaration Name="FIELDBUS_ERROR_INDI_DW" Type="DWORD" Comment="32 bit error indicator min" InitialValue="DWORD#16#FE00_0000"/>
+		<VarDeclaration Name="FIELDBUS_NOT_AVAILABLE_DW" Type="DWORD" Comment="32 bit not available min" InitialValue="DWORD#16#FF00_0000"/>
+		<VarDeclaration Name="FIELDBUS_ERROR_INDI_DWM" Type="DWORD" Comment="32 bit error indicator max" InitialValue="DWORD#16#FEFF_FFFF"/>
+		<VarDeclaration Name="FIELDBUS_NOT_AVAILABLE_DM" Type="DWORD" Comment="32 bit not available max" InitialValue="DWORD#16#FFFF_FFFF"/>
 	</GlobalConstants>
 	<OriginalSource><![CDATA[PACKAGE signalprocessing;
 
@@ -62,11 +64,11 @@ VAR_GLOBAL CONSTANT
 	FIELDBUS_ERROR_INDI_WM : WORD := WORD#16#FEFF;    // 16 bit error indicator max
 	FIELDBUS_NOT_AVAILABLE_WM : WORD := WORD#16#FFFF;    // 16 bit not available max
 	FIELDBUS_DONT_CARE_W : WORD := WORD#16#FFFF;    // 16 bit dont care
-	FIELDBUS_VALID_SIGNAL_DW : DWORD := DWORD#16#FAFFFFFF;    // 32 bit max value of valid signal
-	FIELDBUS_ERROR_INDI_DW : DWORD := DWORD#16#FE000000;    // 32 bit error indicator min
-	FIELDBUS_NOT_AVAILABLE_DW : DWORD := DWORD#16#FF000000;    // 32 bit not available min
-	FIELDBUS_ERROR_INDI_DWM : DWORD := DWORD#16#FEFFFFFF;    // 32 bit error indicator max
-	FIELDBUS_NOT_AVAILABLE_DM : DWORD := DWORD#16#FFFFFFFF;    // 32 bit not available max
+	FIELDBUS_VALID_SIGNAL_DW : DWORD := DWORD#16#FAFF_FFFF;    // 32 bit max value of valid signal
+	FIELDBUS_ERROR_INDI_DW : DWORD := DWORD#16#FE00_0000;    // 32 bit error indicator min
+	FIELDBUS_NOT_AVAILABLE_DW : DWORD := DWORD#16#FF00_0000;    // 32 bit not available min
+	FIELDBUS_ERROR_INDI_DWM : DWORD := DWORD#16#FEFF_FFFF;    // 32 bit error indicator max
+	FIELDBUS_NOT_AVAILABLE_DM : DWORD := DWORD#16#FFFF_FFFF;    // 32 bit not available max
 END_VAR
 
 ]]></OriginalSource>

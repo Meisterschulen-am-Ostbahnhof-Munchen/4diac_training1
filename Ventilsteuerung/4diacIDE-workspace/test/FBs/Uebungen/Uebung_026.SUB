@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SubAppType Name="Uebung_026" Comment="Spiegelabfolge (6)">
+	<Identification Standard="61499-2">
+	</Identification>
+	<VersionInfo Version="1.0" Author="franz" Date="2023-10-23">
+	</VersionInfo>
+	<CompilerInfo>
+	</CompilerInfo>
+	<SubAppInterfaceList>
+		<SubAppEventInputs>
+			<SubAppEvent Name="INIT" Type="Event" Comment="">
+			</SubAppEvent>
+		</SubAppEventInputs>
+	</SubAppInterfaceList>
+	<SubAppNetwork>
+		<FB Name="SoftKey_F1_UP" Type="IE" Comment="" x="-7200.0" y="-1053.3333333333335">
+			<Parameter Name="QI" Value="TRUE" Comment=""/>
+		</FB>
+		<FB Name="SoftKey_F2_DOWN" Type="IE" Comment="" x="-7200.0" y="413.33333333333337">
+			<Parameter Name="QI" Value="TRUE" Comment=""/>
+		</FB>
+		<Comment Comment="START-Knopf Ausfahren" x="-8933.333333333334" y="-753.3333333333334" width="1373.3333333333335" height="366.6666666666667"/>
+		<Comment Comment="Endlage Ausfahren_Cyl_1 &amp;#10;" x="-8933.333333333334" y="1080.0" width="1373.3333333333335" height="366.6666666666667"/>
+		<Comment Comment="Endlage Ausfahren_Cyl_2 &amp;#10;" x="-8933.333333333334" y="2413.3333333333335" width="1373.3333333333335" height="366.6666666666667"/>
+		<FB Name="SoftKey_F3_DOWN" Type="IE" Comment="" x="-7200.0" y="2280.0">
+			<Parameter Name="QI" Value="TRUE" Comment=""/>
+		</FB>
+		<Comment Comment="Ausfahren_Cyl_1" x="-2400.0" y="-666.6666666666667" width="1373.3333333333335" height="366.6666666666667"/>
+		<Comment Comment="Ausfahren_Cyl_2" x="-2400.0" y="933.3333333333334" width="1373.3333333333335" height="366.6666666666667"/>
+		<FB Name="SoftKey_F9_DOWN" Type="IE" Comment="" x="-7200.0" y="6533.333333333334">
+			<Parameter Name="QI" Value="TRUE" Comment=""/>
+		</FB>
+		<Comment Comment="Einfahren Zeit gesteuert" x="-8933.333333333334" y="3833.3333333333335" width="1373.3333333333335" height="366.6666666666667"/>
+		<Comment Comment="Endlage Einfahren_Cyl_1  &amp;#10;" x="-8933.333333333334" y="6666.666666666667" width="1373.3333333333335" height="366.6666666666667"/>
+		<FB Name="SoftKey_F8_DOWN" Type="IE" Comment="" x="-7200.0" y="5346.666666666667">
+			<Parameter Name="QI" Value="TRUE" Comment=""/>
+		</FB>
+		<Comment Comment="Einfahren_Cyl_2" x="-2400.0" y="4000.0" width="1373.3333333333335" height="366.6666666666667"/>
+		<Comment Comment="Endlage Einfahren_Cyl_2  &amp;#10;" x="-8933.333333333334" y="5333.333333333334" width="1373.3333333333335" height="366.6666666666667"/>
+		<Comment Comment="Einfahren_Cyl_1 &amp;#10;" x="-2400.0" y="5733.333333333334" width="1373.3333333333335" height="366.6666666666667"/>
+		<FB Name="E_DELAY" Type="E_DELAY" Comment="" x="-7200.0" y="3813.3333333333335">
+			<Parameter Name="DT" Value="T#2s" Comment=""/>
+		</FB>
+		<FB Name="E_REND_Ausfahren_Cyl_1" Type="E_REND" Comment="" x="-5466.666666666667" y="666.6666666666667">
+		</FB>
+		<FB Name="E_REND_Ausfahren_Cyl_2" Type="E_REND" Comment="" x="-5466.666666666667" y="2533.3333333333335">
+		</FB>
+		<FB Name="E_REND_Einfahren_Cyl_2" Type="E_REND" Comment="" x="-5466.666666666667" y="5600.0">
+		</FB>
+		<FB Name="E_REND_Einfahren_Cyl_1" Type="E_REND" Comment="" x="-5466.666666666667" y="6786.666666666667">
+		</FB>
+		<SubApp Name="Q4" Type="Uebung_026_sub" Comment="" x="-3466.666666666667" y="5600.0">
+		</SubApp>
+		<SubApp Name="Q2" Type="Uebung_026_sub" Comment="" x="-3466.666666666667" y="666.6666666666667">
+		</SubApp>
+		<SubApp Name="Q3" Type="Uebung_026_sub" Comment="" x="-3466.666666666667" y="3866.666666666667">
+		</SubApp>
+		<SubApp Name="Q1" Type="Uebung_026_sub" Comment="" x="-3466.666666666667" y="-800.0">
+		</SubApp>
+		<EventConnections>
+			<Connection Source="INIT" Destination="SoftKey_F1_UP.INIT" Comment="" dx1="746.6666666666667">
+				<Attribute Name="Visible" Type="STRING" Value="false"/>
+			</Connection>
+			<Connection Source="INIT" Destination="SoftKey_F2_DOWN.INIT" Comment="" dx1="746.6666666666667">
+				<Attribute Name="Visible" Type="STRING" Value="false"/>
+			</Connection>
+			<Connection Source="INIT" Destination="SoftKey_F3_DOWN.INIT" Comment="" dx1="2053.3333333333335">
+				<Attribute Name="Visible" Type="STRING" Value="false"/>
+			</Connection>
+			<Connection Source="INIT" Destination="SoftKey_F9_DOWN.INIT" Comment="" dx1="1366.6666666666667">
+				<Attribute Name="Visible" Type="STRING" Value="false"/>
+			</Connection>
+			<Connection Source="INIT" Destination="SoftKey_F8_DOWN.INIT" Comment="" dx1="1366.6666666666667">
+				<Attribute Name="Visible" Type="STRING" Value="false"/>
+			</Connection>
+			<Connection Source="SoftKey_F2_DOWN.IND" Destination="E_REND_Ausfahren_Cyl_1.EI2" Comment="" dx1="153.33333333333334"/>
+			<Connection Source="SoftKey_F3_DOWN.IND" Destination="E_REND_Ausfahren_Cyl_2.EI2" Comment="" dx1="226.66666666666669"/>
+			<Connection Source="SoftKey_F9_DOWN.IND" Destination="E_REND_Einfahren_Cyl_1.EI2" Comment="" dx1="206.66666666666669"/>
+			<Connection Source="SoftKey_F8_DOWN.IND" Destination="E_REND_Einfahren_Cyl_2.EI2" Comment="" dx1="206.66666666666669"/>
+			<Connection Source="E_REND_Ausfahren_Cyl_2.EO" Destination="E_DELAY.START" Comment="" dx1="100.0" dx2="100.0" dy="873.3333333333334"/>
+			<Connection Source="SoftKey_F1_UP.IND" Destination="E_REND_Ausfahren_Cyl_1.R" Comment="" dx1="333.33333333333337"/>
+			<Connection Source="SoftKey_F2_DOWN.IND" Destination="E_REND_Ausfahren_Cyl_2.R" Comment="" dx1="120.0"/>
+			<Connection Source="E_DELAY.EO" Destination="E_REND_Einfahren_Cyl_2.R" Comment="" dx1="593.3333333333334"/>
+			<Connection Source="SoftKey_F8_DOWN.IND" Destination="E_REND_Einfahren_Cyl_1.R" Comment="" dx1="140.0"/>
+			<Connection Source="INIT" Destination="Q4.INIT" Comment="" dx1="2906.666666666667" dx2="2906.666666666667" dy="0.0">
+				<Attribute Name="Visible" Type="STRING" Value="false"/>
+			</Connection>
+			<Connection Source="E_REND_Einfahren_Cyl_2.EO" Destination="Q4.SET" Comment="" dx1="600.0" dx2="600.0" dy="0.0"/>
+			<Connection Source="E_REND_Einfahren_Cyl_1.EO" Destination="Q4.RESET" Comment="" dx1="580.0" dx2="580.0" dy="0.0"/>
+			<Connection Source="Q4.EO1" Destination="E_REND_Einfahren_Cyl_1.EI1" Comment="" dx1="80.0" dx2="80.0" dy="800.0"/>
+			<Connection Source="INIT" Destination="Q2.INIT" Comment="" dx1="2886.666666666667" dx2="2886.666666666667" dy="0.0">
+				<Attribute Name="Visible" Type="STRING" Value="false"/>
+			</Connection>
+			<Connection Source="E_REND_Ausfahren_Cyl_1.EO" Destination="Q2.SET" Comment="" dx1="600.0" dx2="600.0" dy="0.0"/>
+			<Connection Source="E_REND_Ausfahren_Cyl_2.EO" Destination="Q2.RESET" Comment="" dx1="586.6666666666667" dx2="586.6666666666667" dy="0.0"/>
+			<Connection Source="Q2.EO1" Destination="E_REND_Ausfahren_Cyl_2.EI1" Comment="" dx1="80.0" dx2="80.0" dy="733.3333333333334"/>
+			<Connection Source="INIT" Destination="Q3.INIT" Comment="" dx1="2906.666666666667" dx2="2906.666666666667" dy="0.0">
+				<Attribute Name="Visible" Type="STRING" Value="false"/>
+			</Connection>
+			<Connection Source="E_DELAY.EO" Destination="Q3.SET" Comment="" dx1="1520.0" dx2="1520.0" dy="0.0"/>
+			<Connection Source="E_REND_Einfahren_Cyl_2.EO" Destination="Q3.RESET" Comment="" dx1="586.6666666666667" dx2="586.6666666666667" dy="0.0"/>
+			<Connection Source="Q3.EO1" Destination="E_REND_Einfahren_Cyl_2.EI1" Comment="" dx1="80.0" dx2="80.0" dy="666.6666666666667"/>
+			<Connection Source="INIT" Destination="Q1.INIT" Comment="" dx1="2906.666666666667" dx2="2906.666666666667" dy="0.0">
+				<Attribute Name="Visible" Type="STRING" Value="false"/>
+			</Connection>
+			<Connection Source="SoftKey_F1_UP.IND" Destination="Q1.SET" Comment="" dx1="1513.3333333333335" dx2="1513.3333333333335" dy="0.0"/>
+			<Connection Source="E_REND_Ausfahren_Cyl_1.EO" Destination="Q1.RESET" Comment="" dx1="600.0" dx2="600.0" dy="0.0"/>
+			<Connection Source="Q1.EO1" Destination="E_REND_Ausfahren_Cyl_1.EI1" Comment="" dx1="80.0" dx2="80.0" dy="866.6666666666667"/>
+		</EventConnections>
+	</SubAppNetwork>
+</SubAppType>

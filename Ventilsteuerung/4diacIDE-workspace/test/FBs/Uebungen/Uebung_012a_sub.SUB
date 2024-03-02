@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<SubAppType Name="Uebung_012a_sub" Comment="Subapplication Type">
+<SubAppType Name="Uebung_012a_sub" Comment="Numeric Value Input und Speichern">
 	<Identification Standard="61499-2">
 	</Identification>
 	<VersionInfo Version="1.0" Author="franz" Date="2023-10-31">
@@ -8,7 +8,7 @@
 	</CompilerInfo>
 	<SubAppInterfaceList>
 		<SubAppEventInputs>
-			<SubAppEvent Name="COLD" Type="Event" Comment="">
+			<SubAppEvent Name="INIT" Type="Event" Comment="">
 			</SubAppEvent>
 			<SubAppEvent Name="IND" Type="Event" Comment="">
 			</SubAppEvent>
@@ -19,12 +19,12 @@
 		</InputVars>
 	</SubAppInterfaceList>
 	<SubAppNetwork>
-		<FB Name="InputNumber_I1" Type="ID" Comment="" x="-666.6666666666667" y="0.0">
+		<FB Name="InputNumber_I1" Type="ID" Comment="" x="-666.6666666666667" y="20.0">
 			<Parameter Name="QI" Value="TRUE" Comment=""/>
 		</FB>
-		<FB Name="F_DWORD_TO_UDINT" Type="F_DWORD_TO_UDINT" Comment="" x="400.0" y="400.0">
+		<FB Name="F_DWORD_TO_UDINT" Type="F_DWORD_TO_UDINT" Comment="" x="400.0" y="473.33333333333337">
 		</FB>
-		<FB Name="NVS_UDINT" Type="NVS_UDINT" Comment="" x="2133.3333333333335" y="0.0">
+		<FB Name="NVS_UDINT" Type="NVS_UDINT" Comment="" x="2133.3333333333335" y="20.0">
 			<Parameter Name="QI" Value="TRUE" Comment=""/>
 		</FB>
 		<FB Name="Q_NumericValue" Type="Q_NumericValue" Comment="" x="3866.666666666667" y="133.33333333333334">
@@ -34,11 +34,11 @@
 			<Connection Source="F_DWORD_TO_UDINT.CNF" Destination="NVS_UDINT.SET" Comment="" dx1="380.0"/>
 			<Connection Source="NVS_UDINT.INITO" Destination="NVS_UDINT.GET" Comment="" dx1="80.0" dx2="480.0" dy="-253.33333333333334"/>
 			<Connection Source="NVS_UDINT.INITO" Destination="Q_NumericValue.INIT" Comment="" dx1="513.3333333333334"/>
-			<Connection Source="NVS_UDINT.GETO" Destination="Q_NumericValue.REQ" Comment="" dx1="513.3333333333334"/>
-			<Connection Source="COLD" Destination="InputNumber_I1.INIT" Comment="" dx1="333.33333333333337">
+			<Connection Source="NVS_UDINT.GETO" Destination="Q_NumericValue.REQ" Comment=""/>
+			<Connection Source="INIT" Destination="InputNumber_I1.INIT" Comment="" dx1="333.33333333333337">
 				<Attribute Name="Visible" Type="STRING" Value="false"/>
 			</Connection>
-			<Connection Source="COLD" Destination="NVS_UDINT.INIT" Comment="" dx1="733.3333333333334">
+			<Connection Source="INIT" Destination="NVS_UDINT.INIT" Comment="" dx1="733.3333333333334">
 				<Attribute Name="Visible" Type="STRING" Value="false"/>
 			</Connection>
 			<Connection Source="IND" Destination="Q_NumericValue.REQ" Comment="" dx1="1600.0">

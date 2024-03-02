@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SubAppType Name="Uebung_032" Comment="LED Strip Blinkende LED">
+	<Identification Standard="61499-2">
+	</Identification>
+	<VersionInfo Version="1.0" Author="franz" Date="2023-10-23">
+	</VersionInfo>
+	<CompilerInfo>
+	</CompilerInfo>
+	<SubAppInterfaceList>
+		<SubAppEventInputs>
+			<SubAppEvent Name="INIT" Type="Event" Comment="">
+			</SubAppEvent>
+		</SubAppEventInputs>
+	</SubAppInterfaceList>
+	<SubAppNetwork>
+		<FB Name="LED_GREEN_5HZ" Type="QX" Comment="" x="-1466.6666666666667" y="-833.3333333333334">
+			<Parameter Name="QI" Value="TRUE" Comment=""/>
+		</FB>
+		<FB Name="BUTTON_GREEN" Type="IX" Comment="" x="-4533.333333333334" y="-946.6666666666667">
+			<Parameter Name="QI" Value="TRUE" Comment=""/>
+		</FB>
+		<FB Name="BUTTON_YELLOW" Type="IX" Comment="" x="-4500.0" y="220.0">
+			<Parameter Name="QI" Value="TRUE" Comment=""/>
+		</FB>
+		<FB Name="LED_YELLOW_5HZ" Type="QX" Comment="" x="-1433.3333333333335" y="333.33333333333337">
+			<Parameter Name="QI" Value="TRUE" Comment=""/>
+		</FB>
+		<FB Name="BUTTON_RED" Type="IX" Comment="" x="-4506.666666666667" y="1493.3333333333335">
+			<Parameter Name="QI" Value="TRUE" Comment=""/>
+		</FB>
+		<FB Name="LED_RED_5HZ" Type="QX" Comment="" x="-1440.0" y="1606.6666666666667">
+			<Parameter Name="QI" Value="TRUE" Comment=""/>
+		</FB>
+		<FB Name="BUTTON_BLUE" Type="IX" Comment="" x="-4533.333333333334" y="2666.666666666667">
+			<Parameter Name="QI" Value="TRUE" Comment=""/>
+		</FB>
+		<FB Name="LED_BLUE_5HZ" Type="QX" Comment="" x="-1466.6666666666667" y="2780.0">
+			<Parameter Name="QI" Value="TRUE" Comment=""/>
+		</FB>
+		<EventConnections>
+			<Connection Source="INIT" Destination="BUTTON_GREEN.INIT" Comment="" dx1="1073.3333333333335">
+				<Attribute Name="Visible" Type="STRING" Value="false"/>
+			</Connection>
+			<Connection Source="BUTTON_GREEN.INITO" Destination="LED_GREEN_5HZ.INIT" Comment="" dx1="1200.0"/>
+			<Connection Source="BUTTON_GREEN.IND" Destination="LED_GREEN_5HZ.REQ" Comment=""/>
+			<Connection Source="INIT" Destination="BUTTON_YELLOW.INIT" Comment="" dx1="1073.3333333333335" dx2="1073.3333333333335" dy="0.0">
+				<Attribute Name="Visible" Type="STRING" Value="false"/>
+			</Connection>
+			<Connection Source="BUTTON_YELLOW.IND" Destination="LED_YELLOW_5HZ.REQ" Comment=""/>
+			<Connection Source="BUTTON_YELLOW.INITO" Destination="LED_YELLOW_5HZ.INIT" Comment="" dx1="1200.0" dx2="1200.0" dy="0.0"/>
+			<Connection Source="INIT" Destination="BUTTON_RED.INIT" Comment="" dx1="1073.3333333333335" dx2="1073.3333333333335" dy="0.0">
+				<Attribute Name="Visible" Type="STRING" Value="false"/>
+			</Connection>
+			<Connection Source="BUTTON_RED.IND" Destination="LED_RED_5HZ.REQ" Comment=""/>
+			<Connection Source="BUTTON_RED.INITO" Destination="LED_RED_5HZ.INIT" Comment="" dx1="1200.0" dx2="1200.0" dy="0.0"/>
+			<Connection Source="INIT" Destination="BUTTON_BLUE.INIT" Comment="" dx1="1066.6666666666667">
+				<Attribute Name="Visible" Type="STRING" Value="false"/>
+			</Connection>
+			<Connection Source="BUTTON_BLUE.IND" Destination="LED_BLUE_5HZ.REQ" Comment=""/>
+			<Connection Source="BUTTON_BLUE.INITO" Destination="LED_BLUE_5HZ.INIT" Comment="" dx1="1193.3333333333335"/>
+		</EventConnections>
+		<DataConnections>
+			<Connection Source="BUTTON_GREEN.IN" Destination="LED_GREEN_5HZ.OUT" Comment=""/>
+			<Connection Source="BUTTON_YELLOW.IN" Destination="LED_YELLOW_5HZ.OUT" Comment=""/>
+			<Connection Source="BUTTON_RED.IN" Destination="LED_RED_5HZ.OUT" Comment=""/>
+			<Connection Source="BUTTON_BLUE.IN" Destination="LED_BLUE_5HZ.OUT" Comment=""/>
+		</DataConnections>
+	</SubAppNetwork>
+</SubAppType>

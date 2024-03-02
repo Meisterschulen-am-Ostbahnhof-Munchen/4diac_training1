@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<SubAppType Name="Uebung_010" Comment="Subapplication Type">
+<SubAppType Name="Uebung_010" Comment="SoftKey_F1 auf DigitalOutput_Q1">
 	<Identification Standard="61499-2">
 	</Identification>
 	<VersionInfo Version="1.0" Author="franz" Date="2023-10-23">
@@ -8,7 +8,7 @@
 	</CompilerInfo>
 	<SubAppInterfaceList>
 		<SubAppEventInputs>
-			<SubAppEvent Name="COLD" Type="Event" Comment="">
+			<SubAppEvent Name="INIT" Type="Event" Comment="">
 			</SubAppEvent>
 		</SubAppEventInputs>
 	</SubAppInterfaceList>
@@ -20,14 +20,14 @@
 			<Parameter Name="QI" Value="TRUE" Comment=""/>
 		</FB>
 		<EventConnections>
-			<Connection Source="COLD" Destination="SoftKey_F1.INIT" Comment="" dx1="1073.3333333333335">
+			<Connection Source="INIT" Destination="SoftKey_F1.INIT" Comment="" dx1="1073.3333333333335">
 				<Attribute Name="Visible" Type="STRING" Value="false"/>
 			</Connection>
 			<Connection Source="SoftKey_F1.INITO" Destination="DigitalOutput_Q1.INIT" Comment="" dx1="1200.0"/>
-			<Connection Source="SoftKey_F1.IND" Destination="DigitalOutput_Q1.REQ" Comment=""/>
+			<Connection Source="SoftKey_F1.IND" Destination="DigitalOutput_Q1.REQ" Comment="" dx1="1200.0"/>
 		</EventConnections>
 		<DataConnections>
-			<Connection Source="SoftKey_F1.IN" Destination="DigitalOutput_Q1.OUT" Comment=""/>
+			<Connection Source="SoftKey_F1.IN" Destination="DigitalOutput_Q1.OUT" Comment="" dx1="1200.0"/>
 		</DataConnections>
 	</SubAppNetwork>
 </SubAppType>
