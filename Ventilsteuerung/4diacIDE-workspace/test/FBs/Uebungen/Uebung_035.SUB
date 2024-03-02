@@ -30,15 +30,12 @@
 			</Connection>
 			<Connection Source="DigitalInput_I1.INITO" Destination="DigitalOutput_Q1.INIT" Comment=""/>
 			<Connection Source="DigitalInput_I1.IND" Destination="DigitalOutput_Q1.REQ" Comment="" dx1="80.0"/>
-			<Connection Source="INIT" Destination="sequence_04.INIT" Comment="" dx1="1346.6666666666667">
-				<Attribute Name="Visible" Type="STRING" Value="false"/>
-			</Connection>
 		</EventConnections>
 		<DataConnections>
 			<Connection Source="DigitalInput_I1.IN" Destination="DigitalOutput_Q1.OUT" Comment="" dx1="80.0"/>
 		</DataConnections>
 		<AdapterConnections>
-			<Connection Source="sequence_04.timeOut" Destination="E_TimeOut.TimeOutSocket" Comment=""/>
+			<Connection Source="sequence_04.timeOut" Destination="E_TimeOut.TimeOutSocket" Comment="" dx1="413.33333333333337"/>
 		</AdapterConnections>
 	</SubAppNetwork>
 </SubAppType>
