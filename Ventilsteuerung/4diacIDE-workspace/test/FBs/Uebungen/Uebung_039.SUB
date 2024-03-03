@@ -81,15 +81,15 @@
 				<Attribute Name="Visible" Type="STRING" Value="false"/>
 			</Connection>
 			<Connection Source="F_SINT_TO_UINT.CNF" Destination="Q_NumericValue.REQ" Comment="" dx1="233.33333333333334"/>
+			<Connection Source="DigitalInput_I1_CLK.IND" Destination="sequence_04.S1_S2" Comment="" dx1="433.33333333333337" dx2="433.33333333333337" dy="0.0"/>
+			<Connection Source="DigitalInput_I2_CLK.IND" Destination="sequence_04.S2_S3" Comment="" dx1="306.6666666666667" dx2="306.6666666666667" dy="0.0"/>
+			<Connection Source="DigitalInput_I3_CLK.IND" Destination="sequence_04.S4_S5" Comment=""/>
+			<Connection Source="DigitalInput_I4_CLK.IND" Destination="sequence_04.S5_START" Comment="" dx1="446.6666666666667" dx2="446.6666666666667" dy="0.0"/>
 			<Connection Source="sequence_04.CNF" Destination="F_SINT_TO_UINT.REQ" Comment="" dx1="393.33333333333337" dx2="393.33333333333337" dy="-13.333333333333334"/>
 			<Connection Source="sequence_04.EO_S1" Destination="DigitalOutput_Q1.REQ" Comment="" dx1="186.66666666666669" dx2="186.66666666666669" dy="0.0"/>
 			<Connection Source="sequence_04.EO_S2" Destination="DigitalOutput_Q2.REQ" Comment="" dx1="253.33333333333334" dx2="253.33333333333334" dy="0.0"/>
 			<Connection Source="sequence_04.EO_S3" Destination="DigitalOutput_Q3.REQ" Comment="" dx1="320.0" dx2="320.0" dy="0.0"/>
 			<Connection Source="sequence_04.EO_S4" Destination="DigitalOutput_Q4.REQ" Comment="" dx1="393.33333333333337" dx2="393.33333333333337" dy="0.0"/>
-			<Connection Source="DigitalInput_I4_CLK.IND" Destination="sequence_04.S5_START" Comment="" dx1="446.6666666666667" dx2="446.6666666666667" dy="0.0"/>
-			<Connection Source="DigitalInput_I3_CLK.IND" Destination="sequence_04.S4_S5" Comment=""/>
-			<Connection Source="DigitalInput_I2_CLK.IND" Destination="sequence_04.S2_S3" Comment="" dx1="306.6666666666667" dx2="453.33333333333337" dy="0.0"/>
-			<Connection Source="DigitalInput_I1_CLK.IND" Destination="sequence_04.S1_S2" Comment="" dx1="433.33333333333337" dx2="433.33333333333337" dy="0.0"/>
 		</EventConnections>
 		<DataConnections>
 			<Connection Source="F_SINT_TO_UINT.OUT" Destination="Q_NumericValue.u32NewValue" Comment="" dx1="233.33333333333334"/>
@@ -100,7 +100,7 @@
 			<Connection Source="sequence_04.DO_S4" Destination="DigitalOutput_Q4.OUT" Comment="" dx1="386.6666666666667" dx2="386.6666666666667" dy="0.0"/>
 		</DataConnections>
 		<AdapterConnections>
-			<Connection Source="sequence_04.timeOut" Destination="E_TimeOut.TimeOutSocket" Comment="" dx1="406.6666666666667"/>
+			<Connection Source="sequence_04.timeOut" Destination="E_TimeOut.TimeOutSocket" Comment="" dx1="406.6666666666667" dx2="406.6666666666667" dy="0.0"/>
 		</AdapterConnections>
 	</SubAppNetwork>
 </SubAppType>
