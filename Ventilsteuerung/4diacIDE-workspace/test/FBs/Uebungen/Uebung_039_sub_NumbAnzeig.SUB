@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SubAppType Name="Uebung_039_sub_NumbAnzeig" Comment="Subapplication Type">
+	<Identification Standard="61499-2">
+	</Identification>
+	<VersionInfo Version="1.0" Author="franz" Date="2024-03-03">
+	</VersionInfo>
+	<CompilerInfo>
+	</CompilerInfo>
+	<SubAppInterfaceList>
+		<SubAppEventInputs>
+			<SubAppEvent Name="CNF" Type="Event" Comment="">
+			</SubAppEvent>
+			<SubAppEvent Name="INIT" Type="Event" Comment="">
+			</SubAppEvent>
+		</SubAppEventInputs>
+		<InputVars>
+			<VarDeclaration Name="STATE_NR" Type="SINT" Comment=""/>
+		</InputVars>
+	</SubAppInterfaceList>
+	<SubAppNetwork>
+		<FB Name="F_SINT_TO_UINT" Type="F_SINT_TO_UINT" Comment="" x="0.0" y="340.0">
+		</FB>
+		<FB Name="Q_NumericValue" Type="Q_NumericValue" Comment="" x="2133.3333333333335" y="0.0">
+			<Parameter Name="u16ObjId" Value="OutputNumber_N1" Comment=""/>
+		</FB>
+		<EventConnections>
+			<Connection Source="F_SINT_TO_UINT.CNF" Destination="Q_NumericValue.REQ" Comment="" dx1="233.33333333333334"/>
+			<Connection Source="CNF" Destination="F_SINT_TO_UINT.REQ" Comment=""/>
+			<Connection Source="INIT" Destination="Q_NumericValue.INIT" Comment=""/>
+		</EventConnections>
+		<DataConnections>
+			<Connection Source="F_SINT_TO_UINT.OUT" Destination="Q_NumericValue.u32NewValue" Comment="" dx1="233.33333333333334"/>
+			<Connection Source="STATE_NR" Destination="F_SINT_TO_UINT.IN" Comment=""/>
+		</DataConnections>
+	</SubAppNetwork>
+</SubAppType>
