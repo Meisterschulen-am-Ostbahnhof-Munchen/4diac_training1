@@ -97,9 +97,9 @@
 			<Connection Source="INIT" Destination="Q_NumericValue.INIT" Comment="" dx1="4666.666666666667">
 				<Attribute Name="Visible" Type="STRING" Value="false"/>
 			</Connection>
-			<Connection Source="DigitalInput_I4_CLK.IND" Destination="loop.RESET" Comment="" dx1="5793.333333333334"/>
+			<Connection Source="DigitalInput_I4_CLK.IND" Destination="loop.RESET" Comment="" dx1="5146.666666666667"/>
 			<Connection Source="loop.CNF" Destination="F_SINT_TO_UINT.REQ" Comment="" dx1="3060.0"/>
-			<Connection Source="loop.EO_S1" Destination="DigitalOutput_Q1.REQ" Comment="" dx1="73.33333333333334"/>
+			<Connection Source="loop.EO_S1" Destination="DigitalOutput_Q1.REQ" Comment="" dx1="600.0"/>
 			<Connection Source="loop.EO_S2" Destination="DigitalOutput_Q2.REQ" Comment="" dx1="760.0"/>
 			<Connection Source="loop.EO_S3" Destination="DigitalOutput_Q3.REQ" Comment="" dx1="660.0"/>
 			<Connection Source="loop.EO_S4" Destination="DigitalOutput_Q4.REQ" Comment="" dx1="660.0"/>
@@ -113,8 +113,7 @@
 			</Connection>
 			<Connection Source="DigitalInput_I2_CLK.IND" Destination="E_CTU_0.CU" Comment="" dx1="340.0"/>
 			<Connection Source="E_CTU_0.CUO" Destination="F_SUB_0.REQ" Comment=""/>
-			<Connection Source="DigitalInput_I4_CLK.IND" Destination="E_CTU_0.R" Comment="" dx1="406.6666666666667"/>
-			<Connection Source="loop.EO_S1" Destination="E_CTU_0.R" Comment="" dx1="73.33333333333334" dx2="66.66666666666667" dy="-366.6666666666667"/>
+			<Connection Source="DigitalInput_I4_CLK.IND" Destination="E_CTU_0.R" Comment="" dx1="206.66666666666669"/>
 			<Connection Source="F_SUB_0.CNF" Destination="E_DEMUX_0.EI" Comment=""/>
 			<Connection Source="E_DEMUX_0.EO0" Destination="loop.S1_S2" Comment="" dx1="846.6666666666667"/>
 			<Connection Source="E_DEMUX_0.EO1" Destination="loop.S2_S3" Comment="" dx1="846.6666666666667"/>
@@ -124,6 +123,7 @@
 			<Connection Source="E_DEMUX_0.EO5" Destination="loop.S6_S7" Comment="" dx1="846.6666666666667"/>
 			<Connection Source="E_DEMUX_0.EO6" Destination="loop.S7_S8" Comment="" dx1="846.6666666666667"/>
 			<Connection Source="E_DEMUX_0.EO7" Destination="loop.S8_S1" Comment="" dx1="846.6666666666667"/>
+			<Connection Source="E_DEMUX_0.EO7" Destination="E_CTU_0.R" Comment="" dx1="353.33333333333337" dx2="66.66666666666667" dy="460.0"/>
 		</EventConnections>
 		<DataConnections>
 			<Connection Source="F_SINT_TO_UINT.OUT" Destination="Q_NumericValue.u32NewValue" Comment="" dx1="286.6666666666667"/>
