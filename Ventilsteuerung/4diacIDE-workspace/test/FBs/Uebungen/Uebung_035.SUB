@@ -17,12 +17,6 @@
 		<FB Name="DigitalOutput_Q1" Type="QX" Comment="" x="-7840.0" y="-986.6666666666667">
 			<Parameter Name="QI" Value="TRUE" Comment=""/>
 		</FB>
-		<FB Name="sequence_04" Type="sequence_04" Comment="" x="-9673.333333333334" y="1713.3333333333335">
-			<Parameter Name="DT_S1_S2" Value="T#2s" Comment=""/>
-			<Parameter Name="DT_S2_S3" Value="T#2s" Comment=""/>
-			<Parameter Name="DT_S3_S4" Value="T#2s" Comment=""/>
-			<Parameter Name="DT_S4_START" Value="T#2s" Comment=""/>
-		</FB>
 		<FB Name="E_TimeOut" Type="E_TimeOut" Comment="" x="-7840.0" y="2933.3333333333335">
 		</FB>
 		<FB Name="DigitalOutput_Q2" Type="QX" Comment="" x="-7840.0" y="-6.666666666666667">
@@ -51,11 +45,13 @@
 		</FB>
 		<FB Name="F_SINT_TO_UINT" Type="F_SINT_TO_UINT" Comment="" x="-6400.0" y="2206.666666666667">
 		</FB>
+		<FB Name="sequence_04" Type="sequence_ET_04" Comment="" x="-9673.333333333334" y="1713.3333333333335">
+			<Parameter Name="DT_S1_S2" Value="T#2s" Comment=""/>
+			<Parameter Name="DT_S2_S3" Value="T#2s" Comment=""/>
+			<Parameter Name="DT_S3_S4" Value="T#2s" Comment=""/>
+			<Parameter Name="DT_S4_START" Value="T#2s" Comment=""/>
+		</FB>
 		<EventConnections>
-			<Connection Source="sequence_04.EO_S1" Destination="DigitalOutput_Q1.REQ" Comment="" dx1="186.66666666666669"/>
-			<Connection Source="sequence_04.EO_S2" Destination="DigitalOutput_Q2.REQ" Comment="" dx1="253.33333333333334"/>
-			<Connection Source="sequence_04.EO_S3" Destination="DigitalOutput_Q3.REQ" Comment="" dx1="320.0"/>
-			<Connection Source="sequence_04.EO_S4" Destination="DigitalOutput_Q4.REQ" Comment="" dx1="393.33333333333337"/>
 			<Connection Source="INIT" Destination="DigitalOutput_Q4.INIT" Comment="" dx1="2613.3333333333335">
 				<Attribute Name="Visible" Type="STRING" Value="false"/>
 			</Connection>
@@ -71,7 +67,6 @@
 			<Connection Source="INIT" Destination="DigitalInput_I1_CLK.INIT" Comment="" dx1="453.33333333333337">
 				<Attribute Name="Visible" Type="STRING" Value="false"/>
 			</Connection>
-			<Connection Source="DigitalInput_I1_CLK.IND" Destination="sequence_04.START_S1" Comment="" dx1="406.6666666666667"/>
 			<Connection Source="INIT" Destination="DigitalInput_I2_CLK.INIT" Comment="" dx1="273.33333333333337">
 				<Attribute Name="Visible" Type="STRING" Value="false"/>
 			</Connection>
@@ -81,22 +76,27 @@
 			<Connection Source="INIT" Destination="DigitalInput_I4_CLK.INIT" Comment="" dx1="1453.3333333333335">
 				<Attribute Name="Visible" Type="STRING" Value="false"/>
 			</Connection>
-			<Connection Source="DigitalInput_I4_CLK.IND" Destination="sequence_04.RESET" Comment="" dx1="253.33333333333334"/>
-			<Connection Source="DigitalInput_I2_CLK.IND" Destination="sequence_04.S2_S3" Comment="" dx1="373.33333333333337"/>
-			<Connection Source="DigitalInput_I3_CLK.IND" Destination="sequence_04.S4_START" Comment=""/>
 			<Connection Source="INIT" Destination="Q_NumericValue.INIT" Comment="" dx1="3466.666666666667">
 				<Attribute Name="Visible" Type="STRING" Value="false"/>
 			</Connection>
 			<Connection Source="F_SINT_TO_UINT.CNF" Destination="Q_NumericValue.REQ" Comment="" dx1="233.33333333333334"/>
-			<Connection Source="sequence_04.CNF" Destination="F_SINT_TO_UINT.REQ" Comment="" dx1="393.33333333333337" dx2="326.6666666666667" dy="-13.333333333333334"/>
+			<Connection Source="DigitalInput_I1_CLK.IND" Destination="sequence_04.START_S1" Comment="" dx1="406.6666666666667" dx2="406.6666666666667" dy="0.0"/>
+			<Connection Source="DigitalInput_I2_CLK.IND" Destination="sequence_04.S2_S3" Comment="" dx1="373.33333333333337" dx2="373.33333333333337" dy="0.0"/>
+			<Connection Source="DigitalInput_I3_CLK.IND" Destination="sequence_04.S4_START" Comment=""/>
+			<Connection Source="DigitalInput_I4_CLK.IND" Destination="sequence_04.RESET" Comment="" dx1="253.33333333333334" dx2="253.33333333333334" dy="0.0"/>
+			<Connection Source="sequence_04.CNF" Destination="F_SINT_TO_UINT.REQ" Comment="" dx1="393.33333333333337" dx2="393.33333333333337" dy="-13.333333333333334"/>
+			<Connection Source="sequence_04.EO_S1" Destination="DigitalOutput_Q1.REQ" Comment="" dx1="186.66666666666669" dx2="186.66666666666669" dy="0.0"/>
+			<Connection Source="sequence_04.EO_S2" Destination="DigitalOutput_Q2.REQ" Comment="" dx1="253.33333333333334" dx2="253.33333333333334" dy="0.0"/>
+			<Connection Source="sequence_04.EO_S3" Destination="DigitalOutput_Q3.REQ" Comment="" dx1="320.0" dx2="320.0" dy="0.0"/>
+			<Connection Source="sequence_04.EO_S4" Destination="DigitalOutput_Q4.REQ" Comment="" dx1="393.33333333333337" dx2="393.33333333333337" dy="0.0"/>
 		</EventConnections>
 		<DataConnections>
-			<Connection Source="sequence_04.DO_S4" Destination="DigitalOutput_Q4.OUT" Comment="" dx1="386.6666666666667"/>
-			<Connection Source="sequence_04.DO_S3" Destination="DigitalOutput_Q3.OUT" Comment="" dx1="353.33333333333337"/>
-			<Connection Source="sequence_04.DO_S2" Destination="DigitalOutput_Q2.OUT" Comment="" dx1="286.6666666666667"/>
-			<Connection Source="sequence_04.DO_S1" Destination="DigitalOutput_Q1.OUT" Comment="" dx1="220.0"/>
-			<Connection Source="sequence_04.STATE_NR" Destination="F_SINT_TO_UINT.IN" Comment="" dx1="186.66666666666669" dx2="326.6666666666667" dy="173.33333333333334"/>
 			<Connection Source="F_SINT_TO_UINT.OUT" Destination="Q_NumericValue.u32NewValue" Comment="" dx1="233.33333333333334"/>
+			<Connection Source="sequence_04.STATE_NR" Destination="F_SINT_TO_UINT.IN" Comment="" dx1="186.66666666666669" dx2="186.66666666666669" dy="173.33333333333334"/>
+			<Connection Source="sequence_04.DO_S1" Destination="DigitalOutput_Q1.OUT" Comment="" dx1="220.0" dx2="220.0" dy="0.0"/>
+			<Connection Source="sequence_04.DO_S2" Destination="DigitalOutput_Q2.OUT" Comment="" dx1="286.6666666666667" dx2="286.6666666666667" dy="0.0"/>
+			<Connection Source="sequence_04.DO_S3" Destination="DigitalOutput_Q3.OUT" Comment="" dx1="353.33333333333337" dx2="353.33333333333337" dy="0.0"/>
+			<Connection Source="sequence_04.DO_S4" Destination="DigitalOutput_Q4.OUT" Comment="" dx1="386.6666666666667" dx2="386.6666666666667" dy="0.0"/>
 		</DataConnections>
 		<AdapterConnections>
 			<Connection Source="sequence_04.timeOut" Destination="E_TimeOut.TimeOutSocket" Comment=""/>
