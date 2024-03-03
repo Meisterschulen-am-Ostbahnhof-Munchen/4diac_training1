@@ -26,10 +26,10 @@
 		<FB Name="DigitalOutput_Q4" Type="QX" Comment="" x="-6666.666666666667" y="800.0">
 			<Parameter Name="QI" Value="TRUE" Comment=""/>
 		</FB>
-		<FB Name="DigitalInput_I1_CLK" Type="IE" Comment="" x="-11373.333333333334" y="-826.6666666666667">
+		<FB Name="DigitalInput_I1_CLK" Type="IE" Comment="" x="-14666.666666666668" y="-3466.666666666667">
 			<Parameter Name="QI" Value="TRUE" Comment=""/>
 		</FB>
-		<FB Name="DigitalInput_I4_CLK" Type="IE" Comment="" x="-11373.333333333334" y="186.66666666666669">
+		<FB Name="DigitalInput_I4_CLK" Type="IE" Comment="" x="-14666.666666666668" y="-266.6666666666667">
 			<Parameter Name="QI" Value="TRUE" Comment=""/>
 		</FB>
 		<FB Name="DigitalOutput_Q5" Type="QX" Comment="" x="-6666.666666666667" y="1866.6666666666667">
@@ -50,6 +50,22 @@
 		<FB Name="F_SINT_TO_UINT" Type="F_SINT_TO_UINT" Comment="" x="-4906.666666666667" y="-1820.0">
 		</FB>
 		<FB Name="loop" Type="sequence_E_08_loop" Comment="" x="-9613.333333333334" y="-600.0">
+		</FB>
+		<FB Name="E_CTU_0" Type="E_CTU" Comment="" x="-13066.666666666668" y="-3466.666666666667">
+			<Parameter Name="PV" Value="0" Comment=""/>
+		</FB>
+		<FB Name="E_DEMUX" Type="E_DEMUX" Comment="" x="-12000.0" y="-3466.666666666667">
+		</FB>
+		<FB Name="DigitalInput_I2_CLK" Type="IE" Comment="" x="-14666.666666666668" y="-2400.0">
+			<Parameter Name="QI" Value="TRUE" Comment=""/>
+		</FB>
+		<FB Name="E_CTU_1" Type="E_CTU" Comment="" x="-12800.0" y="-1333.3333333333335">
+			<Parameter Name="PV" Value="0" Comment=""/>
+		</FB>
+		<FB Name="E_DEMUX_1" Type="E_DEMUX" Comment="" x="-11733.333333333334" y="-1333.3333333333335">
+		</FB>
+		<FB Name="DigitalInput_I3_CLK" Type="IE" Comment="" x="-14666.666666666668" y="-1333.3333333333335">
+			<Parameter Name="QI" Value="TRUE" Comment=""/>
 		</FB>
 		<EventConnections>
 			<Connection Source="INIT" Destination="DigitalOutput_Q4.INIT" Comment="" dx1="2613.3333333333335">
@@ -86,37 +102,51 @@
 			<Connection Source="INIT" Destination="Q_NumericValue.INIT" Comment="" dx1="4666.666666666667">
 				<Attribute Name="Visible" Type="STRING" Value="false"/>
 			</Connection>
-			<Connection Source="DigitalInput_I1_CLK.IND" Destination="loop.START_S1" Comment=""/>
-			<Connection Source="DigitalInput_I4_CLK.IND" Destination="loop.RESET" Comment="" dx1="420.0" dx2="420.0" dy="0.0"/>
-			<Connection Source="loop.CNF" Destination="F_SINT_TO_UINT.REQ" Comment="" dx1="3153.3333333333335" dx2="3153.3333333333335" dy="0.0"/>
-			<Connection Source="loop.EO_S1" Destination="DigitalOutput_Q1.REQ" Comment="" dx1="820.0" dx2="820.0" dy="0.0"/>
-			<Connection Source="loop.EO_S2" Destination="DigitalOutput_Q2.REQ" Comment="" dx1="986.6666666666667" dx2="986.6666666666667" dy="0.0"/>
-			<Connection Source="loop.EO_S3" Destination="DigitalOutput_Q3.REQ" Comment="" dx1="886.6666666666667" dx2="886.6666666666667" dy="0.0"/>
-			<Connection Source="loop.EO_S4" Destination="DigitalOutput_Q4.REQ" Comment="" dx1="886.6666666666667" dx2="886.6666666666667" dy="0.0"/>
-			<Connection Source="loop.EO_S5" Destination="DigitalOutput_Q5.REQ" Comment="" dx1="853.3333333333334" dx2="853.3333333333334" dy="0.0"/>
-			<Connection Source="loop.EO_S6" Destination="DigitalOutput_Q6.REQ" Comment="" dx1="753.3333333333334" dx2="753.3333333333334" dy="0.0"/>
-			<Connection Source="loop.EO_S7" Destination="DigitalOutput_Q7.REQ" Comment="" dx1="686.6666666666667" dx2="686.6666666666667" dy="0.0"/>
-			<Connection Source="loop.EO_S8" Destination="DigitalOutput_Q8.REQ" Comment="" dx1="620.0" dx2="620.0" dy="0.0"/>
-			<Connection Source="DigitalInput_I1_CLK.IND" Destination="loop.S1_S2" Comment="" dx1="486.6666666666667"/>
-			<Connection Source="DigitalInput_I1_CLK.IND" Destination="loop.S2_S3" Comment="" dx1="486.6666666666667"/>
-			<Connection Source="DigitalInput_I1_CLK.IND" Destination="loop.S3_S4" Comment="" dx1="486.6666666666667"/>
-			<Connection Source="DigitalInput_I1_CLK.IND" Destination="loop.S4_S5" Comment="" dx1="486.6666666666667"/>
-			<Connection Source="DigitalInput_I1_CLK.IND" Destination="loop.S5_S6" Comment="" dx1="486.6666666666667"/>
-			<Connection Source="DigitalInput_I1_CLK.IND" Destination="loop.S6_S7" Comment="" dx1="486.6666666666667"/>
-			<Connection Source="DigitalInput_I1_CLK.IND" Destination="loop.S7_S8" Comment="" dx1="486.6666666666667"/>
-			<Connection Source="DigitalInput_I1_CLK.IND" Destination="loop.S8_S1" Comment="" dx1="486.6666666666667"/>
+			<Connection Source="DigitalInput_I4_CLK.IND" Destination="loop.RESET" Comment="" dx1="2066.666666666667"/>
+			<Connection Source="loop.CNF" Destination="F_SINT_TO_UINT.REQ" Comment="" dx1="3060.0"/>
+			<Connection Source="loop.EO_S1" Destination="DigitalOutput_Q1.REQ" Comment="" dx1="600.0"/>
+			<Connection Source="loop.EO_S2" Destination="DigitalOutput_Q2.REQ" Comment="" dx1="760.0"/>
+			<Connection Source="loop.EO_S3" Destination="DigitalOutput_Q3.REQ" Comment="" dx1="660.0"/>
+			<Connection Source="loop.EO_S4" Destination="DigitalOutput_Q4.REQ" Comment="" dx1="660.0"/>
+			<Connection Source="loop.EO_S5" Destination="DigitalOutput_Q5.REQ" Comment="" dx1="626.6666666666667"/>
+			<Connection Source="loop.EO_S6" Destination="DigitalOutput_Q6.REQ" Comment="" dx1="560.0"/>
+			<Connection Source="loop.EO_S7" Destination="DigitalOutput_Q7.REQ" Comment="" dx1="493.33333333333337"/>
+			<Connection Source="loop.EO_S8" Destination="DigitalOutput_Q8.REQ" Comment="" dx1="426.6666666666667"/>
+			<Connection Source="DigitalInput_I1_CLK.IND" Destination="loop.START_S1" Comment="" dx1="186.66666666666669"/>
+			<Connection Source="E_DEMUX.EO0" Destination="loop.S1_S2" Comment="" dx1="1120.0"/>
+			<Connection Source="E_DEMUX.EO1" Destination="loop.S2_S3" Comment="" dx1="1086.6666666666667"/>
+			<Connection Source="E_DEMUX.EO2" Destination="loop.S3_S4" Comment="" dx1="1053.3333333333335"/>
+			<Connection Source="E_DEMUX.EO3" Destination="loop.S4_S5" Comment="" dx1="1020.0"/>
+			<Connection Source="E_CTU_0.CUO" Destination="E_DEMUX.EI" Comment=""/>
+			<Connection Source="INIT" Destination="DigitalInput_I2_CLK.INIT" Comment="" dx1="1513.3333333333335">
+				<Attribute Name="Visible" Type="STRING" Value="false"/>
+			</Connection>
+			<Connection Source="DigitalInput_I2_CLK.IND" Destination="E_CTU_0.CU" Comment="" dx1="220.0"/>
+			<Connection Source="DigitalInput_I4_CLK.IND" Destination="E_CTU_0.R" Comment="" dx1="306.6666666666667"/>
+			<Connection Source="DigitalInput_I3_CLK.IND" Destination="E_CTU_1.CU" Comment="" dx1="273.33333333333337"/>
+			<Connection Source="E_CTU_1.CUO" Destination="E_DEMUX_1.EI" Comment=""/>
+			<Connection Source="INIT" Destination="DigitalInput_I3_CLK.INIT" Comment="" dx1="1273.3333333333335">
+				<Attribute Name="Visible" Type="STRING" Value="false"/>
+			</Connection>
+			<Connection Source="DigitalInput_I4_CLK.IND" Destination="E_CTU_1.R" Comment="" dx1="306.6666666666667"/>
+			<Connection Source="E_DEMUX_1.EO3" Destination="loop.S8_S1" Comment="" dx1="620.0"/>
+			<Connection Source="E_DEMUX_1.EO2" Destination="loop.S7_S8" Comment="" dx1="653.3333333333334"/>
+			<Connection Source="E_DEMUX_1.EO1" Destination="loop.S6_S7" Comment="" dx1="686.6666666666667"/>
+			<Connection Source="E_DEMUX_1.EO0" Destination="loop.S5_S6" Comment="" dx1="720.0"/>
 		</EventConnections>
 		<DataConnections>
 			<Connection Source="F_SINT_TO_UINT.OUT" Destination="Q_NumericValue.u32NewValue" Comment="" dx1="286.6666666666667"/>
-			<Connection Source="loop.STATE_NR" Destination="F_SINT_TO_UINT.IN" Comment="" dx1="953.3333333333334" dx2="953.3333333333334" dy="0.0"/>
-			<Connection Source="loop.DO_S1" Destination="DigitalOutput_Q1.OUT" Comment="" dx1="920.0" dx2="920.0" dy="0.0"/>
-			<Connection Source="loop.DO_S2" Destination="DigitalOutput_Q2.OUT" Comment="" dx1="1020.0" dx2="1020.0" dy="0.0"/>
-			<Connection Source="loop.DO_S3" Destination="DigitalOutput_Q3.OUT" Comment="" dx1="1053.3333333333335" dx2="1053.3333333333335" dy="0.0"/>
-			<Connection Source="loop.DO_S4" Destination="DigitalOutput_Q4.OUT" Comment="" dx1="886.6666666666667" dx2="886.6666666666667" dy="0.0"/>
-			<Connection Source="loop.DO_S5" Destination="DigitalOutput_Q5.OUT" Comment="" dx1="820.0" dx2="820.0" dy="0.0"/>
-			<Connection Source="loop.DO_S6" Destination="DigitalOutput_Q6.OUT" Comment="" dx1="720.0" dx2="720.0" dy="0.0"/>
-			<Connection Source="loop.DO_S7" Destination="DigitalOutput_Q7.OUT" Comment="" dx1="653.3333333333334" dx2="653.3333333333334" dy="0.0"/>
-			<Connection Source="loop.DO_S8" Destination="DigitalOutput_Q8.OUT" Comment="" dx1="586.6666666666667" dx2="586.6666666666667" dy="0.0"/>
+			<Connection Source="loop.STATE_NR" Destination="F_SINT_TO_UINT.IN" Comment="" dx1="726.6666666666667"/>
+			<Connection Source="loop.DO_S1" Destination="DigitalOutput_Q1.OUT" Comment="" dx1="693.3333333333334"/>
+			<Connection Source="loop.DO_S2" Destination="DigitalOutput_Q2.OUT" Comment="" dx1="793.3333333333334"/>
+			<Connection Source="loop.DO_S3" Destination="DigitalOutput_Q3.OUT" Comment="" dx1="826.6666666666667"/>
+			<Connection Source="loop.DO_S4" Destination="DigitalOutput_Q4.OUT" Comment="" dx1="660.0"/>
+			<Connection Source="loop.DO_S5" Destination="DigitalOutput_Q5.OUT" Comment="" dx1="593.3333333333334"/>
+			<Connection Source="loop.DO_S6" Destination="DigitalOutput_Q6.OUT" Comment="" dx1="526.6666666666667"/>
+			<Connection Source="loop.DO_S7" Destination="DigitalOutput_Q7.OUT" Comment="" dx1="460.0"/>
+			<Connection Source="loop.DO_S8" Destination="DigitalOutput_Q8.OUT" Comment="" dx1="393.33333333333337"/>
+			<Connection Source="E_CTU_0.CV" Destination="E_DEMUX.K" Comment="" dx1="260.0"/>
+			<Connection Source="E_CTU_1.CV" Destination="E_DEMUX_1.K" Comment="" dx1="260.0"/>
 		</DataConnections>
 	</SubAppNetwork>
 </SubAppType>
