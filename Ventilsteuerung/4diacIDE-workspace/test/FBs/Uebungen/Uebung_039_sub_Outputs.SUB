@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SubAppType Name="Uebung_039_sub_Outputs" Comment="Subapplication Type">
+	<Identification Standard="61499-2">
+	</Identification>
+	<VersionInfo Version="1.0" Author="franz" Date="2024-03-03">
+	</VersionInfo>
+	<CompilerInfo>
+	</CompilerInfo>
+	<SubAppInterfaceList>
+		<SubAppEventInputs>
+			<SubAppEvent Name="INIT" Type="Event" Comment="">
+				<Attribute Name="YPOSITION" Value="46"/>
+			</SubAppEvent>
+			<SubAppEvent Name="REQ" Type="Event" Comment="Service Request">
+				<Attribute Name="YPOSITION" Value="132"/>
+			</SubAppEvent>
+		</SubAppEventInputs>
+		<InputVars>
+			<VarDeclaration Name="OUT" Type="BOOL" Comment="Output data to resource">
+				<Attribute Name="YPOSITION" Value="48"/>
+			</VarDeclaration>
+			<VarDeclaration Name="u16ObjId" Type="UINT" Comment="Object ID Softkey/Button" InitialValue="ID_NULL">
+				<Attribute Name="YPOSITION" Value="36"/>
+			</VarDeclaration>
+		</InputVars>
+	</SubAppInterfaceList>
+	<SubAppNetwork>
+		<FB Name="QX" Type="QX" Comment="" x="1813.3333333333335" y="-633.3333333333334">
+			<Parameter Name="QI" Value="TRUE" Comment=""/>
+		</FB>
+		<FB Name="IX" Type="IX" Comment="" x="-706.6666666666667" y="-986.6666666666667">
+			<Parameter Name="QI" Value="TRUE" Comment=""/>
+		</FB>
+		<FB Name="OR_2" Type="OR_2" Comment="" x="526.6666666666667" y="-193.33333333333334">
+		</FB>
+		<SubApp Name="GreenWhiteBackground" Type="GreenWhiteBackground" Comment="" x="3046.666666666667" y="-260.0">
+		</SubApp>
+		<EventConnections>
+			<Connection Source="OR_2.CNF" Destination="QX.REQ" Comment="" dx1="73.33333333333334"/>
+			<Connection Source="INIT" Destination="IX.INIT" Comment="" dx1="313.33333333333337"/>
+			<Connection Source="IX.INITO" Destination="QX.INIT" Comment="" dx1="1086.6666666666667"/>
+			<Connection Source="IX.IND" Destination="OR_2.REQ" Comment="" dx1="140.0"/>
+			<Connection Source="REQ" Destination="OR_2.REQ" Comment="" dx1="933.3333333333334"/>
+			<Connection Source="QX.INITO" Destination="GreenWhiteBackground.INIT" Comment="" dx1="140.0"/>
+			<Connection Source="QX.CNF" Destination="GreenWhiteBackground.REQ" Comment="" dx1="73.33333333333334"/>
+		</EventConnections>
+		<DataConnections>
+			<Connection Source="OUT" Destination="OR_2.IN2" Comment="" dx1="933.3333333333334"/>
+			<Connection Source="IX.IN" Destination="OR_2.IN1" Comment="" dx1="73.33333333333334"/>
+			<Connection Source="OR_2.OUT" Destination="QX.OUT" Comment="" dx1="73.33333333333334"/>
+			<Connection Source="OR_2.OUT" Destination="GreenWhiteBackground.DI1" Comment="" dx1="1026.6666666666667"/>
+			<Connection Source="u16ObjId" Destination="GreenWhiteBackground.u16ObjId" Comment="" dx1="3900.0"/>
+		</DataConnections>
+	</SubAppNetwork>
+</SubAppType>
