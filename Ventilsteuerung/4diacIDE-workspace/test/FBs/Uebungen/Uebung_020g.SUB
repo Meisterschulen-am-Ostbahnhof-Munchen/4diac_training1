@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SubAppType Name="Uebung_020g" Comment="DigitalInput_I1 auf DigitalOutput_Q1; TONOF Ein-/Ausschaltverzögert">
+	<Identification Standard="61499-2">
+	</Identification>
+	<VersionInfo Version="1.0" Author="franz" Date="2023-10-23">
+	</VersionInfo>
+	<CompilerInfo>
+	</CompilerInfo>
+	<SubAppInterfaceList>
+		<SubAppEventInputs>
+			<SubAppEvent Name="INIT" Type="Event" Comment="">
+				<Attribute Name="YPOSITION" Value="0"/>
+			</SubAppEvent>
+		</SubAppEventInputs>
+	</SubAppInterfaceList>
+	<SubAppNetwork>
+		<FB Name="DigitalOutput_Q1" Type="QX" Comment="" x="-5860.0" y="460.0">
+			<Parameter Name="QI" Value="TRUE" Comment=""/>
+		</FB>
+		<FB Name="DigitalInput_I1" Type="IX" Comment="" x="-8706.666666666668" y="346.6666666666667">
+			<Parameter Name="QI" Value="TRUE" Comment=""/>
+		</FB>
+		<FB Name="E_TONOF" Type="E_TONOF" Comment="" x="-7193.333333333334" y="573.3333333333334">
+			<Parameter Name="PT_ON" Value="T#5S" Comment=""/>
+			<Parameter Name="PT_OFF" Value="T#5S" Comment=""/>
+		</FB>
+		<EventConnections>
+			<Connection Source="INIT" Destination="DigitalInput_I1.INIT" Comment="" dx1="200.0">
+				<Attribute Name="Visible" Type="STRING" Value="false"/>
+			</Connection>
+			<Connection Source="INIT" Destination="DigitalOutput_Q1.INIT" Comment="" dx1="3880.0">
+				<Attribute Name="Visible" Type="STRING" Value="false"/>
+			</Connection>
+			<Connection Source="DigitalInput_I1.IND" Destination="E_TONOF.REQ" Comment=""/>
+			<Connection Source="E_TONOF.CNF" Destination="DigitalOutput_Q1.REQ" Comment=""/>
+		</EventConnections>
+		<DataConnections>
+			<Connection Source="DigitalInput_I1.IN" Destination="E_TONOF.IN" Comment="" dx1="80.0" dx2="80.0" dy="0.0"/>
+			<Connection Source="E_TONOF.Q" Destination="DigitalOutput_Q1.OUT" Comment="" dx1="73.33333333333334" dx2="73.33333333333334" dy="0.0"/>
+		</DataConnections>
+	</SubAppNetwork>
+</SubAppType>
