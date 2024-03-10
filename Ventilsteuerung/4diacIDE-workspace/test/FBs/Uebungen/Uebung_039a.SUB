@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <SubAppType Name="Uebung_039a" Comment="Spiegelabfolge V2 mit Schrittkette">
-	<Identification Standard="61499-2" Description="Spiegelabfolge V2 mit Schrittkette &#10;geeignet für hydraulisches Ringsystem 3/2 Wege Ventile  (z.B. Claas)&#10;oder pneumatische 5/2 Wege Ventile &#10;" >
+	<Identification Standard="61499-2" Description="Spiegelabfolge V2 mit Schrittkette  &#10;geeignet für hydraulisches Ringsystem 3/2 Wege Ventile  (z.B. Claas) &#10;oder pneumatische 5/2 Wege Ventile  &#10;" >
 	</Identification>
 	<VersionInfo Version="1.0" Author="franz" Date="2023-10-23">
 	</VersionInfo>
@@ -40,17 +40,11 @@
 		<FB Name="SoftKey_F1_UP" Type="IE" Comment="" x="-14040.0" y="-353.33333333333337">
 			<Parameter Name="QI" Value="TRUE" Comment=""/>
 		</FB>
-		<SubApp Name="Q1" Type="Uebung_039_sub_Outputs" Comment="" x="-8626.666666666668" y="-233.33333333333334">
+		<SubApp Name="Q1" Type="Uebung_039a_sub_Outputs" Comment="" x="-7600.0" y="-266.6666666666667">
 			<Parameter Name="u16ObjId" Value="SoftKey_F8" Comment=""/>
 		</SubApp>
-		<SubApp Name="Q4" Type="Uebung_039_sub_Outputs" Comment="" x="-8626.666666666668" y="2606.666666666667">
-			<Parameter Name="u16ObjId" Value="SoftKey_F3" Comment=""/>
-		</SubApp>
-		<SubApp Name="Q2" Type="Uebung_039_sub_Outputs" Comment="" x="-8626.666666666668" y="713.3333333333334">
+		<SubApp Name="Q2" Type="Uebung_039a_sub_Outputs" Comment="" x="-7600.0" y="666.6666666666667">
 			<Parameter Name="u16ObjId" Value="SoftKey_F2" Comment=""/>
-		</SubApp>
-		<SubApp Name="Q3" Type="Uebung_039_sub_Outputs" Comment="" x="-8626.666666666668" y="1660.0">
-			<Parameter Name="u16ObjId" Value="SoftKey_F9" Comment=""/>
 		</SubApp>
 		<EventConnections>
 			<Connection Source="INIT" Destination="DigitalInput_DOWN_I1.INIT" Comment="" dx1="453.33333333333337">
@@ -77,29 +71,19 @@
 				<Attribute Name="Visible" Value="false"/>
 			</Connection>
 			<Connection Source="SoftKey_F1_UP.IND" Destination="sequence_05.START_S1" Comment=""/>
-			<Connection Source="INIT" Destination="Q1.INIT" Comment="" dx1="3066.666666666667" dx2="3066.666666666667" dy="0.0">
+			<Connection Source="INIT" Destination="Q1.INIT" Comment="" dx1="4866.666666666667">
 				<Attribute Name="Visible" Value="false"/>
 			</Connection>
-			<Connection Source="sequence_05.EO_S1" Destination="Q1.REQ" Comment="" dx1="406.6666666666667"/>
-			<Connection Source="INIT" Destination="Q4.INIT" Comment="" dx1="2613.3333333333335" dx2="2613.3333333333335" dy="0.0">
+			<Connection Source="INIT" Destination="Q2.INIT" Comment="" dx1="4866.666666666667" dx2="4866.666666666667" dy="0.0">
 				<Attribute Name="Visible" Value="false"/>
 			</Connection>
-			<Connection Source="sequence_05.EO_S5" Destination="Q4.REQ" Comment="" dx1="273.33333333333337"/>
-			<Connection Source="INIT" Destination="Q2.INIT" Comment="" dx1="2613.3333333333335" dx2="2613.3333333333335" dy="0.0">
-				<Attribute Name="Visible" Value="false"/>
-			</Connection>
-			<Connection Source="sequence_05.EO_S2" Destination="Q2.REQ" Comment="" dx1="540.0"/>
-			<Connection Source="INIT" Destination="Q3.INIT" Comment="" dx1="2613.3333333333335" dx2="2613.3333333333335" dy="0.0">
-				<Attribute Name="Visible" Value="false"/>
-			</Connection>
-			<Connection Source="sequence_05.EO_S4" Destination="Q3.REQ" Comment="" dx1="406.6666666666667"/>
+			<Connection Source="sequence_05.EO_S1" Destination="Q1.SET" Comment="" dx1="986.6666666666667"/>
+			<Connection Source="sequence_05.EO_S2" Destination="Q2.SET" Comment="" dx1="1053.3333333333335"/>
+			<Connection Source="sequence_05.EO_S4" Destination="Q2.RESET" Comment="" dx1="906.6666666666667"/>
+			<Connection Source="sequence_05.EO_S5" Destination="Q1.RESET" Comment="" dx1="986.6666666666667"/>
 		</EventConnections>
 		<DataConnections>
 			<Connection Source="sequence_05.STATE_NR" Destination="NumbAnzeig.STATE_NR" Comment="" dx1="340.0"/>
-			<Connection Source="sequence_05.DO_S1" Destination="Q1.OUT" Comment="" dx1="473.33333333333337"/>
-			<Connection Source="sequence_05.DO_S5" Destination="Q4.OUT" Comment="" dx1="140.0"/>
-			<Connection Source="sequence_05.DO_S2" Destination="Q2.OUT" Comment="" dx1="540.0"/>
-			<Connection Source="sequence_05.DO_S4" Destination="Q3.OUT" Comment="" dx1="206.66666666666669"/>
 		</DataConnections>
 		<AdapterConnections>
 			<Connection Source="sequence_05.timeOut" Destination="E_TimeOut.TimeOutSocket" Comment="" dx1="73.33333333333334"/>

@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SubAppType Name="Uebung_039a_sub_Outputs" Comment="Subapplication Type">
+	<Identification Standard="61499-2">
+	</Identification>
+	<VersionInfo Version="1.0" Author="franz" Date="2024-03-03">
+	</VersionInfo>
+	<CompilerInfo>
+	</CompilerInfo>
+	<SubAppInterfaceList>
+		<SubAppEventInputs>
+			<SubAppEvent Name="INIT" Type="Event" Comment="">
+				<Attribute Name="YPOSITION" Value="46"/>
+			</SubAppEvent>
+			<SubAppEvent Name="SET" Type="Event" Comment="Set Output">
+				<Attribute Name="YPOSITION" Value="132"/>
+			</SubAppEvent>
+			<SubAppEvent Name="RESET" Type="Event" Comment="Reset Output">
+			</SubAppEvent>
+		</SubAppEventInputs>
+		<InputVars>
+			<VarDeclaration Name="u16ObjId" Type="UINT" Comment="Object ID Softkey/Button" InitialValue="ID_NULL">
+				<Attribute Name="YPOSITION" Value="36"/>
+			</VarDeclaration>
+		</InputVars>
+	</SubAppInterfaceList>
+	<SubAppNetwork>
+		<FB Name="QX" Type="QX" Comment="" x="-853.3333333333334" y="-633.3333333333334">
+			<Parameter Name="QI" Value="TRUE" Comment=""/>
+		</FB>
+		<SubApp Name="GreenWhiteBackground" Type="GreenWhiteBackground" Comment="" x="380.0" y="-260.0">
+		</SubApp>
+		<FB Name="E_SWITCH" Type="E_SWITCH" Comment="" x="-3733.3333333333335" y="-266.6666666666667">
+		</FB>
+		<FB Name="E_SR" Type="E_SR" Comment="" x="-2240.0" y="-266.6666666666667">
+		</FB>
+		<FB Name="IE" Type="IE" Comment="" x="-5200.0" y="-1066.6666666666667">
+			<Parameter Name="QI" Value="TRUE" Comment=""/>
+		</FB>
+		<EventConnections>
+			<Connection Source="QX.INITO" Destination="GreenWhiteBackground.INIT" Comment="" dx1="266.6666666666667"/>
+			<Connection Source="QX.CNF" Destination="GreenWhiteBackground.REQ" Comment="" dx1="233.33333333333334"/>
+			<Connection Source="E_SWITCH.EO0" Destination="E_SR.S" Comment=""/>
+			<Connection Source="E_SWITCH.EO1" Destination="E_SR.R" Comment=""/>
+			<Connection Source="INIT" Destination="IE.INIT" Comment="" dx1="306.6666666666667" dx2="306.6666666666667" dy="0.0"/>
+			<Connection Source="IE.INITO" Destination="QX.INIT" Comment="" dx1="900.0" dx2="900.0" dy="0.0"/>
+			<Connection Source="IE.IND" Destination="E_SWITCH.EI" Comment="" dx1="700.0"/>
+			<Connection Source="E_SR.EO" Destination="QX.REQ" Comment="" dx1="460.0"/>
+			<Connection Source="SET" Destination="E_SR.S" Comment="" dx1="4220.0"/>
+			<Connection Source="RESET" Destination="E_SR.R" Comment="" dx1="4306.666666666667"/>
+		</EventConnections>
+		<DataConnections>
+			<Connection Source="u16ObjId" Destination="GreenWhiteBackground.u16ObjId" Comment="" dx1="6386.666666666667"/>
+			<Connection Source="E_SR.Q" Destination="E_SWITCH.G" Comment="" dx1="233.33333333333334" dx2="293.33333333333337" dy="346.6666666666667"/>
+			<Connection Source="E_SR.Q" Destination="QX.OUT" Comment="" dx1="460.0"/>
+			<Connection Source="E_SR.Q" Destination="GreenWhiteBackground.DI1" Comment="" dx1="1073.3333333333335"/>
+		</DataConnections>
+	</SubAppNetwork>
+</SubAppType>

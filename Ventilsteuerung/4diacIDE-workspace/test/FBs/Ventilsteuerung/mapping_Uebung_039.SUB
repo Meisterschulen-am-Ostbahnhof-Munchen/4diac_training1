@@ -30,7 +30,9 @@
 			<Parameter Name="u16ObjId_1" Value="SoftKey_F1" Comment=""/>
 			<Parameter Name="DigitalInput_1" Value="'Ventilsteuerung.functions.SoftKey_F1_UP'" Comment=""/>
 			<Parameter Name="u16ObjId_2" Value="SoftKey_F2" Comment=""/>
-			<Parameter Name="DigitalInput_2" Value="'Ventilsteuerung.functions.SoftKey_F2_UP'" Comment=""/>
+			<Parameter Name="DigitalInput_2" Value="'Ventilsteuerung.functions.Q2.IE'" Comment=""/>
+			<Parameter Name="u16ObjId_3" Value="SoftKey_F8" Comment=""/>
+			<Parameter Name="DigitalInput_3" Value="'Ventilsteuerung.functions.Q1.IE'" Comment=""/>
 		</FB>
 		<FB Name="Hutschienenmoped_XL_8_DI_DOWN" Type="Hutschienenmoped_XL_8_DI_DOWN" Comment="" x="-12800.0" y="-800.0">
 			<Parameter Name="QI" Value="TRUE" Comment=""/>
@@ -56,16 +58,16 @@
 		</FB>
 		<EventConnections>
 			<Connection Source="INIT" Destination="Hutschienenmoped_XL_8_DO.INIT" Comment="" dx1="73.33333333333334">
-				<Attribute Name="Visible" Type="STRING" Value="false"/>
+				<Attribute Name="Visible" Value="false"/>
 			</Connection>
 			<Connection Source="INIT" Destination="UT_SoftkeyMapping_UP.INIT" Comment="" dx1="1733.3333333333335">
-				<Attribute Name="Visible" Type="STRING" Value="false"/>
+				<Attribute Name="Visible" Value="false"/>
 			</Connection>
 			<Connection Source="INIT" Destination="Hutschienenmoped_XL_8_DI_DOWN.INIT" Comment="" dx1="400.0">
-				<Attribute Name="Visible" Type="STRING" Value="false"/>
+				<Attribute Name="Visible" Value="false"/>
 			</Connection>
 			<Connection Source="INIT" Destination="UT_SoftkeyMapping.INIT" Comment="" dx1="1066.6666666666667">
-				<Attribute Name="Visible" Type="STRING" Value="false"/>
+				<Attribute Name="Visible" Value="false"/>
 			</Connection>
 		</EventConnections>
 	</SubAppNetwork>
