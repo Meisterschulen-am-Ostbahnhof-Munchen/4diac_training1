@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <SubAppType Name="Uebung_039" Comment="Spiegelabfolge V2 mit Schrittkette">
-	<Identification Standard="61499-2">
+	<Identification Standard="61499-2" Description="Spiegelabfolge V2 mit Schrittkette&#10;geeignet für hydraulische 4/3 Wege Ventile &#10;oder pneumatische 5/3 Wege Ventile&#10;jeweils Mittelstellung gesperrt. " >
 	</Identification>
 	<VersionInfo Version="1.0" Author="franz" Date="2023-10-23">
 	</VersionInfo>
@@ -54,16 +54,16 @@
 		</SubApp>
 		<EventConnections>
 			<Connection Source="INIT" Destination="DigitalInput_DOWN_I1.INIT" Comment="" dx1="453.33333333333337">
-				<Attribute Name="Visible" Type="STRING" Value="false"/>
+				<Attribute Name="Visible" Value="false"/>
 			</Connection>
 			<Connection Source="INIT" Destination="DigitalInput_DOWN_I2.INIT" Comment="" dx1="273.33333333333337">
-				<Attribute Name="Visible" Type="STRING" Value="false"/>
+				<Attribute Name="Visible" Value="false"/>
 			</Connection>
 			<Connection Source="INIT" Destination="DigitalInput_DOWN_I3.INIT" Comment="" dx1="453.33333333333337" dx2="453.33333333333337" dy="0.0">
-				<Attribute Name="Visible" Type="STRING" Value="false"/>
+				<Attribute Name="Visible" Value="false"/>
 			</Connection>
 			<Connection Source="INIT" Destination="DigitalInput_DOWN_I4.INIT" Comment="" dx1="1453.3333333333335">
-				<Attribute Name="Visible" Type="STRING" Value="false"/>
+				<Attribute Name="Visible" Value="false"/>
 			</Connection>
 			<Connection Source="DigitalInput_DOWN_I1.IND" Destination="sequence_05.S1_S2" Comment="" dx1="313.33333333333337"/>
 			<Connection Source="DigitalInput_DOWN_I2.IND" Destination="sequence_05.S2_S3" Comment="" dx1="380.0"/>
@@ -71,26 +71,26 @@
 			<Connection Source="DigitalInput_DOWN_I4.IND" Destination="sequence_05.S5_START" Comment="" dx1="513.3333333333334"/>
 			<Connection Source="sequence_05.CNF" Destination="NumbAnzeig.CNF" Comment="" dx1="73.33333333333334"/>
 			<Connection Source="INIT" Destination="NumbAnzeig.INIT" Comment="" dx1="2933.3333333333335">
-				<Attribute Name="Visible" Type="STRING" Value="false"/>
+				<Attribute Name="Visible" Value="false"/>
 			</Connection>
 			<Connection Source="INIT" Destination="SoftKey_F1_UP.INIT" Comment="" dx1="173.33333333333334">
-				<Attribute Name="Visible" Type="STRING" Value="false"/>
+				<Attribute Name="Visible" Value="false"/>
 			</Connection>
 			<Connection Source="SoftKey_F1_UP.IND" Destination="sequence_05.START_S1" Comment=""/>
 			<Connection Source="INIT" Destination="Q1.INIT" Comment="" dx1="3066.666666666667" dx2="3066.666666666667" dy="0.0">
-				<Attribute Name="Visible" Type="STRING" Value="false"/>
+				<Attribute Name="Visible" Value="false"/>
 			</Connection>
 			<Connection Source="sequence_05.EO_S1" Destination="Q1.REQ" Comment="" dx1="406.6666666666667"/>
 			<Connection Source="INIT" Destination="Q4.INIT" Comment="" dx1="2613.3333333333335" dx2="2613.3333333333335" dy="0.0">
-				<Attribute Name="Visible" Type="STRING" Value="false"/>
+				<Attribute Name="Visible" Value="false"/>
 			</Connection>
 			<Connection Source="sequence_05.EO_S5" Destination="Q4.REQ" Comment="" dx1="273.33333333333337"/>
 			<Connection Source="INIT" Destination="Q2.INIT" Comment="" dx1="2613.3333333333335" dx2="2613.3333333333335" dy="0.0">
-				<Attribute Name="Visible" Type="STRING" Value="false"/>
+				<Attribute Name="Visible" Value="false"/>
 			</Connection>
 			<Connection Source="sequence_05.EO_S2" Destination="Q2.REQ" Comment="" dx1="540.0"/>
 			<Connection Source="INIT" Destination="Q3.INIT" Comment="" dx1="2613.3333333333335" dx2="2613.3333333333335" dy="0.0">
-				<Attribute Name="Visible" Type="STRING" Value="false"/>
+				<Attribute Name="Visible" Value="false"/>
 			</Connection>
 			<Connection Source="sequence_05.EO_S4" Destination="Q3.REQ" Comment="" dx1="406.6666666666667"/>
 		</EventConnections>
