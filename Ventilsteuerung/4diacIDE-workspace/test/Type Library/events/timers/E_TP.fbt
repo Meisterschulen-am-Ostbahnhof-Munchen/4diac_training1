@@ -30,25 +30,25 @@
 		</OutputVars>
 	</InterfaceList>
 	<FBNetwork>
-		<FB Name="E_SWITCH" Type="E_SWITCH" Comment="" x="-846.6666666666667" y="-986.6666666666667">
-		</FB>
 		<FB Name="E_DELAY" Type="E_DELAY" Comment="" x="353.33333333333337" y="-260.0">
 		</FB>
 		<FB Name="E_RS" Type="E_RS" Comment="" x="1506.6666666666667" y="-553.3333333333334">
 		</FB>
+		<FB Name="E_PERMIT" Type="E_PERMIT" Comment="" x="-1866.6666666666667" y="-933.3333333333334">
+		</FB>
 		<EventConnections>
-			<Connection Source="REQ" Destination="E_SWITCH.EI" Comment="" dx1="260.0"/>
 			<Connection Source="E_RS.EO" Destination="CNF" Comment="" dx1="966.6666666666667"/>
-			<Connection Source="E_SWITCH.EO1" Destination="E_DELAY.START" Comment="" dx1="420.0"/>
-			<Connection Source="E_SWITCH.EO1" Destination="E_RS.S" Comment="" dx1="913.3333333333334"/>
 			<Connection Source="R" Destination="E_DELAY.STOP" Comment="" dx1="226.66666666666669"/>
 			<Connection Source="R" Destination="E_RS.R" Comment="" dx1="226.66666666666669" dx2="1426.6666666666667" dy="880.0"/>
 			<Connection Source="E_DELAY.EO" Destination="E_RS.R" Comment="" dx1="266.6666666666667"/>
+			<Connection Source="REQ" Destination="E_PERMIT.EI" Comment="" dx1="1066.6666666666667"/>
+			<Connection Source="E_PERMIT.EO" Destination="E_RS.S" Comment="" dx1="1360.0"/>
+			<Connection Source="E_PERMIT.EO" Destination="E_DELAY.START" Comment="" dx1="780.0"/>
 		</EventConnections>
 		<DataConnections>
-			<Connection Source="IN" Destination="E_SWITCH.G" Comment="" dx1="260.0"/>
 			<Connection Source="PT" Destination="E_DELAY.DT" Comment="" dx1="193.33333333333334"/>
 			<Connection Source="E_RS.Q" Destination="Q" Comment="" dx1="1000.0"/>
+			<Connection Source="IN" Destination="E_PERMIT.PERMIT" Comment="" dx1="1066.6666666666667"/>
 		</DataConnections>
 	</FBNetwork>
 </FBType>
