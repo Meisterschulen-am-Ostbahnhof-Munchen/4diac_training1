@@ -27,22 +27,22 @@
 		</OutputVars>
 	</InterfaceList>
 	<FBNetwork>
-		<FB Name="E_TABLE_CTRL" Type="E_TABLE_CTRL" Comment="" x="600.0" y="300.0">
+		<FB Name="E_TABLE_CTRL" Type="E_TABLE_CTRL" Comment="" x="-780.0" y="633.3333333333334">
 		</FB>
-		<FB Name="E_DELAY" Type="E_DELAY" Comment="" x="2000.0" y="133.33333333333334">
+		<FB Name="E_DELAY" Type="E_DELAY" Comment="" x="606.6666666666667" y="633.3333333333334">
 		</FB>
 		<EventConnections>
-			<Connection Source="E_TABLE_CTRL.CLKO" Destination="E_DELAY.START" Comment="" dx1="273.33333333333337"/>
-			<Connection Source="E_DELAY.EO" Destination="EO" Comment="" dx1="66.66666666666667"/>
-			<Connection Source="START" Destination="E_TABLE_CTRL.INIT" Comment="" dx1="993.3333333333334"/>
-			<Connection Source="E_DELAY.EO" Destination="E_TABLE_CTRL.CLK" Comment="" dx1="66.66666666666667" dx2="66.66666666666667" dy="-253.33333333333334"/>
-			<Connection Source="STOP" Destination="E_DELAY.STOP" Comment="" dx1="3033.3333333333335"/>
+			<Connection Source="E_TABLE_CTRL.CLKO" Destination="E_DELAY.START" Comment=""/>
+			<Connection Source="E_DELAY.EO" Destination="EO" Comment="" dx1="1380.0"/>
+			<Connection Source="START" Destination="E_TABLE_CTRL.INIT" Comment="" dx1="473.33333333333337"/>
+			<Connection Source="E_DELAY.EO" Destination="E_TABLE_CTRL.CLK" Comment="" dx1="73.33333333333334" dx2="133.33333333333334" dy="-240.0"/>
+			<Connection Source="STOP" Destination="E_DELAY.STOP" Comment="" dx1="1460.0"/>
 		</EventConnections>
 		<DataConnections>
-			<Connection Source="E_TABLE_CTRL.DTO" Destination="E_DELAY.DT" Comment="" dx1="260.0"/>
-			<Connection Source="E_TABLE_CTRL.CV" Destination="CV" Comment="" dx1="1833.3333333333335"/>
-			<Connection Source="DT" Destination="E_TABLE_CTRL.DT" Comment="" dx1="960.0"/>
-			<Connection Source="N" Destination="E_TABLE_CTRL.N" Comment="" dx1="926.6666666666667"/>
+			<Connection Source="E_TABLE_CTRL.DTO" Destination="E_DELAY.DT" Comment="" dx1="73.33333333333334"/>
+			<Connection Source="E_TABLE_CTRL.CV" Destination="CV" Comment="" dx1="1960.0"/>
+			<Connection Source="DT" Destination="E_TABLE_CTRL.DT" Comment="" dx1="280.0"/>
+			<Connection Source="N" Destination="E_TABLE_CTRL.N" Comment="" dx1="280.0"/>
 		</DataConnections>
 	</FBNetwork>
 </FBType>

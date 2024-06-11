@@ -8,7 +8,7 @@
 	</CompilerInfo>
 	<InterfaceList>
 		<EventInputs>
-			<Event Name="REQ" Type="Event" Comment="Normal Execution Request">
+			<Event Name="REQ" Type="Event" Comment="">
 				<With Var="IN_00"/>
 				<With Var="IN_01"/>
 				<With Var="IN_02"/>
@@ -44,8 +44,8 @@
 			</Event>
 		</EventInputs>
 		<EventOutputs>
-			<Event Name="CNF" Type="Event" Comment="Execution Confirmation">
-				<With Var="OUT"/>
+			<Event Name="CNF" Type="Event" Comment="">
+				<With Var=""/>
 			</Event>
 		</EventOutputs>
 		<InputVars>
@@ -83,11 +83,11 @@
 			<VarDeclaration Name="IN_31" Type="BOOL" Comment="BIT 31"/>
 		</InputVars>
 		<OutputVars>
-			<VarDeclaration Name="OUT" Type="DWORD" Comment="DWORD Output"/>
+			<VarDeclaration Name="" Type="DWORD" Comment=""/>
 		</OutputVars>
 	</InterfaceList>
 	<FunctionBody>
-		<ST><![CDATA[FUNCTION BOOLS_TO_DWORD
+		<ST><![CDATA[FUNCTION BOOLS_TO_DWORD : DWORD
 
 VAR_INPUT
 	IN_00 : BOOL;    // BIT 00
@@ -124,43 +124,39 @@ VAR_INPUT
 	IN_31 : BOOL;    // BIT 31
 END_VAR
 
-VAR_OUTPUT
-	OUT : DWORD;    // DWORD Output
-END_VAR
-
 (* this Function combines the 32 BOOLS to a dword *)
-OUT.0 := IN_00;
-OUT.1 := IN_01;
-OUT.2 := IN_02;
-OUT.3 := IN_03;
-OUT.4 := IN_04;
-OUT.5 := IN_05;
-OUT.6 := IN_06;
-OUT.7 := IN_07;
-OUT.8 := IN_08;
-OUT.9 := IN_09;
-OUT.10 := IN_10;
-OUT.11 := IN_11;
-OUT.12 := IN_12;
-OUT.13 := IN_13;
-OUT.14 := IN_14;
-OUT.15 := IN_15;
-OUT.16 := IN_16;
-OUT.17 := IN_17;
-OUT.18 := IN_18;
-OUT.19 := IN_19;
-OUT.20 := IN_20;
-OUT.21 := IN_21;
-OUT.22 := IN_22;
-OUT.23 := IN_23;
-OUT.24 := IN_24;
-OUT.25 := IN_25;
-OUT.26 := IN_26;
-OUT.27 := IN_27;
-OUT.28 := IN_28;
-OUT.29 := IN_29;
-OUT.30 := IN_30;
-OUT.31 := IN_31;
+BOOLS_TO_DWORD.0 := IN_00;
+BOOLS_TO_DWORD.1 := IN_01;
+BOOLS_TO_DWORD.2 := IN_02;
+BOOLS_TO_DWORD.3 := IN_03;
+BOOLS_TO_DWORD.4 := IN_04;
+BOOLS_TO_DWORD.5 := IN_05;
+BOOLS_TO_DWORD.6 := IN_06;
+BOOLS_TO_DWORD.7 := IN_07;
+BOOLS_TO_DWORD.8 := IN_08;
+BOOLS_TO_DWORD.9 := IN_09;
+BOOLS_TO_DWORD.10 := IN_10;
+BOOLS_TO_DWORD.11 := IN_11;
+BOOLS_TO_DWORD.12 := IN_12;
+BOOLS_TO_DWORD.13 := IN_13;
+BOOLS_TO_DWORD.14 := IN_14;
+BOOLS_TO_DWORD.15 := IN_15;
+BOOLS_TO_DWORD.16 := IN_16;
+BOOLS_TO_DWORD.17 := IN_17;
+BOOLS_TO_DWORD.18 := IN_18;
+BOOLS_TO_DWORD.19 := IN_19;
+BOOLS_TO_DWORD.20 := IN_20;
+BOOLS_TO_DWORD.21 := IN_21;
+BOOLS_TO_DWORD.22 := IN_22;
+BOOLS_TO_DWORD.23 := IN_23;
+BOOLS_TO_DWORD.24 := IN_24;
+BOOLS_TO_DWORD.25 := IN_25;
+BOOLS_TO_DWORD.26 := IN_26;
+BOOLS_TO_DWORD.27 := IN_27;
+BOOLS_TO_DWORD.28 := IN_28;
+BOOLS_TO_DWORD.29 := IN_29;
+BOOLS_TO_DWORD.30 := IN_30;
+BOOLS_TO_DWORD.31 := IN_31;
 END_FUNCTION
 ]]></ST>
 	</FunctionBody>

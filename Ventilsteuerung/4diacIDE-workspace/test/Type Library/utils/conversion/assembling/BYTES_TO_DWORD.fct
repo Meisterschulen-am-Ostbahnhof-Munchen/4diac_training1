@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<Function Name="BYTES_TO_WORD" Comment="">
+<Function Name="BYTES_TO_DWORD" Comment="">
 	<Identification Standard="61499-1">
 	</Identification>
 	<VersionInfo Version="1.0" Author="franz" Date="2024-02-22">
@@ -11,6 +11,8 @@
 			<Event Name="REQ" Type="Event" Comment="">
 				<With Var="IN_00"/>
 				<With Var="IN_01"/>
+				<With Var="IN_02"/>
+				<With Var="IN_03"/>
 			</Event>
 		</EventInputs>
 		<EventOutputs>
@@ -21,23 +23,29 @@
 		<InputVars>
 			<VarDeclaration Name="IN_00" Type="BYTE" Comment="BYTE 00"/>
 			<VarDeclaration Name="IN_01" Type="BYTE" Comment="BYTE 01"/>
+			<VarDeclaration Name="IN_02" Type="BYTE" Comment="BYTE 02"/>
+			<VarDeclaration Name="IN_03" Type="BYTE" Comment="BYTE 03"/>
 		</InputVars>
 		<OutputVars>
-			<VarDeclaration Name="" Type="WORD" Comment=""/>
+			<VarDeclaration Name="" Type="DWORD" Comment=""/>
 		</OutputVars>
 	</InterfaceList>
 	<FunctionBody>
-		<ST><![CDATA[FUNCTION BYTES_TO_WORD : WORD
+		<ST><![CDATA[FUNCTION BYTES_TO_DWORD : DWORD
 
 VAR_INPUT
 	IN_00 : BYTE;    // BYTE 00
 	IN_01 : BYTE;    // BYTE 01
+	IN_02 : BYTE;    // BYTE 02
+	IN_03 : BYTE;    // BYTE 03
 END_VAR
 
 (* this Function combines the 2 BYTES to a word *)
-BYTES_TO_WORD := WORD_BYTE_ZZ;
-BYTES_TO_WORD := BYTES_TO_WORD OR SHL(BYTE_TO_WORD(IN_01), SHFT_BYTE_01);
-BYTES_TO_WORD := BYTES_TO_WORD OR SHL(BYTE_TO_WORD(IN_00), SHFT_BYTE_00);
+BYTES_TO_DWORD := DWORD_BYTE_ZZ;
+BYTES_TO_DWORD := BYTES_TO_DWORD OR SHL(BYTE_TO_DWORD(IN_03), SHFT_BYTE_03);
+BYTES_TO_DWORD := BYTES_TO_DWORD OR SHL(BYTE_TO_DWORD(IN_02), SHFT_BYTE_02);
+BYTES_TO_DWORD := BYTES_TO_DWORD OR SHL(BYTE_TO_DWORD(IN_01), SHFT_BYTE_01);
+BYTES_TO_DWORD := BYTES_TO_DWORD OR SHL(BYTE_TO_DWORD(IN_00), SHFT_BYTE_00);
 
 END_FUNCTION
 ]]></ST>
