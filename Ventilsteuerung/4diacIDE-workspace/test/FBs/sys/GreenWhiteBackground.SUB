@@ -7,37 +7,37 @@
 	<SubAppInterfaceList>
 		<SubAppEventInputs>
 			<SubAppEvent Name="INIT" Type="Event" Comment="Initialization Request">
-				<Attribute Name="YPOSITION" Value="20"/>
+				<Attribute Name="YPOSITION" Type="SINT" Value="20"/>
 			</SubAppEvent>
 			<SubAppEvent Name="REQ" Type="Event" Comment="Normal Execution Request">
-				<Attribute Name="YPOSITION" Type="STRING" Value="58"/>
+				<Attribute Name="YPOSITION" Type="SINT" Value="58"/>
 			</SubAppEvent>
 		</SubAppEventInputs>
 		<SubAppEventOutputs>
 			<SubAppEvent Name="INITO_1" Type="Event" Comment="Initialization Confirm">
-				<Attribute Name="YPOSITION" Type="STRING" Value="47"/>
+				<Attribute Name="YPOSITION" Type="SINT" Value="47"/>
 			</SubAppEvent>
 			<SubAppEvent Name="CNF_1" Type="Event" Comment="Execution Confirmation">
-				<Attribute Name="YPOSITION" Value="31"/>
+				<Attribute Name="YPOSITION" Type="SINT" Value="31"/>
 			</SubAppEvent>
 		</SubAppEventOutputs>
 		<InputVars>
 			<VarDeclaration Name="DI1" Type="BOOL" Comment="Selector">
-				<Attribute Name="YPOSITION" Type="STRING" Value="70"/>
+				<Attribute Name="YPOSITION" Type="SINT" Value="70"/>
 			</VarDeclaration>
 			<VarDeclaration Name="u16ObjId" Type="UINT" Comment="Object ID Softkey/Button" InitialValue="ID_NULL">
-				<Attribute Name="YPOSITION" Type="STRING" Value="82"/>
+				<Attribute Name="YPOSITION" Type="SINT" Value="82"/>
 			</VarDeclaration>
 		</InputVars>
 		<OutputVars>
 			<VarDeclaration Name="STATUS_1" Type="STRING" Comment="Service Status">
-				<Attribute Name="YPOSITION" Value="47"/>
+				<Attribute Name="YPOSITION" Type="SINT" Value="47"/>
 			</VarDeclaration>
 			<VarDeclaration Name="u8OldColour_1" Type="USINT" Comment="Old value of ID">
-				<Attribute Name="YPOSITION" Value="31"/>
+				<Attribute Name="YPOSITION" Type="SINT" Value="31"/>
 			</VarDeclaration>
 			<VarDeclaration Name="result_1" Type="INT" Comment="retval see description">
-				<Attribute Name="YPOSITION" Value="31"/>
+				<Attribute Name="YPOSITION" Type="SINT" Value="31"/>
 			</VarDeclaration>
 		</OutputVars>
 	</SubAppInterfaceList>
