@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<GlobalConstants Name="myPorts_espnow" Comment="Global constants">
+	<Identification Standard="61499-1">
+	</Identification>
+	<VersionInfo Version="1.0" Author="franz" Date="2023-10-22">
+	</VersionInfo>
+	<CompilerInfo>
+	</CompilerInfo>
+	<GlobalConstants>
+		<VarDeclaration Name="PORT_0_espnow" Type="WSTRING" Comment="" InitialValue="&quot;fbdk[].espnow[239.0.0.1:61000]&quot;"/>
+		<VarDeclaration Name="PORT_1_espnow" Type="WSTRING" Comment="" InitialValue="&quot;fbdk[].espnow[239.0.0.1:61001]&quot;"/>
+		<VarDeclaration Name="PORT_2_espnow" Type="WSTRING" Comment="" InitialValue="&quot;fbdk[].espnow[239.0.0.1:61002]&quot;"/>
+		<VarDeclaration Name="PORT_3_espnow" Type="WSTRING" Comment="" InitialValue="&quot;fbdk[].espnow[239.0.0.1:61003]&quot;"/>
+	</GlobalConstants>
+	<OriginalSource><![CDATA[
+//UDP Multicast
+VAR_GLOBAL CONSTANT
+	PORT_0_espnow : WSTRING := "fbdk[].espnow[239.0.0.1:61000]";
+	PORT_1_espnow : WSTRING := "fbdk[].espnow[239.0.0.1:61001]";
+	PORT_2_espnow : WSTRING := "fbdk[].espnow[239.0.0.1:61002]";
+	PORT_3_espnow : WSTRING := "fbdk[].espnow[239.0.0.1:61003]";
+END_VAR
+
+]]></OriginalSource>
+</GlobalConstants>

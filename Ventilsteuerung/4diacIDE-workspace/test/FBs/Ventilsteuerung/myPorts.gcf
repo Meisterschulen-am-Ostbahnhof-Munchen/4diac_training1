@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<GlobalConstants Name="myPorts" Comment="Global constants">
+	<Identification Standard="61499-1">
+	</Identification>
+	<VersionInfo Version="1.0" Author="franz" Date="2023-10-22">
+	</VersionInfo>
+	<CompilerInfo>
+	</CompilerInfo>
+	<GlobalConstants>
+		<VarDeclaration Name="PORT_0" Type="WSTRING" Comment="" InitialValue="&quot;fbdk[].ip[239.0.0.1:61000]&quot;"/>
+		<VarDeclaration Name="PORT_1" Type="WSTRING" Comment="" InitialValue="&quot;fbdk[].ip[239.0.0.1:61001]&quot;"/>
+		<VarDeclaration Name="PORT_2" Type="WSTRING" Comment="" InitialValue="&quot;fbdk[].ip[239.0.0.1:61002]&quot;"/>
+		<VarDeclaration Name="PORT_3" Type="WSTRING" Comment="" InitialValue="&quot;fbdk[].ip[239.0.0.1:61003]&quot;"/>
+		<VarDeclaration Name="PORT_A0" Type="WSTRING" Comment="" InitialValue="&quot;fbdk[].ip[localhost:61500]&quot;"/>
+		<VarDeclaration Name="PORT_A1" Type="WSTRING" Comment="" InitialValue="&quot;fbdk[].ip[localhost:61501]&quot;"/>
+		<VarDeclaration Name="PORT_A2" Type="WSTRING" Comment="" InitialValue="&quot;fbdk[].ip[localhost:61502]&quot;"/>
+		<VarDeclaration Name="PORT_A3" Type="WSTRING" Comment="" InitialValue="&quot;fbdk[].ip[localhost:61503]&quot;"/>
+		<VarDeclaration Name="PORT_B0" Type="WSTRING" Comment="" InitialValue="&quot;fbdk[].ip[192.168.178.62:61500]&quot;"/>
+		<VarDeclaration Name="PORT_B1" Type="WSTRING" Comment="" InitialValue="&quot;fbdk[].ip[192.168.178.62:61501]&quot;"/>
+		<VarDeclaration Name="PORT_B2" Type="WSTRING" Comment="" InitialValue="&quot;fbdk[].ip[192.168.178.62:61502]&quot;"/>
+		<VarDeclaration Name="PORT_B3" Type="WSTRING" Comment="" InitialValue="&quot;fbdk[].ip[192.168.178.62:61503]&quot;"/>
+	</GlobalConstants>
+	<OriginalSource><![CDATA[
+//UDP Multicast
+VAR_GLOBAL CONSTANT
+	PORT_0 : WSTRING := "fbdk[].ip[239.0.0.1:61000]";
+	PORT_1 : WSTRING := "fbdk[].ip[239.0.0.1:61001]";
+	PORT_2 : WSTRING := "fbdk[].ip[239.0.0.1:61002]";
+	PORT_3 : WSTRING := "fbdk[].ip[239.0.0.1:61003]";
+END_VAR
+
+// TCP/IP
+VAR_GLOBAL CONSTANT
+	PORT_A0 : WSTRING := "fbdk[].ip[localhost:61500]";
+	PORT_A1 : WSTRING := "fbdk[].ip[localhost:61501]";
+	PORT_A2 : WSTRING := "fbdk[].ip[localhost:61502]";
+	PORT_A3 : WSTRING := "fbdk[].ip[localhost:61503]";
+	PORT_B0 : WSTRING := "fbdk[].ip[192.168.178.62:61500]";
+	PORT_B1 : WSTRING := "fbdk[].ip[192.168.178.62:61501]";
+	PORT_B2 : WSTRING := "fbdk[].ip[192.168.178.62:61502]";
+	PORT_B3 : WSTRING := "fbdk[].ip[192.168.178.62:61503]";
+END_VAR
+
+]]></OriginalSource>
+</GlobalConstants>
