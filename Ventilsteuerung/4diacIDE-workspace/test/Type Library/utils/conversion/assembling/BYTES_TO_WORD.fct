@@ -15,7 +15,7 @@
 		</EventInputs>
 		<EventOutputs>
 			<Event Name="CNF" Type="Event" Comment="">
-				<With Var="OUT"/>
+				<With Var=""/>
 			</Event>
 		</EventOutputs>
 		<InputVars>
@@ -23,24 +23,21 @@
 			<VarDeclaration Name="IN_01" Type="BYTE" Comment="BYTE 01"/>
 		</InputVars>
 		<OutputVars>
-			<VarDeclaration Name="OUT" Type="WORD" Comment="WORD Output"/>
+			<VarDeclaration Name="" Type="WORD" Comment=""/>
 		</OutputVars>
 	</InterfaceList>
 	<FunctionBody>
-		<ST><![CDATA[FUNCTION BYTES_TO_WORD
+		<ST><![CDATA[FUNCTION BYTES_TO_WORD : WORD
 
 VAR_INPUT
 	IN_00 : BYTE;    // BYTE 00
 	IN_01 : BYTE;    // BYTE 01
 END_VAR
 
-VAR_OUTPUT
-	OUT : WORD;    // WORD Output
-END_VAR
-
 (* this Function combines the 2 BYTES to a word *)
-OUT := SHL(BYTE_TO_WORD(IN_01), SHFT_BYTE_01) 
-	OR SHL(BYTE_TO_WORD(IN_00), SHFT_BYTE_00);
+BYTES_TO_WORD := WORD_BYTE_ZZ;
+BYTES_TO_WORD := BYTES_TO_WORD OR SHL(BYTE_TO_WORD(IN_01), SHFT_BYTE_01);
+BYTES_TO_WORD := BYTES_TO_WORD OR SHL(BYTE_TO_WORD(IN_00), SHFT_BYTE_00);
 
 END_FUNCTION
 ]]></ST>
