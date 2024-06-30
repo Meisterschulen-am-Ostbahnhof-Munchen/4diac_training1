@@ -28,6 +28,7 @@
 #define Button_A1                          6000
 #define Button_A2                          6001
 #define InputNumber_I1                     9000
+#define InputNumber_I2                     9001
 #define OutputString_WorkingSet_0         11000
 #define OutputString_SoftKey_F1           11001
 #define OutputString_SoftKey_F2           11002
@@ -50,6 +51,7 @@
 #define OutputString_OutputNumber_N1      11019
 #define OutputString_OutputNumber_N2      11020
 #define OutputString_InputNumber_I1       11021
+#define OutputString_InputNumber_I2       11022
 #define OutputNumber_N1                   12000
 #define OutputNumber_N2                   12001
 #define Line_W                            13000
