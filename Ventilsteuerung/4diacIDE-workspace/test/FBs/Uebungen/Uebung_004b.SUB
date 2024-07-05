@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<SubAppType Name="Uebung_004a" Comment="Toggle Flip-Flop mit IE">
+<SubAppType Name="Uebung_004b" Comment="Toggle Flip-Flop mit IE / Split">
 	<Identification Standard="61499-2">
 	</Identification>
 	<VersionInfo Version="1.0" Author="franz" Date="2023-10-23">
@@ -13,24 +13,29 @@
 		</SubAppEventInputs>
 	</SubAppInterfaceList>
 	<SubAppNetwork>
-		<FB Name="DigitalOutput_Q1" Type="QX" Comment="" x="-1466.67" y="-933.33">
+		<FB Name="DigitalOutput_Q1" Type="QX" Comment="" x="-800" y="-933.33">
 			<Parameter Name="QI" Value="TRUE" Comment=""/>
 		</FB>
 		<FB Name="DigitalInput_I1_CLK" Type="IE" Comment="" x="-4533.33" y="-933.33">
 			<Parameter Name="QI" Value="TRUE" Comment=""/>
 		</FB>
-		<FB Name="E_T_FF" Type="E_T_FF" Comment="" x="-2800" y="-633.33">
+		<FB Name="E_SR" Type="E_SR" Comment="" x="-2140" y="-666.67">
+		</FB>
+		<FB Name="E_SWITCH" Type="E_SWITCH" Comment="" x="-3066.67" y="-666.67">
 		</FB>
 		<EventConnections>
 			<Connection Source="INIT" Destination="DigitalInput_I1_CLK.INIT" Comment="" dx1="1113.33">
 				<Attribute Name="Visible" Value="false"/>
 			</Connection>
 			<Connection Source="DigitalInput_I1_CLK.INITO" Destination="DigitalOutput_Q1.INIT" Comment=""/>
-			<Connection Source="DigitalInput_I1_CLK.IND" Destination="E_T_FF.CLK" Comment="" dx1="473.33"/>
-			<Connection Source="E_T_FF.EO" Destination="DigitalOutput_Q1.REQ" Comment="" dx1="400"/>
+			<Connection Source="E_SR.EO" Destination="DigitalOutput_Q1.REQ" Comment="" dx1="440"/>
+			<Connection Source="DigitalInput_I1_CLK.IND" Destination="E_SWITCH.EI" Comment="" dx1="340"/>
+			<Connection Source="E_SWITCH.EO0" Destination="E_SR.S" Comment=""/>
+			<Connection Source="E_SWITCH.EO1" Destination="E_SR.R" Comment=""/>
 		</EventConnections>
 		<DataConnections>
-			<Connection Source="E_T_FF.Q" Destination="DigitalOutput_Q1.OUT" Comment="" dx1="400"/>
+			<Connection Source="E_SR.Q" Destination="DigitalOutput_Q1.OUT" Comment="" dx1="440"/>
+			<Connection Source="E_SR.Q" Destination="E_SWITCH.G" Comment="" dx1="80" dx2="80" dy="160"/>
 		</DataConnections>
 	</SubAppNetwork>
 </SubAppType>
