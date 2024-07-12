@@ -15,18 +15,16 @@
 		<EventOutputs>
 			<Event Name="INITO" Type="Event" Comment="Initialization Confirm">
 				<With Var="QO"/>
-				<With Var="STATUS"/>
 			</Event>
 			<Event Name="IND" Type="Event" Comment="Indication from Resource">
 				<With Var="QO"/>
-				<With Var="STATUS"/>
-				<With Var="DO1"/>
-				<With Var="DO2"/>
-				<With Var="DO3"/>
-				<With Var="DO4"/>
-				<With Var="DO5"/>
-				<With Var="DO6"/>
-				<With Var="DO7"/>
+				<With Var="WHEELBASEDMACHINESPEED"/>
+				<With Var="WHEELBASEDMACHINEDISTANCE"/>
+				<With Var="MAXI_TIMEOFTRACPOWER"/>
+				<With Var="WHEELBASEDMACHINEDIRECTION"/>
+				<With Var="KEYSWITCHSTATE"/>
+				<With Var="START_STOP_STATE"/>
+				<With Var="OPERATOR_DIREC_REVERSED"/>
 			</Event>
 		</EventOutputs>
 		<InputVars>
@@ -34,14 +32,13 @@
 		</InputVars>
 		<OutputVars>
 			<VarDeclaration Name="QO" Type="BOOL" Comment="Event Output Qualifier"/>
-			<VarDeclaration Name="STATUS" Type="WSTRING" Comment="Service Status"/>
-			<VarDeclaration Name="DO1" Type="UINT" Comment="Wheel-based machine speed"/>
-			<VarDeclaration Name="DO2" Type="UDINT" Comment="Wheel-based machine distance"/>
-			<VarDeclaration Name="DO3" Type="USINT" Comment="Maximum Time of Tractor Power"/>
-			<VarDeclaration Name="DO4" Type="BYTE" Comment="Wheel-based machine direction"/>
-			<VarDeclaration Name="DO5" Type="BYTE" Comment="Key switch state"/>
-			<VarDeclaration Name="DO6" Type="BYTE" Comment="Implement Start/Stop operations"/>
-			<VarDeclaration Name="DO7" Type="BYTE" Comment="Operator direction reversed"/>
+			<VarDeclaration Name="WHEELBASEDMACHINESPEED" Type="UINT" Comment="Wheel-based machine speed"/>
+			<VarDeclaration Name="WHEELBASEDMACHINEDISTANCE" Type="UDINT" Comment="Wheel-based machine distance"/>
+			<VarDeclaration Name="MAXI_TIMEOFTRACPOWER" Type="USINT" Comment="Maximum Time of Tractor Power"/>
+			<VarDeclaration Name="WHEELBASEDMACHINEDIRECTION" Type="BYTE" Comment="Wheel-based machine direction"/>
+			<VarDeclaration Name="KEYSWITCHSTATE" Type="BYTE" Comment="Key switch state"/>
+			<VarDeclaration Name="START_STOP_STATE" Type="BYTE" Comment="Implement Start/Stop operations"/>
+			<VarDeclaration Name="OPERATOR_DIREC_REVERSED" Type="BYTE" Comment="Operator direction reversed"/>
 		</OutputVars>
 	</InterfaceList>
 	<Service RightInterface="RESOURCE" LeftInterface="APPLICATION" Comment="Service Interface Function Block Type">
