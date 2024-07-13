@@ -20,7 +20,7 @@ for %%f in (*.png) do (
     magick ..\img_resized\%%f -monochrome -define png:exclude-chunks=date,time ..\img_monochrome\%%f 
     magick identify ..\img_monochrome\%%f
     echo 4. make BMP
-    magick ..\img_monochrome\%%f ..\img\%%~nf.bmp
+    magick ..\img_monochrome\%%f BMP3:..\img\%%~nf.bmp
     magick identify ..\img\%%~nf.bmp
     echo DONE *************************************
     echo *

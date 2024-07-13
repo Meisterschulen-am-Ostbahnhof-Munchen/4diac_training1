@@ -1,11 +1,14 @@
+::Script
+
+@echo off & setlocal
 
 
+set PATH="C:\Espressif\python_env\idf5.2_py3.11_env\Scripts"
 
+del ..\4diacIDE-workspace\test\FBs\Ventilsteuerung\Workspace\DefaultPool.gcf
 
-set PATH="C:\Espressif\python_env\idf5.0_py3.11_env\Scripts"
+python GcfScript.py --oldfile ISO-DesignerProjects\Workspace\DefaultPool\Output\DefaultPool.iop.h --newfolder 4diacIDE-workspace\test\FBs\Ventilsteuerung\Workspace\ --newfile DefaultPool
 
-del ..\4diacIDE-workspace\test\FBs\Ventilsteuerung\DefaultPool.globalconsts
+del ..\4diacIDE-workspace\test\FBs\Ventilsteuerung\Workspace_TECU\DefaultPool_TECU.gcf
 
-python PoolSkript.py --oldfile ..\ISO-DesignerProjects\Workspace\DefaultPool\Output\DefaultPool.iop.h --newfile ..\4diacIDE-workspace\test\FBs\Ventilsteuerung\DefaultPool
-
-
+python GcfScript.py --oldfile ISO-DesignerProjects\Workspace_TECU\DefaultPool\Output\DefaultPool.iop.h --newfolder 4diacIDE-workspace\test\FBs\Ventilsteuerung\Workspace_TECU\ --newfile DefaultPool_TECU
