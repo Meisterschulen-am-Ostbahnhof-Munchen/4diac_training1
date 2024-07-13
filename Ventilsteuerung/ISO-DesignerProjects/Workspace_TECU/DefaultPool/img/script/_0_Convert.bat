@@ -16,9 +16,15 @@ for %%f in (*.png) do (
     echo 2. resize to 64x64
     magick ..\img_cropped\%%f  -resize  64x64       ..\img_resized\%%f
     magick identify ..\img_resized\%%f
-    echo 3. make monochrome BMP
-    magick ..\img_resized\%%f  -threshold 85 -type bilevel BMP3:..\img\%%~nf.bmp
+    echo 3. make monochrome PNG
+    magick ..\img_cropped\%%f  -monochrome       ..\img_monochrome\%%f
+    magick identify ..\img_monochrome\%%f
+    echo 4. make BMP
+    magick ..\img_monochrome\%%f    ..\img\%%~nf.bmp
     magick identify ..\img\%%~nf.bmp
+    echo DONE *************************************
+    echo *
+    echo *
 )
 
 
