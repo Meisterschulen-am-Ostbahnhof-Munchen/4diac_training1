@@ -1,7 +1,7 @@
 # img_cropped
 
 
-hier liegen die Originalen Images von <http://iso.org/obp>
+hier liegen die Bilder nach dem Zuschneiden
 
 weitere Infos im Ordner darüber: <https://github.com/Meisterschulen-am-Ostbahnhof-Munchen/4diac_training1/tree/main/Ventilsteuerung/ISO-DesignerProjects/Workspace_TECU/DefaultPool/img>
 
