@@ -4,35 +4,18 @@ import re
 import xml.etree.ElementTree as ET
 from xml.dom import minidom
 
-def getPaths2():
+def getPaths():
+    script_path = os.path.dirname(os.path.abspath(__file__))
     parser = ArgumentParser()
     parser.add_argument("-o", "--oldfile", dest="old_file", required=True)
     parser.add_argument("-n", "--newfile", dest="new_file", required=True)
     args = parser.parse_args()
 
-    filepaths = [args.old_file, args.new_file]
-    return filepaths
-
-
-def getPaths():
-    script_path = os.path.dirname(os.path.abspath(__file__))
-
-    # Define the relative paths from the script_path
-    new_path_relative = f'4diacIDE-workspace\\test\\FBs\\Ventilsteuerung'
-    old_path_relative = f'ISO-DesignerProjects\Workspace\DefaultPool\Output'
-
     # Create the absolute paths using os.path.join
-    new_path = os.path.join(os.path.dirname(script_path), new_path_relative)
-    old_path = os.path.join(os.path.dirname(script_path), old_path_relative)
+    new_path = os.path.join(os.path.dirname(script_path), args.new_file)
+    old_path = os.path.join(os.path.dirname(script_path), args.old_file)
 
     filepaths = [old_path, new_path]
-    return filepaths
-
-
-
-# Only for testing purposes
-def getPathsTest():
-    filepaths = ['C:/Users/lorenz.bauer/OneDrive - Gregor Witzmann e.U/Dokumente/Privat/FH Agrartechnologie/ISOBUS-Schulung/GlobalConstScript', 'C:/Users/lorenz.bauer/OneDrive - Gregor Witzmann e.U/Dokumente/Privat/FH Agrartechnologie/ISOBUS-Schulung/GlobalConstScript']
     return filepaths
 
 def printPaths(filepaths):
@@ -111,7 +94,6 @@ if __name__ == "__main__":
 
     # Gets filepaths and saves it in a variable
     filepaths = getPaths()
-    # filepaths = getPathsTest()
 
     # Prints filepaths
     printPaths(filepaths)
