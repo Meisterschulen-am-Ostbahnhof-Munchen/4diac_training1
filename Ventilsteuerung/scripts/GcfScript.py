@@ -9,13 +9,14 @@ def getPaths():
     parser = ArgumentParser()
     parser.add_argument("-o", "--oldfile", dest="old_file", required=True)
     parser.add_argument("-n", "--newfile", dest="new_file", required=True)
+    parser.add_argument("-p", "--newfolder", dest="new_folder", required=True)
     args = parser.parse_args()
 
     # Create the absolute paths using os.path.join
-    new_path = os.path.join(os.path.dirname(script_path), args.new_file)
+    new_path = os.path.join(os.path.dirname(script_path), args.new_folder)
     old_path = os.path.join(os.path.dirname(script_path), args.old_file)
 
-    filepaths = [old_path, new_path]
+    filepaths = [old_path, new_path, args.new_file]
     return filepaths
 
 def printPaths(filepaths):
@@ -23,6 +24,7 @@ def printPaths(filepaths):
     print('')
     print(f"Old File:     {filepaths[0]}")
     print(f"New File:     {filepaths[1]}")
+    print(f"New File:     {filepaths[2]}")
 
 def checkPath(path):
     if os.path.exists(path):
@@ -32,13 +34,12 @@ def checkPath(path):
 
 def readIOPH(filepaths):
     oldfilepath   = filepaths[0]
-    newfolderpath = filepaths[1]
-    newfilepath = os.path.join(newfolderpath, 'DefaultPool.gcf')
+    newfilepath   = filepaths[1]
 
     print("Oldfilepath")
     checkPath(oldfilepath)
     print("Newfilepath")
-    checkPath(newfolderpath)
+    checkPath(newfilepath)
 
     pattern = re.compile(r'#define\s+(\w+)\s+(\S+)')
     with open(oldfilepath, 'r') as file:
@@ -59,9 +60,9 @@ def readIOPH(filepaths):
     return definitions
 
 def writeGCFfile(data, filepaths):
-    newfilepath = os.path.join(filepaths[1], 'DefaultPool.gcf')
+    newfilepath = os.path.join(filepaths[1], filepaths[2]+'.gcf')
 
-    root = ET.Element("GlobalConstants", Name="DefaultPool", Comment="Global constants")
+    root = ET.Element("GlobalConstants", Name=filepaths[2], Comment="Global constants")
 
     # Create the GlobalConstants element
     global_constants = ET.SubElement(root, "GlobalConstants")
