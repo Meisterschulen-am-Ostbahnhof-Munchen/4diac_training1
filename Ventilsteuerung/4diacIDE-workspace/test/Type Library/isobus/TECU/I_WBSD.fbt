@@ -15,9 +15,11 @@
 		<EventOutputs>
 			<Event Name="INITO" Type="Event" Comment="Initialization Confirm">
 				<With Var="QO"/>
+				<With Var="STATUS"/>
 			</Event>
 			<Event Name="IND" Type="Event" Comment="Indication from Resource">
 				<With Var="QO"/>
+				<With Var="timestamp_data"/>
 				<With Var="WHEELBASEDMACHINESPEED"/>
 				<With Var="WHEELBASEDMACHINEDISTANCE"/>
 				<With Var="MAXI_TIMEOFTRACPOWER"/>
@@ -25,6 +27,13 @@
 				<With Var="KEYSWITCHSTATE"/>
 				<With Var="START_STOP_STATE"/>
 				<With Var="OPERATOR_DIREC_REVERSED"/>
+				<With Var="STATUS"/>
+				<With Var="Q_timeout"/>
+			</Event>
+			<Event Name="TIMEOUT" Type="Event" Comment="">
+				<With Var="timestamp_timeout"/>
+				<With Var="STATUS"/>
+				<With Var="Q_timeout"/>
 			</Event>
 		</EventOutputs>
 		<InputVars>
@@ -32,6 +41,10 @@
 		</InputVars>
 		<OutputVars>
 			<VarDeclaration Name="QO" Type="BOOL" Comment="Event Output Qualifier"/>
+			<VarDeclaration Name="STATUS" Type="STRING" Comment=""/>
+			<VarDeclaration Name="Q_timeout" Type="BOOL" Comment=""/>
+			<VarDeclaration Name="timestamp_timeout" Type="UINT" Comment=""/>
+			<VarDeclaration Name="timestamp_data" Type="UINT" Comment=""/>
 			<VarDeclaration Name="WHEELBASEDMACHINESPEED" Type="UINT" Comment="Wheel-based machine speed">
 				<Attribute Name="SPN" Type="INT" Value="1862"/>
 				<Attribute Name="SP_Name" Type="STRING" Value="'Wheel-based machine speed'"/>
