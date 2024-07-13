@@ -8,10 +8,10 @@
 	</CompilerInfo>
 	<InterfaceList>
 		<EventInputs>
-			<Event Name="EI0" Type="Event" Comment="">
+			<Event Name="REQ0" Type="Event" Comment="">
 				<With Var="IN0"/>
 			</Event>
-			<Event Name="EI1" Type="Event" Comment="">
+			<Event Name="REQ1" Type="Event" Comment="">
 				<With Var="IN1"/>
 			</Event>
 		</EventInputs>
@@ -38,8 +38,8 @@
 			<ECState Name="COPY1" Comment="" x="1333.33" y="1200">
 				<ECAction Algorithm="COPY1" Output="EO"/>
 			</ECState>
-			<ECTransition Source="START" Destination="COPY0" Condition="EI0" Comment="" x="1000" y="766.67"/>
-			<ECTransition Source="START" Destination="COPY1" Condition="EI1" Comment="" x="1013.33" y="1093.33"/>
+			<ECTransition Source="START" Destination="COPY0" Condition="REQ0" Comment="" x="1000" y="766.67"/>
+			<ECTransition Source="START" Destination="COPY1" Condition="REQ1" Comment="" x="1013.33" y="1093.33"/>
 			<ECTransition Source="COPY0" Destination="START" Condition="1" Comment="" x="600" y="420"/>
 			<ECTransition Source="COPY1" Destination="START" Condition="1" Comment="" x="660" y="1473.33"/>
 		</ECC>
