@@ -31,7 +31,7 @@ def checkPath(path):
         raise FileNotFoundError(f"The new file '{path}' does not exist.")
 
 def readIOPH(filepaths):
-    oldfilepath = os.path.join(filepaths[0], 'DefaultPool.iop.h')
+    oldfilepath   = filepaths[0]
     newfolderpath = filepaths[1]
     newfilepath = os.path.join(newfolderpath, 'DefaultPool.gcf')
 
