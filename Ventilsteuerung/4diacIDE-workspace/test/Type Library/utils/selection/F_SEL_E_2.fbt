@@ -28,4 +28,34 @@
 			<VarDeclaration Name="OUT" Type="ANY" Comment="Selected input"/>
 		</OutputVars>
 	</InterfaceList>
+	<BasicFB>
+		<ECC>
+			<ECState Name="START" Comment="Initial State" x="403.33" y="805">
+			</ECState>
+			<ECState Name="COPY0" Comment="" x="1333.33" y="533.33">
+				<ECAction Algorithm="COPY0" Output="EO"/>
+			</ECState>
+			<ECState Name="COPY1" Comment="" x="1333.33" y="1200">
+				<ECAction Algorithm="COPY1" Output="EO"/>
+			</ECState>
+			<ECTransition Source="START" Destination="COPY0" Condition="REQ0" Comment="" x="1000" y="766.67"/>
+			<ECTransition Source="START" Destination="COPY1" Condition="REQ1" Comment="" x="1013.33" y="1093.33"/>
+			<ECTransition Source="COPY0" Destination="START" Condition="1" Comment="" x="600" y="420"/>
+			<ECTransition Source="COPY1" Destination="START" Condition="1" Comment="" x="660" y="1473.33"/>
+		</ECC>
+		<Algorithm Name="COPY0" Comment="">
+			<ST><![CDATA[ALGORITHM COPY0
+OUT := IN0;
+END_ALGORITHM]]></ST>
+		</Algorithm>
+		<Algorithm Name="COPY1" Comment="">
+			<ST><![CDATA[
+
+ALGORITHM COPY1
+OUT := IN1;
+END_ALGORITHM
+
+]]></ST>
+		</Algorithm>
+	</BasicFB>
 </FBType>
