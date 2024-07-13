@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <FBType Name="DualHysteresis" Comment="2-way conversion of Analog to Digital with Hysteresis">
-	<Identification Standard="61499-2" Description="Copyright (c) 2023 HR Agrartechnik GmbH &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10;  &#10;SPDX-License-Identifier: EPL-2.0" >
+	<Identification Standard="61499-2" Description="Copyright (c) 2023 HR Agrartechnik GmbH  &#10;  &#10;This program and the accompanying materials are made   &#10;available under the terms of the Eclipse Public License 2.0   &#10;which is available at https://www.eclipse.org/legal/epl-2.0/   &#10;   &#10;SPDX-License-Identifier: EPL-2.0" >
 	</Identification>
 	<VersionInfo Organization="HR Agrartechnik GmbH" Version="1.0" Author="Franz Höpfinger" Date="2023-06-06">
 	</VersionInfo>
@@ -43,31 +43,31 @@
 	</InterfaceList>
 	<BasicFB>
 		<ECC>
-			<ECState Name="START" Comment="Initial State" x="840.0" y="2460.0">
+			<ECState Name="START" Comment="Initial State" x="840" y="2460">
 			</ECState>
-			<ECState Name="Init" Comment="Initialization" x="1600.0" y="2000.0">
+			<ECState Name="Init" Comment="Initialization" x="1600" y="2000">
 				<ECAction Algorithm="initialize" Output="INITO"/>
 			</ECState>
-			<ECState Name="UP" Comment="Normal execution" x="6666.666666666667" y="1066.6666666666667">
+			<ECState Name="UP" Comment="Normal execution" x="6666.67" y="1066.67">
 				<ECAction Algorithm="alUp" Output="CNF"/>
 			</ECState>
-			<ECState Name="Neutral" Comment="" x="2266.666666666667" y="2480.0">
+			<ECState Name="Neutral" Comment="" x="2266.67" y="2480">
 				<ECAction Algorithm="alNeutral" Output="CNF"/>
 			</ECState>
-			<ECState Name="DeInit" Comment="" x="1506.6666666666667" y="2860.0">
+			<ECState Name="DeInit" Comment="" x="1506.67" y="2860">
 				<ECAction Algorithm="deInitialize" Output="INITO"/>
 			</ECState>
-			<ECState Name="DOWN" Comment="" x="6666.666666666667" y="3466.666666666667">
+			<ECState Name="DOWN" Comment="" x="6666.67" y="3466.67">
 				<ECAction Algorithm="alDown" Output="CNF"/>
 			</ECState>
-			<ECTransition Source="START" Destination="Init" Condition="INIT[TRUE = QI]" Comment="" x="1206.6666666666667" y="2260.0"/>
-			<ECTransition Source="Init" Destination="Neutral" Condition="REQ" Comment="" x="2026.6666666666667" y="2313.3333333333335"/>
-			<ECTransition Source="Neutral" Destination="DeInit" Condition="INIT[FALSE = QI]" Comment="" x="2053.3333333333335" y="2680.0"/>
-			<ECTransition Source="Neutral" Destination="UP" Condition="REQ[INPUT &gt;= MI + DEAD + HYSTERESIS]" Comment="" x="5040.0" y="1173.3333333333335"/>
-			<ECTransition Source="DeInit" Destination="START" Condition="1" Comment="" x="1306.6666666666667" y="2780.0"/>
-			<ECTransition Source="Neutral" Destination="DOWN" Condition="REQ[INPUT &lt;= MI - DEAD - HYSTERESIS]" Comment="" x="5513.333333333334" y="3013.3333333333335"/>
-			<ECTransition Source="DOWN" Destination="Neutral" Condition="REQ[INPUT &gt; MI - DEAD]" Comment="" x="5173.333333333334" y="3480.0"/>
-			<ECTransition Source="UP" Destination="Neutral" Condition="REQ[INPUT &lt; MI + DEAD]" Comment="" x="5173.333333333334" y="2026.6666666666667"/>
+			<ECTransition Source="START" Destination="Init" Condition="INIT[TRUE = QI]" Comment="" x="1206.67" y="2260"/>
+			<ECTransition Source="Init" Destination="Neutral" Condition="REQ" Comment="" x="2026.67" y="2313.33"/>
+			<ECTransition Source="Neutral" Destination="DeInit" Condition="INIT[FALSE = QI]" Comment="" x="2053.33" y="2680"/>
+			<ECTransition Source="Neutral" Destination="UP" Condition="REQ[INPUT &gt;= MI + DEAD + HYSTERESIS]" Comment="" x="5040" y="1173.33"/>
+			<ECTransition Source="DeInit" Destination="START" Condition="1" Comment="" x="1306.67" y="2780"/>
+			<ECTransition Source="Neutral" Destination="DOWN" Condition="REQ[INPUT &lt;= MI - DEAD - HYSTERESIS]" Comment="" x="5513.33" y="3013.33"/>
+			<ECTransition Source="DOWN" Destination="Neutral" Condition="REQ[INPUT &gt; MI - DEAD]" Comment="" x="5173.33" y="3480"/>
+			<ECTransition Source="UP" Destination="Neutral" Condition="REQ[INPUT &lt; MI + DEAD]" Comment="" x="5173.33" y="2026.67"/>
 		</ECC>
 		<Algorithm Name="initialize" Comment="">
 			<ST><![CDATA[ALGORITHM initialize
