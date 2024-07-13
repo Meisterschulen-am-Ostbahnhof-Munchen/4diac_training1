@@ -78,7 +78,7 @@ def readIOPH(filepaths):
 def writeGCFfile(data, filepaths):
     newfilepath = os.path.join(filepaths[1], 'DefaultPool.gcf')
 
-    root = ET.Element("GlobalConstants", Name="colours", Comment="Global constants")
+    root = ET.Element("GlobalConstants", Name="DefaultPool", Comment="Global constants")
 
     # Create the GlobalConstants element
     global_constants = ET.SubElement(root, "GlobalConstants")
