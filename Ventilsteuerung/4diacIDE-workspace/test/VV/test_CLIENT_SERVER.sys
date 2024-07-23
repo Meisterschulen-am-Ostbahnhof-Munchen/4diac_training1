@@ -103,42 +103,46 @@
 					<Parameter Name="QI" Value="TRUE" Comment=""/>
 					<Parameter Name="ID" Value="PORT_B3" Comment=""/>
 				</FB>
-				<FB Name="UINT2UINT_0" Type="UINT2UINT" Comment="" x="5866.67" y="800">
+				<FB Name="UINT2UINT_0" Type="F_MOVE" Comment="" x="5866.67" y="800">
+					<Attribute Name="DataType" Value="UINT"/>
 				</FB>
-				<FB Name="UINT2UINT_1" Type="UINT2UINT" Comment="" x="5866.67" y="1866.67">
+				<FB Name="UINT2UINT_1" Type="F_MOVE" Comment="" x="5866.67" y="1866.67">
+					<Attribute Name="DataType" Value="UINT"/>
 				</FB>
-				<FB Name="UINT2UINT_2" Type="UINT2UINT" Comment="" x="5866.67" y="3253.33">
+				<FB Name="UINT2UINT_2" Type="F_MOVE" Comment="" x="5866.67" y="3253.33">
+					<Attribute Name="DataType" Value="UINT"/>
 				</FB>
-				<FB Name="UINT2UINT_3" Type="UINT2UINT" Comment="" x="5866.67" y="4453.33">
+				<FB Name="UINT2UINT_3" Type="F_MOVE" Comment="" x="5866.67" y="4453.33">
+					<Attribute Name="DataType" Value="UINT"/>
 				</FB>
 				<EventConnections>
 					<Connection Source="START.COLD" Destination="App_mapping.mapping_Uebung_033_VV_FORTE_PC_A.INIT" Comment="" dx1="80"/>
 					<Connection Source="App_functions.BUTTON_GREEN.INITO" Destination="CLIENT_BUTTON_GREEN.INIT" Comment="" dx1="646.67"/>
 					<Connection Source="App_functions.BUTTON_GREEN.IND" Destination="CLIENT_BUTTON_GREEN.REQ" Comment=""/>
 					<Connection Source="App_functions.BUTTON_YELLOW.INITO" Destination="CLIENT_BUTTON_YELLOW.INIT" Comment="" dx1="633.33"/>
-					<Connection Source="App_functions.BUTTON_YELLOW.IND" Destination="CLIENT_BUTTON_YELLOW.REQ" Comment=""/>
+					<Connection Source="App_functions.BUTTON_YELLOW.IND" Destination="CLIENT_BUTTON_YELLOW.REQ" Comment="" dx1="633.33"/>
 					<Connection Source="App_functions.BUTTON_RED.INITO" Destination="CLIENT_BUTTON_RED.INIT" Comment="" dx1="666.67"/>
-					<Connection Source="App_functions.BUTTON_RED.IND" Destination="CLIENT_BUTTON_RED.REQ" Comment=""/>
+					<Connection Source="App_functions.BUTTON_RED.IND" Destination="CLIENT_BUTTON_RED.REQ" Comment="" dx1="666.67"/>
 					<Connection Source="App_functions.BUTTON_BLUE.INITO" Destination="CLIENT_BUTTON_BLUE.INIT" Comment="" dx1="660"/>
-					<Connection Source="App_functions.BUTTON_BLUE.IND" Destination="CLIENT_BUTTON_BLUE.REQ" Comment=""/>
-					<Connection Source="CLIENT_BUTTON_GREEN.CNF" Destination="UINT2UINT_0.REQ" Comment="" dx1="346.67"/>
-					<Connection Source="CLIENT_BUTTON_YELLOW.CNF" Destination="UINT2UINT_1.REQ" Comment="" dx1="360"/>
-					<Connection Source="CLIENT_BUTTON_RED.CNF" Destination="UINT2UINT_2.REQ" Comment="" dx1="326.67"/>
-					<Connection Source="CLIENT_BUTTON_BLUE.CNF" Destination="UINT2UINT_3.REQ" Comment="" dx1="333.33"/>
+					<Connection Source="App_functions.BUTTON_BLUE.IND" Destination="CLIENT_BUTTON_BLUE.REQ" Comment="" dx1="660"/>
 					<Connection Source="START.COLD" Destination="App_functions.BUTTON_GREEN.INIT" Comment="" dx1="866.67"/>
 					<Connection Source="START.COLD" Destination="App_functions.BUTTON_YELLOW.INIT" Comment="" dx1="866.67"/>
 					<Connection Source="START.COLD" Destination="App_functions.BUTTON_RED.INIT" Comment="" dx1="866.67"/>
 					<Connection Source="START.COLD" Destination="App_functions.BUTTON_BLUE.INIT" Comment="" dx1="866.67"/>
+					<Connection Source="CLIENT_BUTTON_GREEN.CNF" Destination="UINT2UINT_0.REQ" Comment="" dx1="346.67" dx2="346.67" dy="0"/>
+					<Connection Source="CLIENT_BUTTON_RED.CNF" Destination="UINT2UINT_2.REQ" Comment="" dx1="326.67" dx2="326.67" dy="0"/>
+					<Connection Source="CLIENT_BUTTON_YELLOW.CNF" Destination="UINT2UINT_1.REQ" Comment="" dx1="360" dx2="360" dy="0"/>
+					<Connection Source="CLIENT_BUTTON_BLUE.CNF" Destination="UINT2UINT_3.REQ" Comment="" dx1="333.33" dx2="333.33" dy="0"/>
 				</EventConnections>
 				<DataConnections>
 					<Connection Source="App_functions.BUTTON_GREEN.IN" Destination="CLIENT_BUTTON_GREEN.SD_1" Comment=""/>
-					<Connection Source="App_functions.BUTTON_YELLOW.IN" Destination="CLIENT_BUTTON_YELLOW.SD_1" Comment=""/>
-					<Connection Source="App_functions.BUTTON_RED.IN" Destination="CLIENT_BUTTON_RED.SD_1" Comment=""/>
-					<Connection Source="App_functions.BUTTON_BLUE.IN" Destination="CLIENT_BUTTON_BLUE.SD_1" Comment=""/>
-					<Connection Source="CLIENT_BUTTON_RED.RD_1" Destination="UINT2UINT_2.IN" Comment=""/>
-					<Connection Source="CLIENT_BUTTON_BLUE.RD_1" Destination="UINT2UINT_3.IN" Comment=""/>
-					<Connection Source="CLIENT_BUTTON_YELLOW.RD_1" Destination="UINT2UINT_1.IN" Comment=""/>
-					<Connection Source="CLIENT_BUTTON_GREEN.RD_1" Destination="UINT2UINT_0.IN" Comment=""/>
+					<Connection Source="App_functions.BUTTON_YELLOW.IN" Destination="CLIENT_BUTTON_YELLOW.SD_1" Comment="" dx1="633.33"/>
+					<Connection Source="App_functions.BUTTON_RED.IN" Destination="CLIENT_BUTTON_RED.SD_1" Comment="" dx1="666.67"/>
+					<Connection Source="App_functions.BUTTON_BLUE.IN" Destination="CLIENT_BUTTON_BLUE.SD_1" Comment="" dx1="660"/>
+					<Connection Source="CLIENT_BUTTON_GREEN.RD_1" Destination="UINT2UINT_0.IN" Comment="" dx1="346.67" dx2="346.67" dy="0"/>
+					<Connection Source="CLIENT_BUTTON_RED.RD_1" Destination="UINT2UINT_2.IN" Comment="" dx1="326.67" dx2="326.67" dy="0"/>
+					<Connection Source="CLIENT_BUTTON_YELLOW.RD_1" Destination="UINT2UINT_1.IN" Comment="" dx1="360" dx2="360" dy="0"/>
+					<Connection Source="CLIENT_BUTTON_BLUE.RD_1" Destination="UINT2UINT_3.IN" Comment="" dx1="333.33" dx2="333.33" dy="0"/>
 				</DataConnections>
 			</FBNetwork>
 		</Resource>
