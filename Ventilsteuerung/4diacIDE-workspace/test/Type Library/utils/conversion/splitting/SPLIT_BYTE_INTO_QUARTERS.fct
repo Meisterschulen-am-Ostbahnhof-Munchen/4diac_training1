@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<Function Name="BYTE_TO_QUARTERS" Comment="">
-	<Identification Standard="61499-1">
+<Function Name="SPLIT_BYTE_INTO_QUARTERS" Comment="this Function extracts the 4 QUARTER BYTE from a byte">
+	<Identification Standard="61499-1" Description="Copyright (c) 2024 HR Agrartechnik GmbH    &#10;    &#10;This program and the accompanying materials are made     &#10;available under the terms of the Eclipse Public License 2.0     &#10;which is available at https://www.eclipse.org/legal/epl-2.0/     &#10;     &#10;SPDX-License-Identifier: EPL-2.0" >
 	</Identification>
 	<VersionInfo Version="1.0" Author="franz" Date="2024-02-22">
 	</VersionInfo>
@@ -21,7 +21,7 @@
 			</Event>
 		</EventOutputs>
 		<InputVars>
-			<VarDeclaration Name="IN" Type="BYTE" Comment="BYTE Input"/>
+			<VarDeclaration Name="IN" Type="BYTE" Comment=""/>
 		</InputVars>
 		<OutputVars>
 			<VarDeclaration Name="OUT_00" Type="BYTE" Comment="QUARTER BYTE 00"/>
@@ -31,10 +31,11 @@
 		</OutputVars>
 	</InterfaceList>
 	<FunctionBody>
-		<ST><![CDATA[FUNCTION BYTE_TO_QUARTERS
+		<ST><![CDATA[(* this Function extracts the 4 QUARTER BYTE from a byte *)
+FUNCTION SPLIT_BYTE_INTO_QUARTERS
 
 VAR_INPUT
-	IN : BYTE;    // BYTE Input
+	IN : BYTE;
 END_VAR
 
 VAR_OUTPUT
@@ -44,11 +45,10 @@ VAR_OUTPUT
 	OUT_03 : BYTE;    // QUARTER BYTE 03
 END_VAR
 
-(* this Function extracts the 4 QUARTER BYTE from a byte *)
-OUT_00 := SHR(IN AND BYTE_QUARTER_00, SHFT_QUARTER_00);
-OUT_01 := SHR(IN AND BYTE_QUARTER_01, SHFT_QUARTER_01);
-OUT_02 := SHR(IN AND BYTE_QUARTER_02, SHFT_QUARTER_02);
-OUT_03 := SHR(IN AND BYTE_QUARTER_03, SHFT_QUARTER_03);
+OUT_00 := SHR(IN AND BYTE_QUARTER_00, SHIFT_QUARTER_00);
+OUT_01 := SHR(IN AND BYTE_QUARTER_01, SHIFT_QUARTER_01);
+OUT_02 := SHR(IN AND BYTE_QUARTER_02, SHIFT_QUARTER_02);
+OUT_03 := SHR(IN AND BYTE_QUARTER_03, SHIFT_QUARTER_03);
 
 END_FUNCTION
 ]]></ST>

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<Function Name="DWORD_TO_QUARTERS" Comment="">
-	<Identification Standard="61499-1">
+<Function Name="SPLIT_DWORD_INTO_QUARTERS" Comment="this Function extracts the 16 QUARTER BYTE from a dword">
+	<Identification Standard="61499-1" Description="Copyright (c) 2024 HR Agrartechnik GmbH    &#10;    &#10;This program and the accompanying materials are made     &#10;available under the terms of the Eclipse Public License 2.0     &#10;which is available at https://www.eclipse.org/legal/epl-2.0/     &#10;     &#10;SPDX-License-Identifier: EPL-2.0" >
 	</Identification>
 	<VersionInfo Version="1.0" Author="franz" Date="2024-02-22">
 	</VersionInfo>
@@ -33,7 +33,7 @@
 			</Event>
 		</EventOutputs>
 		<InputVars>
-			<VarDeclaration Name="IN" Type="DWORD" Comment="DWORD Input"/>
+			<VarDeclaration Name="IN" Type="DWORD" Comment=""/>
 		</InputVars>
 		<OutputVars>
 			<VarDeclaration Name="OUT_00" Type="BYTE" Comment="QUARTER BYTE 00"/>
@@ -55,10 +55,11 @@
 		</OutputVars>
 	</InterfaceList>
 	<FunctionBody>
-		<ST><![CDATA[FUNCTION DWORD_TO_QUARTERS
+		<ST><![CDATA[(* this Function extracts the 16 QUARTER BYTE from a dword *)
+FUNCTION SPLIT_DWORD_INTO_QUARTERS
 
 VAR_INPUT
-	IN : DWORD;    // DWORD Input
+	IN : DWORD;
 END_VAR
 
 VAR_OUTPUT
@@ -80,15 +81,14 @@ VAR_OUTPUT
 	OUT_15 : BYTE;    // QUARTER BYTE 15
 END_VAR
 
-(* this Function extracts the 16 QUARTER BYTE from a dword *)
-OUT_00 := DWORD_TO_BYTE(SHR(IN AND DWORD_QUARTER_00, SHFT_QUARTER_00));
-OUT_01 := DWORD_TO_BYTE(SHR(IN AND DWORD_QUARTER_01, SHFT_QUARTER_01));
-OUT_02 := DWORD_TO_BYTE(SHR(IN AND DWORD_QUARTER_02, SHFT_QUARTER_02));
-OUT_03 := DWORD_TO_BYTE(SHR(IN AND DWORD_QUARTER_03, SHFT_QUARTER_03));
-OUT_04 := DWORD_TO_BYTE(SHR(IN AND DWORD_QUARTER_04, SHFT_QUARTER_04));
-OUT_05 := DWORD_TO_BYTE(SHR(IN AND DWORD_QUARTER_05, SHFT_QUARTER_05));
-OUT_06 := DWORD_TO_BYTE(SHR(IN AND DWORD_QUARTER_06, SHFT_QUARTER_06));
-OUT_07 := DWORD_TO_BYTE(SHR(IN AND DWORD_QUARTER_07, SHFT_QUARTER_07));
+OUT_00 := DWORD_TO_BYTE(SHR(IN AND DWORD_QUARTER_00, SHIFT_QUARTER_00));
+OUT_01 := DWORD_TO_BYTE(SHR(IN AND DWORD_QUARTER_01, SHIFT_QUARTER_01));
+OUT_02 := DWORD_TO_BYTE(SHR(IN AND DWORD_QUARTER_02, SHIFT_QUARTER_02));
+OUT_03 := DWORD_TO_BYTE(SHR(IN AND DWORD_QUARTER_03, SHIFT_QUARTER_03));
+OUT_04 := DWORD_TO_BYTE(SHR(IN AND DWORD_QUARTER_04, SHIFT_QUARTER_04));
+OUT_05 := DWORD_TO_BYTE(SHR(IN AND DWORD_QUARTER_05, SHIFT_QUARTER_05));
+OUT_06 := DWORD_TO_BYTE(SHR(IN AND DWORD_QUARTER_06, SHIFT_QUARTER_06));
+OUT_07 := DWORD_TO_BYTE(SHR(IN AND DWORD_QUARTER_07, SHIFT_QUARTER_07));
 OUT_08 := DWORD_TO_BYTE(SHR(IN AND DWORD_QUARTER_08, SHIFT_QUARTER_08));
 OUT_09 := DWORD_TO_BYTE(SHR(IN AND DWORD_QUARTER_09, SHIFT_QUARTER_09));
 OUT_10 := DWORD_TO_BYTE(SHR(IN AND DWORD_QUARTER_10, SHIFT_QUARTER_10));

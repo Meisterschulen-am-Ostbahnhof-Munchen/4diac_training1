@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<Function Name="WORD_TO_QUARTERS" Comment="">
-	<Identification Standard="61499-1" Description="Copyright (c) 2024 HR Agrartechnik GmbH   &#10;   &#10;This program and the accompanying materials are made    &#10;available under the terms of the Eclipse Public License 2.0    &#10;which is available at https://www.eclipse.org/legal/epl-2.0/    &#10;    &#10;SPDX-License-Identifier: EPL-2.0" >
+<Function Name="SPLIT_WORD_INTO_QUARTERS" Comment="this Function extracts the 8 QUARTER BYTE from a word">
+	<Identification Standard="61499-1" Description="Copyright (c) 2024 HR Agrartechnik GmbH    &#10;    &#10;This program and the accompanying materials are made     &#10;available under the terms of the Eclipse Public License 2.0     &#10;which is available at https://www.eclipse.org/legal/epl-2.0/     &#10;     &#10;SPDX-License-Identifier: EPL-2.0" >
 	</Identification>
 	<VersionInfo Version="1.0" Author="franz" Date="2024-02-22">
 	</VersionInfo>
@@ -25,7 +25,7 @@
 			</Event>
 		</EventOutputs>
 		<InputVars>
-			<VarDeclaration Name="IN" Type="WORD" Comment="WORD Input"/>
+			<VarDeclaration Name="IN" Type="WORD" Comment=""/>
 		</InputVars>
 		<OutputVars>
 			<VarDeclaration Name="OUT_00" Type="BYTE" Comment="QUARTER BYTE 00"/>
@@ -39,10 +39,11 @@
 		</OutputVars>
 	</InterfaceList>
 	<FunctionBody>
-		<ST><![CDATA[FUNCTION WORD_TO_QUARTERS
+		<ST><![CDATA[(* this Function extracts the 8 QUARTER BYTE from a word *)
+FUNCTION SPLIT_WORD_INTO_QUARTERS
 
 VAR_INPUT
-	IN : WORD;    // WORD Input
+	IN : WORD;
 END_VAR
 
 VAR_OUTPUT
@@ -56,15 +57,14 @@ VAR_OUTPUT
 	OUT_07 : BYTE;    // QUARTER BYTE 07
 END_VAR
 
-(* this Function extracts the 8 QUARTER BYTE from a word *)
-OUT_00 := WORD_TO_BYTE(SHR(IN AND WORD_QUARTER_00, SHFT_QUARTER_00));
-OUT_01 := WORD_TO_BYTE(SHR(IN AND WORD_QUARTER_01, SHFT_QUARTER_01));
-OUT_02 := WORD_TO_BYTE(SHR(IN AND WORD_QUARTER_02, SHFT_QUARTER_02));
-OUT_03 := WORD_TO_BYTE(SHR(IN AND WORD_QUARTER_03, SHFT_QUARTER_03));
-OUT_04 := WORD_TO_BYTE(SHR(IN AND WORD_QUARTER_04, SHFT_QUARTER_04));
-OUT_05 := WORD_TO_BYTE(SHR(IN AND WORD_QUARTER_05, SHFT_QUARTER_05));
-OUT_06 := WORD_TO_BYTE(SHR(IN AND WORD_QUARTER_06, SHFT_QUARTER_06));
-OUT_07 := WORD_TO_BYTE(SHR(IN AND WORD_QUARTER_07, SHFT_QUARTER_07));
+OUT_00 := WORD_TO_BYTE(SHR(IN AND WORD_QUARTER_00, SHIFT_QUARTER_00));
+OUT_01 := WORD_TO_BYTE(SHR(IN AND WORD_QUARTER_01, SHIFT_QUARTER_01));
+OUT_02 := WORD_TO_BYTE(SHR(IN AND WORD_QUARTER_02, SHIFT_QUARTER_02));
+OUT_03 := WORD_TO_BYTE(SHR(IN AND WORD_QUARTER_03, SHIFT_QUARTER_03));
+OUT_04 := WORD_TO_BYTE(SHR(IN AND WORD_QUARTER_04, SHIFT_QUARTER_04));
+OUT_05 := WORD_TO_BYTE(SHR(IN AND WORD_QUARTER_05, SHIFT_QUARTER_05));
+OUT_06 := WORD_TO_BYTE(SHR(IN AND WORD_QUARTER_06, SHIFT_QUARTER_06));
+OUT_07 := WORD_TO_BYTE(SHR(IN AND WORD_QUARTER_07, SHIFT_QUARTER_07));
 
 END_FUNCTION
 ]]></ST>

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<Function Name="BYTES_TO_DWORD" Comment="">
-	<Identification Standard="61499-1">
+<Function Name="ASSEMBLE_DWORD_FROM_BYTES" Comment="this Function combines the 2 BYTES to a DWORD">
+	<Identification Standard="61499-1" Description="Copyright (c) 2024 HR Agrartechnik GmbH    &#10;    &#10;This program and the accompanying materials are made     &#10;available under the terms of the Eclipse Public License 2.0     &#10;which is available at https://www.eclipse.org/legal/epl-2.0/     &#10;     &#10;SPDX-License-Identifier: EPL-2.0" >
 	</Identification>
 	<VersionInfo Version="1.0" Author="franz" Date="2024-02-22">
 	</VersionInfo>
@@ -31,7 +31,8 @@
 		</OutputVars>
 	</InterfaceList>
 	<FunctionBody>
-		<ST><![CDATA[FUNCTION BYTES_TO_DWORD : DWORD
+		<ST><![CDATA[(* this Function combines the 2 BYTES to a DWORD *)
+FUNCTION ASSEMBLE_DWORD_FROM_BYTES : DWORD
 
 VAR_INPUT
 	IN_00 : BYTE;    // BYTE 00
@@ -40,12 +41,10 @@ VAR_INPUT
 	IN_03 : BYTE;    // BYTE 03
 END_VAR
 
-(* this Function combines the 2 BYTES to a word *)
-BYTES_TO_DWORD := DWORD_BYTE_ZZ;
-BYTES_TO_DWORD := BYTES_TO_DWORD OR SHL(BYTE_TO_DWORD(IN_03), SHFT_BYTE_03);
-BYTES_TO_DWORD := BYTES_TO_DWORD OR SHL(BYTE_TO_DWORD(IN_02), SHFT_BYTE_02);
-BYTES_TO_DWORD := BYTES_TO_DWORD OR SHL(BYTE_TO_DWORD(IN_01), SHFT_BYTE_01);
-BYTES_TO_DWORD := BYTES_TO_DWORD OR SHL(BYTE_TO_DWORD(IN_00), SHFT_BYTE_00);
+ASSEMBLE_DWORD_FROM_BYTES.%B0 := IN_00;
+ASSEMBLE_DWORD_FROM_BYTES.%B1 := IN_01;
+ASSEMBLE_DWORD_FROM_BYTES.%B2 := IN_02;
+ASSEMBLE_DWORD_FROM_BYTES.%B3 := IN_03;
 
 END_FUNCTION
 ]]></ST>
