@@ -115,7 +115,7 @@
 			<Connection Source="Q_TO_BOOL_Q2.CNF" Destination="Q_TO_STR_STATUS_Q2.REQ" Comment="" dx1="320" dx2="320" dy="0"/>
 			<Connection Source="DigitalInput_I2.IND" Destination="Q_TO_STR_STATUS_I2.REQ" Comment="" dx1="840" dx2="840" dy="0"/>
 			<Connection Source="DigitalInput_I1.IND" Destination="BOOL_TO_Q_I1.REQ" Comment="" dx1="853.33" dx2="853.33" dy="0"/>
-			<Connection Source="BOOL_TO_Q_I1.CNF" Destination="ASSEMBLE_BYTE_FROM_QUARTERS.REQ" Comment="" dx1="273.33" dx2="273.33" dy="380"/>
+			<Connection Source="BOOL_TO_Q_I1.CNF" Destination="ASSEMBLE_BYTE_FROM_QUARTERS.REQ" Comment="" dx1="140" dx2="80" dy="380"/>
 			<Connection Source="BOOL_TO_Q_I1.CNF" Destination="Q_TO_STR_STATUS_I1.REQ" Comment=""/>
 			<Connection Source="DigitalInput_I2.IND" Destination="BOOL_TO_Q_I2.REQ" Comment="" dx1="840" dx2="840" dy="0"/>
 			<Connection Source="BOOL_TO_Q_I2.CNF" Destination="ASSEMBLE_BYTE_FROM_QUARTERS.REQ" Comment="" dx1="1546.67" dx2="1546.67" dy="0"/>
@@ -126,13 +126,9 @@
 			<Connection Source="BOOL_TO_Q_I3.CNF" Destination="ASSEMBLE_BYTE_FROM_QUARTERS.REQ" Comment="" dx1="186.67" dx2="186.67" dy="0"/>
 		</EventConnections>
 		<DataConnections>
-			<Connection Source="SPLIT_BYTE_INTO_QUARTERS.OUT_00" Destination="Q_TO_BOOL_Q1.IB" Comment="" dx1="933.33" dx2="933.33" dy="0"/>
 			<Connection Source="Q_TO_BOOL_Q1.Q" Destination="DigitalOutput_Q1.OUT" Comment="" dx1="320" dx2="320" dy="206.67"/>
-			<Connection Source="SPLIT_BYTE_INTO_QUARTERS.OUT_03" Destination="Q_TO_BOOL_Q4.IB" Comment="" dx1="866.67" dx2="866.67" dy="0"/>
 			<Connection Source="Q_TO_BOOL_Q4.Q" Destination="DigitalOutput_Q4.OUT" Comment="" dx1="320" dx2="320" dy="206.67"/>
-			<Connection Source="SPLIT_BYTE_INTO_QUARTERS.OUT_01" Destination="Q_TO_BOOL_Q2.IB" Comment="" dx1="1000" dx2="1000" dy="0"/>
 			<Connection Source="Q_TO_BOOL_Q2.Q" Destination="DigitalOutput_Q2.OUT" Comment="" dx1="320" dx2="320" dy="206.67"/>
-			<Connection Source="SPLIT_BYTE_INTO_QUARTERS.OUT_02" Destination="Q_TO_BOOL_Q3.IB" Comment="" dx1="1033.33" dx2="1033.33" dy="0"/>
 			<Connection Source="Q_TO_BOOL_Q3.Q" Destination="DigitalOutput_Q3.OUT" Comment="" dx1="320" dx2="320" dy="206.67"/>
 			<Connection Source="Q_TO_BOOL_Q3.Q" Destination="Q_TO_STR_STATUS_Q3.IB" Comment="" dx1="320" dx2="320" dy="0"/>
 			<Connection Source="Q_TO_BOOL_Q1.Q" Destination="Q_TO_STR_STATUS_Q1.IB" Comment="" dx1="320" dx2="320" dy="0"/>
@@ -141,16 +137,20 @@
 			<Connection Source="Q_TO_BOOL_Q2.Q" Destination="Q_TO_STR_STATUS_Q2.IB" Comment="" dx1="320" dx2="320" dy="0"/>
 			<Connection Source="DigitalInput_I2.IN" Destination="Q_TO_STR_STATUS_I2.IB" Comment="" dx1="873.33" dx2="873.33" dy="0"/>
 			<Connection Source="DigitalInput_I1.IN" Destination="BOOL_TO_Q_I1.I" Comment="" dx1="853.33" dx2="853.33" dy="0"/>
-			<Connection Source="BOOL_TO_Q_I1.QB" Destination="ASSEMBLE_BYTE_FROM_QUARTERS.IN_00" Comment="" dx1="240" dx2="240" dy="186.67"/>
 			<Connection Source="BOOL_TO_Q_I1.QB" Destination="Q_TO_STR_STATUS_I1.IB" Comment=""/>
 			<Connection Source="DigitalInput_I2.IN" Destination="BOOL_TO_Q_I2.I" Comment="" dx1="873.33" dx2="873.33" dy="0"/>
-			<Connection Source="BOOL_TO_Q_I2.QB" Destination="ASSEMBLE_BYTE_FROM_QUARTERS.IN_01" Comment="" dx1="946.67" dx2="946.67" dy="0"/>
 			<Connection Source="DigitalInput_I4.IN" Destination="BOOL_TO_Q_I4.I" Comment="" dx1="853.33" dx2="853.33" dy="0"/>
-			<Connection Source="BOOL_TO_Q_I4.QB" Destination="ASSEMBLE_BYTE_FROM_QUARTERS.IN_03" Comment="" dx1="253.33" dx2="253.33" dy="0"/>
 			<Connection Source="BOOL_TO_Q_I4.QB" Destination="Q_TO_STR_STATUS_I4.IB" Comment=""/>
 			<Connection Source="DigitalInput_I3.IN" Destination="BOOL_TO_Q_I3.I" Comment="" dx1="853.33" dx2="853.33" dy="0"/>
-			<Connection Source="BOOL_TO_Q_I3.QB" Destination="ASSEMBLE_BYTE_FROM_QUARTERS.IN_02" Comment="" dx1="220" dx2="220" dy="0"/>
 			<Connection Source="ASSEMBLE_BYTE_FROM_QUARTERS." Destination="SPLIT_BYTE_INTO_QUARTERS.IN" Comment=""/>
+			<Connection Source="SPLIT_BYTE_INTO_QUARTERS.QUARTER_BYTE_00" Destination="Q_TO_BOOL_Q1.IB" Comment="" dx1="780" dx2="780" dy="0"/>
+			<Connection Source="SPLIT_BYTE_INTO_QUARTERS.QUARTER_BYTE_03" Destination="Q_TO_BOOL_Q4.IB" Comment="" dx1="786.67" dx2="786.67" dy="0"/>
+			<Connection Source="SPLIT_BYTE_INTO_QUARTERS.QUARTER_BYTE_01" Destination="Q_TO_BOOL_Q2.IB" Comment="" dx1="780" dx2="780" dy="0"/>
+			<Connection Source="SPLIT_BYTE_INTO_QUARTERS.QUARTER_BYTE_02" Destination="Q_TO_BOOL_Q3.IB" Comment="" dx1="780" dx2="780" dy="0"/>
+			<Connection Source="BOOL_TO_Q_I1.QB" Destination="ASSEMBLE_BYTE_FROM_QUARTERS.QUARTER_BYTE_00" Comment="" dx1="80" dx2="820" dy="0"/>
+			<Connection Source="BOOL_TO_Q_I2.QB" Destination="ASSEMBLE_BYTE_FROM_QUARTERS.QUARTER_BYTE_01" Comment="" dx1="813.33" dx2="813.33" dy="0"/>
+			<Connection Source="BOOL_TO_Q_I4.QB" Destination="ASSEMBLE_BYTE_FROM_QUARTERS.QUARTER_BYTE_03" Comment="" dx1="80" dx2="820" dy="0"/>
+			<Connection Source="BOOL_TO_Q_I3.QB" Destination="ASSEMBLE_BYTE_FROM_QUARTERS.QUARTER_BYTE_02" Comment="" dx1="80" dx2="820" dy="0"/>
 		</DataConnections>
 	</SubAppNetwork>
 </SubAppType>
