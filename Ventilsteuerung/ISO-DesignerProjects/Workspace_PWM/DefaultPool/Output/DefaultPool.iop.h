@@ -8,7 +8,15 @@
 #define MASK_HEIGHT                         480
 #define WorkingSet_0                          0
 #define Macro_100_perc                        1
+#define Macro_050_perc                        2
+#define Macro_075_perc                        3
+#define Macro_000_perc                        4
+#define Macro_025_perc                        5
 #define DataMask_1000                      1000
+#define Button_050_perc                    6000
+#define Button_075_perc                    6001
+#define Button_000_perc                    6002
+#define Button_025_perc                    6003
 #define Button_100_perc                    6006
 #define InputNumber_PWM_DUTY               9000
 #define InputNumber_PWM_Value              9001
@@ -16,6 +24,10 @@
 #define OutputString_WS                   11500
 #define OutputNumber_100                  12000
 #define OutputNumber_8129                 12001
+#define OutputNumber_050                  12002
+#define OutputNumber_075                  12003
+#define OutputNumber_000                  12004
+#define OutputNumber_025                  12005
 #define Meter_17000                       17000
 #define LinearBargraph_18000              18000
 #define ArchedBargraph_19000              19000
