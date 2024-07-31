@@ -16,7 +16,9 @@
 #define OutputString_WS                   11500
 #define OutputNumber_100                  12000
 #define OutputNumber_8129                 12001
-#define NumberVariable_PWM_DUTY           21000
+#define Meter_17000                       17000
+#define LinearBargraph_18000              18000
+#define ArchedBargraph_19000              19000
 #define NumberVariable_PWM_Value          21001
 #define FontAttributes_12x16              23000
 #define FontAttributes_12x16_B            23001

@@ -1,21 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <JetView-ObjectPool Version="3.0" ProductVersion="5.6.2.5533">
 	<Objects>
-		<Object Class="CNumberVariable" JVS-ID="21000" ObjectName="NumberVariable_PWM_DUTY" Pinned="FALSE">
-			<Property Name="Group">
-				<Value/>
-			</Property>
-			<Property Name="Comment">
-				<Value>
-					<![CDATA[AAA=]]>
-				</Value>
-			</Property>
-			<PropertySheet Name="NumberVariable" ID="68736">
-				<Property Name="Value">
-					<Value>0</Value>
-				</Property>
-			</PropertySheet>
-		</Object>
 		<Object Class="CNumberVariable" JVS-ID="21001" ObjectName="NumberVariable_PWM_Value" Pinned="FALSE">
 			<Property Name="Group">
 				<Value/>
@@ -520,7 +505,7 @@
 			</PropertySheet>
 			<Objects>
 				<Object JVS-ID="23004"/>
-				<Object JVS-ID="21000"/>
+				<Object JVS-ID="21001"/>
 			</Objects>
 		</Object>
 		<Object Class="CInputNumber" Name="Edit" ObjectName="InputNumber_PWM_Value" Pinned="FALSE" JVS-ID="9001">
@@ -953,7 +938,7 @@
 			<PropertySheet Name="Text">
 				<Property Name="Text">
 					<Value>
-						<![CDATA[OAAxADkAMgAAAA==]]>
+						<![CDATA[OAAxADkAMQAAAA==]]>
 					</Value>
 				</Property>
 				<Property Name="ResourceID">
@@ -1000,7 +985,7 @@
 				</Property>
 				<Property Name="Value">
 					<Value>
-						<![CDATA[OAAxADkAMgAAAA==]]>
+						<![CDATA[OAAxADkAMQAAAA==]]>
 					</Value>
 				</Property>
 				<Property Name="StringLength">
@@ -1047,6 +1032,339 @@
 			</PropertySheet>
 			<Objects>
 				<Object JVS-ID="23000"/>
+			</Objects>
+		</Object>
+		<Object Class="CMeter" Name="Meter" ObjectName="Meter_17000" Pinned="FALSE" JVS-ID="17000">
+			<PropertySheet Name="Meter">
+				<Property Name="NeedleColor">
+					<Value>0</Value>
+				</Property>
+				<Property Name="BorderColor">
+					<Value>0</Value>
+				</Property>
+				<Property Name="ArcAndTickColor">
+					<Value>0</Value>
+				</Property>
+				<Property Name="BackColor">
+					<Value>16777215</Value>
+				</Property>
+				<Property Name="BackMode">
+					<Value>1</Value>
+				</Property>
+				<Property Name="DrawArc">
+					<Value>1</Value>
+				</Property>
+				<Property Name="DrawBorder">
+					<Value>0</Value>
+				</Property>
+				<Property Name="DrawTicks">
+					<Value>1</Value>
+				</Property>
+				<Property Name="DeflectionDirection">
+					<Value>1</Value>
+				</Property>
+				<Property Name="NoOfTicks">
+					<Value>5</Value>
+				</Property>
+				<Property Name="StartAngle">
+					<Value>-30</Value>
+				</Property>
+				<Property Name="EndAngle">
+					<Value>210</Value>
+				</Property>
+				<Property Name="MinValue">
+					<Value>0</Value>
+				</Property>
+				<Property Name="MaxValue">
+					<Value>8191</Value>
+				</Property>
+				<Property Name="NeedlePos">
+					<Value>0</Value>
+				</Property>
+				<Property Name="NeedleWidth">
+					<Value>1</Value>
+				</Property>
+				<Property Name="Value">
+					<Value/>
+				</Property>
+				<Property Name="Width">
+					<Value>120</Value>
+				</Property>
+				<Property Name="Height">
+					<Value>120</Value>
+				</Property>
+				<Property Name="Visible">
+					<Value>1</Value>
+				</Property>
+				<Property Name="Locked">
+					<Value>0</Value>
+				</Property>
+				<Property Name="Comment">
+					<Value>
+						<![CDATA[AAA=]]>
+					</Value>
+				</Property>
+				<Property Name="Disabled">
+					<Value>0</Value>
+				</Property>
+			</PropertySheet>
+			<Objects>
+				<Object JVS-ID="21001"/>
+			</Objects>
+		</Object>
+		<Object Class="CRectangle" Name="Rectangle" ObjectName="LinearBargraph_18000" Pinned="FALSE" JVS-ID="18000">
+			<PropertySheet Name="Rectangle">
+				<Property Name="LineSupression">
+					<Value>0000</Value>
+				</Property>
+				<Property Name="RoundEdgeRadius">
+					<Value>0</Value>
+				</Property>
+				<Property Name="Points">
+					<Value>(0,0)(480,0)(480,40)(0,40)</Value>
+				</Property>
+				<Property Name="OriginalPoints">
+					<Value>(0,0)(480,0)(480,40)(0,40)</Value>
+				</Property>
+				<Property Name="Width">
+					<Value>480</Value>
+				</Property>
+				<Property Name="Height">
+					<Value>40</Value>
+				</Property>
+				<Property Name="Visible">
+					<Value>1</Value>
+				</Property>
+				<Property Name="Locked">
+					<Value>0</Value>
+				</Property>
+				<Property Name="Comment">
+					<Value>
+						<![CDATA[AAA=]]>
+					</Value>
+				</Property>
+				<Property Name="Disabled">
+					<Value>0</Value>
+				</Property>
+			</PropertySheet>
+			<PropertySheet Name="Bargraph" Version="2">
+				<Property Name="Tag">
+					<Value>
+						<![CDATA[]]>
+					</Value>
+				</Property>
+				<Property Name="Min">
+					<Value>
+						<![CDATA[0]]>
+					</Value>
+				</Property>
+				<Property Name="Max">
+					<Value>
+						<![CDATA[8191]]>
+					</Value>
+				</Property>
+				<Property Name="Type">
+					<Value>3</Value>
+				</Property>
+				<Property Name="BackMode">
+					<Value>1</Value>
+				</Property>
+				<Property Name="BackColor">
+					<Value>16777215</Value>
+				</Property>
+				<Property Name="Color">
+					<Value>0</Value>
+				</Property>
+				<Property Name="FillType">
+					<Value>0</Value>
+				</Property>
+				<Property Name="NoOfTicks">
+					<Value>5</Value>
+				</Property>
+				<Property Name="TickColor">
+					<Value>16711680</Value>
+				</Property>
+				<Property Name="TickLength">
+					<Value>10</Value>
+				</Property>
+				<Property Name="TickWidth">
+					<Value>0</Value>
+				</Property>
+				<Property Name="ShowTicks">
+					<Value>2011784143</Value>
+				</Property>
+				<Property Name="ShowBorder">
+					<Value>1</Value>
+				</Property>
+				<Property Name="ShowTargetLine">
+					<Value>1</Value>
+				</Property>
+				<Property Name="TargetVal">
+					<Value>
+						<![CDATA[4095]]>
+					</Value>
+				</Property>
+				<Property Name="TargetLineColor">
+					<Value>255</Value>
+				</Property>
+				<Property Name="TargetLineWidth">
+					<Value>0</Value>
+				</Property>
+				<Property Name="PosVal">
+					<Value>
+						<![CDATA[0]]>
+					</Value>
+				</Property>
+				<Property Name="StartAngle">
+					<Value>-30</Value>
+				</Property>
+				<Property Name="EndAngle">
+					<Value>210</Value>
+				</Property>
+				<Property Name="PosValVariableObjectID">
+					<Value>21001</Value>
+				</Property>
+				<Property Name="TargetValVariableObjectID">
+					<Value>-1</Value>
+				</Property>
+				<Property Name="MinValVarObjectID">
+					<Value>-1</Value>
+				</Property>
+				<Property Name="MaxValVarObjectID">
+					<Value>-1</Value>
+				</Property>
+				<Property Name="VariableUpdateInterval">
+					<Value>0</Value>
+				</Property>
+			</PropertySheet>
+			<Objects>
+				<Object JVS-ID="21001"/>
+			</Objects>
+		</Object>
+		<Object Class="CArc" Name="Arc" ObjectName="ArchedBargraph_19000" Pinned="FALSE" JVS-ID="19000">
+			<PropertySheet Name="Arc">
+				<Property Name="StartAngle">
+					<Value>-30</Value>
+				</Property>
+				<Property Name="EndAngle">
+					<Value>210</Value>
+				</Property>
+				<Property Name="ArcWidth">
+					<Value>30</Value>
+				</Property>
+				<Property Name="Width">
+					<Value>120</Value>
+				</Property>
+				<Property Name="Height">
+					<Value>120</Value>
+				</Property>
+				<Property Name="Visible">
+					<Value>1</Value>
+				</Property>
+				<Property Name="Locked">
+					<Value>0</Value>
+				</Property>
+				<Property Name="Comment">
+					<Value>
+						<![CDATA[AAA=]]>
+					</Value>
+				</Property>
+				<Property Name="Disabled">
+					<Value>0</Value>
+				</Property>
+			</PropertySheet>
+			<PropertySheet Name="Bargraph" Version="2">
+				<Property Name="Tag">
+					<Value>
+						<![CDATA[]]>
+					</Value>
+				</Property>
+				<Property Name="Min">
+					<Value>
+						<![CDATA[0]]>
+					</Value>
+				</Property>
+				<Property Name="Max">
+					<Value>
+						<![CDATA[8191]]>
+					</Value>
+				</Property>
+				<Property Name="Type">
+					<Value>7</Value>
+				</Property>
+				<Property Name="BackMode">
+					<Value>1</Value>
+				</Property>
+				<Property Name="BackColor">
+					<Value>16777215</Value>
+				</Property>
+				<Property Name="Color">
+					<Value>0</Value>
+				</Property>
+				<Property Name="FillType">
+					<Value>0</Value>
+				</Property>
+				<Property Name="NoOfTicks">
+					<Value>0</Value>
+				</Property>
+				<Property Name="TickColor">
+					<Value>0</Value>
+				</Property>
+				<Property Name="TickLength">
+					<Value>7</Value>
+				</Property>
+				<Property Name="TickWidth">
+					<Value>0</Value>
+				</Property>
+				<Property Name="ShowTicks">
+					<Value>0</Value>
+				</Property>
+				<Property Name="ShowBorder">
+					<Value>1</Value>
+				</Property>
+				<Property Name="ShowTargetLine">
+					<Value>1</Value>
+				</Property>
+				<Property Name="TargetVal">
+					<Value>
+						<![CDATA[4095]]>
+					</Value>
+				</Property>
+				<Property Name="TargetLineColor">
+					<Value>255</Value>
+				</Property>
+				<Property Name="TargetLineWidth">
+					<Value>0</Value>
+				</Property>
+				<Property Name="PosVal">
+					<Value>
+						<![CDATA[0]]>
+					</Value>
+				</Property>
+				<Property Name="StartAngle">
+					<Value>-30</Value>
+				</Property>
+				<Property Name="EndAngle">
+					<Value>210</Value>
+				</Property>
+				<Property Name="PosValVariableObjectID">
+					<Value>21001</Value>
+				</Property>
+				<Property Name="TargetValVariableObjectID">
+					<Value>-1</Value>
+				</Property>
+				<Property Name="MinValVarObjectID">
+					<Value>-1</Value>
+				</Property>
+				<Property Name="MaxValVarObjectID">
+					<Value>-1</Value>
+				</Property>
+				<Property Name="VariableUpdateInterval">
+					<Value>0</Value>
+				</Property>
+			</PropertySheet>
+			<Objects>
+				<Object JVS-ID="21001"/>
 			</Objects>
 		</Object>
 		<Object Class="CProxy" Name="Edit" ObjectName="" Pinned="FALSE" JVS-ID="4194314">

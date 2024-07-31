@@ -4,26 +4,28 @@
 #define WorkingSet_0_Offset                                     1
 #define Macro_100_perc_Offset                                  21
 #define DataMask_1000_Offset                                   26
-#define Button_100_perc_Offset                                 76
-#define InputNumber_PWM_DUTY_Offset                           103
-#define InputNumber_PWM_Value_Offset                          141
-#define OutputString_percent_Offset                           179
-#define OutputString_WS_Offset                                200
-#define OutputNumber_100_Offset                               221
-#define OutputNumber_8129_Offset                              250
-#define NumberVariable_PWM_DUTY_Offset                        279
-#define NumberVariable_PWM_Value_Offset                       286
-#define FontAttributes_12x16_Offset                           293
-#define FontAttributes_12x16_B_Offset                         301
-#define FontAttributes_16x16_Offset                           309
-#define FontAttributes_WS_Offset                              317
+#define Button_100_perc_Offset                                 94
+#define InputNumber_PWM_DUTY_Offset                           121
+#define InputNumber_PWM_Value_Offset                          159
+#define OutputString_percent_Offset                           197
+#define OutputString_WS_Offset                                218
+#define OutputNumber_100_Offset                               239
+#define OutputNumber_8129_Offset                              268
+#define Meter_17000_Offset                                    297
+#define LinearBargraph_18000_Offset                           318
+#define ArchedBargraph_19000_Offset                           342
+#define NumberVariable_PWM_Value_Offset                       369
+#define FontAttributes_12x16_Offset                           376
+#define FontAttributes_12x16_B_Offset                         384
+#define FontAttributes_16x16_Offset                           392
+#define FontAttributes_WS_Offset                              400
 
 #define ISO_OP_MEMORY_CLASS
 
-#define ISO_OP_DefaultPool_Size    325
+#define ISO_OP_DefaultPool_Size    408
 extern const unsigned char ISO_OP_MEMORY_CLASS isoOP_DefaultPool[];
 
-#define ISO_OP_DefaultPool_ObjectNumber     16
+#define ISO_OP_DefaultPool_ObjectNumber     18
 extern const unsigned long ISO_OP_MEMORY_CLASS isoOP_DefaultPool_Offset[];
 extern const unsigned long ISO_OP_MEMORY_CLASS isoOP_DefaultPool_Offset_Id[];
 #define ISO_OP_DefaultPool_Scale_Offset      1
