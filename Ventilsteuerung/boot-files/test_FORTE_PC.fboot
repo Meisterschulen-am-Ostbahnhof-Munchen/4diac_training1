@@ -1,9 +1,9 @@
 ;<Request ID="2" Action="CREATE"><FB Name="EMB_RES" Type="EMB_RES" /></Request>
-EMB_RES;<Request ID="3" Action="CREATE"><FB Name="Ventilsteuerung.mapping.Hutschienenmoped_XL_8_PWM" Type="OctaOut_8_PWM" /></Request>
-EMB_RES;<Request ID="4" Action="WRITE"><Connection Source="TRUE" Destination="Ventilsteuerung.mapping.Hutschienenmoped_XL_8_PWM.QI" /></Request>
-EMB_RES;<Request ID="5" Action="WRITE"><Connection Source="255" Destination="Ventilsteuerung.mapping.Hutschienenmoped_XL_8_PWM.u8SAMember" /></Request>
-EMB_RES;<Request ID="6" Action="WRITE"><Connection Source="65535" Destination="Ventilsteuerung.mapping.Hutschienenmoped_XL_8_PWM.u16ObjId" /></Request>
-EMB_RES;<Request ID="7" Action="WRITE"><Connection Source="&apos;Ventilsteuerung.functions.PWMOutput_Q4&apos;" Destination="Ventilsteuerung.mapping.Hutschienenmoped_XL_8_PWM.PWMOutput_Q4" /></Request>
+EMB_RES;<Request ID="3" Action="CREATE"><FB Name="Ventilsteuerung.mapping.OctaOut_8_PWM" Type="OctaOut_8_PWM" /></Request>
+EMB_RES;<Request ID="4" Action="WRITE"><Connection Source="TRUE" Destination="Ventilsteuerung.mapping.OctaOut_8_PWM.QI" /></Request>
+EMB_RES;<Request ID="5" Action="WRITE"><Connection Source="255" Destination="Ventilsteuerung.mapping.OctaOut_8_PWM.u8SAMember" /></Request>
+EMB_RES;<Request ID="6" Action="WRITE"><Connection Source="65535" Destination="Ventilsteuerung.mapping.OctaOut_8_PWM.u16ObjId" /></Request>
+EMB_RES;<Request ID="7" Action="WRITE"><Connection Source="&apos;Ventilsteuerung.functions.PWMOutput_Q4&apos;" Destination="Ventilsteuerung.mapping.OctaOut_8_PWM.PWMOutput_Q4" /></Request>
 EMB_RES;<Request ID="8" Action="CREATE"><FB Name="Ventilsteuerung.mapping.UT_NumericValueInputMapping" Type="UT_NumericValueInputMapping" /></Request>
 EMB_RES;<Request ID="9" Action="WRITE"><Connection Source="TRUE" Destination="Ventilsteuerung.mapping.UT_NumericValueInputMapping.QI" /></Request>
 EMB_RES;<Request ID="10" Action="WRITE"><Connection Source="255" Destination="Ventilsteuerung.mapping.UT_NumericValueInputMapping.u8SAMember" /></Request>
@@ -19,7 +19,7 @@ EMB_RES;<Request ID="19" Action="CREATE"><Connection Source="Ventilsteuerung.fun
 EMB_RES;<Request ID="20" Action="CREATE"><Connection Source="Ventilsteuerung.functions.PWM_Value.IN" Destination="Ventilsteuerung.functions.F_DWORD_TO_UDINT.IN" /></Request>
 EMB_RES;<Request ID="21" Action="CREATE"><Connection Source="Ventilsteuerung.functions.PWM_Value.IN" Destination="Ventilsteuerung.functions.PWMOutput_Q4.OUT" /></Request>
 EMB_RES;<Request ID="22" Action="CREATE"><Connection Source="START.COLD" Destination="Ventilsteuerung.mapping.UT_NumericValueInputMapping.INIT" /></Request>
-EMB_RES;<Request ID="23" Action="CREATE"><Connection Source="START.COLD" Destination="Ventilsteuerung.mapping.Hutschienenmoped_XL_8_PWM.INIT" /></Request>
+EMB_RES;<Request ID="23" Action="CREATE"><Connection Source="START.COLD" Destination="Ventilsteuerung.mapping.OctaOut_8_PWM.INIT" /></Request>
 EMB_RES;<Request ID="24" Action="CREATE"><Connection Source="START.COLD" Destination="Ventilsteuerung.functions.PWM_Value.INIT" /></Request>
 EMB_RES;<Request ID="25" Action="CREATE"><Connection Source="START.COLD" Destination="Ventilsteuerung.functions.PWMOutput_Q4.INIT" /></Request>
 EMB_RES;<Request ID="25" Action="START"/>
