@@ -14,74 +14,41 @@
 		</SubAppEventInputs>
 	</SubAppInterfaceList>
 	<SubAppNetwork>
-		<FB Name="SETPOINT_CONDENSED_WORK_STATE_1_16" Type="ID" Comment="" x="-706.6666666666667" y="-8666.666666666668">
+		<FB Name="SETPOINT_CONDENSED_WORK_STATE_1_16" Type="ID" Comment="" x="-706.67" y="-8666.67">
 			<Parameter Name="QI" Value="TRUE" Comment=""/>
 		</FB>
-		<FB Name="DWORD_TO_QUARTERS" Type="DWORD_TO_QUARTERS" Comment="" x="1420.0" y="-8666.666666666668">
+		<FB Name="SPLIT_DWORD_INTO_QUARTERS" Type="SPLIT_DWORD_INTO_QUARTERS" Comment="" x="1246.67" y="-8666.67">
 		</FB>
-		<FB Name="QUARTERS_TO_DWORD" Type="QUARTERS_TO_DWORD" Comment="" x="7220.0" y="-8666.666666666668">
+		<FB Name="ASSEMBLE_DWORD_FROM_QUARTERS" Type="ASSEMBLE_DWORD_FROM_QUARTERS" Comment="" x="7220" y="-8666.67">
 		</FB>
-		<FB Name="ACTUAL_CONDENSED_WORK_STATE_1_16" Type="QD" Comment="" x="10673.333333333334" y="-8666.666666666668">
+		<FB Name="ACTUAL_CONDENSED_WORK_STATE_1_16" Type="QD" Comment="" x="10673.33" y="-8666.67">
 			<Parameter Name="QI" Value="TRUE" Comment=""/>
 		</FB>
-		<FB Name="BOOLS_TO_QUARTERS" Type="BOOLS_TO_QUARTERS" Comment="" x="5600.0" y="-8666.666666666668">
+		<FB Name="BOOLS_TO_QUARTERS" Type="BOOLS_TO_QUARTERS" Comment="" x="5600" y="-8666.67">
 		</FB>
-		<FB Name="QUARTERS_TO_BOOLS" Type="QUARTERS_TO_BOOLS" Comment="" x="3040.0" y="-8666.666666666668">
+		<FB Name="QUARTERS_TO_BOOLS" Type="QUARTERS_TO_BOOLS" Comment="" x="3040" y="-8666.67">
 		</FB>
-		<SubApp Name="Out" Type="Uebung_060_sub_Outputs" Comment="" x="8000.0" y="-12340.0">
+		<SubApp Name="Out" Type="Uebung_060_sub_Outputs" Comment="" x="8000" y="-12340">
 		</SubApp>
 		<EventConnections>
-			<Connection Source="INIT" Destination="SETPOINT_CONDENSED_WORK_STATE_1_16.INIT" Comment="" dx1="393.33333333333337">
-				<Attribute Name="Visible" Type="STRING" Value="false"/>
+			<Connection Source="INIT" Destination="SETPOINT_CONDENSED_WORK_STATE_1_16.INIT" Comment="" dx1="393.33">
+				<Attribute Name="Visible" Value="false"/>
 			</Connection>
-			<Connection Source="SETPOINT_CONDENSED_WORK_STATE_1_16.IND" Destination="DWORD_TO_QUARTERS.REQ" Comment="" dx1="233.33333333333334"/>
-			<Connection Source="QUARTERS_TO_DWORD.CNF" Destination="ACTUAL_CONDENSED_WORK_STATE_1_16.REQ" Comment="" dx1="1166.6666666666667"/>
-			<Connection Source="INIT" Destination="ACTUAL_CONDENSED_WORK_STATE_1_16.INIT" Comment="" dx1="3586.666666666667">
-				<Attribute Name="Visible" Type="STRING" Value="false"/>
+			<Connection Source="SETPOINT_CONDENSED_WORK_STATE_1_16.IND" Destination="SPLIT_DWORD_INTO_QUARTERS.REQ" Comment="" dx1="233.33"/>
+			<Connection Source="ASSEMBLE_DWORD_FROM_QUARTERS.CNF" Destination="ACTUAL_CONDENSED_WORK_STATE_1_16.REQ" Comment="" dx1="1166.67"/>
+			<Connection Source="INIT" Destination="ACTUAL_CONDENSED_WORK_STATE_1_16.INIT" Comment="" dx1="3586.67">
+				<Attribute Name="Visible" Value="false"/>
 			</Connection>
-			<Connection Source="BOOLS_TO_QUARTERS.CNF" Destination="QUARTERS_TO_DWORD.REQ" Comment=""/>
-			<Connection Source="DWORD_TO_QUARTERS.CNF" Destination="QUARTERS_TO_BOOLS.REQ" Comment=""/>
+			<Connection Source="BOOLS_TO_QUARTERS.CNF" Destination="ASSEMBLE_DWORD_FROM_QUARTERS.REQ" Comment=""/>
+			<Connection Source="SPLIT_DWORD_INTO_QUARTERS.CNF" Destination="QUARTERS_TO_BOOLS.REQ" Comment=""/>
 			<Connection Source="QUARTERS_TO_BOOLS.CNF" Destination="BOOLS_TO_QUARTERS.REQ" Comment=""/>
-			<Connection Source="INIT" Destination="Out.INIT" Comment="" dx1="4653.333333333334">
-				<Attribute Name="Visible" Type="STRING" Value="false"/>
+			<Connection Source="INIT" Destination="Out.INIT" Comment="" dx1="4653.33">
+				<Attribute Name="Visible" Value="false"/>
 			</Connection>
-			<Connection Source="QUARTERS_TO_BOOLS.CNF" Destination="Out.CNF" Comment="" dx1="453.33333333333337"/>
+			<Connection Source="QUARTERS_TO_BOOLS.CNF" Destination="Out.CNF" Comment="" dx1="453.33"/>
 		</EventConnections>
 		<DataConnections>
-			<Connection Source="SETPOINT_CONDENSED_WORK_STATE_1_16.IN" Destination="DWORD_TO_QUARTERS.IN" Comment="" dx1="266.6666666666667"/>
-			<Connection Source="QUARTERS_TO_DWORD.OUT" Destination="ACTUAL_CONDENSED_WORK_STATE_1_16.OUT" Comment="" dx1="1166.6666666666667"/>
-			<Connection Source="BOOLS_TO_QUARTERS.QB_00" Destination="QUARTERS_TO_DWORD.IN_00" Comment=""/>
-			<Connection Source="BOOLS_TO_QUARTERS.QB_01" Destination="QUARTERS_TO_DWORD.IN_01" Comment=""/>
-			<Connection Source="BOOLS_TO_QUARTERS.QB_02" Destination="QUARTERS_TO_DWORD.IN_02" Comment=""/>
-			<Connection Source="BOOLS_TO_QUARTERS.QB_03" Destination="QUARTERS_TO_DWORD.IN_03" Comment=""/>
-			<Connection Source="BOOLS_TO_QUARTERS.QB_04" Destination="QUARTERS_TO_DWORD.IN_04" Comment=""/>
-			<Connection Source="BOOLS_TO_QUARTERS.QB_05" Destination="QUARTERS_TO_DWORD.IN_05" Comment=""/>
-			<Connection Source="BOOLS_TO_QUARTERS.QB_06" Destination="QUARTERS_TO_DWORD.IN_06" Comment=""/>
-			<Connection Source="BOOLS_TO_QUARTERS.QB_07" Destination="QUARTERS_TO_DWORD.IN_07" Comment=""/>
-			<Connection Source="BOOLS_TO_QUARTERS.QB_08" Destination="QUARTERS_TO_DWORD.IN_08" Comment=""/>
-			<Connection Source="BOOLS_TO_QUARTERS.QB_09" Destination="QUARTERS_TO_DWORD.IN_09" Comment=""/>
-			<Connection Source="BOOLS_TO_QUARTERS.QB_10" Destination="QUARTERS_TO_DWORD.IN_10" Comment=""/>
-			<Connection Source="BOOLS_TO_QUARTERS.QB_11" Destination="QUARTERS_TO_DWORD.IN_11" Comment=""/>
-			<Connection Source="BOOLS_TO_QUARTERS.QB_12" Destination="QUARTERS_TO_DWORD.IN_12" Comment=""/>
-			<Connection Source="BOOLS_TO_QUARTERS.QB_13" Destination="QUARTERS_TO_DWORD.IN_13" Comment=""/>
-			<Connection Source="BOOLS_TO_QUARTERS.QB_14" Destination="QUARTERS_TO_DWORD.IN_14" Comment=""/>
-			<Connection Source="BOOLS_TO_QUARTERS.QB_15" Destination="QUARTERS_TO_DWORD.IN_15" Comment=""/>
-			<Connection Source="DWORD_TO_QUARTERS.OUT_00" Destination="QUARTERS_TO_BOOLS.IB_00" Comment=""/>
-			<Connection Source="DWORD_TO_QUARTERS.OUT_01" Destination="QUARTERS_TO_BOOLS.IB_01" Comment=""/>
-			<Connection Source="DWORD_TO_QUARTERS.OUT_02" Destination="QUARTERS_TO_BOOLS.IB_02" Comment=""/>
-			<Connection Source="DWORD_TO_QUARTERS.OUT_03" Destination="QUARTERS_TO_BOOLS.IB_03" Comment=""/>
-			<Connection Source="DWORD_TO_QUARTERS.OUT_04" Destination="QUARTERS_TO_BOOLS.IB_04" Comment=""/>
-			<Connection Source="DWORD_TO_QUARTERS.OUT_05" Destination="QUARTERS_TO_BOOLS.IB_05" Comment=""/>
-			<Connection Source="DWORD_TO_QUARTERS.OUT_06" Destination="QUARTERS_TO_BOOLS.IB_06" Comment=""/>
-			<Connection Source="DWORD_TO_QUARTERS.OUT_07" Destination="QUARTERS_TO_BOOLS.IB_07" Comment=""/>
-			<Connection Source="DWORD_TO_QUARTERS.OUT_08" Destination="QUARTERS_TO_BOOLS.IB_08" Comment=""/>
-			<Connection Source="DWORD_TO_QUARTERS.OUT_09" Destination="QUARTERS_TO_BOOLS.IB_09" Comment=""/>
-			<Connection Source="DWORD_TO_QUARTERS.OUT_10" Destination="QUARTERS_TO_BOOLS.IB_10" Comment=""/>
-			<Connection Source="DWORD_TO_QUARTERS.OUT_11" Destination="QUARTERS_TO_BOOLS.IB_11" Comment=""/>
-			<Connection Source="DWORD_TO_QUARTERS.OUT_12" Destination="QUARTERS_TO_BOOLS.IB_12" Comment=""/>
-			<Connection Source="DWORD_TO_QUARTERS.OUT_13" Destination="QUARTERS_TO_BOOLS.IB_13" Comment=""/>
-			<Connection Source="DWORD_TO_QUARTERS.OUT_14" Destination="QUARTERS_TO_BOOLS.IB_14" Comment=""/>
-			<Connection Source="DWORD_TO_QUARTERS.OUT_15" Destination="QUARTERS_TO_BOOLS.IB_15" Comment=""/>
+			<Connection Source="SETPOINT_CONDENSED_WORK_STATE_1_16.IN" Destination="SPLIT_DWORD_INTO_QUARTERS.IN" Comment="" dx1="266.67"/>
 			<Connection Source="QUARTERS_TO_BOOLS.Q_00" Destination="BOOLS_TO_QUARTERS.I_00" Comment=""/>
 			<Connection Source="QUARTERS_TO_BOOLS.Q_02" Destination="BOOLS_TO_QUARTERS.I_02" Comment=""/>
 			<Connection Source="QUARTERS_TO_BOOLS.Q_01" Destination="BOOLS_TO_QUARTERS.I_01" Comment=""/>
@@ -98,22 +65,55 @@
 			<Connection Source="QUARTERS_TO_BOOLS.Q_13" Destination="BOOLS_TO_QUARTERS.I_13" Comment=""/>
 			<Connection Source="QUARTERS_TO_BOOLS.Q_14" Destination="BOOLS_TO_QUARTERS.I_14" Comment=""/>
 			<Connection Source="QUARTERS_TO_BOOLS.Q_15" Destination="BOOLS_TO_QUARTERS.I_15" Comment=""/>
-			<Connection Source="QUARTERS_TO_BOOLS.Q_06" Destination="Out.Q_06" Comment="" dx1="686.6666666666667"/>
-			<Connection Source="QUARTERS_TO_BOOLS.Q_00" Destination="Out.Q_00" Comment="" dx1="486.6666666666667"/>
-			<Connection Source="QUARTERS_TO_BOOLS.Q_04" Destination="Out.Q_04" Comment="" dx1="620.0"/>
-			<Connection Source="QUARTERS_TO_BOOLS.Q_01" Destination="Out.Q_01" Comment="" dx1="520.0"/>
-			<Connection Source="QUARTERS_TO_BOOLS.Q_05" Destination="Out.Q_05" Comment="" dx1="653.3333333333334"/>
-			<Connection Source="QUARTERS_TO_BOOLS.Q_07" Destination="Out.Q_07" Comment="" dx1="720.0"/>
-			<Connection Source="QUARTERS_TO_BOOLS.Q_02" Destination="Out.Q_02" Comment="" dx1="553.3333333333334"/>
-			<Connection Source="QUARTERS_TO_BOOLS.Q_03" Destination="Out.Q_03" Comment="" dx1="586.6666666666667"/>
-			<Connection Source="QUARTERS_TO_BOOLS.Q_08" Destination="Out.Q_08" Comment="" dx1="753.3333333333334"/>
-			<Connection Source="QUARTERS_TO_BOOLS.Q_09" Destination="Out.Q_09" Comment="" dx1="786.6666666666667"/>
-			<Connection Source="QUARTERS_TO_BOOLS.Q_10" Destination="Out.Q_10" Comment="" dx1="820.0"/>
-			<Connection Source="QUARTERS_TO_BOOLS.Q_11" Destination="Out.Q_11" Comment="" dx1="853.3333333333334"/>
-			<Connection Source="QUARTERS_TO_BOOLS.Q_12" Destination="Out.Q_12" Comment="" dx1="886.6666666666667"/>
-			<Connection Source="QUARTERS_TO_BOOLS.Q_13" Destination="Out.Q_13" Comment="" dx1="920.0"/>
-			<Connection Source="QUARTERS_TO_BOOLS.Q_14" Destination="Out.Q_14" Comment="" dx1="953.3333333333334"/>
-			<Connection Source="QUARTERS_TO_BOOLS.Q_15" Destination="Out.Q_15" Comment="" dx1="986.6666666666667"/>
+			<Connection Source="QUARTERS_TO_BOOLS.Q_06" Destination="Out.Q_06" Comment="" dx1="686.67"/>
+			<Connection Source="QUARTERS_TO_BOOLS.Q_00" Destination="Out.Q_00" Comment="" dx1="486.67"/>
+			<Connection Source="QUARTERS_TO_BOOLS.Q_04" Destination="Out.Q_04" Comment="" dx1="620"/>
+			<Connection Source="QUARTERS_TO_BOOLS.Q_01" Destination="Out.Q_01" Comment="" dx1="520"/>
+			<Connection Source="QUARTERS_TO_BOOLS.Q_05" Destination="Out.Q_05" Comment="" dx1="653.33"/>
+			<Connection Source="QUARTERS_TO_BOOLS.Q_07" Destination="Out.Q_07" Comment="" dx1="720"/>
+			<Connection Source="QUARTERS_TO_BOOLS.Q_02" Destination="Out.Q_02" Comment="" dx1="553.33"/>
+			<Connection Source="QUARTERS_TO_BOOLS.Q_03" Destination="Out.Q_03" Comment="" dx1="586.67"/>
+			<Connection Source="QUARTERS_TO_BOOLS.Q_08" Destination="Out.Q_08" Comment="" dx1="753.33"/>
+			<Connection Source="QUARTERS_TO_BOOLS.Q_09" Destination="Out.Q_09" Comment="" dx1="786.67"/>
+			<Connection Source="QUARTERS_TO_BOOLS.Q_10" Destination="Out.Q_10" Comment="" dx1="820"/>
+			<Connection Source="QUARTERS_TO_BOOLS.Q_11" Destination="Out.Q_11" Comment="" dx1="853.33"/>
+			<Connection Source="QUARTERS_TO_BOOLS.Q_12" Destination="Out.Q_12" Comment="" dx1="886.67"/>
+			<Connection Source="QUARTERS_TO_BOOLS.Q_13" Destination="Out.Q_13" Comment="" dx1="920"/>
+			<Connection Source="QUARTERS_TO_BOOLS.Q_14" Destination="Out.Q_14" Comment="" dx1="953.33"/>
+			<Connection Source="QUARTERS_TO_BOOLS.Q_15" Destination="Out.Q_15" Comment="" dx1="986.67"/>
+			<Connection Source="BOOLS_TO_QUARTERS.QB_00" Destination="ASSEMBLE_DWORD_FROM_QUARTERS.QUARTER_BYTE_00" Comment=""/>
+			<Connection Source="BOOLS_TO_QUARTERS.QB_01" Destination="ASSEMBLE_DWORD_FROM_QUARTERS.QUARTER_BYTE_01" Comment=""/>
+			<Connection Source="BOOLS_TO_QUARTERS.QB_02" Destination="ASSEMBLE_DWORD_FROM_QUARTERS.QUARTER_BYTE_02" Comment=""/>
+			<Connection Source="BOOLS_TO_QUARTERS.QB_03" Destination="ASSEMBLE_DWORD_FROM_QUARTERS.QUARTER_BYTE_03" Comment=""/>
+			<Connection Source="ASSEMBLE_DWORD_FROM_QUARTERS." Destination="ACTUAL_CONDENSED_WORK_STATE_1_16.OUT" Comment="" dx1="1133.33"/>
+			<Connection Source="BOOLS_TO_QUARTERS.QB_04" Destination="ASSEMBLE_DWORD_FROM_QUARTERS.QUARTER_BYTE_04" Comment=""/>
+			<Connection Source="BOOLS_TO_QUARTERS.QB_05" Destination="ASSEMBLE_DWORD_FROM_QUARTERS.QUARTER_BYTE_05" Comment=""/>
+			<Connection Source="BOOLS_TO_QUARTERS.QB_06" Destination="ASSEMBLE_DWORD_FROM_QUARTERS.QUARTER_BYTE_06" Comment=""/>
+			<Connection Source="BOOLS_TO_QUARTERS.QB_07" Destination="ASSEMBLE_DWORD_FROM_QUARTERS.QUARTER_BYTE_07" Comment=""/>
+			<Connection Source="BOOLS_TO_QUARTERS.QB_08" Destination="ASSEMBLE_DWORD_FROM_QUARTERS.QUARTER_BYTE_08" Comment=""/>
+			<Connection Source="BOOLS_TO_QUARTERS.QB_09" Destination="ASSEMBLE_DWORD_FROM_QUARTERS.QUARTER_BYTE_09" Comment=""/>
+			<Connection Source="BOOLS_TO_QUARTERS.QB_10" Destination="ASSEMBLE_DWORD_FROM_QUARTERS.QUARTER_BYTE_10" Comment=""/>
+			<Connection Source="BOOLS_TO_QUARTERS.QB_11" Destination="ASSEMBLE_DWORD_FROM_QUARTERS.QUARTER_BYTE_11" Comment=""/>
+			<Connection Source="BOOLS_TO_QUARTERS.QB_12" Destination="ASSEMBLE_DWORD_FROM_QUARTERS.QUARTER_BYTE_12" Comment=""/>
+			<Connection Source="BOOLS_TO_QUARTERS.QB_13" Destination="ASSEMBLE_DWORD_FROM_QUARTERS.QUARTER_BYTE_13" Comment=""/>
+			<Connection Source="BOOLS_TO_QUARTERS.QB_14" Destination="ASSEMBLE_DWORD_FROM_QUARTERS.QUARTER_BYTE_14" Comment=""/>
+			<Connection Source="BOOLS_TO_QUARTERS.QB_15" Destination="ASSEMBLE_DWORD_FROM_QUARTERS.QUARTER_BYTE_15" Comment=""/>
+			<Connection Source="SPLIT_DWORD_INTO_QUARTERS.QUARTER_BYTE_00" Destination="QUARTERS_TO_BOOLS.IB_00" Comment=""/>
+			<Connection Source="SPLIT_DWORD_INTO_QUARTERS.QUARTER_BYTE_01" Destination="QUARTERS_TO_BOOLS.IB_01" Comment=""/>
+			<Connection Source="SPLIT_DWORD_INTO_QUARTERS.QUARTER_BYTE_02" Destination="QUARTERS_TO_BOOLS.IB_02" Comment=""/>
+			<Connection Source="SPLIT_DWORD_INTO_QUARTERS.QUARTER_BYTE_03" Destination="QUARTERS_TO_BOOLS.IB_03" Comment=""/>
+			<Connection Source="SPLIT_DWORD_INTO_QUARTERS.QUARTER_BYTE_04" Destination="QUARTERS_TO_BOOLS.IB_04" Comment=""/>
+			<Connection Source="SPLIT_DWORD_INTO_QUARTERS.QUARTER_BYTE_15" Destination="QUARTERS_TO_BOOLS.IB_15" Comment=""/>
+			<Connection Source="SPLIT_DWORD_INTO_QUARTERS.QUARTER_BYTE_14" Destination="QUARTERS_TO_BOOLS.IB_14" Comment=""/>
+			<Connection Source="SPLIT_DWORD_INTO_QUARTERS.QUARTER_BYTE_13" Destination="QUARTERS_TO_BOOLS.IB_13" Comment=""/>
+			<Connection Source="SPLIT_DWORD_INTO_QUARTERS.QUARTER_BYTE_12" Destination="QUARTERS_TO_BOOLS.IB_12" Comment=""/>
+			<Connection Source="SPLIT_DWORD_INTO_QUARTERS.QUARTER_BYTE_11" Destination="QUARTERS_TO_BOOLS.IB_11" Comment=""/>
+			<Connection Source="SPLIT_DWORD_INTO_QUARTERS.QUARTER_BYTE_10" Destination="QUARTERS_TO_BOOLS.IB_10" Comment=""/>
+			<Connection Source="SPLIT_DWORD_INTO_QUARTERS.QUARTER_BYTE_09" Destination="QUARTERS_TO_BOOLS.IB_09" Comment=""/>
+			<Connection Source="SPLIT_DWORD_INTO_QUARTERS.QUARTER_BYTE_08" Destination="QUARTERS_TO_BOOLS.IB_08" Comment=""/>
+			<Connection Source="SPLIT_DWORD_INTO_QUARTERS.QUARTER_BYTE_07" Destination="QUARTERS_TO_BOOLS.IB_07" Comment=""/>
+			<Connection Source="SPLIT_DWORD_INTO_QUARTERS.QUARTER_BYTE_06" Destination="QUARTERS_TO_BOOLS.IB_06" Comment=""/>
+			<Connection Source="SPLIT_DWORD_INTO_QUARTERS.QUARTER_BYTE_05" Destination="QUARTERS_TO_BOOLS.IB_05" Comment=""/>
 		</DataConnections>
 	</SubAppNetwork>
 </SubAppType>
