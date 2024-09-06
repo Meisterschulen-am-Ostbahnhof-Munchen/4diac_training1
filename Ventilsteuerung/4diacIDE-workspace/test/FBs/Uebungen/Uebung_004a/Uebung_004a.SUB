@@ -13,20 +13,20 @@
 		</SubAppEventInputs>
 	</SubAppInterfaceList>
 	<SubAppNetwork>
-		<FB Name="DigitalOutput_Q1" Type="QX" Comment="" x="-1133.33" y="-1133.33">
+		<FB Name="DigitalOutput_Q1" Type="QX" Comment="" x="-3860" y="-346.66">
 			<Parameter Name="QI" Value="TRUE" Comment=""/>
 		</FB>
-		<FB Name="DigitalInput_I1_CLK" Type="IE" Comment="" x="-4533.33" y="-1133.33">
+		<FB Name="DigitalInput_I1_CLK" Type="IE" Comment="" x="-7260" y="-346.66">
 			<Parameter Name="QI" Value="TRUE" Comment=""/>
 		</FB>
-		<FB Name="E_T_FF" Type="E_T_FF" Comment="" x="-2833.33" y="-906.67">
+		<FB Name="E_T_FF" Type="E_T_FF" Comment="" x="-5560" y="-120">
 		</FB>
 		<EventConnections>
 			<Connection Source="INIT" Destination="DigitalInput_I1_CLK.INIT" Comment="" dx1="1113.33">
 				<Attribute Name="Visible" Value="false"/>
 			</Connection>
 			<Connection Source="DigitalInput_I1_CLK.INITO" Destination="DigitalOutput_Q1.INIT" Comment=""/>
-			<Connection Source="DigitalInput_I1_CLK.IND" Destination="E_T_FF.CLK" Comment=""/>
+			<Connection Source="DigitalInput_I1_CLK.IND" Destination="E_T_FF.CLK" Comment="" dx1="453.33"/>
 			<Connection Source="E_T_FF.EO" Destination="DigitalOutput_Q1.REQ" Comment="" dx1="400"/>
 		</EventConnections>
 		<DataConnections>
