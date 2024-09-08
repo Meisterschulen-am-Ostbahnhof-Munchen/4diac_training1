@@ -13,9 +13,9 @@
 		</SubAppEventInputs>
 	</SubAppInterfaceList>
 	<SubAppNetwork>
-		<FB Name="CbVtStatus" Type="CbVtStatus" Comment="" x="-5600" y="1333.33">
+		<FB Name="CbVtStatus" Type="CbVtStatus" Comment="" x="-5553.33" y="1593.33">
 		</FB>
-		<SubApp Name="Uebung_012a_sub" Type="Uebung_012a_sub" Comment="" x="-3066.67" y="1560">
+		<SubApp Name="Uebung_012a_sub" Type="Uebung_012a_sub" Comment="" x="-3173.34" y="1586.67">
 			<Parameter Name="KEY" Value="KEY_I1_STORE" Comment=""/>
 			<Parameter Name="u16ObjId" Value="InputNumber_I1" Comment=""/>
 		</SubApp>
@@ -26,7 +26,7 @@
 			<Connection Source="INIT" Destination="Uebung_012a_sub.INIT" Comment="" dx1="1466.67">
 				<Attribute Name="Visible" Value="false"/>
 			</Connection>
-			<Connection Source="CbVtStatus.IND" Destination="Uebung_012a_sub.REQ" Comment="" dx1="893.33" dx2="893.33" dy="0"/>
+			<Connection Source="CbVtStatus.IND" Destination="Uebung_012a_sub.REQ" Comment=""/>
 		</EventConnections>
 	</SubAppNetwork>
 </SubAppType>
