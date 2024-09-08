@@ -13,21 +13,27 @@
 		</SubAppEventInputs>
 	</SubAppInterfaceList>
 	<SubAppNetwork>
-		<FB Name="DigitalOutput_Q1" Type="QX" Comment="" x="-1466.6666666666667" y="-833.3333333333334">
+		<FB Name="DigitalOutput_Q1" Type="QX" Comment="" x="-1473.33" y="-573.33">
 			<Parameter Name="QI" Value="TRUE" Comment=""/>
+			<Parameter Name="PARAMS" Value="" Comment="">
+				<Attribute Name="Visible" Value="false"/>
+			</Parameter>
 		</FB>
-		<FB Name="SoftKey_F1" Type="IX" Comment="" x="-4533.333333333334" y="-933.3333333333334">
+		<FB Name="SoftKey_F1" Type="IX" Comment="" x="-4646.67" y="-566.67">
 			<Parameter Name="QI" Value="TRUE" Comment=""/>
+			<Parameter Name="PARAMS" Value="" Comment="">
+				<Attribute Name="Visible" Value="false"/>
+			</Parameter>
 		</FB>
 		<EventConnections>
-			<Connection Source="INIT" Destination="SoftKey_F1.INIT" Comment="" dx1="1073.3333333333335">
-				<Attribute Name="Visible" Type="STRING" Value="false"/>
+			<Connection Source="INIT" Destination="SoftKey_F1.INIT" Comment="" dx1="1073.33">
+				<Attribute Name="Visible" Value="false"/>
 			</Connection>
-			<Connection Source="SoftKey_F1.INITO" Destination="DigitalOutput_Q1.INIT" Comment="" dx1="1200.0"/>
-			<Connection Source="SoftKey_F1.IND" Destination="DigitalOutput_Q1.REQ" Comment="" dx1="1200.0"/>
+			<Connection Source="SoftKey_F1.INITO" Destination="DigitalOutput_Q1.INIT" Comment=""/>
+			<Connection Source="SoftKey_F1.IND" Destination="DigitalOutput_Q1.REQ" Comment="" dx1="1306.67"/>
 		</EventConnections>
 		<DataConnections>
-			<Connection Source="SoftKey_F1.IN" Destination="DigitalOutput_Q1.OUT" Comment="" dx1="1200.0"/>
+			<Connection Source="SoftKey_F1.IN" Destination="DigitalOutput_Q1.OUT" Comment="" dx1="1360"/>
 		</DataConnections>
 	</SubAppNetwork>
 </SubAppType>

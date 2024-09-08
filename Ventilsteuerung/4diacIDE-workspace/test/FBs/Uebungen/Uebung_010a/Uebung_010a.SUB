@@ -13,33 +13,53 @@
 		</SubAppEventInputs>
 	</SubAppInterfaceList>
 	<SubAppNetwork>
-		<FB Name="DigitalOutput_Q1" Type="QX" Comment="" x="-1466.6666666666667" y="-833.3333333333334">
-			<Parameter Name="QI" Value="TRUE" Comment=""/>
+		<FB Name="DigitalOutput_Q1" Type="QX" Comment="" x="-1466.67" y="-933.33">
+			<Parameter Name="QI" Value="TRUE" Comment="">
+				<Attribute Name="Visible" Value="false"/>
+			</Parameter>
+			<Parameter Name="PARAMS" Value="" Comment="">
+				<Attribute Name="Visible" Value="false"/>
+			</Parameter>
 		</FB>
-		<FB Name="SoftKey_F1" Type="IX" Comment="" x="-4533.333333333334" y="-933.3333333333334">
-			<Parameter Name="QI" Value="TRUE" Comment=""/>
+		<FB Name="SoftKey_F1" Type="IX" Comment="" x="-4533.33" y="-933.33">
+			<Parameter Name="QI" Value="TRUE" Comment="">
+				<Attribute Name="Visible" Value="false"/>
+			</Parameter>
+			<Parameter Name="PARAMS" Value="" Comment="">
+				<Attribute Name="Visible" Value="false"/>
+			</Parameter>
 		</FB>
-		<FB Name="SoftKey_F2" Type="IX" Comment="" x="-4533.333333333334" y="266.6666666666667">
-			<Parameter Name="QI" Value="TRUE" Comment=""/>
+		<FB Name="SoftKey_F2" Type="IX" Comment="" x="-4533.33" y="266.67">
+			<Parameter Name="QI" Value="TRUE" Comment="">
+				<Attribute Name="Visible" Value="false"/>
+			</Parameter>
+			<Parameter Name="PARAMS" Value="" Comment="">
+				<Attribute Name="Visible" Value="false"/>
+			</Parameter>
 		</FB>
-		<FB Name="DigitalOutput_Q2" Type="QX" Comment="" x="-1466.6666666666667" y="366.6666666666667">
-			<Parameter Name="QI" Value="TRUE" Comment=""/>
+		<FB Name="DigitalOutput_Q2" Type="QX" Comment="" x="-1466.67" y="266.67">
+			<Parameter Name="QI" Value="TRUE" Comment="">
+				<Attribute Name="Visible" Value="false"/>
+			</Parameter>
+			<Parameter Name="PARAMS" Value="" Comment="">
+				<Attribute Name="Visible" Value="false"/>
+			</Parameter>
 		</FB>
 		<EventConnections>
-			<Connection Source="INIT" Destination="SoftKey_F1.INIT" Comment="" dx1="993.3333333333334">
-				<Attribute Name="Visible" Type="STRING" Value="false"/>
+			<Connection Source="INIT" Destination="SoftKey_F1.INIT" Comment="" dx1="993.33">
+				<Attribute Name="Visible" Value="false"/>
 			</Connection>
-			<Connection Source="SoftKey_F1.INITO" Destination="DigitalOutput_Q1.INIT" Comment="" dx1="1200.0"/>
-			<Connection Source="SoftKey_F1.IND" Destination="DigitalOutput_Q1.REQ" Comment="" dx1="1200.0"/>
-			<Connection Source="SoftKey_F2.INITO" Destination="DigitalOutput_Q2.INIT" Comment="" dx1="1200.0"/>
-			<Connection Source="SoftKey_F2.IND" Destination="DigitalOutput_Q2.REQ" Comment="" dx1="1200.0"/>
-			<Connection Source="INIT" Destination="SoftKey_F2.INIT" Comment="" dx1="1066.6666666666667">
-				<Attribute Name="Visible" Type="STRING" Value="false"/>
+			<Connection Source="SoftKey_F1.INITO" Destination="DigitalOutput_Q1.INIT" Comment=""/>
+			<Connection Source="SoftKey_F1.IND" Destination="DigitalOutput_Q1.REQ" Comment="" dx1="1200"/>
+			<Connection Source="SoftKey_F2.INITO" Destination="DigitalOutput_Q2.INIT" Comment=""/>
+			<Connection Source="SoftKey_F2.IND" Destination="DigitalOutput_Q2.REQ" Comment="" dx1="1200"/>
+			<Connection Source="INIT" Destination="SoftKey_F2.INIT" Comment="" dx1="1066.67">
+				<Attribute Name="Visible" Value="false"/>
 			</Connection>
 		</EventConnections>
 		<DataConnections>
-			<Connection Source="SoftKey_F1.IN" Destination="DigitalOutput_Q1.OUT" Comment="" dx1="1200.0"/>
-			<Connection Source="SoftKey_F2.IN" Destination="DigitalOutput_Q2.OUT" Comment="" dx1="1200.0"/>
+			<Connection Source="SoftKey_F1.IN" Destination="DigitalOutput_Q1.OUT" Comment="" dx1="1200"/>
+			<Connection Source="SoftKey_F2.IN" Destination="DigitalOutput_Q2.OUT" Comment="" dx1="1200"/>
 		</DataConnections>
 	</SubAppNetwork>
 </SubAppType>

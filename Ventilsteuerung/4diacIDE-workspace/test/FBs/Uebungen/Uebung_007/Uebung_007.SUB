@@ -13,26 +13,26 @@
 		</SubAppEventInputs>
 	</SubAppInterfaceList>
 	<SubAppNetwork>
-		<FB Name="DigitalOutput_Q1" Type="QX" Comment="" x="-400.0" y="-866.6666666666667">
+		<FB Name="DigitalOutput_Q1" Type="QX" Comment="" x="-400" y="-906.67">
 			<Parameter Name="QI" Value="TRUE" Comment=""/>
 		</FB>
-		<FB Name="E_CYCLE" Type="E_CYCLE" Comment="" x="-2933.3333333333335" y="-566.6666666666667">
+		<FB Name="E_CYCLE" Type="E_CYCLE" Comment="" x="-2933.33" y="-566.67">
 			<Parameter Name="DT" Value="T#1s" Comment=""/>
 		</FB>
-		<FB Name="E_T_FF" Type="E_T_FF" Comment="" x="-1600.0" y="-566.6666666666667">
+		<FB Name="E_T_FF" Type="E_T_FF" Comment="" x="-1600" y="-566.67">
 		</FB>
 		<EventConnections>
 			<Connection Source="E_CYCLE.EO" Destination="E_T_FF.CLK" Comment=""/>
-			<Connection Source="E_T_FF.EO" Destination="DigitalOutput_Q1.REQ" Comment="" dx1="333.33333333333337"/>
-			<Connection Source="INIT" Destination="DigitalOutput_Q1.INIT" Comment="" dx1="1813.3333333333335">
-				<Attribute Name="Visible" Type="STRING" Value="false"/>
+			<Connection Source="E_T_FF.EO" Destination="DigitalOutput_Q1.REQ" Comment="" dx1="333.33"/>
+			<Connection Source="INIT" Destination="DigitalOutput_Q1.INIT" Comment="" dx1="1813.33">
+				<Attribute Name="Visible" Value="false"/>
 			</Connection>
-			<Connection Source="INIT" Destination="E_CYCLE.START" Comment="" dx1="533.3333333333334">
-				<Attribute Name="Visible" Type="STRING" Value="false"/>
+			<Connection Source="INIT" Destination="E_CYCLE.START" Comment="" dx1="533.33">
+				<Attribute Name="Visible" Value="false"/>
 			</Connection>
 		</EventConnections>
 		<DataConnections>
-			<Connection Source="E_T_FF.Q" Destination="DigitalOutput_Q1.OUT" Comment="" dx1="333.33333333333337"/>
+			<Connection Source="E_T_FF.Q" Destination="DigitalOutput_Q1.OUT" Comment=""/>
 		</DataConnections>
 	</SubAppNetwork>
 </SubAppType>
