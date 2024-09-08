@@ -13,27 +13,37 @@
 		</SubAppEventInputs>
 	</SubAppInterfaceList>
 	<SubAppNetwork>
-		<FB Name="DualOut_2_DO" Type="DualOut_2_DO" Comment="" x="-3866.666666666667" y="-800.0">
-			<Parameter Name="QI" Value="TRUE" Comment=""/>
-			<Parameter Name="u8SAMember" Value="GLOBAL" Comment=""/>
-			<Parameter Name="u16ObjId" Value="ID_NULL" Comment=""/>
+		<FB Name="DualOut_2_DO" Type="DualOut_2_DO" Comment="" x="-3866.67" y="-800">
+			<Parameter Name="QI" Value="TRUE" Comment="">
+				<Attribute Name="Visible" Value="false"/>
+			</Parameter>
+			<Parameter Name="u8SAMember" Value="GLOBAL" Comment="">
+				<Attribute Name="Visible" Value="false"/>
+			</Parameter>
+			<Parameter Name="u16ObjId" Value="ID_NULL" Comment="">
+				<Attribute Name="Visible" Value="false"/>
+			</Parameter>
 			<Parameter Name="DigitalOutput_Q1" Value="'Ventilsteuerung.functions.DigitalOutput_Q1'" Comment=""/>
 			<Parameter Name="DigitalOutput_Q2" Value="'Ventilsteuerung.functions.DigitalOutput_Q2'" Comment=""/>
 		</FB>
-		<FB Name="UT_SoftkeyMapping" Type="UT_SoftkeyMapping" Comment="" x="-3866.666666666667" y="533.3333333333334">
-			<Parameter Name="QI" Value="TRUE" Comment=""/>
-			<Parameter Name="u8SAMember" Value="GLOBAL" Comment=""/>
+		<FB Name="UT_SoftkeyMapping" Type="UT_SoftkeyMapping" Comment="" x="-3866.67" y="533.33">
+			<Parameter Name="QI" Value="TRUE" Comment="">
+				<Attribute Name="Visible" Value="false"/>
+			</Parameter>
+			<Parameter Name="u8SAMember" Value="GLOBAL" Comment="">
+				<Attribute Name="Visible" Value="false"/>
+			</Parameter>
 			<Parameter Name="u16ObjId_1" Value="SoftKey_F1" Comment=""/>
 			<Parameter Name="DigitalInput_1" Value="'Ventilsteuerung.functions.SoftKey_F1'" Comment=""/>
 			<Parameter Name="u16ObjId_2" Value="SoftKey_F2" Comment=""/>
 			<Parameter Name="DigitalInput_2" Value="'Ventilsteuerung.functions.SoftKey_F2'" Comment=""/>
 		</FB>
 		<EventConnections>
-			<Connection Source="INIT" Destination="DualOut_2_DO.INIT" Comment="" dx1="1066.6666666666667">
-				<Attribute Name="Visible" Type="STRING" Value="false"/>
+			<Connection Source="INIT" Destination="DualOut_2_DO.INIT" Comment="" dx1="1066.67">
+				<Attribute Name="Visible" Value="false"/>
 			</Connection>
-			<Connection Source="INIT" Destination="UT_SoftkeyMapping.INIT" Comment="" dx1="1066.6666666666667">
-				<Attribute Name="Visible" Type="STRING" Value="false"/>
+			<Connection Source="INIT" Destination="UT_SoftkeyMapping.INIT" Comment="" dx1="1066.67">
+				<Attribute Name="Visible" Value="false"/>
 			</Connection>
 		</EventConnections>
 	</SubAppNetwork>

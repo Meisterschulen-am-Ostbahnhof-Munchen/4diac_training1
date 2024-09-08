@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<SubAppType Name="Uebung_020c2_sub" Comment="Numeric Value Input und Speichern">
+<SubAppType Name="Uebung_020c2_sub" Comment="DigitalInput_I1 auf DigitalOutput_Q1; TON Einschaltverzögert; Zeit eingeben und speichern.">
 	<Identification Standard="61499-2">
 	</Identification>
 	<VersionInfo Version="1.0" Author="franz" Date="2023-10-31">
@@ -41,7 +41,7 @@
 			<Connection Source="F_DWORD_TO_UDINT.CNF" Destination="NVS_UDINT.SET" Comment="" dx1="380"/>
 			<Connection Source="NVS_UDINT.INITO" Destination="NVS_UDINT.GET" Comment="" dx1="80" dx2="480" dy="-253.33"/>
 			<Connection Source="NVS_UDINT.INITO" Destination="Q_NumericValue.INIT" Comment="" dx1="513.33"/>
-			<Connection Source="NVS_UDINT.GETO" Destination="Q_NumericValue.REQ" Comment=""/>
+			<Connection Source="NVS_UDINT.GETO" Destination="Q_NumericValue.REQ" Comment="" dx1="520"/>
 			<Connection Source="INIT" Destination="InputNumber_I1.INIT" Comment="" dx1="333.33">
 				<Attribute Name="Visible" Value="false"/>
 			</Connection>
@@ -59,8 +59,8 @@
 			</Connection>
 		</EventConnections>
 		<DataConnections>
-			<Connection Source="InputNumber_I1.IN" Destination="F_DWORD_TO_UDINT.IN" Comment=""/>
-			<Connection Source="F_DWORD_TO_UDINT.OUT" Destination="NVS_UDINT.VALUE" Comment=""/>
+			<Connection Source="InputNumber_I1.IN" Destination="F_DWORD_TO_UDINT.IN" Comment="" dx1="186.67"/>
+			<Connection Source="F_DWORD_TO_UDINT.OUT" Destination="NVS_UDINT.VALUE" Comment="" dx1="346.67"/>
 			<Connection Source="NVS_UDINT.VALUEO" Destination="Q_NumericValue.u32NewValue" Comment="" dx1="313.33"/>
 			<Connection Source="KEY" Destination="NVS_UDINT.KEY" Comment="" dx1="2066.67">
 				<Attribute Name="Visible" Value="false"/>

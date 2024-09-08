@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<SubAppType Name="mapping_Uebung_012a" Comment="Numeric Value Input und Speichern">
+<SubAppType Name="mapping_Uebung_015" Comment="Object Pointer umschalten">
 	<Identification Standard="61499-2">
 	</Identification>
 	<VersionInfo Version="1.0" Author="franz" Date="2023-10-23">
@@ -13,60 +13,56 @@
 		</SubAppEventInputs>
 	</SubAppInterfaceList>
 	<SubAppNetwork>
-		<FB Name="UT_NumericValueInputMapping" Type="UT_NumericValueInputMapping" Comment="" x="3200" y="1866.67">
+		<FB Name="UT_SoftkeyMapping_UP" Type="UT_SoftkeyMapping_UP" Comment="" x="-3286.66" y="-226.67">
 			<Parameter Name="QI" Value="TRUE" Comment="">
 				<Attribute Name="Visible" Value="false"/>
 			</Parameter>
 			<Parameter Name="u8SAMember" Value="GLOBAL" Comment="">
 				<Attribute Name="Visible" Value="false"/>
 			</Parameter>
-			<Parameter Name="u16ObjId_1" Value="InputNumber_I1" Comment=""/>
-			<Parameter Name="NumericValueInput_1" Value="'Ventilsteuerung.functions.Uebung_012a_sub.InputNumber_I1'" Comment=""/>
-			<Parameter Name="u16ObjId_2" Value="" Comment="">
-				<Attribute Name="Visible" Value="false"/>
-			</Parameter>
-			<Parameter Name="NumericValueInput_2" Value="" Comment="">
-				<Attribute Name="Visible" Value="false"/>
-			</Parameter>
+			<Parameter Name="u16ObjId_1" Value="SoftKey_F1" Comment=""/>
+			<Parameter Name="DigitalInput_1" Value="'Ventilsteuerung.functions.SoftKey_F1_UP'" Comment=""/>
+			<Parameter Name="u16ObjId_2" Value="SoftKey_F2" Comment=""/>
+			<Parameter Name="DigitalInput_2" Value="'Ventilsteuerung.functions.SoftKey_F2_UP'" Comment=""/>
 			<Parameter Name="u16ObjId_3" Value="" Comment="">
 				<Attribute Name="Visible" Value="false"/>
 			</Parameter>
-			<Parameter Name="NumericValueInput_3" Value="" Comment="">
+			<Parameter Name="DigitalInput_3" Value="" Comment="">
 				<Attribute Name="Visible" Value="false"/>
 			</Parameter>
 			<Parameter Name="u16ObjId_4" Value="" Comment="">
 				<Attribute Name="Visible" Value="false"/>
 			</Parameter>
-			<Parameter Name="NumericValueInput_4" Value="" Comment="">
+			<Parameter Name="DigitalInput_4" Value="" Comment="">
 				<Attribute Name="Visible" Value="false"/>
 			</Parameter>
 			<Parameter Name="u16ObjId_5" Value="" Comment="">
 				<Attribute Name="Visible" Value="false"/>
 			</Parameter>
-			<Parameter Name="NumericValueInput_5" Value="" Comment="">
+			<Parameter Name="DigitalInput_5" Value="" Comment="">
 				<Attribute Name="Visible" Value="false"/>
 			</Parameter>
 			<Parameter Name="u16ObjId_6" Value="" Comment="">
 				<Attribute Name="Visible" Value="false"/>
 			</Parameter>
-			<Parameter Name="NumericValueInput_6" Value="" Comment="">
+			<Parameter Name="DigitalInput_6" Value="" Comment="">
 				<Attribute Name="Visible" Value="false"/>
 			</Parameter>
 			<Parameter Name="u16ObjId_7" Value="" Comment="">
 				<Attribute Name="Visible" Value="false"/>
 			</Parameter>
-			<Parameter Name="NumericValueInput_7" Value="" Comment="">
+			<Parameter Name="DigitalInput_7" Value="" Comment="">
 				<Attribute Name="Visible" Value="false"/>
 			</Parameter>
 			<Parameter Name="u16ObjId_8" Value="" Comment="">
 				<Attribute Name="Visible" Value="false"/>
 			</Parameter>
-			<Parameter Name="NumericValueInput_8" Value="" Comment="">
+			<Parameter Name="DigitalInput_8" Value="" Comment="">
 				<Attribute Name="Visible" Value="false"/>
 			</Parameter>
 		</FB>
 		<EventConnections>
-			<Connection Source="INIT" Destination="UT_NumericValueInputMapping.INIT" Comment="" dx1="3466.67">
+			<Connection Source="INIT" Destination="UT_SoftkeyMapping_UP.INIT" Comment="" dx1="4646.67">
 				<Attribute Name="Visible" Value="false"/>
 			</Connection>
 		</EventConnections>
