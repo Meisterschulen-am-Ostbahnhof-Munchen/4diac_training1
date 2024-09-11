@@ -32,10 +32,10 @@
 		<FB Name="F_UINT_TO_UDINT" Type="F_UINT_TO_UDINT" Comment="" x="-2800" y="0">
 			<Parameter Name="IN" Value="Button_A1" Comment=""/>
 		</FB>
-		<FB Name="F_SEL" Type="F_SEL_E_3" Comment="" x="-1133.33" y="-906.67">
+		<FB Name="F_SEL_E_3" Type="F_SEL_E_3" Comment="" x="-1133.33" y="-906.67">
 			<Parameter Name="IN0" Value="ID_NULL" Comment=""/>
 		</FB>
-		<FB Name="Q_NumericValue" Type="Q_NumericValue" Comment="" x="793.33" y="-1026.67">
+		<FB Name="Q_NumericValue" Type="Q_NumericValue" Comment="" x="800" y="-1020">
 			<Parameter Name="u16ObjId" Value="ObjectPointer_P1" Comment=""/>
 		</FB>
 		<FB Name="SoftKey_F2_UP_1" Type="IE" Comment="" x="-4533.33" y="1473.33">
@@ -62,21 +62,21 @@
 			<Connection Source="INIT" Destination="F_UINT_TO_UDINT.REQ" Comment="" dx1="1933.33">
 				<Attribute Name="Visible" Value="false"/>
 			</Connection>
-			<Connection Source="F_SEL.CNF" Destination="Q_NumericValue.REQ" Comment="" dx1="700" dx2="700" dy="0"/>
-			<Connection Source="SoftKey_F1_UP.IND" Destination="F_SEL.REQ0" Comment="" dx1="1413.33"/>
-			<Connection Source="SoftKey_F2_UP.IND" Destination="F_SEL.REQ1" Comment="" dx1="280"/>
+			<Connection Source="F_SEL_E_3.CNF" Destination="Q_NumericValue.REQ" Comment=""/>
+			<Connection Source="SoftKey_F1_UP.IND" Destination="F_SEL_E_3.REQ0" Comment="" dx1="1413.33"/>
+			<Connection Source="SoftKey_F2_UP.IND" Destination="F_SEL_E_3.REQ1" Comment="" dx1="280"/>
 			<Connection Source="INIT" Destination="SoftKey_F2_UP_1.INIT" Comment="" dx1="2133.33">
 				<Attribute Name="Visible" Value="false"/>
 			</Connection>
-			<Connection Source="SoftKey_F2_UP_1.IND" Destination="F_SEL.REQ2" Comment="" dx1="560"/>
+			<Connection Source="SoftKey_F2_UP_1.IND" Destination="F_SEL_E_3.REQ2" Comment="" dx1="560"/>
 			<Connection Source="INIT" Destination="F_UINT_TO_UDINT_1.REQ" Comment="" dx1="2946.67">
 				<Attribute Name="Visible" Value="false"/>
 			</Connection>
 		</EventConnections>
 		<DataConnections>
-			<Connection Source="F_UINT_TO_UDINT.OUT" Destination="F_SEL.IN1" Comment="" dx1="373.33" dx2="373.33" dy="0"/>
-			<Connection Source="F_SEL.OUT" Destination="Q_NumericValue.u32NewValue" Comment="" dx1="313.33" dx2="313.33" dy="0"/>
-			<Connection Source="F_UINT_TO_UDINT_1.OUT" Destination="F_SEL.IN2" Comment="" dx1="520"/>
+			<Connection Source="F_UINT_TO_UDINT.OUT" Destination="F_SEL_E_3.IN1" Comment="" dx1="373.33" dx2="373.33" dy="0"/>
+			<Connection Source="F_SEL_E_3.OUT" Destination="Q_NumericValue.u32NewValue" Comment="" dx1="606.67"/>
+			<Connection Source="F_UINT_TO_UDINT_1.OUT" Destination="F_SEL_E_3.IN2" Comment="" dx1="520"/>
 		</DataConnections>
 	</SubAppNetwork>
 </SubAppType>
