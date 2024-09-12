@@ -14,17 +14,25 @@
 		</SubAppEventInputs>
 	</SubAppInterfaceList>
 	<SubAppNetwork>
-		<FB Name="DigitalOutput_Q1" Type="QX" Comment="" x="-3553.33" y="346.67">
+		<FB Name="DigitalOutput_Q1" Type="QX" Comment="" x="-3520" y="453.34">
 			<Parameter Name="QI" Value="TRUE" Comment=""/>
+			<Parameter Name="PARAMS" Value="" Comment="">
+				<Attribute Name="Visible" Value="false"/>
+			</Parameter>
 		</FB>
-		<FB Name="DigitalInput_I1" Type="IX" Comment="" x="-8706.67" y="366.67">
-			<Parameter Name="QI" Value="TRUE" Comment=""/>
+		<FB Name="DigitalInput_I1" Type="IX" Comment="" x="-8726.67" y="453.34">
+			<Parameter Name="QI" Value="TRUE" Comment="">
+				<Attribute Name="Visible" Value="false"/>
+			</Parameter>
+			<Parameter Name="PARAMS" Value="" Comment="">
+				<Attribute Name="Visible" Value="false"/>
+			</Parameter>
 		</FB>
-		<FB Name="E_SWITCH" Type="E_SWITCH" Comment="" x="-7466.67" y="753.33">
+		<FB Name="E_SWITCH" Type="E_SWITCH" Comment="" x="-7480" y="800">
 		</FB>
-		<FB Name="E_RS" Type="E_RS" Comment="" x="-4840" y="526.67">
+		<FB Name="E_RS" Type="E_RS" Comment="" x="-4873.33" y="566.67">
 		</FB>
-		<FB Name="E_DELAY" Type="E_DELAY" Comment="" x="-5993.33" y="640">
+		<FB Name="E_DELAY" Type="E_DELAY" Comment="" x="-6013.33" y="680">
 			<Parameter Name="DT" Value="T#2S" Comment=""/>
 		</FB>
 		<EventConnections>
@@ -34,16 +42,16 @@
 			<Connection Source="INIT" Destination="DigitalOutput_Q1.INIT" Comment="" dx1="3880">
 				<Attribute Name="Visible" Value="false"/>
 			</Connection>
-			<Connection Source="DigitalInput_I1.IND" Destination="E_SWITCH.EI" Comment="" dx1="80"/>
-			<Connection Source="E_RS.EO" Destination="DigitalOutput_Q1.REQ" Comment="" dx1="73.33"/>
-			<Connection Source="E_SWITCH.EO1" Destination="E_DELAY.START" Comment="" dx1="433.33"/>
+			<Connection Source="DigitalInput_I1.IND" Destination="E_SWITCH.EI" Comment="" dx1="246.67"/>
+			<Connection Source="E_RS.EO" Destination="DigitalOutput_Q1.REQ" Comment=""/>
+			<Connection Source="E_SWITCH.EO1" Destination="E_DELAY.START" Comment="" dx1="526.67"/>
 			<Connection Source="E_DELAY.EO" Destination="E_RS.S" Comment=""/>
-			<Connection Source="E_SWITCH.EO0" Destination="E_RS.R" Comment="" dx1="73.33" dx2="286.67" dy="-360"/>
 			<Connection Source="E_SWITCH.EO0" Destination="E_DELAY.STOP" Comment=""/>
+			<Connection Source="E_SWITCH.EO0" Destination="E_RS.R" Comment="" dx1="306.67" dx2="246.67" dy="-366.67"/>
 		</EventConnections>
 		<DataConnections>
-			<Connection Source="DigitalInput_I1.IN" Destination="E_SWITCH.G" Comment="" dx1="273.33"/>
-			<Connection Source="E_RS.Q" Destination="DigitalOutput_Q1.OUT" Comment="" dx1="420"/>
+			<Connection Source="DigitalInput_I1.IN" Destination="E_SWITCH.G" Comment=""/>
+			<Connection Source="E_RS.Q" Destination="DigitalOutput_Q1.OUT" Comment=""/>
 		</DataConnections>
 	</SubAppNetwork>
 </SubAppType>
