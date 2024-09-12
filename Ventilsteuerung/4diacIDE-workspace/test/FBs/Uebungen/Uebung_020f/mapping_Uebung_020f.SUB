@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<SubAppType Name="mapping_Uebung_028" Comment="Analog-Eingang">
+<SubAppType Name="mapping_Uebung_020f" Comment="DigitalInput_I1 auf DigitalOutput_Q1; E_TP; Impulsformend">
 	<Identification Standard="61499-2">
 	</Identification>
 	<VersionInfo Version="1.0" Author="franz" Date="2023-10-23">
@@ -13,7 +13,7 @@
 		</SubAppEventInputs>
 	</SubAppInterfaceList>
 	<SubAppNetwork>
-		<FB Name="Hutschienenmoped_XL_8_DO" Type="Hutschienenmoped_XL_8_DO" Comment="" x="-3626.67" y="-226.67">
+		<FB Name="Hutschienenmoped_XL_8_DO" Type="Hutschienenmoped_XL_8_DO" Comment="" x="-3293.33" y="6.67">
 			<Parameter Name="QI" Value="TRUE" Comment="">
 				<Attribute Name="Visible" Value="false"/>
 			</Parameter>
@@ -46,7 +46,7 @@
 				<Attribute Name="Visible" Value="false"/>
 			</Parameter>
 		</FB>
-		<FB Name="Hutschienenmoped_XL_8_DI" Type="Hutschienenmoped_XL_8_DI" Comment="" x="-3626.67" y="-1066.67">
+		<FB Name="Hutschienenmoped_XL_8_DI" Type="Hutschienenmoped_XL_8_DI" Comment="" x="-3333.33" y="-1066.67">
 			<Parameter Name="QI" Value="TRUE" Comment="">
 				<Attribute Name="Visible" Value="false"/>
 			</Parameter>
@@ -79,65 +79,11 @@
 				<Attribute Name="Visible" Value="false"/>
 			</Parameter>
 		</FB>
-		<FB Name="Hutschienenmoped_XL_8_AI" Type="Hutschienenmoped_XL_8_AI" Comment="" x="-3626.67" y="680">
-			<Parameter Name="QI" Value="TRUE" Comment="">
-				<Attribute Name="Visible" Value="false"/>
-			</Parameter>
-			<Parameter Name="u8SAMember" Value="GLOBAL" Comment="">
-				<Attribute Name="Visible" Value="false"/>
-			</Parameter>
-			<Parameter Name="u16ObjId" Value="ID_NULL" Comment="">
-				<Attribute Name="Visible" Value="false"/>
-			</Parameter>
-			<Parameter Name="AnalogInput_I1" Value="" Comment="">
-				<Attribute Name="Visible" Value="false"/>
-			</Parameter>
-			<Parameter Name="AnalogInput_I1_hysteresis" Value="" Comment="">
-				<Attribute Name="Visible" Value="false"/>
-			</Parameter>
-			<Parameter Name="AnalogInput_I2" Value="" Comment="">
-				<Attribute Name="Visible" Value="false"/>
-			</Parameter>
-			<Parameter Name="AnalogInput_I2_hysteresis" Value="" Comment="">
-				<Attribute Name="Visible" Value="false"/>
-			</Parameter>
-			<Parameter Name="AnalogInput_I3" Value="" Comment="">
-				<Attribute Name="Visible" Value="false"/>
-			</Parameter>
-			<Parameter Name="AnalogInput_I3_hysteresis" Value="" Comment="">
-				<Attribute Name="Visible" Value="false"/>
-			</Parameter>
-			<Parameter Name="AnalogInput_I4" Value="'Ventilsteuerung.functions.AnalogInput_I4'" Comment=""/>
-			<Parameter Name="AnalogInput_I4_hysteresis" Value="50" Comment=""/>
-			<Parameter Name="AnalogInput_I5" Value="" Comment="">
-				<Attribute Name="Visible" Value="false"/>
-			</Parameter>
-			<Parameter Name="AnalogInput_I5_hysteresis" Value="" Comment="">
-				<Attribute Name="Visible" Value="false"/>
-			</Parameter>
-			<Parameter Name="AnalogInput_I6" Value="" Comment="">
-				<Attribute Name="Visible" Value="false"/>
-			</Parameter>
-			<Parameter Name="AnalogInput_I6_hysteresis" Value="" Comment="">
-				<Attribute Name="Visible" Value="false"/>
-			</Parameter>
-			<Parameter Name="AnalogInput_I7" Value="'Ventilsteuerung.functions.AnalogInput_I7'" Comment=""/>
-			<Parameter Name="AnalogInput_I7_hysteresis" Value="50" Comment=""/>
-			<Parameter Name="AnalogInput_I8" Value="" Comment="">
-				<Attribute Name="Visible" Value="false"/>
-			</Parameter>
-			<Parameter Name="AnalogInput_I8_hysteresis" Value="" Comment="">
-				<Attribute Name="Visible" Value="false"/>
-			</Parameter>
-		</FB>
 		<EventConnections>
 			<Connection Source="INIT" Destination="Hutschienenmoped_XL_8_DI.INIT" Comment="" dx1="73.33">
 				<Attribute Name="Visible" Value="false"/>
 			</Connection>
 			<Connection Source="INIT" Destination="Hutschienenmoped_XL_8_DO.INIT" Comment="" dx1="73.33">
-				<Attribute Name="Visible" Value="false"/>
-			</Connection>
-			<Connection Source="INIT" Destination="Hutschienenmoped_XL_8_AI.INIT" Comment="" dx1="1600">
 				<Attribute Name="Visible" Value="false"/>
 			</Connection>
 		</EventConnections>

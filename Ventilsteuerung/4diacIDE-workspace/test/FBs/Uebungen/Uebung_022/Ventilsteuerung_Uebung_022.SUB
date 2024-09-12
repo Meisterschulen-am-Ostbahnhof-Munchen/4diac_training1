@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SubAppType Name="Ventilsteuerung_Uebung_022" Comment="Spiegelabfolge (2)">
+	<Identification Standard="61499-2">
+	</Identification>
+	<VersionInfo Version="1.0" Author="franz" Date="2023-10-23">
+	</VersionInfo>
+	<CompilerInfo>
+	</CompilerInfo>
+	<SubAppInterfaceList>
+		<SubAppEventInputs>
+			<SubAppEvent Name="INIT" Type="Event" Comment="">
+				<Attribute Name="YPOSITION" Type="INT" Value="0"/>
+			</SubAppEvent>
+		</SubAppEventInputs>
+	</SubAppInterfaceList>
+	<SubAppNetwork>
+		<SubApp Name="mapping" Type="mapping_Uebung_022" Comment="" x="-266.67" y="-266.67">
+		</SubApp>
+		<SubApp Name="functions" Type="Uebung_022" Comment="" x="-266.67" y="273.33">
+		</SubApp>
+		<EventConnections>
+			<Connection Source="INIT" Destination="functions.INIT" Comment="" dx1="800" dx2="800" dy="0">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="INIT" Destination="mapping.INIT" Comment="" dx1="533.33" dx2="533.33" dy="0">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+		</EventConnections>
+	</SubAppNetwork>
+</SubAppType>

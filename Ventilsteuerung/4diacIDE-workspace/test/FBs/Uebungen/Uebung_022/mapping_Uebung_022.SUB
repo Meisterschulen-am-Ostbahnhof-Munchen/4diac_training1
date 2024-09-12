@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<SubAppType Name="mapping_Uebung_026" Comment="Spiegelabfolge (6)">
+<SubAppType Name="mapping_Uebung_022" Comment="Spiegelabfolge (2)">
 	<Identification Standard="61499-2">
 	</Identification>
 	<VersionInfo Version="1.0" Author="franz" Date="2023-10-23">
@@ -13,7 +13,7 @@
 		</SubAppEventInputs>
 	</SubAppInterfaceList>
 	<SubAppNetwork>
-		<FB Name="Hutschienenmoped_XL_8_DO" Type="Hutschienenmoped_XL_8_DO" Comment="" x="-3513.33" y="0">
+		<FB Name="Hutschienenmoped_XL_8_DO" Type="Hutschienenmoped_XL_8_DO" Comment="" x="-4200" y="-333.34">
 			<Parameter Name="QI" Value="TRUE" Comment="">
 				<Attribute Name="Visible" Value="false"/>
 			</Parameter>
@@ -23,10 +23,14 @@
 			<Parameter Name="u16ObjId" Value="ID_NULL" Comment="">
 				<Attribute Name="Visible" Value="false"/>
 			</Parameter>
-			<Parameter Name="DigitalOutput_Q1" Value="'Ventilsteuerung.functions.Q1.QX'" Comment=""/>
-			<Parameter Name="DigitalOutput_Q2" Value="'Ventilsteuerung.functions.Q2.QX'" Comment=""/>
-			<Parameter Name="DigitalOutput_Q3" Value="'Ventilsteuerung.functions.Q3.QX'" Comment=""/>
-			<Parameter Name="DigitalOutput_Q4" Value="'Ventilsteuerung.functions.Q4.QX'" Comment=""/>
+			<Parameter Name="DigitalOutput_Q1" Value="'Ventilsteuerung.functions.DigitalOutput_Q1'" Comment=""/>
+			<Parameter Name="DigitalOutput_Q2" Value="'Ventilsteuerung.functions.DigitalOutput_Q2'" Comment=""/>
+			<Parameter Name="DigitalOutput_Q3" Value="" Comment="">
+				<Attribute Name="Visible" Value="false"/>
+			</Parameter>
+			<Parameter Name="DigitalOutput_Q4" Value="" Comment="">
+				<Attribute Name="Visible" Value="false"/>
+			</Parameter>
 			<Parameter Name="DigitalOutput_Q5" Value="" Comment="">
 				<Attribute Name="Visible" Value="false"/>
 			</Parameter>
@@ -40,7 +44,7 @@
 				<Attribute Name="Visible" Value="false"/>
 			</Parameter>
 		</FB>
-		<FB Name="UT_SoftkeyMapping_UP" Type="UT_SoftkeyMapping_UP" Comment="" x="-3513.33" y="-906.67">
+		<FB Name="UT_SoftkeyMapping_UP" Type="UT_SoftkeyMapping_UP" Comment="" x="-4193.33" y="-1253.33">
 			<Parameter Name="QI" Value="TRUE" Comment="">
 				<Attribute Name="Visible" Value="false"/>
 			</Parameter>
@@ -92,7 +96,7 @@
 				<Attribute Name="Visible" Value="false"/>
 			</Parameter>
 		</FB>
-		<FB Name="UT_SoftkeyMapping_DOWN" Type="UT_SoftkeyMapping_DOWN" Comment="" x="-3513.33" y="-2486.67">
+		<FB Name="UT_SoftkeyMapping_DOWN" Type="UT_SoftkeyMapping_DOWN" Comment="" x="-4193.33" y="-2386.66">
 			<Parameter Name="QI" Value="TRUE" Comment="">
 				<Attribute Name="Visible" Value="false"/>
 			</Parameter>
@@ -109,10 +113,18 @@
 			<Parameter Name="DigitalInput_2" Value="'Ventilsteuerung.functions.SoftKey_F2_DOWN'" Comment=""/>
 			<Parameter Name="u16ObjId_3" Value="SoftKey_F3" Comment=""/>
 			<Parameter Name="DigitalInput_3" Value="'Ventilsteuerung.functions.SoftKey_F3_DOWN'" Comment=""/>
-			<Parameter Name="u16ObjId_4" Value="SoftKey_F8" Comment=""/>
-			<Parameter Name="DigitalInput_4" Value="'Ventilsteuerung.functions.SoftKey_F8_DOWN'" Comment=""/>
-			<Parameter Name="u16ObjId_5" Value="SoftKey_F9" Comment=""/>
-			<Parameter Name="DigitalInput_5" Value="'Ventilsteuerung.functions.SoftKey_F9_DOWN'" Comment=""/>
+			<Parameter Name="u16ObjId_4" Value="" Comment="">
+				<Attribute Name="Visible" Value="false"/>
+			</Parameter>
+			<Parameter Name="DigitalInput_4" Value="" Comment="">
+				<Attribute Name="Visible" Value="false"/>
+			</Parameter>
+			<Parameter Name="u16ObjId_5" Value="" Comment="">
+				<Attribute Name="Visible" Value="false"/>
+			</Parameter>
+			<Parameter Name="DigitalInput_5" Value="" Comment="">
+				<Attribute Name="Visible" Value="false"/>
+			</Parameter>
 			<Parameter Name="u16ObjId_6" Value="" Comment="">
 				<Attribute Name="Visible" Value="false"/>
 			</Parameter>
@@ -136,10 +148,10 @@
 			<Connection Source="INIT" Destination="Hutschienenmoped_XL_8_DO.INIT" Comment="" dx1="73.33">
 				<Attribute Name="Visible" Value="false"/>
 			</Connection>
-			<Connection Source="INIT" Destination="UT_SoftkeyMapping_UP.INIT" Comment="" dx1="2666.67">
+			<Connection Source="INIT" Destination="UT_SoftkeyMapping_UP.INIT" Comment="" dx1="3600">
 				<Attribute Name="Visible" Value="false"/>
 			</Connection>
-			<Connection Source="INIT" Destination="UT_SoftkeyMapping_DOWN.INIT" Comment="" dx1="5133.33">
+			<Connection Source="INIT" Destination="UT_SoftkeyMapping_DOWN.INIT" Comment="" dx1="3600">
 				<Attribute Name="Visible" Value="false"/>
 			</Connection>
 		</EventConnections>
