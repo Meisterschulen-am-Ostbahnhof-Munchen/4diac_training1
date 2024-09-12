@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SubAppType Name="Uebung_011" Comment="Numeric Value Input">
+	<Identification Standard="61499-2">
+	</Identification>
+	<VersionInfo Version="1.0" Author="franz" Date="2023-10-23">
+	</VersionInfo>
+	<CompilerInfo>
+	</CompilerInfo>
+	<SubAppInterfaceList>
+		<SubAppEventInputs>
+			<SubAppEvent Name="INIT" Type="Event" Comment="">
+			</SubAppEvent>
+		</SubAppEventInputs>
+	</SubAppInterfaceList>
+	<SubAppNetwork>
+		<FB Name="F_DWORD_TO_UDINT" Type="F_DWORD_TO_UDINT" Comment="" x="-3333.33" y="1066.67">
+		</FB>
+		<FB Name="InputNumber_I1" Type="ID" Comment="" x="-5000" y="613.33">
+			<Parameter Name="QI" Value="TRUE" Comment="">
+				<Attribute Name="Visible" Value="false"/>
+			</Parameter>
+			<Parameter Name="PARAMS" Value="" Comment="">
+				<Attribute Name="Visible" Value="false"/>
+			</Parameter>
+		</FB>
+		<EventConnections>
+			<Connection Source="InputNumber_I1.IND" Destination="F_DWORD_TO_UDINT.REQ" Comment="" dx1="486.67"/>
+			<Connection Source="INIT" Destination="InputNumber_I1.INIT" Comment="" dx1="833.33">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+		</EventConnections>
+		<DataConnections>
+			<Connection Source="InputNumber_I1.IN" Destination="F_DWORD_TO_UDINT.IN" Comment=""/>
+		</DataConnections>
+	</SubAppNetwork>
+</SubAppType>

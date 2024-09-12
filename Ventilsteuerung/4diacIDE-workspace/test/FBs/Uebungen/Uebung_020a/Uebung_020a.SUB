@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SubAppType Name="Uebung_020a" Comment="DigitalInput_I1 auf DigitalOutput_Q1">
+	<Identification Standard="61499-2">
+	</Identification>
+	<VersionInfo Version="1.0" Author="franz" Date="2023-10-23">
+	</VersionInfo>
+	<CompilerInfo>
+	</CompilerInfo>
+	<SubAppInterfaceList>
+		<SubAppEventInputs>
+			<SubAppEvent Name="INIT" Type="Event" Comment="">
+				<Attribute Name="YPOSITION" Type="INT" Value="0"/>
+			</SubAppEvent>
+		</SubAppEventInputs>
+	</SubAppInterfaceList>
+	<SubAppNetwork>
+		<FB Name="DigitalOutput_Q1" Type="QX" Comment="" x="-2673.33" y="1713.33">
+			<Parameter Name="QI" Value="TRUE" Comment=""/>
+			<Parameter Name="PARAMS" Value="" Comment="">
+				<Attribute Name="Visible" Value="false"/>
+			</Parameter>
+		</FB>
+		<FB Name="DigitalInput_I1" Type="IX" Comment="" x="-6400" y="1600">
+			<Parameter Name="QI" Value="TRUE" Comment="">
+				<Attribute Name="Visible" Value="false"/>
+			</Parameter>
+			<Parameter Name="PARAMS" Value="" Comment="">
+				<Attribute Name="Visible" Value="false"/>
+			</Parameter>
+		</FB>
+		<FB Name="E_SWITCH" Type="E_SWITCH" Comment="" x="-5160" y="1826.67">
+		</FB>
+		<FB Name="E_RS" Type="E_RS" Comment="" x="-3960" y="1826.67">
+		</FB>
+		<EventConnections>
+			<Connection Source="INIT" Destination="DigitalInput_I1.INIT" Comment="" dx1="200">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="INIT" Destination="DigitalOutput_Q1.INIT" Comment="" dx1="3880">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="DigitalInput_I1.IND" Destination="E_SWITCH.EI" Comment=""/>
+			<Connection Source="E_SWITCH.EO0" Destination="E_RS.R" Comment=""/>
+			<Connection Source="E_SWITCH.EO1" Destination="E_RS.S" Comment=""/>
+			<Connection Source="E_RS.EO" Destination="DigitalOutput_Q1.REQ" Comment=""/>
+		</EventConnections>
+		<DataConnections>
+			<Connection Source="DigitalInput_I1.IN" Destination="E_SWITCH.G" Comment="" dx1="80"/>
+			<Connection Source="E_RS.Q" Destination="DigitalOutput_Q1.OUT" Comment="" dx1="73.33"/>
+		</DataConnections>
+	</SubAppNetwork>
+</SubAppType>

@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SubAppType Name="Uebung_005" Comment="Toggle Flip-Flop mit IX">
+	<Identification Standard="61499-2">
+	</Identification>
+	<VersionInfo Version="1.0" Author="franz" Date="2023-10-23">
+	</VersionInfo>
+	<CompilerInfo>
+	</CompilerInfo>
+	<SubAppInterfaceList>
+		<SubAppEventInputs>
+			<SubAppEvent Name="INIT" Type="Event" Comment="">
+			</SubAppEvent>
+		</SubAppEventInputs>
+	</SubAppInterfaceList>
+	<SubAppNetwork>
+		<FB Name="DigitalOutput_Q1" Type="QX" Comment="" x="-1246.67" y="-453.33">
+			<Parameter Name="QI" Value="TRUE" Comment=""/>
+		</FB>
+		<FB Name="E_T_FF" Type="E_T_FF" Comment="" x="-2493.33" y="-113.33">
+		</FB>
+		<FB Name="DigitalInput_I1" Type="IX" Comment="" x="-5780" y="-566.67">
+			<Parameter Name="QI" Value="TRUE" Comment=""/>
+		</FB>
+		<FB Name="E_SWITCH" Type="E_SWITCH" Comment="" x="-3966.67" y="-226.67">
+		</FB>
+		<EventConnections>
+			<Connection Source="E_T_FF.EO" Destination="DigitalOutput_Q1.REQ" Comment="" dx1="400"/>
+			<Connection Source="INIT" Destination="DigitalInput_I1.INIT" Comment="" dx1="340">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="DigitalInput_I1.INITO" Destination="DigitalOutput_Q1.INIT" Comment="" dx1="1933.33"/>
+			<Connection Source="DigitalInput_I1.IND" Destination="E_SWITCH.EI" Comment="" dx1="520"/>
+			<Connection Source="E_SWITCH.EO1" Destination="E_T_FF.CLK" Comment=""/>
+		</EventConnections>
+		<DataConnections>
+			<Connection Source="E_T_FF.Q" Destination="DigitalOutput_Q1.OUT" Comment=""/>
+			<Connection Source="DigitalInput_I1.IN" Destination="E_SWITCH.G" Comment=""/>
+		</DataConnections>
+	</SubAppNetwork>
+</SubAppType>

@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SubAppType Name="Uebung_020f" Comment="DigitalInput_I1 auf DigitalOutput_Q1; E_PULSE; Impulsformend">
+	<Identification Standard="61499-2">
+	</Identification>
+	<VersionInfo Version="1.0" Author="franz" Date="2023-10-23">
+	</VersionInfo>
+	<CompilerInfo>
+	</CompilerInfo>
+	<SubAppInterfaceList>
+		<SubAppEventInputs>
+			<SubAppEvent Name="INIT" Type="Event" Comment="">
+				<Attribute Name="YPOSITION" Type="INT" Value="0"/>
+			</SubAppEvent>
+		</SubAppEventInputs>
+	</SubAppInterfaceList>
+	<SubAppNetwork>
+		<FB Name="DigitalOutput_Q1" Type="QX" Comment="" x="-5860" y="460">
+			<Parameter Name="QI" Value="TRUE" Comment=""/>
+		</FB>
+		<FB Name="DigitalInput_I1" Type="IX" Comment="" x="-8706.67" y="346.67">
+			<Parameter Name="QI" Value="TRUE" Comment=""/>
+		</FB>
+		<FB Name="E_TP" Type="E_TP" Comment="" x="-7193.33" y="573.33">
+			<Parameter Name="PT" Value="T#5s" Comment=""/>
+		</FB>
+		<EventConnections>
+			<Connection Source="INIT" Destination="DigitalInput_I1.INIT" Comment="" dx1="200">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="INIT" Destination="DigitalOutput_Q1.INIT" Comment="" dx1="3880">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="DigitalInput_I1.IND" Destination="E_TP.REQ" Comment=""/>
+			<Connection Source="E_TP.CNF" Destination="DigitalOutput_Q1.REQ" Comment=""/>
+		</EventConnections>
+		<DataConnections>
+			<Connection Source="DigitalInput_I1.IN" Destination="E_TP.IN" Comment="" dx1="80" dx2="80" dy="0"/>
+			<Connection Source="E_TP.Q" Destination="DigitalOutput_Q1.OUT" Comment="" dx1="73.33" dx2="73.33" dy="0"/>
+		</DataConnections>
+	</SubAppNetwork>
+</SubAppType>

@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SubAppType Name="Uebung_006a2" Comment="2x SR&amp;amp;T-Flip-Flop mit IE">
+	<Identification Standard="61499-2">
+	</Identification>
+	<VersionInfo Version="1.0" Author="franz" Date="2023-10-23">
+	</VersionInfo>
+	<CompilerInfo>
+	</CompilerInfo>
+	<SubAppInterfaceList>
+		<SubAppEventInputs>
+			<SubAppEvent Name="INIT" Type="Event" Comment="">
+			</SubAppEvent>
+		</SubAppEventInputs>
+	</SubAppInterfaceList>
+	<SubAppNetwork>
+		<FB Name="DigitalOutput_Q1" Type="QX" Comment="" x="-1473.34" y="-1020">
+			<Parameter Name="QI" Value="TRUE" Comment=""/>
+		</FB>
+		<FB Name="DigitalInput_I1_CLK" Type="IE" Comment="" x="-4540" y="-913.33">
+			<Parameter Name="QI" Value="TRUE" Comment="">
+				<Attribute Name="Visible" Value="false"/>
+			</Parameter>
+			<Parameter Name="PARAMS" Value="" Comment="">
+				<Attribute Name="Visible" Value="false"/>
+			</Parameter>
+		</FB>
+		<FB Name="DigitalInput_I2_CLK" Type="IE" Comment="" x="-4540" y="113.34">
+			<Parameter Name="QI" Value="TRUE" Comment="">
+				<Attribute Name="Visible" Value="false"/>
+			</Parameter>
+			<Parameter Name="PARAMS" Value="" Comment="">
+				<Attribute Name="Visible" Value="false"/>
+			</Parameter>
+		</FB>
+		<FB Name="E_T_FF_SR_Q1" Type="E_T_FF_SR" Comment="" x="-2840" y="-913.33">
+		</FB>
+		<FB Name="DigitalInput_I3_CLK" Type="IE" Comment="" x="-4200" y="-2380">
+			<Parameter Name="QI" Value="TRUE" Comment="">
+				<Attribute Name="Visible" Value="false"/>
+			</Parameter>
+			<Parameter Name="PARAMS" Value="" Comment="">
+				<Attribute Name="Visible" Value="false"/>
+			</Parameter>
+		</FB>
+		<FB Name="E_T_FF_SR_Q2" Type="E_T_FF_SR" Comment="" x="-2833.33" y="113.34">
+		</FB>
+		<FB Name="DigitalOutput_Q2" Type="QX" Comment="" x="-1473.34" y="0">
+			<Parameter Name="QI" Value="TRUE" Comment=""/>
+		</FB>
+		<EventConnections>
+			<Connection Source="INIT" Destination="DigitalInput_I1_CLK.INIT" Comment="" dx1="1113.33">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="INIT" Destination="DigitalInput_I2_CLK.INIT" Comment="" dx1="1206.67">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="E_T_FF_SR_Q1.EO" Destination="DigitalOutput_Q1.REQ" Comment=""/>
+			<Connection Source="INIT" Destination="DigitalInput_I3_CLK.INIT" Comment="" dx1="2226.67">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="INIT" Destination="DigitalOutput_Q1.INIT" Comment="" dx1="3646.67">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="INIT" Destination="DigitalOutput_Q2.INIT" Comment="" dx1="3640">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="E_T_FF_SR_Q2.EO" Destination="DigitalOutput_Q2.REQ" Comment=""/>
+			<Connection Source="DigitalInput_I1_CLK.IND" Destination="E_T_FF_SR_Q1.CLK" Comment=""/>
+			<Connection Source="DigitalInput_I2_CLK.IND" Destination="E_T_FF_SR_Q2.CLK" Comment=""/>
+			<Connection Source="DigitalInput_I3_CLK.IND" Destination="E_T_FF_SR_Q2.R" Comment="" dx1="320"/>
+			<Connection Source="DigitalInput_I3_CLK.IND" Destination="E_T_FF_SR_Q1.R" Comment="" dx1="320"/>
+		</EventConnections>
+		<DataConnections>
+			<Connection Source="E_T_FF_SR_Q1.Q" Destination="DigitalOutput_Q1.OUT" Comment=""/>
+			<Connection Source="E_T_FF_SR_Q2.Q" Destination="DigitalOutput_Q2.OUT" Comment=""/>
+		</DataConnections>
+	</SubAppNetwork>
+</SubAppType>

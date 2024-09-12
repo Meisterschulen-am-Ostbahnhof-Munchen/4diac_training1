@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SubAppType Name="Uebung_020c2" Comment="DigitalInput_I1 auf DigitalOutput_Q1; E_TON Einschaltverzögert; Zeit eingeben und speichern.">
+	<Identification Standard="61499-2">
+	</Identification>
+	<VersionInfo Version="1.0" Author="franz" Date="2023-10-23">
+	</VersionInfo>
+	<CompilerInfo>
+	</CompilerInfo>
+	<SubAppInterfaceList>
+		<SubAppEventInputs>
+			<SubAppEvent Name="INIT" Type="Event" Comment="">
+				<Attribute Name="YPOSITION" Type="INT" Value="0"/>
+			</SubAppEvent>
+		</SubAppEventInputs>
+	</SubAppInterfaceList>
+	<SubAppNetwork>
+		<FB Name="DigitalOutput_Q1" Type="QX" Comment="" x="-5893.33" y="453.33">
+			<Parameter Name="QI" Value="TRUE" Comment=""/>
+		</FB>
+		<FB Name="DigitalInput_I1" Type="IX" Comment="" x="-8726.67" y="340">
+			<Parameter Name="QI" Value="TRUE" Comment="">
+				<Attribute Name="Visible" Value="false"/>
+			</Parameter>
+			<Parameter Name="PARAMS" Value="" Comment="">
+				<Attribute Name="Visible" Value="false"/>
+			</Parameter>
+		</FB>
+		<FB Name="E_TON" Type="E_TON" Comment="" x="-7193.33" y="573.33">
+		</FB>
+		<SubApp Name="Uebung_020c2_sub" Type="Uebung_020c2_sub" Comment="" x="-10133.33" y="1733.33">
+			<Parameter Name="KEY" Value="KEY_I1_STORE" Comment=""/>
+			<Parameter Name="u16ObjId" Value="InputNumber_I1" Comment=""/>
+		</SubApp>
+		<FB Name="F_MULTIME" Type="F_MULTIME" Comment="" x="-8400" y="1733.33">
+			<Parameter Name="IN1" Value="T#1s" Comment=""/>
+		</FB>
+		<EventConnections>
+			<Connection Source="INIT" Destination="DigitalInput_I1.INIT" Comment="" dx1="200">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="INIT" Destination="DigitalOutput_Q1.INIT" Comment="" dx1="3880">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="DigitalInput_I1.IND" Destination="E_TON.REQ" Comment=""/>
+			<Connection Source="E_TON.CNF" Destination="DigitalOutput_Q1.REQ" Comment="" dx1="406.67"/>
+			<Connection Source="INIT" Destination="Uebung_020c2_sub.INIT" Comment="" dx1="1966.67" dx2="1966.67" dy="0">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="Uebung_020c2_sub.IND" Destination="F_MULTIME.REQ" Comment=""/>
+		</EventConnections>
+		<DataConnections>
+			<Connection Source="DigitalInput_I1.IN" Destination="E_TON.IN" Comment="" dx1="80"/>
+			<Connection Source="E_TON.Q" Destination="DigitalOutput_Q1.OUT" Comment="" dx1="73.33"/>
+			<Connection Source="F_MULTIME.OUT" Destination="E_TON.PT" Comment="" dx1="253.33"/>
+			<Connection Source="Uebung_020c2_sub.VALUEO" Destination="F_MULTIME.IN2" Comment=""/>
+		</DataConnections>
+	</SubAppNetwork>
+</SubAppType>
