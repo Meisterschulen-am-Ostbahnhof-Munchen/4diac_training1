@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SubAppType Name="Uebung_030" Comment="LED_PWM Blinkende LED">
+	<Identification Standard="61499-2">
+	</Identification>
+	<VersionInfo Version="1.0" Author="franz" Date="2023-10-23">
+	</VersionInfo>
+	<CompilerInfo>
+	</CompilerInfo>
+	<SubAppInterfaceList>
+		<SubAppEventInputs>
+			<SubAppEvent Name="INIT" Type="Event" Comment="">
+			</SubAppEvent>
+		</SubAppEventInputs>
+	</SubAppInterfaceList>
+	<SubAppNetwork>
+		<FB Name="LED_Q1_5HZ" Type="QX" Comment="" x="-1320" y="-833.33">
+			<Parameter Name="QI" Value="TRUE" Comment=""/>
+		</FB>
+		<FB Name="DigitalInput_I1" Type="IX" Comment="" x="-4533.33" y="-946.67">
+			<Parameter Name="QI" Value="TRUE" Comment=""/>
+		</FB>
+		<FB Name="LED_Q1_1HZ" Type="QX" Comment="" x="-1320" y="400">
+			<Parameter Name="QI" Value="TRUE" Comment=""/>
+		</FB>
+		<FB Name="DigitalInput_I2" Type="IX" Comment="" x="-4533.33" y="286.67">
+			<Parameter Name="QI" Value="TRUE" Comment=""/>
+		</FB>
+		<FB Name="LED_Q1_breathing_05HZ" Type="QX" Comment="" x="-1466.67" y="1566.67">
+			<Parameter Name="QI" Value="TRUE" Comment=""/>
+		</FB>
+		<FB Name="DigitalInput_I3" Type="IX" Comment="" x="-4533.33" y="1453.33">
+			<Parameter Name="QI" Value="TRUE" Comment=""/>
+		</FB>
+		<FB Name="DigitalInput_I4" Type="IX" Comment="" x="-4533.33" y="2666.67">
+			<Parameter Name="QI" Value="TRUE" Comment=""/>
+		</FB>
+		<FB Name="LED_Q1_ON_1" Type="QX" Comment="" x="-1320" y="2780">
+			<Parameter Name="QI" Value="TRUE" Comment=""/>
+		</FB>
+		<EventConnections>
+			<Connection Source="INIT" Destination="DigitalInput_I1.INIT" Comment="" dx1="1073.33">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="DigitalInput_I1.INITO" Destination="LED_Q1_5HZ.INIT" Comment="" dx1="1200"/>
+			<Connection Source="DigitalInput_I1.IND" Destination="LED_Q1_5HZ.REQ" Comment=""/>
+			<Connection Source="DigitalInput_I2.IND" Destination="LED_Q1_1HZ.REQ" Comment=""/>
+			<Connection Source="INIT" Destination="DigitalInput_I2.INIT" Comment="" dx1="1073.33">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="DigitalInput_I2.INITO" Destination="LED_Q1_1HZ.INIT" Comment="" dx1="1186.67"/>
+			<Connection Source="INIT" Destination="DigitalInput_I3.INIT" Comment="" dx1="1073.33">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="DigitalInput_I3.IND" Destination="LED_Q1_breathing_05HZ.REQ" Comment=""/>
+			<Connection Source="DigitalInput_I3.INITO" Destination="LED_Q1_breathing_05HZ.INIT" Comment="" dx1="1186.67"/>
+			<Connection Source="DigitalInput_I4.IND" Destination="LED_Q1_ON_1.REQ" Comment=""/>
+			<Connection Source="DigitalInput_I4.INITO" Destination="LED_Q1_ON_1.INIT" Comment="" dx1="1186.67"/>
+			<Connection Source="INIT" Destination="DigitalInput_I4.INIT" Comment="" dx1="1073.33">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+		</EventConnections>
+		<DataConnections>
+			<Connection Source="DigitalInput_I1.IN" Destination="LED_Q1_5HZ.OUT" Comment=""/>
+			<Connection Source="DigitalInput_I2.IN" Destination="LED_Q1_1HZ.OUT" Comment=""/>
+			<Connection Source="DigitalInput_I3.IN" Destination="LED_Q1_breathing_05HZ.OUT" Comment=""/>
+			<Connection Source="DigitalInput_I4.IN" Destination="LED_Q1_ON_1.OUT" Comment=""/>
+		</DataConnections>
+	</SubAppNetwork>
+</SubAppType>
