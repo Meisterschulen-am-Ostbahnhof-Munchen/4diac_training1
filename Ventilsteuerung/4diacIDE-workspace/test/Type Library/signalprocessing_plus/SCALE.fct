@@ -4,18 +4,56 @@
 	</Identification>
 	<VersionInfo Version="1.0" Author="franz" Date="2024-09-19">
 	</VersionInfo>
-	<CompilerInfo>
+	<CompilerInfo packageName="signalprocessing">
 	</CompilerInfo>
 	<InterfaceList>
 		<EventInputs>
 			<Event Name="REQ" Type="Event" Comment="">
+				<With Var="IN"/>
+				<With Var="MAX1"/>
+				<With Var="MIN1"/>
+				<With Var="MAX2"/>
+				<With Var="MIN2"/>
 			</Event>
 		</EventInputs>
 		<EventOutputs>
 			<Event Name="CNF" Type="Event" Comment="">
+				<With Var=""/>
+				<With Var="OUT"/>
 			</Event>
 		</EventOutputs>
+		<InputVars>
+			<VarDeclaration Name="IN" Type="REAL" Comment=""/>
+			<VarDeclaration Name="MAX1" Type="REAL" Comment=""/>
+			<VarDeclaration Name="MIN1" Type="REAL" Comment=""/>
+			<VarDeclaration Name="MAX2" Type="REAL" Comment=""/>
+			<VarDeclaration Name="MIN2" Type="REAL" Comment=""/>
+		</InputVars>
+		<OutputVars>
+			<VarDeclaration Name="" Type="ANY" Comment=""/>
+			<VarDeclaration Name="OUT" Type="REAL" Comment=""/>
+		</OutputVars>
 	</InterfaceList>
 	<FunctionBody>
+		<ST><![CDATA[PACKAGE signalprocessing;
+
+(* Scaling Function Block *)
+FUNCTION SCALE
+VAR_INPUT
+	IN : REAL;
+	MAX1 : REAL;
+	MIN1 : REAL;
+	MAX2 : REAL;
+	MIN2 : REAL;
+END_VAR
+VAR_OUTPUT
+	OUT : REAL;
+END_VAR
+
+OUT := (IN - MIN1) * (MAX2 - MIN2) / (MAX1 - MIN1) + MIN2;
+
+END_FUNCTION
+
+]]></ST>
 	</FunctionBody>
 </Function>
