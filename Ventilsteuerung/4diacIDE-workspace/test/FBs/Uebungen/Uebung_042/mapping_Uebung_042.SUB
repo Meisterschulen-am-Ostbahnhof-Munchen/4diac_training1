@@ -13,7 +13,7 @@
 		</SubAppEventInputs>
 	</SubAppInterfaceList>
 	<SubAppNetwork>
-		<FB Name="Hutschienenmoped_XL_8_DI" Type="Hutschienenmoped_XL_8_DI" Comment="" x="-3333.33" y="-1066.67">
+		<FB Name="Hutschienenmoped_XL_8_DI_SINGLE_CLICK" Type="Hutschienenmoped_XL_8_DI_SINGLE_CLICK" Comment="" x="-3273.33" y="360">
 			<Parameter Name="QI" Value="TRUE" Comment="">
 				<Attribute Name="Visible" Value="false"/>
 			</Parameter>
@@ -23,7 +23,7 @@
 			<Parameter Name="u16ObjId" Value="ID_NULL" Comment="">
 				<Attribute Name="Visible" Value="false"/>
 			</Parameter>
-			<Parameter Name="DigitalInput_I1" Value="'Ventilsteuerung.functions.DigitalInput_I1'" Comment=""/>
+			<Parameter Name="DigitalInput_I1" Value="'Ventilsteuerung.functions.DigitalInput_I1_CLK'" Comment=""/>
 			<Parameter Name="DigitalInput_I2" Value="" Comment="">
 				<Attribute Name="Visible" Value="false"/>
 			</Parameter>
@@ -46,10 +46,5 @@
 				<Attribute Name="Visible" Value="false"/>
 			</Parameter>
 		</FB>
-		<EventConnections>
-			<Connection Source="INIT" Destination="Hutschienenmoped_XL_8_DI.INIT" Comment="" dx1="73.33">
-				<Attribute Name="Visible" Value="false"/>
-			</Connection>
-		</EventConnections>
 	</SubAppNetwork>
 </SubAppType>

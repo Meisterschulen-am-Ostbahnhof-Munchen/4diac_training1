@@ -19,7 +19,6 @@
 		<EventOutputs>
 			<Event Name="CNF" Type="Event" Comment="">
 				<With Var=""/>
-				<With Var="OUT"/>
 			</Event>
 		</EventOutputs>
 		<InputVars>
@@ -30,15 +29,14 @@
 			<VarDeclaration Name="MIN2" Type="REAL" Comment=""/>
 		</InputVars>
 		<OutputVars>
-			<VarDeclaration Name="" Type="ANY" Comment=""/>
-			<VarDeclaration Name="OUT" Type="REAL" Comment=""/>
+			<VarDeclaration Name="" Type="REAL" Comment=""/>
 		</OutputVars>
 	</InterfaceList>
 	<FunctionBody>
 		<ST><![CDATA[PACKAGE signalprocessing;
 
 (* Scaling Function Block *)
-FUNCTION SCALE
+FUNCTION SCALE : REAL
 VAR_INPUT
 	IN : REAL;
 	MAX1 : REAL;
@@ -46,11 +44,8 @@ VAR_INPUT
 	MAX2 : REAL;
 	MIN2 : REAL;
 END_VAR
-VAR_OUTPUT
-	OUT : REAL;
-END_VAR
 
-OUT := (IN - MIN1) * (MAX2 - MIN2) / (MAX1 - MIN1) + MIN2;
+SCALE := (IN - MIN1) * (MAX2 - MIN2) / (MAX1 - MIN1) + MIN2;
 
 END_FUNCTION
 
