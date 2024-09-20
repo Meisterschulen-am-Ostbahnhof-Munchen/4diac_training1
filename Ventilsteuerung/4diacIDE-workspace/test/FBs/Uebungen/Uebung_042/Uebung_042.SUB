@@ -18,16 +18,16 @@
 		</FB>
 		<FB Name="SCALE" Type="signalprocessing::SCALE" Comment="" x="-2606.67" y="-226.67">
 			<Parameter Name="IN" Value="10.0" Comment=""/>
-			<Parameter Name="MAX1" Value="20.0" Comment=""/>
-			<Parameter Name="MIN1" Value="4.0" Comment=""/>
-			<Parameter Name="MAX2" Value="100.0" Comment=""/>
-			<Parameter Name="MIN2" Value="0.0" Comment=""/>
+			<Parameter Name="MAX_IN" Value="20.0" Comment=""/>
+			<Parameter Name="MIN_IN" Value="4.0" Comment=""/>
+			<Parameter Name="MAX_OUT" Value="100.0" Comment=""/>
+			<Parameter Name="MIN_OUT" Value="0.0" Comment=""/>
 		</FB>
 		<EventConnections>
 			<Connection Source="INIT" Destination="DigitalInput_I2_CLK.INIT" Comment="" dx1="1920">
 				<Attribute Name="Visible" Value="false"/>
 			</Connection>
-			<Connection Source="DigitalInput_I2_CLK.IND" Destination="SCALE.REQ" Comment=""/>
+			<Connection Source="DigitalInput_I2_CLK.IND" Destination="SCALE.REQ" Comment="" dx1="846.67"/>
 		</EventConnections>
 	</SubAppNetwork>
 </SubAppType>
