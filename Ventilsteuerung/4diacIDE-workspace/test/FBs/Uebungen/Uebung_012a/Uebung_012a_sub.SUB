@@ -26,7 +26,7 @@
 		</OutputVars>
 	</SubAppInterfaceList>
 	<SubAppNetwork>
-		<FB Name="InputNumber_I1" Type="ID" Comment="" x="-666.67" y="20">
+		<FB Name="ID" Type="ID" Comment="" x="-666.67" y="20">
 			<Parameter Name="QI" Value="TRUE" Comment=""/>
 		</FB>
 		<FB Name="F_DWORD_TO_UDINT" Type="F_DWORD_TO_UDINT" Comment="" x="400" y="473.33">
@@ -37,8 +37,8 @@
 		<FB Name="Q_NumericValue" Type="Q_NumericValue" Comment="" x="3866.67" y="133.33">
 		</FB>
 		<EventConnections>
-			<Connection Source="InputNumber_I1.IND" Destination="F_DWORD_TO_UDINT.REQ" Comment="" dx1="300"/>
-			<Connection Source="INIT" Destination="InputNumber_I1.INIT" Comment="" dx1="333.33">
+			<Connection Source="ID.IND" Destination="F_DWORD_TO_UDINT.REQ" Comment="" dx1="300"/>
+			<Connection Source="INIT" Destination="ID.INIT" Comment="" dx1="333.33">
 				<Attribute Name="Visible" Value="false"/>
 			</Connection>
 			<Connection Source="REQ" Destination="Q_NumericValue.REQ" Comment="" dx1="1600">
@@ -59,7 +59,7 @@
 			</Connection>
 		</EventConnections>
 		<DataConnections>
-			<Connection Source="InputNumber_I1.IN" Destination="F_DWORD_TO_UDINT.IN" Comment="" dx1="186.67"/>
+			<Connection Source="ID.IN" Destination="F_DWORD_TO_UDINT.IN" Comment="" dx1="186.67"/>
 			<Connection Source="u16ObjId" Destination="Q_NumericValue.u16ObjId" Comment="" dx1="2933.33">
 				<Attribute Name="Visible" Value="false"/>
 			</Connection>
