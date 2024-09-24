@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<SubAppType Name="Uebung_039_sub_Outputs" Comment="Subapplication Type">
+<SubAppType Name="Uebung_039_sub_Outputs" Comment="Spiegelabfolge V2 mit Schrittkette SUB Out">
 	<Identification Standard="61499-2">
 	</Identification>
 	<VersionInfo Version="1.0" Author="franz" Date="2024-03-03">
@@ -25,31 +25,31 @@
 		</InputVars>
 	</SubAppInterfaceList>
 	<SubAppNetwork>
-		<FB Name="QX" Type="QX" Comment="" x="-853.3333333333334" y="-633.3333333333334">
+		<FB Name="QX" Type="QX" Comment="" x="-853.33" y="-633.33">
 			<Parameter Name="QI" Value="TRUE" Comment=""/>
 		</FB>
-		<FB Name="IX" Type="IX" Comment="" x="-3373.3333333333335" y="-986.6666666666667">
+		<FB Name="IX" Type="IX" Comment="" x="-3373.33" y="-986.67">
 			<Parameter Name="QI" Value="TRUE" Comment=""/>
 		</FB>
-		<FB Name="OR_2" Type="OR_2" Comment="" x="-2140.0" y="-193.33333333333334">
+		<FB Name="OR_2" Type="OR_2" Comment="" x="-2140" y="-193.33">
 		</FB>
-		<SubApp Name="GreenWhiteBackground" Type="GreenWhiteBackground" Comment="" x="380.0" y="-260.0">
+		<SubApp Name="GreenWhiteBackground" Type="GreenWhiteBackground" Comment="" x="380" y="-260">
 		</SubApp>
 		<EventConnections>
-			<Connection Source="OR_2.CNF" Destination="QX.REQ" Comment="" dx1="260.0"/>
-			<Connection Source="INIT" Destination="IX.INIT" Comment="" dx1="306.6666666666667"/>
-			<Connection Source="IX.INITO" Destination="QX.INIT" Comment="" dx1="900.0"/>
-			<Connection Source="IX.IND" Destination="OR_2.REQ" Comment="" dx1="273.33333333333337"/>
-			<Connection Source="REQ" Destination="OR_2.REQ" Comment="" dx1="1393.3333333333335"/>
-			<Connection Source="QX.INITO" Destination="GreenWhiteBackground.INIT" Comment="" dx1="266.6666666666667"/>
-			<Connection Source="QX.CNF" Destination="GreenWhiteBackground.REQ" Comment="" dx1="233.33333333333334"/>
+			<Connection Source="OR_2.CNF" Destination="QX.REQ" Comment="" dx1="260"/>
+			<Connection Source="INIT" Destination="IX.INIT" Comment="" dx1="306.67"/>
+			<Connection Source="IX.INITO" Destination="QX.INIT" Comment="" dx1="900"/>
+			<Connection Source="IX.IND" Destination="OR_2.REQ" Comment="" dx1="273.33"/>
+			<Connection Source="REQ" Destination="OR_2.REQ" Comment="" dx1="1393.33"/>
+			<Connection Source="QX.INITO" Destination="GreenWhiteBackground.INIT" Comment="" dx1="266.67"/>
+			<Connection Source="QX.CNF" Destination="GreenWhiteBackground.REQ" Comment="" dx1="233.33"/>
 		</EventConnections>
 		<DataConnections>
-			<Connection Source="OUT" Destination="OR_2.IN2" Comment="" dx1="1426.6666666666667"/>
-			<Connection Source="IX.IN" Destination="OR_2.IN1" Comment="" dx1="240.0"/>
-			<Connection Source="OR_2.OUT" Destination="QX.OUT" Comment="" dx1="260.0"/>
-			<Connection Source="OR_2.OUT" Destination="GreenWhiteBackground.DI1" Comment="" dx1="393.33333333333337" dx2="260.0" dy="60.0"/>
-			<Connection Source="u16ObjId" Destination="GreenWhiteBackground.u16ObjId" Comment="" dx1="3353.3333333333335"/>
+			<Connection Source="OUT" Destination="OR_2.IN2" Comment="" dx1="1426.67"/>
+			<Connection Source="IX.IN" Destination="OR_2.IN1" Comment="" dx1="240"/>
+			<Connection Source="OR_2.OUT" Destination="QX.OUT" Comment="" dx1="260"/>
+			<Connection Source="OR_2.OUT" Destination="GreenWhiteBackground.DI1" Comment="" dx1="393.33" dx2="260" dy="60"/>
+			<Connection Source="u16ObjId" Destination="GreenWhiteBackground.u16ObjId" Comment="" dx1="3353.33"/>
 		</DataConnections>
 	</SubAppNetwork>
 </SubAppType>
