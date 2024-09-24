@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<SubAppType Name="mapping_Uebung_012a" Comment="Numeric Value Input und Speichern">
+<SubAppType Name="mapping_Uebung_012b" Comment="Numeric Value Input und Speichern">
 	<Identification Standard="61499-2">
 	</Identification>
 	<VersionInfo Version="1.0" Author="franz" Date="2023-10-23">
@@ -13,7 +13,7 @@
 		</SubAppEventInputs>
 	</SubAppInterfaceList>
 	<SubAppNetwork>
-		<FB Name="UT_NumericValueInputMapping" Type="UT_NumericValueInputMapping" Comment="" x="3200" y="1866.67">
+		<FB Name="UT_NumericValueInputMapping" Type="UT_NumericValueInputMapping" Comment="" x="-3966.67" y="566.67">
 			<Parameter Name="QI" Value="TRUE" Comment="">
 				<Attribute Name="Visible" Value="false"/>
 			</Parameter>
@@ -21,7 +21,7 @@
 				<Attribute Name="Visible" Value="false"/>
 			</Parameter>
 			<Parameter Name="u16ObjId_1" Value="InputNumber_I1" Comment=""/>
-			<Parameter Name="NumericValueInput_1" Value="'Ventilsteuerung.functions.Uebung_012a_sub.ID'" Comment=""/>
+			<Parameter Name="NumericValueInput_1" Value="'Ventilsteuerung.functions.InputNumber_I1'" Comment=""/>
 			<Parameter Name="u16ObjId_2" Value="" Comment="">
 				<Attribute Name="Visible" Value="false"/>
 			</Parameter>
@@ -66,7 +66,7 @@
 			</Parameter>
 		</FB>
 		<EventConnections>
-			<Connection Source="INIT" Destination="UT_NumericValueInputMapping.INIT" Comment="" dx1="3466.67">
+			<Connection Source="INIT" Destination="UT_NumericValueInputMapping.INIT" Comment="" dx1="2006.67">
 				<Attribute Name="Visible" Value="false"/>
 			</Connection>
 		</EventConnections>
