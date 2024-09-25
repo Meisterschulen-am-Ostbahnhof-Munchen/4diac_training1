@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SubAppType Name="Uebung_004a3" Comment="wie Uebung_004a2 aber ohne E_MERGE">
+	<Identification Standard="61499-2">
+	</Identification>
+	<VersionInfo Version="1.0" Author="franz" Date="2023-10-23">
+	</VersionInfo>
+	<CompilerInfo>
+	</CompilerInfo>
+	<SubAppInterfaceList>
+		<SubAppEventInputs>
+			<SubAppEvent Name="INIT" Type="Event" Comment="">
+			</SubAppEvent>
+		</SubAppEventInputs>
+	</SubAppInterfaceList>
+	<SubAppNetwork>
+		<FB Name="DigitalOutput_Q1" Type="QX" Comment="" x="-4400" y="-6.66">
+			<Parameter Name="QI" Value="TRUE" Comment="">
+				<Attribute Name="Visible" Value="false"/>
+			</Parameter>
+			<Parameter Name="PARAMS" Value="" Comment="">
+				<Attribute Name="Visible" Value="false"/>
+			</Parameter>
+		</FB>
+		<FB Name="DigitalInput_I1_CLK" Type="IE" Comment="" x="-8000" y="-479.99">
+			<Parameter Name="QI" Value="TRUE" Comment="">
+				<Attribute Name="Visible" Value="false"/>
+			</Parameter>
+			<Parameter Name="PARAMS" Value="" Comment="">
+				<Attribute Name="Visible" Value="false"/>
+			</Parameter>
+		</FB>
+		<FB Name="E_T_FF" Type="E_T_FF" Comment="" x="-5600" y="0">
+		</FB>
+		<FB Name="DigitalInput_I2_CLK" Type="IE" Comment="" x="-8000" y="533.33">
+			<Parameter Name="QI" Value="TRUE" Comment="">
+				<Attribute Name="Visible" Value="false"/>
+			</Parameter>
+			<Parameter Name="PARAMS" Value="" Comment="">
+				<Attribute Name="Visible" Value="false"/>
+			</Parameter>
+		</FB>
+		<EventConnections>
+			<Connection Source="INIT" Destination="DigitalInput_I1_CLK.INIT" Comment="" dx1="1113.33">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="E_T_FF.EO" Destination="DigitalOutput_Q1.REQ" Comment="" dx1="400"/>
+			<Connection Source="INIT" Destination="DigitalOutput_Q1.INIT" Comment="" dx1="3780">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="INIT" Destination="DigitalInput_I2_CLK.INIT" Comment="" dx1="2106.67">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="DigitalInput_I1_CLK.IND" Destination="E_T_FF.CLK" Comment="" dx1="840"/>
+			<Connection Source="DigitalInput_I2_CLK.IND" Destination="E_T_FF.CLK" Comment="" dx1="840"/>
+		</EventConnections>
+		<DataConnections>
+			<Connection Source="E_T_FF.Q" Destination="DigitalOutput_Q1.OUT" Comment="" dx1="313.33"/>
+		</DataConnections>
+	</SubAppNetwork>
+</SubAppType>
