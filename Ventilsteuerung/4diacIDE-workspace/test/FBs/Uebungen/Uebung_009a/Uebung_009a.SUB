@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<SubAppType Name="Uebung_009a" Comment="Stepper">
+<SubAppType Name="Uebung_009a" Comment="RampLimitFS">
 	<Identification Standard="61499-2">
 	</Identification>
 	<VersionInfo Version="1.0" Author="franz" Date="2023-10-23">
@@ -58,7 +58,7 @@
 				<Attribute Name="Visible" Value="false"/>
 			</Parameter>
 		</FB>
-		<FB Name="STEPPER" Type="signalprocessing::STEPPER" Comment="" x="-140" y="1466.67">
+		<FB Name="RampLimitFS" Type="signalprocessing::RampLimitFS" Comment="" x="-140" y="1466.67">
 			<Parameter Name="VAL_ZERO" Value="DINT#0" Comment=""/>
 			<Parameter Name="SLOW" Value="DINT#1" Comment=""/>
 			<Parameter Name="FAST" Value="DINT#10" Comment=""/>
@@ -76,17 +76,17 @@
 			<Connection Source="INIT" Destination="Q_NumericValue.INIT" Comment="" dx1="4986.67">
 				<Attribute Name="Visible" Value="false"/>
 			</Connection>
-			<Connection Source="UP_FAST.IND" Destination="STEPPER.UP_FAST" Comment=""/>
-			<Connection Source="FULL.IND" Destination="STEPPER.FULL" Comment="" dx1="1466.67"/>
-			<Connection Source="STEPPER.CNF" Destination="F_DINT_TO_UDINT.REQ" Comment=""/>
-			<Connection Source="ZERO.IND" Destination="STEPPER.ZERO" Comment="" dx1="546.67"/>
-			<Connection Source="DOWN_SLOW.IND" Destination="STEPPER.DOWN_SLOW" Comment="" dx1="993.33"/>
-			<Connection Source="DOWN_FAST.IND" Destination="STEPPER.DOWN_FAST" Comment="" dx1="446.67"/>
-			<Connection Source="UP_SLOW.IND" Destination="STEPPER.UP_SLOW" Comment="" dx1="1226.67"/>
+			<Connection Source="UP_FAST.IND" Destination="RampLimitFS.UP_FAST" Comment=""/>
+			<Connection Source="FULL.IND" Destination="RampLimitFS.FULL" Comment="" dx1="1466.67"/>
+			<Connection Source="RampLimitFS.CNF" Destination="F_DINT_TO_UDINT.REQ" Comment=""/>
+			<Connection Source="ZERO.IND" Destination="RampLimitFS.ZERO" Comment="" dx1="546.67"/>
+			<Connection Source="DOWN_SLOW.IND" Destination="RampLimitFS.DOWN_SLOW" Comment="" dx1="993.33"/>
+			<Connection Source="DOWN_FAST.IND" Destination="RampLimitFS.DOWN_FAST" Comment="" dx1="446.67"/>
+			<Connection Source="UP_SLOW.IND" Destination="RampLimitFS.UP_SLOW" Comment="" dx1="1226.67"/>
 			<Connection Source="F_DINT_TO_UDINT.CNF" Destination="Q_NumericValue.REQ" Comment="" dx1="486.67"/>
 		</EventConnections>
 		<DataConnections>
-			<Connection Source="STEPPER.OUT" Destination="F_DINT_TO_UDINT.IN" Comment="" dx1="266.67"/>
+			<Connection Source="RampLimitFS.OUT" Destination="F_DINT_TO_UDINT.IN" Comment="" dx1="266.67"/>
 			<Connection Source="F_DINT_TO_UDINT.OUT" Destination="Q_NumericValue.u32NewValue" Comment="" dx1="106.67"/>
 		</DataConnections>
 	</SubAppNetwork>
