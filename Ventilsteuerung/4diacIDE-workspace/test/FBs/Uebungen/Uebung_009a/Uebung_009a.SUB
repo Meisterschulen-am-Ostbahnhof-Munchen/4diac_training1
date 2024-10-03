@@ -84,6 +84,24 @@
 			<Connection Source="DOWN_FAST.IND" Destination="RampLimitFS.DOWN_FAST" Comment="" dx1="446.67"/>
 			<Connection Source="UP_SLOW.IND" Destination="RampLimitFS.UP_SLOW" Comment="" dx1="1226.67"/>
 			<Connection Source="F_DINT_TO_UDINT.CNF" Destination="Q_NumericValue.REQ" Comment="" dx1="486.67"/>
+			<Connection Source="INIT" Destination="ZERO.INIT" Comment="" dx1="2033.33">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="INIT" Destination="UP_SLOW.INIT" Comment="" dx1="1566.67">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="INIT" Destination="UP_FAST.INIT" Comment="" dx1="2033.33">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="INIT" Destination="DOWN_SLOW.INIT" Comment="" dx1="1566.67">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="INIT" Destination="DOWN_FAST.INIT" Comment="" dx1="2033.33">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="INIT" Destination="FULL.INIT" Comment="" dx1="1566.67">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
 		</EventConnections>
 		<DataConnections>
 			<Connection Source="RampLimitFS.OUT" Destination="F_DINT_TO_UDINT.IN" Comment="" dx1="266.67"/>
