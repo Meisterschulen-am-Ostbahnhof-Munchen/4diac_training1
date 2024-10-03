@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SubAppType Name="Uebung_020i" Comment="DigitalInput_I1 auf DigitalOutput_Q1; E_PULSE; Impulsformend">
+	<Identification Standard="61499-2">
+	</Identification>
+	<VersionInfo Version="1.0" Author="franz" Date="2023-10-23">
+	</VersionInfo>
+	<CompilerInfo>
+	</CompilerInfo>
+	<SubAppInterfaceList>
+		<SubAppEventInputs>
+			<SubAppEvent Name="INIT" Type="Event" Comment="">
+				<Attribute Name="YPOSITION" Type="INT" Value="0"/>
+			</SubAppEvent>
+		</SubAppEventInputs>
+	</SubAppInterfaceList>
+	<SubAppNetwork>
+		<FB Name="DigitalOutput_Q1" Type="QX" Comment="" x="-10946.67" y="393.33">
+			<Parameter Name="QI" Value="TRUE" Comment=""/>
+		</FB>
+		<FB Name="E_PULSE" Type="E_PULSE" Comment="" x="-12406.67" y="573.33">
+		</FB>
+		<FB Name="DigitalInput_I1_CLK" Type="IE" Comment="" x="-13873.33" y="346.67">
+			<Parameter Name="QI" Value="TRUE" Comment="">
+				<Attribute Name="Visible" Value="false"/>
+			</Parameter>
+			<Parameter Name="PARAMS" Value="" Comment="">
+				<Attribute Name="Visible" Value="false"/>
+			</Parameter>
+		</FB>
+		<FB Name="E_STOPWATCH" Type="E_STOPWATCH" Comment="" x="-13833.33" y="1453.33">
+		</FB>
+		<FB Name="E_SWITCH" Type="E_SWITCH" Comment="" x="-15100" y="1680">
+		</FB>
+		<FB Name="DigitalInput_I2" Type="IX" Comment="" x="-16380" y="1293.33">
+			<Parameter Name="QI" Value="TRUE" Comment="">
+				<Attribute Name="Visible" Value="false"/>
+			</Parameter>
+			<Parameter Name="PARAMS" Value="" Comment="">
+				<Attribute Name="Visible" Value="false"/>
+			</Parameter>
+		</FB>
+		<EventConnections>
+			<Connection Source="INIT" Destination="DigitalOutput_Q1.INIT" Comment="" dx1="3880">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="E_PULSE.CNF" Destination="DigitalOutput_Q1.REQ" Comment="" dx1="406.67"/>
+			<Connection Source="DigitalInput_I1_CLK.IND" Destination="E_PULSE.REQ" Comment=""/>
+			<Connection Source="INIT" Destination="DigitalInput_I1_CLK.INIT" Comment="" dx1="2640">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="DigitalInput_I2.IND" Destination="E_SWITCH.EI" Comment="" dx1="273.33"/>
+			<Connection Source="E_SWITCH.EO1" Destination="E_STOPWATCH.START" Comment="" dx1="286.67"/>
+			<Connection Source="E_SWITCH.EO0" Destination="E_STOPWATCH.STOP" Comment=""/>
+			<Connection Source="INIT" Destination="DigitalInput_I2.INIT" Comment="" dx1="2000">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+		</EventConnections>
+		<DataConnections>
+			<Connection Source="E_PULSE.Q" Destination="DigitalOutput_Q1.OUT" Comment="" dx1="286.67"/>
+			<Connection Source="E_STOPWATCH.TD" Destination="E_PULSE.PT" Comment="" dx1="326.67"/>
+			<Connection Source="DigitalInput_I2.IN" Destination="E_SWITCH.G" Comment="" dx1="273.33"/>
+		</DataConnections>
+	</SubAppNetwork>
+</SubAppType>
