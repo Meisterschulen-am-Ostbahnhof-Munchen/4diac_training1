@@ -2,7 +2,7 @@
 <FBType Name="INTEGRAL" Comment="determines approximately the integral over time.">
 	<Identification Standard="61499-1" Description="Copyright (c) 2024 HR Agrartechnik GmbH  &#10; &#10;This program and the accompanying materials are made&#10;available under the terms of the Eclipse Public License 2.0&#10;which is available at https://www.eclipse.org/legal/epl-2.0/&#10;&#10;SPDX-License-Identifier: EPL-2.0&#10;&#10;This Block was inspired by &#10;https://content.helpme-codesys.com/en/libs/Util/Current/Mathematical-Functions/INTEGRAL.html&#10;" >
 	</Identification>
-	<VersionInfo Version="1.0" Author="franz" Date="2024-10-18">
+	<VersionInfo Organization="HR Agrartechnik GmbH" Version="1.0" Author="Franz Höpfinger" Date="2024-10-18" Remarks="initial Version">
 	</VersionInfo>
 	<CompilerInfo packageName="utils::math">
 	</CompilerInfo>
@@ -36,7 +36,7 @@
 IF NOT OVERFLOW THEN
 	IF (1.0E38 - IN * DINT_TO_REAL(TM) < OUT OR -1.0E38 - IN * DINT_TO_REAL(TM) > OUT) THEN
 		OVERFLOW := TRUE;
-	ELSIF (TM > 0) THEN
+	ELSIF (TM > 0) THEN    // Time Difference since last call must be positive.
 		OUT := OUT + IN * DINT_TO_REAL(TM) / 1000.0;
 	END_IF;
 END_IF;
