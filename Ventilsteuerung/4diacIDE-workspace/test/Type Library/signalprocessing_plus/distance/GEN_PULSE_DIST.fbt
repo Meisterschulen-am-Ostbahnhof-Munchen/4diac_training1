@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<FBType Name="GEN_PULSE_DIST" Comment="Distance based Impulse Generator">
+	<Identification Standard="61499-1" Description="Distance based Impulse Generator&#10;&#10;START with a HIGH Pulse. " >
+	</Identification>
+	<VersionInfo Version="1.0" Author="franz" Date="2024-10-18">
+	</VersionInfo>
+	<CompilerInfo packageName="signalprocessing_plus::distance">
+	</CompilerInfo>
+	<InterfaceList>
+		<EventInputs>
+			<Event Name="REQ" Type="Event" Comment="Normal Execution Request">
+			</Event>
+		</EventInputs>
+		<EventOutputs>
+			<Event Name="CNF" Type="Event" Comment="Execution Confirmation">
+				<With Var="Q"/>
+			</Event>
+		</EventOutputs>
+		<InputVars>
+			<VarDeclaration Name="DIST_IN" Type="UDINT" Comment="Travelled Distance"/>
+			<VarDeclaration Name="DIST_HIGH" Type="UDINT" Comment="Distance for Output HIGH"/>
+			<VarDeclaration Name="DIST_LOW" Type="UDINT" Comment="Distance for Output LOW"/>
+		</InputVars>
+		<OutputVars>
+			<VarDeclaration Name="Q" Type="BOOL" Comment="Output"/>
+		</OutputVars>
+	</InterfaceList>
+	<SimpleFB>
+		<InternalVars>
+			<VarDeclaration Name="DIST_REMAINDER" Type="UDINT" Comment=""/>
+		</InternalVars>
+		<Algorithm Name="REQ" Comment="">
+			<ST><![CDATA[ALGORITHM REQ
+
+DIST_REMAINDER := DIST_IN MOD (DIST_HIGH + DIST_LOW);
+
+IF (DIST_REMAINDER >= DIST_HIGH) THEN
+	Q := TRUE;
+ELSE
+	Q := FALSE;
+END_IF;
+
+END_ALGORITHM
+
+]]></ST>
+		</Algorithm>
+	</SimpleFB>
+</FBType>
