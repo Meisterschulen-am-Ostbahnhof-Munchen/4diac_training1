@@ -5,30 +5,36 @@
 #define DataMask_M1_Offset                                     21
 #define Container_Wheel_based_machine_speed_Offset             53
 #define Container_Ground_based_machine_speed_Offset            93
-#define SoftKeyMask_S1_Offset                                 133
-#define OutputString_km_h_Offset                              139
-#define OutputString_m_s_Offset                               160
-#define OutputNumber_Wheel_based_machine_speed_km_h_Offset    181
-#define OutputNumber_Wheel_based_machine_speed_m_s_Offset     210
-#define OutputNumber_Ground_based_machine_speed_km_h_Offset    239
-#define OutputNumber_Ground_based_machine_speed_m_s_Offset    268
-#define Line_13000_Offset                                     297
-#define Tractor_wheel_slip_Offset                             308
-#define Battery_disconnect_Offset                             837
-#define Work_distance_travelled_Offset                       1366
-#define Tractor_ground_speed_Offset                          1895
-#define NumberVariable_Wheel_based_machine_speed_Offset      2424
-#define NumberVariable_Ground_based_machine_speed_Offset     2431
-#define FontAttributes_23000_Offset                          2438
-#define FontAttributes_23001_Offset                          2446
-#define LineAttributes_24000_Offset                          2454
+#define Container_Wheel_based_machine_distance_Offset         133
+#define SoftKeyMask_S1_Offset                                 173
+#define OutputString_km_h_Offset                              179
+#define OutputString_m_s_Offset                               200
+#define OutputString_km_Offset                                221
+#define OutputString_m_Offset                                 242
+#define OutputNumber_Wheel_based_machine_speed_km_h_Offset    263
+#define OutputNumber_Wheel_based_machine_speed_m_s_Offset     292
+#define OutputNumber_Ground_based_machine_speed_km_h_Offset    321
+#define OutputNumber_Ground_based_machine_speed_m_s_Offset    350
+#define OutputNumber_Wheel_based_machine_distance_km_Offset    379
+#define OutputNumber_Wheel_based_machine_distance_m_Offset    408
+#define Line_13000_Offset                                     437
+#define Tractor_wheel_slip_Offset                             448
+#define Battery_disconnect_Offset                             977
+#define Work_distance_travelled_Offset                       1506
+#define Tractor_ground_speed_Offset                          2035
+#define NumberVariable_Wheel_based_machine_speed_Offset      2564
+#define NumberVariable_Ground_based_machine_speed_Offset     2571
+#define NumberVariable_Wheel_based_machine_distance_Offset   2578
+#define FontAttributes_OutputNumber_Offset                   2585
+#define FontAttributes_OutputString_Offset                   2593
+#define LineAttributes_24000_Offset                          2601
 
 #define ISO_OP_MEMORY_CLASS
 
-#define ISO_OP_DefaultPool_Size   2462
+#define ISO_OP_DefaultPool_Size   2609
 extern const unsigned char ISO_OP_MEMORY_CLASS isoOP_DefaultPool[];
 
-#define ISO_OP_DefaultPool_ObjectNumber     21
+#define ISO_OP_DefaultPool_ObjectNumber     27
 extern const unsigned long ISO_OP_MEMORY_CLASS isoOP_DefaultPool_Offset[];
 extern const unsigned long ISO_OP_MEMORY_CLASS isoOP_DefaultPool_Offset_Id[];
 #define ISO_OP_DefaultPool_Scale_Offset      1
