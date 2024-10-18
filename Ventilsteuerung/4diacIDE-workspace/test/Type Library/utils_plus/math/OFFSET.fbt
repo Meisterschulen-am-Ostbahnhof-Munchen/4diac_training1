@@ -19,11 +19,11 @@
 			</Event>
 		</EventOutputs>
 		<InputVars>
-			<VarDeclaration Name="IN" Type="UDINT" Comment="Input. First call with a Value &amp;gt;0 will Set FIRST"/>
+			<VarDeclaration Name="IN" Type="DINT" Comment="Input. First call with a Value &amp;gt;0 will Set FIRST" InitialValue="0"/>
 		</InputVars>
 		<OutputVars>
-			<VarDeclaration Name="OUT" Type="UDINT" Comment="IN - FIRST"/>
-			<VarDeclaration Name="FIRST" Type="UDINT" Comment="Set at First Call"/>
+			<VarDeclaration Name="OUT" Type="DINT" Comment="IN - FIRST" InitialValue="0"/>
+			<VarDeclaration Name="FIRST" Type="DINT" Comment="Set at First Call" InitialValue="0"/>
 		</OutputVars>
 	</InterfaceList>
 	<SimpleFB>

@@ -22,23 +22,22 @@
 			</Event>
 		</EventOutputs>
 		<InputVars>
-			<VarDeclaration Name="IN" Type="REAL" Comment="Input value"/>
-			<VarDeclaration Name="TM" Type="UDINT" Comment="Time since last call in msec"/>
+			<VarDeclaration Name="IN" Type="REAL" Comment="Input value" InitialValue="0.0"/>
+			<VarDeclaration Name="TM" Type="DINT" Comment="Time since last call in msec" InitialValue="0"/>
 		</InputVars>
 		<OutputVars>
-			<VarDeclaration Name="OUT" Type="REAL" Comment="Value of the integral. This is done by summing all part integrals IN * TM"/>
-			<VarDeclaration Name="OVERFLOW" Type="BOOL" Comment="TRUE: The value of OUT is out of range of REAL variables. he function is blocked till it is new initialised by input RESET."/>
+			<VarDeclaration Name="OUT" Type="REAL" Comment="Value of the integral. This is done by summing all part integrals IN * TM" InitialValue="0.0"/>
+			<VarDeclaration Name="OVERFLOW" Type="BOOL" Comment="TRUE: The value of OUT is out of range of REAL variables. he function is blocked till it is new initialised by input RESET." InitialValue="FALSE"/>
 		</OutputVars>
 	</InterfaceList>
 	<SimpleFB>
 		<Algorithm Name="REQ" Comment="">
 			<ST><![CDATA[ALGORITHM REQ
 IF NOT OVERFLOW THEN
-	IF (1.0E38 - IN * UDINT_TO_REAL(TM) < OUT OR -1.0E38 - IN * UDINT_TO_REAL(TM) > OUT) THEN
+	IF (1.0E38 - IN * DINT_TO_REAL(TM) < OUT OR -1.0E38 - IN * DINT_TO_REAL(TM) > OUT) THEN
 		OVERFLOW := TRUE;
-	ELSE
-		OUT := OUT + IN * UDINT_TO_REAL(TM) / 1000.0;
-
+	ELSIF (TM > 0) THEN
+		OUT := OUT + IN * DINT_TO_REAL(TM) / 1000.0;
 	END_IF;
 END_IF;
 END_ALGORITHM]]></ST>
