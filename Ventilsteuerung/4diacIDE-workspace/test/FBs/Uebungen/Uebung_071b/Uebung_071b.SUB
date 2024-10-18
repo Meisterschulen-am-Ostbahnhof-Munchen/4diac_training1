@@ -19,13 +19,14 @@
 		<FB Name="Q_NumericValue_WBSD" Type="Q_NumericValue" Comment="" x="-680" y="453.33">
 			<Parameter Name="u16ObjId" Value="NumberVariable_Wheel_based_machine_speed" Comment=""/>
 		</FB>
-		<FB Name="DigitalOutput_Q1" Type="QX" Comment="" x="1400" y="1900">
+		<FB Name="DigitalOutput_Q1" Type="QX" Comment="" x="1400" y="2300">
 			<Parameter Name="QI" Value="TRUE" Comment=""/>
 		</FB>
-		<FB Name="F_GT" Type="F_GT" Comment="" x="-1500" y="2000">
-			<Parameter Name="IN2" Value="UINT#0" Comment=""/>
+		<FB Name="GEN_PULSE_DIST" Type="signalprocessing::distance::GEN_PULSE_DIST" Comment="" x="-1600" y="2400">
+			<Parameter Name="DIST_HIGH" Value="5000" Comment=""/>
+			<Parameter Name="DIST_LOW" Value="5000" Comment=""/>
 		</FB>
-		<FB Name="E_D_FF" Type="E_D_FF" Comment="" x="-200" y="2000">
+		<FB Name="E_D_FF" Type="E_D_FF" Comment="" x="300" y="2400">
 		</FB>
 		<EventConnections>
 			<Connection Source="I_WBSD.IND" Destination="Q_NumericValue_WBSD.REQ" Comment=""/>
@@ -35,18 +36,18 @@
 			<Connection Source="INIT" Destination="Q_NumericValue_WBSD.INIT" Comment="" dx1="4026.67">
 				<Attribute Name="Visible" Value="false"/>
 			</Connection>
-			<Connection Source="INIT" Destination="DigitalOutput_Q1.INIT" Comment="" dx1="3473.33">
+			<Connection Source="INIT" Destination="DigitalOutput_Q1.INIT" Comment="" dx1="3473.33" dx2="3473.33" dy="0">
 				<Attribute Name="Visible" Value="false"/>
 			</Connection>
-			<Connection Source="I_WBSD.IND" Destination="F_GT.REQ" Comment="" dx1="1006.67"/>
-			<Connection Source="F_GT.CNF" Destination="E_D_FF.CLK" Comment=""/>
+			<Connection Source="I_WBSD.IND" Destination="GEN_PULSE_DIST.REQ" Comment="" dx1="1086.67" dx2="1086.67" dy="0"/>
 			<Connection Source="E_D_FF.EO" Destination="DigitalOutput_Q1.REQ" Comment=""/>
+			<Connection Source="GEN_PULSE_DIST.CNF" Destination="E_D_FF.CLK" Comment=""/>
 		</EventConnections>
 		<DataConnections>
 			<Connection Source="I_WBSD.WHEELBASEDMACHINESPEED" Destination="Q_NumericValue_WBSD.u32NewValue" Comment="" dx1="806.67"/>
-			<Connection Source="I_WBSD.WHEELBASEDMACHINESPEED" Destination="F_GT.IN1" Comment="" dx1="806.67"/>
-			<Connection Source="F_GT.OUT" Destination="E_D_FF.D" Comment=""/>
-			<Connection Source="E_D_FF.Q" Destination="DigitalOutput_Q1.OUT" Comment="" dx1="533.33"/>
+			<Connection Source="I_WBSD.WHEELBASEDMACHINEDISTANCE" Destination="GEN_PULSE_DIST.DIST_IN" Comment="" dx1="786.67" dx2="786.67" dy="0"/>
+			<Connection Source="E_D_FF.Q" Destination="DigitalOutput_Q1.OUT" Comment="" dx1="280"/>
+			<Connection Source="GEN_PULSE_DIST.Q" Destination="E_D_FF.D" Comment=""/>
 		</DataConnections>
 	</SubAppNetwork>
 </SubAppType>
