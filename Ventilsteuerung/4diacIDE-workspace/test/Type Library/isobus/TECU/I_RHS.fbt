@@ -22,8 +22,12 @@
 				<With Var="timestamp_data"/>
 				<With Var="STATUS"/>
 				<With Var="Q_timeout"/>
-				<With Var="REAR_PTO_OUTP_SHAFT_SPEED"/>
-
+				<With Var="REAR_HITCH_POSITION"/>
+				<With Var="REAR_HITCH_WORK_INDICATION"/>
+				<With Var="REAR_HITCH_POS_LIMIT_STATUS"/>
+				<With Var="REAR_HITCH_NOMINAL_LOWER_LINK_FORCE"/>
+				<With Var="REAR_HITCH_DRAFT"/>
+				<With Var="REAR_HITCH_EXIT_REASON_CODE"/>
 			</Event>
 			<Event Name="TIMEOUT" Type="Event" Comment="">
 				<With Var="timestamp_timeout"/>
@@ -40,8 +44,12 @@
 			<VarDeclaration Name="Q_timeout" Type="BOOL" Comment=""/>
 			<VarDeclaration Name="timestamp_timeout" Type="UINT" Comment=""/>
 			<VarDeclaration Name="timestamp_data" Type="UINT" Comment=""/>
-			<VarDeclaration Name="REAR_PTO_OUTP_SHAFT_SPEED" Type="UINT" Comment="Rear PTO output shaft speed (see Attributes for Details)"/>
-
+			<VarDeclaration Name="REAR_HITCH_POSITION" Type="USINT" Comment="Rear Hitch Position (see Attributes for Details)"/>
+			<VarDeclaration Name="REAR_HITCH_WORK_INDICATION" Type="BYTE" Comment="Rear Hitch In-work Indication"/>
+			<VarDeclaration Name="REAR_HITCH_POS_LIMIT_STATUS" Type="BYTE" Comment="Rear Hitch Position Limit status"/>
+			<VarDeclaration Name="REAR_HITCH_NOMINAL_LOWER_LINK_FORCE" Type="USINT" Comment="Rear Nominal Lower Link Force"/>
+			<VarDeclaration Name="REAR_HITCH_DRAFT" Type="UINT" Comment="Rear Draft"/>
+			<VarDeclaration Name="REAR_HITCH_EXIT_REASON_CODE" Type="BYTE" Comment="Rear hitch exit/reason code"/>
 		</OutputVars>
 	</InterfaceList>
 </FBType>
