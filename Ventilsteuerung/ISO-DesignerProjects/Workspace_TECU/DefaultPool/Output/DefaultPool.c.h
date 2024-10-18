@@ -18,7 +18,7 @@
 #define Work_distance_travelled_Offset                       1366
 #define Tractor_ground_speed_Offset                          1895
 #define NumberVariable_Wheel_based_machine_speed_Offset      2424
-#define NumberVariable_Gruound_based_machine_speed_Offset    2431
+#define NumberVariable_Ground_based_machine_speed_Offset     2431
 #define FontAttributes_23000_Offset                          2438
 #define FontAttributes_23001_Offset                          2446
 #define LineAttributes_24000_Offset                          2454

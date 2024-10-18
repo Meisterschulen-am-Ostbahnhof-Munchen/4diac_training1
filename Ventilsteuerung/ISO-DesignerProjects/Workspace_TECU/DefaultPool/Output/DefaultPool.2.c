@@ -21,7 +21,7 @@ const unsigned long ISO_OP_MEMORY_CLASS isoOP_DefaultPool_Offset[] = {
 	  1366,  // Work_distance_travelled_Offset
 	  1895,  // Tractor_ground_speed_Offset
 	  2424,  // NumberVariable_Wheel_based_machine_speed_Offset
-	  2431,  // NumberVariable_Gruound_based_machine_speed_Offset
+	  2431,  // NumberVariable_Ground_based_machine_speed_Offset
 	  2438,  // FontAttributes_23000_Offset
 	  2446,  // FontAttributes_23001_Offset
 	  2454,  // LineAttributes_24000_Offset

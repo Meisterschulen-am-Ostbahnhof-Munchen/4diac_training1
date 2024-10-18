@@ -23,7 +23,7 @@
 #define Work_distance_travelled           20002
 #define Tractor_ground_speed              20003
 #define NumberVariable_Wheel_based_machine_speed  21000
-#define NumberVariable_Gruound_based_machine_speed  21001
+#define NumberVariable_Ground_based_machine_speed  21001
 #define FontAttributes_23000              23000
 #define FontAttributes_23001              23001
 #define LineAttributes_24000              24000
