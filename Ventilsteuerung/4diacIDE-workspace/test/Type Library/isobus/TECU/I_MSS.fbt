@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<FBType Name="I_MSS" Comment="Machine Selected Speed MSS">
+	<Identification Standard="ISO 11783-7" Classification="PGN 65097" Function="Machine Selected Speed MSS" Description="Copyright (c) 2024 HR Agrartechnik GmbH  &#10; &#10;This program and the accompanying materials are made&#10;available under the terms of the Eclipse Public License 2.0&#10;which is available at https://www.eclipse.org/legal/epl-2.0/&#10;&#10;SPDX-License-Identifier: EPL-2.0&#10;&#10;Message that provides the current machine selected speed, direction and source parameters.&#10;&#10;&#10;https://www.isobus.net/isobus/pGNAndSPN/2233?type=PGN" >
+	</Identification>
+	<VersionInfo Organization="HR Agrartechnik GmbH" Version="1.0" Author="Franz Hoepfinger" Date="2024-07-09">
+	</VersionInfo>
+	<CompilerInfo>
+	</CompilerInfo>
+	<InterfaceList>
+		<EventInputs>
+			<Event Name="INIT" Type="Event" Comment="Service Initialization">
+				<With Var="QI"/>
+			</Event>
+		</EventInputs>
+		<EventOutputs>
+			<Event Name="INITO" Type="Event" Comment="Initialization Confirm">
+				<With Var="QO"/>
+				<With Var="STATUS"/>
+			</Event>
+			<Event Name="IND" Type="Event" Comment="Indication from Resource">
+				<With Var="QO"/>
+				<With Var="timestamp_data"/>
+				<With Var="STATUS"/>
+				<With Var="Q_timeout"/>
+				<With Var="SELECTEDMACHINESPEED"/>
+				<With Var="SELECTEDMACHINEDISTANCE"/>
+				<With Var="SELECTEDMACHINELIMITSTATUS"/>
+				<With Var="SELECTEDMACHINESOURCE"/>
+				<With Var="SELECTEDMACHINEDIRECTION"/>
+				<With Var="SELECTEDMACHINE_EXIT_REASON_CODE"/>
+			</Event>
+			<Event Name="TIMEOUT" Type="Event" Comment="">
+				<With Var="timestamp_timeout"/>
+				<With Var="STATUS"/>
+				<With Var="Q_timeout"/>
+			</Event>
+		</EventOutputs>
+		<InputVars>
+			<VarDeclaration Name="QI" Type="BOOL" Comment="Event Input Qualifier"/>
+		</InputVars>
+		<OutputVars>
+			<VarDeclaration Name="QO" Type="BOOL" Comment="Event Output Qualifier"/>
+			<VarDeclaration Name="STATUS" Type="STRING" Comment=""/>
+			<VarDeclaration Name="Q_timeout" Type="BOOL" Comment=""/>
+			<VarDeclaration Name="timestamp_timeout" Type="UINT" Comment=""/>
+			<VarDeclaration Name="timestamp_data" Type="UINT" Comment=""/>
+			<VarDeclaration Name="SELECTEDMACHINESPEED" Type="UINT" Comment="Machine selected speed (see Attributes for Details)">
+				<Attribute Name="SPN" Type="INT" Value="1859"/>
+				<Attribute Name="SP_Name" Type="STRING" Value="'Ground-based machine speed'"/>
+				<Attribute Name="SP_Position_In_PG" Type="STRING" Value="'1-2'"/>
+				<Attribute Name="SP_Length" Type="INT" Value="16" Comment="16 bits"/>
+				<Attribute Name="Scaling" Type="STRING" Value="'0.001 m/s per bit'"/>
+				<Attribute Name="Offset" Type="INT" Value=""/>
+				<Attribute Name="Link" Type="STRING" Value="'https://www.isobus.net/isobus/pGNAndSPN/14876?type=SPN'"/>
+			</VarDeclaration>
+			<VarDeclaration Name="SELECTEDMACHINEDISTANCE" Type="UDINT" Comment="Machine selected distance (see Attributes for Details)">
+				<Attribute Name="SPN" Type="INT" Value="1860"/>
+				<Attribute Name="SP_Name" Type="STRING" Value="'Ground-based machine distance'"/>
+				<Attribute Name="SP_Position_In_PG" Type="STRING" Value="'3-6'"/>
+				<Attribute Name="SP_Length" Type="INT" Value="16" Comment="32 bits"/>
+				<Attribute Name="Scaling" Type="STRING" Value="'0.001 m/bit'"/>
+				<Attribute Name="Offset" Type="INT" Value=""/>
+				<Attribute Name="Link" Type="STRING" Value="'https://www.isobus.net/isobus/pGNAndSPN/14877?type=SPN'"/>
+			</VarDeclaration>
+			<VarDeclaration Name="SELECTEDMACHINELIMITSTATUS" Type="UDINT" Comment="Machine selected speed limit status"/>
+			<VarDeclaration Name="SELECTEDMACHINESOURCE" Type="BYTE" Comment="Machine selected speed source"/>
+			<VarDeclaration Name="SELECTEDMACHINEDIRECTION" Type="BYTE" Comment="Machine selected direction (see Attributes for Details)">
+				<Attribute Name="SPN" Type="INT" Value="1861"/>
+				<Attribute Name="SP_Name" Type="STRING" Value="'Ground-based machine direction'"/>
+				<Attribute Name="SP_Position_In_PG" Type="STRING" Value="'8.1'"/>
+				<Attribute Name="SP_Length" Type="INT" Value="16" Comment="2 bits"/>
+				<Attribute Name="Scaling" Type="STRING" Value="'4 states/2 bit'"/>
+				<Attribute Name="Offset" Type="INT" Value=""/>
+				<Attribute Name="Link" Type="STRING" Value="'https://www.isobus.net/isobus/pGNAndSPN/14878?type=SPN'"/>
+			</VarDeclaration>
+			<VarDeclaration Name="SELECTEDMACHINE_EXIT_REASON_CODE" Type="BYTE" Comment="Machine selected speed exit/reason code"/>
+		</OutputVars>
+	</InterfaceList>
+	<Service RightInterface="RESOURCE" LeftInterface="APPLICATION" Comment="Machine Selected Speed MSS">
+		<ServiceSequence Name="normal_establishment" Comment="">
+			<ServiceTransaction>
+				<InputPrimitive Interface="APPLICATION" Event="INIT+" Parameters="PARAMS"/>
+				<OutputPrimitive Interface="RESOURCE" Event="initialize" Parameters="PARAMS"/>
+				<OutputPrimitive Interface="APPLICATION" Event="INITO+"/>
+			</ServiceTransaction>
+		</ServiceSequence>
+		<ServiceSequence Name="unsuccessful_establishment" Comment="">
+			<ServiceTransaction>
+				<InputPrimitive Interface="APPLICATION" Event="INIT+" Parameters="PARAMS"/>
+				<OutputPrimitive Interface="RESOURCE" Event="initialize" Parameters="PARAMS"/>
+				<OutputPrimitive Interface="APPLICATION" Event="INITO-" Parameters="STATUS"/>
+			</ServiceTransaction>
+		</ServiceSequence>
+		<ServiceSequence Name="request_confirm" Comment="">
+			<ServiceTransaction>
+				<InputPrimitive Interface="APPLICATION" Event="REQ+" Parameters="SD"/>
+				<OutputPrimitive Interface="RESOURCE" Event="request" Parameters="SD"/>
+				<OutputPrimitive Interface="APPLICATION" Event="CNF+" Parameters="RD"/>
+			</ServiceTransaction>
+		</ServiceSequence>
+		<ServiceSequence Name="request_inhibited" Comment="">
+			<ServiceTransaction>
+				<InputPrimitive Interface="APPLICATION" Event="REQ-" Parameters="SD"/>
+				<OutputPrimitive Interface="APPLICATION" Event="CNF-" Parameters="STATUS"/>
+			</ServiceTransaction>
+		</ServiceSequence>
+		<ServiceSequence Name="request_error" Comment="">
+			<ServiceTransaction>
+				<InputPrimitive Interface="APPLICATION" Event="REQ+" Parameters="SD"/>
+				<OutputPrimitive Interface="RESOURCE" Event="request" Parameters="SD"/>
+				<OutputPrimitive Interface="APPLICATION" Event="CNF-" Parameters="STATUS"/>
+			</ServiceTransaction>
+		</ServiceSequence>
+		<ServiceSequence Name="indication_response" Comment="">
+			<ServiceTransaction>
+				<InputPrimitive Interface="RESOURCE" Event="indicate" Parameters="RD"/>
+				<OutputPrimitive Interface="APPLICATION" Event="IND+" Parameters="RD"/>
+			</ServiceTransaction>
+			<ServiceTransaction>
+				<InputPrimitive Interface="APPLICATION" Event="RSP" Parameters="QI,SD"/>
+				<OutputPrimitive Interface="RESOURCE" Event="response" Parameters="QI,SD"/>
+			</ServiceTransaction>
+		</ServiceSequence>
+		<ServiceSequence Name="indication_inhibited" Comment="">
+			<ServiceTransaction>
+				<InputPrimitive Interface="RESOURCE" Event="indicate" Parameters="RD,QI=FALSE"/>
+				<OutputPrimitive Interface="RESOURCE" Event="inhibited"/>
+			</ServiceTransaction>
+		</ServiceSequence>
+		<ServiceSequence Name="error_indication" Comment="">
+			<ServiceTransaction>
+				<InputPrimitive Interface="RESOURCE" Event="error" Parameters="STATUS"/>
+				<OutputPrimitive Interface="APPLICATION" Event="IND-" Parameters="STATUS"/>
+			</ServiceTransaction>
+		</ServiceSequence>
+		<ServiceSequence Name="application_initiated_termination" Comment="">
+			<ServiceTransaction>
+				<InputPrimitive Interface="APPLICATION" Event="INIT-"/>
+				<OutputPrimitive Interface="RESOURCE" Event="terminate"/>
+				<OutputPrimitive Interface="APPLICATION" Event="INITO-" Parameters="STATUS"/>
+			</ServiceTransaction>
+		</ServiceSequence>
+		<ServiceSequence Name="resource_initiated_termination" Comment="">
+			<ServiceTransaction>
+				<OutputPrimitive Interface="APPLICATION" Event="INITO-" Parameters="STATUS"/>
+			</ServiceTransaction>
+		</ServiceSequence>
+	</Service>
+</FBType>
