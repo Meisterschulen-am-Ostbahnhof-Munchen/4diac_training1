@@ -1,4 +1,4 @@
-// ISO-Designer ISO 11783   Version 5.6.2.5533 Jetter AG
+// ISO-Designer ISO 11783   Version 5.7.0.6283 Bucher Automation AG
 // Do not change!
 
 #include "DefaultPool.iop.h"
@@ -48,11 +48,11 @@ const unsigned char ISO_OP_MEMORY_CLASS isoOP_DefaultPool[] = {
 	ID(OutputString_km_h), TYPEID_OUTSTR, WORD(80), WORD(30), COLOR_WHITE, ID(FontAttributes_OutputString), 0,
 		ID(ID_NULL), 0, WORD(4), 'k', 'm', '/', 'h', 0,
 	ID(OutputString_m_s), TYPEID_OUTSTR, WORD(80), WORD(30), COLOR_WHITE, ID(FontAttributes_OutputString), 0,
-		ID(ID_NULL), 0, WORD(4), 'm', '/', 's', ' ', 0,
+		ID(ID_NULL), 0, WORD(3), 'm', '/', 's', 0,
 	ID(OutputString_km), TYPEID_OUTSTR, WORD(80), WORD(30), COLOR_WHITE, ID(FontAttributes_OutputString), 0,
-		ID(ID_NULL), 0, WORD(4), 'k', 'm', ' ', ' ', 0,
+		ID(ID_NULL), 0, WORD(2), 'k', 'm', 0,
 	ID(OutputString_m), TYPEID_OUTSTR, WORD(80), WORD(30), COLOR_WHITE, ID(FontAttributes_OutputString), 0,
-		ID(ID_NULL), 0, WORD(4), 'm', ' ', ' ', ' ', 0,
+		ID(ID_NULL), 0, WORD(1), 'm', 0,
 	ID(OutputNumber_Wheel_based_machine_speed_km_h), TYPEID_OUTNUM, WORD(200), WORD(30), COLOR_WHITE, ID(FontAttributes_OutputNumber), 0,
 		ID(NumberVariable_Wheel_based_machine_speed), LONG(0UL), LONG(0L), 0xFA, 0xED, 0x6B, 0x3B, 1, 0, 0, 0,
 	ID(OutputNumber_Wheel_based_machine_speed_m_s), TYPEID_OUTNUM, WORD(200), WORD(30), COLOR_WHITE, ID(FontAttributes_OutputNumber), 0,
