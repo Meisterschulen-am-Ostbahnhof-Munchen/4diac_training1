@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<SubAppType Name="Uebung_071b" Comment="WBSD auf UT ausgeben, Q1 Schalten wenn Speed &amp;gt;0">
+<SubAppType Name="Uebung_071b" Comment="WBSD auf UT ausgeben, Q1 Schalten wenn Speed &gt;0" >
 	<Identification Standard="61499-2">
 	</Identification>
 	<VersionInfo Version="1.0" Author="franz" Date="2023-10-23">
@@ -8,54 +8,54 @@
 	</CompilerInfo>
 	<SubAppInterfaceList>
 		<SubAppEventInputs>
-			<SubAppEvent Name="INIT" Type="Event" Comment="">
+			<SubAppEvent Name="INIT" Type="Event">
 			</SubAppEvent>
 		</SubAppEventInputs>
 	</SubAppInterfaceList>
 	<SubAppNetwork>
-		<FB Name="I_WBSD" Type="I_WBSD" Comment="" x="-5200" y="500">
-			<Parameter Name="QI" Value="TRUE" Comment=""/>
+		<FB Name="I_WBSD" Type="I_WBSD" x="-5200" y="500">
+			<Parameter Name="QI" Value="TRUE"/>
 		</FB>
-		<FB Name="Q_NumberVariable_Wheel_based_machine_speed" Type="Q_NumericValue" Comment="" x="-700" y="500">
-			<Parameter Name="u16ObjId" Value="NumberVariable_Wheel_based_machine_speed" Comment=""/>
+		<FB Name="Q_NumberVariable_Wheel_based_machine_speed" Type="Q_NumericValue" x="-700" y="500">
+			<Parameter Name="u16ObjId" Value="NumberVariable_Wheel_based_machine_speed"/>
 		</FB>
-		<FB Name="DigitalOutput_Q1" Type="QX" Comment="" x="1400" y="2300">
-			<Parameter Name="QI" Value="TRUE" Comment=""/>
+		<FB Name="DigitalOutput_Q1" Type="QX" x="1400" y="2300">
+			<Parameter Name="QI" Value="TRUE"/>
 		</FB>
-		<FB Name="RangeBasedPulse" Type="signalprocessing::distance::RangeBasedPulse" Comment="" x="-1600" y="2400">
-			<Parameter Name="DIST_HIGH" Value="5000" Comment=""/>
-			<Parameter Name="DIST_LOW" Value="5000" Comment=""/>
+		<FB Name="RangeBasedPulse" Type="signalprocessing::distance::RangeBasedPulse" x="-1600" y="2400">
+			<Parameter Name="DIST_HIGH" Value="5000"/>
+			<Parameter Name="DIST_LOW" Value="5000"/>
 		</FB>
-		<FB Name="E_D_FF" Type="E_D_FF" Comment="" x="300" y="2400">
+		<FB Name="E_D_FF" Type="E_D_FF" x="300" y="2400">
 		</FB>
-		<FB Name="Q_NumberVariable_Wheel_based_machine_distance" Type="Q_NumericValue" Comment="" x="1400" y="1100">
-			<Parameter Name="u16ObjId" Value="NumberVariable_Wheel_based_machine_distance" Comment=""/>
+		<FB Name="Q_NumberVariable_Wheel_based_machine_distance" Type="Q_NumericValue" x="1400" y="1100">
+			<Parameter Name="u16ObjId" Value="NumberVariable_Wheel_based_machine_distance"/>
 		</FB>
 		<EventConnections>
-			<Connection Source="I_WBSD.IND" Destination="Q_NumberVariable_Wheel_based_machine_speed.REQ" Comment=""/>
-			<Connection Source="INIT" Destination="I_WBSD.INIT" Comment="" dx1="1760">
+			<Connection Source="I_WBSD.IND" Destination="Q_NumberVariable_Wheel_based_machine_speed.REQ"/>
+			<Connection Source="INIT" Destination="I_WBSD.INIT" dx1="1760">
 				<Attribute Name="Visible" Value="false"/>
 			</Connection>
-			<Connection Source="INIT" Destination="Q_NumberVariable_Wheel_based_machine_speed.INIT" Comment="" dx1="4026.67">
+			<Connection Source="INIT" Destination="Q_NumberVariable_Wheel_based_machine_speed.INIT" dx1="4026.67">
 				<Attribute Name="Visible" Value="false"/>
 			</Connection>
-			<Connection Source="INIT" Destination="DigitalOutput_Q1.INIT" Comment="" dx1="3473.33" dx2="3473.33" dy="0">
+			<Connection Source="INIT" Destination="DigitalOutput_Q1.INIT" dx1="3473.33" dx2="3473.33" dy="0">
 				<Attribute Name="Visible" Value="false"/>
 			</Connection>
-			<Connection Source="E_D_FF.EO" Destination="DigitalOutput_Q1.REQ" Comment=""/>
-			<Connection Source="I_WBSD.IND" Destination="Q_NumberVariable_Wheel_based_machine_distance.REQ" Comment="" dx1="1346.67"/>
-			<Connection Source="INIT" Destination="Q_NumberVariable_Wheel_based_machine_distance.INIT" Comment="" dx1="4286.67">
+			<Connection Source="E_D_FF.EO" Destination="DigitalOutput_Q1.REQ"/>
+			<Connection Source="I_WBSD.IND" Destination="Q_NumberVariable_Wheel_based_machine_distance.REQ" dx1="1346.67"/>
+			<Connection Source="INIT" Destination="Q_NumberVariable_Wheel_based_machine_distance.INIT" dx1="4286.67">
 				<Attribute Name="Visible" Value="false"/>
 			</Connection>
-			<Connection Source="I_WBSD.IND" Destination="RangeBasedPulse.REQ" Comment="" dx1="1240" dx2="1240" dy="0"/>
-			<Connection Source="RangeBasedPulse.CNF" Destination="E_D_FF.CLK" Comment="" dx1="260" dx2="260" dy="0"/>
+			<Connection Source="I_WBSD.IND" Destination="RangeBasedPulse.REQ" dx1="1240" dx2="1240" dy="0"/>
+			<Connection Source="RangeBasedPulse.CNF" Destination="E_D_FF.CLK" dx1="260" dx2="260" dy="0"/>
 		</EventConnections>
 		<DataConnections>
-			<Connection Source="I_WBSD.WHEELBASEDMACHINESPEED" Destination="Q_NumberVariable_Wheel_based_machine_speed.u32NewValue" Comment="" dx1="806.67"/>
-			<Connection Source="E_D_FF.Q" Destination="DigitalOutput_Q1.OUT" Comment="" dx1="280"/>
-			<Connection Source="I_WBSD.WHEELBASEDMACHINEDISTANCE" Destination="Q_NumberVariable_Wheel_based_machine_distance.u32NewValue" Comment=""/>
-			<Connection Source="I_WBSD.WHEELBASEDMACHINEDISTANCE" Destination="RangeBasedPulse.DIST_IN" Comment="" dx1="1080" dx2="1080" dy="0"/>
-			<Connection Source="RangeBasedPulse.Q" Destination="E_D_FF.D" Comment="" dx1="260" dx2="260" dy="0"/>
+			<Connection Source="I_WBSD.WHEELBASEDMACHINESPEED" Destination="Q_NumberVariable_Wheel_based_machine_speed.u32NewValue" dx1="806.67"/>
+			<Connection Source="E_D_FF.Q" Destination="DigitalOutput_Q1.OUT" dx1="280"/>
+			<Connection Source="I_WBSD.WHEELBASEDMACHINEDISTANCE" Destination="Q_NumberVariable_Wheel_based_machine_distance.u32NewValue"/>
+			<Connection Source="I_WBSD.WHEELBASEDMACHINEDISTANCE" Destination="RangeBasedPulse.DIST_IN" dx1="1080" dx2="1080" dy="0"/>
+			<Connection Source="RangeBasedPulse.Q" Destination="E_D_FF.D" dx1="260" dx2="260" dy="0"/>
 		</DataConnections>
 	</SubAppNetwork>
 </SubAppType>
