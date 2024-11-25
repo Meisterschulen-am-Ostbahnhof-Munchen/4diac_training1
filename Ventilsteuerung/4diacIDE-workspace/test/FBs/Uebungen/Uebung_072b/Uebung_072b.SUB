@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SubAppType Name="Uebung_072b" Comment="GBSD auf UT ausgeben" >
+	<Identification Standard="61499-2">
+	</Identification>
+	<VersionInfo Version="1.0" Author="franz" Date="2023-10-23">
+	</VersionInfo>
+	<CompilerInfo>
+	</CompilerInfo>
+	<SubAppInterfaceList>
+		<SubAppEventInputs>
+			<SubAppEvent Name="INIT" Type="Event">
+			</SubAppEvent>
+		</SubAppEventInputs>
+	</SubAppInterfaceList>
+	<SubAppNetwork>
+		<FB Name="I_GBSD" Type="I_GBSD" x="-5200" y="500">
+			<Parameter Name="QI" Value="TRUE"/>
+		</FB>
+		<FB Name="Q_NumericValue_GBSD" Type="Q_NumericValue" x="-400" y="500">
+			<Parameter Name="u16ObjId" Value="NumberVariable_Ground_based_machine_speed"/>
+		</FB>
+		<FB Name="I_WBSD" Type="I_WBSD" x="-5200" y="-1400">
+			<Parameter Name="QI" Value="TRUE"/>
+		</FB>
+		<FB Name="Q_NumericValue_WBSD" Type="Q_NumericValue" x="-700" y="-1400">
+			<Parameter Name="u16ObjId" Value="NumberVariable_Wheel_based_machine_speed"/>
+		</FB>
+		<FB Name="Q_NumberVariable_Wheel_based_machine_distance" Type="Q_NumericValue" x="900" y="1100">
+			<Parameter Name="u16ObjId" Value="NumberVariable_Wheel_based_machine_distance"/>
+		</FB>
+		<FB Name="DigitalOutput_Q1" Type="QX" x="1200" y="2100">
+			<Parameter Name="QI" Value="TRUE"/>
+		</FB>
+		<FB Name="RangeBasedPulse_Q1" Type="signalprocessing::distance::RangeBasedPulse" x="-1800" y="2200">
+			<Parameter Name="DIST_OFF" Value="0"/>
+			<Parameter Name="DIST_HIGH" Value="5000"/>
+			<Parameter Name="DIST_LOW" Value="5000"/>
+		</FB>
+		<FB Name="E_D_FF_Q1" Type="E_D_FF" x="-193.33" y="2200">
+		</FB>
+		<FB Name="DigitalOutput_Q2" Type="QX" x="1200" y="2900">
+			<Parameter Name="QI" Value="TRUE"/>
+		</FB>
+		<FB Name="RangeBasedPulse_Q2" Type="signalprocessing::distance::RangeBasedPulse" x="-1800" y="3000">
+			<Parameter Name="DIST_OFF" Value="1000"/>
+			<Parameter Name="DIST_HIGH" Value="5000"/>
+			<Parameter Name="DIST_LOW" Value="5000"/>
+		</FB>
+		<FB Name="E_D_FF_Q2" Type="E_D_FF" x="-193.33" y="3000">
+		</FB>
+		<FB Name="DigitalOutput_Q3" Type="QX" x="1193.33" y="3700">
+			<Parameter Name="QI" Value="TRUE"/>
+		</FB>
+		<FB Name="RangeBasedPulse_Q3" Type="signalprocessing::distance::RangeBasedPulse" x="-1800" y="3800">
+			<Parameter Name="DIST_OFF" Value="2000"/>
+			<Parameter Name="DIST_HIGH" Value="5000"/>
+			<Parameter Name="DIST_LOW" Value="5000"/>
+		</FB>
+		<FB Name="E_D_FF_Q3" Type="E_D_FF" x="-200" y="3800">
+		</FB>
+		<FB Name="DigitalOutput_Q4" Type="QX" x="1200" y="4500">
+			<Parameter Name="QI" Value="TRUE"/>
+		</FB>
+		<FB Name="RangeBasedPulse_Q4" Type="signalprocessing::distance::RangeBasedPulse" x="-1800" y="4600">
+			<Parameter Name="DIST_OFF" Value="3000"/>
+			<Parameter Name="DIST_HIGH" Value="5000"/>
+			<Parameter Name="DIST_LOW" Value="5000"/>
+		</FB>
+		<FB Name="E_D_FF_Q4" Type="E_D_FF" x="-200" y="4600">
+		</FB>
+		<EventConnections>
+			<Connection Source="INIT" Destination="I_GBSD.INIT" dx1="1766.67">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="I_GBSD.IND" Destination="Q_NumericValue_GBSD.REQ"/>
+			<Connection Source="INIT" Destination="I_WBSD.INIT" dx1="1766.67">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="I_WBSD.IND" Destination="Q_NumericValue_WBSD.REQ"/>
+			<Connection Source="E_D_FF_Q1.EO" Destination="DigitalOutput_Q1.REQ"/>
+			<Connection Source="INIT" Destination="DigitalOutput_Q1.INIT" dx1="4980">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="INIT" Destination="Q_NumericValue_WBSD.INIT" dx1="4033.33">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="INIT" Destination="Q_NumericValue_GBSD.INIT" dx1="4013.33">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="INIT" Destination="Q_NumberVariable_Wheel_based_machine_distance.INIT" dx1="5053.33">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="I_GBSD.IND" Destination="Q_NumberVariable_Wheel_based_machine_distance.REQ" dx1="1360"/>
+			<Connection Source="E_D_FF_Q2.EO" Destination="DigitalOutput_Q2.REQ"/>
+			<Connection Source="INIT" Destination="DigitalOutput_Q2.INIT" dx1="4980">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="E_D_FF_Q3.EO" Destination="DigitalOutput_Q3.REQ"/>
+			<Connection Source="INIT" Destination="DigitalOutput_Q3.INIT" dx1="4973.33">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="E_D_FF_Q4.EO" Destination="DigitalOutput_Q4.REQ"/>
+			<Connection Source="INIT" Destination="DigitalOutput_Q4.INIT" dx1="4980">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="I_GBSD.IND" Destination="RangeBasedPulse_Q1.REQ" dx1="80" dx2="80" dy="0"/>
+			<Connection Source="RangeBasedPulse_Q1.CNF" Destination="E_D_FF_Q1.CLK" dx1="120" dx2="120" dy="0"/>
+			<Connection Source="I_GBSD.IND" Destination="RangeBasedPulse_Q2.REQ" dx1="80" dx2="80" dy="0"/>
+			<Connection Source="RangeBasedPulse_Q2.CNF" Destination="E_D_FF_Q2.CLK" dx1="120" dx2="120" dy="0"/>
+			<Connection Source="I_GBSD.IND" Destination="RangeBasedPulse_Q3.REQ" dx1="80" dx2="80" dy="0"/>
+			<Connection Source="RangeBasedPulse_Q3.CNF" Destination="E_D_FF_Q3.CLK" dx1="113.33" dx2="113.33" dy="0"/>
+			<Connection Source="I_GBSD.IND" Destination="RangeBasedPulse_Q4.REQ" dx1="80" dx2="80" dy="0"/>
+			<Connection Source="RangeBasedPulse_Q4.CNF" Destination="E_D_FF_Q4.CLK" dx1="113.33" dx2="113.33" dy="0"/>
+		</EventConnections>
+		<DataConnections>
+			<Connection Source="I_GBSD.GROUNDBASEDMACHINESPEED" Destination="Q_NumericValue_GBSD.u32NewValue" dx1="2813.33"/>
+			<Connection Source="I_WBSD.WHEELBASEDMACHINESPEED" Destination="Q_NumericValue_WBSD.u32NewValue" dx1="1546.67"/>
+			<Connection Source="E_D_FF_Q1.Q" Destination="DigitalOutput_Q1.OUT" dx1="280"/>
+			<Connection Source="I_GBSD.GROUNDBASEDMACHINEDISTANCE" Destination="Q_NumberVariable_Wheel_based_machine_distance.u32NewValue"/>
+			<Connection Source="E_D_FF_Q2.Q" Destination="DigitalOutput_Q2.OUT" dx1="280"/>
+			<Connection Source="E_D_FF_Q3.Q" Destination="DigitalOutput_Q3.OUT" dx1="280"/>
+			<Connection Source="E_D_FF_Q4.Q" Destination="DigitalOutput_Q4.OUT" dx1="286.67"/>
+			<Connection Source="I_GBSD.GROUNDBASEDMACHINEDISTANCE" Destination="RangeBasedPulse_Q1.DIST_IN" dx1="960" dx2="960" dy="0"/>
+			<Connection Source="RangeBasedPulse_Q1.Q" Destination="E_D_FF_Q1.D" dx1="120" dx2="120" dy="0"/>
+			<Connection Source="I_GBSD.GROUNDBASEDMACHINEDISTANCE" Destination="RangeBasedPulse_Q2.DIST_IN" dx1="960" dx2="960" dy="0"/>
+			<Connection Source="RangeBasedPulse_Q2.Q" Destination="E_D_FF_Q2.D" dx1="120" dx2="120" dy="0"/>
+			<Connection Source="I_GBSD.GROUNDBASEDMACHINEDISTANCE" Destination="RangeBasedPulse_Q3.DIST_IN" dx1="960" dx2="960" dy="0"/>
+			<Connection Source="RangeBasedPulse_Q3.Q" Destination="E_D_FF_Q3.D" dx1="113.33" dx2="113.33" dy="0"/>
+			<Connection Source="I_GBSD.GROUNDBASEDMACHINEDISTANCE" Destination="RangeBasedPulse_Q4.DIST_IN" dx1="960" dx2="960" dy="0"/>
+			<Connection Source="RangeBasedPulse_Q4.Q" Destination="E_D_FF_Q4.D" dx1="113.33" dx2="113.33" dy="0"/>
+		</DataConnections>
+	</SubAppNetwork>
+</SubAppType>

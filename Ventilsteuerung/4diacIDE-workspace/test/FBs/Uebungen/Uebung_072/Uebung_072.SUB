@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SubAppType Name="Uebung_072" Comment="GBSD auf UT ausgeben">
+	<Identification Standard="61499-2">
+	</Identification>
+	<VersionInfo Version="1.0" Author="franz" Date="2023-10-23">
+	</VersionInfo>
+	<CompilerInfo>
+	</CompilerInfo>
+	<SubAppInterfaceList>
+		<SubAppEventInputs>
+			<SubAppEvent Name="INIT" Type="Event" Comment="">
+			</SubAppEvent>
+		</SubAppEventInputs>
+	</SubAppInterfaceList>
+	<SubAppNetwork>
+		<FB Name="I_GBSD" Type="I_GBSD" Comment="" x="-5213.33" y="453.33">
+			<Parameter Name="QI" Value="TRUE" Comment=""/>
+		</FB>
+		<FB Name="Q_NumericValue_GBSD" Type="Q_NumericValue" Comment="" x="-680" y="453.33">
+			<Parameter Name="u16ObjId" Value="NumberVariable_Ground_based_machine_speed" Comment=""/>
+		</FB>
+		<FB Name="I_WBSD" Type="I_WBSD" Comment="" x="-5200" y="1900">
+			<Parameter Name="QI" Value="TRUE" Comment=""/>
+		</FB>
+		<FB Name="Q_NumericValue_WBSD" Type="Q_NumericValue" Comment="" x="-666.67" y="1900">
+			<Parameter Name="u16ObjId" Value="NumberVariable_Wheel_based_machine_speed" Comment=""/>
+		</FB>
+		<EventConnections>
+			<Connection Source="INIT" Destination="I_GBSD.INIT" Comment="" dx1="1760" dx2="1760" dy="0">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="I_GBSD.INITO" Destination="Q_NumericValue_GBSD.INIT" Comment=""/>
+			<Connection Source="I_GBSD.IND" Destination="Q_NumericValue_GBSD.REQ" Comment=""/>
+			<Connection Source="INIT" Destination="I_WBSD.INIT" Comment="" dx1="1766.67" dx2="1766.67" dy="0">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="I_WBSD.INITO" Destination="Q_NumericValue_WBSD.INIT" Comment=""/>
+			<Connection Source="I_WBSD.IND" Destination="Q_NumericValue_WBSD.REQ" Comment=""/>
+		</EventConnections>
+		<DataConnections>
+			<Connection Source="I_GBSD.GROUNDBASEDMACHINESPEED" Destination="Q_NumericValue_GBSD.u32NewValue" Comment="" dx1="1480" dx2="1480" dy="0"/>
+			<Connection Source="I_WBSD.WHEELBASEDMACHINESPEED" Destination="Q_NumericValue_WBSD.u32NewValue" Comment="" dx1="1486.67" dx2="1486.67" dy="0"/>
+		</DataConnections>
+	</SubAppNetwork>
+</SubAppType>
