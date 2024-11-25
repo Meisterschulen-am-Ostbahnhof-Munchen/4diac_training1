@@ -1,0 +1,25 @@
+;<Request ID="1" Action="CREATE"><FB Name="EMB_RES" Type="EMB_RES" /></Request>
+EMB_RES;<Request ID="2" Action="CREATE"><FB Name="Ventilsteuerung.mapping.Hutschienenmoped_XL_8_PWM" Type="Hutschienenmoped_XL_8_PWM" /></Request>
+EMB_RES;<Request ID="3" Action="WRITE"><Connection Source="TRUE" Destination="Ventilsteuerung.mapping.Hutschienenmoped_XL_8_PWM.QI" /></Request>
+EMB_RES;<Request ID="4" Action="WRITE"><Connection Source="255" Destination="Ventilsteuerung.mapping.Hutschienenmoped_XL_8_PWM.u8SAMember" /></Request>
+EMB_RES;<Request ID="5" Action="WRITE"><Connection Source="65535" Destination="Ventilsteuerung.mapping.Hutschienenmoped_XL_8_PWM.u16ObjId" /></Request>
+EMB_RES;<Request ID="6" Action="WRITE"><Connection Source="&apos;Ventilsteuerung.functions.PWMOutput_Q2&apos;" Destination="Ventilsteuerung.mapping.Hutschienenmoped_XL_8_PWM.PWMOutput_Q2" /></Request>
+EMB_RES;<Request ID="7" Action="CREATE"><FB Name="Ventilsteuerung.mapping.UT_NumericValueInputMapping" Type="UT_NumericValueInputMapping" /></Request>
+EMB_RES;<Request ID="8" Action="WRITE"><Connection Source="TRUE" Destination="Ventilsteuerung.mapping.UT_NumericValueInputMapping.QI" /></Request>
+EMB_RES;<Request ID="9" Action="WRITE"><Connection Source="255" Destination="Ventilsteuerung.mapping.UT_NumericValueInputMapping.u8SAMember" /></Request>
+EMB_RES;<Request ID="10" Action="WRITE"><Connection Source="21001" Destination="Ventilsteuerung.mapping.UT_NumericValueInputMapping.u16ObjId_1" /></Request>
+EMB_RES;<Request ID="11" Action="WRITE"><Connection Source="&apos;Ventilsteuerung.functions.PWM_Value&apos;" Destination="Ventilsteuerung.mapping.UT_NumericValueInputMapping.NumericValueInput_1" /></Request>
+EMB_RES;<Request ID="12" Action="CREATE"><FB Name="Ventilsteuerung.functions.F_DWORD_TO_UDINT" Type="F_DWORD_TO_UDINT" /></Request>
+EMB_RES;<Request ID="13" Action="CREATE"><FB Name="Ventilsteuerung.functions.PWMOutput_Q2" Type="QD" /></Request>
+EMB_RES;<Request ID="14" Action="WRITE"><Connection Source="TRUE" Destination="Ventilsteuerung.functions.PWMOutput_Q2.QI" /></Request>
+EMB_RES;<Request ID="15" Action="CREATE"><FB Name="Ventilsteuerung.functions.PWM_Value" Type="ID" /></Request>
+EMB_RES;<Request ID="16" Action="WRITE"><Connection Source="TRUE" Destination="Ventilsteuerung.functions.PWM_Value.QI" /></Request>
+EMB_RES;<Request ID="17" Action="CREATE"><Connection Source="Ventilsteuerung.functions.PWM_Value.IND" Destination="Ventilsteuerung.functions.PWMOutput_Q2.REQ" /></Request>
+EMB_RES;<Request ID="18" Action="CREATE"><Connection Source="Ventilsteuerung.functions.PWM_Value.IND" Destination="Ventilsteuerung.functions.F_DWORD_TO_UDINT.REQ" /></Request>
+EMB_RES;<Request ID="19" Action="CREATE"><Connection Source="Ventilsteuerung.functions.PWM_Value.IN" Destination="Ventilsteuerung.functions.F_DWORD_TO_UDINT.IN" /></Request>
+EMB_RES;<Request ID="20" Action="CREATE"><Connection Source="Ventilsteuerung.functions.PWM_Value.IN" Destination="Ventilsteuerung.functions.PWMOutput_Q2.OUT" /></Request>
+EMB_RES;<Request ID="21" Action="CREATE"><Connection Source="START.COLD" Destination="Ventilsteuerung.mapping.Hutschienenmoped_XL_8_PWM.INIT" /></Request>
+EMB_RES;<Request ID="22" Action="CREATE"><Connection Source="START.COLD" Destination="Ventilsteuerung.mapping.UT_NumericValueInputMapping.INIT" /></Request>
+EMB_RES;<Request ID="23" Action="CREATE"><Connection Source="START.COLD" Destination="Ventilsteuerung.functions.PWM_Value.INIT" /></Request>
+EMB_RES;<Request ID="24" Action="CREATE"><Connection Source="START.COLD" Destination="Ventilsteuerung.functions.PWMOutput_Q2.INIT" /></Request>
+EMB_RES;<Request ID="25" Action="START"/>
