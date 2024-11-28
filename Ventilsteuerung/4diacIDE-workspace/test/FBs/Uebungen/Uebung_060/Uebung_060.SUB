@@ -21,7 +21,7 @@
 		</FB>
 		<FB Name="ASSEMBLE_DWORD_FROM_QUARTERS" Type="ASSEMBLE_DWORD_FROM_QUARTERS" x="7300" y="-8700">
 		</FB>
-		<FB Name="ACTUAL_CONDENSED_WORK_STATE_1_16" Type="QD" x="9900" y="-8800">
+		<FB Name="ACTUAL_CONDENSED_WORK_STATE_1_16" Type="QD" x="11740" y="-8800">
 			<Parameter Name="QI" Value="TRUE"/>
 		</FB>
 		<FB Name="BOOLS_TO_QUARTERS" Type="BOOLS_TO_QUARTERS" x="5700" y="-8700">
@@ -30,11 +30,24 @@
 		</FB>
 		<SubApp Name="Out" Type="Uebung_060_sub_Outputs" x="6800" y="-10700">
 		</SubApp>
-		<FB Name="SECTION_CONTROL_STATE_IN" Type="ID" x="-600" y="-10200">
+		<FB Name="SECTION_CONTROL_STATE_IN" Type="ID" x="10100" y="-8000">
 			<Parameter Name="QI" Value="TRUE"/>
 		</FB>
-		<FB Name="SECTION_CONTROL_STATE_OUT" Type="QD" x="900" y="-10100">
+		<FB Name="SECTION_CONTROL_STATE_OUT" Type="QD" x="11900" y="-7900">
 			<Parameter Name="QI" Value="TRUE"/>
+		</FB>
+		<FB Name="ACTUAL_RATE" Type="QD" x="12140" y="-9600">
+			<Parameter Name="QI" Value="TRUE"/>
+		</FB>
+		<FB Name="ACTUAL_WORK_STATE" Type="QD" x="12093.33" y="-10400">
+			<Parameter Name="QI" Value="TRUE"/>
+		</FB>
+		<FB Name="F_SEL" Type="F_SEL" x="11000" y="-9300">
+			<Parameter Name="IN0" Value="DWORD#0"/>
+			<Parameter Name="IN1" Value="DWORD#1"/>
+		</FB>
+		<FB Name="F_GT" Type="F_GT" x="10000" y="-9300">
+			<Parameter Name="IN2" Value="DWORD#0"/>
 		</FB>
 		<EventConnections>
 			<Connection Source="INIT" Destination="SETPOINT_CONDENSED_WORK_STATE_1_16.INIT" dx1="393.33">
@@ -59,6 +72,16 @@
 				<Attribute Name="Visible" Value="false"/>
 			</Connection>
 			<Connection Source="SECTION_CONTROL_STATE_IN.IND" Destination="SECTION_CONTROL_STATE_OUT.REQ"/>
+			<Connection Source="F_GT.CNF" Destination="F_SEL.REQ"/>
+			<Connection Source="ASSEMBLE_DWORD_FROM_QUARTERS.CNF" Destination="F_GT.REQ" dx1="360"/>
+			<Connection Source="F_SEL.CNF" Destination="ACTUAL_WORK_STATE.REQ" dx1="120"/>
+			<Connection Source="F_SEL.CNF" Destination="ACTUAL_RATE.REQ" dx1="340"/>
+			<Connection Source="INIT" Destination="ACTUAL_WORK_STATE.INIT" dx1="9160">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="INIT" Destination="ACTUAL_RATE.INIT" dx1="9133.33">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
 		</EventConnections>
 		<DataConnections>
 			<Connection Source="SETPOINT_CONDENSED_WORK_STATE_1_16.IN" Destination="SPLIT_DWORD_INTO_QUARTERS.IN" dx1="266.67"/>
@@ -121,6 +144,10 @@
 			<Connection Source="SPLIT_DWORD_INTO_QUARTERS.QUARTER_BYTE_06" Destination="QUARTERS_TO_BOOLS.IB_06"/>
 			<Connection Source="SPLIT_DWORD_INTO_QUARTERS.QUARTER_BYTE_05" Destination="QUARTERS_TO_BOOLS.IB_05"/>
 			<Connection Source="SECTION_CONTROL_STATE_IN.IN" Destination="SECTION_CONTROL_STATE_OUT.OUT"/>
+			<Connection Source="F_GT.OUT" Destination="F_SEL.G"/>
+			<Connection Source="ASSEMBLE_DWORD_FROM_QUARTERS." Destination="F_GT.IN1" dx1="553.33"/>
+			<Connection Source="F_SEL.OUT" Destination="ACTUAL_RATE.OUT"/>
+			<Connection Source="F_SEL.OUT" Destination="ACTUAL_WORK_STATE.OUT" dx1="213.33"/>
 		</DataConnections>
 	</SubAppNetwork>
 </SubAppType>
