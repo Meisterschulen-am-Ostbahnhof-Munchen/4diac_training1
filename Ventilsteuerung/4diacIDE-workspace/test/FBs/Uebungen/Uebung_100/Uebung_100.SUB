@@ -21,7 +21,9 @@
 			<Connection Source="INIT" Destination="DigitalInput_I1.INIT" dx1="1073.33" dx2="1073.33" dy="0">
 				<Attribute Name="Visible" Value="false"/>
 			</Connection>
-			<Connection Source="DigitalInput_I1.INITO" Destination="DigitalOutput_Q1.INIT"/>
+			<Connection Source="INIT" Destination="DigitalOutput_Q1.INIT" dx1="3680">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
 		</EventConnections>
 		<AdapterConnections>
 			<Connection Source="DigitalInput_I1.IN" Destination="DigitalOutput_Q1.OUT"/>
