@@ -1,0 +1,177 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SubAppType Name="mapping_Uebung_060" Comment="für TC-SC also Task Controller Section Control" >
+	<Identification Standard="61499-2">
+	</Identification>
+	<VersionInfo Version="1.0" Author="franz" Date="2023-10-23">
+	</VersionInfo>
+	<CompilerInfo>
+	</CompilerInfo>
+	<SubAppInterfaceList>
+		<SubAppEventInputs>
+			<SubAppEvent Name="INIT" Type="Event">
+			</SubAppEvent>
+		</SubAppEventInputs>
+	</SubAppInterfaceList>
+	<SubAppNetwork>
+		<FB Name="TC_InputMapping" Type="TC_InputMapping" x="-4200" y="-1000">
+			<Parameter Name="QI" Value="TRUE">
+				<Attribute Name="Visible" Value="false"/>
+			</Parameter>
+			<Parameter Name="u8SAMember" Value="GLOBAL">
+				<Attribute Name="Visible" Value="false"/>
+			</Parameter>
+			<Parameter Name="u16ObjId" Value="ID_NULL">
+				<Attribute Name="Visible" Value="false"/>
+			</Parameter>
+			<Parameter Name="wDevElementNumb_1" Value="DE_NUM_DEVICE"/>
+			<Parameter Name="wDDI_1" Value="DDI_SETPOINT_CONDENSED_WORK_STATE_1_16"/>
+			<Parameter Name="Input_1" Value="'Ventilsteuerung.functions.SETPOINT_CONDENSED_WORK_STATE_1_16'"/>
+			<Parameter Name="wDevElementNumb_2" Value="DE_NUM_DEVICE"/>
+			<Parameter Name="wDDI_2" Value="DDI_SECTION_CONTROL_STATE"/>
+			<Parameter Name="Input_2" Value="'Ventilsteuerung.functions.SECTION_CONTROL_STATE_IN'"/>
+			<Parameter Name="wDevElementNumb_3" Value="">
+				<Attribute Name="Visible" Value="false"/>
+			</Parameter>
+			<Parameter Name="wDDI_3" Value="">
+				<Attribute Name="Visible" Value="false"/>
+			</Parameter>
+			<Parameter Name="Input_3" Value="">
+				<Attribute Name="Visible" Value="false"/>
+			</Parameter>
+			<Parameter Name="wDevElementNumb_4" Value="">
+				<Attribute Name="Visible" Value="false"/>
+			</Parameter>
+			<Parameter Name="wDDI_4" Value="">
+				<Attribute Name="Visible" Value="false"/>
+			</Parameter>
+			<Parameter Name="Input_4" Value="">
+				<Attribute Name="Visible" Value="false"/>
+			</Parameter>
+			<Parameter Name="wDevElementNumb_5" Value="">
+				<Attribute Name="Visible" Value="false"/>
+			</Parameter>
+			<Parameter Name="wDDI_5" Value="">
+				<Attribute Name="Visible" Value="false"/>
+			</Parameter>
+			<Parameter Name="Input_5" Value="">
+				<Attribute Name="Visible" Value="false"/>
+			</Parameter>
+			<Parameter Name="wDevElementNumb_6" Value="">
+				<Attribute Name="Visible" Value="false"/>
+			</Parameter>
+			<Parameter Name="wDDI_6" Value="">
+				<Attribute Name="Visible" Value="false"/>
+			</Parameter>
+			<Parameter Name="Input_6" Value="">
+				<Attribute Name="Visible" Value="false"/>
+			</Parameter>
+			<Parameter Name="wDevElementNumb_7" Value="">
+				<Attribute Name="Visible" Value="false"/>
+			</Parameter>
+			<Parameter Name="wDDI_7" Value="">
+				<Attribute Name="Visible" Value="false"/>
+			</Parameter>
+			<Parameter Name="Input_7" Value="">
+				<Attribute Name="Visible" Value="false"/>
+			</Parameter>
+			<Parameter Name="wDevElementNumb_8" Value="">
+				<Attribute Name="Visible" Value="false"/>
+			</Parameter>
+			<Parameter Name="wDDI_8" Value="">
+				<Attribute Name="Visible" Value="false"/>
+			</Parameter>
+			<Parameter Name="Input_8" Value="">
+				<Attribute Name="Visible" Value="false"/>
+			</Parameter>
+		</FB>
+		<FB Name="TC_OutputMapping" Type="TC_OutputMapping" x="-4200" y="200">
+			<Parameter Name="QI" Value="TRUE">
+				<Attribute Name="Visible" Value="false"/>
+			</Parameter>
+			<Parameter Name="u8SAMember" Value="GLOBAL">
+				<Attribute Name="Visible" Value="false"/>
+			</Parameter>
+			<Parameter Name="u16ObjId" Value="ID_NULL">
+				<Attribute Name="Visible" Value="false"/>
+			</Parameter>
+			<Parameter Name="wDevElementNumb_1" Value="DE_NUM_DEVICE"/>
+			<Parameter Name="wDDI_1" Value="DDI_ACTUAL_CONDENSED_WORK_STATE_1_16"/>
+			<Parameter Name="Output_1" Value="'Ventilsteuerung.functions.ACTUAL_CONDENSED_WORK_STATE_1_16'"/>
+			<Parameter Name="wDevElementNumb_2" Value="DE_NUM_DEVICE"/>
+			<Parameter Name="wDDI_2" Value="DDI_SECTION_CONTROL_STATE"/>
+			<Parameter Name="Output_2" Value="'Ventilsteuerung.functions.SECTION_CONTROL_STATE_OUT'"/>
+			<Parameter Name="wDevElementNumb_3" Value="DE_NUM_DEVICE"/>
+			<Parameter Name="wDDI_3" Value="DDI_ACTUAL_VOLUME_PER_AREA_APPLICATION_RATE"/>
+			<Parameter Name="Output_3" Value="'Ventilsteuerung.functions.ACTUAL_RATE'"/>
+			<Parameter Name="wDevElementNumb_4" Value="DE_NUM_DEVICE"/>
+			<Parameter Name="wDDI_4" Value="DDI_ACTUAL_WORK_STATE"/>
+			<Parameter Name="Output_4" Value="'Ventilsteuerung.functions.ACTUAL_WORK_STATE'"/>
+			<Parameter Name="wDevElementNumb_5" Value="">
+				<Attribute Name="Visible" Value="false"/>
+			</Parameter>
+			<Parameter Name="wDDI_5" Value="">
+				<Attribute Name="Visible" Value="false"/>
+			</Parameter>
+			<Parameter Name="Output_5" Value="">
+				<Attribute Name="Visible" Value="false"/>
+			</Parameter>
+			<Parameter Name="wDevElementNumb_6" Value="">
+				<Attribute Name="Visible" Value="false"/>
+			</Parameter>
+			<Parameter Name="wDDI_6" Value="">
+				<Attribute Name="Visible" Value="false"/>
+			</Parameter>
+			<Parameter Name="Output_6" Value="">
+				<Attribute Name="Visible" Value="false"/>
+			</Parameter>
+			<Parameter Name="wDevElementNumb_7" Value="">
+				<Attribute Name="Visible" Value="false"/>
+			</Parameter>
+			<Parameter Name="wDDI_7" Value="">
+				<Attribute Name="Visible" Value="false"/>
+			</Parameter>
+			<Parameter Name="Output_7" Value="">
+				<Attribute Name="Visible" Value="false"/>
+			</Parameter>
+			<Parameter Name="wDevElementNumb_8" Value="">
+				<Attribute Name="Visible" Value="false"/>
+			</Parameter>
+			<Parameter Name="wDDI_8" Value="">
+				<Attribute Name="Visible" Value="false"/>
+			</Parameter>
+			<Parameter Name="Output_8" Value="">
+				<Attribute Name="Visible" Value="false"/>
+			</Parameter>
+		</FB>
+		<FB Name="Hutschienenmoped_XL_8_DO" Type="Hutschienenmoped_XL_8_DO" x="-4400" y="2200">
+			<Parameter Name="QI" Value="TRUE">
+				<Attribute Name="Visible" Value="false"/>
+			</Parameter>
+			<Parameter Name="u8SAMember" Value="GLOBAL">
+				<Attribute Name="Visible" Value="false"/>
+			</Parameter>
+			<Parameter Name="u16ObjId" Value="ID_NULL">
+				<Attribute Name="Visible" Value="false"/>
+			</Parameter>
+			<Parameter Name="DigitalOutput_Q1" Value="'Ventilsteuerung.functions.Out.DigitalOutput_Q1'"/>
+			<Parameter Name="DigitalOutput_Q2" Value="'Ventilsteuerung.functions.Out.DigitalOutput_Q2'"/>
+			<Parameter Name="DigitalOutput_Q3" Value="'Ventilsteuerung.functions.Out.DigitalOutput_Q3'"/>
+			<Parameter Name="DigitalOutput_Q4" Value="'Ventilsteuerung.functions.Out.DigitalOutput_Q4'"/>
+			<Parameter Name="DigitalOutput_Q5" Value="'Ventilsteuerung.functions.Out.DigitalOutput_Q5'"/>
+			<Parameter Name="DigitalOutput_Q6" Value="'Ventilsteuerung.functions.Out.DigitalOutput_Q6'"/>
+			<Parameter Name="DigitalOutput_Q7" Value="'Ventilsteuerung.functions.Out.DigitalOutput_Q7'"/>
+			<Parameter Name="DigitalOutput_Q8" Value="'Ventilsteuerung.functions.Out.DigitalOutput_Q8'"/>
+		</FB>
+		<EventConnections>
+			<Connection Source="INIT" Destination="TC_InputMapping.INIT" dx1="1786.67">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="INIT" Destination="TC_OutputMapping.INIT" dx1="2066.67">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="INIT" Destination="Hutschienenmoped_XL_8_DO.INIT" dx1="6133.33">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+		</EventConnections>
+	</SubAppNetwork>
+</SubAppType>
