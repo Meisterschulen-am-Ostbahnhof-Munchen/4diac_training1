@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SubAppType Name="tastend" Comment="Subapplication Type" >
+	<Identification Standard="61499-2">
+	</Identification>
+	<VersionInfo Version="1.0" Author="franz" Date="2024-10-23">
+	</VersionInfo>
+	<CompilerInfo packageName="FBs::Uebungen::Uebung_103::subapp">
+	</CompilerInfo>
+	<SubAppInterfaceList>
+		<SubAppEventInputs>
+			<SubAppEvent Name="INIT" Type="Event" Comment="Initialization Request" >
+			</SubAppEvent>
+		</SubAppEventInputs>
+		<SubAppEventOutputs>
+			<SubAppEvent Name="INITO" Type="Event" Comment="Initialization Confirm" >
+			</SubAppEvent>
+		</SubAppEventOutputs>
+		<Plugs>
+			<AdapterDeclaration Name="OUT" Type="AX"/>
+		</Plugs>
+		<Sockets>
+			<AdapterDeclaration Name="IN" Type="AX"/>
+		</Sockets>
+	</SubAppInterfaceList>
+	<SubAppNetwork>
+		<EventConnections>
+			<Connection Source="INIT" Destination="INITO">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+		</EventConnections>
+		<AdapterConnections>
+			<Connection Source="IN" Destination="OUT"/>
+		</AdapterConnections>
+	</SubAppNetwork>
+</SubAppType>
