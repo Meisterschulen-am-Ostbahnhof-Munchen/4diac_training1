@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <FBType Name="Q_Attribute" Comment="Command change attribute( Part 6 - F.38 ) " >
-	<Identification Standard="ISO 11783-6" Description="&lt;p&gt;This command is used to change any attribute with an assigned AID. This message cannot be used to change strings.&lt;/p&gt; &#10; &#10;&lt;p&gt;Return values&lt;/p&gt; &#10; &#10;&lt;p&gt;iso_s16&lt;/p&gt; &#10; &#10;&lt;ul&gt; &#10;&#9;&lt;li&gt;&lt;span style=&quot;color:#0066cc&quot;&gt;E_NO_ERR&lt;/span&gt; - OK&lt;/li&gt; &#10;&#9;&lt;li&gt;&lt;span style=&quot;color:#0066cc&quot;&gt;E_OVERFLOW&lt;/span&gt; - buffer overflow&lt;/li&gt; &#10;&#9;&lt;li&gt;&lt;span style=&quot;color:#0066cc&quot;&gt;E_NOACT&lt;/span&gt; - Command not possible in current state&lt;/li&gt; &#10;&#9;&lt;li&gt;&lt;span style=&quot;color:#0066cc&quot;&gt;E_NO_INSTANCE&lt;/span&gt; - No VT client available&lt;/li&gt; &#10;&lt;/ul&gt; &#10; &#10;" >
+	<Identification Standard="ISO 11783-6" Description="see Description Tab" >
 	</Identification>
 	<VersionInfo Version="1.0" Author="franz" Date="2022-07-08">
 	</VersionInfo>
@@ -39,25 +39,21 @@
 
 <p>This command is used to change any attribute with an assigned AID. This message cannot be used to change strings.</p>
 
-<h2>param[in] {u8Instance, iso_u8}</h2>
-
-<p>Identifier of the client instance</p>
-
-<h2>param[in] {u16ObjId, iso_u16}</h2>
+<h2>param[in] {u16ObjId, uint16_t}</h2>
 
 <p>Object ID</p>
 
-<h2>param[in] {u8IdAttribute, iso_u8}</h2>
+<h2>param[in] {u8IdAttribute, uint8_t}</h2>
 
 <p>Attribute ID (AID) - see description of wished object</p>
 
-<h2>param[in] {u32ValueAttribute, iso_u32}</h2>
+<h2>param[in] {u32ValueAttribute, uint32_t}</h2>
 
 <p>New value for attribute</p>
 
 <h2>Return Values:&nbsp;</h2>
 
-<h3>iso_s16</h3>
+<h3>int16_t</h3>
 
 <ul>
 	<li><span style="color:#2980b9">VT_E_NO_ERR (0)</span>&nbsp;- OK</li>

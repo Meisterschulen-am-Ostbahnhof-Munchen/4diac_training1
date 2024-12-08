@@ -37,21 +37,17 @@
 
 <p>This command is used to change the active mask of a working set to either a data or an alarm mask object.</p>
 
-<h2>param[in] {u8Instance, iso_u8}</h2>
-
-<p>Identifier of the client instance</p>
-
-<h2>param[in] \wp{u16WorkSetId, iso_u16}</h2>
+<h2>param[in] \wp{u16WorkSetId, uint16_t}</h2>
 
 <p>WorkingSet Object ID</p>
 
-<h2>param[in] \wp{u16NewMaskId, iso_u16}</h2>
+<h2>param[in] \wp{u16NewMaskId, uint16_t}</h2>
 
 <p>Object ID of new active (data/alarm)-mask</p>
 
 <h2>Return values:</h2>
 
-<h3>iso_s16</h3>
+<h3>int16_t</h3>
 
 <ul>
 	<li><span style="font-size:14px"><span style="color:#2980b9">VT_E_NO_ERR </span></span><span style="color:#2980b9">(0)</span><span style="font-size:14px"><span style="color:#2980b9">&nbsp;- </span>OK</span></li>
