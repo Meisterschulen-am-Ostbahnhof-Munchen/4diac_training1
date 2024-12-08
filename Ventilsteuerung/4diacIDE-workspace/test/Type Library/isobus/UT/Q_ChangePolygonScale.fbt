@@ -6,7 +6,7 @@
 	</VersionInfo>
 	<InterfaceList>
 		<EventInputs>
-			<Event Name="INIT" Type="Event" Comment="Service Initialization">
+			<Event Name="INIT" Type="EInit" Comment="Service Initialization">
 				<With Var="u16ObjId"/>
 			</Event>
 			<Event Name="REQ" Type="Event" Comment="Service Request">
@@ -15,7 +15,7 @@
 			</Event>
 		</EventInputs>
 		<EventOutputs>
-			<Event Name="INITO" Type="Event" Comment="Initialization Confirm">
+			<Event Name="INITO" Type="EInit" Comment="Initialization Confirm">
 			</Event>
 			<Event Name="CNF" Type="Event" Comment="Confirmation of Requested Service">
 				<With Var="STATUS"/>
