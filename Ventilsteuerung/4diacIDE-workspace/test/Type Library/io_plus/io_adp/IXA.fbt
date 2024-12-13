@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<FBType Name="IXA" Comment="Composite FB for boolean input data" >
+	<Identification Standard="61499-2">
+	</Identification>
+	<VersionInfo Version="1.0" Author="franz" Date="2024-04-24">
+	</VersionInfo>
+	<CompilerInfo>
+	</CompilerInfo>
+	<InterfaceList>
+		<EventInputs>
+			<Event Name="INIT" Type="EInit" Comment="Initialization Request" >
+			</Event>
+		</EventInputs>
+		<EventOutputs>
+			<Event Name="INITO" Type="EInit" Comment="Initialization Confirm" >
+			</Event>
+		</EventOutputs>
+		<Plugs>
+			<AdapterDeclaration Name="IN" Type="AX" x="3200" y="886.67"/>
+		</Plugs>
+	</InterfaceList>
+	<FBNetwork>
+		<FB Name="IX" Type="IX" x="1240" y="433.33">
+			<Parameter Name="QI" Value="TRUE"/>
+		</FB>
+		<EventConnections>
+			<Connection Source="INIT" Destination="IX.INIT" dx1="1286.67"/>
+			<Connection Source="IX.INITO" Destination="INITO" dx1="1026.67"/>
+			<Connection Source="IX.IND" Destination="IN.E1" dx1="633.33" dx2="633.33" dy="0"/>
+		</EventConnections>
+		<DataConnections>
+			<Connection Source="IX.IN" Destination="IN.D1" dx1="633.33"/>
+		</DataConnections>
+	</FBNetwork>
+</FBType>
