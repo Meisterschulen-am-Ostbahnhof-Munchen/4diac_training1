@@ -13,17 +13,15 @@
 		</SubAppEventInputs>
 	</SubAppInterfaceList>
 	<SubAppNetwork>
-		<FB Name="DigitalInput_I1" Type="IXP" x="-4500" y="-800">
-			<Parameter Name="QI" Value="TRUE"/>
+		<FB Name="DigitalInput_I1" Type="IXA" x="-4500" y="-800">
 		</FB>
-		<FB Name="DigitalOutput_Q1" Type="QXP" x="-1500" y="-900">
-			<Parameter Name="QI" Value="TRUE"/>
+		<FB Name="DigitalOutput_Q1" Type="QXA" x="-1500" y="-900">
 		</FB>
 		<EventConnections>
-			<Connection Source="INIT" Destination="DigitalInput_I1.INIT" dx1="2120">
+			<Connection Source="INIT" Destination="DigitalInput_I1.INIT" dx1="2120" dx2="2120" dy="0">
 				<Attribute Name="Visible" Value="false"/>
 			</Connection>
-			<Connection Source="INIT" Destination="DigitalOutput_Q1.INIT" dx1="3680">
+			<Connection Source="INIT" Destination="DigitalOutput_Q1.INIT" dx1="3680" dx2="3680" dy="0">
 				<Attribute Name="Visible" Value="false"/>
 			</Connection>
 		</EventConnections>

@@ -13,32 +13,29 @@
 		</SubAppEventInputs>
 	</SubAppInterfaceList>
 	<SubAppNetwork>
-		<FB Name="DigitalInput_I1" Type="IXP" x="400" y="-200">
-			<Parameter Name="QI" Value="TRUE"/>
+		<FB Name="DigitalInput_I1" Type="IXA" x="400" y="-200">
 		</FB>
-		<FB Name="DigitalOutput_Q1" Type="QXP" x="3000" y="-300">
-			<Parameter Name="QI" Value="TRUE"/>
+		<FB Name="DigitalOutput_Q1" Type="QXA" x="3000" y="-300">
 		</FB>
 		<FB Name="AX_OR_2" Type="io::adp::boolean::AX_OR_2" x="1700" y="100">
 		</FB>
-		<FB Name="DigitalInput_I2" Type="IXP" x="400" y="700">
-			<Parameter Name="QI" Value="TRUE"/>
+		<FB Name="DigitalInput_I2" Type="IXA" x="400" y="700">
 		</FB>
 		<EventConnections>
-			<Connection Source="INIT" Destination="DigitalInput_I1.INIT" dx1="1986.67">
+			<Connection Source="INIT" Destination="DigitalInput_I1.INIT" dx1="1986.67" dx2="1986.67" dy="0">
 				<Attribute Name="Visible" Value="false"/>
 			</Connection>
-			<Connection Source="INIT" Destination="DigitalOutput_Q1.INIT" dx1="3680">
+			<Connection Source="INIT" Destination="DigitalOutput_Q1.INIT" dx1="3680" dx2="3680" dy="0">
 				<Attribute Name="Visible" Value="false"/>
 			</Connection>
-			<Connection Source="INIT" Destination="DigitalInput_I2.INIT" dx1="2053.33">
+			<Connection Source="INIT" Destination="DigitalInput_I2.INIT" dx1="2053.33" dx2="2053.33" dy="0">
 				<Attribute Name="Visible" Value="false"/>
 			</Connection>
 		</EventConnections>
 		<AdapterConnections>
 			<Connection Source="AX_OR_2.OUT" Destination="DigitalOutput_Q1.OUT"/>
 			<Connection Source="DigitalInput_I1.IN" Destination="AX_OR_2.IN1"/>
-			<Connection Source="DigitalInput_I2.IN" Destination="AX_OR_2.IN2" dx1="186.67"/>
+			<Connection Source="DigitalInput_I2.IN" Destination="AX_OR_2.IN2" dx1="186.67" dx2="186.67" dy="0"/>
 		</AdapterConnections>
 	</SubAppNetwork>
 </SubAppType>
