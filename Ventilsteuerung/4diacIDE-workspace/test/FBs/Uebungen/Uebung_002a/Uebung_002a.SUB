@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<SubAppType Name="Uebung_002a" Comment="DigitalInput_I1/_I2 auf DigitalOutput_Q1" >
+<SubAppType Name="Uebung_002a" Comment="DigitalInput_I1/_I2 auf DigitalOutput_Q1">
 	<Identification Standard="61499-2">
 	</Identification>
 	<VersionInfo Version="1.0" Author="franz" Date="2023-10-23">
@@ -8,38 +8,38 @@
 	</CompilerInfo>
 	<SubAppInterfaceList>
 		<SubAppEventInputs>
-			<SubAppEvent Name="INIT" Type="EInit">
+			<SubAppEvent Name="INIT" Type="Event" Comment="">
 			</SubAppEvent>
 		</SubAppEventInputs>
 	</SubAppInterfaceList>
 	<SubAppNetwork>
-		<FB Name="DigitalOutput_Q1" Type="QX" x="-533.33" y="-926.67">
-			<Parameter Name="QI" Value="TRUE"/>
+		<FB Name="DigitalOutput_Q1" Type="QX" Comment="" x="-533.33" y="-926.67">
+			<Parameter Name="QI" Value="TRUE" Comment=""/>
 		</FB>
-		<FB Name="DigitalInput_I1" Type="IX" x="-4533.33" y="-933.33">
-			<Parameter Name="QI" Value="TRUE"/>
+		<FB Name="DigitalInput_I1" Type="IX" Comment="" x="-4533.33" y="-933.33">
+			<Parameter Name="QI" Value="TRUE" Comment=""/>
 		</FB>
-		<FB Name="DigitalInput_I2" Type="IX" x="-4533.33" y="133.33">
-			<Parameter Name="QI" Value="TRUE"/>
+		<FB Name="DigitalInput_I2" Type="IX" Comment="" x="-4533.33" y="133.33">
+			<Parameter Name="QI" Value="TRUE" Comment=""/>
 		</FB>
-		<FB Name="AND_2" Type="AND_2" x="-2000" y="-400">
+		<FB Name="AND_2" Type="AND_2" Comment="" x="-2000" y="-400">
 		</FB>
 		<EventConnections>
-			<Connection Source="INIT" Destination="DigitalInput_I1.INIT" dx1="1073.33">
+			<Connection Source="INIT" Destination="DigitalInput_I1.INIT" Comment="" dx1="1073.33">
 				<Attribute Name="Visible" Value="false"/>
 			</Connection>
-			<Connection Source="DigitalInput_I1.INITO" Destination="DigitalOutput_Q1.INIT"/>
-			<Connection Source="INIT" Destination="DigitalInput_I2.INIT" dx1="1073.33">
+			<Connection Source="DigitalInput_I1.INITO" Destination="DigitalOutput_Q1.INIT" Comment=""/>
+			<Connection Source="INIT" Destination="DigitalInput_I2.INIT" Comment="" dx1="1073.33">
 				<Attribute Name="Visible" Value="false"/>
 			</Connection>
-			<Connection Source="DigitalInput_I1.IND" Destination="AND_2.REQ" dx1="920"/>
-			<Connection Source="DigitalInput_I2.IND" Destination="AND_2.REQ" dx1="920"/>
-			<Connection Source="AND_2.CNF" Destination="DigitalOutput_Q1.REQ" dx1="486.67"/>
+			<Connection Source="DigitalInput_I1.IND" Destination="AND_2.REQ" Comment="" dx1="920"/>
+			<Connection Source="DigitalInput_I2.IND" Destination="AND_2.REQ" Comment="" dx1="920"/>
+			<Connection Source="AND_2.CNF" Destination="DigitalOutput_Q1.REQ" Comment="" dx1="486.67"/>
 		</EventConnections>
 		<DataConnections>
-			<Connection Source="AND_2.OUT" Destination="DigitalOutput_Q1.OUT" dx1="486.67"/>
-			<Connection Source="DigitalInput_I1.IN" Destination="AND_2.IN1" dx1="1493.33"/>
-			<Connection Source="DigitalInput_I2.IN" Destination="AND_2.IN2" dx1="1480"/>
+			<Connection Source="AND_2.OUT" Destination="DigitalOutput_Q1.OUT" Comment="" dx1="486.67"/>
+			<Connection Source="DigitalInput_I1.IN" Destination="AND_2.IN1" Comment="" dx1="1493.33"/>
+			<Connection Source="DigitalInput_I2.IN" Destination="AND_2.IN2" Comment="" dx1="1480"/>
 		</DataConnections>
 	</SubAppNetwork>
 </SubAppType>
