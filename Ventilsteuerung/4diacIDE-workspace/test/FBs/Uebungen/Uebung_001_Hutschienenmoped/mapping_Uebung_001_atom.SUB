@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SubAppType Name="mapping_Uebung_001_atom" Comment="DigitalInput_I1 auf DigitalOutput_Q1" >
+	<Identification Standard="61499-2">
+	</Identification>
+	<VersionInfo Version="1.0" Author="franz" Date="2023-10-23">
+	</VersionInfo>
+	<CompilerInfo>
+	</CompilerInfo>
+	<SubAppInterfaceList>
+		<SubAppEventInputs>
+			<SubAppEvent Name="INIT" Type="Event">
+			</SubAppEvent>
+		</SubAppEventInputs>
+	</SubAppInterfaceList>
+	<SubAppNetwork>
+		<FB Name="Hutschienenmoped_4_DO" Type="Hutschienenmoped_4_DO" x="-3300" y="100">
+			<Parameter Name="QI" Value="TRUE">
+				<Attribute Name="Visible" Value="false"/>
+			</Parameter>
+			<Parameter Name="u8SAMember" Value="GLOBAL">
+				<Attribute Name="Visible" Value="false"/>
+			</Parameter>
+			<Parameter Name="u16ObjId" Value="ID_NULL">
+				<Attribute Name="Visible" Value="false"/>
+			</Parameter>
+			<Parameter Name="DigitalOutput_Q1" Value="'Ventilsteuerung.functions.DigitalOutput_Q1'"/>
+			<Parameter Name="DigitalOutput_Q2" Value="">
+				<Attribute Name="Visible" Value="false"/>
+			</Parameter>
+			<Parameter Name="DigitalOutput_Q3" Value="">
+				<Attribute Name="Visible" Value="false"/>
+			</Parameter>
+			<Parameter Name="DigitalOutput_Q4" Value="">
+				<Attribute Name="Visible" Value="false"/>
+			</Parameter>
+		</FB>
+		<FB Name="Hutschienenmoped_3_DI" Type="Hutschienenmoped_3_DI" x="-3333.33" y="-1066.67">
+			<Parameter Name="QI" Value="TRUE">
+				<Attribute Name="Visible" Value="false"/>
+			</Parameter>
+			<Parameter Name="u8SAMember" Value="GLOBAL">
+				<Attribute Name="Visible" Value="false"/>
+			</Parameter>
+			<Parameter Name="u16ObjId" Value="ID_NULL">
+				<Attribute Name="Visible" Value="false"/>
+			</Parameter>
+			<Parameter Name="DigitalInput_I1" Value="'Ventilsteuerung.functions.DigitalInput_I1'"/>
+			<Parameter Name="DigitalInput_I2" Value="">
+				<Attribute Name="Visible" Value="false"/>
+			</Parameter>
+			<Parameter Name="DigitalInput_I3" Value="">
+				<Attribute Name="Visible" Value="false"/>
+			</Parameter>
+		</FB>
+		<EventConnections>
+			<Connection Source="INIT" Destination="Hutschienenmoped_3_DI.INIT" dx1="73.33" dx2="73.33" dy="0">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="INIT" Destination="Hutschienenmoped_4_DO.INIT" dx1="73.33" dx2="73.33" dy="0">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+		</EventConnections>
+	</SubAppNetwork>
+</SubAppType>
