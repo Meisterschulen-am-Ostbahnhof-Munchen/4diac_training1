@@ -6,7 +6,7 @@
 	</VersionInfo>
 	<InterfaceList>
 		<EventInputs>
-			<Event Name="INIT" Type="Event" Comment="Service Initialization">
+			<Event Name="INIT" Type="EInit" Comment="Service Initialization">
 			</Event>
 			<Event Name="set_pixel" Type="Event" Comment="Set RGB for a specific pixel">
 				<With Var="index"/>
@@ -18,7 +18,7 @@
 			</Event>
 		</EventInputs>
 		<EventOutputs>
-			<Event Name="INITO" Type="Event" Comment="Initialization Confirm">
+			<Event Name="INITO" Type="EInit" Comment="Initialization Confirm">
 			</Event>
 			<Event Name="set_pixel_CNF" Type="Event" Comment="Confirmation of set_pixel">
 				<With Var="set_pixel_return"/>
