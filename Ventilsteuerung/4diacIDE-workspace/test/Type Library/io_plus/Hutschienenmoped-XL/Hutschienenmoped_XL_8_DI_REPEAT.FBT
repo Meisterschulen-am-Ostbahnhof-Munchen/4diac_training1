@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <FBType Name="Hutschienenmoped_XL_8_DI_REPEAT" Comment="Service Interface Function Block Type">
-	<Identification Function="All Inputs" Description="this maps to IB" >
+	<Identification Function="All Inputs" Description="Copyright (c) 2018, 2023 Jose Cabral, HR Agrartechnik GmbH  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0  &#10;   &#10;   &#10;this maps to IB" >
 	</Identification>
 	<VersionInfo Version="1.0" Author="Jose Cabral" Date="2018-12-05">
 	</VersionInfo>
@@ -10,7 +10,7 @@
 	</VersionInfo>
 	<InterfaceList>
 		<EventInputs>
-			<Event Name="INIT" Type="Event" Comment="Service Initialization">
+			<Event Name="INIT" Type="EInit" Comment="Service Initialization">
 				<With Var="QI"/>
 				<With Var="u8SAMember"/>
 				<With Var="u16ObjId"/>
@@ -25,7 +25,7 @@
 			</Event>
 		</EventInputs>
 		<EventOutputs>
-			<Event Name="INITO" Type="Event" Comment="Initialization Confirm">
+			<Event Name="INITO" Type="EInit" Comment="Initialization Confirm">
 				<With Var="QO"/>
 			</Event>
 			<Event Name="IND" Type="Event" Comment="Indication from Resource">
