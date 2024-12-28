@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <FBType Name="UT_AuxiliaryInputMapping_Type_07_DualBool_LatchedUp" Comment="Type 7 DualBool_LatchedUp Three-position switch - latching in up position">
-	<Identification Standard=" ISO 11783-6" Classification="AUX – ISO 11783-6" Function="All Inputs" Type="UT according to ISO 11783-6" Description="- &#10;Type 7 DualBool_LatchedUp Three-position switch - latching in up position &#10;Applicable AUX-N only &#10; * Maps to IX" >
+	<Identification Standard=" ISO 11783-6" Classification="AUX – ISO 11783-6" Function="All Inputs" Type="UT according to ISO 11783-6" Description="Copyright (c) 2018, 2023 Jose Cabral, HR Agrartechnik GmbH  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0  &#10;   &#10;   &#10;- 
+&#10;Type 7 DualBool_LatchedUp Three-position switch - latching in up position 
+&#10;Applicable AUX-N only 
+&#10; * Maps to IX" >
 	</Identification>
 	<VersionInfo Version="1.0" Author="Jose Cabral" Date="2018-12-05">
 	</VersionInfo>
@@ -10,7 +13,7 @@
 	</VersionInfo>
 	<InterfaceList>
 		<EventInputs>
-			<Event Name="INIT" Type="Event" Comment="Service Initialization">
+			<Event Name="INIT" Type="EInit" Comment="Service Initialization">
 				<With Var="QI"/>
 				<With Var="u8SAMember"/>
 				<With Var="u16ObjId_1"/>
@@ -40,7 +43,7 @@
 			</Event>
 		</EventInputs>
 		<EventOutputs>
-			<Event Name="INITO" Type="Event" Comment="Initialization Confirm">
+			<Event Name="INITO" Type="EInit" Comment="Initialization Confirm">
 				<With Var="QO"/>
 			</Event>
 			<Event Name="IND" Type="Event" Comment="Indication from Resource">
