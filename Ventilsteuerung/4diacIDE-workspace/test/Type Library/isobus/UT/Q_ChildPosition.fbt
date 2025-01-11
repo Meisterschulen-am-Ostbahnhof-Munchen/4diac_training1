@@ -1,24 +1,24 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<FBType Name="Q_ChildPosition" Comment="Command change child position ( Part 6 - F.16 ) ">
+<FBType Name="Q_ChildPosition" Comment="Command change child position ( Part 6 - F.16 ) " >
 	<Identification Standard="ISO 11783-6" Description="Copyright (c) 2022 franz  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0  &#10;   &#10;   &#10;see Description Tab" >
 	</Identification>
 	<VersionInfo Version="1.0" Author="franz" Date="2022-07-08">
 	</VersionInfo>
 	<InterfaceList>
 		<EventInputs>
-			<Event Name="INIT" Type="EInit" Comment="Service Initialization">
+			<Event Name="INIT" Type="EInit" Comment="Service Initialization" >
 				<With Var="u16ObjId"/>
 				<With Var="u16ObjIdParent"/>
 			</Event>
-			<Event Name="REQ" Type="Event" Comment="Service Request">
+			<Event Name="REQ" Type="Event" Comment="Service Request" >
 				<With Var="s16Xposition"/>
 				<With Var="s16Yposition"/>
 			</Event>
 		</EventInputs>
 		<EventOutputs>
-			<Event Name="INITO" Type="EInit" Comment="Initialization Confirm">
+			<Event Name="INITO" Type="EInit" Comment="Initialization Confirm" >
 			</Event>
-			<Event Name="CNF" Type="Event" Comment="Confirmation of Requested Service">
+			<Event Name="CNF" Type="Event" Comment="Confirmation of Requested Service" >
 				<With Var="STATUS"/>
 				<With Var="s16OldYposition"/>
 				<With Var="s16OldXposition"/>
@@ -26,16 +26,16 @@
 			</Event>
 		</EventOutputs>
 		<InputVars>
-			<VarDeclaration Name="u16ObjId" Type="UINT" Comment="Object ID"/>
-			<VarDeclaration Name="u16ObjIdParent" Type="UINT" Comment="Parent object ID"/>
-			<VarDeclaration Name="s16Xposition" Type="INT" Comment="New X position relative to the top left corner of parent object"/>
-			<VarDeclaration Name="s16Yposition" Type="INT" Comment="New Y position relative to the top left corner of parent object"/>
+			<VarDeclaration Name="u16ObjId" Type="UINT" Comment="Object ID" />
+			<VarDeclaration Name="u16ObjIdParent" Type="UINT" Comment="Parent object ID" />
+			<VarDeclaration Name="s16Xposition" Type="INT" Comment="New X position relative to the top left corner of parent object" />
+			<VarDeclaration Name="s16Yposition" Type="INT" Comment="New Y position relative to the top left corner of parent object" />
 		</InputVars>
 		<OutputVars>
-			<VarDeclaration Name="STATUS" Type="STRING" Comment="Service Status"/>
-			<VarDeclaration Name="s16OldXposition" Type="INT" Comment="Old X position relative to the top left corner of parent object"/>
-			<VarDeclaration Name="s16OldYposition" Type="INT" Comment="Old Y position relative to the top left corner of parent object"/>
-			<VarDeclaration Name="s16result" Type="INT" Comment="retval see description"/>
+			<VarDeclaration Name="STATUS" Type="STRING" Comment="Service Status" />
+			<VarDeclaration Name="s16OldXposition" Type="INT" Comment="Old X position relative to the top left corner of parent object" />
+			<VarDeclaration Name="s16OldYposition" Type="INT" Comment="Old Y position relative to the top left corner of parent object" />
+			<VarDeclaration Name="s16result" Type="INT" Comment="retval see description" />
 		</OutputVars>
 	</InterfaceList>
 	<Attribute Name="Documentation" Type="CDATA"><![CDATA[<h1>Command change child position ( Part 6 - F.16 )</h1>

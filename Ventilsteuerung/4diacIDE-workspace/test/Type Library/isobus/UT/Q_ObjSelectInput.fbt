@@ -1,35 +1,35 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<FBType Name="Q_ObjSelectInput" Comment="Command Select input object ( Part 6 - F.6 ) ">
+<FBType Name="Q_ObjSelectInput" Comment="Command Select input object ( Part 6 - F.6 ) " >
 	<Identification Standard="ISO 11783-6" Description="Copyright (c) 2022 franz  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0  &#10;   &#10;   &#10;see Description Tab" >
 	</Identification>
 	<VersionInfo Version="1.0" Author="franz" Date="2022-07-08">
 	</VersionInfo>
 	<InterfaceList>
 		<EventInputs>
-			<Event Name="INIT" Type="EInit" Comment="Service Initialization">
+			<Event Name="INIT" Type="EInit" Comment="Service Initialization" >
 				<With Var="u16ObjId"/>
 			</Event>
-			<Event Name="REQ" Type="Event" Comment="Service Request">
+			<Event Name="REQ" Type="Event" Comment="Service Request" >
 				<With Var="u8Option"/>
 			</Event>
 		</EventInputs>
 		<EventOutputs>
-			<Event Name="INITO" Type="EInit" Comment="Initialization Confirm">
+			<Event Name="INITO" Type="EInit" Comment="Initialization Confirm" >
 			</Event>
-			<Event Name="CNF" Type="Event" Comment="Confirmation of Requested Service">
+			<Event Name="CNF" Type="Event" Comment="Confirmation of Requested Service" >
 				<With Var="STATUS"/>
 				<With Var="s16result"/>
 				<With Var="u8OldOption"/>
 			</Event>
 		</EventOutputs>
 		<InputVars>
-			<VarDeclaration Name="u16ObjId" Type="UINT" Comment="Object ID"/>
-			<VarDeclaration Name="u8Option" Type="USINT" Comment="normal: 0xFF, for Version 4 also 0 possible "/>
+			<VarDeclaration Name="u16ObjId" Type="UINT" Comment="Object ID" />
+			<VarDeclaration Name="u8Option" Type="USINT" Comment="normal: 0xFF, for Version 4 also 0 possible " />
 		</InputVars>
 		<OutputVars>
-			<VarDeclaration Name="STATUS" Type="STRING" Comment="Service Status"/>
-			<VarDeclaration Name="u8OldOption" Type="USINT" Comment="Old normal: 0xFF, for Version 4 also 0 possible "/>
-			<VarDeclaration Name="s16result" Type="INT" Comment="retval see description"/>
+			<VarDeclaration Name="STATUS" Type="STRING" Comment="Service Status" />
+			<VarDeclaration Name="u8OldOption" Type="USINT" Comment="Old normal: 0xFF, for Version 4 also 0 possible " />
+			<VarDeclaration Name="s16result" Type="INT" Comment="retval see description" />
 		</OutputVars>
 	</InterfaceList>
 	<Attribute Name="Documentation" Type="CDATA"><![CDATA[<h1>Command Select input object ( Part 6 - F.6 )</h1>

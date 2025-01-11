@@ -1,23 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<FBType Name="Q_SoftKeyMask" Comment="Command change soft key mask( Part 6 - F.36 ) ">
+<FBType Name="Q_SoftKeyMask" Comment="Command change soft key mask( Part 6 - F.36 ) " >
 	<Identification Standard="ISO 11783-6" Description="Copyright (c) 2022 franz  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0  &#10;   &#10;   &#10;see Description Tab" >
 	</Identification>
 	<VersionInfo Version="1.0" Author="franz" Date="2022-07-08">
 	</VersionInfo>
 	<InterfaceList>
 		<EventInputs>
-			<Event Name="INIT" Type="EInit" Comment="Service Initialization">
+			<Event Name="INIT" Type="EInit" Comment="Service Initialization" >
 			</Event>
-			<Event Name="REQ" Type="Event" Comment="Service Request">
+			<Event Name="REQ" Type="Event" Comment="Service Request" >
 				<With Var="u16DataMaskId"/>
 				<With Var="u16SoftKeyMaskId"/>
 				<With Var="u8MaskType"/>
 			</Event>
 		</EventInputs>
 		<EventOutputs>
-			<Event Name="INITO" Type="EInit" Comment="Initialization Confirm">
+			<Event Name="INITO" Type="EInit" Comment="Initialization Confirm" >
 			</Event>
-			<Event Name="CNF" Type="Event" Comment="Confirmation of Requested Service">
+			<Event Name="CNF" Type="Event" Comment="Confirmation of Requested Service" >
 				<With Var="STATUS"/>
 				<With Var="s16result"/>
 				<With Var="u16OldDataMaskId"/>
@@ -26,16 +26,16 @@
 			</Event>
 		</EventOutputs>
 		<InputVars>
-			<VarDeclaration Name="u8MaskType" Type="USINT" Comment="1 == Data, 2 == Alarm "/>
-			<VarDeclaration Name="u16DataMaskId" Type="UINT" Comment="Object ID of active Mask "/>
-			<VarDeclaration Name="u16SoftKeyMaskId" Type="UINT" Comment="Object ID of (new) soft key mask "/>
+			<VarDeclaration Name="u8MaskType" Type="USINT" Comment="1 == Data, 2 == Alarm " />
+			<VarDeclaration Name="u16DataMaskId" Type="UINT" Comment="Object ID of active Mask " />
+			<VarDeclaration Name="u16SoftKeyMaskId" Type="UINT" Comment="Object ID of (new) soft key mask " />
 		</InputVars>
 		<OutputVars>
-			<VarDeclaration Name="STATUS" Type="STRING" Comment="Service Status"/>
-			<VarDeclaration Name="u8OldMaskType" Type="USINT" Comment=""/>
-			<VarDeclaration Name="u16OldDataMaskId" Type="UINT" Comment="Old object ID of active Mask "/>
-			<VarDeclaration Name="u16OldSoftKeyMaskId" Type="UINT" Comment="Old object ID of (new) soft key mask "/>
-			<VarDeclaration Name="s16result" Type="INT" Comment="retval see description"/>
+			<VarDeclaration Name="STATUS" Type="STRING" Comment="Service Status" />
+			<VarDeclaration Name="u8OldMaskType" Type="USINT"/>
+			<VarDeclaration Name="u16OldDataMaskId" Type="UINT" Comment="Old object ID of active Mask " />
+			<VarDeclaration Name="u16OldSoftKeyMaskId" Type="UINT" Comment="Old object ID of (new) soft key mask " />
+			<VarDeclaration Name="s16result" Type="INT" Comment="retval see description" />
 		</OutputVars>
 	</InterfaceList>
 	<Attribute Name="Documentation" Type="CDATA"><![CDATA[<h1>Command change soft key mask( Part 6 - F.36 )</h1>

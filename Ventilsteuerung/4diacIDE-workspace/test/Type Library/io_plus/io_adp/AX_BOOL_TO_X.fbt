@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<FBType Name="AX_BOOL_TO_X" Comment="Composite FB for convert BOOL to AX">
-	<Identification Standard="61499-2" Description="Copyright (c) 2024 franz  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0">
+<FBType Name="AX_BOOL_TO_X" Comment="Composite FB for convert BOOL to AX" >
+	<Identification Standard="61499-2" Description="Copyright (c) 2024 franz  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0" >
 	</Identification>
 	<VersionInfo Version="1.0" Author="franz" Date="2024-04-24">
 	</VersionInfo>
@@ -8,26 +8,26 @@
 	</CompilerInfo>
 	<InterfaceList>
 		<EventInputs>
-			<Event Name="REQ" Type="Event" Comment="Initialization Request">
+			<Event Name="REQ" Type="Event" Comment="Initialization Request" >
 				<With Var="OUT"/>
 				<Attribute Name="YPOSITION" Type="DINT" Value="46"/>
 			</Event>
 		</EventInputs>
 		<InputVars>
-			<VarDeclaration Name="OUT" Type="BOOL" Comment="">
+			<VarDeclaration Name="OUT" Type="BOOL">
 				<Attribute Name="YPOSITION" Type="DINT" Value="31"/>
 			</VarDeclaration>
 		</InputVars>
 		<Plugs>
-			<AdapterDeclaration Name="AX_OUT" Type="AX" Comment="" x="1686.6666666666667" y="346.6666666666667"/>
+			<AdapterDeclaration Name="AX_OUT" Type="AX" x="1686.67" y="346.67"/>
 		</Plugs>
 	</InterfaceList>
 	<FBNetwork>
 		<EventConnections>
-			<Connection Source="REQ" Destination="AX_OUT.E1" Comment="" dx1="180.0"/>
+			<Connection Source="REQ" Destination="AX_OUT.E1" dx1="180"/>
 		</EventConnections>
 		<DataConnections>
-			<Connection Source="OUT" Destination="AX_OUT.D1" Comment="" dx1="180.0"/>
+			<Connection Source="OUT" Destination="AX_OUT.D1" dx1="180"/>
 		</DataConnections>
 	</FBNetwork>
 </FBType>

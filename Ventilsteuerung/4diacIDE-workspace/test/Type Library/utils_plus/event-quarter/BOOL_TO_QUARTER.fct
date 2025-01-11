@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<Function Name="BOOL_TO_QUARTER" Comment="">
-	<Identification Standard="61499-1" Description="Copyright (c) 2024 franz  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0">
+<Function Name="BOOL_TO_QUARTER">
+	<Identification Standard="61499-1" Description="Copyright (c) 2024 franz  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0" >
 	</Identification>
 	<VersionInfo Version="1.0" Author="franz" Date="2024-02-29">
 	</VersionInfo>
@@ -8,20 +8,20 @@
 	</CompilerInfo>
 	<InterfaceList>
 		<EventInputs>
-			<Event Name="REQ" Type="Event" Comment="">
+			<Event Name="REQ" Type="Event">
 				<With Var="I"/>
 			</Event>
 		</EventInputs>
 		<EventOutputs>
-			<Event Name="CNF" Type="Event" Comment="">
+			<Event Name="CNF" Type="Event">
 				<With Var="QB"/>
 			</Event>
 		</EventOutputs>
 		<InputVars>
-			<VarDeclaration Name="I" Type="BOOL" Comment="BOOL Input" InitialValue="BOOL#FALSE"/>
+			<VarDeclaration Name="I" Type="BOOL" Comment="BOOL Input"  InitialValue="BOOL#FALSE"/>
 		</InputVars>
 		<OutputVars>
-			<VarDeclaration Name="QB" Type="BYTE" Comment="2bit (quarter Byte) Output with 4 States (only 2 used)" InitialValue="COMMAND_DISABLE"/>
+			<VarDeclaration Name="QB" Type="BYTE" Comment="2bit (quarter Byte) Output with 4 States (only 2 used)"  InitialValue="COMMAND_DISABLE"/>
 		</OutputVars>
 	</InterfaceList>
 	<FunctionBody>
