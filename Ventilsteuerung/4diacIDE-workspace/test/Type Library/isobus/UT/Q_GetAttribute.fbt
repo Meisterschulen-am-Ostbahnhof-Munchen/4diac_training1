@@ -32,11 +32,21 @@
 			<VarDeclaration Name="s16result" Type="INT" Comment="retval see description" />
 		</OutputVars>
 	</InterfaceList>
-	<Attribute Name="Documentation" Type="WSTRING"><![CDATA[<p>This message is available in VT Version 4 and later. This command is used by a Working Set to query the VT for the current state of objects within the VT.</p>
+	<Attribute Name="Documentation" Type="CDATA"><![CDATA[<h1>Command GetAttribute( Part 6 - F.58 )</h1>
 
-<p>Return values</p>
+<p>This message is available in VT Version 4 and later. This command is used by a Working Set to query the VT for the current state of objects within the VT.</p>
 
-<p>iso_s16</p>
+<h2>param[in] {objectID, uint16_t}</h2>
+
+<p>Object ID</p>
+
+<h2>param[in] {attributeID, uint8_t}</h2>
+
+<p>Attribute ID of the object</p>
+
+<h2>Return Values:&nbsp;</h2>
+
+<h3>int16_t</h3>
 
 <ul>
 	<li><span style="color:#2980b9">VT_E_NO_ERR (0)</span>&nbsp;- OK</li>
@@ -46,13 +56,5 @@
 	<li><span style="color:#2980b9">VT_E_ISO_INSTANCE_INVALID (-129)</span> - Identifier for instance (connection) invalid</li>
 	<li><span style="color:#2980b9">VT_E_NOT_ALIVE (-130)</span> - Identifier for instance valid, but VT Dead.</li>
 </ul>
-
-<div>
-<div>&nbsp;</div>
-</div>
-
-<div>
-<div>&nbsp;</div>
-</div>
 ]]></Attribute>
 </FBType>

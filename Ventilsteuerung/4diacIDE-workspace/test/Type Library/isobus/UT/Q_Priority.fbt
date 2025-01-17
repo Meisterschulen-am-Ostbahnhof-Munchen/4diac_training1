@@ -32,11 +32,21 @@
 			<VarDeclaration Name="s16result" Type="INT" Comment="retval see description" />
 		</OutputVars>
 	</InterfaceList>
-	<Attribute Name="Documentation" Type="WSTRING"><![CDATA[<p>This command is used to change the priority of an alarm mask.</p>
+	<Attribute Name="Documentation" Type="CDATA"><![CDATA[<h1>Command change priority( Part 6 - F.40 )</h1>
 
-<p>Return values</p>
+<p>This command is used to change the priority of an alarm mask.</p>
 
-<p>iso_s16</p>
+<h2>param[in] {alarmMaskObjectID, uint16_t}</h2>
+
+<p>Object ID of alarm mask</p>
+
+<h2>param[in] {priority, uint8_t}</h2>
+
+<p>New priority</p>
+
+<h2>Return Values:&nbsp;</h2>
+
+<h3>int16_t</h3>
 
 <ul>
 	<li><span style="color:#2980b9">VT_E_NO_ERR (0)</span>&nbsp;- OK</li>

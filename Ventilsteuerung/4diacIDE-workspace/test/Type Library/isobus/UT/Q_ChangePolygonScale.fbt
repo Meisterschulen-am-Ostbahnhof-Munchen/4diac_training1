@@ -36,11 +36,25 @@
 			<VarDeclaration Name="s16result" Type="INT" Comment="retval see description" />
 		</OutputVars>
 	</InterfaceList>
-	<Attribute Name="Documentation" Type="WSTRING"><![CDATA[<p>This command is used by a Working Set to change the scale of a complete Output Polygon object.</p>
+	<Attribute Name="Documentation" Type="CDATA"><![CDATA[<h1>Command Change Polygon Scale( Part 6 - F.54 )</h1>
 
-<p>Return values</p>
+<p>This command is used by a Working Set to change the scale of a complete Output Polygon object.</p>
 
-<p>iso_s16</p>
+<h2>param[in] {objectID, uint16_t}</h2>
+
+<p>Object ID of the Output Polygon object to scale</p>
+
+<h2>param[in] {widthAttribute, uint16_t}</h2>
+
+<p>New width attribute</p>
+
+<h2>param[in] {heightAttribute, uint16_t}</h2>
+
+<p>New height attribute</p>
+
+<h2>Return Values:&nbsp;</h2>
+
+<h3>int16_t</h3>
 
 <ul>
 	<li><span style="color:#2980b9">VT_E_NO_ERR (0)</span>&nbsp;- OK</li>

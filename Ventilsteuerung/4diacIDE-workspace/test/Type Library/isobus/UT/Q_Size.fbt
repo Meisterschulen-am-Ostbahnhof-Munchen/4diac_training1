@@ -36,11 +36,25 @@
 			<VarDeclaration Name="s16result" Type="INT" Comment="retval see description" />
 		</OutputVars>
 	</InterfaceList>
-	<Attribute Name="Documentation" Type="WSTRING"><![CDATA[<p>The Change Size command is used to change the size of an object.</p>
+	<Attribute Name="Documentation" Type="CDATA"><![CDATA[<h1>Command change size  ( Part 6 - F.18 )</h1>
 
-<p>Return values</p>
+<p>The Change Size command is used to change the size of an object.</p>
 
-<p>iso_s16</p>
+<h2>param[in] {objectID, uint16_t}</h2>
+
+<p>Object ID</p>
+
+<h2>param[in] {newWidth, uint16_t}</h2>
+
+<p>New width</p>
+
+<h2>param[in] {newHeight, uint16_t}</h2>
+
+<p>New height</p>
+
+<h2>Return Values:&nbsp;</h2>
+
+<h3>int16_t</h3>
 
 <ul>
 	<li><span style="color:#2980b9">VT_E_NO_ERR (0)</span>&nbsp;- OK</li>
