@@ -13,7 +13,7 @@
 		</SubAppEventInputs>
 	</SubAppInterfaceList>
 	<SubAppNetwork>
-		<FB Name="SoftKey_F1_UP" Type="IE" x="-4500" y="-1200">
+		<FB Name="SoftKey_F1_UP" Type="IE" Comment="" x="-4533.33" y="-1133.33">
 			<Parameter Name="QI" Value="TRUE">
 				<Attribute Name="Visible" Value="false"/>
 			</Parameter>
@@ -32,10 +32,10 @@
 		<FB Name="F_UINT_TO_UDINT" Type="F_UINT_TO_UDINT" x="-2800" y="0">
 			<Parameter Name="IN" Value="Button_A1"/>
 		</FB>
-		<FB Name="F_SEL_E_3" Type="F_SEL_E_3" x="-1100" y="-1000">
+		<FB Name="F_SEL_E_3" Type="F_SEL_E_3" Comment="" x="-1133.33" y="-906.67">
 			<Parameter Name="IN0" Value="ID_NULL"/>
 		</FB>
-		<FB Name="Q_NumericValue" Type="Q_NumericValue" x="800" y="-1100">
+		<FB Name="Q_NumericValue" Type="Q_NumericValue" Comment="" x="800" y="-1020">
 			<Parameter Name="u16ObjId" Value="ObjectPointer_P1"/>
 		</FB>
 		<FB Name="SoftKey_F3_UP" Type="IE" x="-4533.33" y="1473.33">
@@ -68,7 +68,7 @@
 			<Connection Source="INIT" Destination="F_UINT_TO_UDINT_1.REQ" dx1="2946.67">
 				<Attribute Name="Visible" Value="false"/>
 			</Connection>
-			<Connection Source="SoftKey_F3_UP.IND" Destination="F_SEL_E_3.REQ2" dx1="600"/>
+			<Connection Source="SoftKey_F2_UP_1.IND" Destination="F_SEL_E_3.REQ2" Comment="" dx1="560"/>
 		</EventConnections>
 		<DataConnections>
 			<Connection Source="F_UINT_TO_UDINT.OUT" Destination="F_SEL_E_3.IN1" dx1="360"/>
