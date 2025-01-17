@@ -7,11 +7,6 @@
 	<CompilerInfo>
 	</CompilerInfo>
 	<SubAppInterfaceList>
-		<SubAppEventInputs>
-			<SubAppEvent Name="INIT" Type="Event">
-				<Attribute Name="YPOSITION" Type="INT" Value="20"/>
-			</SubAppEvent>
-		</SubAppEventInputs>
 	</SubAppInterfaceList>
 	<SubAppNetwork>
 		<FB Name="SETPOINT_CONDENSED_WORK_STATE_1_16" Type="ID" x="-800" y="-8900">
@@ -50,38 +45,17 @@
 			<Parameter Name="IN2" Value="DWORD#0"/>
 		</FB>
 		<EventConnections>
-			<Connection Source="INIT" Destination="SETPOINT_CONDENSED_WORK_STATE_1_16.INIT" dx1="393.33">
-				<Attribute Name="Visible" Value="false"/>
-			</Connection>
 			<Connection Source="SETPOINT_CONDENSED_WORK_STATE_1_16.IND" Destination="SPLIT_DWORD_INTO_QUARTERS.REQ"/>
 			<Connection Source="ASSEMBLE_DWORD_FROM_QUARTERS.CNF" Destination="ACTUAL_CONDENSED_WORK_STATE_1_16.REQ"/>
-			<Connection Source="INIT" Destination="ACTUAL_CONDENSED_WORK_STATE_1_16.INIT" dx1="3586.67">
-				<Attribute Name="Visible" Value="false"/>
-			</Connection>
 			<Connection Source="BOOLS_TO_QUARTERS.CNF" Destination="ASSEMBLE_DWORD_FROM_QUARTERS.REQ"/>
 			<Connection Source="SPLIT_DWORD_INTO_QUARTERS.CNF" Destination="QUARTERS_TO_BOOLS.REQ"/>
 			<Connection Source="QUARTERS_TO_BOOLS.CNF" Destination="BOOLS_TO_QUARTERS.REQ"/>
-			<Connection Source="INIT" Destination="Out.INIT" dx1="6433.33">
-				<Attribute Name="Visible" Value="false"/>
-			</Connection>
 			<Connection Source="QUARTERS_TO_BOOLS.CNF" Destination="Out.CNF" dx1="226.67"/>
-			<Connection Source="INIT" Destination="SECTION_CONTROL_STATE_IN.INIT" dx1="3033.33">
-				<Attribute Name="Visible" Value="false"/>
-			</Connection>
-			<Connection Source="INIT" Destination="SECTION_CONTROL_STATE_OUT.INIT" dx1="3780">
-				<Attribute Name="Visible" Value="false"/>
-			</Connection>
 			<Connection Source="SECTION_CONTROL_STATE_IN.IND" Destination="SECTION_CONTROL_STATE_OUT.REQ"/>
 			<Connection Source="F_GT.CNF" Destination="F_SEL.REQ"/>
 			<Connection Source="ASSEMBLE_DWORD_FROM_QUARTERS.CNF" Destination="F_GT.REQ" dx1="360"/>
 			<Connection Source="F_SEL.CNF" Destination="ACTUAL_WORK_STATE.REQ" dx1="120"/>
 			<Connection Source="F_SEL.CNF" Destination="ACTUAL_RATE.REQ" dx1="340"/>
-			<Connection Source="INIT" Destination="ACTUAL_WORK_STATE.INIT" dx1="9160">
-				<Attribute Name="Visible" Value="false"/>
-			</Connection>
-			<Connection Source="INIT" Destination="ACTUAL_RATE.INIT" dx1="9133.33">
-				<Attribute Name="Visible" Value="false"/>
-			</Connection>
 		</EventConnections>
 		<DataConnections>
 			<Connection Source="SETPOINT_CONDENSED_WORK_STATE_1_16.IN" Destination="SPLIT_DWORD_INTO_QUARTERS.IN" dx1="266.67"/>

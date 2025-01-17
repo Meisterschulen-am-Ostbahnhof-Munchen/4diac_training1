@@ -7,10 +7,6 @@
 	<CompilerInfo>
 	</CompilerInfo>
 	<SubAppInterfaceList>
-		<SubAppEventInputs>
-			<SubAppEvent Name="INIT" Type="Event">
-			</SubAppEvent>
-		</SubAppEventInputs>
 	</SubAppInterfaceList>
 	<SubAppNetwork>
 		<FB Name="TC_InputMapping" Type="TC_InputMapping" x="-4200" y="-1000">
@@ -162,16 +158,5 @@
 			<Parameter Name="DigitalOutput_Q7" Value="'Ventilsteuerung.functions.Out.DigitalOutput_Q7'"/>
 			<Parameter Name="DigitalOutput_Q8" Value="'Ventilsteuerung.functions.Out.DigitalOutput_Q8'"/>
 		</FB>
-		<EventConnections>
-			<Connection Source="INIT" Destination="TC_InputMapping.INIT" dx1="1786.67">
-				<Attribute Name="Visible" Value="false"/>
-			</Connection>
-			<Connection Source="INIT" Destination="TC_OutputMapping.INIT" dx1="2066.67">
-				<Attribute Name="Visible" Value="false"/>
-			</Connection>
-			<Connection Source="INIT" Destination="Hutschienenmoped_XL_8_DO.INIT" dx1="6133.33">
-				<Attribute Name="Visible" Value="false"/>
-			</Connection>
-		</EventConnections>
 	</SubAppNetwork>
 </SubAppType>

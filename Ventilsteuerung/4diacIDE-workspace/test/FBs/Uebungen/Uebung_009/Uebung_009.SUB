@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<SubAppType Name="Uebung_009" Comment="Ticker">
+<SubAppType Name="Uebung_009" Comment="Ticker" >
 	<Identification Standard="61499-2">
 	</Identification>
 	<VersionInfo Version="1.0" Author="franz" Date="2023-10-23">
@@ -7,53 +7,40 @@
 	<CompilerInfo>
 	</CompilerInfo>
 	<SubAppInterfaceList>
-		<SubAppEventInputs>
-			<SubAppEvent Name="INIT" Type="Event" Comment="">
-			</SubAppEvent>
-		</SubAppEventInputs>
 	</SubAppInterfaceList>
 	<SubAppNetwork>
-		<FB Name="DigitalOutput_Q1" Type="QX" Comment="" x="566.67" y="-906.67">
-			<Parameter Name="QI" Value="TRUE" Comment=""/>
+		<FB Name="DigitalOutput_Q1" Type="QX" x="566.67" y="-906.67">
+			<Parameter Name="QI" Value="TRUE"/>
 		</FB>
-		<FB Name="E_CYCLE" Type="E_CYCLE" Comment="" x="-2493.33" y="-680">
-			<Parameter Name="DT" Value="T#1s" Comment=""/>
+		<FB Name="E_CYCLE" Type="E_CYCLE" x="-2493.33" y="-680">
+			<Parameter Name="DT" Value="T#1s"/>
 		</FB>
-		<FB Name="E_SWITCH" Type="E_SWITCH" Comment="" x="-1586.67" y="-680">
+		<FB Name="E_SWITCH" Type="E_SWITCH" x="-1586.67" y="-680">
 		</FB>
-		<FB Name="E_SR" Type="E_SR" Comment="" x="-680" y="-680">
+		<FB Name="E_SR" Type="E_SR" x="-680" y="-680">
 		</FB>
-		<FB Name="E_PERMIT" Type="E_PERMIT" Comment="" x="573.33" y="226.67">
+		<FB Name="E_PERMIT" Type="E_PERMIT" x="573.33" y="226.67">
 		</FB>
-		<FB Name="E_CTUD_UDINT" Type="E_CTUD_UDINT" Comment="" x="1706.66" y="226.67">
-			<Parameter Name="PV" Value="0" Comment=""/>
+		<FB Name="E_CTUD_UDINT" Type="E_CTUD_UDINT" x="1706.66" y="226.67">
+			<Parameter Name="PV" Value="0"/>
 		</FB>
-		<FB Name="Q_NumericValue" Type="Q_NumericValue" Comment="" x="3513.33" y="226.67">
-			<Parameter Name="u16ObjId" Value="OutputNumber_N1" Comment=""/>
+		<FB Name="Q_NumericValue" Type="Q_NumericValue" x="3513.33" y="226.67">
+			<Parameter Name="u16ObjId" Value="OutputNumber_N1"/>
 		</FB>
 		<EventConnections>
-			<Connection Source="INIT" Destination="DigitalOutput_Q1.INIT" Comment="" dx1="1813.33">
-				<Attribute Name="Visible" Value="false"/>
-			</Connection>
-			<Connection Source="INIT" Destination="E_CYCLE.START" Comment="" dx1="193.33">
-				<Attribute Name="Visible" Value="false"/>
-			</Connection>
-			<Connection Source="E_CYCLE.EO" Destination="E_SWITCH.EI" Comment=""/>
-			<Connection Source="E_SWITCH.EO0" Destination="E_SR.S" Comment=""/>
-			<Connection Source="E_SWITCH.EO1" Destination="E_SR.R" Comment=""/>
-			<Connection Source="E_SR.EO" Destination="DigitalOutput_Q1.REQ" Comment="" dx1="380"/>
-			<Connection Source="E_SR.EO" Destination="E_PERMIT.EI" Comment="" dx1="480"/>
-			<Connection Source="E_PERMIT.EO" Destination="E_CTUD_UDINT.CU" Comment=""/>
-			<Connection Source="E_CTUD_UDINT.CO" Destination="Q_NumericValue.REQ" Comment="" dx1="333.33"/>
-			<Connection Source="INIT" Destination="Q_NumericValue.INIT" Comment="" dx1="4986.67">
-				<Attribute Name="Visible" Value="false"/>
-			</Connection>
+			<Connection Source="E_CYCLE.EO" Destination="E_SWITCH.EI"/>
+			<Connection Source="E_SWITCH.EO0" Destination="E_SR.S"/>
+			<Connection Source="E_SWITCH.EO1" Destination="E_SR.R"/>
+			<Connection Source="E_SR.EO" Destination="DigitalOutput_Q1.REQ" dx1="380"/>
+			<Connection Source="E_SR.EO" Destination="E_PERMIT.EI" dx1="480"/>
+			<Connection Source="E_PERMIT.EO" Destination="E_CTUD_UDINT.CU"/>
+			<Connection Source="E_CTUD_UDINT.CO" Destination="Q_NumericValue.REQ" dx1="333.33"/>
 		</EventConnections>
 		<DataConnections>
-			<Connection Source="E_SR.Q" Destination="E_SWITCH.G" Comment="" dx1="80" dx2="80" dy="160"/>
-			<Connection Source="E_SR.Q" Destination="DigitalOutput_Q1.OUT" Comment=""/>
-			<Connection Source="E_SR.Q" Destination="E_PERMIT.PERMIT" Comment="" dx1="366.67"/>
-			<Connection Source="E_CTUD_UDINT.CV" Destination="Q_NumericValue.u32NewValue" Comment="" dx1="333.33"/>
+			<Connection Source="E_SR.Q" Destination="E_SWITCH.G" dx1="80" dx2="80" dy="160"/>
+			<Connection Source="E_SR.Q" Destination="DigitalOutput_Q1.OUT" dx1="400"/>
+			<Connection Source="E_SR.Q" Destination="E_PERMIT.PERMIT" dx1="366.67"/>
+			<Connection Source="E_CTUD_UDINT.CV" Destination="Q_NumericValue.u32NewValue" dx1="333.33"/>
 		</DataConnections>
 	</SubAppNetwork>
 </SubAppType>

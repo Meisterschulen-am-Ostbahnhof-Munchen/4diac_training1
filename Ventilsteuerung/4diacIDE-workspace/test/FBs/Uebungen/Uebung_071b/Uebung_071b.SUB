@@ -7,10 +7,6 @@
 	<CompilerInfo>
 	</CompilerInfo>
 	<SubAppInterfaceList>
-		<SubAppEventInputs>
-			<SubAppEvent Name="INIT" Type="Event">
-			</SubAppEvent>
-		</SubAppEventInputs>
 	</SubAppInterfaceList>
 	<SubAppNetwork>
 		<FB Name="I_WBSD" Type="I_WBSD" x="-5200" y="500">
@@ -33,20 +29,8 @@
 		</FB>
 		<EventConnections>
 			<Connection Source="I_WBSD.IND" Destination="Q_NumberVariable_Wheel_based_machine_speed.REQ"/>
-			<Connection Source="INIT" Destination="I_WBSD.INIT" dx1="1760">
-				<Attribute Name="Visible" Value="false"/>
-			</Connection>
-			<Connection Source="INIT" Destination="Q_NumberVariable_Wheel_based_machine_speed.INIT" dx1="4026.67">
-				<Attribute Name="Visible" Value="false"/>
-			</Connection>
-			<Connection Source="INIT" Destination="DigitalOutput_Q1.INIT" dx1="3473.33" dx2="3473.33" dy="0">
-				<Attribute Name="Visible" Value="false"/>
-			</Connection>
 			<Connection Source="E_D_FF.EO" Destination="DigitalOutput_Q1.REQ"/>
 			<Connection Source="I_WBSD.IND" Destination="Q_NumberVariable_Wheel_based_machine_distance.REQ" dx1="1346.67"/>
-			<Connection Source="INIT" Destination="Q_NumberVariable_Wheel_based_machine_distance.INIT" dx1="4286.67">
-				<Attribute Name="Visible" Value="false"/>
-			</Connection>
 			<Connection Source="I_WBSD.IND" Destination="RangeBasedPulse.REQ" dx1="1240" dx2="1240" dy="0"/>
 			<Connection Source="RangeBasedPulse.CNF" Destination="E_D_FF.CLK" dx1="260" dx2="260" dy="0"/>
 		</EventConnections>
