@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<SubAppType Name="Uebung_012c" Comment="String Input und Speichern (WIP)">
+<SubAppType Name="Uebung_012c" Comment="String Input und Speichern (WIP)" >
 	<Identification Standard="61499-2">
 	</Identification>
 	<VersionInfo Version="1.0" Author="franz" Date="2023-10-23">
@@ -7,66 +7,53 @@
 	<CompilerInfo>
 	</CompilerInfo>
 	<SubAppInterfaceList>
-		<SubAppEventInputs>
-			<SubAppEvent Name="INIT" Type="Event" Comment="">
-			</SubAppEvent>
-		</SubAppEventInputs>
 	</SubAppInterfaceList>
 	<SubAppNetwork>
-		<FB Name="F_DWORD_TO_UDINT" Type="F_DWORD_TO_UDINT" Comment="" x="-3060" y="1253.33">
+		<FB Name="F_DWORD_TO_UDINT" Type="F_DWORD_TO_UDINT" x="-3060" y="1253.33">
 		</FB>
-		<FB Name="InputNumber_I1" Type="ID" Comment="" x="-4126.66" y="680">
-			<Parameter Name="QI" Value="TRUE" Comment="">
+		<FB Name="InputNumber_I1" Type="ID" x="-4126.66" y="680">
+			<Parameter Name="QI" Value="TRUE">
 				<Attribute Name="Visible" Value="false"/>
 			</Parameter>
-			<Parameter Name="PARAMS" Value="" Comment="">
+			<Parameter Name="PARAMS" Value="">
 				<Attribute Name="Visible" Value="false"/>
 			</Parameter>
 		</FB>
-		<FB Name="INI" Type="INI" Comment="" x="-913.33" y="680">
-			<Parameter Name="QI" Value="TRUE" Comment=""/>
-			<Parameter Name="SECTION" Value="SECTION_S1_STORE" Comment=""/>
-			<Parameter Name="KEY" Value="KEY_S1_STORE" Comment=""/>
-			<Parameter Name="VALUE" Value="STRING#'Test'" Comment=""/>
-			<Parameter Name="DEFAULT_VALUE" Value="STRING#'Test'" Comment=""/>
+		<FB Name="INI" Type="INI" x="-913.33" y="680">
+			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="SECTION" Value="SECTION_S1_STORE"/>
+			<Parameter Name="KEY" Value="KEY_S1_STORE"/>
+			<Parameter Name="VALUE" Value="STRING#'Test'"/>
+			<Parameter Name="DEFAULT_VALUE" Value="STRING#'Test'"/>
 		</FB>
-		<FB Name="Q_NumericValue" Type="Q_StringValue" Comment="" x="1020" y="906.67">
-			<Parameter Name="u16ObjId" Value="InputNumber_I1" Comment=""/>
+		<FB Name="Q_NumericValue" Type="Q_StringValue" x="1020" y="906.67">
+			<Parameter Name="u16ObjId" Value="InputNumber_I1"/>
 		</FB>
-		<FB Name="CbVtStatus" Type="CbVtStatus" Comment="" x="-4133.33" y="-6.67">
-			<Parameter Name="STATUS" Value="" Comment="">
+		<FB Name="CbVtStatus" Type="CbVtStatus" x="-4133.33" y="-6.67">
+			<Parameter Name="STATUS" Value="">
 				<Attribute Name="Visible" Value="false"/>
 			</Parameter>
-			<Parameter Name="u8Instance" Value="" Comment="">
+			<Parameter Name="u8Instance" Value="">
 				<Attribute Name="Visible" Value="false"/>
 			</Parameter>
-			<Parameter Name="qWsActive" Value="" Comment="">
+			<Parameter Name="qWsActive" Value="">
 				<Attribute Name="Visible" Value="false"/>
 			</Parameter>
-			<Parameter Name="wPage" Value="" Comment="">
+			<Parameter Name="wPage" Value="">
 				<Attribute Name="Visible" Value="false"/>
 			</Parameter>
 		</FB>
 		<EventConnections>
-			<Connection Source="InputNumber_I1.IND" Destination="F_DWORD_TO_UDINT.REQ" Comment="" dx1="300"/>
-			<Connection Source="INIT" Destination="InputNumber_I1.INIT" Comment="" dx1="833.33">
-				<Attribute Name="Visible" Value="false"/>
-			</Connection>
-			<Connection Source="INIT" Destination="CbVtStatus.INIT" Comment="" dx1="1466.67">
-				<Attribute Name="Visible" Value="false"/>
-			</Connection>
-			<Connection Source="INIT" Destination="INI.INIT" Comment="" dx1="3913.33" dx2="3913.33" dy="0">
-				<Attribute Name="Visible" Value="false"/>
-			</Connection>
-			<Connection Source="F_DWORD_TO_UDINT.CNF" Destination="INI.SET" Comment="" dx1="253.33" dx2="253.33" dy="0"/>
-			<Connection Source="INI.INITO" Destination="INI.GET" Comment="" dx1="80" dx2="80" dy="-253.33"/>
-			<Connection Source="INI.INITO" Destination="Q_NumericValue.INIT" Comment="" dx1="693.33" dx2="693.33" dy="0"/>
-			<Connection Source="CbVtStatus.IND" Destination="Q_NumericValue.REQ" Comment="" dx1="4206.67" dx2="4206.67" dy="0"/>
-			<Connection Source="INI.GETO" Destination="Q_NumericValue.REQ" Comment="" dx1="486.67" dx2="486.67" dy="0"/>
+			<Connection Source="InputNumber_I1.IND" Destination="F_DWORD_TO_UDINT.REQ" dx1="300"/>
+			<Connection Source="F_DWORD_TO_UDINT.CNF" Destination="INI.SET" dx1="253.33" dx2="253.33" dy="0"/>
+			<Connection Source="INI.INITO" Destination="INI.GET" dx1="80" dx2="80" dy="-253.33"/>
+			<Connection Source="INI.INITO" Destination="Q_NumericValue.INIT" dx1="693.33" dx2="693.33" dy="0"/>
+			<Connection Source="CbVtStatus.IND" Destination="Q_NumericValue.REQ" dx1="4206.67" dx2="4206.67" dy="0"/>
+			<Connection Source="INI.GETO" Destination="Q_NumericValue.REQ" dx1="486.67" dx2="486.67" dy="0"/>
 		</EventConnections>
 		<DataConnections>
-			<Connection Source="InputNumber_I1.IN" Destination="F_DWORD_TO_UDINT.IN" Comment="" dx1="226.67"/>
-			<Connection Source="INI.VALUEO" Destination="Q_NumericValue.pau8String" Comment=""/>
+			<Connection Source="InputNumber_I1.IN" Destination="F_DWORD_TO_UDINT.IN" dx1="226.67"/>
+			<Connection Source="INI.VALUEO" Destination="Q_NumericValue.pau8String" dx1="453.33"/>
 		</DataConnections>
 	</SubAppNetwork>
 </SubAppType>
