@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<SubAppType Name="Uebung_010b2" Comment="Toggle Flip-Flop mit IE SoftKey_F1">
+<SubAppType Name="Uebung_010b2" Comment="Toggle Flip-Flop mit IE SoftKey_F1" >
 	<Identification Standard="61499-2">
 	</Identification>
 	<VersionInfo Version="1.0" Author="franz" Date="2023-10-23">
@@ -7,30 +7,23 @@
 	<CompilerInfo>
 	</CompilerInfo>
 	<SubAppInterfaceList>
-		<SubAppEventInputs>
-			<SubAppEvent Name="INIT" Type="Event" Comment="">
-			</SubAppEvent>
-		</SubAppEventInputs>
 	</SubAppInterfaceList>
 	<SubAppNetwork>
-		<FB Name="DigitalOutput_Q1" Type="QX" Comment="" x="-3860" y="-346.66">
-			<Parameter Name="QI" Value="TRUE" Comment=""/>
+		<FB Name="DigitalOutput_Q1" Type="QX" x="-3860" y="-346.66">
+			<Parameter Name="QI" Value="TRUE"/>
 		</FB>
-		<FB Name="SoftKey_F1_UP" Type="IE" Comment="" x="-7260" y="-346.66">
-			<Parameter Name="QI" Value="TRUE" Comment=""/>
+		<FB Name="SoftKey_F1_UP" Type="IE" x="-7260" y="-346.66">
+			<Parameter Name="QI" Value="TRUE"/>
 		</FB>
-		<FB Name="E_T_FF" Type="E_T_FF" Comment="" x="-5560" y="0">
+		<FB Name="E_T_FF" Type="E_T_FF" x="-5560" y="0">
 		</FB>
 		<EventConnections>
-			<Connection Source="INIT" Destination="SoftKey_F1_UP.INIT" Comment="" dx1="1113.33">
-				<Attribute Name="Visible" Value="false"/>
-			</Connection>
-			<Connection Source="SoftKey_F1_UP.INITO" Destination="DigitalOutput_Q1.INIT" Comment=""/>
-			<Connection Source="SoftKey_F1_UP.IND" Destination="E_T_FF.CLK" Comment="" dx1="453.33"/>
-			<Connection Source="E_T_FF.EO" Destination="DigitalOutput_Q1.REQ" Comment="" dx1="400"/>
+			<Connection Source="SoftKey_F1_UP.INITO" Destination="DigitalOutput_Q1.INIT"/>
+			<Connection Source="SoftKey_F1_UP.IND" Destination="E_T_FF.CLK" dx1="453.33"/>
+			<Connection Source="E_T_FF.EO" Destination="DigitalOutput_Q1.REQ" dx1="400"/>
 		</EventConnections>
 		<DataConnections>
-			<Connection Source="E_T_FF.Q" Destination="DigitalOutput_Q1.OUT" Comment=""/>
+			<Connection Source="E_T_FF.Q" Destination="DigitalOutput_Q1.OUT" dx1="580"/>
 		</DataConnections>
 	</SubAppNetwork>
 </SubAppType>
