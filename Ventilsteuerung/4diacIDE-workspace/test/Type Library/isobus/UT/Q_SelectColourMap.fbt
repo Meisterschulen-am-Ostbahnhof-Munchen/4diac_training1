@@ -1,33 +1,33 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<FBType Name="Q_SelectColourMap" Comment="Command Select Colour Map ( VT version 4 and later ) ( Part 6 - F.60 ) ">
-	<Identification Standard="ISO 11783-6" Description="see Description Tab" >
+<FBType Name="Q_SelectColourMap" Comment="Command Select Colour Map ( VT version 4 and later ) ( Part 6 - F.60 ) " >
+	<Identification Standard="ISO 11783-6" Description="Copyright (c) 2022 franz  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0  &#10;   &#10;   &#10;see Description Tab" >
 	</Identification>
 	<VersionInfo Version="1.0" Author="franz" Date="2022-07-08">
 	</VersionInfo>
 	<InterfaceList>
 		<EventInputs>
-			<Event Name="INIT" Type="EInit" Comment="Service Initialization">
+			<Event Name="INIT" Type="EInit" Comment="Service Initialization" >
 			</Event>
-			<Event Name="REQ" Type="Event" Comment="Service Request">
+			<Event Name="REQ" Type="Event" Comment="Service Request" >
 				<With Var="u16ObjIdColourMap"/>
 			</Event>
 		</EventInputs>
 		<EventOutputs>
-			<Event Name="INITO" Type="EInit" Comment="Initialization Confirm">
+			<Event Name="INITO" Type="EInit" Comment="Initialization Confirm" >
 			</Event>
-			<Event Name="CNF" Type="Event" Comment="Confirmation of Requested Service">
+			<Event Name="CNF" Type="Event" Comment="Confirmation of Requested Service" >
 				<With Var="STATUS"/>
 				<With Var="s16result"/>
 				<With Var="u16OldObjIdColourMap"/>
 			</Event>
 		</EventOutputs>
 		<InputVars>
-			<VarDeclaration Name="u16ObjIdColourMap" Type="UINT" Comment="Object ID of Colour map object or FFFF to restore the default colour table (see A.3) "/>
+			<VarDeclaration Name="u16ObjIdColourMap" Type="UINT" Comment="Object ID of Colour map object or FFFF to restore the default colour table (see A.3) " />
 		</InputVars>
 		<OutputVars>
-			<VarDeclaration Name="STATUS" Type="STRING" Comment="Service Status"/>
-			<VarDeclaration Name="u16OldObjIdColourMap" Type="UINT" Comment="Old object ID of Colour map object or FFFF to restore the default colour table (see A.3) "/>
-			<VarDeclaration Name="s16result" Type="INT" Comment="retval see description"/>
+			<VarDeclaration Name="STATUS" Type="STRING" Comment="Service Status" />
+			<VarDeclaration Name="u16OldObjIdColourMap" Type="UINT" Comment="Old object ID of Colour map object or FFFF to restore the default colour table (see A.3) " />
+			<VarDeclaration Name="s16result" Type="INT" Comment="retval see description" />
 		</OutputVars>
 	</InterfaceList>
 	<Attribute Name="Documentation" Type="CDATA"><![CDATA[<h1>Command Select Colour Map ( VT version 4 and later ) ( Part 6 - F.60 )</h1>
