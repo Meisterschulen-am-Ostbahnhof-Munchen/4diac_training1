@@ -7,10 +7,6 @@
 	<CompilerInfo>
 	</CompilerInfo>
 	<SubAppInterfaceList>
-		<SubAppEventInputs>
-			<SubAppEvent Name="INIT" Type="Event">
-			</SubAppEvent>
-		</SubAppEventInputs>
 	</SubAppInterfaceList>
 	<SubAppNetwork>
 		<FB Name="DigitalOutput_Q1" Type="QX" x="-4900" y="-900">
@@ -25,15 +21,6 @@
 		<FB Name="E_D_FF" Type="E_D_FF" x="-6400" y="-600">
 		</FB>
 		<EventConnections>
-			<Connection Source="INIT" Destination="DigitalInput_I1.INIT" dx1="1746.67">
-				<Attribute Name="Visible" Value="false"/>
-			</Connection>
-			<Connection Source="INIT" Destination="DigitalOutput_Q1.INIT" dx1="3626.67">
-				<Attribute Name="Visible" Value="false"/>
-			</Connection>
-			<Connection Source="INIT" Destination="DigitalInput_I2_CLK.INIT" dx1="2086.67">
-				<Attribute Name="Visible" Value="false"/>
-			</Connection>
 			<Connection Source="DigitalInput_I2_CLK.IND" Destination="E_D_FF.CLK"/>
 			<Connection Source="E_D_FF.EO" Destination="DigitalOutput_Q1.REQ" dx1="486.67"/>
 		</EventConnections>
