@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<FBType Name="AX_X_TO_BOOL" Comment="Composite FB for convert AX to BOOL">
-	<Identification Standard="61499-2">
+<FBType Name="AX_X_TO_BOOL" Comment="Composite FB for convert AX to BOOL" >
+	<Identification Standard="61499-2" Description="Copyright (c) 2024 franz  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0" >
 	</Identification>
 	<VersionInfo Version="1.0" Author="franz" Date="2024-04-24">
 	</VersionInfo>
@@ -8,26 +8,26 @@
 	</CompilerInfo>
 	<InterfaceList>
 		<EventOutputs>
-			<Event Name="IND" Type="Event" Comment="Initialization Confirm">
+			<Event Name="IND" Type="Event" Comment="Initialization Confirm" >
 				<With Var="IN"/>
 				<Attribute Name="YPOSITION" Type="DINT" Value="46"/>
 			</Event>
 		</EventOutputs>
 		<OutputVars>
-			<VarDeclaration Name="IN" Type="BOOL" Comment="">
+			<VarDeclaration Name="IN" Type="BOOL">
 				<Attribute Name="YPOSITION" Type="DINT" Value="47"/>
 			</VarDeclaration>
 		</OutputVars>
 		<Sockets>
-			<AdapterDeclaration Name="AX_IN" Type="AX" Comment="" x="-986.6666666666667" y="346.6666666666667"/>
+			<AdapterDeclaration Name="AX_IN" Type="AX" x="-986.67" y="346.67"/>
 		</Sockets>
 	</InterfaceList>
 	<FBNetwork>
 		<EventConnections>
-			<Connection Source="AX_IN.E1" Destination="IND" Comment="" dx1="2293.3333333333335"/>
+			<Connection Source="AX_IN.E1" Destination="IND" dx1="2293.33"/>
 		</EventConnections>
 		<DataConnections>
-			<Connection Source="AX_IN.D1" Destination="IN" Comment="" dx1="2293.3333333333335"/>
+			<Connection Source="AX_IN.D1" Destination="IN" dx1="2293.33"/>
 		</DataConnections>
 	</FBNetwork>
 </FBType>
