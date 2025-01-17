@@ -24,16 +24,16 @@
 		</OutputVars>
 	</SubAppInterfaceList>
 	<SubAppNetwork>
-		<FB Name="InputNumber_I1" Type="ID" x="-666.67" y="20">
+		<FB Name="InputNumber_I1" Type="ID" x="-700" y="0">
 			<Parameter Name="QI" Value="TRUE"/>
 		</FB>
-		<FB Name="F_DWORD_TO_UDINT" Type="F_DWORD_TO_UDINT" x="400" y="473.33">
+		<FB Name="F_DWORD_TO_UDINT" Type="F_DWORD_TO_UDINT" x="400" y="400">
 		</FB>
-		<FB Name="NVS_UDINT" Type="NVS" x="2133.33" y="20">
+		<FB Name="NVS_UDINT" Type="NVS" x="2100" y="0">
 			<Parameter Name="QI" Value="TRUE"/>
 			<Parameter Name="DEFAULT_VALUE" Value="UDINT#0"/>
 		</FB>
-		<FB Name="Q_NumericValue" Type="Q_NumericValue" x="3866.67" y="133.33">
+		<FB Name="Q_NumericValue" Type="Q_NumericValue" x="4100" y="200">
 		</FB>
 		<EventConnections>
 			<Connection Source="InputNumber_I1.IND" Destination="F_DWORD_TO_UDINT.REQ" dx1="300"/>
@@ -41,8 +41,6 @@
 				<Attribute Name="Visible" Value="false"/>
 			</Connection>
 			<Connection Source="F_DWORD_TO_UDINT.CNF" Destination="NVS_UDINT.SET" dx1="380"/>
-			<Connection Source="NVS_UDINT.INITO" Destination="NVS_UDINT.GET" dx1="80" dx2="80" dy="-253.33"/>
-			<Connection Source="NVS_UDINT.INITO" Destination="Q_NumericValue.INIT" dx1="513.33"/>
 			<Connection Source="NVS_UDINT.SETO" Destination="IND" dx1="2933.33">
 				<Attribute Name="Visible" Value="false"/>
 			</Connection>
@@ -52,15 +50,15 @@
 			</Connection>
 		</EventConnections>
 		<DataConnections>
-			<Connection Source="InputNumber_I1.IN" Destination="F_DWORD_TO_UDINT.IN" dx1="186.67"/>
+			<Connection Source="InputNumber_I1.IN" Destination="F_DWORD_TO_UDINT.IN"/>
 			<Connection Source="u16ObjId" Destination="Q_NumericValue.u16ObjId" dx1="2933.33">
 				<Attribute Name="Visible" Value="false"/>
 			</Connection>
 			<Connection Source="KEY" Destination="NVS_UDINT.KEY" dx1="2066.67">
 				<Attribute Name="Visible" Value="false"/>
 			</Connection>
-			<Connection Source="F_DWORD_TO_UDINT.OUT" Destination="NVS_UDINT.VALUE" dx1="346.67"/>
-			<Connection Source="NVS_UDINT.VALUEO" Destination="Q_NumericValue.u32NewValue" dx1="313.33"/>
+			<Connection Source="F_DWORD_TO_UDINT.OUT" Destination="NVS_UDINT.VALUE"/>
+			<Connection Source="NVS_UDINT.VALUEO" Destination="Q_NumericValue.u32NewValue"/>
 			<Connection Source="NVS_UDINT.VALUEO" Destination="VALUEO" dx1="2933.33">
 				<Attribute Name="Visible" Value="false"/>
 			</Connection>

@@ -9,11 +9,9 @@
 	<SubAppInterfaceList>
 	</SubAppInterfaceList>
 	<SubAppNetwork>
-		<FB Name="DigitalInput_I1" Type="IXP" x="0" y="100">
-			<Parameter Name="QI" Value="TRUE"/>
+		<FB Name="DigitalInput_I1" Type="IXA" x="0" y="100">
 		</FB>
-		<FB Name="DigitalOutput_Q1" Type="QXP" x="6100" y="100">
-			<Parameter Name="QI" Value="TRUE"/>
+		<FB Name="DigitalOutput_Q1" Type="QXA" x="6100" y="100">
 		</FB>
 		<FB Name="AX_DEMUX_3" Type="io::adp::selection::AX_DEMUX_3" x="1600" y="0">
 		</FB>
@@ -55,10 +53,10 @@
 		<AdapterConnections>
 			<Connection Source="AX_MUX_3.OUT" Destination="DigitalOutput_Q1.OUT" dx1="220"/>
 			<Connection Source="DigitalInput_I1.IN" Destination="AX_DEMUX_3.IN" dx1="413.33"/>
-			<Connection Source="AX_DEMUX_3.OUT0" Destination="tastend.IN" dx1="333.33" dx2="333.33" dy="0"/>
-			<Connection Source="tastend.OUT" Destination="AX_MUX_3.IN0" dx1="593.33" dx2="593.33" dy="0"/>
-			<Connection Source="AX_DEMUX_3.OUT2" Destination="tastend_TON_5s.IN" dx1="326.67" dx2="326.67" dy="0"/>
-			<Connection Source="tastend_TON_5s.OUT" Destination="AX_MUX_3.IN2" dx1="400" dx2="400" dy="0"/>
+			<Connection Source="AX_DEMUX_3.OUT0" Destination="tastend.IN" dx1="333.33"/>
+			<Connection Source="tastend.OUT" Destination="AX_MUX_3.IN0" dx1="593.33"/>
+			<Connection Source="AX_DEMUX_3.OUT2" Destination="tastend_TON_5s.IN" dx1="326.67"/>
+			<Connection Source="tastend_TON_5s.OUT" Destination="AX_MUX_3.IN2" dx1="400"/>
 			<Connection Source="rastend.OUT" Destination="AX_MUX_3.IN1"/>
 			<Connection Source="AX_DEMUX_3.OUT1" Destination="rastend.IN"/>
 		</AdapterConnections>

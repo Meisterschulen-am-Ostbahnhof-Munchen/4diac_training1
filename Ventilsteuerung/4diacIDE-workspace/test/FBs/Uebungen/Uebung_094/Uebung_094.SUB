@@ -7,10 +7,6 @@
 	<CompilerInfo>
 	</CompilerInfo>
 	<SubAppInterfaceList>
-		<SubAppEventInputs>
-			<SubAppEvent Name="INIT" Type="Event">
-			</SubAppEvent>
-		</SubAppEventInputs>
 	</SubAppInterfaceList>
 	<SubAppNetwork>
 		<FB Name="DigitalInput_I1" Type="IX" x="-8000" y="100">
@@ -22,16 +18,10 @@
 		<FB Name="E_PERMIT" Type="E_PERMIT" x="-6400" y="-600">
 		</FB>
 		<EventConnections>
-			<Connection Source="INIT" Destination="DigitalInput_I1.INIT" dx1="1746.67">
-				<Attribute Name="Visible" Value="false"/>
-			</Connection>
-			<Connection Source="INIT" Destination="DigitalInput_I2_CLK.INIT" dx1="2086.67">
-				<Attribute Name="Visible" Value="false"/>
-			</Connection>
 			<Connection Source="DigitalInput_I2_CLK.IND" Destination="E_PERMIT.EI"/>
 		</EventConnections>
 		<DataConnections>
-			<Connection Source="DigitalInput_I1.IN" Destination="E_PERMIT.PERMIT" dx1="440" dx2="440" dy="0"/>
+			<Connection Source="DigitalInput_I1.IN" Destination="E_PERMIT.PERMIT" dx1="440"/>
 		</DataConnections>
 	</SubAppNetwork>
 </SubAppType>
