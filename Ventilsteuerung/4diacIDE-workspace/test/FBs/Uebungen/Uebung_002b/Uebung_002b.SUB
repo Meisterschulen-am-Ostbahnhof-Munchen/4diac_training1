@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<SubAppType Name="Uebung_002b" Comment="DigitalInput_I1/_I2 auf DigitalOutput_Q1">
+<SubAppType Name="Uebung_002b" Comment="DigitalInput_I1/_I2 auf DigitalOutput_Q1" >
 	<Identification Standard="61499-2">
 	</Identification>
 	<VersionInfo Version="1.0" Author="franz" Date="2023-10-23">
@@ -7,55 +7,41 @@
 	<CompilerInfo>
 	</CompilerInfo>
 	<SubAppInterfaceList>
-		<SubAppEventInputs>
-			<SubAppEvent Name="INIT" Type="Event" Comment="">
-			</SubAppEvent>
-		</SubAppEventInputs>
 	</SubAppInterfaceList>
 	<SubAppNetwork>
-		<FB Name="DigitalOutput_Q1" Type="QX" Comment="" x="1006.67" y="-906.67">
-			<Parameter Name="QI" Value="TRUE" Comment=""/>
+		<FB Name="DigitalOutput_Q1" Type="QX" x="1300" y="1500">
+			<Parameter Name="QI" Value="TRUE"/>
 		</FB>
-		<FB Name="DigitalInput_I1" Type="IX" Comment="" x="-4540" y="-913.33">
-			<Parameter Name="QI" Value="TRUE" Comment=""/>
+		<FB Name="DigitalInput_I1" Type="IX" x="-4500" y="-800">
+			<Parameter Name="QI" Value="TRUE"/>
 		</FB>
-		<FB Name="DigitalInput_I2" Type="IX" Comment="" x="-4533.33" y="133.33">
-			<Parameter Name="QI" Value="TRUE" Comment=""/>
+		<FB Name="DigitalInput_I2" Type="IX" x="-4500" y="300">
+			<Parameter Name="QI" Value="TRUE"/>
 		</FB>
-		<FB Name="AND_2" Type="AND_2" Comment="" x="-2040" y="466.67">
+		<FB Name="AND_2" Type="AND_2" x="-2000" y="500">
 		</FB>
-		<FB Name="DigitalInput_I3" Type="IX" Comment="" x="-4533.33" y="1246.67">
-			<Parameter Name="QI" Value="TRUE" Comment=""/>
+		<FB Name="DigitalInput_I3" Type="IX" x="-4500" y="1400">
+			<Parameter Name="QI" Value="TRUE"/>
 		</FB>
-		<FB Name="OR_2" Type="OR_2" Comment="" x="120" y="1586.67">
+		<FB Name="OR_2" Type="OR_2" x="100" y="1600">
 		</FB>
-		<FB Name="BOOL2BOOL" Type="BOOL2BOOL" Comment="" x="-1246.67" y="466.67">
+		<FB Name="BOOL2BOOL" Type="BOOL2BOOL" x="-1200" y="500">
 		</FB>
 		<EventConnections>
-			<Connection Source="INIT" Destination="DigitalInput_I1.INIT" Comment="" dx1="1073.33">
-				<Attribute Name="Visible" Value="false"/>
-			</Connection>
-			<Connection Source="DigitalInput_I1.INITO" Destination="DigitalOutput_Q1.INIT" Comment=""/>
-			<Connection Source="INIT" Destination="DigitalInput_I2.INIT" Comment="" dx1="1073.33">
-				<Attribute Name="Visible" Value="false"/>
-			</Connection>
-			<Connection Source="DigitalInput_I1.IND" Destination="AND_2.REQ" Comment="" dx1="1720"/>
-			<Connection Source="DigitalInput_I2.IND" Destination="AND_2.REQ" Comment="" dx1="1713.33"/>
-			<Connection Source="INIT" Destination="DigitalInput_I3.INIT" Comment="" dx1="2100">
-				<Attribute Name="Visible" Value="false"/>
-			</Connection>
-			<Connection Source="OR_2.CNF" Destination="DigitalOutput_Q1.REQ" Comment="" dx1="133.33"/>
-			<Connection Source="AND_2.CNF" Destination="BOOL2BOOL.REQ" Comment=""/>
-			<Connection Source="BOOL2BOOL.CNF" Destination="OR_2.REQ" Comment="" dx1="326.67"/>
-			<Connection Source="DigitalInput_I3.IND" Destination="OR_2.REQ" Comment="" dx1="1973.33"/>
+			<Connection Source="DigitalInput_I1.IND" Destination="AND_2.REQ" dx1="1686.67"/>
+			<Connection Source="DigitalInput_I2.IND" Destination="AND_2.REQ"/>
+			<Connection Source="OR_2.CNF" Destination="DigitalOutput_Q1.REQ"/>
+			<Connection Source="AND_2.CNF" Destination="BOOL2BOOL.REQ"/>
+			<Connection Source="BOOL2BOOL.CNF" Destination="OR_2.REQ" dx1="326.67"/>
+			<Connection Source="DigitalInput_I3.IND" Destination="OR_2.REQ"/>
 		</EventConnections>
 		<DataConnections>
-			<Connection Source="DigitalInput_I1.IN" Destination="AND_2.IN1" Comment="" dx1="900"/>
-			<Connection Source="DigitalInput_I2.IN" Destination="AND_2.IN2" Comment=""/>
-			<Connection Source="DigitalInput_I3.IN" Destination="OR_2.IN2" Comment=""/>
-			<Connection Source="OR_2.OUT" Destination="DigitalOutput_Q1.OUT" Comment="" dx1="373.33"/>
-			<Connection Source="AND_2.OUT" Destination="BOOL2BOOL.IN" Comment=""/>
-			<Connection Source="BOOL2BOOL.OUT" Destination="OR_2.IN1" Comment="" dx1="80"/>
+			<Connection Source="DigitalInput_I1.IN" Destination="AND_2.IN1" dx1="900"/>
+			<Connection Source="DigitalInput_I2.IN" Destination="AND_2.IN2" dx1="893.33"/>
+			<Connection Source="DigitalInput_I3.IN" Destination="OR_2.IN2" dx1="1953.33"/>
+			<Connection Source="OR_2.OUT" Destination="DigitalOutput_Q1.OUT" dx1="373.33"/>
+			<Connection Source="AND_2.OUT" Destination="BOOL2BOOL.IN"/>
+			<Connection Source="BOOL2BOOL.OUT" Destination="OR_2.IN1" dx1="80"/>
 		</DataConnections>
 	</SubAppNetwork>
 </SubAppType>
