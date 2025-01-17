@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<FBType Name="AX_SPLIT" Comment="Basic FB with empty ECC">
-	<Identification Standard="61499-2">
+<FBType Name="AX_SPLIT" Comment="Basic FB with empty ECC" >
+	<Identification Standard="61499-2" Description="Copyright (c) 2024 franz  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0" >
 	</Identification>
 	<VersionInfo Version="1.0" Author="franz" Date="2024-10-24">
 	</VersionInfo>
@@ -8,30 +8,30 @@
 	</CompilerInfo>
 	<InterfaceList>
 		<Plugs>
-			<AdapterDeclaration Name="OUT0" Type="AX" Comment=""/>
-			<AdapterDeclaration Name="OUT1" Type="AX" Comment=""/>
+			<AdapterDeclaration Name="OUT0" Type="AX"/>
+			<AdapterDeclaration Name="OUT1" Type="AX"/>
 		</Plugs>
 		<Sockets>
-			<AdapterDeclaration Name="IN" Type="AX" Comment=""/>
+			<AdapterDeclaration Name="IN" Type="AX"/>
 		</Sockets>
 	</InterfaceList>
 	<BasicFB>
 		<ECC>
-			<ECState Name="START" Comment="Initial State" x="550" y="425">
+			<ECState Name="START" Comment="Initial State"  x="550" y="425">
 			</ECState>
-			<ECState Name="State" Comment="" x="2226.67" y="673.33">
+			<ECState Name="State" x="2226.67" y="673.33">
 				<ECAction Algorithm="OUT0" Output="OUT0.E1"/>
 				<ECAction Algorithm="OUT1" Output="OUT1.E1"/>
 			</ECState>
 			<ECTransition Source="State" Destination="START" Condition="1" Comment="" x="1406.67" y="1060"/>
 			<ECTransition Source="START" Destination="State" Condition="IN.E1" Comment="" x="1566.67" y="586.67"/>
 		</ECC>
-		<Algorithm Name="OUT0" Comment="">
+		<Algorithm Name="OUT0">
 			<ST><![CDATA[ALGORITHM OUT0
 OUT0.D1 := IN.D1;
 END_ALGORITHM]]></ST>
 		</Algorithm>
-		<Algorithm Name="OUT1" Comment="">
+		<Algorithm Name="OUT1">
 			<ST><![CDATA[
 
 ALGORITHM OUT1
