@@ -7,10 +7,6 @@
 	<CompilerInfo>
 	</CompilerInfo>
 	<SubAppInterfaceList>
-		<SubAppEventInputs>
-			<SubAppEvent Name="INIT" Type="Event" Comment="">
-			</SubAppEvent>
-		</SubAppEventInputs>
 	</SubAppInterfaceList>
 	<SubAppNetwork>
 		<FB Name="DigitalOutput_Q1" Type="QX" Comment="" x="-1466.67" y="-833.33">
@@ -23,13 +19,8 @@
 			<Parameter Name="QI" Value="TRUE" Comment=""/>
 		</FB>
 		<EventConnections>
-			<Connection Source="INIT" Destination="DigitalInput_I1.INIT" Comment="" dx1="1073.33">
-				<Attribute Name="Visible" Value="false"/>
-			</Connection>
-			<Connection Source="DigitalInput_I1.INITO" Destination="DigitalOutput_Q1.INIT" Comment=""/>
 			<Connection Source="DigitalInput_I1.IND" Destination="DigitalOutput_Q1.REQ" Comment="" dx1="1406.67"/>
 			<Connection Source="DigitalInput_I1.IND" Destination="DigitalOutput_Q2.REQ" Comment="" dx1="1413.33"/>
-			<Connection Source="DigitalInput_I1.INITO" Destination="DigitalOutput_Q2.INIT" Comment="" dx1="1960"/>
 		</EventConnections>
 		<DataConnections>
 			<Connection Source="DigitalInput_I1.IN" Destination="DigitalOutput_Q1.OUT" Comment="" dx1="973.33"/>
