@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<SubAppType Name="Uebung_039" Comment="Spiegelabfolge V2 mit Schrittkette">
+<SubAppType Name="Uebung_039" Comment="Spiegelabfolge V2 mit Schrittkette" >
 	<Identification Standard="61499-2" Description="Spiegelabfolge V2 mit Schrittkette &#10;geeignet für hydraulische 4/3 Wege Ventile  &#10;oder pneumatische 5/3 Wege Ventile &#10;jeweils Mittelstellung gesperrt. " >
 	</Identification>
 	<VersionInfo Version="1.0" Author="franz" Date="2023-10-23">
@@ -7,102 +7,67 @@
 	<CompilerInfo>
 	</CompilerInfo>
 	<SubAppInterfaceList>
-		<SubAppEventInputs>
-			<SubAppEvent Name="INIT" Type="Event" Comment="">
-				<Attribute Name="YPOSITION" Type="INT" Value="0"/>
-			</SubAppEvent>
-		</SubAppEventInputs>
 	</SubAppInterfaceList>
 	<SubAppNetwork>
-		<FB Name="E_TimeOut" Type="E_TimeOut" Comment="" x="-8626.67" y="3553.33">
+		<FB Name="E_TimeOut" Type="E_TimeOut" x="-8626.67" y="3553.33">
 		</FB>
-		<FB Name="DigitalInput_DOWN_I1" Type="IE" Comment="" x="-12533.33" y="166.67">
-			<Parameter Name="QI" Value="TRUE" Comment=""/>
+		<FB Name="DigitalInput_DOWN_I1" Type="IE" x="-12533.33" y="166.67">
+			<Parameter Name="QI" Value="TRUE"/>
 		</FB>
-		<FB Name="DigitalInput_DOWN_I2" Type="IE" Comment="" x="-12533.33" y="1146.67">
-			<Parameter Name="QI" Value="TRUE" Comment=""/>
+		<FB Name="DigitalInput_DOWN_I2" Type="IE" x="-12533.33" y="1146.67">
+			<Parameter Name="QI" Value="TRUE"/>
 		</FB>
-		<FB Name="DigitalInput_DOWN_I3" Type="IE" Comment="" x="-12533.33" y="2126.67">
-			<Parameter Name="QI" Value="TRUE" Comment=""/>
+		<FB Name="DigitalInput_DOWN_I3" Type="IE" x="-12533.33" y="2126.67">
+			<Parameter Name="QI" Value="TRUE"/>
 		</FB>
-		<FB Name="DigitalInput_DOWN_I4" Type="IE" Comment="" x="-12533.33" y="3106.67">
-			<Parameter Name="QI" Value="TRUE" Comment=""/>
+		<FB Name="DigitalInput_DOWN_I4" Type="IE" x="-12533.33" y="3106.67">
+			<Parameter Name="QI" Value="TRUE"/>
 		</FB>
-		<FB Name="sequence_05" Type="sequence_ET_05" Comment="" x="-10726.67" y="-126.67">
-			<Parameter Name="DT_S1_S2" Value="NO_TIME" Comment=""/>
-			<Parameter Name="DT_S2_S3" Value="NO_TIME" Comment=""/>
-			<Parameter Name="DT_S3_S4" Value="T#5s" Comment=""/>
-			<Parameter Name="DT_S4_S5" Value="NO_TIME" Comment=""/>
-			<Parameter Name="DT_S5_START" Value="NO_TIME" Comment=""/>
+		<FB Name="sequence_05" Type="sequence_ET_05" x="-10726.67" y="-126.67">
+			<Parameter Name="DT_S1_S2" Value="NO_TIME"/>
+			<Parameter Name="DT_S2_S3" Value="NO_TIME"/>
+			<Parameter Name="DT_S3_S4" Value="T#5s"/>
+			<Parameter Name="DT_S4_S5" Value="NO_TIME"/>
+			<Parameter Name="DT_S5_START" Value="NO_TIME"/>
 		</FB>
-		<SubApp Name="NumbAnzeig" Type="Uebung_039_sub_NumbAnzeig" Comment="" x="-8766.67" y="-986.67">
+		<SubApp Name="NumbAnzeig" Type="Uebung_039_sub_NumbAnzeig" x="-8766.67" y="-986.67">
 		</SubApp>
-		<FB Name="SoftKey_F1_UP" Type="IE" Comment="" x="-14133.33" y="-400">
-			<Parameter Name="QI" Value="TRUE" Comment=""/>
+		<FB Name="SoftKey_F1_UP" Type="IE" x="-14133.33" y="-400">
+			<Parameter Name="QI" Value="TRUE"/>
 		</FB>
-		<SubApp Name="Q1" Type="Uebung_039_sub_Outputs" Comment="" x="-8626.67" y="-233.33">
-			<Parameter Name="u16ObjId" Value="SoftKey_F8" Comment=""/>
+		<SubApp Name="Q1" Type="Uebung_039_sub_Outputs" x="-8626.67" y="-233.33">
+			<Parameter Name="u16ObjId" Value="SoftKey_F8"/>
 		</SubApp>
-		<SubApp Name="Q4" Type="Uebung_039_sub_Outputs" Comment="" x="-8626.67" y="2606.67">
-			<Parameter Name="u16ObjId" Value="SoftKey_F3" Comment=""/>
+		<SubApp Name="Q4" Type="Uebung_039_sub_Outputs" x="-8626.67" y="2606.67">
+			<Parameter Name="u16ObjId" Value="SoftKey_F3"/>
 		</SubApp>
-		<SubApp Name="Q2" Type="Uebung_039_sub_Outputs" Comment="" x="-8626.67" y="713.33">
-			<Parameter Name="u16ObjId" Value="SoftKey_F2" Comment=""/>
+		<SubApp Name="Q2" Type="Uebung_039_sub_Outputs" x="-8626.67" y="713.33">
+			<Parameter Name="u16ObjId" Value="SoftKey_F2"/>
 		</SubApp>
-		<SubApp Name="Q3" Type="Uebung_039_sub_Outputs" Comment="" x="-8626.67" y="1660">
-			<Parameter Name="u16ObjId" Value="SoftKey_F9" Comment=""/>
+		<SubApp Name="Q3" Type="Uebung_039_sub_Outputs" x="-8626.67" y="1660">
+			<Parameter Name="u16ObjId" Value="SoftKey_F9"/>
 		</SubApp>
 		<EventConnections>
-			<Connection Source="INIT" Destination="DigitalInput_DOWN_I1.INIT" Comment="" dx1="453.33">
-				<Attribute Name="Visible" Value="false"/>
-			</Connection>
-			<Connection Source="INIT" Destination="DigitalInput_DOWN_I2.INIT" Comment="" dx1="273.33">
-				<Attribute Name="Visible" Value="false"/>
-			</Connection>
-			<Connection Source="INIT" Destination="DigitalInput_DOWN_I3.INIT" Comment="" dx1="453.33" dx2="453.33" dy="0">
-				<Attribute Name="Visible" Value="false"/>
-			</Connection>
-			<Connection Source="INIT" Destination="DigitalInput_DOWN_I4.INIT" Comment="" dx1="1453.33">
-				<Attribute Name="Visible" Value="false"/>
-			</Connection>
-			<Connection Source="DigitalInput_DOWN_I1.IND" Destination="sequence_05.S1_S2" Comment="" dx1="313.33"/>
-			<Connection Source="DigitalInput_DOWN_I2.IND" Destination="sequence_05.S2_S3" Comment="" dx1="380"/>
-			<Connection Source="DigitalInput_DOWN_I3.IND" Destination="sequence_05.S4_S5" Comment="" dx1="446.67"/>
-			<Connection Source="DigitalInput_DOWN_I4.IND" Destination="sequence_05.S5_START" Comment="" dx1="513.33"/>
-			<Connection Source="sequence_05.CNF" Destination="NumbAnzeig.CNF" Comment="" dx1="73.33"/>
-			<Connection Source="INIT" Destination="NumbAnzeig.INIT" Comment="" dx1="2933.33">
-				<Attribute Name="Visible" Value="false"/>
-			</Connection>
-			<Connection Source="INIT" Destination="SoftKey_F1_UP.INIT" Comment="" dx1="173.33">
-				<Attribute Name="Visible" Value="false"/>
-			</Connection>
-			<Connection Source="SoftKey_F1_UP.IND" Destination="sequence_05.START_S1" Comment="" dx1="1360"/>
-			<Connection Source="INIT" Destination="Q1.INIT" Comment="" dx1="3066.67" dx2="3066.67" dy="0">
-				<Attribute Name="Visible" Value="false"/>
-			</Connection>
-			<Connection Source="sequence_05.EO_S1" Destination="Q1.REQ" Comment="" dx1="406.67"/>
-			<Connection Source="INIT" Destination="Q4.INIT" Comment="" dx1="2613.33" dx2="2613.33" dy="0">
-				<Attribute Name="Visible" Value="false"/>
-			</Connection>
-			<Connection Source="sequence_05.EO_S5" Destination="Q4.REQ" Comment="" dx1="273.33"/>
-			<Connection Source="INIT" Destination="Q2.INIT" Comment="" dx1="2613.33" dx2="2613.33" dy="0">
-				<Attribute Name="Visible" Value="false"/>
-			</Connection>
-			<Connection Source="sequence_05.EO_S2" Destination="Q2.REQ" Comment="" dx1="540"/>
-			<Connection Source="INIT" Destination="Q3.INIT" Comment="" dx1="2613.33" dx2="2613.33" dy="0">
-				<Attribute Name="Visible" Value="false"/>
-			</Connection>
-			<Connection Source="sequence_05.EO_S4" Destination="Q3.REQ" Comment="" dx1="406.67"/>
+			<Connection Source="DigitalInput_DOWN_I1.IND" Destination="sequence_05.S1_S2" dx1="313.33"/>
+			<Connection Source="DigitalInput_DOWN_I2.IND" Destination="sequence_05.S2_S3" dx1="380"/>
+			<Connection Source="DigitalInput_DOWN_I3.IND" Destination="sequence_05.S4_S5" dx1="446.67"/>
+			<Connection Source="DigitalInput_DOWN_I4.IND" Destination="sequence_05.S5_START" dx1="513.33"/>
+			<Connection Source="sequence_05.CNF" Destination="NumbAnzeig.CNF" dx1="73.33"/>
+			<Connection Source="SoftKey_F1_UP.IND" Destination="sequence_05.START_S1" dx1="1360"/>
+			<Connection Source="sequence_05.EO_S1" Destination="Q1.REQ" dx1="406.67"/>
+			<Connection Source="sequence_05.EO_S5" Destination="Q4.REQ" dx1="273.33"/>
+			<Connection Source="sequence_05.EO_S2" Destination="Q2.REQ" dx1="540"/>
+			<Connection Source="sequence_05.EO_S4" Destination="Q3.REQ" dx1="406.67"/>
 		</EventConnections>
 		<DataConnections>
-			<Connection Source="sequence_05.STATE_NR" Destination="NumbAnzeig.STATE_NR" Comment="" dx1="340"/>
-			<Connection Source="sequence_05.DO_S1" Destination="Q1.OUT" Comment="" dx1="473.33"/>
-			<Connection Source="sequence_05.DO_S5" Destination="Q4.OUT" Comment="" dx1="140"/>
-			<Connection Source="sequence_05.DO_S2" Destination="Q2.OUT" Comment="" dx1="540"/>
-			<Connection Source="sequence_05.DO_S4" Destination="Q3.OUT" Comment="" dx1="206.67"/>
+			<Connection Source="sequence_05.STATE_NR" Destination="NumbAnzeig.STATE_NR" dx1="340"/>
+			<Connection Source="sequence_05.DO_S1" Destination="Q1.OUT" dx1="473.33"/>
+			<Connection Source="sequence_05.DO_S5" Destination="Q4.OUT" dx1="140"/>
+			<Connection Source="sequence_05.DO_S2" Destination="Q2.OUT" dx1="540"/>
+			<Connection Source="sequence_05.DO_S4" Destination="Q3.OUT" dx1="206.67"/>
 		</DataConnections>
 		<AdapterConnections>
-			<Connection Source="sequence_05.timeOut" Destination="E_TimeOut.TimeOutSocket" Comment="" dx1="73.33"/>
+			<Connection Source="sequence_05.timeOut" Destination="E_TimeOut.TimeOutSocket" dx1="73.33"/>
 		</AdapterConnections>
 	</SubAppNetwork>
 </SubAppType>

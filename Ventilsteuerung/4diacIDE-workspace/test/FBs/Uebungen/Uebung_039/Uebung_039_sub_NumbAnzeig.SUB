@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<SubAppType Name="Uebung_039_sub_NumbAnzeig" Comment="Spiegelabfolge V2 mit Schrittkette SUB Num">
+<SubAppType Name="Uebung_039_sub_NumbAnzeig" Comment="Spiegelabfolge V2 mit Schrittkette SUB Num" >
 	<Identification Standard="61499-2">
 	</Identification>
 	<VersionInfo Version="1.0" Author="franz" Date="2024-03-03">
@@ -8,33 +8,29 @@
 	</CompilerInfo>
 	<SubAppInterfaceList>
 		<SubAppEventInputs>
-			<SubAppEvent Name="CNF" Type="Event" Comment="">
+			<SubAppEvent Name="CNF" Type="Event">
 				<Attribute Name="YPOSITION" Type="INT" Value="20"/>
-			</SubAppEvent>
-			<SubAppEvent Name="INIT" Type="Event" Comment="">
-				<Attribute Name="YPOSITION" Type="INT" Value="29"/>
 			</SubAppEvent>
 		</SubAppEventInputs>
 		<InputVars>
-			<VarDeclaration Name="STATE_NR" Type="SINT" Comment="">
+			<VarDeclaration Name="STATE_NR" Type="SINT">
 				<Attribute Name="YPOSITION" Type="INT" Value="75"/>
 			</VarDeclaration>
 		</InputVars>
 	</SubAppInterfaceList>
 	<SubAppNetwork>
-		<FB Name="F_SINT_TO_UINT" Type="F_SINT_TO_UINT" Comment="" x="-800" y="0">
+		<FB Name="F_SINT_TO_UINT" Type="F_SINT_TO_UINT" x="-800" y="0">
 		</FB>
-		<FB Name="Q_NumericValue" Type="Q_NumericValue" Comment="" x="1340" y="-873.33">
-			<Parameter Name="u16ObjId" Value="OutputNumber_N1" Comment=""/>
+		<FB Name="Q_NumericValue" Type="Q_NumericValue" x="1340" y="-873.33">
+			<Parameter Name="u16ObjId" Value="OutputNumber_N1"/>
 		</FB>
 		<EventConnections>
-			<Connection Source="F_SINT_TO_UINT.CNF" Destination="Q_NumericValue.REQ" Comment="" dx1="213.33"/>
-			<Connection Source="CNF" Destination="F_SINT_TO_UINT.REQ" Comment="" dx1="273.33"/>
-			<Connection Source="INIT" Destination="Q_NumericValue.INIT" Comment="" dx1="1326.67"/>
+			<Connection Source="F_SINT_TO_UINT.CNF" Destination="Q_NumericValue.REQ" dx1="213.33"/>
+			<Connection Source="CNF" Destination="F_SINT_TO_UINT.REQ" dx1="273.33"/>
 		</EventConnections>
 		<DataConnections>
-			<Connection Source="F_SINT_TO_UINT.OUT" Destination="Q_NumericValue.u32NewValue" Comment="" dx1="246.67"/>
-			<Connection Source="STATE_NR" Destination="F_SINT_TO_UINT.IN" Comment="" dx1="240"/>
+			<Connection Source="F_SINT_TO_UINT.OUT" Destination="Q_NumericValue.u32NewValue" dx1="246.67"/>
+			<Connection Source="STATE_NR" Destination="F_SINT_TO_UINT.IN" dx1="240"/>
 		</DataConnections>
 	</SubAppNetwork>
 </SubAppType>

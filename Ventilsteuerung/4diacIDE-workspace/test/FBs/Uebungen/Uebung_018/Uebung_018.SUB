@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<SubAppType Name="Uebung_018" Comment="Control Audio Signal und Delay">
+<SubAppType Name="Uebung_018" Comment="Control Audio Signal und Delay" >
 	<Identification Standard="61499-2">
 	</Identification>
 	<VersionInfo Version="1.0" Author="franz" Date="2023-10-23">
@@ -7,39 +7,32 @@
 	<CompilerInfo>
 	</CompilerInfo>
 	<SubAppInterfaceList>
-		<SubAppEventInputs>
-			<SubAppEvent Name="INIT" Type="Event" Comment="">
-			</SubAppEvent>
-		</SubAppEventInputs>
 	</SubAppInterfaceList>
 	<SubAppNetwork>
-		<FB Name="SoftKey_F1_UP" Type="IE" Comment="" x="-4533.33" y="-1020">
-			<Parameter Name="QI" Value="TRUE" Comment=""/>
+		<FB Name="SoftKey_F1_UP" Type="IE" x="-4533.33" y="-1020">
+			<Parameter Name="QI" Value="TRUE"/>
 		</FB>
-		<FB Name="Q_CtrlAudioSignal_0" Type="Q_CtrlAudioSignal" Comment="" x="-2380" y="-1020">
-			<Parameter Name="u8NumOfRepit" Value="1" Comment=""/>
-			<Parameter Name="u16Frequency" Value="440" Comment=""/>
-			<Parameter Name="u16OnTimeMs" Value="150" Comment=""/>
-			<Parameter Name="u16OffTimeMs" Value="0" Comment=""/>
+		<FB Name="Q_CtrlAudioSignal_0" Type="Q_CtrlAudioSignal" x="-2380" y="-1020">
+			<Parameter Name="u8NumOfRepit" Value="1"/>
+			<Parameter Name="u16Frequency" Value="440"/>
+			<Parameter Name="u16OnTimeMs" Value="150"/>
+			<Parameter Name="u16OffTimeMs" Value="0"/>
 		</FB>
-		<FB Name="Q_CtrlAudioSignal_1" Type="Q_CtrlAudioSignal" Comment="" x="913.33" y="-1020">
-			<Parameter Name="u8NumOfRepit" Value="1" Comment=""/>
-			<Parameter Name="u16Frequency" Value="880" Comment=""/>
-			<Parameter Name="u16OnTimeMs" Value="150" Comment=""/>
-			<Parameter Name="u16OffTimeMs" Value="0" Comment=""/>
+		<FB Name="Q_CtrlAudioSignal_1" Type="Q_CtrlAudioSignal" x="913.33" y="-1020">
+			<Parameter Name="u8NumOfRepit" Value="1"/>
+			<Parameter Name="u16Frequency" Value="880"/>
+			<Parameter Name="u16OnTimeMs" Value="150"/>
+			<Parameter Name="u16OffTimeMs" Value="0"/>
 		</FB>
-		<FB Name="E_DELAY" Type="E_DELAY" Comment="" x="-286.67" y="-753.33">
-			<Parameter Name="DT" Value="T#250ms" Comment=""/>
+		<FB Name="E_DELAY" Type="E_DELAY" x="-286.67" y="-753.33">
+			<Parameter Name="DT" Value="T#250ms"/>
 		</FB>
 		<EventConnections>
-			<Connection Source="INIT" Destination="SoftKey_F1_UP.INIT" Comment="" dx1="1113.33">
-				<Attribute Name="Visible" Value="false"/>
-			</Connection>
-			<Connection Source="SoftKey_F1_UP.INITO" Destination="Q_CtrlAudioSignal_0.INIT" Comment=""/>
-			<Connection Source="SoftKey_F1_UP.IND" Destination="Q_CtrlAudioSignal_0.REQ" Comment="" dx1="720"/>
-			<Connection Source="E_DELAY.EO" Destination="Q_CtrlAudioSignal_1.REQ" Comment="" dx1="293.33"/>
-			<Connection Source="Q_CtrlAudioSignal_0.CNF" Destination="E_DELAY.START" Comment="" dx1="360"/>
-			<Connection Source="Q_CtrlAudioSignal_0.INITO" Destination="Q_CtrlAudioSignal_1.INIT" Comment=""/>
+			<Connection Source="SoftKey_F1_UP.INITO" Destination="Q_CtrlAudioSignal_0.INIT"/>
+			<Connection Source="SoftKey_F1_UP.IND" Destination="Q_CtrlAudioSignal_0.REQ" dx1="720"/>
+			<Connection Source="E_DELAY.EO" Destination="Q_CtrlAudioSignal_1.REQ" dx1="293.33"/>
+			<Connection Source="Q_CtrlAudioSignal_0.CNF" Destination="E_DELAY.START" dx1="360"/>
+			<Connection Source="Q_CtrlAudioSignal_0.INITO" Destination="Q_CtrlAudioSignal_1.INIT"/>
 		</EventConnections>
 	</SubAppNetwork>
 </SubAppType>
