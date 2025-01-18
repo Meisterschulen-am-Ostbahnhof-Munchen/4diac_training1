@@ -10,11 +10,13 @@
 	</SubAppInterfaceList>
 	<SubAppNetwork>
 		<FB Name="DigitalInput_I1" Type="IXA" x="-4500" y="-800">
+			<Parameter Name="QI" Value="TRUE"/>
 		</FB>
 		<FB Name="DigitalOutput_Q1" Type="QXA" x="-1500" y="-900">
+			<Parameter Name="QI" Value="TRUE"/>
 		</FB>
 		<AdapterConnections>
-			<Connection Source="DigitalInput_I1.IN" Destination="DigitalOutput_Q1.OUT" dx1="1113.33" dx2="1113.33" dy="0"/>
+			<Connection Source="DigitalInput_I1.IN" Destination="DigitalOutput_Q1.OUT" dx1="1113.33"/>
 		</AdapterConnections>
 	</SubAppNetwork>
 </SubAppType>

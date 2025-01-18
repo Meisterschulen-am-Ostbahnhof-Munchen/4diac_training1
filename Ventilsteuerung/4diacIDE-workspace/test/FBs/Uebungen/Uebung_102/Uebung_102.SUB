@@ -10,17 +10,20 @@
 	</SubAppInterfaceList>
 	<SubAppNetwork>
 		<FB Name="DigitalInput_I1" Type="IXA" x="400" y="-200">
+			<Parameter Name="QI" Value="TRUE"/>
 		</FB>
 		<FB Name="DigitalOutput_Q1" Type="QXA" x="3000" y="-300">
+			<Parameter Name="QI" Value="TRUE"/>
 		</FB>
 		<FB Name="AX_OR_2" Type="io::adp::boolean::AX_OR_2" x="1700" y="100">
 		</FB>
 		<FB Name="DigitalInput_I2" Type="IXA" x="400" y="700">
+			<Parameter Name="QI" Value="TRUE"/>
 		</FB>
 		<AdapterConnections>
-			<Connection Source="AX_OR_2.OUT" Destination="DigitalOutput_Q1.OUT" dx1="346.67" dx2="346.67" dy="0"/>
-			<Connection Source="DigitalInput_I1.IN" Destination="AX_OR_2.IN1" dx1="266.67" dx2="266.67" dy="0"/>
-			<Connection Source="DigitalInput_I2.IN" Destination="AX_OR_2.IN2" dx1="186.67" dx2="186.67" dy="0"/>
+			<Connection Source="AX_OR_2.OUT" Destination="DigitalOutput_Q1.OUT" dx1="346.67"/>
+			<Connection Source="DigitalInput_I1.IN" Destination="AX_OR_2.IN1" dx1="266.67"/>
+			<Connection Source="DigitalInput_I2.IN" Destination="AX_OR_2.IN2" dx1="186.67"/>
 		</AdapterConnections>
 	</SubAppNetwork>
 </SubAppType>

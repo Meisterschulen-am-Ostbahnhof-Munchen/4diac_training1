@@ -9,9 +9,11 @@
 	<SubAppInterfaceList>
 	</SubAppInterfaceList>
 	<SubAppNetwork>
-		<FB Name="DigitalInput_I1" Type="IXA" x="0" y="100">
+		<FB Name="DigitalInput_I1" Type="IXA" x="-100" y="-100">
+			<Parameter Name="QI" Value="TRUE"/>
 		</FB>
-		<FB Name="DigitalOutput_Q1" Type="QXA" x="6100" y="100">
+		<FB Name="DigitalOutput_Q1" Type="QXA" x="6300" y="-200">
+			<Parameter Name="QI" Value="TRUE"/>
 		</FB>
 		<FB Name="AX_DEMUX_3" Type="io::adp::selection::AX_DEMUX_3" x="1600" y="0">
 		</FB>
@@ -51,8 +53,8 @@
 			</Connection>
 		</DataConnections>
 		<AdapterConnections>
-			<Connection Source="AX_MUX_3.OUT" Destination="DigitalOutput_Q1.OUT" dx1="220"/>
-			<Connection Source="DigitalInput_I1.IN" Destination="AX_DEMUX_3.IN" dx1="413.33"/>
+			<Connection Source="AX_MUX_3.OUT" Destination="DigitalOutput_Q1.OUT"/>
+			<Connection Source="DigitalInput_I1.IN" Destination="AX_DEMUX_3.IN"/>
 			<Connection Source="AX_DEMUX_3.OUT0" Destination="tastend.IN" dx1="333.33"/>
 			<Connection Source="tastend.OUT" Destination="AX_MUX_3.IN0" dx1="593.33"/>
 			<Connection Source="AX_DEMUX_3.OUT2" Destination="tastend_TON_5s.IN" dx1="326.67"/>
