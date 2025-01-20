@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<SubAppType Name="Uebung_081" Comment="Beispiel für E_CTD">
+<SubAppType Name="Uebung_081" Comment="Beispiel für E_CTD" >
 	<Identification Standard="61499-2" Description="Beispiel für E_CTD&#10;Aufwärts zählen&#10;UAO Curriculum Module 3 - The IEC 61499 Standard, &#10;Seite 93" >
 	</Identification>
 	<VersionInfo Version="1.0" Author="franz" Date="2023-10-23">
@@ -7,41 +7,28 @@
 	<CompilerInfo>
 	</CompilerInfo>
 	<SubAppInterfaceList>
-		<SubAppEventInputs>
-			<SubAppEvent Name="INIT" Type="Event" Comment="">
-			</SubAppEvent>
-		</SubAppEventInputs>
 	</SubAppInterfaceList>
 	<SubAppNetwork>
-		<FB Name="DigitalOutput_Q1" Type="QX" Comment="" x="-4886.67" y="-886.67">
-			<Parameter Name="QI" Value="TRUE" Comment=""/>
+		<FB Name="DigitalOutput_Q1" Type="QX" x="-4886.67" y="-886.67">
+			<Parameter Name="QI" Value="TRUE"/>
 		</FB>
-		<FB Name="DigitalInput_I1_CLK" Type="IE" Comment="" x="-8006.67" y="-986.67">
-			<Parameter Name="QI" Value="TRUE" Comment=""/>
+		<FB Name="DigitalInput_I1_CLK" Type="IE" x="-8006.67" y="-986.67">
+			<Parameter Name="QI" Value="TRUE"/>
 		</FB>
-		<FB Name="E_CTD" Type="E_CTD" Comment="" x="-6253.33" y="-786.67">
-			<Parameter Name="PV" Value="UINT#5" Comment=""/>
+		<FB Name="E_CTD" Type="E_CTD" x="-6253.33" y="-786.67">
+			<Parameter Name="PV" Value="UINT#5"/>
 		</FB>
-		<FB Name="DigitalInput_I2_CLK" Type="IE" Comment="" x="-8006.67" y="-100">
-			<Parameter Name="QI" Value="TRUE" Comment=""/>
+		<FB Name="DigitalInput_I2_CLK" Type="IE" x="-8006.67" y="-100">
+			<Parameter Name="QI" Value="TRUE"/>
 		</FB>
 		<EventConnections>
-			<Connection Source="INIT" Destination="DigitalInput_I1_CLK.INIT" Comment="" dx1="2166.67">
-				<Attribute Name="Visible" Value="false"/>
-			</Connection>
-			<Connection Source="INIT" Destination="DigitalOutput_Q1.INIT" Comment="" dx1="3626.67">
-				<Attribute Name="Visible" Value="false"/>
-			</Connection>
-			<Connection Source="DigitalInput_I1_CLK.IND" Destination="E_CTD.CD" Comment=""/>
-			<Connection Source="E_CTD.CDO" Destination="DigitalOutput_Q1.REQ" Comment=""/>
-			<Connection Source="E_CTD.LDO" Destination="DigitalOutput_Q1.REQ" Comment="" dx1="406.67" dx2="406.67" dy="0"/>
-			<Connection Source="INIT" Destination="DigitalInput_I2_CLK.INIT" Comment="" dx1="2086.67">
-				<Attribute Name="Visible" Value="false"/>
-			</Connection>
-			<Connection Source="DigitalInput_I2_CLK.IND" Destination="E_CTD.LD" Comment="" dx1="460" dx2="460" dy="0"/>
+			<Connection Source="DigitalInput_I1_CLK.IND" Destination="E_CTD.CD"/>
+			<Connection Source="E_CTD.CDO" Destination="DigitalOutput_Q1.REQ"/>
+			<Connection Source="E_CTD.LDO" Destination="DigitalOutput_Q1.REQ" dx1="406.67" dx2="406.67" dy="0"/>
+			<Connection Source="DigitalInput_I2_CLK.IND" Destination="E_CTD.LD" dx1="460" dx2="460" dy="0"/>
 		</EventConnections>
 		<DataConnections>
-			<Connection Source="E_CTD.Q" Destination="DigitalOutput_Q1.OUT" Comment="" dx1="286.67" dx2="286.67" dy="0"/>
+			<Connection Source="E_CTD.Q" Destination="DigitalOutput_Q1.OUT" dx1="286.67" dx2="286.67" dy="0"/>
 		</DataConnections>
 	</SubAppNetwork>
 </SubAppType>

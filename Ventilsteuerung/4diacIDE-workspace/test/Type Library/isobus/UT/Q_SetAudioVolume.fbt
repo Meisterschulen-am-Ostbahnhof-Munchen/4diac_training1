@@ -6,28 +6,28 @@
 	</VersionInfo>
 	<InterfaceList>
 		<EventInputs>
-			<Event Name="INIT" Type="Event" Comment="Service Initialization">
+			<Event Name="INIT" Type="EInit" Comment="Service Initialization" >
 			</Event>
-			<Event Name="REQ" Type="Event" Comment="Service Request">
+			<Event Name="REQ" Type="Event" Comment="Service Request" >
 				<With Var="u8Volume"/>
 			</Event>
 		</EventInputs>
 		<EventOutputs>
-			<Event Name="INITO" Type="Event" Comment="Initialization Confirm">
+			<Event Name="INITO" Type="EInit" Comment="Initialization Confirm" >
 			</Event>
-			<Event Name="CNF" Type="Event" Comment="Confirmation of Requested Service">
+			<Event Name="CNF" Type="Event" Comment="Confirmation of Requested Service" >
 				<With Var="STATUS"/>
 				<With Var="s16result"/>
 				<With Var="u8OldVolume"/>
 			</Event>
 		</EventOutputs>
 		<InputVars>
-			<VarDeclaration Name="u8Volume" Type="USINT" Comment="Volume 0 - 100 (%) "/>
+			<VarDeclaration Name="u8Volume" Type="USINT" Comment="Volume 0 - 100 (%) " />
 		</InputVars>
 		<OutputVars>
-			<VarDeclaration Name="STATUS" Type="STRING" Comment="Service Status"/>
-			<VarDeclaration Name="u8OldVolume" Type="USINT" Comment="Old volume 0 - 100 (%) "/>
-			<VarDeclaration Name="s16result" Type="INT" Comment="retval see description"/>
+			<VarDeclaration Name="STATUS" Type="STRING" Comment="Service Status" />
+			<VarDeclaration Name="u8OldVolume" Type="USINT" Comment="Old volume 0 - 100 (%) " />
+			<VarDeclaration Name="s16result" Type="INT" Comment="retval see description" />
 		</OutputVars>
 	</InterfaceList>
 	<Attribute Name="Documentation" Type="CDATA"><![CDATA[<h1>Command SetAudioVolume</h1>

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<SubAppType Name="mapping_Uebung_033_VV_FORTE_PC_A" Comment="LED Strip Blinkende LED">
+<SubAppType Name="mapping_Uebung_033_VV_FORTE_PC_A" Comment="LED Strip Blinkende LED" >
 	<Identification Standard="61499-2">
 	</Identification>
 	<VersionInfo Version="1.0" Author="franz" Date="2023-10-23">
@@ -7,43 +7,34 @@
 	<CompilerInfo>
 	</CompilerInfo>
 	<SubAppInterfaceList>
-		<SubAppEventInputs>
-			<SubAppEvent Name="INIT" Type="Event" Comment="">
-			</SubAppEvent>
-		</SubAppEventInputs>
 	</SubAppInterfaceList>
 	<SubAppNetwork>
-		<FB Name="Hutschienenmoped_XL_8_DI" Type="Hutschienenmoped_XL_8_DI" Comment="" x="-1866.6666666666667" y="-533.3333333333334">
-			<Parameter Name="QI" Value="TRUE" Comment="">
-				<Attribute Name="Visible" Type="STRING" Value="false"/>
+		<FB Name="Hutschienenmoped_XL_8_DI" Type="Hutschienenmoped_XL_8_DI" x="-1866.67" y="-533.33">
+			<Parameter Name="QI" Value="TRUE">
+				<Attribute Name="Visible" Value="false"/>
 			</Parameter>
-			<Parameter Name="u8SAMember" Value="GLOBAL" Comment="">
-				<Attribute Name="Visible" Type="STRING" Value="false"/>
+			<Parameter Name="u8SAMember" Value="GLOBAL">
+				<Attribute Name="Visible" Value="false"/>
 			</Parameter>
-			<Parameter Name="u16ObjId" Value="ID_NULL" Comment="">
-				<Attribute Name="Visible" Type="STRING" Value="false"/>
+			<Parameter Name="u16ObjId" Value="ID_NULL">
+				<Attribute Name="Visible" Value="false"/>
 			</Parameter>
-			<Parameter Name="DigitalInput_I1" Value="'App_functions.BUTTON_GREEN'" Comment=""/>
-			<Parameter Name="DigitalInput_I2" Value="'App_functions.BUTTON_YELLOW'" Comment=""/>
-			<Parameter Name="DigitalInput_I3" Value="'App_functions.BUTTON_RED'" Comment=""/>
-			<Parameter Name="DigitalInput_I4" Value="'App_functions.BUTTON_BLUE'" Comment=""/>
-			<Parameter Name="DigitalInput_I5" Value="" Comment="">
-				<Attribute Name="Visible" Type="STRING" Value="false"/>
+			<Parameter Name="DigitalInput_I1" Value="'App_functions.BUTTON_GREEN'"/>
+			<Parameter Name="DigitalInput_I2" Value="'App_functions.BUTTON_YELLOW'"/>
+			<Parameter Name="DigitalInput_I3" Value="'App_functions.BUTTON_RED'"/>
+			<Parameter Name="DigitalInput_I4" Value="'App_functions.BUTTON_BLUE'"/>
+			<Parameter Name="DigitalInput_I5" Value="">
+				<Attribute Name="Visible" Value="false"/>
 			</Parameter>
-			<Parameter Name="DigitalInput_I6" Value="" Comment="">
-				<Attribute Name="Visible" Type="STRING" Value="false"/>
+			<Parameter Name="DigitalInput_I6" Value="">
+				<Attribute Name="Visible" Value="false"/>
 			</Parameter>
-			<Parameter Name="DigitalInput_I7" Value="" Comment="">
-				<Attribute Name="Visible" Type="STRING" Value="false"/>
+			<Parameter Name="DigitalInput_I7" Value="">
+				<Attribute Name="Visible" Value="false"/>
 			</Parameter>
-			<Parameter Name="DigitalInput_I8" Value="" Comment="">
-				<Attribute Name="Visible" Type="STRING" Value="false"/>
+			<Parameter Name="DigitalInput_I8" Value="">
+				<Attribute Name="Visible" Value="false"/>
 			</Parameter>
 		</FB>
-		<EventConnections>
-			<Connection Source="INIT" Destination="Hutschienenmoped_XL_8_DI.INIT" Comment="" dx1="73.33333333333334">
-				<Attribute Name="Visible" Type="STRING" Value="false"/>
-			</Connection>
-		</EventConnections>
 	</SubAppNetwork>
 </SubAppType>

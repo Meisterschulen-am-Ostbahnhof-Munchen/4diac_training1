@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<SubAppType Name="Uebung_020c2_sub" Comment="DigitalInput_I1 auf DigitalOutput_Q1; E_TON Einschaltverzögert; Zeit eingeben und speichern.">
+<SubAppType Name="Uebung_020c2_sub" Comment="DigitalInput_I1 auf DigitalOutput_Q1; E_TON Einschaltverzögert; Zeit eingeben und speichern." >
 	<Identification Standard="61499-2">
 	</Identification>
 	<VersionInfo Version="1.0" Author="franz" Date="2023-10-31">
@@ -8,68 +8,58 @@
 	</CompilerInfo>
 	<SubAppInterfaceList>
 		<SubAppEventInputs>
-			<SubAppEvent Name="INIT" Type="Event" Comment="">
-			</SubAppEvent>
-			<SubAppEvent Name="REQ" Type="Event" Comment="">
+			<SubAppEvent Name="REQ" Type="Event">
 			</SubAppEvent>
 		</SubAppEventInputs>
 		<SubAppEventOutputs>
-			<SubAppEvent Name="IND" Type="Event" Comment="">
+			<SubAppEvent Name="IND" Type="Event">
 			</SubAppEvent>
 		</SubAppEventOutputs>
 		<InputVars>
-			<VarDeclaration Name="KEY" Type="STRING" Comment=""/>
-			<VarDeclaration Name="u16ObjId" Type="UINT" Comment=""/>
+			<VarDeclaration Name="KEY" Type="STRING"/>
+			<VarDeclaration Name="u16ObjId" Type="UINT"/>
 		</InputVars>
 		<OutputVars>
-			<VarDeclaration Name="VALUEO" Type="UDINT" Comment=""/>
+			<VarDeclaration Name="VALUEO" Type="UDINT"/>
 		</OutputVars>
 	</SubAppInterfaceList>
 	<SubAppNetwork>
-		<FB Name="InputNumber_I1" Type="ID" Comment="" x="-666.67" y="20">
-			<Parameter Name="QI" Value="TRUE" Comment=""/>
+		<FB Name="InputNumber_I1" Type="ID" x="-700" y="0">
+			<Parameter Name="QI" Value="TRUE"/>
 		</FB>
-		<FB Name="F_DWORD_TO_UDINT" Type="F_DWORD_TO_UDINT" Comment="" x="400" y="473.33">
+		<FB Name="F_DWORD_TO_UDINT" Type="F_DWORD_TO_UDINT" x="400" y="400">
 		</FB>
-		<FB Name="NVS_UDINT" Type="NVS" Comment="" x="2133.33" y="20">
-			<Parameter Name="QI" Value="TRUE" Comment=""/>
-			<Parameter Name="DEFAULT_VALUE" Value="UDINT#0" Comment=""/>
+		<FB Name="NVS_UDINT" Type="NVS" x="2100" y="0">
+			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="DEFAULT_VALUE" Value="UDINT#0"/>
 		</FB>
-		<FB Name="Q_NumericValue" Type="Q_NumericValue" Comment="" x="3866.67" y="133.33">
+		<FB Name="Q_NumericValue" Type="Q_NumericValue" x="4100" y="200">
 		</FB>
 		<EventConnections>
-			<Connection Source="InputNumber_I1.IND" Destination="F_DWORD_TO_UDINT.REQ" Comment="" dx1="300"/>
-			<Connection Source="INIT" Destination="InputNumber_I1.INIT" Comment="" dx1="333.33">
+			<Connection Source="InputNumber_I1.IND" Destination="F_DWORD_TO_UDINT.REQ" dx1="300"/>
+			<Connection Source="REQ" Destination="Q_NumericValue.REQ" dx1="1600">
 				<Attribute Name="Visible" Value="false"/>
 			</Connection>
-			<Connection Source="REQ" Destination="Q_NumericValue.REQ" Comment="" dx1="1600">
+			<Connection Source="F_DWORD_TO_UDINT.CNF" Destination="NVS_UDINT.SET" dx1="380"/>
+			<Connection Source="NVS_UDINT.SETO" Destination="IND" dx1="2933.33">
 				<Attribute Name="Visible" Value="false"/>
 			</Connection>
-			<Connection Source="INIT" Destination="NVS_UDINT.INIT" Comment="" dx1="733.33" dx2="733.33" dy="0">
-				<Attribute Name="Visible" Value="false"/>
-			</Connection>
-			<Connection Source="F_DWORD_TO_UDINT.CNF" Destination="NVS_UDINT.SET" Comment="" dx1="380" dx2="380" dy="0"/>
-			<Connection Source="NVS_UDINT.INITO" Destination="NVS_UDINT.GET" Comment="" dx1="80" dx2="80" dy="-253.33"/>
-			<Connection Source="NVS_UDINT.INITO" Destination="Q_NumericValue.INIT" Comment="" dx1="513.33" dx2="513.33" dy="0"/>
-			<Connection Source="NVS_UDINT.SETO" Destination="IND" Comment="" dx1="2933.33" dx2="2933.33" dy="0">
-				<Attribute Name="Visible" Value="false"/>
-			</Connection>
-			<Connection Source="NVS_UDINT.GETO" Destination="Q_NumericValue.REQ" Comment="" dx1="520" dx2="520" dy="0"/>
-			<Connection Source="NVS_UDINT.GETO" Destination="IND" Comment="" dx1="2933.33" dx2="2933.33" dy="0">
+			<Connection Source="NVS_UDINT.GETO" Destination="Q_NumericValue.REQ" dx1="520"/>
+			<Connection Source="NVS_UDINT.GETO" Destination="IND" dx1="2933.33">
 				<Attribute Name="Visible" Value="false"/>
 			</Connection>
 		</EventConnections>
 		<DataConnections>
-			<Connection Source="InputNumber_I1.IN" Destination="F_DWORD_TO_UDINT.IN" Comment="" dx1="186.67"/>
-			<Connection Source="u16ObjId" Destination="Q_NumericValue.u16ObjId" Comment="" dx1="2933.33">
+			<Connection Source="InputNumber_I1.IN" Destination="F_DWORD_TO_UDINT.IN"/>
+			<Connection Source="u16ObjId" Destination="Q_NumericValue.u16ObjId" dx1="2933.33">
 				<Attribute Name="Visible" Value="false"/>
 			</Connection>
-			<Connection Source="KEY" Destination="NVS_UDINT.KEY" Comment="" dx1="2066.67" dx2="2066.67" dy="0">
+			<Connection Source="KEY" Destination="NVS_UDINT.KEY" dx1="2066.67">
 				<Attribute Name="Visible" Value="false"/>
 			</Connection>
-			<Connection Source="F_DWORD_TO_UDINT.OUT" Destination="NVS_UDINT.VALUE" Comment="" dx1="346.67" dx2="346.67" dy="0"/>
-			<Connection Source="NVS_UDINT.VALUEO" Destination="Q_NumericValue.u32NewValue" Comment="" dx1="313.33" dx2="313.33" dy="0"/>
-			<Connection Source="NVS_UDINT.VALUEO" Destination="VALUEO" Comment="" dx1="2933.33" dx2="2933.33" dy="0">
+			<Connection Source="F_DWORD_TO_UDINT.OUT" Destination="NVS_UDINT.VALUE"/>
+			<Connection Source="NVS_UDINT.VALUEO" Destination="Q_NumericValue.u32NewValue"/>
+			<Connection Source="NVS_UDINT.VALUEO" Destination="VALUEO" dx1="2933.33">
 				<Attribute Name="Visible" Value="false"/>
 			</Connection>
 		</DataConnections>

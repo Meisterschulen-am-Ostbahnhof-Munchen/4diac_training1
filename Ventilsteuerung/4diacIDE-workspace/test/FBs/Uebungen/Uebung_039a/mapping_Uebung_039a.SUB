@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<SubAppType Name="mapping_Uebung_039a" Comment="Spiegelabfolge V2 mit Schrittkette">
+<SubAppType Name="mapping_Uebung_039a" Comment="Spiegelabfolge V2 mit Schrittkette" >
 	<Identification Standard="61499-2">
 	</Identification>
 	<VersionInfo Version="1.0" Author="franz" Date="2023-10-23">
@@ -7,146 +7,127 @@
 	<CompilerInfo>
 	</CompilerInfo>
 	<SubAppInterfaceList>
-		<SubAppEventInputs>
-			<SubAppEvent Name="INIT" Type="Event" Comment="">
-				<Attribute Name="YPOSITION" Type="INT" Value="0"/>
-			</SubAppEvent>
-		</SubAppEventInputs>
 	</SubAppInterfaceList>
 	<SubAppNetwork>
-		<FB Name="Hutschienenmoped_XL_8_DO" Type="Hutschienenmoped_XL_8_DO" Comment="" x="-8800" y="-800">
-			<Parameter Name="QI" Value="TRUE" Comment="">
+		<FB Name="Hutschienenmoped_XL_8_DO" Type="Hutschienenmoped_XL_8_DO" x="-8800" y="-800">
+			<Parameter Name="QI" Value="TRUE">
 				<Attribute Name="Visible" Value="false"/>
 			</Parameter>
-			<Parameter Name="u8SAMember" Value="GLOBAL" Comment="">
+			<Parameter Name="u8SAMember" Value="GLOBAL">
 				<Attribute Name="Visible" Value="false"/>
 			</Parameter>
-			<Parameter Name="u16ObjId" Value="ID_NULL" Comment="">
+			<Parameter Name="u16ObjId" Value="ID_NULL">
 				<Attribute Name="Visible" Value="false"/>
 			</Parameter>
-			<Parameter Name="DigitalOutput_Q1" Value="'Ventilsteuerung.functions.Q1.QX'" Comment=""/>
-			<Parameter Name="DigitalOutput_Q2" Value="'Ventilsteuerung.functions.Q2.QX'" Comment=""/>
-			<Parameter Name="DigitalOutput_Q3" Value="'Ventilsteuerung.functions.Q3.QX'" Comment=""/>
-			<Parameter Name="DigitalOutput_Q4" Value="'Ventilsteuerung.functions.Q4.QX'" Comment=""/>
-			<Parameter Name="DigitalOutput_Q5" Value="" Comment="">
+			<Parameter Name="DigitalOutput_Q1" Value="'Ventilsteuerung.functions.Q1.QX'"/>
+			<Parameter Name="DigitalOutput_Q2" Value="'Ventilsteuerung.functions.Q2.QX'"/>
+			<Parameter Name="DigitalOutput_Q3" Value="'Ventilsteuerung.functions.Q3.QX'"/>
+			<Parameter Name="DigitalOutput_Q4" Value="'Ventilsteuerung.functions.Q4.QX'"/>
+			<Parameter Name="DigitalOutput_Q5" Value="">
 				<Attribute Name="Visible" Value="false"/>
 			</Parameter>
-			<Parameter Name="DigitalOutput_Q6" Value="" Comment="">
+			<Parameter Name="DigitalOutput_Q6" Value="">
 				<Attribute Name="Visible" Value="false"/>
 			</Parameter>
-			<Parameter Name="DigitalOutput_Q7" Value="" Comment="">
+			<Parameter Name="DigitalOutput_Q7" Value="">
 				<Attribute Name="Visible" Value="false"/>
 			</Parameter>
-			<Parameter Name="DigitalOutput_Q8" Value="''" Comment="">
-				<Attribute Name="Visible" Value="false"/>
-			</Parameter>
-		</FB>
-		<FB Name="UT_SoftkeyMapping_UP" Type="UT_SoftkeyMapping_UP" Comment="" x="-8800" y="1600">
-			<Parameter Name="QI" Value="TRUE" Comment="">
-				<Attribute Name="Visible" Value="false"/>
-			</Parameter>
-			<Parameter Name="u8SAMember" Value="GLOBAL" Comment="">
-				<Attribute Name="Visible" Value="false"/>
-			</Parameter>
-			<Parameter Name="u16ObjId_1" Value="SoftKey_F1" Comment=""/>
-			<Parameter Name="DigitalInput_1" Value="'Ventilsteuerung.functions.SoftKey_F1_UP'" Comment=""/>
-			<Parameter Name="u16ObjId_2" Value="SoftKey_F2" Comment=""/>
-			<Parameter Name="DigitalInput_2" Value="'Ventilsteuerung.functions.Q2.IE'" Comment=""/>
-			<Parameter Name="u16ObjId_3" Value="SoftKey_F8" Comment=""/>
-			<Parameter Name="DigitalInput_3" Value="'Ventilsteuerung.functions.Q1.IE'" Comment=""/>
-			<Parameter Name="u16ObjId_4" Value="" Comment="">
-				<Attribute Name="Visible" Value="false"/>
-			</Parameter>
-			<Parameter Name="DigitalInput_4" Value="" Comment="">
-				<Attribute Name="Visible" Value="false"/>
-			</Parameter>
-			<Parameter Name="u16ObjId_5" Value="" Comment="">
-				<Attribute Name="Visible" Value="false"/>
-			</Parameter>
-			<Parameter Name="DigitalInput_5" Value="" Comment="">
-				<Attribute Name="Visible" Value="false"/>
-			</Parameter>
-			<Parameter Name="u16ObjId_6" Value="" Comment="">
-				<Attribute Name="Visible" Value="false"/>
-			</Parameter>
-			<Parameter Name="DigitalInput_6" Value="" Comment="">
-				<Attribute Name="Visible" Value="false"/>
-			</Parameter>
-			<Parameter Name="u16ObjId_7" Value="" Comment="">
-				<Attribute Name="Visible" Value="false"/>
-			</Parameter>
-			<Parameter Name="DigitalInput_7" Value="" Comment="">
-				<Attribute Name="Visible" Value="false"/>
-			</Parameter>
-			<Parameter Name="u16ObjId_8" Value="" Comment="">
-				<Attribute Name="Visible" Value="false"/>
-			</Parameter>
-			<Parameter Name="DigitalInput_8" Value="" Comment="">
+			<Parameter Name="DigitalOutput_Q8" Value="''">
 				<Attribute Name="Visible" Value="false"/>
 			</Parameter>
 		</FB>
-		<FB Name="Hutschienenmoped_XL_8_DI_DOWN" Type="Hutschienenmoped_XL_8_DI_DOWN" Comment="" x="-12800" y="-800">
-			<Parameter Name="QI" Value="TRUE" Comment=""/>
-			<Parameter Name="u8SAMember" Value="GLOBAL" Comment=""/>
-			<Parameter Name="u16ObjId" Value="ID_NULL" Comment=""/>
-			<Parameter Name="DigitalInput_I1" Value="'Ventilsteuerung.functions.DigitalInput_DOWN_I1'" Comment=""/>
-			<Parameter Name="DigitalInput_I2" Value="'Ventilsteuerung.functions.DigitalInput_DOWN_I2'" Comment=""/>
-			<Parameter Name="DigitalInput_I3" Value="'Ventilsteuerung.functions.DigitalInput_DOWN_I3'" Comment=""/>
-			<Parameter Name="DigitalInput_I4" Value="'Ventilsteuerung.functions.DigitalInput_DOWN_I4'" Comment=""/>
-		</FB>
-		<FB Name="UT_SoftkeyMapping" Type="UT_SoftkeyMapping" Comment="" x="-12800" y="1600">
-			<Parameter Name="QI" Value="TRUE" Comment="">
+		<FB Name="UT_SoftkeyMapping_UP" Type="UT_SoftkeyMapping_UP" x="-8800" y="1600">
+			<Parameter Name="QI" Value="TRUE">
 				<Attribute Name="Visible" Value="false"/>
 			</Parameter>
-			<Parameter Name="u8SAMember" Value="GLOBAL" Comment="">
+			<Parameter Name="u8SAMember" Value="GLOBAL">
 				<Attribute Name="Visible" Value="false"/>
 			</Parameter>
-			<Parameter Name="u16ObjId_1" Value="SoftKey_F8" Comment=""/>
-			<Parameter Name="DigitalInput_1" Value="'Ventilsteuerung.functions.Q1.IX'" Comment=""/>
-			<Parameter Name="u16ObjId_2" Value="SoftKey_F2" Comment=""/>
-			<Parameter Name="DigitalInput_2" Value="'Ventilsteuerung.functions.Q2.IX'" Comment=""/>
-			<Parameter Name="u16ObjId_3" Value="" Comment="">
+			<Parameter Name="u16ObjId_1" Value="SoftKey_F1"/>
+			<Parameter Name="DigitalInput_1" Value="'Ventilsteuerung.functions.SoftKey_F1_UP'"/>
+			<Parameter Name="u16ObjId_2" Value="SoftKey_F2"/>
+			<Parameter Name="DigitalInput_2" Value="'Ventilsteuerung.functions.Q2.IE'"/>
+			<Parameter Name="u16ObjId_3" Value="SoftKey_F8"/>
+			<Parameter Name="DigitalInput_3" Value="'Ventilsteuerung.functions.Q1.IE'"/>
+			<Parameter Name="u16ObjId_4" Value="">
 				<Attribute Name="Visible" Value="false"/>
 			</Parameter>
-			<Parameter Name="DigitalInput_3" Value="''" Comment="">
+			<Parameter Name="DigitalInput_4" Value="">
 				<Attribute Name="Visible" Value="false"/>
 			</Parameter>
-			<Parameter Name="u16ObjId_4" Value="SoftKey_F9" Comment=""/>
-			<Parameter Name="DigitalInput_4" Value="'Ventilsteuerung.functions.Q3.IX'" Comment=""/>
-			<Parameter Name="u16ObjId_5" Value="SoftKey_F3" Comment=""/>
-			<Parameter Name="DigitalInput_5" Value="'Ventilsteuerung.functions.Q4.IX'" Comment=""/>
-			<Parameter Name="u16ObjId_6" Value="" Comment="">
+			<Parameter Name="u16ObjId_5" Value="">
 				<Attribute Name="Visible" Value="false"/>
 			</Parameter>
-			<Parameter Name="DigitalInput_6" Value="" Comment="">
+			<Parameter Name="DigitalInput_5" Value="">
 				<Attribute Name="Visible" Value="false"/>
 			</Parameter>
-			<Parameter Name="u16ObjId_7" Value="" Comment="">
+			<Parameter Name="u16ObjId_6" Value="">
 				<Attribute Name="Visible" Value="false"/>
 			</Parameter>
-			<Parameter Name="DigitalInput_7" Value="" Comment="">
+			<Parameter Name="DigitalInput_6" Value="">
 				<Attribute Name="Visible" Value="false"/>
 			</Parameter>
-			<Parameter Name="u16ObjId_8" Value="" Comment="">
+			<Parameter Name="u16ObjId_7" Value="">
 				<Attribute Name="Visible" Value="false"/>
 			</Parameter>
-			<Parameter Name="DigitalInput_8" Value="" Comment="">
+			<Parameter Name="DigitalInput_7" Value="">
+				<Attribute Name="Visible" Value="false"/>
+			</Parameter>
+			<Parameter Name="u16ObjId_8" Value="">
+				<Attribute Name="Visible" Value="false"/>
+			</Parameter>
+			<Parameter Name="DigitalInput_8" Value="">
 				<Attribute Name="Visible" Value="false"/>
 			</Parameter>
 		</FB>
-		<EventConnections>
-			<Connection Source="INIT" Destination="Hutschienenmoped_XL_8_DO.INIT" Comment="" dx1="73.33">
+		<FB Name="Hutschienenmoped_XL_8_DI_DOWN" Type="Hutschienenmoped_XL_8_DI_DOWN" x="-12800" y="-800">
+			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="u8SAMember" Value="GLOBAL"/>
+			<Parameter Name="u16ObjId" Value="ID_NULL"/>
+			<Parameter Name="DigitalInput_I1" Value="'Ventilsteuerung.functions.DigitalInput_DOWN_I1'"/>
+			<Parameter Name="DigitalInput_I2" Value="'Ventilsteuerung.functions.DigitalInput_DOWN_I2'"/>
+			<Parameter Name="DigitalInput_I3" Value="'Ventilsteuerung.functions.DigitalInput_DOWN_I3'"/>
+			<Parameter Name="DigitalInput_I4" Value="'Ventilsteuerung.functions.DigitalInput_DOWN_I4'"/>
+		</FB>
+		<FB Name="UT_SoftkeyMapping" Type="UT_SoftkeyMapping" x="-12800" y="1600">
+			<Parameter Name="QI" Value="TRUE">
 				<Attribute Name="Visible" Value="false"/>
-			</Connection>
-			<Connection Source="INIT" Destination="UT_SoftkeyMapping_UP.INIT" Comment="" dx1="1733.33">
+			</Parameter>
+			<Parameter Name="u8SAMember" Value="GLOBAL">
 				<Attribute Name="Visible" Value="false"/>
-			</Connection>
-			<Connection Source="INIT" Destination="Hutschienenmoped_XL_8_DI_DOWN.INIT" Comment="" dx1="400">
+			</Parameter>
+			<Parameter Name="u16ObjId_1" Value="SoftKey_F8"/>
+			<Parameter Name="DigitalInput_1" Value="'Ventilsteuerung.functions.Q1.IX'"/>
+			<Parameter Name="u16ObjId_2" Value="SoftKey_F2"/>
+			<Parameter Name="DigitalInput_2" Value="'Ventilsteuerung.functions.Q2.IX'"/>
+			<Parameter Name="u16ObjId_3" Value="">
 				<Attribute Name="Visible" Value="false"/>
-			</Connection>
-			<Connection Source="INIT" Destination="UT_SoftkeyMapping.INIT" Comment="" dx1="1066.67">
+			</Parameter>
+			<Parameter Name="DigitalInput_3" Value="''">
 				<Attribute Name="Visible" Value="false"/>
-			</Connection>
-		</EventConnections>
+			</Parameter>
+			<Parameter Name="u16ObjId_4" Value="SoftKey_F9"/>
+			<Parameter Name="DigitalInput_4" Value="'Ventilsteuerung.functions.Q3.IX'"/>
+			<Parameter Name="u16ObjId_5" Value="SoftKey_F3"/>
+			<Parameter Name="DigitalInput_5" Value="'Ventilsteuerung.functions.Q4.IX'"/>
+			<Parameter Name="u16ObjId_6" Value="">
+				<Attribute Name="Visible" Value="false"/>
+			</Parameter>
+			<Parameter Name="DigitalInput_6" Value="">
+				<Attribute Name="Visible" Value="false"/>
+			</Parameter>
+			<Parameter Name="u16ObjId_7" Value="">
+				<Attribute Name="Visible" Value="false"/>
+			</Parameter>
+			<Parameter Name="DigitalInput_7" Value="">
+				<Attribute Name="Visible" Value="false"/>
+			</Parameter>
+			<Parameter Name="u16ObjId_8" Value="">
+				<Attribute Name="Visible" Value="false"/>
+			</Parameter>
+			<Parameter Name="DigitalInput_8" Value="">
+				<Attribute Name="Visible" Value="false"/>
+			</Parameter>
+		</FB>
 	</SubAppNetwork>
 </SubAppType>

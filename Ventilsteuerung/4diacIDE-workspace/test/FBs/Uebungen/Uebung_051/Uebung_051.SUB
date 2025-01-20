@@ -1,92 +1,63 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<SubAppType Name="Uebung_051" Comment="DigitalInput_I1-_I4 auf DigitalOutput_Q1-_Q4">
+<SubAppType Name="Uebung_051" Comment="DigitalInput_I1-_I4 auf DigitalOutput_Q1-_Q4" >
 	<Identification Standard="61499-2">
 	</Identification>
 	<VersionInfo Version="1.0" Author="franz" Date="2023-10-23">
 	</VersionInfo>
 	<SubAppInterfaceList>
-		<SubAppEventInputs>
-			<SubAppEvent Name="INIT" Type="Event" Comment="">
-				<Attribute Name="YPOSITION" Type="INT" Value="0"/>
-			</SubAppEvent>
-		</SubAppEventInputs>
 	</SubAppInterfaceList>
 	<SubAppNetwork>
-		<FB Name="DigitalOutput_Q1" Type="QX" Comment="" x="-1846.67" y="-1086.67">
-			<Parameter Name="QI" Value="TRUE" Comment=""/>
+		<FB Name="DigitalOutput_Q1" Type="QX" x="-1846.67" y="-1086.67">
+			<Parameter Name="QI" Value="TRUE"/>
 		</FB>
-		<FB Name="DigitalInput_I1" Type="IX" Comment="" x="-6040" y="-486.67">
-			<Parameter Name="QI" Value="TRUE" Comment=""/>
+		<FB Name="DigitalInput_I1" Type="IX" x="-6040" y="-486.67">
+			<Parameter Name="QI" Value="TRUE"/>
 		</FB>
-		<FB Name="DigitalOutput_Q2" Type="QX" Comment="" x="-1846.67" y="-106.67">
-			<Parameter Name="QI" Value="TRUE" Comment=""/>
+		<FB Name="DigitalOutput_Q2" Type="QX" x="-1846.67" y="-106.67">
+			<Parameter Name="QI" Value="TRUE"/>
 		</FB>
-		<FB Name="DigitalInput_I2" Type="IX" Comment="" x="-6040" y="626.67">
-			<Parameter Name="QI" Value="TRUE" Comment=""/>
+		<FB Name="DigitalInput_I2" Type="IX" x="-6040" y="626.67">
+			<Parameter Name="QI" Value="TRUE"/>
 		</FB>
-		<FB Name="DigitalOutput_Q3" Type="QX" Comment="" x="-1846.67" y="873.33">
-			<Parameter Name="QI" Value="TRUE" Comment=""/>
+		<FB Name="DigitalOutput_Q3" Type="QX" x="-1846.67" y="873.33">
+			<Parameter Name="QI" Value="TRUE"/>
 		</FB>
-		<FB Name="DigitalInput_I3" Type="IX" Comment="" x="-6040" y="1740">
-			<Parameter Name="QI" Value="TRUE" Comment=""/>
+		<FB Name="DigitalInput_I3" Type="IX" x="-6040" y="1740">
+			<Parameter Name="QI" Value="TRUE"/>
 		</FB>
-		<FB Name="DigitalOutput_Q4" Type="QX" Comment="" x="-1846.67" y="1853.33">
-			<Parameter Name="QI" Value="TRUE" Comment=""/>
+		<FB Name="DigitalOutput_Q4" Type="QX" x="-1846.67" y="1853.33">
+			<Parameter Name="QI" Value="TRUE"/>
 		</FB>
-		<FB Name="DigitalInput_I4" Type="IX" Comment="" x="-6040" y="2853.33">
-			<Parameter Name="QI" Value="TRUE" Comment=""/>
+		<FB Name="DigitalInput_I4" Type="IX" x="-6040" y="2853.33">
+			<Parameter Name="QI" Value="TRUE"/>
 		</FB>
-		<FB Name="STRUCT_DEMUX" Type="STRUCT_DEMUX" Comment="" x="-3506.67" y="1966.67">
+		<FB Name="STRUCT_DEMUX" Type="STRUCT_DEMUX" x="-3506.67" y="1966.67">
 			<Attribute Name="StructuredType" Type="STRING" Value="ST04B"/>
 		</FB>
-		<FB Name="STRUCT_MUX" Type="STRUCT_MUX" Comment="" x="-4800" y="1966.67">
+		<FB Name="STRUCT_MUX" Type="STRUCT_MUX" x="-4800" y="1966.67">
 			<Attribute Name="StructuredType" Type="STRING" Value="ST04B"/>
 		</FB>
 		<EventConnections>
-			<Connection Source="INIT" Destination="DigitalInput_I1.INIT" Comment="" dx1="1073.33">
-				<Attribute Name="Visible" Value="false"/>
-			</Connection>
-			<Connection Source="INIT" Destination="DigitalInput_I2.INIT" Comment="" dx1="1146.67">
-				<Attribute Name="Visible" Value="false"/>
-			</Connection>
-			<Connection Source="INIT" Destination="DigitalInput_I3.INIT" Comment="" dx1="1073.33" dx2="1073.33" dy="0">
-				<Attribute Name="Visible" Value="false"/>
-			</Connection>
-			<Connection Source="INIT" Destination="DigitalInput_I4.INIT" Comment="" dx1="1140">
-				<Attribute Name="Visible" Value="false"/>
-			</Connection>
-			<Connection Source="INIT" Destination="DigitalOutput_Q1.INIT" Comment="" dx1="3946.67">
-				<Attribute Name="Visible" Value="false"/>
-			</Connection>
-			<Connection Source="INIT" Destination="DigitalOutput_Q2.INIT" Comment="" dx1="3946.67">
-				<Attribute Name="Visible" Value="false"/>
-			</Connection>
-			<Connection Source="INIT" Destination="DigitalOutput_Q3.INIT" Comment="" dx1="3946.67">
-				<Attribute Name="Visible" Value="false"/>
-			</Connection>
-			<Connection Source="INIT" Destination="DigitalOutput_Q4.INIT" Comment="" dx1="3946.67">
-				<Attribute Name="Visible" Value="false"/>
-			</Connection>
-			<Connection Source="DigitalInput_I1.IND" Destination="STRUCT_MUX.REQ" Comment="" dx1="80" dx2="80" dy="0"/>
-			<Connection Source="DigitalInput_I2.IND" Destination="STRUCT_MUX.REQ" Comment="" dx1="80" dx2="80" dy="0"/>
-			<Connection Source="DigitalInput_I3.IND" Destination="STRUCT_MUX.REQ" Comment=""/>
-			<Connection Source="DigitalInput_I4.IND" Destination="STRUCT_MUX.REQ" Comment="" dx1="80" dx2="80" dy="0"/>
-			<Connection Source="STRUCT_MUX.CNF" Destination="STRUCT_DEMUX.REQ" Comment=""/>
-			<Connection Source="STRUCT_DEMUX.CNF" Destination="DigitalOutput_Q1.REQ" Comment="" dx1="206.67" dx2="206.67" dy="0"/>
-			<Connection Source="STRUCT_DEMUX.CNF" Destination="DigitalOutput_Q2.REQ" Comment="" dx1="206.67" dx2="206.67" dy="0"/>
-			<Connection Source="STRUCT_DEMUX.CNF" Destination="DigitalOutput_Q3.REQ" Comment="" dx1="206.67" dx2="206.67" dy="0"/>
-			<Connection Source="STRUCT_DEMUX.CNF" Destination="DigitalOutput_Q4.REQ" Comment="" dx1="420" dx2="420" dy="0"/>
+			<Connection Source="DigitalInput_I1.IND" Destination="STRUCT_MUX.REQ" dx1="80" dx2="80" dy="0"/>
+			<Connection Source="DigitalInput_I2.IND" Destination="STRUCT_MUX.REQ" dx1="80" dx2="80" dy="0"/>
+			<Connection Source="DigitalInput_I3.IND" Destination="STRUCT_MUX.REQ" dx1="273.33"/>
+			<Connection Source="DigitalInput_I4.IND" Destination="STRUCT_MUX.REQ" dx1="80" dx2="80" dy="0"/>
+			<Connection Source="STRUCT_MUX.CNF" Destination="STRUCT_DEMUX.REQ"/>
+			<Connection Source="STRUCT_DEMUX.CNF" Destination="DigitalOutput_Q1.REQ" dx1="206.67" dx2="206.67" dy="0"/>
+			<Connection Source="STRUCT_DEMUX.CNF" Destination="DigitalOutput_Q2.REQ" dx1="206.67" dx2="206.67" dy="0"/>
+			<Connection Source="STRUCT_DEMUX.CNF" Destination="DigitalOutput_Q3.REQ" dx1="206.67" dx2="206.67" dy="0"/>
+			<Connection Source="STRUCT_DEMUX.CNF" Destination="DigitalOutput_Q4.REQ" dx1="420" dx2="420" dy="0"/>
 		</EventConnections>
 		<DataConnections>
-			<Connection Source="DigitalInput_I1.IN" Destination="STRUCT_MUX.B_00" Comment="" dx1="213.33" dx2="213.33" dy="0"/>
-			<Connection Source="DigitalInput_I2.IN" Destination="STRUCT_MUX.B_01" Comment="" dx1="146.67" dx2="146.67" dy="0"/>
-			<Connection Source="DigitalInput_I3.IN" Destination="STRUCT_MUX.B_02" Comment="" dx1="146.67" dx2="146.67" dy="0"/>
-			<Connection Source="DigitalInput_I4.IN" Destination="STRUCT_MUX.B_03" Comment="" dx1="146.67" dx2="146.67" dy="0"/>
-			<Connection Source="STRUCT_MUX.OUT" Destination="STRUCT_DEMUX.IN" Comment="" dx1="73.33" dx2="73.33" dy="0"/>
-			<Connection Source="STRUCT_DEMUX.B_00" Destination="DigitalOutput_Q1.OUT" Comment="" dx1="73.33" dx2="73.33" dy="0"/>
-			<Connection Source="STRUCT_DEMUX.B_01" Destination="DigitalOutput_Q2.OUT" Comment="" dx1="140" dx2="140" dy="0"/>
-			<Connection Source="STRUCT_DEMUX.B_02" Destination="DigitalOutput_Q3.OUT" Comment="" dx1="273.33" dx2="273.33" dy="0"/>
-			<Connection Source="STRUCT_DEMUX.B_03" Destination="DigitalOutput_Q4.OUT" Comment="" dx1="340" dx2="340" dy="0"/>
+			<Connection Source="DigitalInput_I1.IN" Destination="STRUCT_MUX.B_00" dx1="213.33" dx2="213.33" dy="0"/>
+			<Connection Source="DigitalInput_I2.IN" Destination="STRUCT_MUX.B_01" dx1="146.67" dx2="146.67" dy="0"/>
+			<Connection Source="DigitalInput_I3.IN" Destination="STRUCT_MUX.B_02" dx1="146.67" dx2="146.67" dy="0"/>
+			<Connection Source="DigitalInput_I4.IN" Destination="STRUCT_MUX.B_03" dx1="146.67" dx2="146.67" dy="0"/>
+			<Connection Source="STRUCT_MUX.OUT" Destination="STRUCT_DEMUX.IN" dx1="73.33" dx2="73.33" dy="0"/>
+			<Connection Source="STRUCT_DEMUX.B_00" Destination="DigitalOutput_Q1.OUT" dx1="73.33" dx2="73.33" dy="0"/>
+			<Connection Source="STRUCT_DEMUX.B_01" Destination="DigitalOutput_Q2.OUT" dx1="140" dx2="140" dy="0"/>
+			<Connection Source="STRUCT_DEMUX.B_02" Destination="DigitalOutput_Q3.OUT" dx1="273.33" dx2="273.33" dy="0"/>
+			<Connection Source="STRUCT_DEMUX.B_03" Destination="DigitalOutput_Q4.OUT" dx1="340" dx2="340" dy="0"/>
 		</DataConnections>
 	</SubAppNetwork>
 </SubAppType>

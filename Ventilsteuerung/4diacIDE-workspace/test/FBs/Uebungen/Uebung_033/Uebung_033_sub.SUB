@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<SubAppType Name="Uebung_033_sub" Comment="LED Strip Blinkende LED">
+<SubAppType Name="Uebung_033_sub" Comment="LED Strip Blinkende LED" >
 	<Identification Standard="61499-2">
 	</Identification>
 	<VersionInfo Version="1.0" Author="franz" Date="2023-10-23">
@@ -7,27 +7,20 @@
 	<CompilerInfo>
 	</CompilerInfo>
 	<SubAppInterfaceList>
-		<SubAppEventInputs>
-			<SubAppEvent Name="INIT" Type="Event" Comment="">
-			</SubAppEvent>
-		</SubAppEventInputs>
 	</SubAppInterfaceList>
 	<SubAppNetwork>
-		<FB Name="LED" Type="QX" Comment="" x="-1466.6666666666667" y="-833.3333333333334">
-			<Parameter Name="QI" Value="TRUE" Comment=""/>
+		<FB Name="LED" Type="QX" x="-1466.67" y="-833.33">
+			<Parameter Name="QI" Value="TRUE"/>
 		</FB>
-		<FB Name="BUTTON" Type="IX" Comment="" x="-4533.333333333334" y="-946.6666666666667">
-			<Parameter Name="QI" Value="TRUE" Comment=""/>
+		<FB Name="BUTTON" Type="IX" x="-4533.33" y="-946.67">
+			<Parameter Name="QI" Value="TRUE"/>
 		</FB>
 		<EventConnections>
-			<Connection Source="INIT" Destination="BUTTON.INIT" Comment="" dx1="1073.3333333333335">
-				<Attribute Name="Visible" Type="STRING" Value="false"/>
-			</Connection>
-			<Connection Source="BUTTON.INITO" Destination="LED.INIT" Comment="" dx1="1200.0"/>
-			<Connection Source="BUTTON.IND" Destination="LED.REQ" Comment=""/>
+			<Connection Source="BUTTON.INITO" Destination="LED.INIT" dx1="1200"/>
+			<Connection Source="BUTTON.IND" Destination="LED.REQ" dx1="1186.67"/>
 		</EventConnections>
 		<DataConnections>
-			<Connection Source="BUTTON.IN" Destination="LED.OUT" Comment=""/>
+			<Connection Source="BUTTON.IN" Destination="LED.OUT" dx1="1186.67"/>
 		</DataConnections>
 	</SubAppNetwork>
 </SubAppType>

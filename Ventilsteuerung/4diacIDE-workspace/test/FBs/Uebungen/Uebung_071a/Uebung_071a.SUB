@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<SubAppType Name="Uebung_071a" Comment="WBSD auf UT ausgeben, Q1 Schalten wenn Speed &amp;gt;0">
+<SubAppType Name="Uebung_071a" Comment="WBSD auf UT ausgeben, Q1 Schalten wenn Speed &gt;0" >
 	<Identification Standard="61499-2">
 	</Identification>
 	<VersionInfo Version="1.0" Author="franz" Date="2023-10-23">
@@ -7,46 +7,33 @@
 	<CompilerInfo>
 	</CompilerInfo>
 	<SubAppInterfaceList>
-		<SubAppEventInputs>
-			<SubAppEvent Name="INIT" Type="Event" Comment="">
-			</SubAppEvent>
-		</SubAppEventInputs>
 	</SubAppInterfaceList>
 	<SubAppNetwork>
-		<FB Name="I_WBSD" Type="I_WBSD" Comment="" x="-5213.33" y="453.33">
-			<Parameter Name="QI" Value="TRUE" Comment=""/>
+		<FB Name="I_WBSD" Type="I_WBSD" x="-5213.33" y="453.33">
+			<Parameter Name="QI" Value="TRUE"/>
 		</FB>
-		<FB Name="Q_NumericValue_WBSD" Type="Q_NumericValue" Comment="" x="-680" y="453.33">
-			<Parameter Name="u16ObjId" Value="NumberVariable_Wheel_based_machine_speed" Comment=""/>
+		<FB Name="Q_NumericValue_WBSD" Type="Q_NumericValue" x="-680" y="453.33">
+			<Parameter Name="u16ObjId" Value="NumberVariable_Wheel_based_machine_speed"/>
 		</FB>
-		<FB Name="DigitalOutput_Q1" Type="QX" Comment="" x="1400" y="1900">
-			<Parameter Name="QI" Value="TRUE" Comment=""/>
+		<FB Name="DigitalOutput_Q1" Type="QX" x="1400" y="1900">
+			<Parameter Name="QI" Value="TRUE"/>
 		</FB>
-		<FB Name="F_GT" Type="F_GT" Comment="" x="-1500" y="2000">
-			<Parameter Name="IN2" Value="UINT#0" Comment=""/>
+		<FB Name="F_GT" Type="F_GT" x="-1500" y="2000">
+			<Parameter Name="IN2" Value="UINT#0"/>
 		</FB>
-		<FB Name="E_D_FF" Type="E_D_FF" Comment="" x="-200" y="2000">
+		<FB Name="E_D_FF" Type="E_D_FF" x="-200" y="2000">
 		</FB>
 		<EventConnections>
-			<Connection Source="I_WBSD.IND" Destination="Q_NumericValue_WBSD.REQ" Comment=""/>
-			<Connection Source="INIT" Destination="I_WBSD.INIT" Comment="" dx1="1760">
-				<Attribute Name="Visible" Value="false"/>
-			</Connection>
-			<Connection Source="INIT" Destination="Q_NumericValue_WBSD.INIT" Comment="" dx1="4026.67">
-				<Attribute Name="Visible" Value="false"/>
-			</Connection>
-			<Connection Source="INIT" Destination="DigitalOutput_Q1.INIT" Comment="" dx1="3473.33">
-				<Attribute Name="Visible" Value="false"/>
-			</Connection>
-			<Connection Source="I_WBSD.IND" Destination="F_GT.REQ" Comment="" dx1="1006.67"/>
-			<Connection Source="F_GT.CNF" Destination="E_D_FF.CLK" Comment=""/>
-			<Connection Source="E_D_FF.EO" Destination="DigitalOutput_Q1.REQ" Comment=""/>
+			<Connection Source="I_WBSD.IND" Destination="Q_NumericValue_WBSD.REQ"/>
+			<Connection Source="I_WBSD.IND" Destination="F_GT.REQ" dx1="1006.67"/>
+			<Connection Source="F_GT.CNF" Destination="E_D_FF.CLK"/>
+			<Connection Source="E_D_FF.EO" Destination="DigitalOutput_Q1.REQ"/>
 		</EventConnections>
 		<DataConnections>
-			<Connection Source="I_WBSD.WHEELBASEDMACHINESPEED" Destination="Q_NumericValue_WBSD.u32NewValue" Comment="" dx1="806.67"/>
-			<Connection Source="I_WBSD.WHEELBASEDMACHINESPEED" Destination="F_GT.IN1" Comment="" dx1="806.67"/>
-			<Connection Source="F_GT.OUT" Destination="E_D_FF.D" Comment=""/>
-			<Connection Source="E_D_FF.Q" Destination="DigitalOutput_Q1.OUT" Comment="" dx1="533.33"/>
+			<Connection Source="I_WBSD.WHEELBASEDMACHINESPEED" Destination="Q_NumericValue_WBSD.u32NewValue" dx1="806.67"/>
+			<Connection Source="I_WBSD.WHEELBASEDMACHINESPEED" Destination="F_GT.IN1" dx1="806.67"/>
+			<Connection Source="F_GT.OUT" Destination="E_D_FF.D"/>
+			<Connection Source="E_D_FF.Q" Destination="DigitalOutput_Q1.OUT" dx1="533.33"/>
 		</DataConnections>
 	</SubAppNetwork>
 </SubAppType>

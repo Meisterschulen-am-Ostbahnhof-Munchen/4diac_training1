@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<SubAppType Name="mapping_Uebung_034a1_Q4" Comment="Numeric Value Input auf PWM Ausgang">
+<SubAppType Name="mapping_Uebung_034a1_Q4" Comment="Numeric Value Input auf PWM Ausgang" >
 	<Identification Standard="61499-2">
 	</Identification>
 	<VersionInfo Version="1.0" Author="franz" Date="2023-10-23">
@@ -7,100 +7,88 @@
 	<CompilerInfo>
 	</CompilerInfo>
 	<SubAppInterfaceList>
-		<SubAppEventInputs>
-			<SubAppEvent Name="INIT" Type="Event" Comment="">
-			</SubAppEvent>
-		</SubAppEventInputs>
 	</SubAppInterfaceList>
 	<SubAppNetwork>
-		<FB Name="Hutschienenmoped_XL_8_PWM" Type="Hutschienenmoped_XL_8_PWM" Comment="" x="-3466.67" y="-666.67">
-			<Parameter Name="QI" Value="TRUE" Comment="">
+		<FB Name="Hutschienenmoped_XL_8_PWM" Type="Hutschienenmoped_XL_8_PWM" x="-3466.67" y="-666.67">
+			<Parameter Name="QI" Value="TRUE">
 				<Attribute Name="Visible" Value="false"/>
 			</Parameter>
-			<Parameter Name="u8SAMember" Value="GLOBAL" Comment="">
+			<Parameter Name="u8SAMember" Value="GLOBAL">
 				<Attribute Name="Visible" Value="false"/>
 			</Parameter>
-			<Parameter Name="u16ObjId" Value="ID_NULL" Comment="">
+			<Parameter Name="u16ObjId" Value="ID_NULL">
 				<Attribute Name="Visible" Value="false"/>
 			</Parameter>
-			<Parameter Name="PWMOutput_Q1" Value="" Comment="">
+			<Parameter Name="PWMOutput_Q1" Value="">
 				<Attribute Name="Visible" Value="false"/>
 			</Parameter>
-			<Parameter Name="PWMOutput_Q2" Value="" Comment="">
+			<Parameter Name="PWMOutput_Q2" Value="">
 				<Attribute Name="Visible" Value="false"/>
 			</Parameter>
-			<Parameter Name="PWMOutput_Q3" Value="" Comment="">
+			<Parameter Name="PWMOutput_Q3" Value="">
 				<Attribute Name="Visible" Value="false"/>
 			</Parameter>
-			<Parameter Name="PWMOutput_Q4" Value="'Ventilsteuerung.functions.PWMOutput_Q4'" Comment=""/>
-			<Parameter Name="PWMOutput_Q5" Value="" Comment="">
+			<Parameter Name="PWMOutput_Q4" Value="'Ventilsteuerung.functions.PWMOutput_Q4'"/>
+			<Parameter Name="PWMOutput_Q5" Value="">
 				<Attribute Name="Visible" Value="false"/>
 			</Parameter>
-			<Parameter Name="PWMOutput_Q6" Value="" Comment="">
+			<Parameter Name="PWMOutput_Q6" Value="">
 				<Attribute Name="Visible" Value="false"/>
 			</Parameter>
-			<Parameter Name="PWMOutput_Q7" Value="" Comment="">
+			<Parameter Name="PWMOutput_Q7" Value="">
 				<Attribute Name="Visible" Value="false"/>
 			</Parameter>
-			<Parameter Name="PWMOutput_Q8" Value="" Comment="">
-				<Attribute Name="Visible" Value="false"/>
-			</Parameter>
-		</FB>
-		<FB Name="UT_NumericValueInputMapping" Type="UT_NumericValueInputMapping" Comment="" x="-3513.33" y="566.67">
-			<Parameter Name="QI" Value="TRUE" Comment=""/>
-			<Parameter Name="u8SAMember" Value="GLOBAL" Comment=""/>
-			<Parameter Name="u16ObjId_1" Value="NumberVariable_PWM_Value" Comment=""/>
-			<Parameter Name="NumericValueInput_1" Value="'Ventilsteuerung.functions.PWM_Value'" Comment=""/>
-			<Parameter Name="u16ObjId_2" Value="" Comment="">
-				<Attribute Name="Visible" Value="false"/>
-			</Parameter>
-			<Parameter Name="NumericValueInput_2" Value="" Comment="">
-				<Attribute Name="Visible" Value="false"/>
-			</Parameter>
-			<Parameter Name="u16ObjId_3" Value="" Comment="">
-				<Attribute Name="Visible" Value="false"/>
-			</Parameter>
-			<Parameter Name="NumericValueInput_3" Value="" Comment="">
-				<Attribute Name="Visible" Value="false"/>
-			</Parameter>
-			<Parameter Name="u16ObjId_4" Value="" Comment="">
-				<Attribute Name="Visible" Value="false"/>
-			</Parameter>
-			<Parameter Name="NumericValueInput_4" Value="" Comment="">
-				<Attribute Name="Visible" Value="false"/>
-			</Parameter>
-			<Parameter Name="u16ObjId_5" Value="" Comment="">
-				<Attribute Name="Visible" Value="false"/>
-			</Parameter>
-			<Parameter Name="NumericValueInput_5" Value="" Comment="">
-				<Attribute Name="Visible" Value="false"/>
-			</Parameter>
-			<Parameter Name="u16ObjId_6" Value="" Comment="">
-				<Attribute Name="Visible" Value="false"/>
-			</Parameter>
-			<Parameter Name="NumericValueInput_6" Value="" Comment="">
-				<Attribute Name="Visible" Value="false"/>
-			</Parameter>
-			<Parameter Name="u16ObjId_7" Value="" Comment="">
-				<Attribute Name="Visible" Value="false"/>
-			</Parameter>
-			<Parameter Name="NumericValueInput_7" Value="" Comment="">
-				<Attribute Name="Visible" Value="false"/>
-			</Parameter>
-			<Parameter Name="u16ObjId_8" Value="" Comment="">
-				<Attribute Name="Visible" Value="false"/>
-			</Parameter>
-			<Parameter Name="NumericValueInput_8" Value="" Comment="">
+			<Parameter Name="PWMOutput_Q8" Value="">
 				<Attribute Name="Visible" Value="false"/>
 			</Parameter>
 		</FB>
-		<EventConnections>
-			<Connection Source="INIT" Destination="Hutschienenmoped_XL_8_PWM.INIT" Comment="" dx1="1600">
+		<FB Name="UT_NumericValueInputMapping" Type="UT_NumericValueInputMapping" x="-3513.33" y="566.67">
+			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="u8SAMember" Value="GLOBAL"/>
+			<Parameter Name="u16ObjId_1" Value="NumberVariable_PWM_Value"/>
+			<Parameter Name="NumericValueInput_1" Value="'Ventilsteuerung.functions.PWM_Value'"/>
+			<Parameter Name="u16ObjId_2" Value="">
 				<Attribute Name="Visible" Value="false"/>
-			</Connection>
-			<Connection Source="INIT" Destination="UT_NumericValueInputMapping.INIT" Comment="" dx1="2613.33">
+			</Parameter>
+			<Parameter Name="NumericValueInput_2" Value="">
 				<Attribute Name="Visible" Value="false"/>
-			</Connection>
-		</EventConnections>
+			</Parameter>
+			<Parameter Name="u16ObjId_3" Value="">
+				<Attribute Name="Visible" Value="false"/>
+			</Parameter>
+			<Parameter Name="NumericValueInput_3" Value="">
+				<Attribute Name="Visible" Value="false"/>
+			</Parameter>
+			<Parameter Name="u16ObjId_4" Value="">
+				<Attribute Name="Visible" Value="false"/>
+			</Parameter>
+			<Parameter Name="NumericValueInput_4" Value="">
+				<Attribute Name="Visible" Value="false"/>
+			</Parameter>
+			<Parameter Name="u16ObjId_5" Value="">
+				<Attribute Name="Visible" Value="false"/>
+			</Parameter>
+			<Parameter Name="NumericValueInput_5" Value="">
+				<Attribute Name="Visible" Value="false"/>
+			</Parameter>
+			<Parameter Name="u16ObjId_6" Value="">
+				<Attribute Name="Visible" Value="false"/>
+			</Parameter>
+			<Parameter Name="NumericValueInput_6" Value="">
+				<Attribute Name="Visible" Value="false"/>
+			</Parameter>
+			<Parameter Name="u16ObjId_7" Value="">
+				<Attribute Name="Visible" Value="false"/>
+			</Parameter>
+			<Parameter Name="NumericValueInput_7" Value="">
+				<Attribute Name="Visible" Value="false"/>
+			</Parameter>
+			<Parameter Name="u16ObjId_8" Value="">
+				<Attribute Name="Visible" Value="false"/>
+			</Parameter>
+			<Parameter Name="NumericValueInput_8" Value="">
+				<Attribute Name="Visible" Value="false"/>
+			</Parameter>
+		</FB>
 	</SubAppNetwork>
 </SubAppType>

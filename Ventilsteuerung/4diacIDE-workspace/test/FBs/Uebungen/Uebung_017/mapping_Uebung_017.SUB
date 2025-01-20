@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<SubAppType Name="mapping_Uebung_017" Comment="Control Audio Signal">
+<SubAppType Name="mapping_Uebung_017" Comment="Control Audio Signal" >
 	<Identification Standard="61499-2">
 	</Identification>
 	<VersionInfo Version="1.0" Author="franz" Date="2023-10-23">
@@ -7,68 +7,59 @@
 	<CompilerInfo>
 	</CompilerInfo>
 	<SubAppInterfaceList>
-		<SubAppEventInputs>
-			<SubAppEvent Name="INIT" Type="Event" Comment="">
-			</SubAppEvent>
-		</SubAppEventInputs>
 	</SubAppInterfaceList>
 	<SubAppNetwork>
-		<FB Name="UT_SoftkeyMapping_UP" Type="UT_SoftkeyMapping_UP" Comment="" x="-3286.66" y="-226.67">
-			<Parameter Name="QI" Value="TRUE" Comment="">
+		<FB Name="UT_SoftkeyMapping_UP" Type="UT_SoftkeyMapping_UP" x="-3286.66" y="-226.67">
+			<Parameter Name="QI" Value="TRUE">
 				<Attribute Name="Visible" Value="false"/>
 			</Parameter>
-			<Parameter Name="u8SAMember" Value="GLOBAL" Comment="">
+			<Parameter Name="u8SAMember" Value="GLOBAL">
 				<Attribute Name="Visible" Value="false"/>
 			</Parameter>
-			<Parameter Name="u16ObjId_1" Value="SoftKey_F1" Comment=""/>
-			<Parameter Name="DigitalInput_1" Value="'Ventilsteuerung.functions.SoftKey_F1_UP'" Comment=""/>
-			<Parameter Name="u16ObjId_2" Value="" Comment="">
+			<Parameter Name="u16ObjId_1" Value="SoftKey_F1"/>
+			<Parameter Name="DigitalInput_1" Value="'Ventilsteuerung.functions.SoftKey_F1_UP'"/>
+			<Parameter Name="u16ObjId_2" Value="">
 				<Attribute Name="Visible" Value="false"/>
 			</Parameter>
-			<Parameter Name="DigitalInput_2" Value="" Comment="">
+			<Parameter Name="DigitalInput_2" Value="">
 				<Attribute Name="Visible" Value="false"/>
 			</Parameter>
-			<Parameter Name="u16ObjId_3" Value="" Comment="">
+			<Parameter Name="u16ObjId_3" Value="">
 				<Attribute Name="Visible" Value="false"/>
 			</Parameter>
-			<Parameter Name="DigitalInput_3" Value="" Comment="">
+			<Parameter Name="DigitalInput_3" Value="">
 				<Attribute Name="Visible" Value="false"/>
 			</Parameter>
-			<Parameter Name="u16ObjId_4" Value="" Comment="">
+			<Parameter Name="u16ObjId_4" Value="">
 				<Attribute Name="Visible" Value="false"/>
 			</Parameter>
-			<Parameter Name="DigitalInput_4" Value="" Comment="">
+			<Parameter Name="DigitalInput_4" Value="">
 				<Attribute Name="Visible" Value="false"/>
 			</Parameter>
-			<Parameter Name="u16ObjId_5" Value="" Comment="">
+			<Parameter Name="u16ObjId_5" Value="">
 				<Attribute Name="Visible" Value="false"/>
 			</Parameter>
-			<Parameter Name="DigitalInput_5" Value="" Comment="">
+			<Parameter Name="DigitalInput_5" Value="">
 				<Attribute Name="Visible" Value="false"/>
 			</Parameter>
-			<Parameter Name="u16ObjId_6" Value="" Comment="">
+			<Parameter Name="u16ObjId_6" Value="">
 				<Attribute Name="Visible" Value="false"/>
 			</Parameter>
-			<Parameter Name="DigitalInput_6" Value="" Comment="">
+			<Parameter Name="DigitalInput_6" Value="">
 				<Attribute Name="Visible" Value="false"/>
 			</Parameter>
-			<Parameter Name="u16ObjId_7" Value="" Comment="">
+			<Parameter Name="u16ObjId_7" Value="">
 				<Attribute Name="Visible" Value="false"/>
 			</Parameter>
-			<Parameter Name="DigitalInput_7" Value="" Comment="">
+			<Parameter Name="DigitalInput_7" Value="">
 				<Attribute Name="Visible" Value="false"/>
 			</Parameter>
-			<Parameter Name="u16ObjId_8" Value="" Comment="">
+			<Parameter Name="u16ObjId_8" Value="">
 				<Attribute Name="Visible" Value="false"/>
 			</Parameter>
-			<Parameter Name="DigitalInput_8" Value="" Comment="">
+			<Parameter Name="DigitalInput_8" Value="">
 				<Attribute Name="Visible" Value="false"/>
 			</Parameter>
 		</FB>
-		<EventConnections>
-			<Connection Source="INIT" Destination="UT_SoftkeyMapping_UP.INIT" Comment="" dx1="4646.67">
-				<Attribute Name="Visible" Value="false"/>
-			</Connection>
-		</EventConnections>
 	</SubAppNetwork>
 </SubAppType>

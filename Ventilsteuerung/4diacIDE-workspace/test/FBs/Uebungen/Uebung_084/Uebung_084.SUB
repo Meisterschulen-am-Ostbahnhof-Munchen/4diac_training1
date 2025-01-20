@@ -7,10 +7,6 @@
 	<CompilerInfo>
 	</CompilerInfo>
 	<SubAppInterfaceList>
-		<SubAppEventInputs>
-			<SubAppEvent Name="INIT" Type="Event">
-			</SubAppEvent>
-		</SubAppEventInputs>
 	</SubAppInterfaceList>
 	<SubAppNetwork>
 		<FB Name="DigitalOutput_Q1" Type="QX" x="5200" y="1700">
@@ -32,24 +28,12 @@
 			<Parameter Name="QI" Value="TRUE"/>
 		</FB>
 		<EventConnections>
-			<Connection Source="INIT" Destination="DigitalOutput_Q1.INIT" dx1="3626.67">
-				<Attribute Name="Visible" Value="false"/>
-			</Connection>
 			<Connection Source="E_CTU.CUO" Destination="DigitalOutput_Q1.REQ" dx1="320"/>
 			<Connection Source="E_CTU.RO" Destination="DigitalOutput_Q1.REQ" dx1="320"/>
 			<Connection Source="E_CYCLE.EO" Destination="E_CTU.CU"/>
 			<Connection Source="DigitalInput_I1_CLK.IND" Destination="E_CYCLE.START"/>
 			<Connection Source="DigitalInput_I2_CLK.IND" Destination="E_CYCLE.STOP" dx1="300"/>
 			<Connection Source="DigitalInput_I3_CLK.IND" Destination="E_CTU.R" dx1="1906.67"/>
-			<Connection Source="INIT" Destination="DigitalInput_I1_CLK.INIT" dx1="1980">
-				<Attribute Name="Visible" Value="false"/>
-			</Connection>
-			<Connection Source="INIT" Destination="DigitalInput_I2_CLK.INIT" dx1="2106.67">
-				<Attribute Name="Visible" Value="false"/>
-			</Connection>
-			<Connection Source="INIT" Destination="DigitalInput_I3_CLK.INIT" dx1="2080">
-				<Attribute Name="Visible" Value="false"/>
-			</Connection>
 		</EventConnections>
 		<DataConnections>
 			<Connection Source="E_CTU.Q" Destination="DigitalOutput_Q1.OUT" dx1="353.33"/>

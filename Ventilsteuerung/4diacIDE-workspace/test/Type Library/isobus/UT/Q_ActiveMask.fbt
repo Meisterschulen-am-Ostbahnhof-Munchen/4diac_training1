@@ -6,17 +6,17 @@
 	</VersionInfo>
 	<InterfaceList>
 		<EventInputs>
-			<Event Name="INIT" Type="Event" Comment="Service Initialization">
+			<Event Name="INIT" Type="EInit" Comment="Service Initialization" >
 			</Event>
-			<Event Name="REQ" Type="Event" Comment="Service Request">
+			<Event Name="REQ" Type="Event" Comment="Service Request" >
 				<With Var="u16NewMaskId"/>
 				<With Var="u16WorkSetId"/>
 			</Event>
 		</EventInputs>
 		<EventOutputs>
-			<Event Name="INITO" Type="Event" Comment="Initialization Confirm">
+			<Event Name="INITO" Type="EInit" Comment="Initialization Confirm" >
 			</Event>
-			<Event Name="CNF" Type="Event" Comment="Confirmation of Requested Service">
+			<Event Name="CNF" Type="Event" Comment="Confirmation of Requested Service" >
 				<With Var="STATUS"/>
 				<With Var="u16OldMaskId"/>
 				<With Var="s16result"/>
@@ -24,13 +24,13 @@
 			</Event>
 		</EventOutputs>
 		<InputVars>
-			<VarDeclaration Name="u16WorkSetId" Type="UINT" Comment="WorkingSet Object ID "/>
-			<VarDeclaration Name="u16NewMaskId" Type="UINT" Comment="Object ID of new active (data/alarm)-mask"/>
+			<VarDeclaration Name="u16WorkSetId" Type="UINT" Comment="WorkingSet Object ID " />
+			<VarDeclaration Name="u16NewMaskId" Type="UINT" Comment="Object ID of new active (data/alarm)-mask" />
 		</InputVars>
 		<OutputVars>
-			<VarDeclaration Name="STATUS" Type="STRING" Comment="Service Status"/>
-			<VarDeclaration Name="u16OldMaskId" Type="UINT" Comment="Object ID of old active (data/alarm)-mask"/>
-			<VarDeclaration Name="s16result" Type="INT" Comment="retval see description"/>
+			<VarDeclaration Name="STATUS" Type="STRING" Comment="Service Status" />
+			<VarDeclaration Name="u16OldMaskId" Type="UINT" Comment="Object ID of old active (data/alarm)-mask" />
+			<VarDeclaration Name="s16result" Type="INT" Comment="retval see description" />
 		</OutputVars>
 	</InterfaceList>
 	<Attribute Name="Documentation" Type="CDATA"><![CDATA[<h1>Command change active mask( Part 6 - F.34 )</h1>

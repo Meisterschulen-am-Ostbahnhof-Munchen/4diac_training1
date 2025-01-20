@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<SubAppType Name="Uebung_021" Comment="Spiegelabfolge (1)">
+<SubAppType Name="Uebung_021" Comment="Spiegelabfolge (1)" >
 	<Identification Standard="61499-2">
 	</Identification>
 	<VersionInfo Version="1.0" Author="franz" Date="2023-10-23">
@@ -7,41 +7,28 @@
 	<CompilerInfo>
 	</CompilerInfo>
 	<SubAppInterfaceList>
-		<SubAppEventInputs>
-			<SubAppEvent Name="INIT" Type="Event" Comment="">
-			</SubAppEvent>
-		</SubAppEventInputs>
 	</SubAppInterfaceList>
 	<SubAppNetwork>
-		<FB Name="DigitalOutput_Q1" Type="QX" Comment="" x="-2833.3333333333335" y="-500.0">
-			<Parameter Name="QI" Value="TRUE" Comment=""/>
+		<FB Name="DigitalOutput_Q1" Type="QX" x="-2833.33" y="-500">
+			<Parameter Name="QI" Value="TRUE"/>
 		</FB>
-		<FB Name="SoftKey_F1_UP" Type="IE" Comment="" x="-6833.333333333334" y="-500.0">
-			<Parameter Name="QI" Value="TRUE" Comment=""/>
+		<FB Name="SoftKey_F1_UP" Type="IE" x="-6833.33" y="-500">
+			<Parameter Name="QI" Value="TRUE"/>
 		</FB>
-		<FB Name="E_SR" Type="E_SR" Comment="" x="-5000.0" y="-300.0">
+		<FB Name="E_SR" Type="E_SR" x="-5000" y="-300">
 		</FB>
-		<FB Name="SoftKey_F2_DOWN" Type="IE" Comment="" x="-6833.333333333334" y="1000.0">
-			<Parameter Name="QI" Value="TRUE" Comment=""/>
+		<FB Name="SoftKey_F2_DOWN" Type="IE" x="-6833.33" y="1000">
+			<Parameter Name="QI" Value="TRUE"/>
 		</FB>
-		<Comment Comment="START-Knopf" x="-8500.0" y="-333.33333333333337" width="1373.3333333333335" height="366.6666666666667"/>
-		<Comment Comment="Endlage &amp;#10;" x="-8500.0" y="1166.6666666666667" width="1373.3333333333335" height="366.6666666666667"/>
+		<Comment Comment="START-Knopf"  x="-8500" y="-333.33" width="1373.33" height="366.67"/>
+		<Comment Comment="Endlage &#10;"  x="-8500" y="1166.67" width="1373.33" height="366.67"/>
 		<EventConnections>
-			<Connection Source="INIT" Destination="SoftKey_F1_UP.INIT" Comment="" dx1="746.6666666666667">
-				<Attribute Name="Visible" Type="STRING" Value="false"/>
-			</Connection>
-			<Connection Source="INIT" Destination="DigitalOutput_Q1.INIT" Comment="" dx1="2753.3333333333335">
-				<Attribute Name="Visible" Type="STRING" Value="false"/>
-			</Connection>
-			<Connection Source="SoftKey_F1_UP.IND" Destination="E_SR.S" Comment="" dx1="573.3333333333334"/>
-			<Connection Source="INIT" Destination="SoftKey_F2_DOWN.INIT" Comment="" dx1="746.6666666666667">
-				<Attribute Name="Visible" Type="STRING" Value="false"/>
-			</Connection>
-			<Connection Source="SoftKey_F2_DOWN.IND" Destination="E_SR.R" Comment="" dx1="553.3333333333334"/>
-			<Connection Source="E_SR.EO" Destination="DigitalOutput_Q1.REQ" Comment="" dx1="813.3333333333334"/>
+			<Connection Source="SoftKey_F1_UP.IND" Destination="E_SR.S" dx1="573.33"/>
+			<Connection Source="SoftKey_F2_DOWN.IND" Destination="E_SR.R" dx1="553.33"/>
+			<Connection Source="E_SR.EO" Destination="DigitalOutput_Q1.REQ" dx1="813.33"/>
 		</EventConnections>
 		<DataConnections>
-			<Connection Source="E_SR.Q" Destination="DigitalOutput_Q1.OUT" Comment="" dx1="860.0"/>
+			<Connection Source="E_SR.Q" Destination="DigitalOutput_Q1.OUT" dx1="860"/>
 		</DataConnections>
 	</SubAppNetwork>
 </SubAppType>

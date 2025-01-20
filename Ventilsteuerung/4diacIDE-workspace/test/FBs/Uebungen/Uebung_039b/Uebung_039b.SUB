@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<SubAppType Name="Uebung_039b" Comment="Spiegelabfolge V2 mit Schrittkette">
+<SubAppType Name="Uebung_039b" Comment="Spiegelabfolge V2 mit Schrittkette" >
 	<Identification Standard="61499-2" Description="Spiegelabfolge V2 mit Schrittkette  &#10;geeignet für hydraulisches Ringsystem 3/2 Wege Ventile  (z.B. Claas) &#10;oder pneumatische 5/2 Wege Ventile  &#10;" >
 	</Identification>
 	<VersionInfo Version="1.0" Author="franz" Date="2023-10-23">
@@ -7,53 +7,39 @@
 	<CompilerInfo>
 	</CompilerInfo>
 	<SubAppInterfaceList>
-		<SubAppEventInputs>
-			<SubAppEvent Name="INIT" Type="Event" Comment="">
-				<Attribute Name="YPOSITION" Type="INT" Value="0"/>
-			</SubAppEvent>
-		</SubAppEventInputs>
 	</SubAppInterfaceList>
 	<SubAppNetwork>
-		<FB Name="DigitalOutput_Q1" Type="QX" Comment="" x="-11293.333333333334" y="-986.6666666666667">
-			<Parameter Name="QI" Value="TRUE" Comment=""/>
+		<FB Name="DigitalOutput_Q1" Type="QX" x="-11293.33" y="-986.67">
+			<Parameter Name="QI" Value="TRUE"/>
 		</FB>
-		<FB Name="DigitalOutput_Q2" Type="QX" Comment="" x="-11333.333333333334" y="1066.6666666666667">
-			<Parameter Name="QI" Value="TRUE" Comment=""/>
+		<FB Name="DigitalOutput_Q2" Type="QX" x="-11333.33" y="1066.67">
+			<Parameter Name="QI" Value="TRUE"/>
 		</FB>
-		<FB Name="SoftKey_F1" Type="IX" Comment="" x="-14000.0" y="-1066.6666666666667">
-			<Parameter Name="QI" Value="TRUE" Comment=""/>
+		<FB Name="SoftKey_F1" Type="IX" x="-14000" y="-1066.67">
+			<Parameter Name="QI" Value="TRUE"/>
 		</FB>
-		<FB Name="E_TP_Q1" Type="E_TP" Comment="" x="-12620.0" y="-800.0">
-			<Parameter Name="PT" Value="T#8s" Comment=""/>
+		<FB Name="E_TP_Q1" Type="E_TP" x="-12620" y="-800">
+			<Parameter Name="PT" Value="T#8s"/>
 		</FB>
-		<FB Name="E_TP_Q2" Type="E_TP" Comment="" x="-12620.0" y="1180.0">
-			<Parameter Name="PT" Value="T#4s" Comment=""/>
+		<FB Name="E_TP_Q2" Type="E_TP" x="-12620" y="1180">
+			<Parameter Name="PT" Value="T#4s"/>
 		</FB>
-		<FB Name="E_TON" Type="E_TON" Comment="" x="-13866.666666666668" y="1200.0">
-			<Parameter Name="PT" Value="T#2s" Comment=""/>
+		<FB Name="E_TON" Type="E_TON" x="-13866.67" y="1200">
+			<Parameter Name="PT" Value="T#2s"/>
 		</FB>
 		<EventConnections>
-			<Connection Source="INIT" Destination="SoftKey_F1.INIT" Comment="" dx1="1133.3333333333335">
-				<Attribute Name="Visible" Value="false"/>
-			</Connection>
-			<Connection Source="E_TP_Q1.CNF" Destination="DigitalOutput_Q1.REQ" Comment="" dx1="366.6666666666667"/>
-			<Connection Source="INIT" Destination="DigitalOutput_Q1.INIT" Comment="" dx1="4280.0">
-				<Attribute Name="Visible" Value="false"/>
-			</Connection>
-			<Connection Source="INIT" Destination="DigitalOutput_Q2.INIT" Comment="" dx1="4280.0">
-				<Attribute Name="Visible" Value="false"/>
-			</Connection>
-			<Connection Source="E_TP_Q2.CNF" Destination="DigitalOutput_Q2.REQ" Comment=""/>
-			<Connection Source="E_TP_Q1.CNF" Destination="E_TON.REQ" Comment="" dx1="300.0" dx2="66.66666666666667" dy="913.3333333333334"/>
-			<Connection Source="E_TON.CNF" Destination="E_TP_Q2.REQ" Comment="" dx1="233.33333333333334"/>
-			<Connection Source="SoftKey_F1.IND" Destination="E_TP_Q1.REQ" Comment="" dx1="613.3333333333334"/>
+			<Connection Source="E_TP_Q1.CNF" Destination="DigitalOutput_Q1.REQ" dx1="366.67"/>
+			<Connection Source="E_TP_Q2.CNF" Destination="DigitalOutput_Q2.REQ" dx1="420"/>
+			<Connection Source="E_TP_Q1.CNF" Destination="E_TON.REQ" dx1="300" dx2="66.67" dy="913.33"/>
+			<Connection Source="E_TON.CNF" Destination="E_TP_Q2.REQ" dx1="233.33"/>
+			<Connection Source="SoftKey_F1.IND" Destination="E_TP_Q1.REQ" dx1="613.33"/>
 		</EventConnections>
 		<DataConnections>
-			<Connection Source="E_TP_Q2.Q" Destination="DigitalOutput_Q2.OUT" Comment="" dx1="273.33333333333337"/>
-			<Connection Source="E_TP_Q1.Q" Destination="DigitalOutput_Q1.OUT" Comment="" dx1="66.66666666666667"/>
-			<Connection Source="E_TP_Q1.Q" Destination="E_TON.IN" Comment="" dx1="66.66666666666667" dx2="413.33333333333337" dy="293.33333333333337"/>
-			<Connection Source="E_TON.Q" Destination="E_TP_Q2.IN" Comment="" dx1="200.0"/>
-			<Connection Source="SoftKey_F1.IN" Destination="E_TP_Q1.IN" Comment="" dx1="613.3333333333334"/>
+			<Connection Source="E_TP_Q2.Q" Destination="DigitalOutput_Q2.OUT" dx1="273.33"/>
+			<Connection Source="E_TP_Q1.Q" Destination="DigitalOutput_Q1.OUT" dx1="66.67"/>
+			<Connection Source="E_TP_Q1.Q" Destination="E_TON.IN" dx1="66.67" dx2="413.33" dy="293.33"/>
+			<Connection Source="E_TON.Q" Destination="E_TP_Q2.IN" dx1="200"/>
+			<Connection Source="SoftKey_F1.IN" Destination="E_TP_Q1.IN" dx1="613.33"/>
 		</DataConnections>
 	</SubAppNetwork>
 </SubAppType>

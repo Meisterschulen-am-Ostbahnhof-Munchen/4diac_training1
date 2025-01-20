@@ -6,18 +6,18 @@
 	</VersionInfo>
 	<InterfaceList>
 		<EventInputs>
-			<Event Name="INIT" Type="Event" Comment="Service Initialization">
+			<Event Name="INIT" Type="EInit" Comment="Service Initialization" >
 				<With Var="u16ObjId"/>
 				<With Var="u8IdAttribute"/>
 			</Event>
-			<Event Name="REQ" Type="Event" Comment="Service Request">
+			<Event Name="REQ" Type="Event" Comment="Service Request" >
 				<With Var="u32ValueAttribute"/>
 			</Event>
 		</EventInputs>
 		<EventOutputs>
-			<Event Name="INITO" Type="Event" Comment="Initialization Confirm">
+			<Event Name="INITO" Type="EInit" Comment="Initialization Confirm" >
 			</Event>
-			<Event Name="CNF" Type="Event" Comment="Confirmation of Requested Service">
+			<Event Name="CNF" Type="Event" Comment="Confirmation of Requested Service" >
 				<With Var="STATUS"/>
 				<With Var="u32OldValueAttribute"/>
 				<With Var="s16result"/>
@@ -25,21 +25,35 @@
 			</Event>
 		</EventOutputs>
 		<InputVars>
-			<VarDeclaration Name="u16ObjId" Type="UINT" Comment="Object ID "/>
-			<VarDeclaration Name="u8IdAttribute" Type="USINT" Comment="Attribute ID (AID) - see description of wished object "/>
-			<VarDeclaration Name="u32ValueAttribute" Type="UDINT" Comment="New value for attribute "/>
+			<VarDeclaration Name="u16ObjId" Type="UINT" Comment="Object ID " />
+			<VarDeclaration Name="u8IdAttribute" Type="USINT" Comment="Attribute ID (AID) - see description of wished object " />
+			<VarDeclaration Name="u32ValueAttribute" Type="UDINT" Comment="New value for attribute " />
 		</InputVars>
 		<OutputVars>
-			<VarDeclaration Name="STATUS" Type="STRING" Comment="Service Status"/>
-			<VarDeclaration Name="u32OldValueAttribute" Type="UDINT" Comment="Old value for attribute "/>
-			<VarDeclaration Name="s16result" Type="INT" Comment="retval see description"/>
+			<VarDeclaration Name="STATUS" Type="STRING" Comment="Service Status" />
+			<VarDeclaration Name="u32OldValueAttribute" Type="UDINT" Comment="Old value for attribute " />
+			<VarDeclaration Name="s16result" Type="INT" Comment="retval see description" />
 		</OutputVars>
 	</InterfaceList>
-	<Attribute Name="Documentation" Type="WSTRING"><![CDATA[<p>This command is used to change any attribute with an assigned AID. This message cannot be used to change strings.</p>
+	<Attribute Name="Documentation" Type="CDATA"><![CDATA[<h1>Command change attribute( Part 6 - F.38 )</h1>
 
-<p>Return values</p>
+<p>This command is used to change any attribute with an assigned AID. This message cannot be used to change strings.</p>
 
-<p>iso_s16</p>
+<h2>param[in] {u16ObjId, uint16_t}</h2>
+
+<p>Object ID</p>
+
+<h2>param[in] {u8IdAttribute, uint8_t}</h2>
+
+<p>Attribute ID (AID) - see description of wished object</p>
+
+<h2>param[in] {u32ValueAttribute, uint32_t}</h2>
+
+<p>New value for attribute</p>
+
+<h2>Return Values:&nbsp;</h2>
+
+<h3>int16_t</h3>
 
 <ul>
 	<li><span style="color:#2980b9">VT_E_NO_ERR (0)</span>&nbsp;- OK</li>

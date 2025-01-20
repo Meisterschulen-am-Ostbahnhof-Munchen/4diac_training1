@@ -6,19 +6,19 @@
 	</VersionInfo>
 	<InterfaceList>
 		<EventInputs>
-			<Event Name="INIT" Type="Event" Comment="Service Initialization">
+			<Event Name="INIT" Type="EInit" Comment="Service Initialization" >
 				<With Var="u16ObjId"/>
 			</Event>
-			<Event Name="REQ" Type="Event" Comment="Service Request">
+			<Event Name="REQ" Type="Event" Comment="Service Request" >
 				<With Var="u8PointIndex"/>
 				<With Var="u16NewXValue"/>
 				<With Var="u16NewYValue"/>
 			</Event>
 		</EventInputs>
 		<EventOutputs>
-			<Event Name="INITO" Type="Event" Comment="Initialization Confirm">
+			<Event Name="INITO" Type="EInit" Comment="Initialization Confirm" >
 			</Event>
-			<Event Name="CNF" Type="Event" Comment="Confirmation of Requested Service">
+			<Event Name="CNF" Type="Event" Comment="Confirmation of Requested Service" >
 				<With Var="STATUS"/>
 				<With Var="s16result"/>
 				<With Var="u8OldPointIndex"/>
@@ -27,24 +27,42 @@
 			</Event>
 		</EventOutputs>
 		<InputVars>
-			<VarDeclaration Name="u16ObjId" Type="UINT" Comment="Object ID of the Output Polygon object to change "/>
-			<VarDeclaration Name="u8PointIndex" Type="USINT" Comment="Point index of the point to replace."/>
-			<VarDeclaration Name="u16NewXValue" Type="UINT" Comment="New X value of a point relative to the top left corner of the polygon "/>
-			<VarDeclaration Name="u16NewYValue" Type="UINT" Comment="New Y value of a point relative to the top left corner of the polygon "/>
+			<VarDeclaration Name="u16ObjId" Type="UINT" Comment="Object ID of the Output Polygon object to change " />
+			<VarDeclaration Name="u8PointIndex" Type="USINT" Comment="Point index of the point to replace." />
+			<VarDeclaration Name="u16NewXValue" Type="UINT" Comment="New X value of a point relative to the top left corner of the polygon " />
+			<VarDeclaration Name="u16NewYValue" Type="UINT" Comment="New Y value of a point relative to the top left corner of the polygon " />
 		</InputVars>
 		<OutputVars>
-			<VarDeclaration Name="STATUS" Type="STRING" Comment="Service Status"/>
-			<VarDeclaration Name="u8OldPointIndex" Type="USINT" Comment="Old point index of the point to replace."/>
-			<VarDeclaration Name="u16OldXValue" Type="UINT" Comment="Old X value of a point relative to the top left corner of the polygon "/>
-			<VarDeclaration Name="u16OldYValue" Type="UINT" Comment="Old Y value of a point relative to the top left corner of the polygon "/>
-			<VarDeclaration Name="s16result" Type="INT" Comment="retval see description"/>
+			<VarDeclaration Name="STATUS" Type="STRING" Comment="Service Status" />
+			<VarDeclaration Name="u8OldPointIndex" Type="USINT" Comment="Old point index of the point to replace." />
+			<VarDeclaration Name="u16OldXValue" Type="UINT" Comment="Old X value of a point relative to the top left corner of the polygon " />
+			<VarDeclaration Name="u16OldYValue" Type="UINT" Comment="Old Y value of a point relative to the top left corner of the polygon " />
+			<VarDeclaration Name="s16result" Type="INT" Comment="retval see description" />
 		</OutputVars>
 	</InterfaceList>
-	<Attribute Name="Documentation" Type="WSTRING"><![CDATA[<p>This command is used by a Working Set to modify a point in an Output Polygon object.</p>
+	<Attribute Name="Documentation" Type="CDATA"><![CDATA[<h1>Command Change Polygon Point( Part 6 - F.52 )</h1>
 
-<p>Return values</p>
+<p>This command is used by a Working Set to modify a point in an Output Polygon object.</p>
 
-<p>iso_s16</p>
+<h2>param[in] {objectID, uint16_t}</h2>
+
+<p>Object ID of the Output Polygon object to change</p>
+
+<h2>param[in] {pointIndex, uint8_t}</h2>
+
+<p>Point index of the point to replace.</p>
+
+<h2>param[in] {newXValue, uint16_t}</h2>
+
+<p>New X value of a point relative to the top left corner of the polygon</p>
+
+<h2>param[in] {newYValue, uint16_t}</h2>
+
+<p>New Y value of a point relative to the top left corner of the polygon</p>
+
+<h2>Return Values:&nbsp;</h2>
+
+<h3>int16_t</h3>
 
 <ul>
 	<li><span style="color:#2980b9">VT_E_NO_ERR (0)</span>&nbsp;- OK</li>
