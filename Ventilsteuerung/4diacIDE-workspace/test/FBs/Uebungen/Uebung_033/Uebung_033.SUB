@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<SubAppType Name="Uebung_033" Comment="LED Strip Blinkende LED">
+<SubAppType Name="Uebung_033" Comment="LED Strip Blinkende LED" >
 	<Identification Standard="61499-2">
 	</Identification>
 	<VersionInfo Version="1.0" Author="franz" Date="2023-10-23">
@@ -7,33 +7,15 @@
 	<CompilerInfo>
 	</CompilerInfo>
 	<SubAppInterfaceList>
-		<SubAppEventInputs>
-			<SubAppEvent Name="INIT" Type="Event" Comment="">
-			</SubAppEvent>
-		</SubAppEventInputs>
 	</SubAppInterfaceList>
 	<SubAppNetwork>
-		<SubApp Name="GREEN" Type="Uebung_033_sub" Comment="" x="-4533.333333333334" y="-946.6666666666667">
+		<SubApp Name="GREEN" Type="Uebung_033_sub" x="-4533.33" y="-946.67">
 		</SubApp>
-		<SubApp Name="YELLOW" Type="Uebung_033_sub" Comment="" x="-4533.333333333334" y="-533.3333333333334">
+		<SubApp Name="YELLOW" Type="Uebung_033_sub" x="-4533.33" y="-533.33">
 		</SubApp>
-		<SubApp Name="RED" Type="Uebung_033_sub" Comment="" x="-4533.333333333334" y="-133.33333333333334">
+		<SubApp Name="RED" Type="Uebung_033_sub" x="-4533.33" y="-133.33">
 		</SubApp>
-		<SubApp Name="BLUE" Type="Uebung_033_sub" Comment="" x="-4533.333333333334" y="266.6666666666667">
+		<SubApp Name="BLUE" Type="Uebung_033_sub" x="-4533.33" y="266.67">
 		</SubApp>
-		<EventConnections>
-			<Connection Source="INIT" Destination="GREEN.INIT" Comment="" dx1="1066.6666666666667">
-				<Attribute Name="Visible" Type="STRING" Value="false"/>
-			</Connection>
-			<Connection Source="INIT" Destination="YELLOW.INIT" Comment="" dx1="1086.6666666666667">
-				<Attribute Name="Visible" Type="STRING" Value="false"/>
-			</Connection>
-			<Connection Source="INIT" Destination="RED.INIT" Comment="" dx1="1080.0">
-				<Attribute Name="Visible" Type="STRING" Value="false"/>
-			</Connection>
-			<Connection Source="INIT" Destination="BLUE.INIT" Comment="" dx1="1066.6666666666667">
-				<Attribute Name="Visible" Type="STRING" Value="false"/>
-			</Connection>
-		</EventConnections>
 	</SubAppNetwork>
 </SubAppType>

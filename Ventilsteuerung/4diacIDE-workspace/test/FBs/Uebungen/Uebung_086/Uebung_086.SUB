@@ -7,10 +7,6 @@
 	<CompilerInfo>
 	</CompilerInfo>
 	<SubAppInterfaceList>
-		<SubAppEventInputs>
-			<SubAppEvent Name="INIT" Type="Event">
-			</SubAppEvent>
-		</SubAppEventInputs>
 	</SubAppInterfaceList>
 	<SubAppNetwork>
 		<FB Name="DigitalInput_I1" Type="IX" x="-8000" y="100">
@@ -19,9 +15,6 @@
 		<FB Name="E_SWITCH" Type="E_SWITCH" x="-6700" y="400">
 		</FB>
 		<EventConnections>
-			<Connection Source="INIT" Destination="DigitalInput_I1.INIT" dx1="1746.67">
-				<Attribute Name="Visible" Value="false"/>
-			</Connection>
 			<Connection Source="DigitalInput_I1.IND" Destination="E_SWITCH.EI" dx1="300"/>
 		</EventConnections>
 		<DataConnections>

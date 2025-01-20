@@ -6,37 +6,47 @@
 	</VersionInfo>
 	<InterfaceList>
 		<EventInputs>
-			<Event Name="INIT" Type="Event" Comment="Service Initialization">
+			<Event Name="INIT" Type="EInit" Comment="Service Initialization" >
 				<With Var="u16ObjId"/>
 			</Event>
-			<Event Name="REQ" Type="Event" Comment="Service Request">
+			<Event Name="REQ" Type="Event" Comment="Service Request" >
 				<With Var="qVisible"/>
 			</Event>
 		</EventInputs>
 		<EventOutputs>
-			<Event Name="INITO" Type="Event" Comment="Initialization Confirm">
+			<Event Name="INITO" Type="EInit" Comment="Initialization Confirm" >
 			</Event>
-			<Event Name="CNF" Type="Event" Comment="Confirmation of Requested Service">
+			<Event Name="CNF" Type="Event" Comment="Confirmation of Requested Service" >
 				<With Var="STATUS"/>
 				<With Var="qOldVisible"/>
 				<With Var="s16result"/>
 			</Event>
 		</EventOutputs>
 		<InputVars>
-			<VarDeclaration Name="u16ObjId" Type="UINT" Comment="Object ID"/>
-			<VarDeclaration Name="qVisible" Type="BOOL" Comment="0 == disable, 1 == enable"/>
+			<VarDeclaration Name="u16ObjId" Type="UINT" Comment="Object ID" />
+			<VarDeclaration Name="qVisible" Type="BOOL" Comment="0 == disable, 1 == enable" />
 		</InputVars>
 		<OutputVars>
-			<VarDeclaration Name="STATUS" Type="STRING" Comment="Service Status"/>
-			<VarDeclaration Name="qOldVisible" Type="BOOL" Comment="Old value of Visible"/>
-			<VarDeclaration Name="s16result" Type="INT" Comment="retval see description"/>
+			<VarDeclaration Name="STATUS" Type="STRING" Comment="Service Status" />
+			<VarDeclaration Name="qOldVisible" Type="BOOL" Comment="Old value of Visible" />
+			<VarDeclaration Name="s16result" Type="INT" Comment="retval see description" />
 		</OutputVars>
 	</InterfaceList>
-	<Attribute Name="Documentation" Type="WSTRING"><![CDATA[<p>This command is used to change the value of an object. It applies only to objects that have a numeric value attribute.</p>
+	<Attribute Name="Documentation" Type="CDATA"><![CDATA[<h1>Command Hide/Show Object (Container) ( Part 6 - F.2 )</h1>
 
-<p>Return values</p>
+<p>The Hide/Show Object command is used to hide or show a container object.</p>
 
-<p>iso_s16</p>
+<h2>param[in] {objectId, uint16_t}</h2>
+
+<p>Object ID of Container</p>
+
+<h2>param[in] {visible, bool}</h2>
+
+<p>0 = Hide, 1 = Show</p>
+
+<h2>Return Values:&nbsp;</h2>
+
+<h3>int16_t</h3>
 
 <ul>
 	<li><span style="color:#2980b9">VT_E_NO_ERR (0)</span>&nbsp;- OK</li>

@@ -36,11 +36,25 @@
 			<VarDeclaration Name="s16result" Type="INT" Comment="retval see description" />
 		</OutputVars>
 	</InterfaceList>
-	<Attribute Name="Documentation" Type="WSTRING"><![CDATA[<p>This command is used to change a list item in a list input object.</p>
+	<Attribute Name="Documentation" Type="CDATA"><![CDATA[<h1>Command change list item ( Part 6 - F.42 )</h1>
 
-<p>Return values</p>
+<p>This command is used to change a list item in a list input object.</p>
 
-<p>iso_s16</p>
+<h2>param[in] {objectID, uint16_t}</h2>
+
+<p>Object ID of a list input object</p>
+
+<h2>param[in] {listIndex, uint8_t}</h2>
+
+<p>List index (-> see list)</p>
+
+<h2>param[in] {newObjectID, uint16_t}</h2>
+
+<p>New object ID or 0xFFFF to set empty</p>
+
+<h2>Return Values:&nbsp;</h2>
+
+<h3>int16_t</h3>
 
 <ul>
 	<li><span style="color:#2980b9">VT_E_NO_ERR (0)</span>&nbsp;- OK</li>

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<SubAppType Name="Uebung_014" Comment="Container (visible/invisible)">
+<SubAppType Name="Uebung_014" Comment="Container (visible/invisible)" >
 	<Identification Standard="61499-2">
 	</Identification>
 	<VersionInfo Version="1.0" Author="franz" Date="2023-10-23">
@@ -7,47 +7,37 @@
 	<CompilerInfo>
 	</CompilerInfo>
 	<SubAppInterfaceList>
-		<SubAppEventInputs>
-			<SubAppEvent Name="INIT" Type="Event" Comment="">
-			</SubAppEvent>
-		</SubAppEventInputs>
 	</SubAppInterfaceList>
 	<SubAppNetwork>
-		<FB Name="SoftKey_F1_UP" Type="IE" Comment="" x="-4533.33" y="-1020">
-			<Parameter Name="QI" Value="TRUE" Comment="">
+		<FB Name="SoftKey_F1_UP" Type="IE" x="-4533.33" y="-1020">
+			<Parameter Name="QI" Value="TRUE">
 				<Attribute Name="Visible" Value="false"/>
 			</Parameter>
-			<Parameter Name="PARAMS" Value="" Comment="">
-				<Attribute Name="Visible" Value="false"/>
-			</Parameter>
-		</FB>
-		<FB Name="SoftKey_F2_UP" Type="IE" Comment="" x="-4533.33" y="226.67">
-			<Parameter Name="QI" Value="TRUE" Comment="">
-				<Attribute Name="Visible" Value="false"/>
-			</Parameter>
-			<Parameter Name="PARAMS" Value="" Comment="">
+			<Parameter Name="PARAMS" Value="">
 				<Attribute Name="Visible" Value="false"/>
 			</Parameter>
 		</FB>
-		<FB Name="E_SR" Type="E_SR" Comment="" x="-2833.33" y="-793.33">
+		<FB Name="SoftKey_F2_UP" Type="IE" x="-4533.33" y="226.67">
+			<Parameter Name="QI" Value="TRUE">
+				<Attribute Name="Visible" Value="false"/>
+			</Parameter>
+			<Parameter Name="PARAMS" Value="">
+				<Attribute Name="Visible" Value="false"/>
+			</Parameter>
 		</FB>
-		<FB Name="Q_ObjHideShow" Type="Q_ObjHideShow" Comment="" x="-1473.33" y="-1020">
-			<Parameter Name="u16ObjId" Value="Container_B" Comment=""/>
+		<FB Name="E_SR" Type="E_SR" x="-2833.33" y="-793.33">
+		</FB>
+		<FB Name="Q_ObjHideShow" Type="Q_ObjHideShow" x="-1473.33" y="-1020">
+			<Parameter Name="u16ObjId" Value="Container_B"/>
 		</FB>
 		<EventConnections>
-			<Connection Source="INIT" Destination="SoftKey_F1_UP.INIT" Comment="" dx1="1113.33">
-				<Attribute Name="Visible" Value="false"/>
-			</Connection>
-			<Connection Source="INIT" Destination="SoftKey_F2_UP.INIT" Comment="" dx1="1206.67">
-				<Attribute Name="Visible" Value="false"/>
-			</Connection>
-			<Connection Source="SoftKey_F1_UP.IND" Destination="E_SR.S" Comment=""/>
-			<Connection Source="SoftKey_F2_UP.IND" Destination="E_SR.R" Comment="" dx1="473.33"/>
-			<Connection Source="SoftKey_F1_UP.INITO" Destination="Q_ObjHideShow.INIT" Comment=""/>
-			<Connection Source="E_SR.EO" Destination="Q_ObjHideShow.REQ" Comment="" dx1="433.33"/>
+			<Connection Source="SoftKey_F1_UP.IND" Destination="E_SR.S" dx1="560"/>
+			<Connection Source="SoftKey_F2_UP.IND" Destination="E_SR.R" dx1="473.33"/>
+			<Connection Source="SoftKey_F1_UP.INITO" Destination="Q_ObjHideShow.INIT"/>
+			<Connection Source="E_SR.EO" Destination="Q_ObjHideShow.REQ" dx1="433.33"/>
 		</EventConnections>
 		<DataConnections>
-			<Connection Source="E_SR.Q" Destination="Q_ObjHideShow.qVisible" Comment="" dx1="433.33"/>
+			<Connection Source="E_SR.Q" Destination="Q_ObjHideShow.qVisible" dx1="433.33"/>
 		</DataConnections>
 	</SubAppNetwork>
 </SubAppType>

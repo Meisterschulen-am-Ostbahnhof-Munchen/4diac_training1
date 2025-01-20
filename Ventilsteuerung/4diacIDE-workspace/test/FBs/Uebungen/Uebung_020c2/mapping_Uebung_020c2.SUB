@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<SubAppType Name="mapping_Uebung_020c2" Comment="DigitalInput_I1 auf DigitalOutput_Q1; E_TON Einschaltverzögert; Zeit eingeben und speichern.">
+<SubAppType Name="mapping_Uebung_020c2" Comment="DigitalInput_I1 auf DigitalOutput_Q1; E_TON Einschaltverzögert; Zeit eingeben und speichern." >
 	<Identification Standard="61499-2">
 	</Identification>
 	<VersionInfo Version="1.0" Author="franz" Date="2023-10-23">
@@ -7,140 +7,125 @@
 	<CompilerInfo>
 	</CompilerInfo>
 	<SubAppInterfaceList>
-		<SubAppEventInputs>
-			<SubAppEvent Name="INIT" Type="Event" Comment="">
-			</SubAppEvent>
-		</SubAppEventInputs>
 	</SubAppInterfaceList>
 	<SubAppNetwork>
-		<FB Name="UT_NumericValueInputMapping" Type="UT_NumericValueInputMapping" Comment="" x="3100" y="1866.67">
-			<Parameter Name="QI" Value="TRUE" Comment="">
+		<FB Name="UT_NumericValueInputMapping" Type="UT_NumericValueInputMapping" x="3100" y="1866.67">
+			<Parameter Name="QI" Value="TRUE">
 				<Attribute Name="Visible" Value="false"/>
 			</Parameter>
-			<Parameter Name="u8SAMember" Value="GLOBAL" Comment="">
+			<Parameter Name="u8SAMember" Value="GLOBAL">
 				<Attribute Name="Visible" Value="false"/>
 			</Parameter>
-			<Parameter Name="u16ObjId_1" Value="InputNumber_I1" Comment=""/>
-			<Parameter Name="NumericValueInput_1" Value="'Ventilsteuerung.functions.Uebung_012a_sub.InputNumber_I1'" Comment=""/>
-			<Parameter Name="u16ObjId_2" Value="" Comment="">
+			<Parameter Name="u16ObjId_1" Value="InputNumber_I1"/>
+			<Parameter Name="NumericValueInput_1" Value="'Ventilsteuerung.functions.Uebung_012a_sub.InputNumber_I1'"/>
+			<Parameter Name="u16ObjId_2" Value="">
 				<Attribute Name="Visible" Value="false"/>
 			</Parameter>
-			<Parameter Name="NumericValueInput_2" Value="" Comment="">
+			<Parameter Name="NumericValueInput_2" Value="">
 				<Attribute Name="Visible" Value="false"/>
 			</Parameter>
-			<Parameter Name="u16ObjId_3" Value="" Comment="">
+			<Parameter Name="u16ObjId_3" Value="">
 				<Attribute Name="Visible" Value="false"/>
 			</Parameter>
-			<Parameter Name="NumericValueInput_3" Value="" Comment="">
+			<Parameter Name="NumericValueInput_3" Value="">
 				<Attribute Name="Visible" Value="false"/>
 			</Parameter>
-			<Parameter Name="u16ObjId_4" Value="" Comment="">
+			<Parameter Name="u16ObjId_4" Value="">
 				<Attribute Name="Visible" Value="false"/>
 			</Parameter>
-			<Parameter Name="NumericValueInput_4" Value="" Comment="">
+			<Parameter Name="NumericValueInput_4" Value="">
 				<Attribute Name="Visible" Value="false"/>
 			</Parameter>
-			<Parameter Name="u16ObjId_5" Value="" Comment="">
+			<Parameter Name="u16ObjId_5" Value="">
 				<Attribute Name="Visible" Value="false"/>
 			</Parameter>
-			<Parameter Name="NumericValueInput_5" Value="" Comment="">
+			<Parameter Name="NumericValueInput_5" Value="">
 				<Attribute Name="Visible" Value="false"/>
 			</Parameter>
-			<Parameter Name="u16ObjId_6" Value="" Comment="">
+			<Parameter Name="u16ObjId_6" Value="">
 				<Attribute Name="Visible" Value="false"/>
 			</Parameter>
-			<Parameter Name="NumericValueInput_6" Value="" Comment="">
+			<Parameter Name="NumericValueInput_6" Value="">
 				<Attribute Name="Visible" Value="false"/>
 			</Parameter>
-			<Parameter Name="u16ObjId_7" Value="" Comment="">
+			<Parameter Name="u16ObjId_7" Value="">
 				<Attribute Name="Visible" Value="false"/>
 			</Parameter>
-			<Parameter Name="NumericValueInput_7" Value="" Comment="">
+			<Parameter Name="NumericValueInput_7" Value="">
 				<Attribute Name="Visible" Value="false"/>
 			</Parameter>
-			<Parameter Name="u16ObjId_8" Value="" Comment="">
+			<Parameter Name="u16ObjId_8" Value="">
 				<Attribute Name="Visible" Value="false"/>
 			</Parameter>
-			<Parameter Name="NumericValueInput_8" Value="" Comment="">
-				<Attribute Name="Visible" Value="false"/>
-			</Parameter>
-		</FB>
-		<FB Name="Hutschienenmoped_XL_8_DI" Type="Hutschienenmoped_XL_8_DI" Comment="" x="3173.33" y="1020">
-			<Parameter Name="QI" Value="TRUE" Comment="">
-				<Attribute Name="Visible" Value="false"/>
-			</Parameter>
-			<Parameter Name="u8SAMember" Value="GLOBAL" Comment="">
-				<Attribute Name="Visible" Value="false"/>
-			</Parameter>
-			<Parameter Name="u16ObjId" Value="ID_NULL" Comment="">
-				<Attribute Name="Visible" Value="false"/>
-			</Parameter>
-			<Parameter Name="DigitalInput_I1" Value="'Ventilsteuerung.functions.DigitalInput_I1'" Comment=""/>
-			<Parameter Name="DigitalInput_I2" Value="" Comment="">
-				<Attribute Name="Visible" Value="false"/>
-			</Parameter>
-			<Parameter Name="DigitalInput_I3" Value="" Comment="">
-				<Attribute Name="Visible" Value="false"/>
-			</Parameter>
-			<Parameter Name="DigitalInput_I4" Value="" Comment="">
-				<Attribute Name="Visible" Value="false"/>
-			</Parameter>
-			<Parameter Name="DigitalInput_I5" Value="" Comment="">
-				<Attribute Name="Visible" Value="false"/>
-			</Parameter>
-			<Parameter Name="DigitalInput_I6" Value="" Comment="">
-				<Attribute Name="Visible" Value="false"/>
-			</Parameter>
-			<Parameter Name="DigitalInput_I7" Value="" Comment="">
-				<Attribute Name="Visible" Value="false"/>
-			</Parameter>
-			<Parameter Name="DigitalInput_I8" Value="" Comment="">
+			<Parameter Name="NumericValueInput_8" Value="">
 				<Attribute Name="Visible" Value="false"/>
 			</Parameter>
 		</FB>
-		<FB Name="Hutschienenmoped_XL_8_DO" Type="Hutschienenmoped_XL_8_DO" Comment="" x="3173.33" y="2833.33">
-			<Parameter Name="QI" Value="TRUE" Comment="">
+		<FB Name="Hutschienenmoped_XL_8_DI" Type="Hutschienenmoped_XL_8_DI" x="3173.33" y="1020">
+			<Parameter Name="QI" Value="TRUE">
 				<Attribute Name="Visible" Value="false"/>
 			</Parameter>
-			<Parameter Name="u8SAMember" Value="GLOBAL" Comment="">
+			<Parameter Name="u8SAMember" Value="GLOBAL">
 				<Attribute Name="Visible" Value="false"/>
 			</Parameter>
-			<Parameter Name="u16ObjId" Value="ID_NULL" Comment="">
+			<Parameter Name="u16ObjId" Value="ID_NULL">
 				<Attribute Name="Visible" Value="false"/>
 			</Parameter>
-			<Parameter Name="DigitalOutput_Q1" Value="'Ventilsteuerung.functions.DigitalOutput_Q1'" Comment=""/>
-			<Parameter Name="DigitalOutput_Q2" Value="" Comment="">
+			<Parameter Name="DigitalInput_I1" Value="'Ventilsteuerung.functions.DigitalInput_I1'"/>
+			<Parameter Name="DigitalInput_I2" Value="">
 				<Attribute Name="Visible" Value="false"/>
 			</Parameter>
-			<Parameter Name="DigitalOutput_Q3" Value="" Comment="">
+			<Parameter Name="DigitalInput_I3" Value="">
 				<Attribute Name="Visible" Value="false"/>
 			</Parameter>
-			<Parameter Name="DigitalOutput_Q4" Value="" Comment="">
+			<Parameter Name="DigitalInput_I4" Value="">
 				<Attribute Name="Visible" Value="false"/>
 			</Parameter>
-			<Parameter Name="DigitalOutput_Q5" Value="" Comment="">
+			<Parameter Name="DigitalInput_I5" Value="">
 				<Attribute Name="Visible" Value="false"/>
 			</Parameter>
-			<Parameter Name="DigitalOutput_Q6" Value="" Comment="">
+			<Parameter Name="DigitalInput_I6" Value="">
 				<Attribute Name="Visible" Value="false"/>
 			</Parameter>
-			<Parameter Name="DigitalOutput_Q7" Value="" Comment="">
+			<Parameter Name="DigitalInput_I7" Value="">
 				<Attribute Name="Visible" Value="false"/>
 			</Parameter>
-			<Parameter Name="DigitalOutput_Q8" Value="" Comment="">
+			<Parameter Name="DigitalInput_I8" Value="">
 				<Attribute Name="Visible" Value="false"/>
 			</Parameter>
 		</FB>
-		<EventConnections>
-			<Connection Source="INIT" Destination="UT_NumericValueInputMapping.INIT" Comment="" dx1="3466.67">
+		<FB Name="Hutschienenmoped_XL_8_DO" Type="Hutschienenmoped_XL_8_DO" x="3173.33" y="2833.33">
+			<Parameter Name="QI" Value="TRUE">
 				<Attribute Name="Visible" Value="false"/>
-			</Connection>
-			<Connection Source="INIT" Destination="Hutschienenmoped_XL_8_DI.INIT" Comment="" dx1="3286.67">
+			</Parameter>
+			<Parameter Name="u8SAMember" Value="GLOBAL">
 				<Attribute Name="Visible" Value="false"/>
-			</Connection>
-			<Connection Source="INIT" Destination="Hutschienenmoped_XL_8_DO.INIT" Comment="" dx1="3286.67">
+			</Parameter>
+			<Parameter Name="u16ObjId" Value="ID_NULL">
 				<Attribute Name="Visible" Value="false"/>
-			</Connection>
-		</EventConnections>
+			</Parameter>
+			<Parameter Name="DigitalOutput_Q1" Value="'Ventilsteuerung.functions.DigitalOutput_Q1'"/>
+			<Parameter Name="DigitalOutput_Q2" Value="">
+				<Attribute Name="Visible" Value="false"/>
+			</Parameter>
+			<Parameter Name="DigitalOutput_Q3" Value="">
+				<Attribute Name="Visible" Value="false"/>
+			</Parameter>
+			<Parameter Name="DigitalOutput_Q4" Value="">
+				<Attribute Name="Visible" Value="false"/>
+			</Parameter>
+			<Parameter Name="DigitalOutput_Q5" Value="">
+				<Attribute Name="Visible" Value="false"/>
+			</Parameter>
+			<Parameter Name="DigitalOutput_Q6" Value="">
+				<Attribute Name="Visible" Value="false"/>
+			</Parameter>
+			<Parameter Name="DigitalOutput_Q7" Value="">
+				<Attribute Name="Visible" Value="false"/>
+			</Parameter>
+			<Parameter Name="DigitalOutput_Q8" Value="">
+				<Attribute Name="Visible" Value="false"/>
+			</Parameter>
+		</FB>
 	</SubAppNetwork>
 </SubAppType>

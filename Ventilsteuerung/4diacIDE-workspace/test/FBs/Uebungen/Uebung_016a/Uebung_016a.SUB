@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<SubAppType Name="Uebung_016a" Comment="Background Colour umschalten -- 3-fach">
+<SubAppType Name="Uebung_016a" Comment="Background Colour umschalten -- 3-fach" >
 	<Identification Standard="61499-2">
 	</Identification>
 	<VersionInfo Version="1.0" Author="franz" Date="2023-10-23">
@@ -7,49 +7,33 @@
 	<CompilerInfo>
 	</CompilerInfo>
 	<SubAppInterfaceList>
-		<SubAppEventInputs>
-			<SubAppEvent Name="INIT" Type="Event" Comment="">
-			</SubAppEvent>
-		</SubAppEventInputs>
 	</SubAppInterfaceList>
 	<SubAppNetwork>
-		<FB Name="SoftKey_F1_UP" Type="IE" Comment="" x="-4533.33" y="-1066.67">
-			<Parameter Name="QI" Value="TRUE" Comment=""/>
+		<FB Name="SoftKey_F1_UP" Type="IE" x="-4533.33" y="-1066.67">
+			<Parameter Name="QI" Value="TRUE"/>
 		</FB>
-		<FB Name="SoftKey_F2_UP" Type="IE" Comment="" x="-4533.33" y="-113.33">
-			<Parameter Name="QI" Value="TRUE" Comment=""/>
+		<FB Name="SoftKey_F2_UP" Type="IE" x="-4533.33" y="-113.33">
+			<Parameter Name="QI" Value="TRUE"/>
 		</FB>
-		<FB Name="F_SEL" Type="F_SEL_E_3" Comment="" x="-1133.33" y="-1020">
-			<Parameter Name="IN0" Value="COLOR_WHITE" Comment=""/>
-			<Parameter Name="IN1" Value="COLOR_GREEN" Comment=""/>
-			<Parameter Name="IN2" Value="COLOR_RED" Comment=""/>
+		<FB Name="F_SEL" Type="F_SEL_E_3" x="-1133.33" y="-1020">
+			<Parameter Name="IN0" Value="COLOR_WHITE"/>
+			<Parameter Name="IN1" Value="COLOR_GREEN"/>
+			<Parameter Name="IN2" Value="COLOR_RED"/>
 		</FB>
-		<FB Name="Q_BackgroundColour" Type="Q_BackgroundColour" Comment="" x="793.33" y="-1140">
-			<Parameter Name="u16ObjId" Value="SoftKey_F7" Comment=""/>
+		<FB Name="Q_BackgroundColour" Type="Q_BackgroundColour" x="793.33" y="-1140">
+			<Parameter Name="u16ObjId" Value="SoftKey_F7"/>
 		</FB>
-		<FB Name="SoftKey_F3_UP" Type="IE" Comment="" x="-4533.33" y="913.33">
-			<Parameter Name="QI" Value="TRUE" Comment=""/>
+		<FB Name="SoftKey_F3_UP" Type="IE" x="-4533.33" y="913.33">
+			<Parameter Name="QI" Value="TRUE"/>
 		</FB>
 		<EventConnections>
-			<Connection Source="INIT" Destination="SoftKey_F1_UP.INIT" Comment="" dx1="1113.33">
-				<Attribute Name="Visible" Value="false"/>
-			</Connection>
-			<Connection Source="INIT" Destination="SoftKey_F2_UP.INIT" Comment="" dx1="1206.67">
-				<Attribute Name="Visible" Value="false"/>
-			</Connection>
-			<Connection Source="INIT" Destination="Q_BackgroundColour.INIT" Comment="" dx1="4760">
-				<Attribute Name="Visible" Value="false"/>
-			</Connection>
-			<Connection Source="F_SEL.CNF" Destination="Q_BackgroundColour.REQ" Comment="" dx1="613.33"/>
-			<Connection Source="INIT" Destination="SoftKey_F3_UP.INIT" Comment="" dx1="2100">
-				<Attribute Name="Visible" Value="false"/>
-			</Connection>
-			<Connection Source="SoftKey_F1_UP.IND" Destination="F_SEL.REQ0" Comment="" dx1="820"/>
-			<Connection Source="SoftKey_F2_UP.IND" Destination="F_SEL.REQ1" Comment="" dx1="1040"/>
-			<Connection Source="SoftKey_F3_UP.IND" Destination="F_SEL.REQ2" Comment="" dx1="1353.33"/>
+			<Connection Source="F_SEL.CNF" Destination="Q_BackgroundColour.REQ" dx1="613.33"/>
+			<Connection Source="SoftKey_F1_UP.IND" Destination="F_SEL.REQ0" dx1="820"/>
+			<Connection Source="SoftKey_F2_UP.IND" Destination="F_SEL.REQ1" dx1="1040"/>
+			<Connection Source="SoftKey_F3_UP.IND" Destination="F_SEL.REQ2" dx1="1353.33"/>
 		</EventConnections>
 		<DataConnections>
-			<Connection Source="F_SEL.OUT" Destination="Q_BackgroundColour.u8Colour" Comment="" dx1="613.33"/>
+			<Connection Source="F_SEL.OUT" Destination="Q_BackgroundColour.u8Colour" dx1="613.33"/>
 		</DataConnections>
 	</SubAppNetwork>
 </SubAppType>

@@ -28,11 +28,17 @@
 			<VarDeclaration Name="s16result" Type="INT" Comment="retval see description" />
 		</OutputVars>
 	</InterfaceList>
-	<Attribute Name="Documentation" Type="WSTRING"><![CDATA[<p>This command is used to execute a Macro with 16-bit Object ID. This message is available in VT version 5 and later.</p>
+	<Attribute Name="Documentation" Type="CDATA"><![CDATA[<h1>Command Execute Extended Macro( Part 6 - F.62 )</h1>
 
-<p>Return values</p>
+<p>This command is used to execute a Macro with 16-bit Object ID. This message is available in VT version 5 and later.</p>
 
-<p>iso_s16</p>
+<h2>param[in] {objectID,  uint16_t}</h2>
+
+<p>Object ID of Macro object</p>
+
+<h2>Return Values:&nbsp;</h2>
+
+<h3>int16_t</h3>
 
 <ul>
 	<li><span style="color:#2980b9">VT_E_NO_ERR (0)</span>&nbsp;- OK</li>

@@ -6,37 +6,47 @@
 	</VersionInfo>
 	<InterfaceList>
 		<EventInputs>
-			<Event Name="INIT" Type="Event" Comment="Service Initialization">
+			<Event Name="INIT" Type="EInit" Comment="Service Initialization" >
 				<With Var="u16ObjId"/>
 			</Event>
-			<Event Name="REQ" Type="Event" Comment="Service Request">
+			<Event Name="REQ" Type="Event" Comment="Service Request" >
 				<With Var="qAbility"/>
 			</Event>
 		</EventInputs>
 		<EventOutputs>
-			<Event Name="INITO" Type="Event" Comment="Initialization Confirm">
+			<Event Name="INITO" Type="EInit" Comment="Initialization Confirm" >
 			</Event>
-			<Event Name="CNF" Type="Event" Comment="Confirmation of Requested Service">
+			<Event Name="CNF" Type="Event" Comment="Confirmation of Requested Service" >
 				<With Var="STATUS"/>
 				<With Var="qOldAbility"/>
 				<With Var="s16result"/>
 			</Event>
 		</EventOutputs>
 		<InputVars>
-			<VarDeclaration Name="u16ObjId" Type="UINT" Comment="Object ID"/>
-			<VarDeclaration Name="qAbility" Type="BOOL" Comment="0 == disable, 1 == enable"/>
+			<VarDeclaration Name="u16ObjId" Type="UINT" Comment="Object ID" />
+			<VarDeclaration Name="qAbility" Type="BOOL" Comment="0 == disable, 1 == enable" />
 		</InputVars>
 		<OutputVars>
-			<VarDeclaration Name="STATUS" Type="STRING" Comment="Service Status"/>
-			<VarDeclaration Name="qOldAbility" Type="BOOL" Comment="0 == disable, 1 == enable "/>
-			<VarDeclaration Name="s16result" Type="INT" Comment="retval see description"/>
+			<VarDeclaration Name="STATUS" Type="STRING" Comment="Service Status" />
+			<VarDeclaration Name="qOldAbility" Type="BOOL" Comment="0 == disable, 1 == enable " />
+			<VarDeclaration Name="s16result" Type="INT" Comment="retval see description" />
 		</OutputVars>
 	</InterfaceList>
-	<Attribute Name="Documentation" Type="WSTRING"><![CDATA[<p>This command is used to enable or disable an input field object and pertains to the accessibility of an input object.</p>
+	<Attribute Name="Documentation" Type="CDATA"><![CDATA[<h1>Command enable/disable (input) object - ( Part 6 - F.4 )</h1>
 
-<p>Return values</p>
+<p>This command is used to enable or disable an input field object and pertains to the accessibility of an input object.</p>
 
-<p>iso_s16</p>
+<h2>param[in] {objectId, uint16_t}</h2>
+
+<p>Object ID of input object</p>
+
+<h2>param[in] {enabled, bool}</h2>
+
+<p>0 == disable, 1 == enable</p>
+
+<h2>Return Values:&nbsp;</h2>
+
+<h3>int16_t</h3>
 
 <ul>
 	<li><span style="color:#2980b9">VT_E_NO_ERR (0)</span>&nbsp;- OK</li>

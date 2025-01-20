@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<SubAppType Name="Uebung_035" Comment="Spiegelabfolge V2 mit Schrittkette">
+<SubAppType Name="Uebung_035" Comment="Spiegelabfolge V2 mit Schrittkette" >
 	<Identification Standard="61499-2">
 	</Identification>
 	<VersionInfo Version="1.0" Author="franz" Date="2023-10-23">
@@ -7,99 +7,67 @@
 	<CompilerInfo>
 	</CompilerInfo>
 	<SubAppInterfaceList>
-		<SubAppEventInputs>
-			<SubAppEvent Name="INIT" Type="Event" Comment="">
-				<Attribute Name="YPOSITION" Type="INT" Value="0"/>
-			</SubAppEvent>
-		</SubAppEventInputs>
 	</SubAppInterfaceList>
 	<SubAppNetwork>
-		<FB Name="DigitalOutput_Q1" Type="QX" Comment="" x="-7840.0" y="-986.6666666666667">
-			<Parameter Name="QI" Value="TRUE" Comment=""/>
+		<FB Name="DigitalOutput_Q1" Type="QX" x="-7840" y="-986.67">
+			<Parameter Name="QI" Value="TRUE"/>
 		</FB>
-		<FB Name="E_TimeOut" Type="E_TimeOut" Comment="" x="-7840.0" y="2933.3333333333335">
+		<FB Name="E_TimeOut" Type="E_TimeOut" x="-7840" y="2933.33">
 		</FB>
-		<FB Name="DigitalOutput_Q2" Type="QX" Comment="" x="-7840.0" y="-6.666666666666667">
-			<Parameter Name="QI" Value="TRUE" Comment=""/>
+		<FB Name="DigitalOutput_Q2" Type="QX" x="-7840" y="-6.67">
+			<Parameter Name="QI" Value="TRUE"/>
 		</FB>
-		<FB Name="DigitalOutput_Q3" Type="QX" Comment="" x="-7840.0" y="973.3333333333334">
-			<Parameter Name="QI" Value="TRUE" Comment=""/>
+		<FB Name="DigitalOutput_Q3" Type="QX" x="-7840" y="973.33">
+			<Parameter Name="QI" Value="TRUE"/>
 		</FB>
-		<FB Name="DigitalOutput_Q4" Type="QX" Comment="" x="-7840.0" y="1953.3333333333335">
-			<Parameter Name="QI" Value="TRUE" Comment=""/>
+		<FB Name="DigitalOutput_Q4" Type="QX" x="-7840" y="1953.33">
+			<Parameter Name="QI" Value="TRUE"/>
 		</FB>
-		<FB Name="DigitalInput_I1_CLK" Type="IE" Comment="" x="-11373.333333333334" y="-20.0">
-			<Parameter Name="QI" Value="TRUE" Comment=""/>
+		<FB Name="DigitalInput_I1_CLK" Type="IE" x="-11373.33" y="-20">
+			<Parameter Name="QI" Value="TRUE"/>
 		</FB>
-		<FB Name="DigitalInput_I2_CLK" Type="IE" Comment="" x="-11373.333333333334" y="960.0">
-			<Parameter Name="QI" Value="TRUE" Comment=""/>
+		<FB Name="DigitalInput_I2_CLK" Type="IE" x="-11373.33" y="960">
+			<Parameter Name="QI" Value="TRUE"/>
 		</FB>
-		<FB Name="DigitalInput_I3_CLK" Type="IE" Comment="" x="-11373.333333333334" y="1940.0">
-			<Parameter Name="QI" Value="TRUE" Comment=""/>
+		<FB Name="DigitalInput_I3_CLK" Type="IE" x="-11373.33" y="1940">
+			<Parameter Name="QI" Value="TRUE"/>
 		</FB>
-		<FB Name="DigitalInput_I4_CLK" Type="IE" Comment="" x="-11373.333333333334" y="2920.0">
-			<Parameter Name="QI" Value="TRUE" Comment=""/>
+		<FB Name="DigitalInput_I4_CLK" Type="IE" x="-11373.33" y="2920">
+			<Parameter Name="QI" Value="TRUE"/>
 		</FB>
-		<FB Name="Q_NumericValue" Type="Q_NumericValue" Comment="" x="-4266.666666666667" y="1866.6666666666667">
-			<Parameter Name="u16ObjId" Value="OutputNumber_N1" Comment=""/>
+		<FB Name="Q_NumericValue" Type="Q_NumericValue" x="-4266.67" y="1866.67">
+			<Parameter Name="u16ObjId" Value="OutputNumber_N1"/>
 		</FB>
-		<FB Name="F_SINT_TO_UINT" Type="F_SINT_TO_UINT" Comment="" x="-6400.0" y="2206.666666666667">
+		<FB Name="F_SINT_TO_UINT" Type="F_SINT_TO_UINT" x="-6400" y="2206.67">
 		</FB>
-		<FB Name="sequence_04" Type="sequence_ET_04" Comment="" x="-9673.333333333334" y="1713.3333333333335">
-			<Parameter Name="DT_S1_S2" Value="T#2s" Comment=""/>
-			<Parameter Name="DT_S2_S3" Value="T#2s" Comment=""/>
-			<Parameter Name="DT_S3_S4" Value="T#2s" Comment=""/>
-			<Parameter Name="DT_S4_START" Value="T#2s" Comment=""/>
+		<FB Name="sequence_04" Type="sequence_ET_04" x="-9673.33" y="1713.33">
+			<Parameter Name="DT_S1_S2" Value="T#2s"/>
+			<Parameter Name="DT_S2_S3" Value="T#2s"/>
+			<Parameter Name="DT_S3_S4" Value="T#2s"/>
+			<Parameter Name="DT_S4_START" Value="T#2s"/>
 		</FB>
 		<EventConnections>
-			<Connection Source="INIT" Destination="DigitalOutput_Q4.INIT" Comment="" dx1="2613.3333333333335">
-				<Attribute Name="Visible" Type="STRING" Value="false"/>
-			</Connection>
-			<Connection Source="INIT" Destination="DigitalOutput_Q3.INIT" Comment="" dx1="2613.3333333333335">
-				<Attribute Name="Visible" Type="STRING" Value="false"/>
-			</Connection>
-			<Connection Source="INIT" Destination="DigitalOutput_Q2.INIT" Comment="" dx1="2613.3333333333335">
-				<Attribute Name="Visible" Type="STRING" Value="false"/>
-			</Connection>
-			<Connection Source="INIT" Destination="DigitalOutput_Q1.INIT" Comment="" dx1="2613.3333333333335">
-				<Attribute Name="Visible" Type="STRING" Value="false"/>
-			</Connection>
-			<Connection Source="INIT" Destination="DigitalInput_I1_CLK.INIT" Comment="" dx1="453.33333333333337">
-				<Attribute Name="Visible" Type="STRING" Value="false"/>
-			</Connection>
-			<Connection Source="INIT" Destination="DigitalInput_I2_CLK.INIT" Comment="" dx1="273.33333333333337">
-				<Attribute Name="Visible" Type="STRING" Value="false"/>
-			</Connection>
-			<Connection Source="INIT" Destination="DigitalInput_I3_CLK.INIT" Comment="" dx1="453.33333333333337" dx2="453.33333333333337" dy="0.0">
-				<Attribute Name="Visible" Type="STRING" Value="false"/>
-			</Connection>
-			<Connection Source="INIT" Destination="DigitalInput_I4_CLK.INIT" Comment="" dx1="1453.3333333333335">
-				<Attribute Name="Visible" Type="STRING" Value="false"/>
-			</Connection>
-			<Connection Source="INIT" Destination="Q_NumericValue.INIT" Comment="" dx1="3466.666666666667">
-				<Attribute Name="Visible" Type="STRING" Value="false"/>
-			</Connection>
-			<Connection Source="F_SINT_TO_UINT.CNF" Destination="Q_NumericValue.REQ" Comment="" dx1="233.33333333333334"/>
-			<Connection Source="DigitalInput_I1_CLK.IND" Destination="sequence_04.START_S1" Comment="" dx1="406.6666666666667" dx2="406.6666666666667" dy="0.0"/>
-			<Connection Source="DigitalInput_I2_CLK.IND" Destination="sequence_04.S2_S3" Comment="" dx1="373.33333333333337" dx2="373.33333333333337" dy="0.0"/>
-			<Connection Source="DigitalInput_I3_CLK.IND" Destination="sequence_04.S4_START" Comment=""/>
-			<Connection Source="DigitalInput_I4_CLK.IND" Destination="sequence_04.RESET" Comment="" dx1="253.33333333333334" dx2="253.33333333333334" dy="0.0"/>
-			<Connection Source="sequence_04.CNF" Destination="F_SINT_TO_UINT.REQ" Comment="" dx1="393.33333333333337" dx2="393.33333333333337" dy="-13.333333333333334"/>
-			<Connection Source="sequence_04.EO_S1" Destination="DigitalOutput_Q1.REQ" Comment="" dx1="186.66666666666669" dx2="186.66666666666669" dy="0.0"/>
-			<Connection Source="sequence_04.EO_S2" Destination="DigitalOutput_Q2.REQ" Comment="" dx1="253.33333333333334" dx2="253.33333333333334" dy="0.0"/>
-			<Connection Source="sequence_04.EO_S3" Destination="DigitalOutput_Q3.REQ" Comment="" dx1="320.0" dx2="320.0" dy="0.0"/>
-			<Connection Source="sequence_04.EO_S4" Destination="DigitalOutput_Q4.REQ" Comment="" dx1="393.33333333333337" dx2="393.33333333333337" dy="0.0"/>
+			<Connection Source="F_SINT_TO_UINT.CNF" Destination="Q_NumericValue.REQ" dx1="233.33"/>
+			<Connection Source="DigitalInput_I1_CLK.IND" Destination="sequence_04.START_S1" dx1="406.67"/>
+			<Connection Source="DigitalInput_I2_CLK.IND" Destination="sequence_04.S2_S3" dx1="373.33"/>
+			<Connection Source="DigitalInput_I3_CLK.IND" Destination="sequence_04.S4_START" dx1="453.33"/>
+			<Connection Source="DigitalInput_I4_CLK.IND" Destination="sequence_04.RESET" dx1="253.33"/>
+			<Connection Source="sequence_04.CNF" Destination="F_SINT_TO_UINT.REQ" dx1="393.33" dx2="393.33" dy="-13.33"/>
+			<Connection Source="sequence_04.EO_S1" Destination="DigitalOutput_Q1.REQ" dx1="186.67"/>
+			<Connection Source="sequence_04.EO_S2" Destination="DigitalOutput_Q2.REQ" dx1="253.33"/>
+			<Connection Source="sequence_04.EO_S3" Destination="DigitalOutput_Q3.REQ" dx1="320"/>
+			<Connection Source="sequence_04.EO_S4" Destination="DigitalOutput_Q4.REQ" dx1="393.33"/>
 		</EventConnections>
 		<DataConnections>
-			<Connection Source="F_SINT_TO_UINT.OUT" Destination="Q_NumericValue.u32NewValue" Comment="" dx1="233.33333333333334"/>
-			<Connection Source="sequence_04.STATE_NR" Destination="F_SINT_TO_UINT.IN" Comment="" dx1="186.66666666666669" dx2="186.66666666666669" dy="173.33333333333334"/>
-			<Connection Source="sequence_04.DO_S1" Destination="DigitalOutput_Q1.OUT" Comment="" dx1="220.0" dx2="220.0" dy="0.0"/>
-			<Connection Source="sequence_04.DO_S2" Destination="DigitalOutput_Q2.OUT" Comment="" dx1="286.6666666666667" dx2="286.6666666666667" dy="0.0"/>
-			<Connection Source="sequence_04.DO_S3" Destination="DigitalOutput_Q3.OUT" Comment="" dx1="353.33333333333337" dx2="353.33333333333337" dy="0.0"/>
-			<Connection Source="sequence_04.DO_S4" Destination="DigitalOutput_Q4.OUT" Comment="" dx1="386.6666666666667" dx2="386.6666666666667" dy="0.0"/>
+			<Connection Source="F_SINT_TO_UINT.OUT" Destination="Q_NumericValue.u32NewValue" dx1="233.33"/>
+			<Connection Source="sequence_04.STATE_NR" Destination="F_SINT_TO_UINT.IN" dx1="186.67" dx2="186.67" dy="173.33"/>
+			<Connection Source="sequence_04.DO_S1" Destination="DigitalOutput_Q1.OUT" dx1="220"/>
+			<Connection Source="sequence_04.DO_S2" Destination="DigitalOutput_Q2.OUT" dx1="286.67"/>
+			<Connection Source="sequence_04.DO_S3" Destination="DigitalOutput_Q3.OUT" dx1="353.33"/>
+			<Connection Source="sequence_04.DO_S4" Destination="DigitalOutput_Q4.OUT" dx1="386.67"/>
 		</DataConnections>
 		<AdapterConnections>
-			<Connection Source="sequence_04.timeOut" Destination="E_TimeOut.TimeOutSocket" Comment=""/>
+			<Connection Source="sequence_04.timeOut" Destination="E_TimeOut.TimeOutSocket" dx1="406.67"/>
 		</AdapterConnections>
 	</SubAppNetwork>
 </SubAppType>

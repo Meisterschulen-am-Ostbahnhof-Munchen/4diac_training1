@@ -6,12 +6,6 @@
 	</VersionInfo>
 	<CompilerInfo>
 	</CompilerInfo>
-	<SubAppInterfaceList>
-		<SubAppEventInputs>
-			<SubAppEvent Name="INIT" Type="EInit">
-			</SubAppEvent>
-		</SubAppEventInputs>
-	</SubAppInterfaceList>
 	<SubAppNetwork>
 		<FB Name="Hutschienenmoped_4_DO" Type="Hutschienenmoped_4_DO" x="-3300" y="100">
 			<Parameter Name="QI" Value="TRUE">
@@ -52,13 +46,5 @@
 				<Attribute Name="Visible" Value="false"/>
 			</Parameter>
 		</FB>
-		<EventConnections>
-			<Connection Source="INIT" Destination="Hutschienenmoped_3_DI.INIT" dx1="73.33" dx2="73.33" dy="0">
-				<Attribute Name="Visible" Value="false"/>
-			</Connection>
-			<Connection Source="INIT" Destination="Hutschienenmoped_4_DO.INIT" dx1="73.33" dx2="73.33" dy="0">
-				<Attribute Name="Visible" Value="false"/>
-			</Connection>
-		</EventConnections>
 	</SubAppNetwork>
 </SubAppType>

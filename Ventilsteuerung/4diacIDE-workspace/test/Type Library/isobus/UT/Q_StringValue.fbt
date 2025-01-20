@@ -32,11 +32,22 @@
 			<VarDeclaration Name="s16result" Type="INT" Comment="retval see description" />
 		</OutputVars>
 	</InterfaceList>
-	<Attribute Name="Documentation" Type="WSTRING"><![CDATA[<p>This command sends a string to the VT. The length of the string including &#39;&#39; may not be longer than the define ISO_VTC_CMD_STR_MAX_LENGTH. Take care that &#39;&#39; is trailed.</p>
+	<Attribute Name="Documentation" Type="CDATA"><![CDATA[<h1>Command Change String Value with command buffer reference ( Part 6 - F.24 )</h1>
 
-<p>Return values</p>
+<p>This command sends a string to the VT. If the ObjectID is already in the command FIFO then the value of this FIFO entry is updated. 
+The length of the string including '\0' may not be longer than the define ISO_VTC_CMD_STR_MAX_LENGTH. Take care that '\0' is trailed.</p>
 
-<p>iso_s16</p>
+<h2>param[in] {objectId, iso_u16}</h2>
+
+<p>Object ID</p>
+
+<h2>param[in] {string[], const uint8_t[] }</h2>
+
+<p>Pointer to string/p>
+
+<h2>Return Values:&nbsp;</h2>
+
+<h3>int16_t</h3>
 
 <ul>
 	<li><span style="color:#2980b9">VT_E_NO_ERR (0)</span>&nbsp;- OK</li>

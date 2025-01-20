@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<SubAppType Name="Uebung_025" Comment="Spiegelabfolge (5)">
+<SubAppType Name="Uebung_025" Comment="Spiegelabfolge (5)" >
 	<Identification Standard="61499-2">
 	</Identification>
 	<VersionInfo Version="1.0" Author="franz" Date="2023-10-23">
@@ -7,143 +7,112 @@
 	<CompilerInfo>
 	</CompilerInfo>
 	<SubAppInterfaceList>
-		<SubAppEventInputs>
-			<SubAppEvent Name="INIT" Type="Event" Comment="">
-			</SubAppEvent>
-		</SubAppEventInputs>
 	</SubAppInterfaceList>
 	<SubAppNetwork>
-		<FB Name="DigitalOutput_Q1" Type="QX" Comment="" x="-2833.33" y="-500">
-			<Parameter Name="QI" Value="TRUE" Comment=""/>
+		<FB Name="DigitalOutput_Q1" Type="QX" x="-2833.33" y="-500">
+			<Parameter Name="QI" Value="TRUE"/>
 		</FB>
-		<FB Name="SoftKey_F1_UP" Type="IE" Comment="" x="-6833.33" y="-500">
-			<Parameter Name="QI" Value="TRUE" Comment=""/>
+		<FB Name="SoftKey_F1_UP" Type="IE" x="-6833.33" y="-500">
+			<Parameter Name="QI" Value="TRUE"/>
 		</FB>
-		<FB Name="E_SR_Ausfahren_Cyl_1" Type="E_SR" Comment="" x="-4800" y="-266.67">
+		<FB Name="E_SR_Ausfahren_Cyl_1" Type="E_SR" x="-4800" y="-266.67">
 		</FB>
-		<FB Name="SoftKey_F2_DOWN" Type="IE" Comment="" x="-6833.33" y="1000">
-			<Parameter Name="QI" Value="TRUE" Comment=""/>
+		<FB Name="SoftKey_F2_DOWN" Type="IE" x="-6833.33" y="1000">
+			<Parameter Name="QI" Value="TRUE"/>
 		</FB>
-		<Comment Comment="START-Knopf Ausfahren" x="-8500" y="-333.33" width="1373.33" height="366.67"/>
-		<Comment Comment="Endlage Ausfahren_Cyl_1 &amp;#10;" x="-8500" y="1166.67" width="1373.33" height="366.67"/>
-		<FB Name="DigitalOutput_Q2" Type="QX" Comment="" x="-2833.33" y="1166.67">
-			<Parameter Name="QI" Value="TRUE" Comment=""/>
+		<Comment Comment="START-Knopf Ausfahren"  x="-8500" y="-333.33" width="1373.33" height="366.67"/>
+		<Comment Comment="Endlage Ausfahren_Cyl_1 &#10;"  x="-8500" y="1166.67" width="1373.33" height="366.67"/>
+		<FB Name="DigitalOutput_Q2" Type="QX" x="-2833.33" y="1166.67">
+			<Parameter Name="QI" Value="TRUE"/>
 		</FB>
-		<FB Name="E_SR_Ausfahren_Cyl_2" Type="E_SR" Comment="" x="-4833.33" y="1366.67">
+		<FB Name="E_SR_Ausfahren_Cyl_2" Type="E_SR" x="-4833.33" y="1366.67">
 		</FB>
-		<Comment Comment="Endlage Ausfahren_Cyl_2 &amp;#10;" x="-8500" y="2500" width="1373.33" height="366.67"/>
-		<FB Name="SoftKey_F3_DOWN" Type="IE" Comment="" x="-6833.33" y="2333.33">
-			<Parameter Name="QI" Value="TRUE" Comment=""/>
+		<Comment Comment="Endlage Ausfahren_Cyl_2 &#10;"  x="-8500" y="2500" width="1373.33" height="366.67"/>
+		<FB Name="SoftKey_F3_DOWN" Type="IE" x="-6833.33" y="2333.33">
+			<Parameter Name="QI" Value="TRUE"/>
 		</FB>
-		<Comment Comment="Ausfahren_Cyl_1" x="-1866.67" y="-933.33" width="1373.33" height="366.67"/>
-		<Comment Comment="Ausfahren_Cyl_2" x="-1866.67" y="666.67" width="1373.33" height="366.67"/>
-		<FB Name="SoftKey_F9_DOWN" Type="IE" Comment="" x="-6606.67" y="6586.67">
-			<Parameter Name="QI" Value="TRUE" Comment=""/>
+		<Comment Comment="Ausfahren_Cyl_1"  x="-1866.67" y="-933.33" width="1373.33" height="366.67"/>
+		<Comment Comment="Ausfahren_Cyl_2"  x="-1866.67" y="666.67" width="1373.33" height="366.67"/>
+		<FB Name="SoftKey_F9_DOWN" Type="IE" x="-6606.67" y="6586.67">
+			<Parameter Name="QI" Value="TRUE"/>
 		</FB>
-		<FB Name="E_SR_Einfahren_Cyl_2" Type="E_SR" Comment="" x="-4533.33" y="3600">
+		<FB Name="E_SR_Einfahren_Cyl_2" Type="E_SR" x="-4533.33" y="3600">
 		</FB>
-		<FB Name="DigitalOutput_Q3" Type="QX" Comment="" x="-2606.67" y="3753.33">
-			<Parameter Name="QI" Value="TRUE" Comment=""/>
+		<FB Name="DigitalOutput_Q3" Type="QX" x="-2606.67" y="3753.33">
+			<Parameter Name="QI" Value="TRUE"/>
 		</FB>
-		<Comment Comment="Einfahren Zeit gesteuert" x="-8273.33" y="3920" width="1373.33" height="366.67"/>
-		<FB Name="DigitalOutput_Q4" Type="QX" Comment="" x="-2606.67" y="5420">
-			<Parameter Name="QI" Value="TRUE" Comment=""/>
+		<Comment Comment="Einfahren Zeit gesteuert"  x="-8273.33" y="3920" width="1373.33" height="366.67"/>
+		<FB Name="DigitalOutput_Q4" Type="QX" x="-2606.67" y="5420">
+			<Parameter Name="QI" Value="TRUE"/>
 		</FB>
-		<FB Name="E_SR_Einfahren_Cyl_1" Type="E_SR" Comment="" x="-4606.67" y="5620">
+		<FB Name="E_SR_Einfahren_Cyl_1" Type="E_SR" x="-4606.67" y="5620">
 		</FB>
-		<Comment Comment="Endlage Einfahren_Cyl_1  &amp;#10;" x="-8273.33" y="6753.33" width="1373.33" height="366.67"/>
-		<FB Name="SoftKey_F8_DOWN" Type="IE" Comment="" x="-6606.67" y="5253.33">
-			<Parameter Name="QI" Value="TRUE" Comment=""/>
+		<Comment Comment="Endlage Einfahren_Cyl_1  &#10;"  x="-8273.33" y="6753.33" width="1373.33" height="366.67"/>
+		<FB Name="SoftKey_F8_DOWN" Type="IE" x="-6606.67" y="5253.33">
+			<Parameter Name="QI" Value="TRUE"/>
 		</FB>
-		<Comment Comment="Einfahren_Cyl_2" x="-1333.33" y="3200" width="1373.33" height="366.67"/>
-		<Comment Comment="Endlage Einfahren_Cyl_2  &amp;#10;" x="-8273.33" y="5420" width="1373.33" height="366.67"/>
-		<Comment Comment="Einfahren_Cyl_1 &amp;#10;" x="-1333.33" y="4933.33" width="1373.33" height="366.67"/>
-		<FB Name="E_DELAY" Type="E_DELAY" Comment="" x="-6500" y="3666.67">
-			<Parameter Name="DT" Value="T#2s" Comment=""/>
+		<Comment Comment="Einfahren_Cyl_2"  x="-1333.33" y="3200" width="1373.33" height="366.67"/>
+		<Comment Comment="Endlage Einfahren_Cyl_2  &#10;"  x="-8273.33" y="5420" width="1373.33" height="366.67"/>
+		<Comment Comment="Einfahren_Cyl_1 &#10;"  x="-1333.33" y="4933.33" width="1373.33" height="366.67"/>
+		<FB Name="E_DELAY" Type="E_DELAY" x="-6500" y="3666.67">
+			<Parameter Name="DT" Value="T#2s"/>
 		</FB>
-		<FB Name="E_REND_Ausfahren_Cyl_1" Type="E_REND" Comment="" x="-5733.33" y="666.67">
+		<FB Name="E_REND_Ausfahren_Cyl_1" Type="E_REND" x="-5733.33" y="666.67">
 		</FB>
-		<FB Name="E_REND_Ausfahren_Cyl_2" Type="E_REND" Comment="" x="-5833.33" y="2000">
+		<FB Name="E_REND_Ausfahren_Cyl_2" Type="E_REND" x="-5833.33" y="2000">
 		</FB>
-		<FB Name="E_REND_Einfahren_Cyl_2" Type="E_REND" Comment="" x="-5600" y="4533.33">
+		<FB Name="E_REND_Einfahren_Cyl_2" Type="E_REND" x="-5600" y="4533.33">
 		</FB>
-		<FB Name="E_REND_Einfahren_Cyl_1" Type="E_REND" Comment="" x="-5466.67" y="6400">
+		<FB Name="E_REND_Einfahren_Cyl_1" Type="E_REND" x="-5466.67" y="6400">
 		</FB>
-		<FB Name="E_SWITCH_Q1" Type="E_SWITCH" Comment="" x="-2800" y="-1066.67">
+		<FB Name="E_SWITCH_Q1" Type="E_SWITCH" x="-2800" y="-1066.67">
 		</FB>
-		<FB Name="E_SWITCH_Q2" Type="E_SWITCH" Comment="" x="-2800" y="533.33">
+		<FB Name="E_SWITCH_Q2" Type="E_SWITCH" x="-2800" y="533.33">
 		</FB>
-		<FB Name="E_SWITCH_Q3" Type="E_SWITCH" Comment="" x="-2666.67" y="3200">
+		<FB Name="E_SWITCH_Q3" Type="E_SWITCH" x="-2666.67" y="3200">
 		</FB>
-		<FB Name="E_SWITCH_Q4" Type="E_SWITCH" Comment="" x="-2666.67" y="4800">
+		<FB Name="E_SWITCH_Q4" Type="E_SWITCH" x="-2666.67" y="4800">
 		</FB>
 		<EventConnections>
-			<Connection Source="INIT" Destination="SoftKey_F1_UP.INIT" Comment="" dx1="746.67">
-				<Attribute Name="Visible" Value="false"/>
-			</Connection>
-			<Connection Source="INIT" Destination="DigitalOutput_Q1.INIT" Comment="" dx1="2753.33">
-				<Attribute Name="Visible" Value="false"/>
-			</Connection>
-			<Connection Source="SoftKey_F1_UP.IND" Destination="E_SR_Ausfahren_Cyl_1.S" Comment="" dx1="786.67"/>
-			<Connection Source="INIT" Destination="SoftKey_F2_DOWN.INIT" Comment="" dx1="746.67">
-				<Attribute Name="Visible" Value="false"/>
-			</Connection>
-			<Connection Source="E_SR_Ausfahren_Cyl_1.EO" Destination="DigitalOutput_Q1.REQ" Comment="" dx1="813.33"/>
-			<Connection Source="INIT" Destination="DigitalOutput_Q2.INIT" Comment="" dx1="4340">
-				<Attribute Name="Visible" Value="false"/>
-			</Connection>
-			<Connection Source="E_SR_Ausfahren_Cyl_2.EO" Destination="DigitalOutput_Q2.REQ" Comment="" dx1="640"/>
-			<Connection Source="INIT" Destination="SoftKey_F3_DOWN.INIT" Comment="" dx1="2346.67">
-				<Attribute Name="Visible" Value="false"/>
-			</Connection>
-			<Connection Source="INIT" Destination="SoftKey_F9_DOWN.INIT" Comment="" dx1="2346.67" dx2="2346.67" dy="0">
-				<Attribute Name="Visible" Value="false"/>
-			</Connection>
-			<Connection Source="INIT" Destination="DigitalOutput_Q3.INIT" Comment="" dx1="2753.33" dx2="2753.33" dy="0">
-				<Attribute Name="Visible" Value="false"/>
-			</Connection>
-			<Connection Source="INIT" Destination="DigitalOutput_Q4.INIT" Comment="" dx1="4340" dx2="4340" dy="0">
-				<Attribute Name="Visible" Value="false"/>
-			</Connection>
-			<Connection Source="E_SR_Einfahren_Cyl_2.EO" Destination="DigitalOutput_Q3.REQ" Comment="" dx1="580"/>
-			<Connection Source="INIT" Destination="SoftKey_F8_DOWN.INIT" Comment="" dx1="746.67" dx2="746.67" dy="0">
-				<Attribute Name="Visible" Value="false"/>
-			</Connection>
-			<Connection Source="E_SR_Einfahren_Cyl_1.EO" Destination="DigitalOutput_Q4.REQ" Comment="" dx1="640" dx2="640" dy="0"/>
-			<Connection Source="E_DELAY.EO" Destination="E_SR_Einfahren_Cyl_2.S" Comment="" dx1="613.33"/>
-			<Connection Source="E_REND_Ausfahren_Cyl_1.EO" Destination="E_SR_Ausfahren_Cyl_1.R" Comment="" dx1="293.33"/>
-			<Connection Source="E_REND_Ausfahren_Cyl_1.EO" Destination="E_SR_Ausfahren_Cyl_2.S" Comment="" dx1="80"/>
-			<Connection Source="SoftKey_F2_DOWN.IND" Destination="E_REND_Ausfahren_Cyl_1.EI2" Comment="" dx1="153.33"/>
-			<Connection Source="SoftKey_F3_DOWN.IND" Destination="E_REND_Ausfahren_Cyl_2.EI2" Comment="" dx1="240"/>
-			<Connection Source="E_REND_Ausfahren_Cyl_2.EO" Destination="E_SR_Ausfahren_Cyl_2.R" Comment="" dx1="180"/>
-			<Connection Source="E_REND_Einfahren_Cyl_1.EO" Destination="E_SR_Einfahren_Cyl_1.R" Comment="" dx1="213.33"/>
-			<Connection Source="SoftKey_F9_DOWN.IND" Destination="E_REND_Einfahren_Cyl_1.EI2" Comment="" dx1="206.67"/>
-			<Connection Source="E_REND_Einfahren_Cyl_2.EO" Destination="E_SR_Einfahren_Cyl_1.S" Comment="" dx1="80"/>
-			<Connection Source="E_REND_Einfahren_Cyl_2.EO" Destination="E_SR_Einfahren_Cyl_2.R" Comment="" dx1="426.67"/>
-			<Connection Source="SoftKey_F8_DOWN.IND" Destination="E_REND_Einfahren_Cyl_2.EI2" Comment="" dx1="206.67"/>
-			<Connection Source="E_REND_Ausfahren_Cyl_2.EO" Destination="E_DELAY.START" Comment="" dx1="100" dx2="100" dy="1233.33"/>
-			<Connection Source="SoftKey_F1_UP.IND" Destination="E_REND_Ausfahren_Cyl_1.R" Comment="" dx1="100"/>
-			<Connection Source="SoftKey_F2_DOWN.IND" Destination="E_REND_Ausfahren_Cyl_2.R" Comment="" dx1="120"/>
-			<Connection Source="E_DELAY.EO" Destination="E_REND_Einfahren_Cyl_2.R" Comment="" dx1="100"/>
-			<Connection Source="SoftKey_F8_DOWN.IND" Destination="E_REND_Einfahren_Cyl_1.R" Comment="" dx1="140"/>
-			<Connection Source="E_SR_Einfahren_Cyl_1.EO" Destination="E_SWITCH_Q4.EI" Comment="" dx1="620"/>
-			<Connection Source="E_SR_Einfahren_Cyl_2.EO" Destination="E_SWITCH_Q3.EI" Comment="" dx1="580"/>
-			<Connection Source="E_SR_Ausfahren_Cyl_2.EO" Destination="E_SWITCH_Q2.EI" Comment="" dx1="580"/>
-			<Connection Source="E_SR_Ausfahren_Cyl_1.EO" Destination="E_SWITCH_Q1.EI" Comment="" dx1="746.67"/>
-			<Connection Source="E_SWITCH_Q1.EO1" Destination="E_REND_Ausfahren_Cyl_1.EI1" Comment="" dx1="80" dx2="340" dy="1100"/>
-			<Connection Source="E_SWITCH_Q2.EO1" Destination="E_REND_Ausfahren_Cyl_2.EI1" Comment="" dx1="80" dx2="320" dy="1186.67"/>
-			<Connection Source="E_SWITCH_Q3.EO1" Destination="E_REND_Einfahren_Cyl_2.EI1" Comment="" dx1="486.67" dx2="380" dy="1080"/>
-			<Connection Source="E_SWITCH_Q4.EO1" Destination="E_REND_Einfahren_Cyl_1.EI1" Comment="" dx1="320" dx2="366.67" dy="1153.33"/>
+			<Connection Source="SoftKey_F1_UP.IND" Destination="E_SR_Ausfahren_Cyl_1.S" dx1="786.67"/>
+			<Connection Source="E_SR_Ausfahren_Cyl_1.EO" Destination="DigitalOutput_Q1.REQ" dx1="813.33"/>
+			<Connection Source="E_SR_Ausfahren_Cyl_2.EO" Destination="DigitalOutput_Q2.REQ" dx1="640"/>
+			<Connection Source="E_SR_Einfahren_Cyl_2.EO" Destination="DigitalOutput_Q3.REQ" dx1="580"/>
+			<Connection Source="E_SR_Einfahren_Cyl_1.EO" Destination="DigitalOutput_Q4.REQ" dx1="640"/>
+			<Connection Source="E_DELAY.EO" Destination="E_SR_Einfahren_Cyl_2.S" dx1="613.33"/>
+			<Connection Source="E_REND_Ausfahren_Cyl_1.EO" Destination="E_SR_Ausfahren_Cyl_1.R" dx1="293.33"/>
+			<Connection Source="E_REND_Ausfahren_Cyl_1.EO" Destination="E_SR_Ausfahren_Cyl_2.S" dx1="80"/>
+			<Connection Source="SoftKey_F2_DOWN.IND" Destination="E_REND_Ausfahren_Cyl_1.EI2" dx1="153.33"/>
+			<Connection Source="SoftKey_F3_DOWN.IND" Destination="E_REND_Ausfahren_Cyl_2.EI2" dx1="240"/>
+			<Connection Source="E_REND_Ausfahren_Cyl_2.EO" Destination="E_SR_Ausfahren_Cyl_2.R" dx1="180"/>
+			<Connection Source="E_REND_Einfahren_Cyl_1.EO" Destination="E_SR_Einfahren_Cyl_1.R" dx1="213.33"/>
+			<Connection Source="SoftKey_F9_DOWN.IND" Destination="E_REND_Einfahren_Cyl_1.EI2" dx1="206.67"/>
+			<Connection Source="E_REND_Einfahren_Cyl_2.EO" Destination="E_SR_Einfahren_Cyl_1.S" dx1="80"/>
+			<Connection Source="E_REND_Einfahren_Cyl_2.EO" Destination="E_SR_Einfahren_Cyl_2.R" dx1="426.67"/>
+			<Connection Source="SoftKey_F8_DOWN.IND" Destination="E_REND_Einfahren_Cyl_2.EI2" dx1="206.67"/>
+			<Connection Source="E_REND_Ausfahren_Cyl_2.EO" Destination="E_DELAY.START" dx1="100" dx2="100" dy="1233.33"/>
+			<Connection Source="SoftKey_F1_UP.IND" Destination="E_REND_Ausfahren_Cyl_1.R" dx1="100"/>
+			<Connection Source="SoftKey_F2_DOWN.IND" Destination="E_REND_Ausfahren_Cyl_2.R" dx1="120"/>
+			<Connection Source="E_DELAY.EO" Destination="E_REND_Einfahren_Cyl_2.R" dx1="100"/>
+			<Connection Source="SoftKey_F8_DOWN.IND" Destination="E_REND_Einfahren_Cyl_1.R" dx1="140"/>
+			<Connection Source="E_SR_Einfahren_Cyl_1.EO" Destination="E_SWITCH_Q4.EI" dx1="620"/>
+			<Connection Source="E_SR_Einfahren_Cyl_2.EO" Destination="E_SWITCH_Q3.EI" dx1="580"/>
+			<Connection Source="E_SR_Ausfahren_Cyl_2.EO" Destination="E_SWITCH_Q2.EI" dx1="580"/>
+			<Connection Source="E_SR_Ausfahren_Cyl_1.EO" Destination="E_SWITCH_Q1.EI" dx1="746.67"/>
+			<Connection Source="E_SWITCH_Q1.EO1" Destination="E_REND_Ausfahren_Cyl_1.EI1" dx1="80" dx2="340" dy="1100"/>
+			<Connection Source="E_SWITCH_Q2.EO1" Destination="E_REND_Ausfahren_Cyl_2.EI1" dx1="80" dx2="320" dy="1186.67"/>
+			<Connection Source="E_SWITCH_Q3.EO1" Destination="E_REND_Einfahren_Cyl_2.EI1" dx1="486.67" dx2="380" dy="1080"/>
+			<Connection Source="E_SWITCH_Q4.EO1" Destination="E_REND_Einfahren_Cyl_1.EI1" dx1="320" dx2="366.67" dy="1153.33"/>
 		</EventConnections>
 		<DataConnections>
-			<Connection Source="E_SR_Ausfahren_Cyl_1.Q" Destination="DigitalOutput_Q1.OUT" Comment="" dx1="1073.33"/>
-			<Connection Source="E_SR_Ausfahren_Cyl_2.Q" Destination="DigitalOutput_Q2.OUT" Comment="" dx1="660"/>
-			<Connection Source="E_SR_Einfahren_Cyl_1.Q" Destination="DigitalOutput_Q4.OUT" Comment="" dx1="660"/>
-			<Connection Source="E_SR_Einfahren_Cyl_2.Q" Destination="DigitalOutput_Q3.OUT" Comment="" dx1="893.33"/>
-			<Connection Source="E_SR_Einfahren_Cyl_1.Q" Destination="E_SWITCH_Q4.G" Comment="" dx1="913.33"/>
-			<Connection Source="E_SR_Einfahren_Cyl_2.Q" Destination="E_SWITCH_Q3.G" Comment="" dx1="906.67"/>
-			<Connection Source="E_SR_Ausfahren_Cyl_2.Q" Destination="E_SWITCH_Q2.G" Comment="" dx1="953.33"/>
-			<Connection Source="E_SR_Ausfahren_Cyl_1.Q" Destination="E_SWITCH_Q1.G" Comment="" dx1="913.33"/>
+			<Connection Source="E_SR_Ausfahren_Cyl_1.Q" Destination="DigitalOutput_Q1.OUT" dx1="1073.33"/>
+			<Connection Source="E_SR_Ausfahren_Cyl_2.Q" Destination="DigitalOutput_Q2.OUT" dx1="660"/>
+			<Connection Source="E_SR_Einfahren_Cyl_1.Q" Destination="DigitalOutput_Q4.OUT" dx1="660"/>
+			<Connection Source="E_SR_Einfahren_Cyl_2.Q" Destination="DigitalOutput_Q3.OUT" dx1="893.33"/>
+			<Connection Source="E_SR_Einfahren_Cyl_1.Q" Destination="E_SWITCH_Q4.G" dx1="913.33"/>
+			<Connection Source="E_SR_Einfahren_Cyl_2.Q" Destination="E_SWITCH_Q3.G" dx1="906.67"/>
+			<Connection Source="E_SR_Ausfahren_Cyl_2.Q" Destination="E_SWITCH_Q2.G" dx1="953.33"/>
+			<Connection Source="E_SR_Ausfahren_Cyl_1.Q" Destination="E_SWITCH_Q1.G" dx1="913.33"/>
 		</DataConnections>
 	</SubAppNetwork>
 </SubAppType>

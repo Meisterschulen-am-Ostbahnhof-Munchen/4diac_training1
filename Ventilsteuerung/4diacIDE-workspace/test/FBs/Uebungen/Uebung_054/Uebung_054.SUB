@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<SubAppType Name="Uebung_054" Comment="DigitalInput_I1-_I4 auf DigitalOutput_Q1-_Q4">
+<SubAppType Name="Uebung_054" Comment="DigitalInput_I1-_I4 auf DigitalOutput_Q1-_Q4" >
 	<Identification Standard="61499-2">
 	</Identification>
 	<VersionInfo Version="1.0" Author="franz" Date="2023-10-23">
@@ -7,86 +7,57 @@
 	<CompilerInfo>
 	</CompilerInfo>
 	<SubAppInterfaceList>
-		<SubAppEventInputs>
-			<SubAppEvent Name="INIT" Type="Event" Comment="">
-				<Attribute Name="YPOSITION" Type="INT" Value="0"/>
-			</SubAppEvent>
-		</SubAppEventInputs>
 	</SubAppInterfaceList>
 	<SubAppNetwork>
-		<FB Name="DigitalOutput_Q1" Type="QX" Comment="" x="-4146.666666666667" y="-986.6666666666667">
-			<Parameter Name="QI" Value="TRUE" Comment=""/>
+		<FB Name="DigitalOutput_Q1" Type="QX" x="-4146.67" y="-986.67">
+			<Parameter Name="QI" Value="TRUE"/>
 		</FB>
-		<FB Name="DigitalInput_I1" Type="IX" Comment="" x="-8706.666666666668" y="-420.0">
-			<Parameter Name="QI" Value="TRUE" Comment=""/>
+		<FB Name="DigitalInput_I1" Type="IX" x="-8706.67" y="-420">
+			<Parameter Name="QI" Value="TRUE"/>
 		</FB>
-		<FB Name="DigitalOutput_Q2" Type="QX" Comment="" x="-4146.666666666667" y="-40.0">
-			<Parameter Name="QI" Value="TRUE" Comment=""/>
+		<FB Name="DigitalOutput_Q2" Type="QX" x="-4146.67" y="-40">
+			<Parameter Name="QI" Value="TRUE"/>
 		</FB>
-		<FB Name="DigitalInput_I2" Type="IX" Comment="" x="-8706.666666666668" y="660.0">
-			<Parameter Name="QI" Value="TRUE" Comment=""/>
+		<FB Name="DigitalInput_I2" Type="IX" x="-8706.67" y="660">
+			<Parameter Name="QI" Value="TRUE"/>
 		</FB>
-		<FB Name="DigitalOutput_Q3" Type="QX" Comment="" x="-4146.666666666667" y="906.6666666666667">
-			<Parameter Name="QI" Value="TRUE" Comment=""/>
+		<FB Name="DigitalOutput_Q3" Type="QX" x="-4146.67" y="906.67">
+			<Parameter Name="QI" Value="TRUE"/>
 		</FB>
-		<FB Name="DigitalInput_I3" Type="IX" Comment="" x="-8706.666666666668" y="1740.0">
-			<Parameter Name="QI" Value="TRUE" Comment=""/>
+		<FB Name="DigitalInput_I3" Type="IX" x="-8706.67" y="1740">
+			<Parameter Name="QI" Value="TRUE"/>
 		</FB>
-		<FB Name="DigitalOutput_Q4" Type="QX" Comment="" x="-4146.666666666667" y="1853.3333333333335">
-			<Parameter Name="QI" Value="TRUE" Comment=""/>
+		<FB Name="DigitalOutput_Q4" Type="QX" x="-4146.67" y="1853.33">
+			<Parameter Name="QI" Value="TRUE"/>
 		</FB>
-		<FB Name="DigitalInput_I4" Type="IX" Comment="" x="-8706.666666666668" y="2820.0">
-			<Parameter Name="QI" Value="TRUE" Comment=""/>
+		<FB Name="DigitalInput_I4" Type="IX" x="-8706.67" y="2820">
+			<Parameter Name="QI" Value="TRUE"/>
 		</FB>
-		<FB Name="ARR08B_TO_BOOLS" Type="ARR08B_TO_BOOLS" Comment="" x="-5946.666666666667" y="1966.6666666666667">
+		<FB Name="ARR08B_TO_BOOLS" Type="ARR08B_TO_BOOLS" x="-5946.67" y="1966.67">
 		</FB>
-		<FB Name="BOOLS_TO_ARR08B" Type="BOOLS_TO_ARR08B" Comment="" x="-7473.333333333334" y="1966.6666666666667">
+		<FB Name="BOOLS_TO_ARR08B" Type="BOOLS_TO_ARR08B" x="-7473.33" y="1966.67">
 		</FB>
 		<EventConnections>
-			<Connection Source="INIT" Destination="DigitalInput_I1.INIT" Comment="" dx1="1073.3333333333335">
-				<Attribute Name="Visible" Type="STRING" Value="false"/>
-			</Connection>
-			<Connection Source="INIT" Destination="DigitalInput_I2.INIT" Comment="" dx1="1146.6666666666667">
-				<Attribute Name="Visible" Type="STRING" Value="false"/>
-			</Connection>
-			<Connection Source="INIT" Destination="DigitalInput_I3.INIT" Comment="" dx1="1073.3333333333335" dx2="1073.3333333333335" dy="0.0">
-				<Attribute Name="Visible" Type="STRING" Value="false"/>
-			</Connection>
-			<Connection Source="INIT" Destination="DigitalInput_I4.INIT" Comment="" dx1="1140.0">
-				<Attribute Name="Visible" Type="STRING" Value="false"/>
-			</Connection>
-			<Connection Source="INIT" Destination="DigitalOutput_Q1.INIT" Comment="" dx1="3946.666666666667">
-				<Attribute Name="Visible" Type="STRING" Value="false"/>
-			</Connection>
-			<Connection Source="INIT" Destination="DigitalOutput_Q2.INIT" Comment="" dx1="3946.666666666667">
-				<Attribute Name="Visible" Type="STRING" Value="false"/>
-			</Connection>
-			<Connection Source="INIT" Destination="DigitalOutput_Q3.INIT" Comment="" dx1="3946.666666666667">
-				<Attribute Name="Visible" Type="STRING" Value="false"/>
-			</Connection>
-			<Connection Source="INIT" Destination="DigitalOutput_Q4.INIT" Comment="" dx1="3946.666666666667">
-				<Attribute Name="Visible" Type="STRING" Value="false"/>
-			</Connection>
-			<Connection Source="BOOLS_TO_ARR08B.CNF" Destination="ARR08B_TO_BOOLS.REQ" Comment=""/>
-			<Connection Source="DigitalInput_I1.IND" Destination="BOOLS_TO_ARR08B.REQ" Comment="" dx1="73.33333333333334"/>
-			<Connection Source="DigitalInput_I2.IND" Destination="BOOLS_TO_ARR08B.REQ" Comment="" dx1="73.33333333333334"/>
-			<Connection Source="DigitalInput_I3.IND" Destination="BOOLS_TO_ARR08B.REQ" Comment=""/>
-			<Connection Source="DigitalInput_I4.IND" Destination="BOOLS_TO_ARR08B.REQ" Comment="" dx1="73.33333333333334"/>
-			<Connection Source="ARR08B_TO_BOOLS.CNF" Destination="DigitalOutput_Q1.REQ" Comment="" dx1="206.66666666666669"/>
-			<Connection Source="ARR08B_TO_BOOLS.CNF" Destination="DigitalOutput_Q2.REQ" Comment="" dx1="206.66666666666669"/>
-			<Connection Source="ARR08B_TO_BOOLS.CNF" Destination="DigitalOutput_Q3.REQ" Comment="" dx1="206.66666666666669"/>
-			<Connection Source="ARR08B_TO_BOOLS.CNF" Destination="DigitalOutput_Q4.REQ" Comment=""/>
+			<Connection Source="BOOLS_TO_ARR08B.CNF" Destination="ARR08B_TO_BOOLS.REQ"/>
+			<Connection Source="DigitalInput_I1.IND" Destination="BOOLS_TO_ARR08B.REQ" dx1="73.33"/>
+			<Connection Source="DigitalInput_I2.IND" Destination="BOOLS_TO_ARR08B.REQ" dx1="73.33"/>
+			<Connection Source="DigitalInput_I3.IND" Destination="BOOLS_TO_ARR08B.REQ" dx1="266.67"/>
+			<Connection Source="DigitalInput_I4.IND" Destination="BOOLS_TO_ARR08B.REQ" dx1="73.33"/>
+			<Connection Source="ARR08B_TO_BOOLS.CNF" Destination="DigitalOutput_Q1.REQ" dx1="206.67"/>
+			<Connection Source="ARR08B_TO_BOOLS.CNF" Destination="DigitalOutput_Q2.REQ" dx1="206.67"/>
+			<Connection Source="ARR08B_TO_BOOLS.CNF" Destination="DigitalOutput_Q3.REQ" dx1="206.67"/>
+			<Connection Source="ARR08B_TO_BOOLS.CNF" Destination="DigitalOutput_Q4.REQ" dx1="420"/>
 		</EventConnections>
 		<DataConnections>
-			<Connection Source="BOOLS_TO_ARR08B.OUT" Destination="ARR08B_TO_BOOLS.IN" Comment="" dx1="73.33333333333334"/>
-			<Connection Source="DigitalInput_I1.IN" Destination="BOOLS_TO_ARR08B.IN_00" Comment="" dx1="206.66666666666669"/>
-			<Connection Source="DigitalInput_I2.IN" Destination="BOOLS_TO_ARR08B.IN_01" Comment="" dx1="140.0"/>
-			<Connection Source="DigitalInput_I3.IN" Destination="BOOLS_TO_ARR08B.IN_02" Comment="" dx1="140.0"/>
-			<Connection Source="DigitalInput_I4.IN" Destination="BOOLS_TO_ARR08B.IN_03" Comment="" dx1="140.0"/>
-			<Connection Source="ARR08B_TO_BOOLS.OUT_00" Destination="DigitalOutput_Q1.OUT" Comment="" dx1="73.33333333333334"/>
-			<Connection Source="ARR08B_TO_BOOLS.OUT_01" Destination="DigitalOutput_Q2.OUT" Comment="" dx1="140.0"/>
-			<Connection Source="ARR08B_TO_BOOLS.OUT_02" Destination="DigitalOutput_Q3.OUT" Comment="" dx1="273.33333333333337"/>
-			<Connection Source="ARR08B_TO_BOOLS.OUT_03" Destination="DigitalOutput_Q4.OUT" Comment="" dx1="340.0"/>
+			<Connection Source="BOOLS_TO_ARR08B.OUT" Destination="ARR08B_TO_BOOLS.IN" dx1="73.33"/>
+			<Connection Source="DigitalInput_I1.IN" Destination="BOOLS_TO_ARR08B.IN_00" dx1="206.67"/>
+			<Connection Source="DigitalInput_I2.IN" Destination="BOOLS_TO_ARR08B.IN_01" dx1="140"/>
+			<Connection Source="DigitalInput_I3.IN" Destination="BOOLS_TO_ARR08B.IN_02" dx1="140"/>
+			<Connection Source="DigitalInput_I4.IN" Destination="BOOLS_TO_ARR08B.IN_03" dx1="140"/>
+			<Connection Source="ARR08B_TO_BOOLS.OUT_00" Destination="DigitalOutput_Q1.OUT" dx1="73.33"/>
+			<Connection Source="ARR08B_TO_BOOLS.OUT_01" Destination="DigitalOutput_Q2.OUT" dx1="140"/>
+			<Connection Source="ARR08B_TO_BOOLS.OUT_02" Destination="DigitalOutput_Q3.OUT" dx1="273.33"/>
+			<Connection Source="ARR08B_TO_BOOLS.OUT_03" Destination="DigitalOutput_Q4.OUT" dx1="340"/>
 		</DataConnections>
 	</SubAppNetwork>
 </SubAppType>

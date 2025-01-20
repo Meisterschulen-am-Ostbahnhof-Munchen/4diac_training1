@@ -40,11 +40,29 @@
 			<VarDeclaration Name="s16result" Type="INT" Comment="retval see description" />
 		</OutputVars>
 	</InterfaceList>
-	<Attribute Name="Documentation" Type="WSTRING"><![CDATA[<p>This command is used to change the end point of a line object by changing the width, height and/or line direction attributes.</p>
+	<Attribute Name="Documentation" Type="CDATA"><![CDATA[<h1>Command change end point ( Part 6 - F.26 )</h1>
 
-<p>Return values</p>
+<p>This command is used to change the end point of a line object by changing the width, height and/or line direction attributes.</p>
 
-<p>iso_s16</p>
+<h2>param[in] {objectID, uint16_t}</h2>
+
+<p>Object ID</p>
+
+<h2>param[in] {width_px, uint16_t}</h2>
+
+<p>X value of end point</p>
+
+<h2>param[in] {height_px, uint16_t}</h2>
+
+<p>Y value of end point</p>
+
+<h2>param[in] {direction, uint8_t}</h2>
+
+<p>Line direction</p>
+
+<h2>Return Values:&nbsp;</h2>
+
+<h3>int16_t</h3>
 
 <ul>
 	<li><span style="color:#2980b9">VT_E_NO_ERR (0)</span>&nbsp;- OK</li>

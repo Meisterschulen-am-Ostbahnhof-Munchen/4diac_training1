@@ -7,10 +7,6 @@
 	<CompilerInfo>
 	</CompilerInfo>
 	<SubAppInterfaceList>
-		<SubAppEventInputs>
-			<SubAppEvent Name="INIT" Type="Event">
-			</SubAppEvent>
-		</SubAppEventInputs>
 	</SubAppInterfaceList>
 	<SubAppNetwork>
 		<FB Name="I_GBSD" Type="I_GBSD" x="-5200" y="500">
@@ -69,40 +65,13 @@
 		<FB Name="E_D_FF_Q4" Type="E_D_FF" x="-200" y="4600">
 		</FB>
 		<EventConnections>
-			<Connection Source="INIT" Destination="I_GBSD.INIT" dx1="1766.67">
-				<Attribute Name="Visible" Value="false"/>
-			</Connection>
 			<Connection Source="I_GBSD.IND" Destination="Q_NumericValue_GBSD.REQ"/>
-			<Connection Source="INIT" Destination="I_WBSD.INIT" dx1="1766.67">
-				<Attribute Name="Visible" Value="false"/>
-			</Connection>
 			<Connection Source="I_WBSD.IND" Destination="Q_NumericValue_WBSD.REQ"/>
 			<Connection Source="E_D_FF_Q1.EO" Destination="DigitalOutput_Q1.REQ"/>
-			<Connection Source="INIT" Destination="DigitalOutput_Q1.INIT" dx1="4980">
-				<Attribute Name="Visible" Value="false"/>
-			</Connection>
-			<Connection Source="INIT" Destination="Q_NumericValue_WBSD.INIT" dx1="4033.33">
-				<Attribute Name="Visible" Value="false"/>
-			</Connection>
-			<Connection Source="INIT" Destination="Q_NumericValue_GBSD.INIT" dx1="4013.33">
-				<Attribute Name="Visible" Value="false"/>
-			</Connection>
-			<Connection Source="INIT" Destination="Q_NumberVariable_Wheel_based_machine_distance.INIT" dx1="5053.33">
-				<Attribute Name="Visible" Value="false"/>
-			</Connection>
 			<Connection Source="I_GBSD.IND" Destination="Q_NumberVariable_Wheel_based_machine_distance.REQ" dx1="1360"/>
 			<Connection Source="E_D_FF_Q2.EO" Destination="DigitalOutput_Q2.REQ"/>
-			<Connection Source="INIT" Destination="DigitalOutput_Q2.INIT" dx1="4980">
-				<Attribute Name="Visible" Value="false"/>
-			</Connection>
 			<Connection Source="E_D_FF_Q3.EO" Destination="DigitalOutput_Q3.REQ"/>
-			<Connection Source="INIT" Destination="DigitalOutput_Q3.INIT" dx1="4973.33">
-				<Attribute Name="Visible" Value="false"/>
-			</Connection>
 			<Connection Source="E_D_FF_Q4.EO" Destination="DigitalOutput_Q4.REQ"/>
-			<Connection Source="INIT" Destination="DigitalOutput_Q4.INIT" dx1="4980">
-				<Attribute Name="Visible" Value="false"/>
-			</Connection>
 			<Connection Source="I_GBSD.IND" Destination="RangeBasedPulse_Q1.REQ" dx1="80" dx2="80" dy="0"/>
 			<Connection Source="RangeBasedPulse_Q1.CNF" Destination="E_D_FF_Q1.CLK" dx1="120" dx2="120" dy="0"/>
 			<Connection Source="I_GBSD.IND" Destination="RangeBasedPulse_Q2.REQ" dx1="80" dx2="80" dy="0"/>
