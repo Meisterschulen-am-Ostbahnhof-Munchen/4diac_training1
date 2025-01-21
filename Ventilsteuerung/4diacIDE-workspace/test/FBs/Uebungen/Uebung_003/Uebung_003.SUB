@@ -9,27 +9,25 @@
 	<SubAppInterfaceList>
 	</SubAppInterfaceList>
 	<SubAppNetwork>
-		<FB Name="DigitalOutput_Q1" Type="QX" x="-1473.33" y="-793.33">
+		<FB Name="DigitalOutput_Q1" Type="QX" x="-1500" y="-800">
 			<Parameter Name="QI" Value="TRUE"/>
 		</FB>
-		<FB Name="DigitalInput_I1" Type="IX" x="-4533.33" y="-906.67">
+		<FB Name="DigitalInput_I1" Type="IX" x="-4500" y="-900">
 			<Parameter Name="QI" Value="TRUE"/>
 		</FB>
-		<FB Name="DigitalOutput_Q2" Type="QX" x="-1473.33" y="226.67">
+		<FB Name="DigitalOutput_Q2" Type="QX" x="-1500" y="100">
 			<Parameter Name="QI" Value="TRUE"/>
 		</FB>
-		<FB Name="DigitalInput_I2" Type="IX" x="-4533.33" y="113.33">
+		<FB Name="DigitalInput_I2" Type="IX" x="-4500" y="0">
 			<Parameter Name="QI" Value="TRUE"/>
 		</FB>
 		<EventConnections>
-			<Connection Source="DigitalInput_I1.INITO" Destination="DigitalOutput_Q1.INIT" dx1="1200"/>
-			<Connection Source="DigitalInput_I1.IND" Destination="DigitalOutput_Q1.REQ" dx1="1193.33"/>
-			<Connection Source="DigitalInput_I2.IND" Destination="DigitalOutput_Q2.REQ" dx1="1193.33"/>
-			<Connection Source="DigitalInput_I2.INITO" Destination="DigitalOutput_Q2.INIT" dx1="1200"/>
+			<Connection Source="DigitalInput_I1.IND" Destination="DigitalOutput_Q1.REQ"/>
+			<Connection Source="DigitalInput_I2.IND" Destination="DigitalOutput_Q2.REQ"/>
 		</EventConnections>
 		<DataConnections>
-			<Connection Source="DigitalInput_I1.IN" Destination="DigitalOutput_Q1.OUT" dx1="1193.33"/>
-			<Connection Source="DigitalInput_I2.IN" Destination="DigitalOutput_Q2.OUT" dx1="1193.33"/>
+			<Connection Source="DigitalInput_I1.IN" Destination="DigitalOutput_Q1.OUT"/>
+			<Connection Source="DigitalInput_I2.IN" Destination="DigitalOutput_Q2.OUT"/>
 		</DataConnections>
 	</SubAppNetwork>
 </SubAppType>

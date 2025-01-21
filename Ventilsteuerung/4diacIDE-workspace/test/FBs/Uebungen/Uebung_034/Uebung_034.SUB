@@ -9,7 +9,7 @@
 	<SubAppInterfaceList>
 	</SubAppInterfaceList>
 	<SubAppNetwork>
-		<FB Name="AnalogInput_I7" Type="ID" x="-2533.33" y="1066.67">
+		<FB Name="AnalogInput_I7" Type="ID" x="-2700" y="1300">
 			<Parameter Name="QI" Value="TRUE">
 				<Attribute Name="Visible" Value="false"/>
 			</Parameter>
@@ -17,9 +17,9 @@
 				<Attribute Name="Visible" Value="false"/>
 			</Parameter>
 		</FB>
-		<FB Name="F_DWORD_TO_UDINT_I7" Type="F_DWORD_TO_UDINT" x="1360" y="2386.66">
+		<FB Name="F_DWORD_TO_UDINT_I7" Type="F_DWORD_TO_UDINT" x="1100" y="2600">
 		</FB>
-		<FB Name="PWMOutput_Q4" Type="QD" x="1733.33" y="1066.67">
+		<FB Name="PWMOutput_Q4" Type="QD" x="1300" y="1600">
 			<Parameter Name="QI" Value="TRUE">
 				<Attribute Name="Visible" Value="false"/>
 			</Parameter>
@@ -31,15 +31,14 @@
 			<Parameter Name="N" Value="UINT#1"/>
 		</FB>
 		<EventConnections>
-			<Connection Source="AnalogInput_I7.INITO" Destination="PWMOutput_Q4.INIT"/>
 			<Connection Source="AnalogInput_I7.IND" Destination="F_SHL.REQ" dx1="166.67"/>
 			<Connection Source="F_SHL.CNF" Destination="F_DWORD_TO_UDINT_I7.REQ" dx1="1040"/>
-			<Connection Source="F_SHL.CNF" Destination="PWMOutput_Q4.REQ" dx1="1233.33"/>
+			<Connection Source="F_SHL.CNF" Destination="PWMOutput_Q4.REQ"/>
 		</EventConnections>
 		<DataConnections>
-			<Connection Source="AnalogInput_I7.IN" Destination="F_SHL.IN" dx1="80"/>
-			<Connection Source="F_SHL.OUT" Destination="PWMOutput_Q4.OUT" dx1="1400"/>
-			<Connection Source="F_SHL.OUT" Destination="F_DWORD_TO_UDINT_I7.IN" dx1="1213.33"/>
+			<Connection Source="AnalogInput_I7.IN" Destination="F_SHL.IN"/>
+			<Connection Source="F_SHL.OUT" Destination="PWMOutput_Q4.OUT"/>
+			<Connection Source="F_SHL.OUT" Destination="F_DWORD_TO_UDINT_I7.IN" dx1="853.33"/>
 		</DataConnections>
 	</SubAppNetwork>
 </SubAppType>

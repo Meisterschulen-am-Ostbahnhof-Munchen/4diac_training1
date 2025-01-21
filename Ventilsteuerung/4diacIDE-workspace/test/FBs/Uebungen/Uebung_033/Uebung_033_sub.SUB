@@ -9,18 +9,17 @@
 	<SubAppInterfaceList>
 	</SubAppInterfaceList>
 	<SubAppNetwork>
-		<FB Name="LED" Type="QX" x="-1466.67" y="-833.33">
+		<FB Name="LED" Type="QX" x="-1500" y="-700">
 			<Parameter Name="QI" Value="TRUE"/>
 		</FB>
-		<FB Name="BUTTON" Type="IX" x="-4533.33" y="-946.67">
+		<FB Name="BUTTON" Type="IX" x="-4500" y="-800">
 			<Parameter Name="QI" Value="TRUE"/>
 		</FB>
 		<EventConnections>
-			<Connection Source="BUTTON.INITO" Destination="LED.INIT" dx1="1200"/>
-			<Connection Source="BUTTON.IND" Destination="LED.REQ" dx1="1186.67"/>
+			<Connection Source="BUTTON.IND" Destination="LED.REQ"/>
 		</EventConnections>
 		<DataConnections>
-			<Connection Source="BUTTON.IN" Destination="LED.OUT" dx1="1186.67"/>
+			<Connection Source="BUTTON.IN" Destination="LED.OUT"/>
 		</DataConnections>
 	</SubAppNetwork>
 </SubAppType>

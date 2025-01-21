@@ -9,36 +9,33 @@
 	<SubAppInterfaceList>
 	</SubAppInterfaceList>
 	<SubAppNetwork>
-		<FB Name="LED_Q1_5HZ" Type="QX" x="-1466.67" y="-833.33">
+		<FB Name="LED_Q1_5HZ" Type="QX" x="-1500" y="-900">
 			<Parameter Name="QI" Value="TRUE"/>
 		</FB>
-		<FB Name="DigitalInput_I1" Type="IX" x="-4533.33" y="-946.67">
+		<FB Name="DigitalInput_I1" Type="IX" x="-4500" y="-1000">
 			<Parameter Name="QI" Value="TRUE"/>
 		</FB>
-		<FB Name="LED_Q1_1HZ" Type="QX" x="-1466.67" y="400">
+		<FB Name="LED_Q1_1HZ" Type="QX" x="-1500" y="300">
 			<Parameter Name="QI" Value="TRUE"/>
 		</FB>
-		<FB Name="DigitalInput_I2" Type="IX" x="-4533.33" y="286.67">
+		<FB Name="DigitalInput_I2" Type="IX" x="-4500" y="200">
 			<Parameter Name="QI" Value="TRUE"/>
 		</FB>
-		<FB Name="LED_Q1_ON" Type="QX" x="-1466.67" y="1566.67">
+		<FB Name="LED_Q1_ON" Type="QX" x="-1500" y="1500">
 			<Parameter Name="QI" Value="TRUE"/>
 		</FB>
-		<FB Name="DigitalInput_I3" Type="IX" x="-4533.33" y="1453.33">
+		<FB Name="DigitalInput_I3" Type="IX" x="-4500" y="1400">
 			<Parameter Name="QI" Value="TRUE"/>
 		</FB>
 		<EventConnections>
-			<Connection Source="DigitalInput_I1.INITO" Destination="LED_Q1_5HZ.INIT" dx1="1200"/>
-			<Connection Source="DigitalInput_I1.IND" Destination="LED_Q1_5HZ.REQ" dx1="1186.67"/>
-			<Connection Source="DigitalInput_I2.IND" Destination="LED_Q1_1HZ.REQ" dx1="1186.67"/>
-			<Connection Source="DigitalInput_I2.INITO" Destination="LED_Q1_1HZ.INIT" dx1="1186.67"/>
-			<Connection Source="DigitalInput_I3.IND" Destination="LED_Q1_ON.REQ" dx1="1186.67"/>
-			<Connection Source="DigitalInput_I3.INITO" Destination="LED_Q1_ON.INIT" dx1="1186.67"/>
+			<Connection Source="DigitalInput_I1.IND" Destination="LED_Q1_5HZ.REQ"/>
+			<Connection Source="DigitalInput_I2.IND" Destination="LED_Q1_1HZ.REQ"/>
+			<Connection Source="DigitalInput_I3.IND" Destination="LED_Q1_ON.REQ"/>
 		</EventConnections>
 		<DataConnections>
-			<Connection Source="DigitalInput_I1.IN" Destination="LED_Q1_5HZ.OUT" dx1="1186.67"/>
-			<Connection Source="DigitalInput_I2.IN" Destination="LED_Q1_1HZ.OUT" dx1="1186.67"/>
-			<Connection Source="DigitalInput_I3.IN" Destination="LED_Q1_ON.OUT" dx1="1186.67"/>
+			<Connection Source="DigitalInput_I1.IN" Destination="LED_Q1_5HZ.OUT"/>
+			<Connection Source="DigitalInput_I2.IN" Destination="LED_Q1_1HZ.OUT"/>
+			<Connection Source="DigitalInput_I3.IN" Destination="LED_Q1_ON.OUT"/>
 		</DataConnections>
 	</SubAppNetwork>
 </SubAppType>
