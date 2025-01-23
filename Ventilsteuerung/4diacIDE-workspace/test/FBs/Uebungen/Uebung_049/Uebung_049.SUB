@@ -9,45 +9,41 @@
 	<SubAppInterfaceList>
 	</SubAppInterfaceList>
 	<SubAppNetwork>
-		<FB Name="DigitalOutput_Q1" Type="QX" x="-1320" y="-820">
+		<FB Name="DigitalOutput_Q1" Type="QX" x="-1300" y="-700">
 			<Parameter Name="QI" Value="TRUE"/>
 		</FB>
-		<FB Name="DigitalInput_I1" Type="IX" x="-4386.67" y="-933.33">
+		<FB Name="DigitalInput_I1" Type="IX" x="-4400" y="-800">
 			<Parameter Name="QI" Value="TRUE"/>
 		</FB>
-		<FB Name="DigitalOutput_Q2" Type="QX" x="-1320" y="673.33">
+		<FB Name="DigitalOutput_Q2" Type="QX" x="-1300" y="800">
 			<Parameter Name="QI" Value="TRUE"/>
 		</FB>
-		<FB Name="DigitalInput_I2" Type="IX" x="-4386.67" y="560">
+		<FB Name="DigitalInput_I2" Type="IX" x="-4400" y="700">
 			<Parameter Name="QI" Value="TRUE"/>
 		</FB>
-		<FB Name="DigitalOutput_Q3" Type="QX" x="-1320" y="2060">
+		<FB Name="DigitalOutput_Q3" Type="QX" x="-1300" y="2100">
 			<Parameter Name="QI" Value="TRUE"/>
 		</FB>
-		<FB Name="DigitalInput_I3" Type="IX" x="-4386.67" y="1946.67">
+		<FB Name="DigitalInput_I3" Type="IX" x="-4400" y="2000">
 			<Parameter Name="QI" Value="TRUE"/>
 		</FB>
-		<FB Name="DigitalOutput_Q4" Type="QX" x="-1320" y="3340">
+		<FB Name="DigitalOutput_Q4" Type="QX" x="-1300" y="3300">
 			<Parameter Name="QI" Value="TRUE"/>
 		</FB>
-		<FB Name="DigitalInput_I4" Type="IX" x="-4386.67" y="3226.67">
+		<FB Name="DigitalInput_I4" Type="IX" x="-4400" y="3200">
 			<Parameter Name="QI" Value="TRUE"/>
 		</FB>
 		<EventConnections>
-			<Connection Source="DigitalInput_I1.IND" Destination="DigitalOutput_Q1.REQ" dx1="1200"/>
-			<Connection Source="DigitalInput_I2.IND" Destination="DigitalOutput_Q2.REQ" dx1="1200"/>
-			<Connection Source="DigitalInput_I3.IND" Destination="DigitalOutput_Q3.REQ" dx1="1200"/>
-			<Connection Source="DigitalInput_I4.IND" Destination="DigitalOutput_Q4.REQ" dx1="1200"/>
-			<Connection Source="DigitalInput_I3.INITO" Destination="DigitalOutput_Q3.INIT" dx1="1200"/>
-			<Connection Source="DigitalInput_I4.INITO" Destination="DigitalOutput_Q4.INIT" dx1="1200"/>
-			<Connection Source="DigitalInput_I2.INITO" Destination="DigitalOutput_Q2.INIT" dx1="1200"/>
-			<Connection Source="DigitalInput_I1.INITO" Destination="DigitalOutput_Q1.INIT" dx1="1200"/>
+			<Connection Source="DigitalInput_I1.IND" Destination="DigitalOutput_Q1.REQ"/>
+			<Connection Source="DigitalInput_I2.IND" Destination="DigitalOutput_Q2.REQ"/>
+			<Connection Source="DigitalInput_I3.IND" Destination="DigitalOutput_Q3.REQ"/>
+			<Connection Source="DigitalInput_I4.IND" Destination="DigitalOutput_Q4.REQ"/>
 		</EventConnections>
 		<DataConnections>
-			<Connection Source="DigitalInput_I1.IN" Destination="DigitalOutput_Q1.OUT" dx1="1200"/>
-			<Connection Source="DigitalInput_I2.IN" Destination="DigitalOutput_Q2.OUT" dx1="1200"/>
-			<Connection Source="DigitalInput_I3.IN" Destination="DigitalOutput_Q3.OUT" dx1="1200"/>
-			<Connection Source="DigitalInput_I4.IN" Destination="DigitalOutput_Q4.OUT" dx1="1200"/>
+			<Connection Source="DigitalInput_I1.IN" Destination="DigitalOutput_Q1.OUT"/>
+			<Connection Source="DigitalInput_I2.IN" Destination="DigitalOutput_Q2.OUT"/>
+			<Connection Source="DigitalInput_I3.IN" Destination="DigitalOutput_Q3.OUT"/>
+			<Connection Source="DigitalInput_I4.IN" Destination="DigitalOutput_Q4.OUT"/>
 		</DataConnections>
 	</SubAppNetwork>
 </SubAppType>

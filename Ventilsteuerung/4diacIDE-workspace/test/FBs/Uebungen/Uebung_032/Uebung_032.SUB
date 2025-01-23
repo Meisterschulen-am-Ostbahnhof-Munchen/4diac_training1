@@ -9,45 +9,41 @@
 	<SubAppInterfaceList>
 	</SubAppInterfaceList>
 	<SubAppNetwork>
-		<FB Name="LED_GREEN_5HZ" Type="QX" x="-1466.67" y="-833.33">
+		<FB Name="LED_GREEN_5HZ" Type="QX" x="-1500" y="-900">
 			<Parameter Name="QI" Value="TRUE"/>
 		</FB>
-		<FB Name="BUTTON_GREEN" Type="IX" x="-4533.33" y="-946.67">
+		<FB Name="BUTTON_GREEN" Type="IX" x="-4500" y="-1000">
 			<Parameter Name="QI" Value="TRUE"/>
 		</FB>
-		<FB Name="BUTTON_YELLOW" Type="IX" x="-4500" y="220">
+		<FB Name="BUTTON_YELLOW" Type="IX" x="-4500" y="100">
 			<Parameter Name="QI" Value="TRUE"/>
 		</FB>
-		<FB Name="LED_YELLOW_5HZ" Type="QX" x="-1433.33" y="333.33">
+		<FB Name="LED_YELLOW_5HZ" Type="QX" x="-1400" y="200">
 			<Parameter Name="QI" Value="TRUE"/>
 		</FB>
-		<FB Name="BUTTON_RED" Type="IX" x="-4506.67" y="1493.33">
+		<FB Name="BUTTON_RED" Type="IX" x="-4500" y="1400">
 			<Parameter Name="QI" Value="TRUE"/>
 		</FB>
-		<FB Name="LED_RED_5HZ" Type="QX" x="-1440" y="1606.67">
+		<FB Name="LED_RED_5HZ" Type="QX" x="-1400" y="1500">
 			<Parameter Name="QI" Value="TRUE"/>
 		</FB>
-		<FB Name="BUTTON_BLUE" Type="IX" x="-4533.33" y="2666.67">
+		<FB Name="BUTTON_BLUE" Type="IX" x="-4500" y="2600">
 			<Parameter Name="QI" Value="TRUE"/>
 		</FB>
-		<FB Name="LED_BLUE_5HZ" Type="QX" x="-1466.67" y="2780">
+		<FB Name="LED_BLUE_5HZ" Type="QX" x="-1400" y="2700">
 			<Parameter Name="QI" Value="TRUE"/>
 		</FB>
 		<EventConnections>
-			<Connection Source="BUTTON_GREEN.INITO" Destination="LED_GREEN_5HZ.INIT" dx1="1200"/>
-			<Connection Source="BUTTON_GREEN.IND" Destination="LED_GREEN_5HZ.REQ" dx1="1186.67"/>
-			<Connection Source="BUTTON_YELLOW.IND" Destination="LED_YELLOW_5HZ.REQ" dx1="1186.67"/>
-			<Connection Source="BUTTON_YELLOW.INITO" Destination="LED_YELLOW_5HZ.INIT" dx1="1200"/>
-			<Connection Source="BUTTON_RED.IND" Destination="LED_RED_5HZ.REQ" dx1="1186.67"/>
-			<Connection Source="BUTTON_RED.INITO" Destination="LED_RED_5HZ.INIT" dx1="1200"/>
-			<Connection Source="BUTTON_BLUE.IND" Destination="LED_BLUE_5HZ.REQ" dx1="1186.67"/>
-			<Connection Source="BUTTON_BLUE.INITO" Destination="LED_BLUE_5HZ.INIT" dx1="1193.33"/>
+			<Connection Source="BUTTON_GREEN.IND" Destination="LED_GREEN_5HZ.REQ"/>
+			<Connection Source="BUTTON_YELLOW.IND" Destination="LED_YELLOW_5HZ.REQ"/>
+			<Connection Source="BUTTON_RED.IND" Destination="LED_RED_5HZ.REQ"/>
+			<Connection Source="BUTTON_BLUE.IND" Destination="LED_BLUE_5HZ.REQ"/>
 		</EventConnections>
 		<DataConnections>
-			<Connection Source="BUTTON_GREEN.IN" Destination="LED_GREEN_5HZ.OUT" dx1="1186.67"/>
-			<Connection Source="BUTTON_YELLOW.IN" Destination="LED_YELLOW_5HZ.OUT" dx1="1186.67"/>
-			<Connection Source="BUTTON_RED.IN" Destination="LED_RED_5HZ.OUT" dx1="1186.67"/>
-			<Connection Source="BUTTON_BLUE.IN" Destination="LED_BLUE_5HZ.OUT" dx1="1186.67"/>
+			<Connection Source="BUTTON_GREEN.IN" Destination="LED_GREEN_5HZ.OUT"/>
+			<Connection Source="BUTTON_YELLOW.IN" Destination="LED_YELLOW_5HZ.OUT"/>
+			<Connection Source="BUTTON_RED.IN" Destination="LED_RED_5HZ.OUT"/>
+			<Connection Source="BUTTON_BLUE.IN" Destination="LED_BLUE_5HZ.OUT"/>
 		</DataConnections>
 	</SubAppNetwork>
 </SubAppType>

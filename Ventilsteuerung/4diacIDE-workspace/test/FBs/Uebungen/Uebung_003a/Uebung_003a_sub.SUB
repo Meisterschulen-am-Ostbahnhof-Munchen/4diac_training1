@@ -9,24 +9,23 @@
 	<SubAppInterfaceList>
 	</SubAppInterfaceList>
 	<SubAppNetwork>
-		<FB Name="QX" Type="QX" x="-2533.33" y="-800">
+		<FB Name="QX" Type="QX" x="-2500" y="-800">
 			<Parameter Name="QI" Value="TRUE"/>
 			<Parameter Name="PARAMS" Value="">
 				<Attribute Name="Visible" Value="false"/>
 			</Parameter>
 		</FB>
-		<FB Name="IX" Type="IX" x="-4533.33" y="-1026.67">
+		<FB Name="IX" Type="IX" x="-4600" y="-1000">
 			<Parameter Name="QI" Value="TRUE"/>
 			<Parameter Name="PARAMS" Value="">
 				<Attribute Name="Visible" Value="false"/>
 			</Parameter>
 		</FB>
 		<EventConnections>
-			<Connection Source="IX.INITO" Destination="QX.INIT" dx1="1373.33"/>
-			<Connection Source="IX.IND" Destination="QX.REQ" dx1="993.33"/>
+			<Connection Source="IX.IND" Destination="QX.REQ" dx1="773.33"/>
 		</EventConnections>
 		<DataConnections>
-			<Connection Source="IX.IN" Destination="QX.OUT" dx1="726.67"/>
+			<Connection Source="IX.IN" Destination="QX.OUT"/>
 		</DataConnections>
 	</SubAppNetwork>
 </SubAppType>

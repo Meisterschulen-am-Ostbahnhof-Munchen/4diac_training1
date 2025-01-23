@@ -9,7 +9,7 @@
 	<SubAppInterfaceList>
 	</SubAppInterfaceList>
 	<SubAppNetwork>
-		<FB Name="DigitalOutput_Q1" Type="QX" x="-1246.67" y="-113.33">
+		<FB Name="DigitalOutput_Q1" Type="QX" x="-1200" y="-100">
 			<Parameter Name="QI" Value="TRUE">
 				<Attribute Name="Visible" Value="false"/>
 			</Parameter>
@@ -17,7 +17,7 @@
 				<Attribute Name="Visible" Value="false"/>
 			</Parameter>
 		</FB>
-		<FB Name="DigitalInput_I1" Type="IX" x="-4193.33" y="-113.33">
+		<FB Name="DigitalInput_I1" Type="IX" x="-4200" y="-200">
 			<Parameter Name="QI" Value="TRUE">
 				<Attribute Name="Visible" Value="false"/>
 			</Parameter>
@@ -25,7 +25,7 @@
 				<Attribute Name="Visible" Value="false"/>
 			</Parameter>
 		</FB>
-		<FB Name="AnalogInput_I4" Type="ID" x="-1193.33" y="1066.67">
+		<FB Name="AnalogInput_I4" Type="ID" x="-1200" y="1100">
 			<Parameter Name="QI" Value="TRUE">
 				<Attribute Name="Visible" Value="false"/>
 			</Parameter>
@@ -33,7 +33,7 @@
 				<Attribute Name="Visible" Value="false"/>
 			</Parameter>
 		</FB>
-		<FB Name="AnalogInput_I7" Type="ID" x="-1193.33" y="2400">
+		<FB Name="AnalogInput_I7" Type="ID" x="-1200" y="2400">
 			<Parameter Name="QI" Value="TRUE">
 				<Attribute Name="Visible" Value="false"/>
 			</Parameter>
@@ -41,13 +41,12 @@
 				<Attribute Name="Visible" Value="false"/>
 			</Parameter>
 		</FB>
-		<FB Name="F_DWORD_TO_UDINT_I7" Type="F_DWORD_TO_UDINT" x="533.33" y="2853.33">
+		<FB Name="F_DWORD_TO_UDINT_I7" Type="F_DWORD_TO_UDINT" x="500" y="2800">
 		</FB>
-		<FB Name="F_DWORD_TO_UDINT_I4" Type="F_DWORD_TO_UDINT" x="533.33" y="1520">
+		<FB Name="F_DWORD_TO_UDINT_I4" Type="F_DWORD_TO_UDINT" x="500" y="1500">
 		</FB>
 		<EventConnections>
-			<Connection Source="DigitalInput_I1.IND" Destination="DigitalOutput_Q1.REQ" dx1="1273.33"/>
-			<Connection Source="DigitalInput_I1.INITO" Destination="DigitalOutput_Q1.INIT"/>
+			<Connection Source="DigitalInput_I1.IND" Destination="DigitalOutput_Q1.REQ"/>
 			<Connection Source="AnalogInput_I7.IND" Destination="F_DWORD_TO_UDINT_I7.REQ" dx1="960"/>
 			<Connection Source="AnalogInput_I4.IND" Destination="F_DWORD_TO_UDINT_I4.REQ" dx1="960"/>
 			<Connection Source="DigitalInput_I1.IND" Destination="AnalogInput_I4.REQ" dx1="1213.33"/>
@@ -56,9 +55,9 @@
 			<Connection Source="AnalogInput_I4.CNF" Destination="F_DWORD_TO_UDINT_I4.REQ" dx1="960"/>
 		</EventConnections>
 		<DataConnections>
-			<Connection Source="DigitalInput_I1.IN" Destination="DigitalOutput_Q1.OUT" dx1="1273.33"/>
-			<Connection Source="AnalogInput_I7.IN" Destination="F_DWORD_TO_UDINT_I7.IN" dx1="553.33"/>
-			<Connection Source="AnalogInput_I4.IN" Destination="F_DWORD_TO_UDINT_I4.IN" dx1="553.33"/>
+			<Connection Source="DigitalInput_I1.IN" Destination="DigitalOutput_Q1.OUT" dx1="2166.67"/>
+			<Connection Source="AnalogInput_I7.IN" Destination="F_DWORD_TO_UDINT_I7.IN"/>
+			<Connection Source="AnalogInput_I4.IN" Destination="F_DWORD_TO_UDINT_I4.IN"/>
 		</DataConnections>
 	</SubAppNetwork>
 </SubAppType>

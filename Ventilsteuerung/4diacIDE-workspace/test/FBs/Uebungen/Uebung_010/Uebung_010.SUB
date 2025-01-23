@@ -9,21 +9,20 @@
 	<SubAppInterfaceList>
 	</SubAppInterfaceList>
 	<SubAppNetwork>
-		<FB Name="DigitalOutput_Q1" Type="QX" x="-1473.33" y="-573.33">
+		<FB Name="DigitalOutput_Q1" Type="QX" x="-1500" y="-400">
 			<Parameter Name="QI" Value="TRUE"/>
 			<Parameter Name="PARAMS" Value="">
 				<Attribute Name="Visible" Value="false"/>
 			</Parameter>
 		</FB>
-		<FB Name="SoftKey_F1" Type="IX" x="-4646.67" y="-566.67">
+		<FB Name="SoftKey_F1" Type="IX" x="-4600" y="-500">
 			<Parameter Name="QI" Value="TRUE"/>
 			<Parameter Name="PARAMS" Value="">
 				<Attribute Name="Visible" Value="false"/>
 			</Parameter>
 		</FB>
 		<EventConnections>
-			<Connection Source="SoftKey_F1.INITO" Destination="DigitalOutput_Q1.INIT"/>
-			<Connection Source="SoftKey_F1.IND" Destination="DigitalOutput_Q1.REQ" dx1="1306.67"/>
+			<Connection Source="SoftKey_F1.IND" Destination="DigitalOutput_Q1.REQ"/>
 		</EventConnections>
 		<DataConnections>
 			<Connection Source="SoftKey_F1.IN" Destination="DigitalOutput_Q1.OUT" dx1="1360"/>

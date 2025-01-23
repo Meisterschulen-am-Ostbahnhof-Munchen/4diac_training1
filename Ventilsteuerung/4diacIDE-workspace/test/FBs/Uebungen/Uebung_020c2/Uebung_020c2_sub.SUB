@@ -35,6 +35,8 @@
 		</FB>
 		<FB Name="Q_NumericValue" Type="Q_NumericValue" x="4100" y="200">
 		</FB>
+		<FB Name="EI_TO_E" Type="EI_TO_E" x="1000" y="-500">
+		</FB>
 		<EventConnections>
 			<Connection Source="InputNumber_I1.IND" Destination="F_DWORD_TO_UDINT.REQ" dx1="300"/>
 			<Connection Source="REQ" Destination="Q_NumericValue.REQ" dx1="1600">
@@ -48,6 +50,8 @@
 			<Connection Source="NVS_UDINT.GETO" Destination="IND" dx1="2933.33">
 				<Attribute Name="Visible" Value="false"/>
 			</Connection>
+			<Connection Source="EI_TO_E.OUT" Destination="NVS_UDINT.GET" dx1="246.67"/>
+			<Connection Source="NVS_UDINT.INITO" Destination="EI_TO_E.IN" dx1="80" dx2="80" dy="-766.67"/>
 		</EventConnections>
 		<DataConnections>
 			<Connection Source="InputNumber_I1.IN" Destination="F_DWORD_TO_UDINT.IN"/>

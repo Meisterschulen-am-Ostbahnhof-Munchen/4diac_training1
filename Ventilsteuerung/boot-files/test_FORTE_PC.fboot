@@ -13,6 +13,9 @@ EMB_RES;<Request ID="12" Action="CREATE"><FB Name="Ventilsteuerung.functions.Dig
 EMB_RES;<Request ID="13" Action="WRITE"><Connection Source="TRUE" Destination="Ventilsteuerung.functions.DigitalOutput_Q1.QI" /></Request>
 EMB_RES;<Request ID="14" Action="CREATE"><FB Name="Ventilsteuerung.functions.DigitalInput_I1" Type="IX" /></Request>
 EMB_RES;<Request ID="15" Action="WRITE"><Connection Source="TRUE" Destination="Ventilsteuerung.functions.DigitalInput_I1.QI" /></Request>
-EMB_RES;<Request ID="16" Action="CREATE"><Connection Source="Ventilsteuerung.functions.DigitalInput_I1.IND" Destination="Ventilsteuerung.functions.DigitalOutput_Q1.REQ" /></Request>
-EMB_RES;<Request ID="17" Action="CREATE"><Connection Source="Ventilsteuerung.functions.DigitalInput_I1.IN" Destination="Ventilsteuerung.functions.DigitalOutput_Q1.OUT" /></Request>
-EMB_RES;<Request ID="18" Action="START"/>
+EMB_RES;<Request ID="16" Action="CREATE"><FB Name="E_TRIG" Type="E_TRIG" /></Request>
+EMB_RES;<Request ID="17" Action="WRITE"><Connection Source="&apos;EInit&apos;" Destination="E_TRIG.EVENTTYPE" /></Request>
+EMB_RES;<Request ID="18" Action="CREATE"><Connection Source="Ventilsteuerung.functions.DigitalInput_I1.IND" Destination="Ventilsteuerung.functions.DigitalOutput_Q1.REQ" /></Request>
+EMB_RES;<Request ID="19" Action="CREATE"><Connection Source="Ventilsteuerung.functions.DigitalInput_I1.IN" Destination="Ventilsteuerung.functions.DigitalOutput_Q1.OUT" /></Request>
+EMB_RES;<Request ID="20" Action="CREATE"><Connection Source="START.COLD" Destination="E_TRIG.REQ" /></Request>
+EMB_RES;<Request ID="21" Action="START"/>

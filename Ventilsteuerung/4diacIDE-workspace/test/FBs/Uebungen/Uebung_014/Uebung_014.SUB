@@ -9,7 +9,7 @@
 	<SubAppInterfaceList>
 	</SubAppInterfaceList>
 	<SubAppNetwork>
-		<FB Name="SoftKey_F1_UP" Type="IE" x="-4533.33" y="-1020">
+		<FB Name="SoftKey_F1_UP" Type="IE" x="-4500" y="-1000">
 			<Parameter Name="QI" Value="TRUE">
 				<Attribute Name="Visible" Value="false"/>
 			</Parameter>
@@ -17,7 +17,7 @@
 				<Attribute Name="Visible" Value="false"/>
 			</Parameter>
 		</FB>
-		<FB Name="SoftKey_F2_UP" Type="IE" x="-4533.33" y="226.67">
+		<FB Name="SoftKey_F2_UP" Type="IE" x="-4500" y="0">
 			<Parameter Name="QI" Value="TRUE">
 				<Attribute Name="Visible" Value="false"/>
 			</Parameter>
@@ -25,19 +25,18 @@
 				<Attribute Name="Visible" Value="false"/>
 			</Parameter>
 		</FB>
-		<FB Name="E_SR" Type="E_SR" x="-2833.33" y="-793.33">
+		<FB Name="E_SR" Type="E_SR" x="-2800" y="-800">
 		</FB>
-		<FB Name="Q_ObjHideShow" Type="Q_ObjHideShow" x="-1473.33" y="-1020">
+		<FB Name="Q_ObjHideShow" Type="Q_ObjHideShow" x="-1500" y="-900">
 			<Parameter Name="u16ObjId" Value="Container_B"/>
 		</FB>
 		<EventConnections>
-			<Connection Source="SoftKey_F1_UP.IND" Destination="E_SR.S" dx1="560"/>
+			<Connection Source="SoftKey_F1_UP.IND" Destination="E_SR.S"/>
 			<Connection Source="SoftKey_F2_UP.IND" Destination="E_SR.R" dx1="473.33"/>
-			<Connection Source="SoftKey_F1_UP.INITO" Destination="Q_ObjHideShow.INIT"/>
-			<Connection Source="E_SR.EO" Destination="Q_ObjHideShow.REQ" dx1="433.33"/>
+			<Connection Source="E_SR.EO" Destination="Q_ObjHideShow.REQ"/>
 		</EventConnections>
 		<DataConnections>
-			<Connection Source="E_SR.Q" Destination="Q_ObjHideShow.qVisible" dx1="433.33"/>
+			<Connection Source="E_SR.Q" Destination="Q_ObjHideShow.qVisible"/>
 		</DataConnections>
 	</SubAppNetwork>
 </SubAppType>
