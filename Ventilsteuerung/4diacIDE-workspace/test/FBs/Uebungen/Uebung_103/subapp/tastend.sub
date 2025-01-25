@@ -7,14 +7,6 @@
 	<CompilerInfo packageName="FBs::Uebungen::Uebung_103::subapp">
 	</CompilerInfo>
 	<SubAppInterfaceList>
-		<SubAppEventInputs>
-			<SubAppEvent Name="INIT" Type="Event" Comment="Initialization Request" >
-			</SubAppEvent>
-		</SubAppEventInputs>
-		<SubAppEventOutputs>
-			<SubAppEvent Name="INITO" Type="Event" Comment="Initialization Confirm" >
-			</SubAppEvent>
-		</SubAppEventOutputs>
 		<Plugs>
 			<AdapterDeclaration Name="OUT" Type="AX"/>
 		</Plugs>
@@ -23,13 +15,8 @@
 		</Sockets>
 	</SubAppInterfaceList>
 	<SubAppNetwork>
-		<EventConnections>
-			<Connection Source="INIT" Destination="INITO">
-				<Attribute Name="Visible" Value="false"/>
-			</Connection>
-		</EventConnections>
 		<AdapterConnections>
-			<Connection Source="IN" Destination="OUT"/>
+			<Connection Source="IN" Destination="OUT" dx1="3386.67"/>
 		</AdapterConnections>
 	</SubAppNetwork>
 </SubAppType>

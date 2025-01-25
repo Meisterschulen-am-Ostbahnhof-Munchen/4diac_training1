@@ -29,7 +29,7 @@
 		<FB Name="Q_NumericValue" Type="Q_StringValue" x="1100" y="900">
 			<Parameter Name="u16ObjId" Value="InputNumber_I1"/>
 		</FB>
-		<FB Name="CbVtStatus" Type="CbVtStatus" x="-4133.33" y="-6.67">
+		<FB Name="CbVtStatus" Type="CbVtStatus" x="-500" y="-1000">
 			<Parameter Name="STATUS" Value="">
 				<Attribute Name="Visible" Value="false"/>
 			</Parameter>
@@ -43,15 +43,19 @@
 				<Attribute Name="Visible" Value="false"/>
 			</Parameter>
 		</FB>
+		<FB Name="EI_TO_E" Type="EI_TO_E" x="-1900" y="0">
+		</FB>
 		<EventConnections>
 			<Connection Source="InputNumber_I1.IND" Destination="F_DWORD_TO_UDINT.REQ" dx1="300"/>
 			<Connection Source="F_DWORD_TO_UDINT.CNF" Destination="INI.SET" dx1="253.33"/>
 			<Connection Source="INI.GETO" Destination="Q_NumericValue.REQ" dx1="486.67"/>
-			<Connection Source="CbVtStatus.IND" Destination="INI.GET" dx1="1240"/>
+			<Connection Source="CbVtStatus.IND" Destination="Q_NumericValue.REQ" dx1="773.33"/>
+			<Connection Source="EI_TO_E.OUT" Destination="INI.GET" dx1="193.33"/>
+			<Connection Source="INI.INITO" Destination="EI_TO_E.IN" dx1="80" dx2="80" dy="-993.33"/>
 		</EventConnections>
 		<DataConnections>
 			<Connection Source="InputNumber_I1.IN" Destination="F_DWORD_TO_UDINT.IN"/>
-			<Connection Source="INI.VALUEO" Destination="Q_NumericValue.pau8String"/>
+			<Connection Source="INI.VALUEO" Destination="Q_NumericValue.pau8String" dx1="493.33"/>
 		</DataConnections>
 	</SubAppNetwork>
 </SubAppType>

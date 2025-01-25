@@ -15,9 +15,9 @@
 		<FB Name="DigitalOutput_Q1" Type="QXA" x="6300" y="-200">
 			<Parameter Name="QI" Value="TRUE"/>
 		</FB>
-		<FB Name="AX_DEMUX_3" Type="io::adp::selection::AX_DEMUX_3" x="1600" y="0">
+		<FB Name="AX_DEMUX_3" Type="AX_DEMUX_3" x="1600" y="0">
 		</FB>
-		<FB Name="AX_MUX_3" Type="io::adp::selection::AX_MUX_3" x="5000" y="0">
+		<FB Name="AX_MUX_3" Type="AX_MUX_3" x="5000" y="0">
 		</FB>
 		<FB Name="ID" Type="ID" x="0" y="-1400">
 			<Parameter Name="QI" Value="TRUE"/>
@@ -26,9 +26,9 @@
 		</FB>
 		<FB Name="C2" Type="F_UDINT_TO_UINT" x="2600" y="-1100">
 		</FB>
-		<SubApp Name="rastend" Type="FBs::Uebungen::Uebung_103::subapp::rastend" x="3260" y="200">
+		<SubApp Name="rastend" Type="FBs::Uebungen::Uebung_103::subapp::rastend" x="3200" y="300">
 		</SubApp>
-		<SubApp Name="tastend" Type="FBs::Uebungen::Uebung_103::subapp::tastend" x="3260" y="-300">
+		<SubApp Name="tastend" Type="FBs::Uebungen::Uebung_103::subapp::tastend" x="3200" y="-100">
 		</SubApp>
 		<SubApp Name="tastend_TON_5s" Type="FBs::Uebungen::Uebung_103::subapp::tastend_TON_5s" x="3100" y="700">
 		</SubApp>
@@ -53,14 +53,14 @@
 			</Connection>
 		</DataConnections>
 		<AdapterConnections>
-			<Connection Source="AX_MUX_3.OUT" Destination="DigitalOutput_Q1.OUT"/>
-			<Connection Source="DigitalInput_I1.IN" Destination="AX_DEMUX_3.IN"/>
+			<Connection Source="AX_MUX_3.OUT" Destination="DigitalOutput_Q1.OUT" dx1="160"/>
+			<Connection Source="DigitalInput_I1.IN" Destination="AX_DEMUX_3.IN" dx1="500"/>
 			<Connection Source="AX_DEMUX_3.OUT0" Destination="tastend.IN" dx1="333.33"/>
 			<Connection Source="tastend.OUT" Destination="AX_MUX_3.IN0" dx1="593.33"/>
 			<Connection Source="AX_DEMUX_3.OUT2" Destination="tastend_TON_5s.IN" dx1="326.67"/>
 			<Connection Source="tastend_TON_5s.OUT" Destination="AX_MUX_3.IN2" dx1="400"/>
-			<Connection Source="rastend.OUT" Destination="AX_MUX_3.IN1"/>
-			<Connection Source="AX_DEMUX_3.OUT1" Destination="rastend.IN"/>
+			<Connection Source="rastend.OUT" Destination="AX_MUX_3.IN1" dx1="593.33"/>
+			<Connection Source="AX_DEMUX_3.OUT1" Destination="rastend.IN" dx1="253.33"/>
 		</AdapterConnections>
 	</SubAppNetwork>
 </SubAppType>

@@ -9,21 +9,20 @@
 	<SubAppInterfaceList>
 	</SubAppInterfaceList>
 	<SubAppNetwork>
-		<FB Name="DigitalOutput_Q1" Type="QX" x="-1473.33" y="-573.33">
+		<FB Name="DigitalOutput_Q1" Type="QX" x="-1500" y="-400">
 			<Parameter Name="QI" Value="TRUE"/>
 			<Parameter Name="PARAMS" Value="">
 				<Attribute Name="Visible" Value="false"/>
 			</Parameter>
 		</FB>
-		<FB Name="AuxFunction2_X1" Type="IX" x="-4646.67" y="-566.67">
+		<FB Name="AuxFunction2_X1" Type="IX" x="-4600" y="-500">
 			<Parameter Name="QI" Value="TRUE"/>
 			<Parameter Name="PARAMS" Value="">
 				<Attribute Name="Visible" Value="false"/>
 			</Parameter>
 		</FB>
 		<EventConnections>
-			<Connection Source="AuxFunction2_X1.INITO" Destination="DigitalOutput_Q1.INIT"/>
-			<Connection Source="AuxFunction2_X1.IND" Destination="DigitalOutput_Q1.REQ" dx1="1306.67"/>
+			<Connection Source="AuxFunction2_X1.IND" Destination="DigitalOutput_Q1.REQ"/>
 		</EventConnections>
 		<DataConnections>
 			<Connection Source="AuxFunction2_X1.IN" Destination="DigitalOutput_Q1.OUT" dx1="1360"/>

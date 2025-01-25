@@ -9,25 +9,24 @@
 	<SubAppInterfaceList>
 	</SubAppInterfaceList>
 	<SubAppNetwork>
-		<FB Name="DigitalOutput_Q1" Type="QX" x="-1466.67" y="-933.33">
+		<FB Name="DigitalOutput_Q1" Type="QX" x="-1500" y="-800">
 			<Parameter Name="QI" Value="TRUE"/>
 		</FB>
-		<FB Name="DigitalInput_I1_CLK" Type="IE" x="-4533.33" y="-933.33">
+		<FB Name="DigitalInput_I1_CLK" Type="IE" x="-4500" y="-900">
 			<Parameter Name="QI" Value="TRUE"/>
 		</FB>
-		<FB Name="DigitalInput_I2_CLK" Type="IE" x="-4533.33" y="266.67">
+		<FB Name="DigitalInput_I2_CLK" Type="IE" x="-4500" y="0">
 			<Parameter Name="QI" Value="TRUE"/>
 		</FB>
-		<FB Name="E_RS" Type="E_RS" x="-2800" y="-733.33">
+		<FB Name="E_RS" Type="E_RS" x="-2800" y="-700">
 		</FB>
 		<EventConnections>
-			<Connection Source="DigitalInput_I1_CLK.INITO" Destination="DigitalOutput_Q1.INIT"/>
-			<Connection Source="DigitalInput_I2_CLK.IND" Destination="E_RS.S" dx1="446.67" dx2="446.67" dy="0"/>
-			<Connection Source="E_RS.EO" Destination="DigitalOutput_Q1.REQ" dx1="446.67" dx2="446.67" dy="0"/>
+			<Connection Source="DigitalInput_I2_CLK.IND" Destination="E_RS.S" dx1="446.67"/>
+			<Connection Source="E_RS.EO" Destination="DigitalOutput_Q1.REQ"/>
 			<Connection Source="DigitalInput_I1_CLK.IND" Destination="E_RS.R"/>
 		</EventConnections>
 		<DataConnections>
-			<Connection Source="E_RS.Q" Destination="DigitalOutput_Q1.OUT" dx1="446.67" dx2="446.67" dy="0"/>
+			<Connection Source="E_RS.Q" Destination="DigitalOutput_Q1.OUT" dx1="446.67"/>
 		</DataConnections>
 	</SubAppNetwork>
 </SubAppType>
