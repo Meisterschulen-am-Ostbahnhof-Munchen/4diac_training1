@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SubAppType Name="mapping_Uebung_034b" Comment="LONG_PRESS_HOLD-Eingang auf PWM Ausgang" >
+	<Identification Standard="61499-2" Description="Copyright (c) 2023 Meisterschulen am Ostbahnhof  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0" >
+	</Identification>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2023-10-23">
+	</VersionInfo>
+	<CompilerInfo>
+	</CompilerInfo>
+	<SubAppInterfaceList>
+	</SubAppInterfaceList>
+	<SubAppNetwork>
+		<FB Name="Hutschienenmoped_XL_8_PWM" Type="Hutschienenmoped_XL_8_PWM" x="-3466.67" y="-666.67">
+			<Parameter Name="QI" Value="TRUE">
+				<Attribute Name="Visible" Value="false"/>
+			</Parameter>
+			<Parameter Name="u8SAMember" Value="GLOBAL">
+				<Attribute Name="Visible" Value="false"/>
+			</Parameter>
+			<Parameter Name="u16ObjId" Value="ID_NULL">
+				<Attribute Name="Visible" Value="false"/>
+			</Parameter>
+			<Parameter Name="PWMOutput_Q1" Value="'Ventilsteuerung.functions.PWMOutput_Q1'"/>
+			<Parameter Name="PWMOutput_Q2" Value="">
+				<Attribute Name="Visible" Value="false"/>
+			</Parameter>
+			<Parameter Name="PWMOutput_Q3" Value="">
+				<Attribute Name="Visible" Value="false"/>
+			</Parameter>
+			<Parameter Name="PWMOutput_Q5" Value="">
+				<Attribute Name="Visible" Value="false"/>
+			</Parameter>
+			<Parameter Name="PWMOutput_Q6" Value="">
+				<Attribute Name="Visible" Value="false"/>
+			</Parameter>
+			<Parameter Name="PWMOutput_Q7" Value="">
+				<Attribute Name="Visible" Value="false"/>
+			</Parameter>
+			<Parameter Name="PWMOutput_Q8" Value="">
+				<Attribute Name="Visible" Value="false"/>
+			</Parameter>
+		</FB>
+		<FB Name="Hutschienenmoped_XL_8_DI_SINGLE_CLICK" Type="Hutschienenmoped_XL_8_DI_SINGLE_CLICK" x="-3700" y="400">
+			<Parameter Name="QI" Value="TRUE">
+				<Attribute Name="Visible" Value="false"/>
+			</Parameter>
+			<Parameter Name="u8SAMember" Value="GLOBAL">
+				<Attribute Name="Visible" Value="false"/>
+			</Parameter>
+			<Parameter Name="u16ObjId" Value="ID_NULL">
+				<Attribute Name="Visible" Value="false"/>
+			</Parameter>
+			<Parameter Name="DigitalInput_I2" Value="''"/>
+			<Parameter Name="DigitalInput_I3" Value="'Ventilsteuerung.functions.IE_STOP'"/>
+			<Parameter Name="DigitalInput_I4" Value="'Ventilsteuerung.functions.IE_FULL'"/>
+			<Parameter Name="DigitalInput_I5" Value="">
+				<Attribute Name="Visible" Value="false"/>
+			</Parameter>
+			<Parameter Name="DigitalInput_I6" Value="">
+				<Attribute Name="Visible" Value="false"/>
+			</Parameter>
+			<Parameter Name="DigitalInput_I7" Value="">
+				<Attribute Name="Visible" Value="false"/>
+			</Parameter>
+			<Parameter Name="DigitalInput_I8" Value="">
+				<Attribute Name="Visible" Value="false"/>
+			</Parameter>
+		</FB>
+		<FB Name="Hutschienenmoped_XL_8_DI_LONG_PRESS_HOLD" Type="Hutschienenmoped_XL_8_DI_LONG_PRESS_HOLD" x="-4000" y="1500">
+			<Parameter Name="QI" Value="TRUE">
+				<Attribute Name="Visible" Value="false"/>
+			</Parameter>
+			<Parameter Name="u8SAMember" Value="GLOBAL">
+				<Attribute Name="Visible" Value="false"/>
+			</Parameter>
+			<Parameter Name="u16ObjId" Value="ID_NULL">
+				<Attribute Name="Visible" Value="false"/>
+			</Parameter>
+			<Parameter Name="DigitalInput_I1" Value="'Ventilsteuerung.functions.IE_SPEED_UP'"/>
+			<Parameter Name="DigitalInput_I2" Value="'Ventilsteuerung.functions.IE_SPEED_DOWN'"/>
+			<Parameter Name="DigitalInput_I4" Value="">
+				<Attribute Name="Visible" Value="false"/>
+			</Parameter>
+			<Parameter Name="DigitalInput_I5" Value="">
+				<Attribute Name="Visible" Value="false"/>
+			</Parameter>
+			<Parameter Name="DigitalInput_I6" Value="">
+				<Attribute Name="Visible" Value="false"/>
+			</Parameter>
+			<Parameter Name="DigitalInput_I7" Value="">
+				<Attribute Name="Visible" Value="false"/>
+			</Parameter>
+			<Parameter Name="DigitalInput_I8" Value="">
+				<Attribute Name="Visible" Value="false"/>
+			</Parameter>
+		</FB>
+	</SubAppNetwork>
+</SubAppType>
