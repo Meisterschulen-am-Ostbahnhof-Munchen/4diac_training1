@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <SubAppType Name="Uebung_036" Comment="Spiegelabfolge V2 mit Schrittkette" >
-	<Identification Standard="61499-2" Description="Copyright (c) 2023 Meisterschulen am Ostbahnhof  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0">
+	<Identification Standard="61499-2" Description="Copyright (c) 2023 Meisterschulen am Ostbahnhof  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0" >
 	</Identification>
 	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2023-10-23">
 	</VersionInfo>
@@ -41,8 +41,8 @@
 		<FB Name="F_SINT_TO_UINT" Type="F_SINT_TO_UINT" x="-6400" y="2206.67">
 		</FB>
 		<FB Name="sequence_04" Type="sequence_ET_04" x="-9673.33" y="1713.33">
-			<Parameter Name="DT_S1_S2" Value="NO_TIME"/>
-			<Parameter Name="DT_S2_S3" Value="NO_TIME"/>
+			<Parameter Name="DT_S1_S2" Value="sequence::NO_TIME"/>
+			<Parameter Name="DT_S2_S3" Value="sequence::NO_TIME"/>
 			<Parameter Name="DT_S3_S4" Value="T#2s"/>
 			<Parameter Name="DT_S4_START" Value="T#2s"/>
 		</FB>
@@ -51,7 +51,7 @@
 			<Connection Source="DigitalInput_I1_CLK.IND" Destination="sequence_04.START_S1" dx1="406.67"/>
 			<Connection Source="DigitalInput_I2_CLK.IND" Destination="sequence_04.S1_S2" dx1="373.33"/>
 			<Connection Source="DigitalInput_I3_CLK.IND" Destination="sequence_04.S2_S3" dx1="406.67"/>
-			<Connection Source="DigitalInput_I4_CLK.IND" Destination="sequence_04.RESET" dx1="253.33"/>
+			<Connection Source="DigitalInput_I4_CLK.IND" Destination="sequence_04.RESET" dx1="133.33"/>
 			<Connection Source="sequence_04.CNF" Destination="F_SINT_TO_UINT.REQ" dx1="393.33" dx2="393.33" dy="-13.33"/>
 			<Connection Source="sequence_04.EO_S1" Destination="DigitalOutput_Q1.REQ" dx1="186.67"/>
 			<Connection Source="sequence_04.EO_S2" Destination="DigitalOutput_Q2.REQ" dx1="253.33"/>
