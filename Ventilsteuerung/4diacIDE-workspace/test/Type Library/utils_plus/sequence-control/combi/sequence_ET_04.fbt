@@ -43,10 +43,10 @@
 			</Event>
 		</EventOutputs>
 		<InputVars>
-			<VarDeclaration Name="DT_S1_S2" Type="TIME" Comment="State_01 to State_02 timed, set to NO_TIME to disable"  InitialValue="NO_TIME"/>
-			<VarDeclaration Name="DT_S2_S3" Type="TIME" Comment="State_02 to State_03 timed, set to NO_TIME to disable"  InitialValue="NO_TIME"/>
-			<VarDeclaration Name="DT_S3_S4" Type="TIME" Comment="State_03 to State_04 timed, set to NO_TIME to disable"  InitialValue="NO_TIME"/>
-			<VarDeclaration Name="DT_S4_START" Type="TIME" Comment="State_04 to START timed, set to NO_TIME to disable"  InitialValue="NO_TIME"/>
+			<VarDeclaration Name="DT_S1_S2" Type="TIME" Comment="State_01 to State_02 timed, set to NO_TIME to disable"  InitialValue="sequence::NO_TIME"/>
+			<VarDeclaration Name="DT_S2_S3" Type="TIME" Comment="State_02 to State_03 timed, set to NO_TIME to disable"  InitialValue="sequence::NO_TIME"/>
+			<VarDeclaration Name="DT_S3_S4" Type="TIME" Comment="State_03 to State_04 timed, set to NO_TIME to disable"  InitialValue="sequence::NO_TIME"/>
+			<VarDeclaration Name="DT_S4_START" Type="TIME" Comment="State_04 to START timed, set to NO_TIME to disable"  InitialValue="sequence::NO_TIME"/>
 		</InputVars>
 		<OutputVars>
 			<VarDeclaration Name="STATE_NR" Type="SINT" Comment="State Number, START = 0, State_01 = 1 and so on. " />
@@ -122,96 +122,96 @@
 			<ECTransition Source="sRESET" Destination="sState_00" Condition="1" Comment="" x="313.33" y="4553.33"/>
 		</ECC>
 		<Algorithm Name="State_00_C">
-			<ST><![CDATA[    // Confirmation STEPS
-ALGORITHM State_00_C    // State_00 Confirmation Step
-STATE_NR := State_00;
+			<ST><![CDATA[ // Confirmation STEPS
+ALGORITHM State_00_C // State_00 Confirmation Step
+STATE_NR := sequence::State_00;
 END_ALGORITHM]]></ST>
 		</Algorithm>
 		<Algorithm Name="State_01_C">
 			<ST><![CDATA[
 
-ALGORITHM State_01_C    // State_01 Confirmation Step
-STATE_NR := State_01;
+ALGORITHM State_01_C // State_01 Confirmation Step
+STATE_NR := sequence::State_01;
 timeOut.DT := DT_S1_S2;
 END_ALGORITHM]]></ST>
 		</Algorithm>
 		<Algorithm Name="State_02_C">
 			<ST><![CDATA[
 
-ALGORITHM State_02_C    // State_02 Confirmation Step
-STATE_NR := State_02;
+ALGORITHM State_02_C // State_02 Confirmation Step
+STATE_NR := sequence::State_02;
 timeOut.DT := DT_S2_S3;
 END_ALGORITHM]]></ST>
 		</Algorithm>
 		<Algorithm Name="State_03_C">
 			<ST><![CDATA[
 
-ALGORITHM State_03_C    // State_03 Confirmation Step
-STATE_NR := State_03;
+ALGORITHM State_03_C // State_03 Confirmation Step
+STATE_NR := sequence::State_03;
 timeOut.DT := DT_S3_S4;
 END_ALGORITHM]]></ST>
 		</Algorithm>
 		<Algorithm Name="State_04_C">
 			<ST><![CDATA[
 
-ALGORITHM State_04_C    // State_04 Confirmation Step
-STATE_NR := State_04;
+ALGORITHM State_04_C // State_04 Confirmation Step
+STATE_NR := sequence::State_04;
 timeOut.DT := DT_S4_START;
 END_ALGORITHM]]></ST>
 		</Algorithm>
 		<Algorithm Name="State_01_E">
 			<ST><![CDATA[
 
-ALGORITHM State_01_E    // State_01 Entry Step
-DO_S1 := BOOL#TRUE;    // ON
+ALGORITHM State_01_E // State_01 Entry Step
+DO_S1 := BOOL#TRUE; // ON
 END_ALGORITHM]]></ST>
 		</Algorithm>
 		<Algorithm Name="State_01_X">
 			<ST><![CDATA[
 
-ALGORITHM State_01_X    // State_01 Exit Step
+ALGORITHM State_01_X // State_01 Exit Step
 DO_S1 := BOOL#FALSE;
 END_ALGORITHM]]></ST>
 		</Algorithm>
 		<Algorithm Name="State_02_E">
 			<ST><![CDATA[
 
-ALGORITHM State_02_E    // State_02 Entry Step
-DO_S2 := BOOL#TRUE;    // ON
+ALGORITHM State_02_E // State_02 Entry Step
+DO_S2 := BOOL#TRUE; // ON
 END_ALGORITHM]]></ST>
 		</Algorithm>
 		<Algorithm Name="State_02_X">
 			<ST><![CDATA[
 
-ALGORITHM State_02_X    // State_02 Exit Step
+ALGORITHM State_02_X // State_02 Exit Step
 DO_S2 := BOOL#FALSE;
 END_ALGORITHM]]></ST>
 		</Algorithm>
 		<Algorithm Name="State_03_E">
 			<ST><![CDATA[
 
-ALGORITHM State_03_E    // State_03 Entry Step
-DO_S3 := BOOL#TRUE;    // ON
+ALGORITHM State_03_E // State_03 Entry Step
+DO_S3 := BOOL#TRUE; // ON
 END_ALGORITHM]]></ST>
 		</Algorithm>
 		<Algorithm Name="State_03_X">
 			<ST><![CDATA[
 
-ALGORITHM State_03_X    // State_03 Exit Step
+ALGORITHM State_03_X // State_03 Exit Step
 DO_S3 := BOOL#FALSE;
 END_ALGORITHM]]></ST>
 		</Algorithm>
 		<Algorithm Name="State_04_E">
 			<ST><![CDATA[
 
-ALGORITHM State_04_E    // State_04 Entry Step
-DO_S4 := BOOL#TRUE;    // ON
+ALGORITHM State_04_E // State_04 Entry Step
+DO_S4 := BOOL#TRUE; // ON
 END_ALGORITHM]]></ST>
 		</Algorithm>
 		<Algorithm Name="State_04_X">
 			<ST><![CDATA[
 
-ALGORITHM State_04_X    // State_04 Exit Step
+ALGORITHM State_04_X // State_04 Exit Step
 DO_S4 := BOOL#FALSE;
 END_ALGORITHM
 

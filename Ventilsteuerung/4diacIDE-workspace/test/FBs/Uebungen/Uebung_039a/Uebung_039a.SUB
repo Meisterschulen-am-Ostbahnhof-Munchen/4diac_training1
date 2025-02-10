@@ -11,24 +11,24 @@
 	<SubAppNetwork>
 		<FB Name="E_TimeOut" Type="E_TimeOut" x="-9200" y="2000">
 		</FB>
-		<FB Name="DigitalInput_DOWN_I1" Type="IE" x="-12533.33" y="166.67">
+		<FB Name="DigitalInput_DOWN_I1" Type="IE" x="-12900" y="120">
 			<Parameter Name="QI" Value="TRUE"/>
 		</FB>
-		<FB Name="DigitalInput_DOWN_I2" Type="IE" x="-12533.33" y="1146.67">
+		<FB Name="DigitalInput_DOWN_I2" Type="IE" x="-12900" y="1100">
 			<Parameter Name="QI" Value="TRUE"/>
 		</FB>
-		<FB Name="DigitalInput_DOWN_I3" Type="IE" x="-12533.33" y="2126.67">
+		<FB Name="DigitalInput_DOWN_I3" Type="IE" x="-12900" y="2080">
 			<Parameter Name="QI" Value="TRUE"/>
 		</FB>
-		<FB Name="DigitalInput_DOWN_I4" Type="IE" x="-12533.33" y="3106.67">
+		<FB Name="DigitalInput_DOWN_I4" Type="IE" x="-12900" y="3060">
 			<Parameter Name="QI" Value="TRUE"/>
 		</FB>
 		<FB Name="sequence_05" Type="sequence_ET_05" x="-10700" y="-200">
-			<Parameter Name="DT_S1_S2" Value="NO_TIME"/>
-			<Parameter Name="DT_S2_S3" Value="NO_TIME"/>
+			<Parameter Name="DT_S1_S2" Value="sequence::NO_TIME"/>
+			<Parameter Name="DT_S2_S3" Value="sequence::NO_TIME"/>
 			<Parameter Name="DT_S3_S4" Value="T#5s"/>
-			<Parameter Name="DT_S4_S5" Value="NO_TIME"/>
-			<Parameter Name="DT_S5_START" Value="NO_TIME"/>
+			<Parameter Name="DT_S4_S5" Value="sequence::NO_TIME"/>
+			<Parameter Name="DT_S5_START" Value="sequence::NO_TIME"/>
 		</FB>
 		<SubApp Name="NumbAnzeig" Type="Uebung_039_sub_NumbAnzeig" x="-8766.67" y="-986.67">
 		</SubApp>
@@ -36,10 +36,10 @@
 			<Parameter Name="QI" Value="TRUE"/>
 		</FB>
 		<SubApp Name="Q1" Type="Uebung_039a_sub_Outputs" x="-7600" y="-100">
-			<Parameter Name="u16ObjId" Value="SoftKey_F8"/>
+			<Parameter Name="u16ObjId" Value="DefaultPool::SoftKey_F8"/>
 		</SubApp>
 		<SubApp Name="Q2" Type="Uebung_039a_sub_Outputs" x="-7600" y="500">
-			<Parameter Name="u16ObjId" Value="SoftKey_F2"/>
+			<Parameter Name="u16ObjId" Value="DefaultPool::SoftKey_F2"/>
 		</SubApp>
 		<EventConnections>
 			<Connection Source="DigitalInput_DOWN_I1.IND" Destination="sequence_05.S1_S2" dx1="313.33"/>

@@ -21,13 +21,13 @@
 		</EventOutputs>
 		<OutputVars>
 			<VarDeclaration Name="Q" Type="BOOL" Comment="BOOL Output"  InitialValue="FALSE"/>
-			<VarDeclaration Name="QB" Type="BYTE" Comment="2bit (quarter Byte) Output with 4 States"  InitialValue="COMMAND_DISABLE"/>
+			<VarDeclaration Name="QB" Type="BYTE" Comment="2bit (quarter Byte) Output with 4 States"  InitialValue="quarter::COMMAND_DISABLE"/>
 		</OutputVars>
 	</InterfaceList>
 	<BasicFB>
 		<InternalVars>
 			<VarDeclaration Name="old_Q" Type="BOOL" Comment="old BOOL Output"  InitialValue="FALSE"/>
-			<VarDeclaration Name="old_QB" Type="BYTE" Comment="old 2bit (quarter Byte) Output with 4 States"  InitialValue="COMMAND_DISABLE"/>
+			<VarDeclaration Name="old_QB" Type="BYTE" Comment="old 2bit (quarter Byte) Output with 4 States"  InitialValue="quarter::COMMAND_DISABLE"/>
 		</InternalVars>
 		<ECC>
 			<ECState Name="START" Comment="Initial State"  x="133.33" y="1466.67">
@@ -64,7 +64,7 @@
 		<Algorithm Name="SET">
 			<ST><![CDATA[ALGORITHM SET
 Q := TRUE;
-QB := COMMAND_ENABLE;
+QB := quarter::COMMAND_ENABLE;
 END_ALGORITHM]]></ST>
 		</Algorithm>
 		<Algorithm Name="RESET">
@@ -72,7 +72,7 @@ END_ALGORITHM]]></ST>
 
 ALGORITHM RESET
 Q := FALSE;
-QB := COMMAND_DISABLE;
+QB := quarter::COMMAND_DISABLE;
 END_ALGORITHM]]></ST>
 		</Algorithm>
 		<Algorithm Name="ERROR">
@@ -80,7 +80,7 @@ END_ALGORITHM]]></ST>
 
 ALGORITHM ERROR
 Q := FALSE;
-QB := STATUS_ERROR;
+QB := quarter::STATUS_ERROR;
 END_ALGORITHM]]></ST>
 		</Algorithm>
 		<Algorithm Name="NONE">
@@ -88,7 +88,7 @@ END_ALGORITHM]]></ST>
 
 ALGORITHM NONE
 // Q Don't care/take no action (leave function as is)
-QB := COMMAND_NO_ACTION;
+QB := quarter::COMMAND_NO_ACTION;
 END_ALGORITHM]]></ST>
 		</Algorithm>
 		<Algorithm Name="HOLD">
