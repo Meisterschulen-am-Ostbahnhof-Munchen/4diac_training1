@@ -18,10 +18,10 @@
 			</Event>
 		</EventOutputs>
 		<InputVars>
-			<VarDeclaration Name="IB" Type="BYTE" Comment="2bit (quarter Byte) Output with 4 States"  InitialValue="COMMAND_DISABLE"/>
+			<VarDeclaration Name="IB" Type="BYTE" Comment="2bit (quarter Byte) Output with 4 States"  InitialValue="quarter::COMMAND_DISABLE"/>
 		</InputVars>
 		<OutputVars>
-			<VarDeclaration Name="STR" Type="STRING" Comment="STRING Output"  InitialValue="COMMAND_DISABLE_msg"/>
+			<VarDeclaration Name="STR" Type="STRING" Comment="STRING Output"  InitialValue="quarter::COMMAND_DISABLE_msg"/>
 		</OutputVars>
 	</InterfaceList>
 	<BasicFB>
@@ -55,28 +55,28 @@
 		</ECC>
 		<Algorithm Name="SET">
 			<ST><![CDATA[ALGORITHM SET
-STR := COMMAND_ENABLE_msg;
+STR := quarter::COMMAND_ENABLE_msg;
 END_ALGORITHM]]></ST>
 		</Algorithm>
 		<Algorithm Name="RESET">
 			<ST><![CDATA[
 
 ALGORITHM RESET
-STR := COMMAND_DISABLE_msg;
+STR := quarter::COMMAND_DISABLE_msg;
 END_ALGORITHM]]></ST>
 		</Algorithm>
 		<Algorithm Name="ERROR">
 			<ST><![CDATA[
 
 ALGORITHM ERROR
-STR := COMMAND_RESERVED_msg;
+STR := quarter::COMMAND_RESERVED_msg;
 END_ALGORITHM]]></ST>
 		</Algorithm>
 		<Algorithm Name="NONE">
 			<ST><![CDATA[
 
 ALGORITHM NONE
-STR := COMMAND_NO_ACTION_msg;
+STR := quarter::COMMAND_NO_ACTION_msg;
 END_ALGORITHM
 
 ]]></ST>

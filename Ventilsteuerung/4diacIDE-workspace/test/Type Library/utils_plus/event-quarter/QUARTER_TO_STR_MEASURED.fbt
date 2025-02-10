@@ -18,10 +18,10 @@
 			</Event>
 		</EventOutputs>
 		<InputVars>
-			<VarDeclaration Name="IB" Type="BYTE" Comment="2bit (quarter Byte) Output with 4 States"  InitialValue="STATUS_DISABLED"/>
+			<VarDeclaration Name="IB" Type="BYTE" Comment="2bit (quarter Byte) Output with 4 States"  InitialValue="quarter::STATUS_DISABLED"/>
 		</InputVars>
 		<OutputVars>
-			<VarDeclaration Name="STR" Type="STRING" Comment="STRING Output"  InitialValue="STATUS_DISABLED_msg"/>
+			<VarDeclaration Name="STR" Type="STRING" Comment="STRING Output"  InitialValue="quarter::STATUS_DISABLED_msg"/>
 		</OutputVars>
 	</InterfaceList>
 	<BasicFB>
@@ -55,28 +55,28 @@
 		</ECC>
 		<Algorithm Name="SET">
 			<ST><![CDATA[ALGORITHM SET
-STR := STATUS_ENABLED_msg;
+STR := quarter::STATUS_ENABLED_msg;
 END_ALGORITHM]]></ST>
 		</Algorithm>
 		<Algorithm Name="RESET">
 			<ST><![CDATA[
 
 ALGORITHM RESET
-STR := STATUS_DISABLED_msg;
+STR := quarter::STATUS_DISABLED_msg;
 END_ALGORITHM]]></ST>
 		</Algorithm>
 		<Algorithm Name="ERROR">
 			<ST><![CDATA[
 
 ALGORITHM ERROR
-STR := STATUS_ERROR_msg;
+STR := quarter::STATUS_ERROR_msg;
 END_ALGORITHM]]></ST>
 		</Algorithm>
 		<Algorithm Name="NONE">
 			<ST><![CDATA[
 
 ALGORITHM NONE
-STR := STATUS_NOT_AVAILABLE_msg;
+STR := quarter::STATUS_NOT_AVAILABLE_msg;
 END_ALGORITHM
 
 ]]></ST>
