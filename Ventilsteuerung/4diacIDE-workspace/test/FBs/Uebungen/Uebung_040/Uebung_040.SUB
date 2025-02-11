@@ -21,10 +21,10 @@
 		<FB Name="DigitalOutput_Q4" Type="QX" x="-6666.67" y="800">
 			<Parameter Name="QI" Value="TRUE"/>
 		</FB>
-		<FB Name="DigitalInput_I1_CLK" Type="IE" x="-16000" y="-4533.33">
+		<FB Name="DigitalInput_CLK_I1" Type="IE" x="-16000" y="-4533.33">
 			<Parameter Name="QI" Value="TRUE"/>
 		</FB>
-		<FB Name="DigitalInput_I4_CLK" Type="IE" x="-16533.33" y="800">
+		<FB Name="DigitalInput_CLK_I4" Type="IE" x="-16533.33" y="800">
 			<Parameter Name="QI" Value="TRUE"/>
 		</FB>
 		<FB Name="DigitalOutput_Q5" Type="QX" x="-6666.67" y="1866.67">
@@ -51,7 +51,7 @@
 		</FB>
 		<FB Name="E_DEMUX_0" Type="E_DEMUX" x="-12000" y="-3466.67">
 		</FB>
-		<FB Name="DigitalInput_I2_CLK" Type="IE" x="-16000" y="-2400">
+		<FB Name="DigitalInput_CLK_I2" Type="IE" x="-16000" y="-2400">
 			<Parameter Name="QI" Value="TRUE"/>
 		</FB>
 		<FB Name="E_CTU_1" Type="E_CTU" x="-14400" y="-1333.33">
@@ -59,7 +59,7 @@
 		</FB>
 		<FB Name="E_DEMUX_1" Type="E_DEMUX" x="-12000" y="-1333.33">
 		</FB>
-		<FB Name="DigitalInput_I3_CLK" Type="IE" x="-16000" y="-1333.33">
+		<FB Name="DigitalInput_CLK_I3" Type="IE" x="-16000" y="-1333.33">
 			<Parameter Name="QI" Value="TRUE"/>
 		</FB>
 		<FB Name="F_SUB_1" Type="F_SUB" x="-13066.67" y="-1333.33">
@@ -70,7 +70,7 @@
 		</FB>
 		<EventConnections>
 			<Connection Source="F_SINT_TO_UINT.CNF" Destination="Q_NumericValue.REQ" dx1="633.33"/>
-			<Connection Source="DigitalInput_I4_CLK.IND" Destination="loop.RESET" dx1="3000"/>
+			<Connection Source="DigitalInput_CLK_I4.IND" Destination="loop.RESET" dx1="3000"/>
 			<Connection Source="loop.CNF" Destination="F_SINT_TO_UINT.REQ" dx1="3060"/>
 			<Connection Source="loop.EO_S1" Destination="DigitalOutput_Q1.REQ" dx1="600"/>
 			<Connection Source="loop.EO_S2" Destination="DigitalOutput_Q2.REQ" dx1="760"/>
@@ -80,13 +80,13 @@
 			<Connection Source="loop.EO_S6" Destination="DigitalOutput_Q6.REQ" dx1="560"/>
 			<Connection Source="loop.EO_S7" Destination="DigitalOutput_Q7.REQ" dx1="493.33"/>
 			<Connection Source="loop.EO_S8" Destination="DigitalOutput_Q8.REQ" dx1="426.67"/>
-			<Connection Source="DigitalInput_I1_CLK.IND" Destination="loop.START_S1" dx1="5126.67"/>
+			<Connection Source="DigitalInput_CLK_I1.IND" Destination="loop.START_S1" dx1="5126.67"/>
 			<Connection Source="E_DEMUX_0.EO0" Destination="loop.S1_S2" dx1="986.67"/>
 			<Connection Source="E_DEMUX_0.EO1" Destination="loop.S2_S3" dx1="953.33"/>
 			<Connection Source="E_DEMUX_0.EO2" Destination="loop.S3_S4" dx1="920"/>
 			<Connection Source="E_DEMUX_0.EO3" Destination="loop.S4_S5" dx1="886.67"/>
-			<Connection Source="DigitalInput_I2_CLK.IND" Destination="E_CTU_0.CU" dx1="186.67"/>
-			<Connection Source="DigitalInput_I3_CLK.IND" Destination="E_CTU_1.CU" dx1="253.33"/>
+			<Connection Source="DigitalInput_CLK_I2.IND" Destination="E_CTU_0.CU" dx1="186.67"/>
+			<Connection Source="DigitalInput_CLK_I3.IND" Destination="E_CTU_1.CU" dx1="253.33"/>
 			<Connection Source="E_DEMUX_1.EO3" Destination="loop.S8_S1" dx1="753.33"/>
 			<Connection Source="E_DEMUX_1.EO2" Destination="loop.S7_S8" dx1="786.67"/>
 			<Connection Source="E_DEMUX_1.EO1" Destination="loop.S6_S7" dx1="820"/>
@@ -95,8 +95,8 @@
 			<Connection Source="F_SUB_0.CNF" Destination="E_DEMUX_0.EI"/>
 			<Connection Source="E_CTU_0.CUO" Destination="F_SUB_0.REQ"/>
 			<Connection Source="E_CTU_1.CUO" Destination="F_SUB_1.REQ"/>
-			<Connection Source="DigitalInput_I4_CLK.IND" Destination="E_CTU_1.R" dx1="753.33"/>
-			<Connection Source="DigitalInput_I4_CLK.IND" Destination="E_CTU_0.R" dx1="753.33"/>
+			<Connection Source="DigitalInput_CLK_I4.IND" Destination="E_CTU_1.R" dx1="753.33"/>
+			<Connection Source="DigitalInput_CLK_I4.IND" Destination="E_CTU_0.R" dx1="753.33"/>
 			<Connection Source="E_DEMUX_0.EO3" Destination="E_CTU_0.R" dx1="66.67" dx2="193.33" dy="406.67"/>
 			<Connection Source="E_DEMUX_1.EO3" Destination="E_CTU_1.R" dx1="66.67" dx2="66.67" dy="266.67"/>
 		</EventConnections>

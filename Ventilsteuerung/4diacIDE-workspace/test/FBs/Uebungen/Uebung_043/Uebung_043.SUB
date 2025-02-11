@@ -9,7 +9,7 @@
 	<SubAppInterfaceList>
 	</SubAppInterfaceList>
 	<SubAppNetwork>
-		<FB Name="DigitalInput_I1_CLK" Type="IE" x="-4986.67" y="-460">
+		<FB Name="DigitalInput_CLK_I1" Type="IE" x="-4986.67" y="-460">
 			<Parameter Name="QI" Value="TRUE"/>
 		</FB>
 		<FB Name="SCALE_LIM" Type="signalprocessing::SCALE_LIM" x="-2606.67" y="-226.67">
@@ -24,7 +24,7 @@
 			<Parameter Name="MIN_OUT_FIX" Value="0.0"/>
 		</FB>
 		<EventConnections>
-			<Connection Source="DigitalInput_I1_CLK.IND" Destination="SCALE_LIM.REQ" dx1="793.33" dx2="793.33" dy="0"/>
+			<Connection Source="DigitalInput_CLK_I1.IND" Destination="SCALE_LIM.REQ" dx1="793.33" dx2="793.33" dy="0"/>
 		</EventConnections>
 	</SubAppNetwork>
 </SubAppType>

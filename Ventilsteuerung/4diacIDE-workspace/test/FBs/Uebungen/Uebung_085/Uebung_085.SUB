@@ -15,13 +15,13 @@
 		<FB Name="DigitalInput_I1" Type="IX" x="-8000" y="100">
 			<Parameter Name="QI" Value="TRUE"/>
 		</FB>
-		<FB Name="DigitalInput_I2_CLK" Type="IE" x="-8100" y="-800">
+		<FB Name="DigitalInput_CLK_I2" Type="IE" x="-8100" y="-800">
 			<Parameter Name="QI" Value="TRUE"/>
 		</FB>
 		<FB Name="E_D_FF" Type="E_D_FF" x="-6400" y="-600">
 		</FB>
 		<EventConnections>
-			<Connection Source="DigitalInput_I2_CLK.IND" Destination="E_D_FF.CLK"/>
+			<Connection Source="DigitalInput_CLK_I2.IND" Destination="E_D_FF.CLK"/>
 			<Connection Source="E_D_FF.EO" Destination="DigitalOutput_Q1.REQ" dx1="486.67"/>
 		</EventConnections>
 		<DataConnections>

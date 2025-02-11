@@ -12,7 +12,7 @@
 		<FB Name="DigitalOutput_Q1" Type="QX" x="0" y="-1000">
 			<Parameter Name="QI" Value="TRUE"/>
 		</FB>
-		<FB Name="DigitalInput_I1_CLK" Type="IE" x="-4500" y="-1100">
+		<FB Name="DigitalInput_CLK_I1" Type="IE" x="-4500" y="-1100">
 			<Parameter Name="QI" Value="TRUE"/>
 		</FB>
 		<FB Name="E_SR_I1" Type="E_SR" x="-1800" y="-900">
@@ -26,18 +26,18 @@
 		</FB>
 		<FB Name="E_SR_I2" Type="E_SR" x="-1600" y="200">
 		</FB>
-		<FB Name="DigitalInput_I2_CLK" Type="IE" x="-4500" y="0">
+		<FB Name="DigitalInput_CLK_I2" Type="IE" x="-4500" y="0">
 			<Parameter Name="QI" Value="TRUE"/>
 		</FB>
 		<EventConnections>
 			<Connection Source="E_SR_I1.EO" Destination="DigitalOutput_Q1.REQ"/>
-			<Connection Source="DigitalInput_I1_CLK.IND" Destination="E_SWITCH_I1.EI"/>
+			<Connection Source="DigitalInput_CLK_I1.IND" Destination="E_SWITCH_I1.EI"/>
 			<Connection Source="E_SWITCH_I1.EO0" Destination="E_SR_I1.S"/>
 			<Connection Source="E_SWITCH_I1.EO1" Destination="E_SR_I1.R"/>
 			<Connection Source="E_SWITCH_I2.EO1" Destination="E_SR_I2.R"/>
 			<Connection Source="E_SWITCH_I2.EO0" Destination="E_SR_I2.S"/>
 			<Connection Source="E_SR_I2.EO" Destination="DigitalOutput_Q2.REQ"/>
-			<Connection Source="DigitalInput_I2_CLK.IND" Destination="E_SWITCH_I2.EI"/>
+			<Connection Source="DigitalInput_CLK_I2.IND" Destination="E_SWITCH_I2.EI"/>
 		</EventConnections>
 		<DataConnections>
 			<Connection Source="E_SR_I1.Q" Destination="DigitalOutput_Q1.OUT" dx1="680"/>

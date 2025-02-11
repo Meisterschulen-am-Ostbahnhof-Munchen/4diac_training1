@@ -12,32 +12,32 @@
 		<FB Name="DigitalOutput_Q1" Type="QX" x="-7600" y="-100">
 			<Parameter Name="QI" Value="TRUE"/>
 		</FB>
-		<FB Name="DigitalInput_I1_CLK" Type="IE" x="-10800" y="-900">
+		<FB Name="DigitalInput_CLK_I1" Type="IE" x="-10800" y="-900">
 			<Parameter Name="QI" Value="TRUE"/>
 		</FB>
 		<FB Name="E_CTUD" Type="E_CTUD" x="-9000" y="0">
 			<Parameter Name="PV" Value="UINT#5"/>
 		</FB>
-		<FB Name="DigitalInput_I2_CLK" Type="IE" x="-10800" y="-100">
+		<FB Name="DigitalInput_CLK_I2" Type="IE" x="-10800" y="-100">
 			<Parameter Name="QI" Value="TRUE"/>
 		</FB>
-		<FB Name="DigitalInput_I3_CLK" Type="IE" x="-10800" y="700">
+		<FB Name="DigitalInput_CLK_I3" Type="IE" x="-10800" y="700">
 			<Parameter Name="QI" Value="TRUE"/>
 		</FB>
-		<FB Name="DigitalInput_I4_CLK" Type="IE" x="-10800" y="1500">
+		<FB Name="DigitalInput_CLK_I4" Type="IE" x="-10800" y="1500">
 			<Parameter Name="QI" Value="TRUE"/>
 		</FB>
 		<FB Name="DigitalOutput_Q2" Type="QX" x="-7600" y="800">
 			<Parameter Name="QI" Value="TRUE"/>
 		</FB>
 		<EventConnections>
-			<Connection Source="DigitalInput_I1_CLK.IND" Destination="E_CTUD.CU" dx1="413.33"/>
+			<Connection Source="DigitalInput_CLK_I1.IND" Destination="E_CTUD.CU" dx1="413.33"/>
 			<Connection Source="E_CTUD.CO" Destination="DigitalOutput_Q1.REQ"/>
 			<Connection Source="E_CTUD.LDO" Destination="DigitalOutput_Q1.REQ" dx1="453.33"/>
-			<Connection Source="DigitalInput_I2_CLK.IND" Destination="E_CTUD.CD"/>
+			<Connection Source="DigitalInput_CLK_I2.IND" Destination="E_CTUD.CD"/>
 			<Connection Source="E_CTUD.RO" Destination="DigitalOutput_Q1.REQ" dx1="453.33"/>
-			<Connection Source="DigitalInput_I3_CLK.IND" Destination="E_CTUD.R" dx1="260"/>
-			<Connection Source="DigitalInput_I4_CLK.IND" Destination="E_CTUD.LD" dx1="400"/>
+			<Connection Source="DigitalInput_CLK_I3.IND" Destination="E_CTUD.R" dx1="260"/>
+			<Connection Source="DigitalInput_CLK_I4.IND" Destination="E_CTUD.LD" dx1="400"/>
 			<Connection Source="E_CTUD.LDO" Destination="DigitalOutput_Q2.REQ" dx1="453.33"/>
 			<Connection Source="E_CTUD.CO" Destination="DigitalOutput_Q2.REQ" dx1="453.33"/>
 			<Connection Source="E_CTUD.RO" Destination="DigitalOutput_Q2.REQ" dx1="453.33"/>

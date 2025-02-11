@@ -12,7 +12,7 @@
 		<FB Name="DigitalOutput_Q1" Type="QX" x="-1473.34" y="-800">
 			<Parameter Name="QI" Value="TRUE"/>
 		</FB>
-		<FB Name="DigitalInput_I1_CLK" Type="IE" x="-4540" y="-913.33">
+		<FB Name="DigitalInput_CLK_I1" Type="IE" x="-4540" y="-913.33">
 			<Parameter Name="QI" Value="TRUE">
 				<Attribute Name="Visible" Value="false"/>
 			</Parameter>
@@ -20,7 +20,7 @@
 				<Attribute Name="Visible" Value="false"/>
 			</Parameter>
 		</FB>
-		<FB Name="DigitalInput_I2_CLK" Type="IE" x="-4540" y="113.34">
+		<FB Name="DigitalInput_CLK_I2" Type="IE" x="-4540" y="113.34">
 			<Parameter Name="QI" Value="TRUE">
 				<Attribute Name="Visible" Value="false"/>
 			</Parameter>
@@ -30,7 +30,7 @@
 		</FB>
 		<FB Name="E_T_FF_SR" Type="E_T_FF_SR" x="-2833.33" y="-686.66">
 		</FB>
-		<FB Name="DigitalInput_I3_CLK" Type="IE" x="-4533.33" y="1133.33">
+		<FB Name="DigitalInput_CLK_I3" Type="IE" x="-4533.33" y="1133.33">
 			<Parameter Name="QI" Value="TRUE">
 				<Attribute Name="Visible" Value="false"/>
 			</Parameter>
@@ -39,10 +39,10 @@
 			</Parameter>
 		</FB>
 		<EventConnections>
-			<Connection Source="DigitalInput_I1_CLK.IND" Destination="E_T_FF_SR.S" dx1="500"/>
-			<Connection Source="DigitalInput_I2_CLK.IND" Destination="E_T_FF_SR.R" dx1="486.67"/>
+			<Connection Source="DigitalInput_CLK_I1.IND" Destination="E_T_FF_SR.S" dx1="500"/>
+			<Connection Source="DigitalInput_CLK_I2.IND" Destination="E_T_FF_SR.R" dx1="486.67"/>
 			<Connection Source="E_T_FF_SR.EO" Destination="DigitalOutput_Q1.REQ" dx1="340"/>
-			<Connection Source="DigitalInput_I3_CLK.IND" Destination="E_T_FF_SR.CLK" dx1="673.33"/>
+			<Connection Source="DigitalInput_CLK_I3.IND" Destination="E_T_FF_SR.CLK" dx1="673.33"/>
 		</EventConnections>
 		<DataConnections>
 			<Connection Source="E_T_FF_SR.Q" Destination="DigitalOutput_Q1.OUT" dx1="340"/>

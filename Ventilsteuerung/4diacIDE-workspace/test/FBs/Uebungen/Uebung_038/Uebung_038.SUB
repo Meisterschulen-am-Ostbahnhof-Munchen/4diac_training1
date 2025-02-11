@@ -23,10 +23,10 @@
 		<FB Name="DigitalOutput_Q4" Type="QX" x="-6666.67" y="800">
 			<Parameter Name="QI" Value="TRUE"/>
 		</FB>
-		<FB Name="DigitalInput_I1_CLK" Type="IE" x="-11373.33" y="-826.67">
+		<FB Name="DigitalInput_CLK_I1" Type="IE" x="-11373.33" y="-826.67">
 			<Parameter Name="QI" Value="TRUE"/>
 		</FB>
-		<FB Name="DigitalInput_I4_CLK" Type="IE" x="-11373.33" y="186.67">
+		<FB Name="DigitalInput_CLK_I4" Type="IE" x="-11373.33" y="186.67">
 			<Parameter Name="QI" Value="TRUE"/>
 		</FB>
 		<FB Name="DigitalOutput_Q5" Type="QX" x="-6666.67" y="1866.67">
@@ -58,8 +58,8 @@
 		</FB>
 		<EventConnections>
 			<Connection Source="F_SINT_TO_UINT.CNF" Destination="Q_NumericValue.REQ" dx1="633.33"/>
-			<Connection Source="DigitalInput_I1_CLK.IND" Destination="loop.START_S1" dx1="486.67"/>
-			<Connection Source="DigitalInput_I4_CLK.IND" Destination="loop.RESET" dx1="420"/>
+			<Connection Source="DigitalInput_CLK_I1.IND" Destination="loop.START_S1" dx1="486.67"/>
+			<Connection Source="DigitalInput_CLK_I4.IND" Destination="loop.RESET" dx1="420"/>
 			<Connection Source="loop.CNF" Destination="F_SINT_TO_UINT.REQ" dx1="3153.33"/>
 			<Connection Source="loop.EO_S1" Destination="DigitalOutput_Q1.REQ" dx1="820"/>
 			<Connection Source="loop.EO_S2" Destination="DigitalOutput_Q2.REQ" dx1="986.67"/>
