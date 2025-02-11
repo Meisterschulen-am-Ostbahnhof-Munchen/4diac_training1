@@ -12,19 +12,19 @@
 		<FB Name="DigitalOutput_Q1" Type="QX" x="-7400" y="-100">
 			<Parameter Name="QI" Value="TRUE"/>
 		</FB>
-		<FB Name="DigitalInput_I1_CLK" Type="IE" x="-10800" y="-900">
+		<FB Name="DigitalInput_CLK_I1" Type="IE" x="-10800" y="-900">
 			<Parameter Name="QI" Value="TRUE"/>
 		</FB>
 		<FB Name="E_CTUD_UDINT" Type="E_CTUD_UDINT" x="-9000" y="0">
 			<Parameter Name="PV" Value="UINT#5"/>
 		</FB>
-		<FB Name="DigitalInput_I2_CLK" Type="IE" x="-10800" y="-100">
+		<FB Name="DigitalInput_CLK_I2" Type="IE" x="-10800" y="-100">
 			<Parameter Name="QI" Value="TRUE"/>
 		</FB>
-		<FB Name="DigitalInput_I3_CLK" Type="IE" x="-10800" y="700">
+		<FB Name="DigitalInput_CLK_I3" Type="IE" x="-10800" y="700">
 			<Parameter Name="QI" Value="TRUE"/>
 		</FB>
-		<FB Name="DigitalInput_I4_CLK" Type="IE" x="-10800" y="1500">
+		<FB Name="DigitalInput_CLK_I4" Type="IE" x="-10800" y="1500">
 			<Parameter Name="QI" Value="TRUE"/>
 		</FB>
 		<FB Name="DigitalOutput_Q2" Type="QX" x="-7400" y="800">
@@ -34,13 +34,13 @@
 			<Parameter Name="u16ObjId" Value="DefaultPool::OutputNumber_N1"/>
 		</FB>
 		<EventConnections>
-			<Connection Source="DigitalInput_I1_CLK.IND" Destination="E_CTUD_UDINT.CU" dx1="413.33" dx2="413.33" dy="0"/>
+			<Connection Source="DigitalInput_CLK_I1.IND" Destination="E_CTUD_UDINT.CU" dx1="413.33" dx2="413.33" dy="0"/>
 			<Connection Source="E_CTUD_UDINT.CO" Destination="DigitalOutput_Q1.REQ"/>
 			<Connection Source="E_CTUD_UDINT.LDO" Destination="DigitalOutput_Q1.REQ" dx1="393.33" dx2="393.33" dy="0"/>
-			<Connection Source="DigitalInput_I2_CLK.IND" Destination="E_CTUD_UDINT.CD"/>
+			<Connection Source="DigitalInput_CLK_I2.IND" Destination="E_CTUD_UDINT.CD"/>
 			<Connection Source="E_CTUD_UDINT.RO" Destination="DigitalOutput_Q1.REQ" dx1="393.33" dx2="393.33" dy="0"/>
-			<Connection Source="DigitalInput_I3_CLK.IND" Destination="E_CTUD_UDINT.R" dx1="260" dx2="260" dy="0"/>
-			<Connection Source="DigitalInput_I4_CLK.IND" Destination="E_CTUD_UDINT.LD" dx1="400" dx2="400" dy="0"/>
+			<Connection Source="DigitalInput_CLK_I3.IND" Destination="E_CTUD_UDINT.R" dx1="260" dx2="260" dy="0"/>
+			<Connection Source="DigitalInput_CLK_I4.IND" Destination="E_CTUD_UDINT.LD" dx1="400" dx2="400" dy="0"/>
 			<Connection Source="E_CTUD_UDINT.LDO" Destination="DigitalOutput_Q2.REQ" dx1="393.33" dx2="393.33" dy="0"/>
 			<Connection Source="E_CTUD_UDINT.CO" Destination="DigitalOutput_Q2.REQ" dx1="393.33" dx2="393.33" dy="0"/>
 			<Connection Source="E_CTUD_UDINT.RO" Destination="DigitalOutput_Q2.REQ" dx1="393.33" dx2="393.33" dy="0"/>

@@ -9,10 +9,10 @@
 	<SubAppInterfaceList>
 	</SubAppInterfaceList>
 	<SubAppNetwork>
-		<FB Name="DigitalInput_I1_CLK" Type="IE" x="-5733.33" y="626.67">
+		<FB Name="DigitalInput_CLK_I1" Type="IE" x="-5733.33" y="626.67">
 			<Parameter Name="QI" Value="TRUE"/>
 		</FB>
-		<FB Name="DigitalInput_I2_CLK" Type="IE" x="-5733.33" y="-326.67">
+		<FB Name="DigitalInput_CLK_I2" Type="IE" x="-5733.33" y="-326.67">
 			<Parameter Name="QI" Value="TRUE"/>
 		</FB>
 		<FB Name="strip_set_pixel" Type="strip_set_pixel" x="-1066.67" y="400">
@@ -24,9 +24,9 @@
 			<Parameter Name="value" Value="100"/>
 		</FB>
 		<EventConnections>
-			<Connection Source="DigitalInput_I2_CLK.IND" Destination="strip_set_pixel.clear" dx1="2553.33"/>
+			<Connection Source="DigitalInput_CLK_I2.IND" Destination="strip_set_pixel.clear" dx1="2553.33"/>
 			<Connection Source="hsv2rgb.CNF" Destination="strip_set_pixel.set_pixel" dx1="1413.33"/>
-			<Connection Source="DigitalInput_I1_CLK.IND" Destination="hsv2rgb.REQ" dx1="873.33"/>
+			<Connection Source="DigitalInput_CLK_I1.IND" Destination="hsv2rgb.REQ" dx1="873.33"/>
 		</EventConnections>
 		<DataConnections>
 			<Connection Source="hsv2rgb.r" Destination="strip_set_pixel.red" dx1="746.67"/>

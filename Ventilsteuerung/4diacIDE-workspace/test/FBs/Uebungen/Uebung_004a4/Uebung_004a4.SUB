@@ -17,7 +17,7 @@
 				<Attribute Name="Visible" Value="false"/>
 			</Parameter>
 		</FB>
-		<FB Name="DigitalInput_I1_CLK" Type="IE" x="-8533.33" y="-6.66">
+		<FB Name="DigitalInput_CLK_I1" Type="IE" x="-8533.33" y="-6.66">
 			<Parameter Name="QI" Value="TRUE">
 				<Attribute Name="Visible" Value="false"/>
 			</Parameter>
@@ -44,7 +44,7 @@
 			<Connection Source="E_T_FF_Q2.EO" Destination="DigitalOutput_Q2.REQ" dx1="366.67"/>
 			<Connection Source="E_SPLIT.EO1" Destination="E_T_FF_Q1.CLK" dx1="493.33"/>
 			<Connection Source="E_SPLIT.EO2" Destination="E_T_FF_Q2.CLK" dx1="493.33"/>
-			<Connection Source="DigitalInput_I1_CLK.IND" Destination="E_SPLIT.EI" dx1="373.33"/>
+			<Connection Source="DigitalInput_CLK_I1.IND" Destination="E_SPLIT.EI" dx1="373.33"/>
 		</EventConnections>
 		<DataConnections>
 			<Connection Source="E_T_FF_Q1.Q" Destination="DigitalOutput_Q1.OUT" dx1="313.33"/>

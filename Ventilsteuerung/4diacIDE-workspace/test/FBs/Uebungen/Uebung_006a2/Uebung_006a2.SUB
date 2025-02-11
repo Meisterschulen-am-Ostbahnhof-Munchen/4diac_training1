@@ -12,7 +12,7 @@
 		<FB Name="DigitalOutput_Q1" Type="QX" x="-1473.34" y="-1020">
 			<Parameter Name="QI" Value="TRUE"/>
 		</FB>
-		<FB Name="DigitalInput_I1_CLK" Type="IE" x="-4540" y="-913.33">
+		<FB Name="DigitalInput_CLK_I1" Type="IE" x="-4540" y="-913.33">
 			<Parameter Name="QI" Value="TRUE">
 				<Attribute Name="Visible" Value="false"/>
 			</Parameter>
@@ -20,7 +20,7 @@
 				<Attribute Name="Visible" Value="false"/>
 			</Parameter>
 		</FB>
-		<FB Name="DigitalInput_I2_CLK" Type="IE" x="-4540" y="113.34">
+		<FB Name="DigitalInput_CLK_I2" Type="IE" x="-4540" y="113.34">
 			<Parameter Name="QI" Value="TRUE">
 				<Attribute Name="Visible" Value="false"/>
 			</Parameter>
@@ -30,7 +30,7 @@
 		</FB>
 		<FB Name="E_T_FF_SR_Q1" Type="E_T_FF_SR" x="-2840" y="-913.33">
 		</FB>
-		<FB Name="DigitalInput_I3_CLK" Type="IE" x="-4200" y="-2380">
+		<FB Name="DigitalInput_CLK_I3" Type="IE" x="-4200" y="-2380">
 			<Parameter Name="QI" Value="TRUE">
 				<Attribute Name="Visible" Value="false"/>
 			</Parameter>
@@ -46,10 +46,10 @@
 		<EventConnections>
 			<Connection Source="E_T_FF_SR_Q1.EO" Destination="DigitalOutput_Q1.REQ" dx1="346.67"/>
 			<Connection Source="E_T_FF_SR_Q2.EO" Destination="DigitalOutput_Q2.REQ" dx1="340"/>
-			<Connection Source="DigitalInput_I1_CLK.IND" Destination="E_T_FF_SR_Q1.CLK"/>
-			<Connection Source="DigitalInput_I2_CLK.IND" Destination="E_T_FF_SR_Q2.CLK"/>
-			<Connection Source="DigitalInput_I3_CLK.IND" Destination="E_T_FF_SR_Q2.R" dx1="320"/>
-			<Connection Source="DigitalInput_I3_CLK.IND" Destination="E_T_FF_SR_Q1.R" dx1="320"/>
+			<Connection Source="DigitalInput_CLK_I1.IND" Destination="E_T_FF_SR_Q1.CLK"/>
+			<Connection Source="DigitalInput_CLK_I2.IND" Destination="E_T_FF_SR_Q2.CLK"/>
+			<Connection Source="DigitalInput_CLK_I3.IND" Destination="E_T_FF_SR_Q2.R" dx1="320"/>
+			<Connection Source="DigitalInput_CLK_I3.IND" Destination="E_T_FF_SR_Q1.R" dx1="320"/>
 		</EventConnections>
 		<DataConnections>
 			<Connection Source="E_T_FF_SR_Q1.Q" Destination="DigitalOutput_Q1.OUT" dx1="346.67"/>

@@ -12,17 +12,17 @@
 		<FB Name="DigitalOutput_Q1" Type="QX" x="-1500" y="-900">
 			<Parameter Name="QI" Value="TRUE"/>
 		</FB>
-		<FB Name="DigitalInput_I1_CLK" Type="IE" x="-4500" y="-1000">
+		<FB Name="DigitalInput_CLK_I1" Type="IE" x="-4500" y="-1000">
 			<Parameter Name="QI" Value="TRUE"/>
 		</FB>
-		<FB Name="DigitalInput_I2_CLK" Type="IE" x="-4500" y="200">
+		<FB Name="DigitalInput_CLK_I2" Type="IE" x="-4500" y="200">
 			<Parameter Name="QI" Value="TRUE"/>
 		</FB>
 		<FB Name="E_SR" Type="E_SR" x="-2800" y="-800">
 		</FB>
 		<EventConnections>
-			<Connection Source="DigitalInput_I1_CLK.IND" Destination="E_SR.S"/>
-			<Connection Source="DigitalInput_I2_CLK.IND" Destination="E_SR.R" dx1="473.33"/>
+			<Connection Source="DigitalInput_CLK_I1.IND" Destination="E_SR.S"/>
+			<Connection Source="DigitalInput_CLK_I2.IND" Destination="E_SR.R" dx1="473.33"/>
 			<Connection Source="E_SR.EO" Destination="DigitalOutput_Q1.REQ"/>
 		</EventConnections>
 		<DataConnections>

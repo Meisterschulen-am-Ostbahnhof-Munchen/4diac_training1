@@ -21,10 +21,10 @@
 		<FB Name="DigitalOutput_Q4" Type="QX" x="-6666.67" y="800">
 			<Parameter Name="QI" Value="TRUE"/>
 		</FB>
-		<FB Name="DigitalInput_I1_CLK" Type="IE" x="-11466.67" y="-2133.33">
+		<FB Name="DigitalInput_CLK_I1" Type="IE" x="-11466.67" y="-2133.33">
 			<Parameter Name="QI" Value="TRUE"/>
 		</FB>
-		<FB Name="DigitalInput_I4_CLK" Type="IE" x="-16533.33" y="1333.33">
+		<FB Name="DigitalInput_CLK_I4" Type="IE" x="-16533.33" y="1333.33">
 			<Parameter Name="QI" Value="TRUE"/>
 		</FB>
 		<FB Name="DigitalOutput_Q5" Type="QX" x="-6666.67" y="1866.67">
@@ -49,7 +49,7 @@
 		<FB Name="E_CTU_0" Type="E_CTU" x="-14933.33" y="-533.33">
 			<Parameter Name="PV" Value="0"/>
 		</FB>
-		<FB Name="DigitalInput_I2_CLK" Type="IE" x="-16533.33" y="-800">
+		<FB Name="DigitalInput_CLK_I2" Type="IE" x="-16533.33" y="-800">
 			<Parameter Name="QI" Value="TRUE"/>
 		</FB>
 		<FB Name="F_SUB_0" Type="F_SUB" x="-13600" y="-533.33">
@@ -59,7 +59,7 @@
 		</FB>
 		<EventConnections>
 			<Connection Source="F_SINT_TO_UINT.CNF" Destination="Q_NumericValue.REQ" dx1="633.33"/>
-			<Connection Source="DigitalInput_I4_CLK.IND" Destination="loop.RESET" dx1="5146.67"/>
+			<Connection Source="DigitalInput_CLK_I4.IND" Destination="loop.RESET" dx1="5146.67"/>
 			<Connection Source="loop.CNF" Destination="F_SINT_TO_UINT.REQ" dx1="3060"/>
 			<Connection Source="loop.EO_S1" Destination="DigitalOutput_Q1.REQ" dx1="600"/>
 			<Connection Source="loop.EO_S2" Destination="DigitalOutput_Q2.REQ" dx1="760"/>
@@ -69,10 +69,10 @@
 			<Connection Source="loop.EO_S6" Destination="DigitalOutput_Q6.REQ" dx1="560"/>
 			<Connection Source="loop.EO_S7" Destination="DigitalOutput_Q7.REQ" dx1="493.33"/>
 			<Connection Source="loop.EO_S8" Destination="DigitalOutput_Q8.REQ" dx1="426.67"/>
-			<Connection Source="DigitalInput_I1_CLK.IND" Destination="loop.START_S1" dx1="466.67"/>
-			<Connection Source="DigitalInput_I2_CLK.IND" Destination="E_CTU_0.CU" dx1="340"/>
+			<Connection Source="DigitalInput_CLK_I1.IND" Destination="loop.START_S1" dx1="466.67"/>
+			<Connection Source="DigitalInput_CLK_I2.IND" Destination="E_CTU_0.CU" dx1="340"/>
 			<Connection Source="E_CTU_0.CUO" Destination="F_SUB_0.REQ"/>
-			<Connection Source="DigitalInput_I4_CLK.IND" Destination="E_CTU_0.R" dx1="206.67"/>
+			<Connection Source="DigitalInput_CLK_I4.IND" Destination="E_CTU_0.R" dx1="206.67"/>
 			<Connection Source="F_SUB_0.CNF" Destination="E_DEMUX_0.EI"/>
 			<Connection Source="E_DEMUX_0.EO0" Destination="loop.S1_S2" dx1="846.67"/>
 			<Connection Source="E_DEMUX_0.EO1" Destination="loop.S2_S3" dx1="846.67"/>

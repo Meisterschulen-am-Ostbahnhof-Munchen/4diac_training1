@@ -14,7 +14,7 @@
 		</FB>
 		<FB Name="E_PULSE" Type="E_PULSE" x="-12406.67" y="573.33">
 		</FB>
-		<FB Name="DigitalInput_I1_CLK" Type="IE" x="-13873.33" y="346.67">
+		<FB Name="DigitalInput_CLK_I1" Type="IE" x="-13873.33" y="346.67">
 			<Parameter Name="QI" Value="TRUE">
 				<Attribute Name="Visible" Value="false"/>
 			</Parameter>
@@ -36,7 +36,7 @@
 		</FB>
 		<EventConnections>
 			<Connection Source="E_PULSE.CNF" Destination="DigitalOutput_Q1.REQ" dx1="406.67"/>
-			<Connection Source="DigitalInput_I1_CLK.IND" Destination="E_PULSE.REQ" dx1="373.33"/>
+			<Connection Source="DigitalInput_CLK_I1.IND" Destination="E_PULSE.REQ" dx1="373.33"/>
 			<Connection Source="DigitalInput_I2.IND" Destination="E_SWITCH.EI" dx1="273.33"/>
 			<Connection Source="E_SWITCH.EO1" Destination="E_STOPWATCH.START" dx1="286.67"/>
 			<Connection Source="E_SWITCH.EO0" Destination="E_STOPWATCH.STOP" dx1="306.67"/>

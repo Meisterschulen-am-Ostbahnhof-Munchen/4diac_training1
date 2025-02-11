@@ -12,13 +12,13 @@
 		<FB Name="DigitalInput_I1" Type="IX" x="-8000" y="100">
 			<Parameter Name="QI" Value="TRUE"/>
 		</FB>
-		<FB Name="DigitalInput_I2_CLK" Type="IE" x="-8100" y="-800">
+		<FB Name="DigitalInput_CLK_I2" Type="IE" x="-8100" y="-800">
 			<Parameter Name="QI" Value="TRUE"/>
 		</FB>
 		<FB Name="E_PERMIT" Type="E_PERMIT" x="-6400" y="-600">
 		</FB>
 		<EventConnections>
-			<Connection Source="DigitalInput_I2_CLK.IND" Destination="E_PERMIT.EI"/>
+			<Connection Source="DigitalInput_CLK_I2.IND" Destination="E_PERMIT.EI"/>
 		</EventConnections>
 		<DataConnections>
 			<Connection Source="DigitalInput_I1.IN" Destination="E_PERMIT.PERMIT" dx1="440"/>
