@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <SubAppType Name="mapping_Uebung_033" Comment="LED Strip Blinkende LED" >
-	<Identification Standard="61499-2" Description="Copyright (c) 2023 Meisterschulen am Ostbahnhof  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0">
+	<Identification Standard="61499-2" Description="Copyright (c) 2023 Meisterschulen am Ostbahnhof  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0" >
 	</Identification>
 	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2023-10-23">
 	</VersionInfo>
@@ -13,10 +13,10 @@
 			<Parameter Name="QI" Value="TRUE">
 				<Attribute Name="Visible" Value="false"/>
 			</Parameter>
-			<Parameter Name="u8SAMember" Value="GLOBAL">
+			<Parameter Name="u8SAMember" Value="isobus::GLOBAL">
 				<Attribute Name="Visible" Value="false"/>
 			</Parameter>
-			<Parameter Name="u16ObjId" Value="ID_NULL">
+			<Parameter Name="u16ObjId" Value="isobus::ID_NULL">
 				<Attribute Name="Visible" Value="false"/>
 			</Parameter>
 			<Parameter Name="DigitalInput_I1" Value="'Ventilsteuerung.functions.GREEN.BUTTON'"/>
@@ -40,10 +40,10 @@
 			<Parameter Name="QI" Value="TRUE">
 				<Attribute Name="Visible" Value="false"/>
 			</Parameter>
-			<Parameter Name="u8SAMember" Value="Output_strip">
+			<Parameter Name="u8SAMember" Value="LED_strip::Output_strip">
 				<Attribute Name="Visible" Value="false"/>
 			</Parameter>
-			<Parameter Name="u16ObjId" Value="LED_YELLOW"/>
+			<Parameter Name="u16ObjId" Value="LED_COLOURS::LED_YELLOW"/>
 			<Parameter Name="LED_5HZ" Value="'Ventilsteuerung.functions.YELLOW.LED'"/>
 			<Parameter Name="LED_2HZ" Value="">
 				<Attribute Name="Visible" Value="false"/>
@@ -62,10 +62,10 @@
 			<Parameter Name="QI" Value="TRUE">
 				<Attribute Name="Visible" Value="false"/>
 			</Parameter>
-			<Parameter Name="u8SAMember" Value="Output_strip">
+			<Parameter Name="u8SAMember" Value="LED_strip::Output_strip">
 				<Attribute Name="Visible" Value="false"/>
 			</Parameter>
-			<Parameter Name="u16ObjId" Value="LED_GREEN"/>
+			<Parameter Name="u16ObjId" Value="LED_COLOURS::LED_GREEN"/>
 			<Parameter Name="LED_5HZ" Value="'Ventilsteuerung.functions.GREEN.LED'"/>
 			<Parameter Name="LED_2HZ" Value="">
 				<Attribute Name="Visible" Value="false"/>
@@ -84,10 +84,10 @@
 			<Parameter Name="QI" Value="TRUE">
 				<Attribute Name="Visible" Value="false"/>
 			</Parameter>
-			<Parameter Name="u8SAMember" Value="Output_strip">
+			<Parameter Name="u8SAMember" Value="LED_strip::Output_strip">
 				<Attribute Name="Visible" Value="false"/>
 			</Parameter>
-			<Parameter Name="u16ObjId" Value="LED_RED"/>
+			<Parameter Name="u16ObjId" Value="LED_COLOURS::LED_RED"/>
 			<Parameter Name="LED_5HZ" Value="'Ventilsteuerung.functions.RED.LED'"/>
 			<Parameter Name="LED_2HZ" Value="">
 				<Attribute Name="Visible" Value="false"/>
@@ -106,10 +106,10 @@
 			<Parameter Name="QI" Value="TRUE">
 				<Attribute Name="Visible" Value="false"/>
 			</Parameter>
-			<Parameter Name="u8SAMember" Value="Output_strip">
+			<Parameter Name="u8SAMember" Value="LED_strip::Output_strip">
 				<Attribute Name="Visible" Value="false"/>
 			</Parameter>
-			<Parameter Name="u16ObjId" Value="LED_BLUE"/>
+			<Parameter Name="u16ObjId" Value="LED_COLOURS::LED_BLUE"/>
 			<Parameter Name="LED_5HZ" Value="'Ventilsteuerung.functions.BLUE.LED'"/>
 			<Parameter Name="LED_2HZ" Value="">
 				<Attribute Name="Visible" Value="false"/>

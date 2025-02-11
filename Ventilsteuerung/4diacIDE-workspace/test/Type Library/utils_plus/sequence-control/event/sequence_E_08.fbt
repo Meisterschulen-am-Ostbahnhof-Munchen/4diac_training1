@@ -150,176 +150,176 @@
 			<ECTransition Source="sState_06" Destination="sRESET" Condition="RESET" Comment="" x="413.33" y="4706.67"/>
 		</ECC>
 		<Algorithm Name="State_00_C">
-			<ST><![CDATA[    // Confirmation STEPS
-ALGORITHM State_00_C    // State_00 Confirmation Step
-STATE_NR := State_00;
+			<ST><![CDATA[ // Confirmation STEPS
+ALGORITHM State_00_C // State_00 Confirmation Step
+STATE_NR := sequence::State_00;
 END_ALGORITHM]]></ST>
 		</Algorithm>
 		<Algorithm Name="State_01_C">
 			<ST><![CDATA[
 
-ALGORITHM State_01_C    // State_01 Confirmation Step
-STATE_NR := State_01;
+ALGORITHM State_01_C // State_01 Confirmation Step
+STATE_NR := sequence::State_01;
 END_ALGORITHM]]></ST>
 		</Algorithm>
 		<Algorithm Name="State_02_C">
 			<ST><![CDATA[
 
-ALGORITHM State_02_C    // State_02 Confirmation Step
-STATE_NR := State_02;
+ALGORITHM State_02_C // State_02 Confirmation Step
+STATE_NR := sequence::State_02;
 END_ALGORITHM]]></ST>
 		</Algorithm>
 		<Algorithm Name="State_03_C">
 			<ST><![CDATA[
 
-ALGORITHM State_03_C    // State_03 Confirmation Step
-STATE_NR := State_03;
+ALGORITHM State_03_C // State_03 Confirmation Step
+STATE_NR := sequence::State_03;
 END_ALGORITHM]]></ST>
 		</Algorithm>
 		<Algorithm Name="State_04_C">
 			<ST><![CDATA[
 
-ALGORITHM State_04_C    // State_04 Confirmation Step
-STATE_NR := State_04;
+ALGORITHM State_04_C // State_04 Confirmation Step
+STATE_NR := sequence::State_04;
 END_ALGORITHM]]></ST>
 		</Algorithm>
 		<Algorithm Name="State_05_C">
 			<ST><![CDATA[
 
-ALGORITHM State_05_C    // State_05 Confirmation Step
-STATE_NR := State_05;
+ALGORITHM State_05_C // State_05 Confirmation Step
+STATE_NR := sequence::State_05;
 END_ALGORITHM]]></ST>
 		</Algorithm>
 		<Algorithm Name="State_06_C">
 			<ST><![CDATA[
 
-ALGORITHM State_06_C    // State_06 Confirmation Step
-STATE_NR := State_06;
+ALGORITHM State_06_C // State_06 Confirmation Step
+STATE_NR := sequence::State_06;
 END_ALGORITHM]]></ST>
 		</Algorithm>
 		<Algorithm Name="State_07_C">
 			<ST><![CDATA[
 
-ALGORITHM State_07_C    // State_07 Confirmation Step
-STATE_NR := State_07;
+ALGORITHM State_07_C // State_07 Confirmation Step
+STATE_NR := sequence::State_07;
 END_ALGORITHM]]></ST>
 		</Algorithm>
 		<Algorithm Name="State_08_C">
 			<ST><![CDATA[
 
-ALGORITHM State_08_C    // State_08 Confirmation Step
-STATE_NR := State_08;
+ALGORITHM State_08_C // State_08 Confirmation Step
+STATE_NR := sequence::State_08;
 END_ALGORITHM]]></ST>
 		</Algorithm>
 		<Algorithm Name="State_01_E">
 			<ST><![CDATA[
 
-ALGORITHM State_01_E    // State_01 Entry Step
-DO_S1 := BOOL#TRUE;    // ON
+ALGORITHM State_01_E // State_01 Entry Step
+DO_S1 := BOOL#TRUE; // ON
 END_ALGORITHM]]></ST>
 		</Algorithm>
 		<Algorithm Name="State_01_X">
 			<ST><![CDATA[
 
-ALGORITHM State_01_X    // State_01 Exit Step
+ALGORITHM State_01_X // State_01 Exit Step
 DO_S1 := BOOL#FALSE;
 END_ALGORITHM]]></ST>
 		</Algorithm>
 		<Algorithm Name="State_02_E">
 			<ST><![CDATA[
 
-ALGORITHM State_02_E    // State_02 Entry Step
-DO_S2 := BOOL#TRUE;    // ON
+ALGORITHM State_02_E // State_02 Entry Step
+DO_S2 := BOOL#TRUE; // ON
 END_ALGORITHM]]></ST>
 		</Algorithm>
 		<Algorithm Name="State_02_X">
 			<ST><![CDATA[
 
-ALGORITHM State_02_X    // State_02 Exit Step
+ALGORITHM State_02_X // State_02 Exit Step
 DO_S2 := BOOL#FALSE;
 END_ALGORITHM]]></ST>
 		</Algorithm>
 		<Algorithm Name="State_03_E">
 			<ST><![CDATA[
 
-ALGORITHM State_03_E    // State_03 Entry Step
-DO_S3 := BOOL#TRUE;    // ON
+ALGORITHM State_03_E // State_03 Entry Step
+DO_S3 := BOOL#TRUE; // ON
 END_ALGORITHM]]></ST>
 		</Algorithm>
 		<Algorithm Name="State_03_X">
 			<ST><![CDATA[
 
-ALGORITHM State_03_X    // State_03 Exit Step
+ALGORITHM State_03_X // State_03 Exit Step
 DO_S3 := BOOL#FALSE;
 END_ALGORITHM]]></ST>
 		</Algorithm>
 		<Algorithm Name="State_04_E">
 			<ST><![CDATA[
 
-ALGORITHM State_04_E    // State_04 Entry Step
-DO_S4 := BOOL#TRUE;    // ON
+ALGORITHM State_04_E // State_04 Entry Step
+DO_S4 := BOOL#TRUE; // ON
 END_ALGORITHM]]></ST>
 		</Algorithm>
 		<Algorithm Name="State_04_X">
 			<ST><![CDATA[
 
-ALGORITHM State_04_X    // State_04 Exit Step
+ALGORITHM State_04_X // State_04 Exit Step
 DO_S4 := BOOL#FALSE;
 END_ALGORITHM]]></ST>
 		</Algorithm>
 		<Algorithm Name="State_05_E">
 			<ST><![CDATA[
 
-ALGORITHM State_05_E    // State_05 Entry Step
-DO_S5 := BOOL#TRUE;    // ON
+ALGORITHM State_05_E // State_05 Entry Step
+DO_S5 := BOOL#TRUE; // ON
 END_ALGORITHM]]></ST>
 		</Algorithm>
 		<Algorithm Name="State_05_X">
 			<ST><![CDATA[
 
-ALGORITHM State_05_X    // State_05 Exit Step
+ALGORITHM State_05_X // State_05 Exit Step
 DO_S5 := BOOL#FALSE;
 END_ALGORITHM]]></ST>
 		</Algorithm>
 		<Algorithm Name="State_06_E">
 			<ST><![CDATA[
 
-ALGORITHM State_06_E    // State_06 Entry Step
-DO_S6 := BOOL#TRUE;    // ON
+ALGORITHM State_06_E // State_06 Entry Step
+DO_S6 := BOOL#TRUE; // ON
 END_ALGORITHM]]></ST>
 		</Algorithm>
 		<Algorithm Name="State_06_X">
 			<ST><![CDATA[
 
-ALGORITHM State_06_X    // State_06 Exit Step
+ALGORITHM State_06_X // State_06 Exit Step
 DO_S6 := BOOL#FALSE;
 END_ALGORITHM]]></ST>
 		</Algorithm>
 		<Algorithm Name="State_07_E">
 			<ST><![CDATA[
 
-ALGORITHM State_07_E    // State_07 Entry Step
-DO_S7 := BOOL#TRUE;    // ON
+ALGORITHM State_07_E // State_07 Entry Step
+DO_S7 := BOOL#TRUE; // ON
 END_ALGORITHM]]></ST>
 		</Algorithm>
 		<Algorithm Name="State_07_X">
 			<ST><![CDATA[
 
-ALGORITHM State_07_X    // State_07 Exit Step
+ALGORITHM State_07_X // State_07 Exit Step
 DO_S7 := BOOL#FALSE;
 END_ALGORITHM]]></ST>
 		</Algorithm>
 		<Algorithm Name="State_08_E">
 			<ST><![CDATA[
 
-ALGORITHM State_08_E    // State_08 Entry Step
-DO_S8 := BOOL#TRUE;    // ON
+ALGORITHM State_08_E // State_08 Entry Step
+DO_S8 := BOOL#TRUE; // ON
 END_ALGORITHM]]></ST>
 		</Algorithm>
 		<Algorithm Name="State_08_X">
 			<ST><![CDATA[
 
-ALGORITHM State_08_X    // State_08 Exit Step
+ALGORITHM State_08_X // State_08 Exit Step
 DO_S8 := BOOL#FALSE;
 END_ALGORITHM
 

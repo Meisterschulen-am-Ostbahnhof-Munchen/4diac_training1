@@ -18,10 +18,10 @@
 			</Event>
 		</EventOutputs>
 		<InputVars>
-			<VarDeclaration Name="IB" Type="BYTE" Comment="2bit (quarter Byte) Output with 4 States"  InitialValue="STATUS_DISABLED"/>
+			<VarDeclaration Name="IB" Type="BYTE" Comment="2bit (quarter Byte) Output with 4 States"  InitialValue="quarter::STATUS_DISABLED"/>
 		</InputVars>
 		<OutputVars>
-			<VarDeclaration Name="STR" Type="STRING" Comment="STRING Output"  InitialValue="STATUS_DISABLED_msg"/>
+			<VarDeclaration Name="STR" Type="STRING" Comment="STRING Output"  InitialValue="quarter::STATUS_DISABLED_msg"/>
 		</OutputVars>
 	</InterfaceList>
 	<BasicFB>
@@ -43,10 +43,10 @@
 			<ECState Name="ok" x="6746.67" y="1353.33">
 				<ECAction Output="CNF"/>
 			</ECState>
-			<ECTransition Source="START" Destination="SET" Condition="REQ[IB = STATUS_ENABLED]" Comment="" x="2640" y="1080"/>
-			<ECTransition Source="START" Destination="RESET" Condition="REQ[IB = STATUS_DISABLED]" Comment="" x="2673.33" y="1446.67"/>
-			<ECTransition Source="START" Destination="Error" Condition="REQ[IB = STATUS_ERROR]" Comment="" x="2700" y="1840"/>
-			<ECTransition Source="START" Destination="none" Condition="REQ[IB = STATUS_NOT_AVAILABLE]" Comment="" x="2653.33" y="2200"/>
+			<ECTransition Source="START" Destination="SET" Condition="REQ[IB = quarter::STATUS_ENABLED]" Comment="" x="2640" y="1080"/>
+			<ECTransition Source="START" Destination="RESET" Condition="REQ[IB = quarter::STATUS_DISABLED]" Comment="" x="2673.33" y="1446.67"/>
+			<ECTransition Source="START" Destination="Error" Condition="REQ[IB = quarter::STATUS_ERROR]" Comment="" x="2700" y="1840"/>
+			<ECTransition Source="START" Destination="none" Condition="REQ[IB = quarter::STATUS_NOT_AVAILABLE]" Comment="" x="2653.33" y="2200"/>
 			<ECTransition Source="SET" Destination="ok" Condition="1" Comment="" x="4700" y="393.33"/>
 			<ECTransition Source="RESET" Destination="ok" Condition="1" Comment="" x="4546.67" y="1040"/>
 			<ECTransition Source="Error" Destination="ok" Condition="1" Comment="" x="4593.33" y="1753.33"/>
@@ -55,28 +55,28 @@
 		</ECC>
 		<Algorithm Name="SET">
 			<ST><![CDATA[ALGORITHM SET
-STR := STATUS_ENABLED_msg;
+STR := quarter::STATUS_ENABLED_msg;
 END_ALGORITHM]]></ST>
 		</Algorithm>
 		<Algorithm Name="RESET">
 			<ST><![CDATA[
 
 ALGORITHM RESET
-STR := STATUS_DISABLED_msg;
+STR := quarter::STATUS_DISABLED_msg;
 END_ALGORITHM]]></ST>
 		</Algorithm>
 		<Algorithm Name="ERROR">
 			<ST><![CDATA[
 
 ALGORITHM ERROR
-STR := STATUS_ERROR_msg;
+STR := quarter::STATUS_ERROR_msg;
 END_ALGORITHM]]></ST>
 		</Algorithm>
 		<Algorithm Name="NONE">
 			<ST><![CDATA[
 
 ALGORITHM NONE
-STR := STATUS_NOT_AVAILABLE_msg;
+STR := quarter::STATUS_NOT_AVAILABLE_msg;
 END_ALGORITHM
 
 ]]></ST>
