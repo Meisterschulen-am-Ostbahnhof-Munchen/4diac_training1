@@ -1,0 +1,213 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SubAppType Name="Uebung_035a2" Comment="Ampelschaltung Österreich" >
+	<Identification Standard="61499-2" Description="Copyright (c) 2023 Meisterschulen am Ostbahnhof  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0" >
+	</Identification>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2023-10-23">
+	</VersionInfo>
+	<CompilerInfo>
+	</CompilerInfo>
+	<SubAppInterfaceList>
+	</SubAppInterfaceList>
+	<SubAppNetwork>
+		<FB Name="CAR_RED_LIGHT" Type="QX" x="5400" y="-2100">
+			<Parameter Name="QI" Value="TRUE"/>
+		</FB>
+		<FB Name="E_TimeOut" Type="E_TimeOut" x="4200" y="2000">
+		</FB>
+		<FB Name="CAR_ORANGE_LIGHT" Type="QX" x="5400" y="-1300">
+			<Parameter Name="QI" Value="TRUE"/>
+		</FB>
+		<FB Name="CAR_GREEN_LIGHT" Type="QX" x="5400" y="-400">
+			<Parameter Name="QI" Value="TRUE"/>
+		</FB>
+		<FB Name="DigitalInput_CLK_I1" Type="IE" x="700" y="600">
+			<Parameter Name="QI" Value="TRUE"/>
+		</FB>
+		<FB Name="sequence_T_04_loop" Type="sequence_T_05_loop" x="2000" y="800">
+			<Parameter Name="DT_S1_S2" Value="T#6s" Comment="RED" />
+			<Parameter Name="DT_S2_S3" Value="T#2s" Comment="RED+ORANGE" />
+			<Parameter Name="DT_S3_S4" Value="T#6s" Comment="GREEN" />
+			<Parameter Name="DT_S4_S5" Value="t#4s" Comment="GREEN BLINK" />
+			<Parameter Name="DT_S5_S1" Value="T#2s" Comment="ORANGE" />
+			<Parameter Name="EO_S1" Value="" Comment="RED" />
+			<Parameter Name="EO_S2" Value="" Comment="RED+ORANGE" />
+			<Parameter Name="EO_S3" Value="" Comment="GREEN" />
+			<Parameter Name="EO_S4" Value="" Comment="GREEN_BLINK" />
+			<Parameter Name="EO_S5" Value="" Comment="ORANGE" />
+			<Parameter Name="DO_S1" Value="" Comment="RED" />
+			<Parameter Name="DO_S2" Value="" Comment="RED+ORANGE" />
+			<Parameter Name="DO_S3" Value="" Comment="GREEN" />
+			<Parameter Name="DO_S4" Value="" Comment="GREEN_BLINK" />
+			<Parameter Name="DO_S5" Value="" Comment="ORANGE" />
+		</FB>
+		<SubApp Name="RED" x="4000" y="-1900">
+			<SubAppInterfaceList>
+				<SubAppEventInputs>
+					<SubAppEvent Name="EI_RED" Type="Event">
+					</SubAppEvent>
+					<SubAppEvent Name="EI_RED_ORANGE" Type="Event">
+					</SubAppEvent>
+				</SubAppEventInputs>
+				<SubAppEventOutputs>
+					<SubAppEvent Name="CNF" Type="Event">
+					</SubAppEvent>
+				</SubAppEventOutputs>
+				<InputVars>
+					<VarDeclaration Name="DI_RED" Type="ANY_BIT"/>
+					<VarDeclaration Name="DI_RED_ORANGE" Type="ANY_BIT"/>
+				</InputVars>
+				<OutputVars>
+					<VarDeclaration Name="OUT" Type="ANY_BIT"/>
+				</OutputVars>
+			</SubAppInterfaceList>
+			<SubAppNetwork>
+				<FB Name="OR_RED" Type="OR_2" x="300" y="-1000">
+				</FB>
+				<EventConnections>
+					<Connection Source="EI_RED" Destination="OR_RED.REQ" dx1="2393.33"/>
+					<Connection Source="EI_RED_ORANGE" Destination="OR_RED.REQ" dx1="2300"/>
+					<Connection Source="OR_RED.CNF" Destination="CNF" dx1="73.33"/>
+				</EventConnections>
+				<DataConnections>
+					<Connection Source="DI_RED" Destination="OR_RED.IN1" dx1="2066.67"/>
+					<Connection Source="DI_RED_ORANGE" Destination="OR_RED.IN2" dx1="1933.33"/>
+					<Connection Source="OR_RED.OUT" Destination="OUT" dx1="2866.67"/>
+				</DataConnections>
+			</SubAppNetwork>
+			<Attribute Name="width" Type="LREAL" Value="200"/>
+			<Attribute Name="height" Type="LREAL" Value="100"/>
+		</SubApp>
+		<SubApp Name="ORANGE" x="4100" y="-1100">
+			<SubAppInterfaceList>
+				<SubAppEventInputs>
+					<SubAppEvent Name="EI_RED_ORANGE" Type="Event">
+					</SubAppEvent>
+					<SubAppEvent Name="EI_ORANGE" Type="Event">
+					</SubAppEvent>
+				</SubAppEventInputs>
+				<SubAppEventOutputs>
+					<SubAppEvent Name="CNF" Type="Event">
+					</SubAppEvent>
+				</SubAppEventOutputs>
+				<InputVars>
+					<VarDeclaration Name="DI_RED_ORANGE" Type="ANY_BIT"/>
+					<VarDeclaration Name="DI_ORANGE" Type="ANY_BIT"/>
+				</InputVars>
+				<OutputVars>
+					<VarDeclaration Name="OUT" Type="ANY_BIT"/>
+				</OutputVars>
+			</SubAppInterfaceList>
+			<SubAppNetwork>
+				<FB Name="OR_ORANGE" Type="OR_2" x="0" y="0">
+				</FB>
+				<EventConnections>
+					<Connection Source="EI_RED_ORANGE" Destination="OR_ORANGE.REQ" dx1="80" dx2="80" dy="-120"/>
+					<Connection Source="EI_ORANGE" Destination="OR_ORANGE.REQ" dx1="80" dx2="80" dy="-173.33"/>
+					<Connection Source="OR_ORANGE.CNF" Destination="CNF" dx1="5453.33"/>
+				</EventConnections>
+				<DataConnections>
+					<Connection Source="DI_RED_ORANGE" Destination="OR_ORANGE.IN1" dx1="80" dx2="80" dy="-120"/>
+					<Connection Source="DI_ORANGE" Destination="OR_ORANGE.IN2" dx1="80" dx2="80" dy="-120"/>
+					<Connection Source="OR_ORANGE.OUT" Destination="OUT" dx1="5453.33"/>
+				</DataConnections>
+			</SubAppNetwork>
+			<Attribute Name="width" Type="LREAL" Value="200"/>
+			<Attribute Name="height" Type="LREAL" Value="100"/>
+		</SubApp>
+		<FB Name="E_TRAIN" Type="E_TRAIN" x="4300" y="1200">
+			<Parameter Name="DT" Value="T#500ms"/>
+			<Parameter Name="N" Value="4"/>
+		</FB>
+		<FB Name="E_T_FF" Type="E_T_FF" x="5100" y="1200">
+		</FB>
+		<SubApp Name="GREEN" x="4000" y="-300">
+			<SubAppInterfaceList>
+				<SubAppEventInputs>
+					<SubAppEvent Name="EI_GREEN" Type="Event">
+					</SubAppEvent>
+					<SubAppEvent Name="EI_GREEN_BLINK" Type="Event">
+					</SubAppEvent>
+				</SubAppEventInputs>
+				<SubAppEventOutputs>
+					<SubAppEvent Name="CNF" Type="Event">
+					</SubAppEvent>
+				</SubAppEventOutputs>
+				<InputVars>
+					<VarDeclaration Name="DI_GREEN" Type="ANY_BIT"/>
+					<VarDeclaration Name="DI_GREEN_BLINK" Type="ANY_BIT"/>
+				</InputVars>
+				<OutputVars>
+					<VarDeclaration Name="OUT" Type="BOOL"/>
+				</OutputVars>
+			</SubAppInterfaceList>
+			<SubAppNetwork>
+				<FB Name="OR_2" Type="OR_2" x="200" y="600">
+				</FB>
+				<EventConnections>
+					<Connection Source="EI_GREEN" Destination="OR_2.REQ" dx1="86.67"/>
+					<Connection Source="EI_GREEN_BLINK" Destination="OR_2.REQ" dx1="86.67"/>
+					<Connection Source="OR_2.CNF" Destination="CNF" dx1="133.33"/>
+				</EventConnections>
+				<DataConnections>
+					<Connection Source="DI_GREEN" Destination="OR_2.IN1" dx1="86.67"/>
+					<Connection Source="DI_GREEN_BLINK" Destination="OR_2.IN2" dx1="86.67"/>
+					<Connection Source="OR_2.OUT" Destination="OUT" dx1="133.33"/>
+				</DataConnections>
+			</SubAppNetwork>
+			<Attribute Name="width" Type="LREAL" Value="5226.67"/>
+			<Attribute Name="height" Type="LREAL" Value="2940"/>
+		</SubApp>
+		<EventConnections>
+			<Connection Source="DigitalInput_CLK_I1.IND" Destination="sequence_T_04_loop.START_S1"/>
+			<Connection Source="sequence_T_04_loop.EO_S1" Destination="RED.EI_RED" dx1="600">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="sequence_T_04_loop.EO_S2" Destination="RED.EI_RED_ORANGE" dx1="600">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="RED.CNF" Destination="CAR_RED_LIGHT.REQ" dx1="346.67"/>
+			<Connection Source="sequence_T_04_loop.EO_S2" Destination="ORANGE.EI_RED_ORANGE" dx1="700">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="sequence_T_04_loop.EO_S5" Destination="ORANGE.EI_ORANGE" dx1="520">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="ORANGE.CNF" Destination="CAR_ORANGE_LIGHT.REQ" dx1="313.33"/>
+			<Connection Source="E_TRAIN.EO" Destination="E_T_FF.CLK"/>
+			<Connection Source="sequence_T_04_loop.EO_S4" Destination="E_TRAIN.START"/>
+			<Connection Source="E_T_FF.EO" Destination="GREEN.EI_GREEN_BLINK" dx1="80" dx2="80" dy="-600">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="GREEN.CNF" Destination="CAR_GREEN_LIGHT.REQ"/>
+			<Connection Source="sequence_T_04_loop.EO_S3" Destination="GREEN.EI_GREEN" dx1="620">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+		</EventConnections>
+		<DataConnections>
+			<Connection Source="sequence_T_04_loop.DO_S1" Destination="RED.DI_RED" dx1="600">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="sequence_T_04_loop.DO_S2" Destination="RED.DI_RED_ORANGE" dx1="600">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="RED.OUT" Destination="CAR_RED_LIGHT.OUT"/>
+			<Connection Source="sequence_T_04_loop.DO_S2" Destination="ORANGE.DI_RED_ORANGE" dx1="700">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="sequence_T_04_loop.DO_S5" Destination="ORANGE.DI_ORANGE" dx1="526.67">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="ORANGE.OUT" Destination="CAR_ORANGE_LIGHT.OUT"/>
+			<Connection Source="sequence_T_04_loop.DO_S3" Destination="GREEN.DI_GREEN" dx1="620">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="E_T_FF.Q" Destination="GREEN.DI_GREEN_BLINK" dx1="80" dx2="80" dy="-500">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="GREEN.OUT" Destination="CAR_GREEN_LIGHT.OUT" dx1="406.67"/>
+		</DataConnections>
+		<AdapterConnections>
+			<Connection Source="sequence_T_04_loop.timeOut" Destination="E_TimeOut.TimeOutSocket"/>
+		</AdapterConnections>
+	</SubAppNetwork>
+</SubAppType>
