@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<SubAppType Name="Uebung_034a3" Comment="Numeric Value Input auf PWM Ausgang" >
+<SubAppType Name="Uebung_034a1_Q4" Comment="Numeric Value Input auf PWM Ausgang" >
 	<Identification Standard="61499-2" Description="Copyright (c) 2023 Meisterschulen am Ostbahnhof  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0">
 	</Identification>
 	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2023-10-23">
@@ -11,7 +11,7 @@
 	<SubAppNetwork>
 		<FB Name="F_DWORD_TO_UDINT" Type="F_DWORD_TO_UDINT" x="1360" y="2386.66">
 		</FB>
-		<FB Name="PWMOutput_Q2" Type="QD" x="1733.33" y="1053.34">
+		<FB Name="PWMOutput_Q4" Type="QD" x="1733.33" y="1053.34">
 			<Parameter Name="QI" Value="TRUE"/>
 		</FB>
 		<FB Name="PWM_Value" Type="ID" x="-3966.67" y="940">
@@ -19,12 +19,12 @@
 		</FB>
 		<Comment Comment="ACHTUNG !! &#10;IND erscheint erst, &#10;wenn man die Numeric Value mit OK Bestätigt. &#10;nicht bei Button Druck. &#10;"  x="-5800" y="1000" width="1480" height="800"/>
 		<EventConnections>
-			<Connection Source="PWM_Value.IND" Destination="PWMOutput_Q2.REQ" dx1="2500"/>
+			<Connection Source="PWM_Value.IND" Destination="PWMOutput_Q4.REQ" dx1="2500"/>
 			<Connection Source="PWM_Value.IND" Destination="F_DWORD_TO_UDINT.REQ" dx1="3013.33"/>
 		</EventConnections>
 		<DataConnections>
 			<Connection Source="PWM_Value.IN" Destination="F_DWORD_TO_UDINT.IN" dx1="2286.67"/>
-			<Connection Source="PWM_Value.IN" Destination="PWMOutput_Q2.OUT" dx1="2500"/>
+			<Connection Source="PWM_Value.IN" Destination="PWMOutput_Q4.OUT" dx1="2500"/>
 		</DataConnections>
 	</SubAppNetwork>
 </SubAppType>
