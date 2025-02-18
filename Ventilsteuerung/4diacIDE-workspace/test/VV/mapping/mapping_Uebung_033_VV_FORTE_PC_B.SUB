@@ -9,15 +9,13 @@
 	<SubAppInterfaceList>
 	</SubAppInterfaceList>
 	<SubAppNetwork>
-		<FB Name="Hutschienenmoped_XL_1_LED_YELLOW" Type="logiBUS_1_LED_strip" x="-3866.67" y="0">
+		<FB Name="Hutschienenmoped_XL_1_LED_RED" Type="logiBUS_1_LED_strip" x="-300" y="1000">
 			<Parameter Name="QI" Value="TRUE">
 				<Attribute Name="Visible" Value="false"/>
 			</Parameter>
-			<Parameter Name="u8SAMember" Value="LED_strip::Output_strip">
-				<Attribute Name="Visible" Value="false"/>
-			</Parameter>
-			<Parameter Name="u16ObjId" Value="LED_COLOURS::LED_YELLOW"/>
-			<Parameter Name="LED_5HZ" Value="'App_functions.LED_YELLOW_5HZ'"/>
+			<Parameter Name="Output" Value="LED_strip::Output_strip"/>
+			<Parameter Name="Colour" Value="LED_COLOURS::LED_RED"/>
+			<Parameter Name="LED_5HZ" Value="'App.Control.functions.RED.LED'"/>
 			<Parameter Name="LED_2HZ" Value="">
 				<Attribute Name="Visible" Value="false"/>
 			</Parameter>
@@ -31,15 +29,13 @@
 				<Attribute Name="Visible" Value="false"/>
 			</Parameter>
 		</FB>
-		<FB Name="Hutschienenmoped_XL_1_LED_GREEN" Type="logiBUS_1_LED_strip" x="-3866.67" y="-800">
+		<FB Name="Hutschienenmoped_XL_1_LED_GREEN" Type="logiBUS_1_LED_strip" x="-300" y="-800">
 			<Parameter Name="QI" Value="TRUE">
 				<Attribute Name="Visible" Value="false"/>
 			</Parameter>
-			<Parameter Name="u8SAMember" Value="LED_strip::Output_strip">
-				<Attribute Name="Visible" Value="false"/>
-			</Parameter>
-			<Parameter Name="u16ObjId" Value="LED_COLOURS::LED_GREEN"/>
-			<Parameter Name="LED_5HZ" Value="'App_functions.LED_GREEN_5HZ'"/>
+			<Parameter Name="Output" Value="LED_strip::Output_strip"/>
+			<Parameter Name="Colour" Value="LED_COLOURS::LED_GREEN"/>
+			<Parameter Name="LED_5HZ" Value="'App.Control.functions.GREEN.LED'"/>
 			<Parameter Name="LED_2HZ" Value="">
 				<Attribute Name="Visible" Value="false"/>
 			</Parameter>
@@ -53,15 +49,13 @@
 				<Attribute Name="Visible" Value="false"/>
 			</Parameter>
 		</FB>
-		<FB Name="Hutschienenmoped_XL_1_LED_RED" Type="logiBUS_1_LED_strip" x="-3866.67" y="800">
+		<FB Name="Hutschienenmoped_XL_1_LED_BLUE" Type="logiBUS_1_LED_strip" x="-300" y="1900">
 			<Parameter Name="QI" Value="TRUE">
 				<Attribute Name="Visible" Value="false"/>
 			</Parameter>
-			<Parameter Name="u8SAMember" Value="LED_strip::Output_strip">
-				<Attribute Name="Visible" Value="false"/>
-			</Parameter>
-			<Parameter Name="u16ObjId" Value="LED_COLOURS::LED_RED"/>
-			<Parameter Name="LED_5HZ" Value="'App_functions.LED_RED_5HZ'"/>
+			<Parameter Name="Output" Value="LED_strip::Output_strip"/>
+			<Parameter Name="Colour" Value="LED_COLOURS::LED_BLUE"/>
+			<Parameter Name="LED_5HZ" Value="'App.Control.functions.BLUE.LED'"/>
 			<Parameter Name="LED_2HZ" Value="">
 				<Attribute Name="Visible" Value="false"/>
 			</Parameter>
@@ -75,15 +69,13 @@
 				<Attribute Name="Visible" Value="false"/>
 			</Parameter>
 		</FB>
-		<FB Name="Hutschienenmoped_XL_1_LED_BLUE" Type="logiBUS_1_LED_strip" x="-3866.67" y="1600">
+		<FB Name="Hutschienenmoped_XL_1_LED_YELLOW" Type="logiBUS_1_LED_strip" x="-300" y="100">
 			<Parameter Name="QI" Value="TRUE">
 				<Attribute Name="Visible" Value="false"/>
 			</Parameter>
-			<Parameter Name="u8SAMember" Value="LED_strip::Output_strip">
-				<Attribute Name="Visible" Value="false"/>
-			</Parameter>
-			<Parameter Name="u16ObjId" Value="LED_COLOURS::LED_BLUE"/>
-			<Parameter Name="LED_5HZ" Value="'App_functions.LED_BLUE_5HZ'"/>
+			<Parameter Name="Output" Value="LED_strip::Output_strip"/>
+			<Parameter Name="Colour" Value="LED_COLOURS::LED_YELLOW"/>
+			<Parameter Name="LED_5HZ" Value="'App.Control.functions.YELLOW.LED'"/>
 			<Parameter Name="LED_2HZ" Value="">
 				<Attribute Name="Visible" Value="false"/>
 			</Parameter>
