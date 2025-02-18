@@ -16,8 +16,6 @@
 		<EventInputs>
 			<Event Name="INIT" Type="EInit" Comment="Service Initialization" >
 				<With Var="QI"/>
-				<With Var="u8SAMember"/>
-				<With Var="u16ObjId"/>
 				<With Var="Servo_S1"/>
 				<With Var="Servo_S2"/>
 			</Event>
@@ -33,8 +31,6 @@
 		</EventOutputs>
 		<InputVars>
 			<VarDeclaration Name="QI" Type="BOOL" Comment="Event Input Qualifier" />
-			<VarDeclaration Name="u8SAMember" Type="USINT" Comment="Dummy !, set to GLOBAL if in doubt. OFF deactivates FB."  InitialValue="isobus::GLOBAL"/>
-			<VarDeclaration Name="u16ObjId" Type="UINT" Comment="Dummy ! set to ID_NULL if in Doubt. ID_OFF deactivates FB."  InitialValue="isobus::ID_NULL"/>
 			<VarDeclaration Name="Servo_S1" Type="STRING" Comment="Identifier for PWM Servo Output 1" />
 			<VarDeclaration Name="Servo_S2" Type="STRING" Comment="Identifier for PWM Servo Output 2" />
 		</InputVars>
