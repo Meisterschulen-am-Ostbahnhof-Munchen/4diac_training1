@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <SubAppType Name="mapping_Uebung_026" Comment="Spiegelabfolge (6)" >
-	<Identification Standard="61499-2" Description="Copyright (c) 2023 Meisterschulen am Ostbahnhof  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0">
+	<Identification Standard="61499-2" Description="Copyright (c) 2023 Meisterschulen am Ostbahnhof  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0" >
 	</Identification>
 	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2023-10-23">
 	</VersionInfo>
@@ -9,14 +9,8 @@
 	<SubAppInterfaceList>
 	</SubAppInterfaceList>
 	<SubAppNetwork>
-		<FB Name="Hutschienenmoped_XL_8_DO" Type="Hutschienenmoped_XL_8_DO" x="-3513.33" y="0">
+		<FB Name="logiBUS_8_DO" Type="logiBUS_8_DO" x="-3513.33" y="0">
 			<Parameter Name="QI" Value="TRUE">
-				<Attribute Name="Visible" Value="false"/>
-			</Parameter>
-			<Parameter Name="u8SAMember" Value="isobus::GLOBAL">
-				<Attribute Name="Visible" Value="false"/>
-			</Parameter>
-			<Parameter Name="u16ObjId" Value="isobus::ID_NULL">
 				<Attribute Name="Visible" Value="false"/>
 			</Parameter>
 			<Parameter Name="DigitalOutput_Q1" Value="'App.Control.functions.Q1.QX'"/>
@@ -38,9 +32,6 @@
 		</FB>
 		<FB Name="UT_SoftkeyMapping_UP" Type="UT_SoftkeyMapping_UP" x="-3513.33" y="-906.67">
 			<Parameter Name="QI" Value="TRUE">
-				<Attribute Name="Visible" Value="false"/>
-			</Parameter>
-			<Parameter Name="u8SAMember" Value="isobus::GLOBAL">
 				<Attribute Name="Visible" Value="false"/>
 			</Parameter>
 			<Parameter Name="u16ObjId_1" Value="DefaultPool::SoftKey_F1"/>
@@ -90,9 +81,6 @@
 		</FB>
 		<FB Name="UT_SoftkeyMapping_DOWN" Type="UT_SoftkeyMapping_DOWN" x="-3513.33" y="-2486.67">
 			<Parameter Name="QI" Value="TRUE">
-				<Attribute Name="Visible" Value="false"/>
-			</Parameter>
-			<Parameter Name="u8SAMember" Value="isobus::GLOBAL">
 				<Attribute Name="Visible" Value="false"/>
 			</Parameter>
 			<Parameter Name="u16ObjId_1" Value="">

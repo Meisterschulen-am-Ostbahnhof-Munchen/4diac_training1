@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SubAppType Name="Uebung_004a7" Comment="SR und T-Flip-Flop mit IE und E_REND (Rendezvous)" >
+	<Identification Standard="61499-2" Description="Copyright (c) 2023 Meisterschulen am Ostbahnhof  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0" >
+	</Identification>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2023-10-23">
+	</VersionInfo>
+	<CompilerInfo>
+	</CompilerInfo>
+	<SubAppInterfaceList>
+	</SubAppInterfaceList>
+	<SubAppNetwork>
+		<FB Name="DigitalOutput_Q1" Type="QX" x="3800" y="900">
+			<Parameter Name="QI" Value="TRUE"/>
+		</FB>
+		<FB Name="DigitalInput_CLK_I1" Type="IE" x="200" y="300">
+			<Parameter Name="QI" Value="TRUE"/>
+		</FB>
+		<FB Name="E_T_FF" Type="E_T_FF_SR" x="2700" y="1000">
+		</FB>
+		<FB Name="E_REND" Type="E_REND" x="1700" y="1200">
+		</FB>
+		<FB Name="DigitalInput_CLK_I2" Type="IE" x="200" y="1100">
+			<Parameter Name="QI" Value="TRUE"/>
+		</FB>
+		<FB Name="DigitalInput_CLK_I3" Type="IE" x="200" y="1900">
+			<Parameter Name="QI" Value="TRUE"/>
+		</FB>
+		<EventConnections>
+			<Connection Source="DigitalInput_CLK_I1.IND" Destination="E_REND.EI1" dx1="633.33"/>
+			<Connection Source="E_T_FF.EO" Destination="DigitalOutput_Q1.REQ"/>
+			<Connection Source="DigitalInput_CLK_I2.IND" Destination="E_REND.EI2"/>
+			<Connection Source="DigitalInput_CLK_I3.IND" Destination="E_REND.R" dx1="633.33"/>
+			<Connection Source="E_REND.EO" Destination="E_T_FF.CLK"/>
+			<Connection Source="DigitalInput_CLK_I3.IND" Destination="E_T_FF.R" dx1="1486.67"/>
+		</EventConnections>
+		<DataConnections>
+			<Connection Source="E_T_FF.Q" Destination="DigitalOutput_Q1.OUT"/>
+		</DataConnections>
+	</SubAppNetwork>
+</SubAppType>
