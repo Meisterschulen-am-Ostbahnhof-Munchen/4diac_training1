@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<SubAppType Name="Uebung_041" Comment="Lauflicht 8 mit einer Taste" >
+<SubAppType Name="Uebung_041" Comment="Lauflicht 8 mit einer Taste">
 	<Identification Standard="61499-2" Description="Copyright (c) 2023 Meisterschulen am Ostbahnhof  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0">
 	</Identification>
 	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2023-10-23">
@@ -55,7 +55,7 @@
 		<FB Name="F_SUB_0" Type="F_SUB" x="-13600" y="-533.33">
 			<Parameter Name="IN2" Value="UINT#1"/>
 		</FB>
-		<FB Name="E_DEMUX_0" Type="E_DEMUX8" x="-12000" y="-533.33">
+		<FB Name="E_DEMUX_0" Type="E_DEMUX_8" x="-12000" y="-533.33">
 		</FB>
 		<EventConnections>
 			<Connection Source="F_SINT_TO_UINT.CNF" Destination="Q_NumericValue.REQ" dx1="633.33"/>
@@ -73,7 +73,7 @@
 			<Connection Source="DigitalInput_CLK_I2.IND" Destination="E_CTU_0.CU" dx1="340"/>
 			<Connection Source="E_CTU_0.CUO" Destination="F_SUB_0.REQ"/>
 			<Connection Source="DigitalInput_CLK_I4.IND" Destination="E_CTU_0.R" dx1="206.67"/>
-			<Connection Source="F_SUB_0.CNF" Destination="E_DEMUX_0.EI"/>
+			<Connection Source="F_SUB_0.CNF" Destination="E_DEMUX_0.EI" dx1="540"/>
 			<Connection Source="E_DEMUX_0.EO0" Destination="loop.S1_S2" dx1="846.67"/>
 			<Connection Source="E_DEMUX_0.EO1" Destination="loop.S2_S3" dx1="846.67"/>
 			<Connection Source="E_DEMUX_0.EO2" Destination="loop.S3_S4" dx1="846.67"/>
@@ -82,7 +82,7 @@
 			<Connection Source="E_DEMUX_0.EO5" Destination="loop.S6_S7" dx1="846.67"/>
 			<Connection Source="E_DEMUX_0.EO6" Destination="loop.S7_S8" dx1="846.67"/>
 			<Connection Source="E_DEMUX_0.EO7" Destination="loop.S8_S1" dx1="846.67"/>
-			<Connection Source="E_DEMUX_0.EO7" Destination="E_CTU_0.R" dx1="353.33" dx2="66.67" dy="460"/>
+			<Connection Source="E_DEMUX_0.EO7" Destination="E_CTU_0.R" dx1="353.33" dx2="353.33" dy="460"/>
 		</EventConnections>
 		<DataConnections>
 			<Connection Source="F_SINT_TO_UINT.OUT" Destination="Q_NumericValue.u32NewValue" dx1="286.67"/>
