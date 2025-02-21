@@ -9,16 +9,11 @@
 	<SubAppInterfaceList>
 	</SubAppInterfaceList>
 	<SubAppNetwork>
-		<FB Name="Hutschienenmoped_XL_8_DO" Type="Hutschienenmoped_XL_8_DO" x="-3626.66" y="460">
+		<FB Name="Hutschienenmoped_XL_8_DO" Type="logiBUS_8_DO" x="-3626.66" y="460">
 			<Parameter Name="QI" Value="TRUE">
 				<Attribute Name="Visible" Value="false"/>
 			</Parameter>
-			<Parameter Name="u8SAMember" Value="isobus::GLOBAL">
-				<Attribute Name="Visible" Value="false"/>
-			</Parameter>
-			<Parameter Name="u16ObjId" Value="isobus::ID_NULL">
-				<Attribute Name="Visible" Value="false"/>
-			</Parameter>
+
 			<Parameter Name="DigitalOutput_Q1" Value="'App.Control.functions.DigitalOutput_Q1'"/>
 			<Parameter Name="DigitalOutput_Q2" Value="">
 				<Attribute Name="Visible" Value="false"/>
@@ -42,16 +37,11 @@
 				<Attribute Name="Visible" Value="false"/>
 			</Parameter>
 		</FB>
-		<FB Name="Hutschienenmoped_XL_8_DI_SINGLE_CLICK" Type="Hutschienenmoped_XL_8_DI_SINGLE_CLICK" x="-3633.33" y="-680">
+		<FB Name="Hutschienenmoped_XL_8_DI_SINGLE_CLICK" Type="logiBUS_8_DI_SINGLE_CLICK" x="-3633.33" y="-680">
 			<Parameter Name="QI" Value="TRUE">
 				<Attribute Name="Visible" Value="false"/>
 			</Parameter>
-			<Parameter Name="u8SAMember" Value="isobus::GLOBAL">
-				<Attribute Name="Visible" Value="false"/>
-			</Parameter>
-			<Parameter Name="u16ObjId" Value="isobus::ID_NULL">
-				<Attribute Name="Visible" Value="false"/>
-			</Parameter>
+
 			<Parameter Name="DigitalInput_I1" Value="'App.Control.functions.DigitalInput_CLK_I1'"/>
 			<Parameter Name="DigitalInput_I2" Value="'App.Control.functions.DigitalInput_CLK_I2'"/>
 			<Parameter Name="DigitalInput_I3" Value="'App.Control.functions.DigitalInput_CLK_I3'"/>

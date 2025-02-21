@@ -13,7 +13,6 @@
 			<Event Name="INIT" Type="EInit" Comment="Service Initialization" >
 				<With Var="QI"/>
 				<With Var="u8SAMember"/>
-				<With Var="u16ObjId"/>
 				<With Var="DigitalInput_Key_1"/>
 				<With Var="DigitalInput_Key_2"/>
 				<With Var="DigitalInput_Key_3"/>
@@ -33,7 +32,6 @@
 		<InputVars>
 			<VarDeclaration Name="QI" Type="BOOL" Comment="Event Input Qualifier" />
 			<VarDeclaration Name="u8SAMember" Type="USINT" Comment="Node SA (Default 21h = PKP_2200_DEFAULT)"  InitialValue="PKP_2200::PKP_2200_DEFAULT"/>
-			<VarDeclaration Name="u16ObjId" Type="UINT" Comment="Dummy ! set to ID_NULL if in Doubt. ID_OFF deactivates FB."  InitialValue="isobus::ID_NULL"/>
 			<VarDeclaration Name="DigitalInput_Key_1" Type="STRING"/>
 			<VarDeclaration Name="DigitalInput_Key_2" Type="STRING"/>
 			<VarDeclaration Name="DigitalInput_Key_3" Type="STRING"/>
