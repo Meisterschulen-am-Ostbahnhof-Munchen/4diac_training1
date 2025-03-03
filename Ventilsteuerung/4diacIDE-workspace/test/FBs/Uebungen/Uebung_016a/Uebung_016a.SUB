@@ -9,10 +9,10 @@
 	<SubAppInterfaceList>
 	</SubAppInterfaceList>
 	<SubAppNetwork>
-		<FB Name="SoftKey_F1_UP" Type="IE" x="-4533.33" y="-1066.67">
+		<FB Name="SoftKey_UP_F1" Type="IE" x="-4533.33" y="-1066.67">
 			<Parameter Name="QI" Value="TRUE"/>
 		</FB>
-		<FB Name="SoftKey_F2_UP" Type="IE" x="-4533.33" y="-113.33">
+		<FB Name="SoftKey_UP_F2" Type="IE" x="-4533.33" y="-113.33">
 			<Parameter Name="QI" Value="TRUE"/>
 		</FB>
 		<FB Name="F_SEL" Type="F_SEL_E_3" x="-1133.33" y="-1020">
@@ -23,14 +23,14 @@
 		<FB Name="Q_BackgroundColour" Type="Q_BackgroundColour" x="793.33" y="-1140">
 			<Parameter Name="u16ObjId" Value="DefaultPool::SoftKey_F7"/>
 		</FB>
-		<FB Name="SoftKey_F3_UP" Type="IE" x="-4533.33" y="913.33">
+		<FB Name="SoftKey_UP_F3" Type="IE" x="-4533.33" y="913.33">
 			<Parameter Name="QI" Value="TRUE"/>
 		</FB>
 		<EventConnections>
 			<Connection Source="F_SEL.CNF" Destination="Q_BackgroundColour.REQ" dx1="613.33"/>
-			<Connection Source="SoftKey_F1_UP.IND" Destination="F_SEL.REQ0" dx1="820"/>
-			<Connection Source="SoftKey_F2_UP.IND" Destination="F_SEL.REQ1" dx1="1040"/>
-			<Connection Source="SoftKey_F3_UP.IND" Destination="F_SEL.REQ2" dx1="1353.33"/>
+			<Connection Source="SoftKey_UP_F1.IND" Destination="F_SEL.REQ0" dx1="820"/>
+			<Connection Source="SoftKey_UP_F2.IND" Destination="F_SEL.REQ1" dx1="1040"/>
+			<Connection Source="SoftKey_UP_F3.IND" Destination="F_SEL.REQ2" dx1="1353.33"/>
 		</EventConnections>
 		<DataConnections>
 			<Connection Source="F_SEL.OUT" Destination="Q_BackgroundColour.u8Colour" dx1="613.33"/>

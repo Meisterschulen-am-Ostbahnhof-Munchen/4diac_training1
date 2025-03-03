@@ -9,7 +9,7 @@
 	<SubAppInterfaceList>
 	</SubAppInterfaceList>
 	<SubAppNetwork>
-		<FB Name="SoftKey_F1_UP" Type="IE" x="-7200" y="-1053.33">
+		<FB Name="SoftKey_UP_F1" Type="IE" x="-7200" y="-1053.33">
 			<Parameter Name="QI" Value="TRUE"/>
 		</FB>
 		<FB Name="SoftKey_F2_DOWN" Type="IE" x="-7200" y="413.33">
@@ -59,7 +59,7 @@
 			<Connection Source="SoftKey_F9_DOWN.IND" Destination="E_REND_Einfahren_Cyl_1.EI2" dx1="206.67"/>
 			<Connection Source="SoftKey_F8_DOWN.IND" Destination="E_REND_Einfahren_Cyl_2.EI2" dx1="206.67"/>
 			<Connection Source="E_REND_Ausfahren_Cyl_2.EO" Destination="E_DELAY.START" dx1="100" dx2="100" dy="873.33"/>
-			<Connection Source="SoftKey_F1_UP.IND" Destination="E_REND_Ausfahren_Cyl_1.R" dx1="333.33"/>
+			<Connection Source="SoftKey_UP_F1.IND" Destination="E_REND_Ausfahren_Cyl_1.R" dx1="333.33"/>
 			<Connection Source="SoftKey_F2_DOWN.IND" Destination="E_REND_Ausfahren_Cyl_2.R" dx1="120"/>
 			<Connection Source="E_DELAY.EO" Destination="E_REND_Einfahren_Cyl_2.R" dx1="593.33"/>
 			<Connection Source="SoftKey_F8_DOWN.IND" Destination="E_REND_Einfahren_Cyl_1.R" dx1="140"/>
@@ -72,7 +72,7 @@
 			<Connection Source="E_DELAY.EO" Destination="Q3.SET" dx1="1520"/>
 			<Connection Source="E_REND_Einfahren_Cyl_2.EO" Destination="Q3.RESET" dx1="586.67"/>
 			<Connection Source="Q3.EO1" Destination="E_REND_Einfahren_Cyl_2.EI1" dx1="80" dx2="80" dy="666.67"/>
-			<Connection Source="SoftKey_F1_UP.IND" Destination="Q1.SET" dx1="1513.33"/>
+			<Connection Source="SoftKey_UP_F1.IND" Destination="Q1.SET" dx1="1513.33"/>
 			<Connection Source="E_REND_Ausfahren_Cyl_1.EO" Destination="Q1.RESET" dx1="600"/>
 			<Connection Source="Q1.EO1" Destination="E_REND_Ausfahren_Cyl_1.EI1" dx1="80" dx2="80" dy="866.67"/>
 		</EventConnections>
