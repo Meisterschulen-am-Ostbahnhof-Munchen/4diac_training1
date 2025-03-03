@@ -9,23 +9,26 @@
 	<SubAppInterfaceList>
 	</SubAppInterfaceList>
 	<SubAppNetwork>
-		<FB Name="SoftKey_UP_F1" Type="IE" x="-4500" y="-900">
+		<FB Name="DigitalInput_CLK_I1" Type="IE" x="-8100" y="-400">
 			<Parameter Name="QI" Value="TRUE"/>
 		</FB>
-		<FB Name="DataMask_M1" Type="Q_ActiveMask" x="-2300" y="-800">
+		<FB Name="Q_ActiveMask" Type="Q_ActiveMask" x="-2100" y="-300">
 			<Parameter Name="u16WorkSetId" Value="DefaultPool::WorkingSet_0"/>
-			<Parameter Name="u16NewMaskId" Value="DefaultPool::DataMask_M1"/>
 		</FB>
-		<FB Name="SoftKey_UP_F2" Type="IE" x="-4600" y="200">
+		<FB Name="DigitalInput_CLK_I2" Type="IE" x="-8100" y="400">
 			<Parameter Name="QI" Value="TRUE"/>
 		</FB>
-		<FB Name="DataMask_M2" Type="Q_ActiveMask" x="-2400" y="300">
-			<Parameter Name="u16WorkSetId" Value="DefaultPool::WorkingSet_0"/>
-			<Parameter Name="u16NewMaskId" Value="DefaultPool::DataMask_M2"/>
+		<FB Name="F_SEL_E_2" Type="F_SEL_E_2" x="-4800" y="-200">
+			<Parameter Name="IN0" Value="DefaultPool::DataMask_M1"/>
+			<Parameter Name="IN1" Value="DefaultPool::DataMask_M2"/>
 		</FB>
 		<EventConnections>
-			<Connection Source="SoftKey_UP_F1.IND" Destination="DataMask_M1.REQ"/>
-			<Connection Source="SoftKey_UP_F2.IND" Destination="DataMask_M2.REQ"/>
+			<Connection Source="DigitalInput_CLK_I1.IND" Destination="F_SEL_E_2.REQ0"/>
+			<Connection Source="DigitalInput_CLK_I2.IND" Destination="F_SEL_E_2.REQ1" dx1="1253.33"/>
+			<Connection Source="F_SEL_E_2.CNF" Destination="Q_ActiveMask.REQ"/>
 		</EventConnections>
+		<DataConnections>
+			<Connection Source="F_SEL_E_2.OUT" Destination="Q_ActiveMask.u16NewMaskId"/>
+		</DataConnections>
 	</SubAppNetwork>
 </SubAppType>
