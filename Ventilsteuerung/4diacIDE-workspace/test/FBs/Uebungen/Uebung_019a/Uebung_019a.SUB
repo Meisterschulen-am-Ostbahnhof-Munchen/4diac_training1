@@ -18,17 +18,22 @@
 		<FB Name="DigitalInput_CLK_I2" Type="IE" x="-8100" y="400">
 			<Parameter Name="QI" Value="TRUE"/>
 		</FB>
-		<FB Name="F_SEL_E_2" Type="F_SEL_E_2" x="-4800" y="-200">
+		<FB Name="F_SEL_E_2" Type="F_SEL_E_3" x="-4800" y="-200">
 			<Parameter Name="IN0" Value="DefaultPool::DataMask_M1"/>
 			<Parameter Name="IN1" Value="DefaultPool::DataMask_M2"/>
+			<Parameter Name="IN2" Value="DefaultPool::AlarmMask_A2_medium"/>
+		</FB>
+		<FB Name="DigitalInput_CLK_I3" Type="IE" x="-8100" y="1200">
+			<Parameter Name="QI" Value="TRUE"/>
 		</FB>
 		<EventConnections>
 			<Connection Source="DigitalInput_CLK_I1.IND" Destination="F_SEL_E_2.REQ0"/>
-			<Connection Source="DigitalInput_CLK_I2.IND" Destination="F_SEL_E_2.REQ1" dx1="1253.33"/>
+			<Connection Source="DigitalInput_CLK_I2.IND" Destination="F_SEL_E_2.REQ1" dx1="313.33"/>
 			<Connection Source="F_SEL_E_2.CNF" Destination="Q_ActiveMask.REQ"/>
+			<Connection Source="DigitalInput_CLK_I3.IND" Destination="F_SEL_E_2.REQ2" dx1="666.67"/>
 		</EventConnections>
 		<DataConnections>
-			<Connection Source="F_SEL_E_2.OUT" Destination="Q_ActiveMask.u16NewMaskId"/>
+			<Connection Source="F_SEL_E_2.OUT" Destination="Q_ActiveMask.u16NewMaskId" dx1="1000"/>
 		</DataConnections>
 	</SubAppNetwork>
 </SubAppType>
