@@ -9,7 +9,7 @@
 	<SubAppInterfaceList>
 	</SubAppInterfaceList>
 	<SubAppNetwork>
-		<FB Name="SoftKey_F1_UP" Type="IE" x="-4500" y="-900">
+		<FB Name="SoftKey_UP_F1" Type="IE" x="-4500" y="-900">
 			<Parameter Name="QI" Value="TRUE"/>
 		</FB>
 		<FB Name="Q_CtrlAudioSignal_0" Type="Q_CtrlAudioSignal" x="-2700" y="-800">
@@ -28,7 +28,7 @@
 			<Parameter Name="DT" Value="T#250ms"/>
 		</FB>
 		<EventConnections>
-			<Connection Source="SoftKey_F1_UP.IND" Destination="Q_CtrlAudioSignal_0.REQ"/>
+			<Connection Source="SoftKey_UP_F1.IND" Destination="Q_CtrlAudioSignal_0.REQ"/>
 			<Connection Source="E_DELAY.EO" Destination="Q_CtrlAudioSignal_1.REQ"/>
 			<Connection Source="Q_CtrlAudioSignal_0.CNF" Destination="E_DELAY.START"/>
 		</EventConnections>
