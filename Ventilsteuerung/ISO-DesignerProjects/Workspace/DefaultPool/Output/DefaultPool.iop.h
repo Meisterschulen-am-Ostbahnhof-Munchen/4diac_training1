@@ -1,4 +1,4 @@
-// ISO-Designer ISO 11783   Version 5.6.2.5533 Jetter AG
+// ISO-Designer ISO 11783   Version 5.7.0.6283 Bucher Automation AG
 // Do not change!
 #define ISO_DESIGNATOR_WIDTH                 80
 #define ISO_DESIGNATOR_HEIGHT                80
@@ -11,7 +11,13 @@
 #define Macro_Go_To_DataMask_M2               2
 #define DataMask_M1                        1000
 #define DataMask_M2                        1001
+#define AlarmMask_A1_low                   2000
+#define AlarmMask_A2_medium                2001
+#define AlarmMask_A3_high                  2002
 #define Container_B                        3000
+#define Container_low                      3001
+#define Container_medium                   3002
+#define Container_high                     3003
 #define SoftKeyMask_S1                     4000
 #define SoftKey_F1                         5000
 #define SoftKey_F2                         5001
@@ -56,11 +62,23 @@
 #define OutputNumber_N2                   12001
 #define Line_W                            13000
 #define Line_S                            13001
+#define Rectangle_black                   14000
+#define Rectangle_grey                    14001
+#define Rectangle_yellow                  14002
+#define Rectangle_red                     14003
 #define Logos_icon                        20000
+#define information                       20001
+#define alert                             20002
+#define Caution                           20003
 #define FontAttributes_6x8                23000
 #define FontAttributes_8x12               23001
 #define FontAttributes_12x16              23002
 #define FontAttributes_23003              23003
 #define LineAttributes_black              24000
+#define LineAttributes_black_3            24001
+#define LineAttributes_grey_3             24002
+#define LineAttributes_yellow_3           24003
+#define LineAttributes_red_3              24004
+#define FillAttributes_25000              25000
 #define ObjectPointer_P1                  27000
 #define AuxFunction2_X1                   31000
