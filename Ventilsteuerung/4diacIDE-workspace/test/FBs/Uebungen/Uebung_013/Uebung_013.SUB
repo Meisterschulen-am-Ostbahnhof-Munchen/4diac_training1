@@ -12,7 +12,7 @@
 		<FB Name="DigitalOutput_Q1" Type="QX" x="-1400" y="-900">
 			<Parameter Name="QI" Value="TRUE"/>
 		</FB>
-		<FB Name="SoftKey_F1_UP" Type="IE" x="-4500" y="-1000">
+		<FB Name="SoftKey_UP_F1" Type="IE" x="-4500" y="-1000">
 			<Parameter Name="QI" Value="TRUE">
 				<Attribute Name="Visible" Value="false"/>
 			</Parameter>
@@ -20,7 +20,7 @@
 				<Attribute Name="Visible" Value="false"/>
 			</Parameter>
 		</FB>
-		<FB Name="SoftKey_F2_UP" Type="IE" x="-4500" y="0">
+		<FB Name="SoftKey_UP_F2" Type="IE" x="-4500" y="0">
 			<Parameter Name="QI" Value="TRUE">
 				<Attribute Name="Visible" Value="false"/>
 			</Parameter>
@@ -31,8 +31,8 @@
 		<FB Name="E_SR" Type="E_SR" x="-2800" y="-800">
 		</FB>
 		<EventConnections>
-			<Connection Source="SoftKey_F1_UP.IND" Destination="E_SR.S"/>
-			<Connection Source="SoftKey_F2_UP.IND" Destination="E_SR.R" dx1="473.33"/>
+			<Connection Source="SoftKey_UP_F1.IND" Destination="E_SR.S"/>
+			<Connection Source="SoftKey_UP_F2.IND" Destination="E_SR.R" dx1="473.33"/>
 			<Connection Source="E_SR.EO" Destination="DigitalOutput_Q1.REQ"/>
 		</EventConnections>
 		<DataConnections>

@@ -12,7 +12,7 @@
 		<FB Name="DigitalOutput_Q1" Type="QX" x="-2833.33" y="-500">
 			<Parameter Name="QI" Value="TRUE"/>
 		</FB>
-		<FB Name="SoftKey_F1_UP" Type="IE" x="-6833.33" y="-500">
+		<FB Name="SoftKey_UP_F1" Type="IE" x="-6833.33" y="-500">
 			<Parameter Name="QI" Value="TRUE"/>
 		</FB>
 		<FB Name="E_SR_Ausfahren_Cyl_1" Type="E_SR" x="-4800" y="-266.67">
@@ -74,7 +74,7 @@
 		<FB Name="E_SWITCH_Q4" Type="E_SWITCH" x="-2666.67" y="4800">
 		</FB>
 		<EventConnections>
-			<Connection Source="SoftKey_F1_UP.IND" Destination="E_SR_Ausfahren_Cyl_1.S" dx1="786.67"/>
+			<Connection Source="SoftKey_UP_F1.IND" Destination="E_SR_Ausfahren_Cyl_1.S" dx1="786.67"/>
 			<Connection Source="E_SR_Ausfahren_Cyl_1.EO" Destination="DigitalOutput_Q1.REQ" dx1="813.33"/>
 			<Connection Source="E_SR_Ausfahren_Cyl_2.EO" Destination="DigitalOutput_Q2.REQ" dx1="640"/>
 			<Connection Source="E_SR_Einfahren_Cyl_2.EO" Destination="DigitalOutput_Q3.REQ" dx1="580"/>
@@ -91,7 +91,7 @@
 			<Connection Source="E_REND_Einfahren_Cyl_2.EO" Destination="E_SR_Einfahren_Cyl_2.R" dx1="426.67"/>
 			<Connection Source="SoftKey_F8_DOWN.IND" Destination="E_REND_Einfahren_Cyl_2.EI2" dx1="206.67"/>
 			<Connection Source="E_REND_Ausfahren_Cyl_2.EO" Destination="E_DELAY.START" dx1="100" dx2="100" dy="1233.33"/>
-			<Connection Source="SoftKey_F1_UP.IND" Destination="E_REND_Ausfahren_Cyl_1.R" dx1="100"/>
+			<Connection Source="SoftKey_UP_F1.IND" Destination="E_REND_Ausfahren_Cyl_1.R" dx1="100"/>
 			<Connection Source="SoftKey_F2_DOWN.IND" Destination="E_REND_Ausfahren_Cyl_2.R" dx1="120"/>
 			<Connection Source="E_DELAY.EO" Destination="E_REND_Einfahren_Cyl_2.R" dx1="100"/>
 			<Connection Source="SoftKey_F8_DOWN.IND" Destination="E_REND_Einfahren_Cyl_1.R" dx1="140"/>
