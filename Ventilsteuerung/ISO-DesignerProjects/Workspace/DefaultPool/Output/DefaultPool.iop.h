@@ -66,10 +66,10 @@
 #define Rectangle_grey                    14001
 #define Rectangle_yellow                  14002
 #define Rectangle_red                     14003
-#define Logos_icon                        20000
 #define information                       20001
 #define alert                             20002
 #define Caution                           20003
+#define Logos_icon                        20500
 #define FontAttributes_6x8                23000
 #define FontAttributes_8x12               23001
 #define FontAttributes_12x16              23002

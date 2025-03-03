@@ -64,10 +64,10 @@ const unsigned long ISO_OP_MEMORY_CLASS isoOP_DefaultPool_Offset[] = {
 	  1398,  // Rectangle_grey_Offset
 	  1411,  // Rectangle_yellow_Offset
 	  1424,  // Rectangle_red_Offset
-	  1437,  // Logos_icon_Offset
-	  1966,  // information_Offset
-	  6883,  // alert_Offset
-	 11800,  // Caution_Offset
+	  1437,  // information_Offset
+	  6354,  // alert_Offset
+	 11271,  // Caution_Offset
+	 16188,  // Logos_icon_Offset
 	 16717,  // FontAttributes_6x8_Offset
 	 16725,  // FontAttributes_8x12_Offset
 	 16733,  // FontAttributes_12x16_Offset

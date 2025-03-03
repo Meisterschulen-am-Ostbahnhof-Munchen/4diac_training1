@@ -61,10 +61,10 @@
 #define Rectangle_grey_Offset                                1398
 #define Rectangle_yellow_Offset                              1411
 #define Rectangle_red_Offset                                 1424
-#define Logos_icon_Offset                                    1437
-#define information_Offset                                   1966
-#define alert_Offset                                         6883
-#define Caution_Offset                                      11800
+#define information_Offset                                   1437
+#define alert_Offset                                         6354
+#define Caution_Offset                                      11271
+#define Logos_icon_Offset                                   16188
 #define FontAttributes_6x8_Offset                           16717
 #define FontAttributes_8x12_Offset                          16725
 #define FontAttributes_12x16_Offset                         16733
