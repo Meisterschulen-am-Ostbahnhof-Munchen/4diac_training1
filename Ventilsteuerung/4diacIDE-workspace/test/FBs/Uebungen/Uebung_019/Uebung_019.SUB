@@ -12,25 +12,20 @@
 		<FB Name="SoftKey_UP_F1" Type="IE" x="-4500" y="-900">
 			<Parameter Name="QI" Value="TRUE"/>
 		</FB>
-		<FB Name="Q_CtrlAudioSignal_0" Type="Q_CtrlAudioSignal" x="-2700" y="-800">
-			<Parameter Name="u8NumOfRepit" Value="1"/>
-			<Parameter Name="u16Frequency" Value="440"/>
-			<Parameter Name="u16OnTimeMs" Value="150"/>
-			<Parameter Name="u16OffTimeMs" Value="0"/>
+		<FB Name="DataMask_M1" Type="Q_ActiveMask" x="-2300" y="-800">
+			<Parameter Name="u16WorkSetId" Value="DefaultPool::WorkingSet_0"/>
+			<Parameter Name="u16NewMaskId" Value="DefaultPool::DataMask_M1"/>
 		</FB>
-		<FB Name="Q_CtrlAudioSignal_1" Type="Q_CtrlAudioSignal" x="1200" y="-800">
-			<Parameter Name="u8NumOfRepit" Value="1"/>
-			<Parameter Name="u16Frequency" Value="880"/>
-			<Parameter Name="u16OnTimeMs" Value="150"/>
-			<Parameter Name="u16OffTimeMs" Value="0"/>
+		<FB Name="SoftKey_UP_F2" Type="IE" x="-4600" y="200">
+			<Parameter Name="QI" Value="TRUE"/>
 		</FB>
-		<FB Name="E_DELAY" Type="E_DELAY" x="-400" y="-700">
-			<Parameter Name="DT" Value="T#250ms"/>
+		<FB Name="DataMask_M2" Type="Q_ActiveMask" x="-2400" y="300">
+			<Parameter Name="u16WorkSetId" Value="DefaultPool::WorkingSet_0"/>
+			<Parameter Name="u16NewMaskId" Value="DefaultPool::DataMask_M2"/>
 		</FB>
 		<EventConnections>
-			<Connection Source="SoftKey_UP_F1.IND" Destination="Q_CtrlAudioSignal_0.REQ"/>
-			<Connection Source="E_DELAY.EO" Destination="Q_CtrlAudioSignal_1.REQ"/>
-			<Connection Source="Q_CtrlAudioSignal_0.CNF" Destination="E_DELAY.START"/>
+			<Connection Source="SoftKey_UP_F1.IND" Destination="DataMask_M1.REQ"/>
+			<Connection Source="SoftKey_UP_F2.IND" Destination="DataMask_M2.REQ"/>
 		</EventConnections>
 	</SubAppNetwork>
 </SubAppType>
