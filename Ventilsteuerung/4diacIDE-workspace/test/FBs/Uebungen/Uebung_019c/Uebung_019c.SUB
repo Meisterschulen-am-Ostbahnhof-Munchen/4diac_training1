@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SubAppType Name="Uebung_019c" Comment="Umschalten einer Maske">
+	<Identification Standard="61499-2" Description="Copyright (c) 2023 Meisterschulen am Ostbahnhof  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0">
+	</Identification>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2023-10-23">
+	</VersionInfo>
+	<CompilerInfo>
+	</CompilerInfo>
+	<SubAppInterfaceList>
+	</SubAppInterfaceList>
+	<SubAppNetwork>
+		<FB Name="DigitalInput_CLK_I1" Type="IE" x="-8100" y="-400">
+			<Parameter Name="QI" Value="TRUE"/>
+		</FB>
+		<FB Name="Q_ActiveMask" Type="Q_ActiveMask" x="-1100" y="-400">
+			<Parameter Name="u16WorkSetId" Value="DefaultPool::WorkingSet_0"/>
+		</FB>
+		<FB Name="DigitalInput_CLK_I2" Type="IE" x="-8100" y="400">
+			<Parameter Name="QI" Value="TRUE"/>
+		</FB>
+		<FB Name="F_SEL_E_2" Type="F_SEL_E_4" x="-3800" y="-300">
+			<Parameter Name="IN0" Value="DefaultPool::DataMask_M1"/>
+			<Parameter Name="IN1" Value="DefaultPool::DataMask_M2"/>
+			<Parameter Name="IN2" Value="DefaultPool::AlarmMask_A2_medium"/>
+			<Parameter Name="IN3" Value="DefaultPool::DataMask_M1"/>
+		</FB>
+		<FB Name="DigitalInput_CLK_I3" Type="IE" x="-8100" y="1200">
+			<Parameter Name="QI" Value="TRUE"/>
+		</FB>
+		<FB Name="ACK" Type="IE" x="-8000" y="2200">
+			<Parameter Name="QI" Value="TRUE"/>
+		</FB>
+		<FB Name="E_SR" Type="E_SR" x="-5000" y="1800">
+		</FB>
+		<FB Name="Alarmausgang" Type="QX" x="-3300" y="1700">
+			<Parameter Name="QI" Value="TRUE"/>
+		</FB>
+		<EventConnections>
+			<Connection Source="DigitalInput_CLK_I1.IND" Destination="F_SEL_E_2.REQ0" dx1="1753.33">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="DigitalInput_CLK_I2.IND" Destination="F_SEL_E_2.REQ1" dx1="313.33">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="F_SEL_E_2.CNF" Destination="Q_ActiveMask.REQ"/>
+			<Connection Source="DigitalInput_CLK_I3.IND" Destination="F_SEL_E_2.REQ2" dx1="1560"/>
+			<Connection Source="ACK.IND" Destination="F_SEL_E_2.REQ3" dx1="840">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="DigitalInput_CLK_I3.IND" Destination="E_SR.S" dx1="1560"/>
+			<Connection Source="DigitalInput_CLK_I2.IND" Destination="E_SR.R" dx1="1153.33"/>
+			<Connection Source="DigitalInput_CLK_I1.IND" Destination="E_SR.R" dx1="1153.33"/>
+			<Connection Source="ACK.IND" Destination="E_SR.R" dx1="1153.33"/>
+			<Connection Source="E_SR.EO" Destination="Alarmausgang.REQ"/>
+		</EventConnections>
+		<DataConnections>
+			<Connection Source="F_SEL_E_2.OUT" Destination="Q_ActiveMask.u16NewMaskId" dx1="1000"/>
+			<Connection Source="E_SR.Q" Destination="Alarmausgang.OUT" dx1="626.67"/>
+		</DataConnections>
+	</SubAppNetwork>
+</SubAppType>
