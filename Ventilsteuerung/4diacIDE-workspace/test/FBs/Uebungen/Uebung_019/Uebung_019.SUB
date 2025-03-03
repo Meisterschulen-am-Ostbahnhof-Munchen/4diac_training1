@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SubAppType Name="Uebung_019" Comment="Umschalten einer Maske">
+	<Identification Standard="61499-2" Description="Copyright (c) 2023 Meisterschulen am Ostbahnhof  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0">
+	</Identification>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2023-10-23">
+	</VersionInfo>
+	<CompilerInfo>
+	</CompilerInfo>
+	<SubAppInterfaceList>
+	</SubAppInterfaceList>
+	<SubAppNetwork>
+		<FB Name="SoftKey_F1_UP" Type="IE" x="-4500" y="-900">
+			<Parameter Name="QI" Value="TRUE"/>
+		</FB>
+		<FB Name="Q_CtrlAudioSignal_0" Type="Q_CtrlAudioSignal" x="-2700" y="-800">
+			<Parameter Name="u8NumOfRepit" Value="1"/>
+			<Parameter Name="u16Frequency" Value="440"/>
+			<Parameter Name="u16OnTimeMs" Value="150"/>
+			<Parameter Name="u16OffTimeMs" Value="0"/>
+		</FB>
+		<FB Name="Q_CtrlAudioSignal_1" Type="Q_CtrlAudioSignal" x="1200" y="-800">
+			<Parameter Name="u8NumOfRepit" Value="1"/>
+			<Parameter Name="u16Frequency" Value="880"/>
+			<Parameter Name="u16OnTimeMs" Value="150"/>
+			<Parameter Name="u16OffTimeMs" Value="0"/>
+		</FB>
+		<FB Name="E_DELAY" Type="E_DELAY" x="-400" y="-700">
+			<Parameter Name="DT" Value="T#250ms"/>
+		</FB>
+		<EventConnections>
+			<Connection Source="SoftKey_F1_UP.IND" Destination="Q_CtrlAudioSignal_0.REQ"/>
+			<Connection Source="E_DELAY.EO" Destination="Q_CtrlAudioSignal_1.REQ"/>
+			<Connection Source="Q_CtrlAudioSignal_0.CNF" Destination="E_DELAY.START"/>
+		</EventConnections>
+	</SubAppNetwork>
+</SubAppType>
