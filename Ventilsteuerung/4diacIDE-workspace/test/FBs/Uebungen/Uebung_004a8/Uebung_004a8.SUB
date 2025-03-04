@@ -37,14 +37,14 @@
 				<Attribute Name="Visible" Value="false"/>
 			</Parameter>
 		</FB>
-		<FB Name="E_SPLIT" Type="E_SPLIT" x="-7100" y="200">
+		<FB Name="E_SPLIT_2" Type="E_SPLIT_2" x="-7100" y="200">
 		</FB>
 		<EventConnections>
 			<Connection Source="E_T_FF_Q1.EO" Destination="DigitalOutput_Q1.REQ"/>
 			<Connection Source="E_T_FF_Q2.EO" Destination="DigitalOutput_Q2.REQ"/>
-			<Connection Source="E_SPLIT.EO1" Destination="E_T_FF_Q1.CLK" dx1="493.33"/>
-			<Connection Source="E_SPLIT.EO2" Destination="E_T_FF_Q2.CLK" dx1="493.33"/>
-			<Connection Source="DigitalInput_CLK_I1.IND" Destination="E_SPLIT.EI"/>
+			<Connection Source="E_SPLIT_2.EO1" Destination="E_T_FF_Q1.CLK" dx1="493.33"/>
+			<Connection Source="E_SPLIT_2.EO2" Destination="E_T_FF_Q2.CLK" dx1="493.33"/>
+			<Connection Source="DigitalInput_CLK_I1.IND" Destination="E_SPLIT_2.EI"/>
 		</EventConnections>
 		<DataConnections>
 			<Connection Source="E_T_FF_Q1.Q" Destination="DigitalOutput_Q1.OUT"/>

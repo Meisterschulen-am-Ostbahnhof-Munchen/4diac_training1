@@ -37,18 +37,31 @@
 				<Attribute Name="Visible" Value="false"/>
 			</Parameter>
 		</FB>
-		<FB Name="E_SPLIT" Type="E_SPLIT" x="-7100" y="200">
+		<FB Name="E_SPLIT_3" Type="E_SPLIT_3" x="-7100" y="200">
+		</FB>
+		<FB Name="E_T_FF_Q3" Type="E_T_FF" x="-5500" y="1800">
+		</FB>
+		<FB Name="DigitalOutput_Q3" Type="QX" x="-4300" y="1700">
+			<Parameter Name="QI" Value="TRUE">
+				<Attribute Name="Visible" Value="false"/>
+			</Parameter>
+			<Parameter Name="PARAMS" Value="">
+				<Attribute Name="Visible" Value="false"/>
+			</Parameter>
 		</FB>
 		<EventConnections>
 			<Connection Source="E_T_FF_Q1.EO" Destination="DigitalOutput_Q1.REQ"/>
 			<Connection Source="E_T_FF_Q2.EO" Destination="DigitalOutput_Q2.REQ"/>
-			<Connection Source="E_SPLIT.EO1" Destination="E_T_FF_Q1.CLK" dx1="493.33"/>
-			<Connection Source="E_SPLIT.EO2" Destination="E_T_FF_Q2.CLK" dx1="493.33"/>
-			<Connection Source="DigitalInput_CLK_I1.IND" Destination="E_SPLIT.EI"/>
+			<Connection Source="E_SPLIT_3.EO1" Destination="E_T_FF_Q1.CLK" dx1="493.33"/>
+			<Connection Source="E_SPLIT_3.EO2" Destination="E_T_FF_Q2.CLK" dx1="493.33"/>
+			<Connection Source="DigitalInput_CLK_I1.IND" Destination="E_SPLIT_3.EI"/>
+			<Connection Source="E_T_FF_Q3.EO" Destination="DigitalOutput_Q3.REQ"/>
+			<Connection Source="E_SPLIT_3.EO3" Destination="E_T_FF_Q3.CLK" dx1="340"/>
 		</EventConnections>
 		<DataConnections>
 			<Connection Source="E_T_FF_Q1.Q" Destination="DigitalOutput_Q1.OUT"/>
 			<Connection Source="E_T_FF_Q2.Q" Destination="DigitalOutput_Q2.OUT"/>
+			<Connection Source="E_T_FF_Q3.Q" Destination="DigitalOutput_Q3.OUT"/>
 		</DataConnections>
 	</SubAppNetwork>
 </SubAppType>
