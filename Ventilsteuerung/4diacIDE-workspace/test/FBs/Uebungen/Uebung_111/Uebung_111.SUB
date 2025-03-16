@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SubAppType Name="Uebung_111" Comment="Übung zum Integer Überlauf">
+	<Identification Standard="61499-2" Description="Copyright (c) 2023 Meisterschulen am Ostbahnhof  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0">
+	</Identification>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2023-10-23">
+	</VersionInfo>
+	<CompilerInfo>
+	</CompilerInfo>
+	<SubAppInterfaceList>
+	</SubAppInterfaceList>
+	<SubAppNetwork>
+		<FB Name="DigitalOutput_Q1" Type="QX" x="2500" y="200">
+			<Parameter Name="QI" Value="TRUE"/>
+		</FB>
+		<FB Name="ADD_2" Type="ADD_2" x="-3600" y="400">
+			<Parameter Name="IN1" Value="USINT#128"/>
+			<Parameter Name="IN2" Value="USINT#128"/>
+		</FB>
+		<FB Name="DigitalInput_CLK_I1" Type="IE" x="-5600" y="200">
+			<Parameter Name="QI" Value="TRUE"/>
+		</FB>
+		<FB Name="F_GT" Type="F_GT" x="1300" y="300">
+			<Parameter Name="IN2" Value="UDINT#200"/>
+		</FB>
+		<FB Name="F_DIV" Type="F_DIV" x="-900" y="300">
+			<Parameter Name="IN1" Value="UDINT#5000"/>
+		</FB>
+		<FB Name="F_USINT_TO_UDINT" Type="F_USINT_TO_UDINT" x="-2700" y="400">
+		</FB>
+		<FB Name="F_MOVE" Type="F_MOVE" x="100" y="300">
+			<Attribute Name="DataType" Value="UDINT"/>
+		</FB>
+		<EventConnections>
+			<Connection Source="DigitalInput_CLK_I1.IND" Destination="ADD_2.REQ"/>
+			<Connection Source="F_GT.CNF" Destination="DigitalOutput_Q1.REQ"/>
+			<Connection Source="ADD_2.CNF" Destination="F_USINT_TO_UDINT.REQ"/>
+			<Connection Source="F_USINT_TO_UDINT.CNF" Destination="F_DIV.REQ" dx1="160"/>
+			<Connection Source="F_DIV.CNF" Destination="F_MOVE.REQ"/>
+			<Connection Source="F_MOVE.CNF" Destination="F_GT.REQ"/>
+		</EventConnections>
+		<DataConnections>
+			<Connection Source="F_GT.OUT" Destination="DigitalOutput_Q1.OUT" dx1="380"/>
+			<Connection Source="ADD_2.OUT" Destination="F_USINT_TO_UDINT.IN"/>
+			<Connection Source="F_USINT_TO_UDINT.OUT" Destination="F_DIV.IN2"/>
+			<Connection Source="F_MOVE.OUT" Destination="F_GT.IN1"/>
+			<Connection Source="F_DIV.OUT" Destination="F_MOVE.IN"/>
+		</DataConnections>
+	</SubAppNetwork>
+</SubAppType>
