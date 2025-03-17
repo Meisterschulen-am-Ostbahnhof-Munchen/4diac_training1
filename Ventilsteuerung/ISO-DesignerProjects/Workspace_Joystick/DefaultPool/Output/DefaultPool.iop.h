@@ -8,6 +8,10 @@
 #define MASK_HEIGHT                         480
 #define WorkingSet_0                          0
 #define DataMask_1000                      1000
+#define Container_3000                     3000
+#define Container_3001                     3001
+#define Container_3002                     3002
+#define Container_3003                     3003
 #define OutputString_WS                   11500
 #define DM_main_20000                     20000
 #define I1_20001                          20001
@@ -23,3 +27,15 @@
 #define AuxObjectPointer_33001            33001
 #define AuxObjectPointer_33002            33002
 #define AuxObjectPointer_33003            33003
+#define AuxObjectPointer_33004            33004
+#define AuxObjectPointer_33005            33005
+#define AuxObjectPointer_33006            33006
+#define AuxObjectPointer_33007            33007
+#define AuxObjectPointer_33008            33008
+#define AuxObjectPointer_33009            33009
+#define AuxObjectPointer_33010            33010
+#define AuxObjectPointer_33011            33011
+#define AuxObjectPointer_33012            33012
+#define AuxObjectPointer_33013            33013
+#define AuxObjectPointer_33014            33014
+#define AuxObjectPointer_33015            33015

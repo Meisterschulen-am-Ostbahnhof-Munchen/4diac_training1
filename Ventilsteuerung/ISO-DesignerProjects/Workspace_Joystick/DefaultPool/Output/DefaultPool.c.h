@@ -3,28 +3,44 @@
 
 #define WorkingSet_0_Offset                                     1
 #define DataMask_1000_Offset                                   21
-#define OutputString_WS_Offset                                 59
-#define DM_main_20000_Offset                                   79
-#define I1_20001_Offset                                     24813
-#define I2_20002_Offset                                     26878
-#define I3_20003_Offset                                     28943
-#define I4_20004_Offset                                     31008
-#define FontAttributes_WS_Offset                            33073
-#define AuxInput2_32000_Offset                              33081
-#define AuxInput2_32001_Offset                              33093
-#define AuxInput2_32002_Offset                              33105
-#define AuxInput2_32003_Offset                              33117
-#define AuxObjectPointer_33000_Offset                       33129
-#define AuxObjectPointer_33001_Offset                       33135
-#define AuxObjectPointer_33002_Offset                       33141
-#define AuxObjectPointer_33003_Offset                       33147
+#define Container_3000_Offset                                  59
+#define Container_3001_Offset                                  93
+#define Container_3002_Offset                                 127
+#define Container_3003_Offset                                 161
+#define OutputString_WS_Offset                                195
+#define DM_main_20000_Offset                                  215
+#define I1_20001_Offset                                     24949
+#define I2_20002_Offset                                     27014
+#define I3_20003_Offset                                     29079
+#define I4_20004_Offset                                     31144
+#define FontAttributes_WS_Offset                            33209
+#define AuxInput2_32000_Offset                              33217
+#define AuxInput2_32001_Offset                              33229
+#define AuxInput2_32002_Offset                              33241
+#define AuxInput2_32003_Offset                              33253
+#define AuxObjectPointer_33000_Offset                       33265
+#define AuxObjectPointer_33001_Offset                       33271
+#define AuxObjectPointer_33002_Offset                       33277
+#define AuxObjectPointer_33003_Offset                       33283
+#define AuxObjectPointer_33004_Offset                       33289
+#define AuxObjectPointer_33005_Offset                       33295
+#define AuxObjectPointer_33006_Offset                       33301
+#define AuxObjectPointer_33007_Offset                       33307
+#define AuxObjectPointer_33008_Offset                       33313
+#define AuxObjectPointer_33009_Offset                       33319
+#define AuxObjectPointer_33010_Offset                       33325
+#define AuxObjectPointer_33011_Offset                       33331
+#define AuxObjectPointer_33012_Offset                       33337
+#define AuxObjectPointer_33013_Offset                       33343
+#define AuxObjectPointer_33014_Offset                       33349
+#define AuxObjectPointer_33015_Offset                       33355
 
 #define ISO_OP_MEMORY_CLASS
 
-#define ISO_OP_DefaultPool_Size  33153
+#define ISO_OP_DefaultPool_Size  33361
 extern const unsigned char ISO_OP_MEMORY_CLASS isoOP_DefaultPool[];
 
-#define ISO_OP_DefaultPool_ObjectNumber     17
+#define ISO_OP_DefaultPool_ObjectNumber     33
 extern const unsigned long ISO_OP_MEMORY_CLASS isoOP_DefaultPool_Offset[];
 extern const unsigned long ISO_OP_MEMORY_CLASS isoOP_DefaultPool_Offset_Id[];
 #define ISO_OP_DefaultPool_Scale_Offset      1
