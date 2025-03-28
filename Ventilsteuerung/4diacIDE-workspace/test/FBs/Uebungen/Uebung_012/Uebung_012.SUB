@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<SubAppType Name="Uebung_012" Comment="Numeric Value Input und Speichern" >
-	<Identification Standard="61499-2" Description="Copyright (c) 2023 Meisterschulen am Ostbahnhof  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0" >
+<SubAppType Name="Uebung_012" Comment="Numeric Value Input und Speichern">
+	<Identification Standard="61499-2" Description="Copyright (c) 2023 Meisterschulen am Ostbahnhof  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0">
 	</Identification>
 	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2023-10-23">
 	</VersionInfo>
@@ -41,15 +41,12 @@
 				<Attribute Name="Visible" Value="false"/>
 			</Parameter>
 		</FB>
-		<FB Name="EI_TO_E" Type="EI_TO_E" x="-1800" y="400">
-		</FB>
 		<EventConnections>
 			<Connection Source="InputNumber_I1.IND" Destination="F_DWORD_TO_UDINT.REQ" dx1="300"/>
 			<Connection Source="F_DWORD_TO_UDINT.CNF" Destination="NVS.SET"/>
 			<Connection Source="NVS.GETO" Destination="Q_NumericValue.REQ"/>
 			<Connection Source="CbVtStatus.IND" Destination="Q_NumericValue.REQ" dx1="3713.33"/>
-			<Connection Source="EI_TO_E.OUT" Destination="NVS.GET" dx1="146.67"/>
-			<Connection Source="NVS.INITO" Destination="EI_TO_E.IN" dx1="80" dx2="80" dy="-506.67"/>
+			<Connection Source="NVS.INITO" Destination="NVS.GET" dx1="80" dx2="440" dy="-506.67"/>
 		</EventConnections>
 		<DataConnections>
 			<Connection Source="InputNumber_I1.IN" Destination="F_DWORD_TO_UDINT.IN"/>

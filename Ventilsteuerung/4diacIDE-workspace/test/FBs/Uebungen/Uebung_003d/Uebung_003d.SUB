@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<SubAppType Name="Uebung_079" Comment="alle TECU FBs">
+<SubAppType Name="Uebung_003d" Comment="DigitalInput_I1/_I2 auf DigitalOutput_Q1/_I2">
 	<Identification Standard="61499-2" Description="Copyright (c) 2023 Meisterschulen am Ostbahnhof  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0">
 	</Identification>
 	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2023-10-23">
@@ -9,28 +9,25 @@
 	<SubAppInterfaceList>
 	</SubAppInterfaceList>
 	<SubAppNetwork>
-		<FB Name="I_GBSD" Type="I_GBSD" x="-5213.33" y="453.33">
+		<FB Name="DigitalOutput_Q1" Type="QX" x="-1500" y="-800">
 			<Parameter Name="QI" Value="TRUE"/>
 		</FB>
-		<FB Name="I_VDS" Type="I_VDS" x="-5200" y="3800">
+		<FB Name="DigitalInput_I1" Type="IX" x="-4500" y="-900">
 			<Parameter Name="QI" Value="TRUE"/>
 		</FB>
-		<FB Name="I_WBSD" Type="I_WBSD" x="-5200" y="1900">
-		</FB>
-		<FB Name="I_MSS" Type="I_MSS" x="-5200" y="5400">
+		<FB Name="DigitalOutput_Q2" Type="QX" x="-1500" y="100">
 			<Parameter Name="QI" Value="TRUE"/>
 		</FB>
-		<FB Name="I_FHS" Type="I_FHS" x="-2000" y="-200">
+		<FB Name="DigitalInput_I2" Type="IX" x="-4500" y="0">
 			<Parameter Name="QI" Value="TRUE"/>
 		</FB>
-		<FB Name="I_FPTO" Type="I_FPTO" x="-2000" y="1600">
-			<Parameter Name="QI" Value="TRUE"/>
-		</FB>
-		<FB Name="I_RHS" Type="I_RHS" x="-2000" y="3800">
-			<Parameter Name="QI" Value="TRUE"/>
-		</FB>
-		<FB Name="I_RPTO" Type="I_RPTO" x="-2000" y="5700">
-			<Parameter Name="QI" Value="TRUE"/>
-		</FB>
+		<EventConnections>
+			<Connection Source="DigitalInput_I1.IND" Destination="DigitalOutput_Q1.REQ"/>
+			<Connection Source="DigitalInput_I2.IND" Destination="DigitalOutput_Q2.REQ"/>
+		</EventConnections>
+		<DataConnections>
+			<Connection Source="DigitalInput_I1.IN" Destination="DigitalOutput_Q1.OUT"/>
+			<Connection Source="DigitalInput_I2.IN" Destination="DigitalOutput_Q2.OUT"/>
+		</DataConnections>
 	</SubAppNetwork>
 </SubAppType>
