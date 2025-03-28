@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<SubAppType Name="mapping_Uebung_010b5" Comment="SoftKey_F1-8 auf DigitalOutput_Q1-8">
+<SubAppType Name="mapping_Uebung_010b5" Comment="SoftKey_F1-10 auf DigitalOutput_Q1-10">
 	<Identification Standard="61499-2" Description="Copyright (c) 2023 Meisterschulen am Ostbahnhof  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0">
 	</Identification>
 	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2023-10-23">
@@ -19,6 +19,8 @@
 			<Parameter Name="DigitalOutput_Q6" Value="'App.Control.functions.F6.QX'"/>
 			<Parameter Name="DigitalOutput_Q7" Value="'App.Control.functions.F7.QX'"/>
 			<Parameter Name="DigitalOutput_Q8" Value="'App.Control.functions.F8.QX'"/>
+			<Parameter Name="DigitalOutput_Q9" Value="'App.Control.functions.F9.QX'"/>
+			<Parameter Name="DigitalOutput_Q10" Value="'App.Control.functions.F10.QX'"/>
 		</FB>
 		<FB Name="UT_SoftkeyMapping" Type="UT_SoftkeyMapping" x="-7600" y="-800">
 			<Parameter Name="QI" Value="TRUE"/>
@@ -38,6 +40,13 @@
 			<Parameter Name="DigitalInput_7" Value="'App.Control.functions.F7.IX'"/>
 			<Parameter Name="u16ObjId_8" Value="DefaultPool::SoftKey_F8"/>
 			<Parameter Name="DigitalInput_8" Value="'App.Control.functions.F8.IX'"/>
+		</FB>
+		<FB Name="UT_SoftkeyMapping_1" Type="UT_SoftkeyMapping" x="-4100" y="-800">
+			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="u16ObjId_1" Value="DefaultPool::SoftKey_F9"/>
+			<Parameter Name="DigitalInput_1" Value="'App.Control.functions.F9.IX'"/>
+			<Parameter Name="u16ObjId_2" Value="DefaultPool::SoftKey_F10"/>
+			<Parameter Name="DigitalInput_2" Value="'App.Control.functions.F10.IX'"/>
 		</FB>
 	</SubAppNetwork>
 </SubAppType>
