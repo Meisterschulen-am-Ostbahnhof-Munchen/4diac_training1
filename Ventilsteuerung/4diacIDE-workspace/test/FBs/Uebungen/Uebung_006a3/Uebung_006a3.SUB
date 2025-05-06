@@ -9,10 +9,7 @@
 	<SubAppInterfaceList>
 	</SubAppInterfaceList>
 	<SubAppNetwork>
-		<FB Name="DigitalOutput_Q1" Type="QX" x="-1473.34" y="-800">
-			<Parameter Name="QI" Value="TRUE"/>
-		</FB>
-		<FB Name="DigitalInput_CLK_I1" Type="IE" x="-4540" y="-913.33">
+		<FB Name="DigitalInput_CLK_I1" Type="IE" x="-4600" y="-900">
 			<Parameter Name="QI" Value="TRUE">
 				<Attribute Name="Visible" Value="false"/>
 			</Parameter>
@@ -28,7 +25,7 @@
 				<Attribute Name="Visible" Value="false"/>
 			</Parameter>
 		</FB>
-		<FB Name="E_T_FF_SR" Type="E_T_FF_SR" x="-2833.33" y="-686.66">
+		<FB Name="E_T_FF_SR" Type="E_T_FF_SR" x="-2800" y="-700">
 		</FB>
 		<FB Name="DigitalInput_CLK_I3" Type="IE" x="-4533.33" y="1133.33">
 			<Parameter Name="QI" Value="TRUE">
@@ -38,14 +35,38 @@
 				<Attribute Name="Visible" Value="false"/>
 			</Parameter>
 		</FB>
+		<FB Name="AND_LINKS" Type="AND_2_BOOL" x="1300" y="-600">
+		</FB>
+		<FB Name="Rechtslauf" Type="QX" x="3200" y="400">
+			<Parameter Name="QI" Value="TRUE"/>
+		</FB>
+		<FB Name="Linkslauf" Type="QX" x="3200" y="-700">
+			<Parameter Name="QI" Value="TRUE"/>
+		</FB>
+		<FB Name="AND_RECHTS" Type="AND_2_BOOL" x="1400" y="500">
+		</FB>
+		<SubApp Name="LinksRechts" Type="LinksRechts" x="-1300" y="-1400">
+		</SubApp>
 		<EventConnections>
-			<Connection Source="DigitalInput_CLK_I1.IND" Destination="E_T_FF_SR.S" dx1="500"/>
+			<Connection Source="DigitalInput_CLK_I1.IND" Destination="E_T_FF_SR.S"/>
 			<Connection Source="DigitalInput_CLK_I2.IND" Destination="E_T_FF_SR.R" dx1="486.67"/>
-			<Connection Source="E_T_FF_SR.EO" Destination="DigitalOutput_Q1.REQ" dx1="340"/>
 			<Connection Source="DigitalInput_CLK_I3.IND" Destination="E_T_FF_SR.CLK" dx1="673.33"/>
+			<Connection Source="AND_RECHTS.CNF" Destination="Rechtslauf.REQ"/>
+			<Connection Source="AND_LINKS.CNF" Destination="Linkslauf.REQ"/>
+			<Connection Source="E_T_FF_SR.EO" Destination="LinksRechts.EI" dx1="246.67"/>
+			<Connection Source="LinksRechts.EO" Destination="AND_LINKS.REQ" dx1="1246.67"/>
+			<Connection Source="LinksRechts.EO" Destination="AND_RECHTS.REQ" dx1="1146.67"/>
+			<Connection Source="E_T_FF_SR.EO" Destination="AND_LINKS.REQ" dx1="1700"/>
+			<Connection Source="E_T_FF_SR.EO" Destination="AND_RECHTS.REQ" dx1="1746.67"/>
 		</EventConnections>
 		<DataConnections>
-			<Connection Source="E_T_FF_SR.Q" Destination="DigitalOutput_Q1.OUT" dx1="340"/>
+			<Connection Source="AND_LINKS.OUT" Destination="Linkslauf.OUT" dx1="573.33"/>
+			<Connection Source="E_T_FF_SR.Q" Destination="AND_RECHTS.IN2" dx1="1313.33"/>
+			<Connection Source="AND_RECHTS.OUT" Destination="Rechtslauf.OUT" dx1="573.33"/>
+			<Connection Source="E_T_FF_SR.Q" Destination="AND_LINKS.IN2"/>
+			<Connection Source="LinksRechts.Rechts" Destination="AND_RECHTS.IN1" dx1="1020"/>
+			<Connection Source="E_T_FF_SR.Q" Destination="LinksRechts.DI" dx1="346.67"/>
+			<Connection Source="LinksRechts.Links" Destination="AND_LINKS.IN1" dx1="886.67"/>
 		</DataConnections>
 	</SubAppNetwork>
 </SubAppType>
