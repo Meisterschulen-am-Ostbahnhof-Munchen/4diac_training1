@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SubAppType Name="mapping_Uebung_003b2" Comment="Funk 16 Tasten auf DataPanel 16">
+	<Identification Standard="61499-2" Description="Copyright (c) 2023 Meisterschulen am Ostbahnhof  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0">
+	</Identification>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2023-10-23">
+	</VersionInfo>
+	<CompilerInfo>
+	</CompilerInfo>
+	<SubAppInterfaceList>
+	</SubAppInterfaceList>
+	<SubAppNetwork>
+		<FB Name="logiBUS_8_DO" Type="DataPanel_xDB_16_DO_SAE_J1939" x="-3400" y="100">
+			<Parameter Name="QI" Value="TRUE">
+				<Attribute Name="Visible" Value="false"/>
+			</Parameter>
+			<Parameter Name="DigitalOutput_1A" Value="'App.Control.functions.F1.QX'"/>
+			<Parameter Name="DigitalOutput_1B" Value="'App.Control.functions.F2.QX'"/>
+			<Parameter Name="DigitalOutput_2A" Value="'App.Control.functions.F3.QX'"/>
+			<Parameter Name="DigitalOutput_2B" Value="'App.Control.functions.F4.QX'"/>
+			<Parameter Name="DigitalOutput_3A" Value="'App.Control.functions.F5.QX'"/>
+			<Parameter Name="DigitalOutput_3B" Value="'App.Control.functions.F6.QX'"/>
+			<Parameter Name="DigitalOutput_4A" Value="'App.Control.functions.F7.QX'"/>
+			<Parameter Name="DigitalOutput_4B" Value="'App.Control.functions.F8.QX'"/>
+			<Parameter Name="DigitalOutput_5A" Value="'App.Control.functions.F9.QX'"/>
+			<Parameter Name="DigitalOutput_5B" Value="'App.Control.functions.F10.QX'"/>
+			<Parameter Name="DigitalOutput_6A" Value="'App.Control.functions.F11.QX'"/>
+			<Parameter Name="DigitalOutput_6B" Value="'App.Control.functions.F12.QX'"/>
+			<Parameter Name="DigitalOutput_7A" Value="'App.Control.functions.F13.QX'"/>
+			<Parameter Name="DigitalOutput_7B" Value="'App.Control.functions.F14.QX'"/>
+			<Parameter Name="DigitalOutput_8A" Value="'App.Control.functions.F15.QX'"/>
+		</FB>
+		<FB Name="logiBUS_8_DI" Type="FunkButtons" x="-7400" y="-600">
+			<Parameter Name="QI" Value="TRUE">
+				<Attribute Name="Visible" Value="false"/>
+			</Parameter>
+			<Parameter Name="DigitalInput_Key_01" Value="'App.Control.functions.F1.IX'"/>
+			<Parameter Name="DigitalInput_Key_02" Value="'App.Control.functions.F2.IX'"/>
+			<Parameter Name="DigitalInput_Key_03" Value="'App.Control.functions.F3.IX'"/>
+			<Parameter Name="DigitalInput_Key_04" Value="'App.Control.functions.F4.IX'"/>
+			<Parameter Name="DigitalInput_Key_05" Value="'App.Control.functions.F5.IX'"/>
+			<Parameter Name="DigitalInput_Key_06" Value="'App.Control.functions.F6.IX'"/>
+			<Parameter Name="DigitalInput_Key_07" Value="'App.Control.functions.F7.IX'"/>
+			<Parameter Name="DigitalInput_Key_08" Value="'App.Control.functions.F8.IX'"/>
+			<Parameter Name="DigitalInput_Key_09" Value="'App.Control.functions.F9.IX'"/>
+			<Parameter Name="DigitalInput_Key_10" Value="'App.Control.functions.F10.IX'"/>
+			<Parameter Name="DigitalInput_Key_11" Value="'App.Control.functions.F11.IX'"/>
+			<Parameter Name="DigitalInput_Key_12" Value="'App.Control.functions.F12.IX'"/>
+			<Parameter Name="DigitalInput_Key_START" Value="'App.Control.functions.F13.IX'"/>
+			<Parameter Name="DigitalInput_Key_STOP" Value="'App.Control.functions.F14.IX'"/>
+			<Parameter Name="DigitalInput_Key_STATUS" Value="'App.Control.functions.F15.IX'"/>
+		</FB>
+	</SubAppNetwork>
+</SubAppType>

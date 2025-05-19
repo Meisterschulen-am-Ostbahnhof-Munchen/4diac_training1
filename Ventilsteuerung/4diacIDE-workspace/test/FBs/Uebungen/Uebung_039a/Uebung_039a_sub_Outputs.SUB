@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SubAppType Name="Uebung_039a_sub_Outputs" Comment="Subapplication Type" >
+	<Identification Standard="61499-2" Description="Copyright (c) 2024 Meisterschulen am Ostbahnhof  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0">
+	</Identification>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2024-03-03">
+	</VersionInfo>
+	<CompilerInfo>
+	</CompilerInfo>
+	<SubAppInterfaceList>
+		<SubAppEventInputs>
+			<SubAppEvent Name="SET" Type="Event" Comment="Set Output" >
+				<Attribute Name="YPOSITION" Type="INT" Value="132"/>
+			</SubAppEvent>
+			<SubAppEvent Name="RESET" Type="Event" Comment="Reset Output" >
+			</SubAppEvent>
+		</SubAppEventInputs>
+		<InputVars>
+			<VarDeclaration Name="u16ObjId" Type="UINT" Comment="Object ID Softkey/Button"  InitialValue="isobus::ID_NULL">
+				<Attribute Name="YPOSITION" Type="INT" Value="36"/>
+			</VarDeclaration>
+		</InputVars>
+	</SubAppInterfaceList>
+	<SubAppNetwork>
+		<FB Name="QX" Type="QX" x="-800" y="-500">
+			<Parameter Name="QI" Value="TRUE"/>
+		</FB>
+		<SubApp Name="GreenWhiteBackground" Type="GreenWhiteBackground" x="400" y="100">
+		</SubApp>
+		<FB Name="E_SWITCH" Type="E_SWITCH" x="-3700" y="-300">
+		</FB>
+		<FB Name="E_SR" Type="E_SR" x="-2200" y="-300">
+		</FB>
+		<FB Name="IE" Type="IE" x="-5300" y="-500">
+			<Parameter Name="QI" Value="TRUE"/>
+		</FB>
+		<EventConnections>
+			<Connection Source="QX.CNF" Destination="GreenWhiteBackground.REQ" dx1="180"/>
+			<Connection Source="E_SWITCH.EO0" Destination="E_SR.S"/>
+			<Connection Source="E_SWITCH.EO1" Destination="E_SR.R"/>
+			<Connection Source="IE.IND" Destination="E_SWITCH.EI"/>
+			<Connection Source="E_SR.EO" Destination="QX.REQ" dx1="460"/>
+			<Connection Source="SET" Destination="E_SR.S" dx1="4220">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="RESET" Destination="E_SR.R" dx1="4306.67">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+		</EventConnections>
+		<DataConnections>
+			<Connection Source="u16ObjId" Destination="GreenWhiteBackground.u16ObjId" dx1="6386.67">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="E_SR.Q" Destination="E_SWITCH.G" dx1="233.33" dx2="293.33" dy="306.67"/>
+			<Connection Source="E_SR.Q" Destination="QX.OUT"/>
+			<Connection Source="E_SR.Q" Destination="GreenWhiteBackground.DI1" dx1="366.67"/>
+		</DataConnections>
+	</SubAppNetwork>
+</SubAppType>

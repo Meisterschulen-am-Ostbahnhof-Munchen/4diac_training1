@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SubAppType Name="Uebung_015a" Comment="Object Pointer umschalten -- 3-fach" >
+	<Identification Standard="61499-2" Description="Copyright (c) 2023 Meisterschulen am Ostbahnhof  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0" >
+	</Identification>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2023-10-23">
+	</VersionInfo>
+	<CompilerInfo>
+	</CompilerInfo>
+	<SubAppInterfaceList>
+	</SubAppInterfaceList>
+	<SubAppNetwork>
+		<FB Name="SoftKey_UP_F1" Type="IE" x="-5100" y="-1100">
+			<Parameter Name="QI" Value="TRUE">
+				<Attribute Name="Visible" Value="false"/>
+			</Parameter>
+			<Parameter Name="PARAMS" Value="">
+				<Attribute Name="Visible" Value="false"/>
+			</Parameter>
+		</FB>
+		<FB Name="SoftKey_UP_F2" Type="IE" x="-5100" y="253.33">
+			<Parameter Name="QI" Value="TRUE">
+				<Attribute Name="Visible" Value="false"/>
+			</Parameter>
+			<Parameter Name="PARAMS" Value="">
+				<Attribute Name="Visible" Value="false"/>
+			</Parameter>
+		</FB>
+		<FB Name="F_UINT_TO_UDINT" Type="F_UINT_TO_UDINT" x="-2800" y="0">
+			<Parameter Name="IN" Value="DefaultPool::Button_A1"/>
+		</FB>
+		<FB Name="F_SEL_E_3" Type="F_SEL_E_3" x="-1100" y="-900">
+			<Parameter Name="IN0" Value="isobus::ID_NULL"/>
+		</FB>
+		<FB Name="Q_NumericValue" Type="Q_NumericValue" x="800" y="-1000">
+			<Parameter Name="u16ObjId" Value="DefaultPool::ObjectPointer_P1"/>
+		</FB>
+		<FB Name="SoftKey_UP_F3" Type="IE" x="-5100" y="1493.33">
+			<Parameter Name="QI" Value="TRUE">
+				<Attribute Name="Visible" Value="false"/>
+			</Parameter>
+			<Parameter Name="PARAMS" Value="">
+				<Attribute Name="Visible" Value="false"/>
+			</Parameter>
+		</FB>
+		<FB Name="F_UINT_TO_UDINT_1" Type="F_UINT_TO_UDINT" x="-2833.33" y="566.67">
+			<Parameter Name="IN" Value="DefaultPool::Button_A2"/>
+		</FB>
+		<EventConnections>
+			<Connection Source="F_SEL_E_3.CNF" Destination="Q_NumericValue.REQ"/>
+			<Connection Source="SoftKey_UP_F1.IND" Destination="F_SEL_E_3.REQ0"/>
+			<Connection Source="SoftKey_UP_F2.IND" Destination="F_SEL_E_3.REQ1" dx1="280"/>
+			<Connection Source="SoftKey_UP_F3.IND" Destination="F_SEL_E_3.REQ2" dx1="446.67"/>
+		</EventConnections>
+		<DataConnections>
+			<Connection Source="F_UINT_TO_UDINT.OUT" Destination="F_SEL_E_3.IN1" dx1="360"/>
+			<Connection Source="F_SEL_E_3.OUT" Destination="Q_NumericValue.u32NewValue" dx1="606.67"/>
+			<Connection Source="F_UINT_TO_UDINT_1.OUT" Destination="F_SEL_E_3.IN2" dx1="520"/>
+		</DataConnections>
+	</SubAppNetwork>
+</SubAppType>

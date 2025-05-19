@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SubAppType Name="mapping_Uebung_006" Comment="SR-Flip-Flop mit 2x IE" >
+	<Identification Standard="61499-2" Description="Copyright (c) 2023 Meisterschulen am Ostbahnhof  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0" >
+	</Identification>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2023-10-23">
+	</VersionInfo>
+	<CompilerInfo>
+	</CompilerInfo>
+	<SubAppInterfaceList>
+	</SubAppInterfaceList>
+	<SubAppNetwork>
+		<FB Name="logiBUS_8_DO" Type="logiBUS_8_DO" x="-3626.66" y="460">
+			<Parameter Name="QI" Value="TRUE">
+				<Attribute Name="Visible" Value="false"/>
+			</Parameter>
+
+			<Parameter Name="DigitalOutput_Q1" Value="'App.Control.functions.DigitalOutput_Q1'"/>
+			<Parameter Name="DigitalOutput_Q2" Value="">
+				<Attribute Name="Visible" Value="false"/>
+			</Parameter>
+			<Parameter Name="DigitalOutput_Q3" Value="">
+				<Attribute Name="Visible" Value="false"/>
+			</Parameter>
+			<Parameter Name="DigitalOutput_Q4" Value="">
+				<Attribute Name="Visible" Value="false"/>
+			</Parameter>
+			<Parameter Name="DigitalOutput_Q5" Value="">
+				<Attribute Name="Visible" Value="false"/>
+			</Parameter>
+			<Parameter Name="DigitalOutput_Q6" Value="">
+				<Attribute Name="Visible" Value="false"/>
+			</Parameter>
+			<Parameter Name="DigitalOutput_Q7" Value="">
+				<Attribute Name="Visible" Value="false"/>
+			</Parameter>
+			<Parameter Name="DigitalOutput_Q8" Value="">
+				<Attribute Name="Visible" Value="false"/>
+			</Parameter>
+		</FB>
+		<FB Name="logiBUS_8_DI_SINGLE_CLICK" Type="logiBUS_8_DI_SINGLE_CLICK" x="-3633.33" y="-680">
+			<Parameter Name="QI" Value="TRUE">
+				<Attribute Name="Visible" Value="false"/>
+			</Parameter>
+
+			<Parameter Name="DigitalInput_I1" Value="'App.Control.functions.DigitalInput_CLK_I1'"/>
+			<Parameter Name="DigitalInput_I2" Value="'App.Control.functions.DigitalInput_CLK_I2'"/>
+			<Parameter Name="DigitalInput_I3" Value="">
+				<Attribute Name="Visible" Value="false"/>
+			</Parameter>
+			<Parameter Name="DigitalInput_I4" Value="">
+				<Attribute Name="Visible" Value="false"/>
+			</Parameter>
+			<Parameter Name="DigitalInput_I5" Value="">
+				<Attribute Name="Visible" Value="false"/>
+			</Parameter>
+			<Parameter Name="DigitalInput_I6" Value="">
+				<Attribute Name="Visible" Value="false"/>
+			</Parameter>
+			<Parameter Name="DigitalInput_I7" Value="">
+				<Attribute Name="Visible" Value="false"/>
+			</Parameter>
+			<Parameter Name="DigitalInput_I8" Value="">
+				<Attribute Name="Visible" Value="false"/>
+			</Parameter>
+		</FB>
+	</SubAppNetwork>
+</SubAppType>

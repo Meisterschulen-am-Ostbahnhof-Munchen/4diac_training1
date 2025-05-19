@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SubAppType Name="Uebung_042" Comment="Scaling Function Block Testing" >
+	<Identification Standard="61499-2" Description="Copyright (c) 2023 Meisterschulen am Ostbahnhof  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0">
+	</Identification>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2023-10-23">
+	</VersionInfo>
+	<CompilerInfo>
+	</CompilerInfo>
+	<SubAppInterfaceList>
+	</SubAppInterfaceList>
+	<SubAppNetwork>
+		<FB Name="DigitalInput_CLK_I1" Type="IE" x="-4986.67" y="-460">
+			<Parameter Name="QI" Value="TRUE"/>
+		</FB>
+		<FB Name="SCALE" Type="signalprocessing::SCALE" x="-2606.67" y="-226.67">
+			<Parameter Name="IN" Value="10.0"/>
+			<Parameter Name="MAX_IN" Value="20.0"/>
+			<Parameter Name="MIN_IN" Value="4.0"/>
+			<Parameter Name="MAX_OUT" Value="100.0"/>
+			<Parameter Name="MIN_OUT" Value="0.0"/>
+		</FB>
+		<EventConnections>
+			<Connection Source="DigitalInput_CLK_I1.IND" Destination="SCALE.REQ" dx1="846.67"/>
+		</EventConnections>
+	</SubAppNetwork>
+</SubAppType>

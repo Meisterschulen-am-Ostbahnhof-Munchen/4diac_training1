@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SubAppType Name="Uebung_081" Comment="Beispiel für E_CTD" >
+	<Identification Standard="61499-2" Description="Copyright (c) 2023 Meisterschulen am Ostbahnhof  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0&#10;   &#10;Beispiel für E_CTD&#10;Aufwärts zählen&#10;UAO Curriculum Module 3 - The IEC 61499 Standard, &#10;Seite 93" >
+	</Identification>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2023-10-23">
+	</VersionInfo>
+	<CompilerInfo>
+	</CompilerInfo>
+	<SubAppInterfaceList>
+	</SubAppInterfaceList>
+	<SubAppNetwork>
+		<FB Name="DigitalOutput_Q1" Type="QX" x="-4886.67" y="-886.67">
+			<Parameter Name="QI" Value="TRUE"/>
+		</FB>
+		<FB Name="DigitalInput_CLK_I1" Type="IE" x="-8006.67" y="-986.67">
+			<Parameter Name="QI" Value="TRUE"/>
+		</FB>
+		<FB Name="E_CTD" Type="E_CTD" x="-6253.33" y="-786.67">
+			<Parameter Name="PV" Value="UINT#5"/>
+		</FB>
+		<FB Name="DigitalInput_CLK_I2" Type="IE" x="-8006.67" y="-100">
+			<Parameter Name="QI" Value="TRUE"/>
+		</FB>
+		<EventConnections>
+			<Connection Source="DigitalInput_CLK_I1.IND" Destination="E_CTD.CD"/>
+			<Connection Source="E_CTD.CDO" Destination="DigitalOutput_Q1.REQ"/>
+			<Connection Source="E_CTD.LDO" Destination="DigitalOutput_Q1.REQ" dx1="406.67" dx2="406.67" dy="0"/>
+			<Connection Source="DigitalInput_CLK_I2.IND" Destination="E_CTD.LD" dx1="460" dx2="460" dy="0"/>
+		</EventConnections>
+		<DataConnections>
+			<Connection Source="E_CTD.Q" Destination="DigitalOutput_Q1.OUT" dx1="286.67" dx2="286.67" dy="0"/>
+		</DataConnections>
+	</SubAppNetwork>
+</SubAppType>

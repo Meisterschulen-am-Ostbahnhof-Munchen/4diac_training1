@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SubAppType Name="Uebung_006c" Comment="SR-Flip-Flop mit IB auf DI_REPEAT">
+	<Identification Standard="61499-2" Description="Copyright (c) 2023 Meisterschulen am Ostbahnhof  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0">
+	</Identification>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2023-10-23">
+	</VersionInfo>
+	<CompilerInfo>
+	</CompilerInfo>
+	<SubAppInterfaceList>
+	</SubAppInterfaceList>
+	<SubAppNetwork>
+		<FB Name="DigitalOutput_Q1" Type="QX" x="5780" y="33.33">
+			<Parameter Name="QI" Value="TRUE"/>
+		</FB>
+		<FB Name="DigitalInput_RPT_I1" Type="IB" x="413.33" y="2680">
+			<Parameter Name="QI" Value="TRUE"/>
+		</FB>
+		<FB Name="DigitalInput_RPT_I2" Type="IB" x="413.33" y="4673.33">
+			<Parameter Name="QI" Value="TRUE"/>
+		</FB>
+		<FB Name="E_SR_Q1" Type="E_SR" x="4726.67" y="180">
+		</FB>
+		<FB Name="E_SR_Q2" Type="E_SR" x="4793.33" y="1260">
+		</FB>
+		<FB Name="DigitalOutput_Q2" Type="QX" x="5846.67" y="1113.33">
+			<Parameter Name="QI" Value="TRUE"/>
+		</FB>
+		<FB Name="DigitalOutput_Q3" Type="QX" x="5980" y="2193.33">
+			<Parameter Name="QI" Value="TRUE"/>
+		</FB>
+		<FB Name="DigitalOutput_Q4" Type="QX" x="6046.67" y="3273.33">
+			<Parameter Name="QI" Value="TRUE"/>
+		</FB>
+		<FB Name="E_SR_Q5" Type="E_SR" x="4926.67" y="4573.33">
+		</FB>
+		<FB Name="E_SR_Q6" Type="E_SR" x="4860" y="5653.33">
+		</FB>
+		<FB Name="DigitalOutput_Q5" Type="QX" x="5980" y="4373.33">
+			<Parameter Name="QI" Value="TRUE"/>
+		</FB>
+		<FB Name="DigitalOutput_Q6" Type="QX" x="5913.33" y="5453.33">
+			<Parameter Name="QI" Value="TRUE"/>
+		</FB>
+		<FB Name="DigitalOutput_Q7" Type="QX" x="5846.67" y="6533.33">
+			<Parameter Name="QI" Value="TRUE"/>
+		</FB>
+		<FB Name="DigitalOutput_Q8" Type="QX" x="5780" y="7613.33">
+			<Parameter Name="QI" Value="TRUE"/>
+		</FB>
+		<FB Name="E_DEMUX8_S" Type="E_DEMUX_8" x="3893.33" y="2840">
+		</FB>
+		<FB Name="E_DEMUX8_R" Type="E_DEMUX_8" x="2860" y="4273.33">
+		</FB>
+		<FB Name="E_SR_Q3" Type="E_SR" x="4926.67" y="2340">
+		</FB>
+		<FB Name="E_SR_Q4" Type="E_SR" x="4993.33" y="3473.33">
+		</FB>
+		<FB Name="E_SR_Q7" Type="E_SR" x="4793.33" y="6733.33">
+		</FB>
+		<FB Name="E_SR_Q8" Type="E_SR" x="4726.67" y="7813.33">
+		</FB>
+		<FB Name="F_BYTE_TO_UINT_S" Type="F_BYTE_TO_UINT" x="1613.33" y="2980">
+		</FB>
+		<FB Name="F_BYTE_TO_UINT_R" Type="F_BYTE_TO_UINT" x="1613.33" y="4973.33">
+		</FB>
+		<EventConnections>
+			<Connection Source="E_SR_Q1.EO" Destination="DigitalOutput_Q1.REQ" dx1="73.33"/>
+			<Connection Source="E_SR_Q2.EO" Destination="DigitalOutput_Q2.REQ" dx1="73.33"/>
+			<Connection Source="E_SR_Q5.EO" Destination="DigitalOutput_Q5.REQ" dx1="73.33"/>
+			<Connection Source="E_DEMUX8_S.EO1" Destination="E_SR_Q1.S" dx1="73.33"/>
+			<Connection Source="E_SR_Q4.EO" Destination="DigitalOutput_Q4.REQ" dx1="73.33"/>
+			<Connection Source="E_SR_Q3.EO" Destination="DigitalOutput_Q3.REQ" dx1="73.33"/>
+			<Connection Source="E_DEMUX8_S.EO2" Destination="E_SR_Q2.S" dx1="140"/>
+			<Connection Source="E_DEMUX8_S.EO3" Destination="E_SR_Q3.S" dx1="206.67"/>
+			<Connection Source="E_DEMUX8_S.EO4" Destination="E_SR_Q4.S" dx1="340"/>
+			<Connection Source="E_DEMUX8_S.EO5" Destination="E_SR_Q5.S" dx1="273.33"/>
+			<Connection Source="E_SR_Q6.EO" Destination="DigitalOutput_Q6.REQ" dx1="73.33"/>
+			<Connection Source="E_SR_Q8.EO" Destination="DigitalOutput_Q8.REQ" dx1="73.33"/>
+			<Connection Source="E_SR_Q7.EO" Destination="DigitalOutput_Q7.REQ" dx1="73.33"/>
+			<Connection Source="E_DEMUX8_S.EO6" Destination="E_SR_Q6.S" dx1="206.67"/>
+			<Connection Source="E_DEMUX8_S.EO7" Destination="E_SR_Q7.S" dx1="140"/>
+			<Connection Source="E_DEMUX8_S.EO8" Destination="E_SR_Q8.S" dx1="73.33"/>
+			<Connection Source="F_BYTE_TO_UINT_S.CNF" Destination="E_DEMUX8_S.EI" dx1="73.33" dx2="73.33" dy="20"/>
+			<Connection Source="DigitalInput_RPT_I1.IND" Destination="F_BYTE_TO_UINT_S.REQ" dx1="73.33"/>
+			<Connection Source="DigitalInput_RPT_I2.IND" Destination="F_BYTE_TO_UINT_R.REQ" dx1="73.33"/>
+			<Connection Source="F_BYTE_TO_UINT_R.CNF" Destination="E_DEMUX8_R.EI" dx1="73.33"/>
+			<Connection Source="E_DEMUX8_R.EO8" Destination="E_SR_Q8.R" dx1="73.33"/>
+			<Connection Source="E_DEMUX8_R.EO7" Destination="E_SR_Q7.R" dx1="140"/>
+			<Connection Source="E_DEMUX8_R.EO4" Destination="E_SR_Q6.R" dx1="206.67"/>
+			<Connection Source="E_DEMUX8_R.EO5" Destination="E_SR_Q5.R"/>
+			<Connection Source="E_DEMUX8_R.EO4" Destination="E_SR_Q4.R" dx1="273.33" dx2="273.33" dy="-440"/>
+			<Connection Source="E_DEMUX8_R.EO3" Destination="E_SR_Q3.R" dx1="206.67" dx2="206.67" dy="-2033.33"/>
+			<Connection Source="E_DEMUX8_R.EO1" Destination="E_SR_Q2.R" dx1="140"/>
+			<Connection Source="E_DEMUX8_R.EO1" Destination="E_SR_Q1.R" dx1="73.33"/>
+		</EventConnections>
+		<DataConnections>
+			<Connection Source="E_SR_Q1.Q" Destination="DigitalOutput_Q1.OUT" dx1="73.33"/>
+			<Connection Source="E_SR_Q2.Q" Destination="DigitalOutput_Q2.OUT" dx1="73.33"/>
+			<Connection Source="E_SR_Q5.Q" Destination="DigitalOutput_Q5.OUT"/>
+			<Connection Source="E_SR_Q3.Q" Destination="DigitalOutput_Q3.OUT" dx1="73.33"/>
+			<Connection Source="E_SR_Q4.Q" Destination="DigitalOutput_Q4.OUT"/>
+			<Connection Source="E_SR_Q6.Q" Destination="DigitalOutput_Q6.OUT"/>
+			<Connection Source="E_SR_Q8.Q" Destination="DigitalOutput_Q8.OUT"/>
+			<Connection Source="E_SR_Q7.Q" Destination="DigitalOutput_Q7.OUT"/>
+			<Connection Source="F_BYTE_TO_UINT_S.OUT" Destination="E_DEMUX8_S.K" dx1="73.33" dx2="73.33" dy="66.67"/>
+			<Connection Source="DigitalInput_RPT_I1.IN" Destination="F_BYTE_TO_UINT_S.IN" dx1="73.33"/>
+			<Connection Source="DigitalInput_RPT_I2.IN" Destination="F_BYTE_TO_UINT_R.IN" dx1="73.33"/>
+			<Connection Source="F_BYTE_TO_UINT_R.OUT" Destination="E_DEMUX8_R.K" dx1="160"/>
+		</DataConnections>
+	</SubAppNetwork>
+</SubAppType>

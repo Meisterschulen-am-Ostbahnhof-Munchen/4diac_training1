@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SubAppType Name="mapping_Uebung_033" Comment="LED Strip Blinkende LED" >
+	<Identification Standard="61499-2" Description="Copyright (c) 2023 Meisterschulen am Ostbahnhof  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0" >
+	</Identification>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2023-10-23">
+	</VersionInfo>
+	<CompilerInfo>
+	</CompilerInfo>
+	<SubAppInterfaceList>
+	</SubAppInterfaceList>
+	<SubAppNetwork>
+		<FB Name="logiBUS_8_DI" Type="logiBUS_8_DI" x="-3593.33" y="-926.67">
+			<Parameter Name="QI" Value="TRUE">
+				<Attribute Name="Visible" Value="false"/>
+			</Parameter>
+			<Parameter Name="DigitalInput_I1" Value="'App.Control.functions.GREEN.BUTTON'"/>
+			<Parameter Name="DigitalInput_I2" Value="'App.Control.functions.YELLOW.BUTTON'"/>
+			<Parameter Name="DigitalInput_I3" Value="'App.Control.functions.RED.BUTTON'"/>
+			<Parameter Name="DigitalInput_I4" Value="'App.Control.functions.BLUE.BUTTON'"/>
+			<Parameter Name="DigitalInput_I5" Value="">
+				<Attribute Name="Visible" Value="false"/>
+			</Parameter>
+			<Parameter Name="DigitalInput_I6" Value="">
+				<Attribute Name="Visible" Value="false"/>
+			</Parameter>
+			<Parameter Name="DigitalInput_I7" Value="">
+				<Attribute Name="Visible" Value="false"/>
+			</Parameter>
+			<Parameter Name="DigitalInput_I8" Value="">
+				<Attribute Name="Visible" Value="false"/>
+			</Parameter>
+		</FB>
+		<FB Name="logiBUS_1_LED_YELLOW" Type="logiBUS_1_LED_strip" x="-3600" y="1000">
+			<Parameter Name="QI" Value="TRUE">
+				<Attribute Name="Visible" Value="false"/>
+			</Parameter>
+			<Parameter Name="Output" Value="LED_strip::Output_strip"/>
+			<Parameter Name="Colour" Value="LED_COLOURS::LED_YELLOW"/>
+			<Parameter Name="LED_5HZ" Value="'App.Control.functions.YELLOW.LED'"/>
+			<Parameter Name="LED_2HZ" Value="">
+				<Attribute Name="Visible" Value="false"/>
+			</Parameter>
+			<Parameter Name="LED_1HZ" Value="">
+				<Attribute Name="Visible" Value="false"/>
+			</Parameter>
+			<Parameter Name="LED_05HZ" Value="">
+				<Attribute Name="Visible" Value="false"/>
+			</Parameter>
+			<Parameter Name="LED_ON" Value="">
+				<Attribute Name="Visible" Value="false"/>
+			</Parameter>
+		</FB>
+		<FB Name="logiBUS_1_LED_GREEN" Type="logiBUS_1_LED_strip" x="-3600" y="100">
+			<Parameter Name="QI" Value="TRUE">
+				<Attribute Name="Visible" Value="false"/>
+			</Parameter>
+			<Parameter Name="Output" Value="LED_strip::Output_strip"/>
+			<Parameter Name="Colour" Value="LED_COLOURS::LED_GREEN"/>
+			<Parameter Name="LED_5HZ" Value="'App.Control.functions.GREEN.LED'"/>
+			<Parameter Name="LED_2HZ" Value="">
+				<Attribute Name="Visible" Value="false"/>
+			</Parameter>
+			<Parameter Name="LED_1HZ" Value="">
+				<Attribute Name="Visible" Value="false"/>
+			</Parameter>
+			<Parameter Name="LED_05HZ" Value="">
+				<Attribute Name="Visible" Value="false"/>
+			</Parameter>
+			<Parameter Name="LED_ON" Value="">
+				<Attribute Name="Visible" Value="false"/>
+			</Parameter>
+		</FB>
+		<FB Name="logiBUS_1_LED_RED" Type="logiBUS_1_LED_strip" x="-3600" y="1900">
+			<Parameter Name="QI" Value="TRUE">
+				<Attribute Name="Visible" Value="false"/>
+			</Parameter>
+			<Parameter Name="Output" Value="LED_strip::Output_strip"/>
+			<Parameter Name="Colour" Value="LED_COLOURS::LED_RED"/>
+			<Parameter Name="LED_5HZ" Value="'App.Control.functions.RED.LED'"/>
+			<Parameter Name="LED_2HZ" Value="">
+				<Attribute Name="Visible" Value="false"/>
+			</Parameter>
+			<Parameter Name="LED_1HZ" Value="">
+				<Attribute Name="Visible" Value="false"/>
+			</Parameter>
+			<Parameter Name="LED_05HZ" Value="">
+				<Attribute Name="Visible" Value="false"/>
+			</Parameter>
+			<Parameter Name="LED_ON" Value="">
+				<Attribute Name="Visible" Value="false"/>
+			</Parameter>
+		</FB>
+		<FB Name="logiBUS_1_LED_BLUE" Type="logiBUS_1_LED_strip" x="-3600" y="2800">
+			<Parameter Name="QI" Value="TRUE">
+				<Attribute Name="Visible" Value="false"/>
+			</Parameter>
+			<Parameter Name="Output" Value="LED_strip::Output_strip"/>
+			<Parameter Name="Colour" Value="LED_COLOURS::LED_BLUE"/>
+			<Parameter Name="LED_5HZ" Value="'App.Control.functions.BLUE.LED'"/>
+			<Parameter Name="LED_2HZ" Value="">
+				<Attribute Name="Visible" Value="false"/>
+			</Parameter>
+			<Parameter Name="LED_1HZ" Value="">
+				<Attribute Name="Visible" Value="false"/>
+			</Parameter>
+			<Parameter Name="LED_05HZ" Value="">
+				<Attribute Name="Visible" Value="false"/>
+			</Parameter>
+			<Parameter Name="LED_ON" Value="">
+				<Attribute Name="Visible" Value="false"/>
+			</Parameter>
+		</FB>
+	</SubAppNetwork>
+</SubAppType>

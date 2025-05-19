@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SubAppType Name="Uebung_055" Comment="DigitalInput_I1 auf DigitalOutput_Q1" >
+	<Identification Standard="61499-2" Description="Copyright (c) 2023 Meisterschulen am Ostbahnhof  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0">
+	</Identification>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2023-10-23">
+	</VersionInfo>
+	<CompilerInfo>
+	</CompilerInfo>
+	<SubAppInterfaceList>
+	</SubAppInterfaceList>
+	<SubAppNetwork>
+		<FB Name="DigitalOutput_Q1" Type="QX" x="-4706.67" y="-873.33">
+			<Parameter Name="QI" Value="TRUE"/>
+		</FB>
+		<FB Name="DigitalInput_I1" Type="IX" x="-8706.67" y="-986.67">
+			<Parameter Name="QI" Value="TRUE"/>
+		</FB>
+		<FB Name="Q_TO_STR_STATUS" Type="QUARTER_TO_STR_STATUS" x="-4933.33" y="400">
+		</FB>
+		<FB Name="Q_TO_BOOL" Type="QUARTER_TO_BOOL" x="-6226.67" y="-760">
+		</FB>
+		<FB Name="BOOL_TO_Q" Type="BOOL_TO_QUARTER" x="-7473.33" y="-760">
+		</FB>
+		<EventConnections>
+			<Connection Source="Q_TO_BOOL.CNF" Destination="DigitalOutput_Q1.REQ" dx1="280"/>
+			<Connection Source="DigitalInput_I1.IND" Destination="BOOL_TO_Q.REQ" dx1="273.33"/>
+			<Connection Source="BOOL_TO_Q.CNF" Destination="Q_TO_STR_STATUS.REQ" dx1="186.67" dx2="286.67" dy="0"/>
+			<Connection Source="BOOL_TO_Q.CNF" Destination="Q_TO_BOOL.REQ"/>
+		</EventConnections>
+		<DataConnections>
+			<Connection Source="Q_TO_BOOL.Q" Destination="DigitalOutput_Q1.OUT" dx1="73.33" dx2="73.33" dy="0"/>
+			<Connection Source="DigitalInput_I1.IN" Destination="BOOL_TO_Q.I" dx1="73.33" dx2="73.33" dy="0"/>
+			<Connection Source="BOOL_TO_Q.QB" Destination="Q_TO_STR_STATUS.IB" dx1="100" dx2="100" dy="0"/>
+			<Connection Source="BOOL_TO_Q.QB" Destination="Q_TO_BOOL.IB" dx1="73.33" dx2="73.33" dy="0"/>
+		</DataConnections>
+	</SubAppNetwork>
+</SubAppType>

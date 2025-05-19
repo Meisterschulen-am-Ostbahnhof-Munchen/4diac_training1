@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SubAppType Name="Uebung_073" Comment="VDS auf UT ausgeben" >
+	<Identification Standard="61499-2" Description="Copyright (c) 2023 Meisterschulen am Ostbahnhof  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0" >
+	</Identification>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2023-10-23">
+	</VersionInfo>
+	<CompilerInfo>
+	</CompilerInfo>
+	<SubAppInterfaceList>
+	</SubAppInterfaceList>
+	<SubAppNetwork>
+		<FB Name="I_GBSD" Type="I_GBSD" x="-5213.33" y="453.33">
+			<Parameter Name="QI" Value="TRUE"/>
+		</FB>
+		<FB Name="Q_NumericValue_GBSD" Type="Q_NumericValue" x="-680" y="453.33">
+			<Parameter Name="u16ObjId" Value="DefaultPool_TECU::NumberVariable_Ground_based_machine_speed"/>
+		</FB>
+		<FB Name="I_VDS" Type="I_VDS" x="-5200" y="1900">
+			<Parameter Name="QI" Value="TRUE"/>
+		</FB>
+		<FB Name="Q_NumericValue_WBSD" Type="Q_NumericValue" x="-666.67" y="1900">
+			<Parameter Name="u16ObjId" Value="DefaultPool_TECU::NumberVariable_Wheel_based_machine_speed"/>
+		</FB>
+		<EventConnections>
+			<Connection Source="I_GBSD.IND" Destination="Q_NumericValue_GBSD.REQ"/>
+			<Connection Source="I_VDS.IND" Destination="Q_NumericValue_WBSD.REQ"/>
+		</EventConnections>
+		<DataConnections>
+			<Connection Source="I_GBSD.GROUNDBASEDMACHINESPEED" Destination="Q_NumericValue_GBSD.u32NewValue" dx1="1480"/>
+			<Connection Source="I_VDS.NavigationBasedVehicleSpeed" Destination="Q_NumericValue_WBSD.u32NewValue" dx1="1480"/>
+		</DataConnections>
+	</SubAppNetwork>
+</SubAppType>
