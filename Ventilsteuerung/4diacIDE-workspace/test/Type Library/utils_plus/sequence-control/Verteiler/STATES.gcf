@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<GlobalConstants Name="STATES" Comment="Global constants">
+	<Identification Standard="61499-1">
+	</Identification>
+	<VersionInfo Version="1.0" Author="franz" Date="2025-05-23">
+	</VersionInfo>
+	<CompilerInfo packageName="Verteiler::LinksRechts">
+	</CompilerInfo>
+	<GlobalConstants>
+		<VarDeclaration Name="Rechtslauf" Type="STRING" InitialValue="STRING#'Rechtslauf'"/>
+		<VarDeclaration Name="Linkslauf" Type="STRING" InitialValue="STRING#'Linkslauf'"/>
+		<VarDeclaration Name="Linkslauf_Pause" Type="STRING" InitialValue="STRING#'Linkslauf_Pause'"/>
+		<VarDeclaration Name="Rechtslauf_Pause" Type="STRING" InitialValue="STRING#'Rechtslauf_Pause'"/>
+	</GlobalConstants>
+	<OriginalSource><![CDATA[PACKAGE Verteiler::LinksRechts;
+
+GLOBALCONSTANTS STATES
+	VAR_GLOBAL CONSTANT
+		Rechtslauf : STRING := STRING#'Rechtslauf';
+		Linkslauf : STRING := STRING#'Linkslauf';
+		Linkslauf_Pause : STRING := STRING#'Linkslauf_Pause';
+		Rechtslauf_Pause : STRING := STRING#'Rechtslauf_Pause';
+	END_VAR
+END_GLOBALCONSTANTS
+]]></OriginalSource>
+</GlobalConstants>

@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<GlobalConstants Name="STATES" Comment="Global constants">
+	<Identification Standard="61499-1">
+	</Identification>
+	<VersionInfo Version="1.0" Author="franz" Date="2025-05-23">
+	</VersionInfo>
+	<CompilerInfo packageName="Schieber::AufZu">
+	</CompilerInfo>
+	<GlobalConstants>
+		<VarDeclaration Name="Closed" Type="STRING" InitialValue="STRING#'Closed'"/>
+		<VarDeclaration Name="Opening" Type="STRING" InitialValue="STRING#'Opening'"/>
+		<VarDeclaration Name="Opened" Type="STRING" InitialValue="STRING#'Opened'"/>
+		<VarDeclaration Name="Closing" Type="STRING" InitialValue="STRING#'Closing'"/>
+		<VarDeclaration Name="Unknown" Type="STRING" InitialValue="STRING#'Unknown'"/>
+	</GlobalConstants>
+	<OriginalSource><![CDATA[PACKAGE Schieber::AufZu;
+
+GLOBALCONSTANTS STATES
+	VAR_GLOBAL CONSTANT
+		Closed : STRING := STRING#'Closed';
+		Opening : STRING := STRING#'Opening';
+		Opened : STRING := STRING#'Opened';
+		Closing : STRING := STRING#'Closing';
+		Unknown : STRING := STRING#'Unknown';
+	END_VAR
+END_GLOBALCONSTANTS
+]]></OriginalSource>
+</GlobalConstants>
