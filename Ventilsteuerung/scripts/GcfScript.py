@@ -69,7 +69,7 @@ def writeGCFfile(data, filepaths):
 
     # Iterate over the data and create VarDeclaration elements
     for name, value in data.items():
-        var_declaration = ET.SubElement(global_constants, "VarDeclaration", Name=name, Type="UINT", InitialValue=value)
+        var_declaration = ET.SubElement(global_constants, "VarDeclaration", Name=name, Type="UINT", Comment="", InitialValue=value)
 
         # If the name is 'ISO_VERSION_LABEL', set the type attribute to '       '
         if name == 'ISO_VERSION_LABEL':
