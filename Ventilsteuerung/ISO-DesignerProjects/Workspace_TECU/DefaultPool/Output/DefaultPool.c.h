@@ -1,40 +1,45 @@
-// ISO-Designer ISO 11783   Version 5.7.0.6283 Bucher Automation AG
+// ISO-Designer ISO 11783   Version 5.7.1.6514 Bucher Automation AG
 // Do not change!
 
 #define WorkingSet_0_Offset                                     1
 #define DataMask_M1_Offset                                     21
-#define Container_Wheel_based_machine_speed_Offset             53
-#define Container_Ground_based_machine_speed_Offset            93
-#define Container_Wheel_based_machine_distance_Offset         133
-#define SoftKeyMask_S1_Offset                                 173
-#define OutputString_km_h_Offset                              179
-#define OutputString_m_s_Offset                               200
-#define OutputString_km_Offset                                220
-#define OutputString_m_Offset                                 239
-#define OutputNumber_Wheel_based_machine_speed_km_h_Offset    257
-#define OutputNumber_Wheel_based_machine_speed_m_s_Offset     286
-#define OutputNumber_Ground_based_machine_speed_km_h_Offset    315
-#define OutputNumber_Ground_based_machine_speed_m_s_Offset    344
-#define OutputNumber_Wheel_based_machine_distance_km_Offset    373
-#define OutputNumber_Wheel_based_machine_distance_m_Offset    402
-#define Line_13000_Offset                                     431
-#define Tractor_wheel_slip_Offset                             442
-#define Battery_disconnect_Offset                             971
-#define Work_distance_travelled_Offset                       1500
-#define Tractor_ground_speed_Offset                          2029
-#define NumberVariable_Wheel_based_machine_speed_Offset      2558
-#define NumberVariable_Ground_based_machine_speed_Offset     2565
-#define NumberVariable_Wheel_based_machine_distance_Offset   2572
-#define FontAttributes_OutputNumber_Offset                   2579
-#define FontAttributes_OutputString_Offset                   2587
-#define LineAttributes_24000_Offset                          2595
+#define Container_Wheel_based_machine_speed_Offset             59
+#define Container_Ground_based_machine_speed_Offset            99
+#define Container_Wheel_based_machine_distance_Offset         139
+#define Container_Rear_PTO_output_shaft_speed_Offset          179
+#define SoftKeyMask_S1_Offset                                 207
+#define OutputString_km_h_Offset                              213
+#define OutputString_m_s_Offset                               234
+#define OutputString_km_Offset                                254
+#define OutputString_m_Offset                                 273
+#define OutputString_1_min_Offset                             291
+#define OutputNumber_Wheel_based_machine_speed_km_h_Offset    313
+#define OutputNumber_Wheel_based_machine_speed_m_s_Offset     342
+#define OutputNumber_Ground_based_machine_speed_km_h_Offset    371
+#define OutputNumber_Ground_based_machine_speed_m_s_Offset    400
+#define OutputNumber_Wheel_based_machine_distance_km_Offset    429
+#define OutputNumber_Wheel_based_machine_distance_m_Offset    458
+#define OutputNumber_Rear_PTO_output_shaft_speed_Offset       487
+#define Line_13000_Offset                                     516
+#define Tractor_wheel_slip_Offset                             527
+#define Battery_disconnect_Offset                            1056
+#define Work_distance_travelled_Offset                       1585
+#define Tractor_ground_speed_Offset                          2114
+#define PTO_output_shaft_speed_Offset                        2643
+#define NumberVariable_Wheel_based_machine_speed_Offset      3172
+#define NumberVariable_Ground_based_machine_speed_Offset     3179
+#define NumberVariable_Wheel_based_machine_distance_Offset   3186
+#define NumberVariable_Rear_PTO_output_shaft_speed_Offset    3193
+#define FontAttributes_OutputNumber_Offset                   3200
+#define FontAttributes_OutputString_Offset                   3208
+#define LineAttributes_24000_Offset                          3216
 
 #define ISO_OP_MEMORY_CLASS
 
-#define ISO_OP_DefaultPool_Size   2603
+#define ISO_OP_DefaultPool_Size   3224
 extern const unsigned char ISO_OP_MEMORY_CLASS isoOP_DefaultPool[];
 
-#define ISO_OP_DefaultPool_ObjectNumber     27
+#define ISO_OP_DefaultPool_ObjectNumber     32
 extern const unsigned long ISO_OP_MEMORY_CLASS isoOP_DefaultPool_Offset[];
 extern const unsigned long ISO_OP_MEMORY_CLASS isoOP_DefaultPool_Offset_Id[];
 #define ISO_OP_DefaultPool_Scale_Offset      1

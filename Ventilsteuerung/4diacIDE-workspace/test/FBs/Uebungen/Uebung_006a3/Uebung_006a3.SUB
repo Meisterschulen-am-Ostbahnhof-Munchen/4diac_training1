@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SubAppType Name="Uebung_006a3" Comment="SR und T-Flip-Flop mit 3x IE">
+	<Identification Standard="61499-2" Description="Copyright (c) 2023 Meisterschulen am Ostbahnhof  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0">
+	</Identification>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2023-10-23">
+	</VersionInfo>
+	<CompilerInfo>
+	</CompilerInfo>
+	<SubAppInterfaceList>
+	</SubAppInterfaceList>
+	<SubAppNetwork>
+		<FB Name="DigitalInput_CLK_I1" Type="IE" x="-4600" y="-900">
+			<Parameter Name="QI" Value="TRUE">
+				<Attribute Name="Visible" Value="false"/>
+			</Parameter>
+			<Parameter Name="PARAMS" Value="">
+				<Attribute Name="Visible" Value="false"/>
+			</Parameter>
+		</FB>
+		<FB Name="DigitalInput_CLK_I2" Type="IE" x="-4540" y="113.34">
+			<Parameter Name="QI" Value="TRUE">
+				<Attribute Name="Visible" Value="false"/>
+			</Parameter>
+			<Parameter Name="PARAMS" Value="">
+				<Attribute Name="Visible" Value="false"/>
+			</Parameter>
+		</FB>
+		<FB Name="E_T_FF_SR" Type="E_T_FF_SR" x="-2800" y="-700">
+		</FB>
+		<FB Name="DigitalInput_CLK_I3" Type="IE" x="-4533.33" y="1133.33">
+			<Parameter Name="QI" Value="TRUE">
+				<Attribute Name="Visible" Value="false"/>
+			</Parameter>
+			<Parameter Name="PARAMS" Value="">
+				<Attribute Name="Visible" Value="false"/>
+			</Parameter>
+		</FB>
+		<FB Name="AND_LINKS" Type="AND_2_BOOL" x="1300" y="-600">
+		</FB>
+		<FB Name="Rechtslauf" Type="QX" x="3200" y="400">
+			<Parameter Name="QI" Value="TRUE"/>
+		</FB>
+		<FB Name="Linkslauf" Type="QX" x="3200" y="-700">
+			<Parameter Name="QI" Value="TRUE"/>
+		</FB>
+		<FB Name="AND_RECHTS" Type="AND_2_BOOL" x="1400" y="500">
+		</FB>
+		<SubApp Name="LinksRechts_T_FF" Type="FBs::Uebungen::Uebung_006a3::LinksRechts_T_FF" x="-1300" y="-1400">
+		</SubApp>
+		<EventConnections>
+			<Connection Source="DigitalInput_CLK_I1.IND" Destination="E_T_FF_SR.S"/>
+			<Connection Source="DigitalInput_CLK_I2.IND" Destination="E_T_FF_SR.R" dx1="486.67"/>
+			<Connection Source="DigitalInput_CLK_I3.IND" Destination="E_T_FF_SR.CLK" dx1="673.33"/>
+			<Connection Source="AND_RECHTS.CNF" Destination="Rechtslauf.REQ"/>
+			<Connection Source="AND_LINKS.CNF" Destination="Linkslauf.REQ"/>
+			<Connection Source="E_T_FF_SR.EO" Destination="LinksRechts_T_FF.EI" dx1="246.67"/>
+			<Connection Source="LinksRechts_T_FF.EO" Destination="AND_LINKS.REQ" dx1="1246.67"/>
+			<Connection Source="LinksRechts_T_FF.EO" Destination="AND_RECHTS.REQ" dx1="1146.67"/>
+			<Connection Source="E_T_FF_SR.EO" Destination="AND_LINKS.REQ" dx1="1700"/>
+			<Connection Source="E_T_FF_SR.EO" Destination="AND_RECHTS.REQ" dx1="1586.67"/>
+		</EventConnections>
+		<DataConnections>
+			<Connection Source="AND_LINKS.OUT" Destination="Linkslauf.OUT" dx1="573.33"/>
+			<Connection Source="E_T_FF_SR.Q" Destination="AND_RECHTS.IN2" dx1="1313.33"/>
+			<Connection Source="AND_RECHTS.OUT" Destination="Rechtslauf.OUT" dx1="573.33"/>
+			<Connection Source="E_T_FF_SR.Q" Destination="AND_LINKS.IN2"/>
+			<Connection Source="LinksRechts_T_FF.Rechts" Destination="AND_RECHTS.IN1" dx1="1020"/>
+			<Connection Source="E_T_FF_SR.Q" Destination="LinksRechts_T_FF.DI" dx1="346.67"/>
+			<Connection Source="LinksRechts_T_FF.Links" Destination="AND_LINKS.IN1" dx1="886.67"/>
+		</DataConnections>
+	</SubAppNetwork>
+</SubAppType>

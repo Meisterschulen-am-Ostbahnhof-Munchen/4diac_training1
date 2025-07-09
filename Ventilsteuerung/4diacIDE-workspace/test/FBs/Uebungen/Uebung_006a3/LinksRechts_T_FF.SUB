@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SubAppType Name="LinksRechts_T_FF" Comment="Subapplication Type">
+	<Identification Standard="61499-2">
+	</Identification>
+	<VersionInfo Version="1.0" Author="franz" Date="2025-05-06">
+	</VersionInfo>
+	<CompilerInfo packageName="FBs::Uebungen::Uebung_006a3">
+	</CompilerInfo>
+	<SubAppInterfaceList>
+		<SubAppEventInputs>
+			<SubAppEvent Name="EI" Type="Event">
+			</SubAppEvent>
+		</SubAppEventInputs>
+		<SubAppEventOutputs>
+			<SubAppEvent Name="EO" Type="Event">
+			</SubAppEvent>
+		</SubAppEventOutputs>
+		<InputVars>
+			<VarDeclaration Name="DI" Type="BOOL"/>
+		</InputVars>
+		<OutputVars>
+			<VarDeclaration Name="Rechts" Type="BOOL"/>
+			<VarDeclaration Name="Links" Type="BOOL"/>
+		</OutputVars>
+	</SubAppInterfaceList>
+	<SubAppNetwork>
+		<FB Name="E_T_FF" Type="E_T_FF" x="1100" y="-100">
+		</FB>
+		<FB Name="E_SWITCH" Type="E_SWITCH" x="0" y="-200">
+		</FB>
+		<FB Name="F_NOT" Type="F_NOT" x="2100" y="-100">
+		</FB>
+		<EventConnections>
+			<Connection Source="E_T_FF.EO" Destination="F_NOT.REQ"/>
+			<Connection Source="EI" Destination="E_SWITCH.EI" dx1="1700"/>
+			<Connection Source="F_NOT.CNF" Destination="EO" dx1="973.33"/>
+			<Connection Source="E_SWITCH.EO1" Destination="E_T_FF.CLK"/>
+		</EventConnections>
+		<DataConnections>
+			<Connection Source="E_T_FF.Q" Destination="F_NOT.IN"/>
+			<Connection Source="E_T_FF.Q" Destination="Rechts" dx1="153.33"/>
+			<Connection Source="DI" Destination="E_SWITCH.G" dx1="980"/>
+			<Connection Source="F_NOT.OUT" Destination="Links" dx1="1386.67"/>
+		</DataConnections>
+	</SubAppNetwork>
+</SubAppType>

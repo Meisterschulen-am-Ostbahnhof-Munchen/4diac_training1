@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<FBType Name="A2X_2AX_TO_2X" Comment="Composite FB for convert A2X to 2 BOOLS">
+	<Identification Standard="61499-2" Description="Copyright (c) 2024 HR Agrartechnik GmbH &#10; &#10;This program and the accompanying materials are made &#10;available under the terms of the Eclipse Public License 2.0 &#10;which is available at https://www.eclipse.org/legal/epl-2.0/ &#10; &#10;SPDX-License-Identifier: EPL-2.0">
+	</Identification>
+	<VersionInfo Organization="HR Agrartechnik GmbH" Version="1.0" Author="Franz Höpfinger" Date="2024-04-24">
+	</VersionInfo>
+	<CompilerInfo>
+	</CompilerInfo>
+	<InterfaceList>
+		<Plugs>
+			<AdapterDeclaration Name="A2X_IN" Type="A2X" Comment="Adapter Input" x="820" y="320"/>
+		</Plugs>
+		<Sockets>
+			<AdapterDeclaration Name="UP" Type="AX" Comment="TRUE = forward, up, right, clockwise" x="133.33" y="33.33"/>
+			<AdapterDeclaration Name="DOWN" Type="AX" Comment="TRUE = backward, down, left, counter-clockwise" x="133.33" y="813.33"/>
+		</Sockets>
+	</InterfaceList>
+	<FBNetwork>
+		<EventConnections>
+			<Connection Source="DOWN.E1" Destination="A2X_IN.E_DOWN" dx1="140"/>
+			<Connection Source="UP.E1" Destination="A2X_IN.E_UP" dx1="140"/>
+		</EventConnections>
+		<DataConnections>
+			<Connection Source="DOWN.D1" Destination="A2X_IN.DOWN" dx1="206.67"/>
+			<Connection Source="UP.D1" Destination="A2X_IN.UP" dx1="73.33"/>
+		</DataConnections>
+	</FBNetwork>
+</FBType>
