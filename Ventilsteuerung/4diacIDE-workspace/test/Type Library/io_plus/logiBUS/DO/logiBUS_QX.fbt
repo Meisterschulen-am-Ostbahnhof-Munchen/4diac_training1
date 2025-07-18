@@ -13,6 +13,7 @@
 			<Event Name="INIT" Type="EInit" Comment="Service Initialization">
 				<With Var="QI"/>
 				<With Var="PARAMS"/>
+				<With Var="Output"/>
 			</Event>
 			<Event Name="REQ" Type="Event" Comment="Service Request">
 				<With Var="QI"/>
@@ -32,8 +33,8 @@
 		<InputVars>
 			<VarDeclaration Name="QI" Type="BOOL" Comment="Event Input Qualifier"/>
 			<VarDeclaration Name="PARAMS" Type="STRING" Comment="Service Parameters"/>
-			<VarDeclaration Name="Output" Type="USINT" Comment="Identify the Output Output_Q1..Q8" InitialValue="logiBUS_DO::Invalid"/>
 			<VarDeclaration Name="OUT" Type="BOOL" Comment="Output data to resource"/>
+			<VarDeclaration Name="Output" Type="USINT" Comment="Identify the Output Output_Q1..Q8" InitialValue="logiBUS_DO::Invalid"/>
 		</InputVars>
 		<OutputVars>
 			<VarDeclaration Name="QO" Type="BOOL" Comment="Event Output Qualifier"/>
