@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<GlobalConstants Name="LED_DO" Comment="Global constants" >
-	<Identification Standard="61499-1" Description="Copyright (c) 2024 HR Agrartechnik GmbH  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0" >
+<GlobalConstants Name="logiBUS_DO" Comment="Global constants">
+	<Identification Standard="61499-1" Description="Copyright (c) 2024 HR Agrartechnik GmbH  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0">
 	</Identification>
 	<VersionInfo Organization="HR Agrartechnik GmbH" Version="1.0" Author="Franz Höpfinger" Date="2024-01-25">
 	</VersionInfo>
@@ -16,8 +16,9 @@
 		<VarDeclaration Name="Output_Q7" Type="USINT" InitialValue="7"/>
 		<VarDeclaration Name="Output_Q8" Type="USINT" InitialValue="8"/>
 		<VarDeclaration Name="Output_Q9" Type="USINT" InitialValue="9"/>
+		<VarDeclaration Name="Invalid" Type="USINT" InitialValue="255"/>
 	</GlobalConstants>
-	<OriginalSource><![CDATA[GLOBALCONSTANTS LED_DO
+	<OriginalSource><![CDATA[GLOBALCONSTANTS logiBUS_DO
 	VAR_GLOBAL CONSTANT
 		Output_Q1 : USINT := 1;
 		Output_Q2 : USINT := 2;
@@ -28,6 +29,7 @@
 		Output_Q7 : USINT := 7;
 		Output_Q8 : USINT := 8;
 		Output_Q9 : USINT := 9;
+		Invalid : USINT := 255;
 	END_VAR
 END_GLOBALCONSTANTS
 ]]></OriginalSource>
