@@ -9,21 +9,23 @@
 	<SubAppInterfaceList>
 	</SubAppInterfaceList>
 	<SubAppNetwork>
-		<FB Name="DigitalOutput_Q1" Type="logiBUS_QX" x="-3500" y="-300">
+		<FB Name="DigitalOutput_Q1" Type="logiBUS_QX" x="-4000" y="-100">
 			<Parameter Name="QI" Value="TRUE"/>
 			<Parameter Name="Output" Value="logiBUS_DO::Output_Q1"/>
 		</FB>
-		<FB Name="DigitalInput_CLK_I1" Type="IE" x="-7300" y="-300">
+		<FB Name="DigitalInput_CLK_I1" Type="logiBUS_IE" x="-7300" y="-200">
 			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="Input" Value="logiBUS_DI::Input_I1"/>
+			<Parameter Name="Event" Value="logiBUS_DI_Events::BUTTON_SINGLE_CLICK"/>
 		</FB>
 		<FB Name="E_T_FF" Type="E_T_FF" x="-5600" y="0">
 		</FB>
 		<EventConnections>
-			<Connection Source="DigitalInput_CLK_I1.IND" Destination="E_T_FF.CLK" dx1="453.33"/>
-			<Connection Source="E_T_FF.EO" Destination="DigitalOutput_Q1.REQ" dx1="400"/>
+			<Connection Source="DigitalInput_CLK_I1.IND" Destination="E_T_FF.CLK"/>
+			<Connection Source="E_T_FF.EO" Destination="DigitalOutput_Q1.REQ"/>
 		</EventConnections>
 		<DataConnections>
-			<Connection Source="E_T_FF.Q" Destination="DigitalOutput_Q1.OUT"/>
+			<Connection Source="E_T_FF.Q" Destination="DigitalOutput_Q1.OUT" dx1="386.67"/>
 		</DataConnections>
 	</SubAppNetwork>
 </SubAppType>
