@@ -9,15 +9,17 @@
 	<SubAppInterfaceList>
 	</SubAppInterfaceList>
 	<SubAppNetwork>
-		<FB Name="DigitalOutput_Q1" Type="QX" x="-500" y="300">
+		<FB Name="DigitalOutput_Q1" Type="logiBUS_QX" x="-500" y="300">
 			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="Output" Value="logiBUS_DO::Output_Q1"/>
 		</FB>
 		<FB Name="ADD_2" Type="ADD_2" x="-3600" y="400">
 			<Parameter Name="IN1" Value="USINT#200"/>
 			<Parameter Name="IN2" Value="USINT#200"/>
 		</FB>
-		<FB Name="DigitalInput_CLK_I1" Type="IE" x="-5600" y="200">
+		<FB Name="DigitalInput_CLK_I1" Type="logiBUS_IE" x="-5600" y="200">
 			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="Input" Value="logiBUS_DI::Input_I1"/>
 		</FB>
 		<FB Name="F_GT" Type="F_GT" x="-1700" y="400">
 			<Parameter Name="IN2" Value="USINT#200"/>
