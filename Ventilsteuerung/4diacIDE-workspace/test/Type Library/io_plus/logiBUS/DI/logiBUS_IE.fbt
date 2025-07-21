@@ -15,6 +15,8 @@
 			<Event Name="INIT" Type="EInit" Comment="Service Initialization">
 				<With Var="QI"/>
 				<With Var="PARAMS"/>
+				<With Var="Input"/>
+				<With Var="Event"/>
 			</Event>
 			<Event Name="REQ" Type="Event" Comment="Service Request">
 				<With Var="QI"/>
@@ -38,6 +40,7 @@
 			<VarDeclaration Name="QI" Type="BOOL" Comment="Event Input Qualifier"/>
 			<VarDeclaration Name="PARAMS" Type="STRING" Comment="Service Parameters"/>
 			<VarDeclaration Name="Input" Type="logiBUS_DI_S" Comment="Identify the Input Input_I1..I8" InitialValue="logiBUS_DI::Invalid"/>
+			<VarDeclaration Name="Event" Type="logiBUS_DI_Events_S" Comment="Identify the Event (Down, Up, Single-Click, Double Click etc..)" InitialValue="logiBUS_DI_Events::Invalid"/>
 		</InputVars>
 		<OutputVars>
 			<VarDeclaration Name="QO" Type="BOOL" Comment="Event Output Qualifier"/>
