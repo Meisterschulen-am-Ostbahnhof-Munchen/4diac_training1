@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<GlobalConstants Name="ButtonActivationCode" Comment="isobus_DI constants">
+	<Identification Standard="61499-1" Description="Copyright (c) 2024 HR Agrartechnik GmbH  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0">
+	</Identification>
+	<VersionInfo Organization="HR Agrartechnik GmbH" Version="1.0" Author="Franz Höpfinger" Date="2024-01-25">
+	</VersionInfo>
+	<CompilerInfo>
+	</CompilerInfo>
+	<GlobalConstants>
+		<VarDeclaration Name="SK_RELEASED" Type="ButtonActivationCode_S" Comment="SoftKey released" InitialValue="(code := 0)"/>
+		<VarDeclaration Name="SK_PRESSED" Type="ButtonActivationCode_S" Comment="SoftKey pressed" InitialValue="(code := 1)"/>
+		<VarDeclaration Name="SK_STILL_HELD" Type="ButtonActivationCode_S" Comment="SoftKey still held" InitialValue="(code := 2)"/>
+		<VarDeclaration Name="SK_ABORTED" Type="ButtonActivationCode_S" Comment="SoftKey aborted" InitialValue="(code := 3)"/>
+		<VarDeclaration Name="Invalid" Type="ButtonActivationCode_S" InitialValue="(code := 255)"/>
+	</GlobalConstants>
+	<OriginalSource><![CDATA[GLOBALCONSTANTS ButtonActivationCode
+	VAR_GLOBAL CONSTANT
+		SK_RELEASED : ButtonActivationCode_S := (code := 0); // SoftKey released
+		SK_PRESSED : ButtonActivationCode_S := (code := 1); // SoftKey pressed
+		SK_STILL_HELD : ButtonActivationCode_S := (code := 2); // SoftKey still held
+		SK_ABORTED : ButtonActivationCode_S := (code := 3); // SoftKey aborted
+		Invalid : ButtonActivationCode_S := (code := 255);
+	END_VAR
+END_GLOBALCONSTANTS
+]]></OriginalSource>
+</GlobalConstants>
