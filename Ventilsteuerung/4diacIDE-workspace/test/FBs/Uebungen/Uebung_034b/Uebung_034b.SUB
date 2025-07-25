@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<SubAppType Name="Uebung_034b" Comment="LONG_PRESS_HOLD-Eingang auf PWM Ausgang" >
-	<Identification Standard="61499-2" Description="Copyright (c) 2023 Meisterschulen am Ostbahnhof  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0" >
+<SubAppType Name="Uebung_034b" Comment="LONG_PRESS_HOLD-Eingang auf PWM Ausgang">
+	<Identification Standard="61499-2" Description="Copyright (c) 2023 Meisterschulen am Ostbahnhof  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0">
 	</Identification>
 	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2023-10-23">
 	</VersionInfo>
@@ -28,11 +28,15 @@
 		</FB>
 		<FB Name="F_UDINT_TO_DWORD" Type="F_UDINT_TO_DWORD" x="4000" y="1700">
 		</FB>
-		<FB Name="IE_STOP" Type="IE" x="413.33" y="2193.33">
+		<FB Name="IE_STOP" Type="logiBUS_IE" x="413.33" y="2193.33">
 			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="Input" Value="logiBUS_DI::Input_I3"/>
+			<Parameter Name="InputEvent" Value="logiBUS_DI_Events::BUTTON_SINGLE_CLICK"/>
 		</FB>
-		<FB Name="IE_FULL" Type="IE" x="413.33" y="3273.33">
+		<FB Name="IE_FULL" Type="logiBUS_IE" x="413.33" y="3273.33">
 			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="Input" Value="logiBUS_DI::Input_I4"/>
+			<Parameter Name="InputEvent" Value="logiBUS_DI_Events::BUTTON_SINGLE_CLICK"/>
 		</FB>
 		<FB Name="F_MUL" Type="F_MUL" x="3173.33" y="1700">
 			<Parameter Name="IN2" Value="UDINT#8"/>
