@@ -7,15 +7,19 @@
 	<CompilerInfo>
 	</CompilerInfo>
 	<SubAppInterfaceList>
+		<InputVars>
+			<VarDeclaration Name="Input" Type="logiBUS_DI_S" Comment="Identify the Input Input_Q1..Q8" InitialValue="logiBUS_DI::Invalid"/>
+			<VarDeclaration Name="AuxNum" Type="USINT" Comment="Number of Aux like in Object Pool" InitialValue="0"/>
+		</InputVars>
 	</SubAppInterfaceList>
 	<SubAppNetwork>
-		<FB Name="QX" Type="QX" x="-2500" y="-800">
+		<FB Name="QX" Type="Aux_QX" x="-2500" y="-800">
 			<Parameter Name="QI" Value="TRUE"/>
 			<Parameter Name="PARAMS" Value="">
 				<Attribute Name="Visible" Value="false"/>
 			</Parameter>
 		</FB>
-		<FB Name="IX" Type="IX" x="-4600" y="-1000">
+		<FB Name="IX" Type="logiBUS_IX" x="-4600" y="-1000">
 			<Parameter Name="QI" Value="TRUE"/>
 			<Parameter Name="PARAMS" Value="">
 				<Attribute Name="Visible" Value="false"/>
@@ -26,6 +30,12 @@
 		</EventConnections>
 		<DataConnections>
 			<Connection Source="IX.IN" Destination="QX.OUT"/>
+			<Connection Source="Input" Destination="IX.Input" dx1="2813.33">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="AuxNum" Destination="QX.AuxNum" dx1="3860">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
 		</DataConnections>
 	</SubAppNetwork>
 </SubAppType>
