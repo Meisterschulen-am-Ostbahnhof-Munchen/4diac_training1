@@ -13,15 +13,15 @@
 			<Parameter Name="QI" Value="TRUE"/>
 			<Parameter Name="Output" Value="logiBUS_DO::Output_Q1"/>
 		</FB>
-		<FB Name="SoftKey_UP_F1" Type="Softkey_IE" x="-7200" y="-200">
+		<FB Name="Button_A1" Type="Button_IE" x="-7200" y="-200">
 			<Parameter Name="QI" Value="TRUE"/>
-			<Parameter Name="u16ObjId" Value="DefaultPool::SoftKey_F1"/>
-			<Parameter Name="InputEvent" Value="SoftKeyActivationCode::SK_RELEASED"/>
+			<Parameter Name="u16ObjId" Value="DefaultPool::Button_A1"/>
+			<Parameter Name="InputEvent" Value="ButtonActivationCode::BT_RELEASED_UNLATCHED"/>
 		</FB>
 		<FB Name="E_T_FF" Type="E_T_FF" x="-5560" y="0">
 		</FB>
 		<EventConnections>
-			<Connection Source="SoftKey_UP_F1.IND" Destination="E_T_FF.CLK"/>
+			<Connection Source="Button_A1.IND" Destination="E_T_FF.CLK"/>
 			<Connection Source="E_T_FF.EO" Destination="DigitalOutput_Q1.REQ"/>
 		</EventConnections>
 		<DataConnections>
