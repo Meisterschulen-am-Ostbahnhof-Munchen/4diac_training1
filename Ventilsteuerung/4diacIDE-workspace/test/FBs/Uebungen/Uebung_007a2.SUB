@@ -9,26 +9,25 @@
 	<SubAppInterfaceList>
 	</SubAppInterfaceList>
 	<SubAppNetwork>
-		<FB Name="DigitalOutput_Q1" Type="QX" x="-400" y="-906.67">
+		<FB Name="DigitalOutput_Q1" Type="QX" x="-400" y="-600">
 			<Parameter Name="QI" Value="TRUE"/>
 		</FB>
-		<FB Name="E_CYCLE" Type="E_CYCLE" x="-2933.33" y="-566.67">
+		<FB Name="E_CYCLE" Type="E_CYCLE" x="-2800" y="-500">
 			<Parameter Name="DT" Value="T#1s"/>
 		</FB>
-		<FB Name="E_T_FF" Type="E_T_FF" x="-1600" y="-566.67">
+		<FB Name="E_T_FF" Type="E_T_FF" x="-1600" y="-500">
 		</FB>
 		<FB Name="START" Type="IE" x="-4700" y="-900">
 			<Parameter Name="QI" Value="TRUE"/>
 		</FB>
-		<FB Name="STOP" Type="IE" x="-4700" y="-100">
+		<FB Name="STOP" Type="IE" x="-4700" y="0">
 			<Parameter Name="QI" Value="TRUE"/>
 		</FB>
 		<EventConnections>
 			<Connection Source="E_CYCLE.EO" Destination="E_T_FF.CLK"/>
-			<Connection Source="E_T_FF.EO" Destination="DigitalOutput_Q1.REQ" dx1="333.33"/>
+			<Connection Source="E_T_FF.EO" Destination="DigitalOutput_Q1.REQ"/>
 			<Connection Source="START.IND" Destination="E_CYCLE.START" dx1="526.67"/>
 			<Connection Source="STOP.IND" Destination="E_CYCLE.STOP" dx1="526.67"/>
-			<Connection Source="START.IND" Destination="E_CYCLE.STOP" dx1="526.67"/>
 		</EventConnections>
 		<DataConnections>
 			<Connection Source="E_T_FF.Q" Destination="DigitalOutput_Q1.OUT" dx1="333.33"/>
