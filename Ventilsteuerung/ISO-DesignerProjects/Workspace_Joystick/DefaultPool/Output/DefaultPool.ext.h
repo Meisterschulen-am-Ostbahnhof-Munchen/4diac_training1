@@ -1,4 +1,4 @@
-// ISO-Designer ISO 11783   Version 5.7.0.6283 Bucher Automation AG
+// ISO-Designer ISO 11783   Version 5.7.1.6514 Bucher Automation AG
 // Do not change!
 #define ISO_SOFTKEY_MASK_WIDTH              640
 #define ISO_SOFTKEY_MASK_HEIGHT             480
