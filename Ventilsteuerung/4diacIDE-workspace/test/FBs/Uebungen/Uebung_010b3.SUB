@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<SubAppType Name="Uebung_010b4_sub" Comment="IX auf QX (generisch)">
+<SubAppType Name="Uebung_010b3" Comment="Toggle Flip-Flop mit IE AuxFunction2_X1">
 	<Identification Standard="61499-2" Description="Copyright (c) 2023 Meisterschulen am Ostbahnhof  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0">
 	</Identification>
 	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2023-10-23">
@@ -9,23 +9,23 @@
 	<SubAppInterfaceList>
 	</SubAppInterfaceList>
 	<SubAppNetwork>
-		<FB Name="QX" Type="QX" x="-2500" y="-800">
+		<FB Name="DigitalOutput_Q1" Type="logiBUS_QX" x="-3900" y="-100">
 			<Parameter Name="QI" Value="TRUE"/>
-			<Parameter Name="PARAMS" Value="">
-				<Attribute Name="Visible" Value="false"/>
-			</Parameter>
+			<Parameter Name="Output" Value="logiBUS_DO::Output_Q1"/>
 		</FB>
-		<FB Name="IX" Type="IX" x="-4600" y="-1000">
+		<FB Name="AuxFunction2_X1_UP" Type="Aux_IE" x="-7300" y="-200">
 			<Parameter Name="QI" Value="TRUE"/>
-			<Parameter Name="PARAMS" Value="">
-				<Attribute Name="Visible" Value="false"/>
-			</Parameter>
+			<Parameter Name="u16ObjId" Value="DefaultPool::AuxFunction2_X1"/>
+			<Parameter Name="InputEvent" Value="AuxiliaryState::AuxDisabled_START"/>
+		</FB>
+		<FB Name="E_T_FF" Type="E_T_FF" x="-5560" y="0">
 		</FB>
 		<EventConnections>
-			<Connection Source="IX.IND" Destination="QX.REQ" dx1="773.33"/>
+			<Connection Source="AuxFunction2_X1_UP.IND" Destination="E_T_FF.CLK"/>
+			<Connection Source="E_T_FF.EO" Destination="DigitalOutput_Q1.REQ"/>
 		</EventConnections>
 		<DataConnections>
-			<Connection Source="IX.IN" Destination="QX.OUT"/>
+			<Connection Source="E_T_FF.Q" Destination="DigitalOutput_Q1.OUT" dx1="580"/>
 		</DataConnections>
 	</SubAppNetwork>
 </SubAppType>
