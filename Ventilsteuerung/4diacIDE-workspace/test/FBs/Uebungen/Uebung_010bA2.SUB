@@ -20,7 +20,7 @@
 		</FB>
 		<FB Name="E_T_FF" Type="E_T_FF" x="-5560" y="0">
 		</FB>
-		<Comment Comment="AuxEnabled wird nicht wiederholt bei einem AUX Type 2&#10;bei Aux Type 0 schon.&#10;Lange drücken ergibt 1 Event bei Type 2" x="-9000" y="800" width="1500" height="700"/>
+		<Comment Comment="AuxEnabled wird nicht wiederholt bei einem AUX Type 2&#10;bei Aux Type 0 schon.&#10;Lange drücken ergibt 1 Event bei Type 2&#10;&#10;&#10;    Bool_Latched = 0,    /**&lt; Two-position switch */&#10;    Bool_NonLatched = 2,    /**&lt; Two-position switch - returns to off */" x="-10400" y="800" width="4100" height="1000"/>
 		<EventConnections>
 			<Connection Source="Button_A1.IND" Destination="E_T_FF.CLK"/>
 			<Connection Source="E_T_FF.EO" Destination="DigitalOutput_Q1.REQ"/>
