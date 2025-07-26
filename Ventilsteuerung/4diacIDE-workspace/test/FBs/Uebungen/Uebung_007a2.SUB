@@ -28,6 +28,7 @@
 			<Parameter Name="Input" Value="logiBUS_DI::Input_I2"/>
 			<Parameter Name="InputEvent" Value="logiBUS_DI_Events::BUTTON_SINGLE_CLICK"/>
 		</FB>
+		<Comment Comment="Nachteil: &#10;dieser Blinker bleibt zufällig auf &#10;AN oder AUS stehen." x="-3300" y="400" width="1800" height="700"/>
 		<EventConnections>
 			<Connection Source="E_CYCLE.EO" Destination="E_T_FF.CLK"/>
 			<Connection Source="E_T_FF.EO" Destination="DigitalOutput_Q1.REQ"/>
