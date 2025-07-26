@@ -1,4 +1,4 @@
-// ISO-Designer ISO 11783   Version 5.7.0.6283 Bucher Automation AG
+// ISO-Designer ISO 11783   Version 5.7.1.6514 Bucher Automation AG
 // Do not change!
 #define ISO_DESIGNATOR_WIDTH                 80
 #define ISO_DESIGNATOR_HEIGHT                80
@@ -33,6 +33,7 @@
 #define SoftKey_F12                        5011
 #define Button_A1                          6000
 #define Button_A2                          6001
+#define Button_L1                          6002
 #define InputNumber_I1                     9000
 #define InputNumber_I2                     9001
 #define OutputString_WorkingSet_0         11000
@@ -58,6 +59,8 @@
 #define OutputString_OutputNumber_N2      11020
 #define OutputString_InputNumber_I1       11021
 #define OutputString_InputNumber_I2       11022
+#define OutputString_11023                11023
+#define OutputString_Button_L1            11024
 #define OutputNumber_N1                   12000
 #define OutputNumber_N2                   12001
 #define Line_W                            13000

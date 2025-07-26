@@ -1,4 +1,4 @@
-// ISO-Designer ISO 11783   Version 5.7.0.6283 Bucher Automation AG
+// ISO-Designer ISO 11783   Version 5.7.1.6514 Bucher Automation AG
 // Do not change!
 
 #include "DefaultPool.iop.h"
@@ -25,7 +25,7 @@ const unsigned char ISO_OP_MEMORY_CLASS isoOP_DefaultPool[] = {
 		CMD_CHANGE_ACTIVE_MASK, ID(WorkingSet_0), ID(DataMask_M1), 0xFF, 0xFF, 0xFF,
 	ID(Macro_Go_To_DataMask_M2), TYPEID_MACRO, WORD(8),
 		CMD_CHANGE_ACTIVE_MASK, ID(WorkingSet_0), ID(DataMask_M2), 0xFF, 0xFF, 0xFF,
-	ID(DataMask_M1), TYPEID_DATAMASK, COLOR_SILVER, ID(SoftKeyMask_S1), 17, 0, 
+	ID(DataMask_M1), TYPEID_DATAMASK, COLOR_SILVER, ID(SoftKeyMask_S1), 18, 0, 
 		XYREF(OutputString_DataMask_M1, 370, 460),
 		XYREF(Container_B, 320, 0),
 		XYREF(Line_W, 0, 80),
@@ -43,6 +43,7 @@ const unsigned char ISO_OP_MEMORY_CLASS isoOP_DefaultPool[] = {
 		XYREF(OutputString_InputNumber_I1, 0, 300),
 		XYREF(InputNumber_I2, 0, 320),
 		XYREF(OutputString_InputNumber_I2, 0, 380),
+		XYREF(Button_L1, 300, 280),
 	ID(DataMask_M2), TYPEID_DATAMASK, COLOR_SILVER, ID(SoftKeyMask_S1), 2, 0, 
 		XYREF(OutputString_DataMask_M2, 370, 460),
 		XYREF(Container_B, 320, 0),
@@ -112,6 +113,9 @@ const unsigned char ISO_OP_MEMORY_CLASS isoOP_DefaultPool[] = {
 		XYREF(OutputString_Go_To_DataMask_M2, 0, 0),
 		XYREF(OutputString_Button_A2, 72, 52),
 		MACRO(EV_KEYRELEASE, Macro_Go_To_DataMask_M2),
+	ID(Button_L1), TYPEID_BUTTON, WORD(160), WORD(80), 8, 8, 1, 1, 2, 0, 
+		XYREF(OutputString_11023, 0, 0),
+		XYREF(OutputString_Button_L1, 72, 52),
 	ID(InputNumber_I1), TYPEID_INNUM, WORD(240), WORD(60), COLOR_WHITE, ID(FontAttributes_23003), 0, 
 		ID(ID_NULL), LONG(123UL), LONG(0UL), LONG(65535UL), LONG(0L), FLOAT_1, 0, 0, 2, 1, 0, 
 	ID(InputNumber_I2), TYPEID_INNUM, WORD(240), WORD(60), COLOR_WHITE, ID(FontAttributes_23003), 0, 
@@ -162,6 +166,10 @@ const unsigned char ISO_OP_MEMORY_CLASS isoOP_DefaultPool[] = {
 		ID(ID_NULL), 0, WORD(14), 'I', 'n', 'p', 'u', 't', 'N', 'u', 'm', 'b', 'e', 'r', '_', 'I', '1', 0,
 	ID(OutputString_InputNumber_I2), TYPEID_OUTSTR, WORD(240), WORD(20), COLOR_TEAL, ID(FontAttributes_6x8), 2,
 		ID(ID_NULL), 0, WORD(14), 'I', 'n', 'p', 'u', 't', 'N', 'u', 'm', 'b', 'e', 'r', '_', 'I', '2', 0,
+	ID(OutputString_11023), TYPEID_OUTSTR, WORD(152), WORD(52), COLOR_WHITE, ID(FontAttributes_8x12), 3,
+		ID(ID_NULL), 1, WORD(8), 'L', 'a', 't', 'c', 'h', 'i', 'n', 'g', 0,
+	ID(OutputString_Button_L1), TYPEID_OUTSTR, WORD(80), WORD(20), COLOR_WHITE, ID(FontAttributes_6x8), 2,
+		ID(ID_NULL), 0, WORD(9), 'B', 'u', 't', 't', 'o', 'n', '_', 'L', '1', 0,
 	ID(OutputNumber_N1), TYPEID_OUTNUM, WORD(240), WORD(60), COLOR_WHITE, ID(FontAttributes_12x16), 1,
 		ID(ID_NULL), LONG(0UL), LONG(0L), FLOAT_1, 0, 0, 0, 0,
 	ID(OutputNumber_N2), TYPEID_OUTNUM, WORD(240), WORD(60), COLOR_WHITE, ID(FontAttributes_12x16), 1,
