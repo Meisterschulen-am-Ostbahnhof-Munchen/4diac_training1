@@ -7,18 +7,18 @@
 	<CompilerInfo>
 	</CompilerInfo>
 	<GlobalConstants>
-		<VarDeclaration Name="SK_RELEASED" Type="SoftKeyActivationCode_S" Comment="SoftKey released" InitialValue="(code := 0)"/>
-		<VarDeclaration Name="SK_PRESSED" Type="SoftKeyActivationCode_S" Comment="SoftKey pressed" InitialValue="(code := 1)"/>
-		<VarDeclaration Name="SK_STILL_HELD" Type="SoftKeyActivationCode_S" Comment="SoftKey still held" InitialValue="(code := 2)"/>
-		<VarDeclaration Name="SK_ABORTED" Type="SoftKeyActivationCode_S" Comment="SoftKey aborted (VT Version 4 only)" InitialValue="(code := 3)"/>
+		<VarDeclaration Name="SK_RELEASED" Type="SoftKeyActivationCode_S" Comment="SoftKey has been released (state change)" InitialValue="(code := 0)"/>
+		<VarDeclaration Name="SK_PRESSED" Type="SoftKeyActivationCode_S" Comment="SoftKey  has been pressed (state change)" InitialValue="(code := 1)"/>
+		<VarDeclaration Name="SK_STILL_HELD" Type="SoftKeyActivationCode_S" Comment="SoftKey is still held" InitialValue="(code := 2)"/>
+		<VarDeclaration Name="SK_ABORTED" Type="SoftKeyActivationCode_S" Comment="SoftKey press aborted (Applies to VT version 4 and later)" InitialValue="(code := 3)"/>
 		<VarDeclaration Name="Invalid" Type="SoftKeyActivationCode_S" InitialValue="(code := 255)"/>
 	</GlobalConstants>
 	<OriginalSource><![CDATA[GLOBALCONSTANTS SoftKeyActivationCode
 	VAR_GLOBAL CONSTANT
-		SK_RELEASED : SoftKeyActivationCode_S := (code := 0); // SoftKey released
-		SK_PRESSED : SoftKeyActivationCode_S := (code := 1); // SoftKey pressed
-		SK_STILL_HELD : SoftKeyActivationCode_S := (code := 2); // SoftKey still held
-		SK_ABORTED : SoftKeyActivationCode_S := (code := 3); // SoftKey aborted (VT Version 4 only)
+		SK_RELEASED : SoftKeyActivationCode_S := (code := 0); // SoftKey has been released (state change)
+		SK_PRESSED : SoftKeyActivationCode_S := (code := 1); // SoftKey  has been pressed (state change)
+		SK_STILL_HELD : SoftKeyActivationCode_S := (code := 2); // SoftKey is still held
+		SK_ABORTED : SoftKeyActivationCode_S := (code := 3); // SoftKey press aborted (Applies to VT version 4 and later)
 		Invalid : SoftKeyActivationCode_S := (code := 255);
 	END_VAR
 END_GLOBALCONSTANTS

@@ -7,18 +7,18 @@
 	<CompilerInfo>
 	</CompilerInfo>
 	<GlobalConstants>
-		<VarDeclaration Name="BT_RELEASED_UNLATCHED" Type="ButtonActivationCode_S" Comment="Button released or unlatched" InitialValue="(code := 0)"/>
-		<VarDeclaration Name="BT_PRESSED_LATCHED" Type="ButtonActivationCode_S" Comment="Button pressed or latched" InitialValue="(code := 1)"/>
-		<VarDeclaration Name="BT_STILL_HELD" Type="ButtonActivationCode_S" Comment="Button still held - latchable buttons do not repeat" InitialValue="(code := 2)"/>
-		<VarDeclaration Name="BT_ABORTED" Type="ButtonActivationCode_S" Comment="Button aborted (VT Version 4 only)" InitialValue="(code := 3)"/>
+		<VarDeclaration Name="BT_RELEASED_UNLATCHED" Type="ButtonActivationCode_S" Comment="Button has been unlatched or released (state change)" InitialValue="(code := 0)"/>
+		<VarDeclaration Name="BT_PRESSED_LATCHED" Type="ButtonActivationCode_S" Comment="Button has been “pressed” or latched (state change)" InitialValue="(code := 1)"/>
+		<VarDeclaration Name="BT_STILL_HELD" Type="ButtonActivationCode_S" Comment="Button is still held (latchable buttons do not repeat)" InitialValue="(code := 2)"/>
+		<VarDeclaration Name="BT_ABORTED" Type="ButtonActivationCode_S" Comment="Button press aborted (Applies to VT version 4 and later)" InitialValue="(code := 3)"/>
 		<VarDeclaration Name="Invalid" Type="ButtonActivationCode_S" InitialValue="(code := 255)"/>
 	</GlobalConstants>
 	<OriginalSource><![CDATA[GLOBALCONSTANTS ButtonActivationCode
 	VAR_GLOBAL CONSTANT
-		BT_RELEASED_UNLATCHED : ButtonActivationCode_S := (code := 0); // Button released or unlatched
-		BT_PRESSED_LATCHED : ButtonActivationCode_S := (code := 1); // Button pressed or latched
-		BT_STILL_HELD : ButtonActivationCode_S := (code := 2); // Button still held - latchable buttons do not repeat
-		BT_ABORTED : ButtonActivationCode_S := (code := 3); // Button aborted (VT Version 4 only)
+		BT_RELEASED_UNLATCHED : ButtonActivationCode_S := (code := 0); // Button has been unlatched or released (state change)
+		BT_PRESSED_LATCHED : ButtonActivationCode_S := (code := 1); // Button has been “pressed” or latched (state change)
+		BT_STILL_HELD : ButtonActivationCode_S := (code := 2); // Button is still held (latchable buttons do not repeat)
+		BT_ABORTED : ButtonActivationCode_S := (code := 3); // Button press aborted (Applies to VT version 4 and later)
 		Invalid : ButtonActivationCode_S := (code := 255);
 	END_VAR
 END_GLOBALCONSTANTS
