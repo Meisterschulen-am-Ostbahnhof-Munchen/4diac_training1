@@ -8,20 +8,28 @@
 	</CompilerInfo>
 	<GlobalConstants>
 		<VarDeclaration Name="AuxDisabled" Type="AuxiliaryState_S" Comment="Off - backward, down, left, or not pressed" InitialValue="(value := 0)"/>
+		<VarDeclaration Name="AuxDisabled_START" Type="AuxiliaryState_S" Comment="Off - backward, down, left, or not pressed" InitialValue="(value := 0, bCyclic := FALSE)"/>
 		<VarDeclaration Name="AuxEnabled" Type="AuxiliaryState_S" Comment="On  - forward, up, right, or pressed" InitialValue="(value := 1)"/>
+		<VarDeclaration Name="AuxEnabled_START" Type="AuxiliaryState_S" Comment="On  - forward, up, right, or pressed" InitialValue="(value := 1, bCyclic := FALSE)"/>
 		<VarDeclaration Name="AuxHeld" Type="AuxiliaryState_S" Comment="Held (forward, up, or right)" InitialValue="(value := 2)"/>
+		<VarDeclaration Name="AuxHeld_START" Type="AuxiliaryState_S" Comment="Held (forward, up, or right)" InitialValue="(value := 2, bCyclic := FALSE)"/>
 		<VarDeclaration Name="AuxEnabledBackwards" Type="AuxiliaryState_S" Comment="On momentary - backward, down or left" InitialValue="(value := 4)"/>
 		<VarDeclaration Name="AuxHeldBackwards" Type="AuxiliaryState_S" Comment="Held (backwards, down, or left)" InitialValue="(value := 8)"/>
+		<VarDeclaration Name="AuxHeldBackwards_START" Type="AuxiliaryState_S" Comment="Held (backwards, down, or left)" InitialValue="(value := 8, bCyclic := FALSE)"/>
 		<VarDeclaration Name="AuxDefault" Type="AuxiliaryState_S" Comment="-" InitialValue="(value := 9)"/>
 		<VarDeclaration Name="Invalid" Type="AuxiliaryState_S" InitialValue="(value := 255)"/>
 	</GlobalConstants>
 	<OriginalSource><![CDATA[GLOBALCONSTANTS AuxiliaryState
 	VAR_GLOBAL CONSTANT
 		AuxDisabled : AuxiliaryState_S := (value := 0); // Off - backward, down, left, or not pressed
+		AuxDisabled_START : AuxiliaryState_S := (value := 0, bCyclic := FALSE); // Off - backward, down, left, or not pressed
 		AuxEnabled : AuxiliaryState_S := (value := 1); // On  - forward, up, right, or pressed
+		AuxEnabled_START : AuxiliaryState_S := (value := 1, bCyclic := FALSE); // On  - forward, up, right, or pressed
 		AuxHeld : AuxiliaryState_S := (value := 2); // Held (forward, up, or right)
+		AuxHeld_START : AuxiliaryState_S := (value := 2, bCyclic := FALSE); // Held (forward, up, or right)
 		AuxEnabledBackwards : AuxiliaryState_S := (value := 4); // On momentary - backward, down or left
 		AuxHeldBackwards : AuxiliaryState_S := (value := 8); // Held (backwards, down, or left)
+		AuxHeldBackwards_START : AuxiliaryState_S := (value := 8, bCyclic := FALSE); // Held (backwards, down, or left)
 		AuxDefault : AuxiliaryState_S := (value := 9); // -
 		Invalid : AuxiliaryState_S := (value := 255);
 	END_VAR

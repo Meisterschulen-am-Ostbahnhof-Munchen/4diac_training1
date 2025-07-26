@@ -9,7 +9,7 @@
 	<GlobalConstants>
 		<VarDeclaration Name="SK_RELEASED" Type="SoftKeyActivationCode_S" Comment="SoftKey has been released (state change)" InitialValue="(code := 0)"/>
 		<VarDeclaration Name="SK_PRESSED" Type="SoftKeyActivationCode_S" Comment="SoftKey  has been pressed (state change)" InitialValue="(code := 1)"/>
-		<VarDeclaration Name="SK_STILL_HELD" Type="SoftKeyActivationCode_S" Comment="SoftKey is still held" InitialValue="(code := 2, bCyclic := TRUE)"/>
+		<VarDeclaration Name="SK_STILL_HELD" Type="SoftKeyActivationCode_S" Comment="SoftKey is still held" InitialValue="(code := 2)"/>
 		<VarDeclaration Name="SK_STILL_HELD_START" Type="SoftKeyActivationCode_S" Comment="SoftKey is still held start" InitialValue="(code := 2, bCyclic := FALSE)"/>
 		<VarDeclaration Name="SK_ABORTED" Type="SoftKeyActivationCode_S" Comment="SoftKey press aborted (Applies to VT version 4 and later)" InitialValue="(code := 3)"/>
 		<VarDeclaration Name="Invalid" Type="SoftKeyActivationCode_S" InitialValue="(code := 255)"/>
@@ -21,7 +21,7 @@
 		(* ********************************************************************************************** *)
 		SK_RELEASED : SoftKeyActivationCode_S := (code := 0); // SoftKey has been released (state change)
 		SK_PRESSED : SoftKeyActivationCode_S := (code := 1); // SoftKey  has been pressed (state change)
-		SK_STILL_HELD : SoftKeyActivationCode_S := (code := 2, bCyclic := TRUE); // SoftKey is still held
+		SK_STILL_HELD : SoftKeyActivationCode_S := (code := 2); // SoftKey is still held
 		SK_STILL_HELD_START : SoftKeyActivationCode_S := (code := 2, bCyclic := FALSE); // SoftKey is still held start
 		SK_ABORTED : SoftKeyActivationCode_S := (code := 3); // SoftKey press aborted (Applies to VT version 4 and later)
 		Invalid : SoftKeyActivationCode_S := (code := 255);
