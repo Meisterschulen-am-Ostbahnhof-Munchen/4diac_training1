@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<SubAppType Name="Uebung_013" Comment="SR-Flip-Flop (Softkey)" >
+<SubAppType Name="Uebung_013" Comment="SR-Flip-Flop (Softkey)">
 	<Identification Standard="61499-2" Description="Copyright (c) 2023 Meisterschulen am Ostbahnhof  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0">
 	</Identification>
 	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2023-10-23">
@@ -9,24 +9,29 @@
 	<SubAppInterfaceList>
 	</SubAppInterfaceList>
 	<SubAppNetwork>
-		<FB Name="DigitalOutput_Q1" Type="QX" x="-1400" y="-900">
+		<FB Name="DigitalOutput_Q1" Type="logiBUS_QX" x="-1400" y="-900">
 			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="Output" Value="logiBUS_DO::Output_Q1"/>
 		</FB>
-		<FB Name="SoftKey_UP_F1" Type="IE" x="-4500" y="-1000">
+		<FB Name="SoftKey_UP_F1" Type="Softkey_IE" x="-4500" y="-1000">
 			<Parameter Name="QI" Value="TRUE">
 				<Attribute Name="Visible" Value="false"/>
 			</Parameter>
 			<Parameter Name="PARAMS" Value="">
 				<Attribute Name="Visible" Value="false"/>
 			</Parameter>
+			<Parameter Name="u16ObjId" Value="DefaultPool::SoftKey_F1"/>
+			<Parameter Name="InputEvent" Value="SoftKeyActivationCode::SK_RELEASED"/>
 		</FB>
-		<FB Name="SoftKey_UP_F2" Type="IE" x="-4500" y="0">
+		<FB Name="SoftKey_UP_F2" Type="Softkey_IE" x="-4500" y="0">
 			<Parameter Name="QI" Value="TRUE">
 				<Attribute Name="Visible" Value="false"/>
 			</Parameter>
 			<Parameter Name="PARAMS" Value="">
 				<Attribute Name="Visible" Value="false"/>
 			</Parameter>
+			<Parameter Name="u16ObjId" Value="DefaultPool::SoftKey_F2"/>
+			<Parameter Name="InputEvent" Value="SoftKeyActivationCode::SK_RELEASED"/>
 		</FB>
 		<FB Name="E_SR" Type="E_SR" x="-2800" y="-800">
 		</FB>
