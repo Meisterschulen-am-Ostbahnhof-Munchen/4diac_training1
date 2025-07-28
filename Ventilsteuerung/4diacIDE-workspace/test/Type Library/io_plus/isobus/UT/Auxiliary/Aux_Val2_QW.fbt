@@ -1,12 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<FBType Name="Aux_QX" Comment="Output service interface function block for boolean output data">
-	<Identification Description="Copyright (c) 2014, 2015 fortiss GmbH&#10; &#10;This program and the accompanying materials are made&#10;available under the terms of the Eclipse Public License 2.0&#10;which is available at https://www.eclipse.org/legal/epl-2.0/&#10;&#10;SPDX-License-Identifier: EPL-2.0">
+<FBType Name="Aux_Val2_QW" Comment="Output service interface function block for word output data">
+	<Identification Description="Copyright (c) 2015, 2016 fortiss GmbH &#10; &#10;This program and the accompanying materials are made &#10;available under the terms of the Eclipse Public License 2.0 &#10;which is available at https://www.eclipse.org/legal/epl-2.0/ &#10; &#10;SPDX-License-Identifier: EPL-2.0&#10;&#10;Supported auxiliary types: 0, 1, 2, 3, 4, 6, 11, 12, 13">
 	</Identification>
-	<VersionInfo Organization="fortiss GmbH" Version="1.0" Author="Waldemar Eisenmenger" Date="2014-08-26">
+	<VersionInfo Organization="fortiss GmbH" Version="1.0" Author="Gerd Kainz" Date="2015-09-22">
 	</VersionInfo>
-	<VersionInfo Organization="fortiss GmbH" Version="1.1" Author="Alois Zoitl" Date="2014-08-30">
-	</VersionInfo>
-	<VersionInfo Organization="fortiss GmbH" Version="1.2" Author="Monika Wenger" Date="2015-06-10">
+	<VersionInfo Organization="fortiss GmbH" Version="1.1" Author="Alois Zoitl" Date="2016-07-18">
 	</VersionInfo>
 	<InterfaceList>
 		<EventInputs>
@@ -33,7 +31,7 @@
 		<InputVars>
 			<VarDeclaration Name="QI" Type="BOOL" Comment="Event Input Qualifier"/>
 			<VarDeclaration Name="PARAMS" Type="STRING" Comment="Service Parameters"/>
-			<VarDeclaration Name="OUT" Type="BOOL" Comment="Output data to resource"/>
+			<VarDeclaration Name="OUT" Type="WORD" Comment="Output data to resource"/>
 			<VarDeclaration Name="iInpNr" Type="UINT" Comment="Number of auxiliary array - corresponds with the order in the pool that means first aux input in pool is iInpNr = 0 etc." InitialValue="0"/>
 		</InputVars>
 		<OutputVars>
