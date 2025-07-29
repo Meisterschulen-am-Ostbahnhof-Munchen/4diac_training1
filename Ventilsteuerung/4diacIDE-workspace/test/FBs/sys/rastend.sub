@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SubAppType Name="rastend" Comment="Subapplication Type" >
+	<Identification Standard="61499-2" Description="Copyright (c) 2024 Meisterschulen am Ostbahnhof  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0">
+	</Identification>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2024-10-23">
+	</VersionInfo>
+	<CompilerInfo packageName="FBs::Uebungen::Uebung_103::subapp">
+	</CompilerInfo>
+	<SubAppInterfaceList>
+		<Plugs>
+			<AdapterDeclaration Name="OUT" Type="AX"/>
+		</Plugs>
+		<Sockets>
+			<AdapterDeclaration Name="IN" Type="AX"/>
+		</Sockets>
+	</SubAppInterfaceList>
+	<SubAppNetwork>
+		<FB Name="E_T_FF" Type="E_T_FF" x="-11046.67" y="-1200">
+		</FB>
+		<FB Name="E_SWITCH" Type="E_SWITCH" x="-12280" y="-1200">
+		</FB>
+		<FB Name="AX_X_TO_BOOL" Type="AX_X_TO_BOOL" x="-13700" y="-1200">
+		</FB>
+		<FB Name="AX_BOOL_TO_X" Type="AX_BOOL_TO_X" x="-9906.67" y="-1200">
+		</FB>
+		<Comment Comment="soll beim Loslassen gestarte t werden !"  x="-12000" y="-1700" width="1500" height="366.67"/>
+		<EventConnections>
+			<Connection Source="E_SWITCH.EO0" Destination="E_T_FF.CLK"/>
+			<Connection Source="E_T_FF.EO" Destination="AX_BOOL_TO_X.REQ"/>
+			<Connection Source="AX_X_TO_BOOL.CNF" Destination="E_SWITCH.EI"/>
+		</EventConnections>
+		<DataConnections>
+			<Connection Source="E_T_FF.Q" Destination="AX_BOOL_TO_X.OUT"/>
+			<Connection Source="AX_X_TO_BOOL.IN" Destination="E_SWITCH.G" dx1="273.33"/>
+		</DataConnections>
+		<AdapterConnections>
+			<Connection Source="IN" Destination="AX_X_TO_BOOL.AX_IN" dx1="2833.33"/>
+			<Connection Source="AX_BOOL_TO_X.AX_OUT" Destination="OUT" dx1="7540"/>
+		</AdapterConnections>
+	</SubAppNetwork>
+</SubAppType>

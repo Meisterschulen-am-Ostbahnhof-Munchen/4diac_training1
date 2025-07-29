@@ -26,16 +26,16 @@
 			</Event>
 		</EventOutputs>
 		<InputVars>
-			<VarDeclaration Name="u8MaskType" Type="USINT" Comment="1 == Data, 2 == Alarm " />
-			<VarDeclaration Name="u16DataMaskId" Type="UINT" Comment="Object ID of active Mask " />
-			<VarDeclaration Name="u16SoftKeyMaskId" Type="UINT" Comment="Object ID of (new) soft key mask " />
+			<VarDeclaration Name="u8MaskType" Type="USINT" Comment="1 == Data, 2 == Alarm "/>
+			<VarDeclaration Name="u16DataMaskId" Type="UINT" Comment="Object ID of active Mask "/>
+			<VarDeclaration Name="u16SoftKeyMaskId" Type="UINT" Comment="Object ID of (new) soft key mask "/>
 		</InputVars>
 		<OutputVars>
-			<VarDeclaration Name="STATUS" Type="STRING" Comment="Service Status" />
+			<VarDeclaration Name="STATUS" Type="STRING" Comment="Service Status"/>
 			<VarDeclaration Name="u8OldMaskType" Type="USINT"/>
-			<VarDeclaration Name="u16OldDataMaskId" Type="UINT" Comment="Old object ID of active Mask " />
-			<VarDeclaration Name="u16OldSoftKeyMaskId" Type="UINT" Comment="Old object ID of (new) soft key mask " />
-			<VarDeclaration Name="s16result" Type="INT" Comment="retval see description" />
+			<VarDeclaration Name="u16OldDataMaskId" Type="UINT" Comment="Old object ID of active Mask "/>
+			<VarDeclaration Name="u16OldSoftKeyMaskId" Type="UINT" Comment="Old object ID of (new) soft key mask "/>
+			<VarDeclaration Name="s16result" Type="INT" Comment="retval see description"/>
 		</OutputVars>
 	</InterfaceList>
 	<Attribute Name="Documentation" Type="CDATA"><![CDATA[<h1>Command change soft key mask( Part 6 - F.36 )</h1>

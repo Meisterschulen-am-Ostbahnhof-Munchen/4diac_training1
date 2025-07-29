@@ -26,16 +26,16 @@
 			</Event>
 		</EventOutputs>
 		<InputVars>
-			<VarDeclaration Name="u8LockCmd" Type="USINT" Comment="0 = Unlock, 1 = Lock data mask or user-layout data mask" />
-			<VarDeclaration Name="u16MaskId" Type="UINT" Comment="Object ID of data mask or user layout data mask to lock or unlock " />
-			<VarDeclaration Name="u16LockTimeoutMs" Type="UINT" Comment="Lock timeout in ms or zero for no timeout " />
+			<VarDeclaration Name="u8LockCmd" Type="USINT" Comment="0 = Unlock, 1 = Lock data mask or user-layout data mask"/>
+			<VarDeclaration Name="u16MaskId" Type="UINT" Comment="Object ID of data mask or user layout data mask to lock or unlock "/>
+			<VarDeclaration Name="u16LockTimeoutMs" Type="UINT" Comment="Lock timeout in ms or zero for no timeout "/>
 		</InputVars>
 		<OutputVars>
-			<VarDeclaration Name="STATUS" Type="STRING" Comment="Service Status" />
-			<VarDeclaration Name="u8OldLockCmd" Type="USINT" Comment="Old 0 = Unlock, 1 = Lock data mask or user-layout data mask" />
-			<VarDeclaration Name="u16OldMaskId" Type="UINT" Comment="Old object ID of data mask or user layout data mask to lock or unlock " />
-			<VarDeclaration Name="u16OldLockTimeoutMs" Type="UINT" Comment="Old lock timeout in ms or zero for no timeout " />
-			<VarDeclaration Name="s16result" Type="INT" Comment="retval see description" />
+			<VarDeclaration Name="STATUS" Type="STRING" Comment="Service Status"/>
+			<VarDeclaration Name="u8OldLockCmd" Type="USINT" Comment="Old 0 = Unlock, 1 = Lock data mask or user-layout data mask"/>
+			<VarDeclaration Name="u16OldMaskId" Type="UINT" Comment="Old object ID of data mask or user layout data mask to lock or unlock "/>
+			<VarDeclaration Name="u16OldLockTimeoutMs" Type="UINT" Comment="Old lock timeout in ms or zero for no timeout "/>
+			<VarDeclaration Name="s16result" Type="INT" Comment="retval see description"/>
 		</OutputVars>
 	</InterfaceList>
 	<Attribute Name="Documentation" Type="CDATA"><![CDATA[<h1>Command Lock/UnlockMask( Part 6 - F.46 )</h1>

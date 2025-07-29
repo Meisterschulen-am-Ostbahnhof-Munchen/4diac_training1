@@ -13,7 +13,7 @@
 			</Event>
 		</EventOutputs>
 		<OutputVars>
-			<VarDeclaration Name="D1" Type="BOOL" Comment="Indication (or Request) Data from Plug" />
+			<VarDeclaration Name="D1" Type="BOOL" Comment="Indication (or Request) Data from Plug"/>
 		</OutputVars>
 	</InterfaceList>
 </AdapterType>

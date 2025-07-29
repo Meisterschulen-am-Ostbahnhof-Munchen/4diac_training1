@@ -18,10 +18,10 @@
 			</Event>
 		</EventOutputs>
 		<InputVars>
-			<VarDeclaration Name="DI1" Type="BOOL" Comment="Request (or Indication) to Socket" />
+			<VarDeclaration Name="DI1" Type="BOOL" Comment="Request (or Indication) to Socket"/>
 		</InputVars>
 		<OutputVars>
-			<VarDeclaration Name="DO1" Type="BOOL" Comment="Indication (or Request) Data from Plug" />
+			<VarDeclaration Name="DO1" Type="BOOL" Comment="Indication (or Request) Data from Plug"/>
 		</OutputVars>
 	</InterfaceList>
 </AdapterType>
