@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<SubAppType Name="Uebung_093b" Comment="Beispiel für E_N_TABLE" >
-	<Identification Standard="61499-2" Description="Copyright (c) 2023 Meisterschulen am Ostbahnhof  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0" >
+<SubAppType Name="Uebung_093b" Comment="Beispiel für E_N_TABLE">
+	<Identification Standard="61499-2" Description="Copyright (c) 2023 Meisterschulen am Ostbahnhof  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0">
 	</Identification>
 	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2023-10-23">
 	</VersionInfo>
@@ -13,46 +13,52 @@
 			<Parameter Name="DT" Value="[T#0s, T#2s, T#3s, T#4s]"/>
 			<Parameter Name="N" Value="4"/>
 		</FB>
-		<FB Name="DigitalInput_CLK_I1" Type="IE" x="-5300" y="-400">
+		<FB Name="DigitalInput_CLK_I1" Type="logiBUS_IE" x="-5300" y="-400">
 			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="Input" Value="logiBUS_DI::Input_I1"/>
+			<Parameter Name="InputEvent" Value="logiBUS_DI_Events::BUTTON_SINGLE_CLICK"/>
 		</FB>
-		<Comment Comment="E_TABLE wird 4 Events ausgeben, das erste sofort nach dem Click, das letzte 9s nach dem Click&#10;[T#0s, T#2s, T#3s, T#4s]"  x="-3900" y="900" width="1400" height="600"/>
-		<FB Name="E_T_FF_Q2" Type="E_T_FF" x="-100" y="200">
+		<Comment Comment="E_TABLE wird 4 Events ausgeben, das erste sofort nach dem Click, das letzte 9s nach dem Click&#10;[T#0s, T#2s, T#3s, T#4s]" x="-3900" y="900" width="1400" height="600"/>
+		<FB Name="E_T_FF_Q2" Type="E_T_FF" x="-100" y="700">
 		</FB>
-		<FB Name="E_T_FF_Q4" Type="E_T_FF" x="-100" y="1800">
+		<FB Name="E_T_FF_Q4" Type="E_T_FF" x="-100" y="2500">
 		</FB>
-		<FB Name="DigitalOutput_Q2" Type="QX" x="1000" y="-900">
+		<FB Name="DigitalOutput_Q1" Type="logiBUS_QX" x="1000" y="-300">
 			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="Output" Value="logiBUS_DO::Output_Q1"/>
 		</FB>
-		<FB Name="E_T_FF_Q3" Type="E_T_FF" x="-100" y="1000">
+		<FB Name="E_T_FF_Q3" Type="E_T_FF" x="-100" y="1600">
 		</FB>
-		<FB Name="DigitalOutput_Q3" Type="QX" x="1000" y="700">
+		<FB Name="DigitalOutput_Q3" Type="logiBUS_QX" x="1000" y="1500">
 			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="Output" Value="logiBUS_DO::Output_Q3"/>
 		</FB>
-		<FB Name="E_T_FF_Q1" Type="E_T_FF" x="-100" y="-600">
+		<FB Name="E_T_FF_Q1" Type="E_T_FF" x="-100" y="-200">
 		</FB>
-		<FB Name="DigitalOutput_Q4" Type="QX" x="1000" y="-100">
+		<FB Name="DigitalOutput_Q2" Type="logiBUS_QX" x="1000" y="600">
 			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="Output" Value="logiBUS_DO::Output_Q2"/>
 		</FB>
-		<FB Name="DigitalOutput_Q5" Type="QX" x="1000" y="1500">
+		<FB Name="DigitalOutput_Q4" Type="logiBUS_QX" x="1000" y="2400">
 			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="Output" Value="logiBUS_DO::Output_Q4"/>
 		</FB>
 		<EventConnections>
 			<Connection Source="DigitalInput_CLK_I1.IND" Destination="E_TABLE.START"/>
-			<Connection Source="E_T_FF_Q1.EO" Destination="DigitalOutput_Q2.REQ" dx1="380"/>
-			<Connection Source="E_T_FF_Q3.EO" Destination="DigitalOutput_Q3.REQ" dx1="280"/>
-			<Connection Source="E_T_FF_Q2.EO" Destination="DigitalOutput_Q4.REQ" dx1="280"/>
-			<Connection Source="E_T_FF_Q4.EO" Destination="DigitalOutput_Q5.REQ" dx1="333.33"/>
-			<Connection Source="E_TABLE.EO0" Destination="E_T_FF_Q1.CLK" dx1="1146.67"/>
+			<Connection Source="E_T_FF_Q1.EO" Destination="DigitalOutput_Q1.REQ"/>
+			<Connection Source="E_T_FF_Q3.EO" Destination="DigitalOutput_Q3.REQ"/>
+			<Connection Source="E_T_FF_Q2.EO" Destination="DigitalOutput_Q2.REQ"/>
+			<Connection Source="E_T_FF_Q4.EO" Destination="DigitalOutput_Q4.REQ"/>
+			<Connection Source="E_TABLE.EO0" Destination="E_T_FF_Q1.CLK"/>
 			<Connection Source="E_TABLE.EO1" Destination="E_T_FF_Q2.CLK" dx1="1146.67"/>
 			<Connection Source="E_TABLE.EO2" Destination="E_T_FF_Q3.CLK" dx1="1046.67"/>
 			<Connection Source="E_TABLE.EO3" Destination="E_T_FF_Q4.CLK" dx1="893.33"/>
 		</EventConnections>
 		<DataConnections>
-			<Connection Source="E_T_FF_Q1.Q" Destination="DigitalOutput_Q2.OUT"/>
-			<Connection Source="E_T_FF_Q4.Q" Destination="DigitalOutput_Q5.OUT"/>
-			<Connection Source="E_T_FF_Q2.Q" Destination="DigitalOutput_Q4.OUT"/>
-			<Connection Source="E_T_FF_Q3.Q" Destination="DigitalOutput_Q3.OUT"/>
+			<Connection Source="E_T_FF_Q1.Q" Destination="DigitalOutput_Q1.OUT" dx1="266.67"/>
+			<Connection Source="E_T_FF_Q4.Q" Destination="DigitalOutput_Q4.OUT" dx1="266.67"/>
+			<Connection Source="E_T_FF_Q2.Q" Destination="DigitalOutput_Q2.OUT" dx1="266.67"/>
+			<Connection Source="E_T_FF_Q3.Q" Destination="DigitalOutput_Q3.OUT" dx1="266.67"/>
 		</DataConnections>
 	</SubAppNetwork>
 </SubAppType>
