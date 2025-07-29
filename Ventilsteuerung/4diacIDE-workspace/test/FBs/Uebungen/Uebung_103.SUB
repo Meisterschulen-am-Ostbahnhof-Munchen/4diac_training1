@@ -9,11 +9,13 @@
 	<SubAppInterfaceList>
 	</SubAppInterfaceList>
 	<SubAppNetwork>
-		<FB Name="DigitalInput_I1" Type="IXA" x="-100" y="-100">
+		<FB Name="DigitalInput_I1" Type="logiBUS_IXA" x="-200" y="-300">
 			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="Input" Value="logiBUS_DI::Input_I1"/>
 		</FB>
-		<FB Name="DigitalOutput_Q1" Type="QXA" x="6300" y="-200">
+		<FB Name="DigitalOutput_Q1" Type="logiBUS_QXA" x="7000" y="-300">
 			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="Output" Value="logiBUS_DO::Output_Q1"/>
 		</FB>
 		<FB Name="AX_DEMUX_3" Type="AX_DEMUX_3" x="1600" y="0">
 		</FB>
@@ -53,8 +55,8 @@
 			</Connection>
 		</DataConnections>
 		<AdapterConnections>
-			<Connection Source="AX_MUX_3.OUT" Destination="DigitalOutput_Q1.OUT" dx1="160"/>
-			<Connection Source="DigitalInput_I1.IN" Destination="AX_DEMUX_3.IN" dx1="500"/>
+			<Connection Source="AX_MUX_3.OUT" Destination="DigitalOutput_Q1.OUT"/>
+			<Connection Source="DigitalInput_I1.IN" Destination="AX_DEMUX_3.IN"/>
 			<Connection Source="AX_DEMUX_3.OUT0" Destination="tastend.IN" dx1="333.33"/>
 			<Connection Source="tastend.OUT" Destination="AX_MUX_3.IN0" dx1="593.33"/>
 			<Connection Source="AX_DEMUX_3.OUT2" Destination="tastend_TON_5s.IN" dx1="326.67"/>
