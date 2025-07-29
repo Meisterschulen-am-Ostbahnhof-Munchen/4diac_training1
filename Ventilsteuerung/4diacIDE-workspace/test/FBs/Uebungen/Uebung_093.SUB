@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<SubAppType Name="Uebung_093" Comment="Beispiel für E_TABLE" >
-	<Identification Standard="61499-2" Description="Copyright (c) 2023 Meisterschulen am Ostbahnhof  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0" >
+<SubAppType Name="Uebung_093" Comment="Beispiel für E_TABLE">
+	<Identification Standard="61499-2" Description="Copyright (c) 2023 Meisterschulen am Ostbahnhof  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0">
 	</Identification>
 	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2023-10-23">
 	</VersionInfo>
@@ -9,19 +9,22 @@
 	<SubAppInterfaceList>
 	</SubAppInterfaceList>
 	<SubAppNetwork>
-		<FB Name="DigitalOutput_Q1" Type="QX" x="-200" y="-500">
+		<FB Name="DigitalOutput_Q1" Type="logiBUS_QX" x="-200" y="-500">
 			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="Output" Value="logiBUS_DO::Output_Q1"/>
 		</FB>
 		<FB Name="E_TABLE" Type="E_TABLE" x="-3100" y="-200">
 			<Parameter Name="DT" Value="[T#0s, T#2s, T#3s, T#4s]"/>
 			<Parameter Name="N" Value="4"/>
 		</FB>
-		<FB Name="DigitalInput_CLK_I1" Type="IE" x="-5300" y="-400">
+		<FB Name="DigitalInput_CLK_I1" Type="logiBUS_IE" x="-5300" y="-400">
 			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="Input" Value="logiBUS_DI::Input_I1"/>
+			<Parameter Name="InputEvent" Value="logiBUS_DI_Events::BUTTON_SINGLE_CLICK"/>
 		</FB>
 		<FB Name="E_T_FF" Type="E_T_FF" x="-1800" y="-200">
 		</FB>
-		<Comment Comment="E_TABLE wird 4 Events ausgeben, das erste sofort nach dem Click, das letzte 9s nach dem Click&#10;[T#0s, T#2s, T#3s, T#4s]"  x="-3400" y="700" width="1400" height="600"/>
+		<Comment Comment="E_TABLE wird 4 Events ausgeben, das erste sofort nach dem Click, das letzte 9s nach dem Click&#10;[T#0s, T#2s, T#3s, T#4s]" x="-3400" y="700" width="1400" height="600"/>
 		<EventConnections>
 			<Connection Source="DigitalInput_CLK_I1.IND" Destination="E_TABLE.START"/>
 			<Connection Source="E_TABLE.EO" Destination="E_T_FF.CLK"/>
