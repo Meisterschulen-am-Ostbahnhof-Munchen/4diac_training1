@@ -13,6 +13,7 @@
 			<Event Name="INIT" Type="EInit" Comment="Service Initialization">
 				<With Var="QI"/>
 				<With Var="PARAMS"/>
+				<With Var="u8SAMember"/>
 				<With Var="Input"/>
 			</Event>
 			<Event Name="REQ" Type="Event" Comment="Service Request">
@@ -38,7 +39,7 @@
 		<InputVars>
 			<VarDeclaration Name="QI" Type="BOOL" Comment="Event Input Qualifier"/>
 			<VarDeclaration Name="PARAMS" Type="STRING" Comment="Service Parameters"/>
-				<VarDeclaration Name="u8SAMember" Type="USINT" Comment="Node SA (Default 21h = PKP_2200_DEFAULT)" InitialValue="PKP_2200::PKP_2200_DEFAULT"/>
+			<VarDeclaration Name="u8SAMember" Type="USINT" Comment="Node SA (Default 21h = PKP_2200_DEFAULT)" InitialValue="PKP_2200::PKP_2200_DEFAULT"/>
 			<VarDeclaration Name="Input" Type="PKP_2200_LI_4_DI_S" Comment="Identify the Input Input_Q1..Q8" InitialValue="PKP_2200_LI_4_DI::Invalid"/>
 		</InputVars>
 		<OutputVars>
