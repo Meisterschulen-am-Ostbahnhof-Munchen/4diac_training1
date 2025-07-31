@@ -13,6 +13,7 @@
 			<Event Name="INIT" Type="EInit" Comment="Service Initialization">
 				<With Var="QI"/>
 				<With Var="PARAMS"/>
+				<With Var="u8SAMember"/>
 				<With Var="Output"/>
 			</Event>
 			<Event Name="REQ" Type="Event" Comment="Service Request">
@@ -34,7 +35,8 @@
 			<VarDeclaration Name="QI" Type="BOOL" Comment="Event Input Qualifier"/>
 			<VarDeclaration Name="PARAMS" Type="STRING" Comment="Service Parameters"/>
 			<VarDeclaration Name="OUT" Type="BOOL" Comment="Output data to resource"/>
-			<VarDeclaration Name="Output" Type="logiBUS_DO_S" Comment="Identify the Output Output_Q1..Q8" InitialValue="DataPanel_MI_DO::Invalid"/>
+			<VarDeclaration Name="u8SAMember" Type="USINT" Comment="Node SA 224..239"  InitialValue="MI::MI_00"/>
+			<VarDeclaration Name="Output" Type="DataPanel_MI_DO_S" Comment="Identify the Output Output_Q1..Q8" InitialValue="DataPanel_MI_DO::Invalid"/>
 		</InputVars>
 		<OutputVars>
 			<VarDeclaration Name="QO" Type="BOOL" Comment="Event Output Qualifier"/>

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<FBType Name="DataPanel_xDB_08_DO_SAE_J1939" Comment="Service Interface Function Block Type" >
-	<Identification Standard="SAE J1939" Function="All Outputs: Digital" Type="DP-40044-05-000" Description="Copyright (c) 2018, 2023 Jose Cabral, HR Agrartechnik GmbH  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0&#10;&#10;this maps to QX" >
+<FBType Name="DataPanel_STATUS_SAE_J1939" Comment="Service Interface Function Block Type">
+	<Identification Standard="SAE J1939" Function="All Outputs: Digital" Type="DP-34044-5-000" Description="Copyright (c) 2018, 2023 Jose Cabral, HR Agrartechnik GmbH  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0&#10;&#10;this maps to QX">
 	</Identification>
 	<VersionInfo Version="1.0" Author="Jose Cabral" Date="2018-12-05">
 	</VersionInfo>
@@ -10,7 +10,7 @@
 	</VersionInfo>
 	<InterfaceList>
 		<EventInputs>
-			<Event Name="INIT" Type="EInit" Comment="Service Initialization" >
+			<Event Name="INIT" Type="EInit" Comment="Service Initialization">
 				<With Var="QI"/>
 				<With Var="u8SAMember"/>
 				<With Var="DigitalOutput_1A"/>
@@ -21,13 +21,21 @@
 				<With Var="DigitalOutput_3B"/>
 				<With Var="DigitalOutput_4A"/>
 				<With Var="DigitalOutput_4B"/>
+				<With Var="DigitalOutput_5A"/>
+				<With Var="DigitalOutput_5B"/>
+				<With Var="DigitalOutput_6A"/>
+				<With Var="DigitalOutput_6B"/>
+				<With Var="DigitalOutput_7A"/>
+				<With Var="DigitalOutput_7B"/>
+				<With Var="DigitalOutput_8A"/>
+				<With Var="DigitalOutput_8B"/>
 			</Event>
 		</EventInputs>
 		<EventOutputs>
-			<Event Name="INITO" Type="EInit" Comment="Initialization Confirm" >
+			<Event Name="INITO" Type="EInit" Comment="Initialization Confirm">
 				<With Var="QO"/>
 			</Event>
-			<Event Name="IND" Type="Event" Comment="Indication from Resource" >
+			<Event Name="IND" Type="Event" Comment="Indication from Resource">
 				<With Var="QO"/>
 				<With Var="STATUS"/>
 				<With Var="qTimedOut"/>
@@ -54,7 +62,7 @@
 		</EventOutputs>
 		<InputVars>
 			<VarDeclaration Name="QI" Type="BOOL" Comment="Event Input Qualifier"/>
-			<VarDeclaration Name="u8SAMember" Type="USINT" Comment="Node SA 217..224"  InitialValue="LO::LO_00"/>
+			<VarDeclaration Name="u8SAMember" Type="USINT" Comment="Node SA 224..239" InitialValue="MI::MI_00"/>
 			<VarDeclaration Name="DigitalOutput_1A" Type="STRING"/>
 			<VarDeclaration Name="DigitalOutput_1B" Type="STRING"/>
 			<VarDeclaration Name="DigitalOutput_2A" Type="STRING"/>
@@ -63,6 +71,14 @@
 			<VarDeclaration Name="DigitalOutput_3B" Type="STRING"/>
 			<VarDeclaration Name="DigitalOutput_4A" Type="STRING"/>
 			<VarDeclaration Name="DigitalOutput_4B" Type="STRING"/>
+			<VarDeclaration Name="DigitalOutput_5A" Type="STRING"/>
+			<VarDeclaration Name="DigitalOutput_5B" Type="STRING"/>
+			<VarDeclaration Name="DigitalOutput_6A" Type="STRING"/>
+			<VarDeclaration Name="DigitalOutput_6B" Type="STRING"/>
+			<VarDeclaration Name="DigitalOutput_7A" Type="STRING"/>
+			<VarDeclaration Name="DigitalOutput_7B" Type="STRING"/>
+			<VarDeclaration Name="DigitalOutput_8A" Type="STRING"/>
+			<VarDeclaration Name="DigitalOutput_8B" Type="STRING"/>
 		</InputVars>
 		<OutputVars>
 			<VarDeclaration Name="QO" Type="BOOL" Comment="Event Output Qualifier"/>
