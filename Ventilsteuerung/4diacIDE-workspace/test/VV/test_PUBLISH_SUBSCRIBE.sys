@@ -4,41 +4,57 @@
 	</VersionInfo>
 	<Application Name="App_functions">
 		<SubAppNetwork>
-			<FB Name="BUTTON_RED" Type="IX" x="2946.67" y="3613.33">
+			<FB Name="BUTTON_RED" Type="logiBUS_IX" x="2946.67" y="3613.33">
 				<Parameter Name="QI" Value="TRUE"/>
+				<Parameter Name="Input" Value="logiBUS_DI::Input_I3"/>
 			</FB>
-			<FB Name="BUTTON_YELLOW" Type="IX" x="2953.33" y="2340">
+			<FB Name="BUTTON_YELLOW" Type="logiBUS_IX" x="2953.33" y="2340">
 				<Parameter Name="QI" Value="TRUE"/>
+				<Parameter Name="Input" Value="logiBUS_DI::Input_I2"/>
 			</FB>
-			<FB Name="BUTTON_BLUE" Type="IX" x="2920" y="4786.67">
+			<FB Name="BUTTON_BLUE" Type="logiBUS_IX" x="2920" y="4786.67">
 				<Parameter Name="QI" Value="TRUE"/>
+				<Parameter Name="Input" Value="logiBUS_DI::Input_I4"/>
 			</FB>
-			<FB Name="LED_YELLOW_5HZ" Type="QX" x="6020" y="2453.33">
+			<FB Name="LED_YELLOW_5HZ" Type="logiBUS_LED_strip_QX" x="6020" y="2453.33">
 				<Parameter Name="QI" Value="TRUE"/>
+				<Parameter Name="Output" Value="LED_strip::Output_strip"/>
+				<Parameter Name="Colour" Value="LED_COLOURS::LED_YELLOW"/>
+				<Parameter Name="FREQ" Value="LED_FREQ::LED_5HZ"/>
 			</FB>
-			<FB Name="LED_BLUE_5HZ" Type="QX" x="5986.67" y="4900">
+			<FB Name="LED_BLUE_5HZ" Type="logiBUS_LED_strip_QX" x="5986.67" y="4900">
 				<Parameter Name="QI" Value="TRUE"/>
+				<Parameter Name="Output" Value="LED_strip::Output_strip"/>
+				<Parameter Name="Colour" Value="LED_COLOURS::LED_BLUE"/>
+				<Parameter Name="FREQ" Value="LED_FREQ::LED_5HZ"/>
 			</FB>
-			<FB Name="LED_RED_5HZ" Type="QX" x="6013.33" y="3726.67">
+			<FB Name="LED_RED_5HZ" Type="logiBUS_LED_strip_QX" x="6013.33" y="3726.67">
 				<Parameter Name="QI" Value="TRUE"/>
+				<Parameter Name="Output" Value="LED_strip::Output_strip"/>
+				<Parameter Name="Colour" Value="LED_COLOURS::LED_RED"/>
+				<Parameter Name="FREQ" Value="LED_FREQ::LED_5HZ"/>
 			</FB>
-			<FB Name="BUTTON_GREEN" Type="IX" x="2920" y="1173.33">
+			<FB Name="BUTTON_GREEN" Type="logiBUS_IX" x="2920" y="1173.33">
 				<Parameter Name="QI" Value="TRUE"/>
+				<Parameter Name="Input" Value="logiBUS_DI::Input_I1"/>
 			</FB>
-			<FB Name="LED_GREEN_5HZ" Type="QX" x="5986.67" y="1286.67">
+			<FB Name="LED_GREEN_5HZ" Type="logiBUS_LED_strip_QX" x="5986.67" y="1286.67">
 				<Parameter Name="QI" Value="TRUE"/>
+				<Parameter Name="Output" Value="LED_strip::Output_strip"/>
+				<Parameter Name="Colour" Value="LED_COLOURS::LED_GREEN"/>
+				<Parameter Name="FREQ" Value="LED_FREQ::LED_5HZ"/>
 			</FB>
 			<EventConnections>
-				<Connection Source="BUTTON_RED.IND" Destination="LED_RED_5HZ.REQ"/>
-				<Connection Source="BUTTON_YELLOW.IND" Destination="LED_YELLOW_5HZ.REQ"/>
-				<Connection Source="BUTTON_BLUE.IND" Destination="LED_BLUE_5HZ.REQ"/>
-				<Connection Source="BUTTON_GREEN.IND" Destination="LED_GREEN_5HZ.REQ"/>
+				<Connection Source="BUTTON_RED.IND" Destination="LED_RED_5HZ.REQ" dx1="1186.67"/>
+				<Connection Source="BUTTON_YELLOW.IND" Destination="LED_YELLOW_5HZ.REQ" dx1="1193.33"/>
+				<Connection Source="BUTTON_BLUE.IND" Destination="LED_BLUE_5HZ.REQ" dx1="1186.67"/>
+				<Connection Source="BUTTON_GREEN.IND" Destination="LED_GREEN_5HZ.REQ" dx1="1186.67"/>
 			</EventConnections>
 			<DataConnections>
-				<Connection Source="BUTTON_RED.IN" Destination="LED_RED_5HZ.OUT"/>
-				<Connection Source="BUTTON_YELLOW.IN" Destination="LED_YELLOW_5HZ.OUT"/>
-				<Connection Source="BUTTON_BLUE.IN" Destination="LED_BLUE_5HZ.OUT"/>
-				<Connection Source="BUTTON_GREEN.IN" Destination="LED_GREEN_5HZ.OUT"/>
+				<Connection Source="BUTTON_RED.IN" Destination="LED_RED_5HZ.OUT" dx1="1186.67"/>
+				<Connection Source="BUTTON_YELLOW.IN" Destination="LED_YELLOW_5HZ.OUT" dx1="1193.33"/>
+				<Connection Source="BUTTON_BLUE.IN" Destination="LED_BLUE_5HZ.OUT" dx1="1186.67"/>
+				<Connection Source="BUTTON_GREEN.IN" Destination="LED_GREEN_5HZ.OUT" dx1="1186.67"/>
 			</DataConnections>
 		</SubAppNetwork>
 	</Application>
@@ -73,15 +89,15 @@
 				<EventConnections>
 					<Connection Source="START.COLD" Destination="E_TRIG.REQ" dx1="946.67"/>
 					<Connection Source="App_functions.BUTTON_GREEN.IND" Destination="PUBLISH_BUTTON_GREEN.REQ"/>
-					<Connection Source="App_functions.BUTTON_BLUE.IND" Destination="PUBLISH_BUTTON_BLUE.REQ"/>
-					<Connection Source="App_functions.BUTTON_RED.IND" Destination="PUBLISH_BUTTON_RED.REQ"/>
 					<Connection Source="App_functions.BUTTON_YELLOW.IND" Destination="PUBLISH_BUTTON_YELLOW.REQ"/>
+					<Connection Source="App_functions.BUTTON_RED.IND" Destination="PUBLISH_BUTTON_RED.REQ"/>
+					<Connection Source="App_functions.BUTTON_BLUE.IND" Destination="PUBLISH_BUTTON_BLUE.REQ"/>
 				</EventConnections>
 				<DataConnections>
 					<Connection Source="App_functions.BUTTON_GREEN.IN" Destination="PUBLISH_BUTTON_GREEN.SD_1"/>
+					<Connection Source="App_functions.BUTTON_YELLOW.IN" Destination="PUBLISH_BUTTON_YELLOW.SD_1"/>
 					<Connection Source="App_functions.BUTTON_RED.IN" Destination="PUBLISH_BUTTON_RED.SD_1"/>
 					<Connection Source="App_functions.BUTTON_BLUE.IN" Destination="PUBLISH_BUTTON_BLUE.SD_1"/>
-					<Connection Source="App_functions.BUTTON_YELLOW.IN" Destination="PUBLISH_BUTTON_YELLOW.SD_1"/>
 				</DataConnections>
 			</FBNetwork>
 		</Resource>
@@ -116,9 +132,9 @@
 				<EventConnections>
 					<Connection Source="START.COLD" Destination="E_TRIG.REQ" dx1="746.67"/>
 					<Connection Source="SUBSCRIBE_BUTTON_GREEN.IND" Destination="App_functions.LED_GREEN_5HZ.REQ"/>
-					<Connection Source="SUBSCRIBE_BUTTON_BLUE.IND" Destination="App_functions.LED_BLUE_5HZ.REQ"/>
-					<Connection Source="SUBSCRIBE_BUTTON_RED.IND" Destination="App_functions.LED_RED_5HZ.REQ"/>
 					<Connection Source="SUBSCRIBE_BUTTON_YELLOW.IND" Destination="App_functions.LED_YELLOW_5HZ.REQ"/>
+					<Connection Source="SUBSCRIBE_BUTTON_RED.IND" Destination="App_functions.LED_RED_5HZ.REQ"/>
+					<Connection Source="SUBSCRIBE_BUTTON_BLUE.IND" Destination="App_functions.LED_BLUE_5HZ.REQ"/>
 				</EventConnections>
 				<DataConnections>
 					<Connection Source="SUBSCRIBE_BUTTON_GREEN.RD_1" Destination="App_functions.LED_GREEN_5HZ.OUT"/>
