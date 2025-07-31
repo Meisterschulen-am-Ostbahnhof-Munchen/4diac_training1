@@ -9,17 +9,21 @@
 	<SubAppInterfaceList>
 	</SubAppInterfaceList>
 	<SubAppNetwork>
-		<FB Name="DigitalOutput_Q1" Type="QX" x="-1500" y="-800">
+		<FB Name="DigitalOutput_Q1" Type="logiBUS_QX" x="-1500" y="-800">
 			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="Output" Value="logiBUS_DO::Output_Q1"/>
 		</FB>
-		<FB Name="DigitalInput_I1" Type="IX" x="-4500" y="-900">
+		<FB Name="DigitalInput_I1" Type="logiBUS_IX" x="-4500" y="-900">
 			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="Input" Value="logiBUS_DI::Input_I1"/>
 		</FB>
-		<FB Name="DigitalOutput_Q2" Type="QX" x="-1500" y="100">
+		<FB Name="DigitalOutput_Q2" Type="logiBUS_QX" x="-1500" y="100">
 			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="Output" Value="logiBUS_DO::Output_Q2"/>
 		</FB>
-		<FB Name="DigitalInput_I2" Type="IX" x="-4500" y="0">
+		<FB Name="DigitalInput_I2" Type="logiBUS_IX" x="-4500" y="0">
 			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="Input" Value="logiBUS_DI::Input_I2"/>
 		</FB>
 		<EventConnections>
 			<Connection Source="DigitalInput_I1.IND" Destination="DigitalOutput_Q1.REQ"/>

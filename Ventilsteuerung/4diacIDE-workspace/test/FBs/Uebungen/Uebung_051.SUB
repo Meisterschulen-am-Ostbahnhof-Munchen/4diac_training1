@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<SubAppType Name="Uebung_051" Comment="DigitalInput_I1-_I4 auf DigitalOutput_Q1-_Q4" >
+<SubAppType Name="Uebung_051" Comment="DigitalInput_I1-_I4 auf DigitalOutput_Q1-_Q4">
 	<Identification Standard="61499-2" Description="Copyright (c) 2023 Meisterschulen am Ostbahnhof  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0">
 	</Identification>
 	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2023-10-23">
@@ -7,57 +7,65 @@
 	<SubAppInterfaceList>
 	</SubAppInterfaceList>
 	<SubAppNetwork>
-		<FB Name="DigitalOutput_Q1" Type="QX" x="-1846.67" y="-1086.67">
+		<FB Name="DigitalOutput_Q1" Type="logiBUS_QX" x="-1000" y="-900">
 			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="Output" Value="logiBUS_DO::Output_Q1"/>
 		</FB>
-		<FB Name="DigitalInput_I1" Type="IX" x="-6040" y="-486.67">
+		<FB Name="DigitalInput_I1" Type="logiBUS_IX" x="-6400" y="-1333.33">
 			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="Input" Value="logiBUS_DI::Input_I1"/>
 		</FB>
-		<FB Name="DigitalOutput_Q2" Type="QX" x="-1846.67" y="-106.67">
+		<FB Name="DigitalOutput_Q2" Type="logiBUS_QX" x="-1000" y="0">
 			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="Output" Value="logiBUS_DO::Output_Q2"/>
 		</FB>
-		<FB Name="DigitalInput_I2" Type="IX" x="-6040" y="626.67">
+		<FB Name="DigitalInput_I2" Type="logiBUS_IX" x="-6400" y="-220">
 			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="Input" Value="logiBUS_DI::Input_I2"/>
 		</FB>
-		<FB Name="DigitalOutput_Q3" Type="QX" x="-1846.67" y="873.33">
+		<FB Name="DigitalOutput_Q3" Type="logiBUS_QX" x="-1000" y="1000">
 			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="Output" Value="logiBUS_DO::Output_Q3"/>
 		</FB>
-		<FB Name="DigitalInput_I3" Type="IX" x="-6040" y="1740">
+		<FB Name="DigitalInput_I3" Type="logiBUS_IX" x="-6400" y="893.33">
 			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="Input" Value="logiBUS_DI::Input_I3"/>
 		</FB>
-		<FB Name="DigitalOutput_Q4" Type="QX" x="-1846.67" y="1853.33">
+		<FB Name="DigitalOutput_Q4" Type="logiBUS_QX" x="-1000" y="2100">
 			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="Output" Value="logiBUS_DO::Output_Q4"/>
 		</FB>
-		<FB Name="DigitalInput_I4" Type="IX" x="-6040" y="2853.33">
+		<FB Name="DigitalInput_I4" Type="logiBUS_IX" x="-6400" y="2000">
 			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="Input" Value="logiBUS_DI::Input_I4"/>
 		</FB>
-		<FB Name="STRUCT_DEMUX" Type="STRUCT_DEMUX" x="-3506.67" y="1966.67">
+		<FB Name="STRUCT_DEMUX" Type="STRUCT_DEMUX" x="-3500" y="2000">
 			<Attribute Name="StructuredType" Type="STRING" Value="ST04B"/>
 		</FB>
-		<FB Name="STRUCT_MUX" Type="STRUCT_MUX" x="-4800" y="1966.67">
+		<FB Name="STRUCT_MUX" Type="STRUCT_MUX" x="-4800" y="2000">
 			<Attribute Name="StructuredType" Type="STRING" Value="ST04B"/>
 		</FB>
 		<EventConnections>
-			<Connection Source="DigitalInput_I1.IND" Destination="STRUCT_MUX.REQ" dx1="80" dx2="80" dy="0"/>
-			<Connection Source="DigitalInput_I2.IND" Destination="STRUCT_MUX.REQ" dx1="80" dx2="80" dy="0"/>
+			<Connection Source="DigitalInput_I1.IND" Destination="STRUCT_MUX.REQ" dx1="80"/>
+			<Connection Source="DigitalInput_I2.IND" Destination="STRUCT_MUX.REQ" dx1="80"/>
 			<Connection Source="DigitalInput_I3.IND" Destination="STRUCT_MUX.REQ" dx1="273.33"/>
-			<Connection Source="DigitalInput_I4.IND" Destination="STRUCT_MUX.REQ" dx1="80" dx2="80" dy="0"/>
+			<Connection Source="DigitalInput_I4.IND" Destination="STRUCT_MUX.REQ" dx1="80"/>
 			<Connection Source="STRUCT_MUX.CNF" Destination="STRUCT_DEMUX.REQ"/>
-			<Connection Source="STRUCT_DEMUX.CNF" Destination="DigitalOutput_Q1.REQ" dx1="206.67" dx2="206.67" dy="0"/>
-			<Connection Source="STRUCT_DEMUX.CNF" Destination="DigitalOutput_Q2.REQ" dx1="206.67" dx2="206.67" dy="0"/>
-			<Connection Source="STRUCT_DEMUX.CNF" Destination="DigitalOutput_Q3.REQ" dx1="206.67" dx2="206.67" dy="0"/>
-			<Connection Source="STRUCT_DEMUX.CNF" Destination="DigitalOutput_Q4.REQ" dx1="420" dx2="420" dy="0"/>
+			<Connection Source="STRUCT_DEMUX.CNF" Destination="DigitalOutput_Q1.REQ" dx1="206.67"/>
+			<Connection Source="STRUCT_DEMUX.CNF" Destination="DigitalOutput_Q2.REQ" dx1="206.67"/>
+			<Connection Source="STRUCT_DEMUX.CNF" Destination="DigitalOutput_Q3.REQ" dx1="206.67"/>
+			<Connection Source="STRUCT_DEMUX.CNF" Destination="DigitalOutput_Q4.REQ" dx1="420"/>
 		</EventConnections>
 		<DataConnections>
-			<Connection Source="DigitalInput_I1.IN" Destination="STRUCT_MUX.B_00" dx1="213.33" dx2="213.33" dy="0"/>
-			<Connection Source="DigitalInput_I2.IN" Destination="STRUCT_MUX.B_01" dx1="146.67" dx2="146.67" dy="0"/>
-			<Connection Source="DigitalInput_I3.IN" Destination="STRUCT_MUX.B_02" dx1="146.67" dx2="146.67" dy="0"/>
-			<Connection Source="DigitalInput_I4.IN" Destination="STRUCT_MUX.B_03" dx1="146.67" dx2="146.67" dy="0"/>
-			<Connection Source="STRUCT_MUX.OUT" Destination="STRUCT_DEMUX.IN" dx1="73.33" dx2="73.33" dy="0"/>
-			<Connection Source="STRUCT_DEMUX.B_00" Destination="DigitalOutput_Q1.OUT" dx1="73.33" dx2="73.33" dy="0"/>
-			<Connection Source="STRUCT_DEMUX.B_01" Destination="DigitalOutput_Q2.OUT" dx1="140" dx2="140" dy="0"/>
-			<Connection Source="STRUCT_DEMUX.B_02" Destination="DigitalOutput_Q3.OUT" dx1="273.33" dx2="273.33" dy="0"/>
-			<Connection Source="STRUCT_DEMUX.B_03" Destination="DigitalOutput_Q4.OUT" dx1="340" dx2="340" dy="0"/>
+			<Connection Source="DigitalInput_I1.IN" Destination="STRUCT_MUX.B_00" dx1="213.33"/>
+			<Connection Source="DigitalInput_I2.IN" Destination="STRUCT_MUX.B_01" dx1="146.67"/>
+			<Connection Source="DigitalInput_I3.IN" Destination="STRUCT_MUX.B_02" dx1="146.67"/>
+			<Connection Source="DigitalInput_I4.IN" Destination="STRUCT_MUX.B_03" dx1="146.67"/>
+			<Connection Source="STRUCT_MUX.OUT" Destination="STRUCT_DEMUX.IN"/>
+			<Connection Source="STRUCT_DEMUX.B_00" Destination="DigitalOutput_Q1.OUT" dx1="73.33"/>
+			<Connection Source="STRUCT_DEMUX.B_01" Destination="DigitalOutput_Q2.OUT" dx1="140"/>
+			<Connection Source="STRUCT_DEMUX.B_02" Destination="DigitalOutput_Q3.OUT" dx1="273.33"/>
+			<Connection Source="STRUCT_DEMUX.B_03" Destination="DigitalOutput_Q4.OUT" dx1="340"/>
 		</DataConnections>
 	</SubAppNetwork>
 </SubAppType>

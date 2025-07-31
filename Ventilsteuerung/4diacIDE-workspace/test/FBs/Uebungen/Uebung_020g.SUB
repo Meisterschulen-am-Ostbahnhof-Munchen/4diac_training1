@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<SubAppType Name="Uebung_020g" Comment="DigitalInput_I1 auf DigitalOutput_Q1; E_TONOF; Ein-/Ausschaltverzögert" >
+<SubAppType Name="Uebung_020g" Comment="DigitalInput_I1 auf DigitalOutput_Q1; E_TONOF; Ein-/Ausschaltverzögert">
 	<Identification Standard="61499-2" Description="Copyright (c) 2023 Meisterschulen am Ostbahnhof  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0">
 	</Identification>
 	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2023-10-23">
@@ -9,22 +9,24 @@
 	<SubAppInterfaceList>
 	</SubAppInterfaceList>
 	<SubAppNetwork>
-		<FB Name="DigitalOutput_Q1" Type="QX" x="-5860" y="460">
+		<FB Name="DigitalOutput_Q1" Type="logiBUS_QX" x="-5100" y="500">
 			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="Output" Value="logiBUS_DO::Output_Q1"/>
 		</FB>
-		<FB Name="DigitalInput_I1" Type="IX" x="-8706.67" y="346.67">
+		<FB Name="DigitalInput_I1" Type="logiBUS_IX" x="-8900" y="400">
 			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="Input" Value="logiBUS_DI::Input_I1"/>
 		</FB>
-		<FB Name="E_TONOF" Type="E_TONOF" x="-7193.33" y="573.33">
+		<FB Name="E_TONOF" Type="E_TONOF" x="-7100" y="600">
 			<Parameter Name="PT_ON" Value="T#5S"/>
 			<Parameter Name="PT_OFF" Value="T#5S"/>
 		</FB>
 		<EventConnections>
-			<Connection Source="DigitalInput_I1.IND" Destination="E_TONOF.REQ" dx1="413.33"/>
-			<Connection Source="E_TONOF.CNF" Destination="DigitalOutput_Q1.REQ" dx1="373.33"/>
+			<Connection Source="DigitalInput_I1.IND" Destination="E_TONOF.REQ"/>
+			<Connection Source="E_TONOF.CNF" Destination="DigitalOutput_Q1.REQ"/>
 		</EventConnections>
 		<DataConnections>
-			<Connection Source="DigitalInput_I1.IN" Destination="E_TONOF.IN" dx1="80"/>
+			<Connection Source="DigitalInput_I1.IN" Destination="E_TONOF.IN" dx1="406.67"/>
 			<Connection Source="E_TONOF.Q" Destination="DigitalOutput_Q1.OUT" dx1="73.33"/>
 		</DataConnections>
 	</SubAppNetwork>

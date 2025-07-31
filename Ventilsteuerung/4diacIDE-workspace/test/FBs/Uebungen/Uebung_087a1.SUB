@@ -13,14 +13,17 @@
 		</FB>
 		<FB Name="ADD_3" Type="ADD_3" x="2700" y="3200">
 		</FB>
-		<FB Name="DigitalInput_I2" Type="IX" x="400" y="2300">
+		<FB Name="DigitalInput_I2" Type="logiBUS_IX" x="400" y="2300">
 			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="Input" Value="logiBUS_DI::Input_I2"/>
 		</FB>
-		<FB Name="DigitalInput_I3" Type="IX" x="400" y="3500">
+		<FB Name="DigitalInput_I3" Type="logiBUS_IX" x="400" y="3500">
 			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="Input" Value="logiBUS_DI::Input_I3"/>
 		</FB>
-		<FB Name="DigitalInput_I4" Type="IX" x="400" y="4700">
+		<FB Name="DigitalInput_I4" Type="logiBUS_IX" x="400" y="4700">
 			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="Input" Value="logiBUS_DI::Input_I1"/>
 		</FB>
 		<FB Name="F_BOOL_TO_UINT_I2" Type="F_BOOL_TO_UINT" x="1400" y="2700">
 		</FB>
@@ -28,28 +31,34 @@
 		</FB>
 		<FB Name="F_BOOL_TO_UINT_I4" Type="F_BOOL_TO_UINT" x="1400" y="5100">
 		</FB>
-		<FB Name="DigitalOutput_Q2" Type="QX" x="6900" y="2700">
+		<FB Name="DigitalOutput_Q2" Type="logiBUS_QX" x="7400" y="2400">
 			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="Output" Value="logiBUS_DO::Output_Q2"/>
 		</FB>
-		<FB Name="DigitalOutput_Q1" Type="QX" x="6900" y="1900">
+		<FB Name="DigitalOutput_Q1" Type="logiBUS_QX" x="7400" y="1500">
 			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="Output" Value="logiBUS_DO::Output_Q1"/>
 		</FB>
-		<FB Name="DigitalOutput_Q4" Type="QX" x="6900" y="4300">
+		<FB Name="DigitalOutput_Q4" Type="logiBUS_QX" x="7400" y="4200">
 			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="Output" Value="logiBUS_DO::Output_Q4"/>
 		</FB>
-		<FB Name="DigitalOutput_Q3" Type="QX" x="6900" y="3500">
+		<FB Name="DigitalOutput_Q3" Type="logiBUS_QX" x="7400" y="3300">
 			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="Output" Value="logiBUS_DO::Output_Q3"/>
 		</FB>
-		<FB Name="E_T_FF_Q1" Type="E_T_FF" x="5600" y="2200">
+		<FB Name="E_T_FF_Q1" Type="E_T_FF" x="5600" y="1800">
 		</FB>
-		<FB Name="E_T_FF_Q2" Type="E_T_FF" x="5800" y="3000">
+		<FB Name="E_T_FF_Q2" Type="E_T_FF" x="5600" y="2700">
 		</FB>
-		<FB Name="E_T_FF_Q3" Type="E_T_FF" x="5800" y="3800">
+		<FB Name="E_T_FF_Q3" Type="E_T_FF" x="5600" y="3600">
 		</FB>
-		<FB Name="E_T_FF_Q4" Type="E_T_FF" x="5700" y="4600">
+		<FB Name="E_T_FF_Q4" Type="E_T_FF" x="5600" y="4500">
 		</FB>
-		<FB Name="DigitalInput_CLK_I1" Type="IE" x="400" y="1200">
+		<FB Name="DigitalInput_CLK_I1" Type="logiBUS_IE" x="400" y="1200">
 			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="Input" Value="logiBUS_DI::Input_I1"/>
+			<Parameter Name="InputEvent" Value="logiBUS_DI_Events::BUTTON_SINGLE_CLICK"/>
 		</FB>
 		<Comment Comment="Diese Taste schaltet ein oder aus&#10;" x="1400" y="1000" width="900" height="500"/>
 		<Comment Comment="Die Anzahl der restlichen Tasten bestimmt den Ausgang: &#10;Keine --&gt; Q1&#10;Eine --&gt; Q2&#10;Zwei --&gt; Q3&#10;Drei --&gt; Q4" x="1400" y="1900" width="2000" height="700"/>
@@ -64,8 +73,8 @@
 			<Connection Source="E_T_FF_Q3.EO" Destination="DigitalOutput_Q3.REQ" dx1="280"/>
 			<Connection Source="E_T_FF_Q2.EO" Destination="DigitalOutput_Q2.REQ" dx1="280"/>
 			<Connection Source="E_T_FF_Q1.EO" Destination="DigitalOutput_Q1.REQ" dx1="380"/>
-			<Connection Source="E_DEMUX_4.EO1" Destination="E_T_FF_Q1.CLK" dx1="693.33"/>
-			<Connection Source="E_DEMUX_4.EO2" Destination="E_T_FF_Q2.CLK"/>
+			<Connection Source="E_DEMUX_4.EO1" Destination="E_T_FF_Q1.CLK" dx1="346.67"/>
+			<Connection Source="E_DEMUX_4.EO2" Destination="E_T_FF_Q2.CLK" dx1="600"/>
 			<Connection Source="E_DEMUX_4.EO3" Destination="E_T_FF_Q3.CLK" dx1="793.33"/>
 			<Connection Source="E_DEMUX_4.EO4" Destination="E_T_FF_Q4.CLK" dx1="566.67"/>
 			<Connection Source="DigitalInput_CLK_I1.IND" Destination="E_DEMUX_4.EI" dx1="2500"/>
