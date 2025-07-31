@@ -81,23 +81,21 @@
 					<Parameter Name="QI" Value="TRUE"/>
 					<Parameter Name="ID" Value="PORT_3"/>
 				</FB>
-				<SubApp Name="mapping_Uebung_033_VV_FORTE_PC_A_1" Type="mapping_Uebung_033_VV_FORTE_PC_A" x="2606.67" y="-340">
-				</SubApp>
 				<FB Name="E_TRIG" Type="E_TRIG" x="2700" y="-1000">
 					<Parameter Name="EVENTTYPE" Value="'EInit'"/>
 				</FB>
 				<EventConnections>
 					<Connection Source="START.COLD" Destination="E_TRIG.REQ" dx1="946.67"/>
-					<Connection Source="App_functions.BUTTON_GREEN.IND" Destination="PUBLISH_BUTTON_GREEN.REQ"/>
-					<Connection Source="App_functions.BUTTON_YELLOW.IND" Destination="PUBLISH_BUTTON_YELLOW.REQ"/>
-					<Connection Source="App_functions.BUTTON_RED.IND" Destination="PUBLISH_BUTTON_RED.REQ"/>
-					<Connection Source="App_functions.BUTTON_BLUE.IND" Destination="PUBLISH_BUTTON_BLUE.REQ"/>
+					<Connection Source="App_functions.BUTTON_GREEN.IND" Destination="PUBLISH_BUTTON_GREEN.REQ" dx1="420"/>
+					<Connection Source="App_functions.BUTTON_YELLOW.IND" Destination="PUBLISH_BUTTON_YELLOW.REQ" dx1="373.33"/>
+					<Connection Source="App_functions.BUTTON_RED.IND" Destination="PUBLISH_BUTTON_RED.REQ" dx1="433.33"/>
+					<Connection Source="App_functions.BUTTON_BLUE.IND" Destination="PUBLISH_BUTTON_BLUE.REQ" dx1="413.33"/>
 				</EventConnections>
 				<DataConnections>
-					<Connection Source="App_functions.BUTTON_GREEN.IN" Destination="PUBLISH_BUTTON_GREEN.SD_1"/>
-					<Connection Source="App_functions.BUTTON_YELLOW.IN" Destination="PUBLISH_BUTTON_YELLOW.SD_1"/>
-					<Connection Source="App_functions.BUTTON_RED.IN" Destination="PUBLISH_BUTTON_RED.SD_1"/>
-					<Connection Source="App_functions.BUTTON_BLUE.IN" Destination="PUBLISH_BUTTON_BLUE.SD_1"/>
+					<Connection Source="App_functions.BUTTON_GREEN.IN" Destination="PUBLISH_BUTTON_GREEN.SD_1" dx1="420"/>
+					<Connection Source="App_functions.BUTTON_YELLOW.IN" Destination="PUBLISH_BUTTON_YELLOW.SD_1" dx1="373.33"/>
+					<Connection Source="App_functions.BUTTON_RED.IN" Destination="PUBLISH_BUTTON_RED.SD_1" dx1="433.33"/>
+					<Connection Source="App_functions.BUTTON_BLUE.IN" Destination="PUBLISH_BUTTON_BLUE.SD_1" dx1="413.33"/>
 				</DataConnections>
 			</FBNetwork>
 		</Resource>
@@ -124,23 +122,21 @@
 					<Parameter Name="QI" Value="TRUE"/>
 					<Parameter Name="ID" Value="PORT_3"/>
 				</FB>
-				<SubApp Name="mapping_Uebung_033_VV_FORTE_PC_B_1" Type="mapping_Uebung_033_VV_FORTE_PC_B" x="2266.67" y="-453.33">
-				</SubApp>
 				<FB Name="E_TRIG" Type="E_TRIG" x="2300" y="-1100">
 					<Parameter Name="EVENTTYPE" Value="'EInit'"/>
 				</FB>
 				<EventConnections>
 					<Connection Source="START.COLD" Destination="E_TRIG.REQ" dx1="746.67"/>
-					<Connection Source="SUBSCRIBE_BUTTON_GREEN.IND" Destination="App_functions.LED_GREEN_5HZ.REQ"/>
-					<Connection Source="SUBSCRIBE_BUTTON_YELLOW.IND" Destination="App_functions.LED_YELLOW_5HZ.REQ"/>
-					<Connection Source="SUBSCRIBE_BUTTON_RED.IND" Destination="App_functions.LED_RED_5HZ.REQ"/>
-					<Connection Source="SUBSCRIBE_BUTTON_BLUE.IND" Destination="App_functions.LED_BLUE_5HZ.REQ"/>
+					<Connection Source="SUBSCRIBE_BUTTON_GREEN.IND" Destination="App_functions.LED_GREEN_5HZ.REQ" dx1="1186.67"/>
+					<Connection Source="SUBSCRIBE_BUTTON_YELLOW.IND" Destination="App_functions.LED_YELLOW_5HZ.REQ" dx1="1193.33"/>
+					<Connection Source="SUBSCRIBE_BUTTON_RED.IND" Destination="App_functions.LED_RED_5HZ.REQ" dx1="1220"/>
+					<Connection Source="SUBSCRIBE_BUTTON_BLUE.IND" Destination="App_functions.LED_BLUE_5HZ.REQ" dx1="1200"/>
 				</EventConnections>
 				<DataConnections>
-					<Connection Source="SUBSCRIBE_BUTTON_GREEN.RD_1" Destination="App_functions.LED_GREEN_5HZ.OUT"/>
-					<Connection Source="SUBSCRIBE_BUTTON_YELLOW.RD_1" Destination="App_functions.LED_YELLOW_5HZ.OUT"/>
-					<Connection Source="SUBSCRIBE_BUTTON_RED.RD_1" Destination="App_functions.LED_RED_5HZ.OUT"/>
-					<Connection Source="SUBSCRIBE_BUTTON_BLUE.RD_1" Destination="App_functions.LED_BLUE_5HZ.OUT"/>
+					<Connection Source="SUBSCRIBE_BUTTON_GREEN.RD_1" Destination="App_functions.LED_GREEN_5HZ.OUT" dx1="1186.67"/>
+					<Connection Source="SUBSCRIBE_BUTTON_YELLOW.RD_1" Destination="App_functions.LED_YELLOW_5HZ.OUT" dx1="1193.33"/>
+					<Connection Source="SUBSCRIBE_BUTTON_RED.RD_1" Destination="App_functions.LED_RED_5HZ.OUT" dx1="1220"/>
+					<Connection Source="SUBSCRIBE_BUTTON_BLUE.RD_1" Destination="App_functions.LED_BLUE_5HZ.OUT" dx1="1200"/>
 				</DataConnections>
 			</FBNetwork>
 		</Resource>

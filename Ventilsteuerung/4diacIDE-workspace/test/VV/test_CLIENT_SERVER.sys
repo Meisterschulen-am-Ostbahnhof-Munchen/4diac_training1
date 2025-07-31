@@ -109,8 +109,6 @@
 				<FB Name="UINT2UINT_3" Type="F_MOVE" x="5900" y="4500">
 					<Attribute Name="DataType" Value="UINT"/>
 				</FB>
-				<SubApp Name="mapping_Uebung_033_VV_FORTE_PC_A" Type="mapping_Uebung_033_VV_FORTE_PC_A" x="2493.33" y="-680">
-				</SubApp>
 				<FB Name="E_TRIG" Type="E_TRIG" x="2500" y="-1200">
 					<Parameter Name="EVENTTYPE" Value="'EInit'"/>
 				</FB>
@@ -120,20 +118,20 @@
 					<Connection Source="CLIENT_BUTTON_YELLOW.CNF" Destination="UINT2UINT_1.REQ" dx1="360"/>
 					<Connection Source="CLIENT_BUTTON_BLUE.CNF" Destination="UINT2UINT_3.REQ" dx1="333.33"/>
 					<Connection Source="START.COLD" Destination="E_TRIG.REQ" dx1="846.67"/>
-					<Connection Source="App_functions.BUTTON_GREEN.IND" Destination="CLIENT_BUTTON_GREEN.REQ"/>
-					<Connection Source="App_functions.BUTTON_YELLOW.IND" Destination="CLIENT_BUTTON_YELLOW.REQ"/>
-					<Connection Source="App_functions.BUTTON_RED.IND" Destination="CLIENT_BUTTON_RED.REQ"/>
-					<Connection Source="App_functions.BUTTON_BLUE.IND" Destination="CLIENT_BUTTON_BLUE.REQ"/>
+					<Connection Source="App_functions.BUTTON_GREEN.IND" Destination="CLIENT_BUTTON_GREEN.REQ" dx1="433.33"/>
+					<Connection Source="App_functions.BUTTON_YELLOW.IND" Destination="CLIENT_BUTTON_YELLOW.REQ" dx1="393.33"/>
+					<Connection Source="App_functions.BUTTON_RED.IND" Destination="CLIENT_BUTTON_RED.REQ" dx1="460"/>
+					<Connection Source="App_functions.BUTTON_BLUE.IND" Destination="CLIENT_BUTTON_BLUE.REQ" dx1="420"/>
 				</EventConnections>
 				<DataConnections>
 					<Connection Source="CLIENT_BUTTON_GREEN.RD_1" Destination="UINT2UINT_0.IN"/>
 					<Connection Source="CLIENT_BUTTON_RED.RD_1" Destination="UINT2UINT_2.IN"/>
 					<Connection Source="CLIENT_BUTTON_YELLOW.RD_1" Destination="UINT2UINT_1.IN"/>
 					<Connection Source="CLIENT_BUTTON_BLUE.RD_1" Destination="UINT2UINT_3.IN"/>
-					<Connection Source="App_functions.BUTTON_GREEN.IN" Destination="CLIENT_BUTTON_GREEN.SD_1"/>
-					<Connection Source="App_functions.BUTTON_YELLOW.IN" Destination="CLIENT_BUTTON_YELLOW.SD_1"/>
-					<Connection Source="App_functions.BUTTON_RED.IN" Destination="CLIENT_BUTTON_RED.SD_1"/>
-					<Connection Source="App_functions.BUTTON_BLUE.IN" Destination="CLIENT_BUTTON_BLUE.SD_1"/>
+					<Connection Source="App_functions.BUTTON_GREEN.IN" Destination="CLIENT_BUTTON_GREEN.SD_1" dx1="433.33"/>
+					<Connection Source="App_functions.BUTTON_YELLOW.IN" Destination="CLIENT_BUTTON_YELLOW.SD_1" dx1="393.33"/>
+					<Connection Source="App_functions.BUTTON_RED.IN" Destination="CLIENT_BUTTON_RED.SD_1" dx1="460"/>
+					<Connection Source="App_functions.BUTTON_BLUE.IN" Destination="CLIENT_BUTTON_BLUE.SD_1" dx1="420"/>
 				</DataConnections>
 			</FBNetwork>
 		</Resource>
@@ -160,8 +158,6 @@
 					<Parameter Name="QI" Value="TRUE"/>
 					<Parameter Name="ID" Value="PORT_A3"/>
 				</FB>
-				<SubApp Name="mapping_Uebung_033_VV_FORTE_PC_B" Type="mapping_Uebung_033_VV_FORTE_PC_B" x="2266.67" y="-566.67">
-				</SubApp>
 				<FB Name="E_TRIG" Type="E_TRIG" x="2400" y="-1200">
 					<Parameter Name="EVENTTYPE" Value="'EInit'"/>
 				</FB>
@@ -171,20 +167,20 @@
 					<Connection Source="App_functions.E_CTU_LED_RED_5HZ.CUO" Destination="SERVER_BUTTON_RED.RSP" dx1="260" dx2="526.67" dy="706.67"/>
 					<Connection Source="App_functions.E_CTU_LED_YELLOW_5HZ.CUO" Destination="SERVER_BUTTON_YELLOW.RSP" dx1="233.33" dx2="453.33" dy="693.33"/>
 					<Connection Source="App_functions.E_CTU_LED_GREEN_5HZ.CUO" Destination="SERVER_BUTTON_GREEN.RSP" dx1="166.67" dx2="433.33" dy="673.33"/>
-					<Connection Source="SERVER_BUTTON_BLUE.IND" Destination="App_functions.LED_BLUE_5HZ.REQ"/>
+					<Connection Source="SERVER_BUTTON_BLUE.IND" Destination="App_functions.LED_BLUE_5HZ.REQ" dx1="1273.33"/>
 					<Connection Source="SERVER_BUTTON_RED.IND" Destination="App_functions.LED_RED_5HZ.REQ"/>
-					<Connection Source="SERVER_BUTTON_YELLOW.IND" Destination="App_functions.LED_YELLOW_5HZ.REQ"/>
-					<Connection Source="SERVER_BUTTON_GREEN.IND" Destination="App_functions.LED_GREEN_5HZ.REQ"/>
+					<Connection Source="SERVER_BUTTON_YELLOW.IND" Destination="App_functions.LED_YELLOW_5HZ.REQ" dx1="1253.33"/>
+					<Connection Source="SERVER_BUTTON_GREEN.IND" Destination="App_functions.LED_GREEN_5HZ.REQ" dx1="1266.67"/>
 				</EventConnections>
 				<DataConnections>
 					<Connection Source="App_functions.E_CTU_LED_GREEN_5HZ.CV" Destination="SERVER_BUTTON_GREEN.SD_1" dx1="66.67" dx2="233.33" dy="160"/>
 					<Connection Source="App_functions.E_CTU_LED_YELLOW_5HZ.CV" Destination="SERVER_BUTTON_YELLOW.SD_1" dx1="66.67" dx2="206.67" dy="160"/>
 					<Connection Source="App_functions.E_CTU_LED_RED_5HZ.CV" Destination="SERVER_BUTTON_RED.SD_1" dx1="66.67" dx2="280" dy="160"/>
 					<Connection Source="App_functions.E_CTU_LED_BLUE_5HZ.CV" Destination="SERVER_BUTTON_BLUE.SD_1" dx1="66.67" dx2="253.33" dy="160"/>
-					<Connection Source="SERVER_BUTTON_BLUE.RD_1" Destination="App_functions.LED_BLUE_5HZ.OUT"/>
+					<Connection Source="SERVER_BUTTON_BLUE.RD_1" Destination="App_functions.LED_BLUE_5HZ.OUT" dx1="1273.33"/>
 					<Connection Source="SERVER_BUTTON_RED.RD_1" Destination="App_functions.LED_RED_5HZ.OUT"/>
-					<Connection Source="SERVER_BUTTON_YELLOW.RD_1" Destination="App_functions.LED_YELLOW_5HZ.OUT"/>
-					<Connection Source="SERVER_BUTTON_GREEN.RD_1" Destination="App_functions.LED_GREEN_5HZ.OUT"/>
+					<Connection Source="SERVER_BUTTON_YELLOW.RD_1" Destination="App_functions.LED_YELLOW_5HZ.OUT" dx1="1253.33"/>
+					<Connection Source="SERVER_BUTTON_GREEN.RD_1" Destination="App_functions.LED_GREEN_5HZ.OUT" dx1="1266.67"/>
 				</DataConnections>
 			</FBNetwork>
 		</Resource>
