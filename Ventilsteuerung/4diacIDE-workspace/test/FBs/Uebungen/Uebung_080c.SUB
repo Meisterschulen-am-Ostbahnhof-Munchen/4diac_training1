@@ -21,8 +21,10 @@
 		<FB Name="E_CTU" Type="E_CTU" x="-6200" y="-800">
 			<Parameter Name="PV" Value="UINT#5"/>
 		</FB>
-		<FB Name="DigitalInput_CLK_I2" Type="IE" x="-7700" y="0">
+		<FB Name="DigitalInput_CLK_I2" Type="logiBUS_IE" x="-7700" y="0">
 			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="Input" Value="logiBUS_DI::Input_I2"/>
+			<Parameter Name="InputEvent" Value="logiBUS_DI_Events::BUTTON_SINGLE_CLICK"/>
 		</FB>
 		<FB Name="E_PERMIT" Type="E_PERMIT" x="-8000" y="-800">
 		</FB>
