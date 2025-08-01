@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<SubAppType Name="Uebung_021" Comment="Spiegelabfolge (1)" >
+<SubAppType Name="Uebung_021" Comment="Spiegelabfolge (1)">
 	<Identification Standard="61499-2" Description="Copyright (c) 2023 Meisterschulen am Ostbahnhof  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0">
 	</Identification>
 	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2023-10-23">
@@ -9,23 +9,28 @@
 	<SubAppInterfaceList>
 	</SubAppInterfaceList>
 	<SubAppNetwork>
-		<FB Name="DigitalOutput_Q1" Type="QX" x="-2833.33" y="-500">
+		<FB Name="DigitalOutput_Q1" Type="logiBUS_QX" x="-2800" y="-400">
 			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="Output" Value="logiBUS_DO::Output_Q1"/>
 		</FB>
-		<FB Name="SoftKey_UP_F1" Type="IE" x="-6833.33" y="-500">
+		<FB Name="SoftKey_UP_F1" Type="Softkey_IE" x="-6833.33" y="-500">
 			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="u16ObjId" Value="DefaultPool::SoftKey_F1"/>
+			<Parameter Name="InputEvent" Value="SoftKeyActivationCode::SK_RELEASED"/>
 		</FB>
 		<FB Name="E_SR" Type="E_SR" x="-5000" y="-300">
 		</FB>
-		<FB Name="SoftKey_F2_DOWN" Type="IE" x="-6833.33" y="1000">
+		<FB Name="SoftKey_F2_DOWN" Type="Softkey_IE" x="-6833.33" y="1000">
 			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="u16ObjId" Value="DefaultPool::SoftKey_F1"/>
+			<Parameter Name="InputEvent" Value="SoftKeyActivationCode::SK_RELEASED"/>
 		</FB>
-		<Comment Comment="START-Knopf"  x="-8500" y="-333.33" width="1373.33" height="366.67"/>
-		<Comment Comment="Endlage &#10;"  x="-8500" y="1166.67" width="1373.33" height="366.67"/>
+		<Comment Comment="START-Knopf" x="-8300" y="-500" width="1373.33" height="366.67"/>
+		<Comment Comment="Endlage &#10;" x="-8300" y="1000" width="1373.33" height="366.67"/>
 		<EventConnections>
 			<Connection Source="SoftKey_UP_F1.IND" Destination="E_SR.S" dx1="573.33"/>
 			<Connection Source="SoftKey_F2_DOWN.IND" Destination="E_SR.R" dx1="553.33"/>
-			<Connection Source="E_SR.EO" Destination="DigitalOutput_Q1.REQ" dx1="813.33"/>
+			<Connection Source="E_SR.EO" Destination="DigitalOutput_Q1.REQ"/>
 		</EventConnections>
 		<DataConnections>
 			<Connection Source="E_SR.Q" Destination="DigitalOutput_Q1.OUT" dx1="860"/>
