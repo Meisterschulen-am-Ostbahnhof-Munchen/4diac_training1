@@ -9,26 +9,31 @@
 	<SubAppInterfaceList>
 	</SubAppInterfaceList>
 	<SubAppNetwork>
-		<FB Name="DigitalOutput_Q1" Type="QX" x="-4886.67" y="-886.67">
+		<FB Name="DigitalOutput_Q1" Type="logiBUS_QX" x="-4700" y="-800">
 			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="Output" Value="logiBUS_DO::Output_Q1"/>
 		</FB>
-		<FB Name="DigitalInput_CLK_I1" Type="IE" x="-8006.67" y="-986.67">
+		<FB Name="DigitalInput_CLK_I1" Type="logiBUS_IE" x="-8000" y="-1000">
 			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="Input" Value="logiBUS_DI::Input_I1"/>
+			<Parameter Name="InputEvent" Value="logiBUS_DI_Events::BUTTON_SINGLE_CLICK"/>
 		</FB>
-		<FB Name="E_CTD" Type="E_CTD" x="-6253.33" y="-786.67">
+		<FB Name="E_CTD" Type="E_CTD" x="-6200" y="-800">
 			<Parameter Name="PV" Value="UINT#5"/>
 		</FB>
-		<FB Name="DigitalInput_CLK_I2" Type="IE" x="-8006.67" y="-100">
+		<FB Name="DigitalInput_CLK_I2" Type="logiBUS_IE" x="-8000" y="100">
 			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="Input" Value="logiBUS_DI::Input_I2"/>
+			<Parameter Name="InputEvent" Value="logiBUS_DI_Events::BUTTON_SINGLE_CLICK"/>
 		</FB>
 		<EventConnections>
 			<Connection Source="DigitalInput_CLK_I1.IND" Destination="E_CTD.CD"/>
-			<Connection Source="E_CTD.CDO" Destination="DigitalOutput_Q1.REQ"/>
-			<Connection Source="E_CTD.LDO" Destination="DigitalOutput_Q1.REQ" dx1="406.67" dx2="406.67" dy="0"/>
-			<Connection Source="DigitalInput_CLK_I2.IND" Destination="E_CTD.LD" dx1="460" dx2="460" dy="0"/>
+			<Connection Source="E_CTD.CDO" Destination="DigitalOutput_Q1.REQ" dx1="413.33"/>
+			<Connection Source="E_CTD.LDO" Destination="DigitalOutput_Q1.REQ"/>
+			<Connection Source="DigitalInput_CLK_I2.IND" Destination="E_CTD.LD" dx1="460"/>
 		</EventConnections>
 		<DataConnections>
-			<Connection Source="E_CTD.Q" Destination="DigitalOutput_Q1.OUT" dx1="286.67" dx2="286.67" dy="0"/>
+			<Connection Source="E_CTD.Q" Destination="DigitalOutput_Q1.OUT" dx1="286.67"/>
 		</DataConnections>
 	</SubAppNetwork>
 </SubAppType>
