@@ -9,10 +9,12 @@
 	<SubAppInterfaceList>
 	</SubAppInterfaceList>
 	<SubAppNetwork>
-		<FB Name="DigitalInput_CLK_I1" Type="IE" x="-4986.67" y="-460">
+		<FB Name="DigitalInput_CLK_I1" Type="logiBUS_IE" x="-5000" y="-400">
 			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="Input" Value="logiBUS_DI::Input_I1"/>
+			<Parameter Name="InputEvent" Value="logiBUS_DI_Events::BUTTON_SINGLE_CLICK"/>
 		</FB>
-		<FB Name="SCALE" Type="signalprocessing::SCALE" x="-2606.67" y="-226.67">
+		<FB Name="SCALE" Type="signalprocessing::SCALE" x="-2500" y="-200">
 			<Parameter Name="IN" Value="10.0"/>
 			<Parameter Name="MAX_IN" Value="20.0"/>
 			<Parameter Name="MIN_IN" Value="4.0"/>
@@ -20,7 +22,7 @@
 			<Parameter Name="MIN_OUT" Value="0.0"/>
 		</FB>
 		<EventConnections>
-			<Connection Source="DigitalInput_CLK_I1.IND" Destination="SCALE.REQ" dx1="846.67"/>
+			<Connection Source="DigitalInput_CLK_I1.IND" Destination="SCALE.REQ"/>
 		</EventConnections>
 	</SubAppNetwork>
 </SubAppType>
