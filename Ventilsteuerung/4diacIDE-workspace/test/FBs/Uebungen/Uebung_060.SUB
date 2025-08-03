@@ -11,6 +11,8 @@
 	<SubAppNetwork>
 		<FB Name="SETPOINT_CONDENSED_WORK_STATE_1_16" Type="TC_ID" x="-800" y="-8900">
 			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="wDevElementNumb" Value="TCPool::DE_NUM_DEVICE"/>
+			<Parameter Name="wDDI" Value="DDI::SETPOINT_CONDENSED_WORK_STATE_1_16"/>
 		</FB>
 		<FB Name="SPLIT_DWORD_INTO_QUARTERS" Type="SPLIT_DWORD_INTO_QUARTERS" x="1300" y="-8700">
 		</FB>
@@ -18,6 +20,8 @@
 		</FB>
 		<FB Name="ACTUAL_CONDENSED_WORK_STATE_1_16" Type="TC_QD" x="12506.67" y="-8800">
 			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="wDevElementNumb" Value="TCPool::DE_NUM_DEVICE"/>
+			<Parameter Name="wDDI" Value="DDI::ACTUAL_CONDENSED_WORK_STATE_1_16"/>
 		</FB>
 		<FB Name="BOOLS_TO_QUARTERS" Type="BOOLS_TO_QUARTERS" x="5700" y="-8700">
 		</FB>
@@ -25,17 +29,25 @@
 		</FB>
 		<SubApp Name="Out" Type="Uebung_060_sub_Outputs" x="6800" y="-10700">
 		</SubApp>
-		<FB Name="SECTION_CONTROL_STATE_IN" Type="ID" x="10100" y="-7700">
+		<FB Name="SECTION_CONTROL_STATE_IN" Type="TC_ID" x="10900" y="-7700">
 			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="wDevElementNumb" Value="TCPool::DE_NUM_DEVICE"/>
+			<Parameter Name="wDDI" Value="DDI::SECTION_CONTROL_STATE"/>
 		</FB>
-		<FB Name="SECTION_CONTROL_STATE_OUT" Type="TC_QD" x="12666.67" y="-7600">
+		<FB Name="SECTION_CONTROL_STATE_OUT" Type="TC_QD" x="13466.67" y="-7600">
 			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="wDevElementNumb" Value="TCPool::DE_NUM_DEVICE"/>
+			<Parameter Name="wDDI" Value="DDI::SECTION_CONTROL_STATE"/>
 		</FB>
-		<FB Name="ACTUAL_RATE" Type="TC_QD" x="12700" y="-9900">
+		<FB Name="ACTUAL_RATE" Type="TC_QD" x="13900" y="-9900">
 			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="wDevElementNumb" Value="TCPool::DE_NUM_DEVICE"/>
+			<Parameter Name="wDDI" Value="DDI::ACTUAL_VOLUME_PER_AREA_APPLICATION_RATE"/>
 		</FB>
 		<FB Name="ACTUAL_WORK_STATE" Type="TC_QD" x="12700" y="-10900">
 			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="wDevElementNumb" Value="TCPool::DE_NUM_DEVICE"/>
+			<Parameter Name="wDDI" Value="DDI::ACTUAL_WORK_STATE"/>
 		</FB>
 		<FB Name="F_SEL" Type="F_SEL" x="10800" y="-9600">
 			<Parameter Name="IN0" Value="DWORD#0"/>
