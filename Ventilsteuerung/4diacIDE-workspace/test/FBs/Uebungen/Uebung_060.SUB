@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<SubAppType Name="Uebung_060" Comment="für TC-SC also Task Controller Section Control" >
+<SubAppType Name="Uebung_060" Comment="für TC-SC also Task Controller Section Control">
 	<Identification Standard="61499-2" Description="Copyright (c) 2023 Meisterschulen am Ostbahnhof  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0">
 	</Identification>
 	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2023-10-23">
@@ -9,14 +9,14 @@
 	<SubAppInterfaceList>
 	</SubAppInterfaceList>
 	<SubAppNetwork>
-		<FB Name="SETPOINT_CONDENSED_WORK_STATE_1_16" Type="ID" x="-800" y="-8900">
+		<FB Name="SETPOINT_CONDENSED_WORK_STATE_1_16" Type="TC_ID" x="-800" y="-8900">
 			<Parameter Name="QI" Value="TRUE"/>
 		</FB>
 		<FB Name="SPLIT_DWORD_INTO_QUARTERS" Type="SPLIT_DWORD_INTO_QUARTERS" x="1300" y="-8700">
 		</FB>
 		<FB Name="ASSEMBLE_DWORD_FROM_QUARTERS" Type="ASSEMBLE_DWORD_FROM_QUARTERS" x="7300" y="-8700">
 		</FB>
-		<FB Name="ACTUAL_CONDENSED_WORK_STATE_1_16" Type="QD" x="11740" y="-8800">
+		<FB Name="ACTUAL_CONDENSED_WORK_STATE_1_16" Type="TC_QD" x="12506.67" y="-8800">
 			<Parameter Name="QI" Value="TRUE"/>
 		</FB>
 		<FB Name="BOOLS_TO_QUARTERS" Type="BOOLS_TO_QUARTERS" x="5700" y="-8700">
@@ -25,23 +25,23 @@
 		</FB>
 		<SubApp Name="Out" Type="Uebung_060_sub_Outputs" x="6800" y="-10700">
 		</SubApp>
-		<FB Name="SECTION_CONTROL_STATE_IN" Type="ID" x="10100" y="-8000">
+		<FB Name="SECTION_CONTROL_STATE_IN" Type="ID" x="10100" y="-7700">
 			<Parameter Name="QI" Value="TRUE"/>
 		</FB>
-		<FB Name="SECTION_CONTROL_STATE_OUT" Type="QD" x="11900" y="-7900">
+		<FB Name="SECTION_CONTROL_STATE_OUT" Type="TC_QD" x="12666.67" y="-7600">
 			<Parameter Name="QI" Value="TRUE"/>
 		</FB>
-		<FB Name="ACTUAL_RATE" Type="QD" x="12140" y="-9600">
+		<FB Name="ACTUAL_RATE" Type="TC_QD" x="12700" y="-9900">
 			<Parameter Name="QI" Value="TRUE"/>
 		</FB>
-		<FB Name="ACTUAL_WORK_STATE" Type="QD" x="12093.33" y="-10400">
+		<FB Name="ACTUAL_WORK_STATE" Type="TC_QD" x="12700" y="-10900">
 			<Parameter Name="QI" Value="TRUE"/>
 		</FB>
-		<FB Name="F_SEL" Type="F_SEL" x="11000" y="-9300">
+		<FB Name="F_SEL" Type="F_SEL" x="10800" y="-9600">
 			<Parameter Name="IN0" Value="DWORD#0"/>
 			<Parameter Name="IN1" Value="DWORD#1"/>
 		</FB>
-		<FB Name="F_GT" Type="F_GT" x="10000" y="-9300">
+		<FB Name="F_GT" Type="F_GT" x="9800" y="-9600">
 			<Parameter Name="IN2" Value="DWORD#0"/>
 		</FB>
 		<EventConnections>
