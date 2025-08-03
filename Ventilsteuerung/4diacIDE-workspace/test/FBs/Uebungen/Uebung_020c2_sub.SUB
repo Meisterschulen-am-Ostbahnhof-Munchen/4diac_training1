@@ -24,8 +24,9 @@
 		</OutputVars>
 	</SubAppInterfaceList>
 	<SubAppNetwork>
-		<FB Name="InputNumber_I1" Type="ID" x="-700" y="0">
+		<FB Name="InputNumber_I1" Type="NumericValue_ID" x="-1300" y="0">
 			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="u16ObjId" Value="DefaultPool::InputNumber_I1"/>
 		</FB>
 		<FB Name="F_DWORD_TO_UDINT" Type="F_DWORD_TO_UDINT" x="400" y="400">
 		</FB>
@@ -48,7 +49,7 @@
 			<Connection Source="NVS_UDINT.GETO" Destination="IND" dx1="2933.33">
 				<Attribute Name="Visible" Value="false"/>
 			</Connection>
-			<Connection Source="NVS_UDINT.INITO" Destination="NVS_UDINT.GET" dx1="80" dx2="80" dy="-766.67"/>
+			<Connection Source="NVS_UDINT.INITO" Destination="NVS_UDINT.GET" dx1="80" dx2="80" dy="-286.67"/>
 		</EventConnections>
 		<DataConnections>
 			<Connection Source="InputNumber_I1.IN" Destination="F_DWORD_TO_UDINT.IN"/>

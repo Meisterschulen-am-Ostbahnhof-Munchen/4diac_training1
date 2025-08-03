@@ -9,13 +9,15 @@
 	<SubAppInterfaceList>
 	</SubAppInterfaceList>
 	<SubAppNetwork>
-		<FB Name="AnalogInput_I7" Type="ID" x="-2700" y="1300">
+		<FB Name="AnalogInput_I7" Type="logiBUS_AI_ID" x="-3700" y="1500">
 			<Parameter Name="QI" Value="TRUE">
 				<Attribute Name="Visible" Value="false"/>
 			</Parameter>
 			<Parameter Name="PARAMS" Value="">
 				<Attribute Name="Visible" Value="false"/>
 			</Parameter>
+			<Parameter Name="Input" Value="logiBUS_AI::AnalogInput_I7"/>
+			<Parameter Name="AnalogInput_hysteresis" Value="50"/>
 		</FB>
 		<FB Name="F_DWORD_TO_UDINT_I7" Type="F_DWORD_TO_UDINT" x="1100" y="2600">
 		</FB>
@@ -32,12 +34,12 @@
 			<Parameter Name="N" Value="UINT#1"/>
 		</FB>
 		<EventConnections>
-			<Connection Source="AnalogInput_I7.IND" Destination="F_SHL.REQ" dx1="166.67"/>
+			<Connection Source="AnalogInput_I7.IND" Destination="F_SHL.REQ"/>
 			<Connection Source="F_SHL.CNF" Destination="F_DWORD_TO_UDINT_I7.REQ" dx1="1040"/>
 			<Connection Source="F_SHL.CNF" Destination="PWMOutput_Q4.REQ"/>
 		</EventConnections>
 		<DataConnections>
-			<Connection Source="AnalogInput_I7.IN" Destination="F_SHL.IN"/>
+			<Connection Source="AnalogInput_I7.IN" Destination="F_SHL.IN" dx1="206.67"/>
 			<Connection Source="F_SHL.OUT" Destination="PWMOutput_Q4.OUT"/>
 			<Connection Source="F_SHL.OUT" Destination="F_DWORD_TO_UDINT_I7.IN" dx1="853.33"/>
 		</DataConnections>
