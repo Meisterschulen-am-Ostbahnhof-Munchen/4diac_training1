@@ -9,19 +9,24 @@
 	<SubAppInterfaceList>
 	</SubAppInterfaceList>
 	<SubAppNetwork>
-		<FB Name="CAR_RED_LIGHT" Type="QX" x="5200" y="-1100">
+		<FB Name="CAR_RED_LIGHT" Type="logiBUS_QX" x="6900" y="-1000">
 			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="Output" Value="logiBUS_DO::Output_Q1"/>
 		</FB>
 		<FB Name="E_TimeOut" Type="E_TimeOut" x="4200" y="1800">
 		</FB>
-		<FB Name="CAR_ORANGE_LIGHT" Type="QX" x="5200" y="-300">
+		<FB Name="CAR_ORANGE_LIGHT" Type="logiBUS_QX" x="6900" y="-100">
 			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="Output" Value="logiBUS_DO::Output_Q2"/>
 		</FB>
-		<FB Name="CAR_GREEN_LIGHT" Type="QX" x="5200" y="500">
+		<FB Name="CAR_GREEN_LIGHT" Type="logiBUS_QX" x="6900" y="800">
 			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="Output" Value="logiBUS_DO::Output_Q3"/>
 		</FB>
-		<FB Name="DigitalInput_CLK_I1" Type="IE" x="700" y="600">
+		<FB Name="DigitalInput_CLK_I1" Type="logiBUS_IE" x="700" y="600">
 			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="Input" Value="logiBUS_DI::Input_I1"/>
+			<Parameter Name="InputEvent" Value="logiBUS_DI_Events::BUTTON_SINGLE_CLICK"/>
 		</FB>
 		<FB Name="sequence_T_04_loop" Type="sequence_T_04_loop" x="2000" y="800">
 			<Parameter Name="DT_S1_S2" Value="T#6s" Comment="RED"/>
@@ -37,7 +42,7 @@
 			<Parameter Name="DO_S3" Value="" Comment="GREEN"/>
 			<Parameter Name="DO_S4" Value="" Comment="ORANGE"/>
 		</FB>
-		<SubApp Name="RED" x="3800" y="-900">
+		<SubApp Name="RED" x="4600" y="-900">
 			<SubAppInterfaceList>
 				<SubAppEventInputs>
 					<SubAppEvent Name="EI_RED" Type="Event">
@@ -74,7 +79,7 @@
 			<Attribute Name="width" Type="LREAL" Value="200"/>
 			<Attribute Name="height" Type="LREAL" Value="100"/>
 		</SubApp>
-		<SubApp Name="ORANGE" x="3900" y="-100">
+		<SubApp Name="ORANGE" x="4700" y="0">
 			<SubAppInterfaceList>
 				<SubAppEventInputs>
 					<SubAppEvent Name="EI_RED_ORANGE" Type="Event">
@@ -122,14 +127,14 @@
 			<Connection Source="sequence_T_04_loop.EO_S2" Destination="RED.EI_RED_ORANGE" dx1="600">
 				<Attribute Name="Visible" Value="false"/>
 			</Connection>
-			<Connection Source="RED.CNF" Destination="CAR_RED_LIGHT.REQ" dx1="346.67"/>
+			<Connection Source="RED.CNF" Destination="CAR_RED_LIGHT.REQ"/>
 			<Connection Source="sequence_T_04_loop.EO_S2" Destination="ORANGE.EI_RED_ORANGE" dx1="700">
 				<Attribute Name="Visible" Value="false"/>
 			</Connection>
 			<Connection Source="sequence_T_04_loop.EO_S4" Destination="ORANGE.EI_ORANGE" dx1="700">
 				<Attribute Name="Visible" Value="false"/>
 			</Connection>
-			<Connection Source="ORANGE.CNF" Destination="CAR_ORANGE_LIGHT.REQ" dx1="313.33"/>
+			<Connection Source="ORANGE.CNF" Destination="CAR_ORANGE_LIGHT.REQ"/>
 		</EventConnections>
 		<DataConnections>
 			<Connection Source="sequence_T_04_loop.DO_S3" Destination="CAR_GREEN_LIGHT.OUT" dx1="1093.33">
@@ -141,14 +146,14 @@
 			<Connection Source="sequence_T_04_loop.DO_S2" Destination="RED.DI_RED_ORANGE" dx1="600">
 				<Attribute Name="Visible" Value="false"/>
 			</Connection>
-			<Connection Source="RED.OUT" Destination="CAR_RED_LIGHT.OUT"/>
+			<Connection Source="RED.OUT" Destination="CAR_RED_LIGHT.OUT" dx1="713.33"/>
 			<Connection Source="sequence_T_04_loop.DO_S2" Destination="ORANGE.DI_RED_ORANGE" dx1="700">
 				<Attribute Name="Visible" Value="false"/>
 			</Connection>
 			<Connection Source="sequence_T_04_loop.DO_S4" Destination="ORANGE.DI_ORANGE" dx1="700">
 				<Attribute Name="Visible" Value="false"/>
 			</Connection>
-			<Connection Source="ORANGE.OUT" Destination="CAR_ORANGE_LIGHT.OUT"/>
+			<Connection Source="ORANGE.OUT" Destination="CAR_ORANGE_LIGHT.OUT" dx1="660"/>
 		</DataConnections>
 		<AdapterConnections>
 			<Connection Source="sequence_T_04_loop.timeOut" Destination="E_TimeOut.TimeOutSocket"/>
