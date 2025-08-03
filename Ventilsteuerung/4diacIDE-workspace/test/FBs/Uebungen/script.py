@@ -4,14 +4,15 @@ import os
 
 def update_xml_file(filepath):
     """
-    Updates an XML file by changing attribute values and adding new elements.
+    Aktualisiert eine XML-Datei, indem Attributwerte geändert und neue Elemente hinzugefügt werden.
     Args:
-        filepath (str): The path to the XML file to be updated.
+        filepath (str): Der Pfad zur zu aktualisierenden XML-Datei.
     """
     try:
-        # Register the default namespace to avoid prefixes like ns0 in the output
+        # Registrieren Sie den Standard-Namespace, um Präfixe wie ns0 in der Ausgabe zu vermeiden.
         ET.register_namespace('', 'http://www.w3.org/2001/XMLSchema-instance')
         
+        # Parse the XML file
         tree = ET.parse(filepath)
         root = tree.getroot()
 
@@ -19,55 +20,61 @@ def update_xml_file(filepath):
         for fb in root.findall(".//FB[@Name='DigitalOutput_Q1']"):
             fb.set("Type", "logiBUS_QX")
             
-            # Check if the parameter already exists to avoid duplicates
-            if not fb.find("Parameter[@Name='Output']") is not None:
+            # Überprüfen Sie, ob der Parameter bereits existiert, um Duplikate zu vermeiden
+            output_param_exists = any(p.get('Name') == 'Output' for p in fb.findall('Parameter'))
+            if not output_param_exists:
                 output_param = ET.Element("Parameter", Name="Output", Value="logiBUS_DO::Output_Q1")
                 fb.append(output_param)
-                print(f"  - Updated DigitalOutput_Q1 in {os.path.basename(filepath)}")
+                print(f"  - Parameter 'Output' zu DigitalOutput_Q1 in {os.path.basename(filepath)} hinzugefügt.")
 
         # Update the 'DigitalInput_CLK_I1' FB block
         for fb in root.findall(".//FB[@Name='DigitalInput_CLK_I1']"):
             fb.set("Type", "logiBUS_IE")
             
-            # Check for existing parameters before adding to avoid duplicates
-            if not fb.find("Parameter[@Name='Input']") is not None:
+            # Überprüfen Sie auf vorhandene Parameter, bevor Sie sie hinzufügen, um Duplikate zu vermeiden
+            input_param_exists = any(p.get('Name') == 'Input' for p in fb.findall('Parameter'))
+            if not input_param_exists:
                 input_param = ET.Element("Parameter", Name="Input", Value="logiBUS_DI::Input_I1")
                 fb.append(input_param)
+                print(f"  - Parameter 'Input' zu DigitalInput_CLK_I1 in {os.path.basename(filepath)} hinzugefügt.")
 
-            if not fb.find("Parameter[@Name='InputEvent']") is not None:
+            input_event_param_exists = any(p.get('Name') == 'InputEvent' for p in fb.findall('Parameter'))
+            if not input_event_param_exists:
                 input_event_param = ET.Element("Parameter", Name="InputEvent", Value="logiBUS_DI_Events::BUTTON_SINGLE_CLICK")
                 fb.append(input_event_param)
-                print(f"  - Updated DigitalInput_CLK_I1 in {os.path.basename(filepath)}")
+                print(f"  - Parameter 'InputEvent' zu DigitalInput_CLK_I1 in {os.path.basename(filepath)} hinzugefügt.")
 
-        # Save the updated XML to the same file with a proper formatting
+        # Speichern Sie die aktualisierte XML-Datei mit korrekter Formatierung
+        # Verwendung von 'xml_declaration=True' und 'encoding='UTF-8''
+        # hilft, die Formatierung konsistent zu halten.
         tree.write(filepath, encoding='UTF-8', xml_declaration=True)
-        print(f"Successfully updated and saved the file: {filepath}")
+        print(f"Datei erfolgreich aktualisiert und gespeichert: {filepath}")
 
     except FileNotFoundError:
-        print(f"Error: The file {filepath} was not found.")
+        print(f"Fehler: Die Datei {filepath} wurde nicht gefunden.")
     except Exception as e:
-        print(f"An error occurred while processing {filepath}: {e}")
+        print(f"Ein Fehler ist bei der Verarbeitung von {filepath} aufgetreten: {e}")
 
 def process_directory(directory_path):
     """
-    Finds all XML files in a directory and applies the update function to each.
+    Findet alle XML-Dateien in einem Verzeichnis und wendet die Update-Funktion auf jede an.
     Args:
-        directory_path (str): The path to the directory containing the XML files.
+        directory_path (str): Der Pfad zu dem Verzeichnis, das die XML-Dateien enthält.
     """
     # Use glob to find all files ending with .xml
     # Adjust the pattern if your files have a different naming convention
     xml_files = glob.glob(os.path.join(directory_path, '*.SUB'))
     
     if not xml_files:
-        print(f"No XML files found in the directory: {directory_path}")
+        print(f"Keine XML-Dateien im Verzeichnis gefunden: {directory_path}")
         return
 
-    print(f"Found {len(xml_files)} XML file(s) to process.")
+    print(f"Es wurden {len(xml_files)} XML-Datei(en) zum Verarbeiten gefunden.")
     for file_path in xml_files:
-        print(f"\nProcessing file: {file_path}")
+        print(f"\nVerarbeite Datei: {file_path}")
         update_xml_file(file_path)
     
-    print("\nProcessing complete.")
+    print("\nVerarbeitung abgeschlossen.")
 
 # --- Beispiel-Nutzung ---
 # Ersetzen Sie 'pfad/zu/ihrem/verzeichnis' mit dem tatsächlichen Pfad zu Ihrem Verzeichnis.
