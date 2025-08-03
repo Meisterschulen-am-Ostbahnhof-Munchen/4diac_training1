@@ -9,30 +9,38 @@
 	<SubAppInterfaceList>
 	</SubAppInterfaceList>
 	<SubAppNetwork>
-		<FB Name="DigitalOutput_Q1" Type="QX" x="-7840" y="-986.67">
+		<FB Name="DigitalOutput_Q1" Type="logiBUS_QX" x="-6800" y="-1000">
 			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="Output" Value="logiBUS_DO::Output_Q1"/>
 		</FB>
-		<FB Name="E_TimeOut" Type="E_TimeOut" x="-7840" y="2933.33">
+		<FB Name="E_TimeOut" Type="E_TimeOut" x="-8800" y="3500">
 		</FB>
-		<FB Name="DigitalOutput_Q2" Type="QX" x="-7840" y="-6.67">
+		<FB Name="DigitalOutput_Q2" Type="logiBUS_QX" x="-6800" y="-20">
 			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="Output" Value="logiBUS_DO::Output_Q2"/>
 		</FB>
-		<FB Name="DigitalOutput_Q3" Type="QX" x="-7840" y="973.33">
+		<FB Name="DigitalOutput_Q3" Type="logiBUS_QX" x="-6800" y="953.33">
 			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="Output" Value="logiBUS_DO::Output_Q3"/>
 		</FB>
-		<FB Name="DigitalOutput_Q4" Type="QX" x="-7840" y="1953.33">
+		<FB Name="DigitalOutput_Q4" Type="logiBUS_QX" x="-6800" y="1933.33">
 			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="Output" Value="logiBUS_DO::Output_Q4"/>
 		</FB>
-		<FB Name="DigitalInput_CLK_I1" Type="IE" x="-11373.33" y="-20">
+		<FB Name="DigitalInput_CLK_I1" Type="logiBUS_IE" x="-11373.33" y="-20">
 			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="Input" Value="logiBUS_DI::Input_I1"/>
+			<Parameter Name="InputEvent" Value="logiBUS_DI_Events::BUTTON_SINGLE_CLICK"/>
 		</FB>
-		<FB Name="DigitalInput_CLK_I4" Type="IE" x="-11373.33" y="2920">
+		<FB Name="DigitalInput_CLK_I4" Type="logiBUS_IE" x="-11373.33" y="2920">
 			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="Input" Value="logiBUS_DI::Input_I4"/>
+			<Parameter Name="InputEvent" Value="logiBUS_DI_Events::BUTTON_SINGLE_CLICK"/>
 		</FB>
-		<FB Name="Q_NumericValue" Type="Q_NumericValue" x="-4266.67" y="1866.67">
+		<FB Name="Q_NumericValue" Type="Q_NumericValue" x="-3100" y="2300">
 			<Parameter Name="u16ObjId" Value="DefaultPool::OutputNumber_N1"/>
 		</FB>
-		<FB Name="F_SINT_TO_UINT" Type="F_SINT_TO_UINT" x="-6400" y="2206.67">
+		<FB Name="F_SINT_TO_UINT" Type="F_SINT_TO_UINT" x="-5400" y="2500">
 		</FB>
 		<FB Name="sequence_04" Type="sequence_ET_04_loop" x="-9673.33" y="1713.33">
 			<Parameter Name="DT_S1_S2" Value="T#200ms"/>
@@ -44,22 +52,22 @@
 			<Connection Source="F_SINT_TO_UINT.CNF" Destination="Q_NumericValue.REQ" dx1="233.33"/>
 			<Connection Source="DigitalInput_CLK_I1.IND" Destination="sequence_04.START_S1" dx1="406.67"/>
 			<Connection Source="DigitalInput_CLK_I4.IND" Destination="sequence_04.RESET" dx1="253.33"/>
-			<Connection Source="sequence_04.CNF" Destination="F_SINT_TO_UINT.REQ" dx1="393.33" dx2="393.33" dy="-13.33"/>
+			<Connection Source="sequence_04.CNF" Destination="F_SINT_TO_UINT.REQ" dx1="2906.67"/>
 			<Connection Source="sequence_04.EO_S1" Destination="DigitalOutput_Q1.REQ" dx1="186.67"/>
 			<Connection Source="sequence_04.EO_S2" Destination="DigitalOutput_Q2.REQ" dx1="253.33"/>
 			<Connection Source="sequence_04.EO_S3" Destination="DigitalOutput_Q3.REQ" dx1="320"/>
 			<Connection Source="sequence_04.EO_S4" Destination="DigitalOutput_Q4.REQ" dx1="393.33"/>
 		</EventConnections>
 		<DataConnections>
-			<Connection Source="F_SINT_TO_UINT.OUT" Destination="Q_NumericValue.u32NewValue" dx1="233.33"/>
-			<Connection Source="sequence_04.STATE_NR" Destination="F_SINT_TO_UINT.IN" dx1="186.67" dx2="186.67" dy="173.33"/>
+			<Connection Source="F_SINT_TO_UINT.OUT" Destination="Q_NumericValue.u32NewValue"/>
+			<Connection Source="sequence_04.STATE_NR" Destination="F_SINT_TO_UINT.IN" dx1="440"/>
 			<Connection Source="sequence_04.DO_S1" Destination="DigitalOutput_Q1.OUT" dx1="220"/>
 			<Connection Source="sequence_04.DO_S2" Destination="DigitalOutput_Q2.OUT" dx1="286.67"/>
 			<Connection Source="sequence_04.DO_S3" Destination="DigitalOutput_Q3.OUT" dx1="353.33"/>
-			<Connection Source="sequence_04.DO_S4" Destination="DigitalOutput_Q4.OUT" dx1="386.67"/>
+			<Connection Source="sequence_04.DO_S4" Destination="DigitalOutput_Q4.OUT" dx1="546.67"/>
 		</DataConnections>
 		<AdapterConnections>
-			<Connection Source="sequence_04.timeOut" Destination="E_TimeOut.TimeOutSocket" dx1="333.33"/>
+			<Connection Source="sequence_04.timeOut" Destination="E_TimeOut.TimeOutSocket" dx1="80" dx2="80" dy="346.67"/>
 		</AdapterConnections>
 	</SubAppNetwork>
 </SubAppType>
