@@ -9,8 +9,10 @@
 	<SubAppInterfaceList>
 	</SubAppInterfaceList>
 	<SubAppNetwork>
-		<FB Name="SoftKey_UP_F1" Type="IE" x="-4500" y="-900">
+		<FB Name="SoftKey_UP_F1" Type="Softkey_IE" x="-4500" y="-900">
 			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="u16ObjId" Value="DefaultPool::SoftKey_F1"/>
+			<Parameter Name="InputEvent" Value="SoftKeyActivationCode::SK_RELEASED"/>
 		</FB>
 		<FB Name="Q_CtrlAudioSignal_0" Type="Q_CtrlAudioSignal" x="-2700" y="-800">
 			<Parameter Name="u8NumOfRepit" Value="1"/>
