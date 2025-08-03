@@ -51,6 +51,28 @@ def update_xml_file(filepath):
                     fb.append(input_event_param)
                     print(f"  - Parameter 'InputEvent' zu {fb_name} in {os.path.basename(filepath)} hinzugefügt.")
 
+        # NEUE FUNKTIONALITÄT: Update all 'SoftKey_...' FB blocks
+        for fb in root.findall(".//FB"):
+            fb_name = fb.get("Name")
+            if fb_name and fb_name.startswith("SoftKey_"):
+                fb.set("Type", "Softkey_IE")
+
+                # Fügen Sie den 'u16ObjId' Parameter hinzu
+                obj_id_exists = any(p.get('Name') == 'u16ObjId' for p in fb.findall('Parameter'))
+                if not obj_id_exists:
+                    softkey_part = fb_name.split('_')[-1]
+                    obj_id_value = f"DefaultPool::SoftKey_{softkey_part}"
+                    obj_id_param = ET.Element("Parameter", Name="u16ObjId", Value=obj_id_value)
+                    fb.append(obj_id_param)
+                    print(f"  - Parameter 'u16ObjId' zu {fb_name} in {os.path.basename(filepath)} hinzugefügt.")
+
+                # Fügen Sie den 'InputEvent' Parameter hinzu
+                input_event_exists = any(p.get('Name') == 'InputEvent' for p in fb.findall('Parameter'))
+                if not input_event_exists:
+                    input_event_param = ET.Element("Parameter", Name="InputEvent", Value="SoftKeyActivationCode::SK_RELEASED")
+                    fb.append(input_event_param)
+                    print(f"  - Parameter 'InputEvent' zu {fb_name} in {os.path.basename(filepath)} hinzugefügt.")
+        
         # Speichern Sie die aktualisierte XML-Datei
         tree.write(filepath, encoding='UTF-8', xml_declaration=True)
         print(f"Datei erfolgreich aktualisiert und gespeichert: {filepath}")
