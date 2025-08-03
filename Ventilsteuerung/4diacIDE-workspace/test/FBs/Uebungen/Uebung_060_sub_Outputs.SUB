@@ -43,30 +43,30 @@
 		</InputVars>
 	</SubAppInterfaceList>
 	<SubAppNetwork>
-		<FB Name="DigitalOutput_Q4" Type="QX" x="-3373.33" y="1953.33">
+		<FB Name="DigitalOutput_Q4" Type="logiBUS_QX" x="-3373.33" y="1953.33">
 			<Parameter Name="QI" Value="TRUE"/>
-		</FB>
-		<FB Name="DigitalOutput_Q7" Type="QX" x="-3373.33" y="4893.33">
+		<Parameter Name="Output" Value="logiBUS_DO::Output_Q4"/></FB>
+		<FB Name="DigitalOutput_Q7" Type="logiBUS_QX" x="-3373.33" y="4893.33">
 			<Parameter Name="QI" Value="TRUE"/>
-		</FB>
-		<FB Name="DigitalOutput_Q1" Type="QX" x="-3373.33" y="-986.67">
+		<Parameter Name="Output" Value="logiBUS_DO::Output_Q7"/></FB>
+		<FB Name="DigitalOutput_Q1" Type="logiBUS_QX" x="-3373.33" y="-986.67">
 			<Parameter Name="QI" Value="TRUE"/>
-		</FB>
-		<FB Name="DigitalOutput_Q5" Type="QX" x="-3373.33" y="2933.33">
+		<Parameter Name="Output" Value="logiBUS_DO::Output_Q1"/></FB>
+		<FB Name="DigitalOutput_Q5" Type="logiBUS_QX" x="-3373.33" y="2933.33">
 			<Parameter Name="QI" Value="TRUE"/>
-		</FB>
-		<FB Name="DigitalOutput_Q2" Type="QX" x="-3373.33" y="-6.67">
+		<Parameter Name="Output" Value="logiBUS_DO::Output_Q5"/></FB>
+		<FB Name="DigitalOutput_Q2" Type="logiBUS_QX" x="-3373.33" y="-6.67">
 			<Parameter Name="QI" Value="TRUE"/>
-		</FB>
-		<FB Name="DigitalOutput_Q6" Type="QX" x="-3373.33" y="3913.33">
+		<Parameter Name="Output" Value="logiBUS_DO::Output_Q2"/></FB>
+		<FB Name="DigitalOutput_Q6" Type="logiBUS_QX" x="-3373.33" y="3913.33">
 			<Parameter Name="QI" Value="TRUE"/>
-		</FB>
-		<FB Name="DigitalOutput_Q8" Type="QX" x="-3373.33" y="5873.33">
+		<Parameter Name="Output" Value="logiBUS_DO::Output_Q6"/></FB>
+		<FB Name="DigitalOutput_Q8" Type="logiBUS_QX" x="-3373.33" y="5873.33">
 			<Parameter Name="QI" Value="TRUE"/>
-		</FB>
-		<FB Name="DigitalOutput_Q3" Type="QX" x="-3373.33" y="973.33">
+		<Parameter Name="Output" Value="logiBUS_DO::Output_Q8"/></FB>
+		<FB Name="DigitalOutput_Q3" Type="logiBUS_QX" x="-3373.33" y="973.33">
 			<Parameter Name="QI" Value="TRUE"/>
-		</FB>
+		<Parameter Name="Output" Value="logiBUS_DO::Output_Q3"/></FB>
 		<EventConnections>
 			<Connection Source="CNF" Destination="DigitalOutput_Q4.REQ" dx1="720">
 				<Attribute Name="Visible" Value="false"/>
