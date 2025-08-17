@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SubAppType Name="Uebung_088" Comment="Beispiel für E_F_TRIG">
+	<Identification Standard="61499-2" Description="Copyright (c) 2023 Meisterschulen am Ostbahnhof  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0">
+	</Identification>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2023-10-23">
+	</VersionInfo>
+	<CompilerInfo>
+	</CompilerInfo>
+	<SubAppInterfaceList>
+	</SubAppInterfaceList>
+	<SubAppNetwork>
+		<FB Name="DigitalOutput_Q1" Type="logiBUS_QX" x="1900" y="-500">
+			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="Output" Value="logiBUS_DO::Output_Q1"/>
+		</FB>
+		<FB Name="DigitalInput_I1" Type="logiBUS_IX" x="-4500" y="-900">
+			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="Input" Value="logiBUS_DI::Input_I1"/>
+		</FB>
+		<FB Name="AND_2" Type="AND_2" x="-2400" y="-200">
+		</FB>
+		<FB Name="DigitalInput_I2" Type="logiBUS_IX" x="-4500" y="300">
+			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="Input" Value="logiBUS_DI::Input_I2"/>
+		</FB>
+		<FB Name="E_F_TRIG" Type="E_F_TRIG" x="-1200" y="-200">
+		</FB>
+		<FB Name="E_T_FF_Q1" Type="E_T_FF" x="0" y="-200">
+		</FB>
+		<FB Name="DigitalOutput_Q2" Type="logiBUS_QX" x="1900" y="500">
+			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="Output" Value="logiBUS_DO::Output_Q2"/>
+		</FB>
+		<FB Name="E_T_FF_1_Q2" Type="E_T_FF" x="0" y="800">
+		</FB>
+		<FB Name="E_SWITCH" Type="E_SWITCH" x="-1200" y="800">
+		</FB>
+		<Comment Comment="F_TRIG schaltet nur wenn wirklich fallende Flanke" x="-1300" y="-700" width="1200" height="400"/>
+		<Comment Comment="E_SWITCH schaltet auch, wenn anderweitig ein Event kommt." x="-1200" y="1400" width="1200" height="400"/>
+		<EventConnections>
+			<Connection Source="DigitalInput_I2.IND" Destination="AND_2.REQ" dx1="1326.67"/>
+			<Connection Source="DigitalInput_I1.IND" Destination="AND_2.REQ" dx1="1326.67"/>
+			<Connection Source="AND_2.CNF" Destination="E_F_TRIG.EI"/>
+			<Connection Source="E_F_TRIG.EO" Destination="E_T_FF_Q1.CLK"/>
+			<Connection Source="E_T_FF_Q1.EO" Destination="DigitalOutput_Q1.REQ" dx1="633.33"/>
+			<Connection Source="E_SWITCH.EO0" Destination="E_T_FF_1_Q2.CLK"/>
+			<Connection Source="AND_2.CNF" Destination="E_SWITCH.EI" dx1="513.33"/>
+			<Connection Source="E_T_FF_1_Q2.EO" Destination="DigitalOutput_Q2.REQ" dx1="680"/>
+		</EventConnections>
+		<DataConnections>
+			<Connection Source="DigitalInput_I1.IN" Destination="AND_2.IN1" dx1="700"/>
+			<Connection Source="DigitalInput_I2.IN" Destination="AND_2.IN2" dx1="700"/>
+			<Connection Source="AND_2.OUT" Destination="E_F_TRIG.QI"/>
+			<Connection Source="E_T_FF_Q1.Q" Destination="DigitalOutput_Q1.OUT"/>
+			<Connection Source="AND_2.OUT" Destination="E_SWITCH.G" dx1="366.67"/>
+			<Connection Source="E_T_FF_1_Q2.Q" Destination="DigitalOutput_Q2.OUT"/>
+		</DataConnections>
+	</SubAppNetwork>
+</SubAppType>

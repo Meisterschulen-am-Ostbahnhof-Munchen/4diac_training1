@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SubAppType Name="Uebung_019c" Comment="Umschalten einer Maske">
+	<Identification Standard="61499-2" Description="Copyright (c) 2023 Meisterschulen am Ostbahnhof  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0">
+	</Identification>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2023-10-23">
+	</VersionInfo>
+	<CompilerInfo>
+	</CompilerInfo>
+	<SubAppInterfaceList>
+	</SubAppInterfaceList>
+	<SubAppNetwork>
+		<FB Name="DigitalInput_CLK_I1" Type="logiBUS_IE" x="-8600" y="-400">
+			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="Input" Value="logiBUS_DI::Input_I1"/>
+			<Parameter Name="InputEvent" Value="logiBUS_DI_Events::BUTTON_SINGLE_CLICK"/>
+		</FB>
+		<FB Name="Q_ActiveMask" Type="Q_ActiveMask" x="-1400" y="-300">
+			<Parameter Name="u16WorkSetId" Value="DefaultPool::WorkingSet_0"/>
+		</FB>
+		<FB Name="DigitalInput_CLK_I2" Type="logiBUS_IE" x="-8600" y="800">
+			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="Input" Value="logiBUS_DI::Input_I2"/>
+			<Parameter Name="InputEvent" Value="logiBUS_DI_Events::BUTTON_SINGLE_CLICK"/>
+		</FB>
+		<FB Name="F_SEL_E_2" Type="F_SEL_E_4" x="-3800" y="-200">
+			<Parameter Name="IN0" Value="DefaultPool::DataMask_M1"/>
+			<Parameter Name="IN1" Value="DefaultPool::DataMask_M2"/>
+			<Parameter Name="IN2" Value="DefaultPool::AlarmMask_A2_medium"/>
+			<Parameter Name="IN3" Value="DefaultPool::DataMask_M1"/>
+		</FB>
+		<FB Name="ACK" Type="logiBUS_IE" x="-8600" y="3100">
+			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="Input" Value="logiBUS_DI::Input_I4"/>
+			<Parameter Name="InputEvent" Value="logiBUS_DI_Events::BUTTON_SINGLE_CLICK"/>
+		</FB>
+		<FB Name="E_SR" Type="E_SR" x="-4500" y="2600">
+		</FB>
+		<FB Name="Alarmausgang" Type="logiBUS_QX" x="-2600" y="2500">
+			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="Output" Value="logiBUS_DO::Output_Q8"/>
+		</FB>
+		<FB Name="Alarmeingang" Type="logiBUS_IX" x="-8600" y="2100">
+			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="Input" Value="logiBUS_DI::Input_I3"/>
+		</FB>
+		<FB Name="E_SWITCH" Type="E_SWITCH" x="-6900" y="2400">
+		</FB>
+		<FB Name="E_PERMIT_INVERT" Type="E_SWITCH" x="-6900" y="3300">
+		</FB>
+		<FB Name="E_PERMIT_INVERT_1" Type="E_SWITCH" x="-6900" y="-200">
+		</FB>
+		<FB Name="E_PERMIT_INVERT_2" Type="E_SWITCH" x="-6900" y="1000">
+		</FB>
+		<EventConnections>
+			<Connection Source="F_SEL_E_2.CNF" Destination="Q_ActiveMask.REQ"/>
+			<Connection Source="E_PERMIT_INVERT.EO0" Destination="F_SEL_E_2.REQ3" dx1="840">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="E_PERMIT_INVERT.EO0" Destination="E_SR.R" dx1="1013.33"/>
+			<Connection Source="E_SR.EO" Destination="Alarmausgang.REQ"/>
+			<Connection Source="Alarmeingang.IND" Destination="E_SWITCH.EI" dx1="353.33"/>
+			<Connection Source="E_SWITCH.EO1" Destination="F_SEL_E_2.REQ2" dx1="733.33"/>
+			<Connection Source="ACK.IND" Destination="E_PERMIT_INVERT.EI"/>
+			<Connection Source="E_SWITCH.EO1" Destination="E_SR.S" dx1="720"/>
+			<Connection Source="DigitalInput_CLK_I1.IND" Destination="E_PERMIT_INVERT.EI" dx1="113.33"/>
+			<Connection Source="DigitalInput_CLK_I2.IND" Destination="E_PERMIT_INVERT.EI" dx1="113.33"/>
+			<Connection Source="DigitalInput_CLK_I1.IND" Destination="E_PERMIT_INVERT_1.EI"/>
+			<Connection Source="DigitalInput_CLK_I2.IND" Destination="E_PERMIT_INVERT_2.EI"/>
+			<Connection Source="E_PERMIT_INVERT_1.EO0" Destination="F_SEL_E_2.REQ0"/>
+			<Connection Source="E_PERMIT_INVERT_2.EO0" Destination="F_SEL_E_2.REQ1" dx1="493.33"/>
+		</EventConnections>
+		<DataConnections>
+			<Connection Source="F_SEL_E_2.OUT" Destination="Q_ActiveMask.u16NewMaskId" dx1="1000"/>
+			<Connection Source="E_SR.Q" Destination="Alarmausgang.OUT" dx1="626.67"/>
+			<Connection Source="Alarmeingang.IN" Destination="E_SWITCH.G"/>
+			<Connection Source="Alarmeingang.IN" Destination="E_PERMIT_INVERT.G" dx1="593.33"/>
+			<Connection Source="Alarmeingang.IN" Destination="E_PERMIT_INVERT_1.G" dx1="653.33"/>
+			<Connection Source="Alarmeingang.IN" Destination="E_PERMIT_INVERT_2.G" dx1="773.33"/>
+		</DataConnections>
+	</SubAppNetwork>
+</SubAppType>
