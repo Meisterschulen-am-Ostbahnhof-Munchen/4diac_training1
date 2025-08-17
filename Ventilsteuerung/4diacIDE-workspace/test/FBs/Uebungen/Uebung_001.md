@@ -2,6 +2,12 @@
 
 <https://docs.ms-muc-docs.de/projects/visual-programming-languages-docs/de/latest/training1/Ventilsteuerung/4diacIDE-workspace/test/FBs/Uebungen/Uebung_001.html>
 
+Dieser Artikel beschreibt die grundlegende logiBUS®-Übung `Uebung_001`, bei der ein digitaler Eingang direkt mit einem digitalen Ausgang verbunden wird.
+
+![](Uebung_001_Gemini.jpg)
+
+![](Uebung_001.png)
+
 ## Übersicht
 
 **Übung 001** ist ein grundlegendes Anwendungsbeispiel im logiBUS®-System. Das Ziel dieser Übung ist es, den Zustand eines digitalen Eingangssignals direkt an einen digitalen Ausgang weiterzuleiten. Wenn der Eingang `TRUE` (wahr) ist, soll auch der Ausgang `TRUE` sein.
