@@ -1,5 +1,7 @@
 # Übung 001: Direkte Verschaltung eines digitalen Eingangs auf einen Ausgang
 
+<https://docs.ms-muc-docs.de/projects/visual-programming-languages-docs/de/latest/training1/Ventilsteuerung/4diacIDE-workspace/test/FBs/Uebungen/Uebung_001.html>
+
 ## Übersicht
 
 **Übung 001** ist ein grundlegendes Anwendungsbeispiel im logiBUS®-System. Das Ziel dieser Übung ist es, den Zustand eines digitalen Eingangssignals direkt an einen digitalen Ausgang weiterzuleiten. Wenn der Eingang `TRUE` (wahr) ist, soll auch der Ausgang `TRUE` sein.
