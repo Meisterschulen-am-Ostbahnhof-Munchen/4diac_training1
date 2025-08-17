@@ -27,17 +27,17 @@
 			</Event>
 		</EventOutputs>
 		<InputVars>
-			<VarDeclaration Name="u16ObjId" Type="UINT" Comment="Object ID" />
-			<VarDeclaration Name="u8SubCommandID" Type="USINT" Comment="Sub-Command ID " />
+			<VarDeclaration Name="u16ObjId" Type="UINT" Comment="Object ID"/>
+			<VarDeclaration Name="u8SubCommandID" Type="USINT" Comment="Sub-Command ID "/>
 			<VarDeclaration Name="u8ParaList" Type="USINT" Comment="Parameters based on sub-command ID byte "  ArraySize="5"/>
-			<VarDeclaration Name="u16LenBytes" Type="UINT" Comment="Length in bytes of parameter list " />
+			<VarDeclaration Name="u16LenBytes" Type="UINT" Comment="Length in bytes of parameter list "/>
 		</InputVars>
 		<OutputVars>
-			<VarDeclaration Name="STATUS" Type="STRING" Comment="Service Status" />
-			<VarDeclaration Name="u8OldSubCommandID" Type="USINT" Comment="Old Sub-Command ID " />
+			<VarDeclaration Name="STATUS" Type="STRING" Comment="Service Status"/>
+			<VarDeclaration Name="u8OldSubCommandID" Type="USINT" Comment="Old Sub-Command ID "/>
 			<VarDeclaration Name="u8OldParaList" Type="USINT" Comment="Old parameters based on sub-command ID byte "  ArraySize="5"/>
-			<VarDeclaration Name="u16OldLenBytes" Type="UINT" Comment="Old length in bytes of parameter list " />
-			<VarDeclaration Name="s16result" Type="INT" Comment="retval see description" />
+			<VarDeclaration Name="u16OldLenBytes" Type="UINT" Comment="Old length in bytes of parameter list "/>
+			<VarDeclaration Name="s16result" Type="INT" Comment="retval see description"/>
 		</OutputVars>
 	</InterfaceList>
 	<Attribute Name="Documentation" Type="CDATA"><![CDATA[<h1>Command Graphics Context ( Part 6 - F.56 )</h1>
@@ -79,4 +79,5 @@
 	<li>Function uses string buffer ( Parameterlist has to be smaller than ISO_VTC_CMD_STR_MAX_LENGTH )</li>
 </ul>
 ]]></Attribute>
+
 </FBType>

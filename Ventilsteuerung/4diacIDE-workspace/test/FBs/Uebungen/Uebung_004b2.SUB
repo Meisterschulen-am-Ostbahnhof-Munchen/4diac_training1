@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SubAppType Name="Uebung_004b2" Comment="Toggle Flip-Flop mit IE / Split / doppelt">
+	<Identification Standard="61499-2" Description="Copyright (c) 2023 Meisterschulen am Ostbahnhof  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0">
+	</Identification>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2023-10-23">
+	</VersionInfo>
+	<CompilerInfo>
+	</CompilerInfo>
+	<SubAppInterfaceList>
+	</SubAppInterfaceList>
+	<SubAppNetwork>
+		<FB Name="DigitalOutput_Q1" Type="logiBUS_QX" x="0" y="-1000">
+			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="Output" Value="logiBUS_DO::Output_Q1"/>
+		</FB>
+		<FB Name="DigitalInput_CLK_I1" Type="logiBUS_IE" x="-4500" y="-1100">
+			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="Input" Value="logiBUS_DI::Input_I1"/>
+			<Parameter Name="InputEvent" Value="logiBUS_DI_Events::BUTTON_SINGLE_CLICK"/>
+		</FB>
+		<FB Name="E_SR_I1" Type="E_SR" x="-1800" y="-900">
+		</FB>
+		<FB Name="E_SWITCH_I1" Type="E_SWITCH" x="-2900" y="-900">
+		</FB>
+		<FB Name="E_SWITCH_I2" Type="E_SWITCH" x="-2900" y="200">
+		</FB>
+		<FB Name="DigitalOutput_Q2" Type="logiBUS_QX" x="0" y="100">
+			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="Output" Value="logiBUS_DO::Output_Q2"/>
+		</FB>
+		<FB Name="E_SR_I2" Type="E_SR" x="-1600" y="200">
+		</FB>
+		<FB Name="DigitalInput_CLK_I2" Type="logiBUS_IE" x="-4500" y="0">
+			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="Input" Value="logiBUS_DI::Input_I2"/>
+			<Parameter Name="InputEvent" Value="logiBUS_DI_Events::BUTTON_SINGLE_CLICK"/>
+		</FB>
+		<EventConnections>
+			<Connection Source="E_SR_I1.EO" Destination="DigitalOutput_Q1.REQ"/>
+			<Connection Source="DigitalInput_CLK_I1.IND" Destination="E_SWITCH_I1.EI"/>
+			<Connection Source="E_SWITCH_I1.EO0" Destination="E_SR_I1.S"/>
+			<Connection Source="E_SWITCH_I1.EO1" Destination="E_SR_I1.R"/>
+			<Connection Source="E_SWITCH_I2.EO1" Destination="E_SR_I2.R"/>
+			<Connection Source="E_SWITCH_I2.EO0" Destination="E_SR_I2.S"/>
+			<Connection Source="E_SR_I2.EO" Destination="DigitalOutput_Q2.REQ"/>
+			<Connection Source="DigitalInput_CLK_I2.IND" Destination="E_SWITCH_I2.EI"/>
+		</EventConnections>
+		<DataConnections>
+			<Connection Source="E_SR_I1.Q" Destination="DigitalOutput_Q1.OUT" dx1="680"/>
+			<Connection Source="E_SR_I1.Q" Destination="E_SWITCH_I1.G" dx1="80" dx2="80" dy="160"/>
+			<Connection Source="E_SR_I2.Q" Destination="E_SWITCH_I2.G" dx1="80" dx2="80" dy="160"/>
+			<Connection Source="E_SR_I2.Q" Destination="DigitalOutput_Q2.OUT" dx1="626.67"/>
+		</DataConnections>
+	</SubAppNetwork>
+</SubAppType>

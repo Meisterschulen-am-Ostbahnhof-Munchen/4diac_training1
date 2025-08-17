@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SubAppType Name="Uebung_052" Comment="DigitalInput_I1-_I4 auf DigitalOutput_Q1-_Q4">
+	<Identification Standard="61499-2" Description="Copyright (c) 2023 Meisterschulen am Ostbahnhof  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0">
+	</Identification>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2023-10-23">
+	</VersionInfo>
+	<SubAppInterfaceList>
+	</SubAppInterfaceList>
+	<SubAppNetwork>
+		<FB Name="DigitalInput_I1" Type="logiBUS_IX" x="-6600" y="-1100">
+			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="Input" Value="logiBUS_DI::Input_I1"/>
+		</FB>
+		<FB Name="DigitalInput_I2" Type="logiBUS_IX" x="-6600" y="0">
+			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="Input" Value="logiBUS_DI::Input_I2"/>
+		</FB>
+		<FB Name="DigitalInput_I3" Type="logiBUS_IX" x="-6600" y="1100">
+			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="Input" Value="logiBUS_DI::Input_I3"/>
+		</FB>
+		<FB Name="DigitalOutput_Q4" Type="logiBUS_QX" x="-1200" y="2300">
+			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="Output" Value="logiBUS_DO::Output_Q1"/>
+		</FB>
+		<FB Name="DigitalInput_I4" Type="logiBUS_IX" x="-6600" y="2300">
+			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="Input" Value="logiBUS_DI::Input_I4"/>
+		</FB>
+		<FB Name="GET_STRUCT_VALUE" Type="GET_STRUCT_VALUE" x="-3100" y="2400">
+			<Parameter Name="member" Value="'B_00'"/>
+		</FB>
+		<FB Name="STRUCT_MUX" Type="STRUCT_MUX" x="-4700" y="2300">
+			<Attribute Name="StructuredType" Type="STRING" Value="ST04B"/>
+			<Parameter Name="B_00" Value="" Comment="BIT 00"/>
+			<Parameter Name="B_01" Value="" Comment="BIT 01"/>
+			<Parameter Name="B_02" Value="" Comment="BIT 02"/>
+			<Parameter Name="B_03" Value="" Comment="BIT 03"/>
+		</FB>
+		<EventConnections>
+			<Connection Source="GET_STRUCT_VALUE.CNF" Destination="DigitalOutput_Q4.REQ"/>
+			<Connection Source="DigitalInput_I1.IND" Destination="STRUCT_MUX.REQ" dx1="1073.33"/>
+			<Connection Source="DigitalInput_I2.IND" Destination="STRUCT_MUX.REQ" dx1="1073.33"/>
+			<Connection Source="DigitalInput_I3.IND" Destination="STRUCT_MUX.REQ" dx1="1073.33"/>
+			<Connection Source="DigitalInput_I4.IND" Destination="STRUCT_MUX.REQ" dx1="1073.33"/>
+			<Connection Source="STRUCT_MUX.CNF" Destination="GET_STRUCT_VALUE.REQ" dx1="426.67"/>
+		</EventConnections>
+		<DataConnections>
+			<Connection Source="GET_STRUCT_VALUE.output" Destination="DigitalOutput_Q4.OUT" dx1="73.33"/>
+			<Connection Source="DigitalInput_I1.IN" Destination="STRUCT_MUX.B_00" dx1="713.33"/>
+			<Connection Source="DigitalInput_I2.IN" Destination="STRUCT_MUX.B_01" dx1="520"/>
+			<Connection Source="DigitalInput_I3.IN" Destination="STRUCT_MUX.B_02" dx1="286.67"/>
+			<Connection Source="DigitalInput_I4.IN" Destination="STRUCT_MUX.B_03" dx1="213.33"/>
+			<Connection Source="STRUCT_MUX.OUT" Destination="GET_STRUCT_VALUE.in_struct" dx1="73.33"/>
+		</DataConnections>
+	</SubAppNetwork>
+</SubAppType>

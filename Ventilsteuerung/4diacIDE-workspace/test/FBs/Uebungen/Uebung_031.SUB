@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SubAppType Name="Uebung_031" Comment="LED Strip">
+	<Identification Standard="61499-2" Description="Copyright (c) 2023 Meisterschulen am Ostbahnhof  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0">
+	</Identification>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2023-10-23">
+	</VersionInfo>
+	<CompilerInfo>
+	</CompilerInfo>
+	<SubAppInterfaceList>
+	</SubAppInterfaceList>
+	<SubAppNetwork>
+		<FB Name="DigitalInput_CLK_I1" Type="logiBUS_IE" x="-5600" y="600">
+			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="Input" Value="logiBUS_DI::Input_I1"/>
+			<Parameter Name="InputEvent" Value="logiBUS_DI_Events::BUTTON_SINGLE_CLICK"/>
+		</FB>
+		<FB Name="DigitalInput_CLK_I2" Type="logiBUS_IE" x="-5600" y="-500">
+			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="Input" Value="logiBUS_DI::Input_I2"/>
+			<Parameter Name="InputEvent" Value="logiBUS_DI_Events::BUTTON_SINGLE_CLICK"/>
+		</FB>
+		<FB Name="strip_set_pixel" Type="strip_set_pixel" x="-1000" y="500">
+			<Parameter Name="index" Value="LED_strip::Output_strip"/>
+		</FB>
+		<FB Name="hsv2rgb" Type="hsv2rgb" x="-3200" y="800">
+			<Parameter Name="hue" Value="100"/>
+			<Parameter Name="saturation" Value="100"/>
+			<Parameter Name="value" Value="100"/>
+		</FB>
+		<EventConnections>
+			<Connection Source="DigitalInput_CLK_I2.IND" Destination="strip_set_pixel.clear" dx1="2806.67"/>
+			<Connection Source="hsv2rgb.CNF" Destination="strip_set_pixel.set_pixel" dx1="80"/>
+			<Connection Source="DigitalInput_CLK_I1.IND" Destination="hsv2rgb.REQ"/>
+		</EventConnections>
+		<DataConnections>
+			<Connection Source="hsv2rgb.r" Destination="strip_set_pixel.red"/>
+			<Connection Source="hsv2rgb.g" Destination="strip_set_pixel.green"/>
+			<Connection Source="hsv2rgb.b" Destination="strip_set_pixel.blue"/>
+		</DataConnections>
+	</SubAppNetwork>
+</SubAppType>
