@@ -1,6 +1,13 @@
 # Übung 001\_AX: Digitale Ein- zu Ausgangsverbindung
 
+<https://docs.ms-muc-docs.de/projects/visual-programming-languages-docs/de/latest/training1/Ventilsteuerung/4diacIDE-workspace/test/FBs/Uebungen/Uebung_001_AX.html>
+
 Dieser Artikel beschreibt die grundlegende logiBUS®-Übung `Uebung_001_AX`, bei der ein digitaler Eingang direkt mit einem digitalen Ausgang verbunden wird.
+
+![](Uebung_001_AX_Gemini.jpg)
+
+![](Uebung_001_AX.png)
+
 
 ## Ziel der Übung
 
