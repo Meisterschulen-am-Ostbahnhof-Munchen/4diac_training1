@@ -2,11 +2,14 @@
 
 <https://docs.ms-muc-docs.de/projects/visual-programming-languages-docs/de/latest/training1/Ventilsteuerung/4diacIDE-workspace/test/FBs/Uebungen/Uebung_001.html>
 
+[![NotebookLM](media/NotebookLM_logo.png)](https://notebooklm.google.com/notebook/a6872e59-1dfc-4132-a118-aff1bc7bc944)
+
 Dieser Artikel beschreibt die grundlegende logiBUS®-Übung `Uebung_001`, bei der ein digitaler Eingang direkt mit einem digitalen Ausgang verbunden wird.
 
 ![](Uebung_001_Gemini.jpg)
 
 ![](Uebung_001.png)
+
 
 ## Übersicht
 
