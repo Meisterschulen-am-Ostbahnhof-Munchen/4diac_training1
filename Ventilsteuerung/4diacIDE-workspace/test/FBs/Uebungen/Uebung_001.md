@@ -6,6 +6,12 @@
 
 Dieser Artikel beschreibt die grundlegende logiBUS®-Übung `Uebung_001`, bei der ein digitaler Eingang direkt mit einem digitalen Ausgang verbunden wird.
 
+## Podcast
+<iframe src="https://creators.spotify.com/pod/profile/logibus/embed/episodes/LogiBUS--IEC-61499-Daten--und-Ereignisflsse-einfach-erklrt--Vom-Schalter-zur-intelligenten-Steuerung-e36vldb/a-ac3vadb" height="102px" width="400px" frameborder="0" scrolling="no"></iframe>
+
+---
+
+
 ![](Uebung_001_Gemini.jpg)
 
 ![](Uebung_001.png)
