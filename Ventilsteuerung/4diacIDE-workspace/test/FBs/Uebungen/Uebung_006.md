@@ -8,6 +8,7 @@ In dieser Übung wird ein **SR-Flip-Flop** (auch als SR-Latch bezeichnet) unter 
 
 
 ## Podcast
+<iframe src="https://creators.spotify.com/pod/profile/logibus/embed/episodes/Digitale-Gedchtnisse-Das-SR-Flip-Flop-im-logiBUS-System-erklrt-e36vksj/a-ac3v9ne" height="102px" width="400px" frameborder="0" scrolling="no"></iframe>
 ---
 
 
