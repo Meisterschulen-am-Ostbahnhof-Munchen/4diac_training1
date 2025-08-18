@@ -1,10 +1,14 @@
-## Übung 004a: Toggle Flip-Flop mit logiBUS®
+# Übung 004a: Toggle Flip-Flop mit logiBUS®
 
 <https://docs.ms-muc-docs.de/projects/visual-programming-languages-docs/de/latest/training1/Ventilsteuerung/4diacIDE-workspace/test/FBs/Uebungen/Uebung_004a.html>
 
 <https://notebooklm.google.com/notebook/7e3a9891-27ee-431d-acf7-017c4c04599d>
 
 Die Übung **Uebung_004a** ist eine Anwendungsaufgabe für das logiBUS®-System, die ein einfaches Toggle Flip-Flop realisiert. Dabei wird der Zustand eines digitalen Ausgangs durch einen einzelnen Tastendruck an einem digitalen Eingang umgeschaltet.
+
+## Podcast
+<iframe src="https://creators.spotify.com/pod/profile/logibus/embed/episodes/Schalterlogik-verstehen-So-funktioniert-ein-Toggle-Flip-Flop-mit-logiBUS--einfache-Steuerung-in-der-Landtechnik-e36vjo1" height="102px" width="400px" frameborder="0" scrolling="no"></iframe>
+
 
 ![](Uebung_004a_Gemini.jpg)
 
@@ -14,13 +18,13 @@ Das logiBUS®-System vereinfacht die Programmierung von ISOBUS-kompatiblen Steue
 
 ---
 
-### Funktionsweise
+## Funktionsweise
 
 Die Applikation wartet auf ein bestimmtes Ereignis an einem digitalen Eingang, das hier als `BUTTON_SINGLE_CLICK` definiert ist. Sobald dieses Ereignis eintritt, wird ein `E_T_FF` (Toggle Flip-Flop) Funktionsbaustein angesteuert. Dieser Baustein ändert bei jeder Aktivierung seinen Ausgangszustand `Q` (von `TRUE` auf `FALSE` oder umgekehrt). Der Zustand des Flip-Flops wird dann an einen digitalen Ausgang weitergeleitet, wodurch beispielsweise eine Lampe oder ein anderer Aktor ein- oder ausgeschaltet wird.
 
 ---
 
-### Komponenten
+## Komponenten
 
 Die Übung besteht aus drei zentralen Funktionsbausteinen (FBs):
 
@@ -36,13 +40,13 @@ Die Übung besteht aus drei zentralen Funktionsbausteinen (FBs):
 
 ---
 
-### Verbindungen
+## Verbindungen
 
 Die Funktionsweise wird durch die logische Verknüpfung der Bausteine realisiert:
 
-#### Ereignisverbindungen:
+### Ereignisverbindungen:
 * Eine Verbindung vom `IND`-Ausgang des `DigitalInput_CLK_I1` zum `CLK`-Eingang des `E_T_FF`. Dadurch wird das Flip-Flop getriggert, sobald ein einzelner Klick am Eingang I1 erkannt wird.
 * Eine Verbindung vom `EO`-Ausgang des `E_T_FF` zum `REQ`-Eingang des `DigitalOutput_Q1`. Nachdem das Flip-Flop seinen Zustand geändert hat, wird der Ausgangsbaustein zur Aktualisierung aufgefordert.
 
-#### Datenverbindungen:
+### Datenverbindungen:
 * Eine Verbindung vom `Q`-Ausgang des `E_T_FF` zum `OUT`-Eingang des `DigitalOutput_Q1`. Der logische Zustand (TRUE/FALSE) des Flip-Flops wird so direkt an den Ausgang Q1 übergeben.
