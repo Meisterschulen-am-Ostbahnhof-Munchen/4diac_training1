@@ -6,10 +6,12 @@
 
 Die Übung **Uebung_004a** ist eine Anwendungsaufgabe für das logiBUS®-System, die ein einfaches Toggle Flip-Flop realisiert. Dabei wird der Zustand eines digitalen Ausgangs durch einen einzelnen Tastendruck an einem digitalen Eingang umgeschaltet.
 
+
 ## Podcast
 <iframe src="https://creators.spotify.com/pod/profile/logibus/embed/episodes/Schalterlogik-verstehen-So-funktioniert-ein-Toggle-Flip-Flop-mit-logiBUS--einfache-Steuerung-in-der-Landtechnik-e36vjo1" height="102px" width="400px" frameborder="0" scrolling="no"></iframe>
 
----
+----
+
 
 
 ![](Uebung_004a_Gemini.jpg)

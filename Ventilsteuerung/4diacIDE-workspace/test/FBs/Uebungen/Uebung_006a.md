@@ -9,13 +9,15 @@ Dieser Artikel beschreibt die technische Umsetzung und Funktionsweise der "Übun
 
 ## Podcast
 <iframe src="https://creators.spotify.com/pod/profile/logibus/embed/episodes/Digitaltechnik-entschlsselt-Das-Geheimnis-des-SR-T-Flip-Flops-mit-drei-Tasten-e36vkub/a-ac3v9pl" height="102px" width="400px" frameborder="0" scrolling="no"></iframe>
----
+
+----
 
 
 
 ![](Uebung_006a_Gemini.jpg)
 
 ![](Uebung_006a.png)
+
 
 ## **Übersicht**
 
