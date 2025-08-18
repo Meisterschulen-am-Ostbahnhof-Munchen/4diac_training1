@@ -1,6 +1,8 @@
 ## Übung 004a: Toggle Flip-Flop mit logiBUS®
 
+<https://docs.ms-muc-docs.de/projects/visual-programming-languages-docs/de/latest/training1/Ventilsteuerung/4diacIDE-workspace/test/FBs/Uebungen/Uebung_004a.html>
 
+<https://notebooklm.google.com/notebook/7e3a9891-27ee-431d-acf7-017c4c04599d>
 
 Die Übung **Uebung_004a** ist eine Anwendungsaufgabe für das logiBUS®-System, die ein einfaches Toggle Flip-Flop realisiert. Dabei wird der Zustand eines digitalen Ausgangs durch einen einzelnen Tastendruck an einem digitalen Eingang umgeschaltet.
 
