@@ -19,27 +19,4 @@
 			<AdapterDeclaration Name="IN6" Type="AX" Comment="OR input 6" x="133.33" y="3933.33"/>
 		</Sockets>
 	</InterfaceList>
-	<FBNetwork>
-		<FB Name="OR_6" Type="OR_6" x="886.67" y="1980">
-		</FB>
-		<EventConnections>
-			<Connection Source="IN1.E1" Destination="OR_6.REQ" dx1="73.33"/>
-			<Connection Source="IN2.E1" Destination="OR_6.REQ" dx1="73.33"/>
-			<Connection Source="OR_6.CNF" Destination="OUT.E1"/>
-			<Connection Source="IN3.E1" Destination="OR_6.REQ" dx1="73.33"/>
-			<Connection Source="IN4.E1" Destination="OR_6.REQ" dx1="73.33"/>
-			<Connection Source="IN5.E1" Destination="OR_6.REQ" dx1="73.33"/>
-			<Connection Source="IN6.E1" Destination="OR_6.REQ" dx1="73.33"/>
-		</EventConnections>
-		<DataConnections>
-			<Connection Source="IN1.D1" Destination="OR_6.IN1" dx1="273.33"/>
-			<Connection Source="IN2.D1" Destination="OR_6.IN2" dx1="206.67"/>
-			<Connection Source="OR_6.OUT" Destination="OUT.D1"/>
-			<Connection Source="IN3.D1" Destination="OR_6.IN3" dx1="140"/>
-			<Connection Source="IN4.D1" Destination="OR_6.IN4" dx1="140"/>
-			<Connection Source="IN5.D1" Destination="OR_6.IN5" dx1="206.67"/>
-			<Connection Source="IN6.D1" Destination="OR_6.IN6" dx1="273.33"/>
-		</DataConnections>
-	</FBNetwork>
-
 </FBType>

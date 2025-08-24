@@ -16,21 +16,4 @@
 			<AdapterDeclaration Name="IN3" Type="AX" Comment="OR input 3"  x="133.33" y="1593.33"/>
 		</Sockets>
 	</InterfaceList>
-	<FBNetwork>
-		<FB Name="OR_3" Type="OR_3" x="820" y="813.33">
-		</FB>
-		<EventConnections>
-			<Connection Source="IN1.E1" Destination="OR_3.REQ" dx1="73.33"/>
-			<Connection Source="IN2.E1" Destination="OR_3.REQ"/>
-			<Connection Source="OR_3.CNF" Destination="OUT.E1"/>
-			<Connection Source="IN3.E1" Destination="OR_3.REQ" dx1="73.33"/>
-		</EventConnections>
-		<DataConnections>
-			<Connection Source="IN1.D1" Destination="OR_3.IN1" dx1="206.67"/>
-			<Connection Source="IN2.D1" Destination="OR_3.IN2" dx1="140"/>
-			<Connection Source="OR_3.OUT" Destination="OUT.D1"/>
-			<Connection Source="IN3.D1" Destination="OR_3.IN3" dx1="140"/>
-		</DataConnections>
-	</FBNetwork>
-
 </FBType>

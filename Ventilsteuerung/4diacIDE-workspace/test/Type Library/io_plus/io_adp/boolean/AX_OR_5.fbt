@@ -18,25 +18,4 @@
 			<AdapterDeclaration Name="IN5" Type="AX" Comment="OR input 5" x="133.33" y="3153.33"/>
 		</Sockets>
 	</InterfaceList>
-	<FBNetwork>
-		<FB Name="OR_5" Type="OR_5" x="886.67" y="1593.33">
-		</FB>
-		<EventConnections>
-			<Connection Source="IN1.E1" Destination="OR_5.REQ" dx1="73.33"/>
-			<Connection Source="IN2.E1" Destination="OR_5.REQ" dx1="73.33"/>
-			<Connection Source="OR_5.CNF" Destination="OUT.E1"/>
-			<Connection Source="IN3.E1" Destination="OR_5.REQ"/>
-			<Connection Source="IN4.E1" Destination="OR_5.REQ" dx1="73.33"/>
-			<Connection Source="IN5.E1" Destination="OR_5.REQ" dx1="73.33"/>
-		</EventConnections>
-		<DataConnections>
-			<Connection Source="IN1.D1" Destination="OR_5.IN1" dx1="273.33"/>
-			<Connection Source="IN2.D1" Destination="OR_5.IN2" dx1="206.67"/>
-			<Connection Source="OR_5.OUT" Destination="OUT.D1"/>
-			<Connection Source="IN3.D1" Destination="OR_5.IN3" dx1="140"/>
-			<Connection Source="IN4.D1" Destination="OR_5.IN4" dx1="140"/>
-			<Connection Source="IN5.D1" Destination="OR_5.IN5" dx1="206.67"/>
-		</DataConnections>
-	</FBNetwork>
-
 </FBType>
