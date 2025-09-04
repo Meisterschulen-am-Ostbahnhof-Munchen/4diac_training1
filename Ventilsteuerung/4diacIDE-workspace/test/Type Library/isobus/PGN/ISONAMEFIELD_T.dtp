@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<DataType Name="ISONAMEFIELD_T" Comment="ISO Part 5 name field structure">
+<DataType Name="ISONAMEFIELD_T" Comment="ISO Part 5 name field structure according to IFM conventions">
 	<Identification>
 	</Identification>
 	<VersionInfo Version="1.0" Author="Coding-Assistent" Date="2025-09-04">
@@ -7,15 +7,15 @@
 	<CompilerInfo>
 	</CompilerInfo>
 	<StructuredType>
-		<VarDeclaration Name="bSelfConf" Type="BOOL" Comment="self-configurable-address ECU?"/>
-		<VarDeclaration Name="bIndGroup" Type="USINT" Comment="NAMES associated with industries (3 bits)"/>
-		<VarDeclaration Name="bDevClassInst" Type="USINT" Comment="Identifier if a device class more than 1 times in net (4 bits)"/>
-		<VarDeclaration Name="bDevClass" Type="USINT" Comment="ISO Defined (7 bits)"/>
+		<VarDeclaration Name="bSelfConf" Type="BOOL" Comment="Self-configurable-address ECU?"/>
+		<VarDeclaration Name="bIndGroup" Type="USINT" Comment="NAMES associated with industries (0..7, 255 = Filter for all)"/>
+		<VarDeclaration Name="bDevClassInst" Type="USINT" Comment="Identifier if a device class more than 1 times in net (0..15, 255 = Filter for all)"/>
+		<VarDeclaration Name="bDevClass" Type="USINT" Comment="ISO Defined (0..127, 255 = Filter for all)"/>
 		<VarDeclaration Name="bReserved" Type="BOOL" Comment="Reserved (not used)"/>
-		<VarDeclaration Name="bFunction" Type="USINT" Comment="ISO defined, -> SA (8 bits)"/>
-		<VarDeclaration Name="bFunctionInst" Type="USINT" Comment="subgroup of function (5 bits)"/>
-		<VarDeclaration Name="bEcuInstance" Type="USINT" Comment="which ECU associated with a given function (3 bits)"/>
-		<VarDeclaration Name="wManufCode" Type="UINT" Comment="ISO defined (11 bits)"/>
-		<VarDeclaration Name="dwIdentNumb" Type="UDINT" Comment="Used when the NAME is not unique in same network (21 bits)"/>
+		<VarDeclaration Name="bFunction" Type="USINT" Comment="ISO defined, -> SA (0..255, 65535 = Filter for all)"/>
+		<VarDeclaration Name="bFunctionInst" Type="USINT" Comment="Subgroup of function (0..31, 255 = Filter for all)"/>
+		<VarDeclaration Name="bEcuInstance" Type="USINT" Comment="Which ECU associated with a given function (0..7, 255 = Filter for all)"/>
+		<VarDeclaration Name="wManufCode" Type="UINT" Comment="ISO defined (0..2047, 65535 = Filter for all)"/>
+		<VarDeclaration Name="dwIdentNumb" Type="UDINT" Comment="Used when the NAME is not unique in same network (0..2047, 4294967295 = Filter for all)"/>
 	</StructuredType>
 </DataType>
