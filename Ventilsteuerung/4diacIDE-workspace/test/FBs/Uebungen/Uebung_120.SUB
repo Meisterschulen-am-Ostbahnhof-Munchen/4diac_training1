@@ -10,16 +10,32 @@
 	</SubAppInterfaceList>
 	<SubAppNetwork>
 		<FB Name="STRUCT_DEMUX" Type="STRUCT_DEMUX" x="2400" y="1400">
-			<Attribute Name="StructuredType" Type="STRING" Value="ISONAMEFIELD_T"/>
+			<Attribute Name="StructuredType" Type="STRING" Value="NAMEFIELD_T"/>
 		</FB>
 		<FB Name="STRUCT_MUX" Type="STRUCT_MUX" x="300" y="1400">
-			<Attribute Name="StructuredType" Type="STRING" Value="ISONAMEFIELD_T"/>
+			<Attribute Name="StructuredType" Type="STRING" Value="NAMEFIELD_T"/>
+		</FB>
+		<FB Name="NmSetName" Type="isobus::NmSetName" x="500" y="4500">
+		</FB>
+		<FB Name="NmSetNameField" Type="isobus::NmSetNameField" x="1700" y="4500">
+		</FB>
+		<FB Name="STRUCT_MUX_1" Type="STRUCT_MUX" x="-1000" y="4500">
+			<Attribute Name="StructuredType" Type="STRING" Value="NAMEFIELD_T"/>
+		</FB>
+		<FB Name="STRUCT_DEMUX_1" Type="STRUCT_DEMUX" x="3100" y="4500">
+			<Attribute Name="StructuredType" Type="STRING" Value="NAMEFIELD_T"/>
 		</FB>
 		<EventConnections>
 			<Connection Source="STRUCT_MUX.CNF" Destination="STRUCT_DEMUX.REQ"/>
+			<Connection Source="NmSetName.CNF" Destination="NmSetNameField.REQ"/>
+			<Connection Source="STRUCT_MUX_1.CNF" Destination="NmSetName.REQ"/>
+			<Connection Source="NmSetNameField.CNF" Destination="STRUCT_DEMUX_1.REQ"/>
 		</EventConnections>
 		<DataConnections>
 			<Connection Source="STRUCT_MUX.OUT" Destination="STRUCT_DEMUX.IN"/>
+			<Connection Source="NmSetName." Destination="NmSetNameField.au8IsoName"/>
+			<Connection Source="NmSetNameField." Destination="STRUCT_DEMUX_1.IN" dx1="80"/>
+			<Connection Source="STRUCT_MUX_1.OUT" Destination="NmSetName.psNameField" dx1="180"/>
 		</DataConnections>
 	</SubAppNetwork>
 </SubAppType>

@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<GlobalConstants Name="USERFUNC_e" Comment="Global constants">
+	<Identification Standard="61499-1">
+	</Identification>
+	<VersionInfo Version="1.0" Author="franz" Date="2025-09-04">
+	</VersionInfo>
+	<CompilerInfo packageName="isobus">
+	</CompilerInfo>
+	<GlobalConstants>
+		<VarDeclaration Name="working_set_master" Type="BYTE" InitialValue="0"/>
+		<VarDeclaration Name="task_controller" Type="BYTE" InitialValue="1"/>
+		<VarDeclaration Name="virtual_terminal" Type="BYTE" InitialValue="2"/>
+		<VarDeclaration Name="tractor_ecu" Type="BYTE" InitialValue="3"/>
+		<VarDeclaration Name="auxiliary" Type="BYTE" InitialValue="4"/>
+		<VarDeclaration Name="sequence_control_master" Type="BYTE" InitialValue="5"/>
+		<VarDeclaration Name="working_set_member" Type="BYTE" InitialValue="6"/>
+		<VarDeclaration Name="steering_control" Type="BYTE" InitialValue="7"/>
+		<VarDeclaration Name="off_vehicle_gateway" Type="BYTE" InitialValue="8"/>
+		<VarDeclaration Name="network_interconnection_unit" Type="BYTE" InitialValue="9"/>
+		<VarDeclaration Name="unknown" Type="BYTE" InitialValue="10"/>
+		<VarDeclaration Name="file_server" Type="BYTE" InitialValue="11"/>
+		<VarDeclaration Name="virtual_cf" Type="BYTE" InitialValue="12"/>
+		<VarDeclaration Name="bridged_cf" Type="BYTE" Comment="virtual CF on this network segment managed from the NIU" InitialValue="13"/>
+		<VarDeclaration Name="datalogger" Type="BYTE" Comment="NIU bridged CF on this network segment" InitialValue="14"/>
+		<VarDeclaration Name="tim_server" Type="BYTE" InitialValue="16"/>
+		<VarDeclaration Name="tim_server_slave" Type="BYTE" InitialValue="17"/>
+		<VarDeclaration Name="sequence_control_client" Type="BYTE" Comment="&lt; Use only in clients see IsoClientsReadListofExtHandles()" InitialValue="18"/>
+		<VarDeclaration Name="all_clients" Type="BYTE" InitialValue="20"/>
+		<VarDeclaration Name="all_server" Type="BYTE" InitialValue="21"/>
+		<VarDeclaration Name="undefined" Type="SINT" InitialValue="-1"/>
+	</GlobalConstants>
+	<OriginalSource><![CDATA[PACKAGE isobus;
+
+GLOBALCONSTANTS USERFUNC_e
+	VAR_GLOBAL CONSTANT
+		working_set_master : BYTE := 0;
+		task_controller : BYTE := 1;
+		virtual_terminal : BYTE := 2;
+		tractor_ecu : BYTE := 3;
+		auxiliary : BYTE := 4;
+		sequence_control_master : BYTE := 5;
+		working_set_member : BYTE := 6;
+		steering_control : BYTE := 7;
+		off_vehicle_gateway : BYTE := 8;
+		network_interconnection_unit : BYTE := 9;
+		unknown : BYTE := 10;
+		file_server : BYTE := 11;
+		virtual_cf : BYTE := 12; (* virtual CF on this network segment managed from the NIU *)
+		bridged_cf : BYTE := 13; (* NIU bridged CF on this network segment *)
+		datalogger : BYTE := 14;
+		tim_server : BYTE := 16;
+		tim_server_slave : BYTE := 17; (* *< Use only in clients see IsoClientsReadListofExtHandles() *)
+		sequence_control_client : BYTE := 18;
+		all_clients : BYTE := 20;
+		all_server : BYTE := 21;
+		undefined : SINT := -1;
+	END_VAR
+END_GLOBALCONSTANTS
+]]></OriginalSource>
+</GlobalConstants>
