@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<SubAppType Name="Uebung_002_AX" Comment="DigitalInput_I1 auf DigitalOutput_Q1/_Q2, mit Plug and Socket">
+<SubAppType Name="Uebung_002a5_AX" Comment="DigitalInput_I1-3 mit OR auf DigitalOutput_Q1, mit Plug and Socket">
 	<Identification Standard="61499-2" Description="Copyright (c) 2023 Meisterschulen am Ostbahnhof  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0">
 	</Identification>
 	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2023-10-23">
@@ -9,24 +9,29 @@
 	<SubAppInterfaceList>
 	</SubAppInterfaceList>
 	<SubAppNetwork>
-		<FB Name="DigitalInput_I1" Type="logiBUS_IXA" x="100" y="-400">
+		<FB Name="DigitalInput_I1" Type="logiBUS_IXA" x="400" y="-200">
 			<Parameter Name="QI" Value="TRUE"/>
 			<Parameter Name="Input" Value="logiBUS_DI::Input_I1"/>
 		</FB>
-		<FB Name="DigitalOutput_Q1" Type="logiBUS_QXA" x="4000" y="-700">
+		<FB Name="DigitalOutput_Q1" Type="logiBUS_QXA" x="4000" y="100">
 			<Parameter Name="QI" Value="TRUE"/>
 			<Parameter Name="Output" Value="logiBUS_DO::Output_Q1"/>
 		</FB>
-		<FB Name="DigitalOutput_Q2" Type="logiBUS_QXA" x="4000" y="300">
-			<Parameter Name="QI" Value="TRUE"/>
-			<Parameter Name="Output" Value="logiBUS_DO::Output_Q2"/>
+		<FB Name="AX_OR_3" Type="AX_OR_3" x="2200" y="600">
 		</FB>
-		<FB Name="AX_SPLIT" Type="AX_SPLIT_2" x="1800" y="100">
+		<FB Name="DigitalInput_I2" Type="logiBUS_IXA" x="400" y="700">
+			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="Input" Value="logiBUS_DI::Input_I2"/>
+		</FB>
+		<FB Name="DigitalInput_I3" Type="logiBUS_IXA" x="400" y="1600">
+			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="Input" Value="logiBUS_DI::Input_I3"/>
 		</FB>
 		<AdapterConnections>
-			<Connection Source="DigitalInput_I1.IN" Destination="AX_SPLIT.IN"/>
-			<Connection Source="AX_SPLIT.OUT0" Destination="DigitalOutput_Q1.OUT" dx1="80"/>
-			<Connection Source="AX_SPLIT.OUT1" Destination="DigitalOutput_Q2.OUT" dx1="80"/>
+			<Connection Source="AX_OR_3.OUT" Destination="DigitalOutput_Q1.OUT"/>
+			<Connection Source="DigitalInput_I1.IN" Destination="AX_OR_3.IN1" dx1="926.67"/>
+			<Connection Source="DigitalInput_I2.IN" Destination="AX_OR_3.IN2" dx1="293.33"/>
+			<Connection Source="DigitalInput_I3.IN" Destination="AX_OR_3.IN3" dx1="580"/>
 		</AdapterConnections>
 	</SubAppNetwork>
 </SubAppType>
