@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<DataType Name="ISONAMEFIELD_T" Comment="ISO Part 5 name field structure">
+	<Identification>
+	</Identification>
+	<VersionInfo Version="1.0" Author="Coding-Assistent" Date="2025-09-04">
+	</VersionInfo>
+	<CompilerInfo>
+	</CompilerInfo>
+	<StructuredType>
+		<VarDeclaration Name="bSelfConf" Type="BOOL" Comment="self-configurable-address ECU?"/>
+		<VarDeclaration Name="bIndGroup" Type="USINT" Comment="NAMES associated with industries (3 bits)"/>
+		<VarDeclaration Name="bDevClassInst" Type="USINT" Comment="Identifier if a device class more than 1 times in net (4 bits)"/>
+		<VarDeclaration Name="bDevClass" Type="USINT" Comment="ISO Defined (7 bits)"/>
+		<VarDeclaration Name="bReserved" Type="BOOL" Comment="Reserved (not used)"/>
+		<VarDeclaration Name="bFunction" Type="USINT" Comment="ISO defined, -> SA (8 bits)"/>
+		<VarDeclaration Name="bFunctionInst" Type="USINT" Comment="subgroup of function (5 bits)"/>
+		<VarDeclaration Name="bEcuInstance" Type="USINT" Comment="which ECU associated with a given function (3 bits)"/>
+		<VarDeclaration Name="wManufCode" Type="UINT" Comment="ISO defined (11 bits)"/>
+		<VarDeclaration Name="dwIdentNumb" Type="UDINT" Comment="Used when the NAME is not unique in same network (21 bits)"/>
+	</StructuredType>
+</DataType>
