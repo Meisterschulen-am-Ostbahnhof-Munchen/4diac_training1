@@ -9,113 +9,37 @@
 	<InterfaceList>
 		<EventInputs>
 			<Event Name="INIT" Type="EInit" Comment="Service Initialization">
-				<With Var="QI"/>
-				<With Var="PARAMS"/>
 			</Event>
-			<Event Name="REQ" Type="Event" Comment="Service Request">
-				<With Var="QI"/>
-				<With Var="SD"/>
+			<Event Name="install" Type="Event" Comment="installs a Transmit PGN (TX) ">
+				<With Var="NmHandle"/>
+				<With Var="u32Pgn"/>
+				<With Var="NmDestin"/>
+				<With Var="u16DaSize"/>
+				<With Var="u8Priority"/>
 			</Event>
-			<Event Name="RSP" Type="Event" Comment="Application Response to IND">
-				<With Var="QI"/>
-				<With Var="SD"/>
+			<Event Name="REQ" Type="Event" Comment="Send Data, unconfirmed">
+				<With Var="Data"/>
 			</Event>
 		</EventInputs>
 		<EventOutputs>
 			<Event Name="INITO" Type="EInit" Comment="Initialization Confirm">
-				<With Var="QO"/>
-				<With Var="STATUS"/>
 			</Event>
-			<Event Name="CNF" Type="Event" Comment="Confirmation of Requested Service">
-				<With Var="QO"/>
-				<With Var="STATUS"/>
-				<With Var="RD"/>
+			<Event Name="installO" Type="Event" Comment="install Done">
+				<With Var="PGN_handle"/>
 			</Event>
-			<Event Name="IND" Type="Event" Comment="Indication from Resource">
-				<With Var="QO"/>
-				<With Var="STATUS"/>
-				<With Var="RD"/>
+			<Event Name="CNF" Type="Event" Comment="Data was sent">
 			</Event>
 		</EventOutputs>
 		<InputVars>
-			<VarDeclaration Name="QI" Type="BOOL" Comment="Event Input Qualifier"/>
-			<VarDeclaration Name="PARAMS" Type="WSTRING" Comment="Service Parameters"/>
-			<VarDeclaration Name="SD" Type="ANY" Comment="Output data to resource"/>
+			<VarDeclaration Name="NmHandle" Type="isobus::CF_INFO_T" Comment="Handle of network member assigned of Network management"/>
+			<VarDeclaration Name="u32Pgn" Type="UDINT" Comment="PGN - Range: 0 - 0x3FFFF "/>
+			<VarDeclaration Name="NmDestin" Type="isobus::CF_INFO_T" Comment="Define the Communication Partner"/>
+			<VarDeclaration Name="u16DaSize" Type="UINT" Comment="Data length of this PGN (0..8)"/>
+			<VarDeclaration Name="u8Priority" Type="SINT" Comment="Default priority of this PGN (0..7) 0=highest"/>
+			<VarDeclaration Name="Data" Type="isobus::CAN_MSG"/>
 		</InputVars>
 		<OutputVars>
-			<VarDeclaration Name="QO" Type="BOOL" Comment="Event Output Qualifier"/>
-			<VarDeclaration Name="STATUS" Type="WSTRING" Comment="Service Status"/>
-			<VarDeclaration Name="RD" Type="ANY" Comment="Input data from resource"/>
+			<VarDeclaration Name="PGN_handle" Type="INT" Comment="PGN-handle on success, HANDLE_UNVALID in case of an error "/>
 		</OutputVars>
 	</InterfaceList>
-	<Service RightInterface="RESOURCE" LeftInterface="APPLICATION">
-		<ServiceSequence Name="normal_establishment">
-			<ServiceTransaction>
-				<InputPrimitive Interface="APPLICATION" Event="INIT+" Parameters="PARAMS"/>
-				<OutputPrimitive Interface="RESOURCE" Event="initialize" Parameters="PARAMS"/>
-				<OutputPrimitive Interface="APPLICATION" Event="INITO+"/>
-			</ServiceTransaction>
-		</ServiceSequence>
-		<ServiceSequence Name="unsuccessful_establishment">
-			<ServiceTransaction>
-				<InputPrimitive Interface="APPLICATION" Event="INIT+" Parameters="PARAMS"/>
-				<OutputPrimitive Interface="RESOURCE" Event="initialize" Parameters="PARAMS"/>
-				<OutputPrimitive Interface="APPLICATION" Event="INITO-" Parameters="STATUS"/>
-			</ServiceTransaction>
-		</ServiceSequence>
-		<ServiceSequence Name="request_confirm">
-			<ServiceTransaction>
-				<InputPrimitive Interface="APPLICATION" Event="REQ+" Parameters="SD"/>
-				<OutputPrimitive Interface="RESOURCE" Event="request" Parameters="SD"/>
-				<OutputPrimitive Interface="APPLICATION" Event="CNF+" Parameters="RD"/>
-			</ServiceTransaction>
-		</ServiceSequence>
-		<ServiceSequence Name="request_inhibited">
-			<ServiceTransaction>
-				<InputPrimitive Interface="APPLICATION" Event="REQ-" Parameters="SD"/>
-				<OutputPrimitive Interface="APPLICATION" Event="CNF-" Parameters="STATUS"/>
-			</ServiceTransaction>
-		</ServiceSequence>
-		<ServiceSequence Name="request_error">
-			<ServiceTransaction>
-				<InputPrimitive Interface="APPLICATION" Event="REQ+" Parameters="SD"/>
-				<OutputPrimitive Interface="RESOURCE" Event="request" Parameters="SD"/>
-				<OutputPrimitive Interface="APPLICATION" Event="CNF-" Parameters="STATUS"/>
-			</ServiceTransaction>
-		</ServiceSequence>
-		<ServiceSequence Name="indication_response">
-			<ServiceTransaction>
-				<InputPrimitive Interface="RESOURCE" Event="indicate" Parameters="RD"/>
-				<OutputPrimitive Interface="APPLICATION" Event="IND+" Parameters="RD"/>
-			</ServiceTransaction>
-			<ServiceTransaction>
-				<InputPrimitive Interface="APPLICATION" Event="RSP" Parameters="QI,SD"/>
-				<OutputPrimitive Interface="RESOURCE" Event="response" Parameters="QI,SD"/>
-			</ServiceTransaction>
-		</ServiceSequence>
-		<ServiceSequence Name="indication_inhibited">
-			<ServiceTransaction>
-				<InputPrimitive Interface="RESOURCE" Event="indicate" Parameters="RD,QI=FALSE"/>
-				<OutputPrimitive Interface="RESOURCE" Event="inhibited"/>
-			</ServiceTransaction>
-		</ServiceSequence>
-		<ServiceSequence Name="error_indication">
-			<ServiceTransaction>
-				<InputPrimitive Interface="RESOURCE" Event="error" Parameters="STATUS"/>
-				<OutputPrimitive Interface="APPLICATION" Event="IND-" Parameters="STATUS"/>
-			</ServiceTransaction>
-		</ServiceSequence>
-		<ServiceSequence Name="application_initiated_termination">
-			<ServiceTransaction>
-				<InputPrimitive Interface="APPLICATION" Event="INIT-"/>
-				<OutputPrimitive Interface="RESOURCE" Event="terminate"/>
-				<OutputPrimitive Interface="APPLICATION" Event="INITO-" Parameters="STATUS"/>
-			</ServiceTransaction>
-		</ServiceSequence>
-		<ServiceSequence Name="resource_initiated_termination">
-			<ServiceTransaction>
-				<OutputPrimitive Interface="APPLICATION" Event="INITO-" Parameters="STATUS"/>
-			</ServiceTransaction>
-		</ServiceSequence>
-	</Service>
 </FBType>
