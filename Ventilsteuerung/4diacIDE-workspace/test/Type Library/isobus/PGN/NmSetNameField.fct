@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<Function Name="NmSetNameField" Comment="\brief      Fills the NAME field structure out of an ISO NAME ( see ISO 11783 - 5 - 5.1.2 )&#10;\param[in]  \wpp{au8IsoName, const #ISO_CF_NAME_T*} Pointer to the ISO NAME byte array ( 8 bytes&#10;)&#10;\param[out] \wp{psNameField, ISONAMEFIELD_T*} Pointer to the NAME field structure which should be&#10;filled">
+<Function Name="NmSetNameField" Comment="\brief      Fills the NAME field structure out of an ISO NAME ( see ISO 11783 - 5 - 5.1.2 )">
 	<Identification Standard="61499-1">
 	</Identification>
 	<VersionInfo Version="1.0" Author="franz" Date="2025-09-04">
@@ -21,21 +21,21 @@
 			<VarDeclaration Name="au8IsoName" Type="isobus::CF_NAME_T"/>
 		</InputVars>
 		<OutputVars>
-			<VarDeclaration Name="" Type="NAMEFIELD_T"/>
+			<VarDeclaration Name="" Type="isobus::NAMEFIELD_T"/>
 		</OutputVars>
 	</InterfaceList>
 	<FunctionBody>
 		<ST><![CDATA[PACKAGE isobus;
 
+(* \brief      Fills the NAME field structure out of an ISO NAME ( see ISO 11783 - 5 - 5.1.2 ) *)
+FUNCTION NmSetNameField : isobus::NAMEFIELD_T
 (*
- * \brief      Fills the NAME field structure out of an ISO NAME ( see ISO 11783 - 5 - 5.1.2 )
  * \param[in]  \wpp{au8IsoName, const #ISO_CF_NAME_T*} Pointer to the ISO NAME byte array ( 8 bytes
  * ) 
  * \param[out] \wp{psNameField, ISONAMEFIELD_T*} Pointer to the NAME field structure which should be
  * filled
  * *
  *)
-FUNCTION NmSetNameField : NAMEFIELD_T
 VAR_INPUT
 	au8IsoName : CF_NAME_T;
 END_VAR
