@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<DataType Name="CF_INFO_T" Comment="Typedef of the ISO CF/user information data structure">
+	<Identification>
+	</Identification>
+	<VersionInfo Version="1.0" Author="franz" Date="2025-09-04">
+	</VersionInfo>
+	<CompilerInfo packageName="isobus">
+	</CompilerInfo>
+	<StructuredType>
+		<VarDeclaration Name="s16Handle" Type="INT" Comment="Network member handle of the CF / user " InitialValue="isobus::HANDLE::UNVALID"/>
+		<VarDeclaration Name="u8SourceAddress" Type="BYTE" Comment="Source address (SA) of the control function (CF) / user" InitialValue="isobus::ADDRESS::NULL_A"/>
+		<VarDeclaration Name="u8CanIdx" Type="BYTE" Comment="CAN-Bus node / index of the control function (CF) / user"/>
+		<VarDeclaration Name="au8Name" Type="isobus::CF_NAME_T" Comment="CF ISOBUS NAME"/>
+		<VarDeclaration Name="eIsoUserFunct" Type="SINT" Comment="Internal used CF function type" InitialValue="isobus::USERFUNC_e::undefined"/>
+		<VarDeclaration Name="bExternalCf" Type="BOOL" Comment="External CF on the CAN network"/>
+		<VarDeclaration Name="bIsAnnounced" Type="BOOL" Comment="ISO_TRUE if the CF is active and full announced"/>
+		<VarDeclaration Name="bIsActive" Type="BOOL" Comment="NIU specific: ISO_TRUE if the CF is not in an error state or logged off"/>
+	</StructuredType>
+</DataType>
