@@ -25,9 +25,9 @@
 			<Parameter Name="QI" Value="TRUE"/>
 			<Parameter Name="u16ObjId" Value="DefaultPool::InputNumber_I1"/>
 		</FB>
-		<FB Name="C1" Type="F_DWORD_TO_UDINT" x="1200" y="-1100">
+		<FB Name="C1" Type="iec61131::conversion::F_DWORD_TO_UDINT" x="1200" y="-1100">
 		</FB>
-		<FB Name="C2" Type="F_UDINT_TO_UINT" x="2600" y="-1100">
+		<FB Name="C2" Type="iec61131::conversion::F_UDINT_TO_UINT" x="2600" y="-1100">
 		</FB>
 		<SubApp Name="rastend" Type="FBs::Uebungen::Uebung_103::subapp::rastend" x="3200" y="300">
 		</SubApp>
@@ -37,7 +37,7 @@
 		</SubApp>
 		<EventConnections>
 			<Connection Source="InputNumber_I1.IND" Destination="C1.REQ" dx1="253.33"/>
-			<Connection Source="C1.CNF" Destination="C2.REQ"/>
+			<Connection Source="C1.CNF" Destination="C2.REQ" dx1="186.67"/>
 			<Connection Source="C2.CNF" Destination="AX_DEMUX_3.REQ" dx1="80" dx2="80" dy="746.67">
 				<Attribute Name="Visible" Value="false"/>
 			</Connection>
@@ -47,7 +47,7 @@
 		</EventConnections>
 		<DataConnections>
 			<Connection Source="InputNumber_I1.IN" Destination="C1.IN" dx1="253.33"/>
-			<Connection Source="C1.OUT" Destination="C2.IN"/>
+			<Connection Source="C1.OUT" Destination="C2.IN" dx1="186.67"/>
 			<Connection Source="C2.OUT" Destination="AX_DEMUX_3.K" dx1="80" dx2="80" dy="746.67">
 				<Attribute Name="Visible" Value="false"/>
 			</Connection>

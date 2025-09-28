@@ -19,21 +19,21 @@
 			<Parameter Name="QI" Value="TRUE"/>
 			<Parameter Name="Output" Value="logiBUS_DO::Output_Q1"/>
 		</FB>
-		<FB Name="F_GT" Type="F_GT" x="-1500" y="2000">
+		<FB Name="F_GT" Type="iec61131::comparison::F_GT" x="-1500" y="2000">
 			<Parameter Name="IN2" Value="UINT#0"/>
 		</FB>
-		<FB Name="E_D_FF" Type="E_D_FF" x="-200" y="2000">
+		<FB Name="E_D_FF" Type="iec61499::events::E_D_FF" x="-200" y="2000">
 		</FB>
 		<EventConnections>
 			<Connection Source="I_WBSD.IND" Destination="Q_NumericValue_WBSD.REQ"/>
 			<Connection Source="I_WBSD.IND" Destination="F_GT.REQ" dx1="1006.67"/>
-			<Connection Source="F_GT.CNF" Destination="E_D_FF.CLK"/>
-			<Connection Source="E_D_FF.EO" Destination="DigitalOutput_Q1.REQ"/>
+			<Connection Source="F_GT.CNF" Destination="E_D_FF.CLK" dx1="413.33"/>
+			<Connection Source="E_D_FF.EO" Destination="DigitalOutput_Q1.REQ" dx1="446.67"/>
 		</EventConnections>
 		<DataConnections>
 			<Connection Source="I_WBSD.WHEELBASEDMACHINESPEED" Destination="Q_NumericValue_WBSD.u32NewValue" dx1="806.67"/>
 			<Connection Source="I_WBSD.WHEELBASEDMACHINESPEED" Destination="F_GT.IN1" dx1="806.67"/>
-			<Connection Source="F_GT.OUT" Destination="E_D_FF.D"/>
+			<Connection Source="F_GT.OUT" Destination="E_D_FF.D" dx1="413.33"/>
 			<Connection Source="E_D_FF.Q" Destination="DigitalOutput_Q1.OUT" dx1="533.33"/>
 		</DataConnections>
 	</SubAppNetwork>
