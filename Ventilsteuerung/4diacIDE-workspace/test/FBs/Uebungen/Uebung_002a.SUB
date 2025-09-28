@@ -21,12 +21,12 @@
 			<Parameter Name="QI" Value="TRUE"/>
 			<Parameter Name="Input" Value="logiBUS_DI::Input_I2"/>
 		</FB>
-		<FB Name="AND_2" Type="AND_2" x="-2000" y="-400">
+		<FB Name="AND_2" Type="iec61131::bitwiseOperators::AND_2" x="-2000" y="-400">
 		</FB>
 		<EventConnections>
 			<Connection Source="DigitalInput_I1.IND" Destination="AND_2.REQ" dx1="920"/>
 			<Connection Source="DigitalInput_I2.IND" Destination="AND_2.REQ" dx1="920"/>
-			<Connection Source="AND_2.CNF" Destination="DigitalOutput_Q1.REQ"/>
+			<Connection Source="AND_2.CNF" Destination="DigitalOutput_Q1.REQ" dx1="220"/>
 		</EventConnections>
 		<DataConnections>
 			<Connection Source="AND_2.OUT" Destination="DigitalOutput_Q1.OUT" dx1="206.67"/>
