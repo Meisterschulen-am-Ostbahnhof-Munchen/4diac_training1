@@ -27,22 +27,10 @@
 			<Parameter Name="VALUE" Value="STRING#'Test'"/>
 			<Parameter Name="DEFAULT_VALUE" Value="STRING#'Test'"/>
 		</FB>
-		<FB Name="Q_NumericValue" Type="Q_StringValue" x="1700" y="900">
+		<FB Name="Q_NumericValue" Type="isobus::ut::Q_StringValue" x="1700" y="900">
 			<Parameter Name="u16ObjId" Value="DefaultPool::InputNumber_I1"/>
 		</FB>
-		<FB Name="CbVtStatus" Type="CbVtStatus" x="-500" y="-1000">
-			<Parameter Name="STATUS" Value="">
-				<Attribute Name="Visible" Value="false"/>
-			</Parameter>
-			<Parameter Name="u8Instance" Value="">
-				<Attribute Name="Visible" Value="false"/>
-			</Parameter>
-			<Parameter Name="qWsActive" Value="">
-				<Attribute Name="Visible" Value="false"/>
-			</Parameter>
-			<Parameter Name="wPage" Value="">
-				<Attribute Name="Visible" Value="false"/>
-			</Parameter>
+		<FB Name="CbVtStatus" Type="isobus::ut::CbVtStatus" x="-500" y="-1000">
 		</FB>
 		<EventConnections>
 			<Connection Source="InputNumber_I1.IND" Destination="F_DWORD_TO_UDINT.REQ"/>

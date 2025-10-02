@@ -4,6 +4,8 @@
 	</Identification>
 	<VersionInfo Organization="HR Agrartechnik GmbH" Version="1.0" Author="Franz Höpfinger" Date="2022-07-08">
 	</VersionInfo>
+	<CompilerInfo packageName="isobus::ut">
+	</CompilerInfo>
 	<InterfaceList>
 		<EventInputs>
 			<Event Name="INIT" Type="EInit" Comment="Service Initialization">
@@ -29,13 +31,13 @@
 		<InputVars>
 			<VarDeclaration Name="u16ObjId" Type="UINT" Comment="Object ID"/>
 			<VarDeclaration Name="u8SubCommandID" Type="USINT" Comment="Sub-Command ID "/>
-			<VarDeclaration Name="u8ParaList" Type="USINT" Comment="Parameters based on sub-command ID byte "  ArraySize="5"/>
+			<VarDeclaration Name="u8ParaList" Type="USINT" Comment="Parameters based on sub-command ID byte " ArraySize="5"/>
 			<VarDeclaration Name="u16LenBytes" Type="UINT" Comment="Length in bytes of parameter list "/>
 		</InputVars>
 		<OutputVars>
 			<VarDeclaration Name="STATUS" Type="STRING" Comment="Service Status"/>
 			<VarDeclaration Name="u8OldSubCommandID" Type="USINT" Comment="Old Sub-Command ID "/>
-			<VarDeclaration Name="u8OldParaList" Type="USINT" Comment="Old parameters based on sub-command ID byte "  ArraySize="5"/>
+			<VarDeclaration Name="u8OldParaList" Type="USINT" Comment="Old parameters based on sub-command ID byte " ArraySize="5"/>
 			<VarDeclaration Name="u16OldLenBytes" Type="UINT" Comment="Old length in bytes of parameter list "/>
 			<VarDeclaration Name="s16result" Type="INT" Comment="retval see description"/>
 		</OutputVars>

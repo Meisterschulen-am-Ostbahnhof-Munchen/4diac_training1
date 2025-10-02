@@ -14,7 +14,7 @@
 			<Parameter Name="Input" Value="logiBUS_DI::Input_I1"/>
 			<Parameter Name="InputEvent" Value="logiBUS_DI_Events::BUTTON_SINGLE_CLICK"/>
 		</FB>
-		<FB Name="Q_ActiveMask" Type="Q_ActiveMask" x="-1100" y="-400">
+		<FB Name="Q_ActiveMask" Type="isobus::ut::Q_ActiveMask" x="-1100" y="-400">
 			<Parameter Name="u16WorkSetId" Value="DefaultPool::WorkingSet_0"/>
 		</FB>
 		<FB Name="DigitalInput_CLK_I2" Type="logiBUS_IE" x="-8100" y="400">
@@ -35,7 +35,7 @@
 		</FB>
 		<FB Name="ACK" Type="Softkey_IE" x="-8000" y="2600">
 			<Parameter Name="QI" Value="TRUE"/>
-			<Parameter Name="u16ObjId" Value="isobus::ID_NULL"/>
+			<Parameter Name="u16ObjId" Value="isobus::ut::isobus::ID_NULL"/>
 			<Parameter Name="InputEvent" Value="SoftKeyActivationCode::SK_PRESSED"/>
 		</FB>
 		<FB Name="E_SR" Type="E_SR" x="-5000" y="1800">
