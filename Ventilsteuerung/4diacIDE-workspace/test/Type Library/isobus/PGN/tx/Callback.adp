@@ -4,7 +4,7 @@
 	</Identification>
 	<VersionInfo Version="1.0" Author="franz" Date="2025-09-06">
 	</VersionInfo>
-	<CompilerInfo packageName="isobus::tx">
+	<CompilerInfo packageName="isobus::pgn::tx">
 	</CompilerInfo>
 	<InterfaceList>
 		<EventInputs>
@@ -17,7 +17,7 @@
 			</Event>
 		</EventOutputs>
 		<OutputVars>
-			<VarDeclaration Name="DO1" Type="isobus::CAN_MSG"/>
+			<VarDeclaration Name="DO1" Type="isobus::pgn::CAN_MSG"/>
 		</OutputVars>
 	</InterfaceList>
 </AdapterType>

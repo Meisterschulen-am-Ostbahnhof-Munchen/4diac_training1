@@ -4,12 +4,12 @@
 	</Identification>
 	<VersionInfo Version="1.0" Author="franz" Date="2025-09-06">
 	</VersionInfo>
-	<CompilerInfo packageName="isobus">
+	<CompilerInfo packageName="isobus::pgn">
 	</CompilerInfo>
 	<GlobalConstants>
-		<VarDeclaration Name="GLOBAL" Type="isobus::CF_INFO_T" InitialValue="(s16Handle := BYTE_TO_INT(ADDRESS::GLOBAL_A))"/>
+		<VarDeclaration Name="GLOBAL" Type="isobus::pgn::CF_INFO_T" InitialValue="(s16Handle := BYTE_TO_INT(ADDRESS::GLOBAL_A))"/>
 	</GlobalConstants>
-	<OriginalSource><![CDATA[PACKAGE isobus;
+	<OriginalSource><![CDATA[PACKAGE isobus::pgn;
 
 GLOBALCONSTANTS CommunicationPartners
 	VAR_GLOBAL CONSTANT

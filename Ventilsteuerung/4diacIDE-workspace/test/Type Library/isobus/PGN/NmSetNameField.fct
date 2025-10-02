@@ -4,7 +4,7 @@
 	</Identification>
 	<VersionInfo Version="1.0" Author="franz" Date="2025-09-04">
 	</VersionInfo>
-	<CompilerInfo packageName="isobus">
+	<CompilerInfo packageName="isobus::pgn">
 	</CompilerInfo>
 	<InterfaceList>
 		<EventInputs>
@@ -18,17 +18,17 @@
 			</Event>
 		</EventOutputs>
 		<InputVars>
-			<VarDeclaration Name="au8IsoName" Type="isobus::CF_NAME_T"/>
+			<VarDeclaration Name="au8IsoName" Type="isobus::pgn::CF_NAME_T"/>
 		</InputVars>
 		<OutputVars>
-			<VarDeclaration Name="" Type="isobus::NAMEFIELD_T"/>
+			<VarDeclaration Name="" Type="isobus::pgn::NAMEFIELD_T"/>
 		</OutputVars>
 	</InterfaceList>
 	<FunctionBody>
-		<ST><![CDATA[PACKAGE isobus;
+		<ST><![CDATA[PACKAGE isobus::pgn;
 
 (* \brief      Fills the NAME field structure out of an ISO NAME ( see ISO 11783 - 5 - 5.1.2 ) *)
-FUNCTION NmSetNameField : isobus::NAMEFIELD_T
+FUNCTION NmSetNameField : isobus::pgn::NAMEFIELD_T
 (*
  * \param[in]  \wpp{au8IsoName, const #ISO_CF_NAME_T*} Pointer to the ISO NAME byte array ( 8 bytes
  * ) 
@@ -37,7 +37,7 @@ FUNCTION NmSetNameField : isobus::NAMEFIELD_T
  * *
  *)
 VAR_INPUT
-	au8IsoName : CF_NAME_T;
+	au8IsoName : isobus::pgn::CF_NAME_T;
 END_VAR
 
 // ISO NAME fields are 8 bytes long (0 to 7)
