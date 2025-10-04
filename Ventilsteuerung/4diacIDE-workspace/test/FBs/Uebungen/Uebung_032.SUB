@@ -11,9 +11,9 @@
 	<SubAppNetwork>
 		<FB Name="LED_GREEN_5HZ" Type="logiBUS_LED_strip_QX" x="-1100" y="-900">
 			<Parameter Name="QI" Value="TRUE"/>
-			<Parameter Name="Output" Value="LED_strip::Output_strip"/>
-			<Parameter Name="Colour" Value="LED_COLOURS::LED_GREEN"/>
-			<Parameter Name="FREQ" Value="LED_FREQ::LED_5HZ"/>
+			<Parameter Name="Output" Value="logiBUS::io::LED_strip::Output_strip"/>
+			<Parameter Name="Colour" Value="logiBUS::io::LED_COLOURS::LED_GREEN"/>
+			<Parameter Name="FREQ" Value="logiBUS::io::LED_FREQ::LED_5HZ"/>
 		</FB>
 		<FB Name="BUTTON_GREEN" Type="logiBUS_IX" x="-4500" y="-1000">
 			<Parameter Name="QI" Value="TRUE"/>
@@ -25,9 +25,9 @@
 		</FB>
 		<FB Name="LED_YELLOW_5HZ" Type="logiBUS_LED_strip_QX" x="-1100" y="200">
 			<Parameter Name="QI" Value="TRUE"/>
-			<Parameter Name="Output" Value="LED_strip::Output_strip"/>
-			<Parameter Name="Colour" Value="LED_COLOURS::LED_YELLOW"/>
-			<Parameter Name="FREQ" Value="LED_FREQ::LED_5HZ"/>
+			<Parameter Name="Output" Value="logiBUS::io::LED_strip::Output_strip"/>
+			<Parameter Name="Colour" Value="logiBUS::io::LED_COLOURS::LED_YELLOW"/>
+			<Parameter Name="FREQ" Value="logiBUS::io::LED_FREQ::LED_5HZ"/>
 		</FB>
 		<FB Name="BUTTON_RED" Type="logiBUS_IX" x="-4500" y="1400">
 			<Parameter Name="QI" Value="TRUE"/>
@@ -35,9 +35,9 @@
 		</FB>
 		<FB Name="LED_RED_5HZ" Type="logiBUS_LED_strip_QX" x="-1100" y="1500">
 			<Parameter Name="QI" Value="TRUE"/>
-			<Parameter Name="Output" Value="LED_strip::Output_strip"/>
-			<Parameter Name="Colour" Value="LED_COLOURS::LED_RED"/>
-			<Parameter Name="FREQ" Value="LED_FREQ::LED_5HZ"/>
+			<Parameter Name="Output" Value="logiBUS::io::LED_strip::Output_strip"/>
+			<Parameter Name="Colour" Value="logiBUS::io::LED_COLOURS::LED_RED"/>
+			<Parameter Name="FREQ" Value="logiBUS::io::LED_FREQ::LED_5HZ"/>
 		</FB>
 		<FB Name="BUTTON_BLUE" Type="logiBUS_IX" x="-4500" y="2600">
 			<Parameter Name="QI" Value="TRUE"/>
@@ -45,9 +45,9 @@
 		</FB>
 		<FB Name="LED_BLUE_5HZ" Type="logiBUS_LED_strip_QX" x="-1100" y="2700">
 			<Parameter Name="QI" Value="TRUE"/>
-			<Parameter Name="Output" Value="LED_strip::Output_strip"/>
-			<Parameter Name="Colour" Value="LED_COLOURS::LED_BLUE"/>
-			<Parameter Name="FREQ" Value="LED_FREQ::LED_5HZ"/>
+			<Parameter Name="Output" Value="logiBUS::io::LED_strip::Output_strip"/>
+			<Parameter Name="Colour" Value="logiBUS::io::LED_COLOURS::LED_BLUE"/>
+			<Parameter Name="FREQ" Value="logiBUS::io::LED_FREQ::LED_5HZ"/>
 		</FB>
 		<EventConnections>
 			<Connection Source="BUTTON_GREEN.IND" Destination="LED_GREEN_5HZ.REQ"/>

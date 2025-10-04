@@ -9,14 +9,9 @@
 	<SubAppInterfaceList>
 	</SubAppInterfaceList>
 	<SubAppNetwork>
-		<FB Name="AnalogInput_I7" Type="logiBUS_AI_ID" x="-3700" y="1500">
-			<Parameter Name="QI" Value="TRUE">
-				<Attribute Name="Visible" Value="false"/>
-			</Parameter>
-			<Parameter Name="PARAMS" Value="">
-				<Attribute Name="Visible" Value="false"/>
-			</Parameter>
-			<Parameter Name="Input" Value="logiBUS_AI::AnalogInput_I7"/>
+		<FB Name="AnalogInput_I7" Type="logiBUS::io::AI::logiBUS_AI_ID" x="-3700" y="1500">
+			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="Input" Value="logiBUS::io::AI::logiBUS_AI::AnalogInput_I7"/>
 			<Parameter Name="AnalogInput_hysteresis" Value="50"/>
 		</FB>
 		<FB Name="F_DWORD_TO_UDINT_I7" Type="F_DWORD_TO_UDINT" x="1100" y="2600">
@@ -28,7 +23,7 @@
 			<Parameter Name="PARAMS" Value="">
 				<Attribute Name="Visible" Value="false"/>
 			</Parameter>
-			<Parameter Name="Output" Value="logiBUS_DO::Output_Q4"/>
+			<Parameter Name="Output" Value="logiBUS::io::DO::logiBUS_DO::Output_Q4"/>
 		</FB>
 		<FB Name="F_SHL" Type="F_SHL" x="-1246.67" y="1700">
 			<Parameter Name="N" Value="UINT#1"/>

@@ -9,14 +9,14 @@
 	<SubAppInterfaceList>
 		<InputVars>
 			<VarDeclaration Name="Input" Type="logiBUS_DI_S" Comment="Identify the Input Input_I1..I8" InitialValue="logiBUS_DI::Invalid"/>
-			<VarDeclaration Name="Colour" Type="UINT" Comment="This identify the Colour. " InitialValue="LED_COLOURS::LED_GREEN"/>
+			<VarDeclaration Name="Colour" Type="UINT" Comment="This identify the Colour. " InitialValue="logiBUS::io::LED_COLOURS::LED_GREEN"/>
 			<VarDeclaration Name="Output" Type="USINT" Comment="Identify the Output Number of Strip"/>
 		</InputVars>
 	</SubAppInterfaceList>
 	<SubAppNetwork>
 		<FB Name="LED" Type="logiBUS_LED_strip_QX" x="-1500" y="-700">
 			<Parameter Name="QI" Value="TRUE"/>
-			<Parameter Name="FREQ" Value="LED_FREQ::LED_1HZ"/>
+			<Parameter Name="FREQ" Value="logiBUS::io::LED_FREQ::LED_1HZ"/>
 		</FB>
 		<FB Name="BUTTON" Type="logiBUS_IX" x="-4500" y="-800">
 			<Parameter Name="QI" Value="TRUE"/>

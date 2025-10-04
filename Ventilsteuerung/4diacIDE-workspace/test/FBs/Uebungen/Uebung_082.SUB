@@ -11,7 +11,7 @@
 	<SubAppNetwork>
 		<FB Name="DigitalOutput_Q1" Type="logiBUS_QX" x="-6700" y="-100">
 			<Parameter Name="QI" Value="TRUE"/>
-			<Parameter Name="Output" Value="logiBUS_DO::Output_Q1"/>
+			<Parameter Name="Output" Value="logiBUS::io::DO::logiBUS_DO::Output_Q1"/>
 		</FB>
 		<FB Name="DigitalInput_CLK_I1" Type="logiBUS_IE" x="-10800" y="-1100">
 			<Parameter Name="QI" Value="TRUE"/>
@@ -38,7 +38,7 @@
 		</FB>
 		<FB Name="DigitalOutput_Q2" Type="logiBUS_QX" x="-6700" y="900">
 			<Parameter Name="QI" Value="TRUE"/>
-			<Parameter Name="Output" Value="logiBUS_DO::Output_Q2"/>
+			<Parameter Name="Output" Value="logiBUS::io::DO::logiBUS_DO::Output_Q2"/>
 		</FB>
 		<EventConnections>
 			<Connection Source="DigitalInput_CLK_I1.IND" Destination="E_CTUD.CU" dx1="413.33"/>

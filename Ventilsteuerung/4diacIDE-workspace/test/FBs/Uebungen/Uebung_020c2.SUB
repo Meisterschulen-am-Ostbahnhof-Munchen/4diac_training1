@@ -11,15 +11,16 @@
 	<SubAppNetwork>
 		<FB Name="DigitalOutput_Q1" Type="logiBUS_QX" x="-5500" y="400">
 			<Parameter Name="QI" Value="TRUE"/>
-			<Parameter Name="Output" Value="logiBUS_DO::Output_Q1"/>
+			<Parameter Name="Output" Value="logiBUS::io::DO::logiBUS_DO::Output_Q1"/>
 		</FB>
 		<FB Name="DigitalInput_I1" Type="logiBUS_IX" x="-9000" y="300">
-			<Parameter Name="QI" Value="TRUE">
+			<Parameter Name="QI" Value="">
 				<Attribute Name="Visible" Value="false"/>
 			</Parameter>
 			<Parameter Name="PARAMS" Value="">
 				<Attribute Name="Visible" Value="false"/>
 			</Parameter>
+			<Parameter Name="QI" Value="TRUE"/>
 			<Parameter Name="Input" Value="logiBUS_DI::Input_I1"/>
 		</FB>
 		<FB Name="E_TON" Type="E_TON" x="-7100" y="500">

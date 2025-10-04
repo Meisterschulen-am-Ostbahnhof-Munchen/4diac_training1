@@ -16,35 +16,26 @@
 			<Parameter Name="PARAMS" Value="">
 				<Attribute Name="Visible" Value="false"/>
 			</Parameter>
-			<Parameter Name="Output" Value="logiBUS_DO::Output_Q1"/>
+			<Parameter Name="Output" Value="logiBUS::io::DO::logiBUS_DO::Output_Q1"/>
 		</FB>
 		<FB Name="DigitalInput_I1" Type="logiBUS_IX" x="-4200" y="-200">
-			<Parameter Name="QI" Value="TRUE">
+			<Parameter Name="QI" Value="">
 				<Attribute Name="Visible" Value="false"/>
 			</Parameter>
 			<Parameter Name="PARAMS" Value="">
 				<Attribute Name="Visible" Value="false"/>
 			</Parameter>
+			<Parameter Name="QI" Value="TRUE"/>
 			<Parameter Name="Input" Value="logiBUS_DI::Input_I1"/>
 		</FB>
-		<FB Name="AnalogInput_I4" Type="logiBUS_AI_ID" x="-700" y="1100">
-			<Parameter Name="QI" Value="TRUE">
-				<Attribute Name="Visible" Value="false"/>
-			</Parameter>
-			<Parameter Name="PARAMS" Value="">
-				<Attribute Name="Visible" Value="false"/>
-			</Parameter>
-			<Parameter Name="Input" Value="logiBUS_AI::AnalogInput_I4"/>
+		<FB Name="AnalogInput_I4" Type="logiBUS::io::AI::logiBUS_AI_ID" x="-700" y="1100">
+			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="Input" Value="logiBUS::io::AI::logiBUS_AI::AnalogInput_I4"/>
 			<Parameter Name="AnalogInput_hysteresis" Value="50"/>
 		</FB>
-		<FB Name="AnalogInput_I7" Type="logiBUS_AI_ID" x="-700" y="2400">
-			<Parameter Name="QI" Value="TRUE">
-				<Attribute Name="Visible" Value="false"/>
-			</Parameter>
-			<Parameter Name="PARAMS" Value="">
-				<Attribute Name="Visible" Value="false"/>
-			</Parameter>
-			<Parameter Name="Input" Value="logiBUS_AI::AnalogInput_I7"/>
+		<FB Name="AnalogInput_I7" Type="logiBUS::io::AI::logiBUS_AI_ID" x="-700" y="2400">
+			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="Input" Value="logiBUS::io::AI::logiBUS_AI::AnalogInput_I7"/>
 			<Parameter Name="AnalogInput_hysteresis" Value="50"/>
 		</FB>
 		<FB Name="F_DWORD_TO_UDINT_I7" Type="F_DWORD_TO_UDINT" x="2200" y="2800">

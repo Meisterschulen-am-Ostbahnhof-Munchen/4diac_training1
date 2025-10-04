@@ -11,7 +11,7 @@
 	<SubAppNetwork>
 		<FB Name="DigitalOutput_Q1" Type="logiBUS_QX" x="400" y="-1160">
 			<Parameter Name="QI" Value="TRUE"/>
-			<Parameter Name="Output" Value="logiBUS_DO::Output_Q1"/>
+			<Parameter Name="Output" Value="logiBUS::io::DO::logiBUS_DO::Output_Q1"/>
 		</FB>
 		<FB Name="DigitalInput_I1" Type="logiBUS_IX" x="-6226.67" y="-526.67">
 			<Parameter Name="QI" Value="TRUE"/>
@@ -19,7 +19,7 @@
 		</FB>
 		<FB Name="DigitalOutput_Q2" Type="logiBUS_QX" x="400" y="-180">
 			<Parameter Name="QI" Value="TRUE"/>
-			<Parameter Name="Output" Value="logiBUS_DO::Output_Q2"/>
+			<Parameter Name="Output" Value="logiBUS::io::DO::logiBUS_DO::Output_Q2"/>
 		</FB>
 		<FB Name="DigitalInput_I2" Type="logiBUS_IX" x="-6226.67" y="586.67">
 			<Parameter Name="QI" Value="TRUE"/>
@@ -27,7 +27,7 @@
 		</FB>
 		<FB Name="DigitalOutput_Q3" Type="logiBUS_QX" x="400" y="800">
 			<Parameter Name="QI" Value="TRUE"/>
-			<Parameter Name="Output" Value="logiBUS_DO::Output_Q3"/>
+			<Parameter Name="Output" Value="logiBUS::io::DO::logiBUS_DO::Output_Q3"/>
 		</FB>
 		<FB Name="DigitalInput_I3" Type="logiBUS_IX" x="-6200" y="1700">
 			<Parameter Name="QI" Value="TRUE"/>
@@ -35,7 +35,7 @@
 		</FB>
 		<FB Name="DigitalOutput_Q4" Type="logiBUS_QX" x="400" y="1800">
 			<Parameter Name="QI" Value="TRUE"/>
-			<Parameter Name="Output" Value="logiBUS_DO::Output_Q4"/>
+			<Parameter Name="Output" Value="logiBUS::io::DO::logiBUS_DO::Output_Q4"/>
 		</FB>
 		<FB Name="DigitalInput_I4" Type="logiBUS_IX" x="-6226.67" y="2813.33">
 			<Parameter Name="QI" Value="TRUE"/>
@@ -57,7 +57,7 @@
 			<Connection Source="SPLIT_BYTE_INTO_BOOLS.CNF" Destination="DigitalOutput_Q4.REQ"/>
 		</EventConnections>
 		<DataConnections>
-			<Connection Source="ASSEMBLE_BYTE_FROM_BOOLS." Destination="SPLIT_BYTE_INTO_BOOLS.IN"/>
+			<Connection Source="ASSEMBLE_BYTE_FROM_BOOLS.pin &quot;ASSEMBLE_BYTE_FROM_BOOLS.&quot; not found" Destination="SPLIT_BYTE_INTO_BOOLS.IN"/>
 			<Connection Source="SPLIT_BYTE_INTO_BOOLS.BIT_00" Destination="DigitalOutput_Q1.OUT" dx1="400"/>
 			<Connection Source="SPLIT_BYTE_INTO_BOOLS.BIT_01" Destination="DigitalOutput_Q2.OUT" dx1="520"/>
 			<Connection Source="SPLIT_BYTE_INTO_BOOLS.BIT_02" Destination="DigitalOutput_Q3.OUT" dx1="626.67"/>

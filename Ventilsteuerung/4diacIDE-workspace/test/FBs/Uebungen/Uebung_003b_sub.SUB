@@ -9,7 +9,7 @@
 	<SubAppInterfaceList>
 		<InputVars>
 			<VarDeclaration Name="Input" Type="logiBUS_DI_S" Comment="Identify the Input Input_I1..I8" InitialValue="logiBUS_DI::Invalid"/>
-			<VarDeclaration Name="Output" Type="logiBUS_DO_S" Comment="Identify the Output Output_Q1..Q8" InitialValue="logiBUS_DO::Invalid"/>
+			<VarDeclaration Name="Output" Type="logiBUS_DO_S" Comment="Identify the Output Output_Q1..Q8" InitialValue="logiBUS::io::DO::logiBUS_DO::Invalid"/>
 		</InputVars>
 	</SubAppInterfaceList>
 	<SubAppNetwork>
@@ -20,10 +20,10 @@
 			</Parameter>
 		</FB>
 		<FB Name="IX" Type="logiBUS_IX" x="-4600" y="-1000">
-			<Parameter Name="QI" Value="TRUE"/>
 			<Parameter Name="PARAMS" Value="">
 				<Attribute Name="Visible" Value="false"/>
 			</Parameter>
+			<Parameter Name="QI" Value="TRUE"/>
 		</FB>
 		<EventConnections>
 			<Connection Source="IX.IND" Destination="QX.REQ" dx1="773.33"/>
