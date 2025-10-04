@@ -8,34 +8,12 @@
 	</CompilerInfo>
 	<InterfaceList>
 		<Plugs>
-			<AdapterDeclaration Name="OUT" Type="AX" Comment="OR result" x="1600" y="373.33"/>
+			<AdapterDeclaration Name="OUT" Type="AX" Comment="AND result" x="1600" y="373.33"/>
 		</Plugs>
 		<Sockets>
-			<AdapterDeclaration Name="IN1" Type="AX" Comment="OR input 1" x="133.33" y="33.33"/>
-			<AdapterDeclaration Name="IN2" Type="AX" Comment="OR input 2" x="133.33" y="813.33"/>
+			<AdapterDeclaration Name="IN1" Type="AX" Comment="AND input 1" x="133.33" y="33.33"/>
+			<AdapterDeclaration Name="IN2" Type="AX" Comment="AND input 2" x="133.33" y="813.33"/>
 		</Sockets>
 	</InterfaceList>
-	<FBNetwork>
-		<FB Name="AND_2" Type="AND_2" x="820" y="373.33">
-		</FB>
-		<EventConnections>
-			<Connection Source="IN1.E1" Destination="AND_2.REQ" dx1="140"/>
-			<Connection Source="IN2.E1" Destination="AND_2.REQ" dx1="140"/>
-			<Connection Source="AND_2.CNF" Destination="OUT.E1"/>
-		</EventConnections>
-		<DataConnections>
-			<Connection Source="IN1.D1" Destination="AND_2.IN1" dx1="73.33"/>
-			<Connection Source="IN2.D1" Destination="AND_2.IN2" dx1="206.67"/>
-			<Connection Source="AND_2.OUT" Destination="OUT.D1"/>
-		</DataConnections>
-	</FBNetwork>
-	<Attribute Name="Documentation" Type="CDATA"><![CDATA[<p>Copyright (c) 2024 HR Agrartechnik GmbH&nbsp;&nbsp;&nbsp;<br />
-&nbsp;&nbsp;&nbsp;<br />
-This program and the accompanying materials are made&nbsp;&nbsp;&nbsp;&nbsp;<br />
-available under the terms of the Eclipse Public License 2.0&nbsp;&nbsp;&nbsp;&nbsp;<br />
-which is available at <a href="https://www.eclipse.org/legal/epl-2.0/">https://www.eclipse.org/legal/epl-2.0/</a>&nbsp;&nbsp;&nbsp;&nbsp;<br />
-&nbsp;&nbsp;&nbsp;&nbsp;<br />
-SPDX-License-Identifier: EPL-2.0</p>
-]]></Attribute>
-
+	<Attribute Name="GenericClassName" Value="'GEN_AX_AND'"/>
 </FBType>

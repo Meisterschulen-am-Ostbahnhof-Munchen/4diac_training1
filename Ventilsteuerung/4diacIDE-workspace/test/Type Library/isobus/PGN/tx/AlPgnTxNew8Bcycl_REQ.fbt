@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<FBType Name="AlPgnTxNew8Bcycl_REQ" Comment="Service Interface Function Block Type">
+	<Identification Standard="61499-2">
+	</Identification>
+	<VersionInfo Version="1.0" Author="franz" Date="2025-09-04">
+	</VersionInfo>
+	<CompilerInfo packageName="isobus::tx">
+	</CompilerInfo>
+	<InterfaceList>
+		<EventInputs>
+			<Event Name="INIT" Type="EInit" Comment="Service Initialization">
+			</Event>
+			<Event Name="install" Type="Event" Comment="installs a Transmit PGN (TX) ">
+				<With Var="NmHandle"/>
+				<With Var="u32Pgn"/>
+				<With Var="NmDestin"/>
+				<With Var="u16DaSize"/>
+				<With Var="u8Priority"/>
+				<With Var="u16DefRepRate"/>
+			</Event>
+		</EventInputs>
+		<EventOutputs>
+			<Event Name="INITO" Type="EInit" Comment="Initialization Confirm">
+			</Event>
+			<Event Name="installO" Type="Event" Comment="install Done">
+				<With Var="PGN_handle"/>
+			</Event>
+		</EventOutputs>
+		<InputVars>
+			<VarDeclaration Name="NmHandle" Type="isobus::CF_INFO_T" Comment="Handle of network member assigned of Network management"/>
+			<VarDeclaration Name="u32Pgn" Type="UDINT" Comment="PGN - Range: 0 - 0x3FFFF "/>
+			<VarDeclaration Name="NmDestin" Type="isobus::CF_INFO_T" Comment="Define the Communication Partner"/>
+			<VarDeclaration Name="u16DaSize" Type="UINT" Comment="Data length of this PGN (0..8)"/>
+			<VarDeclaration Name="u8Priority" Type="SINT" Comment="Default priority of this PGN (0..7) 0=highest"/>
+			<VarDeclaration Name="u16DefRepRate" Type="UINT" Comment="0 ... 0xFDFF ms for time interval of cyclic transmission" InitialValue="0"/>
+		</InputVars>
+		<OutputVars>
+			<VarDeclaration Name="PGN_handle" Type="INT" Comment="PGN-handle on success, HANDLE_UNVALID in case of an error "/>
+		</OutputVars>
+		<Sockets>
+			<AdapterDeclaration Name="CB" Type="isobus::tx::Callback"/>
+		</Sockets>
+	</InterfaceList>
+</FBType>
