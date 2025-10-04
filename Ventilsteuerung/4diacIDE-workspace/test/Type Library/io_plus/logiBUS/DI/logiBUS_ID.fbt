@@ -4,6 +4,8 @@
 	</Identification>
 	<VersionInfo Organization="fortiss GmbH" Version="1.0" Author="Monika Wenger" Date="2017-03-20">
 	</VersionInfo>
+	<CompilerInfo packageName="logiBUS::io::DI">
+	</CompilerInfo>
 	<InterfaceList>
 		<EventInputs>
 			<Event Name="INIT" Type="EInit" Comment="Service Initialization">
@@ -35,8 +37,8 @@
 		<InputVars>
 			<VarDeclaration Name="QI" Type="BOOL" Comment="Event Input Qualifier"/>
 			<VarDeclaration Name="PARAMS" Type="STRING" Comment="Service Parameters"/>
-			<VarDeclaration Name="Input" Type="logiBUS_DI_S" Comment="Identify the Input Input_I1..I8" InitialValue="logiBUS_DI::Invalid"/>
-			<VarDeclaration Name="InputEvent" Type="logiBUS_DI_Events_S" Comment="Identify the Event (currently only REPEAT supported)" InitialValue="logiBUS_DI_Events::Invalid"/>
+			<VarDeclaration Name="Input" Type="logiBUS::io::DI::logiBUS_DI_S" Comment="Identify the Input Input_I1..I8" InitialValue="logiBUS_DI::Invalid"/>
+			<VarDeclaration Name="InputEvent" Type="logiBUS::io::DI::logiBUS_DI_Events_S" Comment="Identify the Event (currently only REPEAT supported)" InitialValue="logiBUS_DI_Events::Invalid"/>
 		</InputVars>
 		<OutputVars>
 			<VarDeclaration Name="QO" Type="BOOL" Comment="Event Output Qualifier"/>

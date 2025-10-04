@@ -8,6 +8,9 @@
 	</VersionInfo>
 	<VersionInfo Organization="fortiss GmbH" Version="1.2" Author="Monika Wenger" Date="2015-06-10">
 	</VersionInfo>
+	<CompilerInfo packageName="logiBUS::io::DO_LED">
+		<Import declaration="logiBUS::io::DQ::logiBUS_DO"/>
+	</CompilerInfo>
 	<InterfaceList>
 		<EventInputs>
 			<Event Name="INIT" Type="EInit" Comment="Service Initialization">
@@ -35,7 +38,7 @@
 			<VarDeclaration Name="QI" Type="BOOL" Comment="Event Input Qualifier"/>
 			<VarDeclaration Name="PARAMS" Type="STRING" Comment="Service Parameters"/>
 			<VarDeclaration Name="OUT" Type="BOOL" Comment="Output data to resource"/>
-			<VarDeclaration Name="Output" Type="logiBUS_DO_S" Comment="Identify the Output Output_Q1..Q8" InitialValue="logiBUS_DO::Invalid"/>
+			<VarDeclaration Name="Output" Type="logiBUS::io::DQ::logiBUS_DO_S" Comment="Identify the Output Output_Q1..Q8" InitialValue="logiBUS_DO::Invalid"/>
 			<VarDeclaration Name="FREQ" Type="UINT" Comment="Define the LED Frequency and Priority" InitialValue="LED_FREQ::LED_OFF"/>
 		</InputVars>
 		<OutputVars>

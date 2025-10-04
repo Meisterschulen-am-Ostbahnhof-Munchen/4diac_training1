@@ -4,6 +4,8 @@
 	</Identification>
 	<VersionInfo Organization="fortiss GmbH" Version="1.0" Author="Monika Wenger" Date="2017-03-20">
 	</VersionInfo>
+	<CompilerInfo packageName="logiBUS::io::AI">
+	</CompilerInfo>
 	<InterfaceList>
 		<EventInputs>
 			<Event Name="INIT" Type="EInit" Comment="Service Initialization">
@@ -35,7 +37,7 @@
 		<InputVars>
 			<VarDeclaration Name="QI" Type="BOOL" Comment="Event Input Qualifier"/>
 			<VarDeclaration Name="PARAMS" Type="STRING" Comment="Service Parameters"/>
-			<VarDeclaration Name="Input" Type="logiBUS_AI_S" Comment="Identify the Input Input_I1..I8" InitialValue="logiBUS_AI::Invalid"/>
+			<VarDeclaration Name="Input" Type="logiBUS::io::AI::logiBUS_AI_S" Comment="Identify the Input Input_I1..I8" InitialValue="logiBUS_AI::Invalid"/>
 			<VarDeclaration Name="AnalogInput_hysteresis" Type="DWORD"/>
 		</InputVars>
 		<OutputVars>

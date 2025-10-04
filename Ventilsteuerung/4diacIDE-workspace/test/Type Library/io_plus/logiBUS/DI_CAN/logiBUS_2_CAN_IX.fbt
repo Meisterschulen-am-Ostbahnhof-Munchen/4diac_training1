@@ -8,6 +8,8 @@
 	</VersionInfo>
 	<VersionInfo Organization="fortiss GmbH" Version="1.2" Author="Monika Wenger" Date="2015-06-10">
 	</VersionInfo>
+	<CompilerInfo packageName="logiBUS::io::DI_CAN">
+	</CompilerInfo>
 	<InterfaceList>
 		<EventInputs>
 			<Event Name="INIT" Type="EInit" Comment="Service Initialization">
@@ -38,7 +40,7 @@
 		<InputVars>
 			<VarDeclaration Name="QI" Type="BOOL" Comment="Event Input Qualifier"/>
 			<VarDeclaration Name="PARAMS" Type="STRING" Comment="Service Parameters"/>
-			<VarDeclaration Name="Input" Type="logiBUS_2_CAN_DI_S" Comment="Identify the Input Input_Q1..Q8" InitialValue="logiBUS_2_CAN_DI::Invalid"/>
+			<VarDeclaration Name="Input" Type="logiBUS::io::DI_CAN::logiBUS_2_CAN_DI_S" Comment="Identify the Input Input_Q1..Q8" InitialValue="logiBUS_2_CAN_DI::Invalid"/>
 		</InputVars>
 		<OutputVars>
 			<VarDeclaration Name="QO" Type="BOOL" Comment="Event Output Qualifier"/>
