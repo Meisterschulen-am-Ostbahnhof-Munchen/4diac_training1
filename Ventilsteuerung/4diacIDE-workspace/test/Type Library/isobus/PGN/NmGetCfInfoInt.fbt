@@ -9,6 +9,7 @@
 	<InterfaceList>
 		<EventInputs>
 			<Event Name="INIT" Type="EInit" Comment="Service Initialization">
+				<With Var="u8CanIdx"/>
 			</Event>
 		</EventInputs>
 		<EventOutputs>
@@ -17,6 +18,9 @@
 			<Event Name="IND" Type="Event" Comment="Indication from Resource">
 			</Event>
 		</EventOutputs>
+		<InputVars>
+			<VarDeclaration Name="u8CanIdx" Type="USINT"/>
+		</InputVars>
 		<OutputVars>
 			<VarDeclaration Name="OUT" Type="isobus::pgn::CF_INFO_T"/>
 		</OutputVars>
