@@ -5,11 +5,13 @@
 	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2023-10-23">
 	</VersionInfo>
 	<CompilerInfo>
+		<Import declaration="logiBUS::io::DI::logiBUS_DI"/>
+		<Import declaration="logiBUS::io::DI::logiBUS_DI_Events"/>
 	</CompilerInfo>
 	<SubAppInterfaceList>
 	</SubAppInterfaceList>
 	<SubAppNetwork>
-		<FB Name="DigitalInput_CLK_I1" Type="logiBUS_IE" x="-8100" y="-400">
+		<FB Name="DigitalInput_CLK_I1" Type="logiBUS::io::DI::logiBUS_IE" x="-8100" y="-400">
 			<Parameter Name="QI" Value="TRUE"/>
 			<Parameter Name="Input" Value="logiBUS_DI::Input_I1"/>
 			<Parameter Name="InputEvent" Value="logiBUS_DI_Events::BUTTON_SINGLE_CLICK"/>
@@ -17,22 +19,22 @@
 		<FB Name="Q_ActiveMask" Type="isobus::ut::Q_ActiveMask" x="-2100" y="-300">
 			<Parameter Name="u16WorkSetId" Value="DefaultPool::WorkingSet_0"/>
 		</FB>
-		<FB Name="DigitalInput_CLK_I2" Type="logiBUS_IE" x="-8100" y="600">
+		<FB Name="DigitalInput_CLK_I2" Type="logiBUS::io::DI::logiBUS_IE" x="-8100" y="600">
 			<Parameter Name="QI" Value="TRUE"/>
 			<Parameter Name="Input" Value="logiBUS_DI::Input_I2"/>
 			<Parameter Name="InputEvent" Value="logiBUS_DI_Events::BUTTON_SINGLE_CLICK"/>
 		</FB>
-		<FB Name="F_SEL_E_2" Type="F_SEL_E_2" x="-4800" y="-200">
+		<FB Name="F_SEL_E_2" Type="eclipse4diac::utils::selection::F_SEL_E_2" x="-4800" y="-200">
 			<Parameter Name="IN0" Value="DefaultPool::DataMask_M1"/>
 			<Parameter Name="IN1" Value="DefaultPool::DataMask_M2"/>
 		</FB>
 		<EventConnections>
-			<Connection Source="DigitalInput_CLK_I1.IND" Destination="F_SEL_E_2.REQ0"/>
+			<Connection Source="DigitalInput_CLK_I1.IND" Destination="F_SEL_E_2.REQ0" dx1="1100"/>
 			<Connection Source="DigitalInput_CLK_I2.IND" Destination="F_SEL_E_2.REQ1" dx1="1253.33"/>
-			<Connection Source="F_SEL_E_2.CNF" Destination="Q_ActiveMask.REQ"/>
+			<Connection Source="F_SEL_E_2.CNF" Destination="Q_ActiveMask.REQ" dx1="826.67"/>
 		</EventConnections>
 		<DataConnections>
-			<Connection Source="F_SEL_E_2.OUT" Destination="Q_ActiveMask.u16NewMaskId"/>
+			<Connection Source="F_SEL_E_2.OUT" Destination="Q_ActiveMask.u16NewMaskId" dx1="826.67"/>
 		</DataConnections>
 	</SubAppNetwork>
 </SubAppType>
