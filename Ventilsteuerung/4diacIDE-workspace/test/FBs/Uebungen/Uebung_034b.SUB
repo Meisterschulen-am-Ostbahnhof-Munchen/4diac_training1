@@ -15,12 +15,12 @@
 			<Parameter Name="QI" Value="TRUE"/>
 			<Parameter Name="Output" Value="logiBUS_DO::Output_Q1"/>
 		</FB>
-		<FB Name="IE_SPEED_UP" Type="logiBUS_IE" x="413.33" y="33.33">
+		<FB Name="IE_SPEED_UP" Type="logiBUS::io::DI::logiBUS_IE" x="413.33" y="33.33">
 			<Parameter Name="QI" Value="TRUE"/>
 			<Parameter Name="Input" Value="logiBUS_DI::Input_I1"/>
 			<Parameter Name="InputEvent" Value="logiBUS_DI_Events::BUTTON_LONG_PRESS_HOLD"/>
 		</FB>
-		<FB Name="IE_SPEED_DOWN" Type="logiBUS_IE" x="413.33" y="1113.33">
+		<FB Name="IE_SPEED_DOWN" Type="logiBUS::io::DI::logiBUS_IE" x="413.33" y="1113.33">
 			<Parameter Name="QI" Value="TRUE"/>
 			<Parameter Name="Input" Value="logiBUS_DI::Input_I2"/>
 			<Parameter Name="InputEvent" Value="logiBUS_DI_Events::BUTTON_LONG_PRESS_HOLD"/>
@@ -30,12 +30,12 @@
 		</FB>
 		<FB Name="F_UDINT_TO_DWORD" Type="F_UDINT_TO_DWORD" x="4000" y="1700">
 		</FB>
-		<FB Name="IE_STOP" Type="logiBUS_IE" x="413.33" y="2193.33">
+		<FB Name="IE_STOP" Type="logiBUS::io::DI::logiBUS_IE" x="413.33" y="2193.33">
 			<Parameter Name="QI" Value="TRUE"/>
 			<Parameter Name="Input" Value="logiBUS_DI::Input_I3"/>
 			<Parameter Name="InputEvent" Value="logiBUS_DI_Events::BUTTON_SINGLE_CLICK"/>
 		</FB>
-		<FB Name="IE_FULL" Type="logiBUS_IE" x="413.33" y="3273.33">
+		<FB Name="IE_FULL" Type="logiBUS::io::DI::logiBUS_IE" x="413.33" y="3273.33">
 			<Parameter Name="QI" Value="TRUE"/>
 			<Parameter Name="Input" Value="logiBUS_DI::Input_I4"/>
 			<Parameter Name="InputEvent" Value="logiBUS_DI_Events::BUTTON_SINGLE_CLICK"/>
