@@ -16,7 +16,7 @@
 			<Parameter Name="QI" Value="TRUE"/>
 			<Parameter Name="Output" Value="logiBUS_DO::Output_Q1"/>
 		</FB>
-		<FB Name="DigitalInput_RPT_I1" Type="logiBUS_IB" x="1920" y="3620">
+		<FB Name="DigitalInput_RPT_I1" Type="logiBUS::io::DI::logiBUS_IB" x="1920" y="3620">
 			<Parameter Name="QI" Value="TRUE"/>
 			<Parameter Name="Input" Value="logiBUS_DI::Input_I1"/>
 			<Parameter Name="InputEvent" Value="logiBUS_DI_Events::BUTTON_PRESS_REPEAT"/>
@@ -74,9 +74,9 @@
 		</FB>
 		<FB Name="E_SR_Q8" Type="iec61499::events::E_SR" x="6260" y="8960">
 		</FB>
-		<FB Name="F_BYTE_TO_UINT_S" Type="F_BYTE_TO_UINT" x="3120" y="3973.33">
+		<FB Name="F_BYTE_TO_UINT_S" Type="iec61131::conversion::F_BYTE_TO_UINT" x="3120" y="3973.33">
 		</FB>
-		<FB Name="F_BYTE_TO_UINT_R" Type="F_BYTE_TO_UINT" x="3120" y="5720">
+		<FB Name="F_BYTE_TO_UINT_R" Type="iec61131::conversion::F_BYTE_TO_UINT" x="3120" y="5720">
 		</FB>
 		<EventConnections>
 			<Connection Source="E_SR_Q1.EO" Destination="DigitalOutput_Q1.REQ" dx1="633.33"/>

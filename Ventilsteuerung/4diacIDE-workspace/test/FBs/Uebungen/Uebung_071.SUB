@@ -5,14 +5,12 @@
 	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2023-10-23">
 	</VersionInfo>
 	<CompilerInfo>
-		<Import declaration="logiBUS::io::DI::logiBUS_DI"/>
-		<Import declaration="logiBUS::io::DI::logiBUS_DI_Events"/>
 		<Import declaration="logiBUS::io::DQ::logiBUS_DO"/>
 	</CompilerInfo>
 	<SubAppInterfaceList>
 	</SubAppInterfaceList>
 	<SubAppNetwork>
-		<FB Name="I_WBSD" Type="I_WBSD" x="-6000" y="500">
+		<FB Name="I_WBSD" Type="isobus::tecu::I_WBSD" x="-6000" y="500">
 			<Parameter Name="QI" Value="TRUE"/>
 		</FB>
 		<FB Name="Q_NumericValue_WBSD" Type="isobus::ut::Q_NumericValue" x="-700" y="500">
@@ -22,7 +20,7 @@
 			<Parameter Name="QI" Value="TRUE"/>
 			<Parameter Name="Output" Value="logiBUS_DO::Output_Q1"/>
 		</FB>
-		<FB Name="F_GT" Type="F_GT" x="-1500" y="2000">
+		<FB Name="F_GT" Type="iec61131::comparison::F_GT" x="-1500" y="2000">
 			<Parameter Name="IN2" Value="UINT#0"/>
 		</FB>
 		<EventConnections>

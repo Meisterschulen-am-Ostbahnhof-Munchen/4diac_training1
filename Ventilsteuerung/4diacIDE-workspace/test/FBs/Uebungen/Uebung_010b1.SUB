@@ -19,7 +19,7 @@
 			</Parameter>
 			<Parameter Name="Output" Value="logiBUS_DO::Output_Q1"/>
 		</FB>
-		<FB Name="AuxFunction2_X1" Type="Aux_IX" x="-4600" y="-500">
+		<FB Name="AuxFunction2_X1" Type="isobus::UT_io::aux::in::Aux_IX" x="-4600" y="-500">
 			<Parameter Name="QI" Value="TRUE"/>
 			<Parameter Name="u16ObjId" Value="DefaultPool::AuxFunction2_X1"/>
 		</FB>
@@ -27,7 +27,7 @@
 			<Connection Source="AuxFunction2_X1.IND" Destination="DigitalOutput_Q1.REQ" dx1="1080"/>
 		</EventConnections>
 		<DataConnections>
-			<Connection Source="AuxFunction2_X1.IN" Destination="DigitalOutput_Q1.OUT"/>
+			<Connection Source="AuxFunction2_X1.IN" Destination="DigitalOutput_Q1.OUT" dx1="1093.33"/>
 		</DataConnections>
 	</SubAppNetwork>
 </SubAppType>

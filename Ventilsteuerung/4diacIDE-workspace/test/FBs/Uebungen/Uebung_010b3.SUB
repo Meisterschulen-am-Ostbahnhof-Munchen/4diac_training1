@@ -16,7 +16,7 @@
 			<Parameter Name="QI" Value="TRUE"/>
 			<Parameter Name="Output" Value="logiBUS_DO::Output_Q1"/>
 		</FB>
-		<FB Name="AuxFunction2_X1_UP" Type="Aux_IE" x="-7300" y="-200">
+		<FB Name="AuxFunction2_X1_UP" Type="isobus::UT_io::aux::in::Aux_IE" x="-7300" y="-200">
 			<Parameter Name="QI" Value="TRUE"/>
 			<Parameter Name="u16ObjId" Value="DefaultPool::AuxFunction2_X1"/>
 			<Parameter Name="InputEvent" Value="AuxiliaryState::AuxDisabled_START"/>
@@ -24,7 +24,7 @@
 		<FB Name="E_T_FF" Type="iec61499::events::E_T_FF" x="-5560" y="0">
 		</FB>
 		<EventConnections>
-			<Connection Source="AuxFunction2_X1_UP.IND" Destination="E_T_FF.CLK"/>
+			<Connection Source="AuxFunction2_X1_UP.IND" Destination="E_T_FF.CLK" dx1="413.33"/>
 			<Connection Source="E_T_FF.EO" Destination="DigitalOutput_Q1.REQ"/>
 		</EventConnections>
 		<DataConnections>

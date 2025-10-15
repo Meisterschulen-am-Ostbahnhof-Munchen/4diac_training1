@@ -44,29 +44,29 @@
 			<Parameter Name="QI" Value="TRUE"/>
 			<Parameter Name="Input" Value="logiBUS_DI::Input_I4"/>
 		</FB>
-		<FB Name="ASSEMBLE_BYTE_FROM_BOOLS" Type="ASSEMBLE_BYTE_FROM_BOOLS" x="-4900" y="1900">
+		<FB Name="ASSEMBLE_BYTE_FROM_BOOLS" Type="eclipse4diac::utils::assembling::ASSEMBLE_BYTE_FROM_BOOLS" x="-4900" y="1900">
 		</FB>
-		<FB Name="SPLIT_BYTE_INTO_BOOLS" Type="SPLIT_BYTE_INTO_BOOLS" x="-2800" y="1900">
+		<FB Name="SPLIT_BYTE_INTO_BOOLS" Type="eclipse4diac::utils::splitting::SPLIT_BYTE_INTO_BOOLS" x="-2800" y="1900">
 		</FB>
 		<EventConnections>
-			<Connection Source="ASSEMBLE_BYTE_FROM_BOOLS.CNF" Destination="SPLIT_BYTE_INTO_BOOLS.REQ"/>
+			<Connection Source="ASSEMBLE_BYTE_FROM_BOOLS.CNF" Destination="SPLIT_BYTE_INTO_BOOLS.REQ" dx1="166.67"/>
 			<Connection Source="DigitalInput_I1.IND" Destination="ASSEMBLE_BYTE_FROM_BOOLS.REQ" dx1="80"/>
 			<Connection Source="DigitalInput_I2.IND" Destination="ASSEMBLE_BYTE_FROM_BOOLS.REQ" dx1="80"/>
-			<Connection Source="DigitalInput_I3.IND" Destination="ASSEMBLE_BYTE_FROM_BOOLS.REQ"/>
+			<Connection Source="DigitalInput_I3.IND" Destination="ASSEMBLE_BYTE_FROM_BOOLS.REQ" dx1="273.33"/>
 			<Connection Source="DigitalInput_I4.IND" Destination="ASSEMBLE_BYTE_FROM_BOOLS.REQ" dx1="80"/>
 			<Connection Source="SPLIT_BYTE_INTO_BOOLS.CNF" Destination="DigitalOutput_Q1.REQ" dx1="206.67"/>
 			<Connection Source="SPLIT_BYTE_INTO_BOOLS.CNF" Destination="DigitalOutput_Q2.REQ" dx1="206.67"/>
 			<Connection Source="SPLIT_BYTE_INTO_BOOLS.CNF" Destination="DigitalOutput_Q3.REQ" dx1="206.67"/>
-			<Connection Source="SPLIT_BYTE_INTO_BOOLS.CNF" Destination="DigitalOutput_Q4.REQ"/>
+			<Connection Source="SPLIT_BYTE_INTO_BOOLS.CNF" Destination="DigitalOutput_Q4.REQ" dx1="793.33"/>
 		</EventConnections>
 		<DataConnections>
-			<Connection Source="ASSEMBLE_BYTE_FROM_BOOLS.pin &quot;ASSEMBLE_BYTE_FROM_BOOLS.&quot; not found" Destination="SPLIT_BYTE_INTO_BOOLS.IN"/>
+			<Connection Source="ASSEMBLE_BYTE_FROM_BOOLS." Destination="SPLIT_BYTE_INTO_BOOLS.IN"/>
 			<Connection Source="SPLIT_BYTE_INTO_BOOLS.BIT_00" Destination="DigitalOutput_Q1.OUT" dx1="400"/>
 			<Connection Source="SPLIT_BYTE_INTO_BOOLS.BIT_01" Destination="DigitalOutput_Q2.OUT" dx1="520"/>
 			<Connection Source="SPLIT_BYTE_INTO_BOOLS.BIT_02" Destination="DigitalOutput_Q3.OUT" dx1="626.67"/>
 			<Connection Source="SPLIT_BYTE_INTO_BOOLS.BIT_03" Destination="DigitalOutput_Q4.OUT" dx1="780"/>
 			<Connection Source="DigitalInput_I4.IN" Destination="ASSEMBLE_BYTE_FROM_BOOLS.BIT_03" dx1="273.33"/>
-			<Connection Source="DigitalInput_I3.IN" Destination="ASSEMBLE_BYTE_FROM_BOOLS.BIT_02"/>
+			<Connection Source="DigitalInput_I3.IN" Destination="ASSEMBLE_BYTE_FROM_BOOLS.BIT_02" dx1="273.33"/>
 			<Connection Source="DigitalInput_I2.IN" Destination="ASSEMBLE_BYTE_FROM_BOOLS.BIT_01" dx1="273.33"/>
 			<Connection Source="DigitalInput_I1.IN" Destination="ASSEMBLE_BYTE_FROM_BOOLS.BIT_00" dx1="393.33"/>
 		</DataConnections>
