@@ -6,7 +6,6 @@
 	</VersionInfo>
 	<CompilerInfo>
 		<Import declaration="logiBUS::io::DI::logiBUS_DI"/>
-		<Import declaration="logiBUS::io::DI::logiBUS_DI_Events"/>
 		<Import declaration="logiBUS::io::DQ::logiBUS_DO"/>
 	</CompilerInfo>
 	<SubAppInterfaceList>
@@ -44,13 +43,13 @@
 			<Parameter Name="QI" Value="TRUE"/>
 			<Parameter Name="Output" Value="logiBUS_DO::Output_Q1"/>
 		</FB>
-		<FB Name="DigitalOutput_Q4" Type="logiBUS::io::DQ::logiBUS_QX" x="2286.67" y="1993.33">
+		<FB Name="DigitalOutput_Q4" Type="logiBUS::io::DQ::logiBUS_QX" x="2273.33" y="2140">
 			<Parameter Name="QI" Value="TRUE"/>
 			<Parameter Name="Output" Value="logiBUS_DO::Output_Q4"/>
 		</FB>
 		<FB Name="Q_TO_BOOL_Q1" Type="QUARTER_TO_BOOL" x="-906.67" y="-553.33">
 		</FB>
-		<FB Name="Q_TO_BOOL_Q4" Type="QUARTER_TO_BOOL" x="-886.67" y="2146.67">
+		<FB Name="Q_TO_BOOL_Q4" Type="QUARTER_TO_BOOL" x="-900" y="2300">
 		</FB>
 		<FB Name="Q_TO_BOOL_Q2" Type="QUARTER_TO_BOOL" x="-906.67" y="386.67">
 		</FB>
@@ -66,7 +65,7 @@
 		</FB>
 		<FB Name="Q_TO_STR_STATUS_I4" Type="QUARTER_TO_STR_STATUS" x="-7386.67" y="3513.33">
 		</FB>
-		<FB Name="Q_TO_STR_STATUS_Q4" Type="QUARTER_TO_STR_STATUS" x="493.33" y="2193.33">
+		<FB Name="Q_TO_STR_STATUS_Q4" Type="QUARTER_TO_STR_STATUS" x="473.33" y="2340">
 		</FB>
 		<FB Name="Q_TO_STR_STATUS_Q2" Type="QUARTER_TO_STR_STATUS" x="473.33" y="433.33">
 		</FB>
@@ -85,7 +84,7 @@
 			<Connection Source="SPLIT_BYTE_INTO_QUARTERS.CNF" Destination="Q_TO_BOOL_Q1.REQ" dx1="913.33"/>
 			<Connection Source="Q_TO_BOOL_Q1.CNF" Destination="DigitalOutput_Q1.REQ" dx1="320" dx2="320" dy="-173.33"/>
 			<Connection Source="SPLIT_BYTE_INTO_QUARTERS.CNF" Destination="Q_TO_BOOL_Q4.REQ" dx1="900"/>
-			<Connection Source="Q_TO_BOOL_Q4.CNF" Destination="DigitalOutput_Q4.REQ" dx1="320" dx2="320" dy="-173.33"/>
+			<Connection Source="Q_TO_BOOL_Q4.CNF" Destination="DigitalOutput_Q4.REQ" dx1="1093.33"/>
 			<Connection Source="SPLIT_BYTE_INTO_QUARTERS.CNF" Destination="Q_TO_BOOL_Q2.REQ" dx1="913.33"/>
 			<Connection Source="Q_TO_BOOL_Q2.CNF" Destination="DigitalOutput_Q2.REQ" dx1="320" dx2="320" dy="-173.33"/>
 			<Connection Source="SPLIT_BYTE_INTO_QUARTERS.CNF" Destination="Q_TO_BOOL_Q3.REQ" dx1="606.67"/>
@@ -93,7 +92,7 @@
 			<Connection Source="Q_TO_BOOL_Q3.CNF" Destination="Q_TO_STR_STATUS_Q3.REQ" dx1="320"/>
 			<Connection Source="Q_TO_BOOL_Q1.CNF" Destination="Q_TO_STR_STATUS_Q1.REQ" dx1="320"/>
 			<Connection Source="DigitalInput_I3.IND" Destination="Q_TO_STR_STATUS_I3.REQ" dx1="1226.67"/>
-			<Connection Source="Q_TO_BOOL_Q4.CNF" Destination="Q_TO_STR_STATUS_Q4.REQ" dx1="320"/>
+			<Connection Source="Q_TO_BOOL_Q4.CNF" Destination="Q_TO_STR_STATUS_Q4.REQ" dx1="313.33"/>
 			<Connection Source="Q_TO_BOOL_Q2.CNF" Destination="Q_TO_STR_STATUS_Q2.REQ" dx1="320"/>
 			<Connection Source="DigitalInput_I2.IND" Destination="Q_TO_STR_STATUS_I2.REQ" dx1="840"/>
 			<Connection Source="DigitalInput_I1.IND" Destination="BOOL_TO_Q_I1.REQ" dx1="853.33"/>
@@ -109,13 +108,13 @@
 		</EventConnections>
 		<DataConnections>
 			<Connection Source="Q_TO_BOOL_Q1.Q" Destination="DigitalOutput_Q1.OUT" dx1="320" dx2="320" dy="206.67"/>
-			<Connection Source="Q_TO_BOOL_Q4.Q" Destination="DigitalOutput_Q4.OUT" dx1="320" dx2="320" dy="206.67"/>
+			<Connection Source="Q_TO_BOOL_Q4.Q" Destination="DigitalOutput_Q4.OUT" dx1="1093.33"/>
 			<Connection Source="Q_TO_BOOL_Q2.Q" Destination="DigitalOutput_Q2.OUT" dx1="320" dx2="320" dy="206.67"/>
 			<Connection Source="Q_TO_BOOL_Q3.Q" Destination="DigitalOutput_Q3.OUT" dx1="320" dx2="320" dy="206.67"/>
 			<Connection Source="Q_TO_BOOL_Q3.Q" Destination="Q_TO_STR_STATUS_Q3.IB" dx1="320"/>
 			<Connection Source="Q_TO_BOOL_Q1.Q" Destination="Q_TO_STR_STATUS_Q1.IB" dx1="320"/>
 			<Connection Source="DigitalInput_I3.IN" Destination="Q_TO_STR_STATUS_I3.IB" dx1="1786.67"/>
-			<Connection Source="Q_TO_BOOL_Q4.Q" Destination="Q_TO_STR_STATUS_Q4.IB" dx1="320"/>
+			<Connection Source="Q_TO_BOOL_Q4.Q" Destination="Q_TO_STR_STATUS_Q4.IB" dx1="313.33"/>
 			<Connection Source="Q_TO_BOOL_Q2.Q" Destination="Q_TO_STR_STATUS_Q2.IB" dx1="320"/>
 			<Connection Source="DigitalInput_I2.IN" Destination="Q_TO_STR_STATUS_I2.IB" dx1="873.33"/>
 			<Connection Source="DigitalInput_I1.IN" Destination="BOOL_TO_Q_I1.I" dx1="853.33"/>

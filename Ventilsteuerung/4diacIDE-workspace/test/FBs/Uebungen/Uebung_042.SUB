@@ -7,7 +7,6 @@
 	<CompilerInfo>
 		<Import declaration="logiBUS::io::DI::logiBUS_DI"/>
 		<Import declaration="logiBUS::io::DI::logiBUS_DI_Events"/>
-		<Import declaration="logiBUS::io::DQ::logiBUS_DO"/>
 	</CompilerInfo>
 	<SubAppInterfaceList>
 	</SubAppInterfaceList>
@@ -17,7 +16,7 @@
 			<Parameter Name="Input" Value="logiBUS_DI::Input_I1"/>
 			<Parameter Name="InputEvent" Value="logiBUS_DI_Events::BUTTON_SINGLE_CLICK"/>
 		</FB>
-		<FB Name="SCALE" Type="signalprocessing::SCALE" x="-2500" y="-200">
+		<FB Name="SCALE" Type="eclipse4diac::signalprocessing::SCALE" x="-2500" y="-200">
 			<Parameter Name="IN" Value="10.0"/>
 			<Parameter Name="MAX_IN" Value="20.0"/>
 			<Parameter Name="MIN_IN" Value="4.0"/>
@@ -25,7 +24,7 @@
 			<Parameter Name="MIN_OUT" Value="0.0"/>
 		</FB>
 		<EventConnections>
-			<Connection Source="DigitalInput_CLK_I1.IND" Destination="SCALE.REQ"/>
+			<Connection Source="DigitalInput_CLK_I1.IND" Destination="SCALE.REQ" dx1="806.67"/>
 		</EventConnections>
 	</SubAppNetwork>
 </SubAppType>
