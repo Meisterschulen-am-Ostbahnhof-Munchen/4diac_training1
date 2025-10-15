@@ -10,12 +10,13 @@
 	</SubAppInterfaceList>
 	<SubAppNetwork>
 		<FB Name="DigitalOutput_Q1" Type="logiBUS_QX" x="-3700" y="200">
-			<Parameter Name="QI" Value="TRUE">
+			<Parameter Name="QI" Value="">
 				<Attribute Name="Visible" Value="false"/>
 			</Parameter>
 			<Parameter Name="PARAMS" Value="">
 				<Attribute Name="Visible" Value="false"/>
 			</Parameter>
+			<Parameter Name="QI" Value="TRUE"/>
 			<Parameter Name="Output" Value="logiBUS::io::DO::logiBUS_DO::Output_Q1"/>
 		</FB>
 		<FB Name="DigitalInput_CLK_I1" Type="logiBUS_IE" x="-8500" y="400">
@@ -25,32 +26,32 @@
 			<Parameter Name="PARAMS" Value="">
 				<Attribute Name="Visible" Value="false"/>
 			</Parameter>
-			<Parameter Name="QI" Value="TRUE"/>
 			<Parameter Name="Input" Value="logiBUS_DI::Input_I1"/>
 			<Parameter Name="InputEvent" Value="logiBUS_DI_Events::BUTTON_SINGLE_CLICK"/>
 		</FB>
-		<FB Name="E_T_FF_Q1" Type="E_T_FF" x="-5600" y="300">
+		<FB Name="E_T_FF_Q1" Type="iec61499::events::E_T_FF" x="-5600" y="300">
 		</FB>
-		<FB Name="E_T_FF_Q2" Type="E_T_FF" x="-5600" y="1100">
+		<FB Name="E_T_FF_Q2" Type="iec61499::events::E_T_FF" x="-5600" y="1100">
 		</FB>
 		<FB Name="DigitalOutput_Q2" Type="logiBUS_QX" x="-3700" y="1000">
-			<Parameter Name="QI" Value="TRUE">
+			<Parameter Name="QI" Value="">
 				<Attribute Name="Visible" Value="false"/>
 			</Parameter>
 			<Parameter Name="PARAMS" Value="">
 				<Attribute Name="Visible" Value="false"/>
 			</Parameter>
+			<Parameter Name="QI" Value="TRUE"/>
 			<Parameter Name="Output" Value="logiBUS::io::DO::logiBUS_DO::Output_Q2"/>
 		</FB>
 		<EventConnections>
-			<Connection Source="E_T_FF_Q1.EO" Destination="DigitalOutput_Q1.REQ"/>
-			<Connection Source="E_T_FF_Q2.EO" Destination="DigitalOutput_Q2.REQ"/>
+			<Connection Source="E_T_FF_Q1.EO" Destination="DigitalOutput_Q1.REQ" dx1="666.67"/>
+			<Connection Source="E_T_FF_Q2.EO" Destination="DigitalOutput_Q2.REQ" dx1="666.67"/>
 			<Connection Source="DigitalInput_CLK_I1.IND" Destination="E_T_FF_Q1.CLK" dx1="1173.33"/>
 			<Connection Source="DigitalInput_CLK_I1.IND" Destination="E_T_FF_Q2.CLK" dx1="1173.33"/>
 		</EventConnections>
 		<DataConnections>
-			<Connection Source="E_T_FF_Q1.Q" Destination="DigitalOutput_Q1.OUT"/>
-			<Connection Source="E_T_FF_Q2.Q" Destination="DigitalOutput_Q2.OUT"/>
+			<Connection Source="E_T_FF_Q1.Q" Destination="DigitalOutput_Q1.OUT" dx1="666.67"/>
+			<Connection Source="E_T_FF_Q2.Q" Destination="DigitalOutput_Q2.OUT" dx1="666.67"/>
 		</DataConnections>
 	</SubAppNetwork>
 </SubAppType>
