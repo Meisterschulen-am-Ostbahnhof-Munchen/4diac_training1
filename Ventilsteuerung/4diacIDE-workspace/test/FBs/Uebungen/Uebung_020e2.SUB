@@ -22,13 +22,13 @@
 		<FB Name="FB_TOF" Type="FB_TOF" x="-6000" y="900">
 			<Parameter Name="PT" Value="T#5s"/>
 		</FB>
-		<FB Name="E_CYCLE" Type="E_CYCLE" x="-7100" y="600">
+		<FB Name="E_CYCLE" Type="iec61499::events::E_CYCLE" x="-7100" y="600">
 			<Parameter Name="DT" Value="T#500ms"/>
 		</FB>
-		<FB Name="E_SWITCH_I1" Type="E_SWITCH" x="-8600" y="500">
+		<FB Name="E_SWITCH_I1" Type="iec61499::events::E_SWITCH" x="-8600" y="500">
 		</FB>
 		<Comment Comment="E_CYCLE bestimmt, &#10;wie oft FB_TOF den ET aktualisert" x="-7700" y="100" width="1000" height="400"/>
-		<FB Name="E_SWITCH_Q1" Type="E_SWITCH" x="-4900" y="1400">
+		<FB Name="E_SWITCH_Q1" Type="iec61499::events::E_SWITCH" x="-4900" y="1400">
 		</FB>
 		<EventConnections>
 			<Connection Source="FB_TOF.CNF" Destination="DigitalOutput_Q1.REQ" dx1="280"/>

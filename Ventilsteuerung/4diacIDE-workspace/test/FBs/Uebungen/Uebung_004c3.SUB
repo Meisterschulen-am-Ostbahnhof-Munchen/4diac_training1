@@ -20,7 +20,7 @@
 			<Parameter Name="Input" Value="logiBUS_DI::Input_I1"/>
 			<Parameter Name="InputEvent" Value="logiBUS_DI_Events::BUTTON_LONG_PRESS_UP"/>
 		</FB>
-		<FB Name="E_T_FF" Type="E_T_FF" x="-5600" y="0">
+		<FB Name="E_T_FF" Type="iec61499::events::E_T_FF" x="-5600" y="0">
 		</FB>
 		<EventConnections>
 			<Connection Source="DigitalInput_CLK_I1.IND" Destination="E_T_FF.CLK"/>

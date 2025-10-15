@@ -15,7 +15,7 @@
 			<Parameter Name="QI" Value="TRUE"/>
 			<Parameter Name="Output" Value="logiBUS_DO::Output_Q1"/>
 		</FB>
-		<FB Name="E_TimeOut" Type="E_TimeOut" x="5000" y="2000">
+		<FB Name="E_TimeOut" Type="iec61499::events::E_TimeOut" x="5000" y="2000">
 		</FB>
 		<FB Name="CAR_ORANGE_LIGHT" Type="logiBUS::io::DQ::logiBUS_QX" x="6000" y="-1400">
 			<Parameter Name="QI" Value="TRUE"/>
@@ -158,7 +158,7 @@
 			<Attribute Name="width" Type="LREAL" Value="5226.67"/>
 			<Attribute Name="height" Type="LREAL" Value="2940"/>
 		</SubApp>
-		<FB Name="E_BLINK_TRAIN" Type="E_BLINK_TRAIN" x="4900" y="1200">
+		<FB Name="E_BLINK_TRAIN" Type="iec61499::events::E_BLINK_TRAIN" x="4900" y="1200">
 			<Parameter Name="TIMELOW" Value="T#500ms"/>
 			<Parameter Name="TIMEHIGH" Value="T#500ms"/>
 			<Parameter Name="N" Value="2"/>

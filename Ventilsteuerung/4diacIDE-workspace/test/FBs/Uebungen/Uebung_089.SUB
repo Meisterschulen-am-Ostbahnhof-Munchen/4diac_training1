@@ -25,17 +25,17 @@
 			<Parameter Name="QI" Value="TRUE"/>
 			<Parameter Name="Input" Value="logiBUS_DI::Input_I2"/>
 		</FB>
-		<FB Name="E_R_TRIG" Type="E_R_TRIG" x="-1200" y="-200">
+		<FB Name="E_R_TRIG" Type="iec61499::events::E_R_TRIG" x="-1200" y="-200">
 		</FB>
-		<FB Name="E_T_FF_Q1" Type="E_T_FF" x="0" y="-200">
+		<FB Name="E_T_FF_Q1" Type="iec61499::events::E_T_FF" x="0" y="-200">
 		</FB>
 		<FB Name="DigitalOutput_Q2" Type="logiBUS::io::DQ::logiBUS_QX" x="1900" y="800">
 			<Parameter Name="QI" Value="TRUE"/>
 			<Parameter Name="Output" Value="logiBUS_DO::Output_Q2"/>
 		</FB>
-		<FB Name="E_T_FF_1_Q2" Type="E_T_FF" x="0" y="900">
+		<FB Name="E_T_FF_1_Q2" Type="iec61499::events::E_T_FF" x="0" y="900">
 		</FB>
-		<FB Name="E_SWITCH" Type="E_SWITCH" x="-1200" y="800">
+		<FB Name="E_SWITCH" Type="iec61499::events::E_SWITCH" x="-1200" y="800">
 		</FB>
 		<Comment Comment="R_TRIG schaltet nur wenn wirklich steigende Flanke" x="-1300" y="-700" width="1200" height="400"/>
 		<Comment Comment="E_SWITCH schaltet auch, wenn anderweitig ein Event kommt. " x="-1300" y="1600" width="1200" height="400"/>

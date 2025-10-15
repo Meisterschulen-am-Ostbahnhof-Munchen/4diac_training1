@@ -11,9 +11,9 @@
 	<SubAppInterfaceList>
 	</SubAppInterfaceList>
 	<SubAppNetwork>
-		<FB Name="E_SWITCH_I1" Type="E_SWITCH" x="1100" y="-300">
+		<FB Name="E_SWITCH_I1" Type="iec61499::events::E_SWITCH" x="1100" y="-300">
 		</FB>
-		<FB Name="E_SWITCH_Q1" Type="E_SWITCH" x="4800" y="600">
+		<FB Name="E_SWITCH_Q1" Type="iec61499::events::E_SWITCH" x="4800" y="600">
 		</FB>
 		<Comment Comment="E_CYCLE bestimmt, &#10;wie oft FB_TP den ET aktualisert" x="2000" y="-700" width="1000" height="400"/>
 		<FB Name="DigitalInput_I1" Type="logiBUS::io::DI::logiBUS_IX" x="-100" y="-500">
@@ -27,7 +27,7 @@
 			<Parameter Name="QI" Value="TRUE"/>
 			<Parameter Name="Output" Value="logiBUS_DO::Output_Q1"/>
 		</FB>
-		<FB Name="E_CYCLE" Type="E_CYCLE" x="2600" y="-200">
+		<FB Name="E_CYCLE" Type="iec61499::events::E_CYCLE" x="2600" y="-200">
 			<Parameter Name="DT" Value="T#500ms"/>
 		</FB>
 		<EventConnections>

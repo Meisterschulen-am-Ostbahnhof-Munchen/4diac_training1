@@ -60,7 +60,7 @@
 		</FB>
 		<FB Name="loop" Type="sequence_E_08_loop" x="-9600" y="-600">
 		</FB>
-		<FB Name="E_CTU_0" Type="E_CTU" x="-14900" y="-500">
+		<FB Name="E_CTU_0" Type="iec61499::events::E_CTU" x="-14900" y="-500">
 			<Parameter Name="PV" Value="0"/>
 		</FB>
 		<FB Name="DigitalInput_CLK_I2" Type="logiBUS_IE" x="-16600" y="-700">
@@ -71,7 +71,7 @@
 		<FB Name="F_SUB_0" Type="F_SUB" x="-13600" y="-500">
 			<Parameter Name="IN2" Value="UINT#1"/>
 		</FB>
-		<FB Name="E_DEMUX_0" Type="E_DEMUX_8" x="-12000" y="-500">
+		<FB Name="E_DEMUX_0" Type="iec61499::events::E_DEMUX_8" x="-12000" y="-500">
 		</FB>
 		<EventConnections>
 			<Connection Source="F_SINT_TO_UINT.CNF" Destination="Q_NumericValue.REQ" dx1="633.33"/>

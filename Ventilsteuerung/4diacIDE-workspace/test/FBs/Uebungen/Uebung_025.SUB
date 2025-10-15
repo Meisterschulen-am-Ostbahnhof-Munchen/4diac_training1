@@ -20,7 +20,7 @@
 			<Parameter Name="u16ObjId" Value="DefaultPool::SoftKey_F1"/>
 			<Parameter Name="InputEvent" Value="SoftKeyActivationCode::SK_RELEASED"/>
 		</FB>
-		<FB Name="E_SR_Ausfahren_Cyl_1" Type="E_SR" x="-4800" y="-266.67">
+		<FB Name="E_SR_Ausfahren_Cyl_1" Type="iec61499::events::E_SR" x="-4800" y="-266.67">
 		</FB>
 		<FB Name="SoftKey_F2_DOWN" Type="Softkey_IE" x="-6833.33" y="1000">
 			<Parameter Name="QI" Value="TRUE"/>
@@ -33,7 +33,7 @@
 			<Parameter Name="QI" Value="TRUE"/>
 			<Parameter Name="Output" Value="logiBUS_DO::Output_Q2"/>
 		</FB>
-		<FB Name="E_SR_Ausfahren_Cyl_2" Type="E_SR" x="-4833.33" y="1366.67">
+		<FB Name="E_SR_Ausfahren_Cyl_2" Type="iec61499::events::E_SR" x="-4833.33" y="1366.67">
 		</FB>
 		<Comment Comment="Endlage Ausfahren_Cyl_2 &#10;" x="-8500" y="2500" width="1373.33" height="366.67"/>
 		<FB Name="SoftKey_F3_DOWN" Type="Softkey_IE" x="-6833.33" y="2333.33">
@@ -48,7 +48,7 @@
 			<Parameter Name="u16ObjId" Value="DefaultPool::SoftKey_F9"/>
 			<Parameter Name="InputEvent" Value="SoftKeyActivationCode::SK_RELEASED"/>
 		</FB>
-		<FB Name="E_SR_Einfahren_Cyl_2" Type="E_SR" x="-4533.33" y="3600">
+		<FB Name="E_SR_Einfahren_Cyl_2" Type="iec61499::events::E_SR" x="-4533.33" y="3600">
 		</FB>
 		<FB Name="DigitalOutput_Q3" Type="logiBUS::io::DQ::logiBUS_QX" x="-2606.67" y="3753.33">
 			<Parameter Name="QI" Value="TRUE"/>
@@ -59,7 +59,7 @@
 			<Parameter Name="QI" Value="TRUE"/>
 			<Parameter Name="Output" Value="logiBUS_DO::Output_Q4"/>
 		</FB>
-		<FB Name="E_SR_Einfahren_Cyl_1" Type="E_SR" x="-4606.67" y="5620">
+		<FB Name="E_SR_Einfahren_Cyl_1" Type="iec61499::events::E_SR" x="-4606.67" y="5620">
 		</FB>
 		<Comment Comment="Endlage Einfahren_Cyl_1  &#10;" x="-8273.33" y="6753.33" width="1373.33" height="366.67"/>
 		<FB Name="SoftKey_F8_DOWN" Type="Softkey_IE" x="-6606.67" y="5253.33">
@@ -70,24 +70,24 @@
 		<Comment Comment="Einfahren_Cyl_2" x="-1333.33" y="3200" width="1373.33" height="366.67"/>
 		<Comment Comment="Endlage Einfahren_Cyl_2  &#10;" x="-8273.33" y="5420" width="1373.33" height="366.67"/>
 		<Comment Comment="Einfahren_Cyl_1 &#10;" x="-1333.33" y="4933.33" width="1373.33" height="366.67"/>
-		<FB Name="E_DELAY" Type="E_DELAY" x="-6500" y="3666.67">
+		<FB Name="E_DELAY" Type="iec61499::events::E_DELAY" x="-6500" y="3666.67">
 			<Parameter Name="DT" Value="T#2s"/>
 		</FB>
-		<FB Name="E_REND_Ausfahren_Cyl_1" Type="E_REND" x="-5733.33" y="666.67">
+		<FB Name="E_REND_Ausfahren_Cyl_1" Type="iec61499::events::E_REND" x="-5733.33" y="666.67">
 		</FB>
-		<FB Name="E_REND_Ausfahren_Cyl_2" Type="E_REND" x="-5833.33" y="2000">
+		<FB Name="E_REND_Ausfahren_Cyl_2" Type="iec61499::events::E_REND" x="-5833.33" y="2000">
 		</FB>
-		<FB Name="E_REND_Einfahren_Cyl_2" Type="E_REND" x="-5600" y="4533.33">
+		<FB Name="E_REND_Einfahren_Cyl_2" Type="iec61499::events::E_REND" x="-5600" y="4533.33">
 		</FB>
-		<FB Name="E_REND_Einfahren_Cyl_1" Type="E_REND" x="-5466.67" y="6400">
+		<FB Name="E_REND_Einfahren_Cyl_1" Type="iec61499::events::E_REND" x="-5466.67" y="6400">
 		</FB>
-		<FB Name="E_SWITCH_Q1" Type="E_SWITCH" x="-2800" y="-1066.67">
+		<FB Name="E_SWITCH_Q1" Type="iec61499::events::E_SWITCH" x="-2800" y="-1066.67">
 		</FB>
-		<FB Name="E_SWITCH_Q2" Type="E_SWITCH" x="-2800" y="533.33">
+		<FB Name="E_SWITCH_Q2" Type="iec61499::events::E_SWITCH" x="-2800" y="533.33">
 		</FB>
-		<FB Name="E_SWITCH_Q3" Type="E_SWITCH" x="-2666.67" y="3200">
+		<FB Name="E_SWITCH_Q3" Type="iec61499::events::E_SWITCH" x="-2666.67" y="3200">
 		</FB>
-		<FB Name="E_SWITCH_Q4" Type="E_SWITCH" x="-2666.67" y="4800">
+		<FB Name="E_SWITCH_Q4" Type="iec61499::events::E_SWITCH" x="-2666.67" y="4800">
 		</FB>
 		<EventConnections>
 			<Connection Source="SoftKey_UP_F1.IND" Destination="E_SR_Ausfahren_Cyl_1.S" dx1="786.67"/>

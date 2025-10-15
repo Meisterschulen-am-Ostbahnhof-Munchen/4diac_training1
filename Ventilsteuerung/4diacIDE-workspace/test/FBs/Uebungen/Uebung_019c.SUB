@@ -35,7 +35,7 @@
 			<Parameter Name="Input" Value="logiBUS_DI::Input_I4"/>
 			<Parameter Name="InputEvent" Value="logiBUS_DI_Events::BUTTON_SINGLE_CLICK"/>
 		</FB>
-		<FB Name="E_SR" Type="E_SR" x="-4500" y="2600">
+		<FB Name="E_SR" Type="iec61499::events::E_SR" x="-4500" y="2600">
 		</FB>
 		<FB Name="Alarmausgang" Type="logiBUS::io::DQ::logiBUS_QX" x="-2600" y="2500">
 			<Parameter Name="QI" Value="TRUE"/>
@@ -45,13 +45,13 @@
 			<Parameter Name="QI" Value="TRUE"/>
 			<Parameter Name="Input" Value="logiBUS_DI::Input_I3"/>
 		</FB>
-		<FB Name="E_SWITCH" Type="E_SWITCH" x="-6900" y="2400">
+		<FB Name="E_SWITCH" Type="iec61499::events::E_SWITCH" x="-6900" y="2400">
 		</FB>
-		<FB Name="E_PERMIT_INVERT" Type="E_SWITCH" x="-6900" y="3300">
+		<FB Name="E_PERMIT_INVERT" Type="iec61499::events::E_SWITCH" x="-6900" y="3300">
 		</FB>
-		<FB Name="E_PERMIT_INVERT_1" Type="E_SWITCH" x="-6900" y="-200">
+		<FB Name="E_PERMIT_INVERT_1" Type="iec61499::events::E_SWITCH" x="-6900" y="-200">
 		</FB>
-		<FB Name="E_PERMIT_INVERT_2" Type="E_SWITCH" x="-6900" y="1000">
+		<FB Name="E_PERMIT_INVERT_2" Type="iec61499::events::E_SWITCH" x="-6900" y="1000">
 		</FB>
 		<EventConnections>
 			<Connection Source="F_SEL_E_2.CNF" Destination="Q_ActiveMask.REQ"/>

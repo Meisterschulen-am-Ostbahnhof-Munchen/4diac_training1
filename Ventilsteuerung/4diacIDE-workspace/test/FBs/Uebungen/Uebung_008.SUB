@@ -15,12 +15,12 @@
 			<Parameter Name="QI" Value="TRUE"/>
 			<Parameter Name="Output" Value="logiBUS_DO::Output_Q1"/>
 		</FB>
-		<FB Name="E_CYCLE" Type="E_CYCLE" x="-3700" y="-700">
+		<FB Name="E_CYCLE" Type="iec61499::events::E_CYCLE" x="-3700" y="-700">
 			<Parameter Name="DT" Value="T#1s"/>
 		</FB>
-		<FB Name="E_SWITCH" Type="E_SWITCH" x="-2300" y="-700">
+		<FB Name="E_SWITCH" Type="iec61499::events::E_SWITCH" x="-2300" y="-700">
 		</FB>
-		<FB Name="E_SR" Type="E_SR" x="-700" y="-700">
+		<FB Name="E_SR" Type="iec61499::events::E_SR" x="-700" y="-700">
 		</FB>
 		<EventConnections>
 			<Connection Source="E_CYCLE.EO" Destination="E_SWITCH.EI"/>

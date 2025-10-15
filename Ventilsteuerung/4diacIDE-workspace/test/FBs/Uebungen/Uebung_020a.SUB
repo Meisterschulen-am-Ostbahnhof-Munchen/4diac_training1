@@ -28,9 +28,9 @@
 			<Parameter Name="QI" Value="TRUE"/>
 			<Parameter Name="Input" Value="logiBUS_DI::Input_I1"/>
 		</FB>
-		<FB Name="E_SWITCH" Type="E_SWITCH" x="-5100" y="1900">
+		<FB Name="E_SWITCH" Type="iec61499::events::E_SWITCH" x="-5100" y="1900">
 		</FB>
-		<FB Name="E_RS" Type="E_RS" x="-3900" y="1900">
+		<FB Name="E_RS" Type="iec61499::events::E_RS" x="-3900" y="1900">
 		</FB>
 		<EventConnections>
 			<Connection Source="DigitalInput_I1.IND" Destination="E_SWITCH.EI"/>
