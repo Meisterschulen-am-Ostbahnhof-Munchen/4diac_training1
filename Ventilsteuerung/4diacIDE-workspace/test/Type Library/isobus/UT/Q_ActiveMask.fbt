@@ -5,6 +5,7 @@
 	<VersionInfo Organization="HR Agrartechnik GmbH" Version="1.0" Author="Franz Höpfinger" Date="2022-07-08">
 	</VersionInfo>
 	<CompilerInfo packageName="isobus::ut">
+		<Import declaration="eclipse4diac::core::TypeHash"/>
 	</CompilerInfo>
 	<InterfaceList>
 		<EventInputs>
@@ -26,8 +27,8 @@
 			</Event>
 		</EventOutputs>
 		<InputVars>
-			<VarDeclaration Name="u16WorkSetId" Type="UINT" Comment="WorkingSet Object ID "/>
-			<VarDeclaration Name="u16NewMaskId" Type="UINT" Comment="Object ID of new active (data/alarm)-mask"/>
+			<VarDeclaration Name="u16WorkSetId" Type="UINT" Comment="WorkingSet Object ID " InitialValue="IDs::ID_NULL"/>
+			<VarDeclaration Name="u16NewMaskId" Type="UINT" Comment="Object ID of new active (data/alarm)-mask" InitialValue="IDs::ID_NULL"/>
 		</InputVars>
 		<OutputVars>
 			<VarDeclaration Name="STATUS" Type="STRING" Comment="Service Status"/>

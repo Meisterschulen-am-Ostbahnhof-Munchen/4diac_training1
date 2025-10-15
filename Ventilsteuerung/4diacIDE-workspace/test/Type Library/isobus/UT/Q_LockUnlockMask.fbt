@@ -29,7 +29,7 @@
 		</EventOutputs>
 		<InputVars>
 			<VarDeclaration Name="u8LockCmd" Type="USINT" Comment="0 = Unlock, 1 = Lock data mask or user-layout data mask"/>
-			<VarDeclaration Name="u16MaskId" Type="UINT" Comment="Object ID of data mask or user layout data mask to lock or unlock "/>
+			<VarDeclaration Name="u16MaskId" Type="UINT" Comment="Object ID of data mask or user layout data mask to lock or unlock " InitialValue="IDs::ID_NULL"/>
 			<VarDeclaration Name="u16LockTimeoutMs" Type="UINT" Comment="Lock timeout in ms or zero for no timeout "/>
 		</InputVars>
 		<OutputVars>

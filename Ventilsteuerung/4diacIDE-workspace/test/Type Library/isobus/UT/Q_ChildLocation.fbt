@@ -5,6 +5,7 @@
 	<VersionInfo Organization="HR Agrartechnik GmbH" Version="1.0" Author="Franz Höpfinger" Date="2022-07-08">
 	</VersionInfo>
 	<CompilerInfo packageName="isobus::ut">
+		<Import declaration="eclipse4diac::core::TypeHash"/>
 	</CompilerInfo>
 	<InterfaceList>
 		<EventInputs>
@@ -28,8 +29,8 @@
 			</Event>
 		</EventOutputs>
 		<InputVars>
-			<VarDeclaration Name="u16ObjId" Type="UINT" Comment="Object ID"/>
-			<VarDeclaration Name="u16ObjIdParent" Type="UINT" Comment="Parent object ID "/>
+			<VarDeclaration Name="u16ObjId" Type="UINT" Comment="Object ID" InitialValue="IDs::ID_NULL"/>
+			<VarDeclaration Name="u16ObjIdParent" Type="UINT" Comment="Parent object ID " InitialValue="IDs::ID_NULL"/>
 			<VarDeclaration Name="u8Xchange" Type="USINT" Comment="Relative change in x position (interpreted as signed!)"/>
 			<VarDeclaration Name="u8Ychange" Type="USINT" Comment="Relative change in y position (interpreted as signed!)"/>
 		</InputVars>
