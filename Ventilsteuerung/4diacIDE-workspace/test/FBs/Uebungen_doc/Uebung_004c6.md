@@ -25,30 +25,20 @@ Diese Übung demonstriert die Funktionsweise eines Toggle Flip-Flops (T-FF) in K
   - QI = TRUE (aktiviert den Baustein)
   - Output = logiBUS_DO::Output_Q1 (steuert Ausgang Q1)
 
-### E_SR
-- **Typ**: E_SR (Set-Reset Flip-Flop)
-- **Funktionsweise**: Setzt oder resetet den Ausgang basierend auf den Eingangsereignissen
-
-### E_SWITCH
-- **Typ**: E_SWITCH (Ereignis-Schalter)
-- **Funktionsweise**: Leitet Ereignisse basierend auf dem Steuersignal G an unterschiedliche Ausgänge
-
 ## Programmablauf und Verbindungen
 
 **Ereignisverbindungen:**
 - DigitalInput_CLK_I1.IND → E_T_FF.CLK (3-fach Klick löst Takt aus)
 - E_T_FF.EO → DigitalOutput_Q1.REQ (Toggle-Ergebnis steuert Ausgang)
-- E_SWITCH.EO0 → E_SR.S (Set-Operation)
-- E_SWITCH.EO1 → E_SR.R (Reset-Operation)
+
 
 **Datenverbindungen:**
 - E_T_FF.Q → DigitalOutput_Q1.OUT (Toggle-Zustand zum Ausgang)
-- E_SR.Q → E_SWITCH.G (Steuersignal für Ereignisverteilung)
 
 **Lernziele:**
 - Verständnis von Toggle Flip-Flops
 - Umgang mit speziellen Eingabeereignissen (Mehrfachklick)
-- Kombination von Flip-Flop-Typen (T-FF und SR-FF)
+- Flip-Flop-Typen (E_T_FF)
 - Ereignisgesteuerte Programmierung in 4diac
 
 **Schwierigkeitsgrad**: Mittel
