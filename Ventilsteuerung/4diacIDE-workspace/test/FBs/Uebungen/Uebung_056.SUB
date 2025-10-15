@@ -5,45 +5,47 @@
 	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2023-10-23">
 	</VersionInfo>
 	<CompilerInfo>
+		<Import declaration="logiBUS::io::DI::logiBUS_DI"/>
+		<Import declaration="logiBUS::io::DQ::logiBUS_DO"/>
 	</CompilerInfo>
 	<SubAppInterfaceList>
 	</SubAppInterfaceList>
 	<SubAppNetwork>
-		<FB Name="DigitalInput_I1" Type="logiBUS_IX" x="-11066.67" y="0">
+		<FB Name="DigitalInput_I1" Type="logiBUS::io::DI::logiBUS_IX" x="-11066.67" y="0">
 			<Parameter Name="QI" Value="TRUE"/>
 			<Parameter Name="Input" Value="logiBUS_DI::Input_I1"/>
 		</FB>
 		<FB Name="ASSEMBLE_BYTE_FROM_QUARTERS" Type="ASSEMBLE_BYTE_FROM_QUARTERS" x="-6000" y="1333.33">
 		</FB>
-		<FB Name="DigitalInput_I2" Type="logiBUS_IX" x="-11066.67" y="1073.33">
+		<FB Name="DigitalInput_I2" Type="logiBUS::io::DI::logiBUS_IX" x="-11066.67" y="1073.33">
 			<Parameter Name="QI" Value="TRUE"/>
 			<Parameter Name="Input" Value="logiBUS_DI::Input_I2"/>
 		</FB>
-		<FB Name="DigitalInput_I3" Type="logiBUS_IX" x="-11066.67" y="2153.33">
+		<FB Name="DigitalInput_I3" Type="logiBUS::io::DI::logiBUS_IX" x="-11066.67" y="2153.33">
 			<Parameter Name="QI" Value="TRUE"/>
 			<Parameter Name="Input" Value="logiBUS_DI::Input_I3"/>
 		</FB>
-		<FB Name="DigitalInput_I4" Type="logiBUS_IX" x="-11066.67" y="3333.33">
+		<FB Name="DigitalInput_I4" Type="logiBUS::io::DI::logiBUS_IX" x="-11066.67" y="3333.33">
 			<Parameter Name="QI" Value="TRUE"/>
 			<Parameter Name="Input" Value="logiBUS_DI::Input_I4"/>
 		</FB>
-		<FB Name="DigitalOutput_Q2" Type="logiBUS_QX" x="2266.67" y="240">
+		<FB Name="DigitalOutput_Q2" Type="logiBUS::io::DQ::logiBUS_QX" x="2266.67" y="240">
 			<Parameter Name="QI" Value="TRUE"/>
-			<Parameter Name="Output" Value="logiBUS::io::DO::logiBUS_DO::Output_Q2"/>
+			<Parameter Name="Output" Value="logiBUS_DO::Output_Q2"/>
 		</FB>
-		<FB Name="DigitalOutput_Q3" Type="logiBUS_QX" x="2266.67" y="1186.67">
+		<FB Name="DigitalOutput_Q3" Type="logiBUS::io::DQ::logiBUS_QX" x="2266.67" y="1186.67">
 			<Parameter Name="QI" Value="TRUE"/>
-			<Parameter Name="Output" Value="logiBUS::io::DO::logiBUS_DO::Output_Q3"/>
+			<Parameter Name="Output" Value="logiBUS_DO::Output_Q3"/>
 		</FB>
 		<FB Name="SPLIT_BYTE_INTO_QUARTERS" Type="SPLIT_BYTE_INTO_QUARTERS" x="-3866.67" y="1333.33">
 		</FB>
-		<FB Name="DigitalOutput_Q1" Type="logiBUS_QX" x="2266.67" y="-706.67">
+		<FB Name="DigitalOutput_Q1" Type="logiBUS::io::DQ::logiBUS_QX" x="2266.67" y="-706.67">
 			<Parameter Name="QI" Value="TRUE"/>
-			<Parameter Name="Output" Value="logiBUS::io::DO::logiBUS_DO::Output_Q1"/>
+			<Parameter Name="Output" Value="logiBUS_DO::Output_Q1"/>
 		</FB>
-		<FB Name="DigitalOutput_Q4" Type="logiBUS_QX" x="2286.67" y="1993.33">
+		<FB Name="DigitalOutput_Q4" Type="logiBUS::io::DQ::logiBUS_QX" x="2286.67" y="1993.33">
 			<Parameter Name="QI" Value="TRUE"/>
-			<Parameter Name="Output" Value="logiBUS::io::DO::logiBUS_DO::Output_Q4"/>
+			<Parameter Name="Output" Value="logiBUS_DO::Output_Q4"/>
 		</FB>
 		<FB Name="Q_TO_BOOL_Q1" Type="QUARTER_TO_BOOL" x="-906.67" y="-553.33">
 		</FB>

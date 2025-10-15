@@ -5,23 +5,25 @@
 	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2023-10-23">
 	</VersionInfo>
 	<CompilerInfo>
+		<Import declaration="logiBUS::io::DI::logiBUS_DI"/>
+		<Import declaration="logiBUS::io::DQ::logiBUS_DO"/>
 	</CompilerInfo>
 	<SubAppInterfaceList>
 	</SubAppInterfaceList>
 	<SubAppNetwork>
-		<FB Name="CAR_RED_LIGHT" Type="logiBUS_QX" x="6000" y="-2400">
+		<FB Name="CAR_RED_LIGHT" Type="logiBUS::io::DQ::logiBUS_QX" x="6000" y="-2400">
 			<Parameter Name="QI" Value="TRUE"/>
-			<Parameter Name="Output" Value="logiBUS::io::DO::logiBUS_DO::Output_Q1"/>
+			<Parameter Name="Output" Value="logiBUS_DO::Output_Q1"/>
 		</FB>
 		<FB Name="E_TimeOut" Type="E_TimeOut" x="5000" y="2000">
 		</FB>
-		<FB Name="CAR_ORANGE_LIGHT" Type="logiBUS_QX" x="6000" y="-1400">
+		<FB Name="CAR_ORANGE_LIGHT" Type="logiBUS::io::DQ::logiBUS_QX" x="6000" y="-1400">
 			<Parameter Name="QI" Value="TRUE"/>
-			<Parameter Name="Output" Value="logiBUS::io::DO::logiBUS_DO::Output_Q2"/>
+			<Parameter Name="Output" Value="logiBUS_DO::Output_Q2"/>
 		</FB>
-		<FB Name="CAR_GREEN_LIGHT" Type="logiBUS_QX" x="6000" y="-400">
+		<FB Name="CAR_GREEN_LIGHT" Type="logiBUS::io::DQ::logiBUS_QX" x="6000" y="-400">
 			<Parameter Name="QI" Value="TRUE"/>
-			<Parameter Name="Output" Value="logiBUS::io::DO::logiBUS_DO::Output_Q3"/>
+			<Parameter Name="Output" Value="logiBUS_DO::Output_Q3"/>
 		</FB>
 		<FB Name="DigitalInput_CLK_I1" Type="logiBUS_IE" x="600" y="600">
 			<Parameter Name="QI" Value="TRUE"/>

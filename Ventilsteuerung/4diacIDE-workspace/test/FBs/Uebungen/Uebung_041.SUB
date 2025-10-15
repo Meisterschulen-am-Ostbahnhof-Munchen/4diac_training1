@@ -5,25 +5,27 @@
 	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2023-10-23">
 	</VersionInfo>
 	<CompilerInfo>
+		<Import declaration="logiBUS::io::DI::logiBUS_DI"/>
+		<Import declaration="logiBUS::io::DQ::logiBUS_DO"/>
 	</CompilerInfo>
 	<SubAppInterfaceList>
 	</SubAppInterfaceList>
 	<SubAppNetwork>
-		<FB Name="DigitalOutput_Q1" Type="logiBUS_QX" x="-6666.67" y="-2400">
+		<FB Name="DigitalOutput_Q1" Type="logiBUS::io::DQ::logiBUS_QX" x="-6666.67" y="-2400">
 			<Parameter Name="QI" Value="TRUE"/>
-			<Parameter Name="Output" Value="logiBUS::io::DO::logiBUS_DO::Output_Q1"/>
+			<Parameter Name="Output" Value="logiBUS_DO::Output_Q1"/>
 		</FB>
-		<FB Name="DigitalOutput_Q2" Type="logiBUS_QX" x="-6666.67" y="-1333.33">
+		<FB Name="DigitalOutput_Q2" Type="logiBUS::io::DQ::logiBUS_QX" x="-6666.67" y="-1333.33">
 			<Parameter Name="QI" Value="TRUE"/>
-			<Parameter Name="Output" Value="logiBUS::io::DO::logiBUS_DO::Output_Q2"/>
+			<Parameter Name="Output" Value="logiBUS_DO::Output_Q2"/>
 		</FB>
-		<FB Name="DigitalOutput_Q3" Type="logiBUS_QX" x="-6666.67" y="-266.67">
+		<FB Name="DigitalOutput_Q3" Type="logiBUS::io::DQ::logiBUS_QX" x="-6666.67" y="-266.67">
 			<Parameter Name="QI" Value="TRUE"/>
-			<Parameter Name="Output" Value="logiBUS::io::DO::logiBUS_DO::Output_Q3"/>
+			<Parameter Name="Output" Value="logiBUS_DO::Output_Q3"/>
 		</FB>
-		<FB Name="DigitalOutput_Q4" Type="logiBUS_QX" x="-6666.67" y="800">
+		<FB Name="DigitalOutput_Q4" Type="logiBUS::io::DQ::logiBUS_QX" x="-6666.67" y="800">
 			<Parameter Name="QI" Value="TRUE"/>
-			<Parameter Name="Output" Value="logiBUS::io::DO::logiBUS_DO::Output_Q4"/>
+			<Parameter Name="Output" Value="logiBUS_DO::Output_Q4"/>
 		</FB>
 		<FB Name="DigitalInput_CLK_I1" Type="logiBUS_IE" x="-11466.67" y="-2133.33">
 			<Parameter Name="QI" Value="TRUE"/>
@@ -35,21 +37,21 @@
 			<Parameter Name="Input" Value="logiBUS_DI::Input_I4"/>
 			<Parameter Name="InputEvent" Value="logiBUS_DI_Events::BUTTON_SINGLE_CLICK"/>
 		</FB>
-		<FB Name="DigitalOutput_Q5" Type="logiBUS_QX" x="-6666.67" y="1866.67">
+		<FB Name="DigitalOutput_Q5" Type="logiBUS::io::DQ::logiBUS_QX" x="-6666.67" y="1866.67">
 			<Parameter Name="QI" Value="TRUE"/>
-			<Parameter Name="Output" Value="logiBUS::io::DO::logiBUS_DO::Output_Q5"/>
+			<Parameter Name="Output" Value="logiBUS_DO::Output_Q5"/>
 		</FB>
-		<FB Name="DigitalOutput_Q6" Type="logiBUS_QX" x="-6666.67" y="2933.33">
+		<FB Name="DigitalOutput_Q6" Type="logiBUS::io::DQ::logiBUS_QX" x="-6666.67" y="2933.33">
 			<Parameter Name="QI" Value="TRUE"/>
-			<Parameter Name="Output" Value="logiBUS::io::DO::logiBUS_DO::Output_Q6"/>
+			<Parameter Name="Output" Value="logiBUS_DO::Output_Q6"/>
 		</FB>
-		<FB Name="DigitalOutput_Q7" Type="logiBUS_QX" x="-6666.67" y="4000">
+		<FB Name="DigitalOutput_Q7" Type="logiBUS::io::DQ::logiBUS_QX" x="-6666.67" y="4000">
 			<Parameter Name="QI" Value="TRUE"/>
-			<Parameter Name="Output" Value="logiBUS::io::DO::logiBUS_DO::Output_Q7"/>
+			<Parameter Name="Output" Value="logiBUS_DO::Output_Q7"/>
 		</FB>
-		<FB Name="DigitalOutput_Q8" Type="logiBUS_QX" x="-6666.67" y="5066.67">
+		<FB Name="DigitalOutput_Q8" Type="logiBUS::io::DQ::logiBUS_QX" x="-6666.67" y="5066.67">
 			<Parameter Name="QI" Value="TRUE"/>
-			<Parameter Name="Output" Value="logiBUS::io::DO::logiBUS_DO::Output_Q8"/>
+			<Parameter Name="Output" Value="logiBUS_DO::Output_Q8"/>
 		</FB>
 		<FB Name="Q_NumericValue" Type="isobus::ut::Q_NumericValue" x="-2666.67" y="-2000">
 			<Parameter Name="u16ObjId" Value="DefaultPool::OutputNumber_N1"/>

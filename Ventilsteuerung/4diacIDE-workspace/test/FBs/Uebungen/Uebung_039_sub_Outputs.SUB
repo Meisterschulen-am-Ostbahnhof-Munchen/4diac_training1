@@ -5,6 +5,8 @@
 	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2024-03-03">
 	</VersionInfo>
 	<CompilerInfo>
+		<Import declaration="logiBUS::io::DI::logiBUS_DI"/>
+		<Import declaration="logiBUS::io::DQ::logiBUS_DO"/>
 	</CompilerInfo>
 	<SubAppInterfaceList>
 		<SubAppEventInputs>
@@ -19,11 +21,11 @@
 			<VarDeclaration Name="u16ObjId" Type="UINT" Comment="Object ID Softkey/Button" InitialValue="isobus::ut::isobus::ID_NULL">
 				<Attribute Name="YPOSITION" Type="INT" Value="36"/>
 			</VarDeclaration>
-			<VarDeclaration Name="Output" Type="logiBUS_DO_S"/>
+			<VarDeclaration Name="Output" Type="logiBUS::io::DQ::logiBUS_DO_S" InitialValue="logiBUS_DO::Invalid"/>
 		</InputVars>
 	</SubAppInterfaceList>
 	<SubAppNetwork>
-		<FB Name="QX" Type="logiBUS_QX" x="-500" y="-700">
+		<FB Name="QX" Type="logiBUS::io::DQ::logiBUS_QX" x="-500" y="-700">
 			<Parameter Name="QI" Value="TRUE"/>
 		</FB>
 		<FB Name="IX" Type="Softkey_IX" x="-3800" y="-1000">

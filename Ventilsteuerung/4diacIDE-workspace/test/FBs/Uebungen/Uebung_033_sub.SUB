@@ -5,10 +5,12 @@
 	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2023-10-23">
 	</VersionInfo>
 	<CompilerInfo>
+		<Import declaration="logiBUS::io::DI::logiBUS_DI"/>
+		<Import declaration="logiBUS::io::DQ::logiBUS_DO"/>
 	</CompilerInfo>
 	<SubAppInterfaceList>
 		<InputVars>
-			<VarDeclaration Name="Input" Type="logiBUS_DI_S" Comment="Identify the Input Input_I1..I8" InitialValue="logiBUS_DI::Invalid"/>
+			<VarDeclaration Name="Input" Type="logiBUS::io::DI::logiBUS_DI_S" Comment="Identify the Input Input_I1..I8" InitialValue="logiBUS_DI::Invalid"/>
 			<VarDeclaration Name="Colour" Type="UINT" Comment="This identify the Colour. " InitialValue="logiBUS::io::LED_COLOURS::LED_GREEN"/>
 			<VarDeclaration Name="Output" Type="USINT" Comment="Identify the Output Number of Strip"/>
 		</InputVars>
@@ -18,7 +20,7 @@
 			<Parameter Name="QI" Value="TRUE"/>
 			<Parameter Name="FREQ" Value="logiBUS::io::LED_FREQ::LED_1HZ"/>
 		</FB>
-		<FB Name="BUTTON" Type="logiBUS_IX" x="-4500" y="-800">
+		<FB Name="BUTTON" Type="logiBUS::io::DI::logiBUS_IX" x="-4500" y="-800">
 			<Parameter Name="QI" Value="TRUE"/>
 		</FB>
 		<EventConnections>

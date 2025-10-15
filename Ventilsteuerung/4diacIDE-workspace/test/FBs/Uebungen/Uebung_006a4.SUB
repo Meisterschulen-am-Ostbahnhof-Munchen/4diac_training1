@@ -5,6 +5,8 @@
 	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2023-10-23">
 	</VersionInfo>
 	<CompilerInfo>
+		<Import declaration="logiBUS::io::DI::logiBUS_DI"/>
+		<Import declaration="logiBUS::io::DQ::logiBUS_DO"/>
 	</CompilerInfo>
 	<SubAppInterfaceList>
 	</SubAppInterfaceList>
@@ -44,13 +46,13 @@
 			<Parameter Name="Input" Value="logiBUS_DI::Input_I3"/>
 			<Parameter Name="InputEvent" Value="logiBUS_DI_Events::BUTTON_SINGLE_CLICK"/>
 		</FB>
-		<FB Name="Rechtslauf" Type="logiBUS_QX" x="3200" y="-800">
+		<FB Name="Rechtslauf" Type="logiBUS::io::DQ::logiBUS_QX" x="3200" y="-800">
 			<Parameter Name="QI" Value="TRUE"/>
-			<Parameter Name="Output" Value="logiBUS::io::DO::logiBUS_DO::Output_Q1"/>
+			<Parameter Name="Output" Value="logiBUS_DO::Output_Q1"/>
 		</FB>
-		<FB Name="Linkslauf" Type="logiBUS_QX" x="3200" y="300">
+		<FB Name="Linkslauf" Type="logiBUS::io::DQ::logiBUS_QX" x="3200" y="300">
 			<Parameter Name="QI" Value="TRUE"/>
-			<Parameter Name="Output" Value="logiBUS::io::DO::logiBUS_DO::Output_Q2"/>
+			<Parameter Name="Output" Value="logiBUS_DO::Output_Q2"/>
 		</FB>
 		<FB Name="LinksRechts" Type="LinksRechts" x="-1000" y="-700">
 		</FB>

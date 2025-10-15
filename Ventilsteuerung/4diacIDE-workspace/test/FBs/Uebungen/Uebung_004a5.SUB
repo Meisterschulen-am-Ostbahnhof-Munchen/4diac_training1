@@ -5,11 +5,13 @@
 	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2023-10-23">
 	</VersionInfo>
 	<CompilerInfo>
+		<Import declaration="logiBUS::io::DI::logiBUS_DI"/>
+		<Import declaration="logiBUS::io::DQ::logiBUS_DO"/>
 	</CompilerInfo>
 	<SubAppInterfaceList>
 	</SubAppInterfaceList>
 	<SubAppNetwork>
-		<FB Name="DigitalOutput_Q1" Type="logiBUS_QX" x="-3700" y="200">
+		<FB Name="DigitalOutput_Q1" Type="logiBUS::io::DQ::logiBUS_QX" x="-3700" y="200">
 			<Parameter Name="QI" Value="">
 				<Attribute Name="Visible" Value="false"/>
 			</Parameter>
@@ -17,7 +19,7 @@
 				<Attribute Name="Visible" Value="false"/>
 			</Parameter>
 			<Parameter Name="QI" Value="TRUE"/>
-			<Parameter Name="Output" Value="logiBUS::io::DO::logiBUS_DO::Output_Q1"/>
+			<Parameter Name="Output" Value="logiBUS_DO::Output_Q1"/>
 		</FB>
 		<FB Name="DigitalInput_CLK_I1" Type="logiBUS_IE" x="-8500" y="400">
 			<Parameter Name="QI" Value="">
@@ -33,7 +35,7 @@
 		</FB>
 		<FB Name="E_T_FF_Q2" Type="iec61499::events::E_T_FF" x="-5600" y="1100">
 		</FB>
-		<FB Name="DigitalOutput_Q2" Type="logiBUS_QX" x="-3700" y="1000">
+		<FB Name="DigitalOutput_Q2" Type="logiBUS::io::DQ::logiBUS_QX" x="-3700" y="1000">
 			<Parameter Name="QI" Value="">
 				<Attribute Name="Visible" Value="false"/>
 			</Parameter>
@@ -41,7 +43,7 @@
 				<Attribute Name="Visible" Value="false"/>
 			</Parameter>
 			<Parameter Name="QI" Value="TRUE"/>
-			<Parameter Name="Output" Value="logiBUS::io::DO::logiBUS_DO::Output_Q2"/>
+			<Parameter Name="Output" Value="logiBUS_DO::Output_Q2"/>
 		</FB>
 		<EventConnections>
 			<Connection Source="E_T_FF_Q1.EO" Destination="DigitalOutput_Q1.REQ" dx1="666.67"/>
