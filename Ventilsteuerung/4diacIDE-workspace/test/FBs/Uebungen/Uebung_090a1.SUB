@@ -6,19 +6,18 @@
 	</VersionInfo>
 	<CompilerInfo>
 		<Import declaration="logiBUS::io::DI::logiBUS_DI"/>
-		<Import declaration="logiBUS::io::DI::logiBUS_DI_Events"/>
 		<Import declaration="logiBUS::io::DQ::logiBUS_DO"/>
 	</CompilerInfo>
 	<SubAppInterfaceList>
 	</SubAppInterfaceList>
 	<SubAppNetwork>
-		<FB Name="F_MUX_2" Type="F_MUX_2" x="2700" y="3700">
+		<FB Name="F_MUX_2" Type="iec61131::selection::F_MUX_2" x="2700" y="3700">
 		</FB>
 		<FB Name="DigitalInput_I4" Type="logiBUS::io::DI::logiBUS_IX" x="-1400" y="3500">
 			<Parameter Name="QI" Value="TRUE"/>
 			<Parameter Name="Input" Value="logiBUS_DI::Input_I4"/>
 		</FB>
-		<FB Name="F_BOOL_TO_UINT_I4" Type="F_BOOL_TO_UINT" x="-300" y="3700">
+		<FB Name="F_BOOL_TO_UINT_I4" Type="iec61131::conversion::F_BOOL_TO_UINT" x="-300" y="3700">
 		</FB>
 		<FB Name="DigitalOutput_Q1" Type="logiBUS::io::DQ::logiBUS_QX" x="4500" y="3600">
 			<Parameter Name="QI" Value="TRUE"/>

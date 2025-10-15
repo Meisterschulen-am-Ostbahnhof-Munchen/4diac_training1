@@ -22,7 +22,7 @@
 			<Parameter Name="u16ObjId" Value="DefaultPool::SoftKey_F2"/>
 			<Parameter Name="InputEvent" Value="SoftKeyActivationCode::SK_RELEASED"/>
 		</FB>
-		<FB Name="F_SEL" Type="F_SEL_E_3" x="-1100" y="-900">
+		<FB Name="F_SEL" Type="eclipse4diac::utils::selection::F_SEL_E_3" x="-1100" y="-900">
 			<Parameter Name="IN0" Value="colours::COLOR_WHITE"/>
 			<Parameter Name="IN1" Value="colours::COLOR_GREEN"/>
 			<Parameter Name="IN2" Value="colours::COLOR_RED"/>
@@ -37,12 +37,12 @@
 		</FB>
 		<EventConnections>
 			<Connection Source="F_SEL.CNF" Destination="Q_BackgroundColour.REQ" dx1="613.33"/>
-			<Connection Source="SoftKey_UP_F1.IND" Destination="F_SEL.REQ0"/>
+			<Connection Source="SoftKey_UP_F1.IND" Destination="F_SEL.REQ0" dx1="1260"/>
 			<Connection Source="SoftKey_UP_F2.IND" Destination="F_SEL.REQ1" dx1="1040"/>
 			<Connection Source="SoftKey_UP_F3.IND" Destination="F_SEL.REQ2" dx1="1353.33"/>
 		</EventConnections>
 		<DataConnections>
-			<Connection Source="F_SEL.OUT" Destination="Q_BackgroundColour.u8Colour"/>
+			<Connection Source="F_SEL.OUT" Destination="Q_BackgroundColour.u8Colour" dx1="426.67"/>
 		</DataConnections>
 	</SubAppNetwork>
 </SubAppType>

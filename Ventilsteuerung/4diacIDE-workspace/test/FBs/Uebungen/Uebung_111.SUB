@@ -20,7 +20,7 @@
 			<Parameter Name="IN1" Value="USINT#128"/>
 			<Parameter Name="IN2" Value="USINT#128"/>
 		</FB>
-		<FB Name="DigitalInput_CLK_I1" Type="logiBUS::io::DI::logiBUS_IE" x="-5600" y="200">
+		<FB Name="DigitalInput_CLK_I1" Type="logiBUS::io::DI::logiBUS_IE" x="-5500" y="200">
 			<Parameter Name="QI" Value="TRUE"/>
 			<Parameter Name="Input" Value="logiBUS_DI::Input_I1"/>
 			<Parameter Name="InputEvent" Value="logiBUS_DI_Events::BUTTON_SINGLE_CLICK"/>
@@ -37,7 +37,7 @@
 			<Attribute Name="DataType" Value="UDINT"/>
 		</FB>
 		<EventConnections>
-			<Connection Source="DigitalInput_CLK_I1.IND" Destination="ADD_2.REQ" dx1="560"/>
+			<Connection Source="DigitalInput_CLK_I1.IND" Destination="ADD_2.REQ"/>
 			<Connection Source="F_GT.CNF" Destination="DigitalOutput_Q1.REQ" dx1="193.33"/>
 			<Connection Source="ADD_2.CNF" Destination="F_USINT_TO_UDINT.REQ" dx1="193.33"/>
 			<Connection Source="F_USINT_TO_UDINT.CNF" Destination="F_DIV.REQ" dx1="160"/>

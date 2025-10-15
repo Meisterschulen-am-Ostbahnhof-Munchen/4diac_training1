@@ -16,7 +16,7 @@
 			<Parameter Name="QI" Value="TRUE"/>
 			<Parameter Name="Output" Value="logiBUS_DO::Output_Q1"/>
 		</FB>
-		<FB Name="Button_A1" Type="Aux_IE" x="-7200" y="-200">
+		<FB Name="Button_A1" Type="isobus::UT_io::aux::in::Aux_IE" x="-7200" y="-200">
 			<Parameter Name="QI" Value="TRUE"/>
 			<Parameter Name="u16ObjId" Value="DefaultPool::AuxFunction2_X1"/>
 			<Parameter Name="InputEvent" Value="AuxiliaryState::AuxHeld_START"/>
@@ -25,7 +25,7 @@
 		</FB>
 		<Comment Comment="AuxHeld_START wird nur einmal gesendet. &#10;Egal welcher Typ" x="-9800" y="800" width="2300" height="700"/>
 		<EventConnections>
-			<Connection Source="Button_A1.IND" Destination="E_T_FF.CLK"/>
+			<Connection Source="Button_A1.IND" Destination="E_T_FF.CLK" dx1="366.67"/>
 			<Connection Source="E_T_FF.EO" Destination="DigitalOutput_Q1.REQ"/>
 		</EventConnections>
 		<DataConnections>

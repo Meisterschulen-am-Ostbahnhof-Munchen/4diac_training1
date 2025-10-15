@@ -16,7 +16,7 @@
 			<Parameter Name="QI" Value="TRUE"/>
 			<Parameter Name="Output" Value="logiBUS_DO::Output_Q1"/>
 		</FB>
-		<FB Name="Button_A1" Type="Aux_IE" x="-7200" y="-200">
+		<FB Name="Button_A1" Type="isobus::UT_io::aux::in::Aux_IE" x="-7200" y="-200">
 			<Parameter Name="QI" Value="TRUE"/>
 			<Parameter Name="u16ObjId" Value="DefaultPool::AuxFunction2_X1"/>
 			<Parameter Name="InputEvent" Value="AuxiliaryState::AuxHeld"/>
@@ -25,7 +25,7 @@
 		</FB>
 		<Comment Comment="AuxHeld wird wiederholt bei einem AUX Type 2. Ergibt einen Blinker.&#10;&#10;Bool_NonLatched = 2,    /**&lt; Two-position switch - returns to off */" x="-10500" y="800" width="4100" height="900"/>
 		<EventConnections>
-			<Connection Source="Button_A1.IND" Destination="E_T_FF.CLK"/>
+			<Connection Source="Button_A1.IND" Destination="E_T_FF.CLK" dx1="366.67"/>
 			<Connection Source="E_T_FF.EO" Destination="DigitalOutput_Q1.REQ"/>
 		</EventConnections>
 		<DataConnections>

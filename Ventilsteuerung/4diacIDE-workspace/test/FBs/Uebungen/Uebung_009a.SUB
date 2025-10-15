@@ -35,7 +35,7 @@
 			<Parameter Name="Input" Value="logiBUS_DI::Input_I3"/>
 			<Parameter Name="InputEvent" Value="logiBUS_DI_Events::BUTTON_SINGLE_CLICK"/>
 		</FB>
-		<FB Name="F_DINT_TO_UDINT" Type="F_DINT_TO_UDINT" x="1000" y="1400">
+		<FB Name="F_DINT_TO_UDINT" Type="iec61131::conversion::F_DINT_TO_UDINT" x="1000" y="1400">
 		</FB>
 		<FB Name="ZERO" Type="logiBUS::io::DI::logiBUS_IE" x="-2000" y="300">
 			<Parameter Name="QI" Value="TRUE">
@@ -67,7 +67,7 @@
 			<Parameter Name="Input" Value="logiBUS_DI::Input_I2"/>
 			<Parameter Name="InputEvent" Value="logiBUS_DI_Events::BUTTON_SINGLE_CLICK"/>
 		</FB>
-		<FB Name="RampLimitFS" Type="signalprocessing::RampLimitFS" x="-100" y="1400">
+		<FB Name="RampLimitFS" Type="eclipse4diac::signalprocessing::RampLimitFS" x="-100" y="1400">
 			<Parameter Name="VAL_ZERO" Value="DINT#0"/>
 			<Parameter Name="SLOW" Value="DINT#1"/>
 			<Parameter Name="FAST" Value="DINT#10"/>
@@ -84,9 +84,9 @@
 			<Parameter Name="InputEvent" Value="logiBUS_DI_Events::BUTTON_SINGLE_CLICK"/>
 		</FB>
 		<EventConnections>
-			<Connection Source="UP_FAST.IND" Destination="RampLimitFS.UP_FAST"/>
+			<Connection Source="UP_FAST.IND" Destination="RampLimitFS.UP_FAST" dx1="513.33"/>
 			<Connection Source="FULL.IND" Destination="RampLimitFS.FULL" dx1="3460"/>
-			<Connection Source="RampLimitFS.CNF" Destination="F_DINT_TO_UDINT.REQ"/>
+			<Connection Source="RampLimitFS.CNF" Destination="F_DINT_TO_UDINT.REQ" dx1="80" dx2="80" dy="-46.67"/>
 			<Connection Source="ZERO.IND" Destination="RampLimitFS.ZERO" dx1="546.67"/>
 			<Connection Source="DOWN_SLOW.IND" Destination="RampLimitFS.DOWN_SLOW" dx1="3126.67"/>
 			<Connection Source="DOWN_FAST.IND" Destination="RampLimitFS.DOWN_FAST" dx1="446.67"/>

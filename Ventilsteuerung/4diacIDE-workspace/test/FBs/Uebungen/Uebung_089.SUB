@@ -6,7 +6,6 @@
 	</VersionInfo>
 	<CompilerInfo>
 		<Import declaration="logiBUS::io::DI::logiBUS_DI"/>
-		<Import declaration="logiBUS::io::DI::logiBUS_DI_Events"/>
 		<Import declaration="logiBUS::io::DQ::logiBUS_DO"/>
 	</CompilerInfo>
 	<SubAppInterfaceList>
@@ -20,7 +19,7 @@
 			<Parameter Name="QI" Value="TRUE"/>
 			<Parameter Name="Input" Value="logiBUS_DI::Input_I1"/>
 		</FB>
-		<FB Name="OR_2" Type="OR_2" x="-2400" y="-200">
+		<FB Name="OR_2" Type="iec61131::bitwiseOperators::OR_2" x="-2400" y="-200">
 		</FB>
 		<FB Name="DigitalInput_I2" Type="logiBUS::io::DI::logiBUS_IX" x="-4500" y="300">
 			<Parameter Name="QI" Value="TRUE"/>
@@ -41,8 +40,8 @@
 		<Comment Comment="R_TRIG schaltet nur wenn wirklich steigende Flanke" x="-1300" y="-700" width="1200" height="400"/>
 		<Comment Comment="E_SWITCH schaltet auch, wenn anderweitig ein Event kommt. " x="-1300" y="1600" width="1200" height="400"/>
 		<EventConnections>
-			<Connection Source="DigitalInput_I2.IND" Destination="OR_2.REQ" dx1="1326.67"/>
-			<Connection Source="DigitalInput_I1.IND" Destination="OR_2.REQ" dx1="1326.67"/>
+			<Connection Source="DigitalInput_I2.IND" Destination="OR_2.REQ" dx1="886.67"/>
+			<Connection Source="DigitalInput_I1.IND" Destination="OR_2.REQ" dx1="893.33"/>
 			<Connection Source="OR_2.CNF" Destination="E_R_TRIG.EI"/>
 			<Connection Source="E_R_TRIG.EO" Destination="E_T_FF_Q1.CLK"/>
 			<Connection Source="E_T_FF_Q1.EO" Destination="DigitalOutput_Q1.REQ"/>
