@@ -17,22 +17,21 @@
 			<Parameter Name="Output" Value="logiBUS_DO::Output_Q1"/>
 		</FB>
 		<FB Name="DigitalInput_I1" Type="logiBUS::io::DI::logiBUS_IX" x="-9000" y="300">
-			<Parameter Name="QI" Value="">
+			<Parameter Name="QI" Value="TRUE">
 				<Attribute Name="Visible" Value="false"/>
 			</Parameter>
 			<Parameter Name="PARAMS" Value="">
 				<Attribute Name="Visible" Value="false"/>
 			</Parameter>
-			<Parameter Name="QI" Value="TRUE"/>
 			<Parameter Name="Input" Value="logiBUS_DI::Input_I1"/>
 		</FB>
 		<FB Name="E_TON" Type="iec61499::events::E_TON" x="-7100" y="500">
 		</FB>
 		<SubApp Name="Uebung_020c2_sub" Type="Uebung_020c2_sub" x="-10100" y="1700">
-			<Parameter Name="KEY" Value="NVS_KEYS::KEY_I1_STORE"/>
+			<Parameter Name="KEY" Value="FBs::Constants::NVS_Keys::KEY_I1_STORE"/>
 			<Parameter Name="u16ObjId" Value="DefaultPool::InputNumber_I1"/>
 		</SubApp>
-		<FB Name="F_MULTIME" Type="F_MULTIME" x="-8300" y="1700">
+		<FB Name="F_MULTIME" Type="iec61131::arithmetic::F_MULTIME" x="-8300" y="1700">
 			<Parameter Name="IN1" Value="T#1s"/>
 		</FB>
 		<EventConnections>
