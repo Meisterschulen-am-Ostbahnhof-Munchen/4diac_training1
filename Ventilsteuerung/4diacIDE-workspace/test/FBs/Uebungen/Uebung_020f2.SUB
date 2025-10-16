@@ -6,7 +6,6 @@
 	</VersionInfo>
 	<CompilerInfo>
 		<Import declaration="logiBUS::io::DI::logiBUS_DI"/>
-		<Import declaration="logiBUS::io::DI::logiBUS_DI_Events"/>
 		<Import declaration="logiBUS::io::DQ::logiBUS_DO"/>
 	</CompilerInfo>
 	<SubAppInterfaceList>
@@ -21,7 +20,7 @@
 			<Parameter Name="QI" Value="TRUE"/>
 			<Parameter Name="Input" Value="logiBUS_DI::Input_I1"/>
 		</FB>
-		<FB Name="FB_TP" Type="FB_TP" x="3700" y="100">
+		<FB Name="FB_TP" Type="iec61131::timers::FB_TP" x="3700" y="100">
 			<Parameter Name="PT" Value="T#5s"/>
 		</FB>
 		<FB Name="DigitalOutput_Q1" Type="logiBUS::io::DQ::logiBUS_QX" x="6400" y="-200">

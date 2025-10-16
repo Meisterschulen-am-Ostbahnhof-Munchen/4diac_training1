@@ -6,7 +6,6 @@
 	</VersionInfo>
 	<CompilerInfo>
 		<Import declaration="logiBUS::io::DI::logiBUS_DI"/>
-		<Import declaration="logiBUS::io::DI::logiBUS_DI_Events"/>
 		<Import declaration="logiBUS::io::DQ::logiBUS_DO"/>
 	</CompilerInfo>
 	<SubAppInterfaceList>
@@ -20,13 +19,12 @@
 			<Parameter Name="Output" Value="logiBUS_DO::Output_Q1"/>
 		</FB>
 		<FB Name="DigitalInput_I1" Type="logiBUS::io::DI::logiBUS_IX" x="-8800" y="500">
-			<Parameter Name="QI" Value="">
+			<Parameter Name="QI" Value="TRUE">
 				<Attribute Name="Visible" Value="false"/>
 			</Parameter>
 			<Parameter Name="PARAMS" Value="">
 				<Attribute Name="Visible" Value="false"/>
 			</Parameter>
-			<Parameter Name="QI" Value="TRUE"/>
 			<Parameter Name="Input" Value="logiBUS_DI::Input_I1"/>
 		</FB>
 		<FB Name="E_SWITCH" Type="iec61499::events::E_SWITCH" x="-7500" y="700">

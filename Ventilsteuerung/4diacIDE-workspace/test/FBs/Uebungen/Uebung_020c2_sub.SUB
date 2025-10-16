@@ -5,9 +5,6 @@
 	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2023-10-31">
 	</VersionInfo>
 	<CompilerInfo>
-		<Import declaration="logiBUS::io::DI::logiBUS_DI"/>
-		<Import declaration="logiBUS::io::DI::logiBUS_DI_Events"/>
-		<Import declaration="logiBUS::io::DQ::logiBUS_DO"/>
 	</CompilerInfo>
 	<SubAppInterfaceList>
 		<SubAppEventInputs>
@@ -31,7 +28,7 @@
 			<Parameter Name="QI" Value="TRUE"/>
 			<Parameter Name="u16ObjId" Value="DefaultPool::InputNumber_I1"/>
 		</FB>
-		<FB Name="F_DWORD_TO_UDINT" Type="F_DWORD_TO_UDINT" x="400" y="400">
+		<FB Name="F_DWORD_TO_UDINT" Type="iec61131::conversion::F_DWORD_TO_UDINT" x="400" y="400">
 		</FB>
 		<FB Name="NVS_UDINT" Type="NVS" x="2100" y="0">
 			<Parameter Name="QI" Value="TRUE"/>

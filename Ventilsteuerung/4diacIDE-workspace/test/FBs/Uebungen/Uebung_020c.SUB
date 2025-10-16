@@ -6,7 +6,6 @@
 	</VersionInfo>
 	<CompilerInfo>
 		<Import declaration="logiBUS::io::DI::logiBUS_DI"/>
-		<Import declaration="logiBUS::io::DI::logiBUS_DI_Events"/>
 		<Import declaration="logiBUS::io::DQ::logiBUS_DO"/>
 	</CompilerInfo>
 	<SubAppInterfaceList>
@@ -20,12 +19,12 @@
 			<Parameter Name="QI" Value="TRUE"/>
 			<Parameter Name="Input" Value="logiBUS_DI::Input_I1"/>
 		</FB>
-		<FB Name="E_TON" Type="iec61499::events::E_TON" x="-7100" y="600">
+		<FB Name="E_TON" Type="iec61499::events::timers::E_TON" x="-7100" y="600">
 			<Parameter Name="PT" Value="T#5s"/>
 		</FB>
 		<EventConnections>
-			<Connection Source="DigitalInput_I1.IND" Destination="E_TON.REQ"/>
-			<Connection Source="E_TON.CNF" Destination="DigitalOutput_Q1.REQ"/>
+			<Connection Source="DigitalInput_I1.IND" Destination="E_TON.REQ" dx1="473.33"/>
+			<Connection Source="E_TON.CNF" Destination="DigitalOutput_Q1.REQ" dx1="320"/>
 		</EventConnections>
 		<DataConnections>
 			<Connection Source="DigitalInput_I1.IN" Destination="E_TON.IN" dx1="246.67"/>

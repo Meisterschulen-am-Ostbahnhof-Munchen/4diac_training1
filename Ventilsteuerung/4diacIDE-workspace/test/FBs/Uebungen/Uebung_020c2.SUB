@@ -6,7 +6,6 @@
 	</VersionInfo>
 	<CompilerInfo>
 		<Import declaration="logiBUS::io::DI::logiBUS_DI"/>
-		<Import declaration="logiBUS::io::DI::logiBUS_DI_Events"/>
 		<Import declaration="logiBUS::io::DQ::logiBUS_DO"/>
 	</CompilerInfo>
 	<SubAppInterfaceList>
@@ -25,7 +24,7 @@
 			</Parameter>
 			<Parameter Name="Input" Value="logiBUS_DI::Input_I1"/>
 		</FB>
-		<FB Name="E_TON" Type="iec61499::events::E_TON" x="-7100" y="500">
+		<FB Name="E_TON" Type="iec61499::events::timers::E_TON" x="-7100" y="500">
 		</FB>
 		<SubApp Name="Uebung_020c2_sub" Type="Uebung_020c2_sub" x="-10100" y="1700">
 			<Parameter Name="KEY" Value="FBs::Constants::NVS_Keys::KEY_I1_STORE"/>
@@ -35,8 +34,8 @@
 			<Parameter Name="IN1" Value="T#1s"/>
 		</FB>
 		<EventConnections>
-			<Connection Source="DigitalInput_I1.IND" Destination="E_TON.REQ"/>
-			<Connection Source="E_TON.CNF" Destination="DigitalOutput_Q1.REQ"/>
+			<Connection Source="DigitalInput_I1.IND" Destination="E_TON.REQ" dx1="573.33"/>
+			<Connection Source="E_TON.CNF" Destination="DigitalOutput_Q1.REQ" dx1="366.67"/>
 			<Connection Source="Uebung_020c2_sub.IND" Destination="F_MULTIME.REQ"/>
 		</EventConnections>
 		<DataConnections>
