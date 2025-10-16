@@ -7,7 +7,7 @@
 	<CompilerInfo>
 		<Import declaration="logiBUS::io::DI::logiBUS_DI"/>
 		<Import declaration="logiBUS::io::DI::logiBUS_DI_Events"/>
-		<Import declaration="logiBUS::io::DQ::logiBUS_DO"/>
+		<Import declaration="logiBUS::io::DO_LED::LED_strip"/>
 	</CompilerInfo>
 	<SubAppInterfaceList>
 	</SubAppInterfaceList>
@@ -23,7 +23,7 @@
 			<Parameter Name="InputEvent" Value="logiBUS_DI_Events::BUTTON_SINGLE_CLICK"/>
 		</FB>
 		<FB Name="strip_set_pixel" Type="strip_set_pixel" x="-1000" y="500">
-			<Parameter Name="index" Value="logiBUS::io::LED_strip::Output_strip"/>
+			<Parameter Name="index" Value="LED_strip::Output_strip"/>
 		</FB>
 		<FB Name="hsv2rgb" Type="hsv2rgb" x="-3200" y="800">
 			<Parameter Name="hue" Value="100"/>

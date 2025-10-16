@@ -7,7 +7,6 @@
 	<CompilerInfo>
 		<Import declaration="logiBUS::io::DI::logiBUS_DI"/>
 		<Import declaration="logiBUS::io::DI::logiBUS_DI_Events"/>
-		<Import declaration="logiBUS::io::DQ::logiBUS_DO"/>
 	</CompilerInfo>
 	<SubAppInterfaceList>
 	</SubAppInterfaceList>
@@ -15,12 +14,12 @@
 		<FB Name="Q_NumericValue" Type="isobus::ut::Q_NumericValue" x="900" y="1000">
 			<Parameter Name="u16ObjId" Value="DefaultPool::OutputNumber_N1"/>
 		</FB>
-		<FB Name="logiBUS_IB" Type="logiBUS_IB" x="-3700" y="800">
+		<FB Name="logiBUS_IB" Type="logiBUS::io::DI::logiBUS_IB" x="-3700" y="800">
 			<Parameter Name="QI" Value="TRUE"/>
 			<Parameter Name="Input" Value="logiBUS_DI::Input_I1"/>
 			<Parameter Name="InputEvent" Value="logiBUS_DI_Events::BUTTON_PRESS_REPEAT_DONE"/>
 		</FB>
-		<FB Name="F_BYTE_TO_UDINT" Type="F_BYTE_TO_UDINT" x="-1900" y="1200">
+		<FB Name="F_BYTE_TO_UDINT" Type="iec61131::conversion::F_BYTE_TO_UDINT" x="-1900" y="1200">
 		</FB>
 		<Comment Comment="BUTTON_PRESS_REPEAT_DONE: nur am Ende 1 Event&#10;BUTTON_PRESS_REPEAT: Während des drückens kommen Events" x="-5300" y="1800" width="3200" height="400"/>
 		<EventConnections>
@@ -28,7 +27,7 @@
 			<Connection Source="F_BYTE_TO_UDINT.CNF" Destination="Q_NumericValue.REQ" dx1="860"/>
 		</EventConnections>
 		<DataConnections>
-			<Connection Source="logiBUS_IB.IN" Destination="F_BYTE_TO_UDINT.IN"/>
+			<Connection Source="logiBUS_IB.IN" Destination="F_BYTE_TO_UDINT.IN" dx1="353.33"/>
 			<Connection Source="F_BYTE_TO_UDINT.OUT" Destination="Q_NumericValue.u32NewValue"/>
 		</DataConnections>
 	</SubAppNetwork>

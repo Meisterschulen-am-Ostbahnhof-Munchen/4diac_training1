@@ -69,7 +69,7 @@
 				</OutputVars>
 			</SubAppInterfaceList>
 			<SubAppNetwork>
-				<FB Name="OR_RED" Type="OR_2" x="300" y="-1000">
+				<FB Name="OR_RED" Type="iec61131::bitwiseOperators::OR_2" x="300" y="-1000">
 				</FB>
 				<EventConnections>
 					<Connection Source="EI_RED" Destination="OR_RED.REQ" dx1="2393.33"/>
@@ -106,7 +106,7 @@
 				</OutputVars>
 			</SubAppInterfaceList>
 			<SubAppNetwork>
-				<FB Name="OR_ORANGE" Type="OR_2" x="0" y="0">
+				<FB Name="OR_ORANGE" Type="iec61131::bitwiseOperators::OR_2" x="0" y="0">
 				</FB>
 				<EventConnections>
 					<Connection Source="EI_RED_ORANGE" Destination="OR_ORANGE.REQ" dx1="80" dx2="80" dy="-120"/>
@@ -143,7 +143,7 @@
 				</OutputVars>
 			</SubAppInterfaceList>
 			<SubAppNetwork>
-				<FB Name="OR_2" Type="OR_2" x="200" y="600">
+				<FB Name="OR_2" Type="iec61131::bitwiseOperators::OR_2" x="200" y="600">
 				</FB>
 				<EventConnections>
 					<Connection Source="EI_GREEN" Destination="OR_2.REQ" dx1="86.67"/>
@@ -159,7 +159,7 @@
 			<Attribute Name="width" Type="LREAL" Value="5226.67"/>
 			<Attribute Name="height" Type="LREAL" Value="2940"/>
 		</SubApp>
-		<FB Name="E_BLINK_TRAIN" Type="iec61499::events::E_BLINK_TRAIN" x="4900" y="1200">
+		<FB Name="E_BLINK_TRAIN" Type="eclipse4diac::utils::signals::E_BLINK_TRAIN" x="4900" y="1200">
 			<Parameter Name="TIMELOW" Value="T#500ms"/>
 			<Parameter Name="TIMEHIGH" Value="T#500ms"/>
 			<Parameter Name="N" Value="2"/>
@@ -187,7 +187,7 @@
 			<Connection Source="sequence_T_04_loop.EO_S3" Destination="GREEN.EI_GREEN" dx1="620">
 				<Attribute Name="Visible" Value="false"/>
 			</Connection>
-			<Connection Source="sequence_T_04_loop.EO_S4" Destination="E_BLINK_TRAIN.START"/>
+			<Connection Source="sequence_T_04_loop.EO_S4" Destination="E_BLINK_TRAIN.START" dx1="886.67"/>
 		</EventConnections>
 		<DataConnections>
 			<Connection Source="sequence_T_04_loop.DO_S1" Destination="RED.DI_RED" dx1="600">

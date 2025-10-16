@@ -5,14 +5,11 @@
 	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2023-10-23">
 	</VersionInfo>
 	<CompilerInfo>
-		<Import declaration="logiBUS::io::DI::logiBUS_DI"/>
-		<Import declaration="logiBUS::io::DI::logiBUS_DI_Events"/>
-		<Import declaration="logiBUS::io::DQ::logiBUS_DO"/>
 	</CompilerInfo>
 	<SubAppInterfaceList>
 	</SubAppInterfaceList>
 	<SubAppNetwork>
-		<FB Name="F_DWORD_TO_UDINT" Type="F_DWORD_TO_UDINT" x="-3500" y="1100">
+		<FB Name="F_DWORD_TO_UDINT" Type="iec61131::conversion::F_DWORD_TO_UDINT" x="-3500" y="1100">
 		</FB>
 		<FB Name="InputNumber_I1" Type="NumericValue_ID" x="-5300" y="900">
 			<Parameter Name="QI" Value="TRUE">
