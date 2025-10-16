@@ -5,6 +5,7 @@
 	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2023-10-23">
 	</VersionInfo>
 	<CompilerInfo>
+		<Import declaration="isobus::ut::IDs"/>
 		<Import declaration="logiBUS::io::DI::logiBUS_DI"/>
 		<Import declaration="logiBUS::io::DI::logiBUS_DI_Events"/>
 		<Import declaration="logiBUS::io::DQ::logiBUS_DO"/>
@@ -25,7 +26,7 @@
 			<Parameter Name="Input" Value="logiBUS_DI::Input_I2"/>
 			<Parameter Name="InputEvent" Value="logiBUS_DI_Events::BUTTON_SINGLE_CLICK"/>
 		</FB>
-		<FB Name="F_SEL_E_2" Type="F_SEL_E_4" x="-3800" y="-300">
+		<FB Name="F_SEL_E_2" Type="eclipse4diac::utils::selection::F_SEL_E_4" x="-3800" y="-300">
 			<Parameter Name="IN0" Value="DefaultPool::DataMask_M1"/>
 			<Parameter Name="IN1" Value="DefaultPool::DataMask_M2"/>
 			<Parameter Name="IN2" Value="DefaultPool::AlarmMask_A2_medium"/>
@@ -38,7 +39,7 @@
 		</FB>
 		<FB Name="ACK" Type="Softkey_IE" x="-8000" y="2600">
 			<Parameter Name="QI" Value="TRUE"/>
-			<Parameter Name="u16ObjId" Value="isobus::ut::isobus::ID_NULL"/>
+			<Parameter Name="u16ObjId" Value="IDs::ID_NULL"/>
 			<Parameter Name="InputEvent" Value="SoftKeyActivationCode::SK_PRESSED"/>
 		</FB>
 		<FB Name="E_SR" Type="iec61499::events::E_SR" x="-5000" y="1800">
@@ -54,7 +55,7 @@
 			<Connection Source="DigitalInput_CLK_I2.IND" Destination="F_SEL_E_2.REQ1" dx1="313.33">
 				<Attribute Name="Visible" Value="false"/>
 			</Connection>
-			<Connection Source="F_SEL_E_2.CNF" Destination="Q_ActiveMask.REQ"/>
+			<Connection Source="F_SEL_E_2.CNF" Destination="Q_ActiveMask.REQ" dx1="826.67"/>
 			<Connection Source="DigitalInput_CLK_I3.IND" Destination="F_SEL_E_2.REQ2" dx1="1560"/>
 			<Connection Source="ACK.IND" Destination="F_SEL_E_2.REQ3" dx1="840">
 				<Attribute Name="Visible" Value="false"/>
