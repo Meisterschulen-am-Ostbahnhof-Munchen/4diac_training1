@@ -26,7 +26,8 @@
 			<VarDeclaration Name="mask" Type="isobus::pgn::NAMEFIELD_T" Comment="The Mask - only 1 Bits are counted. "/>
 		</InputVars>
 		<OutputVars>
-			<VarDeclaration Name="OUT" Type="isobus::pgn::CF_INFO_T"/>
+			<VarDeclaration Name="sCfInfo" Type="isobus::pgn::CF_INFO_T" Comment="ISO CF/user information data structure"/>
+			<VarDeclaration Name="netEv" Type="isobus::pgn::ISONETEVENT_T" Comment="network layer event"/>
 		</OutputVars>
 	</InterfaceList>
 </FBType>

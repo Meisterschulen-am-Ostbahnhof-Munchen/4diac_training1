@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<DataType Name="ISONETEVENT_T" Comment="typedef of the network event structure">
+	<Identification>
+	</Identification>
+	<VersionInfo Version="1.0" Author="franz" Date="2025-10-18">
+	</VersionInfo>
+	<CompilerInfo packageName="isobus::pgn">
+	</CompilerInfo>
+	<StructuredType>
+        <VarDeclaration Name="eNetEvent" Type="SINT" Comment="Which event occurs in the network member administration?"/>
+        
+        <VarDeclaration Name="eMemberRefer" Type="SINT" Comment="Which member concerned: Owner of this callback, another internal or external CF"/>
+        
+        <VarDeclaration Name="s16OwnCfHnd" Type="INT" Comment="CF handle of the entry for which the callback is triggered"/>
+        
+        <VarDeclaration Name="s16Handle" Type="INT" Comment="Network member handle of the CF / user (event source CF handle)"/>
+        
+        <VarDeclaration Name="u8SAMember" Type="BYTE" Comment="Current source address (SA) of the network member"/>
+        
+        <VarDeclaration Name="userParam" Type="isobus::pgn::USER_PARAM_T" Comment="User defined parameter set with iso_NmMemberNew()"/>
+        
+        <VarDeclaration Name="eUserFunction" Type="SINT" Comment="Function of user / CF on the bus (internal used)"/>
+        
+        <VarDeclaration Name="cfName" Type="isobus::pgn::CF_NAME_T" Comment="ISOBUS name of the control function"/>
+        
+	</StructuredType>
+</DataType>
