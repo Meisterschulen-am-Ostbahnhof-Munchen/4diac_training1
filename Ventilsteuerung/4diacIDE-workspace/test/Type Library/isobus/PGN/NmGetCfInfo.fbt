@@ -10,6 +10,7 @@
 		<EventInputs>
 			<Event Name="INIT" Type="EInit" Comment="Service Initialization">
 				<With Var="u8CanIdx"/>
+				<With Var="member"/>
 				<With Var="address"/>
 				<With Var="mask"/>
 			</Event>
@@ -21,13 +22,14 @@
 			</Event>
 		</EventOutputs>
 		<InputVars>
-			<VarDeclaration Name="u8CanIdx" Type="USINT" InitialValue="ISO_CAN_NODE::INVALID"/>
+			<VarDeclaration Name="u8CanIdx" Type="USINT" Comment="ISO_CAN_NODE" InitialValue="ISO_CAN_NODE::INVALID"/>
+			<VarDeclaration Name="member" Type="SINT" InitialValue="ISOUSERHOME_e::notdef"/>
 			<VarDeclaration Name="address" Type="isobus::pgn::NAMEFIELD_T" Comment="The Address of the Other Participant"/>
 			<VarDeclaration Name="mask" Type="isobus::pgn::NAMEFIELD_T" Comment="The Mask - only 1 Bits are counted. "/>
 		</InputVars>
 		<OutputVars>
 			<VarDeclaration Name="sCfInfo" Type="isobus::pgn::CF_INFO_T" Comment="ISO CF/user information data structure"/>
-			<VarDeclaration Name="netEv" Type="isobus::pgn::ISONETEVENT_T" Comment="network layer event"/>
+			<VarDeclaration Name="sNetEv" Type="isobus::pgn::ISONETEVENT_T" Comment="network layer event"/>
 		</OutputVars>
 	</InterfaceList>
 </FBType>

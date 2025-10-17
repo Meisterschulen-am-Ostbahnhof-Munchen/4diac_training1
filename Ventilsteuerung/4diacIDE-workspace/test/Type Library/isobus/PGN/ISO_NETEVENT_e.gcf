@@ -8,18 +8,19 @@
 	</CompilerInfo>
 	<GlobalConstants>
 		<VarDeclaration Name="Isonet_MemberActive" Type="USINT" InitialValue="0"/>
-		<VarDeclaration Name="Isonet_MemberAddressConflict" Type="USINT" InitialValue="1"/>
-		<VarDeclaration Name="Isonet_MemberInactive" Type="USINT" InitialValue="2"/>
-		<VarDeclaration Name="Isonet_MemberNewAddress" Type="USINT" InitialValue="3"/>
-		<VarDeclaration Name="Isonet_MemberAddressViolation" Type="USINT" InitialValue="4"/>
-		<VarDeclaration Name="Isonet_MemberAdd" Type="USINT" InitialValue="5"/>
-		<VarDeclaration Name="Isonet_MemberRemove" Type="USINT" InitialValue="6"/>
-        <VarDeclaration Name="Isonet_HsiActive" Type="USINT" InitialValue="7"/>
+		<VarDeclaration Name="Isonet_MemberAddressConflict" Type="USINT" Comment="&lt; There is a new member on network (intern or extern)" InitialValue="1"/>
+		<VarDeclaration Name="Isonet_MemberInactive" Type="USINT" Comment="&lt; Network member has lost address conflict" InitialValue="2"/>
+		<VarDeclaration Name="Isonet_MemberNewAddress" Type="USINT" Comment="&lt; Member stopped or commanded address" InitialValue="3"/>
+		<VarDeclaration Name="Isonet_MemberAddressViolation" Type="USINT" Comment="&lt; Address claimed after SA conflict" InitialValue="4"/>
+		<VarDeclaration Name="Isonet_MemberAdd" Type="USINT" Comment="&lt; Address violation: internal SA conflicts with SA from extern msg" InitialValue="5"/>
+		<VarDeclaration Name="Isonet_MemberRemove" Type="USINT" Comment="&lt; Core/base internal: Add(ed) CF to list" InitialValue="6"/>
+		<VarDeclaration Name="Isonet_HsiActive" Type="USINT" Comment="Conditional constants from C-Code: #if defined (CCI_HSI)" InitialValue="7"/>
 		<VarDeclaration Name="Isonet_HsiInactive" Type="USINT" InitialValue="8"/>
-        <VarDeclaration Name="Isonet_Last" Type="USINT" InitialValue="9"/>
+		<VarDeclaration Name="Isonet_Last" Type="USINT" Comment="End of conditional block" InitialValue="9"/>
 	</GlobalConstants>
 	<OriginalSource><![CDATA[PACKAGE isobus::pgn;
-GLOBALCONSTANTS ISO_NETEVENT_e
+
+GLOBALCONSTANTS ISO_NETEVENT_e // Network management event type
 	VAR_GLOBAL CONSTANT
 		Isonet_MemberActive : USINT := 0; (* *< There is a new member on network (intern or extern) *)
 		Isonet_MemberAddressConflict : USINT := 1; (* *< Network member has lost address conflict *)
