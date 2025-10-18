@@ -8,6 +8,7 @@
 		<Import declaration="isobus::pgn::ISOUSERHOME_e"/>
 		<Import declaration="isobus::pgn::ISO_CAN_NODE"/>
 		<Import declaration="isobus::pgn::NAMEFIELD_T"/>
+		<Import declaration="isobus::pgn::ISONETEVENT_T"/>
 	</CompilerInfo>
 	<SubAppInterfaceList>
 	</SubAppInterfaceList>
@@ -16,21 +17,37 @@
 			<Parameter Name="u8CanIdx" Value="ISO_CAN_NODE::NODE1"/>
 			<Parameter Name="member" Value="ISOUSERHOME_e::intern"/>
 		</FB>
-		<FB Name="STRUCT_DEMUX_2" Type="eclipse4diac::convert::STRUCT_DEMUX" x="1400" y="7000">
+		<FB Name="STRUCT_DEMUX_2" Type="eclipse4diac::convert::STRUCT_DEMUX" x="1300" y="7800">
 			<Attribute Name="StructuredType" Type="STRING" Value="isobus::pgn::CF_INFO_T"/>
 		</FB>
-		<FB Name="STRUCT_DEMUX_3" Type="eclipse4diac::convert::STRUCT_DEMUX" x="1400" y="5900">
+		<FB Name="STRUCT_DEMUX_3" Type="eclipse4diac::convert::STRUCT_DEMUX" x="1100" y="4600">
 			<Attribute Name="StructuredType" Type="STRING" Value="isobus::pgn::ISONETEVENT_T"/>
 		</FB>
-		<FB Name="STRUCT_DEMUX" Type="eclipse4diac::convert::STRUCT_DEMUX" x="-1300" y="8200">
+		<FB Name="NmSetNameField" Type="isobus::pgn::NmSetNameField" x="2600" y="5900">
+		</FB>
+		<FB Name="NmSetNameField_1" Type="isobus::pgn::NmSetNameField" x="3000" y="9300">
+		</FB>
+		<FB Name="STRUCT_DEMUX" Type="eclipse4diac::convert::STRUCT_DEMUX" x="6200" y="5900">
+			<Attribute Name="StructuredType" Type="STRING" Value="isobus::pgn::NAMEFIELD_T"/>
+		</FB>
+		<FB Name="STRUCT_DEMUX_1" Type="eclipse4diac::convert::STRUCT_DEMUX" x="6400" y="9300">
+			<Attribute Name="StructuredType" Type="STRING" Value="isobus::pgn::NAMEFIELD_T"/>
 		</FB>
 		<EventConnections>
 			<Connection Source="NmGetCfInfo.IND" Destination="STRUCT_DEMUX_3.REQ" dx1="513.33"/>
 			<Connection Source="NmGetCfInfo.IND" Destination="STRUCT_DEMUX_2.REQ" dx1="866.67"/>
+			<Connection Source="STRUCT_DEMUX_3.CNF" Destination="NmSetNameField.REQ" dx1="526.67"/>
+			<Connection Source="STRUCT_DEMUX_2.CNF" Destination="NmSetNameField_1.REQ" dx1="586.67"/>
+			<Connection Source="NmSetNameField.CNF" Destination="STRUCT_DEMUX.REQ"/>
+			<Connection Source="NmSetNameField_1.CNF" Destination="STRUCT_DEMUX_1.REQ"/>
 		</EventConnections>
 		<DataConnections>
 			<Connection Source="NmGetCfInfo.sNetEv" Destination="STRUCT_DEMUX_3.IN" dx1="733.33"/>
 			<Connection Source="NmGetCfInfo.sCfInfo" Destination="STRUCT_DEMUX_2.IN" dx1="733.33"/>
+			<Connection Source="STRUCT_DEMUX_3.cfName" Destination="NmSetNameField.au8IsoName" dx1="133.33"/>
+			<Connection Source="STRUCT_DEMUX_2.au8Name" Destination="NmSetNameField_1.au8IsoName" dx1="386.67"/>
+			<Connection Source="NmSetNameField." Destination="STRUCT_DEMUX.IN" dx1="1133.33"/>
+			<Connection Source="NmSetNameField_1." Destination="STRUCT_DEMUX_1.IN" dx1="533.33"/>
 		</DataConnections>
 	</SubAppNetwork>
 </SubAppType>
