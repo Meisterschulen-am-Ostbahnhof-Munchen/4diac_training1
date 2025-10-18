@@ -5,7 +5,9 @@
 	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2023-10-23">
 	</VersionInfo>
 	<CompilerInfo>
+		<Import declaration="isobus::pgn::ISOUSERHOME_e"/>
 		<Import declaration="isobus::pgn::ISO_CAN_NODE"/>
+		<Import declaration="isobus::pgn::NAMEFIELD_T"/>
 	</CompilerInfo>
 	<SubAppInterfaceList>
 	</SubAppInterfaceList>
@@ -26,20 +28,31 @@
 		<FB Name="STRUCT_DEMUX_1" Type="eclipse4diac::convert::STRUCT_DEMUX" x="4300" y="4500">
 			<Attribute Name="StructuredType" Type="STRING" Value="isobus::pgn::NAMEFIELD_T"/>
 		</FB>
-		<FB Name="NmGetCfInfo" Type="isobus::pgn::NmGetCfInfo" x="100" y="6300">
+		<FB Name="NmGetCfInfo" Type="isobus::pgn::NmGetCfInfo" x="-1300" y="6400">
 			<Parameter Name="u8CanIdx" Value="ISO_CAN_NODE::NODE1"/>
+			<Parameter Name="member" Value="ISOUSERHOME_e::intern"/>
+		</FB>
+		<FB Name="STRUCT_DEMUX_2" Type="eclipse4diac::convert::STRUCT_DEMUX" x="1400" y="7000">
+			<Attribute Name="StructuredType" Type="STRING" Value="isobus::pgn::CF_INFO_T"/>
+		</FB>
+		<FB Name="STRUCT_DEMUX_3" Type="eclipse4diac::convert::STRUCT_DEMUX" x="1400" y="5900">
+			<Attribute Name="StructuredType" Type="STRING" Value="isobus::pgn::ISONETEVENT_T"/>
 		</FB>
 		<EventConnections>
 			<Connection Source="STRUCT_MUX.CNF" Destination="STRUCT_DEMUX.REQ" dx1="673.33"/>
 			<Connection Source="NmSetName.CNF" Destination="NmSetNameField.REQ"/>
 			<Connection Source="STRUCT_MUX_1.CNF" Destination="NmSetName.REQ"/>
 			<Connection Source="NmSetNameField.CNF" Destination="STRUCT_DEMUX_1.REQ"/>
+			<Connection Source="NmGetCfInfo.IND" Destination="STRUCT_DEMUX_3.REQ" dx1="513.33"/>
+			<Connection Source="NmGetCfInfo.IND" Destination="STRUCT_DEMUX_2.REQ" dx1="866.67"/>
 		</EventConnections>
 		<DataConnections>
 			<Connection Source="STRUCT_MUX.OUT" Destination="STRUCT_DEMUX.IN" dx1="673.33"/>
 			<Connection Source="STRUCT_MUX_1.OUT" Destination="NmSetName.psNameField" dx1="180"/>
 			<Connection Source="NmSetName." Destination="NmSetNameField.au8IsoName"/>
 			<Connection Source="NmSetNameField." Destination="STRUCT_DEMUX_1.IN" dx1="733.33"/>
+			<Connection Source="NmGetCfInfo.sNetEv" Destination="STRUCT_DEMUX_3.IN" dx1="733.33"/>
+			<Connection Source="NmGetCfInfo.sCfInfo" Destination="STRUCT_DEMUX_2.IN" dx1="733.33"/>
 		</DataConnections>
 	</SubAppNetwork>
 </SubAppType>
