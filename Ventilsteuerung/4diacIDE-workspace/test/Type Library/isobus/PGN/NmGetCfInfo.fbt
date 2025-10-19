@@ -21,6 +21,7 @@
 			<Event Name="IND" Type="Event" Comment="Indication from Resource">
 				<With Var="sNetEv"/>
 				<With Var="sCfInfo"/>
+				<With Var="sNameField"/>
 			</Event>
 		</EventOutputs>
 		<InputVars>
@@ -32,6 +33,7 @@
 		<OutputVars>
 			<VarDeclaration Name="sNetEv" Type="isobus::pgn::ISONETEVENT_T" Comment="network layer event"/>
 			<VarDeclaration Name="sCfInfo" Type="isobus::pgn::CF_INFO_T" Comment="ISO CF/user information data structure"/>
+			<VarDeclaration Name="sNameField" Type="isobus::pgn::NAMEFIELD_T" Comment="ISOBUS Name"/>
 		</OutputVars>
 	</InterfaceList>
 </FBType>
