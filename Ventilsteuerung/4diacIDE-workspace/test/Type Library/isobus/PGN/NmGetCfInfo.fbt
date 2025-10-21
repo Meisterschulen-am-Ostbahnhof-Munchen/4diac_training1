@@ -5,7 +5,6 @@
 	<VersionInfo Version="1.0" Author="franz" Date="2025-09-04">
 	</VersionInfo>
 	<CompilerInfo packageName="isobus::pgn">
-		<Import declaration="isobus::pgn::HANDLE::UNVALID"/>
 	</CompilerInfo>
 	<InterfaceList>
 		<EventInputs>
@@ -32,7 +31,6 @@
 			<VarDeclaration Name="mask" Type="isobus::pgn::NAMEFIELD_T" Comment="The Mask - only 1 Bits are counted. "/>
 		</InputVars>
 		<OutputVars>
-			<VarDeclaration Name="s16Handle" Type="INT" InitialValue="UNVALID"/>
 			<VarDeclaration Name="sNetEv" Type="isobus::pgn::ISONETEVENT_T" Comment="network layer event"/>
 			<VarDeclaration Name="sCfInfo" Type="isobus::pgn::CF_INFO_T" Comment="ISO CF/user information data structure"/>
 			<VarDeclaration Name="sNameField" Type="isobus::pgn::NAMEFIELD_T" Comment="ISOBUS Name"/>
