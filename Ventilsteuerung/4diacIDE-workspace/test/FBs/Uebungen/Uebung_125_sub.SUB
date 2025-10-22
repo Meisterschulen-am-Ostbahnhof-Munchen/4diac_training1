@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SubAppType Name="Uebung_125_sub" Comment="Subapplication Type">
+	<Identification Standard="61499-2">
+	</Identification>
+	<VersionInfo Version="1.0" Author="franz" Date="2025-10-22">
+	</VersionInfo>
+	<CompilerInfo>
+	</CompilerInfo>
+	<SubAppInterfaceList>
+		<Plugs>
+			<AdapterDeclaration Name="PLUG1" Type="isobus::pgn::tx::Callback"/>
+		</Plugs>
+	</SubAppInterfaceList>
+	<SubAppNetwork>
+		<FB Name="CallbackFB" Type="isobus::pgn::tx::CallbackFB" x="0" y="0">
+			<Parameter Name="DI1" Value="(data := [16#FF, 16#FF, 16#FF, 16#FF, 16#FF, 16#FF, 16#FF, 16#FF])"/>
+		</FB>
+		<FB Name="E_CTU" Type="iec61499::events::E_CTU" x="1900" y="-600">
+			<Parameter Name="PV" Value="USINT#0"/>
+		</FB>
+		<EventConnections>
+			<Connection Source="CallbackFB.REQ" Destination="E_CTU.CU" dx1="573.33"/>
+			<Connection Source="E_CTU.CUO" Destination="CallbackFB.CNF" dx1="80" dx2="80" dy="-446.67"/>
+		</EventConnections>
+		<AdapterConnections>
+			<Connection Source="CallbackFB.PLUG1" Destination="PLUG1" dx1="4780"/>
+		</AdapterConnections>
+	</SubAppNetwork>
+</SubAppType>
