@@ -6,6 +6,7 @@
 	</VersionInfo>
 	<CompilerInfo>
 		<Import declaration="DefaultPool::InputNumber_I1"/>
+		<Import declaration="FBs::Constants::NVS_Keys::KEY_I1_STORE"/>
 		<Import declaration="logiBUS::io::DI::logiBUS_DI::Input_I1"/>
 		<Import declaration="logiBUS::io::DQ::logiBUS_DO::Output_Q1"/>
 	</CompilerInfo>
@@ -28,7 +29,7 @@
 		<FB Name="E_TON" Type="iec61499::events::timers::E_TON" x="-7100" y="500">
 		</FB>
 		<SubApp Name="Uebung_020c2_sub" Type="Uebung_020c2_sub" x="-10100" y="1700">
-			<Parameter Name="KEY" Value="FBs::Constants::NVS_Keys::KEY_I1_STORE"/>
+			<Parameter Name="KEY" Value="KEY_I1_STORE"/>
 			<Parameter Name="u16ObjId" Value="InputNumber_I1"/>
 		</SubApp>
 		<FB Name="F_MULTIME" Type="iec61131::arithmetic::F_MULTIME" x="-8300" y="1700">
