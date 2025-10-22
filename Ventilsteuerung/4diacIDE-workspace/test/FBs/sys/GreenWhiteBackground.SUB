@@ -6,7 +6,8 @@
 	</VersionInfo>
 	<CompilerInfo>
 		<Import declaration="isobus::ut::IDs"/>
-		<Import declaration="isobus::ut::colours"/>
+		<Import declaration="isobus::ut::colours::COLOR_GREEN"/>
+		<Import declaration="isobus::ut::colours::COLOR_WHITE"/>
 	</CompilerInfo>
 	<SubAppInterfaceList>
 		<SubAppEventInputs>
@@ -43,8 +44,8 @@
 		<FB Name="Q_BackgroundColour" Type="isobus::ut::Q_BackgroundColour" x="-3106.67" y="706.67">
 		</FB>
 		<FB Name="F_SEL_I" Type="iec61131::selection::F_SEL" x="-4306.67" y="2040">
-			<Parameter Name="IN0" Value="colours::COLOR_WHITE"/>
-			<Parameter Name="IN1" Value="colours::COLOR_GREEN"/>
+			<Parameter Name="IN0" Value="COLOR_WHITE"/>
+			<Parameter Name="IN1" Value="COLOR_GREEN"/>
 		</FB>
 		<EventConnections>
 			<Connection Source="Q_BackgroundColour.CNF" Destination="CNF" dx1="960"/>

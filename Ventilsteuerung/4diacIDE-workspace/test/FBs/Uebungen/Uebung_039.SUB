@@ -10,6 +10,7 @@
 		<Import declaration="DefaultPool::SoftKey_F3"/>
 		<Import declaration="DefaultPool::SoftKey_F8"/>
 		<Import declaration="DefaultPool::SoftKey_F9"/>
+		<Import declaration="SoftKeyActivationCode::SK_RELEASED"/>
 		<Import declaration="logiBUS::io::DI::logiBUS_DI::Input_I1"/>
 		<Import declaration="logiBUS::io::DI::logiBUS_DI::Input_I2"/>
 		<Import declaration="logiBUS::io::DI::logiBUS_DI::Input_I3"/>
@@ -57,7 +58,7 @@
 		<FB Name="SoftKey_UP_F1" Type="Softkey_IE" x="-13100" y="-1300">
 			<Parameter Name="QI" Value="TRUE"/>
 			<Parameter Name="u16ObjId" Value="SoftKey_F1"/>
-			<Parameter Name="InputEvent" Value="SoftKeyActivationCode::SK_RELEASED"/>
+			<Parameter Name="InputEvent" Value="SK_RELEASED"/>
 		</FB>
 		<SubApp Name="Q1" Type="Uebung_039_sub_Outputs" x="-7600" y="-200">
 			<Parameter Name="u16ObjId" Value="SoftKey_F8"/>

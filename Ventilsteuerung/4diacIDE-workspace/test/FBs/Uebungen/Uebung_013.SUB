@@ -7,6 +7,7 @@
 	<CompilerInfo>
 		<Import declaration="DefaultPool::SoftKey_F1"/>
 		<Import declaration="DefaultPool::SoftKey_F2"/>
+		<Import declaration="SoftKeyActivationCode::SK_RELEASED"/>
 		<Import declaration="logiBUS::io::DQ::logiBUS_DO::Output_Q1"/>
 	</CompilerInfo>
 	<SubAppInterfaceList>
@@ -24,7 +25,7 @@
 				<Attribute Name="Visible" Value="false"/>
 			</Parameter>
 			<Parameter Name="u16ObjId" Value="SoftKey_F1"/>
-			<Parameter Name="InputEvent" Value="SoftKeyActivationCode::SK_RELEASED"/>
+			<Parameter Name="InputEvent" Value="SK_RELEASED"/>
 		</FB>
 		<FB Name="SoftKey_UP_F2" Type="Softkey_IE" x="-4500" y="0">
 			<Parameter Name="QI" Value="TRUE">
@@ -34,7 +35,7 @@
 				<Attribute Name="Visible" Value="false"/>
 			</Parameter>
 			<Parameter Name="u16ObjId" Value="SoftKey_F2"/>
-			<Parameter Name="InputEvent" Value="SoftKeyActivationCode::SK_RELEASED"/>
+			<Parameter Name="InputEvent" Value="SK_RELEASED"/>
 		</FB>
 		<FB Name="E_SR" Type="iec61499::events::E_SR" x="-2800" y="-800">
 		</FB>

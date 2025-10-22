@@ -5,6 +5,7 @@
 	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2024-03-03">
 	</VersionInfo>
 	<CompilerInfo>
+		<Import declaration="SoftKeyActivationCode::SK_RELEASED"/>
 		<Import declaration="isobus::ut::IDs"/>
 		<Import declaration="logiBUS::io::DQ::logiBUS_DO"/>
 		<Import declaration="logiBUS::io::DQ::logiBUS_DO_S"/>
@@ -36,7 +37,7 @@
 		</FB>
 		<FB Name="IE" Type="Softkey_IE" x="-5300" y="-500">
 			<Parameter Name="QI" Value="TRUE"/>
-			<Parameter Name="InputEvent" Value="SoftKeyActivationCode::SK_RELEASED"/>
+			<Parameter Name="InputEvent" Value="SK_RELEASED"/>
 		</FB>
 		<EventConnections>
 			<Connection Source="QX.CNF" Destination="GreenWhiteBackground.REQ" dx1="180"/>
