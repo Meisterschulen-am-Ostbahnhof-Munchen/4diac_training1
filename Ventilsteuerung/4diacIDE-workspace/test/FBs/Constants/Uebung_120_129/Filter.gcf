@@ -17,6 +17,12 @@
 		<VarDeclaration Name="FLT_ALL_PASS" Type="isobus::pgn::NAMEFIELD_T" InitialValue="(bSelfConf := FALSE, bIndGroup := 0, bDevClassInst := 0, bDevClass := 0,
 			bReserved := FALSE, bFunction := 0, bFunctionInst := 0, bEcuInstance := 0, wManufCode := 0,
 			dwIdentNumb := 0)"/>
+		<VarDeclaration Name="PEAK_ADD" Type="isobus::pgn::NAMEFIELD_T" InitialValue="(bSelfConf := FALSE, bIndGroup := 4, bDevClassInst := 0, bDevClass := 0,
+			bReserved := FALSE, bFunction := 99, bFunctionInst := 9, bEcuInstance := 0, wManufCode := 0,
+			dwIdentNumb := 0)"/>
+		<VarDeclaration Name="PEAK_FLT" Type="isobus::pgn::NAMEFIELD_T" InitialValue="(bSelfConf := FALSE, bIndGroup := 16#FF, bDevClassInst := 0, bDevClass := 0,
+			bReserved := FALSE, bFunction := 16#FF, bFunctionInst := 16#FF, bEcuInstance := 0, wManufCode := 0,
+			dwIdentNumb := 0)"/>
 	</GlobalConstants>
 	<OriginalSource><![CDATA[PACKAGE uebungen;
 
@@ -32,6 +38,12 @@ GLOBALCONSTANTS Filter
 			dwIdentNumb := 0);
 		FLT_ALL_PASS : NAMEFIELD_T := (bSelfConf := FALSE, bIndGroup := 0, bDevClassInst := 0, bDevClass := 0,
 			bReserved := FALSE, bFunction := 0, bFunctionInst := 0, bEcuInstance := 0, wManufCode := 0,
+			dwIdentNumb := 0);
+		PEAK_ADD : NAMEFIELD_T := (bSelfConf := FALSE, bIndGroup := 4, bDevClassInst := 0, bDevClass := 0,
+			bReserved := FALSE, bFunction := 99, bFunctionInst := 9, bEcuInstance := 0, wManufCode := 0,
+			dwIdentNumb := 0);
+		PEAK_FLT : NAMEFIELD_T := (bSelfConf := FALSE, bIndGroup := 16#FF, bDevClassInst := 0, bDevClass := 0,
+			bReserved := FALSE, bFunction := 16#FF, bFunctionInst := 16#FF, bEcuInstance := 0, wManufCode := 0,
 			dwIdentNumb := 0);
 	END_VAR
 END_GLOBALCONSTANTS
