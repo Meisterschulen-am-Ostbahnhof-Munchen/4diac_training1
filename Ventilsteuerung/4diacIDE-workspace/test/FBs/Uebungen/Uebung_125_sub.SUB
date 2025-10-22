@@ -18,10 +18,26 @@
 		<FB Name="E_CTU" Type="iec61499::events::E_CTU" x="1900" y="-600">
 			<Parameter Name="PV" Value="USINT#0"/>
 		</FB>
+		<FB Name="STRUCT_MUX" Type="eclipse4diac::convert::STRUCT_MUX" x="-2400" y="100">
+			<Attribute Name="StructuredType" Type="STRING" Value="isobus::pgn::CAN_MSG"/>
+		</FB>
+		<FB Name="SET_AT_INDEX" Type="eclipse4diac::utils::SET_AT_INDEX" x="-3800" y="900">
+			<Parameter Name="INDEX" Value="0"/>
+		</FB>
+		<FB Name="STRUCT_DEMUX" Type="eclipse4diac::convert::STRUCT_DEMUX" x="-6900" y="0">
+			<Attribute Name="StructuredType" Type="STRING" Value="isobus::pgn::CAN_MSG"/>
+		</FB>
 		<EventConnections>
 			<Connection Source="CallbackFB.REQ" Destination="E_CTU.CU" dx1="573.33"/>
-			<Connection Source="E_CTU.CUO" Destination="CallbackFB.CNF" dx1="80" dx2="80" dy="-446.67"/>
+			<Connection Source="E_CTU.CUO" Destination="SET_AT_INDEX.REQ" dx1="80" dx2="80" dy="-446.67"/>
+			<Connection Source="SET_AT_INDEX.CNF" Destination="STRUCT_MUX.REQ" dx1="240"/>
 		</EventConnections>
+		<DataConnections>
+			<Connection Source="STRUCT_MUX.OUT" Destination="CallbackFB.DI1" dx1="1226.67"/>
+			<Connection Source="STRUCT_DEMUX.data" Destination="SET_AT_INDEX.IN_ARRAY" dx1="473.33"/>
+			<Connection Source="E_CTU.CV" Destination="SET_AT_INDEX.VALUE" dx1="833.33" dx2="720" dy="-1026.67"/>
+			<Connection Source="SET_AT_INDEX.OUT_ARRAY" Destination="STRUCT_MUX.data" dx1="340"/>
+		</DataConnections>
 		<AdapterConnections>
 			<Connection Source="CallbackFB.PLUG1" Destination="PLUG1" dx1="4780"/>
 		</AdapterConnections>
