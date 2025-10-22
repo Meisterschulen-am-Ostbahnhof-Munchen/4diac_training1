@@ -6,7 +6,7 @@
 	</VersionInfo>
 	<CompilerInfo>
 		<Import declaration="logiBUS::io::AI::logiBUS_AI"/>
-		<Import declaration="logiBUS::io::DQ::logiBUS_DO"/>
+		<Import declaration="logiBUS::io::DQ::logiBUS_DO::Output_Q4"/>
 	</CompilerInfo>
 	<SubAppInterfaceList>
 	</SubAppInterfaceList>
@@ -20,7 +20,7 @@
 		</FB>
 		<FB Name="PWMOutput_Q4" Type="logiBUS::io::DQ::logiBUS_QD_PWM" x="1900" y="1600">
 			<Parameter Name="QI" Value="TRUE"/>
-			<Parameter Name="Output" Value="logiBUS_DO::Output_Q4"/>
+			<Parameter Name="Output" Value="Output_Q4"/>
 		</FB>
 		<FB Name="F_SHL" Type="iec61131::bitwiseOperators::F_SHL" x="-1246.67" y="1700">
 			<Parameter Name="N" Value="UINT#1"/>

@@ -5,18 +5,19 @@
 	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2023-10-23">
 	</VersionInfo>
 	<CompilerInfo>
-		<Import declaration="logiBUS::io::DQ::logiBUS_DO"/>
+		<Import declaration="logiBUS::io::DQ::logiBUS_DO::Output_Q1"/>
+		<Import declaration="logiBUS::io::DQ::logiBUS_DO::Output_Q2"/>
 	</CompilerInfo>
 	<SubAppInterfaceList>
 	</SubAppInterfaceList>
 	<SubAppNetwork>
 		<SubApp Name="Uebung_010c4_sub" Type="Uebung_010c4_sub" x="-4600" y="-500">
 			<Parameter Name="u16ObjId" Value="DefaultPool::SoftKey_F1"/>
-			<Parameter Name="Output" Value="logiBUS_DO::Output_Q1"/>
+			<Parameter Name="Output" Value="Output_Q1"/>
 		</SubApp>
 		<SubApp Name="Uebung_010c4_sub_1" Type="Uebung_010c4_sub" x="-4600" y="0">
 			<Parameter Name="u16ObjId" Value="DefaultPool::SoftKey_F2"/>
-			<Parameter Name="Output" Value="logiBUS_DO::Output_Q2"/>
+			<Parameter Name="Output" Value="Output_Q2"/>
 		</SubApp>
 	</SubAppNetwork>
 </SubAppType>

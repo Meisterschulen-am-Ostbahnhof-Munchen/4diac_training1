@@ -6,14 +6,14 @@
 	</VersionInfo>
 	<CompilerInfo>
 		<Import declaration="isobus::UT_io::aux::in::AuxiliaryState"/>
-		<Import declaration="logiBUS::io::DQ::logiBUS_DO"/>
+		<Import declaration="logiBUS::io::DQ::logiBUS_DO::Output_Q1"/>
 	</CompilerInfo>
 	<SubAppInterfaceList>
 	</SubAppInterfaceList>
 	<SubAppNetwork>
 		<FB Name="DigitalOutput_Q1" Type="logiBUS::io::DQ::logiBUS_QX" x="-3900" y="-100">
 			<Parameter Name="QI" Value="TRUE"/>
-			<Parameter Name="Output" Value="logiBUS_DO::Output_Q1"/>
+			<Parameter Name="Output" Value="Output_Q1"/>
 		</FB>
 		<FB Name="AuxFunction2_X1_UP" Type="isobus::UT_io::aux::in::Aux_IE" x="-7300" y="-200">
 			<Parameter Name="QI" Value="TRUE"/>

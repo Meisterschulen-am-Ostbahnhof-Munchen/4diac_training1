@@ -5,25 +5,28 @@
 	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2023-10-23">
 	</VersionInfo>
 	<CompilerInfo>
-		<Import declaration="logiBUS::io::DI::logiBUS_DI"/>
-		<Import declaration="logiBUS::io::DI::logiBUS_DI_Events"/>
-		<Import declaration="logiBUS::io::DQ::logiBUS_DO"/>
+		<Import declaration="logiBUS::io::DI::logiBUS_DI::Input_I1"/>
+		<Import declaration="logiBUS::io::DI::logiBUS_DI::Input_I2"/>
+		<Import declaration="logiBUS::io::DI::logiBUS_DI::Input_I3"/>
+		<Import declaration="logiBUS::io::DI::logiBUS_DI::Input_I4"/>
+		<Import declaration="logiBUS::io::DI::logiBUS_DI_Events::BUTTON_SINGLE_CLICK"/>
+		<Import declaration="logiBUS::io::DQ::logiBUS_DO::Output_Q8"/>
 	</CompilerInfo>
 	<SubAppInterfaceList>
 	</SubAppInterfaceList>
 	<SubAppNetwork>
 		<FB Name="DigitalInput_CLK_I1" Type="logiBUS::io::DI::logiBUS_IE" x="-8600" y="-400">
 			<Parameter Name="QI" Value="TRUE"/>
-			<Parameter Name="Input" Value="logiBUS_DI::Input_I1"/>
-			<Parameter Name="InputEvent" Value="logiBUS_DI_Events::BUTTON_SINGLE_CLICK"/>
+			<Parameter Name="Input" Value="Input_I1"/>
+			<Parameter Name="InputEvent" Value="BUTTON_SINGLE_CLICK"/>
 		</FB>
 		<FB Name="Q_ActiveMask" Type="isobus::ut::Q_ActiveMask" x="-1400" y="-300">
 			<Parameter Name="u16WorkSetId" Value="DefaultPool::WorkingSet_0"/>
 		</FB>
 		<FB Name="DigitalInput_CLK_I2" Type="logiBUS::io::DI::logiBUS_IE" x="-8600" y="800">
 			<Parameter Name="QI" Value="TRUE"/>
-			<Parameter Name="Input" Value="logiBUS_DI::Input_I2"/>
-			<Parameter Name="InputEvent" Value="logiBUS_DI_Events::BUTTON_SINGLE_CLICK"/>
+			<Parameter Name="Input" Value="Input_I2"/>
+			<Parameter Name="InputEvent" Value="BUTTON_SINGLE_CLICK"/>
 		</FB>
 		<FB Name="F_SEL_E_4" Type="eclipse4diac::utils::selection::F_SEL_E_4" x="-3800" y="-200">
 			<Parameter Name="IN1" Value="DefaultPool::DataMask_M1"/>
@@ -33,18 +36,18 @@
 		</FB>
 		<FB Name="ACK" Type="logiBUS::io::DI::logiBUS_IE" x="-8600" y="3100">
 			<Parameter Name="QI" Value="TRUE"/>
-			<Parameter Name="Input" Value="logiBUS_DI::Input_I4"/>
-			<Parameter Name="InputEvent" Value="logiBUS_DI_Events::BUTTON_SINGLE_CLICK"/>
+			<Parameter Name="Input" Value="Input_I4"/>
+			<Parameter Name="InputEvent" Value="BUTTON_SINGLE_CLICK"/>
 		</FB>
 		<FB Name="E_SR" Type="iec61499::events::E_SR" x="-4500" y="2600">
 		</FB>
 		<FB Name="Alarmausgang" Type="logiBUS::io::DQ::logiBUS_QX" x="-2600" y="2500">
 			<Parameter Name="QI" Value="TRUE"/>
-			<Parameter Name="Output" Value="logiBUS_DO::Output_Q8"/>
+			<Parameter Name="Output" Value="Output_Q8"/>
 		</FB>
 		<FB Name="Alarmeingang" Type="logiBUS::io::DI::logiBUS_IX" x="-8600" y="2100">
 			<Parameter Name="QI" Value="TRUE"/>
-			<Parameter Name="Input" Value="logiBUS_DI::Input_I3"/>
+			<Parameter Name="Input" Value="Input_I3"/>
 		</FB>
 		<FB Name="E_SWITCH" Type="iec61499::events::E_SWITCH" x="-6900" y="2400">
 		</FB>

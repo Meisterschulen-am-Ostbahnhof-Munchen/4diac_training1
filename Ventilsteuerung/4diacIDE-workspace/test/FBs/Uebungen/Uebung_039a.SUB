@@ -5,9 +5,13 @@
 	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2023-10-23">
 	</VersionInfo>
 	<CompilerInfo>
-		<Import declaration="logiBUS::io::DI::logiBUS_DI"/>
-		<Import declaration="logiBUS::io::DI::logiBUS_DI_Events"/>
-		<Import declaration="logiBUS::io::DQ::logiBUS_DO"/>
+		<Import declaration="logiBUS::io::DI::logiBUS_DI::Input_I1"/>
+		<Import declaration="logiBUS::io::DI::logiBUS_DI::Input_I2"/>
+		<Import declaration="logiBUS::io::DI::logiBUS_DI::Input_I3"/>
+		<Import declaration="logiBUS::io::DI::logiBUS_DI::Input_I4"/>
+		<Import declaration="logiBUS::io::DI::logiBUS_DI_Events::BUTTON_SINGLE_CLICK"/>
+		<Import declaration="logiBUS::io::DQ::logiBUS_DO::Output_Q1"/>
+		<Import declaration="logiBUS::io::DQ::logiBUS_DO::Output_Q2"/>
 	</CompilerInfo>
 	<SubAppInterfaceList>
 	</SubAppInterfaceList>
@@ -16,23 +20,23 @@
 		</FB>
 		<FB Name="DigitalInput_DOWN_I1" Type="logiBUS::io::DI::logiBUS_IE" x="-13300" y="100">
 			<Parameter Name="QI" Value="TRUE"/>
-			<Parameter Name="Input" Value="logiBUS_DI::Input_I1"/>
-			<Parameter Name="InputEvent" Value="logiBUS_DI_Events::BUTTON_SINGLE_CLICK"/>
+			<Parameter Name="Input" Value="Input_I1"/>
+			<Parameter Name="InputEvent" Value="BUTTON_SINGLE_CLICK"/>
 		</FB>
 		<FB Name="DigitalInput_DOWN_I2" Type="logiBUS::io::DI::logiBUS_IE" x="-13300" y="1200">
 			<Parameter Name="QI" Value="TRUE"/>
-			<Parameter Name="Input" Value="logiBUS_DI::Input_I2"/>
-			<Parameter Name="InputEvent" Value="logiBUS_DI_Events::BUTTON_SINGLE_CLICK"/>
+			<Parameter Name="Input" Value="Input_I2"/>
+			<Parameter Name="InputEvent" Value="BUTTON_SINGLE_CLICK"/>
 		</FB>
 		<FB Name="DigitalInput_DOWN_I3" Type="logiBUS::io::DI::logiBUS_IE" x="-13300" y="2200">
 			<Parameter Name="QI" Value="TRUE"/>
-			<Parameter Name="Input" Value="logiBUS_DI::Input_I3"/>
-			<Parameter Name="InputEvent" Value="logiBUS_DI_Events::BUTTON_SINGLE_CLICK"/>
+			<Parameter Name="Input" Value="Input_I3"/>
+			<Parameter Name="InputEvent" Value="BUTTON_SINGLE_CLICK"/>
 		</FB>
 		<FB Name="DigitalInput_DOWN_I4" Type="logiBUS::io::DI::logiBUS_IE" x="-13300" y="3200">
 			<Parameter Name="QI" Value="TRUE"/>
-			<Parameter Name="Input" Value="logiBUS_DI::Input_I4"/>
-			<Parameter Name="InputEvent" Value="logiBUS_DI_Events::BUTTON_SINGLE_CLICK"/>
+			<Parameter Name="Input" Value="Input_I4"/>
+			<Parameter Name="InputEvent" Value="BUTTON_SINGLE_CLICK"/>
 		</FB>
 		<FB Name="sequence_05" Type="sequence_ET_05" x="-10700" y="-200">
 			<Parameter Name="DT_S1_S2" Value="sequence::NO_TIME"/>
@@ -50,11 +54,11 @@
 		</FB>
 		<SubApp Name="Q1" Type="Uebung_039a_sub_Outputs" x="-7000" y="-100">
 			<Parameter Name="u16ObjId" Value="DefaultPool::SoftKey_F8"/>
-			<Parameter Name="Output" Value="logiBUS_DO::Output_Q1"/>
+			<Parameter Name="Output" Value="Output_Q1"/>
 		</SubApp>
 		<SubApp Name="Q2" Type="Uebung_039a_sub_Outputs" x="-7000" y="600">
 			<Parameter Name="u16ObjId" Value="DefaultPool::SoftKey_F2"/>
-			<Parameter Name="Output" Value="logiBUS_DO::Output_Q2"/>
+			<Parameter Name="Output" Value="Output_Q2"/>
 		</SubApp>
 		<EventConnections>
 			<Connection Source="DigitalInput_DOWN_I1.IND" Destination="sequence_05.S1_S2" dx1="313.33"/>

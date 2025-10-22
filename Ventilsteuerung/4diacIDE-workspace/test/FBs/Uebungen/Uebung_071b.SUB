@@ -5,7 +5,7 @@
 	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2023-10-23">
 	</VersionInfo>
 	<CompilerInfo>
-		<Import declaration="logiBUS::io::DQ::logiBUS_DO"/>
+		<Import declaration="logiBUS::io::DQ::logiBUS_DO::Output_Q1"/>
 	</CompilerInfo>
 	<SubAppInterfaceList>
 	</SubAppInterfaceList>
@@ -18,7 +18,7 @@
 		</FB>
 		<FB Name="DigitalOutput_Q1" Type="logiBUS::io::DQ::logiBUS_QX" x="1900" y="2300">
 			<Parameter Name="QI" Value="TRUE"/>
-			<Parameter Name="Output" Value="logiBUS_DO::Output_Q1"/>
+			<Parameter Name="Output" Value="Output_Q1"/>
 		</FB>
 		<FB Name="RangeBasedPulse" Type="eclipse4diac::signalprocessing::distance::RangeBasedPulse" x="-1600" y="2400">
 			<Parameter Name="DIST_HIGH" Value="5000"/>

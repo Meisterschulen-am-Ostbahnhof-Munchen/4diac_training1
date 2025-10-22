@@ -5,31 +5,33 @@
 	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2023-10-23">
 	</VersionInfo>
 	<CompilerInfo>
-		<Import declaration="logiBUS::io::DI::logiBUS_DI"/>
-		<Import declaration="logiBUS::io::DI::logiBUS_DI_Events"/>
-		<Import declaration="logiBUS::io::DQ::logiBUS_DO"/>
+		<Import declaration="logiBUS::io::DI::logiBUS_DI::Input_I1"/>
+		<Import declaration="logiBUS::io::DI::logiBUS_DI_Events::BUTTON_SINGLE_CLICK"/>
+		<Import declaration="logiBUS::io::DQ::logiBUS_DO::Output_Q1"/>
+		<Import declaration="logiBUS::io::DQ::logiBUS_DO::Output_Q2"/>
+		<Import declaration="logiBUS::io::DQ::logiBUS_DO::Output_Q3"/>
 	</CompilerInfo>
 	<SubAppInterfaceList>
 	</SubAppInterfaceList>
 	<SubAppNetwork>
 		<FB Name="CAR_RED_LIGHT" Type="logiBUS::io::DQ::logiBUS_QX" x="6300" y="-2100">
 			<Parameter Name="QI" Value="TRUE"/>
-			<Parameter Name="Output" Value="logiBUS_DO::Output_Q1"/>
+			<Parameter Name="Output" Value="Output_Q1"/>
 		</FB>
 		<FB Name="E_TimeOut" Type="iec61499::events::E_TimeOut" x="4200" y="2000">
 		</FB>
 		<FB Name="CAR_ORANGE_LIGHT" Type="logiBUS::io::DQ::logiBUS_QX" x="6300" y="-1200">
 			<Parameter Name="QI" Value="TRUE"/>
-			<Parameter Name="Output" Value="logiBUS_DO::Output_Q2"/>
+			<Parameter Name="Output" Value="Output_Q2"/>
 		</FB>
 		<FB Name="CAR_GREEN_LIGHT" Type="logiBUS::io::DQ::logiBUS_QX" x="6300" y="-300">
 			<Parameter Name="QI" Value="TRUE"/>
-			<Parameter Name="Output" Value="logiBUS_DO::Output_Q3"/>
+			<Parameter Name="Output" Value="Output_Q3"/>
 		</FB>
 		<FB Name="DigitalInput_CLK_I1" Type="logiBUS::io::DI::logiBUS_IE" x="700" y="600">
 			<Parameter Name="QI" Value="TRUE"/>
-			<Parameter Name="Input" Value="logiBUS_DI::Input_I1"/>
-			<Parameter Name="InputEvent" Value="logiBUS_DI_Events::BUTTON_SINGLE_CLICK"/>
+			<Parameter Name="Input" Value="Input_I1"/>
+			<Parameter Name="InputEvent" Value="BUTTON_SINGLE_CLICK"/>
 		</FB>
 		<FB Name="sequence_T_04_loop" Type="sequence_T_05_loop" x="2000" y="800">
 			<Parameter Name="DT_S1_S2" Value="T#6s" Comment="RED"/>
@@ -69,7 +71,7 @@
 				</OutputVars>
 			</SubAppInterfaceList>
 			<SubAppNetwork>
-				<FB Name="OR_RED" Type="OR_2" x="300" y="-1000">
+				<FB Name="OR_RED" Type="iec61131::bitwiseOperators::OR_2" x="300" y="-1000">
 				</FB>
 				<EventConnections>
 					<Connection Source="EI_RED" Destination="OR_RED.REQ" dx1="2393.33"/>
@@ -106,7 +108,7 @@
 				</OutputVars>
 			</SubAppInterfaceList>
 			<SubAppNetwork>
-				<FB Name="OR_ORANGE" Type="OR_2" x="0" y="0">
+				<FB Name="OR_ORANGE" Type="iec61131::bitwiseOperators::OR_2" x="0" y="0">
 				</FB>
 				<EventConnections>
 					<Connection Source="EI_RED_ORANGE" Destination="OR_ORANGE.REQ" dx1="80" dx2="80" dy="-120"/>
@@ -149,7 +151,7 @@
 				</OutputVars>
 			</SubAppInterfaceList>
 			<SubAppNetwork>
-				<FB Name="OR_2" Type="OR_2" x="200" y="600">
+				<FB Name="OR_2" Type="iec61131::bitwiseOperators::OR_2" x="200" y="600">
 				</FB>
 				<EventConnections>
 					<Connection Source="EI_GREEN" Destination="OR_2.REQ" dx1="86.67"/>

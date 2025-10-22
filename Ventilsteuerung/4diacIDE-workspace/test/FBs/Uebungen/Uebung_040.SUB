@@ -5,59 +5,69 @@
 	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2023-10-23">
 	</VersionInfo>
 	<CompilerInfo>
-		<Import declaration="logiBUS::io::DI::logiBUS_DI"/>
-		<Import declaration="logiBUS::io::DI::logiBUS_DI_Events"/>
-		<Import declaration="logiBUS::io::DQ::logiBUS_DO"/>
+		<Import declaration="logiBUS::io::DI::logiBUS_DI::Input_I1"/>
+		<Import declaration="logiBUS::io::DI::logiBUS_DI::Input_I2"/>
+		<Import declaration="logiBUS::io::DI::logiBUS_DI::Input_I3"/>
+		<Import declaration="logiBUS::io::DI::logiBUS_DI::Input_I4"/>
+		<Import declaration="logiBUS::io::DI::logiBUS_DI_Events::BUTTON_SINGLE_CLICK"/>
+		<Import declaration="logiBUS::io::DQ::logiBUS_DO::Output_Q1"/>
+		<Import declaration="logiBUS::io::DQ::logiBUS_DO::Output_Q2"/>
+		<Import declaration="logiBUS::io::DQ::logiBUS_DO::Output_Q3"/>
+		<Import declaration="logiBUS::io::DQ::logiBUS_DO::Output_Q4"/>
+		<Import declaration="logiBUS::io::DQ::logiBUS_DO::Output_Q5"/>
+		<Import declaration="logiBUS::io::DQ::logiBUS_DO::Output_Q6"/>
+		<Import declaration="logiBUS::io::DQ::logiBUS_DO::Output_Q7"/>
+		<Import declaration="logiBUS::io::DQ::logiBUS_DO::Output_Q8"/>
 	</CompilerInfo>
 	<SubAppInterfaceList>
 	</SubAppInterfaceList>
 	<SubAppNetwork>
 		<FB Name="DigitalOutput_Q1" Type="logiBUS::io::DQ::logiBUS_QX" x="-6666.67" y="-2400">
 			<Parameter Name="QI" Value="TRUE"/>
-			<Parameter Name="Output" Value="logiBUS_DO::Output_Q1"/>
+			<Parameter Name="Output" Value="Output_Q1"/>
 		</FB>
 		<FB Name="DigitalOutput_Q2" Type="logiBUS::io::DQ::logiBUS_QX" x="-6666.67" y="-1333.33">
 			<Parameter Name="QI" Value="TRUE"/>
-			<Parameter Name="Output" Value="logiBUS_DO::Output_Q2"/>
+			<Parameter Name="Output" Value="Output_Q2"/>
 		</FB>
 		<FB Name="DigitalOutput_Q3" Type="logiBUS::io::DQ::logiBUS_QX" x="-6666.67" y="-266.67">
 			<Parameter Name="QI" Value="TRUE"/>
-			<Parameter Name="Output" Value="logiBUS_DO::Output_Q3"/>
+			<Parameter Name="Output" Value="Output_Q3"/>
 		</FB>
 		<FB Name="DigitalOutput_Q4" Type="logiBUS::io::DQ::logiBUS_QX" x="-6666.67" y="800">
 			<Parameter Name="QI" Value="TRUE"/>
-			<Parameter Name="Output" Value="logiBUS_DO::Output_Q4"/>
+			<Parameter Name="Output" Value="Output_Q4"/>
 		</FB>
 		<FB Name="DigitalInput_CLK_I1" Type="logiBUS::io::DI::logiBUS_IE" x="-16600" y="-4500">
 			<Parameter Name="QI" Value="TRUE"/>
-			<Parameter Name="Input" Value="logiBUS_DI::Input_I1"/>
-			<Parameter Name="InputEvent" Value="logiBUS_DI_Events::BUTTON_SINGLE_CLICK"/>
+			<Parameter Name="Input" Value="Input_I1"/>
+			<Parameter Name="InputEvent" Value="BUTTON_SINGLE_CLICK"/>
 		</FB>
 		<FB Name="DigitalInput_CLK_I4" Type="logiBUS::io::DI::logiBUS_IE" x="-17126.67" y="826.67">
 			<Parameter Name="QI" Value="TRUE"/>
-			<Parameter Name="Input" Value="logiBUS_DI::Input_I4"/>
-			<Parameter Name="InputEvent" Value="logiBUS_DI_Events::BUTTON_SINGLE_CLICK"/>
+			<Parameter Name="Input" Value="Input_I4"/>
+			<Parameter Name="InputEvent" Value="BUTTON_SINGLE_CLICK"/>
 		</FB>
 		<FB Name="DigitalOutput_Q5" Type="logiBUS::io::DQ::logiBUS_QX" x="-6666.67" y="1866.67">
 			<Parameter Name="QI" Value="TRUE"/>
-			<Parameter Name="Output" Value="logiBUS_DO::Output_Q5"/>
+			<Parameter Name="Output" Value="Output_Q5"/>
 		</FB>
 		<FB Name="DigitalOutput_Q6" Type="logiBUS::io::DQ::logiBUS_QX" x="-6666.67" y="2933.33">
 			<Parameter Name="QI" Value="TRUE"/>
-			<Parameter Name="Output" Value="logiBUS_DO::Output_Q6"/>
+			<Parameter Name="Output" Value="Output_Q6"/>
 		</FB>
 		<FB Name="DigitalOutput_Q7" Type="logiBUS::io::DQ::logiBUS_QX" x="-6666.67" y="4000">
 			<Parameter Name="QI" Value="TRUE"/>
-			<Parameter Name="Output" Value="logiBUS_DO::Output_Q7"/>
+			<Parameter Name="Output" Value="Output_Q7"/>
 		</FB>
 		<FB Name="DigitalOutput_Q8" Type="logiBUS::io::DQ::logiBUS_QX" x="-6666.67" y="5066.67">
 			<Parameter Name="QI" Value="TRUE"/>
-			<Parameter Name="Output" Value="logiBUS_DO::Output_Q8"/>
+			<Parameter Name="Output" Value="Output_Q8"/>
 		</FB>
 		<FB Name="Q_NumericValue" Type="isobus::ut::Q_NumericValue" x="-2666.67" y="-2000">
 			<Parameter Name="u16ObjId" Value="DefaultPool::OutputNumber_N1"/>
 		</FB>
-		<FB Name="F_SINT_TO_UINT" Type="F_SINT_TO_UINT" x="-4906.67" y="-1820">
+		<FB Name="F_SINT_TO_UINT" Type="iec61131::conversion::F_SINT_TO_UINT" x="-4906.67" y="-1820">
 		</FB>
 		<FB Name="loop" Type="sequence_E_08_loop" x="-9613.33" y="-600">
 		</FB>
@@ -68,8 +78,8 @@
 		</FB>
 		<FB Name="DigitalInput_CLK_I2" Type="logiBUS::io::DI::logiBUS_IE" x="-16600" y="-2373.33">
 			<Parameter Name="QI" Value="TRUE"/>
-			<Parameter Name="Input" Value="logiBUS_DI::Input_I2"/>
-			<Parameter Name="InputEvent" Value="logiBUS_DI_Events::BUTTON_SINGLE_CLICK"/>
+			<Parameter Name="Input" Value="Input_I2"/>
+			<Parameter Name="InputEvent" Value="BUTTON_SINGLE_CLICK"/>
 		</FB>
 		<FB Name="E_CTU_1" Type="iec61499::events::E_CTU" x="-14400" y="-1333.33">
 			<Parameter Name="PV" Value="0"/>
@@ -78,13 +88,13 @@
 		</FB>
 		<FB Name="DigitalInput_CLK_I3" Type="logiBUS::io::DI::logiBUS_IE" x="-16600" y="-1300">
 			<Parameter Name="QI" Value="TRUE"/>
-			<Parameter Name="Input" Value="logiBUS_DI::Input_I3"/>
-			<Parameter Name="InputEvent" Value="logiBUS_DI_Events::BUTTON_SINGLE_CLICK"/>
+			<Parameter Name="Input" Value="Input_I3"/>
+			<Parameter Name="InputEvent" Value="BUTTON_SINGLE_CLICK"/>
 		</FB>
-		<FB Name="F_SUB_1" Type="F_SUB" x="-13066.67" y="-1333.33">
+		<FB Name="F_SUB_1" Type="iec61131::arithmetic::F_SUB" x="-13066.67" y="-1333.33">
 			<Parameter Name="IN2" Value="UINT#1"/>
 		</FB>
-		<FB Name="F_SUB_0" Type="F_SUB" x="-13066.67" y="-3466.67">
+		<FB Name="F_SUB_0" Type="iec61131::arithmetic::F_SUB" x="-13066.67" y="-3466.67">
 			<Parameter Name="IN2" Value="UINT#1"/>
 		</FB>
 		<EventConnections>

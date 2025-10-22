@@ -5,14 +5,14 @@
 	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2023-10-23">
 	</VersionInfo>
 	<CompilerInfo>
-		<Import declaration="logiBUS::io::DI::logiBUS_DI"/>
 		<Import declaration="logiBUS::io::DI::logiBUS_DI_S"/>
 		<Import declaration="logiBUS::io::DO_LED::LED_COLOURS"/>
 		<Import declaration="logiBUS::io::DO_LED::LED_FREQ"/>
+		<Import declaration="logiBUS::io::DI::logiBUS_DI::Invalid"/>
 	</CompilerInfo>
 	<SubAppInterfaceList>
 		<InputVars>
-			<VarDeclaration Name="Input" Type="logiBUS::io::DI::logiBUS_DI_S" Comment="Identify the Input Input_I1..I8" InitialValue="logiBUS_DI::Invalid"/>
+			<VarDeclaration Name="Input" Type="logiBUS::io::DI::logiBUS_DI_S" Comment="Identify the Input Input_I1..I8" InitialValue="Invalid"/>
 			<VarDeclaration Name="Colour" Type="UINT" Comment="This identify the Colour. " InitialValue="LED_COLOURS::LED_GREEN"/>
 			<VarDeclaration Name="Output" Type="USINT" Comment="Identify the Output Number of Strip"/>
 		</InputVars>
