@@ -5,6 +5,7 @@
 	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2023-10-23">
 	</VersionInfo>
 	<CompilerInfo>
+		<Import declaration="DefaultPool_TECU::NumberVariable_Wheel_based_machine_speed"/>
 		<Import declaration="logiBUS::io::DQ::logiBUS_DO::Output_Q1"/>
 	</CompilerInfo>
 	<SubAppInterfaceList>
@@ -14,7 +15,7 @@
 			<Parameter Name="QI" Value="TRUE"/>
 		</FB>
 		<FB Name="Q_NumericValue_WBSD" Type="isobus::ut::Q_NumericValue" x="-700" y="500">
-			<Parameter Name="u16ObjId" Value="DefaultPool_TECU::NumberVariable_Wheel_based_machine_speed"/>
+			<Parameter Name="u16ObjId" Value="NumberVariable_Wheel_based_machine_speed"/>
 		</FB>
 		<FB Name="DigitalOutput_Q1" Type="logiBUS::io::DQ::logiBUS_QX" x="200" y="1900">
 			<Parameter Name="QI" Value="TRUE"/>
