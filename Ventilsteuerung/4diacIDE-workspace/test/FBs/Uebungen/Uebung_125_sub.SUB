@@ -36,13 +36,13 @@
 			<Connection Source="CallbackFB.REQ" Destination="E_CTU.CU" dx1="573.33"/>
 			<Connection Source="STRUCT_MUX.CNF" Destination="CallbackFB.CNF" dx1="626.67"/>
 			<Connection Source="BYTES_TO_ARR08B.CNF" Destination="STRUCT_MUX.REQ" dx1="560"/>
-			<Connection Source="F_USINT_TO_BYTE.CNF" Destination="BYTES_TO_ARR08B.REQ"/>
+			<Connection Source="F_USINT_TO_BYTE.CNF" Destination="BYTES_TO_ARR08B.REQ" dx1="433.33"/>
 			<Connection Source="E_CTU.CUO" Destination="F_USINT_TO_BYTE.REQ" dx1="80" dx2="80" dy="-493.33"/>
 		</EventConnections>
 		<DataConnections>
 			<Connection Source="STRUCT_MUX.OUT" Destination="CallbackFB.DI1" dx1="1173.33"/>
 			<Connection Source="BYTES_TO_ARR08B.OUT" Destination="STRUCT_MUX.data" dx1="506.67"/>
-			<Connection Source="F_USINT_TO_BYTE.OUT" Destination="BYTES_TO_ARR08B.IN_00"/>
+			<Connection Source="F_USINT_TO_BYTE.OUT" Destination="BYTES_TO_ARR08B.IN_00" dx1="433.33"/>
 			<Connection Source="E_CTU.CV" Destination="F_USINT_TO_BYTE.IN" dx1="300" dx2="413.33" dy="-1060"/>
 		</DataConnections>
 		<AdapterConnections>
