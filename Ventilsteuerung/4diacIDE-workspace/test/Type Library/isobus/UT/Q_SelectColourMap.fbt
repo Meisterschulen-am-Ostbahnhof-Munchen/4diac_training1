@@ -6,6 +6,7 @@
 	</VersionInfo>
 	<CompilerInfo packageName="isobus::ut">
 		<Import declaration="eclipse4diac::core::TypeHash"/>
+		<Import declaration="isobus::ut::IDs::ID_NULL"/>
 	</CompilerInfo>
 	<InterfaceList>
 		<EventInputs>
@@ -25,7 +26,7 @@
 			</Event>
 		</EventOutputs>
 		<InputVars>
-			<VarDeclaration Name="u16ObjIdColourMap" Type="UINT" Comment="Object ID of Colour map object or FFFF to restore the default colour table (see A.3) " InitialValue="IDs::ID_NULL"/>
+			<VarDeclaration Name="u16ObjIdColourMap" Type="UINT" Comment="Object ID of Colour map object or FFFF to restore the default colour table (see A.3) " InitialValue="ID_NULL"/>
 		</InputVars>
 		<OutputVars>
 			<VarDeclaration Name="STATUS" Type="STRING" Comment="Service Status"/>

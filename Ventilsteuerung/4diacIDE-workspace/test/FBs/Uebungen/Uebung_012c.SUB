@@ -6,7 +6,8 @@
 	</VersionInfo>
 	<CompilerInfo>
 		<Import declaration="DefaultPool::InputNumber_I1"/>
-		<Import declaration="FBs::Constants::NVS_Keys"/>
+		<Import declaration="FBs::Constants::NVS_Keys::KEY_S1_STORE"/>
+		<Import declaration="FBs::Constants::NVS_Keys::SECTION_S1_STORE"/>
 	</CompilerInfo>
 	<SubAppInterfaceList>
 	</SubAppInterfaceList>
@@ -24,8 +25,8 @@
 		</FB>
 		<FB Name="INI" Type="eclipse4diac::storage::INI" x="-900" y="700">
 			<Parameter Name="QI" Value="TRUE"/>
-			<Parameter Name="SECTION" Value="NVS_Keys::SECTION_S1_STORE"/>
-			<Parameter Name="KEY" Value="NVS_Keys::KEY_S1_STORE"/>
+			<Parameter Name="SECTION" Value="SECTION_S1_STORE"/>
+			<Parameter Name="KEY" Value="KEY_S1_STORE"/>
 			<Parameter Name="VALUE" Value="STRING#'Test'"/>
 			<Parameter Name="DEFAULT_VALUE" Value="STRING#'Test'"/>
 		</FB>

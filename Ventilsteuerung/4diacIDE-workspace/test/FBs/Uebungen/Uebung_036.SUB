@@ -15,6 +15,7 @@
 		<Import declaration="logiBUS::io::DQ::logiBUS_DO::Output_Q2"/>
 		<Import declaration="logiBUS::io::DQ::logiBUS_DO::Output_Q3"/>
 		<Import declaration="logiBUS::io::DQ::logiBUS_DO::Output_Q4"/>
+		<Import declaration="sequence::NO_TIME"/>
 	</CompilerInfo>
 	<SubAppInterfaceList>
 	</SubAppInterfaceList>
@@ -63,8 +64,8 @@
 		<FB Name="F_SINT_TO_UINT" Type="iec61131::conversion::F_SINT_TO_UINT" x="-5600" y="2600">
 		</FB>
 		<FB Name="sequence_04" Type="sequence_ET_04" x="-9700" y="1700">
-			<Parameter Name="DT_S1_S2" Value="sequence::NO_TIME"/>
-			<Parameter Name="DT_S2_S3" Value="sequence::NO_TIME"/>
+			<Parameter Name="DT_S1_S2" Value="NO_TIME"/>
+			<Parameter Name="DT_S2_S3" Value="NO_TIME"/>
 			<Parameter Name="DT_S3_S4" Value="T#2s"/>
 			<Parameter Name="DT_S4_START" Value="T#2s"/>
 		</FB>

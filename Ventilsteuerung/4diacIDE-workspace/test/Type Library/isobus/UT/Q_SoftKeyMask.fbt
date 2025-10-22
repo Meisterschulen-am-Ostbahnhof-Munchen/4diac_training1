@@ -6,6 +6,7 @@
 	</VersionInfo>
 	<CompilerInfo packageName="isobus::ut">
 		<Import declaration="eclipse4diac::core::TypeHash"/>
+		<Import declaration="isobus::ut::IDs::ID_NULL"/>
 	</CompilerInfo>
 	<InterfaceList>
 		<EventInputs>
@@ -30,8 +31,8 @@
 		</EventOutputs>
 		<InputVars>
 			<VarDeclaration Name="u8MaskType" Type="USINT" Comment="1 == Data, 2 == Alarm "/>
-			<VarDeclaration Name="u16DataMaskId" Type="UINT" Comment="Object ID of active Mask " InitialValue="IDs::ID_NULL"/>
-			<VarDeclaration Name="u16SoftKeyMaskId" Type="UINT" Comment="Object ID of (new) soft key mask " InitialValue="IDs::ID_NULL"/>
+			<VarDeclaration Name="u16DataMaskId" Type="UINT" Comment="Object ID of active Mask " InitialValue="ID_NULL"/>
+			<VarDeclaration Name="u16SoftKeyMaskId" Type="UINT" Comment="Object ID of (new) soft key mask " InitialValue="ID_NULL"/>
 		</InputVars>
 		<OutputVars>
 			<VarDeclaration Name="STATUS" Type="STRING" Comment="Service Status"/>

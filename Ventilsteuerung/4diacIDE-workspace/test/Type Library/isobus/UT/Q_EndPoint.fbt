@@ -6,6 +6,7 @@
 	</VersionInfo>
 	<CompilerInfo packageName="isobus::ut">
 		<Import declaration="eclipse4diac::core::TypeHash"/>
+		<Import declaration="isobus::ut::IDs::ID_NULL"/>
 	</CompilerInfo>
 	<InterfaceList>
 		<EventInputs>
@@ -30,7 +31,7 @@
 			</Event>
 		</EventOutputs>
 		<InputVars>
-			<VarDeclaration Name="u16ObjId" Type="UINT" Comment="Object ID" InitialValue="IDs::ID_NULL"/>
+			<VarDeclaration Name="u16ObjId" Type="UINT" Comment="Object ID" InitialValue="ID_NULL"/>
 			<VarDeclaration Name="u16Width" Type="UINT" Comment="X value of end point "/>
 			<VarDeclaration Name="u16Height" Type="UINT" Comment="Y value of end point"/>
 			<VarDeclaration Name="u8LineDirection" Type="USINT" Comment="Line direction see Part 6 - B.27"/>

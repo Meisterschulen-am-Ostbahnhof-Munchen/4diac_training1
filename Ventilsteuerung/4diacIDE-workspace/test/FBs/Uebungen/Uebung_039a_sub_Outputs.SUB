@@ -6,7 +6,7 @@
 	</VersionInfo>
 	<CompilerInfo>
 		<Import declaration="SoftKeyActivationCode::SK_RELEASED"/>
-		<Import declaration="isobus::ut::IDs"/>
+		<Import declaration="isobus::ut::IDs::ID_NULL"/>
 		<Import declaration="logiBUS::io::DQ::logiBUS_DO"/>
 		<Import declaration="logiBUS::io::DQ::logiBUS_DO_S"/>
 	</CompilerInfo>
@@ -19,7 +19,7 @@
 			</SubAppEvent>
 		</SubAppEventInputs>
 		<InputVars>
-			<VarDeclaration Name="u16ObjId" Type="UINT" Comment="Object ID Softkey/Button" InitialValue="IDs::ID_NULL">
+			<VarDeclaration Name="u16ObjId" Type="UINT" Comment="Object ID Softkey/Button" InitialValue="ID_NULL">
 				<Attribute Name="YPOSITION" Type="INT" Value="36"/>
 			</VarDeclaration>
 			<VarDeclaration Name="Output" Type="logiBUS::io::DQ::logiBUS_DO_S" InitialValue="logiBUS_DO::Invalid"/>

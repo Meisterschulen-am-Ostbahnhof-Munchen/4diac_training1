@@ -16,6 +16,7 @@
 		<Import declaration="logiBUS::io::DI::logiBUS_DI_Events::BUTTON_SINGLE_CLICK"/>
 		<Import declaration="logiBUS::io::DQ::logiBUS_DO::Output_Q1"/>
 		<Import declaration="logiBUS::io::DQ::logiBUS_DO::Output_Q2"/>
+		<Import declaration="sequence::NO_TIME"/>
 	</CompilerInfo>
 	<SubAppInterfaceList>
 	</SubAppInterfaceList>
@@ -43,11 +44,11 @@
 			<Parameter Name="InputEvent" Value="BUTTON_SINGLE_CLICK"/>
 		</FB>
 		<FB Name="sequence_05" Type="sequence_ET_05" x="-10700" y="-200">
-			<Parameter Name="DT_S1_S2" Value="sequence::NO_TIME"/>
-			<Parameter Name="DT_S2_S3" Value="sequence::NO_TIME"/>
+			<Parameter Name="DT_S1_S2" Value="NO_TIME"/>
+			<Parameter Name="DT_S2_S3" Value="NO_TIME"/>
 			<Parameter Name="DT_S3_S4" Value="T#5s"/>
-			<Parameter Name="DT_S4_S5" Value="sequence::NO_TIME"/>
-			<Parameter Name="DT_S5_START" Value="sequence::NO_TIME"/>
+			<Parameter Name="DT_S4_S5" Value="NO_TIME"/>
+			<Parameter Name="DT_S5_START" Value="NO_TIME"/>
 		</FB>
 		<SubApp Name="NumbAnzeig" Type="Uebung_039_sub_NumbAnzeig" x="-8766.67" y="-986.67">
 		</SubApp>

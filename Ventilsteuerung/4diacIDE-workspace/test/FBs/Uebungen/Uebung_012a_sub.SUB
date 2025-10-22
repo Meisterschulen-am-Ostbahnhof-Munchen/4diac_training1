@@ -5,7 +5,7 @@
 	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2023-10-31">
 	</VersionInfo>
 	<CompilerInfo>
-		<Import declaration="isobus::ut::IDs"/>
+		<Import declaration="isobus::ut::IDs::ID_NULL"/>
 	</CompilerInfo>
 	<SubAppInterfaceList>
 		<SubAppEventInputs>
@@ -18,7 +18,7 @@
 		</SubAppEventOutputs>
 		<InputVars>
 			<VarDeclaration Name="KEY" Type="STRING"/>
-			<VarDeclaration Name="u16ObjId" Type="UINT" InitialValue="IDs::ID_NULL"/>
+			<VarDeclaration Name="u16ObjId" Type="UINT" InitialValue="ID_NULL"/>
 		</InputVars>
 		<OutputVars>
 			<VarDeclaration Name="VALUEO" Type="UDINT"/>

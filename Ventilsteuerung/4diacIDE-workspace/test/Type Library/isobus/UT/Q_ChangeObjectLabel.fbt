@@ -6,6 +6,7 @@
 	</VersionInfo>
 	<CompilerInfo packageName="isobus::ut">
 		<Import declaration="eclipse4diac::core::TypeHash"/>
+		<Import declaration="isobus::ut::IDs::ID_NULL"/>
 	</CompilerInfo>
 	<InterfaceList>
 		<EventInputs>
@@ -33,10 +34,10 @@
 			</Event>
 		</EventOutputs>
 		<InputVars>
-			<VarDeclaration Name="u16ObjId" Type="UINT" Comment="Object ID" InitialValue="IDs::ID_NULL"/>
-			<VarDeclaration Name="u16ObIdStringVar" Type="UINT" Comment="Object ID of a String Variable object that contains the label string (32 characters maximum) or FFFF if no text is supplied" InitialValue="IDs::ID_NULL"/>
+			<VarDeclaration Name="u16ObjId" Type="UINT" Comment="Object ID" InitialValue="ID_NULL"/>
+			<VarDeclaration Name="u16ObIdStringVar" Type="UINT" Comment="Object ID of a String Variable object that contains the label string (32 characters maximum) or FFFF if no text is supplied" InitialValue="ID_NULL"/>
 			<VarDeclaration Name="u8FontType" Type="USINT" Comment="Font type (ignored if String Variable object reference is NULL or the string contains a WideString ) "/>
-			<VarDeclaration Name="u16ObIdGrafic" Type="UINT" Comment="Object ID of an object to be used as a graphic representation of the object label or FFFF16 if no designator supplied" InitialValue="IDs::ID_NULL"/>
+			<VarDeclaration Name="u16ObIdGrafic" Type="UINT" Comment="Object ID of an object to be used as a graphic representation of the object label or FFFF16 if no designator supplied" InitialValue="ID_NULL"/>
 		</InputVars>
 		<OutputVars>
 			<VarDeclaration Name="STATUS" Type="STRING" Comment="Service Status"/>

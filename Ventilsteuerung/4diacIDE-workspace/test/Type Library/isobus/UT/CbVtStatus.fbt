@@ -6,6 +6,7 @@
 	</VersionInfo>
 	<CompilerInfo packageName="isobus::ut">
 		<Import declaration="eclipse4diac::core::TypeHash"/>
+		<Import declaration="isobus::ut::IDs::ID_NULL"/>
 	</CompilerInfo>
 	<InterfaceList>
 		<EventInputs>
@@ -27,7 +28,7 @@
 			<VarDeclaration Name="STATUS" Type="STRING" Comment="Service Status"/>
 			<VarDeclaration Name="u8Instance" Type="USINT" Comment="Identifier of the client instance"/>
 			<VarDeclaration Name="qWsActive" Type="BOOL" Comment="true, if the working set is active (displayed on screen) "/>
-			<VarDeclaration Name="wPage" Type="UINT" Comment="Contains the object ID of the open/last mask, or NULL object ID if unknown (ID_NULL = 0xFFFF)" InitialValue="IDs::ID_NULL"/>
+			<VarDeclaration Name="wPage" Type="UINT" Comment="Contains the object ID of the open/last mask, or NULL object ID if unknown (ID_NULL = 0xFFFF)" InitialValue="ID_NULL"/>
 		</OutputVars>
 	</InterfaceList>
 	<Attribute Name="eclipse4diac::core::TypeHash" Value="''"/>

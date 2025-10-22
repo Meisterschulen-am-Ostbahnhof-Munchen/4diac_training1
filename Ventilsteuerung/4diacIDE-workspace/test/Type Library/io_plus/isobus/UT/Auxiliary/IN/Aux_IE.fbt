@@ -12,7 +12,7 @@
 	</VersionInfo>
 	<CompilerInfo packageName="isobus::UT_io::aux::in">
 		<Import declaration="eclipse4diac::core::TypeHash"/>
-		<Import declaration="isobus::ut::IDs"/>
+		<Import declaration="isobus::ut::IDs::ID_NULL"/>
 	</CompilerInfo>
 	<InterfaceList>
 		<EventInputs>
@@ -43,7 +43,7 @@
 		<InputVars>
 			<VarDeclaration Name="QI" Type="BOOL" Comment="Event Input Qualifier"/>
 			<VarDeclaration Name="PARAMS" Type="STRING" Comment="Service Parameters"/>
-			<VarDeclaration Name="u16ObjId" Type="UINT" Comment="Object ID" InitialValue="IDs::ID_NULL"/>
+			<VarDeclaration Name="u16ObjId" Type="UINT" Comment="Object ID" InitialValue="ID_NULL"/>
 			<VarDeclaration Name="InputEvent" Type="isobus::UT_io::aux::in::AuxiliaryState_S" Comment="Identify the Event (Down, Up, Single-Click, Double Click etc..)" InitialValue="AuxiliaryState::Invalid"/>
 		</InputVars>
 		<OutputVars>

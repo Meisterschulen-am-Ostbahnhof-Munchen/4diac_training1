@@ -10,7 +10,7 @@
 		<Import declaration="DefaultPool::DataMask_M2"/>
 		<Import declaration="DefaultPool::WorkingSet_0"/>
 		<Import declaration="SoftKeyActivationCode::SK_PRESSED"/>
-		<Import declaration="isobus::ut::IDs"/>
+		<Import declaration="isobus::ut::IDs::ID_NULL"/>
 		<Import declaration="logiBUS::io::DI::logiBUS_DI::Input_I1"/>
 		<Import declaration="logiBUS::io::DI::logiBUS_DI::Input_I2"/>
 		<Import declaration="logiBUS::io::DI::logiBUS_DI::Input_I3"/>
@@ -46,7 +46,7 @@
 		</FB>
 		<FB Name="ACK" Type="Softkey_IE" x="-8000" y="2600">
 			<Parameter Name="QI" Value="TRUE"/>
-			<Parameter Name="u16ObjId" Value="IDs::ID_NULL"/>
+			<Parameter Name="u16ObjId" Value="ID_NULL"/>
 			<Parameter Name="InputEvent" Value="SK_PRESSED"/>
 		</FB>
 		<FB Name="E_SR" Type="iec61499::events::E_SR" x="-5000" y="1800">
