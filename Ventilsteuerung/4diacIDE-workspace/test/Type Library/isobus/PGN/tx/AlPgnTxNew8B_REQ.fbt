@@ -5,13 +5,14 @@
 	<VersionInfo Version="1.0" Author="franz" Date="2025-09-04">
 	</VersionInfo>
 	<CompilerInfo packageName="isobus::pgn::tx">
+		<Import declaration="isobus::pgn::CAN_MSG"/>
+		<Import declaration="isobus::pgn::ISONETEVENT_T"/>
 	</CompilerInfo>
 	<InterfaceList>
 		<EventInputs>
 			<Event Name="INIT" Type="EInit" Comment="Service Initialization">
 			</Event>
 			<Event Name="install" Type="Event" Comment="installs a Transmit PGN (TX) ">
-				<With Var="NmHandle"/>
 				<With Var="u32Pgn"/>
 				<With Var="NmDestin"/>
 				<With Var="u16DaSize"/>
@@ -24,16 +25,23 @@
 			<Event Name="installO" Type="Event" Comment="install Done">
 				<With Var="PGN_handle"/>
 			</Event>
+			<Event Name="dataERR" Type="Event">
+				<With Var="dataERRC"/>
+			</Event>
+			<Event Name="pgnERR" Type="Event">
+				<With Var="pgnERRC"/>
+			</Event>
 		</EventOutputs>
 		<InputVars>
-			<VarDeclaration Name="NmHandle" Type="isobus::pgn::CF_INFO_T" Comment="Handle of network member assigned of Network management"/>
 			<VarDeclaration Name="u32Pgn" Type="UDINT" Comment="PGN - Range: 0 - 0x3FFFF "/>
-			<VarDeclaration Name="NmDestin" Type="isobus::pgn::CF_INFO_T" Comment="Define the Communication Partner"/>
+			<VarDeclaration Name="NmDestin" Type="isobus::pgn::ISONETEVENT_T" Comment="Define the Communication Partner"/>
 			<VarDeclaration Name="u16DaSize" Type="UINT" Comment="Data length of this PGN (0..8)"/>
-			<VarDeclaration Name="u8Priority" Type="SINT" Comment="Default priority of this PGN (0..7) 0=highest"/>
+			<VarDeclaration Name="u8Priority" Type="USINT" Comment="Default priority of this PGN (0..7) 0=highest"/>
 		</InputVars>
 		<OutputVars>
 			<VarDeclaration Name="PGN_handle" Type="INT" Comment="PGN-handle on success, HANDLE_UNVALID in case of an error "/>
+			<VarDeclaration Name="dataERRC" Type="INT" Comment="dataERR error Code"/>
+			<VarDeclaration Name="pgnERRC" Type="INT" Comment="pgnERR error Code"/>
 		</OutputVars>
 		<Sockets>
 			<AdapterDeclaration Name="CB" Type="isobus::pgn::tx::Callback"/>

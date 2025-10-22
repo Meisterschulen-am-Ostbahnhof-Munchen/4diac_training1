@@ -30,6 +30,12 @@
 			</Event>
 			<Event Name="CNF" Type="Event" Comment="Data was sent">
 			</Event>
+			<Event Name="dataERR" Type="Event">
+				<With Var="dataERRC"/>
+			</Event>
+			<Event Name="pgnERR" Type="Event">
+				<With Var="pgnERRC"/>
+			</Event>
 		</EventOutputs>
 		<InputVars>
 			<VarDeclaration Name="u32Pgn" Type="UDINT" Comment="PGN - Range: 0 - 0x3FFFF "/>
@@ -40,6 +46,8 @@
 		</InputVars>
 		<OutputVars>
 			<VarDeclaration Name="PGN_handle" Type="INT" Comment="PGN-handle on success, HANDLE_UNVALID in case of an error "/>
+			<VarDeclaration Name="dataERRC" Type="INT" Comment="dataERR error Code"/>
+			<VarDeclaration Name="pgnERRC" Type="INT" Comment="pgnERR error Code"/>
 		</OutputVars>
 	</InterfaceList>
 </FBType>
