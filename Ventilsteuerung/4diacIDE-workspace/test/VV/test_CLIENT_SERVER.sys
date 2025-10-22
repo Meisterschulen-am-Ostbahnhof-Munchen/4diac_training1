@@ -5,24 +5,27 @@
 	<CompilerInfo>
 		<Import declaration="FBs::Constants::myComputers"/>
 		<Import declaration="FBs::Constants::myPorts"/>
-		<Import declaration="logiBUS::io::DI::logiBUS_DI"/>
+		<Import declaration="logiBUS::io::DI::logiBUS_DI::Input_I1"/>
 		<Import declaration="logiBUS::io::DO_LED::LED_COLOURS"/>
 		<Import declaration="logiBUS::io::DO_LED::LED_FREQ"/>
 		<Import declaration="logiBUS::io::DO_LED::LED_strip"/>
+		<Import declaration="logiBUS::io::DI::logiBUS_DI::Input_I2"/>
+		<Import declaration="logiBUS::io::DI::logiBUS_DI::Input_I3"/>
+		<Import declaration="logiBUS::io::DI::logiBUS_DI::Input_I4"/>
 	</CompilerInfo>
 	<Application Name="App_functions">
 		<SubAppNetwork>
 			<FB Name="BUTTON_RED" Type="logiBUS::io::DI::logiBUS_IX" x="2900" y="3600">
 				<Parameter Name="QI" Value="TRUE"/>
-				<Parameter Name="Input" Value="logiBUS_DI::Input_I3"/>
+				<Parameter Name="Input" Value="Input_I3"/>
 			</FB>
 			<FB Name="BUTTON_YELLOW" Type="logiBUS::io::DI::logiBUS_IX" x="2900" y="2300">
 				<Parameter Name="QI" Value="TRUE"/>
-				<Parameter Name="Input" Value="logiBUS_DI::Input_I2"/>
+				<Parameter Name="Input" Value="Input_I2"/>
 			</FB>
 			<FB Name="BUTTON_BLUE" Type="logiBUS::io::DI::logiBUS_IX" x="2900" y="4800">
 				<Parameter Name="QI" Value="TRUE"/>
-				<Parameter Name="Input" Value="logiBUS_DI::Input_I4"/>
+				<Parameter Name="Input" Value="Input_I4"/>
 			</FB>
 			<FB Name="LED_YELLOW_5HZ" Type="logiBUS::io::DO_LED::logiBUS_LED_strip_QX" x="6000" y="2400">
 				<Parameter Name="QI" Value="TRUE"/>
@@ -44,7 +47,7 @@
 			</FB>
 			<FB Name="BUTTON_GREEN" Type="logiBUS::io::DI::logiBUS_IX" x="2900" y="700">
 				<Parameter Name="QI" Value="TRUE"/>
-				<Parameter Name="Input" Value="logiBUS_DI::Input_I1"/>
+				<Parameter Name="Input" Value="Input_I1"/>
 			</FB>
 			<FB Name="LED_GREEN_5HZ" Type="logiBUS::io::DO_LED::logiBUS_LED_strip_QX" x="6000" y="800">
 				<Parameter Name="QI" Value="TRUE"/>
