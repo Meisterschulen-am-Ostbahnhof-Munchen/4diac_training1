@@ -5,6 +5,8 @@
 	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2023-10-23">
 	</VersionInfo>
 	<CompilerInfo>
+		<Import declaration="DefaultPool::SoftKey_F1"/>
+		<Import declaration="DefaultPool::SoftKey_F2"/>
 		<Import declaration="logiBUS::io::DQ::logiBUS_DO::Output_Q1"/>
 		<Import declaration="logiBUS::io::DQ::logiBUS_DO::Output_Q2"/>
 	</CompilerInfo>
@@ -27,7 +29,7 @@
 			<Parameter Name="PARAMS" Value="">
 				<Attribute Name="Visible" Value="false"/>
 			</Parameter>
-			<Parameter Name="u16ObjId" Value="DefaultPool::SoftKey_F1"/>
+			<Parameter Name="u16ObjId" Value="SoftKey_F1"/>
 		</FB>
 		<FB Name="SoftKey_F2" Type="Softkey_IX" x="-4500" y="400">
 			<Parameter Name="QI" Value="TRUE">
@@ -36,7 +38,7 @@
 			<Parameter Name="PARAMS" Value="">
 				<Attribute Name="Visible" Value="false"/>
 			</Parameter>
-			<Parameter Name="u16ObjId" Value="DefaultPool::SoftKey_F2"/>
+			<Parameter Name="u16ObjId" Value="SoftKey_F2"/>
 		</FB>
 		<FB Name="DigitalOutput_Q2" Type="logiBUS::io::DQ::logiBUS_QX" x="-1500" y="700">
 			<Parameter Name="QI" Value="TRUE">

@@ -6,6 +6,7 @@
 	</VersionInfo>
 	<CompilerInfo>
 		<Import declaration="DataPanel_MI_DO::DigitalOutput_1A"/>
+		<Import declaration="DefaultPool::SoftKey_F1"/>
 		<Import declaration="MI::MI_00"/>
 	</CompilerInfo>
 	<SubAppInterfaceList>
@@ -24,7 +25,7 @@
 			<Parameter Name="PARAMS" Value="">
 				<Attribute Name="Visible" Value="false"/>
 			</Parameter>
-			<Parameter Name="u16ObjId" Value="DefaultPool::SoftKey_F1"/>
+			<Parameter Name="u16ObjId" Value="SoftKey_F1"/>
 		</FB>
 		<EventConnections>
 			<Connection Source="SoftKey_F1.IND" Destination="DigitalOutput_Q1.REQ" dx1="1206.67"/>

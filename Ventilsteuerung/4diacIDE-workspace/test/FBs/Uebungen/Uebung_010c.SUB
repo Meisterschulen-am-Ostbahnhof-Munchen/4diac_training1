@@ -5,6 +5,7 @@
 	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2023-10-23">
 	</VersionInfo>
 	<CompilerInfo>
+		<Import declaration="DefaultPool::SoftKey_F1"/>
 		<Import declaration="logiBUS::io::DQ::logiBUS_DO::Output_Q1"/>
 	</CompilerInfo>
 	<SubAppInterfaceList>
@@ -22,10 +23,10 @@
 			<Parameter Name="PARAMS" Value="">
 				<Attribute Name="Visible" Value="false"/>
 			</Parameter>
-			<Parameter Name="u16ObjId" Value="DefaultPool::SoftKey_F1"/>
+			<Parameter Name="u16ObjId" Value="SoftKey_F1"/>
 		</FB>
 		<SubApp Name="GreenWhiteBackground" Type="GreenWhiteBackground" x="-1700" y="800">
-			<Parameter Name="u16ObjId" Value="DefaultPool::SoftKey_F1"/>
+			<Parameter Name="u16ObjId" Value="SoftKey_F1"/>
 		</SubApp>
 		<Comment Comment="Nachteil: &#10;DefaultPool::SoftKey_F1 &#10;muss 2x angegeben werden" x="-4800" y="700" width="1400" height="700"/>
 		<EventConnections>

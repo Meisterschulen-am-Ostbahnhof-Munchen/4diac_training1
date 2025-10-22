@@ -5,6 +5,7 @@
 	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2023-10-23">
 	</VersionInfo>
 	<CompilerInfo>
+		<Import declaration="DefaultPool::OutputNumber_N1"/>
 		<Import declaration="logiBUS::io::DI::logiBUS_DI::Input_I1"/>
 		<Import declaration="logiBUS::io::DI::logiBUS_DI_Events::BUTTON_LONG_PRESS_UP"/>
 	</CompilerInfo>
@@ -12,7 +13,7 @@
 	</SubAppInterfaceList>
 	<SubAppNetwork>
 		<FB Name="Q_NumericValue" Type="isobus::ut::Q_NumericValue" x="900" y="1000">
-			<Parameter Name="u16ObjId" Value="DefaultPool::OutputNumber_N1"/>
+			<Parameter Name="u16ObjId" Value="OutputNumber_N1"/>
 		</FB>
 		<FB Name="logiBUS_ID" Type="logiBUS::io::DI::logiBUS_ID" x="-3700" y="800">
 			<Parameter Name="QI" Value="TRUE"/>

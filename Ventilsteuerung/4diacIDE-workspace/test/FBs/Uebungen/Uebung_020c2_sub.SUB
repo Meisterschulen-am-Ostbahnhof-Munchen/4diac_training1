@@ -5,6 +5,7 @@
 	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2023-10-31">
 	</VersionInfo>
 	<CompilerInfo>
+		<Import declaration="DefaultPool::InputNumber_I1"/>
 	</CompilerInfo>
 	<SubAppInterfaceList>
 		<SubAppEventInputs>
@@ -26,7 +27,7 @@
 	<SubAppNetwork>
 		<FB Name="InputNumber_I1" Type="NumericValue_ID" x="-1300" y="0">
 			<Parameter Name="QI" Value="TRUE"/>
-			<Parameter Name="u16ObjId" Value="DefaultPool::InputNumber_I1"/>
+			<Parameter Name="u16ObjId" Value="InputNumber_I1"/>
 		</FB>
 		<FB Name="F_DWORD_TO_UDINT" Type="iec61131::conversion::F_DWORD_TO_UDINT" x="400" y="400">
 		</FB>
