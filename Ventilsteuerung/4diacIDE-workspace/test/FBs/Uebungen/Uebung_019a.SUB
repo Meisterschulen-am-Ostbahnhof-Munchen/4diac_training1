@@ -5,6 +5,10 @@
 	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2023-10-23">
 	</VersionInfo>
 	<CompilerInfo>
+		<Import declaration="DefaultPool::AlarmMask_A2_medium"/>
+		<Import declaration="DefaultPool::DataMask_M1"/>
+		<Import declaration="DefaultPool::DataMask_M2"/>
+		<Import declaration="DefaultPool::WorkingSet_0"/>
 		<Import declaration="SoftKeyActivationCode::SK_PRESSED"/>
 		<Import declaration="isobus::ut::IDs"/>
 		<Import declaration="logiBUS::io::DI::logiBUS_DI::Input_I1"/>
@@ -21,7 +25,7 @@
 			<Parameter Name="InputEvent" Value="BUTTON_SINGLE_CLICK"/>
 		</FB>
 		<FB Name="Q_ActiveMask" Type="isobus::ut::Q_ActiveMask" x="-2100" y="-300">
-			<Parameter Name="u16WorkSetId" Value="DefaultPool::WorkingSet_0"/>
+			<Parameter Name="u16WorkSetId" Value="WorkingSet_0"/>
 		</FB>
 		<FB Name="DigitalInput_CLK_I2" Type="logiBUS::io::DI::logiBUS_IE" x="-8100" y="400">
 			<Parameter Name="QI" Value="TRUE"/>
@@ -29,10 +33,10 @@
 			<Parameter Name="InputEvent" Value="BUTTON_SINGLE_CLICK"/>
 		</FB>
 		<FB Name="F_SEL_E_4" Type="eclipse4diac::utils::selection::F_SEL_E_4" x="-4800" y="-200">
-			<Parameter Name="IN1" Value="DefaultPool::DataMask_M1"/>
-			<Parameter Name="IN2" Value="DefaultPool::DataMask_M2"/>
-			<Parameter Name="IN3" Value="DefaultPool::AlarmMask_A2_medium"/>
-			<Parameter Name="IN4" Value="DefaultPool::DataMask_M1"/>
+			<Parameter Name="IN1" Value="DataMask_M1"/>
+			<Parameter Name="IN2" Value="DataMask_M2"/>
+			<Parameter Name="IN3" Value="AlarmMask_A2_medium"/>
+			<Parameter Name="IN4" Value="DataMask_M1"/>
 		</FB>
 		<FB Name="DigitalInput_CLK_I3" Type="logiBUS::io::DI::logiBUS_IE" x="-8100" y="1400">
 			<Parameter Name="QI" Value="TRUE"/>

@@ -5,6 +5,7 @@
 	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2023-10-23">
 	</VersionInfo>
 	<CompilerInfo>
+		<Import declaration="DefaultPool::SoftKey_F1"/>
 		<Import declaration="logiBUS::io::DQ::logiBUS_DO"/>
 		<Import declaration="logiBUS::io::DQ::logiBUS_DO_S"/>
 	</CompilerInfo>
@@ -14,7 +15,7 @@
 		<SubApp Name="Uebung_10c2_sub" x="-4600" y="-500">
 			<SubAppInterfaceList>
 				<InputVars>
-					<VarDeclaration Name="u16ObjId" Type="UINT" Comment="Object ID" InitialValue="DefaultPool::SoftKey_F1"/>
+					<VarDeclaration Name="u16ObjId" Type="UINT" Comment="Object ID" InitialValue="SoftKey_F1"/>
 					<VarDeclaration Name="Output" Type="logiBUS::io::DQ::logiBUS_DO_S" Comment="Identify the Output Output_Q1..Q8" InitialValue="logiBUS_DO::Output_Q1"/>
 				</InputVars>
 			</SubAppInterfaceList>

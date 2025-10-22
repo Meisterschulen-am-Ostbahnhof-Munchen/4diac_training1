@@ -5,6 +5,8 @@
 	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2023-10-23">
 	</VersionInfo>
 	<CompilerInfo>
+		<Import declaration="DefaultPool::Button_A1"/>
+		<Import declaration="DefaultPool::Button_A2"/>
 		<Import declaration="DefaultPool::ObjectPointer_P1"/>
 		<Import declaration="DefaultPool::SoftKey_F1"/>
 		<Import declaration="DefaultPool::SoftKey_F2"/>
@@ -36,7 +38,7 @@
 			<Parameter Name="InputEvent" Value="SK_RELEASED"/>
 		</FB>
 		<FB Name="F_UINT_TO_UDINT" Type="iec61131::conversion::F_UINT_TO_UDINT" x="-2800" y="0">
-			<Parameter Name="IN" Value="DefaultPool::Button_A1"/>
+			<Parameter Name="IN" Value="Button_A1"/>
 		</FB>
 		<FB Name="F_SEL_E_3" Type="eclipse4diac::utils::selection::F_SEL_E_3" x="-1100" y="-900">
 			<Parameter Name="IN1" Value="IDs::ID_NULL"/>
@@ -55,7 +57,7 @@
 			<Parameter Name="InputEvent" Value="SK_RELEASED"/>
 		</FB>
 		<FB Name="F_UINT_TO_UDINT_1" Type="iec61131::conversion::F_UINT_TO_UDINT" x="-2833.33" y="566.67">
-			<Parameter Name="IN" Value="DefaultPool::Button_A2"/>
+			<Parameter Name="IN" Value="Button_A2"/>
 		</FB>
 		<EventConnections>
 			<Connection Source="F_SEL_E_3.CNF" Destination="Q_NumericValue.REQ" dx1="573.33"/>
