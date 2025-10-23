@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<AdapterType Name="Callback" Comment="Adapter Interface">
+<AdapterType Name="Callback" Comment="Message Callback">
 	<Identification Standard="61499-1">
 	</Identification>
 	<VersionInfo Version="1.0" Author="franz" Date="2025-09-06">
