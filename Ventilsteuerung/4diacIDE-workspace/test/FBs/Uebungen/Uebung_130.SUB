@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SubAppType Name="Uebung_130" Comment="Übung zu ISOBUS Receive Message">
+	<Identification Standard="61499-2" Description="Copyright (c) 2025 Meisterschulen am Ostbahnhof  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0">
+	</Identification>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2023-10-23">
+	</VersionInfo>
+	<CompilerInfo>
+		<Import declaration="isobus::pgn::ISOUSERHOME_e::network"/>
+		<Import declaration="isobus::pgn::ISO_CAN_NODE::NODE1"/>
+		<Import declaration="logiBUS::io::DI::logiBUS_DI::Input_I1"/>
+		<Import declaration="logiBUS::io::DI::logiBUS_DI_Events::BUTTON_SINGLE_CLICK"/>
+		<Import declaration="uebungen::Filter::VT_ADD"/>
+		<Import declaration="uebungen::Filter::VT_FLT"/>
+	</CompilerInfo>
+	<SubAppInterfaceList>
+	</SubAppInterfaceList>
+	<SubAppNetwork>
+		<FB Name="STRUCT_DEMUX_3" Type="eclipse4diac::convert::STRUCT_DEMUX" x="-7800" y="7400">
+			<Attribute Name="StructuredType" Type="STRING" Value="isobus::pgn::NAMEFIELD_T"/>
+		</FB>
+		<FB Name="NmGetCfInfo_1" Type="isobus::pgn::NmGetCfInfo" x="-10100" y="3900">
+			<Parameter Name="u8CanIdx" Value="NODE1"/>
+			<Parameter Name="member" Value="network"/>
+			<Parameter Name="address" Value="VT_ADD"/>
+			<Parameter Name="mask" Value="VT_FLT"/>
+		</FB>
+		<FB Name="STRUCT_DEMUX_4" Type="eclipse4diac::convert::STRUCT_DEMUX" x="-7900" y="6100">
+			<Attribute Name="StructuredType" Type="STRING" Value="isobus::pgn::CF_INFO_T"/>
+		</FB>
+		<FB Name="STRUCT_DEMUX_5" Type="eclipse4diac::convert::STRUCT_DEMUX" x="-7900" y="4900">
+			<Attribute Name="StructuredType" Type="STRING" Value="isobus::pgn::ISONETEVENT_T"/>
+		</FB>
+		<FB Name="AlPgnTxNew8B" Type="isobus::pgn::rx::AlPgnRxNew8B" x="-4400" y="3700">
+			<Parameter Name="u32Pgn" Value="61184"/>
+			<Parameter Name="u16DaSize" Value="8"/>
+			<Parameter Name="u8Priority" Value="3"/>
+		</FB>
+		<EventConnections>
+			<Connection Source="NmGetCfInfo_1.IND" Destination="STRUCT_DEMUX_3.REQ" dx1="593.33"/>
+			<Connection Source="NmGetCfInfo_1.IND" Destination="STRUCT_DEMUX_4.REQ" dx1="593.33"/>
+			<Connection Source="NmGetCfInfo_1.IND" Destination="STRUCT_DEMUX_5.REQ" dx1="593.33"/>
+			<Connection Source="NmGetCfInfo_1.IND" Destination="AlPgnTxNew8B.install" dx1="2366.67"/>
+		</EventConnections>
+		<DataConnections>
+			<Connection Source="NmGetCfInfo_1.sNameField" Destination="STRUCT_DEMUX_3.IN" dx1="560"/>
+			<Connection Source="NmGetCfInfo_1.sNetEv" Destination="STRUCT_DEMUX_5.IN" dx1="660"/>
+			<Connection Source="NmGetCfInfo_1.sCfInfo" Destination="STRUCT_DEMUX_4.IN" dx1="626.67"/>
+			<Connection Source="NmGetCfInfo_1.sNetEv" Destination="AlPgnTxNew8B.NmSource" dx1="2273.33"/>
+		</DataConnections>
+	</SubAppNetwork>
+</SubAppType>
