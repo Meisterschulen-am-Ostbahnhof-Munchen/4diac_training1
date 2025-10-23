@@ -37,7 +37,7 @@
 			<VarDeclaration Name="u32Pgn" Type="UDINT" Comment="PGN - Range: 0 - 0x3FFFF "/>
 			<VarDeclaration Name="NmDestin" Type="isobus::pgn::ISONETEVENT_T" Comment="Define the Communication Partner"/>
 			<VarDeclaration Name="u16DaSize" Type="UINT" Comment="Data length of this PGN (0..8)"/>
-			<VarDeclaration Name="u8Priority" Type="USINT" Comment="Default priority of this PGN (0..7) 0=highest"/>
+			<VarDeclaration Name="u8Priority" Type="USINT" Comment="Default priority of this PGN (0..7) 0=highest" InitialValue="7"/>
 		</InputVars>
 		<OutputVars>
 			<VarDeclaration Name="PGN_handle" Type="INT" Comment="PGN-handle on success, HANDLE_UNVALID in case of an error "/>

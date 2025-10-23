@@ -7,10 +7,8 @@
 	<CompilerInfo>
 		<Import declaration="isobus::pgn::ISOUSERHOME_e::network"/>
 		<Import declaration="isobus::pgn::ISO_CAN_NODE::NODE1"/>
-		<Import declaration="logiBUS::io::DI::logiBUS_DI::Input_I1"/>
-		<Import declaration="logiBUS::io::DI::logiBUS_DI_Events::BUTTON_SINGLE_CLICK"/>
-		<Import declaration="uebungen::Filter::VT_ADD"/>
-		<Import declaration="uebungen::Filter::VT_FLT"/>
+		<Import declaration="uebungen::Filter::PEAK_ADD"/>
+		<Import declaration="uebungen::Filter::PEAK_FLT"/>
 	</CompilerInfo>
 	<SubAppInterfaceList>
 	</SubAppInterfaceList>
@@ -21,8 +19,8 @@
 		<FB Name="NmGetCfInfo_1" Type="isobus::pgn::NmGetCfInfo" x="-10100" y="3900">
 			<Parameter Name="u8CanIdx" Value="NODE1"/>
 			<Parameter Name="member" Value="network"/>
-			<Parameter Name="address" Value="VT_ADD"/>
-			<Parameter Name="mask" Value="VT_FLT"/>
+			<Parameter Name="address" Value="PEAK_ADD"/>
+			<Parameter Name="mask" Value="PEAK_FLT"/>
 		</FB>
 		<FB Name="STRUCT_DEMUX_4" Type="eclipse4diac::convert::STRUCT_DEMUX" x="-7900" y="6100">
 			<Attribute Name="StructuredType" Type="STRING" Value="isobus::pgn::CF_INFO_T"/>

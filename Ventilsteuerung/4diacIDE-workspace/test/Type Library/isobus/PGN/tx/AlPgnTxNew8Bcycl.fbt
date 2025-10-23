@@ -45,7 +45,7 @@
 			<VarDeclaration Name="u32Pgn" Type="UDINT" Comment="PGN - Range: 0 - 0x3FFFF "/>
 			<VarDeclaration Name="NmDestin" Type="isobus::pgn::ISONETEVENT_T" Comment="Define the Communication Partner"/>
 			<VarDeclaration Name="u16DaSize" Type="UINT" Comment="Data length of this PGN (0..8)"/>
-			<VarDeclaration Name="u8Priority" Type="USINT" Comment="Default priority of this PGN (0..7) 0=highest"/>
+			<VarDeclaration Name="u8Priority" Type="USINT" Comment="Default priority of this PGN (0..7) 0=highest" InitialValue="7"/>
 			<VarDeclaration Name="u16DefRepRate" Type="UINT" Comment="0 ... 0xFDFF ms for time interval of cyclic transmission" InitialValue="0"/>
 			<VarDeclaration Name="Data" Type="isobus::pgn::CAN_MSG"/>
 		</InputVars>

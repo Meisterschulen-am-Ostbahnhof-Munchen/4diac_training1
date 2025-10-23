@@ -22,7 +22,7 @@
 			</Event>
 			<Event Name="IND" Type="Event" Comment="Indication from Resource">
 				<With Var="QO"/>
-				<With Var="timestamp_data"/>
+				<With Var="s32TimeStamp"/>
 				<With Var="STATUS"/>
 				<With Var="Q_timeout"/>
 				<With Var="Version"/>
@@ -46,7 +46,7 @@
 				<With Var="Status_14"/>
 			</Event>
 			<Event Name="TIMEOUT" Type="Event">
-				<With Var="timestamp_timeout"/>
+				<With Var="s32TimeStamp_timeout"/>
 				<With Var="STATUS"/>
 				<With Var="Q_timeout"/>
 			</Event>
@@ -59,8 +59,8 @@
 			<VarDeclaration Name="QO" Type="BOOL" Comment="Event Output Qualifier"/>
 			<VarDeclaration Name="STATUS" Type="STRING" Comment="Service Status"/>
 			<VarDeclaration Name="Q_timeout" Type="BOOL"/>
-			<VarDeclaration Name="timestamp_timeout" Type="DINT"/>
-			<VarDeclaration Name="timestamp_data" Type="DINT"/>
+			<VarDeclaration Name="s32TimeStamp_timeout" Type="DINT"/>
+			<VarDeclaration Name="s32TimeStamp" Type="DINT"/>
 			<VarDeclaration Name="Version" Type="USINT"/>
 			<VarDeclaration Name="Revision" Type="USINT"/>
 			<VarDeclaration Name="Fault_Code" Type="USINT"/>
