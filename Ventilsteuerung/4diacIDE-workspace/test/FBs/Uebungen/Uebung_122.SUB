@@ -18,7 +18,7 @@
 			<Parameter Name="address" Value="FLT_ALL_PASS"/>
 			<Parameter Name="mask" Value="FLT_ALL_PASS"/>
 		</FB>
-		<FB Name="LOG_16" Type="eclipse4diac::utils::logging::LOG_16" x="-1700" y="-2100">
+		<FB Name="LOG_16" Type="logiBUS::utils::logging::LOG_16" x="-1700" y="-2100">
 		</FB>
 		<FB Name="SD_A_1" Type="eclipse4diac::convert::STRUCT_DEMUX" x="6306.67" y="-12273.33">
 			<Attribute Name="StructuredType" Type="STRING" Value="isobus::pgn::ISONETEVENT_T"/>
@@ -149,7 +149,7 @@
 			<Attribute Name="StructuredType" Type="STRING" Value="isobus::pgn::NAMEFIELD_T"/>
 		</FB>
 		<EventConnections>
-			<Connection Source="NmGetCfInfo.IND" Destination="LOG_16.REQ"/>
+			<Connection Source="NmGetCfInfo.IND" Destination="LOG_16.REQ" dx1="220"/>
 			<Connection Source="LOG_16.CNF" Destination="SD_A_1.REQ" dx1="533.33"/>
 			<Connection Source="LOG_16.CNF" Destination="SD_A_2.REQ" dx1="533.33"/>
 			<Connection Source="LOG_16.CNF" Destination="SD_A_3.REQ" dx1="533.33"/>
@@ -198,7 +198,7 @@
 			<Connection Source="NmSetNF_15.CNF" Destination="SD_C_15.REQ"/>
 			<Connection Source="SD_A_16.CNF" Destination="NmSetNF_16.REQ"/>
 			<Connection Source="NmSetNF_16.CNF" Destination="SD_C_16.REQ" dx1="726.67"/>
-			<Connection Source="LOG_16.CNF" Destination="NmGetCfInfo.RSP" dx1="80" dx2="406.67" dy="-453.33"/>
+			<Connection Source="LOG_16.CNF" Destination="NmGetCfInfo.RSP" dx1="80" dx2="80" dy="-453.33"/>
 		</EventConnections>
 		<DataConnections>
 			<Connection Source="NmGetCfInfo.sNetEv" Destination="LOG_16.IN" dx1="220"/>

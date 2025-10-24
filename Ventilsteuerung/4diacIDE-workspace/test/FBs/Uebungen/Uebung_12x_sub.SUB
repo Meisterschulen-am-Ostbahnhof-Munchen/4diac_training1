@@ -20,8 +20,10 @@
 		</FB>
 		<FB Name="STRUCT_MUX" Type="eclipse4diac::convert::STRUCT_MUX" x="-2400" y="100">
 			<Attribute Name="StructuredType" Type="STRING" Value="isobus::pgn::CAN_MSG"/>
+			<Parameter Name="u16DaSize" Value="0"/>
+			<Parameter Name="u8Priority" Value="7"/>
 		</FB>
-		<FB Name="BYTES_TO_ARR08B" Type="eclipse4diac::utils::conversion::arr::reversing::BYTES_TO_ARR08B" x="-4500" y="200">
+		<FB Name="BYTES_TO_ARR08B" Type="logiBUS::utils::conversion::arr::reversing::BYTES_TO_ARR08B" x="-4500" y="200">
 			<Parameter Name="IN_01" Value="16#00"/>
 			<Parameter Name="IN_02" Value="16#00"/>
 			<Parameter Name="IN_03" Value="16#00"/>

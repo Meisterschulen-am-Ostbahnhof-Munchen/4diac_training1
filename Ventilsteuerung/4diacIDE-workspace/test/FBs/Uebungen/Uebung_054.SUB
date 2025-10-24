@@ -49,9 +49,9 @@
 			<Parameter Name="QI" Value="TRUE"/>
 			<Parameter Name="Input" Value="Input_I4"/>
 		</FB>
-		<FB Name="ARR08B_TO_BOOLS" Type="eclipse4diac::utils::conversion::arr::forwarding::ARR08X_TO_BOOLS" x="-5900" y="2000">
+		<FB Name="ARR08B_TO_BOOLS" Type="logiBUS::utils::conversion::arr::forwarding::ARR08X_TO_BOOLS" x="-5900" y="2000">
 		</FB>
-		<FB Name="BOOLS_TO_ARR08B" Type="eclipse4diac::utils::conversion::arr::reversing::BOOLS_TO_ARR08X" x="-7400" y="2000">
+		<FB Name="BOOLS_TO_ARR08B" Type="logiBUS::utils::conversion::arr::reversing::BOOLS_TO_ARR08X" x="-7400" y="2000">
 		</FB>
 		<EventConnections>
 			<Connection Source="BOOLS_TO_ARR08B.CNF" Destination="ARR08B_TO_BOOLS.REQ" dx1="260"/>
