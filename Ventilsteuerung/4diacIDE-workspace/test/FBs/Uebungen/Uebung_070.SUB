@@ -5,15 +5,16 @@
 	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2023-10-23">
 	</VersionInfo>
 	<CompilerInfo>
+		<Import declaration="DefaultPool_TECU::NumberVariable_Wheel_based_machine_speed"/>
 	</CompilerInfo>
 	<SubAppInterfaceList>
 	</SubAppInterfaceList>
 	<SubAppNetwork>
-		<FB Name="I_WBSD" Type="I_WBSD" x="-5200" y="500">
+		<FB Name="I_WBSD" Type="isobus::tecu::I_WBSD" x="-5200" y="500">
 			<Parameter Name="QI" Value="TRUE"/>
 		</FB>
-		<FB Name="Q_NumericValue" Type="Q_NumericValue" x="-700" y="500">
-			<Parameter Name="u16ObjId" Value="DefaultPool_TECU::NumberVariable_Wheel_based_machine_speed"/>
+		<FB Name="Q_NumericValue" Type="isobus::ut::Q_NumericValue" x="-700" y="500">
+			<Parameter Name="u16ObjId" Value="NumberVariable_Wheel_based_machine_speed"/>
 		</FB>
 		<EventConnections>
 			<Connection Source="I_WBSD.IND" Destination="Q_NumericValue.REQ"/>

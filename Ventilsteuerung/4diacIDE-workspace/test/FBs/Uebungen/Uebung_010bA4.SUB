@@ -5,24 +5,27 @@
 	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2023-10-23">
 	</VersionInfo>
 	<CompilerInfo>
+		<Import declaration="DefaultPool::AuxFunction2_X1"/>
+		<Import declaration="isobus::UT_io::aux::in::AuxiliaryState"/>
+		<Import declaration="logiBUS::io::DQ::logiBUS_DO::Output_Q1"/>
 	</CompilerInfo>
 	<SubAppInterfaceList>
 	</SubAppInterfaceList>
 	<SubAppNetwork>
-		<FB Name="DigitalOutput_Q1" Type="logiBUS_QX" x="-3900" y="-100">
+		<FB Name="DigitalOutput_Q1" Type="logiBUS::io::DQ::logiBUS_QX" x="-3900" y="-100">
 			<Parameter Name="QI" Value="TRUE"/>
-			<Parameter Name="Output" Value="logiBUS_DO::Output_Q1"/>
+			<Parameter Name="Output" Value="Output_Q1"/>
 		</FB>
-		<FB Name="Button_A1" Type="Aux_IE" x="-7200" y="-200">
+		<FB Name="Button_A1" Type="isobus::UT_io::aux::in::Aux_IE" x="-7200" y="-200">
 			<Parameter Name="QI" Value="TRUE"/>
-			<Parameter Name="u16ObjId" Value="DefaultPool::AuxFunction2_X1"/>
+			<Parameter Name="u16ObjId" Value="AuxFunction2_X1"/>
 			<Parameter Name="InputEvent" Value="AuxiliaryState::AuxHeld_START"/>
 		</FB>
-		<FB Name="E_T_FF" Type="E_T_FF" x="-5560" y="0">
+		<FB Name="E_T_FF" Type="iec61499::events::E_T_FF" x="-5560" y="0">
 		</FB>
 		<Comment Comment="AuxHeld_START wird nur einmal gesendet. &#10;Egal welcher Typ" x="-9800" y="800" width="2300" height="700"/>
 		<EventConnections>
-			<Connection Source="Button_A1.IND" Destination="E_T_FF.CLK"/>
+			<Connection Source="Button_A1.IND" Destination="E_T_FF.CLK" dx1="366.67"/>
 			<Connection Source="E_T_FF.EO" Destination="DigitalOutput_Q1.REQ"/>
 		</EventConnections>
 		<DataConnections>

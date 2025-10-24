@@ -5,60 +5,69 @@
 	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2023-10-23">
 	</VersionInfo>
 	<CompilerInfo>
+		<Import declaration="logiBUS::io::DI::logiBUS_DI::Input_I1"/>
+		<Import declaration="logiBUS::io::DI::logiBUS_DI::Input_I2"/>
+		<Import declaration="logiBUS::io::DI::logiBUS_DI::Input_I3"/>
+		<Import declaration="logiBUS::io::DI::logiBUS_DI::Input_I4"/>
+		<Import declaration="logiBUS::io::DI::logiBUS_DI_Events::BUTTON_SINGLE_CLICK"/>
+		<Import declaration="logiBUS::io::DQ::logiBUS_DO::Output_Q1"/>
+		<Import declaration="logiBUS::io::DQ::logiBUS_DO::Output_Q2"/>
+		<Import declaration="logiBUS::io::DQ::logiBUS_DO::Output_Q3"/>
+		<Import declaration="logiBUS::io::DQ::logiBUS_DO::Output_Q4"/>
 	</CompilerInfo>
 	<SubAppInterfaceList>
 	</SubAppInterfaceList>
 	<SubAppNetwork>
-		<FB Name="E_DEMUX" Type="E_DEMUX" x="3900" y="2900">
+		<FB Name="E_DEMUX" Type="iec61499::events::E_DEMUX" x="3900" y="2900">
 		</FB>
-		<FB Name="ADD_3" Type="ADD_3" x="2700" y="3200">
+		<FB Name="ADD_3" Type="iec61131::arithmetic::ADD_3" x="2700" y="3200">
 		</FB>
-		<FB Name="DigitalInput_I2" Type="logiBUS_IX" x="400" y="2300">
+		<FB Name="DigitalInput_I2" Type="logiBUS::io::DI::logiBUS_IX" x="400" y="2300">
 			<Parameter Name="QI" Value="TRUE"/>
-			<Parameter Name="Input" Value="logiBUS_DI::Input_I2"/>
+			<Parameter Name="Input" Value="Input_I2"/>
 		</FB>
-		<FB Name="DigitalInput_I3" Type="logiBUS_IX" x="400" y="3500">
+		<FB Name="DigitalInput_I3" Type="logiBUS::io::DI::logiBUS_IX" x="400" y="3500">
 			<Parameter Name="QI" Value="TRUE"/>
-			<Parameter Name="Input" Value="logiBUS_DI::Input_I3"/>
+			<Parameter Name="Input" Value="Input_I3"/>
 		</FB>
-		<FB Name="DigitalInput_I4" Type="logiBUS_IX" x="400" y="4700">
+		<FB Name="DigitalInput_I4" Type="logiBUS::io::DI::logiBUS_IX" x="400" y="4700">
 			<Parameter Name="QI" Value="TRUE"/>
-			<Parameter Name="Input" Value="logiBUS_DI::Input_I4"/>
+			<Parameter Name="Input" Value="Input_I4"/>
 		</FB>
-		<FB Name="F_BOOL_TO_UINT_I2" Type="F_BOOL_TO_UINT" x="1400" y="2700">
+		<FB Name="F_BOOL_TO_UINT_I2" Type="iec61131::conversion::F_BOOL_TO_UINT" x="1400" y="2700">
 		</FB>
-		<FB Name="F_BOOL_TO_UINT_I3" Type="F_BOOL_TO_UINT" x="1400" y="3900">
+		<FB Name="F_BOOL_TO_UINT_I3" Type="iec61131::conversion::F_BOOL_TO_UINT" x="1400" y="3900">
 		</FB>
-		<FB Name="F_BOOL_TO_UINT_I4" Type="F_BOOL_TO_UINT" x="1400" y="5100">
+		<FB Name="F_BOOL_TO_UINT_I4" Type="iec61131::conversion::F_BOOL_TO_UINT" x="1400" y="5100">
 		</FB>
-		<FB Name="DigitalOutput_Q2" Type="logiBUS_QX" x="7200" y="2800">
+		<FB Name="DigitalOutput_Q2" Type="logiBUS::io::DQ::logiBUS_QX" x="7200" y="2800">
 			<Parameter Name="QI" Value="TRUE"/>
-			<Parameter Name="Output" Value="logiBUS_DO::Output_Q2"/>
+			<Parameter Name="Output" Value="Output_Q2"/>
 		</FB>
-		<FB Name="DigitalOutput_Q1" Type="logiBUS_QX" x="7200" y="1900">
+		<FB Name="DigitalOutput_Q1" Type="logiBUS::io::DQ::logiBUS_QX" x="7200" y="1900">
 			<Parameter Name="QI" Value="TRUE"/>
-			<Parameter Name="Output" Value="logiBUS_DO::Output_Q1"/>
+			<Parameter Name="Output" Value="Output_Q1"/>
 		</FB>
-		<FB Name="DigitalOutput_Q4" Type="logiBUS_QX" x="7200" y="4600">
+		<FB Name="DigitalOutput_Q4" Type="logiBUS::io::DQ::logiBUS_QX" x="7200" y="4600">
 			<Parameter Name="QI" Value="TRUE"/>
-			<Parameter Name="Output" Value="logiBUS_DO::Output_Q4"/>
+			<Parameter Name="Output" Value="Output_Q4"/>
 		</FB>
-		<FB Name="DigitalOutput_Q3" Type="logiBUS_QX" x="7200" y="3700">
+		<FB Name="DigitalOutput_Q3" Type="logiBUS::io::DQ::logiBUS_QX" x="7200" y="3700">
 			<Parameter Name="QI" Value="TRUE"/>
-			<Parameter Name="Output" Value="logiBUS_DO::Output_Q3"/>
+			<Parameter Name="Output" Value="Output_Q3"/>
 		</FB>
-		<FB Name="E_T_FF_Q1" Type="E_T_FF" x="5800" y="2000">
+		<FB Name="E_T_FF_Q1" Type="iec61499::events::E_T_FF" x="5800" y="2000">
 		</FB>
-		<FB Name="E_T_FF_Q2" Type="E_T_FF" x="5800" y="2900">
+		<FB Name="E_T_FF_Q2" Type="iec61499::events::E_T_FF" x="5800" y="2900">
 		</FB>
-		<FB Name="E_T_FF_Q3" Type="E_T_FF" x="5800" y="3800">
+		<FB Name="E_T_FF_Q3" Type="iec61499::events::E_T_FF" x="5800" y="3800">
 		</FB>
-		<FB Name="E_T_FF_Q4" Type="E_T_FF" x="5800" y="4700">
+		<FB Name="E_T_FF_Q4" Type="iec61499::events::E_T_FF" x="5800" y="4700">
 		</FB>
-		<FB Name="DigitalInput_CLK_I1" Type="logiBUS_IE" x="400" y="1200">
+		<FB Name="DigitalInput_CLK_I1" Type="logiBUS::io::DI::logiBUS_IE" x="400" y="1200">
 			<Parameter Name="QI" Value="TRUE"/>
-			<Parameter Name="Input" Value="logiBUS_DI::Input_I1"/>
-			<Parameter Name="InputEvent" Value="logiBUS_DI_Events::BUTTON_SINGLE_CLICK"/>
+			<Parameter Name="Input" Value="Input_I1"/>
+			<Parameter Name="InputEvent" Value="BUTTON_SINGLE_CLICK"/>
 		</FB>
 		<Comment Comment="Diese Taste schaltet ein oder aus&#10;" x="1400" y="1000" width="900" height="500"/>
 		<Comment Comment="Die Anzahl der restlichen Tasten bestimmt den Ausgang: &#10;Keine --&gt; Q1&#10;Eine --&gt; Q2&#10;Zwei --&gt; Q3&#10;Drei --&gt; Q4" x="1400" y="1900" width="2000" height="700"/>

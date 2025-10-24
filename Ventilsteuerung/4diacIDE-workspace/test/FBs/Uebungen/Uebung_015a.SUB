@@ -5,6 +5,14 @@
 	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2023-10-23">
 	</VersionInfo>
 	<CompilerInfo>
+		<Import declaration="DefaultPool::Button_A1"/>
+		<Import declaration="DefaultPool::Button_A2"/>
+		<Import declaration="DefaultPool::ObjectPointer_P1"/>
+		<Import declaration="DefaultPool::SoftKey_F1"/>
+		<Import declaration="DefaultPool::SoftKey_F2"/>
+		<Import declaration="DefaultPool::SoftKey_F3"/>
+		<Import declaration="SoftKeyActivationCode::SK_RELEASED"/>
+		<Import declaration="isobus::ut::IDs::ID_NULL"/>
 	</CompilerInfo>
 	<SubAppInterfaceList>
 	</SubAppInterfaceList>
@@ -16,8 +24,8 @@
 			<Parameter Name="PARAMS" Value="">
 				<Attribute Name="Visible" Value="false"/>
 			</Parameter>
-			<Parameter Name="u16ObjId" Value="DefaultPool::SoftKey_F1"/>
-			<Parameter Name="InputEvent" Value="SoftKeyActivationCode::SK_RELEASED"/>
+			<Parameter Name="u16ObjId" Value="SoftKey_F1"/>
+			<Parameter Name="InputEvent" Value="SK_RELEASED"/>
 		</FB>
 		<FB Name="SoftKey_UP_F2" Type="Softkey_IE" x="-5600" y="200">
 			<Parameter Name="QI" Value="TRUE">
@@ -26,17 +34,17 @@
 			<Parameter Name="PARAMS" Value="">
 				<Attribute Name="Visible" Value="false"/>
 			</Parameter>
-			<Parameter Name="u16ObjId" Value="DefaultPool::SoftKey_F2"/>
-			<Parameter Name="InputEvent" Value="SoftKeyActivationCode::SK_RELEASED"/>
+			<Parameter Name="u16ObjId" Value="SoftKey_F2"/>
+			<Parameter Name="InputEvent" Value="SK_RELEASED"/>
 		</FB>
-		<FB Name="F_UINT_TO_UDINT" Type="F_UINT_TO_UDINT" x="-2800" y="0">
-			<Parameter Name="IN" Value="DefaultPool::Button_A1"/>
+		<FB Name="F_UINT_TO_UDINT" Type="iec61131::conversion::F_UINT_TO_UDINT" x="-2800" y="0">
+			<Parameter Name="IN" Value="Button_A1"/>
 		</FB>
-		<FB Name="F_SEL_E_3" Type="F_SEL_E_3" x="-1100" y="-900">
-			<Parameter Name="IN0" Value="isobus::ID_NULL"/>
+		<FB Name="F_SEL_E_3" Type="eclipse4diac::utils::selection::F_SEL_E_3" x="-1100" y="-900">
+			<Parameter Name="IN1" Value="ID_NULL"/>
 		</FB>
-		<FB Name="Q_NumericValue" Type="Q_NumericValue" x="1100" y="-1000">
-			<Parameter Name="u16ObjId" Value="DefaultPool::ObjectPointer_P1"/>
+		<FB Name="Q_NumericValue" Type="isobus::ut::Q_NumericValue" x="1100" y="-1000">
+			<Parameter Name="u16ObjId" Value="ObjectPointer_P1"/>
 		</FB>
 		<FB Name="SoftKey_UP_F3" Type="Softkey_IE" x="-5600" y="1400">
 			<Parameter Name="QI" Value="TRUE">
@@ -45,22 +53,22 @@
 			<Parameter Name="PARAMS" Value="">
 				<Attribute Name="Visible" Value="false"/>
 			</Parameter>
-			<Parameter Name="u16ObjId" Value="DefaultPool::SoftKey_F3"/>
-			<Parameter Name="InputEvent" Value="SoftKeyActivationCode::SK_RELEASED"/>
+			<Parameter Name="u16ObjId" Value="SoftKey_F3"/>
+			<Parameter Name="InputEvent" Value="SK_RELEASED"/>
 		</FB>
-		<FB Name="F_UINT_TO_UDINT_1" Type="F_UINT_TO_UDINT" x="-2833.33" y="566.67">
-			<Parameter Name="IN" Value="DefaultPool::Button_A2"/>
+		<FB Name="F_UINT_TO_UDINT_1" Type="iec61131::conversion::F_UINT_TO_UDINT" x="-2833.33" y="566.67">
+			<Parameter Name="IN" Value="Button_A2"/>
 		</FB>
 		<EventConnections>
-			<Connection Source="F_SEL_E_3.CNF" Destination="Q_NumericValue.REQ"/>
-			<Connection Source="SoftKey_UP_F1.IND" Destination="F_SEL_E_3.REQ0"/>
-			<Connection Source="SoftKey_UP_F2.IND" Destination="F_SEL_E_3.REQ1" dx1="280"/>
-			<Connection Source="SoftKey_UP_F3.IND" Destination="F_SEL_E_3.REQ2" dx1="446.67"/>
+			<Connection Source="F_SEL_E_3.CNF" Destination="Q_NumericValue.REQ" dx1="573.33"/>
+			<Connection Source="SoftKey_UP_F1.IND" Destination="F_SEL_E_3.REQ1"/>
+			<Connection Source="SoftKey_UP_F2.IND" Destination="F_SEL_E_3.REQ2" dx1="280"/>
+			<Connection Source="SoftKey_UP_F3.IND" Destination="F_SEL_E_3.REQ3" dx1="446.67"/>
 		</EventConnections>
 		<DataConnections>
-			<Connection Source="F_UINT_TO_UDINT.OUT" Destination="F_SEL_E_3.IN1" dx1="360"/>
+			<Connection Source="F_UINT_TO_UDINT.OUT" Destination="F_SEL_E_3.IN2" dx1="360"/>
 			<Connection Source="F_SEL_E_3.OUT" Destination="Q_NumericValue.u32NewValue" dx1="600"/>
-			<Connection Source="F_UINT_TO_UDINT_1.OUT" Destination="F_SEL_E_3.IN2" dx1="520"/>
+			<Connection Source="F_UINT_TO_UDINT_1.OUT" Destination="F_SEL_E_3.IN3" dx1="500"/>
 		</DataConnections>
 	</SubAppNetwork>
 </SubAppType>

@@ -4,21 +4,23 @@
 	</Identification>
 	<VersionInfo Organization="HR Agrartechnik GmbH" Version="1.0" Author="Franz Höpfinger" Date="2024-01-25">
 	</VersionInfo>
-	<CompilerInfo>
+	<CompilerInfo packageName="logiBUS::io::DI">
 	</CompilerInfo>
 	<GlobalConstants>
-		<VarDeclaration Name="Input_I1" Type="logiBUS_DI_S" InitialValue="(Pin := 1)"/>
-		<VarDeclaration Name="Input_I2" Type="logiBUS_DI_S" InitialValue="(Pin := 2)"/>
-		<VarDeclaration Name="Input_I3" Type="logiBUS_DI_S" InitialValue="(Pin := 3)"/>
-		<VarDeclaration Name="Input_I4" Type="logiBUS_DI_S" InitialValue="(Pin := 4)"/>
-		<VarDeclaration Name="Input_I5" Type="logiBUS_DI_S" InitialValue="(Pin := 5)"/>
-		<VarDeclaration Name="Input_I6" Type="logiBUS_DI_S" InitialValue="(Pin := 6)"/>
-		<VarDeclaration Name="Input_I7" Type="logiBUS_DI_S" InitialValue="(Pin := 7)"/>
-		<VarDeclaration Name="Input_I8" Type="logiBUS_DI_S" InitialValue="(Pin := 8)"/>
-		<VarDeclaration Name="Input_I9" Type="logiBUS_DI_S" InitialValue="(Pin := 9)"/>
-		<VarDeclaration Name="Invalid" Type="logiBUS_DI_S" InitialValue="(Pin := 255)"/>
+		<VarDeclaration Name="Input_I1" Type="logiBUS::io::DI::logiBUS_DI_S" InitialValue="(Pin := 1)"/>
+		<VarDeclaration Name="Input_I2" Type="logiBUS::io::DI::logiBUS_DI_S" InitialValue="(Pin := 2)"/>
+		<VarDeclaration Name="Input_I3" Type="logiBUS::io::DI::logiBUS_DI_S" InitialValue="(Pin := 3)"/>
+		<VarDeclaration Name="Input_I4" Type="logiBUS::io::DI::logiBUS_DI_S" InitialValue="(Pin := 4)"/>
+		<VarDeclaration Name="Input_I5" Type="logiBUS::io::DI::logiBUS_DI_S" InitialValue="(Pin := 5)"/>
+		<VarDeclaration Name="Input_I6" Type="logiBUS::io::DI::logiBUS_DI_S" InitialValue="(Pin := 6)"/>
+		<VarDeclaration Name="Input_I7" Type="logiBUS::io::DI::logiBUS_DI_S" InitialValue="(Pin := 7)"/>
+		<VarDeclaration Name="Input_I8" Type="logiBUS::io::DI::logiBUS_DI_S" InitialValue="(Pin := 8)"/>
+		<VarDeclaration Name="Input_I9" Type="logiBUS::io::DI::logiBUS_DI_S" InitialValue="(Pin := 9)"/>
+		<VarDeclaration Name="Invalid" Type="logiBUS::io::DI::logiBUS_DI_S" InitialValue="(Pin := 255)"/>
 	</GlobalConstants>
-	<OriginalSource><![CDATA[GLOBALCONSTANTS logiBUS_DI
+	<OriginalSource><![CDATA[PACKAGE logiBUS::io::DI;
+
+GLOBALCONSTANTS logiBUS_DI
 	VAR_GLOBAL CONSTANT
 		Input_I1 : logiBUS_DI_S := (Pin := 1);
 		Input_I2 : logiBUS_DI_S := (Pin := 2);

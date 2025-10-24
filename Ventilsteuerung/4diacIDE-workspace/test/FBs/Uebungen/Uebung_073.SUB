@@ -5,21 +5,23 @@
 	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2023-10-23">
 	</VersionInfo>
 	<CompilerInfo>
+		<Import declaration="DefaultPool_TECU::NumberVariable_Ground_based_machine_speed"/>
+		<Import declaration="DefaultPool_TECU::NumberVariable_Wheel_based_machine_speed"/>
 	</CompilerInfo>
 	<SubAppInterfaceList>
 	</SubAppInterfaceList>
 	<SubAppNetwork>
-		<FB Name="I_GBSD" Type="I_GBSD" x="-5213.33" y="453.33">
+		<FB Name="I_GBSD" Type="isobus::tecu::I_GBSD" x="-5213.33" y="453.33">
 			<Parameter Name="QI" Value="TRUE"/>
 		</FB>
-		<FB Name="Q_NumericValue_GBSD" Type="Q_NumericValue" x="-680" y="453.33">
-			<Parameter Name="u16ObjId" Value="DefaultPool_TECU::NumberVariable_Ground_based_machine_speed"/>
+		<FB Name="Q_NumericValue_GBSD" Type="isobus::ut::Q_NumericValue" x="-680" y="453.33">
+			<Parameter Name="u16ObjId" Value="NumberVariable_Ground_based_machine_speed"/>
 		</FB>
-		<FB Name="I_VDS" Type="I_VDS" x="-5200" y="1900">
+		<FB Name="I_VDS" Type="isobus::tecu::I_VDS" x="-5200" y="1900">
 			<Parameter Name="QI" Value="TRUE"/>
 		</FB>
-		<FB Name="Q_NumericValue_WBSD" Type="Q_NumericValue" x="-666.67" y="1900">
-			<Parameter Name="u16ObjId" Value="DefaultPool_TECU::NumberVariable_Wheel_based_machine_speed"/>
+		<FB Name="Q_NumericValue_WBSD" Type="isobus::ut::Q_NumericValue" x="-666.67" y="1900">
+			<Parameter Name="u16ObjId" Value="NumberVariable_Wheel_based_machine_speed"/>
 		</FB>
 		<EventConnections>
 			<Connection Source="I_GBSD.IND" Destination="Q_NumericValue_GBSD.REQ"/>

@@ -5,26 +5,28 @@
 	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2023-10-23">
 	</VersionInfo>
 	<CompilerInfo>
+		<Import declaration="DefaultPool::AuxFunction2_X1"/>
+		<Import declaration="logiBUS::io::DQ::logiBUS_DO::Output_Q1"/>
 	</CompilerInfo>
 	<SubAppInterfaceList>
 	</SubAppInterfaceList>
 	<SubAppNetwork>
-		<FB Name="DigitalOutput_Q1" Type="logiBUS_QX" x="-1500" y="-300">
+		<FB Name="DigitalOutput_Q1" Type="logiBUS::io::DQ::logiBUS_QX" x="-1500" y="-300">
 			<Parameter Name="QI" Value="TRUE"/>
 			<Parameter Name="PARAMS" Value="">
 				<Attribute Name="Visible" Value="false"/>
 			</Parameter>
-			<Parameter Name="Output" Value="logiBUS_DO::Output_Q1"/>
+			<Parameter Name="Output" Value="Output_Q1"/>
 		</FB>
-		<FB Name="AuxFunction2_X1" Type="Aux_IX" x="-4600" y="-500">
+		<FB Name="AuxFunction2_X1" Type="isobus::UT_io::aux::in::Aux_IX" x="-4600" y="-500">
 			<Parameter Name="QI" Value="TRUE"/>
-			<Parameter Name="u16ObjId" Value="DefaultPool::AuxFunction2_X1"/>
+			<Parameter Name="u16ObjId" Value="AuxFunction2_X1"/>
 		</FB>
 		<EventConnections>
 			<Connection Source="AuxFunction2_X1.IND" Destination="DigitalOutput_Q1.REQ" dx1="1080"/>
 		</EventConnections>
 		<DataConnections>
-			<Connection Source="AuxFunction2_X1.IN" Destination="DigitalOutput_Q1.OUT"/>
+			<Connection Source="AuxFunction2_X1.IN" Destination="DigitalOutput_Q1.OUT" dx1="1093.33"/>
 		</DataConnections>
 	</SubAppNetwork>
 </SubAppType>

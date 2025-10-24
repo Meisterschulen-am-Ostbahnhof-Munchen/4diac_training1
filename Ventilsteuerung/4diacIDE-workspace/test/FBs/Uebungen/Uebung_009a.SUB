@@ -5,85 +5,92 @@
 	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2023-10-23">
 	</VersionInfo>
 	<CompilerInfo>
+		<Import declaration="DefaultPool::OutputNumber_N1"/>
+		<Import declaration="logiBUS::io::DI::logiBUS_DI::Input_I1"/>
+		<Import declaration="logiBUS::io::DI::logiBUS_DI::Input_I2"/>
+		<Import declaration="logiBUS::io::DI::logiBUS_DI::Input_I3"/>
+		<Import declaration="logiBUS::io::DI::logiBUS_DI::Input_I4"/>
+		<Import declaration="logiBUS::io::DI::logiBUS_DI_Events::BUTTON_LONG_PRESS_START"/>
+		<Import declaration="logiBUS::io::DI::logiBUS_DI_Events::BUTTON_SINGLE_CLICK"/>
 	</CompilerInfo>
 	<SubAppInterfaceList>
 	</SubAppInterfaceList>
 	<SubAppNetwork>
-		<FB Name="Q_NumericValue" Type="Q_NumericValue" x="3600" y="1300">
-			<Parameter Name="u16ObjId" Value="DefaultPool::OutputNumber_N1"/>
+		<FB Name="Q_NumericValue" Type="isobus::ut::Q_NumericValue" x="3600" y="1300">
+			<Parameter Name="u16ObjId" Value="OutputNumber_N1"/>
 		</FB>
-		<FB Name="UP_FAST" Type="logiBUS_IE" x="-2000" y="1400">
+		<FB Name="UP_FAST" Type="logiBUS::io::DI::logiBUS_IE" x="-2000" y="1400">
 			<Parameter Name="QI" Value="TRUE">
 				<Attribute Name="Visible" Value="false"/>
 			</Parameter>
 			<Parameter Name="PARAMS" Value="">
 				<Attribute Name="Visible" Value="false"/>
 			</Parameter>
-			<Parameter Name="Input" Value="logiBUS_DI::Input_I2"/>
-			<Parameter Name="InputEvent" Value="logiBUS_DI_Events::BUTTON_LONG_PRESS_START"/>
+			<Parameter Name="Input" Value="Input_I2"/>
+			<Parameter Name="InputEvent" Value="BUTTON_LONG_PRESS_START"/>
 		</FB>
-		<FB Name="DOWN_SLOW" Type="logiBUS_IE" x="-4900" y="2000">
+		<FB Name="DOWN_SLOW" Type="logiBUS::io::DI::logiBUS_IE" x="-4900" y="2000">
 			<Parameter Name="QI" Value="TRUE">
 				<Attribute Name="Visible" Value="false"/>
 			</Parameter>
 			<Parameter Name="PARAMS" Value="">
 				<Attribute Name="Visible" Value="false"/>
 			</Parameter>
-			<Parameter Name="Input" Value="logiBUS_DI::Input_I3"/>
-			<Parameter Name="InputEvent" Value="logiBUS_DI_Events::BUTTON_SINGLE_CLICK"/>
+			<Parameter Name="Input" Value="Input_I3"/>
+			<Parameter Name="InputEvent" Value="BUTTON_SINGLE_CLICK"/>
 		</FB>
-		<FB Name="F_DINT_TO_UDINT" Type="F_DINT_TO_UDINT" x="1000" y="1400">
+		<FB Name="F_DINT_TO_UDINT" Type="iec61131::conversion::F_DINT_TO_UDINT" x="1000" y="1400">
 		</FB>
-		<FB Name="ZERO" Type="logiBUS_IE" x="-2000" y="300">
+		<FB Name="ZERO" Type="logiBUS::io::DI::logiBUS_IE" x="-2000" y="300">
 			<Parameter Name="QI" Value="TRUE">
 				<Attribute Name="Visible" Value="false"/>
 			</Parameter>
 			<Parameter Name="PARAMS" Value="">
 				<Attribute Name="Visible" Value="false"/>
 			</Parameter>
-			<Parameter Name="Input" Value="logiBUS_DI::Input_I1"/>
-			<Parameter Name="InputEvent" Value="logiBUS_DI_Events::BUTTON_SINGLE_CLICK"/>
+			<Parameter Name="Input" Value="Input_I1"/>
+			<Parameter Name="InputEvent" Value="BUTTON_SINGLE_CLICK"/>
 		</FB>
-		<FB Name="DOWN_FAST" Type="logiBUS_IE" x="-2000" y="2600">
+		<FB Name="DOWN_FAST" Type="logiBUS::io::DI::logiBUS_IE" x="-2000" y="2600">
 			<Parameter Name="QI" Value="TRUE">
 				<Attribute Name="Visible" Value="false"/>
 			</Parameter>
 			<Parameter Name="PARAMS" Value="">
 				<Attribute Name="Visible" Value="false"/>
 			</Parameter>
-			<Parameter Name="Input" Value="logiBUS_DI::Input_I3"/>
-			<Parameter Name="InputEvent" Value="logiBUS_DI_Events::BUTTON_LONG_PRESS_START"/>
+			<Parameter Name="Input" Value="Input_I3"/>
+			<Parameter Name="InputEvent" Value="BUTTON_LONG_PRESS_START"/>
 		</FB>
-		<FB Name="UP_SLOW" Type="logiBUS_IE" x="-4900" y="900">
+		<FB Name="UP_SLOW" Type="logiBUS::io::DI::logiBUS_IE" x="-4900" y="900">
 			<Parameter Name="QI" Value="TRUE">
 				<Attribute Name="Visible" Value="false"/>
 			</Parameter>
 			<Parameter Name="PARAMS" Value="">
 				<Attribute Name="Visible" Value="false"/>
 			</Parameter>
-			<Parameter Name="Input" Value="logiBUS_DI::Input_I2"/>
-			<Parameter Name="InputEvent" Value="logiBUS_DI_Events::BUTTON_SINGLE_CLICK"/>
+			<Parameter Name="Input" Value="Input_I2"/>
+			<Parameter Name="InputEvent" Value="BUTTON_SINGLE_CLICK"/>
 		</FB>
-		<FB Name="RampLimitFS" Type="signalprocessing::RampLimitFS" x="-100" y="1400">
+		<FB Name="RampLimitFS" Type="eclipse4diac::signalprocessing::RampLimitFS" x="-100" y="1400">
 			<Parameter Name="VAL_ZERO" Value="DINT#0"/>
 			<Parameter Name="SLOW" Value="DINT#1"/>
 			<Parameter Name="FAST" Value="DINT#10"/>
 			<Parameter Name="VAL_FULL" Value="DINT#100"/>
 		</FB>
-		<FB Name="FULL" Type="logiBUS_IE" x="-4900" y="3200">
+		<FB Name="FULL" Type="logiBUS::io::DI::logiBUS_IE" x="-4900" y="3200">
 			<Parameter Name="QI" Value="TRUE">
 				<Attribute Name="Visible" Value="false"/>
 			</Parameter>
 			<Parameter Name="PARAMS" Value="">
 				<Attribute Name="Visible" Value="false"/>
 			</Parameter>
-			<Parameter Name="Input" Value="logiBUS_DI::Input_I4"/>
-			<Parameter Name="InputEvent" Value="logiBUS_DI_Events::BUTTON_SINGLE_CLICK"/>
+			<Parameter Name="Input" Value="Input_I4"/>
+			<Parameter Name="InputEvent" Value="BUTTON_SINGLE_CLICK"/>
 		</FB>
 		<EventConnections>
-			<Connection Source="UP_FAST.IND" Destination="RampLimitFS.UP_FAST"/>
+			<Connection Source="UP_FAST.IND" Destination="RampLimitFS.UP_FAST" dx1="513.33"/>
 			<Connection Source="FULL.IND" Destination="RampLimitFS.FULL" dx1="3460"/>
-			<Connection Source="RampLimitFS.CNF" Destination="F_DINT_TO_UDINT.REQ"/>
+			<Connection Source="RampLimitFS.CNF" Destination="F_DINT_TO_UDINT.REQ" dx1="80" dx2="80" dy="-46.67"/>
 			<Connection Source="ZERO.IND" Destination="RampLimitFS.ZERO" dx1="546.67"/>
 			<Connection Source="DOWN_SLOW.IND" Destination="RampLimitFS.DOWN_SLOW" dx1="3126.67"/>
 			<Connection Source="DOWN_FAST.IND" Destination="RampLimitFS.DOWN_FAST" dx1="446.67"/>

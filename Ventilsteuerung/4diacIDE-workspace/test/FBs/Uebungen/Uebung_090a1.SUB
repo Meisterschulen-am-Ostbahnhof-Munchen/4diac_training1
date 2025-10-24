@@ -5,29 +5,33 @@
 	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2023-10-23">
 	</VersionInfo>
 	<CompilerInfo>
+		<Import declaration="logiBUS::io::DI::logiBUS_DI::Input_I1"/>
+		<Import declaration="logiBUS::io::DI::logiBUS_DI::Input_I2"/>
+		<Import declaration="logiBUS::io::DI::logiBUS_DI::Input_I4"/>
+		<Import declaration="logiBUS::io::DQ::logiBUS_DO::Output_Q1"/>
 	</CompilerInfo>
 	<SubAppInterfaceList>
 	</SubAppInterfaceList>
 	<SubAppNetwork>
-		<FB Name="F_MUX_2" Type="F_MUX_2" x="2700" y="3700">
+		<FB Name="F_MUX_2" Type="iec61131::selection::F_MUX_2" x="2700" y="3700">
 		</FB>
-		<FB Name="DigitalInput_I4" Type="logiBUS_IX" x="-1400" y="3500">
+		<FB Name="DigitalInput_I4" Type="logiBUS::io::DI::logiBUS_IX" x="-1400" y="3500">
 			<Parameter Name="QI" Value="TRUE"/>
-			<Parameter Name="Input" Value="logiBUS_DI::Input_I4"/>
+			<Parameter Name="Input" Value="Input_I4"/>
 		</FB>
-		<FB Name="F_BOOL_TO_UINT_I4" Type="F_BOOL_TO_UINT" x="-300" y="3700">
+		<FB Name="F_BOOL_TO_UINT_I4" Type="iec61131::conversion::F_BOOL_TO_UINT" x="-300" y="3700">
 		</FB>
-		<FB Name="DigitalOutput_Q1" Type="logiBUS_QX" x="4500" y="3600">
+		<FB Name="DigitalOutput_Q1" Type="logiBUS::io::DQ::logiBUS_QX" x="4500" y="3600">
 			<Parameter Name="QI" Value="TRUE"/>
-			<Parameter Name="Output" Value="logiBUS_DO::Output_Q1"/>
+			<Parameter Name="Output" Value="Output_Q1"/>
 		</FB>
-		<FB Name="DigitalInput_I1" Type="logiBUS_IX" x="-1400" y="4400">
+		<FB Name="DigitalInput_I1" Type="logiBUS::io::DI::logiBUS_IX" x="-1400" y="4400">
 			<Parameter Name="QI" Value="TRUE"/>
-			<Parameter Name="Input" Value="logiBUS_DI::Input_I1"/>
+			<Parameter Name="Input" Value="Input_I1"/>
 		</FB>
-		<FB Name="DigitalInput_I2" Type="logiBUS_IX" x="-1400" y="5300">
+		<FB Name="DigitalInput_I2" Type="logiBUS::io::DI::logiBUS_IX" x="-1400" y="5300">
 			<Parameter Name="QI" Value="TRUE"/>
-			<Parameter Name="Input" Value="logiBUS_DI::Input_I2"/>
+			<Parameter Name="Input" Value="Input_I2"/>
 		</FB>
 		<EventConnections>
 			<Connection Source="DigitalInput_I4.IND" Destination="F_BOOL_TO_UINT_I4.REQ"/>

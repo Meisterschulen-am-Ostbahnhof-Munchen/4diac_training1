@@ -5,6 +5,8 @@
 	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2024-02-05">
 	</VersionInfo>
 	<CompilerInfo>
+		<Import declaration="logiBUS::io::DQ::logiBUS_DO"/>
+		<Import declaration="logiBUS::io::DQ::logiBUS_DO_S"/>
 	</CompilerInfo>
 	<SubAppInterfaceList>
 		<SubAppEventInputs>
@@ -21,16 +23,16 @@
 			</SubAppEvent>
 		</SubAppEventOutputs>
 		<InputVars>
-			<VarDeclaration Name="Output" Type="logiBUS_DO_S" Comment="Identify the Output Output_Q1..Q8" InitialValue="logiBUS_DO::Invalid"/>
+			<VarDeclaration Name="Output" Type="logiBUS::io::DQ::logiBUS_DO_S" Comment="Identify the Output Output_Q1..Q8" InitialValue="logiBUS_DO::Invalid"/>
 		</InputVars>
 	</SubAppInterfaceList>
 	<SubAppNetwork>
-		<FB Name="E_SR" Type="E_SR" x="133.33" y="-800">
+		<FB Name="E_SR" Type="iec61499::events::E_SR" x="133.33" y="-800">
 		</FB>
-		<FB Name="QX" Type="logiBUS_QX" x="2100" y="-900">
+		<FB Name="QX" Type="logiBUS::io::DQ::logiBUS_QX" x="2100" y="-900">
 			<Parameter Name="QI" Value="TRUE"/>
 		</FB>
-		<FB Name="E_SWITCH" Type="E_SWITCH" x="1333.33" y="33.33">
+		<FB Name="E_SWITCH" Type="iec61499::events::E_SWITCH" x="1333.33" y="33.33">
 		</FB>
 		<EventConnections>
 			<Connection Source="E_SR.EO" Destination="QX.REQ"/>

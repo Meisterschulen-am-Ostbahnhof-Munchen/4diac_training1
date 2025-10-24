@@ -5,6 +5,10 @@
 	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2023-10-23">
 	</VersionInfo>
 	<CompilerInfo>
+		<Import declaration="DefaultPool::Container_B"/>
+		<Import declaration="DefaultPool::SoftKey_F1"/>
+		<Import declaration="DefaultPool::SoftKey_F2"/>
+		<Import declaration="SoftKeyActivationCode::SK_RELEASED"/>
 	</CompilerInfo>
 	<SubAppInterfaceList>
 	</SubAppInterfaceList>
@@ -16,8 +20,8 @@
 			<Parameter Name="PARAMS" Value="">
 				<Attribute Name="Visible" Value="false"/>
 			</Parameter>
-			<Parameter Name="u16ObjId" Value="DefaultPool::SoftKey_F1"/>
-			<Parameter Name="InputEvent" Value="SoftKeyActivationCode::SK_RELEASED"/>
+			<Parameter Name="u16ObjId" Value="SoftKey_F1"/>
+			<Parameter Name="InputEvent" Value="SK_RELEASED"/>
 		</FB>
 		<FB Name="SoftKey_UP_F2" Type="Softkey_IE" x="-4500" y="0">
 			<Parameter Name="QI" Value="TRUE">
@@ -26,13 +30,13 @@
 			<Parameter Name="PARAMS" Value="">
 				<Attribute Name="Visible" Value="false"/>
 			</Parameter>
-			<Parameter Name="u16ObjId" Value="DefaultPool::SoftKey_F2"/>
-			<Parameter Name="InputEvent" Value="SoftKeyActivationCode::SK_RELEASED"/>
+			<Parameter Name="u16ObjId" Value="SoftKey_F2"/>
+			<Parameter Name="InputEvent" Value="SK_RELEASED"/>
 		</FB>
-		<FB Name="E_SR" Type="E_SR" x="-2800" y="-800">
+		<FB Name="E_SR" Type="iec61499::events::E_SR" x="-2800" y="-800">
 		</FB>
-		<FB Name="Q_ObjHideShow" Type="Q_ObjHideShow" x="-1000" y="-900">
-			<Parameter Name="u16ObjId" Value="DefaultPool::Container_B"/>
+		<FB Name="Q_ObjHideShow" Type="isobus::ut::Q_ObjHideShow" x="-1000" y="-900">
+			<Parameter Name="u16ObjId" Value="Container_B"/>
 		</FB>
 		<EventConnections>
 			<Connection Source="SoftKey_UP_F1.IND" Destination="E_SR.S"/>

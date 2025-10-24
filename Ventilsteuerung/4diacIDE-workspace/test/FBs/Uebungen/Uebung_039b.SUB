@@ -5,44 +5,46 @@
 	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2023-10-23">
 	</VersionInfo>
 	<CompilerInfo>
+		<Import declaration="DefaultPool::SoftKey_F1"/>
+		<Import declaration="logiBUS::io::DQ::logiBUS_DO::Output_Q1"/>
 	</CompilerInfo>
 	<SubAppInterfaceList>
 	</SubAppInterfaceList>
 	<SubAppNetwork>
-		<FB Name="DigitalOutput_Q1" Type="logiBUS_QX" x="-10500" y="-900">
+		<FB Name="DigitalOutput_Q1" Type="logiBUS::io::DQ::logiBUS_QX" x="-10400" y="-1000">
 			<Parameter Name="QI" Value="TRUE"/>
-			<Parameter Name="Output" Value="logiBUS_DO::Output_Q1"/>
+			<Parameter Name="Output" Value="Output_Q1"/>
 		</FB>
-		<FB Name="DigitalOutput_Q2" Type="logiBUS_QX" x="-11000" y="1100">
+		<FB Name="DigitalOutput_Q2" Type="logiBUS::io::DQ::logiBUS_QX" x="-10700" y="900">
 			<Parameter Name="QI" Value="TRUE"/>
-			<Parameter Name="Output" Value="logiBUS_DO::Output_Q1"/>
+			<Parameter Name="Output" Value="Output_Q1"/>
 		</FB>
-		<FB Name="SoftKey_F1" Type="Softkey_IX" x="-14200" y="-1100">
+		<FB Name="SoftKey_F1" Type="Softkey_IX" x="-14700" y="-1100">
 			<Parameter Name="QI" Value="TRUE"/>
-			<Parameter Name="u16ObjId" Value="DefaultPool::SoftKey_F1"/>
+			<Parameter Name="u16ObjId" Value="SoftKey_F1"/>
 		</FB>
-		<FB Name="E_TP_Q1" Type="E_TP" x="-12620" y="-800">
+		<FB Name="E_TP_Q1" Type="iec61499::events::timers::E_TP" x="-12600" y="-800">
 			<Parameter Name="PT" Value="T#8s"/>
 		</FB>
-		<FB Name="E_TP_Q2" Type="E_TP" x="-12600" y="1200">
+		<FB Name="E_TP_Q2" Type="iec61499::events::timers::E_TP" x="-12500" y="1100">
 			<Parameter Name="PT" Value="T#4s"/>
 		</FB>
-		<FB Name="E_TON" Type="E_TON" x="-13800" y="1200">
+		<FB Name="E_TON" Type="iec61499::events::timers::E_TON" x="-13800" y="1200">
 			<Parameter Name="PT" Value="T#2s"/>
 		</FB>
 		<EventConnections>
-			<Connection Source="E_TP_Q1.CNF" Destination="DigitalOutput_Q1.REQ"/>
-			<Connection Source="E_TP_Q2.CNF" Destination="DigitalOutput_Q2.REQ"/>
-			<Connection Source="E_TP_Q1.CNF" Destination="E_TON.REQ" dx1="300" dx2="66.67" dy="913.33"/>
-			<Connection Source="E_TON.CNF" Destination="E_TP_Q2.REQ"/>
-			<Connection Source="SoftKey_F1.IND" Destination="E_TP_Q1.REQ" dx1="393.33"/>
+			<Connection Source="E_TP_Q1.CNF" Destination="DigitalOutput_Q1.REQ" dx1="866.67"/>
+			<Connection Source="E_TP_Q2.CNF" Destination="DigitalOutput_Q2.REQ" dx1="666.67"/>
+			<Connection Source="E_TP_Q1.CNF" Destination="E_TON.REQ" dx1="646.67" dx2="300" dy="913.33"/>
+			<Connection Source="E_TON.CNF" Destination="E_TP_Q2.REQ" dx1="166.67"/>
+			<Connection Source="SoftKey_F1.IND" Destination="E_TP_Q1.REQ" dx1="406.67"/>
 		</EventConnections>
 		<DataConnections>
-			<Connection Source="E_TP_Q2.Q" Destination="DigitalOutput_Q2.OUT" dx1="273.33"/>
-			<Connection Source="E_TP_Q1.Q" Destination="DigitalOutput_Q1.OUT" dx1="66.67"/>
-			<Connection Source="E_TP_Q1.Q" Destination="E_TON.IN" dx1="66.67" dx2="413.33" dy="293.33"/>
-			<Connection Source="E_TON.Q" Destination="E_TP_Q2.IN" dx1="200"/>
-			<Connection Source="SoftKey_F1.IN" Destination="E_TP_Q1.IN" dx1="353.33"/>
+			<Connection Source="E_TP_Q2.Q" Destination="DigitalOutput_Q2.OUT"/>
+			<Connection Source="E_TP_Q1.Q" Destination="DigitalOutput_Q1.OUT"/>
+			<Connection Source="E_TP_Q1.Q" Destination="E_TON.IN" dx1="400" dx2="833.33" dy="293.33"/>
+			<Connection Source="E_TON.Q" Destination="E_TP_Q2.IN"/>
+			<Connection Source="SoftKey_F1.IN" Destination="E_TP_Q1.IN"/>
 		</DataConnections>
 	</SubAppNetwork>
 </SubAppType>

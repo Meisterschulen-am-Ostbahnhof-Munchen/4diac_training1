@@ -5,43 +5,48 @@
 	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2023-10-23">
 	</VersionInfo>
 	<CompilerInfo>
+		<Import declaration="logiBUS::io::DI::logiBUS_DI::Input_I1"/>
+		<Import declaration="logiBUS::io::DI::logiBUS_DI::Input_I2"/>
+		<Import declaration="logiBUS::io::DI::logiBUS_DI::Input_I3"/>
+		<Import declaration="logiBUS::io::DI::logiBUS_DI_Events::BUTTON_SINGLE_CLICK"/>
+		<Import declaration="logiBUS::io::DQ::logiBUS_DO::Output_Q1"/>
 	</CompilerInfo>
 	<SubAppInterfaceList>
 	</SubAppInterfaceList>
 	<SubAppNetwork>
-		<FB Name="DigitalOutput_Q1" Type="logiBUS_QX" x="4700" y="1800">
+		<FB Name="DigitalOutput_Q1" Type="logiBUS::io::DQ::logiBUS_QX" x="4700" y="1800">
 			<Parameter Name="QI" Value="TRUE"/>
-			<Parameter Name="Output" Value="logiBUS_DO::Output_Q1"/>
+			<Parameter Name="Output" Value="Output_Q1"/>
 		</FB>
-		<FB Name="DigitalInput_CLK_I1" Type="logiBUS_IE" x="200" y="300">
+		<FB Name="DigitalInput_CLK_I1" Type="logiBUS::io::DI::logiBUS_IE" x="200" y="300">
 			<Parameter Name="QI" Value="TRUE"/>
-			<Parameter Name="Input" Value="logiBUS_DI::Input_I1"/>
-			<Parameter Name="InputEvent" Value="logiBUS_DI_Events::BUTTON_SINGLE_CLICK"/>
+			<Parameter Name="Input" Value="Input_I1"/>
+			<Parameter Name="InputEvent" Value="BUTTON_SINGLE_CLICK"/>
 		</FB>
-		<FB Name="E_T_FF" Type="E_T_FF_SR" x="2500" y="1900">
+		<FB Name="E_T_FF" Type="iec61499::events::E_T_FF_SR" x="2500" y="1900">
 		</FB>
-		<FB Name="E_REND" Type="E_REND" x="1500" y="1500">
+		<FB Name="E_REND" Type="iec61499::events::E_REND" x="1500" y="1500">
 		</FB>
-		<FB Name="DigitalInput_CLK_I2" Type="logiBUS_IE" x="200" y="1400">
+		<FB Name="DigitalInput_CLK_I2" Type="logiBUS::io::DI::logiBUS_IE" x="200" y="1400">
 			<Parameter Name="QI" Value="TRUE"/>
-			<Parameter Name="Input" Value="logiBUS_DI::Input_I2"/>
-			<Parameter Name="InputEvent" Value="logiBUS_DI_Events::BUTTON_SINGLE_CLICK"/>
+			<Parameter Name="Input" Value="Input_I2"/>
+			<Parameter Name="InputEvent" Value="BUTTON_SINGLE_CLICK"/>
 		</FB>
-		<FB Name="DigitalInput_CLK_I3" Type="logiBUS_IE" x="200" y="2400">
+		<FB Name="DigitalInput_CLK_I3" Type="logiBUS::io::DI::logiBUS_IE" x="200" y="2400">
 			<Parameter Name="QI" Value="TRUE"/>
-			<Parameter Name="Input" Value="logiBUS_DI::Input_I3"/>
-			<Parameter Name="InputEvent" Value="logiBUS_DI_Events::BUTTON_SINGLE_CLICK"/>
+			<Parameter Name="Input" Value="Input_I3"/>
+			<Parameter Name="InputEvent" Value="BUTTON_SINGLE_CLICK"/>
 		</FB>
 		<EventConnections>
 			<Connection Source="DigitalInput_CLK_I1.IND" Destination="E_REND.EI1" dx1="73.33"/>
-			<Connection Source="E_T_FF.EO" Destination="DigitalOutput_Q1.REQ"/>
-			<Connection Source="DigitalInput_CLK_I2.IND" Destination="E_REND.EI2"/>
+			<Connection Source="E_T_FF.EO" Destination="DigitalOutput_Q1.REQ" dx1="746.67"/>
+			<Connection Source="DigitalInput_CLK_I2.IND" Destination="E_REND.EI2" dx1="100"/>
 			<Connection Source="DigitalInput_CLK_I3.IND" Destination="E_REND.R" dx1="73.33"/>
 			<Connection Source="E_REND.EO" Destination="E_T_FF.CLK" dx1="73.33"/>
 			<Connection Source="DigitalInput_CLK_I3.IND" Destination="E_T_FF.R" dx1="140"/>
 		</EventConnections>
 		<DataConnections>
-			<Connection Source="E_T_FF.Q" Destination="DigitalOutput_Q1.OUT"/>
+			<Connection Source="E_T_FF.Q" Destination="DigitalOutput_Q1.OUT" dx1="746.67"/>
 		</DataConnections>
 	</SubAppNetwork>
 </SubAppType>

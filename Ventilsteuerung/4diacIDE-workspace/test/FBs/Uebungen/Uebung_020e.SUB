@@ -5,27 +5,29 @@
 	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2023-10-23">
 	</VersionInfo>
 	<CompilerInfo>
+		<Import declaration="logiBUS::io::DI::logiBUS_DI::Input_I1"/>
+		<Import declaration="logiBUS::io::DQ::logiBUS_DO::Output_Q1"/>
 	</CompilerInfo>
 	<SubAppInterfaceList>
 	</SubAppInterfaceList>
 	<SubAppNetwork>
-		<FB Name="DigitalOutput_Q1" Type="logiBUS_QX" x="-5200" y="500">
+		<FB Name="DigitalOutput_Q1" Type="logiBUS::io::DQ::logiBUS_QX" x="-5200" y="500">
 			<Parameter Name="QI" Value="TRUE"/>
-			<Parameter Name="Output" Value="logiBUS_DO::Output_Q1"/>
+			<Parameter Name="Output" Value="Output_Q1"/>
 		</FB>
-		<FB Name="DigitalInput_I1" Type="logiBUS_IX" x="-8800" y="400">
+		<FB Name="DigitalInput_I1" Type="logiBUS::io::DI::logiBUS_IX" x="-8800" y="400">
 			<Parameter Name="QI" Value="TRUE"/>
-			<Parameter Name="Input" Value="logiBUS_DI::Input_I1"/>
+			<Parameter Name="Input" Value="Input_I1"/>
 		</FB>
-		<FB Name="E_TOF" Type="E_TOF" x="-7200" y="600">
+		<FB Name="E_TOF" Type="iec61499::events::timers::E_TOF" x="-7200" y="600">
 			<Parameter Name="PT" Value="T#5s"/>
 		</FB>
 		<EventConnections>
-			<Connection Source="DigitalInput_I1.IND" Destination="E_TOF.REQ"/>
-			<Connection Source="E_TOF.CNF" Destination="DigitalOutput_Q1.REQ"/>
+			<Connection Source="DigitalInput_I1.IND" Destination="E_TOF.REQ" dx1="426.67"/>
+			<Connection Source="E_TOF.CNF" Destination="DigitalOutput_Q1.REQ" dx1="566.67"/>
 		</EventConnections>
 		<DataConnections>
-			<Connection Source="DigitalInput_I1.IN" Destination="E_TOF.IN" dx1="80"/>
+			<Connection Source="DigitalInput_I1.IN" Destination="E_TOF.IN" dx1="253.33"/>
 			<Connection Source="E_TOF.Q" Destination="DigitalOutput_Q1.OUT" dx1="620"/>
 		</DataConnections>
 	</SubAppNetwork>

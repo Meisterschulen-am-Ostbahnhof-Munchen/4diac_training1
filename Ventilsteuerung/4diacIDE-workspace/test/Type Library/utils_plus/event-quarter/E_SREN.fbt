@@ -1,20 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<FBType Name="E_SREN" Comment="Event-driven quad-state" >
-	<Identification Standard="61499-1 Annex A" Description="Copyright (c)    &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0  &#10;&#10;&#10;The Output Q will be TRUE only at S.  &#10;The Output Q will be FALSE only at R and ERR.  &#10;The Output Q will be not changed at NONE  " >
+<FBType Name="E_SREN" Comment="Event-driven quad-state">
+	<Identification Standard="61499-1 Annex A" Description="Copyright (c)    &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0  &#10;&#10;&#10;The Output Q will be TRUE only at S.  &#10;The Output Q will be FALSE only at R and ERR.  &#10;The Output Q will be not changed at NONE  ">
 	</Identification>
 	<InterfaceList>
 		<EventInputs>
-			<Event Name="S" Type="Event" Comment="Enabled (on, active, etc.)" >
+			<Event Name="S" Type="Event" Comment="Enabled (on, active, etc.)">
 			</Event>
-			<Event Name="R" Type="Event" Comment="Disabled (off, passive, etc.)" >
+			<Event Name="R" Type="Event" Comment="Disabled (off, passive, etc.)">
 			</Event>
-			<Event Name="ERR" Type="Event" Comment="Error indicator" >
+			<Event Name="ERR" Type="Event" Comment="Error indicator">
 			</Event>
-			<Event Name="NONE" Type="Event" Comment="Not available or not installed" >
+			<Event Name="NONE" Type="Event" Comment="Not available or not installed">
 			</Event>
 		</EventInputs>
 		<EventOutputs>
-			<Event Name="EO" Type="Event" Comment="Output Q has changed" >
+			<Event Name="EO" Type="Event" Comment="Output Q has changed">
 				<With Var="Q"/>
 				<With Var="QB"/>
 			</Event>
@@ -102,5 +102,5 @@ END_ALGORITHM
 ]]></ST>
 		</Algorithm>
 	</BasicFB>
-
+	<Attribute Name="eclipse4diac::core::TypeHash" Value="''"/>
 </FBType>

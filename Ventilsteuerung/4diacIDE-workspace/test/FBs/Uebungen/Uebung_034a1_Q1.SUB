@@ -5,15 +5,16 @@
 	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2023-10-23">
 	</VersionInfo>
 	<CompilerInfo>
+		<Import declaration="logiBUS::io::DQ::logiBUS_DO::Output_Q1"/>
 	</CompilerInfo>
 	<SubAppInterfaceList>
 	</SubAppInterfaceList>
 	<SubAppNetwork>
-		<FB Name="F_DWORD_TO_UDINT" Type="F_DWORD_TO_UDINT" x="1360" y="2386.66">
+		<FB Name="F_DWORD_TO_UDINT" Type="iec61131::conversion::F_DWORD_TO_UDINT" x="1360" y="2386.66">
 		</FB>
-		<FB Name="PWMOutput_Q1" Type="logiBUS_QD_PWM" x="1700" y="1000">
+		<FB Name="PWMOutput_Q1" Type="logiBUS::io::DQ::logiBUS_QD_PWM" x="1700" y="1000">
 			<Parameter Name="QI" Value="TRUE"/>
-			<Parameter Name="Output" Value="logiBUS_DO::Output_Q1"/>
+			<Parameter Name="Output" Value="Output_Q1"/>
 		</FB>
 		<FB Name="PWM_Value" Type="NumericValue_ID" x="-4000" y="900">
 			<Parameter Name="QI" Value="TRUE"/>
@@ -21,12 +22,12 @@
 		</FB>
 		<Comment Comment="ACHTUNG !! &#10;IND erscheint erst, &#10;wenn man die Numeric Value mit OK Bestätigt. &#10;nicht bei Button Druck. &#10;" x="-5900" y="700" width="1480" height="800"/>
 		<EventConnections>
-			<Connection Source="PWM_Value.IND" Destination="PWMOutput_Q1.REQ"/>
+			<Connection Source="PWM_Value.IND" Destination="PWMOutput_Q1.REQ" dx1="2360"/>
 			<Connection Source="PWM_Value.IND" Destination="F_DWORD_TO_UDINT.REQ" dx1="3013.33"/>
 		</EventConnections>
 		<DataConnections>
 			<Connection Source="PWM_Value.IN" Destination="F_DWORD_TO_UDINT.IN" dx1="2286.67"/>
-			<Connection Source="PWM_Value.IN" Destination="PWMOutput_Q1.OUT"/>
+			<Connection Source="PWM_Value.IN" Destination="PWMOutput_Q1.OUT" dx1="2360"/>
 		</DataConnections>
 	</SubAppNetwork>
 </SubAppType>

@@ -5,6 +5,9 @@
 	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2023-10-23">
 	</VersionInfo>
 	<CompilerInfo>
+		<Import declaration="DataPanel_MI_DO::DigitalOutput_1A"/>
+		<Import declaration="DefaultPool::SoftKey_F1"/>
+		<Import declaration="MI::MI_00"/>
 	</CompilerInfo>
 	<SubAppInterfaceList>
 	</SubAppInterfaceList>
@@ -14,15 +17,15 @@
 			<Parameter Name="PARAMS" Value="">
 				<Attribute Name="Visible" Value="false"/>
 			</Parameter>
-			<Parameter Name="u8SAMember" Value="MI::MI_00"/>
-			<Parameter Name="Output" Value="DataPanel_MI_DO::DigitalOutput_1A"/>
+			<Parameter Name="u8SAMember" Value="MI_00"/>
+			<Parameter Name="Output" Value="DigitalOutput_1A"/>
 		</FB>
 		<FB Name="SoftKey_F1" Type="Softkey_IX" x="-4600" y="-500">
 			<Parameter Name="QI" Value="TRUE"/>
 			<Parameter Name="PARAMS" Value="">
 				<Attribute Name="Visible" Value="false"/>
 			</Parameter>
-			<Parameter Name="u16ObjId" Value="DefaultPool::SoftKey_F1"/>
+			<Parameter Name="u16ObjId" Value="SoftKey_F1"/>
 		</FB>
 		<EventConnections>
 			<Connection Source="SoftKey_F1.IND" Destination="DigitalOutput_Q1.REQ" dx1="1206.67"/>

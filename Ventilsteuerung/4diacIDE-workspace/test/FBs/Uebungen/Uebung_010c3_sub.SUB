@@ -5,17 +5,20 @@
 	<VersionInfo Version="1.0" Author="franz" Date="2025-07-26">
 	</VersionInfo>
 	<CompilerInfo>
+		<Import declaration="isobus::ut::IDs::ID_NULL"/>
+		<Import declaration="logiBUS::io::DQ::logiBUS_DO"/>
+		<Import declaration="logiBUS::io::DQ::logiBUS_DO_S"/>
 	</CompilerInfo>
 	<SubAppInterfaceList>
 		<InputVars>
-			<VarDeclaration Name="u16ObjId" Type="UINT" Comment="Object ID" InitialValue="isobus::ID_NULL"/>
-			<VarDeclaration Name="Output" Type="logiBUS_DO_S" Comment="Identify the Output Output_Q1..Q8" InitialValue="logiBUS_DO::Invalid"/>
+			<VarDeclaration Name="u16ObjId" Type="UINT" Comment="Object ID" InitialValue="ID_NULL"/>
+			<VarDeclaration Name="Output" Type="logiBUS::io::DQ::logiBUS_DO_S" Comment="Identify the Output Output_Q1..Q8" InitialValue="logiBUS_DO::Invalid"/>
 		</InputVars>
 	</SubAppInterfaceList>
 	<SubAppNetwork>
 		<SubApp Name="GreenWhiteBackground" Type="GreenWhiteBackground" x="3200" y="1200">
 		</SubApp>
-		<FB Name="DigitalOutput_Q1" Type="logiBUS_QX" x="3200" y="200">
+		<FB Name="DigitalOutput_Q1" Type="logiBUS::io::DQ::logiBUS_QX" x="3200" y="200">
 			<Parameter Name="QI" Value="TRUE"/>
 			<Parameter Name="PARAMS" Value="">
 				<Attribute Name="Visible" Value="false"/>

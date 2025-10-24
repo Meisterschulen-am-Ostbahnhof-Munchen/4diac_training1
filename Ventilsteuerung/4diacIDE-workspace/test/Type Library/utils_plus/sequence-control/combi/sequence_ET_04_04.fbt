@@ -5,6 +5,8 @@
 	<VersionInfo Organization="HR Agrartechnik GmbH" Version="1.0" Author="Franz Höpfinger" Date="2024-03-02">
 	</VersionInfo>
 	<CompilerInfo>
+		<Import declaration="eclipse4diac::core::TypeHash"/>
+		<Import declaration="sequence::NO_TIME"/>
 	</CompilerInfo>
 	<InterfaceList>
 		<EventInputs>
@@ -63,13 +65,13 @@
 			</Event>
 		</EventOutputs>
 		<InputVars>
-			<VarDeclaration Name="DT_S1_S2" Type="TIME" Comment="State_01 to State_02 timed, set to NO_TIME to disable" InitialValue="sequence::NO_TIME"/>
-			<VarDeclaration Name="DT_S2_S3" Type="TIME" Comment="State_02 to State_03 timed, set to NO_TIME to disable" InitialValue="sequence::NO_TIME"/>
-			<VarDeclaration Name="DT_S3_S4" Type="TIME" Comment="State_03 to State_04 timed, set to NO_TIME to disable" InitialValue="sequence::NO_TIME"/>
-			<VarDeclaration Name="DT_S5_S6" Type="TIME" Comment="State_05 to State_06 timed, set to NO_TIME to disable" InitialValue="sequence::NO_TIME"/>
-			<VarDeclaration Name="DT_S6_S7" Type="TIME" Comment="State_06 to State_07 timed, set to NO_TIME to disable" InitialValue="sequence::NO_TIME"/>
-			<VarDeclaration Name="DT_S7_S8" Type="TIME" Comment="State_07 to State_08 timed, set to NO_TIME to disable" InitialValue="sequence::NO_TIME"/>
-			<VarDeclaration Name="DT_S8_START" Type="TIME" Comment="State_08 to START timed, set to NO_TIME to disable" InitialValue="sequence::NO_TIME"/>
+			<VarDeclaration Name="DT_S1_S2" Type="TIME" Comment="State_01 to State_02 timed, set to NO_TIME to disable" InitialValue="NO_TIME"/>
+			<VarDeclaration Name="DT_S2_S3" Type="TIME" Comment="State_02 to State_03 timed, set to NO_TIME to disable" InitialValue="NO_TIME"/>
+			<VarDeclaration Name="DT_S3_S4" Type="TIME" Comment="State_03 to State_04 timed, set to NO_TIME to disable" InitialValue="NO_TIME"/>
+			<VarDeclaration Name="DT_S5_S6" Type="TIME" Comment="State_05 to State_06 timed, set to NO_TIME to disable" InitialValue="NO_TIME"/>
+			<VarDeclaration Name="DT_S6_S7" Type="TIME" Comment="State_06 to State_07 timed, set to NO_TIME to disable" InitialValue="NO_TIME"/>
+			<VarDeclaration Name="DT_S7_S8" Type="TIME" Comment="State_07 to State_08 timed, set to NO_TIME to disable" InitialValue="NO_TIME"/>
+			<VarDeclaration Name="DT_S8_START" Type="TIME" Comment="State_08 to START timed, set to NO_TIME to disable" InitialValue="NO_TIME"/>
 		</InputVars>
 		<OutputVars>
 			<VarDeclaration Name="STATE_NR" Type="SINT" Comment="State Number, START = 0, State_01 = 1 and so on. "/>
@@ -83,7 +85,7 @@
 			<VarDeclaration Name="DO_S8" Type="BOOL" Comment="Output if State_05 is active"/>
 		</OutputVars>
 		<Plugs>
-			<AdapterDeclaration Name="timeOut" Type="ATimeOut" Comment="timeOut Adapter"/>
+			<AdapterDeclaration Name="timeOut" Type="iec61499::events::ATimeOut" Comment="timeOut Adapter"/>
 		</Plugs>
 	</InterfaceList>
 	<BasicFB>
@@ -385,5 +387,5 @@ END_ALGORITHM
 ]]></ST>
 		</Algorithm>
 	</BasicFB>
-
+	<Attribute Name="eclipse4diac::core::TypeHash" Value="''"/>
 </FBType>

@@ -1,22 +1,26 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<FBType Name="Q_ActiveMask" Comment="Command change active mask( Part 6 - F.34 )" >
-	<Identification Standard="ISO 11783-6" Description="Copyright (c) 2022 HR Agrartechnik GmbH  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0  &#10;   &#10;   &#10;see Description Tab" >
+<FBType Name="Q_ActiveMask" Comment="Command change active mask( Part 6 - F.34 )">
+	<Identification Standard="ISO 11783-6" Description="Copyright (c) 2022 HR Agrartechnik GmbH  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0  &#10;   &#10;   &#10;see Description Tab">
 	</Identification>
 	<VersionInfo Organization="HR Agrartechnik GmbH" Version="1.0" Author="Franz Höpfinger" Date="2022-07-08">
 	</VersionInfo>
+	<CompilerInfo packageName="isobus::ut">
+		<Import declaration="eclipse4diac::core::TypeHash"/>
+		<Import declaration="isobus::ut::IDs::ID_NULL"/>
+	</CompilerInfo>
 	<InterfaceList>
 		<EventInputs>
-			<Event Name="INIT" Type="EInit" Comment="Service Initialization" >
+			<Event Name="INIT" Type="EInit" Comment="Service Initialization">
 			</Event>
-			<Event Name="REQ" Type="Event" Comment="Service Request" >
+			<Event Name="REQ" Type="Event" Comment="Service Request">
 				<With Var="u16NewMaskId"/>
 				<With Var="u16WorkSetId"/>
 			</Event>
 		</EventInputs>
 		<EventOutputs>
-			<Event Name="INITO" Type="EInit" Comment="Initialization Confirm" >
+			<Event Name="INITO" Type="EInit" Comment="Initialization Confirm">
 			</Event>
-			<Event Name="CNF" Type="Event" Comment="Confirmation of Requested Service" >
+			<Event Name="CNF" Type="Event" Comment="Confirmation of Requested Service">
 				<With Var="STATUS"/>
 				<With Var="u16OldMaskId"/>
 				<With Var="s16result"/>
@@ -24,8 +28,8 @@
 			</Event>
 		</EventOutputs>
 		<InputVars>
-			<VarDeclaration Name="u16WorkSetId" Type="UINT" Comment="WorkingSet Object ID "/>
-			<VarDeclaration Name="u16NewMaskId" Type="UINT" Comment="Object ID of new active (data/alarm)-mask"/>
+			<VarDeclaration Name="u16WorkSetId" Type="UINT" Comment="WorkingSet Object ID " InitialValue="ID_NULL"/>
+			<VarDeclaration Name="u16NewMaskId" Type="UINT" Comment="Object ID of new active (data/alarm)-mask" InitialValue="ID_NULL"/>
 		</InputVars>
 		<OutputVars>
 			<VarDeclaration Name="STATUS" Type="STRING" Comment="Service Status"/>
@@ -58,5 +62,5 @@
 	<li><span style="font-size:14px"><span style="color:#2980b9">VT_E_NOT_ALIVE (-130) - </span>Identifier for instance valid, but VT Dead.</span></li>
 </ul>
 ]]></Attribute>
-
+	<Attribute Name="eclipse4diac::core::TypeHash" Value="''"/>
 </FBType>

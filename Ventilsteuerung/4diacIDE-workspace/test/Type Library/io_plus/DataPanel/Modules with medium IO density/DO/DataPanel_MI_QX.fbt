@@ -8,6 +8,10 @@
 	</VersionInfo>
 	<VersionInfo Organization="fortiss GmbH" Version="1.2" Author="Monika Wenger" Date="2015-06-10">
 	</VersionInfo>
+	<CompilerInfo>
+		<Import declaration="DataPanel_MI_DO::Invalid"/>
+		<Import declaration="eclipse4diac::core::TypeHash"/>
+	</CompilerInfo>
 	<InterfaceList>
 		<EventInputs>
 			<Event Name="INIT" Type="EInit" Comment="Service Initialization">
@@ -35,13 +39,13 @@
 			<VarDeclaration Name="QI" Type="BOOL" Comment="Event Input Qualifier"/>
 			<VarDeclaration Name="PARAMS" Type="STRING" Comment="Service Parameters"/>
 			<VarDeclaration Name="OUT" Type="BOOL" Comment="Output data to resource"/>
-			<VarDeclaration Name="u8SAMember" Type="USINT" Comment="Node SA 224..239"  InitialValue="MI::MI_00"/>
-			<VarDeclaration Name="Output" Type="DataPanel_MI_DO_S" Comment="Identify the Output DigitalOutput_1A..8B and Input_Power_Port_5..8" InitialValue="DataPanel_MI_DO::Invalid"/>
+			<VarDeclaration Name="u8SAMember" Type="USINT" Comment="Node SA 224..239" InitialValue="MI::MI_00"/>
+			<VarDeclaration Name="Output" Type="DataPanel_MI_DO_S" Comment="Identify the Output DigitalOutput_1A..8B and Input_Power_Port_5..8" InitialValue="Invalid"/>
 		</InputVars>
 		<OutputVars>
 			<VarDeclaration Name="QO" Type="BOOL" Comment="Event Output Qualifier"/>
 			<VarDeclaration Name="STATUS" Type="STRING" Comment="Service Status"/>
 		</OutputVars>
 	</InterfaceList>
-
+	<Attribute Name="eclipse4diac::core::TypeHash" Value="''"/>
 </FBType>

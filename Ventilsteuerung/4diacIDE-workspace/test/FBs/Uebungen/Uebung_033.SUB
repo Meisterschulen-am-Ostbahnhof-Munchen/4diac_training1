@@ -5,17 +5,35 @@
 	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2023-10-23">
 	</VersionInfo>
 	<CompilerInfo>
+		<Import declaration="logiBUS::io::DI::logiBUS_DI::Input_I1"/>
+		<Import declaration="logiBUS::io::DI::logiBUS_DI::Input_I2"/>
+		<Import declaration="logiBUS::io::DI::logiBUS_DI::Input_I3"/>
+		<Import declaration="logiBUS::io::DI::logiBUS_DI::Input_I4"/>
+		<Import declaration="logiBUS::io::DO_LED::LED_COLOURS"/>
+		<Import declaration="logiBUS::io::DO_LED::LED_strip"/>
 	</CompilerInfo>
 	<SubAppInterfaceList>
 	</SubAppInterfaceList>
 	<SubAppNetwork>
-		<SubApp Name="GREEN" Type="Uebung_033_sub" x="-4533.33" y="-946.67">
+		<SubApp Name="GREEN" Type="Uebung_033_sub" x="-4000" y="-400">
+			<Parameter Name="Input" Value="Input_I1"/>
+			<Parameter Name="Colour" Value="LED_COLOURS::LED_GREEN"/>
+			<Parameter Name="Output" Value="LED_strip::Output_strip"/>
 		</SubApp>
-		<SubApp Name="YELLOW" Type="Uebung_033_sub" x="-4533.33" y="-533.33">
+		<SubApp Name="YELLOW" Type="Uebung_033_sub" x="-4000" y="200">
+			<Parameter Name="Input" Value="Input_I2"/>
+			<Parameter Name="Colour" Value="LED_COLOURS::LED_YELLOW"/>
+			<Parameter Name="Output" Value="LED_strip::Output_strip"/>
 		</SubApp>
-		<SubApp Name="RED" Type="Uebung_033_sub" x="-4533.33" y="-133.33">
+		<SubApp Name="RED" Type="Uebung_033_sub" x="-4000" y="800">
+			<Parameter Name="Input" Value="Input_I3"/>
+			<Parameter Name="Colour" Value="LED_COLOURS::LED_RED"/>
+			<Parameter Name="Output" Value="LED_strip::Output_strip"/>
 		</SubApp>
-		<SubApp Name="BLUE" Type="Uebung_033_sub" x="-4533.33" y="266.67">
+		<SubApp Name="BLUE" Type="Uebung_033_sub" x="-4000" y="1400">
+			<Parameter Name="Input" Value="Input_I4"/>
+			<Parameter Name="Colour" Value="LED_COLOURS::LED_BLUE"/>
+			<Parameter Name="Output" Value="LED_strip::Output_strip"/>
 		</SubApp>
 	</SubAppNetwork>
 </SubAppType>

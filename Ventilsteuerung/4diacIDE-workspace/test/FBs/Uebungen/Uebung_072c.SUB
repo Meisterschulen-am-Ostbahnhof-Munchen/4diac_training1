@@ -5,18 +5,20 @@
 	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2023-10-23">
 	</VersionInfo>
 	<CompilerInfo>
+		<Import declaration="DefaultPool_TECU::NumberVariable_Ground_based_machine_speed"/>
+		<Import declaration="DefaultPool_TECU::NumberVariable_Wheel_based_machine_distance"/>
 	</CompilerInfo>
 	<SubAppInterfaceList>
 	</SubAppInterfaceList>
 	<SubAppNetwork>
-		<FB Name="I_GBSD" Type="I_GBSD" x="-5200" y="500">
+		<FB Name="I_GBSD" Type="isobus::tecu::I_GBSD" x="-5200" y="500">
 			<Parameter Name="QI" Value="TRUE"/>
 		</FB>
-		<FB Name="Q_NumericValue_GBSD" Type="Q_NumericValue" x="-400" y="500">
-			<Parameter Name="u16ObjId" Value="DefaultPool_TECU::NumberVariable_Ground_based_machine_speed"/>
+		<FB Name="Q_NumericValue_GBSD" Type="isobus::ut::Q_NumericValue" x="-400" y="500">
+			<Parameter Name="u16ObjId" Value="NumberVariable_Ground_based_machine_speed"/>
 		</FB>
-		<FB Name="Q_NumberVariable_Wheel_based_machine_distance" Type="Q_NumericValue" x="3300" y="1400">
-			<Parameter Name="u16ObjId" Value="DefaultPool_TECU::NumberVariable_Wheel_based_machine_distance"/>
+		<FB Name="Q_NumberVariable_Wheel_based_machine_distance" Type="isobus::ut::Q_NumericValue" x="3300" y="1400">
+			<Parameter Name="u16ObjId" Value="NumberVariable_Wheel_based_machine_distance"/>
 		</FB>
 		<FB Name="INTEGRAL" Type="utils::math::INTEGRAL" x="1200" y="2800">
 		</FB>
@@ -24,15 +26,15 @@
 		</FB>
 		<FB Name="CYCLE_TIME" Type="utils::timing::CYCLE_TIME" x="-2800" y="3000">
 		</FB>
-		<FB Name="F_UINT_TO_REAL" Type="F_UINT_TO_REAL" x="-800" y="2900">
+		<FB Name="F_UINT_TO_REAL" Type="iec61131::conversion::F_UINT_TO_REAL" x="-800" y="2900">
 		</FB>
-		<FB Name="F_REAL_TO_UDINT" Type="F_REAL_TO_UDINT" x="3500" y="2900">
+		<FB Name="F_REAL_TO_UDINT" Type="iec61131::conversion::F_REAL_TO_UDINT" x="3500" y="2900">
 		</FB>
-		<FB Name="F_SUB" Type="F_SUB" x="8800" y="2300">
+		<FB Name="F_SUB" Type="iec61131::arithmetic::F_SUB" x="8800" y="2300">
 		</FB>
-		<FB Name="F_UDINT_TO_LINT" Type="F_UDINT_TO_LINT" x="6000" y="2000">
+		<FB Name="F_UDINT_TO_LINT" Type="iec61131::conversion::F_UDINT_TO_LINT" x="6000" y="2000">
 		</FB>
-		<FB Name="F_UDINT_TO_LINT_1" Type="F_UDINT_TO_LINT" x="6000" y="2500">
+		<FB Name="F_UDINT_TO_LINT_1" Type="iec61131::conversion::F_UDINT_TO_LINT" x="6000" y="2500">
 		</FB>
 		<EventConnections>
 			<Connection Source="I_GBSD.IND" Destination="Q_NumericValue_GBSD.REQ"/>
