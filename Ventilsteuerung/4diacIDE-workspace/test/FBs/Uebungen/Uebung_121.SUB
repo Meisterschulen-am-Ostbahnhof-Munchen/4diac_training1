@@ -5,7 +5,7 @@
 	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2023-10-23">
 	</VersionInfo>
 	<CompilerInfo>
-		<Import declaration="isobus::pgn::ISOUSERHOME_e::intern"/>
+		<Import declaration="isobus::pgn::ISOUSERHOME_e::thisMember"/>
 		<Import declaration="isobus::pgn::ISO_CAN_NODE::NODE1"/>
 		<Import declaration="uebungen::Filter::FLT_ALL_PASS"/>
 	</CompilerInfo>
@@ -30,7 +30,7 @@
 		</FB>
 		<FB Name="NmGetCfInfo" Type="isobus::pgn::NmGetCfInfo" x="-1300" y="6400">
 			<Parameter Name="u8CanIdx" Value="NODE1"/>
-			<Parameter Name="member" Value="intern"/>
+			<Parameter Name="member" Value="thisMember"/>
 			<Parameter Name="address" Value="FLT_ALL_PASS"/>
 			<Parameter Name="mask" Value="FLT_ALL_PASS"/>
 		</FB>

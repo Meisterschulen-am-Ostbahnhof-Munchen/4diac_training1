@@ -7,16 +7,16 @@
 	<CompilerInfo packageName="isobus::pgn">
 	</CompilerInfo>
 	<GlobalConstants>
-		<VarDeclaration Name="NULL_A" Type="BYTE" Comment="SAs with special meaning" InitialValue="254"/>
-		<VarDeclaration Name="GLOBAL_A" Type="BYTE" Comment="&lt; \brief 0xFEu NULL address - only sender with network man." InitialValue="255"/>
+		<VarDeclaration Name="NULL_A" Type="INT" Comment="SAs with special meaning" InitialValue="254"/>
+		<VarDeclaration Name="GLOBAL_A" Type="INT" Comment="&lt; \brief 0xFEu NULL address - only sender with network man." InitialValue="255"/>
 	</GlobalConstants>
 	<OriginalSource><![CDATA[PACKAGE isobus::pgn;
 
 GLOBALCONSTANTS ADDRESS
 	VAR_GLOBAL CONSTANT
 		(* SAs with special meaning *)
-		NULL_A : BYTE := 254; (* *< \brief 0xFEu NULL address - only sender with network man. *)
-		GLOBAL_A : BYTE := 255; (* *< \brief 0xFFu GLOBAL address - only destination address field *)
+		NULL_A : INT := 254; (* *< \brief 0xFEu NULL address - only sender with network man. *)
+		GLOBAL_A : INT := 255; (* *< \brief 0xFFu GLOBAL address - only destination address field *)
 	END_VAR
 END_GLOBALCONSTANTS
 ]]></OriginalSource>

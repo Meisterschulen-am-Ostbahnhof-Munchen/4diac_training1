@@ -32,7 +32,8 @@
 			<Parameter Name="u32Pgn" Value="61184"/>
 			<Parameter Name="u16DaSize" Value="8"/>
 			<Parameter Name="u8Priority" Value="3"/>
-			<Parameter Name="u16CtrlTime" Value="500"/>
+			<Parameter Name="u16DefRepRate" Value="500"/>
+			<Parameter Name="u16CtrlTime" Value="1500"/>
 		</FB>
 		<FB Name="STRUCT_DEMUX" Type="eclipse4diac::convert::STRUCT_DEMUX" x="-1900" y="5300">
 			<Attribute Name="StructuredType" Type="STRING" Value="isobus::pgn::CAN_MSG"/>
@@ -45,9 +46,9 @@
 			<Connection Source="AlPgnRxNew8Bcylc_REQ.IND" Destination="STRUCT_DEMUX.REQ" dx1="366.67"/>
 		</EventConnections>
 		<DataConnections>
-			<Connection Source="NmGetCfInfo_1.sNameField" Destination="STRUCT_DEMUX_3.IN" dx1="560"/>
-			<Connection Source="NmGetCfInfo_1.sNetEv" Destination="STRUCT_DEMUX_5.IN" dx1="660"/>
-			<Connection Source="NmGetCfInfo_1.sCfInfo" Destination="STRUCT_DEMUX_4.IN" dx1="626.67"/>
+			<Connection Source="NmGetCfInfo_1.sNameField" Destination="STRUCT_DEMUX_3.IN" dx1="253.33"/>
+			<Connection Source="NmGetCfInfo_1.sNetEv" Destination="STRUCT_DEMUX_5.IN" dx1="446.67"/>
+			<Connection Source="NmGetCfInfo_1.sCfInfo" Destination="STRUCT_DEMUX_4.IN" dx1="346.67"/>
 			<Connection Source="NmGetCfInfo_1.sNetEv" Destination="AlPgnRxNew8Bcylc_REQ.NmSource"/>
 			<Connection Source="AlPgnRxNew8Bcylc_REQ.Data" Destination="STRUCT_DEMUX.IN" dx1="166.67"/>
 		</DataConnections>
