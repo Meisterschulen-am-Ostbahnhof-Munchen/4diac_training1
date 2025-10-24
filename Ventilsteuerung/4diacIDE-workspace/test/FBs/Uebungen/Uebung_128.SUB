@@ -41,14 +41,13 @@
 			<Parameter Name="Input" Value="Input_I1"/>
 			<Parameter Name="InputEvent" Value="BUTTON_SINGLE_CLICK"/>
 		</FB>
-		<FB Name="NetEv2NetEv" Type="isobus::PGN::NetEv2NetEv" x="-4900" y="4000">
-			<Parameter Name="s16Handle" Value="GLOBAL_A"/>
+		<FB Name="NetEv2NetEv" Type="isobus::pgn::NetEv2NetEv" x="-4900" y="4100">
 		</FB>
 		<EventConnections>
 			<Connection Source="NmGetCfInfo_1.IND" Destination="STRUCT_DEMUX_3.REQ" dx1="593.33"/>
 			<Connection Source="NmGetCfInfo_1.IND" Destination="STRUCT_DEMUX_4.REQ" dx1="593.33"/>
 			<Connection Source="NmGetCfInfo_1.IND" Destination="STRUCT_DEMUX_5.REQ" dx1="593.33"/>
-			<Connection Source="NmGetCfInfo_1.IND" Destination="NetEv2NetEv.REQ"/>
+			<Connection Source="NmGetCfInfo_1.IND" Destination="NetEv2NetEv.REQ" dx1="2020"/>
 			<Connection Source="DigitalInput_CLK_I1.IND" Destination="AlPgnTxNew8B.REQ" dx1="1160"/>
 			<Connection Source="NetEv2NetEv.CNF" Destination="AlPgnTxNew8B.install" dx1="853.33"/>
 		</EventConnections>
@@ -56,8 +55,8 @@
 			<Connection Source="NmGetCfInfo_1.sNameField" Destination="STRUCT_DEMUX_3.IN" dx1="560"/>
 			<Connection Source="NmGetCfInfo_1.sNetEv" Destination="STRUCT_DEMUX_5.IN" dx1="660"/>
 			<Connection Source="NmGetCfInfo_1.sCfInfo" Destination="STRUCT_DEMUX_4.IN" dx1="626.67"/>
-			<Connection Source="NmGetCfInfo_1.sNetEv" Destination="NetEv2NetEv.IN" dx1="3126.67"/>
-			<Connection Source="NetEv2NetEv." Destination="AlPgnTxNew8B.NmDestin" dx1="853.33"/>
+			<Connection Source="NmGetCfInfo_1.sNetEv" Destination="NetEv2NetEv.IN" dx1="2020"/>
+			<Connection Source="NetEv2NetEv." Destination="AlPgnTxNew8B.NmDestin" dx1="680"/>
 		</DataConnections>
 	</SubAppNetwork>
 </SubAppType>
