@@ -4,7 +4,7 @@
 	</Identification>
 	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2023-10-23">
 	</VersionInfo>
-	<CompilerInfo>
+	<CompilerInfo packageName="Uebungen">
 		<Import declaration="TCPool::DE_NUM_DEVICE"/>
 		<Import declaration="Uebungen::const::TC::DDI::ACTUAL_CONDENSED_WORK_STATE_1_16"/>
 		<Import declaration="Uebungen::const::TC::DDI::ACTUAL_VOLUME_PER_AREA_APPLICATION_RATE"/>
@@ -33,7 +33,7 @@
 		</FB>
 		<FB Name="QUARTERS_TO_BOOLS" Type="logiBUS::utils::quarter::QUARTERS_TO_BOOLS" x="3100" y="-8700">
 		</FB>
-		<SubApp Name="Out" Type="Uebung_060_sub_Outputs" x="6800" y="-10700">
+		<SubApp Name="Out" Type="Uebungen::Uebung_060_sub_Outputs" x="6800" y="-10700">
 		</SubApp>
 		<FB Name="SECTION_CONTROL_STATE_IN" Type="TC_ID" x="10900" y="-7700">
 			<Parameter Name="QI" Value="TRUE"/>

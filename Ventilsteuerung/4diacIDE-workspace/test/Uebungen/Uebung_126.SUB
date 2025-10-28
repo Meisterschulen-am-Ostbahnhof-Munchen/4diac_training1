@@ -4,7 +4,7 @@
 	</Identification>
 	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2023-10-23">
 	</VersionInfo>
-	<CompilerInfo>
+	<CompilerInfo packageName="Uebungen">
 		<Import declaration="isobus::pgn::ISOUSERHOME_e::network"/>
 		<Import declaration="isobus::pgn::ISO_CAN_NODE::NODE1"/>
 		<Import declaration="Uebungen::const::Uebung_120_129::Filter::PEAK_ADD"/>
@@ -34,7 +34,7 @@
 			<Parameter Name="u8Priority" Value="3"/>
 			<Parameter Name="u16DefRepRate" Value="500"/>
 		</FB>
-		<SubApp Name="DataSupply" Type="Uebung_12x_sub" x="-6200" y="5100">
+		<SubApp Name="DataSupply" Type="Uebungen::Uebung_12x_sub" x="-6200" y="5100">
 		</SubApp>
 		<EventConnections>
 			<Connection Source="NmGetCfInfo_1.IND" Destination="STRUCT_DEMUX_3.REQ" dx1="593.33"/>

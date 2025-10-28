@@ -4,7 +4,7 @@
 	</Identification>
 	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2023-10-23">
 	</VersionInfo>
-	<CompilerInfo>
+	<CompilerInfo packageName="Uebungen">
 		<Import declaration="logiBUS::io::DI::logiBUS_DI::Input_I1"/>
 		<Import declaration="logiBUS::io::DI::logiBUS_DI_Events::BUTTON_SINGLE_CLICK"/>
 		<Import declaration="logiBUS::io::DQ::logiBUS_DO::Output_Q1"/>
@@ -34,7 +34,6 @@
 		<FB Name="F_USINT_TO_UDINT" Type="iec61131::conversion::F_USINT_TO_UDINT" x="-2700" y="400">
 		</FB>
 		<FB Name="F_MOVE" Type="iec61131::selection::F_MOVE" x="100" y="300">
-			<Attribute Name="DataType" Value="UDINT"/>
 			<Attribute Name="DataType" Value="UDINT"/>
 		</FB>
 		<EventConnections>

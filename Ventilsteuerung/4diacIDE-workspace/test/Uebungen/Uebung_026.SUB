@@ -4,7 +4,7 @@
 	</Identification>
 	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2023-10-23">
 	</VersionInfo>
-	<CompilerInfo>
+	<CompilerInfo packageName="Uebungen">
 		<Import declaration="SoftKeyActivationCode::SK_PRESSED"/>
 		<Import declaration="SoftKeyActivationCode::SK_RELEASED"/>
 		<Import declaration="Uebungen::const::UT::DefaultPool::SoftKey_F1"/>
@@ -66,16 +66,16 @@
 		</FB>
 		<FB Name="E_REND_Einfahren_Cyl_1" Type="iec61499::events::E_REND" x="-5400" y="6800">
 		</FB>
-		<SubApp Name="Q4" Type="Uebung_026_sub" x="-2900" y="5600">
+		<SubApp Name="Q4" Type="Uebungen::Uebung_026_sub" x="-2900" y="5600">
 			<Parameter Name="Output" Value="Output_Q4"/>
 		</SubApp>
-		<SubApp Name="Q2" Type="Uebung_026_sub" x="-2800" y="700">
+		<SubApp Name="Q2" Type="Uebungen::Uebung_026_sub" x="-2800" y="700">
 			<Parameter Name="Output" Value="Output_Q2"/>
 		</SubApp>
-		<SubApp Name="Q3" Type="Uebung_026_sub" x="-2800" y="3900">
+		<SubApp Name="Q3" Type="Uebungen::Uebung_026_sub" x="-2800" y="3900">
 			<Parameter Name="Output" Value="Output_Q3"/>
 		</SubApp>
-		<SubApp Name="Q1" Type="Uebung_026_sub" x="-2900" y="-800">
+		<SubApp Name="Q1" Type="Uebungen::Uebung_026_sub" x="-2900" y="-800">
 			<Parameter Name="Output" Value="Output_Q1"/>
 		</SubApp>
 		<EventConnections>

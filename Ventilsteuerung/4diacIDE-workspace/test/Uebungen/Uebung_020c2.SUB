@@ -4,7 +4,7 @@
 	</Identification>
 	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2023-10-23">
 	</VersionInfo>
-	<CompilerInfo>
+	<CompilerInfo packageName="Uebungen">
 		<Import declaration="Uebungen::const::NVS::NVS_Keys::KEY_I1_STORE"/>
 		<Import declaration="Uebungen::const::UT::DefaultPool::InputNumber_I1"/>
 		<Import declaration="logiBUS::io::DI::logiBUS_DI::Input_I1"/>
@@ -28,7 +28,7 @@
 		</FB>
 		<FB Name="E_TON" Type="iec61499::events::timers::E_TON" x="-7100" y="500">
 		</FB>
-		<SubApp Name="Uebung_020c2_sub" Type="Uebung_020c2_sub" x="-10100" y="1700">
+		<SubApp Name="Uebung_020c2_sub" Type="Uebungen::Uebung_020c2_sub" x="-10100" y="1700">
 			<Parameter Name="KEY" Value="KEY_I1_STORE"/>
 			<Parameter Name="u16ObjId" Value="InputNumber_I1"/>
 		</SubApp>
