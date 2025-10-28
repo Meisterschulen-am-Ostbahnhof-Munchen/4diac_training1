@@ -8,6 +8,10 @@
 	</VersionInfo>
 	<VersionInfo Organization="fortiss GmbH" Version="1.2" Author="Monika Wenger" Date="2015-06-10">
 	</VersionInfo>
+	<CompilerInfo packageName="DataPanel::io::MI::DI">
+		<Import declaration="DataPanel::io::MI::const::MI"/>
+		<Import declaration="eclipse4diac::core::TypeHash"/>
+	</CompilerInfo>
 	<InterfaceList>
 		<EventInputs>
 			<Event Name="INIT" Type="EInit" Comment="Service Initialization">
@@ -40,7 +44,7 @@
 			<VarDeclaration Name="QI" Type="BOOL" Comment="Event Input Qualifier"/>
 			<VarDeclaration Name="PARAMS" Type="STRING" Comment="Service Parameters"/>
 			<VarDeclaration Name="u8SAMember" Type="USINT" Comment="Node SA 224..239" InitialValue="MI::MI_00"/>
-			<VarDeclaration Name="Input" Type="DataPanel_MI_DI_S" Comment="Identify the Input DigitalInput_5A..8B" InitialValue="DataPanel_MI_DI::Invalid"/>
+			<VarDeclaration Name="Input" Type="DataPanel::io::MI::DI::DataPanel_MI_DI_S" Comment="Identify the Input DigitalInput_5A..8B" InitialValue="DataPanel_MI_DI::Invalid"/>
 		</InputVars>
 		<OutputVars>
 			<VarDeclaration Name="QO" Type="BOOL" Comment="Event Output Qualifier"/>

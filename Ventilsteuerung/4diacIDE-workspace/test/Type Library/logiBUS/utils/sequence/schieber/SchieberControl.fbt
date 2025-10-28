@@ -4,9 +4,10 @@
 	</Identification>
 	<VersionInfo Organization="HR Agrartechnik GmbH" Version="1.0" Author="Franz Höpfinger" Date="2025-06-03">
 	</VersionInfo>
-	<CompilerInfo>
-		<Import declaration="Schieber::AufZu::STATES"/>
-		<Import declaration="Schieber::AufZu::START"/>
+	<CompilerInfo packageName="logiBUS::utils::sequence::schieber">
+		<Import declaration="eclipse4diac::core::TypeHash"/>
+		<Import declaration="logiBUS::utils::sequence::schieber::const::START"/>
+		<Import declaration="logiBUS::utils::sequence::schieber::const::STATES"/>
 	</CompilerInfo>
 	<InterfaceList>
 		<EventInputs>
@@ -14,6 +15,7 @@
 				<With Var="QI"/>
 				<With Var="DT_Opening"/>
 				<With Var="DT_Closing"/>
+				<With Var="START"/>
 			</Event>
 			<Event Name="Open" Type="Event" Comment="Open">
 			</Event>
@@ -51,9 +53,9 @@
 		</EventOutputs>
 		<InputVars>
 			<VarDeclaration Name="QI" Type="BOOL" Comment="Input event qualifier"/>
-			<VarDeclaration Name="BT" Type="SchieberStruct" Comment="Button"/>
-			<VarDeclaration Name="SK" Type="SchieberStruct" Comment="SoftKey"/>
-			<VarDeclaration Name="AUXC" Type="SchieberAuxInStruct" Comment="Auxiliary Control"/>
+			<VarDeclaration Name="BT" Type="logiBUS::utils::sequence::schieber::SchieberStruct" Comment="Button"/>
+			<VarDeclaration Name="SK" Type="logiBUS::utils::sequence::schieber::SchieberStruct" Comment="SoftKey"/>
+			<VarDeclaration Name="AUXC" Type="logiBUS::utils::sequence::schieber::SchieberAuxInStruct" Comment="Auxiliary Control"/>
 			<VarDeclaration Name="DT_Opening" Type="TIME" Comment="TIME Setting"/>
 			<VarDeclaration Name="DT_Closing" Type="TIME" Comment="TIME Setting"/>
 			<VarDeclaration Name="START" Type="UINT" InitialValue="START::STARTUnknown"/>
@@ -62,7 +64,7 @@
 			<VarDeclaration Name="QO" Type="BOOL" Comment="Output event qualifier"/>
 			<VarDeclaration Name="Button" Type="UINT" Comment="Button Out"/>
 			<VarDeclaration Name="Softkey" Type="UINT" Comment="Softkey Out"/>
-			<VarDeclaration Name="Auxiliary" Type="SchieberAuxOutStruct" Comment="Auxiliary Control Out"/>
+			<VarDeclaration Name="Auxiliary" Type="logiBUS::utils::sequence::schieber::SchieberAuxOutStruct" Comment="Auxiliary Control Out"/>
 			<VarDeclaration Name="DO_POWERED" Type="BOOL" Comment="Actuate &quot;Open&quot; Valve for Pneumatic"/>
 			<VarDeclaration Name="DO_OPEN" Type="BOOL" Comment="Actuate &quot;Open&quot; Valve"/>
 			<VarDeclaration Name="DO_CLOSE" Type="BOOL" Comment="Actuate &quot;Close&quot; Valve"/>
