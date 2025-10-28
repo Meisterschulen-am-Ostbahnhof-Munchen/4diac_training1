@@ -6,7 +6,7 @@
 	</VersionInfo>
 	<CompilerInfo packageName="Uebungen">
 		<Import declaration="Uebungen::const::UT::DefaultPool::AuxFunction2_X1"/>
-		<Import declaration="isobus::UT_io::aux::in::AuxiliaryState"/>
+		<Import declaration="isobus::UT::io::Auxiliary::IN::AuxiliaryState"/>
 		<Import declaration="logiBUS::io::DQ::logiBUS_DO::Output_Q1"/>
 	</CompilerInfo>
 	<SubAppInterfaceList>
@@ -16,7 +16,7 @@
 			<Parameter Name="QI" Value="TRUE"/>
 			<Parameter Name="Output" Value="Output_Q1"/>
 		</FB>
-		<FB Name="Button_A1" Type="isobus::UT_io::aux::in::Aux_IE" x="-7200" y="-200">
+		<FB Name="Button_A1" Type="isobus::UT::io::Auxiliary::IN::Aux_IE" x="-7200" y="-200">
 			<Parameter Name="QI" Value="TRUE"/>
 			<Parameter Name="u16ObjId" Value="AuxFunction2_X1"/>
 			<Parameter Name="InputEvent" Value="AuxiliaryState::AuxHeld"/>

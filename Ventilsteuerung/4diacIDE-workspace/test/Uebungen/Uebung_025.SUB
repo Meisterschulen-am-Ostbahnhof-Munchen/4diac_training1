@@ -5,7 +5,7 @@
 	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2023-10-23">
 	</VersionInfo>
 	<CompilerInfo packageName="Uebungen">
-		<Import declaration="SoftKeyActivationCode::SK_RELEASED"/>
+		<Import declaration="isobus::UT::io::Softkey::SoftKeyActivationCode::SK_RELEASED"/>
 		<Import declaration="Uebungen::const::UT::DefaultPool::SoftKey_F1"/>
 		<Import declaration="Uebungen::const::UT::DefaultPool::SoftKey_F2"/>
 		<Import declaration="Uebungen::const::UT::DefaultPool::SoftKey_F3"/>
@@ -23,14 +23,14 @@
 			<Parameter Name="QI" Value="TRUE"/>
 			<Parameter Name="Output" Value="Output_Q1"/>
 		</FB>
-		<FB Name="SoftKey_UP_F1" Type="Softkey_IE" x="-6833.33" y="-500">
+		<FB Name="SoftKey_UP_F1" Type="isobus::UT::io::Softkey::Softkey_IE" x="-6833.33" y="-500">
 			<Parameter Name="QI" Value="TRUE"/>
 			<Parameter Name="u16ObjId" Value="SoftKey_F1"/>
 			<Parameter Name="InputEvent" Value="SK_RELEASED"/>
 		</FB>
 		<FB Name="E_SR_Ausfahren_Cyl_1" Type="iec61499::events::E_SR" x="-4800" y="-266.67">
 		</FB>
-		<FB Name="SoftKey_F2_DOWN" Type="Softkey_IE" x="-6833.33" y="1000">
+		<FB Name="SoftKey_F2_DOWN" Type="isobus::UT::io::Softkey::Softkey_IE" x="-6833.33" y="1000">
 			<Parameter Name="QI" Value="TRUE"/>
 			<Parameter Name="u16ObjId" Value="SoftKey_F2"/>
 			<Parameter Name="InputEvent" Value="SK_RELEASED"/>
@@ -44,14 +44,14 @@
 		<FB Name="E_SR_Ausfahren_Cyl_2" Type="iec61499::events::E_SR" x="-4833.33" y="1366.67">
 		</FB>
 		<Comment Comment="Endlage Ausfahren_Cyl_2 &#10;" x="-8500" y="2500" width="1373.33" height="366.67"/>
-		<FB Name="SoftKey_F3_DOWN" Type="Softkey_IE" x="-6833.33" y="2333.33">
+		<FB Name="SoftKey_F3_DOWN" Type="isobus::UT::io::Softkey::Softkey_IE" x="-6833.33" y="2333.33">
 			<Parameter Name="QI" Value="TRUE"/>
 			<Parameter Name="u16ObjId" Value="SoftKey_F3"/>
 			<Parameter Name="InputEvent" Value="SK_RELEASED"/>
 		</FB>
 		<Comment Comment="Ausfahren_Cyl_1" x="-1866.67" y="-933.33" width="1373.33" height="366.67"/>
 		<Comment Comment="Ausfahren_Cyl_2" x="-1866.67" y="666.67" width="1373.33" height="366.67"/>
-		<FB Name="SoftKey_F9_DOWN" Type="Softkey_IE" x="-6606.67" y="6586.67">
+		<FB Name="SoftKey_F9_DOWN" Type="isobus::UT::io::Softkey::Softkey_IE" x="-6606.67" y="6586.67">
 			<Parameter Name="QI" Value="TRUE"/>
 			<Parameter Name="u16ObjId" Value="SoftKey_F9"/>
 			<Parameter Name="InputEvent" Value="SK_RELEASED"/>
@@ -70,7 +70,7 @@
 		<FB Name="E_SR_Einfahren_Cyl_1" Type="iec61499::events::E_SR" x="-4606.67" y="5620">
 		</FB>
 		<Comment Comment="Endlage Einfahren_Cyl_1  &#10;" x="-8273.33" y="6753.33" width="1373.33" height="366.67"/>
-		<FB Name="SoftKey_F8_DOWN" Type="Softkey_IE" x="-6606.67" y="5253.33">
+		<FB Name="SoftKey_F8_DOWN" Type="isobus::UT::io::Softkey::Softkey_IE" x="-6606.67" y="5253.33">
 			<Parameter Name="QI" Value="TRUE"/>
 			<Parameter Name="u16ObjId" Value="SoftKey_F8"/>
 			<Parameter Name="InputEvent" Value="SK_RELEASED"/>

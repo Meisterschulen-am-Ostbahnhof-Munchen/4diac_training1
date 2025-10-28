@@ -5,24 +5,24 @@
 	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2023-10-23">
 	</VersionInfo>
 	<CompilerInfo packageName="Uebungen">
-		<Import declaration="SoftKeyActivationCode::SK_RELEASED"/>
+		<Import declaration="isobus::UT::io::Softkey::SoftKeyActivationCode::SK_RELEASED"/>
 		<Import declaration="Uebungen::const::UT::DefaultPool::SoftKey_F1"/>
 	</CompilerInfo>
 	<SubAppInterfaceList>
 	</SubAppInterfaceList>
 	<SubAppNetwork>
-		<FB Name="SoftKey_UP_F1" Type="Softkey_IE" x="-4500" y="-900">
+		<FB Name="SoftKey_UP_F1" Type="isobus::UT::io::Softkey::Softkey_IE" x="-4500" y="-900">
 			<Parameter Name="QI" Value="TRUE"/>
 			<Parameter Name="u16ObjId" Value="SoftKey_F1"/>
 			<Parameter Name="InputEvent" Value="SK_RELEASED"/>
 		</FB>
-		<FB Name="Q_CtrlAudioSignal_0" Type="isobus::ut::Q_CtrlAudioSignal" x="-2700" y="-800">
+		<FB Name="Q_CtrlAudioSignal_0" Type="isobus::UT::Q::Q_CtrlAudioSignal" x="-2700" y="-800">
 			<Parameter Name="u8NumOfRepit" Value="1"/>
 			<Parameter Name="u16Frequency" Value="440"/>
 			<Parameter Name="u16OnTimeMs" Value="150"/>
 			<Parameter Name="u16OffTimeMs" Value="0"/>
 		</FB>
-		<FB Name="Q_CtrlAudioSignal_1" Type="isobus::ut::Q_CtrlAudioSignal" x="1200" y="-800">
+		<FB Name="Q_CtrlAudioSignal_1" Type="isobus::UT::Q::Q_CtrlAudioSignal" x="1200" y="-800">
 			<Parameter Name="u8NumOfRepit" Value="1"/>
 			<Parameter Name="u16Frequency" Value="880"/>
 			<Parameter Name="u16OnTimeMs" Value="150"/>

@@ -12,13 +12,8 @@
 	<SubAppNetwork>
 		<FB Name="F_DWORD_TO_UDINT" Type="iec61131::conversion::F_DWORD_TO_UDINT" x="-3200" y="1000">
 		</FB>
-		<FB Name="InputNumber_I1" Type="NumericValue_ID" x="-5000" y="600">
-			<Parameter Name="QI" Value="TRUE">
-				<Attribute Name="Visible" Value="false"/>
-			</Parameter>
-			<Parameter Name="PARAMS" Value="">
-				<Attribute Name="Visible" Value="false"/>
-			</Parameter>
+		<FB Name="InputNumber_I1" Type="isobus::UT::io::NumericValue::NumericValue_ID" x="-5000" y="600">
+			<Parameter Name="QI" Value="TRUE"/>
 			<Parameter Name="u16ObjId" Value="InputNumber_I1"/>
 		</FB>
 		<EventConnections>

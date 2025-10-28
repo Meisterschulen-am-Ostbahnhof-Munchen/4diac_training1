@@ -25,7 +25,7 @@
 		</OutputVars>
 	</SubAppInterfaceList>
 	<SubAppNetwork>
-		<FB Name="InputNumber_I1" Type="NumericValue_ID" x="-1300" y="0">
+		<FB Name="InputNumber_I1" Type="isobus::UT::io::NumericValue::NumericValue_ID" x="-1300" y="0">
 			<Parameter Name="QI" Value="TRUE"/>
 			<Parameter Name="u16ObjId" Value="InputNumber_I1"/>
 		</FB>
@@ -35,7 +35,7 @@
 			<Parameter Name="QI" Value="TRUE"/>
 			<Parameter Name="DEFAULT_VALUE" Value="UDINT#0"/>
 		</FB>
-		<FB Name="Q_NumericValue" Type="isobus::ut::Q_NumericValue" x="4100" y="200">
+		<FB Name="Q_NumericValue" Type="isobus::UT::Q::Q_NumericValue" x="4100" y="200">
 		</FB>
 		<EventConnections>
 			<Connection Source="InputNumber_I1.IND" Destination="F_DWORD_TO_UDINT.REQ" dx1="300"/>

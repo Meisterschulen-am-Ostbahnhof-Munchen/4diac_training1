@@ -5,35 +5,25 @@
 	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2023-10-23">
 	</VersionInfo>
 	<CompilerInfo packageName="Uebungen">
-		<Import declaration="SoftKeyActivationCode::SK_RELEASED"/>
+		<Import declaration="isobus::UT::io::Softkey::SoftKeyActivationCode::SK_RELEASED"/>
 		<Import declaration="Uebungen::const::UT::DefaultPool::Button_A1"/>
 		<Import declaration="Uebungen::const::UT::DefaultPool::Button_A2"/>
 		<Import declaration="Uebungen::const::UT::DefaultPool::ObjectPointer_P1"/>
 		<Import declaration="Uebungen::const::UT::DefaultPool::SoftKey_F1"/>
 		<Import declaration="Uebungen::const::UT::DefaultPool::SoftKey_F2"/>
 		<Import declaration="Uebungen::const::UT::DefaultPool::SoftKey_F3"/>
-		<Import declaration="isobus::ut::IDs::ID_NULL"/>
+		<Import declaration="isobus::UT::Q::IDs::ID_NULL"/>
 	</CompilerInfo>
 	<SubAppInterfaceList>
 	</SubAppInterfaceList>
 	<SubAppNetwork>
-		<FB Name="SoftKey_UP_F1" Type="Softkey_IE" x="-5600" y="-1100">
-			<Parameter Name="QI" Value="TRUE">
-				<Attribute Name="Visible" Value="false"/>
-			</Parameter>
-			<Parameter Name="PARAMS" Value="">
-				<Attribute Name="Visible" Value="false"/>
-			</Parameter>
+		<FB Name="SoftKey_UP_F1" Type="isobus::UT::io::Softkey::Softkey_IE" x="-5600" y="-1100">
+			<Parameter Name="QI" Value="TRUE"/>
 			<Parameter Name="u16ObjId" Value="SoftKey_F1"/>
 			<Parameter Name="InputEvent" Value="SK_RELEASED"/>
 		</FB>
-		<FB Name="SoftKey_UP_F2" Type="Softkey_IE" x="-5600" y="200">
-			<Parameter Name="QI" Value="TRUE">
-				<Attribute Name="Visible" Value="false"/>
-			</Parameter>
-			<Parameter Name="PARAMS" Value="">
-				<Attribute Name="Visible" Value="false"/>
-			</Parameter>
+		<FB Name="SoftKey_UP_F2" Type="isobus::UT::io::Softkey::Softkey_IE" x="-5600" y="200">
+			<Parameter Name="QI" Value="TRUE"/>
 			<Parameter Name="u16ObjId" Value="SoftKey_F2"/>
 			<Parameter Name="InputEvent" Value="SK_RELEASED"/>
 		</FB>
@@ -43,16 +33,11 @@
 		<FB Name="F_SEL_E_3" Type="eclipse4diac::utils::selection::F_SEL_E_3" x="-1100" y="-900">
 			<Parameter Name="IN1" Value="ID_NULL"/>
 		</FB>
-		<FB Name="Q_NumericValue" Type="isobus::ut::Q_NumericValue" x="1100" y="-1000">
+		<FB Name="Q_NumericValue" Type="isobus::UT::Q::Q_NumericValue" x="1100" y="-1000">
 			<Parameter Name="u16ObjId" Value="ObjectPointer_P1"/>
 		</FB>
-		<FB Name="SoftKey_UP_F3" Type="Softkey_IE" x="-5600" y="1400">
-			<Parameter Name="QI" Value="TRUE">
-				<Attribute Name="Visible" Value="false"/>
-			</Parameter>
-			<Parameter Name="PARAMS" Value="">
-				<Attribute Name="Visible" Value="false"/>
-			</Parameter>
+		<FB Name="SoftKey_UP_F3" Type="isobus::UT::io::Softkey::Softkey_IE" x="-5600" y="1400">
+			<Parameter Name="QI" Value="TRUE"/>
 			<Parameter Name="u16ObjId" Value="SoftKey_F3"/>
 			<Parameter Name="InputEvent" Value="SK_RELEASED"/>
 		</FB>

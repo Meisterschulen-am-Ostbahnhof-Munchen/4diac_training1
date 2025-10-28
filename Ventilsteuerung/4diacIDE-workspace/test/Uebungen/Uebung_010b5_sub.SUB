@@ -5,7 +5,7 @@
 	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2023-10-23">
 	</VersionInfo>
 	<CompilerInfo packageName="Uebungen">
-		<Import declaration="isobus::ut::IDs::ID_NULL"/>
+		<Import declaration="isobus::UT::Q::IDs::ID_NULL"/>
 		<Import declaration="logiBUS::io::DQ::logiBUS_DO"/>
 		<Import declaration="logiBUS::io::DQ::logiBUS_DO_S"/>
 	</CompilerInfo>
@@ -22,11 +22,8 @@
 				<Attribute Name="Visible" Value="false"/>
 			</Parameter>
 		</FB>
-		<FB Name="IX" Type="Softkey_IX" x="-4600" y="-1000">
+		<FB Name="IX" Type="isobus::UT::io::Softkey::Softkey_IX" x="-4600" y="-1000">
 			<Parameter Name="QI" Value="TRUE"/>
-			<Parameter Name="PARAMS" Value="">
-				<Attribute Name="Visible" Value="false"/>
-			</Parameter>
 		</FB>
 		<EventConnections>
 			<Connection Source="IX.IND" Destination="QX.REQ" dx1="773.33"/>

@@ -18,11 +18,8 @@
 			</Parameter>
 			<Parameter Name="Output" Value="Output_Q1"/>
 		</FB>
-		<FB Name="Button_L1" Type="Button_IX" x="-4600" y="-500">
+		<FB Name="Button_L1" Type="isobus::UT::io::Button::Button_IX" x="-4600" y="-500">
 			<Parameter Name="QI" Value="TRUE"/>
-			<Parameter Name="PARAMS" Value="">
-				<Attribute Name="Visible" Value="false"/>
-			</Parameter>
 			<Parameter Name="u16ObjId" Value="Button_L1"/>
 		</FB>
 		<Comment Comment="Latching Button &quot;rastet ein&quot; &#10;kein T_FF nötig!" x="-4900" y="700" width="1800" height="400"/>
@@ -30,7 +27,7 @@
 			<Connection Source="Button_L1.IND" Destination="DigitalOutput_Q1.REQ" dx1="1206.67"/>
 		</EventConnections>
 		<DataConnections>
-			<Connection Source="Button_L1.IN" Destination="DigitalOutput_Q1.OUT"/>
+			<Connection Source="Button_L1.IN" Destination="DigitalOutput_Q1.OUT" dx1="1073.33"/>
 		</DataConnections>
 	</SubAppNetwork>
 </SubAppType>

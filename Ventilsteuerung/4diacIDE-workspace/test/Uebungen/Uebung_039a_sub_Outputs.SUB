@@ -5,8 +5,8 @@
 	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2024-03-03">
 	</VersionInfo>
 	<CompilerInfo packageName="Uebungen">
-		<Import declaration="SoftKeyActivationCode::SK_RELEASED"/>
-		<Import declaration="isobus::ut::IDs::ID_NULL"/>
+		<Import declaration="isobus::UT::io::Softkey::SoftKeyActivationCode::SK_RELEASED"/>
+		<Import declaration="isobus::UT::Q::IDs::ID_NULL"/>
 		<Import declaration="logiBUS::io::DQ::logiBUS_DO"/>
 		<Import declaration="logiBUS::io::DQ::logiBUS_DO_S"/>
 	</CompilerInfo>
@@ -35,7 +35,7 @@
 		</FB>
 		<FB Name="E_SR" Type="iec61499::events::E_SR" x="-2200" y="-300">
 		</FB>
-		<FB Name="IE" Type="Softkey_IE" x="-5300" y="-500">
+		<FB Name="IE" Type="isobus::UT::io::Softkey::Softkey_IE" x="-5300" y="-500">
 			<Parameter Name="QI" Value="TRUE"/>
 			<Parameter Name="InputEvent" Value="SK_RELEASED"/>
 		</FB>

@@ -5,7 +5,7 @@
 	<VersionInfo Version="1.0" Author="franz" Date="2025-07-26">
 	</VersionInfo>
 	<CompilerInfo packageName="Uebungen">
-		<Import declaration="isobus::ut::IDs::ID_NULL"/>
+		<Import declaration="isobus::UT::Q::IDs::ID_NULL"/>
 		<Import declaration="logiBUS::io::DQ::logiBUS_DO"/>
 		<Import declaration="logiBUS::io::DQ::logiBUS_DO_S"/>
 	</CompilerInfo>
@@ -24,11 +24,8 @@
 				<Attribute Name="Visible" Value="false"/>
 			</Parameter>
 		</FB>
-		<FB Name="SoftKey_F1" Type="Softkey_IX" x="200" y="0">
+		<FB Name="SoftKey_F1" Type="isobus::UT::io::Softkey::Softkey_IX" x="200" y="0">
 			<Parameter Name="QI" Value="TRUE"/>
-			<Parameter Name="PARAMS" Value="">
-				<Attribute Name="Visible" Value="false"/>
-			</Parameter>
 		</FB>
 		<EventConnections>
 			<Connection Source="SoftKey_F1.IND" Destination="GreenWhiteBackground.REQ" dx1="1240"/>

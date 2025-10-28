@@ -18,18 +18,15 @@
 			</Parameter>
 			<Parameter Name="Output" Value="Output_Q1"/>
 		</FB>
-		<FB Name="Button_A1" Type="Button_IX" x="-4600" y="-500">
+		<FB Name="Button_A1" Type="isobus::UT::io::Button::Button_IX" x="-4600" y="-500">
 			<Parameter Name="QI" Value="TRUE"/>
-			<Parameter Name="PARAMS" Value="">
-				<Attribute Name="Visible" Value="false"/>
-			</Parameter>
 			<Parameter Name="u16ObjId" Value="Button_A1"/>
 		</FB>
 		<EventConnections>
 			<Connection Source="Button_A1.IND" Destination="DigitalOutput_Q1.REQ" dx1="1206.67"/>
 		</EventConnections>
 		<DataConnections>
-			<Connection Source="Button_A1.IN" Destination="DigitalOutput_Q1.OUT"/>
+			<Connection Source="Button_A1.IN" Destination="DigitalOutput_Q1.OUT" dx1="1073.33"/>
 		</DataConnections>
 	</SubAppNetwork>
 </SubAppType>

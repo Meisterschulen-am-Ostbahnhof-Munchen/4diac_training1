@@ -14,13 +14,8 @@
 	<SubAppNetwork>
 		<FB Name="F_DWORD_TO_UDINT" Type="iec61131::conversion::F_DWORD_TO_UDINT" x="-3300" y="800">
 		</FB>
-		<FB Name="InputNumber_I1" Type="NumericValue_ID" x="-4800" y="600">
-			<Parameter Name="QI" Value="TRUE">
-				<Attribute Name="Visible" Value="false"/>
-			</Parameter>
-			<Parameter Name="PARAMS" Value="">
-				<Attribute Name="Visible" Value="false"/>
-			</Parameter>
+		<FB Name="InputNumber_I1" Type="isobus::UT::io::NumericValue::NumericValue_ID" x="-4800" y="600">
+			<Parameter Name="QI" Value="TRUE"/>
 			<Parameter Name="u16ObjId" Value="InputNumber_I1"/>
 		</FB>
 		<FB Name="INI" Type="eclipse4diac::storage::INI" x="-900" y="700">
@@ -30,10 +25,10 @@
 			<Parameter Name="VALUE" Value="STRING#'Test'"/>
 			<Parameter Name="DEFAULT_VALUE" Value="STRING#'Test'"/>
 		</FB>
-		<FB Name="Q_NumericValue" Type="isobus::ut::Q_StringValue" x="1700" y="900">
+		<FB Name="Q_NumericValue" Type="isobus::UT::Q::Q_StringValue" x="1700" y="900">
 			<Parameter Name="u16ObjId" Value="InputNumber_I1"/>
 		</FB>
-		<FB Name="CbVtStatus" Type="isobus::ut::CbVtStatus" x="-500" y="-1000">
+		<FB Name="CbVtStatus" Type="isobus::UT::Q::CbVtStatus" x="-500" y="-1000">
 		</FB>
 		<EventConnections>
 			<Connection Source="InputNumber_I1.IND" Destination="F_DWORD_TO_UDINT.REQ"/>
