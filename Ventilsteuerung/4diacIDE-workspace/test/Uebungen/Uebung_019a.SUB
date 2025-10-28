@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SubAppType Name="Uebung_019a" Comment="Umschalten einer Maske">
+	<Identification Standard="61499-2" Description="Copyright (c) 2023 Meisterschulen am Ostbahnhof  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0">
+	</Identification>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2023-10-23">
+	</VersionInfo>
+	<CompilerInfo packageName="Uebungen">
+		<Import declaration="isobus::UT::io::Softkey::SoftKeyActivationCode::SK_PRESSED"/>
+		<Import declaration="Uebungen::const::UT::DefaultPool::AlarmMask_A2_medium"/>
+		<Import declaration="Uebungen::const::UT::DefaultPool::DataMask_M1"/>
+		<Import declaration="Uebungen::const::UT::DefaultPool::DataMask_M2"/>
+		<Import declaration="Uebungen::const::UT::DefaultPool::WorkingSet_0"/>
+		<Import declaration="isobus::UT::Q::IDs::ID_NULL"/>
+		<Import declaration="logiBUS::io::DI::logiBUS_DI::Input_I1"/>
+		<Import declaration="logiBUS::io::DI::logiBUS_DI::Input_I2"/>
+		<Import declaration="logiBUS::io::DI::logiBUS_DI::Input_I3"/>
+		<Import declaration="logiBUS::io::DI::logiBUS_DI_Events::BUTTON_SINGLE_CLICK"/>
+	</CompilerInfo>
+	<SubAppInterfaceList>
+	</SubAppInterfaceList>
+	<SubAppNetwork>
+		<FB Name="DigitalInput_CLK_I1" Type="logiBUS::io::DI::logiBUS_IE" x="-8100" y="-600">
+			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="Input" Value="Input_I1"/>
+			<Parameter Name="InputEvent" Value="BUTTON_SINGLE_CLICK"/>
+		</FB>
+		<FB Name="Q_ActiveMask" Type="isobus::UT::Q::Q_ActiveMask" x="-2100" y="-300">
+			<Parameter Name="u16WorkSetId" Value="WorkingSet_0"/>
+		</FB>
+		<FB Name="DigitalInput_CLK_I2" Type="logiBUS::io::DI::logiBUS_IE" x="-8100" y="400">
+			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="Input" Value="Input_I2"/>
+			<Parameter Name="InputEvent" Value="BUTTON_SINGLE_CLICK"/>
+		</FB>
+		<FB Name="F_SEL_E_4" Type="eclipse4diac::utils::selection::F_SEL_E_4" x="-4800" y="-200">
+			<Parameter Name="IN1" Value="DataMask_M1"/>
+			<Parameter Name="IN2" Value="DataMask_M2"/>
+			<Parameter Name="IN3" Value="AlarmMask_A2_medium"/>
+			<Parameter Name="IN4" Value="DataMask_M1"/>
+		</FB>
+		<FB Name="DigitalInput_CLK_I3" Type="logiBUS::io::DI::logiBUS_IE" x="-8100" y="1400">
+			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="Input" Value="Input_I3"/>
+			<Parameter Name="InputEvent" Value="BUTTON_SINGLE_CLICK"/>
+		</FB>
+		<FB Name="ACK" Type="isobus::UT::io::Softkey::Softkey_IE" x="-8100" y="2500">
+			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="u16ObjId" Value="ID_NULL"/>
+			<Parameter Name="InputEvent" Value="SK_PRESSED"/>
+		</FB>
+		<EventConnections>
+			<Connection Source="DigitalInput_CLK_I1.IND" Destination="F_SEL_E_4.REQ4" dx1="1206.67"/>
+			<Connection Source="DigitalInput_CLK_I2.IND" Destination="F_SEL_E_4.REQ1" dx1="313.33"/>
+			<Connection Source="F_SEL_E_4.CNF" Destination="Q_ActiveMask.REQ" dx1="826.67"/>
+			<Connection Source="DigitalInput_CLK_I3.IND" Destination="F_SEL_E_4.REQ2" dx1="473.33"/>
+			<Connection Source="ACK.IND" Destination="F_SEL_E_4.REQ3" dx1="840"/>
+		</EventConnections>
+		<DataConnections>
+			<Connection Source="F_SEL_E_4.OUT" Destination="Q_ActiveMask.u16NewMaskId" dx1="1000"/>
+		</DataConnections>
+	</SubAppNetwork>
+</SubAppType>

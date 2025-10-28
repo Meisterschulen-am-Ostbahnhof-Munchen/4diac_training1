@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SubAppType Name="Uebung_003c_sub" Comment="IX auf QX (generisch)">
+	<Identification Standard="61499-2" Description="Copyright (c) 2023 Meisterschulen am Ostbahnhof  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0">
+	</Identification>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2023-10-23">
+	</VersionInfo>
+	<CompilerInfo packageName="Uebungen">
+		<Import declaration="logiBUS::io::DI::logiBUS_DI::Invalid"/>
+		<Import declaration="logiBUS::io::DI::logiBUS_DI_S"/>
+	</CompilerInfo>
+	<SubAppInterfaceList>
+		<InputVars>
+			<VarDeclaration Name="Input" Type="logiBUS::io::DI::logiBUS_DI_S" Comment="Identify the Input Input_I1..I8" InitialValue="Invalid"/>
+			<VarDeclaration Name="iInpNr" Type="USINT" Comment="Number of auxiliary array - corresponds with the order in the pool that means first aux input in pool is iInpNr = 0 etc." InitialValue="0"/>
+		</InputVars>
+	</SubAppInterfaceList>
+	<SubAppNetwork>
+		<FB Name="QX" Type="isobus::UT::io::Auxiliary::OUT::Aux_QX" x="-2500" y="-800">
+			<Parameter Name="QI" Value="TRUE"/>
+		</FB>
+		<FB Name="IX" Type="logiBUS::io::DI::logiBUS_IX" x="-4600" y="-1000">
+			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="PARAMS" Value="">
+				<Attribute Name="Visible" Value="false"/>
+			</Parameter>
+		</FB>
+		<EventConnections>
+			<Connection Source="IX.IND" Destination="QX.REQ" dx1="773.33"/>
+		</EventConnections>
+		<DataConnections>
+			<Connection Source="IX.IN" Destination="QX.OUT"/>
+			<Connection Source="Input" Destination="IX.Input" dx1="2813.33">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="iInpNr" Destination="QX.iInpNr" dx1="3906.67">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+		</DataConnections>
+	</SubAppNetwork>
+</SubAppType>

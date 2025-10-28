@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SubAppType Name="Uebung_010b4" Comment="SoftKey_F1-8 auf DigitalOutput_Q1-8">
+	<Identification Standard="61499-2" Description="Copyright (c) 2023 Meisterschulen am Ostbahnhof  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0">
+	</Identification>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2023-10-23">
+	</VersionInfo>
+	<CompilerInfo packageName="Uebungen">
+		<Import declaration="Uebungen::const::UT::DefaultPool::SoftKey_F1"/>
+		<Import declaration="Uebungen::const::UT::DefaultPool::SoftKey_F2"/>
+		<Import declaration="Uebungen::const::UT::DefaultPool::SoftKey_F3"/>
+		<Import declaration="Uebungen::const::UT::DefaultPool::SoftKey_F4"/>
+		<Import declaration="Uebungen::const::UT::DefaultPool::SoftKey_F5"/>
+		<Import declaration="Uebungen::const::UT::DefaultPool::SoftKey_F6"/>
+		<Import declaration="Uebungen::const::UT::DefaultPool::SoftKey_F7"/>
+		<Import declaration="Uebungen::const::UT::DefaultPool::SoftKey_F8"/>
+		<Import declaration="logiBUS::io::DQ::logiBUS_DO::Output_Q1"/>
+		<Import declaration="logiBUS::io::DQ::logiBUS_DO::Output_Q2"/>
+		<Import declaration="logiBUS::io::DQ::logiBUS_DO::Output_Q3"/>
+		<Import declaration="logiBUS::io::DQ::logiBUS_DO::Output_Q4"/>
+		<Import declaration="logiBUS::io::DQ::logiBUS_DO::Output_Q5"/>
+		<Import declaration="logiBUS::io::DQ::logiBUS_DO::Output_Q6"/>
+		<Import declaration="logiBUS::io::DQ::logiBUS_DO::Output_Q7"/>
+		<Import declaration="logiBUS::io::DQ::logiBUS_DO::Output_Q8"/>
+	</CompilerInfo>
+	<SubAppInterfaceList>
+	</SubAppInterfaceList>
+	<SubAppNetwork>
+		<SubApp Name="F1" Type="Uebungen::Uebung_010b4_sub" x="140" y="33.33">
+			<Parameter Name="u16ObjId" Value="SoftKey_F1"/>
+			<Parameter Name="Output" Value="Output_Q1"/>
+		</SubApp>
+		<SubApp Name="F2" Type="Uebungen::Uebung_010b4_sub" x="140" y="613.33">
+			<Parameter Name="u16ObjId" Value="SoftKey_F2"/>
+			<Parameter Name="Output" Value="Output_Q2"/>
+		</SubApp>
+		<SubApp Name="F3" Type="Uebungen::Uebung_010b4_sub" x="140" y="1193.33">
+			<Parameter Name="u16ObjId" Value="SoftKey_F3"/>
+			<Parameter Name="Output" Value="Output_Q3"/>
+		</SubApp>
+		<SubApp Name="F4" Type="Uebungen::Uebung_010b4_sub" x="140" y="1773.33">
+			<Parameter Name="u16ObjId" Value="SoftKey_F4"/>
+			<Parameter Name="Output" Value="Output_Q4"/>
+		</SubApp>
+		<SubApp Name="F5" Type="Uebungen::Uebung_010b4_sub" x="140" y="2353.33">
+			<Parameter Name="u16ObjId" Value="SoftKey_F5"/>
+			<Parameter Name="Output" Value="Output_Q5"/>
+		</SubApp>
+		<SubApp Name="F6" Type="Uebungen::Uebung_010b4_sub" x="140" y="2933.33">
+			<Parameter Name="u16ObjId" Value="SoftKey_F6"/>
+			<Parameter Name="Output" Value="Output_Q6"/>
+		</SubApp>
+		<SubApp Name="F7" Type="Uebungen::Uebung_010b4_sub" x="140" y="3513.33">
+			<Parameter Name="u16ObjId" Value="SoftKey_F7"/>
+			<Parameter Name="Output" Value="Output_Q7"/>
+		</SubApp>
+		<SubApp Name="F8" Type="Uebungen::Uebung_010b4_sub" x="140" y="4093.33">
+			<Parameter Name="u16ObjId" Value="SoftKey_F8"/>
+			<Parameter Name="Output" Value="Output_Q8"/>
+		</SubApp>
+	</SubAppNetwork>
+</SubAppType>

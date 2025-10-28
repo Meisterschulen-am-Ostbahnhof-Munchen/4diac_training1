@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<DataType Name="CAN_MSG" Comment="Typedef of the non-TP CAN Message (0..8 Byte only)">
+	<Identification>
+	</Identification>
+	<VersionInfo Version="1.0" Author="franz" Date="2025-09-04">
+	</VersionInfo>
+	<CompilerInfo packageName="isobus::pgn">
+	</CompilerInfo>
+	<StructuredType>
+		<VarDeclaration Name="u16DaSize" Type="UINT" Comment="Number of bytes recorded (0..8)" InitialValue="0"/>
+		<VarDeclaration Name="u8Priority" Type="USINT" Comment="Priority (0..7) 0=highest" InitialValue="7"/>
+		<VarDeclaration Name="data" Type="BYTE" Comment="data buffer" ArraySize="0..7" InitialValue="[16#FF, 16#FF, 16#FF, 16#FF, 16#FF, 16#FF, 16#FF, 16#FF]"/>
+	</StructuredType>
+</DataType>

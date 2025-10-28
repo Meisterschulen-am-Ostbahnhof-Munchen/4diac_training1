@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SubAppType Name="Uebung_010c3_sub" Comment="SoftKey_F1 auf DigitalOutput_Q1 mit GreenWhiteBackground mit Typed Subapp">
+	<Identification Standard="61499-2">
+	</Identification>
+	<VersionInfo Version="1.0" Author="franz" Date="2025-07-26">
+	</VersionInfo>
+	<CompilerInfo packageName="Uebungen">
+		<Import declaration="isobus::UT::Q::IDs::ID_NULL"/>
+		<Import declaration="logiBUS::io::DQ::logiBUS_DO"/>
+		<Import declaration="logiBUS::io::DQ::logiBUS_DO_S"/>
+	</CompilerInfo>
+	<SubAppInterfaceList>
+		<InputVars>
+			<VarDeclaration Name="u16ObjId" Type="UINT" Comment="Object ID" InitialValue="ID_NULL"/>
+			<VarDeclaration Name="Output" Type="logiBUS::io::DQ::logiBUS_DO_S" Comment="Identify the Output Output_Q1..Q8" InitialValue="logiBUS_DO::Invalid"/>
+		</InputVars>
+	</SubAppInterfaceList>
+	<SubAppNetwork>
+		<SubApp Name="GreenWhiteBackground" Type="Uebungen::sys::GreenWhiteBackground" x="3200" y="1200">
+		</SubApp>
+		<FB Name="DigitalOutput_Q1" Type="logiBUS::io::DQ::logiBUS_QX" x="3200" y="200">
+			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="PARAMS" Value="">
+				<Attribute Name="Visible" Value="false"/>
+			</Parameter>
+		</FB>
+		<FB Name="SoftKey_F1" Type="isobus::UT::io::Softkey::Softkey_IX" x="200" y="0">
+			<Parameter Name="QI" Value="TRUE"/>
+		</FB>
+		<EventConnections>
+			<Connection Source="SoftKey_F1.IND" Destination="GreenWhiteBackground.REQ" dx1="1240"/>
+			<Connection Source="SoftKey_F1.IND" Destination="DigitalOutput_Q1.REQ" dx1="1653.33"/>
+		</EventConnections>
+		<DataConnections>
+			<Connection Source="SoftKey_F1.IN" Destination="GreenWhiteBackground.DI1" dx1="1060"/>
+			<Connection Source="SoftKey_F1.IN" Destination="DigitalOutput_Q1.OUT"/>
+			<Connection Source="u16ObjId" Destination="SoftKey_F1.u16ObjId" dx1="2446.67">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="u16ObjId" Destination="GreenWhiteBackground.u16ObjId" dx1="2233.33">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="Output" Destination="DigitalOutput_Q1.Output" dx1="4046.67">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+		</DataConnections>
+	</SubAppNetwork>
+</SubAppType>

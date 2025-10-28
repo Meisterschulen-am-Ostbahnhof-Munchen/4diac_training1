@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SubAppType Name="Uebung_012" Comment="Numeric Value Input und Speichern">
+	<Identification Standard="61499-2" Description="Copyright (c) 2023 Meisterschulen am Ostbahnhof  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0">
+	</Identification>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2023-10-23">
+	</VersionInfo>
+	<CompilerInfo packageName="Uebungen">
+		<Import declaration="Uebungen::const::NVS::NVS_Keys::KEY_I1_STORE"/>
+		<Import declaration="Uebungen::const::UT::DefaultPool::InputNumber_I1"/>
+	</CompilerInfo>
+	<SubAppInterfaceList>
+	</SubAppInterfaceList>
+	<SubAppNetwork>
+		<FB Name="F_DWORD_TO_UDINT" Type="iec61131::conversion::F_DWORD_TO_UDINT" x="-3500" y="1100">
+		</FB>
+		<FB Name="InputNumber_I1" Type="isobus::UT::io::NumericValue::NumericValue_ID" x="-5300" y="900">
+			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="u16ObjId" Value="InputNumber_I1"/>
+		</FB>
+		<FB Name="NVS" Type="logiBUS::storage::esp32::nvs::NVS" x="-900" y="700">
+			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="KEY" Value="KEY_I1_STORE"/>
+			<Parameter Name="DEFAULT_VALUE" Value="UDINT#0"/>
+		</FB>
+		<FB Name="Q_NumericValue" Type="isobus::UT::Q::Q_NumericValue" x="1600" y="900">
+			<Parameter Name="u16ObjId" Value="InputNumber_I1"/>
+		</FB>
+		<FB Name="CbVtStatus" Type="isobus::UT::Q::CbVtStatus" x="-3740" y="0">
+		</FB>
+		<EventConnections>
+			<Connection Source="InputNumber_I1.IND" Destination="F_DWORD_TO_UDINT.REQ"/>
+			<Connection Source="F_DWORD_TO_UDINT.CNF" Destination="NVS.SET" dx1="786.67"/>
+			<Connection Source="NVS.GETO" Destination="Q_NumericValue.REQ" dx1="740"/>
+			<Connection Source="CbVtStatus.IND" Destination="Q_NumericValue.REQ" dx1="4353.33"/>
+			<Connection Source="NVS.INITO" Destination="NVS.GET" dx1="80" dx2="80" dy="-506.67"/>
+		</EventConnections>
+		<DataConnections>
+			<Connection Source="InputNumber_I1.IN" Destination="F_DWORD_TO_UDINT.IN" dx1="406.67"/>
+			<Connection Source="F_DWORD_TO_UDINT.OUT" Destination="NVS.VALUE"/>
+			<Connection Source="NVS.VALUEO" Destination="Q_NumericValue.u32NewValue"/>
+		</DataConnections>
+	</SubAppNetwork>
+</SubAppType>

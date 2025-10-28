@@ -1,18 +1,6 @@
-;<Request ID="1" Action="CREATE"><FB Name="EMB_RES" Type="EMB_RES" /></Request>
-EMB_RES;<Request ID="2" Action="CREATE"><FB Name="E_TRIG" Type="E_TRIG" /></Request>
-EMB_RES;<Request ID="3" Action="WRITE"><Connection Source="&apos;EInit&apos;" Destination="E_TRIG.EVENTTYPE" /></Request>
-EMB_RES;<Request ID="4" Action="CREATE"><FB Name="App.Control.DigitalInput_I1" Type="logiBUS_IXA" /></Request>
-EMB_RES;<Request ID="5" Action="WRITE"><Connection Source="TRUE" Destination="App.Control.DigitalInput_I1.QI" /></Request>
-EMB_RES;<Request ID="6" Action="WRITE"><Connection Source="(Pin:=1)" Destination="App.Control.DigitalInput_I1.Input" /></Request>
-EMB_RES;<Request ID="7" Action="CREATE"><FB Name="App.Control.DigitalOutput_Q1" Type="logiBUS_QXA" /></Request>
-EMB_RES;<Request ID="8" Action="WRITE"><Connection Source="TRUE" Destination="App.Control.DigitalOutput_Q1.QI" /></Request>
-EMB_RES;<Request ID="9" Action="WRITE"><Connection Source="(Pin:=1)" Destination="App.Control.DigitalOutput_Q1.Output" /></Request>
-EMB_RES;<Request ID="10" Action="CREATE"><FB Name="App.Control.AX_OR_2" Type="AX_OR_2" /></Request>
-EMB_RES;<Request ID="11" Action="CREATE"><FB Name="App.Control.DigitalInput_I2" Type="logiBUS_IXA" /></Request>
-EMB_RES;<Request ID="12" Action="WRITE"><Connection Source="TRUE" Destination="App.Control.DigitalInput_I2.QI" /></Request>
-EMB_RES;<Request ID="13" Action="WRITE"><Connection Source="(Pin:=2)" Destination="App.Control.DigitalInput_I2.Input" /></Request>
-EMB_RES;<Request ID="14" Action="CREATE"><Connection Source="App.Control.AX_OR_2.OUT" Destination="App.Control.DigitalOutput_Q1.OUT" /></Request>
-EMB_RES;<Request ID="15" Action="CREATE"><Connection Source="App.Control.DigitalInput_I1.IN" Destination="App.Control.AX_OR_2.IN1" /></Request>
-EMB_RES;<Request ID="16" Action="CREATE"><Connection Source="App.Control.DigitalInput_I2.IN" Destination="App.Control.AX_OR_2.IN2" /></Request>
-EMB_RES;<Request ID="17" Action="CREATE"><Connection Source="START.COLD" Destination="E_TRIG.REQ" /></Request>
-EMB_RES;<Request ID="18" Action="START"/>
+;<Request ID="5" Action="CREATE"><FB Name="EMB_RES" Type="iec61499::system::EMB_RES" /></Request>
+EMB_RES;<Request ID="6" Action="CREATE"><FB Name="E_TRIG" Type="iec61499::events::E_TRIG" /></Request>
+EMB_RES;<Request ID="7" Action="CREATE"><FB Name="App.Control.STRUCT_DEMUX" Type="eclipse4diac::convert::STRUCT_DEMUX_1isobus::pgn::ISONETEVENT_T" /></Request>
+EMB_RES;<Request ID="8" Action="WRITE"><Connection Source="&apos;EInit&apos;" Destination="E_TRIG.EVENTTYPE" /></Request>
+EMB_RES;<Request ID="9" Action="CREATE"><Connection Source="START.COLD" Destination="E_TRIG.REQ" /></Request>
+EMB_RES;<Request ID="10" Action="START"/>

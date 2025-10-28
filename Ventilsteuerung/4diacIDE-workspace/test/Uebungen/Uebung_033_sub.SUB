@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SubAppType Name="Uebung_033_sub" Comment="LED Strip Blinkende LED">
+	<Identification Standard="61499-2" Description="Copyright (c) 2023 Meisterschulen am Ostbahnhof  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0">
+	</Identification>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2023-10-23">
+	</VersionInfo>
+	<CompilerInfo packageName="Uebungen">
+		<Import declaration="logiBUS::io::DI::logiBUS_DI_S"/>
+		<Import declaration="logiBUS::io::DO_LED::LED_COLOURS"/>
+		<Import declaration="logiBUS::io::DO_LED::LED_FREQ"/>
+		<Import declaration="logiBUS::io::DI::logiBUS_DI::Invalid"/>
+	</CompilerInfo>
+	<SubAppInterfaceList>
+		<InputVars>
+			<VarDeclaration Name="Input" Type="logiBUS::io::DI::logiBUS_DI_S" Comment="Identify the Input Input_I1..I8" InitialValue="Invalid"/>
+			<VarDeclaration Name="Colour" Type="UINT" Comment="This identify the Colour. " InitialValue="LED_COLOURS::LED_GREEN"/>
+			<VarDeclaration Name="Output" Type="USINT" Comment="Identify the Output Number of Strip"/>
+		</InputVars>
+	</SubAppInterfaceList>
+	<SubAppNetwork>
+		<FB Name="LED" Type="logiBUS::io::DO_LED::logiBUS_LED_strip_QX" x="-1500" y="-700">
+			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="FREQ" Value="LED_FREQ::LED_1HZ"/>
+		</FB>
+		<FB Name="BUTTON" Type="logiBUS::io::DI::logiBUS_IX" x="-4500" y="-800">
+			<Parameter Name="QI" Value="TRUE"/>
+		</FB>
+		<EventConnections>
+			<Connection Source="BUTTON.IND" Destination="LED.REQ" dx1="1126.67"/>
+		</EventConnections>
+		<DataConnections>
+			<Connection Source="BUTTON.IN" Destination="LED.OUT" dx1="1126.67"/>
+			<Connection Source="Input" Destination="BUTTON.Input" dx1="2933.33">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="Output" Destination="LED.Output" dx1="4406.67">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="Colour" Destination="LED.Colour" dx1="4406.67">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+		</DataConnections>
+	</SubAppNetwork>
+</SubAppType>

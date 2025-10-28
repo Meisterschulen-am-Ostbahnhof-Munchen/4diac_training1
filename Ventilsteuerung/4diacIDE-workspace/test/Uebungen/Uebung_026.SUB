@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SubAppType Name="Uebung_026" Comment="Spiegelabfolge (6)">
+	<Identification Standard="61499-2" Description="Copyright (c) 2023 Meisterschulen am Ostbahnhof  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0">
+	</Identification>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2023-10-23">
+	</VersionInfo>
+	<CompilerInfo packageName="Uebungen">
+		<Import declaration="isobus::UT::io::Softkey::SoftKeyActivationCode::SK_PRESSED"/>
+		<Import declaration="isobus::UT::io::Softkey::SoftKeyActivationCode::SK_RELEASED"/>
+		<Import declaration="Uebungen::const::UT::DefaultPool::SoftKey_F1"/>
+		<Import declaration="Uebungen::const::UT::DefaultPool::SoftKey_F2"/>
+		<Import declaration="Uebungen::const::UT::DefaultPool::SoftKey_F3"/>
+		<Import declaration="Uebungen::const::UT::DefaultPool::SoftKey_F8"/>
+		<Import declaration="Uebungen::const::UT::DefaultPool::SoftKey_F9"/>
+		<Import declaration="logiBUS::io::DQ::logiBUS_DO::Output_Q1"/>
+		<Import declaration="logiBUS::io::DQ::logiBUS_DO::Output_Q2"/>
+		<Import declaration="logiBUS::io::DQ::logiBUS_DO::Output_Q3"/>
+		<Import declaration="logiBUS::io::DQ::logiBUS_DO::Output_Q4"/>
+	</CompilerInfo>
+	<SubAppInterfaceList>
+	</SubAppInterfaceList>
+	<SubAppNetwork>
+		<FB Name="SoftKey_UP_F1" Type="isobus::UT::io::Softkey::Softkey_IE" x="-7200" y="-1000">
+			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="u16ObjId" Value="SoftKey_F1"/>
+			<Parameter Name="InputEvent" Value="SK_RELEASED"/>
+		</FB>
+		<FB Name="SoftKey_F2_DOWN" Type="isobus::UT::io::Softkey::Softkey_IE" x="-7300" y="600">
+			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="u16ObjId" Value="SoftKey_F2"/>
+			<Parameter Name="InputEvent" Value="SK_PRESSED"/>
+		</FB>
+		<Comment Comment="START-Knopf Ausfahren" x="-8933.33" y="-753.33" width="1373.33" height="366.67"/>
+		<Comment Comment="Endlage Ausfahren_Cyl_1 &#10;" x="-8800" y="700" width="1373.33" height="366.67"/>
+		<Comment Comment="Endlage Ausfahren_Cyl_2 &#10;" x="-8933.33" y="2413.33" width="1373.33" height="366.67"/>
+		<FB Name="SoftKey_F3_DOWN" Type="isobus::UT::io::Softkey::Softkey_IE" x="-7400" y="2400">
+			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="u16ObjId" Value="SoftKey_F3"/>
+			<Parameter Name="InputEvent" Value="SK_PRESSED"/>
+		</FB>
+		<Comment Comment="Ausfahren_Cyl_1" x="-1833.33" y="-666.67" width="1373.33" height="366.67"/>
+		<Comment Comment="Ausfahren_Cyl_2" x="-1600" y="900" width="1373.33" height="366.67"/>
+		<FB Name="SoftKey_F9_DOWN" Type="isobus::UT::io::Softkey::Softkey_IE" x="-7300" y="6700">
+			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="u16ObjId" Value="SoftKey_F9"/>
+			<Parameter Name="InputEvent" Value="SK_PRESSED"/>
+		</FB>
+		<Comment Comment="Einfahren Zeit gesteuert" x="-8933.33" y="3833.33" width="1373.33" height="366.67"/>
+		<Comment Comment="Endlage Einfahren_Cyl_1  &#10;" x="-8933.33" y="6666.67" width="1373.33" height="366.67"/>
+		<FB Name="SoftKey_F8_DOWN" Type="isobus::UT::io::Softkey::Softkey_IE" x="-7200" y="5500">
+			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="u16ObjId" Value="SoftKey_F8"/>
+			<Parameter Name="InputEvent" Value="SK_PRESSED"/>
+		</FB>
+		<Comment Comment="Einfahren_Cyl_2" x="-1833.33" y="4000" width="1373.33" height="366.67"/>
+		<Comment Comment="Endlage Einfahren_Cyl_2  &#10;" x="-8933.33" y="5333.33" width="1373.33" height="366.67"/>
+		<Comment Comment="Einfahren_Cyl_1 &#10;" x="-1833.33" y="5726.67" width="1373.33" height="366.67"/>
+		<FB Name="E_DELAY" Type="iec61499::events::E_DELAY" x="-7200" y="3900">
+			<Parameter Name="DT" Value="T#2s"/>
+		</FB>
+		<FB Name="E_REND_Ausfahren_Cyl_1" Type="iec61499::events::E_REND" x="-5400" y="700">
+		</FB>
+		<FB Name="E_REND_Ausfahren_Cyl_2" Type="iec61499::events::E_REND" x="-5400" y="2500">
+		</FB>
+		<FB Name="E_REND_Einfahren_Cyl_2" Type="iec61499::events::E_REND" x="-5400" y="5600">
+		</FB>
+		<FB Name="E_REND_Einfahren_Cyl_1" Type="iec61499::events::E_REND" x="-5400" y="6800">
+		</FB>
+		<SubApp Name="Q4" Type="Uebungen::Uebung_026_sub" x="-2900" y="5600">
+			<Parameter Name="Output" Value="Output_Q4"/>
+		</SubApp>
+		<SubApp Name="Q2" Type="Uebungen::Uebung_026_sub" x="-2800" y="700">
+			<Parameter Name="Output" Value="Output_Q2"/>
+		</SubApp>
+		<SubApp Name="Q3" Type="Uebungen::Uebung_026_sub" x="-2800" y="3900">
+			<Parameter Name="Output" Value="Output_Q3"/>
+		</SubApp>
+		<SubApp Name="Q1" Type="Uebungen::Uebung_026_sub" x="-2900" y="-800">
+			<Parameter Name="Output" Value="Output_Q1"/>
+		</SubApp>
+		<EventConnections>
+			<Connection Source="SoftKey_F2_DOWN.IND" Destination="E_REND_Ausfahren_Cyl_1.EI2"/>
+			<Connection Source="SoftKey_F3_DOWN.IND" Destination="E_REND_Ausfahren_Cyl_2.EI2"/>
+			<Connection Source="SoftKey_F9_DOWN.IND" Destination="E_REND_Einfahren_Cyl_1.EI2"/>
+			<Connection Source="SoftKey_F8_DOWN.IND" Destination="E_REND_Einfahren_Cyl_2.EI2"/>
+			<Connection Source="E_REND_Ausfahren_Cyl_2.EO" Destination="E_DELAY.START" dx1="100" dx2="100" dy="873.33"/>
+			<Connection Source="SoftKey_UP_F1.IND" Destination="E_REND_Ausfahren_Cyl_1.R" dx1="333.33"/>
+			<Connection Source="SoftKey_F2_DOWN.IND" Destination="E_REND_Ausfahren_Cyl_2.R" dx1="120"/>
+			<Connection Source="E_DELAY.EO" Destination="E_REND_Einfahren_Cyl_2.R" dx1="593.33"/>
+			<Connection Source="SoftKey_F8_DOWN.IND" Destination="E_REND_Einfahren_Cyl_1.R" dx1="140"/>
+			<Connection Source="E_REND_Einfahren_Cyl_2.EO" Destination="Q4.SET"/>
+			<Connection Source="E_REND_Einfahren_Cyl_1.EO" Destination="Q4.RESET" dx1="580"/>
+			<Connection Source="Q4.EO1" Destination="E_REND_Einfahren_Cyl_1.EI1" dx1="80" dx2="80" dy="800"/>
+			<Connection Source="E_REND_Ausfahren_Cyl_1.EO" Destination="Q2.SET"/>
+			<Connection Source="E_REND_Ausfahren_Cyl_2.EO" Destination="Q2.RESET" dx1="586.67"/>
+			<Connection Source="Q2.EO1" Destination="E_REND_Ausfahren_Cyl_2.EI1" dx1="80" dx2="80" dy="733.33"/>
+			<Connection Source="E_DELAY.EO" Destination="Q3.SET"/>
+			<Connection Source="E_REND_Einfahren_Cyl_2.EO" Destination="Q3.RESET" dx1="586.67"/>
+			<Connection Source="Q3.EO1" Destination="E_REND_Einfahren_Cyl_2.EI1" dx1="80" dx2="80" dy="666.67"/>
+			<Connection Source="SoftKey_UP_F1.IND" Destination="Q1.SET"/>
+			<Connection Source="E_REND_Ausfahren_Cyl_1.EO" Destination="Q1.RESET" dx1="600"/>
+			<Connection Source="Q1.EO1" Destination="E_REND_Ausfahren_Cyl_1.EI1" dx1="80" dx2="80" dy="866.67"/>
+		</EventConnections>
+	</SubAppNetwork>
+</SubAppType>

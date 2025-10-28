@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SubAppType Name="Uebung_054" Comment="DigitalInput_I1-_I4 auf DigitalOutput_Q1-_Q4">
+	<Identification Standard="61499-2" Description="Copyright (c) 2023 Meisterschulen am Ostbahnhof  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0">
+	</Identification>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2023-10-23">
+	</VersionInfo>
+	<CompilerInfo packageName="Uebungen">
+		<Import declaration="logiBUS::io::DI::logiBUS_DI::Input_I1"/>
+		<Import declaration="logiBUS::io::DI::logiBUS_DI::Input_I2"/>
+		<Import declaration="logiBUS::io::DI::logiBUS_DI::Input_I3"/>
+		<Import declaration="logiBUS::io::DI::logiBUS_DI::Input_I4"/>
+		<Import declaration="logiBUS::io::DQ::logiBUS_DO::Output_Q1"/>
+		<Import declaration="logiBUS::io::DQ::logiBUS_DO::Output_Q2"/>
+		<Import declaration="logiBUS::io::DQ::logiBUS_DO::Output_Q3"/>
+		<Import declaration="logiBUS::io::DQ::logiBUS_DO::Output_Q4"/>
+	</CompilerInfo>
+	<SubAppInterfaceList>
+	</SubAppInterfaceList>
+	<SubAppNetwork>
+		<FB Name="DigitalOutput_Q1" Type="logiBUS::io::DQ::logiBUS_QX" x="-3600" y="-700">
+			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="Output" Value="Output_Q1"/>
+		</FB>
+		<FB Name="DigitalInput_I1" Type="logiBUS::io::DI::logiBUS_IX" x="-8893.33" y="-420">
+			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="Input" Value="Input_I1"/>
+		</FB>
+		<FB Name="DigitalOutput_Q2" Type="logiBUS::io::DQ::logiBUS_QX" x="-3600" y="200">
+			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="Output" Value="Output_Q2"/>
+		</FB>
+		<FB Name="DigitalInput_I2" Type="logiBUS::io::DI::logiBUS_IX" x="-8893.33" y="660">
+			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="Input" Value="Input_I2"/>
+		</FB>
+		<FB Name="DigitalOutput_Q3" Type="logiBUS::io::DQ::logiBUS_QX" x="-3600" y="1100">
+			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="Output" Value="Output_Q3"/>
+		</FB>
+		<FB Name="DigitalInput_I3" Type="logiBUS::io::DI::logiBUS_IX" x="-8900" y="1800">
+			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="Input" Value="Input_I3"/>
+		</FB>
+		<FB Name="DigitalOutput_Q4" Type="logiBUS::io::DQ::logiBUS_QX" x="-3600" y="2000">
+			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="Output" Value="Output_Q4"/>
+		</FB>
+		<FB Name="DigitalInput_I4" Type="logiBUS::io::DI::logiBUS_IX" x="-8893.33" y="2820">
+			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="Input" Value="Input_I4"/>
+		</FB>
+		<FB Name="ARR08B_TO_BOOLS" Type="logiBUS::utils::conversion::arr::forwarding::ARR08X_TO_BOOLS" x="-5900" y="2000">
+		</FB>
+		<FB Name="BOOLS_TO_ARR08B" Type="logiBUS::utils::conversion::arr::reversing::BOOLS_TO_ARR08X" x="-7400" y="2000">
+		</FB>
+		<EventConnections>
+			<Connection Source="BOOLS_TO_ARR08B.CNF" Destination="ARR08B_TO_BOOLS.REQ" dx1="260"/>
+			<Connection Source="DigitalInput_I1.IND" Destination="BOOLS_TO_ARR08B.REQ" dx1="73.33"/>
+			<Connection Source="DigitalInput_I2.IND" Destination="BOOLS_TO_ARR08B.REQ" dx1="73.33"/>
+			<Connection Source="DigitalInput_I3.IND" Destination="BOOLS_TO_ARR08B.REQ" dx1="373.33"/>
+			<Connection Source="DigitalInput_I4.IND" Destination="BOOLS_TO_ARR08B.REQ" dx1="73.33"/>
+			<Connection Source="ARR08B_TO_BOOLS.CNF" Destination="DigitalOutput_Q1.REQ" dx1="206.67"/>
+			<Connection Source="ARR08B_TO_BOOLS.CNF" Destination="DigitalOutput_Q2.REQ" dx1="206.67"/>
+			<Connection Source="ARR08B_TO_BOOLS.CNF" Destination="DigitalOutput_Q3.REQ" dx1="206.67"/>
+			<Connection Source="ARR08B_TO_BOOLS.CNF" Destination="DigitalOutput_Q4.REQ" dx1="660"/>
+		</EventConnections>
+		<DataConnections>
+			<Connection Source="BOOLS_TO_ARR08B.OUT" Destination="ARR08B_TO_BOOLS.IN" dx1="260"/>
+			<Connection Source="DigitalInput_I1.IN" Destination="BOOLS_TO_ARR08B.IN_00" dx1="206.67"/>
+			<Connection Source="DigitalInput_I2.IN" Destination="BOOLS_TO_ARR08B.IN_01" dx1="140"/>
+			<Connection Source="DigitalInput_I3.IN" Destination="BOOLS_TO_ARR08B.IN_02" dx1="373.33"/>
+			<Connection Source="DigitalInput_I4.IN" Destination="BOOLS_TO_ARR08B.IN_03" dx1="140"/>
+			<Connection Source="ARR08B_TO_BOOLS.OUT_00" Destination="DigitalOutput_Q1.OUT" dx1="73.33"/>
+			<Connection Source="ARR08B_TO_BOOLS.OUT_01" Destination="DigitalOutput_Q2.OUT" dx1="140"/>
+			<Connection Source="ARR08B_TO_BOOLS.OUT_02" Destination="DigitalOutput_Q3.OUT" dx1="273.33"/>
+			<Connection Source="ARR08B_TO_BOOLS.OUT_03" Destination="DigitalOutput_Q4.OUT" dx1="486.67"/>
+		</DataConnections>
+	</SubAppNetwork>
+</SubAppType>

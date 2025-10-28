@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SubAppType Name="Uebung_003b2_sub" Comment="IX auf QX (generisch)">
+	<Identification Standard="61499-2" Description="Copyright (c) 2023 Meisterschulen am Ostbahnhof  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0">
+	</Identification>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2023-10-23">
+	</VersionInfo>
+	<CompilerInfo packageName="Uebungen">
+		<Import declaration="DataPanel::io::MI::DQ::DataPanel_MI_DO_S"/>
+		<Import declaration="DataPanel::io::MI::const::MI"/>
+		<Import declaration="Funk::io::DI::Funk_DI"/>
+		<Import declaration="Funk::io::DI::Funk_DI_S"/>
+		<Import declaration="DataPanel::io::MI::DQ::DataPanel_MI_DO::Invalid"/>
+	</CompilerInfo>
+	<SubAppInterfaceList>
+		<InputVars>
+			<VarDeclaration Name="Input" Type="Funk::io::DI::Funk_DI_S" Comment="Identify the Input DigitalInput_Key_01 etc.." InitialValue="Funk_DI::Invalid"/>
+			<VarDeclaration Name="u8SAMember" Type="USINT" Comment="Node SA 224..239" InitialValue="MI::MI_00"/>
+			<VarDeclaration Name="Output" Type="DataPanel::io::MI::DQ::DataPanel_MI_DO_S" Comment="Identify the Output DigitalOutput_1A..8B and Input_Power_Port_5..8" InitialValue="Invalid"/>
+		</InputVars>
+	</SubAppInterfaceList>
+	<SubAppNetwork>
+		<FB Name="QX" Type="DataPanel::io::MI::DQ::DataPanel_MI_QX" x="-2500" y="-800">
+			<Parameter Name="QI" Value="TRUE"/>
+		</FB>
+		<FB Name="IX" Type="Funk::io::DI::Funk_IX" x="-4600" y="-1000">
+			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="PARAMS" Value="">
+				<Attribute Name="Visible" Value="false"/>
+			</Parameter>
+		</FB>
+		<EventConnections>
+			<Connection Source="IX.IND" Destination="QX.REQ" dx1="773.33"/>
+		</EventConnections>
+		<DataConnections>
+			<Connection Source="IX.IN" Destination="QX.OUT" dx1="726.67"/>
+			<Connection Source="Input" Destination="IX.Input" dx1="2880">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="u8SAMember" Destination="QX.u8SAMember" dx1="3813.33">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="Output" Destination="QX.Output" dx1="3813.33">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+		</DataConnections>
+	</SubAppNetwork>
+</SubAppType>

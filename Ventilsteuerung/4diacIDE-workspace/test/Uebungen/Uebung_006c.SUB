@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SubAppType Name="Uebung_006c" Comment="SR-Flip-Flop mit IB auf DI_REPEAT">
+	<Identification Standard="61499-2" Description="Copyright (c) 2023 Meisterschulen am Ostbahnhof  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0">
+	</Identification>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2023-10-23">
+	</VersionInfo>
+	<CompilerInfo packageName="Uebungen">
+		<Import declaration="logiBUS::io::DI::logiBUS_DI::Input_I1"/>
+		<Import declaration="logiBUS::io::DI::logiBUS_DI::Input_I2"/>
+		<Import declaration="logiBUS::io::DI::logiBUS_DI_Events::BUTTON_PRESS_REPEAT"/>
+		<Import declaration="logiBUS::io::DQ::logiBUS_DO::Output_Q1"/>
+		<Import declaration="logiBUS::io::DQ::logiBUS_DO::Output_Q2"/>
+		<Import declaration="logiBUS::io::DQ::logiBUS_DO::Output_Q3"/>
+		<Import declaration="logiBUS::io::DQ::logiBUS_DO::Output_Q4"/>
+		<Import declaration="logiBUS::io::DQ::logiBUS_DO::Output_Q5"/>
+		<Import declaration="logiBUS::io::DQ::logiBUS_DO::Output_Q6"/>
+		<Import declaration="logiBUS::io::DQ::logiBUS_DO::Output_Q7"/>
+		<Import declaration="logiBUS::io::DQ::logiBUS_DO::Output_Q8"/>
+	</CompilerInfo>
+	<SubAppInterfaceList>
+	</SubAppInterfaceList>
+	<SubAppNetwork>
+		<FB Name="DigitalOutput_Q1" Type="logiBUS::io::DQ::logiBUS_QX" x="8160" y="33.33">
+			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="Output" Value="Output_Q1"/>
+		</FB>
+		<FB Name="DigitalInput_RPT_I1" Type="logiBUS::io::DI::logiBUS_IB" x="1920" y="3620">
+			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="Input" Value="Input_I1"/>
+			<Parameter Name="InputEvent" Value="BUTTON_PRESS_REPEAT"/>
+		</FB>
+		<FB Name="DigitalInput_RPT_I2" Type="logiBUS::io::DI::logiBUS_IB" x="1920" y="5420">
+			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="Input" Value="Input_I2"/>
+			<Parameter Name="InputEvent" Value="BUTTON_PRESS_REPEAT"/>
+		</FB>
+		<FB Name="E_SR_Q1" Type="iec61499::events::E_SR" x="6393.33" y="233.33">
+		</FB>
+		<FB Name="E_SR_Q2" Type="iec61499::events::E_SR" x="6393.33" y="1480">
+		</FB>
+		<FB Name="DigitalOutput_Q2" Type="logiBUS::io::DQ::logiBUS_QX" x="8160" y="1280">
+			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="Output" Value="Output_Q2"/>
+		</FB>
+		<FB Name="DigitalOutput_Q3" Type="logiBUS::io::DQ::logiBUS_QX" x="8226.67" y="2526.67">
+			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="Output" Value="Output_Q3"/>
+		</FB>
+		<FB Name="DigitalOutput_Q4" Type="logiBUS::io::DQ::logiBUS_QX" x="8293.33" y="3773.33">
+			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="Output" Value="Output_Q4"/>
+		</FB>
+		<FB Name="E_SR_Q5" Type="iec61499::events::E_SR" x="6393.33" y="6466.67">
+		</FB>
+		<FB Name="E_SR_Q6" Type="iec61499::events::E_SR" x="6526.67" y="5220">
+		</FB>
+		<FB Name="DigitalOutput_Q5" Type="logiBUS::io::DQ::logiBUS_QX" x="8160" y="6266.67">
+			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="Output" Value="Output_Q5"/>
+		</FB>
+		<FB Name="DigitalOutput_Q6" Type="logiBUS::io::DQ::logiBUS_QX" x="8293.33" y="5020">
+			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="Output" Value="Output_Q6"/>
+		</FB>
+		<FB Name="DigitalOutput_Q7" Type="logiBUS::io::DQ::logiBUS_QX" x="8093.33" y="7513.33">
+			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="Output" Value="Output_Q7"/>
+		</FB>
+		<FB Name="DigitalOutput_Q8" Type="logiBUS::io::DQ::logiBUS_QX" x="8026.67" y="8760">
+			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="Output" Value="Output_Q8"/>
+		</FB>
+		<FB Name="E_DEMUX8_S" Type="iec61499::events::E_DEMUX_8" x="5380" y="3620">
+		</FB>
+		<FB Name="E_DEMUX8_R" Type="iec61499::events::E_DEMUX_8" x="4366.67" y="5020">
+		</FB>
+		<FB Name="E_SR_Q3" Type="iec61499::events::E_SR" x="6460" y="2726.67">
+		</FB>
+		<FB Name="E_SR_Q4" Type="iec61499::events::E_SR" x="6526.67" y="3973.33">
+		</FB>
+		<FB Name="E_SR_Q7" Type="iec61499::events::E_SR" x="6326.67" y="7713.33">
+		</FB>
+		<FB Name="E_SR_Q8" Type="iec61499::events::E_SR" x="6260" y="8960">
+		</FB>
+		<FB Name="F_BYTE_TO_UINT_S" Type="iec61131::conversion::F_BYTE_TO_UINT" x="3120" y="3973.33">
+		</FB>
+		<FB Name="F_BYTE_TO_UINT_R" Type="iec61131::conversion::F_BYTE_TO_UINT" x="3120" y="5720">
+		</FB>
+		<EventConnections>
+			<Connection Source="E_SR_Q1.EO" Destination="DigitalOutput_Q1.REQ" dx1="633.33"/>
+			<Connection Source="E_SR_Q2.EO" Destination="DigitalOutput_Q2.REQ" dx1="633.33"/>
+			<Connection Source="E_SR_Q5.EO" Destination="DigitalOutput_Q5.REQ" dx1="633.33"/>
+			<Connection Source="E_DEMUX8_S.EO1" Destination="E_SR_Q1.S" dx1="133.33"/>
+			<Connection Source="E_SR_Q4.EO" Destination="DigitalOutput_Q4.REQ" dx1="633.33"/>
+			<Connection Source="E_SR_Q3.EO" Destination="DigitalOutput_Q3.REQ" dx1="633.33"/>
+			<Connection Source="E_DEMUX8_S.EO2" Destination="E_SR_Q2.S" dx1="200"/>
+			<Connection Source="E_DEMUX8_S.EO3" Destination="E_SR_Q3.S" dx1="233.33"/>
+			<Connection Source="E_DEMUX8_S.EO4" Destination="E_SR_Q4.S" dx1="133.33"/>
+			<Connection Source="E_DEMUX8_S.EO5" Destination="E_SR_Q5.S" dx1="133.33"/>
+			<Connection Source="E_SR_Q6.EO" Destination="DigitalOutput_Q6.REQ" dx1="633.33"/>
+			<Connection Source="E_SR_Q8.EO" Destination="DigitalOutput_Q8.REQ" dx1="633.33"/>
+			<Connection Source="E_SR_Q7.EO" Destination="DigitalOutput_Q7.REQ" dx1="633.33"/>
+			<Connection Source="E_DEMUX8_S.EO6" Destination="E_SR_Q6.S" dx1="333.33"/>
+			<Connection Source="E_DEMUX8_S.EO7" Destination="E_SR_Q7.S" dx1="100"/>
+			<Connection Source="E_DEMUX8_S.EO8" Destination="E_SR_Q8.S" dx1="66.67"/>
+			<Connection Source="F_BYTE_TO_UINT_S.CNF" Destination="E_DEMUX8_S.EI" dx1="646.67"/>
+			<Connection Source="DigitalInput_RPT_I1.IND" Destination="F_BYTE_TO_UINT_S.REQ" dx1="140"/>
+			<Connection Source="DigitalInput_RPT_I2.IND" Destination="F_BYTE_TO_UINT_R.REQ" dx1="140"/>
+			<Connection Source="F_BYTE_TO_UINT_R.CNF" Destination="E_DEMUX8_R.EI" dx1="140"/>
+			<Connection Source="E_DEMUX8_R.EO8" Destination="E_SR_Q8.R" dx1="580"/>
+			<Connection Source="E_DEMUX8_R.EO7" Destination="E_SR_Q7.R" dx1="613.33"/>
+			<Connection Source="E_DEMUX8_R.EO4" Destination="E_SR_Q6.R"/>
+			<Connection Source="E_DEMUX8_R.EO5" Destination="E_SR_Q5.R" dx1="646.67"/>
+			<Connection Source="E_DEMUX8_R.EO4" Destination="E_SR_Q4.R" dx1="1313.33"/>
+			<Connection Source="E_DEMUX8_R.EO3" Destination="E_SR_Q3.R" dx1="1280"/>
+			<Connection Source="E_DEMUX8_R.EO1" Destination="E_SR_Q2.R" dx1="1180"/>
+			<Connection Source="E_DEMUX8_R.EO1" Destination="E_SR_Q1.R" dx1="1180"/>
+		</EventConnections>
+		<DataConnections>
+			<Connection Source="E_SR_Q1.Q" Destination="DigitalOutput_Q1.OUT"/>
+			<Connection Source="E_SR_Q2.Q" Destination="DigitalOutput_Q2.OUT"/>
+			<Connection Source="E_SR_Q5.Q" Destination="DigitalOutput_Q5.OUT"/>
+			<Connection Source="E_SR_Q3.Q" Destination="DigitalOutput_Q3.OUT"/>
+			<Connection Source="E_SR_Q4.Q" Destination="DigitalOutput_Q4.OUT"/>
+			<Connection Source="E_SR_Q6.Q" Destination="DigitalOutput_Q6.OUT"/>
+			<Connection Source="E_SR_Q8.Q" Destination="DigitalOutput_Q8.OUT"/>
+			<Connection Source="E_SR_Q7.Q" Destination="DigitalOutput_Q7.OUT"/>
+			<Connection Source="F_BYTE_TO_UINT_S.OUT" Destination="E_DEMUX8_S.K" dx1="646.67"/>
+			<Connection Source="DigitalInput_RPT_I1.IN" Destination="F_BYTE_TO_UINT_S.IN" dx1="140"/>
+			<Connection Source="DigitalInput_RPT_I2.IN" Destination="F_BYTE_TO_UINT_R.IN" dx1="140"/>
+			<Connection Source="F_BYTE_TO_UINT_R.OUT" Destination="E_DEMUX8_R.K"/>
+		</DataConnections>
+	</SubAppNetwork>
+</SubAppType>

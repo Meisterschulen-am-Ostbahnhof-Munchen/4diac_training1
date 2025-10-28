@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SubAppType Name="Uebung_055" Comment="DigitalInput_I1 auf DigitalOutput_Q1">
+	<Identification Standard="61499-2" Description="Copyright (c) 2023 Meisterschulen am Ostbahnhof  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0">
+	</Identification>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2023-10-23">
+	</VersionInfo>
+	<CompilerInfo packageName="Uebungen">
+		<Import declaration="logiBUS::io::DI::logiBUS_DI::Input_I1"/>
+		<Import declaration="logiBUS::io::DQ::logiBUS_DO::Output_Q1"/>
+	</CompilerInfo>
+	<SubAppInterfaceList>
+	</SubAppInterfaceList>
+	<SubAppNetwork>
+		<FB Name="DigitalOutput_Q1" Type="logiBUS::io::DQ::logiBUS_QX" x="-4300" y="-800">
+			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="Output" Value="Output_Q1"/>
+		</FB>
+		<FB Name="DigitalInput_I1" Type="logiBUS::io::DI::logiBUS_IX" x="-8900" y="-900">
+			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="Input" Value="Input_I1"/>
+		</FB>
+		<FB Name="Q_TO_STR_STATUS" Type="logiBUS::utils::quarter::QUARTER_TO_STR_STATUS" x="-5100" y="300">
+		</FB>
+		<FB Name="Q_TO_BOOL" Type="logiBUS::utils::quarter::QUARTER_TO_BOOL" x="-6200" y="-700">
+		</FB>
+		<FB Name="BOOL_TO_Q" Type="logiBUS::utils::quarter::BOOL_TO_QUARTER" x="-7600" y="-700">
+		</FB>
+		<EventConnections>
+			<Connection Source="Q_TO_BOOL.CNF" Destination="DigitalOutput_Q1.REQ" dx1="286.67"/>
+			<Connection Source="DigitalInput_I1.IND" Destination="BOOL_TO_Q.REQ"/>
+			<Connection Source="BOOL_TO_Q.CNF" Destination="Q_TO_STR_STATUS.REQ" dx1="186.67"/>
+			<Connection Source="BOOL_TO_Q.CNF" Destination="Q_TO_BOOL.REQ"/>
+		</EventConnections>
+		<DataConnections>
+			<Connection Source="Q_TO_BOOL.Q" Destination="DigitalOutput_Q1.OUT" dx1="73.33"/>
+			<Connection Source="DigitalInput_I1.IN" Destination="BOOL_TO_Q.I" dx1="73.33"/>
+			<Connection Source="BOOL_TO_Q.QB" Destination="Q_TO_STR_STATUS.IB" dx1="100"/>
+			<Connection Source="BOOL_TO_Q.QB" Destination="Q_TO_BOOL.IB"/>
+		</DataConnections>
+	</SubAppNetwork>
+</SubAppType>

@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SubAppType Name="Uebung_039" Comment="Spiegelabfolge V2 mit Schrittkette">
+	<Identification Standard="61499-2" Description="Copyright (c) 2023 Meisterschulen am Ostbahnhof  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0&#10;   &#10;Spiegelabfolge V2 mit Schrittkette &#10;geeignet für hydraulische 4/3 Wege Ventile  &#10;oder pneumatische 5/3 Wege Ventile &#10;jeweils Mittelstellung gesperrt. ">
+	</Identification>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2023-10-23">
+	</VersionInfo>
+	<CompilerInfo packageName="Uebungen">
+		<Import declaration="isobus::UT::io::Softkey::SoftKeyActivationCode::SK_RELEASED"/>
+		<Import declaration="Uebungen::const::UT::DefaultPool::SoftKey_F1"/>
+		<Import declaration="Uebungen::const::UT::DefaultPool::SoftKey_F2"/>
+		<Import declaration="Uebungen::const::UT::DefaultPool::SoftKey_F3"/>
+		<Import declaration="Uebungen::const::UT::DefaultPool::SoftKey_F8"/>
+		<Import declaration="Uebungen::const::UT::DefaultPool::SoftKey_F9"/>
+		<Import declaration="logiBUS::io::DI::logiBUS_DI::Input_I1"/>
+		<Import declaration="logiBUS::io::DI::logiBUS_DI::Input_I2"/>
+		<Import declaration="logiBUS::io::DI::logiBUS_DI::Input_I3"/>
+		<Import declaration="logiBUS::io::DI::logiBUS_DI::Input_I4"/>
+		<Import declaration="logiBUS::io::DI::logiBUS_DI_Events::BUTTON_PRESS_DOWN"/>
+		<Import declaration="logiBUS::io::DQ::logiBUS_DO::Output_Q1"/>
+		<Import declaration="logiBUS::io::DQ::logiBUS_DO::Output_Q2"/>
+		<Import declaration="logiBUS::io::DQ::logiBUS_DO::Output_Q3"/>
+		<Import declaration="logiBUS::io::DQ::logiBUS_DO::Output_Q4"/>
+		<Import declaration="logiBUS::utils::sequence::const::sequence::NO_TIME"/>
+	</CompilerInfo>
+	<SubAppInterfaceList>
+	</SubAppInterfaceList>
+	<SubAppNetwork>
+		<FB Name="E_TimeOut" Type="iec61499::events::E_TimeOut" x="-8626.67" y="3553.33">
+		</FB>
+		<FB Name="DigitalInput_DOWN_I1" Type="logiBUS::io::DI::logiBUS_IE" x="-13200" y="-200">
+			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="Input" Value="Input_I1"/>
+			<Parameter Name="InputEvent" Value="BUTTON_PRESS_DOWN"/>
+		</FB>
+		<FB Name="DigitalInput_DOWN_I2" Type="logiBUS::io::DI::logiBUS_IE" x="-13200" y="780">
+			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="Input" Value="Input_I2"/>
+			<Parameter Name="InputEvent" Value="BUTTON_PRESS_DOWN"/>
+		</FB>
+		<FB Name="DigitalInput_DOWN_I3" Type="logiBUS::io::DI::logiBUS_IE" x="-13200" y="1760">
+			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="Input" Value="Input_I3"/>
+			<Parameter Name="InputEvent" Value="BUTTON_PRESS_DOWN"/>
+		</FB>
+		<FB Name="DigitalInput_DOWN_I4" Type="logiBUS::io::DI::logiBUS_IE" x="-13200" y="2740">
+			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="Input" Value="Input_I4"/>
+			<Parameter Name="InputEvent" Value="BUTTON_PRESS_DOWN"/>
+		</FB>
+		<FB Name="sequence_05" Type="logiBUS::utils::sequence::combi::sequence_ET_05" x="-10700" y="-100">
+			<Parameter Name="DT_S1_S2" Value="NO_TIME"/>
+			<Parameter Name="DT_S2_S3" Value="NO_TIME"/>
+			<Parameter Name="DT_S3_S4" Value="T#5s"/>
+			<Parameter Name="DT_S4_S5" Value="NO_TIME"/>
+			<Parameter Name="DT_S5_START" Value="NO_TIME"/>
+		</FB>
+		<SubApp Name="NumbAnzeig" Type="Uebungen::Uebung_039_sub_NumbAnzeig" x="-8766.67" y="-986.67">
+		</SubApp>
+		<FB Name="SoftKey_UP_F1" Type="isobus::UT::io::Softkey::Softkey_IE" x="-13100" y="-1300">
+			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="u16ObjId" Value="SoftKey_F1"/>
+			<Parameter Name="InputEvent" Value="SK_RELEASED"/>
+		</FB>
+		<SubApp Name="Q1" Type="Uebungen::Uebung_039_sub_Outputs" x="-7600" y="-200">
+			<Parameter Name="u16ObjId" Value="SoftKey_F8"/>
+			<Parameter Name="Output" Value="Output_Q1"/>
+		</SubApp>
+		<SubApp Name="Q4" Type="Uebungen::Uebung_039_sub_Outputs" x="-7600" y="2606.67">
+			<Parameter Name="u16ObjId" Value="SoftKey_F3"/>
+			<Parameter Name="Output" Value="Output_Q4"/>
+		</SubApp>
+		<SubApp Name="Q2" Type="Uebungen::Uebung_039_sub_Outputs" x="-7600" y="706.67">
+			<Parameter Name="u16ObjId" Value="SoftKey_F2"/>
+			<Parameter Name="Output" Value="Output_Q2"/>
+		</SubApp>
+		<SubApp Name="Q3" Type="Uebungen::Uebung_039_sub_Outputs" x="-7600" y="1660">
+			<Parameter Name="u16ObjId" Value="SoftKey_F9"/>
+			<Parameter Name="Output" Value="Output_Q3"/>
+		</SubApp>
+		<EventConnections>
+			<Connection Source="DigitalInput_DOWN_I1.IND" Destination="sequence_05.S1_S2" dx1="800"/>
+			<Connection Source="DigitalInput_DOWN_I2.IND" Destination="sequence_05.S2_S3" dx1="380"/>
+			<Connection Source="DigitalInput_DOWN_I3.IND" Destination="sequence_05.S4_S5" dx1="500"/>
+			<Connection Source="DigitalInput_DOWN_I4.IND" Destination="sequence_05.S5_START" dx1="626.67"/>
+			<Connection Source="sequence_05.CNF" Destination="NumbAnzeig.CNF" dx1="73.33"/>
+			<Connection Source="SoftKey_UP_F1.IND" Destination="sequence_05.START_S1" dx1="1360"/>
+			<Connection Source="sequence_05.EO_S1" Destination="Q1.REQ" dx1="406.67"/>
+			<Connection Source="sequence_05.EO_S5" Destination="Q4.REQ" dx1="273.33"/>
+			<Connection Source="sequence_05.EO_S2" Destination="Q2.REQ" dx1="540"/>
+			<Connection Source="sequence_05.EO_S4" Destination="Q3.REQ" dx1="406.67"/>
+		</EventConnections>
+		<DataConnections>
+			<Connection Source="sequence_05.STATE_NR" Destination="NumbAnzeig.STATE_NR" dx1="340"/>
+			<Connection Source="sequence_05.DO_S1" Destination="Q1.OUT" dx1="473.33"/>
+			<Connection Source="sequence_05.DO_S5" Destination="Q4.OUT" dx1="140"/>
+			<Connection Source="sequence_05.DO_S2" Destination="Q2.OUT" dx1="540"/>
+			<Connection Source="sequence_05.DO_S4" Destination="Q3.OUT" dx1="206.67"/>
+		</DataConnections>
+		<AdapterConnections>
+			<Connection Source="sequence_05.timeOut" Destination="E_TimeOut.TimeOutSocket" dx1="73.33"/>
+		</AdapterConnections>
+	</SubAppNetwork>
+</SubAppType>

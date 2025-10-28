@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SubAppType Name="Uebung_041" Comment="Lauflicht 8 mit einer Taste">
+	<Identification Standard="61499-2" Description="Copyright (c) 2023 Meisterschulen am Ostbahnhof  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0">
+	</Identification>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2023-10-23">
+	</VersionInfo>
+	<CompilerInfo packageName="Uebungen">
+		<Import declaration="Uebungen::const::UT::DefaultPool::OutputNumber_N1"/>
+		<Import declaration="logiBUS::io::DI::logiBUS_DI::Input_I1"/>
+		<Import declaration="logiBUS::io::DI::logiBUS_DI::Input_I2"/>
+		<Import declaration="logiBUS::io::DI::logiBUS_DI::Input_I4"/>
+		<Import declaration="logiBUS::io::DI::logiBUS_DI_Events::BUTTON_SINGLE_CLICK"/>
+		<Import declaration="logiBUS::io::DQ::logiBUS_DO::Output_Q1"/>
+		<Import declaration="logiBUS::io::DQ::logiBUS_DO::Output_Q2"/>
+		<Import declaration="logiBUS::io::DQ::logiBUS_DO::Output_Q3"/>
+		<Import declaration="logiBUS::io::DQ::logiBUS_DO::Output_Q4"/>
+		<Import declaration="logiBUS::io::DQ::logiBUS_DO::Output_Q5"/>
+		<Import declaration="logiBUS::io::DQ::logiBUS_DO::Output_Q6"/>
+		<Import declaration="logiBUS::io::DQ::logiBUS_DO::Output_Q7"/>
+		<Import declaration="logiBUS::io::DQ::logiBUS_DO::Output_Q8"/>
+	</CompilerInfo>
+	<SubAppInterfaceList>
+	</SubAppInterfaceList>
+	<SubAppNetwork>
+		<FB Name="DigitalOutput_Q1" Type="logiBUS::io::DQ::logiBUS_QX" x="-6666.67" y="-2400">
+			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="Output" Value="Output_Q1"/>
+		</FB>
+		<FB Name="DigitalOutput_Q2" Type="logiBUS::io::DQ::logiBUS_QX" x="-6666.67" y="-1333.33">
+			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="Output" Value="Output_Q2"/>
+		</FB>
+		<FB Name="DigitalOutput_Q3" Type="logiBUS::io::DQ::logiBUS_QX" x="-6666.67" y="-266.67">
+			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="Output" Value="Output_Q3"/>
+		</FB>
+		<FB Name="DigitalOutput_Q4" Type="logiBUS::io::DQ::logiBUS_QX" x="-6666.67" y="800">
+			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="Output" Value="Output_Q4"/>
+		</FB>
+		<FB Name="DigitalInput_CLK_I1" Type="logiBUS::io::DI::logiBUS_IE" x="-11466.67" y="-2133.33">
+			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="Input" Value="Input_I1"/>
+			<Parameter Name="InputEvent" Value="BUTTON_SINGLE_CLICK"/>
+		</FB>
+		<FB Name="DigitalInput_CLK_I4" Type="logiBUS::io::DI::logiBUS_IE" x="-16533.33" y="1333.33">
+			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="Input" Value="Input_I4"/>
+			<Parameter Name="InputEvent" Value="BUTTON_SINGLE_CLICK"/>
+		</FB>
+		<FB Name="DigitalOutput_Q5" Type="logiBUS::io::DQ::logiBUS_QX" x="-6666.67" y="1866.67">
+			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="Output" Value="Output_Q5"/>
+		</FB>
+		<FB Name="DigitalOutput_Q6" Type="logiBUS::io::DQ::logiBUS_QX" x="-6666.67" y="2933.33">
+			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="Output" Value="Output_Q6"/>
+		</FB>
+		<FB Name="DigitalOutput_Q7" Type="logiBUS::io::DQ::logiBUS_QX" x="-6666.67" y="4000">
+			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="Output" Value="Output_Q7"/>
+		</FB>
+		<FB Name="DigitalOutput_Q8" Type="logiBUS::io::DQ::logiBUS_QX" x="-6666.67" y="5066.67">
+			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="Output" Value="Output_Q8"/>
+		</FB>
+		<FB Name="Q_NumericValue" Type="isobus::UT::Q::Q_NumericValue" x="-2666.67" y="-2000">
+			<Parameter Name="u16ObjId" Value="OutputNumber_N1"/>
+		</FB>
+		<FB Name="F_SINT_TO_UINT" Type="iec61131::conversion::F_SINT_TO_UINT" x="-4906.67" y="-1820">
+		</FB>
+		<FB Name="loop" Type="logiBUS::utils::sequence::event::sequence_E_08_loop" x="-9600" y="-600">
+		</FB>
+		<FB Name="E_CTU_0" Type="iec61499::events::E_CTU" x="-14900" y="-500">
+			<Parameter Name="PV" Value="0"/>
+		</FB>
+		<FB Name="DigitalInput_CLK_I2" Type="logiBUS::io::DI::logiBUS_IE" x="-16600" y="-700">
+			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="Input" Value="Input_I2"/>
+			<Parameter Name="InputEvent" Value="BUTTON_SINGLE_CLICK"/>
+		</FB>
+		<FB Name="F_SUB_0" Type="iec61131::arithmetic::F_SUB" x="-13600" y="-500">
+			<Parameter Name="IN2" Value="UINT#1"/>
+		</FB>
+		<FB Name="E_DEMUX_0" Type="iec61499::events::E_DEMUX_8" x="-12000" y="-500">
+		</FB>
+		<EventConnections>
+			<Connection Source="F_SINT_TO_UINT.CNF" Destination="Q_NumericValue.REQ" dx1="633.33"/>
+			<Connection Source="DigitalInput_CLK_I4.IND" Destination="loop.RESET" dx1="5146.67"/>
+			<Connection Source="loop.CNF" Destination="F_SINT_TO_UINT.REQ" dx1="3060"/>
+			<Connection Source="loop.EO_S1" Destination="DigitalOutput_Q1.REQ" dx1="600"/>
+			<Connection Source="loop.EO_S2" Destination="DigitalOutput_Q2.REQ" dx1="760"/>
+			<Connection Source="loop.EO_S3" Destination="DigitalOutput_Q3.REQ" dx1="660"/>
+			<Connection Source="loop.EO_S4" Destination="DigitalOutput_Q4.REQ" dx1="660"/>
+			<Connection Source="loop.EO_S5" Destination="DigitalOutput_Q5.REQ" dx1="626.67"/>
+			<Connection Source="loop.EO_S6" Destination="DigitalOutput_Q6.REQ" dx1="560"/>
+			<Connection Source="loop.EO_S7" Destination="DigitalOutput_Q7.REQ" dx1="493.33"/>
+			<Connection Source="loop.EO_S8" Destination="DigitalOutput_Q8.REQ" dx1="426.67"/>
+			<Connection Source="DigitalInput_CLK_I1.IND" Destination="loop.START_S1" dx1="466.67"/>
+			<Connection Source="DigitalInput_CLK_I2.IND" Destination="E_CTU_0.CU"/>
+			<Connection Source="E_CTU_0.CUO" Destination="F_SUB_0.REQ"/>
+			<Connection Source="DigitalInput_CLK_I4.IND" Destination="E_CTU_0.R" dx1="206.67"/>
+			<Connection Source="F_SUB_0.CNF" Destination="E_DEMUX_0.EI"/>
+			<Connection Source="E_DEMUX_0.EO2" Destination="loop.S2_S3" dx1="846.67"/>
+			<Connection Source="E_DEMUX_0.EO3" Destination="loop.S3_S4" dx1="846.67"/>
+			<Connection Source="E_DEMUX_0.EO4" Destination="loop.S4_S5" dx1="846.67"/>
+			<Connection Source="E_DEMUX_0.EO5" Destination="loop.S5_S6" dx1="846.67"/>
+			<Connection Source="E_DEMUX_0.EO6" Destination="loop.S6_S7" dx1="846.67"/>
+			<Connection Source="E_DEMUX_0.EO7" Destination="loop.S7_S8" dx1="846.67"/>
+			<Connection Source="E_DEMUX_0.EO8" Destination="loop.S8_S1" dx1="846.67"/>
+			<Connection Source="E_DEMUX_0.EO8" Destination="E_CTU_0.R" dx1="353.33" dx2="353.33" dy="460"/>
+			<Connection Source="E_DEMUX_0.EO1" Destination="loop.S1_S2" dx1="846.67"/>
+		</EventConnections>
+		<DataConnections>
+			<Connection Source="F_SINT_TO_UINT.OUT" Destination="Q_NumericValue.u32NewValue" dx1="286.67"/>
+			<Connection Source="loop.STATE_NR" Destination="F_SINT_TO_UINT.IN" dx1="726.67"/>
+			<Connection Source="loop.DO_S1" Destination="DigitalOutput_Q1.OUT" dx1="693.33"/>
+			<Connection Source="loop.DO_S2" Destination="DigitalOutput_Q2.OUT" dx1="793.33"/>
+			<Connection Source="loop.DO_S3" Destination="DigitalOutput_Q3.OUT" dx1="826.67"/>
+			<Connection Source="loop.DO_S4" Destination="DigitalOutput_Q4.OUT" dx1="660"/>
+			<Connection Source="loop.DO_S5" Destination="DigitalOutput_Q5.OUT" dx1="593.33"/>
+			<Connection Source="loop.DO_S6" Destination="DigitalOutput_Q6.OUT" dx1="526.67"/>
+			<Connection Source="loop.DO_S7" Destination="DigitalOutput_Q7.OUT" dx1="460"/>
+			<Connection Source="loop.DO_S8" Destination="DigitalOutput_Q8.OUT" dx1="393.33"/>
+			<Connection Source="E_CTU_0.CV" Destination="F_SUB_0.IN1" dx1="253.33"/>
+			<Connection Source="F_SUB_0.OUT" Destination="E_DEMUX_0.K" dx1="526.67"/>
+		</DataConnections>
+	</SubAppNetwork>
+</SubAppType>

@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SubAppType Name="Uebung_003c" Comment="DigitalInput_I1-2-3-4 auf AUX">
+	<Identification Standard="61499-2" Description="Copyright (c) 2023 Meisterschulen am Ostbahnhof  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0">
+	</Identification>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2023-10-23">
+	</VersionInfo>
+	<CompilerInfo packageName="Uebungen">
+		<Import declaration="logiBUS::io::DI::logiBUS_DI::Input_I1"/>
+		<Import declaration="logiBUS::io::DI::logiBUS_DI::Input_I2"/>
+		<Import declaration="logiBUS::io::DI::logiBUS_DI::Input_I3"/>
+		<Import declaration="logiBUS::io::DI::logiBUS_DI::Input_I4"/>
+	</CompilerInfo>
+	<SubAppInterfaceList>
+	</SubAppInterfaceList>
+	<SubAppNetwork>
+		<SubApp Name="F1" Type="Uebungen::Uebung_003c_sub" x="140" y="33.33">
+			<Parameter Name="Input" Value="Input_I1"/>
+			<Parameter Name="iInpNr" Value="0"/>
+		</SubApp>
+		<SubApp Name="F2" Type="Uebungen::Uebung_003c_sub" x="140" y="613.33">
+			<Parameter Name="Input" Value="Input_I2"/>
+			<Parameter Name="iInpNr" Value="1"/>
+		</SubApp>
+		<SubApp Name="F3" Type="Uebungen::Uebung_003c_sub" x="140" y="1193.33">
+			<Parameter Name="Input" Value="Input_I3"/>
+			<Parameter Name="iInpNr" Value="2"/>
+		</SubApp>
+		<SubApp Name="F4" Type="Uebungen::Uebung_003c_sub" x="140" y="1773.33">
+			<Parameter Name="Input" Value="Input_I4"/>
+			<Parameter Name="iInpNr" Value="3"/>
+		</SubApp>
+	</SubAppNetwork>
+</SubAppType>

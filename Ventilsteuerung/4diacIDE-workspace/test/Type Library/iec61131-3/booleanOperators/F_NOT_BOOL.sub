@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SubAppType Name="F_NOT_BOOL" Comment="standard boolean NOT function">
+	<Identification Standard="61131-3" Classification="standard boolean function" Description="Copyright (c) 2011 TU Wien ACIN&#10; &#10;This program and the accompanying materials are made&#10;available under the terms of the Eclipse Public License 2.0&#10;which is available at https://www.eclipse.org/legal/epl-2.0/&#10;&#10;SPDX-License-Identifier: EPL-2.0">
+	</Identification>
+	<VersionInfo Organization="TU Wien ACIN" Version="1.0" Author="Monika Wenger" Date="2011-06-21">
+	</VersionInfo>
+	<VersionInfo Version="3.0" Author="Patrick Aigner" Date="2025-04-14" Remarks="changed package">
+	</VersionInfo>
+	<CompilerInfo packageName="iec61131::bitwiseOperators">
+	</CompilerInfo>
+	<SubAppInterfaceList>
+		<SubAppEventInputs>
+			<SubAppEvent Name="REQ" Type="Event" Comment="Service Request">
+			</SubAppEvent>
+		</SubAppEventInputs>
+		<SubAppEventOutputs>
+			<SubAppEvent Name="CNF" Type="Event" Comment="Confirmation of Requested Service">
+			</SubAppEvent>
+		</SubAppEventOutputs>
+		<InputVars>
+			<VarDeclaration Name="IN" Type="BOOL" Comment="Input"/>
+		</InputVars>
+		<OutputVars>
+			<VarDeclaration Name="OUT" Type="BOOL" Comment="Output"/>
+		</OutputVars>
+	</SubAppInterfaceList>
+	<SubAppNetwork>
+		<FB Name="F_NOT" Type="iec61131::bitwiseOperators::F_NOT" x="1300" y="200">
+		</FB>
+		<EventConnections>
+			<Connection Source="REQ" Destination="F_NOT.REQ" dx1="1880"/>
+			<Connection Source="F_NOT.CNF" Destination="CNF" dx1="2973.33"/>
+		</EventConnections>
+		<DataConnections>
+			<Connection Source="IN" Destination="F_NOT.IN" dx1="1880"/>
+			<Connection Source="F_NOT.OUT" Destination="OUT" dx1="2973.33"/>
+		</DataConnections>
+	</SubAppNetwork>
+	<Service RightInterface="RESOURCE" LeftInterface="APPLICATION" Comment="standard boolean function (not)">
+	</Service>
+	<Attribute Name="eclipse4diac::core::TypeHash" Value="''"/>
+</SubAppType>

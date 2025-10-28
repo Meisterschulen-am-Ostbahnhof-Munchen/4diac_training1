@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SubAppType Name="Uebung_016a" Comment="Background Colour umschalten -- 3-fach">
+	<Identification Standard="61499-2" Description="Copyright (c) 2023 Meisterschulen am Ostbahnhof  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0">
+	</Identification>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2023-10-23">
+	</VersionInfo>
+	<CompilerInfo packageName="Uebungen">
+		<Import declaration="isobus::UT::io::Softkey::SoftKeyActivationCode::SK_RELEASED"/>
+		<Import declaration="Uebungen::const::UT::DefaultPool::SoftKey_F1"/>
+		<Import declaration="Uebungen::const::UT::DefaultPool::SoftKey_F2"/>
+		<Import declaration="Uebungen::const::UT::DefaultPool::SoftKey_F3"/>
+		<Import declaration="Uebungen::const::UT::DefaultPool::SoftKey_F7"/>
+		<Import declaration="isobus::UT::Q::colours::COLOR_GREEN"/>
+		<Import declaration="isobus::UT::Q::colours::COLOR_RED"/>
+		<Import declaration="isobus::UT::Q::colours::COLOR_WHITE"/>
+	</CompilerInfo>
+	<SubAppInterfaceList>
+	</SubAppInterfaceList>
+	<SubAppNetwork>
+		<FB Name="SoftKey_UP_F1" Type="isobus::UT::io::Softkey::Softkey_IE" x="-4500" y="-1100">
+			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="u16ObjId" Value="SoftKey_F1"/>
+			<Parameter Name="InputEvent" Value="SK_RELEASED"/>
+		</FB>
+		<FB Name="SoftKey_UP_F2" Type="isobus::UT::io::Softkey::Softkey_IE" x="-4500" y="-100">
+			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="u16ObjId" Value="SoftKey_F2"/>
+			<Parameter Name="InputEvent" Value="SK_RELEASED"/>
+		</FB>
+		<FB Name="F_SEL_E_3" Type="eclipse4diac::utils::selection::F_SEL_E_3" x="-1100" y="-900">
+			<Parameter Name="IN1" Value="COLOR_WHITE"/>
+			<Parameter Name="IN2" Value="COLOR_GREEN"/>
+			<Parameter Name="IN3" Value="COLOR_RED"/>
+		</FB>
+		<FB Name="Q_BackgroundColour" Type="isobus::UT::Q::Q_BackgroundColour" x="800" y="-900">
+			<Parameter Name="u16ObjId" Value="SoftKey_F7"/>
+		</FB>
+		<FB Name="SoftKey_UP_F3" Type="isobus::UT::io::Softkey::Softkey_IE" x="-4500" y="900">
+			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="u16ObjId" Value="SoftKey_F3"/>
+			<Parameter Name="InputEvent" Value="SK_RELEASED"/>
+		</FB>
+		<EventConnections>
+			<Connection Source="F_SEL_E_3.CNF" Destination="Q_BackgroundColour.REQ" dx1="613.33"/>
+			<Connection Source="SoftKey_UP_F1.IND" Destination="F_SEL_E_3.REQ1"/>
+			<Connection Source="SoftKey_UP_F2.IND" Destination="F_SEL_E_3.REQ2" dx1="1040"/>
+			<Connection Source="SoftKey_UP_F3.IND" Destination="F_SEL_E_3.REQ3" dx1="1353.33"/>
+		</EventConnections>
+		<DataConnections>
+			<Connection Source="F_SEL_E_3.OUT" Destination="Q_BackgroundColour.u8Colour" dx1="426.67"/>
+		</DataConnections>
+	</SubAppNetwork>
+</SubAppType>
