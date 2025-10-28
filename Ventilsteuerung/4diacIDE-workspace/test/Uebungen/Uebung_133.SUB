@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SubAppType Name="Uebung_133" Comment="Übung zu ISOBUS Request Message Cyclic">
+	<Identification Standard="61499-2" Description="Copyright (c) 2025 Meisterschulen am Ostbahnhof  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0">
+	</Identification>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2023-10-23">
+	</VersionInfo>
+	<CompilerInfo>
+		<Import declaration="isobus::pgn::ISOUSERHOME_e::network"/>
+		<Import declaration="isobus::pgn::ISO_CAN_NODE::NODE1"/>
+		<Import declaration="Uebungen::const::Uebung_120_129::Filter::PEAK_ADD"/>
+		<Import declaration="Uebungen::const::Uebung_120_129::Filter::PEAK_FLT"/>
+	</CompilerInfo>
+	<SubAppInterfaceList>
+	</SubAppInterfaceList>
+	<SubAppNetwork>
+		<FB Name="STRUCT_DEMUX_3" Type="eclipse4diac::convert::STRUCT_DEMUX" x="-7800" y="7400">
+			<Attribute Name="StructuredType" Type="STRING" Value="isobus::pgn::NAMEFIELD_T"/>
+		</FB>
+		<FB Name="NmGetCfInfo_1" Type="isobus::pgn::NmGetCfInfo" x="-10100" y="3900">
+			<Parameter Name="u8CanIdx" Value="NODE1"/>
+			<Parameter Name="member" Value="network"/>
+			<Parameter Name="address" Value="PEAK_ADD"/>
+			<Parameter Name="mask" Value="PEAK_FLT"/>
+		</FB>
+		<FB Name="STRUCT_DEMUX_4" Type="eclipse4diac::convert::STRUCT_DEMUX" x="-7900" y="6100">
+			<Attribute Name="StructuredType" Type="STRING" Value="isobus::pgn::CF_INFO_T"/>
+		</FB>
+		<FB Name="STRUCT_DEMUX_5" Type="eclipse4diac::convert::STRUCT_DEMUX" x="-7900" y="4900">
+			<Attribute Name="StructuredType" Type="STRING" Value="isobus::pgn::ISONETEVENT_T"/>
+		</FB>
+		<FB Name="AlPgnRxNew8Bcylc_REQ" Type="isobus::pgn::rx::AlPgnRxNew8Bcylc_REQ" x="-4300" y="3500">
+			<Parameter Name="u32Pgn" Value="61184"/>
+			<Parameter Name="u16DaSize" Value="8"/>
+			<Parameter Name="u8Priority" Value="3"/>
+			<Parameter Name="u16DefRepRate" Value="500"/>
+			<Parameter Name="u16CtrlTime" Value="1500"/>
+		</FB>
+		<FB Name="STRUCT_DEMUX" Type="eclipse4diac::convert::STRUCT_DEMUX" x="-1900" y="5300">
+			<Attribute Name="StructuredType" Type="STRING" Value="isobus::pgn::CAN_MSG"/>
+		</FB>
+		<EventConnections>
+			<Connection Source="NmGetCfInfo_1.IND" Destination="STRUCT_DEMUX_3.REQ" dx1="593.33"/>
+			<Connection Source="NmGetCfInfo_1.IND" Destination="STRUCT_DEMUX_4.REQ" dx1="593.33"/>
+			<Connection Source="NmGetCfInfo_1.IND" Destination="STRUCT_DEMUX_5.REQ" dx1="593.33"/>
+			<Connection Source="NmGetCfInfo_1.IND" Destination="AlPgnRxNew8Bcylc_REQ.install" dx1="2366.67"/>
+			<Connection Source="AlPgnRxNew8Bcylc_REQ.IND" Destination="STRUCT_DEMUX.REQ" dx1="366.67"/>
+		</EventConnections>
+		<DataConnections>
+			<Connection Source="NmGetCfInfo_1.sNameField" Destination="STRUCT_DEMUX_3.IN" dx1="253.33"/>
+			<Connection Source="NmGetCfInfo_1.sNetEv" Destination="STRUCT_DEMUX_5.IN" dx1="446.67"/>
+			<Connection Source="NmGetCfInfo_1.sCfInfo" Destination="STRUCT_DEMUX_4.IN" dx1="346.67"/>
+			<Connection Source="NmGetCfInfo_1.sNetEv" Destination="AlPgnRxNew8Bcylc_REQ.NmSource"/>
+			<Connection Source="AlPgnRxNew8Bcylc_REQ.Data" Destination="STRUCT_DEMUX.IN" dx1="166.67"/>
+		</DataConnections>
+	</SubAppNetwork>
+</SubAppType>

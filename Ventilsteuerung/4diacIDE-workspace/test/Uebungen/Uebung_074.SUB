@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SubAppType Name="Uebung_074" Comment="RPTO auf UT ausgeben">
+	<Identification Standard="61499-2" Description="Copyright (c) 2023 Meisterschulen am Ostbahnhof  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0">
+	</Identification>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2023-10-23">
+	</VersionInfo>
+	<CompilerInfo>
+		<Import declaration="Uebungen::const::UT::DefaultPool_TECU::NumberVariable_Rear_PTO_output_shaft_speed"/>
+	</CompilerInfo>
+	<SubAppInterfaceList>
+	</SubAppInterfaceList>
+	<SubAppNetwork>
+		<FB Name="I_RPTO" Type="isobus::tecu::I_RPTO" x="-4500" y="500">
+			<Parameter Name="QI" Value="TRUE"/>
+		</FB>
+		<FB Name="Q_NumericValue_GBSD" Type="isobus::ut::Q_NumericValue" x="2000" y="500">
+			<Parameter Name="u16ObjId" Value="NumberVariable_Rear_PTO_output_shaft_speed"/>
+		</FB>
+		<FB Name="F_SEL_E_2" Type="eclipse4diac::utils::selection::F_SEL_E_2" x="-1800" y="600">
+			<Parameter Name="IN2" Value="UDINT#0"/>
+		</FB>
+		<Comment Comment="&quot;Fendt&quot; Schaltung!" x="-2200" y="1300" width="1300" height="400"/>
+		<EventConnections>
+			<Connection Source="I_RPTO.IND" Destination="F_SEL_E_2.REQ1"/>
+			<Connection Source="F_SEL_E_2.CNF" Destination="Q_NumericValue_GBSD.REQ" dx1="1373.33"/>
+			<Connection Source="I_RPTO.TIMEOUT" Destination="F_SEL_E_2.REQ2"/>
+		</EventConnections>
+		<DataConnections>
+			<Connection Source="I_RPTO.REAR_PTO_OUTP_SHAFT_SPEED" Destination="F_SEL_E_2.IN1" dx1="273.33"/>
+			<Connection Source="F_SEL_E_2.OUT" Destination="Q_NumericValue_GBSD.u32NewValue" dx1="1373.33"/>
+		</DataConnections>
+	</SubAppNetwork>
+</SubAppType>
