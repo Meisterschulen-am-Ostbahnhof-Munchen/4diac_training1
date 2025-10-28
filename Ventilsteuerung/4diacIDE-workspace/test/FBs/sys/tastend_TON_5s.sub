@@ -8,16 +8,16 @@
 	</CompilerInfo>
 	<SubAppInterfaceList>
 		<Plugs>
-			<AdapterDeclaration Name="OUT" Type="AX"/>
+			<AdapterDeclaration Name="OUT" Type="adapter::types::unidirectional::AX"/>
 		</Plugs>
 		<Sockets>
-			<AdapterDeclaration Name="IN" Type="AX"/>
+			<AdapterDeclaration Name="IN" Type="adapter::types::unidirectional::AX"/>
 		</Sockets>
 	</SubAppInterfaceList>
 	<SubAppNetwork>
-		<FB Name="AX_X_TO_BOOL" Type="AX_X_TO_BOOL" x="-13700" y="-1200">
+		<FB Name="AX_X_TO_BOOL" Type="adapter::conversion::unidirectional::AX_X_TO_BOOL" x="-13700" y="-1200">
 		</FB>
-		<FB Name="AX_BOOL_TO_X" Type="AX_BOOL_TO_X" x="-9906.67" y="-1200">
+		<FB Name="AX_BOOL_TO_X" Type="adapter::conversion::unidirectional::AX_BOOL_TO_X" x="-9906.67" y="-1200">
 		</FB>
 		<FB Name="E_TON" Type="iec61499::events::timers::E_TON" x="-11600" y="-1200">
 			<Parameter Name="PT" Value="t#5s"/>
