@@ -4,7 +4,8 @@
 	</Identification>
 	<VersionInfo Organization="HR Agrartechnik GmbH" Version="1.0" Author="Franz Höpfinger" Date="2025-01-24">
 	</VersionInfo>
-	<CompilerInfo>
+	<CompilerInfo packageName="adapter::events::unidirectional">
+		<Import declaration="eclipse4diac::core::TypeHash"/>
 	</CompilerInfo>
 	<InterfaceList>
 		<EventOutputs>
@@ -14,7 +15,7 @@
 			</Event>
 		</EventOutputs>
 		<Sockets>
-			<AdapterDeclaration Name="G" Type="AX" Comment="Switch EI to EI0 when G=0, to EI1 when G=1" x="133.33" y="80"/>
+			<AdapterDeclaration Name="G" Type="adapter::types::unidirectional::AX" Comment="Switch EI to EI0 when G=0, to EI1 when G=1" x="133.33" y="80"/>
 		</Sockets>
 	</InterfaceList>
 	<FBNetwork>
