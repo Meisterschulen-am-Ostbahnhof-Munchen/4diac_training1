@@ -33,7 +33,7 @@
 			<Parameter Name="Input" Value="Input_I1"/>
 			<Parameter Name="InputEvent" Value="BUTTON_SINGLE_CLICK"/>
 		</FB>
-		<FB Name="sequence_T_04_loop" Type="sequence_T_05_loop" x="2000" y="800">
+		<FB Name="sequence_T_04_loop" Type="logiBUS::utils::sequence::timed::sequence_T_05_loop" x="2000" y="800">
 			<Parameter Name="DT_S1_S2" Value="T#6s" Comment="RED"/>
 			<Parameter Name="DT_S2_S3" Value="T#2s" Comment="RED+ORANGE"/>
 			<Parameter Name="DT_S3_S4" Value="T#6s" Comment="GREEN"/>
@@ -168,7 +168,7 @@
 			<Attribute Name="height" Type="LREAL" Value="2940"/>
 		</SubApp>
 		<EventConnections>
-			<Connection Source="DigitalInput_CLK_I1.IND" Destination="sequence_T_04_loop.START_S1"/>
+			<Connection Source="DigitalInput_CLK_I1.IND" Destination="sequence_T_04_loop.START_S1" dx1="206.67"/>
 			<Connection Source="sequence_T_04_loop.EO_S1" Destination="RED.EI_RED" dx1="600">
 				<Attribute Name="Visible" Value="false"/>
 			</Connection>
@@ -217,7 +217,7 @@
 			<Connection Source="GREEN.OUT" Destination="CAR_GREEN_LIGHT.OUT" dx1="406.67"/>
 		</DataConnections>
 		<AdapterConnections>
-			<Connection Source="sequence_T_04_loop.timeOut" Destination="E_TimeOut.TimeOutSocket"/>
+			<Connection Source="sequence_T_04_loop.timeOut" Destination="E_TimeOut.TimeOutSocket" dx1="366.67"/>
 		</AdapterConnections>
 	</SubAppNetwork>
 </SubAppType>

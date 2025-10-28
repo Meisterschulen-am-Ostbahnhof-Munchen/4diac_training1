@@ -16,7 +16,7 @@
 		<Import declaration="logiBUS::io::DI::logiBUS_DI_Events::BUTTON_SINGLE_CLICK"/>
 		<Import declaration="logiBUS::io::DQ::logiBUS_DO::Output_Q1"/>
 		<Import declaration="logiBUS::io::DQ::logiBUS_DO::Output_Q2"/>
-		<Import declaration="sequence::NO_TIME"/>
+		<Import declaration="logiBUS::utils::sequence::const::sequence::NO_TIME"/>
 	</CompilerInfo>
 	<SubAppInterfaceList>
 	</SubAppInterfaceList>
@@ -43,7 +43,7 @@
 			<Parameter Name="Input" Value="Input_I4"/>
 			<Parameter Name="InputEvent" Value="BUTTON_SINGLE_CLICK"/>
 		</FB>
-		<FB Name="sequence_05" Type="sequence_ET_05" x="-10700" y="-200">
+		<FB Name="sequence_05" Type="logiBUS::utils::sequence::combi::sequence_ET_05" x="-10700" y="-200">
 			<Parameter Name="DT_S1_S2" Value="NO_TIME"/>
 			<Parameter Name="DT_S2_S3" Value="NO_TIME"/>
 			<Parameter Name="DT_S3_S4" Value="T#5s"/>
@@ -71,8 +71,8 @@
 			<Connection Source="DigitalInput_DOWN_I3.IND" Destination="sequence_05.S4_S5" dx1="446.67"/>
 			<Connection Source="DigitalInput_DOWN_I4.IND" Destination="sequence_05.S5_START" dx1="513.33"/>
 			<Connection Source="sequence_05.CNF" Destination="NumbAnzeig.CNF" dx1="73.33"/>
-			<Connection Source="SoftKey_UP_F1.IND" Destination="sequence_05.START_S1"/>
-			<Connection Source="sequence_05.EO_S1" Destination="Q1.SET"/>
+			<Connection Source="SoftKey_UP_F1.IND" Destination="sequence_05.START_S1" dx1="1660"/>
+			<Connection Source="sequence_05.EO_S1" Destination="Q1.SET" dx1="1206.67"/>
 			<Connection Source="sequence_05.EO_S2" Destination="Q2.SET" dx1="1053.33"/>
 			<Connection Source="sequence_05.EO_S4" Destination="Q2.RESET" dx1="906.67"/>
 			<Connection Source="sequence_05.EO_S5" Destination="Q1.RESET" dx1="1226.67"/>

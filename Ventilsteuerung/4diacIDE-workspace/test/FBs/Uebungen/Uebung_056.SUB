@@ -53,37 +53,37 @@
 			<Parameter Name="QI" Value="TRUE"/>
 			<Parameter Name="Output" Value="Output_Q4"/>
 		</FB>
-		<FB Name="Q_TO_BOOL_Q1" Type="QUARTER_TO_BOOL" x="-906.67" y="-553.33">
+		<FB Name="Q_TO_BOOL_Q1" Type="logiBUS::utils::quarter::QUARTER_TO_BOOL" x="-906.67" y="-553.33">
 		</FB>
-		<FB Name="Q_TO_BOOL_Q4" Type="QUARTER_TO_BOOL" x="-900" y="2300">
+		<FB Name="Q_TO_BOOL_Q4" Type="logiBUS::utils::quarter::QUARTER_TO_BOOL" x="-900" y="2300">
 		</FB>
-		<FB Name="Q_TO_BOOL_Q2" Type="QUARTER_TO_BOOL" x="-906.67" y="386.67">
+		<FB Name="Q_TO_BOOL_Q2" Type="logiBUS::utils::quarter::QUARTER_TO_BOOL" x="-906.67" y="386.67">
 		</FB>
-		<FB Name="Q_TO_BOOL_Q3" Type="QUARTER_TO_BOOL" x="-906.67" y="1333.33">
+		<FB Name="Q_TO_BOOL_Q3" Type="logiBUS::utils::quarter::QUARTER_TO_BOOL" x="-906.67" y="1333.33">
 		</FB>
-		<FB Name="Q_TO_STR_STATUS_Q3" Type="QUARTER_TO_STR_STATUS" x="473.33" y="1380">
+		<FB Name="Q_TO_STR_STATUS_Q3" Type="logiBUS::utils::quarter::QUARTER_TO_STR_STATUS" x="473.33" y="1380">
 		</FB>
-		<FB Name="Q_TO_STR_STATUS_Q1" Type="QUARTER_TO_STR_STATUS" x="473.33" y="-506.67">
+		<FB Name="Q_TO_STR_STATUS_Q1" Type="logiBUS::utils::quarter::QUARTER_TO_STR_STATUS" x="473.33" y="-506.67">
 		</FB>
-		<FB Name="Q_TO_STR_STATUS_I3" Type="QUARTER_TO_STR_STATUS" x="-7140" y="2720">
+		<FB Name="Q_TO_STR_STATUS_I3" Type="logiBUS::utils::quarter::QUARTER_TO_STR_STATUS" x="-7140" y="2720">
 		</FB>
-		<FB Name="Q_TO_STR_STATUS_I1" Type="QUARTER_TO_STR_STATUS" x="-7386.67" y="173.33">
+		<FB Name="Q_TO_STR_STATUS_I1" Type="logiBUS::utils::quarter::QUARTER_TO_STR_STATUS" x="-7386.67" y="173.33">
 		</FB>
-		<FB Name="Q_TO_STR_STATUS_I4" Type="QUARTER_TO_STR_STATUS" x="-7386.67" y="3513.33">
+		<FB Name="Q_TO_STR_STATUS_I4" Type="logiBUS::utils::quarter::QUARTER_TO_STR_STATUS" x="-7386.67" y="3513.33">
 		</FB>
-		<FB Name="Q_TO_STR_STATUS_Q4" Type="QUARTER_TO_STR_STATUS" x="473.33" y="2340">
+		<FB Name="Q_TO_STR_STATUS_Q4" Type="logiBUS::utils::quarter::QUARTER_TO_STR_STATUS" x="473.33" y="2340">
 		</FB>
-		<FB Name="Q_TO_STR_STATUS_Q2" Type="QUARTER_TO_STR_STATUS" x="473.33" y="433.33">
+		<FB Name="Q_TO_STR_STATUS_Q2" Type="logiBUS::utils::quarter::QUARTER_TO_STR_STATUS" x="473.33" y="433.33">
 		</FB>
-		<FB Name="Q_TO_STR_STATUS_I2" Type="QUARTER_TO_STR_STATUS" x="-7466.67" y="800">
+		<FB Name="Q_TO_STR_STATUS_I2" Type="logiBUS::utils::quarter::QUARTER_TO_STR_STATUS" x="-7466.67" y="800">
 		</FB>
-		<FB Name="BOOL_TO_Q_I1" Type="BOOL_TO_QUARTER" x="-8633.33" y="173.33">
+		<FB Name="BOOL_TO_Q_I1" Type="logiBUS::utils::quarter::BOOL_TO_QUARTER" x="-8633.33" y="173.33">
 		</FB>
-		<FB Name="BOOL_TO_Q_I2" Type="BOOL_TO_QUARTER" x="-8633.33" y="1253.33">
+		<FB Name="BOOL_TO_Q_I2" Type="logiBUS::utils::quarter::BOOL_TO_QUARTER" x="-8633.33" y="1253.33">
 		</FB>
-		<FB Name="BOOL_TO_Q_I4" Type="BOOL_TO_QUARTER" x="-8633.33" y="3513.33">
+		<FB Name="BOOL_TO_Q_I4" Type="logiBUS::utils::quarter::BOOL_TO_QUARTER" x="-8633.33" y="3513.33">
 		</FB>
-		<FB Name="BOOL_TO_Q_I3" Type="BOOL_TO_QUARTER" x="-8633.33" y="2333.33">
+		<FB Name="BOOL_TO_Q_I3" Type="logiBUS::utils::quarter::BOOL_TO_QUARTER" x="-8633.33" y="2333.33">
 		</FB>
 		<EventConnections>
 			<Connection Source="ASSEMBLE_BYTE_FROM_QUARTERS.CNF" Destination="SPLIT_BYTE_INTO_QUARTERS.REQ"/>
@@ -103,12 +103,12 @@
 			<Connection Source="DigitalInput_I2.IND" Destination="Q_TO_STR_STATUS_I2.REQ" dx1="840"/>
 			<Connection Source="DigitalInput_I1.IND" Destination="BOOL_TO_Q_I1.REQ" dx1="853.33"/>
 			<Connection Source="BOOL_TO_Q_I1.CNF" Destination="ASSEMBLE_BYTE_FROM_QUARTERS.REQ" dx1="126.67"/>
-			<Connection Source="BOOL_TO_Q_I1.CNF" Destination="Q_TO_STR_STATUS_I1.REQ"/>
+			<Connection Source="BOOL_TO_Q_I1.CNF" Destination="Q_TO_STR_STATUS_I1.REQ" dx1="80" dx2="80" dy="160"/>
 			<Connection Source="DigitalInput_I2.IND" Destination="BOOL_TO_Q_I2.REQ" dx1="840"/>
 			<Connection Source="BOOL_TO_Q_I2.CNF" Destination="ASSEMBLE_BYTE_FROM_QUARTERS.REQ" dx1="1546.67"/>
 			<Connection Source="DigitalInput_I4.IND" Destination="BOOL_TO_Q_I4.REQ" dx1="853.33"/>
 			<Connection Source="BOOL_TO_Q_I4.CNF" Destination="ASSEMBLE_BYTE_FROM_QUARTERS.REQ" dx1="186.67"/>
-			<Connection Source="BOOL_TO_Q_I4.CNF" Destination="Q_TO_STR_STATUS_I4.REQ"/>
+			<Connection Source="BOOL_TO_Q_I4.CNF" Destination="Q_TO_STR_STATUS_I4.REQ" dx1="80" dx2="80" dy="160"/>
 			<Connection Source="DigitalInput_I3.IND" Destination="BOOL_TO_Q_I3.REQ" dx1="853.33"/>
 			<Connection Source="BOOL_TO_Q_I3.CNF" Destination="ASSEMBLE_BYTE_FROM_QUARTERS.REQ" dx1="186.67"/>
 		</EventConnections>
@@ -124,10 +124,10 @@
 			<Connection Source="Q_TO_BOOL_Q2.Q" Destination="Q_TO_STR_STATUS_Q2.IB" dx1="320"/>
 			<Connection Source="DigitalInput_I2.IN" Destination="Q_TO_STR_STATUS_I2.IB" dx1="873.33"/>
 			<Connection Source="DigitalInput_I1.IN" Destination="BOOL_TO_Q_I1.I" dx1="853.33"/>
-			<Connection Source="BOOL_TO_Q_I1.QB" Destination="Q_TO_STR_STATUS_I1.IB"/>
+			<Connection Source="BOOL_TO_Q_I1.QB" Destination="Q_TO_STR_STATUS_I1.IB" dx1="80" dx2="80" dy="160"/>
 			<Connection Source="DigitalInput_I2.IN" Destination="BOOL_TO_Q_I2.I" dx1="873.33"/>
 			<Connection Source="DigitalInput_I4.IN" Destination="BOOL_TO_Q_I4.I" dx1="853.33"/>
-			<Connection Source="BOOL_TO_Q_I4.QB" Destination="Q_TO_STR_STATUS_I4.IB"/>
+			<Connection Source="BOOL_TO_Q_I4.QB" Destination="Q_TO_STR_STATUS_I4.IB" dx1="80" dx2="80" dy="160"/>
 			<Connection Source="DigitalInput_I3.IN" Destination="BOOL_TO_Q_I3.I" dx1="853.33"/>
 			<Connection Source="ASSEMBLE_BYTE_FROM_QUARTERS." Destination="SPLIT_BYTE_INTO_QUARTERS.IN"/>
 			<Connection Source="SPLIT_BYTE_INTO_QUARTERS.QUARTER_BYTE_00" Destination="Q_TO_BOOL_Q1.IB" dx1="780"/>

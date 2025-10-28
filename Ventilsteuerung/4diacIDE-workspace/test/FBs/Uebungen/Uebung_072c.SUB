@@ -20,9 +20,9 @@
 		<FB Name="Q_NumberVariable_Wheel_based_machine_distance" Type="isobus::ut::Q_NumericValue" x="3300" y="1400">
 			<Parameter Name="u16ObjId" Value="NumberVariable_Wheel_based_machine_distance"/>
 		</FB>
-		<FB Name="INTEGRAL" Type="utils::math::INTEGRAL" x="1200" y="2800">
+		<FB Name="INTEGRAL" Type="logiBUS::utils::math::INTEGRAL" x="1200" y="2800">
 		</FB>
-		<FB Name="OFFSET_UDINT" Type="utils::math::OFFSET_UDINT" x="-1000" y="1900">
+		<FB Name="OFFSET_UDINT" Type="logiBUS::utils::math::OFFSET_UDINT" x="-1000" y="1900">
 		</FB>
 		<FB Name="CYCLE_TIME" Type="utils::timing::CYCLE_TIME" x="-2800" y="3000">
 		</FB>
@@ -53,10 +53,10 @@
 			<Connection Source="I_GBSD.GROUNDBASEDMACHINEDISTANCE" Destination="OFFSET_UDINT.IN" dx1="986.67"/>
 			<Connection Source="OFFSET_UDINT.OUT" Destination="Q_NumberVariable_Wheel_based_machine_distance.u32NewValue" dx1="1553.33"/>
 			<Connection Source="I_GBSD.timestamp_data" Destination="CYCLE_TIME.TM" dx1="460"/>
-			<Connection Source="CYCLE_TIME.CYCLE" Destination="INTEGRAL.TM"/>
-			<Connection Source="F_UINT_TO_REAL.OUT" Destination="INTEGRAL.IN"/>
+			<Connection Source="CYCLE_TIME.CYCLE" Destination="INTEGRAL.TM" dx1="1626.67"/>
+			<Connection Source="F_UINT_TO_REAL.OUT" Destination="INTEGRAL.IN" dx1="533.33"/>
 			<Connection Source="I_GBSD.GROUNDBASEDMACHINESPEED" Destination="F_UINT_TO_REAL.IN" dx1="2413.33"/>
-			<Connection Source="INTEGRAL.OUT" Destination="F_REAL_TO_UDINT.IN"/>
+			<Connection Source="INTEGRAL.OUT" Destination="F_REAL_TO_UDINT.IN" dx1="646.67"/>
 			<Connection Source="OFFSET_UDINT.OUT" Destination="F_UDINT_TO_LINT.IN" dx1="3220"/>
 			<Connection Source="F_REAL_TO_UDINT.OUT" Destination="F_UDINT_TO_LINT_1.IN" dx1="760"/>
 			<Connection Source="F_UDINT_TO_LINT_1.OUT" Destination="F_SUB.IN2" dx1="306.67"/>

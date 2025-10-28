@@ -5,18 +5,15 @@
 	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2023-10-23">
 	</VersionInfo>
 	<CompilerInfo>
-		<Import declaration="DataPanel_MI_DO::DigitalOutput_1A"/>
+		<Import declaration="DataPanel::io::MI::const::MI::MI_00"/>
 		<Import declaration="DefaultPool::SoftKey_F1"/>
-		<Import declaration="MI::MI_00"/>
+		<Import declaration="DataPanel::io::MI::DQ::DataPanel_MI_DO::DigitalOutput_1A"/>
 	</CompilerInfo>
 	<SubAppInterfaceList>
 	</SubAppInterfaceList>
 	<SubAppNetwork>
-		<FB Name="DigitalOutput_Q1" Type="DataPanel_MI_QX" x="-1400" y="-300">
+		<FB Name="DigitalOutput_Q1" Type="DataPanel::io::MI::DQ::DataPanel_MI_QX" x="-1400" y="-300">
 			<Parameter Name="QI" Value="TRUE"/>
-			<Parameter Name="PARAMS" Value="">
-				<Attribute Name="Visible" Value="false"/>
-			</Parameter>
 			<Parameter Name="u8SAMember" Value="MI_00"/>
 			<Parameter Name="Output" Value="DigitalOutput_1A"/>
 		</FB>
@@ -31,7 +28,7 @@
 			<Connection Source="SoftKey_F1.IND" Destination="DigitalOutput_Q1.REQ" dx1="1206.67"/>
 		</EventConnections>
 		<DataConnections>
-			<Connection Source="SoftKey_F1.IN" Destination="DigitalOutput_Q1.OUT"/>
+			<Connection Source="SoftKey_F1.IN" Destination="DigitalOutput_Q1.OUT" dx1="1206.67"/>
 		</DataConnections>
 	</SubAppNetwork>
 </SubAppType>

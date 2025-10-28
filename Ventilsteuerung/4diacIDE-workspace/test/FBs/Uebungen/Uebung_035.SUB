@@ -62,7 +62,7 @@
 		</FB>
 		<FB Name="F_SINT_TO_UINT" Type="iec61131::conversion::F_SINT_TO_UINT" x="-5400" y="2400">
 		</FB>
-		<FB Name="sequence_04" Type="sequence_ET_04" x="-9700" y="1700">
+		<FB Name="sequence_04" Type="logiBUS::utils::sequence::combi::sequence_ET_04" x="-9700" y="1700">
 			<Parameter Name="DT_S1_S2" Value="T#2s"/>
 			<Parameter Name="DT_S2_S3" Value="T#2s"/>
 			<Parameter Name="DT_S3_S4" Value="T#2s"/>
@@ -72,7 +72,7 @@
 			<Connection Source="F_SINT_TO_UINT.CNF" Destination="Q_NumericValue.REQ" dx1="233.33"/>
 			<Connection Source="DigitalInput_CLK_I1.IND" Destination="sequence_04.START_S1" dx1="406.67"/>
 			<Connection Source="DigitalInput_CLK_I2.IND" Destination="sequence_04.S2_S3" dx1="373.33"/>
-			<Connection Source="DigitalInput_CLK_I3.IND" Destination="sequence_04.S4_START"/>
+			<Connection Source="DigitalInput_CLK_I3.IND" Destination="sequence_04.S4_START" dx1="406.67"/>
 			<Connection Source="DigitalInput_CLK_I4.IND" Destination="sequence_04.RESET" dx1="253.33"/>
 			<Connection Source="sequence_04.CNF" Destination="F_SINT_TO_UINT.REQ" dx1="2866.67"/>
 			<Connection Source="sequence_04.EO_S1" Destination="DigitalOutput_Q1.REQ" dx1="186.67"/>
@@ -89,7 +89,7 @@
 			<Connection Source="sequence_04.DO_S4" Destination="DigitalOutput_Q4.OUT" dx1="640"/>
 		</DataConnections>
 		<AdapterConnections>
-			<Connection Source="sequence_04.timeOut" Destination="E_TimeOut.TimeOutSocket"/>
+			<Connection Source="sequence_04.timeOut" Destination="E_TimeOut.TimeOutSocket" dx1="760"/>
 		</AdapterConnections>
 	</SubAppNetwork>
 </SubAppType>

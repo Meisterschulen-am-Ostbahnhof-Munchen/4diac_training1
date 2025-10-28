@@ -15,7 +15,7 @@
 		<Import declaration="logiBUS::io::DQ::logiBUS_DO::Output_Q2"/>
 		<Import declaration="logiBUS::io::DQ::logiBUS_DO::Output_Q3"/>
 		<Import declaration="logiBUS::io::DQ::logiBUS_DO::Output_Q4"/>
-		<Import declaration="sequence::NO_TIME"/>
+		<Import declaration="logiBUS::utils::sequence::const::sequence::NO_TIME"/>
 	</CompilerInfo>
 	<SubAppInterfaceList>
 	</SubAppInterfaceList>
@@ -63,7 +63,7 @@
 		</FB>
 		<FB Name="F_SINT_TO_UINT" Type="iec61131::conversion::F_SINT_TO_UINT" x="-5600" y="2600">
 		</FB>
-		<FB Name="sequence_04" Type="sequence_ET_04" x="-9700" y="1700">
+		<FB Name="sequence_04" Type="logiBUS::utils::sequence::combi::sequence_ET_04" x="-9700" y="1700">
 			<Parameter Name="DT_S1_S2" Value="NO_TIME"/>
 			<Parameter Name="DT_S2_S3" Value="NO_TIME"/>
 			<Parameter Name="DT_S3_S4" Value="T#2s"/>
@@ -73,13 +73,13 @@
 			<Connection Source="F_SINT_TO_UINT.CNF" Destination="Q_NumericValue.REQ" dx1="733.33"/>
 			<Connection Source="DigitalInput_CLK_I1.IND" Destination="sequence_04.START_S1" dx1="406.67"/>
 			<Connection Source="DigitalInput_CLK_I2.IND" Destination="sequence_04.S1_S2" dx1="373.33"/>
-			<Connection Source="DigitalInput_CLK_I3.IND" Destination="sequence_04.S2_S3"/>
+			<Connection Source="DigitalInput_CLK_I3.IND" Destination="sequence_04.S2_S3" dx1="506.67"/>
 			<Connection Source="DigitalInput_CLK_I4.IND" Destination="sequence_04.RESET" dx1="133.33"/>
 			<Connection Source="sequence_04.CNF" Destination="F_SINT_TO_UINT.REQ" dx1="2540"/>
 			<Connection Source="sequence_04.EO_S1" Destination="DigitalOutput_Q1.REQ" dx1="186.67"/>
 			<Connection Source="sequence_04.EO_S2" Destination="DigitalOutput_Q2.REQ" dx1="253.33"/>
 			<Connection Source="sequence_04.EO_S3" Destination="DigitalOutput_Q3.REQ" dx1="320"/>
-			<Connection Source="sequence_04.EO_S4" Destination="DigitalOutput_Q4.REQ"/>
+			<Connection Source="sequence_04.EO_S4" Destination="DigitalOutput_Q4.REQ" dx1="706.67"/>
 		</EventConnections>
 		<DataConnections>
 			<Connection Source="F_SINT_TO_UINT.OUT" Destination="Q_NumericValue.u32NewValue"/>

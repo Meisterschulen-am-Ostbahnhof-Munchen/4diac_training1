@@ -23,10 +23,10 @@
 			<Parameter Name="Input" Value="Input_I2"/>
 			<Parameter Name="InputEvent" Value="BUTTON_SINGLE_CLICK"/>
 		</FB>
-		<FB Name="strip_set_pixel" Type="strip_set_pixel" x="-1000" y="500">
+		<FB Name="strip_set_pixel" Type="logiBUS::esp32::rgb::strip_set_pixel" x="-1000" y="500">
 			<Parameter Name="index" Value="LED_strip::Output_strip"/>
 		</FB>
-		<FB Name="hsv2rgb" Type="hsv2rgb" x="-3200" y="800">
+		<FB Name="hsv2rgb" Type="logiBUS::esp32::rgb::hsv2rgb" x="-3200" y="800">
 			<Parameter Name="hue" Value="100"/>
 			<Parameter Name="saturation" Value="100"/>
 			<Parameter Name="value" Value="100"/>
@@ -34,12 +34,12 @@
 		<EventConnections>
 			<Connection Source="DigitalInput_CLK_I2.IND" Destination="strip_set_pixel.clear" dx1="2806.67"/>
 			<Connection Source="hsv2rgb.CNF" Destination="strip_set_pixel.set_pixel" dx1="80"/>
-			<Connection Source="DigitalInput_CLK_I1.IND" Destination="hsv2rgb.REQ"/>
+			<Connection Source="DigitalInput_CLK_I1.IND" Destination="hsv2rgb.REQ" dx1="760"/>
 		</EventConnections>
 		<DataConnections>
-			<Connection Source="hsv2rgb.r" Destination="strip_set_pixel.red"/>
-			<Connection Source="hsv2rgb.g" Destination="strip_set_pixel.green"/>
-			<Connection Source="hsv2rgb.b" Destination="strip_set_pixel.blue"/>
+			<Connection Source="hsv2rgb.r" Destination="strip_set_pixel.red" dx1="620"/>
+			<Connection Source="hsv2rgb.g" Destination="strip_set_pixel.green" dx1="620"/>
+			<Connection Source="hsv2rgb.b" Destination="strip_set_pixel.blue" dx1="620"/>
 		</DataConnections>
 	</SubAppNetwork>
 </SubAppType>

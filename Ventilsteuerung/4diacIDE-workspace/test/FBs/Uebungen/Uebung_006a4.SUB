@@ -55,19 +55,19 @@
 			<Parameter Name="QI" Value="TRUE"/>
 			<Parameter Name="Output" Value="Output_Q2"/>
 		</FB>
-		<FB Name="LinksRechts" Type="LinksRechts" x="-1000" y="-700">
+		<FB Name="LinksRechts" Type="logiBUS::utils::sequence::verteiler::LinksRechts" x="-1000" y="-700">
 		</FB>
 		<EventConnections>
 			<Connection Source="DigitalInput_CLK_I1.IND" Destination="E_T_FF_SR.S"/>
 			<Connection Source="DigitalInput_CLK_I2.IND" Destination="E_T_FF_SR.R" dx1="486.67"/>
 			<Connection Source="DigitalInput_CLK_I3.IND" Destination="E_T_FF_SR.CLK" dx1="673.33"/>
-			<Connection Source="E_T_FF_SR.EO" Destination="LinksRechts.EI_ON"/>
+			<Connection Source="E_T_FF_SR.EO" Destination="LinksRechts.EI_ON" dx1="546.67"/>
 			<Connection Source="LinksRechts.EO" Destination="Linkslauf.REQ" dx1="1266.67"/>
-			<Connection Source="LinksRechts.EO" Destination="Rechtslauf.REQ"/>
+			<Connection Source="LinksRechts.EO" Destination="Rechtslauf.REQ" dx1="1526.67"/>
 		</EventConnections>
 		<DataConnections>
-			<Connection Source="LinksRechts.Rechts" Destination="Rechtslauf.OUT"/>
-			<Connection Source="E_T_FF_SR.Q" Destination="LinksRechts.EIN"/>
+			<Connection Source="LinksRechts.Rechts" Destination="Rechtslauf.OUT" dx1="1526.67"/>
+			<Connection Source="E_T_FF_SR.Q" Destination="LinksRechts.EIN" dx1="546.67"/>
 			<Connection Source="LinksRechts.Links" Destination="Linkslauf.OUT" dx1="886.67"/>
 		</DataConnections>
 	</SubAppNetwork>

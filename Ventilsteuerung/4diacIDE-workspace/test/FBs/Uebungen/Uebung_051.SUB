@@ -49,11 +49,11 @@
 			<Parameter Name="QI" Value="TRUE"/>
 			<Parameter Name="Input" Value="Input_I4"/>
 		</FB>
-		<FB Name="STRUCT_DEMUX" Type="eclipse4diac::convert::STRUCT_DEMUX" x="-3500" y="2000">
-			<Attribute Name="StructuredType" Type="STRING" Value="ST04B"/>
+		<FB Name="STRUCT_DEMUX" Type="eclipse4diac::convert::STRUCT_DEMUX" x="-3600" y="2000">
+			<Attribute Name="StructuredType" Type="STRING" Value="logiBUS::utils::conversion::types::ST04X"/>
 		</FB>
 		<FB Name="STRUCT_MUX" Type="eclipse4diac::convert::STRUCT_MUX" x="-4800" y="2000">
-			<Attribute Name="StructuredType" Type="STRING" Value="ST04B"/>
+			<Attribute Name="StructuredType" Type="STRING" Value="logiBUS::utils::conversion::types::ST04X"/>
 		</FB>
 		<EventConnections>
 			<Connection Source="DigitalInput_I1.IND" Destination="STRUCT_MUX.REQ" dx1="80"/>
@@ -67,15 +67,15 @@
 			<Connection Source="STRUCT_DEMUX.CNF" Destination="DigitalOutput_Q4.REQ" dx1="420"/>
 		</EventConnections>
 		<DataConnections>
-			<Connection Source="DigitalInput_I1.IN" Destination="STRUCT_MUX.B_00" dx1="213.33"/>
-			<Connection Source="DigitalInput_I2.IN" Destination="STRUCT_MUX.B_01" dx1="146.67"/>
-			<Connection Source="DigitalInput_I3.IN" Destination="STRUCT_MUX.B_02" dx1="146.67"/>
-			<Connection Source="DigitalInput_I4.IN" Destination="STRUCT_MUX.B_03" dx1="146.67"/>
+			<Connection Source="DigitalInput_I1.IN" Destination="STRUCT_MUX.X_00" dx1="213.33"/>
+			<Connection Source="DigitalInput_I2.IN" Destination="STRUCT_MUX.X_01" dx1="146.67"/>
+			<Connection Source="DigitalInput_I3.IN" Destination="STRUCT_MUX.X_02" dx1="146.67"/>
+			<Connection Source="DigitalInput_I4.IN" Destination="STRUCT_MUX.X_03" dx1="146.67"/>
 			<Connection Source="STRUCT_MUX.OUT" Destination="STRUCT_DEMUX.IN"/>
-			<Connection Source="STRUCT_DEMUX.B_00" Destination="DigitalOutput_Q1.OUT" dx1="73.33"/>
-			<Connection Source="STRUCT_DEMUX.B_01" Destination="DigitalOutput_Q2.OUT" dx1="140"/>
-			<Connection Source="STRUCT_DEMUX.B_02" Destination="DigitalOutput_Q3.OUT" dx1="273.33"/>
-			<Connection Source="STRUCT_DEMUX.B_03" Destination="DigitalOutput_Q4.OUT" dx1="340"/>
+			<Connection Source="STRUCT_DEMUX.X_00" Destination="DigitalOutput_Q1.OUT" dx1="73.33"/>
+			<Connection Source="STRUCT_DEMUX.X_01" Destination="DigitalOutput_Q2.OUT" dx1="140"/>
+			<Connection Source="STRUCT_DEMUX.X_02" Destination="DigitalOutput_Q3.OUT" dx1="273.33"/>
+			<Connection Source="STRUCT_DEMUX.X_03" Destination="DigitalOutput_Q4.OUT" dx1="340"/>
 		</DataConnections>
 	</SubAppNetwork>
 </SubAppType>

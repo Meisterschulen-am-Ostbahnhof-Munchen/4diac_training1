@@ -5,22 +5,24 @@
 	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2023-10-23">
 	</VersionInfo>
 	<CompilerInfo>
+		<Import declaration="DataPanel::io::MI::DQ::DataPanel_MI_DO_S"/>
+		<Import declaration="DataPanel::io::MI::const::MI"/>
+		<Import declaration="Funk::io::DI::Funk_DI"/>
+		<Import declaration="Funk::io::DI::Funk_DI_S"/>
+		<Import declaration="DataPanel::io::MI::DQ::DataPanel_MI_DO::Invalid"/>
 	</CompilerInfo>
 	<SubAppInterfaceList>
 		<InputVars>
-			<VarDeclaration Name="Input" Type="Funk_DI_S" Comment="Identify the Input DigitalInput_Key_01 etc.." InitialValue="Funk_DI::Invalid"/>
+			<VarDeclaration Name="Input" Type="Funk::io::DI::Funk_DI_S" Comment="Identify the Input DigitalInput_Key_01 etc.." InitialValue="Funk_DI::Invalid"/>
 			<VarDeclaration Name="u8SAMember" Type="USINT" Comment="Node SA 224..239" InitialValue="MI::MI_00"/>
-			<VarDeclaration Name="Output" Type="DataPanel_MI_DO_S" Comment="Identify the Output DigitalOutput_1A..8B and Input_Power_Port_5..8" InitialValue="DataPanel_MI_DO::Invalid"/>
+			<VarDeclaration Name="Output" Type="DataPanel::io::MI::DQ::DataPanel_MI_DO_S" Comment="Identify the Output DigitalOutput_1A..8B and Input_Power_Port_5..8" InitialValue="Invalid"/>
 		</InputVars>
 	</SubAppInterfaceList>
 	<SubAppNetwork>
-		<FB Name="QX" Type="DataPanel_MI_QX" x="-2500" y="-800">
+		<FB Name="QX" Type="DataPanel::io::MI::DQ::DataPanel_MI_QX" x="-2500" y="-800">
 			<Parameter Name="QI" Value="TRUE"/>
-			<Parameter Name="PARAMS" Value="">
-				<Attribute Name="Visible" Value="false"/>
-			</Parameter>
 		</FB>
-		<FB Name="IX" Type="Funk_IX" x="-4600" y="-1000">
+		<FB Name="IX" Type="Funk::io::DI::Funk_IX" x="-4600" y="-1000">
 			<Parameter Name="QI" Value="TRUE"/>
 			<Parameter Name="PARAMS" Value="">
 				<Attribute Name="Visible" Value="false"/>
@@ -30,7 +32,7 @@
 			<Connection Source="IX.IND" Destination="QX.REQ" dx1="773.33"/>
 		</EventConnections>
 		<DataConnections>
-			<Connection Source="IX.IN" Destination="QX.OUT"/>
+			<Connection Source="IX.IN" Destination="QX.OUT" dx1="726.67"/>
 			<Connection Source="Input" Destination="IX.Input" dx1="2880">
 				<Attribute Name="Visible" Value="false"/>
 			</Connection>

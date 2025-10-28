@@ -20,7 +20,7 @@
 		<Import declaration="logiBUS::io::DQ::logiBUS_DO::Output_Q2"/>
 		<Import declaration="logiBUS::io::DQ::logiBUS_DO::Output_Q3"/>
 		<Import declaration="logiBUS::io::DQ::logiBUS_DO::Output_Q4"/>
-		<Import declaration="sequence::NO_TIME"/>
+		<Import declaration="logiBUS::utils::sequence::const::sequence::NO_TIME"/>
 	</CompilerInfo>
 	<SubAppInterfaceList>
 	</SubAppInterfaceList>
@@ -47,7 +47,7 @@
 			<Parameter Name="Input" Value="Input_I4"/>
 			<Parameter Name="InputEvent" Value="BUTTON_PRESS_DOWN"/>
 		</FB>
-		<FB Name="sequence_05" Type="sequence_ET_05" x="-10700" y="-100">
+		<FB Name="sequence_05" Type="logiBUS::utils::sequence::combi::sequence_ET_05" x="-10700" y="-100">
 			<Parameter Name="DT_S1_S2" Value="NO_TIME"/>
 			<Parameter Name="DT_S2_S3" Value="NO_TIME"/>
 			<Parameter Name="DT_S3_S4" Value="T#5s"/>
@@ -78,7 +78,7 @@
 			<Parameter Name="Output" Value="Output_Q3"/>
 		</SubApp>
 		<EventConnections>
-			<Connection Source="DigitalInput_DOWN_I1.IND" Destination="sequence_05.S1_S2"/>
+			<Connection Source="DigitalInput_DOWN_I1.IND" Destination="sequence_05.S1_S2" dx1="800"/>
 			<Connection Source="DigitalInput_DOWN_I2.IND" Destination="sequence_05.S2_S3" dx1="380"/>
 			<Connection Source="DigitalInput_DOWN_I3.IND" Destination="sequence_05.S4_S5" dx1="500"/>
 			<Connection Source="DigitalInput_DOWN_I4.IND" Destination="sequence_05.S5_START" dx1="626.67"/>

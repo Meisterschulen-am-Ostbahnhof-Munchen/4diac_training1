@@ -21,7 +21,7 @@
 			<Parameter Name="QI" Value="TRUE"/>
 			<Parameter Name="Output" Value="Output_Q1"/>
 		</FB>
-		<FB Name="AX_OR_3" Type="AX_OR_3" x="2200" y="600">
+		<FB Name="AX_OR_3" Type="adapter::booleanOperators::AX_OR_3" x="2200" y="600">
 		</FB>
 		<FB Name="DigitalInput_I2" Type="logiBUS::io::DI::logiBUS_IXA" x="400" y="700">
 			<Parameter Name="QI" Value="TRUE"/>
@@ -32,7 +32,7 @@
 			<Parameter Name="Input" Value="Input_I3"/>
 		</FB>
 		<AdapterConnections>
-			<Connection Source="AX_OR_3.OUT" Destination="DigitalOutput_Q1.OUT"/>
+			<Connection Source="AX_OR_3.OUT" Destination="DigitalOutput_Q1.OUT" dx1="420"/>
 			<Connection Source="DigitalInput_I1.IN" Destination="AX_OR_3.IN1" dx1="926.67"/>
 			<Connection Source="DigitalInput_I2.IN" Destination="AX_OR_3.IN2" dx1="293.33"/>
 			<Connection Source="DigitalInput_I3.IN" Destination="AX_OR_3.IN3" dx1="580"/>

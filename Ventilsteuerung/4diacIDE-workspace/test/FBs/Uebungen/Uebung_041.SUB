@@ -69,7 +69,7 @@
 		</FB>
 		<FB Name="F_SINT_TO_UINT" Type="iec61131::conversion::F_SINT_TO_UINT" x="-4906.67" y="-1820">
 		</FB>
-		<FB Name="loop" Type="sequence_E_08_loop" x="-9600" y="-600">
+		<FB Name="loop" Type="logiBUS::utils::sequence::event::sequence_E_08_loop" x="-9600" y="-600">
 		</FB>
 		<FB Name="E_CTU_0" Type="iec61499::events::E_CTU" x="-14900" y="-500">
 			<Parameter Name="PV" Value="0"/>
@@ -101,15 +101,15 @@
 			<Connection Source="E_CTU_0.CUO" Destination="F_SUB_0.REQ"/>
 			<Connection Source="DigitalInput_CLK_I4.IND" Destination="E_CTU_0.R" dx1="206.67"/>
 			<Connection Source="F_SUB_0.CNF" Destination="E_DEMUX_0.EI"/>
-			<Connection Source="E_DEMUX_0.EO2" Destination="loop.S2_S3"/>
-			<Connection Source="E_DEMUX_0.EO3" Destination="loop.S3_S4"/>
-			<Connection Source="E_DEMUX_0.EO4" Destination="loop.S4_S5"/>
-			<Connection Source="E_DEMUX_0.EO5" Destination="loop.S5_S6"/>
-			<Connection Source="E_DEMUX_0.EO6" Destination="loop.S6_S7"/>
-			<Connection Source="E_DEMUX_0.EO7" Destination="loop.S7_S8"/>
-			<Connection Source="E_DEMUX_0.EO8" Destination="loop.S8_S1"/>
+			<Connection Source="E_DEMUX_0.EO2" Destination="loop.S2_S3" dx1="846.67"/>
+			<Connection Source="E_DEMUX_0.EO3" Destination="loop.S3_S4" dx1="846.67"/>
+			<Connection Source="E_DEMUX_0.EO4" Destination="loop.S4_S5" dx1="846.67"/>
+			<Connection Source="E_DEMUX_0.EO5" Destination="loop.S5_S6" dx1="846.67"/>
+			<Connection Source="E_DEMUX_0.EO6" Destination="loop.S6_S7" dx1="846.67"/>
+			<Connection Source="E_DEMUX_0.EO7" Destination="loop.S7_S8" dx1="846.67"/>
+			<Connection Source="E_DEMUX_0.EO8" Destination="loop.S8_S1" dx1="846.67"/>
 			<Connection Source="E_DEMUX_0.EO8" Destination="E_CTU_0.R" dx1="353.33" dx2="353.33" dy="460"/>
-			<Connection Source="E_DEMUX_0.EO1" Destination="loop.S1_S2"/>
+			<Connection Source="E_DEMUX_0.EO1" Destination="loop.S1_S2" dx1="846.67"/>
 		</EventConnections>
 		<DataConnections>
 			<Connection Source="F_SINT_TO_UINT.OUT" Destination="Q_NumericValue.u32NewValue" dx1="286.67"/>
