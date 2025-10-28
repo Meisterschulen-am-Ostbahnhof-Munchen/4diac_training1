@@ -124,16 +124,20 @@
 					<Parameter Name="QI" Value="TRUE"/>
 					<Parameter Name="ID" Value="PORT_B3"/>
 				</FB>
-				<FB Name="UINT2UINT_0" Type="iec61131::arithmetic::F_MOVE" x="5900" y="700">
+				<FB Name="UINT2UINT_0" Type="iec61131::selection::F_MOVE" x="5900" y="700">
+					<Attribute Name="DataType" Value="UINT"/>
 					<Attribute Name="DataType" Value="UINT"/>
 				</FB>
-				<FB Name="UINT2UINT_1" Type="iec61131::arithmetic::F_MOVE" x="5900" y="1800">
+				<FB Name="UINT2UINT_1" Type="iec61131::selection::F_MOVE" x="5900" y="1800">
+					<Attribute Name="DataType" Value="UINT"/>
 					<Attribute Name="DataType" Value="UINT"/>
 				</FB>
-				<FB Name="UINT2UINT_2" Type="iec61131::arithmetic::F_MOVE" x="5900" y="3200">
+				<FB Name="UINT2UINT_2" Type="iec61131::selection::F_MOVE" x="5900" y="3200">
+					<Attribute Name="DataType" Value="UINT"/>
 					<Attribute Name="DataType" Value="UINT"/>
 				</FB>
-				<FB Name="UINT2UINT_3" Type="iec61131::arithmetic::F_MOVE" x="5900" y="4500">
+				<FB Name="UINT2UINT_3" Type="iec61131::selection::F_MOVE" x="5900" y="4500">
+					<Attribute Name="DataType" Value="UINT"/>
 					<Attribute Name="DataType" Value="UINT"/>
 				</FB>
 				<FB Name="E_TRIG" Type="iec61499::events::E_TRIG" x="2500" y="-1200">
@@ -151,10 +155,10 @@
 					<Connection Source="App_functions.BUTTON_BLUE.IND" Destination="CLIENT_BUTTON_BLUE.REQ" dx1="446.67"/>
 				</EventConnections>
 				<DataConnections>
-					<Connection Source="CLIENT_BUTTON_GREEN.RD_1" Destination="UINT2UINT_0.IN"/>
-					<Connection Source="CLIENT_BUTTON_RED.RD_1" Destination="UINT2UINT_2.IN"/>
-					<Connection Source="CLIENT_BUTTON_YELLOW.RD_1" Destination="UINT2UINT_1.IN"/>
-					<Connection Source="CLIENT_BUTTON_BLUE.RD_1" Destination="UINT2UINT_3.IN"/>
+					<Connection Source="CLIENT_BUTTON_GREEN.RD_1" Destination="UINT2UINT_0.IN" dx1="366.67"/>
+					<Connection Source="CLIENT_BUTTON_RED.RD_1" Destination="UINT2UINT_2.IN" dx1="340"/>
+					<Connection Source="CLIENT_BUTTON_YELLOW.RD_1" Destination="UINT2UINT_1.IN" dx1="380"/>
+					<Connection Source="CLIENT_BUTTON_BLUE.RD_1" Destination="UINT2UINT_3.IN" dx1="353.33"/>
 					<Connection Source="App_functions.BUTTON_GREEN.IN" Destination="CLIENT_BUTTON_GREEN.SD_1" dx1="433.33"/>
 					<Connection Source="App_functions.BUTTON_YELLOW.IN" Destination="CLIENT_BUTTON_YELLOW.SD_1" dx1="420"/>
 					<Connection Source="App_functions.BUTTON_RED.IN" Destination="CLIENT_BUTTON_RED.SD_1" dx1="460"/>
