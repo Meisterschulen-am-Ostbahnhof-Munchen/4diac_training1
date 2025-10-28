@@ -4,8 +4,8 @@
 	</Identification>
 	<VersionInfo Organization="HR Agrartechnik GmbH" Version="1.0" Author="Franz Höpfinger" Date="2025-09-28">
 	</VersionInfo>
-	<CompilerInfo>
-		<Import declaration="stations::Computers"/>
+	<CompilerInfo packageName="Training">
+		<Import declaration="logiBUS::stations::Computers::C_00"/>
 	</CompilerInfo>
 	<Application Name="App" Comment="Default App for Everything">
 		<SubAppNetwork>
@@ -14,7 +14,7 @@
 		</SubAppNetwork>
 	</Application>
 	<Device Name="FORTE_PC" Type="iec61499::system::FORTE_PC" x="3126.67" y="1113.33">
-		<Parameter Name="MGR_ID" Value="Computers::C_00" Comment="Device manager socket ID"/>
+		<Parameter Name="MGR_ID" Value="C_00" Comment="Device manager socket ID"/>
 		<Attribute Name="Profile" Type="STRING" Value="HOLOBLOC"/>
 		<Attribute Name="Color" Type="STRING" Value="255,190,111"/>
 		<Resource Name="EMB_RES" Type="iec61499::system::EMB_RES" x="0" y="0">
@@ -28,4 +28,5 @@
 			</FBNetwork>
 		</Resource>
 	</Device>
+	<Mapping From="App.Control" To="FORTE_PC.EMB_RES"/>
 </System>
