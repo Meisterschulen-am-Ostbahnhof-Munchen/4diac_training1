@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SubAppType Name="Uebung_103c" Comment="DigitalInput_I1 auf DigitalOutput_Q1, mit Plug and Socket und DEMUX">
+	<Identification Standard="61499-2" Description="Copyright (c) 2023 Meisterschulen am Ostbahnhof  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0">
+	</Identification>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2023-10-23">
+	</VersionInfo>
+	<CompilerInfo packageName="Uebungen">
+		<Import declaration="Uebungen::const::UT::DefaultPool::InputNumber_I1"/>
+		<Import declaration="logiBUS::io::DI::logiBUS_DI::Input_I1"/>
+		<Import declaration="logiBUS::io::DQ::logiBUS_DO::Output_Q1"/>
+	</CompilerInfo>
+	<SubAppInterfaceList>
+	</SubAppInterfaceList>
+	<SubAppNetwork>
+		<FB Name="DigitalInput_I1" Type="logiBUS::io::DI::logiBUS_IXA" x="-200" y="-300">
+			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="Input" Value="Input_I1"/>
+		</FB>
+		<FB Name="DigitalOutput_Q1" Type="logiBUS::io::DQ::logiBUS_QXA" x="7000" y="-300">
+			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="Output" Value="Output_Q1"/>
+		</FB>
+		<FB Name="AX_DEMUX_3" Type="adapter::selection::unidirectional::AX_DEMUX_3" x="1600" y="0">
+		</FB>
+		<FB Name="AX_MUX_3" Type="adapter::selection::unidirectional::AX_MUX_3" x="5000" y="0">
+		</FB>
+		<FB Name="C2" Type="iec61131::selection::F_MOVE" x="2600" y="-1100">
+			<Parameter Name="IN" Value="UINT#1"/>
+		</FB>
+		<SubApp Name="rastend" Type="Uebungen::sys::rastend" x="3200" y="300">
+		</SubApp>
+		<SubApp Name="tastend" Type="Uebungen::sys::tastend" x="3200" y="-100">
+		</SubApp>
+		<SubApp Name="tastend_TON_5s" Type="Uebungen::sys::tastend_TON_5s" x="3100" y="700">
+		</SubApp>
+		<EventConnections>
+			<Connection Source="C2.CNF" Destination="AX_DEMUX_3.REQ" dx1="80" dx2="80" dy="746.67">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="C2.CNF" Destination="AX_MUX_3.REQ" dx1="440">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+		</EventConnections>
+		<DataConnections>
+			<Connection Source="C2.OUT" Destination="AX_DEMUX_3.K" dx1="80" dx2="80" dy="746.67">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="C2.OUT" Destination="AX_MUX_3.K" dx1="440">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+		</DataConnections>
+		<AdapterConnections>
+			<Connection Source="AX_MUX_3.OUT" Destination="DigitalOutput_Q1.OUT" dx1="500"/>
+			<Connection Source="DigitalInput_I1.IN" Destination="AX_DEMUX_3.IN" dx1="500"/>
+			<Connection Source="AX_DEMUX_3.OUT0" Destination="tastend.IN" dx1="333.33"/>
+			<Connection Source="tastend.OUT" Destination="AX_MUX_3.IN0" dx1="593.33"/>
+			<Connection Source="AX_DEMUX_3.OUT2" Destination="tastend_TON_5s.IN" dx1="326.67"/>
+			<Connection Source="tastend_TON_5s.OUT" Destination="AX_MUX_3.IN2" dx1="400"/>
+			<Connection Source="rastend.OUT" Destination="AX_MUX_3.IN1" dx1="593.33"/>
+			<Connection Source="AX_DEMUX_3.OUT1" Destination="rastend.IN" dx1="253.33"/>
+		</AdapterConnections>
+	</SubAppNetwork>
+</SubAppType>
