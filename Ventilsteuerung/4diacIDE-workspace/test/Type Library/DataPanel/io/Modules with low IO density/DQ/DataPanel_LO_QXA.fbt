@@ -43,7 +43,7 @@
 		</Sockets>
 	</InterfaceList>
 	<FBNetwork>
-		<FB Name="QX" Type="eclipse4diac::io::QX" x="1240" y="460">
+		<FB Name="QX" Type="DataPanel::io::LO::DQ::DataPanel_LO_QX" x="1240" y="460">
 		</FB>
 		<EventConnections>
 			<Connection Source="INIT" Destination="QX.INIT" dx1="6013.33"/>
@@ -57,6 +57,8 @@
 			<Connection Source="PARAMS" Destination="QX.PARAMS" dx1="5306.67"/>
 			<Connection Source="QX.QO" Destination="QO" dx1="1880"/>
 			<Connection Source="QX.STATUS" Destination="STATUS" dx1="2053.33"/>
+			<Connection Source="u8SAMember" Destination="QX.u8SAMember" dx1="3020"/>
+			<Connection Source="Output" Destination="QX.Output" dx1="1973.33"/>
 		</DataConnections>
 	</FBNetwork>
 	<Attribute Name="Documentation" Type="CDATA"><![CDATA[<p>Copyright (c) 2024 HR Agrartechnik GmbH&nbsp;&nbsp;&nbsp;<br />
