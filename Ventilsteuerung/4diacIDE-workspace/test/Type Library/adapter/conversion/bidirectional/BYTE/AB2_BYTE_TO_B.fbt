@@ -21,7 +21,7 @@
 			</Event>
 		</EventOutputs>
 		<InputVars>
-			<VarDeclaration Name="OUT" Type="BOOL" Comment="Output data to Adapter">
+			<VarDeclaration Name="OUT" Type="BYTE" Comment="Output data to Adapter">
 				<Attribute Name="YPOSITION" Type="DINT" Value="31"/>
 			</VarDeclaration>
 		</InputVars>
@@ -31,17 +31,17 @@
 			</VarDeclaration>
 		</OutputVars>
 		<Plugs>
-			<AdapterDeclaration Name="AX2_OUT" Type="adapter::types::bidirectional::AX2" Comment="Adapter Output" x="-3900" y="-500"/>
+			<AdapterDeclaration Name="AB2_OUT" Type="adapter::types::bidirectional::AB2" Comment="Adapter Output" x="-3900" y="-500"/>
 		</Plugs>
 	</InterfaceList>
 	<FBNetwork>
 		<EventConnections>
-			<Connection Source="REQ" Destination="AX2_OUT.EO1" dx1="1606.67"/>
-			<Connection Source="AX2_OUT.EI1" Destination="CNF" dx1="4760"/>
+			<Connection Source="REQ" Destination="AB2_OUT.EO1" dx1="1606.67"/>
+			<Connection Source="AB2_OUT.EI1" Destination="CNF" dx1="4760"/>
 		</EventConnections>
 		<DataConnections>
-			<Connection Source="OUT" Destination="AX2_OUT.DO1" dx1="180"/>
-			<Connection Source="AX2_OUT.DI1" Destination="IN" dx1="4760"/>
+			<Connection Source="OUT" Destination="AB2_OUT.DO1" dx1="180"/>
+			<Connection Source="AB2_OUT.DI1" Destination="IN" dx1="4760"/>
 		</DataConnections>
 	</FBNetwork>
 	<Attribute Name="eclipse4diac::core::TypeHash" Value="''"/>
