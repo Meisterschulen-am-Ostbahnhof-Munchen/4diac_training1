@@ -31,7 +31,7 @@
 		</FB>
 		<FB Name="F_DWORD_TO_UDINT" Type="iec61131::conversion::F_DWORD_TO_UDINT" x="400" y="400">
 		</FB>
-		<FB Name="NVS" Type="logiBUS::storage::esp32::nvs::NVS" x="2100" y="0">
+		<FB Name="NVS" Type="logiBUS::storage::esp32_nvs::NVS" x="2100" y="0">
 			<Parameter Name="QI" Value="TRUE"/>
 			<Parameter Name="DEFAULT_VALUE" Value="UDINT#0"/>
 		</FB>
@@ -53,15 +53,15 @@
 			<Connection Source="NVS.INITO" Destination="NVS.GET" dx1="80" dx2="80" dy="-286.67"/>
 		</EventConnections>
 		<DataConnections>
-			<Connection Source="InputNumber_I1.IN" Destination="F_DWORD_TO_UDINT.IN"/>
+			<Connection Source="InputNumber_I1.IN" Destination="F_DWORD_TO_UDINT.IN" dx1="353.33"/>
 			<Connection Source="u16ObjId" Destination="Q_NumericValue.u16ObjId" dx1="2933.33">
 				<Attribute Name="Visible" Value="false"/>
 			</Connection>
 			<Connection Source="KEY" Destination="NVS.KEY" dx1="2066.67">
 				<Attribute Name="Visible" Value="false"/>
 			</Connection>
-			<Connection Source="F_DWORD_TO_UDINT.OUT" Destination="NVS.VALUE"/>
-			<Connection Source="NVS.VALUEO" Destination="Q_NumericValue.u32NewValue"/>
+			<Connection Source="F_DWORD_TO_UDINT.OUT" Destination="NVS.VALUE" dx1="333.33"/>
+			<Connection Source="NVS.VALUEO" Destination="Q_NumericValue.u32NewValue" dx1="486.67"/>
 			<Connection Source="NVS.VALUEO" Destination="VALUEO" dx1="2933.33">
 				<Attribute Name="Visible" Value="false"/>
 			</Connection>
