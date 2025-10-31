@@ -50,6 +50,7 @@
 				<With Var="Status_14"/>
 			</Event>
 			<Event Name="TIMEOUT" Type="Event">
+				<With Var="bTimeout"/>
 				<With Var="s32TimeStamp_timeout"/>
 				<With Var="STATUS"/>
 				<With Var="bTimeout"/>
@@ -63,8 +64,8 @@
 			<VarDeclaration Name="QO" Type="BOOL" Comment="Event Output Qualifier"/>
 			<VarDeclaration Name="STATUS" Type="STRING" Comment="Service Status"/>
 			<VarDeclaration Name="bTimeout" Type="BOOL" Comment="Timeout occured TRUE = Timeout, FALSE = no Timeout" InitialValue="FALSE"/>
-			<VarDeclaration Name="s32TimeStamp_timeout" Type="DINT"/>
-			<VarDeclaration Name="s32TimeStamp" Type="DINT"/>
+			<VarDeclaration Name="s32TimeStamp_timeout" Type="DINT" Comment="Time stamp of the Timeout in ms"/>
+			<VarDeclaration Name="s32TimeStamp" Type="DINT" Comment="Time stamp of the message in ms"/>
 			<VarDeclaration Name="Version" Type="USINT"/>
 			<VarDeclaration Name="Revision" Type="USINT"/>
 			<VarDeclaration Name="Fault_Code" Type="USINT"/>
