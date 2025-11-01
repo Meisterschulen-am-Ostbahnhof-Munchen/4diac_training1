@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SubAppType Name="Uebung_003b3_AX" Comment="Funk 16 Tasten auf DataPanel 16">
+	<Identification Standard="61499-2" Description="Copyright (c) 2023 Meisterschulen am Ostbahnhof  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0">
+	</Identification>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2023-10-23">
+	</VersionInfo>
+	<CompilerInfo packageName="Uebungen">
+		<Import declaration="DataPanel::io::MI::DQ::DataPanel_MI_DO::DigitalOutput_1A"/>
+		<Import declaration="DataPanel::io::MI::DQ::DataPanel_MI_DO::DigitalOutput_1B"/>
+		<Import declaration="DataPanel::io::MI::DQ::DataPanel_MI_DO::DigitalOutput_2A"/>
+		<Import declaration="DataPanel::io::MI::DQ::DataPanel_MI_DO::DigitalOutput_2B"/>
+		<Import declaration="DataPanel::io::MI::DQ::DataPanel_MI_DO::DigitalOutput_3A"/>
+		<Import declaration="DataPanel::io::MI::DQ::DataPanel_MI_DO::DigitalOutput_3B"/>
+		<Import declaration="DataPanel::io::MI::DQ::DataPanel_MI_DO::DigitalOutput_4A"/>
+		<Import declaration="DataPanel::io::MI::DQ::DataPanel_MI_DO::DigitalOutput_4B"/>
+		<Import declaration="DataPanel::io::MI::DQ::DataPanel_MI_DO::DigitalOutput_5A"/>
+		<Import declaration="DataPanel::io::MI::DQ::DataPanel_MI_DO::DigitalOutput_5B"/>
+		<Import declaration="DataPanel::io::MI::DQ::DataPanel_MI_DO::DigitalOutput_6A"/>
+		<Import declaration="DataPanel::io::MI::DQ::DataPanel_MI_DO::DigitalOutput_6B"/>
+		<Import declaration="DataPanel::io::MI::DQ::DataPanel_MI_DO::DigitalOutput_7A"/>
+		<Import declaration="DataPanel::io::MI::DQ::DataPanel_MI_DO::DigitalOutput_7B"/>
+		<Import declaration="DataPanel::io::MI::DQ::DataPanel_MI_DO::DigitalOutput_8A"/>
+		<Import declaration="DataPanel::io::MI::const::MI::MI_00"/>
+		<Import declaration="Funk::io::DI::Funk_DI::DigitalInput_Key_01"/>
+		<Import declaration="Funk::io::DI::Funk_DI::DigitalInput_Key_02"/>
+		<Import declaration="Funk::io::DI::Funk_DI::DigitalInput_Key_03"/>
+		<Import declaration="Funk::io::DI::Funk_DI::DigitalInput_Key_04"/>
+		<Import declaration="Funk::io::DI::Funk_DI::DigitalInput_Key_05"/>
+		<Import declaration="Funk::io::DI::Funk_DI::DigitalInput_Key_06"/>
+		<Import declaration="Funk::io::DI::Funk_DI::DigitalInput_Key_07"/>
+		<Import declaration="Funk::io::DI::Funk_DI::DigitalInput_Key_08"/>
+		<Import declaration="Funk::io::DI::Funk_DI::DigitalInput_Key_09"/>
+		<Import declaration="Funk::io::DI::Funk_DI::DigitalInput_Key_10"/>
+		<Import declaration="Funk::io::DI::Funk_DI::DigitalInput_Key_11"/>
+		<Import declaration="Funk::io::DI::Funk_DI::DigitalInput_Key_12"/>
+		<Import declaration="Funk::io::DI::Funk_DI::DigitalInput_Key_13"/>
+		<Import declaration="Funk::io::DI::Funk_DI::DigitalInput_Key_14"/>
+		<Import declaration="Funk::io::DI::Funk_DI::DigitalInput_Key_15"/>
+	</CompilerInfo>
+	<SubAppInterfaceList>
+	</SubAppInterfaceList>
+	<SubAppNetwork>
+		<SubApp Name="F1" Type="Uebungen::Uebung_003b2_sub" x="-500" y="-1100">
+			<Parameter Name="Input" Value="DigitalInput_Key_01"/>
+			<Parameter Name="u8SAMember" Value="MI_00"/>
+			<Parameter Name="Output" Value="DigitalOutput_1A"/>
+		</SubApp>
+		<SubApp Name="F2" Type="Uebungen::Uebung_003b2_sub" x="-500" y="-500">
+			<Parameter Name="Input" Value="DigitalInput_Key_02"/>
+			<Parameter Name="u8SAMember" Value="MI_00"/>
+			<Parameter Name="Output" Value="DigitalOutput_1B"/>
+		</SubApp>
+		<SubApp Name="F3" Type="Uebungen::Uebung_003b2_sub" x="-500" y="100">
+			<Parameter Name="Input" Value="DigitalInput_Key_03"/>
+			<Parameter Name="u8SAMember" Value="MI_00"/>
+			<Parameter Name="Output" Value="DigitalOutput_2A"/>
+		</SubApp>
+		<SubApp Name="F4" Type="Uebungen::Uebung_003b2_sub" x="-500" y="700">
+			<Parameter Name="Input" Value="DigitalInput_Key_04"/>
+			<Parameter Name="u8SAMember" Value="MI_00"/>
+			<Parameter Name="Output" Value="DigitalOutput_2B"/>
+		</SubApp>
+		<SubApp Name="F5" Type="Uebungen::Uebung_003b2_sub" x="-500" y="1300">
+			<Parameter Name="Input" Value="DigitalInput_Key_05"/>
+			<Parameter Name="u8SAMember" Value="MI_00"/>
+			<Parameter Name="Output" Value="DigitalOutput_3A"/>
+		</SubApp>
+		<SubApp Name="F6" Type="Uebungen::Uebung_003b2_sub" x="-500" y="1900">
+			<Parameter Name="Input" Value="DigitalInput_Key_06"/>
+			<Parameter Name="u8SAMember" Value="MI_00"/>
+			<Parameter Name="Output" Value="DigitalOutput_3B"/>
+		</SubApp>
+		<SubApp Name="F7" Type="Uebungen::Uebung_003b2_sub" x="-500" y="2500">
+			<Parameter Name="Input" Value="DigitalInput_Key_07"/>
+			<Parameter Name="u8SAMember" Value="MI_00"/>
+			<Parameter Name="Output" Value="DigitalOutput_4A"/>
+		</SubApp>
+		<SubApp Name="F8" Type="Uebungen::Uebung_003b2_sub" x="-500" y="3100">
+			<Parameter Name="Input" Value="DigitalInput_Key_08"/>
+			<Parameter Name="u8SAMember" Value="MI_00"/>
+			<Parameter Name="Output" Value="DigitalOutput_4B"/>
+		</SubApp>
+		<SubApp Name="F9" Type="Uebungen::Uebung_003b2_sub" x="-500" y="3700">
+			<Parameter Name="Input" Value="DigitalInput_Key_09"/>
+			<Parameter Name="u8SAMember" Value="MI_00"/>
+			<Parameter Name="Output" Value="DigitalOutput_5A"/>
+		</SubApp>
+		<SubApp Name="F10" Type="Uebungen::Uebung_003b2_sub" x="-500" y="4300">
+			<Parameter Name="Input" Value="DigitalInput_Key_10"/>
+			<Parameter Name="u8SAMember" Value="MI_00"/>
+			<Parameter Name="Output" Value="DigitalOutput_5B"/>
+		</SubApp>
+		<SubApp Name="F11" Type="Uebungen::Uebung_003b2_sub" x="-500" y="4900">
+			<Parameter Name="Input" Value="DigitalInput_Key_11"/>
+			<Parameter Name="u8SAMember" Value="MI_00"/>
+			<Parameter Name="Output" Value="DigitalOutput_6A"/>
+		</SubApp>
+		<SubApp Name="F12" Type="Uebungen::Uebung_003b2_sub" x="-500" y="5500">
+			<Parameter Name="Input" Value="DigitalInput_Key_12"/>
+			<Parameter Name="u8SAMember" Value="MI_00"/>
+			<Parameter Name="Output" Value="DigitalOutput_6B"/>
+		</SubApp>
+		<SubApp Name="F13" Type="Uebungen::Uebung_003b2_sub" x="-500" y="6113.33">
+			<Parameter Name="Input" Value="DigitalInput_Key_13"/>
+			<Parameter Name="u8SAMember" Value="MI_00"/>
+			<Parameter Name="Output" Value="DigitalOutput_7A"/>
+		</SubApp>
+		<SubApp Name="F14" Type="Uebungen::Uebung_003b2_sub" x="-500" y="6700">
+			<Parameter Name="Input" Value="DigitalInput_Key_14"/>
+			<Parameter Name="u8SAMember" Value="MI_00"/>
+			<Parameter Name="Output" Value="DigitalOutput_7B"/>
+		</SubApp>
+		<SubApp Name="F15" Type="Uebungen::Uebung_003b2_sub" x="-500" y="7300">
+			<Parameter Name="Input" Value="DigitalInput_Key_15"/>
+			<Parameter Name="u8SAMember" Value="MI_00"/>
+			<Parameter Name="Output" Value="DigitalOutput_8A"/>
+		</SubApp>
+	</SubAppNetwork>
+</SubAppType>
