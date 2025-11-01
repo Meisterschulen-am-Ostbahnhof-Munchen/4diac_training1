@@ -19,29 +19,28 @@
 		</InputVars>
 	</SubAppInterfaceList>
 	<SubAppNetwork>
-		<FB Name="QX" Type="DataPanel::io::MI::DQ::DataPanel_MI_QX" x="-2500" y="-800">
+		<FB Name="QXA" Type="DataPanel::io::MI::DQ::DataPanel_MI_QXA" x="-2500" y="-800">
 			<Parameter Name="QI" Value="TRUE"/>
 		</FB>
-		<FB Name="IX" Type="Funk::io::DI::Funk_IX" x="-4600" y="-1000">
+		<FB Name="IXA" Type="Funk::io::DI::Funk_IXA" x="-4600" y="-600">
 			<Parameter Name="QI" Value="TRUE"/>
 			<Parameter Name="PARAMS" Value="">
 				<Attribute Name="Visible" Value="false"/>
 			</Parameter>
 		</FB>
-		<EventConnections>
-			<Connection Source="IX.IND" Destination="QX.REQ" dx1="773.33"/>
-		</EventConnections>
 		<DataConnections>
-			<Connection Source="IX.IN" Destination="QX.OUT" dx1="726.67"/>
-			<Connection Source="Input" Destination="IX.Input" dx1="2880">
+			<Connection Source="Input" Destination="IXA.Input" dx1="2880">
 				<Attribute Name="Visible" Value="false"/>
 			</Connection>
-			<Connection Source="u8SAMember" Destination="QX.u8SAMember" dx1="3813.33">
+			<Connection Source="u8SAMember" Destination="QXA.u8SAMember" dx1="3813.33">
 				<Attribute Name="Visible" Value="false"/>
 			</Connection>
-			<Connection Source="Output" Destination="QX.Output" dx1="3813.33">
+			<Connection Source="Output" Destination="QXA.Output" dx1="3813.33">
 				<Attribute Name="Visible" Value="false"/>
 			</Connection>
 		</DataConnections>
+		<AdapterConnections>
+			<Connection Source="IXA.IN" Destination="QXA.OUT" dx1="726.67"/>
+		</AdapterConnections>
 	</SubAppNetwork>
 </SubAppType>
