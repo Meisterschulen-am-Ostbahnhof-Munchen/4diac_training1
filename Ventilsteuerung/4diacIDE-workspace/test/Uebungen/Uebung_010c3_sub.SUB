@@ -16,7 +16,7 @@
 		</InputVars>
 	</SubAppInterfaceList>
 	<SubAppNetwork>
-		<SubApp Name="GreenWhiteBackground" Type="Uebungen::sys::GreenWhiteBackground" x="3200" y="1200">
+		<SubApp Name="GreenWhiteBackground" Type="MyLib::sys::GreenWhiteBackground" x="3200" y="1200">
 		</SubApp>
 		<FB Name="DigitalOutput_Q1" Type="logiBUS::io::DQ::logiBUS_QX" x="3200" y="200">
 			<Parameter Name="QI" Value="TRUE"/>
@@ -33,7 +33,7 @@
 		</EventConnections>
 		<DataConnections>
 			<Connection Source="SoftKey_F1.IN" Destination="GreenWhiteBackground.DI1" dx1="1060"/>
-			<Connection Source="SoftKey_F1.IN" Destination="DigitalOutput_Q1.OUT"/>
+			<Connection Source="SoftKey_F1.IN" Destination="DigitalOutput_Q1.OUT" dx1="1100"/>
 			<Connection Source="u16ObjId" Destination="SoftKey_F1.u16ObjId" dx1="2446.67">
 				<Attribute Name="Visible" Value="false"/>
 			</Connection>
