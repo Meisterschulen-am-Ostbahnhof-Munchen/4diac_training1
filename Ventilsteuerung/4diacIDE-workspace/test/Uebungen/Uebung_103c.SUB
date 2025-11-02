@@ -27,11 +27,11 @@
 			<Attribute Name="DataType" Value="UINT"/>
 			<Parameter Name="IN" Value="UINT#1"/>
 		</FB>
-		<SubApp Name="rastend" Type="Uebungen::sys::rastend" x="3200" y="300">
+		<SubApp Name="rastend" Type="MyLib::sys::rastend" x="3200" y="300">
 		</SubApp>
-		<SubApp Name="tastend" Type="Uebungen::sys::tastend" x="3200" y="-100">
+		<SubApp Name="tastend" Type="MyLib::sys::tastend" x="3200" y="-100">
 		</SubApp>
-		<SubApp Name="tastend_TON_5s" Type="Uebungen::sys::tastend_TON_5s" x="3100" y="700">
+		<SubApp Name="tastend_TON_5s" Type="MyLib::sys::tastend_TON_5s" x="3100" y="700">
 		</SubApp>
 		<EventConnections>
 			<Connection Source="C2.CNF" Destination="AX_DEMUX_3.REQ" dx1="80" dx2="80" dy="746.67">
@@ -56,8 +56,8 @@
 			<Connection Source="tastend.OUT" Destination="AX_MUX_3.IN1" dx1="593.33"/>
 			<Connection Source="AX_DEMUX_3.OUT3" Destination="tastend_TON_5s.IN" dx1="326.67"/>
 			<Connection Source="tastend_TON_5s.OUT" Destination="AX_MUX_3.IN3" dx1="400"/>
-			<Connection Source="rastend.OUT" Destination="AX_MUX_3.IN2"/>
-			<Connection Source="AX_DEMUX_3.OUT2" Destination="rastend.IN"/>
+			<Connection Source="rastend.OUT" Destination="AX_MUX_3.IN2" dx1="360"/>
+			<Connection Source="AX_DEMUX_3.OUT2" Destination="rastend.IN" dx1="420"/>
 		</AdapterConnections>
 	</SubAppNetwork>
 </SubAppType>
