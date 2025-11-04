@@ -15,7 +15,7 @@
 	<SubAppInterfaceList>
 	</SubAppInterfaceList>
 	<SubAppNetwork>
-		<FB Name="SETPOINT_CONDENSED_WORK_STATE_1_16" Type="isobus::TC_io::io::TC_ID" x="-1700" y="-8900">
+		<FB Name="SETPOINT_CONDENSED_WORK_STATE_1_16" Type="isobus::TC::io::TC_ID" x="-1700" y="-8900">
 			<Parameter Name="QI" Value="TRUE"/>
 			<Parameter Name="wDevElementNumb" Value="DE_NUM_DEVICE"/>
 			<Parameter Name="wDDI" Value="SETPOINT_CONDENSED_WORK_STATE_1_16"/>
@@ -24,7 +24,7 @@
 		</FB>
 		<FB Name="ASSEMBLE_DWORD_FROM_QUARTERS" Type="eclipse4diac::utils::assembling::ASSEMBLE_DWORD_FROM_QUARTERS" x="7300" y="-8700">
 		</FB>
-		<FB Name="ACTUAL_CONDENSED_WORK_STATE_1_16" Type="isobus::TC_io::io::TC_QD" x="12506.67" y="-8800">
+		<FB Name="ACTUAL_CONDENSED_WORK_STATE_1_16" Type="isobus::TC::io::TC_QD" x="12506.67" y="-8800">
 			<Parameter Name="QI" Value="TRUE"/>
 			<Parameter Name="wDevElementNumb" Value="DE_NUM_DEVICE"/>
 			<Parameter Name="wDDI" Value="ACTUAL_CONDENSED_WORK_STATE_1_16"/>
@@ -35,22 +35,22 @@
 		</FB>
 		<SubApp Name="Out" Type="Uebungen::Uebung_060_sub_Outputs" x="6800" y="-10700">
 		</SubApp>
-		<FB Name="SECTION_CONTROL_STATE_IN" Type="isobus::TC_io::io::TC_ID" x="10900" y="-7700">
+		<FB Name="SECTION_CONTROL_STATE_IN" Type="isobus::TC::io::TC_ID" x="10900" y="-7700">
 			<Parameter Name="QI" Value="TRUE"/>
 			<Parameter Name="wDevElementNumb" Value="DE_NUM_DEVICE"/>
 			<Parameter Name="wDDI" Value="SECTION_CONTROL_STATE"/>
 		</FB>
-		<FB Name="SECTION_CONTROL_STATE_OUT" Type="isobus::TC_io::io::TC_QD" x="13466.67" y="-7600">
+		<FB Name="SECTION_CONTROL_STATE_OUT" Type="isobus::TC::io::TC_QD" x="13466.67" y="-7600">
 			<Parameter Name="QI" Value="TRUE"/>
 			<Parameter Name="wDevElementNumb" Value="DE_NUM_DEVICE"/>
 			<Parameter Name="wDDI" Value="SECTION_CONTROL_STATE"/>
 		</FB>
-		<FB Name="ACTUAL_RATE" Type="isobus::TC_io::io::TC_QD" x="13900" y="-9900">
+		<FB Name="ACTUAL_RATE" Type="isobus::TC::io::TC_QD" x="13900" y="-9900">
 			<Parameter Name="QI" Value="TRUE"/>
 			<Parameter Name="wDevElementNumb" Value="DE_NUM_DEVICE"/>
 			<Parameter Name="wDDI" Value="ACTUAL_VOLUME_PER_AREA_APPLICATION_RATE"/>
 		</FB>
-		<FB Name="ACTUAL_WORK_STATE" Type="isobus::TC_io::io::TC_QD" x="12700" y="-10900">
+		<FB Name="ACTUAL_WORK_STATE" Type="isobus::TC::io::TC_QD" x="12700" y="-10900">
 			<Parameter Name="QI" Value="TRUE"/>
 			<Parameter Name="wDevElementNumb" Value="DE_NUM_DEVICE"/>
 			<Parameter Name="wDDI" Value="ACTUAL_WORK_STATE"/>
@@ -63,13 +63,13 @@
 			<Parameter Name="IN2" Value="DWORD#0"/>
 		</FB>
 		<EventConnections>
-			<Connection Source="SETPOINT_CONDENSED_WORK_STATE_1_16.IND" Destination="SPLIT_DWORD_INTO_QUARTERS.REQ"/>
+			<Connection Source="SETPOINT_CONDENSED_WORK_STATE_1_16.IND" Destination="SPLIT_DWORD_INTO_QUARTERS.REQ" dx1="553.33"/>
 			<Connection Source="ASSEMBLE_DWORD_FROM_QUARTERS.CNF" Destination="ACTUAL_CONDENSED_WORK_STATE_1_16.REQ" dx1="1233.33"/>
 			<Connection Source="BOOLS_TO_QUARTERS.CNF" Destination="ASSEMBLE_DWORD_FROM_QUARTERS.REQ" dx1="260"/>
 			<Connection Source="SPLIT_DWORD_INTO_QUARTERS.CNF" Destination="QUARTERS_TO_BOOLS.REQ" dx1="473.33"/>
 			<Connection Source="QUARTERS_TO_BOOLS.CNF" Destination="BOOLS_TO_QUARTERS.REQ" dx1="760"/>
 			<Connection Source="QUARTERS_TO_BOOLS.CNF" Destination="Out.CNF" dx1="226.67"/>
-			<Connection Source="SECTION_CONTROL_STATE_IN.IND" Destination="SECTION_CONTROL_STATE_OUT.REQ"/>
+			<Connection Source="SECTION_CONTROL_STATE_IN.IND" Destination="SECTION_CONTROL_STATE_OUT.REQ" dx1="833.33"/>
 			<Connection Source="F_GT.CNF" Destination="F_SEL.REQ"/>
 			<Connection Source="ASSEMBLE_DWORD_FROM_QUARTERS.CNF" Destination="F_GT.REQ" dx1="360"/>
 			<Connection Source="F_SEL.CNF" Destination="ACTUAL_WORK_STATE.REQ" dx1="120"/>
@@ -135,10 +135,10 @@
 			<Connection Source="SPLIT_DWORD_INTO_QUARTERS.QUARTER_BYTE_07" Destination="QUARTERS_TO_BOOLS.IB_07" dx1="473.33"/>
 			<Connection Source="SPLIT_DWORD_INTO_QUARTERS.QUARTER_BYTE_06" Destination="QUARTERS_TO_BOOLS.IB_06" dx1="473.33"/>
 			<Connection Source="SPLIT_DWORD_INTO_QUARTERS.QUARTER_BYTE_05" Destination="QUARTERS_TO_BOOLS.IB_05" dx1="473.33"/>
-			<Connection Source="SECTION_CONTROL_STATE_IN.IN" Destination="SECTION_CONTROL_STATE_OUT.OUT"/>
+			<Connection Source="SECTION_CONTROL_STATE_IN.IN" Destination="SECTION_CONTROL_STATE_OUT.OUT" dx1="833.33"/>
 			<Connection Source="F_GT.OUT" Destination="F_SEL.G"/>
 			<Connection Source="ASSEMBLE_DWORD_FROM_QUARTERS." Destination="F_GT.IN1" dx1="553.33"/>
-			<Connection Source="F_SEL.OUT" Destination="ACTUAL_RATE.OUT"/>
+			<Connection Source="F_SEL.OUT" Destination="ACTUAL_RATE.OUT" dx1="1286.67"/>
 			<Connection Source="F_SEL.OUT" Destination="ACTUAL_WORK_STATE.OUT" dx1="213.33"/>
 		</DataConnections>
 	</SubAppNetwork>

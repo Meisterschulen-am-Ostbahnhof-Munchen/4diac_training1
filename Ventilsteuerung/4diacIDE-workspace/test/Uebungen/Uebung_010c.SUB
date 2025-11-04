@@ -22,7 +22,7 @@
 			<Parameter Name="QI" Value="TRUE"/>
 			<Parameter Name="u16ObjId" Value="SoftKey_F1"/>
 		</FB>
-		<SubApp Name="GreenWhiteBackground" Type="Uebungen::sys::GreenWhiteBackground" x="-1700" y="800">
+		<SubApp Name="GreenWhiteBackground" Type="MyLib::sys::GreenWhiteBackground" x="-1700" y="800">
 			<Parameter Name="u16ObjId" Value="SoftKey_F1"/>
 		</SubApp>
 		<Comment Comment="Nachteil: &#10;DefaultPool::SoftKey_F1 &#10;muss 2x angegeben werden" x="-4800" y="700" width="1400" height="700"/>
@@ -31,7 +31,7 @@
 			<Connection Source="SoftKey_F1.IND" Destination="GreenWhiteBackground.REQ" dx1="1240"/>
 		</EventConnections>
 		<DataConnections>
-			<Connection Source="SoftKey_F1.IN" Destination="DigitalOutput_Q1.OUT"/>
+			<Connection Source="SoftKey_F1.IN" Destination="DigitalOutput_Q1.OUT" dx1="1200"/>
 			<Connection Source="SoftKey_F1.IN" Destination="GreenWhiteBackground.DI1" dx1="1060"/>
 		</DataConnections>
 	</SubAppNetwork>
