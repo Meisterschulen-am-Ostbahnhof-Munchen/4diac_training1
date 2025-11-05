@@ -13,7 +13,7 @@
 		<VarDeclaration Name="BT_STILL_HELD_START" Type="isobus::UT::io::Button::ButtonActivationCode_S" Comment="Button is still held (latchable buttons do not repeat)" InitialValue="(code := 2, bCyclic := FALSE)"/>
 		<VarDeclaration Name="BT_ABORTED" Type="isobus::UT::io::Button::ButtonActivationCode_S" Comment="Button press aborted (Applies to VT version 4 and later)" InitialValue="(code := 3)"/>
 		<VarDeclaration Name="Invalid" Type="isobus::UT::io::Button::ButtonActivationCode_S" InitialValue="(code := 255)"/>
-	</GlobalConstants>
+</GlobalConstants>
 	<OriginalSource><![CDATA[PACKAGE isobus::UT::io::Button;
 
 GLOBALCONSTANTS ButtonActivationCode
@@ -31,4 +31,5 @@ GLOBALCONSTANTS ButtonActivationCode
 	END_VAR
 END_GLOBALCONSTANTS
 ]]></OriginalSource>
+	<Attribute Name="eclipse4diac::core::TypeHash" Value="''"/>
 </GlobalConstants>
