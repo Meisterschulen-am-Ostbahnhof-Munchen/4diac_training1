@@ -20,4 +20,5 @@
 			<VarDeclaration Name="DO1" Type="isobus::pgn::CAN_MSG"/>
 		</OutputVars>
 	</InterfaceList>
+	<Attribute Name="eclipse4diac::core::TypeHash" Value="''"/>
 </AdapterType>

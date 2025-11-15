@@ -1,15 +1,12 @@
-;<Request ID="6" Action="CREATE"><FB Name="EMB_RES" Type="iec61499::system::EMB_RES" /></Request>
-EMB_RES;<Request ID="7" Action="CREATE"><FB Name="E_TRIG" Type="iec61499::events::E_TRIG" /></Request>
-EMB_RES;<Request ID="8" Action="CREATE"><FB Name="App.Control.I_RPTO" Type="isobus::tecu::I_RPTO" /></Request>
-EMB_RES;<Request ID="9" Action="CREATE"><FB Name="App.Control.Q_NumericValue_GBSD" Type="isobus::UT::Q::Q_NumericValue" /></Request>
-EMB_RES;<Request ID="10" Action="CREATE"><FB Name="App.Control.F_SEL_E_2" Type="eclipse4diac::utils::selection::F_SEL_E_2" /></Request>
-EMB_RES;<Request ID="11" Action="WRITE"><Connection Source="TRUE" Destination="App.Control.I_RPTO.QI" /></Request>
-EMB_RES;<Request ID="12" Action="WRITE"><Connection Source="21003" Destination="App.Control.Q_NumericValue_GBSD.u16ObjId" /></Request>
-EMB_RES;<Request ID="13" Action="WRITE"><Connection Source="UDINT#0" Destination="App.Control.F_SEL_E_2.IN2" /></Request>
-EMB_RES;<Request ID="14" Action="CREATE"><Connection Source="START.COLD" Destination="E_TRIG.REQ" /></Request>
-EMB_RES;<Request ID="15" Action="CREATE"><Connection Source="App.Control.F_SEL_E_2.CNF" Destination="App.Control.Q_NumericValue_GBSD.REQ" /></Request>
-EMB_RES;<Request ID="16" Action="CREATE"><Connection Source="App.Control.F_SEL_E_2.OUT" Destination="App.Control.Q_NumericValue_GBSD.u32NewValue" /></Request>
-EMB_RES;<Request ID="17" Action="CREATE"><Connection Source="App.Control.I_RPTO.IND" Destination="App.Control.F_SEL_E_2.REQ1" /></Request>
-EMB_RES;<Request ID="18" Action="CREATE"><Connection Source="App.Control.I_RPTO.TIMEOUT" Destination="App.Control.F_SEL_E_2.REQ2" /></Request>
-EMB_RES;<Request ID="19" Action="CREATE"><Connection Source="App.Control.I_RPTO.REAR_PTO_OUTP_SHAFT_SPEED" Destination="App.Control.F_SEL_E_2.IN1" /></Request>
-EMB_RES;<Request ID="20" Action="START"/>
+;<Request ID="5" Action="CREATE"><FB Name="EMB_RES" Type="iec61499::system::EMB_RES" /></Request>
+EMB_RES;<Request ID="6" Action="CREATE"><FB Name="E_TRIG" Type="iec61499::events::E_TRIG" /></Request>
+EMB_RES;<Request ID="7" Action="CREATE"><FB Name="App.Control.DigitalOutput_Q1" Type="logiBUS::io::DQ::logiBUS_QX" /></Request>
+EMB_RES;<Request ID="8" Action="CREATE"><FB Name="App.Control.DigitalInput_I1" Type="logiBUS::io::DI::logiBUS_IX" /></Request>
+EMB_RES;<Request ID="9" Action="WRITE"><Connection Source="TRUE" Destination="App.Control.DigitalOutput_Q1.QI" /></Request>
+EMB_RES;<Request ID="10" Action="WRITE"><Connection Source="(Pin:=1)" Destination="App.Control.DigitalOutput_Q1.Output" /></Request>
+EMB_RES;<Request ID="11" Action="WRITE"><Connection Source="TRUE" Destination="App.Control.DigitalInput_I1.QI" /></Request>
+EMB_RES;<Request ID="12" Action="WRITE"><Connection Source="(Pin:=1)" Destination="App.Control.DigitalInput_I1.Input" /></Request>
+EMB_RES;<Request ID="13" Action="CREATE"><Connection Source="START.COLD" Destination="E_TRIG.REQ" /></Request>
+EMB_RES;<Request ID="14" Action="CREATE"><Connection Source="App.Control.DigitalInput_I1.IND" Destination="App.Control.DigitalOutput_Q1.REQ" /></Request>
+EMB_RES;<Request ID="15" Action="CREATE"><Connection Source="App.Control.DigitalInput_I1.IN" Destination="App.Control.DigitalOutput_Q1.OUT" /></Request>
+EMB_RES;<Request ID="16" Action="START"/>
