@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<SubAppType Name="Uebung_094a" Comment="Beispiel für QI anstelle Permit">
+<SubAppType Name="Uebung_094a_AX" Comment="Beispiel für QI anstelle Permit">
 	<Identification Standard="61499-2" Description="Copyright (c) 2023 Meisterschulen am Ostbahnhof  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0&#10;   &#10;Beispiel für E_CTD&#10;Aufwärts zählen&#10;UAO Curriculum Module 3 - The IEC 61499 Standard, &#10;Seite 93">
 	</Identification>
 	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2023-10-23">
@@ -14,34 +14,40 @@
 	<SubAppInterfaceList>
 	</SubAppInterfaceList>
 	<SubAppNetwork>
-		<FB Name="DigitalInput_I1" Type="logiBUS::io::DI::logiBUS_IX" x="2700" y="0">
+		<FB Name="DigitalInput_I1" Type="logiBUS::io::DI::logiBUS_IXA" x="2700" y="0">
 			<Parameter Name="Input" Value="Input_I1"/>
 		</FB>
-		<FB Name="DigitalInput_CLK_I2" Type="logiBUS::io::DI::logiBUS_IE" x="-300" y="800">
+		<FB Name="DigitalInput_CLK_I2" Type="logiBUS::io::DI::logiBUS_IE" x="-2500" y="700">
 			<Parameter Name="QI" Value="TRUE"/>
 			<Parameter Name="Input" Value="Input_I2"/>
 			<Parameter Name="InputEvent" Value="BUTTON_SINGLE_CLICK"/>
 		</FB>
-		<FB Name="E_T_FF" Type="iec61499::events::E_T_FF" x="1200" y="1000">
+		<FB Name="E_T_FF" Type="adapter::events::unidirectional::AX_T_FF" x="-1000" y="900">
 		</FB>
-		<FB Name="DigitalOutput_Q1" Type="logiBUS::io::DQ::logiBUS_QX" x="4500" y="100">
+		<FB Name="DigitalOutput_Q1" Type="logiBUS::io::DQ::logiBUS_QXA" x="4500" y="0">
 			<Parameter Name="QI" Value="TRUE"/>
 			<Parameter Name="Output" Value="Output_Q1"/>
 		</FB>
-		<FB Name="DigitalOutput_Q2" Type="logiBUS::io::DQ::logiBUS_QX" x="4500" y="1100">
+		<FB Name="DigitalOutput_Q2" Type="logiBUS::io::DQ::logiBUS_QXA" x="4500" y="1100">
 			<Parameter Name="QI" Value="TRUE"/>
 			<Parameter Name="Output" Value="Output_Q2"/>
 		</FB>
+		<FB Name="AX_X_TO_BOOL" Type="adapter::conversion::unidirectional::AX_X_TO_BOOL" x="1400" y="100">
+		</FB>
+		<FB Name="AX_SPLIT_2" Type="adapter::events::unidirectional::AX_SPLIT_2" x="-200" y="1000">
+		</FB>
 		<EventConnections>
 			<Connection Source="DigitalInput_CLK_I2.IND" Destination="E_T_FF.CLK" dx1="306.67"/>
-			<Connection Source="DigitalInput_I1.IND" Destination="DigitalOutput_Q1.REQ" dx1="520"/>
-			<Connection Source="E_T_FF.EO" Destination="DigitalInput_I1.INIT" dx1="73.33"/>
-			<Connection Source="E_T_FF.EO" Destination="DigitalOutput_Q2.REQ" dx1="1086.67"/>
+			<Connection Source="AX_X_TO_BOOL.CNF" Destination="DigitalInput_I1.INIT" dx1="220"/>
 		</EventConnections>
 		<DataConnections>
-			<Connection Source="DigitalInput_I1.IN" Destination="DigitalOutput_Q1.OUT" dx1="520"/>
-			<Connection Source="E_T_FF.Q" Destination="DigitalInput_I1.QI" dx1="213.33"/>
-			<Connection Source="E_T_FF.Q" Destination="DigitalOutput_Q2.OUT" dx1="900"/>
+			<Connection Source="AX_X_TO_BOOL.IN" Destination="DigitalInput_I1.QI" dx1="220"/>
 		</DataConnections>
+		<AdapterConnections>
+			<Connection Source="DigitalInput_I1.IN" Destination="DigitalOutput_Q1.OUT"/>
+			<Connection Source="E_T_FF.Q" Destination="AX_SPLIT_2.IN" dx1="93.33"/>
+			<Connection Source="AX_SPLIT_2.OUT1" Destination="AX_X_TO_BOOL.AX_IN" dx1="420"/>
+			<Connection Source="AX_SPLIT_2.OUT2" Destination="DigitalOutput_Q2.OUT" dx1="1966.67"/>
+		</AdapterConnections>
 	</SubAppNetwork>
 </SubAppType>
