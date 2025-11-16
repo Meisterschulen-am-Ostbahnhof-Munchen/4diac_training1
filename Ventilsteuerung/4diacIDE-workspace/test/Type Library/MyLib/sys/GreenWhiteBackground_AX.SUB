@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SubAppType Name="GreenWhiteBackground_AX" Comment="Subapplication Type">
+	<Identification Standard="61499-2" Description="Copyright (c) 2022 HR Agrartechnik GmbH  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0">
+	</Identification>
+	<VersionInfo Organization="HR Agrartechnik GmbH" Version="1.0" Author="Franz Höpfinger" Date="2022-11-10">
+	</VersionInfo>
+	<CompilerInfo packageName="MyLib::sys">
+		<Import declaration="isobus::UT::Q::const::IDs::ID_NULL"/>
+		<Import declaration="isobus::UT::Q::const::colours::COLOR_GREEN"/>
+		<Import declaration="isobus::UT::Q::const::colours::COLOR_WHITE"/>
+	</CompilerInfo>
+	<SubAppInterfaceList>
+		<SubAppEventOutputs>
+			<SubAppEvent Name="CNF" Type="Event" Comment="Execution Confirmation">
+				<Attribute Name="YPOSITION" Type="INT" Value="31"/>
+			</SubAppEvent>
+		</SubAppEventOutputs>
+		<InputVars>
+			<VarDeclaration Name="u16ObjId" Type="UINT" Comment="Object ID Softkey/Button" InitialValue="ID_NULL">
+				<Attribute Name="YPOSITION" Type="INT" Value="82"/>
+			</VarDeclaration>
+		</InputVars>
+		<OutputVars>
+			<VarDeclaration Name="STATUS_1" Type="STRING" Comment="Service Status">
+				<Attribute Name="YPOSITION" Type="INT" Value="47"/>
+			</VarDeclaration>
+			<VarDeclaration Name="u8OldColour_1" Type="USINT" Comment="Old value of ID">
+				<Attribute Name="YPOSITION" Type="INT" Value="31"/>
+			</VarDeclaration>
+			<VarDeclaration Name="result_1" Type="INT" Comment="retval see description">
+				<Attribute Name="YPOSITION" Type="INT" Value="31"/>
+			</VarDeclaration>
+		</OutputVars>
+		<Sockets>
+			<AdapterDeclaration Name="DI1" Type="adapter::types::unidirectional::AX" Comment="Selector"/>
+		</Sockets>
+	</SubAppInterfaceList>
+	<SubAppNetwork>
+		<FB Name="Q_BackgroundColour" Type="isobus::UT::Q::Q_BackgroundColour" x="-3106.67" y="706.67">
+		</FB>
+		<FB Name="F_SEL_I" Type="adapter::selection::unidirectional::AX_SEL" x="-4306.67" y="2040">
+			<Parameter Name="IN0" Value="COLOR_WHITE"/>
+			<Parameter Name="IN1" Value="COLOR_GREEN"/>
+		</FB>
+		<EventConnections>
+			<Connection Source="Q_BackgroundColour.CNF" Destination="CNF" dx1="960"/>
+			<Connection Source="F_SEL_I.CNF" Destination="Q_BackgroundColour.REQ" dx1="213.33"/>
+		</EventConnections>
+		<DataConnections>
+			<Connection Source="u16ObjId" Destination="Q_BackgroundColour.u16ObjId" dx1="1126.67"/>
+			<Connection Source="Q_BackgroundColour.s16result" Destination="result_1" dx1="926.67"/>
+			<Connection Source="Q_BackgroundColour.u8OldColour" Destination="u8OldColour_1" dx1="960"/>
+			<Connection Source="Q_BackgroundColour.STATUS" Destination="STATUS_1" dx1="946.67"/>
+			<Connection Source="F_SEL_I.OUT" Destination="Q_BackgroundColour.u8Colour" dx1="406.67"/>
+		</DataConnections>
+		<AdapterConnections>
+			<Connection Source="DI1" Destination="F_SEL_I.G" dx1="660"/>
+		</AdapterConnections>
+	</SubAppNetwork>
+</SubAppType>
