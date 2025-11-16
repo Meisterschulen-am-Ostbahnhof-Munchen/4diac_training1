@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SubAppType Name="Uebung_002a5b" Comment="DigitalInput_I1-3 mit OR auf DigitalOutput_Q1-3">
+	<Identification Standard="61499-2" Description="Copyright (c) 2023 Meisterschulen am Ostbahnhof  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0">
+	</Identification>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2023-10-23">
+	</VersionInfo>
+	<CompilerInfo packageName="Uebungen">
+		<Import declaration="logiBUS::io::DI::logiBUS_DI::Input_I1"/>
+		<Import declaration="logiBUS::io::DI::logiBUS_DI::Input_I2"/>
+		<Import declaration="logiBUS::io::DI::logiBUS_DI::Input_I3"/>
+		<Import declaration="logiBUS::io::DQ::logiBUS_DO::Output_Q1"/>
+		<Import declaration="logiBUS::io::DQ::logiBUS_DO::Output_Q2"/>
+		<Import declaration="logiBUS::io::DQ::logiBUS_DO::Output_Q3"/>
+	</CompilerInfo>
+	<SubAppInterfaceList>
+	</SubAppInterfaceList>
+	<SubAppNetwork>
+		<FB Name="DigitalOutput_Q1" Type="logiBUS::io::DQ::logiBUS_QX" x="100" y="-800">
+			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="Output" Value="Output_Q1"/>
+		</FB>
+		<FB Name="DigitalInput_I1" Type="logiBUS::io::DI::logiBUS_IX" x="-4533.33" y="-933.33">
+			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="Input" Value="Input_I1"/>
+		</FB>
+		<FB Name="DigitalInput_I2" Type="logiBUS::io::DI::logiBUS_IX" x="-4533.33" y="133.33">
+			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="Input" Value="Input_I2"/>
+		</FB>
+		<FB Name="DigitalInput_I3" Type="logiBUS::io::DI::logiBUS_IX" x="-4500" y="1200">
+			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="Input" Value="Input_I3"/>
+		</FB>
+		<FB Name="DigitalOutput_Q2" Type="logiBUS::io::DQ::logiBUS_QX" x="100" y="200">
+			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="Output" Value="Output_Q2"/>
+		</FB>
+		<FB Name="DigitalOutput_Q3" Type="logiBUS::io::DQ::logiBUS_QX" x="100" y="1200">
+			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="Output" Value="Output_Q3"/>
+		</FB>
+		<FB Name="OR_3_BOOL" Type="iec61131::bitwiseOperators::OR_3_BOOL" x="-2300" y="200">
+		</FB>
+		<EventConnections>
+			<Connection Source="DigitalInput_I1.IND" Destination="OR_3_BOOL.REQ" dx1="733.33"/>
+			<Connection Source="DigitalInput_I2.IND" Destination="OR_3_BOOL.REQ" dx1="733.33"/>
+			<Connection Source="DigitalInput_I3.IND" Destination="OR_3_BOOL.REQ" dx1="720"/>
+			<Connection Source="OR_3_BOOL.CNF" Destination="DigitalOutput_Q1.REQ" dx1="846.67"/>
+			<Connection Source="OR_3_BOOL.CNF" Destination="DigitalOutput_Q2.REQ" dx1="846.67"/>
+			<Connection Source="OR_3_BOOL.CNF" Destination="DigitalOutput_Q3.REQ" dx1="846.67"/>
+		</EventConnections>
+		<DataConnections>
+			<Connection Source="DigitalInput_I1.IN" Destination="OR_3_BOOL.IN1" dx1="473.33"/>
+			<Connection Source="DigitalInput_I2.IN" Destination="OR_3_BOOL.IN2" dx1="540"/>
+			<Connection Source="DigitalInput_I3.IN" Destination="OR_3_BOOL.IN3" dx1="860"/>
+			<Connection Source="OR_3_BOOL.OUT" Destination="DigitalOutput_Q1.OUT" dx1="1146.67"/>
+			<Connection Source="OR_3_BOOL.OUT" Destination="DigitalOutput_Q2.OUT" dx1="1160"/>
+			<Connection Source="OR_3_BOOL.OUT" Destination="DigitalOutput_Q3.OUT" dx1="1000"/>
+		</DataConnections>
+	</SubAppNetwork>
+</SubAppType>
