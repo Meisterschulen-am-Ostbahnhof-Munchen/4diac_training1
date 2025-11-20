@@ -14,6 +14,7 @@
 				<With Var="PARAMS"/>
 				<With Var="Input"/>
 				<With Var="ImpulseDelta"/>
+				<With Var="TimeDelta"/>
 			</Event>
 			<Event Name="REQ" Type="Event" Comment="Service Request">
 				<With Var="QI"/>
@@ -39,7 +40,8 @@
 			<VarDeclaration Name="QI" Type="BOOL" Comment="Event Input Qualifier"/>
 			<VarDeclaration Name="PARAMS" Type="STRING" Comment="Service Parameters"/>
 			<VarDeclaration Name="Input" Type="logiBUS::io::PI::logiBUS_PI_S" Comment="Identify the Input Input_I1..I8" InitialValue="logiBUS_PI::Invalid"/>
-			<VarDeclaration Name="ImpulseDelta" Type="DWORD"/>
+			<VarDeclaration Name="ImpulseDelta" Type="DWORD" Comment="After How many Impulses an IND"/>
+			<VarDeclaration Name="TimeDelta" Type="DWORD" Comment="After How many ms an IND"/>
 		</InputVars>
 		<OutputVars>
 			<VarDeclaration Name="QO" Type="BOOL" Comment="Event Output Qualifier"/>

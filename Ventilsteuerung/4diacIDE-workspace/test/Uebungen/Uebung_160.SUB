@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SubAppType Name="Uebung_160" Comment="Motor Links/Rechtslauf">
+	<Identification Standard="61499-2" Description="Copyright (c) 2023 Meisterschulen am Ostbahnhof  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0">
+	</Identification>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2023-10-23">
+	</VersionInfo>
+	<CompilerInfo packageName="Uebungen">
+		<Import declaration="logiBUS::io::DI::logiBUS_DI::Input_I1"/>
+		<Import declaration="logiBUS::io::DI::logiBUS_DI::Input_I2"/>
+		<Import declaration="logiBUS::io::DQ::logiBUS_DO::Output_Q5"/>
+		<Import declaration="logiBUS::io::DQ::logiBUS_DO::Output_Q56"/>
+		<Import declaration="logiBUS::io::DQ::logiBUS_DO::Output_Q6"/>
+	</CompilerInfo>
+	<SubAppInterfaceList>
+	</SubAppInterfaceList>
+	<SubAppNetwork>
+		<FB Name="DigitalOutput_Q6" Type="logiBUS::io::DQ::logiBUS_QX" x="-6300" y="1500">
+			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="Output" Value="Output_Q6"/>
+		</FB>
+		<FB Name="DigitalInput_I2" Type="logiBUS::io::DI::logiBUS_IX" x="-9300" y="1400">
+			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="Input" Value="Input_I2"/>
+		</FB>
+		<FB Name="OR_2_BOOL" Type="iec61131::bitwiseOperators::OR_2_BOOL" x="-7800" y="700">
+		</FB>
+		<FB Name="DigitalInput_I1" Type="logiBUS::io::DI::logiBUS_IX" x="-9300" y="-800">
+			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="Input" Value="Input_I1"/>
+		</FB>
+		<FB Name="DigitalOutput_Q5" Type="logiBUS::io::DQ::logiBUS_QX" x="-6300" y="-700">
+			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="Output" Value="Output_Q5"/>
+		</FB>
+		<FB Name="DigitalOutput_Q56" Type="logiBUS::io::DQ::logiBUS_QX" x="-6300" y="400">
+			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="Output" Value="Output_Q56"/>
+		</FB>
+		<EventConnections>
+			<Connection Source="DigitalInput_I2.IND" Destination="DigitalOutput_Q6.REQ" dx1="953.33"/>
+			<Connection Source="DigitalInput_I1.IND" Destination="DigitalOutput_Q5.REQ" dx1="953.33"/>
+			<Connection Source="OR_2_BOOL.CNF" Destination="DigitalOutput_Q56.REQ" dx1="393.33"/>
+			<Connection Source="DigitalInput_I2.IND" Destination="OR_2_BOOL.REQ" dx1="553.33"/>
+			<Connection Source="DigitalInput_I1.IND" Destination="OR_2_BOOL.REQ" dx1="600"/>
+		</EventConnections>
+		<DataConnections>
+			<Connection Source="DigitalInput_I2.IN" Destination="DigitalOutput_Q6.OUT" dx1="953.33"/>
+			<Connection Source="DigitalInput_I1.IN" Destination="DigitalOutput_Q5.OUT" dx1="953.33"/>
+			<Connection Source="OR_2_BOOL.OUT" Destination="DigitalOutput_Q56.OUT" dx1="393.33"/>
+			<Connection Source="DigitalInput_I1.IN" Destination="OR_2_BOOL.IN1" dx1="373.33"/>
+			<Connection Source="DigitalInput_I2.IN" Destination="OR_2_BOOL.IN2" dx1="373.33"/>
+		</DataConnections>
+	</SubAppNetwork>
+</SubAppType>
