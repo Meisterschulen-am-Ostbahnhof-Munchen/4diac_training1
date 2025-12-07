@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SubAppType Name="Uebung_095_AX" Comment="Beispiel für AX_SELECT">
+	<Identification Standard="61499-2" Description="Copyright (c) 2023 Meisterschulen am Ostbahnhof  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0&#10;   &#10;Beispiel für E_CTD&#10;Aufwärts zählen&#10;UAO Curriculum Module 3 - The IEC 61499 Standard, &#10;Seite 93">
+	</Identification>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2023-10-23">
+	</VersionInfo>
+	<CompilerInfo packageName="Uebungen">
+		<Import declaration="logiBUS::io::DI::logiBUS_DI::Input_I1"/>
+		<Import declaration="logiBUS::io::DI::logiBUS_DI::Input_I2"/>
+		<Import declaration="logiBUS::io::DI::logiBUS_DI::Input_I3"/>
+		<Import declaration="logiBUS::io::DI::logiBUS_DI_Events"/>
+		<Import declaration="logiBUS::io::DI::logiBUS_DI_Events::BUTTON_SINGLE_CLICK"/>
+		<Import declaration="logiBUS::io::DQ::logiBUS_DO::Output_Q1"/>
+	</CompilerInfo>
+	<SubAppInterfaceList>
+	</SubAppInterfaceList>
+	<SubAppNetwork>
+		<FB Name="DigitalInput_I1" Type="logiBUS::io::DI::logiBUS_IXA" x="-8100" y="1200">
+			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="Input" Value="Input_I1"/>
+		</FB>
+		<FB Name="DigitalInput_CLK_I2" Type="logiBUS::io::DI::logiBUS_IE" x="-8100" y="-800">
+			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="Input" Value="Input_I2"/>
+			<Parameter Name="InputEvent" Value="BUTTON_SINGLE_CLICK"/>
+		</FB>
+		<FB Name="E_SELECT" Type="adapter::events::unidirectional::AX_SELECT" x="-6400" y="-600">
+		</FB>
+		<FB Name="E_T_FF" Type="adapter::events::unidirectional::AX_T_FF" x="-4800" y="-600">
+		</FB>
+		<FB Name="DigitalOutput_Q1" Type="logiBUS::io::DQ::logiBUS_QXA" x="-3200" y="-1000">
+			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="Output" Value="Output_Q1"/>
+		</FB>
+		<FB Name="DigitalInput_CLK_I3" Type="logiBUS::io::DI::logiBUS_IE" x="-8100" y="200">
+			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="Input" Value="Input_I3"/>
+			<Parameter Name="InputEvent" Value="BUTTON_SINGLE_CLICK"/>
+		</FB>
+		<EventConnections>
+			<Connection Source="DigitalInput_CLK_I2.IND" Destination="E_SELECT.EI0" dx1="406.67"/>
+			<Connection Source="E_SELECT.EO" Destination="E_T_FF.CLK"/>
+			<Connection Source="DigitalInput_CLK_I3.IND" Destination="E_SELECT.EI1" dx1="453.33"/>
+		</EventConnections>
+		<AdapterConnections>
+			<Connection Source="DigitalInput_I1.IN" Destination="E_SELECT.G" dx1="713.33"/>
+			<Connection Source="E_T_FF.Q" Destination="DigitalOutput_Q1.OUT" dx1="320"/>
+		</AdapterConnections>
+	</SubAppNetwork>
+</SubAppType>
