@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<SubAppType Name="Uebung_020c_AX" Comment="DigitalInput_I1 auf DigitalOutput_Q1; E_TON; Einschaltverzögert">
+<SubAppType Name="Uebung_020c_AX" Comment="DigitalInput_I1 auf DigitalOutput_Q1; AX_TON; Einschaltverzögert">
 	<Identification Standard="61499-2" Description="Copyright (c) 2023 Meisterschulen am Ostbahnhof  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0">
 	</Identification>
 	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2023-10-23">
@@ -19,12 +19,12 @@
 			<Parameter Name="QI" Value="TRUE"/>
 			<Parameter Name="Input" Value="Input_I1"/>
 		</FB>
-		<FB Name="E_TON" Type="adapter::events::unidirectional::timers::AX_TON" x="-7100" y="800">
+		<FB Name="AX_TON" Type="adapter::events::unidirectional::timers::AX_TON" x="-7100" y="800">
 			<Parameter Name="PT" Value="T#5s"/>
 		</FB>
 		<AdapterConnections>
-			<Connection Source="E_TON.Q" Destination="DigitalOutput_Q1.OUT" dx1="320"/>
-			<Connection Source="DigitalInput_I1.IN" Destination="E_TON.IN" dx1="246.67"/>
+			<Connection Source="AX_TON.Q" Destination="DigitalOutput_Q1.OUT" dx1="320"/>
+			<Connection Source="DigitalInput_I1.IN" Destination="AX_TON.IN" dx1="246.67"/>
 		</AdapterConnections>
 	</SubAppNetwork>
 </SubAppType>
