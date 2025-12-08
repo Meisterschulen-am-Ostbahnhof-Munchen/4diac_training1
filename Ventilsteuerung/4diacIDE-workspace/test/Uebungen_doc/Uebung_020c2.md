@@ -1,4 +1,4 @@
-# Uebung_020c2
+# Uebung_020c2: DigitalInput_I1 auf DigitalOutput_Q1; E_TON Einschaltverzögert; Zeit eingeben und speichern.
 
 * * * * * * * * * *
 

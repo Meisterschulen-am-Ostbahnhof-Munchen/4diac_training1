@@ -1,4 +1,4 @@
-# Spiegelabfolge V2 mit Schrittkette
+# Uebung_036: Spiegelabfolge V2 mit Schrittkette
 
 * * * * * * * * * *
 

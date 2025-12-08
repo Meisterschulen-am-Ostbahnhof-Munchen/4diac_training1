@@ -1,4 +1,4 @@
-# Uebung_072b
+# Uebung_072b: GBSD auf UT ausgeben, mit Impulsen.
 
 * * * * * * * * * *
 

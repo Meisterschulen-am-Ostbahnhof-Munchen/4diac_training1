@@ -1,4 +1,4 @@
-# Uebung_006a3
+# Uebung_006a3: SR und T-Flip-Flop mit 3x IE
 
 * * * * * * * * * *
 

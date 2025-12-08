@@ -1,4 +1,4 @@
-# Uebung_010b1
+# Uebung_010b1: AuxFunction2_X1 auf DigitalOutput_Q1
 
 * * * * * * * * * *
 

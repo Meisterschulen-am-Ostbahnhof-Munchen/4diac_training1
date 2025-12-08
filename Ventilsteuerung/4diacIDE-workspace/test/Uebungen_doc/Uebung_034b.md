@@ -1,4 +1,4 @@
-# Uebung_034b
+# Uebung_034b: LONG_PRESS_HOLD-Eingang auf PWM Ausgang
 
 * * * * * * * * * *
 

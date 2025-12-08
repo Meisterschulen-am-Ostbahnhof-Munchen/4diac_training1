@@ -1,4 +1,4 @@
-# Uebung_002a_AX
+# Uebung_002a_AX: DigitalInput_I1/_I2 mit AND auf DigitalOutput_Q1, mit Plug and Socket
 
 * * * * * * * * * *
 

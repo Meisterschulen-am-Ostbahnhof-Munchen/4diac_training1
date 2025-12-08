@@ -1,4 +1,4 @@
-# Uebung_008
+# Uebung_008: Blinker mit E_CYCLE, E_SWITCH und E_SR
 
 * * * * * * * * * *
 

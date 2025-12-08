@@ -1,4 +1,4 @@
-# Uebung_055
+# Uebung_055: DigitalInput_I1 auf DigitalOutput_Q1
 
 * * * * * * * * * *
 

@@ -1,4 +1,4 @@
-# Uebung_001c
+# Uebung_001c: DigitalInput_I1 auf DigitalOutput_Q1 --&gt; Eingang abfragen bei Boot.
 
 * * * * * * * * * *
 

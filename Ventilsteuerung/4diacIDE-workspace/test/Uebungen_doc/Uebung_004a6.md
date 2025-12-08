@@ -1,4 +1,4 @@
-# Uebung_004a6
+# Uebung_004a6: Toggle Flip-Flop mit IE und E_REND (Rendezvous)
 
 * * * * * * * * * *
 

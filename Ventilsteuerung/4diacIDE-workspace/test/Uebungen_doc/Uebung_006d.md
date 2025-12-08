@@ -1,4 +1,4 @@
-# Uebung_006d
+# Uebung_006d: SR-Flip-Flop mit 2x IE und Doppelklick.
 
 * * * * * * * * * *
 

@@ -1,4 +1,4 @@
-# Uebung_004b
+# Uebung_004b: Toggle Flip-Flop mit IE / E_SWITCH + E_SR
 
 * * * * * * * * * *
 

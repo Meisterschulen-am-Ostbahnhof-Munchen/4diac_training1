@@ -1,4 +1,4 @@
-# Uebung_020c3
+# Uebung_020c3: DigitalInput_I1 auf DigitalOutput_Q1; FB_TON; Einschaltverzögert
 
 * * * * * * * * * *
 

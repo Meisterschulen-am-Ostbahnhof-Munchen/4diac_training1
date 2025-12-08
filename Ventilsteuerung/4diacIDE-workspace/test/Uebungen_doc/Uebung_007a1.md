@@ -1,4 +1,4 @@
-# Uebung_007a1
+# Uebung_007a1: Blinker mit E_CYCLE und E_T_FF
 
 * * * * * * * * * *
 

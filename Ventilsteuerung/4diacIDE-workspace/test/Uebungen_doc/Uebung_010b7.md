@@ -1,4 +1,4 @@
-# Uebung_010b7
+# Uebung_010b7: Toggle Flip-Flop mit IE Button_A1 BT_RELEASED_UNLATCHED
 
 * * * * * * * * * *
 

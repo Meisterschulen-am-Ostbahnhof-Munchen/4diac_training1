@@ -1,4 +1,4 @@
-# Uebung_010b4
+# Uebung_010b4: SoftKey_F1-8 auf DigitalOutput_Q1-8
 
 * * * * * * * * * *
 

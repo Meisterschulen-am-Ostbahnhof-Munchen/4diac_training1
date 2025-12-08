@@ -1,4 +1,4 @@
-# Uebung_088
+# Uebung_088: Beispiel für E_F_TRIG
 
 * * * * * * * * * *
 

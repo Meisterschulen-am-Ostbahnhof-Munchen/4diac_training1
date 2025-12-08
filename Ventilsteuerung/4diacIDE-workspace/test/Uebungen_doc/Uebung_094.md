@@ -1,4 +1,4 @@
-# Uebung_094
+# Uebung_094: Beispiel für E_PERMIT
 
 * * * * * * * * * *
 

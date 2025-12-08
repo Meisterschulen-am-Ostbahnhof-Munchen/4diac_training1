@@ -1,4 +1,4 @@
-# Uebung_002b2
+# Uebung_002b2: DigitalInput_I1/_I2/_I3 auf DigitalOutput_Q1
 
 * * * * * * * * * *
 

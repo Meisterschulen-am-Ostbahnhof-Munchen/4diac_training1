@@ -1,4 +1,4 @@
-# Uebung_030 - LED_PWM Blinkende LED
+# Uebung_030: LED_PWM Blinkende LED
 
 * * * * * * * * * *
 

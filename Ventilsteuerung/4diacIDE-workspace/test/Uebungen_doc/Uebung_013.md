@@ -1,4 +1,4 @@
-# Uebung_013 - SR-Flip-Flop (Softkey)
+# Uebung_013: SR-Flip-Flop (Softkey)
 
 * * * * * * * * * *
 

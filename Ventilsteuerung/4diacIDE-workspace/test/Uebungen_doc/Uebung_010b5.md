@@ -1,4 +1,4 @@
-# Uebung_010b5
+# Uebung_010b5: SoftKey_F1-10 auf DigitalOutput_Q1-10
 
 * * * * * * * * * *
 

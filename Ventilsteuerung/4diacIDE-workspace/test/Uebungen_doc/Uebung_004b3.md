@@ -1,4 +1,4 @@
-# Uebung_004b3
+# Uebung_004b3: Toggle Flip-Flop mit IE / Split / Verriegelt
 
 * * * * * * * * * *
 
