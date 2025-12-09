@@ -1,4 +1,4 @@
-# Uebung_004a7
+# Uebung_004a7: SR und T-Flip-Flop mit IE und E_REND (Rendezvous)
 
 * * * * * * * * * *
 

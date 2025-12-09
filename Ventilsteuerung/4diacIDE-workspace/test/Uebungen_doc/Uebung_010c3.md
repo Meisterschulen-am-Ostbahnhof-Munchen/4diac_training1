@@ -1,4 +1,4 @@
-# Uebung_010c3
+# Uebung_010c3: SoftKey_F1 auf DigitalOutput_Q1 mit GreenWhiteBackground mit Typed Subapp
 
 * * * * * * * * * *
 

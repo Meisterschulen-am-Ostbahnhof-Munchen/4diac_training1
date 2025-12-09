@@ -1,4 +1,4 @@
-# Uebung_009 - Ticker
+# Uebung_009: Ticker
 
 * * * * * * * * * *
 

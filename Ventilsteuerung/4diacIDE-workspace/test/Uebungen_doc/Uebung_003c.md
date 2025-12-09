@@ -1,4 +1,4 @@
-# Uebung_003c
+# Uebung_003c: DigitalInput_I1-2-3-4 auf AUX
 
 * * * * * * * * * *
 

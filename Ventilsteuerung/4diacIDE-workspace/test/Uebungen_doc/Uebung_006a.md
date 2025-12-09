@@ -1,4 +1,4 @@
-# **Übung 006a: SR- und T-Flip-Flop mit 3 Eingängen**
+# Uebung_006a: SR und T-Flip-Flop mit 3x IE
 
 [Uebung_006a](https://docs.ms-muc-docs.de/projects/visual-programming-languages-docs/de/latest/training1/Ventilsteuerung/4diacIDE-workspace/test/FBs/Uebungen/Uebung_006a.html)
 

@@ -1,4 +1,4 @@
-# Übung 001\_AX: Digitale Ein- zu Ausgangsverbindung
+# Uebung_001_AX: DigitalInput_I1 auf DigitalOutput_Q1, mit Plug and Socket
 
 [Uebung_001_AX](https://docs.ms-muc-docs.de/projects/visual-programming-languages-docs/de/latest/training1/Ventilsteuerung/4diacIDE-workspace/test/FBs/Uebungen/Uebung_001_AX.html)
 

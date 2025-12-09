@@ -1,4 +1,4 @@
-# Uebung_002a5_AX
+# Uebung_002a5_AX: DigitalInput_I1-3 mit OR auf DigitalOutput_Q1, mit Plug and Socket
 
 * * * * * * * * * *
 

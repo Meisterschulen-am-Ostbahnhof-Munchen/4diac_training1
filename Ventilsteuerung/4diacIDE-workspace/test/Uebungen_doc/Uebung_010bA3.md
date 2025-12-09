@@ -1,4 +1,4 @@
-# Uebung_010bA3
+# Uebung_010bA3: Toggle Flip-Flop mit IE AuxFunction2_X1 AuxHeld
 
 * * * * * * * * * *
 

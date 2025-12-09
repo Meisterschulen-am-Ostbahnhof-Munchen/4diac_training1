@@ -1,4 +1,4 @@
-# Uebung_020c
+# Uebung_020c: DigitalInput_I1 auf DigitalOutput_Q1; E_TON; Einschaltverzögert
 
 * * * * * * * * * *
 

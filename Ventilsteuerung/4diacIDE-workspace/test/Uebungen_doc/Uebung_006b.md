@@ -1,4 +1,4 @@
-# Uebung_006b
+# Uebung_006b: RS-Flip-Flop mit 2x IE
 
 * * * * * * * * * *
 

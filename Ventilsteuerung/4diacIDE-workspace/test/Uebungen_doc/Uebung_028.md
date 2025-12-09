@@ -1,4 +1,4 @@
-# Uebung_028 - Analog-Eingang
+# Uebung_028: Analog-Eingang
 
 * * * * * * * * * *
 

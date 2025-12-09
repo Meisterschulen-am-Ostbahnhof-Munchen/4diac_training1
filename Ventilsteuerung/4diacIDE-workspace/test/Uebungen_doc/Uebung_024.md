@@ -1,4 +1,4 @@
-# Uebung_024 - Spiegelabfolge (4)
+# Uebung_024: Spiegelabfolge (4)
 
 * * * * * * * * * *
 

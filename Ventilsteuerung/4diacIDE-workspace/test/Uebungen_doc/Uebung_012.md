@@ -1,4 +1,4 @@
-# Uebung_012 - Numeric Value Input und Speichern
+# Uebung_012: Numeric Value Input und Speichern
 
 * * * * * * * * * *
 

@@ -1,4 +1,4 @@
-# Uebung_038 - Lauflicht 8 reine Zeitsteuerung
+# Uebung_038: Lauflicht 8 reine Zeitsteuerung
 
 * * * * * * * * * *
 

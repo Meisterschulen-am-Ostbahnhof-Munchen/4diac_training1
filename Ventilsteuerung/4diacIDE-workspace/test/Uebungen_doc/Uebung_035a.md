@@ -1,4 +1,4 @@
-# Uebung_035a - Ampelschaltung International
+# Uebung_035a: Ampelschaltung International
 
 * * * * * * * * * *
 

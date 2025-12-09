@@ -1,4 +1,4 @@
-# Uebung_010b6
+# Uebung_010b6: Toggle Flip-Flop mit IE SoftKey_F1 SK_PRESSED
 
 * * * * * * * * * *
 

@@ -1,4 +1,4 @@
-# Uebung_016 - Background Colour umschalten
+# Uebung_016: Background Colour umschalten
 
 * * * * * * * * * *
 

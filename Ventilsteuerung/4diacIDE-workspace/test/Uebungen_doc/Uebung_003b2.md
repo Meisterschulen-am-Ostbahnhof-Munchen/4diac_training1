@@ -1,4 +1,4 @@
-# Uebung_003b2
+# Uebung_003b2: Funk 16 Tasten auf DataPanel 16
 
 * * * * * * * * * *
 

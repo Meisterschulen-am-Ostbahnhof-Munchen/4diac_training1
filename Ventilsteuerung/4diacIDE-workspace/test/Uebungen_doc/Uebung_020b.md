@@ -1,4 +1,4 @@
-# Uebung_020b
+# Uebung_020b: DigitalInput_I1 auf DigitalOutput_Q1; TON Einschaltverzögert; aufgelöst
 
 * * * * * * * * * *
 

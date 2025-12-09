@@ -1,4 +1,4 @@
-# Uebung_010a2
+# Uebung_010a2: Button_A1 auf DigitalOutput_Q1
 
 * * * * * * * * * *
 

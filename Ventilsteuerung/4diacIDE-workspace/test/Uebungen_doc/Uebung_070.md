@@ -1,4 +1,4 @@
-# Uebung_070
+# Uebung_070: WBSD auf UT ausgeben
 
 * * * * * * * * * *
 

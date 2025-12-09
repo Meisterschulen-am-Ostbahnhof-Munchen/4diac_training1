@@ -1,4 +1,4 @@
-# Uebung_010c
+# Uebung_010c: SoftKey_F1 auf DigitalOutput_Q1 mit GreenWhiteBackground
 
 * * * * * * * * * *
 

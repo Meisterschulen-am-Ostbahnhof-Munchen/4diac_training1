@@ -1,4 +1,4 @@
-# Uebung_006c
+# Uebung_006c: SR-Flip-Flop mit IB auf DI_REPEAT
 
 * * * * * * * * * *
 

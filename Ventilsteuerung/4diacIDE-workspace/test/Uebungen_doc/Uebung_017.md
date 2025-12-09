@@ -1,4 +1,4 @@
-# Uebung_017 - Control Audio Signal
+# Uebung_017: Control Audio Signal
 
 * * * * * * * * * *
 

@@ -1,4 +1,4 @@
-# Uebung_021 - Spiegelabfolge (1)
+# Uebung_021: Spiegelabfolge (1)
 
 * * * * * * * * * *
 

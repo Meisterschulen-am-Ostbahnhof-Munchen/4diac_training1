@@ -1,4 +1,4 @@
-# Uebung_094a
+# Uebung_094a: Beispiel für QI anstelle Permit
 
 * * * * * * * * * *
 

@@ -1,4 +1,4 @@
-# Uebung_080b
+# Uebung_080b: Beispiel für E_CTU mit E_SPLIT für Event-Verdoppelung
 
 * * * * * * * * * *
 

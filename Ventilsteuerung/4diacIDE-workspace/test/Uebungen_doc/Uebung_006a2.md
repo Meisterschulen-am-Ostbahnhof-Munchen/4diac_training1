@@ -1,4 +1,4 @@
-# Uebung_006a2
+# Uebung_006a2: 2x SR und T-Flip-Flop mit IE
 
 * * * * * * * * * *
 

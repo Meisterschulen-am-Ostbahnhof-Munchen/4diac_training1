@@ -1,4 +1,4 @@
-# Uebung_033 - LED Strip Blinkende LED
+# Uebung_033: LED Strip Blinkende LED
 
 * * * * * * * * * *
 

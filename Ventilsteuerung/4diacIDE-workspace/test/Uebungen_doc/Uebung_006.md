@@ -1,4 +1,4 @@
-# **Übung 006: SR-Flip-Flop mit 2x IE**
+# Uebung_006: SR-Flip-Flop mit 2x IE
 
 [Uebung_006](https://docs.ms-muc-docs.de/projects/visual-programming-languages-docs/de/latest/training1/Ventilsteuerung/4diacIDE-workspace/test/FBs/Uebungen/Uebung_006.html)
 
