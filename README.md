@@ -60,9 +60,9 @@ Eine strukturierte Reihe von Lernmodulen:
 
 ## 🛠 Verwendete Technologien
 
-* **IDE:** [Eclipse 4diac IDE](https://www.eclipse.org/4diac/) (IEC 61131-3 Standard)
+* **IDE:** [Eclipse 4diac IDE](https://www.eclipse.org/4diac/) (IEC 61131-3 / IEC 61499 Standard)
 * **Laufzeitumgebung:** Eclipse FORTE (4diac RTE)
-* **HMI Design:** Jetter ISO-Designer (für ISOBUS VT)
+* **HMI Design:** Jetter / Bucher ISO-Designer (für ISOBUS VT)
 * **Kommunikation:** CAN-Bus, SAE J1939, ISO 11783 (ISOBUS)
 * **Hardware-Ziele:** ESP32, PC (Soft-SPLC), Mobile Controller
 
@@ -79,7 +79,7 @@ Ein kurzer Überblick über die wichtigsten Verzeichnisse:
 │   │   ├── test_AX/              # Übungsprojekte Serie AX (mit AX Adapter)
 │   │   ├── test_B/               # Übungsprojekte Serie B (ohne AX Adapter)
 │   │   ├── test_VV/              # Übungsprojekte Serie VV (Verteile Verarbeitung)
-│   │   └── .lib/                 # Bibliotheken (logiBUS®, isobus, iec61131)
+│   │   └── .lib/                 # Bibliotheken (logiBUS®, isobus, iec61131, iec61499)
 │   ├── ISO-DesignerProjects/     # HMI/VT Designs
 │   │   ├── Workspace/            # Basis Pool für die meisten Übungen
 │   │   ├── Workspace_Joystick/   # Joystick-Integration
@@ -124,7 +124,7 @@ Detaillierte Anleitungen und Beschreibungen zu den einzelnen Übungspaketen find
 `Automatisierungstechnik`, `Mobile Automation`, `Landtechnik`, `SPS Programmierung`, `Embedded Systems`
 
 **Technologien:**
-`Eclipse 4diac`, `FORTE`, `IEC 61131-3`, `Function Block Diagram (FBD)`, `Structured Text (ST)`, `ESP32`
+`Eclipse 4diac`, `FORTE`, `IEC 61131-3`, `IEC 61499`, `Function Block Diagram (FBD)`, `Structured Text (ST)`, `ESP32`
 
 **Protokolle & Standards:**
 `ISOBUS`, `ISO 11783`, `SAE J1939`, `CAN Bus`, `Virtual Terminal (VT)`, `Task Controller (TC)`
@@ -135,6 +135,10 @@ Detaillierte Anleitungen und Beschreibungen zu den einzelnen Übungspaketen find
 -----
 
 **Hinweis:** Dieses Projekt dient primär Bildungszwecken im Rahmen der Meisterschulen am Ostbahnhof München.
+
+<https://www.ms-muc-docs.de/>
+
+<https://www.ms-muc.de/>
 
 
 
