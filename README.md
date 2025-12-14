@@ -83,17 +83,41 @@ Ein kurzer Überblick über die wichtigsten Verzeichnisse:
 └── README.md
 
 
+## 🚀 Erste Schritte
+
+1.  **Repository klonen:**
+    ```bash
+    git clone [https://github.com/DEIN-USERNAME/4diac_training1.git](https://github.com/DEIN-USERNAME/4diac_training1.git)
+    ```
+2.  **4diac IDE starten:**
+    Wähle `Ventilsteuerung/4diacIDE-workspace` als deinen Workspace.
+3.  **Bibliotheken importieren:**
+    Stelle sicher, dass die `isobus`, `logiBUS` und `iec61131` Bibliotheken korrekt im Pfad eingebunden sind.
+4.  **Deploy:**
+    Nutze die `.launch` Dateien im Ordner `Launches`, um die Applikation auf dein Zielgerät (oder FORTE PC) zu laden.
+
+-----
+
+## 🔍 SEO & Schlagwörter
+
+**Themengebiete:**
+`Automatisierungstechnik`, `Mobile Automation`, `Landtechnik`, `SPS Programmierung`, `Embedded Systems`
+
+**Technologien:**
+`Eclipse 4diac`, `FORTE`, `IEC 61131-3`, `Function Block Diagram (FBD)`, `Structured Text (ST)`, `ESP32`
+
+**Protokolle & Standards:**
+`ISOBUS`, `ISO 11783`, `SAE J1939`, `CAN Bus`, `Virtual Terminal (VT)`, `Task Controller (TC)`
+
+**Spezifisch:**
+`Ventilsteuerung`, `Hydraulik`, `Meisterschule Projekt`, `Open Source PLC`
+
+-----
+
+**Hinweis:** Dieses Projekt dient primär Bildungszwecken im Rahmen der Meisterschulen am Ostbahnhof München.
 
 
-Übungen AX
-Doku: https://meisterschulen-am-ostbahnhof-munchen-docs.readthedocs.io/projects/visual-programming-languages-docs/de/latest/training1/Ventilsteuerung/4diacIDE-workspace/test_AX/Uebungen_doc/Uebungen.html
 
-Übungen (ohne AX)
-Doku: https://meisterschulen-am-ostbahnhof-munchen-docs.readthedocs.io/projects/visual-programming-languages-docs/de/latest/training1/Ventilsteuerung/4diacIDE-workspace/test_B/Uebungen_doc/Uebungen.html
-
-Übungen (VV Verteilte Verarbeitung)
-Doku: TODO,
-kommt hier hin: https://meisterschulen-am-ostbahnhof-munchen-docs.readthedocs.io/projects/visual-programming-languages-docs/de/latest/training1/Ventilsteuerung/4diacIDE-workspace/test_VV/Uebungen_doc/Uebungen.html
 
 
 
