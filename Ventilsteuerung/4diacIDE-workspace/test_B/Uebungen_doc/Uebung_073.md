@@ -1,4 +1,4 @@
-# Uebung_073 - VDS auf UT ausgeben
+# Uebung_073: VDS auf UT ausgeben
 
 * * * * * * * * * *
 

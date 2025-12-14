@@ -1,4 +1,4 @@
-# Uebung_071b
+# Uebung_071b: WBSD auf UT ausgeben, Q1 Schalten wenn Speed &gt;0
 
 * * * * * * * * * *
 

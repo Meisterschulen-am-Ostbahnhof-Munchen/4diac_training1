@@ -1,4 +1,4 @@
-# Uebung_012c
+# Uebung_012c: String Input und Speichern (WIP)
 
 * * * * * * * * * *
 

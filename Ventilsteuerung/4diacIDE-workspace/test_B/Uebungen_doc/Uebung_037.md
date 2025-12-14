@@ -1,4 +1,4 @@
-# Uebung_037 - Spiegelabfolge V2 mit Schrittkette ENDLOS
+# Uebung_037: Spiegelabfolge V2 mit Schrittkette ENDLOS
 
 * * * * * * * * * *
 

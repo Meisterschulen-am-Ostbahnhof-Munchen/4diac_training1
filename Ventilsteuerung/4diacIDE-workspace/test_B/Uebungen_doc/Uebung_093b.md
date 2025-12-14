@@ -1,4 +1,4 @@
-# Uebung_093b
+# Uebung_093b: Beispiel für E_N_TABLE
 
 * * * * * * * * * *
 

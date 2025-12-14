@@ -1,4 +1,4 @@
-# Uebung_002a4
+# Uebung_002a4: DigitalInput_I1/_I2 mit AND_BOOL auf DigitalOutput_Q1
 
 * * * * * * * * * *
 

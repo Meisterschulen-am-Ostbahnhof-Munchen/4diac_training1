@@ -1,4 +1,4 @@
-# Uebung_072c
+# Uebung_072c: GBSD auf UT ausgeben
 
 * * * * * * * * * *
 

@@ -1,4 +1,4 @@
-# Uebung_010b9
+# Uebung_010b9: Toggle Flip-Flop mit IE Button_A1 BT_STILL_HELD
 
 * * * * * * * * * *
 

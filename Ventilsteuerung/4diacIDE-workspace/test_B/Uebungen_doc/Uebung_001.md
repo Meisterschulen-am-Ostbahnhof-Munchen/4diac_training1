@@ -1,4 +1,4 @@
-# Übung 001: Direkte Verschaltung eines digitalen Eingangs auf einen Ausgang
+# Uebung_001: DigitalInput_I1 auf DigitalOutput_Q1
 
 [Uebung_001](https://docs.ms-muc-docs.de/projects/visual-programming-languages-docs/de/latest/training1/Ventilsteuerung/4diacIDE-workspace/test/FBs/Uebungen/Uebung_001.html)
 

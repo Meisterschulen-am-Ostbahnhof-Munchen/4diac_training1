@@ -1,4 +1,4 @@
-# Uebung_004a4
+# Uebung_004a4: mit E_SPLIT
 
 * * * * * * * * * *
 

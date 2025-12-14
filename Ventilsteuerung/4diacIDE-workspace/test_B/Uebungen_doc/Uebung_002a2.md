@@ -1,4 +1,4 @@
-# Uebung_002a2
+# Uebung_002a2: DigitalInput_I1/_I2 mit AND (alt) auf DigitalOutput_Q1
 
 * * * * * * * * * *
 

@@ -1,4 +1,4 @@
-# DigitalInput_I1 auf DigitalOutput_Q1; E_TOF; Ausschaltverzögert
+# Uebung_020e: DigitalInput_I1 auf DigitalOutput_Q1; E_TOF; Ausschaltverzögert
 
 * * * * * * * * * *
 

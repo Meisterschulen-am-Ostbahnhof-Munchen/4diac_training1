@@ -1,4 +1,4 @@
-# Übung 004a: Toggle Flip-Flop mit logiBUS®
+# Uebung_004a: Toggle Flip-Flop mit IE mit BUTTON_SINGLE_CLICK
 
 [Uebung_004a](https://docs.ms-muc-docs.de/projects/visual-programming-languages-docs/de/latest/training1/Ventilsteuerung/4diacIDE-workspace/test/FBs/Uebungen/Uebung_004a.html)
 

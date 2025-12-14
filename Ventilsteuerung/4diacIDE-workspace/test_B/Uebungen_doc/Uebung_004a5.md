@@ -1,4 +1,4 @@
-# Uebung_004a5
+# Uebung_004a5: wie Uebung_004a4 aber ohne E_SPLIT
 
 * * * * * * * * * *
 

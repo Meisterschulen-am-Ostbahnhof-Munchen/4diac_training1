@@ -1,4 +1,4 @@
-# Uebung_004b2
+# Uebung_004b2: Toggle Flip-Flop mit IE / Split / doppelt
 
 * * * * * * * * * *
 

@@ -1,4 +1,4 @@
-# Uebung_031 - LED Strip
+# Uebung_031: LED Strip
 
 * * * * * * * * * *
 

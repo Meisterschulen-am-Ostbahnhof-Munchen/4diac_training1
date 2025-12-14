@@ -1,4 +1,4 @@
-# Uebung_020h
+# Uebung_020h: DigitalInput_I1 auf DigitalOutput_Q1; E_PULSE; Impulsformend
 
 * * * * * * * * * *
 

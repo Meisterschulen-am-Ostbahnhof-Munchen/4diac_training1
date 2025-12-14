@@ -1,4 +1,4 @@
-# Uebung_003b
+# Uebung_003b: DigitalInput_I1-2-3-4 auf DigitalOutput_Q1-2-3-4
 
 * * * * * * * * * *
 

@@ -1,4 +1,4 @@
-# Uebung_093
+# Uebung_093: Beispiel für E_TABLE
 
 * * * * * * * * * *
 

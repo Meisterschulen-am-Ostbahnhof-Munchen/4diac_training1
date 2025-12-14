@@ -1,4 +1,4 @@
-# Uebung_018 - Control Audio Signal und Delay
+# Uebung_018: Control Audio Signal und Delay
 
 * * * * * * * * * *
 
