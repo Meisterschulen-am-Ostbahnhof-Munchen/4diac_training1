@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<System Name="test_AX">
+	<Identification Standard="61499-1" Classification="Training" ApplicationDomain="Agriculture" Function="Learning how to use 4diac" Type="Test Type" Description="Copyright (c) 2023, 2025 HR Agrartechnik GmbH, Meisterschulen am Ostbahnhof &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0&#10;&#10;https://www.logibus.tech/&#10;   &#10;Training&#10;&#10;Hier kann man über &quot;Change Type&quot; andere Ventilsteuerung_Uebung_001 usw auswählen, und so Übung für Übung vollziehen. &#10;&#10;Quellen: &#10;&#10;1. Mit Musterlösungen: &#10;https://github.com/Meisterschulen-am-Ostbahnhof-Munchen/4diac_training1&#10;&#10;2. Ohne Musterlösungen: &#10;https://github.com/Meisterschulen-am-Ostbahnhof-Munchen/4diac_training1_empty&#10;&#10;&#10;">
+	</Identification>
+	<VersionInfo Organization="HR Agrartechnik GmbH" Version="1.0" Author="Franz Höpfinger" Date="2025-09-28">
+	</VersionInfo>
+	<CompilerInfo packageName="Training_AX">
+		<Import declaration="logiBUS::stations::Computers::C_00"/>
+	</CompilerInfo>
+	<Application Name="App_AX" Comment="Default App for Everything">
+		<SubAppNetwork>
+			<SubApp Name="Control" Type="Uebungen::Uebung_001_AX" x="3100" y="0">
+			</SubApp>
+		</SubAppNetwork>
+	</Application>
+	<Device Name="FORTE_PC" Type="iec61499::system::FORTE_PC" x="3126.67" y="1113.33">
+		<Parameter Name="MGR_ID" Value="C_00" Comment="Device manager socket ID"/>
+		<Attribute Name="Profile" Type="STRING" Value="HOLOBLOC"/>
+		<Attribute Name="Color" Type="STRING" Value="255,190,111"/>
+		<Resource Name="EMB_RES" Type="iec61499::system::EMB_RES" x="0" y="0">
+			<FBNetwork>
+				<FB Name="E_TRIG" Type="iec61499::events::E_TRIG" x="2300" y="800">
+					<Parameter Name="EVENTTYPE" Value="'EInit'"/>
+				</FB>
+				<EventConnections>
+					<Connection Source="START.COLD" Destination="E_TRIG.REQ" dx1="746.67"/>
+				</EventConnections>
+			</FBNetwork>
+		</Resource>
+	</Device>
+	<Mapping From="App_AX.Control" To="FORTE_PC.EMB_RES"/>
+</System>
