@@ -1,4 +1,4 @@
-# training1 - Uebungen
+# training1 - Uebungen (alles andere)
 
 ```{toctree}
 Uebung_Isobus_Softkeys
