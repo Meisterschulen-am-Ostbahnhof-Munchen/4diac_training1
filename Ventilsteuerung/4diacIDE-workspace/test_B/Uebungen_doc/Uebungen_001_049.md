@@ -2,19 +2,13 @@
 
 ```{toctree}
 Uebung_001
-Uebung_001_AX
-Uebung_001_AX_b
+
 Uebung_001c
 Uebung_002
-Uebung_002_AX
 Uebung_002a
-Uebung_002a_AX
 Uebung_002a2
 Uebung_002a3
-Uebung_002a3_AX
 Uebung_002a4
-Uebung_002a5_AX
-Uebung_002a6_AX2
 Uebung_002b
 Uebung_002b2
 Uebung_002b3
