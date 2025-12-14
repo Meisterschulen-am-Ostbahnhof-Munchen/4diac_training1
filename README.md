@@ -99,6 +99,19 @@ Ein kurzer Überblick über die wichtigsten Verzeichnisse:
 
 -----
 
+
+## 📚 Dokumentation & Übungsreihen
+
+Detaillierte Anleitungen und Beschreibungen zu den einzelnen Übungspaketen finden Sie in unserer ReadTheDocs-Dokumentation.
+
+| Bereich | Beschreibung | Dokumentation |
+| :--- | :--- | :--- |
+| **Übungen AX** | Grundlagen der Ventilsteuerung (Serie AX) | [📘 Zur Dokumentation](https://meisterschulen-am-ostbahnhof-munchen-docs.readthedocs.io/projects/visual-programming-languages-docs/de/latest/training1/Ventilsteuerung/4diacIDE-workspace/test_AX/Uebungen_doc/Uebungen.html) |
+| **Übungen B** | Erweiterte Übungen ohne AX-Präfix | [📙 Zur Dokumentation](https://meisterschulen-am-ostbahnhof-munchen-docs.readthedocs.io/projects/visual-programming-languages-docs/de/latest/training1/Ventilsteuerung/4diacIDE-workspace/test_B/Uebungen_doc/Uebungen.html) |
+| **Übungen VV** | Verteilte Verarbeitung & Kommunikation | [🚀 Zur Dokumentation](https://meisterschulen-am-ostbahnhof-munchen-docs.readthedocs.io/projects/visual-programming-languages-docs/de/latest/training1/Ventilsteuerung/4diacIDE-workspace/test_VV/Uebungen_doc/Uebungen.html) |
+
+
+
 ## 🔍 SEO & Schlagwörter
 
 **Themengebiete:**
