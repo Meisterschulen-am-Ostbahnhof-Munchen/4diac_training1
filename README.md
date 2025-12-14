@@ -1,6 +1,6 @@
 # 🚜 4diac Training: Ventilsteuerung & ISOBUS Automation
 
-[![License](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE.md)
+[![License](https://img.shields.io/badge/License-EPL%202.0-red.svg)](LICENSE.md)
 [![4diac](https://img.shields.io/badge/Eclipse-4diac-purple)](https://www.eclipse.org/4diac/)
 [![Standard](https://img.shields.io/badge/Standard-IEC%2061131--3-green)](https://en.wikipedia.org/wiki/IEC_61131-3)
 [![Standard](https://img.shields.io/badge/Standard-IEC%2061499-green)](https://en.wikipedia.org/wiki/IEC_61499)
@@ -72,13 +72,15 @@ Ein kurzer Überblick über die wichtigsten Verzeichnisse:
 4diac_training1/
 ├── Ventilsteuerung/
 │   ├── 4diacIDE-workspace/       # Haupt-Arbeitsbereich für 4diac Projekte
-│   │   ├── test_AX/              # Übungsprojekte Serie A
-│   │   ├── test_B/               # Übungsprojekte Serie B
-│   │   └── .lib/                 # Bibliotheken (logiBUS, isobus, iec61131)
+│   │   ├── test_AX/              # Übungsprojekte Serie AX (mit AX Adapter)
+│   │   ├── test_B/               # Übungsprojekte Serie B (ohne AX Adapter)
+│   │   ├── test_VV/              # Übungsprojekte Serie VV (Verteile Verarbeitung)
+│   │   └── .lib/                 # Bibliotheken (logiBUS®, isobus, iec61131)
 │   ├── ISO-DesignerProjects/     # HMI/VT Designs
+│   │   ├── Workspace/            # Basis Pool für die meisten Übungen
 │   │   ├── Workspace_Joystick/   # Joystick-Integration
 │   │   ├── Workspace_PWM/        # PWM-Visualisierung
-│   │   └── Workspace_TECU/       # Tractor ECU Simulation
+│   │   └── Workspace_TECU/       # Tractor ECU auslesen
 │   ├── TaskController-SC/        # Section Control Konfigurationen
 │   └── scripts/                  # Python & Batch Hilfsskripte
 └── README.md
