@@ -82,7 +82,7 @@ Ein kurzer Überblick über die wichtigsten Verzeichnisse:
 │   ├── TaskController-SC/        # Section Control Konfigurationen
 │   └── scripts/                  # Python & Batch Hilfsskripte
 └── README.md
-
+```
 
 ## 🚀 Erste Schritte
 
