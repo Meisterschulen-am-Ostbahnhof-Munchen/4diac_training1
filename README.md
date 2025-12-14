@@ -92,10 +92,25 @@ Ein kurzer Überblick über die wichtigsten Verzeichnisse:
 
 ## 🚀 Erste Schritte
 
-1.  **Repository klonen:**
+### 1. Projekt beschaffen
+Sie haben zwei Möglichkeiten, die Dateien zu erhalten:
+
+* **Option A: ZIP-Download (Einfach & Schnell)** Sie können den aktuellen Stand direkt als ZIP-Datei herunterladen. Dafür ist **kein Git-Client** notwendig.  
+    📦 [**Hier geht es zu den Downloads / Releases**](https://github.com/Meisterschulen-am-Ostbahnhof-Munchen/4diac_training1/releases)
+
+* **Option B: Repository klonen (Für Entwickler)** Nutzen Sie diese Methode, wenn Sie Versionskontrolle verwenden möchten:
     ```bash
-    git clone [https://github.com/DEIN-USERNAME/4diac_training1.git](https://github.com/DEIN-USERNAME/4diac_training1.git)
+    git clone [https://github.com/Meisterschulen-am-Ostbahnhof-Munchen/4diac_training1.git](https://github.com/Meisterschulen-am-Ostbahnhof-Munchen/4diac_training1.git)
     ```
+
+### 2. 4diac IDE starten
+Wähle den Ordner `Ventilsteuerung/4diacIDE-workspace` aus dem heruntergeladenen Paket als deinen Workspace.
+
+### 3. Bibliotheken importieren
+Stelle sicher, dass die `isobus`, `logiBUS` und `iec61131` Bibliotheken korrekt im Pfad eingebunden sind.
+
+### 4. Deploy
+Nutze die `.launch` Dateien im Ordner `Launches`, um die Applikation auf dein Zielgerät (oder FORTE PC) zu laden.
 2.  **4diac IDE starten:**
     Wähle `Ventilsteuerung/4diacIDE-workspace` als deinen Workspace.
 3.  **Bibliotheken importieren:**
