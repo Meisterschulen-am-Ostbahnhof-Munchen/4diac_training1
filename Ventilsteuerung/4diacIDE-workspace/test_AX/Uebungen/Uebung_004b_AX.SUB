@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SubAppType Name="Uebung_004b_AX" Comment="Toggle Flip-Flop mit IE / E_SWITCH + E_SR">
+	<Identification Standard="61499-2" Description="Copyright (c) 2023 Meisterschulen am Ostbahnhof  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0">
+	</Identification>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2023-10-23">
+	</VersionInfo>
+	<CompilerInfo packageName="Uebungen">
+		<Import declaration="logiBUS::io::DI::logiBUS_DI::Input_I1"/>
+		<Import declaration="logiBUS::io::DI::logiBUS_DI_Events::BUTTON_SINGLE_CLICK"/>
+		<Import declaration="logiBUS::io::DQ::logiBUS_DO::Output_Q1"/>
+	</CompilerInfo>
+	<SubAppInterfaceList>
+	</SubAppInterfaceList>
+	<SubAppNetwork>
+		<FB Name="DigitalOutput_Q1" Type="logiBUS::io::DQ::logiBUS_QXA" x="600" y="-1100">
+			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="Output" Value="Output_Q1"/>
+		</FB>
+		<FB Name="DigitalInput_CLK_I1" Type="logiBUS::io::DI::logiBUS_IE" x="-7700" y="-1800">
+			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="Input" Value="Input_I1"/>
+			<Parameter Name="InputEvent" Value="BUTTON_SINGLE_CLICK"/>
+		</FB>
+		<FB Name="E_SR" Type="adapter::events::unidirectional::AX_SR" x="-1700" y="-800">
+		</FB>
+		<FB Name="AX_SWITCH" Type="adapter::events::unidirectional::AX_SWITCH" x="-2600" y="-800">
+		</FB>
+		<FB Name="AX_SPLIT_2" Type="adapter::events::unidirectional::AX_SPLIT_2" x="-900" y="-600">
+		</FB>
+		<FB Name="AX_BOOL_TO_X" Type="adapter::conversion::unidirectional::AX_BOOL_TO_X" x="-3800" y="-800">
+		</FB>
+		<FB Name="AX_X_TO_BOOL" Type="adapter::conversion::unidirectional::AX_X_TO_BOOL" x="-5700" y="-800">
+		</FB>
+		<Comment Comment="Kommentar FH: &#10;nicht empfohlen !!!&#10;viel zu viel Bausteine" x="-7300" y="-500" width="1300" height="600"/>
+		<EventConnections>
+			<Connection Source="AX_SWITCH.EO0" Destination="E_SR.S"/>
+			<Connection Source="AX_SWITCH.EO1" Destination="E_SR.R"/>
+			<Connection Source="DigitalInput_CLK_I1.IND" Destination="AX_BOOL_TO_X.REQ" dx1="2640"/>
+		</EventConnections>
+		<DataConnections>
+			<Connection Source="AX_X_TO_BOOL.IN" Destination="AX_BOOL_TO_X.OUT"/>
+		</DataConnections>
+		<AdapterConnections>
+			<Connection Source="E_SR.Q" Destination="AX_SPLIT_2.IN" dx1="140"/>
+			<Connection Source="AX_SPLIT_2.OUT1" Destination="DigitalOutput_Q1.OUT" dx1="273.33"/>
+			<Connection Source="AX_BOOL_TO_X.AX_OUT" Destination="AX_SWITCH.G"/>
+			<Connection Source="AX_SPLIT_2.OUT2" Destination="AX_X_TO_BOOL.AX_IN" dx1="80" dx2="80" dy="500"/>
+		</AdapterConnections>
+	</SubAppNetwork>
+</SubAppType>

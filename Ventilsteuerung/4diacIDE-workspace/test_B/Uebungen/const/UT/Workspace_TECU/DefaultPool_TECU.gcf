@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<GlobalConstants Name="DefaultPool_TECU" Comment="Global constants">
+	<CompilerInfo packageName="Uebungen::const::UT">
+	</CompilerInfo>
+	<GlobalConstants>
+		<VarDeclaration Name="ISO_DESIGNATOR_WIDTH" Type="UINT" InitialValue="80"/>
+		<VarDeclaration Name="ISO_DESIGNATOR_HEIGHT" Type="UINT" InitialValue="80"/>
+		<VarDeclaration Name="ISO_MASK_SIZE" Type="UINT" InitialValue="480"/>
+		<VarDeclaration Name="ISO_VERSION_LABEL" Type="STRING"/>
+		<VarDeclaration Name="MASK_WIDTH" Type="UINT" InitialValue="480"/>
+		<VarDeclaration Name="MASK_HEIGHT" Type="UINT" InitialValue="480"/>
+		<VarDeclaration Name="WorkingSet_0" Type="UINT" InitialValue="0"/>
+		<VarDeclaration Name="DataMask_M1" Type="UINT" InitialValue="1000"/>
+		<VarDeclaration Name="Container_Wheel_based_machine_speed" Type="UINT" InitialValue="3000"/>
+		<VarDeclaration Name="Container_Ground_based_machine_speed" Type="UINT" InitialValue="3001"/>
+		<VarDeclaration Name="Container_Wheel_based_machine_distance" Type="UINT" InitialValue="3002"/>
+		<VarDeclaration Name="Container_Rear_PTO_output_shaft_speed" Type="UINT" InitialValue="3003"/>
+		<VarDeclaration Name="SoftKeyMask_S1" Type="UINT" InitialValue="4000"/>
+		<VarDeclaration Name="OutputString_km_h" Type="UINT" InitialValue="11000"/>
+		<VarDeclaration Name="OutputString_m_s" Type="UINT" InitialValue="11001"/>
+		<VarDeclaration Name="OutputString_km" Type="UINT" InitialValue="11002"/>
+		<VarDeclaration Name="OutputString_m" Type="UINT" InitialValue="11003"/>
+		<VarDeclaration Name="OutputString_1_min" Type="UINT" InitialValue="11004"/>
+		<VarDeclaration Name="OutputNumber_Wheel_based_machine_speed_km_h" Type="UINT" InitialValue="12000"/>
+		<VarDeclaration Name="OutputNumber_Wheel_based_machine_speed_m_s" Type="UINT" InitialValue="12001"/>
+		<VarDeclaration Name="OutputNumber_Ground_based_machine_speed_km_h" Type="UINT" InitialValue="12002"/>
+		<VarDeclaration Name="OutputNumber_Ground_based_machine_speed_m_s" Type="UINT" InitialValue="12003"/>
+		<VarDeclaration Name="OutputNumber_Wheel_based_machine_distance_km" Type="UINT" InitialValue="12004"/>
+		<VarDeclaration Name="OutputNumber_Wheel_based_machine_distance_m" Type="UINT" InitialValue="12005"/>
+		<VarDeclaration Name="OutputNumber_Rear_PTO_output_shaft_speed" Type="UINT" InitialValue="12006"/>
+		<VarDeclaration Name="Line_13000" Type="UINT" InitialValue="13000"/>
+		<VarDeclaration Name="Tractor_wheel_slip" Type="UINT" InitialValue="20000"/>
+		<VarDeclaration Name="Battery_disconnect" Type="UINT" InitialValue="20001"/>
+		<VarDeclaration Name="Work_distance_travelled" Type="UINT" InitialValue="20002"/>
+		<VarDeclaration Name="Tractor_ground_speed" Type="UINT" InitialValue="20003"/>
+		<VarDeclaration Name="PTO_output_shaft_speed" Type="UINT" InitialValue="20004"/>
+		<VarDeclaration Name="NumberVariable_Wheel_based_machine_speed" Type="UINT" InitialValue="21000"/>
+		<VarDeclaration Name="NumberVariable_Ground_based_machine_speed" Type="UINT" InitialValue="21001"/>
+		<VarDeclaration Name="NumberVariable_Wheel_based_machine_distance" Type="UINT" InitialValue="21002"/>
+		<VarDeclaration Name="NumberVariable_Rear_PTO_output_shaft_speed" Type="UINT" InitialValue="21003"/>
+		<VarDeclaration Name="FontAttributes_OutputNumber" Type="UINT" InitialValue="23000"/>
+		<VarDeclaration Name="FontAttributes_OutputString" Type="UINT" InitialValue="23001"/>
+		<VarDeclaration Name="LineAttributes_24000" Type="UINT" InitialValue="24000"/>
+	</GlobalConstants>
+	<OriginalSource><![CDATA[PACKAGE Uebungen::const::UT;
+
+GLOBALCONSTANTS DefaultPool_TECU
+	VAR_GLOBAL CONSTANT
+		ISO_DESIGNATOR_WIDTH : UINT := 80;
+		ISO_DESIGNATOR_HEIGHT : UINT := 80;
+		ISO_MASK_SIZE : UINT := 480;
+		ISO_VERSION_LABEL : STRING;
+		MASK_WIDTH : UINT := 480;
+		MASK_HEIGHT : UINT := 480;
+		WorkingSet_0 : UINT := 0;
+		DataMask_M1 : UINT := 1000;
+		Container_Wheel_based_machine_speed : UINT := 3000;
+		Container_Ground_based_machine_speed : UINT := 3001;
+		Container_Wheel_based_machine_distance : UINT := 3002;
+		Container_Rear_PTO_output_shaft_speed : UINT := 3003;
+		SoftKeyMask_S1 : UINT := 4000;
+		OutputString_km_h : UINT := 11000;
+		OutputString_m_s : UINT := 11001;
+		OutputString_km : UINT := 11002;
+		OutputString_m : UINT := 11003;
+		OutputString_1_min : UINT := 11004;
+		OutputNumber_Wheel_based_machine_speed_km_h : UINT := 12000;
+		OutputNumber_Wheel_based_machine_speed_m_s : UINT := 12001;
+		OutputNumber_Ground_based_machine_speed_km_h : UINT := 12002;
+		OutputNumber_Ground_based_machine_speed_m_s : UINT := 12003;
+		OutputNumber_Wheel_based_machine_distance_km : UINT := 12004;
+		OutputNumber_Wheel_based_machine_distance_m : UINT := 12005;
+		OutputNumber_Rear_PTO_output_shaft_speed : UINT := 12006;
+		Line_13000 : UINT := 13000;
+		Tractor_wheel_slip : UINT := 20000;
+		Battery_disconnect : UINT := 20001;
+		Work_distance_travelled : UINT := 20002;
+		Tractor_ground_speed : UINT := 20003;
+		PTO_output_shaft_speed : UINT := 20004;
+		NumberVariable_Wheel_based_machine_speed : UINT := 21000;
+		NumberVariable_Ground_based_machine_speed : UINT := 21001;
+		NumberVariable_Wheel_based_machine_distance : UINT := 21002;
+		NumberVariable_Rear_PTO_output_shaft_speed : UINT := 21003;
+		FontAttributes_OutputNumber : UINT := 23000;
+		FontAttributes_OutputString : UINT := 23001;
+		LineAttributes_24000 : UINT := 24000;
+	END_VAR
+END_GLOBALCONSTANTS
+]]></OriginalSource>
+</GlobalConstants>

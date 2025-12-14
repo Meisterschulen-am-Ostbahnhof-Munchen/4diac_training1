@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SubAppType Name="Uebung_004a4" Comment="Toggle Flip-Flop mit IE mit BUTTON_SINGLE_CLICK mit E_SPLIT">
+	<Identification Standard="61499-2" Description="Copyright (c) 2023 Meisterschulen am Ostbahnhof  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0">
+	</Identification>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2023-10-23">
+	</VersionInfo>
+	<CompilerInfo packageName="Uebungen">
+		<Import declaration="logiBUS::io::DI::logiBUS_DI::Input_I1"/>
+		<Import declaration="logiBUS::io::DI::logiBUS_DI_Events::BUTTON_SINGLE_CLICK"/>
+		<Import declaration="logiBUS::io::DQ::logiBUS_DO::Output_Q1"/>
+		<Import declaration="logiBUS::io::DQ::logiBUS_DO::Output_Q2"/>
+	</CompilerInfo>
+	<SubAppInterfaceList>
+	</SubAppInterfaceList>
+	<SubAppNetwork>
+		<FB Name="DigitalOutput_Q1" Type="logiBUS::io::DQ::logiBUS_QX" x="-3700" y="-100">
+			<Parameter Name="QI" Value="TRUE">
+				<Attribute Name="Visible" Value="false"/>
+			</Parameter>
+			<Parameter Name="PARAMS" Value="">
+				<Attribute Name="Visible" Value="false"/>
+			</Parameter>
+			<Parameter Name="Output" Value="Output_Q1"/>
+		</FB>
+		<FB Name="DigitalInput_CLK_I1" Type="logiBUS::io::DI::logiBUS_IE" x="-8533.33" y="-6.66">
+			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="PARAMS" Value="">
+				<Attribute Name="Visible" Value="false"/>
+			</Parameter>
+			<Parameter Name="Input" Value="Input_I1"/>
+			<Parameter Name="InputEvent" Value="BUTTON_SINGLE_CLICK"/>
+		</FB>
+		<FB Name="E_T_FF_Q1" Type="iec61499::events::E_T_FF" x="-5466.67" y="0">
+		</FB>
+		<FB Name="E_T_FF_Q2" Type="iec61499::events::E_T_FF" x="-5500" y="900">
+		</FB>
+		<FB Name="DigitalOutput_Q2" Type="logiBUS::io::DQ::logiBUS_QX" x="-3700" y="800">
+			<Parameter Name="QI" Value="TRUE">
+				<Attribute Name="Visible" Value="false"/>
+			</Parameter>
+			<Parameter Name="PARAMS" Value="">
+				<Attribute Name="Visible" Value="false"/>
+			</Parameter>
+			<Parameter Name="Output" Value="Output_Q2"/>
+		</FB>
+		<FB Name="E_SPLIT" Type="iec61499::events::E_SPLIT" x="-7100" y="200">
+		</FB>
+		<Comment Comment="hier 2x T_FF zu verwenden ist sinnlos, das soll nur zeigen wie man E_SPLIT verwenden kann. " x="-7500" y="1200" width="1700" height="500"/>
+		<EventConnections>
+			<Connection Source="E_T_FF_Q1.EO" Destination="DigitalOutput_Q1.REQ" dx1="600"/>
+			<Connection Source="E_T_FF_Q2.EO" Destination="DigitalOutput_Q2.REQ" dx1="620"/>
+			<Connection Source="E_SPLIT.EO1" Destination="E_T_FF_Q1.CLK" dx1="493.33"/>
+			<Connection Source="E_SPLIT.EO2" Destination="E_T_FF_Q2.CLK" dx1="493.33"/>
+			<Connection Source="DigitalInput_CLK_I1.IND" Destination="E_SPLIT.EI" dx1="166.67"/>
+		</EventConnections>
+		<DataConnections>
+			<Connection Source="E_T_FF_Q1.Q" Destination="DigitalOutput_Q1.OUT" dx1="600"/>
+			<Connection Source="E_T_FF_Q2.Q" Destination="DigitalOutput_Q2.OUT" dx1="620"/>
+		</DataConnections>
+	</SubAppNetwork>
+</SubAppType>
