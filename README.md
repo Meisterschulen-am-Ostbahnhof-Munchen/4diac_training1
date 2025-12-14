@@ -8,9 +8,11 @@
 [![Standard](https://img.shields.io/badge/Standard-DIN%20EN%2061499-green)](https://de.wikipedia.org/wiki/EN_61499)
 [![Protocol](https://img.shields.io/badge/Protocol-ISOBUS%20%2F%20J1939-orange)]()
 
-Dieses Repository bietet eine umfassende Sammlung von Trainingsmaterialien, Beispielprojekten und Implementierungen für die **Ventilsteuerung** unter Verwendung von **Eclipse 4diac**. Der Fokus liegt auf der mobilen Automation, insbesondere der Integration von **ISOBUS (ISO 11783)** Technologien.
+Dieses Repository bietet eine umfassende Sammlung von Trainingsmaterialien, Beispielprojekten und Implementierungen für die **Ventilsteuerung** unter Verwendung von **Eclipse 4diac™**. Der Fokus liegt auf der mobilen Automation, insbesondere der Integration von **ISOBUS (ISO 11783)** Technologien.
 
-Es eignet sich hervorragend für Schulungszwecke, Meisterkurse und Entwickler, die sich in die IEC 61131-3 Programmierung mit verteilten Steuerungssystemen einarbeiten möchten.
+Es eignet sich hervorragend für Schulungszwecke, Meisterkurse und Entwickler, die sich in die IEC 61131-3 / IEC 61499 Programmierung mit verteilten aber auch lokalen Steuerungssystemen einarbeiten möchten.
+
+logiBUS® <https://www.logibus.tech/> 
 
 ---
 
