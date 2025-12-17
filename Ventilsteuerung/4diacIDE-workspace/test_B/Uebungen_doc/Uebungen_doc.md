@@ -218,7 +218,6 @@ Uebung_133
 Uebung_140
 Uebung_160
 Uebung_Isobus_Softkeys
-Uebungen
 Uebungen_001_049
 Uebungen_050_100
 Uebungen_ISOBUS_TC-SC

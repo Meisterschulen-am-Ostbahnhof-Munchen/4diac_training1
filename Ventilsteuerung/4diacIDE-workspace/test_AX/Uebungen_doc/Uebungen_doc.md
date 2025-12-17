@@ -40,6 +40,5 @@ Uebung_103c
 Uebung_103c2
 Uebung_150_AX
 Uebung_160_AX
-Uebungen
 Uebungen_001_049
 ```
