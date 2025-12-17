@@ -1,4 +1,4 @@
-# Uebung_003a: DigitalInput_I1/_I2 auf DigitalOutput_Q1/_I2
+# Uebung_003a: DigitalInput_I1/_I2 auf DigitalOutput_Q1/_I2 - mit typed Subapp
 
 * * * * * * * * * *
 ## Einleitung
