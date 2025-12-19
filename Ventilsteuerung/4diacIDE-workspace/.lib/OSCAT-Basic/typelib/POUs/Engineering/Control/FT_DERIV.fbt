@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<FBType Name="FT_DERIV" Comment="Calculate derivative over signal &apos;in&apos; with Factor &apos;K&apos;">
+	<Identification Standard="61499-1">
+	</Identification>
+	<VersionInfo Version="1.0" Author="franz" Date="2025-12-19">
+	</VersionInfo>
+	<CompilerInfo packageName="OSCAT::Basic::POUs::Engineering::Control">
+		<Import declaration="OSCAT::Basic::POUs::Engineering::measurements::T_PLC_US"/>
+	</CompilerInfo>
+	<InterfaceList>
+		<EventInputs>
+			<Event Name="INIT" Type="EInit" Comment="Init Request">
+				<With Var="in"/>
+				<With Var="K"/>
+				<With Var="run"/>
+			</Event>
+			<Event Name="REQ" Type="Event" Comment="Normal Execution Request">
+				<With Var="in"/>
+				<With Var="K"/>
+				<With Var="run"/>
+			</Event>
+		</EventInputs>
+		<EventOutputs>
+			<Event Name="INITO" Type="EInit" Comment="Init Confirmation">
+				<With Var="out"/>
+			</Event>
+			<Event Name="CNF" Type="Event" Comment="Execution Confirmation">
+				<With Var="out"/>
+			</Event>
+		</EventOutputs>
+		<InputVars>
+			<VarDeclaration Name="in" Type="REAL" Comment="Input Signal"/>
+			<VarDeclaration Name="K" Type="REAL" Comment="Derivation Factor" InitialValue="1.0"/>
+			<VarDeclaration Name="run" Type="BOOL" Comment="Enable calculation" InitialValue="1"/>
+		</InputVars>
+		<OutputVars>
+			<VarDeclaration Name="out" Type="REAL" Comment="Calculated Derivative"/>
+		</OutputVars>
+	</InterfaceList>
+	<SimpleFB>
+		<InternalVars>
+			<VarDeclaration Name="old" Type="REAL"/>
+			<VarDeclaration Name="tx" Type="DWORD"/>
+			<VarDeclaration Name="last" Type="DWORD"/>
+			<VarDeclaration Name="init" Type="BOOL"/>
+			<VarDeclaration Name="tc" Type="REAL"/>
+		</InternalVars>
+		<ECState Name="INIT">
+			<ECAction Algorithm="INIT" Output="INITO"/>
+		</ECState>
+		<ECState Name="REQ">
+			<ECAction Algorithm="REQ" Output="CNF"/>
+		</ECState>
+		<Algorithm Name="INIT">
+			<ST><![CDATA[ALGORITHM INIT
+(* Init values *)
+out := 0.0;
+init := FALSE;
+last := 0;
+old := in;
+END_ALGORITHM]]></ST>
+		</Algorithm>
+		<Algorithm Name="REQ">
+			<ST><![CDATA[
+
+ALGORITHM REQ
+tx := T_PLC_US();
+tc := DWORD_TO_REAL(tx - last);
+last := tx;
+
+(* init on first startup *)
+IF NOT init THEN
+	this.INIT();
+	init := TRUE;
+ELSIF run AND tc > 0.0 THEN
+	out := (in - old) / tc * 1000000.0 * K;
+	old := in;
+ELSE
+	out := 0.0;
+END_IF;
+END_ALGORITHM
+
+]]></ST>
+		</Algorithm>
+	</SimpleFB>
+</FBType>
