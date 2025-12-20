@@ -78,7 +78,7 @@ ALGORITHM REQ
 DIFF := CTRL_IN(SET, ACT, SUP);
 
 (* Call internal PID instance *)
-pid(in := DIFF, kp := KP, tn := TN, tv := TV, lim_l := LL, lim_h := LH);
+pid.REQ(in := DIFF, kp := KP, tn := TN, tv := TV, lim_l := LL, lim_h := LH);
 
 (* Call internal Control Output instance *)
 co(ci := pid.Y, OFFSET := OFS, man_in := M_I, lim_l := LL, lim_h := LH, MANUAL := MAN);

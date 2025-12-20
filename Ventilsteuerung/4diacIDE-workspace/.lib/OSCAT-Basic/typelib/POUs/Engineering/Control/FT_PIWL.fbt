@@ -47,9 +47,9 @@
 	<SimpleFB>
 		<InternalVars>
 			<VarDeclaration Name="init" Type="BOOL" Comment="Initialization Flag"/>
-			<VarDeclaration Name="tx" Type="DWORD" Comment="Current Time"/>
+			<VarDeclaration Name="tx" Type="UDINT" Comment="Current Time"/>
 			<VarDeclaration Name="tc" Type="REAL" Comment="Cycle Time (us)"/>
-			<VarDeclaration Name="t_last" Type="DWORD" Comment="Last Cycle Time"/>
+			<VarDeclaration Name="t_last" Type="UDINT" Comment="Last Cycle Time"/>
 			<VarDeclaration Name="in_last" Type="REAL" Comment="Last Input Value"/>
 			<VarDeclaration Name="i" Type="REAL" Comment="Integrator Value"/>
 			<VarDeclaration Name="p" Type="REAL" Comment="Proportional Value"/>
@@ -67,7 +67,7 @@
 			<ST><![CDATA[ALGORITHM INIT
 (* Reset internal states *)
 init := FALSE;
-in_last := in;
+in_last := IN;
 t_last := T_PLC_US();
 i := 0.0;
 tc := 0.0;
@@ -91,7 +91,7 @@ IF NOT init THEN
 ELSE
 	(* read last cycle time in Microseconds *)
 	tx := T_PLC_US();
-	tc := DWORD_TO_REAL(tx - t_last);
+	tc := UDINT_TO_REAL(tx - t_last);
 	t_last := tx;
 
 		(* calculate proportional part *)
@@ -107,7 +107,7 @@ ELSE
 		(* check output for limits *)
 	IF Y >= LIM_H THEN
 		Y := LIM_H;
-		IF ki <> 0.0 THEN
+		IF KI <> 0.0 THEN
 			i := LIM_H - p;
 		ELSE
 			i := 0.0;
@@ -115,7 +115,7 @@ ELSE
 		LIM := TRUE;
 	ELSIF Y <= LIM_L THEN
 		Y := LIM_L;
-		IF ki <> 0.0 THEN
+		IF KI <> 0.0 THEN
 			i := LIM_L - p;
 		ELSE
 			i := 0.0;

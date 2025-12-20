@@ -65,7 +65,7 @@
 			<ST><![CDATA[ALGORITHM INIT
 (* Init internal instances if necessary, typically empty or reset logic *)
 piwl.INIT();
-diff(IN := IN, K := 0.0); (* Initialize diff input *)
+diff.INIT(); (* Initialize diff input *)
 Y := 0.0;
 LIM := FALSE;
 END_ALGORITHM]]></ST>
@@ -84,13 +84,13 @@ ALGORITHM REQ
 (* run PIWL controller first *)
 (* we need to check if TN = 0 and do alternative calls *)
 IF TN = 0.0 THEN
-	piwl(in := IN * KP, KP := 1.0, KI := 0.0, LIM_L := LIM_L, LIM_H := LIM_H);
+	piwl.REQ(in := IN * KP, KP := 1.0, KI := 0.0, LIM_L := LIM_L, LIM_H := LIM_H);
 ELSE
-	piwl(in := IN * KP, KP := 1.0, KI := 1.0 / TN, LIM_L := LIM_L, LIM_H := LIM_H);
+	piwl.REQ(in := IN * KP, KP := 1.0, KI := 1.0 / TN, LIM_L := LIM_L, LIM_H := LIM_H);
 END_IF;
 
 (* run differentiator and add_to_output *)
-diff(IN := IN, K := KP * TV);
+diff.REQ(IN := IN, K := KP * TV);
 Y := piwl.Y + diff.out;
 
 (* limit the output *)
