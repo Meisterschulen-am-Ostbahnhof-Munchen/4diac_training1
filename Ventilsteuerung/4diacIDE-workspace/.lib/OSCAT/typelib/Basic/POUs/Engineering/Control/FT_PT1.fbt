@@ -6,6 +6,7 @@
 	</VersionInfo>
 	<CompilerInfo packageName="OSCAT::Basic::POUs::Engineering::Control">
 		<Import declaration="OSCAT::Basic::POUs::Engineering::measurements::T_PLC_US"/>
+		<Import declaration="OSCAT::Basic::POUs::conversion::TIME_TO_REAL"/>
 	</CompilerInfo>
 	<InterfaceList>
 		<EventInputs>
@@ -42,7 +43,6 @@
 			<VarDeclaration Name="last" Type="UDINT" Comment="Last execution time"/>
 			<VarDeclaration Name="tx" Type="UDINT" Comment="Current execution time"/>
 			<VarDeclaration Name="init" Type="BOOL" Comment="Initialization flag"/>
-			<VarDeclaration Name="UDTM" Type="UDINT" Comment="TM converted to UDINT"/>
 		</InternalVars>
 		<ECState Name="INIT" Comment="Initialization">
 			<ECAction Algorithm="INIT" Output="INITO"/>
@@ -84,9 +84,8 @@ ELSE
 	delta_t := (tx - last);
 
 		(* PT1 Formula: out = out + (target - out) * (dt / T) *)
-	UDTM := TIME_IN_US_TO_UDINT(TM);
-	IF UDTM > 0 THEN
-		out := out + (in * K - out) * UDINT_TO_REAL(delta_t) / UDINT_TO_REAL(UDTM);
+	IF TIME_TO_REAL(TM) > 0.0 THEN
+		out := out + (in * K - out) * UDINT_TO_REAL(delta_t) / TIME_TO_REAL(TM);
 	END_IF;
 
 		(* Avoid denormalized numbers / underrun *)
