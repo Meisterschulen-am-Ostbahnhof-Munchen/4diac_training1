@@ -21,8 +21,9 @@
 			<Parameter Name="ImpulseDelta" Value="100"/>
 			<Parameter Name="TimeDelta" Value="50000"/>
 		</FB>
-		<FB Name="FT_DERIV" Type="OSCAT::Basic::POUs::Engineering::Control::FT_DERIV" x="400" y="600">
-			<Parameter Name="K" Value="1.0"/>
+		<FB Name="FT_DERIV" Type="OSCAT::Basic::POUs::Engineering::Control::FT_DERIV_10" x="500" y="-1600">
+			<Parameter Name="K" Value="9"/>
+			<Parameter Name="Faktor" Value="1.0"/>
 			<Parameter Name="run" Value="TRUE"/>
 		</FB>
 		<FB Name="F_DWORD_TO_UDINT" Type="iec61131::conversion::F_DWORD_TO_UDINT" x="-2900" y="700">
@@ -55,27 +56,24 @@
 		</FB>
 		<FB Name="F_UDINT_TO_DWORD" Type="iec61131::conversion::F_UDINT_TO_DWORD" x="5500" y="1300">
 		</FB>
-		<FB Name="E_CYCLE" Type="iec61499::events::E_CYCLE" x="-6500" y="3300">
+		<FB Name="E_CYCLE" Type="iec61499::events::E_CYCLE" x="-6500" y="500">
 			<Parameter Name="DT" Value="T#200ms"/>
 		</FB>
-		<FB Name="DigitalInput_I2" Type="logiBUS::io::DI::logiBUS_IE" x="-8400" y="2800">
+		<FB Name="DigitalInput_I2" Type="logiBUS::io::DI::logiBUS_IE" x="-8400" y="0">
 			<Parameter Name="QI" Value="TRUE"/>
 			<Parameter Name="Input" Value="Input_I2"/>
 			<Parameter Name="InputEvent" Value="BUTTON_SINGLE_CLICK"/>
 		</FB>
-		<FB Name="DigitalInput_I3" Type="logiBUS::io::DI::logiBUS_IE" x="-8400" y="3800">
+		<FB Name="DigitalInput_I3" Type="logiBUS::io::DI::logiBUS_IE" x="-8400" y="1000">
 			<Parameter Name="QI" Value="TRUE"/>
 			<Parameter Name="Input" Value="Input_I3"/>
 			<Parameter Name="InputEvent" Value="BUTTON_SINGLE_CLICK"/>
 		</FB>
-		<FB Name="E_CYCLE_1" Type="iec61499::events::E_CYCLE" x="-6600" y="1300">
-			<Parameter Name="DT" Value="T#30s"/>
-		</FB>
 		<EventConnections>
 			<Connection Source="logiBUS_PI_ID.IND" Destination="F_DWORD_TO_UDINT.REQ" dx1="406.67"/>
 			<Connection Source="F_DWORD_TO_UDINT.CNF" Destination="F_UDINT_TO_REAL.REQ"/>
-			<Connection Source="F_UDINT_TO_REAL.CNF" Destination="FT_DERIV.REQ" dx1="353.33"/>
-			<Connection Source="FT_DERIV.CNF" Destination="CTRL_PID.REQ" dx1="1266.67"/>
+			<Connection Source="F_UDINT_TO_REAL.CNF" Destination="FT_DERIV.REQ" dx1="160"/>
+			<Connection Source="FT_DERIV.CNF" Destination="CTRL_PID.REQ" dx1="1220"/>
 			<Connection Source="DigitalInput_I1.IND" Destination="E_T_FF.CLK" dx1="806.67"/>
 			<Connection Source="E_T_FF.EO" Destination="CTRL_PID.REQ" dx1="280"/>
 			<Connection Source="CTRL_PID.CNF" Destination="F_LREAL_TO_UDINT.REQ"/>
@@ -83,11 +81,8 @@
 			<Connection Source="F_UDINT_TO_DWORD.CNF" Destination="PWMOutput_Q1.REQ" dx1="380"/>
 			<Connection Source="DigitalInput_I2.IND" Destination="E_CYCLE.START" dx1="533.33"/>
 			<Connection Source="DigitalInput_I3.IND" Destination="E_CYCLE.STOP" dx1="360"/>
-			<Connection Source="E_CYCLE.EO" Destination="CTRL_PID.REQ" dx1="7486.67"/>
-			<Connection Source="DigitalInput_I2.IND" Destination="E_CYCLE_1.START" dx1="200"/>
-			<Connection Source="DigitalInput_I3.IND" Destination="E_CYCLE_1.STOP" dx1="306.67"/>
-			<Connection Source="E_CYCLE_1.EO" Destination="logiBUS_PI_ID.REQ" dx1="640"/>
 			<Connection Source="logiBUS_PI_ID.CNF" Destination="F_DWORD_TO_UDINT.REQ" dx1="406.67"/>
+			<Connection Source="E_CYCLE.EO" Destination="logiBUS_PI_ID.REQ" dx1="593.33"/>
 		</EventConnections>
 		<DataConnections>
 			<Connection Source="logiBUS_PI_ID.IN" Destination="F_DWORD_TO_UDINT.IN" dx1="406.67"/>
