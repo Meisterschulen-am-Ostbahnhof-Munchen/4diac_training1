@@ -82,7 +82,8 @@ IF NOT init THEN
 	this.RST();
 ELSIF run AND delta_t > 0 THEN
 	delta_in := in - old;
-	out := delta_in / UDINT_TO_REAL(delta_t) * K;
+		// Mikrosekunden in Sekunden
+	out := delta_in / UDINT_TO_REAL(delta_t) * 1000000.0 * K;
 	old := in;
 ELSE
 	out := 0.0;
