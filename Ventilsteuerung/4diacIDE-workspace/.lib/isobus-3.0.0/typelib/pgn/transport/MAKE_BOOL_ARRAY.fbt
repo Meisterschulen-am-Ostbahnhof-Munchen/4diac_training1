@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<FBType Name="MAKE_BOOL_ARRAY" Comment="Make a new Bool Array">
+	<Identification Description="&#10; &#10;This program and the accompanying materials are made&#10;available under the terms of the Eclipse Public License 2.0&#10;which is available at https://www.eclipse.org/legal/epl-2.0/&#10;&#10;SPDX-License-Identifier: EPL-2.0">
+	</Identification>
+	<VersionInfo Organization="Unknown" Version="1.0" Author="Unknown" Date="2026-01-02">
+	</VersionInfo>
+	<CompilerInfo packageName="isobus::pgn::transport">
+	</CompilerInfo>
+	<InterfaceList>
+		<EventInputs>
+			<Event Name="REQ" Type="Event" Comment="Service Request">
+				<With Var="SIZE"/>
+			</Event>
+		</EventInputs>
+		<EventOutputs>
+			<Event Name="CNF" Type="Event" Comment="Confirmation of Requested Service">
+				<With Var="OUT_ARRAY"/>
+			</Event>
+		</EventOutputs>
+		<InputVars>
+			<VarDeclaration Name="SIZE" Type="UINT" Comment="size"/>
+		</InputVars>
+		<OutputVars>
+			<VarDeclaration Name="OUT_ARRAY" Type="ANY" Comment="resulting array after set"/>
+		</OutputVars>
+	</InterfaceList>
+	<Attribute Name="eclipse4diac::core::TypeHash" Value="''"/>
+</FBType>
