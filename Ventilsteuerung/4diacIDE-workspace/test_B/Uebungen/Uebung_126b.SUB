@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SubAppType Name="Uebung_126b" Comment="Übung zu ISOBUS Send Message Cyclic (mit CB) SINUS-Funktion Plotten">
+	<Identification Standard="61499-2" Description="Copyright (c) 2025 Meisterschulen am Ostbahnhof  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0">
+	</Identification>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2023-10-23">
+	</VersionInfo>
+	<CompilerInfo packageName="Uebungen">
+		<Import declaration="Uebungen::const::Uebung_120_129::Filter::PEAK_ADD"/>
+		<Import declaration="Uebungen::const::Uebung_120_129::Filter::PEAK_FLT"/>
+		<Import declaration="isobus::pgn::ISOUSERHOME_e::network"/>
+		<Import declaration="isobus::pgn::ISO_CAN_NODE::NODE1"/>
+	</CompilerInfo>
+	<SubAppInterfaceList>
+	</SubAppInterfaceList>
+	<SubAppNetwork>
+		<FB Name="NmGetCfInfo_1" Type="isobus::pgn::NmGetCfInfo" x="-10100" y="2900">
+			<Parameter Name="u8CanIdx" Value="NODE1"/>
+			<Parameter Name="member" Value="network"/>
+			<Parameter Name="address" Value="PEAK_ADD"/>
+			<Parameter Name="mask" Value="PEAK_FLT"/>
+		</FB>
+		<FB Name="AlPgnTxNew8Bcycl_REQ" Type="isobus::pgn::tx::AlPgnTxNew8Bcycl_REQ" x="-4400" y="3700">
+			<Parameter Name="u32Pgn" Value="61184"/>
+			<Parameter Name="u16DaSize" Value="8"/>
+			<Parameter Name="u8Priority" Value="3"/>
+			<Parameter Name="u16DefRepRate" Value="500"/>
+		</FB>
+		<SubApp Name="DataSupply" Type="Uebungen::Uebung_126b_sub" x="-7400" y="4800">
+		</SubApp>
+		<EventConnections>
+			<Connection Source="NmGetCfInfo_1.IND" Destination="AlPgnTxNew8Bcycl_REQ.install" dx1="4453.33"/>
+		</EventConnections>
+		<DataConnections>
+			<Connection Source="NmGetCfInfo_1.sNetEv" Destination="AlPgnTxNew8Bcycl_REQ.NmDestin" dx1="4266.67"/>
+		</DataConnections>
+		<AdapterConnections>
+			<Connection Source="DataSupply.PLUG1" Destination="AlPgnTxNew8Bcycl_REQ.CB" dx1="386.67"/>
+		</AdapterConnections>
+	</SubAppNetwork>
+</SubAppType>

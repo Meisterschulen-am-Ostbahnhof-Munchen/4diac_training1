@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Function Name="TIME_TO_REAL">
+	<Identification Standard="61499-1">
+	</Identification>
+	<VersionInfo Version="1.0" Author="franz" Date="2025-12-21">
+	</VersionInfo>
+	<CompilerInfo packageName="OSCAT::Basic::POUs::conversion">
+	</CompilerInfo>
+	<InterfaceList>
+		<EventInputs>
+			<Event Name="REQ" Type="Event">
+				<With Var="TM"/>
+			</Event>
+		</EventInputs>
+		<EventOutputs>
+			<Event Name="CNF" Type="Event">
+				<With Var=""/>
+			</Event>
+		</EventOutputs>
+		<InputVars>
+			<VarDeclaration Name="TM" Type="TIME"/>
+		</InputVars>
+		<OutputVars>
+			<VarDeclaration Name="" Type="REAL"/>
+		</OutputVars>
+	</InterfaceList>
+	<FunctionBody>
+		<ST><![CDATA[PACKAGE OSCAT::Basic::POUs::conversion;
+
+FUNCTION TIME_TO_REAL : REAL
+VAR_INPUT
+	TM : TIME;
+END_VAR
+
+TIME_TO_REAL := UDINT_TO_REAL(TIME_IN_MS_TO_UDINT(TM));
+
+END_FUNCTION
+
+]]></ST>
+	</FunctionBody>
+</Function>
