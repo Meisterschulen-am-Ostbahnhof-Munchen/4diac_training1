@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SubAppType Name="Uebung_003c_AX" Comment="DigitalInput_I1-2-3-4 auf AUX">
+	<Identification Standard="61499-2" Description="Copyright (c) 2026 Meisterschulen am Ostbahnhof  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0">
+	</Identification>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Moritz Ortmeier" Date="2026-01-13">
+	</VersionInfo>
+	<CompilerInfo packageName="Uebungen">
+		<Import declaration="logiBUS::io::DI::logiBUS_DI::Input_I1"/>
+		<Import declaration="logiBUS::io::DI::logiBUS_DI::Input_I2"/>
+		<Import declaration="logiBUS::io::DI::logiBUS_DI::Input_I3"/>
+		<Import declaration="logiBUS::io::DI::logiBUS_DI::Input_I4"/>
+	</CompilerInfo>
+	<SubAppInterfaceList>
+	</SubAppInterfaceList>
+	<SubAppNetwork>
+		<SubApp Name="F1" Type="Uebungen::Uebung_003c_sub_AX" x="140" y="33.33">
+		</SubApp>
+		<SubApp Name="F2" Type="Uebungen::Uebung_003c_sub_AX" x="140" y="613.33">
+		</SubApp>
+		<SubApp Name="F3" Type="Uebungen::Uebung_003c_sub_AX" x="140" y="1193.33">
+		</SubApp>
+		<SubApp Name="F4" Type="Uebungen::Uebung_003c_sub_AX" x="140" y="1773.33">
+		</SubApp>
+	</SubAppNetwork>
+</SubAppType>
