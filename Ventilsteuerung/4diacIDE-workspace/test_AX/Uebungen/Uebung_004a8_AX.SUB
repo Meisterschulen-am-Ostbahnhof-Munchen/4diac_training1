@@ -45,9 +45,12 @@
 			</Parameter>
 			<Parameter Name="Output" Value="Output_Q2"/>
 		</FB>
+		<FB Name="E_SPLIT_2" Type="iec61499::events::E_SPLIT_2" x="-7100" y="200">
+		</FB>
 		<EventConnections>
-			<Connection Source="DigitalInput_CLK_I1.IND" Destination="AX_T_FF_Q1.CLK" dx1="1094.12"/>
-			<Connection Source="DigitalInput_CLK_I1.IND" Destination="AX_T_FF_Q2.CLK" dx1="1129.41"/>
+			<Connection Source="DigitalInput_CLK_I1.IND" Destination="E_SPLIT_2.EI" dx1="476.47"/>
+			<Connection Source="E_SPLIT_2.EO1" Destination="AX_T_FF_Q1.CLK" dx1="411.76"/>
+			<Connection Source="E_SPLIT_2.EO2" Destination="AX_T_FF_Q2.CLK" dx1="411.76"/>
 		</EventConnections>
 		<AdapterConnections>
 			<Connection Source="AX_T_FF_Q1.Q" Destination="DigitalOutput_Q1.OUT"/>

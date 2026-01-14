@@ -7,37 +7,32 @@
 	<CompilerInfo packageName="Uebungen">
 	</CompilerInfo>
 	<SubAppInterfaceList>
-		<SubAppEventInputs>
-			<SubAppEvent Name="EI" Type="Event">
-			</SubAppEvent>
-		</SubAppEventInputs>
-		<SubAppEventOutputs>
-			<SubAppEvent Name="EO" Type="Event">
-			</SubAppEvent>
-		</SubAppEventOutputs>
-		<InputVars>
-			<VarDeclaration Name="DI" Type="BOOL"/>
-		</InputVars>
-		<OutputVars>
-			<VarDeclaration Name="Rechts" Type="BOOL"/>
-			<VarDeclaration Name="Links" Type="BOOL"/>
-		</OutputVars>
+		<Plugs>
+			<AdapterDeclaration Name="Rechts" Type="adapter::types::unidirectional::AX"/>
+			<AdapterDeclaration Name="Links" Type="adapter::types::unidirectional::AX"/>
+		</Plugs>
+		<Sockets>
+			<AdapterDeclaration Name="IN" Type="adapter::types::unidirectional::AX"/>
+		</Sockets>
 	</SubAppInterfaceList>
 	<SubAppNetwork>
-		<FB Name="AXT_FF" Type="adapter::events::unidirectional::AX_T_FF" x="1100" y="-200">
+		<FB Name="AX_T_FF" Type="adapter::events::unidirectional::AX_T_FF" x="100" y="-400">
 		</FB>
-		<FB Name="AX_SWITCH" Type="adapter::events::unidirectional::AX_SWITCH" x="0" y="-200">
+		<FB Name="AX_SWITCH" Type="adapter::events::unidirectional::AX_SWITCH" x="-1200" y="-700">
 		</FB>
-		<FB Name="F_NOT" Type="adapter::booleanOperators::AX_NOT" x="2100" y="-100">
+		<FB Name="AX_NOT" Type="adapter::booleanOperators::AX_NOT" x="2700" y="300">
+		</FB>
+		<FB Name="AX_SPLIT_2" Type="adapter::events::unidirectional::AX_SPLIT_2" x="1300" y="-300">
 		</FB>
 		<EventConnections>
-			<Connection Source="AXT_FF.EO" Destination="F_NOT.REQ" dx1="235.29"/>
-			<Connection Source="EI" Destination="AX_SWITCH.EI" dx1="1700"/>
-			<Connection Source="F_NOT.CNF" Destination="EO" dx1="973.33"/>
-			<Connection Source="AX_SWITCH.EO1" Destination="AXT_FF.CLK" dx1="211.76"/>
+			<Connection Source="AX_SWITCH.EO1" Destination="AX_T_FF.CLK" dx1="211.76"/>
 		</EventConnections>
-		<DataConnections>
-			<Connection Source="DI" Destination="AX_SWITCH.G" dx1="980"/>
-		</DataConnections>
+		<AdapterConnections>
+			<Connection Source="IN" Destination="AX_SWITCH.G" dx1="664.71"/>
+			<Connection Source="AX_NOT.OUT" Destination="Links" dx1="711.76"/>
+			<Connection Source="AX_T_FF.Q" Destination="AX_SPLIT_2.IN"/>
+			<Connection Source="AX_SPLIT_2.OUT2" Destination="AX_NOT.IN" dx1="88.24"/>
+			<Connection Source="AX_SPLIT_2.OUT1" Destination="Rechts" dx1="847.06"/>
+		</AdapterConnections>
 	</SubAppNetwork>
 </SubAppType>

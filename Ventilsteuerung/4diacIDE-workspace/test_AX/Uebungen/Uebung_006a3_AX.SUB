@@ -35,7 +35,7 @@
 			<Parameter Name="Input" Value="Input_I2"/>
 			<Parameter Name="InputEvent" Value="BUTTON_SINGLE_CLICK"/>
 		</FB>
-		<FB Name="E_T_FF_SR" Type="iec61499::events::E_T_FF_SR" x="-2800" y="-700">
+		<FB Name="AX_T_FF_SR" Type="adapter::events::unidirectional::AX_T_FF_SR" x="-2800" y="-700">
 		</FB>
 		<FB Name="DigitalInput_CLK_I3" Type="logiBUS::io::DI::logiBUS_IE" x="-4533.33" y="1133.33">
 			<Parameter Name="QI" Value="TRUE">
@@ -47,40 +47,36 @@
 			<Parameter Name="Input" Value="Input_I3"/>
 			<Parameter Name="InputEvent" Value="BUTTON_SINGLE_CLICK"/>
 		</FB>
-		<FB Name="AND_LINKS" Type="iec61131::bitwiseOperators::AND_2_BOOL" x="1300" y="-600">
+		<FB Name="AND_LINKS" Type="adapter::booleanOperators::AX_AND_2" x="1800" y="-600">
 		</FB>
-		<FB Name="Rechtslauf" Type="logiBUS::io::DQ::logiBUS_QX" x="3200" y="400">
+		<FB Name="Rechtslauf" Type="logiBUS::io::DQ::logiBUS_QXA" x="3300" y="0">
 			<Parameter Name="QI" Value="TRUE"/>
 			<Parameter Name="Output" Value="Output_Q2"/>
 		</FB>
-		<FB Name="Linkslauf" Type="logiBUS::io::DQ::logiBUS_QX" x="3200" y="-700">
+		<FB Name="Linkslauf" Type="logiBUS::io::DQ::logiBUS_QXA" x="3200" y="-1100">
 			<Parameter Name="QI" Value="TRUE"/>
 			<Parameter Name="Output" Value="Output_Q1"/>
 		</FB>
-		<FB Name="AND_RECHTS" Type="iec61131::bitwiseOperators::AND_2_BOOL" x="1400" y="500">
+		<FB Name="AND_RECHTS" Type="adapter::booleanOperators::AX_AND_2" x="1800" y="500">
 		</FB>
-		<SubApp Name="LinksRechts_T_FF" Type="Uebungen::Uebung_006a3_sub_AX" x="-1300" y="-1400">
+		<SubApp Name="AX_LinksRechts_T_FF" Type="Uebungen::Uebung_006a3_sub_AX" x="-600" y="-1400">
 		</SubApp>
+		<FB Name="AX_SPLIT_3" Type="adapter::events::unidirectional::AX_SPLIT_3" x="-1600" y="-400">
+		</FB>
 		<EventConnections>
-			<Connection Source="DigitalInput_CLK_I1.IND" Destination="E_T_FF_SR.S"/>
-			<Connection Source="DigitalInput_CLK_I2.IND" Destination="E_T_FF_SR.R" dx1="486.67"/>
-			<Connection Source="DigitalInput_CLK_I3.IND" Destination="E_T_FF_SR.CLK" dx1="673.33"/>
-			<Connection Source="AND_RECHTS.CNF" Destination="Rechtslauf.REQ"/>
-			<Connection Source="AND_LINKS.CNF" Destination="Linkslauf.REQ"/>
-			<Connection Source="E_T_FF_SR.EO" Destination="LinksRechts_T_FF.EI" dx1="246.67"/>
-			<Connection Source="LinksRechts_T_FF.EO" Destination="AND_LINKS.REQ" dx1="1246.67"/>
-			<Connection Source="LinksRechts_T_FF.EO" Destination="AND_RECHTS.REQ" dx1="1146.67"/>
-			<Connection Source="E_T_FF_SR.EO" Destination="AND_LINKS.REQ" dx1="1700"/>
-			<Connection Source="E_T_FF_SR.EO" Destination="AND_RECHTS.REQ" dx1="1586.67"/>
+			<Connection Source="DigitalInput_CLK_I1.IND" Destination="AX_T_FF_SR.S"/>
+			<Connection Source="DigitalInput_CLK_I2.IND" Destination="AX_T_FF_SR.R" dx1="486.67"/>
+			<Connection Source="DigitalInput_CLK_I3.IND" Destination="AX_T_FF_SR.CLK" dx1="673.33"/>
 		</EventConnections>
-		<DataConnections>
-			<Connection Source="AND_LINKS.OUT" Destination="Linkslauf.OUT" dx1="573.33"/>
-			<Connection Source="E_T_FF_SR.Q" Destination="AND_RECHTS.IN2" dx1="1313.33"/>
-			<Connection Source="AND_RECHTS.OUT" Destination="Rechtslauf.OUT" dx1="573.33"/>
-			<Connection Source="E_T_FF_SR.Q" Destination="AND_LINKS.IN2"/>
-			<Connection Source="LinksRechts_T_FF.Rechts" Destination="AND_RECHTS.IN1" dx1="1020"/>
-			<Connection Source="E_T_FF_SR.Q" Destination="LinksRechts_T_FF.DI" dx1="346.67"/>
-			<Connection Source="LinksRechts_T_FF.Links" Destination="AND_LINKS.IN1" dx1="886.67"/>
-		</DataConnections>
+		<AdapterConnections>
+			<Connection Source="AND_RECHTS.OUT" Destination="Rechtslauf.OUT"/>
+			<Connection Source="AND_LINKS.OUT" Destination="Linkslauf.OUT"/>
+			<Connection Source="AX_LinksRechts_T_FF.Rechts" Destination="AND_RECHTS.IN1" dx1="776.47"/>
+			<Connection Source="AX_LinksRechts_T_FF.Links" Destination="AND_LINKS.IN1" dx1="688.24"/>
+			<Connection Source="AX_T_FF_SR.Q" Destination="AX_SPLIT_3.IN"/>
+			<Connection Source="AX_SPLIT_3.OUT1" Destination="AX_LinksRechts_T_FF.IN" dx1="141.18"/>
+			<Connection Source="AX_SPLIT_3.OUT2" Destination="AND_LINKS.IN2" dx1="988.24"/>
+			<Connection Source="AX_SPLIT_3.OUT3" Destination="AND_RECHTS.IN2" dx1="1041.18"/>
+		</AdapterConnections>
 	</SubAppNetwork>
 </SubAppType>

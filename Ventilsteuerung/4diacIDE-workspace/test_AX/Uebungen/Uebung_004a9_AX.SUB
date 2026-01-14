@@ -14,7 +14,7 @@
 	<SubAppInterfaceList>
 	</SubAppInterfaceList>
 	<SubAppNetwork>
-		<FB Name="DigitalOutput_Q1" Type="logiBUS::io::DQ::logiBUS_QXA" x="-5300" y="-400">
+		<FB Name="DigitalOutput_Q1" Type="logiBUS::io::DQ::logiBUS_QXA" x="-4800" y="-400">
 			<Parameter Name="QI" Value="TRUE">
 				<Attribute Name="Visible" Value="false"/>
 			</Parameter>
@@ -23,7 +23,7 @@
 			</Parameter>
 			<Parameter Name="Output" Value="Output_Q1"/>
 		</FB>
-		<FB Name="DigitalInput_CLK_I1" Type="logiBUS::io::DI::logiBUS_IE" x="-9200" y="600">
+		<FB Name="DigitalInput_CLK_I1" Type="logiBUS::io::DI::logiBUS_IE" x="-9200" y="500">
 			<Parameter Name="QI" Value="TRUE">
 				<Attribute Name="Visible" Value="false"/>
 			</Parameter>
@@ -33,11 +33,11 @@
 			<Parameter Name="Input" Value="Input_I1"/>
 			<Parameter Name="InputEvent" Value="BUTTON_SINGLE_CLICK"/>
 		</FB>
-		<FB Name="AX_T_FF_Q1" Type="adapter::events::unidirectional::AX_T_FF" x="-7000" y="-100">
+		<FB Name="AX_T_FF_Q1" Type="adapter::events::unidirectional::AX_T_FF" x="-6500" y="-100">
 		</FB>
-		<FB Name="AX_T_FF_Q2" Type="adapter::events::unidirectional::AX_T_FF" x="-7035.29" y="800">
+		<FB Name="AX_T_FF_Q2" Type="adapter::events::unidirectional::AX_T_FF" x="-6535.29" y="800">
 		</FB>
-		<FB Name="DigitalOutput_Q2" Type="logiBUS::io::DQ::logiBUS_QXA" x="-5300" y="500">
+		<FB Name="DigitalOutput_Q2" Type="logiBUS::io::DQ::logiBUS_QXA" x="-4800" y="500">
 			<Parameter Name="QI" Value="TRUE">
 				<Attribute Name="Visible" Value="false"/>
 			</Parameter>
@@ -46,9 +46,9 @@
 			</Parameter>
 			<Parameter Name="Output" Value="Output_Q2"/>
 		</FB>
-		<FB Name="AX_T_FF_Q3" Type="adapter::events::unidirectional::AX_T_FF" x="-7035.29" y="1700">
+		<FB Name="AX_T_FF_Q3" Type="adapter::events::unidirectional::AX_T_FF" x="-6535.29" y="1700">
 		</FB>
-		<FB Name="DigitalOutput_Q3" Type="logiBUS::io::DQ::logiBUS_QXA" x="-5300" y="1400">
+		<FB Name="DigitalOutput_Q3" Type="logiBUS::io::DQ::logiBUS_QXA" x="-4800" y="1400">
 			<Parameter Name="QI" Value="TRUE">
 				<Attribute Name="Visible" Value="false"/>
 			</Parameter>
@@ -57,10 +57,13 @@
 			</Parameter>
 			<Parameter Name="Output" Value="Output_Q3"/>
 		</FB>
+		<FB Name="E_SPLIT_3" Type="iec61499::events::E_SPLIT_3" x="-7700" y="700">
+		</FB>
 		<EventConnections>
-			<Connection Source="DigitalInput_CLK_I1.IND" Destination="AX_T_FF_Q1.CLK" dx1="1052.94"/>
-			<Connection Source="DigitalInput_CLK_I1.IND" Destination="AX_T_FF_Q2.CLK"/>
-			<Connection Source="DigitalInput_CLK_I1.IND" Destination="AX_T_FF_Q3.CLK" dx1="1017.65"/>
+			<Connection Source="DigitalInput_CLK_I1.IND" Destination="E_SPLIT_3.EI"/>
+			<Connection Source="E_SPLIT_3.EO1" Destination="AX_T_FF_Q1.CLK" dx1="264.71"/>
+			<Connection Source="E_SPLIT_3.EO2" Destination="AX_T_FF_Q2.CLK"/>
+			<Connection Source="E_SPLIT_3.EO3" Destination="AX_T_FF_Q3.CLK" dx1="247.06"/>
 		</EventConnections>
 		<AdapterConnections>
 			<Connection Source="AX_T_FF_Q3.Q" Destination="DigitalOutput_Q3.OUT"/>
