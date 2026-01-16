@@ -1,82 +1,36 @@
-# Uebung_024: Spiegelabfolge (4)
+# Uebung_024: Sequenz mit Wartezeit (Delay)
 
-* * * * * * * * * *
+[Uebung_024](https://docs.ms-muc-docs.de/projects/visual-programming-languages-docs/de/latest/training1/Ventilsteuerung/4diacIDE-workspace/test/FBs/Uebungen/Uebung_024.html)
 
-## Einleitung
-Diese Übung implementiert eine Steuerung für eine Spiegelabfolge mit zwei Zylindern. Die Anwendung demonstriert die sequenzielle Steuerung von pneumatischen Zylindern mit Endlagenerkennung und zeitgesteuerten Abläufen.
+[![NotebookLM](media/NotebookLM_logo.png)](https://notebooklm.google.com/notebook/a6872e59-1dfc-4132-a118-aff1bc7bc944)
 
-## Verwendete Funktionsbausteine (FBs)
+Dieser Artikel beschreibt die logiBUS®-Übung `Uebung_024`. Hier wird eine zeitliche Pause in den automatischen Ablauf integriert.
 
-### Haupt-Funktionsbausteine:
 
-**DigitalOutput_Q1, Q2, Q3, Q4** (logiBUS_QX)
-- **Parameter**: 
-  - QI = TRUE
-  - Output = logiBUS_DO::Output_Q1, Q2, Q3, Q4
+## Podcast
+<iframe src="https://creators.spotify.com/pod/profile/logibus/embed/episodes/LogiBUS--IEC-61499-Daten--und-Ereignisflsse-einfach-erklrt--Vom-Schalter-zur-intelligenten-Steuerung-e36vldb/a-ac3vadb" height="102px" width="400px" frameborder="0" scrolling="no"></iframe>
 
-**SoftKey_IE Bausteine** (Softkey_IE)
-- SoftKey_UP_F1, SoftKey_F2_DOWN, SoftKey_F3_DOWN, SoftKey_F8_DOWN, SoftKey_F9_DOWN
-- **Parameter**:
-  - QI = TRUE
-  - u16ObjId = DefaultPool::SoftKey_F1, F2, F3, F8, F9
-  - InputEvent = SoftKeyActivationCode::SK_RELEASED/SK_PRESSED
+----
 
-**E_SR Bausteine** (E_SR)
-- E_SR_Ausfahren_Cyl_1, E_SR_Ausfahren_Cyl_2, E_SR_Einfahren_Cyl_1, E_SR_Einfahren_Cyl_2
 
-**E_DELAY** (E_DELAY)
-- **Parameter**: DT = T#2s (2 Sekunden Verzögerung)
 
-## Programmablauf und Verbindungen
+![](Uebung_024.png)
 
-### Ablaufsequenz:
 
-1. **Start Ausfahren Zylinder 1**
-   - SoftKey_F1 (released) → E_SR_Ausfahren_Cyl_1.S
-   - Aktiviert DigitalOutput_Q1 (Ausfahren_Cyl_1)
+## Ziel der Übung
 
-2. **Ausfahren Zylinder 2**
-   - SoftKey_F2 (pressed) → E_SR_Ausfahren_Cyl_2.S
-   - Aktiviert DigitalOutput_Q2 (Ausfahren_Cyl_2)
+Integration von Zeitgliedern (`E_DELAY`) in eine Ereigniskette.
 
-3. **Rückzug Zylinder 2**
-   - SoftKey_F3 (pressed) → E_SR_Ausfahren_Cyl_2.R
-   - Gleichzeitig Start E_DELAY Timer
+-----
 
-4. **Zeitgesteuertes Einfahren Zylinder 2**
-   - Nach 2 Sekunden (E_DELAY) → E_SR_Einfahren_Cyl_2.S
-   - Aktiviert DigitalOutput_Q3 (Einfahren_Cyl_2)
+## Funktionsweise
 
-5. **Einfahren Zylinder 1**
-   - SoftKey_F8 (pressed) → E_SR_Einfahren_Cyl_1.S
-   - Aktiviert DigitalOutput_Q4 (Einfahren_Cyl_1)
+[cite_start]Im Vergleich zu Übung 023 wird zwischen zwei Schritten ein Verzögerungs-Baustein eingefügt[cite: 1].
+Wenn Zylinder 2 seine Endlage erreicht (`F3`), wird nicht sofort der nächste Schritt ausgelöst, sondern der Eingang `E_DELAY.START` getriggert. Erst nach Ablauf der Zeit `DT` (hier 2 Sekunden) feuert das `EO`-Event und setzt die Sequenz fort (z.B. Start des Einfahrens).
 
-6. **Reset Zylinder 1**
-   - SoftKey_F9 (pressed) → E_SR_Einfahren_Cyl_1.R
+-----
 
-### Ereignisverbindungen:
-- SoftKey-Ereignisse steuern Set/Reset der E_SR Bausteine
-- E_SR Ausgänge aktivieren DigitalOutputs
-- Zeitverzögerung zwischen Zylinder 2 Rückzug und Einfahren
+## Anwendungsbeispiel
 
-### Datenverbindungen:
-- E_SR.Q Ausgänge verbunden mit DigitalOutput.OUT
-- Sicherstellung des korrekten Signalflusses
-
-## Lernziele
-- Verständnis von Set-Reset-Funktionsbausteinen (E_SR)
-- Implementierung zeitgesteuerter Abläufe mit E_DELAY
-- Steuerung von Softkeys für Benutzerinteraktion
-- Sequenzielle Steuerung mehrerer Aktoren
-- Endlagenerkennung und -verarbeitung
-
-## Schwierigkeitsgrad
-Mittel - Erfordert Verständnis von Zustandsautomaten und zeitgesteuerten Abläufen
-
-## Vorkenntnisse
-- Grundlagen der 4diac-IDE
-- Verständnis von E_SR und E_DELAY Bausteinen
-- Kenntnisse über Softkey-Implementation
-
-## Zusammenfassung
-Diese Übung demonstriert eine komplexe Spiegelabfolge mit zwei Zylindern, die sequenziell gesteuert werden. Besonderes Merkmal ist die zeitgesteuerte Verzögerung zwischen den Zylinderbewegungen und die Verwendung von Softkeys für die Benutzersteuerung. Die Anwendung zeigt praxisnah die Steuerung pneumatischer Systeme mit Endlagenerkennung.
+**Pressvorgang**:
+Ein Zylinder fährt aus und drückt zwei Bauteile zusammen. Sobald die Endlage erreicht ist, muss der Druck für 2 Sekunden gehalten werden (Wartezeit), bevor der Zylinder wieder einfährt und das Werkstück freigibt.

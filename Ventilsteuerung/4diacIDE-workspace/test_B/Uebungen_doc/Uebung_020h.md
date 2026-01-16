@@ -1,57 +1,23 @@
-# Uebung_020h: DigitalInput_I1 auf DigitalOutput_Q1; E_PULSE; Impulsformend
+# Uebung_020h: Ereignisgesteuerter Impuls (E_PULSE)
 
-* * * * * * * * * *
+[Uebung_020h](https://docs.ms-muc-docs.de/projects/visual-programming-languages-docs/de/latest/training1/Ventilsteuerung/4diacIDE-workspace/test/FBs/Uebungen/Uebung_020h.html)
 
-## Einleitung
-Diese Übung demonstriert die Verwendung von Impulsformern in der Automatisierungstechnik. Ein digitaler Eingang wird über einen E_PULSE-Baustein verarbeitet, um einen zeitlich begrenzten Ausgangsimpuls zu erzeugen.
+[![NotebookLM](media/NotebookLM_logo.png)](https://notebooklm.google.com/notebook/a6872e59-1dfc-4132-a118-aff1bc7bc944)
 
-## Verwendete Funktionsbausteine (FBs)
+Dieser Artikel beschreibt die logiBUS®-Übung `Uebung_020h`.
 
-### DigitalInput_CLK_I1
-- **Typ**: logiBUS_IE
-- **Parameter**:
-  - QI = TRUE
-  - Input = logiBUS_DI::Input_I1
-  - InputEvent = logiBUS_DI_Events::BUTTON_SINGLE_CLICK
-- **Funktion**: Erfasst digitale Eingangssignale und erkennt spezifische Ereignisse wie Tastenklicks
 
-### E_PULSE
-- **Typ**: E_PULSE
-- **Parameter**:
-  - PT = T#5S (5 Sekunden Impulsdauer)
-- **Funktion**: Erzeugt einen Impuls mit definierter Zeitdauer bei Auslösung
+## Podcast
+<iframe src="https://creators.spotify.com/pod/profile/logibus/embed/episodes/LogiBUS--IEC-61499-Daten--und-Ereignisflsse-einfach-erklrt--Vom-Schalter-zur-intelligenten-Steuerung-e36vldb/a-ac3vadb" height="102px" width="400px" frameborder="0" scrolling="no"></iframe>
 
-### DigitalOutput_Q1
-- **Typ**: logiBUS_QX
-- **Parameter**:
-  - QI = TRUE
-  - Output = logiBUS_DO::Output_Q1
-- **Funktion**: Steuert digitale Ausgänge an
+----
 
-## Programmablauf und Verbindungen
 
-**Ereignisverbindungen:**
-- DigitalInput_CLK_I1.IND → E_PULSE.REQ
-- E_PULSE.CNF → DigitalOutput_Q1.REQ
 
-**Datenverbindungen:**
-- E_PULSE.Q → DigitalOutput_Q1.OUT
+![](Uebung_020h.png)
 
-**Ablauf:**
-1. Bei einem Tastenklick an Eingang I1 wird das IND-Ereignis ausgelöst
-2. Dies startet den E_PULSE-Baustein über REQ
-3. E_PULSE erzeugt einen 5-Sekunden-Impuls an seinem Q-Ausgang
-4. Der Impuls wird an den Digitalausgang Q1 weitergeleitet
-5. Der Ausgang Q1 bleibt für genau 5 Sekunden aktiv
 
-**Lernziele:**
-- Verwendung von Impulsformern (E_PULSE)
-- Ereignisgesteuerte Programmabläufe
-- Zeitgesteuerte Ausgangssteuerung
-- Verbindung von digitalen Ein- und Ausgängen
+## Übersicht
 
-**Schwierigkeitsgrad**: Einfach
-**Vorkenntnisse**: Grundlagen der 4diac-IDE und digitale Ein-/Ausgänge
-
-## Zusammenfassung
-Die Übung zeigt eine grundlegende Impulsformer-Schaltung, bei der ein Tastendruck an Eingang I1 einen genau 5 Sekunden langen Impuls an Ausgang Q1 erzeugt. Dies ist eine typische Anwendung für zeitgesteuerte Steuerungsaufgaben in der Automatisierungstechnik.
+[cite_start]Diese Übung zeigt die Ansteuerung des Bausteins `E_PULSE` durch einen Ereignis-Eingang (`logiBUS_IE`)[cite: 1].
+Jeder erkannte Einzelklick am Taster löst am Ausgang einen exakt 5 Sekunden langen Impuls aus. Da `E_PULSE` ein reiner Event-Baustein ist, benötigt er kein dauerhaftes Datensignal am Eingang, sondern nur den Start-Trigger.

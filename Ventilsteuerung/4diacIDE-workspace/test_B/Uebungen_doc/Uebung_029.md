@@ -1,58 +1,57 @@
-# Uebung_029: LED_DO Blinkende LED
+# Uebung_029: LED-Statusanzeigen (Frequenzen)
 
-* * * * * * * * * *
+[Uebung_029](https://docs.ms-muc-docs.de/projects/visual-programming-languages-docs/de/latest/training1/Ventilsteuerung/4diacIDE-workspace/test/FBs/Uebungen/Uebung_029.html)
 
-## Einleitung
-Diese Übung demonstriert die Steuerung von LEDs mit unterschiedlichen Blinkfrequenzen über digitale Eingänge. Es werden drei unabhängige LED-Schaltungen implementiert, die jeweils durch separate digitale Eingänge aktiviert werden können.
+[![NotebookLM](media/NotebookLM_logo.png)](https://notebooklm.google.com/notebook/a6872e59-1dfc-4132-a118-aff1bc7bc944)
 
-## Verwendete Funktionsbausteine (FBs)
+Dieser Artikel beschreibt die logiBUS®-Übung `Uebung_029`. Hier wird ein spezialisierter Baustein zur Ansteuerung von Status-LEDs vorgestellt, der das Blinken hardwarenah übernimmt.
 
-### Haupt-Funktionsbausteine:
 
-**logiBUS_LED_DO_QX** (3 Instanzen)
-- **LED_Q1_5HZ**: LED mit 5 Hz Blinkfrequenz
-- **LED_Q1_1HZ**: LED mit 1 Hz Blinkfrequenz  
-- **LED_Q1_ON**: Dauerhaft leuchtende LED
+## Podcast
+<iframe src="https://creators.spotify.com/pod/profile/logibus/embed/episodes/LogiBUS--IEC-61499-Daten--und-Ereignisflsse-einfach-erklrt--Vom-Schalter-zur-intelligenten-Steuerung-e36vldb/a-ac3vadb" height="102px" width="400px" frameborder="0" scrolling="no"></iframe>
 
-**logiBUS_IX** (3 Instanzen)
-- **DigitalInput_I1**: Digitaler Eingang I1
-- **DigitalInput_I2**: Digitaler Eingang I2
-- **DigitalInput_I3**: Digitaler Eingang I3
+----
 
-## Programmablauf und Verbindungen
 
-### Event-Verbindungen:
-- DigitalInput_I1.IND → LED_Q1_5HZ.REQ
-- DigitalInput_I2.IND → LED_Q1_1HZ.REQ  
-- DigitalInput_I3.IND → LED_Q1_ON.REQ
 
-### Datenverbindungen:
-- DigitalInput_I1.IN → LED_Q1_5HZ.OUT
-- DigitalInput_I2.IN → LED_Q1_1HZ.OUT
-- DigitalInput_I3.IN → LED_Q1_ON.OUT
+![](Uebung_029.png)
 
-### Parameterkonfiguration:
-- **LED_Q1_5HZ**: Output_Q1 mit 5 Hz Frequenz
-- **LED_Q1_1HZ**: Output_Q2 mit 1 Hz Frequenz
-- **LED_Q1_ON**: Output_Q3 mit Dauerlicht
-- Alle digitalen Eingänge sind aktiviert (QI=TRUE)
 
-### Funktionsweise:
-Jeder digitale Eingang (I1, I2, I3) steuert eine separate LED-Ausgabe (Q1, Q2, Q3) mit unterschiedlichen Blinkmustern. Bei Betätigung eines Eingangssignals wird die entsprechende LED mit der konfigurierten Frequenz aktiviert.
+## Ziel der Übung
 
-## Lernziele
-- Verständnis der LED-Ansteuerung mit verschiedenen Frequenzen
-- Umgang mit digitalen Ein- und Ausgängen
-- Implementierung paralleler Schaltungen
-- Parametrierung von Funktionsbausteinen
+Nutzung des Bausteins `logiBUS_LED_DO_QX`. Es wird gezeigt, wie man eine LED in verschiedenen Modi (Dauerlicht, langsames Blinken, schnelles Blinken) betreibt, ohne dafür komplexe Software-Timer oder Blink-Logiken (wie in Übung 007) programmieren zu müssen.
 
-## Schwierigkeitsgrad
-Einfach - geeignet für Einsteiger in die 4diac-IDE
+-----
 
-## Vorkenntnisse
-- Grundlagen der 4diac-IDE
-- Verständnis von Events und Datenverbindungen
-- Basiswissen über digitale Ein-/Ausgänge
+## Beschreibung und Komponenten
 
-## Zusammenfassung
-Diese Übung zeigt eine grundlegende Implementierung von LED-Steuerungen mit unterschiedlichen Blinkfrequenzen. Durch die parallele Anordnung von drei unabhängigen Schaltungen wird das Verständnis für die Steuerung mehrerer Ausgänge über separate Eingänge vermittelt. Die Übung demonstriert effektiv die Parametrierung von Frequenzen und die Verbindung von digitalen Ein- mit Ausgangssignalen.
+[cite_start]In `Uebung_029.SUB` werden drei Taster genutzt, um eine einzige LED (`Q1`) in drei verschiedenen Modi anzusteuern[cite: 1].
+
+### Funktionsbausteine (FBs)
+
+  * **`logiBUS_LED_DO_QX`**: Ein spezialisierter Ausgangsbaustein. Er besitzt den Parameter `FREQ` (Frequenz).
+  * **Parameter `FREQ`**:
+    * `LED_ON`: Dauerhaftes Leuchten.
+    * `LED_1HZ`: Langsames Blinken (1 mal pro Sekunde).
+    * `LED_5HZ`: Schnelles Blinken (5 mal pro Sekunde).
+
+-----
+
+## Funktionsweise
+
+Obwohl alle drei Bausteine im Diagramm auf denselben physischen Ausgang `Output_Q1` verweisen, unterscheiden sie sich in ihrer Konfiguration:
+*   Druck auf **Taster I1** ➡️ Triggert den 5Hz-Baustein. Die LED blitzt sehr schnell.
+*   Druck auf **Taster I2** ➡️ Triggert den 1Hz-Baustein. Die LED blinkt ruhig.
+*   Druck auf **Taster I3** ➡️ Triggert den ON-Baustein. Die LED leuchtet konstant.
+
+Die Blink-Frequenz wird dabei direkt vom Hardware-Treiber der Steuerung generiert, was den Prozessor entlastet.
+
+-----
+
+## Anwendungsbeispiel
+
+**Zustands-Signalisierung einer Maschine**:
+*   **LED An**: Maschine ist bereit.
+*   **LED 1Hz**: Maschine arbeitet (Automatikbetrieb).
+*   **LED 5Hz**: Warnung oder Störung (Aufmerksamkeit erforderlich).
+Dies ermöglicht eine intuitive Kommunikation mit dem Bediener über eine einzige Kontrollleuchte.

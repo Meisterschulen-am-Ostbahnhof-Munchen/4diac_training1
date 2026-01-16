@@ -1,54 +1,22 @@
-# Uebung_020e: DigitalInput_I1 auf DigitalOutput_Q1; E_TOF; Ausschaltverzögert
+# Uebung_020e: Ausschaltverzögerung (E_TOF)
 
-* * * * * * * * * *
+[Uebung_020e](https://docs.ms-muc-docs.de/projects/visual-programming-languages-docs/de/latest/training1/Ventilsteuerung/4diacIDE-workspace/test/FBs/Uebungen/Uebung_020e.html)
 
-## Einleitung
-Diese Übung demonstriert die Funktionsweise eines ausschaltverzögerten Zeitglieds (E_TOF) in der 4diac-IDE. Ein digitaler Eingangssignal wird über einen Zeitbaustein verzögert und an einen digitalen Ausgang weitergeleitet.
+[![NotebookLM](media/NotebookLM_logo.png)](https://notebooklm.google.com/notebook/a6872e59-1dfc-4132-a118-aff1bc7bc944)
 
-## Verwendete Funktionsbausteine (FBs)
+Dieser Artikel beschreibt die logiBUS®-Übung `Uebung_020e`.
 
-### DigitalInput_I1
-- **Typ**: logiBUS_IX
-- **Parameter**: 
-  - QI = TRUE
-  - Input = logiBUS_DI::Input_I1
-- **Funktionsweise**: Liest den digitalen Eingang I1 des logiBUS-Systems aus
 
-### E_TOF
-- **Typ**: E_TOF (Ausschaltverzögerung)
-- **Parameter**: 
-  - PT = T#5s (Verzögerungszeit von 5 Sekunden)
-- **Funktionsweise**: Verzögert das Ausschaltsignal um die eingestellte Zeit von 5 Sekunden
+## Podcast
+<iframe src="https://creators.spotify.com/pod/profile/logibus/embed/episodes/LogiBUS--IEC-61499-Daten--und-Ereignisflsse-einfach-erklrt--Vom-Schalter-zur-intelligenten-Steuerung-e36vldb/a-ac3vadb" height="102px" width="400px" frameborder="0" scrolling="no"></iframe>
 
-### DigitalOutput_Q1
-- **Typ**: logiBUS_QX
-- **Parameter**: 
-  - QI = TRUE
-  - Output = logiBUS_DO::Output_Q1
-- **Funktionsweise**: Schreibt das Signal auf den digitalen Ausgang Q1 des logiBUS-Systems
+----
 
-## Programmablauf und Verbindungen
 
-**Ereignisverbindungen:**
-- DigitalInput_I1.IND → E_TOF.REQ
-- E_TOF.CNF → DigitalOutput_Q1.REQ
 
-**Datenverbindungen:**
-- DigitalInput_I1.IN → E_TOF.IN
-- E_TOF.Q → DigitalOutput_Q1.OUT
+![](Uebung_020e.png)
 
-**Ablauf:**
-1. Beim Betätigen des digitalen Eingangs I1 wird sofort das Signal an den Ausgang Q1 weitergeleitet
-2. Beim Loslassen des Eingangs I1 bleibt der Ausgang Q1 für weitere 5 Sekunden aktiv
-3. Nach Ablauf der 5-Sekunden-Verzögerung schaltet der Ausgang Q1 ab
 
-**Lernziele:**
-- Verständnis der Ausschaltverzögerung (E_TOF)
-- Anwendung von Zeitbausteinen in Steuerungsprogrammen
-- Verbindung von Ein-/Ausgängen mit Zeitfunktionen
+## Übersicht
 
-**Schwierigkeitsgrad**: Einfach
-**Benötigte Vorkenntnisse**: Grundlagen der 4diac-IDE, Verständnis von digitalen Ein-/Ausgängen
-
-## Zusammenfassung
-Diese Übung zeigt die praktische Anwendung eines ausschaltverzögerten Zeitglieds in einem Steuerungsprogramm. Der E_TOF-Baustein sorgt dafür, dass ein Ausgangssignal nach dem Abschalten des Eingangssignals für eine definierte Zeit (hier 5 Sekunden) aktiv bleibt, bevor es endgültig abschaltet.
+[cite_start]Verwendung des standardisierten ereignisbasierten Timers `E_TOF`[cite: 1]. Die Logik entspricht der Übung 020d, ist aber in einem einzigen Baustein gekapselt. Ein Signal am Eingang `IN` wird sofort zum Ausgang `Q` durchgereicht. Fällt `IN` weg, bleibt `Q` noch für die Zeit `PT` (hier 5 Sekunden) auf `TRUE`.

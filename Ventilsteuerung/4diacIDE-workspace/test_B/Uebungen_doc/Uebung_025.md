@@ -1,65 +1,29 @@
-# Uebung_025: Spiegelabfolge (5)
+# Uebung_025: Synchronisierte Sequenz (Rendezvous)
 
-* * * * * * * * * *
+[Uebung_025](https://docs.ms-muc-docs.de/projects/visual-programming-languages-docs/de/latest/training1/Ventilsteuerung/4diacIDE-workspace/test/FBs/Uebungen/Uebung_025.html)
 
-## Einleitung
-Diese Übung implementiert eine Steuerung für eine Spiegelabfolge mit zwei Zylindern. Das System steuert das Ausfahren und Einfahren der beiden Zylinder in einer festgelegten Abfolge mit zeitgesteuerten Abläufen und Endlagenerkennung.
+[![NotebookLM](media/NotebookLM_logo.png)](https://notebooklm.google.com/notebook/a6872e59-1dfc-4132-a118-aff1bc7bc944)
 
-## Verwendete Funktionsbausteine (FBs)
+Dieser Artikel beschreibt die logiBUS®-Übung `Uebung_025`. Hier wird die Ablaufsteuerung durch Rendezvous-Bausteine abgesichert.
 
-### Softkey-Funktionsbausteine
-- **SoftKey_UP_F1** (Typ: Softkey_IE) - Start-Knopf für Ausfahren
-- **SoftKey_F2_DOWN** (Typ: Softkey_IE) - F2-Taste für Zylindersteuerung
-- **SoftKey_F3_DOWN** (Typ: Softkey_IE) - F3-Taste für Zylindersteuerung  
-- **SoftKey_F8_DOWN** (Typ: Softkey_IE) - F8-Taste für Einfahren
-- **SoftKey_F9_DOWN** (Typ: Softkey_IE) - F9-Taste für Einfahren
 
-### Zylindersteuerungs-FBs
-- **E_SR_Ausfahren_Cyl_1** (Typ: E_SR) - Set-Reset für Ausfahren Zylinder 1
-- **E_SR_Ausfahren_Cyl_2** (Typ: E_SR) - Set-Reset für Ausfahren Zylinder 2
-- **E_SR_Einfahren_Cyl_1** (Typ: E_SR) - Set-Reset für Einfahren Zylinder 1
-- **E_SR_Einfahren_Cyl_2** (Typ: E_SR) - Set-Reset für Einfahren Zylinder 2
+## Podcast
+<iframe src="https://creators.spotify.com/pod/profile/logibus/embed/episodes/LogiBUS--IEC-61499-Daten--und-Ereignisflsse-einfach-erklrt--Vom-Schalter-zur-intelligenten-Steuerung-e36vldb/a-ac3vadb" height="102px" width="400px" frameborder="0" scrolling="no"></iframe>
 
-### Ausgabebausteine
-- **DigitalOutput_Q1** (Typ: logiBUS_QX) - Ausgang für Zylinder 1 Ausfahren
-- **DigitalOutput_Q2** (Typ: logiBUS_QX) - Ausgang für Zylinder 2 Ausfahren
-- **DigitalOutput_Q3** (Typ: logiBUS_QX) - Ausgang für Zylinder 2 Einfahren
-- **DigitalOutput_Q4** (Typ: logiBUS_QX) - Ausgang für Zylinder 1 Einfahren
+----
 
-### Steuerungs- und Verzögerungs-FBs
-- **E_DELAY** (Typ: E_DELAY) - Zeitverzögerung von 2 Sekunden
-- **E_REND_Ausfahren_Cyl_1** (Typ: E_REND) - Rücksetzende Flanke für Ausfahren Zylinder 1
-- **E_REND_Ausfahren_Cyl_2** (Typ: E_REND) - Rücksetzende Flanke für Ausfahren Zylinder 2
-- **E_REND_Einfahren_Cyl_1** (Typ: E_REND) - Rücksetzende Flanke für Einfahren Zylinder 1
-- **E_REND_Einfahren_Cyl_2** (Typ: E_REND) - Rücksetzende Flanke für Einfahren Zylinder 2
-- **E_SWITCH_Q1-Q4** (Typ: E_SWITCH) - Schalter für Signalverteilung
 
-## Programmablauf und Verbindungen
 
-### Ablaufsequenz:
-1. **Start mit F1**: Auslösung des Ausfahrvorgangs für Zylinder 1
-2. **Zylinder 1 ausfahren**: Über DigitalOutput_Q1
-3. **Endlage Zylinder 1 erreicht**: Signal über E_SWITCH_Q1 an E_REND_Ausfahren_Cyl_1
-4. **Zylinder 2 ausfahren**: Nach Bestätigung durch F2-Taste
-5. **Endlage Zylinder 2 erreicht**: Signal über E_SWITCH_Q2 an E_REND_Ausfahren_Cyl_2
-6. **Zeitverzögerung**: 2 Sekunden Wartezeit über E_DELAY
-7. **Zylinder 2 einfahren**: Nach Ablauf der Verzögerung
-8. **Zylinder 1 einfahren**: Nach Bestätigung durch F8-Taste
-9. **Zyklusende**: Rückkehr in Ausgangsposition
+![](Uebung_025.png)
 
-### Wichtige Verbindungen:
-- Softkey-Ereignisse lösen Set/Reset-Operationen aus
-- E_SR-Bausteine steuern die Digitalausgänge
-- E_REND-Bausteine ermöglichen Rücksetzvorgänge
-- E_SWITCH-Bausteine verteilen Signale an die entsprechenden REND-Bausteine
-- Zeitgesteuerte Abläufe über E_DELAY mit 2 Sekunden Verzögerung
 
-### Lernziele:
-- Verständnis von Set-Reset-Funktionsbausteinen
-- Implementierung von Ablaufsteuerungen
-- Zeitgesteuerte Prozesse
-- Endlagenerkennung und -verarbeitung
-- Softkey-Integration für Benutzerinteraktion
+## Ziel der Übung
 
-## Zusammenfassung
-Die Übung demonstriert eine komplexe Ablaufsteuerung für eine Spiegelabfolge mit zwei Zylindern. Sie kombiniert Benutzereingaben über Softkeys, zeitgesteuerte Abläufe und Endlagenerkennung zu einem vollständigen Steuerungsprozess. Die Implementierung zeigt das Zusammenspiel verschiedener Funktionsbausteine zur Realisierung einer zuverlässigen Ablaufsteuerung in der Automatisierungstechnik.
+Verwendung von `E_REND` zur Absicherung von Übergängen. Es soll sichergestellt werden, dass ein Folgeschritt nur dann ausgelöst wird, wenn sowohl das Hardware-Feedback (Endlage) als auch das logische Software-Event (Bereitschaft) vorliegen.
+
+-----
+
+## Funktionsweise
+
+[cite_start]Die Übung nutzt für jeden Übergang einen `E_REND` Baustein[cite: 1].
+Zusätzlich werden `E_SWITCH` Bausteine zur Plausibilitätsprüfung eingesetzt. Ein Ereignis wird nur dann als gültige Endlage akzeptiert, wenn der zugehörige Ausgang (`Q`) der Steuerung zu diesem Zeitpunkt auch tatsächlich aktiv ist (Rückkopplung der Daten an das Gate der Weiche). Dies verhindert Fehlsteuerungen durch defekte oder hängende Sensoren.

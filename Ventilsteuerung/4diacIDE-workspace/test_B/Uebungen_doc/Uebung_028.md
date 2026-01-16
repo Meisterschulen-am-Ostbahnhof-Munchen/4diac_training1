@@ -1,67 +1,49 @@
-# Uebung_028: Analog-Eingang
+# Uebung_028: Analog-Eingänge (Messwerte)
 
-* * * * * * * * * *
+[Uebung_028](https://docs.ms-muc-docs.de/projects/visual-programming-languages-docs/de/latest/training1/Ventilsteuerung/4diacIDE-workspace/test/FBs/Uebungen/Uebung_028.html)
 
-## Einleitung
-Diese Übung beschäftigt sich mit der Verarbeitung von analogen Eingangssignalen in der 4diac-IDE. Es werden sowohl digitale als auch analoge Eingänge verarbeitet und entsprechende Ausgänge gesteuert.
+[![NotebookLM](media/NotebookLM_logo.png)](https://notebooklm.google.com/notebook/a6872e59-1dfc-4132-a118-aff1bc7bc944)
 
-## Verwendete Funktionsbausteine (FBs)
+Dieser Artikel beschreibt die logiBUS®-Übung `Uebung_028`. Hier verlassen wir die digitale Welt (An/Aus) und erfassen kontinuierliche Messwerte (Analogsignale).
 
-### DigitalInput_I1
-- **Typ**: logiBUS_IX
-- **Parameter**:
-  - QI = TRUE
-  - Input = logiBUS_DI::Input_I1
-- **Funktionsweise**: Liest digitale Eingangssignale vom Eingang I1 ein
 
-### DigitalOutput_Q1
-- **Typ**: logiBUS_QX
-- **Parameter**:
-  - QI = TRUE
-  - Output = logiBUS_DO::Output_Q1
-- **Funktionsweise**: Steuert digitale Ausgänge am Ausgang Q1
+## Podcast
+<iframe src="https://creators.spotify.com/pod/profile/logibus/embed/episodes/LogiBUS--IEC-61499-Daten--und-Ereignisflsse-einfach-erklrt--Vom-Schalter-zur-intelligenten-Steuerung-e36vldb/a-ac3vadb" height="102px" width="400px" frameborder="0" scrolling="no"></iframe>
 
-### AnalogInput_I4
-- **Typ**: logiBUS_AI_ID
-- **Parameter**:
-  - QI = TRUE
-  - Input = logiBUS_AI::AnalogInput_I4
-  - AnalogInput_hysteresis = 50
-- **Funktionsweise**: Verarbeitet analoge Eingangssignale vom Eingang I4 mit einer Hysterese von 50
+----
 
-### AnalogInput_I7
-- **Typ**: logiBUS_AI_ID
-- **Parameter**:
-  - QI = TRUE
-  - Input = logiBUS_AI::AnalogInput_I7
-  - AnalogInput_hysteresis = 50
-- **Funktionsweise**: Verarbeitet analoge Eingangssignale vom Eingang I7 mit einer Hysterese von 50
 
-### F_DWORD_TO_UDINT_I4
-- **Typ**: F_DWORD_TO_UDINT
-- **Funktionsweise**: Konvertiert DWORD-Daten in UDINT-Datentyp für Eingang I4
 
-### F_DWORD_TO_UDINT_I7
-- **Typ**: F_DWORD_TO_UDINT
-- **Funktionsweise**: Konvertiert DWORD-Daten in UDINT-Datentyp für Eingang I7
+![](Uebung_028.png)
 
-## Programmablauf und Verbindungen
 
-**Ereignisverbindungen:**
-- DigitalInput_I1.IND → DigitalOutput_Q1.REQ
-- DigitalInput_I1.IND → AnalogInput_I4.REQ
-- DigitalInput_I1.IND → AnalogInput_I7.REQ
-- AnalogInput_I4.IND → F_DWORD_TO_UDINT_I4.REQ
-- AnalogInput_I4.CNF → F_DWORD_TO_UDINT_I4.REQ
-- AnalogInput_I7.IND → F_DWORD_TO_UDINT_I7.REQ
-- AnalogInput_I7.CNF → F_DWORD_TO_UDINT_I7.REQ
+## Ziel der Übung
 
-**Datenverbindungen:**
-- DigitalInput_I1.IN → DigitalOutput_Q1.OUT
-- AnalogInput_I4.IN → F_DWORD_TO_UDINT_I4.IN
-- AnalogInput_I7.IN → F_DWORD_TO_UDINT_I7.IN
+Verwendung des Bausteins `logiBUS_AI_ID`. Es wird demonstriert, wie analoge Spannungswerte (z.B. von einem Potentiometer oder Sensor) eingelesen, gefiltert (Hysterese) und konvertiert werden.
 
-Das Programm startet mit dem digitalen Eingang I1, der sowohl den digitalen Ausgang Q1 direkt steuert als auch die beiden analogen Eingänge I4 und I7 aktiviert. Die analogen Eingänge verwenden eine Hysterese von 50 zur Signalglättung und konvertieren die analogen Signale über die F_DWORD_TO_UDINT Bausteine in den entsprechenden Datentyp.
+-----
 
-## Zusammenfassung
-Diese Übung demonstriert die grundlegende Verarbeitung von analogen und digitalen Signalen in 4diac. Sie zeigt die Verwendung von Hysterese-Funktionen bei analogen Eingängen und die notwendige Datentyp-Konvertierung für die weitere Signalverarbeitung. Die Übung eignet sich für Einsteiger in die analoge Signalverarbeitung mit 4diac.
+## Beschreibung und Komponenten
+
+[cite_start]Die Subapplikation `Uebung_028.SUB` liest zwei Analogkanäle der Hardware ein[cite: 1].
+
+### Funktionsbausteine (FBs)
+
+  * **`AnalogInput_I4` & `I7`**: Typ `logiBUS_AI_ID`. [cite_start]Diese Bausteine repräsentieren die analogen Hardware-Eingänge. Sie wandeln die elektrische Spannung in einen numerischen Digitalwert um[cite: 1].
+  * **Parameter `AnalogInput_hysteresis`**: Bestimmt, um wie viel sich der Wert ändern muss, bevor ein neues Ereignis (`IND`) gefeuert wird (hier 50 Einheiten). Dies unterdrückt Rauschen.
+  * **`F_DWORD_TO_UDINT`**: Konvertiert den Rohwert in einen Ganzzahl-Datentyp zur weiteren Verarbeitung.
+
+-----
+
+## Funktionsweise
+
+Der Analogbaustein bietet zwei Möglichkeiten der Abfrage:
+1.  **Ereignisgesteuert**: Sobald sich die Eingangsspannung signifikant ändert (außerhalb der Hysterese), sendet der Baustein automatisch ein `IND`-Event.
+2.  **Manuell (Polling)**: In dieser Übung triggert zusätzlich der digitale Taster `I1` den `REQ`-Eingang der Analog-Bausteine. Dies erzwingt eine sofortige Aktualisierung der Werte, egal ob sie sich geändert haben oder nicht.
+
+-----
+
+## Anwendungsbeispiel
+
+**Tankinhalts-Anzeige**:
+Ein Schwimmersensor im Tank liefert eine analoge Spannung. Die Steuerung liest diesen Wert ein. Durch die Hysterese wird verhindert, dass die Anzeige bei leichtem Schwanken des Kraftstoffs ständig flackert. Der Nutzer kann jederzeit einen Knopf am Bedienpult drücken, um den absolut aktuellen Wert sofort abzufragen.

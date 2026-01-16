@@ -1,48 +1,22 @@
-# Uebung_033: LED Strip Blinkende LED
+# Uebung_033: Modulare RGB-Ansteuerung
 
-* * * * * * * * * *
+[Uebung_033](https://docs.ms-muc-docs.de/projects/visual-programming-languages-docs/de/latest/training1/Ventilsteuerung/4diacIDE-workspace/test/FBs/Uebungen/Uebung_033.html)
 
-## Einleitung
-Diese Übung demonstriert die Steuerung eines LED-Streifens mit blinkenden LEDs in verschiedenen Farben. Es werden vier unabhängige LED-Kanäle (GRÜN, GELB, ROT, BLAU) implementiert, die jeweils über separate Eingänge angesteuert werden können.
+[![NotebookLM](media/NotebookLM_logo.png)](https://notebooklm.google.com/notebook/a6872e59-1dfc-4132-a118-aff1bc7bc944)
 
-## Verwendete Funktionsbausteine (FBs)
+Dieser Artikel beschreibt die logiBUS®-Übung `Uebung_033`.
 
-### Sub-Bausteine: Uebung_033_sub
-- **Typ**: SubAppType
-- **Verwendete interne FBs**:
-    - **BUTTON**: logiBUS_IX
-        - Parameter: QI = TRUE
-        - Ereignisausgang/-eingang: IND → LED.REQ
-        - Datenausgang/-eingang: IN → LED.OUT
-    - **LED**: logiBUS_LED_strip_QX
-        - Parameter: QI = TRUE, FREQ = LED_FREQ::LED_1HZ
-        - Ereignisausgang/-eingang: REQ (von BUTTON.IND)
-        - Datenausgang/-eingang: OUT (von BUTTON.IN)
-- **Funktionsweise**: Der Sub-Baustein verbindet einen Eingangstaster (BUTTON) mit einer LED-Streifen-Steuerung. Bei Betätigung des Tasters wird die LED mit der konfigurierten Farbe und Blinkfrequenz aktiviert.
 
-## Programmablauf und Verbindungen
-Die Hauptanwendung besteht aus vier identischen Sub-Bausteinen (GREEN, YELLOW, RED, BLUE), die parallel arbeiten. Jeder Sub-Baustein verfügt über:
-- Einen Eingang für die Tastererkennung (Input)
-- Eine Farbkonfiguration (Colour) 
-- Einen Ausgang für den LED-Streifen (Output)
+## Podcast
+<iframe src="https://creators.spotify.com/pod/profile/logibus/embed/episodes/LogiBUS--IEC-61499-Daten--und-Ereignisflsse-einfach-erklrt--Vom-Schalter-zur-intelligenten-Steuerung-e36vldb/a-ac3vadb" height="102px" width="400px" frameborder="0" scrolling="no"></iframe>
 
-Die Datenverbindungen übertragen:
-- Input-Signal an den BUTTON-Baustein
-- Ausgangsnummer an die LED-Steuerung
-- Farbinformation an die LED-Steuerung
+----
 
-Die Ereignisverbindung sorgt dafür, dass bei Tasterbetätigung (BUTTON.IND) ein Anforderungssignal an die LED-Steuerung (LED.REQ) gesendet wird.
 
-**Lernziele**: 
-- Verständnis der parallelen Verarbeitung mit Sub-Bausteinen
-- Umgang mit LED-Streifen-Steuerung
-- Implementierung von Taster-LED-Interaktionen
 
-**Schwierigkeitsgrad**: Einsteiger
+![](Uebung_033.png)
 
-**Benötigte Vorkenntnisse**: Grundlagen der 4diac-IDE, Verständnis von Funktionsbausteinen und Datenverbindungen
 
-**Starten der Übung**: Nach dem Laden der Anwendung können die vier farbigen Kanäle unabhängig voneinander über ihre jeweiligen Eingänge aktiviert werden.
+## Übersicht
 
-## Zusammenfassung
-Diese Übung zeigt eine praktische Anwendung zur Steuerung eines mehrfarbigen LED-Streifens mit unabhängigen Kanälen. Die modulare Struktur mit wiederverwendbaren Sub-Bausteinen ermöglicht eine klare und übersichtliche Programmarchitektur, die einfach erweitert werden kann.
+[cite_start]Dies ist die modulare Variante der Übung 032[cite: 1]. Die Logik für einen farbigen LED-Kanal wurde in eine typisierte Sub-Applikation `Uebung_033_sub` ausgelagert. Das Hauptprogramm instanziiert diesen Typ viermal und weist ihm die Taster `I1` bis `I4` sowie die Zielfarben zu. Dies zeigt erneut die Vorteile der Wiederverwendbarkeit bei komplexen Hardware-Komponenten wie LED-Controllern.

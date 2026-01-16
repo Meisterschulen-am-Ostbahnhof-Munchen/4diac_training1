@@ -1,53 +1,51 @@
-# Uebung_031: LED Strip
+# Uebung_031: RGB-LED Strip (HSV-Steuerung)
 
-* * * * * * * * * *
+[Uebung_031](https://docs.ms-muc-docs.de/projects/visual-programming-languages-docs/de/latest/training1/Ventilsteuerung/4diacIDE-workspace/test/FBs/Uebungen/Uebung_031.html)
 
-## Einleitung
-Diese Übung demonstriert die Steuerung eines LED-Streifens mit Farbkonvertierung und Tastersteuerung. Die Anwendung ermöglicht die Umwandlung von HSV-Farbwerten in RGB-Werte und die anschließende Ansteuerung einzelner Pixel auf einem LED-Streifen.
+[![NotebookLM](media/NotebookLM_logo.png)](https://notebooklm.google.com/notebook/a6872e59-1dfc-4132-a118-aff1bc7bc944)
 
-## Verwendete Funktionsbausteine (FBs)
+Dieser Artikel beschreibt die logiBUS®-Übung `Uebung_031`. Hier steuern wir adressierbare RGB-LEDs (z.B. WS2812) über das komfortable HSV-Farbmodell an.
 
-### DigitalInput_CLK_I1
-- **Typ**: logiBUS_IE
-- **Parameter**:
-  - QI = TRUE
-  - Input = logiBUS_DI::Input_I1
-  - InputEvent = logiBUS_DI_Events::BUTTON_SINGLE_CLICK
 
-### DigitalInput_CLK_I2
-- **Typ**: logiBUS_IE
-- **Parameter**:
-  - QI = TRUE
-  - Input = logiBUS_DI::Input_I2
-  - InputEvent = logiBUS_DI_Events::BUTTON_SINGLE_CLICK
+## Podcast
+<iframe src="https://creators.spotify.com/pod/profile/logibus/embed/episodes/LogiBUS--IEC-61499-Daten--und-Ereignisflsse-einfach-erklrt--Vom-Schalter-zur-intelligenten-Steuerung-e36vldb/a-ac3vadb" height="102px" width="400px" frameborder="0" scrolling="no"></iframe>
 
-### hsv2rgb
-- **Typ**: hsv2rgb
-- **Parameter**:
-  - hue = 100
-  - saturation = 100
-  - value = 100
+----
 
-### strip_set_pixel
-- **Typ**: strip_set_pixel
-- **Parameter**:
-  - index = LED_strip::Output_strip
 
-## Programmablauf und Verbindungen
 
-Das Programm verwendet zwei digitale Eingänge (I1 und I2) als Taster mit Einzelklick-Erkennung. Der Taster I1 löst über das IND-Ereignis die Farbkonvertierung im hsv2rgb-Baustein aus. Nach erfolgreicher Konvertierung (CNF-Ereignis) werden die RGB-Werte an den strip_set_pixel-Baustein weitergegeben.
+![](Uebung_031.png)
 
-**Ereignisverbindungen:**
-- DigitalInput_CLK_I2.IND → strip_set_pixel.clear
-- hsv2rgb.CNF → strip_set_pixel.set_pixel
-- DigitalInput_CLK_I1.IND → hsv2rgb.REQ
 
-**Datenverbindungen:**
-- hsv2rgb.r → strip_set_pixel.red
-- hsv2rgb.g → strip_set_pixel.green
-- hsv2rgb.b → strip_set_pixel.blue
+## Ziel der Übung
 
-Der Taster I2 dient zum Löschen des LED-Streifens über den clear-Eingang. Die HSV-Parameter sind fest auf Werte von 100 voreingestellt, was eine spezifische Farbe erzeugt.
+Verwendung der RGB-Bibliothek für den ESP32. Es wird demonstriert, wie man Farben nicht über Rot-Grün-Blau-Werte (RGB), sondern über Farbwert (Hue), Sättigung (Saturation) und Helligkeit (Value) definiert und an einen LED-Streifen sendet.
 
-## Zusammenfassung
-Diese Übung vermittelt praktische Erfahrungen mit Farbkonvertierung (HSV zu RGB) und der Ansteuerung von LED-Streifen. Sie zeigt die Verwendung von digitalen Eingängen zur Steuerung von Ausgabefunktionen und demonstriert die Datenübertragung zwischen verschiedenen Funktionsbausteinen in einem verteilten Steuerungssystem.
+-----
+
+## Beschreibung und Komponenten
+
+[cite_start]Die Subapplikation `Uebung_031.SUB` nutzt einen Konvertierungsbaustein und einen Streifen-Treiber[cite: 1].
+
+### Funktionsbausteine (FBs)
+
+  * **`hsv2rgb`**: Rechnet die intuitiven HSV-Werte in die von der Hardware benötigten RGB-Werte um.
+  * **`strip_set_pixel`**: Überträgt die Farbwerte an eine spezifische LED im Streifen.
+  * **`I1` (Set)**: Klick löst das Setzen der Farbe aus.
+  * **`I2` (Clear)**: Klick löscht die Anzeige (LED aus).
+
+-----
+
+## Funktionsweise
+
+1.  Der Nutzer klickt auf **I1**. Das Event triggert die Konvertierung.
+2.  Der `hsv2rgb` Baustein nimmt die voreingestellten Werte (z.B. Hue=100) und liefert die Anteile für Rot, Grün und Blau.
+3.  Das `CNF`-Event des Konverters startet den Hardware-Transfer über `strip_set_pixel`.
+4.  Die erste LED am Streifen leuchtet in der gewählten Farbe.
+
+-----
+
+## Anwendungsbeispiel
+
+**Individuelle Design-Beleuchtung**:
+In einer Kabine soll die Ambiente-Beleuchtung einstellbar sein. Über ein Drehrad (Poti) wird der `Hue`-Wert verändert. Das Programm rechnet dies permanent um, sodass der Fahrer stufenlos durch den gesamten Regenbogen navigieren kann.

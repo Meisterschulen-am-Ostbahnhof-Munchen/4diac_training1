@@ -1,77 +1,27 @@
-# Uebung_023: Spiegelabfolge (3)
+# Uebung_023: Kompletter Zyklus (Aus- und Einfahren)
 
-* * * * * * * * * *
+[Uebung_023](https://docs.ms-muc-docs.de/projects/visual-programming-languages-docs/de/latest/training1/Ventilsteuerung/4diacIDE-workspace/test/FBs/Uebungen/Uebung_023.html)
 
-## Einleitung
-Diese Übung implementiert eine Steuerung für eine Spiegelabfolge mit zwei Zylindern. Das System ermöglicht das unabhängige Ausfahren und Einfahren beider Zylinder über separate Softkeys, wobei die Endlagen der Zylinder über Sensorsignale erfasst werden.
+[![NotebookLM](media/NotebookLM_logo.png)](https://notebooklm.google.com/notebook/a6872e59-1dfc-4132-a118-aff1bc7bc944)
 
-## Verwendete Funktionsbausteine (FBs)
+Dieser Artikel beschreibt die logiBUS®-Übung `Uebung_023`. Hier wird ein vollständiger Hin- und Rückweg für zwei Zylinder implementiert.
 
-### Softkey-Funktionsbausteine
-- **SoftKey_UP_F1** (Typ: Softkey_IE)
-  - Parameter: QI = TRUE, u16ObjId = DefaultPool::SoftKey_F1, InputEvent = SK_RELEASED
-  - Startet das Ausfahren von Zylinder 1
 
-- **SoftKey_F2_DOWN** (Typ: Softkey_IE)  
-  - Parameter: QI = TRUE, u16ObjId = DefaultPool::SoftKey_F2, InputEvent = SK_PRESSED
-  - Steuert Ausfahren von Zylinder 2 und Rücksetzen von Zylinder 1
+## Podcast
+<iframe src="https://creators.spotify.com/pod/profile/logibus/embed/episodes/LogiBUS--IEC-61499-Daten--und-Ereignisflsse-einfach-erklrt--Vom-Schalter-zur-intelligenten-Steuerung-e36vldb/a-ac3vadb" height="102px" width="400px" frameborder="0" scrolling="no"></iframe>
 
-- **SoftKey_F3_DOWN** (Typ: Softkey_IE)
-  - Parameter: QI = TRUE, u16ObjId = DefaultPool::SoftKey_F3, InputEvent = SK_PRESSED
-  - Rücksetzen von Zylinder 2
+----
 
-- **SoftKey_F7_UP** (Typ: Softkey_IE)
-  - Parameter: QI = TRUE, u16ObjId = DefaultPool::SoftKey_F7, InputEvent = SK_PRESSED
-  - Startet das Einfahren von Zylinder 2
 
-- **SoftKey_F8_DOWN** (Typ: Softkey_IE)
-  - Parameter: QI = TRUE, u16ObjId = DefaultPool::SoftKey_F8, InputEvent = SK_PRESSED
-  - Steuert Einfahren von Zylinder 1 und Rücksetzen von Zylinder 2
 
-- **SoftKey_F9_DOWN** (Typ: Softkey_IE)
-  - Parameter: QI = TRUE, u16ObjId = DefaultPool::SoftKey_F9, InputEvent = SK_PRESSED
-  - Rücksetzen von Zylinder 1
+![](Uebung_023.png)
 
-### Set-Reset-Funktionsbausteine
-- **E_SR_Ausfahren_Cyl_1** (Typ: E_SR)
-  - Steuert das Ausfahren von Zylinder 1
 
-- **E_SR_Ausfahren_Cyl_2** (Typ: E_SR)  
-  - Steuert das Ausfahren von Zylinder 2
+## Übersicht
 
-- **E_SR_Einfahren_Cyl_1** (Typ: E_SR)
-  - Steuert das Einfahren von Zylinder 1
+[cite_start]Diese Übung erweitert die Logik auf insgesamt vier Phasen unter Verwendung von sechs Softkeys[cite: 1]:
+1.  **Ausfahren**: `F1` (Start) ➡️ `Q1` an. Endlage erreicht über `F2`.
+2.  **Folgeschritt**: `F2` stoppt `Q1` und startet `Q2`. Endlage erreicht über `F3`.
+3.  **Einfahren**: Über separate Taster (`F7`, `F8`) wird die Rückhol-Sequenz eingeleitet (`Q3`, `Q4`).
 
-- **E_SR_Einfahren_Cyl_2** (Typ: E_SR)
-  - Steuert das Einfahren von Zylinder 2
-
-### Ausgabebausteine
-- **DigitalOutput_Q1** bis **DigitalOutput_Q4** (Typ: logiBUS_QX)
-  - Parameter: QI = TRUE
-  - Steuern die physischen Ausgänge für die Zylinderbewegungen
-
-## Programmablauf und Verbindungen
-
-### Ausfahrsequenz:
-1. **Zylinder 1 ausfahren**: SoftKey_F1 (Released) → E_SR_Ausfahren_Cyl_1.S → DigitalOutput_Q1
-2. **Zylinder 2 ausfahren**: SoftKey_F2 (Pressed) → E_SR_Ausfahren_Cyl_2.S → DigitalOutput_Q2
-3. **Zylinder 1 zurück**: SoftKey_F2 (Pressed) → E_SR_Ausfahren_Cyl_1.R
-4. **Zylinder 2 zurück**: SoftKey_F3 (Pressed) → E_SR_Ausfahren_Cyl_2.R
-
-### Einfahrsequenz:
-1. **Zylinder 2 einfahren**: SoftKey_F7 (Pressed) → E_SR_Einfahren_Cyl_2.S → DigitalOutput_Q3
-2. **Zylinder 1 einfahren**: SoftKey_F8 (Pressed) → E_SR_Einfahren_Cyl_1.S → DigitalOutput_Q4
-3. **Zylinder 2 zurück**: SoftKey_F8 (Pressed) → E_SR_Einfahren_Cyl_2.R
-4. **Zylinder 1 zurück**: SoftKey_F9 (Pressed) → E_SR_Einfahren_Cyl_1.R
-
-### Lernziele:
-- Verständnis von Set-Reset-Funktionsbausteinen (E_SR)
-- Implementierung unabhängiger Zylindersteuerungen
-- Umgang mit Softkey-Eingaben
-- Strukturierung komplexer Ablaufsteuerungen
-
-### Schwierigkeitsgrad:
-Mittel - erfordert Grundkenntnisse in SPS-Programmierung und Verständnis von Set-Reset-Logik
-
-## Zusammenfassung
-Die Übung demonstriert eine erweiterte Spiegelabfolge-Steuerung mit zwei unabhängig steuerbaren Zylindern. Durch die Verwendung von E_SR-Bausteinen und Softkey-Steuerung wird eine flexible und sichere Steuerung implementiert, die sowohl das Ausfahren als auch das Einfahren beider Zylinder in beliebiger Reihenfolge ermöglicht. Die klare Trennung der Steuerfunktionen erleichtert die Wartung und Erweiterbarkeit des Systems.
+Dies zeigt die Handhabung von komplexen, richtungsabhängigen Abläufen in einer flachen Ereignisstruktur.

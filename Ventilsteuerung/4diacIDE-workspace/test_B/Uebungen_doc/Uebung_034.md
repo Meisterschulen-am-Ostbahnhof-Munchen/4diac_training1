@@ -1,64 +1,50 @@
-# Uebung_034: Analog-Eingang auf PWM Ausgang
+# Uebung_034: Leistungsregelung (Analog zu PWM)
 
-* * * * * * * * * *
+[Uebung_034](https://docs.ms-muc-docs.de/projects/visual-programming-languages-docs/de/latest/training1/Ventilsteuerung/4diacIDE-workspace/test/FBs/Uebungen/Uebung_034.html)
 
-## Einleitung
-Diese Übung demonstriert die Verarbeitung eines analogen Eingangssignals und dessen Umwandlung in ein PWM-Ausgangssignal. Das System liest einen analogen Wert ein, verarbeitet diesen und gibt ihn als Pulsweitenmodulationssignal aus.
+[![NotebookLM](media/NotebookLM_logo.png)](https://notebooklm.google.com/notebook/a6872e59-1dfc-4132-a118-aff1bc7bc944)
 
-## Verwendete Funktionsbausteine (FBs)
+Dieser Artikel beschreibt die logiBUS®-Übung `Uebung_034`. Hier wird ein analoger Messwert genutzt, um die Leistung eines Aktors stufenlos zu regeln.
 
-### AnalogInput_I7
-- **Typ**: logiBUS_AI_ID
-- **Parameter**:
-  - QI = TRUE
-  - Input = logiBUS_AI::AnalogInput_I7
-  - AnalogInput_hysteresis = 50
-- **Funktionsweise**: Liest analoge Eingangswerte vom logiBUS System ein
 
-### F_SHL
-- **Typ**: F_SHL (Shift Left)
-- **Parameter**:
-  - N = UINT#1
-- **Funktionsweise**: Führt eine Linksverschiebung der Eingangsdaten um 1 Bit durch
+## Podcast
+<iframe src="https://creators.spotify.com/pod/profile/logibus/embed/episodes/LogiBUS--IEC-61499-Daten--und-Ereignisflsse-einfach-erklrt--Vom-Schalter-zur-intelligenten-Steuerung-e36vldb/a-ac3vadb" height="102px" width="400px" frameborder="0" scrolling="no"></iframe>
 
-### F_DWORD_TO_UDINT_I7
-- **Typ**: F_DWORD_TO_UDINT
-- **Funktionsweise**: Konvertiert DWORD-Datentyp in UDINT-Datentyp
+----
 
-### PWMOutput_Q4
-- **Typ**: logiBUS_QD_PWM
-- **Parameter**:
-  - QI = TRUE
-  - Output = logiBUS_DO::Output_Q4
-- **Funktionsweise**: Erzeugt ein PWM-Signal am logiBUS Ausgang
 
-## Programmablauf und Verbindungen
 
-**Ereignisverbindungen:**
-- AnalogInput_I7.IND → F_SHL.REQ
-- F_SHL.CNF → F_DWORD_TO_UDINT_I7.REQ
-- F_SHL.CNF → PWMOutput_Q4.REQ
+![](Uebung_034.png)
 
-**Datenverbindungen:**
-- AnalogInput_I7.IN → F_SHL.IN
-- F_SHL.OUT → PWMOutput_Q4.OUT
-- F_SHL.OUT → F_DWORD_TO_UDINT_I7.IN
 
-**Ablauf:**
-1. Der Analog-Eingang liest kontinuierlich Werte ein
-2. Bei neuen Daten (IND-Event) wird die Linksverschiebung aktiviert
-3. Das verschobene Signal wird sowohl an den PWM-Ausgang als auch an den Typkonverter gesendet
-4. Der PWM-Ausgang generiert entsprechend dem verarbeiteten Signal ein Ausgangssignal
+## Ziel der Übung
 
-**Lernziele:**
-- Verarbeitung analoger Eingangssignale
-- Bit-Operationen mit F_SHL
-- PWM-Signalgenerierung
-- Datentyp-Konvertierung
-- Event- und Datenflusssteuerung in 4diac
+Verbindung eines Analog-Eingangs (`logiBUS_AI`) mit einem PWM-Ausgang (`logiBUS_QD_PWM`). Es wird demonstriert, wie Datenwerte skaliert werden, um den Stellbereich eines Sensors auf den Leistungsbereich eines Aktors abzubilden.
 
-**Schwierigkeitsgrad**: Einsteiger
-**Benötigte Vorkenntnisse**: Grundlagen der IEC 61499, logiBUS System
+-----
 
-## Zusammenfassung
-Diese Übung zeigt eine komplette Signalverarbeitungskette von der analogen Eingabe bis zur PWM-Ausgabe. Sie vermittelt praktische Kenntnisse in der Signalverarbeitung, Bit-Operationen und der Ansteuerung von PWM-Ausgängen im 4diac Framework.
+## Beschreibung und Komponenten
+
+[cite_start]Die Subapplikation `Uebung_034.SUB` liest ein Potentiometer ein und steuert damit die Helligkeit einer Lampe oder die Drehzahl eines Motors[cite: 1].
+
+### Funktionsbausteine (FBs)
+
+  * **`AnalogInput_I7`**: Liest die Spannung am Eingang ein.
+  * **`F_SHL`**: Ein Schieberegister-Baustein (Shift Left). [cite_start]Er wird hier zur Skalierung genutzt, indem er den Eingangswert um ein Bit nach links verschiebt (entspricht einer Multiplikation mit 2)[cite: 1].
+  * **`PWMOutput_Q4`**: Ein pulsweitenmodulierter Ausgang zur Leistungsstellung.
+
+-----
+
+## Funktionsweise
+
+1.  Jede Änderung am analogen Eingang `I7` löst ein `IND`-Event aus.
+2.  Der Wert wird im `F_SHL` angepasst, um den gewünschten Zielbereich zu erreichen.
+3.  Das Ergebnis wird an den `OUT`-Port des PWM-Bausteins gesendet und über `REQ` aktiviert.
+4.  Der Aktor an `Q4` reagiert sofort auf die neue Vorgabe.
+
+-----
+
+## Anwendungsbeispiel
+
+**Licht-Dimmer oder Lüfter-Steuerung**:
+Durch Drehen an einem physischen Potentiometer (`I7`) kann der Bediener die Helligkeit der Kabinenbeleuchtung oder die Stärke eines Gebläses (`Q4`) stufenlos regeln. Die Software sorgt für die latenzfreie Übertragung der Steuerbefehle.
