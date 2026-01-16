@@ -38,7 +38,7 @@ class AdvancedFbtRenderer:
         def parse_section(tag_name):
             items = []
             section = interface.find(tag_name)
-            if section:
+            if section is not None:
                 for child in section:
                     items.append({
                         'name': child.get('Name'),
@@ -129,7 +129,7 @@ class AdvancedFbtRenderer:
         self.draw_path_shape(d, block_x, block_y, self.block_w, self.head_h, self.total_h, self.style['neck_indent'])
         
         # 2. Block Name
-        d.append(draw.Text(self.name, fontSize=14, x=block_x + self.block_w/2, y=block_y+20, 
+        d.append(draw.Text(self.name, font_size=14, x=block_x + self.block_w/2, y=block_y+20, 
                            center=True, fontWeight='bold', fill=self.style['colors']['text_main'], font_family=self.style['font_family']))
 
         # 3. Pins Zeichnen
@@ -174,22 +174,22 @@ class AdvancedFbtRenderer:
                     self.draw_arrow(d, pin_x, y, 'left', color) # Output arrow points out? Usually just a pin.
                 
                 # Label im Block
-                d.append(draw.Text(item['name'], fontSize=self.style['font_size'], x=label_x, y=y+4, 
+                d.append(draw.Text(item['name'], font_size=self.style['font_size'], x=label_x, y=y+4, 
                                    text_anchor=text_anchor, fill=self.style['colors']['text_main'], font_family=self.style['font_family']))
                 
                 # Typ (Außerhalb)
                 type_anchor = 'end' if is_input else 'start'
                 if item['type'] != 'Event':
-                    d.append(draw.Text(item['type'], fontSize=11, x=type_x, y=y+4,
+                    d.append(draw.Text(item['type'], font_size=11, x=type_x, y=y+4,
                                        text_anchor=type_anchor, fill=self.style['colors']['text_type'], font_family=self.style['font_family'], font_style='italic'))
                 else:
-                    d.append(draw.Text("Event", fontSize=11, x=type_x, y=y+4,
+                    d.append(draw.Text("Event", font_size=11, x=type_x, y=y+4,
                                        text_anchor=type_anchor, fill=self.style['colors']['text_comment'], font_family=self.style['font_family'], font_style='italic'))
 
                 # Kommentar (Ganz außen)
                 if item['comment']:
                     comment_pos = comment_x - 10 if is_input else comment_x + 10
-                    d.append(draw.Text(item['comment'], fontSize=self.style['comment_size'], x=comment_pos, y=y+4,
+                    d.append(draw.Text(item['comment'], font_size=self.style['comment_size'], x=comment_pos, y=y+4,
                                        text_anchor=type_anchor, fill=self.style['colors']['text_comment'], font_family=self.style['font_family']))
 
                 y += self.style['row_height']
