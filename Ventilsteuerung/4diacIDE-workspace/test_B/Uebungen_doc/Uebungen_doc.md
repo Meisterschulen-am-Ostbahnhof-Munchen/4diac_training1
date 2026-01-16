@@ -1,8 +1,10 @@
-# Alle Übungen (Numerisch)
+# Numerischer Index (test_B)
 
-Hier finden Sie alle verfügbaren Übungen in aufsteigender Reihenfolge ihrer Nummerierung.
+Hier finden Sie alle Übungen des Arbeitsbereichs `test_B` in aufsteigender Reihenfolge.
 
 ```{toctree}
+:maxdepth: 1
+
 Uebung_000
 Uebung_001
 Uebung_001c
