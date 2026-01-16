@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<FBType Name="DataPanel_MI_QW" Comment="Output service interface function block for analog output data">
+<FBType Name="DataPanel_MI_QW_PWMi" Comment="Output service interface function block for Current Controlled PWM output data (Current Mode 4)">
 	<Identification Description="Copyright (c) 2026 HR Agrartechnik GmbH">
 	</Identification>
 	<VersionInfo Organization="HR Agrartechnik GmbH" Version="1.0" Author="generated" Date="2026-01-16">
 	</VersionInfo>
-	<CompilerInfo packageName="DataPanel::io::MI::AQ">
+	<CompilerInfo packageName="DataPanel::io::MI::DQ">
+		<Import declaration="DataPanel::io::MI::DQ::DataPanel_MI_DO::Invalid"/>
 		<Import declaration="DataPanel::io::MI::const::MI"/>
 		<Import declaration="eclipse4diac::core::TypeHash"/>
-		<Import declaration="DataPanel::io::MI::AQ::DataPanel_MI_AQ::Invalid"/>
 	</CompilerInfo>
 	<InterfaceList>
 		<EventInputs>
@@ -16,10 +16,14 @@
 				<With Var="PARAMS"/>
 				<With Var="u8SAMember"/>
 				<With Var="Output"/>
+				<With Var="KP"/>
+				<With Var="KI"/>
 			</Event>
 			<Event Name="REQ" Type="Event" Comment="Service Request">
 				<With Var="QI"/>
 				<With Var="OUT"/>
+				<With Var="KP"/>
+				<With Var="KI"/>
 			</Event>
 		</EventInputs>
 		<EventOutputs>
@@ -36,8 +40,10 @@
 			<VarDeclaration Name="QI" Type="BOOL" Comment="Event Input Qualifier"/>
 			<VarDeclaration Name="PARAMS" Type="STRING" Comment="Service Parameters"/>
 			<VarDeclaration Name="OUT" Type="WORD" Comment="Output data to resource"/>
+			<VarDeclaration Name="KP" Type="UINT" Comment="Proportional gain for current control" InitialValue="70"/>
+			<VarDeclaration Name="KI" Type="UINT" Comment="Integral gain for current control" InitialValue="30"/>
 			<VarDeclaration Name="u8SAMember" Type="USINT" Comment="Node SA 224..239" InitialValue="MI::MI_00"/>
-			<VarDeclaration Name="Output" Type="DataPanel::io::MI::AQ::DataPanel_MI_AQ_S" Comment="Identify the Output AnalogOutput_1A..8B" InitialValue="Invalid"/>
+			<VarDeclaration Name="Output" Type="DataPanel::io::MI::DQ::DataPanel_MI_DO_S" Comment="Identify the Output DigitalOutput_1A..8B and Input_Power_Port_5..8" InitialValue="Invalid"/>
 		</InputVars>
 		<OutputVars>
 			<VarDeclaration Name="QO" Type="BOOL" Comment="Event Output Qualifier"/>
