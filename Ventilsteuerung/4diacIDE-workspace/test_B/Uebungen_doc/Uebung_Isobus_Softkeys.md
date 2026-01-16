@@ -1,4 +1,6 @@
-# Uebungen ISOBUS Softkeys, Buttons, etc.
+# ISOBUS (UT, TECU, TC)
+
+Alles rund um die ISOBUS-Kommunikation: Bedienung am Terminal, Auslesen von Traktordaten (TECU) und Anbindung an den Task Controller (TC).
 
 ```{toctree}
 Uebung_010
@@ -10,9 +12,7 @@ Uebung_010b1
 Uebung_010b2
 Uebung_010b3
 Uebung_010b4
-Uebung_010b4_sub
 Uebung_010b5
-Uebung_010b5_sub
 Uebung_010b6
 Uebung_010b7
 Uebung_010b8
@@ -24,18 +24,14 @@ Uebung_010bA4
 Uebung_010c
 Uebung_010c2
 Uebung_010c3
-Uebung_010c3_sub
 Uebung_010c4
-Uebung_010c4_sub
 Uebung_011
 Uebung_011a
 Uebung_011a2
 Uebung_012
 Uebung_012a
-Uebung_012a_sub
 Uebung_012b
 Uebung_012c
-Uebung_013
 Uebung_014
 Uebung_015
 Uebung_015a
@@ -47,4 +43,30 @@ Uebung_019
 Uebung_019a
 Uebung_019b
 Uebung_019c
+Uebung_060
+Uebung_070
+Uebung_071
+Uebung_071a
+Uebung_071b
+Uebung_072
+Uebung_072b
+Uebung_072c
+Uebung_073
+Uebung_074
+Uebung_079
+Uebung_120
+Uebung_121
+Uebung_122
+Uebung_122b
+Uebung_123
+Uebung_124
+Uebung_125
+Uebung_126
+Uebung_127
+Uebung_128
+Uebung_130
+Uebung_131
+Uebung_132
+Uebung_133
+Uebung_134
 ```

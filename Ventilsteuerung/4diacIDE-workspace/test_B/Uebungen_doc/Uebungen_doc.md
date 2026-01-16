@@ -1,7 +1,8 @@
-# Uebungen_doc
+# Alle Übungen (Numerisch)
+
+Hier finden Sie alle verfügbaren Übungen in aufsteigender Reihenfolge ihrer Nummerierung.
 
 ```{toctree}
-media/media
 Uebung_000
 Uebung_001
 Uebung_001c
@@ -218,10 +219,4 @@ Uebung_133
 Uebung_134
 Uebung_140
 Uebung_160
-Uebung_Isobus_Softkeys
-Uebungen_001_049
-Uebungen_050_100
-Uebungen_ISOBUS_TC-SC
-Uebungen_TECU
-Uebungen_Timer
 ```
