@@ -5,11 +5,13 @@ Diese Übungen behandeln die grundlegende Anbindung von I/Os und einfache logisc
 ```{toctree}
 :maxdepth: 1
 
+Uebung_000_AX
 Uebung_001_AX
 Uebung_001_AX_b
 Uebung_001c_AX
 Uebung_002_AX
 Uebung_002a_AX
+Uebung_002a2_AX
 Uebung_002a3_AX
 Uebung_002a5_AX
 Uebung_002a5b_AX

@@ -5,11 +5,13 @@ Hier finden Sie alle Übungen des Arbeitsbereichs `test_AX` in aufsteigender Rei
 ```{toctree}
 :maxdepth: 1
 
+Uebung_000_AX
 Uebung_001_AX
 Uebung_001_AX_b
 Uebung_001c_AX
 Uebung_002_AX
 Uebung_002a_AX
+Uebung_002a2_AX
 Uebung_002a3_AX
 Uebung_002a5_AX
 Uebung_002a5b_AX
@@ -76,9 +78,17 @@ Uebung_010c2_AX
 Uebung_010c3_AX
 Uebung_010c4_AX
 Uebung_013_AX
+Uebung_020a_AX
+Uebung_020b_AX
 Uebung_020c_AX
+Uebung_020d_AX
 Uebung_020e_AX
+Uebung_020f_AX
+Uebung_020f2_AX
 Uebung_020f3_AX
+Uebung_020g_AX
+Uebung_020h_AX
+Uebung_020i_AX
 Uebung_038_AX
 Uebung_040_AX
 Uebung_090a1_AX
