@@ -1,87 +1,41 @@
-# Uebung_072c: GBSD auf UT ausgeben
+# Uebung_072c: Integration der Geschwindigkeit (Wegberechnung)
 
-* * * * * * * * * *
+[Uebung_072c](https://docs.ms-muc-docs.de/projects/visual-programming-languages-docs/de/latest/training1/Ventilsteuerung/4diacIDE-workspace/test/FBs/Uebungen/Uebung_072c.html)
 
-## Einleitung
-Diese Übung demonstriert die Verarbeitung und Ausgabe von GBSD-Daten (Ground Based Speed and Distance) auf einem UT (User Terminal). Das System verarbeitet Geschwindigkeits- und Distanzdaten von einem Boden-basierten System und berechnet daraus weitere Werte für die Ausgabe.
+[![NotebookLM](media/NotebookLM_logo.png)](https://notebooklm.google.com/notebook/a6872e59-1dfc-4132-a118-aff1bc7bc944)
 
-## Verwendete Funktionsbausteine (FBs)
+Dieser Artikel beschreibt die logiBUS®-Übung `Uebung_072c`. Hier wird eine mathematische Methode gezeigt, um aus der Geschwindigkeit die zurückgelegte Strecke selbst zu berechnen (Integration).
 
-### I_GBSD
-- **Typ**: I_GBSD
-- **Parameter**: QI = TRUE
-- **Ereignisausgänge**: IND
-- **Datenausgänge**: GROUNDBASEDMACHINESPEED, GROUNDBASEDMACHINEDISTANCE, timestamp_data
 
-### Q_NumericValue_GBSD
-- **Typ**: Q_NumericValue
-- **Parameter**: u16ObjId = "DefaultPool_TECU::NumberVariable_Ground_based_machine_speed"
+## Podcast
+<iframe src="https://creators.spotify.com/pod/profile/logibus/embed/episodes/LogiBUS--IEC-61499-Daten--und-Ereignisflsse-einfach-erklrt--Vom-Schalter-zur-intelligenten-Steuerung-e36vldb/a-ac3vadb" height="102px" width="400px" frameborder="0" scrolling="no"></iframe>
 
-### Q_NumberVariable_Wheel_based_machine_distance
-- **Typ**: Q_NumericValue
-- **Parameter**: u16ObjId = "DefaultPool_TECU::NumberVariable_Wheel_based_machine_distance"
+----
 
-### INTEGRAL
-- **Typ**: utils::math::INTEGRAL
-- **Funktionsweise**: Führt eine Integration über Zeit durch
 
-### OFFSET_UDINT
-- **Typ**: utils::math::OFFSET_UDINT
-- **Funktionsweise**: Wendet einen Offset auf UDINT-Werte an
 
-### CYCLE_TIME
-- **Typ**: utils::timing::CYCLE_TIME
-- **Funktionsweise**: Berechnet die Zykluszeit
+![](Uebung_072c.png)
 
-### F_UINT_TO_REAL
-- **Typ**: F_UINT_TO_REAL
-- **Funktionsweise**: Konvertiert UINT zu REAL
 
-### F_REAL_TO_UDINT
-- **Typ**: F_REAL_TO_UDINT
-- **Funktionsweise**: Konvertiert REAL zu UDINT
+## Ziel der Übung
 
-### F_SUB
-- **Typ**: F_SUB
-- **Funktionsweise**: Führt eine Subtraktion durch
+Verwendung des Bausteins `INTEGRAL`. Es wird demonstriert, wie man einen Wegwert manuell berechnet, falls die TECU keinen kumulierten Distanzwert liefert oder dieser für eine Teilmessung (Tageskilometerzähler) genullt werden soll.
 
-### F_UDINT_TO_LINT
-- **Typ**: F_UDINT_TO_LINT
-- **Funktionsweise**: Konvertiert UDINT zu LINT
+-----
 
-### F_UDINT_TO_LINT_1
-- **Typ**: F_UDINT_TO_LINT
-- **Funktionsweise**: Konvertiert UDINT zu LINT
+## Beschreibung und Komponenten
 
-## Programmablauf und Verbindungen
+[cite_start]Die Subapplikation `Uebung_072c.SUB` berechnet den Weg durch zeitliche Integration der radarbasierten Geschwindigkeit[cite: 1].
 
-**Ereignisfluss:**
-1. I_GBSD.IND → Q_NumericValue_GBSD.REQ
-2. I_GBSD.IND → OFFSET_UDINT.REQ
-3. I_GBSD.IND → CYCLE_TIME.REQ
-4. OFFSET_UDINT.CNF → Q_NumberVariable_Wheel_based_machine_distance.REQ
-5. CYCLE_TIME.CNF → F_UINT_TO_REAL.REQ
-6. F_UINT_TO_REAL.CNF → INTEGRAL.REQ
-7. INTEGRAL.CNF → F_REAL_TO_UDINT.REQ
-8. F_REAL_TO_UDINT.CNF → F_UDINT_TO_LINT_1.REQ
-9. OFFSET_UDINT.CNF → F_UDINT_TO_LINT.REQ
-10. F_UDINT_TO_LINT_1.CNF → F_SUB.REQ
+### Funktionsbausteine (FBs)
 
-**Datenfluss:**
-- Geschwindigkeitsdaten werden direkt ausgegeben und für Integration verwendet
-- Distanzdaten werden mit Offset verarbeitet und ausgegeben
-- Zeitstempel werden für Zykluszeitberechnung genutzt
-- Integrierte Werte werden konvertiert und für Subtraktion vorbereitet
+  * **`I_GBSD`**: Liefert die aktuelle Geschwindigkeit.
+  * **`CYCLE_TIME`**: Misst die Zeit zwischen zwei Geschwindigkeits-Nachrichten (`TM`).
+  * **`INTEGRAL`**: Summiert das Produkt aus Geschwindigkeit und Zeit (`v * dt`) auf.
+  * **`OFFSET_UDINT`**: Erlaubt das Addieren eines Startwerts oder das Zurücksetzen der Zählung.
 
-**Lernziele:**
-- Verarbeitung von GBSD-Daten
-- Verwendung von mathematischen Operationen (Integration, Subtraktion)
-- Datentyp-Konvertierungen
-- Zeitbasierte Berechnungen
-- Ausgabe von Prozessdaten auf UT
+-----
 
-**Schwierigkeitsgrad**: Mittel
-**Benötigte Vorkenntnisse**: Grundlagen der 4diac-IDE, Verständnis von Funktionsbausteinen und Datenfluss
+## Funktionsweise
 
-## Zusammenfassung
-Diese Übung zeigt ein komplexes Datenverarbeitungssystem für GBSD-Daten, das verschiedene mathematische Operationen, Datentyp-Konvertierungen und zeitbasierte Berechnungen kombiniert. Das System verarbeitet sowohl Geschwindigkeits- als auch Distanzdaten und gibt diese nach entsprechender Verarbeitung auf dem User Terminal aus. Die Übung demonstriert die Integration verschiedener Funktionsbausteine zu einem funktionierenden Gesamtsystem.
+Das Programm führt permanent die physikalische Grundformel `Weg = Geschwindigkeit * Zeit` aus. Da die TECU-Daten nie ganz glatt sind, nutzt der `INTEGRAL` Baustein kleine Zeitintervalle (`CYCLE_TIME`), um eine hohe Genauigkeit der aufsummierten Strecke zu erreichen. Das Ergebnis wird am Terminal als `Wheel_based_machine_distance` angezeigt (auch wenn es hier aus Radar-Daten berechnet wurde).

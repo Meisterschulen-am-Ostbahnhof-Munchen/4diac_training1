@@ -1,74 +1,13 @@
-# Uebung_039b: Spiegelabfolge V2 mit Schrittkette
+# Uebung_039b: Ventil-Timing (Impulssteuerung)
 
-* * * * * * * * * *
+[Uebung_039b](https://docs.ms-muc-docs.de/projects/visual-programming-languages-docs/de/latest/training1/Ventilsteuerung/4diacIDE-workspace/test/FBs/Uebungen/Uebung_039b.html)
 
-## Einleitung
+[![NotebookLM](media/NotebookLM_logo.png)](https://notebooklm.google.com/notebook/a6872e59-1dfc-4132-a118-aff1bc7bc944)
 
-Diese Übung implementiert eine Spiegelabfolge-Steuerung mit Schrittkette, die für hydraulische Ringsysteme mit 3/2-Wege-Ventilen (z.B. Claas) oder pneumatische 5/2-Wege-Ventile geeignet ist. Die Steuerung realisiert eine zeitgesteuerte Abfolge von Ausgängen mit unterschiedlichen Zeitparametern.
+## Übersicht
 
-## Verwendete Funktionsbausteine (FBs)
-
-### DigitalOutput_Q1 / DigitalOutput_Q2
-- **Typ**: logiBUS_QX
-- **Parameter**:
-  - QI = TRUE
-  - Output = logiBUS_DO::Output_Q1
-- **Funktion**: Digitale Ausgänge für die Ansteuerung der Ventile
-
-### SoftKey_F1
-- **Typ**: Softkey_IX
-- **Parameter**:
-  - QI = TRUE
-  - u16ObjId = DefaultPool::SoftKey_F1
-- **Funktion**: Software-Taste zum Starten der Abfolge
-
-### E_TP_Q1
-- **Typ**: E_TP (Impulsgeber)
-- **Parameter**:
-  - PT = T#8s
-- **Funktion**: Erzeugt einen 8-Sekunden-Impuls für Ausgang Q1
-
-### E_TP_Q2
-- **Typ**: E_TP (Impulsgeber)
-- **Parameter**:
-  - PT = T#4s
-- **Funktion**: Erzeugt einen 4-Sekunden-Impuls für Ausgang Q2
-
-### E_TON
-- **Typ**: E_TON (Zeitverzögerung Einschaltverzögerung)
-- **Parameter**:
-  - PT = T#2s
-- **Funktion**: Realisiert eine 2-Sekunden-Verzögerung zwischen den Schritten
-
-## Programmablauf und Verbindungen
-
-**Ereignisverbindungen:**
-- SoftKey_F1.IND → E_TP_Q1.REQ (Startimpuls)
-- E_TP_Q1.CNF → DigitalOutput_Q1.REQ (Aktivierung Q1)
-- E_TP_Q1.CNF → E_TON.REQ (Start Verzögerung)
-- E_TON.CNF → E_TP_Q2.REQ (Aktivierung Q2)
-- E_TP_Q2.CNF → DigitalOutput_Q2.REQ (Aktivierung Q2)
-
-**Datenverbindungen:**
-- E_TP_Q1.Q → DigitalOutput_Q1.OUT (Signal Q1)
-- E_TP_Q1.Q → E_TON.IN (Verzögerungs-Steuersignal)
-- E_TON.Q → E_TP_Q2.IN (Start Q2)
-- E_TP_Q2.Q → DigitalOutput_Q2.OUT (Signal Q2)
-- SoftKey_F1.IN → E_TP_Q1.IN (Start-Steuersignal)
-
-**Ablauf:**
-1. Betätigung der SoftKey_F1 startet die Abfolge
-2. Q1 wird für 8 Sekunden aktiviert
-3. Nach 8 Sekunden startet eine 2-Sekunden-Verzögerung
-4. Nach der Verzögerung wird Q2 für 4 Sekunden aktiviert
-5. Die Abfolge endet nach Abschluss von Q2
-
-**Lernziele:**
-- Verständnis von Schrittketten-Programmierung
-- Zeitgesteuerte Abläufe mit E_TP und E_TON
-- Verwendung von Software-Tasten zur Prozesssteuerung
-- Ansteuerung digitaler Ausgänge
-
-## Zusammenfassung
-
-Diese Übung demonstriert eine typische Schrittkette mit zeitgesteuerten Abläufen für industrielle Anwendungen. Die Kombination aus Impulsgebern (E_TP) und Verzögerungsbausteinen (E_TON) ermöglicht präzise zeitgesteuerte Abfolgen, wie sie in vielen Automatisierungsprozessen benötigt werden. Die Steuerung ist besonders geeignet für Ventilsteuerungen in hydraulischen oder pneumatischen Systemen.
+[cite_start]In dieser Übung wird eine zeitgesteuerte Ventil-Abfolge unter Verwendung von Impulsgebern (`E_TP`) realisiert[cite: 1].
+Ein Klick auf den Softkey **F1** startet eine Kette von Ereignissen:
+1.  Ventil **Q1** wird für 8 Sekunden geöffnet.
+2.  Nach einer Verzögerung von 2 Sekunden (`E_TON`) wird Ventil **Q2** für 4 Sekunden hinzugeschaltet.
+Dies ermöglicht die Programmierung von festen hydraulischen Funktionszyklen (z.B. "Ballenauswurf"), bei denen mehrere Aktoren mit exaktem Zeitversatz arbeiten müssen.

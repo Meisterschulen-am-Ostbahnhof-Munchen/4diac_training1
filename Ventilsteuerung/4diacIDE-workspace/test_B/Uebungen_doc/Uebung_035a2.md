@@ -1,77 +1,23 @@
-# Uebung_035a2: Ampelschaltung Österreich
+# Uebung_035a2: Ampelschaltung mit Blinkphase
 
-* * * * * * * * * *
+[Uebung_035a2](https://docs.ms-muc-docs.de/projects/visual-programming-languages-docs/de/latest/training1/Ventilsteuerung/4diacIDE-workspace/test/FBs/Uebungen/Uebung_035a2.html)
 
-## Einleitung
-Diese Übung implementiert eine österreichische Ampelschaltung für den Straßenverkehr. Die Steuerung realisiert den typischen Ablauf einer Verkehrsampel mit den Phasen Rot, Rot-Gelb, Grün, Grün-Blinken und Gelb. Die Schaltung wird über einen Taster gestartet und durchläuft automatisch den definierten Ablauf mit festgelegten Zeitintervallen.
+[![NotebookLM](media/NotebookLM_logo.png)](https://notebooklm.google.com/notebook/a6872e59-1dfc-4132-a118-aff1bc7bc944)
 
-## Verwendete Funktionsbausteine (FBs)
+Dieser Artikel beschreibt die logiBUS®-Übung `Uebung_035a2`. Hier wird die Ampelsteuerung um die in einigen Ländern (z.B. Österreich) übliche Grün-Blinkphase erweitert.
 
-### Haupt-Funktionsbausteine:
-- **DigitalInput_CLK_I1** (logiBUS_IE): Digitaler Eingang für Tasterbetätigung
-- **sequence_T_04_loop** (sequence_T_05_loop): Sequenzer für den Ampelablauf
-- **CAR_RED_LIGHT** (logiBUS_QX): Ausgang für rotes Licht
-- **CAR_ORANGE_LIGHT** (logiBUS_QX): Ausgang für gelbes Licht  
-- **CAR_GREEN_LIGHT** (logiBUS_QX): Ausgang für grünes Licht
-- **E_TimeOut** (E_TimeOut): Zeitüberwachung
-- **E_TRAIN** (E_TRAIN): Blinkgeber für Grünphase
-- **E_T_FF** (E_T_FF): T-FlipFlop für Blinksignal
 
-### Sub-Bausteine:
+## Podcast
+<iframe src="https://creators.spotify.com/pod/profile/logibus/embed/episodes/LogiBUS--IEC-61499-Daten--und-Ereignisflsse-einfach-erklrt--Vom-Schalter-zur-intelligenten-Steuerung-e36vldb/a-ac3vadb" height="102px" width="400px" frameborder="0" scrolling="no"></iframe>
 
-#### RED
-- **Typ**: SubApp
-- **Verwendete interne FBs**:
-  - **OR_RED** (OR_2): ODER-Verknüpfung
-    - Parameter: keine
-    - Ereigniseingang: REQ
-    - Ereignisausgang: CNF
-    - Dateneingänge: IN1, IN2
-    - Datenausgang: OUT
-- **Funktionsweise**: Kombiniert die Signale für Rot- und Rot-Gelb-Phase mittels ODER-Verknüpfung
+----
 
-#### ORANGE
-- **Typ**: SubApp
-- **Verwendete interne FBs**:
-  - **OR_ORANGE** (OR_2): ODER-Verknüpfung
-    - Parameter: keine
-    - Ereigniseingang: REQ
-    - Ereignisausgang: CNF
-    - Dateneingänge: IN1, IN2
-    - Datenausgang: OUT
-- **Funktionsweise**: Kombiniert die Signale für Rot-Gelb- und Gelb-Phase mittels ODER-Verknüpfung
 
-#### GREEN
-- **Typ**: SubApp
-- **Verwendete interne FBs**:
-  - **OR_2** (OR_2): ODER-Verknüpfung
-    - Parameter: keine
-    - Ereigniseingang: REQ
-    - Ereignisausgang: CNF
-    - Dateneingänge: IN1, IN2
-    - Datenausgang: OUT
-- **Funktionsweise**: Kombiniert die Signale für Grün- und Grün-Blink-Phase mittels ODER-Verknüpfung
 
-## Programmablauf und Verbindungen
+![](Uebung_035a2.png)
 
-**Zeitparameter der Ampelphasen:**
-- Rot: 6 Sekunden
-- Rot+Gelb: 2 Sekunden  
-- Grün: 6 Sekunden
-- Grün blinkend: 4 Sekunden (500ms Blinkintervall, 4 Blitze)
-- Gelb: 2 Sekunden
 
-**Start und Ablauf:**
-- Die Ampel wird über den Taster I1 gestartet
-- Der Sequenzer durchläuft automatisch alle Phasen in der definierten Reihenfolge
-- Die Grün-Blinkphase wird durch den E_TRAIN-Baustein mit 500ms Intervall und 4 Blitzen realisiert
+## Übersicht
 
-**Signalverarbeitung:**
-- Die Sub-Bausteine RED, ORANGE und GREEN kombinieren jeweils die entsprechenden Phasensignale
-- Die Ausgänge steuern direkt die physischen Lampenausgänge Q1-Q3
-
-**Schwierigkeitsgrad**: Mittel
-**Vorkenntnisse**: Grundkenntnisse in IEC 61499, Sequenzer-Programmierung, ODER-Verknüpfungen
-
-## Zusammenfassung
-Diese Übung demonstriert eine praxisnahe Anwendung einer Verkehrsampelsteuerung nach österreichischem Standard. Sie verbindet Sequenzer-Technik mit logischen Verknüpfungen und Zeitsteuerungen. Die modulare Struktur mit Sub-Bausteinen ermöglicht eine klare Trennung der Funktionalitäten und erleichtert die Wartung und Erweiterung des Systems.
+[cite_start]Unter Verwendung eines 5-Schritt-Sequenzers wird ein zusätzlicher Zustand "Grün Blinken" eingefügt[cite: 1].
+Nach der Grünphase (Schritt 3) startet der Sequenzer einen `E_TRAIN` Baustein (Schritt 4). Dieser erzeugt 4 kurze Impulse im 500ms Takt, die über ein Toggle-Flip-Flop die grüne Lampe blinken lassen. Erst nach Abschluss dieser Blink-Sequenz schaltet das System in die Gelbphase (Schritt 5). Dies zeigt die nahtlose Integration von Sub-Sequenzen innerhalb einer übergeordneten Schrittkette.

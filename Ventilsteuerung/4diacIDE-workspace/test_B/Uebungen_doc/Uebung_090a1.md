@@ -1,62 +1,43 @@
-# Uebung_090a1: Beispiel für F_MUX_2
+# Uebung_090a1: Daten-Auswahl (Multiplexer)
 
-* * * * * * * * * *
+[Uebung_090a1](https://docs.ms-muc-docs.de/projects/visual-programming-languages-docs/de/latest/training1/Ventilsteuerung/4diacIDE-workspace/test/FBs/Uebungen/Uebung_090a1.html)
 
-## Einleitung
-Diese Übung demonstriert die Verwendung des Multiplexer-Funktionsbausteins F_MUX_2 in einer 4diac-IDE Anwendung. Das Programm zeigt, wie ein Multiplexer zur Auswahl zwischen verschiedenen Eingangssignalen verwendet werden kann.
+[![NotebookLM](media/NotebookLM_logo.png)](https://notebooklm.google.com/notebook/a6872e59-1dfc-4132-a118-aff1bc7bc944)
 
-## Verwendete Funktionsbausteine (FBs)
+Dieser Artikel beschreibt die logiBUS®-Übung `Uebung_090a1`. Hier wird die Auswahl eines Datenwertes basierend auf einer Adresse demonstriert.
 
-### F_MUX_2
-- **Typ**: Multiplexer-Funktionsbaustein mit 2 Eingängen
-- **Funktionsweise**: Wählt zwischen zwei Eingangssignalen (IN1 und IN2) basierend auf dem Steuersignal K aus
 
-### logiBUS_IX (DigitalInput)
-- **Typ**: Digitaler Eingangsbaustein für logiBUS
-- **Parameter**: 
-  - QI = TRUE (aktiviert den Baustein)
-  - Input = logiBUS_DI::Input_Ix (konfiguriert den spezifischen Eingangskanal)
+## Podcast
+<iframe src="https://creators.spotify.com/pod/profile/logibus/embed/episodes/LogiBUS--IEC-61499-Daten--und-Ereignisflsse-einfach-erklrt--Vom-Schalter-zur-intelligenten-Steuerung-e36vldb/a-ac3vadb" height="102px" width="400px" frameborder="0" scrolling="no"></iframe>
 
-### F_BOOL_TO_UINT
-- **Typ**: Typkonvertierungsbaustein
-- **Funktionsweise**: Wandelt einen BOOL-Wert in einen UINT-Wert um
+----
 
-### logiBUS_QX (DigitalOutput)
-- **Typ**: Digitaler Ausgangsbaustein für logiBUS
-- **Parameter**:
-  - QI = TRUE (aktiviert den Baustein)
-  - Output = logiBUS_DO::Output_Q1 (konfiguriert den spezifischen Ausgangskanal)
 
-## Programmablauf und Verbindungen
 
-Das Programm verwendet drei digitale Eingänge (I1, I2, I4) und einen digitalen Ausgang (Q1). Der Ablauf ist wie folgt:
+![](Uebung_090a1.png)
 
-1. **Ereignisverbindungen**:
-   - DigitalInput_I4.IND → F_BOOL_TO_UINT_I4.REQ
-   - F_MUX_2.CNF → DigitalOutput_Q1.REQ
-   - DigitalInput_I1.IND → F_MUX_2.REQ
-   - DigitalInput_I2.IND → F_MUX_2.REQ
 
-2. **Datenverbindungen**:
-   - DigitalInput_I4.IN → F_BOOL_TO_UINT_I4.IN
-   - F_BOOL_TO_UINT_I4.OUT → F_MUX_2.K (Steuersignal)
-   - DigitalInput_I1.IN → F_MUX_2.IN1 (Eingang 1)
-   - DigitalInput_I2.IN → F_MUX_2.IN2 (Eingang 2)
-   - F_MUX_2.OUT → DigitalOutput_Q1.OUT
+## Ziel der Übung
 
-**Funktionsweise**: 
-- Eingang I4 steuert über den Typkonverter F_BOOL_TO_UINT die Auswahl des Multiplexers
-- Je nach Wert von I4 wird entweder der Wert von I1 oder I2 an den Ausgang Q1 weitergeleitet
-- Die Eingänge I1 und I2 liefern die alternativen Signale für den Multiplexer
+Verwendung des Bausteins `F_MUX_2` (Multiplexer). Es wird gezeigt, wie man zwischen zwei Signalquellen umschaltet, um einen gemeinsamen Ausgang zu bedienen.
 
-**Lernziele**:
-- Verständnis des Multiplexer-Prinzips
-- Umgang mit Typkonvertierungen (BOOL zu UINT)
-- Aufbau von Steuerungslogik mit Multiplexern
-- Verwendung von logiBUS-Ein-/Ausgängen
+-----
 
-**Schwierigkeitsgrad**: Einfach
-**Benötigte Vorkenntnisse**: Grundlagen der 4diac-IDE, Verständnis von Funktionsbausteinen und Datenfluss
+## Beschreibung und Komponenten
 
-## Zusammenfassung
-Diese Übung vermittelt grundlegende Kenntnisse im Umgang mit Multiplexern in der 4diac-IDE. Der F_MUX_2 Baustein ermöglicht die Auswahl zwischen verschiedenen Eingangssignalen basierend auf einem Steuersignal. Die Übung zeigt zudem die praktische Anwendung von Typkonvertierungen und die Integration mit logiBUS-Ein-/Ausgängen.
+[cite_start]In `Uebung_090a1.SUB` wird ein binärer Wahlschalter genutzt, um zwischen zwei Eingängen umzuschalten[cite: 1].
+
+### Funktionsbausteine (FBs)
+
+  * **`I1` & `I2` (Sources)**: Die Datenquellen.
+  * **`I4` (Selector)**: Bestimmt, welche Quelle durchgeschaltet wird.
+  * **`F_MUX_2`**: Der Multiplexer-Baustein.
+
+-----
+
+## Funktionsweise
+
+*   Ist Taster **I4** nicht gedrückt (K=0) ➡️ Der Zustand von **I1** wird an den Ausgang `Q1` weitergereicht.
+*   Ist Taster **I4** gedrückt (K=1) ➡️ Der Zustand von **I2** wird an den Ausgang `Q1` weitergereicht.
+
+Dies ermöglicht das Umschalten von Bedien-Zuständigkeiten (z.B. zwischen Lokal- und Fernsteuerung).

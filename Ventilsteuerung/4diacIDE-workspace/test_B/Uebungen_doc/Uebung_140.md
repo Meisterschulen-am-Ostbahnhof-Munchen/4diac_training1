@@ -1,37 +1,45 @@
-Hier ist die Dokumentationsseite für die Übung 140 basierend auf den bereitgestellten Daten.
+# Uebung_140: Betriebsstundenzähler (SYS_ONTIME)
 
-# Uebung_140
+[Uebung_140](https://docs.ms-muc-docs.de/projects/visual-programming-languages-docs/de/latest/training1/Ventilsteuerung/4diacIDE-workspace/test/FBs/Uebungen/Uebung_140.html)
 
-![Uebung_140](Uebung_140.png)
+[![NotebookLM](media/NotebookLM_logo.png)](https://notebooklm.google.com/notebook/a6872e59-1dfc-4132-a118-aff1bc7bc944)
 
-* * * * * * * * * *
+Dieser Artikel beschreibt die logiBUS®-Übung `Uebung_140`. Hier wird die Erfassung der Systemlaufzeit demonstriert.
 
-## Einleitung
-Diese Übung befasst sich mit der Zeiterfassung in Steuerungssystemen. Konkret wird der Funktionsbaustein `SYS_ONTIME` implementiert, welcher als Betriebsstundenzähler dient. Ziel ist es, zu verstehen, wie Laufzeiten von Systemen oder Aggregaten gemessen und für weitere Logik (z.B. Wartungsintervalle) bereitgestellt werden können.
 
-## Verwendete Funktionsbausteine (FBs)
+## Podcast
+<iframe src="https://creators.spotify.com/pod/profile/logibus/embed/episodes/LogiBUS--IEC-61499-Daten--und-Ereignisflsse-einfach-erklrt--Vom-Schalter-zur-intelligenten-Steuerung-e36vldb/a-ac3vadb" height="102px" width="400px" frameborder="0" scrolling="no"></iframe>
 
-In dieser Sub-Application wird der folgende Funktionsbaustein verwendet:
+----
 
-### Sub-Bausteine: SYS_ONTIME
-- **Typ**: `logiBUS::signalprocessing::measurement::SYS_ONTIME`
-- **Verwendete interne FBs**:
-    - *Keine weiteren internen FBs im bereitgestellten Ausschnitt definiert (Bibliotheksbaustein).*
-- **Funktionsweise**:
-    Der Baustein `SYS_ONTIME` dient der Messung der kumulierten Einschaltzeit. Er zählt die Zeit, solange ein entsprechendes Eingangssignal aktiv ist, und gibt die summierte Dauer aus. Dies ist essenziell für die Realisierung von Betriebsstundenzählern.
 
-## Programmablauf und Verbindungen
 
-Die Übung besteht aus einem Netzwerk innerhalb einer Sub-Application, in dem eine Instanz des `SYS_ONTIME` Bausteins platziert wurde.
+![](Uebung_140.png)
 
-*   **Lernziele**:
-    *   Kennenlernen von Bibliotheksbausteinen zur Zeitmessung.
-    *   Verständnis für die Erfassung von Betriebsdauern.
-*   **Schwierigkeitsgrad**: Einsteiger.
-*   **Voraussetzungen**: Grundlegendes Verständnis der IEC 61499 und der Handhabung von Funktionsbausteinen in der 4diac IDE.
-*   **Ablauf**:
-    *   Der Baustein befindet sich an der Position (x=-1400, y=-400).
-    *   In dieser Basis-Konfiguration sind noch keine expliziten Verbindungen zu Eingangs- oder Ausgangssignalen definiert. Um die Übung zu vervollständigen, müssen die Eingänge des `SYS_ONTIME` Bausteins mit einer Logik (z.B. einem "Motor Ein"-Signal) verbunden werden, um die Zählung zu aktivieren.
 
-## Zusammenfassung
-Die "Uebung_140" legt den Grundstein für die Implementierung von Wartungs- und Überwachungsfunktionen in Steuerungsapplikationen. Durch die Nutzung des `SYS_ONTIME` Bausteins wird eine präzise Erfassung der Betriebszeiten ermöglicht.
+## Ziel der Übung
+
+Verwendung des Bausteins `SYS_ONTIME`. Ziel ist es, die kumulierte Zeit zu erfassen, in der die Steuerung eingeschaltet und aktiv ist.
+
+-----
+
+## Beschreibung und Komponenten
+
+[cite_start]Die Subapplikation `Uebung_140.SUB` nutzt einen speziellen Messbaustein zur Zeitüberwachung[cite: 1].
+
+### Funktionsbausteine (FBs)
+
+  * **`SYS_ONTIME`**: Typ `logiBUS::signalprocessing::measurement::SYS_ONTIME`. [cite_start]Dieser Baustein misst die Zeit seit dem letzten Systemstart oder die kumulierte Gesamtzeit (je nach Implementierung)[cite: 1].
+
+-----
+
+## Funktionsweise
+
+Der Baustein läuft im Hintergrund mit. Er bietet typischerweise Ausgänge für Sekunden, Minuten und Stunden. Diese Daten können dann dauerhaft gespeichert (NVS) oder auf dem Service-Menü des Terminals angezeigt werden.
+
+-----
+
+## Anwendungsbeispiel
+
+**Wartungsintervalle**:
+Die Steuerung zählt die Betriebsstunden der Maschine. Sobald ein Grenzwert (z.B. 500 Stunden) erreicht ist, wird dem Bediener am Terminal eine Meldung angezeigt: "Ölwechsel erforderlich". Dies garantiert die Einhaltung von Wartungsplänen und erhöht die Lebensdauer der Maschine.

@@ -1,81 +1,47 @@
-Hier ist die Dokumentation für die Übung 124, basierend auf den bereitgestellten Daten.
+# Uebung_124: Custom PGN senden (Peer-to-Peer)
 
-# Uebung_124
+[Uebung_124](https://docs.ms-muc-docs.de/projects/visual-programming-languages-docs/de/latest/training1/Ventilsteuerung/4diacIDE-workspace/test/FBs/Uebungen/Uebung_124.html)
 
-*(Hier Platzhalter für ein Bild der Übung einfügen, falls vorhanden)*
+[![NotebookLM](media/NotebookLM_logo.png)](https://notebooklm.google.com/notebook/a6872e59-1dfc-4132-a118-aff1bc7bc944)
 
-* * * * * * * * * *
+Dieser Artikel beschreibt die logiBUS®-Übung `Uebung_124`. Hier verlassen wir die Standard-Nachrichten und senden eigene Datenpakete (PGNs) an einen spezifischen Partner im Netzwerk.
 
-## Einleitung
-Diese Übung befasst sich mit dem Senden von ISOBUS-Nachrichten (`ISOBUS Send Message`). Ziel ist es, einen spezifischen Netzwerkknoten (hier vermutlich ein Virtual Terminal) mittels Filterkriterien zu identifizieren und anschließend auf Tastendruck ein definiertes Datenpaket an diesen Knoten zu senden.
 
-## Verwendete Funktionsbausteine (FBs)
+## Podcast
+<iframe src="https://creators.spotify.com/pod/profile/logibus/embed/episodes/LogiBUS--IEC-61499-Daten--und-Ereignisflsse-einfach-erklrt--Vom-Schalter-zur-intelligenten-Steuerung-e36vldb/a-ac3vadb" height="102px" width="400px" frameborder="0" scrolling="no"></iframe>
 
-In dieser SubApplikation werden verschiedene Funktionsbausteine kombiniert, um die Netzwerkverwaltung und das Senden von Nachrichten zu realisieren.
+----
 
-### Haupt-Bausteine:
 
-### **NmGetCfInfo_1**
-- **Typ**: `isobus::pgn::NmGetCfInfo`
-- **Funktionsweise**: Dieser Baustein dient dazu, Informationen über eine Steuerfunktion (Control Function - CF) im ISOBUS-Netzwerk zu erhalten. Er filtert den Netzwerkverkehr basierend auf einer Adresse und einer Maske.
-- **Konfiguration**:
-    - **Parameter**:
-        - `u8CanIdx` = `NODE1` (Der verwendete CAN-Knoten)
-        - `member` = `network`
-        - `address` = `VT_ADD` (Zieladresse, importiert aus Konstanten)
-        - `mask` = `VT_FLT` (Filtermaske, importiert aus Konstanten)
-    - **Ausgänge**:
-        - Liefert `sNameField`, `sCfInfo` und `sNetEv` (Netzwerkevent mit Adressinformationen).
 
-### **AlPgnTxNew8B**
-- **Typ**: `isobus::pgn::tx::AlPgnTxNew8B`
-- **Funktionsweise**: Dieser Baustein ist für das Senden einer neuen PGN-Nachricht mit einer Länge von 8 Bytes zuständig.
-- **Konfiguration**:
-    - **Parameter**:
-        - `u32Pgn` = `61184` (Die zu sendende Parameter Group Number)
-        - `u16DaSize` = `8` (Datengröße)
-        - `u8Priority` = `3` (Priorität der Nachricht)
-        - `Data` = `[16#FA, 16#FB, 16#FC, 16#FD, 16#FE, 16#FF, 16#F1, 16#F2]` (Das statische Daten-Array, das gesendet wird)
-    - **Eingänge**:
-        - `install`: Initialisiert den Sender mit dem Ziel (getriggert durch `NmGetCfInfo`).
-        - `REQ`: Fordert das Senden der Nachricht an (getriggert durch den Taster).
-        - `NmDestin`: Empfängt das Ziel aus dem `sNetEv` des `NmGetCfInfo`.
+![](Uebung_124.png)
 
-### **DigitalInput_CLK_I1**
-- **Typ**: `logiBUS::io::DI::logiBUS_IE`
-- **Funktionsweise**: Stellt die Schnittstelle zu einem physischen digitalen Eingang dar und generiert Events.
-- **Konfiguration**:
-    - **Parameter**:
-        - `QI` = `TRUE`
-        - `Input` = `Input_I1`
-        - `InputEvent` = `BUTTON_SINGLE_CLICK` (Reagiert auf einen einfachen Klick).
 
-### **STRUCT_DEMUX (3, 4, 5)**
-- **Typ**: `eclipse4diac::convert::STRUCT_DEMUX`
-- **Funktionsweise**: Diese Bausteine werden verwendet, um komplexe Datentypen (Strukturen) in ihre Einzelteile zu zerlegen, vermutlich zu Debugging- oder Analysezwecken.
-- **Verwendete Typen**:
-    - `isobus::pgn::NAMEFIELD_T`
-    - `isobus::pgn::CF_INFO_T`
-    - `isobus::pgn::ISONETEVENT_T`
+## Ziel der Übung
 
-## Programmablauf und Verbindungen
+Verwendung des Bausteins `AlPgnTxNew8B`. Es wird gezeigt, wie man eine herstellerspezifische Nachricht (Proprietary PGN) definiert und diese gezielt an ein anderes Steuergerät sendet.
 
-Der Ablauf der Übung lässt sich in zwei Phasen unterteilen: **Initialisierung/Suche** und **Senden**.
+-----
 
-1.  **Netzwerksuche (Identifikation):**
-    *   Der Baustein `NmGetCfInfo_1` überwacht das Netzwerk `NODE1`.
-    *   Sobald ein Teilnehmer gefunden wird, der den Filterkriterien (`VT_ADD`, `VT_FLT`) entspricht, wird das Event `IND` ausgelöst.
-    *   Gleichzeitig werden die Strukturdaten (`sNameField`, `sNetEv`, `sCfInfo`) ausgegeben. Diese werden zur Analyse an die `STRUCT_DEMUX` Bausteine geleitet.
+## Beschreibung und Komponenten
 
-2.  **Installation des Senders:**
-    *   Das `IND`-Event von `NmGetCfInfo_1` ist mit dem `install`-Eingang des Senders `AlPgnTxNew8B` verbunden.
-    *   Wichtig hierbei ist die Datenverbindung von `NmGetCfInfo_1.sNetEv` zu `AlPgnTxNew8B.NmDestin`. Damit "lernt" der Sender, an welche Adresse (Destination) die PGN 61184 gesendet werden soll.
+[cite_start]Die Subapplikation `Uebung_124.SUB` kombiniert die Teilnehmer-Suche mit einem Sende-Baustein[cite: 1].
 
-3.  **Senden der Nachricht:**
-    *   Der Baustein `DigitalInput_CLK_I1` überwacht den Eingang `Input_I1`.
-    *   Bei einem einfachen Klick (`BUTTON_SINGLE_CLICK`) wird das Event `IND` ausgelöst.
-    *   Dieses Event triggert den Eingang `REQ` am `AlPgnTxNew8B`.
-    *   Daraufhin sendet der Baustein die definierten 8 Bytes (beginnend mit `0xFA`) an die zuvor installierte Zieladresse.
+### Funktionsbausteine (FBs)
 
-## Zusammenfassung
-Die `Uebung_124` demonstriert einen typischen Anwendungsfall im ISOBUS-Umfeld: Das dynamische Finden eines Kommunikationspartners (z.B. ein Virtual Terminal) und das anschließende Senden von gerichtetem Datenverkehr (Destination Specific) ausgelöst durch eine Benutzerinteraktion (Taster). Die Verwendung der `DEMUX`-Bausteine deutet darauf hin, dass die empfangenen Netzwerkinformationen auch im Detail betrachtet werden können.
+  * **`NmGetCfInfo_1`**: Sucht den Zielpartner (hier ein Virtual Terminal).
+  * **`AlPgnTxNew8B`**: Der Sende-Baustein für 8-Byte Nachrichten.
+  * **Parameter**:
+    * `u32Pgn`: Die Nummer der Nachricht (hier `61184` = Proprietary A).
+    * `Data`: Der Inhalt der Nachricht (8 Bytes Hex-Daten).
+
+-----
+
+## Funktionsweise
+
+1.  Zuerst identifiziert `NmGetCfInfo` den Partner und liefert dessen Netzwerk-Identität (`NmDestin`).
+2.  Durch das `IND`-Event wird der Sende-Baustein einmalig im System registriert (`install`).
+3.  Jeder Klick auf den physischen Taster **I1** triggert nun den `REQ`-Eingang.
+4.  Die Steuerung sendet daraufhin das vordefinierte Datenpaket direkt an den gewählten Partner.
+
+Dies ist die Grundlage für die herstellerspezifische Kommunikation zwischen Traktor und Anbaugerät.

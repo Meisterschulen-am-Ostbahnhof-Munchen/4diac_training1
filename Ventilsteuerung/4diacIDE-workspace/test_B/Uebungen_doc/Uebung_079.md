@@ -1,33 +1,42 @@
-# Uebung_079: alle TECU FBs
+# Uebung_079: Tractor ECU (TECU) Gesamtübersicht
 
-* * * * * * * * * *
+[Uebung_079](https://docs.ms-muc-docs.de/projects/visual-programming-languages-docs/de/latest/training1/Ventilsteuerung/4diacIDE-workspace/test/FBs/Uebungen/Uebung_079.html)
 
-## Einleitung
-Diese Übung demonstriert die Verwendung verschiedener TECU-Funktionsbausteine in einer 4diac-IDE Anwendung. Die Übung zeigt die Integration von Sensor- und Aktorbausteinen in einem Steuerungssystem.
+[![NotebookLM](media/NotebookLM_logo.png)](https://notebooklm.google.com/notebook/a6872e59-1dfc-4132-a118-aff1bc7bc944)
 
-## Verwendete Funktionsbausteine (FBs)
+Dieser Artikel beschreibt die logiBUS®-Übung `Uebung_079`. Dies ist eine Sammel-Übung, die alle verfügbaren Bausteine zur Erfassung von Traktor-Informationen vorstellt.
 
-Die Übung verwendet folgende Funktionsbausteine:
 
-- **I_GBSD** - Greifer-Basis-Sensordiagnose
-- **I_VDS** - Vertikal-Dreh-Sensor
-- **I_WBSD** - Werkstück-Basis-Sensordiagnose  
-- **I_MSS** - Material-Sortier-Sensor
-- **I_FHS** - Förderband-Horizontal-Steuerung
-- **I_FPTO** - Förderband-Positionier-Tor-Steuerung
-- **I_RHS** - Roboter-Hand-Steuerung
-- **I_RPTO** - Roboter-Positionier-Tor-Steuerung
-- **COGSOGRapidUpdate** - COGS-OG Rapid Update Baustein
+## Podcast
+<iframe src="https://creators.spotify.com/pod/profile/logibus/embed/episodes/LogiBUS--IEC-61499-Daten--und-Ereignisflsse-einfach-erklrt--Vom-Schalter-zur-intelligenten-Steuerung-e36vldb/a-ac3vadb" height="102px" width="400px" frameborder="0" scrolling="no"></iframe>
 
-## Programmablauf und Verbindungen
+----
 
-Alle Funktionsbausteine sind mit dem Parameter **QI = TRUE** initialisiert, was eine sofortige Aktivierung der Bausteine beim Programmstart gewährleistet. Die Bausteine sind in einer typischen industriellen Automatisierungsstruktur angeordnet:
 
-- **Sensorbausteine** (I_GBSD, I_VDS, I_WBSD, I_MSS) sind auf der linken Seite positioniert
-- **Aktorbausteine** (I_FHS, I_FPTO, I_RHS, I_RPTO) befinden sich in der mittleren Position
-- **Steuerungsbaustein** (COGSOGRapidUpdate) ist auf der rechten Seite platziert
 
-Die räumliche Anordnung spiegelt den typischen Signalfluss von Sensoren über die Steuerung zu den Aktoren wider.
+![](Uebung_079.png)
 
-## Zusammenfassung
-Diese Übung vermittelt grundlegende Kenntnisse in der Integration verschiedener TECU-Funktionsbausteine in einem 4diac-System. Sie zeigt die typische Struktur einer Automatisierungsanwendung mit Sensorik, Aktorik und Steuerungskomponenten und demonstriert die Initialisierung von Bausteinen mit Aktivierungsparametern.
+
+## Ziel der Übung
+
+Erlernen der gesamten Palette an TECU-Schnittstellenbausteinen. Ein ISOBUS-Traktor meldet eine Vielzahl von physikalischen Werten über den CAN-Bus, die in 4diac direkt als Bausteine genutzt werden können.
+
+-----
+
+## Übersicht der Bausteine (FBs)
+
+[cite_start]In `Uebung_079.SUB` sind alle relevanten TECU-Eingangsbausteine platziert[cite: 1]:
+
+1.  **`I_GBSD`**: Ground Based Speed & Distance (Radar/GPS-Weg).
+2.  **`I_WBSD`**: Wheel Based Speed & Distance (Getriebe-Weg).
+3.  **`I_VDS`**: Vehicle Direction and Speed (Navigationsdaten).
+4.  **`I_RPTO` & `I_FPTO`**: Heck- und Front-Zapfwellendrehzahl (Rear/Front Power Take-Off).
+5.  **`I_RHS` & `I_FHS`**: Heck- und Front-Hubwerksposition (Rear/Front Hitch Status).
+6.  **`I_MSS`**: Machine Specific Status.
+7.  **`COGSOGRapidUpdate`**: Hochfrequente Kurs- und Geschwindigkeitsdaten über Grund.
+
+-----
+
+## Anwendung in der Praxis
+
+Jeder dieser Bausteine lauscht auf die standardisierten ISOBUS-Nachrichten der jeweiligen Traktor-ECU. Das logiBUS-System sorgt dafür, dass diese komplexen Protokoll-Daten in einfache IEC 61499 Ereignisse und Datenwerte gewandelt werden. Der Entwickler muss sich nicht um CAN-IDs oder Bit-Masken kümmern, sondern kann direkt mit den physikalischen Größen wie "Drehzahl" oder "Position" arbeiten.

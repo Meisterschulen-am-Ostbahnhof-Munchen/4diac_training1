@@ -1,46 +1,26 @@
-# Uebung_086: Beispiel für E_SWITCH
+# Uebung_086: Ereignis-Weiche (E_SWITCH)
 
-* * * * * * * * * *
+[Uebung_086](https://docs.ms-muc-docs.de/projects/visual-programming-languages-docs/de/latest/training1/Ventilsteuerung/4diacIDE-workspace/test/FBs/Uebungen/Uebung_086.html)
 
-## Einleitung
-Diese Übung demonstriert die Verwendung des E_SWITCH-Funktionsbausteins in einem 4diac-IDE Programm. Die Übung zeigt, wie ein digitaler Eingang mit einem Schalter-Baustein verbunden wird und dient als grundlegendes Beispiel für die Verwendung von Event-Steuerung in IEC 61499.
+[![NotebookLM](media/NotebookLM_logo.png)](https://notebooklm.google.com/notebook/a6872e59-1dfc-4132-a118-aff1bc7bc944)
 
-## Verwendete Funktionsbausteine (FBs)
+Dieser Artikel beschreibt die logiBUS®-Übung `Uebung_086`.
 
-### DigitalInput_I1
-- **Typ**: logiBUS_IX
-- **Parameter**:
-  - QI = TRUE
-  - Input = logiBUS_DI::Input_I1
-- **Funktionsweise**: Stellt einen digitalen Eingang für das logiBUS-System bereit und gibt den Eingangswert an den Datenausgang IN weiter.
 
-### E_SWITCH
-- **Typ**: E_SWITCH
-- **Funktionsweise**: Ein Ereignis-Schalter, der basierend auf dem Eingangswert am Datenanschluss G entscheidet, ob ein eingehendes Ereignis weitergeleitet wird oder nicht.
+## Podcast
+<iframe src="https://creators.spotify.com/pod/profile/logibus/embed/episodes/LogiBUS--IEC-61499-Daten--und-Ereignisflsse-einfach-erklrt--Vom-Schalter-zur-intelligenten-Steuerung-e36vldb/a-ac3vadb" height="102px" width="400px" frameborder="0" scrolling="no"></iframe>
 
-## Programmablauf und Verbindungen
+----
 
-Das Programm besteht aus zwei Hauptkomponenten:
 
-1. **Ereignisverbindung**: 
-   - DigitalInput_I1.IND → E_SWITCH.EI
-   - Überträgt das Indikator-Ereignis vom digitalen Eingang zum E_SWITCH
 
-2. **Datenverbindung**:
-   - DigitalInput_I1.IN → E_SWITCH.G
-   - Überträgt den aktuellen Wert des digitalen Eingangs als Steuersignal zum E_SWITCH
+![](Uebung_086.png)
 
-**Lernziele**:
-- Verständnis der E_SWITCH-Funktionalität
-- Aufbau von Ereignis- und Datenverbindungen zwischen Funktionsbausteinen
-- Arbeit mit digitalen Eingängen im logiBUS-System
 
-**Schwierigkeitsgrad**: Einfach
+## Übersicht
 
-**Benötigte Vorkenntnisse**:
-- Grundlagen der IEC 61499
-- Kenntnisse der 4diac-IDE Oberfläche
-- Verständnis von Ereignis- und Datenflüssen
-
-## Zusammenfassung
-Diese Übung bietet eine einfache Einführung in die Verwendung des E_SWITCH-Bausteins und zeigt die grundlegende Verbindung zwischen einem digitalen Eingang und einem Schalter-Baustein. Das Beispiel verdeutlicht das Prinzip der ereignisgesteuerten Ausführung in IEC 61499-Systemen und bildet eine Basis für komplexere Steuerungsaufgaben.
+[cite_start]Verwendung des fundamentalen Bausteins `E_SWITCH`[cite: 1].
+In dieser Übung wird demonstriert, wie ein Ereignis-Strom (`EI`) basierend auf einem logischen Zustand (`G`) auf zwei verschiedene Pfade aufgeteilt wird.
+*   Ist der Schalter `I1` auf `FALSE`, landet das `IND`-Ereignis am Ausgang `EO0`.
+*   Ist der Schalter `I1` auf `TRUE`, landet das `IND`-Ereignis am Ausgang `EO1`.
+Dies ist die Basis für jede bedingte Programmausführung ("If-Then-Else") in der IEC 61499.

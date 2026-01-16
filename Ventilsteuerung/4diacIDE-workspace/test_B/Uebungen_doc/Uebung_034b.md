@@ -1,61 +1,46 @@
-# Uebung_034b: LONG_PRESS_HOLD-Eingang auf PWM Ausgang
+# Uebung_034b: Dynamische PWM-Tastung (Hold)
 
-* * * * * * * * * *
+[Uebung_034b](https://docs.ms-muc-docs.de/projects/visual-programming-languages-docs/de/latest/training1/Ventilsteuerung/4diacIDE-workspace/test/FBs/Uebungen/Uebung_034b.html)
 
-## Einleitung
-Diese Übung demonstriert die Verwendung von LONG_PRESS_HOLD-Eingängen zur Steuerung eines PWM-Ausgangs. Das Programm ermöglicht die Geschwindigkeitsregelung über Taster mit unterschiedlichen Betriebsmodi.
+[![NotebookLM](media/NotebookLM_logo.png)](https://notebooklm.google.com/notebook/a6872e59-1dfc-4132-a118-aff1bc7bc944)
 
-## Verwendete Funktionsbausteine (FBs)
+Dieser Artikel beschreibt die logiBUS®-Übung `Uebung_034b`. Hier wird die PWM-Leistung über Taster-Interaktionen ("Gas geben") gesteuert.
 
-### logiBUS_IE (Input Event)
-- **Typ**: Eingangsbaustein für logiBUS
-- **Verwendete Instanzen**:
-  - **IE_SPEED_UP**: Konfiguriert für Input_I1 mit BUTTON_LONG_PRESS_HOLD
-  - **IE_SPEED_DOWN**: Konfiguriert für Input_I2 mit BUTTON_LONG_PRESS_HOLD  
-  - **IE_STOP**: Konfiguriert für Input_I3 mit BUTTON_SINGLE_CLICK
-  - **IE_FULL**: Konfiguriert für Input_I4 mit BUTTON_SINGLE_CLICK
 
-### E_CTUD_UDINT
-- **Typ**: Hoch-/Runterzähler mit Vorwärts- und Rückwärtszählung
-- **Parameter**: PV = 1023 (Endwert)
-- **Funktionsweise**: Zählt bei CU-Ereignis hoch, bei CD-Ereignis runter, mit Reset- und Load-Funktionen
+## Podcast
+<iframe src="https://creators.spotify.com/pod/profile/logibus/embed/episodes/LogiBUS--IEC-61499-Daten--und-Ereignisflsse-einfach-erklrt--Vom-Schalter-zur-intelligenten-Steuerung-e36vldb/a-ac3vadb" height="102px" width="400px" frameborder="0" scrolling="no"></iframe>
 
-### F_MUL
-- **Typ**: Multiplikationsbaustein
-- **Parameter**: IN2 = UDINT#8 (konstanter Multiplikator)
-- **Funktionsweise**: Multipliziert den Eingangswert mit 8
+----
 
-### F_UDINT_TO_DWORD
-- **Typ**: Datentyp-Konverter
-- **Funktionsweise**: Wandelt UDINT-Werte in DWORD-Werte um
 
-### logiBUS_QD_PWM
-- **Typ**: PWM-Ausgangsbaustein für logiBUS
-- **Verwendete Instanzen**:
-  - **PWMOutput_Q1**: Konfiguriert für Output_Q1
-  - **Parameter**: QI = TRUE (aktiviert)
 
-## Programmablauf und Verbindungen
+![](Uebung_034b.png)
 
-**Ereignisverbindungen:**
-- IE_SPEED_UP.IND → E_CTUD.CU (Hochzählen)
-- IE_SPEED_DOWN.IND → E_CTUD.CD (Runterzählen)  
-- IE_STOP.IND → E_CTUD.R (Reset)
-- IE_FULL.IND → E_CTUD.LD (Laden auf Maximalwert)
-- E_CTUD.CO/RO/LDO → F_MUL.REQ
-- F_MUL.CNF → F_UDINT_TO_DWORD.REQ
-- F_UDINT_TO_DWORD.CNF → PWMOutput_Q1.REQ
 
-**Datenverbindungen:**
-- E_CTUD.CV → F_MUL.IN1 (Zählerwert zur Multiplikation)
-- F_MUL.OUT → F_UDINT_TO_DWORD.IN (multiplizierter Wert zur Konvertierung)
-- F_UDINT_TO_DWORD.OUT → PWMOutput_Q1.OUT (PWM-Steuerwert)
+## Ziel der Übung
 
-**Bedienung:**
-- I1 (LONG_PRESS_HOLD): Erhöht die Geschwindigkeit
-- I2 (LONG_PRESS_HOLD): Verringert die Geschwindigkeit  
-- I3 (SINGLE_CLICK): Stoppt (Reset auf 0)
-- I4 (SINGLE_CLICK): Volle Geschwindigkeit (Maximalwert)
+Kombination von repetierenden Ereignissen (`HOLD`) und Zählern zur Steuerung einer PWM-Stufe. Der Nutzer kann die Leistung durch Festhalten eines Tasters stufenweise erhöhen oder verringern.
 
-## Zusammenfassung
-Diese Übung zeigt die Kombination von verschiedenen Eingangsereignissen (LONG_PRESS_HOLD und SINGLE_CLICK) mit einem Zählbaustein zur Erzeugung eines PWM-Signals. Der Zählerwert wird mit 8 multipliziert und als PWM-Wert ausgegeben, was eine fein abgestufte Geschwindigkeitsregelung ermöglicht.
+-----
+
+## Beschreibung und Komponenten
+
+[cite_start]In `Uebung_034b.SUB` wird ein Up/Down-Zähler als digitaler Integrator genutzt[cite: 1].
+
+### Funktionsbausteine (FBs)
+
+  * **`IE_SPEED_UP`**: Sendet alle 200ms ein Event, solange Taster **I1** gehalten wird.
+  * **`IE_SPEED_DOWN`**: Sendet alle 200ms ein Event, solange Taster **I2** gehalten wird.
+  * **`E_CTUD`**: Speichert den aktuellen "Leistungs-Zählerstand".
+  * **`F_MUL`**: Skaliert den Zählerstand (hier Faktor 8) auf den Zielbereich für den PWM-Baustein.
+  * **`PWMOutput_Q1`**: Der Leistungsausgang.
+
+-----
+
+## Funktionsweise
+
+1.  **Steigern**: Der Bediener hält **I1** gedrückt. Der Zähler zählt alle 200ms einen Schritt hoch. Die Lampe an `Q1` wird stufenweise heller.
+2.  **Senken**: Der Bediener hält **I2** gedrückt. Die Lampe wird stufenweise dunkler.
+3.  **Schnell-Wahl**: Taster **I3** (Stopp) setzt den Wert sofort auf 0. Taster **I4** (Full) lädt den Zähler sofort auf das Maximum.
+
+Dies ermöglicht eine sehr feinfühlige Steuerung von Antrieben oder Beleuchtungen über einfache digitale Taster.

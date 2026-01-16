@@ -1,59 +1,47 @@
-# Uebung_082: Beispiel für E_CTUD
+# Uebung_082: Vorwärts-Rückwärts-Zähler (Up/Down)
 
-* * * * * * * * * *
+[Uebung_082](https://docs.ms-muc-docs.de/projects/visual-programming-languages-docs/de/latest/training1/Ventilsteuerung/4diacIDE-workspace/test/FBs/Uebungen/Uebung_082.html)
 
-## Einleitung
-Diese Übung demonstriert die Verwendung des E_CTUD-Funktionsbausteins (Counter Up/Down) in der 4diac-IDE. Die Übung zeigt das Aufwärts- und Abwärtszählen sowie Reset- und Lade-Funktionalitäten eines Zählers und ist Teil des UAO Curriculum Module 3 - The IEC 61499 Standard.
+[![NotebookLM](media/NotebookLM_logo.png)](https://notebooklm.google.com/notebook/a6872e59-1dfc-4132-a118-aff1bc7bc944)
 
-## Verwendete Funktionsbausteine (FBs)
+Dieser Artikel beschreibt die logiBUS®-Übung `Uebung_082`. Hier werden beide Zählrichtungen in einem Baustein kombiniert.
 
-### E_CTUD (Counter Up/Down)
-- **Typ**: E_CTUD
-- **Parameter**: 
-  - PV = UINT#5 (Preset Value = 5)
-- **Ereigniseingänge**: CU (Count Up), CD (Count Down), R (Reset), LD (Load)
-- **Ereignisausgänge**: CO (Count Overflow), RO (Reset Overflow), LDO (Load Overflow)
-- **Datenausgänge**: QU (Q Up), QD (Q Down)
 
-### DigitalInput_CLK_I1 bis I4
-- **Typ**: logiBUS_IE
-- **Parameter**:
-  - QI = TRUE
-  - Input = logiBUS_DI::Input_I1 bis I4
-  - InputEvent = logiBUS_DI_Events::BUTTON_SINGLE_CLICK
-- **Funktionsweise**: Erfassen von Tastendrücken an den digitalen Eingängen I1 bis I4
+## Podcast
+<iframe src="https://creators.spotify.com/pod/profile/logibus/embed/episodes/LogiBUS--IEC-61499-Daten--und-Ereignisflsse-einfach-erklrt--Vom-Schalter-zur-intelligenten-Steuerung-e36vldb/a-ac3vadb" height="102px" width="400px" frameborder="0" scrolling="no"></iframe>
 
-### DigitalOutput_Q1 und Q2
-- **Typ**: logiBUS_QX
-- **Parameter**:
-  - QI = TRUE
-  - Output = logiBUS_DO::Output_Q1 bzw. Output_Q2
-- **Funktionsweise**: Steuerung der digitalen Ausgänge Q1 und Q2
+----
 
-## Programmablauf und Verbindungen
 
-**Ereignisverbindungen:**
-- I1 (Taster) → E_CTUD.CU (Aufwärts zählen)
-- I2 (Taster) → E_CTUD.CD (Abwärts zählen) 
-- I3 (Taster) → E_CTUD.R (Reset)
-- I4 (Taster) → E_CTUD.LD (Laden)
-- E_CTUD.CO, RO, LDO → Q1.REQ und Q2.REQ
 
-**Datenverbindungen:**
-- E_CTUD.QU → DigitalOutput_Q1.OUT (Zählstand Aufwärts)
-- E_CTUD.QD → DigitalOutput_Q2.OUT (Zählstand Abwärts)
+![](Uebung_082.png)
 
-**Lernziele:**
-- Verständnis des E_CTUD-Funktionsbausteins
-- Implementierung von Zählfunktionen
-- Verwendung von digitalen Ein- und Ausgängen
-- Ereignis- und Datenverbindungen in 4diac
 
-**Schwierigkeitsgrad**: Einsteiger
+## Ziel der Übung
 
-**Benötigte Vorkenntnisse**: Grundlagen der IEC 61499, 4diac-IDE Bedienung
+Verwendung des Bausteins `E_CTUD` (Event Count Up/Down). Es wird gezeigt, wie man den Füllstand eines Speichers verwaltet, der sowohl Zu- als auch Abflüsse hat.
 
-**Starten der Übung**: Nach dem Laden der Applikation können die Taster I1-I4 betätigt werden, um die verschiedenen Zählfunktionen zu testen. Der Zähler hat einen Preset-Wert von 5.
+-----
 
-## Zusammenfassung
-Diese Übung vermittelt praktische Kenntnisse im Umgang mit dem E_CTUD-Zählerbaustein und demonstriert die Interaktion zwischen digitalen Ein- und Ausgängen. Die Implementierung zeigt alle wesentlichen Funktionen eines Up/Down-Zählers mit Reset- und Lade-Funktionalität.
+## Beschreibung und Komponenten
+
+[cite_start]Die Subapplikation `Uebung_082.SUB` nutzt vier Taster zur vollständigen Kontrolle des Zählers[cite: 1].
+
+### Funktionsbausteine (FBs)
+
+  * **`I1` (CU)**: Zählt aufwärts.
+  * **`I2` (CD)**: Zählt abwärts.
+  * **`I3` (R)**: Setzt den Zähler auf Null.
+  * **`I4` (LD)**: Lädt den Zähler mit dem Wert 5 (`PV`).
+  * **`Q1` (Upper Limit)**: Leuchtet, wenn der Zählerstand >= 5 ist.
+  * **`Q2` (Lower Limit)**: Leuchtet, wenn der Zählerstand <= 0 ist.
+
+-----
+
+## Funktionsweise
+
+Der Baustein überwacht zwei Schwellwerte gleichzeitig:
+*   Der Ausgang `QU` reagiert auf die Obergrenze (`PV`).
+*   Der Ausgang `QD` reagiert auf die Untergrenze (Null).
+
+Dies ermöglicht eine lückenlose Überwachung von Beständen oder Positionen innerhalb eines definierten Arbeitsbereichs.

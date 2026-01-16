@@ -149,6 +149,7 @@ Uebung_037
 Uebung_038
 Uebung_039
 Uebung_039_sub_NumbAnzeig
+Uebung_039_sub_Outputs
 Uebung_039a
 Uebung_039a_sub_Outputs
 Uebung_039b
@@ -197,7 +198,6 @@ Uebung_093b
 Uebung_094
 Uebung_094a
 Uebung_095
-Uebung_103
 Uebung_110
 Uebung_111
 Uebung_120
@@ -215,6 +215,7 @@ Uebung_130
 Uebung_131
 Uebung_132
 Uebung_133
+Uebung_134
 Uebung_140
 Uebung_160
 Uebung_Isobus_Softkeys

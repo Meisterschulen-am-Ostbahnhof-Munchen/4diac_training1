@@ -1,54 +1,40 @@
-Hier ist die Dokumentation für die Übung `Uebung_003a_sub` basierend auf den bereitgestellten XML-Daten.
+# Uebung_003a_sub: Universal-Kanal (SubApp)
 
-# Uebung_003a_sub
+[Uebung_003a_sub](https://docs.ms-muc-docs.de/projects/visual-programming-languages-docs/de/latest/training1/Ventilsteuerung/4diacIDE-workspace/test/FBs/Uebungen/Uebung_003a_sub.html)
 
-![Bild der Übung, falls vorhanden](uebung_003a_sub_screenshot.png)
+[![NotebookLM](media/NotebookLM_logo.png)](https://notebooklm.google.com/notebook/a6872e59-1dfc-4132-a118-aff1bc7bc944)
 
-* * * * * * * * * *
+Dieser Artikel beschreibt den Sub-App-Typ `Uebung_003a_sub`. Dieser Baustein dient als wiederverwendbare Vorlage für die 1:1 Verbindung eines digitalen Eingangs mit einem digitalen Ausgang.
 
-## Einleitung
-Die Sub-Applikation **Uebung_003a_sub** stellt eine generische Verbindung zwischen einem Eingang und einem Ausgang her. Sie dient dazu, den Status eines digitalen Eingangs (IX) direkt auf einen digitalen Ausgang (QX) zu spiegeln. Dieser Baustein ist so konzipiert, dass er parametrierbar ist und somit verschiedene Hardware-Eingänge auf Hardware-Ausgänge mappen kann (logiBUS System).
 
-## Verwendete Funktionsbausteine (FBs)
+## Podcast
+<iframe src="https://creators.spotify.com/pod/profile/logibus/embed/episodes/LogiBUS--IEC-61499-Daten--und-Ereignisflsse-einfach-erklrt--Vom-Schalter-zur-intelligenten-Steuerung-e36vldb/a-ac3vadb" height="102px" width="400px" frameborder="0" scrolling="no"></iframe>
 
-In dieser Sub-Applikation werden spezifische Bausteine zur Interaktion mit dem logiBUS E/A-System verwendet.
+----
 
-### Sub-Bausteine: Uebung_003a_sub (Internes Netzwerk)
 
-- **Typ**: SubAppType
-- **Verwendete interne FBs**:
-    - **Bausteinname**: IX
-        - **Typ**: `logiBUS::io::DI::logiBUS_IX`
-        - **Parameter**: 
-            - `QI` = TRUE
-            - `PARAMS` = "" (leerer String)
-        - **Dateneingang**: `Input` (Verbunden mit der externen Variable der SubApp zur Auswahl des Hardware-Eingangs)
-    
-    - **Bausteinname**: QX
-        - **Typ**: `logiBUS::io::DQ::logiBUS_QX`
-        - **Parameter**: 
-            - `QI` = TRUE
-            - `PARAMS` = "" (leerer String)
-        - **Dateneingang**: `Output` (Verbunden mit der externen Variable der SubApp zur Auswahl des Hardware-Ausgangs)
 
-- **Funktionsweise**: 
-    Der interne Ablauf basiert auf zwei Hauptkomponenten: dem Eingangsbaustein `IX` und dem Ausgangsbaustein `QX`. 
-    Der `IX`-Baustein liest den physikalischen Zustand des durch die Variable `Input` definierten Eingangs. Sobald dieser gelesen wurde, wird der Wert an den `QX`-Baustein weitergegeben, der diesen Zustand auf den durch die Variable `Output` definierten physikalischen Ausgang schreibt.
+## Ziel der Übung
 
-## Programmablauf und Verbindungen
+Kapselung der logiBUS I/O-Logik. Durch die Erstellung eines eigenen Typs wird die Komplexität der Einzelverbindungen nach außen hin verborgen. Der Anwender muss nur noch die Hardware-IDs zuweisen.
 
-Der Programmablauf innerhalb der Sub-Applikation ist ereignisgesteuert und folgt einer direkten Weiterleitungslogik:
+-----
 
-1.  **Initialisierung**: Beide Bausteine (`IX` und `QX`) werden mit `QI = TRUE` initialisiert, was bedeutet, dass sie standardmäßig aktiviert sind.
-2.  **Signalverarbeitung**:
-    - **Ereignisverbindung**: Der Ausgang `IND` (Indication) des Bausteins `IX` ist mit dem Eingang `REQ` (Request) des Bausteins `QX` verbunden. Das bedeutet, sobald der Eingang ein neues Signal oder einen Statusupdate meldet, wird sofort die Anforderung an den Ausgang gesendet, diesen Status zu übernehmen.
-    - **Datenverbindung**: Der Datenausgang `IN` (der aktuelle Wert des Eingangs) von `IX` ist direkt mit dem Dateneingang `OUT` (der zu setzende Wert des Ausgangs) von `QX` verbunden.
+## Beschreibung und Komponenten
 
-**Zusätzliche Informationen zur Nutzung:**
-- **Schnittstellen**:
-    - `Input`: Typ `logiBUS_DI_S` – Identifiziert den zu lesenden Hardware-Eingang (z.B. Input_I1..I8).
-    - `Output`: Typ `logiBUS_DO_S` – Identifiziert den zu schreibenden Hardware-Ausgang (z.B. Output_Q1..Q8).
-- **Lernziel**: Verständnis der direkten Kopplung von Prozessabbildern (Eingang auf Ausgang) innerhalb der IEC 61499 / 4diac Umgebung unter Verwendung proprietärer E/A-Bibliotheken (logiBUS).
+[cite_start]Der Typ `Uebung_003a_sub` bündelt einen Eingangs- und einen Ausgangsbaustein[cite: 1].
 
-## Zusammenfassung
-Die `Uebung_003a_sub` ist ein grundlegender Baustein zur direkten Durchschaltung von Signalen. Sie abstrahiert die Logik "Lese Eingang X und schreibe auf Ausgang Y" in eine wiederverwendbare Sub-Applikation. Durch die Verbindung von `IX.IND` auf `QX.REQ` und `IX.IN` auf `QX.OUT` wird sichergestellt, dass jede Änderung am Eingang unmittelbar am Ausgang reflektiert wird.
+### Interne Funktionsbausteine (FBs)
+
+  * **`IX`**: Typ `logiBUS_IX`. Liest den über den Parameter `Input` zugewiesenen Hardware-Pin ein.
+  * **`QX`**: Typ `logiBUS_QX`. Schaltet den über den Parameter `Output` zugewiesenen Hardware-Pin.
+
+-----
+
+## Schnittstellen
+
+[cite_start]Der Baustein verfügt über zwei Konfigurations-Eingänge[cite: 1]:
+*   **`Input`**: Erwartet eine Konstante vom Typ `logiBUS_DI_S` (z.B. `Input_I1`).
+*   **`Output`**: Erwartet eine Konstante vom Typ `logiBUS_DO_S` (z.B. `Output_Q1`).
+
+Intern sind die Ereignis-Ports (`IND -> REQ`) und die Daten-Ports (`IN -> OUT`) fest miteinander verbunden. Sobald dieser Typ in einem Projekt platziert wird, arbeitet er völlig autark für den zugewiesenen Hardware-Kanal.

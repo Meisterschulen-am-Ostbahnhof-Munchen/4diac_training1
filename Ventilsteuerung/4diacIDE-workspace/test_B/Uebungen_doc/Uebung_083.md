@@ -1,60 +1,23 @@
-# Uebung_083: Beispiel für E_CTUD_UDINT
+# Uebung_083: Präzisions-Zähler (UDINT)
 
-* * * * * * * * * *
+[Uebung_083](https://docs.ms-muc-docs.de/projects/visual-programming-languages-docs/de/latest/training1/Ventilsteuerung/4diacIDE-workspace/test/FBs/Uebungen/Uebung_083.html)
 
-## Einleitung
-Diese Übung demonstriert die Verwendung des E_CTUD_UDINT-Funktionsbausteins für Zählfunktionen. Das Beispiel zeigt einen Aufwärts-/Abwärts-Zähler mit verschiedenen Steuerungsmöglichkeiten und visueller Ausgabe des Zählerstands.
+[![NotebookLM](media/NotebookLM_logo.png)](https://notebooklm.google.com/notebook/a6872e59-1dfc-4132-a118-aff1bc7bc944)
 
-## Verwendete Funktionsbausteine (FBs)
+Dieser Artikel beschreibt die logiBUS®-Übung `Uebung_083`.
 
-### E_CTUD_UDINT
-- **Typ**: E_CTUD_UDINT (Up/Down Counter)
-- **Parameter**: 
-  - PV = UINT#5 (Preset Value = 5)
 
-### DigitalInput_CLK_I1 bis CLK_I4
-- **Typ**: logiBUS_IE (Digital Input)
-- **Parameter**:
-  - QI = TRUE
-  - Input = logiBUS_DI::Input_I1 bis I4
-  - InputEvent = logiBUS_DI_Events::BUTTON_SINGLE_CLICK
+## Podcast
+<iframe src="https://creators.spotify.com/pod/profile/logibus/embed/episodes/LogiBUS--IEC-61499-Daten--und-Ereignisflsse-einfach-erklrt--Vom-Schalter-zur-intelligenten-Steuerung-e36vldb/a-ac3vadb" height="102px" width="400px" frameborder="0" scrolling="no"></iframe>
 
-### DigitalOutput_Q1 und Q2
-- **Typ**: logiBUS_QX (Digital Output)
-- **Parameter**:
-  - QI = TRUE
-  - Output = logiBUS_DO::Output_Q1 bzw. Output_Q2
+----
 
-### Q_NumericValue
-- **Typ**: Q_NumericValue
-- **Parameter**:
-  - u16ObjId = DefaultPool::OutputNumber_N1
 
-## Programmablauf und Verbindungen
 
-**Ereignisverbindungen:**
-- DigitalInput_CLK_I1 (I1) → E_CTUD_UDINT.CU (Count Up)
-- DigitalInput_CLK_I2 (I2) → E_CTUD_UDINT.CD (Count Down)
-- DigitalInput_CLK_I3 (I3) → E_CTUD_UDINT.R (Reset)
-- DigitalInput_CLK_I4 (I4) → E_CTUD_UDINT.LD (Load)
+![](Uebung_083.png)
 
-**Ausgangsereignisse:**
-- E_CTUD_UDINT.CO (Count Overflow) → DigitalOutput_Q1, DigitalOutput_Q2, Q_NumericValue
-- E_CTUD_UDINT.RO (Reset Overflow) → DigitalOutput_Q1, DigitalOutput_Q2, Q_NumericValue
-- E_CTUD_UDINT.LDO (Load Overflow) → DigitalOutput_Q1, DigitalOutput_Q2, Q_NumericValue
 
-**Datenverbindungen:**
-- E_CTUD_UDINT.QU → DigitalOutput_Q1.OUT (Up Count Status)
-- E_CTUD_UDINT.QD → DigitalOutput_Q2.OUT (Down Count Status)
-- E_CTUD_UDINT.CV → Q_NumericValue.u32NewValue (Current Counter Value)
+## Übersicht
 
-**Funktionsweise:**
-- I1: Erhöht den Zählerstand um 1 (Aufwärtszählen)
-- I2: Verringert den Zählerstand um 1 (Abwärtszählen)
-- I3: Setzt den Zähler auf 0 zurück
-- I4: Lädt den Preset-Wert (5) in den Zähler
-- Der aktuelle Zählerstand wird numerisch auf Q_NumericValue angezeigt
-- Q1 und Q2 zeigen den Status des Zählers an
-
-## Zusammenfassung
-Diese Übung vermittelt praktische Kenntnisse im Umgang mit dem E_CTUD_UDINT-Zählerbaustein und demonstriert die Integration von digitalen Ein- und Ausgängen sowie numerischen Anzeigen. Das System ermöglicht sowohl manuelle Steuerung über Taster als auch visuelle Rückmeldung über Statusausgänge und numerische Anzeige des Zählerstands.
+[cite_start]Diese Übung verwendet den Baustein `E_CTUD_UDINT`[cite: 1]. Im Gegensatz zum Standard-Zähler (der meist nur bis 65.535 zählt) nutzt dieser Typ den Datentyp `UDINT` (Unsigned Double Integer). Damit können Ereignisse bis zu einem Wert von über 4 Milliarden gezählt werden.
+Zusätzlich zur Ansteuerung der Lampen `Q1` und `Q2` wird der aktuelle Zählerstand (`CV`) direkt an eine numerische Anzeige am ISOBUS-Terminal gesendet. Dies ermöglicht eine genaue Beobachtung des Zählvorgangs in Echtzeit.

@@ -1,66 +1,10 @@
-# Uebung_039a: Spiegelabfolge V2 mit Schrittkette
+# Uebung_039a: Wegeventil-Steuerung (3/2-Wege)
 
-* * * * * * * * * *
+[Uebung_039a](https://docs.ms-muc-docs.de/projects/visual-programming-languages-docs/de/latest/training1/Ventilsteuerung/4diacIDE-workspace/test/FBs/Uebungen/Uebung_039a.html)
 
-## Einleitung
-Diese Übung implementiert eine Spiegelabfolge-Steuerung mit Schrittkette, die für hydraulische Ringsysteme mit 3/2-Wege-Ventilen oder pneumatische 5/2-Wege-Ventile geeignet ist. Die Steuerung ermöglicht eine sequenzielle Abfolge von Ausgängen mit konfigurierbaren Zeitverzögerungen zwischen den Schritten.
+[![NotebookLM](media/NotebookLM_logo.png)](https://notebooklm.google.com/notebook/a6872e59-1dfc-4132-a118-aff1bc7bc944)
 
-## Verwendete Funktionsbausteine (FBs)
+## Übersicht
 
-### Haupt-Funktionsbausteine:
-- **E_TimeOut**: Zeitüberwachung für Schrittketten
-- **logiBUS_IE**: Digitale Eingänge für Taster (I1-I4)
-- **sequence_ET_05**: Schrittkette mit 5 Zuständen
-- **Softkey_IE**: Softkey-Eingabe (F1)
-- **Uebung_039_sub_NumbAnzeig**: Numerische Anzeige des aktuellen Zustands
-
-### Sub-Bausteine: Uebung_039a_sub_Outputs
-
-- **Typ**: SubApplication
-- **Verwendete interne FBs**:
-    - **QX**: logiBUS_QX
-        - Parameter: QI = TRUE
-    - **GreenWhiteBackground**: GreenWhiteBackground
-    - **E_SWITCH**: E_SWITCH
-    - **E_SR**: E_SR (Set-Reset-Flipflop)
-    - **IE**: Softkey_IE
-        - Parameter: QI = TRUE, InputEvent = SoftKeyActivationCode::SK_RELEASED
-- **Funktionsweise**: 
-  - Verwaltet die Ausgänge Q1 und Q2 mit Set/Reset-Funktionalität
-  - Ermöglicht manuelle Steuerung über Softkeys (F8 für Q1, F2 für Q2)
-  - Visualisiert den Zustand mit GreenWhiteBackground
-  - Verwendet ein E_SR-Element für die Speicherfunktion und E_SWITCH für die Umschaltung
-
-## Programmablauf und Verbindungen
-
-**Ereignisverbindungen:**
-- Taster I1-I4 lösen Zustandsübergänge in der Schrittkette aus
-- Softkey F1 startet die Sequenz (START_S1)
-- Die Schrittkette steuert Q1 und Q2 über SET/RESET-Ereignisse
-- Zustandsnummer wird an die numerische Anzeige übertragen
-
-**Zeitparameter der Schrittkette:**
-- S3→S4: 5 Sekunden Verzögerung
-- Alle anderen Übergänge: ohne Zeitverzögerung
-
-**Lernziele:**
-- Aufbau und Funktionsweise von Schrittketten
-- Zeitgesteuerte Zustandsübergänge
-- Parallele Ausgangssteuerung
-- Integration von Softkey-Steuerung
-- Visualisierung von Prozesszuständen
-
-**Schwierigkeitsgrad**: Mittel
-
-**Benötigte Vorkenntnisse**:
-- Grundlagen der 4diac-IDE
-- Verständnis von Funktionsbausteinen
-- Kenntnisse über Ereignis- und Datenverbindungen
-
-**Starten der Übung**:
-1. System initialisieren
-2. Mit Softkey F1 die Sequenz starten
-3. Taster I1-I4 in der vorgegebenen Reihenfolge betätigen
-
-## Zusammenfassung
-Diese Übung demonstriert eine praxisnahe Anwendung einer Schrittkette zur Steuerung einer Spiegelabfolge. Sie kombiniert manuelle Eingaben über Taster und Softkeys mit automatischen Zeitverzögerungen. Die modular aufgebaute Lösung mit Sub-Applikationen ermöglicht eine klare Trennung der Funktionalitäten und erleichtert die Wartung und Erweiterbarkeit des Systems.
+[cite_start]Diese Übung ist eine Spezialisierung der Ventilsteuerung für Systeme mit 3/2-Wege-Ventilen (z.B. hydraulische Ringsysteme wie bei Claas)[cite: 1].
+Die Schrittkette (`sequence_ET_05`) verwaltet den Ablauf der Zylinderbewegungen. Die Ansteuerung der physischen Ausgänge erfolgt über die Sub-App `Uebung_039a_sub_Outputs`, die zusätzlich ein direktes visuelles Feedback auf dem ISOBUS-Softkey liefert. Dies demonstriert die Anpassbarkeit der logiBUS-Sequenz-Bausteine an verschiedene hydraulische Verschaltungskonzepte.

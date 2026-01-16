@@ -1,67 +1,38 @@
-# Uebung_035a: Ampelschaltung International
+# Uebung_035a: Ampelschaltung (Standard)
 
-* * * * * * * * * *
+[Uebung_035a](https://docs.ms-muc-docs.de/projects/visual-programming-languages-docs/de/latest/training1/Ventilsteuerung/4diacIDE-workspace/test/FBs/Uebungen/Uebung_035a.html)
 
-## Einleitung
-Diese Übung implementiert eine internationale Ampelschaltung für den Fahrzeugverkehr. Die Ampel durchläuft einen standardisierten Zyklus mit den Phasen Rot, Rot-Orange, Grün und Orange. Die Steuerung erfolgt über einen Taster, der den Ampelzyklus startet.
+[![NotebookLM](media/NotebookLM_logo.png)](https://notebooklm.google.com/notebook/a6872e59-1dfc-4132-a118-aff1bc7bc944)
 
-## Verwendete Funktionsbausteine (FBs)
+Dieser Artikel beschreibt die logiBUS®-Übung `Uebung_035a`. Hier wird die Steuerung einer Lichtsignalanlage (Ampel) mittels einer zeitgesteuerten Schrittkette realisiert.
 
-### Haupt-Funktionsbausteine:
-- **DigitalInput_CLK_I1** (logiBUS_IE): Digitaler Eingang für Tasterbetätigung
-- **sequence_T_04_loop** (sequence_T_04_loop): Sequenzer für Ampelphasensteuerung
-- **E_TimeOut** (E_TimeOut): Zeitsteuerung für Sequenzer
-- **CAR_RED_LIGHT** (logiBUS_QX): Ausgang für rotes Ampellicht
-- **CAR_ORANGE_LIGHT** (logiBUS_QX): Ausgang für oranges Ampellicht  
-- **CAR_GREEN_LIGHT** (logiBUS_QX): Ausgang für grünes Ampellicht
 
-### Sub-Bausteine:
+## Podcast
+<iframe src="https://creators.spotify.com/pod/profile/logibus/embed/episodes/LogiBUS--IEC-61499-Daten--und-Ereignisflsse-einfach-erklrt--Vom-Schalter-zur-intelligenten-Steuerung-e36vldb/a-ac3vadb" height="102px" width="400px" frameborder="0" scrolling="no"></iframe>
 
-#### RED
-- **Typ**: SubApp
-- **Verwendete interne FBs**:
-  - **OR_RED**: OR_2
-    - Parameter: keine
-    - Ereigniseingänge: REQ
-    - Ereignisausgänge: CNF
-    - Dateneingänge: IN1, IN2
-    - Datenausgänge: OUT
-- **Funktionsweise**: Kombiniert die Signale für die Rotphase (S1) und Rot-Orange-Phase (S2) mittels ODER-Verknüpfung
+----
 
-#### ORANGE
-- **Typ**: SubApp
-- **Verwendete interne FBs**:
-  - **OR_ORANGE**: OR_2
-    - Parameter: keine
-    - Ereigniseingänge: REQ
-    - Ereignisausgänge: CNF
-    - Dateneingänge: IN1, IN2
-    - Datenausgänge: OUT
-- **Funktionsweise**: Kombiniert die Signale für die Rot-Orange-Phase (S2) und Orange-Phase (S4) mittels ODER-Verknüpfung
 
-## Programmablauf und Verbindungen
 
-Der Programmablauf startet mit der Betätigung des Tasters (DigitalInput_CLK_I1), der den Sequenzer sequence_T_04_loop initialisiert. Der Sequenzer durchläuft folgende Phasen mit festgelegten Zeitintervallen:
+![](Uebung_035a.png)
 
-- **S1 (Rot)**: 6 Sekunden
-- **S2 (Rot+Orange)**: 2 Sekunden  
-- **S3 (Grün)**: 8 Sekunden
-- **S4 (Orange)**: 2 Sekunden
 
-Die Ereignis- und Datenverbindungen sind wie folgt aufgebaut:
-- Der Taster löst über IND den START_S1 des Sequenzers aus
-- Die Phasenausgänge EO_S1-EO_S4 und DO_S1-DO_S4 steuern die entsprechenden Sub-Bausteine und Ausgänge
-- Die Sub-Bausteine RED und ORANGE kombinieren die Phasensignale für die gemeinsamen Lichtzustände
-- Die finalen Signale werden an die Ausgänge CAR_RED_LIGHT, CAR_ORANGE_LIGHT und CAR_GREEN_LIGHT weitergeleitet
-- Der E_TimeOut-Baustein sorgt für die zeitliche Steuerung des Sequenzers
+## Ziel der Übung
 
-**Lernziele**: Verständnis von Zustandsautomaten, Zeitsteuerung, ODER-Verknüpfungen und modularem Aufbau mit Sub-Bausteinen
+Realisierung eines komplexen Zeitablaufs mit überlappenden Zuständen. Es wird die Standard-Abfolge für Deutschland simuliert: Rot ➡️ Rot-Gelb ➡️ Grün ➡️ Gelb ➡️ Rot.
 
-**Schwierigkeitsgrad**: Mittel
+-----
 
-**Benötigte Vorkenntnisse**: Grundlagen der 4diac-IDE, Verständnis von Funktionsbausteinen und Ereignissteuerung
+## Beschreibung und Komponenten
 
-**Start der Übung**: Die Übung wird durch Betätigen des Tasters I1 gestartet
+[cite_start]In `Uebung_035a.SUB` wird ein 4-Schritt-Sequenzer als Taktgeber genutzt[cite: 1].
 
-## Zusammenfassung
-Diese Übung demonstriert eine praxisnahe Anwendung einer Ampelschaltung mit internationalem Standard. Die modulare Struktur mit Sub-Bausteinen ermöglicht eine übersichtliche Implementierung der komplexen Phasensteuerung. Die Verwendung eines Sequenzers mit Zeitsteuerung und die Kombination von Phasensignalen durch ODER-Verknüpfungen sind zentrale Konzepte dieser Übung.
+### Funktionsweise
+
+Die Herausforderung liegt in den Misch-Zuständen (z.B. Rot und Gelb leuchten gleichzeitig). Dies wird durch logische ODER-Gatter in Sub-Applikationen (`RED`, `ORANGE`) gelöst:
+1.  **Schritt 1 (Rot)**: Nur der Rot-Ausgang ist aktiv (6s).
+2.  **Schritt 2 (Rot-Gelb)**: Das Event triggert beide Lampen (2s).
+3.  **Schritt 3 (Grün)**: Nur Grün leuchtet (8s).
+4.  **Schritt 4 (Gelb)**: Nur Gelb leuchtet (2s).
+
+Danach beginnt der Zyklus von vorn. Dies demonstriert die Kombination von sequenziellem Ablauf und kombinatorischer Logik.

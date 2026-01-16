@@ -1,65 +1,24 @@
-# Uebung_093b: Beispiel für E_N_TABLE
+# Uebung_093b: Mehrkanal-Zeit-Tabelle (E_N_TABLE)
 
-* * * * * * * * * *
+[Uebung_093b](https://docs.ms-muc-docs.de/projects/visual-programming-languages-docs/de/latest/training1/Ventilsteuerung/4diacIDE-workspace/test/FBs/Uebungen/Uebung_093b.html)
 
-## Einleitung
-Diese Übung demonstriert die Verwendung des E_N_TABLE-Funktionsbausteins zur zeitgesteuerten Ereignisausgabe. Ein Taster-Eingang löst eine Sequenz von vier zeitverzögerten Ereignissen aus, die jeweils einen Flip-Flop-Baustein ansteuern und damit digitale Ausgänge schalten.
+[![NotebookLM](media/NotebookLM_logo.png)](https://notebooklm.google.com/notebook/a6872e59-1dfc-4132-a118-aff1bc7bc944)
 
-## Verwendete Funktionsbausteine (FBs)
+Dieser Artikel beschreibt die logiBUS®-Übung `Uebung_093b`.
 
-### E_N_TABLE (E_TABLE)
-- **Typ**: E_N_TABLE
-- **Parameter**:
-  - DT = [T#0s, T#2s, T#3s, T#4s]
-  - N = 4
-- **Funktionsweise**: Gibt nach einem START-Ereignis vier Ausgangsereignisse zu den definierten Zeitpunkten aus (0s, 2s, 3s und 4s nach Start)
 
-### logiBUS_IE (DigitalInput_CLK_I1)
-- **Typ**: logiBUS_IE
-- **Parameter**:
-  - QI = TRUE
-  - Input = logiBUS_DI::Input_I1
-  - InputEvent = logiBUS_DI_Events::BUTTON_SINGLE_CLICK
-- **Funktionsweise**: Erfasst Taster-Ereignisse von einem digitalen Eingang
+## Podcast
+<iframe src="https://creators.spotify.com/pod/profile/logibus/embed/episodes/LogiBUS--IEC-61499-Daten--und-Ereignisflsse-einfach-erklrt--Vom-Schalter-zur-intelligenten-Steuerung-e36vldb/a-ac3vadb" height="102px" width="400px" frameborder="0" scrolling="no"></iframe>
 
-### E_T_FF (E_T_FF_Q1, E_T_FF_Q2, E_T_FF_Q3, E_T_FF_Q4)
-- **Typ**: E_T_FF (Toggle-Flip-Flop)
-- **Funktionsweise**: Schaltet den Ausgang Q bei jedem CLK-Ereignis um
+----
 
-### logiBUS_QX (DigitalOutput_Q1, Q2, Q3, Q4)
-- **Typ**: logiBUS_QX
-- **Parameter**:
-  - QI = TRUE
-  - Output = logiBUS_DO::Output_Q1/Q2/Q3/Q4
-- **Funktionsweise**: Steuert digitale Ausgänge an
 
-## Programmablauf und Verbindungen
 
-**Ereignisverbindungen:**
-- DigitalInput_CLK_I1.IND → E_TABLE.START (Taster löst Ereignistabelle aus)
-- E_TABLE.EO0 → E_T_FF_Q1.CLK (sofort nach Tastendruck)
-- E_TABLE.EO1 → E_T_FF_Q2.CLK (2s nach Tastendruck)
-- E_TABLE.EO2 → E_T_FF_Q3.CLK (3s nach Tastendruck)
-- E_TABLE.EO3 → E_T_FF_Q4.CLK (4s nach Tastendruck)
-- E_T_FF_Q1.EO → DigitalOutput_Q1.REQ
-- E_T_FF_Q2.EO → DigitalOutput_Q2.REQ
-- E_T_FF_Q3.EO → DigitalOutput_Q3.REQ
-- E_T_FF_Q4.EO → DigitalOutput_Q4.REQ
+![](Uebung_093b.png)
 
-**Datenverbindungen:**
-- E_T_FF_Qx.Q → DigitalOutput_Qx.OUT (Flip-Flop-Ausgänge zu digitalen Ausgängen)
 
-**Lernziele:**
-- Verständnis der E_N_TABLE-Funktionalität
-- Umgang mit zeitgesteuerten Ereignissequenzen
-- Anwendung von Toggle-Flip-Flops
-- Verknüpfung von Ereignis- und Datenverbindungen
+## Übersicht
 
-**Schwierigkeitsgrad**: Mittel
-
-**Vorkenntnisse**: Grundlagen der 4diac-IDE, Verständnis von Funktionsbausteinen und Ereignisverarbeitung
-
-**Starten der Übung**: Die Übung wird durch Betätigen des Tasters I1 gestartet, was die Ereignissequenz auslöst.
-
-## Zusammenfassung
-Diese Übung zeigt eine praktische Anwendung des E_N_TABLE-Bausteins zur Erzeugung zeitlich versetzter Ereignisse. Die definierte Zeitsequenz [0s, 2s, 3s, 4s] sorgt für eine gestaffelte Aktivierung von vier digitalen Ausgängen über Toggle-Flip-Flops. Die Gesamtlaufzeit der Sequenz beträgt 9 Sekunden ab Tastendruck.
+[cite_start]Erweiterung des Tabellen-Konzepts unter Verwendung des Bausteins `E_N_TABLE`[cite: 1].
+Anstatt alle Ereignisse an einen gemeinsamen Ausgang zu senden, verfügt dieser Baustein über separate Ausgänge (`EO0` bis `EOn`) für jeden Tabelleneintrag.
+In dieser Übung werden dadurch vier verschiedene Lampen (`Q1` bis `Q4`) in einer zeitlich exakt definierten, unregelmäßigen Abfolge nacheinander eingeschaltet. Dies ist die effizienteste Methode, um komplexe Start-Up-Sequenzen für Multi-Aktor-Systeme zu definieren.

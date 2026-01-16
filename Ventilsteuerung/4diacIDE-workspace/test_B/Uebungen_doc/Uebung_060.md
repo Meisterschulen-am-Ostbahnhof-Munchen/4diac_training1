@@ -1,56 +1,51 @@
-# Uebung_060: für TC-SC also Task Controller Section Control
+# Uebung_060: Task Controller Section Control (TC-SC)
 
-* * * * * * * * * *
-## Einleitung
-Diese Übung behandelt die Implementierung einer Task Controller Section Control (TC-SC) Funktionalität in der 4diac-IDE. Die Anwendung demonstriert die Verarbeitung von kondensierten Arbeitszuständen und Sektionskontroll-Daten gemäß ISOBUS-Standards.
+[Uebung_060](https://docs.ms-muc-docs.de/projects/visual-programming-languages-docs/de/latest/training1/Ventilsteuerung/4diacIDE-workspace/test/FBs/Uebungen/Uebung_060.html)
 
-## Verwendete Funktionsbausteine (FBs)
+[![NotebookLM](media/NotebookLM_logo.png)](https://notebooklm.google.com/notebook/a6872e59-1dfc-4132-a118-aff1bc7bc944)
 
-### Haupt-Funktionsbausteine:
-- **SETPOINT_CONDENSED_WORK_STATE_1_16** (TC_ID): Empfängt Soll-Werte für kondensierte Arbeitszustände
-- **SPLIT_DWORD_INTO_QUARTERS**: Teilt ein 32-Bit-Wort in 16 Quarter-Bytes auf
-- **QUARTERS_TO_BOOLS**: Wandelt Quarter-Bytes in boolesche Werte um
-- **BOOLS_TO_QUARTERS**: Wandelt boolesche Werte zurück in Quarter-Bytes
-- **ASSEMBLE_DWORD_FROM_QUARTERS**: Setzt Quarter-Bytes zu einem 32-Bit-Wort zusammen
-- **ACTUAL_CONDENSED_WORK_STATE_1_16** (TC_QD): Sendet Ist-Werte für kondensierte Arbeitszustände
-- **SECTION_CONTROL_STATE_IN** (TC_ID): Empfängt Sektionskontroll-Zustände
-- **SECTION_CONTROL_STATE_OUT** (TC_QD): Sendet Sektionskontroll-Zustände
-- **ACTUAL_RATE** (TC_QD): Sendet aktuelle Applikationsraten
-- **ACTUAL_WORK_STATE** (TC_QD): Sendet aktuelle Arbeitszustände
-- **F_GT** (Vergleichsfunktion): Größer-Vergleich für DWORD-Werte
-- **F_SEL** (Selektor): Wählt zwischen zwei Eingangswerten basierend auf einem Steuersignal
+Dieser Artikel beschreibt die logiBUS®-Übung `Uebung_060`. Dies ist eine High-Level Übung für professionelle ISOBUS-Anwendungen im Bereich des Precision Farming.
 
-### Sub-Bausteine: Uebung_060_sub_Outputs
 
-- **Typ**: SubApp
-- **Verwendete interne FBs**:
-  - **DigitalOutput_Q1 bis DigitalOutput_Q8** (logiBUS_QX)
-    - Parameter: QI = TRUE
-    - Parameter: Output = logiBUS_DO::Output_Qx (entsprechende Ausgänge)
-    - Ereigniseingang: REQ
-    - Datenausgang: OUT
-- **Funktionsweise**: Die Sub-Applikation empfängt boolesche Signale von Q_00 bis Q_08 und gibt diese über entsprechende logiBUS-Digitalausgänge aus. Jeder Ausgang wird über ein REQ-Ereignis angesteuert.
+## Podcast
+<iframe src="https://creators.spotify.com/pod/profile/logibus/embed/episodes/LogiBUS--IEC-61499-Daten--und-Ereignisflsse-einfach-erklrt--Vom-Schalter-zur-intelligenten-Steuerung-e36vldb/a-ac3vadb" height="102px" width="400px" frameborder="0" scrolling="no"></iframe>
 
-## Programmablauf und Verbindungen
+----
 
-Der Programmablauf beginnt mit dem Empfang von Sollwerten durch SETPOINT_CONDENSED_WORK_STATE_1_16. Das eingehende DWORD wird in Quarter-Bytes aufgeteilt und in boolesche Signale umgewandelt. Diese Signale werden teilweise an die Ausgabesubapplikation weitergeleitet und gleichzeitig zurück in Quarter-Bytes konvertiert. 
 
-Die rückkonvertierten Quarter-Bytes werden zu einem DWORD zusammengesetzt und an ACTUAL_CONDENSED_WORK_STATE_1_16 gesendet. Parallel dazu werden Sektionskontrollzustände direkt durchgereicht und Applikationsraten/Arbeitszustände basierend auf Vergleichsoperationen selektiert.
 
-**Lernziele:**
-- Verständnis der ISOBUS TC-SC Kommunikation
-- Umgang mit DWORD-zu-BOOL-Konvertierungen
-- Implementierung von Datenverarbeitungsketten
-- Verwendung von Vergleichs- und Selektionsfunktionen
+![](Uebung_060.png)
 
-**Schwierigkeitsgrad:** Mittel
 
-**Benötigte Vorkenntnisse:**
-- Grundkenntnisse der 4diac-IDE
-- Verständnis von Funktionsbausteinen
-- Basiswissen über ISOBUS-Kommunikation
+## Ziel der Übung
 
-**Starten der Übung:** Die Übung wird in der 4diac-IDE geladen und kann nach Konfiguration der Geräteparameter gestartet werden.
+Anbindung an einen ISOBUS Task Controller (TC). Es wird demonstriert, wie die automatische Teilbreitenschaltung (Section Control) und die Dokumentation von Arbeitszuständen und Ausbringraten realisiert werden.
 
-## Zusammenfassung
-Diese Übung vermittelt praktische Erfahrungen mit der Implementierung von Task Controller Section Control Funktionalitäten unter Verwendung standardisierter ISOBUS-Kommunikationsbausteine. Der Schwerpunkt liegt auf der Datenverarbeitung zwischen verschiedenen Darstellungsformen (DWORD, Quarter-Bytes, BOOL) und der Steuerung von Ausgabesignalen über eine strukturierte Sub-Applikation.
+-----
+
+## Beschreibung und Komponenten
+
+[cite_start]In `Uebung_060.SUB` werden Sollwerte vom Task Controller empfangen und Istwerte zurückgemeldet[cite: 1].
+
+### Funktionsbausteine (FBs)
+
+  * **`TC_ID`**: Empfängt Befehle vom Task Controller des Traktors (z.B. "Schalte Teilbreite 5 ein").
+  * **`TC_QD`**: Meldet Daten an den Task Controller zurück (z.B. "Teilbreite 5 ist jetzt tatsächlich aktiv").
+  * **Quarter-Logik**: Die Zustände der Teilbreiten werden als Quartale (2-Bit) übertragen, um auch Fehlerzustände (z.B. Kabelbruch am Ventil) an den TC melden zu können.
+  * **DDI (Data Dictionary Identifier)**: Spezifische Codes (z.B. `SETPOINT_CONDENSED_WORK_STATE`), die definieren, welche Information gerade übertragen wird.
+
+-----
+
+## Funktionsweise
+
+1.  **Sollwert-Empfang**: Der Task Controller sendet ein DWORD, das die Zustände von 16 Teilbreiten enthält.
+2.  **Verarbeitung**: Die Steuerung zerlegt dieses Wort in einzelne Quartale und dann in boolesche Signale für die Ventile (SubApp `Out`).
+3.  **Istwert-Rückmeldung**: Die tatsächlichen Zustände der Ventile werden wieder zu einem DWORD zusammengefügt und als "Actual Condensed Work State" an den TC zurückgesendet.
+4.  **Arbeitsstatus**: Sobald mindestens eine Teilbreite aktiv ist (`F_GT`), meldet die Steuerung dem TC den "Actual Work State" (Arbeit läuft), woraufhin der TC mit der Flächenaufzeichnung beginnt.
+
+-----
+
+## Anwendungsbeispiel
+
+**Automatische Teilbreitenschaltung bei einer Spritze**:
+Der Traktor erkennt per GPS, dass ein Teil des Gestänges über eine bereits behandelte Fläche fährt. Der Task Controller sendet den Befehl "Teilbreite 1-4 AUS". Das logiBUS-Programm empfängt diesen Befehl, schaltet die physischen Magnetventile ab und meldet dem Fahrer am Bildschirm den Erfolg durch den korrekten Ist-Status zurück.

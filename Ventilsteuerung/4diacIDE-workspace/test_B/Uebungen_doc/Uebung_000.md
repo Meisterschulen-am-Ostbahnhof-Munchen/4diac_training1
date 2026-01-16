@@ -1,51 +1,50 @@
-Hier ist die Dokumentationsseite für die Übung `Uebung_000` basierend auf den bereitgestellten Daten.
+# Uebung_000: Arithmetische Grundfunktionen (ADD)
 
-# Uebung_000
+[Uebung_000](https://docs.ms-muc-docs.de/projects/visual-programming-languages-docs/de/latest/training1/Ventilsteuerung/4diacIDE-workspace/test/FBs/Uebungen/Uebung_000.html)
 
-![Uebung_000](Uebung_000.png)
+[![NotebookLM](media/NotebookLM_logo.png)](https://notebooklm.google.com/notebook/a6872e59-1dfc-4132-a118-aff1bc7bc944)
 
-* * * * * * * * * *
+Dieser Artikel beschreibt die logiBUS®-Übung `Uebung_000`. Dies ist das absolute Einstiegsbeispiel für die mathematische Datenverarbeitung.
 
-## Einleitung
 
-Die Sub-Applikation **Uebung_000** dient als einfaches Einstiegsbeispiel in die Verwendung von arithmetischen Grundfunktionen innerhalb der 4diac IDE. Der Zweck dieser Übung ist die Demonstration einer Addition zweier Integer-Konstanten mithilfe eines Standard-IEC-61131-3-Bausteins. Es handelt sich um eine grundlegende Konfiguration ohne externe Schnittstellen.
+## Podcast
+<iframe src="https://creators.spotify.com/pod/profile/logibus/embed/episodes/LogiBUS--IEC-61499-Daten--und-Ereignisflsse-einfach-erklrt--Vom-Schalter-zur-intelligenten-Steuerung-e36vldb/a-ac3vadb" height="102px" width="400px" frameborder="0" scrolling="no"></iframe>
 
-## Verwendete Funktionsbausteine (FBs)
+----
 
-In dieser Übung wird im internen Netzwerk der Sub-Applikation ein zentraler Funktionsbaustein verwendet, um die Berechnungslogik auszuführen.
 
-### Sub-Bausteine: Uebung_000 Netzwerk
 
-- **Typ**: SubAppType (Sub-Applikation)
-- **Verwendete interne FBs**:
-    - **Bausteinname**: ADD_2
-        - **Typ**: iec61131::arithmetic::ADD_2
-        - **Parameter**: 
-            - IN1 = INT#5
-            - IN2 = INT#3
-        - **Ereignisausgang/-eingang**: *Keine expliziten Ereignisverbindungen in diesem Snippet definiert (Datenfluss-Logik).*
-        - **Datenausgang/-eingang**: 
-            - IN1 (Eingang): Integer-Wert 5
-            - IN2 (Eingang): Integer-Wert 3
-            - OUT (Ausgang): Ergebnis der Addition (implizit)
-- **Funktionsweise**: 
-    Der Baustein `ADD_2` führt eine mathematische Addition durch. Er nimmt die an den Eingängen `IN1` und `IN2` definierten Werte entgegen und summiert diese.
+![](Uebung_000.png)
 
-## Programmablauf und Verbindungen
 
-Der Programmablauf in dieser Übung ist statisch und dient primär der Veranschaulichung der Parameterisierung von Bausteinen.
+## Ziel der Übung
 
-1.  **Initialisierung**: Die Übung verwendet fest kodierte Parameterwerte direkt am Baustein.
-2.  **Verarbeitung**: Der Funktionsbaustein `ADD_2` erhält den Wert `5` am Eingang `IN1` und den Wert `3` am Eingang `IN2`.
-3.  **Ergebnis**: Der Baustein addiert diese beiden Ganzzahlen. Das mathematische Ergebnis dieser Operation ist `8`.
+Verwendung eines Standard-Mathematikbausteins (`ADD_2`). Es wird gezeigt, wie konstante Werte an die Eingänge eines Bausteins angelegt werden, um eine einfache Berechnung auszuführen.
 
-Da keine externen Ein- oder Ausgänge in der `SubAppInterfaceList` definiert sind, ist diese Logik in sich geschlossen. Es werden keine Verbindungen (Connections) zu anderen Bausteinen gezogen; die Werte werden direkt über die Parametereingänge des Bausteins injiziert.
+-----
 
-**Lernziele:**
-- Einfügen eines Funktionsbausteins aus der Bibliothek.
-- Setzen von festen Werten (Konstanten) an Bausteineingängen.
-- Verständnis des `ADD` Bausteins.
+## Beschreibung und Komponenten
 
-## Zusammenfassung
+[cite_start]In `Uebung_000.SUB` wird ein Additions-Baustein zur Berechnung einer Summe genutzt[cite: 1].
 
-Die `Uebung_000` ist eine minimalistische Darstellung einer Additionsaufgabe. Sie zeigt, wie der Baustein `ADD_2` konfiguriert wird, um die Festwerte 5 und 3 zu addieren. Dies bildet die Grundlage für komplexere arithmetische Operationen und Datenverarbeitungen in 4diac.
+### Funktionsbausteine (FBs)
+
+  * **`ADD_2`**: Ein Baustein aus der IEC 61131-Bibliothek (Arithmetik).
+  * **Parameter**:
+    * `IN1`: Festwert 5 (`INT#5`).
+    * `IN2`: Festwert 3 (`INT#3`).
+
+-----
+
+## Funktionsweise
+
+Der Baustein nimmt die beiden Eingangswerte und addiert sie intern. Da in diesem minimalistischen Beispiel keine Ereignisverbindungen definiert sind, handelt es sich um eine rein statische Berechnung des Datenflusses. Das mathematische Ergebnis am Ausgang `OUT` ist 8.
+
+-----
+
+## Lernziel
+
+Diese Übung dient dazu, sich mit der 4diac-Oberfläche vertraut zu machen:
+1.  Bausteine aus der Bibliothek ziehen.
+2.  Eigenschaften (Parameter) von Bausteinen im Properties-Fenster editieren.
+3.  Den Unterschied zwischen variablen Eingängen und Konstanten verstehen.

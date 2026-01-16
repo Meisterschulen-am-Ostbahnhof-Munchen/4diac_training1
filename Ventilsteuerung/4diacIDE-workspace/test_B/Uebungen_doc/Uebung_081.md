@@ -1,68 +1,51 @@
-# Uebung_081: Beispiel für E_CTD
+# Uebung_081: Rückwärts-Zähler (Down-Counter)
 
-* * * * * * * * * *
+[Uebung_081](https://docs.ms-muc-docs.de/projects/visual-programming-languages-docs/de/latest/training1/Ventilsteuerung/4diacIDE-workspace/test/FBs/Uebungen/Uebung_081.html)
 
-## Einleitung
-Diese Übung demonstriert die Verwendung des E_CTD-Funktionsbausteins (Counter Down) in einem 4diac-IDE-System. Die Übung implementiert einen Abwärtszähler mit Reset-Funktionalität und zeigt praktische Anwendungsmöglichkeiten für Zählfunktionen in der Automatisierungstechnik.
+[![NotebookLM](media/NotebookLM_logo.png)](https://notebooklm.google.com/notebook/a6872e59-1dfc-4132-a118-aff1bc7bc944)
 
-## Verwendete Funktionsbausteine (FBs)
+Dieser Artikel beschreibt die logiBUS®-Übung `Uebung_081`. Hier wird das Prinzip des Rückwärtszählens bis zum Erreichen der Nullgrenze gezeigt.
 
-### E_CTD (Counter Down)
-- **Typ**: Standard IEC 61499-Funktionsbaustein
-- **Parameter**: 
-  - PV = UINT#5 (Voreinstellungswert auf 5)
-- **Ereigniseingänge**: CD (Count Down), LD (Load)
-- **Ereignisausgänge**: CDO (Count Down Output), LDO (Load Output)
-- **Datenausgang**: Q (Ausgangswert)
 
-### logiBUS_IE (Digital Input)
-- **Typ**: logiBUS-Interface für digitale Eingänge
-- **Parameter**:
-  - QI = TRUE (Qualified Input aktiviert)
-  - Input = logiBUS_DI::Input_I1 bzw. Input_I2
-  - InputEvent = BUTTON_SINGLE_CLICK
-- **Ereignisausgang**: IND (Input Event)
+## Podcast
+<iframe src="https://creators.spotify.com/pod/profile/logibus/embed/episodes/LogiBUS--IEC-61499-Daten--und-Ereignisflsse-einfach-erklrt--Vom-Schalter-zur-intelligenten-Steuerung-e36vldb/a-ac3vadb" height="102px" width="400px" frameborder="0" scrolling="no"></iframe>
 
-### logiBUS_QX (Digital Output)
-- **Typ**: logiBUS-Interface für digitale Ausgänge
-- **Parameter**:
-  - QI = TRUE (Qualified Input aktiviert)
-  - Output = logiBUS_DO::Output_Q1
-- **Ereigniseingang**: REQ (Request)
-- **Dateneingang**: OUT (Output Value)
+----
 
-## Programmablauf und Verbindungen
 
-Das Programm realisiert einen Abwärtszähler mit folgenden Funktionen:
 
-**Ereignisverbindungen:**
-- DigitalInput_CLK_I1.IND → E_CTD.CD (Zählereignis)
-- DigitalInput_CLK_I2.IND → E_CTD.LD (Lade-/Reset-Ereignis)
-- E_CTD.CDO → DigitalOutput_Q1.REQ (Zählerausgangsereignis)
-- E_CTD.LDO → DigitalOutput_Q1.REQ (Ladeausgangsereignis)
+![](Uebung_081.png)
 
-**Datenverbindungen:**
-- E_CTD.Q → DigitalOutput_Q1.OUT (Zählerwert zum Ausgang)
 
-**Funktionsweise:**
-- Bei Betätigung von Input_I1 wird der Zähler um 1 dekrementiert (CD-Eingang)
-- Bei Betätigung von Input_I2 wird der Zähler auf den Voreinstellungswert 5 zurückgesetzt (LD-Eingang)
-- Der aktuelle Zählerstand wird kontinuierlich an den digitalen Ausgang Q1 ausgegeben
-- Der Zähler zählt von 5 abwärts bis 0
+## Ziel der Übung
 
-## Lernziele
-- Verständnis des E_CTD-Funktionsbausteins
-- Implementierung von Zählfunktionen in IEC 61499
-- Verwendung von logiBUS-Schnittstellen für Ein-/Ausgänge
-- Ereignisgesteuerte Programmierung
+Verwendung des Bausteins `E_CTD` (Event Count Down). Es wird demonstriert, wie ein Zähler mit einem Startwert geladen und durch Ereignisse bis auf Null dekrementiert wird.
 
-## Schwierigkeitsgrad
-Einfach - geeignet für Einsteiger in die IEC 61499-Programmierung
+-----
 
-## Vorkenntnisse
-- Grundkenntnisse in 4diac-IDE
-- Verständnis von Funktionsbausteinen und Ereignisverbindungen
-- Basiswissen über digitale Ein-/Ausgänge
+## Beschreibung und Komponenten
 
-## Zusammenfassung
-Diese Übung zeigt eine praktische Implementierung eines Abwärtszählers mit Reset-Funktion unter Verwendung des standardisierten E_CTD-Funktionsbausteins. Die Verbindung zwischen digitalen Eingängen, dem Zählerbaustein und dem digitalen Ausgang demonstriert grundlegende Prinzipien der ereignisgesteuerten Automatisierungstechnik nach IEC 61499.
+[cite_start]In `Uebung_081.SUB` wird ein Down-Counter zur Steuerung eines Ausgangs verwendet[cite: 1].
+
+### Funktionsbausteine (FBs)
+
+  * **`I1` (Count Down)**: Verringert den Zählerstand bei jedem Klick.
+  * **`I2` (Load)**: Lädt den Zähler mit dem Vorgabewert (`PV`).
+  * **`E_CTD`**: Der Zähler-Baustein. [cite_start]Der Parameter `PV` ist auf 5 eingestellt[cite: 1].
+  * **`DigitalOutput_Q1`**: Signalisiert das Erreichen der Nullgrenze.
+
+-----
+
+## Funktionsweise
+
+1.  **Laden**: Ein Klick auf **I2** triggert den Eingang `LD`. Der Zählerstand springt sofort auf 5. Der Ausgang `Q` wird `FALSE`.
+2.  **Zählen**: Jeder Klick auf **I1** (`CD`) verringert den Zählerstand (4, 3, 2, 1, 0).
+3.  **Grenzwert**: Sobald der Stand Null erreicht (`CV <= 0`), wechselt der Ausgang `Q` auf `TRUE`.
+4.  Die Lampe an **Q1** leuchtet auf.
+
+-----
+
+## Anwendungsbeispiel
+
+**Restmengen-Anzeige**:
+In einem Saatgutbehälter befinden sich 5 Einheiten. Bei jeder Umdrehung der Dosierung wird ein Impuls (`CD`) ausgelöst. Sobald der Zähler bei Null ankommt, wird ein Alarm (`Q1`) ausgegeben, um den Fahrer zum Nachfüllen aufzufordern.

@@ -10,7 +10,9 @@ Uebung_010b1
 Uebung_010b2
 Uebung_010b3
 Uebung_010b4
+Uebung_010b4_sub
 Uebung_010b5
+Uebung_010b5_sub
 Uebung_010b6
 Uebung_010b7
 Uebung_010b8
@@ -22,12 +24,15 @@ Uebung_010bA4
 Uebung_010c
 Uebung_010c2
 Uebung_010c3
+Uebung_010c3_sub
 Uebung_010c4
+Uebung_010c4_sub
 Uebung_011
 Uebung_011a
 Uebung_011a2
 Uebung_012
 Uebung_012a
+Uebung_012a_sub
 Uebung_012b
 Uebung_012c
 Uebung_013
