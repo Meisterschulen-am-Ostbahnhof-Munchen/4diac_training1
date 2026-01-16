@@ -1,66 +1,51 @@
-# Uebung_019a: Umschalten einer Maske
+# Uebung_019a: Alarmmasken und Quittierung
 
-* * * * * * * * * *
+[Uebung_019a](https://docs.ms-muc-docs.de/projects/visual-programming-languages-docs/de/latest/training1/Ventilsteuerung/4diacIDE-workspace/test/FBs/Uebungen/Uebung_019a.html)
 
-## Einleitung
-Diese Übung demonstriert das Umschalten zwischen verschiedenen Anzeigemasken auf einem Display. Durch Betätigung verschiedener Eingänge können unterschiedliche Masken aktiviert werden, was typische Szenarien in der Bedienoberfläche von industriellen Anlagen abbildet.
+[![NotebookLM](media/NotebookLM_logo.png)](https://notebooklm.google.com/notebook/a6872e59-1dfc-4132-a118-aff1bc7bc944)
 
-## Verwendete Funktionsbausteine (FBs)
+Dieser Artikel beschreibt die logiBUS®-Übung `Uebung_019a`. Hier wird die Maskenumschaltung um eine Sicherheitsfunktion erweitert: Den Alarm.
 
-### DigitalInput_CLK_I1, DigitalInput_CLK_I2, DigitalInput_CLK_I3
-- **Typ**: logiBUS_IE
-- **Parameter**:
-  - QI = TRUE
-  - Input = logiBUS_DI::Input_I1 / Input_I2 / Input_I3
-  - InputEvent = logiBUS_DI_Events::BUTTON_SINGLE_CLICK
-- **Funktionsweise**: Erfassen von Tastendruck-Ereignissen an den digitalen Eingängen I1, I2 und I3
 
-### Q_ActiveMask
-- **Typ**: Q_ActiveMask
-- **Parameter**:
-  - u16WorkSetId = DefaultPool::WorkingSet_0
-- **Funktionsweise**: Verwaltung und Aktivierung der aktuellen Anzeigemaske
+## Podcast
+<iframe src="https://creators.spotify.com/pod/profile/logibus/embed/episodes/LogiBUS--IEC-61499-Daten--und-Ereignisflsse-einfach-erklrt--Vom-Schalter-zur-intelligenten-Steuerung-e36vldb/a-ac3vadb" height="102px" width="400px" frameborder="0" scrolling="no"></iframe>
 
-### F_SEL_E_2
-- **Typ**: F_SEL_E_4
-- **Parameter**:
-  - IN0 = DefaultPool::DataMask_M1
-  - IN1 = DefaultPool::DataMask_M2
-  - IN2 = DefaultPool::AlarmMask_A2_medium
-  - IN3 = DefaultPool::DataMask_M1
-- **Funktionsweise**: Selektiert basierend auf dem auslösenden Ereignis eine der vier vordefinierten Masken
+----
 
-### ACK
-- **Typ**: Softkey_IE
-- **Parameter**:
-  - QI = TRUE
-  - u16ObjId = isobus::ID_NULL
-  - InputEvent = SoftKeyActivationCode::SK_PRESSED
-- **Funktionsweise**: Erfassung von Softkey-Betätigungen
 
-## Programmablauf und Verbindungen
 
-**Ereignisverbindungen:**
-- DigitalInput_CLK_I1.IND → F_SEL_E_2.REQ0 (aktiviert Maske M1)
-- DigitalInput_CLK_I2.IND → F_SEL_E_2.REQ1 (aktiviert Maske M2)
-- DigitalInput_CLK_I3.IND → F_SEL_E_2.REQ2 (aktiviert Alarmmaske A2)
-- ACK.IND → F_SEL_E_2.REQ3 (aktiviert Maske M1)
-- F_SEL_E_2.CNF → Q_ActiveMask.REQ
+![](Uebung_019a.png)
 
-**Datenverbindungen:**
-- F_SEL_E_2.OUT → Q_ActiveMask.u16NewMaskId
 
-**Lernziele:**
-- Verständnis des Maskenmanagements in industriellen Steuerungen
-- Implementierung von Maskenumschaltungen über verschiedene Eingänge
-- Verwendung von Selektionsfunktionsbausteinen
-- Integration von Softkey-Funktionalität
+## Ziel der Übung
 
-**Schwierigkeitsgrad**: Mittel
+Erlernen des Umgangs mit Alarm-Masken. Im ISOBUS-Standard haben Alarme Vorrang vor normalen Datenmasken und können oft nur durch eine explizite Quittierung (ACK) verlassen werden.
 
-**Benötigte Vorkenntnisse**: Grundlagen der 4diac-IDE, Verständnis von Funktionsbausteinen und Ereignisverarbeitung
+-----
 
-**Starten der Übung**: Die Übung wird durch Betätigung der digitalen Eingänge I1, I2, I3 oder des ACK-Softkeys gestartet.
+## Beschreibung und Komponenten
 
-## Zusammenfassung
-Diese Übung zeigt ein praktisches Beispiel für das dynamische Umschalten zwischen verschiedenen Anzeigemasken in einer industriellen Steuerung. Durch die Verwendung von digitalen Eingängen und Softkeys können unterschiedliche Masken (Datenmasken M1/M2 und eine Alarmmaske) aktiviert werden. Die Implementierung demonstriert effektiv die Ereignisverarbeitung und Datenweitergabe zwischen Funktionsbausteinen in einem typischen HMI-Szenario.
+[cite_start]In `Uebung_019a.SUB` wird ein vierstufiger Selektor (`F_SEL_E_4`) zur Maskenwahl genutzt[cite: 1].
+
+### Funktionsbausteine (FBs)
+
+  * **`I1` & `I2`**: Normale Maskenwahl (M1, M2).
+  * **`I3`**: Auslöser für den Alarm.
+  * **`ACK`**: Ein Softkey am Terminal zum Quittieren des Alarms.
+  * **`AlarmMask_A2_medium`**: Eine spezielle Alarm-Maske aus dem Pool.
+
+-----
+
+## Funktionsweise
+
+1.  Durch `I1` und `I2` kann der Nutzer wie gewohnt navigieren.
+2.  Tritt ein Fehler ein (`I3`), erzwingt die Steuerung die Anzeige der `AlarmMask_A2`. Das Terminal überlagert nun die aktuelle Ansicht mit der Alarmmeldung.
+3.  Die Navigation über `I1/I2` ist nun wirkungslos oder wird vom Alarm überdeckt (je nach Terminal-Implementierung).
+4.  Erst wenn der Nutzer am Terminal den Softkey **ACK** drückt, schaltet die Steuerung wieder auf die normale Arbeitsmaske (`M1`) zurück.
+
+-----
+
+## Anwendungsbeispiel
+
+**Überlastwarnung**:
+Ein Sensor meldet eine drohende Überlastung der Maschine. Die Steuerung unterbricht die normale Anzeige und blendet großformatig die Warnung "Überlast!" ein. Der Fahrer muss den Fehler bewusst wahrnehmen und am Terminal quittieren, bevor er die normalen Anzeigen wieder nutzen kann.

@@ -1,48 +1,51 @@
-# Uebung_017: Control Audio Signal
+# Uebung_017: Akustische Signale (Beep)
 
-* * * * * * * * * *
+[Uebung_017](https://docs.ms-muc-docs.de/projects/visual-programming-languages-docs/de/latest/training1/Ventilsteuerung/4diacIDE-workspace/test/FBs/Uebungen/Uebung_017.html)
 
-## Einleitung
-Diese Übung demonstriert die Steuerung eines Audiosignals über eine Softkey-Eingabe. Bei Betätigung der definierten Taste wird ein Tonsignal mit spezifischen Parametern ausgelöst.
+[![NotebookLM](media/NotebookLM_logo.png)](https://notebooklm.google.com/notebook/a6872e59-1dfc-4132-a118-aff1bc7bc944)
 
-## Verwendete Funktionsbausteine (FBs)
+Dieser Artikel beschreibt die logiBUS®-Übung `Uebung_017`. In dieser Übung wird gezeigt, wie man den internen Summer des ISOBUS-Terminals anspricht, um akustische Rückmeldungen zu geben.
 
-### SoftKey_UP_F1
-- **Typ**: Softkey_IE
-- **Parameter**:
-  - QI = TRUE
-  - u16ObjId = DefaultPool::SoftKey_F1
-  - InputEvent = SoftKeyActivationCode::SK_RELEASED
 
-### Q_CtrlAudioSignal
-- **Typ**: Q_CtrlAudioSignal
-- **Parameter**:
-  - u8NumOfRepit = 1 (Anzahl der Wiederholungen)
-  - u16Frequency = 440 (Frequenz in Hz)
-  - u16OnTimeMs = 150 (Einschaltdauer in Millisekunden)
-  - u16OffTimeMs = 0 (Ausschaltdauer in Millisekunden)
+## Podcast
+<iframe src="https://creators.spotify.com/pod/profile/logibus/embed/episodes/LogiBUS--IEC-61499-Daten--und-Ereignisflsse-einfach-erklrt--Vom-Schalter-zur-intelligenten-Steuerung-e36vldb/a-ac3vadb" height="102px" width="400px" frameborder="0" scrolling="no"></iframe>
 
-## Programmablauf und Verbindungen
+----
 
-Die Übung verwendet folgende Verbindungen:
 
-- **Ereignisverbindung**: SoftKey_UP_F1.IND → Q_CtrlAudioSignal.REQ
 
-**Programmablauf**:
-1. Beim Loslassen der F1-Taste (SoftKey_F1) wird das IND-Ereignis des SoftKey_IE-Bausteins ausgelöst
-2. Dieses Ereignis triggert den Q_CtrlAudioSignal-Baustein über dessen REQ-Eingang
-3. Der Audio-Controller erzeugt ein Tonsignal mit 440 Hz für 150 Millisekunden
-4. Das Signal wird einmalig abgespielt (keine Wiederholungen)
+![](Uebung_017.png)
 
-**Lernziele**:
-- Verwendung von Softkey-Input-Bausteinen
-- Konfiguration von Audio-Signal-Steuerung
-- Ereignisgesteuerte Programmabläufe
-- Parameterkonfiguration für Tonerzeugung
 
-**Schwierigkeitsgrad**: Einfach
+## Ziel der Übung
 
-**Vorkenntnisse**: Grundlagen der 4diac-IDE, Verständnis von Ereignisverbindungen
+Verwendung des Bausteins `Q_CtrlAudioSignal`. Es wird demonstriert, wie ein Ereignis (hier ein Softkey-Klick) eine Audio-Ausgabe am Terminal mit spezifischer Frequenz und Dauer auslöst.
 
-## Zusammenfassung
-Diese Übung zeigt eine einfache Implementierung zur Steuerung eines Audiosignals durch Tastendruck. Sie vermittelt grundlegende Konzepte der ereignisgesteuerten Programmierung und der Parameterkonfiguration für spezifische Hardware-Funktionalitäten in 4diac.
+-----
+
+## Beschreibung und Komponenten
+
+[cite_start]Die Subapplikation `Uebung_017.SUB` löst bei Betätigung eines Softkeys ein Tonsignal aus[cite: 1].
+
+### Funktionsbausteine (FBs)
+
+  * **`SoftKey_UP_F1`**: Der Auslöser.
+  * **`Q_CtrlAudioSignal`**: Der ISOBUS-Ausgangsbaustein für Audio.
+  * **Parameter**:
+    * `u16Frequency`: Tonhöhe in Hertz (hier 440 Hz = Kammerton A).
+    * `u16OnTimeMs`: Dauer des Tons (150 ms).
+    * `u8NumOfRepit`: Anzahl der Wiederholungen (1).
+
+-----
+
+## Funktionsweise
+
+Die Kette ist rein ereignisbasiert:
+Ein Klick (und Loslassen) von Softkey **F1** feuert ein `IND`-Event. Dieses geht direkt an den `REQ`-Eingang des Audio-Bausteins. Das Terminal erhält daraufhin den Befehl, einmalig für 150ms mit 440 Hz zu piepsen.
+
+-----
+
+## Anwendungsbeispiel
+
+**Tastenton-Quittierung**:
+Jeder Tastendruck am Terminal soll durch einen kurzen, dezenten Piepston bestätigt werden. Dies gibt dem Bediener eine akustische Rückmeldung über die erfolgreiche Eingabe, auch wenn er nicht direkt auf den Bildschirm schaut.

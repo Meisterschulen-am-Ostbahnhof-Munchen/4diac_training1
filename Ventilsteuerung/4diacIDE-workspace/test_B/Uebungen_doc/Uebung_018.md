@@ -1,60 +1,52 @@
-# Uebung_018: Control Audio Signal und Delay
+# Uebung_018: Melodien und Sequenzen (Audio-Delay)
 
-* * * * * * * * * *
+[Uebung_018](https://docs.ms-muc-docs.de/projects/visual-programming-languages-docs/de/latest/training1/Ventilsteuerung/4diacIDE-workspace/test/FBs/Uebungen/Uebung_018.html)
 
-## Einleitung
-Diese Übung demonstriert die Steuerung von Audiosignalen mit Verzögerung. Es werden zwei verschiedene Audiosignale nacheinander abgespielt, wobei das zweite Signal nach einer definierten Verzögerung nach dem ersten Signal aktiviert wird.
+[![NotebookLM](media/NotebookLM_logo.png)](https://notebooklm.google.com/notebook/a6872e59-1dfc-4132-a118-aff1bc7bc944)
 
-## Verwendete Funktionsbausteine (FBs)
+Dieser Artikel beschreibt die logiBUS®-Übung `Uebung_018`. Hier wird die Audio-Ausgabe erweitert, um zeitlich versetzte Tonfolgen zu erzeugen.
 
-### SoftKey_UP_F1
-- **Typ**: Softkey_IE
-- **Parameter**:
-  - QI = TRUE
-  - u16ObjId = DefaultPool::SoftKey_F1
-  - InputEvent = SoftKeyActivationCode::SK_RELEASED
 
-### Q_CtrlAudioSignal_0
-- **Typ**: Q_CtrlAudioSignal
-- **Parameter**:
-  - u8NumOfRepit = 1
-  - u16Frequency = 440
-  - u16OnTimeMs = 150
-  - u16OffTimeMs = 0
+## Podcast
+<iframe src="https://creators.spotify.com/pod/profile/logibus/embed/episodes/LogiBUS--IEC-61499-Daten--und-Ereignisflsse-einfach-erklrt--Vom-Schalter-zur-intelligenten-Steuerung-e36vldb/a-ac3vadb" height="102px" width="400px" frameborder="0" scrolling="no"></iframe>
 
-### Q_CtrlAudioSignal_1
-- **Typ**: Q_CtrlAudioSignal
-- **Parameter**:
-  - u8NumOfRepit = 1
-  - u16Frequency = 880
-  - u16OnTimeMs = 150
-  - u16OffTimeMs = 0
+----
 
-### E_DELAY
-- **Typ**: E_DELAY
-- **Parameter**:
-  - DT = T#250ms
 
-## Programmablauf und Verbindungen
 
-Der Programmablauf beginnt mit der Betätigung der Softtaste F1 (SoftKey_UP_F1). Beim Loslassen der Taste (SK_RELEASED) wird ein Ereignis an Q_CtrlAudioSignal_0 gesendet, welches ein Audiosignal mit 440 Hz Frequenz für 150 ms abspielt.
+![](Uebung_018.png)
 
-Nach Abschluss des ersten Audiosignals (CNF-Ausgang) wird der Verzögerungsbaustein E_DELAY gestartet, der eine 250 ms Verzögerung einfügt. Nach Ablauf dieser Verzögerung wird das zweite Audiosignal Q_CtrlAudioSignal_1 aktiviert, welches ein Signal mit 880 Hz Frequenz für 150 ms abspielt.
 
-**Ereignisverbindungen:**
-- SoftKey_UP_F1.IND → Q_CtrlAudioSignal_0.REQ
-- Q_CtrlAudioSignal_0.CNF → E_DELAY.START
-- E_DELAY.EO → Q_CtrlAudioSignal_1.REQ
+## Ziel der Übung
 
-**Lernziele:**
-- Verwendung von Softkey-Inputs
-- Steuerung von Audiosignalen
-- Implementierung von Zeitverzögerungen
-- Ereignisgesteuerte Programmabläufe
+Erlernen der Ereignisverzögerung (`E_DELAY`) zur Erstellung von Sequenzen. Es wird gezeigt, wie man zwei Töne mit unterschiedlichen Frequenzen nacheinander abspielt.
 
-**Schwierigkeitsgrad**: Einfach bis Mittel
+-----
 
-**Vorkenntnisse**: Grundkenntnisse in 4diac IDE und Funktionsbausteinen
+## Beschreibung und Komponenten
 
-## Zusammenfassung
-Diese Übung zeigt eine praktische Anwendung zur sequenziellen Steuerung von Audiosignalen mit integrierter Zeitverzögerung. Die Kombination aus Benutzereingabe, Signalgenerierung und Zeitsteuerung demonstriert grundlegende Konzepte der ereignisgesteuerten Automatisierungstechnik.
+[cite_start]In `Uebung_018.SUB` werden zwei Audio-Bausteine über ein Zeitglied verkettet[cite: 1].
+
+### Funktionsbausteine (FBs)
+
+  * **`Q_CtrlAudioSignal_0`**: Erster Ton (440 Hz).
+  * **`E_DELAY`**: Ein Verzögerungs-Baustein. [cite_start]Er wartet nach einem Ereignis am Eingang `START` die Zeit `DT` ab (hier 250 ms), bevor er das Ereignis am Ausgang `EO` weitergibt[cite: 1].
+  * **`Q_CtrlAudioSignal_1`**: Zweiter Ton (880 Hz - eine Oktave höher).
+
+-----
+
+## Funktionsweise
+
+1.  Softkey-Klick startet Ton 0.
+2.  Gleichzeitig mit dem Start des ersten Tons (oder nach dessen Bestätigung `CNF`) wird der Timer `E_DELAY` gestartet.
+3.  Während der erste Ton klingt (150ms) und die kurze Pause danach, läuft die Zeit ab.
+4.  Nach 250ms feuert der Timer und startet den zweiten (höheren) Ton.
+
+Das Ergebnis ist ein zweistufiges "Didi"-Signal.
+
+-----
+
+## Anwendungsbeispiel
+
+**Differenzierte Warnsignale**:
+Ein kurzes "Piep" ist eine normale Info. Ein "Piep-Piep" (z.B. tiefer Ton gefolgt von hohem Ton) signalisiert das Ende eines Vorgangs. Ein umgekehrtes Signal (hoch nach tief) könnte eine Fehlermeldung akustisch untermalen.

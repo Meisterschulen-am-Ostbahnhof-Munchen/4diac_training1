@@ -1,50 +1,44 @@
-# Uebung_020c: DigitalInput_I1 auf DigitalOutput_Q1; E_TON; Einschaltverzögert
+# Uebung_020c: Einschaltverzögerung (E_TON)
 
-* * * * * * * * * *
+[Uebung_020c](https://docs.ms-muc-docs.de/projects/visual-programming-languages-docs/de/latest/training1/Ventilsteuerung/4diacIDE-workspace/test/FBs/Uebungen/Uebung_020c.html)
 
-## Einleitung
-Diese Übung demonstriert die Verwendung eines Einschaltverzögerungstimers (E_TON) in Verbindung mit digitalen Ein- und Ausgängen. Das Programm realisiert eine verzögerte Signalweitergabe von einem digitalen Eingang zu einem digitalen Ausgang.
+[![NotebookLM](media/NotebookLM_logo.png)](https://notebooklm.google.com/notebook/a6872e59-1dfc-4132-a118-aff1bc7bc944)
 
-## Verwendete Funktionsbausteine (FBs)
+Dieser Artikel beschreibt die logiBUS®-Übung `Uebung_020c`.
 
-### DigitalInput_I1
-- **Typ**: logiBUS_IX
-- **Parameter**:
-  - QI = TRUE
-  - Input = logiBUS_DI::Input_I1
-- **Funktion**: Liest den Zustand des digitalen Eingangs I1 ein
 
-### E_TON
-- **Typ**: E_TON (Einschaltverzögerung)
-- **Parameter**:
-  - PT = T#5s (Verzögerungszeit von 5 Sekunden)
-- **Funktion**: Verzögert das eingehende Signal um die eingestellte Zeit
+## Podcast
+<iframe src="https://creators.spotify.com/pod/profile/logibus/embed/episodes/LogiBUS--IEC-61499-Daten--und-Ereignisflsse-einfach-erklrt--Vom-Schalter-zur-intelligenten-Steuerung-e36vldb/a-ac3vadb" height="102px" width="400px" frameborder="0" scrolling="no"></iframe>
 
-### DigitalOutput_Q1
-- **Typ**: logiBUS_QX
-- **Parameter**:
-  - QI = TRUE
-  - Output = logiBUS_DO::Output_Q1
-- **Funktion**: Schreibt den Ausgangswert auf den digitalen Ausgang Q1
+----
 
-## Programmablauf und Verbindungen
 
-**Ereignisverbindungen:**
-- DigitalInput_I1.IND → E_TON.REQ
-- E_TON.CNF → DigitalOutput_Q1.REQ
 
-**Datenverbindungen:**
-- DigitalInput_I1.IN → E_TON.IN
-- E_TON.Q → DigitalOutput_Q1.OUT
+![](Uebung_020c.png)
 
-**Programmablauf:**
-1. Bei einer Zustandsänderung am digitalen Eingang I1 wird ein Ereignis an den E_TON-Baustein gesendet
-2. Der E_TON-Baustein startet die Zeitverzögerung von 5 Sekunden
-3. Nach Ablauf der Verzögerungszeit wird das Signal an den digitalen Ausgang Q1 weitergeleitet
-4. Der Ausgang Q1 übernimmt den Zustand des Eingangs I1 mit 5 Sekunden Verzögerung
 
-**Schwierigkeitsgrad**: Einfach
-**Benötigte Vorkenntnisse**: Grundlagen der 4diac-IDE, Verständnis von digitalen Ein-/Ausgängen und Timer-Funktionen
+## Ziel der Übung
 
-## Zusammenfassung
-Diese Übung vermittelt die praktische Anwendung eines Einschaltverzögerungstimers in der Automatisierungstechnik. Sie zeigt, wie ein digitales Eingangssignal mit einer definierten Zeitverzögerung an einen digitalen Ausgang weitergegeben werden kann. Die Verwendung des E_TON-Bausteins und die korrekte Parametrierung der Verzögerungszeit sind zentrale Lerninhalte dieser Übung.
+Nutzung des standardisierten Timer-Bausteins `E_TON`.
+
+-----
+
+## Beschreibung und Komponenten
+
+[cite_start]Die Subapplikation `Uebung_020c.SUB` nutzt den `E_TON` Baustein aus der Event-Timer-Bibliothek[cite: 1].
+
+### Funktionsbausteine (FBs)
+
+  * **`E_TON`**: Timer ON-Delay (Ereignisbasiert).
+  * **Parameter `PT`**: Preset Time (hier 5 Sekunden).
+
+-----
+
+## Funktionsweise
+
+Der Baustein vereinfacht den Aufbau aus Übung 020b erheblich:
+*   Eingang `I1` wird TRUE ➡️ Timer startet.
+*   Nach 5s wird der Ausgang `Q` TRUE.
+*   Eingang `I1` wird FALSE ➡️ Timer bricht ab, Ausgang wird sofort FALSE.
+
+Dies ist der Standardweg, um Verzögerungen in 4diac zu realisieren.

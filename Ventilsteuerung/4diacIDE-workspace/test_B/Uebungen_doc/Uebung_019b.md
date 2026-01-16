@@ -1,83 +1,48 @@
-# Uebung_019b: Umschalten einer Maske
+# Uebung_019b: Alarm-Logik mit Hardware-Ausgang
 
-* * * * * * * * * *
+[Uebung_019b](https://docs.ms-muc-docs.de/projects/visual-programming-languages-docs/de/latest/training1/Ventilsteuerung/4diacIDE-workspace/test/FBs/Uebungen/Uebung_019b.html)
 
-## Einleitung
-Diese Übung demonstriert das Umschalten zwischen verschiedenen Masken auf einem Display und die Steuerung eines Alarmausgangs. Das System ermöglicht die Auswahl unterschiedlicher Anzeigemasken über Tastereingänge und behandelt gleichzeitig Alarmzustände.
+[![NotebookLM](media/NotebookLM_logo.png)](https://notebooklm.google.com/notebook/a6872e59-1dfc-4132-a118-aff1bc7bc944)
 
-## Verwendete Funktionsbausteine (FBs)
+Dieser Artikel beschreibt die logiBUS®-Übung `Uebung_019b`. Hier wird der virtuelle Alarm am Terminal mit einem physischen Alarm-Ausgang synchronisiert.
 
-### DigitalInput_CLK_I1, DigitalInput_CLK_I2, DigitalInput_CLK_I3
-- **Typ**: logiBUS_IE
-- **Parameter**:
-  - QI = TRUE
-  - Input = logiBUS_DI::Input_I1 (bzw. I2, I3)
-  - InputEvent = logiBUS_DI_Events::BUTTON_SINGLE_CLICK
-- **Funktionsweise**: Erfassen von Tasterereignissen mit Einfachklick-Erkennung
 
-### Q_ActiveMask
-- **Typ**: Q_ActiveMask
-- **Parameter**:
-  - u16WorkSetId = DefaultPool::WorkingSet_0
-- **Funktionsweise**: Verwaltung und Anzeige der aktiven Maske auf dem Display
+## Podcast
+<iframe src="https://creators.spotify.com/pod/profile/logibus/embed/episodes/LogiBUS--IEC-61499-Daten--und-Ereignisflsse-einfach-erklrt--Vom-Schalter-zur-intelligenten-Steuerung-e36vldb/a-ac3vadb" height="102px" width="400px" frameborder="0" scrolling="no"></iframe>
 
-### F_SEL_E_2
-- **Typ**: F_SEL_E_4
-- **Parameter**:
-  - IN0 = DefaultPool::DataMask_M1
-  - IN1 = DefaultPool::DataMask_M2
-  - IN2 = DefaultPool::AlarmMask_A2_medium
-  - IN3 = DefaultPool::DataMask_M1
-- **Funktionsweise**: Multiplexer für die Auswahl zwischen vier verschiedenen Masken
+----
 
-### ACK
-- **Typ**: Softkey_IE
-- **Parameter**:
-  - QI = TRUE
-  - u16ObjId = isobus::ID_NULL
-  - InputEvent = SoftKeyActivationCode::SK_PRESSED
-- **Funktionsweise**: Erfassung von Softkey-Ereignissen
 
-### E_SR
-- **Typ**: E_SR
-- **Funktionsweise**: Set-Reset-Flipflop zur Alarmzustandssteuerung
 
-### Alarmausgang
-- **Typ**: logiBUS_QX
-- **Parameter**:
-  - QI = TRUE
-  - Output = logiBUS_DO::Output_Q1
-- **Funktionsweise**: Steuerung des physischen Alarmausgangs
+![](Uebung_019b.png)
 
-## Programmablauf und Verbindungen
 
-### Ereignisverbindungen:
-- DigitalInput_CLK_I1.IND → F_SEL_E_2.REQ0 (Maske M1)
-- DigitalInput_CLK_I2.IND → F_SEL_E_2.REQ1 (Maske M2) 
-- DigitalInput_CLK_I3.IND → F_SEL_E_2.REQ2 (Alarmmaske A2)
-- ACK.IND → F_SEL_E_2.REQ3 (Maske M1)
-- F_SEL_E_2.CNF → Q_ActiveMask.REQ
-- DigitalInput_CLK_I3.IND → E_SR.S (Alarm setzen)
-- DigitalInput_CLK_I2.IND → E_SR.R (Alarm zurücksetzen)
-- DigitalInput_CLK_I1.IND → E_SR.R (Alarm zurücksetzen)
-- ACK.IND → E_SR.R (Alarm zurücksetzen)
-- E_SR.EO → Alarmausgang.REQ
+## Ziel der Übung
 
-### Datenverbindungen:
-- F_SEL_E_2.OUT → Q_ActiveMask.u16NewMaskId
-- E_SR.Q → Alarmausgang.OUT
+Verknüpfung von UI-Zuständen mit Hardware-Speichern. Es soll sichergestellt werden, dass ein Alarmzustand in der Steuerung erhalten bleibt, bis er am Terminal gelöscht wird.
 
-### Lernziele:
-- Verständnis von Maskenumschaltung auf Displays
-- Implementierung von Multiplexer-Funktionalität
-- Steuerung von Alarmzuständen mit Set-Reset-Logik
-- Integration von Taster- und Softkey-Eingaben
+-----
 
-### Bedienung:
-- Taster I1: Schaltet auf Maske M1 und setzt Alarm zurück
-- Taster I2: Schaltet auf Maske M2 und setzt Alarm zurück  
-- Taster I3: Schaltet auf Alarmmaske A2 und setzt Alarm
-- ACK-Key: Schaltet auf Maske M1 und setzt Alarm zurück
+## Beschreibung und Komponenten
 
-## Zusammenfassung
-Diese Übung zeigt ein komplettes System zur Maskensteuerung mit integrierter Alarmbehandlung. Durch die Verwendung eines 4-fach Multiplexers können verschiedene Anzeigemasken ausgewählt werden, während ein Set-Reset-Flipflop die Alarmzustände verwaltet. Die Kombination aus Display-Steuerung und Alarmlogik macht diese Übung zu einem praktischen Beispiel für industrielle HMI-Anwendungen.
+[cite_start]In `Uebung_019b.SUB` wird zusätzlich zur Maskenumschaltung ein SR-Flip-Flop für den Alarm-Status verwendet[cite: 1].
+
+### Funktionsbausteine (FBs)
+
+  * **`E_SR`**: Der Alarm-Speicher.
+  * **`Alarmausgang`**: Schaltet eine physische Hupe oder Warnlampe (`Q1`).
+
+-----
+
+## Funktionsweise
+
+*   **Alarm auslösen**: Taster `I3` triggert den Alarm. Das Terminal springt auf die Alarmmaske **UND** der Speicher `E_SR` wird gesetzt ➡️ Die physische Hupe geht an.
+*   **Quittieren**: Der Nutzer drückt **ACK** am Terminal. Die Steuerung wechselt zurück zur normalen Maske **UND** löscht den Speicher `E_SR.R` ➡️ Die Hupe verstummt.
+*   Interessant: Auch das Wechseln zu einer anderen normalen Maske (`I1`, `I2`) löscht in dieser Implementierung den Alarm-Speicher (Reset-Zweig am `E_SR`).
+
+-----
+
+## Anwendungsbeispiel
+
+**Zentrale Störmelde-Zentrale**:
+Ein kritischer Fehler (z.B. Öldruckverlust) löst sowohl die Anzeige am Bildschirm als auch eine externe Sirene aus. Der Techniker muss zum Terminal gehen, um zu sehen, was los ist, und durch die Quittierung sowohl das Display aufräumen als auch den Lärm abstellen.

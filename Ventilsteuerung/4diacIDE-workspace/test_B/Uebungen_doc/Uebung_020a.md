@@ -1,61 +1,43 @@
-# Uebung_020a: DigitalInput_I1 auf DigitalOutput_Q1
+# Uebung_020a: Manueller Speicher (Standard-Pins)
 
-* * * * * * * * * *
+[Uebung_020a](https://docs.ms-muc-docs.de/projects/visual-programming-languages-docs/de/latest/training1/Ventilsteuerung/4diacIDE-workspace/test/FBs/Uebungen/Uebung_020a.html)
 
-## Einleitung
-Diese Übung demonstriert die grundlegende Verarbeitung eines digitalen Eingangssignals und dessen Ausgabe auf einen digitalen Ausgang. Es werden Ereignis- und Datenverbindungen zwischen verschiedenen Funktionsbausteinen realisiert, um ein einfaches Schaltsystem zu implementieren.
+[![NotebookLM](media/NotebookLM_logo.png)](https://notebooklm.google.com/notebook/a6872e59-1dfc-4132-a118-aff1bc7bc944)
 
-## Verwendete Funktionsbausteine (FBs)
+Dieser Artikel beschreibt die logiBUS®-Übung `Uebung_020a`. Hier wird die manuelle Erzeugung von Setz- und Rücksetz-Ereignissen aus einem Standard-Datensignal demonstriert.
 
-### DigitalInput_I1
-- **Typ**: logiBUS_IX
-- **Parameter**:
-  - QI = TRUE
-  - Input = logiBUS_DI::Input_I1
-- **Funktion**: Liest den digitalen Eingang I1 des logiBUS Systems aus
 
-### DigitalOutput_Q1
-- **Typ**: logiBUS_QX
-- **Parameter**:
-  - QI = TRUE
-  - Output = logiBUS_DO::Output_Q1
-- **Funktion**: Schreibt auf den digitalen Ausgang Q1 des logiBUS Systems
+## Podcast
+<iframe src="https://creators.spotify.com/pod/profile/logibus/embed/episodes/LogiBUS--IEC-61499-Daten--und-Ereignisflsse-einfach-erklrt--Vom-Schalter-zur-intelligenten-Steuerung-e36vldb/a-ac3vadb" height="102px" width="400px" frameborder="0" scrolling="no"></iframe>
 
-### E_SWITCH
-- **Typ**: E_SWITCH
-- **Funktion**: Schaltbaustein, der je nach Eingangswert zwischen zwei Ereignisausgängen umschaltet
+----
 
-### E_RS
-- **Typ**: E_RS
-- **Funktion**: RS-Flipflop zur Speicherung des Schaltzustands
 
-## Programmablauf und Verbindungen
 
-**Ereignisverbindungen:**
-- DigitalInput_I1.IND → E_SWITCH.EI
-- E_SWITCH.EO0 → E_RS.R (Reset)
-- E_SWITCH.EO1 → E_RS.S (Set)
-- E_RS.EO → DigitalOutput_Q1.REQ
+![](Uebung_020a.png)
 
-**Datenverbindungen:**
-- DigitalInput_I1.IN → E_SWITCH.G (Steuerung)
-- E_RS.Q → DigitalOutput_Q1.OUT
 
-**Programmablauf:**
-1. Der DigitalInput_I1 Baustein liest den Zustand des physischen Eingangs I1
-2. Bei einer Zustandsänderung wird ein IND-Ereignis an E_SWITCH gesendet
-3. E_SWITCH wertet den Datenwert aus und leitet das Ereignis entweder an EO0 (Reset) oder EO1 (Set) weiter
-4. E_RS speichert den Zustand und gibt bei Änderung ein EO-Ereignis aus
-5. DigitalOutput_Q1 setzt den Ausgang Q1 entsprechend dem gespeicherten Zustand
+## Ziel der Übung
 
-**Lernziele:**
-- Grundlegende Verwendung von digitalen Ein- und Ausgängen
-- Ereignisgesteuerte Programmierung
-- Umschaltung zwischen verschiedenen Ereignispfaden
-- Zustandsspeicherung mit RS-Flipflop
+Verständnis der Flankenerkennung. Es wird gezeigt, wie man mit einer Ereignis-Weiche (`E_SWITCH`) und einem Speicher (`E_RS`) ein Verhalten realisiert, bei dem der Ausgang beim Drücken eines Tasters eingeschaltet und beim Loslassen ausgeschaltet wird (entspricht funktional einer direkten Leitung, aber mit expliziter Logik-Trennung).
 
-**Schwierigkeitsgrad**: Einfach
-**Vorkenntnisse**: Grundlagen der 4diac-IDE und Funktionsbausteine
+-----
 
-## Zusammenfassung
-Diese Übung vermittelt die grundlegenden Prinzipien der ereignisgesteuerten Automatisierung mit 4diac. Sie zeigt, wie ein digitaler Eingang verarbeitet, über einen Schaltbaustein gesteuert und der resultierende Zustand auf einem digitalen Ausgang ausgegeben wird. Die Verwendung des RS-Flipflops ermöglicht dabei eine Zustandsspeicherung zwischen den Ereignissen.
+## Beschreibung und Komponenten
+
+[cite_start]Die Subapplikation `Uebung_020a.SUB` nutzt einen `logiBUS_IX` Eingang, um einen `E_RS` Speicher zu steuern[cite: 1].
+
+### Funktionsbausteine (FBs)
+
+  * **`DigitalInput_I1`**: Standard-Eingang. Liefert ein Event bei jeder Änderung.
+  * **`E_SWITCH`**: Leitet das Event je nach Pegel an `S` oder `R` weiter.
+  * **`E_RS`**: Der Ereignis-Speicher.
+
+-----
+
+## Funktionsweise
+
+1.  **Drücken (TRUE)**: Das `IND`-Event geht zur Weiche. Da `G=TRUE`, feuert `EO1` ➡️ `E_RS.S` (Setzen).
+2.  **Loslassen (FALSE)**: Das `IND`-Event geht zur Weiche. Da `G=FALSE`, feuert `EO0` ➡️ `E_RS.R` (Rücksetzen).
+
+Obwohl das Ergebnis eine 1:1 Abbildung des Eingangs ist, zeigt diese Übung den inneren Mechanismus von speichernden Systemen.

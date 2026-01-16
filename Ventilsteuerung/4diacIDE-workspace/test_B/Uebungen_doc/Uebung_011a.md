@@ -1,60 +1,50 @@
-# Uebung_011a: Numeric Value Output und BUTTON_PRESS_REPEAT_DONE
+# Uebung_011a: Dynamische Anzeige (Repeat Done)
 
-* * * * * * * * * *
+[Uebung_011a](https://docs.ms-muc-docs.de/projects/visual-programming-languages-docs/de/latest/training1/Ventilsteuerung/4diacIDE-workspace/test/FBs/Uebungen/Uebung_011a.html)
 
-## Einleitung
-Diese Übung demonstriert die Verwendung von numerischen Wertausgaben in Verbindung mit Tasterereignissen. Der Schwerpunkt liegt auf der Verarbeitung des BUTTON_PRESS_REPEAT_DONE-Ereignisses, das nur am Ende einer Tasterbetätigung ausgelöst wird.
+[![NotebookLM](media/NotebookLM_logo.png)](https://notebooklm.google.com/notebook/a6872e59-1dfc-4132-a118-aff1bc7bc944)
 
-## Verwendete Funktionsbausteine (FBs)
+Dieser Artikel beschreibt die logiBUS®-Übung `Uebung_011a`. Hier wird die Interaktion zwischen Taster-Ereignissen und numerischen Anzeigen auf dem Terminal vertieft.
 
-### logiBUS_IB
-- **Typ**: logiBUS_IB
-- **Parameter**:
-  - QI = TRUE (aktiviert den Baustein)
-  - Input = logiBUS_DI::Input_I1 (Eingang I1)
-  - InputEvent = logiBUS_DI_Events::BUTTON_PRESS_REPEAT_DONE (Ereignistyp)
-- **Ereignisausgang**: IND (wird bei Tasterereignis ausgelöst)
-- **Datenausgang**: IN (liefert den Eingangswert)
 
-### F_BYTE_TO_UDINT
-- **Typ**: F_BYTE_TO_UDINT
-- **Ereigniseingang**: REQ (startet die Konvertierung)
-- **Ereignisausgang**: CNF (bestätigt abgeschlossene Konvertierung)
-- **Dateneingang**: IN (BYTE-Wert)
-- **Datenausgang**: OUT (konvertierter UDINT-Wert)
+## Podcast
+<iframe src="https://creators.spotify.com/pod/profile/logibus/embed/episodes/LogiBUS--IEC-61499-Daten--und-Ereignisflsse-einfach-erklrt--Vom-Schalter-zur-intelligenten-Steuerung-e36vldb/a-ac3vadb" height="102px" width="400px" frameborder="0" scrolling="no"></iframe>
 
-### Q_NumericValue
-- **Typ**: Q_NumericValue
-- **Parameter**:
-  - u16ObjId = DefaultPool::OutputNumber_N1 (Ausgabekanal N1)
-- **Ereigniseingang**: REQ (startet die Wertausgabe)
-- **Dateneingang**: u32NewValue (neuer numerischer Wert)
+----
 
-## Programmablauf und Verbindungen
 
-**Ereignisverbindungen:**
-- logiBUS_IB.IND → F_BYTE_TO_UDINT.REQ
-- F_BYTE_TO_UDINT.CNF → Q_NumericValue.REQ
 
-**Datenverbindungen:**
-- logiBUS_IB.IN → F_BYTE_TO_UDINT.IN
-- F_BYTE_TO_UDINT.OUT → Q_NumericValue.u32NewValue
+![](Uebung_011a.png)
 
-**Programmablauf:**
-1. Beim Loslassen des Tasters (BUTTON_PRESS_REPEAT_DONE) wird das IND-Ereignis ausgelöst
-2. Der BYTE-Wert vom Eingang I1 wird an F_BYTE_TO_UDINT weitergeleitet
-3. F_BYTE_TO_UDINT konvertiert den BYTE-Wert in einen UDINT-Wert
-4. Nach erfolgreicher Konvertierung wird Q_NumericValue mit dem neuen Wert aktualisiert
-5. Der numerische Wert wird auf Ausgang N1 ausgegeben
 
-**Lernziele:**
-- Verständnis von Tasterereignissen (BUTTON_PRESS_REPEAT_DONE vs. BUTTON_PRESS_REPEAT)
-- Datentypkonvertierung von BYTE zu UDINT
-- Numerische Wertausgabe auf logi.cals-Systemen
-- Ereignisgesteuerte Programmabläufe
+## Ziel der Übung
 
-**Schwierigkeitsgrad**: Einfach
-**Benötigte Vorkenntnisse**: Grundlagen der 4diac-IDE, Basiswissen über Funktionsbausteine
+Nutzung des `BUTTON_PRESS_REPEAT_DONE` Ereignisses zur Aktualisierung eines Anzeige-Objekts.
 
-## Zusammenfassung
-Diese Übung zeigt eine einfache Anwendung zur Verarbeitung von Tasterereignissen und numerischer Wertausgabe. Der Fokus liegt auf dem BUTTON_PRESS_REPEAT_DONE-Ereignis, das im Gegensatz zu BUTTON_PRESS_REPEAT nur einmal am Ende der Tasterbetätigung ausgelöst wird. Die Übung demonstriert zudem die Notwendigkeit von Datentypkonvertierungen in automatisierten Systemen.
+-----
+
+## Beschreibung und Komponenten
+
+[cite_start]In `Uebung_011a.SUB` wird ein Byte-Wert von einem Taster eingelesen und an eine numerische Anzeige am Terminal gesendet[cite: 1].
+
+### Funktionsbausteine (FBs)
+
+  * **`logiBUS_IB`**: Eingangsbaustein für Byte-Werte. Er ist auf das Event `BUTTON_PRESS_REPEAT_DONE` konfiguriert.
+  * **`Q_NumericValue`**: Ausgangsbaustein zur Anzeige einer Zahl auf dem Terminal.
+
+-----
+
+## Funktionsweise
+
+Das Besondere ist die Wahl des Eingangs-Ereignisses:
+*   **`BUTTON_PRESS_REPEAT`**: Würde während des Drückens ständig Ereignisse senden (Blinker-Effekt).
+*   **`BUTTON_PRESS_REPEAT_DONE`**: Feuert nur **ein einziges Mal**, nämlich dann, wenn der Nutzer den Taster nach einer (eventuell wiederholten) Betätigung endgültig loslässt.
+
+Die Logik sorgt dafür, dass der aktuelle Byte-Wert des Tasters (z.B. eine ID oder ein Zählerstand) erst am Ende der Interaktion an das Terminal übertragen wird.
+
+-----
+
+## Anwendungsbeispiel
+
+**Zähler-Übertragung**:
+Ein Bediener hält einen Taster gedrückt, um einen Wert intern hochzuzählen. Damit der CAN-Bus nicht durch ständige Display-Updates belastet wird, erfolgt die Aktualisierung der Anzeige auf dem Terminal erst dann, wenn der Finger weggenommen wird (`REPEAT_DONE`).

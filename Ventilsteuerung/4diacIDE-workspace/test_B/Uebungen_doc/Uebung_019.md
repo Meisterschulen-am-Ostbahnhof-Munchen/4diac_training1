@@ -1,58 +1,50 @@
-# Uebung_019: Umschalten einer Maske
+# Uebung_019: Maskenumschaltung (Screen-Switch)
 
-* * * * * * * * * *
+[Uebung_019](https://docs.ms-muc-docs.de/projects/visual-programming-languages-docs/de/latest/training1/Ventilsteuerung/4diacIDE-workspace/test/FBs/Uebungen/Uebung_019.html)
 
-## Einleitung
-Diese Übung demonstriert das Umschalten zwischen verschiedenen Masken auf einem logi.BUS-System. Das Programm ermöglicht es, durch Betätigung von Tastern zwischen zwei vordefinierten Masken zu wechseln.
+[![NotebookLM](media/NotebookLM_logo.png)](https://notebooklm.google.com/notebook/a6872e59-1dfc-4132-a118-aff1bc7bc944)
 
-## Verwendete Funktionsbausteine (FBs)
+Dieser Artikel beschreibt die logiBUS®-Übung `Uebung_019`. Hier wird gezeigt, wie das Programm die aktive Anzeige (Data Mask) auf dem Terminal umschalten kann.
 
-### DigitalInput_CLK_I1
-- **Typ**: logiBUS_IE
-- **Parameter**:
-  - QI = TRUE
-  - Input = logiBUS_DI::Input_I1
-  - InputEvent = logiBUS_DI_Events::BUTTON_SINGLE_CLICK
 
-### DigitalInput_CLK_I2
-- **Typ**: logiBUS_IE
-- **Parameter**:
-  - QI = TRUE
-  - Input = logiBUS_DI::Input_I2
-  - InputEvent = logiBUS_DI_Events::BUTTON_SINGLE_CLICK
+## Podcast
+<iframe src="https://creators.spotify.com/pod/profile/logibus/embed/episodes/LogiBUS--IEC-61499-Daten--und-Ereignisflsse-einfach-erklrt--Vom-Schalter-zur-intelligenten-Steuerung-e36vldb/a-ac3vadb" height="102px" width="400px" frameborder="0" scrolling="no"></iframe>
 
-### F_SEL_E_2
-- **Typ**: F_SEL_E_2
-- **Parameter**:
-  - IN0 = DefaultPool::DataMask_M1
-  - IN1 = DefaultPool::DataMask_M2
+----
 
-### Q_ActiveMask
-- **Typ**: Q_ActiveMask
-- **Parameter**:
-  - u16WorkSetId = DefaultPool::WorkingSet_0
 
-## Programmablauf und Verbindungen
 
-Das Programm arbeitet nach folgendem Prinzip:
+![](Uebung_019.png)
 
-**Ereignisverbindungen:**
-- DigitalInput_CLK_I1.IND → F_SEL_E_2.REQ0
-- DigitalInput_CLK_I2.IND → F_SEL_E_2.REQ1
-- F_SEL_E_2.CNF → Q_ActiveMask.REQ
 
-**Datenverbindungen:**
-- F_SEL_E_2.OUT → Q_ActiveMask.u16NewMaskId
+## Ziel der Übung
 
-**Funktionsweise:**
-- Taster I1 (Single-Click) aktiviert Maske M1
-- Taster I2 (Single-Click) aktiviert Maske M2
-- Der F_SEL_E_2 Baustein wählt basierend auf dem auslösenden Ereignis die entsprechende Maske aus
-- Q_ActiveMask setzt die ausgewählte Maske auf dem WorkingSet_0 aktiv
+Verwendung des Bausteins `Q_ActiveMask` zur Navigation auf dem Terminal. Es wird demonstriert, wie physische Taster genutzt werden, um zwischen verschiedenen Bedien-Seiten zu blättern.
 
-**Schwierigkeitsgrad**: Einfach
-**Benötigte Vorkenntnisse**: Grundkenntnisse in 4diac FORTE, logi.BUS Systemaufbau
-**Start der Übung**: Programm auf logi.BUS System laden und Taster I1/I2 betätigen
+-----
 
-## Zusammenfassung
-Diese Übung zeigt das grundlegende Prinzip des Maskenumschaltens auf logi.BUS-Systemen. Durch die Verwendung von Digital-Inputs mit Single-Click Events und einem Selektor-Baustein wird ein zuverlässiger Wechsel zwischen verschiedenen Anzeigemasken realisiert.
+## Beschreibung und Komponenten
+
+[cite_start]Die Subapplikation `Uebung_019.SUB` nutzt zwei physische Taster, um zwischen zwei Arbeitsmasken zu wählen[cite: 1].
+
+### Funktionsbausteine (FBs)
+
+  * **`I1` & `I2`**: Physische Eingangs-Taster.
+  * **`F_SEL_E_2`**: Ein Ereignis-Selektor. Er hat zwei `REQ`-Eingänge und gibt beim jeweiligen Trigger die zugeordnete Konstante am Datenausgang aus.
+  * **`Q_ActiveMask`**: Der ISOBUS-Ausgangsbaustein. [cite_start]Er sendet den Befehl zum Wechseln der Maske an das Terminal[cite: 1].
+
+-----
+
+## Funktionsweise
+
+*   Druck auf **Taster 1** ➡️ `F_SEL_E_2` liefert die ID von `DataMask_M1` ➡️ `Q_ActiveMask` schaltet das Terminal auf Seite 1.
+*   Druck auf **Taster 2** ➡️ `F_SEL_E_2` liefert die ID von `DataMask_M2` ➡️ `Q_ActiveMask` schaltet das Terminal auf Seite 2.
+
+Das System steuert hier also aktiv, was der Bediener sieht.
+
+-----
+
+## Anwendungsbeispiel
+
+**Kontextabhängige Steuerung**:
+Wenn der Fahrer am physischen Bedienpult den Schalter für "Pflugbetrieb" umlegt, wechselt das Terminal automatisch von der Straßenansicht zur Feldansicht mit allen relevanten Tiefeneinstellungen. Dies erspart dem Fahrer das manuelle Suchen der richtigen Seite am Touchscreen während der Fahrt.

@@ -1,43 +1,51 @@
-# Uebung_014: Container (visible/invisible)
+# Uebung_014: Objekte ein- und ausblenden (Container)
 
-* * * * * * * * * *
+[Uebung_014](https://docs.ms-muc-docs.de/projects/visual-programming-languages-docs/de/latest/training1/Ventilsteuerung/4diacIDE-workspace/test/FBs/Uebungen/Uebung_014.html)
 
-## Einleitung
-Diese Übung demonstriert die Steuerung der Sichtbarkeit eines Containers über Softkeys auf einem Bedienpanel. Die Übung zeigt die Verwendung von Ereignisverarbeitung und Zustandssteuerung in 4diac.
+[![NotebookLM](media/NotebookLM_logo.png)](https://notebooklm.google.com/notebook/a6872e59-1dfc-4132-a118-aff1bc7bc944)
 
-## Verwendete Funktionsbausteine (FBs)
+Dieser Artikel beschreibt die logiBUS®-Übung `Uebung_014`. Hier wird gezeigt, wie man die Benutzeroberfläche des ISOBUS-Terminals dynamisch verändert, indem ganze Gruppen von Objekten (Container) sichtbar oder unsichtbar geschaltet werden.
 
-### Softkey_IE Bausteine
-- **SoftKey_UP_F1**: Softkey-Interface für Funktionstaste F1
-- **SoftKey_UP_F2**: Softkey-Interface für Funktionstaste F2
 
-### E_SR Baustein
-- **Typ**: E_SR (Set-Reset Flip-Flop)
-- **Funktionsweise**: Verarbeitet Set- und Reset-Ereignisse und gibt einen stabilen Zustand Q aus
+## Podcast
+<iframe src="https://creators.spotify.com/pod/profile/logibus/embed/episodes/LogiBUS--IEC-61499-Daten--und-Ereignisflsse-einfach-erklrt--Vom-Schalter-zur-intelligenten-Steuerung-e36vldb/a-ac3vadb" height="102px" width="400px" frameborder="0" scrolling="no"></iframe>
 
-### Q_ObjHideShow Baustein
-- **Typ**: Q_ObjHideShow
-- **Funktionsweise**: Steuert die Sichtbarkeit eines grafischen Objekts auf dem Bedienpanel
+----
 
-## Programmablauf und Verbindungen
 
-**Ereignisverbindungen:**
-- SoftKey_UP_F1.IND → E_SR.S (Set-Eingang)
-- SoftKey_UP_F2.IND → E_SR.R (Reset-Eingang)  
-- E_SR.EO → Q_ObjHideShow.REQ (Ausführungsanforderung)
 
-**Datenverbindungen:**
-- E_SR.Q → Q_ObjHideShow.qVisible (Sichtbarkeitsstatus)
+![](Uebung_014.png)
 
-**Parameterkonfiguration:**
-- SoftKey_UP_F1: u16ObjId = "DefaultPool::SoftKey_F1", InputEvent = "SK_RELEASED"
-- SoftKey_UP_F2: u16ObjId = "DefaultPool::SoftKey_F2", InputEvent = "SK_RELEASED"
-- Q_ObjHideShow: u16ObjId = "DefaultPool::Container_B"
 
-**Funktionsweise:**
-- F1-Taste setzt den Flip-Flop und macht den Container sichtbar
-- F2-Taste resetet den Flip-Flop und versteckt den Container
-- Der E_SR Baustein sorgt für einen stabilen Zustand zwischen den Tastendrücken
+## Ziel der Übung
 
-## Zusammenfassung
-Diese Übung vermittelt grundlegende Konzepte der Ereignisverarbeitung und Zustandssteuerung in 4diac. Sie zeigt, wie Softkey-Ereignisse verarbeitet und zur Steuerung grafischer Elemente verwendet werden können. Die Verwendung des E_SR Bausteins demonstriert eine einfache Speicherfunktion für binäre Zustände.
+Verwendung des Bausteins `Q_ObjHideShow` zur Steuerung der Sichtbarkeit von ISOBUS-Objekten. Dies ermöglicht es, kontextsensitive Oberflächen zu erstellen, die nur die Informationen anzeigen, die im aktuellen Betriebszustand relevant sind.
+
+-----
+
+## Beschreibung und Komponenten
+
+[cite_start]Die Subapplikation `Uebung_014.SUB` nutzt zwei Softkeys, um einen Speicher zu setzen oder zu löschen, dessen Zustand die Sichtbarkeit eines Containers steuert[cite: 1].
+
+### Funktionsbausteine (FBs)
+
+  * **`SoftKey_UP_F1` & `F2`**: Eingabe am Terminal (Ein/Aus).
+  * **`E_SR`**: Der Speicher für den Sichtbarkeits-Status.
+  * **`Q_ObjHideShow`**: Der ISOBUS-Ausgangsbaustein. [cite_start]Er steuert die Eigenschaft "Sichtbarkeit" des Objekts mit der ID `Container_B`[cite: 1].
+
+-----
+
+## Funktionsweise
+
+1.  Ein Klick auf **F1** setzt den Speicher auf `TRUE`.
+2.  Ein Klick auf **F2** setzt den Speicher auf `FALSE`.
+3.  Das jeweilige Ereignis (`EO`) triggert den `REQ`-Eingang von `Q_ObjHideShow`.
+4.  Der Baustein übermittelt den Zustand von `qVisible` an das Terminal.
+5.  Alle Objekte, die sich im ISOBUS-Pool innerhalb des `Container_B` befinden, erscheinen oder verschwinden nun zeitgleich auf dem Bildschirm.
+
+-----
+
+## Anwendungsbeispiel
+
+**Optionale Ausstattungsmerkmale**:
+Eine Maschine kann mit oder ohne Wiegeeinrichtung bestellt werden. In der Software ist die Wiege-Anzeige in einem Container gruppiert. Je nach Konfiguration (oder Knopfdruck) wird dieser gesamte Bereich ein- oder ausgeblendet, sodass der Bediener nicht durch inaktive Felder abgelenkt wird.

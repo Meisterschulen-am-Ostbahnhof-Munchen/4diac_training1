@@ -1,60 +1,51 @@
-# Uebung_013: SR-Flip-Flop (Softkey)
+# Uebung_013: Softkey SR-Flip-Flop (Speicher)
 
-* * * * * * * * * *
+[Uebung_013](https://docs.ms-muc-docs.de/projects/visual-programming-languages-docs/de/latest/training1/Ventilsteuerung/4diacIDE-workspace/test/FBs/Uebungen/Uebung_013.html)
 
-## Einleitung
-Diese Übung demonstriert die Funktionsweise eines SR-Flip-Flops (Set-Reset-Flip-Flop) mit Softkey-Bedienung. Das SR-Flip-Flop ist ein grundlegender Speicherbaustein in der digitalen Schaltungstechnik, der zwei stabile Zustände einnehmen kann.
+[![NotebookLM](media/NotebookLM_logo.png)](https://notebooklm.google.com/notebook/a6872e59-1dfc-4132-a118-aff1bc7bc944)
 
-## Verwendete Funktionsbausteine (FBs)
+Dieser Artikel beschreibt die logiBUS®-Übung `Uebung_013`. Hier wird eine Speicherfunktion realisiert, die vollständig über das ISOBUS-Terminal bedient wird.
 
-### E_SR
-- **Typ**: E_SR (SR-Flip-Flop)
-- **Funktionsweise**: Der E_SR Baustein realisiert ein SR-Flip-Flop mit Ereignissteuerung. Er verfügt über Set(S)- und Reset(R)-Eingänge sowie einen Ausgang Q, der den gespeicherten Zustand ausgibt.
 
-### Softkey_IE
-- **Typ**: Softkey_IE (Softkey Input Event)
-- **Verwendete Instanzen**:
-  - **SoftKey_UP_F1**: Softkey F1 für Set-Operation
-    - Parameter: u16ObjId = DefaultPool::SoftKey_F1
-    - Parameter: InputEvent = SoftKeyActivationCode::SK_RELEASED
-    - Ereignisausgang: IND
-  - **SoftKey_UP_F2**: Softkey F2 für Reset-Operation
-    - Parameter: u16ObjId = DefaultPool::SoftKey_F2
-    - Parameter: InputEvent = SoftKeyActivationCode::SK_RELEASED
-    - Ereignisausgang: IND
+## Podcast
+<iframe src="https://creators.spotify.com/pod/profile/logibus/embed/episodes/LogiBUS--IEC-61499-Daten--und-Ereignisflsse-einfach-erklrt--Vom-Schalter-zur-intelligenten-Steuerung-e36vldb/a-ac3vadb" height="102px" width="400px" frameborder="0" scrolling="no"></iframe>
 
-### logiBUS_QX
-- **Typ**: logiBUS_QX (Digital Output)
-- **Verwendete Instanzen**:
-  - **DigitalOutput_Q1**: Digitaler Ausgang Q1
-    - Parameter: QI = TRUE
-    - Parameter: Output = logiBUS_DO::Output_Q1
-    - Ereigniseingang: REQ
-    - Dateneingang: OUT
+----
 
-## Programmablauf und Verbindungen
 
-**Ereignisverbindungen:**
-- SoftKey_UP_F1.IND → E_SR.S (Set-Eingang)
-- SoftKey_UP_F2.IND → E_SR.R (Reset-Eingang)
-- E_SR.EO → DigitalOutput_Q1.REQ
 
-**Datenverbindungen:**
-- E_SR.Q → DigitalOutput_Q1.OUT
+![](Uebung_013.png)
 
-**Funktionsweise:**
-- Beim Drücken und Loslassen der Softkey-Taste F1 wird ein Set-Signal an den E_SR Baustein gesendet
-- Beim Drücken und Loslassen der Softkey-Taste F2 wird ein Reset-Signal an den E_SR Baustein gesendet
-- Der Ausgang Q des SR-Flip-Flops steuert den digitalen Ausgang Q1
-- Das System behält seinen Zustand bei, bis ein gegenteiliges Signal empfangen wird
 
-**Lernziele:**
-- Verständnis der SR-Flip-Flop Funktionsweise
-- Umgang mit Softkey-Inputs in 4diac
-- Ereignisgesteuerte Programmierung
-- Zustandsspeicherung in Funktionsbausteinen
+## Ziel der Übung
 
-**Schwierigkeitsgrad**: Einsteiger
+Realisierung einer Ein/Aus-Schaltung mit getrennten virtuellen Tasten.
 
-## Zusammenfassung
-Diese Übung vermittelt die grundlegende Funktionsweise eines SR-Flip-Flops mit Softkey-Bedienung. Der Baustein E_SR speichert den Zustand und gibt ihn über den digitalen Ausgang Q1 aus. Die Softkeys F1 und F2 dienen als Set- bzw. Reset-Eingänge und demonstrieren die ereignisgesteuerte Zustandsänderung des Flip-Flops.
+-----
+
+## Beschreibung und Komponenten
+
+[cite_start]Die Subapplikation `Uebung_013.SUB` nutzt zwei Softkeys zur Steuerung eines SR-Flip-Flops[cite: 1].
+
+### Funktionsbausteine (FBs)
+
+  * **`SoftKey_UP_F1`**: Triggert beim Loslassen (Release) den Set-Eingang (`S`).
+  * **`SoftKey_UP_F2`**: Triggert beim Loslassen (Release) den Reset-Eingang (`R`).
+  * **`E_SR`**: Der Speicherbaustein.
+  * **`DigitalOutput_Q1`**: Der Hardware-Ausgang.
+
+-----
+
+## Funktionsweise
+
+*   Ein Klick auf **F1** schaltet die Funktion ein.
+*   Ein Klick auf **F2** schaltet die Funktion aus.
+
+Die Verwendung von `SK_RELEASED` sorgt für ein stabiles Bediengefühl am Touchscreen. Da zwei getrennte Tasten verwendet werden, ist der Zustand der Anlage für den Bediener immer eindeutig steuerbar.
+
+-----
+
+## Anwendungsbeispiel
+
+**Zuschalten eines Anbaugeräts**:
+Am Terminal gibt es zwei deutliche Symbole: Ein grüner Haken (`F1`) für "System Aktiv" und ein rotes Kreuz (`F2`) für "System Deaktiviert". Der Speicher in der Steuerung sorgt dafür, dass die gewählte Betriebsart erhalten bleibt, bis die jeweils andere Taste gedrückt wird.

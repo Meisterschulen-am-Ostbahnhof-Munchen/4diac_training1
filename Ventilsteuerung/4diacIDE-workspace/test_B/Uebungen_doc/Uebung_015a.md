@@ -1,44 +1,28 @@
-# Uebung_015a: Object Pointer umschalten -- 3-fach
+# Uebung_015a: Mehrfaches Umschalten von UI-Objekten
 
-* * * * * * * * * *
+[Uebung_015a](https://docs.ms-muc-docs.de/projects/visual-programming-languages-docs/de/latest/training1/Ventilsteuerung/4diacIDE-workspace/test/FBs/Uebungen/Uebung_015a.html)
 
-## Einleitung
-Diese Übung demonstriert die Umschaltung von Object Pointern in einer 3-fach Auswahlkonfiguration. Die Anwendung ermöglicht die Auswahl zwischen verschiedenen Objekt-IDs über Softkeys und die Übergabe der entsprechenden Werte an einen numerischen Anzeigebaustein.
+[![NotebookLM](media/NotebookLM_logo.png)](https://notebooklm.google.com/notebook/a6872e59-1dfc-4132-a118-aff1bc7bc944)
 
-## Verwendete Funktionsbausteine (FBs)
+Dieser Artikel beschreibt die logiBUS®-Übung `Uebung_015a`.
 
-### Softkey_IE Bausteine
-- **SoftKey_UP_F1**: Verarbeitet die Freigabe der F1-Taste
-- **SoftKey_UP_F2**: Verarbeitet die Freigabe der F2-Taste  
-- **SoftKey_UP_F3**: Verarbeitet die Freigabe der F3-Taste
 
-### F_UINT_TO_UDINT Bausteine
-- **F_UINT_TO_UDINT**: Konvertiert den Wert von Button_A1 von UINT zu UDINT
-- **F_UINT_TO_UDINT_1**: Konvertiert den Wert von Button_A2 von UINT zu UDINT
+## Podcast
+<iframe src="https://creators.spotify.com/pod/profile/logibus/embed/episodes/LogiBUS--IEC-61499-Daten--und-Ereignisflsse-einfach-erklrt--Vom-Schalter-zur-intelligenten-Steuerung-e36vldb/a-ac3vadb" height="102px" width="400px" frameborder="0" scrolling="no"></iframe>
 
-### F_SEL_E_3 Baustein
-- **F_SEL_E_3**: 3-fach Selektor für Ereignisse und Daten
+----
 
-### Q_NumericValue Baustein
-- **Q_NumericValue**: Numerischer Anzeigebaustein für ObjectPointer_P1
 
-## Programmablauf und Verbindungen
 
-**Ereignisverbindungen:**
-- F_SEL_E_3.CNF → Q_NumericValue.REQ
-- SoftKey_UP_F1.IND → F_SEL_E_3.REQ0
-- SoftKey_UP_F2.IND → F_SEL_E_3.REQ1
-- SoftKey_UP_F3.IND → F_SEL_E_3.REQ2
+![](Uebung_015a.png)
 
-**Datenverbindungen:**
-- F_UINT_TO_UDINT.OUT → F_SEL_E_3.IN1
-- F_SEL_E_3.OUT → Q_NumericValue.u32NewValue
-- F_UINT_TO_UDINT_1.OUT → F_SEL_E_3.IN2
 
-**Parameterkonfiguration:**
-- Softkeys sind mit den entsprechenden Tasten F1, F2, F3 verknüpft
-- F_SEL_E_3.IN0 ist auf isobus::ID_NULL initialisiert
-- Q_NumericValue zeigt auf ObjectPointer_P1
+## Übersicht
 
-## Zusammenfassung
-Die Übung zeigt eine typische Anwendung für die Umschaltung zwischen verschiedenen Objekt-Pointern mittels Softkey-Bedienung. Der 3-fach Selektor ermöglicht die Auswahl zwischen drei verschiedenen Eingabequellen, wobei die konvertierten Werte der Buttons A1 und A2 sowie ein Null-Wert zur Verfügung stehen. Die Lösung demonstriert grundlegende Konzepte der Ereignissteuerung und Datenkonvertierung in 4diac-Systemen.
+[cite_start]Diese Übung erweitert das Pointer-Konzept aus Übung 015 auf drei Zustände unter Verwendung des Bausteins `F_SEL_E_3`[cite: 1].
+Über drei Softkeys (`F1`, `F2`, `F3`) kann der Nutzer entscheiden, was an einer bestimmten Stelle auf dem Bildschirm angezeigt wird:
+1.  Nichts (`ID_NULL`)
+2.  Schaltfläche `Button_A1`
+3.  Schaltfläche `Button_A2`
+
+Dies demonstriert die Flexibilität von Pointern bei der Erstellung von dynamischen Menüstrukturen oder umschaltbaren Info-Bereichen.
