@@ -1,201 +1,214 @@
 import xml.etree.ElementTree as ET
 import drawsvg as draw
 
-class FbtRenderer:
+class AdvancedFbtRenderer:
     def __init__(self, fbt_path, output_path):
         self.fbt_path = fbt_path
         self.output_path = output_path
         
-        # Konfiguration für das Styling
-        self.config = {
-            'font_family': 'Arial, sans-serif',
+        # Styling basierend auf deinem Screenshot
+        self.style = {
+            'font_family': 'Consolas, monospace', # Monospace wirkt technischer
             'font_size': 12,
+            'comment_size': 10,
             'header_height': 30,
-            'row_height': 20,
-            'pin_width': 10,
-            'pin_height': 4, # Dicke der Anschlussstriche
-            'padding_x': 10,
-            'bg_color': '#f0f0f0',
-            'border_color': '#333333',
-            'text_color': '#000000'
+            'row_height': 24,
+            'neck_indent': 10,  # Wie tief der Einzug ist
+            'pin_len': 10,
+            'col_gap': 10,      # Abstand zwischen Typ und Pin
+            'colors': {
+                'bg_body': '#f5f5f5',
+                'border': '#404040',
+                'event_pin': '#5cb85c', # Das Grün aus dem Bild
+                'data_pin': '#0275d8',  # Blau
+                'text_main': '#000000',
+                'text_type': '#0275d8', # Blau für Typen
+                'text_comment': '#666666'
+            }
         }
 
     def parse_fbt(self):
-        """Liest die XML-Datei und extrahiert die Schnittstellen."""
         tree = ET.parse(self.fbt_path)
         root = tree.getroot()
         
         interface = root.find('InterfaceList')
-        if interface is None:
-            raise ValueError("Keine InterfaceList in der FBT-Datei gefunden.")
+        self.name = root.get('Name', 'BLOCK')
+        
+        # Hilfsfunktion zum sauberen Parsen
+        def parse_section(tag_name):
+            items = []
+            section = interface.find(tag_name)
+            if section:
+                for child in section:
+                    items.append({
+                        'name': child.get('Name'),
+                        'type': child.get('Type', 'Event'), # Events haben keinen Type im Tag
+                        'comment': child.get('Comment', ''),
+                        # Hier würde man auch 'With' parsen
+                        'with': [w.get('Var') for w in child.findall('With')] 
+                    })
+            return items
 
-        # Hilfsfunktion zum Extrahieren von Namen
-        def get_names(section_name):
-            section = interface.find(section_name)
-            if section is None:
-                return []
-            # Wir holen Event Inputs/Outputs und Var Inputs/Outputs
-            # Tag-Namen variieren (Event, VarDeclaration)
-            return [child.get('Name') for child in section]
-
-        self.data = {
-            'name': root.get('Name', 'UnknownBlock'),
-            'inputs': {
-                'events': get_names('EventInputs'),
-                'vars': get_names('InputVars')
-            },
-            'outputs': {
-                'events': get_names('EventOutputs'),
-                'vars': get_names('OutputVars')
-            }
+        self.inputs = {
+            'events': parse_section('EventInputs'),
+            'vars': parse_section('InputVars')
+        }
+        self.outputs = {
+            'events': parse_section('EventOutputs'),
+            'vars': parse_section('OutputVars')
         }
 
-    def calculate_layout(self):
-        """Berechnet Dimensionen basierend auf dem Inhalt."""
-        inputs = self.data['inputs']['events'] + self.data['inputs']['vars']
-        outputs = self.data['outputs']['events'] + self.data['outputs']['vars']
+    def calculate_dimensions(self):
+        # Zeilen berechnen
+        self.n_event_in = len(self.inputs['events'])
+        self.n_var_in = len(self.inputs['vars'])
+        self.n_event_out = len(self.outputs['events'])
+        self.n_var_out = len(self.outputs['vars'])
         
-        # Anzahl der Zeilen bestimmen (Maximum von Links oder Rechts)
-        max_rows = max(len(inputs), len(outputs))
+        # Höhe des oberen Teils (Events) und unteren Teils (Vars)
+        self.head_rows = max(self.n_event_in, self.n_event_out)
+        self.body_rows = max(self.n_var_in, self.n_var_out)
         
-        # Höhe berechnen: Header + Zeilen + etwas Bodenabstand
-        self.height = self.config['header_height'] + (max_rows * self.config['row_height']) + 10
+        self.head_h = self.style['header_height'] + (self.head_rows * self.style['row_height'])
+        self.body_h = (self.body_rows * self.style['row_height']) + 10 # +10 padding unten
+        self.total_h = self.head_h + self.body_h
         
-        # Breite schätzen (grob basierend auf Zeichenlänge * Faktor)
-        # Für eine präzise Berechnung bräuchte man Font-Metriken, aber das hier reicht meistens.
-        max_text_len = 0
-        all_texts = inputs + outputs + [self.data['name']]
-        for text in all_texts:
-            if len(text) > max_text_len:
-                max_text_len = len(text)
+        # Breite des Blocks berechnen (Textabhängig)
+        # Einfache Schätzung: 9px pro Zeichen
+        max_len = len(self.name)
+        for i in [self.inputs, self.outputs]:
+            for group in i.values():
+                for item in group:
+                    max_len = max(max_len, len(item['name']) + 2)
         
-        # Basisbreite + Textlänge (Faktor 8px pro Zeichen ist ein Schätzwert)
-        self.width = 100 + (max_text_len * 8)
+        self.block_w = max(100, max_len * 9)
+        
+        # Gesamtbreite für SVG (inkl. Kommentare links/rechts)
+        self.total_w = self.block_w + 500 # Puffer für externe Spalten
+
+    def draw_path_shape(self, d, x, y, width, head_h, total_h, indent):
+        """Zeichnet die typische IEC 61499 Form mit dem Einzug (Neck)"""
+        p = draw.Path(fill=self.style['colors']['bg_body'], 
+                      stroke=self.style['colors']['border'], 
+                      stroke_width=2)
+        
+        # Start Oben Links
+        p.M(x, y) 
+        p.H(x + width) # Oben
+        p.V(y + head_h) # Rechts runter bis zum Hals
+        p.H(x + width - indent) # Einzug rein
+        p.V(y + total_h) # Runter zum Boden
+        p.H(x + indent) # Boden nach links
+        p.V(y + head_h) # Hoch zum Hals
+        p.H(x) # Auszug raus
+        p.Z() # Schließen
+        
+        d.append(p)
+        
+        # Header Trennlinie
+        d.append(draw.Line(x, y + 30, x + width, y + 30, stroke=self.style['colors']['border'], stroke_width=1))
+
+    def draw_arrow(self, d, x, y, direction='right', color='#000'):
+        """Zeichnet ein kleines Dreieck als Pfeil"""
+        size = 5
+        if direction == 'right':
+            points = [x, y-size, x+size, y, x, y+size]
+        else: # left (für Inputs)
+            points = [x, y-size, x-size, y, x, y+size]
+            
+        d.append(draw.Lines(*points, close=True, fill=color, stroke='none'))
 
     def draw(self):
-        """Erstellt die SVG-Grafik."""
-        d = draw.Drawing(self.width + 40, self.height + 20, origin=(-20, -10))
+        d = draw.Drawing(self.total_w, self.total_h + 20, origin=(-250, -10))
         
-        # 1. Hauptkörper (Rechteck)
-        d.append(draw.Rectangle(0, 0, self.width, self.height, 
-                                fill=self.config['bg_color'], 
-                                stroke=self.config['border_color'], 
-                                stroke_width=2, rx=5, ry=5))
+        # Zentrierung des Blocks
+        block_x = 0
+        block_y = 0
         
-        # 2. Header (Baustein Name)
-        d.append(draw.Text(self.data['name'], 
-                           self.config['font_size'] + 2, 
-                           x=self.width/2, y=20, 
-                           center=True, fontWeight='bold', font_family=self.config['font_family']))
+        # 1. Den Block-Körper zeichnen (Custom Shape)
+        self.draw_path_shape(d, block_x, block_y, self.block_w, self.head_h, self.total_h, self.style['neck_indent'])
         
-        # Trennlinie unter dem Header
-        d.append(draw.Line(0, self.config['header_height'], self.width, self.config['header_height'],
-                           stroke=self.config['border_color'], stroke_width=1))
+        # 2. Block Name
+        d.append(draw.Text(self.name, fontSize=14, x=block_x + self.block_w/2, y=block_y+20, 
+                           center=True, fontWeight='bold', fill=self.style['colors']['text_main'], font_family=self.style['font_family']))
 
-        # 3. Inputs zeichnen (Links)
-        current_y = self.config['header_height'] + self.config['row_height']
+        # 3. Pins Zeichnen
         
-        # Events (Oben)
-        for name in self.data['inputs']['events']:
-            self._draw_pin(d, name, 0, current_y, is_input=True, is_event=True)
-            current_y += self.config['row_height']
-            
-        # Variablen (Unten) - Kleiner Abstand zur optischen Trennung
-        if self.data['inputs']['events'] and self.data['inputs']['vars']:
-            current_y += 5 
-            
-        for name in self.data['inputs']['vars']:
-            self._draw_pin(d, name, 0, current_y, is_input=True, is_event=False)
-            current_y += self.config['row_height']
+        # Helper zum Zeichnen einer Seite
+        def draw_side(items, is_input, start_y):
+            y = start_y
+            indent_adjust = 0 if is_input else -self.style['neck_indent']
+            if not is_input: indent_adjust = 0 # Output side logic varies based on indent
 
-        # 4. Outputs zeichnen (Rechts)
-        current_y = self.config['header_height'] + self.config['row_height']
+            for item in items:
+                # Koordinaten
+                if is_input:
+                    pin_x = block_x
+                    text_anchor = 'start'
+                    label_x = pin_x + 5
+                    # External Layout
+                    type_x = pin_x - 20
+                    comment_x = type_x - 60
+                else:
+                    pin_x = block_x + self.block_w
+                    # Korrektur für den "Hals" bei Data-Outputs ist komplexer, 
+                    # vereinfachen wir hier: Wir zeichnen am Rand des Rechtecks
+                    if start_y > self.head_h: # Wir sind im Body
+                        pin_x -= self.style['neck_indent']
+                    
+                    text_anchor = 'end'
+                    label_x = pin_x - 5
+                    type_x = pin_x + 20
+                    comment_x = type_x + 60
+
+                # Farbe bestimmen
+                is_event = item['type'] == 'Event'
+                color = self.style['colors']['event_pin'] if is_event else self.style['colors']['data_pin']
+                
+                # Pin Linie & Pfeil
+                if is_input:
+                    d.append(draw.Line(pin_x - 10, y, pin_x, y, stroke=color, stroke_width=2))
+                    self.draw_arrow(d, pin_x, y, 'right', color)
+                else:
+                    d.append(draw.Line(pin_x, y, pin_x + 10, y, stroke=color, stroke_width=2))
+                    self.draw_arrow(d, pin_x, y, 'left', color) # Output arrow points out? Usually just a pin.
+                
+                # Label im Block
+                d.append(draw.Text(item['name'], fontSize=self.style['font_size'], x=label_x, y=y+4, 
+                                   text_anchor=text_anchor, fill=self.style['colors']['text_main'], font_family=self.style['font_family']))
+                
+                # Typ (Außerhalb)
+                type_anchor = 'end' if is_input else 'start'
+                if item['type'] != 'Event':
+                    d.append(draw.Text(item['type'], fontSize=11, x=type_x, y=y+4,
+                                       text_anchor=type_anchor, fill=self.style['colors']['text_type'], font_family=self.style['font_family'], font_style='italic'))
+                else:
+                    d.append(draw.Text("Event", fontSize=11, x=type_x, y=y+4,
+                                       text_anchor=type_anchor, fill=self.style['colors']['text_comment'], font_family=self.style['font_family'], font_style='italic'))
+
+                # Kommentar (Ganz außen)
+                if item['comment']:
+                    comment_pos = comment_x - 10 if is_input else comment_x + 10
+                    d.append(draw.Text(item['comment'], fontSize=self.style['comment_size'], x=comment_pos, y=y+4,
+                                       text_anchor=type_anchor, fill=self.style['colors']['text_comment'], font_family=self.style['font_family']))
+
+                y += self.style['row_height']
+            return y
+
+        # Zeichnen Events (Oben)
+        draw_side(self.inputs['events'], True, self.style['header_height'] + 15)
+        draw_side(self.outputs['events'], False, self.style['header_height'] + 15)
         
-        # Events
-        for name in self.data['outputs']['events']:
-            self._draw_pin(d, name, self.width, current_y, is_input=False, is_event=True)
-            current_y += self.config['row_height']
-            
-        if self.data['outputs']['events'] and self.data['outputs']['vars']:
-            current_y += 5
-            
-        for name in self.data['outputs']['vars']:
-            self._draw_pin(d, name, self.width, current_y, is_input=False, is_event=False)
-            current_y += self.config['row_height']
+        # Zeichnen Vars (Unten - Startet nach dem Head)
+        draw_side(self.inputs['vars'], True, self.head_h + 15)
+        draw_side(self.outputs['vars'], False, self.head_h + 15)
 
-        # Speichern
         d.save_svg(self.output_path)
-        print(f"SVG erstellt: {self.output_path}")
+        print(f"Erweitertes SVG erstellt: {self.output_path}")
 
-    def _draw_pin(self, drawing, text, x_pos, y_pos, is_input, is_event):
-        """Hilfsmethode zum Zeichnen eines einzelnen Pins mit Label."""
-        
-        # Pin-Linie
-        if is_input:
-            start_x = x_pos - self.config['pin_width']
-            end_x = x_pos
-            text_anchor = 'start'
-            text_x = x_pos + 5
-        else:
-            start_x = x_pos
-            end_x = x_pos + self.config['pin_width']
-            text_anchor = 'end'
-            text_x = x_pos - 5
-            
-        # Farbe: Events oft Rot oder anders, Vars Schwarz. Hier simpel gehalten.
-        color = '#d9534f' if is_event else '#000000'
-        
-        # Pin zeichnen
-        drawing.append(draw.Line(start_x, y_pos - 4, end_x, y_pos - 4,
-                                 stroke=color, stroke_width=2))
-        
-        # Kleines Rechteck am Ende bei Events (IEC Stil oft Quadrat)
-        if is_event:
-             sq_size = 4
-             sq_x = start_x if is_input else end_x - sq_size
-             drawing.append(draw.Rectangle(sq_x, y_pos - 6, sq_size, sq_size, fill=color))
-
-        # Text Label
-        drawing.append(draw.Text(text, self.config['font_size'],
-                                 x=text_x, y=y_pos,
-                                 text_anchor=text_anchor,
-                                 fill=self.config['text_color'],
-                                 font_family=self.config['font_family']))
-
-# --- Verwendung ---
-
-# Erstelle eine Dummy-Datei zum Testen, falls du keine zur Hand hast
-dummy_fbt = """
-<FBType Name="E_CTUD">
-  <InterfaceList>
-    <EventInputs>
-      <Event Name="CU" Comment="Count Up"/>
-      <Event Name="CD" Comment="Count Down"/>
-      <Event Name="R" Comment="Reset"/>
-      <Event Name="LD" Comment="Load"/>
-    </EventInputs>
-    <EventOutputs>
-      <Event Name="CO" Comment="Carry Out"/>
-      <Event Name="RO" Comment="Reset Out"/>
-    </EventOutputs>
-    <InputVars>
-      <VarDeclaration Name="PV" Type="UINT" Comment="Preset Value"/>
-    </InputVars>
-    <OutputVars>
-      <VarDeclaration Name="QU" Type="BOOL" Comment="Up limit reached"/>
-      <VarDeclaration Name="QD" Type="BOOL" Comment="Down limit reached"/>
-      <VarDeclaration Name="CV" Type="UINT" Comment="Current Value"/>
-    </OutputVars>
-  </InterfaceList>
-</FBType>
-"""
-
-# Schreib den Dummy-Inhalt in eine Datei
-with open("test_block.fbt", "w") as f:
-    f.write(dummy_fbt)
-
-# Führe den Renderer aus
-renderer = FbtRenderer("test_block.fbt", "E_CTUD.svg")
+# --- Test ---
+# Wir nutzen die gleiche Testdatei wie vorher oder deine echte .fbt
+renderer = AdvancedFbtRenderer("test_block.fbt", "E_CTUD_v2.svg")
 renderer.parse_fbt()
-renderer.calculate_layout()
+renderer.calculate_dimensions()
 renderer.draw()
