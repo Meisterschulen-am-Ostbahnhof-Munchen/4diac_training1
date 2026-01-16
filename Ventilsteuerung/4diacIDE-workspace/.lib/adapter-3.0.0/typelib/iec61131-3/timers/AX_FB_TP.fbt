@@ -9,28 +9,18 @@
 	<CompilerInfo packageName="adapter::iec61131::timers">
 	</CompilerInfo>
 	<InterfaceList>
-		<EventInputs>
-			<Event Name="REQ" Type="Event" Comment="Service Request">
-				<With Var="IN"/>
-				<With Var="PT"/>
-			</Event>
-		</EventInputs>
-		<EventOutputs>
-			<Event Name="CNF" Type="Event" Comment="Confirmation of Requested Service">
-				<With Var="Q"/>
-				<With Var="ET"/>
-			</Event>
-		</EventOutputs>
 		<InputVars>
-			<VarDeclaration Name="IN" Type="BOOL" Comment="Input"/>
 			<VarDeclaration Name="PT" Type="TIME" Comment="Pulse time"/>
 		</InputVars>
 		<OutputVars>
-			<VarDeclaration Name="Q" Type="BOOL" Comment="output"/>
 			<VarDeclaration Name="ET" Type="TIME" Comment="elapse time"/>
 		</OutputVars>
+				<Plugs>
+			<AdapterDeclaration Name="Q" Type="adapter::types::unidirectional::AX" Comment="Output"/>
+		</Plugs>
+		<Sockets>
+			<AdapterDeclaration Name="IN" Type="adapter::types::unidirectional::AX" Comment="Input"/>
+		</Sockets>
 	</InterfaceList>
-	<Service RightInterface="RESOURCE" LeftInterface="APPLICATION" Comment="standard timer function block (pulse)">
-	</Service>
 	<Attribute Name="eclipse4diac::core::TypeHash" Value="''"/>
 </FBType>

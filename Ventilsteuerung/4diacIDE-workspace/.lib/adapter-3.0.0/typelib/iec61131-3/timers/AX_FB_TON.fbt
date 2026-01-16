@@ -9,26 +9,18 @@
 	<CompilerInfo packageName="adapter::iec61131::timers">
 	</CompilerInfo>
 	<InterfaceList>
-		<EventInputs>
-			<Event Name="REQ" Type="Event" Comment="Normal Execution Request">
-				<With Var="IN"/>
-				<With Var="PT"/>
-			</Event>
-		</EventInputs>
-		<EventOutputs>
-			<Event Name="CNF" Type="Event" Comment="Execution Confirmation">
-				<With Var="Q"/>
-				<With Var="ET"/>
-			</Event>
-		</EventOutputs>
 		<InputVars>
-			<VarDeclaration Name="IN" Type="BOOL" Comment="Input"/>
 			<VarDeclaration Name="PT" Type="TIME" Comment="Process time"/>
 		</InputVars>
 		<OutputVars>
-			<VarDeclaration Name="Q" Type="BOOL" Comment="Output"/>
 			<VarDeclaration Name="ET" Type="TIME" Comment="Elapsed time"/>
 		</OutputVars>
+				<Plugs>
+			<AdapterDeclaration Name="Q" Type="adapter::types::unidirectional::AX" Comment="Output"/>
+		</Plugs>
+		<Sockets>
+			<AdapterDeclaration Name="IN" Type="adapter::types::unidirectional::AX" Comment="Input"/>
+		</Sockets>
 	</InterfaceList>
 	<Attribute Name="eclipse4diac::core::TypeHash" Value="''"/>
 </FBType>
