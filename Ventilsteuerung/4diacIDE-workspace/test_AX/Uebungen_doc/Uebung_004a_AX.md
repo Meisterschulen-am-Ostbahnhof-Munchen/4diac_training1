@@ -1,61 +1,52 @@
-Hier ist die Dokumentation für die Übung `Uebung_004a_AX` im gewünschten Format.
+# Uebung_004a_AX: Stromstoßschalter (Toggle Flip-Flop)
 
-# Uebung_004a_AX
+[Uebung_004a_AX](https://docs.ms-muc-docs.de/projects/visual-programming-languages-docs/de/latest/training1/Ventilsteuerung/4diacIDE-workspace/test/FBs/Uebungen/Uebung_004a_AX.html)
 
-![Platzhalter für Bild der Übung]
+[![NotebookLM](media/NotebookLM_logo.png)](https://notebooklm.google.com/notebook/041f4df4-b729-484d-b786-b6dcdf151961)
 
-* * * * * * * * * *
+Dieser Artikel beschreibt die logiBUS®-Übung `Uebung_004a_AX`. In dieser Übung verlassen wir die reine Datenweiterleitung und nutzen Ereignisse (Events), um eine Speicherfunktion zu realisieren: einen klassischen Stromstoßschalter.
 
-## Einleitung
-Diese Übung implementiert eine Toggle-Flip-Flop-Schaltung (T-Flip-Flop), die speziell für die Verwendung mit Hardware-Eingangsereignissen konzipiert ist. Die Logik reagiert auf einen einfachen Tastendruck (Single Click) an einem digitalen Eingang und schaltet daraufhin einen digitalen Ausgang um. Besonderheit hierbei ist die Verwendung von Adapter-Verbindungen für die Ausgangssteuerung und spezifischen Event-Handlern für den Eingang.
 
-## Verwendete Funktionsbausteine (FBs)
+## Podcast
+<iframe src="https://creators.spotify.com/pod/profile/logibus/embed/episodes/logiBUS-verstehen-Direkte-Signalweiterleitung--Das-Hallo-Welt-der-Automatisierung-e36vlfg/a-ac3vagq" height="102px" width="400px" frameborder="0" scrolling="no"></iframe>
 
-In dieser SubApplikation werden folgende Bausteine instanziiert und verschaltet:
+----
 
-### Sub-Bausteine: DigitalInput_CLK_I1
-- **Typ**: `logiBUS::io::DI::logiBUS_IE`
-- **Beschreibung**: Dieser Baustein dient als Schnittstelle für digitale Eingangsereignisse.
-- **Verwendete interne Konfiguration**:
-    - **Parameter**: `QI` = `TRUE` (Baustein ist aktiv)
-    - **Parameter**: `Input` = `Input_I1` (Hardware-Zuordnung zum ersten Eingang)
-    - **Parameter**: `InputEvent` = `BUTTON_SINGLE_CLICK` (Reagiert nur auf einfachen Klick)
-- **Funktionsweise**: Er überwacht den Hardware-Eingang `I1`. Sobald das definierte Ereignis (Single Click) eintritt, wird am Ausgang `IND` ein Event gefeuert.
 
-### Sub-Bausteine: E_T_FF
-- **Typ**: `adapter::events::unidirectional::AX_T_FF`
-- **Beschreibung**: Ein T-Flip-Flop (Toggle Flip-Flop), das über Adapter-Technologie kommuniziert.
-- **Verwendete interne Konfiguration**:
-    - **Ereigniseingang**: `CLK` (Clock/Takt)
-    - **Adapterausgang**: `Q`
-- **Funktionsweise**: Bei jedem Signal am `CLK`-Eingang wechselt der interne Zustand (True/False). Dieser Zustand wird über den Adapter-Port `Q` bereitgestellt.
 
-### Sub-Bausteine: DigitalOutput_Q1
-- **Typ**: `logiBUS::io::DQ::logiBUS_QXA`
-- **Beschreibung**: Schnittstelle für digitale Ausgänge, die über Adapter angesteuert wird.
-- **Verwendete interne Konfiguration**:
-    - **Parameter**: `QI` = `TRUE`
-    - **Parameter**: `Output` = `Output_Q1` (Hardware-Zuordnung zum ersten Ausgang)
-    - **Adaptereingang**: `OUT`
-- **Funktionsweise**: Empfängt den Zustand direkt über eine Adapterverbindung am Port `OUT` und schaltet den physischen Ausgang `Q1` entsprechend.
+![](Uebung_004a_AX.png)
 
-## Programmablauf und Verbindungen
 
-Der Ablauf der Schaltung ist ereignisgesteuert und nutzt moderne Adapter-Konzepte zur Datenübertragung:
+## Ziel der Übung
 
-1.  **Eingangserkennung**: Der Baustein `DigitalInput_CLK_I1` überwacht den Eingang `Input_I1`.
-2.  **Auslöser**: Wenn der Benutzer den Taster einmal drückt (`BUTTON_SINGLE_CLICK`), wird das `IND`-Event ausgelöst.
-3.  **Verarbeitung**:
-    - Das Event wird über eine **Event-Verbindung** vom `IND`-Ausgang des Eingangsbausteins an den `CLK`-Eingang des `E_T_FF` Bausteins geleitet.
-4.  **Logik**: Das T-Flip-Flop (`E_T_FF`) wechselt seinen logischen Zustand (von Ein auf Aus oder umgekehrt).
-5.  **Ausgabe**:
-    - Der neue Zustand wird über eine **Adapter-Verbindung** vom Port `Q` des `E_T_FF` an den Port `OUT` des `DigitalOutput_Q1` übergeben.
-    - Der Hardware-Ausgang `Output_Q1` wird entsprechend geschaltet.
+Das Ziel ist es, den Unterschied zwischen zustandsorientierter (Pegel) und ereignisorientierter (Flanke) Programmierung zu verstehen. Während ein einfacher Taster nur solange "Ein" ist, wie er gedrückt wird, soll hier jeder Tastendruck den Zustand des Ausgangs wechseln (Umschalten: Aus -> Ein -> Aus -> ...).
 
-**Lernziele:**
-- Verständnis von Event-gesteuerten Eingängen (`logiBUS_IE`).
-- Nutzung von `BUTTON_SINGLE_CLICK` zur Entprellung und Gestenerkennung.
-- Einsatz von Adapter-Verbindungen (`AX`) zur Vereinfachung des Datenflusses zwischen Logik und IO.
+-----
 
-## Zusammenfassung
-Die `Uebung_004a_AX` zeigt eine effiziente Methode, um eine Stromstoßschalter-Funktion (Toggle) zu realisieren. Durch die Verwendung des `BUTTON_SINGLE_CLICK` Parameters wird sichergestellt, dass der Ausgang sauber schaltet, ohne durch Kontaktprellen mehrfach ausgelöst zu werden. Die Nutzung von Adapter-Verbindungen reduziert den sichtbaren Verdrahtungsaufwand für Datensignale.
+## Beschreibung und Komponenten
+
+[cite_start]Die Subapplikation `Uebung_004a_AX.SUB` verwendet einen speziellen Eingangsbaustein, der Klick-Ereignisse generiert, und ein Toggle-Flip-Flop[cite: 1].
+
+### Funktionsbausteine (FBs)
+
+  * **`DigitalInput_CLK_I1`**: Typ `logiBUS_IE` (Input Event). [cite_start]Im Gegensatz zum `IXA` (Input Extended Adapter) liefert dieser Baustein kein kontinuierliches `BOOL`-Signal, sondern feuert ein einzelnes Ereignis (`IND`), wenn eine bestimmte Bedingung erfüllt ist. Hier ist er auf `BUTTON_SINGLE_CLICK` konfiguriert[cite: 1].
+  * **`E_T_FF`**: Typ `AX_T_FF` (Adapter Toggle Flip-Flop). [cite_start]Dieser Baustein hat einen Takteingang (`CLK`). Bei jedem empfangenen Ereignis wechselt er seinen internen Zustand und gibt diesen über den Adapter-Ausgang `Q` aus[cite: 1].
+  * **`DigitalOutput_Q1`**: Typ `logiBUS_QXA`. [cite_start]Schaltet den physischen Ausgang `Q1` basierend auf dem Zustand des Flip-Flops[cite: 1].
+
+-----
+
+## Funktionsweise
+
+1.  Der Benutzer drückt den Taster an `I1` kurz ("Klick").
+2.  Der `DigitalInput_CLK_I1` erkennt das Muster "Einzelklick" und sendet ein `IND`-Ereignis.
+3.  Das Ereignis erreicht den `CLK`-Eingang des `E_T_FF`.
+4.  Das Flip-Flop kippt seinen Zustand (z.B. von FALSE auf TRUE).
+5.  Der neue Zustand wird über den Adapter-Ausgang `Q` an `DigitalOutput_Q1` gesendet.
+6.  Die Lampe an `Q1` geht an und bleibt an, auch wenn der Taster losgelassen wird.
+7.  Beim nächsten Klick wiederholt sich der Vorgang, das Flip-Flop kippt zurück auf FALSE, die Lampe geht aus.
+
+-----
+
+## Anwendungsbeispiel
+
+Die klassische **Flurbeleuchtung** oder **Treppenhauslicht** (ohne Zeitglied): Ein Tasterdruck schaltet das Licht ein, der nächste schaltet es wieder aus. Dies ist mit einem rein elektrischen Schalter (der zurückfedert) nicht möglich, man benötigt ein Speicherelement (Stromstoßrelais in der Elektrotechnik, Flip-Flop in der Software).

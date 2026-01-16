@@ -1,57 +1,49 @@
-Hier ist die Dokumentation für die Übung `Uebung_010_AX` basierend auf den bereitgestellten Daten.
+# Uebung_010_AX: ISOBUS Softkey (Direkt)
 
-# Uebung_010_AX
+[Uebung_010_AX](https://docs.ms-muc-docs.de/projects/visual-programming-languages-docs/de/latest/training1/Ventilsteuerung/4diacIDE-workspace/test/FBs/Uebungen/Uebung_010_AX.html)
 
-![Uebung_010_AX](Uebung_010_AX.png)
+[![NotebookLM](media/NotebookLM_logo.png)](https://notebooklm.google.com/notebook/041f4df4-b729-484d-b786-b6dcdf151961)
 
-* * * * * * * * * *
+Dieser Artikel beschreibt die logiBUS®-Übung `Uebung_010_AX`. Hier betreten wir die Welt des ISOBUS (ISO 11783). Anstelle von physischen Eingängen nutzen wir virtuelle Tasten auf einem Terminal (Universal Terminal, UT).
 
-## Einleitung
-Diese Übung demonstriert eine grundlegende Funktion der IEC 61499 Programmierung innerhalb der 4diac IDE: Die direkte Verbindung eines Eingabeelements (SoftKey auf einem Universal Terminal) mit einem physikalischen Ausgabeelement (Digitaler Ausgang). Das Ziel ist es, den digitalen Ausgang `Output_Q1` zu aktivieren, sobald der SoftKey `F1` betätigt wird.
 
-## Verwendete Funktionsbausteine (FBs)
+## Podcast
+<iframe src="https://creators.spotify.com/pod/profile/logibus/embed/episodes/logiBUS-verstehen-Direkte-Signalweiterleitung--Das-Hallo-Welt-der-Automatisierung-e36vlfg/a-ac3vagq" height="102px" width="400px" frameborder="0" scrolling="no"></iframe>
 
-In dieser Sub-Applikation werden zwei spezifische Schnittstellen-Bausteine verwendet, um die Kommunikation zwischen der Steuerungslogik und der Hardware bzw. dem ISOBUS-System herzustellen.
+----
 
-### Sub-Bausteine: Uebung_010_AX
-Diese Übung besteht aus einem Netzwerk, das folgende interne Bausteine instanziiert:
 
-- **SoftKey_F1**
-    - **Typ**: `isobus::UT::io::Softkey::Softkey_IXA`
-    - **Beschreibung**: Dieser Baustein repräsentiert einen SoftKey-Eingang von einem ISOBUS Universal Terminal (UT). Er dient als Adapter-Quelle (`IXA` - Input X Adapter).
-    - **Parameter**:
-        - `QI` = `TRUE` (Baustein ist aktiviert)
-        - `u16ObjId` = `SoftKey_F1` (Referenziert die spezifische Objekt-ID des SoftKeys im Objekt-Pool)
-    - **Adapter**:
-        - `IN`: Ausgangsadapter, der den Zustand des SoftKeys bereitstellt.
 
-- **DigitalOutput_Q1**
-    - **Typ**: `logiBUS::io::DQ::logiBUS_QXA`
-    - **Beschreibung**: Dieser Baustein repräsentiert einen digitalen Ausgang auf der Hardware (logiBUS). Er dient als Adapter-Senke (`QXA` - Output X Adapter).
-    - **Parameter**:
-        - `QI` = `TRUE` (Baustein ist aktiviert)
-        - `Output` = `Output_Q1` (Logische Zuordnung zum physikalischen Ausgang Q1)
-        - `PARAMS` -> `Visible` = `false`
-    - **Adapter**:
-        - `OUT`: Eingangsadapter, der das Steuersignal für den Ausgang empfängt.
+![](Uebung_010_AX.png)
 
-## Programmablauf und Verbindungen
 
-Der Programmablauf in dieser Übung ist linear und ereignisgesteuert durch die Adapter-Technologie.
+## Ziel der Übung
 
-1.  **Startbedingungen**: Beide Bausteine (`SoftKey_F1` und `DigitalOutput_Q1`) werden durch den Parameter `QI = TRUE` initialisiert und sind betriebsbereit.
-2.  **Verbindung**: Es existiert genau eine Verbindung im Netzwerk:
-    -   **Quelle**: `SoftKey_F1.IN`
-    -   **Ziel**: `DigitalOutput_Q1.OUT`
-    -   **Art der Verbindung**: Dies ist eine **Adapterverbindung**. Adapter bündeln Daten und Ereignisse. In diesem Fall wird der Status des SoftKeys direkt an den digitalen Ausgang weitergeleitet.
-3.  **Logik**:
-    -   Wenn der Benutzer die Taste **F1** (SoftKey) auf dem Terminal drückt, ändert sich der Status im Adapter `SoftKey_F1`.
-    -   Durch die Verbindung wird dieser Status unmittelbar an `DigitalOutput_Q1` übertragen.
-    -   Der physikalische Ausgang **Q1** schaltet entsprechend (wird `HIGH`, solange die Taste gedrückt ist, bzw. folgt der Logik des SoftKeys).
+Verwendung eines `Softkey`-Bausteins zur Steuerung eines Ausgangs.
 
-**Lernziele:**
--   Verständnis von Adapterverbindungen in IEC 61499.
--   Mapping von ISOBUS-Objekten (SoftKeys) auf Hardware-IOs.
+-----
 
-## Zusammenfassung
-Die `Uebung_010_AX` ist eine Einstiegsübung, die zeigt, wie ohne komplexe logische Verknüpfungen (wie AND/OR Bausteine) eine direkte Durchleitung von Signalen mittels Adaptertechnologie realisiert werden kann. Der SoftKey F1 steuert dabei direkt den Digitalen Ausgang Q1.
+## Beschreibung und Komponenten
+
+[cite_start]Die Subapplikation `Uebung_010_AX.SUB` verbindet eine Softkey-Instanz mit einem digitalen Ausgang[cite: 1].
+
+### Funktionsbausteine (FBs)
+
+  * **`SoftKey_F1`**: Typ `isobus::UT::io::Softkey::Softkey_IXA`. Dieser Baustein repräsentiert die Taste "F1" auf dem Bildschirm des ISOBUS-Terminals.
+  * **`DigitalOutput_Q1`**: Der physische Ausgang.
+
+### Parameter
+
+*   `u16ObjId`: Verweist auf die Objekt-ID des Softkeys im Objekt-Pool (hier `SoftKey_F1`).
+
+-----
+
+## Funktionsweise
+
+Die Funktionsweise ist identisch zu einem physischen Taster. Solange der Nutzer den Finger auf dem Touchscreen (oder die Taste am Rand) hält, liefert der Baustein `TRUE`. Lässt er los, wird `FALSE` gesendet.
+
+-----
+
+## Anwendungsbeispiel
+
+**Maschinenfunktion einschalten**: Der Fahrer drückt auf dem Bildschirm das Symbol für "Arbeitsscheinwerfer", und das Licht geht an (solange er drückt).

@@ -1,57 +1,49 @@
-Hier ist die Dokumentationsseite für die Übung `Uebung_020c_AX`, basierend auf den bereitgestellten XML-Daten.
+# Uebung_020c_AX: Einschaltverzögerung (TON)
 
-# Uebung_020c_AX
+[Uebung_020c_AX](https://docs.ms-muc-docs.de/projects/visual-programming-languages-docs/de/latest/training1/Ventilsteuerung/4diacIDE-workspace/test/FBs/Uebungen/Uebung_020c_AX.html)
 
-![Uebung_020c_AX Bild](Uebung_020c_AX.png)
+[![NotebookLM](media/NotebookLM_logo.png)](https://notebooklm.google.com/notebook/041f4df4-b729-484d-b786-b6dcdf151961)
 
-* * * * * * * * * *
+Dieser Artikel beschreibt die logiBUS®-Übung `Uebung_020c_AX`.
 
-## Einleitung
-Diese Übung implementiert eine einschaltverzögerte Logik unter Verwendung von Adaptern. Das Ziel ist es, das Signal eines digitalen Eingangs (`Input_I1`) zu lesen, es um eine definierte Zeit zu verzögern und anschließend auf einen digitalen Ausgang (`Output_Q1`) zu schalten. Hierbei kommt der Baustein `AX_TON` zum Einsatz, der speziell für die Verwendung mit Adapter-Verbindungen (Adapter Connections) ausgelegt ist.
 
-## Verwendete Funktionsbausteine (FBs)
+## Podcast
+<iframe src="https://creators.spotify.com/pod/profile/logibus/embed/episodes/logiBUS-verstehen-Direkte-Signalweiterleitung--Das-Hallo-Welt-der-Automatisierung-e36vlfg/a-ac3vagq" height="102px" width="400px" frameborder="0" scrolling="no"></iframe>
 
-In dieser Sub-Applikation werden folgende Funktionsbausteine im Netzwerk verschaltet:
+----
 
-### Sub-Bausteine: DigitalInput_I1
-- **Typ**: `logiBUS::io::DI::logiBUS_IXA`
-- **Funktionsweise**: Dieser Baustein stellt die Schnittstelle zum physischen digitalen Eingang dar. Er verwendet Adapter-Technologie.
-- **Parameter**:
-    - `QI` = `TRUE`
-    - `Input` = `Input_I1`
 
-### Sub-Bausteine: AX_TON
-- **Typ**: `adapter::events::unidirectional::timers::AX_TON`
-- **Funktionsweise**: Ein Einschaltverzögerungs-Timer (Timer On-Delay), der über Adapter-Schnittstellen verfügt. Er verzögert das Weiterleiten des `TRUE`-Signals vom Eingang zum Ausgang.
-- **Parameter**:
-    - `PT` = `T#5s` (5 Sekunden Verzögerungszeit)
 
-### Sub-Bausteine: DigitalOutput_Q1
-- **Typ**: `logiBUS::io::DQ::logiBUS_QXA`
-- **Funktionsweise**: Dieser Baustein stellt die Schnittstelle zum physischen digitalen Ausgang dar. Er empfängt das Signal über eine Adapter-Verbindung.
-- **Parameter**:
-    - `QI` = `TRUE`
-    - `Output` = `Output_Q1`
+![](Uebung_020c_AX.png)
 
-## Programmablauf und Verbindungen
 
-Der Programmablauf wird durch Adapter-Verbindungen (`AdapterConnections`) realisiert, was den Plan übersichtlicher gestaltet, da Daten- und Ereignisflüsse gebündelt werden.
+## Ziel der Übung
 
-1.  **Eingangsverarbeitung**:
-    - Der Baustein `DigitalInput_I1` erfasst den Status von `Input_I1`.
-    - Über den Adapter-Port `IN` ist er mit dem Adapter-Port `IN` des Timers `AX_TON` verbunden.
+Kennenlernen des Timer-Bausteins `AX_TON`.
 
-2.  **Verzögerungslogik**:
-    - Sobald das Eingangssignal anliegt, startet der `AX_TON` Timer.
-    - Die Verzögerungszeit (`PT`) ist auf **5 Sekunden** eingestellt.
+-----
 
-3.  **Ausgangssteuerung**:
-    - Nach Ablauf der 5 Sekunden schaltet der Adapter-Ausgang `Q` des `AX_TON` durch.
-    - Dieser ist mit dem Adapter-Eingang `OUT` des `DigitalOutput_Q1` verbunden, wodurch der physische Ausgang `Output_Q1` aktiviert wird.
+## Beschreibung und Komponenten
 
-**Zusatzinformationen:**
-*   **Lernziele**: Verständnis von Adapter-Verbindungen in 4diac und Nutzung von adapterbasierten Timern (`AX_TON`).
-*   **Schwierigkeitsgrad**: Einsteiger bis Fortgeschritten (Fokus auf Adapter-Konzept).
+[cite_start]Die Subapplikation `Uebung_020c_AX.SUB` verzögert das Einschaltsignal[cite: 1].
 
-## Zusammenfassung
-Die `Uebung_020c_AX` zeigt eine klassische Einschaltverzögerung von 5 Sekunden zwischen einem digitalen Eingang und einem digitalen Ausgang. Die Besonderheit liegt in der Verwendung von Adapter-Bausteinen (`logiBUS_IXA`, `logiBUS_QXA`, `AX_TON`), wodurch die Verbindungen im Netzwerkdiagramm auf einzelne Adapter-Linien reduziert werden.
+### Funktionsbausteine (FBs)
+
+  * **`AX_TON`**: Timer On-Delay.
+  * **Parameter `PT`**: Preset Time (hier 5 Sekunden).
+
+-----
+
+## Funktionsweise
+
+1.  Eingang `I1` wird TRUE.
+2.  `AX_TON` startet die Zeitmessung.
+3.  Nach 5 Sekunden wird der Ausgang `Q` TRUE -> Lampe geht an.
+4.  Wird `I1` vor Ablauf der 5s wieder FALSE, bricht der Timer ab und die Lampe bleibt aus.
+5.  Beim Ausschalten von `I1` geht die Lampe sofort aus (keine Ausschaltverzögerung).
+
+-----
+
+## Anwendungsbeispiel
+
+**Anlaufwarnung**: Bevor ein Förderband startet, ertönt für 5 Sekunden eine Hupe. Erst danach läuft der Motor an.

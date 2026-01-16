@@ -1,57 +1,74 @@
-Hier ist die Dokumentationsseite für die Übung `Uebung_003a_AX`, basierend auf den bereitgestellten XML-Daten.
+# Uebung_003a_AX: Wiederverwendung durch typisierte Sub-Applikationen
 
-# Uebung_003a_AX
+[Uebung_003a_AX](https://docs.ms-muc-docs.de/projects/visual-programming-languages-docs/de/latest/training1/Ventilsteuerung/4diacIDE-workspace/test/FBs/Uebungen/Uebung_003a_AX.html)
 
-<Bild der Übung, falls vorhanden>
+[![NotebookLM](media/NotebookLM_logo.png)](https://notebooklm.google.com/notebook/041f4df4-b729-484d-b786-b6dcdf151961)
 
-* * * * * * * * * *
+Dieser Artikel beschreibt die logiBUS®-Übung `Uebung_003a_AX`. Die Übung demonstriert einen fortgeschrittenen Ansatz zur Strukturierung von IEC 61499-Anwendungen: die Verwendung von typisierten Sub-Applikationen ("Typed SubApps") zur Kapselung und Wiederverwendung von Logik.
 
-## Einleitung
 
-Die Übung `Uebung_003a_AX` demonstriert die Verwendung von typisierten Sub-Applikationen (Typed SubApps), um digitale Eingänge auf digitale Ausgänge zu verschalten. Anstatt die Logik für jeden Kanal einzeln zu implementieren, wird ein wiederverwendbarer Sub-Baustein verwendet, der die Verbindung zwischen einem logiBUS-Eingang und einem logiBUS-Ausgang generisch herstellt.
+## Podcast
+<iframe src="https://creators.spotify.com/pod/profile/logibus/embed/episodes/logiBUS-verstehen-Direkte-Signalweiterleitung--Das-Hallo-Welt-der-Automatisierung-e36vlfg/a-ac3vagq" height="102px" width="400px" frameborder="0" scrolling="no"></iframe>
 
-Konkret werden in dieser Übung zwei Instanzen dieses Sub-Bausteins genutzt, um den Eingang `I1` auf den Ausgang `Q1` sowie den Eingang `I2` auf den Ausgang `Q2` zu legen.
+----
 
-## Verwendete Funktionsbausteine (FBs)
 
-Die Hauptanwendung besteht aus Instanzen eines selbsterstellten Sub-Bausteins. Dieser kapselt die eigentliche Hardware-Zugriffslogik.
 
-### Sub-Bausteine: Uebung_003a_AX_sub
+![](Uebung_003a_AX.png)
 
-Dieser Sub-Baustein dient dazu, einen konfigurierbaren Eingang direkt auf einen konfigurierbaren Ausgang durchzuschalten ("IX auf QX").
 
-- **Typ**: SubAppType
-- **Verwendete interne FBs**:
-    - **IX**: `logiBUS::io::DI::logiBUS_IXA`
-        - Parameter: `QI` = `TRUE`
-        - Parameter: `PARAMS` = (Visible="false")
-        - Dateneingang: `Input` (verbunden mit der Schnittstelle `Input` des Sub-Bausteins)
-        - Adapterausgang: `IN` (verbunden mit `QX.OUT`)
-    - **QX**: `logiBUS::io::DQ::logiBUS_QXA`
-        - Parameter: `QI` = `TRUE`
-        - Parameter: `PARAMS` = (Visible="false")
-        - Dateneingang: `Output` (verbunden mit der Schnittstelle `Output` des Sub-Bausteins)
-        - Adaptereingang: `OUT` (verbunden mit `IX.IN`)
+## Ziel der Übung
 
-- **Funktionsweise**:
-  Der Sub-Baustein nimmt über seine Schnittstelle die Adressen bzw. Objekte für einen Eingang (`Input`) und einen Ausgang (`Output`) entgegen. Im Inneren werden zwei Hardware-Abstraktions-Bausteine verwendet: `IX` (für den Eingang) und `QX` (für den Ausgang).
-  
-  Der `IX`-Baustein liest den zugewiesenen physikalischen Eingang. Über eine Adapterverbindung (`IN` zu `OUT`) wird das Signal direkt an den `QX`-Baustein weitergeleitet, der den zugewiesenen physikalischen Ausgang schaltet. Dies ermöglicht eine transparente Weiterleitung des Signals ohne zusätzliche logische Verknüpfungen (AND, OR, etc.).
+Das Hauptziel ist es zu zeigen, wie redundanter Code vermieden werden kann. Anstatt identische Strukturen (z.B. die Verbindung eines Eingangs mit einem Ausgang) mehrfach zu zeichnen, wird einmalig ein generischer Baustein definiert. Dieser kann dann beliebig oft instanziiert und konfiguriert werden. Dies erhöht die Übersichtlichkeit und Wartbarkeit von großen Projekten erheblich.
 
-## Programmablauf und Verbindungen
+-----
 
-Das Hauptnetzwerk der Übung `Uebung_003a_AX` instanziert den oben beschriebenen Sub-Baustein zweimal, um zwei unabhängige Signalpfade zu realisieren.
+## Beschreibung und Komponenten
 
-1.  **Instanz F1**:
-    - Diese Instanz verbindet den Taster/Eingang `Input_I1` mit der Lampe/dem Ausgang `Output_Q1`.
-    - Sobald `I1` aktiv ist (Signal High), wird `Q1` aktiviert.
+[cite_start]Die Subapplikation `Uebung_003a_AX.SUB` verwendet zwei Instanzen eines selbst definierten Sub-Typs, um zwei Signalpfade zu realisieren[cite: 1].
 
-2.  **Instanz F2**:
-    - Diese Instanz verbindet den Taster/Eingang `Input_I2` mit der Lampe/dem Ausgang `Output_Q2`.
-    - Sobald `I2` aktiv ist (Signal High), wird `Q2` aktiviert.
+### Typisierte Sub-Applikation: `Uebung_003a_AX_sub`
 
-Die Übung zeigt somit, wie man durch Modularisierung (Erstellung des `Uebung_003a_AX_sub`) redundanten Code vermeidet und die Hauptansicht der Applikation übersichtlich hält.
+[cite_start]Dieser Baustein kapselt die grundlegende Logik: "Lies einen Eingang und schreibe auf einen Ausgang"[cite: 2]. Er verfügt über Schnittstellen zur Parametrierung:
+  * **`Input`**: Bestimmt, welcher physische Eingang gelesen werden soll (z.B. `Input_I1`).
+  * **`Output`**: Bestimmt, welcher physische Ausgang geschaltet werden soll (z.B. `Output_Q1`).
 
-## Zusammenfassung
+Intern enthält dieser Sub-Typ:
+  * Einen `logiBUS_IXA` Baustein zum Lesen des Eingangs.
+  * Einen `logiBUS_QXA` Baustein zum Schreiben des Ausgangs.
+  * Eine Adapter-Verbindung, die beide direkt verknüpft.
 
-Diese Übung vermittelt das Konzept der Wiederverwendbarkeit in 4diac. Durch die Erstellung eines generischen Sub-Bausteins (`Uebung_003a_AX_sub`), der die logiBUS-Kommunikation zwischen Eingang und Ausgang kapselt, kann die Hauptanwendung sehr einfach gestaltet werden. Es wird eine direkte 1:1-Zuordnung von zwei Eingängen auf zwei Ausgänge realisiert.
+### Instanzen in der Hauptanwendung
+
+In `Uebung_003a_AX` werden zwei Instanzen dieses Typs erzeugt:
+  * **`F1`**: [cite_start]Konfiguriert für `Input_I1` auf `Output_Q1`[cite: 1].
+  * **`F2`**: [cite_start]Konfiguriert für `Input_I2` auf `Output_Q2`[cite: 1].
+
+-----
+
+## Funktionsweise
+
+Die Logik ist im Inneren der Sub-Applikation versteckt ("Information Hiding"). Die Hauptanwendung definiert nur noch die Verschaltung der Parameter. Der Aufbau in `Uebung_003a_AX.SUB` ist daher extrem kompakt:
+
+```xml
+<SubApp Name="F1" Type="Uebungen::Uebung_003a_AX_sub">
+    <Parameter Name="Input" Value="Input_I1"/>
+    <Parameter Name="Output" Value="Output_Q1"/>
+</SubApp>
+<SubApp Name="F2" Type="Uebungen::Uebung_003a_AX_sub">
+    <Parameter Name="Input" Value="Input_I2"/>
+    <Parameter Name="Output" Value="Output_Q2"/>
+</SubApp>
+```
+
+[cite_start][cite: 1]
+
+Der funktionale Ablauf entspricht exakt dem der `Uebung_003_AX` (parallele Steuerung), jedoch ist die Implementierung modularer. Jede Instanz (`F1`, `F2`) arbeitet als eigenständiger, isolierter Block, der seine interne Adapter-Logik ausführt.
+
+-----
+
+## Anwendungsbeispiel
+
+Ein perfektes Anwendungsbeispiel ist die **Objektorientierte Anlagensteuerung**:
+
+Stellen Sie sich eine Förderbandanlage mit 50 identischen Förderbändern vor. Jedes Band hat einen Motor (Ausgang) und eine Lichtschranke (Eingang). Anstatt 50 mal die gleichen Bausteine und Verbindungen zu zeichnen, erstellt man einmal einen Typ "Förderband-Modul". In der Hauptanwendung platziert man dann einfach 50 Instanzen dieses Moduls und weist ihnen nur noch die physikalischen Adressen zu. Ändert sich später die Logik (z.B. soll der Motor verzögert stoppen), muss man dies nur an einer Stelle (im Typ) ändern, und alle 50 Bänder werden automatisch aktualisiert.
