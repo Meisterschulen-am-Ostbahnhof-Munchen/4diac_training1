@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SubAppType Name="Uebung_006a3_AX" Comment="SR und T-Flip-Flop mit 3x IE">
+	<Identification Standard="61499-2" Description="Copyright (c) 2026 Meisterschulen am Ostbahnhof  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0">
+	</Identification>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Moritz Ortmeier" Date="2023-10-23">
+	</VersionInfo>
+	<CompilerInfo packageName="Uebungen">
+		<Import declaration="logiBUS::io::DI::logiBUS_DI::Input_I1"/>
+		<Import declaration="logiBUS::io::DI::logiBUS_DI::Input_I2"/>
+		<Import declaration="logiBUS::io::DI::logiBUS_DI::Input_I3"/>
+		<Import declaration="logiBUS::io::DI::logiBUS_DI_Events::BUTTON_SINGLE_CLICK"/>
+		<Import declaration="logiBUS::io::DQ::logiBUS_DO::Output_Q1"/>
+		<Import declaration="logiBUS::io::DQ::logiBUS_DO::Output_Q2"/>
+	</CompilerInfo>
+	<SubAppInterfaceList>
+	</SubAppInterfaceList>
+	<SubAppNetwork>
+		<FB Name="DigitalInput_CLK_I1" Type="logiBUS::io::DI::logiBUS_IE" x="-4600" y="-900">
+			<Parameter Name="QI" Value="TRUE">
+				<Attribute Name="Visible" Value="false"/>
+			</Parameter>
+			<Parameter Name="PARAMS" Value="">
+				<Attribute Name="Visible" Value="false"/>
+			</Parameter>
+			<Parameter Name="Input" Value="Input_I1"/>
+			<Parameter Name="InputEvent" Value="BUTTON_SINGLE_CLICK"/>
+		</FB>
+		<FB Name="DigitalInput_CLK_I2" Type="logiBUS::io::DI::logiBUS_IE" x="-4540" y="113.34">
+			<Parameter Name="QI" Value="TRUE">
+				<Attribute Name="Visible" Value="false"/>
+			</Parameter>
+			<Parameter Name="PARAMS" Value="">
+				<Attribute Name="Visible" Value="false"/>
+			</Parameter>
+			<Parameter Name="Input" Value="Input_I2"/>
+			<Parameter Name="InputEvent" Value="BUTTON_SINGLE_CLICK"/>
+		</FB>
+		<FB Name="AX_T_FF_SR" Type="adapter::events::unidirectional::AX_T_FF_SR" x="-2800" y="-700">
+		</FB>
+		<FB Name="DigitalInput_CLK_I3" Type="logiBUS::io::DI::logiBUS_IE" x="-4533.33" y="1133.33">
+			<Parameter Name="QI" Value="TRUE">
+				<Attribute Name="Visible" Value="false"/>
+			</Parameter>
+			<Parameter Name="PARAMS" Value="">
+				<Attribute Name="Visible" Value="false"/>
+			</Parameter>
+			<Parameter Name="Input" Value="Input_I3"/>
+			<Parameter Name="InputEvent" Value="BUTTON_SINGLE_CLICK"/>
+		</FB>
+		<FB Name="AND_LINKS" Type="adapter::booleanOperators::AX_AND_2" x="1800" y="-600">
+		</FB>
+		<FB Name="Rechtslauf" Type="logiBUS::io::DQ::logiBUS_QXA" x="3300" y="0">
+			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="Output" Value="Output_Q2"/>
+		</FB>
+		<FB Name="Linkslauf" Type="logiBUS::io::DQ::logiBUS_QXA" x="3200" y="-1100">
+			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="Output" Value="Output_Q1"/>
+		</FB>
+		<FB Name="AND_RECHTS" Type="adapter::booleanOperators::AX_AND_2" x="1800" y="500">
+		</FB>
+		<SubApp Name="AX_LinksRechts_T_FF" Type="Uebungen::Uebung_006a3_sub_AX" x="-600" y="-1400">
+		</SubApp>
+		<FB Name="AX_SPLIT_3" Type="adapter::events::unidirectional::AX_SPLIT_3" x="-1600" y="-400">
+		</FB>
+		<EventConnections>
+			<Connection Source="DigitalInput_CLK_I1.IND" Destination="AX_T_FF_SR.S"/>
+			<Connection Source="DigitalInput_CLK_I2.IND" Destination="AX_T_FF_SR.R" dx1="486.67"/>
+			<Connection Source="DigitalInput_CLK_I3.IND" Destination="AX_T_FF_SR.CLK" dx1="673.33"/>
+		</EventConnections>
+		<AdapterConnections>
+			<Connection Source="AND_RECHTS.OUT" Destination="Rechtslauf.OUT"/>
+			<Connection Source="AND_LINKS.OUT" Destination="Linkslauf.OUT"/>
+			<Connection Source="AX_LinksRechts_T_FF.Rechts" Destination="AND_RECHTS.IN1" dx1="776.47"/>
+			<Connection Source="AX_LinksRechts_T_FF.Links" Destination="AND_LINKS.IN1" dx1="688.24"/>
+			<Connection Source="AX_T_FF_SR.Q" Destination="AX_SPLIT_3.IN"/>
+			<Connection Source="AX_SPLIT_3.OUT1" Destination="AX_LinksRechts_T_FF.IN" dx1="141.18"/>
+			<Connection Source="AX_SPLIT_3.OUT2" Destination="AND_LINKS.IN2" dx1="988.24"/>
+			<Connection Source="AX_SPLIT_3.OUT3" Destination="AND_RECHTS.IN2" dx1="1041.18"/>
+		</AdapterConnections>
+	</SubAppNetwork>
+</SubAppType>

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<FBType Name="AX_MERGE_2" Comment="Merge (OR) of two input events (generic FB)">
+	<Identification Standard="61499-1 Annex A" Function="Output q is triggered when either SOCKET1 or SOCKET2 is received" Description="Copyright (c) 2026 HR Agrartechnik GmbH&#10; &#10;This program and the accompanying materials are made&#10;available under the terms of the Eclipse Public License 2.0&#10;which is available at https://www.eclipse.org/legal/epl-2.0/&#10;&#10;SPDX-License-Identifier: EPL-2.0">
+	</Identification>
+	<VersionInfo Organization="HR Agrartechnik GmbH" Version="3.0" Author="Moritz Ortmeier" Date="2026-01-14">
+	</VersionInfo>
+	<CompilerInfo packageName="adapter::events::unidirectional">
+		<Import declaration="eclipse4diac::core::GenericClassName"/>
+		<Import declaration="eclipse4diac::core::TypeHash"/>
+	</CompilerInfo>
+	<InterfaceList>
+		<Plugs>
+			<AdapterDeclaration Name="Q" Type="adapter::types::unidirectional::AX"/>
+		</Plugs>
+		<Sockets>
+			<AdapterDeclaration Name="SOCKET1" Type="adapter::types::unidirectional::AX" Comment="First input"/>
+			<AdapterDeclaration Name="SOCKET2" Type="adapter::types::unidirectional::AX" Comment="Second input"/>
+		</Sockets>
+	</InterfaceList>
+	<Attribute Name="eclipse4diac::core::GenericClassName" Value="'GEN_E_MERGE'"/>
+	<Attribute Name="eclipse4diac::core::TypeHash" Value="''"/>
+</FBType>

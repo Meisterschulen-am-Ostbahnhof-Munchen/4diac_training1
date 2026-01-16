@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SubAppType Name="Uebung_006a3_sub_AX" Comment="Subapplication Type">
+	<Identification Standard="61499-2" Description="Copyright (c) 2026 Meisterschulen am Ostbahnhof  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0">
+	</Identification>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Moritz Ortmeier" Date="2026-01-13">
+	</VersionInfo>
+	<CompilerInfo packageName="Uebungen">
+	</CompilerInfo>
+	<SubAppInterfaceList>
+		<Plugs>
+			<AdapterDeclaration Name="Rechts" Type="adapter::types::unidirectional::AX"/>
+			<AdapterDeclaration Name="Links" Type="adapter::types::unidirectional::AX"/>
+		</Plugs>
+		<Sockets>
+			<AdapterDeclaration Name="IN" Type="adapter::types::unidirectional::AX"/>
+		</Sockets>
+	</SubAppInterfaceList>
+	<SubAppNetwork>
+		<FB Name="AX_T_FF" Type="adapter::events::unidirectional::AX_T_FF" x="100" y="-400">
+		</FB>
+		<FB Name="AX_SWITCH" Type="adapter::events::unidirectional::AX_SWITCH" x="-1200" y="-700">
+		</FB>
+		<FB Name="AX_NOT" Type="adapter::booleanOperators::AX_NOT" x="2700" y="300">
+		</FB>
+		<FB Name="AX_SPLIT_2" Type="adapter::events::unidirectional::AX_SPLIT_2" x="1300" y="-300">
+		</FB>
+		<EventConnections>
+			<Connection Source="AX_SWITCH.EO1" Destination="AX_T_FF.CLK" dx1="211.76"/>
+		</EventConnections>
+		<AdapterConnections>
+			<Connection Source="IN" Destination="AX_SWITCH.G" dx1="664.71"/>
+			<Connection Source="AX_NOT.OUT" Destination="Links" dx1="711.76"/>
+			<Connection Source="AX_T_FF.Q" Destination="AX_SPLIT_2.IN"/>
+			<Connection Source="AX_SPLIT_2.OUT2" Destination="AX_NOT.IN" dx1="88.24"/>
+			<Connection Source="AX_SPLIT_2.OUT1" Destination="Rechts" dx1="847.06"/>
+		</AdapterConnections>
+	</SubAppNetwork>
+</SubAppType>
