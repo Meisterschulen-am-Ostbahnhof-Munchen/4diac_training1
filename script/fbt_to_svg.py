@@ -229,7 +229,7 @@ if __name__ == "__main__":
     if len(sys.argv) > 1:
         input_file = sys.argv[1]
     else:
-        input_file = "test_block.fbt"
+        input_file = "E_CTUD.fbt"
 
     if not os.path.exists(input_file):
         print(f"Fehler: Datei '{input_file}' nicht gefunden.")
