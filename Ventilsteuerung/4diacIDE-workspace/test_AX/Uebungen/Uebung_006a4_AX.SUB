@@ -55,16 +55,17 @@
 			<Parameter Name="QI" Value="TRUE"/>
 			<Parameter Name="Output" Value="Output_Q2"/>
 		</FB>
-		<FB Name="LinksRechts" Type="logiBUS::utils::sequence::verteiler::LinksRechts" x="-1000" y="-700">
+		<FB Name="LinksRechts" Type="logiBUS::utils::sequence::verteiler::LinksRechts_AX" x="-1000" y="-700">
 		</FB>
 		<EventConnections>
 			<Connection Source="DigitalInput_CLK_I1.IND" Destination="AX_T_FF_SR.S" dx1="511.76"/>
 			<Connection Source="DigitalInput_CLK_I2.IND" Destination="AX_T_FF_SR.R" dx1="486.67"/>
 			<Connection Source="DigitalInput_CLK_I3.IND" Destination="AX_T_FF_SR.CLK" dx1="673.33"/>
 		</EventConnections>
-		<DataConnections>
+		<AdapterConnections>
 			<Connection Source="LinksRechts.Rechts" Destination="Rechtslauf.OUT" dx1="1526.67"/>
 			<Connection Source="LinksRechts.Links" Destination="Linkslauf.OUT" dx1="886.67"/>
-		</DataConnections>
+			<Connection Source="AX_T_FF_SR.Q" Destination="LinksRechts.EIN" dx1="473.33"/>
+		</AdapterConnections>
 	</SubAppNetwork>
 </SubAppType>
