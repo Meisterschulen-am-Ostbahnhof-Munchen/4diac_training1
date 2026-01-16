@@ -1,56 +1,38 @@
-# Uebung_010a2: Button_A1 auf DigitalOutput_Q1
+# Uebung_010a2: ISOBUS Button (Datenmaske)
 
-* * * * * * * * * *
+[Uebung_010a2](https://docs.ms-muc-docs.de/projects/visual-programming-languages-docs/de/latest/training1/Ventilsteuerung/4diacIDE-workspace/test/FBs/Uebungen/Uebung_010a2.html)
 
-## Einleitung
-Diese Übung demonstriert eine einfache Verbindung zwischen einem Eingabe-Button und einem digitalen Ausgang. Der Funktionsbaustein "Button_A1" steuert direkt den Ausgang "DigitalOutput_Q1" an.
+[![NotebookLM](media/NotebookLM_logo.png)](https://notebooklm.google.com/notebook/a6872e59-1dfc-4132-a118-aff1bc7bc944)
 
-## Verwendete Funktionsbausteine (FBs)
+Dieser Artikel beschreibt die logiBUS®-Übung `Uebung_010a2`. Neben den Softkeys am Rand gibt es im ISOBUS auch "Buttons", die sich direkt innerhalb der Arbeitsmaske befinden.
 
-### Button_IX (Button_A1)
-- **Typ**: Eingabe-Button Funktionsbaustein
-- **Parameter**:
-  - QI = TRUE (Qualified Input aktiviert)
-  - u16ObjId = DefaultPool::Button_A1 (Objekt-ID für Button-Konfiguration)
-- **Ereignisausgang**: IND (Indicator Event)
-- **Datenaustgang**: IN (Input Data)
 
-### logiBUS_QX (DigitalOutput_Q1)
-- **Typ**: Digitaler Ausgangsbaustein für logiBUS
-- **Parameter**:
-  - QI = TRUE (Qualified Input aktiviert)
-  - Output = logiBUS_DO::Output_Q1 (Zugewiesener Ausgang)
-- **Ereigniseingang**: REQ (Request Event)
-- **Dateneingang**: OUT (Output Data)
+## Podcast
+<iframe src="https://creators.spotify.com/pod/profile/logibus/embed/episodes/LogiBUS--IEC-61499-Daten--und-Ereignisflsse-einfach-erklrt--Vom-Schalter-zur-intelligenten-Steuerung-e36vldb/a-ac3vadb" height="102px" width="400px" frameborder="0" scrolling="no"></iframe>
 
-## Programmablauf und Verbindungen
+----
 
-**Ereignisverbindung:**
-- Button_A1.IND → DigitalOutput_Q1.REQ
 
-**Datenverbindung:**
-- Button_A1.IN → DigitalOutput_Q1.OUT
 
-**Ablauf:**
-1. Bei Betätigung des Buttons A1 wird das IND-Ereignis ausgelöst
-2. Das Ereignis wird an den REQ-Eingang des Digitalausgangs Q1 weitergeleitet
-3. Gleichzeitig wird der Datenwert (IN) vom Button an den OUT-Eingang des Digitalausgangs übertragen
-4. Der Digitalausgang Q1 schaltet entsprechend dem empfangenen Signal
+![](Uebung_010a2.png)
 
-**Lernziele:**
-- Grundlegende Verbindung von Eingabe- und Ausgabebausteinen
-- Verständnis von Ereignis- und Datenverbindungen
-- Einfache Signalverarbeitung in 4diac
 
-**Schwierigkeitsgrad:** Einfach
+## Ziel der Übung
 
-**Benötigte Vorkenntnisse:**
-- Grundkenntnisse der 4diac-IDE
-- Verständnis von Funktionsbausteinen
-- Basiswissen über Ereignissteuerung
+Verwendung eines `Button_IX` Bausteins.
 
-**Starten der Übung:**
-Die Übung wird durch Betätigen des Buttons A1 gestartet, woraufhin der Ausgang Q1 entsprechend reagiert.
+-----
 
-## Zusammenfassung
-Diese Übung vermittelt die grundlegende Funktionsweise der Signalverarbeitung in 4diac durch direkte Verbindung eines Eingabe-Buttons mit einem digitalen Ausgang. Sie dient als Einstieg in die Ereignisgesteuerte Automatisierungstechnik und demonstriert das Zusammenspiel von Ereignis- und Datenverbindungen zwischen Funktionsbausteinen.
+## Beschreibung und Komponenten
+
+[cite_start]Die Subapplikation `Uebung_010a2.SUB` nutzt einen Button anstelle eines Softkeys zur Steuerung eines Ausgangs[cite: 1].
+
+### Funktionsbausteine (FBs)
+
+  * **`Button_A1`**: Typ `isobus::UT::io::Button::Button_IX`. Referenziert das Objekt `Button_A1` im Pool.
+
+-----
+
+## Funktionsweise
+
+Die Logik ist identisch zum Softkey: Solange die Schaltfläche auf dem Bildschirm berührt wird, liefert der Baustein `TRUE`. Der wesentliche Unterschied ist die visuelle Platzierung und Gestaltungsmöglichkeit innerhalb der grafischen Benutzeroberfläche des Terminals.

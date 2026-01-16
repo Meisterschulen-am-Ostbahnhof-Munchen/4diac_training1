@@ -1,57 +1,70 @@
-# Uebung_001c: DigitalInput_I1 auf DigitalOutput_Q1 --&gt; Eingang abfragen bei Boot.
+# Uebung_001c: Eingang abfragen bei Boot (Standard-Pins)
 
-* * * * * * * * * *
+[Uebung_001c](https://docs.ms-muc-docs.de/projects/visual-programming-languages-docs/de/latest/training1/Ventilsteuerung/4diacIDE-workspace/test/FBs/Uebungen/Uebung_001c.html)
 
-## Einleitung
-Diese Übung demonstriert die grundlegende Verknüpfung eines digitalen Eingangs mit einem digitalen Ausgang in der 4diac-IDE. Das System liest den Zustand eines digitalen Eingangs und gibt diesen direkt an einen digitalen Ausgang weiter.
+[![NotebookLM](media/NotebookLM_logo.png)](https://notebooklm.google.com/notebook/a6872e59-1dfc-4132-a118-aff1bc7bc944)
 
-## Verwendete Funktionsbausteine (FBs)
+Dieser Artikel beschreibt die logiBUS®-Übung `Uebung_001c`. Hier wird demonstriert, wie ein digitaler Eingang unmittelbar nach dem Systemstart (Boot-Vorgang) abgefragt wird, um den initialen Zustand an einen digitalen Ausgang zu übertragen, unter Verwendung von Standard-Ereignis- und Datenverbindungen.
 
-### DigitalInput_I1
-- **Typ**: logiBUS_IX
-- **Parameter**:
-  - QI = TRUE (Qualified Input aktiviert)
-  - Input = logiBUS_DI::Input_I1 (Zuweisung zum physischen Eingang I1)
-- **Ereigniseingänge**: REQ, INITO
-- **Ereignisausgänge**: IND, CNF
-- **Dateneingänge**: -
-- **Datenausgänge**: IN
 
-### DigitalOutput_Q1
-- **Typ**: logiBUS_QX
-- **Parameter**:
-  - QI = TRUE (Qualified Input aktiviert)
-  - Output = logiBUS_DO::Output_Q1 (Zuweisung zum physischen Ausgang Q1)
-- **Ereigniseingänge**: REQ
-- **Ereignisausgänge**: -
-- **Dateneingänge**: OUT
-- **Datenausgänge**: -
+## Podcast
+<iframe src="https://creators.spotify.com/pod/profile/logibus/embed/episodes/LogiBUS--IEC-61499-Daten--und-Ereignisflsse-einfach-erklrt--Vom-Schalter-zur-intelligenten-Steuerung-e36vldb/a-ac3vadb" height="102px" width="400px" frameborder="0" scrolling="no"></iframe>
 
-## Programmablauf und Verbindungen
+----
 
-**Ereignisverbindungen:**
-- DigitalInput_I1.IND → DigitalOutput_Q1.REQ (Auslösung bei Eingangsänderung)
-- DigitalInput_I1.INITO → DigitalInput_I1.REQ (Initialisierungs-Schleife)
-- DigitalInput_I1.CNF → DigitalOutput_Q1.REQ (Bestätigung der Eingabe)
 
-**Datenverbindung:**
-- DigitalInput_I1.IN → DigitalOutput_Q1.OUT (direkte Datenübertragung)
 
-**Lernziele:**
-- Grundlegende Verknüpfung von Ein- und Ausgängen
-- Verständnis der Ereignissteuerung in IEC 61499
-- Umgang mit logiBUS-Schnittstellenbausteinen
-- Initialisierungsprozesse bei Systemstart
+![](Uebung_001c.png)
 
-**Schwierigkeitsgrad**: Einsteiger
 
-**Benötigte Vorkenntnisse:**
-- Grundlagen der 4diac-IDE
-- Verständnis digitaler Ein- und Ausgänge
-- Basiswissen IEC 61499-Funktionsbausteine
+## Ziel der Übung
 
-**Starten der Übung:**
-Das Programm wird automatisch beim Booten des Systems initialisiert und überwacht kontinuierlich den Zustand des digitalen Eingangs I1.
+Das Hauptziel dieser Übung ist das Verständnis des Initialisierungsvorgangs in der IEC 61499. Es soll sichergestellt werden, dass der Ausgang bereits beim Hochfahren der Steuerung den korrekten Ist-Zustand des Hardware-Eingangs übernimmt, auch wenn zu diesem Zeitpunkt noch keine Zustandsänderung (Flanke) stattgefunden hat.
 
-## Zusammenfassung
-Diese Übung zeigt eine grundlegende E/A-Verknüpfung, bei der ein digitaler Eingangswert direkt an einen digitalen Ausgang weitergeleitet wird. Der Schwerpunkt liegt auf der Initialisierung und kontinuierlichen Überwachung des Eingangszustands, wobei alle Änderungen sofort an den Ausgang propagiert werden.
+-----
+
+## Beschreibung und Komponenten
+
+[cite_start]Die Übung nutzt die Subapplikation `Uebung_001c.SUB`, um eine Verbindung zwischen einem digitalen Eingang und einem Ausgang herzustellen, ergänzt um eine Selbst-Triggerung für den Systemstart[cite: 1].
+
+### Funktionsbausteine (FBs)
+
+  * **`DigitalInput_I1`**: Eine Instanz des Typs `logiBUS_IX`. [cite_start]Dieser Baustein liefert das Ereignis `IND` bei Änderungen und reagiert auf den Befehl `REQ`, um den aktuellen Wert manuell auszulesen[cite: 1].
+  * **`DigitalOutput_Q1`**: Eine Instanz des Typs `logiBUS_QX`. [cite_start]Dieser Baustein setzt den Hardware-Ausgang `Output_Q1` bei jedem eintreffenden `REQ`-Ereignis[cite: 1].
+
+-----
+
+## Funktionsweise
+
+Die Logik kombiniert die normale Signalweiterleitung mit einer Initialisierungsschleife. Der Aufbau in `Uebung_001c.SUB` ist wie folgt definiert:
+
+```xml
+<EventConnections>
+    <Connection Source="DigitalInput_I1.IND" Destination="DigitalOutput_Q1.REQ"/>
+    <Connection Source="DigitalInput_I1.INITO" Destination="DigitalInput_I1.REQ"/>
+    <Connection Source="DigitalInput_I1.CNF" Destination="DigitalOutput_Q1.REQ"/>
+</EventConnections>
+<DataConnections>
+    <Connection Source="DigitalInput_I1.IN" Destination="DigitalOutput_Q1.OUT"/>
+</DataConnections>
+```
+
+[cite_start][cite: 1]
+
+Der Ablauf gliedert sich in zwei Phasen:
+
+1.  **Initialisierungsphase (Boot)**:
+    *   Beim Systemstart wird der Baustein `DigitalInput_I1` initialisiert und sendet ein `INITO`-Ereignis.
+    *   Dieses Ereignis wird auf den eigenen `REQ`-Eingang zurückgeführt.
+    *   Dadurch liest der Baustein sofort den physischen Zustand ein und quittiert dies mit einem `CNF`-Ereignis.
+    *   Das `CNF`-Ereignis triggert schließlich `DigitalOutput_Q1.REQ`, wodurch der Ausgang bereits beim Start den korrekten Wert erhält.
+
+2.  **Betriebsphase (Laufzeit)**:
+    *   Jede spätere Änderung am Eingang triggert über `IND -> REQ` direkt den Ausgang, wie in Übung 001.
+
+-----
+
+## Anwendungsbeispiel
+
+Ein **Zustands-Display**:
+Stellen Sie sich vor, der Ausgang `Q1` steuert eine Kontrollleuchte, die anzeigt, ob ein Sicherheitsschalter (`I1`) geschlossen ist. Wenn die Anlage nach einem Stromausfall neu startet, muss die Lampe sofort korrekt leuchten – nicht erst, wenn jemand den Sicherheitsschalter erneut betätigt. Die Boot-Abfrage garantiert diese sofortige Korrektheit der Anzeige.

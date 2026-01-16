@@ -1,65 +1,62 @@
-# Uebung_004a2: Toggle Flip-Flop mit IE mit BUTTON_SINGLE_CLICK mit E_MERGE
+# Uebung_004a2: Stromstoßschalter von zwei Stellen (Event-Merge)
 
-* * * * * * * * * *
+[Uebung_004a2](https://docs.ms-muc-docs.de/projects/visual-programming-languages-docs/de/latest/training1/Ventilsteuerung/4diacIDE-workspace/test/FBs/Uebungen/Uebung_004a2.html)
 
-## Einleitung
-Diese Übung demonstriert die Verwendung eines T-Flipflops in Kombination mit einem Ereignis-Merge-Baustein zur Steuerung einer digitalen Ausgabe. Die Besonderheit liegt in der Verwendung von zwei unabhängigen Eingängen, deren Ereignisse zusammengeführt werden, um den Toggle-Vorgang auszulösen.
+[![NotebookLM](media/NotebookLM_logo.png)](https://notebooklm.google.com/notebook/a6872e59-1dfc-4132-a118-aff1bc7bc944)
 
-## Verwendete Funktionsbausteine (FBs)
+Dieser Artikel beschreibt die logiBUS®-Übung `Uebung_004a2`. Hier wird die Stromstoßschaltung erweitert, sodass sie von zwei verschiedenen Tastern aus bedient werden kann. Dazu werden die Ereignisse der beiden Taster logisch zusammengeführt.
 
-### DigitalInput_CLK_I1
-- **Typ**: logiBUS_IE
-- **Parameter**:
-  - QI = TRUE
-  - Input = logiBUS_DI::Input_I1
-  - InputEvent = logiBUS_DI_Events::BUTTON_SINGLE_CLICK
-- **Funktionsweise**: Erfasst Einzelklick-Ereignisse von digitalem Eingang I1
 
-### DigitalInput_CLK_I2
-- **Typ**: logiBUS_IE
-- **Parameter**:
-  - QI = TRUE
-  - Input = logiBUS_DI::Input_I2
-  - InputEvent = logiBUS_DI_Events::BUTTON_SINGLE_CLICK
-- **Funktionsweise**: Erfasst Einzelklick-Ereignisse von digitalem Eingang I2
+## Podcast
+<iframe src="https://creators.spotify.com/pod/profile/logibus/embed/episodes/LogiBUS--IEC-61499-Daten--und-Ereignisflsse-einfach-erklrt--Vom-Schalter-zur-intelligenten-Steuerung-e36vldb/a-ac3vadb" height="102px" width="400px" frameborder="0" scrolling="no"></iframe>
 
-### E_MERGE
-- **Typ**: E_MERGE
-- **Funktionsweise**: Führt Ereignisse von zwei Eingängen (EI1 und EI2) zusammen und gibt sie über einen gemeinsamen Ausgang (EO) aus
+----
 
-### E_T_FF
-- **Typ**: E_T_FF (T-Flipflop)
-- **Funktionsweise**: Toggelt den Ausgangszustand bei jedem ankommenden Takt-Ereignis (CLK)
 
-### DigitalOutput_Q1
-- **Typ**: logiBUS_QX
-- **Parameter**:
-  - QI = TRUE
-  - Output = logiBUS_DO::Output_Q1
-- **Funktionsweise**: Steuert den digitalen Ausgang Q1 basierend auf dem empfangenen Wert
 
-## Programmablauf und Verbindungen
+![](Uebung_004a2.png)
 
-**Ereignisverbindungen:**
-- DigitalInput_CLK_I1.IND → E_MERGE.EI1
-- DigitalInput_CLK_I2.IND → E_MERGE.EI2
-- E_MERGE.EO → E_T_FF.CLK
-- E_T_FF.EO → DigitalOutput_Q1.REQ
 
-**Datenverbindungen:**
-- E_T_FF.Q → DigitalOutput_Q1.OUT
+## Ziel der Übung
 
-**Lernziele:**
-- Verständnis des T-Flipflop-Verhaltens
-- Umgang mit Ereignis-Merge-Bausteinen
-- Kombination mehrerer Eingangsereignisse zu einer gemeinsamen Aktion
-- Praktische Anwendung digitaler Ein- und Ausgänge
+Das Ziel ist es zu lernen, wie man asynchrone Ereignisströme vereint. Wenn zwei verschiedene Ereignisquellen (Taster) denselben Prozess (Licht umschalten) auslösen sollen, müssen ihre Signale "gemerged" (zusammengeführt) werden, bevor sie den Flip-Flop-Baustein erreichen.
 
-**Schwierigkeitsgrad**: Einsteiger
+-----
 
-**Benötigte Vorkenntnisse**: Grundlagen der 4diac-IDE, Verständnis von Ereignis- und Datenverbindungen
+## Beschreibung und Komponenten
 
-**Starten der Übung**: Die Übung wird durch Betätigen der Taster I1 oder I2 gestartet. Jeder Tastendruck toggelt den Zustand von Ausgang Q1.
+[cite_start]Die Subapplikation `Uebung_004a2.SUB` nutzt einen `E_MERGE` Baustein, um zwei Eingangs-Events auf einen gemeinsamen Takteingang zu leiten[cite: 1].
 
-## Zusammenfassung
-Diese Übung zeigt eine elegante Lösung zur Steuerung eines Toggle-Flipflops mit zwei unabhängigen Eingangsquellen. Durch den Einsatz des E_MERGE-Bausteins können beide Eingänge gleichberechtigt den Toggle-Vorgang auslösen, was typische Anwendungsfälle wie Zweipunkt-Bedienung einer Funktion demonstriert.
+### Funktionsbausteine (FBs)
+
+  * **`DigitalInput_CLK_I1` & `I2`**: Zwei `logiBUS_IE` Bausteine, konfiguriert auf `BUTTON_SINGLE_CLICK`. [cite_start]Sie erzeugen Ereignisse bei Betätigung von Taster 1 oder 2[cite: 1].
+  * **`E_MERGE`**: Ein Standard-Ereignis-Baustein. [cite_start]Er besitzt zwei Ereigniseingänge (`EI1`, `EI2`) und einen Ereignisausgang (`EO`). Jedes eintreffende Event wird sofort an den Ausgang weitergereicht[cite: 1].
+  * **`E_T_FF`**: Das Toggle-Flip-Flop zum Speichern des Zustands.
+  * **`DigitalOutput_Q1`**: Der Hardware-Ausgang für die Lampe.
+
+-----
+
+## Funktionsweise
+
+Die Verschaltung sorgt für ein logisches ODER der Auslöser:
+
+```xml
+<EventConnections>
+    <Connection Source="DigitalInput_CLK_I1.IND" Destination="E_MERGE.EI1"/>
+    <Connection Source="DigitalInput_CLK_I2.IND" Destination="E_MERGE.EI2"/>
+    <Connection Source="E_MERGE.EO" Destination="E_T_FF.CLK"/>
+</EventConnections>
+```
+
+[cite_start][cite: 1]
+
+1.  Drückt man Taster 1, sendet `I1` ein Event an `E_MERGE.EI1`. `E_MERGE` leitet es an `EO` weiter -> `E_T_FF` toggelt.
+2.  Drückt man Taster 2, sendet `I2` ein Event an `E_MERGE.EI2`. `E_MERGE` leitet es an `EO` weiter -> `E_T_FF` toggelt.
+
+Das Licht wechselt also bei jedem Klick, egal an welcher Stelle gedrückt wurde.
+
+-----
+
+## Anwendungsbeispiel
+
+**Wechselschaltung im Flur**: Man kann das Licht an einem Ende des Flurs einschalten und am anderen Ende wieder ausschalten. Jeder Tastendruck bewirkt lediglich eine Zustandsänderung ("Toggle"), unabhängig davon, wie der aktuelle Zustand ist.

@@ -1,90 +1,69 @@
-# Uebung_004b3: Toggle Flip-Flop mit IE / Split / Verriegelt
+# Uebung_004b3: Gegenseitig verriegelte Toggle-Logik
 
-* * * * * * * * * *
+[Uebung_004b3](https://docs.ms-muc-docs.de/projects/visual-programming-languages-docs/de/latest/training1/Ventilsteuerung/4diacIDE-workspace/test/FBs/Uebungen/Uebung_004b3.html)
 
-## Einleitung
-Diese Übung demonstriert die Funktionsweise eines Toggle Flip-Flop-Systems mit Eingabeereignisverarbeitung und gegenseitiger Verriegelung. Die Schaltung implementiert zwei Flip-Flop-Einheiten, die über Ereignisschalter miteinander verbunden sind und sich gegenseitig beeinflussen.
+[![NotebookLM](media/NotebookLM_logo.png)](https://notebooklm.google.com/notebook/a6872e59-1dfc-4132-a118-aff1bc7bc944)
 
-## Verwendete Funktionsbausteine (FBs)
+Dieser Artikel beschreibt die logiBUS®-Übung `Uebung_004b3`. Diese Übung erweitert das zweikanalige System um eine gegenseitige Verriegelung: Es kann immer nur maximal eine Lampe gleichzeitig leuchten.
 
-### Haupt-Funktionsbausteine:
 
-- **DigitalInput_CLK_I1** (Typ: logiBUS_IE)
-  - Parameter: QI = TRUE, Input = LogiBUS_DI::Input_I1, InputEvent = logiBUS_DI_Events::BUTTON_SINGLE_CLICK
-  - Ereignisausgang: IND
-  - Funktion: Verarbeitet Eingabeereignisse von Taster I1
+## Podcast
+<iframe src="https://creators.spotify.com/pod/profile/logibus/embed/episodes/LogiBUS--IEC-61499-Daten--und-Ereignisflsse-einfach-erklrt--Vom-Schalter-zur-intelligenten-Steuerung-e36vldb/a-ac3vadb" height="102px" width="400px" frameborder="0" scrolling="no"></iframe>
 
-- **DigitalInput_CLK_I2** (Typ: logiBUS_IE)
-  - Parameter: QI = TRUE, Input = logiBUS_DI::Input_I2, InputEvent = logiBUS_DI_Events::BUTTON_SINGLE_CLICK
-  - Ereignisausgang: IND
-  - Funktion: Verarbeitet Eingabeereignisse von Taster I2
+----
 
-- **E_SWITCH_I1** (Typ: E_SWITCH)
-  - Ereigniseingang: EI
-  - Ereignisausgänge: EO0, EO1
-  - Dateneingang: G
-  - Funktion: Ereignisverteiler basierend auf dem G-Steuersignal
 
-- **E_SWITCH_I2** (Typ: E_SWITCH)
-  - Ereigniseingang: EI
-  - Ereignisausgänge: EO0, EO1
-  - Dateneingang: G
-  - Funktion: Ereignisverteiler basierend auf dem G-Steuersignal
 
-- **E_SR_I1** (Typ: E_SR)
-  - Ereigniseingänge: S (Set), R (Reset)
-  - Ereignisausgang: EO
-  - Datenausgang: Q
-  - Funktion: Set-Reset Flip-Flop für Ausgang Q1
+![](Uebung_004b3.png)
 
-- **E_SR_I2** (Typ: E_SR)
-  - Ereigniseingänge: S (Set), R (Reset)
-  - Ereignisausgang: EO
-  - Datenausgang: Q
-  - Funktion: Set-Reset Flip-Flop für Ausgang Q2
 
-- **DigitalOutput_Q1** (Typ: logiBUS_QX)
-  - Parameter: QI = TRUE, Output = logiBUS_DO::Output_Q1
-  - Ereigniseingang: REQ
-  - Dateneingang: OUT
-  - Funktion: Steuert die physische Ausgabe Q1
+## Ziel der Übung
 
-- **DigitalOutput_Q2** (Typ: logiBUS_QX)
-  - Parameter: QI = TRUE, Output = logiBUS_DO::Output_Q2
-  - Ereigniseingang: REQ
-  - Dateneingang: OUT
-  - Funktion: Steuert die physische Ausgabe Q2
+Implementierung einer exklusiven Auswahl-Logik. Das Einschalten eines Kanals muss zwangsläufig das Ausschalten des anderen Kanals zur Folge haben. Dies ist eine Standardanforderung bei der Auswahl von Betriebsmodi oder Fahrtrichtungen.
 
-## Programmablauf und Verbindungen
+-----
 
-### Ereignisverbindungen:
-- DigitalInput_CLK_I1.IND → E_SWITCH_I1.EI
-- E_SWITCH_I1.EO0 → E_SR_I1.S
-- E_SWITCH_I1.EO1 → E_SR_I1.R
-- E_SWITCH_I2.EO0 → E_SR_I2.S
-- E_SWITCH_I2.EO1 → E_SR_I2.R
-- E_SR_I1.EO → DigitalOutput_Q1.REQ
-- E_SR_I2.EO → DigitalOutput_Q2.REQ
-- DigitalInput_CLK_I2.IND → E_SWITCH_I2.EI
-- Kreuzverbindungen: E_SWITCH_I2.EO0 → E_SR_I1.R und E_SWITCH_I1.EO0 → E_SR_I2.R
+## Beschreibung und Komponenten
 
-### Datenverbindungen:
-- E_SR_I1.Q → DigitalOutput_Q1.OUT
-- E_SR_I1.Q → E_SWITCH_I1.G
-- E_SR_I2.Q → E_SWITCH_I2.G
-- E_SR_I2.Q → DigitalOutput_Q2.OUT
+[cite_start]Die Subapplikation `Uebung_004b3.SUB` basiert auf dem Aufbau von 004b2, führt jedoch zusätzliche Ereignisverbindungen zur Verriegelung ein[cite: 1].
 
-### Funktionsweise:
-Die Schaltung implementiert ein verriegeltes Toggle-System:
-1. Bei Betätigung von Taster I1 wird das Ereignis an E_SWITCH_I1 weitergeleitet
-2. E_SWITCH_I1 leitet das Ereignis basierend auf dem Zustand von E_SR_I1.Q entweder an S oder R von E_SR_I1
-3. Gleichzeitig wird über die Kreuzverbindung der andere Flip-Flop zurückgesetzt
-4. Das gleiche Prinzip gilt für Taster I2 und die zweite Flip-Flop-Einheit
-5. Die Ausgänge Q1 und Q2 sind somit immer gegensätzlich und verhindern gleichzeitiges Einschalten
+### Funktionsbausteine (FBs)
 
-**Schwierigkeitsgrad**: Mittel  
-**Benötigte Vorkenntnisse**: Grundverständnis von Flip-Flops, Ereignisverarbeitung und Bus-Systemen  
-**Start der Übung**: Programm in 4diac-IDE laden und auf entsprechende Hardware deployen
+  * Identisch zu 004b2: Taster `I1`/`I2`, Weichen `E_SWITCH_I1`/`I2`, Speicher `E_SR_I1`/`I2`.
 
-## Zusammenfassung
-Diese Übung verdeutlicht die Implementierung eines verriegelten Toggle-Flip-Flop-Systems mit gegenseitiger Ausschaltung. Die Kreuzverbindungen zwischen den beiden Flip-Flop-Einheiten gewährleisten, dass immer nur eine Ausgabe aktiv sein kann, was typische Anwendungsfälle wie Wechselschaltungen oder gegenseitige Verriegelungen abbildet. Die Verwendung von Ereignisschaltern ermöglicht eine flexible Steuerung der Flip-Flop-Zustände basierend auf den aktuellen Ausgabewerten.
+-----
+
+## Funktionsweise
+
+Die Besonderheit liegt in der "Über-Kreuz-Verbindung" der Setz-Ereignisse:
+
+```xml
+<EventConnections>
+    <!-- Normale Toggle-Logik Kanal 1 -->
+    <Connection Source="E_SWITCH_I1.EO0" Destination="E_SR_I1.S"/>
+    <Connection Source="E_SWITCH_I1.EO1" Destination="E_SR_I1.R"/>
+    
+    <!-- Verriegelung: Wenn Kanal 1 einschaltet (EO0), schalte Kanal 2 aus! -->
+    <Connection Source="E_SWITCH_I1.EO0" Destination="E_SR_I2.R"/>
+    
+    <!-- Verriegelung: Wenn Kanal 2 einschaltet (EO0), schalte Kanal 1 aus! -->
+    <Connection Source="E_SWITCH_I2.EO0" Destination="E_SR_I1.R"/>
+</EventConnections>
+```
+
+[cite_start][cite: 1]
+
+Der funktionale Ablauf:
+1.  Lampe 1 ist an, Lampe 2 ist aus.
+2.  Nutzer drückt Taster 2 (`I2`).
+3.  Die Weiche von Kanal 2 erkennt "Lampe 2 ist aus" und feuert das Ereignis zum Einschalten (`EO0`).
+4.  Dieses Ereignis geht einerseits an den Speicher von Kanal 2 (`Setzen`) ➡️ Lampe 2 geht an.
+5.  Gleichzeitig geht das selbe Ereignis an den Reset-Eingang von Kanal 1 ➡️ Lampe 1 geht sofort aus.
+
+Ergebnis: Durch das Einschalten einer Funktion wird die andere automatisch deaktiviert.
+
+-----
+
+## Anwendungsbeispiel
+
+**Betriebsarten-Wahl**: Eine Anlage kann entweder im Modus "Automatik" (`Q1`) oder im Modus "Handbetrieb" (`Q2`) laufen. Sobald der Bediener auf Handbetrieb umschaltet, muss die Automatik aus Sicherheitsgründen sofort gestoppt werden.

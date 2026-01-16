@@ -1,58 +1,67 @@
-# Uebung_003: DigitalInput_I1/_I2 auf DigitalOutput_Q1/_I2 - flach
+# Uebung_003: Parallele Signalwege (Standard-Pins)
 
-* * * * * * * * * *
+[Uebung_003](https://docs.ms-muc-docs.de/projects/visual-programming-languages-docs/de/latest/training1/Ventilsteuerung/4diacIDE-workspace/test/FBs/Uebungen/Uebung_003.html)
 
-## Einleitung
-Diese Übung demonstriert die grundlegende Verknüpfung von digitalen Eingängen mit digitalen Ausgängen in der 4diac-IDE. Es handelt sich um eine einfache Steuerung, bei der zwei digitale Eingangssignale direkt auf zwei entsprechende digitale Ausgänge geschaltet werden.
+[![NotebookLM](media/NotebookLM_logo.png)](https://notebooklm.google.com/notebook/a6872e59-1dfc-4132-a118-aff1bc7bc944)
 
-## Verwendete Funktionsbausteine (FBs)
+Dieser Artikel beschreibt die logiBUS®-Übung `Uebung_003`. In dieser Übung werden zwei voneinander unabhängige Signalpfade realisiert, wobei jeder digitale Eingang direkt einen zugeordneten digitalen Ausgang steuert.
 
-Die Übung verwendet vier grundlegende Funktionsbausteine:
 
-- **DigitalInput_I1** (Typ: logiBUS_IX)
-- **DigitalInput_I2** (Typ: logiBUS_IX) 
-- **DigitalOutput_Q1** (Typ: logiBUS_QX)
-- **DigitalOutput_Q2** (Typ: logiBUS_QX)
+## Podcast
+<iframe src="https://creators.spotify.com/pod/profile/logibus/embed/episodes/LogiBUS--IEC-61499-Daten--und-Ereignisflsse-einfach-erklrt--Vom-Schalter-zur-intelligenten-Steuerung-e36vldb/a-ac3vadb" height="102px" width="400px" frameborder="0" scrolling="no"></iframe>
 
-### Baustein-Konfiguration:
+----
 
-**DigitalInput Bausteine:**
-- **QI Parameter**: TRUE (aktiviert den Baustein)
-- **Input Parameter**: 
-  - DigitalInput_I1: logiBUS_DI::Input_I1
-  - DigitalInput_I2: logiBUS_DI::Input_I2
 
-**DigitalOutput Bausteine:**
-- **QI Parameter**: TRUE (aktiviert den Baustein)
-- **Output Parameter**:
-  - DigitalOutput_Q1: logiBUS_DO::Output_Q1
-  - DigitalOutput_Q2: logiBUS_DO::Output_Q2
 
-## Programmablauf und Verbindungen
+![](Uebung_003.png)
 
-**Ereignisverbindungen:**
-- DigitalInput_I1.IND → DigitalOutput_Q1.REQ
-- DigitalInput_I2.IND → DigitalOutput_Q2.REQ
 
-**Datenverbindungen:**
-- DigitalInput_I1.IN → DigitalOutput_Q1.OUT
-- DigitalInput_I2.IN → DigitalOutput_Q2.OUT
+## Ziel der Übung
 
-**Lernziele:**
-- Grundlegendes Verständnis der IEC 61499-Funktionsbausteine
-- Verknüpfung von Eingängen und Ausgängen
-- Umgang mit logiBUS-IO-Bausteinen
-- Ereignisgesteuerte Programmabläufe
+Das Hauptziel dieser Übung ist es, die parallele Verarbeitung von Signalen in der IEC 61499 zu demonstrieren. Da Funktionsbausteine in 4diac ereignisbasiert arbeiten, können mehrere Steuerungsaufgaben völlig unabhängig voneinander in einem Netzwerk existieren, ohne sich gegenseitig in der Ausführung zu blockieren.
 
-**Schwierigkeitsgrad:** Einsteiger
+-----
 
-**Benötigte Vorkenntnisse:**
-- Grundlagen der 4diac-IDE
-- Verständnis von digitalen Ein-/Ausgängen
-- Basiswissen über Funktionsbausteine
+## Beschreibung und Komponenten
 
-**Starten der Übung:**
-Die Übung wird in der 4diac-IDE geladen und auf ein kompatibles Steuerungssystem mit logiBUS-Interface deployed.
+[cite_start]Die Subapplikation `Uebung_003.SUB` definiert zwei separate Signalwege ("Kanäle"), die parallel verarbeitet werden[cite: 1].
 
-## Zusammenfassung
-Diese einfache Übung vermittelt die grundlegenden Prinzipien der Signalverarbeitung in 4diac. Sie zeigt, wie digitale Eingangssignale direkt auf Ausgänge weitergeleitet werden können und dient als Basis für komplexere Steuerungsaufgaben. Die klare Trennung von Ereignis- und Datenverbindungen entspricht dem IEC 61499-Standard und bildet die Grundlage für ereignisgesteuerte Steuerungssysteme.
+### Funktionsbausteine (FBs)
+
+Es werden zwei Paare von Ein- und Ausgangsbausteinen verwendet:
+
+  * **`DigitalInput_I1` & `DigitalOutput_Q1`**: Das erste Paar (Kanal 1). [cite_start]Verbindet Hardware-Eingang `I1` mit Hardware-Ausgang `Q1`[cite: 1].
+  * **`DigitalInput_I2` & `DigitalOutput_Q2`**: Das zweite Paar (Kanal 2). [cite_start]Verbindet Hardware-Eingang `I2` mit Hardware-Ausgang `Q2`[cite: 1].
+
+-----
+
+## Funktionsweise
+
+Die Unabhängigkeit der beiden Kanäle wird durch die getrennten Ereignis- und Datenverbindungen in der Subapplikation `Uebung_003.SUB` sichergestellt:
+
+```xml
+<EventConnections>
+    <Connection Source="DigitalInput_I1.IND" Destination="DigitalOutput_Q1.REQ"/>
+    <Connection Source="DigitalInput_I2.IND" Destination="DigitalOutput_Q2.REQ"/>
+</EventConnections>
+<DataConnections>
+    <Connection Source="DigitalInput_I1.IN" Destination="DigitalOutput_Q1.OUT"/>
+    <Connection Source="DigitalInput_I2.IN" Destination="DigitalOutput_Q2.OUT"/>
+</DataConnections>
+```
+
+[cite_start][cite: 1]
+
+Der funktionale Ablauf:
+1.  Ändert sich der Zustand von `I1`, feuert der erste Baustein ein `IND`-Event, welches `Q1` zur Aktualisierung auffordert.
+2.  Ändert sich der Zustand von `I2`, feuert der zweite Baustein ein `IND`-Event, welches `Q2` zur Aktualisierung auffordert.
+
+Beide Prozesse laufen asynchron ab. Eine schnelle Schaltfolge auf Kanal 1 beeinflusst die Reaktionszeit von Kanal 2 in keiner Weise.
+
+-----
+
+## Anwendungsbeispiel
+
+**Unabhängige Aggregate**:
+In einer landwirtschaftlichen Maschine werden zwei unabhängige Elektromotoren gesteuert. Schalter 1 (`I1`) schaltet den Motor für die Förderschnecke (`Q1`) ein, und Schalter 2 (`I2`) schaltet das Gebläse (`Q2`) ein. Obwohl beide Logiken im selben Steuerungsprogramm definiert sind, operieren sie als getrennte "Software-Schaltkreise".

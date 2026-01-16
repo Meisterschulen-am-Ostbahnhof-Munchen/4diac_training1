@@ -1,56 +1,63 @@
-# Uebung_004a7: SR und T-Flip-Flop mit IE und E_REND (Rendezvous)
+# Uebung_004a7: T-Flip-Flop mit Reset und Rendezvous
 
-* * * * * * * * * *
+[Uebung_004a7](https://docs.ms-muc-docs.de/projects/visual-programming-languages-docs/de/latest/training1/Ventilsteuerung/4diacIDE-workspace/test/FBs/Uebungen/Uebung_004a7.html)
 
-## Einleitung
-Diese Übung demonstriert die Verwendung eines T-Flip-Flops in Kombination mit einem Rendezvous-Mechanismus. Die Schaltung verwendet drei digitale Eingänge und einen digitalen Ausgang, um das Verhalten eines T-Flip-Flops mit Set/Reset-Funktionalität zu zeigen.
+[![NotebookLM](media/NotebookLM_logo.png)](https://notebooklm.google.com/notebook/a6872e59-1dfc-4132-a118-aff1bc7bc944)
 
-## Verwendete Funktionsbausteine (FBs)
+Dieser Artikel beschreibt die logiBUS®-Übung `Uebung_004a7`. Hier wird das Rendezvous-Muster mit einem erweiterten Flip-Flop-Typ kombiniert, der eine dedizierte Reset-Funktion besitzt.
 
-### DigitalInput_CLK_I1, DigitalInput_CLK_I2, DigitalInput_CLK_I3
-- **Typ**: logiBUS_IE
-- **Parameter**:
-  - QI = TRUE
-  - Input = logiBUS_DI::Input_I1 / Input_I2 / Input_I3
-  - InputEvent = logiBUS_DI_Events::BUTTON_SINGLE_CLICK
 
-### E_REND
-- **Typ**: E_REND (Rendezvous-Baustein)
+## Podcast
+<iframe src="https://creators.spotify.com/pod/profile/logibus/embed/episodes/LogiBUS--IEC-61499-Daten--und-Ereignisflsse-einfach-erklrt--Vom-Schalter-zur-intelligenten-Steuerung-e36vldb/a-ac3vadb" height="102px" width="400px" frameborder="0" scrolling="no"></iframe>
 
-### E_T_FF
-- **Typ**: E_T_FF_SR (T-Flip-Flop mit Set/Reset)
+----
 
-### DigitalOutput_Q1
-- **Typ**: logiBUS_QX
-- **Parameter**:
-  - QI = TRUE
-  - Output = logiBUS_DO::Output_Q1
 
-## Programmablauf und Verbindungen
 
-**Ereignisverbindungen:**
-- DigitalInput_CLK_I1.IND → E_REND.EI1
-- DigitalInput_CLK_I2.IND → E_REND.EI2
-- DigitalInput_CLK_I3.IND → E_REND.R
-- E_REND.EO → E_T_FF.CLK
-- DigitalInput_CLK_I3.IND → E_T_FF.R
-- E_T_FF.EO → DigitalOutput_Q1.REQ
+![](Uebung_004a7.png)
 
-**Datenverbindungen:**
-- E_T_FF.Q → DigitalOutput_Q1.OUT
 
-**Funktionsweise:**
-Das Rendezvous-Element (E_REND) wartet auf gleichzeitige Ereignisse von beiden Eingängen I1 und I2. Erst wenn beide Taster gleichzeitig betätigt werden, gibt E_REND ein Ereignis an den Takt-Eingang (CLK) des T-Flip-Flops weiter. Eingang I3 dient als Reset für beide Bausteine (E_REND und E_T_FF). Der T-Flip-Flop ändert seinen Zustand bei jedem Taktimpuls und steuert den digitalen Ausgang Q1.
+## Ziel der Übung
 
-**Lernziele:**
-- Verständnis von T-Flip-Flop Verhalten
-- Anwendung von Rendezvous-Mechanismen
-- Umgang mit digitalen Ein- und Ausgängen
-- Synchronisation von Ereignissen
+Demonstration der Interaktion zwischen komplexer Ereignis-Logik (`E_REND`) und einem Flip-Flop mit Set/Reset-Priorität (`E_T_FF_SR`). Ziel ist eine Steuerung, die nur nach mehrfacher Bestätigung aktiv wird, aber jederzeit sicher abgeschaltet werden kann.
 
-**Schwierigkeitsgrad**: Mittel
+-----
 
-**Benötigte Vorkenntnisse**: Grundlagen der digitalen Schaltungstechnik, Funktionsbausteine in 4diac
+## Beschreibung und Komponenten
 
-## Zusammenfassung
-Diese Übung zeigt eine praktische Implementierung eines T-Flip-Flops mit Rendezvous-Synchronisation. Die Schaltung demonstriert, wie mehrere Eingangsereignisse synchronisiert werden müssen, um einen Zustandswechsel im Flip-Flop auszulösen, während ein separater Reset-Eingang beide Bausteine zurücksetzen kann.
+[cite_start]Die Subapplikation `Uebung_004a7.SUB` nutzt drei Taster zur Steuerung eines Lampenzustands[cite: 1].
+
+### Funktionsbausteine (FBs)
+
+  * **`I1` & `I2`**: Eingänge für das Rendezvous (Scharfschalten).
+  * **`I3`**: Zentraler Reset-Eingang.
+  * **`E_REND`**: Synchronisiert die Ereignisse von `I1` und `I2`.
+  * **`E_T_FF_SR`**: Ein Toggle-Flip-Flop, das zusätzlich einen `R` (Reset) Eingang besitzt, um den Zustand definiert auf `FALSE` zu setzen.
+
+-----
+
+## Funktionsweise
+
+```xml
+<EventConnections>
+    <Connection Source="DigitalInput_CLK_I1.IND" Destination="E_REND.EI1"/>
+    <Connection Source="DigitalInput_CLK_I2.IND" Destination="E_REND.EI2"/>
+    <Connection Source="E_REND.EO" Destination="E_T_FF.CLK"/>
+    <Connection Source="DigitalInput_CLK_I3.IND" Destination="E_REND.R"/>
+    <Connection Source="DigitalInput_CLK_I3.IND" Destination="E_T_FF.R"/>
+</EventConnections>
+```
+
+[cite_start][cite: 1]
+
+1.  Um das Licht (`Q1`) umzuschalten, müssen beide Taster `I1` und `I2` betätigt worden sein. Das Rendezvous feuert dann den Takt (`CLK`) für das Flip-Flop.
+2.  Der Taster `I3` fungiert als **Alles-Aus-Taste**:
+    *   Er setzt das Flip-Flop `E_T_FF_SR` sofort zurück (Ausgang wird `FALSE`).
+    *   Er löscht gleichzeitig das Gedächtnis von `E_REND`. Falls also nur ein Taster (`I1` oder `I2`) gedrückt war, wird diese Teil-Information gelöscht.
+
+-----
+
+## Anwendungsbeispiel
+
+**Maschinenfreigabe mit Not-Stopp**:
+Zwei Sicherheitsbereiche müssen als "geprüft" gemeldet werden (`I1` und `I2`), damit die Maschine in den nächsten Modus wechseln kann. Ein Not-Halt-Taster (`I3`) stoppt die Maschine jedoch sofort und macht alle bisherigen Sicherheits-Bestätigungen ungültig, sodass nach der Entriegelung beide Bereiche erneut geprüft werden müssen.

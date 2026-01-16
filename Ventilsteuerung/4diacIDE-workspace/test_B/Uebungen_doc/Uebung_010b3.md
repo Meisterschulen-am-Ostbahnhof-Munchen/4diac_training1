@@ -1,53 +1,32 @@
-# Uebung_010b3: Toggle Flip-Flop mit IE AuxFunction2_X1
+# Uebung_010b3: AUX-Ereignis-Steuerung
 
-* * * * * * * * * *
+[Uebung_010b3](https://docs.ms-muc-docs.de/projects/visual-programming-languages-docs/de/latest/training1/Ventilsteuerung/4diacIDE-workspace/test/FBs/Uebungen/Uebung_010b3.html)
 
-## Einleitung
-Diese Übung demonstriert die Funktionsweise eines Toggle Flip-Flops (T-FF) in Verbindung mit einer Hilfsfunktion. Das System verwendet einen Ereignis-getriggerten Toggle-Flip-Flop, der durch eine Auxiliary-Funktion angesteuert wird und dessen Ausgangszustand eine digitale Ausgabe schaltet.
+[![NotebookLM](media/NotebookLM_logo.png)](https://notebooklm.google.com/notebook/a6872e59-1dfc-4132-a118-aff1bc7bc944)
 
-## Verwendete Funktionsbausteine (FBs)
+Dieser Artikel beschreibt die logiBUS®-Übung `Uebung_010b3`.
 
-### DigitalOutput_Q1
-- **Typ**: logiBUS_QX
-- **Parameter**:
-  - QI = TRUE (Qualified Identifier aktiviert)
-  - Output = logiBUS_DO::Output_Q1 (Zuweisung zum physikalischen Ausgang Q1)
 
-### AuxFunction2_X1_UP
-- **Typ**: Aux_IE (Auxiliary Input Event)
-- **Parameter**:
-  - QI = TRUE (Qualified Identifier aktiviert)
-  - u16ObjId = DefaultPool::AuxFunction2_X1 (Objekt-ID der Hilfsfunktion)
-  - InputEvent = AuxiliaryState::AuxDisabled_START (Ereignis bei Start der deaktivierten Hilfsfunktion)
+## Podcast
+<iframe src="https://creators.spotify.com/pod/profile/logibus/embed/episodes/LogiBUS--IEC-61499-Daten--und-Ereignisflsse-einfach-erklrt--Vom-Schalter-zur-intelligenten-Steuerung-e36vldb/a-ac3vadb" height="102px" width="400px" frameborder="0" scrolling="no"></iframe>
 
-### E_T_FF
-- **Typ**: E_T_FF (Event-Triggered Toggle Flip-Flop)
-- **Parameter**: Keine zusätzlichen Parameter konfiguriert
+----
 
-## Programmablauf und Verbindungen
 
-**Ereignisverbindungen:**
-- AuxFunction2_X1_UP.IND → E_T_FF.CLK (Hilfsfunktions-Ereignis triggert den Toggle-Flip-Flop)
-- E_T_FF.EO → DigitalOutput_Q1.REQ (Flip-Flop Ausgangsereignis fordert Ausgabeschaltung an)
 
-**Datenverbindungen:**
-- E_T_FF.Q → DigitalOutput_Q1.OUT (Flip-Flop Ausgangszustand steuert digitale Ausgabe)
+![](Uebung_010b3.png)
 
-**Lernziele:**
-- Verständnis der Funktionsweise eines Toggle Flip-Flops
-- Implementierung von ereignisgesteuerten Schaltungen
-- Integration von Auxiliary-Funktionen in Steuerungsabläufe
-- Umgang mit digitalen Ausgabebausteinen
 
-**Schwierigkeitsgrad**: Einfach
+## Ziel der Übung
 
-**Benötigte Vorkenntnisse:**
-- Grundkenntnisse der 4diac-IDE
-- Verständnis von Ereignis- und Datenverbindungen
-- Basiswissen über Flip-Flop-Schaltungen
+Verwendung von `Aux_IE` (Event) zur Steuerung von Speichern.
 
-**Starten der Übung:**
-Die Übung wird durch Aktivieren der Auxiliary-Funktion X1 gestartet. Bei jedem Trigger-Ereignis der Hilfsfunktion toggelt der Flip-Flop seinen Zustand und schaltet die digitale Ausgabe Q1 entsprechend ein oder aus.
+-----
 
-## Zusammenfassung
-Diese Übung zeigt eine kompakte Implementierung eines Toggle Flip-Flops, der durch eine Auxiliary-Funktion gesteuert wird. Der Flip-Flop ändert bei jedem empfangenen Trigger-Ereignis seinen Zustand und gibt diesen über eine digitale Ausgabe aus. Die Übung vermittelt grundlegende Konzepte der ereignisgesteuerten Programmierung und der Zustandssteuerung in IEC 61499-Systemen.
+## Beschreibung
+
+[cite_start]In `Uebung_010b3.SUB` wird eine AUX-Funktion genutzt, um ein Flip-Flop zu toggeln[cite: 1].
+
+### Funktionsweise
+
+Es wird das Event `AuxDisabled_START` verwendet. In der ISOBUS-Terminologie bedeutet dies den Übergang in den Zustand "Deaktiviert". Das entspricht dem **Loslassen** einer Joystick-Taste. Das Flip-Flop wechselt also beim Loslassen der Taste seinen Zustand.

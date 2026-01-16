@@ -1,46 +1,63 @@
-# Uebung_003b2: Funk 16 Tasten auf DataPanel 16
+# Uebung_003b2: Massenmapping (Funk auf DataPanel)
 
-* * * * * * * * * *
+[Uebung_003b2](https://docs.ms-muc-docs.de/projects/visual-programming-languages-docs/de/latest/training1/Ventilsteuerung/4diacIDE-workspace/test/FBs/Uebungen/Uebung_003b2.html)
 
-## Einleitung
-Diese Übung demonstriert die Ansteuerung eines DataPanels mit 16 Tasten über Funk. Es handelt sich um eine strukturierte Anwendung, die die Verwendung von Sub-Applikationen und die Kommunikation zwischen verschiedenen Hardwarekomponenten zeigt.
+[![NotebookLM](media/NotebookLM_logo.png)](https://notebooklm.google.com/notebook/a6872e59-1dfc-4132-a118-aff1bc7bc944)
 
-## Verwendete Funktionsbausteine (FBs)
+Dieser Artikel beschreibt die logiBUS®-Übung `Uebung_003b2`. In dieser Übung wird die Skalierbarkeit des Systems demonstriert, indem 15 Tasten einer Funkfernbedienung auf 15 digitale Ausgänge eines DataPanels gemappt werden.
 
-### Sub-Bausteine: Uebung_003b2_sub
-- **Typ**: SubAppType
-- **Verwendete interne FBs**:
-    - **IX**: Funk_IX
-        - Parameter: QI = TRUE
-        - Ereignisausgang: IND
-        - Dateneingang: Input
-    - **QX**: DataPanel_MI_QX
-        - Parameter: QI = TRUE
-        - Ereigniseingang: REQ
-        - Datenausgang: OUT
-        - Dateneingänge: u8SAMember, Output
-- **Funktionsweise**: Der Sub-Baustein verbindet einen Funk-Eingang (IX) mit einem DataPanel-Ausgang (QX). Bei einer Statusänderung des Funk-Eingangs wird ein Ereignis ausgelöst, das die Aktualisierung des DataPanel-Ausgangs anstößt.
 
-## Programmablauf und Verbindungen
-Die Hauptapplikation besteht aus 15 identischen Sub-Applikationen (F1-F15), die jeweils den Sub-Baustein "Uebung_003b2_sub" instanziieren. Jede Sub-Applikation ist konfiguriert mit:
+## Podcast
+<iframe src="https://creators.spotify.com/pod/profile/logibus/embed/episodes/LogiBUS--IEC-61499-Daten--und-Ereignisflsse-einfach-erklrt--Vom-Schalter-zur-intelligenten-Steuerung-e36vldb/a-ac3vadb" height="102px" width="400px" frameborder="0" scrolling="no"></iframe>
 
-- **Input**: Funk_DI::DigitalInput_Key_01 (gemeinsamer Funk-Eingang für alle Instanzen)
-- **u8SAMember**: MI::MI_00 (SA-Member-Konfiguration)
-- **Output**: Unterschiedliche DataPanel-Ausgänge (DigitalOutput_1A bis DigitalOutput_8A)
+----
 
-**Verbindungen:**
-- Jede Sub-Applikation empfängt denselben Funk-Eingangssignal
-- Die Verarbeitung erfolgt parallel in allen 15 Instanzen
-- Jede Instanz steuert einen spezifischen Ausgang am DataPanel an
 
-**Lernziele:**
-- Verständnis der Sub-Applikations-Struktur
-- Umgang mit parametrisierbaren Funktionsbausteinen
-- Parallelverarbeitung von Signalen
-- Kommunikation zwischen Funk-Eingängen und DataPanel-Ausgängen
 
-**Schwierigkeitsgrad**: Einfach bis Mittel
-**Benötigte Vorkenntnisse**: Grundkenntnisse in 4diac-IDE, Verständnis von Funktionsbausteinen und Event-basierter Programmierung
+![](Uebung_003b2.png)
 
-## Zusammenfassung
-Diese Übung zeigt eine skalierbare Lösung zur Ansteuerung mehrerer DataPanel-Ausgänge über einen gemeinsamen Funk-Eingang. Die modulare Struktur mit wiederverwendbaren Sub-Bausteinen ermöglicht eine effiziente und übersichtliche Programmierung. Die parallele Verarbeitung in 15 Instanzen demonstriert die Leistungsfähigkeit der IEC 61499-Architektur für verteilte Steuerungsaufgaben.
+
+## Ziel der Übung
+
+Das Ziel dieser Übung ist die effiziente Verwaltung einer großen Anzahl von Hardware-Schnittstellen. Durch den Einsatz von typisierten Sub-Applikationen mit exponierten Parametern kann die komplette Zuordnung (Mapping) zwischen Funk-Eingängen und CAN-Bus-Ausgängen zentral in der Hauptanwendung vorgenommen werden, ohne die interne Logik verändern zu müssen.
+
+-----
+
+## Beschreibung und Komponenten
+
+[cite_start]Die Subapplikation `Uebung_003b2.SUB` instanziiert 15 mal den spezialisierten Sub-Typ `Uebung_003b2_sub` (benannt `F1` bis `F15`)[cite: 1].
+
+### Typisierte Sub-Applikation: `Uebung_003b2_sub`
+
+[cite_start]Dieser Baustein dient als universeller "Kanal-Treiber" für die Funk-zu-CAN-Kommunikation[cite: 2]. Er verfügt über folgende Parameter:
+  * **`Input`**: Der Name der Funk-Taste (z.B. `Key_01`, `START`, `STOP`).
+  * **`u8SAMember`**: Die CAN-Adresse des DataPanels (hier fest auf `MI_00` gesetzt).
+  * **`Output`**: Der Name des physischen Ausgangs am DataPanel (z.B. `DigitalOutput_1A`).
+
+Intern enthält der Baustein einen `Funk_IX` zum Empfangen der Funksignale und einen `DataPanel_MI_QX` zum Senden der CAN-Nachrichten.
+
+### Konfiguration der Kanäle
+
+In `Uebung_003b2` sind die Zuweisungen klar definiert:
+*   `F1`: `STOP` ➡️ `Output_1A`
+*   `F2`: `START` ➡️ `Output_1B`
+*   `F3` bis `F15`: `Key_01` bis `Key_13` ➡️ `Output_2A` bis `Output_8A`
+
+-----
+
+## Funktionsweise
+
+Der Signalweg verläuft ereignisbasiert über die CAN-Bus-Infrastruktur:
+1.  Der Nutzer drückt eine Taste auf der Funkfernbedienung.
+2.  Die Instanz des Typs `Funk_IX` im Inneren der entsprechenden Sub-Applikation erkennt den Tastendruck und feuert ein `IND`-Event.
+3.  Dieses Ereignis wird direkt an den `REQ`-Eingang des `DataPanel_MI_QX` Bausteins geleitet.
+4.  Der Ausgangs-Baustein generiert daraufhin eine CAN-Nachricht für das DataPanel, um den zugeordneten physischen Ausgang ein- oder auszuschalten.
+
+Da alle 15 Instanzen parallel und unabhängig arbeiten, können beliebig viele Tasten gleichzeitig bedient werden.
+
+-----
+
+## Anwendungsbeispiel
+
+**Nachrüstung einer Funkfernsteuerung**:
+Eine bestehende Maschine soll mit einer Funkfernbedienung für 15 verschiedene Hydraulikfunktionen ausgestattet werden. Anstatt die gesamte Logik neu zu programmieren, nutzt man das DataPanel als IO-Knoten und mappt die Funktasten rein parametrisch auf die Ventilausgänge. Dies ermöglicht eine extrem schnelle Inbetriebnahme und einfache Anpassung an Kundenwünsche (z.B. Tastenbelegung ändern).

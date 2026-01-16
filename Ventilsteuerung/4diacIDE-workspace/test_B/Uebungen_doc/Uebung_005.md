@@ -1,61 +1,64 @@
-# Uebung_005: Toggle Flip-Flop mit IX
+# Uebung_005: Toggle mit Standard-Eingang (IX)
 
-* * * * * * * * * *
+[Uebung_005](https://docs.ms-muc-docs.de/projects/visual-programming-languages-docs/de/latest/training1/Ventilsteuerung/4diacIDE-workspace/test/FBs/Uebungen/Uebung_005.html)
 
-## Einleitung
-Diese Übung demonstriert die Funktionsweise eines Toggle-Flip-Flops unter Verwendung von IX-Eingängen. Das System realisiert eine Schaltung, bei der ein digitaler Eingang über einen Schalterbaustein den Takt für ein Flip-Flop bereitstellt, dessen Ausgangszustand bei jedem Taktwechsel toggelt.
+[![NotebookLM](media/NotebookLM_logo.png)](https://notebooklm.google.com/notebook/a6872e59-1dfc-4132-a118-aff1bc7bc944)
 
-## Verwendete Funktionsbausteine (FBs)
+Dieser Artikel beschreibt die logiBUS®-Übung `Uebung_005`. Hier wird demonstriert, wie ein zustandsbasierter Hardware-Eingang (`IX`) genutzt werden kann, um ein ereignisbasiertes Toggle-Flip-Flop zu steuern.
 
-### DigitalInput_I1
-- **Typ**: logiBUS_IX
-- **Parameter**:
-  - QI = TRUE
-  - Input = logiBUS_DI::Input_I1
-- **Funktionsweise**: Liest den digitalen Eingang I1 vom logiBUS-System ein
 
-### E_SWITCH
-- **Typ**: E_SWITCH
-- **Funktionsweise**: Dient als Schalter, der Ereignisse basierend auf dem G-Eingang weiterleitet
+## Podcast
+<iframe src="https://creators.spotify.com/pod/profile/logibus/embed/episodes/LogiBUS--IEC-61499-Daten--und-Ereignisflsse-einfach-erklrt--Vom-Schalter-zur-intelligenten-Steuerung-e36vldb/a-ac3vadb" height="102px" width="400px" frameborder="0" scrolling="no"></iframe>
 
-### E_T_FF
-- **Typ**: E_T_FF
-- **Funktionsweise**: Toggle-Flip-Flop, das bei jedem Taktimpuls am CLK-Eingang seinen Ausgangszustand wechselt
+----
 
-### DigitalOutput_Q1
-- **Typ**: logiBUS_QX
-- **Parameter**:
-  - QI = TRUE
-  - Output = logiBUS_DO::Output_Q1
-- **Funktionsweise**: Schreibt den Ausgangswert auf den digitalen Ausgang Q1 des logiBUS-Systems
 
-## Programmablauf und Verbindungen
 
-**Ereignisverbindungen:**
-- DigitalInput_I1.IND → E_SWITCH.EI
-- E_SWITCH.EO1 → E_T_FF.CLK
-- E_T_FF.EO → DigitalOutput_Q1.REQ
+![](Uebung_005.png)
 
-**Datenverbindungen:**
-- DigitalInput_I1.IN → E_SWITCH.G
-- E_T_FF.Q → DigitalOutput_Q1.OUT
 
-**Programmablauf:**
-1. Der digitale Eingang I1 wird kontinuierlich eingelesen
-2. Bei Änderung des Eingangssignals wird ein Ereignis an E_SWITCH gesendet
-3. E_SWITCH leitet das Ereignis an E_T_FF weiter, wenn G=TRUE
-4. E_T_FF toggelt seinen Ausgang Q bei jedem Taktimpuls
-5. Der Ausgangswert wird an den digitalen Ausgang Q1 geschrieben
+## Ziel der Übung
 
-**Lernziele:**
-- Verständnis von Toggle-Flip-Flop-Schaltungen
-- Umgang mit digitalen Ein- und Ausgängen über logiBUS
-- Ereignisgesteuerte Programmierung mit Schalterbausteinen
-- Signalverarbeitung in IEC 61499-Systemen
+Verständnis der Flankenauswertung unter Verwendung von Ereignisweichen. Es wird gezeigt, wie man aus einem kontinuierlichen Signal (Taster gedrückt) einen einzelnen Impuls zum Umschalten generiert, ohne den spezialisierten `logiBUS_IE` Baustein zu verwenden.
 
-**Schwierigkeitsgrad**: Einsteiger
+-----
 
-**Benötigte Vorkenntnisse**: Grundlagen der IEC 61499, digitale Schaltungen
+## Beschreibung und Komponenten
 
-## Zusammenfassung
-Diese Übung zeigt eine praktische Implementierung eines Toggle-Flip-Flops mit IX-Eingängen. Der Aufbau demonstriert die Verknüpfung von digitalen Ein-/Ausgängen mit ereignisgesteuerten Funktionsbausteinen. Das System ermöglicht das experimentelle Erleben der Flip-Flop-Funktionalität und vermittelt grundlegende Konzepte der ereignisbasierten Steuerung in 4diac-Systemen.
+[cite_start]Die Subapplikation `Uebung_005.SUB` kombiniert einen Standard-Eingang (`IX`) mit einer Ereignis-Weiche, um ein Flip-Flop zu takten[cite: 1].
+
+### Funktionsbausteine (FBs)
+
+  * **`DigitalInput_I1`**: Typ `logiBUS_IX`. Liefert ein Ereignis bei jeder Pegeländerung (Drücken und Loslassen).
+  * **`E_SWITCH`**: Dient als Gatter, um nur eine der beiden Flanken durchzulassen.
+  * **`E_T_FF`**: Das Toggle-Flip-Flop.
+
+-----
+
+## Funktionsweise
+
+Die Schaltung nutzt die Datenverbindung vom Eingang zum Gate der Weiche:
+
+```xml
+<EventConnections>
+    <Connection Source="DigitalInput_I1.IND" Destination="E_SWITCH.EI"/>
+    <Connection Source="E_SWITCH.EO1" Destination="E_T_FF.CLK"/>
+</EventConnections>
+<DataConnections>
+    <Connection Source="DigitalInput_I1.IN" Destination="E_SWITCH.G"/>
+</DataConnections>
+```
+
+[cite_start][cite: 1]
+
+Der funktionale Ablauf:
+1.  **Drücken**: `I1` wechselt von FALSE auf TRUE. Ein `IND`-Event wird gesendet. Da am Eingang `G` der Weiche nun TRUE anliegt, wird das Event an `EO1` ➡️ `CLK` weitergeleitet. Das Licht toggelt.
+2.  **Loslassen**: `I1` wechselt zurück auf FALSE. Wieder wird ein `IND`-Event gesendet. Da am Eingang `G` nun aber FALSE anliegt, wird das Event an `EO0` (hier nicht verbunden) geleitet. Das Flip-Flop reagiert nicht.
+
+Ergebnis: Die Lampe schaltet nur beim Drücken des Tasters um (steigende Flanke).
+
+-----
+
+## Bewertung
+
+Dieser Aufbau verdeutlicht die Interaktion von Daten (`G`) und Events (`EI`). In der Praxis ist für diese Aufgabe jedoch die Verwendung eines `logiBUS_IE` Bausteins (siehe Übung 004a) effizienter.

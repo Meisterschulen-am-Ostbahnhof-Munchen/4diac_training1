@@ -1,54 +1,38 @@
-# Uebung_010a3: Button_L1 (Latching) auf DigitalOutput_Q1
+# Uebung_010a3: Latching Button (Einrastend)
 
-* * * * * * * * * *
+[Uebung_010a3](https://docs.ms-muc-docs.de/projects/visual-programming-languages-docs/de/latest/training1/Ventilsteuerung/4diacIDE-workspace/test/FBs/Uebungen/Uebung_010a3.html)
 
-## Einleitung
-Diese Übung demonstriert die Verwendung eines Latching-Buttons (rastender Taster) zur Steuerung eines digitalen Ausgangs. Die Besonderheit dieser Implementierung ist, dass kein zusätzlicher T-Flipflop benötigt wird, da der Button selbst die Latching-Funktionalität bereitstellt.
+[![NotebookLM](media/NotebookLM_logo.png)](https://notebooklm.google.com/notebook/a6872e59-1dfc-4132-a118-aff1bc7bc944)
 
-## Verwendete Funktionsbausteine (FBs)
+Dieser Artikel beschreibt die logiBUS®-Übung `Uebung_010a3`.
 
-### Button_IX (Button_L1)
-- **Typ**: Button_IX
-- **Parameter**:
-  - QI = TRUE (Qualified Input aktiviert)
-  - u16ObjId = DefaultPool::Button_L1 (Objekt-ID für Button-Konfiguration)
-- **Ereignisausgang**: IND (Indication - Signalisiert Zustandsänderung)
-- **Datenaustgang**: IN (Datenausgang mit aktuellem Button-Zustand)
 
-### logiBUS_QX (DigitalOutput_Q1)
-- **Typ**: logiBUS_QX
-- **Parameter**:
-  - QI = TRUE (Qualified Input aktiviert)
-  - Output = logiBUS_DO::Output_Q1 (Zugeordneter Hardware-Ausgang)
-- **Ereigniseingang**: REQ (Request - Auslöser für Ausgangsaktualisierung)
-- **Dateneingang**: OUT (Datenwert für den Ausgang)
+## Podcast
+<iframe src="https://creators.spotify.com/pod/profile/logibus/embed/episodes/LogiBUS--IEC-61499-Daten--und-Ereignisflsse-einfach-erklrt--Vom-Schalter-zur-intelligenten-Steuerung-e36vldb/a-ac3vadb" height="102px" width="400px" frameborder="0" scrolling="no"></iframe>
 
-## Programmablauf und Verbindungen
+----
 
-**Ereignisverbindung:**
-- Button_L1.IND → DigitalOutput_Q1.REQ
 
-**Datenverbindung:**
-- Button_L1.IN → DigitalOutput_Q1.OUT
 
-**Funktionsweise:**
-1. Beim Betätigen des Latching-Buttons sendet Button_L1 ein IND-Ereignis
-2. Das IND-Ereignis löst über REQ die Aktualisierung des Digitalausgangs aus
-3. Der aktuelle Button-Zustand (IN) wird an den Digitalausgang (OUT) weitergeleitet
-4. Der Button behält seinen Zustand bei (Latching-Funktion) bis zur nächsten Betätigung
+![](Uebung_010a3.png)
 
-**Lernziele:**
-- Verständnis von Latching-Buttons (rastenden Tastern)
-- Direkte Verknüpfung von Eingängen und Ausgängen
-- Verwendung von qualifizierten Ein- und Ausgängen (QI-Parameter)
-- Hardware-Konfiguration über Objekt-IDs
 
-**Schwierigkeitsgrad:** Einfach
+## Ziel der Übung
 
-**Benötigte Vorkenntnisse:**
-- Grundverständnis von IEC 61499
-- Kenntnisse über digitale Ein- und Ausgänge
-- Basiswissen über Event- und Data-Connections
+Umgang mit zustandshaltenden Bedienelementen des Universal Terminals.
 
-## Zusammenfassung
-Diese Übung zeigt eine einfache aber effektive Implementierung eines Latching-Buttons zur Steuerung eines digitalen Ausgangs. Die Besonderheit liegt in der integrierten Latching-Funktionalität des Buttons, die den Einsatz zusätzlicher Logikbausteine überflüssig macht. Die direkte Verbindung zwischen Eingang und Ausgang demonstriert grundlegende Prinzipien der Steuerungstechnik in 4diac.
+-----
+
+## Beschreibung und Komponenten
+
+[cite_start]In `Uebung_010a3.SUB` wird ein `Button_L1` (Latching) verwendet[cite: 1].
+
+-----
+
+## Funktionsweise
+
+Ein "Latching Button" ist im ISOBUS-Objektpool so definiert, dass er seinen Zustand bei Betätigung speichert.
+*   Erster Klick: Button rastet visuell ein, sendet dauerhaft `TRUE`.
+*   Zweiter Klick: Button springt zurück, sendet dauerhaft `FALSE`.
+
+Daher wird, wie im Kommentar vermerkt, **kein Software-Flip-Flop** (T_FF) in 4diac benötigt. Die Speicherfunktion wird vollständig vom ISOBUS-Terminal übernommen.

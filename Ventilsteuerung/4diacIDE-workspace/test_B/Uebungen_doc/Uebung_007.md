@@ -1,55 +1,49 @@
-# Uebung_007: Blinker mit E_CYCLE und E_T_FF
+# Uebung_007: Einfacher Blinker (Zeitgeber)
 
-* * * * * * * * * *
+[Uebung_007](https://docs.ms-muc-docs.de/projects/visual-programming-languages-docs/de/latest/training1/Ventilsteuerung/4diacIDE-workspace/test/FBs/Uebungen/Uebung_007.html)
 
-## Einleitung
-Diese Übung demonstriert die Funktionsweise eines Blinkersystems unter Verwendung von zyklischen Ereignissen und einem Toggle-Flipflop. Das System erzeugt eine periodische Ausgabe, die zwischen zwei Zuständen wechselt.
+[![NotebookLM](media/NotebookLM_logo.png)](https://notebooklm.google.com/notebook/a6872e59-1dfc-4132-a118-aff1bc7bc944)
 
-## Verwendete Funktionsbausteine (FBs)
+Dieser Artikel beschreibt die logiBUS®-Übung `Uebung_007`. Hier wird gezeigt, wie man periodische Ereignisse erzeugt, um ein zyklisches Blinksignal zu realisieren.
 
-### E_CYCLE
-- **Typ**: E_CYCLE (Zyklusgeber)
-- **Parameter**: DT = T#1s (Zykluszeit von 1 Sekunde)
-- **Funktionsweise**: Generiert in regelmäßigen Abständen Ereignisse am Ausgang EO. Die Zykluszeit beträgt 1 Sekunde.
 
-### E_T_FF
-- **Typ**: E_T_FF (Toggle-Flipflop)
-- **Funktionsweise**: Wechselt bei jedem eingehenden Ereignis am CLK-Eingang den Zustand des Q-Ausgangs zwischen TRUE und FALSE.
+## Podcast
+<iframe src="https://creators.spotify.com/pod/profile/logibus/embed/episodes/LogiBUS--IEC-61499-Daten--und-Ereignisflsse-einfach-erklrt--Vom-Schalter-zur-intelligenten-Steuerung-e36vldb/a-ac3vadb" height="102px" width="400px" frameborder="0" scrolling="no"></iframe>
 
-### DigitalOutput_Q1
-- **Typ**: logiBUS_QX (Digitaler Ausgang)
-- **Parameter**: 
-  - QI = TRUE (Qualified Input aktiviert)
-  - Output = logiBUS_DO::Output_Q1 (Zugewiesener Hardware-Ausgang)
-- **Funktionsweise**: Setzt den physischen Ausgang Q1 entsprechend dem Wert am Daten-Eingang OUT, wenn ein REQ-Ereignis eintrifft.
+----
 
-## Programmablauf und Verbindungen
 
-**Ereignisverbindungen:**
-- E_CYCLE.EO → E_T_FF.CLK
-- E_T_FF.EO → DigitalOutput_Q1.REQ
 
-**Datenverbindungen:**
-- E_T_FF.Q → DigitalOutput_Q1.OUT
+![](Uebung_007.png)
 
-**Programmablauf:**
-1. Der E_CYCLE-Baustein generiert alle 1 Sekunde ein Ereignis
-2. Dieses Ereignis triggert den CLK-Eingang des E_T_FF
-3. Der E_T_FF wechselt seinen Ausgangszustand Q bei jedem Ereignis
-4. Bei jedem Zustandswechsel wird ein REQ-Ereignis an DigitalOutput_Q1 gesendet
-5. DigitalOutput_Q1 setzt den physischen Ausgang Q1 entsprechend dem Q-Wert
 
-**Lernziele:**
-- Verständnis von zyklischen Ereignisgebern
-- Funktionsweise von Toggle-Flipflops
-- Kombination von Ereignis- und Datenverbindungen
-- Ansteuerung von physischen Ausgängen
+## Ziel der Übung
 
-**Schwierigkeitsgrad**: Einfach
+Verwendung des `E_CYCLE` Bausteins zur Erzeugung einer Zeitbasis. Es wird demonstriert, wie ein periodischer Trigger ein Toggle-Flip-Flop ansteuert, um ein gleichmäßiges Rechtecksignal (An/Aus) zu generieren.
 
-**Benötigte Vorkenntnisse**: Grundlagen der 4diac-IDE, Basiswissen über Funktionsbausteine
+-----
 
-**Starten der Übung**: Nach dem Laden der Anwendung wird der Blinker automatisch gestartet und die Ausgabe Q1 beginnt mit einer Frequenz von 0,5 Hz zu blinken.
+## Beschreibung und Komponenten
 
-## Zusammenfassung
-Diese Übung zeigt ein einfaches Blinkersystem, das mit drei grundlegenden Funktionsbausteinen realisiert wird. Der E_CYCLE-Baustein erzeugt die Zeitbasis, der E_T_FF generiert das Taktsignal und der logiBUS_QX-Baustein steuert den physischen Ausgang an. Die Übung vermittelt wichtige Konzepte der Ereignisverarbeitung und Zustandssteuerung in IEC 61499-Systemen.
+[cite_start]Die Subapplikation `Uebung_007.SUB` kombiniert einen Taktgeber mit einem Speicherglied[cite: 1].
+
+### Funktionsbausteine (FBs)
+
+  * **`E_CYCLE`**: Ein Ereignis-Generator. [cite_start]Er sendet periodisch Ereignisse am Ausgang `EO` aus. Der Parameter `DT` bestimmt das Zeitintervall (hier `T#1s` = 1 Sekunde)[cite: 1].
+  * **`E_T_FF`**: Das Toggle-Flip-Flop, welches bei jedem Takt seinen Zustand invertiert.
+  * **`DigitalOutput_Q1`**: Die physische Lampe.
+
+-----
+
+## Funktionsweise
+
+1.  Der `E_CYCLE` Baustein feuert jede Sekunde ein Ereignis ab.
+2.  Dieses Ereignis erreicht den `CLK`-Eingang des `E_T_FF`.
+3.  Das Flip-Flop wechselt bei jedem Impuls den Zustand (Aus ➡️ An ➡️ Aus ➡️ ...).
+4.  Da für einen vollen Zyklus (An und Aus) zwei Taktimpulse benötigt werden, blinkt die Lampe mit einer Frequenz von 0,5 Hz (1 Sekunde an, 1 Sekunde aus).
+
+-----
+
+## Anwendungsbeispiel
+
+**Betriebsanzeige**: Eine grüne LED am Schaltschrank blinkt langsam, um zu signalisieren, dass die Steuerung aktiv ist und das Programm ordnungsgemäß ausgeführt wird.

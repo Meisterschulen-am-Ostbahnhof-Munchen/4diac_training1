@@ -1,48 +1,51 @@
-# Uebung_006a2: 2x SR und T-Flip-Flop mit IE
+# Uebung_006a2: Globaler Reset für mehrere Kanäle
 
-* * * * * * * * * *
+[Uebung_006a2](https://docs.ms-muc-docs.de/projects/visual-programming-languages-docs/de/latest/training1/Ventilsteuerung/4diacIDE-workspace/test/FBs/Uebungen/Uebung_006a2.html)
 
-## Einleitung
-Diese Übung demonstriert den Einsatz von T-Flip-Flops mit Set/Reset-Funktionalität in Kombination mit digitalen Ein- und Ausgängen. Das System verwendet zwei unabhängige T-Flip-Flop-Schaltungen, die über Eingabebuttons gesteuert werden können.
+[![NotebookLM](media/NotebookLM_logo.png)](https://notebooklm.google.com/notebook/a6872e59-1dfc-4132-a118-aff1bc7bc944)
 
-## Verwendete Funktionsbausteine (FBs)
+Dieser Artikel beschreibt die logiBUS®-Übung `Uebung_006a2`.
 
-### Hauptbausteine:
-- **DigitalInput_CLK_I1**, **DigitalInput_CLK_I2**, **DigitalInput_CLK_I3**: logiBUS_IE
-- **E_T_FF_SR_Q1**, **E_T_FF_SR_Q2**: E_T_FF_SR
-- **DigitalOutput_Q1**, **DigitalOutput_Q2**: logiBUS_QX
 
-### Sub-Bausteine: E_T_FF_SR
-- **Typ**: T-Flip-Flop mit Set/Reset-Funktionalität
-- **Verwendete interne FBs**: Nicht in der bereitgestellten Datei spezifiziert
-- **Funktionsweise**: Der Baustein arbeitet als Toggle-Flip-Flop, der bei jedem Taktimpuls seinen Zustand wechselt. Zusätzlich verfügt er über eine Reset-Funktion.
+## Podcast
+<iframe src="https://creators.spotify.com/pod/profile/logibus/embed/episodes/LogiBUS--IEC-61499-Daten--und-Ereignisflsse-einfach-erklrt--Vom-Schalter-zur-intelligenten-Steuerung-e36vldb/a-ac3vadb" height="102px" width="400px" frameborder="0" scrolling="no"></iframe>
 
-## Programmablauf und Verbindungen
+----
 
-**Ereignisverbindungen:**
-- DigitalInput_CLK_I1.IND → E_T_FF_SR_Q1.CLK (Takt für Flip-Flop 1)
-- DigitalInput_CLK_I2.IND → E_T_FF_SR_Q2.CLK (Takt für Flip-Flop 2)
-- DigitalInput_CLK_I3.IND → E_T_FF_SR_Q1.R und E_T_FF_SR_Q2.R (gemeinsamer Reset)
-- E_T_FF_SR_Q1.EO → DigitalOutput_Q1.REQ
-- E_T_FF_SR_Q2.EO → DigitalOutput_Q2.REQ
 
-**Datenverbindungen:**
-- E_T_FF_SR_Q1.Q → DigitalOutput_Q1.OUT
-- E_T_FF_SR_Q2.Q → DigitalOutput_Q2.OUT
 
-**Parameterkonfiguration:**
-- Alle DigitalInput-Bausteine sind mit BUTTON_SINGLE_CLICK konfiguriert
-- Die Ausgänge sind auf logiBUS_DO::Output_Q1 und Output_Q2 gemappt
-- QI-Parameter sind auf TRUE gesetzt für korrekte Initialisierung
+![](Uebung_006a2.png)
 
-**Lernziele:**
-- Verständnis von T-Flip-Flop-Verhalten
-- Umgang mit digitalen Ein- und Ausgängen
-- Implementierung von Reset-Funktionalität
-- Parallelbetrieb mehrerer Flip-Flop-Schaltungen
 
-**Schwierigkeitsgrad**: Mittel
-**Benötigte Vorkenntnisse**: Grundlagen digitaler Schaltungen, IEC 61499, 4diac-IDE
+## Ziel der Übung
 
-## Zusammenfassung
-Die Übung 006a2 zeigt eine praktische Anwendung von T-Flip-Flops in einer industriellen Steuerungsumgebung. Durch die Verwendung von drei unabhängigen Eingabetastern können zwei Flip-Flop-Schaltungen separat getaktet und gemeinsam zurückgesetzt werden. Die Ausgangszustände werden auf digitale Ausgänge geschaltet, was typische Szenarien in der Automatisierungstechnik abbildet.
+Realisierung einer "Zentral-Aus" Funktion für mehrere unabhängige Speicherglieder.
+
+-----
+
+## Beschreibung und Komponenten
+
+[cite_start]Die Subapplikation `Uebung_006a2.SUB` steuert zwei separate Lampen (`Q1`, `Q2`) über zwei Taster (`I1`, `I2`), die durch einen dritten Taster (`I3`) gemeinsam zurückgesetzt werden können[cite: 1].
+
+### Funktionsbausteine (FBs)
+
+  * **2x `E_T_FF_SR`**: Einer für jeden Lichtkanal.
+  * **`I1` & `I2`**: Tasten zum individuellen Umschalten der Kanäle.
+  * **`I3`**: Gemeinsamer Reset-Taster.
+
+-----
+
+## Funktionsweise
+
+Die Logik nutzt das Fan-Out Prinzip für Ereignisse:
+*   `I1` ist mit `CLK` von Flip-Flop 1 verbunden.
+*   `I2` ist mit `CLK` von Flip-Flop 2 verbunden.
+*   `I3` (Reset) ist mit den `R`-Eingängen **beider** Flip-Flops verbunden.
+
+Ein Druck auf `I3` schaltet sofort alle Lampen im System aus, unabhängig davon, in welchem Zustand sie sich vorher befanden.
+
+-----
+
+## Anwendungsbeispiel
+
+**Werkstatt-Beleuchtung**: Jede Maschine hat ihr eigenes Arbeitslicht. Am Ende des Arbeitstages kann der Werkstattleiter über einen zentralen Schalter an der Tür alle Lichter gleichzeitig löschen.

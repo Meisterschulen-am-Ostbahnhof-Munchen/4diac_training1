@@ -1,66 +1,67 @@
-# Uebung_007a3: Blinker mit E_CYCLE, E_SWITCH und E_SR
+# Uebung_007a3: Sicherer Blinker (Definierter AUS-Zustand)
 
-* * * * * * * * * *
+[Uebung_007a3](https://docs.ms-muc-docs.de/projects/visual-programming-languages-docs/de/latest/training1/Ventilsteuerung/4diacIDE-workspace/test/FBs/Uebungen/Uebung_007a3.html)
 
-## Einleitung
-Diese Übung implementiert einen Blinker mit der Besonderheit, dass er immer im AUS-Zustand stehen bleibt. Die Schaltung verwendet zyklische Ereignisse und eine Set-Reset-Logik zur Steuerung der Blinkfunktion.
+[![NotebookLM](media/NotebookLM_logo.png)](https://notebooklm.google.com/notebook/a6872e59-1dfc-4132-a118-aff1bc7bc944)
 
-## Verwendete Funktionsbausteine (FBs)
+Dieser Artikel beschreibt die logiBUS®-Übung `Uebung_007a3`. Hier wird die "saubere" Lösung für einen schaltbaren Blinker präsentiert, der beim Ausschalten garantiert in den Zustand "AUS" geht.
 
-### Hauptbausteine:
-- **E_CYCLE**: Zyklischer Ereignisgenerator
-- **E_SWITCH**: Ereignis-Weichenschaltung
-- **E_SR**: Set-Reset-Flipflop
-- **logiBUS_IE**: Eingangsbaustein für Taster
-- **logiBUS_QX**: Ausgangsbaustein für Aktoren
 
-### Sub-Bausteine: logiBUS_IE (START/STOP)
-- **Typ**: Eingangsbaustein für logiBUS
-- **Verwendete interne FBs**: Keine internen FBs
-- **Parameter**: 
-  - QI = TRUE (aktiviert)
-  - Input = logiBUS_DI::Input_I1 (START) / Input_I2 (STOP)
-  - InputEvent = logiBUS_DI_Events::BUTTON_SINGLE_CLICK
-- **Ereignisausgang**: IND (Ereignis bei Tastendruck)
-- **Funktionsweise**: Erfasst Einzeltastendrücke an den definierten Eingängen
+## Podcast
+<iframe src="https://creators.spotify.com/pod/profile/logibus/embed/episodes/LogiBUS--IEC-61499-Daten--und-Ereignisflsse-einfach-erklrt--Vom-Schalter-zur-intelligenten-Steuerung-e36vldb/a-ac3vadb" height="102px" width="400px" frameborder="0" scrolling="no"></iframe>
 
-### Sub-Bausteine: logiBUS_QX (DigitalOutput_Q1)
-- **Typ**: Ausgangsbaustein für logiBUS
-- **Verwendete interne FBs**: Keine internen FBs
-- **Parameter**:
-  - QI = TRUE (aktiviert)
-  - Output = logiBUS_DO::Output_Q1
-- **Ereigniseingang**: REQ (Anforderung zur Ausgabesteuerung)
-- **Dateneingang**: OUT (Ausgabewert)
-- **Funktionsweise**: Steuert den physischen Ausgang Q1 basierend auf dem empfangenen Wert
+----
 
-## Programmablauf und Verbindungen
 
-**Ereignisverbindungen:**
-- START.IND → E_CYCLE.START (Startet Zyklus)
-- STOP.IND → E_CYCLE.STOP (Stoppt Zyklus)
-- STOP.IND → E_SR.R (Direktes Reset)
-- E_CYCLE.EO → E_SWITCH.EI (Zyklische Ereigniseingabe)
-- E_SWITCH.EO0 → E_SR.S (Set-Operation)
-- E_SWITCH.EO1 → E_SR.R (Reset-Operation)
-- E_SR.EO → DigitalOutput_Q1.REQ (Ausgabesteuerung)
 
-**Datenverbindungen:**
-- E_SR.Q → E_SWITCH.G (Steuerung der Weichenschaltung)
-- E_SR.Q → DigitalOutput_Q1.OUT (Ausgabewert)
+![](Uebung_007a3.png)
 
-**Lernziele:**
-- Verständnis von zyklischen Ereignissen mit E_CYCLE
-- Anwendung von Set-Reset-Logik mit E_SR
-- Steuerung von Ereigniswegen mit E_SWITCH
-- Integration von Ein-/Ausgabebausteinen
 
-**Schwierigkeitsgrad**: Mittel
-**Benötigte Vorkenntnisse**: Grundlagen der IEC 61499, Ereignissteuerung
+## Ziel der Übung
 
-**Start der Übung**: 
-1. START-Taster (I1) betätigen zum Beginn des Blinkvorgangs
-2. STOP-Taster (I2) betätigen zum Anhalten (Ausgang bleibt aus)
+Realisierung eines Blinkers mit definiertem Stopp-Verhalten. Es wird demonstriert, wie Ereignispfade verknüpft werden müssen, um sowohl die Takterzeugung zu stoppen als auch den Zustandsspeicher zu löschen.
 
-## Zusammenfassung
-Diese Übung demonstriert eine robuste Blinkerschaltung, die durch die kombinierte Verwendung von E_CYCLE, E_SWITCH und E_SR sicherstellt, dass der Ausgang nach dem Stoppen immer im AUS-Zustand verbleibt. Die direkte Reset-Verbindung vom STOP-Taster zum E_SR gewährleistet eine sofortige Deaktivierung unabhängig vom aktuellen Zykluszustand.
+-----
+
+## Beschreibung und Komponenten
+
+[cite_start]In `Uebung_007a3.SUB` wird die Blinklogik manuell aus Weiche und Speicher aufgebaut, um die volle Kontrolle über den Reset-Vorgang zu haben[cite: 1].
+
+### Funktionsbausteine (FBs)
+
+  * **`E_CYCLE`**: Der Taktgeber.
+  * **`E_SWITCH`**: Die Ereignis-Weiche zur Realisierung der Toggle-Funktion.
+  * **`E_SR`**: Der Speicherbaustein (Reset-dominant verschaltet).
+  * **`START` & `STOP`**: Die Bedien-Taster.
+
+-----
+
+## Funktionsweise
+
+Die Sicherheit wird durch eine doppelte Belegung des Stopp-Signals erreicht:
+
+```xml
+<EventConnections>
+    <Connection Source="START.IND" Destination="E_CYCLE.START"/>
+    <Connection Source="STOP.IND" Destination="E_CYCLE.STOP"/>
+    <Connection Source="E_CYCLE.EO" Destination="E_SWITCH.EI"/>
+    <Connection Source="E_SWITCH.EO0" Destination="E_SR.S"/>
+    <Connection Source="E_SWITCH.EO1" Destination="E_SR.R"/>
+    <!-- Die entscheidende Verbindung für die Sicherheit: -->
+    <Connection Source="STOP.IND" Destination="E_SR.R"/>
+</EventConnections>
+```
+
+[cite_start][cite: 1]
+
+1.  **Blinkbetrieb**: Der `E_CYCLE` triggert die `E_SWITCH/E_SR` Kombination, was zum periodischen Umschalten führt.
+2.  **Ausschalten**: Wenn der Nutzer `STOP` drückt, passieren zwei Dinge gleichzeitig:
+    *   Der `E_CYCLE` wird angehalten (keine neuen Takte mehr).
+    *   Der Speicher `E_SR` erhält einen **direkten Reset-Befehl**. Damit wird der Ausgang sofort auf `FALSE` gezwungen, egal ob das Flip-Flop gerade im "An"- oder "Aus"-Zustand war.
+
+-----
+
+## Anwendungsbeispiel
+
+**Professionelle Warnsignalisierung**:
+Ein akustischer Alarm oder eine Blitzleuchte an einer Maschine muss bei Quittierung sofort und zuverlässig verstummen. Ein "Hängenbleiben" im eingeschalteten Zustand wäre irreführend und störend. Diese Schaltung garantiert, dass der Alarm nach dem Ausschalten immer inaktiv ist.

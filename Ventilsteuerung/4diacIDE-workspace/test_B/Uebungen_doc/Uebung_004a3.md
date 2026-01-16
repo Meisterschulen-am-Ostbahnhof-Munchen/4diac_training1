@@ -1,66 +1,59 @@
-# Uebung_004a3: wie Uebung_004a2 aber ohne E_MERGE
+# Uebung_004a3: Impliziter Event-Merge (Fan-In)
 
-* * * * * * * * * *
+[Uebung_004a3](https://docs.ms-muc-docs.de/projects/visual-programming-languages-docs/de/latest/training1/Ventilsteuerung/4diacIDE-workspace/test/FBs/Uebungen/Uebung_004a3.html)
 
-## Einleitung
-Diese Übung demonstriert die Funktionsweise eines T-Flipflops (Toggle-Flipflop) in der 4diac-IDE. Im Vergleich zur vorherigen Übung 004a2 wurde der E_MERGE-Baustein entfernt, um eine direktere Verbindung zwischen den Eingängen und dem Flipflop zu zeigen.
+[![NotebookLM](media/NotebookLM_logo.png)](https://notebooklm.google.com/notebook/a6872e59-1dfc-4132-a118-aff1bc7bc944)
 
-## Verwendete Funktionsbausteine (FBs)
+Dieser Artikel beschreibt die logiBUS®-Übung `Uebung_004a3`. Diese Übung zeigt eine Vereinfachung gegenüber `Uebung_004a2`: In IEC 61499 können mehrere Ereignisquellen oft direkt auf denselben Ereigniseingang verbunden werden.
 
-### DigitalInput_CLK_I1
-- **Typ**: logiBUS_IE
-- **Parameter**:
-  - QI = TRUE
-  - Input = logiBUS_DI::Input_I1
-  - InputEvent = logiBUS_DI_Events::BUTTON_SINGLE_CLICK
-- **Ereignisausgang**: IND
 
-### DigitalInput_CLK_I2
-- **Typ**: logiBUS_IE
-- **Parameter**:
-  - QI = TRUE
-  - Input = logiBUS_DI::Input_I2
-  - InputEvent = logiBUS_DI_Events::BUTTON_SINGLE_CLICK
-- **Ereignisausgang**: IND
+## Podcast
+<iframe src="https://creators.spotify.com/pod/profile/logibus/embed/episodes/LogiBUS--IEC-61499-Daten--und-Ereignisflsse-einfach-erklrt--Vom-Schalter-zur-intelligenten-Steuerung-e36vldb/a-ac3vadb" height="102px" width="400px" frameborder="0" scrolling="no"></iframe>
 
-### E_T_FF
-- **Typ**: E_T_FF (T-Flipflop)
-- **Ereigniseingang**: CLK
-- **Ereignisausgang**: EO
-- **Datenausgang**: Q
+----
 
-### DigitalOutput_Q1
-- **Typ**: logiBUS_QX
-- **Parameter**:
-  - QI = TRUE
-  - Output = logiBUS_DO::Output_Q1
-- **Ereigniseingang**: REQ
-- **Dateneingang**: OUT
 
-## Programmablauf und Verbindungen
 
-**Ereignisverbindungen:**
-- E_T_FF.EO → DigitalOutput_Q1.REQ
-- DigitalInput_CLK_I1.IND → E_T_FF.CLK
-- DigitalInput_CLK_I2.IND → E_T_FF.CLK
+![](Uebung_004a3.png)
 
-**Datenverbindungen:**
-- E_T_FF.Q → DigitalOutput_Q1.OUT
 
-**Lernziele:**
-- Verständnis der Funktionsweise eines T-Flipflops
-- Umgang mit digitalen Ein- und Ausgängen in logiBUS
-- Implementierung von Toggle-Funktionalität ohne E_MERGE-Baustein
+## Ziel der Übung
 
-**Schwierigkeitsgrad**: Einsteiger
+Das Ziel ist die Reduktion der visuellen Komplexität im Netzwerk-Diagramm. Es wird demonstriert, dass der explizite `E_MERGE` Baustein weggelassen werden kann, da die 4diac-Laufzeitumgebung eingehende Events an einem Port automatisch nacheinander verarbeitet ("Fan-In").
 
-**Benötigte Vorkenntnisse:**
-- Grundkenntnisse der 4diac-IDE
-- Verständnis von Flipflop-Schaltungen
-- Basiswissen über Ereignis- und Datenverbindungen
+-----
 
-**Starten der Übung:**
-Die Übung wird durch Betätigen der Taster I1 oder I2 gestartet. Jeder Tastendruck toggelt den Ausgangszustand des Flipflops.
+## Beschreibung und Komponenten
 
-## Zusammenfassung
-Diese Übung zeigt eine vereinfachte Implementierung eines T-Flipflops, bei der zwei digitale Eingänge direkt mit dem Clock-Eingang des Flipflops verbunden sind. Der Ausgang Q1 schaltet bei jedem Tastendruck an I1 oder I2 zwischen den Zuständen ein und aus. Die Übung demonstriert effektiv die grundlegende Toggle-Funktionalität ohne zusätzliche Verschmelzungsbausteine.
+[cite_start]Die Subapplikation `Uebung_004a3.SUB` verbindet zwei Event-Quellen direkt mit dem Takteingang des Flip-Flops[cite: 1].
+
+### Funktionsbausteine (FBs)
+
+  * **`DigitalInput_CLK_I1` & `I2`**: Die ereignisbasierten Eingänge.
+  * **`E_T_FF`**: Das Toggle-Flip-Flop.
+  * **`DigitalOutput_Q1`**: Der Ausgang.
+
+Der Baustein `E_MERGE` aus der vorherigen Übung fehlt hier bewusst.
+
+-----
+
+## Funktionsweise
+
+```xml
+<EventConnections>
+    <Connection Source="DigitalInput_CLK_I1.IND" Destination="E_T_FF.CLK"/>
+    <Connection Source="DigitalInput_CLK_I2.IND" Destination="E_T_FF.CLK"/>
+</EventConnections>
+```
+
+[cite_start][cite: 1]
+
+Die Funktionsweise ist identisch zur Übung mit `E_MERGE`: Jedes eintreffende Event an `E_T_FF.CLK` – egal ob von `I1` oder `I2` kommend – triggert die Ausführung des Funktionsbausteins. 4diac unterstützt diese Mehrfachverbindung für Events nativ.
+
+> **Wichtiger Hinweis:** Bei **Datenverbindungen** ist dies **nicht erlaubt**! Zwei Datenausgänge dürfen niemals direkt auf denselben Dateneingang schreiben, da dies zu Konflikten führen würde. Bei Events hingegen ist dies eine effiziente Methode für "ODER"-Verknüpfungen von Auslösern.
+
+-----
+
+## Anwendungsbeispiel
+
+Gleiches Beispiel wie zuvor (Wechselschaltung), jedoch mit schlankerem Code (weniger Bausteine, höhere Übersichtlichkeit).

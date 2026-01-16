@@ -1,52 +1,67 @@
-# Uebung_010: SoftKey_F1 auf DigitalOutput_Q1
+# Uebung_010: ISOBUS Softkey (Direkt)
 
-* * * * * * * * * *
+[Uebung_010](https://docs.ms-muc-docs.de/projects/visual-programming-languages-docs/de/latest/training1/Ventilsteuerung/4diacIDE-workspace/test/FBs/Uebungen/Uebung_010.html)
 
-## Einleitung
-Diese Übung demonstriert die grundlegende Verknüpfung zwischen einer Softkey-Eingabe und einem digitalen Ausgang. Die Übung zeigt, wie ein Tastendruck auf eine virtuelle Taste (SoftKey_F1) direkt einen digitalen Ausgang (DigitalOutput_Q1) steuert.
+[![NotebookLM](media/NotebookLM_logo.png)](https://notebooklm.google.com/notebook/a6872e59-1dfc-4132-a118-aff1bc7bc944)
 
-## Verwendete Funktionsbausteine (FBs)
+Dieser Artikel beschreibt die logiBUS®-Übung `Uebung_010`. Hier wird die Anbindung virtueller Bedienelemente eines ISOBUS-Terminals (Universal Terminal, UT) an physische Ausgänge demonstriert.
 
-### SoftKey_F1
-- **Typ**: Softkey_IX
-- **Parameter**:
-  - QI = TRUE (Qualified Input - Aktivierung)
-  - u16ObjId = DefaultPool::SoftKey_F1 (Objekt-ID für Softkey)
-- **Ereignisausgang**: IND (Indication - Signalisiert Tastendruck)
-- **Dateneingang**: IN (Eingangsdaten)
 
-### DigitalOutput_Q1
-- **Typ**: logiBUS_QX
-- **Parameter**:
-  - QI = TRUE (Qualified Input - Aktivierung)
-  - Output = logiBUS_DO::Output_Q1 (Zugewiesener physikalischer Ausgang)
-- **Ereigniseingang**: REQ (Request - Anforderung zur Ausgabe)
-- **Datenausgang**: OUT (Ausgangsdaten)
+## Podcast
+<iframe src="https://creators.spotify.com/pod/profile/logibus/embed/episodes/LogiBUS--IEC-61499-Daten--und-Ereignisflsse-einfach-erklrt--Vom-Schalter-zur-intelligenten-Steuerung-e36vldb/a-ac3vadb" height="102px" width="400px" frameborder="0" scrolling="no"></iframe>
 
-## Programmablauf und Verbindungen
+----
 
-**Ereignisverbindung:**
-- SoftKey_F1.IND → DigitalOutput_Q1.REQ
 
-**Datenverbindung:**
-- SoftKey_F1.IN → DigitalOutput_Q1.OUT
 
-**Ablauf:**
-1. Beim Drücken der Softkey-F1-Taste wird das IND-Ereignis ausgelöst
-2. Das IND-Ereignis triggert über die Ereignisverbindung den REQ-Eingang des Digitalausgangs
-3. Gleichzeitig wird der Datenwert von SoftKey_F1.IN an DigitalOutput_Q1.OUT übertragen
-4. Der digitale Ausgang Q1 schaltet entsprechend dem empfangenen Signal
+![](Uebung_010.png)
 
-**Lernziele:**
-- Grundlegende Event- und Datenverbindungen zwischen FBs
-- Steuerung digitaler Ausgänge durch Softkey-Eingaben
-- Verständnis der Parameterkonfiguration für Ein- und Ausgänge
 
-**Schwierigkeitsgrad**: Einfach (Anfängerübung)
+## Ziel der Übung
 
-**Benötigte Vorkenntnisse:**
-- Grundlagen der 4diac-IDE
-- Verständnis von Funktionsbausteinen und deren Verbindungen
+Verwendung eines `Softkey`-Bausteins zur direkten Steuerung eines digitalen Ausgangs. Es wird gezeigt, wie Ereignis- und Datenverbindungen genutzt werden, um eine Interaktion am Touchscreen in eine physische Aktion umzusetzen.
 
-## Zusammenfassung
-Diese Übung vermittelt die grundlegenden Prinzipien der Signalverarbeitung in 4diac. Sie zeigt anschaulich, wie eine Benutzereingabe (Softkey) direkt mit einer Aktorik (digitaler Ausgang) verbunden werden kann. Die einfache Struktur mit nur zwei Funktionsbausteinen und klaren Verbindungen macht diese Übung ideal für den Einstieg in die Automatisierungsprogrammierung mit IEC 61499.
+-----
+
+## Beschreibung und Komponenten
+
+[cite_start]Die Subapplikation `Uebung_010.SUB` verbindet eine Softkey-Instanz mit einem Standard-Ausgangsbaustein[cite: 1].
+
+### Funktionsbausteine (FBs)
+
+  * **`SoftKey_F1`**: Typ `isobus::UT::io::Softkey::Softkey_IX`. Dieser Baustein repräsentiert eine der Tasten am Bildschirmrand oder auf dem Touch-Display des ISOBUS-Terminals.
+  * **`DigitalOutput_Q1`**: Der physische Ausgang (z.B. ein Relais oder eine Lampe).
+
+### Parameter
+
+*   **`u16ObjId`**: Diese Kennung verweist auf das entsprechende Objekt im ISOBUS-Pool (hier `SoftKey_F1`).
+
+-----
+
+## Funktionsweise
+
+Die Kommunikation erfolgt über die standardmäßige Trennung von Trigger und Wert:
+
+```xml
+<EventConnections>
+    <Connection Source="SoftKey_F1.IND" Destination="DigitalOutput_Q1.REQ"/>
+</EventConnections>
+<DataConnections>
+    <Connection Source="SoftKey_F1.IN" Destination="DigitalOutput_Q1.OUT"/>
+</DataConnections>
+```
+
+[cite_start][cite: 1]
+
+Wenn der Bediener den Softkey am Terminal drückt:
+1.  Der Baustein `SoftKey_F1` erkennt die Betätigung über das CAN-Netzwerk.
+2.  Er setzt den Datenausgang `IN` auf `TRUE` und feuert ein `IND`-Event.
+3.  `DigitalOutput_Q1` empfängt den Trigger und schaltet den Hardware-Ausgang ein.
+4.  Beim Loslassen wechselt der Zustand zurück auf `FALSE`, ein erneutes Event wird gesendet und der Ausgang schaltet ab.
+
+-----
+
+## Anwendungsbeispiel
+
+**Hydraulikventil manuell steuern**:
+Der Fahrer wählt auf seinem Terminal eine Service-Seite aus. Dort befindet sich ein Button "Ventil spülen". Solange er diesen Button gedrückt hält, wird das entsprechende Magnetventil (`Q1`) angesteuert.

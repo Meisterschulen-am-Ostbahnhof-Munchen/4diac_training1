@@ -1,60 +1,50 @@
-# Uebung_006d: SR-Flip-Flop mit 2x IE und Doppelklick.
+# Uebung_006d: Schutz vor versehentlichem Einschalten
 
-* * * * * * * * * *
+[Uebung_006d](https://docs.ms-muc-docs.de/projects/visual-programming-languages-docs/de/latest/training1/Ventilsteuerung/4diacIDE-workspace/test/FBs/Uebungen/Uebung_006d.html)
 
-## Einleitung
-Diese Übung demonstriert die Funktionsweise eines SR-Flip-Flops mit zwei Eingabeereignissen. Besonderheit ist die Verwendung unterschiedlicher Tastendruck-Erkennungen (Einzelklick und Doppelklick) auf demselben physischen Eingang.
+[![NotebookLM](media/NotebookLM_logo.png)](https://notebooklm.google.com/notebook/a6872e59-1dfc-4132-a118-aff1bc7bc944)
 
-## Verwendete Funktionsbausteine (FBs)
+Dieser Artikel beschreibt die logiBUS®-Übung `Uebung_006d`. Hier wird eine asymmetrische Bedienlogik zum Schutz der Anlage implementiert.
 
-### DigitalInput_CLK_I1
-- **Typ**: logiBUS_IE
-- **Parameter**:
-  - QI = TRUE
-  - Input = logiBUS_DI::Input_I1
-  - InputEvent = logiBUS_DI_Events::BUTTON_DOUBLE_CLICK
-- **Funktionsweise**: Erkennt Doppelklick-Ereignisse auf Eingang I1
 
-### DigitalInput_CLK_I2
-- **Typ**: logiBUS_IE
-- **Parameter**:
-  - QI = TRUE
-  - Input = logiBUS_DI::Input_I1
-  - InputEvent = logiBUS_DI_Events::BUTTON_SINGLE_CLICK
-- **Funktionsweise**: Erkennt Einzelklick-Ereignisse auf Eingang I1
+## Podcast
+<iframe src="https://creators.spotify.com/pod/profile/logibus/embed/episodes/LogiBUS--IEC-61499-Daten--und-Ereignisflsse-einfach-erklrt--Vom-Schalter-zur-intelligenten-Steuerung-e36vldb/a-ac3vadb" height="102px" width="400px" frameborder="0" scrolling="no"></iframe>
 
-### E_SR
-- **Typ**: E_SR (SR-Flip-Flop)
-- **Funktionsweise**: Setzt den Ausgang Q bei S-Eingang, resetet bei R-Eingang
+----
 
-### DigitalOutput_Q1
-- **Typ**: logiBUS_QX
-- **Parameter**:
-  - QI = TRUE
-  - Output = logiBUS_DO::Output_Q1
-- **Funktionsweise**: Steuert den physischen Ausgang Q1 an
 
-## Programmablauf und Verbindungen
 
-**Ereignisverbindungen:**
-- DigitalInput_CLK_I1.IND → E_SR.S (Doppelklick setzt Flip-Flop)
-- DigitalInput_CLK_I2.IND → E_SR.R (Einzelklick resetet Flip-Flop)
-- E_SR.EO → DigitalOutput_Q1.REQ (Auslöser für Ausgangsaktualisierung)
+![](Uebung_006d.png)
 
-**Datenverbindungen:**
-- E_SR.Q → DigitalOutput_Q1.OUT (Flip-Flop Zustand zum Ausgang)
 
-**Lernziele:**
-- Verständnis von SR-Flip-Flops
-- Umgang mit verschiedenen Eingabeereignissen
-- Verwendung desselben physischen Eingangs für unterschiedliche Funktionen
-- Ereignisgesteuerte Programmierung
+## Ziel der Übung
 
-**Schwierigkeitsgrad**: Einsteiger
+Kombination von komplexen Eingangsereignissen (Doppelklick) mit Speicherbausteinen.
 
-**Benötigte Vorkenntnisse**: Grundlagen der 4diac-IDE, Verständnis von Ereignisbausteinen
+-----
 
-**Starten der Übung**: Die Übung wird in der 4diac-IDE geladen und auf ein kompatibles Steuerungssystem deployt. Der physische Eingang I1 kann sowohl mit Einzel- als auch Doppelklicks bedient werden.
+## Beschreibung und Komponenten
 
-## Zusammenfassung
-Diese Übung zeigt eine praktische Anwendung eines SR-Flip-Flops, bei der durch unterschiedliche Tastendruck-Arten (Einzelklick vs. Doppelklick) auf denselben physischen Eingang verschiedene Funktionen ausgelöst werden. Die Flip-Flop-Funktionalität ermöglicht ein speicherndes Verhalten, bei dem der Ausgangszustand durch die zuletzt empfangene Aktion bestimmt wird.
+[cite_start]Die Subapplikation `Uebung_006d.SUB` realisiert eine Ein/Aus-Logik mit unterschiedlichen Hürden[cite: 1].
+
+### Funktionsbausteine (FBs)
+
+  * **`I1` (Set)**: Konfiguriert auf `BUTTON_DOUBLE_CLICK`.
+  * **`I2` (Reset)**: Konfiguriert auf `BUTTON_SINGLE_CLICK`.
+  * **`E_SR`**: Der Speicherbaustein.
+
+-----
+
+## Funktionsweise
+
+*   **Einschalten**: Erfordert eine bewusste Handlung des Nutzers (Doppelklick auf `I1`). Ein einfaches Berühren reicht nicht aus.
+*   **Ausschalten**: Muss im Bedarfsfall schnell und einfach gehen (einfacher Klick auf `I2`).
+
+Das Flip-Flop speichert den Zustand zwischen diesen Ereignissen.
+
+-----
+
+## Anwendungsbeispiel
+
+**Sicherheitsrelevante Hilfsantriebe**:
+Eine hydraulische Pumpe oder ein Schneidwerk soll nicht durch ein versehentliches Anstoßen des Schalters in der Kabine starten. Der Nutzer muss durch den Doppelklick seine Absicht bestätigen. Das sofortige Ausschalten bei Gefahr muss jedoch durch einen einfachen Schlag auf den Aus-Taster gewährleistet sein.

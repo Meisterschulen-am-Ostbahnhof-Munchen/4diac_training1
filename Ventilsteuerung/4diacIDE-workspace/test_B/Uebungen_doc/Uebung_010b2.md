@@ -1,49 +1,39 @@
-# Uebung_010b2: Toggle Flip-Flop mit IE SoftKey_F1 SK_RELEASED
+# Uebung_010b2: Softkey-Release als Auslöser
 
-* * * * * * * * * *
+[Uebung_010b2](https://docs.ms-muc-docs.de/projects/visual-programming-languages-docs/de/latest/training1/Ventilsteuerung/4diacIDE-workspace/test/FBs/Uebungen/Uebung_010b2.html)
 
-## Einleitung
-Diese Übung demonstriert die Funktionsweise eines Toggle Flip-Flops (T-FF) in Verbindung mit einer Softkey-Eingabe. Der Schaltzustand wird bei jedem Loslassen der F1-Taste umgeschaltet und an einen digitalen Ausgang weitergeleitet.
+[![NotebookLM](media/NotebookLM_logo.png)](https://notebooklm.google.com/notebook/a6872e59-1dfc-4132-a118-aff1bc7bc944)
 
-## Verwendete Funktionsbausteine (FBs)
+Dieser Artikel beschreibt die logiBUS®-Übung `Uebung_010b2`.
 
-### SoftKey_UP_F1
-- **Typ**: Softkey_IE
-- **Parameter**:
-  - QI = TRUE (aktiviert den Baustein)
-  - u16ObjId = DefaultPool::SoftKey_F1 (verwendet Softkey F1)
-  - InputEvent = SoftKeyActivationCode::SK_RELEASED (reagiert auf Tastenloslassen)
 
-### E_T_FF
-- **Typ**: E_T_FF (Toggle Flip-Flop mit Ereigniseingang)
-- **Funktionsweise**: Schaltet den Ausgang Q bei jedem eingehenden Takt-Ereignis (CLK) um
+## Podcast
+<iframe src="https://creators.spotify.com/pod/profile/logibus/embed/episodes/LogiBUS--IEC-61499-Daten--und-Ereignisflsse-einfach-erklrt--Vom-Schalter-zur-intelligenten-Steuerung-e36vldb/a-ac3vadb" height="102px" width="400px" frameborder="0" scrolling="no"></iframe>
 
-### DigitalOutput_Q1
-- **Typ**: logiBUS_QX
-- **Parameter**:
-  - QI = TRUE (aktiviert den Baustein)
-  - Output = logiBUS_DO::Output_Q1 (weist Ausgang Q1 zu)
+----
 
-## Programmablauf und Verbindungen
 
-**Ereignisverbindungen:**
-- SoftKey_UP_F1.IND → E_T_FF.CLK (Tastenloslassen löst Takt aus)
-- E_T_FF.EO → DigitalOutput_Q1.REQ (Flip-Flop Ereignis löst Ausgangsanforderung aus)
 
-**Datenverbindungen:**
-- E_T_FF.Q → DigitalOutput_Q1.OUT (Flip-Flop Zustand wird an Ausgang Q1 weitergeleitet)
+![](Uebung_010b2.png)
 
-**Lernziele:**
-- Verständnis des Toggle Flip-Flop Prinzips
-- Umgang mit Softkey-Ereignissen (SK_RELEASED)
-- Kombination von Ereignis- und Datenverbindungen
-- Ansteuerung digitaler Ausgänge
 
-**Schwierigkeitsgrad**: Einfach
+## Ziel der Übung
 
-**Benötigte Vorkenntnisse**: Grundlagen der 4diac-IDE, Verständnis von Ereignisgesteuerten Funktionsbausteinen
+Verwendung spezialisierter ISOBUS-Ereignisse zur Steuerung von Software-Flip-Flops.
 
-**Starten der Übung**: Nach dem Laden der Anwendung wird durch Loslassen der F1-Taste der Ausgang Q1 getoggelt.
+-----
 
-## Zusammenfassung
-Diese Übung zeigt eine praktische Implementierung eines Toggle Flip-Flops, der durch Softkey-Ereignisse gesteuert wird. Der Schaltzustand wechselt bei jedem Loslassen der F1-Taste und wird visuell durch den digitalen Ausgang Q1 dargestellt. Die Übung vermittelt grundlegende Konzepte der ereignisgesteuerten Programmierung und der Zustandssteuerung in IEC 61499-Systemen.
+## Beschreibung und Komponenten
+
+[cite_start]Die Subapplikation `Uebung_010b2.SUB` nutzt ein Flip-Flop, das durch das Loslassen eines Softkeys getriggert wird[cite: 1].
+
+### Funktionsbausteine (FBs)
+
+  * **`SoftKey_UP_F1`**: Typ `isobus::UT::io::Softkey::Softkey_IE`. Er ist auf das Ereignis `SK_RELEASED` konfiguriert.
+  * **`E_T_FF`**: Toggle-Flip-Flop.
+
+-----
+
+## Funktionsweise
+
+Das Ereignis `IND` wird erst gefeuert, wenn der Nutzer den Finger vom Softkey nimmt. Dies entspricht dem intuitiven Klick-Verhalten. Jeder vollständige Tastendruck (Drücken + Loslassen) schaltet das Licht um.

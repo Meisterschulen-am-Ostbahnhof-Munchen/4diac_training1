@@ -1,58 +1,63 @@
-# Uebung_004a4: Toggle Flip-Flop mit IE mit BUTTON_SINGLE_CLICK mit E_SPLIT
+# Uebung_004a4: Event-Splitter (E_SPLIT)
 
-* * * * * * * * * *
+[Uebung_004a4](https://docs.ms-muc-docs.de/projects/visual-programming-languages-docs/de/latest/training1/Ventilsteuerung/4diacIDE-workspace/test/FBs/Uebungen/Uebung_004a4.html)
 
-## Einleitung
-Diese Übung demonstriert die Verwendung von T-Flipflops in Kombination mit einem Ereignis-Splitter zur Steuerung von digitalen Ausgängen. Die Anwendung zeigt, wie ein einzelnes Eingangsereignis auf mehrere Flipflops verteilt werden kann.
+[![NotebookLM](media/NotebookLM_logo.png)](https://notebooklm.google.com/notebook/a6872e59-1dfc-4132-a118-aff1bc7bc944)
 
-## Verwendete Funktionsbausteine (FBs)
+Dieser Artikel beschreibt die logiBUS®-Übung `Uebung_004a4`. Hier wird gezeigt, wie ein einzelnes Ereignis genutzt werden kann, um mehrere unabhängige Prozesse sequenziell anzustoßen, indem man einen `E_SPLIT` Baustein verwendet.
 
-### Haupt-Funktionsbausteine:
 
-- **DigitalInput_CLK_I1** (Typ: logiBUS_IE)
-  - Eingangsbaustein für Taster-Ereignisse
-  - Konfiguriert für Einzelklick-Ereignisse (BUTTON_SINGLE_CLICK)
-  - Verbunden mit Eingang I1 der logiBUS-Hardware
+## Podcast
+<iframe src="https://creators.spotify.com/pod/profile/logibus/embed/episodes/LogiBUS--IEC-61499-Daten--und-Ereignisflsse-einfach-erklrt--Vom-Schalter-zur-intelligenten-Steuerung-e36vldb/a-ac3vadb" height="102px" width="400px" frameborder="0" scrolling="no"></iframe>
 
-- **E_SPLIT** (Typ: E_SPLIT)
-  - Ereignisverteiler
-  - Teilt ein eingehendes Ereignis auf zwei Ausgänge auf
+----
 
-- **E_T_FF_Q1** und **E_T_FF_Q2** (Typ: E_T_FF)
-  - T-Flipflops mit Ereignissteuerung
-  - Wechseln ihren Zustand bei jedem Takt-Ereignis
 
-- **DigitalOutput_Q1** und **DigitalOutput_Q2** (Typ: logiBUS_QX)
-  - Digitale Ausgabebausteine
-  - Steuern die Ausgänge Q1 und Q2 der logiBUS-Hardware
 
-## Programmablauf und Verbindungen
+![](Uebung_004a4.png)
 
-### Ereignisverbindungen:
-1. Der Taster-Eingang (DigitalInput_CLK_I1) sendet bei jedem Klick ein IND-Ereignis an E_SPLIT
-2. E_SPLIT verteilt das Ereignis gleichzeitig an beide T-Flipflops (E_T_FF_Q1.CLK und E_T_FF_Q2.CLK)
-3. Jedes T-Flipflop sendet nach Zustandsänderung ein EO-Ereignis an den entsprechenden Ausgabebaustein
 
-### Datenverbindungen:
-- Die Q-Ausgänge der T-Flipflops sind mit den OUT-Eingängen der Digitalausgänge verbunden
-- Dadurch wird der aktuelle Zustand der Flipflops direkt an die Hardware-Ausgänge weitergegeben
+## Ziel der Übung
 
-### Lernziele:
-- Verständnis von T-Flipflops und deren Verhalten
-- Einsatz von Ereignis-Splittern zur Signalverteilung
-- Parallelverarbeitung von Ereignissen
-- Steuerung digitaler Ausgänge über Flipflop-Zustände
+Das Ziel ist das Verständnis der sequenziellen Ereignis-Verarbeitung. Der `E_SPLIT` Baustein nimmt ein einzelnes Eingangs-Event entgegen und feuert daraufhin seine Ausgänge nacheinander ab. Dies ermöglicht es, eine Aktion an mehrere Ziele zu verteilen und dabei die Reihenfolge der Abarbeitung festzulegen.
 
-### Schwierigkeitsgrad:
-- Einfach bis mittel
+-----
 
-### Benötigte Vorkenntnisse:
-- Grundlagen der IEC 61499
-- Verständnis von Ereignis- und Datenverbindungen
-- Kenntnisse über Flipflop-Funktionalität
+## Beschreibung und Komponenten
 
-### Start der Übung:
-Die Übung wird durch Betätigen des Tasters an Eingang I1 gestartet. Jeder Klick wechselt den Zustand beider Ausgänge Q1 und Q2 gleichzeitig.
+[cite_start]Die Subapplikation `Uebung_004a4.SUB` verwendet einen Taster, um zwei separate Toggle-Flip-Flops gleichzeitig zu schalten[cite: 1].
 
-## Zusammenfassung
-Diese Übung zeigt eine einfache aber effektive Anwendung von T-Flipflops in paralleler Schaltung. Durch den Einsatz des E_SPLIT-Bausteins kann ein einzelnes Eingangsereignis synchron auf mehrere Flipflops verteilt werden, was zu einer gleichzeitigen Zustandsänderung der Ausgänge führt. Die Übung vermittelt grundlegende Konzepte der Ereignisverteilung und paralleler Signalverarbeitung in IEC 61499-Systemen.
+### Funktionsbausteine (FBs)
+
+  * **`DigitalInput_CLK_I1`**: Der Event-Generator (Klick-Taster).
+  * **`E_SPLIT`**: Ein Ereignis-Verteiler. Er hat einen Eingang `EI` und zwei Ausgänge `EO1` und `EO2`.
+  * **`E_T_FF_Q1` & `E_T_FF_Q2`**: Zwei unabhängige Flip-Flops.
+  * **`DigitalOutput_Q1` & `DigitalOutput_Q2`**: Zwei physische Ausgänge.
+
+-----
+
+## Funktionsweise
+
+```xml
+<EventConnections>
+    <Connection Source="DigitalInput_CLK_I1.IND" Destination="E_SPLIT.EI"/>
+    <Connection Source="E_SPLIT.EO1" Destination="E_T_FF_Q1.CLK"/>
+    <Connection Source="E_SPLIT.EO2" Destination="E_T_FF_Q2.CLK"/>
+</EventConnections>
+```
+
+[cite_start][cite: 1]
+
+1.  Ein Klick auf Taster 1 sendet ein Event an `E_SPLIT.EI`.
+2.  `E_SPLIT` sendet daraufhin **zuerst** ein Event an `EO1` ➡️ `E_T_FF_Q1` schaltet um.
+3.  Unmittelbar danach sendet `E_SPLIT` ein Event an `EO2` ➡️ `E_T_FF_Q2` schaltet um.
+
+Beide Lampen wechseln synchron ihren Zustand, gesteuert durch einen einzigen Taster.
+
+> **Hinweis:** Wie im Quellcode vermerkt, wäre es funktional effizienter, beide Ausgänge an ein einziges Flip-Flop zu hängen. Diese Übung dient jedoch rein zur Demonstration der Event-Verteilung mit `E_SPLIT`.
+
+-----
+
+## Anwendungsbeispiel
+
+**Zentral-Aus Schaltung**: Ein Taster "Feierabend" löst über einen Splitter mehrere Aktionen nacheinander aus: Zuerst wird die Arbeitsbeleuchtung ausgeschaltet (`Q1`) und danach die Stromzufuhr für die Maschinen gekappt (`Q2`).

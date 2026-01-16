@@ -1,75 +1,53 @@
-# Uebung_009: Ticker
+# Uebung_009: Ereignis-Zähler (Ticker)
 
-* * * * * * * * * *
+[Uebung_009](https://docs.ms-muc-docs.de/projects/visual-programming-languages-docs/de/latest/training1/Ventilsteuerung/4diacIDE-workspace/test/FBs/Uebungen/Uebung_009.html)
 
-## Einleitung
-Diese Übung implementiert einen Ticker-Zähler, der periodisch ein Signal ausgibt und gleichzeitig einen Zählerstand anzeigt. Das System verwendet verschiedene Funktionsbausteine zur Ereignissteuerung und Datenverarbeitung.
+[![NotebookLM](media/NotebookLM_logo.png)](https://notebooklm.google.com/notebook/a6872e59-1dfc-4132-a118-aff1bc7bc944)
 
-## Verwendete Funktionsbausteine (FBs)
+Dieser Artikel beschreibt die logiBUS®-Übung `Uebung_009`. Hier verbinden wir die Zeitbasis mit einer Zählfunktion und einer numerischen Anzeige.
 
-### E_CYCLE
-- **Typ**: Zyklusgeber
-- **Parameter**: DT = T#1s (Zykluszeit von 1 Sekunde)
-- **Funktionsweise**: Generiert periodische Ereignisse im angegebenen Zeitintervall
 
-### E_SWITCH
-- **Typ**: Ereignis-Umschalter
-- **Funktionsweise**: Leitet eingehende Ereignisse basierend auf dem Steuersignal G an EO0 oder EO1 weiter
+## Podcast
+<iframe src="https://creators.spotify.com/pod/profile/logibus/embed/episodes/LogiBUS--IEC-61499-Daten--und-Ereignisflsse-einfach-erklrt--Vom-Schalter-zur-intelligenten-Steuerung-e36vldb/a-ac3vadb" height="102px" width="400px" frameborder="0" scrolling="no"></iframe>
 
-### E_SR
-- **Typ**: Set-Reset-Flipflop
-- **Funktionsweise**: Speichert einen Zustand, der durch S-Ereignisse gesetzt und durch R-Ereignisse zurückgesetzt wird
+----
 
-### E_PERMIT
-- **Typ**: Ereignis-Freigabe
-- **Funktionsweise**: Gibt Ereignisse nur dann weiter, wenn das PERMIT-Signal TRUE ist
 
-### E_CTUD_UDINT
-- **Typ**: Hoch-/Runterzähler (unsigned double integer)
-- **Parameter**: PV = 0 (Vorbelegungswert)
-- **Funktionsweise**: Zählt bei jedem CU-Ereignis hoch
 
-### DigitalOutput_Q1
-- **Typ**: logiBUS_QX (digitale Ausgabe)
-- **Parameter**: 
-  - QI = TRUE (Qualified Input aktiviert)
-  - Output = logiBUS_DO::Output_Q1 (Ausgangskanal)
+![](Uebung_009.png)
 
-### Q_NumericValue
-- **Typ**: Numerischer Wert-Ausgabe
-- **Parameter**: u16ObjId = DefaultPool::OutputNumber_N1 (Ausgabekennung)
 
-## Programmablauf und Verbindungen
+## Ziel der Übung
 
-**Ereignisverbindungen:**
-- E_CYCLE.EO → E_SWITCH.EI (Zyklische Ereignisgenerierung)
-- E_SWITCH.EO0 → E_SR.S (Setzen des Flipflops)
-- E_SWITCH.EO1 → E_SR.R (Rücksetzen des Flipflops)
-- E_SR.EO → DigitalOutput_Q1.REQ (Ausgabeanforderung)
-- E_SR.EO → E_PERMIT.EI (Freigabe-Eingang)
-- E_PERMIT.EO → E_CTUD_UDINT.CU (Zähler-Eingang)
-- E_CTUD_UDINT.CO → Q_NumericValue.REQ (Wertausgabe-Anforderung)
+Erlernen der ereignisbasierten Zählung (`E_CTUD`) und der Darstellung von Werten auf einem Terminal.
 
-**Datenverbindungen:**
-- E_SR.Q → E_SWITCH.G (Rückkopplung für Umschaltung)
-- E_SR.Q → DigitalOutput_Q1.OUT (Direkte Signalausgabe)
-- E_SR.Q → E_PERMIT.PERMIT (Freigabe-Steuerung)
-- E_CTUD_UDINT.CV → Q_NumericValue.u32NewValue (Zählerwert-Übertragung)
+-----
 
-**Startbedingung:** In den Watch-Modus wechseln und bei START ein Event auslösen.
+## Beschreibung und Komponenten
 
-**Lernziele:**
-- Verständnis von Ereignissteuerung und Datenfluss
-- Umgang mit Flipflops und Zählern
-- Implementierung von Rückkopplungsschleifen
-- Verwendung von periodischen Signalen
+[cite_start]In `Uebung_009.SUB` wird ein Taktgeber genutzt, um einen Aufwärtszähler anzusteuern, dessen Wert an ein ISOBUS-Terminal gesendet wird[cite: 1].
 
-**Schwierigkeitsgrad:** Mittel
+### Funktionsbausteine (FBs)
 
-**Benötigte Vorkenntnisse:**
-- Grundlagen der 4diac-IDE
-- Verständnis von Funktionsbausteinen
-- Kenntnisse über Ereignis- und Datenverbindungen
+  * **`E_CYCLE` & `E_SR`**: Erzeugen einen permanenten Takt (wie in Übung 008).
+  * **`E_PERMIT`**: Ein Ereignis-Gatter. [cite_start]Es lässt Ereignisse am Eingang `EI` nur dann zum Ausgang `EO` durch, wenn der Dateneingang `PERMIT` auf `TRUE` steht[cite: 1].
+  * **`E_CTUD_UDINT`**: Ein Vorwärts-/Rückwärtszähler für große Ganzzahlen.
+  * **`Q_NumericValue`**: Ein ISOBUS-Ausgangsbaustein zur Anzeige einer Zahl auf dem Bildschirm.
 
-## Zusammenfassung
-Diese Übung demonstriert ein komplexes Steuerungssystem mit periodischer Signalgenerierung, Zustandsspeicherung und Zählfunktionalität. Der Ticker arbeitet mit einer 1-Sekunden-Zykluszeit und zeigt sowohl eine digitale Ausgabe als auch einen numerischen Zählerstand an. Die Rückkopplung des Flipflop-Zustands auf den Ereignis-Umschalter ermöglicht einen automatischen Wechsel zwischen Set- und Reset-Zuständen.
+-----
+
+## Funktionsweise
+
+1.  Der Blinker-Teil erzeugt jede Sekunde ein Ereignis.
+2.  Dieses Ereignis wird durch `E_PERMIT` gefiltert. Da `PERMIT` mit dem blinkenden Ausgang verbunden ist, wird nur **jedes zweite** Ereignis (nämlich nur, wenn der Blinker gerade AN ist) durchgelassen.
+3.  Die durchgelassenen Events erreichen den Eingang `CU` (Count Up) des Zählers.
+4.  Der Zählerstand erhöht sich.
+5.  Bei jeder Änderung (`CO` - Count Output) wird der neue Wert an `Q_NumericValue` gesendet.
+6.  Auf dem ISOBUS-Terminal sieht der Nutzer eine Zahl, die stetig ansteigt.
+
+-----
+
+## Anwendungsbeispiel
+
+**Betriebsstundenzähler**:
+Die Steuerung zählt die Zeitintervalle, in denen eine bestimmte Bedingung (z.B. "Motor läuft") erfüllt ist. Der summierte Wert wird dauerhaft gespeichert und dem Bediener als Wartungsinformation am Terminal angezeigt.

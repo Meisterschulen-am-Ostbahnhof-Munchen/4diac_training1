@@ -1,62 +1,68 @@
-# Uebung_004b: Toggle Flip-Flop mit IE / E_SWITCH + E_SR
+# Uebung_004b: Manueller Stromstoßschalter (Switch & Speicher)
 
-* * * * * * * * * *
+[Uebung_004b](https://docs.ms-muc-docs.de/projects/visual-programming-languages-docs/de/latest/training1/Ventilsteuerung/4diacIDE-workspace/test/FBs/Uebungen/Uebung_004b.html)
 
-## Einleitung
-Diese Übung implementiert ein Toggle Flip-Flop mit Hilfe eines Eingabeereignisbausteins (IE), einem Schalterbaustein (E_SWITCH) und einem Set-Reset-Flipflop (E_SR). Die Schaltung ermöglicht es, durch Betätigen eines Tasters den Ausgangszustand umzuschalten.
+[![NotebookLM](media/NotebookLM_logo.png)](https://notebooklm.google.com/notebook/a6872e59-1dfc-4132-a118-aff1bc7bc944)
 
-## Verwendete Funktionsbausteine (FBs)
+Dieser Artikel beschreibt die logiBUS®-Übung `Uebung_004b`. Hier wird gezeigt, wie die Funktion eines Toggle-Flip-Flops manuell aus Grundbausteinen (Weiche und Speicher) aufgebaut werden kann.
 
-### DigitalInput_CLK_I1
-- **Typ**: logiBUS_IE
-- **Parameter**:
-  - QI = TRUE
-  - Input = logiBUS_DI::Input_I1
-  - InputEvent = logiBUS_DI_Events::BUTTON_SINGLE_CLICK
-- **Funktionsweise**: Erfasst Einzelklick-Ereignisse von Taster I1 und gibt diese als IND-Ereignis aus
 
-### E_SWITCH
-- **Typ**: E_SWITCH
-- **Funktionsweise**: Leitet eingehende Ereignisse basierend auf dem G-Datenwert weiter (EO0 bei G=FALSE, EO1 bei G=TRUE)
+## Podcast
+<iframe src="https://creators.spotify.com/pod/profile/logibus/embed/episodes/LogiBUS--IEC-61499-Daten--und-Ereignisflsse-einfach-erklrt--Vom-Schalter-zur-intelligenten-Steuerung-e36vldb/a-ac3vadb" height="102px" width="400px" frameborder="0" scrolling="no"></iframe>
 
-### E_SR
-- **Typ**: E_SR
-- **Funktionsweise**: Set-Reset-Flipflop, das bei S-Ereignis den Ausgang Q auf TRUE setzt und bei R-Ereignis auf FALSE zurücksetzt
+----
 
-### DigitalOutput_Q1
-- **Typ**: logiBUS_QX
-- **Parameter**:
-  - QI = TRUE
-  - Output = logiBUS_DO::Output_Q1
-- **Funktionsweise**: Steuert den digitalen Ausgang Q1 basierend auf dem eingehenden OUT-Datenwert
 
-## Programmablauf und Verbindungen
 
-**Ereignisverbindungen:**
-- DigitalInput_CLK_I1.IND → E_SWITCH.EI
-- E_SWITCH.EO0 → E_SR.S
-- E_SWITCH.EO1 → E_SR.R
-- E_SR.EO → DigitalOutput_Q1.REQ
+![](Uebung_004b.png)
 
-**Datenverbindungen:**
-- E_SR.Q → DigitalOutput_Q1.OUT
-- E_SR.Q → E_SWITCH.G
 
-**Ablauf:**
-1. Bei jedem Tastendruck auf I1 wird ein IND-Ereignis ausgelöst
-2. E_SWITCH leitet das Ereignis zu E_SR.S oder E_SR.R, abhängig vom aktuellen Q-Zustand
-3. E_SR toggelt seinen Ausgangszustand bei jedem Ereignis
-4. Der neue Zustand wird an den digitalen Ausgang Q1 und zurück an E_SWITCH.G gesendet
+## Ziel der Übung
 
-**Lernziele:**
-- Verständnis von Toggle-Flipflop-Schaltungen
-- Umgang mit Ereignis-basierten Funktionsbausteinen
-- Implementierung von Zustandsautomaten
-- Verwendung von Rückkopplungsschleifen
+Verständnis der inneren Logik eines Speicherbausteins. Anstatt den fertigen `E_T_FF` Baustein zu nutzen, wird hier eine Rückkopplungsschleife konstruiert, die den aktuellen Zustand nutzt, um das nächste Ereignis an den richtigen Eingang (`Setzen` oder `Rücksetzen`) zu leiten.
 
-**Schwierigkeitsgrad**: Einsteiger
+-----
 
-**Benötigte Vorkenntnisse**: Grundlagen der 4diac-IDE, Verständnis von digitalen Ein-/Ausgängen
+## Beschreibung und Komponenten
 
-## Zusammenfassung
-Diese Übung demonstriert die Realisierung eines Toggle-Flipflops mit standardisierten IEC 61499-Funktionsbausteinen. Die Schaltung nutzt eine Rückkopplung des Ausgangszustands, um bei jedem Tastendruck den Zustand umzuschalten. Die Implementierung zeigt elegante Ereignisverarbeitung und Zustandssteuerung innerhalb des 4diac-Frameworks.
+[cite_start]Die Subapplikation `Uebung_004b.SUB` realisiert die Toggle-Funktion durch die Kombination einer Ereignis-Weiche und eines SR-Speichers[cite: 1].
+
+### Funktionsbausteine (FBs)
+
+  * **`DigitalInput_CLK_I1`**: Liefert ein Ereignis bei jedem Tastendruck.
+  * **`E_SWITCH`**: Eine Ereignis-Weiche. [cite_start]Je nach Zustand am Dateneingang `G` leitet sie das Ereignis `EI` entweder an `EO0` (wenn FALSE) oder an `EO1` (wenn TRUE) weiter[cite: 1].
+  * **`E_SR`**: Ein ereignisbasierter SR-Speicher (Set/Reset).
+  * **`DigitalOutput_Q1`**: Der Hardware-Ausgang.
+
+-----
+
+## Funktionsweise
+
+Der Schlüssel liegt in der Rückführung des Ausgangszustands zum Eingang der Weiche:
+
+```xml
+<EventConnections>
+    <Connection Source="DigitalInput_CLK_I1.IND" Destination="E_SWITCH.EI"/>
+    <Connection Source="E_SWITCH.EO0" Destination="E_SR.S"/>
+    <Connection Source="E_SWITCH.EO1" Destination="E_SR.R"/>
+    <Connection Source="E_SR.EO" Destination="DigitalOutput_Q1.REQ"/>
+</EventConnections>
+<DataConnections>
+    <Connection Source="E_SR.Q" Destination="DigitalOutput_Q1.OUT"/>
+    <Connection Source="E_SR.Q" Destination="E_SWITCH.G"/>
+</DataConnections>
+```
+
+[cite_start][cite: 1]
+
+Der funktionale Ablauf:
+1.  **Zustand AUS**: `E_SR.Q` ist FALSE, damit ist auch `E_SWITCH.G` auf FALSE.
+2.  Ein Tastendruck feuert `EI`. Die Weiche leitet es an `EO0` ➡️ `E_SR.S`. Der Speicher wird gesetzt, die Lampe geht an.
+3.  **Zustand AN**: Da die Lampe nun an ist, liegt an `E_SWITCH.G` eine TRUE an.
+4.  Der nächste Tastendruck feuert wieder `EI`. Diesmal leitet die Weiche das Event an `EO1` ➡️ `E_SR.R`. Der Speicher wird zurückgesetzt, die Lampe geht aus.
+
+-----
+
+## Bewertung
+
+Dieser Aufbau ist lehrreich, um die Konzepte von Ereignissteuerung und Datenrückkopplung zu verstehen. In realen Projekten sollte jedoch immer der spezialisierte Baustein `E_T_FF` bevorzugt werden, da dieser übersichtlicher ist und weniger Ressourcen verbraucht.

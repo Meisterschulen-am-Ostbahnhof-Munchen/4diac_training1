@@ -1,79 +1,58 @@
-# Uebung_006: SR-Flip-Flop mit 2x IE
+# Uebung_006: Speicherglied (SR-Flip-Flop)
 
 [Uebung_006](https://docs.ms-muc-docs.de/projects/visual-programming-languages-docs/de/latest/training1/Ventilsteuerung/4diacIDE-workspace/test/FBs/Uebungen/Uebung_006.html)
 
-[![NotebookLM](media/NotebookLM_logo.png)](https://notebooklm.google.com/notebook/8eeed2db-7f08-4a28-be18-d0eb9ab5eb85)
+[![NotebookLM](media/NotebookLM_logo.png)](https://notebooklm.google.com/notebook/a6872e59-1dfc-4132-a118-aff1bc7bc944)
 
-In dieser Übung wird ein **SR-Flip-Flop** (auch als SR-Latch bezeichnet) unter Verwendung von zwei ereignisgesteuerten Eingängen (IE) auf dem logiBUS®-System realisiert. Ziel ist es, das grundlegende Verhalten einer bistabilen Kippstufe zu verstehen, bei der ein Ausgang durch separate Signale gesetzt und zurückgesetzt werden kann.
+Dieser Artikel beschreibt die logiBUS®-Übung `Uebung_006`. Hier wird ein klassischer Selbsthaltespeicher mit getrennten Tastern für Ein und Aus implementiert.
 
 
 ## Podcast
-<iframe src="https://creators.spotify.com/pod/profile/logibus/embed/episodes/Digitale-Gedchtnisse-Das-SR-Flip-Flop-im-logiBUS-System-erklrt-e36vksj/a-ac3v9ne" height="102px" width="400px" frameborder="0" scrolling="no"></iframe>
----
+<iframe src="https://creators.spotify.com/pod/profile/logibus/embed/episodes/LogiBUS--IEC-61499-Daten--und-Ereignisflsse-einfach-erklrt--Vom-Schalter-zur-intelligenten-Steuerung-e36vldb/a-ac3vadb" height="102px" width="400px" frameborder="0" scrolling="no"></iframe>
+
+----
 
 
-
-![](Uebung_006_Gemini.jpg)
 
 ![](Uebung_006.png)
 
-## **Übersicht und Ziel**
 
-Ein SR-Flip-Flop ist ein grundlegender digitaler Speicherbaustein. Er hat zwei Eingänge, **S (Set)** und **R (Reset)**, sowie einen Ausgang **Q**.
+## Ziel der Übung
 
-* Ein Signal am **S-Eingang** "setzt" den Ausgang Q auf `TRUE` (logisch 1).
-* Ein Signal am **R-Eingang** "setzt zurück" (resettet) den Ausgang Q auf `FALSE` (logisch 0).
-* Der Zustand von Q bleibt so lange gespeichert, bis ein neues Signal an einem der Eingänge anliegt.
+Realisierung einer Schaltung mit getrennter Setz- und Rücksetz-Logik unter Verwendung von Ereignis-Bausteinen.
 
-[cite_start]In dieser speziellen Übung werden die Signale S und R durch das einmalige Drücken von zwei Tastern (`BUTTON_SINGLE_CLICK`) erzeugt. [cite: 1]
+-----
 
----
+## Beschreibung und Komponenten
 
-## **Verwendete Funktionsbausteine (FBs)**
+[cite_start]Die Subapplikation `Uebung_006.SUB` nutzt zwei ereignisbasierte Eingänge und einen SR-Speicher[cite: 1].
 
-In der Übung kommen die folgenden logiBUS®-Funktionsbausteine zum Einsatz:
+### Funktionsbausteine (FBs)
 
-| Name im Programm | Typ | Funktion |
-| :--- | :--- | :--- |
-| `DigitalInput_CLK_I1` | `logiBUS_IE` | Stellt den **Set (S)**-Eingang dar. [cite_start]Er ist mit dem physikalischen Eingang `Input_I1` verbunden und löst ein Ereignis bei einem einfachen Tastendruck aus. [cite: 1] |
-| `DigitalInput_CLK_I2` | `logiBUS_IE` | Stellt den **Reset (R)**-Eingang dar. [cite_start]Er ist mit dem physikalischen Eingang `Input_I2` verbunden und löst ebenfalls bei einem einfachen Tastendruck aus. [cite: 1] |
-| `E_SR` | `E_SR` | [cite_start]Dies ist der eigentliche **SR-Flip-Flop**-Baustein, der die Setz- und Rücksetzlogik verarbeitet. [cite: 1] |
-| `DigitalOutput_Q1` | `logiBUS_QX` | [cite_start]Dieser Baustein steuert den physikalischen Ausgang `Output_Q1` an und visualisiert den Zustand des **Q-Ausgangs** des Flip-Flops. [cite: 1] |
+  * **`I1` (Set)**: Taster zum Einschalten (konfiguriert auf Einzelklick).
+  * **`I2` (Reset)**: Taster zum Ausschalten (konfiguriert auf Einzelklick).
+  * **`E_SR`**: Ein ereignisbasierter Speicherbaustein. [cite_start]Ein Event am Eingang `S` (Set) setzt den Ausgang `Q` auf TRUE, ein Event am Eingang `R` (Reset) setzt ihn auf FALSE[cite: 1].
 
----
+-----
 
-## **Logik und Verschaltung**
+## Funktionsweise
 
-Die Funktionsweise wird durch die Verbindungen (Connections) zwischen den Bausteinen realisiert.
+```xml
+<EventConnections>
+    <Connection Source="DigitalInput_CLK_I1.IND" Destination="E_SR.S"/>
+    <Connection Source="DigitalInput_CLK_I2.IND" Destination="E_SR.R"/>
+    <Connection Source="E_SR.EO" Destination="DigitalOutput_Q1.REQ"/>
+</EventConnections>
+```
 
-### **Ereignisverbindungen (Event Connections)**
+[cite_start][cite: 1]
 
-Die Ereignisverbindungen steuern, wann ein Funktionsbaustein ausgeführt wird.
+*   Ein Klick auf Taster 1 ➡️ Speicher wird gesetzt ➡️ Lampe geht an.
+*   Ein Klick auf Taster 2 ➡️ Speicher wird gelöscht ➡️ Lampe geht aus.
+*   Erneutes Drücken von Taster 1, wenn das Licht bereits an ist, hat keine Auswirkung.
 
-1.  [cite_start]**Setzen:** Wenn der Taster an `Input_I1` gedrückt wird (`DigitalInput_CLK_I1.IND`), wird ein Ereignis an den **S-Eingang** des `E_SR`-Bausteins gesendet. [cite: 1]
-2.  [cite_start]**Rücksetzen:** Ein Tastendruck an `Input_I2` (`DigitalInput_CLK_I2.IND`) sendet ein Ereignis an den **R-Eingang** des `E_SR`-Bausteins. [cite: 1]
-3.  [cite_start]**Ausgang ansteuern:** Nachdem der `E_SR`-Baustein seinen neuen Zustand berechnet hat (`E_SR.EO`), sendet er ein Ereignis an den Ausgangsbaustein `DigitalOutput_Q1.REQ`, um diesen zu aktualisieren. [cite: 1]
+-----
 
-### **Datenverbindungen (Data Connections)**
+## Anwendungsbeispiel
 
-Die Datenverbindungen übertragen die logischen Zustände (`TRUE` oder `FALSE`).
-
-* [cite_start]Der **Q-Ausgang** des `E_SR`-Flip-Flops ist direkt mit dem **OUT-Eingang** des `DigitalOutput_Q1`-Bausteins verbunden. [cite: 1] Das bedeutet: Ist Q `TRUE`, wird der Ausgang Q1 aktiviert (z.B. eine LED leuchtet). Ist Q `FALSE`, wird der Ausgang deaktiviert.
-
----
-
-## **Funktionsweise im Detail**
-
-1.  **Startzustand:** Zu Beginn ist der Ausgang Q des `E_SR`-Bausteins `FALSE`, und der Ausgang Q1 ist aus.
-2.  **Setzen:** Der Benutzer drückt den Taster, der mit `Input_I1` verbunden ist.
-    * Der `DigitalInput_CLK_I1`-Baustein löst das Ereignis `IND` aus.
-    * Dieses Ereignis triggert den `S`-Eingang des `E_SR`-Flip-Flops.
-    * Der `E_SR`-Baustein setzt seinen Ausgang `Q` auf `TRUE`.
-    * Dieser `TRUE`-Wert wird über die Datenverbindung an den `DigitalOutput_Q1` übertragen, der daraufhin den physikalischen Ausgang `Output_Q1` einschaltet.
-3.  **Zustand speichern:** Der Ausgang Q1 bleibt eingeschaltet, auch nachdem der Taster an I1 losgelassen wurde. Der Zustand ist nun gespeichert.
-4.  **Rücksetzen:** Der Benutzer drückt den Taster, der mit `Input_I2` verbunden ist.
-    * Der `DigitalInput_CLK_I2`-Baustein löst das Ereignis `IND` aus.
-    * Dieses Ereignis triggert den `R`-Eingang des `E_SR`-Flip-Flops.
-    * Der `E_SR`-Baustein setzt seinen Ausgang `Q` zurück auf `FALSE`.
-    * Dieser `FALSE`-Wert wird an `DigitalOutput_Q1` weitergegeben, der den Ausgang `Output_Q1` wieder ausschaltet.
-5.  **Zustand bleibt gespeichert:** Der Ausgang Q1 bleibt nun aus, bis der Taster an I1 erneut gedrückt wird.
+**Industrielle Start/Stopp-Steuerung**: Ein grüner Taster startet eine Maschine, ein roter Taster stoppt sie. Dies ist sicherer als ein einzelner Toggle-Taster, da der Bediener immer einen definierten Befehl ("Ich will aus") geben kann, unabhängig vom aktuellen Zustand.

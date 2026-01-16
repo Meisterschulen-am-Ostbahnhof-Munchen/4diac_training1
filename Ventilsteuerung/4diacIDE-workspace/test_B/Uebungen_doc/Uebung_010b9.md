@@ -1,51 +1,28 @@
-# Uebung_010b9: Toggle Flip-Flop mit IE Button_A1 BT_STILL_HELD
+# Uebung_010b9: Taktgeber durch Festhalten (STILL_HELD)
 
-* * * * * * * * * *
+[Uebung_010b9](https://docs.ms-muc-docs.de/projects/visual-programming-languages-docs/de/latest/training1/Ventilsteuerung/4diacIDE-workspace/test/FBs/Uebungen/Uebung_010b9.html)
 
-## Einleitung
-Diese Übung demonstriert die Funktionsweise eines Toggle-Flip-Flops (T-FF) in Verbindung mit einem Taster-Input-Event. Der Schwerpunkt liegt auf der Verwendung des speziellen Taster-Ereignisses "BT_STILL_HELD", das alle 200ms ausgelöst wird und einen Blinker mit 400ms-Periodendauer erzeugt.
+[![NotebookLM](media/NotebookLM_logo.png)](https://notebooklm.google.com/notebook/a6872e59-1dfc-4132-a118-aff1bc7bc944)
 
-## Verwendete Funktionsbausteine (FBs)
+Dieser Artikel beschreibt die logiBUS®-Übung `Uebung_010b9`.
 
-### Button_A1
-- **Typ**: Button_IE
-- **Parameter**:
-  - QI = TRUE (aktiviert den Baustein)
-  - u16ObjId = DefaultPool::Button_A1 (Taster-Objekt-ID)
-  - InputEvent = ButtonActivationCode::BT_STILL_HELD (Ereignis bei gedrückt gehaltenem Taster)
 
-### E_T_FF
-- **Typ**: E_T_FF (Toggle-Flip-Flop mit Ereignissteuerung)
+## Podcast
+<iframe src="https://creators.spotify.com/pod/profile/logibus/embed/episodes/LogiBUS--IEC-61499-Daten--und-Ereignisflsse-einfach-erklrt--Vom-Schalter-zur-intelligenten-Steuerung-e36vldb/a-ac3vadb" height="102px" width="400px" frameborder="0" scrolling="no"></iframe>
 
-### DigitalOutput_Q1
-- **Typ**: logiBUS_QX
-- **Parameter**:
-  - QI = TRUE (aktiviert den Baustein)
-  - Output = logiBUS_DO::Output_Q1 (Ausgangskanal für digitale Ausgabe)
+----
 
-## Programmablauf und Verbindungen
 
-**Ereignisverbindungen:**
-- Button_A1.IND → E_T_FF.CLK (Taster-Ereignis triggert den Toggle-Flip-Flop)
-- E_T_FF.EO → DigitalOutput_Q1.REQ (Flip-Flop-Ausgangsereignis aktiviert die Ausgabe)
 
-**Datenverbindungen:**
-- E_T_FF.Q → DigitalOutput_Q1.OUT (Flip-Flop-Zustand wird an den Ausgang weitergeleitet)
+![](Uebung_010b9.png)
 
-**Funktionsweise:**
-Bei Betätigung des Tasters A1 wird das Ereignis "BT_STILL_HELD" alle 200ms ausgelöst. Jedes dieser Ereignisse toggelt den Zustand des Flip-Flops, was zu einem Ausgangssignal mit 400ms Periodendauer führt (200ms ein, 200ms aus).
 
-**Lernziele:**
-- Verständnis von Toggle-Flip-Flop-Funktionalität
-- Umgang mit Taster-Input-Events
-- Erzeugung von Blinkfunktionen durch Ereigniswiederholung
-- Verbindung von Eingabe-, Verarbeitungs- und Ausgabebausteinen
+## Ziel der Übung
 
-**Schwierigkeitsgrad**: Einfach
+Nutzung repetierender Ereignisse zur Erzeugung von Blinksignalen oder Inkrement-Funktionen.
 
-**Benötigte Vorkenntnisse**: Grundlagen der 4diac-IDE, Verständnis von Funktionsbausteinen und Ereignisverbindungen
+-----
 
-**Starten der Übung**: Die Übung wird durch Betätigen des Tasters A1 aktiviert. Der Ausgang Q1 beginnt sofort mit dem Blinken.
+## Funktionsweise
 
-## Zusammenfassung
-Diese Übung zeigt eine praktische Anwendung eines Toggle-Flip-Flops zur Erzeugung einer Blinkfunktion. Durch die Verwendung des "BT_STILL_HELD"-Events wird demonstriert, wie periodische Ereignisse zur Steuerung von Ausgabesignalen genutzt werden können. Die einfache Struktur macht die grundlegenden Prinzipien der ereignisgesteuerten Programmierung in 4diac deutlich.
+[cite_start]Nutzt `Button_A1` mit dem Ereignis `BT_STILL_HELD`[cite: 1]. Wie im Kommentar vermerkt, wird dieses Ereignis alle 200ms wiederholt, solange der Finger auf dem Button bleibt. Da das Signal an ein Toggle-Flip-Flop geleitet wird, blinkt der Hardware-Ausgang mit einer Periode von 400ms (200ms an, 200ms aus), solange gedrückt wird.

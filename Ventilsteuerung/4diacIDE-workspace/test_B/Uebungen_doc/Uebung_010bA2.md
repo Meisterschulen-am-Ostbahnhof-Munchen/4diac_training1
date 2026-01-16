@@ -1,49 +1,25 @@
-# Uebung_010bA2: Toggle Flip-Flop mit IE AuxFunction2_X1 AuxEnabled
+# Uebung_010bA2: AUX-Zustands-Events (Enabled)
 
-* * * * * * * * * *
+[Uebung_010bA2](https://docs.ms-muc-docs.de/projects/visual-programming-languages-docs/de/latest/training1/Ventilsteuerung/4diacIDE-workspace/test/FBs/Uebungen/Uebung_010bA2.html)
 
-## Einleitung
-Diese Übung demonstriert die Funktionsweise eines Toggle-Flip-Flops mit einem speziellen Hilfsfunktionstyp (Auxiliary Function Type 2). Der Schwerpunkt liegt auf dem Verhalten von nicht-latchenden Schaltern und deren Ereignisauslösung.
+[![NotebookLM](media/NotebookLM_logo.png)](https://notebooklm.google.com/notebook/a6872e59-1dfc-4132-a118-aff1bc7bc944)
 
-## Verwendete Funktionsbausteine (FBs)
+Dieser Artikel beschreibt die logiBUS®-Übung `Uebung_010bA2`. Hier geht es um die Feinheiten der AUX-Spezifikation bezüglich rastender und tastender Eingänge.
 
-### Button_A1
-- **Typ**: Aux_IE
-- **Parameter**:
-  - QI = TRUE (aktiviert den Baustein)
-  - u16ObjId = DefaultPool::AuxFunction2_X1 (verwendet Hilfsfunktion Typ 2)
-  - InputEvent = AuxiliaryState::AuxEnabled (reagiert auf Aktivierungsereignis)
 
-### E_T_FF
-- **Typ**: E_T_FF (Toggle-Flip-Flop)
-- **Funktionsweise**: Wechselt den Ausgangszustand bei jedem Taktsignal
+## Podcast
+<iframe src="https://creators.spotify.com/pod/profile/logibus/embed/episodes/LogiBUS--IEC-61499-Daten--und-Ereignisflsse-einfach-erklrt--Vom-Schalter-zur-intelligenten-Steuerung-e36vldb/a-ac3vadb" height="102px" width="400px" frameborder="0" scrolling="no"></iframe>
 
-### DigitalOutput_Q1
-- **Typ**: logiBUS_QX
-- **Parameter**:
-  - QI = TRUE (aktiviert den Baustein)
-  - Output = logiBUS_DO::Output_Q1 (Ausgang Q1 des logiBUS)
+----
 
-## Programmablauf und Verbindungen
 
-**Ereignisverbindungen:**
-- Button_A1.IND → E_T_FF.CLK (Takteingang des Flip-Flops)
-- E_T_FF.EO → DigitalOutput_Q1.REQ (Auslösung der Ausgabaanforderung)
 
-**Datenverbindungen:**
-- E_T_FF.Q → DigitalOutput_Q1.OUT (Übertragung des Flip-Flop-Zustands)
+![](Uebung_010bA2.png)
 
-**Besonderheiten:**
-- Bei Auxiliary Type 2 (Bool_NonLatched) wird das AuxEnabled-Ereignis nicht wiederholt
-- Langer Tastendruck erzeugt nur ein Ereignis
-- Im Vergleich zu Type 0 (Bool_Latched) mit wiederholten Ereignissen
 
-**Lernziele:**
-- Verständnis von Toggle-Flip-Flop-Verhalten
-- Unterschied zwischen latching und non-latching Schaltern
-- Ereignisbehandlung mit Auxiliary Functions
+## Funktionsweise
 
-**Schwierigkeitsgrad**: Einsteiger
-
-## Zusammenfassung
-Diese Übung zeigt die praktische Anwendung eines Toggle-Flip-Flops in Verbindung mit einem nicht-latchenden Schalter (Auxiliary Type 2). Der Flip-Flop ändert seinen Zustand bei jedem Tastendruck, unabhängig von der Dauer des Drucks. Die Übung verdeutlicht wichtige Unterschiede in der Ereignisbehandlung verschiedener Schaltertypen.
+[cite_start]Verwendet `AuxFunction2_X1` mit dem Event `AuxEnabled`[cite: 1]. Das Verhalten hängt vom Typ des zugewiesenen Bedienelements (Joystick-Taste) ab:
+*   Bei einem **tastenden Bediener** (NonLatched) wird das Event nur einmal beim Drücken gesendet.
+*   Bei einem **rastenden Bediener** (Latched) wird das Event zyklisch wiederholt, solange der Schalter aktiv ist.
+Dies verdeutlicht, wie die Software auf die Hardware-Eigenschaften des verwendeten Joysticks reagiert.

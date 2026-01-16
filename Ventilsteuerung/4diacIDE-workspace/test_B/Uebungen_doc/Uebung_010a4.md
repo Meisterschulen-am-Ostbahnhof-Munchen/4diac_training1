@@ -1,46 +1,39 @@
-# Uebung_010a4: SoftKey_F1 auf DigitalOutput_Q1 (Datapanel)
+# Uebung_010a4: Softkey auf externes CAN-Modul
 
-* * * * * * * * * *
+[Uebung_010a4](https://docs.ms-muc-docs.de/projects/visual-programming-languages-docs/de/latest/training1/Ventilsteuerung/4diacIDE-workspace/test/FBs/Uebungen/Uebung_010a4.html)
 
-## Einleitung
-Diese Übung demonstriert die grundlegende Verknüpfung zwischen einem Softkey-Eingang und einem digitalen Ausgang in der 4diac-IDE. Die Anwendung zeigt, wie ein Tastendruck auf einer virtuellen Softkey-Taste direkt einen digitalen Ausgang steuert.
+[![NotebookLM](media/NotebookLM_logo.png)](https://notebooklm.google.com/notebook/a6872e59-1dfc-4132-a118-aff1bc7bc944)
 
-## Verwendete Funktionsbausteine (FBs)
+Dieser Artikel beschreibt die logiBUS®-Übung `Uebung_010a4`.
 
-### SoftKey_F1
-- **Typ**: Softkey_IX
-- **Parameter**:
-  - QI = TRUE (Qualified Input aktiviert)
-  - u16ObjId = DefaultPool::SoftKey_F1 (Objekt-ID für Softkey F1)
-- **Ereignisausgang**: IND (Indication - zeigt Tastendruck an)
-- **Dateneingang**: IN (Eingangsdaten)
 
-### DigitalOutput_Q1
-- **Typ**: DataPanel_MI_QX
-- **Parameter**:
-  - QI = TRUE (Qualified Input aktiviert)
-  - u8SAMember = MI::MI_00 (SA-Mitgliedsnummer)
-  - Output = DataPanel_MI_DO::DigitalOutput_1A (Ausgangskonfiguration)
-- **Ereigniseingang**: REQ (Request - Auslöser für Ausgangsaktivierung)
-- **Datenausgang**: OUT (Ausgangsdaten)
+## Podcast
+<iframe src="https://creators.spotify.com/pod/profile/logibus/embed/episodes/LogiBUS--IEC-61499-Daten--und-Ereignisflsse-einfach-erklrt--Vom-Schalter-zur-intelligenten-Steuerung-e36vldb/a-ac3vadb" height="102px" width="400px" frameborder="0" scrolling="no"></iframe>
 
-## Programmablauf und Verbindungen
+----
 
-**Ereignisverbindung:**
-- SoftKey_F1.IND → DigitalOutput_Q1.REQ
 
-**Datenverbindung:**
-- SoftKey_F1.IN → DigitalOutput_Q1.OUT
 
-**Ablauf:**
-1. Beim Drücken der Softkey-Taste F1 wird das IND-Ereignis ausgelöst
-2. Das IND-Ereignis aktiviert über REQ den digitalen Ausgang Q1
-3. Gleichzeitig werden die Daten von SoftKey_F1.IN an DigitalOutput_Q1.OUT übertragen
-4. Der digitale Ausgang Q1 wird entsprechend dem empfangenen Signal geschaltet
+![](Uebung_010a4.png)
 
-**Schwierigkeitsgrad:** Einfach (Anfängerübung)
-**Benötigte Vorkenntnisse:** Grundlagen der 4diac-IDE, Verständnis von Ereignis- und Datenverbindungen
-**Start der Übung:** Die Übung wird durch Drücken der F1-Taste im DataPanel gestartet
 
-## Zusammenfassung
-Diese Übung vermittelt die grundlegende Funktionsweise von Ereignis- und Datenverbindungen in 4diac-IDE. Sie zeigt, wie einfache Steuerungsaufgaben durch Verknüpfung von Eingangs- und Ausgangsbausteinen realisiert werden können. Die Übung dient als Basis für komplexere Steuerungsanwendungen und demonstriert das Prinzip der ereignisgesteuerten Automatisierung.
+## Ziel der Übung
+
+Kombination verschiedener logiBUS-Teilsysteme.
+
+-----
+
+## Beschreibung und Komponenten
+
+[cite_start]Die Subapplikation `Uebung_010a4.SUB` verbindet einen ISOBUS-Softkey mit einem physikalischen Ausgang eines DataPanels[cite: 1].
+
+### Funktionsbausteine (FBs)
+
+  * **`SoftKey_F1`**: Eingabequelle vom Traktor-Terminal.
+  * **`DigitalOutput_Q1`**: Typ `DataPanel_MI_QX`. Dies ist ein Ausgang auf einer dezentralen IO-Box am CAN-Bus.
+
+-----
+
+## Funktionsweise
+
+Diese Übung verdeutlicht die Mächtigkeit der IEC 61499 Abstraktion: Für die Programmlogik ist es völlig unerheblich, woher ein Signal kommt (Software-Terminal) oder wohin es geht (CAN-Modul). Die Ereignis- und Datenverbindungen überbrücken die Protokollgrenzen zwischen ISOBUS und gerätespezifischem CAN-Protokoll nahtlos.
