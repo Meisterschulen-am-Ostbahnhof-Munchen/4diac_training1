@@ -9,21 +9,22 @@
 	</CompilerInfo>
 	<InterfaceList>
 		<Plugs>
-			<AdapterDeclaration Name="AD_OUT" Type="adapter::types::unidirectional::AD" Comment="DWORD Adapter Output" x="2000" y="0"/>
+			<AdapterDeclaration Name="AD_OUT" Type="adapter::types::unidirectional::AD" Comment="DWORD Adapter Output" x="2800" y="0"/>
 		</Plugs>
 		<Sockets>
 			<AdapterDeclaration Name="AUDI_IN" Type="adapter::types::unidirectional::AUDI" Comment="UDINT Adapter Input" x="0" y="0"/>
 		</Sockets>
 	</InterfaceList>
 	<FBNetwork>
-		<FB Name="Convert" Type="iec61131::conversion::F_UDINT_TO_DWORD" x="1000" y="0"/>
+		<FB Name="Convert" Type="iec61131::conversion::F_UDINT_TO_DWORD" x="1000" y="0">
+		</FB>
 		<EventConnections>
 			<Connection Source="AUDI_IN.E1" Destination="Convert.REQ" dx1="100"/>
-			<Connection Source="Convert.CNF" Destination="AD_OUT.E1" dx1="100"/>
+			<Connection Source="Convert.CNF" Destination="AD_OUT.E1"/>
 		</EventConnections>
 		<DataConnections>
 			<Connection Source="AUDI_IN.D1" Destination="Convert.IN" dx1="100"/>
-			<Connection Source="Convert.OUT" Destination="AD_OUT.D1" dx1="100"/>
+			<Connection Source="Convert.OUT" Destination="AD_OUT.D1"/>
 		</DataConnections>
 	</FBNetwork>
 	<Attribute Name="eclipse4diac::core::TypeHash" Value="''"/>
