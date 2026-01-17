@@ -5,7 +5,7 @@
 	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2026-01-17">
 	</VersionInfo>
 	<CompilerInfo packageName="Uebungen">
-		<Import declaration="isobus::UT::Q::const::IDs::ID_NULL"/>
+		<Import declaration="Uebungen::const::UT::DefaultPool::OutputNumber_N1"/>
 		<Import declaration="logiBUS::io::DQ::logiBUS_DO::Output_Q1"/>
 	</CompilerInfo>
 	<SubAppInterfaceList>
@@ -27,7 +27,7 @@
 		<FB Name="AUDI_CTUD_UDINT" Type="adapter::events::unidirectional::AUDI_CTUD_UDINT" x="2700" y="200">
 		</FB>
 		<FB Name="Q_NumericValue_AUDI" Type="isobus::UT::Q::Q_NumericValue_AUDI" x="5300" y="300">
-			<Parameter Name="u16ObjId" Value="ID_NULL"/>
+			<Parameter Name="u16ObjId" Value="OutputNumber_N1"/>
 		</FB>
 		<Comment Comment="In Watch wechseln, &#10;und bei START ein Event auslösen. " x="-5800" y="-700" width="1600" height="600"/>
 		<FB Name="AX_SPLIT_3" Type="adapter::events::unidirectional::AX_SPLIT_3" x="100" y="-400">
@@ -37,7 +37,7 @@
 		<EventConnections>
 			<Connection Source="AX_SWITCH.EO0" Destination="AX_SR.S"/>
 			<Connection Source="AX_SWITCH.EO1" Destination="AX_SR.R"/>
-			<Connection Source="AX_PERMIT.EO" Destination="AUDI_CTUD_UDINT.CU"/>
+			<Connection Source="AX_PERMIT.EO" Destination="AUDI_CTUD_UDINT.CU" dx1="246.67"/>
 		</EventConnections>
 		<AdapterConnections>
 			<Connection Source="AX_SPLIT_3.OUT2" Destination="DigitalOutput_Q1.OUT" dx1="920"/>

@@ -2,7 +2,7 @@
 <FBType Name="AUDI_CTUD_UDINT" Comment="Event-Driven Up-Down Counter">
 	<Identification Standard="61499-1-A.x" Classification="Event-driven blocks" Function="Up-Down-counter" Description="Copyright (c) 2017, 2024 fortiss GmbH, JKU, HR Agrartechnik GmbH   &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0">
 	</Identification>
-	<VersionInfo Organization="HR Agrartechnik GmbH" Version="3.0" Author="Franz Höpfinger" Date="2025-04-14" Remarks=" Made Version 3.0.0 inspired by Work from Patrick Aigner">
+	<VersionInfo Organization="HR Agrartechnik GmbH" Version="3.0" Author="Franz Höpfinger" Date="2026-01-17" Remarks="Adapted from E_CTUD_UDINT. Removed explicit LD and LDO events, now driven by PV.E1 and CV.E1 adapter events.">
 	</VersionInfo>
 	<VersionInfo Organization="HR Agrartechnik GmbH" Version="1.2" Author="Franz Höpfinger" Date="2024-02-10" Remarks="Copy over E_CTUD to E_CTUD_UDINT">
 	</VersionInfo>
@@ -32,8 +32,8 @@
 			</Event>
 		</EventOutputs>
 		<OutputVars>
-			<VarDeclaration Name="QU" Type="BOOL" Comment="CV &gt;=PV"/>
-			<VarDeclaration Name="QD" Type="BOOL" Comment="CV &lt;= 0"/>
+			<VarDeclaration Name="QU" Type="BOOL" Comment="CV.D1 &gt;= PV.D1"/>
+			<VarDeclaration Name="QD" Type="BOOL" Comment="CV.D1 &lt;= 0"/>
 		</OutputVars>
 		<Plugs>
 			<AdapterDeclaration Name="CV" Type="adapter::types::unidirectional::AUDI" Comment="Counter Value"/>
