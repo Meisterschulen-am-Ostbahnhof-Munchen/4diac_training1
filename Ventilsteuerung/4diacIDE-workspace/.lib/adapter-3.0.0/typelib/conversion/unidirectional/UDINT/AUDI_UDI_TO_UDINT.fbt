@@ -14,7 +14,8 @@
 			</Event>
 		</EventOutputs>
 		<OutputVars>
-			<VarDeclaration Name="IN" Type="UDINT" Comment="Input data from Adapter"/>
+			<VarDeclaration Name="IN" Type="UDINT" Comment="Input data from Adapter">
+			</VarDeclaration>
 		</OutputVars>
 		<Sockets>
 			<AdapterDeclaration Name="AUDI_IN" Type="adapter::types::unidirectional::AUDI" Comment="Adapter Input" x="0" y="0"/>
@@ -25,7 +26,7 @@
 			<Connection Source="AUDI_IN.E1" Destination="CNF" dx1="1000"/>
 		</EventConnections>
 		<DataConnections>
-			<Connection Source="AUDI_IN.D1" Destination="IN" dx1="1946.67"/>
+			<Connection Source="AUDI_IN.D1" Destination="IN" dx1="1000"/>
 		</DataConnections>
 	</FBNetwork>
 	<Attribute Name="eclipse4diac::core::TypeHash" Value="''"/>

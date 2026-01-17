@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<FBType Name="AUDI_UDINT_TO_UDI" Comment="Composite FB for convert UDINT to AUDI">
+<FBType Name="AW_W_TO_WORD" Comment="Composite FB for convert AW to WORD">
 	<Identification Standard="61499-2" Description="Copyright (c) 2026 HR Agrartechnik GmbH  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0">
 	</Identification>
 	<VersionInfo Organization="HR Agrartechnik GmbH" Version="1.0" Author="Franz Hoepfinger" Date="2026-01-17">
@@ -8,25 +8,25 @@
 		<Import declaration="eclipse4diac::core::TypeHash"/>
 	</CompilerInfo>
 	<InterfaceList>
-		<EventInputs>
-			<Event Name="REQ" Type="Event" Comment="Request to Adapter">
-				<With Var="OUT"/>
+		<EventOutputs>
+			<Event Name="CNF" Type="Event" Comment="Confirmation from Adapter">
+				<With Var="IN"/>
 			</Event>
-		</EventInputs>
-		<InputVars>
-			<VarDeclaration Name="OUT" Type="UDINT">
+		</EventOutputs>
+		<OutputVars>
+			<VarDeclaration Name="IN" Type="WORD" Comment="Input data from Adapter">
 			</VarDeclaration>
-		</InputVars>
-		<Plugs>
-			<AdapterDeclaration Name="AUDI_OUT" Type="adapter::types::unidirectional::AUDI" Comment="Adapter Output" x="0" y="0"/>
-		</Plugs>
+		</OutputVars>
+		<Sockets>
+			<AdapterDeclaration Name="AW_IN" Type="adapter::types::unidirectional::AW" Comment="Adapter Input" x="0" y="0"/>
+		</Sockets>
 	</InterfaceList>
 	<FBNetwork>
 		<EventConnections>
-			<Connection Source="REQ" Destination="AUDI_OUT.E1" dx1="1000"/>
+			<Connection Source="AW_IN.E1" Destination="CNF" dx1="1000"/>
 		</EventConnections>
 		<DataConnections>
-			<Connection Source="OUT" Destination="AUDI_OUT.D1" dx1="1000"/>
+			<Connection Source="AW_IN.D1" Destination="IN" dx1="1000"/>
 		</DataConnections>
 	</FBNetwork>
 	<Attribute Name="eclipse4diac::core::TypeHash" Value="''"/>
