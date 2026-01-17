@@ -30,7 +30,7 @@ Sicherstellen, dass der Blinker immer im Zustand "AUS" stoppt.
   * **`AX_CYCLE`**: Der Taktgeber (Startet/Stoppt).
   * **`E_SR`**: Ein Speicher ("Blinker ist aktiv").
   * **`AX_SPLIT_2`**: Verteilt das Signal vom Speicher (zur Lampe und zur Rückkopplung).
-  * **`AX_AE_MERGE`**: Führt das Taktsignal (`AE_CYCLE.Q` - nur Event) und das Rückkopplungssignal (`E_SR.Q` - Event und BOOL) zusammen. Das Daten-Bit vom `E_SR.Q` bleibt dabei erhalten.
+  * **`AX_AE_MERGE`**: Führt das Taktsignal (`AE_CYCLE.EO` - nur Event) und das Rückkopplungssignal (`E_SR.Q` - Event und BOOL) zusammen. Das Daten-Bit vom `E_SR.Q` bleibt dabei erhalten.
   * **`E_SWITCH`**: Das eigentliche "Herzstück". Es nutzt das gemergte Signal, um das `AX_SR`-Flip-Flop umzuschalten.
 
 Aber das Wichtigste: Der `STOP` Eingang ist **zusätzlich** direkt mit `E_SR.R` verbunden.
