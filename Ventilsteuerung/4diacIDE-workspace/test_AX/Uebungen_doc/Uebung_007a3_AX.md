@@ -30,8 +30,8 @@ Sicherstellen, dass der Blinker immer im Zustand "AUS" stoppt.
   * **`AX_CYCLE`**: Der Taktgeber (Startet/Stoppt).
   * **`E_SR`**: Ein Speicher ("Blinker ist aktiv").
   * **`AX_SPLIT_2`**: Verteilt das Signal vom Speicher (zur Lampe und zur Rückkopplung).
-  * **`AX_MERGE_2`**: Führt das Taktsignal (`AX_CYCLE.Q`) und das Rückkopplungssignal zusammen.
-  * **`E_SWITCH`**: Das eigentliche "Herzstück". Es nutzt das Taktsignal (via Merge), um das SR-Flip-Flop umzuschalten.
+  * **`AX_AE_MERGE`**: Führt das Taktsignal (`AE_CYCLE.Q` - nur Event) und das Rückkopplungssignal (`E_SR.Q` - Event und BOOL) zusammen. Das Daten-Bit vom `E_SR.Q` bleibt dabei erhalten.
+  * **`E_SWITCH`**: Das eigentliche "Herzstück". Es nutzt das gemergte Signal, um das `AX_SR`-Flip-Flop umzuschalten.
 
 Aber das Wichtigste: Der `STOP` Eingang ist **zusätzlich** direkt mit `E_SR.R` verbunden.
 
@@ -39,9 +39,9 @@ Aber das Wichtigste: Der `STOP` Eingang ist **zusätzlich** direkt mit `E_SR.R` 
 
 ## Funktionsweise
 
-1.  **Blinken**: Wenn aktiv, sorgt die Schleife über `E_SWITCH` und `E_SR` für das Toggeln (ähnlich zu Übung 004b).
+1.  **Start/Blinken**: `START` drückt den Taster und startet den `AE_CYCLE`. Wenn `E_SR.Q` aktiv ist, sorgt die Schleife über `E_SWITCH` (durch `AX_AE_MERGE` getriggert) für das Toggeln.
 2.  **Stoppen**: Wenn `STOP` gedrückt wird:
-    *   Der `AX_CYCLE` stoppt (keine neuen Takte).
+    *   Der `AE_CYCLE` stoppt (keine neuen Takte).
     *   Der `E_SR` wird **resettet**. Damit wird der Ausgang `Q` und somit die Lampe `Q1` **zwingend** auf FALSE gesetzt.
 
 -----
