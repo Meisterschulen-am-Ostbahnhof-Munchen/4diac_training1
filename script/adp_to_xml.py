@@ -1,41 +1,46 @@
 import os
 
-def xml_to_adp_reverse():
+def rename_recursive_deep():
     """
-    RÜCKWÄRTS-VARIANTE:
-    Durchsucht rekursiv alle Ordner nach .xml Dateien
-    und benennt sie zurück in .adp um.
+    Durchsucht rekursiv alle Ordner und Unterordner nach .adp Dateien
+    und benennt sie in .xml um.
     """
-    # 1. Startverzeichnis bestimmen
+    # 1. Startverzeichnis bestimmen (dort wo dieses Skript liegt)
     root_dir = os.path.dirname(os.path.abspath(__file__))
-    print(f"Starte Rückbenennung (XML -> ADP) in: {root_dir}")
+    print(f"Starte tiefe Suche in: {root_dir}")
     print("-" * 40)
 
     count = 0
     
+    # 2. os.walk geht Schritt für Schritt durch den gesamten Baum
+    # dirpath: Der Pfad zum aktuellen Ordner, den er gerade anschaut
+    # dirnames: Liste der Unterordner im aktuellen Ordner
+    # filenames: Liste der Dateien im aktuellen Ordner
     for dirpath, dirnames, filenames in os.walk(root_dir):
+        
         for filename in filenames:
-            # ACHTUNG: Wir suchen jetzt nach .xml
-            if filename.lower().endswith('.xml'):
+            # Wir prüfen die Endung (case-insensitive durch .lower())
+            if filename.lower().endswith('.adp'):
                 
+                # Den vollen Pfad zur Datei bauen
                 old_file_path = os.path.join(dirpath, filename)
                 
-                # Wir ändern die Endung zurück zu .adp
+                # Neuen Namen bauen (Endung tauschen)
                 base_name = os.path.splitext(old_file_path)[0]
-                new_file_path = base_name + ".adp"
+                new_file_path = base_name + ".xml"
                 
                 try:
                     os.rename(old_file_path, new_file_path)
-                    print(f"[RESTORE] {filename} -> .adp")
+                    print(f"[OK] {filename} -> .xml")
                     count += 1
                 except Exception as e:
-                    print(f"[FEHLER] Konnte {filename} nicht zurücksetzen. Grund: {e}")
+                    print(f"[FEHLER] Konnte {filename} nicht umbenennen. Grund: {e}")
 
     print("-" * 40)
     if count == 0:
-        print("Keine .xml Dateien gefunden, die zurückgesetzt werden könnten.")
+        print("Keine .adp Dateien in den Unterordnern gefunden.")
     else:
-        print(f"Fertig! {count} Dateien wurden wieder zu .adp.")
+        print(f"Fertig! {count} Dateien wurden umbenannt.")
 
 if __name__ == "__main__":
-    xml_to_adp_reverse()
+    rename_recursive_deep()
