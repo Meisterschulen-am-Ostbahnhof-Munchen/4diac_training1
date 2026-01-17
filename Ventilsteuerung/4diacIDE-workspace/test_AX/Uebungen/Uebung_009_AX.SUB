@@ -30,7 +30,7 @@
 			<Parameter Name="u16ObjId" Value="ID_NULL"/>
 		</FB>
 		<Comment Comment="In Watch wechseln, &#10;und bei START ein Event auslösen. " x="-5800" y="-700" width="1600" height="600"/>
-		<FB Name="AX_SPLIT_2" Type="adapter::events::unidirectional::AX_SPLIT_3" x="100" y="-400">
+		<FB Name="AX_SPLIT_3" Type="adapter::events::unidirectional::AX_SPLIT_3" x="100" y="-400">
 		</FB>
 		<FB Name="AX_AE_MERGE" Type="adapter::events::unidirectional::AX_AE_MERGE" x="-2700" y="-500">
 		</FB>
@@ -40,13 +40,13 @@
 			<Connection Source="AX_PERMIT.EO" Destination="AUDI_CTUD_UDINT.CU"/>
 		</EventConnections>
 		<AdapterConnections>
-			<Connection Source="AX_SPLIT_2.OUT2" Destination="DigitalOutput_Q1.OUT" dx1="920"/>
-			<Connection Source="AX_SR.Q" Destination="AX_SPLIT_2.IN" dx1="140"/>
-			<Connection Source="AX_SPLIT_2.OUT3" Destination="AX_PERMIT.PERMIT" dx1="320"/>
+			<Connection Source="AX_SPLIT_3.OUT2" Destination="DigitalOutput_Q1.OUT" dx1="920"/>
+			<Connection Source="AX_SR.Q" Destination="AX_SPLIT_3.IN" dx1="140"/>
+			<Connection Source="AX_SPLIT_3.OUT3" Destination="AX_PERMIT.PERMIT" dx1="320"/>
 			<Connection Source="AUDI_CTUD_UDINT.CV" Destination="Q_NumericValue_AUDI.u32NewValue" dx1="706.67"/>
 			<Connection Source="AX_AE_MERGE.OUT" Destination="AX_SWITCH.G" dx1="146.67"/>
 			<Connection Source="AE_CYCLE.EO" Destination="AX_AE_MERGE.IN_AE" dx1="220"/>
-			<Connection Source="AX_SPLIT_2.OUT1" Destination="AX_AE_MERGE.IN_AX" dx1="260" dx2="233.33" dy="-800"/>
+			<Connection Source="AX_SPLIT_3.OUT1" Destination="AX_AE_MERGE.IN_AX" dx1="260" dx2="233.33" dy="-800"/>
 		</AdapterConnections>
 	</SubAppNetwork>
 </SubAppType>
