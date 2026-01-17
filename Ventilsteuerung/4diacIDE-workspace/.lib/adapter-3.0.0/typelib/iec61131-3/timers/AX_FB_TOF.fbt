@@ -9,6 +9,11 @@
 	<CompilerInfo packageName="adapter::iec61131::timers">
 	</CompilerInfo>
 	<InterfaceList>
+		<EventInputs>
+			<Event Name="REQ" Type="Event" Comment="Normal Execution Request">
+				<With Var="PT"/>
+			</Event>
+		</EventInputs>
 		<InputVars>
 			<VarDeclaration Name="PT" Type="TIME" Comment="Process time"/>
 		</InputVars>

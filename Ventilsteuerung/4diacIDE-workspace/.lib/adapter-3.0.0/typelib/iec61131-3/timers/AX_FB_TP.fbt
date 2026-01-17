@@ -9,13 +9,18 @@
 	<CompilerInfo packageName="adapter::iec61131::timers">
 	</CompilerInfo>
 	<InterfaceList>
+		<EventInputs>
+			<Event Name="REQ" Type="Event" Comment="Service Request">
+				<With Var="PT"/>
+			</Event>
+		</EventInputs>
 		<InputVars>
 			<VarDeclaration Name="PT" Type="TIME" Comment="Pulse time"/>
 		</InputVars>
 		<OutputVars>
 			<VarDeclaration Name="ET" Type="TIME" Comment="elapse time"/>
 		</OutputVars>
-				<Plugs>
+		<Plugs>
 			<AdapterDeclaration Name="Q" Type="adapter::types::unidirectional::AX" Comment="Output"/>
 		</Plugs>
 		<Sockets>
