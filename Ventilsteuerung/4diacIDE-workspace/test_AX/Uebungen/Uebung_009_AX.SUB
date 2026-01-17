@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SubAppType Name="Uebung_009_AX" Comment="Ticker (AX-Adapter basiert)">
+	<Identification Standard="61499-2" Description="Copyright (c) 2026 Meisterschulen am Ostbahnhof  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0">
+	</Identification>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2026-01-17">
+	</VersionInfo>
+	<CompilerInfo packageName="Uebungen">
+		<Import declaration="isobus::UT::Q::const::IDs::ID_NULL"/>
+		<Import declaration="logiBUS::io::DQ::logiBUS_DO::Output_Q1"/>
+	</CompilerInfo>
+	<SubAppInterfaceList>
+	</SubAppInterfaceList>
+	<SubAppNetwork>
+		<FB Name="DigitalOutput_Q1" Type="logiBUS::io::DQ::logiBUS_QXA" x="2700" y="-900">
+			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="Output" Value="Output_Q1"/>
+		</FB>
+		<FB Name="AE_CYCLE" Type="iec61499::events::AE_CYCLE" x="-3900" y="-700">
+			<Parameter Name="DT" Value="T#1s"/>
+		</FB>
+		<FB Name="AX_SWITCH" Type="adapter::events::unidirectional::AX_SWITCH" x="-1600" y="-700">
+		</FB>
+		<FB Name="AX_SR" Type="adapter::events::unidirectional::AX_SR" x="-700" y="-700">
+		</FB>
+		<FB Name="AX_PERMIT" Type="adapter::events::unidirectional::AX_PERMIT" x="1500" y="200">
+		</FB>
+		<FB Name="AUDI_CTUD_UDINT" Type="iec61499::events::AUDI_CTUD_UDINT" x="2700" y="200">
+		</FB>
+		<FB Name="Q_NumericValue_AUDI" Type="isobus::UT::Q::Q_NumericValue_AUDI" x="5300" y="300">
+			<Parameter Name="u16ObjId" Value="ID_NULL"/>
+		</FB>
+		<Comment Comment="In Watch wechseln, &#10;und bei START ein Event auslösen. " x="-5800" y="-700" width="1600" height="600"/>
+		<FB Name="AX_SPLIT_2" Type="adapter::events::unidirectional::AX_SPLIT_3" x="100" y="-400">
+		</FB>
+		<FB Name="AX_AE_MERGE" Type="adapter::events::unidirectional::AX_AE_MERGE" x="-2700" y="-500">
+		</FB>
+		<EventConnections>
+			<Connection Source="AX_SWITCH.EO0" Destination="AX_SR.S"/>
+			<Connection Source="AX_SWITCH.EO1" Destination="AX_SR.R"/>
+			<Connection Source="AX_PERMIT.EO" Destination="AUDI_CTUD_UDINT.CU"/>
+		</EventConnections>
+		<AdapterConnections>
+			<Connection Source="AX_SPLIT_2.OUT2" Destination="DigitalOutput_Q1.OUT" dx1="920"/>
+			<Connection Source="AX_SR.Q" Destination="AX_SPLIT_2.IN" dx1="140"/>
+			<Connection Source="AX_SPLIT_2.OUT3" Destination="AX_PERMIT.PERMIT" dx1="320"/>
+			<Connection Source="AUDI_CTUD_UDINT.CV" Destination="Q_NumericValue_AUDI.u32NewValue" dx1="706.67"/>
+			<Connection Source="AX_AE_MERGE.OUT" Destination="AX_SWITCH.G" dx1="146.67"/>
+			<Connection Source="AE_CYCLE.EO" Destination="AX_AE_MERGE.IN_AE" dx1="220"/>
+			<Connection Source="AX_SPLIT_2.OUT1" Destination="AX_AE_MERGE.IN_AX" dx1="260" dx2="233.33" dy="-800"/>
+		</AdapterConnections>
+	</SubAppNetwork>
+</SubAppType>
