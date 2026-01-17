@@ -31,7 +31,7 @@ Kombination von repetierenden Ereignissen (`HOLD`) und Zählern zur Steuerung ei
 
   * **`IE_SPEED_UP`**: Sendet alle 200ms ein Event, solange Taster **I1** gehalten wird.
   * **`IE_SPEED_DOWN`**: Sendet alle 200ms ein Event, solange Taster **I2** gehalten wird.
-  * **`E_CTUD`**: Speichert den aktuellen "Leistungs-Zählerstand".
+  * **`E_CTUD_UDINT`**: Speichert den aktuellen "Leistungs-Zählerstand".
   * **`F_MUL`**: Skaliert den Zählerstand (hier Faktor 8) auf den Zielbereich für den PWM-Baustein.
   * **`PWMOutput_Q1`**: Der Leistungsausgang.
 
