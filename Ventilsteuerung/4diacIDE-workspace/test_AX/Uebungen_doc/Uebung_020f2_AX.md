@@ -4,7 +4,7 @@
 
 [![NotebookLM](media/NotebookLM_logo.png)](https://notebooklm.google.com/notebook/041f4df4-b729-484d-b786-b6dcdf151961)
 
-Dieser Artikel beschreibt die logiBUS®-Übung `Uebung_020f2_AX`. Hier wird der klassische Funktionsbaustein-Timer `FB_TP` verwendet, der eine regelmäßige Triggerung (Takt) benötigt.
+Dieser Artikel beschreibt die logiBUS®-Übung `Uebung_020f2_AX`. Hier wird der adapterbasierte IEC 61131-3 Timer-Baustein `AX_FB_TP` verwendet, der eine regelmäßige Triggerung (Takt) benötigt.
 
 
 ## Podcast
@@ -17,29 +17,28 @@ Dieser Artikel beschreibt die logiBUS®-Übung `Uebung_020f2_AX`. Hier wird der 
 
 ## Ziel der Übung
 
-Das Ziel ist es, die Brücke zwischen der klassischen SPS-Programmierung (zyklisch) und der IEC 61499 (ereignisbasiert) zu schlagen. Da ein `FB_TP` intern die Zeit zählt, muss sein `REQ`-Eingang regelmäßig mit Ereignissen versorgt werden, solange der Timer läuft.
+Das Ziel ist es, die Brücke zwischen der klassischen SPS-Programmierung (zyklisch) und der IEC 61499 (ereignisbasiert) zu schlagen. Da ein `AX_FB_TP` intern die Zeit zählt, muss sein `REQ`-Eingang regelmäßig mit Ereignissen versorgt werden, solange der Timer läuft.
 
 -----
 
 ## Beschreibung und Komponenten
 
-[cite_start]Die Subapplikation `Uebung_020f2_AX.SUB` nutzt einen `E_CYCLE` Baustein, um den Takt für den Timer zu generieren[cite: 1].
+Die Subapplikation `Uebung_020f2_AX.SUB` nutzt einen `E_CYCLE` Baustein, um den Takt für den Timer zu generieren.
 
 ### Funktionsbausteine (FBs)
 
-  * **`AX_X_TO_BOOL` & `AX_BOOL_TO_X`**: Wandeln zwischen der Adapter-Welt (AX) und der booleschen Welt der klassischen Timer um.
-  * **`FB_TP`**: [cite_start]Der eigentliche Impuls-Timer. Er reagiert auf die steigende Flanke am Eingang `IN` und hält den Ausgang `Q` für die Zeit `PT` auf TRUE[cite: 1].
-  * **`E_CYCLE`**: [cite_start]Erzeugt alle 500ms ein Ereignis, um den Timer zu aktualisieren[cite: 1].
-  * **`AX_SWITCH_Q1`**: Überwacht das Ende des Impulses, um den Taktgeber wieder auszuschalten.
+  * **`AX_FB_TP`**: Der Impuls-Timer mit Adapter-Schnittstellen. Er reagiert auf die steigende Flanke am Eingang und hält den Ausgang für die Zeit `PT` auf TRUE.
+  * **`E_CYCLE`**: Erzeugt alle 500ms ein Ereignis, um den Timer zu aktualisieren.
+  * **`AX_SWITCH`**: Überwacht den Status, um den Taktgeber bei Bedarf zu starten oder zu stoppen.
 
 -----
 
 ## Funktionsweise
 
-1.  **Start**: Beim Drücken des Tasters wird `AX_X_TO_BOOL.IN` wahr. Das dabei entstehende Ereignis `CNF` startet den `E_CYCLE`.
-2.  **Taktung**: Der `E_CYCLE` sendet alle 500ms ein Event an `FB_TP.REQ`. Bei jedem Event prüft der Timer, wie viel Zeit vergangen ist und aktualisiert seinen Ausgang `Q`.
-3.  **Impuls**: Solange der Impuls läuft, bleibt `Q` wahr und steuert über `AX_BOOL_TO_X` den Ausgang `Q1` an.
-4.  **Stopp**: Sobald die 5 Sekunden abgelaufen sind, geht `FB_TP.Q` auf FALSE. Die Weiche `AX_SWITCH_Q1` erkennt diese fallende Flanke (`EO0`) und stoppt den `E_CYCLE`.
+1.  **Start**: Beim Drücken des Tasters wird der Impuls am `AX_FB_TP` ausgelöst und der `E_CYCLE` gestartet.
+2.  **Taktung**: Der `E_CYCLE` sendet alle 500ms ein Event an `AX_FB_TP.REQ`. Bei jedem Event prüft der Timer, wie viel Zeit vergangen ist und aktualisiert seinen Status.
+3.  **Impuls**: Solange der Impuls läuft, bleibt der Ausgang `Q` wahr.
+4.  **Stopp**: Sobald die 5 Sekunden abgelaufen sind, stoppt der `E_CYCLE` über eine entsprechende Logik (`AX_SWITCH`).
 
 Dieses Beispiel zeigt, dass klassische Bausteine zwar verwendet werden können, aber einen höheren Aufwand für die Ereignisverwaltung erfordern als spezialisierte Adapter-Bausteine (wie `AX_TP`).
 
