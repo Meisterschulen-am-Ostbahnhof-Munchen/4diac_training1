@@ -16,6 +16,8 @@
 				<With Var="PARAMS"/>
 				<With Var="u8SAMember"/>
 				<With Var="Input"/>
+				<With Var="ImpulseDelta"/>
+				<With Var="TimeDelta"/>
 			</Event>
 			<Event Name="REQ" Type="Event" Comment="Service Request">
 				<With Var="QI"/>
@@ -42,6 +44,8 @@
 			<VarDeclaration Name="PARAMS" Type="STRING" Comment="Service Parameters"/>
 			<VarDeclaration Name="u8SAMember" Type="USINT" Comment="Node SA 224..239" InitialValue="MI::MI_00"/>
 			<VarDeclaration Name="Input" Type="DataPanel::io::MI::DI::DataPanel_MI_DI_S" Comment="Identify the Input (usually 7A for 7A+8A pair)" InitialValue="Invalid"/>
+			<VarDeclaration Name="ImpulseDelta" Type="DWORD" Comment="After How many Impulses an IND"/>
+			<VarDeclaration Name="TimeDelta" Type="DWORD" Comment="After How many ms an IND"/>
 		</InputVars>
 		<OutputVars>
 			<VarDeclaration Name="QO" Type="BOOL" Comment="Event Output Qualifier"/>
