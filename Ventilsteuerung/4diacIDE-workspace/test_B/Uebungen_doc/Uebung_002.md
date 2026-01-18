@@ -9,10 +9,6 @@
 
 Dieser Artikel beschreibt die logiBUS®-Übung `Uebung_002`, bei der ein einzelnes digitales Eingangssignal auf zwei verschiedene digitale Ausgänge verteilt wird. Hierbei wird das Konzept des "Fan-Out" (Vervielfachung) von Verbindungen demonstriert.
 
-## 📺 Video
-
-* [D-Flip-Flop: E_D_FF aus der IEC 61499 (Übung 002c) als "Eventbremse"](https://www.youtube.com/watch?v=yGSx_0ggveE)
-
 ----
 
 ![](Uebung_002.png)

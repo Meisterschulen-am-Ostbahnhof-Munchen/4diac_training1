@@ -9,11 +9,6 @@
 
 Dieser Artikel beschreibt die logiBUS®-Übung `Uebung_033`.
 
-## 📺 Video
-
-* [2025-11-15 12-19-33 Montage Hutschienenmoped logiBUS® -- Teil 2 -- Einführung und Löten](https://www.youtube.com/watch?v=nohE36SZY9M)
-* [logiBUS® ESP32 installer   Google Chrome 2022 10 18 17 38 33](https://www.youtube.com/watch?v=pQ53R2zChlc)
-
 ----
 
 ![](Uebung_033.png)

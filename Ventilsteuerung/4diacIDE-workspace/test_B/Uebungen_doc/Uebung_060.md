@@ -9,14 +9,6 @@
 
 Dieser Artikel beschreibt die logiBUS®-Übung `Uebung_060`. Dies ist eine High-Level Übung für professionelle ISOBUS-Anwendungen im Bereich des Precision Farming.
 
-## 📺 Video
-
-* [2025-02-23 11-18-57 Einstieg in Autodesk Fusion 360 - Mechanisches Design MCAD](https://www.youtube.com/watch?v=3bmFKBpIpZY)
-* [2025-02-23 11-43-44 Fusion 360 Übersicht Tutorials](https://www.youtube.com/watch?v=djM9ndIfp-0)
-* [2025-02-23 11-47-07 Fusion 360 Elektronik Einführung](https://www.youtube.com/watch?v=uZb-U6FArGw)
-* [2025-02-23 13-20-15 Fusion 360 Elektronik Stückliste Exportieren](https://www.youtube.com/watch?v=Z5RllKgpOfc)
-* [2025-07-20 21-12-23  Fusion 360 Schematic SPICE Simulation deutsch](https://www.youtube.com/watch?v=jHT9nZIXxGU)
-
 ## 🎧 Podcast
 
 * [Automatisierung entschlüsselt: Leiten, Steuern, Regeln – Die unsichtbare Sprache der Technik (DIN IEC 60050-351)](https://podcasters.spotify.com/pod/show/ms-muc-lama/episodes/Automatisierung-entschlsselt-Leiten--Steuern--Regeln--Die-unsichtbare-Sprache-der-Technik-DIN-IEC-60050-351-e36t52b)

@@ -9,10 +9,6 @@
 
 Dieser Artikel beschreibt die logiBUS®-Übung `Uebung_003a`. Hier wird ein fortgeschrittener Ansatz zur Strukturierung von IEC 61499-Anwendungen demonstriert: Die Kapselung von Logik in wiederverwendbare, typisierte Sub-Applikationen ("Typed SubApps").
 
-## 📺 Video
-
-* [2025-03-30 16-47-54 Subapplications Übung 003a](https://www.youtube.com/watch?v=hKU6_d82lAE)
-
 ----
 
 ![](Uebung_003a.png)

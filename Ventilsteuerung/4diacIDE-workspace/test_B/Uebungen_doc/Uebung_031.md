@@ -9,13 +9,6 @@
 
 Dieser Artikel beschreibt die logiBUS®-Übung `Uebung_031`. Hier steuern wir adressierbare RGB-LEDs (z.B. WS2812) über das komfortable HSV-Farbmodell an.
 
-## 📺 Video
-
-* [Übung 31: LED Ansteuern mit Devkit ohne Hutschienenmoped](https://www.youtube.com/watch?v=ZNbAw4bBUjg)
-* [Everything about timers in IEC 61131-3 | TON, TOF & TP explained in an easy-to-understand way! ⏱️](https://www.youtube.com/watch?v=Zlm488qBtZY)
-* [IEC 61499 vs. 61131: Brauchen wir einen neuen Standard für IIoT? Analyse einer hitzigen Debatte u...](https://www.youtube.com/watch?v=kp8L-yM5mAs)
-* [IEC 61499: Befreit der neue Standard die Industrieautomation? Ein Vergleich mit 61131 und die Brü...](https://www.youtube.com/watch?v=iIbwnDH--M4)
-
 ## 🎧 Podcast
 
 * [Die drei Timer der DIN EN 61131-3 entschlüsselt – TP, TON & TOF präzise erklärt](https://podcasters.spotify.com/pod/show/iec-61499-grundkurs-de/episodes/Die-drei-Timer-der-DIN-EN-61131-3-entschlsselt--TP--TON--TOF-przise-erklrt-e3dma77)

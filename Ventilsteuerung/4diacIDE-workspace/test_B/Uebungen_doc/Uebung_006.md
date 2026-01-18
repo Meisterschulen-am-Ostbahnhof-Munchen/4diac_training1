@@ -9,13 +9,6 @@
 
 Dieser Artikel beschreibt die logiBUS®-Übung `Uebung_006`. Hier wird ein klassischer Selbsthaltespeicher mit getrennten Tastern für Ein und Aus implementiert.
 
-## 📺 Video
-
-* [2025-02-02 18-21-50 Uebung_006c Funktion E_DEMUX8 und ..._DI_REPEAT](https://www.youtube.com/watch?v=fOSa4_A7-dE)
-* [RS-Flip-Flop Baustein E_RS aus der IEC 61499 (Übung 006b)](https://www.youtube.com/watch?v=GXOe8K7Jgr0)
-* [SR&T-Flip-Flop Übung 006a](https://www.youtube.com/watch?v=lfumU4WoIGs)
-* [SR-Flip-Flop Baustein E_SR aus der IEC 61499 (Übung 006)](https://www.youtube.com/watch?v=6nGmGX7gwAE)
-
 ----
 
 ![](Uebung_006.png)

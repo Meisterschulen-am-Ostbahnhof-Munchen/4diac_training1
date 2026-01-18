@@ -9,14 +9,6 @@
 
 Dieser Artikel beschreibt die logiBUS®-Übung `Uebung_022`. Hier wird die Ablaufsteuerung auf zwei nacheinander folgende Schritte erweitert.
 
-## 📺 Video
-
-* [2025-03-30 16-22-28 Boot-File in 4diac und logiBUS®](https://www.youtube.com/watch?v=26EKn0-xwkI)
-* [2025-03-30 17-14-22 ISO-Designer Projekt anlegen und in 4diac einbinden](https://www.youtube.com/watch?v=byhZri0xs1g)
-* [22. Apr. 2025 Tag 3 von logiBUS® Schulungsreihe (D)](https://www.youtube.com/watch?v=FBsFm1SwPQc)
-* [Geräte Manager 2022 10 18 17 38 10](https://www.youtube.com/watch?v=l9kIRm3Wtas)
-* [logiBUS® ESP32 installer   Google Chrome 2022 10 18 17 38 33](https://www.youtube.com/watch?v=pQ53R2zChlc)
-
 ## 🎧 Podcast
 
 * [Als Landtechnik-Spezialist durch die Hölle: Wie Lanz-Wery Krieg, Besatzung und Hyperinflation überlebte – Einblicke in Original-Geschäftsberichte 1915-1922](https://podcasters.spotify.com/pod/show/ms-muc-lama/episodes/Als-Landtechnik-Spezialist-durch-die-Hlle-Wie-Lanz-Wery-Krieg--Besatzung-und-Hyperinflation-berlebte--Einblicke-in-Original-Geschftsberichte-1915-1922-e39athj)

@@ -9,10 +9,6 @@
 
 Dieser Artikel beschreibt die logiBUS®-Übung `Uebung_041`. Hier wird die manuelle Steuerung einer 8-stufigen Schrittkette auf einen einzigen Taster reduziert.
 
-## 📺 Video
-
-* [2025-03-30 19-41-34 Python Installation prüfen](https://www.youtube.com/watch?v=pBo6QPdWtgA)
-
 ----
 
 ![](Uebung_041.png)

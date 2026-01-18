@@ -9,14 +9,6 @@
 
 Dieser Artikel beschreibt die logiBUS®-Übung `Uebung_036`. Im Gegensatz zu Übung 035 liegt hier der Fokus auf der manuellen Weiterschaltung durch Ereignisse.
 
-## 📺 Video
-
-* [2025-01-28 20-01-36 logiBUS® Projektupdate und EInit (jetzt mit Ton)](https://www.youtube.com/watch?v=h-tzDyRtiHo)
-* [2025-02-23 11-18-57 Einstieg in Autodesk Fusion 360 - Mechanisches Design MCAD](https://www.youtube.com/watch?v=3bmFKBpIpZY)
-* [2025-02-23 11-43-44 Fusion 360 Übersicht Tutorials](https://www.youtube.com/watch?v=djM9ndIfp-0)
-* [2025-02-23 11-47-07 Fusion 360 Elektronik Einführung](https://www.youtube.com/watch?v=uZb-U6FArGw)
-* [2025-02-23 13-20-15 Fusion 360 Elektronik Stückliste Exportieren](https://www.youtube.com/watch?v=Z5RllKgpOfc)
-
 ----
 
 ![](Uebung_036.png)

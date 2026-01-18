@@ -11,11 +11,7 @@ Dieser Artikel beschreibt die logiBUS®-Übung `Uebung_019`. Hier wird gezeigt, 
 
 ## 📺 Video
 
-* [2025-02-02 19-11-57 DI_LONG_PRESS_HOLD (Teil 2)](https://www.youtube.com/watch?v=vpA6dfZDwh0)
-* [2025-03-30 19-41-34 Python Installation prüfen](https://www.youtube.com/watch?v=pBo6QPdWtgA)
-* [2025-04-06 19-43-11 Slurry Tanker und Subapps und Groups erklärt](https://www.youtube.com/watch?v=EYsZXyRwfps)
-* [2025-11-02 13-19-52 LogiBUS® auf dem Weg zu Eclipse 4diac™ 3.0 - Umstellung eines Projektes](https://www.youtube.com/watch?v=5J_PuNkwxNo)
-* [2025-11-15 12-19-33 Montage Hutschienenmoped logiBUS® -- Teil 2 -- Einführung und Löten](https://www.youtube.com/watch?v=nohE36SZY9M)
+* [Landwirtschaft 1906](https://www.youtube.com/watch?v=rqX10EiEiNM)
 
 ## 🎧 Podcast
 

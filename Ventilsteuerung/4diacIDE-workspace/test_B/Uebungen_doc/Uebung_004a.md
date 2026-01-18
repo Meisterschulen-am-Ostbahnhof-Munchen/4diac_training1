@@ -9,10 +9,6 @@
 
 Dieser Artikel beschreibt die logiBUS®-Übung `Uebung_004a`. In dieser Übung verlassen wir die reine Datenweiterleitung und nutzen Ereignisse (Events), um eine Speicherfunktion zu realisieren: Einen klassischen Stromstoßschalter.
 
-## 📺 Video
-
-* [Toggle-Flip-Flop Baustein E_T_FF aus der IEC 61499 (Übung 004a)](https://www.youtube.com/watch?v=XZqsqNy_g_g)
-
 ----
 
 ![](Uebung_004a.png)

@@ -9,11 +9,6 @@
 
 Dieser Artikel beschreibt die logiBUS®-Übung `Uebung_020e`.
 
-## 📺 Video
-
-* [BTM9020EP: Motor-Maestro](https://www.youtube.com/watch?v=pCCqBW8_m18)
-* [MOTIX™ BTM9020EP im Detail](https://www.youtube.com/watch?v=A0-osdslKYE)
-
 ## 🎧 Podcast
 
 * [Infineon BTM9020EP Vollbrücke verstehen](https://podcasters.spotify.com/pod/show/ms-muc-lama/episodes/Infineon-BTM9020EP-Vollbrcke-verstehen-e3b8n24)
