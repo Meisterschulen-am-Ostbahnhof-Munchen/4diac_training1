@@ -1,5 +1,8 @@
 # Uebung_020e2_AX: AX_FB_TOF mit Takteingang
 
+```{index} single: Uebung_020e2_AX: AX_FB_TOF mit Takteingang
+```
+
 [Uebung_020e2_AX](https://docs.ms-muc-docs.de/projects/visual-programming-languages-docs/de/latest/training1/Ventilsteuerung/4diacIDE-workspace/test/FBs/Uebungen/Uebung_020e2_AX.html)
 
 Dieser Artikel beschreibt die logiBUS®-Übung `Uebung_020e2_AX`. Hier wird der adapterbasierte IEC 61131-3 Timer-Baustein `AX_FB_TOF` verwendet, der eine regelmäßige Triggerung (Takt) benötigt.

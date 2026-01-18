@@ -1,5 +1,8 @@
 # Uebung_020e_AX: Ausschaltverzögerung (TOF)
 
+```{index} single: Uebung_020e_AX: Ausschaltverzögerung (TOF)
+```
+
 [Uebung_020e_AX](https://docs.ms-muc-docs.de/projects/visual-programming-languages-docs/de/latest/training1/Ventilsteuerung/4diacIDE-workspace/test/FBs/Uebungen/Uebung_020e_AX.html)
 
 [![NotebookLM](media/NotebookLM_logo.png)](https://notebooklm.google.com/notebook/041f4df4-b729-484d-b786-b6dcdf151961)

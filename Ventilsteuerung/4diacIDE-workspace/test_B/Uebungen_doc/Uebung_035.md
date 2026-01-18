@@ -1,5 +1,8 @@
 # Uebung_035: Schrittketten-Steuerung (4 Phasen)
 
+```{index} single: Uebung_035: Schrittketten-Steuerung (4 Phasen)
+```
+
 [Uebung_035](https://docs.ms-muc-docs.de/projects/visual-programming-languages-docs/de/latest/training1/Ventilsteuerung/4diacIDE-workspace/test/FBs/Uebungen/Uebung_035.html)
 
 [![NotebookLM](media/NotebookLM_logo.png)](https://notebooklm.google.com/notebook/a6872e59-1dfc-4132-a118-aff1bc7bc944)

@@ -1,5 +1,8 @@
 # Uebung_160_AX: Motor-Logik mit Statusmeldung
 
+```{index} single: Uebung_160_AX: Motor-Logik mit Statusmeldung
+```
+
 [Uebung_160_AX](https://docs.ms-muc-docs.de/projects/visual-programming-languages-docs/de/latest/training1/Ventilsteuerung/4diacIDE-workspace/test/FBs/Uebungen/Uebung_160_AX.html)
 
 [![NotebookLM](media/NotebookLM_logo.png)](https://notebooklm.google.com/notebook/041f4df4-b729-484d-b786-b6dcdf151961)

@@ -1,5 +1,8 @@
 # Uebung_004a9_AX: Event-Splitter 3-fach (E_SPLIT_3)
 
+```{index} single: Uebung_004a9_AX: Event-Splitter 3-fach (E_SPLIT_3)
+```
+
 [Uebung_004a9_AX](https://docs.ms-muc-docs.de/projects/visual-programming-languages-docs/de/latest/training1/Ventilsteuerung/4diacIDE-workspace/test/FBs/Uebungen/Uebung_004a9_AX.html)
 
 [![NotebookLM](media/NotebookLM_logo.png)](https://notebooklm.google.com/notebook/041f4df4-b729-484d-b786-b6dcdf151961)

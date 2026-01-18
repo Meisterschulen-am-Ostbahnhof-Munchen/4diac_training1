@@ -1,5 +1,8 @@
 # Uebung_010bA2: AUX-Zustands-Events (Enabled)
 
+```{index} single: Uebung_010bA2: AUX-Zustands-Events (Enabled)
+```
+
 [Uebung_010bA2](https://docs.ms-muc-docs.de/projects/visual-programming-languages-docs/de/latest/training1/Ventilsteuerung/4diacIDE-workspace/test/FBs/Uebungen/Uebung_010bA2.html)
 
 [![NotebookLM](media/NotebookLM_logo.png)](https://notebooklm.google.com/notebook/a6872e59-1dfc-4132-a118-aff1bc7bc944)

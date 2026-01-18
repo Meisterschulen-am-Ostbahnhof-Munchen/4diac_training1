@@ -1,5 +1,8 @@
 # Uebung_051: Signal-Bündelung (Strukturen)
 
+```{index} single: Uebung_051: Signal-Bündelung (Strukturen)
+```
+
 [Uebung_051](https://docs.ms-muc-docs.de/projects/visual-programming-languages-docs/de/latest/training1/Ventilsteuerung/4diacIDE-workspace/test/FBs/Uebungen/Uebung_051.html)
 
 [![NotebookLM](media/NotebookLM_logo.png)](https://notebooklm.google.com/notebook/a6872e59-1dfc-4132-a118-aff1bc7bc944)

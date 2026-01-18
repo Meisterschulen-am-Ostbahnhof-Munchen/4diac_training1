@@ -1,5 +1,8 @@
 # Uebung_002a5b: ODER-Verknüpfung mit Signalverteilung
 
+```{index} single: Uebung_002a5b: ODER-Verknüpfung mit Signalverteilung
+```
+
 [Uebung_002a5b](https://docs.ms-muc-docs.de/projects/visual-programming-languages-docs/de/latest/training1/Ventilsteuerung/4diacIDE-workspace/test/FBs/Uebungen/Uebung_002a5b.html)
 
 [![NotebookLM](media/NotebookLM_logo.png)](https://notebooklm.google.com/notebook/a6872e59-1dfc-4132-a118-aff1bc7bc944)

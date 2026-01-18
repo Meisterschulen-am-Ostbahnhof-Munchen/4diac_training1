@@ -1,5 +1,8 @@
 # Uebung_090a2: Beispiel für F_MUX_3
 
+```{index} single: Uebung_090a2: Beispiel für F_MUX_3
+```
+
 * * * * * * * * * *
 
 ## Einleitung

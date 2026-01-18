@@ -1,5 +1,8 @@
 # Uebung_016a: Mehrfarbige Zustandsanzeige
 
+```{index} single: Uebung_016a: Mehrfarbige Zustandsanzeige
+```
+
 [Uebung_016a](https://docs.ms-muc-docs.de/projects/visual-programming-languages-docs/de/latest/training1/Ventilsteuerung/4diacIDE-workspace/test/FBs/Uebungen/Uebung_016a.html)
 
 [![NotebookLM](media/NotebookLM_logo.png)](https://notebooklm.google.com/notebook/a6872e59-1dfc-4132-a118-aff1bc7bc944)

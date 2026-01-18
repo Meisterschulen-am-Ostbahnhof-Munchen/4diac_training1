@@ -1,5 +1,8 @@
 # Uebung_001_AX: DigitalInput_I1 auf DigitalOutput_Q1, mit Plug and Socket
 
+```{index} single: Uebung_001_AX: DigitalInput_I1 auf DigitalOutput_Q1, mit Plug and Socket
+```
+
 [Uebung_001_AX](https://docs.ms-muc-docs.de/projects/visual-programming-languages-docs/de/latest/training1/Ventilsteuerung/4diacIDE-workspace/test/FBs/Uebungen/Uebung_001_AX.html)
 
 [![NotebookLM](media/NotebookLM_logo.png)](https://notebooklm.google.com/notebook/041f4df4-b729-484d-b786-b6dcdf151961)

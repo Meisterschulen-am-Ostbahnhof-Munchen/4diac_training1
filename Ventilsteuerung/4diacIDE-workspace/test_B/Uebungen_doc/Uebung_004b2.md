@@ -1,5 +1,8 @@
 # Uebung_004b2: Doppelte manuelle Toggle-Logik
 
+```{index} single: Uebung_004b2: Doppelte manuelle Toggle-Logik
+```
+
 [Uebung_004b2](https://docs.ms-muc-docs.de/projects/visual-programming-languages-docs/de/latest/training1/Ventilsteuerung/4diacIDE-workspace/test/FBs/Uebungen/Uebung_004b2.html)
 
 [![NotebookLM](media/NotebookLM_logo.png)](https://notebooklm.google.com/notebook/a6872e59-1dfc-4132-a118-aff1bc7bc944)

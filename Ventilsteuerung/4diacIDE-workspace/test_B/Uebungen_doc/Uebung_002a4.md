@@ -1,5 +1,8 @@
 # Uebung_002a4: Logische UND-Verknüpfung (AND_2_BOOL)
 
+```{index} single: Uebung_002a4: Logische UND-Verknüpfung (AND_2_BOOL)
+```
+
 [Uebung_002a4](https://docs.ms-muc-docs.de/projects/visual-programming-languages-docs/de/latest/training1/Ventilsteuerung/4diacIDE-workspace/test/FBs/Uebungen/Uebung_002a4.html)
 
 [![NotebookLM](media/NotebookLM_logo.png)](https://notebooklm.google.com/notebook/041f4df4-b729-484d-b786-b6dcdf151961)

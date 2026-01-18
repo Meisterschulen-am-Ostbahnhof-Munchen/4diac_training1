@@ -2,6 +2,9 @@ Hier ist die Dokumentation für die Übung basierend auf der bereitgestellten XM
 
 # Uebung_003b3_sub_AX
 
+```{index} single: Uebung_003b3_sub_AX
+```
+
 ![Bild der Übung, falls vorhanden](path/to/image_placeholder.png)
 
 * * * * * * * * * *

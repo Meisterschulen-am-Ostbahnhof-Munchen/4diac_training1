@@ -2,6 +2,9 @@ Hier ist die Dokumentation für die Übung basierend auf den bereitgestellten XM
 
 # Übung 039a - Sub-Applikation Outputs
 
+```{index} single: Übung 039a - Sub-Applikation Outputs
+```
+
 ![Bild der Übung, falls vorhanden]
 
 * * * * * * * * * *

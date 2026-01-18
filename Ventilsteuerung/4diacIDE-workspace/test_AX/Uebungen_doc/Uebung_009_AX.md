@@ -1,5 +1,8 @@
 # Uebung_009_AX: Ereignis-Zähler (Ticker) mit Adaptern
 
+```{index} single: Uebung_009_AX: Ereignis-Zähler (Ticker) mit Adaptern
+```
+
 [Uebung_009_AX](https://docs.ms-muc-docs.de/projects/visual-programming-languages-docs/de/latest/training1/Ventilsteuerung/4diacIDE-workspace/test/FBs/Uebungen/Uebung_009_AX.html)
 
 Dieser Artikel beschreibt die logiBUS®-Übung `Uebung_009_AX`. Hier wird die Funktionsweise eines ereignisbasierten Zählers und einer numerischen Anzeige über AX-Adapter demonstriert, was zu einer kompakteren und übersichtlicheren Verdrahtung führt.

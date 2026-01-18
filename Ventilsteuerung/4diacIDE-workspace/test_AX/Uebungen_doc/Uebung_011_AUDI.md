@@ -1,5 +1,8 @@
 # Uebung_011_AUDI: Numerische Eingabe mit Adaptern
 
+```{index} single: Uebung_011_AUDI: Numerische Eingabe mit Adaptern
+```
+
 [Uebung_011_AUDI](https://docs.ms-muc-docs.de/projects/visual-programming-languages-docs/de/latest/training1/Ventilsteuerung/4diacIDE-workspace/test/FBs/Uebungen/Uebung_011_AUDI.html)
 
 Dieser Artikel beschreibt die logiBUS®-Übung `Uebung_011_AUDI`. Sie ist die adapterbasierte Variante der Übung 011 und zeigt, wie numerische Werte effizient und übersichtlich verarbeitet werden.

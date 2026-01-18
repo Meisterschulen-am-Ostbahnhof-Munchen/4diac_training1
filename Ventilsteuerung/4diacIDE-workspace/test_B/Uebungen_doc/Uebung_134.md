@@ -1,5 +1,8 @@
 # Uebung_134: Empfang von unbekannten Partnern
 
+```{index} single: Uebung_134: Empfang von unbekannten Partnern
+```
+
 [Uebung_134](https://docs.ms-muc-docs.de/projects/visual-programming-languages-docs/de/latest/training1/Ventilsteuerung/4diacIDE-workspace/test/FBs/Uebungen/Uebung_134.html)
 
 [![NotebookLM](media/NotebookLM_logo.png)](https://notebooklm.google.com/notebook/a6872e59-1dfc-4132-a118-aff1bc7bc944)

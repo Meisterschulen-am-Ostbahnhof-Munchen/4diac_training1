@@ -1,5 +1,8 @@
 # Übungen (Arbeitsbereich test_B)
 
+```{index} single: Übungen (Arbeitsbereich test_B)
+```
+
 Hier finden Sie die Dokumentation der Übungen für den logiBUS® ohne den **AX Adapter**. Die Übungen sind thematisch gruppiert, um den Lernfortschritt optimal zu unterstützen.
 
 ## Themengebiete

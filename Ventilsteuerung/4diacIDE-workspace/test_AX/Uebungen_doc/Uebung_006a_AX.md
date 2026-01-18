@@ -1,5 +1,8 @@
 # Uebung_006a_AX: Kombiniertes T/SR Flip-Flop
 
+```{index} single: Uebung_006a_AX: Kombiniertes T/SR Flip-Flop
+```
+
 [Uebung_006a_AX](https://docs.ms-muc-docs.de/projects/visual-programming-languages-docs/de/latest/training1/Ventilsteuerung/4diacIDE-workspace/test/FBs/Uebungen/Uebung_006a_AX.html)
 
 [![NotebookLM](media/NotebookLM_logo.png)](https://notebooklm.google.com/notebook/041f4df4-b729-484d-b786-b6dcdf151961)

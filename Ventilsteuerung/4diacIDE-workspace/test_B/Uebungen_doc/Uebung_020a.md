@@ -1,5 +1,8 @@
 # Uebung_020a: Manueller Speicher (Standard-Pins)
 
+```{index} single: Uebung_020a: Manueller Speicher (Standard-Pins)
+```
+
 [Uebung_020a](https://docs.ms-muc-docs.de/projects/visual-programming-languages-docs/de/latest/training1/Ventilsteuerung/4diacIDE-workspace/test/FBs/Uebungen/Uebung_020a.html)
 
 [![NotebookLM](media/NotebookLM_logo.png)](https://notebooklm.google.com/notebook/a6872e59-1dfc-4132-a118-aff1bc7bc944)

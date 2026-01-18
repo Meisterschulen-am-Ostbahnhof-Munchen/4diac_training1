@@ -1,5 +1,8 @@
 # Uebung_010b4_AX: Softkey Massenmapping (8-fach)
 
+```{index} single: Uebung_010b4_AX: Softkey Massenmapping (8-fach)
+```
+
 [Uebung_010b4_AX](https://docs.ms-muc-docs.de/projects/visual-programming-languages-docs/de/latest/training1/Ventilsteuerung/4diacIDE-workspace/test/FBs/Uebungen/Uebung_010b4_AX.html)
 
 [![NotebookLM](media/NotebookLM_logo.png)](https://notebooklm.google.com/notebook/041f4df4-b729-484d-b786-b6dcdf151961)

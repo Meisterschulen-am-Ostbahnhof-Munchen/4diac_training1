@@ -1,5 +1,8 @@
 # Uebung_152: PI-Regelung (Drehzahlregelung)
 
+```{index} single: Uebung_152: PI-Regelung (Drehzahlregelung)
+```
+
 [Uebung_152](https://docs.ms-muc-docs.de/projects/visual-programming-languages-docs/de/latest/training1/Ventilsteuerung/4diacIDE-workspace/test/FBs/Uebungen/Uebung_152.html)
 
 [![NotebookLM](media/NotebookLM_logo.png)](https://notebooklm.google.com/notebook/041f4df4-b729-484d-b786-b6dcdf151961)

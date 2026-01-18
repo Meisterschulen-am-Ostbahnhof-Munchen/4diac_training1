@@ -1,6 +1,9 @@
 ```markdown
 # Uebung_002a5b_AX: DigitalInput_I1-3 mit OR auf DigitalOutput_Q1-3, mit Plug and Socket
 
+```{index} single: Uebung_002a5b_AX: DigitalInput_I1-3 mit OR auf DigitalOutput_Q1-3, mit Plug and Socket
+```
+
 <!-- Bild der Übung, falls vorhanden -->
 
 * * * * * * * * * *

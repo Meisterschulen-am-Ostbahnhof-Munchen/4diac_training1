@@ -1,5 +1,8 @@
 # Uebung_128: Globaler Rundruf (Broadcast)
 
+```{index} single: Uebung_128: Globaler Rundruf (Broadcast)
+```
+
 [Uebung_128](https://docs.ms-muc-docs.de/projects/visual-programming-languages-docs/de/latest/training1/Ventilsteuerung/4diacIDE-workspace/test/FBs/Uebungen/Uebung_128.html)
 
 [![NotebookLM](media/NotebookLM_logo.png)](https://notebooklm.google.com/notebook/a6872e59-1dfc-4132-a118-aff1bc7bc944)

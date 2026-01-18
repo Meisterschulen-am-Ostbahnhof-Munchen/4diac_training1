@@ -1,5 +1,8 @@
 # Uebung_006d_AX: SR-Flip-Flop mit Doppelklick-Set
 
+```{index} single: Uebung_006d_AX: SR-Flip-Flop mit Doppelklick-Set
+```
+
 [Uebung_006d_AX](https://docs.ms-muc-docs.de/projects/visual-programming-languages-docs/de/latest/training1/Ventilsteuerung/4diacIDE-workspace/test/FBs/Uebungen/Uebung_006d_AX.html)
 
 [![NotebookLM](media/NotebookLM_logo.png)](https://notebooklm.google.com/notebook/041f4df4-b729-484d-b786-b6dcdf151961)

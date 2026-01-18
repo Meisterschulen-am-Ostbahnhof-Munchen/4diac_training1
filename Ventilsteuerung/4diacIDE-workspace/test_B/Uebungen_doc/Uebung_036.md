@@ -1,5 +1,8 @@
 # Uebung_036: Event-gesteuerte Schrittkette
 
+```{index} single: Uebung_036: Event-gesteuerte Schrittkette
+```
+
 [Uebung_036](https://docs.ms-muc-docs.de/projects/visual-programming-languages-docs/de/latest/training1/Ventilsteuerung/4diacIDE-workspace/test/FBs/Uebungen/Uebung_036.html)
 
 [![NotebookLM](media/NotebookLM_logo.png)](https://notebooklm.google.com/notebook/a6872e59-1dfc-4132-a118-aff1bc7bc944)

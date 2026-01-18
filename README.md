@@ -1,5 +1,8 @@
 # 🚜 4diac Training: Ventilsteuerung & ISOBUS Automation
 
+```{index} single: 🚜 4diac Training: Ventilsteuerung & ISOBUS Automation
+```
+
 [![License](https://img.shields.io/badge/License-EPL%202.0-red.svg)](LICENSE.md)
 [![4diac](https://img.shields.io/badge/Eclipse-4diac-purple)](https://www.eclipse.org/4diac/)
 [![Standard](https://img.shields.io/badge/Standard-IEC%2061131--3-green)](https://en.wikipedia.org/wiki/IEC_61131-3)
