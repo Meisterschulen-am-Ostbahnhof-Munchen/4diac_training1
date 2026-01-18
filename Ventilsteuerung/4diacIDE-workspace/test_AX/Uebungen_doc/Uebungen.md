@@ -5,6 +5,19 @@
 
 Hier finden Sie die Dokumentation der Übungen für den logiBUS® mit dem **AX Adapter**. Die Übungen sind thematisch gruppiert, um den Lernfortschritt optimal zu unterstützen.
 
+## Themengebiete
+
+```{toctree}
+:maxdepth: 1
+
+Uebungen_Basis
+Uebungen_FlipFlops
+Uebungen_Timer
+Uebungen_Sequenzer
+Uebung_Isobus_Softkeys
+Uebungen_Signale
+Uebungen_SubApps
+```
 ## 🎧 Podcast
 
 * [4diac IDE: Dein Open-Source-Werkzeugkasten für verteilte Industrieautomatisierung nach IEC 61499](https://podcasters.spotify.com/pod/show/eclipse-4diac-de/episodes/4diac-IDE-Dein-Open-Source-Werkzeugkasten-fr-verteilte-Industrieautomatisierung-nach-IEC-61499-e36821e)
@@ -20,22 +33,6 @@ Hier finden Sie die Dokumentation der Übungen für den logiBUS® mit dem **AX A
 * [2025 11 15 12 52 26 Montage Hutschienenmoped logiBUS® -- Teil 4 -- Aufbauten](https://www.youtube.com/watch?v=WeowCxZW70Y)
 * [2025-01-29 09-27-56 Windows Defender exclusion check in der Eclipse 4diac™ IDE](https://www.youtube.com/watch?v=8k8-QnbTPxk)
 * [2025-02-23 13-20-15 Fusion 360 Elektronik Stückliste Exportieren](https://www.youtube.com/watch?v=Z5RllKgpOfc)
-
-## Themengebiete
-
-```{toctree}
-:maxdepth: 1
-
-Uebungen_Basis
-Uebungen_FlipFlops
-Uebungen_Timer
-Uebungen_Sequenzer
-Uebung_Isobus_Softkeys
-Uebungen_Signale
-Uebungen_SubApps
-```
-
----
 
 ## Vollständiger Index
 

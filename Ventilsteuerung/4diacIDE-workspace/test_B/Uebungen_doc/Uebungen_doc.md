@@ -5,10 +5,6 @@
 
 Hier finden Sie alle Übungen des Arbeitsbereichs `test_B` in aufsteigender Reihenfolge.
 
-## 🎧 Podcast
-
-* [LogiBUS zu 4diac 3.0: Die Komplette Migrationsanleitung – Kniffe, Stolpersteine und der Umstieg auf Index 1](https://podcasters.spotify.com/pod/show/logibus/episodes/LogiBUS-zu-4diac-3-0-Die-Komplette-Migrationsanleitung--Kniffe--Stolpersteine-und-der-Umstieg-auf-Index-1-e3ahcru)
-
 ```{toctree}
 :maxdepth: 1
 

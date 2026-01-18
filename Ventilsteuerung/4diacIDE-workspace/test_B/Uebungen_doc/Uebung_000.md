@@ -9,26 +9,18 @@
 
 Dieser Artikel beschreibt die logiBUS®-Übung `Uebung_000`. Dies ist das absolute Einstiegsbeispiel für die mathematische Datenverarbeitung.
 
-
 ## 📺 Video
 
 * [Hannes' Turbo-Mais: Wie ein Landwirt mit Hackschnitzel-Kreislauf und Turmtrockner 15.000 Tonnen K...](https://www.youtube.com/watch?v=ubdnMasBwUM)
-* [2025-02-02 18-21-50 Uebung_006c Funktion E_DEMUX8 und ..._DI_REPEAT](https://www.youtube.com/watch?v=fOSa4_A7-dE)
-* [2025-03-15 15-57-14 Arithmetischer Überlauf](https://www.youtube.com/watch?v=TLanGc-c9Ww)
-* [2025-03-15 16-27-21 Arithmetischer Überlauf führt zu Division durch 0.](https://www.youtube.com/watch?v=7CyOJPYJVz0)
-* [2025-03-30 16-40-13 Softkey Ansteuerung Übung 10b2](https://www.youtube.com/watch?v=RLUNzsGLVw8)
 
-## Podcast
+## 🎧 Podcast
+
 * [3000 Watt Lüge Die TVS Diode entschlüsselt](https://podcasters.spotify.com/pod/show/ms-muc-lama/episodes/3000-Watt-Lge-Die-TVS-Diode-entschlsselt-e3aun8t)
 * [Hannes' Turbo-Mais: Wie ein Landwirt mit Hackschnitzel-Kreislauf und Turmtrockner 15.000 Tonnen Körnermais verarbeitet](https://podcasters.spotify.com/pod/show/ms-muc-lama/episodes/Hannes-Turbo-Mais-Wie-ein-Landwirt-mit-Hackschnitzel-Kreislauf-und-Turmtrockner-15-000-Tonnen-Krnermais-verarbeitet-e3a5e0o)
-<iframe src="https://creators.spotify.com/pod/profile/logibus/embed/episodes/LogiBUS--IEC-61499-Daten--und-Ereignisflsse-einfach-erklrt--Vom-Schalter-zur-intelligenten-Steuerung-e36vldb/a-ac3vadb" height="102px" width="400px" frameborder="0" scrolling="no"></iframe>
 
 ----
 
-
-
 ![](Uebung_000.png)
-
 
 ## Ziel der Übung
 

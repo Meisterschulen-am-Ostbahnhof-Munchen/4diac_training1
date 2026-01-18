@@ -9,24 +9,16 @@
 
 Dieser Artikel beschreibt die logiBUS®-Übung `Uebung_028`. Hier verlassen wir die digitale Welt (An/Aus) und erfassen kontinuierliche Messwerte (Analogsignale).
 
-
 ## 📺 Video
 
-* [2025-02-02 18-21-50 Uebung_006c Funktion E_DEMUX8 und ..._DI_REPEAT](https://www.youtube.com/watch?v=fOSa4_A7-dE)
-* [2025-03-30 16-40-13 Softkey Ansteuerung Übung 10b2](https://www.youtube.com/watch?v=RLUNzsGLVw8)
-* [2025-03-30 16-47-54 Subapplications Übung 003a](https://www.youtube.com/watch?v=hKU6_d82lAE)
-* [2025-12-14 20-03-27 Aufspielen Training 1 Übung 1 auf das Hutschienenmoped.](https://www.youtube.com/watch?v=6iog7-DZvW0)
-* [Aufwärts zählen Baustein E_CTU aus der IEC 61499 (Übung 80)](https://www.youtube.com/watch?v=oZOWd_zKFcc)
-
-## Podcast
-<iframe src="https://creators.spotify.com/pod/profile/logibus/embed/episodes/LogiBUS--IEC-61499-Daten--und-Ereignisflsse-einfach-erklrt--Vom-Schalter-zur-intelligenten-Steuerung-e36vldb/a-ac3vadb" height="102px" width="400px" frameborder="0" scrolling="no"></iframe>
+* [2025-01-28 17-51-25  logiBUS® Projektupdate und EInit (leider ohne Ton)](https://www.youtube.com/watch?v=OBNqWd_gZVU)
+* [2025-01-28 20-01-36 logiBUS® Projektupdate und EInit (jetzt mit Ton)](https://www.youtube.com/watch?v=h-tzDyRtiHo)
+* [2025-02-21 15-23-28 logiBUS® mit Eclipse 4diac™ neues IO Konzept für alle Controller](https://www.youtube.com/watch?v=YUCodIng1UA)
+* [2025-03-30 16-22-28 Boot-File in 4diac und logiBUS®](https://www.youtube.com/watch?v=26EKn0-xwkI)
 
 ----
 
-
-
 ![](Uebung_028.png)
-
 
 ## Ziel der Übung
 

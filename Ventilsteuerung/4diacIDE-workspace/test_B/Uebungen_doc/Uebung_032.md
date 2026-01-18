@@ -9,25 +9,25 @@
 
 Dieser Artikel beschreibt die logiBUS®-Übung `Uebung_032`. Hier werden vorkonfigurierte Farbbausteine für LED-Streifen genutzt.
 
-
 ## 📺 Video
 
-* [2025-02-02 18-21-50 Uebung_006c Funktion E_DEMUX8 und ..._DI_REPEAT](https://www.youtube.com/watch?v=fOSa4_A7-dE)
-* [2025-03-30 16-40-13 Softkey Ansteuerung Übung 10b2](https://www.youtube.com/watch?v=RLUNzsGLVw8)
-* [2025-03-30 16-47-54 Subapplications Übung 003a](https://www.youtube.com/watch?v=hKU6_d82lAE)
-* [2025-12-14 20-03-27 Aufspielen Training 1 Übung 1 auf das Hutschienenmoped.](https://www.youtube.com/watch?v=6iog7-DZvW0)
-* [Aufwärts zählen Baustein E_CTU aus der IEC 61499 (Übung 80)](https://www.youtube.com/watch?v=oZOWd_zKFcc)
+* [Das ESP32-S3-DevKitC-1](https://www.youtube.com/watch?v=fyQt3THIQEQ)
+* [ESP32 in der Landwirtschaft: Revolution durch Software!](https://www.youtube.com/watch?v=9N-hUHq4b1M)
+* [ESP32-S3-DevKitC-1 Doku-Analyse: Das Speicher-Monster (32MB Flash/16MB PSRAM) und die Macht der D...](https://www.youtube.com/watch?v=oQPI4NFTt-k)
+* [ESP32-S3: Universum im Chip](https://www.youtube.com/watch?v=xXfb8vsVZfs)
+* [logiBUS® ESP32 installer   Google Chrome 2022 10 18 17 38 33](https://www.youtube.com/watch?v=pQ53R2zChlc)
 
-## Podcast
-* [Z-Dioden: Funktion, Effekte und Anwendungen in der Elektronik](https://podcasters.spotify.com/pod/show/ms-muc-lama/episodes/Z-Dioden-Funktion--Effekte-und-Anwendungen-in-der-Elektronik-e368igc)
-<iframe src="https://creators.spotify.com/pod/profile/logibus/embed/episodes/LogiBUS--IEC-61499-Daten--und-Ereignisflsse-einfach-erklrt--Vom-Schalter-zur-intelligenten-Steuerung-e36vldb/a-ac3vadb" height="102px" width="400px" frameborder="0" scrolling="no"></iframe>
+## 🎧 Podcast
+
+* [ESP32 als Industrie-SPS: Revolution mit Eclipse 4diac und logiBUS®](https://podcasters.spotify.com/pod/show/logibus/episodes/ESP32-als-Industrie-SPS-Revolution-mit-Eclipse-4diac-und-logiBUS-e375dp6)
+* [ESP32 as PLC: Democratizing Industrial Automation with Eclipse 4diac](https://podcasters.spotify.com/pod/show/logibus/episodes/ESP32-as-PLC-Democratizing-Industrial-Automation-with-Eclipse-4diac-e375e13)
+* [ESP32 wird industrielle SPS für Landmaschinen](https://podcasters.spotify.com/pod/show/logibus/episodes/ESP32-wird-industrielle-SPS-fr-Landmaschinen-e3bf4om)
+* [ESP32-S3 Entwicklungsplatinen ESP32-S3-DevKitC-1](https://podcasters.spotify.com/pod/show/ms-muc-lama/episodes/ESP32-S3-Entwicklungsplatinen-ESP32-S3-DevKitC-1-e368gmd)
+* [ESP32-S3 im Detail: Dual-Core, 32MB Power und CAN-Bus für Land- und Baumaschinen-Mechatronik](https://podcasters.spotify.com/pod/show/ms-muc-lama/episodes/ESP32-S3-im-Detail-Dual-Core--32MB-Power-und-CAN-Bus-fr-Land--und-Baumaschinen-Mechatronik-e39haf4)
 
 ----
 
-
-
 ![](Uebung_032.png)
-
 
 ## Ziel der Übung
 

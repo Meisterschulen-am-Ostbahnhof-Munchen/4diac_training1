@@ -5,12 +5,6 @@
 
 Hier lernen Sie den Umgang mit verschiedenen Flip-Flop-Typen (SR, RS, Toggle) und die Auswertung komplexer Taster-Ereignisse wie Doppel- oder Langklicks.
 
-## 🎧 Podcast
-
-* [Von klickenden Relais zum intelligenten Code: Wie Software die Industriesteuerung revolutionierte](https://podcasters.spotify.com/pod/show/iec-61499-grundkurs-de/episodes/Von-klickenden-Relais-zum-intelligenten-Code-Wie-Software-die-Industriesteuerung-revolutionierte-e375en3)
-* [ISOBUS Button: Mehr als nur ein Klick – Die Standardisierung der Landtechnik](https://podcasters.spotify.com/pod/show/isobus-vt-objects/episodes/ISOBUS-Button-Mehr-als-nur-ein-Klick--Die-Standardisierung-der-Landtechnik-e3673rb)
-* [Taster & Events: GPIO-Grundlagen für Land- und Baumaschinen Mechatroniker](https://podcasters.spotify.com/pod/show/ms-muc-lama/episodes/Taster--Events-GPIO-Grundlagen-fr-Land--und-Baumaschinen-Mechatroniker-e36aaen)
-
 ```{toctree}
 :maxdepth: 1
 

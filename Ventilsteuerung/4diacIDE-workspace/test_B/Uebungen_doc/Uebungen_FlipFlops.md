@@ -5,19 +5,6 @@
 
 Diese Gruppe umfasst alle Übungen zur Zustandsspeicherung, von einfachen SR-Gliedern bis hin zu komplexen Klick-Mustern (Doppelklick, Long-Press).
 
-## 🎧 Podcast
-
-* [Der E_T_FF_SR-Baustein: Herzstück der IEC 61499 – Speichern, Umschalten, Reagieren](https://podcasters.spotify.com/pod/show/iec-61499-grundkurs-de/episodes/Der-E_T_FF_SR-Baustein-Herzstck-der-IEC-61499--Speichern--Umschalten--Reagieren-e3682dm)
-* ["Store Version" – Dein Schlüssel zur Verwaltung von Objektdatenpools im nichtflüchtigen VT-Speicher (ISO 11783-6)](https://podcasters.spotify.com/pod/show/isobus-vt-objects/episodes/Store-Version--Dein-Schlssel-zur-Verwaltung-von-Objektdatenpools-im-nichtflchtigen-VT-Speicher-ISO-11783-6-e36vfh0)
-* [Digitaltechnik entschlüsselt: Das Geheimnis des SR-T-Flip-Flops mit drei Tasten](https://podcasters.spotify.com/pod/show/logibus/episodes/Digitaltechnik-entschlsselt-Das-Geheimnis-des-SR-T-Flip-Flops-mit-drei-Tasten-e36vkub)
-* [Digitale Logik Flip-Flops und Datentypen](https://podcasters.spotify.com/pod/show/ms-muc-lama/episodes/Digitale-Logik-Flip-Flops-und-Datentypen-e3dic6t)
-* [Ende der EEG-Förderung: Ihr Weg zur Energie-Autarkie – PV, Speicher & smarte Nutzung](https://podcasters.spotify.com/pod/show/ms-muc-lama/episodes/Ende-der-EEG-Frderung-Ihr-Weg-zur-Energie-Autarkie--PV--Speicher--smarte-Nutzung-e371mk0)
-
-## 📺 Video
-
-* [ESP32-S3-DevKitC-1 Doku-Analyse: Das Speicher-Monster (32MB Flash/16MB PSRAM) und die Macht der D...](https://www.youtube.com/watch?v=oQPI4NFTt-k)
-* [VLF AÖ-MÜ / 20 Jahre EEG was nun? Vortrag 2: Achim Kimmich, Klimacoach (PV Speicher...)](https://www.youtube.com/watch?v=KoYvjf_wrZc)
-
 ```{toctree}
 Uebung_004a
 Uebung_004a2
