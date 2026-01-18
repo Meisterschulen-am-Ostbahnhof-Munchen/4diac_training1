@@ -17,6 +17,22 @@ Es eignet sich hervorragend für Schulungszwecke, Meisterkurse und Entwickler, d
 
 logiBUS® <https://www.logibus.tech/> 
 
+## 🎧 Podcast
+
+* [Eclipse 4diac and FORTE: Unlocking Next-Gen Industrial Automation with Open-Source Power](https://podcasters.spotify.com/pod/show/eclipse-4diac-en/episodes/Eclipse-4diac-and-FORTE-Unlocking-Next-Gen-Industrial-Automation-with-Open-Source-Power-e3682iu)
+* [Eclipse 4diac: Unpacking Open-Source Industrial Automation and the Power of Application-Centric Design](https://podcasters.spotify.com/pod/show/eclipse-4diac-en/episodes/Eclipse-4diac-Unpacking-Open-Source-Industrial-Automation-and-the-Power-of-Application-Centric-Design-e3721li)
+* [IEC 61499 Power Up: Feature Freeze Reveals the Eclipse 4diac 3.0 Revolution for Industrial Automation](https://podcasters.spotify.com/pod/show/eclipse-4diac-en/episodes/IEC-61499-Power-Up-Feature-Freeze-Reveals-the-Eclipse-4diac-3-0-Revolution-for-Industrial-Automation-e3a5cu3)
+* [ESP32 as PLC: Democratizing Industrial Automation with Eclipse 4diac](https://podcasters.spotify.com/pod/show/logibus/episodes/ESP32-as-PLC-Democratizing-Industrial-Automation-with-Eclipse-4diac-e375e13)
+* [4diac IDE: Dein "Hello World" der Automatisierung – Das Blinking Tutorial Lokal](https://podcasters.spotify.com/pod/show/eclipse-4diac-de/episodes/4diac-IDE-Dein-Hello-World-der-Automatisierung--Das-Blinking-Tutorial-Lokal-e36971r)
+
+## 📺 Video
+
+* [2025-12-14 19-53-53 Installation Eclipse 4diac™ IDE 3.0.0 und Import des Training1 Projektes](https://www.youtube.com/watch?v=O3S1o_NUyvc)
+* [Eclipse 4diac: Unpacking Open-Source Industrial Automation and the Power of Application-Centric D...](https://www.youtube.com/watch?v=VW8p4qoOCj0)
+* [2025-01-29 09-27-56 Windows Defender exclusion check in der Eclipse 4diac™ IDE](https://www.youtube.com/watch?v=8k8-QnbTPxk)
+* [2025-02-21 13-04-43 aktueller Stand logiBUS® Eclipse 4diac™ IDE](https://www.youtube.com/watch?v=OMNP9p12mAw)
+* [2025-02-21 15-23-28 logiBUS® mit Eclipse 4diac™ neues IO Konzept für alle Controller](https://www.youtube.com/watch?v=YUCodIng1UA)
+
 ---
 
 ## 📋 Inhaltsverzeichnis
@@ -157,7 +173,6 @@ Detaillierte Anleitungen und Beschreibungen zu den einzelnen Übungspaketen find
 <https://www.ms-muc-docs.de/>
 
 <https://www.ms-muc.de/>
-
 
 
 
