@@ -9,10 +9,6 @@
 
 Dieser Artikel beschreibt die logiBUS®-Übung `Uebung_084`. Hier wird der Zähler nicht manuell, sondern durch einen Taktgeber gesteuert.
 
-## 📺 Video
-
-* [E_CYCLE aus der IEC 61499 (Übung 84)](https://www.youtube.com/watch?v=PWJHijOPpFc)
-
 ----
 
 ![](Uebung_084.png)

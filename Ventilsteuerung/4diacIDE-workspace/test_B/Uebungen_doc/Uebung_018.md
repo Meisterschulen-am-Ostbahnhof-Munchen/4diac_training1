@@ -11,11 +11,7 @@ Dieser Artikel beschreibt die logiBUS®-Übung `Uebung_018`. Hier wird die Audio
 
 ## 📺 Video
 
-* [2025-02-02 18-21-50 Uebung_006c Funktion E_DEMUX8 und ..._DI_REPEAT](https://www.youtube.com/watch?v=fOSa4_A7-dE)
-* [2025-02-02 18-56-54 DI_LONG_PRESS_HOLD (Teil 1)](https://www.youtube.com/watch?v=8pkKq_8HAIQ)
-* [2025-02-23 11-18-57 Einstieg in Autodesk Fusion 360 - Mechanisches Design MCAD](https://www.youtube.com/watch?v=3bmFKBpIpZY)
-* [2025-11-04 18-11-05 LogiBUS® auf dem Weg zu Eclipse 4diac™ 3.0 - Umstellung eines Projektes](https://www.youtube.com/watch?v=dx1lhYFTvhA)
-* [Apfelwein-Allzweckwaffe und Stickstoff-Revolution: Die Landwirtschaft Mittelfrankens 1892 im Zeit...](https://www.youtube.com/watch?v=UVet5DZv1Dk)
+* [Der Katalog von 1863](https://www.youtube.com/watch?v=fk7tIjl2pTk)
 
 ## 🎧 Podcast
 

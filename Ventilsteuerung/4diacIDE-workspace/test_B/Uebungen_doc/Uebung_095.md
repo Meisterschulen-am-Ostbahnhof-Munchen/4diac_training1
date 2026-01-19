@@ -9,10 +9,6 @@
 
 Dieser Artikel beschreibt die logiBUS®-Übung `Uebung_095`. Hier wird die Auswahl zwischen zwei verschiedenen Ereignisquellen demonstriert.
 
-## 📺 Video
-
-* [Ein Traktor von 1958 erwacht](https://www.youtube.com/watch?v=ZBzx67cxPCs)
-
 ----
 
 ![](Uebung_095.png)

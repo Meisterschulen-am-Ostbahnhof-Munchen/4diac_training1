@@ -9,6 +9,10 @@
 
 Dieser Artikel beschreibt die logiBUS®-Übung `Uebung_010c`. Bisher dienten die Tasten nur der Eingabe. Jetzt erhalten sie eine dynamische Rückmeldung auf dem Bildschirm.
 
+## 🎧 Podcast
+
+* [ISO 11783-6: Softkeys und das Virtual Terminal verstehen – Dein Schlüssel zur Landmaschinen-Mechatronik](https://podcasters.spotify.com/pod/show/isobus-vt-objects/episodes/ISO-11783-6-Softkeys-und-das-Virtual-Terminal-verstehen--Dein-Schlssel-zur-Landmaschinen-Mechatronik-e36a8b0)
+
 ----
 
 ![](Uebung_010c.png)

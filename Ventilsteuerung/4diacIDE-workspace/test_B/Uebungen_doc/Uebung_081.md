@@ -9,10 +9,6 @@
 
 Dieser Artikel beschreibt die logiBUS®-Übung `Uebung_081`. Hier wird das Prinzip des Rückwärtszählens bis zum Erreichen der Nullgrenze gezeigt.
 
-## 📺 Video
-
-* [Herunterzählen Baustein E_CTD aus der IEC 61499 (Übung 81)](https://www.youtube.com/watch?v=NgLWcVhgRqk)
-
 ----
 
 ![](Uebung_081.png)

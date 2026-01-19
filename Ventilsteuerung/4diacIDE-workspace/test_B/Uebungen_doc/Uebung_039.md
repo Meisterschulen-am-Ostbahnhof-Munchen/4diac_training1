@@ -9,11 +9,6 @@
 
 Dieser Artikel beschreibt die logiBUS®-Übung `Uebung_039`. Diese Übung ist speziell auf die Ansteuerung von hydraulischen oder pneumatischen Wegeventilen zugeschnitten.
 
-## 📺 Video
-
-* [2025-08-17 14-39-09 logiBUS® Umwandeln eines Projektes mit Mapping in eines ohne Mapping.](https://www.youtube.com/watch?v=w8nTLn8fQxQ)
-* [Schulungsvideo logiBUS® CAN - SAE J1939 Kommunikation](https://www.youtube.com/watch?v=lA8lygx9598)
-
 ----
 
 ![](Uebung_039.png)

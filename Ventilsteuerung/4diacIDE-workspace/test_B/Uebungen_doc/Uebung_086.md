@@ -11,9 +11,6 @@ Dieser Artikel beschreibt die logiBUS®-Übung `Uebung_086`.
 
 ## 📺 Video
 
-* [Ereignisschalter E_SWITCH aus der IEC 61499 (Übung 86)](https://www.youtube.com/watch?v=Gev-kGR4-Tc)
-* [Das Relais im Detail: Schaltverstärker, Schutz und die Geheimnisse von A1/A2, 85/86 und der Hyste...](https://www.youtube.com/watch?v=OUNlE4NABX4)
-* [Das Technologie-Panorama von 1863: Lanz & Comp. und die Revolution der deutschen Landwirtschaft d...](https://www.youtube.com/watch?v=ShV0oAGoY58)
 * [Der Katalog von 1863](https://www.youtube.com/watch?v=fk7tIjl2pTk)
 
 ## 🎧 Podcast

@@ -11,9 +11,7 @@ Dieser Artikel beschreibt die logiBUS®-Übung `Uebung_040`. Hier wird eine raff
 
 ## 📺 Video
 
-* [2025-03-30 16-40-13 Softkey Ansteuerung Übung 10b2](https://www.youtube.com/watch?v=RLUNzsGLVw8)
 * [From 1,400 errors to zero](https://www.youtube.com/watch?v=jBk9Y-EX8zE)
-* [Von 1400 Fehlern zum sauberen Code: Die Migration der „Getreidehacke“ auf Eclipse 4diac™ 3.0 und ...](https://www.youtube.com/watch?v=KlIw2QtGOHE)
 
 ## 🎧 Podcast
 

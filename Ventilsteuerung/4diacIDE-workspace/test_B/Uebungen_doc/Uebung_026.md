@@ -9,11 +9,6 @@
 
 Dieser Artikel beschreibt die logiBUS®-Übung `Uebung_026`.
 
-## 📺 Video
-
-* [2025 11 15 12 52 26 Montage Hutschienenmoped logiBUS® -- Teil 4 -- Aufbauten](https://www.youtube.com/watch?v=WeowCxZW70Y)
-* [2026-01-13 12-14-50 logiBUS® Eclipse 4diac™ Subapplications](https://www.youtube.com/watch?v=J-UYbZDwhZw)
-
 ----
 
 ![](Uebung_026.png)

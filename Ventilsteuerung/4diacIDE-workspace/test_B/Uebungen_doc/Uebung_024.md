@@ -9,13 +9,6 @@
 
 Dieser Artikel beschreibt die logiBUS®-Übung `Uebung_024`. Hier wird eine zeitliche Pause in den automatischen Ablauf integriert.
 
-## 📺 Video
-
-* [2024 09 05 17 59 50 Bayerische Staatsbibliothek Buch Zugriff](https://www.youtube.com/watch?v=0qTGNMfAspU)
-* [24. Apr. 2025 Tag 4 von logiBUS® Schulungsreihe (D)](https://www.youtube.com/watch?v=ul03dimgiis)
-* [JBC Lötspitzen C470 vs. C245 vs. C210 vs. C115: Welche Spitze ist der Allrounder und wann brauchs...](https://www.youtube.com/watch?v=iIl1a0L7PIs)
-* [Mapping entfernen mit Christoph Behr - 2025/09/24 13:57 CEST – Recording](https://www.youtube.com/watch?v=h68m9fcjMpw)
-
 ## 🎧 Podcast
 
 * [Analyse der Novellierung der Meisterprüfungsverordnung im Land- und Baumaschinenmechatroniker-Handwerk: Ein Detaillierter Vergleich der Verordnungen von 2024 und 2001](https://podcasters.spotify.com/pod/show/ms-muc-lama/episodes/Analyse-der-Novellierung-der-Meisterprfungsverordnung-im-Land--und-Baumaschinenmechatroniker-Handwerk-Ein-Detaillierter-Vergleich-der-Verordnungen-von-2024-und-2001-e37aejv)
