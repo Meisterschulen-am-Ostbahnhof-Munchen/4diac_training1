@@ -31,12 +31,12 @@
 			<Event Name="CNF" Type="Event" Comment="Confirmation of Requested Service">
 				<With Var="QO"/>
 				<With Var="STATUS"/>
-				<With Var="CNT"/>
+				<With Var="IN"/>
 			</Event>
 			<Event Name="IND" Type="Event" Comment="Indication from Resource">
 				<With Var="QO"/>
 				<With Var="STATUS"/>
-				<With Var="CNT"/>
+				<With Var="IN"/>
 			</Event>
 		</EventOutputs>
 		<InputVars>
@@ -50,7 +50,7 @@
 		<OutputVars>
 			<VarDeclaration Name="QO" Type="BOOL" Comment="Event Output Qualifier"/>
 			<VarDeclaration Name="STATUS" Type="STRING" Comment="Service Status"/>
-			<VarDeclaration Name="CNT" Type="DWORD" Comment="Encoder Counter data"/>
+			<VarDeclaration Name="IN" Type="DWORD" Comment="Encoder Counter data"/>
 		</OutputVars>
 	</InterfaceList>
 	<Attribute Name="eclipse4diac::core::TypeHash" Value="''"/>
