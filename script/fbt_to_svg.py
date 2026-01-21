@@ -177,7 +177,7 @@ class FbtRenderer:
 
     def draw(self):
         # Canvas Größe berechnen
-        pad_l = 40 + ((self.max_tracks_in + 1) * self.cfg['track_width']) + 250
+        pad_l = 40 + ((self.max_tracks_in + 1) * self.cfg['track_width']) + 500
         pad_r = 40 + ((self.max_tracks_out + 1) * self.cfg['track_width']) + 250
         
         d = draw.Drawing(self.w_block + pad_l + pad_r, self.h_total + 50, origin=(-pad_l, -20))
@@ -278,7 +278,13 @@ class FbtRenderer:
                                    text_anchor=anchor, fill=meta_color, font_style=font_style, font_family=self.cfg['font_family']))
                 
                 if item['comment']:
-                    comm_x = meta_x - 70 if is_input else meta_x + 70
+                    comm_x = meta_x
+                    if is_input and len(item['comment']) + len(item['type']) < 50:
+                        comm_x = meta_x - 70
+                    elif is_input and len(item['comment']) + len(item['type']) >= 50:
+                        comm_x = meta_x - len(item['comment']) - len(item['type']) - 50 
+                    else:
+                        comm_x = meta_x + 70
                     d.append(draw.Text(item['comment'], font_size=11, x=comm_x, y=y+3,
                                        text_anchor=anchor, fill=self.cfg['colors']['meta_comm'], font_family=self.cfg['font_family']))
 
