@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SubAppType Name="Versuch_400" Comment="Versuch Array Summe">
+	<Identification Standard="61499-2" Description="Copyright (c) 2023 Meisterschulen am Ostbahnhof  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0">
+	</Identification>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2023-10-23">
+	</VersionInfo>
+	<CompilerInfo packageName="Versuche">
+		<Import declaration="logiBUS::io::DI::logiBUS_DI::Input_I1"/>
+		<Import declaration="logiBUS::io::DQ::logiBUS_DO::Output_Q1"/>
+	</CompilerInfo>
+	<SubAppInterfaceList>
+	</SubAppInterfaceList>
+	<SubAppNetwork>
+		<FB Name="SUM" Type="logiBUS::utils::dyn_arr::SUM" x="3000" y="2000">
+		</FB>
+		<FB Name="INIT_ARR_8_BYTE" Type="logiBUS::utils::generate::INIT_ARR_8_INT" x="1300" y="1100">
+			<Parameter Name="D1" Value="[0, 0, 5, 0, 7, 8, 0, 0]"/>
+		</FB>
+		<EventConnections>
+			<Connection Source="INIT_ARR_8_BYTE.INITO" Destination="SUM.REQ" dx1="380"/>
+		</EventConnections>
+		<DataConnections>
+			<Connection Source="INIT_ARR_8_BYTE.D1" Destination="SUM.A" dx1="66.67"/>
+		</DataConnections>
+	</SubAppNetwork>
+</SubAppType>
