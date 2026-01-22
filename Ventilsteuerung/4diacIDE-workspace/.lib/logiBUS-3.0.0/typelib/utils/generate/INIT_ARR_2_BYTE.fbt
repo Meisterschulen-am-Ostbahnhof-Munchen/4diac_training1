@@ -14,11 +14,15 @@
 		</EventInputs>
 		<EventOutputs>
 			<Event Name="INITO" Type="EInit" Comment="Initialization Confirm">
+				<With Var="u16DaSize"/>
 				<With Var="D1"/>
 			</Event>
 		</EventOutputs>
+		<OutputVars>
+			<VarDeclaration Name="u16DaSize" Type="UINT" Comment="Data length in Array Elements"/>
+		</OutputVars>
 		<InOutVars>
-			<VarDeclaration Name="D1" Type="BYTE" ArraySize="0..1"/>
+			<VarDeclaration Name="D1" Type="BYTE" Comment="Data" ArraySize="0..1"/>
 		</InOutVars>
 	</InterfaceList>
 	<Attribute Name="eclipse4diac::core::GenericClassName" Value="'GEN_INIT_ARR'"/>
