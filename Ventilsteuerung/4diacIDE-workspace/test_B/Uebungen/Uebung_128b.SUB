@@ -32,7 +32,7 @@
 		</FB>
 		<FB Name="AlPgnTxNew_TP" Type="isobus::pgn::tx::AlPgnTxNew_TP" x="-2400" y="3600">
 			<Parameter Name="u32Pgn" Value="61184"/>
-			<Parameter Name="u16DaSize" Value="8"/>
+			<Parameter Name="u16DaSize" Value="0"/>
 			<Parameter Name="u8Priority" Value="3"/>
 		</FB>
 		<FB Name="DigitalInput_CLK_I1" Type="logiBUS::io::DI::logiBUS_IE" x="-10100" y="2700">
@@ -43,6 +43,9 @@
 		<FB Name="NetEv2NetEv" Type="isobus::pgn::NetEv2NetEv" x="-4900" y="4100">
 			<Parameter Name="s16Handle" Value="GLOBAL_A"/>
 		</FB>
+		<FB Name="INIT_ARR_32_BYTE" Type="logiBUS::utils::generate::INIT_ARR_32_BYTE" x="-3900" y="5500">
+			<Parameter Name="D1" Value="[16#00, 16#00, 16#00, 16#00, 16#00, 16#00, 16#00, 16#00, 16#00, 16#00, 16#00, 16#00, 16#00, 16#00, 16#00, 16#00, 16#00, 16#00, 16#00, 16#00, 16#00, 16#00, 16#00, 16#00, 16#00, 16#00, 16#00, 16#00, 16#00, 16#00, 16#00, 16#00]"/>
+		</FB>
 		<EventConnections>
 			<Connection Source="NmGetCfInfo_1.IND" Destination="STRUCT_DEMUX_3.REQ" dx1="593.33"/>
 			<Connection Source="NmGetCfInfo_1.IND" Destination="STRUCT_DEMUX_4.REQ" dx1="593.33"/>
@@ -50,6 +53,7 @@
 			<Connection Source="NmGetCfInfo_1.IND" Destination="NetEv2NetEv.REQ" dx1="2020"/>
 			<Connection Source="DigitalInput_CLK_I1.IND" Destination="AlPgnTxNew_TP.REQ" dx1="1160"/>
 			<Connection Source="NetEv2NetEv.CNF" Destination="AlPgnTxNew_TP.install" dx1="853.33"/>
+			<Connection Source="INIT_ARR_32_BYTE.INITO" Destination="AlPgnTxNew_TP.INIT" dx1="100"/>
 		</EventConnections>
 		<DataConnections>
 			<Connection Source="NmGetCfInfo_1.sNameField" Destination="STRUCT_DEMUX_3.IN" dx1="560"/>
@@ -57,6 +61,7 @@
 			<Connection Source="NmGetCfInfo_1.sCfInfo" Destination="STRUCT_DEMUX_4.IN" dx1="626.67"/>
 			<Connection Source="NmGetCfInfo_1.sNetEv" Destination="NetEv2NetEv.IN" dx1="2020"/>
 			<Connection Source="NetEv2NetEv." Destination="AlPgnTxNew_TP.NmDestin" dx1="680"/>
+			<Connection Source="INIT_ARR_32_BYTE.D1" Destination="AlPgnTxNew_TP.Data" dx1="233.33"/>
 		</DataConnections>
 	</SubAppNetwork>
 </SubAppType>

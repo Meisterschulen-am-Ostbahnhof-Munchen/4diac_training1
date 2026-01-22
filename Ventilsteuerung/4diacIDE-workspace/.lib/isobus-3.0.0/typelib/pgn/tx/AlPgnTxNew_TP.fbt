@@ -19,7 +19,7 @@
 				<With Var="u8Priority"/>
 			</Event>
 			<Event Name="REQ" Type="Event" Comment="Send Data, unconfirmed">
-				<With Var="data"/>
+				<With Var="Data"/>
 			</Event>
 		</EventInputs>
 		<EventOutputs>
@@ -29,7 +29,7 @@
 				<With Var="PGN_handle"/>
 			</Event>
 			<Event Name="CNF" Type="Event" Comment="Data was sent">
-				<With Var="data"/>
+				<With Var="Data"/>
 			</Event>
 			<Event Name="dataERR" Type="Event">
 				<With Var="dataERRC"/>
@@ -50,7 +50,7 @@
 			<VarDeclaration Name="pgnERRC" Type="INT" Comment="pgnERR error Code"/>
 		</OutputVars>
 		<InOutVars>
-			<VarDeclaration Name="data" Type="BYTE" Comment="data buffer" ArraySize="*"/>
+			<VarDeclaration Name="Data" Type="BYTE" Comment="data buffer" ArraySize="*"/>
 		</InOutVars>
 	</InterfaceList>
 	<Attribute Name="eclipse4diac::core::TypeHash" Value="''"/>
