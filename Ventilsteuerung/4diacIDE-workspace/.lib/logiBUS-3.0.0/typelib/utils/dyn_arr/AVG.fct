@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<Function Name="SUM" Comment="Array Sum">
+<Function Name="AVG" Comment="Array Average">
 	<Identification Standard="61499-1">
 	</Identification>
-	<VersionInfo Organization="Andreas Demmler Fahrzeugbau" Version="1.0" Author="Franz Höpfinger" Date="2026-01-22" Remarks="inspired by SUM in IEC 61131 Paper">
+	<VersionInfo Organization="Andreas Demmler Fahrzeugbau" Version="1.0" Author="Franz Höpfinger" Date="2026-01-23" Remarks="inspired by AVG in IEC 61131 Paper">
 	</VersionInfo>
 	<CompilerInfo packageName="logiBUS::utils::dyn_arr">
 	</CompilerInfo>
@@ -19,7 +19,7 @@
 			</Event>
 		</EventOutputs>
 		<OutputVars>
-			<VarDeclaration Name="" Type="DINT"/>
+			<VarDeclaration Name="" Type="REAL"/>
 		</OutputVars>
 		<InOutVars>
 			<VarDeclaration Name="A" Type="INT" Comment="Input" ArraySize="*"/>
@@ -28,8 +28,8 @@
 	<FunctionBody>
 		<ST><![CDATA[PACKAGE logiBUS::utils::dyn_arr;
 
-(* Array Sum *)
-FUNCTION SUM : DINT
+(* Array Average *)
+FUNCTION AVG : REAL
 
 VAR_IN_OUT
 	A : ARRAY[*] OF INT; // Input
@@ -37,16 +37,17 @@ END_VAR
 
 VAR_TEMP
 	i : INT;
-	sum2 : DINT;
+	sum : DINT;
+	count : INT;
 END_VAR
 
-sum2 := 0;
+sum := 0;
 
 FOR i := LOWER_BOUND(A,1) TO UPPER_BOUND(A,1) DO
-	sum2 := sum2 + A[i];
+	sum := sum + A[i];
 END_FOR;
-
-SUM := sum2;
+count := UPPER_BOUND(A, 1) - LOWER_BOUND(A, 1) + 1;
+AVG := DINT_TO_REAL(sum) / INT_TO_REAL(count);
 
 END_FUNCTION
 
