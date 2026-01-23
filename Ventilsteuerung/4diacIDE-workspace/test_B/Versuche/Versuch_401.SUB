@@ -11,7 +11,7 @@
 	<SubAppNetwork>
 		<FB Name="SUM" Type="logiBUS::utils::dyn_arr::SUM" x="3013.33" y="2640">
 		</FB>
-		<FB Name="INIT_ARR_8_INT" Type="logiBUS::utils::generate::INIT_INT_ARR_8" x="800" y="2600">
+		<FB Name="INIT_ARR_8_INT" Type="logiBUS::utils::generate::INIT_ARR_0008_INT" x="800" y="2600">
 			<Parameter Name="D1" Value="[44, 0, 5, 0, 7, 8, 0, 0]"/>
 		</FB>
 		<FB Name="GET_AT_INDEX" Type="eclipse4diac::convert::GET_AT_INDEX" x="3286.67" y="3540">
@@ -26,7 +26,13 @@
 		</FB>
 		<FB Name="AVG" Type="logiBUS::utils::dyn_arr::AVG" x="2946.67" y="4520">
 		</FB>
-		<FB Name="CountOfElements" Type="eclipse4diac::convert::CountOfElements" x="2946.67" y="33.33">
+		<FB Name="CountOfElements" Type="eclipse4diac::convert::CountOfElements" x="2900" y="-400">
+		</FB>
+		<FB Name="F_UPPER_BOUND" Type="eclipse4diac::convert::F_UPPER_BOUND" x="2900" y="900">
+			<Parameter Name="DIM" Value="1"/>
+		</FB>
+		<FB Name="F_LOWER_BOUND" Type="eclipse4diac::convert::F_LOWER_BOUND" x="2900" y="200">
+			<Parameter Name="DIM" Value="1"/>
 		</FB>
 		<EventConnections>
 			<Connection Source="INIT_ARR_8_INT.INITO" Destination="SUM.REQ" dx1="133.33"/>
@@ -36,6 +42,8 @@
 			<Connection Source="INIT_ARR_8_INT.INITO" Destination="ARR_MAX.REQ" dx1="133.33"/>
 			<Connection Source="INIT_ARR_8_INT.INITO" Destination="AVG.REQ" dx1="133.33"/>
 			<Connection Source="INIT_ARR_8_INT.INITO" Destination="ARR_MIN.REQ" dx1="106.67"/>
+			<Connection Source="INIT_ARR_8_INT.INITO" Destination="F_UPPER_BOUND.REQ" dx1="380"/>
+			<Connection Source="INIT_ARR_8_INT.INITO" Destination="F_LOWER_BOUND.REQ" dx1="273.33"/>
 		</EventConnections>
 		<DataConnections>
 			<Connection Source="INIT_ARR_8_INT.D1" Destination="SUM.A" dx1="633.33"/>
@@ -45,6 +53,8 @@
 			<Connection Source="INIT_ARR_8_INT.D1" Destination="ARR_MAX.A" dx1="66.67"/>
 			<Connection Source="INIT_ARR_8_INT.D1" Destination="AVG.A" dx1="66.67"/>
 			<Connection Source="INIT_ARR_8_INT.D1" Destination="CountOfElements.IN_ARRAY" dx1="66.67"/>
+			<Connection Source="INIT_ARR_8_INT.D1" Destination="F_UPPER_BOUND.IN_ARRAY" dx1="580"/>
+			<Connection Source="INIT_ARR_8_INT.D1" Destination="F_LOWER_BOUND.IN_ARRAY" dx1="580"/>
 		</DataConnections>
 	</SubAppNetwork>
 </SubAppType>
