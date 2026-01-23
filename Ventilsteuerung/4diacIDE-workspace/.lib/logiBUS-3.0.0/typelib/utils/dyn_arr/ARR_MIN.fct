@@ -40,7 +40,8 @@ VAR_TEMP
 	currentMin : INT;
 END_VAR
 
-currentMin := A[LOWER_BOUND(A, 1)];
+i := LOWER_BOUND(A, 1);
+currentMin := A[i];
 FOR i := LOWER_BOUND(A,1) + 1 TO UPPER_BOUND(A,1) DO
 	currentMin := MIN(A[i], currentMin);
 

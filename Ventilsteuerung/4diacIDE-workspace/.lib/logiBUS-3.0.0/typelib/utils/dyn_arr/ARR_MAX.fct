@@ -40,7 +40,8 @@ VAR_TEMP
 	currentMax : INT;
 END_VAR
 
-currentMax := A[LOWER_BOUND(A, 1)];
+i := LOWER_BOUND(A, 1);
+currentMax := A[i];
 FOR i := LOWER_BOUND(A,1) + 1 TO UPPER_BOUND(A,1) DO
 	currentMax := MAX(A[i], currentMax);
 
