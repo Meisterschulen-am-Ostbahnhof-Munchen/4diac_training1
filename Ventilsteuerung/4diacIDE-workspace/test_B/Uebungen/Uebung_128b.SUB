@@ -43,8 +43,8 @@
 		<FB Name="NetEv2NetEv" Type="isobus::pgn::NetEv2NetEv" x="-4900" y="4100">
 			<Parameter Name="s16Handle" Value="GLOBAL_A"/>
 		</FB>
-		<FB Name="INIT_ARR_32_BYTE" Type="logiBUS::utils::generate::INIT_ARR_0032_BYTE" x="-4600" y="3000">
-			<Parameter Name="D1" Value="[16#00, 16#00, 16#00, 16#00, 16#00, 16#00, 16#00, 16#00, 16#00, 16#00, 16#00, 16#00, 16#00, 16#00, 16#00, 16#00, 16#00, 16#00, 16#00, 16#00, 16#00, 16#00, 16#00, 16#00, 16#00, 16#00, 16#00, 16#00, 16#00, 16#00, 16#00, 16#00]"/>
+		<FB Name="INIT_ARR_0032_BYTE" Type="logiBUS::utils::generate::INIT_ARR_0032_BYTE" x="-4600" y="3000">
+			<Parameter Name="D1" Value="[16#01, 16#00, 16#00, 16#00, 16#00, 16#AA, 16#00, 16#00, 16#00, 16#00, 16#00, 16#00, 16#00, 16#00, 16#00, 16#00, 16#00, 16#00, 16#00, 16#00, 16#00, 16#00, 16#00, 16#00, 16#00, 16#00, 16#00, 16#00, 16#00, 16#00, 16#00, 16#00]"/>
 		</FB>
 		<EventConnections>
 			<Connection Source="NmGetCfInfo_1.IND" Destination="STRUCT_DEMUX_3.REQ" dx1="593.33"/>
@@ -53,7 +53,7 @@
 			<Connection Source="NmGetCfInfo_1.IND" Destination="NetEv2NetEv.REQ" dx1="2020"/>
 			<Connection Source="DigitalInput_CLK_I1.IND" Destination="AlPgnTxNew_TP.REQ" dx1="1160"/>
 			<Connection Source="NetEv2NetEv.CNF" Destination="AlPgnTxNew_TP.install" dx1="853.33"/>
-			<Connection Source="INIT_ARR_32_BYTE.INITO" Destination="AlPgnTxNew_TP.INIT" dx1="653.33"/>
+			<Connection Source="INIT_ARR_0032_BYTE.INITO" Destination="AlPgnTxNew_TP.INIT" dx1="653.33"/>
 		</EventConnections>
 		<DataConnections>
 			<Connection Source="NmGetCfInfo_1.sNameField" Destination="STRUCT_DEMUX_3.IN" dx1="560"/>
@@ -61,8 +61,8 @@
 			<Connection Source="NmGetCfInfo_1.sCfInfo" Destination="STRUCT_DEMUX_4.IN" dx1="626.67"/>
 			<Connection Source="NmGetCfInfo_1.sNetEv" Destination="NetEv2NetEv.IN" dx1="2020"/>
 			<Connection Source="NetEv2NetEv." Destination="AlPgnTxNew_TP.NmDestin" dx1="680"/>
-			<Connection Source="INIT_ARR_32_BYTE.D1" Destination="AlPgnTxNew_TP.Data" dx1="80"/>
-			<Connection Source="INIT_ARR_32_BYTE.u16DaSize" Destination="AlPgnTxNew_TP.u16DaSize" dx1="233.33"/>
+			<Connection Source="INIT_ARR_0032_BYTE.D1" Destination="AlPgnTxNew_TP.Data" dx1="80"/>
+			<Connection Source="INIT_ARR_0032_BYTE.u16DaSize" Destination="AlPgnTxNew_TP.u16DaSize" dx1="233.33"/>
 		</DataConnections>
 	</SubAppNetwork>
 </SubAppType>
