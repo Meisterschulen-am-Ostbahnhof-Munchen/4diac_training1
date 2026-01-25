@@ -322,12 +322,13 @@ class FbtRenderer:
                 d.append(draw.Rectangle(line_x-2, y_v-2, 4, 4, fill='white', stroke='black', stroke_width=1))
 
 # --- MASSENVERARBEITUNG ---
-if __name__ == "__main__":
+def draw_fbt_to_svg_loop(source_dir,target_dir,file_extension):
     import glob
     
     # Beispiel: Konvertiere alle .fbt Dateien im aktuellen Ordner
     # Du kannst hier deinen Source-Ordner eintragen
-    source_dir = "." 
+    source_dir = source_dir or '.'
+    target_dir = target_dir or '.'
     files = glob.glob(os.path.join(source_dir, "*.fbt"))
     
     if not files:
@@ -335,8 +336,22 @@ if __name__ == "__main__":
     else:
         print(f"Verarbeite {len(files)} Dateien...")
         for fbt_file in files:
-            output_file = fbt_file.replace(".fbt", ".svg")
+            output_file = os.path.join(target_dir, os.path.basename(fbt_file).replace(file_extension, ".svg"))
             renderer = FbtRenderer(fbt_file, output_file)
             if renderer.parse():
                 renderer.layout()
                 renderer.draw()
+
+def draw_fbt_to_svg(fbt_file,target_dir,file_extension):
+    
+    # Check if target directory exists, create if it doesn't
+    if not os.path.exists(target_dir):
+        os.makedirs(target_dir, exist_ok=True)
+        print(f"Created directory: {target_dir}")
+    
+    output_file = os.path.join(target_dir, os.path.basename(fbt_file).replace(file_extension, ".svg"))
+    print(f"Processing FBT file: {fbt_file} -> {output_file}")
+    renderer = FbtRenderer(fbt_file, output_file)
+    if renderer.parse():
+        renderer.layout()
+        renderer.draw()
