@@ -13,11 +13,11 @@
 			</SubApp>
 		</SubAppNetwork>
 	</Application>
-	<Device Name="FORTE_PC" Type="iec61499::system::FORTE_PC" x="3126.67" y="1113.33">
+	<Device Name="FORTE_PC_B" Type="iec61499::system::FORTE_PC" x="3126.67" y="1113.33">
 		<Parameter Name="MGR_ID" Value="C_00" Comment="Device manager socket ID"/>
 		<Attribute Name="Profile" Type="STRING" Value="HOLOBLOC"/>
 		<Attribute Name="Color" Type="STRING" Value="255,190,111"/>
-		<Resource Name="EMB_RES" Type="iec61499::system::EMB_RES" x="0" y="0">
+		<Resource Name="EMB_RES_B" Type="iec61499::system::EMB_RES" x="0" y="0">
 			<FBNetwork>
 				<FB Name="E_TRIG" Type="iec61499::events::E_TRIG" x="2300" y="800">
 					<Parameter Name="EVENTTYPE" Value="'EInit'"/>
@@ -28,5 +28,5 @@
 			</FBNetwork>
 		</Resource>
 	</Device>
-	<Mapping From="App_B.Control" To="FORTE_PC.EMB_RES"/>
+	<Mapping From="App_B.Control" To="FORTE_PC_B.EMB_RES_B"/>
 </System>
