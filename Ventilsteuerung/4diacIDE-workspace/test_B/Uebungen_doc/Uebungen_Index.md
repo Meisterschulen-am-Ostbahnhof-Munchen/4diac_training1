@@ -1,22 +1,22 @@
-# Übungen (Arbeitsbereich test_AX)
+# Übungen (Arbeitsbereich test_B)
 
-```{index} single: Übungen (Arbeitsbereich test_AX)
+```{index} single: Übungen (Arbeitsbereich test_B)
 ```
 
-Hier finden Sie die Dokumentation der Übungen für den logiBUS® mit dem **AX Adapter**. Die Übungen sind thematisch gruppiert, um den Lernfortschritt optimal zu unterstützen.
+Hier finden Sie die Dokumentation der Übungen für den logiBUS® ohne den **AX Adapter**. Die Übungen sind thematisch gruppiert, um den Lernfortschritt optimal zu unterstützen.
 
 ## Themengebiete
 
 ```{toctree}
 :maxdepth: 1
 
-Uebungen_Basis
-Uebungen_FlipFlops
-Uebungen_Timer
-Uebungen_Sequenzer
-Uebung_Isobus_Softkeys
-Uebungen_Signale
-Uebungen_SubApps
+Uebungen_Basis_Index
+Uebungen_FlipFlops_Index
+Uebungen_Timer_Index
+Uebungen_Sequenzer_Index
+Uebung_Isobus_Softkeys_Index
+Uebungen_Signale_Index
+Uebungen_SubApps_Index
 ```
 ## 🎧 Podcast
 
@@ -38,4 +38,4 @@ Uebungen_SubApps
 
 Falls Sie eine bestimmte Übung anhand ihrer Nummer suchen, nutzen Sie bitte die numerische Übersicht:
 
-* [Numerischer Index aller Übungen (test_AX)](Uebungen_doc.md)
+* [Numerischer Index aller Übungen (test_B)](Uebungen_doc_Index.md)
