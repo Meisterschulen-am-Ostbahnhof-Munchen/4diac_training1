@@ -6,6 +6,8 @@
 Übungen zur Erfassung von Analogwerten, Skalierung von Messbereichen sowie zur Ansteuerung von Aktoren und LEDs mittels Pulsweitenmodulation (PWM).
 
 ```{toctree}
+:maxdepth: 1
+
 Uebung_028
 Uebung_029
 Uebung_030
@@ -19,4 +21,6 @@ Uebung_034a1_Q4
 Uebung_034b
 Uebung_042
 Uebung_043
+Uebung_152
+Uebung_153
 ```

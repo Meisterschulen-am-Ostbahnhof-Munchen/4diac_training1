@@ -15,6 +15,4 @@ Uebung_103c
 Uebung_103c2
 Uebung_150_AX
 Uebung_151_AX
-Uebung_152
-Uebung_153
 ```
