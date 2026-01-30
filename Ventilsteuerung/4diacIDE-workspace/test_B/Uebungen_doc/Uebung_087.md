@@ -1,58 +1,48 @@
-# Uebung_087: Beispiel für E_DEMUX
+# Uebung_087: Bedingte Ereignisverteilung (E_DEMUX)
 
-* * * * * * * * * *
+```{index} single: Uebung_087: Bedingte Ereignisverteilung (E_DEMUX)
+```
 
-## Einleitung
-Diese Übung demonstriert die Verwendung des E_DEMUX-Funktionsbausteins zur Ereignisverteilung basierend auf einem Steuerwert. Das System zählt die Anzahl aktiver Eingänge und verteilt ein Taktereignis entsprechend auf verschiedene Ausgänge. Die Übung zeigt praktische Anwendungen von Multiplexing und T-Flip-Flop-Steuerung in verteilten Automatisierungssystemen.
+[Uebung_087](https://docs.ms-muc-docs.de/projects/visual-programming-languages-docs/de/latest/training1/Ventilsteuerung/4diacIDE-workspace/test/FBs/Uebungen/Uebung_087.html)
 
-## Verwendete Funktionsbausteine (FBs)
+[![NotebookLM](media/NotebookLM_logo.png)](https://notebooklm.google.com/notebook/a6872e59-1dfc-4132-a118-aff1bc7bc944)
 
-### Haupt-Funktionsbausteine:
-- **E_DEMUX**: Ereignis-Demultiplexer zur Verteilung von Ereignissen basierend auf einem Steuerwert
-- **ADD_3**: Addierer für drei Eingangswerte
-- **F_BOOL_TO_UINT**: Wandelt boolesche Werte in unsigned integer Werte um
-- **E_T_FF**: Toggle-Flip-Flop mit Ereignissteuerung
-- **logiBUS_IX**: Digitaler Eingang mit Ereignisausgang
-- **logiBUS_QX**: Digitaler Ausgang
+Dieser Artikel beschreibt die logiBUS®-Übung `Uebung_087`. Hier wird die Auswahl eines Ereignispfads durch eine Kombination von Logikwerten demonstriert.
 
-### Sub-Bausteine:
-**logiBUS_IX** (Digital Input)
-- **Typ**: logiBUS_IX
-- **Parameter**: 
-  - QI = TRUE (Qualified Input aktiviert)
-  - Input = logiBUS_DI::Input_Ix (spezifischer Hardware-Eingang)
-  - InputEvent = logiBUS_DI_Events::BUTTON_SINGLE_CLICK (nur bei CLK_I1)
+----
 
-**logiBUS_QX** (Digital Output)
-- **Typ**: logiBUS_QX
-- **Parameter**:
-  - QI = TRUE (Qualified Input aktiviert)
-  - Output = logiBUS_DO::Output_Qx (spezifischer Hardware-Ausgang)
+![](Uebung_087.png)
 
-## Programmablauf und Verbindungen
+## Ziel der Übung
 
-### Signalfluss:
-1. **Eingangsverarbeitung**: 
-   - Drei digitale Eingänge (I2, I3, I4) werden über logiBUS_IX-Bausteine erfasst
-   - Die booleschen Werte werden mittels F_BOOL_TO_UINT in uint-Werte konvertiert
+Verwendung des `E_DEMUX` (Event Demultiplexer). Es wird gezeigt, wie ein zentrales "Ausführ-Ereignis" (Klick auf Taster 1) an verschiedene Aktoren geleitet wird, wobei die Auswahl über die Kombination anderer Taster getroffen wird.
 
-2. **Zählung aktiver Eingänge**:
-   - ADD_3 summiert die drei uint-Werte (0 oder 1) zu einem Gesamtwert (0-3)
-   - Dieser Wert bestimmt den Ausgangskanal des E_DEMUX
+-----
 
-3. **Ereignisverteilung**:
-   - Der Taktgeber (I1 mit BUTTON_SINGLE_CLICK) löst über E_DEMUX.EI ein Ereignis aus
-   - E_DEMUX leitet das Ereignis basierend auf dem K-Wert (0-3) an einen der vier Ausgänge weiter
+## Beschreibung und Komponenten
 
-4. **Ausgangssteuerung**:
-   - Vier E_T_FF-Bausteine schalten bei jedem empfangenen CLK-Ereignis ihren Zustand um
-   - Die Ausgänge Q1-Q4 werden entsprechend über logiBUS_QX-Bausteine angesteuert
+[cite_start]Die Subapplikation `Uebung_087.SUB` nutzt eine Additions-Logik, um den Selektor-Eingang des Demultiplexers zu steuern[cite: 1].
 
-### Verhaltenslogik:
-- **Keine Taste gedrückt** (K=0) → Q1 toggelt
-- **Eine Taste gedrückt** (K=1) → Q2 toggelt  
-- **Zwei Tasten gedrückt** (K=2) → Q3 toggelt
-- **Drei Tasten gedrückt** (K=3) → Q4 toggelt
+### Funktionsbausteine (FBs)
 
-## Zusammenfassung
-Diese Übung vermittelt grundlegende Konzepte der Ereignisverteilung und Signalverarbeitung in IEC 61499-Systemen. Sie zeigt die praktische Anwendung von Demultiplexern, die Umwandlung von Datentypen und die Steuerung von Flip-Flops durch ereignisbasierte Architekturen. Die Übung eignet sich ideal zum Verständnis von Multiplexing-Techniken und deren Implementierung in verteilten Automatisierungssystemen.
+  * **`I1` (Trigger)**: Das Ereignis, das verteilt werden soll.
+  * **`I2`, `I3`, `I4` (Selector)**: Bestimmen das Ziel.
+  * **`ADD_3`**: Summiert die Zustände der Taster 2, 3 und 4 auf.
+  * **`E_DEMUX`**: Leitet das Event von `I1` an den Ausgang weiter, dessen Nummer der berechneten Summe entspricht.
+
+-----
+
+## Funktionsweise
+
+Die Anzahl der gedrückten "Wahl-Taster" bestimmt, welche Lampe beim Klick auf **I1** toggelt:
+*   Kein Wahl-Taster gedrückt ➡️ Summe = 0 ➡️ Klick auf I1 toggelt **Q1**.
+*   Ein Wahl-Taster gedrückt ➡️ Summe = 1 ➡️ Klick auf I1 toggelt **Q2**.
+*   Zwei Wahl-Taster gedrückt ➡️ Summe = 2 ➡️ Klick auf I1 toggelt **Q3**.
+*   Alle drei Wahl-Taster gedrückt ➡️ Summe = 3 ➡️ Klick auf I1 toggelt **Q4**.
+
+-----
+
+## Anwendungsbeispiel
+
+**Indirekte Adressierung**:
+Ein Bediener wählt über Kippschalter an seinem Bedienpult eine Gruppe von Düsen aus. Erst wenn er den zentralen Fußtaster (`I1`) betätigt, wird der Befehl an die gewählte Gruppe gesendet.

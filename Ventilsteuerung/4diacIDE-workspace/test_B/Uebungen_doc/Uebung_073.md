@@ -1,58 +1,34 @@
-# Uebung_073: VDS auf UT ausgeben
+# Uebung_073: GPS-Geschwindigkeit (VDS)
 
-* * * * * * * * * *
+```{index} single: Uebung_073: GPS-Geschwindigkeit (VDS)
+```
 
-## Einleitung
-Diese Übung demonstriert die Ausgabe von Fahrzeuggeschwindigkeitsdaten auf ein Bedienpanel. Es werden zwei verschiedene Geschwindigkeitsmesswerte verarbeitet und an entsprechende numerische Variablen übergeben.
+[Uebung_073](https://docs.ms-muc-docs.de/projects/visual-programming-languages-docs/de/latest/training1/Ventilsteuerung/4diacIDE-workspace/test/FBs/Uebungen/Uebung_073.html)
 
-## Verwendete Funktionsbausteine (FBs)
+[![NotebookLM](media/NotebookLM_logo.png)](https://notebooklm.google.com/notebook/a6872e59-1dfc-4132-a118-aff1bc7bc944)
 
-### I_GBSD
-- **Typ**: Eingangsbaustein für bodengestützte Maschinengeschwindigkeit
-- **Parameter**: QI = TRUE (aktiviert den Baustein)
-- **Ereignisausgang**: IND (Indikator-Ereignis)
-- **Datenausgang**: GROUNDBASEDMACHINESPEED (bodengestützte Maschinengeschwindigkeit)
+Dieser Artikel beschreibt die logiBUS®-Übung `Uebung_073`. Hier wird die dritte Geschwindigkeitsquelle des ISOBUS erschlossen: Das Navigationssystem.
 
-### Q_NumericValue_GBSD
-- **Typ**: Ausgabebaustein für numerische Werte
-- **Parameter**: u16ObjId = "DefaultPool_TECU::NumberVariable_Ground_based_machine_speed"
-- **Ereigniseingang**: REQ (Anfrage-Ereignis)
-- **Dateneingang**: u32NewValue (neuer numerischer Wert)
+----
 
-### I_VDS
-- **Typ**: Eingangsbaustein für navigationsbasierte Fahrzeuggeschwindigkeit
-- **Parameter**: QI = TRUE (aktiviert den Baustein)
-- **Ereignisausgang**: IND (Indikator-Ereignis)
-- **Datenausgang**: NavigationBasedVehicleSpeed (navigationsbasierte Fahrzeuggeschwindigkeit)
+![](Uebung_073.png)
 
-### Q_NumericValue_WBSD
-- **Typ**: Ausgabebaustein für numerische Werte
-- **Parameter**: u16ObjId = "DefaultPool_TECU::NumberVariable_Wheel_based_machine_speed"
-- **Ereigniseingang**: REQ (Anfrage-Ereignis)
-- **Dateneingang**: u32NewValue (neuer numerischer Wert)
+## Ziel der Übung
 
-## Programmablauf und Verbindungen
+Verwendung des Bausteins `I_VDS` (Vehicle Direction and Speed).
 
-**Ereignisverbindungen:**
-- I_GBSD.IND → Q_NumericValue_GBSD.REQ
-- I_VDS.IND → Q_NumericValue_WBSD.REQ
+-----
 
-**Datenverbindungen:**
-- I_GBSD.GROUNDBASEDMACHINESPEED → Q_NumericValue_GBSD.u32NewValue
-- I_VDS.NavigationBasedVehicleSpeed → Q_NumericValue_WBSD.u32NewValue
+## Beschreibung und Komponenten
 
-**Programmablauf:**
-1. Die Eingangsbausteine I_GBSD und I_VDS werden mit QI=TRUE aktiviert
-2. Bei neuen Geschwindigkeitsdaten generieren die Eingangsbausteine IND-Ereignisse
-3. Diese Ereignisse lösen die REQ-Ereignisse der Ausgabebausteine aus
-4. Gleichzeitig werden die Geschwindigkeitsdaten an die entsprechenden numerischen Variablen übergeben
-5. Die Werte werden in den definierten Objekten "NumberVariable_Ground_based_machine_speed" und "NumberVariable_Wheel_based_machine_speed" gespeichert
+[cite_start]In `Uebung_073.SUB` werden die Radar-Geschwindigkeit (GBSD) und die GPS-Geschwindigkeit (VDS) parallel verarbeitet[cite: 1].
 
-**Lernziele:**
-- Verarbeitung von Geschwindigkeitsdaten aus verschiedenen Quellen
-- Verwendung von numerischen Ausgabevariablen
-- Ereignisgesteuerte Datenübertragung
-- Konfiguration von Objekt-IDs für Variablenzugriff
+### Funktionsbausteine (FBs)
 
-## Zusammenfassung
-Diese Übung zeigt ein einfaches aber effektives System zur Verarbeitung und Ausgabe von Geschwindigkeitsdaten. Zwei unabhängige Geschwindigkeitsmesssysteme (bodengestützt und radbasiert) werden parallel verarbeitet und ihre Werte an entsprechende numerische Variablen auf dem Bedienpanel übergeben. Die ereignisgesteuerte Architektur gewährleistet eine effiziente Datenverarbeitung ohne unnötige Zyklen.
+  * **`I_VDS`**: Dieser Baustein empfängt Daten vom GPS-Empfänger des Traktors (`NavigationBasedVehicleSpeed`).
+
+-----
+
+## Funktionsweise
+
+GPS-Daten sind besonders genau bei konstanter Fahrt auf freiem Feld, können aber bei schneller Beschleunigung oder unter Bäumen/an Gebäuden ungenau werden. In modernen Systemen nutzt man VDS oft als Referenz, um Radar-Sensoren zu kalibrieren oder bei deren Ausfall eine Ausweich-Geschwindigkeit zu haben.

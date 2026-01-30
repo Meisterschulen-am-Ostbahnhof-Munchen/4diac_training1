@@ -1,46 +1,49 @@
-# Uebung_004a9: mit E_SPLIT_3
+# Uebung_004a9: Dreifach Event-Splitter (E_SPLIT_3)
 
-* * * * * * * * * *
+```{index} single: Uebung_004a9: Dreifach Event-Splitter (E_SPLIT_3)
+```
 
-## Einleitung
-Diese Übung demonstriert den Einsatz von Toggle-Flipflops (T-FF) in Verbindung mit einem Ereignisverteiler. Die Schaltung steuert drei digitale Ausgänge über Toggle-Flipflops, die durch einen gemeinsamen Tasterimpuls getriggert werden.
+[Uebung_004a9](https://docs.ms-muc-docs.de/projects/visual-programming-languages-docs/de/latest/training1/Ventilsteuerung/4diacIDE-workspace/test/FBs/Uebungen/Uebung_004a9.html)
 
-## Verwendete Funktionsbausteine (FBs)
+[![NotebookLM](media/NotebookLM_logo.png)](https://notebooklm.google.com/notebook/a6872e59-1dfc-4132-a118-aff1bc7bc944)
 
-### Haupt-Funktionsbausteine:
-- **DigitalInput_CLK_I1** (logiBUS_IE): Digitaler Eingang für Taster I1 mit Einzelklick-Erkennung
-- **E_SPLIT_3**: Ereignisverteiler mit drei Ausgängen
-- **E_T_FF_Q1**, **E_T_FF_Q2**, **E_T_FF_Q3** (E_T_FF): Toggle-Flipflops für drei Ausgänge
-- **DigitalOutput_Q1**, **DigitalOutput_Q2**, **DigitalOutput_Q3** (logiBUS_QX): Digitale Ausgänge Q1-Q3
+Dieser Artikel beschreibt die logiBUS®-Übung `Uebung_004a9`. Hier wird das Konzept des sequenziellen Event-Splittings auf drei Ziele erweitert.
 
-### Sub-Bausteine: E_T_FF (Toggle-Flipflop)
-- **Typ**: Basic Function Block
-- **Verwendete interne FBs**: Keine internen FBs
-- **Funktionsweise**: Bei jedem eingehenden CLK-Ereignis toggelt der Q-Ausgang zwischen TRUE und FALSE. Der EO-Ausgang bestätigt die Verarbeitung.
+----
 
-## Programmablauf und Verbindungen
+![](Uebung_004a9.png)
 
-### Ereignisverbindungen:
-1. DigitalInput_CLK_I1.IND → E_SPLIT_3.EI (Tasterimpuls wird an Verteiler gesendet)
-2. E_SPLIT_3.EO1 → E_T_FF_Q1.CLK (Verteilerausgang 1 triggert Flipflop 1)
-3. E_SPLIT_3.EO2 → E_T_FF_Q2.CLK (Verteilerausgang 2 triggert Flipflop 2)
-4. E_SPLIT_3.EO3 → E_T_FF_Q3.CLK (Verteilerausgang 3 triggert Flipflop 3)
-5. E_T_FF_Q1.EO → DigitalOutput_Q1.REQ (Flipflop 1 aktiviert Ausgang Q1)
-6. E_T_FF_Q2.EO → DigitalOutput_Q2.REQ (Flipflop 2 aktiviert Ausgang Q2)
-7. E_T_FF_Q3.EO → DigitalOutput_Q3.REQ (Flipflop 3 aktiviert Ausgang Q3)
+## Ziel der Übung
 
-### Datenverbindungen:
-- E_T_FF_Q1.Q → DigitalOutput_Q1.OUT (Flipflop-Zustand an Ausgang Q1)
-- E_T_FF_Q2.Q → DigitalOutput_Q2.OUT (Flipflop-Zustand an Ausgang Q2)
-- E_T_FF_Q3.Q → DigitalOutput_Q3.OUT (Flipflop-Zustand an Ausgang Q3)
+Demonstration der Skalierbarkeit von Ereignis-Verteilern. Mit `E_SPLIT_3` können drei Prozesse mit einem einzigen Auslöser sequenziell angestoßen werden.
 
-### Konfiguration:
-- **DigitalInput_CLK_I1**: Input_I1 mit BUTTON_SINGLE_CLICK Event
-- **DigitalOutputs**: Q1-Q3 mit aktiviertem QI-Parameter (TRUE)
+-----
 
-**Schwierigkeitsgrad**: Einfach bis Mittel  
-**Benötigte Vorkenntnisse**: Grundverständnis von Funktionsbausteinen und Ereignisverarbeitung  
-**Start der Übung**: Taster I1 betätigen - bei jedem Klick werden alle drei Flipflops getoggelt
+## Beschreibung und Komponenten
 
-## Zusammenfassung
-Diese Übung zeigt eine praktische Anwendung von Toggle-Flipflops in Verbindung mit einem Ereignisverteiler. Durch die Verwendung von E_SPLIT_3 wird ein einzelner Tasterimpuls auf drei parallele Flipflops verteilt, die unabhängig voneinander ihre Zustände ändern. Die Schaltung demonstriert effektiv die Prinzipien der Ereignisverteilung und parallelen Signalverarbeitung in IEC 61499-Systemen.
+[cite_start]Die Subapplikation `Uebung_004a9.SUB` verteilt das Signal eines Tasters auf drei separate Toggle-Flip-Flops und somit auf drei Ausgänge[cite: 1].
+
+### Funktionsbausteine (FBs)
+
+  * **`DigitalInput_CLK_I1`**: Der zentrale Auslöser (Taster).
+  * **`E_SPLIT_3`**: Verteilt den Eingang `EI` nacheinander auf `EO1`, `EO2` und `EO3`.
+  * **`E_T_FF_Q1`, `Q2`, `Q3`**: Drei unabhängige Flip-Flops.
+  * **`DigitalOutput_Q1`, `Q2`, `Q3`**: Drei physische Lampen.
+
+-----
+
+## Funktionsweise
+
+Ein einziger Klick auf den Taster löst eine definierte Ereigniskette aus:
+1.  `EO1` feuert ➡️ `Q1` toggelt.
+2.  `EO2` feuert ➡️ `Q2` toggelt.
+3.  `EO3` feuert ➡️ `Q3` toggelt.
+
+Die Abarbeitung erfolgt in der Steuerung so schnell, dass die Lampen für den Betrachter gleichzeitig umschalten, jedoch ist die interne Reihenfolge strikt vorgegeben.
+
+-----
+
+## Anwendungsbeispiel
+
+**Szenen-Schaltung im Gebäude**:
+Ein Taster an der Wohnungstür schaltet gleichzeitig die Beleuchtung im Flur (`Q1`), in der Küche (`Q2`) und im Außenbereich (`Q3`) um. Durch den Splitter wird sichergestellt, dass alle Funktionsblöcke den Trigger erhalten.

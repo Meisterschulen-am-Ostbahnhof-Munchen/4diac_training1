@@ -1,54 +1,66 @@
-# Uebung_002a3_AX: DigitalInput_I1/_I2 mit OR auf DigitalOutput_Q1, mit Plug and Socket
+# Uebung_002a3_AX: Logische ODER-Verknüpfung zweier Signale
 
-* * * * * * * * * *
+```{index} single: Uebung_002a3_AX: Logische ODER-Verknüpfung zweier Signale
+```
 
-## Einleitung
-Diese Übung demonstriert die Verwendung von digitalen Ein- und Ausgängen mit einer ODER-Verknüpfung in der 4diac-IDE. Die Übung zeigt die Anwendung von Plug-and-Socket-Verbindungen zwischen Funktionsbausteinen zur Realisierung einer einfachen logischen Schaltung.
+[Uebung_002a3_AX](https://docs.ms-muc-docs.de/projects/visual-programming-languages-docs/de/latest/training1/Ventilsteuerung/4diacIDE-workspace/test/FBs/Uebungen/Uebung_002a3_AX.html)
 
-## Verwendete Funktionsbausteine (FBs)
+[![NotebookLM](media/NotebookLM_logo.png)](https://notebooklm.google.com/notebook/041f4df4-b729-484d-b786-b6dcdf151961)
 
-### DigitalInput_I1 / DigitalInput_I2
-- **Typ**: logiBUS_IXA
-- **Parameter**: 
-  - QI = TRUE
-  - Input = logiBUS_DI::Input_I1 (bzw. Input_I2)
-- **Funktion**: Liest digitale Eingangssignale von den entsprechenden Eingängen des logiBUS-Systems
+Dieser Artikel beschreibt die logiBUS®-Übung `Uebung_002a3_AX`. In dieser Übung wird eine logische ODER-Verknüpfung (OR) implementiert, bei der ein digitaler Ausgang aktiviert wird, sobald mindestens einer von zwei digitalen Eingängen den Zustand "Wahr" (HIGH) einnimmt.
 
-### DigitalOutput_Q1
-- **Typ**: logiBUS_QXA
-- **Parameter**:
-  - QI = TRUE
-  - Output = logiBUS_DO::Output_Q1
-- **Funktion**: Schreibt das Ausgangssignal auf den entsprechenden Ausgang des logiBUS-Systems
+----
 
-### AX_OR_2
-- **Typ**: AX_OR_2
-- **Funktion**: Realisiert eine ODER-Verknüpfung mit zwei Eingängen
+![](Uebung_002a3_AX.png)
 
-## Programmablauf und Verbindungen
+## Ziel der Übung
 
-**Verbindungsstruktur:**
-- DigitalInput_I1.IN → AX_OR_2.IN1
-- DigitalInput_I2.IN → AX_OR_2.IN2
-- AX_OR_2.OUT → DigitalOutput_Q1.OUT
+Das Hauptziel dieser Übung ist es, die Funktionsweise einer ODER-Verknüpfung in der Automatisierungstechnik zu demonstrieren. Sie zeigt, wie alternative Bedingungen (Eingänge) genutzt werden können, um dieselbe Aktion (Ausgang) auszulösen. Dies ist eine Standardanforderung für Systeme, die von mehreren Stellen aus bedienbar sein müssen.
 
-**Programmablauf:**
-1. Die digitalen Eingänge I1 und I2 werden kontinuierlich eingelesen
-2. Die ODER-Verknüpfung verarbeitet die Eingangssignale
-3. Das Ergebnis wird auf den digitalen Ausgang Q1 geschrieben
-4. Q1 wird aktiviert, wenn mindestens einer der beiden Eingänge (I1 oder I2) aktiv ist
+-----
 
-**Lernziele:**
-- Verständnis digitaler Ein- und Ausgänge in 4diac
-- Anwendung von logischen Verknüpfungen (ODER)
-- Umgang mit Plug-and-Socket-Verbindungen
-- Grundlagen der Signalverarbeitung in IEC 61499
+## Beschreibung und Komponenten
 
-**Schwierigkeitsgrad**: Einsteiger
+[cite_start]Die Subapplikation `Uebung_002a3_AX.SUB` führt zwei digitale Eingangssignale über einen ODER-Logik-Baustein zusammen[cite: 1].
 
-**Benötigte Vorkenntnisse**: Grundlagen der 4diac-IDE, Verständnis digitaler Signale
+### Funktionsbausteine (FBs)
 
-**Starten der Übung**: Die Übung kann direkt in der 4diac-IDE geladen und auf einem kompatiblen Zielsystem ausgeführt werden.
+Folgende Bausteine werden verwendet:
 
-## Zusammenfassung
-Diese Übung vermittelt grundlegende Konzepte der digitalen Signalverarbeitung mit 4diac. Sie zeigt anschaulich, wie digitale Eingangssignale mittels einer ODER-Verknüpfung verarbeitet und auf einen Ausgang geschrieben werden. Die Verwendung von standardisierten Bus-Funktionsbausteinen und Plug-and-Socket-Verbindungen demonstriert praxisnahe Anwendungsmöglichkeiten in der Automatisierungstechnik.
+  * **`DigitalInput_I1` & `DigitalInput_I2`**: Instanzen des Typs `logiBUS_IXA`. [cite_start]Diese Bausteine erfassen die Zustände der physischen Eingänge `Input_I1` und `Input_I2`[cite: 1].
+  * **`AX_OR_2`**: Eine Instanz des Typs `AX_OR_2`. [cite_start]Dieser Baustein führt die logische ODER-Operation auf Adapter-Ebene aus. Er besitzt zwei Adapter-Eingänge (`IN1`, `IN2`) und einen Adapter-Ausgang (`OUT`)[cite: 1].
+  * **`DigitalOutput_Q1`**: Eine Instanz des Typs `logiBUS_QXA`. [cite_start]Dieser Baustein setzt den physischen Ausgang `Output_Q1` basierend auf dem Ergebnis der ODER-Verknüpfung[cite: 1].
+
+### Adapter-Schnittstelle: `AX.adp`
+
+[cite_start]Durch die Verwendung des Adapter-Typs `AX` werden die Zustandsänderungen (Events) und die booleschen Werte (Daten) gemeinsam durch die Logikbausteine gereicht[cite: 2].
+
+-----
+
+## Funktionsweise
+
+Die Logik wird durch die Verschaltung der Adapter-Anschlüsse in der Subapplikation definiert. Der Aufbau in `Uebung_002a3_AX.SUB` ist wie folgt:
+
+```xml
+<AdapterConnections>
+    <Connection Source="DigitalInput_I1.IN" Destination="AX_OR_2.IN1"/>
+    <Connection Source="DigitalInput_I2.IN" Destination="AX_OR_2.IN2"/>
+    <Connection Source="AX_OR_2.OUT" Destination="DigitalOutput_Q1.OUT"/>
+</AdapterConnections>
+```
+
+[cite_start][cite: 1]
+
+Der Prozess folgt dieser Logik:
+1.  Der Baustein `AX_OR_2` überwacht beide Adapter-Eingänge.
+2.  Wenn mindestens ein Eingang (`IN1` OR `IN2`) den Datenwert `D1 = TRUE` führt, setzt der Baustein seinen Ausgang `OUT` ebenfalls auf `TRUE` und sendet ein Ereignis.
+3.  Nur wenn beide Eingänge auf `FALSE` stehen, geht auch der Ausgang auf `FALSE`.
+4.  Der Baustein `DigitalOutput_Q1` aktualisiert den physischen Ausgang `Q1` bei jeder Änderung am Ausgang des ODER-Bausteins.
+
+-----
+
+## Anwendungsbeispiel
+
+Ein typisches Anwendungsbeispiel ist die **Flurbeleuchtung mit zwei Schaltern**:
+
+In einem langen Flur gibt es an beiden Enden einen Schalter (`I1` und `I2`). Die Lampe (`Q1`) soll leuchten, wenn Schalter 1 betätigt wird ODER wenn Schalter 2 betätigt wird. Diese "Entweder-Oder"-Logik (bzw. "Mindestens-Eins"-Logik) wird durch den `AX_OR_2`-Baustein perfekt abgebildet, sodass man die Beleuchtung von beiden Stellen aus unabhängig voneinander einschalten kann.

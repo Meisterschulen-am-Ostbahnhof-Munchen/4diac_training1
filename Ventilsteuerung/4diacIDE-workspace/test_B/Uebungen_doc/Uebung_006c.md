@@ -1,56 +1,45 @@
-# Uebung_006c: SR-Flip-Flop mit IB auf DI_REPEAT
+# Uebung_006c: Sammelsteuerung (Demultiplexer)
 
-* * * * * * * * * *
+```{index} single: Uebung_006c: Sammelsteuerung (Demultiplexer)
+```
 
-## Einleitung
-Diese Übung demonstriert die Verwendung von SR-Flip-Flops in Kombination mit Eingabebausteinen, die auf Tastendruck-Wiederholung reagieren. Das System steuert acht digitale Ausgänge (Q1-Q8) über zwei Eingänge, wobei ein Demultiplexer zur Verteilung der Signale eingesetzt wird.
+[Uebung_006c](https://docs.ms-muc-docs.de/projects/visual-programming-languages-docs/de/latest/training1/Ventilsteuerung/4diacIDE-workspace/test/FBs/Uebungen/Uebung_006c.html)
 
-## Verwendete Funktionsbausteine (FBs)
+[![NotebookLM](media/NotebookLM_logo.png)](https://notebooklm.google.com/notebook/a6872e59-1dfc-4132-a118-aff1bc7bc944)
 
-### Hauptbausteine:
-- **DigitalInput_RPT_I1/I2** (logiBUS_IB): Digitale Eingabebausteine mit Wiederholfunktion
-- **F_BYTE_TO_UINT_S/R** (F_BYTE_TO_UINT): Datentyp-Konvertierung von Byte zu Unsigned Integer
-- **E_DEMUX8_S/R** (E_DEMUX_8): 8-fach Ereignis-Demultiplexer
-- **E_SR_Q1-Q8** (E_SR): SR-Flip-Flop Bausteine
-- **DigitalOutput_Q1-Q8** (logiBUS_QX): Digitale Ausgabebausteine
+Dieser Artikel beschreibt die logiBUS®-Übung `Uebung_006c`. Hier wird eine komplexe Kanalsteuerung unter Verwendung von Byte-Daten und Ereignis-Demultiplexern realisiert.
 
-### Sub-Bausteine: E_SR (SR-Flip-Flop)
-- **Typ**: E_SR
-- **Verwendete interne FBs**: Basis-SR-Flip-Flop
-- **Funktionsweise**: Setzt (S) oder Rücksetzt (R) den Ausgang Q basierend auf den Eingangsereignissen
+----
 
-### Sub-Bausteine: E_DEMUX_8 (8-fach Demultiplexer)
-- **Typ**: E_DEMUX_8
-- **Verwendete interne FBs**: Ereignis-Demultiplexer
-- **Funktionsweise**: Leitet eingehende Ereignisse basierend auf dem K-Wert an einen der 8 Ausgänge weiter
+![](Uebung_006c.png)
 
-## Programmablauf und Verbindungen
+## Ziel der Übung
 
-**Eingabeverarbeitung:**
-- DigitalInput_RPT_I1 (I1) und I2 erfassen Tastendrücke mit Wiederholfunktion
-- F_BYTE_TO_UINT Bausteine konvertieren die Eingabedaten für die Demultiplexer
+Erlernen der adressierten Ereignisverteilung. Anstatt für jeden Kanal eine eigene Leitung zu ziehen, wird eine "Adresse" (Index) genutzt, um ein Ereignis an das richtige Ziel zu leiten.
 
-**Signalverteilung:**
-- E_DEMUX8_S verteilt Set-Signale an die SR-Flip-Flops Q1-Q8
-- E_DEMUX8_R verteilt Reset-Signale an die SR-Flip-Flops
+-----
 
-**Ausgabesteuerung:**
-- Acht E_SR Bausteine steuern die entsprechenden DigitalOutput_Q1-Q8 Ausgänge
-- Jeder SR-Flip-Flop kann unabhängig gesetzt und zurückgesetzt werden
+## Beschreibung und Komponenten
 
-**Lernziele:**
-- Verständnis von SR-Flip-Flops in IEC 61499
-- Umgang mit Ereignis-Demultiplexern
-- Datentyp-Konvertierung in Steuerungssystemen
-- Verwendung von Wiederhol-Eingabefunktionen
+[cite_start]Die Subapplikation `Uebung_006c.SUB` steuert 8 Lampenspeicher über zwei zentrale Wahlschalter[cite: 1].
 
-**Schwierigkeitsgrad**: Mittel
-**Benötigte Vorkenntnisse**: Grundlagen IEC 61499, Digitale Ein-/Ausgänge
+### Funktionsbausteine (FBs)
 
-**Starten der Übung**: 
-1. System in 4diac-IDE laden
-2. Auf logiBUS-Hardware deployen
-3. Eingänge I1 und I2 mit Tastern testen
+  * **`logiBUS_IB`**: Ein spezieller Eingangsbaustein für "Input Byte". Er liefert einen Zahlenwert (0-255), der meist von einem Multi-Funktions-Bedienelement (z.B. einem ISOBUS-Joystick mit vielen Tasten) stammt.
+  * **`E_DEMUX_8`**: Ein Ereignis-Demultiplexer. Er hat einen Ereignis-Eingang `EI` und einen Daten-Eingang `K` (Selector). Je nach Wert von `K` leitet er das Event an einen der acht Ausgänge `EO1` bis `EO8` weiter.
+  * **8x `E_SR`**: Speicher für die Ausgänge `Q1` bis `Q8`.
 
-## Zusammenfassung
-Diese Übung zeigt eine erweiterte Anwendung von SR-Flip-Flops mit multiplexer-basierter Steuerung. Die Verwendung von Wiederhol-Eingabebausteinen und Demultiplexern ermöglicht eine flexible Steuerung mehrerer Ausgänge mit minimalen Eingabegeräten. Die Übung vermittelt praktische Kenntnisse in Signalverteilung und Zustandsspeicherung in verteilten Steuerungssystemen.
+-----
+
+## Funktionsweise
+
+Das System arbeitet mit zwei Kanälen:
+1.  **Setzen-Kanal**: Ein Druck auf Taster `I1` (konfiguriert als Repeat) liefert eine Nummer. Der Demux `E_DEMUX8_S` leitet das Ereignis an den entsprechenden Speicherplatz weiter ➡️ Die Lampe geht an.
+2.  **Rücksetzen-Kanal**: Taster `I2` liefert analog dazu eine Nummer an `E_DEMUX8_R` ➡️ Die entsprechende Lampe geht aus.
+
+-----
+
+## Anwendungsbeispiel
+
+**Fernsteuerung von Aktoren über ein Terminal**:
+Ein Bediener hat ein Nummernfeld oder ein Drehrad am Joystick. Er wählt eine Nummer aus und drückt "Aktivieren". Die Steuerung sorgt dafür, dass genau das Gerät mit dieser Nummer eingeschaltet wird. Dies spart enorm viele physische Taster und Leitungen ein.

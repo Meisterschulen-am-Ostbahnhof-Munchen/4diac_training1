@@ -1,46 +1,45 @@
-# Uebung_085: Beispiel für E_D_FF
+# Uebung_085: Zustands-Synchronisation (D-Flip-Flop)
 
-* * * * * * * * * *
+```{index} single: Uebung_085: Zustands-Synchronisation (D-Flip-Flop)
+```
 
-## Einleitung
-Diese Übung demonstriert die Funktionsweise eines D-Flip-Flops (E_D_FF) in der 4diac-IDE. Der Schwerpunkt liegt auf der Verwendung eines taktgesteuerten Speicherelements, das Daten an einem Taktflankenwechsel übernimmt. Die Übung zeigt die praktische Anwendung digitaler Schaltungen mit Ein- und Ausgängen über logiBUS-Schnittstellen.
+[Uebung_085](https://docs.ms-muc-docs.de/projects/visual-programming-languages-docs/de/latest/training1/Ventilsteuerung/4diacIDE-workspace/test/FBs/Uebungen/Uebung_085.html)
 
-## Verwendete Funktionsbausteine (FBs)
+[![NotebookLM](media/NotebookLM_logo.png)](https://notebooklm.google.com/notebook/a6872e59-1dfc-4132-a118-aff1bc7bc944)
 
-### DigitalInput_I1
-- **Typ**: logiBUS_IX
-- **Funktionsweise**: Liest den Zustand eines digitalen Eingangs (Input_I1) und stellt diesen als Datenwert zur Verfügung
+Dieser Artikel beschreibt die logiBUS®-Übung `Uebung_085`. Hier wird das Prinzip des D-Flip-Flops (Delay- oder Data-FF) vorgestellt.
 
-### DigitalInput_CLK_I2  
-- **Typ**: logiBUS_IE
-- **Funktionsweise**: Erkennt Takt-Ereignisse (BUTTON_SINGLE_CLICK) am Eingang I2 und generiert entsprechende Ereignisausgänge
+## 🎧 Podcast
 
-### E_D_FF
-- **Typ**: E_D_FF
-- **Funktionsweise**: D-Flip-Flop Baustein, der den Datenwert am Eingang D bei einer steigenden Taktflanke am CLK-Eingang übernimmt und am Ausgang Q ausgibt
+* [Das Relais im Detail: Schaltverstärker, Schutz und die Geheimnisse von A1/A2, 85/86 und der Hysterese](https://podcasters.spotify.com/pod/show/ms-muc-lama/episodes/Das-Relais-im-Detail-Schaltverstrker--Schutz-und-die-Geheimnisse-von-A1A2--8586-und-der-Hysterese-e3audsc)
 
-### DigitalOutput_Q1
-- **Typ**: logiBUS_QX
-- **Funktionsweise**: Schreibt den empfangenen Datenwert auf den digitalen Ausgang Q1
+----
 
-## Programmablauf und Verbindungen
+![](Uebung_085.png)
 
-**Ereignisverbindungen:**
-- DigitalInput_CLK_I2.IND → E_D_FF.CLK (Takt-Signal)
-- E_D_FF.EO → DigitalOutput_Q1.REQ (Ausgabeanforderung)
+## Ziel der Übung
 
-**Datenverbindungen:**
-- DigitalInput_I1.IN → E_D_FF.D (Dateneingang)
-- E_D_FF.Q → DigitalOutput_Q1.OUT (Datenausgang)
+Verwendung des Bausteins `E_D_FF`. Ziel ist es, einen Datenwert (TRUE/FALSE) erst in dem Moment zu übernehmen, in dem ein taktendendes Ereignis eintrifft.
 
-**Funktionsweise:**
-Der Zustand des Eingangs I1 wird kontinuierlich am D-Eingang des Flip-Flops bereitgestellt. Bei jedem Takt-Event (Einzelklick auf I2) wird dieser Zustand in den Flip-Flop übernommen und am Ausgang Q1 ausgegeben. Der Ausgang behält seinen Zustand bei, bis der nächste Taktimpuls eintrifft.
+-----
 
-**Lernziele:**
-- Verständnis der Funktionsweise eines D-Flip-Flops
-- Umgang mit taktgesteuerten Speicherelementen
-- Anwendung von Ereignis- und Datenverbindungen
-- Praxis mit logiBUS Ein-/Ausgabebausteinen
+## Beschreibung und Komponenten
 
-## Zusammenfassung
-Diese Übung vermittelt grundlegende Kenntnisse über taktgesteuerte Speicherelemente in digitalen Schaltungen. Der D-Flip-Flop zeigt das Prinzip der Datenspeicherung bei Taktflanken und demonstriert die praktische Umsetzung mit realen Ein- und Ausgängen über die logiBUS-Schnittstelle.
+[cite_start]Die Subapplikation `Uebung_085.SUB` nutzt einen Daten-Eingang und einen Klick-Ereignis-Eingang[cite: 1].
+
+### Funktionsbausteine (FBs)
+
+  * **`I1` (Data)**: Liefert den Soll-Zustand.
+  * **`I2` (Clock)**: Liefert den Übernahme-Impuls.
+  * **`E_D_FF`**: Der Speicherbaustein. [cite_start]Er übernimmt den Wert am Eingang `D` nur dann an den Ausgang `Q`, wenn ein Ereignis am Eingang `CLK` empfängt[cite: 1].
+
+-----
+
+## Funktionsweise
+
+Der Ausgang `Q1` folgt nicht sofort dem Schalter `I1`.
+1.  Der Nutzer stellt den Schalter `I1` auf TRUE. Am Ausgang passiert nichts.
+2.  Erst wenn der Nutzer zusätzlich auf Taster **I2** klickt, wird das `TRUE` in das Flip-Flop geladen und die Lampe geht an.
+3.  Wird `I1` wieder auf FALSE gestellt, bleibt die Lampe so lange an, bis erneut ein Klick auf **I2** erfolgt.
+
+Dies ist eine fundamentale Methode zur zeitlichen Synchronisation von Signalen in der Digitaltechnik.

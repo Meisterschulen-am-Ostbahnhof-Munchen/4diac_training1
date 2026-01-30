@@ -1,55 +1,19 @@
-# Uebung_094a: Beispiel für QI anstelle Permit
+# Uebung_094a: Integrierte Freigabe (QI)
 
-* * * * * * * * * *
+```{index} single: Uebung_094a: Integrierte Freigabe (QI)
+```
 
-## Einleitung
-Diese Übung demonstriert die Verwendung eines T-Flip-Flops (E_T_FF) in Kombination mit digitalen Ein- und Ausgängen. Das Programm zeigt ein Beispiel für Aufwärtszählvorgänge und illustriert die Verwendung des QI-Parameters als Alternative zu Permit-Signalen. Die Übung ist Teil des UAO Curriculum Module 3 zum IEC 61499 Standard.
+[Uebung_094a](https://docs.ms-muc-docs.de/projects/visual-programming-languages-docs/de/latest/training1/Ventilsteuerung/4diacIDE-workspace/test/FBs/Uebungen/Uebung_094a.html)
 
-## Verwendete Funktionsbausteine (FBs)
+[![NotebookLM](media/NotebookLM_logo.png)](https://notebooklm.google.com/notebook/a6872e59-1dfc-4132-a118-aff1bc7bc944)
 
-### DigitalInput_I1
-- **Typ**: logiBUS_IX
-- **Parameter**: Input = logiBUS_DI::Input_I1
-- **Ereignisausgänge**: IND
-- **Dateneingänge**: QI
-- **Datenausgänge**: IN
+Dieser Artikel beschreibt die logiBUS®-Übung `Uebung_094a`. Hier wird eine alternative Methode zur Freigabe-Steuerung gezeigt, die direkt in den Bausteinen eingebaut ist.
 
-### DigitalInput_CLK_I2
-- **Typ**: logiBUS_IE
-- **Parameter**: 
-  - QI = TRUE
-  - Input = logiBUS_DI::Input_I2
-  - InputEvent = logiBUS_DI_Events::BUTTON_SINGLE_CLICK
-- **Ereignisausgänge**: IND
+----
 
-### E_T_FF
-- **Typ**: E_T_FF
-- **Ereigniseingänge**: CLK
-- **Ereignisausgänge**: EO
-- **Datenausgänge**: Q
+![](Uebung_094a.png)
 
-### DigitalOutput_Q1
-- **Typ**: logiBUS_QX
-- **Parameter**: 
-  - QI = TRUE
-  - Output = logiBUS_DO::Output_Q1
-- **Ereigniseingänge**: REQ
-- **Dateneingänge**: OUT
+## Übersicht
 
-## Programmablauf und Verbindungen
-
-Das Programm verwendet einen T-Flip-Flop (E_T_FF) als zentrales Element. Der DigitalInput_CLK_I2 Baustein erzeugt Taktsignale bei Betätigung des Tasters I2 und triggert damit den CLK-Eingang des T-Flip-Flops.
-
-**Ereignisverbindungen:**
-- DigitalInput_CLK_I2.IND → E_T_FF.CLK (Taktsignal)
-- DigitalInput_I1.IND → DigitalOutput_Q1.REQ (Ausgabeanforderung)
-- E_T_FF.EO → DigitalInput_I1.INIT (Initialisierung)
-
-**Datenverbindungen:**
-- DigitalInput_I1.IN → DigitalOutput_Q1.OUT (Direkte Signalübertragung)
-- E_T_FF.Q → DigitalInput_I1.QI (QI-Steuerung)
-
-Der T-Flip-Flop ändert seinen Ausgangszustand bei jedem Taktimpuls und steuert über den Q-Ausgang das QI-Signal des DigitalInput_I1 Bausteins. Dies ermöglicht eine bedingte Verarbeitung der Eingangssignale.
-
-## Zusammenfassung
-Diese Übung veranschaulicht die grundlegende Funktionsweise eines T-Flip-Flops in einer IEC 61499-basierten Steuerung. Sie zeigt die praktische Anwendung von QI-Parametern zur Steuerung von Funktionsbausteinen und demonstriert die Verknüpfung von digitalen Ein- und Ausgängen mit logischen Verarbeitungseinheiten. Die Übung eignet sich ideal zum Verständnis von Zählvorgängen und Flip-Flop-Schaltungen in verteilten Automatisierungssystemen.
+[cite_start]Anstatt einen externen `E_PERMIT` Baustein zu nutzen, wird hier der Standard-Port `QI` (Qualified Input) des Eingangsbausteins `DigitalInput_I1` verwendet[cite: 1].
+Über ein Toggle-Flip-Flop wird der `QI` Eingang ein- und ausgeschaltet. Steht `QI` auf `FALSE`, ist der gesamte Baustein deaktiviert und sendet keine Ereignisse mehr an den Ausgang `Q1`, selbst wenn sich der physikalische Zustand am Hardware-Pin ändert. Dies ist die sauberste Methode, um ganze Funktionsblöcke im Programm schlafen zu legen.

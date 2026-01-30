@@ -1,56 +1,44 @@
-# Uebung_004c1: Toggle Flip-Flop mit IE mit BUTTON_DOUBLE_CLICK
+# Uebung_004c1: Doppelklick-Auswertung
 
-* * * * * * * * * *
+```{index} single: Uebung_004c1: Doppelklick-Auswertung
+```
 
-## Einleitung
-Diese Übung demonstriert die Implementierung eines Toggle Flip-Flops mit spezieller Ereignisauslösung. Der Schwerpunkt liegt auf der Verwendung eines Doppelklick-Ereignisses als Taktgeber für den Flip-Flop.
+[Uebung_004c1](https://docs.ms-muc-docs.de/projects/visual-programming-languages-docs/de/latest/training1/Ventilsteuerung/4diacIDE-workspace/test/FBs/Uebungen/Uebung_004c1.html)
 
-## Verwendete Funktionsbausteine (FBs)
+[![NotebookLM](media/NotebookLM_logo.png)](https://notebooklm.google.com/notebook/a6872e59-1dfc-4132-a118-aff1bc7bc944)
 
-### DigitalInput_CLK_I1
-- **Typ**: logiBUS_IE
-- **Parameter**: 
-  - QI = TRUE
-  - Input = logiBUS_DI::Input_I1
-  - InputEvent = logiBUS_DI_Events::BUTTON_DOUBLE_CLICK
-- **Funktionsweise**: Überwacht den digitalen Eingang I1 und erkennt speziell Doppelklick-Ereignisse
+Dieser Artikel beschreibt die logiBUS®-Übung `Uebung_004c1`. Ab hier widmen wir uns den erweiterten Fähigkeiten des `logiBUS_IE` Bausteins, der komplexe Taster-Muster erkennen kann.
 
-### E_T_FF
-- **Typ**: E_T_FF (Toggle Flip-Flop)
-- **Funktionsweise**: Schaltet seinen Ausgangszustand bei jedem eingehenden Taktimpuls um
+----
 
-### DigitalOutput_Q1
-- **Typ**: logiBUS_QX
-- **Parameter**:
-  - QI = TRUE
-  - Output = logiBUS_DO::Output_Q1
-- **Funktionsweise**: Steuert den digitalen Ausgang Q1 basierend auf dem Eingangssignal
+![](Uebung_004c1.png)
 
-## Programmablauf und Verbindungen
+## Ziel der Übung
 
-**Ereignisverbindungen:**
-- DigitalInput_CLK_I1.IND → E_T_FF.CLK
-- E_T_FF.EO → DigitalOutput_Q1.REQ
+Nutzung des Ereignisses `BUTTON_DOUBLE_CLICK` zur Steuerung einer Speicherfunktion.
 
-**Datenverbindungen:**
-- E_T_FF.Q → DigitalOutput_Q1.OUT
+-----
 
-**Programmablauf:**
-1. Ein Doppelklick auf den physischen Button an Eingang I1 löst ein IND-Ereignis aus
-2. Dieses Ereignis dient als Takt (CLK) für den Toggle Flip-Flop
-3. Der E_T_FF wechselt seinen Zustand (Q) bei jedem Taktimpuls
-4. Das Ausgangssignal wird über EO an den Digitalausgang Q1 gesendet
-5. Der Ausgang Q1 schaltet bei jedem Doppelklick-Ereignis um
+## Beschreibung und Komponenten
 
-**Lernziele:**
-- Verständnis von Toggle Flip-Flops
-- Umgang mit speziellen Eingabeereignissen (Doppelklick)
-- Verbindung von Eingabe-, Verarbeitungs- und Ausgabebausteinen
-- Ereignisgesteuerte Programmierung
+[cite_start]Die Subapplikation `Uebung_004c1.SUB` schaltet eine Lampe nur bei einem Doppelklick um[cite: 1].
 
-**Schwierigkeitsgrad**: Einsteiger
+### Funktionsbausteine (FBs)
 
-**Benötigte Vorkenntnisse**: Grundlagen der 4diac-IDE, Verständnis digitaler Ein- und Ausgänge
+  * **`DigitalInput_CLK_I1`**: Typ `logiBUS_IE`. Dieser ist im Parameter `InputEvent` auf `BUTTON_DOUBLE_CLICK` konfiguriert.
+  * **`E_T_FF`**: Das Toggle-Flip-Flop.
 
-## Zusammenfassung
-Diese Übung zeigt eine praktische Anwendung eines Toggle Flip-Flops, der durch Doppelklick-Ereignisse gesteuert wird. Die Kombination aus ereignisbasierter Eingabeverarbeitung und zustandsgesteuerter Logik demonstriert grundlegende Prinzipien der Automatisierungstechnik. Die Übung eignet sich ideal zum Einstieg in die ereignisgesteuerte Programmierung mit 4diac.
+-----
+
+## Funktionsweise
+
+Der Eingangsbaustein überwacht das zeitliche Muster am Hardware-Pin `I1`.
+1.  Ein einfacher Tastendruck wird ignoriert (kein Event an `IND`).
+2.  Werden zwei Klicks innerhalb einer definierten Zeit (meist < 500ms) erkannt, feuert der Baustein **einmal** das Ereignis `IND`.
+3.  Dieses Ereignis triggert das Flip-Flop, welches den Zustand der Lampe wechselt.
+
+-----
+
+## Anwendungsbeispiel
+
+**Vermeidung von Fehlbedienungen**: Kritische Befehle (wie z.B. "Alle Motoren Stopp" oder "Daten löschen") können auf einen Doppelklick gelegt werden, damit ein versehentliches Berühren des Tasters keine Folgen hat.

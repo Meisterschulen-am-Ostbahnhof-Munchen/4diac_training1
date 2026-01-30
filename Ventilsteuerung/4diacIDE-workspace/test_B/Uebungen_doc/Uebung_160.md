@@ -1,82 +1,50 @@
-Hier ist die Dokumentation für die Übung `Uebung_160` basierend auf den bereitgestellten Daten.
+# Uebung_160: Motor-Drehrichtungssteuerung
 
-# Uebung_160 - Motor Links/Rechtslauf
+```{index} single: Uebung_160: Motor-Drehrichtungssteuerung
+```
 
-![Uebung_160 Bild](Uebung_160.png)
+[Uebung_160](https://docs.ms-muc-docs.de/projects/visual-programming-languages-docs/de/latest/training1/Ventilsteuerung/4diacIDE-workspace/test/FBs/Uebungen/Uebung_160.html)
 
-* * * * * * * * * *
+[![NotebookLM](media/NotebookLM_logo.png)](https://notebooklm.google.com/notebook/a6872e59-1dfc-4132-a118-aff1bc7bc944)
 
-## Einleitung
-Diese Übung implementiert eine grundlegende Steuerung für einen Motor mit Links- und Rechtslauf. Das Ziel ist es, Eingangssignale direkt auf entsprechende Ausgänge zu mappen und zusätzlich einen Sammelausgang zu schalten, sobald eine der beiden Richtungen aktiv ist. Diese Logik wird typischerweise verwendet, um Schütze für die Drehrichtung anzusteuern und gleichzeitig eine Anzeige (z. B. "Motor läuft") zu betreiben.
+Dieser Artikel beschreibt die logiBUS®-Übung `Uebung_160`. Hier wird die einfache logische Verknüpfung zur Steuerung eines umschaltbaren Antriebs gezeigt.
 
-## Verwendete Funktionsbausteine (FBs)
+----
 
-In dieser Übung werden Standard-Ein-/Ausgabebausteine des `logiBUS` sowie logische Verknüpfungsbausteine verwendet.
+![](Uebung_160.png)
 
-### Enthaltene Bausteine im Netzwerk
+## Ziel der Übung
 
-Hier sind die Instanzen der Funktionsbausteine aufgeführt, die in dieser SubApplikation verschaltet sind:
+Realisierung einer Steuerung für Linkslauf, Rechtslauf und ein Summensignal (Motor Aktiv).
 
-- **DigitalInput_I1**
-    - **Typ**: `logiBUS::io::DI::logiBUS_IX`
-    - **Parameter**: 
-        - `QI` = `TRUE`
-        - `Input` = `Input_I1`
-    - **Funktion**: Liest das erste digitale Eingangssignal (z. B. Taster "Links").
+-----
 
-- **DigitalInput_I2**
-    - **Typ**: `logiBUS::io::DI::logiBUS_IX`
-    - **Parameter**: 
-        - `QI` = `TRUE`
-        - `Input` = `Input_I2`
-    - **Funktion**: Liest das zweite digitale Eingangssignal (z. B. Taster "Rechts").
+## Beschreibung und Komponenten
 
-- **DigitalOutput_Q5**
-    - **Typ**: `logiBUS::io::DQ::logiBUS_QX`
-    - **Parameter**: 
-        - `QI` = `TRUE`
-        - `Output` = `Output_Q5`
-    - **Funktion**: Steuert den ersten Ausgang an (z. B. Schütz für Linkslauf).
+[cite_start]In `Uebung_160.SUB` werden zwei Taster auf drei Ausgänge gemappt[cite: 1].
 
-- **DigitalOutput_Q6**
-    - **Typ**: `logiBUS::io::DQ::logiBUS_QX`
-    - **Parameter**: 
-        - `QI` = `TRUE`
-        - `Output` = `Output_Q6`
-    - **Funktion**: Steuert den zweiten Ausgang an (z. B. Schütz für Rechtslauf).
+### Funktionsbausteine (FBs)
 
-- **DigitalOutput_Q56**
-    - **Typ**: `logiBUS::io::DQ::logiBUS_QX`
-    - **Parameter**: 
-        - `QI` = `TRUE`
-        - `Output` = `Output_Q56`
-    - **Funktion**: Steuert einen Sammelausgang an (z. B. Signallampe "Betrieb").
+  * **`I1`**: Taster für Linkslauf.
+  * **`I2`**: Taster für Rechtslauf.
+  * **`OR_2_BOOL`**: Logische ODER-Verknüpfung.
+  * **`Q5`**: Ausgang Linkslauf.
+  * **`Q6`**: Ausgang Rechtslauf.
+  * **`Q56`**: Ausgang "Motor läuft" (Summe).
 
-- **OR_2_BOOL**
-    - **Typ**: `iec61131::bitwiseOperators::OR_2_BOOL`
-    - **Funktion**: Logische ODER-Verknüpfung von zwei booleschen Signalen.
+-----
 
-## Programmablauf und Verbindungen
+## Funktionsweise
 
-Der Ablauf der Steuerung ist wie folgt aufgebaut:
+*   Drückt der Nutzer **I1**, wird der Ausgang `Q5` aktiv.
+*   Drückt der Nutzer **I2**, wird der Ausgang `Q6` aktiv.
+*   Über das ODER-Gatter wird der Ausgang `Q56` immer dann aktiv, wenn **entweder I1 ODER I2** (oder beide) gedrückt werden.
 
-1.  **Direkte Ansteuerung der Ausgänge:**
-    *   Das Signal von **DigitalInput_I1** (`Input_I1`) wird direkt an **DigitalOutput_Q5** (`Output_Q5`) weitergeleitet. Wenn Eingang I1 aktiv ist, wird Ausgang Q5 gesetzt.
-    *   Das Signal von **DigitalInput_I2** (`Input_I2`) wird direkt an **DigitalOutput_Q6** (`Output_Q6`) weitergeleitet. Wenn Eingang I2 aktiv ist, wird Ausgang Q6 gesetzt.
+Diese Schaltung demonstriert die Kombination von direkter Signalweiterleitung und logischer Vorverarbeitung für Anzeige-Zwecke.
 
-2.  **Sammelmeldung (ODER-Verknüpfung):**
-    *   Die Datenausgänge (`IN`) von sowohl **DigitalInput_I1** als auch **DigitalInput_I2** sind mit den Eingängen des Bausteins **OR_2_BOOL** verbunden.
-    *   Der Baustein **OR_2_BOOL** prüft, ob *mindestens einer* der beiden Eingänge `TRUE` ist.
-    *   Das Ergebnis dieser Prüfung (`OUT`) wird an den Dateneingang von **DigitalOutput_Q56** (`Output_Q56`) gesendet. Dies bedeutet, dass Ausgang Q56 aktiv wird, sobald entweder Links- oder Rechtslauf (oder beide) angefordert werden.
+-----
 
-3.  **Event-Kette (Ereignissteuerung):**
-    *   Sobald sich ein Wert am Eingang ändert (`IND` Event von I1 oder I2), wird dieses Ereignis genutzt, um die entsprechenden Ausgänge (`REQ` Event an Q5, Q6) und die Logik-Berechnung (`REQ` am OR-Baustein) zu triggern.
+## Anwendungsbeispiel
 
-**Lernziele:**
-*   Verständnis der direkten Signalweiterleitung (Mapping).
-*   Einsatz von logischen Grundfunktionen (ODER).
-*   Verwendung von Hardware-Abstraktions-FBs (logiBUS Inputs/Outputs).
-
-## Zusammenfassung
-
-Die Übung `Uebung_160` realisiert eine einfache Motorsteuerung, bei der zwei Eingänge direkt zwei separate Ausgänge schalten (für Links- bzw. Rechtslauf). Zusätzlich wird über eine ODER-Logik ein dritter Ausgang aktiviert, der als allgemeine Betriebsanzeige dient, solange eines der beiden Eingangssignale anliegt. Dies demonstriert die Kombination von direkter E/A-Zuordnung und logischer Signalverarbeitung innerhalb der 4diac IDE.
+**Zinkenrotor oder Förderband**:
+Die Ausgänge `Q5` und `Q6` steuern die jeweiligen Schütze für die Drehrichtung. Der Ausgang `Q56` steuert eine zentrale Warnleuchte oder ein Entlastungsventil, das immer offen sein muss, wenn der Motor sich in irgendeine Richtung bewegt.

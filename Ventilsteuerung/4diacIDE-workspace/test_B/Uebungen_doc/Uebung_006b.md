@@ -1,59 +1,40 @@
-# Uebung_006b: RS-Flip-Flop mit 2x IE
+# Uebung_006b: Speicherglied (RS-Flip-Flop)
 
-* * * * * * * * * *
+```{index} single: Uebung_006b: Speicherglied (RS-Flip-Flop)
+```
 
-## Einleitung
-Diese Übung demonstriert die Funktionsweise eines RS-Flip-Flops mit zwei Eingabe-Ereignisbausteinen. Im Vergleich zur ähnlichen Übung 006 wird hier ein RS-Flip-Flop anstelle eines SR-Flip-Flops verwendet.
+[Uebung_006b](https://docs.ms-muc-docs.de/projects/visual-programming-languages-docs/de/latest/training1/Ventilsteuerung/4diacIDE-workspace/test/FBs/Uebungen/Uebung_006b.html)
 
-## Verwendete Funktionsbausteine (FBs)
+[![NotebookLM](media/NotebookLM_logo.png)](https://notebooklm.google.com/notebook/a6872e59-1dfc-4132-a118-aff1bc7bc944)
 
-### DigitalInput_CLK_I1
-- **Typ**: logiBUS_IE
-- **Parameter**:
-  - QI = TRUE
-  - Input = logiBUS_DI::Input_I1
-  - InputEvent = logiBUS_DI_Events::BUTTON_SINGLE_CLICK
+Dieser Artikel beschreibt die logiBUS®-Übung `Uebung_006b`.
 
-### DigitalInput_CLK_I2
-- **Typ**: logiBUS_IE
-- **Parameter**:
-  - QI = TRUE
-  - Input = logiBUS_DI::Input_I2
-  - InputEvent = logiBUS_DI_Events::BUTTON_SINGLE_CLICK
+----
 
-### E_RS
-- **Typ**: E_RS (RS-Flip-Flop)
+![](Uebung_006b.png)
 
-### DigitalOutput_Q1
-- **Typ**: logiBUS_QX
-- **Parameter**:
-  - QI = TRUE
-  - Output = logiBUS_DO::Output_Q1
+## Ziel der Übung
 
-## Programmablauf und Verbindungen
+Verständnis der Reset-Priorität.
 
-**Ereignisverbindungen:**
-- DigitalInput_CLK_I2.IND → E_RS.S (Set-Eingang)
-- DigitalInput_CLK_I1.IND → E_RS.R (Reset-Eingang)
-- E_RS.EO → DigitalOutput_Q1.REQ
+-----
 
-**Datenverbindungen:**
-- E_RS.Q → DigitalOutput_Q1.OUT
+## Beschreibung und Komponenten
 
-**Funktionsweise:**
-Die Übung verwendet zwei digitale Eingänge (I1 und I2), die als Taster mit Einzelklick-Erkennung konfiguriert sind. Eingang I2 steuert den Set-Eingang (S) des RS-Flip-Flops, während Eingang I1 den Reset-Eingang (R) kontrolliert. Der Ausgang Q des Flip-Flops wird an den digitalen Ausgang Q1 weitergeleitet.
+[cite_start]Die Subapplikation `Uebung_006b.SUB` nutzt einen `E_RS` Baustein[cite: 1].
 
-**Lernziele:**
-- Verständnis der Funktionsweise eines RS-Flip-Flops
-- Umgang mit Ereignis-gesteuerten Funktionsbausteinen
-- Unterschied zwischen RS- und SR-Flip-Flops
-- Anwendung von digitalen Ein- und Ausgängen in 4diac
+### Funktionsbausteine (FBs)
 
-**Schwierigkeitsgrad**: Einfach
+  * **`E_RS`**: Ein ereignisbasiertes RS-Flip-Flop (Reset dominant).
 
-**Benötigte Vorkenntnisse**: Grundlagen der 4diac-IDE, Verständnis von Flip-Flops
+-----
 
-**Starten der Übung**: Das Programm wird nach dem Kompilieren und Übertragen auf das Zielsystem automatisch gestartet. Die Taster I1 und I2 können zur Steuerung des Flip-Flops verwendet werden.
+## Funktionsweise
 
-## Zusammenfassung
-Diese Übung vermittelt praktische Erfahrungen mit einem RS-Flip-Flop in einer ereignisgesteuerten Steuerungsumgebung. Die Verwendung von zwei separaten Eingängen für Set- und Reset-Funktionen ermöglicht eine klare Demonstration des Flip-Flop-Verhaltens und zeigt den Unterschied zu ähnlichen Schaltungen wie dem SR-Flip-Flop.
+Funktional sehr ähnlich zum SR-Speicher (Übung 006). Der entscheidende Unterschied liegt im Verhalten bei "Gleichzeitigkeit": Sollten im exakt gleichen Moment sowohl ein Setz- als auch ein Rücksetz-Ereignis eintreffen, gewinnt beim `E_RS` das **Rücksetzen**. Der Ausgang wird also sicher auf `FALSE` geschaltet.
+
+-----
+
+## Anwendungsbeispiel
+
+**Gefahrenabschaltung**: Bei einer Maschine hat der Stopp-Befehl immer Vorrang. Wenn ein Fehlerzustand den Stopp auslöst, darf ein gleichzeitiger Startversuch des Bedieners die Abschaltung nicht verhindern. Hier ist ein RS-Glied zwingend erforderlich.

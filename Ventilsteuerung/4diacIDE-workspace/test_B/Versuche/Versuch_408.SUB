@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SubAppType Name="Versuch_408" Comment="Versuch Array Summe">
+	<Identification Standard="61499-2" Description="Copyright (c) 2023 Meisterschulen am Ostbahnhof  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0">
+	</Identification>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2023-10-23">
+	</VersionInfo>
+	<CompilerInfo packageName="Versuche">
+	</CompilerInfo>
+	<SubAppInterfaceList>
+	</SubAppInterfaceList>
+	<SubAppNetwork>
+		<FB Name="INIT_ARR_8_INT" Type="logiBUS::utils::generate::INIT_ARR_0008_INT" x="-2700" y="600">
+			<Parameter Name="D1" Value="[0, 1, 22, 333, 4444, 333, 22, 1]"/>
+		</FB>
+		<FB Name="ARR_MAX" Type="logiBUS::utils::dyn_arr::ARR_MAX" x="-1306.67" y="600">
+		</FB>
+		<FB Name="SUM" Type="logiBUS::utils::dyn_arr::SUM" x="-200" y="700">
+		</FB>
+		<FB Name="ARR_MIN" Type="logiBUS::utils::dyn_arr::ARR_MIN" x="800" y="700">
+		</FB>
+		<FB Name="GET_AT_INDEX" Type="eclipse4diac::convert::GET_AT_INDEX" x="1800" y="700">
+			<Parameter Name="INDEX" Value="4"/>
+		</FB>
+		<EventConnections>
+			<Connection Source="INIT_ARR_8_INT.INITO" Destination="ARR_MAX.REQ"/>
+			<Connection Source="ARR_MAX.CNF" Destination="SUM.REQ" dx1="246.67"/>
+			<Connection Source="SUM.CNF" Destination="ARR_MIN.REQ"/>
+			<Connection Source="ARR_MIN.CNF" Destination="GET_AT_INDEX.REQ"/>
+		</EventConnections>
+		<DataConnections>
+			<Connection Source="INIT_ARR_8_INT.D1" Destination="ARR_MAX.A" dx1="66.67"/>
+			<Connection Source="ARR_MAX.A" Destination="SUM.A" dx1="246.67"/>
+			<Connection Source="SUM.A" Destination="ARR_MIN.A"/>
+			<Connection Source="ARR_MIN.A" Destination="GET_AT_INDEX.IN_ARRAY" dx1="193.33"/>
+		</DataConnections>
+	</SubAppNetwork>
+</SubAppType>

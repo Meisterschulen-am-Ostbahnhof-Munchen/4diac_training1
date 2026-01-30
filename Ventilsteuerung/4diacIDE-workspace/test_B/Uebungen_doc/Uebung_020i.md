@@ -1,72 +1,50 @@
-# Uebung_020i: DigitalInput_I1 auf DigitalOutput_Q1; E_PULSE; Impulsformend; Teach-In
+# Uebung_020i: Teach-In Zeitsteuerung
 
-* * * * * * * * * *
+```{index} single: Uebung_020i: Teach-In Zeitsteuerung
+```
 
-## Einleitung
-Diese Übung demonstriert die Verarbeitung von digitalen Eingangssignalen und die Erzeugung von Impulsen mit konfigurierbarer Dauer. Das System verarbeitet Tastendrücke und Schalterstellungen zur Steuerung von Ausgängen und Zeitmessungen.
+[Uebung_020i](https://docs.ms-muc-docs.de/projects/visual-programming-languages-docs/de/latest/training1/Ventilsteuerung/4diacIDE-workspace/test/FBs/Uebungen/Uebung_020i.html)
 
-## Verwendete Funktionsbausteine (FBs)
+[![NotebookLM](media/NotebookLM_logo.png)](https://notebooklm.google.com/notebook/a6872e59-1dfc-4132-a118-aff1bc7bc944)
 
-### DigitalInput_CLK_I1
-- **Typ**: logiBUS_IE
-- **Parameter**:
-  - QI = TRUE
-  - Input = logiBUS_DI::Input_I1
-  - InputEvent = logiBUS_DI_Events::BUTTON_SINGLE_CLICK
-- **Funktionsweise**: Erfasst Einzelklick-Ereignisse von Eingang I1
+Dieser Artikel beschreibt die logiBUS®-Übung `Uebung_020i`. Dies ist eine sehr praxisnahe Übung, bei der eine Zeitdauer nicht durch Zahlenwerte, sondern durch "Vormachen" (Teach-In) gelernt wird.
 
-### DigitalInput_I2
-- **Typ**: logiBUS_IX
-- **Parameter**:
-  - QI = TRUE
-  - Input = logiBUS_DI::Input_I2
-- **Funktionsweise**: Liest den digitalen Zustand von Eingang I2
+----
 
-### E_PULSE
-- **Typ**: E_PULSE
-- **Funktionsweise**: Erzeugt Impulse mit konfigurierbarer Dauer
+![](Uebung_020i.png)
 
-### E_STOPWATCH
-- **Typ**: E_STOPWATCH
-- **Funktionsweise**: Führt Zeitmessungen durch
+## Ziel der Übung
 
-### E_SWITCH
-- **Typ**: E_SWITCH
-- **Funktionsweise**: Schaltet zwischen verschiedenen Ereignisausgängen basierend auf dem Eingangswert
+Programmierung einer variablen Impulsdauer unter Verwendung des `E_STOPWATCH` Bausteins.
 
-### DigitalOutput_Q1
-- **Typ**: logiBUS_QX
-- **Parameter**:
-  - QI = TRUE
-  - Output = logiBUS_DO::Output_Q1
-- **Funktionsweise**: Steuert den digitalen Ausgang Q1
+-----
 
-## Programmablauf und Verbindungen
+## Beschreibung und Komponenten
 
-**Ereignisverbindungen:**
-- DigitalInput_CLK_I1.IND → E_PULSE.REQ (Tastendruck löst Impulserzeugung aus)
-- E_PULSE.CNF → DigitalOutput_Q1.REQ (Impulsbestätigung aktiviert Ausgang)
-- DigitalInput_I2.IND → E_SWITCH.EI (Eingang I2 triggert Schalter)
-- E_SWITCH.EO1 → E_STOPWATCH.START (Schalterposition 1 startet Stoppuhr)
-- E_SWITCH.EO0 → E_STOPWATCH.STOP (Schalterposition 0 stoppt Stoppuhr)
+[cite_start]Die Subapplikation `Uebung_020i.SUB` nutzt zwei Taster: Einen zum Ausführen und einen zum Lernen der Zeit[cite: 1].
 
-**Datenverbindungen:**
-- E_PULSE.Q → DigitalOutput_Q1.OUT (Impulssignal an Ausgang Q1)
-- E_STOPWATCH.TD → E_PULSE.PT (Stoppuhr-Zeit als Impulsdauer)
-- DigitalInput_I2.IN → E_SWITCH.G (Eingang I2 als Schaltersteuerung)
+### Funktionsbausteine (FBs)
 
-**Lernziele:**
-- Verarbeitung von digitalen Eingangssignalen
-- Impulserzeugung mit variabler Dauer
-- Zeitmessung mit Stoppuhr-Funktionalität
-- Ereignisgesteuerte Schaltlogik
-- Verwendung von logiBUS-Schnittstellen
+  * **`E_STOPWATCH`**: Misst die Zeit zwischen einem Start- und einem Stopp-Ereignis.
+  * **`E_PULSE`**: Erzeugt den zeitgesteuerten Impuls.
+  * **`I2` (Lern-Taster)**: Ein normaler Pegel-Eingang (`IX`).
+  * **`I1` (Start-Taster)**: Ein Klick-Event-Eingang (`IE`).
 
-**Schwierigkeitsgrad**: Mittel
+-----
 
-**Benötigte Vorkenntnisse**: Grundlagen der 4diac-IDE, digitale Ein-/Ausgänge, Ereignisverarbeitung
+## Funktionsweise
 
-**Start der Übung**: Die Übung wird durch Betätigen des Tasters an Eingang I1 gestartet, wobei die Impulsdauer durch die Stoppuhr gesteuert wird, die über Eingang I2 kontrolliert wird.
+1.  **Lern-Modus**: Der Nutzer hält Taster `I2` gedrückt.
+    *   Beim Drücken (steigende Flanke) startet die Stoppuhr.
+    *   Beim Loslassen (fallende Flanke) stoppt die Stoppuhr.
+    *   Die gemessene Zeitdauer (`TD`) wird sofort an den Parameter `PT` des Pulsgebers übergeben.
+2.  **Arbeits-Modus**: Der Nutzer klickt kurz auf Taster `I1`.
+    *   Der `E_PULSE` wird getriggert.
+    *   Er schaltet den Ausgang für genau die Zeit an, die vorher mit Taster `I2` "vorgegeben" wurde.
 
-## Zusammenfassung
-Diese Übung zeigt eine komplexe Steuerung, bei der Tastendrücke und Schalterstellungen kombiniert werden, um zeitgesteuerte Impulse zu erzeugen. Die Integration von Zeitmessung, Impulserzeugung und Schaltlogik demonstriert fortgeschrittene Automatisierungskonzepte in der 4diac-IDE.
+-----
+
+## Anwendungsbeispiel
+
+**Zentralschmierung oder Bewässerung**:
+Anstatt mühsam Sekundenwerte in ein Terminal einzutippen, drückt der Wartungstechniker einmalig so lange auf den Lern-Taster, wie er meint, dass der Vorgang dauern soll. Die Steuerung übernimmt diese Zeitspanne für alle zukünftigen automatischen Zyklen.

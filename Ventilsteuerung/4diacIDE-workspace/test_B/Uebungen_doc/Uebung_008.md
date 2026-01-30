@@ -1,61 +1,33 @@
-# Uebung_008: Blinker mit E_CYCLE, E_SWITCH und E_SR
+# Uebung_008: Autonomer Blinker-Baustein
 
-* * * * * * * * * *
+```{index} single: Uebung_008: Autonomer Blinker-Baustein
+```
 
-## Einleitung
-Diese Übung implementiert einen Blinkerschaltkreis mit zyklischer Ansteuerung unter Verwendung von IEC 61499-Basis-Funktionsbausteinen. Das System erzeugt ein regelmäßiges Blinksignal, das an einen digitalen Ausgang ausgegeben wird.
+[Uebung_008](https://docs.ms-muc-docs.de/projects/visual-programming-languages-docs/de/latest/training1/Ventilsteuerung/4diacIDE-workspace/test/FBs/Uebungen/Uebung_008.html)
 
-## Verwendete Funktionsbausteine (FBs)
+[![NotebookLM](media/NotebookLM_logo.png)](https://notebooklm.google.com/notebook/a6872e59-1dfc-4132-a118-aff1bc7bc944)
 
-### E_CYCLE
-- **Typ**: Zyklischer Ereignisgenerator
-- **Parameter**: DT = T#1s (Zykluszeit von 1 Sekunde)
-- **Ereignisausgang**: EO (Ereignisausgang bei jedem Zyklus)
+Dieser Artikel beschreibt die logiBUS®-Übung `Uebung_008`. Hier wird die Logik eines dauerhaft laufenden Taktgebers mit internem Speicherzustand gezeigt.
 
-### E_SWITCH
-- **Typ**: Ereignis-Weichenschaltung
-- **Ereigniseingang**: EI (Eingangsereignis)
-- **Ereignisausgänge**: EO0, EO1 (alternierende Ausgänge)
-- **Dateneingang**: G (Steuersignal für Ausgangswahl)
+----
 
-### E_SR
-- **Typ**: Set-Reset-Flipflop
-- **Ereigniseingänge**: S (Set), R (Reset)
-- **Ereignisausgang**: EO (Auslöser bei Zustandsänderung)
-- **Datenausgang**: Q (aktueller Zustand)
+![](Uebung_008.png)
 
-### DigitalOutput_Q1
-- **Typ**: logiBUS_QX (Digitaler Ausgangsbaustein)
-- **Parameter**: 
-  - QI = TRUE (Qualified Input aktiviert)
-  - Output = logiBUS_DO::Output_Q1 (Zielausgang definiert)
+## Ziel der Übung
 
-## Programmablauf und Verbindungen
+Implementierung eines autarken Blink-Schaltkreises.
 
-**Ereignisverbindungen:**
-1. E_CYCLE.EO → E_SWITCH.EI (Zyklische Triggerung der Weiche)
-2. E_SWITCH.EO0 → E_SR.S (Set-Signal für Flipflop)
-3. E_SWITCH.EO1 → E_SR.R (Reset-Signal für Flipflop)
-4. E_SR.EO → DigitalOutput_Q1.REQ (Auslösung der Ausgabefunktion)
+-----
 
-**Datenverbindungen:**
-1. E_SR.Q → E_SWITCH.G (Rückkopplung des Flipflop-Zustands zur Weichensteuerung)
-2. E_SR.Q → DigitalOutput_Q1.OUT (Direkte Ausgabe des Blinksignals)
+## Beschreibung und Komponenten
 
-**Funktionsweise:**
-Der E_CYCLE-Baustein generiert alle 1 Sekunde ein Ereignis, das die E_SWITCH-Weiche ansteuert. Abhängig vom aktuellen Zustand des E_SR-Flipflops (Q-Ausgang) wählt die Weiche alternierend zwischen Set- und Reset-Eingang. Dies führt zu einem kontinuierlichen Wechsel des Flipflop-Zustands, der als Blinksignal an den digitalen Ausgang Q1 ausgegeben wird.
+[cite_start]Die Subapplikation `Uebung_008.SUB` nutzt die Kombination aus `E_CYCLE`, `E_SWITCH` und `E_SR` ohne externe Steuereingänge[cite: 1].
 
-**Lernziele:**
-- Verständnis zyklischer Ereignisgeneratoren
-- Anwendung von Set-Reset-Flipflops
-- Implementierung von Rückkopplungsschleifen
-- Steuerung digitaler Ausgänge
+Der Taktgeber `E_CYCLE` läuft (nach einmaliger Initialisierung durch das System) permanent durch. Die Logik sorgt dafür, dass der Ausgang `Q1` im Sekundentakt zwischen `TRUE` und `FALSE` wechselt. Da keine Stopp-Logik vorhanden ist, dient dieser Aufbau als permanenter Herzschlag des Programms.
 
-**Schwierigkeitsgrad:** Einsteiger
+-----
 
-**Benötigte Vorkenntnisse:** Grundlagen IEC 61499, Basis-Funktionsbausteine
+## Anwendungsbeispiel
 
-**Starten der Übung:** Die Anwendung wird automatisch nach dem Laden gestartet und läuft kontinuierlich.
-
-## Zusammenfassung
-Diese Übung demonstriert eine grundlegende Blinkerschaltung mit IEC 61499-Funktionsbausteinen. Durch die Kombination von E_CYCLE, E_SWITCH und E_SR wird ein robustes Blinksystem mit regelmäßiger Takterzeugung und Zustandssteuerung realisiert. Die Rückkopplung des Flipflop-Zustands zur Weichensteuerung sorgt für einen automatischen Wechsel zwischen Set- und Reset-Operationen.
+**Status-LED (Heartbeat)**:
+Eine LED direkt auf der CPU-Platine, die ständig blinkt, solange die Versorgungsspannung anliegt und das Steuerungsprogramm ("Task") fehlerfrei abgearbeitet wird. Hört die LED auf zu blinken, weiß der Techniker sofort, dass die Steuerung abgestürzt ist oder im Stopp-Zustand verharrt.

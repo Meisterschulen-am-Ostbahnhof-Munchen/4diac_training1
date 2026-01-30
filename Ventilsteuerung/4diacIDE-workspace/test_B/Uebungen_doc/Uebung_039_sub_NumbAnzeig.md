@@ -2,6 +2,9 @@ Hier ist die generierte Dokumentation basierend auf dem bereitgestellten XML-Cod
 
 # Uebung_039_sub_NumbAnzeig
 
+```{index} single: Uebung_039_sub_NumbAnzeig
+```
+
 ![Uebung_039_sub_NumbAnzeig](Uebung_039_sub_NumbAnzeig.png)
 
 * * * * * * * * * *

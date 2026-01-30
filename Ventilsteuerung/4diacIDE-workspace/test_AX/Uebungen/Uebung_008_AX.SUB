@@ -10,11 +10,11 @@
 	<SubAppInterfaceList>
 	</SubAppInterfaceList>
 	<SubAppNetwork>
-		<FB Name="DigitalOutput_Q1" Type="logiBUS::io::DQ::logiBUS_QXA" x="1200" y="-800">
+		<FB Name="DigitalOutput_Q1" Type="logiBUS::io::DQ::logiBUS_QXA" x="1700" y="-200">
 			<Parameter Name="QI" Value="TRUE"/>
 			<Parameter Name="Output" Value="Output_Q1"/>
 		</FB>
-		<FB Name="E_CYCLE" Type="iec61499::events::AX_CYCLE" x="-5600" y="-700">
+		<FB Name="AE_CYCLE" Type="adapter::events::unidirectional::timers::AE_CYCLE" x="-5600" y="-700">
 			<Parameter Name="DT" Value="T#1s"/>
 		</FB>
 		<FB Name="E_SWITCH" Type="adapter::events::unidirectional::AX_SWITCH" x="-2300" y="-700">
@@ -23,7 +23,7 @@
 		</FB>
 		<FB Name="AX_SPLIT_2" Type="adapter::events::unidirectional::AX_SPLIT_2" x="200" y="200">
 		</FB>
-		<FB Name="AX_MERGE_2" Type="adapter::events::unidirectional::AX_MERGE_2" x="-4000" y="-200">
+		<FB Name="AX_AE_MERGE" Type="adapter::events::unidirectional::AX_AE_MERGE" x="-4000" y="-200">
 		</FB>
 		<EventConnections>
 			<Connection Source="E_SWITCH.EO0" Destination="AX_SR.S"/>
@@ -31,10 +31,10 @@
 		</EventConnections>
 		<AdapterConnections>
 			<Connection Source="AX_SR.Q" Destination="AX_SPLIT_2.IN" dx1="205.88"/>
-			<Connection Source="AX_SPLIT_2.OUT1" Destination="DigitalOutput_Q1.OUT" dx1="141.18"/>
-			<Connection Source="AX_SPLIT_2.OUT2" Destination="AX_MERGE_2.SOCKET1" dx1="70.59" dx2="70.59" dy="147.06"/>
-			<Connection Source="E_CYCLE.Q" Destination="AX_MERGE_2.SOCKET2" dx1="435.29"/>
-			<Connection Source="AX_MERGE_2.Q" Destination="E_SWITCH.G" dx1="488.24"/>
+			<Connection Source="AX_SPLIT_2.OUT1" Destination="AX_AE_MERGE.IN_AX" dx1="70.59" dx2="70.59" dy="-1286.67"/>
+			<Connection Source="AE_CYCLE.EO" Destination="AX_AE_MERGE.IN_AE" dx1="435.29"/>
+			<Connection Source="AX_AE_MERGE.OUT" Destination="E_SWITCH.G" dx1="488.24"/>
+			<Connection Source="AX_SPLIT_2.OUT2" Destination="DigitalOutput_Q1.OUT" dx1="373.33"/>
 		</AdapterConnections>
 	</SubAppNetwork>
 </SubAppType>

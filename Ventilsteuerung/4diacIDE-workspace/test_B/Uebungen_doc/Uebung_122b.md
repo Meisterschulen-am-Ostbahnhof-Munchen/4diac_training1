@@ -2,6 +2,9 @@ Hier ist die Dokumentationsseite für die Übung **Uebung_122b** basierend auf d
 
 # Uebung_122b
 
+```{index} single: Uebung_122b
+```
+
 ![Übung 122b](Uebung_122b.png)
 
 * * * * * * * * * *

@@ -1,58 +1,38 @@
-Hier ist die Dokumentation für die Übung basierend auf der bereitgestellten `Uebung_003b2_sub` Datei.
+# Uebung_003b2_sub: Funk-zu-CAN Treiber (SubApp)
 
-# Uebung_003b2_sub
+```{index} single: Uebung_003b2_sub: Funk-zu-CAN Treiber (SubApp)
+```
 
-![Bild der Übung, falls vorhanden](path_to_image_placeholder.png)
+[Uebung_003b2_sub](https://docs.ms-muc-docs.de/projects/visual-programming-languages-docs/de/latest/training1/Ventilsteuerung/4diacIDE-workspace/test/FBs/Uebungen/Uebung_003b2_sub.html)
 
-* * * * * * * * * *
+[![NotebookLM](media/NotebookLM_logo.png)](https://notebooklm.google.com/notebook/a6872e59-1dfc-4132-a118-aff1bc7bc944)
 
-## Einleitung
-Die Sub-Applikation **Uebung_003b2_sub** implementiert eine generische Weiterleitung eines digitalen Eingangssignals auf einen digitalen Ausgang. Sie dient dazu, hardware-spezifische Eingangs- und Ausgangsdefinitionen zu kapseln und eine direkte logische Verbindung zwischen ihnen herzustellen ("IX auf QX"). Der Baustein fungiert als Brücke, um den Status eines physikalischen Eingangs direkt auf einen physikalischen Ausgang zu spiegeln.
+Dieser Artikel beschreibt den Sub-App-Typ `Uebung_003b2_sub`. Dieser Baustein dient als universeller Koppler zwischen einer Funkfernbedienung und einem CAN-Bus Ausgangsmodul (DataPanel).
 
-## Verwendete Funktionsbausteine (FBs)
+----
 
-In dieser Sub-Applikation werden spezifische IO-Bausteine verwendet, um die Hardware-Schnittstellen anzusprechen.
+## Ziel der Übung
 
-### Sub-Bausteine: Uebung_003b2_sub
-- **Typ**: SubAppType
-- **Beschreibung**: Kapselung der Logik zur Verbindung eines `Funk_DI` Eingangs mit einem `DataPanel_MI_DO` Ausgang.
-- **Verwendete interne FBs**:
+Abstraktion von Funk-Signalen. Der Baustein ermöglicht es, Funktasten so einfach zu handhaben wie direkt verdrahtete Eingänge und diese auf ein dezentrales Ausgangsmodul zu mappen.
 
-    - **IX**: `Funk::io::DI::Funk_IX`
-        - **Parameter**:
-            - `QI` = `TRUE` (Baustein ist permanent aktiviert)
-            - `PARAMS` = "" (Leerstring)
-        - **Dateneingang**:
-            - `Input`: Verbunden mit der SubApp-Schnittstelle `Input` (Typ: `Funk_DI_S`). Dies definiert, welcher physikalische Eingang gelesen wird.
-        - **Ereignisausgang**: `IND` (Indication - signalisiert neuen Datenwert)
-        - **Datenausgang**: `IN` (Der aktuelle Wert des Eingangs)
+-----
 
-    - **QX**: `DataPanel::io::MI::DQ::DataPanel_MI_QX`
-        - **Parameter**:
-            - `QI` = `TRUE` (Baustein ist permanent aktiviert)
-        - **Dateneingang**:
-            - `u8SAMember`: Verbunden mit der SubApp-Schnittstelle `u8SAMember` (Knotenadresse).
-            - `Output`: Verbunden mit der SubApp-Schnittstelle `Output` (Typ: `DataPanel_MI_DO_S`). Dies definiert, welcher physikalische Ausgang geschaltet wird.
-            - `OUT`: Empfängt das Signal vom Datenausgang `IN` des Bausteins `IX`.
-        - **Ereigniseingang**: `REQ` (Request - fordert das Schreiben des Ausgangs an)
+## Beschreibung und Komponenten
 
-- **Funktionsweise**:
-    Der Sub-Baustein nimmt Konfigurationsvariablen für Eingang (`Input`) und Ausgang (`Output`, `u8SAMember`) entgegen und leitet diese an die internen IO-Bausteine weiter. Die logische Verknüpfung erfolgt direkt intern: Sobald der Eingangbaustein `IX` eine Änderung feststellt, triggert er den Ausgangsbaustein `QX` und übergibt den neuen Status (`TRUE` oder `FALSE`).
+[cite_start]Der Typ `Uebung_003b2_sub` bündelt den Funk-Empfang und die CAN-Ausgabe[cite: 1].
 
-## Programmablauf und Verbindungen
+### Interne Funktionsbausteine (FBs)
 
-Der Ablauf innerhalb dieser Sub-Applikation ist ereignisgesteuert und linear:
+  * **`IX`**: Typ `Funk_IX`. Empfängt die Signale der über `Input` gewählten Funktaste.
+  * **`QX`**: Typ `DataPanel_MI_QX`. Sendet CAN-Nachrichten an das gewählte DataPanel (`u8SAMember`) und schaltet dort den physischen Port (`Output`).
 
-1.  **Initialisierung**: Die Schnittstellenvariablen (`Input`, `u8SAMember`, `Output`) konfigurieren die internen Bausteine `IX` und `QX` beim Start, um festzulegen, welche Hardware-Pins angesprochen werden sollen.
-2.  **Signalerfassung**: Der Baustein `IX` überwacht den definierten digitalen Eingang.
-3.  **Signalweiterleitung (Event)**: Wenn der Baustein `IX` ein Ereignis generiert (`IND`), wird dieses direkt an den `REQ`-Eingang des Bausteins `QX` weitergeleitet.
-4.  **Datenweiterleitung**: Gleichzeitig wird der logische Zustand des Eingangs (`IX.IN`) an den Ausgangswert (`QX.OUT`) übergeben.
-5.  **Aktion**: Der Baustein `QX` schreibt den empfangenen Wert auf den konfigurierten physikalischen Ausgang.
+-----
 
-**Lernziele:**
-*   Verständnis von Sub-Applikationen zur Kapselung von Logik.
-*   Umgang mit hardwarenahen IO-Bausteinen (`IX` für Inputs, `QX` für Outputs).
-*   Realisierung einer direkten Durchleitung (Mapping) von Signalen in 4diac.
+## Schnittstellen
 
-## Zusammenfassung
-Die `Uebung_003b2_sub` ist ein kompakter Baustein zur direkten Kopplung eines Eingangs mit einem Ausgang. Durch die Verwendung generischer Datentypen an den Schnittstellen (`Funk_DI_S` und `DataPanel_MI_DO_S`) ist dieser Baustein wiederverwendbar, um verschiedene Eingangs-Ausgangs-Paare zu verknüpfen, ohne die interne Logik neu programmieren zu müssen. Er stellt eine elementare Funktion der Steuerungstechnik dar: Das direkte Schalten eines Ausgangs basierend auf einem Eingangssignal.
+[cite_start]Der Baustein bietet drei Konfigurationsmöglichkeiten[cite: 1]:
+*   **`Input`**: Name der Funktaste (z.B. `Key_01`).
+*   **`u8SAMember`**: CAN-Bus Adresse des Zielmoduls.
+*   **`Output`**: Nummer des Ausgangs am Modul (z.B. `DigitalOutput_1A`).
+
+Durch die Verwendung dieses Typs kann eine komplexe Funkfernsteuerung durch einfaches "Eintragen" der IDs in der Hauptanwendung konfiguriert werden.

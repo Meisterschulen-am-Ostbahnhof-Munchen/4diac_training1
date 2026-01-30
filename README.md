@@ -1,5 +1,8 @@
 # 🚜 4diac Training: Ventilsteuerung & ISOBUS Automation
 
+```{index} single: 🚜 4diac Training: Ventilsteuerung & ISOBUS Automation
+```
+
 [![License](https://img.shields.io/badge/License-EPL%202.0-red.svg)](LICENSE.md)
 [![4diac](https://img.shields.io/badge/Eclipse-4diac-purple)](https://www.eclipse.org/4diac/)
 [![Standard](https://img.shields.io/badge/Standard-IEC%2061131--3-green)](https://en.wikipedia.org/wiki/IEC_61131-3)
@@ -13,8 +16,6 @@ Dieses Repository bietet eine umfassende Sammlung von Trainingsmaterialien, Beis
 Es eignet sich hervorragend für Schulungszwecke, Meisterkurse und Entwickler, die sich in die IEC 61131-3 / IEC 61499 Programmierung mit verteilten aber auch lokalen Steuerungssystemen einarbeiten möchten.
 
 logiBUS® <https://www.logibus.tech/> 
-
----
 
 ## 📋 Inhaltsverzeichnis
 
@@ -120,7 +121,6 @@ Nutze die `.launch` Dateien im Ordner `Launches`, um die Applikation auf dein Zi
 
 -----
 
-
 ## 📚 Dokumentation & Übungsreihen
 
 Detaillierte Anleitungen und Beschreibungen zu den einzelnen Übungspaketen finden Sie in unserer ReadTheDocs-Dokumentation.
@@ -130,8 +130,6 @@ Detaillierte Anleitungen und Beschreibungen zu den einzelnen Übungspaketen find
 | **Übungen AX** | Grundlagen der Ventilsteuerung (Serie AX) | [📘 Zur Dokumentation](https://meisterschulen-am-ostbahnhof-munchen-docs.readthedocs.io/projects/visual-programming-languages-docs/de/latest/training1/Ventilsteuerung/4diacIDE-workspace/test_AX/Uebungen_doc/Uebungen.html) |
 | **Übungen B** | Erweiterte Übungen ohne AX-Präfix | [📙 Zur Dokumentation](https://meisterschulen-am-ostbahnhof-munchen-docs.readthedocs.io/projects/visual-programming-languages-docs/de/latest/training1/Ventilsteuerung/4diacIDE-workspace/test_B/Uebungen_doc/Uebungen.html) |
 | **Übungen VV** | Verteilte Verarbeitung & Kommunikation | [🚀 Zur Dokumentation](https://meisterschulen-am-ostbahnhof-munchen-docs.readthedocs.io/projects/visual-programming-languages-docs/de/latest/training1/Ventilsteuerung/4diacIDE-workspace/test_VV/Uebungen_doc/Uebungen.html) |
-
-
 
 ## 🔍 SEO & Schlagwörter
 
@@ -154,23 +152,3 @@ Detaillierte Anleitungen und Beschreibungen zu den einzelnen Übungspaketen find
 <https://www.ms-muc-docs.de/>
 
 <https://www.ms-muc.de/>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

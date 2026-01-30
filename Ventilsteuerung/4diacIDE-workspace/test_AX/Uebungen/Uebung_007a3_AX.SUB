@@ -13,11 +13,11 @@
 	<SubAppInterfaceList>
 	</SubAppInterfaceList>
 	<SubAppNetwork>
-		<FB Name="DigitalOutput_Q1" Type="logiBUS::io::DQ::logiBUS_QXA" x="-1400" y="-600">
+		<FB Name="DigitalOutput_Q1" Type="logiBUS::io::DQ::logiBUS_QXA" x="-900" y="-100">
 			<Parameter Name="QI" Value="TRUE"/>
 			<Parameter Name="Output" Value="Output_Q1"/>
 		</FB>
-		<FB Name="AX_CYCLE" Type="iec61499::events::AX_CYCLE" x="-7100" y="-300">
+		<FB Name="AE_CYCLE" Type="adapter::events::unidirectional::timers::AE_CYCLE" x="-7100" y="-300">
 			<Parameter Name="DT" Value="T#1s"/>
 		</FB>
 		<FB Name="START" Type="logiBUS::io::DI::logiBUS_IE" x="-9000" y="-800">
@@ -31,27 +31,27 @@
 			<Parameter Name="InputEvent" Value="BUTTON_SINGLE_CLICK"/>
 		</FB>
 		<Comment Comment="Vorteil:&#10;dieser Blinker bleibt immer auf AUS stehen" x="-7100" y="1400" width="1800" height="700"/>
-		<FB Name="E_SR" Type="adapter::events::unidirectional::AX_SR" x="-3700" y="-400">
+		<FB Name="E_SR" Type="adapter::events::unidirectional::AX_SR" x="-3500" y="0">
 		</FB>
 		<FB Name="E_SWITCH" Type="adapter::events::unidirectional::AX_SWITCH" x="-4900" y="0">
 		</FB>
-		<FB Name="AX_MERGE" Type="adapter::events::unidirectional::AX_MERGE_2" x="-6100" y="-400">
+		<FB Name="AX_AE_MERGE" Type="adapter::events::unidirectional::AX_AE_MERGE" x="-6100" y="-400">
 		</FB>
 		<FB Name="AX_SPLIT_2" Type="adapter::events::unidirectional::AX_SPLIT_2" x="-2600" y="300">
 		</FB>
 		<EventConnections>
-			<Connection Source="START.IND" Destination="AX_CYCLE.START" dx1="526.67"/>
-			<Connection Source="STOP.IND" Destination="AX_CYCLE.STOP" dx1="526.67"/>
-			<Connection Source="E_SWITCH.EO0" Destination="E_SR.S" dx1="458.82"/>
-			<Connection Source="E_SWITCH.EO1" Destination="E_SR.R" dx1="458.82"/>
+			<Connection Source="START.IND" Destination="AE_CYCLE.START" dx1="526.67"/>
+			<Connection Source="STOP.IND" Destination="AE_CYCLE.STOP" dx1="526.67"/>
+			<Connection Source="E_SWITCH.EO0" Destination="E_SR.S"/>
+			<Connection Source="E_SWITCH.EO1" Destination="E_SR.R"/>
 			<Connection Source="STOP.IND" Destination="E_SR.R" dx1="4026.67"/>
 		</EventConnections>
 		<AdapterConnections>
-			<Connection Source="E_SR.Q" Destination="AX_SPLIT_2.IN" dx1="547.06"/>
-			<Connection Source="AX_SPLIT_2.OUT1" Destination="DigitalOutput_Q1.OUT" dx1="88.24"/>
-			<Connection Source="AX_SPLIT_2.OUT2" Destination="AX_MERGE.SOCKET1" dx1="70.59" dx2="70.59" dy="300"/>
-			<Connection Source="AX_CYCLE.Q" Destination="AX_MERGE.SOCKET2" dx1="205.88"/>
-			<Connection Source="AX_MERGE.Q" Destination="E_SWITCH.G" dx1="405.88"/>
+			<Connection Source="E_SR.Q" Destination="AX_SPLIT_2.IN" dx1="300"/>
+			<Connection Source="AX_SPLIT_2.OUT1" Destination="AX_AE_MERGE.IN_AX" dx1="70.59" dx2="70.59" dy="-1286.67"/>
+			<Connection Source="AE_CYCLE.EO" Destination="AX_AE_MERGE.IN_AE" dx1="160"/>
+			<Connection Source="AX_AE_MERGE.OUT" Destination="E_SWITCH.G" dx1="405.88"/>
+			<Connection Source="AX_SPLIT_2.OUT2" Destination="DigitalOutput_Q1.OUT" dx1="473.33"/>
 		</AdapterConnections>
 	</SubAppNetwork>
 </SubAppType>

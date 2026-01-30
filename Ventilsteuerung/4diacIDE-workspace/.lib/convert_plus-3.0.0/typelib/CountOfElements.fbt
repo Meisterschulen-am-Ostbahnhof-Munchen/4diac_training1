@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<FBType Name="CountOfElements" Comment="Returns the lower bound of the dimension of the given array">
+	<Identification Function="inspired by Siemens: CountOfElements" Description="Copyright (c) 2026 Demmler Andreas Fahrzeugbau&#10; &#10;This program and the accompanying materials are made&#10;available under the terms of the Eclipse Public License 2.0&#10;which is available at https://www.eclipse.org/legal/epl-2.0/&#10;&#10;SPDX-License-Identifier: EPL-2.0">
+	</Identification>
+	<VersionInfo Organization="Demmler Andreas Fahrzeugbau" Version="1.0" Author="Franz Höpfninger" Date="2026-01-23" Remarks="Initial Implementation">
+	</VersionInfo>
+	<CompilerInfo packageName="eclipse4diac::convert">
+	</CompilerInfo>
+	<InterfaceList>
+		<EventInputs>
+			<Event Name="REQ" Type="Event" Comment="Service Request">
+				<With Var="IN_ARRAY"/>
+			</Event>
+		</EventInputs>
+		<EventOutputs>
+			<Event Name="CNF" Type="Event" Comment="Confirmation of Requested Service">
+				<With Var="OUT"/>
+			</Event>
+		</EventOutputs>
+		<InputVars>
+			<VarDeclaration Name="IN_ARRAY" Type="ANY" Comment="input array"/>
+		</InputVars>
+		<OutputVars>
+			<VarDeclaration Name="OUT" Type="UDINT" Comment="Number of Elements in the Array"/>
+		</OutputVars>
+	</InterfaceList>
+	<Attribute Name="eclipse4diac::core::TypeHash" Value="''"/>
+</FBType>

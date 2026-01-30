@@ -1,59 +1,62 @@
-# Uebung_004a: Toggle Flip-Flop mit IE mit BUTTON_SINGLE_CLICK
+# Uebung_004a: Stromstoßschalter (Toggle Flip-Flop)
+
+```{index} single: Uebung_004a: Stromstoßschalter (Toggle Flip-Flop)
+```
 
 [Uebung_004a](https://docs.ms-muc-docs.de/projects/visual-programming-languages-docs/de/latest/training1/Ventilsteuerung/4diacIDE-workspace/test/FBs/Uebungen/Uebung_004a.html)
 
-[![NotebookLM](media/NotebookLM_logo.png)](https://notebooklm.google.com/notebook/7e3a9891-27ee-431d-acf7-017c4c04599d)
+[![NotebookLM](media/NotebookLM_logo.png)](https://notebooklm.google.com/notebook/a6872e59-1dfc-4132-a118-aff1bc7bc944)
 
-Die Übung **Uebung_004a** ist eine Anwendungsaufgabe für das logiBUS®-System, die ein einfaches Toggle Flip-Flop realisiert. Dabei wird der Zustand eines digitalen Ausgangs durch einen einzelnen Tastendruck an einem digitalen Eingang umgeschaltet.
-
-
-## Podcast
-<iframe src="https://creators.spotify.com/pod/profile/logibus/embed/episodes/Schalterlogik-verstehen-So-funktioniert-ein-Toggle-Flip-Flop-mit-logiBUS--einfache-Steuerung-in-der-Landtechnik-e36vjo1" height="102px" width="400px" frameborder="0" scrolling="no"></iframe>
+Dieser Artikel beschreibt die logiBUS®-Übung `Uebung_004a`. In dieser Übung verlassen wir die reine Datenweiterleitung und nutzen Ereignisse (Events), um eine Speicherfunktion zu realisieren: Einen klassischen Stromstoßschalter.
 
 ----
 
-
-
-![](Uebung_004a_Gemini.jpg)
-
 ![](Uebung_004a.png)
 
+## Ziel der Übung
 
-## Übersicht
+Das Ziel ist es, den Unterschied zwischen zustandsorientierter (Pegel) und ereignisorientierter (Flanke) Programmierung zu verstehen. Während ein einfacher Taster nur solange "Ein" ist, wie er gedrückt wird, soll hier jeder Tastendruck den Zustand des Ausgangs wechseln (Umschalten: Aus ➡️ Ein ➡️ Aus ➡️ ...).
 
-Das logiBUS®-System vereinfacht die Programmierung von ISOBUS-kompatiblen Steuerungen für landtechnische Anwendungen durch einen grafischen, bausteinbasierten Ansatz. Diese Übung demonstriert grundlegende Prinzipien der Ereignissteuerung und Logikverarbeitung innerhalb der logiBUS®-Entwicklungsumgebung, die auf Eclipse 4diac™ basiert.
+-----
 
----
+## Beschreibung und Komponenten
+
+[cite_start]Die Subapplikation `Uebung_004a.SUB` verwendet einen speziellen Eingangsbaustein, der Klick-Ereignisse generiert, und ein Toggle-Flip-Flop[cite: 1].
+
+### Funktionsbausteine (FBs)
+
+  * **`DigitalInput_CLK_I1`**: Typ `logiBUS_IE` (Input Event). [cite_start]Im Gegensatz zum Standard-Eingang liefert dieser Baustein kein kontinuierliches Signal, sondern feuert ein einzelnes Ereignis (`IND`), wenn eine bestimmte Bedingung erfüllt ist. Hier ist er auf `BUTTON_SINGLE_CLICK` konfiguriert[cite: 1].
+  * **`E_T_FF`**: Typ `E_T_FF` (Standard-IEC-Event-Baustein). [cite_start]Dieser Baustein hat einen Takteingang (`CLK`). Bei jedem empfangenen Ereignis wechselt er seinen internen Zustand und gibt diesen über den Daten-Ausgang `Q` sowie ein Bestätigungs-Event `EO` aus[cite: 1].
+  * **`DigitalOutput_Q1`**: Typ `logiBUS_QX`. [cite_start]Schaltet den physischen Ausgang `Q1` basierend auf dem Zustand des Flip-Flops[cite: 1].
+
+-----
 
 ## Funktionsweise
 
-Die Applikation wartet auf ein bestimmtes Ereignis an einem digitalen Eingang, das hier als `BUTTON_SINGLE_CLICK` definiert ist. Sobald dieses Ereignis eintritt, wird ein `E_T_FF` (Toggle Flip-Flop) Funktionsbaustein angesteuert. Dieser Baustein ändert bei jeder Aktivierung seinen Ausgangszustand `Q` (von `TRUE` auf `FALSE` oder umgekehrt). Der Zustand des Flip-Flops wird dann an einen digitalen Ausgang weitergeleitet, wodurch beispielsweise eine Lampe oder ein anderer Aktor ein- oder ausgeschaltet wird.
+Die Logik basiert auf der Umwandlung eines flüchtigen Tastendrucks in einen dauerhaften Speicherzustand:
 
----
+```xml
+<EventConnections>
+    <Connection Source="DigitalInput_CLK_I1.IND" Destination="E_T_FF.CLK"/>
+    <Connection Source="E_T_FF.EO" Destination="DigitalOutput_Q1.REQ"/>
+</EventConnections>
+<DataConnections>
+    <Connection Source="E_T_FF.Q" Destination="DigitalOutput_Q1.OUT"/>
+</DataConnections>
+```
 
-## Komponenten
+[cite_start][cite: 1]
 
-Die Übung besteht aus drei zentralen Funktionsbausteinen (FBs):
+1.  Der Benutzer drückt den Taster an `I1` kurz ("Klick").
+2.  Der `DigitalInput_CLK_I1` erkennt das Muster "Einzelklick" und sendet ein `IND`-Ereignis.
+3.  Das Ereignis erreicht den `CLK`-Eingang des `E_T_FF`.
+4.  Das Flip-Flop kippt seinen Zustand (z.B. von FALSE auf TRUE).
+5.  Das neue Signal steht am Daten-Ausgang `Q` bereit und das Flip-Flop sendet ein Ereignis an `EO`.
+6.  `DigitalOutput_Q1` empfängt dieses Ereignis, liest den Wert von `Q` und schaltet die Lampe ein.
+7.  Beim nächsten Klick wiederholt sich der Vorgang, das Flip-Flop kippt zurück auf FALSE, die Lampe geht aus.
 
-* **DigitalInput_CLK_I1 (`logiBUS_IE`)**: Dieser Baustein repräsentiert einen digitalen Eingangskanal.
-    * **Input**: `logiBUS_DI::Input_I1` – Verwendet den physischen Eingang I1.
-    * **InputEvent**: `logiBUS_DI_Events::BUTTON_SINGLE_CLICK` – Löst das Ausgangsereignis `IND` nur bei einem einzelnen, definierten Klick aus.
+-----
 
-* **E_T_FF (`E_T_FF`)**: Ein Ereignis-gesteuertes Toggle Flip-Flop. Dieser Standard-Logikbaustein wechselt seinen Ausgangszustand `Q` jedes Mal, wenn er am `CLK`-Eingang ein Ereignis empfängt.
+## Anwendungsbeispiel
 
-* **DigitalOutput_Q1 (`logiBUS_QX`)**: Repräsentiert einen digitalen Ausgangskanal.
-    * **Output**: `logiBUS_DO::Output_Q1` – Steuert den physischen Ausgang Q1.
-    * **QI**: `TRUE` – Der Ausgang ist aktiviert.
-
----
-
-## Verbindungen
-
-Die Funktionsweise wird durch die logische Verknüpfung der Bausteine realisiert:
-
-### Ereignisverbindungen:
-* Eine Verbindung vom `IND`-Ausgang des `DigitalInput_CLK_I1` zum `CLK`-Eingang des `E_T_FF`. Dadurch wird das Flip-Flop getriggert, sobald ein einzelner Klick am Eingang I1 erkannt wird.
-* Eine Verbindung vom `EO`-Ausgang des `E_T_FF` zum `REQ`-Eingang des `DigitalOutput_Q1`. Nachdem das Flip-Flop seinen Zustand geändert hat, wird der Ausgangsbaustein zur Aktualisierung aufgefordert.
-
-### Datenverbindungen:
-* Eine Verbindung vom `Q`-Ausgang des `E_T_FF` zum `OUT`-Eingang des `DigitalOutput_Q1`. Der logische Zustand (TRUE/FALSE) des Flip-Flops wird so direkt an den Ausgang Q1 übergeben.
+Die klassische **Flurbeleuchtung**: Ein Tasterdruck schaltet das Licht ein, der nächste schaltet es wieder aus. Dies ist mit einem rein elektrischen Taster (der zurückfedert) nicht ohne Speicherelement (Software-Flip-Flop) möglich.

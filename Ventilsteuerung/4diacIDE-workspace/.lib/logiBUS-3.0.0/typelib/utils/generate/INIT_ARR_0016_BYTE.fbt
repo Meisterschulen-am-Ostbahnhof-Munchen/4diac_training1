@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<FBType Name="INIT_ARR_0016_BYTE" Comment="FB to make an Array (generic FB)">
+	<Identification Standard="61499-2">
+	</Identification>
+	<VersionInfo Organization="Andreas Demmler Fahrzeugbau" Version="1.0" Author="Franz Höpfinger" Date="2026-01-22">
+	</VersionInfo>
+	<CompilerInfo packageName="logiBUS::utils::generate">
+	</CompilerInfo>
+	<InterfaceList>
+		<EventInputs>
+			<Event Name="INIT" Type="EInit" Comment="Service Initialization">
+				<With Var="D1"/>
+			</Event>
+		</EventInputs>
+		<EventOutputs>
+			<Event Name="INITO" Type="EInit" Comment="Initialization Confirm">
+				<With Var="u16DaSize"/>
+				<With Var="D1"/>
+			</Event>
+		</EventOutputs>
+		<OutputVars>
+			<VarDeclaration Name="u16DaSize" Type="UINT" Comment="Data length in Array Elements"/>
+		</OutputVars>
+		<InOutVars>
+			<VarDeclaration Name="D1" Type="BYTE" Comment="Data" ArraySize="0..16"/>
+		</InOutVars>
+	</InterfaceList>
+	<Attribute Name="eclipse4diac::core::GenericClassName" Value="'GEN_INIT_ARR'"/>
+	<Attribute Name="eclipse4diac::core::TypeHash" Value="''"/>
+</FBType>

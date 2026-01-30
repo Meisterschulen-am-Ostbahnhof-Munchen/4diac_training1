@@ -1,71 +1,51 @@
-# Uebung_080: Beispiel für E_CTU
+# Uebung_080: Ereignis-Zähler (Up-Counter)
 
-* * * * * * * * * *
+```{index} single: Uebung_080: Ereignis-Zähler (Up-Counter)
+```
 
-## Einleitung
-Diese Übung demonstriert die Verwendung des E_CTU-Funktionsbausteins (Up-Counter) in einem 4diac-IDE Programm. Das Beispiel zeigt einen einfachen Aufwärtszähler, der bei Erreichen eines vordefinierten Wertes eine Ausgabe aktiviert.
+[Uebung_080](https://docs.ms-muc-docs.de/projects/visual-programming-languages-docs/de/latest/training1/Ventilsteuerung/4diacIDE-workspace/test/FBs/Uebungen/Uebung_080.html)
 
-## Verwendete Funktionsbausteine (FBs)
+[![NotebookLM](media/NotebookLM_logo.png)](https://notebooklm.google.com/notebook/a6872e59-1dfc-4132-a118-aff1bc7bc944)
 
-### E_CTU
-- **Typ**: E_CTU (Event-Driven Up Counter)
-- **Parameter**: 
-  - PV = UINT#5 (Preset Value = 5)
-- **Ereigniseingänge**: 
-  - CU (Count Up)
-  - R (Reset)
-- **Ereignisausgänge**: 
-  - CUO (Count Up Output)
-  - RO (Reset Output)
-- **Datenausgänge**: 
-  - Q (Counter Output Value)
-  - CV (Current Counter Value)
+Dieser Artikel beschreibt die logiBUS®-Übung `Uebung_080`. Hier wird das grundlegende Prinzip des Zählens von Ereignissen vorgestellt.
 
-### logiBUS_IE (Digital Input)
-- **Typ**: logiBUS_IE (logiBUS Input Event)
-- **Parameter**:
-  - QI = TRUE (Qualified Input enabled)
-  - Input = logiBUS_DI::Input_I1 / Input_I2
-  - InputEvent = logiBUS_DI_Events::BUTTON_SINGLE_CLICK
-- **Ereignisausgänge**: 
-  - IND (Input Event Detected)
+## 🎧 Podcast
 
-### logiBUS_QX (Digital Output)
-- **Typ**: logiBUS_QX (logiBUS Output)
-- **Parameter**:
-  - QI = TRUE (Qualified Input enabled)
-  - Output = logiBUS_DO::Output_Q1
-- **Ereigniseingänge**: 
-  - REQ (Request Output)
-- **Dateneingänge**: 
-  - OUT (Output Value)
+* [800 PS Hightech-Riese: Was die Betriebsanleitung des ROPA Tiger 6S über moderne Landwirtschaft und extreme Sicherheit verrät](https://podcasters.spotify.com/pod/show/ms-muc-lama/episodes/800-PS-Hightech-Riese-Was-die-Betriebsanleitung-des-ROPA-Tiger-6S-ber-moderne-Landwirtschaft-und-extreme-Sicherheit-verrt-e3aub4t)
 
-## Programmablauf und Verbindungen
+----
 
-Das Programm implementiert einen einfachen Zähler mit folgenden Funktionen:
+![](Uebung_080.png)
 
-**Ereignisverbindungen:**
-- DigitalInput_CLK_I1.IND → E_CTU.CU (Zähler erhöht sich bei Tastendruck I1)
-- DigitalInput_CLK_I2.IND → E_CTU.R (Zähler-Reset bei Tastendruck I2)
-- E_CTU.CUO → DigitalOutput_Q1.REQ (Ausgabe bei Erreichen des Preset-Wertes)
-- E_CTU.RO → DigitalOutput_Q1.REQ (Ausgabe bei Reset)
+## Ziel der Übung
 
-**Datenverbindungen:**
-- E_CTU.Q → DigitalOutput_Q1.OUT (Übergabe des Zählerstatus an Ausgabe)
+Verwendung des Bausteins `E_CTU` (Event Count Up). Es wird gezeigt, wie man eine bestimmte Anzahl von Ereignissen (z.B. Tastendrücke) erfasst und beim Erreichen eines Grenzwerts eine Aktion auslöst.
 
-**Funktionsweise:**
-- Bei jedem Tastendruck auf I1 wird der Zähler um 1 erhöht
-- Bei Erreichen des Preset-Wertes 5 wird die Ausgabe Q1 aktiviert
-- Ein Tastendruck auf I2 setzt den Zähler zurück auf 0
-- Die Ausgabe Q1 zeigt den aktuellen Zählerstatus an
+-----
 
-**Lernziele:**
-- Verständnis des E_CTU-Funktionsbausteins
-- Implementierung eines einfachen Zählers
-- Verwendung von Ereignis- und Datenverbindungen
-- Arbeit mit digitalen Ein- und Ausgängen im logiBUS-System
+## Beschreibung und Komponenten
 
-**Schwierigkeitsgrad**: Einfach
+[cite_start]Die Subapplikation `Uebung_080.SUB` nutzt einen Zählerbaustein mit Set- und Reset-Logik[cite: 1].
 
-## Zusammenfassung
-Diese Übung bietet eine grundlegende Einführung in die Verwendung des E_CTU-Zählbausteins in 4diac-IDE. Sie zeigt die wesentlichen Konzepte der Ereignissteuerung und Datenverarbeitung in IEC 61499-basierten Steuerungssystemen und bildet eine gute Basis für komplexere Zähleranwendungen.
+### Funktionsbausteine (FBs)
+
+  * **`DigitalInput_I1` (Count)**: Jeder Klick erhöht den Zähler.
+  * **`DigitalInput_I2` (Reset)**: Setzt den Zählerstand auf Null zurück.
+  * **`E_CTU`**: Der Zähler-Baustein. [cite_start]Der Parameter `PV` (Preset Value) ist auf 5 eingestellt[cite: 1].
+  * **`DigitalOutput_Q1`**: Zeigt den Status des Zählers an.
+
+-----
+
+## Funktionsweise
+
+1.  Der Nutzer klickt auf **I1**. Der Zählerstand (`CV`) erhöht sich bei jedem Event.
+2.  Der Ausgang `Q` des Zählers wechselt auf `TRUE`, sobald der Zählerstand den Wert 5 erreicht oder überschreitet (`CV >= PV`).
+3.  Die Lampe an **Q1** leuchtet auf.
+4.  Durch Klick auf **I2** wird der Zähler gelöscht, `Q` wird wieder `FALSE` und die Lampe geht aus.
+
+-----
+
+## Anwendungsbeispiel
+
+**Stückzähler**:
+An einer Verpackungsmaschine werden die Kartons gezählt. Sobald 5 Kartons auf der Palette sind, wird ein Signal (`Q1`) gegeben, um die Palette automatisch auszufahren. Der Fahrer drückt nach dem Holen einer neuen Palette "Reset" (`I2`), um den nächsten Vorgang zu starten.

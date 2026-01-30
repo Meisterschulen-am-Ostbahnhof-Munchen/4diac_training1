@@ -1,60 +1,51 @@
-# Uebung_021: Spiegelabfolge (1)
+# Uebung_021: Sequenz-Grundlagen (Zylinder 1)
 
-* * * * * * * * * *
+```{index} single: Uebung_021: Sequenz-Grundlagen (Zylinder 1)
+```
 
-## Einleitung
+[Uebung_021](https://docs.ms-muc-docs.de/projects/visual-programming-languages-docs/de/latest/training1/Ventilsteuerung/4diacIDE-workspace/test/FBs/Uebungen/Uebung_021.html)
 
-Diese Übung demonstriert eine grundlegende Steuerungslogik für eine Spiegelabfolge mit Start- und Stopp-Funktionalität. Die Anwendung verwendet Softkeys zur Aktivierung und Deaktivierung eines digitalen Ausgangs.
+[![NotebookLM](media/NotebookLM_logo.png)](https://notebooklm.google.com/notebook/a6872e59-1dfc-4132-a118-aff1bc7bc944)
 
-## Verwendete Funktionsbausteine (FBs)
+Dieser Artikel beschreibt die logiBUS®-Übung `Uebung_021`. Dies ist der Einstieg in die Ablaufsteuerung (Sequenzierung), simuliert am Beispiel eines Pneumatik-Zylinders.
 
-### DigitalOutput_Q1
-- **Typ**: logiBUS_QX
-- **Parameter**:
-  - QI = TRUE
-  - Output = logiBUS_DO::Output_Q1
+## 🎧 Podcast
 
-### SoftKey_UP_F1
-- **Typ**: Softkey_IE
-- **Parameter**:
-  - QI = TRUE
-  - u16ObjId = DefaultPool::SoftKey_F1
-  - InputEvent = SoftKeyActivationCode::SK_RELEASED
+* [Infineon MOTIX BTM9020/9021EP: Datenblatt-Analyse für Automotive – Robuster Motortreiber mit intelligenter Diagnose (HW vs. SPI)](https://podcasters.spotify.com/pod/show/ms-muc-lama/episodes/Infineon-MOTIX-BTM90209021EP-Datenblatt-Analyse-fr-Automotive--Robuster-Motortreiber-mit-intelligenter-Diagnose-HW-vs--SPI-e39av51)
+* [JBC Lötspitzen C470 vs. C245 vs. C210 vs. C115: Welche Spitze ist der Allrounder und wann brauchst du den Nano-Spezialisten?](https://podcasters.spotify.com/pod/show/ms-muc-lama/episodes/JBC-Ltspitzen-C470-vs--C245-vs--C210-vs--C115-Welche-Spitze-ist-der-Allrounder-und-wann-brauchst-du-den-Nano-Spezialisten-e39ak58)
 
-### E_SR
-- **Typ**: E_SR (Set-Reset Flip-Flop)
+----
 
-### SoftKey_F2_DOWN
-- **Typ**: Softkey_IE
-- **Parameter**:
-  - QI = TRUE
-  - u16ObjId = DefaultPool::SoftKey_F2
-  - InputEvent = SoftKeyActivationCode::SK_PRESSED
+![](Uebung_021.png)
 
-## Programmablauf und Verbindungen
+## Ziel der Übung
 
-**Ereignisverbindungen:**
-- SoftKey_UP_F1.IND → E_SR.S (Set-Eingang)
-- SoftKey_F2_DOWN.IND → E_SR.R (Reset-Eingang)
-- E_SR.EO → DigitalOutput_Q1.REQ
+Realisierung einer einfachen Folgesteuerung: Ein Prozess wird gestartet und stoppt automatisch, sobald eine Endlage erreicht ist.
 
-**Datenverbindungen:**
-- E_SR.Q → DigitalOutput_Q1.OUT
+-----
 
-**Funktionsweise:**
-- SoftKey_F1 (START-Knopf) beim Loslassen setzt den Flip-Flop
-- SoftKey_F2 (Endlage) beim Drücken resettet den Flip-Flop
-- Der E_SR Baustein steuert den digitalen Ausgang Q1 basierend auf dem Set/Reset-Zustand
+## Beschreibung und Komponenten
 
-**Lernziele:**
-- Verständnis von Set-Reset Flip-Flops
-- Umgang mit Softkey-Eingaben
-- Steuerung digitaler Ausgänge
-- Ereignis- und Datenverbindungen in 4diac
+[cite_start]Die Subapplikation `Uebung_021.SUB` nutzt zwei Softkeys, um die Bewegung eines Aktors (`Q1`) zu steuern[cite: 1].
 
-**Schwierigkeitsgrad**: Einfach
-**Vorkenntnisse**: Grundlagen der 4diac-IDE, Verständnis von digitalen Ein-/Ausgängen
+### Funktionsbausteine (FBs)
 
-## Zusammenfassung
+  * **`SoftKey_UP_F1`**: Fungiert als **START-Taster**. [cite_start]Er ist auf `SK_RELEASED` konfiguriert[cite: 1].
+  * **`SoftKey_F2_DOWN`**: Simuliert den **Endlagenschalter**. [cite_start]Er reagiert sofort beim Drücken (`SK_PRESSED`)[cite: 1].
+  * **`E_SR`**: Der Speicher für den Bewegungszustand.
+  * **`DigitalOutput_Q1`**: Der Ausgang für das Zylinderventil.
 
-Diese Übung zeigt eine grundlegende Steuerungslogik mit Set-Reset-Funktionalität. Der digitale Ausgang Q1 wird durch das Loslassen des F1-Softkeys aktiviert und durch das Drücken des F2-Softkeys deaktiviert. Die Übung vermittelt essentielle Konzepte der Ereignissteuerung und digitalen Signalverarbeitung in 4diac.
+-----
+
+## Funktionsweise
+
+1.  **Start**: Der Nutzer klickt auf **F1**. Das Ereignis setzt den Speicher `E_SR.S` ➡️ Der Ausgang `Q1` wird aktiv, der Zylinder fährt aus.
+2.  **Bewegung**: Der Zylinder bewegt sich physikalisch (oder in der Simulation) zur Endposition.
+3.  **Stopp**: Sobald der Zylinder die Endlage erreicht, wird (simuliert durch **F2**) der Reset-Eingang `E_SR.R` getriggert ➡️ Der Ausgang `Q1` wird deaktiviert, die Bewegung stoppt.
+
+-----
+
+## Anwendungsbeispiel
+
+**Einfacher Ausstoßer**:
+In einer Fertigungslinie soll ein Paket per Knopfdruck vom Band geschoben werden. Der Bediener gibt den Startimpuls, der Zylinder fährt aus, schiebt das Paket weg und wird durch einen mechanischen Endschalter am Ende des Weges automatisch wieder abgeschaltet.

@@ -1,66 +1,54 @@
-# Uebung_035: Spiegelabfolge V2 mit Schrittkette
+# Uebung_035: Schrittketten-Steuerung (4 Phasen)
 
-* * * * * * * * * *
+```{index} single: Uebung_035: Schrittketten-Steuerung (4 Phasen)
+```
 
-## Einleitung
-Diese Übung implementiert eine erweiterte Spiegelabfolge-Steuerung mit einer Schrittkette. Das System steuert vier digitale Ausgänge in einer sequenziellen Abfolge, die über digitale Eingänge gestartet und gesteuert werden kann. Die Übung demonstriert den Einsatz von Schrittketten und Zeitsteuerungen in der Automatisierungstechnik.
+[Uebung_035](https://docs.ms-muc-docs.de/projects/visual-programming-languages-docs/de/latest/training1/Ventilsteuerung/4diacIDE-workspace/test/FBs/Uebungen/Uebung_035.html)
 
-## Verwendete Funktionsbausteine (FBs)
+[![NotebookLM](media/NotebookLM_logo.png)](https://notebooklm.google.com/notebook/a6872e59-1dfc-4132-a118-aff1bc7bc944)
 
-### Haupt-Funktionsbausteine:
-- **DigitalOutput_Q1-Q4** (Typ: logiBUS_QX) - Digitale Ausgänge für die Aktorik
-- **DigitalInput_CLK_I1-I4** (Typ: logiBUS_IE) - Digitale Eingänge mit Tasterfunktionalität
-- **E_TimeOut** (Typ: E_TimeOut) - Zeitüberwachungsbaustein
-- **F_SINT_TO_UINT** (Typ: F_SINT_TO_UINT) - Datentypkonvertierung
-- **Q_NumericValue** (Typ: Q_NumericValue) - Numerische Wertausgabe
-- **sequence_04** (Typ: sequence_ET_04) - Schrittkettensteuerung
+Dieser Artikel beschreibt die logiBUS®-Übung `Uebung_035`. Hier wird die Steuerung von komplexen Abläufen mittels eines Sequenzers (Schrittkette) demonstriert.
 
-### Sub-Bausteine: sequence_ET_04
-- **Typ**: sequence_ET_04
-- **Verwendete interne FBs**: E_TimeOut (Adapterverbindung)
-- **Parameter**:
-  - DT_S1_S2 = T#2s (Schritt 1 zu Schritt 2 Zeitverzögerung)
-  - DT_S2_S3 = T#2s (Schritt 2 zu Schritt 3 Zeitverzögerung)
-  - DT_S3_S4 = T#2s (Schritt 3 zu Schritt 4 Zeitverzögerung)
-  - DT_S4_START = T#2s (Schritt 4 zurück zu Start Zeitverzögerung)
-- **Ereigniseingänge**: START_S1, S2_S3, S4_START, RESET
-- **Ereignisausgänge**: EO_S1, EO_S2, EO_S3, EO_S4, CNF
-- **Datenausgänge**: DO_S1, DO_S2, DO_S3, DO_S4, STATE_NR
-- **Funktionsweise**: Implementiert eine 4-Schritt-Sequenz mit Zeitsteuerung zwischen den Schritten. Jeder Schritt aktiviert einen entsprechenden Ausgang und kann über externe Signale gesteuert werden.
+## 🎧 Podcast
 
-## Programmablauf und Verbindungen
+* [Automatisierung entschlüsselt: Leiten, Steuern, Regeln – Die unsichtbare Sprache der Technik (DIN IEC 60050-351)](https://podcasters.spotify.com/pod/show/ms-muc-lama/episodes/Automatisierung-entschlsselt-Leiten--Steuern--Regeln--Die-unsichtbare-Sprache-der-Technik-DIN-IEC-60050-351-e36t52b)
+* [Infineon CAN-Transceiver TLE9250V versus TLE9351VSJ](https://podcasters.spotify.com/pod/show/ms-muc-lama/episodes/Infineon-CAN-Transceiver-TLE9250V-versus-TLE9351VSJ-e3b8nan)
+* [Infineon TLE9351VSJ der unsichtbare Auto-Bodyguard](https://podcasters.spotify.com/pod/show/ms-muc-lama/episodes/Infineon-TLE9351VSJ-der-unsichtbare-Auto-Bodyguard-e3b8nhl)
+* [JBCs Löt-Geheimnis: 350 Grad in 2 Sekunden und warum die Spitze über Effizienz und Lebensdauer entscheidet](https://podcasters.spotify.com/pod/show/ms-muc-lama/episodes/JBCs-Lt-Geheimnis-350-Grad-in-2-Sekunden-und-warum-die-Spitze-ber-Effizienz-und-Lebensdauer-entscheidet-e39arff)
 
-### Ereignisverbindungen:
-- I1-IND → START_S1: Startet Schritt 1 der Sequenz
-- I2-IND → S2_S3: Wechsel von Schritt 2 zu Schritt 3
-- I3-IND → S4_START: Wechsel von Schritt 4 zurück zum Start
-- I4-IND → RESET: Reset der gesamten Sequenz
-- EO_S1-4 → REQ der jeweiligen Ausgänge: Aktiviert die digitalen Ausgänge
-- CNF → REQ der Datentypkonvertierung: Bestätigt Zustandsänderungen
+----
 
-### Datenverbindungen:
-- STATE_NR → IN der Datentypkonvertierung: Überträgt aktuellen Zustand
-- DO_S1-4 → OUT der jeweiligen Ausgänge: Steuert die digitalen Ausgänge
-- Konvertierungsausgang → NumericValue: Zeigt aktuellen Zustand an
+![](Uebung_035.png)
 
-### Adapterverbindungen:
-- timeOut → TimeOutSocket: Verbindung zur Zeitüberwachung
+## Ziel der Übung
 
-### Lernziele:
-- Verständnis von Schrittketten-Programmierung
-- Umgang mit Zeitsteuerungen in Sequenzen
-- Implementierung von Steuerungslogik mit externen Tastern
-- Datentypkonvertierung und Zustandsanzeige
+Verwendung des Bausteins `sequence_ET_04`. Es wird gezeigt, wie ein Prozess in vier Phasen (`S1` bis `S4`) unterteilt wird, wobei die Übergänge sowohl durch Ereignisse (Events) als auch durch Zeit (Timer) ausgelöst werden können.
 
-### Schwierigkeitsgrad: Mittel
+-----
 
-### Benötigte Vorkenntnisse:
-- Grundlagen der 4diac-IDE
-- Verständnis von Funktionsbausteinen
-- Kenntnisse in ereignisgesteuerter Programmierung
+## Beschreibung und Komponenten
 
-### Start der Übung:
-Die Übung wird über die digitalen Eingänge I1-I4 gestartet und gesteuert. I1 startet die Sequenz, I2 und I3 steuern die Schrittübergänge, I4 resettet das System.
+[cite_start]Die Subapplikation `Uebung_035.SUB` steuert 4 Ausgänge in einer festen Reihenfolge[cite: 1].
 
-## Zusammenfassung
-Diese Übung demonstriert eine komplexe Schrittkettensteuerung mit vier Zuständen und integrierter Zeitsteuerung. Das System ermöglicht sowohl automatischen als auch manuellen Betrieb durch externe Taster und zeigt den aktuellen Zustand über eine numerische Anzeige. Die Implementierung verbindet digitale Ein-/Ausgänge mit einer sequenziellen Steuerungslogik unter Verwendung von Zeitverzögerungen zwischen den Zustandsübergängen.
+### Funktionsbausteine (FBs)
+
+  * **`sequence_04`**: Der Sequenzer-Baustein. Er verwaltet die Logik der Schritte.
+  * **Parameter `DT_S1_S2` etc.**: Definieren die maximale Verweildauer in einem Schritt (hier jeweils 2 Sekunden).
+  * **`Q_NumericValue`**: Zeigt den aktuellen Schritt (1-4) auf dem Terminal an.
+  * **`E_TimeOut`**: Überwacht den Ablauf.
+
+-----
+
+## Funktionsweise
+
+1.  **Start**: Taster **I1** triggert `START_S1`. Lampe `Q1` geht an.
+2.  **Übergang**: Nach 2 Sekunden (oder durch ein Event am entsprechenden Port) springt der Sequenzer zu Schritt 2. `Q1` geht aus, `Q2` geht an.
+3.  **Fortsetzung**: Der Prozess läuft bis Schritt 4 durch.
+4.  **Reset**: Taster **I4** kann den Ablauf jederzeit abbrechen und alle Ausgänge deaktivieren.
+
+-----
+
+## Anwendungsbeispiel
+
+**Automatischer Reinigungszyklus**:
+Ein Knopfdruck startet das Programm: 1. Ventile spülen (2s), 2. Reinigungsmittel einlassen (2s), 3. Einwirken (2s), 4. Klarspülen (2s). Die Schrittkette garantiert, dass die Phasen exakt nacheinander und niemals gleichzeitig ablaufen.

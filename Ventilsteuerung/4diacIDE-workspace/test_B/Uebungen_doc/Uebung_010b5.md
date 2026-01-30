@@ -1,50 +1,22 @@
-# Uebung_010b5: SoftKey_F1-10 auf DigitalOutput_Q1-10
+# Uebung_010b5: Strukturiertes Softkey-Mapping (10-fach)
 
-* * * * * * * * * *
+```{index} single: Uebung_010b5: Strukturiertes Softkey-Mapping (10-fach)
+```
 
-## Einleitung
-Diese Übung demonstriert die Zuordnung von Softkeys zu digitalen Ausgängen in der 4diac-IDE. Zehn Softkeys (F1-F10) werden jeweils mit entsprechenden digitalen Ausgängen (Q1-Q10) verbunden, um eine grundlegende Steuerungslogik zu implementieren.
+[Uebung_010b5](https://docs.ms-muc-docs.de/projects/visual-programming-languages-docs/de/latest/training1/Ventilsteuerung/4diacIDE-workspace/test/FBs/Uebungen/Uebung_010b5.html)
 
-## Verwendete Funktionsbausteine (FBs)
+[![NotebookLM](media/NotebookLM_logo.png)](https://notebooklm.google.com/notebook/a6872e59-1dfc-4132-a118-aff1bc7bc944)
 
-### Sub-Bausteine: Uebung_010b5_sub
-- **Typ**: SubAppType
-- **Verwendete interne FBs**:
-    - **IX**: Softkey_IX
-        - Parameter: QI = TRUE
-        - Ereignisausgang/-eingang: IND → QX.REQ
-        - Datenausgang/-eingang: IN → QX.OUT, u16ObjId (Eingangsparameter)
-    - **QX**: logiBUS_QX
-        - Parameter: QI = TRUE
-        - Ereignisausgang/-eingang: REQ (von IX.IND)
-        - Datenausgang/-eingang: OUT (von IX.IN), Output (Eingangsparameter)
-- **Funktionsweise**: Der Sub-Baustein verbindet einen Softkey-Input (IX) mit einem digitalen Ausgang (QX). Bei Betätigung des Softkeys wird ein Ereignis an den Ausgangsbaustein gesendet und der Signalzustand übertragen.
+Dieser Artikel beschreibt die logiBUS®-Übung `Uebung_010b5`.
 
-## Programmablauf und Verbindungen
-Die Übung besteht aus zehn identischen Sub-Applikationen (F1-F10), die jeweils folgende Verbindungen implementieren:
-- SoftKey_F1 → Output_Q1
-- SoftKey_F2 → Output_Q2
-- ...
-- SoftKey_F10 → Output_Q10
+## 🎧 Podcast
 
-Jede Sub-Applikation verwendet den generischen Sub-Baustein "Uebung_010b5_sub", der über Parameter konfiguriert wird:
-- u16ObjId: Definiert die Object-ID des Softkeys (z.B. "DefaultPool::SoftKey_F1")
-- Output: Definiert den Zielausgang (z.B. "logiBUS_DO::Output_Q1")
+* [ISO 11783-6: Softkeys und das Virtual Terminal verstehen – Dein Schlüssel zur Landmaschinen-Mechatronik](https://podcasters.spotify.com/pod/show/isobus-vt-objects/episodes/ISO-11783-6-Softkeys-und-das-Virtual-Terminal-verstehen--Dein-Schlssel-zur-Landmaschinen-Mechatronik-e36a8b0)
 
-**Lernziele**:
-- Verständnis der Parametrierung von Funktionsbausteinen
-- Zuordnung von Eingängen zu Ausgängen
-- Arbeit mit Softkeys und digitalen Ausgängen
-- Wiederverwendung von Sub-Applikationen
+----
 
-**Schwierigkeitsgrad**: Einfach
+![](Uebung_010b5.png)
 
-**Benötigte Vorkenntnisse**:
-- Grundlagen der 4diac-IDE
-- Verständnis von Funktionsbausteinen
-- Kenntnisse über Event- und Datenverbindungen
+## Übersicht
 
-**Starten der Übung**: Die Übung kann direkt in der 4diac-IDE geladen und auf einem kompatiblen Zielsystem ausgeführt werden. Die Softkeys F1-F10 aktivieren jeweils die entsprechenden digitalen Ausgänge Q1-Q10.
-
-## Zusammenfassung
-Diese Übung vermittelt grundlegende Prinzipien der Signalverarbeitung in 4diac durch die direkte Zuordnung von Softkey-Eingängen zu digitalen Ausgängen. Die modulare Struktur mit wiederverwendbaren Sub-Bausteinen zeigt best practices für skalierbare Applikationsentwicklung. Die Parametrierung ermöglicht eine flexible Konfiguration ohne Änderungen an der grundlegenden Logik.
+[cite_start]Erweiterung der vorherigen Übung auf insgesamt 10 parallele Softkey-Kanäle[cite: 1]. Jede Sub-Applikation kapselt die Logik für genau einen Softkey (F1 bis F10).

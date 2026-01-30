@@ -1,63 +1,37 @@
-Hier ist die Dokumentation für die Übung `Uebung_003c_sub` basierend auf den bereitgestellten XML-Daten.
+# Uebung_003c_sub: ISOBUS AUX-Kanal (SubApp)
 
-# Uebung_003c_sub
+```{index} single: Uebung_003c_sub: ISOBUS AUX-Kanal (SubApp)
+```
 
-<Bild der Übung, falls vorhanden>
+[Uebung_003c_sub](https://docs.ms-muc-docs.de/projects/visual-programming-languages-docs/de/latest/training1/Ventilsteuerung/4diacIDE-workspace/test/FBs/Uebungen/Uebung_003c_sub.html)
 
-* * * * * * * * * *
+[![NotebookLM](media/NotebookLM_logo.png)](https://notebooklm.google.com/notebook/a6872e59-1dfc-4132-a118-aff1bc7bc944)
 
-## Einleitung
-Die Sub-Application **Uebung_003c_sub** dient als generischer Baustein, um digitale Eingangssignale (Input IX) auf entsprechende Auxiliary-Ausgänge (QX) zu mappen. Sie fungiert als Brücke zwischen der LogiBUS-Eingangslogik und der ISOBUS-Ausgabelogik. Der Hauptzweck ist die Weiterleitung eines digitalen Zustands von einer Hardware-Eingangsquelle an eine definierte Hilfsfunktion (Auxiliary Function).
+Dieser Artikel beschreibt den Sub-App-Typ `Uebung_003c_sub`. Dieser Baustein dient als Brücke zwischen lokaler Hardware und dem ISOBUS-Hilfseingangssystem (Auxiliary).
 
-## Verwendete Funktionsbausteine (FBs)
+----
 
-Diese Sub-Application nutzt intern spezifische Bausteine zur Signalverarbeitung und Weiterleitung.
+## Ziel der Übung
 
-### Sub-Bausteine: Interne Logik
-Da es sich hierbei um einen `SubAppType` handelt, besteht das Netzwerk aus verschalteten Basis-Funktionsbausteinen.
+Kapselung der ISOBUS-Kommunikation. Der Baustein verbirgt die Details des ISOBUS-Protokolls und stellt eine einfache Schnittstelle zur Zuordnung von physischen Tastern zu logischen AUX-Nummern bereit.
 
-- **Typ**: Sub-Application Netzwerk
-- **Verwendete interne FBs**:
+-----
 
-    - **IX**: `logiBUS::io::DI::logiBUS_IX`
-        - **Beschreibung**: Dieser Baustein extrahiert ein einzelnes digitales Signal aus dem LogiBUS-Eingangsstrom.
-        - **Parameter**: 
-            - `QI` = `TRUE` (Baustein ist standardmäßig aktiviert)
-            - `PARAMS` = "" (Leer/Unsichtbar)
-        - **Dateneingang**: 
-            - `Input` (Verbunden mit dem externen Eingang `Input`)
-        - **Datenausgang**: 
-            - `IN` (Der aktuelle Zustand des Eingangs)
-        - **Ereignisausgang**: 
-            - `IND` (Indication - signalisiert eine Änderung oder Aktualisierung des Wertes)
+## Beschreibung und Komponenten
 
-    - **QX**: `isobus::UT::io::Auxiliary::OUT::Aux_QX`
-        - **Beschreibung**: Dieser Baustein ist für die Ansteuerung eines Auxiliary-Ausgangs im ISOBUS-System zuständig.
-        - **Parameter**: 
-            - `QI` = `TRUE`
-        - **Dateneingang**: 
-            - `OUT` (Der zu schreibende Wert, kommt von `IX.IN`)
-            - `iInpNr` (Nummer des Auxiliary-Arrays, verbunden mit dem externen Eingang `iInpNr`)
-        - **Ereigniseingang**: 
-            - `REQ` (Request - fordert das Schreiben des Ausgangs an)
+[cite_start]Der Typ `Uebung_003c_sub` enthält einen lokalen Eingangs-Baustein und einen ISOBUS-Ausgangs-Baustein[cite: 1].
 
-## Programmablauf und Verbindungen
+### Interne Funktionsbausteine (FBs)
 
-Der Ablauf innerhalb dieser Sub-Application ist ereignisgesteuert und linear:
+  * **`IX`**: Typ `logiBUS_IX`. Liest den lokalen Hardware-Pin (`Input`) ein.
+  * **`QX`**: Typ `Aux_QX`. Sendet den Zustand als ISOBUS-Nachricht für die gewählte Funktionsnummer (`iInpNr`).
 
-1.  **Initialisierung**: Beide internen Bausteine (`IX` und `QX`) sind durch den Parameter `QI = TRUE` dauerhaft aktiviert.
-2.  **Signaleingang**: Über die Schnittstelle der Sub-Application wird eine `Input`-Variable (Typ `logiBUS_DI_S`) an den Baustein **IX** übergeben. Zusätzlich wird über `iInpNr` festgelegt, welcher Auxiliary-Ausgang angesprochen werden soll.
-3.  **Verarbeitung**:
-    - Der Baustein **IX** liest den Zustand des Eingangs.
-    - Sobald **IX** ein Signal verarbeitet hat, löst er das Ereignis `IND` aus.
-    - Der digitale Zustand (TRUE/FALSE) wird am Ausgang `IN` von **IX** bereitgestellt.
-4.  **Signalweiterleitung**:
-    - Das Ereignis `IND` von **IX** ist direkt mit dem Ereignis `REQ` von **QX** verbunden. Das bedeutet, jede Aktualisierung des Eingangs triggert sofort den Ausgangsbaustein.
-    - Die Datenverbindung leitet den Wert von `IX.IN` direkt an `QX.OUT` weiter.
-5.  **Ausgabe**: Der Baustein **QX** schreibt den empfangenen Wert auf den durch `iInpNr` definierten Auxiliary-Ausgang.
+-----
 
-**Anwendungsbereich:**
-Diese Übung demonstriert die Kapselung von Logik. Anstatt `IX` und `QX` jedes Mal manuell zu verbinden, kann dieser Sub-App-Baustein instanziiert werden, um schnell einen Eingang auf einen Ausgang zu routen.
+## Schnittstellen
 
-## Zusammenfassung
-Die `Uebung_003c_sub` ist ein modularer Baustein zur direkten Durchleitung eines digitalen LogiBUS-Eingangs auf einen ISOBUS-Auxiliary-Ausgang. Durch die Parametrierung über `iInpNr` ist der Baustein flexibel für verschiedene Ausgänge wiederverwendbar.
+[cite_start]Der Baustein wird über zwei Parameter konfiguriert[cite: 1]:
+*   **`Input`**: Der physische Taster an der Steuerung.
+*   **`iInpNr`**: Die fortlaufende Nummer (Index) im ISOBUS-Auxiliary-Pool.
+
+Jede Änderung am lokalen Taster führt sofort zu einer entsprechenden Status-Meldung im ISOBUS-Netzwerk, wodurch der Taster für andere Geräte (z.B. Task Controller) sichtbar wird.

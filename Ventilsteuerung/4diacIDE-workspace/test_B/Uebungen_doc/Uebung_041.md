@@ -1,57 +1,49 @@
-# Uebung_041: Lauflicht 8 mit einer Taste
+# Uebung_041: Ein-Tasten-Lauflicht (Zähler-Steuerung)
 
-* * * * * * * * * *
+```{index} single: Uebung_041: Ein-Tasten-Lauflicht (Zähler-Steuerung)
+```
 
-## Einleitung
-Diese Übung implementiert ein 8-stufiges Lauflicht, das mit einer Taste gesteuert werden kann. Das System ermöglicht die sequenzielle Aktivierung von acht Ausgängen in verschiedenen Betriebsmodi.
+[Uebung_041](https://docs.ms-muc-docs.de/projects/visual-programming-languages-docs/de/latest/training1/Ventilsteuerung/4diacIDE-workspace/test/FBs/Uebungen/Uebung_041.html)
 
-## Verwendete Funktionsbausteine (FBs)
+[![NotebookLM](media/NotebookLM_logo.png)](https://notebooklm.google.com/notebook/a6872e59-1dfc-4132-a118-aff1bc7bc944)
 
-### Haupt-Funktionsbausteine:
-- **DigitalOutput_Q1 bis Q8** (Typ: logiBUS_QX) - Digitale Ausgänge für die Lauflicht-LEDs
-- **DigitalInput_CLK_I1, I2, I4** (Typ: logiBUS_IE) - Digitale Eingänge für Tastensteuerung
-- **Q_NumericValue** (Typ: Q_NumericValue) - Numerische Anzeige des aktuellen Zustands
-- **F_SINT_TO_UINT** (Typ: F_SINT_TO_UINT) - Typkonvertierung für die Anzeige
-- **E_CTU_0** (Typ: E_CTU) - Zählerbaustein
-- **F_SUB_0** (Typ: F_SUB) - Subtraktionsbaustein
-- **E_DEMUX_0** (Typ: E_DEMUX_8) - 8-fach Demultiplexer
+Dieser Artikel beschreibt die logiBUS®-Übung `Uebung_041`. Hier wird die manuelle Steuerung einer 8-stufigen Schrittkette auf einen einzigen Taster reduziert.
 
-### Sub-Bausteine: sequence_E_08_loop
-- **Typ**: sequence_E_08_loop
-- **Verwendete interne FBs**: Nicht spezifiziert
-- **Funktionsweise**: Steuert die sequenzielle Aktivierung der acht Ausgänge und verwaltet den Lauflicht-Zyklus
+----
 
-## Programmablauf und Verbindungen
+![](Uebung_041.png)
 
-Das Programm arbeitet nach folgendem Prinzip:
+## Ziel der Übung
 
-**Eingangssteuerung:**
-- I1: Startet die Sequenz bei Position S1
-- I2: Inkrementiert den Zähler (E_CTU_0) für die Betriebsmodus-Auswahl
-- I4: Reset-Funktion für Zähler und Sequenz
+Optimierung der Bedienlogik aus Übung 040. Es wird gezeigt, wie man durch die Kombination von Zähler (`E_CTU`) und Demultiplexer (`E_DEMUX_8`) alle Phasen einer Schrittkette mit nur einer einzigen Taste nacheinander durchschalten kann.
 
-**Sequenzablauf:**
-1. Die Taste I1 startet die Sequenz bei Zustand S1
-2. Der Zähler E_CTU_0 zählt die Tastendrücke auf I2
-3. F_SUB_0 subtrahiert 1 vom Zählerwert für die korrekte Demultiplexer-Ansteuerung
-4. E_DEMUX_0 leitet basierend auf dem Zählerwert zu den entsprechenden Zustandsübergängen
-5. Die Sequenz durchläuft die Zustände S1-S8 im Zyklus
+-----
 
-**Ausgangssteuerung:**
-- Jeder Zustand (S1-S8) aktiviert den entsprechenden digitalen Ausgang (Q1-Q8)
-- Der aktuelle Zustand wird über F_SINT_TO_UINT an Q_NumericValue zur Anzeige übergeben
+## Beschreibung und Komponenten
 
-**Lernziele:**
-- Verständnis von Zustandsautomaten
-- Umgang mit Zählern und Demultiplexern
-- Steuerung von sequenziellen Abläufen
-- Integration von digitalen Ein- und Ausgängen
+[cite_start]In `Uebung_041.SUB` wird ein zentraler Ereignispfad genutzt, um den Sequenzer `sequence_E_08_loop` anzusteuern[cite: 1].
 
-**Schwierigkeitsgrad**: Mittel
+### Funktionsbausteine (FBs)
 
-**Benötigte Vorkenntnisse**: Grundlagen der 4diac-IDE, Verständnis von Funktionsbausteinen und Ereignissteuerung
+  * **`I1` (Start)**: Setzt die Sequenz auf den ersten Schritt.
+  * **`I2` (Step)**: Der einzige Taster zum Weiterschalten.
+  * **`E_CTU_0`**: Zählt die Klicks auf `I2`.
+  * **`E_DEMUX_0`**: Leitet das Klick-Ereignis basierend auf dem Zählerstand an den passenden Transitions-Eingang der Schrittkette weiter.
+  * **`I4` (Reset)**: Löscht sowohl die Schrittkette als auch den Zähler.
 
-**Starten der Übung**: Nach dem Laden und Kompilieren kann die Übung über die Taste I1 gestartet werden. Die Betriebsmodi werden über I2 ausgewählt.
+-----
 
-## Zusammenfassung
-Diese Übung demonstriert die Implementierung eines komplexen Lauflicht-Systems mit mehreren Betriebsmodi. Sie verbindet Zustandsautomaten, Zählerfunktionalität und Ereignissteuerung zu einem kohärenten System. Die Verwendung von Demultiplexern ermöglicht flexible Zustandsübergänge, während die Integration von numerischer Anzeige den aktuellen Systemzustand visualisiert.
+## Funktionsweise
+
+1.  **Initialisierung**: Ein Klick auf **I1** startet das Lauflicht bei `Q1`.
+2.  **Manueller Durchlauf**: Jeder Klick auf **I2** erhöht den internen Zähler. Der Demultiplexer sorgt dafür, dass das erste Event an `S1_S2` geht, das zweite an `S2_S3` und so weiter.
+3.  **Überlauf**: Nach dem 8. Schritt setzt sich die Logik automatisch zurück und beginnt (beim nächsten Klick) wieder von vorn.
+
+Dies ermöglicht eine vollständige Prozesskontrolle mit minimaler Hardware-Anforderung.
+
+-----
+
+## Anwendungsbeispiel
+
+**Sequenzielle Menüführung**:
+Ein einziger Knopf am Joystick dient zum Durchblättern von 8 verschiedenen Betriebsmodi. Jede Betätigung schaltet eine Stufe weiter und aktiviert den entsprechenden Aktor oder Parameter-Satz.

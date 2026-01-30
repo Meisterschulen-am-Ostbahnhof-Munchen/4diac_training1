@@ -1,51 +1,66 @@
-# Uebung_011: Numeric Value Input
+# Uebung_011: Numerische Eingabe (Universal Terminal)
 
-* * * * * * * * * *
-## Einleitung
-Diese Übung demonstriert die Verarbeitung numerischer Eingabewerte in einem 4diac-IDE System. Die Anwendung konvertiert einen numerischen Eingabewert von einem Datentyp in einen anderen und zeigt grundlegende Konzepte der Datenverarbeitung in IEC 61499-Systemen.
+```{index} single: Uebung_011: Numerische Eingabe (Universal Terminal)
+```
 
-## Verwendete Funktionsbausteine (FBs)
+[Uebung_011](https://docs.ms-muc-docs.de/projects/visual-programming-languages-docs/de/latest/training1/Ventilsteuerung/4diacIDE-workspace/test/FBs/Uebungen/Uebung_011.html)
 
-### Sub-Bausteine: NumericValue_ID
-- **Typ**: NumericValue_ID
-- **Verwendete interne FBs**: Keine
-- **Funktionsweise**: Dieser Baustein dient zur Erfassung numerischer Eingabewerte. Bei Aktivierung durch ein Ereignis liefert er den aktuellen numerischen Wert an seinem Datenausgang.
+[![NotebookLM](media/NotebookLM_logo.png)](https://notebooklm.google.com/notebook/a6872e59-1dfc-4132-a118-aff1bc7bc944)
 
-### Sub-Bausteine: F_DWORD_TO_UDINT
-- **Typ**: F_DWORD_TO_UDINT
-- **Verwendete interne FBs**: Keine
-- **Funktionsweise**: Dieser Konvertierungsbaustein wandelt einen DWORD-Datentyp in einen UDINT-Datentyp um. Er wird durch ein REQ-Ereignis aktiviert und gibt nach erfolgreicher Konvertierung ein CNF-Ereignis aus.
+Dieser Artikel beschreibt die logiBUS®-Übung `Uebung_011`. Hier wird demonstriert, wie Zahlenwerte (Daten) von einem ISOBUS-Terminal eingelesen werden.
 
-## Programmablauf und Verbindungen
+## 🎧 Podcast
 
-**Ereignisverbindungen:**
-- InputNumber_I1.IND → F_DWORD_TO_UDINT.REQ
+* [ISO 11783-6: Softkeys und das Virtual Terminal verstehen – Dein Schlüssel zur Landmaschinen-Mechatronik](https://podcasters.spotify.com/pod/show/isobus-vt-objects/episodes/ISO-11783-6-Softkeys-und-das-Virtual-Terminal-verstehen--Dein-Schlssel-zur-Landmaschinen-Mechatronik-e36a8b0)
+* [Die drei Timer der DIN EN 61131-3 entschlüsselt – TP, TON & TOF präzise erklärt](https://podcasters.spotify.com/pod/show/iec-61499-grundkurs-de/episodes/Die-drei-Timer-der-DIN-EN-61131-3-entschlsselt--TP--TON--TOF-przise-erklrt-e3dma77)
+* [DIN EN 61131-3 vs. 61499-1: Dein Wegweiser durch die Normen der Industrieautomatisierung](https://podcasters.spotify.com/pod/show/iec-61499-grundkurs-de/episodes/DIN-EN-61131-3-vs--61499-1-Dein-Wegweiser-durch-die-Normen-der-Industrieautomatisierung-e36c6nc)
+* [DIN EN 61131-3: Das Herz der Land- und Baumaschinen-Mechatronik und der Sprung in die Zukunft mit Ob](https://podcasters.spotify.com/pod/show/iec-61499-grundkurs-de/episodes/DIN-EN-61131-3-Das-Herz-der-Land--und-Baumaschinen-Mechatronik-und-der-Sprung-in-die-Zukunft-mit-Ob-e36c2mp)
+* [FB_TOF und E_TOF: Verzögerungstimer in IEC 61131-3 und 61499](https://podcasters.spotify.com/pod/show/iec-61499-grundkurs-de/episodes/FB_TOF-und-E_TOF-Verzgerungstimer-in-IEC-61131-3-und-61499-e368e2d)
 
-**Datenverbindungen:**
-- InputNumber_I1.IN → F_DWORD_TO_UDINT.IN
+----
 
-**Parameterkonfiguration:**
-- InputNumber_I1: QI = TRUE (immer aktiviert)
-- InputNumber_I1: u16ObjId = "DefaultPool::InputNumber_I1"
+![](Uebung_011.png)
 
-**Programmablauf:**
-1. Der NumericValue_ID-Baustein erfasst einen numerischen Eingabewert
-2. Bei Wertänderung wird das IND-Ereignis ausgelöst
-3. Das IND-Ereignis aktiviert den F_DWORD_TO_UDINT-Konvertierungsbaustein
-4. Der numerische Wert wird über die Datenverbindung an den Konvertierungsbaustein übergeben
-5. F_DWORD_TO_UDINT führt die Typkonvertierung durch
+## Ziel der Übung
 
-**Lernziele:**
-- Verständnis der Datenkonvertierung zwischen verschiedenen Datentypen
-- Umgang mit numerischen Eingabebausteinen
-- Grundlagen der Ereignis- und Datenverbindungen in 4diac
+Erlernen der Verarbeitung von numerischen Variablen im ISOBUS-Kontext. Es wird gezeigt, wie ein Nutzer am Terminal eine Zahl eingeben kann und wie diese Information als Daten-Ereignis-Kombination in der Steuerung ankommt.
 
-**Schwierigkeitsgrad**: Einfach
+-----
 
-**Benötigte Vorkenntnisse:**
-- Grundkenntnisse der 4diac-IDE
-- Verständnis von IEC 61499-Funktionsbausteinen
-- Basiswissen über Datentypen in Automatisierungssystemen
+## Beschreibung und Komponenten
 
-## Zusammenfassung
-Diese Übung vermittelt grundlegende Konzepte der numerischen Datenverarbeitung in 4diac-Systemen. Sie zeigt, wie numerische Eingabewerte erfasst und zwischen verschiedenen Datentypen konvertiert werden können. Die einfache Struktur mit nur zwei Funktionsbausteinen macht diese Übung ideal für den Einstieg in die Datenverarbeitung mit IEC 61499-Standards.
+[cite_start]Die Subapplikation `Uebung_011.SUB` nutzt einen Eingabe-Baustein für numerische Werte[cite: 1].
+
+### Funktionsbausteine (FBs)
+
+  * **`InputNumber_I1`**: Typ `NumericValue_ID`. [cite_start]Dieser Baustein repräsentiert ein numerisches Eingabefeld (Data Mask Object) auf dem ISOBUS-Terminal[cite: 1]. Sobald der Nutzer die Eingabe bestätigt, sendet der Baustein den neuen Wert am Port `IN` (DWORD) und feuert ein `IND`-Ereignis.
+  * **`F_DWORD_TO_UDINT`**: Ein Konvertierungs-Baustein, der den rohen 32-Bit-Wert vom Terminal in einen vorzeichenlosen Ganzzahlwert (UDINT) für die weitere Logik umwandelt.
+
+-----
+
+## Funktionsweise
+
+Die Logik wartet auf die Bestätigung der Eingabe am Terminal:
+
+```xml
+<EventConnections>
+    <Connection Source="InputNumber_I1.IND" Destination="F_DWORD_TO_UDINT.REQ"/>
+</EventConnections>
+<DataConnections>
+    <Connection Source="InputNumber_I1.IN" Destination="F_DWORD_TO_UDINT.IN"/>
+</DataConnections>
+```
+
+[cite_start][cite: 1]
+
+1.  Der Nutzer tippt am Terminal auf das Zahlenfeld `I1`, gibt z.B. "42" ein und drückt "Enter".
+2.  Das Terminal sendet den Wert über den CAN-Bus an die Steuerung.
+3.  Der Baustein `InputNumber_I1` empfängt den Wert und löst das Ereignis `IND` aus.
+4.  Der Konvertierungs-Baustein übernimmt den Wert und stellt ihn der restlichen Applikation als Standard-Datentyp zur Verfügung.
+
+-----
+
+## Anwendungsbeispiel
+
+**Einstellung von Sollwerten**:
+Der Landwirt gibt am Terminal die gewünschte Ausbringmenge für Saatgut (in kg/ha) oder die Zieltemperatur für die Getreidetrocknung ein. Die Software verarbeitet diesen numerischen Wert sofort weiter.

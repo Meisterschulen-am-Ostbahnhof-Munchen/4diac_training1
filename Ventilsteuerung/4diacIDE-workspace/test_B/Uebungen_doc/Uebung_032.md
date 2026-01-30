@@ -1,66 +1,53 @@
-# Uebung_032: LED Strip Blinkende LED
+# Uebung_032: Mehrfarbige LED-Streifen Effekte
 
-* * * * * * * * * *
+```{index} single: Uebung_032: Mehrfarbige LED-Streifen Effekte
+```
 
-## Einleitung
-Diese Übung demonstriert die Steuerung eines LED-Streifens mit verschiedenen Farben und Tastern. Vier unabhängige Taster steuern jeweils eine LED in einer bestimmten Farbe mit einer Blinkfrequenz von 5 Hz.
+[Uebung_032](https://docs.ms-muc-docs.de/projects/visual-programming-languages-docs/de/latest/training1/Ventilsteuerung/4diacIDE-workspace/test/FBs/Uebungen/Uebung_032.html)
 
-## Verwendete Funktionsbausteine (FBs)
+[![NotebookLM](media/NotebookLM_logo.png)](https://notebooklm.google.com/notebook/a6872e59-1dfc-4132-a118-aff1bc7bc944)
 
-### logiBUS_IX (Taster-Bausteine)
-- **Typ**: Eingangsbaustein für Taster
-- **Verwendete interne FBs**: 4 Instanzen
-    - **BUTTON_GREEN**: logiBUS_IX
-        - Parameter: QI = TRUE, Input = logiBUS_DI::Input_I1
-    - **BUTTON_YELLOW**: logiBUS_IX
-        - Parameter: QI = TRUE, Input = logiBUS_DI::Input_I2
-    - **BUTTON_RED**: logiBUS_IX
-        - Parameter: QI = TRUE, Input = logiBUS_DI::Input_I3
-    - **BUTTON_BLUE**: logiBUS_IX
-        - Parameter: QI = TRUE, Input = logiBUS_DI::Input_I4
-- **Funktionsweise**: Liest den Zustand der physikalischen Taster-Eingänge und gibt diese über Daten- und Ereignisausgänge weiter
+Dieser Artikel beschreibt die logiBUS®-Übung `Uebung_032`. Hier werden vorkonfigurierte Farbbausteine für LED-Streifen genutzt.
 
-### logiBUS_LED_strip_QX (LED-Bausteine)
-- **Typ**: Ausgangsbaustein für LED-Streifen
-- **Verwendete interne FBs**: 4 Instanzen
-    - **LED_GREEN_5HZ**: logiBUS_LED_strip_QX
-        - Parameter: QI = TRUE, Output = LED_strip::Output_strip, Colour = LED_COLOURS::LED_GREEN, FREQ = LED_FREQ::LED_5HZ
-    - **LED_YELLOW_5HZ**: logiBUS_LED_strip_QX
-        - Parameter: QI = TRUE, Output = LED_strip::Output_strip, Colour = LED_COLOURS::LED_YELLOW, FREQ = LED_FREQ::LED_5HZ
-    - **LED_RED_5HZ**: logiBUS_LED_strip_QX
-        - Parameter: QI = TRUE, Output = LED_strip::Output_strip, Colour = LED_COLOURS::LED_RED, FREQ = LED_FREQ::LED_5HZ
-    - **LED_BLUE_5HZ**: logiBUS_LED_strip_QX
-        - Parameter: QI = TRUE, Output = LED_strip::Output_strip, Colour = LED_COLOURS::LED_BLUE, FREQ = LED_FREQ::LED_5HZ
-- **Funktionsweise**: Steuert den LED-Streifen mit konfigurierter Farbe und Blinkfrequenz (5 Hz)
+## 📺 Video
 
-## Programmablauf und Verbindungen
+* [Das ESP32-S3-DevKitC-1](https://www.youtube.com/watch?v=fyQt3THIQEQ)
 
-**Ereignisverbindungen:**
-- BUTTON_GREEN.IND → LED_GREEN_5HZ.REQ
-- BUTTON_YELLOW.IND → LED_YELLOW_5HZ.REQ
-- BUTTON_RED.IND → LED_RED_5HZ.REQ
-- BUTTON_BLUE.IND → LED_BLUE_5HZ.REQ
+## 🎧 Podcast
 
-**Datenverbindungen:**
-- BUTTON_GREEN.IN → LED_GREEN_5HZ.OUT
-- BUTTON_YELLOW.IN → LED_YELLOW_5HZ.OUT
-- BUTTON_RED.IN → LED_RED_5HZ.OUT
-- BUTTON_BLUE.IN → LED_BLUE_5HZ.OUT
+* [ESP32 als Industrie-SPS: Revolution mit Eclipse 4diac und logiBUS®](https://podcasters.spotify.com/pod/show/logibus/episodes/ESP32-als-Industrie-SPS-Revolution-mit-Eclipse-4diac-und-logiBUS-e375dp6)
+* [ESP32 as PLC: Democratizing Industrial Automation with Eclipse 4diac](https://podcasters.spotify.com/pod/show/logibus/episodes/ESP32-as-PLC-Democratizing-Industrial-Automation-with-Eclipse-4diac-e375e13)
+* [ESP32 wird industrielle SPS für Landmaschinen](https://podcasters.spotify.com/pod/show/logibus/episodes/ESP32-wird-industrielle-SPS-fr-Landmaschinen-e3bf4om)
+* [ESP32-S3 Entwicklungsplatinen ESP32-S3-DevKitC-1](https://podcasters.spotify.com/pod/show/ms-muc-lama/episodes/ESP32-S3-Entwicklungsplatinen-ESP32-S3-DevKitC-1-e368gmd)
+* [ESP32-S3 im Detail: Dual-Core, 32MB Power und CAN-Bus für Land- und Baumaschinen-Mechatronik](https://podcasters.spotify.com/pod/show/ms-muc-lama/episodes/ESP32-S3-im-Detail-Dual-Core--32MB-Power-und-CAN-Bus-fr-Land--und-Baumaschinen-Mechatronik-e39haf4)
 
-**Lernziele:**
-- Verständnis der Taster-LED-Steuerung
-- Umgang mit verschiedenen LED-Farben und Blinkfrequenzen
-- Implementierung paralleler Steuerungsfunktionen
+----
 
-**Schwierigkeitsgrad**: Einfach
+![](Uebung_032.png)
 
-**Benötigte Vorkenntnisse:**
-- Grundlagen der 4diac-IDE
-- Verständnis von Funktionsbausteinen
-- Basiswissen über Ereignis- und Datenverbindungen
+## Ziel der Übung
 
-**Starten der Übung:**
-Die Übung wird automatisch gestartet, sobald das System initialisiert ist. Jeder Taster steuert unabhängig die entsprechende farbige LED mit 5 Hz Blinkfrequenz.
+Verwendung des Bausteins `logiBUS_LED_strip_QX`. Dies ist ein High-Level Baustein, der Farbe, Frequenz und Hardware-Anbindung für RGB-Streifen in einem Block vereint.
 
-## Zusammenfassung
-Diese Übung zeigt eine einfache aber effektive Steuerung eines LED-Streifens mit vier unabhängigen Tastern. Jeder Taster aktiviert eine spezifische LED-Farbe (Grün, Gelb, Rot, Blau) mit einer konstanten Blinkfrequenz von 5 Hz. Die parallele Architektur ermöglicht die gleichzeitige Steuerung mehrerer LEDs ohne gegenseitige Beeinflussung.
+-----
+
+## Beschreibung und Komponenten
+
+[cite_start]In `Uebung_032.SUB` werden vier verschiedene Farben (Grün, Gelb, Rot, Blau) auf vier Taster gemappt[cite: 1].
+
+### Funktionsbausteine (FBs)
+
+  * **`logiBUS_LED_strip_QX`**: Kombi-Baustein für RGB-Streifen.
+  * **Parameter**:
+    * `Colour`: Auswahl aus einer Palette (z.B. `LED_RED`).
+    * `FREQ`: Blinkfrequenz (hier einheitlich 5 Hz).
+
+-----
+
+## Funktionsweise
+
+Jeder Taster aktiviert "seine" Farbe auf dem Streifen. Da alle Bausteine auf den Parameter `Output_strip` (Kanal 0) konfiguriert sind, überschreiben sie sich gegenseitig.
+*   Druck auf **Grün** ➡️ Streifen blitzt schnell grün.
+*   Druck auf **Rot** ➡️ Streifen wechselt sofort auf schnelles rotes Blitzen.
+
+Dies ermöglicht eine sehr schnelle Programmierung von farbigen Status-Signalen.

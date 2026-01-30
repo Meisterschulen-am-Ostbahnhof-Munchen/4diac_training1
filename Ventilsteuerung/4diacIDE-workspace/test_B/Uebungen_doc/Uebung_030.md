@@ -1,83 +1,55 @@
-# Uebung_030: LED_PWM Blinkende LED
+# Uebung_030: PWM-LED Effekte (Breathing)
 
-* * * * * * * * * *
+```{index} single: Uebung_030: PWM-LED Effekte (Breathing)
+```
 
-## Einleitung
-Diese Übung demonstriert die Anwendung von PWM-gesteuerten LEDs mit verschiedenen Blinkfrequenzen. Es werden vier verschiedene Betriebsmodi einer LED über digitale Eingänge gesteuert, wobei jeder Eingang eine spezifische Blinkfrequenz oder Betriebsart aktiviert.
+[Uebung_030](https://docs.ms-muc-docs.de/projects/visual-programming-languages-docs/de/latest/training1/Ventilsteuerung/4diacIDE-workspace/test/FBs/Uebungen/Uebung_030.html)
 
-## Verwendete Funktionsbausteine (FBs)
+[![NotebookLM](media/NotebookLM_logo.png)](https://notebooklm.google.com/notebook/a6872e59-1dfc-4132-a118-aff1bc7bc944)
 
-### Haupt-Funktionsbausteine:
+Dieser Artikel beschreibt die logiBUS®-Übung `Uebung_030`. Hier werden die erweiterten Fähigkeiten der LED-Ansteuerung mittels Pulsweitenmodulation (PWM) demonstriert.
 
-**DigitalInput_I1, DigitalInput_I2, DigitalInput_I3, DigitalInput_I4**
-- **Typ**: logiBUS_IX
-- **Parameter**: 
-  - QI = TRUE
-  - Input = logiBUS_DI::Input_I1 bis Input_I4
-- **Funktionsweise**: Digitale Eingangsbausteine zur Erfassung von Schalterzuständen
+## 🎧 Podcast
 
-**LED_Q1_5HZ**
-- **Typ**: logiBUS_LED_PWM_QX
-- **Parameter**:
-  - QI = TRUE
-  - Output = logiBUS_DO::Output_Q1
-  - FREQ = LED_FREQ::LED_5HZ
-- **Funktionsweise**: Steuert LED Q1 mit 5Hz Blinkfrequenz
+* [3000 Watt Lüge Die TVS Diode entschlüsselt](https://podcasters.spotify.com/pod/show/ms-muc-lama/episodes/3000-Watt-Lge-Die-TVS-Diode-entschlsselt-e3aun8t)
+* [Der BTS7030-2EPA intelligenter Auto Stromwächter](https://podcasters.spotify.com/pod/show/ms-muc-lama/episodes/Der-BTS7030-2EPA-intelligenter-Auto-Stromwchter-e3b8n3s)
+* [Der Intelligente Leistungsschalter: Wie der Infineon BTS7030 Relais und Sicherungen im Auto ersetzt](https://podcasters.spotify.com/pod/show/ms-muc-lama/episodes/Der-Intelligente-Leistungsschalter-Wie-der-Infineon-BTS7030-Relais-und-Sicherungen-im-Auto-ersetzt-e39av14)
+* [Infineon BTS7030-2EPA: Intelligenter High-Side Leistungsschalter](https://podcasters.spotify.com/pod/show/ms-muc-lama/episodes/Infineon-BTS7030-2EPA-Intelligenter-High-Side-Leistungsschalter-e368fl3)
 
-**LED_Q1_1HZ**
-- **Typ**: logiBUS_LED_PWM_QX
-- **Parameter**:
-  - QI = TRUE
-  - Output = logiBUS_DO::Output_Q1
-  - FREQ = LED_FREQ::LED_1HZ
-- **Funktionsweise**: Steuert LED Q1 mit 1Hz Blinkfrequenz
+----
 
-**LED_Q1_breathing_05HZ**
-- **Typ**: logiBUS_LED_PWM_QX
-- **Parameter**:
-  - QI = TRUE
-  - Output = logiBUS_DO::Output_Q1
-  - FREQ = LED_FREQ::LED_05HZ
-- **Funktionsweise**: Steuert LED Q1 mit 0.5Hz Blinkfrequenz (Atmungseffekt)
+![](Uebung_030.png)
 
-**LED_Q1_ON_1**
-- **Typ**: logiBUS_LED_PWM_QX
-- **Parameter**:
-  - QI = TRUE
-  - Output = logiBUS_DO::Output_Q1
-  - FREQ = LED_FREQ::LED_ON
-- **Funktionsweise**: Schaltet LED Q1 dauerhaft ein
+## Ziel der Übung
 
-## Programmablauf und Verbindungen
+Verwendung des Bausteins `logiBUS_LED_PWM_QX`. Es wird gezeigt, wie man weiche Lichteffekte (Pulsieren / "Breathing") realisiert, indem man die Helligkeit der LED über die Hardware-PWM steuert.
 
-### Ereignisverbindungen:
-- DigitalInput_I1.IND → LED_Q1_5HZ.REQ
-- DigitalInput_I2.IND → LED_Q1_1HZ.REQ
-- DigitalInput_I3.IND → LED_Q1_breathing_05HZ.REQ
-- DigitalInput_I4.IND → LED_Q1_ON_1.REQ
+-----
 
-### Datenverbindungen:
-- DigitalInput_I1.IN → LED_Q1_5HZ.OUT
-- DigitalInput_I2.IN → LED_Q1_1HZ.OUT
-- DigitalInput_I3.IN → LED_Q1_breathing_05HZ.OUT
-- DigitalInput_I4.IN → LED_Q1_ON_1.OUT
+## Beschreibung und Komponenten
 
-### Lernziele:
-- Verständnis der PWM-LED-Steuerung
-- Umgang mit verschiedenen Blinkfrequenzen
-- Steuerung von Ausgängen über digitale Eingänge
-- Implementierung von Mehrfachauswahl für LED-Betriebsarten
+[cite_start]In `Uebung_030.SUB` werden vier Taster genutzt, um verschiedene PWM-Effekte auf einer LED (`Q1`) auszulösen[cite: 1].
 
-### Schwierigkeitsgrad:
-Einfach - geeignet für Einsteiger in die 4diac-IDE
+### Funktionsbausteine (FBs)
 
-### Benötigte Vorkenntnisse:
-- Grundlagen der 4diac-IDE
-- Verständnis von Funktionsbausteinen
-- Basiswissen über digitale Ein- und Ausgänge
+  * **`logiBUS_LED_PWM_QX`**: Dieser Baustein nutzt die PWM-Hardware, um nicht nur AN/AUS, sondern auch Helligkeitsverläufe darzustellen.
+  * **Parameter `FREQ`**:
+    * `LED_05HZ`: Ein sehr langsamer "Breathing"-Effekt (Pulsieren der Helligkeit).
+    * `LED_1HZ` & `LED_5HZ`: Klassische Blinkfrequenzen.
+    * `LED_ON`: Konstante Helligkeit (100%).
 
-### Start der Übung:
-Die Übung wird durch Aktivieren der digitalen Eingänge I1-I4 gestartet. Jeder Eingang aktiviert einen spezifischen LED-Betriebsmodus an Ausgang Q1.
+-----
 
-## Zusammenfassung
-Diese Übung zeigt eine praktische Anwendung zur Steuerung einer LED mit verschiedenen PWM-Frequenzen. Vier digitale Eingänge ermöglichen die Auswahl zwischen vier verschiedenen Betriebsarten: 5Hz Blinken, 1Hz Blinken, 0.5Hz Atmungseffekt und Dauerlicht. Die Übung vermittelt grundlegende Konzepte der Signalverarbeitung und Ausgangssteuerung in verteilten Automatisierungssystemen.
+## Funktionsweise
+
+Jeder Taster aktiviert eine andere Instanz des PWM-Bausteins, die alle auf denselben physikalischen Ausgang `Output_Q1` wirken.
+*   **Taster I3** ➡️ Aktiviert den 0,5 Hz Breathing-Effekt. Die LED wird langsam heller und wieder dunkler.
+*   **Taster I1 & I2** ➡️ Aktivieren schnelles oder langsames Blinken.
+*   **Taster I4** ➡️ Schaltet die LED auf Dauerlicht.
+
+-----
+
+## Anwendungsbeispiel
+
+**Hochwertige Statusanzeige**:
+Anstatt eines harten Blinkens wird ein sanftes Pulsieren der LED genutzt, um einen "Standby"-Zustand oder einen laufenden, unkritischen Hintergrundprozess anzuzeigen. Dies wirkt moderner und weniger störend für den Bediener.

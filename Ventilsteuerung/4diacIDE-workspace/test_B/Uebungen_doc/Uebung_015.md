@@ -1,59 +1,53 @@
-# Uebung_015: Object Pointer umschalten
+# Uebung_015: Dynamische UI mit Object Pointern
 
-* * * * * * * * * *
+```{index} single: Uebung_015: Dynamische UI mit Object Pointern
+```
 
-## Einleitung
-Diese Übung demonstriert die Umschaltung eines Object Pointers zwischen zwei verschiedenen Werten. Die Steuerung erfolgt über Softkeys, wobei die Auswahl zwischen einem Null-Wert und einem konvertierten Button-Wert getroffen werden kann.
+[Uebung_015](https://docs.ms-muc-docs.de/projects/visual-programming-languages-docs/de/latest/training1/Ventilsteuerung/4diacIDE-workspace/test/FBs/Uebungen/Uebung_015.html)
 
-## Verwendete Funktionsbausteine (FBs)
+[![NotebookLM](media/NotebookLM_logo.png)](https://notebooklm.google.com/notebook/a6872e59-1dfc-4132-a118-aff1bc7bc944)
 
-### Softkey_IE
-- **Typ**: Softkey_IE
-- **Funktionsweise**: Verarbeitet Softkey-Ereignisse und gibt entsprechende Indikationsereignisse aus
+Dieser Artikel beschreibt die logiBUS®-Übung `Uebung_015`. Hier wird eine fortgeschrittene ISOBUS-Technik demonstriert: Das Umschalten von Object Pointern, um Bildschirminhalte dynamisch auszutauschen.
 
-### E_SR
-- **Typ**: E_SR (Set-Reset-Flipflop)
-- **Funktionsweise**: Speichert den Zustand basierend auf Set- und Reset-Eingängen
+## 🎧 Podcast
 
-### F_UINT_TO_UDINT
-- **Typ**: F_UINT_TO_UDINT
-- **Funktionsweise**: Konvertiert einen 16-Bit unsigned integer Wert in einen 32-Bit unsigned integer Wert
+* [Als Landtechnik-Spezialist durch die Hölle: Wie Lanz-Wery Krieg, Besatzung und Hyperinflation überlebte – Einblicke in Original-Geschäftsberichte 1915-1922](https://podcasters.spotify.com/pod/show/ms-muc-lama/episodes/Als-Landtechnik-Spezialist-durch-die-Hlle-Wie-Lanz-Wery-Krieg--Besatzung-und-Hyperinflation-berlebte--Einblicke-in-Original-Geschftsberichte-1915-1922-e39athj)
+* [Hannes' Turbo-Mais: Wie ein Landwirt mit Hackschnitzel-Kreislauf und Turmtrockner 15.000 Tonnen Körnermais verarbeitet](https://podcasters.spotify.com/pod/show/ms-muc-lama/episodes/Hannes-Turbo-Mais-Wie-ein-Landwirt-mit-Hackschnitzel-Kreislauf-und-Turmtrockner-15-000-Tonnen-Krnermais-verarbeitet-e3a5e0o)
+* [JBC Lötspitzen C470 vs. C245 vs. C210 vs. C115: Welche Spitze ist der Allrounder und wann brauchst du den Nano-Spezialisten?](https://podcasters.spotify.com/pod/show/ms-muc-lama/episodes/JBC-Ltspitzen-C470-vs--C245-vs--C210-vs--C115-Welche-Spitze-ist-der-Allrounder-und-wann-brauchst-du-den-Nano-Spezialisten-e39ak58)
+* [Schlüter 1500 Spezial: Turbo-Giftigkeit, 40 Jahre und die Seele eines Kraftprotzes](https://podcasters.spotify.com/pod/show/ms-muc-lama/episodes/Schlter-1500-Spezial-Turbo-Giftigkeit--40-Jahre-und-die-Seele-eines-Kraftprotzes-e39au2l)
 
-### F_SEL
-- **Typ**: F_SEL (Selektor)
-- **Funktionsweise**: Wählt zwischen zwei Eingangswerten basierend auf einem Steuersignal aus
+----
 
-### Q_NumericValue
-- **Typ**: Q_NumericValue
-- **Funktionsweise**: Schreibt numerische Werte in ein Objekt im DefaultPool
+![](Uebung_015.png)
 
-## Programmablauf und Verbindungen
+## Ziel der Übung
 
-**Ereignisverbindungen:**
-- SoftKey_F1 (Released) → E_SR (Set)
-- SoftKey_F2 (Released) → E_SR (Reset)
-- E_SR (EO) → F_SEL (REQ)
-- F_SEL (CNF) → Q_NumericValue (REQ)
+Erlernen der Verwendung von `Object Pointer` Objekten. Ein Pointer ist ein Platzhalter auf dem Bildschirm, dem zur Laufzeit die ID eines anderen Objekts zugewiesen werden kann. Dies ist effizienter als das Ausblenden vieler Einzelobjekte.
 
-**Datenverbindungen:**
-- F_UINT_TO_UDINT (OUT) → F_SEL (IN1)
-- E_SR (Q) → F_SEL (G)
-- F_SEL (OUT) → Q_NumericValue (u32NewValue)
+-----
 
-**Parameterkonfiguration:**
-- SoftKey_F1: Object ID = DefaultPool::SoftKey_F1, InputEvent = SK_RELEASED
-- SoftKey_F2: Object ID = DefaultPool::SoftKey_F2, InputEvent = SK_RELEASED
-- F_UINT_TO_UDINT: IN = DefaultPool::Button_A1
-- F_SEL: IN0 = isobus::ID_NULL
-- Q_NumericValue: u16ObjId = DefaultPool::ObjectPointer_P1
+## Beschreibung und Komponenten
 
-**Ablauf:**
-1. Drücken von SoftKey_F1 setzt das E_SR Flipflop
-2. Drücken von SoftKey_F2 resetet das E_SR Flipflop
-3. Der Ausgang Q von E_SR steuert die Selektion in F_SEL
-4. Bei Q=1 wird IN1 (konvertierter Button_A1 Wert) ausgewählt
-5. Bei Q=0 wird IN0 (Null-Wert) ausgewählt
-6. Der selektierte Wert wird an ObjectPointer_P1 geschrieben
+[cite_start]In `Uebung_015.SUB` wird ein Object Pointer (`ObjectPointer_P1`) zwischen einer Schaltfläche (`Button_A1`) und einem leeren Zustand (`ID_NULL`) umgeschaltet[cite: 1].
 
-## Zusammenfassung
-Diese Übung zeigt die praktische Anwendung eines Set-Reset-Flipflops in Kombination mit einem Selektor-Baustein zur dynamischen Auswahl zwischen verschiedenen Werten. Die Umschaltung erfolgt über Softkeys, wobei zwischen einem Null-Wert und einem konvertierten Button-Wert gewählt werden kann. Die Übung vermittelt grundlegende Konzepte der Signalverarbeitung und dynamischen Wertauswahl in 4diac.
+### Funktionsbausteine (FBs)
+
+  * **`SoftKey_UP_F1` & `F2`**: Steuern die Auswahl.
+  * **`F_SEL`**: Ein Auswahl-Baustein (Selection). [cite_start]Je nach Eingang `G` (vom Speicher `E_SR`) gibt er entweder den Wert `ID_NULL` (0) oder die Objekt-ID von `Button_A1` aus[cite: 1].
+  * **`Q_NumericValue`**: Wird hier zweckentfremdet, um die ID an den Pointer zu senden (da ein Pointer-Update technisch das Senden einer neuen ID an die Pointer-Objekt-ID ist).
+
+-----
+
+## Funktionsweise
+
+1.  Nutzer drückt **F1** ➡️ Speicher wird `TRUE` ➡️ `F_SEL` schaltet `Button_A1` durch.
+2.  Die ID von `Button_A1` wird an `ObjectPointer_P1` gesendet.
+3.  Auf dem Bildschirm erscheint an der Position des Pointers plötzlich die Schaltfläche `A1`.
+4.  Nutzer drückt **F2** ➡️ ID `0` wird gesendet ➡️ Die Stelle auf dem Bildschirm wird wieder leer.
+
+-----
+
+## Anwendungsbeispiel
+
+**Kontextsensitive Buttons**:
+Ein zentraler Platz auf dem Terminal soll je nach Arbeitsmodus unterschiedliche Funktionen anzeigen (z.B. im Modus "Transport" ein Straßensymbol, im Modus "Feld" ein Pflugsymbol). Anstatt zwei Buttons übereinander zu legen und zu verstecken, wird ein Pointer genutzt, der je nach Modus auf das eine oder andere Bild-Objekt verweist.

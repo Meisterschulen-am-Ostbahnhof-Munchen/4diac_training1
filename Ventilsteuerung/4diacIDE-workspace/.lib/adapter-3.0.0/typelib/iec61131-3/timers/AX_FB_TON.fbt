@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<FBType Name="AX_FB_TON" Comment="standard timer function block (on-delay timing) with AX Adapter">
+	<Identification Standard="61131-3" Classification="standard timer function block" Description="Copyright (c) 2011 TU Wien ACIN&#10; &#10;This program and the accompanying materials are made&#10;available under the terms of the Eclipse Public License 2.0&#10;which is available at https://www.eclipse.org/legal/epl-2.0/&#10;&#10;SPDX-License-Identifier: EPL-2.0">
+	</Identification>
+	<VersionInfo Version="3.0" Author="Patrick Aigner" Date="2025-04-14" Remarks="changed package">
+	</VersionInfo>
+	<VersionInfo Organization="TU Wien ACIN" Version="1.0" Author="Monika Wenger" Date="2011-06-21">
+	</VersionInfo>
+	<CompilerInfo packageName="adapter::iec61131::timers">
+	</CompilerInfo>
+	<InterfaceList>
+		<EventInputs>
+			<Event Name="REQ" Type="Event" Comment="Normal Execution Request">
+				<With Var="PT"/>
+			</Event>
+		</EventInputs>
+		<InputVars>
+			<VarDeclaration Name="PT" Type="TIME" Comment="Process time"/>
+		</InputVars>
+		<OutputVars>
+			<VarDeclaration Name="ET" Type="TIME" Comment="Elapsed time"/>
+		</OutputVars>
+		<Plugs>
+			<AdapterDeclaration Name="Q" Type="adapter::types::unidirectional::AX" Comment="Output"/>
+		</Plugs>
+		<Sockets>
+			<AdapterDeclaration Name="IN" Type="adapter::types::unidirectional::AX" Comment="Input"/>
+		</Sockets>
+	</InterfaceList>
+	<Attribute Name="eclipse4diac::core::TypeHash" Value="''"/>
+</FBType>

@@ -1,53 +1,48 @@
-# Uebung_006a3: SR und T-Flip-Flop mit 3x IE
+# Uebung_006a3: Motor-Wende-Schaltung (Diskret)
 
-* * * * * * * * * *
+```{index} single: Uebung_006a3: Motor-Wende-Schaltung (Diskret)
+```
 
-## Einleitung
-Diese Übung demonstriert die Funktionsweise eines SR-Flip-Flops und T-Flip-Flops in Kombination mit drei Eingabeelementen. Das System steuert eine Links-/Rechtslauf-Steuerung basierend auf den Eingabesignalen.
+[Uebung_006a3](https://docs.ms-muc-docs.de/projects/visual-programming-languages-docs/de/latest/training1/Ventilsteuerung/4diacIDE-workspace/test/FBs/Uebungen/Uebung_006a3.html)
 
-## Verwendete Funktionsbausteine (FBs)
+[![NotebookLM](media/NotebookLM_logo.png)](https://notebooklm.google.com/notebook/a6872e59-1dfc-4132-a118-aff1bc7bc944)
 
-### Hauptbausteine:
-- **DigitalInput_CLK_I1**, **DigitalInput_CLK_I2**, **DigitalInput_CLK_I3** (Typ: logiBUS_IE)
-  - Parameter: QI = TRUE, Input = logiBUS_DI::Input_I1/I2/I3, InputEvent = logiBUS_DI_Events::BUTTON_SINGLE_CLICK
-- **E_T_FF_SR** (Typ: E_T_FF_SR) - Kombinierter T- und SR-Flip-Flop
-- **AND_LINKS**, **AND_RECHTS** (Typ: AND_2_BOOL) - Logische UND-Verknüpfungen
-- **Linkslauf**, **Rechtslauf** (Typ: logiBUS_QX) - Ausgabeelemente für Links- und Rechtslauf
-  - Parameter: QI = TRUE, Output = logiBUS_DO::Output_Q1/Q2
+Dieser Artikel beschreibt die logiBUS®-Übung `Uebung_006a3`. Dies ist eine anspruchsvollere Anwendung zur Steuerung eines Motors mit zwei Drehrichtungen und automatischer Umschaltung.
 
-### Sub-Bausteine: LinksRechts_T_FF (Typ: Uebung_006a3_sub)
+----
 
-**Verwendete interne FBs:**
-- **E_T_FF** (Typ: E_T_FF) - T-Flip-Flop
-- **E_SWITCH** (Typ: E_SWITCH) - Ereignis-Schalter
-- **F_NOT** (Typ: F_NOT) - Logischer NOT-Operator
+![](Uebung_006a3.png)
 
-**Funktionsweise:**
-Der Sub-Baustein verarbeitet das Eingangssignal DI und steuert die Links-/Rechts-Ausgänge. Der E_SWITCH leitet Ereignisse basierend auf dem DI-Signal an den T-Flip-Flop weiter. Der Ausgang Q des T-Flip-Flops wird direkt als "Rechts"-Signal ausgegeben und durch einen NOT-Operator invertiert als "Links"-Signal.
+## Ziel der Übung
 
-## Programmablauf und Verbindungen
+Aufbau einer Steuerung für Vorwärts- und Rückwärtslauf mit Software-Verriegelung. Es muss sichergestellt werden, dass niemals beide Richtungen gleichzeitig angesteuert werden können.
 
-**Ereignisverbindungen:**
-- Die drei DigitalInputs (I1, I2, I3) lösen Ereignisse für S, R und CLK des E_T_FF_SR aus
-- Der E_T_FF_SR-Ausgang EO triggert sowohl den Sub-Baustein als auch die AND-Gatter
-- Der Sub-Baustein-Ausgang EO aktiviert die AND-Gatter
-- Die AND-Gatter steuern die Ausgabeelemente Linkslauf und Rechtslauf
+-----
 
-**Datenverbindungen:**
-- Der Q-Ausgang des E_T_FF_SR wird an beide AND-Gatter und den Sub-Baustein weitergeleitet
-- Der Sub-Baustein generiert Links- und Rechts-Signale für die AND-Gatter
-- Die AND-Gatter-Ausgänge steuern die physischen Ausgänge Q1 und Q2
+## Beschreibung und Komponenten
 
-**Lernziele:**
-- Verständnis von Flip-Flop-Schaltungen (SR und T-Flip-Flop)
-- Kombination logischer Verknüpfungen mit Speicherelementen
-- Ereignisgesteuerte Programmabläufe in 4diac
-- Verwendung von Sub-Applikationen zur Strukturierung
+[cite_start]Die Subapplikation `Uebung_006a3.SUB` kombiniert einen Haupt-Ein/Aus-Speicher mit einer Logik zur Richtungsentscheidung[cite: 1].
 
-**Schwierigkeitsgrad:** Mittel
-**Benötigte Vorkenntnisse:** Grundlagen logischer Schaltungen, Flip-Flop-Funktionalität, 4diac-Bedienung
+### Funktionsbausteine (FBs)
 
-**Starten der Übung:** Nach dem Laden der Applikation können die drei Eingänge I1, I2, I3 über Taster bedient werden, um das Verhalten der Links-/Rechts-Steuerung zu beobachten.
+  * **`E_T_FF_SR`**: Bestimmt, ob der Motor läuft (Ein/Aus).
+  * **`LinksRechts_T_FF` (SubApp)**: Ein interner Merker, der bei jedem Start die Richtung wechselt.
+  * **2x `AND_2_BOOL`**: Verknüpfen das "Ein"-Signal mit der gewählten Richtung.
+  * **`Q1` (Linkslauf) & `Q2` (Rechtslauf)**: Die Hardware-Ausgänge.
 
-## Zusammenfassung
-Diese Übung verdeutlicht die praktische Anwendung von Flip-Flop-Schaltungen in einer Steuerungsapplikation. Durch die Kombination von SR- und T-Flip-Flops mit logischen Verknüpfungen entsteht ein komplexes Steuerungssystem für eine Links-/Rechtslauf-Steuerung. Die Verwendung von Sub-Applikationen zeigt zudem Methoden zur strukturierten Programmierung in 4diac.
+-----
+
+## Funktionsweise
+
+1.  Der Nutzer startet das System über `I1`, `I2` oder `I3`.
+2.  Das Flip-Flop liefert ein "Global Ein" Signal.
+3.  Die SubApp `LinksRechts_T_FF` entscheidet, welcher Zweig aktiv ist.
+4.  Durch die UND-Gatter kann das "Ein"-Signal nur zu einem der beiden Ausgänge durchdringen.
+
+Diese Schaltung demonstriert, wie man komplexe Entscheidungen durch die Kombination von Basisfunktionen (Speicher, Logikgatter, Sub-Applikationen) löst.
+
+-----
+
+## Anwendungsbeispiel
+
+**Reversierendes Rührwerk**: Ein Motor in einem Mischtank soll bei jedem Einschalten die Drehrichtung ändern, um eine bessere Durchmischung des Mediums zu erreichen. Die Software stellt dabei sicher, dass der Motor immer nur in eine Richtung Strom erhält.

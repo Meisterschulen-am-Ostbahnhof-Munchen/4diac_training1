@@ -1,50 +1,42 @@
-# Uebung_004a8: mit E_SPLIT_2
+# Uebung_004a8: Zweifach Event-Splitter (E_SPLIT_2)
 
-* * * * * * * * * *
+```{index} single: Uebung_004a8: Zweifach Event-Splitter (E_SPLIT_2)
+```
 
-## Einleitung
-Diese Übung demonstriert den Einsatz von T-Flip-Flops in Verbindung mit einem Ereignisverteiler (E_SPLIT_2). Das System steuert zwei digitale Ausgänge basierend auf Taktimpulsen von einem digitalen Eingang.
+[Uebung_004a8](https://docs.ms-muc-docs.de/projects/visual-programming-languages-docs/de/latest/training1/Ventilsteuerung/4diacIDE-workspace/test/FBs/Uebungen/Uebung_004a8.html)
 
-## Verwendete Funktionsbausteine (FBs)
+[![NotebookLM](media/NotebookLM_logo.png)](https://notebooklm.google.com/notebook/a6872e59-1dfc-4132-a118-aff1bc7bc944)
 
-### Hauptbausteine:
-- **DigitalInput_CLK_I1** (logiBUS_IE): Digitaler Eingang für Taktgeber
-- **E_SPLIT_2**: Ereignisverteiler für zwei Ausgänge
-- **E_T_FF_Q1** und **E_T_FF_Q2** (E_T_FF): T-Flip-Flops für Ausgangssteuerung
-- **DigitalOutput_Q1** und **DigitalOutput_Q2** (logiBUS_QX): Digitale Ausgänge
+Dieser Artikel beschreibt die logiBUS®-Übung `Uebung_004a8`. Dies ist eine Variante der Übung 004a4, bei der ein spezifischer Baustein für zwei Ausgänge verwendet wird.
 
-### Sub-Bausteine: E_T_FF (T-Flip-Flop)
-- **Typ**: E_T_FF
-- **Verwendete interne FBs**: Keine weiteren internen FBs angegeben
-- **Funktionsweise**: Der T-Flip-Flop ändert seinen Ausgangszustand bei jedem eingehenden Taktimpuls (CLK-Ereignis). Bei aktivem Takt wechselt der Q-Ausgang zwischen TRUE und FALSE.
+----
 
-## Programmablauf und Verbindungen
+![](Uebung_004a8.png)
 
-**Ereignisverbindungen:**
-- DigitalInput_CLK_I1.IND → E_SPLIT_2.EI
-- E_SPLIT_2.EO1 → E_T_FF_Q1.CLK
-- E_SPLIT_2.EO2 → E_T_FF_Q2.CLK
-- E_T_FF_Q1.EO → DigitalOutput_Q1.REQ
-- E_T_FF_Q2.EO → DigitalOutput_Q2.REQ
+## Ziel der Übung
 
-**Datenverbindungen:**
-- E_T_FF_Q1.Q → DigitalOutput_Q1.OUT
-- E_T_FF_Q2.Q → DigitalOutput_Q2.OUT
+Kennenlernen von typspezifischen Splitter-Bausteinen. Während `E_SPLIT` oft generisch ist, definieren Bausteine wie `E_SPLIT_2` explizit die Anzahl der Ausgänge.
 
-**Parameterkonfiguration:**
-- DigitalInput_CLK_I1: InputEvent = BUTTON_SINGLE_CLICK
-- Beide DigitalOutput-FBs: QI = TRUE
+-----
 
-**Lernziele:**
-- Verständnis von T-Flip-Flop-Verhalten
-- Einsatz von Ereignisverteilern (E_SPLIT)
-- Steuerung mehrerer Ausgänge mit einem Eingangssignal
-- Umgang mit digitalen Ein- und Ausgängen in 4diac
+## Beschreibung und Komponenten
 
-**Schwierigkeitsgrad**: Einsteiger
-**Benötigte Vorkenntnisse**: Grundlagen der 4diac-IDE, Verständnis von Flip-Flops
+[cite_start]Die Subapplikation `Uebung_004a8.SUB` nutzt einen `E_SPLIT_2` Baustein zur Ereignisverteilung[cite: 1].
 
-**Start der Übung**: Das Programm wird durch Betätigen des mit I1 verbundenen Tasters gestartet. Bei jedem Tastendruck (SINGLE_CLICK) werden beide T-Flip-Flops getaktet.
+### Funktionsbausteine (FBs)
 
-## Zusammenfassung
-Diese Übung zeigt eine einfache Anwendung von T-Flip-Flops zur Steuerung zweier unabhängiger Ausgänge mit einem gemeinsamen Taktsignal. Durch den Einsatz des E_SPLIT_2-Bausteins wird das Eingangssignal parallel auf beide Flip-Flops verteilt, was eine synchrone Steuerung ermöglicht. Die Übung vermittelt grundlegende Konzepte der sequentiellen Logik und Ereignisverteilung in 4diac-Systemen.
+  * **`DigitalInput_CLK_I1`**: Taster.
+  * **`E_SPLIT_2`**: Verteilt den Eingang `EI` nacheinander auf `EO1` und `EO2`.
+  * **`E_T_FF_Q1` & `Q2`**: Zwei Flip-Flops.
+
+-----
+
+## Funktionsweise
+
+Funktional identisch zu Übung 004a4: Ein einzelner Tastendruck führt dazu, dass zwei unabhängige Flip-Flops nacheinander getriggert werden. Dies stellt sicher, dass beide Speicherzustände sicher aktualisiert werden.
+
+-----
+
+## Anwendungsbeispiel
+
+Synchrones Schalten von redundanten Systemen, bei denen sichergestellt sein muss, dass beide Teilsysteme den gleichen Schaltbefehl in einer festen Abfolge erhalten.

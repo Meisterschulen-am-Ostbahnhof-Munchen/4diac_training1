@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SubAppType Name="Uebung_134" Comment="Übung zu ISOBUS Receive from Unclaimed Partner">
+	<Identification Standard="61499-2" Description="Copyright (c) 2026 Meisterschulen am Ostbahnhof  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0">
+	</Identification>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Gemini" Date="2026-01-16">
+	</VersionInfo>
+	<CompilerInfo packageName="Uebungen">
+		<Import declaration="Uebungen::const::Uebung_120_129::Filter::FLT_ALL_PASS"/>
+		<Import declaration="isobus::pgn::ISOUSERHOME_e::thisMember"/>
+		<Import declaration="isobus::pgn::ISO_CAN_NODE::NODE1"/>
+	</CompilerInfo>
+	<SubAppInterfaceList>
+	</SubAppInterfaceList>
+	<SubAppNetwork>
+		<FB Name="BaseMemberExternAdd" Type="isobus::pgn::BaseMemberExternAdd" x="-8600" y="2700">
+			<Parameter Name="u8CanIdx" Value="NODE1"/>
+			<Parameter Name="u8SA" Value="55"/>
+		</FB>
+		<FB Name="AlPgnRxNew8B" Type="isobus::pgn::rx::AlPgnRxNew8B" x="-4000" y="3000">
+			<Parameter Name="u32Pgn" Value="61184"/>
+			<Parameter Name="u16DaSize" Value="8"/>
+		</FB>
+		<FB Name="NmGetCfInfo" Type="isobus::pgn::NmGetCfInfo" x="-10600" y="3500">
+			<Parameter Name="u8CanIdx" Value="NODE1"/>
+			<Parameter Name="member" Value="thisMember"/>
+			<Parameter Name="address" Value="FLT_ALL_PASS"/>
+			<Parameter Name="mask" Value="FLT_ALL_PASS"/>
+		</FB>
+		<FB Name="NetEv2NetEv" Type="isobus::pgn::NetEv2NetEv" x="-6000" y="3500">
+		</FB>
+		<FB Name="STRUCT_DEMUX" Type="eclipse4diac::convert::STRUCT_DEMUX" x="-2400" y="4700">
+			<Attribute Name="StructuredType" Type="STRING" Value="isobus::pgn::CAN_MSG"/>
+		</FB>
+		<EventConnections>
+			<Connection Source="BaseMemberExternAdd.CNF" Destination="NetEv2NetEv.REQ" dx1="1000"/>
+			<Connection Source="NetEv2NetEv.CNF" Destination="AlPgnRxNew8B.install" dx1="1000"/>
+			<Connection Source="NmGetCfInfo.IND" Destination="BaseMemberExternAdd.REQ" dx1="80"/>
+			<Connection Source="AlPgnRxNew8B.IND" Destination="STRUCT_DEMUX.REQ" dx1="333.33"/>
+		</EventConnections>
+		<DataConnections>
+			<Connection Source="BaseMemberExternAdd.s16Handle" Destination="NetEv2NetEv.s16Handle" dx1="566.67"/>
+			<Connection Source="NmGetCfInfo.sNetEv" Destination="NetEv2NetEv.IN" dx1="1000"/>
+			<Connection Source="NetEv2NetEv." Destination="AlPgnRxNew8B.NmSource" dx1="1000"/>
+			<Connection Source="AlPgnRxNew8B.Data" Destination="STRUCT_DEMUX.IN" dx1="213.33"/>
+		</DataConnections>
+	</SubAppNetwork>
+</SubAppType>

@@ -1,58 +1,43 @@
-Hier ist die Dokumentation für die Übung `Uebung_020e_AX` basierend auf den bereitgestellten Daten.
+# Uebung_020e_AX: Ausschaltverzögerung (TOF)
 
-# Uebung_020e_AX
+```{index} single: Uebung_020e_AX: Ausschaltverzögerung (TOF)
+```
 
-![Uebung_020e_AX](Uebung_020e_AX.png)
+[Uebung_020e_AX](https://docs.ms-muc-docs.de/projects/visual-programming-languages-docs/de/latest/training1/Ventilsteuerung/4diacIDE-workspace/test/FBs/Uebungen/Uebung_020e_AX.html)
 
-* * * * * * * * * *
+[![NotebookLM](media/NotebookLM_logo.png)](https://notebooklm.google.com/notebook/041f4df4-b729-484d-b786-b6dcdf151961)
 
-## Einleitung
-Diese Übung implementiert eine logische Schaltung, die ein digitales Eingangssignal (Input_I1) auf ein digitales Ausgangssignal (Output_Q1) überträgt, wobei eine Ausschaltverzögerung (TOF - Timer Off-Delay) verwendet wird. Die Besonderheit dieser Übung liegt in der Verwendung von Adapter-Verbindungen (`AdapterConnections`) anstelle von separaten Event- und Datenverbindungen, was durch den Baustein `AX_TOF` realisiert wird.
+Dieser Artikel beschreibt die logiBUS®-Übung `Uebung_020e_AX`.
 
-## Verwendete Funktionsbausteine (FBs)
+----
 
-In dieser Sub-Applikation werden verschiedene Bausteine verschaltet, um die gewünschte Zeitverzögerung zwischen Ein- und Ausgabe zu erreichen.
+![](Uebung_020e_AX.png)
 
-### Sub-Bausteine: Uebung_020e_AX
+## Ziel der Übung
 
-- **Typ**: SubAppType
-- **Verwendete interne FBs**:
-    - **DigitalInput_I1**: logiBUS::io::DI::logiBUS_IXA
-        - **Beschreibung**: Dieser Baustein repräsentiert den digitalen Eingang. Er liest den physikalischen Eingang `Input_I1`.
-        - **Parameter**: 
-            - `QI` = TRUE (Baustein ist aktiviert)
-            - `Input` = Input_I1 (Logische Zuweisung des Eingangs)
-        - **Verbindungen**: Der Adapter-Ausgang `.IN` liefert das Signal.
+Kennenlernen des Timer-Bausteins `AX_TOF`.
 
-    - **AX_TOF**: adapter::events::unidirectional::timers::AX_TOF
-        - **Beschreibung**: Ein ausschaltverzögerter Timer-Baustein, der für die Verwendung mit Adaptern ausgelegt ist.
-        - **Parameter**: 
-            - `PT` = T#5s (Die Verzögerungszeit ist auf 5 Sekunden eingestellt).
-        - **Funktionsweise**: Wenn das Eingangssignal von TRUE auf FALSE wechselt, bleibt der Ausgang für die Zeitdauer `PT` noch auf TRUE, bevor er ebenfalls auf FALSE wechselt.
+-----
 
-    - **DigitalOutput_Q1**: logiBUS::io::DQ::logiBUS_QXA
-        - **Beschreibung**: Dieser Baustein repräsentiert den digitalen Ausgang. Er steuert den physikalischen Ausgang `Output_Q1`.
-        - **Parameter**: 
-            - `QI` = TRUE (Baustein ist aktiviert)
-            - `Output` = Output_Q1 (Logische Zuweisung des Ausgangs)
-        - **Verbindungen**: Der Adapter-Eingang `.OUT` empfängt das Signal.
+## Beschreibung und Komponenten
 
-## Programmablauf und Verbindungen
+[cite_start]Die Subapplikation `Uebung_020e_AX.SUB` verzögert das Ausschaltsignal[cite: 1].
 
-Der Programmablauf innerhalb dieser Sub-Applikation ist linear und nutzt Adapter-Verbindungen zur Vereinfachung des Netzwerks:
+### Funktionsbausteine (FBs)
 
-1.  **Signaleingang**: Der Baustein `DigitalInput_I1` erfasst den Zustand des Hardware-Eingangs.
-2.  **Verbindung zum Timer**: Über eine Adapter-Verbindung (`Connection`) wird der Port `DigitalInput_I1.IN` direkt mit dem Eingang `AX_TOF.IN` verbunden.
-3.  **Zeitverarbeitung (Ausschaltverzögerung)**:
-    *   Solange der Eingang `TRUE` ist, ist auch der Ausgang des Timers `TRUE`.
-    *   Fällt der Eingang auf `FALSE` ab, startet der Timer. Der Ausgang bleibt für weitere **5 Sekunden** (`PT=T#5s`) auf `TRUE`.
-    *   Nach Ablauf der 5 Sekunden fällt auch der Ausgang auf `FALSE`.
-4.  **Signalausgang**: Der Ausgang des Timers `AX_TOF.Q` ist über eine Adapter-Verbindung mit dem Eingang `DigitalOutput_Q1.OUT` verbunden, wodurch der physikalische Ausgang geschaltet wird.
+  * **`AX_TOF`**: Timer Off-Delay.
+  * **Parameter `PT`**: Preset Time (hier 5 Sekunden).
 
-**Lernziele:**
-*   Verständnis von Adapter-Bausteinen (`AX_...`) in 4diac.
-*   Anwendung einer Ausschaltverzögerung (TOF).
-*   Verknüpfung von Hardware-IOs über logiBUS Bausteine.
+-----
 
-## Zusammenfassung
-Die `Uebung_020e_AX` zeigt eine effiziente Implementierung einer Ausschaltverzögerung von 5 Sekunden. Durch die Nutzung der `AX_TOF` Variante und Adapter-Verbindungen wird die grafische Darstellung des Netzwerks im Vergleich zu klassischen IEC 61499 Event/Daten-Verbindungen deutlich übersichtlicher gestaltet, da weniger Linien (Verbindungen) notwendig sind.
+## Funktionsweise
+
+1.  Eingang `I1` wird TRUE -> Lampe geht **sofort** an.
+2.  Eingang `I1` wird FALSE -> Timer startet.
+3.  Nach 5 Sekunden wird der Ausgang `Q` FALSE -> Lampe geht aus.
+
+-----
+
+## Anwendungsbeispiel
+
+**Nachlauf**: Ein Lüfter im Bad läuft noch 5 Minuten nach, nachdem das Licht ausgeschaltet wurde.

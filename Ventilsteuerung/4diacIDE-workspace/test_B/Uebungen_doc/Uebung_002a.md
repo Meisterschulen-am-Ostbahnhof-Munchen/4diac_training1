@@ -1,51 +1,64 @@
-# Uebung_002a: DigitalInput_I1/_I2 mit AND auf DigitalOutput_Q1
+# Uebung_002a: Logische UND-Verknüpfung (AND)
 
-* * * * * * * * * *
+```{index} single: Uebung_002a: Logische UND-Verknüpfung (AND)
+```
 
-## Einleitung
-Diese Übung demonstriert die grundlegende Verarbeitung digitaler Eingangssignale mit einer logischen UND-Verknüpfung. Zwei digitale Eingänge (I1 und I2) werden über einen AND-Baustein verknüpft und das Ergebnis an einen digitalen Ausgang (Q1) ausgegeben.
+[Uebung_002a](https://docs.ms-muc-docs.de/projects/visual-programming-languages-docs/de/latest/training1/Ventilsteuerung/4diacIDE-workspace/test/FBs/Uebungen/Uebung_002a.html)
 
-## Verwendete Funktionsbausteine (FBs)
+[![NotebookLM](media/NotebookLM_logo.png)](https://notebooklm.google.com/notebook/a6872e59-1dfc-4132-a118-aff1bc7bc944)
 
-### DigitalInput_I1 / DigitalInput_I2
-- **Typ**: logiBUS_IX
-- **Parameter**: 
-  - QI = TRUE (Aktivierung des Bausteins)
-  - Input = logiBUS_DI::Input_I1 / logiBUS_DI::Input_I2 (Zuweisung der physikalischen Eingänge)
+Dieser Artikel beschreibt die logiBUS®-Übung `Uebung_002a`. In dieser Übung wird eine klassische UND-Verknüpfung (AND) realisiert, bei der ein digitaler Ausgang nur dann aktiviert wird, wenn zwei digitale Eingänge gleichzeitig den Zustand "Wahr" (HIGH) führen.
 
-### AND_2
-- **Typ**: AND_2 (2-fach UND-Baustein)
-- **Funktionsweise**: Führt eine logische UND-Verknüpfung der beiden Eingangssignale durch
+----
 
-### DigitalOutput_Q1
-- **Typ**: logiBUS_QX
-- **Parameter**:
-  - QI = TRUE (Aktivierung des Bausteins)
-  - Output = logiBUS_DO::Output_Q1 (Zuweisung des physikalischen Ausgangs)
+![](Uebung_002a.png)
 
-## Programmablauf und Verbindungen
+## Ziel der Übung
 
-**Ereignisverbindungen:**
-- DigitalInput_I1.IND → AND_2.REQ
-- DigitalInput_I2.IND → AND_2.REQ
-- AND_2.CNF → DigitalOutput_Q1.REQ
+Das Hauptziel dieser Übung ist die Implementierung einer grundlegenden logischen Entscheidungsstruktur. Es wird gezeigt, wie Signale von mehreren Sensoren (Eingängen) kombiniert werden können, um eine Aktion an einem Aktor (Ausgang) auszulösen. Dies ist ein fundamentaler Baustein jeder Steuerungsprogrammierung.
 
-**Datenverbindungen:**
-- DigitalInput_I1.IN → AND_2.IN1
-- DigitalInput_I2.IN → AND_2.IN2
-- AND_2.OUT → DigitalOutput_Q1.OUT
+-----
 
-**Lernziele:**
-- Verständnis der grundlegenden logischen Verknüpfung (UND)
-- Aufbau von einfachen Steuerungsschaltungen
-- Umgang mit digitalen Ein- und Ausgängen
-- Verkabelung von Funktionsbausteinen in 4diac-IDE
+## Beschreibung und Komponenten
 
-**Schwierigkeitsgrad**: Einsteiger
+[cite_start]Die Subapplikation `Uebung_002a.SUB` verknüpft zwei digitale Eingänge über einen Logik-Baustein mit einem digitalen Ausgang[cite: 1].
 
-**Benötigte Vorkenntnisse**: Grundlagen der Digitaltechnik, erste Erfahrungen mit 4diac-IDE
+### Funktionsbausteine (FBs)
 
-**Starten der Übung**: Das Programm wird automatisch aktiviert, sobald es auf ein kompatibles Steuerungssystem geladen wurde. Die Eingänge I1 und I2 können über die Hardware oder Simulation getestet werden.
+  * **`DigitalInput_I1` & `DigitalInput_I2`**: Instanzen des Typs `logiBUS_IX`. [cite_start]Diese repräsentieren die beiden Hardware-Eingänge, die überwacht werden[cite: 1].
+  * **`AND_2`**: Eine Instanz des Typs `AND_2` (aus der IEC 61131-Bibliothek). [cite_start]Dieser Baustein führt die logische UND-Operation aus. Er besitzt zwei Dateneingänge (`IN1`, `IN2`) und einen Datenausgang (`OUT`)[cite: 1]. Zur Steuerung benötigt er ein Ereignis am Port `REQ` und quittiert die Berechnung am Port `CNF`.
+  * **`DigitalOutput_Q1`**: Eine Instanz des Typs `logiBUS_QX`. [cite_start]Dieser Baustein steuert den Hardware-Ausgang `Output_Q1` basierend auf dem Ergebnis der Logik[cite: 1].
 
-## Zusammenfassung
-Diese Übung vermittelt die grundlegende Funktionsweise einer UND-Verknüpfung in der Automatisierungstechnik. Der Ausgang Q1 wird nur dann aktiviert, wenn beide Eingänge I1 und I2 gleichzeitig ein Signal führen. Dieses Prinzip bildet die Basis für viele Steuerungsaufgaben in der Industrieautomation.
+-----
+
+## Funktionsweise
+
+Die Logik wird durch die Verschaltung von Ereignis- und Datenverbindungen festgelegt. Der Aufbau in `Uebung_002a.SUB` ist wie folgt definiert:
+
+```xml
+<EventConnections>
+    <Connection Source="DigitalInput_I1.IND" Destination="AND_2.REQ"/>
+    <Connection Source="DigitalInput_I2.IND" Destination="AND_2.REQ"/>
+    <Connection Source="AND_2.CNF" Destination="DigitalOutput_Q1.REQ"/>
+</EventConnections>
+<DataConnections>
+    <Connection Source="DigitalInput_I1.IN" Destination="AND_2.IN1"/>
+    <Connection Source="DigitalInput_I2.IN" Destination="AND_2.IN2"/>
+    <Connection Source="AND_2.OUT" Destination="DigitalOutput_Q1.OUT"/>
+</DataConnections>
+```
+
+[cite_start][cite: 1]
+
+Der Prozess folgt dieser Logik:
+1.  Ändert sich einer der beiden Eingänge (`I1` oder `I2`), sendet der jeweilige Baustein ein `IND`-Ereignis an den `REQ`-Port des `AND_2`-Bausteins.
+2.  Der `AND_2`-Baustein liest daraufhin beide Daten-Eingänge (`IN1` und `IN2`) und berechnet das Ergebnis (`IN1 AND IN2`).
+3.  Nach Abschluss der Berechnung feuert der Logik-Baustein ein `CNF`-Ereignis (Confirmation) ab.
+4.  Dieses `CNF`-Ereignis erreicht den `REQ`-Port von `DigitalOutput_Q1`, welcher daraufhin das Ergebnis übernimmt und den physischen Ausgang schaltet.
+
+-----
+
+## Anwendungsbeispiel
+
+Ein klassisches Anwendungsbeispiel ist die **Sicherheits-Freigabe**:
+Ein Motor (`Q1`) soll nur starten, wenn sowohl die Schutztür geschlossen ist (`I1`) als auch der Bediener den Start-Taster drückt (`I2`). Nur wenn beide Bedingungen gleichzeitig erfüllt sind (`TRUE`), liefert das UND-Gatter ein Signal zum Einschalten des Motors.
