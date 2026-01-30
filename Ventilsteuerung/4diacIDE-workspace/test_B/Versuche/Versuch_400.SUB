@@ -12,7 +12,7 @@
 		<FB Name="SUM" Type="logiBUS::utils::dyn_arr::SUM" x="3013.33" y="2640">
 		</FB>
 		<FB Name="INIT_ARR_8_INT" Type="logiBUS::utils::generate::INIT_ARR_0008_INT" x="800" y="2600">
-			<Parameter Name="D1" Value="[44, 0, 5, 0, 7, 8, 0, 0]"/>
+			<Parameter Name="D1" Value="[0, 1, 22, 333, 4444, 333, 22, 1]"/>
 		</FB>
 		<FB Name="GET_AT_INDEX" Type="eclipse4diac::convert::GET_AT_INDEX" x="3286.67" y="3540">
 			<Parameter Name="INDEX" Value="0"/>
@@ -29,13 +29,7 @@
 		<FB Name="CountOfElements" Type="eclipse4diac::convert::CountOfElements" x="2946.67" y="33.33">
 		</FB>
 		<EventConnections>
-			<Connection Source="INIT_ARR_8_INT.INITO" Destination="SUM.REQ" dx1="133.33"/>
 			<Connection Source="GET_AT_INDEX.CNF" Destination="F_MOVE.REQ" dx1="66.67"/>
-			<Connection Source="INIT_ARR_8_INT.INITO" Destination="GET_AT_INDEX.REQ" dx1="133.33"/>
-			<Connection Source="INIT_ARR_8_INT.INITO" Destination="CountOfElements.REQ" dx1="133.33"/>
-			<Connection Source="INIT_ARR_8_INT.INITO" Destination="ARR_MAX.REQ" dx1="133.33"/>
-			<Connection Source="INIT_ARR_8_INT.INITO" Destination="AVG.REQ" dx1="133.33"/>
-			<Connection Source="INIT_ARR_8_INT.INITO" Destination="ARR_MIN.REQ" dx1="106.67"/>
 		</EventConnections>
 		<DataConnections>
 			<Connection Source="INIT_ARR_8_INT.D1" Destination="SUM.A" dx1="633.33"/>

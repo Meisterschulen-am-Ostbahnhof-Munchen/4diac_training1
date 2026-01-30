@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SubAppType Name="Versuch_405" Comment="Versuch Array Summe">
+	<Identification Standard="61499-2" Description="Copyright (c) 2023 Meisterschulen am Ostbahnhof  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0">
+	</Identification>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2023-10-23">
+	</VersionInfo>
+	<CompilerInfo packageName="Versuche">
+	</CompilerInfo>
+	<SubAppInterfaceList>
+	</SubAppInterfaceList>
+	<SubAppNetwork>
+		<FB Name="GET_AT_INDEX" Type="eclipse4diac::convert::GET_AT_INDEX" x="2866.67" y="6360">
+			<Parameter Name="INDEX" Value="0"/>
+		</FB>
+		<FB Name="F_MOVE" Type="iec61131::selection::F_MOVE" x="4026.67" y="6406.67">
+			<Attribute Name="DataType" Value="INT"/>
+		</FB>
+		<FB Name="CountOfElements" Type="eclipse4diac::convert::CountOfElements" x="2526.67" y="7340">
+		</FB>
+		<FB Name="F_UPPER_BOUND" Type="eclipse4diac::convert::F_UPPER_BOUND" x="2866.67" y="5380">
+			<Parameter Name="DIM" Value="1"/>
+		</FB>
+		<FB Name="F_LOWER_BOUND" Type="eclipse4diac::convert::F_LOWER_BOUND" x="2800" y="3600">
+			<Parameter Name="DIM" Value="1"/>
+		</FB>
+		<FB Name="VALUES2ARRAY_8_INT" Type="logiBUS::utils::generate::INIT_ARR_0008_INT" x="-200" y="5300">
+			<Parameter Name="D1" Value="[0, 0, 0, 0, 0, 0, 0, 0]"/>
+		</FB>
+		<FB Name="ARRAY2ARRAY_8_INT" Type="eclipse4diac::convert::ARRAY2ARRAY_8_INT" x="2526.67" y="4580">
+		</FB>
+		<FB Name="CountOfElements_1" Type="eclipse4diac::convert::CountOfElements" x="4440" y="4640">
+		</FB>
+		<EventConnections>
+			<Connection Source="GET_AT_INDEX.CNF" Destination="F_MOVE.REQ" dx1="66.67"/>
+			<Connection Source="VALUES2ARRAY_8_INT.INITO" Destination="GET_AT_INDEX.REQ" dx1="133.33"/>
+			<Connection Source="VALUES2ARRAY_8_INT.INITO" Destination="CountOfElements.REQ" dx1="133.33"/>
+			<Connection Source="VALUES2ARRAY_8_INT.INITO" Destination="F_LOWER_BOUND.REQ" dx1="133.33"/>
+			<Connection Source="VALUES2ARRAY_8_INT.INITO" Destination="F_UPPER_BOUND.REQ" dx1="620"/>
+			<Connection Source="VALUES2ARRAY_8_INT.INITO" Destination="ARRAY2ARRAY_8_INT.REQ" dx1="133.33"/>
+			<Connection Source="ARRAY2ARRAY_8_INT.CNF" Destination="CountOfElements_1.REQ" dx1="413.33"/>
+		</EventConnections>
+		<DataConnections>
+			<Connection Source="GET_AT_INDEX.OUT" Destination="F_MOVE.IN" dx1="66.67"/>
+			<Connection Source="VALUES2ARRAY_8_INT.D1" Destination="GET_AT_INDEX.IN_ARRAY" dx1="66.67"/>
+			<Connection Source="VALUES2ARRAY_8_INT.D1" Destination="F_UPPER_BOUND.IN_ARRAY" dx1="320"/>
+			<Connection Source="VALUES2ARRAY_8_INT.D1" Destination="F_LOWER_BOUND.IN_ARRAY" dx1="66.67"/>
+			<Connection Source="VALUES2ARRAY_8_INT.D1" Destination="CountOfElements.IN_ARRAY" dx1="66.67"/>
+			<Connection Source="VALUES2ARRAY_8_INT.D1" Destination="ARRAY2ARRAY_8_INT.IN" dx1="66.67"/>
+			<Connection Source="ARRAY2ARRAY_8_INT.OUT" Destination="CountOfElements_1.IN_ARRAY" dx1="413.33"/>
+		</DataConnections>
+	</SubAppNetwork>
+</SubAppType>
