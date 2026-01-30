@@ -13,13 +13,17 @@
 			<Parameter Name="D1" Value="[0, 1, 22, 333, 4444, 333, 22, 1]"/>
 		</FB>
 		<FB Name="GET_AT_INDEX" Type="eclipse4diac::convert::GET_AT_INDEX" x="2700" y="2700">
-			<Parameter Name="INDEX" Value="0"/>
+			<Parameter Name="INDEX" Value="3"/>
 		</FB>
-		<FB Name="INIT_ARR_8_INT_1" Type="logiBUS::utils::generate::INIT_ARR_0008_INT" x="2700" y="3700">
+		<FB Name="SUM" Type="logiBUS::utils::dyn_arr::SUM" x="2500" y="3900">
 		</FB>
+		<EventConnections>
+			<Connection Source="INIT_ARR_8_INT.INITO" Destination="GET_AT_INDEX.REQ" dx1="406.67"/>
+			<Connection Source="INIT_ARR_8_INT.INITO" Destination="SUM.REQ" dx1="306.67"/>
+		</EventConnections>
 		<DataConnections>
 			<Connection Source="INIT_ARR_8_INT.D1" Destination="GET_AT_INDEX.IN_ARRAY" dx1="406.67"/>
-			<Connection Source="INIT_ARR_8_INT.D1" Destination="INIT_ARR_8_INT_1.D1" dx1="406.67"/>
+			<Connection Source="INIT_ARR_8_INT.D1" Destination="SUM.A" dx1="80"/>
 		</DataConnections>
 	</SubAppNetwork>
 </SubAppType>
