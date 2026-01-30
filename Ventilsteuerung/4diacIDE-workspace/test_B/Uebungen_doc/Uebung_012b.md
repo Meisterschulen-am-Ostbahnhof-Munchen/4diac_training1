@@ -1,67 +1,43 @@
-# Uebung_012b: Numeric Value Input und Speichern
+# Uebung_012b: Speichern in INI-Dateien
 
-* * * * * * * * * *
+```{index} single: Uebung_012b: Speichern in INI-Dateien
+```
 
-## Einleitung
-Diese Übung demonstriert die Verarbeitung numerischer Eingabewerte und deren dauerhafte Speicherung in 4diac. Der Fokus liegt auf der Verwendung von Non-Volatile Storage (NVS) zur Persistierung von Daten und der Anzeige von numerischen Werten auf einer Visualisierungsoberfläche.
+[Uebung_012b](https://docs.ms-muc-docs.de/projects/visual-programming-languages-docs/de/latest/training1/Ventilsteuerung/4diacIDE-workspace/test/FBs/Uebungen/Uebung_012b.html)
 
-## Verwendete Funktionsbausteine (FBs)
+[![NotebookLM](media/NotebookLM_logo.png)](https://notebooklm.google.com/notebook/a6872e59-1dfc-4132-a118-aff1bc7bc944)
 
-### Sub-Bausteine: Uebung_012b
-- **Typ**: SubAppType
-- **Verwendete interne FBs**:
-    - **InputNumber_I1**: NumericValue_ID
-        - Parameter: u16ObjId = DefaultPool::InputNumber_I1
-        - Ereignisausgang/-eingang: IND → F_DWORD_TO_UDINT.REQ
-        - Datenausgang/-eingang: IN → F_DWORD_TO_UDINT.IN
-    
-    - **F_DWORD_TO_UDINT**: F_DWORD_TO_UDINT
-        - Parameter: Keine
-        - Ereignisausgang/-eingang: REQ ← InputNumber_I1.IND, CNF → INI.SET
-        - Datenausgang/-eingang: IN ← InputNumber_I1.IN, OUT → INI.VALUE
-    
-    - **INI**: INI
-        - Parameter: QI = TRUE, SECTION = NVS_Keys::SECTION_I1_STORE, KEY = NVS_Keys::KEY_I1_STORE, DEFAULT_VALUE = UDINT#55
-        - Ereignisausgang/-eingang: SET ← F_DWORD_TO_UDINT.CNF, GETO → Q_NumericValue.REQ, INITO → INI.GET
-        - Datenausgang/-eingang: VALUE ← F_DWORD_TO_UDINT.OUT, VALUEO → Q_NumericValue.u32NewValue
-    
-    - **Q_NumericValue**: Q_NumericValue
-        - Parameter: u16ObjId = DefaultPool::InputNumber_I1
-        - Ereignisausgang/-eingang: REQ ← INI.GETO, REQ ← CbVtStatus.IND
-        - Datenausgang/-eingang: u32NewValue ← INI.VALUEO
-    
-    - **CbVtStatus**: CbVtStatus
-        - Parameter: STATUS = "", u8Instance = "", qWsActive = "", wPage = ""
-        - Ereignisausgang/-eingang: IND → Q_NumericValue.REQ
-        - Datenausgang/-eingang: Keine
+Dieser Artikel beschreibt die logiBUS®-Übung `Uebung_012b`. Hier wird eine alternative Methode zur Speicherung von Daten vorgestellt: Die Verwendung von INI-Dateien.
 
-- **Funktionsweise**: Die Sub-App verarbeitet numerische Eingaben über InputNumber_I1, konvertiert sie mittels F_DWORD_TO_UDINT und speichert sie persistent im NVS-Speicher mittels INI-Baustein. Bei Statusänderungen oder Initialisierung werden die Werte über Q_NumericValue angezeigt.
+----
 
-## Programmablauf und Verbindungen
+![](Uebung_012b.png)
 
-**Lernziele:**
-- Verständnis der numerischen Werteingabe und -verarbeitung
-- Umgang mit Datentypkonvertierungen (DWORD zu UDINT)
-- Implementierung von persistenter Datenspeicherung mit NVS
-- Anzeige von numerischen Werten auf der Visualisierungsoberfläche
-- Verwendung von Statusüberwachung für die Visualisierung
+## Ziel der Übung
 
-**Schwierigkeitsgrad:** Mittel
+Verwendung des `INI` Bausteins zur strukturierten Datenspeicherung. Im Gegensatz zum einfachen NVS-Key-Value-Speicher erlaubt das INI-Format eine Gliederung in Sektionen und Schlüssel, was bei großen Datenmengen übersichtlicher ist.
 
-**Benötigte Vorkenntnisse:**
-- Grundkenntnisse in 4diac-IDE
-- Verständnis von Funktionsbausteinen und Event-/Datenverbindungen
-- Grundwissen über Datentypen in IEC 61499
+-----
 
-**Programmstart:**
-Die Übung wird in der 4diac-IDE geladen und auf einem geeigneten Zielgerät ausgeführt. Der numerische Eingabewert kann über die konfigurierte Visualisierungsoberfläche (InputNumber_I1) geändert werden.
+## Beschreibung und Komponenten
 
-**Verbindungsablauf:**
-1. Bei Eingabe eines neuen numerischen Werts löst InputNumber_I1 das IND-Ereignis aus
-2. F_DWORD_TO_UDINT konvertiert den Wert und triggert INI.SET
-3. INI speichert den Wert im NVS-Speicher unter dem konfigurierten Schlüssel
-4. Bei Initialisierung oder Statusänderung werden gespeicherte Werte über Q_NumericValue angezeigt
-5. CbVtStatus überwacht den Visualisierungsstatus und aktualisiert die Anzeige bei Bedarf
+[cite_start]Die Subapplikation `Uebung_012b.SUB` nutzt einen INI-Speicher-Baustein[cite: 1].
 
-## Zusammenfassung
-Diese Übung vermittelt praxisnah die Verarbeitung und persistente Speicherung numerischer Eingabewerte in 4diac. Der Schwerpunkt liegt auf der Integration von Eingabekomponenten, Datentypkonvertierung, NVS-Speicherung und Visualisierungsaktualisierung. Die Standardkonfiguration verwendet den Anfangswert 55, der bei Programmstart geladen wird.
+### Funktionsbausteine (FBs)
+
+  * **`INI`**: Typ `eclipse4diac::storage::INI`. [cite_start]Dieser Baustein speichert Werte in einer dateibasierten Struktur ab[cite: 1]. Er benötigt zusätzlich zum `KEY` eine `SECTION`.
+  * **Parameter**:
+    * `SECTION`: "SECTION_I1_STORE"
+    * `KEY`: "KEY_I1_STORE"
+    * `DEFAULT_VALUE`: 55 (wird geladen, falls noch keine Datei existiert).
+
+-----
+
+## Funktionsweise
+
+Die Logik entspricht ansonsten der Übung 012:
+1.  **Schreiben**: `InputNumber -> REQ -> INI.SET`.
+2.  **Lesen**: `INITO -> INI.GET -> Q_NumericValue`.
+3.  **Refresh**: `CbVtStatus -> Q_NumericValue`.
+
+INI-Dateien sind besonders nützlich, wenn Parameter extern (z.B. über einen PC oder Web-Interface) ausgelesen oder editiert werden sollen, da sie in einem für Menschen lesbaren Textformat vorliegen.

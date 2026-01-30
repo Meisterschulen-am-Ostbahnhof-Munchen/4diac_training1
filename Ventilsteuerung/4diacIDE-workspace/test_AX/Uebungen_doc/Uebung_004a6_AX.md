@@ -1,73 +1,60 @@
-Hier ist die Dokumentation für die Übung **Uebung_004a6_AX** basierend auf den bereitgestellten Daten.
+# Uebung_004a6_AX: Event-Rendezvous (Synchronisation)
 
-# Uebung_004a6_AX
+```{index} single: Uebung_004a6_AX: Event-Rendezvous (Synchronisation)
+```
 
-![Uebung_004a6_AX](Uebung_004a6_AX.png)
+[Uebung_004a6_AX](https://docs.ms-muc-docs.de/projects/visual-programming-languages-docs/de/latest/training1/Ventilsteuerung/4diacIDE-workspace/test/FBs/Uebungen/Uebung_004a6_AX.html)
 
-* * * * * * * * * *
+[![NotebookLM](media/NotebookLM_logo.png)](https://notebooklm.google.com/notebook/041f4df4-b729-484d-b786-b6dcdf151961)
 
-## Einleitung
+Dieser Artikel beschreibt die logiBUS®-Übung `Uebung_004a6_AX`. Hier wird ein komplexeres Event-Handling-Muster vorgestellt: Das Rendezvous. Ein Ereignis wird erst dann weitergegeben, wenn zwei Bedingungen (Events) eingetreten sind.
 
-Diese Übung demonstriert die Steuerung eines Toggle-Flip-Flops (T-Flip-Flop) unter Verwendung eines **Rendezvous-Bausteins (`E_REND`)**. Ziel ist es, ein Ereignis (das Umschalten des Ausgangs) erst dann auszulösen, wenn zwei separate Eingangsereignisse eingetreten sind. Zusätzlich wird eine Reset-Funktion für das Rendezvous implementiert. Die Ansteuerung der Ein- und Ausgänge erfolgt über das logiBUS-System.
+----
 
-## Verwendete Funktionsbausteine (FBs)
+![](Uebung_004a6_AX.png)
 
-In dieser Sub-Applikation werden folgende Funktionsbausteine verwendet, um die Logik zu realisieren:
+## Ziel der Übung
 
-### Sub-Bausteine:
+Verständnis des `E_REND` Bausteins. Dieser Baustein fungiert wie ein "UND" für Ereignisse. Er merkt sich, welche Eingänge bereits gefeuert haben, und feuert erst am Ausgang, wenn *alle* erforderlichen Eingänge mindestens einmal aktiv waren. Danach setzt er sich zurück.
 
-#### **DigitalInput_CLK_I1** (und I2, I3)
-- **Typ**: `logiBUS::io::DI::logiBUS_IE`
-- **Beschreibung**: Dieser Baustein dient als Ereignisquelle (Event Input). Er generiert ein Ereignis (`IND`), wenn der physische Eingang betätigt wird.
-- **Parameter**:
-    - `QI` = `TRUE` (Baustein aktiviert)
-    - `Input` = `Input_I1` (bzw. I2, I3)
-    - `InputEvent` = `BUTTON_SINGLE_CLICK` (Reagiert auf einfachen Klick)
+-----
 
-#### **E_REND**
-- **Typ**: `iec61499::events::E_REND`
-- **Beschreibung**: Der Rendezvous-Baustein synchronisiert zwei Ereignisse. Er gibt erst dann ein Ausgangsereignis (`EO`) aus, wenn an beiden Eingängen (`EI1` und `EI2`) ein Ereignis empfangen wurde.
-- **Eingänge**: `EI1`, `EI2`, `R` (Reset)
-- **Ausgänge**: `EO`
+## Beschreibung und Komponenten
 
-#### **E_T_FF**
-- **Typ**: `adapter::events::unidirectional::AX_T_FF`
-- **Beschreibung**: Ein Toggle-Flip-Flop, das seinen Zustand bei jedem Eingangsimpuls (`CLK`) wechselt (von Ein zu Aus und umgekehrt). Diese spezielle Variante verwendet Adapter-Verbindungen für den Signalausgang.
-- **Eingänge**: `CLK`
+[cite_start]Die Subapplikation `Uebung_004a6_AX.SUB` nutzt `E_REND`, um sicherzustellen, dass zwei Taster gedrückt wurden, bevor das Licht umschaltet[cite: 1].
 
-#### **DigitalOutput_Q1**
-- **Typ**: `logiBUS::io::DQ::logiBUS_QXA`
-- **Beschreibung**: Dieser Baustein steuert den physischen Ausgang an. Er empfängt den Zustand über eine Adapter-Verbindung.
-- **Parameter**:
-    - `QI` = `TRUE`
-    - `Output` = `Output_Q1`
+### Funktionsbausteine (FBs)
 
-## Programmablauf und Verbindungen
+  * **`DigitalInput_CLK_I1` & `I2`**: Die beiden Bestätigungs-Taster.
+  * **`DigitalInput_CLK_I3`**: Ein Reset-Taster.
+  * **`E_REND`**: Der Rendezvous-Baustein mit Eingängen `EI1`, `EI2` und einem Reset `R`.
+  * **`E_T_FF`**: Das Flip-Flop.
+  * **`DigitalOutput_Q1`**: Die Lampe.
 
-Die Logik verknüpft drei Taster (I1, I2, I3) mit einem Ausgang (Q1) über eine Synchronisationslogik.
+-----
 
-1.  **Eingangssignale**:
-    *   Der Taster **I1** (`DigitalInput_CLK_I1`) sendet ein Signal an den Eingang `EI1` des `E_REND`-Bausteins.
-    *   Der Taster **I2** (`DigitalInput_CLK_I2`) sendet ein Signal an den Eingang `EI2` des `E_REND`-Bausteins.
-    *   Der Taster **I3** (`DigitalInput_CLK_I3`) ist mit dem Reset-Eingang `R` des `E_REND`-Bausteins verbunden.
+## Funktionsweise
 
-2.  **Rendezvous-Logik (`E_REND`)**:
-    *   Der Baustein wartet darauf, dass sowohl `EI1` (durch Taster I1) als auch `EI2` (durch Taster I2) aktiviert wurden. Die Reihenfolge spielt dabei keine Rolle.
-    *   Erst wenn **beide** Ereignisse eingetreten sind, feuert der Ausgang `EO`.
-    *   Wird Taster I3 gedrückt, wird der interne Speicher des Rendezvous-Bausteins zurückgesetzt (ein eventuell bereits eingegangenes Einzelsignal verfällt).
+```xml
+<EventConnections>
+    <Connection Source="DigitalInput_CLK_I1.IND" Destination="E_REND.EI1"/>
+    <Connection Source="DigitalInput_CLK_I2.IND" Destination="E_REND.EI2"/>
+    <Connection Source="E_REND.EO" Destination="E_T_FF.CLK"/>
+    <Connection Source="DigitalInput_CLK_I3.IND" Destination="E_REND.R"/>
+</EventConnections>
+```
 
-3.  **Toggle-Funktion (`E_T_FF`)**:
-    *   Das Ausgangssignal `EO` des Rendezvous-Bausteins ist mit dem Takteingang `CLK` des Toggle-Flip-Flops verbunden.
-    *   Sobald das Rendezvous erfolgreich war (beide Taster gedrückt), schaltet das Flip-Flop seinen Zustand um.
+[cite_start][cite: 1]
 
-4.  **Ausgabe**:
-    *   Der Zustand des Flip-Flops (`Q`) wird über eine Adapter-Verbindung an den Ausgangsbaustein `DigitalOutput_Q1` weitergegeben, welcher die Lampe Q1 entsprechend ein- oder ausschaltet.
+1.  Drückt man nur Taster 1 (`I1`), passiert nichts am Ausgang. `E_REND` merkt sich intern "EI1 war da".
+2.  Drückt man danach Taster 2 (`I2`), ist die Bedingung komplett (beide waren da). `E_REND` feuert `EO`.
+3.  Das Flip-Flop schaltet um, die Lampe ändert ihren Zustand.
+4.  `E_REND` vergisst den Status und wartet erneut auf beide Events.
 
-**Lernziele:**
-*   Verständnis der Ereignissynchronisation (Rendezvous-Pattern).
-*   Verwendung von Event-gesteuerten Flip-Flops.
-*   Umgang mit logiBUS Ein- und Ausgabebausteinen.
+*   Der Reset-Taster (`I3`) kann genutzt werden, um den internen Merker des `E_REND` zu löschen, falls man z.B. nur Taster 1 gedrückt hat und den Vorgang abbrechen will.
 
-## Zusammenfassung
+-----
 
-Die Übung `Uebung_004a6_AX` zeigt eine Schaltung, bei der eine Aktion (Umschalten von Q1) nur dann ausgeführt wird, wenn zwei Bedingungen (Taster I1 und Taster I2) erfüllt wurden. Ein dritter Taster (I3) ermöglicht das Zurücksetzen des Vorgangs. Dies simuliert eine Zweihand-Sicherheitssteuerung oder eine einfache UND-Verknüpfung auf Ereignisebene.
+## Anwendungsbeispiel
+
+**Zweihand-Auslösung (Sequenziell)**: Ein Prozess soll erst starten, wenn Bediener A "Freigabe" drückt UND Bediener B "Start" drückt (Reihenfolge egal, aber beide müssen einmal gedrückt haben).

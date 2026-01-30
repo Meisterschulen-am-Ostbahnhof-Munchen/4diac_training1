@@ -1,49 +1,19 @@
-# Uebung_038: Lauflicht 8 reine Zeitsteuerung
+# Uebung_038: Zeitgesteuertes Lauflicht (8-fach)
 
-* * * * * * * * * *
+```{index} single: Uebung_038: Zeitgesteuertes Lauflicht (8-fach)
+```
 
-## Einleitung
-Diese Übung implementiert ein 8-Kanal-Lauflicht mit reiner Zeitsteuerung. Das System ermöglicht die sequentielle Aktivierung von acht Ausgängen mit unterschiedlichen Zeitintervallen zwischen den Zustandsübergängen.
+[Uebung_038](https://docs.ms-muc-docs.de/projects/visual-programming-languages-docs/de/latest/training1/Ventilsteuerung/4diacIDE-workspace/test/FBs/Uebungen/Uebung_038.html)
 
-## Verwendete Funktionsbausteine (FBs)
+[![NotebookLM](media/NotebookLM_logo.png)](https://notebooklm.google.com/notebook/a6872e59-1dfc-4132-a118-aff1bc7bc944)
 
-### Hauptbausteine:
-- **DigitalOutput_Q1 bis Q8** (Typ: logiBUS_QX) - Digitale Ausgänge für die Lauflicht-Kanäle
-- **DigitalInput_CLK_I1** (Typ: logiBUS_IE) - Start-Eingang mit Tasterfunktion
-- **DigitalInput_CLK_I4** (Typ: logiBUS_IE) - Reset-Eingang mit Tasterfunktion  
-- **E_TimeOut** (Typ: E_TimeOut) - Zeitsteuerungsbaustein
-- **F_SINT_TO_UINT** (Typ: F_SINT_TO_UINT) - Datentyp-Konvertierung
-- **Q_NumericValue** (Typ: Q_NumericValue) - Numerische Wertausgabe
+Dieser Artikel beschreibt die logiBUS®-Übung `Uebung_038`. Hier wird eine umfangreichere Schrittkette mit 8 Phasen realisiert.
 
-### Sub-Bausteine: sequence_T_08_loop
-- **Typ**: sequence_T_08_loop
-- **Verwendete interne FBs**: E_TimeOut (Adapterverbindung)
-- **Funktionsweise**: Steuert die sequentielle Abfolge der 8 Lauflicht-Zustände mit konfigurierbaren Zeitintervallen zwischen den Zustandsübergängen. Verfügt über START_S1 und RESET Ereigniseingänge sowie EO_S1 bis EO_S8 Ereignisausgänge und entsprechende Datenausgänge DO_S1 bis DO_S8.
+----
 
-## Programmablauf und Verbindungen
+![](Uebung_038.png)
 
-**Start und Steuerung:**
-- I1-Button: Startet die Sequenz ab Zustand S1
-- I4-Button: Reset der gesamten Sequenz
+## Übersicht
 
-**Zeitsteuerung:**
-- S1→S2: 200ms
-- S2→S3: 100ms  
-- S3→S4: 200ms
-- S4→S5: 100ms
-- S5→S6: 200ms
-- S6→S7: 100ms
-- S7→S8: 200ms
-- S8→S1: 100ms
-
-**Signalfluss:**
-- Die Sequenz steuert über EO/DO-Ausgänge direkt die digitalen Ausgänge Q1-Q8
-- Der aktuelle Zustand wird über STATE_NR an F_SINT_TO_UINT weitergeleitet
-- Der konvertierte Wert wird an Q_NumericValue zur Anzeige übergeben
-
-**Hardware-Anbindung:**
-- Alle DigitalOutput-FBs sind mit logiBUS_DO-Schnittstellen verbunden
-- Die DigitalInput-FBs nutzen BUTTON_SINGLE_CLICK Ereignisse
-
-## Zusammenfassung
-Diese Übung demonstriert eine reine Zeitsteuerung für ein 8-Kanal-Lauflicht mit variablen Zeitintervallen. Sie zeigt die Anwendung von Sequenzsteuerungen, Zeitgebern und der Integration von Ein-/Ausgabebausteinen in einem logiBUS-System. Die unterschiedlichen Zeitintervalle zwischen den Zustandsübergängen ermöglichen komplexere Lauflicht-Muster als einfache gleichmäßige Sequenzen.
+[cite_start]Unter Verwendung des Bausteins `sequence_T_08_loop` wird ein automatisches Lauflicht über 8 Ausgänge (`Q1` bis `Q8`) erzeugt[cite: 1].
+Die Übergangszeiten zwischen den Lampen sind individuell einstellbar (z.B. 200ms für die ungeraden, 100ms für die geraden Schritte). Das Programm demonstriert die Handhabung vieler paralleler Ausgänge und die numerische Rückmeldung des aktuellen Systemzustands an das Terminal.

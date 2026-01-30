@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SubAppType Name="Uebung_151" Comment="Impulszähler">
+	<Identification Standard="61499-2" Description="Copyright (c) 2023 Meisterschulen am Ostbahnhof  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0">
+	</Identification>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2023-10-23">
+	</VersionInfo>
+	<CompilerInfo packageName="Uebungen">
+		<Import declaration="logiBUS::io::PI::logiBUS_PI::PulseInput_I8"/>
+	</CompilerInfo>
+	<SubAppInterfaceList>
+	</SubAppInterfaceList>
+	<SubAppNetwork>
+		<FB Name="logiBUS_PI_ID" Type="logiBUS::io::PI::logiBUS_PI_ID" x="-4700" y="400">
+			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="Input" Value="PulseInput_I8"/>
+			<Parameter Name="ImpulseDelta" Value="100"/>
+			<Parameter Name="TimeDelta" Value="1000"/>
+		</FB>
+		<FB Name="FT_DERIV" Type="OSCAT::Basic::POUs::Engineering::Control::FT_DERIV" x="400" y="600">
+			<Parameter Name="K" Value="1.0"/>
+			<Parameter Name="run" Value="TRUE"/>
+		</FB>
+		<FB Name="F_DWORD_TO_UDINT" Type="iec61131::conversion::F_DWORD_TO_UDINT" x="-2900" y="700">
+		</FB>
+		<FB Name="F_UDINT_TO_REAL" Type="iec61131::conversion::F_UDINT_TO_REAL" x="-1300" y="700">
+		</FB>
+		<EventConnections>
+			<Connection Source="logiBUS_PI_ID.IND" Destination="F_DWORD_TO_UDINT.REQ" dx1="406.67"/>
+			<Connection Source="F_DWORD_TO_UDINT.CNF" Destination="F_UDINT_TO_REAL.REQ"/>
+			<Connection Source="F_UDINT_TO_REAL.CNF" Destination="FT_DERIV.REQ" dx1="353.33"/>
+		</EventConnections>
+		<DataConnections>
+			<Connection Source="logiBUS_PI_ID.IN" Destination="F_DWORD_TO_UDINT.IN" dx1="406.67"/>
+			<Connection Source="F_DWORD_TO_UDINT.OUT" Destination="F_UDINT_TO_REAL.IN"/>
+			<Connection Source="F_UDINT_TO_REAL.OUT" Destination="FT_DERIV.in" dx1="353.33"/>
+		</DataConnections>
+	</SubAppNetwork>
+</SubAppType>

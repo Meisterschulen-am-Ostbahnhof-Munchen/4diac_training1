@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SubAppType Name="Uebung_010bA4_AX" Comment="Toggle Flip-Flop mit IE AuxFunction2_X1 AuxHeld_START">
+	<Identification Standard="61499-2" Description="Copyright (c) 2026 Meisterschulen am Ostbahnhof  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0">
+	</Identification>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Moritz Ortmeier" Date="2026-01-15">
+	</VersionInfo>
+	<CompilerInfo packageName="Uebungen">
+		<Import declaration="Uebungen::const::UT::DefaultPool::AuxFunction2_X1"/>
+		<Import declaration="isobus::UT::io::Auxiliary::IN::AuxiliaryState"/>
+		<Import declaration="logiBUS::io::DQ::logiBUS_DO::Output_Q1"/>
+	</CompilerInfo>
+	<SubAppInterfaceList>
+	</SubAppInterfaceList>
+	<SubAppNetwork>
+		<FB Name="DigitalOutput_Q1" Type="logiBUS::io::DQ::logiBUS_QXA" x="-3900" y="-100">
+			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="Output" Value="Output_Q1"/>
+		</FB>
+		<FB Name="Button_A1" Type="isobus::UT::io::Auxiliary::IN::Aux_IE" x="-7200" y="-200">
+			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="u16ObjId" Value="AuxFunction2_X1"/>
+			<Parameter Name="InputEvent" Value="AuxiliaryState::AuxHeld_START"/>
+		</FB>
+		<FB Name="AX_T_FF" Type="adapter::events::unidirectional::AX_T_FF" x="-5560" y="0">
+		</FB>
+		<Comment Comment="AuxHeld_START wird nur einmal gesendet. &#10;Egal welcher Typ" x="-9800" y="800" width="2300" height="700"/>
+		<EventConnections>
+			<Connection Source="Button_A1.IND" Destination="AX_T_FF.CLK" dx1="366.67"/>
+		</EventConnections>
+		<AdapterConnections>
+			<Connection Source="AX_T_FF.Q" Destination="DigitalOutput_Q1.OUT" dx1="580"/>
+		</AdapterConnections>
+	</SubAppNetwork>
+</SubAppType>

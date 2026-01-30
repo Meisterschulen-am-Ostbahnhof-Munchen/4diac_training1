@@ -1,44 +1,18 @@
-# Uebung_010bA: Toggle Flip-Flop mit IE Button_A1 BT_STILL_HELD
+# Uebung_010bA: Einmaliger langer Tastendruck
 
-* * * * * * * * * *
+```{index} single: Uebung_010bA: Einmaliger langer Tastendruck
+```
 
-## Einleitung
-Diese Übung demonstriert die Funktionsweise eines Toggle Flip-Flops mit einem speziellen Tasterereignis. Der Fokus liegt auf der Verwendung des BT_STILL_HELD_START-Events, das nur einmal bei längerem Drücken des Tasters ausgelöst wird.
+[Uebung_010bA](https://docs.ms-muc-docs.de/projects/visual-programming-languages-docs/de/latest/training1/Ventilsteuerung/4diacIDE-workspace/test/FBs/Uebungen/Uebung_010bA.html)
 
-## Verwendete Funktionsbausteine (FBs)
+[![NotebookLM](media/NotebookLM_logo.png)](https://notebooklm.google.com/notebook/a6872e59-1dfc-4132-a118-aff1bc7bc944)
 
-### Button_A1
-- **Typ**: Button_IE
-- **Parameter**:
-  - QI = TRUE (aktiviert den Baustein)
-  - u16ObjId = DefaultPool::Button_A1 (Taster-Objekt-ID)
-  - InputEvent = ButtonActivationCode::BT_STILL_HELD_START (Ereignis bei längerem Drücken)
+Dieser Artikel beschreibt die logiBUS®-Übung `Uebung_010bA`.
 
-### E_T_FF
-- **Typ**: E_T_FF (Toggle Flip-Flop)
-- **Funktionsweise**: Wechselt den Ausgangszustand bei jedem Takt-Ereignis
+----
 
-### DigitalOutput_Q1
-- **Typ**: logiBUS_QX
-- **Parameter**:
-  - QI = TRUE (aktiviert den Baustein)
-  - Output = logiBUS_DO::Output_Q1 (Ausgangsadresse)
+![](Uebung_010bA.png)
 
-## Programmablauf und Verbindungen
+## Funktionsweise
 
-**Ereignisverbindungen:**
-- Button_A1.IND → E_T_FF.CLK (Tasterereignis triggert Toggle Flip-Flop)
-- E_T_FF.EO → DigitalOutput_Q1.REQ (Ausgangsereignis aktiviert Ausgang)
-
-**Datenverbindungen:**
-- E_T_FF.Q → DigitalOutput_Q1.OUT (Flip-Flop Zustand wird an Ausgang weitergeleitet)
-
-**Besonderheit:** Das BT_STILL_HELD_START-Event wird nicht wiederholt - langes Drücken des Tasters erzeugt nur ein einziges Ereignis.
-
-**Schwierigkeitsgrad:** Einfach
-**Benötigte Vorkenntnisse:** Grundlagen der IEC 61499, Funktionsbausteine, Ereignisverarbeitung
-
-**Starten der Übung:** Nach dem Laden der Anwendung wird der Taster A1 aktiviert. Bei längerem Drücken des Tasters wechselt der Ausgang Q1 seinen Zustand.
-
-## Zusammenfassung
-Diese Übung verdeutlicht die Funktionsweise eines Toggle Flip-Flops in Kombination mit einem speziellen Tasterereignis. Der BT_STILL_HELD_START-Modus ermöglicht eine zuverlässige Zustandsänderung bei längerem Tastendruck ohne unerwünschte Mehrfachauslösungen. Die Übung zeigt grundlegende Prinzipien der Ereignisverarbeitung und Zustandssteuerung in IEC 61499-Systemen.
+[cite_start]Nutzt `Button_A1` mit `BT_STILL_HELD_START`[cite: 1]. Im Gegensatz zum einfachen `STILL_HELD` wird dieses Ereignis **nicht wiederholt**. Es feuert exakt einmal, sobald die Haltezeit überschritten wurde. Dies entspricht einer sauberen "Long Press" Auswertung.

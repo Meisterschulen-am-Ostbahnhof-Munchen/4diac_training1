@@ -1,58 +1,42 @@
-# Uebung_012c: String Input und Speichern (WIP)
+# Uebung_012c: Speichern von Text (Strings)
 
-* * * * * * * * * *
+```{index} single: Uebung_012c: Speichern von Text (Strings)
+```
 
-## Einleitung
-Diese Übung demonstriert die Verarbeitung von String-Eingaben und deren Speicherung in einem nicht-flüchtigen Speicher (NVS). Das Programm ermöglicht das Einlesen numerischer Werte, deren Konvertierung und die persistente Speicherung von String-Daten.
+[Uebung_012c](https://docs.ms-muc-docs.de/projects/visual-programming-languages-docs/de/latest/training1/Ventilsteuerung/4diacIDE-workspace/test/FBs/Uebungen/Uebung_012c.html)
 
-## Verwendete Funktionsbausteine (FBs)
+[![NotebookLM](media/NotebookLM_logo.png)](https://notebooklm.google.com/notebook/a6872e59-1dfc-4132-a118-aff1bc7bc944)
 
-### Haupt-Funktionsbausteine:
+Dieser Artikel beschreibt die logiBUS®-Übung `Uebung_012c`. Hier wird demonstriert, dass auch Text-Informationen persistent gespeichert werden können.
 
-- **InputNumber_I1** (Typ: NumericValue_ID)
-  - Liest numerische Eingabewerte ein
-  - Objekt-ID: DefaultPool::InputNumber_I1
+----
 
-- **F_DWORD_TO_UDINT** (Typ: F_DWORD_TO_UDINT)
-  - Führt eine Datentypkonvertierung von DWORD zu UDINT durch
+![](Uebung_012c.png)
 
-- **INI** (Typ: INI)
-  - Verwaltet nicht-flüchtige Speicheroperationen
-  - Parameter:
-    - SECTION: NVS_Keys::SECTION_S1_STORE
-    - KEY: NVS_Keys::KEY_S1_STORE
-    - VALUE: STRING#'Test'
-    - DEFAULT_VALUE: STRING#'Test'
+## Ziel der Übung
 
-- **Q_NumericValue** (Typ: Q_StringValue)
-  - Gibt String-Werte aus
-  - Objekt-ID: DefaultPool::InputNumber_I1
+Umgang mit dem Datentyp `STRING` bei der Speicherung.
 
-- **CbVtStatus** (Typ: CbVtStatus)
-  - Überwacht den Status der Visualisierungskomponente
+-----
 
-## Programmablauf und Verbindungen
+## Beschreibung und Komponenten
 
-### Ereignisverbindungen:
-1. `InputNumber_I1.IND` → `F_DWORD_TO_UDINT.REQ`
-2. `F_DWORD_TO_UDINT.CNF` → `INI.SET`
-3. `INI.GETO` → `Q_NumericValue.REQ`
-4. `CbVtStatus.IND` → `Q_NumericValue.REQ`
-5. `INI.INITO` → `INI.GET` (interne Rückkopplung)
+[cite_start]In `Uebung_012c.SUB` wird ein String-Wert über einen INI-Baustein verwaltet[cite: 1].
 
-### Datenverbindungen:
-1. `InputNumber_I1.IN` → `F_DWORD_TO_UDINT.IN`
-2. `INI.VALUEO` → `Q_NumericValue.pau8String`
+### Funktionsbausteine (FBs)
 
-### Ablaufbeschreibung:
-1. Die Übung startet mit der Initialisierung des INI-Bausteins
-2. Numerische Eingaben werden über InputNumber_I1 erfasst
-3. Die Daten werden konvertiert und an den INI-Baustein zur Speicherung weitergeleitet
-4. Gleichzeitig werden gespeicherte Werte über Q_NumericValue ausgegeben
-5. Der CbVtStatus-Baustein sorgt für eine aktuelle Statusanzeige
+  * **`INI`**: Hier konfiguriert für den Datentyp `STRING`.
+  * **`Q_StringValue`**: Ein ISOBUS-Ausgangsbaustein, der speziell für die Anzeige von Texten (anstelle von Zahlen) gedacht ist.
 
-**Schwierigkeitsgrad**: Mittel  
-**Benötigte Vorkenntnisse**: Grundlagen der 4diac-IDE, Datentypkonvertierung, NVS-Speicherkonzepte
+-----
 
-## Zusammenfassung
-Diese Übung vermittelt praktische Kenntnisse im Umgang mit String-Verarbeitung und persistenter Datenspeicherung in IEC 61499-Systemen. Die Teilnehmer lernen die Konvertierung zwischen verschiedenen Datentypen, die Verwaltung von nicht-flüchtigem Speicher und die Integration von Visualisierungskomponenten in automatisierungstechnische Anwendungen.
+## Funktionsweise
+
+Der Ablauf ist identisch zur numerischen Speicherung, jedoch fließen über die Datenverbindungen nun Zeichenketten. Beim Systemstart wird der gespeicherte Text (z.B. ein Gerätename oder ein Benutzerprofil) geladen und an das Terminal gesendet.
+
+-----
+
+## Anwendungsbeispiel
+
+**Personalisierung**:
+Der Nutzer kann am Terminal seinen Namen oder den Namen des Feldes eingeben, auf dem er gerade arbeitet. Diese Information wird dauerhaft gespeichert und kann später für Protokollierungszwecke (z.B. Task Controller) genutzt werden.

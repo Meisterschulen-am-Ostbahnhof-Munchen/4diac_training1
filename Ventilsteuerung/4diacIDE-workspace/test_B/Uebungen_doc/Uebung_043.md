@@ -1,47 +1,38 @@
-# Uebung_043: Scaling Function Block with limits Testing
+# Uebung_043: Skalierung mit Grenzwerten (SCALE_LIM)
 
-* * * * * * * * * *
+```{index} single: Uebung_043: Skalierung mit Grenzwerten (SCALE_LIM)
+```
 
-## Einleitung
-Diese Übung demonstriert die Funktionsweise eines Skalierungs-Funktionsbausteins mit Begrenzungen. Der Baustein wandelt Eingangswerte innerhalb eines definierten Bereichs in einen entsprechenden Ausgangsbereich um, wobei zusätzliche Grenzwerte für die Eingangs- und Ausgangssignale berücksichtigt werden.
+[Uebung_043](https://docs.ms-muc-docs.de/projects/visual-programming-languages-docs/de/latest/training1/Ventilsteuerung/4diacIDE-workspace/test/FBs/Uebungen/Uebung_043.html)
 
-## Verwendete Funktionsbausteine (FBs)
+[![NotebookLM](media/NotebookLM_logo.png)](https://notebooklm.google.com/notebook/a6872e59-1dfc-4132-a118-aff1bc7bc944)
 
-### DigitalInput_CLK_I1
-- **Typ**: logiBUS_IE
-- **Parameter**:
-  - QI = TRUE
-  - Input = logiBUS_DI::Input_I1
-  - InputEvent = logiBUS_DI_Events::BUTTON_SINGLE_CLICK
+Dieser Artikel beschreibt die logiBUS®-Übung `Uebung_043`. Dies ist eine Erweiterung der Skalierung um Sicherheitsgrenzen.
 
-### SCALE_LIM
-- **Typ**: signalprocessing::SCALE_LIM
-- **Parameter**:
-  - IN = 50.0
-  - MAX_IN = 100.0
-  - MIN_IN = 0.0
-  - MAX_IN_LIM = 99.0
-  - MIN_IN_LIM = 1.0
-  - MAX_OUT = 85.0
-  - MIN_OUT = 30.0
-  - MAX_OUT_FIX = 100.0
-  - MIN_OUT_FIX = 0.0
+----
 
-## Programmablauf und Verbindungen
+![](Uebung_043.png)
 
-Der Programmablauf beginnt mit dem DigitalInput_CLK_I1 Baustein, der auf einen Tastendruck (BUTTON_SINGLE_CLICK) wartet. Bei Erkennung eines Tastendrucks wird ein IND-Ereignis ausgelöst, das direkt an den SCALE_LIM Baustein weitergeleitet wird.
+## Ziel der Übung
 
-Die Ereignisverbindung erfolgt über:
-- DigitalInput_CLK_I1.IND → SCALE_LIM.REQ
+Verwendung des Bausteins `SCALE_LIM`. Im Gegensatz zum einfachen `SCALE` bietet dieser Baustein zusätzliche Parameter, um das Ergebnis nach oben und unten zu begrenzen (Limiting), selbst wenn der Eingangswert den definierten Bereich verlässt.
 
-Der SCALE_LIM Baustein führt eine Skalierung mit folgenden Eigenschaften durch:
-- Eingangsbereich: 0.0 bis 100.0
-- Gültiger Eingangsbereich: 1.0 bis 99.0
-- Ausgangsbereich: 30.0 bis 85.0
-- Fester Ausgangsbereich: 0.0 bis 100.0
-- Testwert: 50.0
+-----
 
-Die Skalierung berücksichtigt sowohl den normalen Eingangsbereich als auch zusätzliche Grenzwerte, die die tatsächlich verwendeten Werte einschränken.
+## Beschreibung und Komponenten
 
-## Zusammenfassung
-Diese Übung vermittelt praktische Erfahrungen mit der Signalverarbeitung und Skalierung in 4diac. Sie zeigt, wie Eingangssignale innerhalb definierter Grenzen verarbeitet und in einen gewünschten Ausgangsbereich transformiert werden können. Die Verwendung von Ereignisverbindungen zwischen Funktionsbausteinen demonstriert die ereignisgesteuerte Programmierung im 61499-Standard.
+[cite_start]In `Uebung_043.SUB` wird ein hochkomplexer Skalierungs-Szenario mit fixen Grenzen aufgebaut[cite: 1].
+
+### Funktionsbausteine (FBs)
+
+  * **`SCALE_LIM`**: Skalierung mit Sättigung.
+  * **Parameter**:
+    * `MIN_IN_LIM` / `MAX_IN_LIM`: Definieren den Bereich, in dem der Eingangswert "gültig" ist.
+    * `MIN_OUT_FIX` / `MAX_OUT_FIX`: Harte Grenzwerte für den Ausgang. Egal was berechnet wird, der Ausgang wird diese Werte niemals unter- oder überschreiten.
+
+-----
+
+## Anwendungsbeispiel
+
+**Überlaufschutz bei der Ventilsteuerung**:
+Ein Regler berechnet die Öffnung eines Ventils basierend auf der Temperatur. Auch wenn der Regler aufgrund einer extremen Störung "150%" anfordert, sorgt `SCALE_LIM` dafür, dass der reale Ausgangswert bei 100% gekappt wird, um die Hardware nicht zu beschädigen. Ebenso kann eine Mindestöffnung (z.B. 5% zur Kühlung) fest als Untergrenze hinterlegt werden.

@@ -1,60 +1,62 @@
-# Uebung_022: Spiegelabfolge (2)
+# Uebung_022: Verkettete Sequenz (2 Zylinder)
 
-* * * * * * * * * *
+```{index} single: Uebung_022: Verkettete Sequenz (2 Zylinder)
+```
 
-## Einleitung
-Diese Übung demonstriert die Steuerung einer Zylinderabfolge mit zwei Zylindern. Das Programm realisiert eine spezifische Abfolge von Ausfahrbewegungen, die durch Softkeys gesteuert werden.
+[Uebung_022](https://docs.ms-muc-docs.de/projects/visual-programming-languages-docs/de/latest/training1/Ventilsteuerung/4diacIDE-workspace/test/FBs/Uebungen/Uebung_022.html)
 
-## Verwendete Funktionsbausteine (FBs)
+[![NotebookLM](media/NotebookLM_logo.png)](https://notebooklm.google.com/notebook/a6872e59-1dfc-4132-a118-aff1bc7bc944)
 
-### Haupt-Funktionsbausteine:
+Dieser Artikel beschreibt die logiBUS®-Übung `Uebung_022`. Hier wird die Ablaufsteuerung auf zwei nacheinander folgende Schritte erweitert.
 
-- **DigitalOutput_Q1** (Typ: logiBUS_QX)
-  - Parameter: QI = TRUE, Output = logiBUS_DO::Output_Q1
-  - Steuert den digitalen Ausgang für Zylinder 1
+## 🎧 Podcast
 
-- **DigitalOutput_Q2** (Typ: logiBUS_QX)
-  - Parameter: QI = TRUE, Output = logiBUS_DO::Output_Q2
-  - Steuert den digitalen Ausgang für Zylinder 2
+* [Als Landtechnik-Spezialist durch die Hölle: Wie Lanz-Wery Krieg, Besatzung und Hyperinflation überlebte – Einblicke in Original-Geschäftsberichte 1915-1922](https://podcasters.spotify.com/pod/show/ms-muc-lama/episodes/Als-Landtechnik-Spezialist-durch-die-Hlle-Wie-Lanz-Wery-Krieg--Besatzung-und-Hyperinflation-berlebte--Einblicke-in-Original-Geschftsberichte-1915-1922-e39athj)
 
-- **SoftKey_UP_F1** (Typ: Softkey_IE)
-  - Parameter: QI = TRUE, u16ObjId = DefaultPool::SoftKey_F1, InputEvent = SoftKeyActivationCode::SK_RELEASED
-  - Erfasst das Loslassen der F1-Taste
+----
 
-- **SoftKey_F2_DOWN** (Typ: Softkey_IE)
-  - Parameter: QI = TRUE, u16ObjId = DefaultPool::SoftKey_F2, InputEvent = SoftKeyActivationCode::SK_PRESSED
-  - Erfasst das Drücken der F2-Taste
+![](Uebung_022.png)
 
-- **SoftKey_F3_DOWN** (Typ: Softkey_IE)
-  - Parameter: QI = TRUE, u16ObjId = DefaultPool::SoftKey_F3, InputEvent = SoftKeyActivationCode::SK_PRESSED
-  - Erfasst das Drücken der F3-Taste
+## Ziel der Übung
 
-- **E_SR_Ausfahren_Cyl_1** (Typ: E_SR)
-  - Set-Reset-Flipflop für Zylinder 1
+Erlernen der Ereignisverkettung. Das Ende eines Prozesses (Erreichen der Endlage) soll automatisch den nächsten Prozessschritt einleiten.
 
-- **E_SR_Ausfahren_Cyl_2** (Typ: E_SR)
-  - Set-Reset-Flipflop für Zylinder 2
+-----
 
-## Programmablauf und Verbindungen
+## Beschreibung und Komponenten
 
-### Ereignisverbindungen:
-- SoftKey_UP_F1.IND → E_SR_Ausfahren_Cyl_1.S (Setzt Zylinder 1)
-- SoftKey_F2_DOWN.IND → E_SR_Ausfahren_Cyl_1.R (Rücksetzt Zylinder 1)
-- SoftKey_F2_DOWN.IND → E_SR_Ausfahren_Cyl_2.S (Setzt Zylinder 2)
-- SoftKey_F3_DOWN.IND → E_SR_Ausfahren_Cyl_2.R (Rücksetzt Zylinder 2)
-- E_SR_Ausfahren_Cyl_1.EO → DigitalOutput_Q1.REQ (Aktiviert Ausgang für Zylinder 1)
-- E_SR_Ausfahren_Cyl_2.EO → DigitalOutput_Q2.REQ (Aktiviert Ausgang für Zylinder 2)
+[cite_start]In `Uebung_022.SUB` werden zwei Speicherglieder so verschaltet, dass eine Kaskade entsteht[cite: 1].
 
-### Datenverbindungen:
-- E_SR_Ausfahren_Cyl_1.Q → DigitalOutput_Q1.OUT (Datenausgang Zylinder 1)
-- E_SR_Ausfahren_Cyl_2.Q → DigitalOutput_Q2.OUT (Datenausgang Zylinder 2)
+### Funktionsbausteine (FBs)
 
-### Bedienablauf:
-1. **START-Knopf**: Loslassen der F1-Taste startet den Prozess
-2. **Zylinder 1 Ausfahren**: Wird durch F1-Loslassen aktiviert
-3. **Zylinder 1 Einfahren**: Wird durch F2-Drücken deaktiviert
-4. **Zylinder 2 Ausfahren**: Wird gleichzeitig mit Zylinder 1 Einfahren aktiviert
-5. **Zylinder 2 Einfahren**: Wird durch F3-Drücken deaktiviert
+  * **`I1` (Start)**: Startet den gesamten Ablauf.
+  * **`I2` (Endlage 1)**: Beendet Schritt 1 und startet Schritt 2.
+  * **`I3` (Endlage 2)**: Beendet Schritt 2.
+  * **`Q1` & `Q2`**: Die Ausgänge für zwei Zylinder.
 
-## Zusammenfassung
-Diese Übung vermittelt die Grundlagen der Zylindersteuerung mit Set-Reset-Flipflops und demonstriert die Abhängigkeit zwischen verschiedenen Zylinderbewegungen. Die Verwendung von Softkeys zur Prozesssteuerung und die Kaskadierung von Zylinderbewegungen sind zentrale Lerninhalte dieser Übung.
+-----
+
+## Funktionsweise
+
+```xml
+<EventConnections>
+    <Connection Source="SoftKey_UP_F1.IND" Destination="E_SR_Cyl_1.S"/>
+    <Connection Source="SoftKey_F2_DOWN.IND" Destination="E_SR_Cyl_1.R"/>
+    <Connection Source="SoftKey_F2_DOWN.IND" Destination="E_SR_Cyl_2.S"/>
+    <Connection Source="SoftKey_F3_DOWN.IND" Destination="E_SR_Cyl_2.R"/>
+</EventConnections>
+```
+
+[cite_start][cite: 1]
+
+Der Ablauf:
+1.  Klick auf **F1** ➡️ Zylinder 1 fährt aus (`Q1`).
+2.  Zylinder 1 erreicht Endlage (**F2**) ➡️ `Q1` wird abgeschaltet **UND** zeitgleich wird Zylinder 2 gestartet (`Q2`).
+3.  Zylinder 2 erreicht seine Endlage (**F3**) ➡️ `Q2` wird abgeschaltet.
+
+-----
+
+## Anwendungsbeispiel
+
+**Zweistufige Paketübergabe**:
+Zylinder 1 schiebt ein Paket aus einem Magazin auf einen Hubtisch. Sobald das Paket dort ankommt (Endschalter 1), stoppt Zylinder 1 und Zylinder 2 hebt den Tisch an.

@@ -1,56 +1,41 @@
-# Uebung_010a: SoftKey_F1/_F2 auf DigitalOutput_Q1/_Q2
+# Uebung_010a: Zwei Softkeys (Parallel)
 
-* * * * * * * * * *
+```{index} single: Uebung_010a: Zwei Softkeys (Parallel)
+```
 
-## Einleitung
-Diese Übung demonstriert die grundlegende Verknüpfung von Softkey-Eingängen mit digitalen Ausgängen in der 4diac-IDE. Die Übung zeigt, wie Tastendrücke auf virtuelle Softkeys (F1 und F2) direkt auf entsprechende digitale Ausgänge (Q1 und Q2) abgebildet werden.
+[Uebung_010a](https://docs.ms-muc-docs.de/projects/visual-programming-languages-docs/de/latest/training1/Ventilsteuerung/4diacIDE-workspace/test/FBs/Uebungen/Uebung_010a.html)
 
-## Verwendete Funktionsbausteine (FBs)
+[![NotebookLM](media/NotebookLM_logo.png)](https://notebooklm.google.com/notebook/a6872e59-1dfc-4132-a118-aff1bc7bc944)
 
-### Softkey_IX
-- **Typ**: Eingangsbaustein für Softkey-Bedienung
-- **Parameter**:
-  - QI = TRUE (aktiviert den Baustein)
-  - u16ObjId = DefaultPool::SoftKey_F1 bzw. DefaultPool::SoftKey_F2 (identifiziert den spezifischen Softkey)
-- **Ereignisausgang**: IND (zeigt Tastendruck an)
-- **Dateneingang**: IN (überträgt den Tastenstatus)
+Dieser Artikel beschreibt die logiBUS®-Übung `Uebung_010a`.
 
-### logiBUS_QX
-- **Typ**: Ausgangsbaustein für digitale Signale
-- **Parameter**:
-  - QI = TRUE (aktiviert den Baustein)
-  - Output = logiBUS_DO::Output_Q1 bzw. logiBUS_DO::Output_Q2 (definiert den physikalischen Ausgang)
-- **Ereigniseingang**: REQ (fordert Ausgangsaktualisierung an)
-- **Datenausgang**: OUT (liefert den aktuellen Ausgangszustand)
+## 🎧 Podcast
 
-## Programmablauf und Verbindungen
+* [ISO 11783-6: Softkeys und das Virtual Terminal verstehen – Dein Schlüssel zur Landmaschinen-Mechatronik](https://podcasters.spotify.com/pod/show/isobus-vt-objects/episodes/ISO-11783-6-Softkeys-und-das-Virtual-Terminal-verstehen--Dein-Schlssel-zur-Landmaschinen-Mechatronik-e36a8b0)
 
-Die Übung verwendet zwei unabhängige Signalpfade:
+----
 
-1. **Pfad 1 (SoftKey_F1 → DigitalOutput_Q1)**:
-   - Ereignisverbindung: SoftKey_F1.IND → DigitalOutput_Q1.REQ
-   - Datenverbindung: SoftKey_F1.IN → DigitalOutput_Q1.OUT
+![](Uebung_010a.png)
 
-2. **Pfad 2 (SoftKey_F2 → DigitalOutput_Q2)**:
-   - Ereignisverbindung: SoftKey_F2.IND → DigitalOutput_Q2.REQ
-   - Datenverbindung: SoftKey_F2.IN → DigitalOutput_Q2.OUT
+## Ziel der Übung
 
-**Lernziele**:
-- Verständnis der grundlegenden Event- und Datenverbindungen
-- Kennenlernen von Eingangs- und Ausgangsbausteinen
-- Umsetzung von Softkey-Eingängen auf digitale Ausgänge
+Erweiterung der ISOBUS-Steuerung auf mehrere Kanäle.
 
-**Schwierigkeitsgrad**: Einfach
+-----
 
-**Benötigte Vorkenntnisse**:
-- Grundlagen der 4diac-IDE
-- Verständnis von Funktionsbausteinen
-- Basiswissen über Event-basierte Programmierung
+## Beschreibung und Komponenten
 
-**Starten der Übung**:
-1. Die SubApp in der 4diac-IDE öffnen
-2. Auf Start klicken, um die Ausführung zu beginnen
-3. Softkeys F1 und F2 im HMI bedienen, um die entsprechenden Ausgänge Q1 und Q2 zu schalten
+[cite_start]Die Subapplikation `Uebung_010a.SUB` steuert zwei unabhängige Hardware-Ausgänge über zwei Softkeys am Terminal[cite: 1].
 
-## Zusammenfassung
-Diese einfache Übung vermittelt die grundlegende Verknüpfung von Eingangs- und Ausgangsbausteinen in 4diac. Sie zeigt das Prinzip der direkten Signalweiterleitung von Softkey-Eingängen zu digitalen Ausgängen und bildet damit eine Basis für komplexere Steuerungsaufgaben. Die parallele Anordnung der beiden unabhängigen Signalpfade demonstriert zudem die Modularität und Skalierbarkeit von IEC 61499-basierten Steuerungssystemen.
+### Funktionsbausteine (FBs)
+
+  * **`SoftKey_F1`** ➡️ **`DigitalOutput_Q1`**
+  * **`SoftKey_F2`** ➡️ **`DigitalOutput_Q2`**
+
+Beide Signalpfade nutzen die ereignisbasierte `IND -> REQ` Verbindung.
+
+-----
+
+## Funktionsweise
+
+Dies demonstriert, dass das UT-Interface beliebig skaliert werden kann. Jeder Softkey im Objekt-Pool kann als eigenständige Instanz im 4diac-Programm genutzt werden, um spezifische Aktoren anzusteuern.

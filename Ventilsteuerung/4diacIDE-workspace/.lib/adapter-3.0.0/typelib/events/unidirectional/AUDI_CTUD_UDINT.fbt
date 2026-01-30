@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<FBType Name="AUDI_CTUD_UDINT" Comment="Event-Driven Up-Down Counter">
+	<Identification Standard="61499-1-A.x" Classification="Event-driven blocks" Function="Up-Down-counter" Description="Copyright (c) 2017, 2024 fortiss GmbH, JKU, HR Agrartechnik GmbH   &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0">
+	</Identification>
+	<VersionInfo Organization="HR Agrartechnik GmbH" Version="3.0" Author="Franz Höpfinger" Date="2026-01-17" Remarks="Adapted from E_CTUD_UDINT. Removed explicit LD and LDO events, now driven by PV.E1 and CV.E1 adapter events.">
+	</VersionInfo>
+	<VersionInfo Organization="HR Agrartechnik GmbH" Version="1.2" Author="Franz Höpfinger" Date="2024-02-10" Remarks="Copy over E_CTUD to E_CTUD_UDINT">
+	</VersionInfo>
+	<VersionInfo Organization="JKU" Version="1.1" Author="Alois Zoitl" Date="2019-07-09" Remarks="fixed bug in down counting (E_CTUD)">
+	</VersionInfo>
+	<VersionInfo Organization="fortiss GmbH" Version="1.0" Author="Alois Zoitl" Date="2017-09-22" Remarks="initial API and implementation and/or initial documentation (E_CTUD)">
+	</VersionInfo>
+	<CompilerInfo packageName="adapter::events::unidirectional">
+	</CompilerInfo>
+	<InterfaceList>
+		<EventInputs>
+			<Event Name="CU" Type="Event" Comment="Count Up">
+			</Event>
+			<Event Name="CD" Type="Event" Comment="Count Down">
+			</Event>
+			<Event Name="R" Type="Event" Comment="Reset">
+			</Event>
+		</EventInputs>
+		<Plugs>
+			<AdapterDeclaration Name="QU" Type="adapter::types::unidirectional::AX" Comment="CV.D1 &gt;= PV.D1"/>
+			<AdapterDeclaration Name="QD" Type="adapter::types::unidirectional::AX" Comment="CV.D1 &lt;= 0"/>
+			<AdapterDeclaration Name="CV" Type="adapter::types::unidirectional::AUDI" Comment="Counter Value"/>
+		</Plugs>
+		<Sockets>
+			<AdapterDeclaration Name="PV" Type="adapter::types::unidirectional::AUDI" Comment="Preset Value"/>
+		</Sockets>
+	</InterfaceList>
+	<BasicFB>
+		<ECC>
+			<ECState Name="START" x="1326.67" y="946.67">
+			</ECState>
+			<ECState Name="CU" x="186.67" y="566.67">
+				<ECAction Algorithm="CountUp" Output="CV.E1"/>
+				<ECAction Algorithm="UpdateQD" Output="QD.E1"/>
+				<ECAction Algorithm="UpdateQU" Output="QU.E1"/>
+			</ECState>
+			<ECState Name="R" x="186.67" y="1326.67">
+				<ECAction Algorithm="Reset" Output="CV.E1"/>
+				<ECAction Algorithm="UpdateQD" Output="QD.E1"/>
+				<ECAction Algorithm="UpdateQU" Output="QU.E1"/>
+			</ECState>
+			<ECState Name="CD" x="1706.67" y="566.67">
+				<ECAction Algorithm="CountDown" Output="CV.E1"/>
+				<ECAction Algorithm="UpdateQD" Output="QD.E1"/>
+				<ECAction Algorithm="UpdateQU" Output="QU.E1"/>
+			</ECState>
+			<ECState Name="LD" x="1800" y="1326.67">
+				<ECAction Algorithm="Load" Output="CV.E1"/>
+				<ECAction Algorithm="UpdateQD" Output="QD.E1"/>
+				<ECAction Algorithm="UpdateQU" Output="QU.E1"/>
+			</ECState>
+			<ECTransition Source="START" Destination="CU" Condition="CU[(CV.D1&lt;4294967295)]" Comment="" x="140" y="1100"/>
+			<ECTransition Source="CU" Destination="START" Condition="1" Comment="" x="493.33" y="933.33"/>
+			<ECTransition Source="START" Destination="R" Condition="R" Comment="" x="706.67" y="1120"/>
+			<ECTransition Source="R" Destination="START" Condition="1" Comment="" x="740" y="1240"/>
+			<ECTransition Source="START" Destination="CD" Condition="CD[(CV.D1 &gt; 0)]" Comment="" x="1460" y="700"/>
+			<ECTransition Source="CD" Destination="START" Condition="1" Comment="" x="1780" y="920"/>
+			<ECTransition Source="START" Destination="LD" Condition="PV.E1" Comment="" x="1820" y="1140"/>
+			<ECTransition Source="LD" Destination="START" Condition="1" Comment="" x="1513.33" y="1273.33"/>
+		</ECC>
+		<Algorithm Name="CountUp">
+			<ST><![CDATA[ALGORITHM CountUp
+CV.D1 := CV.D1 + 1;
+
+END_ALGORITHM]]></ST>
+		</Algorithm>
+		<Algorithm Name="Reset">
+			<ST><![CDATA[
+
+ALGORITHM Reset
+CV.D1 := 0;
+END_ALGORITHM]]></ST>
+		</Algorithm>
+		<Algorithm Name="Load">
+			<ST><![CDATA[
+
+ALGORITHM Load
+CV.D1 := PV.D1;
+END_ALGORITHM]]></ST>
+		</Algorithm>
+		<Algorithm Name="UpdateQU">
+			<ST><![CDATA[
+
+ALGORITHM UpdateQU
+QU.D1 := (CV.D1 >= PV.D1);
+END_ALGORITHM]]></ST>
+		</Algorithm>
+		<Algorithm Name="UpdateQD">
+			<ST><![CDATA[
+
+ALGORITHM UpdateQD
+QD.D1 := (CV.D1 = 0);
+END_ALGORITHM]]></ST>
+		</Algorithm>
+		<Algorithm Name="CountDown">
+			<ST><![CDATA[
+
+ALGORITHM CountDown
+CV.D1 := CV.D1 - 1;
+END_ALGORITHM
+
+]]></ST>
+		</Algorithm>
+	</BasicFB>
+	<Attribute Name="eclipse4diac::core::TypeHash" Value="''"/>
+</FBType>

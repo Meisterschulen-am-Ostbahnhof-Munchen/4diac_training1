@@ -1,62 +1,39 @@
-# Uebung_093: Beispiel für E_TABLE
+# Uebung_093: Zeitgesteuerte Ereignis-Tabelle (E_TABLE)
 
-* * * * * * * * * *
+```{index} single: Uebung_093: Zeitgesteuerte Ereignis-Tabelle (E_TABLE)
+```
 
-## Einleitung
-Diese Übung demonstriert die Verwendung des E_TABLE-Funktionsbausteins zur zeitgesteuerten Ereignisausgabe. Das System erzeugt nach einem Tastendruck eine Sequenz von vier Ereignissen zu definierten Zeitpunkten.
+[Uebung_093](https://docs.ms-muc-docs.de/projects/visual-programming-languages-docs/de/latest/training1/Ventilsteuerung/4diacIDE-workspace/test/FBs/Uebungen/Uebung_093.html)
 
-## Verwendete Funktionsbausteine (FBs)
+[![NotebookLM](media/NotebookLM_logo.png)](https://notebooklm.google.com/notebook/a6872e59-1dfc-4132-a118-aff1bc7bc944)
 
-### DigitalInput_CLK_I1
-- **Typ**: logiBUS_IE
-- **Funktionsweise**: Liest den digitalen Eingang I1 ein und erkennt einen einfachen Tastendruck (BUTTON_SINGLE_CLICK)
+Dieser Artikel beschreibt die logiBUS®-Übung `Uebung_093`. Hier wird ein komplexes Zeitmuster für Ereignisse definiert.
 
-### E_TABLE
-- **Typ**: E_TABLE
-- **Parameter**: 
-  - DT = [T#0s, T#2s, T#3s, T#4s]
-  - N = 4
-- **Funktionsweise**: Gibt nach START-Event vier Ereignisse zu den definierten Zeitpunkten aus (sofort, nach 2s, 3s und 4s)
+## 🎧 Podcast
 
-### E_T_FF
-- **Typ**: E_T_FF
-- **Funktionsweise**: T-Flipflop, der bei jedem CLK-Event seinen Ausgangszustand toggelt
+* [Infineon CAN-Transceiver TLE9250V versus TLE9351VSJ](https://podcasters.spotify.com/pod/show/ms-muc-lama/episodes/Infineon-CAN-Transceiver-TLE9250V-versus-TLE9351VSJ-e3b8nan)
+* [Infineon TLE9351VSJ der unsichtbare Auto-Bodyguard](https://podcasters.spotify.com/pod/show/ms-muc-lama/episodes/Infineon-TLE9351VSJ-der-unsichtbare-Auto-Bodyguard-e3b8nhl)
 
-### DigitalOutput_Q1
-- **Typ**: logiBUS_QX
-- **Parameter**:
-  - QI = TRUE
-  - Output = logiBUS_DO::Output_Q1
-- **Funktionsweise**: Steuert den digitalen Ausgang Q1 an
+----
 
-## Programmablauf und Verbindungen
+![](Uebung_093.png)
 
-**Ereignisverbindungen:**
-- DigitalInput_CLK_I1.IND → E_TABLE.START
-- E_TABLE.EO → E_T_FF.CLK
-- E_T_FF.EO → DigitalOutput_Q1.REQ
+## Ziel der Übung
 
-**Datenverbindungen:**
-- E_T_FF.Q → DigitalOutput_Q1.OUT
+Verwendung des Bausteins `E_TABLE`. Im Gegensatz zum gleichmäßigen Takt des `E_TRAIN` erlaubt dieser Baustein die Definition von individuellen Verzögerungszeiten für jedes Ereignis in einer Liste (Array).
 
-**Ablauf:**
-1. Ein Tastendruck auf I1 löst das IND-Event aus
-2. E_TABLE startet und gibt vier Ereignisse aus:
-   - Sofort nach dem Klick
-   - 2 Sekunden nach dem Klick
-   - 3 Sekunden nach dem Klick
-   - 4 Sekunden nach dem Klick
-3. Jedes EO-Event von E_TABLE toggelt den E_T_FF
-4. Der E_T_FF steuert den Digitalausgang Q1
-5. Insgesamt wird Q1 viermal getoggelt
+-----
 
-**Lernziele:**
-- Verständnis des E_TABLE-Bausteins
-- Zeitgesteuerte Ereignissequenzen
-- Kombination von Event- und Datenverbindungen
-- Toggle-Flipflop Funktionalität
+## Beschreibung und Komponenten
 
-**Schwierigkeitsgrad**: Einfach bis Mittel
+[cite_start]In `Uebung_093.SUB` ist ein Zeit-Array hinterlegt: `[T#0s, T#2s, T#3s, T#4s]`[cite: 1].
 
-## Zusammenfassung
-Diese Übung zeigt eine praktische Anwendung des E_TABLE-Funktionsbausteins zur Erzeugung zeitlich gestaffelter Ereignisse. Nach einem initialen Tastendruck werden vier Events zu genau definierten Zeitpunkten ausgelöst, die einen Ausgangstoggle steuern. Die Gesamtsequenz dauert 9 Sekunden und demonstriert effektiv die Zeitsteuerungsfähigkeiten von 4diac.
+### Funktionsweise
+
+Ein Klick auf **I1** startet die Tabelle:
+1.  Ereignis 1: Sofort (`0s`).
+2.  Ereignis 2: Nach weiteren 2 Sekunden.
+3.  Ereignis 3: Nach weiteren 3 Sekunden.
+4.  Ereignis 4: Nach weiteren 4 Sekunden.
+
+Das angeschlossene Flip-Flop erzeugt somit ein unregelmäßiges Blinkmuster am Ausgang `Q1`, das exakt dem vorgegebenen Zeitplan entspricht. Dies ermöglicht die Programmierung von spezifischen Start-Sequenzen oder rhythmischen Abläufen.

@@ -1,64 +1,66 @@
-# Uebung_002a2: DigitalInput_I1/_I2 mit AND (alt) auf DigitalOutput_Q1
+# Uebung_002a2: Logische UND-Verknüpfung (Generic F_AND)
 
-* * * * * * * * * *
+```{index} single: Uebung_002a2: Logische UND-Verknüpfung (Generic F_AND)
+```
 
-## Einleitung
-Diese Übung demonstriert die grundlegende Verarbeitung digitaler Eingangssignale mit einer logischen UND-Verknüpfung. Zwei digitale Eingänge werden über einen AND-Baustein verknüpft und das Ergebnis an einen digitalen Ausgang ausgegeben.
+[Uebung_002a2](https://docs.ms-muc-docs.de/projects/visual-programming-languages-docs/de/latest/training1/Ventilsteuerung/4diacIDE-workspace/test/FBs/Uebungen/Uebung_002a2.html)
 
-## Verwendete Funktionsbausteine (FBs)
+[![NotebookLM](media/NotebookLM_logo.png)](https://notebooklm.google.com/notebook/041f4df4-b729-484d-b786-b6dcdf151961)
 
-### DigitalInput_I1 / DigitalInput_I2
-- **Typ**: logiBUS_IX
-- **Parameter**: 
-  - QI = TRUE (Aktivierung des Bausteins)
-  - Input = logiBUS_DI::Input_I1 / logiBUS_DI::Input_I2 (Hardware-Zuordnung)
-- **Ereignisausgang**: IND (Input Data - Signalisiert neue Eingangsdaten)
-- **Datenaustgang**: IN (Eingangswert)
+Dieser Artikel beschreibt die logiBUS®-Übung `Uebung_002a2`. Diese Übung ist funktional identisch mit `Uebung_002a`, demonstriert jedoch die Verwendung des generischen Funktionsbausteins `F_AND` anstelle des typspezifischen `AND_2`.
 
-### F_AND
-- **Typ**: F_AND (UND-Funktionsbaustein)
-- **Dateneingänge**: IN1, IN2 (zwei Eingangssignale)
-- **Datenausgang**: OUT (Ergebnis der UND-Verknüpfung)
-- **Ereigniseingang**: REQ (Startet die Verarbeitung)
-- **Ereignisausgang**: CNF (Bestätigt die Bearbeitung)
+----
 
-### DigitalOutput_Q1
-- **Typ**: logiBUS_QX
-- **Parameter**:
-  - QI = TRUE (Aktivierung des Bausteins)
-  - Output = logiBUS_DO::Output_Q1 (Hardware-Zuordnung)
-- **Ereigniseingang**: REQ (Anforderung zur Ausgabe)
-- **Dateneingang**: OUT (Ausgabewert)
+![](Uebung_002a2.png)
 
-## Programmablauf und Verbindungen
+## Ziel der Übung
 
-**Ereignisverbindungen:**
-- DigitalInput_I1.IND → F_AND.REQ
-- DigitalInput_I2.IND → F_AND.REQ
-- F_AND.CNF → DigitalOutput_Q1.REQ
+Das Ziel ist es, die Verwendung von generischen Funktionsbausteinen (F-FBs) in der IEC 61499 zu verstehen. Es wird gezeigt, dass unterschiedliche Bausteintypen dieselbe logische Operation (UND) ausführen können, wobei das ereignisbasierte Ausführungsmodell identisch bleibt.
 
-**Datenverbindungen:**
-- DigitalInput_I1.IN → F_AND.IN1
-- DigitalInput_I2.IN → F_AND.IN2
-- F_AND.OUT → DigitalOutput_Q1.OUT
+-----
 
-**Programmablauf:**
-1. Bei Änderung an DigitalInput_I1 oder DigitalInput_I2 wird ein IND-Ereignis ausgelöst
-2. Das IND-Ereignis startet die Verarbeitung im F_AND-Baustein (REQ)
-3. F_AND verknüpft die beiden Eingangswerte logisch UND
-4. Nach der Verarbeitung sendet F_AND ein CNF-Ereignis
-5. Das CNF-Ereignis aktiviert die Ausgabe an DigitalOutput_Q1 (REQ)
-6. Der berechnete Wert wird an den Ausgang Q1 ausgegeben
+## Beschreibung und Komponenten
 
-**Lernziele:**
-- Grundlegende Verwendung digitaler Ein- und Ausgänge
-- Logische Verknüpfung mit AND-Funktion
-- Ereignisgesteuerte Verarbeitung in 4diac
-- Hardware-Zuordnung von Ein-/Ausgängen
+[cite_start]In der Subapplikation `Uebung_002a2.SUB` werden zwei digitale Eingänge über ein generisches UND-Gatter verknüpft[cite: 1].
 
-**Schwierigkeitsgrad**: Einsteiger
+### Funktionsbausteine (FBs)
 
-**Benötigte Vorkenntnisse**: Grundlagen der 4diac-IDE, digitale Logik
+  * **`DigitalInput_I1` & `DigitalInput_I2`**: Standard-Eingangsbausteine vom Typ `logiBUS_IX`[cite: 1].
+  * **`F_AND`**: Ein generischer Funktionsbaustein vom Typ `F_AND`. [cite_start]Er berechnet das logische UND seiner Eingänge `IN1` und `IN2`, sobald er ein Ereignis am Eingang `REQ` empfängt, und gibt das Ergebnis am Ausgang `OUT` sowie ein Bestätigungs-Ereignis am Port `CNF` aus[cite: 1].
+  * **`DigitalOutput_Q1`**: Standard-Ausgangsbaustein vom Typ `logiBUS_QX`[cite: 1].
 
-## Zusammenfassung
-Diese Übung vermittelt die grundlegende Funktionsweise ereignisgesteuerter Systeme in 4diac. Sie zeigt, wie digitale Eingangssignale verarbeitet, logisch verknüpft und an Ausgänge weitergeleitet werden. Die UND-Verknüpfung stellt sicher, dass der Ausgang Q1 nur aktiviert wird, wenn beide Eingänge I1 und I2 aktiv sind.
+-----
+
+## Funktionsweise
+
+Der Aufbau in `Uebung_002a2.SUB` folgt dem bewährten Muster der Ereigniskette:
+
+```xml
+<EventConnections>
+    <Connection Source="DigitalInput_I1.IND" Destination="F_AND.REQ"/>
+    <Connection Source="DigitalInput_I2.IND" Destination="F_AND.REQ"/>
+    <Connection Source="F_AND.CNF" Destination="DigitalOutput_Q1.REQ"/>
+</EventConnections>
+<DataConnections>
+    <Connection Source="DigitalInput_I1.IN" Destination="F_AND.IN1"/>
+    <Connection Source="DigitalInput_I2.IN" Destination="F_AND.IN2"/>
+    <Connection Source="F_AND.OUT" Destination="DigitalOutput_Q1.OUT"/>
+</DataConnections>
+```
+
+[cite_start][cite: 1]
+
+Der funktionale Ablauf:
+1.  Jede Änderung an den Tastern `I1` oder `I2` löst ein `IND`-Event aus.
+2.  Beide Events sind mit dem `REQ`-Port von `F_AND` verbunden. Das bedeutet: Egal welcher Taster betätigt wird, die Logik wird neu berechnet.
+3.  `F_AND` ermittelt das Ergebnis.
+4.  Über das `CNF`-Event wird der Baustein `DigitalOutput_Q1` angewiesen, den Hardware-Ausgang `Q1` zu aktualisieren.
+
+Der Ausgang ist nur dann aktiv, wenn beide Eingänge gleichzeitig den Wert `TRUE` führen.
+
+-----
+
+## Anwendungsbeispiel
+
+**Zustimmungs-Schaltung**:
+Ein Bediener muss an einem Steuerpult eine Taste drücken (`I1`) und gleichzeitig muss ein zweiter Sensor (`I2`) die Anwesenheit eines Werkstücks bestätigen, damit der Roboterarm (`Q1`) das Werkstück greifen darf.

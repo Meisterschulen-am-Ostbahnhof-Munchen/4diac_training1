@@ -1,12 +1,13 @@
 # img_cropped
 
+```{index} single: img_cropped
+```
 
 hier liegen die Bilder nach dem Zuschneiden
 
-weitere Infos im Ordner darüber: <https://github.com/Meisterschulen-am-Ostbahnhof-Munchen/4diac_training1/tree/main/Ventilsteuerung/ISO-DesignerProjects/Workspace_TECU/DefaultPool/img>
+weitere Infos im Ordner darÃ¼ber: <https://github.com/Meisterschulen-am-Ostbahnhof-Munchen/4diac_training1/tree/main/Ventilsteuerung/ISO-DesignerProjects/Workspace_TECU/DefaultPool/img>
 
 und auch hier: <https://docs.ms-muc-docs.de/projects/isobus-vt-objects-docs/de/latest/Bitmaps_einfuegen.html>
-
 
 | Image                                                                                                                                                                                                                    |   |
 |--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|---|

@@ -1,74 +1,59 @@
-Hier ist die Dokumentation für die Übung `Uebung_004a4_AX` basierend auf den bereitgestellten Daten.
+# Uebung_004a4_AX: Event-Splitter (E_SPLIT)
 
-# Uebung_004a4_AX
+```{index} single: Uebung_004a4_AX: Event-Splitter (E_SPLIT)
+```
 
-*(Hier Platzhalter für ein Bild der Übung einfügen)*
+[Uebung_004a4_AX](https://docs.ms-muc-docs.de/projects/visual-programming-languages-docs/de/latest/training1/Ventilsteuerung/4diacIDE-workspace/test/FBs/Uebungen/Uebung_004a4_AX.html)
 
-* * * * * * * * * *
+[![NotebookLM](media/NotebookLM_logo.png)](https://notebooklm.google.com/notebook/041f4df4-b729-484d-b786-b6dcdf151961)
 
-## Einleitung
-Diese Übung implementiert eine Schaltung, bei der ein Toggle Flip-Flop (T-FF) durch ein Eingangs-Event gesteuert wird. Konkret wird hier auf einen einfachen Tastendruck (`BUTTON_SINGLE_CLICK`) reagiert. Ein wesentliches Lernziel dieser Übung ist die Demonstration des `E_SPLIT` Bausteins, welcher ein einzelnes Event-Signal aufteilt, um zwei separate Funktionsbausteine parallel anzusteuern.
+Dieser Artikel beschreibt die logiBUS®-Übung `Uebung_004a4_AX`. Hier wird gezeigt, wie ein einzelnes Ereignis genutzt werden kann, um mehrere unabhängige Prozesse anzustoßen, indem man einen `E_SPLIT` Baustein verwendet.
 
-## Verwendete Funktionsbausteine (FBs)
+----
 
-In dieser SubApplikation werden verschiedene Bausteine verschaltet, um die Eingabeverarbeitung, Signalaufteilung und Ausgabe zu realisieren.
+![](Uebung_004a4_AX.png)
 
-### Sub-Bausteine: Uebung_004a4_AX
-- **Typ**: SubAppType
-- **Verwendete interne FBs**:
+## Ziel der Übung
 
-    - **DigitalInput_CLK_I1**: `logiBUS::io::DI::logiBUS_IE`
-        - **Parameter**: 
-            - `Input` = `Input_I1`
-            - `InputEvent` = `BUTTON_SINGLE_CLICK`
-            - `QI` = `TRUE` (nicht sichtbar)
-        - **Ereignisausgang**: `IND` (Indication - Signalisiert das Eintreten des Events)
-        - **Funktionsweise**: Dieser Baustein überwacht den Eingang I1 auf das Ereignis "Einfacher Klick" und sendet daraufhin ein Event.
+Das Ziel ist das Verständnis der sequenziellen Event-Verarbeitung. In IEC 61499 kann ein Event-Ausgang oft nur mit einem Event-Eingang verbunden sein (Fan-Out = 1), oder man möchte explizit die Reihenfolge der Abarbeitung steuern. Der `E_SPLIT` Baustein nimmt ein Eingangs-Event und feuert nacheinander Ausgänge ab.
 
-    - **E_SPLIT**: `iec61499::events::E_SPLIT`
-        - **Ereigniseingang**: `EI`
-        - **Ereignisausgänge**: `EO1`, `EO2`
-        - **Funktionsweise**: Dient dazu, einen eingehenden Event-Strom (EI) auf zwei Ausgänge (EO1 und EO2) aufzuteilen, um parallele Ausführungspfade zu ermöglichen.
+-----
 
-    - **E_T_FF_Q1**: `adapter::events::unidirectional::AX_T_FF`
-        - **Ereigniseingang**: `CLK`
-        - **Datenausgang (Adapter)**: `Q`
-        - **Funktionsweise**: Ein Toggle Flip-Flop, das bei jedem `CLK` Event seinen Zustand wechselt (Adapter-basiert).
+## Beschreibung und Komponenten
 
-    - **E_T_FF_Q2**: `adapter::events::unidirectional::AX_T_FF`
-        - **Ereigniseingang**: `CLK`
-        - **Datenausgang (Adapter)**: `Q`
-        - **Funktionsweise**: Zweites Toggle Flip-Flop, identisch zu Q1.
+[cite_start]Die Subapplikation `Uebung_004a4_AX.SUB` verwendet einen Taster, um zwei separate Toggle-Flip-Flops zu schalten[cite: 1].
 
-    - **DigitalOutput_Q1**: `logiBUS::io::DQ::logiBUS_QXA`
-        - **Parameter**: 
-            - `Output` = `Output_Q1`
-            - `QI` = `TRUE` (nicht sichtbar)
-        - **Dateneingang (Adapter)**: `OUT`
-        - **Funktionsweise**: Steuert den physischen Ausgang Q1 an.
+### Funktionsbausteine (FBs)
 
-    - **DigitalOutput_Q2**: `logiBUS::io::DQ::logiBUS_QXA`
-        - **Parameter**: 
-            - `Output` = `Output_Q2`
-            - `QI` = `TRUE` (nicht sichtbar)
-        - **Dateneingang (Adapter)**: `OUT`
-        - **Funktionsweise**: Steuert den physischen Ausgang Q2 an.
+  * **`DigitalInput_CLK_I1`**: Der Event-Generator (Taster).
+  * **`E_SPLIT`**: Ein Event-Verteiler. Er hat einen Eingang `EI` und zwei Ausgänge `EO1` und `EO2`.
+  * **`E_T_FF_Q1` & `Q2`**: Zwei unabhängige Flip-Flops.
+  * **`DigitalOutput_Q1` & `Q2`**: Zwei Lampen.
 
-## Programmablauf und Verbindungen
+-----
 
-Der Ablauf der Übung gestaltet sich wie folgt:
+## Funktionsweise
 
-1.  **Eingabeerkennung**: Der Baustein `DigitalInput_CLK_I1` wartet auf das Ereignis `BUTTON_SINGLE_CLICK` am Eingang `Input_I1`.
-2.  **Event-Verarbeitung**: Sobald der Klick erkannt wird, wird das Event `IND` ausgelöst.
-3.  **Signal-Split**: Das Event gelangt in den `E_SPLIT` Baustein (Eingang `EI`). Dieser dupliziert das Event und gibt es an `EO1` und `EO2` aus.
-4.  **Logik-Schaltung**:
-    *   Der Ausgang `EO1` ist mit dem `CLK`-Eingang von `E_T_FF_Q1` verbunden.
-    *   Der Ausgang `EO2` ist mit dem `CLK`-Eingang von `E_T_FF_Q2` verbunden.
-5.  **Zustandswechsel**: Beide Flip-Flops wechseln bei Empfang des Events ihren internen Zustand (Toggle).
-6.  **Ausgabe**: Die Adapter-Ausgänge (`Q`) der Flip-Flops sind direkt mit den Adapter-Eingängen (`OUT`) der Ausgangsbausteine `DigitalOutput_Q1` und `DigitalOutput_Q2` verbunden, wodurch die physischen Ausgänge geschaltet werden.
+```xml
+<EventConnections>
+    <Connection Source="DigitalInput_CLK_I1.IND" Destination="E_SPLIT.EI"/>
+    <Connection Source="E_SPLIT.EO1" Destination="E_T_FF_Q1.CLK"/>
+    <Connection Source="E_SPLIT.EO2" Destination="E_T_FF_Q2.CLK"/>
+</EventConnections>
+```
 
-**Hinweis zur Übung:**
-In der Übung ist ein Kommentar hinterlegt, der darauf hinweist, dass die Verwendung von zwei separaten Toggle-Flip-Flops (T_FF) für denselben Zweck in einer realen Anwendung redundant wäre. Der Aufbau dient hier explizit dazu, die Funktionsweise und den Nutzen des `E_SPLIT` Bausteins didaktisch zu veranschaulichen.
+[cite_start][cite: 1]
 
-## Zusammenfassung
-Die `Uebung_004a4_AX` demonstriert die Verarbeitung von Eingabe-Events (Single Click) und deren Verteilung mittels `E_SPLIT` auf mehrere Signalpfade. Sie zeigt zudem die Anbindung von Hardware-Ausgängen über Adapter-Technologie (`AX_T_FF` zu `logiBUS_QXA`).
+1.  Ein Klick auf Taster 1 sendet ein Event an `E_SPLIT`.
+2.  `E_SPLIT` sendet **zuerst** ein Event an `EO1` -> `E_T_FF_Q1` schaltet um.
+3.  Danach (quasi zeitgleich, aber logisch danach) sendet `E_SPLIT` ein Event an `EO2` -> `E_T_FF_Q2` schaltet um.
+
+Beide Lampen schalten somit synchron um, gesteuert durch einen Taster.
+
+*(Hinweis im Code: "hier 2x T_FF zu verwenden ist sinnlos, das soll nur zeigen wie man E_SPLIT verwenden kann." - Das stimmt, man hätte auch beide Ausgänge an ein FF hängen können. Hier geht es rein um die Demonstration des Event-Splittings.)*
+
+-----
+
+## Anwendungsbeispiel
+
+**Szenen-Steuerung**: Ein Taster "Feierabend" betätigt gleichzeitig (bzw. nacheinander) mehrere Aktionen: Licht ausschalten (`Q1`) und Alarmanlage scharfschalten (`Q2`). Durch den Splitter wird sichergestellt, dass beide Funktionsketten angestoßen werden.

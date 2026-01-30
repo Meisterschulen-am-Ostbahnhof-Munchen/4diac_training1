@@ -1,65 +1,54 @@
-# Uebung_009a: RampLimitFS
+# Uebung_009a: Rampen-Generator (RampLimitFS)
 
-* * * * * * * * * *
+```{index} single: Uebung_009a: Rampen-Generator (RampLimitFS)
+```
 
-## Einleitung
+[Uebung_009a](https://docs.ms-muc-docs.de/projects/visual-programming-languages-docs/de/latest/training1/Ventilsteuerung/4diacIDE-workspace/test/FBs/Uebungen/Uebung_009a.html)
 
-Diese Übung demonstriert die Anwendung eines Rampenbegrenzungs-Funktionsbausteins (RampLimitFS) zur Steuerung eines numerischen Wertes. Das System ermöglicht es, einen Ausgabewert schrittweise zu erhöhen oder zu verringern, wobei zwischen langsamen und schnellen Änderungsraten unterschieden wird.
+[![NotebookLM](media/NotebookLM_logo.png)](https://notebooklm.google.com/notebook/a6872e59-1dfc-4132-a118-aff1bc7bc944)
 
-## Verwendete Funktionsbausteine (FBs)
+Dieser Artikel beschreibt die logiBUS®-Übung `Uebung_009a`. Hier wird die komplexe Steuerung eines Zahlenwertes über verschiedene Taster-Interaktionen demonstriert.
 
-### Haupt-Funktionsbausteine:
+----
 
-- **RampLimitFS** (signalprocessing::RampLimitFS)
-  - Parameter: 
-    - VAL_ZERO = DINT#0
-    - SLOW = DINT#1
-    - FAST = DINT#10
-    - VAL_FULL = DINT#100
+![](Uebung_009a.png)
 
-- **Q_NumericValue** (Q_NumericValue)
-  - Parameter: u16ObjId = DefaultPool::OutputNumber_N1
+## Ziel der Übung
 
-- **F_DINT_TO_UDINT** (F_DINT_TO_UDINT)
-  - Datentyp-Konvertierungsbaustein
+Ansteuerung eines Rampen-Bausteins (`RampLimitFS`). Es wird gezeigt, wie verschiedene Ereignistypen (Klick vs. Langer Druck) genutzt werden können, um die Geschwindigkeit einer Wertänderung zu beeinflussen.
 
-- **logiBUS_IE** Bausteine (Eingabebausteine):
-  - ZERO (Input_I1, BUTTON_SINGLE_CLICK)
-  - UP_SLOW (Input_I2, BUTTON_SINGLE_CLICK)
-  - UP_FAST (Input_I2, BUTTON_LONG_PRESS_START)
-  - DOWN_SLOW (Input_I3, BUTTON_SINGLE_CLICK)
-  - DOWN_FAST (Input_I3, BUTTON_LONG_PRESS_START)
-  - FULL (Input_I4, BUTTON_SINGLE_CLICK)
+-----
 
-## Programmablauf und Verbindungen
+## Beschreibung und Komponenten
 
-### Ereignisverbindungen:
-- Tasterereignisse werden an den RampLimitFS-Baustein weitergeleitet:
-  - ZERO.IND → RampLimitFS.ZERO
-  - UP_SLOW.IND → RampLimitFS.UP_SLOW
-  - UP_FAST.IND → RampLimitFS.UP_FAST
-  - DOWN_SLOW.IND → RampLimitFS.DOWN_SLOW
-  - DOWN_FAST.IND → RampLimitFS.DOWN_FAST
-  - FULL.IND → RampLimitFS.FULL
+[cite_start]Die Subapplikation `Uebung_009a.SUB` nutzt einen Rampen-Baustein zur stufenlosen Steuerung eines numerischen Werts zwischen 0 und 100[cite: 1].
 
-- Signalverarbeitungskette:
-  - RampLimitFS.CNF → F_DINT_TO_UDINT.REQ
-  - F_DINT_TO_UDINT.CNF → Q_NumericValue.REQ
+### Funktionsbausteine (FBs)
 
-### Datenverbindungen:
-- RampLimitFS.OUT → F_DINT_TO_UDINT.IN
-- F_DINT_TO_UDINT.OUT → Q_NumericValue.u32NewValue
+  * **`RampLimitFS`**: Der Hauptbaustein aus der Signalverarbeitungs-Bibliothek. Er berechnet einen Ausgangswert, der sich zeitlich gleitend (Rampe) verändert.
+  * **Eingangstaster**:
+    *   `ZERO`: Setzt den Wert sofort auf 0.
+    *   `FULL`: Setzt den Wert sofort auf 100.
+    *   `UP_SLOW` (Klick): Erhöht den Wert langsam.
+    *   `UP_FAST` (Langer Druck): Erhöht den Wert schnell.
+    *   `DOWN_SLOW` (Klick): Verringert den Wert langsam.
+    *   `DOWN_FAST` (Langer Druck): Verringert den Wert schnell.
 
-### Bedienung:
-- **I1 (ZERO)**: Setzt den Wert auf 0
-- **I2 Kurzdruck (UP_SLOW)**: Erhöht langsam um 1
-- **I2 Langdruck (UP_FAST)**: Erhöht schnell um 10
-- **I3 Kurzdruck (DOWN_SLOW)**: Verringert langsam um 1
-- **I3 Langdruck (DOWN_FAST)**: Verringert schnell um 10
-- **I4 (FULL)**: Setzt den Wert auf 100
+-----
 
-Der Wertebereich ist auf 0-100 begrenzt, wobei die Änderungsraten durch die Parameter SLOW und FAST definiert sind.
+## Funktionsweise
 
-## Zusammenfassung
+Der Rampen-Baustein reagiert auf unterschiedliche Event-Eingänge:
+1.  **Statische Ziele**: Bei `ZERO` oder `FULL` springt die interne Berechnung sofort auf die Grenzwerte.
+2.  **Dynamische Änderung**:
+    *   Ein Klick (`SINGLE_CLICK`) an `I2` triggert den `UP_SLOW` Eingang des Rampen-Bausteins. Der Wert steigt mit der im Parameter `SLOW` hinterlegten Rate.
+    *   Hält der Nutzer den Taster länger gedrückt (`LONG_PRESS_START`), wird der Eingang `UP_FAST` getriggert. Der Wert steigt nun wesentlich schneller (Parameter `FAST`).
 
-Diese Übung vermittelt die Anwendung von Rampenbegrenzungsfunktionen in der Automatisierungstechnik. Sie zeigt, wie unterschiedliche Eingabesignale (Kurz- und Langdruck) verschiedene Geschwindigkeiten der Wertänderung auslösen können. Die Übung demonstriert zudem die Datenkonvertierung zwischen verschiedenen Integer-Datentypen und die Ausgabe von numerischen Werten auf einem Display.
+Das Ergebnis wird am ISOBUS-Terminal als Zahl (`OutputNumber_N1`) angezeigt.
+
+-----
+
+## Anwendungsbeispiel
+
+**Elektrische Geschwindigkeits-Verstellung (Tempomat)**:
+Mit kurzen Tastendrücken am Joystick kann der Fahrer die Zielgeschwindigkeit in 1-km/h-Schritten feinjustieren. Hält er die Taste gedrückt, beschleunigt das Fahrzeug zügig bis zur Maximalgeschwindigkeit. Ein Tastendruck auf "Null" bremst die Maschine sofort ab. Die Rampe sorgt dabei für weiche Übergänge und schont die Mechanik.

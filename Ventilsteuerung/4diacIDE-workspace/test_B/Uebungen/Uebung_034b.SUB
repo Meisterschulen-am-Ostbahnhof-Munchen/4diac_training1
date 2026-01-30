@@ -30,7 +30,7 @@
 			<Parameter Name="Input" Value="Input_I2"/>
 			<Parameter Name="InputEvent" Value="BUTTON_LONG_PRESS_HOLD"/>
 		</FB>
-		<FB Name="E_CTUD" Type="iec61499::events::E_CTUD_UDINT" x="1686.67" y="1700">
+		<FB Name="E_CTUD_UDINT" Type="iec61499::events::E_CTUD_UDINT" x="1686.67" y="1700">
 			<Parameter Name="PV" Value="1023"/>
 		</FB>
 		<FB Name="F_UDINT_TO_DWORD" Type="iec61131::conversion::F_UDINT_TO_DWORD" x="4000" y="1700">
@@ -49,18 +49,18 @@
 			<Parameter Name="IN2" Value="UDINT#8"/>
 		</FB>
 		<EventConnections>
-			<Connection Source="E_CTUD.CO" Destination="F_MUL.REQ"/>
-			<Connection Source="E_CTUD.RO" Destination="F_MUL.REQ" dx1="73.33"/>
-			<Connection Source="IE_SPEED_UP.IND" Destination="E_CTUD.CU" dx1="140"/>
-			<Connection Source="IE_SPEED_DOWN.IND" Destination="E_CTUD.CD" dx1="73.33"/>
-			<Connection Source="IE_STOP.IND" Destination="E_CTUD.R" dx1="73.33"/>
-			<Connection Source="IE_FULL.IND" Destination="E_CTUD.LD" dx1="140"/>
-			<Connection Source="E_CTUD.LDO" Destination="F_MUL.REQ" dx1="73.33"/>
+			<Connection Source="E_CTUD_UDINT.CO" Destination="F_MUL.REQ"/>
+			<Connection Source="E_CTUD_UDINT.RO" Destination="F_MUL.REQ" dx1="73.33"/>
+			<Connection Source="IE_SPEED_UP.IND" Destination="E_CTUD_UDINT.CU" dx1="140"/>
+			<Connection Source="IE_SPEED_DOWN.IND" Destination="E_CTUD_UDINT.CD" dx1="73.33"/>
+			<Connection Source="IE_STOP.IND" Destination="E_CTUD_UDINT.R" dx1="73.33"/>
+			<Connection Source="IE_FULL.IND" Destination="E_CTUD_UDINT.LD" dx1="140"/>
+			<Connection Source="E_CTUD_UDINT.LDO" Destination="F_MUL.REQ" dx1="73.33"/>
 			<Connection Source="F_UDINT_TO_DWORD.CNF" Destination="PWMOutput_Q1.REQ" dx1="533.33"/>
 			<Connection Source="F_MUL.CNF" Destination="F_UDINT_TO_DWORD.REQ"/>
 		</EventConnections>
 		<DataConnections>
-			<Connection Source="E_CTUD.CV" Destination="F_MUL.IN1" dx1="140"/>
+			<Connection Source="E_CTUD_UDINT.CV" Destination="F_MUL.IN1" dx1="140"/>
 			<Connection Source="F_UDINT_TO_DWORD.OUT" Destination="PWMOutput_Q1.OUT" dx1="533.33"/>
 			<Connection Source="F_MUL.OUT" Destination="F_UDINT_TO_DWORD.IN"/>
 		</DataConnections>

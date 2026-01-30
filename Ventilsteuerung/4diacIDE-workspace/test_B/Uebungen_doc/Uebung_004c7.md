@@ -1,54 +1,36 @@
-# Uebung_004c7: Toggle Flip-Flop mit IE mit BUTTON_PRESS_END
+# Uebung_004c7: Parametrierter langer Tastendruck
 
-* * * * * * * * * *
+```{index} single: Uebung_004c7: Parametrierter langer Tastendruck
+```
 
-## Einleitung
-Diese Übung demonstriert die Funktionsweise eines Toggle-Flip-Flops mit einem speziellen Eingabeereignis. Das System erkennt einen langen Tastendruck und schaltet einen Ausgang bei jedem Erkennen dieses Ereignisses um.
+[Uebung_004c7](https://docs.ms-muc-docs.de/projects/visual-programming-languages-docs/de/latest/training1/Ventilsteuerung/4diacIDE-workspace/test/FBs/Uebungen/Uebung_004c7.html)
 
-## Verwendete Funktionsbausteine (FBs)
+[![NotebookLM](media/NotebookLM_logo.png)](https://notebooklm.google.com/notebook/a6872e59-1dfc-4132-a118-aff1bc7bc944)
 
-### DigitalInput_CLK_I1
-- **Typ**: logiBUS_IE2
-- **Parameter**:
-  - QI = TRUE (aktiviert den Baustein)
-  - Input = logiBUS_DI::Input_I1 (verwendet Eingang I1)
-  - InputEvent = logiBUS_DI_Events::BUTTON_LONG_PRESS_START (erkennt langen Tastendruck)
-  - arg = 3000 (3 Sekunden Schwellwert)
+Dieser Artikel beschreibt die logiBUS®-Übung `Uebung_004c7`. Auch hier wird der Baustein `logiBUS_IE2` genutzt, um die Haltezeit für ein Ereignis individuell anzupassen.
 
-### E_T_FF
-- **Typ**: E_T_FF (Toggle-Flip-Flop)
-- **Funktionsweise**: Schaltet den Ausgang Q bei jedem eingehenden Takt-Ereignis um
+----
 
-### DigitalOutput_Q1
-- **Typ**: logiBUS_QX
-- **Parameter**:
-  - QI = TRUE (aktiviert den Baustein)
-  - Output = logiBUS_DO::Output_Q1 (steuert Ausgang Q1)
+![](Uebung_004c7.png)
 
-## Programmablauf und Verbindungen
+## Ziel der Übung
 
-**Ereignisverbindungen:**
-- DigitalInput_CLK_I1.IND → E_T_FF.CLK (Takt-Ereignis)
-- E_T_FF.EO → DigitalOutput_Q1.REQ (Ausgabeanforderung)
+Festlegung einer spezifischen Zeitdauer für einen langen Tastendruck.
 
-**Datenverbindungen:**
-- E_T_FF.Q → DigitalOutput_Q1.OUT (Ausgangswert)
+-----
 
-**Ablauf:**
-1. Ein langer Tastendruck (3 Sekunden) auf Eingang I1 wird erkannt
-2. Das Ereignis BUTTON_LONG_PRESS_START löst den Toggle-Flip-Flop aus
-3. Der Ausgang Q1 schaltet bei jedem Ereignis seinen Zustand um
-4. Der Kommentar "3s drücken" weist auf die benötigte Druckdauer hin
+## Beschreibung und Komponenten
 
-**Lernziele:**
-- Verständnis von Toggle-Flip-Flop-Funktionalität
-- Umgang mit speziellen Eingabeereignissen (BUTTON_LONG_PRESS_START)
-- Parametrierung von Zeitverzögerungen in Eingabebausteinen
-- Ereignisgesteuerte Programmabläufe
+[cite_start]Die Subapplikation `Uebung_004c7.SUB` nutzt `logiBUS_IE2` mit `BUTTON_LONG_PRESS_START` und dem Argument `arg = 3000`[cite: 1].
 
-**Schwierigkeitsgrad**: Einfach bis mittel
+-----
 
-**Benötigte Vorkenntnisse**: Grundlagen der 4diac-IDE, Verständnis von Funktionsbausteinen und Ereignisverbindungen
+## Funktionsweise
 
-## Zusammenfassung
-Diese Übung zeigt eine praktische Anwendung eines Toggle-Flip-Flops mit ereignisgesteuerter Auslösung. Durch die Verwendung des BUTTON_LONG_PRESS_START-Ereignisses wird ein zuverlässiges Umschalten des Ausgangs bei langem Tastendruck erreicht. Die Übung vermittelt wichtige Konzepte der ereignisbasierten Steuerung und parametrierbarer Eingabebausteine.
+Die Einheit des Arguments `arg` sind Millisekunden. Das bedeutet: Das Ereignis `IND` wird erst dann gefeuert, wenn der Taster für **mindestens 3 Sekunden** (3000ms) ununterbrochen gedrückt wurde. Dies überschreibt den im System hinterlegten Standardwert für "Long Press".
+
+-----
+
+## Anwendungsbeispiel
+
+**Werkseinstellungen laden (Factory Reset)**: Eine kritische Aktion, die eine sehr bewusste und lange Interaktion des Nutzers erfordert, um versehentliche Datenverluste absolut sicher auszuschließen.

@@ -1,68 +1,20 @@
-# Uebung_020e2: DigitalInput_I1 auf DigitalOutput_Q1; FB_TOF; Ausschaltverzögert
+# Uebung_020e2: Zyklischer TOF-Timer (FB_TOF)
 
-* * * * * * * * * *
+```{index} single: Uebung_020e2: Zyklischer TOF-Timer (FB_TOF)
+```
 
-## Einleitung
-Diese Übung demonstriert die Anwendung eines ausschaltverzögerten Timers (FB_TOF) in der Automatisierungstechnik. Ein digitaler Eingangssignal wird über einen Zeitgeber verzögert und an einen digitalen Ausgang weitergeleitet. Die Verzögerungszeit beträgt 5 Sekunden.
+[Uebung_020e2](https://docs.ms-muc-docs.de/projects/visual-programming-languages-docs/de/latest/training1/Ventilsteuerung/4diacIDE-workspace/test/FBs/Uebungen/Uebung_020e2.html)
 
-## Verwendete Funktionsbausteine (FBs)
+[![NotebookLM](media/NotebookLM_logo.png)](https://notebooklm.google.com/notebook/a6872e59-1dfc-4132-a118-aff1bc7bc944)
 
-### DigitalInput_I1
-- **Typ**: logiBUS_IX
-- **Parameter**: 
-  - QI = TRUE
-  - Input = logiBUS_DI::Input_I1
-- **Funktion**: Liest den Zustand des digitalen Eingangs I1 ein
+Dieser Artikel beschreibt die logiBUS®-Übung `Uebung_020e2`. Hier wird der klassische IEC 61131-3 Timer-Baustein `FB_TOF` verwendet, der eine regelmäßige Triggerung (Takt) benötigt.
 
-### DigitalOutput_Q1
-- **Typ**: logiBUS_QX
-- **Parameter**:
-  - QI = TRUE
-  - Output = logiBUS_DO::Output_Q1
-- **Funktion**: Schreibt den Ausgangswert auf den digitalen Ausgang Q1
+**Wichtiger Hinweis: Dieser Baustein funktioniert nur korrekt, wenn er zyklisch aufgerufen wird.**
 
-### FB_TOF
-- **Typ**: FB_TOF
-- **Parameter**:
-  - PT = T#5s (Verzögerungszeit: 5 Sekunden)
-- **Funktion**: Ausschaltverzögerter Timer (OFF-Delay)
+----
 
-### E_CYCLE
-- **Typ**: E_CYCLE
-- **Parameter**:
-  - DT = T#500ms (Zykluszeit: 500ms)
-- **Funktion**: Zyklische Ereignisgenerierung
+![](Uebung_020e2.png)
 
-### E_SWITCH_I1
-- **Typ**: E_SWITCH
-- **Funktion**: Ereignisweiche für den Eingang I1
+## Übersicht
 
-### E_SWITCH_Q1
-- **Typ**: E_SWITCH
-- **Funktion**: Ereignisweiche für den Ausgang Q1
-
-## Programmablauf und Verbindungen
-
-**Ereignisverbindungen:**
-- DigitalInput_I1.IND → E_SWITCH_I1.EI
-- E_SWITCH_I1.EO1 → E_CYCLE.START
-- E_CYCLE.EO → FB_TOF.REQ
-- FB_TOF.CNF → DigitalOutput_Q1.REQ
-- FB_TOF.CNF → E_SWITCH_Q1.EI
-- E_SWITCH_Q1.EO0 → E_CYCLE.STOP
-
-**Datenverbindungen:**
-- DigitalInput_I1.IN → FB_TOF.IN
-- DigitalInput_I1.IN → E_SWITCH_I1.G
-- FB_TOF.Q → DigitalOutput_Q1.OUT
-- FB_TOF.Q → E_SWITCH_Q1.G
-
-**Programmablauf:**
-1. Bei Änderung des Eingangssignals I1 wird der Zyklusgeber E_CYCLE gestartet
-2. E_CYCLE sendet alle 500ms ein Ereignis an FB_TOF
-3. FB_TOF aktualisiert seinen ET-Wert und gibt nach Ablauf der 5-Sekunden-Verzögerung das Signal aus
-4. Das Ausgangssignal Q1 wird entsprechend dem verzögerten Eingangssignal geschaltet
-5. Bei Signalwechsel wird der Zyklusgeber gestoppt
-
-## Zusammenfassung
-Diese Übung verdeutlicht die Funktionsweise eines ausschaltverzögerten Timers in Verbindung mit zyklischer Abfrage. Der E_CYCLE-Baustein sorgt für die regelmäßige Aktualisierung des Timer-Zustands, während die E_SWITCH-Bausteine die Steuerung des Zyklus basierend auf den Eingangs- und Ausgangssignalen übernehmen. Die Übung zeigt praxisnah die Anwendung von Zeitverzögerungen in der industriellen Automatisierungstechnik.
+Demonstration des klassischen `FB_TOF` Bausteins. Da dieser Baustein zyklische Abfragen benötigt, wird er wie in Übung 020c3 über einen `E_CYCLE` (hier 500ms) angetrieben. Zusätzlich sorgt ein zweiter `E_SWITCH` am Ausgang dafür, dass der Taktgeber `E_CYCLE` gestoppt wird, sobald die Nachlaufzeit beendet ist.

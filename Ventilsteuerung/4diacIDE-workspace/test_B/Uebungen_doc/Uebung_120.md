@@ -1,58 +1,36 @@
-# Uebung_120: Übung zu ISOBUS Name
+# Uebung_120: ISOBUS Gerätenamen (NAME) auslesen
 
-* * * * * * * * * *
+```{index} single: Uebung_120: ISOBUS Gerätenamen (NAME) auslesen
+```
 
-## Einleitung
-Diese Übung behandelt die Arbeit mit ISOBUS-Namensfeldern und demonstriert die Verwendung von strukturierten Datentypen in der 4diac-IDE. Die Übung zeigt, wie Namensfelder gesetzt und verarbeitet werden können.
+[Uebung_120](https://docs.ms-muc-docs.de/projects/visual-programming-languages-docs/de/latest/training1/Ventilsteuerung/4diacIDE-workspace/test/FBs/Uebungen/Uebung_120.html)
 
-## Verwendete Funktionsbausteine (FBs)
+[![NotebookLM](media/NotebookLM_logo.png)](https://notebooklm.google.com/notebook/a6872e59-1dfc-4132-a118-aff1bc7bc944)
 
-### Haupt-Funktionsbausteine:
+Dieser Artikel beschreibt die logiBUS®-Übung `Uebung_120`. Hier wird gezeigt, wie man die Identität von Geräten im ISOBUS-Netzwerk ermittelt.
 
-- **STRUCT_DEMUX** - Struktur-Demultiplexer für NAMEFIELD_T
-- **STRUCT_MUX** - Struktur-Multiplexer für NAMEFIELD_T  
-- **STRUCT_DEMUX_1** - Struktur-Demultiplexer für NAMEFIELD_T
-- **STRUCT_MUX_1** - Struktur-Multiplexer für NAMEFIELD_T
-- **NmSetName** - ISOBUS Namenssetzungs-Baustein
-- **NmSetNameField** - ISOBUS Namensfeld-Setzungs-Baustein
-- **NmGetCfInfo** - ISOBUS Konfigurationsinformations-Baustein
+----
 
-### Sub-Bausteine: Keine Sub-Bausteine vorhanden
+![](Uebung_120.png)
 
-## Programmablauf und Verbindungen
+## Ziel der Übung
 
-### Ereignisverbindungen:
-- STRUCT_MUX.CNF → STRUCT_DEMUX.REQ
-- NmSetName.CNF → NmSetNameField.REQ  
-- STRUCT_MUX_1.CNF → NmSetName.REQ
-- NmSetNameField.CNF → STRUCT_DEMUX_1.REQ
+Verwendung des Bausteins `NmGetCfInfo`. Jedes ISOBUS-Gerät besitzt einen weltweit eindeutigen 64-Bit Namen (NAME). Ziel ist es, diese Namen von anderen Teilnehmern am Bus einzulesen und in ihre Bestandteile zu zerlegen.
 
-### Datenverbindungen:
-- STRUCT_MUX.OUT → STRUCT_DEMUX.IN
-- NmSetName → NmSetNameField.au8IsoName
-- NmSetNameField → STRUCT_DEMUX_1.IN
-- STRUCT_MUX_1.OUT → NmSetName.psNameField
+-----
 
-### Programmablauf:
-1. Die STRUCT_MUX Bausteine sammeln strukturierte Daten vom Typ NAMEFIELD_T
-2. NmSetName verarbeitet die Namensinformationen
-3. NmSetNameField setzt die ISOBUS-Namensfelder
-4. STRUCT_DEMUX Bausteine verteilen die strukturierten Daten
-5. NmGetCfInfo steht für zusätzliche Konfigurationsinformationen bereit
+## Beschreibung und Komponenten
 
-## Lernziele
-- Verständnis der ISOBUS-Namensfeldverarbeitung
-- Umgang mit strukturierten Datentypen in 4diac
-- Arbeit mit Multiplexer- und Demultiplexer-Bausteinen
-- Implementierung von ISOBUS-spezifischen Funktionen
+[cite_start]In `Uebung_120.SUB` wird das Netzwerk nach aktiven Control Functions (CF) durchsucht[cite: 1].
 
-## Schwierigkeitsgrad
-Mittel - Grundkenntnisse in 4diac und ISOBUS-Standards werden vorausgesetzt
+### Funktionsbausteine (FBs)
 
-## Vorkenntnisse
-- Grundlagen der 4diac-IDE
-- Verständnis von Funktionsbausteinen und Ereignissteuerung
-- Grundkenntnisse über ISOBUS-Standards
+  * **`NmGetCfInfo`**: Scant den Bus nach Teilnehmern.
+  * **`NmSetNameField`**: Zerlegt den 64-Bit Rohwert in die standardisierten ISOBUS-Felder.
+  * **`STRUCT_DEMUX`**: Macht die einzelnen Felder (Hersteller-Code, Geräteserie, Instanz etc.) für die Programmlogik zugänglich.
 
-## Zusammenfassung
-Diese Übung vermittelt praktische Erfahrungen im Umgang mit ISOBUS-Namensfeldern und strukturierten Datentypen. Sie zeigt die Integration von ISOBUS-spezifischen Funktionalitäten in 4diac-Applikationen und demonstriert den Datenfluss zwischen verschiedenen Funktionsbausteinen zur Namensverwaltung in ISOBUS-Systemen.
+-----
+
+## Funktionsweise
+
+Der Baustein `NmGetCfInfo` liefert bei jedem Scan-Vorgang ein Datenpaket (`sCfInfo`), das den Namen eines Teilnehmers enthält. Über die nachgeschalteten Analyse-Bausteine kann das Programm nun genau "lesen", welche Geräte (z.B. ein Terminal der Firma X oder ein Joystick der Firma Y) gerade am Traktor angeschlossen sind. Dies ist die Voraussetzung für automatisches Plug-and-Play.

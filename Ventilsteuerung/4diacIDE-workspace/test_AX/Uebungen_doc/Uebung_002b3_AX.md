@@ -1,77 +1,69 @@
-Hier ist die Dokumentation für die Übung `Uebung_002b3_AX` basierend auf den bereitgestellten Daten.
+# Uebung_002b3_AX: Kombinatorische Logik (AND/OR)
 
-# Uebung_002b3_AX
+```{index} single: Uebung_002b3_AX: Kombinatorische Logik (AND/OR)
+```
 
-![Bild der Übung Uebung_002b3_AX](Uebung_002b3_AX.png)
+[Uebung_002b3_AX](https://docs.ms-muc-docs.de/projects/visual-programming-languages-docs/de/latest/training1/Ventilsteuerung/4diacIDE-workspace/test/FBs/Uebungen/Uebung_002b3_AX.html)
 
-* * * * * * * * * *
+[![NotebookLM](media/NotebookLM_logo.png)](https://notebooklm.google.com/notebook/041f4df4-b729-484d-b786-b6dcdf151961)
 
-## Einleitung
-Die Übung **Uebung_002b3_AX** realisiert eine kombinatorische Logiksteuerung unter Verwendung von Adapter-Verbindungen (`AX`-Typen) im LogiBUS-System. Ziel der Übung ist es, drei digitale Eingänge (`Input_I1`, `Input_I2`, `Input_I3`) so zu verknüpfen, dass sie einen digitalen Ausgang (`Output_Q1`) steuern. Die Logik entspricht dabei der Booleschen Formel: `Q1 = (I1 AND I2) OR I3`.
+Dieser Artikel beschreibt die logiBUS®-Übung `Uebung_002b3_AX`. In dieser Übung wird eine kombinatorische Logikschaltung implementiert, die zwei Grundoperationen (UND und ODER) miteinander verknüpft, um eine komplexere Schaltbedingung zu erfüllen.
 
-Besonderes Merkmal dieser Übung ist die Verwendung von Adapter-Bausteinen für die booleschen Operationen und die I/O-Anbindung, wodurch explizite Konvertierungsbausteine (wie `F_MOVE`) entfallen.
+----
 
-## Verwendete Funktionsbausteine (FBs)
+![](Uebung_002b3_AX.png)
 
-In dieser Sub-Application werden spezialisierte Bausteine für das LogiBUS-System sowie Adapter-basierte Logikbausteine verwendet.
+## Ziel der Übung
 
-### Sub-Bausteine: Netzwerk-Komponenten
-Da es sich um eine SubApp handelt, werden hier die im Netzwerk instanziierten Bausteine beschrieben:
+Das Hauptziel dieser Übung ist die hierarchische Verknüpfung von Logikbausteinen. Es wird gezeigt, wie Teilergebnisse einer logischen Operation (hier ein AND) als Eingangsgröße für eine weitere Operation (hier ein OR) dienen können. Dies ermöglicht die Abbildung beliebig komplexer logischer Ausdrücke in der Steuerungstechnik.
 
-- **DigitalInput_I1**
-    - **Typ**: `logiBUS::io::DI::logiBUS_IXA`
-    - **Funktion**: Stellt den ersten digitalen Eingang als Adapter zur Verfügung.
-    - **Parameter**:
-        - `QI` = `TRUE`
-        - `Input` = `Input_I1`
+-----
 
-- **DigitalInput_I2**
-    - **Typ**: `logiBUS::io::DI::logiBUS_IXA`
-    - **Funktion**: Stellt den zweiten digitalen Eingang als Adapter zur Verfügung.
-    - **Parameter**:
-        - `QI` = `TRUE`
-        - `Input` = `Input_I2`
+## Beschreibung und Komponenten
 
-- **DigitalInput_I3**
-    - **Typ**: `logiBUS::io::DI::logiBUS_IXA`
-    - **Funktion**: Stellt den dritten digitalen Eingang als Adapter zur Verfügung.
-    - **Parameter**:
-        - `QI` = `TRUE`
-        - `Input` = `Input_I3`
+[cite_start]Die Subapplikation `Uebung_002b3_AX.SUB` realisiert die logische Funktion `Q1 = (I1 AND I2) OR I3` unter Verwendung von Adapter-Logikbausteinen[cite: 1].
 
-- **DigitalOutput_Q1**
-    - **Typ**: `logiBUS::io::DQ::logiBUS_QXA`
-    - **Funktion**: Steuert den digitalen Ausgang über eine Adapter-Verbindung.
-    - **Parameter**:
-        - `QI` = `TRUE`
-        - `Output` = `Output_Q1`
+### Funktionsbausteine (FBs)
 
-- **AND_2_BOOL**
-    - **Typ**: `adapter::booleanOperators::AX_AND_2`
-    - **Funktion**: Führt eine logische UND-Verknüpfung von zwei Adapter-Eingängen durch.
+In der Subapplikation werden folgende Komponenten instanziiert:
 
-- **OR_2_BOOL**
-    - **Typ**: `adapter::booleanOperators::AX_OR_2`
-    - **Funktion**: Führt eine logische ODER-Verknüpfung von zwei Adapter-Eingängen durch.
+  * **`DigitalInput_I1`, `I2`, `I3`**: Instanzen des Typs `logiBUS_IXA`. [cite_start]Sie liefern die Eingangssignale für die Logikkette[cite: 1].
+  * **`AND_2_BOOL`**: Eine Instanz des Typs `AX_AND_2`. [cite_start]Verknüpft die Eingänge `I1` und `I2`[cite: 1].
+  * **`OR_2_BOOL`**: Eine Instanz des Typs `AX_OR_2`. [cite_start]Verknüpft das Ergebnis des UND-Bausteins mit dem dritten Eingang `I3`[cite: 1].
+  * **`DigitalOutput_Q1`**: Eine Instanz des Typs `logiBUS_QXA`. [cite_start]Gibt das Endergebnis der kombinatorischen Logik an den Hardware-Ausgang aus[cite: 1].
 
-## Programmablauf und Verbindungen
+### Adapter-Schnittstelle: `AX.adp`
 
-Der Programmablauf wird durch Adapter-Verbindungen (Adapter Connections) realisiert, welche Daten und Events kapseln. Die Logik ist wie folgt aufgebaut:
+[cite_start]Durch die konsequente Verwendung von Adapter-Bausteinen kann auf explizite Event-Daten-Konverter (wie `F_MOVE`) verzichtet werden, da die `AX`-Bausteine beides intern handhaben[cite: 1].
 
-1.  **UND-Verknüpfung**:
-    - Der Adapter-Anschluss von `DigitalInput_I1` ist mit dem ersten Eingang (`IN1`) des Bausteins `AND_2_BOOL` verbunden.
-    - Der Adapter-Anschluss von `DigitalInput_I2` ist mit dem zweiten Eingang (`IN2`) des Bausteins `AND_2_BOOL` verbunden.
-    - Dies bildet den Term `(I1 AND I2)`.
+-----
 
-2.  **ODER-Verknüpfung**:
-    - Das Ergebnis der UND-Verknüpfung (`AND_2_BOOL.OUT`) wird auf den ersten Eingang (`IN1`) des Bausteins `OR_2_BOOL` geführt.
-    - Der Adapter-Anschluss von `DigitalInput_I3` ist direkt mit dem zweiten Eingang (`IN2`) des Bausteins `OR_2_BOOL` verbunden.
-    - Dies vervollständigt die Logik zu `(Term1 OR I3)`.
+## Funktionsweise
 
-3.  **Ausgabe**:
-    - Das Endergebnis der ODER-Verknüpfung (`OR_2_BOOL.OUT`) ist mit dem Ausgangsbaustein `DigitalOutput_Q1.OUT` verbunden, um das Signal physikalisch auszugeben.
+Die hierarchische Struktur der Logik wird durch die Verschaltung der Adapter-Verbindungen in der Subapplikation `Uebung_002b3_AX.SUB` deutlich:
 
-**Hinweis:** Ein expliziter `F_MOVE`-Baustein ist in diesem Aufbau nicht mehr nötig, da die Datenübertragung und Triggerung durch die Adapter-Logikbausteine (`AX_...`) und die `IXA`/`QXA` I/O-Bausteine implizit gehandhabt wird.
+```xml
+<AdapterConnections>
+    <Connection Source="DigitalInput_I1.IN" Destination="AND_2_BOOL.IN1"/>
+    <Connection Source="DigitalInput_I2.IN" Destination="AND_2_BOOL.IN2"/>
+    <Connection Source="AND_2_BOOL.OUT" Destination="OR_2_BOOL.IN1"/>
+    <Connection Source="DigitalInput_I3.IN" Destination="OR_2_BOOL.IN2"/>
+    <Connection Source="OR_2_BOOL.OUT" Destination="DigitalOutput_Q1.OUT"/>
+</AdapterConnections>
+```
 
-## Zusammenfassung
-Die Übung `Uebung_002b3_AX` zeigt effizient, wie komplexe boolesche Logik mittels Adapter-Technologie in 4diac implementiert werden kann. Sie veranschaulicht die Einsparung von "Glue Logic" (wie Event- und Datenkonvertern), indem sie spezialisierte Adapter-Operatoren für AND und OR Verknüpfungen nutzt, um drei Eingänge auf einen Ausgang zu mappen.
+[cite_start][cite: 1]
+
+Der funktionale Ablauf:
+1.  Das System berechnet zuerst das Teilergebnis der UND-Verknüpfung von `I1` und `I2`.
+2.  Dieses Teilergebnis wird an den ersten Eingang des ODER-Bausteins gereicht.
+3.  Der ODER-Baustein vergleicht dieses Teilergebnis mit dem direkten Signal von `I3`.
+4.  Der Ausgang `Q1` wird aktiviert, wenn entweder beide ersten Eingänge (`I1` AND `I2`) aktiv sind ODER wenn der dritte Eingang (`I3`) aktiv ist.
+
+-----
+
+## Anwendungsbeispiel
+
+Ein typisches Anwendungsbeispiel ist eine **Anlagenfreigabe mit Überbrückung**:
+
+Ein Motor (`Q1`) soll normalerweise nur laufen, wenn zwei Sensoren (`I1` und `I2`) gleichzeitig grünes Licht geben (z.B. Öldruck erreicht UND Temperatur ok). Für Wartungszwecke oder im Notbetrieb soll der Motor jedoch auch dann gestartet werden können, wenn ein spezieller Schlüsselschalter (`I3`) betätigt wird, der die normale Logik überbrückt (Bypass). Diese Anforderung wird durch die `(I1 AND I2) OR I3` Logik exakt erfüllt.

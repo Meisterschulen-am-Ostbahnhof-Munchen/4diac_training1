@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SubAppType Name="Uebung_010a4_AX" Comment="SoftKey_F1 auf DigitalOutput_Q1 (Datapanel)">
+	<Identification Standard="61499-2" Description="Copyright (c) 2026 Meisterschulen am Ostbahnhof  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0">
+	</Identification>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Moritz Ortmeier" Date="2026-01-14">
+	</VersionInfo>
+	<CompilerInfo packageName="Uebungen">
+		<Import declaration="DataPanel::io::MI::DQ::DataPanel_MI_DO::DigitalOutput_1A"/>
+		<Import declaration="DataPanel::io::MI::const::MI::MI_00"/>
+		<Import declaration="Uebungen::const::UT::DefaultPool::SoftKey_F1"/>
+	</CompilerInfo>
+	<SubAppInterfaceList>
+	</SubAppInterfaceList>
+	<SubAppNetwork>
+		<FB Name="DigitalOutput_Q1" Type="DataPanel::io::MI::DQ::DataPanel_MI_QXA" x="-1400" y="-300">
+			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="u8SAMember" Value="MI_00"/>
+			<Parameter Name="Output" Value="DigitalOutput_1A"/>
+		</FB>
+		<FB Name="SoftKey_F1" Type="isobus::UT::io::Softkey::Softkey_IXA" x="-4600" y="-200">
+			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="u16ObjId" Value="SoftKey_F1"/>
+		</FB>
+		<AdapterConnections>
+			<Connection Source="SoftKey_F1.IN" Destination="DigitalOutput_Q1.OUT"/>
+		</AdapterConnections>
+	</SubAppNetwork>
+</SubAppType>

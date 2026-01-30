@@ -1,48 +1,55 @@
-# Uebung_017: Control Audio Signal
+# Uebung_017: Akustische Signale (Beep)
 
-* * * * * * * * * *
+```{index} single: Uebung_017: Akustische Signale (Beep)
+```
 
-## Einleitung
-Diese Übung demonstriert die Steuerung eines Audiosignals über eine Softkey-Eingabe. Bei Betätigung der definierten Taste wird ein Tonsignal mit spezifischen Parametern ausgelöst.
+[Uebung_017](https://docs.ms-muc-docs.de/projects/visual-programming-languages-docs/de/latest/training1/Ventilsteuerung/4diacIDE-workspace/test/FBs/Uebungen/Uebung_017.html)
 
-## Verwendete Funktionsbausteine (FBs)
+[![NotebookLM](media/NotebookLM_logo.png)](https://notebooklm.google.com/notebook/a6872e59-1dfc-4132-a118-aff1bc7bc944)
 
-### SoftKey_UP_F1
-- **Typ**: Softkey_IE
-- **Parameter**:
-  - QI = TRUE
-  - u16ObjId = DefaultPool::SoftKey_F1
-  - InputEvent = SoftKeyActivationCode::SK_RELEASED
+Dieser Artikel beschreibt die logiBUS®-Übung `Uebung_017`. In dieser Übung wird gezeigt, wie man den internen Summer des ISOBUS-Terminals anspricht, um akustische Rückmeldungen zu geben.
 
-### Q_CtrlAudioSignal
-- **Typ**: Q_CtrlAudioSignal
-- **Parameter**:
-  - u8NumOfRepit = 1 (Anzahl der Wiederholungen)
-  - u16Frequency = 440 (Frequenz in Hz)
-  - u16OnTimeMs = 150 (Einschaltdauer in Millisekunden)
-  - u16OffTimeMs = 0 (Ausschaltdauer in Millisekunden)
+## 🎧 Podcast
 
-## Programmablauf und Verbindungen
+* ["Store Version" – Dein Schlüssel zur Verwaltung von Objektdatenpools im nichtflüchtigen VT-Speicher (ISO 11783-6)](https://podcasters.spotify.com/pod/show/isobus-vt-objects/episodes/Store-Version--Dein-Schlssel-zur-Verwaltung-von-Objektdatenpools-im-nichtflchtigen-VT-Speicher-ISO-11783-6-e36vfh0)
+* [ISO 11783-6: Softkeys und das Virtual Terminal verstehen – Dein Schlüssel zur Landmaschinen-Mechatronik](https://podcasters.spotify.com/pod/show/isobus-vt-objects/episodes/ISO-11783-6-Softkeys-und-das-Virtual-Terminal-verstehen--Dein-Schlssel-zur-Landmaschinen-Mechatronik-e36a8b0)
+* [ISOBUS Skalierung: Wenn der Ackerschlepper-Bildschirm nicht passt – Eine Einführung in ISO 11783-6](https://podcasters.spotify.com/pod/show/isobus-vt-objects/episodes/ISOBUS-Skalierung-Wenn-der-Ackerschlepper-Bildschirm-nicht-passt--Eine-Einfhrung-in-ISO-11783-6-e36a8q6)
+* [ISOBUS-Balkendiagramm: Das Output Linear Bar Graph Objekt der ISO 11783-6 entschlüsselt](https://podcasters.spotify.com/pod/show/isobus-vt-objects/episodes/ISOBUS-Balkendiagramm-Das-Output-Linear-Bar-Graph-Objekt-der-ISO-11783-6-entschlsselt-e36l0v2)
+* [ISOBUS-Bedienoberflächen: Wenn Tasten und Hauptanzeige unterschiedlich skalieren – ISO 11783-6 entschlüsselt](https://podcasters.spotify.com/pod/show/isobus-vt-objects/episodes/ISOBUS-Bedienoberflchen-Wenn-Tasten-und-Hauptanzeige-unterschiedlich-skalieren--ISO-11783-6-entschlsselt-e36a8n8)
 
-Die Übung verwendet folgende Verbindungen:
+----
 
-- **Ereignisverbindung**: SoftKey_UP_F1.IND → Q_CtrlAudioSignal.REQ
+![](Uebung_017.png)
 
-**Programmablauf**:
-1. Beim Loslassen der F1-Taste (SoftKey_F1) wird das IND-Ereignis des SoftKey_IE-Bausteins ausgelöst
-2. Dieses Ereignis triggert den Q_CtrlAudioSignal-Baustein über dessen REQ-Eingang
-3. Der Audio-Controller erzeugt ein Tonsignal mit 440 Hz für 150 Millisekunden
-4. Das Signal wird einmalig abgespielt (keine Wiederholungen)
+## Ziel der Übung
 
-**Lernziele**:
-- Verwendung von Softkey-Input-Bausteinen
-- Konfiguration von Audio-Signal-Steuerung
-- Ereignisgesteuerte Programmabläufe
-- Parameterkonfiguration für Tonerzeugung
+Verwendung des Bausteins `Q_CtrlAudioSignal`. Es wird demonstriert, wie ein Ereignis (hier ein Softkey-Klick) eine Audio-Ausgabe am Terminal mit spezifischer Frequenz und Dauer auslöst.
 
-**Schwierigkeitsgrad**: Einfach
+-----
 
-**Vorkenntnisse**: Grundlagen der 4diac-IDE, Verständnis von Ereignisverbindungen
+## Beschreibung und Komponenten
 
-## Zusammenfassung
-Diese Übung zeigt eine einfache Implementierung zur Steuerung eines Audiosignals durch Tastendruck. Sie vermittelt grundlegende Konzepte der ereignisgesteuerten Programmierung und der Parameterkonfiguration für spezifische Hardware-Funktionalitäten in 4diac.
+[cite_start]Die Subapplikation `Uebung_017.SUB` löst bei Betätigung eines Softkeys ein Tonsignal aus[cite: 1].
+
+### Funktionsbausteine (FBs)
+
+  * **`SoftKey_UP_F1`**: Der Auslöser.
+  * **`Q_CtrlAudioSignal`**: Der ISOBUS-Ausgangsbaustein für Audio.
+  * **Parameter**:
+    * `u16Frequency`: Tonhöhe in Hertz (hier 440 Hz = Kammerton A).
+    * `u16OnTimeMs`: Dauer des Tons (150 ms).
+    * `u8NumOfRepit`: Anzahl der Wiederholungen (1).
+
+-----
+
+## Funktionsweise
+
+Die Kette ist rein ereignisbasiert:
+Ein Klick (und Loslassen) von Softkey **F1** feuert ein `IND`-Event. Dieses geht direkt an den `REQ`-Eingang des Audio-Bausteins. Das Terminal erhält daraufhin den Befehl, einmalig für 150ms mit 440 Hz zu piepsen.
+
+-----
+
+## Anwendungsbeispiel
+
+**Tastenton-Quittierung**:
+Jeder Tastendruck am Terminal soll durch einen kurzen, dezenten Piepston bestätigt werden. Dies gibt dem Bediener eine akustische Rückmeldung über die erfolgreiche Eingabe, auch wenn er nicht direkt auf den Bildschirm schaut.

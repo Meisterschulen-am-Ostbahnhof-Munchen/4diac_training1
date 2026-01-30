@@ -1,5 +1,8 @@
 # Uebung_002b3: DigitalInput_I1/_I2/_I3 auf DigitalOutput_Q1; ohne MOVE
 
+```{index} single: Uebung_002b3: DigitalInput_I1/_I2/_I3 auf DigitalOutput_Q1; ohne MOVE
+```
+
 * * * * * * * * * *
 
 ## Einleitung

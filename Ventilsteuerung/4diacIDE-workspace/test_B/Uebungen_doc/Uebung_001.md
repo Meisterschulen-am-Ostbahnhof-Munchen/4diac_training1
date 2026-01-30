@@ -1,65 +1,66 @@
-# Uebung_001: DigitalInput_I1 auf DigitalOutput_Q1
+# Uebung_001: Direkte Signalweiterleitung (Event & Daten)
+
+```{index} single: Uebung_001: Direkte Signalweiterleitung (Event & Daten)
+```
 
 [Uebung_001](https://docs.ms-muc-docs.de/projects/visual-programming-languages-docs/de/latest/training1/Ventilsteuerung/4diacIDE-workspace/test/FBs/Uebungen/Uebung_001.html)
 
 [![NotebookLM](media/NotebookLM_logo.png)](https://notebooklm.google.com/notebook/a6872e59-1dfc-4132-a118-aff1bc7bc944)
 
-Dieser Artikel beschreibt die grundlegende logiBUS®-Übung `Uebung_001`, bei der ein digitaler Eingang direkt mit einem digitalen Ausgang verbunden wird.
+Dieser Artikel beschreibt die grundlegende logiBUS®-Übung `Uebung_001`. Hier wird das fundamentale Prinzip der IEC 61499 demonstriert: Die explizite Trennung von Datenfluss und Ereignisfluss.
 
+## 🎧 Podcast
 
-## Podcast
-<iframe src="https://creators.spotify.com/pod/profile/logibus/embed/episodes/LogiBUS--IEC-61499-Daten--und-Ereignisflsse-einfach-erklrt--Vom-Schalter-zur-intelligenten-Steuerung-e36vldb/a-ac3vadb" height="102px" width="400px" frameborder="0" scrolling="no"></iframe>
+* [Analyse der Novellierung der Meisterprüfungsverordnung im Land- und Baumaschinenmechatroniker-Handwerk: Ein Detaillierter Vergleich der Verordnungen von 2024 und 2001](https://podcasters.spotify.com/pod/show/ms-muc-lama/episodes/Analyse-der-Novellierung-der-Meisterprfungsverordnung-im-Land--und-Baumaschinenmechatroniker-Handwerk-Ein-Detaillierter-Vergleich-der-Verordnungen-von-2024-und-2001-e37aejv)
 
 ----
-
-
 
 ![](Uebung_001_Gemini.jpg)
 
 ![](Uebung_001.png)
 
+## Ziel der Übung
 
-## Übersicht
+Das Ziel dieser Einstiegsübung ist es, ein Signal von einem physischen digitalen Eingang zu einem digitalen Ausgang zu leiten. Dabei lernen die Anwender, dass in der IEC 61499 eine reine Datenverbindung (die "Leitung") nicht ausreicht – es muss auch ein Ereignis (der "Trigger") übertragen werden, damit der Zielbaustein die Daten verarbeitet.
 
-**Übung 001** ist ein grundlegendes Anwendungsbeispiel im logiBUS®-System. Das Ziel dieser Übung ist es, den Zustand eines digitalen Eingangssignals direkt an einen digitalen Ausgang weiterzuleiten. Wenn der Eingang `TRUE` (wahr) ist, soll auch der Ausgang `TRUE` sein.
+-----
 
-**Kernfunktionalität:** `DigitalInput_I1` ➡️ `DigitalOutput_Q1`
+## Beschreibung und Komponenten
 
-## Verwendete Funktionsbausteine (FBs)
+[cite_start]Die Übung besteht aus einer Subapplikation (`Uebung_001.SUB`), die einen Eingangsbaustein und einen Ausgangsbaustein über zwei separate Verbindungstypen verknüpft[cite: 1].
 
-In dieser Übung werden zwei zentrale Funktionsbausteine aus der logiBUS®-Bibliothek verwendet:
+### Funktionsbausteine (FBs)
 
-### 1. DigitalInput_I1
-Dieser Baustein repräsentiert einen physikalischen digitalen Eingang.
-* [cite_start]**Name**: `DigitalInput_I1` [cite: 1]
-* [cite_start]**Typ**: `logiBUS_IX` [cite: 1]
-* [cite_start]**Konfigurierter Eingang**: `logiBUS_DI::Input_I1` [cite: 1]
+  * **`DigitalInput_I1`**: Eine Instanz des Typs `logiBUS_IX`. [cite_start]Dieser Baustein repräsentiert den physischen Eingang `Input_I1`[cite: 1]. Er stellt sowohl den logischen Zustand (`IN`) als auch ein Benachrichtigungs-Ereignis (`IND`) zur Verfügung.
+  * **`DigitalOutput_Q1`**: Eine Instanz des Typs `logiBUS_QX`. [cite_start]Dieser Baustein steuert den physischen Ausgang `Output_Q1`[cite: 1]. Er benötigt einen Datenwert (`OUT`) und einen Auslöse-Befehl (`REQ`).
 
-### 2. DigitalOutput_Q1
-Dieser Baustein repräsentiert einen physikalischen digitalen Ausgang.
-* [cite_start]**Name**: `DigitalOutput_Q1` [cite: 1]
-* [cite_start]**Typ**: `logiBUS_QX` [cite: 1]
-* [cite_start]**Konfigurierter Ausgang**: `logiBUS_DO::Output_Q1` [cite: 1]
+-----
 
-## Programmablauf und Verbindungen
+## Funktionsweise
 
-Die Logik der Anwendung wird durch die Verbindung der beiden Funktionsbausteine realisiert.
+Die Logik wird durch zwei parallele Verbindungen realisiert. Der Aufbau in `Uebung_001.SUB` verdeutlicht dies:
 
-### Datenverbindung (Data Connection)
+```xml
+<EventConnections>
+    <Connection Source="DigitalInput_I1.IND" Destination="DigitalOutput_Q1.REQ"/>
+</EventConnections>
+<DataConnections>
+    <Connection Source="DigitalInput_I1.IN" Destination="DigitalOutput_Q1.OUT"/>
+</DataConnections>
+```
 
-Die wesentliche Logik wird über die Datenverbindung hergestellt:
-* [cite_start]Der Ausgangs-Datenpin `IN` des `DigitalInput_I1` Bausteins wird mit dem Eingangs-Datenpin `OUT` des `DigitalOutput_Q1` Bausteins verbunden. [cite: 1]
+[cite_start][cite: 1]
 
-Dadurch wird der boolesche Wert (TRUE/FALSE) des Eingangs direkt an den Ausgang übergeben.
+Der Prozess läuft wie folgt ab:
+1.  Der Baustein `DigitalInput_I1` erkennt eine Änderung am Hardware-Eingang `I1`.
+2.  Er aktualisiert seinen Daten-Ausgang `IN` mit dem neuen Wert (TRUE oder FALSE).
+3.  Zeitgleich feuert er ein Ereignis am Port `IND` (Indication) ab.
+4.  Dieses Ereignis wandert über die **Event Connection** zum Port `REQ` (Request) des Bausteins `DigitalOutput_Q1`.
+5.  Erst durch den Empfang des Ereignisses liest `DigitalOutput_Q1` den Wert, der an seinem Port `OUT` über die **Data Connection** anliegt, und schaltet den Hardware-Ausgang entsprechend.
 
-### Ereignisverbindung (Event Connection)
+-----
 
-Damit der Ausgangsbaustein weiß, *wann* er den neuen Datenwert verarbeiten soll, wird eine Ereignisverbindung genutzt:
-* [cite_start]Der Ereignis-Ausgangspin `IND` (Indication) des `DigitalInput_I1` wird mit dem Ereignis-Eingangspin `REQ` (Request) des `DigitalOutput_Q1` verbunden. [cite: 1]
+## Anwendungsbeispiel
 
-Immer wenn sich der Zustand des Eingangs ändert, sendet der `IND`-Pin ein Ereignis, welches den `DigitalOutput_Q1`-Baustein auffordert, den anliegenden Datenwert zu lesen und zu setzen.
-
-## Zusammenfassung
-
-Diese einfache Übung demonstriert das grundlegende Prinzip der IEC 61499, bei dem Daten- und Ereignisflüsse getrennt voneinander definiert werden. Der Wert von **`Input_I1`** wird gelesen und ohne weitere logische Verarbeitung direkt an **`Output_Q1`** geschrieben, sobald eine Zustandsänderung am Eingang stattfindet.
-
+Ein **Lichtschalter im Haus**:
+Der Schalter an der Wand ist der Eingang `I1`, die Glühbirne an der Decke ist der Ausgang `Q1`. Das Kabel überträgt den Strom (Daten), aber erst das Umlegen des Schalters (Ereignis) sorgt dafür, dass die Information "An" oder "Aus" verarbeitet und umgesetzt wird.

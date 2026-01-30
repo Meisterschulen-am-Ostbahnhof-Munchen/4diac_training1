@@ -1,48 +1,67 @@
-# Uebung_002a5_AX: DigitalInput_I1-3 mit OR auf DigitalOutput_Q1, mit Plug and Socket
+# Uebung_002a5_AX: ODER-Verknüpfung mit drei Eingängen
 
-* * * * * * * * * *
+```{index} single: Uebung_002a5_AX: ODER-Verknüpfung mit drei Eingängen
+```
 
-## Einleitung
-Diese Übung demonstriert die Verwendung von digitalen Eingängen und einem ODER-Baustein zur Steuerung eines digitalen Ausgangs. Die Schaltung verbindet drei digitale Eingänge über einen 3-fach ODER-Baustein mit einem digitalen Ausgang, wobei Plug-and-Socket-Verbindungen verwendet werden.
+[Uebung_002a5_AX](https://docs.ms-muc-docs.de/projects/visual-programming-languages-docs/de/latest/training1/Ventilsteuerung/4diacIDE-workspace/test/FBs/Uebungen/Uebung_002a5_AX.html)
 
-## Verwendete Funktionsbausteine (FBs)
+[![NotebookLM](media/NotebookLM_logo.png)](https://notebooklm.google.com/notebook/041f4df4-b729-484d-b786-b6dcdf151961)
 
-### Hauptbausteine:
-- **DigitalInput_I1**, **DigitalInput_I2**, **DigitalInput_I3** (Typ: logiBUS_IXA)
-- **AX_OR_3** (Typ: AX_OR_3)
-- **DigitalOutput_Q1** (Typ: logiBUS_QXA)
+Dieser Artikel beschreibt die logiBUS®-Übung `Uebung_002a5_AX`. In dieser Übung wird eine logische ODER-Verknüpfung (OR) mit drei Eingängen realisiert. Der digitale Ausgang wird aktiviert, sobald mindestens einer der drei überwachten Eingänge ein Signal führt.
 
-### Sub-Bausteine: AX_OR_3
-- **Typ**: AX_OR_3
-- **Verwendete interne FBs**: Keine weiteren internen FBs angegeben
-- **Funktionsweise**: Der Baustein realisiert eine logische ODER-Verknüpfung mit drei Eingängen. Wenn mindestens einer der drei Eingänge aktiv ist, wird der Ausgang auf TRUE gesetzt.
+----
 
-## Programmablauf und Verbindungen
+![](Uebung_002a5_AX.png)
 
-**Verbindungen:**
-- DigitalInput_I1.IN → AX_OR_3.IN1
-- DigitalInput_I2.IN → AX_OR_3.IN2  
-- DigitalInput_I3.IN → AX_OR_3.IN3
-- AX_OR_3.OUT → DigitalOutput_Q1.OUT
+## Ziel der Übung
 
-**Parameterkonfiguration:**
-- Alle DigitalInput-Bausteine haben QI = TRUE
-- DigitalInput_I1 nutzt logiBUS_DI::Input_I1
-- DigitalInput_I2 nutzt logiBUS_DI::Input_I2  
-- DigitalInput_I3 nutzt logiBUS_DI::Input_I3
-- DigitalOutput_Q1 nutzt logiBUS_DO::Output_Q1
+Das Hauptziel dieser Übung ist die Erweiterung der logischen Grundfunktionen auf mehr als zwei Eingangssignale. Sie verdeutlicht die Skalierbarkeit von Logikbausteinen in der IEC 61499 und zeigt, wie mehrere alternative Schaltbedingungen effizient in einer Steuerung zusammengefasst werden können.
 
-**Lernziele:**
-- Verständnis der logischen ODER-Verknüpfung
-- Umgang mit digitalen Ein- und Ausgängen
-- Anwendung von Plug-and-Socket-Verbindungen
-- Konfiguration von Bus-Systemparametern
+-----
 
-**Schwierigkeitsgrad**: Einsteiger
+## Beschreibung und Komponenten
 
-**Benötigte Vorkenntnisse**: Grundlagen der digitalen Logik, Basiswissen 4diac-IDE
+[cite_start]Die Subapplikation `Uebung_002a5_AX.SUB` implementiert eine 3-fach-ODER-Logik unter Verwendung von Adapterverbindungen[cite: 1].
 
-**Starten der Übung**: Die Übung kann direkt in der 4diac-IDE geladen und auf einem kompatiblen Zielsystem ausgeführt werden.
+### Funktionsbausteine (FBs)
 
-## Zusammenfassung
-Diese Übung vermittelt grundlegende Konzepte der digitalen Signalverarbeitung mit ODER-Verknüpfungen. Durch die Verwendung von drei Eingängen und der entsprechenden Verknüpfungstechnik lernen Anwender die Prinzipien der logischen Verknüpfung und die Ansteuerung von Ausgängen in industriellen Steuerungssystemen kennen.
+In dieser Konfiguration werden folgende Bausteine eingesetzt:
+
+  * **`DigitalInput_I1`, `I2`, `I3`**: Drei Instanzen des Typs `logiBUS_IXA`. [cite_start]Diese erfassen die Zustände der Hardware-Eingänge `Input_I1` bis `Input_I3`[cite: 1].
+  * **`AX_OR_3`**: Eine Instanz des Typs `AX_OR_3`. [cite_start]Dieser Baustein führt eine ODER-Verknüpfung für drei Adapter-Eingänge (`IN1`, `IN2`, `IN3`) aus und stellt das Ergebnis am Adapter-Ausgang `OUT` bereit[cite: 1].
+  * **`DigitalOutput_Q1`**: Eine Instanz des Typs `logiBUS_QXA`. [cite_start]Dieser Baustein steuert den Hardware-Ausgang `Output_Q1`[cite: 1].
+
+### Adapter-Schnittstelle: `AX.adp`
+
+[cite_start]Wie bei den vorangegangenen Übungen wird der Adapter-Typ `AX` für die nahtlose Übertragung von Ereignissen und Daten verwendet[cite: 2].
+
+-----
+
+## Funktionsweise
+
+Die Logik wird durch die Verschaltung der drei Eingänge mit dem Logik-Baustein in der Subapplikation realisiert. Der Aufbau in `Uebung_002a5_AX.SUB` ist wie folgt definiert:
+
+```xml
+<AdapterConnections>
+    <Connection Source="DigitalInput_I1.IN" Destination="AX_OR_3.IN1"/>
+    <Connection Source="DigitalInput_I2.IN" Destination="AX_OR_3.IN2"/>
+    <Connection Source="DigitalInput_I3.IN" Destination="AX_OR_3.IN3"/>
+    <Connection Source="AX_OR_3.OUT" Destination="DigitalOutput_Q1.OUT"/>
+</AdapterConnections>
+```
+
+[cite_start][cite: 1]
+
+Der funktionale Ablauf:
+1.  Der Baustein `AX_OR_3` überwacht kontinuierlich alle drei Adapter-Eingänge auf Zustandsänderungen.
+2.  Wenn mindestens ein Eingang den Zustand `TRUE` einnimmt, schaltet der Ausgang `OUT` auf `TRUE`.
+3.  Nur wenn alle drei Eingänge (`I1` UND `I2` UND `I3`) den Zustand `FALSE` haben, wird auch der Ausgang deaktiviert.
+4.  Der Ausgangsbaustein `DigitalOutput_Q1` folgt dem logischen Ergebnis des ODER-Bausteins in Echtzeit.
+
+-----
+
+## Anwendungsbeispiel
+
+Ein typisches Anwendungsbeispiel ist eine **Sammelstörmeldung**:
+
+Drei verschiedene Sensoren an einer Maschine (z.B. Übertemperatur `I1`, Ölmangel `I2` und Not-Halt `I3`) sollen eine gemeinsame Warnlampe (`Q1`) oder eine Hupe aktivieren. Sobald auch nur einer der Sensoren eine Störung meldet, wird der Bediener über den gemeinsamen Ausgang gewarnt. Dies reduziert den Verdrahtungsaufwand und bündelt wichtige Statusinformationen.

@@ -1,58 +1,32 @@
-# Uebung_004c5: Toggle Flip-Flop mit IE mit BUTTON_PRESS_END
+# Uebung_004c5: Beliebiges Loslassen (Press End)
 
-* * * * * * * * * *
+```{index} single: Uebung_004c5: Beliebiges Loslassen (Press End)
+```
 
-## Einleitung
-Diese Übung demonstriert die Funktionsweise eines Toggle Flip-Flops (T-FF) mit spezifischer Ereignisauslösung. Der Schwerpunkt liegt auf der Verwendung eines Eingabeereignisses (BUTTON_PRESS_END) zur Steuerung des Toggle-Verhaltens.
+[Uebung_004c5](https://docs.ms-muc-docs.de/projects/visual-programming-languages-docs/de/latest/training1/Ventilsteuerung/4diacIDE-workspace/test/FBs/Uebungen/Uebung_004c5.html)
 
-## Verwendete Funktionsbausteine (FBs)
+[![NotebookLM](media/NotebookLM_logo.png)](https://notebooklm.google.com/notebook/a6872e59-1dfc-4132-a118-aff1bc7bc944)
 
-### DigitalInput_CLK_I1
-- **Typ**: logiBUS_IE
-- **Parameter**:
-  - QI = TRUE (aktiviert den Baustein)
-  - Input = logiBUS_DI::Input_I1 (verwendet digitalen Eingang I1)
-  - InputEvent = logiBUS_DI_Events::BUTTON_PRESS_END (löst bei Tastenloslass-Ereignis aus)
+Dieser Artikel beschreibt die logiBUS®-Übung `Uebung_004c5`.
 
-### E_T_FF
-- **Typ**: E_T_FF (Ereignisgesteuerter Toggle Flip-Flop)
-- **Ereigniseingang**: CLK (Clock-Eingang)
-- **Ereignisausgang**: EO (Ereignisausgang)
-- **Datenausgang**: Q (Ausgangswert des Flip-Flops)
+----
 
-### DigitalOutput_Q1
-- **Typ**: logiBUS_QX
-- **Parameter**:
-  - QI = TRUE (aktiviert den Baustein)
-  - Output = logiBUS_DO::Output_Q1 (steuert digitalen Ausgang Q1 an)
+![](Uebung_004c5.png)
 
-## Programmablauf und Verbindungen
+## Ziel der Übung
 
-**Ereignisverbindungen:**
-- DigitalInput_CLK_I1.IND → E_T_FF.CLK
-- E_T_FF.EO → DigitalOutput_Q1.REQ
+Nutzung des Ereignisses `BUTTON_PRESS_END`.
 
-**Datenverbindungen:**
-- E_T_FF.Q → DigitalOutput_Q1.OUT
+-----
 
-**Ablauf:**
-1. Beim Loslassen einer Taste an Eingang I1 wird das BUTTON_PRESS_END-Ereignis ausgelöst
-2. Dieses Ereignis triggert den Clock-Eingang des Toggle Flip-Flops
-3. Der E_T_FF wechselt seinen Ausgangszustand (Q) bei jedem Ereignis
-4. Der neue Zustand wird an den Digitalausgang Q1 weitergeleitet
-5. Die LED an Ausgang Q1 ändert bei jedem Tastendruck ihren Zustand (Ein/Aus)
+## Funktionsweise
 
-**Lernziele:**
-- Verständnis von Toggle Flip-Flops
-- Umgang mit spezifischen Eingabeereignissen
-- Ereignisgesteuerte Programmierung in 4diac
-- Verbindung von digitalen Ein- und Ausgängen
+[cite_start]Der Baustein `DigitalInput_CLK_I1` in `Uebung_004c5.SUB` reagiert auf jede fallende Flanke[cite: 1].
 
-**Schwierigkeitsgrad**: Einsteiger
+Dieses Ereignis feuert **immer**, wenn der Taster losgelassen wird – völlig unabhängig davon, ob er vorher kurz (`CLICK`) oder lang (`LONG_PRESS`) gedrückt wurde. Es ist das universelle Ereignis für das Ende einer Interaktion.
 
-**Benötigte Vorkenntnisse**: Grundlagen der digitalen Schaltungen, Basiswissen 4diac-IDE
+-----
 
-**Starten der Übung**: Programm in 4diac-IDE laden und auf logi.CORE oder ähnliche Hardware deployen
+## Anwendungsbeispiel
 
-## Zusammenfassung
-Diese Übung zeigt eine praktische Implementierung eines Toggle Flip-Flops mit ereignisgesteuerter Auslösung. Der BUTTON_PRESS_END-Event ermöglicht ein zuverlässiges Toggeln des Ausgangszustands bei jedem Tastenloslassen, was typische Anwendungsfälle wie Schaltfunktionen oder Zustandswechsel abbildet.
+**Sicherheits-Stopp**: Eine Funktion (z.B. ein Kranarm) bewegt sich, solange die Taste gedrückt ist. Sobald der Finger weggenommen wird (`PRESS_END`), muss die Bewegung sofort stoppen, egal wie kurz die Betätigung war.

@@ -1,81 +1,49 @@
-# Uebung_019c: Umschalten einer Maske
+# Uebung_019c: Interaktive Alarm-Verriegelung
 
-* * * * * * * * * *
+```{index} single: Uebung_019c: Interaktive Alarm-Verriegelung
+```
 
-## Einleitung
-Diese Übung demonstriert das Umschalten zwischen verschiedenen Masken auf einem Anzeigegerät. Das System ermöglicht die Auswahl unterschiedlicher Anzeigemasken über Tastereingänge und behandelt gleichzeitig Alarmzustände mit entsprechender Visualisierung.
+[Uebung_019c](https://docs.ms-muc-docs.de/projects/visual-programming-languages-docs/de/latest/training1/Ventilsteuerung/4diacIDE-workspace/test/FBs/Uebungen/Uebung_019c.html)
 
-## Verwendete Funktionsbausteine (FBs)
+[![NotebookLM](media/NotebookLM_logo.png)](https://notebooklm.google.com/notebook/a6872e59-1dfc-4132-a118-aff1bc7bc944)
 
-### DigitalInput_CLK_I1 / DigitalInput_CLK_I2
-- **Typ**: logiBUS_IE
-- **Parameter**:
-  - QI = TRUE
-  - Input = logiBUS_DI::Input_I1 / logiBUS_DI::Input_I2
-  - InputEvent = logiBUS_DI_Events::BUTTON_SINGLE_CLICK
+Dieser Artikel beschreibt die logiBUS®-Übung `Uebung_019c`. Dies ist die komplexeste Navigations-Logik, bei der die Maskenumschaltung aktiv vom Hardware-Zustand blockiert werden kann.
 
-### Q_ActiveMask
-- **Typ**: Q_ActiveMask
-- **Parameter**:
-  - u16WorkSetId = DefaultPool::WorkingSet_0
+----
 
-### F_SEL_E_2
-- **Typ**: F_SEL_E_4
-- **Parameter**:
-  - IN0 = DefaultPool::DataMask_M1
-  - IN1 = DefaultPool::DataMask_M2
-  - IN2 = DefaultPool::AlarmMask_A2_medium
-  - IN3 = DefaultPool::DataMask_M1
+![](Uebung_019c.png)
 
-### ACK
-- **Typ**: logiBUS_IE
-- **Parameter**:
-  - QI = TRUE
-  - Input = logiBUS_DI::Input_I4
-  - InputEvent = logiBUS_DI_Events::BUTTON_SINGLE_CLICK
+## Ziel der Übung
 
-### E_SR
-- **Typ**: E_SR
+Implementierung einer bedingten Navigationssteuerung. Der Wechsel der Bildschirmseiten soll unterbunden werden, solange ein aktiver Alarm anliegt.
 
-### Alarmausgang
-- **Typ**: logiBUS_QX
-- **Parameter**:
-  - QI = TRUE
-  - Output = logiBUS_DO::Output_Q8
+-----
 
-### Alarmeingang
-- **Typ**: logiBUS_IX
-- **Parameter**:
-  - QI = TRUE
-  - Input = logiBUS_DI::Input_I3
+## Beschreibung und Komponenten
 
-### E_SWITCH / E_PERMIT_INVERT / E_PERMIT_INVERT_1 / E_PERMIT_INVERT_2
-- **Typ**: E_SWITCH
+[cite_start]Die Subapplikation `Uebung_019c.SUB` nutzt mehrere `E_SWITCH` Bausteine als "Türsteher" für die Ereignisse[cite: 1].
 
-## Programmablauf und Verbindungen
+### Funktionsbausteine (FBs)
 
-Das System arbeitet mit folgenden Hauptfunktionen:
+  * **`Alarmeingang`**: Ein physischer Sensor (`I3`). Solange dieser `TRUE` ist, herrscht Alarmzustand.
+  * **`E_SWITCH` (diverse)**: Prüfen vor jeder Aktion, ob der Alarmeingang aktiv ist.
+  * **`ACK`**: Ein physischer Quittier-Taster (`I4`) anstelle eines Softkeys.
 
-**Maskenauswahl:**
-- Taster I1 und I2 dienen zur Auswahl zwischen verschiedenen Datenmasken (M1, M2)
-- Jeder Tastendruck löst über E_PERMIT_INVERT_1 und E_PERMIT_INVERT_2 die entsprechende Maskenanforderung aus
-- Die Auswahl erfolgt über den F_SEL_E_2 Baustein, der zwischen vier verschiedenen Masken wählen kann
+-----
 
-**Alarmbehandlung:**
-- Ein Alarmeingang (I3) überwacht den Alarmzustand
-- Bei Alarmaktivierung wird automatisch auf die Alarmmaske A2_medium umgeschaltet
-- Der Alarmzustand wird über ein E_SR Flip-Flop gespeichert
-- Ein Bestätigungstaster (I4) dient zur Alarmquittierung
+## Funktionsweise
 
-**Ereignisverbindungen:**
-- Tasterereignisse werden zu den E_SWITCH und E_PERMIT Bausteinen geleitet
-- Maskenauswahl-Ereignisse werden an Q_ActiveMask weitergegeben
-- Alarmereignisse steuern das E_SR Flip-Flop und die Alarmausgabe
+Die Weichen blockieren die normalen Navigations-Befehle:
+1.  Drückt der Nutzer `I1` (Maske 1), geht das Event zuerst an einen `E_SWITCH`.
+2.  Die Weiche prüft den `Alarmeingang`.
+    *   Ist **kein** Alarm vorhanden (`G=FALSE`), wird das Event zu `EO0` ➡️ `F_SEL_E_4` durchgelassen. Die Seite wechselt.
+    *   Ist ein Alarm aktiv (`G=TRUE`), landet das Event bei `EO1` (nicht verbunden). Der Seitenwechsel wird **ignoriert**.
+3.  Tritt ein Alarm ein, schaltet das System sofort auf die Alarmmaske und aktiviert die Hupe.
+4.  Erst wenn der Alarm-Sensor (`I3`) wieder FALSE ist **UND** der Nutzer den Quittier-Taster (`I4`) drückt, wird der Speicher zurückgesetzt und die Navigation wieder freigegeben.
 
-**Datenverbindungen:**
-- Die ausgewählte Masken-ID wird an Q_ActiveMask übergeben
-- Alarmzustände werden an den physischen Ausgang Q8 weitergeleitet
-- Alarmeingangssignale werden an mehrere Schalterbausteine verteilt
+-----
 
-## Zusammenfassung
-Diese Übung vermittelt praktische Kenntnisse in der Maskensteuerung und Alarmbehandlung in Automatisierungssystemen. Sie zeigt die Integration von Tastereingängen, die Auswahl zwischen verschiedenen Anzeigemasken und die Behandlung von Alarmzuständen mit Quittierungsmöglichkeit. Das System demonstriert eine typische Anwendung in der Prozessvisualisierung mit strukturierter Ereignis- und Datenverarbeitung.
+## Anwendungsbeispiel
+
+**Zwingende Störungsbehebung**:
+Bei einem kritischen Hardware-Fehler (z.B. Not-Aus betätigt) darf der Bediener das Terminal nicht weiter zur normalen Maschinensteuerung nutzen. Er wird auf der Alarmseite "festgehalten", bis der Not-Aus entriegelt und die Störung quittiert wurde. Dies erzwingt die Aufmerksamkeit für das vorrangige Sicherheitsproblem.

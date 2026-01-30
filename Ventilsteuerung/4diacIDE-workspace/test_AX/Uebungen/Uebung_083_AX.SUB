@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SubAppType Name="Uebung_083_AX" Comment="Beispiel für AUDI_CTUD_UDINT (Adapter-basiert)">
+	<Identification Standard="61499-2" Description="Copyright (c) 2026 Meisterschulen am Ostbahnhof  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0&#10;   &#10;Beispiel für AUDI_CTUD_UDINT&#10;Aufwärts zählen&#10;UAO Curriculum Module 3 - The IEC 61499 Standard, &#10;Seite 94">
+	</Identification>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2026-01-17">
+	</VersionInfo>
+	<CompilerInfo packageName="Uebungen">
+		<Import declaration="Uebungen::const::UT::DefaultPool::OutputNumber_N1"/>
+		<Import declaration="logiBUS::io::DI::logiBUS_DI::Input_I1"/>
+		<Import declaration="logiBUS::io::DI::logiBUS_DI::Input_I2"/>
+		<Import declaration="logiBUS::io::DI::logiBUS_DI::Input_I3"/>
+		<Import declaration="logiBUS::io::DI::logiBUS_DI::Input_I4"/>
+		<Import declaration="logiBUS::io::DI::logiBUS_DI_Events::BUTTON_SINGLE_CLICK"/>
+		<Import declaration="logiBUS::io::DQ::logiBUS_DO::Output_Q1"/>
+		<Import declaration="logiBUS::io::DQ::logiBUS_DO::Output_Q2"/>
+	</CompilerInfo>
+	<SubAppInterfaceList>
+	</SubAppInterfaceList>
+	<SubAppNetwork>
+		<FB Name="DigitalOutput_Q1" Type="logiBUS::io::DQ::logiBUS_QXA" x="-6500" y="-300">
+			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="Output" Value="Output_Q1"/>
+		</FB>
+		<FB Name="DigitalInput_CLK_I1" Type="logiBUS::io::DI::logiBUS_IE" x="-10800" y="-1000">
+			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="Input" Value="Input_I1"/>
+			<Parameter Name="InputEvent" Value="BUTTON_SINGLE_CLICK"/>
+		</FB>
+		<FB Name="AUDI_CTUD_UDINT" Type="adapter::events::unidirectional::AUDI_CTUD_UDINT" x="-9000" y="0">
+		</FB>
+		<FB Name="DigitalInput_CLK_I2" Type="logiBUS::io::DI::logiBUS_IE" x="-10800" y="0">
+			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="Input" Value="Input_I2"/>
+			<Parameter Name="InputEvent" Value="BUTTON_SINGLE_CLICK"/>
+		</FB>
+		<FB Name="DigitalInput_CLK_I3" Type="logiBUS::io::DI::logiBUS_IE" x="-10800" y="1000">
+			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="Input" Value="Input_I3"/>
+			<Parameter Name="InputEvent" Value="BUTTON_SINGLE_CLICK"/>
+		</FB>
+		<FB Name="DigitalInput_CLK_I4" Type="logiBUS::io::DI::logiBUS_IE" x="-12500" y="2000">
+			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="Input" Value="Input_I4"/>
+			<Parameter Name="InputEvent" Value="BUTTON_SINGLE_CLICK"/>
+		</FB>
+		<FB Name="DigitalOutput_Q2" Type="logiBUS::io::DQ::logiBUS_QXA" x="-6500" y="800">
+			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="Output" Value="Output_Q2"/>
+		</FB>
+		<FB Name="Q_NumericValue_AUDI" Type="isobus::UT::Q::Q_NumericValue_AUDI" x="-6500" y="2100">
+			<Parameter Name="u16ObjId" Value="OutputNumber_N1"/>
+		</FB>
+		<FB Name="AUDI_UDINT_TO_UDI" Type="adapter::conversion::unidirectional::AUDI_UDINT_TO_UDI" x="-11100" y="2200">
+			<Parameter Name="OUT" Value="UDINT#5"/>
+		</FB>
+		<EventConnections>
+			<Connection Source="DigitalInput_CLK_I1.IND" Destination="AUDI_CTUD_UDINT.CU" dx1="453.33"/>
+			<Connection Source="DigitalInput_CLK_I2.IND" Destination="AUDI_CTUD_UDINT.CD" dx1="453.33"/>
+			<Connection Source="DigitalInput_CLK_I3.IND" Destination="AUDI_CTUD_UDINT.R" dx1="453.33"/>
+			<Connection Source="DigitalInput_CLK_I4.IND" Destination="AUDI_UDINT_TO_UDI.REQ" dx1="253.33"/>
+		</EventConnections>
+		<AdapterConnections>
+			<Connection Source="AUDI_CTUD_UDINT.QU" Destination="DigitalOutput_Q1.OUT" dx1="753.33"/>
+			<Connection Source="AUDI_CTUD_UDINT.QD" Destination="DigitalOutput_Q2.OUT" dx1="753.33"/>
+			<Connection Source="AUDI_CTUD_UDINT.CV" Destination="Q_NumericValue_AUDI.u32NewValue" dx1="306.67"/>
+			<Connection Source="AUDI_UDINT_TO_UDI.AUDI_OUT" Destination="AUDI_CTUD_UDINT.PV" dx1="766.67"/>
+		</AdapterConnections>
+	</SubAppNetwork>
+</SubAppType>

@@ -1,61 +1,67 @@
-# Uebung_003b: DigitalInput_I1-2-3-4 auf DigitalOutput_Q1-2-3-4
+# Uebung_003b: Modulare Parallelsteuerung (4-fach)
 
-* * * * * * * * * *
+```{index} single: Uebung_003b: Modulare Parallelsteuerung (4-fach)
+```
 
-## Einleitung
-Diese Übung demonstriert die grundlegende Verknüpfung von digitalen Eingängen mit digitalen Ausgängen in einer 4diac-IDE Anwendung. Es werden vier unabhängige Signalwege von Eingängen I1-I4 zu Ausgängen Q1-Q4 realisiert, wobei jeder Signalweg durch einen eigenen Sub-App-Baustein abgebildet wird.
+[Uebung_003b](https://docs.ms-muc-docs.de/projects/visual-programming-languages-docs/de/latest/training1/Ventilsteuerung/4diacIDE-workspace/test/FBs/Uebungen/Uebung_003b.html)
 
-## Verwendete Funktionsbausteine (FBs)
+[![NotebookLM](media/NotebookLM_logo.png)](https://notebooklm.google.com/notebook/a6872e59-1dfc-4132-a118-aff1bc7bc944)
 
-### Hauptbaustein: Uebung_003b
-- **Typ**: SubAppType
-- **Funktion**: Enthält vier Instanzen des Sub-Bausteins Uebung_003b_sub, die jeweils einen Eingang mit einem Ausgang verbinden
+Dieser Artikel beschreibt die logiBUS®-Übung `Uebung_003b`. Diese Übung erweitert das Konzept der modularen Steuerung aus `Uebung_003a` auf insgesamt vier unabhängige Kanäle.
 
-### Sub-Bausteine: Uebung_003b_sub
-- **Typ**: SubAppType
-- **Verwendete interne FBs**:
-  - **logiBUS_IX**: Digitaler Eingangsbaustein
-    - Parameter: QI = TRUE (aktiviert)
-    - Ereignisausgang: IND (Input Data Change)
-    - Datenausgang: IN (Eingangswert)
-  
-  - **logiBUS_QX**: Digitaler Ausgangsbaustein
-    - Parameter: QI = TRUE (aktiviert)
-    - Ereigniseingang: REQ (Request to update output)
-    - Dateneingang: OUT (Ausgangswert)
+----
 
-- **Funktionsweise**: 
-  - Der IX-Baustein überwacht den digitalen Eingang
-  - Bei Zustandsänderung am Eingang (IND-Event) wird der QX-Baustein aktiviert (REQ-Event)
-  - Der Eingangswert wird direkt an den Ausgang weitergeleitet
+![](Uebung_003b.png)
 
-## Programmablauf und Verbindungen
+## Ziel der Übung
 
-**Signalwege:**
-- F1: Input_I1 → Output_Q1
-- F2: Input_I2 → Output_Q2  
-- F3: Input_I3 → Output_Q3
-- F4: Input_I4 → Output_Q4
+Das Hauptziel ist die Demonstration der Skalierbarkeit durch Typisierung. Es wird gezeigt, wie einfach eine bestehende Logik vervielfältigt werden kann, indem ein bereits definierter Sub-App-Typ mehrfach instanziiert wird. Dies unterstreicht den Effizienzvorteil der IEC 61499 bei der Verwaltung vieler gleichartiger Hardware-Schnittstellen.
 
-**Ereignisverbindungen:**
-- IX.IND → QX.REQ (bei Zustandsänderung am Eingang wird Ausgang aktualisiert)
+-----
 
-**Datenverbindungen:**
-- IX.IN → QX.OUT (direkte Wertübertragung)
-- Input-Parameter → IX.Input (Eingangskonfiguration)
-- Output-Parameter → QX.Output (Ausgangskonfiguration)
+## Beschreibung und Komponenten
 
-**Lernziele:**
-- Verständnis der grundlegenden E/A-Verknüpfung
-- Arbeit mit logiBUS-Schnittstellenbausteinen
-- Parametrierung von Sub-App-Bausteinen
-- Aufbau modularer Applikationen mit wiederverwendbaren Komponenten
+[cite_start]Die Subapplikation `Uebung_003b.SUB` verwendet vier Instanzen des Typs `Uebung_003b_sub` (identisch zu `Uebung_003a_sub`), um vier I/O-Paare zu verknüpfen[cite: 1].
 
-**Schwierigkeitsgrad**: Einfach
+### Typisierte Sub-Applikation: `Uebung_003b_sub`
 
-**Benötigte Vorkenntnisse**: Grundlagen der 4diac-IDE, Verständnis digitaler Ein- und Ausgänge
+[cite_start]Dieser Baustein kapselt die 1:1 Weiterleitung von einem digitalen Eingang (`IX`) zu einem digitalen Ausgang (`QX`)[cite: 2]. Er stellt zwei Parameter für die Konfiguration bereit:
+  * **`Input`**: Auswahl des physischen Eingangs (z.B. `Input_I1` bis `Input_I4`).
+  * **`Output`**: Auswahl des physischen Ausgangs (z.B. `Output_Q1` bis `Output_Q4`).
 
-**Starten der Übung**: Nach dem Laden der Applikation in der 4diac-IDE kann diese auf ein kompatibles Steuerungssystem deployed werden. Die digitalen Eingänge I1-I4 steuern direkt die entsprechenden Ausgänge Q1-Q4.
+### Instanzen in der Hauptanwendung
 
-## Zusammenfassung
-Diese Übung vermittelt die grundlegende Prinzipien der Signalverarbeitung in 4diac-IDE durch direkte Verknüpfung von digitalen Eingängen mit Ausgängen. Die modulare Struktur mit wiederverwendbaren Sub-Bausteinen zeigt best practices für skalierbare Applikationsentwicklung. Jeder der vier identischen Signalwege demonstriert die unabhängige Verarbeitung paralleler E/A-Kanäle.
+In `Uebung_003b` werden vier Instanzen (`F1` bis `F4`) genutzt:
+  * **`F1`**: `I1` ➡️ `Q1`
+  * **`F2`**: `I2` ➡️ `Q2`
+  * **`F3`**: `I3` ➡️ `Q3`
+  * **`F4`**: `I4` ➡️ `Q4`
+
+-----
+
+## Funktionsweise
+
+Die Logik ist vollständig in den Sub-Applikationen gekapselt. Die Hauptanwendung dient nur noch als Konfigurations-Ebene. Der Aufbau in `Uebung_003b.SUB` zeigt die Zuweisung der Parameter:
+
+```xml
+<SubApp Name="F1" Type="Uebungen::Uebung_003b_sub">
+    <Parameter Name="Input" Value="Input_I1"/>
+    <Parameter Name="Output" Value="Output_Q1"/>
+</SubApp>
+<!-- ... Instanzen F2 und F3 ... -->
+<SubApp Name="F4" Type="Uebungen::Uebung_003b_sub">
+    <Parameter Name="Input" Value="Input_I4"/>
+    <Parameter Name="Output" Value="Output_Q4"/>
+</SubApp>
+```
+
+[cite_start][cite: 1]
+
+Jeder Kanal arbeitet völlig autark. Wenn an Eingang `I3` eine Änderung erkannt wird, reagiert ausschließlich die Instanz `F3` und schaltet den Ausgang `Q3`. Die anderen Kanäle bleiben davon unberührt.
+
+-----
+
+## Anwendungsbeispiel
+
+**Modularer Schaltschrankbau**:
+Stellen Sie sich ein IO-Modul mit 8 oder 16 Kanälen vor. Anstatt für jeden Kanal einzeln Verbindungen zu ziehen, nutzt man die typisierte Sub-Applikation als "Kanal-Treiber". Die Software-Struktur spiegelt so exakt den modularen Aufbau der Hardware wider, was die Fehlersuche und Dokumentation massiv vereinfacht.

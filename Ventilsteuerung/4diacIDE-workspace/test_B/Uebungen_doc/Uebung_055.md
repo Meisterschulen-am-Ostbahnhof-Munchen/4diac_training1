@@ -1,63 +1,42 @@
-# Uebung_055: DigitalInput_I1 auf DigitalOutput_Q1
+# Uebung_055: Diagnose-Status (Quarter-Konzept)
 
-* * * * * * * * * *
+```{index} single: Uebung_055: Diagnose-Status (Quarter-Konzept)
+```
 
-## Einleitung
-Diese Übung demonstriert die grundlegende Verarbeitung eines digitalen Eingangssignals und dessen Ausgabe auf einem digitalen Ausgang. Das System liest den Zustand eines digitalen Eingangs und gibt diesen direkt auf einem digitalen Ausgang aus.
+[Uebung_055](https://docs.ms-muc-docs.de/projects/visual-programming-languages-docs/de/latest/training1/Ventilsteuerung/4diacIDE-workspace/test/FBs/Uebungen/Uebung_055.html)
 
-## Verwendete Funktionsbausteine (FBs)
+[![NotebookLM](media/NotebookLM_logo.png)](https://notebooklm.google.com/notebook/a6872e59-1dfc-4132-a118-aff1bc7bc944)
 
-### DigitalInput_I1
-- **Typ**: logiBUS_IX
-- **Parameter**:
-  - QI = TRUE
-  - Input = logiBUS_DI::Input_I1
-- **Funktionsweise**: Liest den Zustand des physischen digitalen Eingangs I1
+Dieser Artikel beschreibt die logiBUS®-Übung `Uebung_055`. Hier wird ein zentrales logiBUS-Konzept zur Übertragung von erweiterten Status-Informationen eingeführt: Das "Quarter" (2-Bit Information).
 
-### DigitalOutput_Q1
-- **Typ**: logiBUS_QX
-- **Parameter**:
-  - QI = TRUE
-  - Output = logiBUS_DO::Output_Q1
-- **Funktionsweise**: Schreibt den empfangenen Wert auf den physischen digitalen Ausgang Q1
+----
 
-### BOOL_TO_Q
-- **Typ**: BOOL_TO_QUARTER
-- **Funktionsweise**: Konvertiert einen booleschen Wert in das QUARTER-Datenformat
+![](Uebung_055.png)
 
-### Q_TO_BOOL
-- **Typ**: QUARTER_TO_BOOL
-- **Funktionsweise**: Konvertiert einen QUARTER-Wert zurück in einen booleschen Wert
+## Ziel der Übung
 
-### Q_TO_STR_STATUS
-- **Typ**: QUARTER_TO_STR_STATUS
-- **Funktionsweise**: Wandelt QUARTER-Daten in einen Status-String für Anzeigezwecke
+Verständnis von erweiterten Signalzuständen. In professionellen Steuerungen reicht ein einfaches "An/Aus" oft nicht aus. Man möchte auch wissen, ob ein Signal ungültig ist oder ein Fehler vorliegt. Ein "Quarter" nutzt 2 Bit pro Kanal, um vier Zustände darzustellen (z.B. Aus, An, Fehler, Nicht Verfügbar).
 
-## Programmablauf und Verbindungen
+-----
 
-**Ereignisverbindungen:**
-- DigitalInput_I1.IND → BOOL_TO_Q.REQ
-- BOOL_TO_Q.CNF → Q_TO_BOOL.REQ
-- BOOL_TO_Q.CNF → Q_TO_STR_STATUS.REQ
-- Q_TO_BOOL.CNF → DigitalOutput_Q1.REQ
+## Beschreibung und Komponenten
 
-**Datenverbindungen:**
-- DigitalInput_I1.IN → BOOL_TO_Q.I
-- BOOL_TO_Q.QB → Q_TO_BOOL.IB
-- BOOL_TO_Q.QB → Q_TO_STR_STATUS.IB
-- Q_TO_BOOL.Q → DigitalOutput_Q1.OUT
+[cite_start]Die Subapplikation `Uebung_055.SUB` demonstriert die Wandlung zwischen einfachen booleschen Werten und logiBUS-Quartalen[cite: 1].
 
-**Ablauf:**
-1. Bei einer Zustandsänderung am digitalen Eingang I1 wird das IND-Ereignis ausgelöst
-2. Der Eingangswert wird über BOOL_TO_Q in das QUARTER-Format konvertiert
-3. Der konvertierte Wert wird parallel zu Q_TO_BOOL und Q_TO_STR_STATUS weitergeleitet
-4. Q_TO_BOOL wandelt den Wert zurück in einen booleschen Wert
-5. Der boolesche Wert wird an den digitalen Ausgang Q1 gesendet
-6. Gleichzeitig wird der Status für Anzeigezwecke aufbereitet
+### Funktionsbausteine (FBs)
 
-**Schwierigkeitsgrad**: Einfach
-**Benötigte Vorkenntnisse**: Grundlagen der 4diac-IDE, Verständnis von digitalen Ein-/Ausgängen
-**Start der Übung**: Das System startet automatisch und überträgt kontinuierlich den Eingangszustand auf den Ausgang
+  * **`BOOL_TO_Q`**: Wandelt ein Standard-Bit in ein 2-Bit Quartal um.
+  * **`Q_TO_BOOL`**: Extrahiert das Haupt-Signal (An/Aus) wieder aus dem Quartal.
+  * **`QUARTER_TO_STR_STATUS`**: Wandelt den 2-Bit Code in einen lesbaren Text um (z.B. "STATUS_OFF", "STATUS_ON").
 
-## Zusammenfassung
-Diese Übung vermittelt die grundlegende Handhabung digitaler Ein- und Ausgänge in 4diac. Sie zeigt die Signalverarbeitungskette von der Erfassung eines digitalen Eingangssignals über Datenkonvertierung bis zur Ausgabe auf einem digitalen Ausgang. Die Verwendung von Konvertierungsbausteinen demonstriert die Notwendigkeit von Datentyp-Anpassungen in verteilten Automatisierungssystemen.
+-----
+
+## Funktionsweise
+
+Das System reichert die Information an:
+1.  Der Taster `I1` liefert ein einfaches `TRUE/FALSE`.
+2.  `BOOL_TO_Q` macht daraus ein Quartal (z.B. FALSE ➡️ 00, TRUE ➡️ 01).
+3.  Dieses Paket (`QB`) kann nun durch das Programm geleitet werden.
+4.  Am Ende wird es wieder zerlegt: Die Lampe `Q1` erhält nur das An/Aus-Bit, während ein Diagnose-Baustein gleichzeitig den Textstatus ("ON") ermittelt.
+
+Dies bildet die Grundlage für moderne Diagnose-Systeme in der Landtechnik.

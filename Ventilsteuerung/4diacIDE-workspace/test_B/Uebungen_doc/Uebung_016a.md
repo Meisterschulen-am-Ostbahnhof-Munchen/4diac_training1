@@ -1,47 +1,18 @@
-# Uebung_016a: Background Colour umschalten -- 3-fach
+# Uebung_016a: Mehrfarbige Zustandsanzeige
 
-* * * * * * * * * *
+```{index} single: Uebung_016a: Mehrfarbige Zustandsanzeige
+```
 
-## Einleitung
-Diese Übung demonstriert die Umschaltung der Hintergrundfarbe eines Displays über drei verschiedene Softkeys. Bei Betätigung der Tasten F1, F2 und F3 wird jeweils eine andere Hintergrundfarbe aktiviert.
+[Uebung_016a](https://docs.ms-muc-docs.de/projects/visual-programming-languages-docs/de/latest/training1/Ventilsteuerung/4diacIDE-workspace/test/FBs/Uebungen/Uebung_016a.html)
 
-## Verwendete Funktionsbausteine (FBs)
+[![NotebookLM](media/NotebookLM_logo.png)](https://notebooklm.google.com/notebook/a6872e59-1dfc-4132-a118-aff1bc7bc944)
 
-### Softkey_IE
-- **Typ**: Eingabebaustein für Softkeys
-- **Parameter**:
-  - QI = TRUE (aktiviert den Baustein)
-  - u16ObjId = Spezifische Softkey-ID (F1, F2, F3)
-  - InputEvent = SK_RELEASED (Tastenloslassen als Auslöser)
+Dieser Artikel beschreibt die logiBUS®-Übung `Uebung_016a`.
 
-### F_SEL_E_3
-- **Typ**: 3-fach Selektor-Baustein
-- **Parameter**:
-  - IN0 = COLOR_WHITE
-  - IN1 = COLOR_GREEN  
-  - IN2 = COLOR_RED
-- **Funktionsweise**: Wählt basierend auf dem aktivierten REQ-Eingang den entsprechenden Farbwert aus
+----
 
-### Q_BackgroundColour
-- **Typ**: Ausgabebaustein für Hintergrundfarbe
-- **Parameter**:
-  - u16ObjId = DefaultPool::SoftKey_F7 (Display-Objekt für Hintergrundfarbe)
+![](Uebung_016a.png)
 
-## Programmablauf und Verbindungen
+## Übersicht
 
-**Ereignisverbindungen:**
-- SoftKey_UP_F1.IND → F_SEL.REQ0 (löst weiße Farbe aus)
-- SoftKey_UP_F2.IND → F_SEL.REQ1 (löst grüne Farbe aus) 
-- SoftKey_UP_F3.IND → F_SEL.REQ2 (löst rote Farbe aus)
-- F_SEL.CNF → Q_BackgroundColour.REQ (startet Farbänderung)
-
-**Datenverbindungen:**
-- F_SEL.OUT → Q_BackgroundColour.u8Colour (übergibt selektierte Farbe)
-
-**Ablauf:**
-1. Betätigung einer Softkey-Taste (F1, F2 oder F3)
-2. F_SEL-Baustein selektiert entsprechende Farbe
-3. Q_BackgroundColour setzt die Hintergrundfarbe auf dem Display
-
-## Zusammenfassung
-Diese Übung zeigt die grundlegende Steuerung von Display-Eigenschaften über Softkeys. Die dreifache Farbauswahl demonstriert die Verwendung von Selektionsbausteinen und die Zuordnung von Eingabeereignissen zu spezifischen Ausgabefunktionen.
+[cite_start]Diese Übung erweitert das Farb-Umschaltkonzept auf drei Farben unter Verwendung von `F_SEL_E_3`[cite: 1]. Über drei Softkeys kann der Hintergrund eines Objekts (`SoftKey_F7`) direkt auf **Weiß**, **Grün** oder **Rot** gesetzt werden. Dies ist die Grundlage für komplexere Ampel-Logiken oder differenzierte Statusmeldungen am Universal Terminal.

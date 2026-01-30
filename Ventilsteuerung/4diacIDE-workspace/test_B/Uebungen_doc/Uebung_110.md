@@ -1,64 +1,46 @@
-# Uebung_110: Übung zum Integer Überlauf
+# Uebung_110: Arithmetischer Überlauf (Integer Overflow)
 
-* * * * * * * * * *
+```{index} single: Uebung_110: Arithmetischer Überlauf (Integer Overflow)
+```
 
-## Einleitung
+[Uebung_110](https://docs.ms-muc-docs.de/projects/visual-programming-languages-docs/de/latest/training1/Ventilsteuerung/4diacIDE-workspace/test/FBs/Uebungen/Uebung_110.html)
 
-Diese Übung demonstriert das Phänomen des arithmetischen Überlaufs bei der Verwendung von Integer-Datentypen. Anhand eines praktischen Beispiels wird gezeigt, wie eine Addition zu unerwarteten Ergebnissen führen kann, wenn der Wertebereich des Datentyps überschritten wird.
+[![NotebookLM](media/NotebookLM_logo.png)](https://notebooklm.google.com/notebook/a6872e59-1dfc-4132-a118-aff1bc7bc944)
 
-## Verwendete Funktionsbausteine (FBs)
+Dieser Artikel beschreibt die logiBUS®-Übung `Uebung_110`. Hier wird ein wichtiges Phänomen der digitalen Datenverarbeitung demonstriert: Der Überlauf von Variablen.
 
-### DigitalInput_CLK_I1
-- **Typ**: logiBUS_IE
-- **Funktionsweise**: Liest digitale Eingangssignale ein und erkennt Tastendruck-Ereignisse
+----
 
-### ADD_2
-- **Typ**: ADD_2
-- **Parameter**: 
-  - IN1 = USINT#200
-  - IN2 = USINT#200
-- **Funktionsweise**: Führt eine Addition zweier Werte durch
+![](Uebung_110.png)
 
-### F_MOVE
-- **Typ**: F_MOVE
-- **Datentyp**: USINT (Unsigned Short Integer)
-- **Funktionsweise**: Kopiert Datenwerte ohne Änderung
+## Ziel der Übung
 
-### F_GT
-- **Typ**: F_GT (Greater Than)
-- **Parameter**: IN2 = USINT#200
-- **Funktionsweise**: Vergleicht zwei Werte und gibt TRUE aus, wenn der erste Wert größer als der zweite ist
+Verständnis der Begrenzung von Datentypen. Es wird gezeigt, was passiert, wenn das Ergebnis einer Berechnung den maximalen Wertebereich eines Datentyps überschreitet.
 
-### DigitalOutput_Q1
-- **Typ**: logiBUS_QX
-- **Parameter**:
-  - QI = TRUE
-  - Output = logiBUS_DO::Output_Q1
-- **Funktionsweise**: Steuert digitale Ausgänge
+-----
 
-## Programmablauf und Verbindungen
+## Beschreibung und Komponenten
 
-Das Programm wird durch einen Tastendruck am digitalen Eingang I1 gestartet. Der Ablauf erfolgt über folgende Ereignisverbindungen:
+[cite_start]Die Subapplikation `Uebung_110.SUB` nutzt den Datentyp `USINT` (Unsigned Short Integer)[cite: 1]. Dieser hat einen Wertebereich von 0 bis 255.
 
-1. **DigitalInput_CLK_I1.IND** → **ADD_2.REQ**
-2. **ADD_2.CNF** → **F_MOVE.REQ**
-3. **F_MOVE.CNF** → **F_GT.REQ**
-4. **F_GT.CNF** → **DigitalOutput_Q1.REQ**
+### Funktionsbausteine (FBs)
 
-Die Datenverbindungen transportieren die Berechnungsergebnisse:
+  * **`ADD_2`**: Addiert zwei Werte.
+  * **Parameter**: `IN1 = 200`, `IN2 = 200`.
+  * **`F_GT`**: Prüft, ob das Ergebnis größer als 200 ist.
 
-1. **ADD_2.OUT** → **F_MOVE.IN**
-2. **F_MOVE.OUT** → **F_GT.IN1**
-3. **F_GT.OUT** → **DigitalOutput_Q1.OUT**
+-----
 
-**Lernziel**: Verständnis des arithmetischen Überlaufs bei der Verwendung des USINT-Datentyps (0-255 Wertebereich)
+## Das Experiment
 
-**Schwierigkeitsgrad**: Einsteiger
+1.  Mathematisch ergibt `200 + 200 = 400`.
+2.  Da die Variable vom Typ `USINT` aber nur bis **255** zählen kann, tritt ein Überlauf (Wrap-around) auf.
+3.  Das Ergebnis in der Steuerung ist `400 - 256 = 144`.
+4.  Der Vergleich `144 > 200` schlägt fehl (liefert `FALSE`).
+5.  Die Lampe an `Q1` bleibt aus, obwohl man rein rechnerisch ein "Wahr" erwarten würde.
 
-**Vorkenntnisse**: Grundlagen der 4diac-IDE und Funktionsbausteine
+-----
 
-**Start der Übung**: Durch Betätigen des Tasters am Eingang I1
+## Fazit
 
-## Zusammenfassung
-
-Diese Übung verdeutlicht das wichtige Konzept des arithmetischen Überlaufs in der Programmierung. Die Addition von 200 + 200 ergibt 400, was den maximalen Wert des USINT-Datentyps (255) überschreitet und zu einem Überlauf führt. Das Ergebnis des Vergleichs mit F_GT zeigt anschaulich, wie solche Überläufe zu unerwartetem Programmverhalten führen können.
+Diese Übung mahnt zur Vorsicht bei der Wahl der Datentypen. Für Werte, die 255 überschreiten können, muss zwingend ein größerer Typ (z.B. `UINT` bis 65.535 oder `UDINT`) verwendet werden, um logische Fehler in der Steuerung zu vermeiden.

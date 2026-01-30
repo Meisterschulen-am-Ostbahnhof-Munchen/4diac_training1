@@ -1,53 +1,50 @@
-# Uebung_016: Background Colour umschalten
+# Uebung_016: Dynamische Hintergrundfarben
 
-* * * * * * * * * *
+```{index} single: Uebung_016: Dynamische Hintergrundfarben
+```
 
-## Einleitung
-Diese Übung demonstriert die Steuerung der Hintergrundfarbe eines HMI-Elements durch Softkey-Bedienung. Mittels zweier Funktionstasten kann zwischen zwei verschiedenen Hintergrundfarben umgeschaltet werden.
+[Uebung_016](https://docs.ms-muc-docs.de/projects/visual-programming-languages-docs/de/latest/training1/Ventilsteuerung/4diacIDE-workspace/test/FBs/Uebungen/Uebung_016.html)
 
-## Verwendete Funktionsbausteine (FBs)
+[![NotebookLM](media/NotebookLM_logo.png)](https://notebooklm.google.com/notebook/a6872e59-1dfc-4132-a118-aff1bc7bc944)
 
-### Softkey_IE
-- **Typ**: Eingabebaustein für Softkeys
-- **Parameter**:
-  - QI = TRUE (aktiviert den Baustein)
-  - u16ObjId = DefaultPool::SoftKey_F1/F2 (definiert die verwendeten Softkeys)
-  - InputEvent = SoftKeyActivationCode::SK_RELEASED (reagiert auf Tastenloslassen)
+Dieser Artikel beschreibt die logiBUS®-Übung `Uebung_016`. Hier wird gezeigt, wie man die Hintergrundfarbe von Objekten (z.B. Softkeys) zur Laufzeit ändert, um Zustände zu visualisieren.
 
-### E_SR
-- **Typ**: Set-Reset-Flipflop
-- **Funktionsweise**: Speichert den Zustand und gibt ihn über den Q-Ausgang aus
+## 🎧 Podcast
 
-### F_SEL
-- **Typ**: Multiplexer/Selektor
-- **Parameter**:
-  - IN0 = colours::COLOR_WHITE
-  - IN1 = colours::COLOR_GREEN
-- **Funktionsweise**: Wählt zwischen zwei Eingangswerten basierend auf dem Steuersignal G
+* [ESP32-S3-DevKitC-1 Doku-Analyse: Das Speicher-Monster (32MB Flash/16MB PSRAM) und die Macht der Dual-USB-Ports](https://podcasters.spotify.com/pod/show/ms-muc-lama/episodes/ESP32-S3-DevKitC-1-Doku-Analyse-Das-Speicher-Monster-32MB-Flash16MB-PSRAM-und-die-Macht-der-Dual-USB-Ports-e39hamt)
 
-### Q_BackgroundColour
-- **Typ**: Ausgabebaustein für Hintergrundfarbe
-- **Parameter**:
-  - u16ObjId = DefaultPool::SoftKey_F7 (definiert das zu beeinflussende HMI-Element)
+----
 
-## Programmablauf und Verbindungen
+![](Uebung_016.png)
 
-**Ereignisverbindungen:**
-- SoftKey_UP_F1.IND → E_SR.S (Setzt das Flipflop)
-- SoftKey_UP_F2.IND → E_SR.R (Rücksetzt das Flipflop)
-- E_SR.EO → F_SEL.REQ (Trigger für Selektor)
-- F_SEL.CNF → Q_BackgroundColour.REQ (Trigger für Farbausgabe)
+## Ziel der Übung
 
-**Datenverbindungen:**
-- E_SR.Q → F_SEL.G (Steuersignal für Selektor)
-- F_SEL.OUT → Q_BackgroundColour.u8Colour (Farbwert an Ausgabebaustein)
+Verwendung des Bausteins `Q_BackgroundColour`. Dies ist eine Alternative zum Farbumschlag in Sub-Applikationen (wie in Übung 010c) und erlaubt die explizite Wahl von Farben aus der ISOBUS-Palette.
 
-**Programmablauf:**
-1. Drücken und Loslassen von F1 setzt das Flipflop (E_SR.Q = TRUE)
-2. Drücken und Loslassen von F2 resetet das Flipflop (E_SR.Q = FALSE)
-3. Der Flipflop-Zustand steuert den F_SEL-Baustein
-4. Bei TRUE wird GRÜN, bei FALSE wird WEISS ausgewählt
-5. Die gewählte Farbe wird an den Hintergrund des definierten HMI-Elements ausgegeben
+-----
 
-## Zusammenfassung
-Diese Übung vermittelt grundlegende Konzepte der HMI-Steuerung in 4diac, insbesondere die Verwendung von Softkeys zur Zustandssteuerung und die dynamische Änderung von Anzeigeeigenschaften. Sie zeigt die Kombination von Flipflops, Selektoren und Ausgabebausteinen für einfache Benutzerinteraktionen.
+## Beschreibung und Komponenten
+
+[cite_start]Die Subapplikation `Uebung_016.SUB` schaltet die Farbe des Softkeys `F7` basierend auf der Auswahl über `F1` und `F2` um[cite: 1].
+
+### Funktionsbausteine (FBs)
+
+  * **`F_SEL`**: Wählt zwischen zwei Farb-Konstanten aus.
+  * **`Q_BackgroundColour`**: Der Ausgangsbaustein. [cite_start]Er setzt die Hintergrundfarbe für das Objekt `SoftKey_F7`[cite: 1].
+
+-----
+
+## Funktionsweise
+
+*   Wird der Speicher durch **F1** gesetzt, liefert `F_SEL` den Wert `COLOR_GREEN`.
+*   Wird er durch **F2** gelöscht, liefert `F_SEL` den Wert `COLOR_WHITE`.
+*   Das Ergebnis wird an `Q_BackgroundColour` gesendet, welches das entsprechende ISOBUS-Kommando ("Change Background Colour") an das Terminal absetzt.
+
+Der Softkey `F7` (der in dieser Übung keine eigene Logik hat, sondern nur als Anzeige dient) wechselt nun zwischen Grün und Weiß.
+
+-----
+
+## Anwendungsbeispiel
+
+**Status-Ampel**:
+Ein Sensor überwacht einen Füllstand. Ist alles im grünen Bereich, leuchtet eine Anzeige am Terminal grün. Erreicht der Stand eine kritische Marke, schaltet die Anzeige auf Gelb oder Rot um, um den Bediener visuell zu warnen.

@@ -1,61 +1,45 @@
-# Uebung_091: Beispiel für E_TRAIN
+# Uebung_091: Ereignis-Salve (E_TRAIN)
 
-* * * * * * * * * *
+```{index} single: Uebung_091: Ereignis-Salve (E_TRAIN)
+```
 
-## Einleitung
-Diese Übung demonstriert die Verwendung des E_TRAIN-Funktionsbausteins zur Erzeugung einer Ereignisfolge. Das System erzeugt nach einem Tasterdruck eine definierte Anzahl von Ereignissen mit festgelegten Zeitintervallen.
+[Uebung_091](https://docs.ms-muc-docs.de/projects/visual-programming-languages-docs/de/latest/training1/Ventilsteuerung/4diacIDE-workspace/test/FBs/Uebungen/Uebung_091.html)
 
-## Verwendete Funktionsbausteine (FBs)
+[![NotebookLM](media/NotebookLM_logo.png)](https://notebooklm.google.com/notebook/a6872e59-1dfc-4132-a118-aff1bc7bc944)
 
-### E_TRAIN
-- **Typ**: E_TRAIN
-- **Parameter**: 
-  - DT = T#1s (Zeitintervall von 1 Sekunde)
-  - N = 8 (Anzahl der Ereignisse)
+Dieser Artikel beschreibt die logiBUS®-Übung `Uebung_091`. Hier wird die automatische Erzeugung einer festen Anzahl von Ereignissen demonstriert.
 
-### E_T_FF
-- **Typ**: E_T_FF (Toggle-Flipflop)
+## 🎧 Podcast
 
-### logiBUS_IE
-- **Typ**: logiBUS_IE (Digitaler Eingang)
-- **Parameter**:
-  - QI = TRUE
-  - Input = logiBUS_DI::Input_I1
-  - InputEvent = logiBUS_DI_Events::BUTTON_SINGLE_CLICK
+* [Als Landtechnik-Spezialist durch die Hölle: Wie Lanz-Wery Krieg, Besatzung und Hyperinflation überlebte – Einblicke in Original-Geschäftsberichte 1915-1922](https://podcasters.spotify.com/pod/show/ms-muc-lama/episodes/Als-Landtechnik-Spezialist-durch-die-Hlle-Wie-Lanz-Wery-Krieg--Besatzung-und-Hyperinflation-berlebte--Einblicke-in-Original-Geschftsberichte-1915-1922-e39athj)
+* [Rudolf Diesel: Geniales Werk, mysteriöses Ende – Wer verschwand 1913 auf der Fähre?](https://podcasters.spotify.com/pod/show/ms-muc-lama/episodes/Rudolf-Diesel-Geniales-Werk--mysterises-Ende--Wer-verschwand-1913-auf-der-Fhre-e396oa6)
+* [Smart Farming Vision 1991 Auernhammers Blaupausen](https://podcasters.spotify.com/pod/show/ms-muc-lama/episodes/Smart-Farming-Vision-1991-Auernhammers-Blaupausen-e3b09r2)
 
-### logiBUS_QX
-- **Typ**: logiBUS_QX (Digitaler Ausgang)
-- **Parameter**:
-  - QI = TRUE
-  - Output = logiBUS_DO::Output_Q1
+----
 
-## Programmablauf und Verbindungen
+![](Uebung_091.png)
 
-**Ereignisverbindungen:**
-- DigitalInput_CLK_I1.IND → E_TRAIN.START
-- E_TRAIN.EO → E_T_FF.CLK
-- E_T_FF.EO → DigitalOutput_Q1.REQ
+## Ziel der Übung
 
-**Datenverbindungen:**
-- E_T_FF.Q → DigitalOutput_Q1.OUT
+Verwendung des Bausteins `E_TRAIN`. Ziel ist es, nach einem einzelnen Start-Impuls eine definierte Folge von Ereignissen auszulösen.
 
-**Programmablauf:**
-1. Ein Tastendruck auf Input_I1 löst über den DigitalInput_CLK_I1-Baustein ein IND-Ereignis aus
-2. Dieses Ereignis startet den E_TRAIN-Baustein
-3. E_TRAIN generiert 8 Ereignisse im Abstand von je 1 Sekunde
-4. Jedes E_TRAIN-Ausgangsereignis (EO) triggert den E_T_FF-Baustein
-5. E_T_FF toggelt seinen Ausgang Q bei jedem Ereignis
-6. Der Ausgangswert wird über DigitalOutput_Q1 an die physische Ausgabe Q1 gesendet
+-----
 
-**Lernziele:**
-- Verständnis des E_TRAIN-Bausteins und seiner Parameter
-- Umgang mit zeitgesteuerten Ereignisfolgen
-- Kombination von E_TRAIN mit einem Toggle-Flipflop
-- Ansteuerung digitaler Ein- und Ausgänge
+## Beschreibung und Komponenten
 
-**Schwierigkeitsgrad**: Einfach bis mittel
+[cite_start]In `Uebung_091.SUB` wird ein Ereignis-Zug (Train) zur Steuerung eines Flip-Flops genutzt[cite: 1].
 
-**Vorkenntnisse**: Grundlagen der 4diac-IDE, Verständnis von Ereignis- und Datenverbindungen
+### Funktionsweise
 
-## Zusammenfassung
-Diese Übung zeigt eine praktische Anwendung des E_TRAIN-Bausteins zur Erzeugung einer zeitlich gesteuerten Ereignisfolge. Nach einem Tasterdruck werden 8 Ereignisse im Sekundentakt generiert, die einen Ausgangstoggle steuern. Die Übung vermittelt wichtige Konzepte der Ereignisverarbeitung und Zeitsteuerung in IEC 61499-Systemen.
+1.  Der Nutzer klickt einmal auf Taster **I1**.
+2.  Der Baustein `E_TRAIN` startet seine Arbeit.
+3.  Laut Parameter `N=8` und `DT=1s` sendet der Baustein nun exakt **8 Ereignisse** im Abstand von jeweils einer Sekunde aus.
+4.  Diese Ereignisse gelangen an das Toggle-Flip-Flop.
+5.  Die Lampe an `Q1` blinkt daraufhin genau viermal (4 x An, 4 x Aus) und bleibt dann in der letzten Position stehen.
+
+-----
+
+## Anwendungsbeispiel
+
+**Automatisches Abkippen**:
+Ein Hydraulikzylinder soll zum Lockern von Material dreimal kurz ruckeln. Ein Tastendruck löst die Salve von 6 Steuerbefehlen (Ausfahren-Einfahren x 3) aus, woraufhin die Steuerung den Vorgang selbstständig beendet.

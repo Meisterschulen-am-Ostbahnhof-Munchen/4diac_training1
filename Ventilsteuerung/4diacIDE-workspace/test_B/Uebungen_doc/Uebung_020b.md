@@ -1,69 +1,39 @@
-# Uebung_020b: DigitalInput_I1 auf DigitalOutput_Q1; TON Einschaltverzögert; aufgelöst
+# Uebung_020b: Manuelle Einschaltverzögerung
 
-* * * * * * * * * *
+```{index} single: Uebung_020b: Manuelle Einschaltverzögerung
+```
 
-## Einleitung
-Diese Übung demonstriert die Verwendung einer einschaltverzögerten Steuerung mit einem TON-Baustein (Timer On-Delay). Das Programm verarbeitet ein digitales Eingangssignal und gibt es nach einer definierten Verzögerungszeit an den Ausgang weiter.
+[Uebung_020b](https://docs.ms-muc-docs.de/projects/visual-programming-languages-docs/de/latest/training1/Ventilsteuerung/4diacIDE-workspace/test/FBs/Uebungen/Uebung_020b.html)
 
-## Verwendete Funktionsbausteine (FBs)
+[![NotebookLM](media/NotebookLM_logo.png)](https://notebooklm.google.com/notebook/a6872e59-1dfc-4132-a118-aff1bc7bc944)
 
-### logiBUS_IX (DigitalInput_I1)
-- **Typ**: logiBUS_IX
-- **Parameter**:
-  - QI = TRUE
-  - Input = logiBUS_DI::Input_I1
-- **Funktion**: Liest den digitalen Eingang I1 des logiBUS Systems
+Dieser Artikel beschreibt die logiBUS®-Übung `Uebung_020b`. Hier wird eine Einschaltverzögerung (TON) manuell aus Grundbausteinen aufgebaut.
 
-### logiBUS_QX (DigitalOutput_Q1)
-- **Typ**: logiBUS_QX
-- **Parameter**:
-  - QI = TRUE
-  - Output = logiBUS_DO::Output_Q1
-- **Funktion**: Schreibt auf den digitalen Ausgang Q1 des logiBUS Systems
+----
 
-### E_SWITCH
-- **Typ**: E_SWITCH
-- **Funktion**: Schalter-Baustein zur Verteilung von Ereignissen basierend auf dem Eingangssignal
+![](Uebung_020b.png)
 
-### E_DELAY
-- **Typ**: E_DELAY
-- **Parameter**:
-  - DT = T#2S (2 Sekunden Verzögerung)
-- **Funktion**: Timer-Baustein für die Einschaltverzögerung
+## Ziel der Übung
 
-### E_RS
-- **Typ**: E_RS
-- **Funktion**: RS-Flipflop zur Speicherung des Zustands
+Verstehen der Zeitsteuerung durch Ereignisverzögerung (`E_DELAY`). Es wird gezeigt, wie ein Timer-Verhalten ("Licht geht erst nach 2 Sekunden an") durch das gezielte Verzögern und Abbrechen von Ereignissen realisiert wird.
 
-## Programmablauf und Verbindungen
+-----
 
-**Ereignisverbindungen:**
-- DigitalInput_I1.IND → E_SWITCH.EI
-- E_SWITCH.EO1 → E_DELAY.START
-- E_SWITCH.EO0 → E_DELAY.STOP
-- E_SWITCH.EO0 → E_RS.R
-- E_DELAY.EO → E_RS.S
-- E_RS.EO → DigitalOutput_Q1.REQ
+## Beschreibung und Komponenten
 
-**Datenverbindungen:**
-- DigitalInput_I1.IN → E_SWITCH.G
-- E_RS.Q → DigitalOutput_Q1.OUT
+[cite_start]In `Uebung_020b.SUB` wird ein Verzögerungs-Baustein zwischen die Eingangs-Weiche und den Speicher geschaltet[cite: 1].
 
-**Programmablauf:**
-1. Beim Betätigen des Eingangs I1 wird das Signal an E_SWITCH weitergeleitet
-2. E_SWITCH leitet das Ereignis über EO1 an E_DELAY weiter und startet den Timer
-3. Nach Ablauf der 2-Sekunden-Verzögerung gibt E_DELAY ein Ereignis an E_RS.S aus
-4. E_RS setzt den Ausgang Q und triggert DigitalOutput_Q1
-5. Beim Loslassen von I1 wird über E_SWITCH.EO0 der Timer gestoppt und E_RS zurückgesetzt
+### Funktionsbausteine (FBs)
 
-**Lernziele:**
-- Verständnis von einschaltverzögerten Schaltungen
-- Anwendung von Timer-Bausteinen (TON)
-- Einsatz von RS-Flipflops zur Zustandsspeicherung
-- Verarbeitung digitaler Ein- und Ausgänge
+  * **`E_DELAY`**: Wartet die Zeit `DT` (2 Sekunden) ab.
+  * **`E_SWITCH`**: Steuert den Start und Stopp des Timers.
 
-**Schwierigkeitsgrad**: Einsteiger
-**Benötigte Vorkenntnisse**: Grundlagen der 4diac-IDE, digitale Ein-/Ausgänge
+-----
 
-## Zusammenfassung
-Diese Übung zeigt eine praktische Implementierung einer einschaltverzögerten Steuerung mit einer Verzögerungszeit von 2 Sekunden. Der Ausgang Q1 wird erst aktiviert, nachdem der Eingang I1 für mindestens 2 Sekunden aktiv war. Die Lösung verwendet Standard-Funktionsbausteine für Ereignisverarbeitung, Zeitverzögerung und Zustandsspeicherung.
+## Funktionsweise
+
+1.  **Start**: Nutzer drückt `I1`. Die Weiche schaltet auf `EO1` ➡️ `E_DELAY.START`.
+2.  **Warten**: Wenn der Nutzer den Taster für volle 2 Sekunden gedrückt hält, feuert `E_DELAY.EO` ➡️ `E_RS.S`. Die Lampe geht an.
+3.  **Abbruch**: Lässt der Nutzer den Taster vor Ablauf der 2 Sekunden los, schaltet die Weiche auf `EO0`. Dieses Event triggert `E_DELAY.STOP` (Timer wird gelöscht) **und** `E_RS.R` (Ausgang wird sicher auf FALSE gesetzt).
+
+Ergebnis: Einschaltverzögerung mit sofortigem Abbruch bei Signalverlust.

@@ -1,68 +1,43 @@
-# Uebung_007a1: Blinker mit E_CYCLE und E_T_FF
+# Uebung_007a1: Schaltbarer Blinker (Problembehaftet)
 
-* * * * * * * * * *
+```{index} single: Uebung_007a1: Schaltbarer Blinker (Problembehaftet)
+```
 
-## Einleitung
-Diese Übung implementiert einen Blinker mit E_CYCLE und E_T_FF Funktionsbausteinen. Die Anwendung demonstriert die Verwendung von zyklischen Ereignissen und eines Toggle-Flipflops zur Erzeugung eines Blinksignals. Ein besonderer Hinweis in der Übung weist auf einen Nachteil dieser Implementierung hin: Der Blinker bleibt zufällig auf AN oder AUS stehen, wenn er gestoppt wird.
+[Uebung_007a1](https://docs.ms-muc-docs.de/projects/visual-programming-languages-docs/de/latest/training1/Ventilsteuerung/4diacIDE-workspace/test/FBs/Uebungen/Uebung_007a1.html)
 
-## Verwendete Funktionsbausteine (FBs)
+[![NotebookLM](media/NotebookLM_logo.png)](https://notebooklm.google.com/notebook/a6872e59-1dfc-4132-a118-aff1bc7bc944)
 
-### E_CYCLE
-- **Typ**: Zyklischer Ereignisgenerator
-- **Parameter**: 
-  - DT = T#1s (Zykluszeit von 1 Sekunde)
-- **Ereigniseingänge**: START, STOP
-- **Ereignisausgang**: EO
+Dieser Artikel beschreibt die logiBUS®-Übung `Uebung_007a1`. Hier wird versucht, den Blinker aus Übung 007 über externe Taster ein- und auszuschalten.
 
-### E_T_FF
-- **Typ**: Toggle-Flipflop
-- **Ereigniseingänge**: CLK
-- **Ereignisausgang**: EO
-- **Datenausgang**: Q (BOOL)
+----
 
-### logiBUS_IE (START und STOP)
-- **Typ**: Eingabeereignis-Baustein für logiBUS
-- **Parameter**:
-  - QI = TRUE (aktiviert)
-  - Input = logiBUS_DI::Input_I1 (START) / Input_I2 (STOP)
-  - InputEvent = logiBUS_DI_Events::BUTTON_SINGLE_CLICK
-- **Ereignisausgang**: IND
+![](Uebung_007a1.png)
 
-### logiBUS_QX (DigitalOutput_Q1)
-- **Typ**: Ausgabebaustein für logiBUS
-- **Parameter**:
-  - QI = TRUE (aktiviert)
-  - Output = logiBUS_DO::Output_Q1
-- **Ereigniseingang**: REQ
-- **Dateneingang**: OUT
+## Ziel der Übung
 
-## Programmablauf und Verbindungen
+Steuerung eines Taktgebers über Start- und Stopp-Ereignisse.
 
-**Ereignisverbindungen:**
-- E_CYCLE.EO → E_T_FF.CLK
-- E_T_FF.EO → DigitalOutput_Q1.REQ
-- START.IND → E_CYCLE.START
-- STOP.IND → E_CYCLE.STOP
+-----
 
-**Datenverbindungen:**
-- E_T_FF.Q → DigitalOutput_Q1.OUT
+## Beschreibung und Komponenten
 
-**Ablauf:**
-1. Beim Betätigen des START-Buttons (I1) wird der zyklische Timer E_CYCLE gestartet
-2. E_CYCLE generiert alle 1 Sekunde ein Ereignis an E_T_FF.CLK
-3. E_T_FF toggelt seinen Ausgang Q bei jedem Clock-Ereignis
-4. Der Q-Ausgang wird an die digitale Ausgabe Q1 weitergeleitet
-5. Beim Betätigen des STOP-Buttons (I2) wird der Zyklus gestoppt
+[cite_start]In `Uebung_007a1.SUB` werden die Steuerungseingänge des `E_CYCLE` Bausteins genutzt[cite: 1].
 
-**Lernziele:**
-- Verständnis von zyklischen Ereignisgeneratoren
-- Anwendung von Toggle-Flipflops
-- Umsetzung von Start/Stop-Funktionalität
-- Praxis mit logiBUS-Ein-/Ausgabebausteinen
+### Funktionsbausteine (FBs)
 
-**Schwierigkeitsgrad**: Einfach
+  * **`START` (I1)**: Sendet ein Ereignis an `E_CYCLE.START`.
+  * **`STOP` (I2)**: Sendet ein Ereignis an `E_CYCLE.STOP`.
+  * **`E_CYCLE`**: Startet oder stoppt die Generierung von Takt-Events.
 
-**Benötigte Vorkenntnisse**: Grundlagen der 4diac-IDE, Verständnis von Ereignis- und Datenverbindungen
+-----
 
-## Zusammenfassung
-Diese Übung zeigt eine einfache Blinker-Implementierung mit E_CYCLE und E_T_FF. Die Anwendung demonstriert grundlegende Konzepte der ereignisgesteuerten Programmierung in 4diac. Der dokumentierte Nachteil (zufälliger Endzustand beim Stoppen) bietet eine gute Diskussionsgrundlage für erweiterte Implementierungen mit definierten Endzuständen.
+## Das Problem
+
+Wie im Kommentar der Übung vermerkt: *"dieser Blinker bleibt zufällig auf AN oder AUS stehen"*.
+Wenn der `STOP`-Befehl eintrifft, stellt der `E_CYCLE` sofort seine Arbeit ein. Das nachgeschaltete Flip-Flop `E_T_FF` verharrt jedoch in seinem **letzten Zustand**. War die Lampe in diesem Moment gerade an, bleibt sie dauerhaft leuchten. Dies ist in der Automatisierungstechnik meist unerwünscht und potenziell gefährlich.
+
+-----
+
+## Fazit
+
+Diese Übung dient als Lehrbeispiel dafür, dass das bloße Anhalten eines Taktgebers nicht ausreicht, um ein System in einen sicheren (ausgeschalteten) Zustand zu überführen.

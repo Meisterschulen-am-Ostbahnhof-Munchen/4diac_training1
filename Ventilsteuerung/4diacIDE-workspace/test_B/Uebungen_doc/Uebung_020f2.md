@@ -1,71 +1,30 @@
-# Uebung_020f2: DigitalInput_I1 auf DigitalOutput_Q1; FB_TP; Impulsformend
+# Uebung_020f2: Zyklischer Impulsgeber (FB_TP)
 
-* * * * * * * * * *
+```{index} single: Uebung_020f2: Zyklischer Impulsgeber (FB_TP)
+```
 
-## Einleitung
-Diese Übung demonstriert die Verwendung eines Taktgebers (E_CYCLE) zur Steuerung eines Impulsformers (FB_TP). Ein digitaler Eingang (I1) wird über einen Impulsformer auf einen digitalen Ausgang (Q1) geschaltet, wobei der Taktgeber die Aktualisierungsrate des Impulsformers bestimmt.
+[Uebung_020f2](https://docs.ms-muc-docs.de/projects/visual-programming-languages-docs/de/latest/training1/Ventilsteuerung/4diacIDE-workspace/test/FBs/Uebungen/Uebung_020f2.html)
 
-## Verwendete Funktionsbausteine (FBs)
+[![NotebookLM](media/NotebookLM_logo.png)](https://notebooklm.google.com/notebook/a6872e59-1dfc-4132-a118-aff1bc7bc944)
 
-### DigitalInput_I1
-- **Typ**: logiBUS_IX
-- **Parameter**: 
-  - QI = TRUE
-  - Input = logiBUS_DI::Input_I1
-- **Funktion**: Liest den digitalen Eingang I1 vom logiBUS-System
+Dieser Artikel beschreibt die logiBUS®-Übung `Uebung_020f2`. Hier wird der klassische IEC 61131-3 Timer-Baustein `FB_TP` verwendet.
 
-### E_SWITCH_I1
-- **Typ**: E_SWITCH
-- **Funktion**: Schalter für den Eingangsimpuls
+----
 
-### E_CYCLE
-- **Typ**: E_CYCLE
-- **Parameter**: DT = T#500ms
-- **Funktion**: Taktgeber mit 500ms Zykluszeit
+![](Uebung_020f2.png)
 
-### FB_TP
-- **Typ**: FB_TP
-- **Parameter**: PT = T#5s
-- **Funktion**: Impulsformer mit 5 Sekunden Pulszeit
+## Übersicht
 
-### E_SWITCH_Q1
-- **Typ**: E_SWITCH
-- **Funktion**: Schalter für den Ausgangsimpuls
+Diese Übung implementiert einen Impulsgeber unter Verwendung des klassischen `FB_TP` Bausteins. Da dieser Baustein für eine zyklische SPS-Umgebung entworfen wurde, muss in der ereignisbasierten IEC 61499 ein `E_CYCLE` zur regelmäßigen Triggerung genutzt werden.
 
-### DigitalOutput_Q1
-- **Typ**: logiBUS_QX
-- **Parameter**:
-  - QI = TRUE
-  - Output = logiBUS_DO::Output_Q1
-- **Funktion**: Schreibt auf den digitalen Ausgang Q1 des logiBUS-Systems
+## Funktionsweise
 
-## Programmablauf und Verbindungen
+1.  **Trigger**: Die steigende Flanke von `Input_I1` startet über einen `E_SWITCH` den Taktgeber `E_CYCLE`.
+2.  **Berechnung**: Der `E_CYCLE` triggert alle 500ms den `REQ`-Eingang des `FB_TP`. Nur so kann der Timer intern die Zeit hochzählen und den Ausgang `ET` (Elapsed Time) aktualisieren.
+3.  **Abschluss**: Sobald der Impuls beendet ist (`Q` geht auf `FALSE`), stoppt der `E_CYCLE` automatisch, um unnötige CPU-Last zu vermeiden.
 
-**Ereignisverbindungen:**
-- E_CYCLE.EO → FB_TP.REQ (startet Impulsformer bei jedem Takt)
-- DigitalInput_I1.IND → E_SWITCH_I1.EI (Eingangsänderung an Schalter)
-- FB_TP.CNF → E_SWITCH_Q1.EI (Impulsformer-Bestätigung an Ausgangsschalter)
-- E_SWITCH_I1.EO1 → E_CYCLE.START (startet Taktgeber bei Eingangsaktivierung)
-- E_SWITCH_Q1.EO0 → E_CYCLE.STOP (stoppt Taktgeber bei bestimmten Bedingungen)
-- FB_TP.CNF → DigitalOutput_Q1.REQ (Impulsformer-Bestätigung an Ausgang)
+-----
 
-**Datenverbindungen:**
-- DigitalInput_I1.IN → E_SWITCH_I1.G (Eingangswert an Schalter)
-- DigitalInput_I1.IN → FB_TP.IN (Eingangswert an Impulsformer)
-- FB_TP.Q → DigitalOutput_Q1.OUT (Impulsformer-Ausgang an physischen Ausgang)
-- FB_TP.Q → E_SWITCH_Q1.G (Impulsformer-Ausgang an Ausgangsschalter)
+## Vergleich zur AX-Variante
 
-**Lernziele:**
-- Verständnis von Taktgebern und deren Konfiguration
-- Anwendung von Impulsformern (FB_TP)
-- Steuerung von digitalen Ein- und Ausgängen
-- Ereignisgesteuerte Programmabläufe
-
-**Schwierigkeitsgrad**: Einfach bis Mittel
-
-**Benötigte Vorkenntnisse**: Grundlagen der 4diac-IDE, Verständnis von digitalen Ein-/Ausgängen
-
-**Start der Übung**: Das Programm wird automatisch gestartet, sobald der digitale Eingang I1 aktiviert wird.
-
-## Zusammenfassung
-Diese Übung zeigt eine typische Anwendung eines Impulsformers in Kombination mit einem Taktgeber. Der E_CYCLE-Baustein sorgt für eine regelmäßige Aktualisierung des FB_TP, der wiederum den digitalen Ausgang Q1 basierend auf dem Eingang I1 steuert. Die Verwendung von E_SWITCH-Bausteinen ermöglicht eine flexible Steuerung des Programmablaufs.
+Im Gegensatz zur `AX_FB_TP` Variante (Übung 020f2_AX) werden hier klassische boolesche Ein- und Ausgänge verwendet, anstatt auf die flexibleren AX-Adapter zu setzen. Die zugrunde liegende Problematik des zyklischen Aufrufs bleibt jedoch identisch.

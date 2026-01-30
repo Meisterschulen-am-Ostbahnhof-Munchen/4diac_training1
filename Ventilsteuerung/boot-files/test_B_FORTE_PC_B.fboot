@@ -1,0 +1,13 @@
+;<Request ID="6" Action="CREATE"><FB Name="EMB_RES_B" Type="iec61499::system::EMB_RES" /></Request>
+EMB_RES_B;<Request ID="7" Action="CREATE"><FB Name="E_TRIG" Type="iec61499::events::E_TRIG" /></Request>
+EMB_RES_B;<Request ID="8" Action="CREATE"><FB Name="App_B.Control.INIT_ARR_8_INT" Type="logiBUS::utils::generate::INIT_ARR_0008_INT" /></Request>
+EMB_RES_B;<Request ID="9" Action="CREATE"><FB Name="App_B.Control.GET_AT_INDEX" Type="eclipse4diac::convert::GET_AT_INDEX" /></Request>
+EMB_RES_B;<Request ID="10" Action="CREATE"><FB Name="App_B.Control.SUM" Type="logiBUS::utils::dyn_arr::SUM" /></Request>
+EMB_RES_B;<Request ID="11" Action="WRITE"><Connection Source="[0,1,22,333,4444,333,22,1]" Destination="App_B.Control.INIT_ARR_8_INT.D1" /></Request>
+EMB_RES_B;<Request ID="12" Action="WRITE"><Connection Source="3" Destination="App_B.Control.GET_AT_INDEX.INDEX" /></Request>
+EMB_RES_B;<Request ID="13" Action="CREATE"><Connection Source="START.COLD" Destination="E_TRIG.REQ" /></Request>
+EMB_RES_B;<Request ID="14" Action="CREATE"><Connection Source="App_B.Control.INIT_ARR_8_INT.INITO" Destination="App_B.Control.GET_AT_INDEX.REQ" /></Request>
+EMB_RES_B;<Request ID="15" Action="CREATE"><Connection Source="App_B.Control.INIT_ARR_8_INT.D1" Destination="App_B.Control.GET_AT_INDEX.IN_ARRAY" /></Request>
+EMB_RES_B;<Request ID="16" Action="CREATE"><Connection Source="App_B.Control.INIT_ARR_8_INT.INITO" Destination="App_B.Control.SUM.REQ" /></Request>
+EMB_RES_B;<Request ID="17" Action="CREATE"><Connection Source="App_B.Control.INIT_ARR_8_INT.D1" Destination="App_B.Control.SUM.A" /></Request>
+EMB_RES_B;<Request ID="18" Action="START"/>

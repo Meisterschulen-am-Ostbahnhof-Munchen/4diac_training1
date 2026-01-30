@@ -1,56 +1,32 @@
-# Uebung_004c3: Toggle Flip-Flop mit IE mit BUTTON_LONG_PRESS_UP
+# Uebung_004c3: Langer Tastendruck (Release-Event)
 
-* * * * * * * * * *
+```{index} single: Uebung_004c3: Langer Tastendruck (Release-Event)
+```
 
-## Einleitung
-Diese Übung demonstriert die Funktionsweise eines Toggle Flip-Flops mit spezieller Ereignisauslösung. Das System verwendet einen langen Tastendruck als Auslöser für den Toggle-Vorgang.
+[Uebung_004c3](https://docs.ms-muc-docs.de/projects/visual-programming-languages-docs/de/latest/training1/Ventilsteuerung/4diacIDE-workspace/test/FBs/Uebungen/Uebung_004c3.html)
 
-## Verwendete Funktionsbausteine (FBs)
+[![NotebookLM](media/NotebookLM_logo.png)](https://notebooklm.google.com/notebook/a6872e59-1dfc-4132-a118-aff1bc7bc944)
 
-### DigitalInput_CLK_I1
-- **Typ**: logiBUS_IE
-- **Parameter**:
-  - QI = TRUE (aktiviert den Baustein)
-  - Input = logiBUS_DI::Input_I1 (verwendet digitalen Eingang I1)
-  - InputEvent = logiBUS_DI_Events::BUTTON_LONG_PRESS_UP (reagiert auf Loslassen nach langem Tastendruck)
+Dieser Artikel beschreibt die logiBUS®-Übung `Uebung_004c3`.
 
-### E_T_FF
-- **Typ**: E_T_FF (Toggle Flip-Flop mit Ereignissteuerung)
-- **Funktionsweise**: Wechselt den Ausgangszustand bei jedem eingehenden CLK-Ereignis
+----
 
-### DigitalOutput_Q1
-- **Typ**: logiBUS_QX
-- **Parameter**:
-  - QI = TRUE (aktiviert den Baustein)
-  - Output = logiBUS_DO::Output_Q1 (steuert digitalen Ausgang Q1)
+![](Uebung_004c3.png)
 
-## Programmablauf und Verbindungen
+## Ziel der Übung
 
-**Ereignisverbindungen:**
-- DigitalInput_CLK_I1.IND → E_T_FF.CLK
-- E_T_FF.EO → DigitalOutput_Q1.REQ
+Nutzung des Ereignisses `BUTTON_LONG_PRESS_UP`.
 
-**Datenverbindungen:**
-- E_T_FF.Q → DigitalOutput_Q1.OUT
+-----
 
-**Ablauf:**
-1. Ein langer Tastendruck auf Eingang I1 wird erkannt
-2. Beim Loslassen der Taste (BUTTON_LONG_PRESS_UP) sendet DigitalInput_CLK_I1 ein IND-Ereignis
-3. Dieses Ereignis triggert den CLK-Eingang des Toggle Flip-Flops
-4. Der E_T_FF wechselt seinen Ausgangszustand (Q)
-5. Das EO-Ereignis aktiviert die Ausgabe an DigitalOutput_Q1
-6. Der neue Zustand wird an Ausgang Q1 geschrieben
+## Funktionsweise
 
-**Lernziele:**
-- Verständnis von Toggle Flip-Flops
-- Umgang mit speziellen Eingabeereignissen (BUTTON_LONG_PRESS_UP)
-- Ereignisgesteuerte Programmierung in 4diac
+[cite_start]Der Baustein `DigitalInput_CLK_I1` in `Uebung_004c3.SUB` erkennt das Ende eines langen Drucks[cite: 1].
 
-**Schwierigkeitsgrad**: Einfach
+Im Gegensatz zum `START`-Event feuert `LONG_PRESS_UP` erst dann, wenn der Nutzer den Taster **wieder loslässt**, sofern dieser vorher lange genug gedrückt wurde. Dies ermöglicht es, Aktionen genau am Ende einer Interaktion auszulösen.
 
-**Benötigte Vorkenntnisse**: Grundlagen der 4diac-IDE, digitale Ein- und Ausgänge
+-----
 
-**Starten der Übung**: Das System wird automatisch aktiviert (QI=TRUE) und wartet auf langen Tastendruck an I1
+## Anwendungsbeispiel
 
-## Zusammenfassung
-Diese Übung zeigt eine praktische Implementierung eines Toggle Flip-Flops mit ereignisbasierter Steuerung. Besonders hervorzuheben ist die Verwendung des BUTTON_LONG_PRESS_UP-Ereignisses, das eine robuste Bedienung durch Vermeidung von versehentlichen Kurzimpulsen ermöglicht. Die Übung vermittelt grundlegende Konzepte der ereignisgesteuerten Automatisierungstechnik.
+**Bestätigungs-Dialog**: Der Nutzer muss eine Taste lange gedrückt halten, um sicherzugehen, dass er die Aktion will. Die Ausführung (z.B. "Motor starten") erfolgt erst beim Loslassen als finale Bestätigung.

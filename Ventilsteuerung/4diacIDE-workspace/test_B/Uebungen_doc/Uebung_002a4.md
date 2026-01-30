@@ -1,58 +1,65 @@
-# Uebung_002a4: DigitalInput_I1/_I2 mit AND_BOOL auf DigitalOutput_Q1
+# Uebung_002a4: Logische UND-Verknüpfung (AND_2_BOOL)
 
-* * * * * * * * * *
+```{index} single: Uebung_002a4: Logische UND-Verknüpfung (AND_2_BOOL)
+```
 
-## Einleitung
-Diese Übung demonstriert die grundlegende Verarbeitung digitaler Eingangssignale mit einer logischen UND-Verknüpfung. Zwei digitale Eingänge werden über einen AND-Baustein verknüpft und das Ergebnis an einen digitalen Ausgang ausgegeben.
+[Uebung_002a4](https://docs.ms-muc-docs.de/projects/visual-programming-languages-docs/de/latest/training1/Ventilsteuerung/4diacIDE-workspace/test/FBs/Uebungen/Uebung_002a4.html)
 
-## Verwendete Funktionsbausteine (FBs)
+[![NotebookLM](media/NotebookLM_logo.png)](https://notebooklm.google.com/notebook/041f4df4-b729-484d-b786-b6dcdf151961)
 
-### DigitalInput_I1 / DigitalInput_I2
-- **Typ**: logiBUS_IX
-- **Parameter**: 
-  - QI = TRUE (Qualified Input aktiviert)
-  - Input = logiBUS_DI::Input_I1 / logiBUS_DI::Input_I2 (physikalische Eingangsadressen)
-- **Ereignisausgang**: IND (Input Data Event)
-- **Datenaustgang**: IN (Eingangswert)
+Dieser Artikel beschreibt die logiBUS®-Übung `Uebung_002a4`. In dieser Übung wird eine logische UND-Verknüpfung (AND) realisiert, wobei ein digitaler Ausgang nur dann aktiviert wird, wenn zwei digitale Eingänge gleichzeitig den Zustand "Wahr" (HIGH) führen.
 
-### AND_2_BOOL
-- **Typ**: AND_2_BOOL
-- **Ereigniseingang**: REQ (Request Event)
-- **Ereignisausgang**: CNF (Confirm Event)
-- **Dateneingänge**: IN1, IN2 (zwei boolesche Eingänge)
-- **Datenausgang**: OUT (Ergebnis der UND-Verknüpfung)
+----
 
-### DigitalOutput_Q1
-- **Typ**: logiBUS_QX
-- **Parameter**:
-  - QI = TRUE (Qualified Input aktiviert)
-  - Output = logiBUS_DO::Output_Q1 (physikalische Ausgangsadresse)
-- **Ereigniseingang**: REQ (Request Event)
-- **Dateneingang**: OUT (Ausgangswert)
+![](Uebung_002a4.png)
 
-## Programmablauf und Verbindungen
+## Ziel der Übung
 
-**Ereignisverbindungen:**
-- DigitalInput_I1.IND → AND_2_BOOL.REQ
-- DigitalInput_I2.IND → AND_2_BOOL.REQ
-- AND_2_BOOL.CNF → DigitalOutput_Q1.REQ
+Das Hauptziel dieser Übung ist die Implementierung einer logischen Entscheidungsstruktur unter Verwendung des spezialisierten Typs `AND_2_BOOL`. Es wird gezeigt, wie Ereignis- und Datenflüsse kombiniert werden, um eine Hardware-Ausgabe basierend auf mehreren Eingangsbedingungen zu steuern.
 
-**Datenverbindungen:**
-- DigitalInput_I1.IN → AND_2_BOOL.IN1
-- DigitalInput_I2.IN → AND_2_BOOL.IN2
-- AND_2_BOOL.OUT → DigitalOutput_Q1.OUT
+-----
 
-**Lernziele:**
-- Grundlegende Verknüpfung digitaler Eingänge
-- Verwendung von UND-Logikbausteinen
-- Ereignisgesteuerte Datenverarbeitung
-- Anbindung an physikalische Ein-/Ausgänge
+## Beschreibung und Komponenten
 
-**Schwierigkeitsgrad**: Einsteiger
+[cite_start]Die Subapplikation `Uebung_002a4.SUB` verknüpft zwei digitale Eingänge über einen Logik-Baustein mit einem digitalen Ausgang[cite: 1].
 
-**Benötigte Vorkenntnisse**: Grundlagen der IEC 61499, digitale Logik
+### Funktionsbausteine (FBs)
 
-**Starten der Übung**: Die Übung wird automatisch gestartet, sobald das System initialisiert ist. Die Eingänge I1 und I2 müssen extern gesetzt werden, um den Ausgang Q1 zu aktivieren.
+  * **`DigitalInput_I1` & `DigitalInput_I2`**: Instanzen des Typs `logiBUS_IX`. [cite_start]Diese repräsentieren die beiden Hardware-Eingänge, die überwacht werden[cite: 1].
+  * **`AND_2_BOOL`**: Eine Instanz des Typs `AND_2_BOOL` (aus der IEC 61131-Bibliothek). [cite_start]Dieser Baustein führt die logische UND-Operation speziell für boolesche Werte aus. Er besitzt zwei Dateneingänge (`IN1`, `IN2`) und einen Datenausgang (`OUT`)[cite: 1]. Wie alle Standard-Logikbausteine reagiert er auf ein Ereignis am Port `REQ` und signalisiert die Fertigstellung am Port `CNF`.
+  * **`DigitalOutput_Q1`**: Eine Instanz des Typs `logiBUS_QX`. [cite_start]Dieser Baustein steuert den Hardware-Ausgang `Output_Q1`[cite: 1].
 
-## Zusammenfassung
-Diese Übung zeigt eine grundlegende UND-Verknüpfung zweier digitaler Eingänge. Nur wenn beide Eingänge (I1 und I2) aktiv sind, wird der Ausgang Q1 aktiviert. Die Übung vermittelt essentielle Konzepte der ereignisgesteuerten Automatisierungstechnik und logischen Verknüpfungen in 4diac-IDE.
+-----
+
+## Funktionsweise
+
+Die Logik wird durch die Verschaltung der Ereignis- und Datenpfade in der Subapplikation festgelegt. Der Aufbau in `Uebung_002a4.SUB` ist wie folgt definiert:
+
+```xml
+<EventConnections>
+    <Connection Source="DigitalInput_I1.IND" Destination="AND_2_BOOL.REQ"/>
+    <Connection Source="DigitalInput_I2.IND" Destination="AND_2_BOOL.REQ"/>
+    <Connection Source="AND_2_BOOL.CNF" Destination="DigitalOutput_Q1.REQ"/>
+</EventConnections>
+<DataConnections>
+    <Connection Source="DigitalInput_I1.IN" Destination="AND_2_BOOL.IN1"/>
+    <Connection Source="DigitalInput_I2.IN" Destination="AND_2_BOOL.IN2"/>
+    <Connection Source="AND_2_BOOL.OUT" Destination="DigitalOutput_Q1.OUT"/>
+</DataConnections>
+```
+
+[cite_start][cite: 1]
+
+Der funktionale Ablauf:
+1.  Jeder Tastendruck an `I1` oder `I2` löst ein `IND`-Ereignis aus.
+2.  Das Ereignis triggert den `REQ`-Eingang des `AND_2_BOOL`-Bausteins.
+3.  Der Baustein liest die aktuellen Zustände beider Eingänge und verknüpft sie logisch (UND).
+4.  Nach der Berechnung sendet der Baustein ein `CNF`-Ereignis an `DigitalOutput_Q1`.
+5.  Der Ausgangsbaustein aktualisiert daraufhin den physischen Ausgang `Q1` mit dem berechneten Ergebnis.
+
+-----
+
+## Anwendungsbeispiel
+
+Ein klassisches Anwendungsbeispiel ist eine **Zweihandbedienung zur Sicherheit**:
+Damit eine Maschine (`Q1`) startet, muss der Bediener zwei räumlich getrennte Taster (`I1` und `I2`) gleichzeitig drücken. Dies stellt sicher, dass beide Hände des Bedieners außerhalb des Gefahrenbereichs sind. Nur wenn beide Signale `TRUE` sind, wird der Ausgang aktiviert.

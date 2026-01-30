@@ -1,50 +1,68 @@
-# Uebung_002a7_AX: DigitalInput_I1-3 mit XOR auf DigitalOutput_Q1, mit Plug and Socket
+# Uebung_002a7_AX: XOR-Verknüpfung mit drei Eingängen
 
-(Bild der Übung ist nicht vorhanden)
+```{index} single: Uebung_002a7_AX: XOR-Verknüpfung mit drei Eingängen
+```
 
-* * * * * * * * * *
-## Einleitung
-Diese Übung demonstriert die Verwendung digitaler Eingänge (I1, I2, I3) in Kombination mit einer dreifachen Exklusiv-Oder (XOR)-Verknüpfung, um einen digitalen Ausgang (Q1) zu steuern. Die Logik wird unter Verwendung von 4diac-IDE Funktionsbausteinen realisiert, wobei ein spezifischer Adapter-Baustein für die XOR-Funktion zum Einsatz kommt und die Verbindungen über "Plug and Socket"-Mechanismen erfolgen. Das Ziel ist es, den Ausgang Q1 zu aktivieren, wenn eine ungerade Anzahl der Eingänge I1, I2 oder I3 aktiv (TRUE) ist.
+[Uebung_002a7_AX](https://docs.ms-muc-docs.de/projects/visual-programming-languages-docs/de/latest/training1/Ventilsteuerung/4diacIDE-workspace/test/FBs/Uebungen/Uebung_002a7_AX.html)
 
-## Verwendete Funktionsbausteine (FBs)
+[![NotebookLM](media/NotebookLM_logo.png)](https://notebooklm.google.com/notebook/041f4df4-b729-484d-b786-b6dcdf151961)
 
-*   **`DigitalInput_I1`** (Typ: `logiBUS::io::DI::logiBUS_IXA`)
-    *   **Parameter**: `QI = TRUE`, `Input = Input_I1`
-    *   **Funktion**: Dieser Baustein liest den aktuellen logischen Zustand (TRUE/FALSE) des digitalen Eingangs I1 und stellt ihn am Datenausgang `IN` zur Verfügung.
-*   **`DigitalInput_I2`** (Typ: `logiBUS::io::DI::logiBUS_IXA`)
-    *   **Parameter**: `QI = TRUE`, `Input = Input_I2`
-    *   **Funktion**: Dieser Baustein liest den aktuellen logischen Zustand (TRUE/FALSE) des digitalen Eingangs I2 und stellt ihn am Datenausgang `IN` zur Verfügung.
-*   **`DigitalInput_I3`** (Typ: `logiBUS::io::DI::logiBUS_IXA`)
-    *   **Parameter**: `QI = TRUE`, `Input = Input_I3`
-    *   **Funktion**: Dieser Baustein liest den aktuellen logischen Zustand (TRUE/FALSE) des digitalen Eingangs I3 und stellt ihn am Datenausgang `IN` zur Verfügung.
-*   **`DigitalOutput_Q1`** (Typ: `logiBUS::io::DQ::logiBUS_QXA`)
-    *   **Parameter**: `QI = TRUE`, `Output = Output_Q1`
-    *   **Funktion**: Dieser Baustein setzt den digitalen Ausgang Q1 auf den logischen Zustand, der an seinem Dateneingang `OUT` anliegt.
+Dieser Artikel beschreibt die logiBUS®-Übung `Uebung_002a7_AX`. In dieser Übung wird eine exklusive ODER-Verknüpfung (XOR) mit drei Eingängen realisiert. Der Ausgang wird aktiviert, wenn eine ungerade Anzahl von Eingängen aktiv ist.
 
-### Sub-Bausteine: AX_XOR_3
-    - **Typ**: `adapter::booleanOperators::AX_XOR_3`
-    - **Verwendete interne FBs**: (Informationen sind aus den bereitgestellten Dateiinhalten nicht direkt ableitbar)
-    - **Funktionsweise**: Dieser Funktionsbaustein implementiert eine Exklusiv-Oder (XOR)-Logik mit drei Eingängen. Das Ergebnis (Datenausgang `OUT`) ist `TRUE`, wenn eine ungerade Anzahl der Dateneingänge (`IN1`, `IN2`, `IN3`) den Wert `TRUE` aufweist. Ist eine gerade Anzahl der Eingänge `TRUE` oder sind alle `FALSE`, so ist das Ergebnis `FALSE`.
-        - **Dateneingänge**:
-            - `IN1`: Boolean
-            - `IN2`: Boolean
-            - `IN3`: Boolean
-        - **Datenausgang**:
-            - `OUT`: Boolean
+----
 
-## Programmablauf und Verbindungen
+![](Uebung_002a7_AX.png)
 
-Der Programmablauf dieser Übung ist wie folgt strukturiert:
+## Ziel der Übung
 
-1.  **Eingangswerte erfassen**: Die Funktionsbausteine `DigitalInput_I1`, `DigitalInput_I2` und `DigitalInput_I3` erfassen kontinuierlich die Zustände der physikalischen digitalen Eingänge I1, I2 und I3. Die gelesenen Boolean-Werte werden an ihren jeweiligen Datenausgängen `IN` bereitgestellt.
-2.  **XOR-Verknüpfung**: Die Ausgänge der drei Eingangs-Bausteine werden mit den Eingängen des `AX_XOR_3`-Bausteins verbunden:
-    *   Der Datenausgang `IN` von `DigitalInput_I1` wird mit dem Dateneingang `IN1` von `AX_XOR_3` verbunden.
-    *   Der Datenausgang `IN` von `DigitalInput_I2` wird mit dem Dateneingang `IN2` von `AX_XOR_3` verbunden.
-    *   Der Datenausgang `IN` von `DigitalInput_I3` wird mit dem Dateneingang `IN3` von `AX_XOR_3` verbunden.
-    Der `AX_XOR_3`-Baustein führt die logische XOR-Operation mit diesen drei Eingangswerten durch.
-3.  **Ausgang steuern**: Der Datenausgang `OUT` des `AX_XOR_3`-Bausteins wird mit dem Dateneingang `OUT` des `DigitalOutput_Q1`-Bausteins verbunden. Das Ergebnis der XOR-Operation wird somit direkt an den digitalen Ausgang Q1 weitergeleitet, der dann entsprechend seinen Zustand ändert.
+Das Hauptziel dieser Übung ist die Demonstration der XOR-Logik bei mehr als zwei Eingängen. Im Gegensatz zur normalen ODER-Verknüpfung, bei der der Ausgang bei *mindestens* einem aktiven Eingang einschaltet, reagiert die XOR-Logik auf die Parität der Eingangssignale. Dies wird oft für Wechselschaltungen oder Paritätsprüfungen verwendet.
 
-Zusammenfassend bedeutet dies, dass der digitale Ausgang Q1 aktiv (TRUE) wird, wenn entweder nur ein Eingang (I1, I2 oder I3) aktiv ist, oder wenn alle drei Eingänge (I1, I2 und I3) aktiv sind. Wenn keiner der Eingänge aktiv ist oder genau zwei Eingänge aktiv sind, bleibt der Ausgang Q1 inaktiv (FALSE).
+-----
 
-## Zusammenfassung
-Diese Übung demonstriert eine grundlegende Steuerungsschaltung unter Verwendung von drei digitalen Eingängen und einer dreifachen XOR-Logik zur Ansteuerung eines digitalen Ausgangs. Sie zeigt die Verknüpfung von I/O-Bausteinen mit einem Adapter-Baustein für komplexe Logikfunktionen und verdeutlicht den Datenfluss innerhalb einer 4diac-Anwendung. Die Übung ist ideal, um das Verständnis für logische Operationen und die Verbindung von Funktionsbausteinen in der 4diac-IDE zu vertiefen.
+## Beschreibung und Komponenten
+
+[cite_start]Die Subapplikation `Uebung_002a7_AX.SUB` nutzt einen 3-fach-XOR-Baustein, um drei digitale Eingänge mit einem Ausgang zu verknüpfen[cite: 1].
+
+### Funktionsbausteine (FBs)
+
+Folgende Bausteine werden eingesetzt:
+
+  * **`DigitalInput_I1`, `I2`, `I3`**: Drei Instanzen des Typs `logiBUS_IXA`. [cite_start]Diese erfassen die Hardware-Eingänge `Input_I1` bis `Input_I3`[cite: 1].
+  * **`AX_XOR_3`**: Eine Instanz des Typs `AX_XOR_3`. [cite_start]Dieser Baustein führt die exklusive ODER-Operation auf drei Adapter-Eingängen (`IN1`, `IN2`, `IN3`) aus und stellt das Ergebnis am Adapter-Ausgang `OUT` bereit[cite: 1].
+  * **`DigitalOutput_Q1`**: Eine Instanz des Typs `logiBUS_QXA`. [cite_start]Dieser Baustein steuert den Hardware-Ausgang `Output_Q1`[cite: 1].
+
+### Adapter-Schnittstelle: `AX.adp`
+
+[cite_start]Der Adapter-Typ `AX` bündelt auch hier Ereignis und Datenwert für eine effiziente Logikverarbeitung[cite: 2].
+
+-----
+
+## Funktionsweise
+
+Die Logik wird durch die Verschaltung der Eingangsbausteine mit dem XOR-Logik-Baustein in der Subapplikation definiert. Der Aufbau in `Uebung_002a7_AX.SUB` sieht wie folgt aus:
+
+```xml
+<AdapterConnections>
+    <Connection Source="DigitalInput_I1.IN" Destination="AX_XOR_3.IN1"/>
+    <Connection Source="DigitalInput_I2.IN" Destination="AX_XOR_3.IN2"/>
+    <Connection Source="DigitalInput_I3.IN" Destination="AX_XOR_3.IN3"/>
+    <Connection Source="AX_XOR_3.OUT" Destination="DigitalOutput_Q1.OUT"/>
+</AdapterConnections>
+```
+
+[cite_start][cite: 1]
+
+Die XOR-Logik mit drei Eingängen verhält sich wie folgt:
+*   Der Ausgang ist **TRUE**, wenn genau **ein** Eingang aktiv ist.
+*   Der Ausgang ist **TRUE**, wenn alle **drei** Eingänge aktiv sind.
+*   Der Ausgang ist **FALSE**, wenn kein Eingang oder genau zwei Eingänge aktiv sind.
+
+Dies entspricht der mathematischen Definition der XOR-Verknüpfung als ungerade Parität.
+
+-----
+
+## Anwendungsbeispiel
+
+Ein klassisches Anwendungsbeispiel ist eine **Kreuzschaltung mit drei Schaltern**:
+
+In einem Raum mit drei Türen gibt es an jeder Tür einen Schalter (`I1`, `I2`, `I3`). Das Licht (`Q1`) soll von jeder Tür aus ein- und ausgeschaltet werden können, unabhängig vom Zustand der anderen Schalter. Jede Betätigung eines beliebigen Schalters ändert den Zustand des Lichts (von An zu Aus oder umgekehrt). Dies wird durch die Paritätslogik der XOR-Verknüpfung perfekt realisiert.

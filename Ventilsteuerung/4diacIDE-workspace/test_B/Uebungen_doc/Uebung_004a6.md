@@ -1,62 +1,63 @@
-# Uebung_004a6: Toggle Flip-Flop mit IE und E_REND (Rendezvous)
+# Uebung_004a6: Event-Rendezvous (Synchronisation)
 
-* * * * * * * * * *
+```{index} single: Uebung_004a6: Event-Rendezvous (Synchronisation)
+```
 
-## Einleitung
-Diese Übung demonstriert die Funktionsweise eines Toggle Flip-Flops in Kombination mit einem Rendezvous-Mechanismus. Die Schaltung verwendet digitale Eingänge und Ausgänge sowie spezielle Ereignisbausteine zur Synchronisation.
+[Uebung_004a6](https://docs.ms-muc-docs.de/projects/visual-programming-languages-docs/de/latest/training1/Ventilsteuerung/4diacIDE-workspace/test/FBs/Uebungen/Uebung_004a6.html)
 
-## Verwendete Funktionsbausteine (FBs)
+[![NotebookLM](media/NotebookLM_logo.png)](https://notebooklm.google.com/notebook/a6872e59-1dfc-4132-a118-aff1bc7bc944)
 
-### DigitalInput_CLK_I1, DigitalInput_CLK_I2, DigitalInput_CLK_I3
-- **Typ**: logiBUS_IE
-- **Parameter**:
-  - QI = TRUE
-  - Input = logiBUS_DI::Input_I1 / Input_I2 / Input_I3
-  - InputEvent = logiBUS_DI_Events::BUTTON_SINGLE_CLICK
+Dieser Artikel beschreibt die logiBUS®-Übung `Uebung_004a6`. Hier wird ein fortgeschrittenes Ereignis-Muster vorgestellt: Das Rendezvous. Ein Ereignis wird erst dann weitergegeben, wenn mehrere unterschiedliche Bedingungen zeitunabhängig eingetroffen sind.
 
-### E_REND
-- **Typ**: E_REND (Rendezvous-Baustein)
-- **Funktionsweise**: Synchronisiert eingehende Ereignisse und gibt erst ein Ausgangsereignis aus, wenn bestimmte Bedingungen erfüllt sind
+----
 
-### E_T_FF
-- **Typ**: E_T_FF (Toggle Flip-Flop)
-- **Funktionsweise**: Ändert seinen Ausgangszustand bei jedem eingehenden Takt-Ereignis
+![](Uebung_004a6.png)
 
-### DigitalOutput_Q1
-- **Typ**: logiBUS_QX
-- **Parameter**:
-  - QI = TRUE
-  - Output = logiBUS_DO::Output_Q1
+## Ziel der Übung
 
-## Programmablauf und Verbindungen
+Erlernen des Umgangs mit dem `E_REND` Baustein. Dieser fungiert wie ein "Gedächtnis-UND" für Ereignisse. Er feuert erst am Ausgang, wenn an *allen* konfigurierten Eingängen mindestens einmal ein Ereignis registriert wurde. Dies dient der Synchronisation von asynchronen Prozessen.
 
-**Ereignisverbindungen:**
-- DigitalInput_CLK_I1.IND → E_REND.EI1
-- DigitalInput_CLK_I2.IND → E_REND.EI2  
-- DigitalInput_CLK_I3.IND → E_REND.R
-- E_REND.EO → E_T_FF.CLK
-- E_T_FF.EO → DigitalOutput_Q1.REQ
+-----
 
-**Datenverbindungen:**
-- E_T_FF.Q → DigitalOutput_Q1.OUT
+## Beschreibung und Komponenten
 
-**Programmablauf:**
-1. Die drei digitalen Eingänge (I1, I2, I3) erfassen Tastendruck-Ereignisse
-2. E_REND synchronisiert die Ereignisse von I1 und I2
-3. I3 dient als Reset-Signal für den Rendezvous-Baustein
-4. Bei erfolgreicher Synchronisation gibt E_REND ein Takt-Signal an den Toggle Flip-Flop
-5. Der Toggle Flip-Flop ändert seinen Ausgangszustand bei jedem Taktimpuls
-6. Der Ausgangszustand wird an die digitale Ausgangsleitung Q1 weitergeleitet
+[cite_start]Die Subapplikation `Uebung_004a6.SUB` nutzt `E_REND`, um sicherzustellen, dass zwei Taster gedrückt wurden, bevor der Ausgang umschaltet[cite: 1].
 
-**Lernziele:**
-- Verständnis von Toggle Flip-Flop Funktionalität
-- Implementierung von Rendezvous-Synchronisation
-- Umgang mit digitalen Ein- und Ausgängen
-- Ereignisgesteuerte Programmabläufe
+### Funktionsbausteine (FBs)
 
-**Schwierigkeitsgrad**: Mittel
+  * **`DigitalInput_CLK_I1` & `I2`**: Die beiden Taster für die Synchronisation.
+  * **`DigitalInput_CLK_I3`**: Ein Reset-Taster zum Löschen der Vorbedingungen.
+  * **`E_REND`**: Der Rendezvous-Baustein mit Eingängen `EI1`, `EI2` und einem Reset-Eingang `R`.
+  * **`E_T_FF`**: Das Flip-Flop zur Zustandsspeicherung.
 
-**Benötigte Vorkenntnisse**: Grundkenntnisse in IEC 61499, digitale Schaltungen, Ereignisverarbeitung
+-----
 
-## Zusammenfassung
-Diese Übung zeigt eine praktische Anwendung eines Toggle Flip-Flops in Verbindung mit einem Rendezvous-Mechanismus. Die Schaltung demonstriert, wie mehrere Eingangssignale synchronisiert werden können, um einen zuverlässigen Takt für einen Flip-Flop zu generieren. Die Übung vermittelt wichtige Konzepte der ereignisgesteuerten Automatisierungstechnik und Synchronisationsmechanismen.
+## Funktionsweise
+
+Die Logik verlangt die Bestätigung beider Quellen:
+
+```xml
+<EventConnections>
+    <Connection Source="DigitalInput_CLK_I1.IND" Destination="E_REND.EI1"/>
+    <Connection Source="DigitalInput_CLK_I2.IND" Destination="E_REND.EI2"/>
+    <Connection Source="E_REND.EO" Destination="E_T_FF.CLK"/>
+    <Connection Source="DigitalInput_CLK_I3.IND" Destination="E_REND.R"/>
+</EventConnections>
+```
+
+[cite_start][cite: 1]
+
+Der funktionale Ablauf:
+1.  Drückt man nur Taster 1 (`I1`), passiert am Ausgang nichts. `E_REND` speichert intern: "EI1 ist erledigt".
+2.  Drückt man irgendwann später Taster 2 (`I2`), ist die Bedingung erfüllt (beide waren da). `E_REND` feuert nun das Event an `EO`.
+3.  Das Flip-Flop toggelt den Ausgangszustand.
+4.  Danach setzt sich `E_REND` automatisch zurück und wartet erneut auf beide Eingänge.
+
+*   Der Reset-Taster (`I3`) kann jederzeit genutzt werden, um die internen Merker von `E_REND` zu löschen (Abbruch der Sequenz).
+
+-----
+
+## Anwendungsbeispiel
+
+**Sequenzielle Freigabe**:
+In einer Montagehalle muss ein Monteur den Zusammenbau bestätigen (`I1`) und ein Qualitätskontrolleur die Prüfung abnehmen (`I2`). Erst wenn beide (unabhängig voneinander und in beliebiger Reihenfolge) ihre Quittierung gegeben haben, darf das Förderband zum nächsten Schritt weiterschalten (`EO`).

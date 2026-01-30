@@ -1,52 +1,54 @@
-# Uebung_004a5: wie Uebung_004a4 aber ohne E_SPLIT
+# Uebung_004a5: Impliziter Event-Split (Fan-Out)
 
-* * * * * * * * * *
+```{index} single: Uebung_004a5: Impliziter Event-Split (Fan-Out)
+```
 
-## Einleitung
-Diese Übung baut auf der vorherigen Übung 004a4 auf, jedoch wurde der E_SPLIT-Baustein entfernt. Die Übung demonstriert die Verwendung von T-Flipflops zur Steuerung digitaler Ausgänge basierend auf Tasterereignissen.
+[Uebung_004a5](https://docs.ms-muc-docs.de/projects/visual-programming-languages-docs/de/latest/training1/Ventilsteuerung/4diacIDE-workspace/test/FBs/Uebungen/Uebung_004a5.html)
 
-## Verwendete Funktionsbausteine (FBs)
+[![NotebookLM](media/NotebookLM_logo.png)](https://notebooklm.google.com/notebook/a6872e59-1dfc-4132-a118-aff1bc7bc944)
 
-### Hauptbausteine:
-- **DigitalInput_CLK_I1** (Typ: logiBUS_IE)
-- **E_T_FF_Q1** (Typ: E_T_FF)
-- **E_T_FF_Q2** (Typ: E_T_FF)
-- **DigitalOutput_Q1** (Typ: logiBUS_QX)
-- **DigitalOutput_Q2** (Typ: logiBUS_QX)
+Dieser Artikel beschreibt die logiBUS®-Übung `Uebung_004a5`. Ähnlich wie bei der Zusammenführung von Events wird hier gezeigt, dass auch die Verteilung eines Events auf mehrere Ziele oft ohne expliziten Baustein möglich ist.
 
-### Sub-Bausteine: E_T_FF (T-Flipflop)
-- **Typ**: E_T_FF (Ereignisgesteuertes T-Flipflop)
-- **Verwendete interne FBs**: Keine weiteren internen FBs angegeben
-- **Funktionsweise**: Das T-Flipflop ändert seinen Ausgangszustand bei jedem eingehenden Taktimpuls (CLK-Ereignis). Der Ausgang Q wechselt bei jedem Takt zwischen den Zuständen TRUE und FALSE.
+----
 
-## Programmablauf und Verbindungen
+![](Uebung_004a5.png)
 
-**Ereignisverbindungen:**
-- DigitalInput_CLK_I1.IND → E_T_FF_Q1.CLK
-- DigitalInput_CLK_I1.IND → E_T_FF_Q2.CLK
-- E_T_FF_Q1.EO → DigitalOutput_Q1.REQ
-- E_T_FF_Q2.EO → DigitalOutput_Q2.REQ
+## Ziel der Übung
 
-**Datenverbindungen:**
-- E_T_FF_Q1.Q → DigitalOutput_Q1.OUT
-- E_T_FF_Q2.Q → DigitalOutput_Q2.OUT
+Demonstration der "Fan-Out"-Fähigkeit von Ereignisverbindungen in 4diac. Ein einzelner Ereignis-Ausgang kann mit mehreren Ereignis-Eingängen verbunden werden, um parallele Aktionen auszulösen.
 
-**Parameterkonfiguration:**
-- DigitalInput_CLK_I1: InputEvent = BUTTON_SINGLE_CLICK, Input = Input_I1
-- DigitalOutput_Q1: Output = Output_Q1
-- DigitalOutput_Q2: Output = Output_Q2
-- Alle Bausteine haben QI = TRUE aktiviert
+-----
 
-**Lernziele:**
-- Verständnis von T-Flipflops und deren Verhalten
-- Umgang mit parallelen Signalverarbeitung ohne Event-Splitter
-- Steuerung mehrerer Ausgänge mit gemeinsamer Eingabequelle
-- Implementierung von Toggling-Funktionalität für digitale Ausgänge
+## Beschreibung und Komponenten
 
-**Schwierigkeitsgrad**: Mittel
-**Benötigte Vorkenntnisse**: Grundlagen der IEC 61499, Verständnis von Flipflops, Erfahrung mit 4diac-IDE
+[cite_start]Die Subapplikation `Uebung_004a5.SUB` entfernt den `E_SPLIT` Baustein aus der vorherigen Übung und verbindet den Taster direkt mit beiden Flip-Flops[cite: 1].
 
-**Start der Übung**: Das Programm wird durch Betätigen des Tasters I1 gestartet, der einen Single-Click-Event auslöst.
+### Funktionsbausteine (FBs)
 
-## Zusammenfassung
-Diese Übung zeigt die parallele Ansteuerung zweier T-Flipflops mit einem gemeinsamen Tasterereignis. Im Vergleich zur vorherigen Version wurde der E_SPLIT-Baustein entfernt, was eine direktere Verbindung zwischen Eingabe und Flipflops ermöglicht. Beide Ausgänge Q1 und Q2 werden unabhängig voneinander durch die Tasterbetätigung getoggelt, wobei jeder Ausgang seinen eigenen Zustand beibehält und unabhängig vom anderen schaltet.
+  * **`DigitalInput_CLK_I1`**: Taster.
+  * **`E_T_FF_Q1` & `Q2`**: Zwei unabhängige Flip-Flops.
+
+-----
+
+## Funktionsweise
+
+```xml
+<EventConnections>
+    <Connection Source="DigitalInput_CLK_I1.IND" Destination="E_T_FF_Q1.CLK"/>
+    <Connection Source="DigitalInput_CLK_I1.IND" Destination="E_T_FF_Q2.CLK"/>
+</EventConnections>
+```
+
+[cite_start][cite: 1]
+
+Wenn `I1` ein Ereignis feuert, wird dieses an alle verbundenen Ziele verteilt. Die Reihenfolge der Abarbeitung ist in der IEC 61499 Norm für diesen Fall nicht strikt definiert (meistens erfolgt sie in der Reihenfolge, in der die Verbindungen erstellt wurden).
+
+**Wann nutzt man was?**
+*   Nutzen Sie **direkte Verbindungen (Fan-Out)**, wenn die Reihenfolge der Abarbeitung keine Rolle spielt (wie hier beim gleichzeitigen Toggelt zweier Lampen).
+*   Nutzen Sie einen **`E_SPLIT` Baustein**, wenn eine exakte Abfolge (zuerst A, dann B) technisch zwingend erforderlich ist.
+
+-----
+
+## Anwendungsbeispiel
+
+Gleiches Beispiel wie zuvor (Zentral-Aus), jedoch platzsparender implementiert. Dies ist der Standardweg in 4diac, um Signale zu vervielfältigen.

@@ -1,77 +1,24 @@
-# Uebung_012a: Numeric Value Input und Speichern
+# Uebung_012a: Modulare Speicherung (Typed SubApp)
 
-* * * * * * * * * *
+```{index} single: Uebung_012a: Modulare Speicherung (Typed SubApp)
+```
 
-## Einleitung
-Diese Übung demonstriert die Verarbeitung numerischer Eingabewerte und deren Speicherung in einem Non-Volatile Storage (NVS). Der Fokus liegt auf der Integration verschiedener Funktionsbausteine zur Datenerfassung, Typkonvertierung und persistenter Speicherung.
+[Uebung_012a](https://docs.ms-muc-docs.de/projects/visual-programming-languages-docs/de/latest/training1/Ventilsteuerung/4diacIDE-workspace/test/FBs/Uebungen/Uebung_012a.html)
 
-## Verwendete Funktionsbausteine (FBs)
+[![NotebookLM](media/NotebookLM_logo.png)](https://notebooklm.google.com/notebook/a6872e59-1dfc-4132-a118-aff1bc7bc944)
 
-### Hauptbausteine:
-- **CbVtStatus**: Dient als Auslöser für die Verarbeitungskette
-- **Uebung_012a_sub**: Haupt-Subapplikation für die numerische Werteverarbeitung
+Dieser Artikel beschreibt die logiBUS®-Übung `Uebung_012a`. Hier wird die persistente Speicherung aus Übung 012 in eine wiederverwendbare Sub-Applikation gekapselt.
 
-### Sub-Bausteine: Uebung_012a_sub
+----
 
-- **Typ**: SubAppType
-- **Verwendete interne FBs**:
-    - **ID** (Typ: NumericValue_ID)
-        - Parameter: QI = TRUE
-        - Ereignisausgang: IND
-        - Dateneingang: u16ObjId
-        - Datenausgang: IN
-    - **F_DWORD_TO_UDINT** (Typ: F_DWORD_TO_UDINT)
-        - Ereigniseingang: REQ
-        - Ereignisausgang: CNF
-        - Dateneingang: IN
-        - Datenausgang: OUT
-    - **NVS** (Typ: NVS)
-        - Parameter: QI = TRUE, DEFAULT_VALUE = UDINT#0
-        - Ereigniseingänge: SET, GET, INIT
-        - Ereignisausgänge: SETO, GETO, INITO
-        - Dateneingänge: KEY, VALUE
-        - Datenausgänge: VALUEO
-    - **Q_NumericValue** (Typ: Q_NumericValue)
-        - Ereigniseingang: REQ
-        - Dateneingänge: u16ObjId, u32NewValue
+![](Uebung_012a.png)
 
-- **Funktionsweise**: Die Subapplikation verarbeitet numerische Eingaben durch Identifikation, Typkonvertierung und Speicherung im NVS. Bei Initialisierung wird der gespeicherte Wert abgerufen und ausgegeben.
+## Übersicht
 
-## Programmablauf und Verbindungen
+[cite_start]Die Subapplikation `Uebung_012a.SUB` nutzt den Sub-App-Typ `Uebung_012a_sub`, um die Speicher-Logik modular bereitzustellen[cite: 1]. Der Baustein `CbVtStatus` bleibt auf der obersten Ebene, um die gesamte Seite bei Bedarf zu aktualisieren.
 
-**Ereignisverbindungen:**
-- CbVtStatus.IND → Uebung_012a_sub.REQ
-- ID.IND → F_DWORD_TO_UDINT.REQ
-- F_DWORD_TO_UDINT.CNF → NVS.SET
-- NVS.SETO → IND (Ausgang der Subapplikation)
-- NVS.GETO → Q_NumericValue.REQ
-- NVS.GETO → IND (Ausgang der Subapplikation)
-- NVS.INITO → NVS.GET
+### Typisierte Sub-Applikation: `Uebung_012a_sub`
 
-**Datenverbindungen:**
-- ID.IN → F_DWORD_TO_UDINT.IN
-- u16ObjId (Parameter) → Q_NumericValue.u16ObjId
-- KEY (Parameter) → NVS.KEY
-- F_DWORD_TO_UDINT.OUT → NVS.VALUE
-- NVS.VALUEO → Q_NumericValue.u32NewValue
-- NVS.VALUEO → VALUEO (Ausgang der Subapplikation)
-- u16ObjId (Parameter) → ID.u16ObjId
+[cite_start]Dieser Baustein bündelt die Eingabe via `NumericValue_ID`, die Konvertierung, den NVS-Zugriff und die Anzeige-Rückführung[cite: 2]. Er stellt Schnittstellen für den Speicher-Schlüssel (`KEY`) und die Objekt-ID (`u16ObjId`) zur Verfügung.
 
-**Parameter:**
-- KEY: NVS_Keys::KEY_I1_STORE (Speicherschlüssel)
-- u16ObjId: DefaultPool::InputNumber_I1 (Objekt-ID für numerische Eingabe)
-
-**Lernziele:**
-- Verständnis der Numeric Value Input-Verarbeitung
-- Umgang mit Typkonvertierungen (DWORD zu UDINT)
-- Implementierung von Non-Volatile Storage für persistente Datenspeicherung
-- Ereignisgesteuerte Programmabläufe in 4diac
-
-**Schwierigkeitsgrad**: Mittel
-
-**Benötigte Vorkenntnisse**: Grundkenntnisse in 4diac-IDE, Funktionsbausteinen und Ereignisverarbeitung
-
-**Starten der Übung**: Die Übung wird durch das Eintreffen eines IND-Ereignisses am CbVtStatus-Baustein gestartet.
-
-## Zusammenfassung
-Diese Übung vermittelt praktische Erfahrungen mit der Verarbeitung numerischer Eingabewerte und deren persistenter Speicherung. Der Aufbau demonstriert eine typische Verarbeitungskette von der Datenerfassung über Typkonvertierung bis zur Speicherung und zeigt dabei die Integration verschiedener Standard-Funktionsbausteine in 4diac.
+Dies ermöglicht es, viele verschiedene Einstellwerte (z.B. Druck, Durchfluss, Zeit) sehr schnell und übersichtlich in das Programm zu integrieren, ohne jedes Mal das komplexe Netzwerk aus Übung 012 neu zeichnen zu müssen.

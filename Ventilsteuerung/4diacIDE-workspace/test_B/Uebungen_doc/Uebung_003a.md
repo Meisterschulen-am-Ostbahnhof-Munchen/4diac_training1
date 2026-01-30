@@ -1,45 +1,66 @@
-# Uebung_003a: DigitalInput_I1/_I2 auf DigitalOutput_Q1/_I2 - mit typed Subapp
+# Uebung_003a: Modulare Parallelsteuerung (Typed SubApp)
 
-* * * * * * * * * *
-## Einleitung
-Diese Übung demonstriert die grundlegende Verarbeitung von digitalen Eingangssignalen zu digitalen Ausgangssignalen in einer 4diac-IDE Anwendung. Es werden zwei unabhängige Signalpfade realisiert, die jeweils einen digitalen Eingang mit einem digitalen Ausgang verbinden.
+```{index} single: Uebung_003a: Modulare Parallelsteuerung (Typed SubApp)
+```
 
-## Verwendete Funktionsbausteine (FBs)
+[Uebung_003a](https://docs.ms-muc-docs.de/projects/visual-programming-languages-docs/de/latest/training1/Ventilsteuerung/4diacIDE-workspace/test/FBs/Uebungen/Uebung_003a.html)
 
-### Sub-Bausteine: Uebung_003a_sub
-- **Typ**: SubAppType
-- **Verwendete interne FBs**:
-    - **IX**: logiBUS_IX
-        - Parameter: QI = TRUE
-        - Ereignisausgang: IND
-        - Dateneingang: Input
-    - **QX**: logiBUS_QX
-        - Parameter: QI = TRUE
-        - Ereigniseingang: REQ
-        - Datenausgang: Output
+[![NotebookLM](media/NotebookLM_logo.png)](https://notebooklm.google.com/notebook/a6872e59-1dfc-4132-a118-aff1bc7bc944)
 
-- **Funktionsweise**: Der Sub-Baustein verbindet einen digitalen Eingang (IX) mit einem digitalen Ausgang (QX). Bei einer Änderung des Eingangssignals (IND-Ereignis) wird das Signal über eine Ereignisverbindung an den Ausgangsbaustein weitergeleitet und das entsprechende Ausgangssignal gesetzt.
+Dieser Artikel beschreibt die logiBUS®-Übung `Uebung_003a`. Hier wird ein fortgeschrittener Ansatz zur Strukturierung von IEC 61499-Anwendungen demonstriert: Die Kapselung von Logik in wiederverwendbare, typisierte Sub-Applikationen ("Typed SubApps").
 
-## Programmablauf und Verbindungen
-Die Hauptanwendung besteht aus zwei Instanzen des Uebung_003a_sub Sub-Bausteins:
-- **F1**: Verbindet Input_I1 mit Output_Q1
-- **F2**: Verbindet Input_I2 mit Output_Q2
+----
 
-Die Verbindungen erfolgen über:
-- Ereignisverbindung: IX.IND → QX.REQ
-- Datenverbindung: IX.IN → QX.OUT
-- Externe Parameterzuweisung der logiBUS-Schnittstellen
+![](Uebung_003a.png)
 
-**Lernziele**: 
-- Verständnis der grundlegenden Signalverarbeitung
-- Umgang mit digitalen Ein- und Ausgängen
-- Verwendung von Sub-Applikationen
-- Parameterzuweisung für Hardware-Schnittstellen
+## Ziel der Übung
 
-**Schwierigkeitsgrad**: Einfach
-**Benötigte Vorkenntnisse**: Grundlagen der 4diac-IDE, Verständnis von digitalen Signalen
+Das Hauptziel ist die Vermeidung von redundantem Code. Anstatt für jeden Kanal die gleichen Bausteine und Verbindungen manuell zu zeichnen, wird einmalig ein generischer "Kanal-Typ" definiert. Dieser kann dann beliebig oft instanziiert und individuell konfiguriert werden. Dies erhöht die Übersichtlichkeit und reduziert Fehler bei der Programmierung großer Anlagen.
 
-**Starten der Übung**: Die Anwendung wird nach dem Kompilieren und Laden auf das Zielsystem automatisch aktiv. Die digitalen Eingänge I1 und I2 steuern direkt die entsprechenden Ausgänge Q1 und Q2.
+-----
 
-## Zusammenfassung
-Diese Übung vermittelt die grundlegenden Prinzipien der Signalverarbeitung in 4diac-IDE durch die direkte Verbindung von digitalen Eingängen mit digitalen Ausgängen. Die Verwendung von Sub-Applikationen ermöglicht eine modulare und wiederverwendbare Programmstruktur. Die beiden unabhängigen Signalpfade demonstrieren die parallele Verarbeitung von Signalen in Echtzeit-Steuerungssystemen.
+## Beschreibung und Komponenten
+
+[cite_start]Die Subapplikation `Uebung_003a.SUB` verwendet zwei Instanzen eines selbst definierten Sub-App-Typs, um zwei Signalpfade zu realisieren[cite: 1].
+
+### Typisierte Sub-Applikation: `Uebung_003a_sub`
+
+[cite_start]Dieser Baustein kapselt die grundlegende Logik der Signalweiterleitung[cite: 2]. Er besitzt zwei Parameter zur Hardware-Zuordnung:
+  * **`Input`**: Bestimmt den physischen Eingang (z.B. `Input_I1`).
+  * **`Output`**: Bestimmt den physischen Ausgang (z.B. `Output_Q1`).
+
+Im Inneren des Typs befinden sich ein `logiBUS_IX` und ein `logiBUS_QX` Baustein, die über eine Event- und eine Data-Connection fest miteinander verbunden sind.
+
+### Instanzen in der Hauptanwendung
+
+In `Uebung_003a` werden zwei Instanzen dieses Typs platziert:
+  * **`F1`**: [cite_start]Parametriert für den Pfad `I1` zu `Q1`[cite: 1].
+  * **`F2`**: [cite_start]Parametriert für den Pfad `I2` zu `Q2`[cite: 1].
+
+-----
+
+## Funktionsweise
+
+Die Komplexität der Einzelverbindungen ist im Inneren der Sub-Applikation verborgen ("Information Hiding"). Die Hauptanwendung definiert lediglich die Zuweisung der physischen Adressen. Der Aufbau in `Uebung_003a.SUB` ist daher extrem kompakt:
+
+```xml
+<SubApp Name="F1" Type="Uebungen::Uebung_003a_sub">
+    <Parameter Name="Input" Value="Input_I1"/>
+    <Parameter Name="Output" Value="Output_Q1"/>
+</SubApp>
+<SubApp Name="F2" Type="Uebungen::Uebung_003a_sub">
+    <Parameter Name="Input" Value="Input_I2"/>
+    <Parameter Name="Output" Value="Output_Q2"/>
+</SubApp>
+```
+
+[cite_start][cite: 1]
+
+Funktional verhält sich die Anwendung exakt wie die flache Struktur in Übung 003. Jede Instanz arbeitet als eigenständiger Block, der auf Ereignisse an seinem zugewiesenen Hardware-Eingang reagiert und den Hardware-Ausgang aktualisiert.
+
+-----
+
+## Anwendungsbeispiel
+
+**Objektorientierte Anlagensteuerung**:
+Stellen Sie sich eine Förderbandanlage mit 20 identischen Sektionen vor. Anstatt 20 mal die gleiche Logik zu zeichnen, erstellt man einen Typ "Sektion". In der Hauptanwendung platziert man 20 Instanzen und gibt ihnen nur die Start-Adressen der jeweiligen Hardware-IOs. Muss später die Logik geändert werden (z.B. eine zusätzliche Zeitverzögerung), ändert man dies nur an einer einzigen Stelle (im Typ), und alle 20 Sektionen übernehmen die Änderung sofort.

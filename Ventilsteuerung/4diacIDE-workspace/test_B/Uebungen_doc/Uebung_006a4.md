@@ -1,49 +1,35 @@
-# Uebung_006a4: SR und T-Flip-Flop mit 3x IE
+# Uebung_006a4: Motor-Wende-Schaltung (Bibliothek)
 
-* * * * * * * * * *
+```{index} single: Uebung_006a4: Motor-Wende-Schaltung (Bibliothek)
+```
 
-## Einleitung
-Diese Übung demonstriert die Anwendung von SR- und T-Flip-Flop-Funktionalität mit drei Eingängen. Die Übung zeigt die Steuerung einer Links-/Rechtslauf-Steuerung unter Verwendung von logiBUS-Komponenten für Ein- und Ausgänge.
+[Uebung_006a4](https://docs.ms-muc-docs.de/projects/visual-programming-languages-docs/de/latest/training1/Ventilsteuerung/4diacIDE-workspace/test/FBs/Uebungen/Uebung_006a4.html)
 
-## Verwendete Funktionsbausteine (FBs)
+[![NotebookLM](media/NotebookLM_logo.png)](https://notebooklm.google.com/notebook/a6872e59-1dfc-4132-a118-aff1bc7bc944)
 
-### Haupt-Funktionsbausteine:
-- **DigitalInput_CLK_I1**, **DigitalInput_CLK_I2**, **DigitalInput_CLK_I3** (Typ: logiBUS_IE)
-- **E_T_FF_SR** (Typ: E_T_FF_SR)
-- **LinksRechts** (Typ: LinksRechts)
-- **Rechtslauf**, **Linkslauf** (Typ: logiBUS_QX)
+Dieser Artikel beschreibt die logiBUS®-Übung `Uebung_006a4`. Hier wird die Motorsteuerung aus der vorherigen Übung durch die Verwendung eines fertigen Bibliotheksbausteins optimiert.
 
-### Sub-Bausteine: LinksRechts
-- **Typ**: LinksRechts
-- **Verwendete interne FBs**: Nicht in der bereitgestellten XML definiert
-- **Funktionsweise**: Steuert die Richtungsauswahl zwischen Links- und Rechtslauf basierend auf dem Eingangssignal
+----
 
-## Programmablauf und Verbindungen
+![](Uebung_006a4.png)
 
-### Ereignisverbindungen:
-- DigitalInput_CLK_I1.IND → E_T_FF_SR.S (Set-Eingang)
-- DigitalInput_CLK_I2.IND → E_T_FF_SR.R (Reset-Eingang)
-- DigitalInput_CLK_I3.IND → E_T_FF_SR.CLK (Takt-Eingang)
-- E_T_FF_SR.EO → LinksRechts.EI_ON (Einschaltereignis)
-- LinksRechts.EO → Rechtslauf.REQ und Linkslauf.REQ (Aktivierung der Ausgänge)
+## Ziel der Übung
 
-### Datenverbindungen:
-- LinksRechts.Rechts → Rechtslauf.OUT (Rechtslauf-Steuerung)
-- E_T_FF_SR.Q → LinksRechts.EIN (Eingangssignal)
-- LinksRechts.Links → Linkslauf.OUT (Linkslauf-Steuerung)
+Nutzung von spezialisierten Dienstbausteinen zur Reduktion der Diagramm-Komplexität.
 
-### Eingangskonfiguration:
-- I1: Direkter Eingang (EType := 255)
-- I2 und I3: Einzelklick-Button-Ereignisse
+-----
 
-### Lernziele:
-- Verständnis von SR- und T-Flip-Flop-Verhalten
-- Umgang mit Ereignisgesteuerten Eingängen
-- Steuerung von Richtungsauswahl mit Flip-Flops
-- Anwendung von logiBUS-IE und logiBUS-QX Komponenten
+## Beschreibung und Komponenten
 
-### Schwierigkeitsgrad: Mittel
-### Benötigte Vorkenntnisse: Grundlagen der Flip-Flop-Schaltungen, Ereignissteuerung in IEC 61499
+[cite_start]In `Uebung_006a4.SUB` wird das Netzwerk aus Gattern und Sub-Apps durch den Baustein `LinksRechts` ersetzt[cite: 1].
 
-## Zusammenfassung
-Diese Übung verbindet Flip-Flop-Grundlagen mit praktischer Anwendung in einer Richtungssteuerung. Die Kombination aus SR- und T-Flip-Flop-Eigenschaften mit drei unabhängigen Eingängen ermöglicht ein umfassendes Verständnis von sequentiellen Schaltungen und deren Anwendung in steuerungstechnischen Aufgaben. Die Übung zeigt zudem die Integration von Hardware-Ein-/Ausgängen über das logiBUS-System.
+### Funktionsbausteine (FBs)
+
+  * **`LinksRechts`**: Typ `logiBUS::utils::sequence::verteiler::LinksRechts`. [cite_start]Dieser Baustein übernimmt die komplette Verwaltung der zwei Ausgänge inklusive der internen Richtungs-Logik[cite: 1].
+  * **`E_T_FF_SR`**: Liefert weiterhin das Startsignal an den Eingang `EI_ON`.
+
+-----
+
+## Vorteil
+
+Durch die Verwendung von Bibliotheksbausteinen wird das Programm lesbarer und wartungsfreundlicher. Die interne Verriegelung ist im Baustein fest programmiert und kann nicht versehentlich durch fehlerhafte Verbindungen im Hauptdiagramm umgangen werden.

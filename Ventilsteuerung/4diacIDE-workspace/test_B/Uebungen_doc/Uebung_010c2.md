@@ -1,46 +1,18 @@
-# Uebung_010c2: SoftKey_F1 auf DigitalOutput_Q1 mit GreenWhiteBackground mit Subapp
+# Uebung_010c2: Strukturierung von UI-Feedback (Untyped)
 
-* * * * * * * * * *
+```{index} single: Uebung_010c2: Strukturierung von UI-Feedback (Untyped)
+```
 
-## Einleitung
-Diese Übung demonstriert die Verknüpfung einer Softkey-Funktion mit einer digitalen Ausgabe unter Verwendung einer Hintergrundsubapplikation. Die Übung zeigt, wie ein Tastendruck auf die F1-Taste sowohl eine digitale Ausgabe steuert als auch eine visuelle Rückmeldung auf der Benutzeroberfläche erzeugt.
+[Uebung_010c2](https://docs.ms-muc-docs.de/projects/visual-programming-languages-docs/de/latest/training1/Ventilsteuerung/4diacIDE-workspace/test/FBs/Uebungen/Uebung_010c2.html)
 
-## Verwendete Funktionsbausteine (FBs)
+[![NotebookLM](media/NotebookLM_logo.png)](https://notebooklm.google.com/notebook/a6872e59-1dfc-4132-a118-aff1bc7bc944)
 
-### Haupt-FBs:
-- **SoftKey_F1** (Typ: Softkey_IX) - Erfasst den Tastendruck der F1-Taste
-- **DigitalOutput_Q1** (Typ: logiBUS_QX) - Steuert den digitalen Ausgang Q1
-- **GreenWhiteBackground** (Typ: GreenWhiteBackground) - Subapplikation für visuelle Hintergrunddarstellung
+Dieser Artikel beschreibt die logiBUS®-Übung `Uebung_010c2`.
 
-### Sub-Bausteine: GreenWhiteBackground
-- **Typ**: GreenWhiteBackground
-- **Verwendete interne FBs**: Keine weiteren internen FBs angegeben
-- **Funktionsweise**: Diese Subapplikation dient zur visuellen Darstellung mit grün-weißem Hintergrund und empfängt Daten vom Softkey-Baustein zur Anzeige des Tastenzustands.
+----
 
-## Programmablauf und Verbindungen
+![](Uebung_010c2.png)
 
-**Ereignisverbindungen:**
-- SoftKey_F1.IND → GreenWhiteBackground.REQ
-- SoftKey_F1.IND → DigitalOutput_Q1.REQ
+## Übersicht
 
-**Datenverbindungen:**
-- SoftKey_F1.IN → GreenWhiteBackground.DI1
-- SoftKey_F1.IN → DigitalOutput_Q1.OUT
-- u16ObjId (Eingangsvariable) → SoftKey_F1.u16ObjId
-- u16ObjId (Eingangsvariable) → GreenWhiteBackground.u16ObjId
-- Output (Eingangsvariable) → DigitalOutput_Q1.Output
-
-**Parameterkonfiguration:**
-- Beide Haupt-FBs (SoftKey_F1 und DigitalOutput_Q1) haben QI-Parameter auf TRUE gesetzt
-- Initialwerte: u16ObjId = SoftKey_F1, Output = Output_Q1
-
-**Lernziele:**
-- Verständnis der Ereignis- und Datenverbindungen zwischen Funktionsbausteinen
-- Umgang mit Subapplikationen für visuelle Darstellung
-- Steuerung digitaler Ausgänge über Softkey-Eingaben
-
-**Schwierigkeitsgrad**: Einfach
-**Benötigte Vorkenntnisse**: Grundlagen der 4diac-IDE, Verständnis von Funktionsbausteinen und Verbindungen
-
-## Zusammenfassung
-Diese Übung verdeutlicht die grundlegende Verknüpfung von Eingabe-, Verarbeitungs- und Ausgabekomponenten in einem IEC 61499-System. Durch die parallele Ansteuerung einer digitalen Ausgabe und einer visuellen Subapplikation wird das Konzept der ereignisgesteuerten Automatisierung praxisnah demonstriert. Die Übung eignet sich ideal für den Einstieg in die Verwendung von Softkeys und digitalen Ausgängen in kombinierten Anwendungen.
+[cite_start]Die komplette Feedback-Logik aus der vorherigen Übung wird in eine untypisierte Sub-Applikation `Uebung_10c2_sub` gekapselt[cite: 1]. Dies zeigt, wie man komplexe Interaktions-Logiken (Eingabe + Feedback + Hardware-Ausgabe) visuell gruppiert, um die Hauptansicht des Programms übersichtlich zu halten.
