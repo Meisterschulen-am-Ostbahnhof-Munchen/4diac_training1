@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SubAppType Name="Uebung_035a3_AX" Comment="Ampelschaltung Österreich (AX) mit Blinker">
+	<Identification Standard="61499-2" Description="Copyright (c) 2026 Meisterschulen am Ostbahnhof  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0">
+	</Identification>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2026-02-01">
+	</VersionInfo>
+	<CompilerInfo packageName="Uebungen">
+		<Import declaration="logiBUS::io::DI::logiBUS_DI::Input_I1"/>
+		<Import declaration="logiBUS::io::DQ::logiBUS_DO::Output_Q1"/>
+		<Import declaration="logiBUS::io::DQ::logiBUS_DO::Output_Q2"/>
+		<Import declaration="logiBUS::io::DQ::logiBUS_DO::Output_Q3"/>
+		<Import declaration="logiBUS::io::DI::logiBUS_DI_Events::BUTTON_SINGLE_CLICK"/>
+	</CompilerInfo>
+	<SubAppInterfaceList>
+	</SubAppInterfaceList>
+	<SubAppNetwork>
+		<FB Name="Seq" Type="logiBUS::utils::sequence::timed::sequence_T_05_loop_AX" x="-800" y="800">
+			<Parameter Name="DT_S1_S2" Value="T#6s"/>
+			<Parameter Name="DT_S2_S3" Value="T#2s"/>
+			<Parameter Name="DT_S3_S4" Value="T#6s"/>
+			<Parameter Name="DT_S4_S5" Value="T#4s"/>
+			<Parameter Name="DT_S5_S1" Value="T#2s"/>
+		</FB>
+		<FB Name="Light_Red_Q1" Type="logiBUS::io::DQ::logiBUS_QXA" x="3200" y="-600">
+			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="Output" Value="Output_Q1"/>
+		</FB>
+		<FB Name="Light_Yellow_Q2" Type="logiBUS::io::DQ::logiBUS_QXA" x="3200" y="800">
+			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="Output" Value="Output_Q2"/>
+		</FB>
+		<FB Name="Light_Green_Q3" Type="logiBUS::io::DQ::logiBUS_QXA" x="3200" y="2200">
+			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="Output" Value="Output_Q3"/>
+		</FB>
+		<FB Name="Blinker" Type="adapter::events::unidirectional::signals::AX_BLINK_TRAIN" x="1200" y="3000">
+			<Parameter Name="TIMELOW" Value="T#500ms"/>
+			<Parameter Name="TIMEHIGH" Value="T#500ms"/>
+			<Parameter Name="N" Value="4"/>
+		</FB>
+		<FB Name="OR_Red" Type="adapter::booleanOperators::AX_OR_2" x="1700" y="0">
+		</FB>
+		<FB Name="OR_Yellow" Type="adapter::booleanOperators::AX_OR_2" x="2000" y="1300">
+		</FB>
+		<FB Name="OR_Green" Type="adapter::booleanOperators::AX_OR_2" x="2200" y="2200">
+		</FB>
+		<FB Name="DigitalInput_CLK_I1" Type="logiBUS::io::DI::logiBUS_IE" x="-2800" y="800">
+			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="Input" Value="Input_I1"/>
+			<Parameter Name="InputEvent" Value="BUTTON_SINGLE_CLICK"/>
+		</FB>
+		<FB Name="AX_R_TRIG" Type="adapter::events::unidirectional::AX_R_TRIG" x="100" y="3200">
+		</FB>
+		<FB Name="AX_SPLIT_2" Type="adapter::events::unidirectional::AX_SPLIT_2" x="1000" y="1100">
+		</FB>
+		<EventConnections>
+			<Connection Source="DigitalInput_CLK_I1.IND" Destination="Seq.START_S1" dx1="553.33"/>
+			<Connection Source="AX_R_TRIG.EO" Destination="Blinker.START" dx1="193.33"/>
+		</EventConnections>
+		<AdapterConnections>
+			<Connection Source="Seq.DO_S1" Destination="OR_Red.IN1" dx1="186.67"/>
+			<Connection Source="AX_SPLIT_2.OUT1" Destination="OR_Red.IN2" dx1="80" dx2="80" dy="-453.33"/>
+			<Connection Source="Seq.DO_S5" Destination="OR_Yellow.IN2" dx1="613.33"/>
+			<Connection Source="Seq.DO_S3" Destination="OR_Green.IN1" dx1="866.67"/>
+			<Connection Source="Blinker.OUT" Destination="OR_Green.IN2" dx1="80" dx2="80" dy="-613.33"/>
+			<Connection Source="OR_Red.OUT" Destination="Light_Red_Q1.OUT" dx1="693.33"/>
+			<Connection Source="OR_Yellow.OUT" Destination="Light_Yellow_Q2.OUT" dx1="506.67"/>
+			<Connection Source="OR_Green.OUT" Destination="Light_Green_Q3.OUT" dx1="193.33"/>
+			<Connection Source="Seq.DO_S4" Destination="AX_R_TRIG.QI" dx1="280" dx2="80" dy="720"/>
+			<Connection Source="Seq.DO_S2" Destination="AX_SPLIT_2.IN" dx1="313.33"/>
+			<Connection Source="AX_SPLIT_2.OUT2" Destination="OR_Yellow.IN1" dx1="166.67"/>
+		</AdapterConnections>
+	</SubAppNetwork>
+</SubAppType>
