@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SubAppType Name="Uebung_020j2_AX" Comment="DigitalInput_I1 auf DigitalOutput_Q1/2; 2xAX_TP; Impulsformend mit SUB">
+	<Identification Standard="61499-2" Description="Copyright (c) 2026 Meisterschulen am Ostbahnhof  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0">
+	</Identification>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2026-01-16">
+	</VersionInfo>
+	<CompilerInfo packageName="Uebungen">
+		<Import declaration="logiBUS::io::DI::logiBUS_DI::Input_I1"/>
+		<Import declaration="logiBUS::io::DQ::logiBUS_DO::Output_Q1"/>
+		<Import declaration="logiBUS::io::DQ::logiBUS_DO::Output_Q2"/>
+	</CompilerInfo>
+	<SubAppInterfaceList>
+	</SubAppInterfaceList>
+	<SubAppNetwork>
+		<FB Name="DigitalInput_I1" Type="logiBUS::io::DI::logiBUS_IXA" x="-9500" y="400">
+			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="Input" Value="Input_I1"/>
+		</FB>
+		<FB Name="DigitalOutput_Q1" Type="logiBUS::io::DQ::logiBUS_QXA" x="-5100" y="500">
+			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="Output" Value="Output_Q1"/>
+		</FB>
+		<FB Name="DigitalOutput_Q2" Type="logiBUS::io::DQ::logiBUS_QXA" x="-5100" y="1600">
+			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="Output" Value="Output_Q2"/>
+		</FB>
+		<SubApp Name="Uebung_020j2_AX_sub" Type="Uebungen::Uebung_020j2_AX_sub" x="-7600" y="1000">
+			<Parameter Name="TQ1" Value="T#800ms"/>
+			<Parameter Name="TQ2" Value="T#1200ms"/>
+		</SubApp>
+		<AdapterConnections>
+			<Connection Source="DigitalInput_I1.IN" Destination="Uebung_020j2_AX_sub.IN" dx1="246.67"/>
+			<Connection Source="Uebung_020j2_AX_sub.Q1" Destination="DigitalOutput_Q1.OUT" dx1="660"/>
+			<Connection Source="Uebung_020j2_AX_sub.Q2" Destination="DigitalOutput_Q2.OUT" dx1="660"/>
+		</AdapterConnections>
+	</SubAppNetwork>
+</SubAppType>
