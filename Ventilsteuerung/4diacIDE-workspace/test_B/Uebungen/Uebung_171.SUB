@@ -9,7 +9,14 @@
 	<SubAppInterfaceList>
 	</SubAppInterfaceList>
 	<SubAppNetwork>
-		<FB Name="E_MOVE_1" Type="iec61499::events::E_MOVE" x="-2500" y="-800">
+		<FB Name="E_MOVE" Type="iec61499::events::E_MOVE" x="-2500" y="-800">
 		</FB>
+		<FB Name="F_MOVE" Type="iec61131::selection::F_MOVE" x="-4100" y="-100">
+			<Attribute Name="DataType" Value="INT"/>
+		</FB>
+		<Comment Comment="TODO&#10;" x="-2800" y="-100" width="1500" height="300"/>
+		<DataConnections>
+			<Connection Source="F_MOVE.OUT" Destination="E_MOVE.IN" dx1="513.33"/>
+		</DataConnections>
 	</SubAppNetwork>
 </SubAppType>
