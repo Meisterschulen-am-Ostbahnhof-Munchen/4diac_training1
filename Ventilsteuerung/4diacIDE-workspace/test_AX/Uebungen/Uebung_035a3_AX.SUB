@@ -53,6 +53,8 @@
 		</FB>
 		<FB Name="AX_SPLIT_2" Type="adapter::events::unidirectional::AX_SPLIT_2" x="1000" y="1100">
 		</FB>
+		<FB Name="E_TimeOut" Type="iec61499::events::E_TimeOut" x="-1200" y="2900">
+		</FB>
 		<EventConnections>
 			<Connection Source="DigitalInput_CLK_I1.IND" Destination="Seq.START_S1" dx1="553.33"/>
 			<Connection Source="AX_R_TRIG.EO" Destination="Blinker.START" dx1="193.33"/>
@@ -69,6 +71,7 @@
 			<Connection Source="Seq.DO_S4" Destination="AX_R_TRIG.QI" dx1="280" dx2="80" dy="720"/>
 			<Connection Source="Seq.DO_S2" Destination="AX_SPLIT_2.IN" dx1="313.33"/>
 			<Connection Source="AX_SPLIT_2.OUT2" Destination="OR_Yellow.IN1" dx1="166.67"/>
+			<Connection Source="Seq.timeOut" Destination="E_TimeOut.TimeOutSocket" dx1="80" dx2="80" dy="406.67"/>
 		</AdapterConnections>
 	</SubAppNetwork>
 </SubAppType>
