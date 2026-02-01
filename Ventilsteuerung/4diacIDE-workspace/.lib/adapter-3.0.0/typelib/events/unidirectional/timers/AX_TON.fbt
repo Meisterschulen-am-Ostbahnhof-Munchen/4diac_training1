@@ -10,6 +10,11 @@
 		<Import declaration="eclipse4diac::core::TypeHash"/>
 	</CompilerInfo>
 	<InterfaceList>
+		<EventInputs>
+			<Event Name="EIPT" Type="Event" Comment="Set Time Event">
+				<With Var="PT"/>
+			</Event>
+		</EventInputs>
 		<InputVars>
 			<VarDeclaration Name="PT" Type="TIME" Comment="Process time"/>
 		</InputVars>
@@ -30,7 +35,7 @@
 		<DataConnections>
 			<Connection Source="E_TON.Q" Destination="Q.D1"/>
 			<Connection Source="IN.D1" Destination="E_TON.IN" dx1="406.67"/>
-			<Connection Source="PT" Destination="E_TON.PT" dx1="2513.33"/>
+			<Connection Source="PT" Destination="E_TON.PT" dx1="853.33"/>
 		</DataConnections>
 	</FBNetwork>
 	<Attribute Name="eclipse4diac::core::TypeHash" Value="''"/>
