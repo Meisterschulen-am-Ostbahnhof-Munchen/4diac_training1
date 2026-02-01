@@ -23,7 +23,7 @@
 			<Parameter Name="Input" Value="Input_I1"/>
 			<Parameter Name="InputEvent" Value="BUTTON_SINGLE_CLICK"/>
 		</FB>
-		<FB Name="E_T_FF" Type="iec61499::events::E_T_FF_SR" x="2500" y="1900">
+		<FB Name="E_T_FF_SR" Type="iec61499::events::E_T_FF_SR" x="2500" y="1900">
 		</FB>
 		<FB Name="E_REND" Type="iec61499::events::E_REND" x="1500" y="1500">
 		</FB>
@@ -39,14 +39,14 @@
 		</FB>
 		<EventConnections>
 			<Connection Source="DigitalInput_CLK_I1.IND" Destination="E_REND.EI1" dx1="73.33"/>
-			<Connection Source="E_T_FF.EO" Destination="DigitalOutput_Q1.REQ" dx1="746.67"/>
+			<Connection Source="E_T_FF_SR.EO" Destination="DigitalOutput_Q1.REQ" dx1="746.67"/>
 			<Connection Source="DigitalInput_CLK_I2.IND" Destination="E_REND.EI2" dx1="100"/>
 			<Connection Source="DigitalInput_CLK_I3.IND" Destination="E_REND.R" dx1="73.33"/>
-			<Connection Source="E_REND.EO" Destination="E_T_FF.CLK" dx1="73.33"/>
-			<Connection Source="DigitalInput_CLK_I3.IND" Destination="E_T_FF.R" dx1="140"/>
+			<Connection Source="E_REND.EO" Destination="E_T_FF_SR.CLK" dx1="73.33"/>
+			<Connection Source="DigitalInput_CLK_I3.IND" Destination="E_T_FF_SR.R" dx1="140"/>
 		</EventConnections>
 		<DataConnections>
-			<Connection Source="E_T_FF.Q" Destination="DigitalOutput_Q1.OUT" dx1="746.67"/>
+			<Connection Source="E_T_FF_SR.Q" Destination="DigitalOutput_Q1.OUT" dx1="746.67"/>
 		</DataConnections>
 	</SubAppNetwork>
 </SubAppType>

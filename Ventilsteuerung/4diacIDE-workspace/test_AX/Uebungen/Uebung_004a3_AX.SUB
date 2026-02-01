@@ -32,7 +32,7 @@
 			<Parameter Name="Input" Value="Input_I1"/>
 			<Parameter Name="InputEvent" Value="BUTTON_SINGLE_CLICK"/>
 		</FB>
-		<FB Name="E_T_FF" Type="adapter::events::unidirectional::AX_T_FF" x="-5600" y="320">
+		<FB Name="AX_T_FF" Type="adapter::events::unidirectional::AX_T_FF" x="-5600" y="320">
 		</FB>
 		<FB Name="DigitalInput_CLK_I2" Type="logiBUS::io::DI::logiBUS_IE" x="-8000" y="533.33">
 			<Parameter Name="QI" Value="TRUE">
@@ -45,11 +45,11 @@
 			<Parameter Name="InputEvent" Value="BUTTON_SINGLE_CLICK"/>
 		</FB>
 		<EventConnections>
-			<Connection Source="DigitalInput_CLK_I1.IND" Destination="E_T_FF.CLK" dx1="840"/>
-			<Connection Source="DigitalInput_CLK_I2.IND" Destination="E_T_FF.CLK" dx1="840"/>
+			<Connection Source="DigitalInput_CLK_I1.IND" Destination="AX_T_FF.CLK" dx1="840"/>
+			<Connection Source="DigitalInput_CLK_I2.IND" Destination="AX_T_FF.CLK" dx1="840"/>
 		</EventConnections>
 		<AdapterConnections>
-			<Connection Source="E_T_FF.Q" Destination="DigitalOutput_Q1.OUT"/>
+			<Connection Source="AX_T_FF.Q" Destination="DigitalOutput_Q1.OUT"/>
 		</AdapterConnections>
 	</SubAppNetwork>
 </SubAppType>

@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SubAppType Name="Uebung_160b2_AX" Comment="Motor Links/Rechtslauf Automatisierung IXA">
+	<Identification Standard="61499-2" Description="Copyright (c) 2023 Meisterschulen am Ostbahnhof  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0">
+	</Identification>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2023-10-23">
+	</VersionInfo>
+	<CompilerInfo packageName="Uebungen">
+		<Import declaration="logiBUS::io::DI::logiBUS_DI::Input_I1"/>
+		<Import declaration="logiBUS::io::DI::logiBUS_DI::Input_I2"/>
+		<Import declaration="logiBUS::io::DI::logiBUS_DI::Input_I3"/>
+		<Import declaration="logiBUS::io::DQ::logiBUS_DO::Output_Q5"/>
+		<Import declaration="logiBUS::io::DQ::logiBUS_DO::Output_Q56"/>
+		<Import declaration="logiBUS::io::DQ::logiBUS_DO::Output_Q6"/>
+	</CompilerInfo>
+	<SubAppInterfaceList>
+	</SubAppInterfaceList>
+	<SubAppNetwork>
+		<FB Name="DigitalOutput_Q5" Type="logiBUS::io::DQ::logiBUS_QXA" x="-1400" y="-800">
+			<Parameter Name="QI" Value="TRUE">
+				<Attribute Name="Visible" Value="false"/>
+			</Parameter>
+			<Parameter Name="PARAMS" Value="">
+				<Attribute Name="Visible" Value="false"/>
+			</Parameter>
+			<Parameter Name="Output" Value="Output_Q5"/>
+			<Parameter Name="QO" Value="">
+				<Attribute Name="Visible" Value="false"/>
+			</Parameter>
+		</FB>
+		<FB Name="DigitalOutput_Q6" Type="logiBUS::io::DQ::logiBUS_QXA" x="-1400" y="1400">
+			<Parameter Name="QI" Value="TRUE">
+				<Attribute Name="Visible" Value="false"/>
+			</Parameter>
+			<Parameter Name="PARAMS" Value="">
+				<Attribute Name="Visible" Value="false"/>
+			</Parameter>
+			<Parameter Name="Output" Value="Output_Q6"/>
+			<Parameter Name="QO" Value="">
+				<Attribute Name="Visible" Value="false"/>
+			</Parameter>
+		</FB>
+		<FB Name="AX_OR_2" Type="adapter::booleanOperators::AX_OR_2" x="-2700" y="800">
+		</FB>
+		<FB Name="DigitalOutput_Q56" Type="logiBUS::io::DQ::logiBUS_QXA" x="-1400" y="300">
+			<Parameter Name="QI" Value="TRUE">
+				<Attribute Name="Visible" Value="false"/>
+			</Parameter>
+			<Parameter Name="PARAMS" Value="">
+				<Attribute Name="Visible" Value="false"/>
+			</Parameter>
+			<Parameter Name="Output" Value="Output_Q56"/>
+			<Parameter Name="QO" Value="">
+				<Attribute Name="Visible" Value="false"/>
+			</Parameter>
+		</FB>
+		<FB Name="AX_SPLIT_2_A" Type="adapter::events::unidirectional::AX_SPLIT_2" x="-4000" y="-300">
+		</FB>
+		<FB Name="AX_SPLIT_2_B" Type="adapter::events::unidirectional::AX_SPLIT_2" x="-4000" y="1900">
+		</FB>
+		<FB Name="DigitalInput_CLK_I2" Type="logiBUS::io::DI::logiBUS_IXA" x="-7900" y="500">
+			<Parameter Name="QI" Value="TRUE">
+				<Attribute Name="Visible" Value="false"/>
+			</Parameter>
+			<Parameter Name="PARAMS" Value="">
+				<Attribute Name="Visible" Value="false"/>
+			</Parameter>
+			<Parameter Name="Input" Value="Input_I2"/>
+			<Parameter Name="QO" Value="">
+				<Attribute Name="Visible" Value="false"/>
+			</Parameter>
+		</FB>
+		<FB Name="DigitalInput_CLK_I1" Type="logiBUS::io::DI::logiBUS_IXA" x="-7900" y="-800">
+			<Parameter Name="QI" Value="TRUE">
+				<Attribute Name="Visible" Value="false"/>
+			</Parameter>
+			<Parameter Name="PARAMS" Value="">
+				<Attribute Name="Visible" Value="false"/>
+			</Parameter>
+			<Parameter Name="Input" Value="Input_I1"/>
+			<Parameter Name="QO" Value="">
+				<Attribute Name="Visible" Value="false"/>
+			</Parameter>
+		</FB>
+		<FB Name="AX_SR_A" Type="adapter::iec61131::bistableElements::AX_FB_RS" x="-5200" y="-500">
+		</FB>
+		<FB Name="DigitalInput_CLK_I3" Type="logiBUS::io::DI::logiBUS_IXA" x="-8000" y="1800">
+			<Parameter Name="QI" Value="TRUE">
+				<Attribute Name="Visible" Value="false"/>
+			</Parameter>
+			<Parameter Name="PARAMS" Value="">
+				<Attribute Name="Visible" Value="false"/>
+			</Parameter>
+			<Parameter Name="Input" Value="Input_I3"/>
+			<Parameter Name="QO" Value="">
+				<Attribute Name="Visible" Value="false"/>
+			</Parameter>
+		</FB>
+		<FB Name="AX_SR_B" Type="adapter::iec61131::bistableElements::AX_FB_RS" x="-5200" y="1900">
+		</FB>
+		<FB Name="AX_TON" Type="adapter::events::unidirectional::timers::AX_TON" x="-6100" y="1400">
+			<Parameter Name="PT" Value="T#50ms"/>
+		</FB>
+		<FB Name="AX_SPLIT_2" Type="adapter::events::unidirectional::AX_SPLIT_2" x="-6800" y="800">
+		</FB>
+		<AdapterConnections>
+			<Connection Source="AX_SPLIT_2_A.OUT1" Destination="DigitalOutput_Q5.OUT" dx1="920"/>
+			<Connection Source="AX_SPLIT_2_B.OUT2" Destination="DigitalOutput_Q6.OUT" dx1="920"/>
+			<Connection Source="AX_OR_2.OUT" Destination="DigitalOutput_Q56.OUT" dx1="340"/>
+			<Connection Source="AX_SPLIT_2_A.OUT2" Destination="AX_OR_2.IN1" dx1="273.33"/>
+			<Connection Source="AX_SPLIT_2_B.OUT1" Destination="AX_OR_2.IN2" dx1="273.33"/>
+			<Connection Source="AX_SR_A.Q1" Destination="AX_SPLIT_2_A.IN" dx1="340"/>
+			<Connection Source="AX_SR_B.Q1" Destination="AX_SPLIT_2_B.IN"/>
+			<Connection Source="DigitalInput_CLK_I1.IN" Destination="AX_SR_A.SET" dx1="426.67"/>
+			<Connection Source="DigitalInput_CLK_I2.IN" Destination="AX_SPLIT_2.IN" dx1="126.67"/>
+			<Connection Source="AX_TON.Q" Destination="AX_SR_B.SET" dx1="166.67"/>
+			<Connection Source="DigitalInput_CLK_I3.IN" Destination="AX_SR_B.RESET1" dx1="426.67"/>
+			<Connection Source="AX_SPLIT_2.OUT2" Destination="AX_TON.IN" dx1="80" dx2="80" dy="166.67"/>
+			<Connection Source="AX_SPLIT_2.OUT1" Destination="AX_SR_A.RESET1" dx1="473.33"/>
+		</AdapterConnections>
+	</SubAppNetwork>
+</SubAppType>

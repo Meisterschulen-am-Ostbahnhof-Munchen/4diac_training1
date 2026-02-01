@@ -14,6 +14,7 @@
 	<InterfaceList>
 		<EventInputs>
 			<Event Name="R" Type="Event" Comment="Reset">
+				<With Var="PT"/>
 			</Event>
 		</EventInputs>
 		<InputVars>
@@ -36,7 +37,7 @@
 		</EventConnections>
 		<DataConnections>
 			<Connection Source="PT" Destination="E_TOF.PT" dx1="426.67"/>
-			<Connection Source="E_TOF.Q" Destination="Q.D1"/>
+			<Connection Source="E_TOF.Q" Destination="Q.D1" dx1="153.33"/>
 			<Connection Source="IN.D1" Destination="E_TOF.IN" dx1="66.67"/>
 		</DataConnections>
 	</FBNetwork>
