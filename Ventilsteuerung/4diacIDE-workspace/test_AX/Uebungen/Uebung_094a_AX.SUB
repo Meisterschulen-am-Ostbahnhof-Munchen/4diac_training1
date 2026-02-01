@@ -22,7 +22,7 @@
 			<Parameter Name="Input" Value="Input_I2"/>
 			<Parameter Name="InputEvent" Value="BUTTON_SINGLE_CLICK"/>
 		</FB>
-		<FB Name="E_T_FF" Type="adapter::events::unidirectional::AX_T_FF" x="-1000" y="900">
+		<FB Name="AX_T_FF" Type="adapter::events::unidirectional::AX_T_FF" x="-1000" y="900">
 		</FB>
 		<FB Name="DigitalOutput_Q1" Type="logiBUS::io::DQ::logiBUS_QXA" x="4500" y="0">
 			<Parameter Name="QI" Value="TRUE"/>
@@ -37,7 +37,7 @@
 		<FB Name="AX_SPLIT_2" Type="adapter::events::unidirectional::AX_SPLIT_2" x="-200" y="1000">
 		</FB>
 		<EventConnections>
-			<Connection Source="DigitalInput_CLK_I2.IND" Destination="E_T_FF.CLK" dx1="306.67"/>
+			<Connection Source="DigitalInput_CLK_I2.IND" Destination="AX_T_FF.CLK" dx1="306.67"/>
 			<Connection Source="AX_X_TO_BOOL.CNF" Destination="DigitalInput_I1.INIT" dx1="220"/>
 		</EventConnections>
 		<DataConnections>
@@ -45,7 +45,7 @@
 		</DataConnections>
 		<AdapterConnections>
 			<Connection Source="DigitalInput_I1.IN" Destination="DigitalOutput_Q1.OUT"/>
-			<Connection Source="E_T_FF.Q" Destination="AX_SPLIT_2.IN" dx1="93.33"/>
+			<Connection Source="AX_T_FF.Q" Destination="AX_SPLIT_2.IN" dx1="93.33"/>
 			<Connection Source="AX_SPLIT_2.OUT1" Destination="AX_X_TO_BOOL.AX_IN" dx1="420"/>
 			<Connection Source="AX_SPLIT_2.OUT2" Destination="DigitalOutput_Q2.OUT" dx1="1966.67"/>
 		</AdapterConnections>

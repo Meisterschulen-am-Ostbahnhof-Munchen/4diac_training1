@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SubAppType Name="Uebung_160b_AX" Comment="Motor Links/Rechtslauf Automatisierung IE">
+	<Identification Standard="61499-2" Description="Copyright (c) 2023 Meisterschulen am Ostbahnhof  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0">
+	</Identification>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2023-10-23">
+	</VersionInfo>
+	<CompilerInfo packageName="Uebungen">
+		<Import declaration="logiBUS::io::DI::logiBUS_DI::Input_I1"/>
+		<Import declaration="logiBUS::io::DI::logiBUS_DI::Input_I2"/>
+		<Import declaration="logiBUS::io::DI::logiBUS_DI::Input_I3"/>
+		<Import declaration="logiBUS::io::DI::logiBUS_DI_Events::BUTTON_PRESS_DOWN"/>
+		<Import declaration="logiBUS::io::DI::logiBUS_DI_Events::BUTTON_SINGLE_CLICK"/>
+		<Import declaration="logiBUS::io::DQ::logiBUS_DO::Output_Q5"/>
+		<Import declaration="logiBUS::io::DQ::logiBUS_DO::Output_Q56"/>
+		<Import declaration="logiBUS::io::DQ::logiBUS_DO::Output_Q6"/>
+	</CompilerInfo>
+	<SubAppInterfaceList>
+	</SubAppInterfaceList>
+	<SubAppNetwork>
+		<FB Name="DigitalOutput_Q5" Type="logiBUS::io::DQ::logiBUS_QXA" x="-1400" y="-800">
+			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="Output" Value="Output_Q5"/>
+		</FB>
+		<FB Name="DigitalOutput_Q6" Type="logiBUS::io::DQ::logiBUS_QXA" x="-1400" y="1400">
+			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="Output" Value="Output_Q6"/>
+		</FB>
+		<FB Name="AX_OR_2" Type="adapter::booleanOperators::AX_OR_2" x="-2700" y="800">
+		</FB>
+		<FB Name="DigitalOutput_Q56" Type="logiBUS::io::DQ::logiBUS_QXA" x="-1400" y="300">
+			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="Output" Value="Output_Q56"/>
+		</FB>
+		<FB Name="AX_SPLIT_2_A" Type="adapter::events::unidirectional::AX_SPLIT_2" x="-4000" y="-300">
+		</FB>
+		<FB Name="AX_SPLIT_2_B" Type="adapter::events::unidirectional::AX_SPLIT_2" x="-4000" y="1900">
+		</FB>
+		<FB Name="DigitalInput_CLK_I2" Type="logiBUS::io::DI::logiBUS_IE" x="-6900" y="500">
+			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="Input" Value="Input_I2"/>
+			<Parameter Name="InputEvent" Value="BUTTON_PRESS_DOWN"/>
+		</FB>
+		<FB Name="DigitalInput_CLK_I1" Type="logiBUS::io::DI::logiBUS_IE" x="-6900" y="-700">
+			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="Input" Value="Input_I1"/>
+			<Parameter Name="InputEvent" Value="BUTTON_SINGLE_CLICK"/>
+		</FB>
+		<FB Name="AX_SR_A" Type="adapter::events::unidirectional::AX_SR" x="-5200" y="-500">
+		</FB>
+		<FB Name="DigitalInput_CLK_I3" Type="logiBUS::io::DI::logiBUS_IE" x="-6900" y="1800">
+			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="Input" Value="Input_I3"/>
+			<Parameter Name="InputEvent" Value="BUTTON_PRESS_DOWN"/>
+		</FB>
+		<FB Name="AX_SR_B" Type="adapter::events::unidirectional::AX_SR" x="-5200" y="1900">
+		</FB>
+		<FB Name="E_DELAY" Type="iec61499::events::E_DELAY" x="-5300" y="1000">
+			<Parameter Name="DT" Value="T#50ms"/>
+		</FB>
+		<EventConnections>
+			<Connection Source="DigitalInput_CLK_I1.IND" Destination="AX_SR_A.S" dx1="406.67"/>
+			<Connection Source="DigitalInput_CLK_I2.IND" Destination="AX_SR_A.R" dx1="473.33"/>
+			<Connection Source="DigitalInput_CLK_I3.IND" Destination="AX_SR_B.R" dx1="473.33"/>
+			<Connection Source="DigitalInput_CLK_I2.IND" Destination="E_DELAY.START" dx1="466.67"/>
+			<Connection Source="E_DELAY.EO" Destination="AX_SR_B.S" dx1="80" dx2="80" dy="560"/>
+		</EventConnections>
+		<AdapterConnections>
+			<Connection Source="AX_SPLIT_2_A.OUT1" Destination="DigitalOutput_Q5.OUT" dx1="920"/>
+			<Connection Source="AX_SPLIT_2_B.OUT2" Destination="DigitalOutput_Q6.OUT" dx1="920"/>
+			<Connection Source="AX_OR_2.OUT" Destination="DigitalOutput_Q56.OUT" dx1="340"/>
+			<Connection Source="AX_SPLIT_2_A.OUT2" Destination="AX_OR_2.IN1" dx1="273.33"/>
+			<Connection Source="AX_SPLIT_2_B.OUT1" Destination="AX_OR_2.IN2" dx1="273.33"/>
+			<Connection Source="AX_SR_A.Q" Destination="AX_SPLIT_2_A.IN" dx1="340"/>
+			<Connection Source="AX_SR_B.Q" Destination="AX_SPLIT_2_B.IN" dx1="340"/>
+		</AdapterConnections>
+	</SubAppNetwork>
+</SubAppType>

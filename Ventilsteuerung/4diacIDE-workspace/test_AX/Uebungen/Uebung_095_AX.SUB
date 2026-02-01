@@ -24,9 +24,9 @@
 			<Parameter Name="Input" Value="Input_I2"/>
 			<Parameter Name="InputEvent" Value="BUTTON_SINGLE_CLICK"/>
 		</FB>
-		<FB Name="E_SELECT" Type="adapter::events::unidirectional::AX_SELECT" x="-6400" y="-600">
+		<FB Name="AX_SELECT" Type="adapter::events::unidirectional::AX_SELECT" x="-6400" y="-600">
 		</FB>
-		<FB Name="E_T_FF" Type="adapter::events::unidirectional::AX_T_FF" x="-4800" y="-600">
+		<FB Name="AX_T_FF" Type="adapter::events::unidirectional::AX_T_FF" x="-4800" y="-600">
 		</FB>
 		<FB Name="DigitalOutput_Q1" Type="logiBUS::io::DQ::logiBUS_QXA" x="-3200" y="-1000">
 			<Parameter Name="QI" Value="TRUE"/>
@@ -38,13 +38,13 @@
 			<Parameter Name="InputEvent" Value="BUTTON_SINGLE_CLICK"/>
 		</FB>
 		<EventConnections>
-			<Connection Source="DigitalInput_CLK_I2.IND" Destination="E_SELECT.EI0" dx1="406.67"/>
-			<Connection Source="E_SELECT.EO" Destination="E_T_FF.CLK"/>
-			<Connection Source="DigitalInput_CLK_I3.IND" Destination="E_SELECT.EI1" dx1="453.33"/>
+			<Connection Source="DigitalInput_CLK_I2.IND" Destination="AX_SELECT.EI0" dx1="406.67"/>
+			<Connection Source="AX_SELECT.EO" Destination="AX_T_FF.CLK"/>
+			<Connection Source="DigitalInput_CLK_I3.IND" Destination="AX_SELECT.EI1" dx1="453.33"/>
 		</EventConnections>
 		<AdapterConnections>
-			<Connection Source="DigitalInput_I1.IN" Destination="E_SELECT.G" dx1="713.33"/>
-			<Connection Source="E_T_FF.Q" Destination="DigitalOutput_Q1.OUT" dx1="320"/>
+			<Connection Source="DigitalInput_I1.IN" Destination="AX_SELECT.G" dx1="713.33"/>
+			<Connection Source="AX_T_FF.Q" Destination="DigitalOutput_Q1.OUT" dx1="320"/>
 		</AdapterConnections>
 	</SubAppNetwork>
 </SubAppType>

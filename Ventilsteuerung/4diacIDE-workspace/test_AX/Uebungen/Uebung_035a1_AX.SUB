@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SubAppType Name="Uebung_035a1_AX" Comment="Ampelsteuerung mit Pattern Sequencer (AX)">
+	<Identification Standard="61499-2" Description="Copyright (c) 2026 Meisterschulen am Ostbahnhof  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0">
+	</Identification>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2026-02-01">
+	</VersionInfo>
+	<CompilerInfo packageName="Uebungen">
+		<Import declaration="logiBUS::io::DI::logiBUS_DI::Input_I1"/>
+		<Import declaration="logiBUS::io::DI::logiBUS_DI_Events::BUTTON_SINGLE_CLICK"/>
+		<Import declaration="logiBUS::io::DQ::logiBUS_DO::Output_Q1"/>
+		<Import declaration="logiBUS::io::DQ::logiBUS_DO::Output_Q2"/>
+		<Import declaration="logiBUS::io::DQ::logiBUS_DO::Output_Q3"/>
+	</CompilerInfo>
+	<SubAppInterfaceList>
+	</SubAppInterfaceList>
+	<SubAppNetwork>
+		<FB Name="PatternSeq" Type="logiBUS::utils::sequence::pattern::sequence_Pattern_04_04_loop_AX" x="-1200" y="800">
+			<Parameter Name="DT_S1_S2" Value="T#3s"/>
+			<Parameter Name="DT_S2_S3" Value="T#1s"/>
+			<Parameter Name="DT_S3_S4" Value="T#3s"/>
+			<Parameter Name="DT_S4_S1" Value="T#1s"/>
+			<Parameter Name="P_S1" Value="1"/>
+			<Parameter Name="P_S2" Value="3"/>
+			<Parameter Name="P_S3" Value="4"/>
+			<Parameter Name="P_S4" Value="2"/>
+		</FB>
+		<FB Name="DigitalInput_I1" Type="logiBUS::io::DI::logiBUS_IE" x="-2900" y="900">
+			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="Input" Value="Input_I1"/>
+			<Parameter Name="InputEvent" Value="BUTTON_SINGLE_CLICK"/>
+		</FB>
+		<FB Name="Light_Red_Q1" Type="logiBUS::io::DQ::logiBUS_QXA" x="1300" y="800">
+			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="Output" Value="Output_Q1"/>
+		</FB>
+		<FB Name="Light_Yellow_Q2" Type="logiBUS::io::DQ::logiBUS_QXA" x="1200" y="1800">
+			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="Output" Value="Output_Q2"/>
+		</FB>
+		<FB Name="Light_Green_Q3" Type="logiBUS::io::DQ::logiBUS_QXA" x="1200" y="2800">
+			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="Output" Value="Output_Q3"/>
+		</FB>
+		<FB Name="E_TimeOut" Type="iec61499::events::E_TimeOut" x="100" y="3700">
+		</FB>
+		<EventConnections>
+			<Connection Source="DigitalInput_I1.IND" Destination="PatternSeq.START_S1" dx1="653.33"/>
+		</EventConnections>
+		<AdapterConnections>
+			<Connection Source="PatternSeq.Q1" Destination="Light_Red_Q1.OUT" dx1="153.33"/>
+			<Connection Source="PatternSeq.Q2" Destination="Light_Yellow_Q2.OUT" dx1="153.33"/>
+			<Connection Source="PatternSeq.Q3" Destination="Light_Green_Q3.OUT" dx1="153.33"/>
+			<Connection Source="PatternSeq.timeOut" Destination="E_TimeOut.TimeOutSocket" dx1="80" dx2="80" dy="486.67"/>
+		</AdapterConnections>
+	</SubAppNetwork>
+</SubAppType>

@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SubAppType Name="Uebung_020j2_AX_sub" Comment="Subapplication Type">
+	<Identification Standard="61499-2">
+	</Identification>
+	<VersionInfo Version="1.0" Author="franz" Date="2026-02-01">
+	</VersionInfo>
+	<CompilerInfo packageName="Uebungen">
+	</CompilerInfo>
+	<SubAppInterfaceList>
+		<InputVars>
+			<VarDeclaration Name="TQ1" Type="TIME"/>
+			<VarDeclaration Name="TQ2" Type="TIME"/>
+		</InputVars>
+		<Plugs>
+			<AdapterDeclaration Name="Q1" Type="adapter::types::unidirectional::AX"/>
+			<AdapterDeclaration Name="Q2" Type="adapter::types::unidirectional::AX"/>
+		</Plugs>
+		<Sockets>
+			<AdapterDeclaration Name="IN" Type="adapter::types::unidirectional::AX"/>
+		</Sockets>
+	</SubAppInterfaceList>
+	<SubAppNetwork>
+		<FB Name="AX_TP_Q2" Type="adapter::events::unidirectional::timers::AX_TP" x="1200" y="1100">
+		</FB>
+		<FB Name="AX_TP_Q1" Type="adapter::events::unidirectional::timers::AX_TP" x="1200" y="0">
+		</FB>
+		<FB Name="AX_SPLIT_2" Type="adapter::events::unidirectional::AX_SPLIT_2" x="0" y="700">
+		</FB>
+		<DataConnections>
+			<Connection Source="TQ1" Destination="AX_TP_Q1.PT" dx1="3553.33"/>
+			<Connection Source="TQ2" Destination="AX_TP_Q2.PT" dx1="3340"/>
+		</DataConnections>
+		<AdapterConnections>
+			<Connection Source="AX_SPLIT_2.OUT2" Destination="AX_TP_Q2.IN" dx1="80"/>
+			<Connection Source="AX_SPLIT_2.OUT1" Destination="AX_TP_Q1.IN" dx1="220"/>
+			<Connection Source="IN" Destination="AX_SPLIT_2.IN" dx1="80" dx2="80" dy="280"/>
+			<Connection Source="AX_TP_Q2.Q" Destination="Q2" dx1="2540"/>
+			<Connection Source="AX_TP_Q1.Q" Destination="Q1" dx1="1666.67"/>
+		</AdapterConnections>
+	</SubAppNetwork>
+</SubAppType>

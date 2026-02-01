@@ -32,7 +32,7 @@
 		</FB>
 		<FB Name="AX_SPLIT_2" Type="adapter::events::unidirectional::AX_SPLIT_2" x="-4800" y="1100">
 		</FB>
-		<FB Name="AX_SPLIT_3" Type="adapter::events::unidirectional::AX_SPLIT_2" x="-9700" y="700">
+		<FB Name="AX_SPLIT_2_1" Type="adapter::events::unidirectional::AX_SPLIT_2" x="-9700" y="700">
 		</FB>
 		<EventConnections>
 			<Connection Source="E_SWITCH_I1.EO1" Destination="E_CYCLE.START" dx1="420"/>
@@ -40,12 +40,12 @@
 			<Connection Source="E_CYCLE.EO" Destination="AX_FB_TOF.REQ" dx1="240"/>
 		</EventConnections>
 		<AdapterConnections>
-			<Connection Source="AX_SPLIT_3.OUT2" Destination="AX_FB_TOF.IN" dx1="1500"/>
+			<Connection Source="AX_SPLIT_2_1.OUT2" Destination="AX_FB_TOF.IN" dx1="1500"/>
 			<Connection Source="AX_SPLIT_2.OUT1" Destination="DigitalOutput_Q1.OUT" dx1="1266.67"/>
 			<Connection Source="AX_SPLIT_2.OUT2" Destination="E_SWITCH_Q1.G" dx1="220"/>
 			<Connection Source="AX_FB_TOF.Q" Destination="AX_SPLIT_2.IN" dx1="246.67"/>
-			<Connection Source="AX_SPLIT_3.OUT1" Destination="E_SWITCH_I1.G" dx1="220"/>
-			<Connection Source="DigitalInput_I1.IN" Destination="AX_SPLIT_3.IN" dx1="200"/>
+			<Connection Source="AX_SPLIT_2_1.OUT1" Destination="E_SWITCH_I1.G" dx1="220"/>
+			<Connection Source="DigitalInput_I1.IN" Destination="AX_SPLIT_2_1.IN" dx1="200"/>
 		</AdapterConnections>
 	</SubAppNetwork>
 </SubAppType>
