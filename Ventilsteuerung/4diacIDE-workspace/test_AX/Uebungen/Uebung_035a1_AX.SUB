@@ -6,6 +6,7 @@
 	</VersionInfo>
 	<CompilerInfo packageName="Uebungen">
 		<Import declaration="logiBUS::io::DI::logiBUS_DI::Input_I1"/>
+		<Import declaration="logiBUS::io::DI::logiBUS_DI_Events::BUTTON_SINGLE_CLICK"/>
 		<Import declaration="logiBUS::io::DQ::logiBUS_DO::Output_Q1"/>
 		<Import declaration="logiBUS::io::DQ::logiBUS_DO::Output_Q2"/>
 		<Import declaration="logiBUS::io::DQ::logiBUS_DO::Output_Q3"/>
@@ -23,9 +24,10 @@
 			<Parameter Name="P_S3" Value="4"/>
 			<Parameter Name="P_S4" Value="2"/>
 		</FB>
-		<FB Name="DigitalInput_I1" Type="logiBUS::io::DI::logiBUS_IXA" x="-3400" y="800">
+		<FB Name="DigitalInput_I1" Type="logiBUS::io::DI::logiBUS_IE" x="-3400" y="800">
 			<Parameter Name="QI" Value="TRUE"/>
 			<Parameter Name="Input" Value="Input_I1"/>
+			<Parameter Name="InputEvent" Value="BUTTON_SINGLE_CLICK"/>
 		</FB>
 		<FB Name="Light_Red_Q1" Type="logiBUS::io::DQ::logiBUS_QXA" x="800" y="200">
 			<Parameter Name="QI" Value="TRUE"/>
@@ -39,11 +41,13 @@
 			<Parameter Name="QI" Value="TRUE"/>
 			<Parameter Name="Output" Value="Output_Q3"/>
 		</FB>
+		<EventConnections>
+			<Connection Source="DigitalInput_I1.IND" Destination="PatternSeq.START_S1" dx1="653.33"/>
+		</EventConnections>
 		<AdapterConnections>
-			<Connection Source="DigitalInput_I1.IN" Destination="PatternSeq.START_S1"/>
-			<Connection Source="PatternSeq.Q1" Destination="Light_Red_Q1.OUT"/>
-			<Connection Source="PatternSeq.Q2" Destination="Light_Yellow_Q2.OUT"/>
-			<Connection Source="PatternSeq.Q3" Destination="Light_Green_Q3.OUT"/>
+			<Connection Source="PatternSeq.Q1" Destination="Light_Red_Q1.OUT" dx1="153.33"/>
+			<Connection Source="PatternSeq.Q2" Destination="Light_Yellow_Q2.OUT" dx1="153.33"/>
+			<Connection Source="PatternSeq.Q3" Destination="Light_Green_Q3.OUT" dx1="153.33"/>
 		</AdapterConnections>
 	</SubAppNetwork>
 </SubAppType>
