@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SubAppType Name="Uebung_178_AX" Comment="Beispiel für AX_FB_F_TRIG (Falling Edge Detection)">
+	<Identification Standard="61499-2" Description="Copyright (c) 2025 Meisterschulen am Ostbahnhof  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0">
+	</Identification>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2025-02-01">
+	</VersionInfo>
+	<CompilerInfo packageName="Uebungen">
+		<Import declaration="logiBUS::io::DI::logiBUS_DI::Input_I1"/>
+		<Import declaration="logiBUS::io::DQ::logiBUS_DO::Output_Q1"/>
+	</CompilerInfo>
+	<SubAppInterfaceList>
+	</SubAppInterfaceList>
+	<SubAppNetwork>
+		<FB Name="AX_FB_F_TRIG" Type="adapter::iec61131::edgeDetection::AX_FB_F_TRIG" x="-1900" y="966.67">
+		</FB>
+		<FB Name="DigitalInput_I1" Type="logiBUS::io::DI::logiBUS_IXA" x="-3200" y="546.67">
+			<Parameter Name="QI" Value="TRUE">
+				<Attribute Name="Visible" Value="false"/>
+			</Parameter>
+			<Parameter Name="PARAMS" Value="">
+				<Attribute Name="Visible" Value="false"/>
+			</Parameter>
+			<Parameter Name="Input" Value="Input_I1"/>
+			<Parameter Name="QO" Value="">
+				<Attribute Name="Visible" Value="false"/>
+			</Parameter>
+		</FB>
+		<FB Name="DigitalOutput_Q1" Type="logiBUS::io::DQ::logiBUS_QXA" x="1000" y="546.67">
+			<Parameter Name="QI" Value="TRUE">
+				<Attribute Name="Visible" Value="false"/>
+			</Parameter>
+			<Parameter Name="PARAMS" Value="">
+				<Attribute Name="Visible" Value="false"/>
+			</Parameter>
+			<Parameter Name="Output" Value="Output_Q1"/>
+			<Parameter Name="QO" Value="">
+				<Attribute Name="Visible" Value="false"/>
+			</Parameter>
+		</FB>
+		<FB Name="FB_TP" Type="adapter::events::unidirectional::timers::AX_TP" x="-300" y="753.33">
+			<Parameter Name="PT" Value="T#1s"/>
+		</FB>
+		<AdapterConnections>
+			<Connection Source="DigitalInput_I1.IN" Destination="AX_FB_F_TRIG.CLK" dx1="320"/>
+			<Connection Source="AX_FB_F_TRIG.Q" Destination="FB_TP.IN"/>
+			<Connection Source="FB_TP.Q" Destination="DigitalOutput_Q1.OUT" dx1="386.67"/>
+		</AdapterConnections>
+	</SubAppNetwork>
+</SubAppType>

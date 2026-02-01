@@ -23,7 +23,7 @@
 			<Parameter Name="QI" Value="TRUE"/>
 			<Parameter Name="Output" Value="Output_Q1"/>
 		</FB>
-		<FB Name="E_TimeOut" Type="iec61499::events::ATimeOut" x="-6900" y="2800">
+		<FB Name="E_TimeOut" Type="iec61499::events::E_TimeOut" x="-6900" y="2800">
 		</FB>
 		<FB Name="DigitalOutput_Q2" Type="logiBUS::io::DQ::logiBUS_QX" x="-6900" y="-53.33">
 			<Parameter Name="QI" Value="TRUE"/>
@@ -81,7 +81,7 @@
 			<Connection Source="sequence_04.EO_S4" Destination="DigitalOutput_Q4.REQ" dx1="393.33"/>
 		</EventConnections>
 		<DataConnections>
-			<Connection Source="F_SINT_TO_UINT.OUT" Destination="Q_NumericValue.u32NewValue"/>
+			<Connection Source="F_SINT_TO_UINT.OUT" Destination="Q_NumericValue.u32NewValue" dx1="680"/>
 			<Connection Source="sequence_04.STATE_NR" Destination="F_SINT_TO_UINT.IN" dx1="553.33"/>
 			<Connection Source="sequence_04.DO_S1" Destination="DigitalOutput_Q1.OUT" dx1="220"/>
 			<Connection Source="sequence_04.DO_S2" Destination="DigitalOutput_Q2.OUT" dx1="286.67"/>

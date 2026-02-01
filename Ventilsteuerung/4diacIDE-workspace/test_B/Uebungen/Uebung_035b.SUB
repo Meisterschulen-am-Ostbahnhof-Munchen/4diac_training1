@@ -23,7 +23,7 @@
 			<Parameter Name="QI" Value="TRUE"/>
 			<Parameter Name="Output" Value="Output_Q1"/>
 		</FB>
-		<FB Name="E_TimeOut" Type="iec61499::events::E_RTimeOut" x="-6900" y="2800">
+		<FB Name="E_TimeOut" Type="iec61499::events::E_RTimeOut" x="-7300" y="3300">
 		</FB>
 		<FB Name="DigitalOutput_Q2" Type="logiBUS::io::DQ::logiBUS_QX" x="-6900" y="-53.33">
 			<Parameter Name="QI" Value="TRUE"/>
@@ -68,6 +68,7 @@
 			<Parameter Name="DT_S3_S4" Value="T#2s"/>
 			<Parameter Name="DT_S4_START" Value="T#2s"/>
 		</FB>
+		<Comment Comment="TODO!&#10;das soll da Beispiel mit E_RT werden, das funktioniert aber noch nicht." x="-9000" y="3400" width="1600" height="600"/>
 		<EventConnections>
 			<Connection Source="F_SINT_TO_UINT.CNF" Destination="Q_NumericValue.REQ" dx1="233.33"/>
 			<Connection Source="DigitalInput_CLK_I1.IND" Destination="sequence_04.START_S1" dx1="406.67"/>
@@ -81,15 +82,12 @@
 			<Connection Source="sequence_04.EO_S4" Destination="DigitalOutput_Q4.REQ" dx1="393.33"/>
 		</EventConnections>
 		<DataConnections>
-			<Connection Source="F_SINT_TO_UINT.OUT" Destination="Q_NumericValue.u32NewValue"/>
+			<Connection Source="F_SINT_TO_UINT.OUT" Destination="Q_NumericValue.u32NewValue" dx1="680"/>
 			<Connection Source="sequence_04.STATE_NR" Destination="F_SINT_TO_UINT.IN" dx1="553.33"/>
 			<Connection Source="sequence_04.DO_S1" Destination="DigitalOutput_Q1.OUT" dx1="220"/>
 			<Connection Source="sequence_04.DO_S2" Destination="DigitalOutput_Q2.OUT" dx1="286.67"/>
 			<Connection Source="sequence_04.DO_S3" Destination="DigitalOutput_Q3.OUT" dx1="353.33"/>
 			<Connection Source="sequence_04.DO_S4" Destination="DigitalOutput_Q4.OUT" dx1="640"/>
 		</DataConnections>
-		<AdapterConnections>
-			<Connection Source="sequence_04.timeOut" Destination="E_TimeOut.TimeOutSocket" dx1="760"/>
-		</AdapterConnections>
 	</SubAppNetwork>
 </SubAppType>
