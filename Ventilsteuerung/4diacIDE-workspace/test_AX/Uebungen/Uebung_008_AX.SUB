@@ -17,7 +17,7 @@
 		<FB Name="AE_CYCLE" Type="adapter::events::unidirectional::timers::AE_CYCLE" x="-5600" y="-700">
 			<Parameter Name="DT" Value="T#1s"/>
 		</FB>
-		<FB Name="E_SWITCH" Type="adapter::events::unidirectional::AX_SWITCH" x="-2300" y="-700">
+		<FB Name="AX_SWITCH" Type="adapter::events::unidirectional::AX_SWITCH" x="-2300" y="-700">
 		</FB>
 		<FB Name="AX_SR" Type="adapter::events::unidirectional::AX_SR" x="-700" y="-700">
 		</FB>
@@ -26,14 +26,14 @@
 		<FB Name="AX_AE_MERGE" Type="adapter::events::unidirectional::AX_AE_MERGE" x="-4000" y="-200">
 		</FB>
 		<EventConnections>
-			<Connection Source="E_SWITCH.EO0" Destination="AX_SR.S"/>
-			<Connection Source="E_SWITCH.EO1" Destination="AX_SR.R"/>
+			<Connection Source="AX_SWITCH.EO0" Destination="AX_SR.S"/>
+			<Connection Source="AX_SWITCH.EO1" Destination="AX_SR.R"/>
 		</EventConnections>
 		<AdapterConnections>
 			<Connection Source="AX_SR.Q" Destination="AX_SPLIT_2.IN" dx1="205.88"/>
 			<Connection Source="AX_SPLIT_2.OUT1" Destination="AX_AE_MERGE.IN_AX" dx1="70.59" dx2="70.59" dy="-1286.67"/>
 			<Connection Source="AE_CYCLE.EO" Destination="AX_AE_MERGE.IN_AE" dx1="435.29"/>
-			<Connection Source="AX_AE_MERGE.OUT" Destination="E_SWITCH.G" dx1="488.24"/>
+			<Connection Source="AX_AE_MERGE.OUT" Destination="AX_SWITCH.G" dx1="488.24"/>
 			<Connection Source="AX_SPLIT_2.OUT2" Destination="DigitalOutput_Q1.OUT" dx1="373.33"/>
 		</AdapterConnections>
 	</SubAppNetwork>

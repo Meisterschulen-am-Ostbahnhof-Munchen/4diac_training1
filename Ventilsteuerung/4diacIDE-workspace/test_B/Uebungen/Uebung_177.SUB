@@ -39,18 +39,18 @@
 				<Attribute Name="Visible" Value="false"/>
 			</Parameter>
 		</FB>
-		<FB Name="FB_TP" Type="iec61499::events::timers::E_TP" x="-900" y="800">
+		<FB Name="E_TP" Type="iec61499::events::timers::E_TP" x="-900" y="800">
 			<Parameter Name="PT" Value="T#1s"/>
 		</FB>
 		<EventConnections>
 			<Connection Source="DigitalInput_I1.IND" Destination="FB_R_TRIG.REQ"/>
-			<Connection Source="FB_R_TRIG.CNF" Destination="FB_TP.REQ" dx1="393.33"/>
-			<Connection Source="FB_TP.CNF" Destination="DigitalOutput_Q1.REQ" dx1="413.33"/>
+			<Connection Source="FB_R_TRIG.CNF" Destination="E_TP.REQ" dx1="393.33"/>
+			<Connection Source="E_TP.CNF" Destination="DigitalOutput_Q1.REQ" dx1="413.33"/>
 		</EventConnections>
 		<DataConnections>
 			<Connection Source="DigitalInput_I1.IN" Destination="FB_R_TRIG.CLK" dx1="320"/>
-			<Connection Source="FB_R_TRIG.Q" Destination="FB_TP.IN"/>
-			<Connection Source="FB_TP.Q" Destination="DigitalOutput_Q1.OUT" dx1="413.33"/>
+			<Connection Source="FB_R_TRIG.Q" Destination="E_TP.IN"/>
+			<Connection Source="E_TP.Q" Destination="DigitalOutput_Q1.OUT" dx1="413.33"/>
 		</DataConnections>
 	</SubAppNetwork>
 </SubAppType>

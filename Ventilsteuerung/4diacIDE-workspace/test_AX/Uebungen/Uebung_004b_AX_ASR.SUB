@@ -21,7 +21,7 @@
 			<Parameter Name="Input" Value="Input_I1"/>
 			<Parameter Name="InputEvent" Value="BUTTON_SINGLE_CLICK"/>
 		</FB>
-		<FB Name="E_SR" Type="adapter::events::unidirectional::AX_SR" x="-1700" y="-800">
+		<FB Name="AX_SR" Type="adapter::events::unidirectional::AX_SR" x="-1700" y="-800">
 		</FB>
 		<FB Name="AX_SWITCH" Type="adapter::events::unidirectional::AX_SWITCH" x="-2600" y="-800">
 		</FB>
@@ -33,15 +33,15 @@
 		</FB>
 		<Comment Comment="Kommentar FH: &#10;nicht empfohlen !!!&#10;viel zu viel Bausteine" x="-7300" y="-500" width="1300" height="600"/>
 		<EventConnections>
-			<Connection Source="AX_SWITCH.EO0" Destination="E_SR.S"/>
-			<Connection Source="AX_SWITCH.EO1" Destination="E_SR.R"/>
+			<Connection Source="AX_SWITCH.EO0" Destination="AX_SR.S"/>
+			<Connection Source="AX_SWITCH.EO1" Destination="AX_SR.R"/>
 			<Connection Source="DigitalInput_CLK_I1.IND" Destination="AX_BOOL_TO_X.REQ" dx1="2640"/>
 		</EventConnections>
 		<DataConnections>
 			<Connection Source="AX_X_TO_BOOL.IN" Destination="AX_BOOL_TO_X.OUT"/>
 		</DataConnections>
 		<AdapterConnections>
-			<Connection Source="E_SR.Q" Destination="AX_SPLIT_2.IN" dx1="140"/>
+			<Connection Source="AX_SR.Q" Destination="AX_SPLIT_2.IN" dx1="140"/>
 			<Connection Source="AX_SPLIT_2.OUT1" Destination="DigitalOutput_Q1.OUT" dx1="273.33"/>
 			<Connection Source="AX_BOOL_TO_X.AX_OUT" Destination="AX_SWITCH.G"/>
 			<Connection Source="AX_SPLIT_2.OUT2" Destination="AX_X_TO_BOOL.AX_IN" dx1="80" dx2="80" dy="500"/>

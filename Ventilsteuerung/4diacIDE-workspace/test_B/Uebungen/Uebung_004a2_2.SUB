@@ -34,7 +34,7 @@
 		</FB>
 		<FB Name="E_T_FF" Type="iec61499::events::E_T_FF" x="-5600" y="0">
 		</FB>
-		<FB Name="E_MERGE" Type="iec61499::events::E_MERGE_2" x="-6666.67" y="0">
+		<FB Name="E_MERGE_2" Type="iec61499::events::E_MERGE_2" x="-6666.67" y="0">
 		</FB>
 		<FB Name="DigitalInput_CLK_I2" Type="logiBUS::io::DI::logiBUS_IE" x="-8000" y="533.33">
 			<Parameter Name="QI" Value="TRUE">
@@ -48,9 +48,9 @@
 		</FB>
 		<EventConnections>
 			<Connection Source="E_T_FF.EO" Destination="DigitalOutput_Q1.REQ" dx1="613.33"/>
-			<Connection Source="DigitalInput_CLK_I1.IND" Destination="E_MERGE.EI1" dx1="306.67"/>
-			<Connection Source="DigitalInput_CLK_I2.IND" Destination="E_MERGE.EI2" dx1="306.67"/>
-			<Connection Source="E_MERGE.EO" Destination="E_T_FF.CLK"/>
+			<Connection Source="DigitalInput_CLK_I1.IND" Destination="E_MERGE_2.EI1" dx1="306.67"/>
+			<Connection Source="DigitalInput_CLK_I2.IND" Destination="E_MERGE_2.EI2" dx1="306.67"/>
+			<Connection Source="E_MERGE_2.EO" Destination="E_T_FF.CLK"/>
 		</EventConnections>
 		<DataConnections>
 			<Connection Source="E_T_FF.Q" Destination="DigitalOutput_Q1.OUT" dx1="613.33"/>

@@ -37,13 +37,13 @@
 				<Attribute Name="Visible" Value="false"/>
 			</Parameter>
 		</FB>
-		<FB Name="FB_TP" Type="adapter::events::unidirectional::timers::AX_TP" x="-300" y="753.33">
+		<FB Name="AX_TP" Type="adapter::events::unidirectional::timers::AX_TP" x="-300" y="753.33">
 			<Parameter Name="PT" Value="T#1s"/>
 		</FB>
 		<AdapterConnections>
 			<Connection Source="DigitalInput_I1.IN" Destination="AX_FB_F_TRIG.CLK" dx1="320"/>
-			<Connection Source="AX_FB_F_TRIG.Q" Destination="FB_TP.IN"/>
-			<Connection Source="FB_TP.Q" Destination="DigitalOutput_Q1.OUT" dx1="386.67"/>
+			<Connection Source="AX_FB_F_TRIG.Q" Destination="AX_TP.IN"/>
+			<Connection Source="AX_TP.Q" Destination="DigitalOutput_Q1.OUT" dx1="386.67"/>
 		</AdapterConnections>
 	</SubAppNetwork>
 </SubAppType>
