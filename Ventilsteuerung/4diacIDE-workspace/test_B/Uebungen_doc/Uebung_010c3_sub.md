@@ -10,3 +10,7 @@
 
 [cite_start]Dieser Sub-App-Typ kombiniert eine Softkey-Eingabe mit einem automatischen visuellen Feedback auf dem Terminal[cite: 1].
 Er bündelt die Bausteine `Softkey_IX`, `GreenWhiteBackground` und `DigitalOutput_QX`. Der Anwender muss lediglich die `u16ObjId` des Softkeys und den physischen `Output` angeben. Der Baustein stellt sicher, dass bei jeder Betätigung sowohl der Hardware-Ausgang geschaltet als auch der Hintergrund des Softkeys am Terminal farblich (Grün/Weiß) angepasst wird. Dies reduziert den Projektierungsaufwand bei komplexen Bedienoberflächen erheblich.
+
+## Zugehörige Übungen
+
+* [Uebung_010c3](Uebung_010c3.md)

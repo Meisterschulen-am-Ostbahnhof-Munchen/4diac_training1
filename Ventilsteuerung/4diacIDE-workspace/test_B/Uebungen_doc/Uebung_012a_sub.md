@@ -16,3 +16,7 @@ Er bündelt folgende Funktionen:
 3.  **Laden**: Automatisches Auslesen des Werts beim Systemstart (`INITO -> GET`).
 4.  **Rückmeldung**: Senden des (geladenen oder geänderten) Werts an die Anzeige am Terminal.
 Zusätzlich bietet der Baustein einen Eingang `REQ`, um den Anzeige-Refresh extern (z.B. bei Terminal-Neuverbindung) anzustoßen.
+
+## Zugehörige Übungen
+
+* [Uebung_012a](Uebung_012a.md)

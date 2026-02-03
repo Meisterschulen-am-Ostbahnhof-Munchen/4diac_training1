@@ -36,3 +36,7 @@ Abstraktion von Funk-Signalen. Der Baustein ermöglicht es, Funktasten so einfac
 *   **`Output`**: Nummer des Ausgangs am Modul (z.B. `DigitalOutput_1A`).
 
 Durch die Verwendung dieses Typs kann eine komplexe Funkfernsteuerung durch einfaches "Eintragen" der IDs in der Hauptanwendung konfiguriert werden.
+
+## Zugehörige Übungen
+
+* [Uebung_003b2](Uebung_003b2.md)
