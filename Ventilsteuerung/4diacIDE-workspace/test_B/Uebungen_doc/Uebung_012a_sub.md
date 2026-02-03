@@ -18,6 +18,7 @@ Er bündelt folgende Funktionen:
 Zusätzlich bietet der Baustein einen Eingang `REQ`, um den Anzeige-Refresh extern (z.B. bei Terminal-Neuverbindung) anzustoßen.
 
 
+
 ## Zugehörige Übungen
 
 * [Uebung_012a](Uebung_012a.md)

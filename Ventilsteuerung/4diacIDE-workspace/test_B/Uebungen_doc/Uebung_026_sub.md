@@ -39,6 +39,7 @@ Kapselung der Ausgangs-Logik. Der Baustein trennt die Ablauf-Logik (wann muss wa
 In der Hauptanwendung ermöglicht dieser Typ eine sehr übersichtliche Verschaltung der Phasenübergänge, da die Details der Speicherverwaltung und Hardware-Adressierung im Inneren verborgen bleiben.
 
 
+
 ## Zugehörige Übungen
 
 * [Uebung_026](Uebung_026.md)

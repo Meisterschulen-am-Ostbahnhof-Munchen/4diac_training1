@@ -18,6 +18,7 @@ Er verfügt über einen Ereignis-Eingang `EI`. Bei jedem Eintreffen eines Ereign
 Dies wird in der Übung 006a3 genutzt, um einen Motor bei jedem Startvorgang automatisch in die jeweils andere Richtung drehen zu lassen. Der Baustein stellt dabei sicher, dass immer eine eindeutige Richtungsentscheidung vorliegt.
 
 
+
 ## Zugehörige Übungen
 
 * [Uebung_006a3](Uebung_006a3.md)
