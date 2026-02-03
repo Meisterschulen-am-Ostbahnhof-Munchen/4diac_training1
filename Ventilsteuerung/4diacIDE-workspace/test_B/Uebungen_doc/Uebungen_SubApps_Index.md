@@ -7,9 +7,9 @@ Hier finden Sie die Detaildokumentation der Sub-Applikations-Typen, die in den v
 
 ```{toctree}
 Uebung_003a_sub
+Uebung_003b2_sub
 Uebung_003b_sub
 Uebung_003c_sub
-Uebung_003b2_sub
 Uebung_006a3_sub
 Uebung_010b4_sub
 Uebung_010b5_sub

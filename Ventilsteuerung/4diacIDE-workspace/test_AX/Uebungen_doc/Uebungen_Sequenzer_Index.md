@@ -8,6 +8,10 @@ Diese Übungen demonstrieren die Implementierung von Ablaufsteuerungen (Schrittk
 ```{toctree}
 :maxdepth: 1
 
+Uebung_035a1_AX
+Uebung_035a1b_AX
+Uebung_035a2_AX
+Uebung_035a3_AX
 Uebung_038_AX
 Uebung_040_AX
 ```

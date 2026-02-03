@@ -8,6 +8,8 @@ Diese Gruppe umfasst alle Übungen zur Zustandsspeicherung, von einfachen SR-Gli
 ```{toctree}
 Uebung_004a
 Uebung_004a2
+Uebung_004a2_2
+Uebung_004a2_3
 Uebung_004a3
 Uebung_004a4
 Uebung_004a5
@@ -30,10 +32,13 @@ Uebung_006
 Uebung_006a
 Uebung_006a2
 Uebung_006a3
+Uebung_006a3_sub
 Uebung_006a4
 Uebung_006b
 Uebung_006c
 Uebung_006d
+Uebung_006e1
+Uebung_006e2
 Uebung_013
 Uebung_080
 Uebung_080b
@@ -42,6 +47,12 @@ Uebung_081
 Uebung_082
 Uebung_083
 Uebung_085
+Uebung_086
+Uebung_087
+Uebung_087a1
+Uebung_087a2
+Uebung_088
+Uebung_089
 Uebung_094
 Uebung_094a
 Uebung_095
