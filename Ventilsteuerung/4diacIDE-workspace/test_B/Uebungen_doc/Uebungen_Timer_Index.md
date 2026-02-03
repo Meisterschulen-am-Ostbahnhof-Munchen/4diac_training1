@@ -3,8 +3,6 @@
 ```{index} single: Timer & Zeitfunktionen
 ```
 
-Hier finden Sie Übungen zu Einschalt- und Ausschaltverzögerungen, Blinkern, Impulsgebern sowie der Messung von Systemlaufzeiten.
-
 ```{toctree}
 :maxdepth: 1
 Uebung_007
@@ -35,3 +33,6 @@ Uebung_093
 Uebung_093b
 Uebung_140
 ```
+
+Hier finden Sie Übungen zu Einschalt- und Ausschaltverzögerungen, Blinkern, Impulsgebern sowie der Messung von Systemlaufzeiten.
+

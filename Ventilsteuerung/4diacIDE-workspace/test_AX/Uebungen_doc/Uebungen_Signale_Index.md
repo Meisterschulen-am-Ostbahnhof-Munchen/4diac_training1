@@ -3,8 +3,6 @@
 ```{index} single: Signalverarbeitung, PWM und Regelung
 ```
 
-Hier finden Sie Übungen zu komplexeren Themen wie Multiplexing, Pulsweitenmodulation (PWM), Impulszählung und mathematischen Berechnungen für Regelkreise.
-
 ```{toctree}
 :maxdepth: 1
 
@@ -20,3 +18,6 @@ Uebung_171_AX
 Uebung_177_AX
 Uebung_178_AX
 ```
+
+Hier finden Sie Übungen zu komplexeren Themen wie Multiplexing, Pulsweitenmodulation (PWM), Impulszählung und mathematischen Berechnungen für Regelkreise.
+

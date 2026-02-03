@@ -3,8 +3,6 @@
 ```{index} single: Numerischer Index (test_AX)
 ```
 
-Hier finden Sie alle Übungen des Arbeitsbereichs `test_AX` in aufsteigender Reihenfolge.
-
 ```{toctree}
 :maxdepth: 1
 
@@ -144,3 +142,6 @@ Uebungen_Signale_Index
 Uebungen_SubApps_Index
 Uebungen_Timer_Index
 ```
+
+Hier finden Sie alle Übungen des Arbeitsbereichs `test_AX` in aufsteigender Reihenfolge.
+

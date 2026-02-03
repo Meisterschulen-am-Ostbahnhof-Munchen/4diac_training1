@@ -3,8 +3,6 @@
 ```{index} single: Signalverarbeitung & PWM
 ```
 
-Übungen zur Erfassung von Analogwerten, Skalierung von Messbereichen sowie zur Ansteuerung von Aktoren und LEDs mittels Pulsweitenmodulation (PWM).
-
 ```{toctree}
 :maxdepth: 1
 
@@ -41,3 +39,6 @@ Uebung_178
 Uebung_179
 Uebung_180
 ```
+
+Übungen zur Erfassung von Analogwerten, Skalierung von Messbereichen sowie zur Ansteuerung von Aktoren und LEDs mittels Pulsweitenmodulation (PWM).
+

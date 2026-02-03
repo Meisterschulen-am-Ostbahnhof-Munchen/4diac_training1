@@ -3,8 +3,6 @@
 ```{index} single: Wiederverwendbare Typen (SubApps)
 ```
 
-Hier finden Sie die Detaildokumentation der Sub-Applikations-Typen, die in den verschiedenen Übungen zur Strukturierung und Kapselung verwendet werden.
-
 ```{toctree}
 :maxdepth: 1
 Uebung_003a_sub
@@ -26,3 +24,6 @@ Uebung_039a_sub_Outputs
 Uebung_060_sub_Outputs
 Uebung_12x_sub
 ```
+
+Hier finden Sie die Detaildokumentation der Sub-Applikations-Typen, die in den verschiedenen Übungen zur Strukturierung und Kapselung verwendet werden.
+

@@ -3,8 +3,6 @@
 ```{index} single: Numerischer Index (test_B)
 ```
 
-Hier finden Sie alle Übungen des Arbeitsbereichs `test_B` in aufsteigender Reihenfolge.
-
 ```{toctree}
 :maxdepth: 1
 
@@ -263,3 +261,6 @@ Uebungen_Signale_Index
 Uebungen_SubApps_Index
 Uebungen_Timer_Index
 ```
+
+Hier finden Sie alle Übungen des Arbeitsbereichs `test_B` in aufsteigender Reihenfolge.
+

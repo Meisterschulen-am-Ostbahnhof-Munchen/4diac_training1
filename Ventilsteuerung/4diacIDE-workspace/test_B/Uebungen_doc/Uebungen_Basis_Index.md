@@ -3,8 +3,6 @@
 ```{index} single: Grundlagen & Logik
 ```
 
-Hier finden Sie Übungen zu direkten Signalverbindungen, logischen Gattern (AND, OR) und grundlegenden Datenstrukturen.
-
 ```{toctree}
 :maxdepth: 1
 Uebung_000
@@ -42,3 +40,6 @@ Uebung_160
 Uebung_160b
 Uebung_160b2
 ```
+
+Hier finden Sie Übungen zu direkten Signalverbindungen, logischen Gattern (AND, OR) und grundlegenden Datenstrukturen.
+

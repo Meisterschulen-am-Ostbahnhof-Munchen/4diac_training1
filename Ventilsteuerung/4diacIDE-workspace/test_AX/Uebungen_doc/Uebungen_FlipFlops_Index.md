@@ -3,8 +3,6 @@
 ```{index} single: Speicherelemente und Klick-Events
 ```
 
-Hier lernen Sie den Umgang mit verschiedenen Flip-Flop-Typen (SR, RS, Toggle) und die Auswertung komplexer Taster-Ereignisse wie Doppel- oder Langklicks.
-
 ```{toctree}
 :maxdepth: 1
 
@@ -44,3 +42,6 @@ Uebung_083_AX
 Uebung_094a_AX
 Uebung_095_AX
 ```
+
+Hier lernen Sie den Umgang mit verschiedenen Flip-Flop-Typen (SR, RS, Toggle) und die Auswertung komplexer Taster-Ereignisse wie Doppel- oder Langklicks.
+

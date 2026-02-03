@@ -3,8 +3,6 @@
 ```{index} single: Schrittketten & Sequenzer
 ```
 
-Diese Gruppe behandelt die automatische oder manuelle Abfolge von Prozessschritten, ideal für Zylindersteuerungen oder komplexe Maschinenzyklen.
-
 ```{toctree}
 :maxdepth: 1
 Uebung_021
@@ -33,3 +31,6 @@ Uebung_040
 Uebung_040_2
 Uebung_041
 ```
+
+Diese Gruppe behandelt die automatische oder manuelle Abfolge von Prozessschritten, ideal für Zylindersteuerungen oder komplexe Maschinenzyklen.
+

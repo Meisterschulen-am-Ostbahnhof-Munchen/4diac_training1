@@ -3,8 +3,6 @@
 ```{index} single: ISOBUS (UT, TECU, TC)
 ```
 
-Alles rund um die ISOBUS-Kommunikation: Bedienung am Terminal, Auslesen von Traktordaten (TECU) und Anbindung an den Task Controller (TC).
-
 ```{toctree}
 :maxdepth: 1
 Uebung_010
@@ -85,3 +83,6 @@ Uebung_132
 Uebung_133
 Uebung_134
 ```
+
+Alles rund um die ISOBUS-Kommunikation: Bedienung am Terminal, Auslesen von Traktordaten (TECU) und Anbindung an den Task Controller (TC).
+

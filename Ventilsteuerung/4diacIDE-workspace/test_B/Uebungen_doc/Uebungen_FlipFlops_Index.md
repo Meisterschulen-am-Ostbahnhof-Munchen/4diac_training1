@@ -3,8 +3,6 @@
 ```{index} single: Flip-Flops & Speicher
 ```
 
-Diese Gruppe umfasst alle Übungen zur Zustandsspeicherung, von einfachen SR-Gliedern bis hin zu komplexen Klick-Mustern (Doppelklick, Long-Press).
-
 ```{toctree}
 :maxdepth: 1
 Uebung_004a
@@ -58,3 +56,6 @@ Uebung_094
 Uebung_094a
 Uebung_095
 ```
+
+Diese Gruppe umfasst alle Übungen zur Zustandsspeicherung, von einfachen SR-Gliedern bis hin zu komplexen Klick-Mustern (Doppelklick, Long-Press).
+
