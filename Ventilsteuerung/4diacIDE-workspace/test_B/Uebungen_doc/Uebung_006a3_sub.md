@@ -19,7 +19,7 @@ Dies wird in der Übung 006a3 genutzt, um einen Motor bei jedem Startvorgang aut
 
 
 
-## Zugehörige Übungen
+## 🛠️ Zugehörige Übungen
 
 * [Uebung_006a3](Uebung_006a3.md)
 

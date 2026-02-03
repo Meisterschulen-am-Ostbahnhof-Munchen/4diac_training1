@@ -25,6 +25,6 @@ Diese Übung implementiert einen Impulsgeber unter Verwendung des klassischen `F
 
 -----
 
-## Vergleich zur AX-Variante
+## ⚖️ Vergleich zur AX-Variante
 
 Im Gegensatz zur `AX_FB_TP` Variante (Übung 020f2_AX) werden hier klassische boolesche Ein- und Ausgänge verwendet, anstatt auf die flexibleren AX-Adapter zu setzen. Die zugrunde liegende Problematik des zyklischen Aufrufs bleibt jedoch identisch.

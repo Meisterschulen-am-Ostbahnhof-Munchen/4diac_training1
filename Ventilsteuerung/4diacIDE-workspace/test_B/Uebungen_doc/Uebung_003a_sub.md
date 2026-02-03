@@ -38,7 +38,7 @@ Intern sind die Ereignis-Ports (`IND -> REQ`) und die Daten-Ports (`IN -> OUT`) 
 
 
 
-## Zugehörige Übungen
+## 🛠️ Zugehörige Übungen
 
 * [Uebung_003a](Uebung_003a.md)
 

@@ -1,4 +1,4 @@
-# Übungen (Arbeitsbereich test_AX)
+# 🛠️ Übungen (Arbeitsbereich test_AX)
 
 ```{index} single: Übungen (Arbeitsbereich test_AX)
 ```

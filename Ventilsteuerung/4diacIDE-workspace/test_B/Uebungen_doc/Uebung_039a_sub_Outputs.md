@@ -80,7 +80,7 @@ Die `Uebung_039a_sub_Outputs` stellt einen kompletten Funktionsblock dar, der ei
 
 
 
-## Zugehörige Übungen
+## 🛠️ Zugehörige Übungen
 
 * [Uebung_039a](Uebung_039a.md)
 

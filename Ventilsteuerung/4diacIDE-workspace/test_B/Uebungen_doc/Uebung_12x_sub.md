@@ -65,7 +65,7 @@ Die `Uebung_12x_sub` stellt eine Sub-Application dar, die einen ISOBUS-Callback-
 
 
 
-## Zugehörige Übungen
+## 🛠️ Zugehörige Übungen
 
 * [Uebung_125](Uebung_125.md)
 * [Uebung_126](Uebung_126.md)

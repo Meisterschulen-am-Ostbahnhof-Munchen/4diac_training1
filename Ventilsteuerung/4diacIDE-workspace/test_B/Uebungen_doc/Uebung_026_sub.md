@@ -40,7 +40,7 @@ In der Hauptanwendung ermöglicht dieser Typ eine sehr übersichtliche Verschalt
 
 
 
-## Zugehörige Übungen
+## 🛠️ Zugehörige Übungen
 
 * [Uebung_026](Uebung_026.md)
 

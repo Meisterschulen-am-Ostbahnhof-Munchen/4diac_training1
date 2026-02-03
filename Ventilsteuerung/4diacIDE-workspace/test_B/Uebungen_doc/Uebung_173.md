@@ -27,7 +27,7 @@ In diesem Netzwerk wird primär der folgende Standard-Baustein verwendet:
 
 Aktuell befindet sich die Übung in einem initialen Zustand ("TODO").
 
-### Netzwerk-Status
+### 🌐 Netzwerk-Status
 - **Vorhandene Instanzen**: Eine Instanz des Multiplexers (`E_MUX_8_1`) ist im Netzwerk platziert (Koordinaten: -3000, -1000).
 - **Verbindungen**: Es sind **keine** Verbindungen im XML definiert. Der Baustein steht isoliert.
 - **Kommentare**: Ein großer Kommentarblock mit dem Inhalt "TODO" markiert den Bereich, in dem die Implementierung erfolgen soll.

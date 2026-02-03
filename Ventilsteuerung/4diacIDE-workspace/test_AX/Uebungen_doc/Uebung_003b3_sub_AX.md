@@ -65,7 +65,7 @@ Die `Uebung_003b3_sub_AX` ist ein generischer Verbindungsbaustein, der einen dig
 
 
 
-## Zugehörige Übungen
+## 🛠️ Zugehörige Übungen
 
 * [Uebung_003b3_AX](Uebung_003b3_AX.md)
 

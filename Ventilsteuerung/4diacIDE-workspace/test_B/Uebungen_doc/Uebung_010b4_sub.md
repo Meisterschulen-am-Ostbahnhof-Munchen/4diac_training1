@@ -13,7 +13,7 @@ Er bündelt eine `Softkey_IX` Instanz und einen `DigitalOutput_QX` Baustein. Üb
 
 
 
-## Zugehörige Übungen
+## 🛠️ Zugehörige Übungen
 
 * [Uebung_010b4](Uebung_010b4.md)
 

@@ -38,7 +38,7 @@ Jede Änderung am lokalen Taster führt sofort zu einer entsprechenden Status-Me
 
 
 
-## Zugehörige Übungen
+## 🛠️ Zugehörige Übungen
 
 * [Uebung_003c](Uebung_003c.md)
 

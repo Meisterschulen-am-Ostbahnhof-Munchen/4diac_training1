@@ -60,7 +60,7 @@ Die Übung **Uebung_039_sub_NumbAnzeig** demonstriert die Kapselung von Logik in
 
 
 
-## Zugehörige Übungen
+## 🛠️ Zugehörige Übungen
 
 * [Uebung_039](Uebung_039.md)
 * [Uebung_039a](Uebung_039a.md)

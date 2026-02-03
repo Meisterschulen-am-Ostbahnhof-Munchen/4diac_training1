@@ -61,7 +61,7 @@ Die `Uebung_060_sub_Outputs` stellt eine Schnittstellen-Komponente dar, die eine
 
 
 
-## Zugehörige Übungen
+## 🛠️ Zugehörige Übungen
 
 * [Uebung_060](Uebung_060.md)
 

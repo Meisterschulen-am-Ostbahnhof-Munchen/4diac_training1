@@ -24,7 +24,7 @@ Dieser Baustein ist die zentrale Komponente dieser Sub-Applikation.
 
 ## Programmablauf und Verbindungen
 
-### Netzwerkstruktur
+### 🌐 Netzwerkstruktur
 Das Netzwerk dieser Sub-Applikation ist minimalistisch aufgebaut:
 - Es enthält eine einzelne Instanz des Bausteins `AX_D_FF` (benannt als `AX_D_FF_1`).
 - Positioniert bei den Koordinaten x=-1700, y=0.

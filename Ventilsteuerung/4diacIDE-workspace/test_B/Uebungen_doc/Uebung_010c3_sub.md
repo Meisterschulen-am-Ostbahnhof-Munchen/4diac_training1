@@ -13,7 +13,7 @@ Er bündelt die Bausteine `Softkey_IX`, `GreenWhiteBackground` und `DigitalOutpu
 
 
 
-## Zugehörige Übungen
+## 🛠️ Zugehörige Übungen
 
 * [Uebung_010c3](Uebung_010c3.md)
 

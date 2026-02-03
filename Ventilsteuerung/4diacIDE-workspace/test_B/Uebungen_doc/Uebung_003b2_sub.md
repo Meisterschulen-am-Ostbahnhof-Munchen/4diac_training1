@@ -39,7 +39,7 @@ Durch die Verwendung dieses Typs kann eine komplexe Funkfernsteuerung durch einf
 
 
 
-## Zugehörige Übungen
+## 🛠️ Zugehörige Übungen
 
 * [Uebung_003b2](Uebung_003b2.md)
 
