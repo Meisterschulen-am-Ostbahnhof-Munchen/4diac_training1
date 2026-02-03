@@ -1,4 +1,4 @@
-# Uebung_150_AX: Impulszähler (Monitoring)
+# Uebung_150_AX: Impulszähler &amp; DigitalInput_I1 auf DigitalOutput_Q1, mit Plug and Socket
 
 ```{index} single: Uebung_150_AX: Impulszähler (Monitoring)
 ```

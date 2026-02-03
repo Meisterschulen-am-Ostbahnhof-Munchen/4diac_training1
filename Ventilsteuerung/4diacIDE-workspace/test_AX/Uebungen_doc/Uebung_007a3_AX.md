@@ -1,4 +1,4 @@
-# Uebung_007a3_AX: Korrekter Blinker (Definierter Stopp)
+# Uebung_007a3_AX: Blinker mit E_CYCLE, E_SWITCH und E_SR
 
 ```{index} single: Uebung_007a3_AX: Korrekter Blinker (Definierter Stopp)
 ```

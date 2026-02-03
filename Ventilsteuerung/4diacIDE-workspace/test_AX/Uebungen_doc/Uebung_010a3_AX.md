@@ -1,4 +1,4 @@
-# Uebung_010a3_AX: Latching Button (Rastend)
+# Uebung_010a3_AX: Button_L1 (Latching) auf DigitalOutput_Q1
 
 ```{index} single: Uebung_010a3_AX: Latching Button (Rastend)
 ```

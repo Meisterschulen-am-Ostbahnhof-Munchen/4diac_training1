@@ -1,4 +1,4 @@
-# Uebung_013_AX: Softkey SR-Flip-Flop
+# Uebung_013_AX: SR-Flip-Flop (Softkey)
 
 ```{index} single: Uebung_013_AX: Softkey SR-Flip-Flop
 ```

@@ -1,4 +1,4 @@
-# Uebung_003c_AX: Mapping auf ISOBUS AUX
+# Uebung_003c_AX: DigitalInput_I1-2-3-4 auf AUX
 
 ```{index} single: Uebung_003c_AX: Mapping auf ISOBUS AUX
 ```

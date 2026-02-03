@@ -1,4 +1,4 @@
-# Uebung_009_AX: Ereignis-Zähler (Ticker) mit Adaptern
+# Uebung_009_AX: Ticker (AX-Adapter basiert)
 
 ```{index} single: Uebung_009_AX: Ereignis-Zähler (Ticker) mit Adaptern
 ```

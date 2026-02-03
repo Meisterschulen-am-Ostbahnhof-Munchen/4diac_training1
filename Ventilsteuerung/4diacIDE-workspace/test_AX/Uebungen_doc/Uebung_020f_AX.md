@@ -1,4 +1,4 @@
-# Uebung_020f_AX: Impulsglied (TP)
+# Uebung_020f_AX: DigitalInput_I1 auf DigitalOutput_Q1; AX_TP; Impulsformend
 
 ```{index} single: Uebung_020f_AX: Impulsglied (TP)
 ```

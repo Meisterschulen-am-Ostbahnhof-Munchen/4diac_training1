@@ -1,4 +1,4 @@
-# Uebung_020d_AX: Ausschaltverzögerung (aufgelöst)
+# Uebung_020d_AX: DigitalInput_I1 auf DigitalOutput_Q1; TOF Ausschaltverzögert; aufgelöst
 
 ```{index} single: Uebung_020d_AX: Ausschaltverzögerung (aufgelöst)
 ```

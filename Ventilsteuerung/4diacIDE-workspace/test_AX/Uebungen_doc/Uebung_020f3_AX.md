@@ -1,4 +1,4 @@
-# Uebung_020f3_AX: Blinker (AX_BLINK)
+# Uebung_020f3_AX: DigitalInput_I1 auf DigitalOutput_Q1; BLINKER
 
 ```{index} single: Uebung_020f3_AX: Blinker (AX_BLINK)
 ```

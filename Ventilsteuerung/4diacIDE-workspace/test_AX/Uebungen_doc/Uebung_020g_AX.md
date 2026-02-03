@@ -1,4 +1,4 @@
-# Uebung_020g_AX: Ein- und Ausschaltverzögerung (TONOF)
+# Uebung_020g_AX: DigitalInput_I1 auf DigitalOutput_Q1; AX_TONOF; Ein-/Ausschaltverzögert
 
 ```{index} single: Uebung_020g_AX: Ein- und Ausschaltverzögerung (TONOF)
 ```

@@ -1,4 +1,4 @@
-# Uebung_006a2_AX: Zentral-Reset für mehrere Speicher
+# Uebung_006a2_AX: 2x SR und T-Flip-Flop mit IE
 
 ```{index} single: Uebung_006a2_AX: Zentral-Reset für mehrere Speicher
 ```

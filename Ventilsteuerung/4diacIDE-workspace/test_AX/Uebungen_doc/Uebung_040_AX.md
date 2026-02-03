@@ -1,4 +1,4 @@
-# Uebung_040_AX: Lauflicht (Event-Gesteuert / Manuell)
+# Uebung_040_AX: Lauflicht 8 Event gesteuert
 
 ```{index} single: Uebung_040_AX: Lauflicht (Event-Gesteuert / Manuell)
 ```

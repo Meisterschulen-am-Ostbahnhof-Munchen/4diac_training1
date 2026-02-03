@@ -1,4 +1,4 @@
-# Uebung_160_AX: Motor-Logik mit Statusmeldung
+# Uebung_160_AX: Motor Links/Rechtslauf
 
 ```{index} single: Uebung_160_AX: Motor-Logik mit Statusmeldung
 ```

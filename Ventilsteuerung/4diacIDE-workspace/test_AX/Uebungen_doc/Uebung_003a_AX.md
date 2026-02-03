@@ -1,4 +1,4 @@
-# Uebung_003a_AX: Wiederverwendung durch typisierte Sub-Applikationen
+# Uebung_003a_AX: DigitalInput_I1/_I2 auf DigitalOutput_Q1/_I2 - mit typed Subapp
 
 ```{index} single: Uebung_003a_AX: Wiederverwendung durch typisierte Sub-Applikationen
 ```

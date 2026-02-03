@@ -1,4 +1,4 @@
-# Uebung_006_AX: Set-Reset Flip-Flop (Speicher)
+# Uebung_006_AX: SR-Flip-Flop mit 2x IE
 
 ```{index} single: Uebung_006_AX: Set-Reset Flip-Flop (Speicher)
 ```

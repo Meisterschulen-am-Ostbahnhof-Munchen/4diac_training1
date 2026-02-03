@@ -1,4 +1,4 @@
-# Uebung_010b6_AX: Softkey Event (SK_PRESSED)
+# Uebung_010b6_AX: Toggle Flip-Flop mit IE SoftKey_F1 SK_PRESSED
 
 ```{index} single: Uebung_010b6_AX: Softkey Event (SK_PRESSED)
 ```

@@ -1,4 +1,4 @@
-# Uebung_006d_AX: SR-Flip-Flop mit Doppelklick-Set
+# Uebung_006d_AX: SR-Flip-Flop mit 2x IE und Doppelklick.
 
 ```{index} single: Uebung_006d_AX: SR-Flip-Flop mit Doppelklick-Set
 ```

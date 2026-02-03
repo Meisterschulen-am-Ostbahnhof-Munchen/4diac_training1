@@ -1,4 +1,4 @@
-# Uebung_010c3_AX: Kapselung von Feedback (Typed)
+# Uebung_010c3_AX: SoftKey_F1 auf DigitalOutput_Q1 mit GreenWhiteBackground mit Typed Subapp
 
 ```{index} single: Uebung_010c3_AX: Kapselung von Feedback (Typed)
 ```

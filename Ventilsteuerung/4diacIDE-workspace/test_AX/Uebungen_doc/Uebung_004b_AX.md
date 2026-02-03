@@ -1,4 +1,4 @@
-# Uebung_004b_AX: Komplexes Event-Switching (Anti-Pattern?)
+# Uebung_004b_AX: Toggle Flip-Flop mit IE / E_SWITCH + E_SR
 
 ```{index} single: Uebung_004b_AX: Komplexes Event-Switching (Anti-Pattern?)
 ```

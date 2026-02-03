@@ -1,4 +1,4 @@
-# Uebung_007a1_AX: Schaltbarer Blinker (Problembehaftet)
+# Uebung_007a1_AX: Blinker mit E_CYCLE und E_T_FF
 
 ```{index} single: Uebung_007a1_AX: Schaltbarer Blinker (Problembehaftet)
 ```

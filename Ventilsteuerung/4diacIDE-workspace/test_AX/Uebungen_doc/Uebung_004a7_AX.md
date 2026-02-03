@@ -1,4 +1,4 @@
-# Uebung_004a7_AX: SR-Flip-Flop mit Rendezvous
+# Uebung_004a7_AX: SR und T-Flip-Flop mit IE und E_REND (Rendezvous)
 
 ```{index} single: Uebung_004a7_AX: SR-Flip-Flop mit Rendezvous
 ```

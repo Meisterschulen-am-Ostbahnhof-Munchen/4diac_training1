@@ -1,4 +1,4 @@
-# Uebung_103: Modus-Selektion (Multiplexer/Demultiplexer)
+# Uebung_103: DigitalInput_I1 auf DigitalOutput_Q1, mit Plug and Socket und DEMUX
 
 ```{index} single: Uebung_103: Modus-Selektion (Multiplexer/Demultiplexer)
 ```

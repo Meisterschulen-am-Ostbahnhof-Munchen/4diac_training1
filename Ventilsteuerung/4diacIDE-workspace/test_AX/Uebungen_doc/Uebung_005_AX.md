@@ -1,4 +1,4 @@
-# Uebung_005_AX: Toggle mit Pegel-Eingang (Überflüssig kompliziert?)
+# Uebung_005_AX: Toggle Flip-Flop mit IX
 
 ```{index} single: Uebung_005_AX: Toggle mit Pegel-Eingang (Überflüssig kompliziert?)
 ```

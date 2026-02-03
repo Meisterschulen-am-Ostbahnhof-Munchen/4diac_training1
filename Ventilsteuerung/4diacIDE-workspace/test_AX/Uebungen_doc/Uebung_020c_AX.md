@@ -1,4 +1,4 @@
-# Uebung_020c_AX: Einschaltverzögerung (TON)
+# Uebung_020c_AX: DigitalInput_I1 auf DigitalOutput_Q1; AX_TON; Einschaltverzögert
 
 ```{index} single: Uebung_020c_AX: Einschaltverzögerung (TON)
 ```
