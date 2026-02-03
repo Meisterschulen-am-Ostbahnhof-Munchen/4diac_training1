@@ -6,6 +6,7 @@
 Hier finden Sie die Detaildokumentation der Sub-Applikations-Typen, die in den verschiedenen Übungen zur Strukturierung und Kapselung verwendet werden.
 
 ```{toctree}
+:maxdepth: 1
 Uebung_003a_sub
 Uebung_003b2_sub
 Uebung_003b_sub

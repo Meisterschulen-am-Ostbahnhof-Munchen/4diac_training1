@@ -6,6 +6,7 @@
 Diese Gruppe behandelt die automatische oder manuelle Abfolge von Prozessschritten, ideal für Zylindersteuerungen oder komplexe Maschinenzyklen.
 
 ```{toctree}
+:maxdepth: 1
 Uebung_021
 Uebung_022
 Uebung_023

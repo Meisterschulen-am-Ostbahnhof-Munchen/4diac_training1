@@ -6,6 +6,7 @@
 Hier finden Sie Übungen zu Einschalt- und Ausschaltverzögerungen, Blinkern, Impulsgebern sowie der Messung von Systemlaufzeiten.
 
 ```{toctree}
+:maxdepth: 1
 Uebung_007
 Uebung_007a1
 Uebung_007a2

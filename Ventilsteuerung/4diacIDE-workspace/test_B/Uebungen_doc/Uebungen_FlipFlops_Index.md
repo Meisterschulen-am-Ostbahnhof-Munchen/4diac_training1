@@ -6,6 +6,7 @@
 Diese Gruppe umfasst alle Übungen zur Zustandsspeicherung, von einfachen SR-Gliedern bis hin zu komplexen Klick-Mustern (Doppelklick, Long-Press).
 
 ```{toctree}
+:maxdepth: 1
 Uebung_004a
 Uebung_004a2
 Uebung_004a2_2

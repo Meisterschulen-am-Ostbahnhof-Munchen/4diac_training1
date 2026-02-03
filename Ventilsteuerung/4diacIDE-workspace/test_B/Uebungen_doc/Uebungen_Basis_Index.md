@@ -6,6 +6,7 @@
 Hier finden Sie Übungen zu direkten Signalverbindungen, logischen Gattern (AND, OR) und grundlegenden Datenstrukturen.
 
 ```{toctree}
+:maxdepth: 1
 Uebung_000
 Uebung_001
 Uebung_001c
