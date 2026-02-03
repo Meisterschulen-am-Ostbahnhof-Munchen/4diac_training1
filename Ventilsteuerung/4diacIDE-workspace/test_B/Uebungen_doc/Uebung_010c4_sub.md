@@ -1,4 +1,4 @@
-# Uebung_010c4_sub: Softkey mit Feedback (Variante)
+# Uebung_010c4_sub: SoftKey_F1/_F2 auf DigitalOutput_Q1/_Q2 mit GreenWhiteBackground mit Typed Subapp
 
 ```{index} single: Uebung_010c4_sub: Softkey mit Feedback (Variante)
 ```

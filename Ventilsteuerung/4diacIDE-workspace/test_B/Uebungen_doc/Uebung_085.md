@@ -1,4 +1,4 @@
-# Uebung_085: Zustands-Synchronisation (D-Flip-Flop)
+# Uebung_085: Beispiel für E_D_FF
 
 ```{index} single: Uebung_085: Zustands-Synchronisation (D-Flip-Flop)
 ```

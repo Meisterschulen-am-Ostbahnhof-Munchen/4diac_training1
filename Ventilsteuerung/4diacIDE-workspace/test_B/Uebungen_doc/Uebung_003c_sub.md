@@ -1,4 +1,4 @@
-# Uebung_003c_sub: ISOBUS AUX-Kanal (SubApp)
+# Uebung_003c_sub: IX auf QX (generisch)
 
 ```{index} single: Uebung_003c_sub: ISOBUS AUX-Kanal (SubApp)
 ```

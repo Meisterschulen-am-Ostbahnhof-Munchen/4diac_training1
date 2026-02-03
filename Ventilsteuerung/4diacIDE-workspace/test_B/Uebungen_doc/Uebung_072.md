@@ -1,4 +1,4 @@
-# Uebung_072: Rad- vs. Radargeschwindigkeit
+# Uebung_072: GBSD auf UT ausgeben
 
 ```{index} single: Uebung_072: Rad- vs. Radargeschwindigkeit
 ```

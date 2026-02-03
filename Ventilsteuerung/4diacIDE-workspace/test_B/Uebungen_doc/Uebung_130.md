@@ -1,4 +1,4 @@
-# Uebung_130: Custom PGN empfangen (Peer-to-Peer)
+# Uebung_130: Übung zu ISOBUS Receive Message
 
 ```{index} single: Uebung_130: Custom PGN empfangen (Peer-to-Peer)
 ```

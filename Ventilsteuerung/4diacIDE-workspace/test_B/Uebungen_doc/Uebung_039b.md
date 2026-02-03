@@ -1,4 +1,4 @@
-# Uebung_039b: Ventil-Timing (Impulssteuerung)
+# Uebung_039b: Spiegelabfolge V2 mit Schrittkette
 
 ```{index} single: Uebung_039b: Ventil-Timing (Impulssteuerung)
 ```

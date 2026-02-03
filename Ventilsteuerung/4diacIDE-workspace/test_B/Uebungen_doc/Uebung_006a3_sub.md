@@ -1,4 +1,4 @@
-# Uebung_006a3_sub: Richtungs-Merker (SubApp)
+# Uebung_006a3_sub: Subapplication Type
 
 ```{index} single: Uebung_006a3_sub: Richtungs-Merker (SubApp)
 ```

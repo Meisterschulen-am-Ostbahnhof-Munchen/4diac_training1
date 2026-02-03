@@ -1,4 +1,4 @@
-# Uebung_091: Ereignis-Salve (E_TRAIN)
+# Uebung_091: Beispiel für E_TRAIN
 
 ```{index} single: Uebung_091: Ereignis-Salve (E_TRAIN)
 ```

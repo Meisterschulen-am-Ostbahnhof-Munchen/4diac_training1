@@ -1,4 +1,4 @@
-# Uebung_017: Akustische Signale (Beep)
+# Uebung_017: Control Audio Signal
 
 ```{index} single: Uebung_017: Akustische Signale (Beep)
 ```

@@ -1,4 +1,4 @@
-# Uebung_016: Dynamische Hintergrundfarben
+# Uebung_016: Background Colour umschalten
 
 ```{index} single: Uebung_016: Dynamische Hintergrundfarben
 ```

@@ -1,4 +1,4 @@
-# Uebung_020c2_sub: Persistente Zeitvorgabe (SubApp)
+# Uebung_020c2_sub: DigitalInput_I1 auf DigitalOutput_Q1; E_TON Einschaltverzögert; Zeit eingeben und speichern.
 
 ```{index} single: Uebung_020c2_sub: Persistente Zeitvorgabe (SubApp)
 ```

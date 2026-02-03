@@ -1,4 +1,4 @@
-# Uebung_006a: Universal-Flip-Flop (Toggle/Set/Reset)
+# Uebung_006a: SR und T-Flip-Flop mit 3x IE
 
 ```{index} single: Uebung_006a: Universal-Flip-Flop (Toggle/Set/Reset)
 ```

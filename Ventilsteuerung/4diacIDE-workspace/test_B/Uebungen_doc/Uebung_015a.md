@@ -1,4 +1,4 @@
-# Uebung_015a: Mehrfaches Umschalten von UI-Objekten
+# Uebung_015a: Object Pointer umschalten -- 3-fach
 
 ```{index} single: Uebung_015a: Mehrfaches Umschalten von UI-Objekten
 ```

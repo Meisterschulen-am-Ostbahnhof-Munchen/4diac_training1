@@ -1,4 +1,4 @@
-# Uebung_001: Direkte Signalweiterleitung (Event & Daten)
+# Uebung_001: DigitalInput_I1 auf DigitalOutput_Q1
 
 ```{index} single: Uebung_001: Direkte Signalweiterleitung (Event & Daten)
 ```

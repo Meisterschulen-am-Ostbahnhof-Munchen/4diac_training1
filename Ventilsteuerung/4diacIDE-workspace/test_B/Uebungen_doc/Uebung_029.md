@@ -1,4 +1,4 @@
-# Uebung_029: LED-Statusanzeigen (Frequenzen)
+# Uebung_029: LED_DO Blinkende LED
 
 ```{index} single: Uebung_029: LED-Statusanzeigen (Frequenzen)
 ```

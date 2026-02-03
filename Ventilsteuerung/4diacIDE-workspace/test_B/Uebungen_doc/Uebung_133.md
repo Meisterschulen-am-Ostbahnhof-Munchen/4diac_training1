@@ -1,4 +1,4 @@
-# Uebung_133: Zyklisches Abfragen von Daten
+# Uebung_133: Übung zu ISOBUS Request Message Cyclic
 
 ```{index} single: Uebung_133: Zyklisches Abfragen von Daten
 ```

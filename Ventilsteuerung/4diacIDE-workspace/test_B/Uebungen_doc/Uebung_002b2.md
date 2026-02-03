@@ -1,4 +1,4 @@
-# Uebung_002b2: Kombinatorische Logik (AND/OR mit F_MOVE)
+# Uebung_002b2: DigitalInput_I1/_I2/_I3 auf DigitalOutput_Q1; mit MOVE
 
 ```{index} single: Uebung_002b2: Kombinatorische Logik (AND/OR mit F_MOVE)
 ```

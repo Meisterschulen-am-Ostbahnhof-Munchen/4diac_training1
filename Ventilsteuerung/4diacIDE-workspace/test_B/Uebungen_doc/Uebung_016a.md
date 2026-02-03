@@ -1,4 +1,4 @@
-# Uebung_016a: Mehrfarbige Zustandsanzeige
+# Uebung_016a: Background Colour umschalten -- 3-fach
 
 ```{index} single: Uebung_016a: Mehrfarbige Zustandsanzeige
 ```

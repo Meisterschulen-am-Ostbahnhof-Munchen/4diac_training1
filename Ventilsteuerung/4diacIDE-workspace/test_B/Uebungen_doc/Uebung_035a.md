@@ -1,4 +1,4 @@
-# Uebung_035a: Ampelschaltung (Standard)
+# Uebung_035a: Ampelschaltung International
 
 ```{index} single: Uebung_035a: Ampelschaltung (Standard)
 ```

@@ -1,4 +1,4 @@
-# Uebung_004a7: T-Flip-Flop mit Reset und Rendezvous
+# Uebung_004a7: SR und T-Flip-Flop mit IE und E_REND (Rendezvous)
 
 ```{index} single: Uebung_004a7: T-Flip-Flop mit Reset und Rendezvous
 ```

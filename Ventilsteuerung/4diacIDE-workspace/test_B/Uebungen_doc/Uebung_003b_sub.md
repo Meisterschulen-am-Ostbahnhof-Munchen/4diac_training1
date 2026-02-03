@@ -1,4 +1,4 @@
-# Uebung_003b_sub: Universal-Kanal (Variante)
+# Uebung_003b_sub: IX auf QX (generisch)
 
 ```{index} single: Uebung_003b_sub: Universal-Kanal (Variante)
 ```

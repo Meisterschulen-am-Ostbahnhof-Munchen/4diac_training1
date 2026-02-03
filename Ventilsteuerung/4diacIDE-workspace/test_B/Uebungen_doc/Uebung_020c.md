@@ -1,4 +1,4 @@
-# Uebung_020c: Einschaltverzögerung (E_TON)
+# Uebung_020c: DigitalInput_I1 auf DigitalOutput_Q1; E_TON; Einschaltverzögert
 
 ```{index} single: Uebung_020c: Einschaltverzögerung (E_TON)
 ```

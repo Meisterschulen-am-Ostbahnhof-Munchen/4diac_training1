@@ -1,4 +1,4 @@
-# Uebung_039: Hydraulik-Ventilsteuerung
+# Uebung_039: Spiegelabfolge V2 mit Schrittkette
 
 ```{index} single: Uebung_039: Hydraulik-Ventilsteuerung
 ```

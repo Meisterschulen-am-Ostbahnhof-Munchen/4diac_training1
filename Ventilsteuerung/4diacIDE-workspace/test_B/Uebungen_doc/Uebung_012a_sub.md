@@ -1,4 +1,4 @@
-# Uebung_012a_sub: Persistenter Einstellwert (SubApp)
+# Uebung_012a_sub: Numeric Value Input und Speichern
 
 ```{index} single: Uebung_012a_sub: Persistenter Einstellwert (SubApp)
 ```

@@ -1,4 +1,4 @@
-# Uebung_002: Signalverteilung auf mehrere Ausgänge (Fan-Out)
+# Uebung_002: DigitalInput_I1 auf DigitalOutput_Q1/_Q2
 
 ```{index} single: Uebung_002: Signalverteilung auf mehrere Ausgänge (Fan-Out)
 ```

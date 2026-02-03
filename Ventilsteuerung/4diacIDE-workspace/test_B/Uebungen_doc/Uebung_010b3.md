@@ -1,4 +1,4 @@
-# Uebung_010b3: AUX-Ereignis-Steuerung
+# Uebung_010b3: Toggle Flip-Flop mit IE AuxFunction2_X1
 
 ```{index} single: Uebung_010b3: AUX-Ereignis-Steuerung
 ```

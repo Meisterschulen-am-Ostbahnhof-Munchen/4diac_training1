@@ -1,4 +1,4 @@
-# Uebung_010bA: Einmaliger langer Tastendruck
+# Uebung_010bA: Toggle Flip-Flop mit IE Button_A1 BT_STILL_HELD
 
 ```{index} single: Uebung_010bA: Einmaliger langer Tastendruck
 ```

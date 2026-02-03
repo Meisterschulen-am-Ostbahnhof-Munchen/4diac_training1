@@ -1,4 +1,4 @@
-# Uebung_003b2_sub: Funk-zu-CAN Treiber (SubApp)
+# Uebung_003b2_sub: IX auf QX (generisch)
 
 ```{index} single: Uebung_003b2_sub: Funk-zu-CAN Treiber (SubApp)
 ```

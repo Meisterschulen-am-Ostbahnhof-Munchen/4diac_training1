@@ -1,4 +1,4 @@
-# Uebung_031: RGB-LED Strip (HSV-Steuerung)
+# Uebung_031: LED Strip
 
 ```{index} single: Uebung_031: RGB-LED Strip (HSV-Steuerung)
 ```

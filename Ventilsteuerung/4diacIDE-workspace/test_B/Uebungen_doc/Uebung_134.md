@@ -1,4 +1,4 @@
-# Uebung_134: Empfang von unbekannten Partnern
+# Uebung_134: Übung zu ISOBUS Receive from Unclaimed Partner
 
 ```{index} single: Uebung_134: Empfang von unbekannten Partnern
 ```

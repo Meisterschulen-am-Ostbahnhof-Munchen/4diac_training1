@@ -1,4 +1,4 @@
-# Uebung_128: Globaler Rundruf (Broadcast)
+# Uebung_128: Übung zu ISOBUS Send Message GLOBAL
 
 ```{index} single: Uebung_128: Globaler Rundruf (Broadcast)
 ```

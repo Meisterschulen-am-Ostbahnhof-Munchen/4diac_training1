@@ -1,6 +1,6 @@
 Hier ist die generierte Dokumentation basierend auf dem bereitgestellten XML-Code:
 
-# Uebung_039_sub_NumbAnzeig
+# Uebung_039_sub_NumbAnzeig: Spiegelabfolge V2 mit Schrittkette SUB Num
 
 ```{index} single: Uebung_039_sub_NumbAnzeig
 ```

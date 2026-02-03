@@ -1,4 +1,4 @@
-# Uebung_012c: Speichern von Text (Strings)
+# Uebung_012c: String Input und Speichern (WIP)
 
 ```{index} single: Uebung_012c: Speichern von Text (Strings)
 ```

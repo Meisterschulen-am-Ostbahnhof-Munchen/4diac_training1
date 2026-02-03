@@ -1,4 +1,4 @@
-# Uebung_010a4: Softkey auf externes CAN-Modul
+# Uebung_010a4: SoftKey_F1 auf DigitalOutput_Q1 (Datapanel)
 
 ```{index} single: Uebung_010a4: Softkey auf externes CAN-Modul
 ```

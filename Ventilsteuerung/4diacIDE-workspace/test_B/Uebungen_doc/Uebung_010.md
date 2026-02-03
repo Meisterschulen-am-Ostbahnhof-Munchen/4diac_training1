@@ -1,4 +1,4 @@
-# Uebung_010: ISOBUS Softkey (Direkt)
+# Uebung_010: SoftKey_F1 auf DigitalOutput_Q1
 
 ```{index} single: Uebung_010: ISOBUS Softkey (Direkt)
 ```

@@ -1,4 +1,4 @@
-# Uebung_012b: Speichern in INI-Dateien
+# Uebung_012b: Numeric Value Input und Speichern
 
 ```{index} single: Uebung_012b: Speichern in INI-Dateien
 ```

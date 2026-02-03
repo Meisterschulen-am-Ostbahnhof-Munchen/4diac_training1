@@ -1,6 +1,6 @@
 Hier ist die Dokumentation für die Übung `Uebung_060_sub_Outputs` basierend auf den bereitgestellten XML-Daten.
 
-# Uebung_060_sub_Outputs
+# Uebung_060_sub_Outputs: für TC-SC also Task Controller Section Control
 
 ```{index} single: Uebung_060_sub_Outputs
 ```

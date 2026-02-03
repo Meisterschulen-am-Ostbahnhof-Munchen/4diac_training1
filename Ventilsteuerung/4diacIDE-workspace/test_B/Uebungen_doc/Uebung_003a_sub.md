@@ -1,4 +1,4 @@
-# Uebung_003a_sub: Universal-Kanal (SubApp)
+# Uebung_003a_sub: IX auf QX (generisch)
 
 ```{index} single: Uebung_003a_sub: Universal-Kanal (SubApp)
 ```

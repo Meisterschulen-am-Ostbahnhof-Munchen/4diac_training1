@@ -1,4 +1,4 @@
-# Uebung_127: Zyklisches Senden (Statische Daten)
+# Uebung_127: Übung zu ISOBUS Send Message Cyclic (ohne CB)
 
 ```{index} single: Uebung_127: Zyklisches Senden (Statische Daten)
 ```

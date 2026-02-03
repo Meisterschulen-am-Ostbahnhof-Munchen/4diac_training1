@@ -1,4 +1,4 @@
-# Uebung_004a8: Zweifach Event-Splitter (E_SPLIT_2)
+# Uebung_004a8: mit E_SPLIT_2
 
 ```{index} single: Uebung_004a8: Zweifach Event-Splitter (E_SPLIT_2)
 ```

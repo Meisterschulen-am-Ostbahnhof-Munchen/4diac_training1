@@ -1,4 +1,4 @@
-# Uebung_123: Teilnehmer-Filterung
+# Uebung_123: Übung zu ISOBUS Name
 
 ```{index} single: Uebung_123: Teilnehmer-Filterung
 ```

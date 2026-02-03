@@ -1,4 +1,4 @@
-# Uebung_074: Zapfwellen-Überwachung (PTO)
+# Uebung_074: RPTO auf UT ausgeben
 
 ```{index} single: Uebung_074: Zapfwellen-Überwachung (PTO)
 ```

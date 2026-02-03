@@ -1,4 +1,4 @@
-# Uebung_014: Objekte ein- und ausblenden (Container)
+# Uebung_014: Container (visible/invisible)
 
 ```{index} single: Uebung_014: Objekte ein- und ausblenden (Container)
 ```

@@ -1,4 +1,4 @@
-# Uebung_073: GPS-Geschwindigkeit (VDS)
+# Uebung_073: VDS auf UT ausgeben
 
 ```{index} single: Uebung_073: GPS-Geschwindigkeit (VDS)
 ```

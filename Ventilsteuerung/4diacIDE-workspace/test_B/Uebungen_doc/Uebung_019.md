@@ -1,4 +1,4 @@
-# Uebung_019: Maskenumschaltung (Screen-Switch)
+# Uebung_019: Umschalten einer Maske
 
 ```{index} single: Uebung_019: Maskenumschaltung (Screen-Switch)
 ```

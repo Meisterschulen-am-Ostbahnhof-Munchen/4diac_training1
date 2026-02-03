@@ -1,4 +1,4 @@
-# Uebung_002a2: Logische UND-Verknüpfung (Generic F_AND)
+# Uebung_002a2: DigitalInput_I1/_I2 mit AND (alt) auf DigitalOutput_Q1
 
 ```{index} single: Uebung_002a2: Logische UND-Verknüpfung (Generic F_AND)
 ```

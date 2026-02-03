@@ -1,4 +1,4 @@
-# Uebung_012a: Modulare Speicherung (Typed SubApp)
+# Uebung_012a: Numeric Value Input und Speichern
 
 ```{index} single: Uebung_012a: Modulare Speicherung (Typed SubApp)
 ```

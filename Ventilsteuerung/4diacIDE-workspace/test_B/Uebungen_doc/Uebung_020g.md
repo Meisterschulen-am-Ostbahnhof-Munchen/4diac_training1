@@ -1,4 +1,4 @@
-# Uebung_020g: Kombinierte Verzögerung (E_TONOF)
+# Uebung_020g: DigitalInput_I1 auf DigitalOutput_Q1; E_TONOF; Ein-/Ausschaltverzögert
 
 ```{index} single: Uebung_020g: Kombinierte Verzögerung (E_TONOF)
 ```

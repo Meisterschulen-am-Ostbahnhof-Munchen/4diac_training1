@@ -1,4 +1,4 @@
-# Uebung_121: Eigener ISOBUS Name
+# Uebung_121: Übung zu ISOBUS Name
 
 ```{index} single: Uebung_121: Eigener ISOBUS Name
 ```

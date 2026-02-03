@@ -1,4 +1,4 @@
-# Uebung_007a3: Sicherer Blinker (Definierter AUS-Zustand)
+# Uebung_007a3: Blinker mit E_CYCLE, E_SWITCH und E_SR
 
 ```{index} single: Uebung_007a3: Sicherer Blinker (Definierter AUS-Zustand)
 ```

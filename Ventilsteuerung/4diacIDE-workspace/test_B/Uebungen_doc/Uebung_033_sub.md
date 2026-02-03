@@ -1,4 +1,4 @@
-# Uebung_033_sub: Modularer RGB-Kanal (SubApp)
+# Uebung_033_sub: LED Strip Blinkende LED
 
 ```{index} single: Uebung_033_sub: Modularer RGB-Kanal (SubApp)
 ```

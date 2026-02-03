@@ -1,4 +1,4 @@
-# Uebung_122: Netzwerk-Scan (16 Teilnehmer)
+# Uebung_122: Übung zu ISOBUS Name
 
 ```{index} single: Uebung_122: Netzwerk-Scan (16 Teilnehmer)
 ```

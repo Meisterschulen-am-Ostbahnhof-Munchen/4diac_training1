@@ -1,4 +1,4 @@
-# Uebung_010b5: Strukturiertes Softkey-Mapping (10-fach)
+# Uebung_010b5: SoftKey_F1-10 auf DigitalOutput_Q1-10
 
 ```{index} single: Uebung_010b5: Strukturiertes Softkey-Mapping (10-fach)
 ```

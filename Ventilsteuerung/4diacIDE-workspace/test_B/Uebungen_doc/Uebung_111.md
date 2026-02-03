@@ -1,4 +1,4 @@
-# Uebung_111: Überlauf-Vermeidung durch Typwandlung
+# Uebung_111: Übung zum Integer Überlauf
 
 ```{index} single: Uebung_111: Überlauf-Vermeidung durch Typwandlung
 ```

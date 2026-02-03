@@ -1,4 +1,4 @@
-# Uebung_056: Mehrkanal-Statusüberwachung
+# Uebung_056: DigitalInput_I1-_I4 auf DigitalOutput_Q1-_Q4
 
 ```{index} single: Uebung_056: Mehrkanal-Statusüberwachung
 ```

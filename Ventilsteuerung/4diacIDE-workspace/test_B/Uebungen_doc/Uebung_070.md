@@ -1,4 +1,4 @@
-# Uebung_070: Traktor-Geschwindigkeit (WBSD)
+# Uebung_070: WBSD auf UT ausgeben
 
 ```{index} single: Uebung_070: Traktor-Geschwindigkeit (WBSD)
 ```

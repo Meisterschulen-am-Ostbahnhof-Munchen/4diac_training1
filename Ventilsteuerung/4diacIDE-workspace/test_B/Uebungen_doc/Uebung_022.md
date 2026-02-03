@@ -1,4 +1,4 @@
-# Uebung_022: Verkettete Sequenz (2 Zylinder)
+# Uebung_022: Spiegelabfolge (2)
 
 ```{index} single: Uebung_022: Verkettete Sequenz (2 Zylinder)
 ```

@@ -1,4 +1,4 @@
-# Uebung_003b: Modulare Parallelsteuerung (4-fach)
+# Uebung_003b: DigitalInput_I1-2-3-4 auf DigitalOutput_Q1-2-3-4
 
 ```{index} single: Uebung_003b: Modulare Parallelsteuerung (4-fach)
 ```

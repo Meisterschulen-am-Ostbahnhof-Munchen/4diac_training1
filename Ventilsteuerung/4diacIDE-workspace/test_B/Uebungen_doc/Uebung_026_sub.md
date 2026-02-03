@@ -1,4 +1,4 @@
-# Uebung_026_sub: Sequenz-Aktor-Einheit (SubApp)
+# Uebung_026_sub: Spiegelabfolge (6)
 
 ```{index} single: Uebung_026_sub: Sequenz-Aktor-Einheit (SubApp)
 ```

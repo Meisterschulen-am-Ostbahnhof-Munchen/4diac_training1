@@ -1,4 +1,4 @@
-# Uebung_006b: Speicherglied (RS-Flip-Flop)
+# Uebung_006b: RS-Flip-Flop mit 2x IE
 
 ```{index} single: Uebung_006b: Speicherglied (RS-Flip-Flop)
 ```

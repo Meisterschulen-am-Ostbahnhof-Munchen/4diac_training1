@@ -1,6 +1,6 @@
 Hier ist die Dokumentation für die Übung basierend auf den bereitgestellten XML-Daten.
 
-# Übung 039a - Sub-Applikation Outputs
+# Uebung_039a_sub_Outputs: Subapplication Type
 
 ```{index} single: Übung 039a - Sub-Applikation Outputs
 ```
