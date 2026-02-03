@@ -36,6 +36,8 @@ Kapselung der logiBUS I/O-Logik. Durch die Erstellung eines eigenen Typs wird di
 
 Intern sind die Ereignis-Ports (`IND -> REQ`) und die Daten-Ports (`IN -> OUT`) fest miteinander verbunden. Sobald dieser Typ in einem Projekt platziert wird, arbeitet er völlig autark für den zugewiesenen Hardware-Kanal.
 
+
 ## Zugehörige Übungen
 
 * [Uebung_003a](Uebung_003a.md)
+
