@@ -45,6 +45,9 @@ Diese Bausteine schalten automatisch nach Ablauf der für den jeweiligen Schritt
 
 Die Pattern-Sequenzer (`sequence_Pattern_xx_AX`) ermöglichen es, für jeden Schritt ein individuelles Bitmuster (Pattern) für die Ausgänge zu definieren. Dies ist ideal für Anwendungen, bei denen in einem Schritt mehrere Aktoren gleichzeitig in bestimmten Mustern geschaltet werden müssen.
 
+Eine detaillierte Beschreibung der Schnittstellen und der Funktionsweise finden Sie hier:
+👉 **[Detail-Dokumentation Pattern-Sequenzer (AX)](../.lib/logiBUS-3.0.0/typelib/utils/sequence/pattern/sequence_Pattern_AX.md)**
+
 ### Verfügbare Typen
 - `sequence_Pattern_04_04_loop_AX`: 4 Schritte, 4 Ausgänge, zyklisch.
 - `sequence_Pattern_08_08_loop_AX`: 8 Schritte, 8 Ausgänge, zyklisch.
