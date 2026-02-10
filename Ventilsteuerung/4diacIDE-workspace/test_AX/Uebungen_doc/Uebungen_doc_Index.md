@@ -114,6 +114,9 @@ Uebung_035a1b_AX
 Uebung_035a2_AX
 Uebung_035a3_AX
 Uebung_038_AX
+Uebung_039_AX
+Uebung_039_sub_NumbAnzeig_AX
+Uebung_039_sub_Outputs_AX
 Uebung_040_AX
 Uebung_083_AX
 Uebung_090a1_AX
