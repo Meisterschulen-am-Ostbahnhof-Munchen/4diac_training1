@@ -3,10 +3,8 @@
 	<VersionInfo Version="1.0" Author="franz" Date="2023-10-23">
 	</VersionInfo>
 	<CompilerInfo packageName="Training_CLIENT_SERVER">
-		<Import declaration="VV::const::Computers::myComputers"/>
 		<Import declaration="VV::const::Computers::myComputers::C_PC_CLIENT"/>
 		<Import declaration="VV::const::Computers::myComputers::C_PC_SERVER"/>
-		<Import declaration="VV::const::ports::myPorts"/>
 		<Import declaration="VV::const::ports::myPorts::PORT_A0"/>
 		<Import declaration="VV::const::ports::myPorts::PORT_A1"/>
 		<Import declaration="VV::const::ports::myPorts::PORT_A2"/>
@@ -19,61 +17,56 @@
 		<Import declaration="logiBUS::io::DI::logiBUS_DI::Input_I2"/>
 		<Import declaration="logiBUS::io::DI::logiBUS_DI::Input_I3"/>
 		<Import declaration="logiBUS::io::DI::logiBUS_DI::Input_I4"/>
-		<Import declaration="logiBUS::io::DO_LED::LED_COLOURS"/>
-		<Import declaration="logiBUS::io::DO_LED::LED_COLOURS::LED_BLUE"/>
-		<Import declaration="logiBUS::io::DO_LED::LED_COLOURS::LED_GREEN"/>
-		<Import declaration="logiBUS::io::DO_LED::LED_COLOURS::LED_RED"/>
-		<Import declaration="logiBUS::io::DO_LED::LED_COLOURS::LED_YELLOW"/>
-		<Import declaration="logiBUS::io::DO_LED::LED_FREQ"/>
-		<Import declaration="logiBUS::io::DO_LED::LED_FREQ::LED_5HZ"/>
-		<Import declaration="logiBUS::io::DO_LED::LED_strip"/>
-		<Import declaration="logiBUS::io::DO_LED::LED_strip::Output_strip"/>
+		<Import declaration="logiBUS::io::DQ::logiBUS_DO::Output_Q1"/>
+		<Import declaration="logiBUS::io::DQ::logiBUS_DO::Output_Q2"/>
+		<Import declaration="logiBUS::io::DQ::logiBUS_DO::Output_Q3"/>
+		<Import declaration="logiBUS::io::DQ::logiBUS_DO::Output_Q4"/>
 	</CompilerInfo>
 	<Application Name="App_CLIENT_SERVER">
 		<SubAppNetwork>
-			<FB Name="BUTTON_RED" Type="logiBUS::io::DI::logiBUS_IX" x="2900" y="3600">
+			<FB Name="Input_I3" Type="logiBUS::io::DI::logiBUS_IX" x="2900" y="3600">
 				<Parameter Name="QI" Value="TRUE"/>
 				<Parameter Name="Input" Value="Input_I3"/>
 			</FB>
-			<FB Name="BUTTON_YELLOW" Type="logiBUS::io::DI::logiBUS_IX" x="2900" y="2300">
+			<FB Name="Input_I2" Type="logiBUS::io::DI::logiBUS_IX" x="2900" y="2300">
 				<Parameter Name="QI" Value="TRUE"/>
 				<Parameter Name="Input" Value="Input_I2"/>
 			</FB>
-			<FB Name="BUTTON_BLUE" Type="logiBUS::io::DI::logiBUS_IX" x="2900" y="4800">
+			<FB Name="Input_I4" Type="logiBUS::io::DI::logiBUS_IX" x="2900" y="4800">
 				<Parameter Name="QI" Value="TRUE"/>
 				<Parameter Name="Input" Value="Input_I4"/>
 			</FB>
-			<FB Name="LED_YELLOW_5HZ" Type="logiBUS::io::DQ::logiBUS_QX" x="6000" y="2400">
+			<FB Name="Output_Q2" Type="logiBUS::io::DQ::logiBUS_QX" x="6000" y="2400">
 				<Parameter Name="QI" Value="TRUE"/>
 				<Parameter Name="Output" Value="Output_Q2"/>
 			</FB>
-			<FB Name="LED_BLUE_5HZ" Type="logiBUS::io::DQ::logiBUS_QX" x="6000" y="4900">
+			<FB Name="Output_Q4" Type="logiBUS::io::DQ::logiBUS_QX" x="6000" y="4900">
 				<Parameter Name="QI" Value="TRUE"/>
 				<Parameter Name="Output" Value="Output_Q4"/>
 			</FB>
-			<FB Name="LED_RED_5HZ" Type="logiBUS::io::DQ::logiBUS_QX" x="6000" y="3700">
+			<FB Name="Output_Q3" Type="logiBUS::io::DQ::logiBUS_QX" x="6000" y="3700">
 				<Parameter Name="QI" Value="TRUE"/>
 				<Parameter Name="Output" Value="Output_Q3"/>
 			</FB>
-			<FB Name="BUTTON_GREEN" Type="logiBUS::io::DI::logiBUS_IX" x="2900" y="700">
+			<FB Name="Input_I1" Type="logiBUS::io::DI::logiBUS_IX" x="2900" y="700">
 				<Parameter Name="QI" Value="TRUE"/>
 				<Parameter Name="Input" Value="Input_I1"/>
 			</FB>
-			<FB Name="LED_GREEN_5HZ" Type="logiBUS::io::DQ::logiBUS_QX" x="6000" y="800">
+			<FB Name="Output_Q1" Type="logiBUS::io::DQ::logiBUS_QX" x="6000" y="800">
 				<Parameter Name="QI" Value="TRUE"/>
 				<Parameter Name="Output" Value="Output_Q1"/>
 			</FB>
 			<EventConnections>
-				<Connection Source="BUTTON_RED.IND" Destination="LED_RED_5HZ.REQ" dx1="1000"/>
-				<Connection Source="BUTTON_YELLOW.IND" Destination="LED_YELLOW_5HZ.REQ" dx1="1000"/>
-				<Connection Source="BUTTON_BLUE.IND" Destination="LED_BLUE_5HZ.REQ" dx1="1000"/>
-				<Connection Source="BUTTON_GREEN.IND" Destination="LED_GREEN_5HZ.REQ" dx1="1000"/>
+				<Connection Source="Input_I3.IND" Destination="Output_Q3.REQ" dx1="1000"/>
+				<Connection Source="Input_I2.IND" Destination="Output_Q2.REQ" dx1="1000"/>
+				<Connection Source="Input_I4.IND" Destination="Output_Q4.REQ" dx1="1000"/>
+				<Connection Source="Input_I1.IND" Destination="Output_Q1.REQ" dx1="1000"/>
 			</EventConnections>
 			<DataConnections>
-				<Connection Source="BUTTON_RED.IN" Destination="LED_RED_5HZ.OUT" dx1="1000"/>
-				<Connection Source="BUTTON_YELLOW.IN" Destination="LED_YELLOW_5HZ.OUT" dx1="1000"/>
-				<Connection Source="BUTTON_BLUE.IN" Destination="LED_BLUE_5HZ.OUT" dx1="1000"/>
-				<Connection Source="BUTTON_GREEN.IN" Destination="LED_GREEN_5HZ.OUT" dx1="1000"/>
+				<Connection Source="Input_I3.IN" Destination="Output_Q3.OUT" dx1="1000"/>
+				<Connection Source="Input_I2.IN" Destination="Output_Q2.OUT" dx1="1000"/>
+				<Connection Source="Input_I4.IN" Destination="Output_Q4.OUT" dx1="1000"/>
+				<Connection Source="Input_I1.IN" Destination="Output_Q1.OUT" dx1="1000"/>
 			</DataConnections>
 		</SubAppNetwork>
 	</Application>
@@ -120,20 +113,20 @@
 					<Connection Source="CLIENT_BUTTON_YELLOW.CNF" Destination="UINT2UINT_1.REQ" dx1="360"/>
 					<Connection Source="CLIENT_BUTTON_BLUE.CNF" Destination="UINT2UINT_3.REQ" dx1="333.33"/>
 					<Connection Source="START.COLD" Destination="E_TRIG.REQ" dx1="846.67"/>
-					<Connection Source="App_CLIENT_SERVER.BUTTON_GREEN.IND" Destination="CLIENT_BUTTON_GREEN.REQ" dx1="433.33"/>
-					<Connection Source="App_CLIENT_SERVER.BUTTON_YELLOW.IND" Destination="CLIENT_BUTTON_YELLOW.REQ" dx1="420"/>
-					<Connection Source="App_CLIENT_SERVER.BUTTON_RED.IND" Destination="CLIENT_BUTTON_RED.REQ" dx1="460"/>
-					<Connection Source="App_CLIENT_SERVER.BUTTON_BLUE.IND" Destination="CLIENT_BUTTON_BLUE.REQ" dx1="446.67"/>
+					<Connection Source="App_CLIENT_SERVER.Input_I1.IND" Destination="CLIENT_BUTTON_GREEN.REQ" dx1="433.33"/>
+					<Connection Source="App_CLIENT_SERVER.Input_I2.IND" Destination="CLIENT_BUTTON_YELLOW.REQ" dx1="420"/>
+					<Connection Source="App_CLIENT_SERVER.Input_I3.IND" Destination="CLIENT_BUTTON_RED.REQ" dx1="460"/>
+					<Connection Source="App_CLIENT_SERVER.Input_I4.IND" Destination="CLIENT_BUTTON_BLUE.REQ" dx1="446.67"/>
 				</EventConnections>
 				<DataConnections>
 					<Connection Source="CLIENT_BUTTON_GREEN.RD_1" Destination="UINT2UINT_0.IN" dx1="366.67"/>
 					<Connection Source="CLIENT_BUTTON_RED.RD_1" Destination="UINT2UINT_2.IN" dx1="340"/>
 					<Connection Source="CLIENT_BUTTON_YELLOW.RD_1" Destination="UINT2UINT_1.IN" dx1="380"/>
 					<Connection Source="CLIENT_BUTTON_BLUE.RD_1" Destination="UINT2UINT_3.IN" dx1="353.33"/>
-					<Connection Source="App_CLIENT_SERVER.BUTTON_GREEN.IN" Destination="CLIENT_BUTTON_GREEN.SD_1" dx1="433.33"/>
-					<Connection Source="App_CLIENT_SERVER.BUTTON_YELLOW.IN" Destination="CLIENT_BUTTON_YELLOW.SD_1" dx1="420"/>
-					<Connection Source="App_CLIENT_SERVER.BUTTON_RED.IN" Destination="CLIENT_BUTTON_RED.SD_1" dx1="460"/>
-					<Connection Source="App_CLIENT_SERVER.BUTTON_BLUE.IN" Destination="CLIENT_BUTTON_BLUE.SD_1" dx1="446.67"/>
+					<Connection Source="App_CLIENT_SERVER.Input_I1.IN" Destination="CLIENT_BUTTON_GREEN.SD_1" dx1="433.33"/>
+					<Connection Source="App_CLIENT_SERVER.Input_I2.IN" Destination="CLIENT_BUTTON_YELLOW.SD_1" dx1="420"/>
+					<Connection Source="App_CLIENT_SERVER.Input_I3.IN" Destination="CLIENT_BUTTON_RED.SD_1" dx1="460"/>
+					<Connection Source="App_CLIENT_SERVER.Input_I4.IN" Destination="CLIENT_BUTTON_BLUE.SD_1" dx1="446.67"/>
 				</DataConnections>
 			</FBNetwork>
 		</Resource>
@@ -165,26 +158,26 @@
 				</FB>
 				<EventConnections>
 					<Connection Source="START.COLD" Destination="E_TRIG.REQ" dx1="93.33"/>
-					<Connection Source="SERVER_BUTTON_GREEN.IND" Destination="App_CLIENT_SERVER.LED_GREEN_5HZ.REQ"/>
-					<Connection Source="SERVER_BUTTON_YELLOW.IND" Destination="App_CLIENT_SERVER.LED_YELLOW_5HZ.REQ"/>
-					<Connection Source="SERVER_BUTTON_RED.IND" Destination="App_CLIENT_SERVER.LED_RED_5HZ.REQ"/>
-					<Connection Source="SERVER_BUTTON_BLUE.IND" Destination="App_CLIENT_SERVER.LED_BLUE_5HZ.REQ"/>
+					<Connection Source="SERVER_BUTTON_GREEN.IND" Destination="App_CLIENT_SERVER.Output_Q1.REQ"/>
+					<Connection Source="SERVER_BUTTON_YELLOW.IND" Destination="App_CLIENT_SERVER.Output_Q2.REQ"/>
+					<Connection Source="SERVER_BUTTON_RED.IND" Destination="App_CLIENT_SERVER.Output_Q3.REQ"/>
+					<Connection Source="SERVER_BUTTON_BLUE.IND" Destination="App_CLIENT_SERVER.Output_Q4.REQ"/>
 				</EventConnections>
 				<DataConnections>
-					<Connection Source="SERVER_BUTTON_GREEN.RD_1" Destination="App_CLIENT_SERVER.LED_GREEN_5HZ.OUT"/>
-					<Connection Source="SERVER_BUTTON_YELLOW.RD_1" Destination="App_CLIENT_SERVER.LED_YELLOW_5HZ.OUT"/>
-					<Connection Source="SERVER_BUTTON_RED.RD_1" Destination="App_CLIENT_SERVER.LED_RED_5HZ.OUT"/>
-					<Connection Source="SERVER_BUTTON_BLUE.RD_1" Destination="App_CLIENT_SERVER.LED_BLUE_5HZ.OUT"/>
+					<Connection Source="SERVER_BUTTON_GREEN.RD_1" Destination="App_CLIENT_SERVER.Output_Q1.OUT"/>
+					<Connection Source="SERVER_BUTTON_YELLOW.RD_1" Destination="App_CLIENT_SERVER.Output_Q2.OUT"/>
+					<Connection Source="SERVER_BUTTON_RED.RD_1" Destination="App_CLIENT_SERVER.Output_Q3.OUT"/>
+					<Connection Source="SERVER_BUTTON_BLUE.RD_1" Destination="App_CLIENT_SERVER.Output_Q4.OUT"/>
 				</DataConnections>
 			</FBNetwork>
 		</Resource>
 	</Device>
-	<Mapping From="App_CLIENT_SERVER.BUTTON_BLUE" To="FORTE_PC_CLIENT.EMB_RES_CLIENT"/>
-	<Mapping From="App_CLIENT_SERVER.BUTTON_RED" To="FORTE_PC_CLIENT.EMB_RES_CLIENT"/>
-	<Mapping From="App_CLIENT_SERVER.BUTTON_YELLOW" To="FORTE_PC_CLIENT.EMB_RES_CLIENT"/>
-	<Mapping From="App_CLIENT_SERVER.LED_RED_5HZ" To="FORTE_PC_SERVER.EMB_RES_SERVER"/>
-	<Mapping From="App_CLIENT_SERVER.LED_YELLOW_5HZ" To="FORTE_PC_SERVER.EMB_RES_SERVER"/>
-	<Mapping From="App_CLIENT_SERVER.LED_BLUE_5HZ" To="FORTE_PC_SERVER.EMB_RES_SERVER"/>
-	<Mapping From="App_CLIENT_SERVER.LED_GREEN_5HZ" To="FORTE_PC_SERVER.EMB_RES_SERVER"/>
-	<Mapping From="App_CLIENT_SERVER.BUTTON_GREEN" To="FORTE_PC_CLIENT.EMB_RES_CLIENT"/>
+	<Mapping From="App_CLIENT_SERVER.Input_I4" To="FORTE_PC_CLIENT.EMB_RES_CLIENT"/>
+	<Mapping From="App_CLIENT_SERVER.Input_I3" To="FORTE_PC_CLIENT.EMB_RES_CLIENT"/>
+	<Mapping From="App_CLIENT_SERVER.Input_I2" To="FORTE_PC_CLIENT.EMB_RES_CLIENT"/>
+	<Mapping From="App_CLIENT_SERVER.Output_Q3" To="FORTE_PC_SERVER.EMB_RES_SERVER"/>
+	<Mapping From="App_CLIENT_SERVER.Output_Q2" To="FORTE_PC_SERVER.EMB_RES_SERVER"/>
+	<Mapping From="App_CLIENT_SERVER.Output_Q4" To="FORTE_PC_SERVER.EMB_RES_SERVER"/>
+	<Mapping From="App_CLIENT_SERVER.Output_Q1" To="FORTE_PC_SERVER.EMB_RES_SERVER"/>
+	<Mapping From="App_CLIENT_SERVER.Input_I1" To="FORTE_PC_CLIENT.EMB_RES_CLIENT"/>
 </System>
