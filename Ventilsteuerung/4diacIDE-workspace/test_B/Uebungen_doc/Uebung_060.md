@@ -1,4 +1,4 @@
-# Uebung_060: Task Controller Section Control (TC-SC)
+# Uebung_060: für TC-SC also Task Controller Section Control
 
 ```{index} single: Uebung_060: Task Controller Section Control (TC-SC)
 ```

@@ -1,4 +1,4 @@
-# Uebung_006a2: Globaler Reset für mehrere Kanäle
+# Uebung_006a2: 2x SR und T-Flip-Flop mit IE
 
 ```{index} single: Uebung_006a2: Globaler Reset für mehrere Kanäle
 ```

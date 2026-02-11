@@ -1,4 +1,4 @@
-# Uebung_034: Leistungsregelung (Analog zu PWM)
+# Uebung_034: Analog-Eingang auf PWM Ausgang
 
 ```{index} single: Uebung_034: Leistungsregelung (Analog zu PWM)
 ```

@@ -1,4 +1,4 @@
-# Uebung_093: Zeitgesteuerte Ereignis-Tabelle (E_TABLE)
+# Uebung_093: Beispiel für E_TABLE
 
 ```{index} single: Uebung_093: Zeitgesteuerte Ereignis-Tabelle (E_TABLE)
 ```

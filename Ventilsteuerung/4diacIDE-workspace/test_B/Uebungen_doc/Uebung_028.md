@@ -1,4 +1,4 @@
-# Uebung_028: Analog-Eingänge (Messwerte)
+# Uebung_028: Analog-Eingang
 
 ```{index} single: Uebung_028: Analog-Eingänge (Messwerte)
 ```

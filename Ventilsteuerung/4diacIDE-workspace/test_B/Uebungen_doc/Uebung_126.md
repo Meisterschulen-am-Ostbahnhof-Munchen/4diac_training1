@@ -1,4 +1,4 @@
-# Uebung_126: Zyklisches Senden mit Callback
+# Uebung_126: Übung zu ISOBUS Send Message Cyclic (mit CB)
 
 ```{index} single: Uebung_126: Zyklisches Senden mit Callback
 ```

@@ -1,4 +1,4 @@
-# Uebung_020e2: Zyklischer TOF-Timer (FB_TOF)
+# Uebung_020e2: DigitalInput_I1 auf DigitalOutput_Q1; FB_TOF; Ausschaltverzögert
 
 ```{index} single: Uebung_020e2: Zyklischer TOF-Timer (FB_TOF)
 ```

@@ -1,4 +1,4 @@
-# Uebung_020e: Ausschaltverzögerung (E_TOF)
+# Uebung_020e: DigitalInput_I1 auf DigitalOutput_Q1; E_TOF; Ausschaltverzögert
 
 ```{index} single: Uebung_020e: Ausschaltverzögerung (E_TOF)
 ```

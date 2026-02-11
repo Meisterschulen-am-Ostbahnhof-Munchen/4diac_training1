@@ -1,4 +1,4 @@
-# Uebung_038: Zeitgesteuertes Lauflicht (8-fach)
+# Uebung_038: Lauflicht 8 reine Zeitsteuerung
 
 ```{index} single: Uebung_038: Zeitgesteuertes Lauflicht (8-fach)
 ```

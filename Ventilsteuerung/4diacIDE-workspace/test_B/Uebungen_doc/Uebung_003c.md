@@ -1,4 +1,4 @@
-# Uebung_003c: Mapping auf ISOBUS AUX (Standard-Pins)
+# Uebung_003c: DigitalInput_I1-2-3-4 auf AUX
 
 ```{index} single: Uebung_003c: Mapping auf ISOBUS AUX (Standard-Pins)
 ```

@@ -1,4 +1,4 @@
-# Uebung_008_AX: Autonomer Blinker-Baustein
+# Uebung_008_AX: Blinker mit E_CYCLE, E_SWITCH und E_SR
 
 ```{index} single: Uebung_008_AX: Autonomer Blinker-Baustein
 ```

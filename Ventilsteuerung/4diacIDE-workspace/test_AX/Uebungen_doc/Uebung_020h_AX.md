@@ -1,4 +1,4 @@
-# Uebung_020h_AX: Ereignisgesteuerter Impuls (AX_PULSE)
+# Uebung_020h_AX: DigitalInput_I1 auf DigitalOutput_Q1; AX_PULSE; Impulsformend
 
 ```{index} single: Uebung_020h_AX: Ereignisgesteuerter Impuls (AX_PULSE)
 ```

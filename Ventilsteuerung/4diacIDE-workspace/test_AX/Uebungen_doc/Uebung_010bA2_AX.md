@@ -1,4 +1,4 @@
-# Uebung_010bA2_AX: AUX Event (Enabled - Latched vs NonLatched)
+# Uebung_010bA2_AX: Toggle Flip-Flop mit IE AuxFunction2_X1 AuxEnabled
 
 ```{index} single: Uebung_010bA2_AX: AUX Event (Enabled - Latched vs NonLatched)
 ```

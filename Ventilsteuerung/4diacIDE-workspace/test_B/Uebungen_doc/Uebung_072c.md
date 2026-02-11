@@ -1,4 +1,4 @@
-# Uebung_072c: Integration der Geschwindigkeit (Wegberechnung)
+# Uebung_072c: GBSD auf UT ausgeben
 
 ```{index} single: Uebung_072c: Integration der Geschwindigkeit (Wegberechnung)
 ```

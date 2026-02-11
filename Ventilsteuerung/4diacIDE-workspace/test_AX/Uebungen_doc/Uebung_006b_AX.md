@@ -1,4 +1,4 @@
-# Uebung_006b_AX: RS-Flip-Flop (Rücksetzen dominant)
+# Uebung_006b_AX: RS-Flip-Flop mit 2x IE
 
 ```{index} single: Uebung_006b_AX: RS-Flip-Flop (Rücksetzen dominant)
 ```

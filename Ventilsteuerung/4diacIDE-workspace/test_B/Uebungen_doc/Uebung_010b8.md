@@ -1,4 +1,4 @@
-# Uebung_010b8: Button-Pressed (Latched)
+# Uebung_010b8: Toggle Flip-Flop mit IE Button_A1 BT_PRESSED_LATCHED
 
 ```{index} single: Uebung_010b8: Button-Pressed (Latched)
 ```

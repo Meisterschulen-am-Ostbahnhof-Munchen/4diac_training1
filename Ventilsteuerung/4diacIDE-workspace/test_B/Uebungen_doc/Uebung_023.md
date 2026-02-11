@@ -1,4 +1,4 @@
-# Uebung_023: Kompletter Zyklus (Aus- und Einfahren)
+# Uebung_023: Spiegelabfolge (3)
 
 ```{index} single: Uebung_023: Kompletter Zyklus (Aus- und Einfahren)
 ```

@@ -1,4 +1,4 @@
-# Uebung_040: Manuelle Schrittwahl (Zähler & Demux)
+# Uebung_040: Lauflicht 8
 
 ```{index} single: Uebung_040: Manuelle Schrittwahl (Zähler & Demux)
 ```

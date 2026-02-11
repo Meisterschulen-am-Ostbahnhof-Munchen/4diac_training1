@@ -1,6 +1,6 @@
 Hier ist die generierte Dokumentation basierend auf dem bereitgestellten XML-Code:
 
-# Uebung_039_sub_NumbAnzeig
+# Uebung_039_sub_NumbAnzeig: Spiegelabfolge V2 mit Schrittkette SUB Num
 
 ```{index} single: Uebung_039_sub_NumbAnzeig
 ```
@@ -57,3 +57,11 @@ Der Ablauf innerhalb dieses Sub-Bausteins ist streng linear und ereignisgesteuer
 
 ## Zusammenfassung
 Die Übung **Uebung_039_sub_NumbAnzeig** demonstriert die Kapselung von Logik in einer Sub-Applikation. Sie dient als Schnittstelle zwischen der Steuerungslogik (Schrittkette) und der Visualisierung (ISOBUS-Terminal), indem sie Datentypen anpasst und die Kommunikation mit dem Ausgabeobjekt `OutputNumber_N1` übernimmt. Dies fördert die Wiederverwendbarkeit und Übersichtlichkeit im Hauptprogramm.
+
+
+
+## 🛠️ Zugehörige Übungen
+
+* [Uebung_039](Uebung_039.md)
+* [Uebung_039a](Uebung_039a.md)
+

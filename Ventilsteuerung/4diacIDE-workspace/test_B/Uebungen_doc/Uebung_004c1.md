@@ -1,4 +1,4 @@
-# Uebung_004c1: Doppelklick-Auswertung
+# Uebung_004c1: Toggle Flip-Flop mit IE mit BUTTON_DOUBLE_CLICK
 
 ```{index} single: Uebung_004c1: Doppelklick-Auswertung
 ```

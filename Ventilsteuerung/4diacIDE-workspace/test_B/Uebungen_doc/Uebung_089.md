@@ -1,4 +1,4 @@
-# Uebung_089: Steigende Flanke (R_TRIG)
+# Uebung_089: Beispiel für E_R_TRIG
 
 ```{index} single: Uebung_089: Steigende Flanke (R_TRIG)
 ```

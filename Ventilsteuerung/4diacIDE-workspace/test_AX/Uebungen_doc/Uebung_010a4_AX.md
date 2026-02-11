@@ -1,4 +1,4 @@
-# Uebung_010a4_AX: Softkey auf DataPanel
+# Uebung_010a4_AX: SoftKey_F1 auf DigitalOutput_Q1 (Datapanel)
 
 ```{index} single: Uebung_010a4_AX: Softkey auf DataPanel
 ```

@@ -1,4 +1,4 @@
-# Uebung_103c2: Vereinfachte Selektion
+# Uebung_103c2: DigitalInput_I1 auf DigitalOutput_Q1, mit Plug and Socket und DEMUX
 
 ```{index} single: Uebung_103c2: Vereinfachte Selektion
 ```

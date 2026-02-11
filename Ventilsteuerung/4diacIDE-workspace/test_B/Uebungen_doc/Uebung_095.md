@@ -1,4 +1,4 @@
-# Uebung_095: Ereignis-Auswahl (E_SELECT)
+# Uebung_095: Beispiel für E_SELECT
 
 ```{index} single: Uebung_095: Ereignis-Auswahl (E_SELECT)
 ```

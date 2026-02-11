@@ -1,4 +1,4 @@
-# Uebung_002b3_AX: Kombinatorische Logik (AND/OR)
+# Uebung_002b3_AX: DigitalInput_I1/_I2/_I3 auf DigitalOutput_Q1
 
 ```{index} single: Uebung_002b3_AX: Kombinatorische Logik (AND/OR)
 ```

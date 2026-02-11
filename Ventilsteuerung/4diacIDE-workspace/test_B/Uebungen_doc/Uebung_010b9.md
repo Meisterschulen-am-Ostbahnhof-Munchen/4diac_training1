@@ -1,4 +1,4 @@
-# Uebung_010b9: Taktgeber durch Festhalten (STILL_HELD)
+# Uebung_010b9: Toggle Flip-Flop mit IE Button_A1 BT_STILL_HELD
 
 ```{index} single: Uebung_010b9: Taktgeber durch Festhalten (STILL_HELD)
 ```

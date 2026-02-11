@@ -3,8 +3,6 @@
 ```{index} single: Numerischer Index (test_B)
 ```
 
-Hier finden Sie alle Übungen des Arbeitsbereichs `test_B` in aufsteigender Reihenfolge.
-
 ```{toctree}
 :maxdepth: 1
 
@@ -32,6 +30,8 @@ Uebung_003c_sub
 Uebung_003d
 Uebung_004a
 Uebung_004a2
+Uebung_004a2_2
+Uebung_004a2_3
 Uebung_004a3
 Uebung_004a4
 Uebung_004a5
@@ -59,6 +59,8 @@ Uebung_006a4
 Uebung_006b
 Uebung_006c
 Uebung_006d
+Uebung_006e1
+Uebung_006e2
 Uebung_007
 Uebung_007a1
 Uebung_007a2
@@ -108,6 +110,7 @@ Uebung_016
 Uebung_016a
 Uebung_017
 Uebung_018
+Uebung_018a
 Uebung_019
 Uebung_019a
 Uebung_019b
@@ -150,6 +153,8 @@ Uebung_035
 Uebung_035a
 Uebung_035a2
 Uebung_035a3
+Uebung_035b
+Uebung_035c
 Uebung_036
 Uebung_037
 Uebung_038
@@ -160,6 +165,7 @@ Uebung_039a
 Uebung_039a_sub_Outputs
 Uebung_039b
 Uebung_040
+Uebung_040_2
 Uebung_041
 Uebung_042
 Uebung_043
@@ -204,6 +210,7 @@ Uebung_093b
 Uebung_094
 Uebung_094a
 Uebung_095
+Uebung_103
 Uebung_110
 Uebung_111
 Uebung_120
@@ -214,8 +221,11 @@ Uebung_123
 Uebung_124
 Uebung_125
 Uebung_126
+Uebung_126b
+Uebung_126b2
 Uebung_127
 Uebung_128
+Uebung_128b
 Uebung_12x_sub
 Uebung_130
 Uebung_131
@@ -223,9 +233,34 @@ Uebung_132
 Uebung_133
 Uebung_134
 Uebung_140
+Uebung_150
+Uebung_151
 Uebung_152
 Uebung_153
 Uebung_160
+Uebung_160b
+Uebung_160b2
+Uebung_170
+Uebung_171
+Uebung_172
+Uebung_173
+Uebung_174
+Uebung_175
+Uebung_176
+Uebung_177
+Uebung_178
+Uebung_179
+Uebung_180
+Uebung_Isobus_Softkeys_Index
+Uebungen_Basis_Index
+Uebungen_doc_Index
+Uebungen_FlipFlops_Index
+Uebungen_Index
+Uebungen_Sequenzer_Index
+Uebungen_Signale_Index
+Uebungen_SubApps_Index
+Uebungen_Timer_Index
 ```
 
+Hier finden Sie alle Übungen des Arbeitsbereichs `test_B` in aufsteigender Reihenfolge.
 

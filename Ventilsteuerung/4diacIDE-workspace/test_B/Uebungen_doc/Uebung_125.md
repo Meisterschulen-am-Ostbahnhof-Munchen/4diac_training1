@@ -1,4 +1,4 @@
-# Uebung_125: Antwort auf Anfrage (TX on Request)
+# Uebung_125: Übung zu ISOBUS Send Message on Request (mit CB)
 
 ```{index} single: Uebung_125: Antwort auf Anfrage (TX on Request)
 ```

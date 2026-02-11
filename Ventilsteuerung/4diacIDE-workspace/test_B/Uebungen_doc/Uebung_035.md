@@ -1,4 +1,4 @@
-# Uebung_035: Schrittketten-Steuerung (4 Phasen)
+# Uebung_035: Spiegelabfolge V2 mit Schrittkette
 
 ```{index} single: Uebung_035: Schrittketten-Steuerung (4 Phasen)
 ```

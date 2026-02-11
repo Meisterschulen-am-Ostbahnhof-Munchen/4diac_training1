@@ -1,4 +1,4 @@
-# Uebung_083_AX: Präzisions-Zähler (AUDI) mit Adaptern
+# Uebung_083_AX: Beispiel für AUDI_CTUD_UDINT (Adapter-basiert)
 
 ```{index} single: Uebung_083_AX: Präzisions-Zähler (AUDI) mit Adaptern
 ```

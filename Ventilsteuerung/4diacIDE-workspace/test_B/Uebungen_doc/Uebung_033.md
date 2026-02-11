@@ -1,4 +1,4 @@
-# Uebung_033: Modulare RGB-Ansteuerung
+# Uebung_033: LED Strip Blinkende LED
 
 ```{index} single: Uebung_033: Modulare RGB-Ansteuerung
 ```

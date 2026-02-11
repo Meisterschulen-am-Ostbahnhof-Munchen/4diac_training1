@@ -1,4 +1,4 @@
-# Uebung_002a: Logische UND-Verknüpfung (AND)
+# Uebung_002a: DigitalInput_I1/_I2 mit AND auf DigitalOutput_Q1
 
 ```{index} single: Uebung_002a: Logische UND-Verknüpfung (AND)
 ```

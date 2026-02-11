@@ -1,4 +1,4 @@
-# Uebung_002a7_AX: XOR-Verknüpfung mit drei Eingängen
+# Uebung_002a7_AX: DigitalInput_I1-3 mit XOR auf DigitalOutput_Q1, mit Plug and Socket
 
 ```{index} single: Uebung_002a7_AX: XOR-Verknüpfung mit drei Eingängen
 ```

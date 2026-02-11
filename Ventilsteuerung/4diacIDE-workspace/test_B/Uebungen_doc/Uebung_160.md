@@ -1,4 +1,4 @@
-# Uebung_160: Motor-Drehrichtungssteuerung
+# Uebung_160: Motor Links/Rechtslauf
 
 ```{index} single: Uebung_160: Motor-Drehrichtungssteuerung
 ```

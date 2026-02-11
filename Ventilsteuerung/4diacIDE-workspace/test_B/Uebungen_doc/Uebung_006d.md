@@ -1,4 +1,4 @@
-# Uebung_006d: Schutz vor versehentlichem Einschalten
+# Uebung_006d: SR-Flip-Flop mit 2x IE und Doppelklick.
 
 ```{index} single: Uebung_006d: Schutz vor versehentlichem Einschalten
 ```

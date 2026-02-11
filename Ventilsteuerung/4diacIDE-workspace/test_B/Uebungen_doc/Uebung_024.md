@@ -1,4 +1,4 @@
-# Uebung_024: Sequenz mit Wartezeit (Delay)
+# Uebung_024: Spiegelabfolge (4)
 
 ```{index} single: Uebung_024: Sequenz mit Wartezeit (Delay)
 ```

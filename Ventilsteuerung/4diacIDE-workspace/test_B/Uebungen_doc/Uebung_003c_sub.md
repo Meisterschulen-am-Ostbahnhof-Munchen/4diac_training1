@@ -1,4 +1,4 @@
-# Uebung_003c_sub: ISOBUS AUX-Kanal (SubApp)
+# Uebung_003c_sub: IX auf QX (generisch)
 
 ```{index} single: Uebung_003c_sub: ISOBUS AUX-Kanal (SubApp)
 ```
@@ -35,3 +35,10 @@ Kapselung der ISOBUS-Kommunikation. Der Baustein verbirgt die Details des ISOBUS
 *   **`iInpNr`**: Die fortlaufende Nummer (Index) im ISOBUS-Auxiliary-Pool.
 
 Jede Änderung am lokalen Taster führt sofort zu einer entsprechenden Status-Meldung im ISOBUS-Netzwerk, wodurch der Taster für andere Geräte (z.B. Task Controller) sichtbar wird.
+
+
+
+## 🛠️ Zugehörige Übungen
+
+* [Uebung_003c](Uebung_003c.md)
+

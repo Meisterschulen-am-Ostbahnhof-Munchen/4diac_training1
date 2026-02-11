@@ -1,4 +1,4 @@
-# Uebung_006a_AX: Kombiniertes T/SR Flip-Flop
+# Uebung_006a_AX: SR und T-Flip-Flop mit 3x IE
 
 ```{index} single: Uebung_006a_AX: Kombiniertes T/SR Flip-Flop
 ```

@@ -1,4 +1,4 @@
-# Uebung_003: Parallele Signalwege (Standard-Pins)
+# Uebung_003: DigitalInput_I1/_I2 auf DigitalOutput_Q1/_I2 - flach
 
 ```{index} single: Uebung_003: Parallele Signalwege (Standard-Pins)
 ```

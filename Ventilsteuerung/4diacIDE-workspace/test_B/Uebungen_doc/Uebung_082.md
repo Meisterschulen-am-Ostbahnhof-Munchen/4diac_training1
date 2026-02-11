@@ -1,4 +1,4 @@
-# Uebung_082: Vorwärts-Rückwärts-Zähler (Up/Down)
+# Uebung_082: Beispiel für E_CTUD
 
 ```{index} single: Uebung_082: Vorwärts-Rückwärts-Zähler (Up/Down)
 ```

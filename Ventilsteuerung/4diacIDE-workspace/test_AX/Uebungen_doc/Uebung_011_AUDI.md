@@ -1,4 +1,4 @@
-# Uebung_011_AUDI: Numerische Eingabe mit Adaptern
+# Uebung_011_AUDI: Numeric Value Input
 
 ```{index} single: Uebung_011_AUDI: Numerische Eingabe mit Adaptern
 ```

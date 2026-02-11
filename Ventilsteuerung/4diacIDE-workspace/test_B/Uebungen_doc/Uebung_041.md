@@ -1,4 +1,4 @@
-# Uebung_041: Ein-Tasten-Lauflicht (Zähler-Steuerung)
+# Uebung_041: Lauflicht 8 mit einer Taste
 
 ```{index} single: Uebung_041: Ein-Tasten-Lauflicht (Zähler-Steuerung)
 ```

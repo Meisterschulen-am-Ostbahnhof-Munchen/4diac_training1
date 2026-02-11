@@ -1,4 +1,4 @@
-# Uebung_095_AX: Event-Selektor (Weiche)
+# Uebung_095_AX: Beispiel für AX_SELECT
 
 ```{index} single: Uebung_095_AX: Event-Selektor (Weiche)
 ```

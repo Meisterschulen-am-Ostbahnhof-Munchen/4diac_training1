@@ -1,4 +1,4 @@
-# Uebung_090a1: Daten-Auswahl (Multiplexer)
+# Uebung_090a1: Beispiel für F_MUX_2
 
 ```{index} single: Uebung_090a1: Daten-Auswahl (Multiplexer)
 ```

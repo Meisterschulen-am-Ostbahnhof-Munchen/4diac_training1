@@ -1,4 +1,4 @@
-# Uebung_081: Rückwärts-Zähler (Down-Counter)
+# Uebung_081: Beispiel für E_CTD
 
 ```{index} single: Uebung_081: Rückwärts-Zähler (Down-Counter)
 ```

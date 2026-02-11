@@ -1,4 +1,4 @@
-# Uebung_079: Tractor ECU (TECU) Gesamtübersicht
+# Uebung_079: alle TECU FBs
 
 ```{index} single: Uebung_079: Tractor ECU (TECU) Gesamtübersicht
 ```

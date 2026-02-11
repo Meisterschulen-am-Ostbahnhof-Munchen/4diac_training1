@@ -1,4 +1,4 @@
-# Uebung_019c: Interaktive Alarm-Verriegelung
+# Uebung_019c: Umschalten einer Maske
 
 ```{index} single: Uebung_019c: Interaktive Alarm-Verriegelung
 ```

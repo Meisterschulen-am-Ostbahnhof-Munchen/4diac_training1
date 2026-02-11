@@ -1,4 +1,4 @@
-# Uebung_072b: Versetzte Wegimpulse (Phasenschieber)
+# Uebung_072b: GBSD auf UT ausgeben, mit Impulsen.
 
 ```{index} single: Uebung_072b: Versetzte Wegimpulse (Phasenschieber)
 ```

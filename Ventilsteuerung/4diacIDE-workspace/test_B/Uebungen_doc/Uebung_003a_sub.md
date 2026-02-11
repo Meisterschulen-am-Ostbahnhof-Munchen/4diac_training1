@@ -1,4 +1,4 @@
-# Uebung_003a_sub: Universal-Kanal (SubApp)
+# Uebung_003a_sub: IX auf QX (generisch)
 
 ```{index} single: Uebung_003a_sub: Universal-Kanal (SubApp)
 ```
@@ -35,3 +35,10 @@ Kapselung der logiBUS I/O-Logik. Durch die Erstellung eines eigenen Typs wird di
 *   **`Output`**: Erwartet eine Konstante vom Typ `logiBUS_DO_S` (z.B. `Output_Q1`).
 
 Intern sind die Ereignis-Ports (`IND -> REQ`) und die Daten-Ports (`IN -> OUT`) fest miteinander verbunden. Sobald dieser Typ in einem Projekt platziert wird, arbeitet er völlig autark für den zugewiesenen Hardware-Kanal.
+
+
+
+## 🛠️ Zugehörige Übungen
+
+* [Uebung_003a](Uebung_003a.md)
+

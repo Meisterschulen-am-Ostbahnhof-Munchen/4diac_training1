@@ -1,4 +1,4 @@
-# Uebung_051: Signal-Bündelung (Strukturen)
+# Uebung_051: DigitalInput_I1-_I4 auf DigitalOutput_Q1-_Q4
 
 ```{index} single: Uebung_051: Signal-Bündelung (Strukturen)
 ```

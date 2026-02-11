@@ -1,4 +1,4 @@
-# Uebung_007_AX: Einfacher Blinker (Taktgeber)
+# Uebung_007_AX: Blinker mit E_CYCLE und E_T_FF
 
 ```{index} single: Uebung_007_AX: Einfacher Blinker (Taktgeber)
 ```

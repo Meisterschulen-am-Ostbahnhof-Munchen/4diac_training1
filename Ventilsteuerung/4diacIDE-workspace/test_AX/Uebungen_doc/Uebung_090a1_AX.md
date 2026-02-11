@@ -1,4 +1,4 @@
-# Uebung_090a1_AX: Signal-Multiplexer (2-fach)
+# Uebung_090a1_AX: Beispiel für AX_MUX_2
 
 ```{index} single: Uebung_090a1_AX: Signal-Multiplexer (2-fach)
 ```

@@ -1,4 +1,4 @@
-# Uebung_003_AX: Parallele Steuerung zweier Kanäle
+# Uebung_003_AX: DigitalInput_I1/_I2 auf DigitalOutput_Q1/_I2 - flach mit Adapter
 
 ```{index} single: Uebung_003_AX: Parallele Steuerung zweier Kanäle
 ```

@@ -1,4 +1,4 @@
-# Uebung_025: Synchronisierte Sequenz (Rendezvous)
+# Uebung_025: Spiegelabfolge (5)
 
 ```{index} single: Uebung_025: Synchronisierte Sequenz (Rendezvous)
 ```

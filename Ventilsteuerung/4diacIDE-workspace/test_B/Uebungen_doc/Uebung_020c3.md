@@ -1,4 +1,4 @@
-# Uebung_020c3: Zyklische Timer-Aktualisierung (FB_TON)
+# Uebung_020c3: DigitalInput_I1 auf DigitalOutput_Q1; FB_TON; Einschaltverzögert
 
 ```{index} single: Uebung_020c3: Zyklische Timer-Aktualisierung (FB_TON)
 ```

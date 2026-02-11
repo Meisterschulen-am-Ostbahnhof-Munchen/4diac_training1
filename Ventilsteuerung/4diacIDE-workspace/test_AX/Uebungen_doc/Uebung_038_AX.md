@@ -1,4 +1,4 @@
-# Uebung_038_AX: Lauflicht (Zeitgesteuert)
+# Uebung_038_AX: Lauflicht 8 reine Zeitsteuerung
 
 ```{index} single: Uebung_038_AX: Lauflicht (Zeitgesteuert)
 ```

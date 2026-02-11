@@ -1,4 +1,4 @@
-# Uebung_036: Event-gesteuerte Schrittkette
+# Uebung_036: Spiegelabfolge V2 mit Schrittkette
 
 ```{index} single: Uebung_036: Event-gesteuerte Schrittkette
 ```

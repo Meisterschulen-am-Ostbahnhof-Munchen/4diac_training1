@@ -1,4 +1,4 @@
-# Uebung_020c3_AX: AX_FB_TON mit Takteingang
+# Uebung_020c3_AX: DigitalInput_I1 auf DigitalOutput_Q1; AX_FB_TON; Einschaltverzögert
 
 ```{index} single: Uebung_020c3_AX: AX_FB_TON mit Takteingang
 ```

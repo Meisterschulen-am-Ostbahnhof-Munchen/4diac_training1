@@ -1,4 +1,4 @@
-# Uebung_021: Sequenz-Grundlagen (Zylinder 1)
+# Uebung_021: Spiegelabfolge (1)
 
 ```{index} single: Uebung_021: Sequenz-Grundlagen (Zylinder 1)
 ```

@@ -1,4 +1,4 @@
-# Uebung_124: Custom PGN senden (Peer-to-Peer)
+# Uebung_124: Übung zu ISOBUS Send Message
 
 ```{index} single: Uebung_124: Custom PGN senden (Peer-to-Peer)
 ```

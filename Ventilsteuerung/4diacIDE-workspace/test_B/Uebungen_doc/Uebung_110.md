@@ -1,4 +1,4 @@
-# Uebung_110: Arithmetischer Überlauf (Integer Overflow)
+# Uebung_110: Übung zum Integer Überlauf
 
 ```{index} single: Uebung_110: Arithmetischer Überlauf (Integer Overflow)
 ```

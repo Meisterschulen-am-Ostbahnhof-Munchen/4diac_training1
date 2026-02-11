@@ -1,4 +1,4 @@
-# Uebung_002a5b: ODER-Verknüpfung mit Signalverteilung
+# Uebung_002a5b: DigitalInput_I1-3 mit OR auf DigitalOutput_Q1-3
 
 ```{index} single: Uebung_002a5b: ODER-Verknüpfung mit Signalverteilung
 ```

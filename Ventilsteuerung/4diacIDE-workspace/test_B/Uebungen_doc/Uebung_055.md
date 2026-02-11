@@ -1,4 +1,4 @@
-# Uebung_055: Diagnose-Status (Quarter-Konzept)
+# Uebung_055: DigitalInput_I1 auf DigitalOutput_Q1
 
 ```{index} single: Uebung_055: Diagnose-Status (Quarter-Konzept)
 ```

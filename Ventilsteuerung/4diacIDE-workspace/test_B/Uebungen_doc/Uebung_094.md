@@ -1,4 +1,4 @@
-# Uebung_094: Ereignis-Freigabe (PERMIT)
+# Uebung_094: Beispiel für E_PERMIT
 
 ```{index} single: Uebung_094: Ereignis-Freigabe (PERMIT)
 ```

@@ -1,4 +1,4 @@
-# Uebung_020i: Teach-In Zeitsteuerung
+# Uebung_020i: DigitalInput_I1 auf DigitalOutput_Q1; E_PULSE; Impulsformend; Teach-In
 
 ```{index} single: Uebung_020i: Teach-In Zeitsteuerung
 ```

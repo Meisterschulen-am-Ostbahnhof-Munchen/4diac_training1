@@ -1,4 +1,4 @@
-# Uebung_010b2: Softkey-Release als Auslöser
+# Uebung_010b2: Toggle Flip-Flop mit IE SoftKey_F1 SK_RELEASED
 
 ```{index} single: Uebung_010b2: Softkey-Release als Auslöser
 ```

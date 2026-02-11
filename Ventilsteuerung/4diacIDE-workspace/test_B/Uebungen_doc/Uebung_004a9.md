@@ -1,4 +1,4 @@
-# Uebung_004a9: Dreifach Event-Splitter (E_SPLIT_3)
+# Uebung_004a9: mit E_SPLIT_3
 
 ```{index} single: Uebung_004a9: Dreifach Event-Splitter (E_SPLIT_3)
 ```

@@ -1,4 +1,4 @@
-# Uebung_083: Präzisions-Zähler (UDINT)
+# Uebung_083: Beispiel für E_CTUD_UDINT
 
 ```{index} single: Uebung_083: Präzisions-Zähler (UDINT)
 ```

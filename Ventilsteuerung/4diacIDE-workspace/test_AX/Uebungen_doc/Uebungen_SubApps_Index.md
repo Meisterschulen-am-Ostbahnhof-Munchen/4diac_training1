@@ -3,8 +3,6 @@
 ```{index} single: Wiederverwendbare Sub-Applikationen
 ```
 
-In diesem Abschnitt werden die Definitionen und die Funktionsweise der in den Übungen verwendeten Baustein-Typen (Typed SubApps) detailliert beschrieben.
-
 ```{toctree}
 :maxdepth: 1
 
@@ -17,4 +15,9 @@ Uebung_010b4_sub_AX
 Uebung_010b5_sub_AX
 Uebung_010c3_sub_AX
 Uebung_010c4_sub_AX
+Uebung_039_sub_NumbAnzeig_AX
+Uebung_039_sub_Outputs_AX
 ```
+
+In diesem Abschnitt werden die Definitionen und die Funktionsweise der in den Übungen verwendeten Baustein-Typen (Typed SubApps) detailliert beschrieben.
+

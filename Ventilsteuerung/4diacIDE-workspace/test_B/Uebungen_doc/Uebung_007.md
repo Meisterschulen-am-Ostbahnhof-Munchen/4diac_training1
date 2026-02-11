@@ -1,4 +1,4 @@
-# Uebung_007: Einfacher Blinker (Zeitgeber)
+# Uebung_007: Blinker mit E_CYCLE und E_T_FF
 
 ```{index} single: Uebung_007: Einfacher Blinker (Zeitgeber)
 ```

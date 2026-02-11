@@ -1,4 +1,4 @@
-# Uebung_006a4_AX: Motorsteuerung mit Bibliotheksbaustein
+# Uebung_006a4_AX: SR und T-Flip-Flop mit 3x IE
 
 ```{index} single: Uebung_006a4_AX: Motorsteuerung mit Bibliotheksbaustein
 ```
