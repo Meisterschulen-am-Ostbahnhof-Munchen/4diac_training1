@@ -146,6 +146,8 @@
 				<Attribute Name="Visible" Value="false"/>
 			</Parameter>
 		</FB>
+		<FB Name="E_TimeOut" Type="iec61499::events::E_TimeOut" x="3300" y="3700">
+		</FB>
 		<EventConnections>
 			<Connection Source="DigitalInput_I1.IND" Destination="sequence_Pattern_04_04_loop_AX.START_S1" dx1="1880"/>
 			<Connection Source="DigitalInput_I1.INITO" Destination="P1_Red.REQ" dx1="80" dx2="80" dy="600">
@@ -174,6 +176,7 @@
 			<Connection Source="sequence_Pattern_04_04_loop_AX.Q1" Destination="Light_Red_Q1.OUT" dx1="406.67"/>
 			<Connection Source="sequence_Pattern_04_04_loop_AX.Q2" Destination="Light_Yellow_Q2.OUT" dx1="526.67"/>
 			<Connection Source="sequence_Pattern_04_04_loop_AX.Q3" Destination="Light_Green_Q3.OUT" dx1="406.67"/>
+			<Connection Source="sequence_Pattern_04_04_loop_AX.timeOut" Destination="E_TimeOut.TimeOutSocket" dx1="80" dx2="80" dy="486.67"/>
 		</AdapterConnections>
 	</SubAppNetwork>
 </SubAppType>
