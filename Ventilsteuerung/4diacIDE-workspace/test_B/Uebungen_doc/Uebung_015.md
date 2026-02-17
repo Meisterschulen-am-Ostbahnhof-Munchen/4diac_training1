@@ -1,4 +1,4 @@
-# Uebung_015: Dynamische UI mit Object Pointern
+# Uebung_015: Object Pointer umschalten
 
 ```{index} single: Uebung_015: Dynamische UI mit Object Pointern
 ```

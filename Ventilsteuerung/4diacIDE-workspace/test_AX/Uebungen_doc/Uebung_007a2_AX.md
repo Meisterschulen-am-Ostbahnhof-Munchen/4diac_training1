@@ -1,4 +1,4 @@
-# Uebung_007a2_AX: Schaltbarer Blinker (Zweite Variante)
+# Uebung_007a2_AX: Blinker mit E_CYCLE und E_T_FF
 
 ```{index} single: Uebung_007a2_AX: Schaltbarer Blinker (Zweite Variante)
 ```

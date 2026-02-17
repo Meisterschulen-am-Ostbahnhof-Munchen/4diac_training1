@@ -1,4 +1,4 @@
-# Uebung_004a_AX: Stromstoßschalter (Toggle Flip-Flop)
+# Uebung_004a_AX: Toggle Flip-Flop mit IE mit BUTTON_SINGLE_CLICK
 
 ```{index} single: Uebung_004a_AX: Stromstoßschalter (Toggle Flip-Flop)
 ```

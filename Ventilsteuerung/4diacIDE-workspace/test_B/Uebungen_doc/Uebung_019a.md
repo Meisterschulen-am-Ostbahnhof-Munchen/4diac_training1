@@ -1,4 +1,4 @@
-# Uebung_019a: Alarmmasken und Quittierung
+# Uebung_019a: Umschalten einer Maske
 
 ```{index} single: Uebung_019a: Alarmmasken und Quittierung
 ```

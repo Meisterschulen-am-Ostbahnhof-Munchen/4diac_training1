@@ -1,4 +1,4 @@
-# Uebung_087: Bedingte Ereignisverteilung (E_DEMUX)
+# Uebung_087: Beispiel für E_DEMUX
 
 ```{index} single: Uebung_087: Bedingte Ereignisverteilung (E_DEMUX)
 ```

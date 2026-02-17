@@ -1,4 +1,4 @@
-# Uebung_001c: Eingang abfragen bei Boot (Standard-Pins)
+# Uebung_001c: DigitalInput_I1 auf DigitalOutput_Q1 --&gt; Eingang abfragen bei Boot.
 
 ```{index} single: Uebung_001c: Eingang abfragen bei Boot (Standard-Pins)
 ```

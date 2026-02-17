@@ -1,0 +1,182 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SubAppType Name="Uebung_035a1b_AX" Comment="Ampelsteuerung mit Pattern Sequencer (AX) und Bit-Assembler">
+	<Identification Standard="61499-2" Description="Copyright (c) 2026 Meisterschulen am Ostbahnhof  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0">
+	</Identification>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2026-02-01">
+	</VersionInfo>
+	<CompilerInfo packageName="Uebungen">
+		<Import declaration="logiBUS::io::DI::logiBUS_DI::Input_I1"/>
+		<Import declaration="logiBUS::io::DI::logiBUS_DI_Events::BUTTON_SINGLE_CLICK"/>
+		<Import declaration="logiBUS::io::DQ::logiBUS_DO::Output_Q1"/>
+		<Import declaration="logiBUS::io::DQ::logiBUS_DO::Output_Q2"/>
+		<Import declaration="logiBUS::io::DQ::logiBUS_DO::Output_Q3"/>
+	</CompilerInfo>
+	<SubAppInterfaceList>
+	</SubAppInterfaceList>
+	<SubAppNetwork>
+		<FB Name="sequence_Pattern_04_04_loop_AX" Type="logiBUS::utils::sequence::pattern::sequence_Pattern_04_04_loop_AX" x="1600" y="800">
+			<Parameter Name="DT_S1_S2" Value="T#3s"/>
+			<Parameter Name="DT_S2_S3" Value="T#1s"/>
+			<Parameter Name="DT_S3_S4" Value="T#3s"/>
+			<Parameter Name="DT_S4_S1" Value="T#1s"/>
+		</FB>
+		<FB Name="DigitalInput_I1" Type="logiBUS::io::DI::logiBUS_IE" x="-1400" y="-300">
+			<Parameter Name="QI" Value="TRUE">
+				<Attribute Name="Visible" Value="false"/>
+			</Parameter>
+			<Parameter Name="PARAMS" Value="">
+				<Attribute Name="Visible" Value="false"/>
+			</Parameter>
+			<Parameter Name="Input" Value="Input_I1"/>
+			<Parameter Name="InputEvent" Value="BUTTON_SINGLE_CLICK"/>
+		</FB>
+		<FB Name="Light_Red_Q1" Type="logiBUS::io::DQ::logiBUS_QXA" x="4500" y="1200">
+			<Parameter Name="QI" Value="TRUE">
+				<Attribute Name="Visible" Value="false"/>
+			</Parameter>
+			<Parameter Name="PARAMS" Value="">
+				<Attribute Name="Visible" Value="false"/>
+			</Parameter>
+			<Parameter Name="Output" Value="Output_Q1"/>
+			<Parameter Name="QO" Value="">
+				<Attribute Name="Visible" Value="false"/>
+			</Parameter>
+		</FB>
+		<FB Name="Light_Yellow_Q2" Type="logiBUS::io::DQ::logiBUS_QXA" x="4500" y="2100">
+			<Parameter Name="QI" Value="TRUE">
+				<Attribute Name="Visible" Value="false"/>
+			</Parameter>
+			<Parameter Name="PARAMS" Value="">
+				<Attribute Name="Visible" Value="false"/>
+			</Parameter>
+			<Parameter Name="Output" Value="Output_Q2"/>
+			<Parameter Name="QO" Value="">
+				<Attribute Name="Visible" Value="false"/>
+			</Parameter>
+		</FB>
+		<FB Name="Light_Green_Q3" Type="logiBUS::io::DQ::logiBUS_QXA" x="4500" y="3000">
+			<Parameter Name="QI" Value="TRUE">
+				<Attribute Name="Visible" Value="false"/>
+			</Parameter>
+			<Parameter Name="PARAMS" Value="">
+				<Attribute Name="Visible" Value="false"/>
+			</Parameter>
+			<Parameter Name="Output" Value="Output_Q3"/>
+			<Parameter Name="QO" Value="">
+				<Attribute Name="Visible" Value="false"/>
+			</Parameter>
+		</FB>
+		<FB Name="P1_Red" Type="eclipse4diac::utils::assembling::ASSEMBLE_BYTE_FROM_BOOLS" x="-1400" y="600">
+			<Parameter Name="BIT_00" Value="TRUE" Comment="RED"/>
+			<Parameter Name="BIT_01" Value="FALSE" Comment="YELLOW"/>
+			<Parameter Name="BIT_02" Value="FALSE" Comment="GREEN"/>
+			<Parameter Name="BIT_03" Value="">
+				<Attribute Name="Visible" Value="false"/>
+			</Parameter>
+			<Parameter Name="BIT_04" Value="">
+				<Attribute Name="Visible" Value="false"/>
+			</Parameter>
+			<Parameter Name="BIT_05" Value="">
+				<Attribute Name="Visible" Value="false"/>
+			</Parameter>
+			<Parameter Name="BIT_06" Value="">
+				<Attribute Name="Visible" Value="false"/>
+			</Parameter>
+			<Parameter Name="BIT_07" Value="">
+				<Attribute Name="Visible" Value="false"/>
+			</Parameter>
+		</FB>
+		<FB Name="P2_RedYellow" Type="eclipse4diac::utils::assembling::ASSEMBLE_BYTE_FROM_BOOLS" x="-1400" y="1400">
+			<Parameter Name="BIT_00" Value="TRUE" Comment="RED"/>
+			<Parameter Name="BIT_01" Value="TRUE" Comment="YELLOW"/>
+			<Parameter Name="BIT_02" Value="FALSE" Comment="GREEN"/>
+			<Parameter Name="BIT_03" Value="">
+				<Attribute Name="Visible" Value="false"/>
+			</Parameter>
+			<Parameter Name="BIT_04" Value="">
+				<Attribute Name="Visible" Value="false"/>
+			</Parameter>
+			<Parameter Name="BIT_05" Value="">
+				<Attribute Name="Visible" Value="false"/>
+			</Parameter>
+			<Parameter Name="BIT_06" Value="">
+				<Attribute Name="Visible" Value="false"/>
+			</Parameter>
+			<Parameter Name="BIT_07" Value="">
+				<Attribute Name="Visible" Value="false"/>
+			</Parameter>
+		</FB>
+		<FB Name="P3_Green" Type="eclipse4diac::utils::assembling::ASSEMBLE_BYTE_FROM_BOOLS" x="-1400" y="2200">
+			<Parameter Name="BIT_00" Value="FALSE" Comment="RED"/>
+			<Parameter Name="BIT_01" Value="FALSE" Comment="YELLOW"/>
+			<Parameter Name="BIT_02" Value="TRUE" Comment="GREEN"/>
+			<Parameter Name="BIT_03" Value="">
+				<Attribute Name="Visible" Value="false"/>
+			</Parameter>
+			<Parameter Name="BIT_04" Value="">
+				<Attribute Name="Visible" Value="false"/>
+			</Parameter>
+			<Parameter Name="BIT_05" Value="">
+				<Attribute Name="Visible" Value="false"/>
+			</Parameter>
+			<Parameter Name="BIT_06" Value="">
+				<Attribute Name="Visible" Value="false"/>
+			</Parameter>
+			<Parameter Name="BIT_07" Value="">
+				<Attribute Name="Visible" Value="false"/>
+			</Parameter>
+		</FB>
+		<FB Name="P4_Yellow" Type="eclipse4diac::utils::assembling::ASSEMBLE_BYTE_FROM_BOOLS" x="-1400" y="3000">
+			<Parameter Name="BIT_00" Value="FALSE" Comment="RED"/>
+			<Parameter Name="BIT_01" Value="TRUE" Comment="YELLOW"/>
+			<Parameter Name="BIT_02" Value="FALSE" Comment="GREEN"/>
+			<Parameter Name="BIT_03" Value="">
+				<Attribute Name="Visible" Value="false"/>
+			</Parameter>
+			<Parameter Name="BIT_04" Value="">
+				<Attribute Name="Visible" Value="false"/>
+			</Parameter>
+			<Parameter Name="BIT_05" Value="">
+				<Attribute Name="Visible" Value="false"/>
+			</Parameter>
+			<Parameter Name="BIT_06" Value="">
+				<Attribute Name="Visible" Value="false"/>
+			</Parameter>
+			<Parameter Name="BIT_07" Value="">
+				<Attribute Name="Visible" Value="false"/>
+			</Parameter>
+		</FB>
+		<FB Name="E_TimeOut" Type="iec61499::events::E_TimeOut" x="3300" y="3700">
+		</FB>
+		<EventConnections>
+			<Connection Source="DigitalInput_I1.IND" Destination="sequence_Pattern_04_04_loop_AX.START_S1" dx1="1880"/>
+			<Connection Source="DigitalInput_I1.INITO" Destination="P1_Red.REQ" dx1="80" dx2="80" dy="600">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="P1_Red.CNF" Destination="P2_RedYellow.REQ" dx1="80" dx2="80" dy="700">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="P2_RedYellow.CNF" Destination="P3_Green.REQ" dx1="80" dx2="80" dy="746.67">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="P3_Green.CNF" Destination="P4_Yellow.REQ" dx1="80" dx2="80" dy="700">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="P4_Yellow.CNF" Destination="sequence_Pattern_04_04_loop_AX.RESET" dx1="993.33">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+		</EventConnections>
+		<DataConnections>
+			<Connection Source="P1_Red." Destination="sequence_Pattern_04_04_loop_AX.P_S1" dx1="1173.33"/>
+			<Connection Source="P2_RedYellow." Destination="sequence_Pattern_04_04_loop_AX.P_S2" dx1="1053.33"/>
+			<Connection Source="P3_Green." Destination="sequence_Pattern_04_04_loop_AX.P_S3" dx1="1053.33"/>
+			<Connection Source="P4_Yellow." Destination="sequence_Pattern_04_04_loop_AX.P_S4" dx1="1366.67"/>
+		</DataConnections>
+		<AdapterConnections>
+			<Connection Source="sequence_Pattern_04_04_loop_AX.Q1" Destination="Light_Red_Q1.OUT" dx1="406.67"/>
+			<Connection Source="sequence_Pattern_04_04_loop_AX.Q2" Destination="Light_Yellow_Q2.OUT" dx1="526.67"/>
+			<Connection Source="sequence_Pattern_04_04_loop_AX.Q3" Destination="Light_Green_Q3.OUT" dx1="406.67"/>
+			<Connection Source="sequence_Pattern_04_04_loop_AX.timeOut" Destination="E_TimeOut.TimeOutSocket" dx1="80" dx2="80" dy="486.67"/>
+		</AdapterConnections>
+	</SubAppNetwork>
+</SubAppType>

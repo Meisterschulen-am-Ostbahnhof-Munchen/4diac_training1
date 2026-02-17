@@ -1,4 +1,4 @@
-# Uebung_020h: Ereignisgesteuerter Impuls (E_PULSE)
+# Uebung_020h: DigitalInput_I1 auf DigitalOutput_Q1; E_PULSE; Impulsformend
 
 ```{index} single: Uebung_020h: Ereignisgesteuerter Impuls (E_PULSE)
 ```

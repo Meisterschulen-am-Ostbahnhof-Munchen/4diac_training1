@@ -1,4 +1,4 @@
-# Uebung_080: Ereignis-Zähler (Up-Counter)
+# Uebung_080: Beispiel für E_CTU
 
 ```{index} single: Uebung_080: Ereignis-Zähler (Up-Counter)
 ```

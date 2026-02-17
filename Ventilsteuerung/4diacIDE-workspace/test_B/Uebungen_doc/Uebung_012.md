@@ -1,4 +1,4 @@
-# Uebung_012: Daten dauerhaft speichern (NVS)
+# Uebung_012: Numeric Value Input und Speichern
 
 ```{index} single: Uebung_012: Daten dauerhaft speichern (NVS)
 ```

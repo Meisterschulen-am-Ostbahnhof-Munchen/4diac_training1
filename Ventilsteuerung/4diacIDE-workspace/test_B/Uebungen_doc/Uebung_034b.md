@@ -1,4 +1,4 @@
-# Uebung_034b: Dynamische PWM-Tastung (Hold)
+# Uebung_034b: LONG_PRESS_HOLD-Eingang auf PWM Ausgang
 
 ```{index} single: Uebung_034b: Dynamische PWM-Tastung (Hold)
 ```

@@ -1,4 +1,4 @@
-# Uebung_034a1_Q4: PWM-Wert vom Terminal (Kanal 4)
+# Uebung_034a1_Q4: Numeric Value Input auf PWM Ausgang
 
 ```{index} single: Uebung_034a1_Q4: PWM-Wert vom Terminal (Kanal 4)
 ```

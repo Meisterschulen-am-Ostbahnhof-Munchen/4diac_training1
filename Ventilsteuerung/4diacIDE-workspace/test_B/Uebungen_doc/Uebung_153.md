@@ -1,4 +1,4 @@
-# Uebung_153: PID-Regelung
+# Uebung_153: Impulszähler &amp; PID Regler
 
 ```{index} single: Uebung_153: PID-Regelung
 ```

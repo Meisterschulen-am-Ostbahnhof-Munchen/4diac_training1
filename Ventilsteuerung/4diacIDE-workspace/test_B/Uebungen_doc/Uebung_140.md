@@ -1,4 +1,4 @@
-# Uebung_140: Betriebsstundenzähler (SYS_ONTIME)
+# Uebung_140: Übung zu SYS_ONTIME (Betriebsstundenzähler)
 
 ```{index} single: Uebung_140: Betriebsstundenzähler (SYS_ONTIME)
 ```

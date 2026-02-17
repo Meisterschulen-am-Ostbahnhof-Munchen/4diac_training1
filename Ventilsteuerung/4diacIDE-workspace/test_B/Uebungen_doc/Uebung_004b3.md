@@ -1,4 +1,4 @@
-# Uebung_004b3: Gegenseitig verriegelte Toggle-Logik
+# Uebung_004b3: Toggle Flip-Flop mit IE / Split / Verriegelt
 
 ```{index} single: Uebung_004b3: Gegenseitig verriegelte Toggle-Logik
 ```

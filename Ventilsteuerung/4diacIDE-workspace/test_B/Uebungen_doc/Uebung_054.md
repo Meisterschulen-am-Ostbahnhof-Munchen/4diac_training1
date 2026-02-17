@@ -1,4 +1,4 @@
-# Uebung_054: Signal-Vektoren (Arrays)
+# Uebung_054: DigitalInput_I1-_I4 auf DigitalOutput_Q1-_Q4
 
 ```{index} single: Uebung_054: Signal-Vektoren (Arrays)
 ```

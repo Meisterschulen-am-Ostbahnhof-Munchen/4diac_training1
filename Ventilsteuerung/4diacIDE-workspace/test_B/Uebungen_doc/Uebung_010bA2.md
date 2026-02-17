@@ -1,4 +1,4 @@
-# Uebung_010bA2: AUX-Zustands-Events (Enabled)
+# Uebung_010bA2: Toggle Flip-Flop mit IE AuxFunction2_X1 AuxEnabled
 
 ```{index} single: Uebung_010bA2: AUX-Zustands-Events (Enabled)
 ```

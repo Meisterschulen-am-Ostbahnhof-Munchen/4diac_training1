@@ -1,4 +1,4 @@
-# Uebung_020e_AX: Ausschaltverzögerung (TOF)
+# Uebung_020e_AX: DigitalInput_I1 auf DigitalOutput_Q1; AX_TOF; Ausschaltverzögert
 
 ```{index} single: Uebung_020e_AX: Ausschaltverzögerung (TOF)
 ```

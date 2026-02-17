@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SubAppType Name="Uebung_039_sub_Outputs_AX" Comment="Spiegelabfolge V2 mit Schrittkette SUB Out">
+	<Identification Standard="61499-2" Description="Copyright (c) 2024 Meisterschulen am Ostbahnhof  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0">
+	</Identification>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2024-03-03">
+	</VersionInfo>
+	<CompilerInfo packageName="Uebungen">
+		<Import declaration="isobus::UT::Q::const::IDs::ID_NULL"/>
+		<Import declaration="logiBUS::io::DQ::logiBUS_DO"/>
+		<Import declaration="logiBUS::io::DQ::logiBUS_DO_S"/>
+	</CompilerInfo>
+	<SubAppInterfaceList>
+		<InputVars>
+			<VarDeclaration Name="u16ObjId" Type="UINT" Comment="Object ID Softkey/Button" InitialValue="ID_NULL"/>
+			<VarDeclaration Name="Output" Type="logiBUS::io::DQ::logiBUS_DO_S" InitialValue="logiBUS_DO::Invalid"/>
+		</InputVars>
+		<Sockets>
+			<AdapterDeclaration Name="OUT" Type="adapter::types::unidirectional::AX"/>
+		</Sockets>
+	</SubAppInterfaceList>
+	<SubAppNetwork>
+		<FB Name="QX" Type="logiBUS::io::DQ::logiBUS_QXA" x="400" y="-700">
+			<Parameter Name="QI" Value="TRUE"/>
+		</FB>
+		<FB Name="IX" Type="isobus::UT::io::Softkey::Softkey_IXA" x="-3800" y="-1000">
+			<Parameter Name="QI" Value="TRUE"/>
+		</FB>
+		<FB Name="OR_2" Type="adapter::booleanOperators::AX_OR_2" x="-2140" y="-193.33">
+		</FB>
+		<SubApp Name="GreenWhiteBackground" Type="MyLib::sys::GreenWhiteBackground_AX" x="1800" y="0">
+		</SubApp>
+		<FB Name="AX_SPLIT_2" Type="adapter::events::unidirectional::AX_SPLIT_2" x="-1100" y="200">
+		</FB>
+		<DataConnections>
+			<Connection Source="u16ObjId" Destination="GreenWhiteBackground.u16ObjId" dx1="7860">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="u16ObjId" Destination="IX.u16ObjId" dx1="1880">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="Output" Destination="QX.Output" dx1="6980"/>
+		</DataConnections>
+		<AdapterConnections>
+			<Connection Source="AX_SPLIT_2.OUT1" Destination="QX.OUT" dx1="520"/>
+			<Connection Source="IX.IN" Destination="OR_2.IN1" dx1="240"/>
+			<Connection Source="AX_SPLIT_2.OUT2" Destination="GreenWhiteBackground.DI1" dx1="960"/>
+			<Connection Source="OR_2.OUT" Destination="AX_SPLIT_2.IN" dx1="213.33"/>
+			<Connection Source="OUT" Destination="OR_2.IN2" dx1="2706.67"/>
+		</AdapterConnections>
+	</SubAppNetwork>
+</SubAppType>

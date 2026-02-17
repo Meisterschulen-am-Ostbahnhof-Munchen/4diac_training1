@@ -1,4 +1,4 @@
-# Uebung_020i_AX: Teach-In Puls (Stoppuhr)
+# Uebung_020i_AX: DigitalInput_I1 auf DigitalOutput_Q1; AX_PULSE; Teach-In
 
 ```{index} single: Uebung_020i_AX: Teach-In Puls (Stoppuhr)
 ```

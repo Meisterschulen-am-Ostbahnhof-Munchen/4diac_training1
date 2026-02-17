@@ -1,6 +1,6 @@
 Hier ist die Dokumentation für die Übung `Uebung_12x_sub` basierend auf den bereitgestellten XML-Daten.
 
-# Uebung_12x_sub
+# Uebung_12x_sub: Subapplication Type
 
 ```{index} single: Uebung_12x_sub
 ```
@@ -62,3 +62,11 @@ Diese Übung demonstriert fortgeschrittene Datenmanipulation und Event-Ketten in
 
 ## Zusammenfassung
 Die `Uebung_12x_sub` stellt eine Sub-Application dar, die einen ISOBUS-Callback-Mechanismus bedient. Sie nutzt einen internen Zähler, um das erste Byte der 8-Byte Nutzlast einer CAN-Nachricht bei jedem Callback-Aufruf zu inkrementieren. Dies eignet sich hervorragend zum Testen von zyklischen Übertragungen und der korrekten Verarbeitung von Datenänderungen in einem verteilten Steuerungssystem.
+
+
+
+## 🛠️ Zugehörige Übungen
+
+* [Uebung_125](Uebung_125.md)
+* [Uebung_126](Uebung_126.md)
+

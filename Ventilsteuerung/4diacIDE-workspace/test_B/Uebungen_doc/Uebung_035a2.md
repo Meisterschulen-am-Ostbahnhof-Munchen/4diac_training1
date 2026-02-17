@@ -1,4 +1,4 @@
-# Uebung_035a2: Ampelschaltung mit Blinkphase
+# Uebung_035a2: Ampelschaltung Österreich
 
 ```{index} single: Uebung_035a2: Ampelschaltung mit Blinkphase
 ```

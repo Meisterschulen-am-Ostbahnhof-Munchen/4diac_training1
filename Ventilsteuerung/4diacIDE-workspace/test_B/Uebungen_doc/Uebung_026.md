@@ -1,4 +1,4 @@
-# Uebung_026: Strukturierte Sequenz-Ausgabe
+# Uebung_026: Spiegelabfolge (6)
 
 ```{index} single: Uebung_026: Strukturierte Sequenz-Ausgabe
 ```

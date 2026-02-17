@@ -1,4 +1,4 @@
-# Uebung_071b: Wegstrecken-Impulse (Wegmesser)
+# Uebung_071b: WBSD auf UT ausgeben, Q1 Schalten wenn Speed &gt;0
 
 ```{index} single: Uebung_071b: Wegstrecken-Impulse (Wegmesser)
 ```

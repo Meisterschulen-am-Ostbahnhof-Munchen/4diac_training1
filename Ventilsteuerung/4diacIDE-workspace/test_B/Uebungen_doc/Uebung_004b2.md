@@ -1,4 +1,4 @@
-# Uebung_004b2: Doppelte manuelle Toggle-Logik
+# Uebung_004b2: Toggle Flip-Flop mit IE / Split / doppelt
 
 ```{index} single: Uebung_004b2: Doppelte manuelle Toggle-Logik
 ```

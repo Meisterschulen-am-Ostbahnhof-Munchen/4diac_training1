@@ -1,4 +1,4 @@
-# Uebung_035a3: Ampelschaltung (Variante)
+# Uebung_035a3: Ampelschaltung Österreich
 
 ```{index} single: Uebung_035a3: Ampelschaltung (Variante)
 ```

@@ -1,4 +1,4 @@
-# Uebung_019b: Alarm-Logik mit Hardware-Ausgang
+# Uebung_019b: Umschalten einer Maske
 
 ```{index} single: Uebung_019b: Alarm-Logik mit Hardware-Ausgang
 ```

@@ -1,4 +1,4 @@
-# Uebung_071a: Synchronisierte Schwellwert-Logik
+# Uebung_071a: WBSD auf UT ausgeben, Q1 Schalten wenn Speed &gt;0
 
 ```{index} single: Uebung_071a: Synchronisierte Schwellwert-Logik
 ```

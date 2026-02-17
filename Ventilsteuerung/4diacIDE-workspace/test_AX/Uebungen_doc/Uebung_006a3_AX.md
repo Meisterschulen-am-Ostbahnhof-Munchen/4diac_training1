@@ -1,4 +1,4 @@
-# Uebung_006a3_AX: Motorsteuerung (Links/Rechts) mit Verriegelung
+# Uebung_006a3_AX: SR und T-Flip-Flop mit 3x IE
 
 ```{index} single: Uebung_006a3_AX: Motorsteuerung (Links/Rechts) mit Verriegelung
 ```

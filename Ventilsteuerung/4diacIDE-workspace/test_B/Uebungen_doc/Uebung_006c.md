@@ -1,4 +1,4 @@
-# Uebung_006c: Sammelsteuerung (Demultiplexer)
+# Uebung_006c: SR-Flip-Flop mit IB auf DI_REPEAT
 
 ```{index} single: Uebung_006c: Sammelsteuerung (Demultiplexer)
 ```

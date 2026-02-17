@@ -1,4 +1,4 @@
-# Uebung_010b4_AX: Softkey Massenmapping (8-fach)
+# Uebung_010b4_AX: SoftKey_F1-8 auf DigitalOutput_Q1-8
 
 ```{index} single: Uebung_010b4_AX: Softkey Massenmapping (8-fach)
 ```

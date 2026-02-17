@@ -1,4 +1,4 @@
-# Uebung_093b: Mehrkanal-Zeit-Tabelle (E_N_TABLE)
+# Uebung_093b: Beispiel für E_N_TABLE
 
 ```{index} single: Uebung_093b: Mehrkanal-Zeit-Tabelle (E_N_TABLE)
 ```

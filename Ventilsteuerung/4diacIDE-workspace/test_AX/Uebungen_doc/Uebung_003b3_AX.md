@@ -1,4 +1,4 @@
-# Uebung_003b3_AX: Parametrierbare Massenverarbeitung
+# Uebung_003b3_AX: Funk 16 Tasten auf DataPanel 16
 
 ```{index} single: Uebung_003b3_AX: Parametrierbare Massenverarbeitung
 ```

@@ -1,4 +1,4 @@
-# Uebung_003b2_AX: Massenverarbeitung mit untypisierten Sub-Applikationen
+# Uebung_003b2_AX: Funk 16 Tasten auf DataPanel 16
 
 ```{index} single: Uebung_003b2_AX: Massenverarbeitung mit untypisierten Sub-Applikationen
 ```

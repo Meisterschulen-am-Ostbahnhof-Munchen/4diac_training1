@@ -1,4 +1,4 @@
-# Uebung_152: PI-Regelung (Drehzahlregelung)
+# Uebung_152: Impulszähler &amp; PI Regler
 
 ```{index} single: Uebung_152: PI-Regelung (Drehzahlregelung)
 ```

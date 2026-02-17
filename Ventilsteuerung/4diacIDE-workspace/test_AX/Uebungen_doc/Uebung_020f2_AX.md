@@ -1,4 +1,4 @@
-# Uebung_020f2_AX: FB_TP mit Takteingang
+# Uebung_020f2_AX: DigitalInput_I1 auf DigitalOutput_Q1; AX_FB_TP; Impulsformend
 
 ```{index} single: Uebung_020f2_AX: FB_TP mit Takteingang
 ```

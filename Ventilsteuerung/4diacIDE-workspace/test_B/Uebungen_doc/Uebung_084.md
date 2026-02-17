@@ -1,4 +1,4 @@
-# Uebung_084: Automatischer Zähler (Takt & Zählung)
+# Uebung_084: Beispiel für E_CYCLE
 
 ```{index} single: Uebung_084: Automatischer Zähler (Takt & Zählung)
 ```

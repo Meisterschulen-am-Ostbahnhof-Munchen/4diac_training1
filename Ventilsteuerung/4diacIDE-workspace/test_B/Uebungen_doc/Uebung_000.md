@@ -1,4 +1,4 @@
-# Uebung_000: Arithmetische Grundfunktionen (ADD)
+# Uebung_000: ADD
 
 ```{index} single: Uebung_000: Arithmetische Grundfunktionen (ADD)
 ```

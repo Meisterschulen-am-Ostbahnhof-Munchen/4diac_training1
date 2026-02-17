@@ -1,4 +1,4 @@
-# Uebung_020d: Manuelle Ausschaltverzögerung
+# Uebung_020d: DigitalInput_I1 auf DigitalOutput_Q1; TOF Ausschaltverzögert; aufgelöst
 
 ```{index} single: Uebung_020d: Manuelle Ausschaltverzögerung
 ```

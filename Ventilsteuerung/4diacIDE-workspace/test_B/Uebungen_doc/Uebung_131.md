@@ -1,4 +1,4 @@
-# Uebung_131: Zyklisches Empfangen mit Überwachung
+# Uebung_131: Übung zu ISOBUS Receive Message Cyclic
 
 ```{index} single: Uebung_131: Zyklisches Empfangen mit Überwachung
 ```

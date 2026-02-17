@@ -1,4 +1,4 @@
-# Uebung_004a5_AX: Impliziter Event-Split (Fan-Out)
+# Uebung_004a5_AX: wie Uebung_004a4 aber ohne E_SPLIT
 
 ```{index} single: Uebung_004a5_AX: Impliziter Event-Split (Fan-Out)
 ```

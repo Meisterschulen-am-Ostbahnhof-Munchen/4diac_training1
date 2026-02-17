@@ -1,4 +1,4 @@
-# Uebung_011a: Dynamische Anzeige (Repeat Done)
+# Uebung_011a: Numeric Value Output und BUTTON_PRESS_REPEAT_DONE
 
 ```{index} single: Uebung_011a: Dynamische Anzeige (Repeat Done)
 ```

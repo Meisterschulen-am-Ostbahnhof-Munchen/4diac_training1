@@ -1,4 +1,4 @@
-# Uebung_002_AX: Signalverteilung auf mehrere Ausgänge
+# Uebung_002_AX: DigitalInput_I1 auf DigitalOutput_Q1/_Q2, mit Plug and Socket 
 
 ```{index} single: Uebung_002_AX: Signalverteilung auf mehrere Ausgänge
 ```

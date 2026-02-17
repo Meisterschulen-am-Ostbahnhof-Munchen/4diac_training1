@@ -1,4 +1,4 @@
-# Uebung_009: Ereignis-Zähler (Ticker)
+# Uebung_009: Ticker
 
 ```{index} single: Uebung_009: Ereignis-Zähler (Ticker)
 ```

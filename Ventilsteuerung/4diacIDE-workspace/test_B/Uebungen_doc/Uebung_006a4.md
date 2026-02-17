@@ -1,4 +1,4 @@
-# Uebung_006a4: Motor-Wende-Schaltung (Bibliothek)
+# Uebung_006a4: SR und T-Flip-Flop mit 3x IE und LinksRechts Baustein
 
 ```{index} single: Uebung_006a4: Motor-Wende-Schaltung (Bibliothek)
 ```

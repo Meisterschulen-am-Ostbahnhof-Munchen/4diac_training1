@@ -1,4 +1,4 @@
-# Uebung_010b1: ISOBUS AUX-N (Joystick-Tasten)
+# Uebung_010b1: AuxFunction2_X1 auf DigitalOutput_Q1
 
 ```{index} single: Uebung_010b1: ISOBUS AUX-N (Joystick-Tasten)
 ```

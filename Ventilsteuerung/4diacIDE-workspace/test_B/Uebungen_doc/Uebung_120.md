@@ -1,4 +1,4 @@
-# Uebung_120: ISOBUS Gerätenamen (NAME) auslesen
+# Uebung_120: Übung zu ISOBUS Name
 
 ```{index} single: Uebung_120: ISOBUS Gerätenamen (NAME) auslesen
 ```

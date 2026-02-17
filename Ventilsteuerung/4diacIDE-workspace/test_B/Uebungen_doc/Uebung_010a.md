@@ -1,4 +1,4 @@
-# Uebung_010a: Zwei Softkeys (Parallel)
+# Uebung_010a: SoftKey_F1/_F2 auf DigitalOutput_Q1/_Q2
 
 ```{index} single: Uebung_010a: Zwei Softkeys (Parallel)
 ```

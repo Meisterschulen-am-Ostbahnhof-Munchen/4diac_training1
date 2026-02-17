@@ -1,4 +1,4 @@
-# Uebung_020b_AX: Einschaltverzögerung (aufgelöst)
+# Uebung_020b_AX: DigitalInput_I1 auf DigitalOutput_Q1; TON Einschaltverzögert; aufgelöst
 
 ```{index} single: Uebung_020b_AX: Einschaltverzögerung (aufgelöst)
 ```

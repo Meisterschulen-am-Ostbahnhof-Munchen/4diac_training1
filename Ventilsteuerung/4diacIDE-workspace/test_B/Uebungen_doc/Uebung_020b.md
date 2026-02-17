@@ -1,4 +1,4 @@
-# Uebung_020b: Manuelle Einschaltverzögerung
+# Uebung_020b: DigitalInput_I1 auf DigitalOutput_Q1; TON Einschaltverzögert; aufgelöst
 
 ```{index} single: Uebung_020b: Manuelle Einschaltverzögerung
 ```

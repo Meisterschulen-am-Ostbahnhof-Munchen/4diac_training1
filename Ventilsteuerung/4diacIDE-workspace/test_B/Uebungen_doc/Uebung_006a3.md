@@ -1,4 +1,4 @@
-# Uebung_006a3: Motor-Wende-Schaltung (Diskret)
+# Uebung_006a3: SR und T-Flip-Flop mit 3x IE
 
 ```{index} single: Uebung_006a3: Motor-Wende-Schaltung (Diskret)
 ```

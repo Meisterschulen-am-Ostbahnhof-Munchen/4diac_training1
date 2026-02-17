@@ -1,4 +1,4 @@
-# Uebung_020a: Manueller Speicher (Standard-Pins)
+# Uebung_020a: DigitalInput_I1 auf DigitalOutput_Q1
 
 ```{index} single: Uebung_020a: Manueller Speicher (Standard-Pins)
 ```

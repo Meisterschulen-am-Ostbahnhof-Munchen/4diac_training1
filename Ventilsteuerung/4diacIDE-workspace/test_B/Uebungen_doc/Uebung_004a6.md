@@ -1,4 +1,4 @@
-# Uebung_004a6: Event-Rendezvous (Synchronisation)
+# Uebung_004a6: Toggle Flip-Flop mit IE und E_REND (Rendezvous)
 
 ```{index} single: Uebung_004a6: Event-Rendezvous (Synchronisation)
 ```

@@ -1,4 +1,4 @@
-# Uebung_003b2: Massenmapping (Funk auf DataPanel)
+# Uebung_003b2: Funk 16 Tasten auf DataPanel 16
 
 ```{index} single: Uebung_003b2: Massenmapping (Funk auf DataPanel)
 ```

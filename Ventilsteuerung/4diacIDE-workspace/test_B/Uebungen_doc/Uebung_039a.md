@@ -1,4 +1,4 @@
-# Uebung_039a: Wegeventil-Steuerung (3/2-Wege)
+# Uebung_039a: Spiegelabfolge V2 mit Schrittkette
 
 ```{index} single: Uebung_039a: Wegeventil-Steuerung (3/2-Wege)
 ```

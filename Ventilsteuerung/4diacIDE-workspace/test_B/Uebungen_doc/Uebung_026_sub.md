@@ -1,4 +1,4 @@
-# Uebung_026_sub: Sequenz-Aktor-Einheit (SubApp)
+# Uebung_026_sub: Spiegelabfolge (6)
 
 ```{index} single: Uebung_026_sub: Sequenz-Aktor-Einheit (SubApp)
 ```
@@ -37,3 +37,10 @@ Kapselung der Ausgangs-Logik. Der Baustein trennt die Ablauf-Logik (wann muss wa
 *   **`EO1`**: Meldet den erfolgreichen Vollzug des Einschaltbefehls zurück (Quittierung).
 
 In der Hauptanwendung ermöglicht dieser Typ eine sehr übersichtliche Verschaltung der Phasenübergänge, da die Details der Speicherverwaltung und Hardware-Adressierung im Inneren verborgen bleiben.
+
+
+
+## 🛠️ Zugehörige Übungen
+
+* [Uebung_026](Uebung_026.md)
+

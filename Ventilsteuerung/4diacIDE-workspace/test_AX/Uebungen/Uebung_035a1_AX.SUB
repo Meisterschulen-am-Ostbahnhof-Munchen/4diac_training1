@@ -30,16 +30,40 @@
 			<Parameter Name="InputEvent" Value="BUTTON_SINGLE_CLICK"/>
 		</FB>
 		<FB Name="Light_Red_Q1" Type="logiBUS::io::DQ::logiBUS_QXA" x="1300" y="800">
-			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="QI" Value="TRUE">
+				<Attribute Name="Visible" Value="false"/>
+			</Parameter>
+			<Parameter Name="PARAMS" Value="">
+				<Attribute Name="Visible" Value="false"/>
+			</Parameter>
 			<Parameter Name="Output" Value="Output_Q1"/>
+			<Parameter Name="QO" Value="">
+				<Attribute Name="Visible" Value="false"/>
+			</Parameter>
 		</FB>
 		<FB Name="Light_Yellow_Q2" Type="logiBUS::io::DQ::logiBUS_QXA" x="1200" y="1800">
-			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="QI" Value="TRUE">
+				<Attribute Name="Visible" Value="false"/>
+			</Parameter>
+			<Parameter Name="PARAMS" Value="">
+				<Attribute Name="Visible" Value="false"/>
+			</Parameter>
 			<Parameter Name="Output" Value="Output_Q2"/>
+			<Parameter Name="QO" Value="">
+				<Attribute Name="Visible" Value="false"/>
+			</Parameter>
 		</FB>
 		<FB Name="Light_Green_Q3" Type="logiBUS::io::DQ::logiBUS_QXA" x="1200" y="2800">
-			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="QI" Value="TRUE">
+				<Attribute Name="Visible" Value="false"/>
+			</Parameter>
+			<Parameter Name="PARAMS" Value="">
+				<Attribute Name="Visible" Value="false"/>
+			</Parameter>
 			<Parameter Name="Output" Value="Output_Q3"/>
+			<Parameter Name="QO" Value="">
+				<Attribute Name="Visible" Value="false"/>
+			</Parameter>
 		</FB>
 		<FB Name="E_TimeOut" Type="iec61499::events::E_TimeOut" x="100" y="3700">
 		</FB>
@@ -48,7 +72,7 @@
 		</EventConnections>
 		<AdapterConnections>
 			<Connection Source="PatternSeq.Q1" Destination="Light_Red_Q1.OUT" dx1="153.33"/>
-			<Connection Source="PatternSeq.Q2" Destination="Light_Yellow_Q2.OUT" dx1="153.33"/>
+			<Connection Source="PatternSeq.Q2" Destination="Light_Yellow_Q2.OUT" dx1="340"/>
 			<Connection Source="PatternSeq.Q3" Destination="Light_Green_Q3.OUT" dx1="153.33"/>
 			<Connection Source="PatternSeq.timeOut" Destination="E_TimeOut.TimeOutSocket" dx1="80" dx2="80" dy="486.67"/>
 		</AdapterConnections>

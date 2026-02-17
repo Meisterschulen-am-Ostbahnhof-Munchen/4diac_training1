@@ -1,4 +1,4 @@
-# Uebung_042: Signal-Skalierung (SCALE)
+# Uebung_042: Scaling Function Block Testing
 
 ```{index} single: Uebung_042: Signal-Skalierung (SCALE)
 ```

@@ -1,4 +1,4 @@
-# Uebung_004a3: Impliziter Event-Merge (Fan-In)
+# Uebung_004a3: wie Uebung_004a2 aber ohne E_MERGE
 
 ```{index} single: Uebung_004a3: Impliziter Event-Merge (Fan-In)
 ```

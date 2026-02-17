@@ -1,4 +1,4 @@
-# Uebung_094a_AX: Deaktivieren von Bausteinen (QI)
+# Uebung_094a_AX: Beispiel für QI anstelle Permit
 
 ```{index} single: Uebung_094a_AX: Deaktivieren von Bausteinen (QI)
 ```

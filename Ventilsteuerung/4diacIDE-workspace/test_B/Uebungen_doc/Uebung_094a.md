@@ -1,4 +1,4 @@
-# Uebung_094a: Integrierte Freigabe (QI)
+# Uebung_094a: Beispiel für QI anstelle Permit
 
 ```{index} single: Uebung_094a: Integrierte Freigabe (QI)
 ```

@@ -1,4 +1,4 @@
-# Uebung_010b5_AX: Softkey Massenmapping (10-fach)
+# Uebung_010b5_AX: SoftKey_F1-10 auf DigitalOutput_Q1-10
 
 ```{index} single: Uebung_010b5_AX: Softkey Massenmapping (10-fach)
 ```

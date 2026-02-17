@@ -1,4 +1,4 @@
-# Uebung_151_AX: Geschwindigkeitsberechnung (Ableitung)
+# Uebung_151_AX: Impulszähler &amp; DigitalInput_I1 auf DigitalOutput_Q1, mit Plug and Socket
 
 ```{index} single: Uebung_151_AX: Geschwindigkeitsberechnung (Ableitung)
 ```

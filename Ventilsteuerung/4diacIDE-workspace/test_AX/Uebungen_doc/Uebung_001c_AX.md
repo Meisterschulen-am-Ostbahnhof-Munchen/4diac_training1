@@ -1,4 +1,4 @@
-# Uebung_001c_AX: Eingang abfragen bei Boot
+# Uebung_001c_AX: DigitalInput_I1 auf DigitalOutput_Q1 --&gt; Eingang abfragen bei Boot.
 
 ```{index} single: Uebung_001c_AX: Eingang abfragen bei Boot
 ```

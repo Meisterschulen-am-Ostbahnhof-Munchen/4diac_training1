@@ -1,4 +1,4 @@
-# Uebung_009a: Rampen-Generator (RampLimitFS)
+# Uebung_009a: RampLimitFS
 
 ```{index} single: Uebung_009a: Rampen-Generator (RampLimitFS)
 ```

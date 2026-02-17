@@ -1,4 +1,4 @@
-# Uebung_037: Endlose Schrittkette (Loop)
+# Uebung_037: Spiegelabfolge V2 mit Schrittkette ENDLOS
 
 ```{index} single: Uebung_037: Endlose Schrittkette (Loop)
 ```

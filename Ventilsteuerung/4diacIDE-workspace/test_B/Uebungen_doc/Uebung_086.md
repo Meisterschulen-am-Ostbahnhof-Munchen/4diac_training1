@@ -1,4 +1,4 @@
-# Uebung_086: Ereignis-Weiche (E_SWITCH)
+# Uebung_086: Beispiel für E_SWITCH
 
 ```{index} single: Uebung_086: Ereignis-Weiche (E_SWITCH)
 ```

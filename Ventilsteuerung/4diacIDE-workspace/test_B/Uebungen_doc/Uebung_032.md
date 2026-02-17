@@ -1,4 +1,4 @@
-# Uebung_032: Mehrfarbige LED-Streifen Effekte
+# Uebung_032: LED Strip Blinkende LED
 
 ```{index} single: Uebung_032: Mehrfarbige LED-Streifen Effekte
 ```

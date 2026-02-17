@@ -1,4 +1,4 @@
-# Uebung_004a2: Stromstoßschalter von zwei Stellen (Event-Merge)
+# Uebung_004a2: Toggle Flip-Flop mit IE mit BUTTON_SINGLE_CLICK mit E_MERGE
 
 ```{index} single: Uebung_004a2: Stromstoßschalter von zwei Stellen (Event-Merge)
 ```

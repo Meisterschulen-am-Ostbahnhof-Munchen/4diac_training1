@@ -1,4 +1,4 @@
-# Uebung_020a_AX: Gepufferte Signalweiterleitung (RS)
+# Uebung_020a_AX: DigitalInput_I1 auf DigitalOutput_Q1 via AX_RS (Puffer)
 
 ```{index} single: Uebung_020a_AX: Gepufferte Signalweiterleitung (RS)
 ```

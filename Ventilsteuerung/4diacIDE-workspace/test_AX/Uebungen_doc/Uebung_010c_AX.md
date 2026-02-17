@@ -1,4 +1,4 @@
-# Uebung_010c_AX: Softkey Feedback (Visuell)
+# Uebung_010c_AX: SoftKey_F1 auf DigitalOutput_Q1 mit GreenWhiteBackground
 
 ```{index} single: Uebung_010c_AX: Softkey Feedback (Visuell)
 ```

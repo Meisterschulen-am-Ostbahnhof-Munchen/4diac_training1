@@ -1,4 +1,4 @@
-# Uebung_003a0_AX: Strukturierung durch untypisierte Sub-Applikationen
+# Uebung_003a0_AX: DigitalInput_I1/_I2 auf DigitalOutput_Q1/_I2 - mit untyped Subapp
 
 ```{index} single: Uebung_003a0_AX: Strukturierung durch untypisierte Sub-Applikationen
 ```

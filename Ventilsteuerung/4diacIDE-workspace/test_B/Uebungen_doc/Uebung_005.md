@@ -1,4 +1,4 @@
-# Uebung_005: Toggle mit Standard-Eingang (IX)
+# Uebung_005: Toggle Flip-Flop mit IX
 
 ```{index} single: Uebung_005: Toggle mit Standard-Eingang (IX)
 ```

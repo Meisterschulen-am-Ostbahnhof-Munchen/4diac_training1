@@ -3,8 +3,6 @@
 ```{index} single: Timer und Zeitfunktionen
 ```
 
-In diesem Abschnitt werden Zeitverzögerungen (Einschalt-/Ausschaltverzögerung) und Taktgeber (Blinker) behandelt.
-
 ```{toctree}
 :maxdepth: 1
 
@@ -13,14 +11,23 @@ Uebung_007a1_AX
 Uebung_007a2_AX
 Uebung_007a3_AX
 Uebung_008_AX
+Uebung_009_AX
+Uebung_020a_AX
 Uebung_020b_AX
+Uebung_020c3_AX
 Uebung_020c_AX
 Uebung_020d_AX
+Uebung_020e2_AX
 Uebung_020e_AX
-Uebung_020f_AX
 Uebung_020f2_AX
 Uebung_020f3_AX
+Uebung_020f_AX
 Uebung_020g_AX
 Uebung_020h_AX
 Uebung_020i_AX
+Uebung_020j2_AX
+Uebung_020j_AX
 ```
+
+In diesem Abschnitt werden Zeitverzögerungen (Einschalt-/Ausschaltverzögerung) und Taktgeber (Blinker) behandelt.
+

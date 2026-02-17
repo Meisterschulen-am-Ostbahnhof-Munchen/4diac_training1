@@ -1,4 +1,4 @@
-# Uebung_018: Melodien und Sequenzen (Audio-Delay)
+# Uebung_018: Control Audio Signal und Delay
 
 ```{index} single: Uebung_018: Melodien und Sequenzen (Audio-Delay)
 ```

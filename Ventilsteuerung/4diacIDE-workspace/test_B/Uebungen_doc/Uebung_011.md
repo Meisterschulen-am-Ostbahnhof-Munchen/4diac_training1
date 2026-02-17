@@ -1,4 +1,4 @@
-# Uebung_011: Numerische Eingabe (Universal Terminal)
+# Uebung_011: Numeric Value Input
 
 ```{index} single: Uebung_011: Numerische Eingabe (Universal Terminal)
 ```

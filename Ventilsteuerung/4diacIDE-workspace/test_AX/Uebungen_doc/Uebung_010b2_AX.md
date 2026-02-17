@@ -1,4 +1,4 @@
-# Uebung_010b2_AX: Softkey Event (SK_RELEASED)
+# Uebung_010b2_AX: Toggle Flip-Flop mit IE SoftKey_F1 SK_RELEASED
 
 ```{index} single: Uebung_010b2_AX: Softkey Event (SK_RELEASED)
 ```

@@ -1,4 +1,4 @@
-# Uebung_010a3: Latching Button (Einrastend)
+# Uebung_010a3: Button_L1 (Latching) auf DigitalOutput_Q1
 
 ```{index} single: Uebung_010a3: Latching Button (Einrastend)
 ```

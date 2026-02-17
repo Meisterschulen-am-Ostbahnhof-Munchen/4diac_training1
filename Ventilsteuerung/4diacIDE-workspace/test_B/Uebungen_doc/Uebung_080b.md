@@ -1,4 +1,4 @@
-# Uebung_080b: Frequenzverdopplung von Events
+# Uebung_080b: Beispiel für E_CTU mit E_SPLIT für Event-Verdoppelung
 
 ```{index} single: Uebung_080b: Frequenzverdopplung von Events
 ```

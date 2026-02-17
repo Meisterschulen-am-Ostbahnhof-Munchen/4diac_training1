@@ -1,4 +1,4 @@
-# Uebung_030: PWM-LED Effekte (Breathing)
+# Uebung_030: LED_PWM Blinkende LED
 
 ```{index} single: Uebung_030: PWM-LED Effekte (Breathing)
 ```

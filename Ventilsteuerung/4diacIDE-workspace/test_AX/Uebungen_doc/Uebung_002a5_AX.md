@@ -1,4 +1,4 @@
-# Uebung_002a5_AX: ODER-Verknüpfung mit drei Eingängen
+# Uebung_002a5_AX: DigitalInput_I1-3 mit OR auf DigitalOutput_Q1, mit Plug and Socket
 
 ```{index} single: Uebung_002a5_AX: ODER-Verknüpfung mit drei Eingängen
 ```

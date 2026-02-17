@@ -1,4 +1,4 @@
-# Uebung_080c: Frequenzhalbierung von Events
+# Uebung_080c: Beispiel für E_CTU
 
 ```{index} single: Uebung_080c: Frequenzhalbierung von Events
 ```

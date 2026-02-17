@@ -1,4 +1,4 @@
-# Uebung_004a4: Event-Splitter (E_SPLIT)
+# Uebung_004a4: Toggle Flip-Flop mit IE mit BUTTON_SINGLE_CLICK mit E_SPLIT
 
 ```{index} single: Uebung_004a4: Event-Splitter (E_SPLIT)
 ```

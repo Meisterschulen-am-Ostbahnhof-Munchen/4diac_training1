@@ -1,6 +1,6 @@
 Hier ist die Dokumentation für die Übung basierend auf der bereitgestellten XML-Datei:
 
-# Uebung_003b3_sub_AX
+# Uebung_003b3_sub_AX: IX auf QX (generisch)
 
 ```{index} single: Uebung_003b3_sub_AX
 ```
@@ -62,3 +62,10 @@ Diese Struktur ermöglicht eine saubere Kapselung der IO-Zuordnung, sodass diese
 ## Zusammenfassung
 
 Die `Uebung_003b3_sub_AX` ist ein generischer Verbindungsbaustein, der einen digitalen Funkeingang auf einen digitalen DataPanel-Ausgang mappt. Durch die Nutzung von Adapter-Technologie und parametrierbaren Eingängen bietet der Baustein eine flexible Möglichkeit, Hardware-IOs ohne komplexe Logikprogrammierung direkt miteinander zu verknüpfen.
+
+
+
+## 🛠️ Zugehörige Übungen
+
+* [Uebung_003b3_AX](Uebung_003b3_AX.md)
+

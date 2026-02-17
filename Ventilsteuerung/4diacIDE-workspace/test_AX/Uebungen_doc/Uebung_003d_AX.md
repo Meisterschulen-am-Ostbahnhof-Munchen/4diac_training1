@@ -1,4 +1,4 @@
-# Uebung_003d_AX: Wiederholung Parallelsteuerung
+# Uebung_003d_AX: DigitalInput_I1/_I2 auf DigitalOutput_Q1/_I2
 
 ```{index} single: Uebung_003d_AX: Wiederholung Parallelsteuerung
 ```

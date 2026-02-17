@@ -1,4 +1,4 @@
-# Uebung_052: Gezielter Zugriff auf Strukturen
+# Uebung_052: DigitalInput_I1-_I4 auf DigitalOutput_Q1-_Q4
 
 ```{index} single: Uebung_052: Gezielter Zugriff auf Strukturen
 ```
