@@ -55,42 +55,42 @@
 			<ECState Name="sState_01" x="2400" y="1600">
 				<ECAction Output="timeOut.STOP"/>
 				<ECAction/>
-				<ECAction Algorithm="State_01_C"/>
+				<ECAction Algorithm="State_01_C" Output="STATE_NR.E1"/>
 				<ECAction Algorithm="State_01_E" Output="DO_S1.E1"/>
 				<ECAction Output="timeOut.START"/>
 			</ECState>
 			<ECState Name="sState_02" x="2400" y="2400">
 				<ECAction Output="timeOut.STOP"/>
 				<ECAction Algorithm="State_01_X" Output="DO_S1.E1"/>
-				<ECAction Algorithm="State_02_C"/>
+				<ECAction Algorithm="State_02_C" Output="STATE_NR.E1"/>
 				<ECAction Algorithm="State_02_E" Output="DO_S2.E1"/>
 				<ECAction Output="timeOut.START"/>
 			</ECState>
 			<ECState Name="sState_03" x="2400" y="3200">
 				<ECAction Output="timeOut.STOP"/>
 				<ECAction Algorithm="State_02_X" Output="DO_S2.E1"/>
-				<ECAction Algorithm="State_03_C"/>
+				<ECAction Algorithm="State_03_C" Output="STATE_NR.E1"/>
 				<ECAction Algorithm="State_03_E" Output="DO_S3.E1"/>
 				<ECAction Output="timeOut.START"/>
 			</ECState>
 			<ECState Name="sState_04" x="2400" y="4000">
 				<ECAction Output="timeOut.STOP"/>
 				<ECAction Algorithm="State_03_X" Output="DO_S3.E1"/>
-				<ECAction Algorithm="State_04_C"/>
+				<ECAction Algorithm="State_04_C" Output="STATE_NR.E1"/>
 				<ECAction Algorithm="State_04_E" Output="DO_S4.E1"/>
 				<ECAction Output="timeOut.START"/>
 			</ECState>
 			<ECState Name="sState_05" x="2400" y="4800">
 				<ECAction Output="timeOut.STOP"/>
 				<ECAction Algorithm="State_04_X" Output="DO_S4.E1"/>
-				<ECAction Algorithm="State_05_C"/>
+				<ECAction Algorithm="State_05_C" Output="STATE_NR.E1"/>
 				<ECAction Algorithm="State_05_E" Output="DO_S5.E1"/>
 				<ECAction Output="timeOut.START"/>
 			</ECState>
 			<ECState Name="sState_00" x="2400" y="5600">
 				<ECAction Output="timeOut.STOP"/>
 				<ECAction Algorithm="State_05_X" Output="DO_S5.E1"/>
-				<ECAction Algorithm="State_00_C"/>
+				<ECAction Algorithm="State_00_C" Output="STATE_NR.E1"/>
 				<ECAction/>
 				<ECAction/>
 			</ECState>
@@ -113,7 +113,7 @@
 			<ECTransition Source="sState_01" Destination="sRESET" Condition="RESET" Comment="" x="613.33" y="1813.33"/>
 			<ECTransition Source="sState_02" Destination="sRESET" Condition="RESET" Comment="" x="633.33" y="2593.33"/>
 			<ECTransition Source="sState_03" Destination="sRESET" Condition="RESET" Comment="" x="806.67" y="3240"/>
-			<ECTransition Source="sRESET" Destination="sState_00" Condition="RESET" Comment="" x="780" y="4600"/>
+			<ECTransition Source="sRESET" Destination="sState_00" Condition="1" Comment="" x="780" y="4600"/>
 			<ECTransition Source="sState_04" Destination="sState_05" Condition="S4_S5" Comment="" x="2360" y="4466.67"/>
 			<ECTransition Source="sState_04" Destination="sState_05" Condition="timeOut.TimeOut" Comment="" x="2600" y="4286.67"/>
 			<ECTransition Source="sState_04" Destination="sRESET" Condition="RESET" Comment="" x="826.67" y="3806.67"/>
@@ -124,14 +124,14 @@
 		<Algorithm Name="State_00_C">
 			<ST><![CDATA[ // Confirmation STEPS
 ALGORITHM State_00_C // State_00 Confirmation Step
-STATE_NR := sequence::State_00;
+STATE_NR.D1 := sequence::State_00;
 END_ALGORITHM]]></ST>
 		</Algorithm>
 		<Algorithm Name="State_01_C">
 			<ST><![CDATA[
 
 ALGORITHM State_01_C // State_01 Confirmation Step
-STATE_NR := sequence::State_01;
+STATE_NR.D1 := sequence::State_01;
 timeOut.DT := DT_S1_S2;
 END_ALGORITHM]]></ST>
 		</Algorithm>
@@ -139,7 +139,7 @@ END_ALGORITHM]]></ST>
 			<ST><![CDATA[
 
 ALGORITHM State_02_C // State_02 Confirmation Step
-STATE_NR := sequence::State_02;
+STATE_NR.D1 := sequence::State_02;
 timeOut.DT := DT_S2_S3;
 END_ALGORITHM]]></ST>
 		</Algorithm>
@@ -147,7 +147,7 @@ END_ALGORITHM]]></ST>
 			<ST><![CDATA[
 
 ALGORITHM State_03_C // State_03 Confirmation Step
-STATE_NR := sequence::State_03;
+STATE_NR.D1 := sequence::State_03;
 timeOut.DT := DT_S3_S4;
 END_ALGORITHM]]></ST>
 		</Algorithm>
@@ -155,7 +155,7 @@ END_ALGORITHM]]></ST>
 			<ST><![CDATA[
 
 ALGORITHM State_04_C // State_04 Confirmation Step
-STATE_NR := sequence::State_04;
+STATE_NR.D1 := sequence::State_04;
 timeOut.DT := DT_S4_S5;
 END_ALGORITHM]]></ST>
 		</Algorithm>
@@ -163,7 +163,7 @@ END_ALGORITHM]]></ST>
 			<ST><![CDATA[
 
 ALGORITHM State_05_C // State_05 Confirmation Step
-STATE_NR := sequence::State_05;
+STATE_NR.D1 := sequence::State_05;
 timeOut.DT := DT_S5_START;
 END_ALGORITHM]]></ST>
 		</Algorithm>
