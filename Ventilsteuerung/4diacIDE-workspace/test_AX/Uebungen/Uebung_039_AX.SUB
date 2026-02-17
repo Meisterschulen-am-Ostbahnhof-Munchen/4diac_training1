@@ -82,14 +82,11 @@
 			<Connection Source="DigitalInput_DOWN_I2.IND" Destination="sequence_05.S2_S3" dx1="380"/>
 			<Connection Source="DigitalInput_DOWN_I3.IND" Destination="sequence_05.S4_S5" dx1="500"/>
 			<Connection Source="DigitalInput_DOWN_I4.IND" Destination="sequence_05.S5_START" dx1="626.67"/>
-			<Connection Source="sequence_05.CNF" Destination="NumbAnzeig.CNF" dx1="73.33"/>
 			<Connection Source="SoftKey_UP_F1.IND" Destination="sequence_05.START_S1" dx1="1360"/>
 		</EventConnections>
-		<DataConnections>
-			<Connection Source="sequence_05.STATE_NR" Destination="NumbAnzeig.STATE_NR" dx1="340"/>
-		</DataConnections>
 		<AdapterConnections>
 			<Connection Source="sequence_05.timeOut" Destination="E_TimeOut.TimeOutSocket" dx1="73.33"/>
+			<Connection Source="sequence_05.STATE_NR" Destination="NumbAnzeig.STATE_NR" dx1="340"/>
 			<Connection Source="sequence_05.DO_S1" Destination="Q1.OUT" dx1="473.33"/>
 			<Connection Source="sequence_05.DO_S5" Destination="Q4.OUT" dx1="140"/>
 			<Connection Source="sequence_05.DO_S2" Destination="Q2.OUT" dx1="540"/>

@@ -8,30 +8,19 @@
 		<Import declaration="Uebungen::const::UT::DefaultPool::OutputNumber_N1"/>
 	</CompilerInfo>
 	<SubAppInterfaceList>
-		<SubAppEventInputs>
-			<SubAppEvent Name="CNF" Type="Event">
-				<Attribute Name="YPOSITION" Type="INT" Value="20"/>
-			</SubAppEvent>
-		</SubAppEventInputs>
-		<InputVars>
-			<VarDeclaration Name="STATE_NR" Type="SINT">
-				<Attribute Name="YPOSITION" Type="INT" Value="75"/>
-			</VarDeclaration>
-		</InputVars>
+		<Sockets>
+			<AdapterDeclaration Name="STATE_NR" Type="adapter::types::unidirectional::AS"/>
+		</Sockets>
 	</SubAppInterfaceList>
 	<SubAppNetwork>
-		<FB Name="F_SINT_TO_UINT" Type="iec61131::conversion::F_SINT_TO_UINT" x="-800" y="0">
-		</FB>
-		<FB Name="Q_NumericValue" Type="isobus::UT::Q::Q_NumericValue" x="1340" y="-873.33">
+		<FB Name="Q_NumericValue" Type="isobus::UT::Q::Q_NumericValue_AUDI" x="1500" y="-500">
 			<Parameter Name="u16ObjId" Value="OutputNumber_N1"/>
 		</FB>
-		<EventConnections>
-			<Connection Source="F_SINT_TO_UINT.CNF" Destination="Q_NumericValue.REQ" dx1="213.33"/>
-			<Connection Source="CNF" Destination="F_SINT_TO_UINT.REQ" dx1="273.33"/>
-		</EventConnections>
-		<DataConnections>
-			<Connection Source="F_SINT_TO_UINT.OUT" Destination="Q_NumericValue.u32NewValue" dx1="246.67"/>
-			<Connection Source="STATE_NR" Destination="F_SINT_TO_UINT.IN" dx1="240"/>
-		</DataConnections>
+		<FB Name="AS_TO_AUDI" Type="adapter::conversion::unidirectional::AS_TO_AUDI" x="-1100" y="0">
+		</FB>
+		<AdapterConnections>
+			<Connection Source="AS_TO_AUDI.AUDI_OUT" Destination="Q_NumericValue.u32NewValue" dx1="893.33"/>
+			<Connection Source="STATE_NR" Destination="AS_TO_AUDI.AS_IN" dx1="540"/>
+		</AdapterConnections>
 	</SubAppNetwork>
 </SubAppType>
