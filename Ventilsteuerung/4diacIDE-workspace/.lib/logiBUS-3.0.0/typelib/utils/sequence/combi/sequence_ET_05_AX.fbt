@@ -31,11 +31,6 @@
 			<Event Name="RESET" Type="Event" Comment="Reset from any State to START">
 			</Event>
 		</EventInputs>
-		<EventOutputs>
-			<Event Name="CNF" Type="Event" Comment="Execution Confirmation">
-				<With Var="STATE_NR"/>
-			</Event>
-		</EventOutputs>
 		<InputVars>
 			<VarDeclaration Name="DT_S1_S2" Type="TIME" Comment="State_01 to State_02 timed, set to NO_TIME to disable" InitialValue="NO_TIME"/>
 			<VarDeclaration Name="DT_S2_S3" Type="TIME" Comment="State_02 to State_03 timed, set to NO_TIME to disable" InitialValue="NO_TIME"/>
@@ -43,10 +38,8 @@
 			<VarDeclaration Name="DT_S4_S5" Type="TIME" Comment="State_04 to State_05 timed, set to NO_TIME to disable" InitialValue="NO_TIME"/>
 			<VarDeclaration Name="DT_S5_START" Type="TIME" Comment="State_05 to START timed, set to NO_TIME to disable" InitialValue="NO_TIME"/>
 		</InputVars>
-		<OutputVars>
-			<VarDeclaration Name="STATE_NR" Type="SINT" Comment="State Number, START = 0, State_01 = 1 and so on. "/>
-		</OutputVars>
 		<Plugs>
+			<AdapterDeclaration Name="STATE_NR" Type="adapter::types::unidirectional::AS" Comment="State Number, START = 0, State_01 = 1 and so on. "/>
 			<AdapterDeclaration Name="DO_S1" Type="adapter::types::unidirectional::AX" Comment="Output if State_01 is active"/>
 			<AdapterDeclaration Name="DO_S2" Type="adapter::types::unidirectional::AX" Comment="Output if State_02 is active"/>
 			<AdapterDeclaration Name="DO_S3" Type="adapter::types::unidirectional::AX" Comment="Output if State_03 is active"/>
@@ -62,42 +55,42 @@
 			<ECState Name="sState_01" x="2400" y="1600">
 				<ECAction Output="timeOut.STOP"/>
 				<ECAction/>
-				<ECAction Algorithm="State_01_C" Output="CNF"/>
+				<ECAction Algorithm="State_01_C"/>
 				<ECAction Algorithm="State_01_E" Output="DO_S1.E1"/>
 				<ECAction Output="timeOut.START"/>
 			</ECState>
 			<ECState Name="sState_02" x="2400" y="2400">
 				<ECAction Output="timeOut.STOP"/>
 				<ECAction Algorithm="State_01_X" Output="DO_S1.E1"/>
-				<ECAction Algorithm="State_02_C" Output="CNF"/>
+				<ECAction Algorithm="State_02_C"/>
 				<ECAction Algorithm="State_02_E" Output="DO_S2.E1"/>
 				<ECAction Output="timeOut.START"/>
 			</ECState>
 			<ECState Name="sState_03" x="2400" y="3200">
 				<ECAction Output="timeOut.STOP"/>
 				<ECAction Algorithm="State_02_X" Output="DO_S2.E1"/>
-				<ECAction Algorithm="State_03_C" Output="CNF"/>
+				<ECAction Algorithm="State_03_C"/>
 				<ECAction Algorithm="State_03_E" Output="DO_S3.E1"/>
 				<ECAction Output="timeOut.START"/>
 			</ECState>
 			<ECState Name="sState_04" x="2400" y="4000">
 				<ECAction Output="timeOut.STOP"/>
 				<ECAction Algorithm="State_03_X" Output="DO_S3.E1"/>
-				<ECAction Algorithm="State_04_C" Output="CNF"/>
+				<ECAction Algorithm="State_04_C"/>
 				<ECAction Algorithm="State_04_E" Output="DO_S4.E1"/>
 				<ECAction Output="timeOut.START"/>
 			</ECState>
 			<ECState Name="sState_05" x="2400" y="4800">
 				<ECAction Output="timeOut.STOP"/>
 				<ECAction Algorithm="State_04_X" Output="DO_S4.E1"/>
-				<ECAction Algorithm="State_05_C" Output="CNF"/>
+				<ECAction Algorithm="State_05_C"/>
 				<ECAction Algorithm="State_05_E" Output="DO_S5.E1"/>
 				<ECAction Output="timeOut.START"/>
 			</ECState>
 			<ECState Name="sState_00" x="2400" y="5600">
 				<ECAction Output="timeOut.STOP"/>
 				<ECAction Algorithm="State_05_X" Output="DO_S5.E1"/>
-				<ECAction Algorithm="State_00_C" Output="CNF"/>
+				<ECAction Algorithm="State_00_C"/>
 				<ECAction/>
 				<ECAction/>
 			</ECState>
