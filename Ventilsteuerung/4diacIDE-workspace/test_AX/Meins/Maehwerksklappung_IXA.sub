@@ -11,9 +11,6 @@
 		<Import declaration="logiBUS::io::DI::logiBUS_DI::Input_I4"/>
 		<Import declaration="logiBUS::io::DI::logiBUS_DI::Input_I5"/>
 		<Import declaration="logiBUS::io::DI::logiBUS_DI::Input_I6"/>
-		<Import declaration="logiBUS::io::DI::logiBUS_DI_Events::BUTTON_PRESS_DOWN"/>
-		<Import declaration="logiBUS::io::DI::logiBUS_DI_Events::BUTTON_PRESS_UP"/>
-		<Import declaration="logiBUS::io::DI::logiBUS_DI_Events::BUTTON_SINGLE_CLICK"/>
 		<Import declaration="logiBUS::io::DQ::logiBUS_DO::Output_Q1"/>
 		<Import declaration="logiBUS::io::DQ::logiBUS_DO::Output_Q2"/>
 		<Import declaration="logiBUS::io::DQ::logiBUS_DO::Output_Q3"/>
@@ -108,7 +105,7 @@
 				<Attribute Name="Visible" Value="false"/>
 			</Parameter>
 		</FB>
-		<FB Name="S_1B1_riegel_offen" Type="logiBUS::io::DI::logiBUS_IXA" x="-600" y="300">
+		<FB Name="S_1B1_riegel_offen" Type="logiBUS::io::DI::logiBUS_IXA" x="-1200" y="300">
 			<Parameter Name="QI" Value="TRUE">
 				<Attribute Name="Visible" Value="false"/>
 			</Parameter>
@@ -182,8 +179,8 @@
 		</FB>
 		<FB Name="Arbeit_oder_Transport" Type="adapter::booleanOperators::AX_OR_2" x="4900" y="-900">
 		</FB>
-		<Comment Comment="Heben (Transport): Y_3 = S_1 and 1B1 and not 2B2 Erklärung: Der Ausgang &quot;Mähwerk heben&quot; (Y_3) ist nur aktiv, solange S_1 gedrückt bleibt, der Riegel &quot;Offen&quot; meldet (1B1) und die obere Endlage (2B2) noch nicht erreicht ist. Lässt der Fahrer S_1 los, wird die Bedingung falsch, Y_3 fällt ab und das 5/3-Wegeventil stoppt den Zylinder sofort." x="4800" y="200" width="2800" height="633.33"/>
-		<FB Name="riegel_offen2" Type="adapter::events::unidirectional::AX_SPLIT_3" x="700" y="600">
+		<Comment Comment="Heben (Transport): Y_3 = S_1 and 1B1 and not 2B2 Erklärung: Der Ausgang &quot;Mähwerk heben&quot; (Y_3) ist nur aktiv, solange S_1 gedrückt bleibt, der Riegel &quot;Offen&quot; meldet (1B1) und die obere Endlage (2B2) noch nicht erreicht ist. Lässt der Fahrer S_1 los, wird die Bedingung falsch, Y_3 fällt ab und das 5/3-Wegeventil stoppt den Zylinder sofort." x="5100" y="300" width="2800" height="633.33"/>
+		<FB Name="riegel_offen2" Type="adapter::events::unidirectional::AX_SPLIT_3" x="400" y="700">
 		</FB>
 		<FB Name="heben" Type="adapter::booleanOperators::AX_AND_3" x="5700" y="1300">
 		</FB>
