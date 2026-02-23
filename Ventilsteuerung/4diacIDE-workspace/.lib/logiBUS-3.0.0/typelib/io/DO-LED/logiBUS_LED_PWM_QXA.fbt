@@ -39,7 +39,7 @@
 			<VarDeclaration Name="STATUS" Type="STRING" Comment="Service Status"/>
 		</OutputVars>
 		<Sockets>
-			<AdapterDeclaration Name="OUT" Type="adapter::types::unidirectional::AX" x="-600" y="1600"/>
+			<AdapterDeclaration Name="OUT" Type="adapter::types::unidirectional::AX" Comment="Output data to resource" x="-600" y="1600"/>
 		</Sockets>
 	</InterfaceList>
 	<FBNetwork>
@@ -58,7 +58,7 @@
 			<Connection Source="QX.QO" Destination="QO" dx1="1880"/>
 			<Connection Source="QX.STATUS" Destination="STATUS" dx1="2053.33"/>
 			<Connection Source="Output" Destination="QX.Output" dx1="3113.33"/>
-			<Connection Source="FREQ" Destination="QX.FREQ" dx1="3113.33"/>
+			<Connection Source="FREQ" Destination="QX.FREQ" dx1="2933.33"/>
 		</DataConnections>
 	</FBNetwork>
 	<Attribute Name="eclipse4diac::core::TypeHash" Value="''"/>
