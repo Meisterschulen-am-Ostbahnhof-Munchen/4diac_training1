@@ -24,7 +24,7 @@
 	<SubAppInterfaceList>
 	</SubAppInterfaceList>
 	<SubAppNetwork>
-		<FB Name="Ausgang_heben" Type="logiBUS::io::DQ::logiBUS_QXA" x="6700" y="2400">
+		<FB Name="Ausgang_heben" Type="logiBUS::io::DQ::logiBUS_QXA" x="8100" y="1000">
 			<Parameter Name="QI" Value="TRUE">
 				<Attribute Name="Visible" Value="false"/>
 			</Parameter>
@@ -36,8 +36,8 @@
 				<Attribute Name="Visible" Value="false"/>
 			</Parameter>
 		</FB>
-		<FB Name="Ausgang_senken" Type="logiBUS::io::DQ::logiBUS_QXA" x="6700" y="600">
-			<Parameter Name="QI" Value="TRUE">
+		<FB Name="Ausgang_senken" Type="logiBUS::io::DQ::logiBUS_QXA" x="6700" y="2600">
+			<Parameter Name="QI" Value="TRUE" Comment="Event Input Qualifier">
 				<Attribute Name="Visible" Value="false"/>
 			</Parameter>
 			<Parameter Name="PARAMS" Value="">
@@ -48,7 +48,7 @@
 				<Attribute Name="Visible" Value="false"/>
 			</Parameter>
 		</FB>
-		<FB Name="Ausgang_entriegeln" Type="logiBUS::io::DQ::logiBUS_QXA" x="6700" y="-300">
+		<FB Name="Ausgang_entriegeln" Type="logiBUS::io::DQ::logiBUS_QXA" x="7600" y="-800">
 			<Parameter Name="QI" Value="TRUE">
 				<Attribute Name="Visible" Value="false"/>
 			</Parameter>
@@ -60,7 +60,7 @@
 				<Attribute Name="Visible" Value="false"/>
 			</Parameter>
 		</FB>
-		<FB Name="Ausgang_verriegeln" Type="logiBUS::io::DQ::logiBUS_QXA" x="6700" y="1500">
+		<FB Name="Ausgang_verriegeln" Type="logiBUS::io::DQ::logiBUS_QXA" x="6700" y="4600">
 			<Parameter Name="QI" Value="TRUE">
 				<Attribute Name="Visible" Value="false"/>
 			</Parameter>
@@ -72,7 +72,7 @@
 				<Attribute Name="Visible" Value="false"/>
 			</Parameter>
 		</FB>
-		<FB Name="Lampe_gruen" Type="logiBUS::io::DQ::logiBUS_QXA" x="7100" y="3400">
+		<FB Name="Lampe_gruen" Type="logiBUS::io::DQ::logiBUS_QXA" x="5900" y="8000">
 			<Parameter Name="QI" Value="TRUE">
 				<Attribute Name="Visible" Value="false"/>
 			</Parameter>
@@ -84,7 +84,7 @@
 				<Attribute Name="Visible" Value="false"/>
 			</Parameter>
 		</FB>
-		<FB Name="Blinker_orange" Type="logiBUS::io::DQ::logiBUS_QXA" x="5700" y="4400">
+		<FB Name="Blinker_orange" Type="logiBUS::io::DQ::logiBUS_QXA" x="5700" y="6200">
 			<Parameter Name="QI" Value="TRUE">
 				<Attribute Name="Visible" Value="false"/>
 			</Parameter>
@@ -96,7 +96,7 @@
 				<Attribute Name="Visible" Value="false"/>
 			</Parameter>
 		</FB>
-		<FB Name="Arbeit" Type="logiBUS::io::DI::logiBUS_IXA" x="800" y="-900">
+		<FB Name="Arbeit" Type="logiBUS::io::DI::logiBUS_IXA" x="-400" y="-1800">
 			<Parameter Name="QI" Value="TRUE">
 				<Attribute Name="Visible" Value="false"/>
 			</Parameter>
@@ -108,7 +108,7 @@
 				<Attribute Name="Visible" Value="false"/>
 			</Parameter>
 		</FB>
-		<FB Name="S_1B1_riegel_offen" Type="logiBUS::io::DI::logiBUS_IXA" x="700" y="200">
+		<FB Name="S_1B1_riegel_offen" Type="logiBUS::io::DI::logiBUS_IXA" x="-600" y="300">
 			<Parameter Name="QI" Value="TRUE">
 				<Attribute Name="Visible" Value="false"/>
 			</Parameter>
@@ -120,7 +120,7 @@
 				<Attribute Name="Visible" Value="false"/>
 			</Parameter>
 		</FB>
-		<FB Name="S_1B2_riegel_geschlossen" Type="logiBUS::io::DI::logiBUS_IXA" x="600" y="2100">
+		<FB Name="S_1B2_riegel_geschlossen" Type="logiBUS::io::DI::logiBUS_IXA" x="-1300" y="4800">
 			<Parameter Name="QI" Value="TRUE">
 				<Attribute Name="Visible" Value="false"/>
 			</Parameter>
@@ -132,7 +132,7 @@
 				<Attribute Name="Visible" Value="false"/>
 			</Parameter>
 		</FB>
-		<FB Name="S_2B2_M_oben" Type="logiBUS::io::DI::logiBUS_IXA" x="700" y="4000">
+		<FB Name="S_2B2_M_oben" Type="logiBUS::io::DI::logiBUS_IXA" x="-1200" y="1300">
 			<Parameter Name="QI" Value="TRUE">
 				<Attribute Name="Visible" Value="false"/>
 			</Parameter>
@@ -144,7 +144,7 @@
 				<Attribute Name="Visible" Value="false"/>
 			</Parameter>
 		</FB>
-		<FB Name="S_2B1_M_unten" Type="logiBUS::io::DI::logiBUS_IXA" x="700" y="1100">
+		<FB Name="S_2B1_M_unten" Type="logiBUS::io::DI::logiBUS_IXA" x="-1200" y="2100">
 			<Parameter Name="QI" Value="TRUE">
 				<Attribute Name="Visible" Value="false"/>
 			</Parameter>
@@ -156,7 +156,7 @@
 				<Attribute Name="Visible" Value="false"/>
 			</Parameter>
 		</FB>
-		<FB Name="Transport" Type="logiBUS::io::DI::logiBUS_IXA" x="700" y="3000">
+		<FB Name="Transport" Type="logiBUS::io::DI::logiBUS_IXA" x="-500" y="-700">
 			<Parameter Name="QI" Value="TRUE">
 				<Attribute Name="Visible" Value="false"/>
 			</Parameter>
@@ -168,16 +168,94 @@
 				<Attribute Name="Visible" Value="false"/>
 			</Parameter>
 		</FB>
-		<Comment Comment="UNTEN" x="3400" y="500" width="1" height="1"/>
-		<FB Name="AX_TON_Arbeit" Type="adapter::events::unidirectional::timers::AX_TON" x="2200" y="-900">
+		<Comment Comment="UNTEN" x="1000" y="900" width="1" height="1"/>
+		<FB Name="AX_TON_Arbeit" Type="adapter::events::unidirectional::timers::AX_TON" x="1100" y="-1700">
 			<Parameter Name="PT" Value="T#2s"/>
 		</FB>
-		<FB Name="AX_TON_Transport" Type="adapter::events::unidirectional::timers::AX_TON" x="2200" y="3300">
+		<FB Name="AX_TON_Transport" Type="adapter::events::unidirectional::timers::AX_TON" x="800" y="-500">
 			<Parameter Name="PT" Value="T#2s"/>
+		</FB>
+		<Comment Comment="A. Entriegeln (Bolzen fährt ein)&#10;Damit das Mähwerk überhaupt fahren darf, muss bei Tastendruck zuerst der Riegel öffnen.Logik: Y_1 = (S_1 or S_2) and not 1B1 Erklärung: Wenn der Taster &quot;Transport&quot; (S_1) oder &quot;Arbeit&quot; (S_2) gedrückt wird UND der Riegel noch nicht in der Position &quot;Offen&quot; ist (1B1) , wird der Ausgang &quot;Riegel öffnen&quot; (Y_1)  angesteuert." x="4700" y="-2200" width="3700" height="833.33"/>
+		<FB Name="NOT_riegel_offen" Type="adapter::booleanOperators::AX_NOT" x="4900" y="-300">
+		</FB>
+		<FB Name="entriegeln" Type="adapter::booleanOperators::AX_AND_2" x="6200" y="-500">
+		</FB>
+		<FB Name="Arbeit_oder_Transport" Type="adapter::booleanOperators::AX_OR_2" x="4900" y="-900">
+		</FB>
+		<Comment Comment="Heben (Transport): Y_3 = S_1 and 1B1 and not 2B2 Erklärung: Der Ausgang &quot;Mähwerk heben&quot; (Y_3) ist nur aktiv, solange S_1 gedrückt bleibt, der Riegel &quot;Offen&quot; meldet (1B1) und die obere Endlage (2B2) noch nicht erreicht ist. Lässt der Fahrer S_1 los, wird die Bedingung falsch, Y_3 fällt ab und das 5/3-Wegeventil stoppt den Zylinder sofort." x="4800" y="200" width="2800" height="633.33"/>
+		<FB Name="riegel_offen2" Type="adapter::events::unidirectional::AX_SPLIT_3" x="700" y="600">
+		</FB>
+		<FB Name="heben" Type="adapter::booleanOperators::AX_AND_3" x="5700" y="1300">
+		</FB>
+		<FB Name="NOT_oben" Type="adapter::booleanOperators::AX_NOT" x="1600" y="1800">
+		</FB>
+		<FB Name="senken" Type="adapter::booleanOperators::AX_AND_3" x="5100" y="2800">
+		</FB>
+		<Comment Comment="Senken (Arbeit): Y_4 = S_2 and 1B1 and not 2B1 Erklärung: Analog zum Heben. Der Ausgang &quot;Mähwerk senken&quot; (Y_4) ist nur aktiv, solange S_2 gedrückt ist, der Riegel offen ist und die untere Endlage (2B1) nicht erreicht ist." x="5400" y="1900" width="2800" height="600"/>
+		<FB Name="Arbeit2" Type="adapter::events::unidirectional::AX_SPLIT_2" x="2200" y="-1600">
+		</FB>
+		<FB Name="NOT_unten" Type="adapter::booleanOperators::AX_NOT" x="1400" y="2800">
+		</FB>
+		<Comment Comment="Logik: Y_2 = (2B2 or 2B1) and not 1B2 Erklärung: Sobald das Mähwerk ganz oben (2B2) oder ganz unten (2B1) ist UND der Riegel noch nicht zu ist (not 1B2) , wird der Ausgang &quot;Riegel schließen&quot; (Y_2) aktiviert." x="5200" y="3700" width="2300" height="633.33"/>
+		<FB Name="verriegeln" Type="adapter::booleanOperators::AX_AND_2" x="5100" y="4800">
+		</FB>
+		<FB Name="NOT_riegel_geschlossen" Type="adapter::booleanOperators::AX_NOT" x="1200" y="5200">
+		</FB>
+		<FB Name="oben_oder_unten" Type="adapter::booleanOperators::AX_OR_2" x="1600" y="4100">
+		</FB>
+		<FB Name="oben2" Type="adapter::events::unidirectional::AX_SPLIT_2" x="100" y="1500">
+		</FB>
+		<FB Name="unten2" Type="adapter::events::unidirectional::AX_SPLIT_2" x="100" y="2300">
+		</FB>
+		<Comment Comment="Warnleuchte (H_1): Soll während des gesamten Bewegungsablaufs leuchten/blinken. Das ist der Fall, solange der Riegel nicht komplett geschlossen ist. H_1 = not 1B2&#10;" x="4900" y="5566.67" width="3600" height="433.33"/>
+		<Comment Comment="Statusleuchte (H_2): Signalisert den sicheren Zustand (Verriegelt in Endlage).H_2 = 1B2 and (2B2 or 2B1)" x="5000" y="7300" width="3600" height="633.33"/>
+		<FB Name="NOT_riegel_geschlossen2" Type="adapter::events::unidirectional::AX_SPLIT_2" x="2500" y="5600">
+		</FB>
+		<FB Name="oben_oder_unten2" Type="adapter::events::unidirectional::AX_SPLIT_2" x="3500" y="4200">
+		</FB>
+		<FB Name="Endlage_verriegelt" Type="adapter::booleanOperators::AX_AND_2" x="3800" y="8100">
+		</FB>
+		<FB Name="riegel_geschlossen2" Type="adapter::events::unidirectional::AX_SPLIT_2" x="100" y="5200">
+		</FB>
+		<FB Name="Transport2" Type="adapter::events::unidirectional::AX_SPLIT_2" x="2300" y="-600">
 		</FB>
 		<AdapterConnections>
 			<Connection Source="Arbeit.IN" Destination="AX_TON_Arbeit.IN" dx1="300"/>
-			<Connection Source="Transport.IN" Destination="AX_TON_Transport.IN" dx1="346.67"/>
+			<Connection Source="riegel_offen2.OUT1" Destination="NOT_riegel_offen.IN" dx1="566.67"/>
+			<Connection Source="NOT_riegel_offen.OUT" Destination="entriegeln.IN2" dx1="313.33"/>
+			<Connection Source="Arbeit_oder_Transport.OUT" Destination="entriegeln.IN1" dx1="293.33"/>
+			<Connection Source="entriegeln.OUT" Destination="Ausgang_entriegeln.OUT" dx1="280"/>
+			<Connection Source="Arbeit2.OUT1" Destination="Arbeit_oder_Transport.IN1" dx1="1626.67"/>
+			<Connection Source="heben.OUT" Destination="Ausgang_heben.OUT" dx1="260"/>
+			<Connection Source="S_1B1_riegel_offen.IN" Destination="riegel_offen2.IN" dx1="86.67"/>
+			<Connection Source="oben2.OUT1" Destination="NOT_oben.IN" dx1="346.67"/>
+			<Connection Source="riegel_offen2.OUT2" Destination="heben.IN1" dx1="1286.67"/>
+			<Connection Source="NOT_oben.OUT" Destination="heben.IN3" dx1="733.33"/>
+			<Connection Source="senken.OUT" Destination="Ausgang_senken.OUT" dx1="466.67"/>
+			<Connection Source="riegel_offen2.OUT3" Destination="senken.IN1" dx1="1046.67"/>
+			<Connection Source="AX_TON_Arbeit.Q" Destination="Arbeit2.IN" dx1="206.67"/>
+			<Connection Source="Arbeit2.OUT2" Destination="senken.IN2" dx1="1120"/>
+			<Connection Source="unten2.OUT1" Destination="NOT_unten.IN" dx1="446.67"/>
+			<Connection Source="NOT_unten.OUT" Destination="senken.IN3" dx1="280"/>
+			<Connection Source="verriegeln.OUT" Destination="Ausgang_verriegeln.OUT" dx1="480"/>
+			<Connection Source="NOT_riegel_geschlossen2.OUT1" Destination="verriegeln.IN2" dx1="1100"/>
+			<Connection Source="oben_oder_unten2.OUT1" Destination="verriegeln.IN1" dx1="293.33"/>
+			<Connection Source="S_2B2_M_oben.IN" Destination="oben2.IN" dx1="246.67"/>
+			<Connection Source="S_2B1_M_unten.IN" Destination="unten2.IN" dx1="246.67"/>
+			<Connection Source="oben2.OUT2" Destination="oben_oder_unten.IN1" dx1="246.67"/>
+			<Connection Source="unten2.OUT2" Destination="oben_oder_unten.IN2" dx1="80"/>
+			<Connection Source="NOT_riegel_geschlossen.OUT" Destination="NOT_riegel_geschlossen2.IN" dx1="166.67"/>
+			<Connection Source="NOT_riegel_geschlossen2.OUT2" Destination="Blinker_orange.OUT" dx1="1420"/>
+			<Connection Source="oben_oder_unten.OUT" Destination="oben_oder_unten2.IN" dx1="193.33"/>
+			<Connection Source="Endlage_verriegelt.OUT" Destination="Lampe_gruen.OUT" dx1="366.67"/>
+			<Connection Source="oben_oder_unten2.OUT2" Destination="Endlage_verriegelt.IN1" dx1="80" dx2="320" dy="800"/>
+			<Connection Source="S_1B2_riegel_geschlossen.IN" Destination="riegel_geschlossen2.IN" dx1="426.67"/>
+			<Connection Source="riegel_geschlossen2.OUT1" Destination="NOT_riegel_geschlossen.IN"/>
+			<Connection Source="riegel_geschlossen2.OUT2" Destination="Endlage_verriegelt.IN2" dx1="220"/>
+			<Connection Source="Transport.IN" Destination="AX_TON_Transport.IN" dx1="293.33"/>
+			<Connection Source="AX_TON_Transport.Q" Destination="Transport2.IN" dx1="220"/>
+			<Connection Source="Transport2.OUT1" Destination="Arbeit_oder_Transport.IN2" dx1="1120"/>
+			<Connection Source="Transport2.OUT2" Destination="heben.IN2" dx1="1520"/>
 		</AdapterConnections>
 	</SubAppNetwork>
 </SubAppType>
