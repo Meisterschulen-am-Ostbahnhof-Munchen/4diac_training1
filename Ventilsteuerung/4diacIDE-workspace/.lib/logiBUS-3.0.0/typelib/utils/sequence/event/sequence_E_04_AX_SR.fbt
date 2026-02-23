@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<FBType Name="sequence_E_04_AX_SR" Comment="Sequence with 4 Outputs, Transition by EVENT, with AX Adapter, STOP and RESUME Events">
+<FBType Name="sequence_E_04_AX_SR" Comment="Sequence with 4 Outputs, Transition by EVENT, with AX Adapter, STOP (safety off) and RESUME Events">
 	<Identification Standard="61499-2" Description="Copyright (c) 2024 HR Agrartechnik GmbH&#10;&#10;This program and the accompanying materials are made&#10;available under the terms of the Eclipse Public License 2.0&#10;which is available at https://www.eclipse.org/legal/epl-2.0/&#10;&#10;SPDX-License-Identifier: EPL-2.0">
 	</Identification>
 	<VersionInfo Organization="HR Agrartechnik GmbH" Version="1.1" Author="Franz Höpfinger" Date="2026-02-23">
@@ -20,7 +20,7 @@
 			</Event>
 			<Event Name="S4_START" Type="Event" Comment="jump from State_04 to START">
 			</Event>
-			<Event Name="STOP" Type="Event" Comment="Pause current state - outputs remain active but no transitions allowed">
+			<Event Name="STOP" Type="Event" Comment="Stop current state immediately - ALL outputs go OFF (safety stop)">
 			</Event>
 			<Event Name="RESUME" Type="Event" Comment="Resume from pause - continue with current state">
 			</Event>
@@ -74,21 +74,25 @@
 				<ECAction Algorithm="State_04_X" Output="DO_S4.E1"/>
 				<ECAction Algorithm="State_00_C" Output="CNF"/>
 			</ECState>
-			<ECState Name="sPAUSED_S1" Comment="Paused while in State_01" x="4800" y="1040">
-				<ECAction Algorithm="Save_S1" Output="CNF"/>
-			</ECState>
-			<ECState Name="sPAUSED_S2" Comment="Paused while in State_02" x="4800" y="1760">
-				<ECAction Algorithm="Save_S2" Output="CNF"/>
-			</ECState>
-			<ECState Name="sPAUSED_S3" Comment="Paused while in State_03" x="4800" y="2480">
-				<ECAction Algorithm="Save_S3" Output="CNF"/>
-			</ECState>
-			<ECState Name="sPAUSED_S4" Comment="Paused while in State_04" x="4800" y="3120">
-				<ECAction Algorithm="Save_S4" Output="CNF"/>
-			</ECState>
-			<ECState Name="sPAUSED_S0" Comment="Paused while in START/State_00" x="4800" y="3760">
-				<ECAction Algorithm="Save_S0" Output="CNF"/>
-			</ECState>
+		<ECState Name="sPAUSED_S1" Comment="Paused while in State_01 - Output OFF" x="4800" y="1040">
+			<ECAction Algorithm="State_01_X" Output="DO_S1.E1"/>
+			<ECAction Algorithm="Save_S1" Output="CNF"/>
+		</ECState>
+		<ECState Name="sPAUSED_S2" Comment="Paused while in State_02 - Output OFF" x="4800" y="1760">
+			<ECAction Algorithm="State_02_X" Output="DO_S2.E1"/>
+			<ECAction Algorithm="Save_S2" Output="CNF"/>
+		</ECState>
+		<ECState Name="sPAUSED_S3" Comment="Paused while in State_03 - Output OFF" x="4800" y="2480">
+			<ECAction Algorithm="State_03_X" Output="DO_S3.E1"/>
+			<ECAction Algorithm="Save_S3" Output="CNF"/>
+		</ECState>
+		<ECState Name="sPAUSED_S4" Comment="Paused while in State_04 - Output OFF" x="4800" y="3120">
+			<ECAction Algorithm="State_04_X" Output="DO_S4.E1"/>
+			<ECAction Algorithm="Save_S4" Output="CNF"/>
+		</ECState>
+		<ECState Name="sPAUSED_S0" Comment="Paused while in START/State_00 - Output OFF" x="4800" y="3760">
+			<ECAction Algorithm="Save_S0" Output="CNF"/>
+		</ECState>
 			<ECState Name="sRESET" x="-666.67" y="2533.33">
 				<ECAction Algorithm="State_01_X" Output="DO_S1.E1"/>
 				<ECAction Algorithm="State_02_X" Output="DO_S2.E1"/>
