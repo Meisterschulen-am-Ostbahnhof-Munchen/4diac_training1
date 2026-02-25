@@ -13,28 +13,52 @@
 	<SubAppInterfaceList>
 	</SubAppInterfaceList>
 	<SubAppNetwork>
-		<FB Name="DigitalOutput_Q1" Type="logiBUS::io::DQ::logiBUS_QXA" x="-2500" y="-700">
-			<Parameter Name="QI" Value="TRUE"/>
+		<FB Name="DigitalOutput_Q1" Type="logiBUS::io::DQ::logiBUS_QXA" x="1173.33" y="993.33">
+			<Parameter Name="QI" Value="TRUE">
+				<Attribute Name="Visible" Value="false"/>
+			</Parameter>
+			<Parameter Name="PARAMS" Value="">
+				<Attribute Name="Visible" Value="false"/>
+			</Parameter>
 			<Parameter Name="Output" Value="Output_Q1"/>
+			<Parameter Name="QO" Value="">
+				<Attribute Name="Visible" Value="false"/>
+			</Parameter>
 		</FB>
-		<FB Name="DigitalInput_CLK_I1" Type="logiBUS::io::DI::logiBUS_IE" x="-5500" y="-800">
-			<Parameter Name="QI" Value="TRUE"/>
+		<FB Name="START" Type="logiBUS::io::DI::logiBUS_IE" x="-1300" y="333.33">
+			<Parameter Name="QI" Value="TRUE">
+				<Attribute Name="Visible" Value="false"/>
+			</Parameter>
+			<Parameter Name="PARAMS" Value="">
+				<Attribute Name="Visible" Value="false"/>
+			</Parameter>
 			<Parameter Name="Input" Value="Input_I1"/>
 			<Parameter Name="InputEvent" Value="BUTTON_SINGLE_CLICK"/>
+			<Parameter Name="QO" Value="">
+				<Attribute Name="Visible" Value="false"/>
+			</Parameter>
 		</FB>
-		<FB Name="DigitalInput_CLK_I2" Type="logiBUS::io::DI::logiBUS_IE" x="-5500" y="400">
-			<Parameter Name="QI" Value="TRUE"/>
+		<FB Name="STOP" Type="logiBUS::io::DI::logiBUS_IE" x="-1300" y="1553.33">
+			<Parameter Name="QI" Value="TRUE">
+				<Attribute Name="Visible" Value="false"/>
+			</Parameter>
+			<Parameter Name="PARAMS" Value="">
+				<Attribute Name="Visible" Value="false"/>
+			</Parameter>
 			<Parameter Name="Input" Value="Input_I2"/>
 			<Parameter Name="InputEvent" Value="BUTTON_SINGLE_CLICK"/>
+			<Parameter Name="QO" Value="">
+				<Attribute Name="Visible" Value="false"/>
+			</Parameter>
 		</FB>
-		<FB Name="AX_SR" Type="adapter::events::unidirectional::AX_SR" x="-3800" y="-600">
+		<FB Name="AX_SR" Type="adapter::events::unidirectional::AX_SR" x="-93.33" y="1100">
 		</FB>
 		<EventConnections>
-			<Connection Source="DigitalInput_CLK_I1.IND" Destination="AX_SR.S"/>
-			<Connection Source="DigitalInput_CLK_I2.IND" Destination="AX_SR.R" dx1="473.33"/>
+			<Connection Source="START.IND" Destination="AX_SR.S" dx1="66.67"/>
+			<Connection Source="STOP.IND" Destination="AX_SR.R" dx1="66.67"/>
 		</EventConnections>
 		<AdapterConnections>
-			<Connection Source="AX_SR.Q" Destination="DigitalOutput_Q1.OUT" dx1="446.67"/>
+			<Connection Source="AX_SR.Q" Destination="DigitalOutput_Q1.OUT"/>
 		</AdapterConnections>
 	</SubAppNetwork>
 </SubAppType>

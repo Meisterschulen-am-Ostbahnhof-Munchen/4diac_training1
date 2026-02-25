@@ -12,24 +12,40 @@
 	<SubAppInterfaceList>
 	</SubAppInterfaceList>
 	<SubAppNetwork>
-		<FB Name="DigitalInput_I1" Type="logiBUS::io::DI::logiBUS_IXA" x="400" y="-200">
-			<Parameter Name="QI" Value="TRUE"/>
+		<FB Name="DigitalInput_I1" Type="logiBUS::io::DI::logiBUS_IXA" x="-2100" y="400">
+			<Parameter Name="QI" Value="TRUE">
+				<Attribute Name="Visible" Value="false"/>
+			</Parameter>
+			<Parameter Name="PARAMS" Value="">
+				<Attribute Name="Visible" Value="false"/>
+			</Parameter>
 			<Parameter Name="Input" Value="Input_I1"/>
+			<Parameter Name="QO" Value="">
+				<Attribute Name="Visible" Value="false"/>
+			</Parameter>
 		</FB>
-		<FB Name="DigitalOutput_Q1" Type="logiBUS::io::DQ::logiBUS_QXA" x="4000" y="100">
+		<FB Name="DigitalOutput_Q1" Type="logiBUS::io::DQ::logiBUS_QXA" x="800" y="700">
 			<Parameter Name="QI" Value="TRUE"/>
 			<Parameter Name="Output" Value="Output_Q1"/>
 		</FB>
-		<FB Name="AX_AND_2" Type="adapter::booleanOperators::AX_AND_2" x="2200" y="600">
+		<FB Name="AX_AND_2" Type="adapter::booleanOperators::AX_AND_2" x="-986.67" y="1220">
 		</FB>
-		<FB Name="DigitalInput_I2" Type="logiBUS::io::DI::logiBUS_IXA" x="400" y="700">
-			<Parameter Name="QI" Value="TRUE"/>
+		<FB Name="DigitalInput_I2" Type="logiBUS::io::DI::logiBUS_IXA" x="-2100" y="1513.33">
+			<Parameter Name="QI" Value="TRUE">
+				<Attribute Name="Visible" Value="false"/>
+			</Parameter>
+			<Parameter Name="PARAMS" Value="">
+				<Attribute Name="Visible" Value="false"/>
+			</Parameter>
 			<Parameter Name="Input" Value="Input_I2"/>
+			<Parameter Name="QO" Value="">
+				<Attribute Name="Visible" Value="false"/>
+			</Parameter>
 		</FB>
 		<AdapterConnections>
-			<Connection Source="AX_AND_2.OUT" Destination="DigitalOutput_Q1.OUT" dx1="573.33"/>
-			<Connection Source="DigitalInput_I1.IN" Destination="AX_AND_2.IN1" dx1="926.67"/>
-			<Connection Source="DigitalInput_I2.IN" Destination="AX_AND_2.IN2" dx1="926.67"/>
+			<Connection Source="AX_AND_2.OUT" Destination="DigitalOutput_Q1.OUT" dx1="366.67"/>
+			<Connection Source="DigitalInput_I1.IN" Destination="AX_AND_2.IN1" dx1="66.67"/>
+			<Connection Source="DigitalInput_I2.IN" Destination="AX_AND_2.IN2" dx1="66.67"/>
 		</AdapterConnections>
 	</SubAppNetwork>
 </SubAppType>

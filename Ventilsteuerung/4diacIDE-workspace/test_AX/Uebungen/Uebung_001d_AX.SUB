@@ -1,27 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<SubAppType Name="Uebung_006e2_AX" Comment="RS-Flip-Flop mit 2x IX">
+<SubAppType Name="Uebung_001d_AX" Comment="DigitalInput_I1 auf DigitalOutput_Q1, mit Plug and Socket">
 	<Identification Standard="61499-2" Description="Copyright (c) 2023 Meisterschulen am Ostbahnhof  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0">
 	</Identification>
 	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2023-10-23">
 	</VersionInfo>
 	<CompilerInfo packageName="Uebungen">
 		<Import declaration="logiBUS::io::DI::logiBUS_DI::Input_I1"/>
-		<Import declaration="logiBUS::io::DI::logiBUS_DI::Input_I2"/>
 		<Import declaration="logiBUS::io::DQ::logiBUS_DO::Output_Q1"/>
 	</CompilerInfo>
 	<SubAppInterfaceList>
 	</SubAppInterfaceList>
 	<SubAppNetwork>
-		<FB Name="MOTOR" Type="logiBUS::io::DQ::logiBUS_QXA" x="-3500" y="-2000">
-			<Parameter Name="QI" Value="TRUE">
-				<Attribute Name="Visible" Value="false"/>
-			</Parameter>
-			<Parameter Name="PARAMS" Value="">
-				<Attribute Name="Visible" Value="false"/>
-			</Parameter>
-			<Parameter Name="Output" Value="Output_Q1"/>
-		</FB>
-		<FB Name="START" Type="logiBUS::io::DI::logiBUS_IXA" x="-6600" y="-2600">
+		<FB Name="DigitalInput_I1" Type="logiBUS::io::DI::logiBUS_IXA" x="-4700" y="-600">
 			<Parameter Name="QI" Value="TRUE">
 				<Attribute Name="Visible" Value="false"/>
 			</Parameter>
@@ -29,22 +19,31 @@
 				<Attribute Name="Visible" Value="false"/>
 			</Parameter>
 			<Parameter Name="Input" Value="Input_I1"/>
+			<Parameter Name="QO" Value="">
+				<Attribute Name="Visible" Value="false"/>
+			</Parameter>
 		</FB>
-		<FB Name="STOP" Type="logiBUS::io::DI::logiBUS_IXA" x="-6600" y="-1200">
+		<FB Name="DigitalOutput_Q1" Type="logiBUS::io::DQ::logiBUS_QXA" x="-900" y="-600">
 			<Parameter Name="QI" Value="TRUE">
 				<Attribute Name="Visible" Value="false"/>
 			</Parameter>
 			<Parameter Name="PARAMS" Value="">
 				<Attribute Name="Visible" Value="false"/>
 			</Parameter>
-			<Parameter Name="Input" Value="Input_I2"/>
+			<Parameter Name="Output" Value="Output_Q1"/>
+			<Parameter Name="QO" Value="">
+				<Attribute Name="Visible" Value="false"/>
+			</Parameter>
 		</FB>
-		<FB Name="AX_FB_RS" Type="adapter::iec61131::bistableElements::AX_FB_RS" x="-5000" y="-1500">
+		<FB Name="AX_SPLIT_2" Type="adapter::events::unidirectional::AX_SPLIT_2" x="-3400" y="-300">
+		</FB>
+		<FB Name="AX_AND_2" Type="adapter::booleanOperators::AX_AND_2" x="-2300" y="-300">
 		</FB>
 		<AdapterConnections>
-			<Connection Source="AX_FB_RS.Q1" Destination="MOTOR.OUT" dx1="446.67"/>
-			<Connection Source="START.IN" Destination="AX_FB_RS.SET" dx1="600"/>
-			<Connection Source="STOP.IN" Destination="AX_FB_RS.RESET1" dx1="620"/>
+			<Connection Source="AX_SPLIT_2.OUT1" Destination="AX_AND_2.IN1"/>
+			<Connection Source="AX_SPLIT_2.OUT2" Destination="AX_AND_2.IN2"/>
+			<Connection Source="AX_AND_2.OUT" Destination="DigitalOutput_Q1.OUT" dx1="366.67"/>
+			<Connection Source="DigitalInput_I1.IN" Destination="AX_SPLIT_2.IN" dx1="146.67"/>
 		</AdapterConnections>
 	</SubAppNetwork>
 </SubAppType>

@@ -81,7 +81,7 @@
 				<Attribute Name="Visible" Value="false"/>
 			</Parameter>
 		</FB>
-		<FB Name="AX_SR_A" Type="adapter::iec61131::bistableElements::AX_FB_RS" x="-5200" y="-500">
+		<FB Name="AX_FB_RS_A" Type="adapter::iec61131::bistableElements::AX_FB_RS" x="-5200" y="-500">
 		</FB>
 		<FB Name="DigitalInput_CLK_I3" Type="logiBUS::io::DI::logiBUS_IXA" x="-8000" y="1800">
 			<Parameter Name="QI" Value="TRUE">
@@ -95,7 +95,7 @@
 				<Attribute Name="Visible" Value="false"/>
 			</Parameter>
 		</FB>
-		<FB Name="AX_SR_B" Type="adapter::iec61131::bistableElements::AX_FB_RS" x="-5200" y="1900">
+		<FB Name="AX_FB_RS_B" Type="adapter::iec61131::bistableElements::AX_FB_RS" x="-5200" y="1900">
 		</FB>
 		<FB Name="AX_TON" Type="adapter::events::unidirectional::timers::AX_TON" x="-6100" y="1400">
 			<Parameter Name="PT" Value="T#50ms"/>
@@ -108,14 +108,14 @@
 			<Connection Source="AX_OR_2.OUT" Destination="DigitalOutput_Q56.OUT" dx1="340"/>
 			<Connection Source="AX_SPLIT_2_A.OUT2" Destination="AX_OR_2.IN1" dx1="273.33"/>
 			<Connection Source="AX_SPLIT_2_B.OUT1" Destination="AX_OR_2.IN2" dx1="273.33"/>
-			<Connection Source="AX_SR_A.Q1" Destination="AX_SPLIT_2_A.IN" dx1="340"/>
-			<Connection Source="AX_SR_B.Q1" Destination="AX_SPLIT_2_B.IN"/>
-			<Connection Source="DigitalInput_CLK_I1.IN" Destination="AX_SR_A.SET" dx1="426.67"/>
+			<Connection Source="AX_FB_RS_A.Q1" Destination="AX_SPLIT_2_A.IN" dx1="340"/>
+			<Connection Source="AX_FB_RS_B.Q1" Destination="AX_SPLIT_2_B.IN"/>
+			<Connection Source="DigitalInput_CLK_I1.IN" Destination="AX_FB_RS_A.SET" dx1="426.67"/>
 			<Connection Source="DigitalInput_CLK_I2.IN" Destination="AX_SPLIT_2.IN" dx1="126.67"/>
-			<Connection Source="AX_TON.Q" Destination="AX_SR_B.SET" dx1="166.67"/>
-			<Connection Source="DigitalInput_CLK_I3.IN" Destination="AX_SR_B.RESET1" dx1="426.67"/>
+			<Connection Source="AX_TON.Q" Destination="AX_FB_RS_B.SET" dx1="166.67"/>
+			<Connection Source="DigitalInput_CLK_I3.IN" Destination="AX_FB_RS_B.RESET1" dx1="426.67"/>
 			<Connection Source="AX_SPLIT_2.OUT2" Destination="AX_TON.IN" dx1="80" dx2="80" dy="166.67"/>
-			<Connection Source="AX_SPLIT_2.OUT1" Destination="AX_SR_A.RESET1" dx1="473.33"/>
+			<Connection Source="AX_SPLIT_2.OUT1" Destination="AX_FB_RS_A.RESET1" dx1="473.33"/>
 		</AdapterConnections>
 	</SubAppNetwork>
 </SubAppType>
