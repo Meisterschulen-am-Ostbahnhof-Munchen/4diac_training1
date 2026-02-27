@@ -4,16 +4,14 @@
 	</Identification>
 	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Generated" Date="2025-02-27">
 	</VersionInfo>
-	<CompilerInfo packageName="isobus::UT">
+	<CompilerInfo packageName="isobus::UT::util">
 		<Import declaration="eclipse4diac::core::TypeHash"/>
 	</CompilerInfo>
 	<InterfaceList>
 		<EventInputs>
 			<Event Name="INIT" Type="EInit" Comment="Service Initialization">
 				<With Var="QI"/>
-				<With Var="u8Instance"/>
 				<With Var="poolFileName"/>
-				<With Var="colourDepth"/>
 			</Event>
 			<Event Name="REQ" Type="Event" Comment="Service Request - Reload pool">
 				<With Var="QI"/>
@@ -32,9 +30,7 @@
 		</EventOutputs>
 		<InputVars>
 			<VarDeclaration Name="QI" Type="BOOL" Comment="Quality Input - TRUE to enable service"/>
-			<VarDeclaration Name="u8Instance" Type="USINT" Comment="Identifier of the VT client instance (0-255)"/>
 			<VarDeclaration Name="poolFileName" Type="STRING" Comment="Path to pool file (e.g., pools/pool_de.iop)"/>
-			<VarDeclaration Name="colourDepth" Type="USINT" Comment="Color depth: 0=monochrome, 1=16 colors, 2=256 colors" InitialValue="2"/>
 		</InputVars>
 		<OutputVars>
 			<VarDeclaration Name="QO" Type="BOOL" Comment="Quality Output - TRUE if pool reload was successful"/>
