@@ -34,6 +34,9 @@ python script/comprehensive_scan.py
 
 # Check sequence naming patterns
 python script/scan_sequences.py
+
+# Check for missing AX FB variants in library
+python script/check_missing_ax_fbs.py
 ```
 
 **File Conversion:**
@@ -88,7 +91,7 @@ Ventilsteuerung/4diacIDE-workspace/
 **Function Block Instances:**
 - Use descriptive CamelCase names: `DigitalInput_I1`, `Timer_ON`, `ValveControl`
 - **NEVER** use a type name as an instance name if it's a different type
-- Bad: Name="E_T_FF" Type="E_T_FF_SR" (confusing - instance name is a different type)
+- Bad: Name="E_T_FF" Type="E_T_FF_SR"
 - Good: Name="E_T_FF_SR" Type="E_T_FF_SR" or Name="MyTimer" Type="E_T_FF_SR"
 
 **Type References:**
