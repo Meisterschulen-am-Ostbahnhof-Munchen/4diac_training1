@@ -11,7 +11,6 @@
 		<EventInputs>
 			<Event Name="INIT" Type="EInit" Comment="Service Initialization">
 				<With Var="QI"/>
-				<With Var="u8Instance"/>
 				<With Var="versionString"/>
 			</Event>
 			<Event Name="REQ" Type="Event" Comment="Service Request - Delete pool version">
@@ -31,8 +30,7 @@
 		</EventOutputs>
 		<InputVars>
 			<VarDeclaration Name="QI" Type="BOOL" Comment="Quality Input - TRUE to enable service"/>
-			<VarDeclaration Name="u8Instance" Type="USINT" Comment="Identifier of the VT client instance (0-255)"/>
-			<VarDeclaration Name="versionString" Type="STRING" Comment="Version label to delete (use spaces for last stored pool)" InitialValue="'       '"/>
+			<VarDeclaration Name="versionString" Type="STRING" Comment="Version label to delete (use spaces for last stored pool)" InitialValue="&quot;       &quot;"/>
 		</InputVars>
 		<OutputVars>
 			<VarDeclaration Name="QO" Type="BOOL" Comment="Quality Output - TRUE if deletion was successful"/>
