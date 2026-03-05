@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<FBType Name="SPLIT_AB_INTO_AX" Comment="this Function extracts the 8 BOOLS from a byte">
+	<Identification Standard="61499-2" Description="Copyright (c) 2026 Meisterschulen am Ostbahnhof&#10;&#10;SPDX-License-Identifier: EPL-2.0">
+	</Identification>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="franz" Date="2026-03-05">
+	</VersionInfo>
+	<CompilerInfo packageName="adapter::splitting">
+	</CompilerInfo>
+	<InterfaceList>
+		<Plugs>
+			<AdapterDeclaration Name="BIT_00" Type="adapter::types::unidirectional::AX" Comment="Bool Bit 0"/>
+			<AdapterDeclaration Name="BIT_01" Type="adapter::types::unidirectional::AX" Comment="Bool Bit 1"/>
+			<AdapterDeclaration Name="BIT_02" Type="adapter::types::unidirectional::AX" Comment="Bool Bit 2"/>
+			<AdapterDeclaration Name="BIT_03" Type="adapter::types::unidirectional::AX" Comment="Bool Bit 3"/>
+			<AdapterDeclaration Name="BIT_04" Type="adapter::types::unidirectional::AX" Comment="Bool Bit 4"/>
+			<AdapterDeclaration Name="BIT_05" Type="adapter::types::unidirectional::AX" Comment="Bool Bit 5"/>
+			<AdapterDeclaration Name="BIT_06" Type="adapter::types::unidirectional::AX" Comment="Bool Bit 6"/>
+			<AdapterDeclaration Name="BIT_07" Type="adapter::types::unidirectional::AX" Comment="Bool Bit 7"/>
+		</Plugs>
+		<Sockets>
+			<AdapterDeclaration Name="IN" Type="adapter::types::unidirectional::AB" Comment="BYTE Input"/>
+		</Sockets>
+	</InterfaceList>
+	<BasicFB>
+		<ECC>
+			<ECState Name="START" Comment="Initial State" x="550" y="425">
+			</ECState>
+			<ECState Name="Convert" x="1920" y="720">
+			</ECState>
+			<ECTransition Source="START" Destination="Convert" Condition="IN.E1" Comment="" x="1280" y="346.67"/>
+			<ECTransition Source="Convert" Destination="START" Condition="1" Comment="" x="1340" y="900"/>
+		</ECC>
+		<Algorithm Name="Convert">
+			<ST><![CDATA[ALGORITHM Convert
+BIT_00.D1 := IN.D1.%X0;
+BIT_01.D1 := IN.D1.%X1;
+BIT_02.D1 := IN.D1.%X2;
+BIT_03.D1 := IN.D1.%X3;
+BIT_04.D1 := IN.D1.%X4;
+BIT_05.D1 := IN.D1.%X5;
+BIT_06.D1 := IN.D1.%X6;
+BIT_07.D1 := IN.D1.%X7;
+END_ALGORITHM
+
+]]></ST>
+		</Algorithm>
+	</BasicFB>
+</FBType>
