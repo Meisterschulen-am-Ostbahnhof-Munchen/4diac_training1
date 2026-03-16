@@ -37,19 +37,27 @@
 		<FB Name="STRUCT_DEMUX" Type="eclipse4diac::convert::STRUCT_DEMUX" x="-1900" y="5300">
 			<Attribute Name="StructuredType" Type="STRING" Value="isobus::pgn::CAN_MSG"/>
 		</FB>
+		<FB Name="ARR08B_TO_BYTES" Type="logiBUS::utils::conversion::arr::forwarding::ARR08B_TO_BYTES" x="-100" y="5800">
+		</FB>
+		<FB Name="SPLIT_BYTE_INTO_BOOLS" Type="eclipse4diac::utils::splitting::SPLIT_BYTE_INTO_BOOLS" x="1700" y="5900">
+		</FB>
 		<EventConnections>
 			<Connection Source="NmGetCfInfo_1.IND" Destination="STRUCT_DEMUX_3.REQ" dx1="593.33"/>
 			<Connection Source="NmGetCfInfo_1.IND" Destination="STRUCT_DEMUX_4.REQ" dx1="593.33"/>
 			<Connection Source="NmGetCfInfo_1.IND" Destination="STRUCT_DEMUX_5.REQ" dx1="593.33"/>
 			<Connection Source="NmGetCfInfo_1.IND" Destination="AlPgnRxNew8Bcylc.install" dx1="2366.67"/>
 			<Connection Source="AlPgnRxNew8Bcylc.IND" Destination="STRUCT_DEMUX.REQ" dx1="366.67"/>
+			<Connection Source="STRUCT_DEMUX.CNF" Destination="ARR08B_TO_BYTES.REQ" dx1="473.33"/>
+			<Connection Source="ARR08B_TO_BYTES.CNF" Destination="SPLIT_BYTE_INTO_BOOLS.REQ" dx1="406.67"/>
 		</EventConnections>
 		<DataConnections>
 			<Connection Source="NmGetCfInfo_1.sNameField" Destination="STRUCT_DEMUX_3.IN" dx1="560"/>
 			<Connection Source="NmGetCfInfo_1.sNetEv" Destination="STRUCT_DEMUX_5.IN" dx1="660"/>
 			<Connection Source="NmGetCfInfo_1.sCfInfo" Destination="STRUCT_DEMUX_4.IN" dx1="626.67"/>
-			<Connection Source="NmGetCfInfo_1.sNetEv" Destination="AlPgnRxNew8Bcylc.NmSource"/>
+			<Connection Source="NmGetCfInfo_1.sNetEv" Destination="AlPgnRxNew8Bcylc.NmSource" dx1="2313.33"/>
 			<Connection Source="AlPgnRxNew8Bcylc.Data" Destination="STRUCT_DEMUX.IN" dx1="166.67"/>
+			<Connection Source="STRUCT_DEMUX.data" Destination="ARR08B_TO_BYTES.IN" dx1="473.33"/>
+			<Connection Source="ARR08B_TO_BYTES.OUT_00" Destination="SPLIT_BYTE_INTO_BOOLS.IN" dx1="406.67"/>
 		</DataConnections>
 	</SubAppNetwork>
 </SubAppType>
