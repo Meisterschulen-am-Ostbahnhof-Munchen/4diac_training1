@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<FBType Name="ASSEMBLE_AB_FROM_AX" Comment="this Function combines the 8 AX (BOOL) adapters to a AB (BYTE)">
+	<Identification Standard="61499-2" Description="Copyright (c) 2026 Meisterschulen am Ostbahnhof&#10;&#10;SPDX-License-Identifier: EPL-2.0">
+	</Identification>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="franz" Date="2026-03-05">
+	</VersionInfo>
+	<CompilerInfo packageName="adapter::assembling">
+	</CompilerInfo>
+	<InterfaceList>
+		<Plugs>
+			<AdapterDeclaration Name="OUT" Type="adapter::types::unidirectional::AB" Comment="BYTE Output" x="2000" y="0"/>
+		</Plugs>
+		<Sockets>
+			<AdapterDeclaration Name="BIT_00" Type="adapter::types::unidirectional::AX" Comment="Bool Bit 0" x="0" y="0"/>
+			<AdapterDeclaration Name="BIT_01" Type="adapter::types::unidirectional::AX" Comment="Bool Bit 1" x="0" y="0"/>
+			<AdapterDeclaration Name="BIT_02" Type="adapter::types::unidirectional::AX" Comment="Bool Bit 2" x="0" y="0"/>
+			<AdapterDeclaration Name="BIT_03" Type="adapter::types::unidirectional::AX" Comment="Bool Bit 3" x="0" y="0"/>
+			<AdapterDeclaration Name="BIT_04" Type="adapter::types::unidirectional::AX" Comment="Bool Bit 4" x="0" y="0"/>
+			<AdapterDeclaration Name="BIT_05" Type="adapter::types::unidirectional::AX" Comment="Bool Bit 5" x="0" y="0"/>
+			<AdapterDeclaration Name="BIT_06" Type="adapter::types::unidirectional::AX" Comment="Bool Bit 6" x="0" y="0"/>
+			<AdapterDeclaration Name="BIT_07" Type="adapter::types::unidirectional::AX" Comment="Bool Bit 7" x="0" y="0"/>
+		</Sockets>
+	</InterfaceList>
+</FBType>
