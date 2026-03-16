@@ -59,9 +59,9 @@
 			<VarDeclaration Name="STATE" Type="STRING"/>
 		</OutputVars>
 		<Plugs>
-			<AdapterDeclaration Name="POWERED" Type="adapter::types::unidirectional::AX" Comment="Actuate &quot;Open&quot; Valve for Pneumatic"/>
-			<AdapterDeclaration Name="OPEN" Type="adapter::types::unidirectional::AX" Comment="Actuate &quot;Open&quot; Valve"/>
-			<AdapterDeclaration Name="CLOSE" Type="adapter::types::unidirectional::AX" Comment="Actuate &quot;Close&quot; Valve"/>
+			<AdapterDeclaration Name="Q_POWERED" Type="adapter::types::unidirectional::AX" Comment="Actuate &quot;Open&quot; Valve for Pneumatic"/>
+			<AdapterDeclaration Name="Q_OPEN" Type="adapter::types::unidirectional::AX" Comment="Actuate &quot;Open&quot; Valve"/>
+			<AdapterDeclaration Name="Q_CLOSE" Type="adapter::types::unidirectional::AX" Comment="Actuate &quot;Close&quot; Valve"/>
 			<AdapterDeclaration Name="timeOut" Type="iec61499::events::ATimeOut" Comment="timeOut Adapter"/>
 		</Plugs>
 	</InterfaceList>
@@ -74,44 +74,44 @@
 			</ECState>
 			<ECState Name="Closed" x="3520" y="1040">
 				<ECAction Algorithm="Closed" Output="EO"/>
-				<ECAction Output="CLOSE.E1"/>
+				<ECAction Output="Q_CLOSE.E1"/>
 			</ECState>
 			<ECState Name="DeInit" x="1140" y="1520">
 				<ECAction Algorithm="deInitialize" Output="INITO"/>
 			</ECState>
 			<ECState Name="Opened" x="7040" y="1040">
 				<ECAction Algorithm="Opened" Output="EO"/>
-				<ECAction Output="OPEN.E1"/>
+				<ECAction Output="Q_OPEN.E1"/>
 			</ECState>
 			<ECState Name="Closing" x="5120" y="2560">
 				<ECAction Algorithm="Closing" Output="EO"/>
-				<ECAction Output="CLOSE.E1"/>
-				<ECAction Output="POWERED.E1"/>
+				<ECAction Output="Q_CLOSE.E1"/>
+				<ECAction Output="Q_POWERED.E1"/>
 				<ECAction Output="timeOut.START"/>
 			</ECState>
 			<ECState Name="Opening" x="5280" y="160">
 				<ECAction Algorithm="Opening" Output="EO"/>
-				<ECAction Output="OPEN.E1"/>
-				<ECAction Output="POWERED.E1"/>
+				<ECAction Output="Q_OPEN.E1"/>
+				<ECAction Output="Q_POWERED.E1"/>
 				<ECAction Output="timeOut.START"/>
 			</ECState>
 			<ECState Name="Opening_STOP" x="5040" y="1120">
-				<ECAction Algorithm="STOP" Output="OPEN.E1"/>
+				<ECAction Algorithm="STOP" Output="Q_OPEN.E1"/>
 				<ECAction Output="timeOut.STOP"/>
 			</ECState>
 			<ECState Name="Closing_STOP" x="4800" y="1520">
-				<ECAction Algorithm="STOP" Output="CLOSE.E1"/>
+				<ECAction Algorithm="STOP" Output="Q_CLOSE.E1"/>
 				<ECAction Output="timeOut.STOP"/>
 			</ECState>
 			<ECState Name="Unknown" x="4640" y="4480">
 				<ECAction Algorithm="Unknown" Output="EO"/>
 			</ECState>
 			<ECState Name="Opening_STOP_R" x="3600" y="2960">
-				<ECAction Algorithm="STOP" Output="OPEN.E1"/>
+				<ECAction Algorithm="STOP" Output="Q_OPEN.E1"/>
 				<ECAction Output="timeOut.STOP"/>
 			</ECState>
 			<ECState Name="Closing_STOP_R" x="5440" y="3360">
-				<ECAction Algorithm="STOP" Output="CLOSE.E1"/>
+				<ECAction Algorithm="STOP" Output="Q_CLOSE.E1"/>
 				<ECAction Output="timeOut.STOP"/>
 			</ECState>
 			<ECState Name="INIT3" x="3493.33" y="13.33">
@@ -162,9 +162,9 @@ Softkey := SK.Closed;
 Button := BT.Closed;
 Auxiliary.Picture := AUXC.Picture.Closed;
 Auxiliary.u8Colour := AUXC.u8Colour.Closed;
-POWERED.D1 := BOOL#FALSE;
-OPEN.D1 := BOOL#FALSE;
-CLOSE.D1 := BOOL#FALSE;
+Q_POWERED.D1 := BOOL#FALSE;
+Q_OPEN.D1 := BOOL#FALSE;
+Q_CLOSE.D1 := BOOL#FALSE;
 END_ALGORITHM]]></ST>
 		</Algorithm>
 		<Algorithm Name="Opening">
@@ -177,9 +177,9 @@ Button := BT.Opening;
 Auxiliary.Picture := AUXC.Picture.Opening;
 Auxiliary.u8Colour := AUXC.u8Colour.Opening;
 timeOut.DT := DT_Opening;
-POWERED.D1 := BOOL#TRUE;
-OPEN.D1 := BOOL#TRUE;
-CLOSE.D1 := BOOL#FALSE;
+Q_POWERED.D1 := BOOL#TRUE;
+Q_OPEN.D1 := BOOL#TRUE;
+Q_CLOSE.D1 := BOOL#FALSE;
 END_ALGORITHM]]></ST>
 		</Algorithm>
 		<Algorithm Name="Opened">
@@ -191,9 +191,9 @@ Softkey := SK.Opened;
 Button := BT.Opened;
 Auxiliary.Picture := AUXC.Picture.Opened;
 Auxiliary.u8Colour := AUXC.u8Colour.Opened;
-POWERED.D1 := BOOL#TRUE;
-OPEN.D1 := BOOL#FALSE;
-CLOSE.D1 := BOOL#FALSE;
+Q_POWERED.D1 := BOOL#TRUE;
+Q_OPEN.D1 := BOOL#FALSE;
+Q_CLOSE.D1 := BOOL#FALSE;
 END_ALGORITHM]]></ST>
 		</Algorithm>
 		<Algorithm Name="Closing">
@@ -206,9 +206,9 @@ Button := BT.Closing;
 Auxiliary.Picture := AUXC.Picture.Closing;
 Auxiliary.u8Colour := AUXC.u8Colour.Closing;
 timeOut.DT := DT_Closing;
-POWERED.D1 := BOOL#FALSE;
-OPEN.D1 := BOOL#FALSE;
-CLOSE.D1 := BOOL#TRUE;
+Q_POWERED.D1 := BOOL#FALSE;
+Q_OPEN.D1 := BOOL#FALSE;
+Q_CLOSE.D1 := BOOL#TRUE;
 END_ALGORITHM]]></ST>
 		</Algorithm>
 		<Algorithm Name="STOP">
@@ -216,8 +216,8 @@ END_ALGORITHM]]></ST>
 
 ALGORITHM STOP
 // Powered_unchanged
-OPEN.D1 := BOOL#FALSE;
-CLOSE.D1 := BOOL#FALSE;
+Q_OPEN.D1 := BOOL#FALSE;
+Q_CLOSE.D1 := BOOL#FALSE;
 END_ALGORITHM]]></ST>
 		</Algorithm>
 		<Algorithm Name="Unknown">
@@ -229,9 +229,9 @@ Softkey := SK.Unknown;
 Button := BT.Unknown;
 Auxiliary.Picture := AUXC.Picture.Unknown;
 Auxiliary.u8Colour := AUXC.u8Colour.Unknown;
-POWERED.D1 := BOOL#FALSE;
-OPEN.D1 := BOOL#FALSE;
-CLOSE.D1 := BOOL#FALSE;
+Q_POWERED.D1 := BOOL#FALSE;
+Q_OPEN.D1 := BOOL#FALSE;
+Q_CLOSE.D1 := BOOL#FALSE;
 END_ALGORITHM
 
 ]]></ST>
