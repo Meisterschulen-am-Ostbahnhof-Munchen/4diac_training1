@@ -10,7 +10,7 @@
 	</CompilerInfo>
 	<InterfaceList>
 		<EventInputs>
-			<Event Name="INIT" Type="EInit" Comment="Init Request">
+			<Event Name="EINIT" Type="EInit" Comment="Init Request">
 			</Event>
 			<Event Name="REQ" Type="Event" Comment="Normal Execution Request">
 				<With Var="in"/>
@@ -44,8 +44,8 @@
 			<VarDeclaration Name="tx" Type="UDINT" Comment="Current execution time"/>
 			<VarDeclaration Name="init" Type="BOOL" Comment="Initialization flag"/>
 		</InternalVars>
-		<ECState Name="INIT" Comment="Initialization">
-			<ECAction Algorithm="INIT" Output="INITO"/>
+		<ECState Name="EINIT" Comment="Initialization">
+			<ECAction Algorithm="EINIT" Output="INITO"/>
 		</ECState>
 		<ECState Name="REQ" Comment="Normal Operation">
 			<ECAction Algorithm="REQ" Output="CNF"/>
@@ -53,8 +53,8 @@
 		<ECState Name="RST">
 			<ECAction Algorithm="RST" Output="CNF"/>
 		</ECState>
-		<Algorithm Name="INIT">
-			<ST><![CDATA[ALGORITHM INIT
+		<Algorithm Name="EINIT">
+			<ST><![CDATA[ALGORITHM EINIT
 (* Reset logic *)
 init := FALSE;
 out := 0.0;

@@ -9,7 +9,7 @@
 	</CompilerInfo>
 	<InterfaceList>
 		<EventInputs>
-			<Event Name="INIT" Type="EInit" Comment="Init Request">
+			<Event Name="EINIT" Type="EInit" Comment="Init Request">
 			</Event>
 			<Event Name="REQ" Type="Event" Comment="Normal Execution Request">
 				<With Var="in"/>
@@ -46,8 +46,8 @@
 			<VarDeclaration Name="last" Type="UDINT"/>
 			<VarDeclaration Name="init" Type="BOOL"/>
 		</InternalVars>
-		<ECState Name="INIT">
-			<ECAction Algorithm="INIT" Output="INITO"/>
+		<ECState Name="EINIT">
+			<ECAction Algorithm="EINIT" Output="INITO"/>
 		</ECState>
 		<ECState Name="REQ">
 			<ECAction Algorithm="REQ" Output="CNF"/>
@@ -55,8 +55,8 @@
 		<ECState Name="RST">
 			<ECAction Algorithm="RST" Output="CNF"/>
 		</ECState>
-		<Algorithm Name="INIT">
-			<ST><![CDATA[ALGORITHM INIT
+		<Algorithm Name="EINIT">
+			<ST><![CDATA[ALGORITHM EINIT
 init := FALSE;
 END_ALGORITHM]]></ST>
 		</Algorithm>

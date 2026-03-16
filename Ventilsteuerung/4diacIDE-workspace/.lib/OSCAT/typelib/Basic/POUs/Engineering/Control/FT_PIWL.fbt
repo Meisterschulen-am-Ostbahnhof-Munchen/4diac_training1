@@ -9,7 +9,7 @@
 	</CompilerInfo>
 	<InterfaceList>
 		<EventInputs>
-			<Event Name="INIT" Type="EInit" Comment="Init Request">
+			<Event Name="EINIT" Type="EInit" Comment="Init Request">
 			</Event>
 			<Event Name="REQ" Type="Event" Comment="Normal Execution Request">
 				<With Var="IN"/>
@@ -54,8 +54,8 @@
 			<VarDeclaration Name="i" Type="REAL" Comment="Integrator Value"/>
 			<VarDeclaration Name="p" Type="REAL" Comment="Proportional Value"/>
 		</InternalVars>
-		<ECState Name="INIT">
-			<ECAction Algorithm="INIT" Output="INITO"/>
+		<ECState Name="EINIT">
+			<ECAction Algorithm="EINIT" Output="INITO"/>
 		</ECState>
 		<ECState Name="REQ">
 			<ECAction Algorithm="REQ" Output="CNF"/>
@@ -63,8 +63,8 @@
 		<ECState Name="RST">
 			<ECAction Algorithm="RST" Output="CNF"/>
 		</ECState>
-		<Algorithm Name="INIT">
-			<ST><![CDATA[ALGORITHM INIT
+		<Algorithm Name="EINIT">
+			<ST><![CDATA[ALGORITHM EINIT
 (* Reset internal states *)
 init := FALSE;
 in_last := IN;
@@ -77,7 +77,7 @@ END_ALGORITHM]]></ST>
 			<ST><![CDATA[
 
 ALGORITHM RST
-this.INIT();
+this.EINIT();
 init := TRUE;
 END_ALGORITHM]]></ST>
 		</Algorithm>

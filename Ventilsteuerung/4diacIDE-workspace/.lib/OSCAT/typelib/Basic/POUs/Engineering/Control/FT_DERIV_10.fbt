@@ -9,7 +9,7 @@
 	</CompilerInfo>
 	<InterfaceList>
 		<EventInputs>
-			<Event Name="INIT" Type="EInit" Comment="Init Request">
+			<Event Name="EINIT" Type="EInit" Comment="Init Request">
 			</Event>
 			<Event Name="REQ" Type="Event" Comment="Normal Execution Request">
 				<With Var="in"/>
@@ -99,8 +99,8 @@
 			<VarDeclaration Name="MAX_CNT" Type="INT" Comment="cnt max" InitialValue="11"/>
 			<VarDeclaration Name="INCR" Type="INT" Comment="increment" InitialValue="1"/>
 		</InternalConstVars>
-		<ECState Name="INIT">
-			<ECAction Algorithm="INIT" Output="INITO"/>
+		<ECState Name="EINIT">
+			<ECAction Algorithm="EINIT" Output="INITO"/>
 		</ECState>
 		<ECState Name="REQ">
 			<ECAction Algorithm="REQ" Output="CNF"/>
@@ -108,8 +108,8 @@
 		<ECState Name="RST">
 			<ECAction Algorithm="RST" Output="CNF"/>
 		</ECState>
-		<Algorithm Name="INIT">
-			<ST><![CDATA[ALGORITHM INIT
+		<Algorithm Name="EINIT">
+			<ST><![CDATA[ALGORITHM EINIT
 init_done := FALSE;
 cnt := 0;
 ptr := 0;
