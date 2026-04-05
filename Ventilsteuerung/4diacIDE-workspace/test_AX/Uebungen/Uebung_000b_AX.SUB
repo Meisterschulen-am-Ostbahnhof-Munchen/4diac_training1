@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SubAppType Name="Uebung_000b_AX" Comment="AX_AND">
+	<Identification Standard="61499-2" Description="Copyright (c) 2026 Meisterschulen am Ostbahnhof  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0">
+	</Identification>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2026-01-16">
+	</VersionInfo>
+	<CompilerInfo packageName="Uebungen">
+	</CompilerInfo>
+	<SubAppInterfaceList>
+	</SubAppInterfaceList>
+	<SubAppNetwork>
+		<FB Name="AX_AND_2" Type="adapter::booleanOperators::AX_AND_2" x="400" y="400">
+		</FB>
+		<FB Name="AX_X_TO_BOOL" Type="adapter::conversion::unidirectional::AX_X_TO_BOOL" x="2000" y="200">
+		</FB>
+		<FB Name="AX_BOOL_TO_X" Type="adapter::conversion::unidirectional::AX_BOOL_TO_X" x="-1000" y="-100">
+			<Parameter Name="OUT" Value="TRUE"/>
+		</FB>
+		<FB Name="AX_BOOL_TO_X_1" Type="adapter::conversion::unidirectional::AX_BOOL_TO_X" x="-1000" y="600">
+			<Parameter Name="OUT" Value="TRUE"/>
+		</FB>
+		<AdapterConnections>
+			<Connection Source="AX_BOOL_TO_X.AX_OUT" Destination="AX_AND_2.IN1" dx1="326.67"/>
+			<Connection Source="AX_BOOL_TO_X_1.AX_OUT" Destination="AX_AND_2.IN2" dx1="473.33"/>
+			<Connection Source="AX_AND_2.OUT" Destination="AX_X_TO_BOOL.AX_IN" dx1="266.67"/>
+		</AdapterConnections>
+	</SubAppNetwork>
+</SubAppType>
