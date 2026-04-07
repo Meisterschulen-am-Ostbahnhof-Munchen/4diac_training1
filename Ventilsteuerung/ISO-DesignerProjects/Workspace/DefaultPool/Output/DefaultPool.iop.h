@@ -1,4 +1,4 @@
-// ISO-Designer ISO 11783   Version 5.7.1.6514 Bucher Automation AG
+// ISO-Designer ISO 11783   Version 5.7.2.6664 Bucher Automation AG
 // Do not change!
 #define ISO_DESIGNATOR_WIDTH                 80
 #define ISO_DESIGNATOR_HEIGHT                80
@@ -72,6 +72,7 @@
 #define information                       20001
 #define alert                             20002
 #define Caution                           20003
+#define Meisterschulen_LogoG1_256_20004   20004
 #define Logos_icon                        20500
 #define FontAttributes_6x8                23000
 #define FontAttributes_8x12               23001
