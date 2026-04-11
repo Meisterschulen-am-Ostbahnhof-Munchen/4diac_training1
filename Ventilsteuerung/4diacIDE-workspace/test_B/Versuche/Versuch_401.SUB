@@ -28,11 +28,9 @@
 		</FB>
 		<FB Name="CountOfElements" Type="eclipse4diac::convert::CountOfElements" x="2900" y="-400">
 		</FB>
-		<FB Name="F_UPPER_BOUND" Type="eclipse4diac::convert::F_UPPER_BOUND" x="2900" y="900">
-			<Parameter Name="DIM" Value="1"/>
+		<FB Name="F_UPPER_BOUND" Type="iec61131::arrays::F_UPPER_BOUND" x="2900" y="900">
 		</FB>
-		<FB Name="F_LOWER_BOUND" Type="eclipse4diac::convert::F_LOWER_BOUND" x="2900" y="200">
-			<Parameter Name="DIM" Value="1"/>
+		<FB Name="F_LOWER_BOUND" Type="iec61131::arrays::F_LOWER_BOUND" x="2900" y="200">
 		</FB>
 		<EventConnections>
 			<Connection Source="INIT_ARR_8_INT.INITO" Destination="SUM.REQ" dx1="133.33"/>
@@ -53,8 +51,8 @@
 			<Connection Source="INIT_ARR_8_INT.D1" Destination="ARR_MAX.A" dx1="66.67"/>
 			<Connection Source="INIT_ARR_8_INT.D1" Destination="AVG.A" dx1="66.67"/>
 			<Connection Source="INIT_ARR_8_INT.D1" Destination="CountOfElements.IN_ARRAY" dx1="66.67"/>
-			<Connection Source="INIT_ARR_8_INT.D1" Destination="F_UPPER_BOUND.IN_ARRAY" dx1="580"/>
-			<Connection Source="INIT_ARR_8_INT.D1" Destination="F_LOWER_BOUND.IN_ARRAY" dx1="580"/>
+			<Connection Source="INIT_ARR_8_INT.D1" Destination="F_UPPER_BOUND.ARR" dx1="580"/>
+			<Connection Source="INIT_ARR_8_INT.D1" Destination="F_LOWER_BOUND.ARR" dx1="580"/>
 		</DataConnections>
 	</SubAppNetwork>
 </SubAppType>

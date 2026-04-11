@@ -43,8 +43,8 @@
 		<FB Name="NetEv2NetEv" Type="isobus::pgn::NetEv2NetEv" x="-4900" y="4100">
 			<Parameter Name="s16Handle" Value="GLOBAL_A"/>
 		</FB>
-		<FB Name="INIT_ARR_0032_BYTE" Type="logiBUS::utils::generate::INIT_ARR_0032_BYTE" x="-4600" y="3000">
-			<Parameter Name="D1" Value="[16#01, 16#00, 16#00, 16#00, 16#00, 16#AA, 16#00, 16#00, 16#00, 16#00, 16#00, 16#00, 16#00, 16#00, 16#00, 16#00, 16#00, 16#00, 16#00, 16#00, 16#00, 16#00, 16#00, 16#00, 16#00, 16#00, 16#00, 16#00, 16#00, 16#00, 16#00, 16#00]"/>
+		<FB Name="INIT_ARR_0032_BYTE" Type="eclipse4diac::convert::providers::PROVIDE_ARR_0032_BYTE" x="-5000" y="2600">
+			<Parameter Name="D1" Value="[16#00, 16#00, 16#00, 16#00, 16#00, 16#00, 16#00, 16#00, 16#00, 16#00, 16#00, 16#00, 16#00, 16#00, 16#00, 16#00, 16#00, 16#00, 16#00, 16#00, 16#00, 16#00, 16#00, 16#00, 16#00, 16#00, 16#00, 16#00, 16#00, 16#00, 16#00, 16#00]"/>
 		</FB>
 		<EventConnections>
 			<Connection Source="NmGetCfInfo_1.IND" Destination="STRUCT_DEMUX_3.REQ" dx1="593.33"/>
@@ -62,7 +62,6 @@
 			<Connection Source="NmGetCfInfo_1.sNetEv" Destination="NetEv2NetEv.IN" dx1="2020"/>
 			<Connection Source="NetEv2NetEv." Destination="AlPgnTxNew_TP.NmDestin" dx1="680"/>
 			<Connection Source="INIT_ARR_0032_BYTE.D1" Destination="AlPgnTxNew_TP.Data" dx1="80"/>
-			<Connection Source="INIT_ARR_0032_BYTE.u16DaSize" Destination="AlPgnTxNew_TP.u16DaSize" dx1="233.33"/>
 		</DataConnections>
 	</SubAppNetwork>
 </SubAppType>
