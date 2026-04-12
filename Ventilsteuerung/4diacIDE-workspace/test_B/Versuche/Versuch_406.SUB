@@ -26,7 +26,7 @@
 		</FB>
 		<FB Name="AVG" Type="logiBUS::utils::dyn_arr::AVG" x="2946.67" y="4520">
 		</FB>
-		<FB Name="CountOfElements" Type="eclipse4diac::convert::CountOfElements" x="3000" y="900">
+		<FB Name="CountOfElements" Type="eclipse4diac::utils::arrays::F_LEN_ARRAY" x="3000" y="900">
 		</FB>
 		<EventConnections>
 			<Connection Source="GET_AT_INDEX.CNF" Destination="F_MOVE.REQ" dx1="66.67"/>
@@ -44,7 +44,7 @@
 			<Connection Source="INIT_ARR_8_INT.D1" Destination="ARR_MIN.A" dx1="66.67"/>
 			<Connection Source="INIT_ARR_8_INT.D1" Destination="ARR_MAX.A" dx1="66.67"/>
 			<Connection Source="INIT_ARR_8_INT.D1" Destination="AVG.A" dx1="66.67"/>
-			<Connection Source="INIT_ARR_8_INT.D1" Destination="CountOfElements.IN_ARRAY" dx1="66.67"/>
+			<Connection Source="INIT_ARR_8_INT.D1" Destination="CountOfElements.ARR" dx1="66.67"/>
 		</DataConnections>
 	</SubAppNetwork>
 </SubAppType>

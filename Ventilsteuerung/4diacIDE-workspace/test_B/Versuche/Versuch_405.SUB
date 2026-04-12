@@ -15,7 +15,7 @@
 		<FB Name="F_MOVE" Type="iec61131::selection::F_MOVE" x="4026.67" y="6406.67">
 			<Attribute Name="DataType" Value="INT"/>
 		</FB>
-		<FB Name="CountOfElements" Type="eclipse4diac::convert::CountOfElements" x="2526.67" y="7340">
+		<FB Name="CountOfElements" Type="eclipse4diac::utils::arrays::F_LEN_ARRAY" x="2526.67" y="7340">
 		</FB>
 		<FB Name="F_UPPER_BOUND" Type="iec61131::arrays::F_UPPER_BOUND" x="2900" y="5300">
 		</FB>
@@ -26,7 +26,7 @@
 		</FB>
 		<FB Name="ARRAY2ARRAY_8_INT" Type="eclipse4diac::convert::ARRAY2ARRAY_8_INT" x="2526.67" y="4580">
 		</FB>
-		<FB Name="CountOfElements_1" Type="eclipse4diac::convert::CountOfElements" x="4440" y="4640">
+		<FB Name="CountOfElements_1" Type="eclipse4diac::utils::arrays::F_LEN_ARRAY" x="4700" y="4500">
 		</FB>
 		<EventConnections>
 			<Connection Source="GET_AT_INDEX.CNF" Destination="F_MOVE.REQ" dx1="66.67"/>
@@ -42,9 +42,9 @@
 			<Connection Source="VALUES2ARRAY_8_INT.D1" Destination="GET_AT_INDEX.IN_ARRAY" dx1="66.67"/>
 			<Connection Source="VALUES2ARRAY_8_INT.D1" Destination="F_UPPER_BOUND.ARR" dx1="320"/>
 			<Connection Source="VALUES2ARRAY_8_INT.D1" Destination="F_LOWER_BOUND.ARR" dx1="66.67"/>
-			<Connection Source="VALUES2ARRAY_8_INT.D1" Destination="CountOfElements.IN_ARRAY" dx1="66.67"/>
+			<Connection Source="VALUES2ARRAY_8_INT.D1" Destination="CountOfElements.ARR" dx1="66.67"/>
 			<Connection Source="VALUES2ARRAY_8_INT.D1" Destination="ARRAY2ARRAY_8_INT.IN" dx1="66.67"/>
-			<Connection Source="ARRAY2ARRAY_8_INT.OUT" Destination="CountOfElements_1.IN_ARRAY" dx1="413.33"/>
+			<Connection Source="ARRAY2ARRAY_8_INT.OUT" Destination="CountOfElements_1.ARR" dx1="413.33"/>
 		</DataConnections>
 	</SubAppNetwork>
 </SubAppType>
