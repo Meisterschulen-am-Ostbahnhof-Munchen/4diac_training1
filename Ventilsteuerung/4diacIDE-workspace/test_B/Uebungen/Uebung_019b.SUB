@@ -26,7 +26,6 @@
 			<Parameter Name="InputEvent" Value="BUTTON_SINGLE_CLICK"/>
 		</FB>
 		<FB Name="Q_ActiveMask" Type="isobus::UT::Q::Q_ActiveMask" x="-1100" y="-400">
-			<Parameter Name="u16WorkSetId" Value="WorkingSet_0"/>
 		</FB>
 		<FB Name="DigitalInput_CLK_I2" Type="logiBUS::io::DI::logiBUS_IE" x="-8100" y="400">
 			<Parameter Name="QI" Value="TRUE"/>
@@ -71,7 +70,7 @@
 			<Connection Source="DigitalInput_CLK_I2.IND" Destination="E_SR.R" dx1="1153.33"/>
 			<Connection Source="DigitalInput_CLK_I1.IND" Destination="E_SR.R" dx1="1153.33"/>
 			<Connection Source="ACK.IND" Destination="E_SR.R" dx1="1153.33"/>
-			<Connection Source="E_SR.EO" Destination="Alarmausgang.REQ"/>
+			<Connection Source="E_SR.EO" Destination="Alarmausgang.REQ" dx1="860"/>
 		</EventConnections>
 		<DataConnections>
 			<Connection Source="F_SEL_E_4.OUT" Destination="Q_ActiveMask.u16NewMaskId" dx1="1000"/>

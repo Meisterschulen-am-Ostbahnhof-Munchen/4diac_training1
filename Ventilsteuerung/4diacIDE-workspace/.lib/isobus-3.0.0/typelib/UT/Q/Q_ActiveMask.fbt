@@ -14,7 +14,6 @@
 			</Event>
 			<Event Name="REQ" Type="Event" Comment="Service Request">
 				<With Var="u16NewMaskId"/>
-				<With Var="u16WorkSetId"/>
 			</Event>
 		</EventInputs>
 		<EventOutputs>
@@ -28,7 +27,6 @@
 			</Event>
 		</EventOutputs>
 		<InputVars>
-			<VarDeclaration Name="u16WorkSetId" Type="UINT" Comment="WorkingSet Object ID " InitialValue="ID_NULL"/>
 			<VarDeclaration Name="u16NewMaskId" Type="UINT" Comment="Object ID of new active (data/alarm)-mask" InitialValue="ID_NULL"/>
 		</InputVars>
 		<OutputVars>
@@ -41,9 +39,7 @@
 
 <p>This command is used to change the active mask of a working set to either a data or an alarm mask object.</p>
 
-<h2>param[in] {u16WorkSetId, uint16_t}</h2>
-
-<p>WorkingSet Object ID</p>
+<p><strong>Note:</strong> The WorkingSet Object ID (<code>u16WorkSetId</code>) is fixed to <strong>0</strong> by the authors of <a href="https://www.logibus.tech/">logiBUS®</a>. The user must ensure that the WorkingSet object in the object pool always has Object ID 0. This is the default in most tools (e.g., <a href="https://www.bucherautomation.com/iso-designer/sw10133">ISO-Designer</a> by Bucher Automation AG, or <a href="https://isobus-studio.com/">Isobus Studio</a> by <a href="https://www.to-the-future.de/">to-the-future / Tobias Tenberg</a>). Since there is only one WorkingSet object, this restriction does not cause any practical limitation.</p>
 
 <h2>param[in] {u16NewMaskId, uint16_t}</h2>
 
