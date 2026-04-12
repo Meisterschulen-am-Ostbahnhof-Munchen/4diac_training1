@@ -55,6 +55,14 @@ This command is used by a Working Set to disallow or allow screen refreshes at t
 
 <p>Object ID of data mask or user layout data mask to lock or unlock</p>
 
+<p><strong>Valid Object Types:</strong> DataMask, WindowMaskObject</p>
+
+<table border="1">
+<tr><th>Object Type</th><th>ID Range</th><th>Description</th></tr>
+<tr><td>DataMask</td><td>1000-1999</td><td>Data mask object</td></tr>
+<tr><td>WindowMaskObject</td><td>34000-34999</td><td>Window mask (VT v4+)</td></tr>
+</table>
+
 <h2>param[in] {timeout_ms,  uint16_t}</h2>
 
 <p>Lock timeout in ms or zero for no timeout</p>

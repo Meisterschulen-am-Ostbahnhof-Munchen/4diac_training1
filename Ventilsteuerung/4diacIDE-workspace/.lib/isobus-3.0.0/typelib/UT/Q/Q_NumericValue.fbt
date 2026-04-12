@@ -44,6 +44,25 @@
 
 <p>Object ID</p>
 
+<p><strong>Valid Object Types:</strong> InputBooleanField, InputNumberField, InputListField, OutputNumberField, OutputListObject, Meter, LinearBarGraph, ArchedBarGraph, NumberVariable, ObjectPointer, ExternalObjectPointer, AnimationObject, ScaledGraphicObject</p>
+
+<table border="1">
+<tr><th>Object Type</th><th>ID Range</th><th>Description</th></tr>
+<tr><td>InputBooleanField</td><td>7000-7999</td><td>1 byte TRUE/FALSE</td></tr>
+<tr><td>InputNumberField</td><td>9000-9999</td><td>4 bytes integer</td></tr>
+<tr><td>InputListField</td><td>10000-10999</td><td>1 byte list index</td></tr>
+<tr><td>OutputNumberField</td><td>12000-12999</td><td>4 bytes</td></tr>
+<tr><td>OutputListObject</td><td>37000-37999</td><td>1 byte list index (VT v4+)</td></tr>
+<tr><td>Meter</td><td>17000-17999</td><td>1 byte list index</td></tr>
+<tr><td>LinearBarGraph</td><td>18000-18999</td><td>2 bytes</td></tr>
+<tr><td>ArchedBarGraph</td><td>19000-19999</td><td>2 bytes</td></tr>
+<tr><td>NumberVariable</td><td>21000-21999</td><td>4 bytes</td></tr>
+<tr><td>ObjectPointer</td><td>27000-27999</td><td>2 bytes</td></tr>
+<tr><td>ExternalObjectPointer</td><td>43000-43999</td><td>2 bytes + NAME (VT v5+)</td></tr>
+<tr><td>AnimationObject</td><td>44000-44999</td><td>Object ID (VT v5+)</td></tr>
+<tr><td>ScaledGraphicObject</td><td>48000-48999</td><td>1 byte + 2 bytes Object ID (VT v6+)</td></tr>
+</table>
+
 <h2>param[in] {value, uint32_t}</h2>
 
 <p>New value of ID</p>
