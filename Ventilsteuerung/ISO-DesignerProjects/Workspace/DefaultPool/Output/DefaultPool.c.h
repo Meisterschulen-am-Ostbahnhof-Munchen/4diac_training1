@@ -57,7 +57,7 @@
 #define OutputString_InputNumber_I2_Offset                   1345
 #define OutputString_11023_Offset                            1376
 #define OutputString_Button_L1_Offset                        1401
-#define OutputString_11025_Offset                            1427
+#define OutputString_InputString_S1_Offset                   1427
 #define OutputNumber_N1_Offset                               1458
 #define OutputNumber_N2_Offset                               1487
 #define Line_W_Offset                                        1516

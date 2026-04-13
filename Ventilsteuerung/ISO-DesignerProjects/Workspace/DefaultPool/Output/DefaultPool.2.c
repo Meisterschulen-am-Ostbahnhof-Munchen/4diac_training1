@@ -60,7 +60,7 @@ const unsigned long ISO_OP_MEMORY_CLASS isoOP_DefaultPool_Offset[] = {
 	  1345,  // OutputString_InputNumber_I2_Offset
 	  1376,  // OutputString_11023_Offset
 	  1401,  // OutputString_Button_L1_Offset
-	  1427,  // OutputString_11025_Offset
+	  1427,  // OutputString_InputString_S1_Offset
 	  1458,  // OutputNumber_N1_Offset
 	  1487,  // OutputNumber_N2_Offset
 	  1516,  // Line_W_Offset

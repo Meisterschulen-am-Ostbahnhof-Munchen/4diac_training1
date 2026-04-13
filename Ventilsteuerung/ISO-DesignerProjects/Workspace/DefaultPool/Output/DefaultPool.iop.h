@@ -62,7 +62,7 @@
 #define OutputString_InputNumber_I2       11022
 #define OutputString_11023                11023
 #define OutputString_Button_L1            11024
-#define OutputString_11025                11025
+#define OutputString_InputString_S1       11025
 #define OutputNumber_N1                   12000
 #define OutputNumber_N2                   12001
 #define Line_W                            13000
