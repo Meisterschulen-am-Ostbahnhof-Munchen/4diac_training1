@@ -10,13 +10,14 @@ def getPaths():
     parser.add_argument("-o", "--oldfile", dest="old_file", required=True)
     parser.add_argument("-n", "--newfile", dest="new_file", required=True)
     parser.add_argument("-p", "--newfolder", dest="new_folder", required=True)
+    parser.add_argument("-k", "--package", dest="package", required=True)
     args = parser.parse_args()
 
     # Create the absolute paths using os.path.join
     new_path = os.path.join(os.path.dirname(script_path), args.new_folder)
     old_path = os.path.join(os.path.dirname(script_path), args.old_file)
 
-    filepaths = [old_path, new_path, args.new_file]
+    filepaths = [old_path, new_path, args.new_file, args.package]
     return filepaths
 
 def printPaths(filepaths):
@@ -64,17 +65,17 @@ def writeGCFfile(data, filepaths):
 
     root = ET.Element("GlobalConstants", Name=filepaths[2], Comment="Global constants")
 
-    # Create the GlobalConstants element
+    compiler_info = ET.SubElement(root, "CompilerInfo")
+    compiler_info.set("packageName", filepaths[3])
+
     global_constants = ET.SubElement(root, "GlobalConstants")
 
-    # Iterate over the data and create VarDeclaration elements
     for name, value in data.items():
         var_declaration = ET.SubElement(global_constants, "VarDeclaration", Name=name, Type="UINT", InitialValue=value)
 
-        # If the name is 'ISO_VERSION_LABEL', set the type attribute to '       '
         if name == 'ISO_VERSION_LABEL':
             var_declaration.set('Type', 'STRING')
-            var_declaration.set('InitialValue', ''       '')
+            var_declaration.set('InitialValue', '')
 
     # Create an ElementTree object and write it to a file
     tree = ET.ElementTree(root)
