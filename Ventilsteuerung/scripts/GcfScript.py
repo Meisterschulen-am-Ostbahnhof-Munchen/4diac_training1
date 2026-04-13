@@ -63,6 +63,8 @@ def readIOPH(filepaths):
 def writeGCFfile(data, filepaths):
     newfilepath = os.path.join(filepaths[1], filepaths[2]+'.gcf')
 
+    os.makedirs(filepaths[1], exist_ok=True)
+
     root = ET.Element("GlobalConstants", Name=filepaths[2], Comment="Global constants")
 
     compiler_info = ET.SubElement(root, "CompilerInfo")
