@@ -34,6 +34,7 @@
 #define Button_A1                          6000
 #define Button_A2                          6001
 #define Button_L1                          6002
+#define InputString_S1                     8000
 #define InputNumber_I1                     9000
 #define InputNumber_I2                     9001
 #define OutputString_WorkingSet_0         11000
@@ -61,6 +62,7 @@
 #define OutputString_InputNumber_I2       11022
 #define OutputString_11023                11023
 #define OutputString_Button_L1            11024
+#define OutputString_11025                11025
 #define OutputNumber_N1                   12000
 #define OutputNumber_N2                   12001
 #define Line_W                            13000
@@ -77,12 +79,11 @@
 #define FontAttributes_6x8                23000
 #define FontAttributes_8x12               23001
 #define FontAttributes_12x16              23002
-#define FontAttributes_23003              23003
 #define LineAttributes_black              24000
 #define LineAttributes_black_3            24001
 #define LineAttributes_grey_3             24002
 #define LineAttributes_yellow_3           24003
 #define LineAttributes_red_3              24004
-#define FillAttributes_25000              25000
+#define FillAttributes_white              25000
 #define ObjectPointer_P1                  27000
 #define AuxFunction2_X1                   31000
