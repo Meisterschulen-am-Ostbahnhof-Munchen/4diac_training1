@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SubAppType Name="Uebung_011b1" Comment="Numeric Value Input ADD">
+	<Identification Standard="61499-2" Description="Copyright (c) 2023 Meisterschulen am Ostbahnhof  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0">
+	</Identification>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2023-10-23">
+	</VersionInfo>
+	<CompilerInfo packageName="Uebungen">
+		<Import declaration="Uebungen::const::UT::DefaultPool::InputNumber_I1"/>
+		<Import declaration="Uebungen::const::UT::DefaultPool::InputNumber_I2"/>
+		<Import declaration="Uebungen::const::UT::DefaultPool::OutputNumber_N1"/>
+	</CompilerInfo>
+	<SubAppInterfaceList>
+	</SubAppInterfaceList>
+	<SubAppNetwork>
+		<FB Name="F_DWORD_TO_UDINT" Type="iec61131::conversion::F_DWORD_TO_UDINT" x="-5100" y="1200">
+		</FB>
+		<FB Name="InputNumber_I1" Type="isobus::UT::io::NumericValue::NumericValue_ID" x="-6900" y="800">
+			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="u16ObjId" Value="InputNumber_I1"/>
+		</FB>
+		<FB Name="Q_NumericValue" Type="isobus::UT::Q::Q_NumericValue" x="-500" y="1100">
+			<Parameter Name="u16ObjId" Value="OutputNumber_N1"/>
+		</FB>
+		<FB Name="ADD_2" Type="iec61131::arithmetic::ADD_2" x="-2400" y="1300">
+		</FB>
+		<FB Name="InputNumber_I2" Type="isobus::UT::io::NumericValue::NumericValue_ID" x="-6900" y="1800">
+			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="u16ObjId" Value="InputNumber_I2"/>
+		</FB>
+		<FB Name="F_DWORD_TO_UDINT_1" Type="iec61131::conversion::F_DWORD_TO_UDINT" x="-5100" y="2200">
+		</FB>
+		<EventConnections>
+			<Connection Source="InputNumber_I1.IND" Destination="F_DWORD_TO_UDINT.REQ" dx1="486.67"/>
+			<Connection Source="InputNumber_I2.IND" Destination="F_DWORD_TO_UDINT_1.REQ" dx1="486.67"/>
+			<Connection Source="F_DWORD_TO_UDINT.CNF" Destination="ADD_2.REQ" dx1="833.33"/>
+			<Connection Source="F_DWORD_TO_UDINT_1.CNF" Destination="ADD_2.REQ" dx1="833.33"/>
+			<Connection Source="ADD_2.CNF" Destination="Q_NumericValue.REQ" dx1="686.67"/>
+		</EventConnections>
+		<DataConnections>
+			<Connection Source="InputNumber_I1.IN" Destination="F_DWORD_TO_UDINT.IN" dx1="406.67"/>
+			<Connection Source="InputNumber_I2.IN" Destination="F_DWORD_TO_UDINT_1.IN" dx1="406.67"/>
+			<Connection Source="F_DWORD_TO_UDINT.OUT" Destination="ADD_2.IN1" dx1="833.33"/>
+			<Connection Source="F_DWORD_TO_UDINT_1.OUT" Destination="ADD_2.IN2" dx1="1173.33"/>
+			<Connection Source="ADD_2.OUT" Destination="Q_NumericValue.u32NewValue" dx1="686.67"/>
+		</DataConnections>
+	</SubAppNetwork>
+</SubAppType>
