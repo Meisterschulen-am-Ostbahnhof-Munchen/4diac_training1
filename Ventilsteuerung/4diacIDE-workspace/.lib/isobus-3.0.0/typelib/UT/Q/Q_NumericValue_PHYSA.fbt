@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<FBType Name="Q_NumericValue_PHYSA" Comment="Command change numeric value — accepts physical REAL value via AR adapter (wraps Q_NumericValue_PHYS)">
+	<Identification Standard="ISO 11783-6" Description="Copyright (c) 2026 Meisterschulen am Ostbahnhof  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0">
+	</Identification>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2026-04-14">
+	</VersionInfo>
+	<CompilerInfo packageName="isobus::UT::Q">
+		<Import declaration="eclipse4diac::core::TypeHash"/>
+		<Import declaration="isobus::UT::io::NumericValue::NumericObjectPool_S"/>
+	</CompilerInfo>
+	<InterfaceList>
+		<EventInputs>
+			<Event Name="INIT" Type="EInit" Comment="Service Initialization">
+				<With Var="stObj"/>
+			</Event>
+		</EventInputs>
+		<EventOutputs>
+			<Event Name="INITO" Type="EInit" Comment="Initialization Confirm">
+			</Event>
+			<Event Name="CNF" Type="Event" Comment="Confirmation of Requested Service">
+				<With Var="STATUS"/>
+				<With Var="s16result"/>
+			</Event>
+		</EventOutputs>
+		<InputVars>
+			<VarDeclaration Name="stObj" Type="isobus::UT::io::NumericValue::NumericObjectPool_S" Comment="Object pool properties (u16ObjId, scale, offset, decimals)"/>
+		</InputVars>
+		<OutputVars>
+			<VarDeclaration Name="STATUS" Type="STRING" Comment="Service Status"/>
+			<VarDeclaration Name="s16result" Type="INT" Comment="retval see Q_NumericValue"/>
+		</OutputVars>
+		<Sockets>
+			<AdapterDeclaration Name="rPhys" Type="adapter::types::unidirectional::AR" Comment="Physical REAL value input" x="-600" y="1200"/>
+		</Sockets>
+	</InterfaceList>
+	<FBNetwork>
+		<FB Name="Q_NumericValue_PHYS" Type="isobus::UT::Q::Q_NumericValue_PHYS" x="533.33" y="420">
+		</FB>
+		<EventConnections>
+			<Connection Source="INIT" Destination="Q_NumericValue_PHYS.INIT" dx1="1306.67"/>
+			<Connection Source="rPhys.E1" Destination="Q_NumericValue_PHYS.REQ" dx1="320"/>
+			<Connection Source="Q_NumericValue_PHYS.INITO" Destination="INITO" dx1="1506.67"/>
+			<Connection Source="Q_NumericValue_PHYS.CNF" Destination="CNF" dx1="1760"/>
+		</EventConnections>
+		<DataConnections>
+			<Connection Source="stObj" Destination="Q_NumericValue_PHYS.stObj" dx1="973.33"/>
+			<Connection Source="rPhys.D1" Destination="Q_NumericValue_PHYS.rPhys" dx1="320"/>
+			<Connection Source="Q_NumericValue_PHYS.STATUS" Destination="STATUS" dx1="2000"/>
+			<Connection Source="Q_NumericValue_PHYS.s16result" Destination="s16result" dx1="2573.33"/>
+		</DataConnections>
+	</FBNetwork>
+	<Attribute Name="eclipse4diac::core::TypeHash" Value="''"/>
+</FBType>
