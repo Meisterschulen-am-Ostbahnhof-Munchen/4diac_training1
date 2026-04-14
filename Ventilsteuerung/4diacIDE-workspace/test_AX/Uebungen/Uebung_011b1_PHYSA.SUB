@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SubAppType Name="Uebung_011b1_PHYSA" Comment="Numeric Value Input ADD with Physical Values">
+	<Identification Standard="61499-2" Description="Copyright (c) 2026 Meisterschulen am Ostbahnhof  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0">
+	</Identification>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2026-04-14">
+	</VersionInfo>
+	<CompilerInfo packageName="Uebungen">
+		<Import declaration="Uebungen::const::UT::DefaultPool_Numeric::InputNumber_I1"/>
+		<Import declaration="Uebungen::const::UT::DefaultPool_Numeric::InputNumber_I2"/>
+		<Import declaration="Uebungen::const::UT::DefaultPool_Numeric::OutputNumber_N1"/>
+	</CompilerInfo>
+	<SubAppInterfaceList>
+	</SubAppInterfaceList>
+	<SubAppNetwork>
+		<FB Name="NumericValue_PHYSA_I1" Type="isobus::UT::io::NumericValue::NumericValue_PHYSA" x="-6900" y="800">
+			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="stObj" Value="InputNumber_I1"/>
+		</FB>
+		<FB Name="NumericValue_PHYSA_I2" Type="isobus::UT::io::NumericValue::NumericValue_PHYSA" x="-6900" y="1800">
+			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="stObj" Value="InputNumber_I2"/>
+		</FB>
+		<FB Name="AR_ADD_2" Type="adapter::booleanOperators::AR_ADD_2" x="-3400" y="1600">
+		</FB>
+		<FB Name="Q_NumericValue_PHYSA" Type="isobus::UT::Q::Q_NumericValue_PHYSA" x="-1600" y="1200">
+			<Parameter Name="stObj" Value="OutputNumber_N1"/>
+		</FB>
+		<AdapterConnections>
+			<Connection Source="NumericValue_PHYSA_I1.rPhys" Destination="AR_ADD_2.IN1" dx1="1333.33"/>
+			<Connection Source="NumericValue_PHYSA_I2.rPhys" Destination="AR_ADD_2.IN2" dx1="1333.33"/>
+			<Connection Source="AR_ADD_2.OUT" Destination="Q_NumericValue_PHYSA.rPhys" dx1="1026.67"/>
+		</AdapterConnections>
+	</SubAppNetwork>
+</SubAppType>
