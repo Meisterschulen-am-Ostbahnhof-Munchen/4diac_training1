@@ -1,8 +1,8 @@
-﻿<?xml version="1.0" encoding="UTF-8"?> 
+<?xml version="1.0" encoding="UTF-8"?>
 <FBType Name="ILOCK_BLOCK" Comment="Prioritizes the first active input. Any subsequent conflicting signals are completely ignored until the initial input is released.">
-	<Identification Standard="61499-2" Description="Copyright (c) 2026 HR Agrartechnik GmbH  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0 ">
+	<Identification Standard="61499-2" Description="Copyright (c) 2023 HR Agrartechnik GmbH  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0">
 	</Identification>
-	<VersionInfo Organization="HR Agrartechnik GmbH" Version="1.0" Remarks="initial API and implementation and/or initial documentation"Author="Franz Höpfinger" Date="2026-02-23" Remarks="initial API and implementation and/or initial documentation">
+	<VersionInfo Organization="HR Agrartechnik GmbH" Version="1.0" Author="Franz Höpfinger" Date="2026-02-23" Remarks="initial API and implementation and/or initial documentation">
 	</VersionInfo>
 	<CompilerInfo packageName="logiBUS::signalprocessing::interlock">
 	</CompilerInfo>
@@ -59,29 +59,16 @@
 			<ECTransition Source="UP_STOP" Destination="STOP" Condition="1" Comment="" x="4133.33" y="1313.33"/>
 		</ECC>
 		<Algorithm Name="UP">
-			<ST><![CDATA[ALGORITHM UP
-DO_UP := BOOL#TRUE;
-DO_DOWN := BOOL#FALSE;
-END_ALGORITHM]]></ST>
+			<ST><![CDATA[DO_UP := BOOL#TRUE;
+DO_DOWN := BOOL#FALSE;]]></ST>
 		</Algorithm>
 		<Algorithm Name="DOWN">
-			<ST><![CDATA[
-
-ALGORITHM DOWN
-DO_UP := BOOL#FALSE;
-DO_DOWN := BOOL#TRUE;
-END_ALGORITHM]]></ST>
+			<ST><![CDATA[DO_UP := BOOL#FALSE;
+DO_DOWN := BOOL#TRUE;]]></ST>
 		</Algorithm>
 		<Algorithm Name="STOP">
-			<ST><![CDATA[
-
-ALGORITHM STOP
-DO_UP := BOOL#FALSE;
-DO_DOWN := BOOL#FALSE;
-END_ALGORITHM
-
-]]></ST>
+			<ST><![CDATA[DO_UP := BOOL#FALSE;
+DO_DOWN := BOOL#FALSE;]]></ST>
 		</Algorithm>
 	</BasicFB>
 </FBType>
-
