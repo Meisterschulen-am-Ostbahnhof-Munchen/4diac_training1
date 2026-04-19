@@ -150,7 +150,7 @@ def writeNumericGCFfile(data, filepaths):
     newfilepath = os.path.join(filepaths[1], filepaths[2] + '_Numeric.gcf')
     gcf_name    = filepaths[2] + '_Numeric'
     package     = filepaths[3]
-    struct_type = "isobus::UT::io::NumericValue::NumericObjectPool_S"
+    struct_type = "logiBUS::utils::conversion::phys::NumericObjectPool_S"
 
     root = ET.Element("GlobalConstants", Name=gcf_name, Comment="Numeric object pool constants (ID, Scale, Offset, Decimals)")
 

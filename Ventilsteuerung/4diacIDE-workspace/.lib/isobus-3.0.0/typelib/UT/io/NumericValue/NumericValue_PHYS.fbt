@@ -6,7 +6,7 @@
 	</VersionInfo>
 	<CompilerInfo packageName="isobus::UT::io::NumericValue">
 		<Import declaration="eclipse4diac::core::TypeHash"/>
-		<Import declaration="isobus::UT::io::NumericValue::NumericObjectPool_S"/>
+		<Import declaration="logiBUS::utils::conversion::phys::NumericObjectPool_S"/>
 	</CompilerInfo>
 	<InterfaceList>
 		<EventInputs>
@@ -33,7 +33,7 @@
 		<InputVars>
 			<VarDeclaration Name="QI" Type="BOOL" Comment="Event Input Qualifier"/>
 			<VarDeclaration Name="PARAMS" Type="STRING" Comment="Service Parameters"/>
-			<VarDeclaration Name="stObj" Type="isobus::UT::io::NumericValue::NumericObjectPool_S" Comment="Object pool properties (u16ObjId, scale, offset, decimals)"/>
+			<VarDeclaration Name="stObj" Type="logiBUS::utils::conversion::phys::NumericObjectPool_S" Comment="Object pool properties (u16ObjId, scale, offset, decimals)"/>
 		</InputVars>
 		<OutputVars>
 			<VarDeclaration Name="QO" Type="BOOL" Comment="Event Output Qualifier"/>
@@ -46,17 +46,17 @@
 		</FB>
 		<FB Name="F_DWORD_TO_UDINT" Type="iec61131::conversion::F_DWORD_TO_UDINT" x="2600" y="1000">
 		</FB>
-		<FB Name="F_RAW_TO_PHYS" Type="isobus::UT::io::NumericValue::F_RAW_TO_PHYS" x="4600" y="1100">
+		<FB Name="F_RAW_TO_PHYS" Type="logiBUS::utils::conversion::phys::F_RAW_TO_PHYS" x="4600" y="1100">
 		</FB>
-		<FB Name="F_MOVE" Type="iec61131::selection::F_MOVE" x="-1100" y="-700">
-			<Attribute Name="DataType" Value="isobus::UT::io::NumericValue::NumericObjectPool_S"/>
+		<FB Name="F_MOVE" Type="iec61131::selection::F_MOVE" x="-600" y="-900">
+			<Attribute Name="DataType" Value="logiBUS::utils::conversion::phys::NumericObjectPool_S"/>
 			<Parameter Name="OUT.u16ObjId" Value="">
 				<Attribute Name="Visible" Value="true"/>
 			</Parameter>
 		</FB>
 		<EventConnections>
 			<Connection Source="INIT" Destination="F_MOVE.REQ" dx1="1133.33"/>
-			<Connection Source="F_MOVE.CNF" Destination="NumericValue_ID.INIT" dx1="233.33"/>
+			<Connection Source="F_MOVE.CNF" Destination="NumericValue_ID.INIT" dx1="188.24"/>
 			<Connection Source="REQ" Destination="NumericValue_ID.REQ" dx1="1040"/>
 			<Connection Source="NumericValue_ID.INITO" Destination="INITO" dx1="193.33"/>
 			<Connection Source="NumericValue_ID.IND" Destination="F_DWORD_TO_UDINT.REQ" dx1="1106.67"/>

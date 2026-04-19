@@ -6,7 +6,7 @@
 	</VersionInfo>
 	<CompilerInfo packageName="isobus::UT::Q">
 		<Import declaration="eclipse4diac::core::TypeHash"/>
-		<Import declaration="isobus::UT::io::NumericValue::NumericObjectPool_S"/>
+		<Import declaration="logiBUS::utils::conversion::phys::NumericObjectPool_S"/>
 	</CompilerInfo>
 	<InterfaceList>
 		<EventInputs>
@@ -27,7 +27,7 @@
 			</Event>
 		</EventOutputs>
 		<InputVars>
-			<VarDeclaration Name="stObj" Type="isobus::UT::io::NumericValue::NumericObjectPool_S" Comment="Object pool properties (u16ObjId, scale, offset, decimals)"/>
+			<VarDeclaration Name="stObj" Type="logiBUS::utils::conversion::phys::NumericObjectPool_S" Comment="Object pool properties (u16ObjId, scale, offset, decimals)"/>
 			<VarDeclaration Name="rPhys" Type="REAL" Comment="New raw value — use F_PHYS_TO_RAW to convert from physical value"/>
 		</InputVars>
 		<OutputVars>
@@ -39,10 +39,10 @@
 	<FBNetwork>
 		<FB Name="Q_NumericValue" Type="isobus::UT::Q::Q_NumericValue" x="700" y="500">
 		</FB>
-		<FB Name="F_PHYS_TO_RAW" Type="isobus::UT::io::NumericValue::F_PHYS_TO_RAW" x="-1100" y="1300">
+		<FB Name="F_PHYS_TO_RAW" Type="logiBUS::utils::conversion::phys::F_PHYS_TO_RAW" x="-1100" y="1300">
 		</FB>
 		<FB Name="F_MOVE" Type="iec61131::selection::F_MOVE" x="-2500" y="300">
-			<Attribute Name="DataType" Value="isobus::UT::io::NumericValue::NumericObjectPool_S"/>
+			<Attribute Name="DataType" Value="logiBUS::utils::conversion::phys::NumericObjectPool_S"/>
 			<Parameter Name="OUT.u16ObjId" Value="">
 				<Attribute Name="Visible" Value="true"/>
 			</Parameter>

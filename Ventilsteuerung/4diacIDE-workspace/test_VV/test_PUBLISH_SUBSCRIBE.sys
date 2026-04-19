@@ -6,7 +6,7 @@
 		<Import declaration="VV::const::Computers::myComputers"/>
 		<Import declaration="VV::const::Computers::myComputers::C_PC_PUBLISH"/>
 		<Import declaration="VV::const::Computers::myComputers::C_PC_SUBSCRIBE"/>
-		<Import declaration="VV::const::ports::myPorts"/>
+		<Import declaration=""/>
 		<Import declaration="VV::const::ports::myPorts::PORT_0"/>
 		<Import declaration="VV::const::ports::myPorts::PORT_1"/>
 		<Import declaration="VV::const::ports::myPorts::PORT_2"/>
@@ -89,35 +89,35 @@
 			<FBNetwork>
 				<FB Name="PUBLISH_BUTTON_GREEN" Type="iec61499::net::PUBLISH_1" x="4400" y="700">
 					<Parameter Name="QI" Value="TRUE"/>
-					<Parameter Name="ID" Value="myPorts::PORT_0"/>
+					<Parameter Name="ID" Value="PORT_0"/>
 				</FB>
 				<FB Name="PUBLISH_BUTTON_YELLOW" Type="iec61499::net::PUBLISH_1" x="4300" y="1800">
 					<Parameter Name="QI" Value="TRUE"/>
-					<Parameter Name="ID" Value="myPorts::PORT_1"/>
+					<Parameter Name="ID" Value="PORT_1"/>
 				</FB>
 				<FB Name="PUBLISH_BUTTON_RED" Type="iec61499::net::PUBLISH_1" x="4400" y="3000">
 					<Parameter Name="QI" Value="TRUE"/>
-					<Parameter Name="ID" Value="myPorts::PORT_2"/>
+					<Parameter Name="ID" Value="PORT_2"/>
 				</FB>
 				<FB Name="PUBLISH_BUTTON_BLUE" Type="iec61499::net::PUBLISH_1" x="4400" y="4100">
 					<Parameter Name="QI" Value="TRUE"/>
-					<Parameter Name="ID" Value="myPorts::PORT_3"/>
+					<Parameter Name="ID" Value="PORT_3"/>
 				</FB>
 				<FB Name="E_TRIG" Type="iec61499::events::E_TRIG" x="2700" y="-1000">
 					<Parameter Name="EVENTTYPE" Value="'EInit'"/>
 				</FB>
 				<EventConnections>
 					<Connection Source="START.COLD" Destination="E_TRIG.REQ" dx1="946.67"/>
-					<Connection Source="App_PUBLISH_SUBSCRIBE.BUTTON_GREEN.IND" Destination="PUBLISH_BUTTON_GREEN.REQ" dx1="420"/>
+					<Connection Source="App_PUBLISH_SUBSCRIBE.BUTTON_GREEN.IND" Destination="PUBLISH_BUTTON_GREEN.REQ"/>
 					<Connection Source="App_PUBLISH_SUBSCRIBE.BUTTON_YELLOW.IND" Destination="PUBLISH_BUTTON_YELLOW.REQ" dx1="366.67"/>
 					<Connection Source="App_PUBLISH_SUBSCRIBE.BUTTON_RED.IND" Destination="PUBLISH_BUTTON_RED.REQ" dx1="380"/>
-					<Connection Source="App_PUBLISH_SUBSCRIBE.BUTTON_BLUE.IND" Destination="PUBLISH_BUTTON_BLUE.REQ" dx1="406.67"/>
+					<Connection Source="App_PUBLISH_SUBSCRIBE.BUTTON_BLUE.IND" Destination="PUBLISH_BUTTON_BLUE.REQ"/>
 				</EventConnections>
 				<DataConnections>
-					<Connection Source="App_PUBLISH_SUBSCRIBE.BUTTON_GREEN.IN" Destination="PUBLISH_BUTTON_GREEN.SD_1" dx1="420"/>
+					<Connection Source="App_PUBLISH_SUBSCRIBE.BUTTON_GREEN.IN" Destination="PUBLISH_BUTTON_GREEN.SD_1"/>
 					<Connection Source="App_PUBLISH_SUBSCRIBE.BUTTON_YELLOW.IN" Destination="PUBLISH_BUTTON_YELLOW.SD_1" dx1="366.67"/>
 					<Connection Source="App_PUBLISH_SUBSCRIBE.BUTTON_RED.IN" Destination="PUBLISH_BUTTON_RED.SD_1" dx1="380"/>
-					<Connection Source="App_PUBLISH_SUBSCRIBE.BUTTON_BLUE.IN" Destination="PUBLISH_BUTTON_BLUE.SD_1" dx1="406.67"/>
+					<Connection Source="App_PUBLISH_SUBSCRIBE.BUTTON_BLUE.IN" Destination="PUBLISH_BUTTON_BLUE.SD_1"/>
 				</DataConnections>
 			</FBNetwork>
 		</Resource>
@@ -128,7 +128,7 @@
 		<Attribute Name="Color" Type="STRING" Value="59,215,47"/>
 		<Resource Name="EMB_RES_SUBSCRIBE" Type="iec61499::system::EMB_RES" x="0" y="0">
 			<FBNetwork>
-				<FB Name="SUBSCRIBE_BUTTON_GREEN" Type="iec61499::net::SUBSCRIBE_1" x="2800" y="800">
+				<FB Name="SUBSCRIBE_BUTTON_GREEN" Type="iec61499::net::SUBSCRIBE_1" x="2800" y="700">
 					<Parameter Name="QI" Value="TRUE"/>
 					<Parameter Name="ID" Value="PORT_0"/>
 				</FB>
