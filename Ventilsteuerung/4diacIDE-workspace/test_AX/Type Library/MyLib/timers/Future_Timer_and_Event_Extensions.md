@@ -4,11 +4,12 @@ This document outlines proposed functional blocks to enhance the event-driven ca
 
 ---
 
-## 1. Pulse Generation: `E_TRAIN`
+## 1. Pulse Generation: `E_TRAIN` (Already available in 4diac IDE Nightly)
+**Status:** Integrated in standard `iec61499::events` in newer 4diac versions.
 **Concept:** Generates a specific number of pulses with a defined period.
-- **Inputs:** `N` (UINT - Number of pulses), `T_ON` (TIME), `T_OFF` (TIME).
+- **Inputs:** `N` (UINT - Number of pulses), `DT` (TIME).
 - **Use Case:** Acoustic error codes (e.g., "beep 3 times"), status LEDs, or step-by-step actuator movement.
-- **Benefit:** Replaces complex manual counter-timer-networks with a single, clear block.
+- **AX-Variant Idea:** An `AX_TRAIN` could be created to output these pulses directly onto an AX adapter line.
 
 ## 2. Monitoring: `E_WATCHDOG`
 **Concept:** Monitors the frequency of incoming events.
