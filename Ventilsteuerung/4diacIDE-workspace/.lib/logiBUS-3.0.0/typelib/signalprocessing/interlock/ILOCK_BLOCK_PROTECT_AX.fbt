@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<FBType Name="ILOCK_BLOCK_PROTECT_AX" Comment="Prioritizes the first active input with protection dead-time (Adapter Version).">
+	<Identification Standard="61499-2" Description="Copyright (c) 2023-2026 HR Agrartechnik GmbH  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0">
+	</Identification>
+	<VersionInfo Organization="HR Agrartechnik GmbH" Version="1.0" Author="Franz Höpfinger" Date="2026-04-19" Remarks="initial API and implementation and/or initial documentation">
+	</VersionInfo>
+	<CompilerInfo packageName="logiBUS::signalprocessing::interlock">
+	</CompilerInfo>
+	<InterfaceList>
+		<EventInputs>
+			<Event Name="EDT_PROTECT" Type="Event" Comment="Protection Time Set">
+				<With Var="DT_PROTECT"/>
+			</Event>
+		</EventInputs>
+		<InputVars>
+			<VarDeclaration Name="DT_PROTECT" Type="TIME" Comment="Protection Time" InitialValue="T#50ms"/>
+		</InputVars>
+		<Plugs>
+			<AdapterDeclaration Name="UP_OUT" Type="adapter::types::unidirectional::AX" Comment="Output for forward/up direction"/>
+			<AdapterDeclaration Name="DOWN_OUT" Type="adapter::types::unidirectional::AX" Comment="Output for backward/down direction"/>
+			<AdapterDeclaration Name="timeOut" Type="iec61499::events::ATimeOut" Comment="timeOut Adapter"/>
+		</Plugs>
+		<Sockets>
+			<AdapterDeclaration Name="UP_IN" Type="adapter::types::unidirectional::AX" Comment="Input for forward/up direction"/>
+			<AdapterDeclaration Name="DOWN_IN" Type="adapter::types::unidirectional::AX" Comment="Input for backward/down direction"/>
+		</Sockets>
+	</InterfaceList>
+	<BasicFB>
+		<ECC>
+			<ECState Name="START" Comment="Initial State" x="2960" y="560">
+			</ECState>
+			<ECState Name="UP" x="5040" y="720">
+				<ECAction Algorithm="UP" Output="UP_OUT.E1"/>
+			</ECState>
+			<ECState Name="DOWN" x="4800" y="1920">
+				<ECAction Algorithm="DOWN" Output="DOWN_OUT.E1"/>
+			</ECState>
+			<ECState Name="STOP" x="2800" y="1440">
+			</ECState>
+			<ECState Name="UP_STOP" x="5040" y="1280">
+				<ECAction Algorithm="STOP" Output="UP_OUT.E1"/>
+				<ECAction Output="timeOut.START"/>
+			</ECState>
+			<ECState Name="DOWN_STOP" x="4720" y="2640">
+				<ECAction Algorithm="STOP" Output="DOWN_OUT.E1"/>
+				<ECAction Output="timeOut.START"/>
+			</ECState>
+			<ECState Name="EVAL" x="8080" y="1520">
+			</ECState>
+			<ECState Name="State" x="2160" y="1400">
+			</ECState>
+			<ECTransition Source="STOP" Destination="DOWN" Condition="DOWN_IN.E1[DOWN_IN.D1]" Comment="" x="4133.33" y="1733.33"/>
+			<ECTransition Source="STOP" Destination="UP" Condition="UP_IN.E1[UP_IN.D1]" Comment="" x="4173.33" y="1020"/>
+			<ECTransition Source="START" Destination="STOP" Condition="1" Comment="" x="2953.33" y="1226.67"/>
+			<ECTransition Source="DOWN" Destination="DOWN_STOP" Condition="DOWN_IN.E1[NOT DOWN_IN.D1]" Comment="" x="4766.67" y="2293.33"/>
+			<ECTransition Source="UP" Destination="UP_STOP" Condition="UP_IN.E1[NOT UP_IN.D1]" Comment="" x="5146.67" y="1053.33"/>
+			<ECTransition Source="UP_STOP" Destination="EVAL" Condition="timeOut.TimeOut" Comment="" x="5273.33" y="1700"/>
+			<ECTransition Source="DOWN_STOP" Destination="EVAL" Condition="timeOut.TimeOut" Comment="" x="5653.33" y="2206.67"/>
+			<ECTransition Source="EVAL" Destination="UP" Condition="[UP_IN.D1 AND NOT DOWN_IN.D1]" Comment="" x="6433.33" y="1073.33"/>
+			<ECTransition Source="EVAL" Destination="DOWN" Condition="[DOWN_IN.D1 AND NOT UP_IN.D1]" Comment="" x="6520" y="1833.33"/>
+			<ECTransition Source="EVAL" Destination="STOP" Condition="[(NOT UP_IN.D1 AND NOT DOWN_IN.D1) OR (UP_IN.D1 AND DOWN_IN.D1)]" Comment="" x="5400" y="260"/>
+			<ECTransition Source="State" Destination="STOP" Condition="1" Comment="" x="2480" y="1420"/>
+			<ECTransition Source="STOP" Destination="State" Condition="EDT_PROTECT" Comment="" x="2540" y="1973.33"/>
+		</ECC>
+		<Algorithm Name="UP">
+			<ST><![CDATA[timeOut.DT := DT_PROTECT;
+UP_OUT.D1 := BOOL#TRUE;
+DOWN_OUT.D1 := BOOL#FALSE;]]></ST>
+		</Algorithm>
+		<Algorithm Name="DOWN">
+			<ST><![CDATA[timeOut.DT := DT_PROTECT;
+UP_OUT.D1 := BOOL#FALSE;
+DOWN_OUT.D1 := BOOL#TRUE;]]></ST>
+		</Algorithm>
+		<Algorithm Name="STOP">
+			<ST><![CDATA[timeOut.DT := DT_PROTECT;
+UP_OUT.D1 := BOOL#FALSE;
+DOWN_OUT.D1 := BOOL#FALSE;]]></ST>
+		</Algorithm>
+	</BasicFB>
+</FBType>
