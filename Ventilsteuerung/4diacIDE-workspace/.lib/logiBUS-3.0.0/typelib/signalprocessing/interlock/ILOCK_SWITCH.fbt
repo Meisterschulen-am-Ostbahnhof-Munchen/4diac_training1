@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <FBType Name="ILOCK_SWITCH" Comment="Prioritizes the last active input.">
-	<Identification Standard="61499-2">
+	<Identification Standard="61499-2" Description="Copyright (c) 2026 HR Agrartechnik GmbH  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0 ">
 	</Identification>
-	<VersionInfo Version="1.0" Author="Franz Höpfinger" Date="2026-02-23">
+	<VersionInfo Organization="HR Agrartechnik GmbH  " Version="1.0" Author="Franz Höpfinger" Date="2026-02-23" Remarks="initial API and implementation and/or initial documentation">
 	</VersionInfo>
 	<CompilerInfo packageName="logiBUS::signalprocessing::interlock">
 	</CompilerInfo>
@@ -65,28 +65,16 @@
 			<ECTransition Source="START" Destination="STOP" Condition="1" Comment="" x="2986.67" y="1060"/>
 		</ECC>
 		<Algorithm Name="UP">
-			<ST><![CDATA[ALGORITHM UP
-DO_UP := BOOL#TRUE;
-DO_DOWN := BOOL#FALSE;
-END_ALGORITHM]]></ST>
+			<ST><![CDATA[DO_UP := BOOL#TRUE;
+DO_DOWN := BOOL#FALSE;]]></ST>
 		</Algorithm>
 		<Algorithm Name="DOWN">
-			<ST><![CDATA[
-
-ALGORITHM DOWN
-DO_UP := BOOL#FALSE;
-DO_DOWN := BOOL#TRUE;
-END_ALGORITHM]]></ST>
+			<ST><![CDATA[DO_UP := BOOL#FALSE;
+DO_DOWN := BOOL#TRUE;]]></ST>
 		</Algorithm>
 		<Algorithm Name="STOP">
-			<ST><![CDATA[
-
-ALGORITHM STOP
-DO_UP := BOOL#FALSE;
-DO_DOWN := BOOL#FALSE;
-END_ALGORITHM
-
-]]></ST>
+			<ST><![CDATA[DO_UP := BOOL#FALSE;
+DO_DOWN := BOOL#FALSE;]]></ST>
 		</Algorithm>
 	</BasicFB>
 </FBType>
