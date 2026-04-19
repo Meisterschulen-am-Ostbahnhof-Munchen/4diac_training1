@@ -4,7 +4,7 @@
 	</Identification>
 	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2026-04-14">
 	</VersionInfo>
-	<CompilerInfo packageName="isobus::UT::io::NumericValue">
+	<CompilerInfo packageName="logiBUS::utils::conversion::phys">
 	</CompilerInfo>
 	<InterfaceList>
 		<EventInputs>
@@ -20,14 +20,14 @@
 		</EventOutputs>
 		<InputVars>
 			<VarDeclaration Name="rPhys" Type="REAL"/>
-			<VarDeclaration Name="stObj" Type="isobus::UT::io::NumericValue::NumericObjectPool_S"/>
+			<VarDeclaration Name="stObj" Type="logiBUS::utils::conversion::phys::NumericObjectPool_S"/>
 		</InputVars>
 		<OutputVars>
 			<VarDeclaration Name="" Type="UDINT"/>
 		</OutputVars>
 	</InterfaceList>
 	<FunctionBody>
-		<ST><![CDATA[PACKAGE isobus::UT::io::NumericValue;
+		<ST><![CDATA[PACKAGE logiBUS::utils::conversion::phys;
 
 (* Convert physical REAL value to ISOBUS raw UDINT.
  * ISOBUS formula: display = (raw + offset) * scale Inverse:        raw     = UDINT(DINT(phys /

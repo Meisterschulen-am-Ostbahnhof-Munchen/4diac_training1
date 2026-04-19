@@ -6,7 +6,7 @@
 	</VersionInfo>
 	<CompilerInfo packageName="isobus::UT::Q">
 		<Import declaration="eclipse4diac::core::TypeHash"/>
-		<Import declaration="isobus::UT::io::NumericValue::NumericObjectPool_S"/>
+		<Import declaration="logiBUS::utils::conversion::phys::NumericObjectPool_S"/>
 	</CompilerInfo>
 	<InterfaceList>
 		<EventInputs>
@@ -23,7 +23,7 @@
 			</Event>
 		</EventOutputs>
 		<InputVars>
-			<VarDeclaration Name="stObj" Type="isobus::UT::io::NumericValue::NumericObjectPool_S" Comment="Object pool properties (u16ObjId, scale, offset, decimals)"/>
+			<VarDeclaration Name="stObj" Type="logiBUS::utils::conversion::phys::NumericObjectPool_S" Comment="Object pool properties (u16ObjId, scale, offset, decimals)"/>
 		</InputVars>
 		<OutputVars>
 			<VarDeclaration Name="STATUS" Type="STRING" Comment="Service Status"/>
