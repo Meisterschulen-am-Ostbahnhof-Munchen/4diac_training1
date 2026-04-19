@@ -48,8 +48,11 @@
 		</FB>
 		<FB Name="F_RAW_TO_PHYS" Type="isobus::UT::io::NumericValue::F_RAW_TO_PHYS" x="4600" y="1100">
 		</FB>
-		<FB Name="F_MOVE" Type="eclipse4diac::convert::STRUCT_DEMUX" x="-1100" y="-700">
-			<Attribute Name="StructuredType" Type="STRING" Value="isobus::UT::io::NumericValue::NumericObjectPool_S"/>
+		<FB Name="F_MOVE" Type="iec61131::selection::F_MOVE" x="-1100" y="-700">
+			<Attribute Name="DataType" Value="isobus::UT::io::NumericValue::NumericObjectPool_S"/>
+			<Parameter Name="OUT.u16ObjId" Value="">
+				<Attribute Name="Visible" Value="true"/>
+			</Parameter>
 		</FB>
 		<EventConnections>
 			<Connection Source="INIT" Destination="F_MOVE.REQ" dx1="1133.33"/>
@@ -63,7 +66,7 @@
 		</EventConnections>
 		<DataConnections>
 			<Connection Source="stObj" Destination="F_MOVE.IN" dx1="293.33"/>
-			<Connection Source="F_MOVE.u16ObjId" Destination="NumericValue_ID.u16ObjId" dx1="120"/>
+			<Connection Source="F_MOVE.OUT.u16ObjId" Destination="NumericValue_ID.u16ObjId" dx1="120"/>
 			<Connection Source="QI" Destination="NumericValue_ID.QI" dx1="700"/>
 			<Connection Source="PARAMS" Destination="NumericValue_ID.PARAMS" dx1="600"/>
 			<Connection Source="NumericValue_ID.QO" Destination="QO" dx1="306.67"/>
