@@ -32,6 +32,9 @@
 		</Sockets>
 	</InterfaceList>
 	<BasicFB>
+		<InternalVars>
+			<VarDeclaration Name="Q_OLD" Type="BOOL" Comment="Stores the previous state of the output Q to detect changes (On-Change triggering)." InitialValue="FALSE"/>
+		</InternalVars>
 		<ECC>
 			<ECState Name="START" Comment="Initial State" x="550" y="425">
 			</ECState>
