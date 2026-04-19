@@ -10,50 +10,36 @@
 		<Import declaration="logiBUS::io::DI::logiBUS_DI_Events::BUTTON_SINGLE_CLICK"/>
 		<Import declaration="logiBUS::io::DQ::logiBUS_DO::Output_Q1"/>
 	</CompilerInfo>
+	<SubAppInterfaceList>
+	</SubAppInterfaceList>
 	<SubAppNetwork>
 		<FB Name="DigitalOutput_Q1" Type="logiBUS::io::DQ::logiBUS_QXA" x="-2800" y="-800">
 			<Parameter Name="QI" Value="TRUE"/>
 			<Parameter Name="Output" Value="Output_Q1"/>
 		</FB>
-		<FB Name="DigitalInput_CLK_I1" Type="logiBUS::io::DI::logiBUS_IEA" x="-9500" y="-1100">
+		<FB Name="DigitalInput_CLK_I1" Type="logiBUS::io::DI::logiBUS_IE" x="-10800" y="-1300">
 			<Parameter Name="QI" Value="TRUE"/>
 			<Parameter Name="Input" Value="Input_I1"/>
 			<Parameter Name="InputEvent" Value="BUTTON_SINGLE_CLICK"/>
 		</FB>
-		<FB Name="E_CTU" Type="iec61499::events::E_CTU" x="-5600" y="-800">
-			<Parameter Name="PV" Value="UINT#5"/>
+		<FB Name="E_CTU" Type="adapter::events::unidirectional::AUI_CTU" x="-5600" y="-800">
 		</FB>
-		<FB Name="DigitalInput_CLK_I2" Type="logiBUS::io::DI::logiBUS_IEA" x="-8000" y="200">
+		<FB Name="DigitalInput_CLK_I2" Type="logiBUS::io::DI::logiBUS_IE" x="-10800" y="-100">
 			<Parameter Name="QI" Value="TRUE"/>
 			<Parameter Name="Input" Value="Input_I2"/>
 			<Parameter Name="InputEvent" Value="BUTTON_SINGLE_CLICK"/>
 		</FB>
-		<FB Name="AX_SPLIT_2" Type="adapter::events::unidirectional::AX_SPLIT_2" x="-8100" y="-1100">
-		</FB>
-		<FB Name="AE_E_TO_EVENT_1" Type="adapter::conversion::unidirectional::AE_E_TO_EVENT" x="-6800" y="-1400">
-		</FB>
-		<FB Name="AE_E_TO_EVENT_2" Type="adapter::conversion::unidirectional::AE_E_TO_EVENT" x="-6800" y="-600">
-		</FB>
-		<FB Name="AE_E_TO_EVENT_3" Type="adapter::conversion::unidirectional::AE_E_TO_EVENT" x="-6800" y="200">
-		</FB>
-		<FB Name="AX_BOOL_TO_X" Type="adapter::conversion::unidirectional::AX_BOOL_TO_X" x="-4200" y="-800">
+		<Comment Comment="E_SPLIT macht 2 Events, die dann wieder gemerged werden.&#10;--&gt; Event wird verdoppelt" x="-8800" y="-1300" width="1500" height="400"/>
+		<FB Name="E_SPLIT" Type="iec61499::events::E_SPLIT" x="-8500" y="-800">
 		</FB>
 		<EventConnections>
-			<Connection Source="E_CTU.CUO" Destination="AX_BOOL_TO_X.REQ" dx1="466.67"/>
-			<Connection Source="E_CTU.RO" Destination="AX_BOOL_TO_X.REQ"/>
-			<Connection Source="AE_E_TO_EVENT_1.CNF" Destination="E_CTU.CU"/>
-			<Connection Source="AE_E_TO_EVENT_2.CNF" Destination="E_CTU.CU"/>
-			<Connection Source="AE_E_TO_EVENT_3.CNF" Destination="E_CTU.R" dx1="273.33"/>
+			<Connection Source="DigitalInput_CLK_I1.IND" Destination="E_SPLIT.EI" dx1="706.67"/>
+			<Connection Source="E_SPLIT.EO1" Destination="E_CTU.CU"/>
+			<Connection Source="E_SPLIT.EO2" Destination="E_CTU.CU" dx1="1140"/>
+			<Connection Source="DigitalInput_CLK_I2.IND" Destination="E_CTU.R" dx1="3553.33"/>
 		</EventConnections>
-		<DataConnections>
-			<Connection Source="E_CTU.Q" Destination="AX_BOOL_TO_X.OUT" dx1="286.67"/>
-		</DataConnections>
 		<AdapterConnections>
-			<Connection Source="DigitalInput_CLK_I1.IN" Destination="AX_SPLIT_2.IN" dx1="200"/>
-			<Connection Source="DigitalInput_CLK_I2.IN" Destination="AE_E_TO_EVENT_3.AE_IN" dx1="200"/>
-			<Connection Source="AX_BOOL_TO_X.AX_OUT" Destination="DigitalOutput_Q1.OUT" dx1="200"/>
-			<Connection Source="AX_SPLIT_2.OUT1" Destination="AE_E_TO_EVENT_1.AE_IN" dx1="200"/>
-			<Connection Source="AX_SPLIT_2.OUT2" Destination="AE_E_TO_EVENT_2.AE_IN" dx1="200"/>
+			<Connection Source="E_CTU.Q" Destination="DigitalOutput_Q1.OUT" dx1="1093.33"/>
 		</AdapterConnections>
 	</SubAppNetwork>
 </SubAppType>

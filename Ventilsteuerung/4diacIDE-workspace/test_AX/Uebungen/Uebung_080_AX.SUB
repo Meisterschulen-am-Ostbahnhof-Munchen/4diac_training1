@@ -17,38 +17,24 @@
 			<Parameter Name="QI" Value="TRUE"/>
 			<Parameter Name="Output" Value="Output_Q1"/>
 		</FB>
-		<FB Name="DigitalInput_CLK_I1" Type="logiBUS::io::DI::logiBUS_IEA" x="-8000" y="-1000">
+		<FB Name="DigitalInput_CLK_I1" Type="logiBUS::io::DI::logiBUS_IE" x="-8000" y="-1000">
 			<Parameter Name="QI" Value="TRUE"/>
 			<Parameter Name="Input" Value="Input_I1"/>
 			<Parameter Name="InputEvent" Value="BUTTON_SINGLE_CLICK"/>
 		</FB>
-		<FB Name="E_CTU" Type="iec61499::events::E_CTU" x="-5600" y="-800">
-			<Parameter Name="PV" Value="UINT#5"/>
+		<FB Name="E_CTU" Type="adapter::events::unidirectional::AUI_CTU" x="-5600" y="-800">
 		</FB>
-		<FB Name="DigitalInput_CLK_I2" Type="logiBUS::io::DI::logiBUS_IEA" x="-8000" y="0">
+		<FB Name="DigitalInput_CLK_I2" Type="logiBUS::io::DI::logiBUS_IE" x="-8000" y="0">
 			<Parameter Name="QI" Value="TRUE"/>
 			<Parameter Name="Input" Value="Input_I2"/>
 			<Parameter Name="InputEvent" Value="BUTTON_SINGLE_CLICK"/>
 		</FB>
-		<FB Name="AE_E_TO_EVENT_1" Type="adapter::conversion::unidirectional::AE_E_TO_EVENT" x="-6800" y="-1000">
-		</FB>
-		<FB Name="AE_E_TO_EVENT_2" Type="adapter::conversion::unidirectional::AE_E_TO_EVENT" x="-6800" y="0">
-		</FB>
-		<FB Name="AX_BOOL_TO_X" Type="adapter::conversion::unidirectional::AX_BOOL_TO_X" x="-4200" y="-800">
-		</FB>
 		<EventConnections>
-			<Connection Source="E_CTU.CUO" Destination="AX_BOOL_TO_X.REQ" dx1="466.67"/>
-			<Connection Source="E_CTU.RO" Destination="AX_BOOL_TO_X.REQ"/>
-			<Connection Source="AE_E_TO_EVENT_1.CNF" Destination="E_CTU.CU"/>
-			<Connection Source="AE_E_TO_EVENT_2.CNF" Destination="E_CTU.R" dx1="273.33"/>
+			<Connection Source="DigitalInput_CLK_I1.IND" Destination="E_CTU.CU" dx1="753.33"/>
+			<Connection Source="DigitalInput_CLK_I2.IND" Destination="E_CTU.R" dx1="753.33"/>
 		</EventConnections>
-		<DataConnections>
-			<Connection Source="E_CTU.Q" Destination="AX_BOOL_TO_X.OUT" dx1="286.67"/>
-		</DataConnections>
 		<AdapterConnections>
-			<Connection Source="DigitalInput_CLK_I1.IN" Destination="AE_E_TO_EVENT_1.AE_IN" dx1="200"/>
-			<Connection Source="DigitalInput_CLK_I2.IN" Destination="AE_E_TO_EVENT_2.AE_IN" dx1="200"/>
-			<Connection Source="AX_BOOL_TO_X.AX_OUT" Destination="DigitalOutput_Q1.OUT" dx1="200"/>
+			<Connection Source="E_CTU.Q" Destination="DigitalOutput_Q1.OUT" dx1="200"/>
 		</AdapterConnections>
 	</SubAppNetwork>
 </SubAppType>
