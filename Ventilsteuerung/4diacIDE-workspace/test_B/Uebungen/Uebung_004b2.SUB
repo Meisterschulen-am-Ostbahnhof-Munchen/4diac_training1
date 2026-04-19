@@ -41,14 +41,14 @@
 			<Parameter Name="InputEvent" Value="BUTTON_SINGLE_CLICK"/>
 		</FB>
 		<EventConnections>
-			<Connection Source="E_SR_I1.EO" Destination="DigitalOutput_Q1.REQ"/>
-			<Connection Source="DigitalInput_CLK_I1.IND" Destination="E_SWITCH_I1.EI"/>
+			<Connection Source="E_SR_I1.EO" Destination="DigitalOutput_Q1.REQ" dx1="660"/>
+			<Connection Source="DigitalInput_CLK_I1.IND" Destination="E_SWITCH_I1.EI" dx1="353.33"/>
 			<Connection Source="E_SWITCH_I1.EO0" Destination="E_SR_I1.S"/>
 			<Connection Source="E_SWITCH_I1.EO1" Destination="E_SR_I1.R"/>
 			<Connection Source="E_SWITCH_I2.EO1" Destination="E_SR_I2.R"/>
 			<Connection Source="E_SWITCH_I2.EO0" Destination="E_SR_I2.S"/>
-			<Connection Source="E_SR_I2.EO" Destination="DigitalOutput_Q2.REQ"/>
-			<Connection Source="DigitalInput_CLK_I2.IND" Destination="E_SWITCH_I2.EI"/>
+			<Connection Source="E_SR_I2.EO" Destination="DigitalOutput_Q2.REQ" dx1="560"/>
+			<Connection Source="DigitalInput_CLK_I2.IND" Destination="E_SWITCH_I2.EI" dx1="353.33"/>
 		</EventConnections>
 		<DataConnections>
 			<Connection Source="E_SR_I1.Q" Destination="DigitalOutput_Q1.OUT" dx1="680"/>
