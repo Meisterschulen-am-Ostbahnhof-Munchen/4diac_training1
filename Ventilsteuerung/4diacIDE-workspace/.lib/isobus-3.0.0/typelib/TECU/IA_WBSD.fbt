@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<FBType Name="IA_WBSD" Comment="ISOBUS Adapter for Wheel Based Speed and Distance (WBSD)">
+	<Identification Standard="ISO 11783-7" Classification="PGN 65096" Description="Copyright (c) 2024-2026 HR Agrartechnik GmbH  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0">
+	</Identification>
+	<VersionInfo Organization="HR Agrartechnik GmbH" Version="1.1" Author="Franz Höpfinger" Date="2026-04-19" Remarks="Fixed: Use conversion blocks to properly connect internal pins to adapter plugs">
+	</VersionInfo>
+	<VersionInfo Organization="HR Agrartechnik GmbH" Version="1.0" Author="Franz Höpfinger" Date="2026-04-19" Remarks="initial API and implementation (Adapter Wrapper for I_WBSD)">
+	</VersionInfo>
+	<CompilerInfo packageName="isobus::tecu">
+	</CompilerInfo>
+	<InterfaceList>
+		<EventInputs>
+			<Event Name="INIT" Type="EInit" Comment="Service Initialization">
+				<With Var="QI"/>
+			</Event>
+		</EventInputs>
+		<EventOutputs>
+			<Event Name="INITO" Type="EInit" Comment="Initialization Confirm">
+				<With Var="QO"/>
+				<With Var="STATUS"/>
+			</Event>
+		</EventOutputs>
+		<InputVars>
+			<VarDeclaration Name="QI" Type="BOOL" Comment="Event Input Qualifier"/>
+		</InputVars>
+		<OutputVars>
+			<VarDeclaration Name="QO" Type="BOOL" Comment="Event Output Qualifier"/>
+			<VarDeclaration Name="STATUS" Type="STRING"/>
+		</OutputVars>
+		<Plugs>
+			<AdapterDeclaration Name="SPEED" Type="adapter::types::unidirectional::AUI" Comment="Wheel-based machine speed" x="3200" y="4000"/>
+			<AdapterDeclaration Name="DISTANCE" Type="adapter::types::unidirectional::AUDI" Comment="Wheel-based machine distance" x="3200" y="4500"/>
+			<AdapterDeclaration Name="TIMEOUT" Type="adapter::types::unidirectional::AX" Comment="Timeout Status" x="3200" y="3500"/>
+		</Plugs>
+	</InterfaceList>
+	<FBNetwork>
+		<FB Name="I_WBSD" Type="isobus::tecu::I_WBSD" x="680" y="3100">
+		</FB>
+		<EventConnections>
+			<Connection Source="INIT" Destination="I_WBSD.INIT" dx1="2766.67"/>
+			<Connection Source="I_WBSD.INITO" Destination="INITO" dx1="66.67"/>
+			<Connection Source="I_WBSD.TIMEOUT" Destination="TIMEOUT.E1" dx1="266.67"/>
+			<Connection Source="I_WBSD.IND" Destination="DISTANCE.E1" dx1="333.33"/>
+			<Connection Source="I_WBSD.IND" Destination="SPEED.E1" dx1="333.33"/>
+		</EventConnections>
+		<DataConnections>
+			<Connection Source="QI" Destination="I_WBSD.QI" dx1="1573.33"/>
+			<Connection Source="I_WBSD.QO" Destination="QO" dx1="133.33"/>
+			<Connection Source="I_WBSD.STATUS" Destination="STATUS" dx1="200"/>
+			<Connection Source="I_WBSD.Q_timeout" Destination="TIMEOUT.D1" dx1="200"/>
+			<Connection Source="I_WBSD.WHEELBASEDMACHINESPEED" Destination="SPEED.D1" dx1="133.33"/>
+			<Connection Source="I_WBSD.WHEELBASEDMACHINEDISTANCE" Destination="DISTANCE.D1" dx1="66.67"/>
+		</DataConnections>
+	</FBNetwork>
+</FBType>
