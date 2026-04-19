@@ -14,14 +14,14 @@
 			<Parameter Name="QI" Value="TRUE"/>
 			<Parameter Name="Output" Value="Output_Q1"/>
 		</FB>
-		<FB Name="E_CYCLE" Type="iec61499::events::E_CYCLE" x="-2900" y="-600">
+		<FB Name="E_CYCLE" Type="iec61499::events::E_CYCLE" x="-4100" y="-800">
 			<Parameter Name="DT" Value="T#1s"/>
 		</FB>
 		<FB Name="E_T_FF" Type="iec61499::events::E_T_FF" x="-1500" y="-600">
 		</FB>
 		<EventConnections>
-			<Connection Source="E_CYCLE.EO" Destination="E_T_FF.CLK"/>
-			<Connection Source="E_T_FF.EO" Destination="DigitalOutput_Q1.REQ"/>
+			<Connection Source="E_CYCLE.EO" Destination="E_T_FF.CLK" dx1="940"/>
+			<Connection Source="E_T_FF.EO" Destination="DigitalOutput_Q1.REQ" dx1="466.67"/>
 		</EventConnections>
 		<DataConnections>
 			<Connection Source="E_T_FF.Q" Destination="DigitalOutput_Q1.OUT" dx1="333.33"/>
