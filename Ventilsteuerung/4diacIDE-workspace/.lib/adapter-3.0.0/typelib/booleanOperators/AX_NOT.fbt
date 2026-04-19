@@ -13,13 +13,25 @@
 	</CompilerInfo>
 	<InterfaceList>
 		<Plugs>
-			<AdapterDeclaration Name="OUT" Type="adapter::types::unidirectional::AX" Comment="Output"/>
+			<AdapterDeclaration Name="OUT" Type="adapter::types::unidirectional::AX" Comment="Output" x="2900" y="1100"/>
 		</Plugs>
 		<Sockets>
-			<AdapterDeclaration Name="IN" Type="adapter::types::unidirectional::AX" Comment="Input"/>
+			<AdapterDeclaration Name="IN" Type="adapter::types::unidirectional::AX" Comment="Input" x="200" y="1100"/>
 		</Sockets>
 	</InterfaceList>
-	<Service RightInterface="RESOURCE" LeftInterface="APPLICATION" Comment="standard bitwise boolean function (not)">
+	<FBNetwork>
+		<FB Name="F_NOT_BOOL" Type="iec61131::bitwiseOperators::F_NOT_BOOL" x="1400" y="1100">
+		</FB>
+		<EventConnections>
+			<Connection Source="F_NOT_BOOL.CNF" Destination="OUT.E1"/>
+			<Connection Source="IN.E1" Destination="F_NOT_BOOL.REQ"/>
+		</EventConnections>
+		<DataConnections>
+			<Connection Source="F_NOT_BOOL.OUT" Destination="OUT.D1"/>
+			<Connection Source="IN.D1" Destination="F_NOT_BOOL.IN"/>
+		</DataConnections>
+	</FBNetwork>
+	<Service RightInterface="RESOURCE" LeftInterface="APPLICATION">
 	</Service>
 	<Attribute Name="eclipse4diac::core::TypeHash" Value="''"/>
 </FBType>
