@@ -2,7 +2,7 @@
 <AdapterType Name="Callback" Comment="Message Callback">
 	<Identification Standard="61499-1">
 	</Identification>
-	<VersionInfo Version="1.0" Author="franz" Date="2025-09-06">
+	<VersionInfo Version="1.0" Author="Franz Höpfinger" Date="2025-09-06">
 	</VersionInfo>
 	<CompilerInfo packageName="isobus::pgn::tx">
 	</CompilerInfo>
