@@ -47,6 +47,16 @@ This document outlines proposed functional blocks to enhance the event-driven ca
 
 ---
 
+## Appendix: Excluded Concepts
+
+### `AX_DELAY` (Decided against implementation)
+During the design phase, the concept of a pure `AX_DELAY` block was evaluated and discarded for the following reasons:
+1. **Data Consistency:** An `AX` adapter bundles an event with a state. Delaying the event while simply passing through the data leads to a "time-of-check vs. time-of-use" conflict. The receiver would process an old event with potentially new, inconsistent data.
+2. **Alternative Patterns:** Most requirements for delaying AX-signals are actually state-based. These are already correctly handled by `AX_TON` or `AX_TOF` blocks, which ensure that the event and data remain synchronized according to timer logic.
+3. **Architectural Purity:** To maintain the "Single Source of Truth" philosophy of 4diac adapters, pure event delays should remain on dedicated event lines, while logic delays should be handled by state-aware timer blocks.
+
+---
+
 ## Conclusion
 Adding these blocks will bridge the gap between basic delay functions and complex industrial requirements. While the standard library provides the foundation, these extensions focus on the **real-world challenges** of machine safety and diagnostic visibility.
 
