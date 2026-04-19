@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<FBType Name="IA_VDS" Comment="ISOBUS Adapter for Vehicle Direction/Speed (VDS)">
+	<Identification Standard="ISO 11783-7" Classification="PGN 65256" Description="Copyright (c) 2024-2026 HR Agrartechnik GmbH  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0">
+	</Identification>
+	<VersionInfo Organization="HR Agrartechnik GmbH" Version="1.0" Author="Franz Höpfinger" Date="2026-04-19" Remarks="initial API and implementation (Adapter Wrapper for I_VDS)">
+	</VersionInfo>
+	<CompilerInfo packageName="isobus::tecu">
+	</CompilerInfo>
+	<InterfaceList>
+		<EventInputs>
+			<Event Name="INIT" Type="EInit" Comment="Service Initialization">
+				<With Var="QI"/>
+			</Event>
+		</EventInputs>
+		<EventOutputs>
+			<Event Name="INITO" Type="EInit" Comment="Initialization Confirm">
+				<With Var="QO"/>
+				<With Var="STATUS"/>
+			</Event>
+		</EventOutputs>
+		<InputVars>
+			<VarDeclaration Name="QI" Type="BOOL" Comment="Event Input Qualifier"/>
+		</InputVars>
+		<OutputVars>
+			<VarDeclaration Name="QO" Type="BOOL" Comment="Event Output Qualifier"/>
+			<VarDeclaration Name="STATUS" Type="STRING"/>
+		</OutputVars>
+		<Plugs>
+			<AdapterDeclaration Name="NAV_SPEED" Type="adapter::types::unidirectional::AUI" Comment="Navigation-based vehicle speed" x="2620" y="5726.67"/>
+			<AdapterDeclaration Name="BEARING" Type="adapter::types::unidirectional::AUI" Comment="Compass bearing" x="2620" y="4966.67"/>
+			<AdapterDeclaration Name="ALTITUDE" Type="adapter::types::unidirectional::AUI" Comment="Altitude" x="2620" y="6486.67"/>
+			<AdapterDeclaration Name="TIMEOUT" Type="adapter::types::unidirectional::AX" Comment="Timeout Status" x="3200" y="4000"/>
+		</Plugs>
+	</InterfaceList>
+	<FBNetwork>
+		<FB Name="I_VDS" Type="isobus::tecu::I_VDS" x="680" y="3700">
+		</FB>
+		<EventConnections>
+			<Connection Source="INIT" Destination="I_VDS.INIT" dx1="66.67"/>
+			<Connection Source="I_VDS.INITO" Destination="INITO" dx1="66.67"/>
+			<Connection Source="I_VDS.TIMEOUT" Destination="TIMEOUT.E1" dx1="266.67"/>
+			<Connection Source="I_VDS.IND" Destination="NAV_SPEED.E1" dx1="333.33"/>
+			<Connection Source="I_VDS.IND" Destination="BEARING.E1" dx1="333.33"/>
+			<Connection Source="I_VDS.IND" Destination="ALTITUDE.E1" dx1="333.33"/>
+		</EventConnections>
+		<DataConnections>
+			<Connection Source="QI" Destination="I_VDS.QI" dx1="66.67"/>
+			<Connection Source="I_VDS.QO" Destination="QO" dx1="133.33"/>
+			<Connection Source="I_VDS.STATUS" Destination="STATUS" dx1="200"/>
+			<Connection Source="I_VDS.Q_timeout" Destination="TIMEOUT.D1" dx1="66.67"/>
+			<Connection Source="I_VDS.NavigationBasedVehicleSpeed" Destination="NAV_SPEED.D1" dx1="133.33"/>
+			<Connection Source="I_VDS.CompassBearing" Destination="BEARING.D1" dx1="200"/>
+			<Connection Source="I_VDS.Altitude" Destination="ALTITUDE.D1" dx1="66.67"/>
+		</DataConnections>
+	</FBNetwork>
+</FBType>

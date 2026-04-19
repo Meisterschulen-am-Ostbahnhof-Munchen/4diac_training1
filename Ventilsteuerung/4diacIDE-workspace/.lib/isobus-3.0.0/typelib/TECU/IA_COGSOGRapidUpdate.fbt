@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<FBType Name="IA_COGSOGRapidUpdate" Comment="ISOBUS Adapter for Course Over Ground and Speed Over Ground (Rapid Update)">
+	<Identification Standard="NMEA 2000" Classification="PGN 129026" Description="Copyright (c) 2024-2026 HR Agrartechnik GmbH  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0">
+	</Identification>
+	<VersionInfo Organization="HR Agrartechnik GmbH" Version="1.0" Author="Franz Höpfinger" Date="2026-04-19" Remarks="initial API and implementation (Adapter Wrapper for I_COGSOGRapidUpdate)">
+	</VersionInfo>
+	<CompilerInfo packageName="isobus::tecu">
+	</CompilerInfo>
+	<InterfaceList>
+		<EventInputs>
+			<Event Name="INIT" Type="EInit" Comment="Service Initialization">
+				<With Var="QI"/>
+			</Event>
+		</EventInputs>
+		<EventOutputs>
+			<Event Name="INITO" Type="EInit" Comment="Initialization Confirm">
+				<With Var="QO"/>
+				<With Var="STATUS"/>
+			</Event>
+		</EventOutputs>
+		<InputVars>
+			<VarDeclaration Name="QI" Type="BOOL" Comment="Event Input Qualifier"/>
+		</InputVars>
+		<OutputVars>
+			<VarDeclaration Name="QO" Type="BOOL" Comment="Event Output Qualifier"/>
+			<VarDeclaration Name="STATUS" Type="STRING"/>
+		</OutputVars>
+		<Plugs>
+			<AdapterDeclaration Name="COG" Type="adapter::types::unidirectional::AUI" Comment="Course Over Ground" x="3520" y="4100"/>
+			<AdapterDeclaration Name="SOG" Type="adapter::types::unidirectional::AUI" Comment="Speed Over Ground" x="3520" y="4860"/>
+			<AdapterDeclaration Name="TIMEOUT" Type="adapter::types::unidirectional::AX" Comment="Timeout Status" x="4000" y="1500"/>
+			<AdapterDeclaration Name="SID" Type="adapter::types::unidirectional::AUS" Comment="Sequence ID" x="3520" y="2580"/>
+			<AdapterDeclaration Name="COG_REF" Type="adapter::types::unidirectional::AB" Comment="COG Reference" x="3520" y="3340"/>
+		</Plugs>
+	</InterfaceList>
+	<FBNetwork>
+		<FB Name="I_CORE" Type="isobus::tecu::I_COGSOGRapidUpdate" x="400" y="1300">
+		</FB>
+		<EventConnections>
+			<Connection Source="INIT" Destination="I_CORE.INIT" dx1="1320"/>
+			<Connection Source="I_CORE.INITO" Destination="INITO" dx1="66.67"/>
+			<Connection Source="I_CORE.IND" Destination="COG.E1" dx1="400"/>
+			<Connection Source="I_CORE.IND" Destination="SOG.E1" dx1="400"/>
+			<Connection Source="I_CORE.IND" Destination="SID.E1" dx1="400"/>
+			<Connection Source="I_CORE.IND" Destination="COG_REF.E1" dx1="400"/>
+			<Connection Source="I_CORE.TIMEOUT" Destination="TIMEOUT.E1" dx1="1213.33"/>
+		</EventConnections>
+		<DataConnections>
+			<Connection Source="QI" Destination="I_CORE.QI" dx1="66.67"/>
+			<Connection Source="I_CORE.QO" Destination="QO" dx1="466.67"/>
+			<Connection Source="I_CORE.STATUS" Destination="STATUS" dx1="533.33"/>
+			<Connection Source="I_CORE.CourseOverGround" Destination="COG.D1" dx1="133.33"/>
+			<Connection Source="I_CORE.SpeedOverGround" Destination="SOG.D1" dx1="66.67"/>
+			<Connection Source="I_CORE.Q_timeout" Destination="TIMEOUT.D1" dx1="333.33"/>
+			<Connection Source="I_CORE.SID" Destination="SID.D1" dx1="266.67"/>
+			<Connection Source="I_CORE.COGReference" Destination="COG_REF.D1" dx1="200"/>
+		</DataConnections>
+	</FBNetwork>
+</FBType>
