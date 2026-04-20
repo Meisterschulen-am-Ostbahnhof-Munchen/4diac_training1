@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SubAppType Name="Uebung_034b_AX" Comment="LONG_PRESS_HOLD-Eingang auf PWM Ausgang (Adapter Version)">
+	<Identification Standard="61499-2" Description="Copyright (c) 2023-2026 Meisterschulen am Ostbahnhof  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0">
+	</Identification>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2026-04-20" Remarks="initial API and implementation (Adapter Version of Uebung_034b)">
+	</VersionInfo>
+	<CompilerInfo packageName="Uebungen">
+		<Import declaration="logiBUS::io::DI::logiBUS_DI::Input_I1"/>
+		<Import declaration="logiBUS::io::DI::logiBUS_DI::Input_I2"/>
+		<Import declaration="logiBUS::io::DI::logiBUS_DI::Input_I3"/>
+		<Import declaration="logiBUS::io::DI::logiBUS_DI::Input_I4"/>
+		<Import declaration="logiBUS::io::DI::logiBUS_DI_Events::BUTTON_LONG_PRESS_HOLD"/>
+		<Import declaration="logiBUS::io::DI::logiBUS_DI_Events::BUTTON_SINGLE_CLICK"/>
+		<Import declaration="logiBUS::io::DQ::logiBUS_DO::Output_Q1"/>
+	</CompilerInfo>
+	<SubAppInterfaceList>
+	</SubAppInterfaceList>
+	<SubAppNetwork>
+		<FB Name="PWMOutput_Q1" Type="logiBUS::io::DQ::logiBUS_QDA_PWM" x="6100" y="1600">
+			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="Output" Value="Output_Q1"/>
+		</FB>
+		<FB Name="IE_SPEED_UP" Type="logiBUS::io::DI::logiBUS_IEA" x="-2000" y="0">
+			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="Input" Value="Input_I1"/>
+			<Parameter Name="InputEvent" Value="BUTTON_LONG_PRESS_HOLD"/>
+		</FB>
+		<FB Name="IE_SPEED_DOWN" Type="logiBUS::io::DI::logiBUS_IEA" x="-2000" y="1000">
+			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="Input" Value="Input_I2"/>
+			<Parameter Name="InputEvent" Value="BUTTON_LONG_PRESS_HOLD"/>
+		</FB>
+		<FB Name="IE_STOP" Type="logiBUS::io::DI::logiBUS_IEA" x="-2000" y="2000">
+			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="Input" Value="Input_I3"/>
+			<Parameter Name="InputEvent" Value="BUTTON_SINGLE_CLICK"/>
+		</FB>
+		<FB Name="IE_FULL" Type="logiBUS::io::DI::logiBUS_IEA" x="-2000" y="3000">
+			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="Input" Value="Input_I4"/>
+			<Parameter Name="InputEvent" Value="BUTTON_SINGLE_CLICK"/>
+		</FB>
+		<FB Name="AE_TO_E_UP" Type="adapter::conversion::unidirectional::EVENT::AE_EVENT_TO_E" x="-500" y="0">
+		</FB>
+		<FB Name="AE_TO_E_DOWN" Type="adapter::conversion::unidirectional::EVENT::AE_EVENT_TO_E" x="-500" y="1000">
+		</FB>
+		<FB Name="AE_TO_E_STOP" Type="adapter::conversion::unidirectional::EVENT::AE_EVENT_TO_E" x="-500" y="2000">
+		</FB>
+		<FB Name="AE_TO_E_FULL" Type="adapter::conversion::unidirectional::EVENT::AE_EVENT_TO_E" x="-500" y="3000">
+		</FB>
+		<FB Name="AUDI_CTUD" Type="adapter::events::unidirectional::UDINT::AUDI_CTUD_UDINT" x="1000" y="1700">
+			<Parameter Name="PV" Value="UDINT#1023"/>
+		</FB>
+		<FB Name="CV_TO_UDINT" Type="adapter::conversion::unidirectional::UDINT::AUDI_UDI_TO_UDINT" x="2500" y="1700">
+		</FB>
+		<FB Name="F_MUL" Type="iec61131::arithmetic::F_MUL" x="3500" y="1700">
+			<Parameter Name="IN2" Value="UDINT#8"/>
+		</FB>
+		<FB Name="F_UDINT_TO_DWORD" Type="iec61131::conversion::F_UDINT_TO_DWORD" x="4500" y="1700">
+		</FB>
+		<FB Name="AD_ENC" Type="adapter::conversion::unidirectional::DWORD::AD_DWORD_TO_D" x="5500" y="1700">
+		</FB>
+		<EventConnections>
+			<Connection Source="AE_TO_E_UP.CNF" Destination="AUDI_CTUD.CU" dx1="100"/>
+			<Connection Source="AE_TO_E_DOWN.CNF" Destination="AUDI_CTUD.CD" dx1="100"/>
+			<Connection Source="AE_TO_E_STOP.CNF" Destination="AUDI_CTUD.R" dx1="100"/>
+			<Connection Source="AE_TO_E_FULL.CNF" Destination="AUDI_CTUD.LD" dx1="100"/>
+			<Connection Source="CV_TO_UDINT.CNF" Destination="F_MUL.REQ" dx1="100"/>
+			<Connection Source="F_MUL.CNF" Destination="F_UDINT_TO_DWORD.REQ" dx1="100"/>
+			<Connection Source="F_UDINT_TO_DWORD.CNF" Destination="AD_ENC.REQ" dx1="100"/>
+			<Connection Source="IE_SPEED_UP.INITO" Destination="IE_SPEED_DOWN.INIT" dx1="100" dx2="100" dy="500"/>
+			<Connection Source="IE_SPEED_DOWN.INITO" Destination="IE_STOP.INIT" dx1="100" dx2="100" dy="500"/>
+			<Connection Source="IE_STOP.INITO" Destination="IE_FULL.INIT" dx1="100" dx2="100" dy="500"/>
+			<Connection Source="IE_FULL.INITO" Destination="PWMOutput_Q1.INIT" dx1="5000"/>
+		</EventConnections>
+		<DataConnections>
+			<Connection Source="CV_TO_UDINT.IN" Destination="F_MUL.IN1" dx1="100"/>
+			<Connection Source="F_MUL.OUT" Destination="F_UDINT_TO_DWORD.IN" dx1="100"/>
+			<Connection Source="F_UDINT_TO_DWORD.OUT" Destination="AD_ENC.OUT" dx1="100"/>
+		</DataConnections>
+		<AdapterConnections>
+			<Connection Source="IE_SPEED_UP.IN" Destination="AE_TO_E_UP.AE_IN" dx1="100"/>
+			<Connection Source="IE_SPEED_DOWN.IN" Destination="AE_TO_E_DOWN.AE_IN" dx1="100"/>
+			<Connection Source="IE_STOP.IN" Destination="AE_TO_E_STOP.AE_IN" dx1="100"/>
+			<Connection Source="IE_FULL.IN" Destination="AE_TO_E_FULL.AE_IN" dx1="100"/>
+			<Connection Source="AUDI_CTUD.CV" Destination="CV_TO_UDINT.AUDI_IN" dx1="100"/>
+			<Connection Source="AD_ENC.AD_OUT" Destination="PWMOutput_Q1.OUT" dx1="100"/>
+		</AdapterConnections>
+	</SubAppNetwork>
+</SubAppType>
