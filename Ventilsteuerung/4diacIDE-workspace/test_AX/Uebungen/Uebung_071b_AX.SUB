@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SubAppType Name="Uebung_071b_AX" Comment="WBSD auf UT ausgeben, Wegabhängige Impulse (Adapter Version)">
+	<Identification Standard="61499-2" Description="Copyright (c) 2023-2026 Meisterschulen am Ostbahnhof  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0">
+	</Identification>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2026-04-19" Remarks="initial API and implementation (Adapter Version of Uebung_071b)">
+	</VersionInfo>
+	<CompilerInfo packageName="Uebungen">
+		<Import declaration="Uebungen::const::UT::TECU::DefaultPool_TECU::NumberVariable_Wheel_based_machine_distance"/>
+		<Import declaration="Uebungen::const::UT::TECU::DefaultPool_TECU::NumberVariable_Wheel_based_machine_speed"/>
+		<Import declaration="logiBUS::io::DQ::logiBUS_DO::Output_Q1"/>
+	</CompilerInfo>
+	<SubAppInterfaceList>
+	</SubAppInterfaceList>
+	<SubAppNetwork>
+		<FB Name="IA_WBSD" Type="isobus::tecu::IA_WBSD" x="-5200" y="500">
+			<Parameter Name="QI" Value="TRUE"/>
+		</FB>
+		<FB Name="Q_Speed" Type="isobus::UT::Q::Q_NumericValue_AUDI" x="2400" y="500">
+			<Parameter Name="u16ObjId" Value="NumberVariable_Wheel_based_machine_speed"/>
+		</FB>
+		<FB Name="Q_Distance" Type="isobus::UT::Q::Q_NumericValue_AUDI" x="2400" y="1400">
+			<Parameter Name="u16ObjId" Value="NumberVariable_Wheel_based_machine_distance"/>
+		</FB>
+		<FB Name="DigitalOutput_Q1" Type="logiBUS::io::DQ::logiBUS_QXA" x="2400" y="2400">
+			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="Output" Value="Output_Q1"/>
+		</FB>
+		<FB Name="RangePulse" Type="MyLib::sys::AX_RangeBasedPulse" x="-500" y="2400">
+			<Parameter Name="DIST_HIGH" Value="5000"/>
+			<Parameter Name="DIST_LOW" Value="5000"/>
+		</FB>
+		<FB Name="CONV_SPEED" Type="adapter::conversion::unidirectional::AUI_TO_AUDI" x="800" y="500">
+		</FB>
+		<Comment Comment="Periodischer Puls alle 10 Meter (5m HIGH, 5m LOW) basierend auf Wegstrecke!" x="-1200" y="3200" width="2000" height="400"/>
+		<FB Name="AUDI_SPLIT_2" Type="adapter::events::unidirectional::AUDI_SPLIT_2" x="-4200" y="1100">
+		</FB>
+		<AdapterConnections>
+			<Connection Source="IA_WBSD.SPEED" Destination="CONV_SPEED.AUI_IN" dx1="200"/>
+			<Connection Source="CONV_SPEED.AUDI_OUT" Destination="Q_Speed.u32NewValue" dx1="200"/>
+			<Connection Source="AUDI_SPLIT_2.OUT1" Destination="Q_Distance.u32NewValue" dx1="1000"/>
+			<Connection Source="AUDI_SPLIT_2.OUT2" Destination="RangePulse.DIST_IN" dx1="500"/>
+			<Connection Source="RangePulse.OUT" Destination="DigitalOutput_Q1.OUT" dx1="500"/>
+			<Connection Source="IA_WBSD.DISTANCE" Destination="AUDI_SPLIT_2.IN" dx1="180"/>
+		</AdapterConnections>
+	</SubAppNetwork>
+</SubAppType>
