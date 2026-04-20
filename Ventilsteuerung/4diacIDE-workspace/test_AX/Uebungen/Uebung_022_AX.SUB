@@ -18,11 +18,11 @@
 			<Parameter Name="QI" Value="TRUE"/>
 			<Parameter Name="Output" Value="Output_Q1"/>
 		</FB>
-		<FB Name="SoftKey_UP_F1" Type="isobus::UT::io::Softkey::Softkey_IXA" x="-7600" y="-500">
+		<FB Name="SoftKey_UP_F1" Type="isobus::UT::io::Softkey::Softkey_IXA" x="-7500" y="-900">
 			<Parameter Name="QI" Value="TRUE"/>
 			<Parameter Name="u16ObjId" Value="SoftKey_F1"/>
 		</FB>
-		<FB Name="AX_FB_SR_Ausfahren_Cyl_1" Type="adapter::iec61131-3::bistableElements::AX_FB_SR" x="-4300" y="-300">
+		<FB Name="AX_FB_SR_Ausfahren_Cyl_1" Type="adapter::iec61131::bistableElements::AX_FB_SR" x="-4900" y="0">
 		</FB>
 		<FB Name="SoftKey_F2_DOWN" Type="isobus::UT::io::Softkey::Softkey_IXA" x="-7600" y="1000">
 			<Parameter Name="QI" Value="TRUE"/>
@@ -34,7 +34,7 @@
 			<Parameter Name="QI" Value="TRUE"/>
 			<Parameter Name="Output" Value="Output_Q2"/>
 		</FB>
-		<FB Name="AX_FB_SR_Ausfahren_Cyl_2" Type="adapter::iec61131-3::bistableElements::AX_FB_SR" x="-4133.33" y="1366.67">
+		<FB Name="AX_FB_SR_Ausfahren_Cyl_2" Type="adapter::iec61131::bistableElements::AX_FB_SR" x="-5000" y="1700">
 		</FB>
 		<Comment Comment="Endlage Ausfahren_Cyl_2 &#10;" x="-9066.67" y="2500" width="1373.33" height="366.67"/>
 		<FB Name="SoftKey_F3_DOWN" Type="isobus::UT::io::Softkey::Softkey_IXA" x="-7600" y="2333.33">
@@ -43,13 +43,16 @@
 		</FB>
 		<Comment Comment="Ausfahren_Cyl_1" x="-3400" y="400" width="1373.33" height="366.67"/>
 		<Comment Comment="Ausfahren_Cyl_2" x="-3400" y="2100" width="1373.33" height="366.67"/>
+		<FB Name="AX_SPLIT_2" Type="adapter::events::unidirectional::AX_SPLIT_2" x="-6400" y="1500">
+		</FB>
 		<AdapterConnections>
 			<Connection Source="SoftKey_UP_F1.IN" Destination="AX_FB_SR_Ausfahren_Cyl_1.SET1" dx1="1246.67"/>
-			<Connection Source="SoftKey_F2_DOWN.IN" Destination="AX_FB_SR_Ausfahren_Cyl_1.RESET" dx1="1246.67"/>
 			<Connection Source="AX_FB_SR_Ausfahren_Cyl_1.Q1" Destination="DigitalOutput_Q1.OUT" dx1="760"/>
-			<Connection Source="AX_FB_SR_Ausfahren_Cyl_2.Q1" Destination="DigitalOutput_Q2.OUT" dx1="660"/>
-			<Connection Source="SoftKey_F2_DOWN.IN" Destination="AX_FB_SR_Ausfahren_Cyl_2.SET1" dx1="1246.67"/>
-			<Connection Source="SoftKey_F3_DOWN.IN" Destination="AX_FB_SR_Ausfahren_Cyl_2.RESET" dx1="1246.67"/>
+			<Connection Source="AX_FB_SR_Ausfahren_Cyl_2.Q1" Destination="DigitalOutput_Q2.OUT"/>
+			<Connection Source="SoftKey_F3_DOWN.IN" Destination="AX_FB_SR_Ausfahren_Cyl_2.RESET" dx1="1566.67"/>
+			<Connection Source="SoftKey_F2_DOWN.IN" Destination="AX_SPLIT_2.IN" dx1="146.67"/>
+			<Connection Source="AX_SPLIT_2.OUT1" Destination="AX_FB_SR_Ausfahren_Cyl_1.RESET" dx1="440"/>
+			<Connection Source="AX_SPLIT_2.OUT2" Destination="AX_FB_SR_Ausfahren_Cyl_2.SET1" dx1="606.67"/>
 		</AdapterConnections>
 	</SubAppNetwork>
 </SubAppType>

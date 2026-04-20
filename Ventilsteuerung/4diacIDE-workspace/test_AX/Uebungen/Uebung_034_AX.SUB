@@ -20,25 +20,15 @@
 			<Parameter Name="QI" Value="TRUE"/>
 			<Parameter Name="Output" Value="Output_Q4"/>
 		</FB>
-		<FB Name="AD_D_TO_DWORD" Type="adapter::conversion::unidirectional::AD_D_TO_DWORD" x="-1500" y="1700">
-		</FB>
-		<FB Name="F_SHL" Type="iec61131::bitwiseOperators::F_SHL" x="500" y="1700">
+		<FB Name="AD_SHL" Type="adapter::iec61131::bitwise::AD_SHL" x="300" y="1800">
 			<Parameter Name="N" Value="UINT#1"/>
-		</FB>
-		<FB Name="AD_DWORD_TO_D" Type="adapter::conversion::unidirectional::AD_DWORD_TO_D" x="2500" y="1700">
 		</FB>
 		<EventConnections>
 			<Connection Source="AnalogInput_I7.INITO" Destination="PWMOutput_Q4.INIT" dx1="5000"/>
-			<Connection Source="AD_D_TO_DWORD.CNF" Destination="F_SHL.REQ" dx1="100"/>
-			<Connection Source="F_SHL.CNF" Destination="AD_DWORD_TO_D.REQ" dx1="100"/>
 		</EventConnections>
-		<DataConnections>
-			<Connection Source="AD_D_TO_DWORD.IN" Destination="F_SHL.IN" dx1="100"/>
-			<Connection Source="F_SHL.OUT" Destination="AD_DWORD_TO_D.OUT" dx1="100"/>
-		</DataConnections>
 		<AdapterConnections>
-			<Connection Source="AnalogInput_I7.IN" Destination="AD_D_TO_DWORD.AD_IN" dx1="200"/>
-			<Connection Source="AD_DWORD_TO_D.AD_OUT" Destination="PWMOutput_Q4.OUT" dx1="200"/>
+			<Connection Source="AnalogInput_I7.IN" Destination="AD_SHL.IN" dx1="200"/>
+			<Connection Source="AD_SHL.OUT" Destination="PWMOutput_Q4.OUT" dx1="1013.33"/>
 		</AdapterConnections>
 	</SubAppNetwork>
 </SubAppType>
