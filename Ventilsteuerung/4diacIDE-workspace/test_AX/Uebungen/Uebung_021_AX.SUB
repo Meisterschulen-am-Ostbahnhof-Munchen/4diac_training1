@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SubAppType Name="Uebung_021_AX" Comment="Spiegelabfolge (1) - AX Variante">
+	<Identification Standard="61499-2" Description="Copyright (c) 2023 Meisterschulen am Ostbahnhof  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0">
+	</Identification>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2026-04-20" Remarks="AX Variante">
+	</VersionInfo>
+	<CompilerInfo packageName="Uebungen">
+		<Import declaration="Uebungen::const::UT::DefaultPool::SoftKey_F1"/>
+		<Import declaration="Uebungen::const::UT::DefaultPool::SoftKey_F2"/>
+		<Import declaration="logiBUS::io::DQ::logiBUS_DO::Output_Q1"/>
+	</CompilerInfo>
+	<SubAppInterfaceList>
+	</SubAppInterfaceList>
+	<SubAppNetwork>
+		<FB Name="DigitalOutput_Q1" Type="logiBUS::io::DQ::logiBUS_QXA" x="-2800" y="-400">
+			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="Output" Value="Output_Q1"/>
+		</FB>
+		<FB Name="SoftKey_UP_F1" Type="isobus::UT::io::Softkey::Softkey_IXA" x="-7600" y="-500">
+			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="u16ObjId" Value="SoftKey_F1"/>
+		</FB>
+		<FB Name="AX_FB_SR" Type="adapter::iec61131::bistableElements::AX_FB_SR" x="-4300" y="200">
+		</FB>
+		<FB Name="SoftKey_F2_DOWN" Type="isobus::UT::io::Softkey::Softkey_IXA" x="-7600" y="1000">
+			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="u16ObjId" Value="SoftKey_F2"/>
+		</FB>
+		<Comment Comment="START-Knopf" x="-9066.67" y="-500" width="1373.33" height="366.67"/>
+		<Comment Comment="Endlage &#10;" x="-9066.67" y="1000" width="1373.33" height="366.67"/>
+		<AdapterConnections>
+			<Connection Source="AX_FB_SR.Q1" Destination="DigitalOutput_Q1.OUT" dx1="760"/>
+			<Connection Source="SoftKey_UP_F1.IN" Destination="AX_FB_SR.SET1" dx1="1246.67"/>
+			<Connection Source="SoftKey_F2_DOWN.IN" Destination="AX_FB_SR.RESET" dx1="1246.67"/>
+		</AdapterConnections>
+	</SubAppNetwork>
+</SubAppType>
