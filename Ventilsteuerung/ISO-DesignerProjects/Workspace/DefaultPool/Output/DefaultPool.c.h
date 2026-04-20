@@ -4,7 +4,7 @@
 #define WorkingSet_0_Offset                                     1
 #define Macro_Go_To_DataMask_M1_Offset                         21
 #define Macro_Go_To_DataMask_M2_Offset                         34
-#define Macro_3_Offset                                         47
+#define Macro_Go_To_DataMask_M3_Offset                         47
 #define DataMask_M1_Offset                                     60
 #define DataMask_M2_Offset                                    188
 #define DataMask_M3_Offset                                    220

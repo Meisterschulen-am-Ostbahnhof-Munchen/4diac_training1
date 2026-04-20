@@ -9,7 +9,7 @@
 #define WorkingSet_0                          0
 #define Macro_Go_To_DataMask_M1               1
 #define Macro_Go_To_DataMask_M2               2
-#define Macro_3                               3
+#define Macro_Go_To_DataMask_M3               3
 #define DataMask_M1                        1000
 #define DataMask_M2                        1001
 #define DataMask_M3                        1002

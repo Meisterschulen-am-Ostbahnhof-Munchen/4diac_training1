@@ -7,7 +7,7 @@ const unsigned long ISO_OP_MEMORY_CLASS isoOP_DefaultPool_Offset_Id[] = {
 	     1,  // WorkingSet_0_Offset
 	    21,  // Macro_Go_To_DataMask_M1_Offset
 	    34,  // Macro_Go_To_DataMask_M2_Offset
-	    47,  // Macro_3_Offset
+	    47,  // Macro_Go_To_DataMask_M3_Offset
 	    60,  // DataMask_M1_Offset
 	   188,  // DataMask_M2_Offset
 	   220,  // DataMask_M3_Offset
