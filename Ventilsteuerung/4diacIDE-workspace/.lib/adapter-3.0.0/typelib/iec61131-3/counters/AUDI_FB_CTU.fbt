@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<FBType Name="AI_FB_CTU" Comment="Up counter (INT) AI-Adapter Version">
+<FBType Name="AUDI_FB_CTU" Comment="Up counter (UDINT) AUDI-Adapter Version">
 	<Identification Standard="61499-2" Description="Copyright (c) 2026 Meisterschulen am Ostbahnhof  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0 &#10; &#10;NOTE: This block fires the AX output event (Q.E1) on every update (CU, R, PV). If on-change triggering is required, use of an AX_D_FF as a filter is recommended.">
 	</Identification>
 	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2026-04-21" Remarks="initial API and implementation and/or initial documentation">
@@ -13,31 +13,31 @@
 		</EventOutputs>
 		<Plugs>
 			<AdapterDeclaration Name="Q" Type="adapter::types::unidirectional::AX" Comment="Output" x="1400" y="100"/>
-			<AdapterDeclaration Name="CV" Type="adapter::types::unidirectional::AI" Comment="Count value" x="1400" y="893.33"/>
+			<AdapterDeclaration Name="CV" Type="adapter::types::unidirectional::AUDI" Comment="Count value" x="1400" y="893.33"/>
 		</Plugs>
 		<Sockets>
 			<AdapterDeclaration Name="CU" Type="adapter::types::unidirectional::AX" Comment="Count up" x="-1000" y="-1000"/>
 			<AdapterDeclaration Name="R" Type="adapter::types::unidirectional::AX" Comment="Reset" x="-1000" y="-200"/>
-			<AdapterDeclaration Name="PV" Type="adapter::types::unidirectional::AI" Comment="Preset value" x="-1000" y="600"/>
+			<AdapterDeclaration Name="PV" Type="adapter::types::unidirectional::AUDI" Comment="Preset value" x="-1000" y="600"/>
 		</Sockets>
 	</InterfaceList>
 	<FBNetwork>
-		<FB Name="FB_CTU" Type="iec61131::counters::FB_CTU" x="300" y="100">
+		<FB Name="FB_CTU_UDINT" Type="iec61131::counters::FB_CTU_UDINT" x="300" y="100">
 		</FB>
 		<EventConnections>
-			<Connection Source="R.E1" Destination="FB_CTU.REQ" dx1="600"/>
-			<Connection Source="CU.E1" Destination="FB_CTU.REQ" dx1="800"/>
-			<Connection Source="PV.E1" Destination="FB_CTU.REQ" dx1="800"/>
-			<Connection Source="FB_CTU.CNF" Destination="CV.E1" dx1="133.33"/>
-			<Connection Source="FB_CTU.CNF" Destination="Q.E1" dx1="133.33"/>
-			<Connection Source="FB_CTU.CNF" Destination="CNF" dx1="133.33"/>
+			<Connection Source="R.E1" Destination="FB_CTU_UDINT.REQ" dx1="600"/>
+			<Connection Source="CU.E1" Destination="FB_CTU_UDINT.REQ" dx1="800"/>
+			<Connection Source="PV.E1" Destination="FB_CTU_UDINT.REQ" dx1="800"/>
+			<Connection Source="FB_CTU_UDINT.CNF" Destination="CV.E1" dx1="133.33"/>
+			<Connection Source="FB_CTU_UDINT.CNF" Destination="Q.E1" dx1="133.33"/>
+			<Connection Source="FB_CTU_UDINT.CNF" Destination="CNF" dx1="133.33"/>
 		</EventConnections>
 		<DataConnections>
-			<Connection Source="R.D1" Destination="FB_CTU.R" dx1="200"/>
-			<Connection Source="CU.D1" Destination="FB_CTU.CU" dx1="400"/>
-			<Connection Source="PV.D1" Destination="FB_CTU.PV" dx1="400"/>
-			<Connection Source="FB_CTU.CV" Destination="CV.D1" dx1="100"/>
-			<Connection Source="FB_CTU.Q" Destination="Q.D1" dx1="100"/>
+			<Connection Source="R.D1" Destination="FB_CTU_UDINT.R" dx1="200"/>
+			<Connection Source="CU.D1" Destination="FB_CTU_UDINT.CU" dx1="400"/>
+			<Connection Source="PV.D1" Destination="FB_CTU_UDINT.PV" dx1="400"/>
+			<Connection Source="FB_CTU_UDINT.CV" Destination="CV.D1" dx1="100"/>
+			<Connection Source="FB_CTU_UDINT.Q" Destination="Q.D1" dx1="100"/>
 		</DataConnections>
 	</FBNetwork>
 </FBType>
