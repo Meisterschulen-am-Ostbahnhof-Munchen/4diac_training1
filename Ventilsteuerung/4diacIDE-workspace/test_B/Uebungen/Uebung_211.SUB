@@ -1,10 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<SubAppType Name="Uebung_211" Comment="Standard IEC 61131-3 FB_CTU_DINT (Vorwärtszähler, DINT)">
+<SubAppType Name="Uebung_211" Comment="Standard IEC 61131-3 FB_CTU_DINT (Vorwärtszähler, DINT) mit Terminal-Ausgabe">
 	<Identification Standard="61131-3" Description="Copyright (c) 2026 Meisterschulen am Ostbahnhof  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0">
 	</Identification>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.1" Author="Franz Höpfinger" Date="2026-04-21" Remarks="Added terminal output for counter value">
+	</VersionInfo>
 	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2026-04-20" Remarks="initial API and implementation (IEC 61131-3 version)">
 	</VersionInfo>
 	<CompilerInfo packageName="Uebungen">
+		<Import declaration="Uebungen::const::UT::DefaultPool::OutputNumber_N1"/>
 		<Import declaration="logiBUS::io::DI::logiBUS_DI::Input_I1"/>
 		<Import declaration="logiBUS::io::DI::logiBUS_DI::Input_I2"/>
 		<Import declaration="logiBUS::io::DQ::logiBUS_DO::Output_Q1"/>
@@ -23,19 +26,30 @@
 			<Parameter Name="QI" Value="TRUE"/>
 			<Parameter Name="Input" Value="Input_I2"/>
 		</FB>
-		<FB Name="Output_Q1" Type="logiBUS::io::DQ::logiBUS_QX" x="3000" y="500">
+		<FB Name="Output_Q1" Type="logiBUS::io::DQ::logiBUS_QX" x="3000" y="-200">
 			<Parameter Name="QI" Value="TRUE"/>
 			<Parameter Name="Output" Value="Output_Q1"/>
 		</FB>
+		<FB Name="Q_NumericValue" Type="isobus::UT::Q::Q_NumericValue" x="3500" y="1000">
+			<Parameter Name="u16ObjId" Value="OutputNumber_N1"/>
+		</FB>
+		<FB Name="F_DINT_TO_UDINT" Type="iec61131::conversion::F_DINT_TO_UDINT" x="1500" y="1200">
+		</FB>
+		<Comment Comment="hier gegebenenfalls einen E_D_FF einbauen, damit die Events reduziert werden. " x="1700" y="-500" width="1000" height="500"/>
+		<Comment Comment="F_DINT_TO_UDINT ist großer Quatsch ... keine Negativen Zahlen möglich" x="1400" y="1900" width="2200" height="500"/>
 		<EventConnections>
 			<Connection Source="Input_CU.IND" Destination="FB_CTU_DINT.REQ" dx1="500"/>
 			<Connection Source="Input_R.IND" Destination="FB_CTU_DINT.REQ" dx1="500"/>
 			<Connection Source="FB_CTU_DINT.CNF" Destination="Output_Q1.REQ" dx1="500"/>
+			<Connection Source="FB_CTU_DINT.CNF" Destination="F_DINT_TO_UDINT.REQ" dx1="480"/>
+			<Connection Source="F_DINT_TO_UDINT.CNF" Destination="Q_NumericValue.REQ" dx1="200"/>
 		</EventConnections>
 		<DataConnections>
 			<Connection Source="Input_CU.IN" Destination="FB_CTU_DINT.CU" dx1="200"/>
 			<Connection Source="Input_R.IN" Destination="FB_CTU_DINT.R" dx1="200"/>
-			<Connection Source="FB_CTU_DINT.Q" Destination="Output_Q1.OUT" dx1="200"/>
+			<Connection Source="FB_CTU_DINT.Q" Destination="Output_Q1.OUT" dx1="1120"/>
+			<Connection Source="FB_CTU_DINT.CV" Destination="F_DINT_TO_UDINT.IN" dx1="200"/>
+			<Connection Source="F_DINT_TO_UDINT.OUT" Destination="Q_NumericValue.u32NewValue" dx1="200"/>
 		</DataConnections>
 	</SubAppNetwork>
 </SubAppType>
