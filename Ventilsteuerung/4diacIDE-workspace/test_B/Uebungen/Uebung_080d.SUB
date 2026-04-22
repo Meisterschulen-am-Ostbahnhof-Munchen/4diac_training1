@@ -9,6 +9,7 @@
 		<Import declaration="logiBUS::io::DI::logiBUS_DI::Input_I2"/>
 		<Import declaration="logiBUS::io::DI::logiBUS_DI_Events::BUTTON_SINGLE_CLICK"/>
 		<Import declaration="logiBUS::io::DQ::logiBUS_DO::Output_Q1"/>
+		<Import declaration="Uebungen::const::UT::DefaultPool::OutputNumber_N1"/>
 	</CompilerInfo>
 	<SubAppInterfaceList>
 	</SubAppInterfaceList>
@@ -34,12 +35,12 @@
 		</FB>
 		<FB Name="E_MERGE_4" Type="iec61499::events::E_MERGE_4" x="-3300" y="-900">
 		</FB>
-		<FB Name="E_D_FF_ANY" Type="iec61499::events::E_D_FF_ANY" x="-2200" y="-500">
-		</FB>
-		<FB Name="F_MOVE" Type="iec61131::selection::F_MOVE" x="-900" y="-500">
-			<Attribute Name="DataType" Value="UINT"/>
+		<FB Name="E_D_FF_ANY" Type="iec61499::events::E_D_FF_ANY" x="-2100" y="-500">
 		</FB>
 		<FB Name="E_D_FF" Type="iec61499::events::E_D_FF" x="-1900" y="600">
+		</FB>
+		<FB Name="Q_NumericValue" Type="isobus::UT::Q::Q_NumericValue" x="-500" y="-700">
+			<Parameter Name="u16ObjId" Value="OutputNumber_N1"/>
 		</FB>
 		<EventConnections>
 			<Connection Source="DigitalInput_CLK_I1.IND" Destination="E_CTU.CU" dx1="453.33"/>
@@ -51,13 +52,13 @@
 			<Connection Source="E_SPLIT_4.EO3" Destination="E_MERGE_4.EI3"/>
 			<Connection Source="E_SPLIT_4.EO4" Destination="E_MERGE_4.EI4"/>
 			<Connection Source="E_MERGE_4.EO" Destination="E_D_FF_ANY.CLK" dx1="246.67"/>
-			<Connection Source="E_D_FF_ANY.EO" Destination="F_MOVE.REQ"/>
+			<Connection Source="E_D_FF_ANY.EO" Destination="Q_NumericValue.REQ" dx1="366.67"/>
 			<Connection Source="E_MERGE_4.EO" Destination="E_D_FF.CLK" dx1="173.33"/>
 			<Connection Source="E_D_FF.EO" Destination="DigitalOutput_Q1.REQ" dx1="766.67"/>
 		</EventConnections>
 		<DataConnections>
 			<Connection Source="E_CTU.CV" Destination="E_D_FF_ANY.D" dx1="853.33"/>
-			<Connection Source="E_D_FF_ANY.Q" Destination="F_MOVE.IN"/>
+			<Connection Source="E_D_FF_ANY.Q" Destination="Q_NumericValue.u32NewValue" dx1="266.67"/>
 			<Connection Source="E_CTU.Q" Destination="E_D_FF.D" dx1="80"/>
 			<Connection Source="E_D_FF.Q" Destination="DigitalOutput_Q1.OUT" dx1="766.67"/>
 		</DataConnections>
