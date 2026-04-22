@@ -93,6 +93,16 @@ for %%f in (*.gif) do (
     echo    BMP 256 DM frames in ..\img_DM_256\!fname!\
     echo.
     
+    echo 11. generate frame_BG.bmp for DM (white background, same size as DM frames)
+    magick "..\img_frames\!fname!\frame_00.png" -fill white -colorize 100 -alpha off -type Palette -compress none BMP3:"..\img_DM_256\!fname!\frame_BG.bmp"
+    echo    frame_BG.bmp created in ..\img_DM_256\!fname!\
+    echo.
+
+    echo 12. generate frame_BG.bmp for SKM (white background, resized)
+    magick "..\img_resized_SKM\!fname!\frame_00.png" -fill white -colorize 100 -alpha off -type Palette -compress none BMP3:"..\img_SKM_256\!fname!\frame_BG.bmp"
+    echo    frame_BG.bmp created in ..\img_SKM_256\!fname!\
+    echo.
+
     echo DONE *************************************
     echo *
     echo *
