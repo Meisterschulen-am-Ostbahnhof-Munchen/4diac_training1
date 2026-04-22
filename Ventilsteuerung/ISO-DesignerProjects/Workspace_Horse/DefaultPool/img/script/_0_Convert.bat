@@ -31,15 +31,17 @@ for %%f in (*.gif) do (
     echo    frame_BG.bmp created in ..\img_DM_256\!fname!\
     echo.
 
-    echo 4. Replace background pixels with pink (#FF00FF) for RLE compression
+    echo 4. Replace background and white pixels with pink (#FF00FF) for RLE compression
     for %%g in (..\img_DM_256\!fname!\frame_*.bmp) do (
         if /I not "%%~nxg"=="frame_BG.bmp" (
-            magick "%%g" "..\img_DM_256\!fname!\frame_BG.bmp" -compose Difference -composite -threshold 0 "..\img_DM_256\!fname!\tmp_mask.png"
-            magick "%%g" ( "..\img_DM_256\!fname!\tmp_mask.png" -alpha off ) -compose CopyOpacity -composite -background "#FF00FF" -alpha background -alpha remove -remap netscape: -type Palette BMP3:"%%g"
+            magick "%%g" "..\img_DM_256\!fname!\frame_BG.bmp" -compose Difference -composite -threshold 0 -negate "..\img_DM_256\!fname!\tmp_mask.png"
+            magick "%%g" -fill "#FF00FF" -colorize 100 "..\img_DM_256\!fname!\tmp_pink.bmp"
+            magick "%%g" "..\img_DM_256\!fname!\tmp_pink.bmp" "..\img_DM_256\!fname!\tmp_mask.png" -composite -fill "#FF00FF" -opaque "#FFFFFF" -remap netscape: -type Palette BMP3:"%%g"
             del "..\img_DM_256\!fname!\tmp_mask.png"
+            del "..\img_DM_256\!fname!\tmp_pink.bmp"
         )
     )
-    echo    Background pixels replaced with pink in all frames
+    echo    Background and white pixels replaced with pink in all frames
     echo.
 
     echo DONE *************************************
