@@ -1,13 +1,13 @@
-// ISO-Designer ISO 11783   Version 5.6.2.5533 Jetter AG
+// ISO-Designer ISO 11783   Version 5.7.2.6664 Bucher Automation AG
 // Do not change!
 
-#define WorkingSet_0_Offset                                     1
+#define WorkingSet_Offset                                       1
 #define Macro_100_perc_Offset                                  21
 #define Macro_050_perc_Offset                                  34
 #define Macro_075_perc_Offset                                  47
 #define Macro_000_perc_Offset                                  60
 #define Macro_025_perc_Offset                                  73
-#define DataMask_1000_Offset                                   86
+#define DataMask_Offset                                        86
 #define Button_050_perc_Offset                                178
 #define Button_075_perc_Offset                                205
 #define Button_000_perc_Offset                                232
@@ -16,25 +16,25 @@
 #define InputNumber_PWM_DUTY_Offset                           313
 #define InputNumber_PWM_Value_Offset                          351
 #define OutputString_percent_Offset                           389
-#define OutputString_WS_Offset                                410
-#define OutputNumber_100_Offset                               431
-#define OutputNumber_8129_Offset                              460
-#define OutputNumber_050_Offset                               489
-#define OutputNumber_075_Offset                               518
-#define OutputNumber_000_Offset                               547
-#define OutputNumber_025_Offset                               576
-#define Meter_17000_Offset                                    605
-#define LinearBargraph_18000_Offset                           626
-#define ArchedBargraph_19000_Offset                           650
-#define NumberVariable_PWM_Value_Offset                       677
-#define FontAttributes_12x16_Offset                           684
-#define FontAttributes_12x16_B_Offset                         692
-#define FontAttributes_16x16_Offset                           700
-#define FontAttributes_WS_Offset                              708
+#define OutputString_WS_Offset                                408
+#define OutputNumber_100_Offset                               428
+#define OutputNumber_8129_Offset                              457
+#define OutputNumber_050_Offset                               486
+#define OutputNumber_075_Offset                               515
+#define OutputNumber_000_Offset                               544
+#define OutputNumber_025_Offset                               573
+#define Meter_Offset                                          602
+#define LinearBargraph_Offset                                 623
+#define ArchedBargraph_Offset                                 647
+#define NumberVariable_PWM_Value_Offset                       674
+#define FontAttributes_12x16_Offset                           681
+#define FontAttributes_12x16_B_Offset                         689
+#define FontAttributes_16x16_Offset                           697
+#define FontAttributes_WS_Offset                              705
 
 #define ISO_OP_MEMORY_CLASS
 
-#define ISO_OP_DefaultPool_Size    716
+#define ISO_OP_DefaultPool_Size    713
 extern const unsigned char ISO_OP_MEMORY_CLASS isoOP_DefaultPool[];
 
 #define ISO_OP_DefaultPool_ObjectNumber     30

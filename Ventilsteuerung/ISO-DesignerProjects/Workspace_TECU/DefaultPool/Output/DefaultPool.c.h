@@ -1,7 +1,7 @@
-// ISO-Designer ISO 11783   Version 5.7.1.6514 Bucher Automation AG
+// ISO-Designer ISO 11783   Version 5.7.2.6664 Bucher Automation AG
 // Do not change!
 
-#define WorkingSet_0_Offset                                     1
+#define WorkingSet_Offset                                       1
 #define DataMask_M1_Offset                                     21
 #define Container_Wheel_based_machine_speed_Offset             59
 #define Container_Ground_based_machine_speed_Offset            99
@@ -20,7 +20,7 @@
 #define OutputNumber_Wheel_based_machine_distance_km_Offset    429
 #define OutputNumber_Wheel_based_machine_distance_m_Offset    458
 #define OutputNumber_Rear_PTO_output_shaft_speed_Offset       487
-#define Line_13000_Offset                                     516
+#define Line_Offset                                           516
 #define Tractor_wheel_slip_Offset                             527
 #define Battery_disconnect_Offset                            1056
 #define Work_distance_travelled_Offset                       1585
@@ -32,7 +32,7 @@
 #define NumberVariable_Rear_PTO_output_shaft_speed_Offset    3193
 #define FontAttributes_OutputNumber_Offset                   3200
 #define FontAttributes_OutputString_Offset                   3208
-#define LineAttributes_24000_Offset                          3216
+#define LineAttributes_Offset                                3216
 
 #define ISO_OP_MEMORY_CLASS
 

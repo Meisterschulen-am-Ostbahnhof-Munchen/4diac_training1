@@ -1,4 +1,4 @@
-// ISO-Designer ISO 11783   Version 5.6.2.5533 Jetter AG
+// ISO-Designer ISO 11783   Version 5.7.2.6664 Bucher Automation AG
 // Do not change!
 
 #include "DefaultPool.iop.h"
@@ -17,7 +17,7 @@
 
 const unsigned char ISO_OP_MEMORY_CLASS isoOP_DefaultPool[] = {
 	17,
-	ID(WorkingSet_0), TYPEID_WORKSET, COLOR_SILVER, 1, ID(DataMask_1000), 1, 0, 2,
+	ID(WorkingSet), TYPEID_WORKSET, COLOR_SILVER, 1, ID(DataMask), 1, 0, 2,
 		XYREF(OutputString_WS, 0, 40),
 		'e', 'n',
 		'd', 'e',
@@ -31,16 +31,16 @@ const unsigned char ISO_OP_MEMORY_CLASS isoOP_DefaultPool[] = {
 		CMD_CHANGE_NUMERIC_VALUE, ID(NumberVariable_PWM_Value), 0, LONG(0UL),
 	ID(Macro_025_perc), TYPEID_MACRO, WORD(8),
 		CMD_CHANGE_NUMERIC_VALUE, ID(NumberVariable_PWM_Value), 0, LONG(2047UL),
-	ID(DataMask_1000), TYPEID_DATAMASK, COLOR_SILVER, ID(ID_NULL), 14, 0, 
+	ID(DataMask), TYPEID_DATAMASK, COLOR_SILVER, ID(ID_NULL), 14, 0, 
 		XYREF(InputNumber_PWM_DUTY, 240, 240),
 		XYREF(InputNumber_PWM_Value, 40, 240),
 		XYREF(OutputString_percent, 400, 240),
 		XYREF(OutputNumber_8129, 40, 320),
 		XYREF(OutputString_percent, 400, 320),
 		XYREF(OutputNumber_100, 240, 320),
-		XYREF(LinearBargraph_18000, 0, 400),
-		XYREF(Meter_17000, 40, 15),
-		XYREF(ArchedBargraph_19000, 200, 15),
+		XYREF(LinearBargraph, 0, 400),
+		XYREF(Meter, 40, 15),
+		XYREF(ArchedBargraph, 200, 15),
 		XYREF(Button_100_perc, 400, 120),
 		XYREF(Button_075_perc, 320, 120),
 		XYREF(Button_050_perc, 240, 120),
@@ -71,9 +71,9 @@ const unsigned char ISO_OP_MEMORY_CLASS isoOP_DefaultPool[] = {
 	ID(InputNumber_PWM_Value), TYPEID_INNUM, WORD(150), WORD(30), COLOR(193), ID(FontAttributes_16x16), 0, 
 		ID(NumberVariable_PWM_Value), LONG(123UL), LONG(0UL), LONG(8191UL), LONG(0L), FLOAT_1, 0, 0, 1, 1, 0, 
 	ID(OutputString_percent), TYPEID_OUTSTR, WORD(66), WORD(36), COLOR_WHITE, ID(FontAttributes_12x16_B), 1,
-		ID(ID_NULL), 1, WORD(4), ' ', '%', ' ', ' ', 0,
+		ID(ID_NULL), 1, WORD(2), ' ', '%', 0,
 	ID(OutputString_WS), TYPEID_OUTSTR, WORD(80), WORD(40), COLOR_WHITE, ID(FontAttributes_WS), 1,
-		ID(ID_NULL), 1, WORD(4), 'P', 'W', 'M', ' ', 0,
+		ID(ID_NULL), 1, WORD(3), 'P', 'W', 'M', 0,
 	ID(OutputNumber_100), TYPEID_OUTNUM, WORD(72), WORD(40), COLOR_WHITE, ID(FontAttributes_12x16), 1,
 		ID(ID_NULL), LONG(100UL), LONG(0L), FLOAT_1, 0, 0, 1, 0,
 	ID(OutputNumber_8129), TYPEID_OUTNUM, WORD(150), WORD(40), COLOR_WHITE, ID(FontAttributes_12x16), 1,
@@ -86,11 +86,11 @@ const unsigned char ISO_OP_MEMORY_CLASS isoOP_DefaultPool[] = {
 		ID(ID_NULL), LONG(0UL), LONG(0L), FLOAT_1, 0, 0, 1, 0,
 	ID(OutputNumber_025), TYPEID_OUTNUM, WORD(72), WORD(40), COLOR_WHITE, ID(FontAttributes_12x16), 1,
 		ID(ID_NULL), LONG(25UL), LONG(0L), FLOAT_1, 0, 0, 1, 0,
-	ID(Meter_17000), TYPEID_OUTMETER, WORD(120), COLOR_BLACK, COLOR_BLACK, COLOR_BLACK, 13, 9, 165, 105, 
+	ID(Meter), TYPEID_OUTMETER, WORD(120), COLOR_BLACK, COLOR_BLACK, COLOR_BLACK, 13, 9, 165, 105, 
 		WORD(0), WORD(8191), ID(NumberVariable_PWM_Value), WORD(0), 0, 
-	ID(LinearBargraph_18000), TYPEID_OUTLINBAR, WORD(480), WORD(40), COLOR_BLACK, COLOR_RED, 55, 9, 
+	ID(LinearBargraph), TYPEID_OUTLINBAR, WORD(480), WORD(40), COLOR_BLACK, COLOR_RED, 55, 9, 
 		WORD(0), WORD(8191), ID(NumberVariable_PWM_Value), WORD(0), ID(ID_NULL), WORD(4095), 0, 
-	ID(ArchedBargraph_19000), TYPEID_OUTARCBAR, WORD(120), WORD(120), COLOR_BLACK, COLOR_RED, 19, 165, 105, 
+	ID(ArchedBargraph), TYPEID_OUTARCBAR, WORD(120), WORD(120), COLOR_BLACK, COLOR_RED, 19, 165, 105, 
 		WORD(15), WORD(0), WORD(8191), ID(NumberVariable_PWM_Value), WORD(0), ID(ID_NULL), WORD(4095), 0, 
 	ID(NumberVariable_PWM_Value), TYPEID_VARNUM, LONG(0UL), 
 	ID(FontAttributes_12x16), TYPEID_FONTATTR, COLOR_BLACK, 3, 0, 0, 0, 
