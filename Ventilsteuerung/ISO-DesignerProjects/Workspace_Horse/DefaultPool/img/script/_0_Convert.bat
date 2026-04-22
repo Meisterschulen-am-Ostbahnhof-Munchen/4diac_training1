@@ -45,20 +45,22 @@ for %%f in (*.gif) do (
     echo    BMP frames in ..\img_SKM\!fname!\
     echo.
 
-    echo 5. make 256 color PNG for SKM (pink FF00FF background for transparency)
+    echo 5. calculate common background for SKM and create 256 color PNGs (pink = transparent / background)
     if not exist "..\img_256_SKM\!fname!" mkdir "..\img_256_SKM\!fname!"
-    for %%g in (..\img_resized_SKM\!fname!\*.png) do (
-        magick "%%g" -fuzz 2%% -fill "#FF00FF" -opaque "#FFFFFF" -background "#FF00FF" -alpha remove -colors 256 -dither None -define png:exclude-chunks=date,time "..\img_256_SKM\!fname!\%%~nxg"
+    magick ..\img_resized_SKM\!fname!\frame_*.png -evaluate-sequence Median "..\img_resized_SKM\!fname!\background.png"
+    for %%g in (..\img_resized_SKM\!fname!\frame_*.png) do (
+        magick "..\img_resized_SKM\!fname!\background.png" "%%g" -fuzz 2%% -compose ChangeMask -composite -background "#FF00FF" -alpha background -alpha remove -colors 256 -dither None -define png:exclude-chunks=date,time "..\img_256_SKM\!fname!\%%~nxg"
     )
-    echo    256 color frames in ..\img_256_SKM\!fname!\
+    echo    256 color frames (background removed) in ..\img_256_SKM\!fname!\
     echo.
 
-    echo 6. make BMP for SKM 256 colors
+    echo 6. make BMP for SKM 256 colors (including frame_BG.bmp)
     if not exist "..\img_SKM_256\!fname!" mkdir "..\img_SKM_256\!fname!"
     for %%g in (..\img_256_SKM\!fname!\*.png) do (
         magick "%%g" -type Palette -compress none BMP3:"..\img_SKM_256\!fname!\%%~ng.bmp"
     )
-    echo    BMP 256 frames in ..\img_SKM_256\!fname!\
+    magick "..\img_resized_SKM\!fname!\background.png" -type Palette -compress none BMP3:"..\img_SKM_256\!fname!\frame_BG.bmp"
+    echo    BMP 256 frames + frame_BG.bmp in ..\img_SKM_256\!fname!\
     echo.
 
     echo 7. make monochrome PNG for DM (full size)
@@ -77,30 +79,22 @@ for %%f in (*.gif) do (
     echo    BMP DM frames in ..\img_DM\!fname!\
     echo.
 
-    echo 9. make 256 color PNG for DM (full size, pink FF00FF background for transparency)
+    echo 9. calculate common background for DM and create 256 color PNGs (pink = transparent / background)
     if not exist "..\img_256_DM\!fname!" mkdir "..\img_256_DM\!fname!"
-    for %%g in (..\img_frames\!fname!\*.png) do (
-        magick "%%g" -fuzz 2%% -fill "#FF00FF" -opaque "#FFFFFF" -background "#FF00FF" -alpha remove -colors 256 -dither None -define png:exclude-chunks=date,time "..\img_256_DM\!fname!\%%~nxg"
+    magick ..\img_frames\!fname!\frame_*.png -evaluate-sequence Median "..\img_frames\!fname!\background.png"
+    for %%g in (..\img_frames\!fname!\frame_*.png) do (
+        magick "..\img_frames\!fname!\background.png" "%%g" -fuzz 2%% -compose ChangeMask -composite -background "#FF00FF" -alpha background -alpha remove -colors 256 -dither None -define png:exclude-chunks=date,time "..\img_256_DM\!fname!\%%~nxg"
     )
-    echo    256 color DM frames in ..\img_256_DM\!fname!\
+    echo    256 color DM frames (background removed) in ..\img_256_DM\!fname!\
     echo.
 
-    echo 10. make BMP for DM 256 colors
+    echo 10. make BMP for DM 256 colors (including frame_BG.bmp)
     if not exist "..\img_DM_256\!fname!" mkdir "..\img_DM_256\!fname!"
     for %%g in (..\img_256_DM\!fname!\*.png) do (
         magick "%%g" -type Palette -compress none BMP3:"..\img_DM_256\!fname!\%%~ng.bmp"
     )
-    echo    BMP 256 DM frames in ..\img_DM_256\!fname!\
-    echo.
-    
-    echo 11. generate frame_BG.bmp for DM (white background, same size as DM frames)
-    magick "..\img_frames\!fname!\frame_00.png" -fill white -colorize 100 -alpha off -type Palette -compress none BMP3:"..\img_DM_256\!fname!\frame_BG.bmp"
-    echo    frame_BG.bmp created in ..\img_DM_256\!fname!\
-    echo.
-
-    echo 12. generate frame_BG.bmp for SKM (white background, resized)
-    magick "..\img_resized_SKM\!fname!\frame_00.png" -fill white -colorize 100 -alpha off -type Palette -compress none BMP3:"..\img_SKM_256\!fname!\frame_BG.bmp"
-    echo    frame_BG.bmp created in ..\img_SKM_256\!fname!\
+    magick "..\img_frames\!fname!\background.png" -type Palette -compress none BMP3:"..\img_DM_256\!fname!\frame_BG.bmp"
+    echo    BMP 256 DM frames + frame_BG.bmp in ..\img_DM_256\!fname!\
     echo.
 
     echo DONE *************************************
