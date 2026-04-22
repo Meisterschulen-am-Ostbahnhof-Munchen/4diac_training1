@@ -9,6 +9,7 @@
 #define WorkingSet                            0
 #define DataMask_Main                      1000
 #define DataMask_invisible                 1001
+#define Container_Horse                    3000
 #define frame_00                          20000
 #define frame_01                          20001
 #define frame_02                          20002
@@ -41,5 +42,6 @@
 #define frame_29                          20029
 #define frame_30                          20030
 #define frame_31                          20031
+#define frame_BG                          20032
 #define ws_pic                            20532
 #define ObjectPointer_Horse               27000

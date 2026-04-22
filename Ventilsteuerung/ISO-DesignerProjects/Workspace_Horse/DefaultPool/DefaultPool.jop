@@ -46,6 +46,40 @@
 				</Property>
 			</PropertySheet>
 		</Object>
+		<Object Class="CGroup" Name="Group" ObjectName="Container_Horse" Pinned="FALSE" JVS-ID="3000">
+			<PropertySheet Name="Group">
+				<Property Name="Hidden">
+					<Value>1</Value>
+				</Property>
+				<Property Name="ClipsChildren">
+					<Value>1</Value>
+				</Property>
+				<Property Name="Width">
+					<Value>140</Value>
+				</Property>
+				<Property Name="Height">
+					<Value>132</Value>
+				</Property>
+				<Property Name="Visible">
+					<Value>1</Value>
+				</Property>
+				<Property Name="Locked">
+					<Value>0</Value>
+				</Property>
+				<Property Name="Comment">
+					<Value>
+						<![CDATA[AAA=]]>
+					</Value>
+				</Property>
+				<Property Name="Disabled">
+					<Value>0</Value>
+				</Property>
+			</PropertySheet>
+			<Objects>
+				<Object JVS-ID="4194305"/>
+				<Object JVS-ID="4194306"/>
+			</Objects>
+		</Object>
 		<Object Class="CImage" Name="Image" ObjectName="frame_00" Pinned="TRUE" JVS-ID="20000">
 			<PropertySheet Name="Image">
 				<Property Name="Path">
@@ -654,7 +688,7 @@
 					<Value>0</Value>
 				</Property>
 				<Property Name="BitPerPixel">
-					<Value>1</Value>
+					<Value>8</Value>
 				</Property>
 				<Property Name="IsFlashing">
 					<Value>0</Value>
@@ -2126,11 +2160,11 @@
 				</Property>
 			</PropertySheet>
 		</Object>
-		<Object Class="CImage" Name="Image" ObjectName="ws_pic" Pinned="TRUE" JVS-ID="20532">
+		<Object Class="CImage" Name="Image" ObjectName="frame_BG" Pinned="FALSE" JVS-ID="20032">
 			<PropertySheet Name="Image">
 				<Property Name="Path">
 					<Value>
-						<![CDATA[.\img\ws\ws_pic.bmp]]>
+						<![CDATA[.\img\img_DM_256\Muybridge_horse_jumping_animated\frame_BG.bmp]]>
 					</Value>
 				</Property>
 				<Property Name="ResourceID">
@@ -2140,7 +2174,7 @@
 					<Value>1</Value>
 				</Property>
 				<Property Name="Transparency">
-					<Value>0</Value>
+					<Value>1</Value>
 				</Property>
 				<Property Name="TransColor">
 					<Value>16711935</Value>
@@ -2155,7 +2189,72 @@
 					<Value>0</Value>
 				</Property>
 				<Property Name="Encoding">
+					<Value>1</Value>
+				</Property>
+				<Property Name="Extended">
 					<Value>0</Value>
+				</Property>
+				<Property Name="RealImageWidth">
+					<Value>140</Value>
+				</Property>
+				<Property Name="RealImageHeight">
+					<Value>132</Value>
+				</Property>
+				<Property Name="RotationAngle">
+					<Value>0.000000</Value>
+				</Property>
+				<Property Name="Width">
+					<Value>140</Value>
+				</Property>
+				<Property Name="Height">
+					<Value>132</Value>
+				</Property>
+				<Property Name="Visible">
+					<Value>1</Value>
+				</Property>
+				<Property Name="Locked">
+					<Value>0</Value>
+				</Property>
+				<Property Name="Comment">
+					<Value>
+						<![CDATA[AAA=]]>
+					</Value>
+				</Property>
+				<Property Name="Disabled">
+					<Value>0</Value>
+				</Property>
+			</PropertySheet>
+		</Object>
+		<Object Class="CImage" Name="Image" ObjectName="ws_pic" Pinned="TRUE" JVS-ID="20532">
+			<PropertySheet Name="Image">
+				<Property Name="Path">
+					<Value>
+						<![CDATA[.\img\ws\ws_pic.bmp]]>
+					</Value>
+				</Property>
+				<Property Name="ResourceID">
+					<Value/>
+				</Property>
+				<Property Name="Retain Aspect Ratio">
+					<Value>1</Value>
+				</Property>
+				<Property Name="Transparency">
+					<Value>1</Value>
+				</Property>
+				<Property Name="TransColor">
+					<Value>16711935</Value>
+				</Property>
+				<Property Name="ControlType">
+					<Value>0</Value>
+				</Property>
+				<Property Name="BitPerPixel">
+					<Value>8</Value>
+				</Property>
+				<Property Name="IsFlashing">
+					<Value>0</Value>
+				</Property>
+				<Property Name="Encoding">
+					<Value>1</Value>
 				</Property>
 				<Property Name="Extended">
 					<Value>0</Value>
@@ -2208,6 +2307,44 @@
 					<Value>0</Value>
 				</Property>
 			</PropertySheet>
+		</Object>
+		<Object Class="CProxy" Name="Pointer" ObjectName="" Pinned="FALSE" JVS-ID="4194305">
+			<PropertySheet Name="Proxy">
+				<Property Name="Top">
+					<Value>0</Value>
+				</Property>
+				<Property Name="Left">
+					<Value>0</Value>
+				</Property>
+				<Property Name="Name">
+					<Value>Pointer</Value>
+				</Property>
+				<Property Name="Transform">
+					<Value>(1.0000000000000000)(0.0000000000000000)(0.0000000000000000)(0.0000000000000000)(1.0000000000000000)(0.0000000000000000)</Value>
+				</Property>
+			</PropertySheet>
+			<Objects>
+				<Object JVS-ID="27000"/>
+			</Objects>
+		</Object>
+		<Object Class="CProxy" Name="Image_1" ObjectName="" Pinned="FALSE" JVS-ID="4194306">
+			<PropertySheet Name="Proxy">
+				<Property Name="Top">
+					<Value>0</Value>
+				</Property>
+				<Property Name="Left">
+					<Value>0</Value>
+				</Property>
+				<Property Name="Name">
+					<Value>Image_1</Value>
+				</Property>
+				<Property Name="Transform">
+					<Value>(1.0000000000000000)(0.0000000000000000)(0.0000000000000000)(0.0000000000000000)(1.0000000000000000)(0.0000000000000000)</Value>
+				</Property>
+			</PropertySheet>
+			<Objects>
+				<Object JVS-ID="20032"/>
+			</Objects>
 		</Object>
 	</Objects>
 </JetView-ObjectPool>

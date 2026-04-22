@@ -2,49 +2,51 @@
 // Do not change!
 
 #define WorkingSet_Offset                                       1
-#define DataMask_Main_Offset                                   39
-#define DataMask_invisible_Offset                              53
-#define frame_00_Offset                                       253
-#define frame_01_Offset                                      9604
-#define frame_02_Offset                                     19707
-#define frame_03_Offset                                     27368
-#define frame_04_Offset                                     36735
-#define frame_05_Offset                                     45864
-#define frame_06_Offset                                     53487
-#define frame_07_Offset                                     61538
-#define frame_08_Offset                                     69301
-#define frame_09_Offset                                     79162
-#define frame_10_Offset                                     89697
-#define frame_11_Offset                                     99778
-#define frame_12_Offset                                    107585
-#define frame_13_Offset                                    117020
-#define frame_14_Offset                                    124987
-#define frame_15_Offset                                    132996
-#define frame_16_Offset                                    143277
-#define frame_17_Offset                                    154004
-#define frame_18_Offset                                    163407
-#define frame_19_Offset                                    172758
-#define frame_20_Offset                                    180667
-#define frame_21_Offset                                    188578
-#define frame_22_Offset                                    198283
-#define frame_23_Offset                                    205954
-#define frame_24_Offset                                    215105
-#define frame_25_Offset                                    223756
-#define frame_26_Offset                                    233047
-#define frame_27_Offset                                    240590
-#define frame_28_Offset                                    249177
-#define frame_29_Offset                                    258182
-#define frame_30_Offset                                    263703
-#define frame_31_Offset                                    273070
-#define ws_pic_Offset                                      281171
-#define ObjectPointer_Horse_Offset                         283020
+#define DataMask_Main_Offset                                   21
+#define DataMask_invisible_Offset                              35
+#define Container_Horse_Offset                                241
+#define frame_00_Offset                                       263
+#define frame_01_Offset                                     10124
+#define frame_02_Offset                                     21427
+#define frame_03_Offset                                     28740
+#define frame_04_Offset                                     41687
+#define frame_05_Offset                                     49668
+#define frame_06_Offset                                     57033
+#define frame_07_Offset                                     67164
+#define frame_08_Offset                                     74347
+#define frame_09_Offset                                     81092
+#define frame_10_Offset                                     87641
+#define frame_11_Offset                                     95700
+#define frame_12_Offset                                    104937
+#define frame_13_Offset                                    112662
+#define frame_14_Offset                                    124085
+#define frame_15_Offset                                    132450
+#define frame_16_Offset                                    141625
+#define frame_17_Offset                                    151786
+#define frame_18_Offset                                    159363
+#define frame_19_Offset                                    167528
+#define frame_20_Offset                                    173849
+#define frame_21_Offset                                    180706
+#define frame_22_Offset                                    191319
+#define frame_23_Offset                                    197652
+#define frame_24_Offset                                    205987
+#define frame_25_Offset                                    215208
+#define frame_26_Offset                                    223521
+#define frame_27_Offset                                    230820
+#define frame_28_Offset                                    237381
+#define frame_29_Offset                                    245436
+#define frame_30_Offset                                    253407
+#define frame_31_Offset                                    260326
+#define frame_BG_Offset                                    266853
+#define ws_pic_Offset                                      271846
+#define ObjectPointer_Horse_Offset                         273695
 
 #define ISO_OP_MEMORY_CLASS
 
-#define ISO_OP_DefaultPool_Size 283025
+#define ISO_OP_DefaultPool_Size 273700
 extern const unsigned char ISO_OP_MEMORY_CLASS isoOP_DefaultPool[];
 
-#define ISO_OP_DefaultPool_ObjectNumber     37
+#define ISO_OP_DefaultPool_ObjectNumber     39
 extern const unsigned long ISO_OP_MEMORY_CLASS isoOP_DefaultPool_Offset[];
 extern const unsigned long ISO_OP_MEMORY_CLASS isoOP_DefaultPool_Offset_Id[];
 #define ISO_OP_DefaultPool_Scale_Offset      1
