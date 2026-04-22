@@ -45,10 +45,10 @@ for %%f in (*.gif) do (
     echo    BMP frames in ..\img_SKM\!fname!\
     echo.
 
-    echo 5. make 256 color PNG for SKM
+    echo 5. make 256 color PNG for SKM (pink FF00FF background for transparency)
     if not exist "..\img_256_SKM\!fname!" mkdir "..\img_256_SKM\!fname!"
     for %%g in (..\img_resized_SKM\!fname!\*.png) do (
-        magick "%%g" -colors 256 -dither None -define png:exclude-chunks=date,time "..\img_256_SKM\!fname!\%%~nxg"
+        magick "%%g" -fuzz 2%% -fill "#FF00FF" -opaque "#FFFFFF" -background "#FF00FF" -alpha remove -colors 256 -dither None -define png:exclude-chunks=date,time "..\img_256_SKM\!fname!\%%~nxg"
     )
     echo    256 color frames in ..\img_256_SKM\!fname!\
     echo.
@@ -77,10 +77,10 @@ for %%f in (*.gif) do (
     echo    BMP DM frames in ..\img_DM\!fname!\
     echo.
 
-    echo 9. make 256 color PNG for DM (full size)
+    echo 9. make 256 color PNG for DM (full size, pink FF00FF background for transparency)
     if not exist "..\img_256_DM\!fname!" mkdir "..\img_256_DM\!fname!"
     for %%g in (..\img_frames\!fname!\*.png) do (
-        magick "%%g" -colors 256 -dither None -define png:exclude-chunks=date,time "..\img_256_DM\!fname!\%%~nxg"
+        magick "%%g" -fuzz 2%% -fill "#FF00FF" -opaque "#FFFFFF" -background "#FF00FF" -alpha remove -colors 256 -dither None -define png:exclude-chunks=date,time "..\img_256_DM\!fname!\%%~nxg"
     )
     echo    256 color DM frames in ..\img_256_DM\!fname!\
     echo.
