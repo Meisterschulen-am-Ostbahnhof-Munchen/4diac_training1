@@ -37,6 +37,40 @@ def checkPath(path):
     else:
         raise FileNotFoundError(f"The new file '{path}' does not exist.")
 
+def compute_rename_map(definitions):
+    """For names that end with _<value> (numeric), strip the suffix if the result is unique.
+
+    Returns {original_name: stripped_name} only for unambiguous renames.
+    Prints a warning for cases where two names would produce the same stripped name.
+    """
+    all_names = set(definitions.keys())
+    candidate_to_originals = {}
+
+    for name, value_str in definitions.items():
+        try:
+            int(value_str)
+        except ValueError:
+            continue
+        suffix = '_' + value_str
+        if name.endswith(suffix) and len(name) > len(suffix):
+            candidate = name[:-len(suffix)]
+            candidate_to_originals.setdefault(candidate, []).append(name)
+
+    rename_map = {}
+    for candidate, originals in sorted(candidate_to_originals.items()):
+        if len(originals) != 1:
+            print(f"  Skip rename to '{candidate}': ambiguous ({', '.join(sorted(originals))})")
+            continue
+        original = originals[0]
+        # Candidate must not already exist as a different, non-renamed name
+        if candidate in all_names and candidate != original:
+            print(f"  Skip rename '{original}' -> '{candidate}': conflicts with existing name")
+            continue
+        rename_map[original] = candidate
+        print(f"  Rename: '{original}' -> '{candidate}'")
+
+    return rename_map
+
 def readIOPH(filepaths):
     oldfilepath   = filepaths[0]
     newfilepath   = filepaths[1]
@@ -47,22 +81,18 @@ def readIOPH(filepaths):
     checkPath(newfilepath)
 
     pattern = re.compile(r'#define\s+(\w+)\s+(\S+)')
+    definitions = {}
     with open(oldfilepath, 'r') as file:
-    # Initialize a dictionary to store the name and corresponding number
-        definitions = {}
-
-        # Iterate through each line in the file
         for line in file:
-            # Use the regular expression pattern to match lines with #define
             match = pattern.match(line)
             if match:
-                # Extract the name and number from the matched groups
                 name, number = match.groups()
-
-                # Save the information in the dictionary
                 definitions[name] = number
 
-    return definitions
+    rename_map = compute_rename_map(definitions)
+
+    renamed = {rename_map.get(name, name): value for name, value in definitions.items()}
+    return renamed, rename_map
 
 def readJOP(jop_filepath):
     """Parse a JetViewSoft .jop XML file and extract InputNumber and OutputNumber objects.
@@ -106,6 +136,32 @@ def readJOP(jop_filepath):
         }
 
     return result
+
+def update_jop_objectnames(jop_path, rename_map):
+    """Replace ObjectName="old" with ObjectName="new" in the .jop XML file (in-place, idempotent)."""
+    if not rename_map:
+        return
+
+    with open(jop_path, 'r', encoding='utf-8') as f:
+        content = f.read()
+
+    new_content = content
+    changed = []
+    for old_name, new_name in rename_map.items():
+        search = f'ObjectName="{old_name}"'
+        replacement = f'ObjectName="{new_name}"'
+        if search in new_content:
+            new_content = new_content.replace(search, replacement)
+            changed.append(f"  {old_name} -> {new_name}")
+
+    if changed:
+        with open(jop_path, 'w', encoding='utf-8') as f:
+            f.write(new_content)
+        print(f"Updated ObjectNames in {jop_path}:")
+        for c in changed:
+            print(c)
+    else:
+        print(f"No ObjectName changes needed in {jop_path}")
 
 def writeGCFfile(data, filepaths):
     newfilepath = os.path.join(filepaths[1], filepaths[2]+'.gcf')
@@ -199,16 +255,17 @@ if __name__ == "__main__":
 
     # Prints filepaths
     printPaths(filepaths)
-    file_data = readIOPH(filepaths)
+    file_data, rename_map = readIOPH(filepaths)
     writeGCFfile(file_data, filepaths)
 
-    # If a .jop file was provided, also generate the Numeric struct GCF
+    # If a .jop file was provided, update ObjectNames and generate the Numeric struct GCF
     if filepaths[4]:
         checkPath(filepaths[4])
+        update_jop_objectnames(filepaths[4], rename_map)
         numeric_data = readJOP(filepaths[4])
         writeNumericGCFfile(numeric_data, filepaths)
 
 
 __author__ = "Lorenz Bauer / Franz Höpfinger"
-__version__ = "0.2"
-__description__ = "Converts .iop.h to .gcf; optionally converts .jop to NumericObjectPool_S .gcf"
+__version__ = "0.3"
+__description__ = "Converts .iop.h to .gcf; optionally converts .jop to NumericObjectPool_S .gcf; strips _<ID> suffix from unique object names"
