@@ -29,14 +29,14 @@
 			<Parameter Name="QI" Value="TRUE"/>
 			<Parameter Name="Output" Value="Output_Q1"/>
 		</FB>
-		<FB Name="Q_NumericValue_1" Type="isobus::UT::Q::Q_NumericValue_PHYSA" x="2500" y="800">
+		<FB Name="Q_NumericValue_1" Type="isobus::UT::Q::Q_NumericValue_PHYSA_LREAL" x="2500" y="800">
 			<Parameter Name="stObj" Value="OutputNumber_N3"/>
 		</FB>
 		<EventConnections>
 			<Connection Source="ADI_FB_CTD.CNF" Destination="Q_NumericValue_1.REQ" dx1="500"/>
 		</EventConnections>
 		<DataConnections>
-			<Connection Source="ADI_FB_CTD.CV.D1" Destination="Q_NumericValue_1.rPhys" dx1="500"/>
+			<Connection Source="ADI_FB_CTD.CV.D1" Destination="Q_NumericValue_1.lrPhys" dx1="500"/>
 		</DataConnections>
 		<AdapterConnections>
 			<Connection Source="Input_CD.IN" Destination="ADI_FB_CTD.CD" dx1="400"/>
