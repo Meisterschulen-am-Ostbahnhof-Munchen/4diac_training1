@@ -20,7 +20,7 @@
 	<SubAppNetwork>
 		<FB Name="ADI_FB_CTUD" Type="adapter::iec61131_3::counters::ADI_FB_CTUD" x="0" y="0">
 		</FB>
-		<FB Name="Input_CU" Type="logiBUS::io::DI::logiBUS_IXA" x="-2500" y="-1200">
+		<FB Name="Input_CU" Type="logiBUS::io::DI::logiBUS_IXA" x="-2500" y="-1400">
 			<Parameter Name="QI" Value="TRUE"/>
 			<Parameter Name="Input" Value="Input_I1"/>
 		</FB>
@@ -28,38 +28,36 @@
 			<Parameter Name="QI" Value="TRUE"/>
 			<Parameter Name="Input" Value="Input_I2"/>
 		</FB>
-		<FB Name="Input_R" Type="logiBUS::io::DI::logiBUS_IXA" x="-2500" y="400">
+		<FB Name="Input_R" Type="logiBUS::io::DI::logiBUS_IXA" x="-2500" y="600">
 			<Parameter Name="QI" Value="TRUE"/>
 			<Parameter Name="Input" Value="Input_I3"/>
 		</FB>
-		<FB Name="Input_LD" Type="logiBUS::io::DI::logiBUS_IXA" x="-2500" y="1200">
+		<FB Name="Input_LD" Type="logiBUS::io::DI::logiBUS_IXA" x="-2500" y="1500">
 			<Parameter Name="QI" Value="TRUE"/>
 			<Parameter Name="Input" Value="Input_I4"/>
 		</FB>
-		<FB Name="Output_QU" Type="logiBUS::io::DQ::logiBUS_QXA" x="2500" y="-800">
+		<FB Name="Output_QU" Type="logiBUS::io::DQ::logiBUS_QXA" x="2500" y="-1100">
 			<Parameter Name="QI" Value="TRUE"/>
 			<Parameter Name="Output" Value="Output_Q1"/>
 		</FB>
-		<FB Name="Output_QD" Type="logiBUS::io::DQ::logiBUS_QXA" x="2500" y="0">
+		<FB Name="Output_QD" Type="logiBUS::io::DQ::logiBUS_QXA" x="2500" y="-200">
 			<Parameter Name="QI" Value="TRUE"/>
 			<Parameter Name="Output" Value="Output_Q2"/>
 		</FB>
-		<FB Name="Q_NumericValue_1" Type="isobus::UT::Q::Q_NumericValue_PHYS" x="2500" y="800">
+		<FB Name="Q_NumericValue_1" Type="isobus::UT::Q::Q_NumericValue_PHYSA_LREAL" x="2500" y="900">
 			<Parameter Name="stObj" Value="OutputNumber_N3"/>
 		</FB>
-		<EventConnections>
-			<Connection Source="ADI_FB_CTUD.CNF" Destination="Q_NumericValue_1.REQ" dx1="500"/>
-		</EventConnections>
-		<DataConnections>
-			<Connection Source="ADI_FB_CTUD.CV.D1" Destination="Q_NumericValue_1.rPhys" dx1="500"/>
-		</DataConnections>
+		<FB Name="ADI_TO_ALR" Type="adapter::conversion::unidirectional::ADI_TO_ALR" x="1100" y="1400">
+		</FB>
 		<AdapterConnections>
 			<Connection Source="Input_CU.IN" Destination="ADI_FB_CTUD.CU" dx1="500"/>
 			<Connection Source="Input_CD.IN" Destination="ADI_FB_CTUD.CD" dx1="400"/>
 			<Connection Source="Input_R.IN" Destination="ADI_FB_CTUD.R" dx1="300"/>
-			<Connection Source="Input_LD.IN" Destination="ADI_FB_CTUD.LD" dx1="200"/>
+			<Connection Source="Input_LD.IN" Destination="ADI_FB_CTUD.LD" dx1="573.33"/>
 			<Connection Source="ADI_FB_CTUD.QU" Destination="Output_QU.OUT" dx1="200"/>
-			<Connection Source="ADI_FB_CTUD.QD" Destination="Output_QD.OUT" dx1="200"/>
+			<Connection Source="ADI_FB_CTUD.QD" Destination="Output_QD.OUT" dx1="820"/>
+			<Connection Source="ADI_FB_CTUD.CV" Destination="ADI_TO_ALR.ADI_IN" dx1="173.33"/>
+			<Connection Source="ADI_TO_ALR.ALR_OUT" Destination="Q_NumericValue_1.lrPhys" dx1="293.33"/>
 		</AdapterConnections>
 	</SubAppNetwork>
 </SubAppType>

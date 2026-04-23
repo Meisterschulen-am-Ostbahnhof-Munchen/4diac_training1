@@ -32,10 +32,14 @@
 		<FB Name="Q_NumericValue_1" Type="isobus::UT::Q::Q_NumericValue_PHYSA" x="2400" y="700">
 			<Parameter Name="stObj" Value="OutputNumber_N3"/>
 		</FB>
+		<FB Name="AI_TO_AR" Type="adapter::conversion::unidirectional::AI_TO_AR" x="1100" y="1400">
+		</FB>
 		<AdapterConnections>
 			<Connection Source="Input_CU.IN" Destination="AI_FB_CTU.CU" dx1="400"/>
 			<Connection Source="Input_R.IN" Destination="AI_FB_CTU.R" dx1="200"/>
 			<Connection Source="AI_FB_CTU.Q" Destination="Output_Q1.OUT" dx1="200"/>
+			<Connection Source="AI_FB_CTU.CV" Destination="AI_TO_AR.AI_IN" dx1="173.33"/>
+			<Connection Source="AI_TO_AR.AR_OUT" Destination="Q_NumericValue_1.rPhys" dx1="293.33"/>
 		</AdapterConnections>
 	</SubAppNetwork>
 </SubAppType>

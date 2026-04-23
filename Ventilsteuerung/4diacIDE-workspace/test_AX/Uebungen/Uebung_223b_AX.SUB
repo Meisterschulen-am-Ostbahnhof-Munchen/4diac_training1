@@ -7,7 +7,7 @@
 	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2026-04-21" Remarks="initial API and implementation (Adapter version)">
 	</VersionInfo>
 	<CompilerInfo packageName="Uebungen">
-		<Import declaration="Uebungen::const::UT::DefaultPool::OutputNumber_N1"/>
+		<Import declaration="Uebungen::const::UT::DefaultPool_Numeric::OutputNumber_N3"/>
 		<Import declaration="logiBUS::io::DI::logiBUS_DI::Input_I1"/>
 		<Import declaration="logiBUS::io::DI::logiBUS_DI::Input_I2"/>
 		<Import declaration="logiBUS::io::DI::logiBUS_DI::Input_I3"/>
@@ -36,16 +36,18 @@
 			<Parameter Name="QI" Value="TRUE"/>
 			<Parameter Name="Input" Value="Input_I4"/>
 		</FB>
-		<FB Name="Output_QU" Type="logiBUS::io::DQ::logiBUS_QXA" x="2500" y="-1000">
+		<FB Name="Output_QU" Type="logiBUS::io::DQ::logiBUS_QXA" x="2500" y="-1300">
 			<Parameter Name="QI" Value="TRUE"/>
 			<Parameter Name="Output" Value="Output_Q1"/>
 		</FB>
-		<FB Name="Output_QD" Type="logiBUS::io::DQ::logiBUS_QXA" x="2500" y="0">
+		<FB Name="Output_QD" Type="logiBUS::io::DQ::logiBUS_QXA" x="2500" y="-300">
 			<Parameter Name="QI" Value="TRUE"/>
 			<Parameter Name="Output" Value="Output_Q2"/>
 		</FB>
-		<FB Name="Q_NumericValue_AUDI" Type="isobus::UT::Q::Q_NumericValue_AUDI" x="2500" y="1000">
-			<Parameter Name="u16ObjId" Value="OutputNumber_N1"/>
+		<FB Name="Q_NumericValue_1" Type="isobus::UT::Q::Q_NumericValue_PHYSA_LREAL" x="2800" y="900">
+			<Parameter Name="stObj" Value="OutputNumber_N3"/>
+		</FB>
+		<FB Name="AUDI_TO_ALR" Type="adapter::conversion::unidirectional::AUDI_TO_ALR" x="1100" y="1400">
 		</FB>
 		<AdapterConnections>
 			<Connection Source="Input_CU.IN" Destination="AUDI_FB_CTUD.CU" dx1="500"/>
@@ -54,7 +56,8 @@
 			<Connection Source="Input_LD.IN" Destination="AUDI_FB_CTUD.LD" dx1="646.67"/>
 			<Connection Source="AUDI_FB_CTUD.QU" Destination="Output_QU.OUT" dx1="200"/>
 			<Connection Source="AUDI_FB_CTUD.QD" Destination="Output_QD.OUT" dx1="746.67"/>
-			<Connection Source="AUDI_FB_CTUD.CV" Destination="Q_NumericValue_AUDI.u32NewValue" dx1="500"/>
+			<Connection Source="AUDI_FB_CTUD.CV" Destination="AUDI_TO_ALR.AUDI_IN" dx1="173.33"/>
+			<Connection Source="AUDI_TO_ALR.ALR_OUT" Destination="Q_NumericValue_1.lrPhys" dx1="293.33"/>
 		</AdapterConnections>
 	</SubAppNetwork>
 </SubAppType>

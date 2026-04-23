@@ -29,19 +29,17 @@
 			<Parameter Name="QI" Value="TRUE"/>
 			<Parameter Name="Output" Value="Output_Q1"/>
 		</FB>
-		<FB Name="Q_NumericValue_1" Type="isobus::UT::Q::Q_NumericValue_PHYSA_LREAL" x="2500" y="800">
+		<FB Name="Q_NumericValue_1" Type="isobus::UT::Q::Q_NumericValue_PHYSA_LREAL" x="3000" y="700">
 			<Parameter Name="stObj" Value="OutputNumber_N3"/>
 		</FB>
-		<EventConnections>
-			<Connection Source="ADI_FB_CTD.CNF" Destination="Q_NumericValue_1.REQ" dx1="500"/>
-		</EventConnections>
-		<DataConnections>
-			<Connection Source="ADI_FB_CTD.CV.D1" Destination="Q_NumericValue_1.lrPhys" dx1="500"/>
-		</DataConnections>
+		<FB Name="ADI_TO_ALR" Type="adapter::conversion::unidirectional::ADI_TO_ALR" x="1300" y="1200">
+		</FB>
 		<AdapterConnections>
 			<Connection Source="Input_CD.IN" Destination="ADI_FB_CTD.CD" dx1="400"/>
 			<Connection Source="Input_LD.IN" Destination="ADI_FB_CTD.LD" dx1="200"/>
 			<Connection Source="ADI_FB_CTD.Q" Destination="Output_Q1.OUT" dx1="200"/>
+			<Connection Source="ADI_FB_CTD.CV" Destination="ADI_TO_ALR.ADI_IN" dx1="173.33"/>
+			<Connection Source="ADI_TO_ALR.ALR_OUT" Destination="Q_NumericValue_1.lrPhys" dx1="293.33"/>
 		</AdapterConnections>
 	</SubAppNetwork>
 </SubAppType>

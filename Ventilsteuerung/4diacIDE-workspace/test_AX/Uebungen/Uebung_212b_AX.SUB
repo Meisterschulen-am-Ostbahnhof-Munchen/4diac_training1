@@ -32,16 +32,14 @@
 		<FB Name="Q_NumericValue_1" Type="isobus::UT::Q::Q_NumericValue_PHYSA_LREAL" x="2500" y="800">
 			<Parameter Name="stObj" Value="OutputNumber_N3"/>
 		</FB>
-		<EventConnections>
-			<Connection Source="ALI_FB_CTU.CNF" Destination="Q_NumericValue_1.REQ" dx1="500"/>
-		</EventConnections>
-		<DataConnections>
-			<Connection Source="ALI_FB_CTU.CV.D1" Destination="Q_NumericValue_1.lrPhys" dx1="500"/>
-		</DataConnections>
+		<FB Name="ALI_TO_ALR" Type="adapter::conversion::unidirectional::ALI_TO_ALR" x="1100" y="1400">
+		</FB>
 		<AdapterConnections>
 			<Connection Source="Input_CU.IN" Destination="ALI_FB_CTU.CU" dx1="400"/>
 			<Connection Source="Input_R.IN" Destination="ALI_FB_CTU.R" dx1="200"/>
 			<Connection Source="ALI_FB_CTU.Q" Destination="Output_Q1.OUT" dx1="200"/>
+			<Connection Source="ALI_FB_CTU.CV" Destination="ALI_TO_ALR.ALI_IN" dx1="173.33"/>
+			<Connection Source="ALI_TO_ALR.ALR_OUT" Destination="Q_NumericValue_1.lrPhys" dx1="293.33"/>
 		</AdapterConnections>
 	</SubAppNetwork>
 </SubAppType>
