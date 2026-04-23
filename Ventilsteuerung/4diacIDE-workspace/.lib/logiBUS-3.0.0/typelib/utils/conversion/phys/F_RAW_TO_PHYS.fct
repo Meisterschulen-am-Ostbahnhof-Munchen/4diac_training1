@@ -31,7 +31,7 @@
 
 (* Convert ISOBUS raw UDINT to physical REAL value.
  * ISOBUS formula: display = (raw + offset) * scale
- *
+ * *
  * Example: raw=50000, scale=0.01, offset=-100000 DINT(50000) + (-100000) = -50000 REAL(-50000) *
  * 0.01     = -500.0 *)
 FUNCTION F_RAW_TO_PHYS : REAL
@@ -41,7 +41,7 @@ VAR_INPUT
 	stObj : NumericObjectPool_S;
 END_VAR
 
-F_RAW_TO_PHYS := DINT_TO_REAL(UDINT_TO_DINT(u32Raw) + stObj.i32Offset) * stObj.r32Scale;
+F_RAW_TO_PHYS := LINT_TO_REAL(UDINT_TO_LINT(u32Raw) + DINT_TO_LINT(stObj.i32Offset)) * stObj.r32Scale;
 
 END_FUNCTION
 ]]></ST>

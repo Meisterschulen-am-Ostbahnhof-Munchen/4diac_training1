@@ -41,7 +41,7 @@ VAR_INPUT
 	stObj : NumericObjectPool_S;
 END_VAR
 
-F_RAW_TO_PHYS_LREAL := DINT_TO_LREAL(UDINT_TO_DINT(u32Raw) + stObj.i32Offset) * stObj.r32Scale;
+F_RAW_TO_PHYS_LREAL := LINT_TO_LREAL(UDINT_TO_LINT(u32Raw) + DINT_TO_LINT(stObj.i32Offset)) * stObj.r32Scale;
 
 END_FUNCTION
 ]]></ST>
