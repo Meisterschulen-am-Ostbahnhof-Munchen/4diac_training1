@@ -2,7 +2,9 @@
 <FBType Name="Q_ObjHideShow" Comment="Command Hide/Show Object (Container) ( Part 6 - F.2 )">
 	<Identification Standard="ISO 11783-6" Description="Copyright (c) 2022 HR Agrartechnik GmbH  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0  &#10;   &#10;   &#10;see Description Tab">
 	</Identification>
-	<VersionInfo Organization="HR Agrartechnik GmbH" Version="1.0" Author="Franz Höpfinger" Date="2022-07-08">
+	<VersionInfo Organization="HR Agrartechnik GmbH" Version="1.1" Author="Franz Höpfinger" Date="2026-04-24" Remarks="BYTE as Param">
+	</VersionInfo>
+	<VersionInfo Organization="HR Agrartechnik GmbH" Version="1.0" Author="Franz Höpfinger" Date="2022-07-08" Remarks="initial Version">
 	</VersionInfo>
 	<CompilerInfo packageName="isobus::UT::Q">
 		<Import declaration="eclipse4diac::core::TypeHash"/>
@@ -28,11 +30,11 @@
 		</EventOutputs>
 		<InputVars>
 			<VarDeclaration Name="u16ObjId" Type="UINT" Comment="Object ID" InitialValue="ID_NULL"/>
-			<VarDeclaration Name="qVisible" Type="BOOL" Comment="0 == disable, 1 == enable"/>
+			<VarDeclaration Name="qVisible" Type="BYTE" Comment="0 == disable, 1 == enable, 0xFF == undefined"/>
 		</InputVars>
 		<OutputVars>
 			<VarDeclaration Name="STATUS" Type="STRING" Comment="Service Status"/>
-			<VarDeclaration Name="qOldVisible" Type="BOOL" Comment="Old value of Visible"/>
+			<VarDeclaration Name="qOldVisible" Type="BYTE" Comment="Old value of Visible"/>
 			<VarDeclaration Name="s16result" Type="INT" Comment="retval see description"/>
 		</OutputVars>
 	</InterfaceList>
@@ -62,5 +64,4 @@
 	<li><span style="color:#2980b9">VT_E_NOT_ALIVE (-130)</span> - Identifier for instance valid, but VT Dead.</li>
 </ul>
 ]]></Attribute>
-	<Attribute Name="eclipse4diac::core::TypeHash" Value="''"/>
 </FBType>
