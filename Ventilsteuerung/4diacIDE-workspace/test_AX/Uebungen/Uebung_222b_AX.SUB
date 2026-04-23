@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<SubAppType Name="Uebung_220_AX" Comment="Standard IEC 61131-3 AI_FB_CTUD (Adapter Version, INT) mit Terminal-Ausgabe">
+<SubAppType Name="Uebung_222b_AX" Comment="Standard IEC 61131-3 ALI_FB_CTUD (Adapter Version, LINT) mit Terminal-Ausgabe (PHYS)">
 	<Identification Standard="61131-3" Description="Copyright (c) 2026 Meisterschulen am Ostbahnhof  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0">
 	</Identification>
-	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.1" Author="Franz Höpfinger" Date="2026-04-21" Remarks="Added terminal output for counter value">
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.1" Author="Franz Höpfinger" Date="2026-04-21" Remarks="Added terminal output for counter value (PHYS)">
 	</VersionInfo>
 	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2026-04-21" Remarks="initial API and implementation (Adapter version)">
 	</VersionInfo>
 	<CompilerInfo packageName="Uebungen">
-		<Import declaration="Uebungen::const::UT::DefaultPool::OutputNumber_N1"/>
+		<Import declaration="Uebungen::const::UT::DefaultPool_Numeric::OutputNumber_N3"/>
 		<Import declaration="logiBUS::io::DI::logiBUS_DI::Input_I1"/>
 		<Import declaration="logiBUS::io::DI::logiBUS_DI::Input_I2"/>
 		<Import declaration="logiBUS::io::DI::logiBUS_DI::Input_I3"/>
@@ -18,9 +18,9 @@
 	<SubAppInterfaceList>
 	</SubAppInterfaceList>
 	<SubAppNetwork>
-		<FB Name="AI_FB_CTUD" Type="adapter::iec61131_3::counters::AI_FB_CTUD" x="0" y="0">
+		<FB Name="ALI_FB_CTUD" Type="adapter::iec61131_3::counters::ALI_FB_CTUD" x="0" y="0">
 		</FB>
-		<FB Name="Input_CU" Type="logiBUS::io::DI::logiBUS_IXA" x="-2500" y="-1200">
+		<FB Name="Input_CU" Type="logiBUS::io::DI::logiBUS_IXA" x="-2500" y="-1400">
 			<Parameter Name="QI" Value="TRUE"/>
 			<Parameter Name="Input" Value="Input_I1"/>
 		</FB>
@@ -28,37 +28,36 @@
 			<Parameter Name="QI" Value="TRUE"/>
 			<Parameter Name="Input" Value="Input_I2"/>
 		</FB>
-		<FB Name="Input_R" Type="logiBUS::io::DI::logiBUS_IXA" x="-2500" y="400">
+		<FB Name="Input_R" Type="logiBUS::io::DI::logiBUS_IXA" x="-2500" y="500">
 			<Parameter Name="QI" Value="TRUE"/>
 			<Parameter Name="Input" Value="Input_I3"/>
 		</FB>
-		<FB Name="Input_LD" Type="logiBUS::io::DI::logiBUS_IXA" x="-2500" y="1200">
+		<FB Name="Input_LD" Type="logiBUS::io::DI::logiBUS_IXA" x="-2500" y="1500">
 			<Parameter Name="QI" Value="TRUE"/>
 			<Parameter Name="Input" Value="Input_I4"/>
 		</FB>
-		<FB Name="Output_QU" Type="logiBUS::io::DQ::logiBUS_QXA" x="2500" y="-800">
+		<FB Name="Output_QU" Type="logiBUS::io::DQ::logiBUS_QXA" x="2500" y="-1100">
 			<Parameter Name="QI" Value="TRUE"/>
 			<Parameter Name="Output" Value="Output_Q1"/>
 		</FB>
-		<FB Name="Output_QD" Type="logiBUS::io::DQ::logiBUS_QXA" x="2500" y="0">
+		<FB Name="Output_QD" Type="logiBUS::io::DQ::logiBUS_QXA" x="2500" y="-200">
 			<Parameter Name="QI" Value="TRUE"/>
 			<Parameter Name="Output" Value="Output_Q2"/>
 		</FB>
-		<FB Name="AI_TO_AUDI" Type="adapter::conversion::unidirectional::AI_TO_AUDI" x="1000" y="800">
+		<FB Name="Q_NumericValue_1" Type="isobus::UT::Q::Q_NumericValue_PHYSA" x="3200" y="900">
+			<Parameter Name="stObj" Value="OutputNumber_N3"/>
 		</FB>
-		<FB Name="Q_NumericValue_AUDI" Type="isobus::UT::Q::Q_NumericValue_AUDI" x="2500" y="800">
-			<Parameter Name="u16ObjId" Value="OutputNumber_N1"/>
+		<FB Name="ALI_TO_AR" Type="adapter::conversion::unidirectional::ALI_TO_ALR" x="1400" y="1200">
 		</FB>
-		<Comment Comment="AI_TO_AUDI ist großer Quatsch ... keine Negativen Zahlen möglich" x="400" y="1500" width="2200" height="500"/>
 		<AdapterConnections>
-			<Connection Source="Input_CU.IN" Destination="AI_FB_CTUD.CU" dx1="500"/>
-			<Connection Source="Input_CD.IN" Destination="AI_FB_CTUD.CD" dx1="400"/>
-			<Connection Source="Input_R.IN" Destination="AI_FB_CTUD.R" dx1="300"/>
-			<Connection Source="Input_LD.IN" Destination="AI_FB_CTUD.LD" dx1="200"/>
-			<Connection Source="AI_FB_CTUD.QU" Destination="Output_QU.OUT" dx1="200"/>
-			<Connection Source="AI_FB_CTUD.QD" Destination="Output_QD.OUT" dx1="200"/>
-			<Connection Source="AI_FB_CTUD.CV" Destination="AI_TO_AUDI.AI_IN" dx1="200"/>
-			<Connection Source="AI_TO_AUDI.AUDI_OUT" Destination="Q_NumericValue_AUDI.u32NewValue" dx1="200"/>
+			<Connection Source="Input_CU.IN" Destination="ALI_FB_CTUD.CU" dx1="500"/>
+			<Connection Source="Input_CD.IN" Destination="ALI_FB_CTUD.CD" dx1="400"/>
+			<Connection Source="Input_R.IN" Destination="ALI_FB_CTUD.R" dx1="300"/>
+			<Connection Source="Input_LD.IN" Destination="ALI_FB_CTUD.LD" dx1="840"/>
+			<Connection Source="ALI_FB_CTUD.QU" Destination="Output_QU.OUT" dx1="200"/>
+			<Connection Source="ALI_FB_CTUD.QD" Destination="Output_QD.OUT" dx1="886.67"/>
+			<Connection Source="ALI_TO_AR.AR_OUT" Destination="Q_NumericValue_1.rPhys" dx1="413.33"/>
+			<Connection Source="ALI_FB_CTUD.CV" Destination="ALI_TO_AR.ALI_IN" dx1="300"/>
 		</AdapterConnections>
 	</SubAppNetwork>
 </SubAppType>

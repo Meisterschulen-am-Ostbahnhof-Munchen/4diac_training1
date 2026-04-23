@@ -1,19 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<SubAppType Name="Uebung_220b" Comment="Standard IEC 61131-3 FB_CTUD (Vor-/Rückwärtszähler, INT) mit Terminal-Ausgabe">
+<SubAppType Name="Uebung_220b" Comment="Standard IEC 61131-3 FB_CTUD (Vor-/Rückwärtszähler, INT) mit Terminal-Ausgabe (PHYS)">
 	<Identification Standard="61131-3" Description="Copyright (c) 2026 Meisterschulen am Ostbahnhof  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0">
 	</Identification>
-	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.1" Author="Franz Höpfinger" Date="2026-04-21" Remarks="Added terminal output for counter value">
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.1" Author="Franz Höpfinger" Date="2026-04-21" Remarks="Added terminal output for counter value (PHYS)">
 	</VersionInfo>
 	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2026-04-20" Remarks="initial API and implementation (IEC 61131-3 version)">
 	</VersionInfo>
 	<CompilerInfo packageName="Uebungen">
+		<Import declaration="Uebungen::const::UT::DefaultPool_Numeric::OutputNumber_N3"/>
 		<Import declaration="logiBUS::io::DI::logiBUS_DI::Input_I1"/>
 		<Import declaration="logiBUS::io::DI::logiBUS_DI::Input_I2"/>
 		<Import declaration="logiBUS::io::DI::logiBUS_DI::Input_I3"/>
 		<Import declaration="logiBUS::io::DI::logiBUS_DI::Input_I4"/>
 		<Import declaration="logiBUS::io::DQ::logiBUS_DO::Output_Q1"/>
 		<Import declaration="logiBUS::io::DQ::logiBUS_DO::Output_Q2"/>
-		<Import declaration="Uebungen::const::UT::DefaultPool_Numeric::OutputNumber_N3"/>
 	</CompilerInfo>
 	<SubAppInterfaceList>
 	</SubAppInterfaceList>
@@ -37,18 +37,17 @@
 			<Parameter Name="QI" Value="TRUE"/>
 			<Parameter Name="Input" Value="Input_I4"/>
 		</FB>
-		<FB Name="Output_QU" Type="logiBUS::io::DQ::logiBUS_QX" x="3000" y="-800">
+		<FB Name="Output_QU" Type="logiBUS::io::DQ::logiBUS_QX" x="3000" y="-1100">
 			<Parameter Name="QI" Value="TRUE"/>
 			<Parameter Name="Output" Value="Output_Q1"/>
 		</FB>
-		<FB Name="Output_QD" Type="logiBUS::io::DQ::logiBUS_QX" x="3000" y="400">
+		<FB Name="Output_QD" Type="logiBUS::io::DQ::logiBUS_QX" x="3000" y="0">
 			<Parameter Name="QI" Value="TRUE"/>
 			<Parameter Name="Output" Value="Output_Q2"/>
 		</FB>
-		<FB Name="Q_NumericValue" Type="isobus::UT::Q::Q_NumericValue_PHYS" x="3400" y="1500">
+		<FB Name="Q_NumericValue_1" Type="isobus::UT::Q::Q_NumericValue_PHYS" x="3000" y="1000">
 			<Parameter Name="stObj" Value="OutputNumber_N3"/>
 		</FB>
-		<Comment Comment="F_INT_TO_UDINT ist großer Quatsch ... keine Negativen Zahlen möglich&#10;F_INT_TO_REAL kann man weglassen.&#10;" x="700" y="2300" width="2200" height="500"/>
 		<EventConnections>
 			<Connection Source="Input_CU.IND" Destination="FB_CTUD.REQ" dx1="500"/>
 			<Connection Source="Input_CD.IND" Destination="FB_CTUD.REQ" dx1="500"/>
@@ -56,16 +55,16 @@
 			<Connection Source="Input_LD.IND" Destination="FB_CTUD.REQ" dx1="500"/>
 			<Connection Source="FB_CTUD.CNF" Destination="Output_QU.REQ" dx1="500"/>
 			<Connection Source="FB_CTUD.CNF" Destination="Output_QD.REQ" dx1="500"/>
-			<Connection Source="FB_CTUD.CNF" Destination="Q_NumericValue.REQ" dx1="540"/>
+			<Connection Source="FB_CTUD.CNF" Destination="Q_NumericValue_1.REQ" dx1="500"/>
 		</EventConnections>
 		<DataConnections>
-			<Connection Source="Input_CU.IN" Destination="FB_CTUD.CU" dx1="320"/>
+			<Connection Source="Input_CU.IN" Destination="FB_CTUD.CU" dx1="286.67"/>
 			<Connection Source="Input_CD.IN" Destination="FB_CTUD.CD" dx1="200"/>
 			<Connection Source="Input_R.IN" Destination="FB_CTUD.R" dx1="200"/>
-			<Connection Source="Input_LD.IN" Destination="FB_CTUD.LD" dx1="320"/>
-			<Connection Source="FB_CTUD.QU" Destination="Output_QU.OUT" dx1="1146.67"/>
-			<Connection Source="FB_CTUD.QD" Destination="Output_QD.OUT" dx1="1500"/>
-			<Connection Source="FB_CTUD.CV" Destination="Q_NumericValue.rPhys" dx1="206.67"/>
+			<Connection Source="Input_LD.IN" Destination="FB_CTUD.LD" dx1="306.67"/>
+			<Connection Source="FB_CTUD.QU" Destination="Output_QU.OUT" dx1="200"/>
+			<Connection Source="FB_CTUD.QD" Destination="Output_QD.OUT" dx1="840"/>
+			<Connection Source="FB_CTUD.CV" Destination="Q_NumericValue_1.rPhys" dx1="293.33"/>
 		</DataConnections>
 	</SubAppNetwork>
 </SubAppType>
