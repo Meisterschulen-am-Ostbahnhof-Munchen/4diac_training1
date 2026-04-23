@@ -39,13 +39,13 @@
 			<Connection Source="Input_CU.IND" Destination="FB_CTU_ULINT.REQ" dx1="500"/>
 			<Connection Source="Input_R.IND" Destination="FB_CTU_ULINT.REQ" dx1="500"/>
 			<Connection Source="FB_CTU_ULINT.CNF" Destination="Output_Q1.REQ" dx1="500"/>
-			<Connection Source="FB_CTU_ULINT.CNF" Destination="F_ULINT_TO_LREAL.REQ" dx1="200"/>
+			<Connection Source="FB_CTU_ULINT.CNF" Destination="F_ULINT_TO_LREAL.REQ" dx1="600"/>
 			<Connection Source="F_ULINT_TO_LREAL.CNF" Destination="Q_NumericValue_L.REQ" dx1="200"/>
 		</EventConnections>
 		<DataConnections>
 			<Connection Source="Input_CU.IN" Destination="FB_CTU_ULINT.CU" dx1="200"/>
 			<Connection Source="Input_R.IN" Destination="FB_CTU_ULINT.R" dx1="200"/>
-			<Connection Source="FB_CTU_ULINT.Q" Destination="Output_Q1.OUT" dx1="200"/>
+			<Connection Source="FB_CTU_ULINT.Q" Destination="Output_Q1.OUT" dx1="1073.33"/>
 			<Connection Source="FB_CTU_ULINT.CV" Destination="F_ULINT_TO_LREAL.IN" dx1="200"/>
 			<Connection Source="F_ULINT_TO_LREAL.OUT" Destination="Q_NumericValue_L.lrPhys" dx1="200"/>
 		</DataConnections>

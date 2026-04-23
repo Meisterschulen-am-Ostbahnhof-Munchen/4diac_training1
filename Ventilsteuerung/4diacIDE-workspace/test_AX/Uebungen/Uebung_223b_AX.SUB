@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<SubAppType Name="Uebung_224_AX" Comment="Standard IEC 61131-3 AULI_FB_CTUD (Adapter Version, ULINT) mit Terminal-Ausgabe">
+<SubAppType Name="Uebung_223b_AX" Comment="Standard IEC 61131-3 AUDI_FB_CTUD (Adapter Version, UDINT) mit Terminal-Ausgabe">
 	<Identification Standard="61131-3" Description="Copyright (c) 2026 Meisterschulen am Ostbahnhof  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0">
 	</Identification>
 	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.1" Author="Franz Höpfinger" Date="2026-04-21" Remarks="Added terminal output for counter value">
@@ -18,21 +18,21 @@
 	<SubAppInterfaceList>
 	</SubAppInterfaceList>
 	<SubAppNetwork>
-		<FB Name="AULI_FB_CTUD" Type="adapter::iec61131_3::counters::AULI_FB_CTUD" x="0" y="0">
+		<FB Name="AUDI_FB_CTUD" Type="adapter::iec61131_3::counters::AUDI_FB_CTUD" x="0" y="0">
 		</FB>
-		<FB Name="Input_CU" Type="logiBUS::io::DI::logiBUS_IXA" x="-2500" y="-1500">
+		<FB Name="Input_CU" Type="logiBUS::io::DI::logiBUS_IXA" x="-2500" y="-1300">
 			<Parameter Name="QI" Value="TRUE"/>
 			<Parameter Name="Input" Value="Input_I1"/>
 		</FB>
-		<FB Name="Input_CD" Type="logiBUS::io::DI::logiBUS_IXA" x="-2500" y="-600">
+		<FB Name="Input_CD" Type="logiBUS::io::DI::logiBUS_IXA" x="-2500" y="-400">
 			<Parameter Name="QI" Value="TRUE"/>
 			<Parameter Name="Input" Value="Input_I2"/>
 		</FB>
-		<FB Name="Input_R" Type="logiBUS::io::DI::logiBUS_IXA" x="-2500" y="400">
+		<FB Name="Input_R" Type="logiBUS::io::DI::logiBUS_IXA" x="-2500" y="600">
 			<Parameter Name="QI" Value="TRUE"/>
 			<Parameter Name="Input" Value="Input_I3"/>
 		</FB>
-		<FB Name="Input_LD" Type="logiBUS::io::DI::logiBUS_IXA" x="-2500" y="1400">
+		<FB Name="Input_LD" Type="logiBUS::io::DI::logiBUS_IXA" x="-2500" y="1500">
 			<Parameter Name="QI" Value="TRUE"/>
 			<Parameter Name="Input" Value="Input_I4"/>
 		</FB>
@@ -44,20 +44,17 @@
 			<Parameter Name="QI" Value="TRUE"/>
 			<Parameter Name="Output" Value="Output_Q2"/>
 		</FB>
-		<FB Name="AULI_TO_AUDI" Type="adapter::conversion::unidirectional::AULI_TO_AUDI" x="1100" y="1600">
-		</FB>
-		<FB Name="Q_NumericValue_AUDI" Type="isobus::UT::Q::Q_NumericValue_AUDI" x="2800" y="1100">
+		<FB Name="Q_NumericValue_AUDI" Type="isobus::UT::Q::Q_NumericValue_AUDI" x="2500" y="1000">
 			<Parameter Name="u16ObjId" Value="OutputNumber_N1"/>
 		</FB>
 		<AdapterConnections>
-			<Connection Source="Input_CU.IN" Destination="AULI_FB_CTUD.CU" dx1="500"/>
-			<Connection Source="Input_CD.IN" Destination="AULI_FB_CTUD.CD" dx1="400"/>
-			<Connection Source="Input_R.IN" Destination="AULI_FB_CTUD.R" dx1="300"/>
-			<Connection Source="Input_LD.IN" Destination="AULI_FB_CTUD.LD" dx1="626.67"/>
-			<Connection Source="AULI_FB_CTUD.QU" Destination="Output_QU.OUT" dx1="200"/>
-			<Connection Source="AULI_FB_CTUD.QD" Destination="Output_QD.OUT" dx1="593.33"/>
-			<Connection Source="AULI_FB_CTUD.CV" Destination="AULI_TO_AUDI.AULI_IN" dx1="173.33"/>
-			<Connection Source="AULI_TO_AUDI.AUDI_OUT" Destination="Q_NumericValue_AUDI.u32NewValue" dx1="200"/>
+			<Connection Source="Input_CU.IN" Destination="AUDI_FB_CTUD.CU" dx1="500"/>
+			<Connection Source="Input_CD.IN" Destination="AUDI_FB_CTUD.CD" dx1="400"/>
+			<Connection Source="Input_R.IN" Destination="AUDI_FB_CTUD.R" dx1="300"/>
+			<Connection Source="Input_LD.IN" Destination="AUDI_FB_CTUD.LD" dx1="646.67"/>
+			<Connection Source="AUDI_FB_CTUD.QU" Destination="Output_QU.OUT" dx1="200"/>
+			<Connection Source="AUDI_FB_CTUD.QD" Destination="Output_QD.OUT" dx1="746.67"/>
+			<Connection Source="AUDI_FB_CTUD.CV" Destination="Q_NumericValue_AUDI.u32NewValue" dx1="500"/>
 		</AdapterConnections>
 	</SubAppNetwork>
 </SubAppType>

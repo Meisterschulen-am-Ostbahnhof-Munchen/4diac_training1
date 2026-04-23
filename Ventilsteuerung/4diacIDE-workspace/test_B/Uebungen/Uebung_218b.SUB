@@ -30,25 +30,21 @@
 			<Parameter Name="QI" Value="TRUE"/>
 			<Parameter Name="Output" Value="Output_Q1"/>
 		</FB>
-		<FB Name="Q_NumericValue_1" Type="isobus::UT::Q::Q_NumericValue_PHYS" x="3300" y="1600">
+		<FB Name="Q_NumericValue_1" Type="isobus::UT::Q::Q_NumericValue_PHYS_LREAL" x="3300" y="1600">
 			<Parameter Name="stObj" Value="OutputNumber_N3"/>
 		</FB>
-		<FB Name="F_UDINT_TO_REAL" Type="iec61131::conversion::F_UDINT_TO_REAL" x="1400" y="1800">
-		</FB>
-		<Comment Comment="Hier würde auch (Siehe Uebung_218) der Normale Ausgang gehen. " x="1300" y="2500" width="1000" height="500"/>
+		<Comment Comment="Hier würde auch (Siehe Uebung_218) der Normale Ausgang gehen. " x="1300" y="2400" width="1000" height="500"/>
 		<EventConnections>
 			<Connection Source="Input_CD.IND" Destination="FB_CTD_UDINT.REQ" dx1="500"/>
 			<Connection Source="Input_LD.IND" Destination="FB_CTD_UDINT.REQ" dx1="500"/>
 			<Connection Source="FB_CTD_UDINT.CNF" Destination="Output_Q1.REQ" dx1="500"/>
-			<Connection Source="FB_CTD_UDINT.CNF" Destination="F_UDINT_TO_REAL.REQ" dx1="500"/>
-			<Connection Source="F_UDINT_TO_REAL.CNF" Destination="Q_NumericValue_1.REQ" dx1="306.67"/>
+			<Connection Source="FB_CTD_UDINT.CNF" Destination="Q_NumericValue_1.REQ" dx1="500"/>
 		</EventConnections>
 		<DataConnections>
 			<Connection Source="Input_CD.IN" Destination="FB_CTD_UDINT.CD" dx1="200"/>
 			<Connection Source="Input_LD.IN" Destination="FB_CTD_UDINT.LD" dx1="200"/>
 			<Connection Source="FB_CTD_UDINT.Q" Destination="Output_Q1.OUT" dx1="200"/>
-			<Connection Source="FB_CTD_UDINT.CV" Destination="F_UDINT_TO_REAL.IN" dx1="106.67"/>
-			<Connection Source="F_UDINT_TO_REAL.OUT" Destination="Q_NumericValue_1.rPhys" dx1="306.67"/>
+			<Connection Source="FB_CTD_UDINT.CV" Destination="Q_NumericValue_1.lrPhys" dx1="106.67"/>
 		</DataConnections>
 	</SubAppNetwork>
 </SubAppType>

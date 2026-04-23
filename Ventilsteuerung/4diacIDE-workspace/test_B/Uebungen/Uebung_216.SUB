@@ -30,7 +30,7 @@
 			<Parameter Name="QI" Value="TRUE"/>
 			<Parameter Name="Output" Value="Output_Q1"/>
 		</FB>
-		<FB Name="Q_NumericValue" Type="isobus::UT::Q::Q_NumericValue" x="3000" y="1000">
+		<FB Name="Q_NumericValue" Type="isobus::UT::Q::Q_NumericValue" x="3400" y="800">
 			<Parameter Name="u16ObjId" Value="OutputNumber_N1"/>
 		</FB>
 		<FB Name="F_DINT_TO_UDINT" Type="iec61131::conversion::F_DINT_TO_UDINT" x="1500" y="1000">
@@ -46,8 +46,8 @@
 		<DataConnections>
 			<Connection Source="Input_CD.IN" Destination="FB_CTD_DINT.CD" dx1="200"/>
 			<Connection Source="Input_LD.IN" Destination="FB_CTD_DINT.LD" dx1="200"/>
-			<Connection Source="FB_CTD_DINT.Q" Destination="Output_Q1.OUT" dx1="200"/>
-			<Connection Source="FB_CTD_DINT.CV" Destination="F_DINT_TO_UDINT.IN" dx1="200"/>
+			<Connection Source="FB_CTD_DINT.Q" Destination="Output_Q1.OUT" dx1="800"/>
+			<Connection Source="FB_CTD_DINT.CV" Destination="F_DINT_TO_UDINT.IN" dx1="106.67"/>
 			<Connection Source="F_DINT_TO_UDINT.OUT" Destination="Q_NumericValue.u32NewValue" dx1="200"/>
 		</DataConnections>
 	</SubAppNetwork>
