@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<SubAppType Name="Uebung_012" Comment="Numeric Value Input und Speichern NVS">
+<SubAppType Name="Uebung_012d" Comment="Numeric Value Input und Speichern NVS">
 	<Identification Standard="61499-2" Description="Copyright (c) 2023 Meisterschulen am Ostbahnhof  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0">
 	</Identification>
 	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2023-10-23" Remarks="initial API and implementation and/or initial documentation">
@@ -13,9 +13,8 @@
 	<SubAppNetwork>
 		<FB Name="F_DWORD_TO_UDINT" Type="iec61131::conversion::F_DWORD_TO_UDINT" x="-3500" y="1100">
 		</FB>
-		<FB Name="InputNumber_I1" Type="isobus::UT::io::NumericValue::NumericValue_ID" x="-5300" y="900">
+		<FB Name="InputNumber_I1" Type="isobus::UT::io::NumericValue::NumericValue_PHYS" x="-5300" y="900">
 			<Parameter Name="QI" Value="TRUE"/>
-			<Parameter Name="u16ObjId" Value="InputNumber_I1"/>
 		</FB>
 		<FB Name="NVS" Type="logiBUS::storage::esp32_nvs::NVS" x="-900" y="700">
 			<Parameter Name="QI" Value="TRUE"/>
