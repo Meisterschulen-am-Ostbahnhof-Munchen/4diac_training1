@@ -6,14 +6,15 @@
 	</VersionInfo>
 	<CompilerInfo packageName="Uebungen">
 		<Import declaration="Uebungen::const::NVS::NVS_Keys::KEY_I1_STORE"/>
-		<Import declaration="Uebungen::const::UT::DefaultPool_Numeric::InputNumber_I1"/>
+		<Import declaration="Uebungen::const::UT::DefaultPool_Numeric::InputNumber_I3"/>
+		<Import declaration="Uebungen::const::UT::DefaultPool_Numeric::OutputNumber_N3"/>
 	</CompilerInfo>
 	<SubAppInterfaceList>
 	</SubAppInterfaceList>
 	<SubAppNetwork>
-		<FB Name="InputNumber_I1" Type="isobus::UT::io::NumericValue::NumericValue_PHYS" x="-4900" y="700">
+		<FB Name="InputNumber_I3" Type="isobus::UT::io::NumericValue::NumericValue_PHYS" x="-4900" y="700">
 			<Parameter Name="QI" Value="TRUE"/>
-			<Parameter Name="stObj" Value="InputNumber_I1"/>
+			<Parameter Name="stObj" Value="InputNumber_I3"/>
 		</FB>
 		<FB Name="NVS" Type="eclipse4diac::storage::INI" x="-900" y="700">
 			<Parameter Name="QI" Value="TRUE"/>
@@ -21,16 +22,16 @@
 			<Parameter Name="DEFAULT_VALUE" Value="REAL#0.0"/>
 		</FB>
 		<FB Name="Q_NumericValue" Type="isobus::UT::Q::Q_NumericValue_PHYS" x="1600" y="900">
-			<Parameter Name="stObj" Value="InputNumber_I1"/>
+			<Parameter Name="stObj" Value="OutputNumber_N3"/>
 		</FB>
 		<EventConnections>
 			<Connection Source="NVS.GETO" Destination="Q_NumericValue.REQ" dx1="740"/>
 			<Connection Source="NVS.INITO" Destination="NVS.GET" dx1="80" dx2="80" dy="-506.67"/>
-			<Connection Source="InputNumber_I1.IND" Destination="NVS.SET"/>
+			<Connection Source="InputNumber_I3.IND" Destination="NVS.SET"/>
 		</EventConnections>
 		<DataConnections>
 			<Connection Source="NVS.VALUEO" Destination="Q_NumericValue.rPhys" dx1="733.33"/>
-			<Connection Source="InputNumber_I1.rPhys" Destination="NVS.VALUE" dx1="1660"/>
+			<Connection Source="InputNumber_I3.rPhys" Destination="NVS.VALUE" dx1="1660"/>
 		</DataConnections>
 	</SubAppNetwork>
 </SubAppType>
