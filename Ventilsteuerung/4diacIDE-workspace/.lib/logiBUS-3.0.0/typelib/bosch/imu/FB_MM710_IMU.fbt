@@ -6,15 +6,19 @@
 	</VersionInfo>
 	<CompilerInfo packageName="logiBUS::bosch::imu">
 		<Import declaration="eclipse4diac::core::TypeHash"/>
+		<Import declaration="isobus::pgn::ISO_CAN_NODE"/>
+		<Import declaration="isobus::pgn::ISO_CAN_NODE::INVALID"/>
+		<Import declaration=""/>
 	</CompilerInfo>
 	<InterfaceList>
 		<EventInputs>
 			<Event Name="INIT" Type="EInit" Comment="Service Initialization">
 				<With Var="QI"/>
 				<With Var="PARAMS"/>
+				<With Var="u8CanIdx"/>
+				<With Var="SA"/>
 			</Event>
 			<Event Name="REQ" Type="Event" Comment="Service Request">
-				<With Var="QI"/>
 			</Event>
 		</EventInputs>
 		<EventOutputs>
@@ -23,7 +27,6 @@
 				<With Var="STATUS"/>
 			</Event>
 			<Event Name="CNF" Type="Event" Comment="Confirmation of Requested Service">
-				<With Var="QO"/>
 				<With Var="STATUS"/>
 				<With Var="rAccX"/>
 				<With Var="rAccY"/>
@@ -49,7 +52,6 @@
 				<With Var="uiMessageCounter"/>
 			</Event>
 			<Event Name="ERROR" Type="Event" Comment="Error indication">
-				<With Var="QO"/>
 				<With Var="STATUS"/>
 				<With Var="bCommError"/>
 				<With Var="bCRCError"/>
@@ -59,6 +61,8 @@
 		<InputVars>
 			<VarDeclaration Name="QI" Type="BOOL" Comment="Event Input Qualifier"/>
 			<VarDeclaration Name="PARAMS" Type="STRING" Comment="Service Parameters (e.g. CAN interface config)"/>
+			<VarDeclaration Name="u8CanIdx" Type="USINT" Comment="ISO_CAN_NODE" InitialValue="ISO_CAN_NODE::INVALID"/>
+			<VarDeclaration Name="SA" Type="BYTE" Comment="Source Address" InitialValue="16#DA"/>
 		</InputVars>
 		<OutputVars>
 			<VarDeclaration Name="QO" Type="BOOL" Comment="Event Output Qualifier"/>
