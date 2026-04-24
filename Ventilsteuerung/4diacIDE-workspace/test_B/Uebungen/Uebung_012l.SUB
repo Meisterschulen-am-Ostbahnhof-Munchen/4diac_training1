@@ -15,7 +15,7 @@
 			<Parameter Name="QI" Value="TRUE"/>
 			<Parameter Name="u16ObjId" Value="InputString_S1"/>
 		</FB>
-		<FB Name="INI" Type="logiBUS::storage::esp32_nvs::NVS" x="-1200" y="700">
+		<FB Name="NVS" Type="logiBUS::storage::esp32_nvs::NVS" x="-1200" y="700">
 			<Parameter Name="QI" Value="TRUE"/>
 			<Parameter Name="KEY" Value="KEY_S1_STORE"/>
 			<Parameter Name="DEFAULT_VALUE" Value="STRING#'Test'"/>
@@ -24,13 +24,13 @@
 			<Parameter Name="u16ObjId" Value="InputString_S1"/>
 		</FB>
 		<EventConnections>
-			<Connection Source="INI.GETO" Destination="Q_StringValue.REQ" dx1="793.33"/>
-			<Connection Source="INI.INITO" Destination="INI.GET" dx1="80" dx2="80" dy="-233.33"/>
-			<Connection Source="StringValue_IS.IND" Destination="INI.SET" dx1="1480"/>
+			<Connection Source="NVS.GETO" Destination="Q_StringValue.REQ" dx1="793.33"/>
+			<Connection Source="NVS.INITO" Destination="NVS.GET" dx1="80" dx2="80" dy="-233.33"/>
+			<Connection Source="StringValue_IS.IND" Destination="NVS.SET" dx1="1480"/>
 		</EventConnections>
 		<DataConnections>
-			<Connection Source="INI.VALUEO" Destination="Q_StringValue.pau8String" dx1="793.33"/>
-			<Connection Source="StringValue_IS.IN" Destination="INI.VALUE" dx1="1480"/>
+			<Connection Source="NVS.VALUEO" Destination="Q_StringValue.pau8String" dx1="793.33"/>
+			<Connection Source="StringValue_IS.IN" Destination="NVS.VALUE" dx1="1480"/>
 		</DataConnections>
 	</SubAppNetwork>
 </SubAppType>
