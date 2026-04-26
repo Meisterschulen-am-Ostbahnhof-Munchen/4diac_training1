@@ -177,12 +177,12 @@
 		<FB Name="sequence_E_08_AX" Type="logiBUS::utils::sequence::event::sequence_E_08_AX" x="3200" y="-100">
 		</FB>
 		<Comment Comment="UNTEN" x="3400" y="500" width="1" height="1"/>
-		<Comment Comment="S4 ist der Zustand &quot;Arbeit&quot;" x="-1800" y="-300" width="993.33" height="293.33"/>
+		<Comment Comment="S4 ist der Zustand &quot;Arbeit&quot;" x="7800" y="2400" width="993.33" height="293.33"/>
 		<FB Name="AX_OR_entriegeln" Type="adapter::booleanOperators::AX_OR_2" x="5600" y="0">
 		</FB>
 		<FB Name="AX_OR_verriegeln" Type="adapter::booleanOperators::AX_OR_2" x="5400" y="1800">
 		</FB>
-		<Comment Comment="S8 ist Zustand &#10;&quot;Transport&quot;&#10;" x="-1800" y="3100" width="993.33" height="293.33"/>
+		<Comment Comment="S8 ist Zustand &#10;&quot;Transport&quot;&#10;" x="7800" y="1800" width="993.33" height="293.33"/>
 		<FB Name="AX_OR_Lampe_gruen" Type="adapter::booleanOperators::AX_OR_2" x="4800" y="3700">
 		</FB>
 		<FB Name="S_1B2_riegel_geschlossen_1" Type="logiBUS::io::DI::logiBUS_IE" x="1900" y="4700">
@@ -218,7 +218,7 @@
 		<AdapterConnections>
 			<Connection Source="sequence_E_08_AX.DO_S1" Destination="AX_OR_entriegeln.IN1" dx1="633.33"/>
 			<Connection Source="sequence_E_08_AX.DO_S2" Destination="Ausgang_senken.OUT" dx1="1673.33"/>
-			<Connection Source="sequence_E_08_AX.DO_S3" Destination="AX_OR_verriegeln.IN1" dx1="1053.33"/>
+			<Connection Source="sequence_E_08_AX.DO_S3" Destination="AX_OR_verriegeln.IN1" dx1="1046.67"/>
 			<Connection Source="AX_OR_entriegeln.OUT" Destination="Ausgang_entriegeln.OUT" dx1="253.33"/>
 			<Connection Source="sequence_E_08_AX.DO_S5" Destination="AX_OR_entriegeln.IN2" dx1="733.33"/>
 			<Connection Source="sequence_E_08_AX.DO_S6" Destination="Ausgang_heben.OUT" dx1="913.33"/>
