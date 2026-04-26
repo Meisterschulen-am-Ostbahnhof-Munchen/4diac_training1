@@ -12,24 +12,21 @@
 	<SubAppInterfaceList>
 	</SubAppInterfaceList>
 	<SubAppNetwork>
-		<FB Name="InputNumber_I3" Type="isobus::UT::io::NumericValue::NumericValue_PHYSA" x="-4900" y="700">
+		<FB Name="InputNumber_I3" Type="isobus::UT::io::NumericValue::NumericValue_PHYSA" x="-4800" y="700">
 			<Parameter Name="QI" Value="TRUE"/>
 			<Parameter Name="stObj" Value="InputNumber_I3"/>
 		</FB>
-		<FB Name="NVS_AR" Type="logiBUS::storage::esp32_nvs::NVS_AR" x="-900" y="700">
+		<FB Name="NVS_AR" Type="logiBUS::storage::esp32_nvs::NVS_AR" x="-1000" y="800">
 			<Parameter Name="QI" Value="TRUE"/>
 			<Parameter Name="KEY" Value="KEY_I1_STORE"/>
 			<Parameter Name="DEFAULT_VALUE" Value="REAL#0.0"/>
 		</FB>
-		<FB Name="Q_NumericValue" Type="isobus::UT::Q::Q_NumericValue_PHYSA" x="1600" y="900">
-			<Parameter Name="stObj" Value="OutputNumber_N3"/>
+		<FB Name="Q_NumericValue" Type="isobus::UT::Q::Q_NumericValue_PHYSA" x="1700" y="800">
+			<Parameter Name="stObj" Value="InputNumber_I3"/>
 		</FB>
-		<EventConnections>
-			<Connection Source="NVS_AR.INITO" Destination="NVS_AR.INIT" dx1="80" dx2="80" dy="-506.67"/>
-		</EventConnections>
 		<AdapterConnections>
 			<Connection Source="InputNumber_I3.rPhys" Destination="NVS_AR.AR_IN" dx1="1660"/>
-			<Connection Source="NVS_AR.AR_OUT" Destination="Q_NumericValue.rPhys" dx1="733.33"/>
+			<Connection Source="NVS_AR.AR_OUT" Destination="Q_NumericValue.rPhys"/>
 		</AdapterConnections>
 	</SubAppNetwork>
 </SubAppType>
