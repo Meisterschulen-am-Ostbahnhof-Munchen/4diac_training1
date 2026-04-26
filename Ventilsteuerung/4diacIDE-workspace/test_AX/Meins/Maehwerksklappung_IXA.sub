@@ -179,7 +179,7 @@
 		</FB>
 		<FB Name="Arbeit_oder_Transport" Type="adapter::booleanOperators::AX_OR_2" x="4900" y="-900">
 		</FB>
-		<Comment Comment="Heben (Transport): Y_3 = S_1 and 1B1 and not 2B2 Erklärung: Der Ausgang &quot;Mähwerk heben&quot; (Y_3) ist nur aktiv, solange S_1 gedrückt bleibt, der Riegel &quot;Offen&quot; meldet (1B1) und die obere Endlage (2B2) noch nicht erreicht ist. Lässt der Fahrer S_1 los, wird die Bedingung falsch, Y_3 fällt ab und das 5/3-Wegeventil stoppt den Zylinder sofort." x="5100" y="300" width="2800" height="633.33"/>
+		<Comment Comment="Heben (Transport): Y_3 = S_1 and 1B1 and not 2B2 Erklärung: Der Ausgang &quot;Mähwerk heben&quot; (Y_3) ist nur aktiv, solange S_1 gedrückt bleibt, der Riegel &quot;Offen&quot; meldet (1B1) und die obere Endlage (2B2) noch nicht erreicht ist. Lässt der Fahrer S_1 los, wird die Bedingung falsch, Y_3 fällt ab und das 5/3-Wegeventil stoppt den Zylinder sofort." x="5100" y="300" width="2800" height="900"/>
 		<FB Name="riegel_offen2" Type="adapter::events::unidirectional::AX_SPLIT_3" x="400" y="600">
 		</FB>
 		<FB Name="heben" Type="adapter::booleanOperators::AX_AND_3" x="5700" y="1300">
@@ -224,7 +224,7 @@
 			<Connection Source="entriegeln.OUT" Destination="Ausgang_entriegeln.OUT" dx1="280"/>
 			<Connection Source="Arbeit2.OUT1" Destination="Arbeit_oder_Transport.IN1" dx1="1626.67"/>
 			<Connection Source="heben.OUT" Destination="Ausgang_heben.OUT" dx1="260"/>
-			<Connection Source="S_1B1_riegel_offen.IN" Destination="riegel_offen2.IN"/>
+			<Connection Source="S_1B1_riegel_offen.IN" Destination="riegel_offen2.IN" dx1="386.67"/>
 			<Connection Source="oben2.OUT1" Destination="NOT_oben.IN" dx1="346.67"/>
 			<Connection Source="riegel_offen2.OUT2" Destination="heben.IN1" dx1="1286.67"/>
 			<Connection Source="NOT_oben.OUT" Destination="heben.IN3" dx1="733.33"/>
@@ -249,8 +249,8 @@
 			<Connection Source="S_1B2_riegel_geschlossen.IN" Destination="riegel_geschlossen2.IN" dx1="426.67"/>
 			<Connection Source="riegel_geschlossen2.OUT1" Destination="NOT_riegel_geschlossen.IN"/>
 			<Connection Source="riegel_geschlossen2.OUT2" Destination="Endlage_verriegelt.IN2" dx1="220"/>
-			<Connection Source="Transport.IN" Destination="AX_TON_Transport.IN"/>
-			<Connection Source="AX_TON_Transport.Q" Destination="Transport2.IN"/>
+			<Connection Source="Transport.IN" Destination="AX_TON_Transport.IN" dx1="446.67"/>
+			<Connection Source="AX_TON_Transport.Q" Destination="Transport2.IN" dx1="620"/>
 			<Connection Source="Transport2.OUT1" Destination="Arbeit_oder_Transport.IN2" dx1="1120"/>
 			<Connection Source="Transport2.OUT2" Destination="heben.IN2" dx1="1520"/>
 		</AdapterConnections>
