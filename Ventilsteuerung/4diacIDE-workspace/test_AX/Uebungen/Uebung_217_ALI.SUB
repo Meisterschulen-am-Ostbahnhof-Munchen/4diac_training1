@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SubAppType Name="Uebung_217_ALI" Comment="Standard IEC 61131-3 ALI_FB_CTD (Adapter Version, LINT) mit Terminal-Ausgabe">
+	<Identification Standard="61131-3" Description="Copyright (c) 2026 Meisterschulen am Ostbahnhof  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0">
+	</Identification>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.1" Author="Franz Höpfinger" Date="2026-04-21" Remarks="Added terminal output for counter value">
+	</VersionInfo>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2026-04-21" Remarks="initial API and implementation (Adapter version)">
+	</VersionInfo>
+	<CompilerInfo packageName="Uebungen">
+		<Import declaration="Uebungen::const::UT::DefaultPool::OutputNumber_N1"/>
+		<Import declaration="logiBUS::io::DI::logiBUS_DI::Input_I1"/>
+		<Import declaration="logiBUS::io::DI::logiBUS_DI::Input_I2"/>
+		<Import declaration="logiBUS::io::DQ::logiBUS_DO::Output_Q1"/>
+	</CompilerInfo>
+	<SubAppInterfaceList>
+	</SubAppInterfaceList>
+	<SubAppNetwork>
+		<FB Name="ALI_FB_CTD" Type="adapter::iec61131::counters::ALI_FB_CTD" x="0" y="0">
+		</FB>
+		<FB Name="Input_CD" Type="logiBUS::io::DI::logiBUS_IXA" x="-2500" y="-800">
+			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="Input" Value="Input_I1"/>
+		</FB>
+		<FB Name="Input_LD" Type="logiBUS::io::DI::logiBUS_IXA" x="-2500" y="800">
+			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="Input" Value="Input_I2"/>
+		</FB>
+		<FB Name="Output_Q1" Type="logiBUS::io::DQ::logiBUS_QXA" x="2500" y="-800">
+			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="Output" Value="Output_Q1"/>
+		</FB>
+		<FB Name="ALI_TO_AUDI" Type="adapter::conversion::unidirectional::ALI_TO_AUDI" x="1000" y="800">
+		</FB>
+		<FB Name="Q_NumericValue_AUDI" Type="isobus::UT::Q::Q_NumericValue_AUDI" x="2800" y="400">
+			<Parameter Name="u16ObjId" Value="OutputNumber_N1"/>
+		</FB>
+		<Comment Comment="ALI_TO_AUDI ist großer Quatsch ... keine Negativen Zahlen möglich" x="600" y="1800" width="2200" height="500"/>
+		<AdapterConnections>
+			<Connection Source="Input_CD.IN" Destination="ALI_FB_CTD.CD" dx1="400"/>
+			<Connection Source="Input_LD.IN" Destination="ALI_FB_CTD.LD" dx1="200"/>
+			<Connection Source="ALI_FB_CTD.Q" Destination="Output_Q1.OUT" dx1="200"/>
+			<Connection Source="ALI_FB_CTD.CV" Destination="ALI_TO_AUDI.ALI_IN" dx1="200"/>
+			<Connection Source="ALI_TO_AUDI.AUDI_OUT" Destination="Q_NumericValue_AUDI.u32NewValue" dx1="200"/>
+		</AdapterConnections>
+	</SubAppNetwork>
+</SubAppType>
