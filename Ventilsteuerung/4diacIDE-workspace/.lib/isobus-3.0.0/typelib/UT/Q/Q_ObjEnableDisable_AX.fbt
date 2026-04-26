@@ -22,25 +22,26 @@
 		<InputVars>
 			<VarDeclaration Name="u16ObjId" Type="UINT" Comment="Object ID"/>
 		</InputVars>
-		<Sockets>
-			<AdapterDeclaration Name="REQ" Type="adapter::types::unidirectional::AX" Comment="Enable/Disable request (BOOL)"/>
-		</Sockets>
 		<Plugs>
-			<AdapterDeclaration Name="CNF" Type="adapter::types::unidirectional::AX" Comment="Confirmation"/>
+			<AdapterDeclaration Name="qOldAbility" Type="adapter::types::unidirectional::AB" Comment="0 == disable, 1 == enable, 0xFF == undefined"/>
 		</Plugs>
+		<Sockets>
+			<AdapterDeclaration Name="qAbility" Type="adapter::types::unidirectional::AX" Comment="0 == disable, 1 == enable, 0xFF == undefined" x="-1100" y="-400"/>
+		</Sockets>
 	</InterfaceList>
 	<FBNetwork>
-		<FB Name="Q_ObjEnableDisable" Type="isobus::UT::Q::Q_ObjEnableDisable" x="0" y="0">
+		<FB Name="Q_ObjEnableDisable" Type="isobus::UT::Q::Q_ObjEnableDisable" x="500" y="-800">
 		</FB>
 		<EventConnections>
 			<Connection Source="INIT" Destination="Q_ObjEnableDisable.INIT" dx1="200"/>
 			<Connection Source="Q_ObjEnableDisable.INITO" Destination="INITO" dx1="200"/>
-			<Connection Source="REQ.E1" Destination="Q_ObjEnableDisable.REQ" dx1="200"/>
-			<Connection Source="Q_ObjEnableDisable.CNF" Destination="CNF.E1" dx1="200"/>
+			<Connection Source="qAbility.E1" Destination="Q_ObjEnableDisable.REQ" dx1="406.67"/>
+			<Connection Source="Q_ObjEnableDisable.CNF" Destination="qOldAbility.E1" dx1="733.33"/>
 		</EventConnections>
 		<DataConnections>
 			<Connection Source="u16ObjId" Destination="Q_ObjEnableDisable.u16ObjId" dx1="200"/>
-			<Connection Source="REQ.D1" Destination="Q_ObjEnableDisable.qAbility" dx1="200"/>
+			<Connection Source="qAbility.D1" Destination="Q_ObjEnableDisable.qAbility" dx1="846.67"/>
+			<Connection Source="Q_ObjEnableDisable.qOldAbility" Destination="qOldAbility.D1" dx1="733.33"/>
 		</DataConnections>
 	</FBNetwork>
 	<Attribute Name="eclipse4diac::core::TypeHash" Value="''"/>

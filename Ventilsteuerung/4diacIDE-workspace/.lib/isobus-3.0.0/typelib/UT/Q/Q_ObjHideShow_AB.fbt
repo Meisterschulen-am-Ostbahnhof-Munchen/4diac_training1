@@ -22,25 +22,26 @@
 		<InputVars>
 			<VarDeclaration Name="u16ObjId" Type="UINT" Comment="Object ID"/>
 		</InputVars>
-		<Sockets>
-			<AdapterDeclaration Name="REQ" Type="adapter::types::unidirectional::AB" Comment="Hide/Show request (BYTE)"/>
-		</Sockets>
 		<Plugs>
-			<AdapterDeclaration Name="CNF" Type="adapter::types::unidirectional::AB" Comment="Confirmation"/>
+			<AdapterDeclaration Name="qOldVisible" Type="adapter::types::unidirectional::AB" Comment="Old value of Visible 0 == hidden, 1 == shown, 0xFF == undefined" x="2900" y="-300"/>
 		</Plugs>
+		<Sockets>
+			<AdapterDeclaration Name="qVisible" Type="adapter::types::unidirectional::AB" Comment="0 == hidden, 1 == shown" x="-1200" y="-100"/>
+		</Sockets>
 	</InterfaceList>
 	<FBNetwork>
-		<FB Name="Q_ObjHideShow" Type="isobus::UT::Q::Q_ObjHideShow" x="0" y="0">
+		<FB Name="Q_ObjHideShow" Type="isobus::UT::Q::Q_ObjHideShow" x="600" y="-900">
 		</FB>
 		<EventConnections>
-			<Connection Source="INIT" Destination="Q_ObjHideShow.INIT" dx1="200"/>
+			<Connection Source="INIT" Destination="Q_ObjHideShow.INIT" dx1="1626.67"/>
 			<Connection Source="Q_ObjHideShow.INITO" Destination="INITO" dx1="200"/>
-			<Connection Source="REQ.E1" Destination="Q_ObjHideShow.REQ" dx1="200"/>
-			<Connection Source="Q_ObjHideShow.CNF" Destination="CNF.E1" dx1="200"/>
+			<Connection Source="qVisible.E1" Destination="Q_ObjHideShow.REQ" dx1="113.33"/>
+			<Connection Source="Q_ObjHideShow.CNF" Destination="qOldVisible.E1" dx1="833.33"/>
 		</EventConnections>
 		<DataConnections>
 			<Connection Source="u16ObjId" Destination="Q_ObjHideShow.u16ObjId" dx1="200"/>
-			<Connection Source="REQ.D1" Destination="Q_ObjHideShow.qVisible" dx1="200"/>
+			<Connection Source="qVisible.D1" Destination="Q_ObjHideShow.qVisible" dx1="660"/>
+			<Connection Source="Q_ObjHideShow.qOldVisible" Destination="qOldVisible.D1" dx1="686.67"/>
 		</DataConnections>
 	</FBNetwork>
 	<Attribute Name="eclipse4diac::core::TypeHash" Value="''"/>
