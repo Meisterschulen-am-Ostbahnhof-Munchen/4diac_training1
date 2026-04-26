@@ -7,6 +7,7 @@
 	<CompilerInfo packageName="Uebungen">
 		<Import declaration="Uebungen::const::NVS::NVS_Keys::KEY_I1_STORE"/>
 		<Import declaration="Uebungen::const::UT::DefaultPool::InputNumber_I1"/>
+			<Import declaration="Uebungen::const::UT::DefaultPool::OutputNumber_N1"/>
 	</CompilerInfo>
 	<SubAppInterfaceList>
 	</SubAppInterfaceList>
@@ -23,7 +24,7 @@
 			<Parameter Name="DEFAULT_VALUE" Value="UDINT#0"/>
 		</FB>
 		<FB Name="Q_NumericValue_AUDI" Type="isobus::UT::Q::Q_NumericValue_AUDI" x="600" y="600">
-			<Parameter Name="u16ObjId" Value="InputNumber_I1"/>
+			<Parameter Name="u16ObjId" Value="OutputNumber_N1"/>
 		</FB>
 		<AdapterConnections>
 			<Connection Source="InputNumber_I1.IN" Destination="AD_TO_AUDI.AD_IN"/>

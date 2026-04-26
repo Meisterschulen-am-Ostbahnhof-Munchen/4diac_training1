@@ -7,6 +7,7 @@
 	<CompilerInfo packageName="Uebungen">
 		<Import declaration="Uebungen::const::NVS::NVS_Keys::KEY_I1_STORE"/>
 		<Import declaration="Uebungen::const::UT::DefaultPool_Numeric::InputNumber_I3"/>
+			<Import declaration="Uebungen::const::UT::DefaultPool_Numeric::OutputNumber_N3"/>
 	</CompilerInfo>
 	<SubAppInterfaceList>
 	</SubAppInterfaceList>
@@ -21,7 +22,7 @@
 			<Parameter Name="DEFAULT_VALUE" Value="REAL#0.0"/>
 		</FB>
 		<FB Name="Q_NumericValue" Type="isobus::UT::Q::Q_NumericValue_PHYS" x="1600" y="900">
-			<Parameter Name="stObj" Value="InputNumber_I3"/>
+			<Parameter Name="stObj" Value="OutputNumber_N3"/>
 		</FB>
 		<EventConnections>
 			<Connection Source="NVS.GETO" Destination="Q_NumericValue.REQ" dx1="740"/>
