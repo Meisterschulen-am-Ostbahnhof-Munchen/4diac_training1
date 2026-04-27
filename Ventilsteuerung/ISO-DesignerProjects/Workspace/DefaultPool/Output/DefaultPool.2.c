@@ -4,7 +4,7 @@
 #include "DefaultPool.c.h"
 
 const unsigned long ISO_OP_MEMORY_CLASS isoOP_DefaultPool_Offset[] = {
-	     1,  // WorkingSet_0_Offset
+	     1,  // WorkingSet_Offset
 	    21,  // Macro_Go_To_DataMask_M1_Offset
 	    34,  // Macro_Go_To_DataMask_M2_Offset
 	    47,  // Macro_Go_To_DataMask_M3_Offset
@@ -63,7 +63,7 @@ const unsigned long ISO_OP_MEMORY_CLASS isoOP_DefaultPool_Offset[] = {
 	  1484,  // OutputString_OutputNumber_N2_Offset
 	  1516,  // OutputString_InputNumber_I1_Offset
 	  1547,  // OutputString_InputNumber_I2_Offset
-	  1578,  // OutputString_11023_Offset
+	  1578,  // OutputString_Offset
 	  1603,  // OutputString_Button_L1_Offset
 	  1629,  // OutputString_InputString_S1_Offset
 	  1660,  // OutputString_Go_To_DataMask_M3_Offset
@@ -83,7 +83,7 @@ const unsigned long ISO_OP_MEMORY_CLASS isoOP_DefaultPool_Offset[] = {
 	  1975,  // information_Offset
 	  6892,  // alert_Offset
 	 11809,  // Caution_Offset
-	 16726,  // Meisterschulen_LogoG1_256_20004_Offset
+	 16726,  // Meisterschulen_LogoG1_256_Offset
 	 22369,  // Logos_icon_Offset
 	 22898,  // FontAttributes_6x8_Offset
 	 22906,  // FontAttributes_8x12_Offset

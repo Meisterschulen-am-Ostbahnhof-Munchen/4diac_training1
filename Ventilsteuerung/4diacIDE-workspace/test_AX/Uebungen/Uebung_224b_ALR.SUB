@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SubAppType Name="Uebung_224b_ALR" Comment="Standard IEC 61131-3 AULI_FB_CTUD (Adapter Version, ULINT) mit Terminal-Ausgabe">
+	<Identification Standard="61131-3" Description="Copyright (c) 2026 Meisterschulen am Ostbahnhof  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0">
+	</Identification>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.1" Author="Franz Höpfinger" Date="2026-04-21" Remarks="Added terminal output for counter value">
+	</VersionInfo>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2026-04-21" Remarks="initial API and implementation (Adapter version)">
+	</VersionInfo>
+	<CompilerInfo packageName="Uebungen">
+		<Import declaration="logiBUS::io::DI::logiBUS_DI::Input_I1"/>
+		<Import declaration="logiBUS::io::DI::logiBUS_DI::Input_I2"/>
+		<Import declaration="logiBUS::io::DI::logiBUS_DI::Input_I3"/>
+		<Import declaration="logiBUS::io::DI::logiBUS_DI::Input_I4"/>
+		<Import declaration="logiBUS::io::DQ::logiBUS_DO::Output_Q1"/>
+		<Import declaration="logiBUS::io::DQ::logiBUS_DO::Output_Q2"/>
+		<Import declaration="Uebungen::const::UT::DefaultPool_Numeric::OutputNumber_N3"/>
+	</CompilerInfo>
+	<SubAppInterfaceList>
+	</SubAppInterfaceList>
+	<SubAppNetwork>
+		<FB Name="AULI_FB_CTUD" Type="adapter::iec61131::counters::AULI_FB_CTUD" x="0" y="0">
+		</FB>
+		<FB Name="Input_CU" Type="logiBUS::io::DI::logiBUS_IXA" x="-2500" y="-1500">
+			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="Input" Value="Input_I1"/>
+		</FB>
+		<FB Name="Input_CD" Type="logiBUS::io::DI::logiBUS_IXA" x="-2500" y="-600">
+			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="Input" Value="Input_I2"/>
+		</FB>
+		<FB Name="Input_R" Type="logiBUS::io::DI::logiBUS_IXA" x="-2500" y="400">
+			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="Input" Value="Input_I3"/>
+		</FB>
+		<FB Name="Input_LD" Type="logiBUS::io::DI::logiBUS_IXA" x="-2500" y="1400">
+			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="Input" Value="Input_I4"/>
+		</FB>
+		<FB Name="Output_QU" Type="logiBUS::io::DQ::logiBUS_QXA" x="2500" y="-1000">
+			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="Output" Value="Output_Q1"/>
+		</FB>
+		<FB Name="Output_QD" Type="logiBUS::io::DQ::logiBUS_QXA" x="2500" y="0">
+			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="Output" Value="Output_Q2"/>
+		</FB>
+		<FB Name="Q_NumericValue_1" Type="isobus::UT::Q::Q_NumericValue_PHYSA_LREAL" x="2800" y="1100">
+			<Parameter Name="stObj" Value="OutputNumber_N3"/>
+		</FB>
+		<FB Name="AULI_TO_ALR" Type="adapter::conversion::unidirectional::AULI_TO_ALR" x="1100" y="1600">
+		</FB>
+		<AdapterConnections>
+			<Connection Source="Input_CU.IN" Destination="AULI_FB_CTUD.CU" dx1="500"/>
+			<Connection Source="Input_CD.IN" Destination="AULI_FB_CTUD.CD" dx1="400"/>
+			<Connection Source="Input_R.IN" Destination="AULI_FB_CTUD.R" dx1="300"/>
+			<Connection Source="Input_LD.IN" Destination="AULI_FB_CTUD.LD" dx1="626.67"/>
+			<Connection Source="AULI_FB_CTUD.QU" Destination="Output_QU.OUT" dx1="200"/>
+			<Connection Source="AULI_FB_CTUD.QD" Destination="Output_QD.OUT" dx1="593.33"/>
+			<Connection Source="AULI_FB_CTUD.CV" Destination="AULI_TO_ALR.AULI_IN" dx1="173.33"/>
+			<Connection Source="AULI_TO_ALR.ALR_OUT" Destination="Q_NumericValue_1.lrPhys" dx1="293.33"/>
+		</AdapterConnections>
+	</SubAppNetwork>
+</SubAppType>

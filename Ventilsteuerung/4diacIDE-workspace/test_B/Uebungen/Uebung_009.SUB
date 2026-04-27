@@ -12,7 +12,6 @@
 	</SubAppInterfaceList>
 	<SubAppNetwork>
 		<FB Name="DigitalOutput_Q1" Type="logiBUS::io::DQ::logiBUS_QX" x="1800" y="-900">
-			<Parameter Name="QI" Value="TRUE"/>
 			<Parameter Name="Output" Value="Output_Q1"/>
 		</FB>
 		<FB Name="E_CYCLE" Type="iec61499::events::E_CYCLE" x="-2500" y="-700">
@@ -45,6 +44,7 @@
 			<Connection Source="E_SR.Q" Destination="DigitalOutput_Q1.OUT" dx1="1013.33"/>
 			<Connection Source="E_SR.Q" Destination="E_PERMIT.PERMIT" dx1="366.67"/>
 			<Connection Source="E_CTUD_UDINT.CV" Destination="Q_NumericValue.u32NewValue" dx1="333.33"/>
+			<Connection Source="E_CTUD_UDINT.QU" Destination="DigitalOutput_Q1.QI" dx1="80" dx2="80" dy="-653.33"/>
 		</DataConnections>
 	</SubAppNetwork>
 </SubAppType>

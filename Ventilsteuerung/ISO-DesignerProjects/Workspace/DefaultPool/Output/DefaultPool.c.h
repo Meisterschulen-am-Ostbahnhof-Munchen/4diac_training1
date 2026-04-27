@@ -1,7 +1,7 @@
 // ISO-Designer ISO 11783   Version 5.7.2.6664 Bucher Automation AG
 // Do not change!
 
-#define WorkingSet_0_Offset                                     1
+#define WorkingSet_Offset                                       1
 #define Macro_Go_To_DataMask_M1_Offset                         21
 #define Macro_Go_To_DataMask_M2_Offset                         34
 #define Macro_Go_To_DataMask_M3_Offset                         47
@@ -60,7 +60,7 @@
 #define OutputString_OutputNumber_N2_Offset                  1484
 #define OutputString_InputNumber_I1_Offset                   1516
 #define OutputString_InputNumber_I2_Offset                   1547
-#define OutputString_11023_Offset                            1578
+#define OutputString_Offset                                  1578
 #define OutputString_Button_L1_Offset                        1603
 #define OutputString_InputString_S1_Offset                   1629
 #define OutputString_Go_To_DataMask_M3_Offset                1660
@@ -80,7 +80,7 @@
 #define information_Offset                                   1975
 #define alert_Offset                                         6892
 #define Caution_Offset                                      11809
-#define Meisterschulen_LogoG1_256_20004_Offset              16726
+#define Meisterschulen_LogoG1_256_Offset                    16726
 #define Logos_icon_Offset                                   22369
 #define FontAttributes_6x8_Offset                           22898
 #define FontAttributes_8x12_Offset                          22906

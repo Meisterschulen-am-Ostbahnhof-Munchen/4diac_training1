@@ -6,6 +6,7 @@
 	</VersionInfo>
 	<CompilerInfo packageName="isobus::UT::Q">
 		<Import declaration="eclipse4diac::core::TypeHash"/>
+		<Import declaration="isobus::UT::Q::const::IDs::ID_NULL"/>
 		<Import declaration="logiBUS::utils::conversion::phys::NumericObjectPool_S"/>
 	</CompilerInfo>
 	<InterfaceList>
@@ -24,16 +25,20 @@
 				<With Var="STATUS"/>
 				<With Var="u32OldValue"/>
 				<With Var="s16result"/>
+				<With Var="xOver"/>
+				<With Var="xUnder"/>
 			</Event>
 		</EventOutputs>
 		<InputVars>
-			<VarDeclaration Name="stObj" Type="logiBUS::utils::conversion::phys::NumericObjectPool_S" Comment="Object pool properties (u16ObjId, scale, offset, decimals)"/>
+			<VarDeclaration Name="stObj" Type="logiBUS::utils::conversion::phys::NumericObjectPool_S" Comment="Object pool properties (u16ObjId, scale, offset, decimals)" InitialValue="(u16ObjId := ID_NULL, r32Scale := 1.0, i32Offset := 0, u8Decimals := 0)"/>
 			<VarDeclaration Name="rPhys" Type="REAL" Comment="New raw value — use F_PHYS_TO_RAW to convert from physical value"/>
 		</InputVars>
 		<OutputVars>
 			<VarDeclaration Name="STATUS" Type="STRING" Comment="Service Status"/>
 			<VarDeclaration Name="u32OldValue" Type="UDINT" Comment="Old raw value of ID"/>
 			<VarDeclaration Name="s16result" Type="INT" Comment="retval see Q_NumericValue"/>
+			<VarDeclaration Name="xOver" Type="BOOL" Comment="Physical value exceeds upper ISOBUS limit"/>
+			<VarDeclaration Name="xUnder" Type="BOOL" Comment="Physical value below lower ISOBUS limit"/>
 		</OutputVars>
 	</InterfaceList>
 	<FBNetwork>
@@ -57,13 +62,15 @@
 		</EventConnections>
 		<DataConnections>
 			<Connection Source="Q_NumericValue.STATUS" Destination="STATUS" dx1="2000"/>
-			<Connection Source="Q_NumericValue.u32OldValue" Destination="u32OldValue" dx1="2000"/>
+			<Connection Source="Q_NumericValue.u32OldValue" Destination="u32OldValue" dx1="2333.33"/>
 			<Connection Source="Q_NumericValue.s16result" Destination="s16result" dx1="2573.33"/>
 			<Connection Source="stObj" Destination="F_PHYS_TO_RAW.stObj" dx1="713.33"/>
-			<Connection Source="F_PHYS_TO_RAW." Destination="Q_NumericValue.u32NewValue" dx1="320"/>
+			<Connection Source="F_PHYS_TO_RAW." Destination="Q_NumericValue.u32NewValue" dx1="480"/>
 			<Connection Source="rPhys" Destination="F_PHYS_TO_RAW.rPhys" dx1="593.33"/>
 			<Connection Source="stObj" Destination="F_MOVE.IN" dx1="1100"/>
 			<Connection Source="F_MOVE.OUT.u16ObjId" Destination="Q_NumericValue.u16ObjId" dx1="533.33"/>
+			<Connection Source="F_PHYS_TO_RAW.xOver" Destination="xOver" dx1="4740"/>
+			<Connection Source="F_PHYS_TO_RAW.xUnder" Destination="xUnder" dx1="4853.33"/>
 		</DataConnections>
 	</FBNetwork>
 	<Attribute Name="eclipse4diac::core::TypeHash" Value="''"/>

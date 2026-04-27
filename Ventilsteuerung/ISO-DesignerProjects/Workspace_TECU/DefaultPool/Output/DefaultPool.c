@@ -1,4 +1,4 @@
-// ISO-Designer ISO 11783   Version 5.7.1.6514 Bucher Automation AG
+// ISO-Designer ISO 11783   Version 5.7.2.6664 Bucher Automation AG
 // Do not change!
 
 #include "DefaultPool.iop.h"
@@ -17,8 +17,8 @@
 
 const unsigned char ISO_OP_MEMORY_CLASS isoOP_DefaultPool[] = {
 	17,
-	ID(WorkingSet_0), TYPEID_WORKSET, COLOR_SILVER, 1, ID(DataMask_M1), 1, 0, 2,
-		XYREF(Line_13000, 40, 40),
+	ID(WorkingSet), TYPEID_WORKSET, COLOR_SILVER, 1, ID(DataMask_M1), 1, 0, 2,
+		XYREF(Line, 40, 40),
 		'e', 'n',
 		'd', 'e',
 	ID(DataMask_M1), TYPEID_DATAMASK, COLOR_SILVER, ID(ID_NULL), 5, 0, 
@@ -74,7 +74,7 @@ const unsigned char ISO_OP_MEMORY_CLASS isoOP_DefaultPool[] = {
 		ID(NumberVariable_Wheel_based_machine_distance), LONG(0UL), LONG(0L), FLOAT_0_001, 1, 0, 0, 0,
 	ID(OutputNumber_Rear_PTO_output_shaft_speed), TYPEID_OUTNUM, WORD(200), WORD(30), COLOR_WHITE, ID(FontAttributes_OutputNumber), 0,
 		ID(NumberVariable_Rear_PTO_output_shaft_speed), LONG(0UL), LONG(0L), 0x00, 0x00, 0x00, 0x3E, 1, 0, 0, 0,
-	ID(Line_13000), TYPEID_OUTLINE, ID(LineAttributes_24000), WORD(40), WORD(1), 0, 0,
+	ID(Line), TYPEID_OUTLINE, ID(LineAttributes), WORD(40), WORD(1), 0, 0,
 	ID(Tractor_wheel_slip), TYPEID_OUTPICT, WORD(64), WORD(64), WORD(64), 
 		0, 0, COLOR_MAGENTA, LONG(512UL), 0, 
 		0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 
@@ -306,5 +306,5 @@ const unsigned char ISO_OP_MEMORY_CLASS isoOP_DefaultPool[] = {
 	ID(NumberVariable_Rear_PTO_output_shaft_speed), TYPEID_VARNUM, LONG(0UL), 
 	ID(FontAttributes_OutputNumber), TYPEID_FONTATTR, COLOR_BLACK, 3, 0, 0, 0, 
 	ID(FontAttributes_OutputString), TYPEID_FONTATTR, COLOR_BLACK, 3, 0, 0, 0, 
-	ID(LineAttributes_24000), TYPEID_LINEATTR, COLOR_BLACK, 1, WORD(65535), 0, 
+	ID(LineAttributes), TYPEID_LINEATTR, COLOR_BLACK, 1, WORD(65535), 0, 
 }; // isoOP_DefaultPool

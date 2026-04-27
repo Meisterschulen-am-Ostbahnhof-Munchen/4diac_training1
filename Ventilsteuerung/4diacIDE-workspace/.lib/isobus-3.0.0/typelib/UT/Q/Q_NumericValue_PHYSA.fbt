@@ -6,6 +6,7 @@
 	</VersionInfo>
 	<CompilerInfo packageName="isobus::UT::Q">
 		<Import declaration="eclipse4diac::core::TypeHash"/>
+		<Import declaration="isobus::UT::Q::const::IDs::ID_NULL"/>
 		<Import declaration="logiBUS::utils::conversion::phys::NumericObjectPool_S"/>
 	</CompilerInfo>
 	<InterfaceList>
@@ -23,14 +24,18 @@
 			</Event>
 		</EventOutputs>
 		<InputVars>
-			<VarDeclaration Name="stObj" Type="logiBUS::utils::conversion::phys::NumericObjectPool_S" Comment="Object pool properties (u16ObjId, scale, offset, decimals)"/>
+			<VarDeclaration Name="stObj" Type="logiBUS::utils::conversion::phys::NumericObjectPool_S" Comment="Object pool properties (u16ObjId, scale, offset, decimals)" InitialValue="(u16ObjId := ID_NULL, r32Scale := 1.0, i32Offset := 0, u8Decimals := 0)"/>
 		</InputVars>
 		<OutputVars>
 			<VarDeclaration Name="STATUS" Type="STRING" Comment="Service Status"/>
 			<VarDeclaration Name="s16result" Type="INT" Comment="retval see Q_NumericValue"/>
 		</OutputVars>
+		<Plugs>
+			<AdapterDeclaration Name="xOver" Type="adapter::types::unidirectional::AX" Comment="Physical value exceeds upper ISOBUS limit" x="4000" y="1300"/>
+			<AdapterDeclaration Name="xUnder" Type="adapter::types::unidirectional::AX" Comment="Physical value below lower ISOBUS limit" x="4000" y="1800"/>
+		</Plugs>
 		<Sockets>
-			<AdapterDeclaration Name="rPhys" Type="adapter::types::unidirectional::AR" Comment="Physical REAL value input" x="-600" y="1200"/>
+			<AdapterDeclaration Name="rPhys" Type="adapter::types::unidirectional::AR" Comment="Physical REAL value input" x="-1400" y="1000"/>
 		</Sockets>
 	</InterfaceList>
 	<FBNetwork>
@@ -41,12 +46,16 @@
 			<Connection Source="rPhys.E1" Destination="Q_NumericValue_PHYS.REQ" dx1="320"/>
 			<Connection Source="Q_NumericValue_PHYS.INITO" Destination="INITO" dx1="1506.67"/>
 			<Connection Source="Q_NumericValue_PHYS.CNF" Destination="CNF" dx1="1760"/>
+			<Connection Source="Q_NumericValue_PHYS.CNF" Destination="xOver.E1" dx1="1146.67"/>
+			<Connection Source="Q_NumericValue_PHYS.CNF" Destination="xUnder.E1" dx1="1146.67"/>
 		</EventConnections>
 		<DataConnections>
 			<Connection Source="stObj" Destination="Q_NumericValue_PHYS.stObj" dx1="973.33"/>
-			<Connection Source="rPhys.D1" Destination="Q_NumericValue_PHYS.rPhys" dx1="320"/>
+			<Connection Source="rPhys.D1" Destination="Q_NumericValue_PHYS.rPhys" dx1="1120"/>
 			<Connection Source="Q_NumericValue_PHYS.STATUS" Destination="STATUS" dx1="2000"/>
 			<Connection Source="Q_NumericValue_PHYS.s16result" Destination="s16result" dx1="2573.33"/>
+			<Connection Source="Q_NumericValue_PHYS.xOver" Destination="xOver.D1" dx1="2000"/>
+			<Connection Source="Q_NumericValue_PHYS.xUnder" Destination="xUnder.D1" dx1="913.33"/>
 		</DataConnections>
 	</FBNetwork>
 	<Attribute Name="eclipse4diac::core::TypeHash" Value="''"/>

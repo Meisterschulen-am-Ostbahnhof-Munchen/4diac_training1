@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SubAppType Name="Uebung_210b" Comment="Standard IEC 61131-3 FB_CTU (Vorwärtszähler, INT) mit Terminal-Ausgabe">
+	<Identification Standard="61131-3" Description="Copyright (c) 2026 Meisterschulen am Ostbahnhof  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0">
+	</Identification>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.1" Author="Franz Höpfinger" Date="2026-04-21" Remarks="Added terminal output for counter value">
+	</VersionInfo>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2026-04-20" Remarks="initial API and implementation (IEC 61131-3 version)">
+	</VersionInfo>
+	<CompilerInfo packageName="Uebungen">
+		<Import declaration="Uebungen::const::UT::DefaultPool_Numeric::OutputNumber_N3"/>
+		<Import declaration="logiBUS::io::DI::logiBUS_DI::Input_I1"/>
+		<Import declaration="logiBUS::io::DI::logiBUS_DI::Input_I2"/>
+		<Import declaration="logiBUS::io::DQ::logiBUS_DO::Output_Q1"/>
+	</CompilerInfo>
+	<SubAppInterfaceList>
+	</SubAppInterfaceList>
+	<SubAppNetwork>
+		<FB Name="FB_CTU" Type="iec61131::counters::FB_CTU" x="-1200" y="500">
+			<Parameter Name="PV" Value="INT#5"/>
+		</FB>
+		<FB Name="Input_CU" Type="logiBUS::io::DI::logiBUS_IX" x="-3000" y="0">
+			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="Input" Value="Input_I1"/>
+		</FB>
+		<FB Name="Input_R" Type="logiBUS::io::DI::logiBUS_IX" x="-3000" y="1000">
+			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="Input" Value="Input_I2"/>
+		</FB>
+		<FB Name="Output_Q1" Type="logiBUS::io::DQ::logiBUS_QX" x="3000" y="-200">
+			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="Output" Value="Output_Q1"/>
+		</FB>
+		<Comment Comment="F_INT_TO_UDINT ist großer Quatsch ... keine Negativen Zahlen möglich&#10;F_INT_TO_REAL kann man weglassen.&#10;" x="0" y="1800" width="2200" height="500"/>
+		<FB Name="Q_NumericValue_1" Type="isobus::UT::Q::Q_NumericValue_PHYS" x="2700" y="1000">
+			<Parameter Name="stObj" Value="OutputNumber_N3"/>
+		</FB>
+		<Comment Comment="hier gegebenenfalls einen E_D_FF einbauen, damit die Events reduziert werden. " x="1000" y="-500" width="1000" height="500"/>
+		<EventConnections>
+			<Connection Source="Input_CU.IND" Destination="FB_CTU.REQ" dx1="500"/>
+			<Connection Source="Input_R.IND" Destination="FB_CTU.REQ" dx1="500"/>
+			<Connection Source="FB_CTU.CNF" Destination="Output_Q1.REQ" dx1="500"/>
+			<Connection Source="FB_CTU.CNF" Destination="Q_NumericValue_1.REQ" dx1="2166.67"/>
+		</EventConnections>
+		<DataConnections>
+			<Connection Source="Input_CU.IN" Destination="FB_CTU.CU" dx1="200"/>
+			<Connection Source="Input_R.IN" Destination="FB_CTU.R" dx1="200"/>
+			<Connection Source="FB_CTU.Q" Destination="Output_Q1.OUT" dx1="1080"/>
+			<Connection Source="FB_CTU.CV" Destination="Q_NumericValue_1.rPhys" dx1="1666.67"/>
+		</DataConnections>
+	</SubAppNetwork>
+</SubAppType>

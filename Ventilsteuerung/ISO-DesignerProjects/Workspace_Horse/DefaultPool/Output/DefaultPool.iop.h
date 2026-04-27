@@ -1,0 +1,47 @@
+// ISO-Designer ISO 11783   Version 5.7.2.6664 Bucher Automation AG
+// Do not change!
+#define ISO_DESIGNATOR_WIDTH                 80
+#define ISO_DESIGNATOR_HEIGHT                80
+#define ISO_MASK_SIZE                       480
+#define ISO_VERSION_LABEL             "       "
+#define MASK_WIDTH                          480
+#define MASK_HEIGHT                         480
+#define WorkingSet                            0
+#define DataMask_Main                      1000
+#define DataMask_invisible                 1001
+#define Container_Horse                    3000
+#define frame_00                          20000
+#define frame_01                          20001
+#define frame_02                          20002
+#define frame_03                          20003
+#define frame_04                          20004
+#define frame_05                          20005
+#define frame_06                          20006
+#define frame_07                          20007
+#define frame_08                          20008
+#define frame_09                          20009
+#define frame_10                          20010
+#define frame_11                          20011
+#define frame_12                          20012
+#define frame_13                          20013
+#define frame_14                          20014
+#define frame_15                          20015
+#define frame_16                          20016
+#define frame_17                          20017
+#define frame_18                          20018
+#define frame_19                          20019
+#define frame_20                          20020
+#define frame_21                          20021
+#define frame_22                          20022
+#define frame_23                          20023
+#define frame_24                          20024
+#define frame_25                          20025
+#define frame_26                          20026
+#define frame_27                          20027
+#define frame_28                          20028
+#define frame_29                          20029
+#define frame_30                          20030
+#define frame_31                          20031
+#define frame_BG                          20032
+#define ws_pic                            20532
+#define ObjectPointer_Horse               27000

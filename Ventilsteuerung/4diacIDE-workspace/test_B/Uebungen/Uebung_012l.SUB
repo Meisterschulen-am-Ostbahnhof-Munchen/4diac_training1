@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SubAppType Name="Uebung_012l" Comment="String Input und Speichern NVS">
+	<Identification Standard="61499-2" Description="Copyright (c) 2023 Meisterschulen am Ostbahnhof  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0">
+	</Identification>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2023-10-23" Remarks="initial API and implementation and/or initial documentation">
+	</VersionInfo>
+	<CompilerInfo packageName="Uebungen">
+		<Import declaration="Uebungen::const::NVS::NVS_Keys::KEY_S1_STORE"/>
+		<Import declaration="Uebungen::const::UT::DefaultPool::InputString_S1"/>
+	</CompilerInfo>
+	<SubAppInterfaceList>
+	</SubAppInterfaceList>
+	<SubAppNetwork>
+		<FB Name="StringValue_IS" Type="isobus::UT::io::StringValue::StringValue_IS" x="-4800" y="600">
+			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="u16ObjId" Value="InputString_S1"/>
+		</FB>
+		<FB Name="NVS" Type="logiBUS::storage::esp32_nvs::NVS" x="-1200" y="700">
+			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="KEY" Value="KEY_S1_STORE"/>
+			<Parameter Name="DEFAULT_VALUE" Value="STRING#'Test'"/>
+		</FB>
+		<FB Name="Q_StringValue" Type="isobus::UT::Q::Q_StringValue" x="1700" y="900">
+			<Parameter Name="u16ObjId" Value="InputString_S1"/>
+		</FB>
+		<EventConnections>
+			<Connection Source="NVS.GETO" Destination="Q_StringValue.REQ" dx1="793.33"/>
+			<Connection Source="NVS.INITO" Destination="NVS.GET" dx1="80" dx2="80" dy="-233.33"/>
+			<Connection Source="StringValue_IS.IND" Destination="NVS.SET" dx1="1480"/>
+		</EventConnections>
+		<DataConnections>
+			<Connection Source="NVS.VALUEO" Destination="Q_StringValue.pau8String" dx1="793.33"/>
+			<Connection Source="StringValue_IS.IN" Destination="NVS.VALUE" dx1="1480"/>
+		</DataConnections>
+	</SubAppNetwork>
+</SubAppType>

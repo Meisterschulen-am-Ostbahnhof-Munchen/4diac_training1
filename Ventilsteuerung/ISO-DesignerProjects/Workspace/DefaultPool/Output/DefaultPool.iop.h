@@ -6,7 +6,7 @@
 #define ISO_VERSION_LABEL             "       "
 #define MASK_WIDTH                          480
 #define MASK_HEIGHT                         480
-#define WorkingSet_0                          0
+#define WorkingSet                            0
 #define Macro_Go_To_DataMask_M1               1
 #define Macro_Go_To_DataMask_M2               2
 #define Macro_Go_To_DataMask_M3               3
@@ -65,7 +65,7 @@
 #define OutputString_OutputNumber_N2      11020
 #define OutputString_InputNumber_I1       11021
 #define OutputString_InputNumber_I2       11022
-#define OutputString_11023                11023
+#define OutputString                      11023
 #define OutputString_Button_L1            11024
 #define OutputString_InputString_S1       11025
 #define OutputString_Go_To_DataMask_M3    11026
@@ -85,7 +85,7 @@
 #define information                       20001
 #define alert                             20002
 #define Caution                           20003
-#define Meisterschulen_LogoG1_256_20004   20004
+#define Meisterschulen_LogoG1_256         20004
 #define Logos_icon                        20500
 #define FontAttributes_6x8                23000
 #define FontAttributes_8x12               23001

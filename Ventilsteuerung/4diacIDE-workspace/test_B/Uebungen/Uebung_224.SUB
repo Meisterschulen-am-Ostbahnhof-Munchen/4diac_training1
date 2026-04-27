@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SubAppType Name="Uebung_224" Comment="Standard IEC 61131-3 FB_CTUD_ULINT (Vor-/Rückwärtszähler, ULINT) mit Terminal-Ausgabe">
+	<Identification Standard="61131-3" Description="Copyright (c) 2026 Meisterschulen am Ostbahnhof  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0">
+	</Identification>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.1" Author="Franz Höpfinger" Date="2026-04-21" Remarks="Added terminal output for counter value">
+	</VersionInfo>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2026-04-20" Remarks="initial API and implementation (IEC 61131-3 version)">
+	</VersionInfo>
+	<CompilerInfo packageName="Uebungen">
+		<Import declaration="Uebungen::const::UT::DefaultPool::OutputNumber_N1"/>
+		<Import declaration="logiBUS::io::DI::logiBUS_DI::Input_I1"/>
+		<Import declaration="logiBUS::io::DI::logiBUS_DI::Input_I2"/>
+		<Import declaration="logiBUS::io::DI::logiBUS_DI::Input_I3"/>
+		<Import declaration="logiBUS::io::DI::logiBUS_DI::Input_I4"/>
+		<Import declaration="logiBUS::io::DQ::logiBUS_DO::Output_Q1"/>
+		<Import declaration="logiBUS::io::DQ::logiBUS_DO::Output_Q2"/>
+	</CompilerInfo>
+	<SubAppInterfaceList>
+	</SubAppInterfaceList>
+	<SubAppNetwork>
+		<FB Name="FB_CTUD_ULINT" Type="iec61131::counters::FB_CTUD_ULINT" x="0" y="500">
+			<Parameter Name="PV" Value="ULINT#10"/>
+		</FB>
+		<FB Name="Input_CU" Type="logiBUS::io::DI::logiBUS_IX" x="-3000" y="-1000">
+			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="Input" Value="Input_I1"/>
+		</FB>
+		<FB Name="Input_CD" Type="logiBUS::io::DI::logiBUS_IX" x="-3000" y="0">
+			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="Input" Value="Input_I2"/>
+		</FB>
+		<FB Name="Input_R" Type="logiBUS::io::DI::logiBUS_IX" x="-3000" y="1000">
+			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="Input" Value="Input_I3"/>
+		</FB>
+		<FB Name="Input_LD" Type="logiBUS::io::DI::logiBUS_IX" x="-3000" y="2000">
+			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="Input" Value="Input_I4"/>
+		</FB>
+		<FB Name="Output_QU" Type="logiBUS::io::DQ::logiBUS_QX" x="3100" y="-1000">
+			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="Output" Value="Output_Q1"/>
+		</FB>
+		<FB Name="Output_QD" Type="logiBUS::io::DQ::logiBUS_QX" x="3100" y="0">
+			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="Output" Value="Output_Q2"/>
+		</FB>
+		<FB Name="Q_NumericValue" Type="isobus::UT::Q::Q_NumericValue" x="3400" y="1300">
+			<Parameter Name="u16ObjId" Value="OutputNumber_N1"/>
+		</FB>
+		<FB Name="F_ULINT_TO_UDINT" Type="iec61131::conversion::F_ULINT_TO_UDINT" x="1500" y="1500">
+		</FB>
+		<Comment Comment="der ULINT auf UDINT muss gewandelt werden. L ist grüßer als D. " x="1600" y="2100" width="1000" height="500"/>
+		<Comment Comment="hier gegebenenfalls (einen oder zwei) E_D_FF einbauen, damit die Events reduziert werden. " x="400" y="-800" width="1000" height="600"/>
+		<EventConnections>
+			<Connection Source="Input_CU.IND" Destination="FB_CTUD_ULINT.REQ" dx1="1106.67"/>
+			<Connection Source="Input_CD.IND" Destination="FB_CTUD_ULINT.REQ" dx1="1106.67"/>
+			<Connection Source="Input_R.IND" Destination="FB_CTUD_ULINT.REQ" dx1="1106.67"/>
+			<Connection Source="Input_LD.IND" Destination="FB_CTUD_ULINT.REQ" dx1="1106.67"/>
+			<Connection Source="FB_CTUD_ULINT.CNF" Destination="Output_QU.REQ" dx1="573.33"/>
+			<Connection Source="FB_CTUD_ULINT.CNF" Destination="Output_QD.REQ" dx1="573.33"/>
+			<Connection Source="FB_CTUD_ULINT.CNF" Destination="F_ULINT_TO_UDINT.REQ" dx1="573.33"/>
+			<Connection Source="F_ULINT_TO_UDINT.CNF" Destination="Q_NumericValue.REQ" dx1="213.33"/>
+		</EventConnections>
+		<DataConnections>
+			<Connection Source="Input_CU.IN" Destination="FB_CTUD_ULINT.CU" dx1="320"/>
+			<Connection Source="Input_CD.IN" Destination="FB_CTUD_ULINT.CD" dx1="200"/>
+			<Connection Source="Input_R.IN" Destination="FB_CTUD_ULINT.R" dx1="200"/>
+			<Connection Source="Input_LD.IN" Destination="FB_CTUD_ULINT.LD" dx1="320"/>
+			<Connection Source="FB_CTUD_ULINT.QU" Destination="Output_QU.OUT" dx1="1060"/>
+			<Connection Source="FB_CTUD_ULINT.QD" Destination="Output_QD.OUT" dx1="1093.33"/>
+			<Connection Source="FB_CTUD_ULINT.CV" Destination="F_ULINT_TO_UDINT.IN" dx1="200"/>
+			<Connection Source="F_ULINT_TO_UDINT.OUT" Destination="Q_NumericValue.u32NewValue" dx1="200"/>
+		</DataConnections>
+	</SubAppNetwork>
+</SubAppType>
