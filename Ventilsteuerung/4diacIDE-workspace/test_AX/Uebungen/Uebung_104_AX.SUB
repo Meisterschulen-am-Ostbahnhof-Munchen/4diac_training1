@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SubAppType Name="Uebung_104_AX" Comment="Zustandsbasierte Schrittkette mit Power-Fail Recovery (AX-Version)">
+	<Identification Standard="61499-2" Description="Copyright (c) 2026 HR Agrartechnik GmbH  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0">
+	</Identification>
+	<VersionInfo Organization="HR Agrartechnik GmbH" Version="1.0" Author="Franz Höpfinger" Date="2026-04-20" Remarks="initial API and implementation">
+	</VersionInfo>
+	<CompilerInfo packageName="Uebungen">
+		<Import declaration="logiBUS::io::DI::logiBUS_DI::Input_I1"/>
+		<Import declaration="logiBUS::io::DI::logiBUS_DI::Input_I2"/>
+		<Import declaration="logiBUS::io::DI::logiBUS_DI::Input_I3"/>
+		<Import declaration="logiBUS::io::DI::logiBUS_DI::Input_I4"/>
+		<Import declaration="logiBUS::io::DQ::logiBUS_DO::Output_Q1"/>
+		<Import declaration="logiBUS::io::DQ::logiBUS_DO::Output_Q2"/>
+		<Import declaration="logiBUS::io::DQ::logiBUS_DO::Output_Q3"/>
+	</CompilerInfo>
+	<SubAppInterfaceList>
+	</SubAppInterfaceList>
+	<SubAppNetwork>
+		<FB Name="SEQ" Type="logiBUS::utils::sequence::boolean::sequence_B_08_AX_AX" x="0" y="0">
+		</FB>
+		<FB Name="Feedback_S1" Type="logiBUS::io::DI::logiBUS_IXA" x="-4000" y="-1000">
+			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="Input" Value="Input_I1"/>
+		</FB>
+		<FB Name="Feedback_S2" Type="logiBUS::io::DI::logiBUS_IXA" x="-4000" y="0">
+			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="Input" Value="Input_I2"/>
+		</FB>
+		<FB Name="Feedback_S3" Type="logiBUS::io::DI::logiBUS_IXA" x="-4000" y="1000">
+			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="Input" Value="Input_I3"/>
+		</FB>
+		<FB Name="Reset_Button" Type="logiBUS::io::DI::logiBUS_IE" x="-3700" y="-2100">
+			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="Input" Value="Input_I4"/>
+			<Parameter Name="InputEvent" Value="logiBUS::io::DI::logiBUS_DI_Events::BUTTON_SINGLE_CLICK"/>
+		</FB>
+		<FB Name="Action_Q1" Type="logiBUS::io::DQ::logiBUS_QXA" x="4000" y="-1000">
+			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="Output" Value="Output_Q1"/>
+		</FB>
+		<FB Name="Action_Q2" Type="logiBUS::io::DQ::logiBUS_QXA" x="4000" y="0">
+			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="Output" Value="Output_Q2"/>
+		</FB>
+		<FB Name="Action_Q3" Type="logiBUS::io::DQ::logiBUS_QXA" x="4000" y="1000">
+			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="Output" Value="Output_Q3"/>
+		</FB>
+		<Comment Comment="Diese Schrittkette springt beim Einschalten direkt in den Zustand, &#10;dessen Eingangs-Adapter auf TRUE steht (Recovery). &#10;" x="-2000" y="-2000" width="4000" height="500"/>
+		<EventConnections>
+			<Connection Source="Reset_Button.IND" Destination="SEQ.RESET" dx1="500"/>
+		</EventConnections>
+		<AdapterConnections>
+			<Connection Source="Feedback_S1.IN" Destination="SEQ.DI_S1" dx1="673.33"/>
+			<Connection Source="Feedback_S2.IN" Destination="SEQ.DI_S2" dx1="873.33"/>
+			<Connection Source="Feedback_S3.IN" Destination="SEQ.DI_S3" dx1="1513.33"/>
+			<Connection Source="SEQ.DO_S1" Destination="Action_Q1.OUT" dx1="500"/>
+			<Connection Source="SEQ.DO_S2" Destination="Action_Q2.OUT" dx1="1640"/>
+			<Connection Source="SEQ.DO_S3" Destination="Action_Q3.OUT" dx1="500"/>
+		</AdapterConnections>
+	</SubAppNetwork>
+</SubAppType>

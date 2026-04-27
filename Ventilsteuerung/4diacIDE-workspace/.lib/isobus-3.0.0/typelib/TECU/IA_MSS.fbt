@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<FBType Name="IA_MSS" Comment="ISOBUS Adapter for Machine Selected Speed (MSS)">
+	<Identification Standard="ISO 11783-7" Classification="PGN 61474" Description="Copyright (c) 2024-2026 HR Agrartechnik GmbH  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0">
+	</Identification>
+	<VersionInfo Organization="HR Agrartechnik GmbH" Version="1.0" Author="Franz Höpfinger" Date="2026-04-19" Remarks="initial API and implementation (Adapter Wrapper for I_MSS)">
+	</VersionInfo>
+	<CompilerInfo packageName="isobus::tecu">
+	</CompilerInfo>
+	<InterfaceList>
+		<EventInputs>
+			<Event Name="INIT" Type="EInit" Comment="Service Initialization">
+				<With Var="QI"/>
+			</Event>
+		</EventInputs>
+		<EventOutputs>
+			<Event Name="INITO" Type="EInit" Comment="Initialization Confirm">
+				<With Var="QO"/>
+				<With Var="STATUS"/>
+			</Event>
+		</EventOutputs>
+		<InputVars>
+			<VarDeclaration Name="QI" Type="BOOL" Comment="Event Input Qualifier"/>
+		</InputVars>
+		<OutputVars>
+			<VarDeclaration Name="QO" Type="BOOL" Comment="Event Output Qualifier"/>
+			<VarDeclaration Name="STATUS" Type="STRING"/>
+		</OutputVars>
+		<Plugs>
+			<AdapterDeclaration Name="SPEED" Type="adapter::types::unidirectional::AUI" Comment="Machine selected speed" x="2786.67" y="4966.67"/>
+			<AdapterDeclaration Name="DISTANCE" Type="adapter::types::unidirectional::AUDI" Comment="Machine selected distance" x="2786.67" y="5726.67"/>
+			<AdapterDeclaration Name="TIMEOUT" Type="adapter::types::unidirectional::AX" Comment="Timeout Status" x="3900" y="3500"/>
+		</Plugs>
+	</InterfaceList>
+	<FBNetwork>
+		<FB Name="I_CORE" Type="isobus::tecu::I_MSS" x="680" y="3100">
+		</FB>
+		<EventConnections>
+			<Connection Source="INIT" Destination="I_CORE.INIT" dx1="66.67"/>
+			<Connection Source="I_CORE.INITO" Destination="INITO" dx1="66.67"/>
+			<Connection Source="I_CORE.IND" Destination="SPEED.E1" dx1="186.67"/>
+			<Connection Source="I_CORE.IND" Destination="DISTANCE.E1" dx1="266.67"/>
+			<Connection Source="I_CORE.TIMEOUT" Destination="TIMEOUT.E1" dx1="746.67"/>
+		</EventConnections>
+		<DataConnections>
+			<Connection Source="QI" Destination="I_CORE.QI" dx1="66.67"/>
+			<Connection Source="I_CORE.QO" Destination="QO" dx1="333.33"/>
+			<Connection Source="I_CORE.STATUS" Destination="STATUS" dx1="400"/>
+			<Connection Source="I_CORE.SELECTEDMACHINESPEED" Destination="SPEED.D1" dx1="133.33"/>
+			<Connection Source="I_CORE.SELECTEDMACHINEDISTANCE" Destination="DISTANCE.D1" dx1="66.67"/>
+			<Connection Source="I_CORE.Q_timeout" Destination="TIMEOUT.D1" dx1="200"/>
+		</DataConnections>
+	</FBNetwork>
+</FBType>

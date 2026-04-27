@@ -1,12 +1,16 @@
-;<Request ID="5" Action="CREATE"><FB Name="EMB_RES" Type="iec61499::system::EMB_RES" /></Request>
-EMB_RES;<Request ID="6" Action="CREATE"><FB Name="E_TRIG" Type="iec61499::events::E_TRIG" /></Request>
-EMB_RES;<Request ID="7" Action="CREATE"><FB Name="App.Control.DigitalOutput_Q1" Type="logiBUS::io::DQ::logiBUS_QX" /></Request>
-EMB_RES;<Request ID="8" Action="CREATE"><FB Name="App.Control.DigitalInput_I1" Type="logiBUS::io::DI::logiBUS_IX" /></Request>
-EMB_RES;<Request ID="9" Action="WRITE"><Connection Source="TRUE" Destination="App.Control.DigitalOutput_Q1.QI" /></Request>
-EMB_RES;<Request ID="10" Action="WRITE"><Connection Source="(Pin:=1)" Destination="App.Control.DigitalOutput_Q1.Output" /></Request>
-EMB_RES;<Request ID="11" Action="WRITE"><Connection Source="TRUE" Destination="App.Control.DigitalInput_I1.QI" /></Request>
-EMB_RES;<Request ID="12" Action="WRITE"><Connection Source="(Pin:=1)" Destination="App.Control.DigitalInput_I1.Input" /></Request>
-EMB_RES;<Request ID="13" Action="CREATE"><Connection Source="START.COLD" Destination="E_TRIG.REQ" /></Request>
-EMB_RES;<Request ID="14" Action="CREATE"><Connection Source="App.Control.DigitalInput_I1.IND" Destination="App.Control.DigitalOutput_Q1.REQ" /></Request>
-EMB_RES;<Request ID="15" Action="CREATE"><Connection Source="App.Control.DigitalInput_I1.IN" Destination="App.Control.DigitalOutput_Q1.OUT" /></Request>
-EMB_RES;<Request ID="16" Action="START"/>
+;<Request ID="6" Action="CREATE"><FB Name="EMB_RES_AX" Type="iec61499::system::EMB_RES" /></Request>
+EMB_RES_AX;<Request ID="7" Action="CREATE"><FB Name="E_TRIG" Type="iec61499::events::E_TRIG" /></Request>
+EMB_RES_AX;<Request ID="8" Action="CREATE"><FB Name="App_AX.Control.InputNumber_I3" Type="isobus::UT::io::NumericValue::NumericValue_PHYSA" /></Request>
+EMB_RES_AX;<Request ID="9" Action="CREATE"><FB Name="App_AX.Control.InputNumber_I4" Type="isobus::UT::io::NumericValue::NumericValue_PHYSA" /></Request>
+EMB_RES_AX;<Request ID="10" Action="CREATE"><FB Name="App_AX.Control.AR_ADD_2" Type="adapter::iec61131::arithmetic::AR_ADD_2" /></Request>
+EMB_RES_AX;<Request ID="11" Action="CREATE"><FB Name="App_AX.Control.OutputNumber_N3" Type="isobus::UT::Q::Q_NumericValue_PHYSA" /></Request>
+EMB_RES_AX;<Request ID="12" Action="WRITE"><Connection Source="TRUE" Destination="App_AX.Control.InputNumber_I3.QI" /></Request>
+EMB_RES_AX;<Request ID="13" Action="WRITE"><Connection Source="(u16ObjId:=9002,r32Scale:=0.01,i32Offset:=-100000,u8Decimals:=2)" Destination="App_AX.Control.InputNumber_I3.stObj" /></Request>
+EMB_RES_AX;<Request ID="14" Action="WRITE"><Connection Source="TRUE" Destination="App_AX.Control.InputNumber_I4.QI" /></Request>
+EMB_RES_AX;<Request ID="15" Action="WRITE"><Connection Source="(u16ObjId:=9003,r32Scale:=0.01,i32Offset:=-100000,u8Decimals:=2)" Destination="App_AX.Control.InputNumber_I4.stObj" /></Request>
+EMB_RES_AX;<Request ID="16" Action="WRITE"><Connection Source="(u16ObjId:=12002,r32Scale:=0.01,i32Offset:=-100000,u8Decimals:=2)" Destination="App_AX.Control.OutputNumber_N3.stObj" /></Request>
+EMB_RES_AX;<Request ID="17" Action="CREATE"><Connection Source="START.COLD" Destination="E_TRIG.REQ" /></Request>
+EMB_RES_AX;<Request ID="18" Action="CREATE"><Connection Source="App_AX.Control.InputNumber_I3.rPhys" Destination="App_AX.Control.AR_ADD_2.IN1" /></Request>
+EMB_RES_AX;<Request ID="19" Action="CREATE"><Connection Source="App_AX.Control.InputNumber_I4.rPhys" Destination="App_AX.Control.AR_ADD_2.IN2" /></Request>
+EMB_RES_AX;<Request ID="20" Action="CREATE"><Connection Source="App_AX.Control.AR_ADD_2.OUT" Destination="App_AX.Control.OutputNumber_N3.rPhys" /></Request>
+EMB_RES_AX;<Request ID="21" Action="START"/>

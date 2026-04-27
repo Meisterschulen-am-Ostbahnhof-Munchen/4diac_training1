@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SubAppType Name="Uebung_039_sub_NumbAnzeig_AS" Comment="Spiegelabfolge V2 mit Schrittkette SUB Num">
+	<Identification Standard="61499-2" Description="Copyright (c) 2023 Meisterschulen am Ostbahnhof  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0">
+	</Identification>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2024-03-03" Remarks="initial API and implementation and/or initial documentation">
+	</VersionInfo>
+	<CompilerInfo packageName="Uebungen">
+		<Import declaration="Uebungen::const::UT::DefaultPool::OutputNumber_N1"/>
+	</CompilerInfo>
+	<SubAppInterfaceList>
+		<Sockets>
+			<AdapterDeclaration Name="STATE_NR" Type="adapter::types::unidirectional::AS"/>
+		</Sockets>
+	</SubAppInterfaceList>
+	<SubAppNetwork>
+		<FB Name="Q_NumericValue" Type="isobus::UT::Q::Q_NumericValue_AUDI" x="1500" y="-500">
+			<Parameter Name="u16ObjId" Value="OutputNumber_N1"/>
+		</FB>
+		<FB Name="AS_TO_AUDI" Type="adapter::conversion::unidirectional::AS_TO_AUDI" x="-1100" y="0">
+		</FB>
+		<AdapterConnections>
+			<Connection Source="AS_TO_AUDI.AUDI_OUT" Destination="Q_NumericValue.u32NewValue" dx1="893.33"/>
+			<Connection Source="STATE_NR" Destination="AS_TO_AUDI.AS_IN" dx1="540"/>
+		</AdapterConnections>
+	</SubAppNetwork>
+</SubAppType>

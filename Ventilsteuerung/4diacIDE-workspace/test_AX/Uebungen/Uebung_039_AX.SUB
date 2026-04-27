@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <SubAppType Name="Uebung_039_AX" Comment="Spiegelabfolge V2 mit Schrittkette">
-	<Identification Standard="61499-2" Description="Copyright (c) 2023 Meisterschulen am Ostbahnhof  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0&#10;   &#10;Spiegelabfolge V2 mit Schrittkette &#10;geeignet für hydraulische 4/3 Wege Ventile  &#10;oder pneumatische 5/3 Wege Ventile &#10;jeweils Mittelstellung gesperrt. ">
+	<Identification Standard="61499-2" Description="Copyright (c) 2023 Meisterschulen am Ostbahnhof  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0">
 	</Identification>
-	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2023-10-23">
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2023-10-23" Remarks="initial API and implementation and/or initial documentation">
 	</VersionInfo>
 	<CompilerInfo packageName="Uebungen">
 		<Import declaration="isobus::UT::io::Softkey::SoftKeyActivationCode::SK_RELEASED"/>
@@ -54,7 +54,7 @@
 			<Parameter Name="DT_S4_S5" Value="NO_TIME"/>
 			<Parameter Name="DT_S5_START" Value="NO_TIME"/>
 		</FB>
-		<SubApp Name="NumbAnzeig" Type="Uebungen::Uebung_039_sub_NumbAnzeig_AX" x="-8766.67" y="-986.67">
+		<SubApp Name="NumbAnzeig" Type="Uebungen::Uebung_039_sub_NumbAnzeig_AS" x="-8766.67" y="-986.67">
 		</SubApp>
 		<FB Name="SoftKey_UP_F1" Type="isobus::UT::io::Softkey::Softkey_IE" x="-13100" y="-1300">
 			<Parameter Name="QI" Value="TRUE"/>

@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<FBType Name="IA_GBSD" Comment="ISOBUS Adapter for Ground Based Speed and Distance (GBSD)">
+	<Identification Standard="ISO 11783-7" Classification="PGN 65097" Description="Copyright (c) 2024-2026 HR Agrartechnik GmbH  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0">
+	</Identification>
+	<VersionInfo Organization="HR Agrartechnik GmbH" Version="1.0" Author="Franz Höpfinger" Date="2026-04-19" Remarks="initial API and implementation (Adapter Wrapper for I_GBSD)">
+	</VersionInfo>
+	<CompilerInfo packageName="isobus::tecu">
+	</CompilerInfo>
+	<InterfaceList>
+		<EventInputs>
+			<Event Name="INIT" Type="EInit" Comment="Service Initialization">
+				<With Var="QI"/>
+			</Event>
+		</EventInputs>
+		<EventOutputs>
+			<Event Name="INITO" Type="EInit" Comment="Initialization Confirm">
+				<With Var="QO"/>
+				<With Var="STATUS"/>
+			</Event>
+		</EventOutputs>
+		<InputVars>
+			<VarDeclaration Name="QI" Type="BOOL" Comment="Event Input Qualifier"/>
+		</InputVars>
+		<OutputVars>
+			<VarDeclaration Name="QO" Type="BOOL" Comment="Event Output Qualifier"/>
+			<VarDeclaration Name="STATUS" Type="STRING"/>
+		</OutputVars>
+		<Plugs>
+			<AdapterDeclaration Name="SPEED" Type="adapter::types::unidirectional::AUI" Comment="Ground-based machine speed" x="2140" y="2866.67"/>
+			<AdapterDeclaration Name="DISTANCE" Type="adapter::types::unidirectional::AUDI" Comment="Ground-based machine distance" x="2140" y="3626.67"/>
+			<AdapterDeclaration Name="TIMEOUT" Type="adapter::types::unidirectional::AX" Comment="Timeout Status" x="3220" y="1200"/>
+		</Plugs>
+	</InterfaceList>
+	<FBNetwork>
+		<FB Name="I_GBSD" Type="isobus::tecu::I_GBSD" x="200" y="1000">
+		</FB>
+		<EventConnections>
+			<Connection Source="INIT" Destination="I_GBSD.INIT" dx1="66.67"/>
+			<Connection Source="I_GBSD.INITO" Destination="INITO" dx1="66.67"/>
+			<Connection Source="I_GBSD.IND" Destination="DISTANCE.E1" dx1="333.33"/>
+			<Connection Source="I_GBSD.IND" Destination="SPEED.E1" dx1="333.33"/>
+			<Connection Source="I_GBSD.TIMEOUT" Destination="TIMEOUT.E1" dx1="760"/>
+		</EventConnections>
+		<DataConnections>
+			<Connection Source="QI" Destination="I_GBSD.QI" dx1="66.67"/>
+			<Connection Source="I_GBSD.QO" Destination="QO" dx1="133.33"/>
+			<Connection Source="I_GBSD.STATUS" Destination="STATUS" dx1="200"/>
+			<Connection Source="I_GBSD.Q_timeout" Destination="TIMEOUT.D1" dx1="200"/>
+			<Connection Source="I_GBSD.GROUNDBASEDMACHINESPEED" Destination="SPEED.D1" dx1="133.33"/>
+			<Connection Source="I_GBSD.GROUNDBASEDMACHINEDISTANCE" Destination="DISTANCE.D1" dx1="66.67"/>
+		</DataConnections>
+	</FBNetwork>
+</FBType>

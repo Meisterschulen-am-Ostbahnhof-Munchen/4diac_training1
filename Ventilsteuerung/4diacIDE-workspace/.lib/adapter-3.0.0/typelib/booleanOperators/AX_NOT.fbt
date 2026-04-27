@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <FBType Name="AX_NOT" Comment="standard boolean NOT function">
-	<Identification Standard="61131-3" Classification="standard boolean function" Description="Copyright (c) 2011 TU Wien ACIN&#10; &#10;This program and the accompanying materials are made&#10;available under the terms of the Eclipse Public License 2.0&#10;which is available at https://www.eclipse.org/legal/epl-2.0/&#10;&#10;SPDX-License-Identifier: EPL-2.0">
+	<Identification Standard="61131-3" Classification="standard boolean function" Description="Copyright (c) 2011 TU Wien ACIN, HR Agrartechnik GmbH&#10; &#10;This program and the accompanying materials are made&#10;available under the terms of the Eclipse Public License 2.0&#10;which is available at https://www.eclipse.org/legal/epl-2.0/&#10;&#10;SPDX-License-Identifier: EPL-2.0">
 	</Identification>
 	<VersionInfo Organization="HR Agrartechnik GmbH" Version="3.1" Author="Franz Höpfinger" Date="2025-11-04" Remarks="made AX Version">
 	</VersionInfo>
@@ -13,13 +13,25 @@
 	</CompilerInfo>
 	<InterfaceList>
 		<Plugs>
-			<AdapterDeclaration Name="OUT" Type="adapter::types::unidirectional::AX" Comment="Output"/>
+			<AdapterDeclaration Name="OUT" Type="adapter::types::unidirectional::AX" Comment="Output" x="2900" y="1100"/>
 		</Plugs>
 		<Sockets>
-			<AdapterDeclaration Name="IN" Type="adapter::types::unidirectional::AX" Comment="Input"/>
+			<AdapterDeclaration Name="IN" Type="adapter::types::unidirectional::AX" Comment="Input" x="200" y="1100"/>
 		</Sockets>
 	</InterfaceList>
-	<Service RightInterface="RESOURCE" LeftInterface="APPLICATION" Comment="standard bitwise boolean function (not)">
+	<FBNetwork>
+		<FB Name="F_NOT_BOOL" Type="iec61131::bitwiseOperators::F_NOT_BOOL" x="1400" y="1100">
+		</FB>
+		<EventConnections>
+			<Connection Source="F_NOT_BOOL.CNF" Destination="OUT.E1"/>
+			<Connection Source="IN.E1" Destination="F_NOT_BOOL.REQ"/>
+		</EventConnections>
+		<DataConnections>
+			<Connection Source="F_NOT_BOOL.OUT" Destination="OUT.D1"/>
+			<Connection Source="IN.D1" Destination="F_NOT_BOOL.IN"/>
+		</DataConnections>
+	</FBNetwork>
+	<Service RightInterface="RESOURCE" LeftInterface="APPLICATION">
 	</Service>
 	<Attribute Name="eclipse4diac::core::TypeHash" Value="''"/>
 </FBType>

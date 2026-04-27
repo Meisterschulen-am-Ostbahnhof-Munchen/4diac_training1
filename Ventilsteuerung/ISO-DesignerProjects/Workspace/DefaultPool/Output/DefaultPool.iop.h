@@ -6,11 +6,13 @@
 #define ISO_VERSION_LABEL             "       "
 #define MASK_WIDTH                          480
 #define MASK_HEIGHT                         480
-#define WorkingSet_0                          0
+#define WorkingSet                            0
 #define Macro_Go_To_DataMask_M1               1
 #define Macro_Go_To_DataMask_M2               2
+#define Macro_Go_To_DataMask_M3               3
 #define DataMask_M1                        1000
 #define DataMask_M2                        1001
+#define DataMask_M3                        1002
 #define AlarmMask_A1_low                   2000
 #define AlarmMask_A2_medium                2001
 #define AlarmMask_A3_high                  2002
@@ -34,9 +36,12 @@
 #define Button_A1                          6000
 #define Button_A2                          6001
 #define Button_L1                          6002
+#define Button_A3                          6003
 #define InputString_S1                     8000
 #define InputNumber_I1                     9000
 #define InputNumber_I2                     9001
+#define InputNumber_I3                     9002
+#define InputNumber_I4                     9003
 #define OutputString_WorkingSet_0         11000
 #define OutputString_SoftKey_F1           11001
 #define OutputString_SoftKey_F2           11002
@@ -60,11 +65,17 @@
 #define OutputString_OutputNumber_N2      11020
 #define OutputString_InputNumber_I1       11021
 #define OutputString_InputNumber_I2       11022
-#define OutputString_11023                11023
+#define OutputString                      11023
 #define OutputString_Button_L1            11024
 #define OutputString_InputString_S1       11025
+#define OutputString_Go_To_DataMask_M3    11026
+#define OutputString_Button_A3            11027
+#define OutputString_InputNumber_I3       11028
+#define OutputString_InputNumber_I4       11029
+#define OutputString_OutputNumber_N3      11030
 #define OutputNumber_N1                   12000
 #define OutputNumber_N2                   12001
+#define OutputNumber_N3                   12002
 #define Line_W                            13000
 #define Line_S                            13001
 #define Rectangle_black                   14000
@@ -74,7 +85,7 @@
 #define information                       20001
 #define alert                             20002
 #define Caution                           20003
-#define Meisterschulen_LogoG1_256_20004   20004
+#define Meisterschulen_LogoG1_256         20004
 #define Logos_icon                        20500
 #define FontAttributes_6x8                23000
 #define FontAttributes_8x12               23001

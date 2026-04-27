@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <FBType Name="ILOCK_BLOCK_PROTECT" Comment="Prioritizes the first active input. Any subsequent conflicting signals are completely ignored until the initial input is released, followed by a configurable dead-time (DT_PROTECT) before a new direction can be activated.">
-	<Identification Standard="61499-2">
+	<Identification Standard="61499-2" Description="Copyright (c) 2023 HR Agrartechnik GmbH  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0">
 	</Identification>
-	<VersionInfo Version="1.0" Author="franz" Date="2026-02-23">
+	<VersionInfo Organization="HR Agrartechnik GmbH" Version="1.0" Author="Franz Höpfinger" Date="2026-02-23" Remarks="initial API and implementation and/or initial documentation">
 	</VersionInfo>
 	<CompilerInfo packageName="logiBUS::signalprocessing::interlock">
 	</CompilerInfo>
@@ -58,7 +58,7 @@
 				<ECAction Algorithm="STOP" Output="EO_DOWN"/>
 				<ECAction Output="timeOut.START"/>
 			</ECState>
-			<ECState Name="EVAL" x="8013.33" y="1580">
+			<ECState Name="EVAL" x="8080" y="1520">
 			</ECState>
 			<ECTransition Source="STOP" Destination="DOWN" Condition="EI_DOWN[DI_DOWN]" Comment="" x="4133.33" y="1733.33"/>
 			<ECTransition Source="STOP" Destination="UP" Condition="EI_UP[DI_UP]" Comment="" x="4173.33" y="1020"/>
@@ -72,31 +72,19 @@
 			<ECTransition Source="EVAL" Destination="STOP" Condition="[(NOT DI_UP AND NOT DI_DOWN) OR (DI_UP AND DI_DOWN)]" Comment="" x="5400" y="260"/>
 		</ECC>
 		<Algorithm Name="UP">
-			<ST><![CDATA[ALGORITHM UP
-timeOut.DT := DT_PROTECT;
+			<ST><![CDATA[timeOut.DT := DT_PROTECT;
 DO_UP := BOOL#TRUE;
-DO_DOWN := BOOL#FALSE;
-END_ALGORITHM]]></ST>
+DO_DOWN := BOOL#FALSE;]]></ST>
 		</Algorithm>
 		<Algorithm Name="DOWN">
-			<ST><![CDATA[
-
-ALGORITHM DOWN
-timeOut.DT := DT_PROTECT;
+			<ST><![CDATA[timeOut.DT := DT_PROTECT;
 DO_UP := BOOL#FALSE;
-DO_DOWN := BOOL#TRUE;
-END_ALGORITHM]]></ST>
+DO_DOWN := BOOL#TRUE;]]></ST>
 		</Algorithm>
 		<Algorithm Name="STOP">
-			<ST><![CDATA[
-
-ALGORITHM STOP
-timeOut.DT := DT_PROTECT;
+			<ST><![CDATA[timeOut.DT := DT_PROTECT;
 DO_UP := BOOL#FALSE;
-DO_DOWN := BOOL#FALSE;
-END_ALGORITHM
-
-]]></ST>
+DO_DOWN := BOOL#FALSE;]]></ST>
 		</Algorithm>
 	</BasicFB>
 </FBType>

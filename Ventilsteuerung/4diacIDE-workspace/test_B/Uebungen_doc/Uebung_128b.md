@@ -49,7 +49,7 @@ In dieser Übung werden verschiedene Funktionsbausteine verschaltet, um die Netz
         *   `InputEvent`: `BUTTON_SINGLE_CLICK`
     *   **Funktion**: Dient als Auslöser (Trigger) für den Sendevorgang.
 
-*   **logiBUS::utils::generate::INIT_ARR_0032_BYTE** (`INIT_ARR_0032_BYTE`)
+*   **eclipse4diac::convert::providers::PROVIDE_ARR_0032_BYTE** (`INIT_ARR_0032_BYTE`)
     *   Erzeugt ein statisches Byte-Array.
     *   **Parameter**:
         *   `D1`: Ein Array mit 32 Bytes (beginnend mit `16#01, 16#00... 16#AA...`).

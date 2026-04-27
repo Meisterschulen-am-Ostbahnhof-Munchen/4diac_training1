@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SubAppType Name="Uebung_202b" Comment="Interlock: ILOCK_BLOCK_PROTECT (Motor Reversierung mit Schutzzeit)">
+	<Identification Standard="61499-2" Description="Copyright (c) 2023 Meisterschulen am Ostbahnhof  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0">
+	</Identification>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2026-04-19" Remarks="initial API and implementation and/or initial documentation">
+	</VersionInfo>
+	<CompilerInfo packageName="Uebungen">
+		<Import declaration="logiBUS::io::DI::logiBUS_DI::Input_I1"/>
+		<Import declaration="logiBUS::io::DI::logiBUS_DI::Input_I2"/>
+		<Import declaration="logiBUS::io::DQ::logiBUS_DO::Output_Q5"/>
+		<Import declaration="logiBUS::io::DQ::logiBUS_DO::Output_Q6"/>
+		<Import declaration="logiBUS::io::DQ::logiBUS_DO::Output_Q56"/>
+	</CompilerInfo>
+	<SubAppInterfaceList>
+	</SubAppInterfaceList>
+	<SubAppNetwork>
+		<FB Name="DigitalInput_I1" Type="logiBUS::io::DI::logiBUS_IX" x="-4000" y="-400">
+			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="Input" Value="Input_I1"/>
+		</FB>
+		<FB Name="DigitalInput_I2" Type="logiBUS::io::DI::logiBUS_IX" x="-4000" y="600">
+			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="Input" Value="Input_I2"/>
+		</FB>
+		<FB Name="ILOCK" Type="logiBUS::signalprocessing::interlock::ILOCK_BLOCK_PROTECT" x="-1800" y="0">
+			<Parameter Name="DT_PROTECT" Value="T#1s"/>
+		</FB>
+		<FB Name="Rechtslauf" Type="logiBUS::io::DQ::logiBUS_QX" x="2000" y="-1000">
+			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="Output" Value="Output_Q5"/>
+		</FB>
+		<FB Name="Linkslauf" Type="logiBUS::io::DQ::logiBUS_QX" x="2000" y="800">
+			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="Output" Value="Output_Q6"/>
+		</FB>
+		<FB Name="LowSide_Treiber" Type="logiBUS::io::DQ::logiBUS_QX" x="2000" y="-100">
+			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="Output" Value="Output_Q56"/>
+		</FB>
+		<FB Name="OR_2_BOOL" Type="iec61131::bitwiseOperators::OR_2_BOOL" x="800" y="100">
+		</FB>
+		<FB Name="E_TimeOut" Type="iec61499::events::E_TimeOut" x="200" y="1800">
+		</FB>
+		<EventConnections>
+			<Connection Source="DigitalInput_I1.IND" Destination="ILOCK.EI_UP" dx1="200"/>
+			<Connection Source="DigitalInput_I2.IND" Destination="ILOCK.EI_DOWN" dx1="200"/>
+			<Connection Source="ILOCK.EO_UP" Destination="Rechtslauf.REQ" dx1="200"/>
+			<Connection Source="ILOCK.EO_DOWN" Destination="Linkslauf.REQ" dx1="200"/>
+			<Connection Source="ILOCK.EO_UP" Destination="OR_2_BOOL.REQ" dx1="100"/>
+			<Connection Source="ILOCK.EO_DOWN" Destination="OR_2_BOOL.REQ" dx1="100"/>
+			<Connection Source="OR_2_BOOL.CNF" Destination="LowSide_Treiber.REQ" dx1="200"/>
+		</EventConnections>
+		<DataConnections>
+			<Connection Source="DigitalInput_I1.IN" Destination="ILOCK.DI_UP" dx1="100"/>
+			<Connection Source="DigitalInput_I2.IN" Destination="ILOCK.DI_DOWN" dx1="100"/>
+			<Connection Source="ILOCK.DO_UP" Destination="Rechtslauf.OUT" dx1="100"/>
+			<Connection Source="ILOCK.DO_DOWN" Destination="Linkslauf.OUT" dx1="100"/>
+			<Connection Source="ILOCK.DO_UP" Destination="OR_2_BOOL.IN1" dx1="50"/>
+			<Connection Source="ILOCK.DO_DOWN" Destination="OR_2_BOOL.IN2" dx1="50"/>
+			<Connection Source="OR_2_BOOL.OUT" Destination="LowSide_Treiber.OUT" dx1="200"/>
+		</DataConnections>
+		<AdapterConnections>
+			<Connection Source="ILOCK.timeOut" Destination="E_TimeOut.TimeOutSocket" dx1="413.33"/>
+		</AdapterConnections>
+	</SubAppNetwork>
+</SubAppType>

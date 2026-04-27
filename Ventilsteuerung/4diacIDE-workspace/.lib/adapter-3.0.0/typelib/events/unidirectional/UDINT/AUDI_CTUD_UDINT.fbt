@@ -1,14 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<FBType Name="AUDI_CTUD_UDINT" Comment="Event-Driven Up-Down Counter">
-	<Identification Standard="61499-1-A.x" Classification="Event-driven blocks" Function="Up-Down-counter" Description="Copyright (c) 2017, 2024 fortiss GmbH, JKU, HR Agrartechnik GmbH   &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0">
+<FBType Name="AUDI_CTUD_UDINT" Comment="Event driven up/down counter (Adapter Version) - On Change Triggering">
+	<Identification Standard="61499-2" Description="Copyright (c) 2024 HR Agrartechnik GmbH  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0">
 	</Identification>
-	<VersionInfo Organization="HR Agrartechnik GmbH" Version="3.0" Author="Franz Höpfinger" Date="2026-01-17" Remarks="Adapted from E_CTUD_UDINT. Removed explicit LD and LDO events, now driven by PV.E1 and CV.E1 adapter events.">
+	<VersionInfo Organization="HR Agrartechnik GmbH" Version="1.1" Author="Franz Höpfinger" Date="2026-04-19" Remarks="Fixed ECC: Added sequential on-change check and explicit event firing for QU and QD">
 	</VersionInfo>
-	<VersionInfo Organization="HR Agrartechnik GmbH" Version="1.2" Author="Franz Höpfinger" Date="2024-02-10" Remarks="Copy over E_CTUD to E_CTUD_UDINT">
-	</VersionInfo>
-	<VersionInfo Organization="JKU" Version="1.1" Author="Alois Zoitl" Date="2019-07-09" Remarks="fixed bug in down counting (E_CTUD)">
-	</VersionInfo>
-	<VersionInfo Organization="fortiss GmbH" Version="1.0" Author="Alois Zoitl" Date="2017-09-22" Remarks="initial API and implementation and/or initial documentation (E_CTUD)">
+	<VersionInfo Organization="HR Agrartechnik GmbH" Version="1.0" Author="Franz Höpfinger" Date="2026-04-19" Remarks="initial API and implementation based on E_CTUD with adapter support">
 	</VersionInfo>
 	<CompilerInfo packageName="adapter::events::unidirectional">
 	</CompilerInfo>
@@ -20,10 +16,22 @@
 			</Event>
 			<Event Name="R" Type="Event" Comment="Reset">
 			</Event>
+			<Event Name="LD" Type="Event" Comment="Load CV with PV">
+			</Event>
 		</EventInputs>
+		<EventOutputs>
+			<Event Name="CUO" Type="Event" Comment="Count Up Output">
+			</Event>
+			<Event Name="CDO" Type="Event" Comment="Count Down Output">
+			</Event>
+			<Event Name="RO" Type="Event" Comment="Reset Output">
+			</Event>
+			<Event Name="LDO" Type="Event" Comment="Load Output">
+			</Event>
+		</EventOutputs>
 		<Plugs>
-			<AdapterDeclaration Name="QU" Type="adapter::types::unidirectional::AX" Comment="CV.D1 &gt;= PV.D1"/>
-			<AdapterDeclaration Name="QD" Type="adapter::types::unidirectional::AX" Comment="CV.D1 &lt;= 0"/>
+			<AdapterDeclaration Name="QU" Type="adapter::types::unidirectional::AX" Comment="True if CV &gt;= PV"/>
+			<AdapterDeclaration Name="QD" Type="adapter::types::unidirectional::AX" Comment="True if CV &lt;= 0"/>
 			<AdapterDeclaration Name="CV" Type="adapter::types::unidirectional::AUDI" Comment="Counter Value"/>
 		</Plugs>
 		<Sockets>
@@ -31,81 +39,106 @@
 		</Sockets>
 	</InterfaceList>
 	<BasicFB>
+		<InternalVars>
+			<VarDeclaration Name="QU_OLD" Type="BOOL" Comment="Stores the previous state of the output QU" InitialValue="FALSE">
+				<Attribute Name="Retain" Value="NON_RETAIN"/>
+			</VarDeclaration>
+			<VarDeclaration Name="QD_OLD" Type="BOOL" Comment="Stores the previous state of the output QD" InitialValue="FALSE">
+				<Attribute Name="Retain" Value="NON_RETAIN"/>
+			</VarDeclaration>
+		</InternalVars>
 		<ECC>
-			<ECState Name="START" x="1326.67" y="946.67">
+			<ECState Name="START" Comment="Initial State" x="160" y="1760">
 			</ECState>
-			<ECState Name="CU" x="186.67" y="566.67">
-				<ECAction Algorithm="CountUp" Output="CV.E1"/>
-				<ECAction Algorithm="UpdateQD" Output="QD.E1"/>
-				<ECAction Algorithm="UpdateQU" Output="QU.E1"/>
+			<ECState Name="CU" Comment="Count Up" x="1600" y="-400">
+				<ECAction Algorithm="CU" Output="CV.E1"/>
+				<ECAction Output="CUO"/>
 			</ECState>
-			<ECState Name="R" x="186.67" y="1326.67">
-				<ECAction Algorithm="Reset" Output="CV.E1"/>
-				<ECAction Algorithm="UpdateQD" Output="QD.E1"/>
-				<ECAction Algorithm="UpdateQU" Output="QU.E1"/>
+			<ECState Name="CD" Comment="Count Down" x="1600" y="0">
+				<ECAction Algorithm="CD" Output="CV.E1"/>
+				<ECAction Output="CDO"/>
 			</ECState>
-			<ECState Name="CD" x="1706.67" y="566.67">
-				<ECAction Algorithm="CountDown" Output="CV.E1"/>
-				<ECAction Algorithm="UpdateQD" Output="QD.E1"/>
-				<ECAction Algorithm="UpdateQU" Output="QU.E1"/>
+			<ECState Name="R" Comment="Reset" x="1680" y="320">
+				<ECAction Algorithm="R" Output="CV.E1"/>
+				<ECAction Output="RO"/>
 			</ECState>
-			<ECState Name="LD" x="1800" y="1326.67">
-				<ECAction Algorithm="Load" Output="CV.E1"/>
-				<ECAction Algorithm="UpdateQD" Output="QD.E1"/>
-				<ECAction Algorithm="UpdateQU" Output="QU.E1"/>
+			<ECState Name="LD" Comment="Load" x="1600" y="720">
+				<ECAction Algorithm="LOAD" Output="CV.E1"/>
+				<ECAction Output="LDO"/>
 			</ECState>
-			<ECTransition Source="START" Destination="CU" Condition="CU[(CV.D1&lt;4294967295)]" Comment="" x="140" y="1100"/>
-			<ECTransition Source="CU" Destination="START" Condition="1" Comment="" x="493.33" y="933.33"/>
-			<ECTransition Source="START" Destination="R" Condition="R" Comment="" x="706.67" y="1120"/>
-			<ECTransition Source="R" Destination="START" Condition="1" Comment="" x="740" y="1240"/>
-			<ECTransition Source="START" Destination="CD" Condition="CD[(CV.D1 &gt; 0)]" Comment="" x="1460" y="700"/>
-			<ECTransition Source="CD" Destination="START" Condition="1" Comment="" x="1780" y="920"/>
-			<ECTransition Source="START" Destination="LD" Condition="PV.E1" Comment="" x="1820" y="1140"/>
-			<ECTransition Source="LD" Destination="START" Condition="1" Comment="" x="1513.33" y="1273.33"/>
+			<ECState Name="UPDATE_PV" Comment="Re-evaluate status on PV change" x="1570" y="1150">
+				<ECAction Algorithm="UPDATE"/>
+			</ECState>
+			<ECState Name="CHECK_QU" Comment="Check for QU change" x="2800" y="500">
+			</ECState>
+			<ECState Name="FIRE_QU" Comment="Fire QU Event" x="4640" y="-240">
+				<ECAction Algorithm="SAVE_QU" Output="QU.E1"/>
+			</ECState>
+			<ECState Name="CHECK_QD" Comment="Check for QD change" x="4800" y="500">
+			</ECState>
+			<ECState Name="FIRE_QD" Comment="Fire QD Event" x="5280" y="1440">
+				<ECAction Algorithm="SAVE_QD" Output="QD.E1"/>
+			</ECState>
+			<ECTransition Source="START" Destination="CU" Condition="CU[CV.D1 &lt; 4294967295 ]" Comment="" x="1000" y="200"/>
+			<ECTransition Source="START" Destination="CD" Condition="CD[CV.D1 &gt; 0 ]" Comment="" x="1000" y="425"/>
+			<ECTransition Source="START" Destination="R" Condition="R" Comment="" x="1000" y="650"/>
+			<ECTransition Source="START" Destination="LD" Condition="LD" Comment="" x="1000" y="900"/>
+			<ECTransition Source="START" Destination="UPDATE_PV" Condition="PV.E1" Comment="" x="1000" y="1150"/>
+			<ECTransition Source="CU" Destination="CHECK_QU" Condition="1" Comment="" x="2393.33" y="-386.67"/>
+			<ECTransition Source="CD" Destination="CHECK_QU" Condition="1" Comment="" x="2346.67" y="13.33"/>
+			<ECTransition Source="R" Destination="CHECK_QU" Condition="1" Comment="" x="2373.33" y="326.67"/>
+			<ECTransition Source="LD" Destination="CHECK_QU" Condition="1" Comment="" x="2353.33" y="660"/>
+			<ECTransition Source="UPDATE_PV" Destination="CHECK_QU" Condition="1" Comment="" x="2553.33" y="1033.33"/>
+			<ECTransition Source="CHECK_QU" Destination="FIRE_QU" Condition="[QU.D1 &lt;&gt; QU_OLD ]" Comment="" x="3873.33" y="-26.67"/>
+			<ECTransition Source="CHECK_QU" Destination="CHECK_QD" Condition="[QU.D1 = QU_OLD ]" Comment="" x="3840" y="720"/>
+			<ECTransition Source="FIRE_QU" Destination="CHECK_QD" Condition="1" Comment="" x="5073.33" y="0"/>
+			<ECTransition Source="CHECK_QD" Destination="FIRE_QD" Condition="[QD.D1 &lt;&gt; QD_OLD ]" Comment="" x="5500" y="966.67"/>
+			<ECTransition Source="CHECK_QD" Destination="START" Condition="[QD.D1 = QD_OLD ]" Comment="" x="3040" y="1600"/>
+			<ECTransition Source="FIRE_QD" Destination="START" Condition="1" Comment="" x="3453.33" y="1946.67"/>
 		</ECC>
-		<Algorithm Name="CountUp">
-			<ST><![CDATA[ALGORITHM CountUp
-CV.D1 := CV.D1 + 1;
-
-END_ALGORITHM]]></ST>
-		</Algorithm>
-		<Algorithm Name="Reset">
+		<Algorithm Name="R" Comment="reset counter">
 			<ST><![CDATA[
-
-ALGORITHM Reset
 CV.D1 := 0;
-END_ALGORITHM]]></ST>
-		</Algorithm>
-		<Algorithm Name="Load">
-			<ST><![CDATA[
-
-ALGORITHM Load
-CV.D1 := PV.D1;
-END_ALGORITHM]]></ST>
-		</Algorithm>
-		<Algorithm Name="UpdateQU">
-			<ST><![CDATA[
-
-ALGORITHM UpdateQU
 QU.D1 := (CV.D1 >= PV.D1);
-END_ALGORITHM]]></ST>
+QD.D1 := (CV.D1 <= 0);
+]]></ST>
 		</Algorithm>
-		<Algorithm Name="UpdateQD">
+		<Algorithm Name="LOAD" Comment="load counter">
 			<ST><![CDATA[
-
-ALGORITHM UpdateQD
-QD.D1 := (CV.D1 = 0);
-END_ALGORITHM]]></ST>
+CV.D1 := PV.D1;
+QU.D1 := (CV.D1 >= PV.D1);
+QD.D1 := (CV.D1 <= 0);
+]]></ST>
 		</Algorithm>
-		<Algorithm Name="CountDown">
+		<Algorithm Name="CU" Comment="count up">
 			<ST><![CDATA[
-
-ALGORITHM CountDown
+CV.D1 := CV.D1 + 1;
+QU.D1 := (CV.D1 >= PV.D1);
+QD.D1 := (CV.D1 <= 0);
+]]></ST>
+		</Algorithm>
+		<Algorithm Name="CD" Comment="count down">
+			<ST><![CDATA[
 CV.D1 := CV.D1 - 1;
-END_ALGORITHM
-
+QU.D1 := (CV.D1 >= PV.D1);
+QD.D1 := (CV.D1 <= 0);
+]]></ST>
+		</Algorithm>
+		<Algorithm Name="UPDATE" Comment="update status only">
+			<ST><![CDATA[
+QU.D1 := (CV.D1 >= PV.D1);
+QD.D1 := (CV.D1 <= 0);
+]]></ST>
+		</Algorithm>
+		<Algorithm Name="SAVE_QU" Comment="save state">
+			<ST><![CDATA[
+QU_OLD := QU.D1;
+]]></ST>
+		</Algorithm>
+		<Algorithm Name="SAVE_QD" Comment="save state">
+			<ST><![CDATA[
+QD_OLD := QD.D1;
 ]]></ST>
 		</Algorithm>
 	</BasicFB>
-	<Attribute Name="eclipse4diac::core::TypeHash" Value="''"/>
 </FBType>
