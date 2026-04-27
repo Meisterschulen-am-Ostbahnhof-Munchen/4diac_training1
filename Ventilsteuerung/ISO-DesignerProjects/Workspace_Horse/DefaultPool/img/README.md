@@ -1,3 +1,0 @@
-
-
-# Bilder für ISOBUS Vorbereiten. 
