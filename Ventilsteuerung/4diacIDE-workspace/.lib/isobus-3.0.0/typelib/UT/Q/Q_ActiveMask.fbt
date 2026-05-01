@@ -45,17 +45,19 @@
 
 <p>Object ID of new active (data/alarm)-mask</p>
 
-<h2>Return values:</h2>
+<h2>Return Values (s16result):</h2>
 
 <h3>int16_t</h3>
 
 <ul>
-	<li><span style="font-size:14px"><span style="color:#2980b9">VT_E_NO_ERR </span></span><span style="color:#2980b9">(0)</span><span style="font-size:14px"><span style="color:#2980b9">&nbsp;- </span>OK</span></li>
-	<li><span style="font-size:14px"><span style="color:#2980b9">VT_E_OVERFLOW </span></span><span style="color:#2980b9">(-6)</span><span style="font-size:14px"><span style="color:#2980b9">&nbsp;- </span>buffer overflow</span></li>
-	<li><span style="font-size:14px"><span style="color:#2980b9">VT_E_NOACT (-8) - </span>Command not possible in current state</span></li>
-	<li><span style="font-size:14px"><span style="color:#2980b9">VT_E_NO_INSTANCE (-21)&nbsp;-</span> No VT client available</span></li>
-	<li><span style="font-size:14px"><span style="color:#2980b9">VT_E_ISO_INSTANCE_INVALID (-129) - </span>Identifier for instance (connection) invalid</span></li>
-	<li><span style="font-size:14px"><span style="color:#2980b9">VT_E_NOT_ALIVE (-130) - </span>Identifier for instance valid, but VT Dead.</span></li>
+	<li><span style="color:#27ae60">VT_E_NO_ERR (0)</span> - OK</li>
+	<li><span style="color:#e74c3c">VT_E_NOT_READY (-131)</span> - VT client not yet ready</li>
+	<li><span style="color:#e74c3c">VT_E_OVERFLOW (-6)</span> - buffer overflow</li>
+	<li><span style="color:#e74c3c">VT_E_NOACT (-8)</span> - Command not possible in current state</li>
+	<li><span style="color:#e74c3c">VT_E_NO_INSTANCE (-21)</span> - No VT client available</li>
+	<li><span style="color:#e74c3c">VT_E_ISO_INSTANCE_INVALID (-129)</span> - Identifier for instance (connection) invalid</li>
+	<li><span style="color:#e74c3c">VT_E_NOT_ALIVE (-130)</span> - Identifier for instance valid, but VT Dead.</li>
+	<li><span style="color:#2980b9">VT_OK_BUFFERED (18)</span> - command buffered, waiting for VT to be ready</li>
 </ul>
 ]]></Attribute>
 	<Attribute Name="eclipse4diac::core::TypeHash" Value="''"/>

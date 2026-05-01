@@ -48,9 +48,36 @@
 
 <p>This command is used to change the end point of a line object by changing the width, height and/or line direction attributes.</p>
 
+<h2>Valid Object IDs</h2>
+
+<p>A line endpoint Object ID is valid if it falls within the following ISO 11783-6 ID range:</p>
+<ul>
+	<li><strong>TypLine</strong>: 13000 – 13999</li>
+</ul>
+
+<p>ID_NULL (65535) is not a command target but can be used in INIT to deactivate the FB. Any ID outside this range is invalid for commanding.</p>
+
+<h2>Activate / Deactivate</h2>
+
+<p>The FB is deactivated by default. It becomes active when INIT provides a valid line Object ID. Sending INIT with ID_NULL (65535) deactivates the FB again. This toggle can be repeated arbitrarily.</p>
+
+<ul>
+	<li><strong>INIT + ID_NULL (65535)</strong>: FB deactivated, STATUS="DEACTIVATED", s16result=VT_E_DEACTIVATED (-40)</li>
+	<li><strong>INIT + valid line ID</strong>: FB activated, STATUS="initialized", s16result=VT_E_NO_ERR (0). If a REQ was buffered before, it is executed immediately.</li>
+	<li><strong>INIT + invalid ID</strong>: STATUS="ERROR: Invalid Object ID (not a line object)", s16result=VT_E_INVALID_OBJECT_ID (-132)</li>
+</ul>
+
+<h2>REQ Handling</h2>
+
+<ul>
+	<li><strong>REQ before any INIT</strong>: Buffered, STATUS="Buffered: INIT not yet completed", s16result=VT_E_NOT_READY (-131)</li>
+	<li><strong>REQ while deactivated (INIT came with NULL or invalid ID)</strong>: STATUS shows the actual deactivation reason, s16result=VT_E_DEACTIVATED (-40) or VT_E_INVALID_OBJECT_ID (-132)</li>
+	<li><strong>REQ while active</strong>: Command sent to VT, result reflected in CNF</li>
+</ul>
+
 <h2>param[in] {objectID, uint16_t}</h2>
 
-<p>Object ID</p>
+<p>Object ID. Use ID_NULL (65535) to deactivate the FB. Use a valid line object ID to activate.</p>
 
 <h2>param[in] {width_px, uint16_t}</h2>
 
@@ -64,17 +91,20 @@
 
 <p>Line direction</p>
 
-<h2>Return Values:&nbsp;</h2>
+<h2>Return Values (s16result):</h2>
 
 <h3>int16_t</h3>
 
 <ul>
-	<li><span style="color:#2980b9">VT_E_NO_ERR (0)</span>&nbsp;- OK</li>
-	<li><span style="color:#2980b9">VT_E_OVERFLOW (-6)</span>&nbsp;- buffer overflow</li>
-	<li><span style="color:#2980b9">VT_E_NOACT (-8)</span> - Command not possible in current state</li>
-	<li><span style="color:#2980b9">VT_E_NO_INSTANCE (-21)</span>&nbsp;- No VT client available</li>
-	<li><span style="color:#2980b9">VT_E_ISO_INSTANCE_INVALID (-129)</span> - Identifier for instance (connection) invalid</li>
-	<li><span style="color:#2980b9">VT_E_NOT_ALIVE (-130)</span> - Identifier for instance valid, but VT Dead.</li>
+	<li><span style="color:#27ae60">VT_E_NO_ERR (0)</span> - OK</li>
+	<li><span style="color:#f39c12">VT_E_DEACTIVATED (-40)</span> - FB deactivated (INIT received with ID_NULL)</li>
+	<li><span style="color:#e74c3c">VT_E_INVALID_OBJECT_ID (-132)</span> - Object ID is invalid (not a line object)</li>
+	<li><span style="color:#e74c3c">VT_E_NOT_READY (-131)</span> - Buffered: INIT not yet completed</li>
+	<li><span style="color:#e74c3c">VT_E_OVERFLOW (-6)</span> - buffer overflow</li>
+	<li><span style="color:#e74c3c">VT_E_NOACT (-8)</span> - Command not possible in current state</li>
+	<li><span style="color:#e74c3c">VT_E_NO_INSTANCE (-21)</span> - No VT client available</li>
+	<li><span style="color:#e74c3c">VT_E_ISO_INSTANCE_INVALID (-129)</span> - Identifier for instance (connection) invalid</li>
+	<li><span style="color:#e74c3c">VT_E_NOT_ALIVE (-130)</span> - Identifier for instance valid, but VT Dead.</li>
 </ul>
 ]]></Attribute>
 	<Attribute Name="eclipse4diac::core::TypeHash" Value="''"/>
