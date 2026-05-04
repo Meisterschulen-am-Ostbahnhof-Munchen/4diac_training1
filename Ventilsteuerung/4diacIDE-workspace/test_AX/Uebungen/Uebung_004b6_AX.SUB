@@ -19,15 +19,15 @@
 			<Parameter Name="QI" Value="TRUE"/>
 			<Parameter Name="Input" Value="Input_I1"/>
 		</FB>
-		<FB Name="E_T_FF" Type="adapter::events::unidirectional::AX_T_FF" x="-1700" y="-500">
+		<FB Name="AX_T_FF" Type="adapter::events::unidirectional::AX_T_FF" x="-1700" y="-500">
 		</FB>
 		<FB Name="AX_PERMIT" Type="adapter::events::unidirectional::AX_PERMIT" x="-2600" y="-500">
 		</FB>
 		<EventConnections>
-			<Connection Source="AX_PERMIT.EO" Destination="E_T_FF.CLK"/>
+			<Connection Source="AX_PERMIT.EO" Destination="AX_T_FF.CLK"/>
 		</EventConnections>
 		<AdapterConnections>
-			<Connection Source="E_T_FF.Q" Destination="DigitalOutput_Q1.OUT" dx1="626.67"/>
+			<Connection Source="AX_T_FF.Q" Destination="DigitalOutput_Q1.OUT" dx1="626.67"/>
 			<Connection Source="DigitalInput_I1.IN" Destination="AX_PERMIT.PERMIT" dx1="473.33"/>
 		</AdapterConnections>
 	</SubAppNetwork>
