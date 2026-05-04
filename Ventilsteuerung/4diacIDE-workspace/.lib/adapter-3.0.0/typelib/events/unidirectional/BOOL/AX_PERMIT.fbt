@@ -24,7 +24,7 @@
 			<ECState Name="EO" Comment="Event propagration permited" x="1500" y="500">
 				<ECAction Output="EO"/>
 			</ECState>
-			<ECTransition Source="START" Destination="EO" Condition="[PERMIT.D1]" Comment="" x="1100" y="515"/>
+			<ECTransition Source="START" Destination="EO" Condition="PERMIT.E1[PERMIT.D1]" Comment="" x="1206.67" y="400"/>
 			<ECTransition Source="EO" Destination="START" Condition="1" Comment="" x="1200" y="885"/>
 		</ECC>
 	</BasicFB>
