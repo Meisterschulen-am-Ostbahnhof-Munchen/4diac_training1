@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<FBType Name="AUDI_UDINT_AX_SEL" Comment="binary selection">
+	<Identification Standard="61499-2" Description="Copyright (c) 2026 HR Agrartechnik GmbH  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0">
+	</Identification>
+	<VersionInfo Organization="HR Agrartechnik GmbH" Version="1.0" Author="Franz Höpfinger" Date="2026-04-19" Remarks="initial API and implementation">
+	</VersionInfo>
+	<CompilerInfo packageName="adapter::iec61131::selection">
+	</CompilerInfo>
+	<InterfaceList>
+		<EventInputs>
+			<Event Name="EI0" Type="Event" Comment="Set IN0">
+				<With Var="IN0"/>
+			</Event>
+			<Event Name="EI1" Type="Event" Comment="Set IN1">
+				<With Var="IN1"/>
+			</Event>
+		</EventInputs>
+		<EventOutputs>
+			<Event Name="CNF" Type="Event" Comment="Confirmation of Requested Service">
+				<With Var="OUT"/>
+			</Event>
+		</EventOutputs>
+		<InputVars>
+			<VarDeclaration Name="IN0" Type="UDINT" Comment="Selectable input variable"/>
+			<VarDeclaration Name="IN1" Type="ANY_ELEMENTARY" Comment="Selectable input variable"/>
+		</InputVars>
+		<OutputVars>
+			<VarDeclaration Name="OUT" Type="UDINT" Comment="Selected input"/>
+		</OutputVars>
+		<Sockets>
+			<AdapterDeclaration Name="G" Type="adapter::types::unidirectional::AX" Comment="Selelctor" x="-1200" y="-1300"/>
+		</Sockets>
+	</InterfaceList>
+	<FBNetwork>
+		<FB Name="F_SEL" Type="iec61131::selection::F_SEL" x="-400" y="-1000">
+		</FB>
+		<EventConnections>
+			<Connection Source="F_SEL.CNF" Destination="CNF" dx1="2486.67"/>
+			<Connection Source="G.E1" Destination="F_SEL.REQ" dx1="206.67"/>
+		</EventConnections>
+		<DataConnections>
+			<Connection Source="IN0" Destination="F_SEL.IN0" dx1="1026.67"/>
+			<Connection Source="IN1" Destination="F_SEL.IN1" dx1="666.67"/>
+			<Connection Source="F_SEL.OUT" Destination="OUT" dx1="2486.67"/>
+			<Connection Source="G.D1" Destination="F_SEL.G" dx1="80"/>
+		</DataConnections>
+	</FBNetwork>
+	<Service RightInterface="RESOURCE" LeftInterface="APPLICATION">
+	</Service>
+	<Attribute Name="eclipse4diac::core::TypeHash" Value="''"/>
+</FBType>

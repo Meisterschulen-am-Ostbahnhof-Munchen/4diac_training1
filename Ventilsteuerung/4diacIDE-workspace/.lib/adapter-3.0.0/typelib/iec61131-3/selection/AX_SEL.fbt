@@ -6,7 +6,7 @@
 	</VersionInfo>
 	<VersionInfo Organization="TU Wien ACIN" Version="1.0" Author="Monika Wenger" Date="2012-03-25" Remarks="initial API and implementation and/or initial documentation">
 	</VersionInfo>
-	<CompilerInfo packageName="adapter::selection::unidirectional">
+	<CompilerInfo packageName="adapter::iec61131::selection">
 	</CompilerInfo>
 	<InterfaceList>
 		<EventInputs>
@@ -30,8 +30,24 @@
 			<VarDeclaration Name="OUT" Type="ANY" Comment="Selected input"/>
 		</OutputVars>
 		<Sockets>
-			<AdapterDeclaration Name="G" Type="adapter::types::unidirectional::AX"/>
+			<AdapterDeclaration Name="G" Type="adapter::types::unidirectional::AX" Comment="Selelctor" x="-1200" y="-1300"/>
 		</Sockets>
 	</InterfaceList>
+	<FBNetwork>
+		<FB Name="F_SEL" Type="iec61131::selection::F_SEL" x="-400" y="-1000">
+		</FB>
+		<EventConnections>
+			<Connection Source="F_SEL.CNF" Destination="CNF" dx1="2486.67"/>
+			<Connection Source="G.E1" Destination="F_SEL.REQ" dx1="206.67"/>
+		</EventConnections>
+		<DataConnections>
+			<Connection Source="IN0" Destination="F_SEL.IN0" dx1="1026.67"/>
+			<Connection Source="IN1" Destination="F_SEL.IN1" dx1="666.67"/>
+			<Connection Source="F_SEL.OUT" Destination="OUT" dx1="2486.67"/>
+			<Connection Source="G.D1" Destination="F_SEL.G" dx1="80"/>
+		</DataConnections>
+	</FBNetwork>
+	<Service RightInterface="RESOURCE" LeftInterface="APPLICATION">
+	</Service>
 	<Attribute Name="eclipse4diac::core::TypeHash" Value="''"/>
 </FBType>
