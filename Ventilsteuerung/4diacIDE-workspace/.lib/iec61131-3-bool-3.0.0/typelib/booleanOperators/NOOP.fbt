@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<FBType Name="NOOP" Comment="No-Op, also known as &quot;no Operation&quot;">
+	<Identification Standard="61499-2">
+	</Identification>
+	<VersionInfo Version="1.0" Author="franz" Date="2026-05-05">
+	</VersionInfo>
+	<CompilerInfo packageName="iec61131::bitwiseOperators">
+	</CompilerInfo>
+	<InterfaceList>
+		<EventInputs>
+			<Event Name="INIT" Type="EInit" Comment="Initialization Request">
+			</Event>
+			<Event Name="REQ" Type="Event" Comment="Normal Execution Request">
+				<With Var="IN"/>
+			</Event>
+		</EventInputs>
+		<EventOutputs>
+			<Event Name="INITO" Type="EInit" Comment="Initialization Confirm">
+			</Event>
+			<Event Name="CNF" Type="Event" Comment="Execution Confirmation">
+				<With Var="OUT"/>
+			</Event>
+		</EventOutputs>
+		<InputVars>
+			<VarDeclaration Name="IN" Type="BOOL" Comment="Input"/>
+		</InputVars>
+		<OutputVars>
+			<VarDeclaration Name="OUT" Type="BOOL" Comment="Output"/>
+		</OutputVars>
+	</InterfaceList>
+	<FBNetwork>
+		<EventConnections>
+			<Connection Source="INIT" Destination="INITO"/>
+			<Connection Source="REQ" Destination="CNF"/>
+		</EventConnections>
+		<DataConnections>
+			<Connection Source="IN" Destination="OUT"/>
+		</DataConnections>
+	</FBNetwork>
+</FBType>
