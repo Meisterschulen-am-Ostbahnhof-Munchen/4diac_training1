@@ -31,14 +31,16 @@
 		</OutputVars>
 	</InterfaceList>
 	<SimpleFB>
+		<InternalVars>
+			<VarDeclaration Name="EDGE" Type="BOOL" InitialValue="TRUE"/>
+		</InternalVars>
 		<ECState Name="REQ">
 			<ECAction Algorithm="REQ" Output="CNF"/>
 		</ECState>
 		<Algorithm Name="REQ">
-			<ST><![CDATA[ALGORITHM REQ
-Q1 := (NOT R1) AND (S OR Q1);
-END_ALGORITHM
-
+			<ST><![CDATA[
+Q1 := (NOT R1) AND (S OR ((NOT CLK AND EDGE) OR (CLK AND Q1)));
+EDGE := NOT CLK;
 ]]></ST>
 		</Algorithm>
 	</SimpleFB>
