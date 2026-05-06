@@ -47,7 +47,9 @@
 			<Connection Source="E_MERGE_2.EO" Destination="ILOCK_IN.EI1" dx1="146.67"/>
 			<Connection Source="E_MERGE_2.EO" Destination="ILOCK_OUT.EO1" dx1="146.67"/>
 			<Connection Source="E_SWITCH.EO0" Destination="E_MERGE_2.EI2" dx1="380"/>
-			<Connection Source="S" Destination="E_MERGE_2.EI1"/>
+			<Connection Source="S" Destination="E_MERGE_2.EI1" dx1="80" dx2="80" dy="-666.67"/>
+			<Connection Source="ILOCK_OUT.EI1" Destination="ILOCK_IN.EI1" dx1="80" dx2="80" dy="-200"/>
+			<Connection Source="ILOCK_IN.EO1" Destination="ILOCK_OUT.EO1" dx1="80" dx2="80" dy="200"/>
 		</EventConnections>
 		<DataConnections>
 			<Connection Source="E_SR.Q" Destination="E_SWITCH.G" dx1="80" dx2="80" dy="160"/>
