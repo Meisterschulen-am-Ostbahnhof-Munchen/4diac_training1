@@ -19,10 +19,10 @@
 			<VarDeclaration Name="Q" Type="BOOL"/>
 		</OutputVars>
 		<Plugs>
-			<AdapterDeclaration Name="PLUG" Type="adapter::types::bidirectional::AE2" x="0" y="0"/>
+			<AdapterDeclaration Name="PLUG" Type="adapter::types::bidirectional::AE2" x="800" y="600"/>
 		</Plugs>
 		<Sockets>
-			<AdapterDeclaration Name="SOCKET" Type="adapter::types::bidirectional::AE2" x="0" y="0"/>
+			<AdapterDeclaration Name="SOCKET" Type="adapter::types::bidirectional::AE2" x="800" y="100"/>
 		</Sockets>
 	</InterfaceList>
 	<FBNetwork>
@@ -30,27 +30,19 @@
 		</FB>
 		<FB Name="E_SWITCH_I1" Type="iec61499::events::E_SWITCH" x="-1100" y="-900">
 		</FB>
-		<FB Name="AE2_EVENT_TO_E" Type="adapter::conversion::bidirectional::AE2_EVENT_TO_E" x="600" y="600">
-		</FB>
-		<FB Name="AE2_E_TO_EVENT" Type="adapter::conversion::bidirectional::AE2_E_TO_EVENT" x="600" y="0">
-		</FB>
 		<EventConnections>
 			<Connection Source="E_SWITCH_I1.EO0" Destination="E_SR_I1.S"/>
 			<Connection Source="E_SWITCH_I1.EO1" Destination="E_SR_I1.R"/>
 			<Connection Source="E_SR_I1.EO" Destination="EO" dx1="780"/>
 			<Connection Source="IND" Destination="E_SWITCH_I1.EI" dx1="693.33"/>
-			<Connection Source="E_SWITCH_I1.EO0" Destination="AE2_EVENT_TO_E.REQ" dx1="353.33"/>
-			<Connection Source="AE2_E_TO_EVENT.CNF" Destination="E_SR_I1.R" dx1="300"/>
-			<Connection Source="AE2_EVENT_TO_E.CNF" Destination="E_SR_I1.R" dx1="426.67"/>
-			<Connection Source="E_SWITCH_I1.EO0" Destination="AE2_E_TO_EVENT.REQ" dx1="593.33"/>
+			<Connection Source="E_SWITCH_I1.EO0" Destination="SOCKET.EI1" dx1="353.33"/>
+			<Connection Source="SOCKET.EO1" Destination="E_SR_I1.R" dx1="280"/>
+			<Connection Source="PLUG.EI1" Destination="E_SR_I1.R" dx1="426.67"/>
+			<Connection Source="E_SWITCH_I1.EO0" Destination="PLUG.EO1" dx1="593.33"/>
 		</EventConnections>
 		<DataConnections>
 			<Connection Source="E_SR_I1.Q" Destination="E_SWITCH_I1.G" dx1="80" dx2="80" dy="160"/>
 			<Connection Source="E_SR_I1.Q" Destination="Q" dx1="1306.67"/>
 		</DataConnections>
-		<AdapterConnections>
-			<Connection Source="SOCKET" Destination="AE2_E_TO_EVENT.AE2_IN" dx1="80"/>
-			<Connection Source="AE2_EVENT_TO_E.AE2_OUT" Destination="PLUG" dx1="3313.33"/>
-		</AdapterConnections>
 	</FBNetwork>
 </FBType>
