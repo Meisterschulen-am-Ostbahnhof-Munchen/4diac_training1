@@ -11,7 +11,7 @@
 	<SubAppInterfaceList>
 	</SubAppInterfaceList>
 	<SubAppNetwork>
-		<FB Name="DigitalOutput_Q1" Type="logiBUS::io::DQ::logiBUS_QX" x="-1500" y="-700">
+		<FB Name="DigitalOutput_Q1" Type="logiBUS::io::DQ::logiBUS_QX" x="700" y="-700">
 			<Parameter Name="QI" Value="TRUE"/>
 			<Parameter Name="Output" Value="Output_Q1"/>
 		</FB>
@@ -19,11 +19,16 @@
 			<Parameter Name="QI" Value="TRUE"/>
 			<Parameter Name="Input" Value="Input_I1"/>
 		</FB>
+		<FB Name="AND_2" Type="iec61131::bitwiseOperators::AND_2_BOOL" x="-1400" y="-600">
+		</FB>
 		<EventConnections>
-			<Connection Source="DigitalInput_I1.IND" Destination="DigitalOutput_Q1.REQ" dx1="953.33"/>
+			<Connection Source="AND_2.CNF" Destination="DigitalOutput_Q1.REQ" dx1="686.67"/>
+			<Connection Source="DigitalInput_I1.IND" Destination="AND_2.REQ" dx1="1220"/>
 		</EventConnections>
 		<DataConnections>
-			<Connection Source="DigitalInput_I1.IN" Destination="DigitalOutput_Q1.OUT" dx1="953.33"/>
+			<Connection Source="AND_2.OUT" Destination="DigitalOutput_Q1.OUT" dx1="686.67"/>
+			<Connection Source="DigitalInput_I1.IN" Destination="AND_2.IN1" dx1="1273.33"/>
+			<Connection Source="DigitalInput_I1.IN" Destination="AND_2.IN2" dx1="1273.33"/>
 		</DataConnections>
 	</SubAppNetwork>
 </SubAppType>
