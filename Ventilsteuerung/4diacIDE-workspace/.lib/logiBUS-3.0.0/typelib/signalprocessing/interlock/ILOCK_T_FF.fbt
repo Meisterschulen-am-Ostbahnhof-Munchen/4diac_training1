@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<CompositeFBType Name="ILOCK_T_FF" Comment="Composite FB für ein verriegelbares Toggle-Flip-Flop mit AE2-Adapter-Schnittstelle">
-	<Identification Standard="61499-2" Description="Copyright (c) 2023 Meisterschulen am Ostbahnhof  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0">
+<FBType Name="ILOCK_T_FF" Comment="Composite FB für ein verriegelbares Toggle-Flip-Flop mit AE2-Adapter-Schnittstelle">
+	<Identification Standard="61499-2" Description="Copyright (c) 2023 HR Agrartechnik GmbH  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0">
 	</Identification>
-	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2026-04-19" Remarks="initial API and implementation and/or initial documentation">
+	<VersionInfo Organization="HR Agrartechnik GmbH" Version="1.0" Author="Franz Höpfinger" Date="2026-04-19" Remarks="initial API and implementation and/or initial documentation">
 	</VersionInfo>
 	<CompilerInfo packageName="logiBUS::signalprocessing::interlock">
 	</CompilerInfo>
@@ -19,10 +19,10 @@
 			<VarDeclaration Name="Q" Type="BOOL"/>
 		</OutputVars>
 		<Plugs>
-			<AdapterDeclaration Name="PLUG" Type="adapter::types::bidirectional::AE2"/>
+			<AdapterDeclaration Name="PLUG" Type="adapter::types::bidirectional::AE2" x="0" y="0"/>
 		</Plugs>
 		<Sockets>
-			<AdapterDeclaration Name="SOCKET" Type="adapter::types::bidirectional::AE2"/>
+			<AdapterDeclaration Name="SOCKET" Type="adapter::types::bidirectional::AE2" x="0" y="0"/>
 		</Sockets>
 	</InterfaceList>
 	<FBNetwork>
@@ -53,4 +53,4 @@
 			<Connection Source="AE2_EVENT_TO_E.AE2_OUT" Destination="PLUG" dx1="3313.33"/>
 		</AdapterConnections>
 	</FBNetwork>
-</CompositeFBType>
+</FBType>
