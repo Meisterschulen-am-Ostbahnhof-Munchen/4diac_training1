@@ -37,21 +37,21 @@
 	<FBNetwork>
 		<FB Name="FB_RS" Type="iec61131::bistableElements::FB_RS" x="1100" y="200">
 		</FB>
-		<FB Name="OR_2" Type="iec61131::bitwiseOperators::OR_2_BOOL" x="-2700" y="2200">
+		<FB Name="OR_2_BOOL_OUT" Type="iec61131::bitwiseOperators::OR_2_BOOL" x="-2700" y="2200">
 		</FB>
-		<FB Name="OR_3" Type="iec61131::bitwiseOperators::OR_2_BOOL" x="-2700" y="1300">
+		<FB Name="OR_2_BOOL_IN" Type="iec61131::bitwiseOperators::OR_2_BOOL" x="-2700" y="1300">
 		</FB>
 		<FB Name="OR_3_BOOL" Type="iec61131::bitwiseOperators::OR_3_BOOL" x="-200" y="600">
 		</FB>
 		<EventConnections>
 			<Connection Source="REQ" Destination="OR_3_BOOL.REQ" dx1="2246.67"/>
 			<Connection Source="FB_RS.CNF" Destination="CNF" dx1="1726.67"/>
-			<Connection Source="ILOCK_OUT.EI1" Destination="OR_3.REQ" dx1="133.33" dx2="100" dy="-346.67"/>
-			<Connection Source="OR_3.CNF" Destination="ILOCK_IN.EI1"/>
-			<Connection Source="OR_2.CNF" Destination="ILOCK_OUT.EO1"/>
-			<Connection Source="ILOCK_IN.EO1" Destination="OR_2.REQ" dx1="100" dx2="166.67" dy="620"/>
-			<Connection Source="REQ" Destination="OR_2.REQ" dx1="2246.67"/>
-			<Connection Source="REQ" Destination="OR_3.REQ" dx1="2246.67"/>
+			<Connection Source="ILOCK_OUT.EI1" Destination="OR_2_BOOL_IN.REQ" dx1="133.33" dx2="100" dy="-346.67"/>
+			<Connection Source="OR_2_BOOL_IN.CNF" Destination="ILOCK_IN.EI1"/>
+			<Connection Source="OR_2_BOOL_OUT.CNF" Destination="ILOCK_OUT.EO1"/>
+			<Connection Source="ILOCK_IN.EO1" Destination="OR_2_BOOL_OUT.REQ" dx1="100" dx2="166.67" dy="620"/>
+			<Connection Source="REQ" Destination="OR_2_BOOL_OUT.REQ" dx1="2246.67"/>
+			<Connection Source="REQ" Destination="OR_2_BOOL_IN.REQ" dx1="2246.67"/>
 			<Connection Source="OR_3_BOOL.CNF" Destination="FB_RS.REQ" dx1="280"/>
 			<Connection Source="ILOCK_IN.EO1" Destination="OR_3_BOOL.REQ" dx1="133.33"/>
 			<Connection Source="ILOCK_OUT.EI1" Destination="OR_3_BOOL.REQ" dx1="133.33"/>
@@ -60,12 +60,12 @@
 			<Connection Source="S" Destination="FB_RS.S" dx1="5900"/>
 			<Connection Source="R1" Destination="OR_3_BOOL.IN1" dx1="2280"/>
 			<Connection Source="FB_RS.Q1" Destination="Q1" dx1="1726.67"/>
-			<Connection Source="ILOCK_IN.DO1" Destination="OR_2.IN1" dx1="66.67" dx2="200" dy="373.33"/>
-			<Connection Source="OR_2.OUT" Destination="ILOCK_OUT.DO1"/>
-			<Connection Source="ILOCK_OUT.DI1" Destination="OR_3.IN2" dx1="200" dx2="66.67" dy="-593.33"/>
-			<Connection Source="OR_3.OUT" Destination="ILOCK_IN.DI1"/>
-			<Connection Source="R1" Destination="OR_3.IN1" dx1="2280"/>
-			<Connection Source="R1" Destination="OR_2.IN2" dx1="2280"/>
+			<Connection Source="ILOCK_IN.DO1" Destination="OR_2_BOOL_OUT.IN1" dx1="66.67" dx2="200" dy="373.33"/>
+			<Connection Source="OR_2_BOOL_OUT.OUT" Destination="ILOCK_OUT.DO1"/>
+			<Connection Source="ILOCK_OUT.DI1" Destination="OR_2_BOOL_IN.IN2" dx1="200" dx2="66.67" dy="-593.33"/>
+			<Connection Source="OR_2_BOOL_IN.OUT" Destination="ILOCK_IN.DI1"/>
+			<Connection Source="R1" Destination="OR_2_BOOL_IN.IN1" dx1="2280"/>
+			<Connection Source="R1" Destination="OR_2_BOOL_OUT.IN2" dx1="2280"/>
 			<Connection Source="OR_3_BOOL.OUT" Destination="FB_RS.R1" dx1="313.33"/>
 			<Connection Source="ILOCK_IN.DO1" Destination="OR_3_BOOL.IN2" dx1="166.67"/>
 			<Connection Source="ILOCK_OUT.DI1" Destination="OR_3_BOOL.IN3" dx1="200"/>
