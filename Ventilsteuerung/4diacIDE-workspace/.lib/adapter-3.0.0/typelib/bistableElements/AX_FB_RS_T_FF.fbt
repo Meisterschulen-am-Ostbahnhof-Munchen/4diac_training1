@@ -30,13 +30,16 @@
 			<VarDeclaration Name="Q1" Type="BOOL" Comment="Output"/>
 		</OutputVars>
 	</InterfaceList>
-	<SimpleFB>
+	<BasicFB>
 		<InternalVars>
 			<VarDeclaration Name="EDGE" Type="BOOL" InitialValue="TRUE"/>
 		</InternalVars>
-		<ECState Name="REQ">
-			<ECAction Algorithm="REQ" Output="CNF"/>
-		</ECState>
+		<ECC>
+			<ECState Name="REQ" x="0" y="0">
+				<ECAction Algorithm="REQ" Output="CNF"/>
+			</ECState>
+			<ECTransition Source="REQ" Destination="REQ" Condition="REQ" Comment="" x="-6.67" y="713.33"/>
+		</ECC>
 		<Algorithm Name="REQ">
 			<ST><![CDATA[
 IF R1 THEN
@@ -49,6 +52,6 @@ END_IF;
 EDGE := NOT CLK;
 ]]></ST>
 		</Algorithm>
-	</SimpleFB>
+	</BasicFB>
 	<Attribute Name="eclipse4diac::core::TypeHash" Value="''"/>
 </FBType>
