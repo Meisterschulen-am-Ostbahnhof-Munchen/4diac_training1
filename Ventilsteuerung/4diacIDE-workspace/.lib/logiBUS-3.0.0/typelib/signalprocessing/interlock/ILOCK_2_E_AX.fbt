@@ -36,14 +36,15 @@
 		<ECC>
 			<ECState Name="START" Comment="Initial State" x="500" y="385">
 			</ECState>
-			<ECState Name="TOGGLE1" x="2720" y="1040">
+			<ECState Name="TOGGLE1" x="2880" y="1040">
 				<ECAction Algorithm="TOGGLE1" Output="OUT1.E1"/>
+				<ECAction Algorithm="TOGGLE1_2" Output="OUT2.E1"/>
 			</ECState>
-			<ECState Name="RESET" x="2640" y="1680">
+			<ECState Name="RESET" x="2800" y="1520">
 				<ECAction Algorithm="RESET" Output="OUT1.E1"/>
 				<ECAction Algorithm="RESET" Output="OUT2.E1"/>
 			</ECState>
-			<ECState Name="SET1" x="1700" y="840">
+			<ECState Name="SET1" x="2960" y="560">
 				<ECAction Algorithm="RESET2" Output="OUT2.E1"/>
 				<ECAction Algorithm="SET1" Output="OUT1.E1"/>
 			</ECState>
@@ -51,8 +52,9 @@
 				<ECAction Algorithm="RESET1" Output="OUT1.E1"/>
 				<ECAction Algorithm="SET2" Output="OUT2.E1"/>
 			</ECState>
-			<ECState Name="TOGGLE2" x="1900" y="-40">
+			<ECState Name="TOGGLE2" x="3040" y="-240">
 				<ECAction Algorithm="TOGGLE2" Output="OUT2.E1"/>
+				<ECAction Algorithm="TOGGLE2_2" Output="OUT1.E1"/>
 			</ECState>
 			<ECTransition Source="START" Destination="SET1" Condition="SET1" Comment="" x="1140" y="620"/>
 			<ECTransition Source="START" Destination="SET2" Condition="SET2" Comment="" x="1946.67" y="53.33"/>
@@ -86,19 +88,27 @@ END_ALGORITHM]]></ST>
 IF NOT EDGE1 THEN
     OUT1.D1 := NOT OUT1.D1;
 END_IF;
-OUT2.D1 := FALSE;
 EDGE1 := TRUE;
 EDGE2 := FALSE;
 END_ALGORITHM]]></ST>
 		</Algorithm>
+		<Algorithm Name="TOGGLE1_2">
+			<ST><![CDATA[ALGORITHM TOGGLE1_2
+OUT2.D1 := FALSE;
+END_ALGORITHM]]></ST>
+		</Algorithm>
 		<Algorithm Name="TOGGLE2">
 			<ST><![CDATA[ALGORITHM TOGGLE2
-OUT1.D1 := FALSE;
 IF NOT EDGE2 THEN
     OUT2.D1 := NOT OUT2.D1;
 END_IF;
 EDGE1 := FALSE;
 EDGE2 := TRUE;
+END_ALGORITHM]]></ST>
+		</Algorithm>
+		<Algorithm Name="TOGGLE2_2">
+			<ST><![CDATA[ALGORITHM TOGGLE2_2
+OUT1.D1 := FALSE;
 END_ALGORITHM]]></ST>
 		</Algorithm>
 		<Algorithm Name="RESET">
