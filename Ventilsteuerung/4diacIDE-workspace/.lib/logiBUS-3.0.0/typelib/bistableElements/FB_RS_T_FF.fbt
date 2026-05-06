@@ -39,7 +39,13 @@
 		</ECState>
 		<Algorithm Name="REQ">
 			<ST><![CDATA[
-Q1 := (NOT R1) AND (S OR ((NOT CLK AND EDGE) OR (CLK AND Q1)));
+IF R1 THEN
+	Q1 := BOOL#FALSE;
+ELSIF S THEN
+	Q1 := BOOL#TRUE;
+ELSIF CLK AND NOT EDGE THEN
+	Q1 := NOT Q1;
+END_IF;
 EDGE := NOT CLK;
 ]]></ST>
 		</Algorithm>
