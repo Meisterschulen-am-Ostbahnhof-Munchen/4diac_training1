@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<SubAppType Name="Uebung_001c2" Comment="DigitalInput_I1 negiert auf DigitalOutput_Q1 --&gt; Eingang abfragen bei Boot.">
+<SubAppType Name="Uebung_001e" Comment="DigitalInput_I1 negiert auf DigitalOutput_Q1">
 	<Identification Standard="61499-2" Description="Copyright (c) 2023 Meisterschulen am Ostbahnhof  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0">
 	</Identification>
 	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2023-10-23" Remarks="initial API and implementation and/or initial documentation">
@@ -21,11 +21,8 @@
 		</FB>
 		<FB Name="F_NOT_BOOL" Type="iec61131::bitwiseOperators::F_NOT_BOOL" x="-1600" y="-700">
 		</FB>
-		<Comment Comment="ohne die Linie INITO-&gt;REQ ist der Ausgang Q1 beim Start FALSE. mit der Linie ist er TRUE. &#10;" x="-4800" y="100" width="2200" height="500"/>
 		<EventConnections>
 			<Connection Source="DigitalInput_I1.IND" Destination="F_NOT_BOOL.REQ" dx1="953.33"/>
-			<Connection Source="DigitalInput_I1.INITO" Destination="DigitalInput_I1.REQ" dx1="80" dx2="80" dy="46.67"/>
-			<Connection Source="DigitalInput_I1.CNF" Destination="F_NOT_BOOL.REQ" dx1="1166.67"/>
 			<Connection Source="F_NOT_BOOL.CNF" Destination="DigitalOutput_Q1.REQ" dx1="673.33"/>
 		</EventConnections>
 		<DataConnections>
