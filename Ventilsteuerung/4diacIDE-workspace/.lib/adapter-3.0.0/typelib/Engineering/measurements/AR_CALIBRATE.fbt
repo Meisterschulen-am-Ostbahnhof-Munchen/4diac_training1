@@ -7,6 +7,16 @@
 	<CompilerInfo packageName="adapter::Engineering::measurements">
 	</CompilerInfo>
 	<InterfaceList>
+		<EventInputs>
+			<Event Name="SET" Type="EInit" Comment="Set References">
+				<With Var="Y_Offset"/>
+				<With Var="Y_Scale"/>
+			</Event>
+		</EventInputs>
+		<InputVars>
+			<VarDeclaration Name="Y_Offset" Type="REAL" Comment="Reference for offset calibration"/>
+			<VarDeclaration Name="Y_Scale" Type="REAL" Comment="Reference for scale calibration"/>
+		</InputVars>
 		<Plugs>
 			<AdapterDeclaration Name="Y" Type="adapter::types::unidirectional::AR" Comment="Calibrated Output"/>
 			<AdapterDeclaration Name="OFFSET" Type="adapter::types::bidirectional::AR2IO" Comment="Offset value"/>
@@ -16,29 +26,46 @@
 			<AdapterDeclaration Name="X" Type="adapter::types::unidirectional::AR" Comment="Input"/>
 			<AdapterDeclaration Name="CO" Type="adapter::types::unidirectional::AX" Comment="Calibrate Offset"/>
 			<AdapterDeclaration Name="CS" Type="adapter::types::unidirectional::AX" Comment="Calibrate Scale"/>
-			<AdapterDeclaration Name="Y_OFFSET" Type="adapter::types::unidirectional::AR" Comment="Reference for offset calibration"/>
-			<AdapterDeclaration Name="Y_SCALE" Type="adapter::types::unidirectional::AR" Comment="Reference for scale calibration"/>
 		</Sockets>
 	</InterfaceList>
 	<BasicFB>
 		<ECC>
-			<ECState Name="REQ" x="0" y="0">
+			<ECState Name="REQ" x="240" y="640">
 				<ECAction Algorithm="REQ" Output="Y.E1"/>
 			</ECState>
-			<ECTransition Source="REQ" Destination="REQ" Condition="X.E1" Comment="" x="-753.33" y="-200"/>
-			<ECTransition Source="REQ" Destination="REQ" Condition="CO.E1" Comment="" x="-20" y="-386.67"/>
-			<ECTransition Source="REQ" Destination="REQ" Condition="CS.E1" Comment="" x="-480" y="-380"/>
+			<ECState Name="CO" x="1920" y="-320">
+				<ECAction Algorithm="CO" Output="OFFSET.EO1"/>
+			</ECState>
+			<ECState Name="CS" x="2080" y="1360">
+				<ECAction Algorithm="CS" Output="SCALE.EO1"/>
+			</ECState>
+			<ECTransition Source="REQ" Destination="REQ" Condition="X.E1" Comment="" x="13.33" y="1733.33"/>
+			<ECTransition Source="REQ" Destination="REQ" Condition="SET" Comment="" x="-160" y="1326.67"/>
+			<ECTransition Source="REQ" Destination="REQ" Condition="SET" Comment="" x="-73.33" y="1633.33"/>
+			<ECTransition Source="REQ" Destination="REQ" Condition="OFFSET.EI1" Comment="" x="-146.67" y="1433.33"/>
+			<ECTransition Source="REQ" Destination="REQ" Condition="SCALE.EI1" Comment="" x="-100" y="1533.33"/>
+			<ECTransition Source="CO" Destination="REQ" Condition="1" Comment="" x="1080" y="160"/>
+			<ECTransition Source="CS" Destination="REQ" Condition="1" Comment="" x="1160" y="1000"/>
+			<ECTransition Source="REQ" Destination="CO" Condition="CO.E1" Comment="" x="846.67" y="-200"/>
+			<ECTransition Source="REQ" Destination="CS" Condition="CS.E1" Comment="" x="1006.67" y="1193.33"/>
 		</ECC>
-		<Algorithm Name="REQ">
-			<ST><![CDATA[ALGORITHM REQ
-IF CO.D1 THEN
-	OFFSET.D1 := Y_OFFSET.D1 - X.D1;
-ELSIF CS.D1 THEN
-	SCALE.D1 := Y_SCALE.D1 / (X.D1 + OFFSET.D1);
-END_IF;
+		<Algorithm Name="REQ" Comment="REQ">
+			<ST><![CDATA[
 Y.D1 := (X.D1 + OFFSET.D1) * SCALE.D1;
-END_ALGORITHM
-
+]]></ST>
+		</Algorithm>
+		<Algorithm Name="CO" Comment="CO">
+			<ST><![CDATA[
+IF CO.D1 THEN
+	OFFSET.D1 := Y_Offset - X.D1;
+END_IF;
+]]></ST>
+		</Algorithm>
+		<Algorithm Name="CS" Comment="CS">
+			<ST><![CDATA[
+IF CS.D1 THEN
+	SCALE.D1 := Y_Scale / (X.D1 + OFFSET.D1);
+END_IF;
 ]]></ST>
 		</Algorithm>
 	</BasicFB>
