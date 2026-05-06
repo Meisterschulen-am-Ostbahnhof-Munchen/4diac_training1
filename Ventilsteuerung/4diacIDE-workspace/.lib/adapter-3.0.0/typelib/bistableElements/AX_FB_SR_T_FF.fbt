@@ -31,7 +31,7 @@
 			<ECTransition Source="REQ" Destination="REQ" Condition="CLK.E1" Comment="" x="73.33" y="646.67"/>
 		</ECC>
 		<Algorithm Name="REQ">
-			<ST><![CDATA[ALGORITHM REQ
+			<ST><![CDATA[
 IF SET.D1 THEN
 	Q1.D1 := BOOL#TRUE;
 ELSIF RESET.D1 THEN
@@ -39,9 +39,7 @@ ELSIF RESET.D1 THEN
 ELSIF CLK.D1 AND NOT EDGE THEN
 	Q1.D1 := NOT Q1.D1;
 END_IF;
-EDGE := NOT CLK.D1;
-END_ALGORITHM
-
+EDGE := CLK.D1;
 ]]></ST>
 		</Algorithm>
 	</BasicFB>
