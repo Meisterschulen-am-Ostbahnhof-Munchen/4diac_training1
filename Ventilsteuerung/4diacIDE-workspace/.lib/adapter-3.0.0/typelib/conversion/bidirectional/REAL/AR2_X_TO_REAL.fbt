@@ -31,17 +31,17 @@
 			</VarDeclaration>
 		</OutputVars>
 		<Sockets>
-			<AdapterDeclaration Name="AR2_IN" Type="adapter::types::bidirectional::AR2" Comment="Adapter Input" x="0" y="-700"/>
+			<AdapterDeclaration Name="AR2_IN" Type="adapter::types::bidirectional::AR2" Comment="Adapter Input" x="600" y="-700"/>
 		</Sockets>
 	</InterfaceList>
 	<FBNetwork>
 		<EventConnections>
 			<Connection Source="AR2_IN.EO1" Destination="CNF" dx1="2293.33"/>
-			<Connection Source="REQ" Destination="AR2_IN.EI1" dx1="3033.33"/>
+			<Connection Source="REQ" Destination="AR2_IN.EI1" dx1="2980"/>
 		</EventConnections>
 		<DataConnections>
 			<Connection Source="AR2_IN.DO1" Destination="IN" dx1="2293.33"/>
-			<Connection Source="OUT" Destination="AR2_IN.DI1" dx1="3033.33"/>
+			<Connection Source="OUT" Destination="AR2_IN.DI1" dx1="2980"/>
 		</DataConnections>
 	</FBNetwork>
 	<Attribute Name="eclipse4diac::core::TypeHash" Value="''"/>
