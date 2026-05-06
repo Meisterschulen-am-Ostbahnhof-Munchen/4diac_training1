@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<FBType Name="ILOCK_FB_SR" Comment="Realizes a bistable set-dominat latch">
+	<Identification Standard="61499-1" Description="Copyright (c) 2023 Martin Erich Jobst&#10; &#10;This program and the accompanying materials are made&#10;available under the terms of the Eclipse Public License 2.0&#10;which is available at https://www.eclipse.org/legal/epl-2.0/&#10;&#10;SPDX-License-Identifier: EPL-2.0">
+	</Identification>
+	<VersionInfo Version="3.0" Author="Patrick Aigner" Date="2025-04-14" Remarks="changed package">
+	</VersionInfo>
+	<VersionInfo Version="1.0" Author="Martin Jobst" Date="2023-04-28">
+	</VersionInfo>
+	<CompilerInfo packageName="logiBUS::signalprocessing::interlock">
+	</CompilerInfo>
+	<InterfaceList>
+		<EventInputs>
+			<Event Name="REQ" Type="Event" Comment="Normal Execution Request">
+				<With Var="S1"/>
+				<With Var="R"/>
+			</Event>
+		</EventInputs>
+		<EventOutputs>
+			<Event Name="CNF" Type="Event" Comment="Execution Confirmation">
+				<With Var="Q1"/>
+			</Event>
+		</EventOutputs>
+		<InputVars>
+			<VarDeclaration Name="S1" Type="BOOL" Comment="Set"/>
+			<VarDeclaration Name="R" Type="BOOL" Comment="Reset"/>
+		</InputVars>
+		<OutputVars>
+			<VarDeclaration Name="Q1" Type="BOOL" Comment="Output"/>
+		</OutputVars>
+		<Plugs>
+			<AdapterDeclaration Name="ILOCK_OUT" Type="adapter::types::bidirectional::AX2" x="3700" y="1600"/>
+		</Plugs>
+		<Sockets>
+			<AdapterDeclaration Name="ILOCK_IN" Type="adapter::types::bidirectional::AX2" x="2600" y="1500"/>
+		</Sockets>
+	</InterfaceList>
+	<FBNetwork>
+		<FB Name="FB_SR" Type="iec61131::bistableElements::FB_SR" x="1700" y="300">
+		</FB>
+		<EventConnections>
+			<Connection Source="REQ" Destination="FB_SR.REQ" dx1="746.67"/>
+			<Connection Source="FB_SR.CNF" Destination="CNF" dx1="2773.33"/>
+		</EventConnections>
+		<DataConnections>
+			<Connection Source="S1" Destination="FB_SR.S1" dx1="746.67"/>
+			<Connection Source="R" Destination="FB_SR.R" dx1="486.67"/>
+			<Connection Source="FB_SR.Q1" Destination="Q1" dx1="2773.33"/>
+		</DataConnections>
+	</FBNetwork>
+</FBType>
