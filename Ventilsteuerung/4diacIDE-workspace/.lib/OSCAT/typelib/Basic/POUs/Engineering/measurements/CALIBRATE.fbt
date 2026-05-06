@@ -29,15 +29,15 @@
 			<VarDeclaration Name="X" Type="REAL" Comment="Input"/>
 			<VarDeclaration Name="CO" Type="BOOL" Comment="Calibrate Offset"/>
 			<VarDeclaration Name="CS" Type="BOOL" Comment="Calibrate Scale"/>
-			<VarDeclaration Name="Y_Offset" Type="REAL"/>
-			<VarDeclaration Name="Y_Scale" Type="REAL"/>
+			<VarDeclaration Name="Y_Offset" Type="REAL" Comment="Reference for offset calibration"/>
+			<VarDeclaration Name="Y_Scale" Type="REAL" Comment="Reference for scale calibration"/>
 		</InputVars>
 		<OutputVars>
-			<VarDeclaration Name="Y" Type="REAL" Comment="Output"/>
+			<VarDeclaration Name="Y" Type="REAL" Comment="Calibrated Output"/>
 		</OutputVars>
 		<InOutVars>
-			<VarDeclaration Name="OFFSET" Type="REAL" InitialValue="0.0"/>
-			<VarDeclaration Name="SCALE" Type="REAL" InitialValue="1.0"/>
+			<VarDeclaration Name="OFFSET" Type="REAL" Comment="Offset value" InitialValue="0.0"/>
+			<VarDeclaration Name="SCALE" Type="REAL" Comment="Scale value" InitialValue="1.0"/>
 		</InOutVars>
 	</InterfaceList>
 	<SimpleFB>
