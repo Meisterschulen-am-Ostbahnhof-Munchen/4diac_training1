@@ -19,8 +19,8 @@
 		</InputVars>
 		<Plugs>
 			<AdapterDeclaration Name="Y" Type="adapter::types::unidirectional::AR" Comment="Calibrated Output"/>
-			<AdapterDeclaration Name="OFFSET" Type="adapter::types::bidirectional::AR2IO" Comment="Offset value"/>
-			<AdapterDeclaration Name="SCALE" Type="adapter::types::bidirectional::AR2IO" Comment="Scale value"/>
+			<AdapterDeclaration Name="OFFSET" Type="adapter::types::bidirectional::AR2" Comment="Offset value"/>
+			<AdapterDeclaration Name="SCALE" Type="adapter::types::bidirectional::AR2" Comment="Scale value"/>
 		</Plugs>
 		<Sockets>
 			<AdapterDeclaration Name="X" Type="adapter::types::unidirectional::AR" Comment="Input"/>
@@ -51,20 +51,20 @@
 		</ECC>
 		<Algorithm Name="REQ" Comment="REQ">
 			<ST><![CDATA[
-Y.D1 := (X.D1 + OFFSET.D1) * SCALE.D1;
+Y.D1 := (X.D1 + OFFSET.DI1) * SCALE.DI1;
 ]]></ST>
 		</Algorithm>
 		<Algorithm Name="CO" Comment="CO">
 			<ST><![CDATA[
 IF CO.D1 THEN
-	OFFSET.D1 := Y_Offset - X.D1;
+	OFFSET.DO1 := Y_Offset - X.D1;
 END_IF;
 ]]></ST>
 		</Algorithm>
 		<Algorithm Name="CS" Comment="CS">
 			<ST><![CDATA[
 IF CS.D1 THEN
-	SCALE.D1 := Y_Scale / (X.D1 + OFFSET.D1);
+	SCALE.DO1 := Y_Scale / (X.D1 + OFFSET.DO1);
 END_IF;
 ]]></ST>
 		</Algorithm>

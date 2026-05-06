@@ -8,33 +8,41 @@
 		<Import declaration="eclipse4diac::core::TypeHash"/>
 	</CompilerInfo>
 	<InterfaceList>
-		<EventInputs>
-			<Event Name="REQ" Type="Event" Comment="Request to Adapter">
-				<Attribute Name="YPOSITION" Type="DINT" Value="46"/>
-			</Event>
-		</EventInputs>
-		<EventOutputs>
-			<Event Name="CNF" Type="Event" Comment="Confirmation from Adapter">
-				<Attribute Name="YPOSITION" Type="DINT" Value="46"/>
-			</Event>
-		</EventOutputs>
-		<Sockets>
-			<AdapterDeclaration Name="AR2IO_IN" Type="adapter::types::bidirectional::AR2IO" Comment="AR2IO Adapter Input" x="0" y="-700"/>
-		</Sockets>
 		<Plugs>
-			<AdapterDeclaration Name="AR2_OUT" Type="adapter::types::bidirectional::AR2" Comment="AR2 Adapter Output" x="-3900" y="-500"/>
+			<AdapterDeclaration Name="AR2_OUT" Type="adapter::types::bidirectional::AR2" Comment="AR2 Adapter Output">
+				<Parameter Name="DO1" Value="0.0"/>
+			</AdapterDeclaration>
 		</Plugs>
+		<Sockets>
+			<AdapterDeclaration Name="AR2IO_IN" Type="adapter::types::bidirectional::AR2IO" Comment="AR2IO Adapter Input">
+				<Parameter Name="D1" Value="0.0"/>
+			</AdapterDeclaration>
+		</Sockets>
 	</InterfaceList>
-	<FBNetwork>
-		<EventConnections>
-			<Connection Source="REQ" Destination="AR2_OUT.EO1" dx1="1606.67"/>
-			<Connection Source="AR2IO_IN.EI1" Destination="CNF" dx1="4760"/>
-			<Connection Source="AR2_OUT.EI1" Destination="AR2IO_IN.EO1" dx1="1600"/>
-		</EventConnections>
-		<DataConnections>
-			<Connection Source="AR2IO_IN.D1" Destination="AR2_OUT.DI1" dx1="300"/>
-			<Connection Source="AR2_OUT.DO1" Destination="AR2IO_IN.D1" dx1="4760"/>
-		</DataConnections>
-	</FBNetwork>
-	<Attribute Name="eclipse4diac::core::TypeHash" Value="''"/>
+	<BasicFB>
+		<ECC>
+			<ECState Name="START" Comment="Initial State" x="550" y="425">
+			</ECState>
+			<ECState Name="GET" x="2760" y="513.33">
+				<ECAction Algorithm="GET" Output="AR2_OUT.EO1"/>
+			</ECState>
+			<ECState Name="SET" x="2720" y="1040">
+				<ECAction Algorithm="SET" Output="AR2IO_IN.EI1"/>
+			</ECState>
+			<ECTransition Source="START" Destination="GET" Condition="AR2_OUT.EI1" Comment="" x="1655" y="469.17"/>
+			<ECTransition Source="START" Destination="SET" Condition="AR2IO_IN.EO1" Comment="" x="1540" y="846.67"/>
+			<ECTransition Source="GET" Destination="START" Condition="1" Comment="" x="1726.67" y="646.67"/>
+			<ECTransition Source="SET" Destination="START" Condition="1" Comment="" x="1440" y="1146.67"/>
+		</ECC>
+		<Algorithm Name="GET">
+			<ST><![CDATA[
+AR2IO_IN.D1 := AR2_OUT.DI1;
+]]></ST>
+		</Algorithm>
+		<Algorithm Name="SET">
+			<ST><![CDATA[
+AR2_OUT.DO1 := AR2IO_IN.D1;
+]]></ST>
+		</Algorithm>
+	</BasicFB>
 </FBType>
