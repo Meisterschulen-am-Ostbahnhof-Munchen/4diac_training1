@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SubAppType Name="Uebung_206_SR" Comment="Exercise for FB_SR_T_FF (Set-Dominant Toggle Flip-Flop)">
+	<Identification Standard="61499-2" Description="Copyright (c) 2026 Meisterschulen am Ostbahnhof">
+	</Identification>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Gemini CLI" Date="2026-05-07">
+	</VersionInfo>
+	<CompilerInfo packageName="Uebungen">
+		<Import declaration="logiBUS::io::DI::logiBUS_DI::Input_I1"/>
+		<Import declaration="logiBUS::io::DI::logiBUS_DI::Input_I2"/>
+		<Import declaration="logiBUS::io::DI::logiBUS_DI::Input_I3"/>
+		<Import declaration="logiBUS::io::DQ::logiBUS_DO::Output_Q1"/>
+	</CompilerInfo>
+	<SubAppNetwork>
+		<FB Name="DigitalInput_S" Type="logiBUS::io::DI::logiBUS_IX" x="-4500" y="-800">
+			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="Input" Value="Input_I1"/>
+		</FB>
+		<FB Name="DigitalInput_R" Type="logiBUS::io::DI::logiBUS_IX" x="-4500" y="0">
+			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="Input" Value="Input_I2"/>
+		</FB>
+		<FB Name="DigitalInput_CLK" Type="logiBUS::io::DI::logiBUS_IX" x="-4500" y="800">
+			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="Input" Value="Input_I3"/>
+		</FB>
+		<FB Name="SR_T_FF" Type="logiBUS::bistableElements::FB_SR_T_FF" x="-1500" y="0">
+		</FB>
+		<FB Name="DigitalOutput_Q1" Type="logiBUS::io::DQ::logiBUS_QX" x="1000" y="0">
+			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="Output" Value="Output_Q1"/>
+		</FB>
+		<EventConnections>
+			<Connection Source="DigitalInput_S.IND" Destination="SR_T_FF.REQ" dx1="200"/>
+			<Connection Source="DigitalInput_R.IND" Destination="SR_T_FF.REQ" dx1="200"/>
+			<Connection Source="DigitalInput_CLK.IND" Destination="SR_T_FF.REQ" dx1="200"/>
+			<Connection Source="SR_T_FF.CNF" Destination="DigitalOutput_Q1.REQ" dx1="200"/>
+		</EventConnections>
+		<DataConnections>
+			<Connection Source="DigitalInput_S.IN" Destination="SR_T_FF.S1" dx1="200"/>
+			<Connection Source="DigitalInput_R.IN" Destination="SR_T_FF.R" dx1="200"/>
+			<Connection Source="DigitalInput_CLK.IN" Destination="SR_T_FF.CLK" dx1="200"/>
+			<Connection Source="SR_T_FF.Q1" Destination="DigitalOutput_Q1.OUT" dx1="200"/>
+		</DataConnections>
+	</SubAppNetwork>
+</SubAppType>
