@@ -13,7 +13,7 @@
 	<SubAppInterfaceList>
 	</SubAppInterfaceList>
 	<SubAppNetwork>
-		<FB Name="DigitalInput_SET" Type="logiBUS::io::DI::logiBUS_IXA" x="-4500" y="-800">
+		<FB Name="DigitalInput_SET" Type="logiBUS::io::DI::logiBUS_IXA" x="-4500" y="-900">
 			<Parameter Name="QI" Value="TRUE"/>
 			<Parameter Name="Input" Value="Input_I1"/>
 		</FB>
@@ -21,20 +21,20 @@
 			<Parameter Name="QI" Value="TRUE"/>
 			<Parameter Name="Input" Value="Input_I2"/>
 		</FB>
-		<FB Name="DigitalInput_CLK" Type="logiBUS::io::DI::logiBUS_IXA" x="-4500" y="800">
+		<FB Name="DigitalInput_CLK" Type="logiBUS::io::DI::logiBUS_IXA" x="-4500" y="900">
 			<Parameter Name="QI" Value="TRUE"/>
 			<Parameter Name="Input" Value="Input_I3"/>
 		</FB>
 		<FB Name="RS_T_FF" Type="adapter::bistableElements::AX_FB_RS_T_FF" x="-1500" y="0">
 		</FB>
-		<FB Name="DigitalOutput_Q1" Type="logiBUS::io::DQ::logiBUS_QXA" x="1000" y="0">
+		<FB Name="DigitalOutput_Q1" Type="logiBUS::io::DQ::logiBUS_QXA" x="1100" y="-600">
 			<Parameter Name="QI" Value="TRUE"/>
 			<Parameter Name="Output" Value="Output_Q1"/>
 		</FB>
 		<AdapterConnections>
 			<Connection Source="DigitalInput_SET.IN" Destination="RS_T_FF.SET" dx1="200"/>
 			<Connection Source="DigitalInput_RESET.IN" Destination="RS_T_FF.RESET1" dx1="200"/>
-			<Connection Source="DigitalInput_CLK.IN" Destination="RS_T_FF.CLK" dx1="200"/>
+			<Connection Source="DigitalInput_CLK.IN" Destination="RS_T_FF.CLK" dx1="440"/>
 			<Connection Source="RS_T_FF.Q1" Destination="DigitalOutput_Q1.OUT" dx1="200"/>
 		</AdapterConnections>
 	</SubAppNetwork>
