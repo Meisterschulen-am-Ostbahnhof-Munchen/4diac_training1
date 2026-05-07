@@ -24,12 +24,30 @@
 			<VarDeclaration Name="QO" Type="BOOL" Comment="Output"/>
 		</OutputVars>
 		<Plugs>
-			<AdapterDeclaration Name="BY_OUT" Type="adapter::types::unidirectional::AX" Comment="Bypass out" x="66.67" y="66.67"/>
+			<AdapterDeclaration Name="BY_OUT" Type="adapter::types::unidirectional::AX" Comment="Bypass out" x="2300" y="1100"/>
 		</Plugs>
 		<Sockets>
-			<AdapterDeclaration Name="BY_IN" Type="adapter::types::unidirectional::AX" Comment="Bypass in" x="66.67" y="66.67"/>
+			<AdapterDeclaration Name="BY_IN" Type="adapter::types::unidirectional::AX" Comment="Bypass in" x="-1100" y="1100"/>
 		</Sockets>
 	</InterfaceList>
 	<FBNetwork>
+		<FB Name="OR_2_BOOL" Type="iec61131::bitwiseOperators::OR_2_BOOL" x="-200" y="1100">
+		</FB>
+		<FB Name="E_D_FF" Type="iec61499::events::E_D_FF" x="1100" y="1100">
+		</FB>
+		<EventConnections>
+			<Connection Source="OR_2_BOOL.CNF" Destination="E_D_FF.CLK"/>
+			<Connection Source="BY_IN.E1" Destination="OR_2_BOOL.REQ"/>
+			<Connection Source="E_D_FF.EO" Destination="BY_OUT.E1"/>
+			<Connection Source="REQ" Destination="CNF"/>
+			<Connection Source="REQ" Destination="OR_2_BOOL.REQ" dx1="2086.67"/>
+		</EventConnections>
+		<DataConnections>
+			<Connection Source="OR_2_BOOL.OUT" Destination="E_D_FF.D"/>
+			<Connection Source="BY_IN.D1" Destination="OR_2_BOOL.IN1"/>
+			<Connection Source="E_D_FF.Q" Destination="BY_OUT.D1"/>
+			<Connection Source="IN" Destination="OR_2_BOOL.IN2" dx1="1126.67"/>
+			<Connection Source="IN" Destination="QO"/>
+		</DataConnections>
 	</FBNetwork>
 </FBType>
