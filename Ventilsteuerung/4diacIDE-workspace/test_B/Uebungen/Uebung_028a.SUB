@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SubAppType Name="Uebung_028a" Comment="Analog-Eingang">
+	<Identification Standard="61499-2" Description="Copyright (c) 2023 Meisterschulen am Ostbahnhof  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0">
+	</Identification>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2023-10-23" Remarks="initial API and implementation and/or initial documentation">
+	</VersionInfo>
+	<CompilerInfo packageName="Uebungen">
+		<Import declaration="logiBUS::io::DI::logiBUS_DI::Input_I1"/>
+		<Import declaration="logiBUS::io::DI::logiBUS_DI::Input_I2"/>
+		<Import declaration="logiBUS::io::DI::logiBUS_DI::Input_I3"/>
+		<Import declaration="logiBUS::io::DI::logiBUS_DI_Events::BUTTON_SINGLE_CLICK"/>
+		<Import declaration="logiBUS::io::DQ::logiBUS_DO::Output_Q1"/>
+	</CompilerInfo>
+	<SubAppInterfaceList>
+	</SubAppInterfaceList>
+	<SubAppNetwork>
+		<FB Name="DigitalOutput_Q1" Type="logiBUS::io::DQ::logiBUS_QX" x="-100" y="100">
+			<Parameter Name="QI" Value="TRUE">
+				<Attribute Name="Visible" Value="false"/>
+			</Parameter>
+			<Parameter Name="PARAMS" Value="">
+				<Attribute Name="Visible" Value="false"/>
+			</Parameter>
+			<Parameter Name="Output" Value="Output_Q1"/>
+		</FB>
+		<FB Name="DigitalInput_I1" Type="logiBUS::io::DI::logiBUS_IX" x="-4200" y="-200">
+			<Parameter Name="QI" Value="TRUE">
+				<Attribute Name="Visible" Value="false"/>
+			</Parameter>
+			<Parameter Name="PARAMS" Value="">
+				<Attribute Name="Visible" Value="false"/>
+			</Parameter>
+			<Parameter Name="Input" Value="Input_I1"/>
+		</FB>
+		<FB Name="AnalogInput_I4" Type="logiBUS::io::AI::logiBUS_AI_ID" x="-700" y="1100">
+			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="Input" Value="logiBUS::io::AI::logiBUS_AI::AnalogInput_I4"/>
+			<Parameter Name="AnalogInput_hysteresis" Value="50"/>
+		</FB>
+		<FB Name="F_DWORD_TO_UDINT_I4" Type="iec61131::conversion::F_DWORD_TO_REAL" x="2100" y="1500">
+		</FB>
+		<FB Name="CALIBRATE" Type="OSCAT::Basic::POUs::Engineering::measurements::E_CALIBRATE" x="6000" y="1600">
+			<Parameter Name="Y_Offset" Value="100.0"/>
+			<Parameter Name="Y_Scale" Value="600.0"/>
+		</FB>
+		<FB Name="DigitalInput_I2" Type="logiBUS::io::DI::logiBUS_IE" x="3900" y="-400">
+			<Parameter Name="QI" Value="TRUE">
+				<Attribute Name="Visible" Value="false"/>
+			</Parameter>
+			<Parameter Name="PARAMS" Value="">
+				<Attribute Name="Visible" Value="false"/>
+			</Parameter>
+			<Parameter Name="Input" Value="Input_I2"/>
+			<Parameter Name="InputEvent" Value="BUTTON_SINGLE_CLICK"/>
+		</FB>
+		<FB Name="DigitalInput_I3" Type="logiBUS::io::DI::logiBUS_IE" x="3900" y="600">
+			<Parameter Name="QI" Value="TRUE">
+				<Attribute Name="Visible" Value="false"/>
+			</Parameter>
+			<Parameter Name="PARAMS" Value="">
+				<Attribute Name="Visible" Value="false"/>
+			</Parameter>
+			<Parameter Name="Input" Value="Input_I3"/>
+			<Parameter Name="InputEvent" Value="BUTTON_SINGLE_CLICK"/>
+		</FB>
+		<FB Name="INI_OFFSET" Type="eclipse4diac::storage::INI" x="2600" y="3500">
+			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="DEFAULT_VALUE" Value="REAL#0.0"/>
+		</FB>
+		<FB Name="SET_REAL_OFFSET" Type="logiBUS::utils::conversion::provide::SET_REAL" x="4400" y="3900">
+			<Parameter Name="OUT" Value="0.0"/>
+		</FB>
+		<FB Name="INI_SCALE" Type="eclipse4diac::storage::INI" x="2600" y="4900">
+			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="DEFAULT_VALUE" Value="REAL#1.0"/>
+		</FB>
+		<FB Name="SET_REAL_SCALE" Type="logiBUS::utils::conversion::provide::SET_REAL" x="4400" y="5300">
+			<Parameter Name="OUT" Value="0.0"/>
+		</FB>
+		<EventConnections>
+			<Connection Source="DigitalInput_I1.IND" Destination="DigitalOutput_Q1.REQ" dx1="1673.33"/>
+			<Connection Source="AnalogInput_I4.IND" Destination="F_DWORD_TO_UDINT_I4.REQ" dx1="960"/>
+			<Connection Source="DigitalInput_I1.IND" Destination="AnalogInput_I4.REQ" dx1="1213.33"/>
+			<Connection Source="AnalogInput_I4.CNF" Destination="F_DWORD_TO_UDINT_I4.REQ" dx1="960"/>
+			<Connection Source="F_DWORD_TO_UDINT_I4.CNF" Destination="CALIBRATE.REQ" dx1="553.33"/>
+			<Connection Source="INI_OFFSET.GETO" Destination="SET_REAL_OFFSET.REQ" dx1="386.67"/>
+			<Connection Source="INI_OFFSET.INITO" Destination="INI_OFFSET.GET" dx1="80" dx2="80" dy="-266.67"/>
+			<Connection Source="INI_SCALE.INITO" Destination="INI_SCALE.GET" dx1="80" dx2="80" dy="-266.67"/>
+			<Connection Source="INI_SCALE.GETO" Destination="SET_REAL_SCALE.REQ" dx1="386.67"/>
+			<Connection Source="SET_REAL_OFFSET.CNF" Destination="CALIBRATE.REQ" dx1="80"/>
+			<Connection Source="SET_REAL_SCALE.CNF" Destination="CALIBRATE.REQ" dx1="300"/>
+			<Connection Source="DigitalInput_I2.IND" Destination="CALIBRATE.EICO" dx1="1026.67"/>
+			<Connection Source="DigitalInput_I3.IND" Destination="CALIBRATE.EICS" dx1="906.67"/>
+			<Connection Source="CALIBRATE.EOCO" Destination="INI_OFFSET.SET" dx1="893.33" dx2="660" dy="946.67"/>
+			<Connection Source="CALIBRATE.EOCS" Destination="INI_SCALE.SET" dx1="1113.33" dx2="786.67" dy="1206.67"/>
+		</EventConnections>
+		<DataConnections>
+			<Connection Source="DigitalInput_I1.IN" Destination="DigitalOutput_Q1.OUT" dx1="1673.33"/>
+			<Connection Source="AnalogInput_I4.IN" Destination="F_DWORD_TO_UDINT_I4.IN" dx1="673.33"/>
+			<Connection Source="F_DWORD_TO_UDINT_I4.OUT" Destination="CALIBRATE.X" dx1="680"/>
+			<Connection Source="INI_OFFSET.VALUEO" Destination="SET_REAL_OFFSET.IN" dx1="386.67"/>
+			<Connection Source="SET_REAL_OFFSET.OUT" Destination="CALIBRATE.OFFSET" dx1="166.67"/>
+			<Connection Source="INI_SCALE.VALUEO" Destination="SET_REAL_SCALE.IN" dx1="386.67"/>
+			<Connection Source="SET_REAL_SCALE.OUT" Destination="CALIBRATE.SCALE" dx1="480"/>
+			<Connection Source="CALIBRATE.SCALE" Destination="INI_SCALE.VALUE" dx1="506.67" dx2="506.67" dy="3506.67"/>
+			<Connection Source="CALIBRATE.OFFSET" Destination="INI_OFFSET.VALUE" dx1="80" dx2="546.67" dy="2140"/>
+		</DataConnections>
+	</SubAppNetwork>
+</SubAppType>

@@ -33,13 +33,12 @@
 			<ECTransition Source="REQ" Destination="REQ" Condition="ILOCK_OUT.EI1" Comment="" x="973.33" y="1873.33"/>
 		</ECC>
 		<Algorithm Name="REQ">
-			<ST><![CDATA[ALGORITHM REQ
+			<ST><![CDATA[
 Q1.D1 := SET1.D1 OR ILOCK_IN.DO1 OR ILOCK_OUT.DI1 OR ((NOT RESET.D1) AND Q1.D1);
 
 (* Propagate Set signal *)
 ILOCK_IN.DI1 := SET1.D1 OR ILOCK_OUT.DI1;
 ILOCK_OUT.DO1 := SET1.D1 OR ILOCK_IN.DO1;
-END_ALGORITHM
 ]]></ST>
 		</Algorithm>
 	</BasicFB>
