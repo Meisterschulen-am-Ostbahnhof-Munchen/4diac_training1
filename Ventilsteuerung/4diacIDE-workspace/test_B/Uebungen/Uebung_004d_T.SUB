@@ -12,11 +12,11 @@
 	<SubAppInterfaceList>
 	</SubAppInterfaceList>
 	<SubAppNetwork>
-		<FB Name="DigitalInput_RST" Type="logiBUS::io::DI::logiBUS_IX" x="-4500" y="-800">
+		<FB Name="DigitalInput_RST" Type="logiBUS::io::DI::logiBUS_IX" x="-4500" y="-1100">
 			<Parameter Name="QI" Value="TRUE"/>
 			<Parameter Name="Input" Value="Input_I1"/>
 		</FB>
-		<FB Name="DigitalInput_CLK" Type="logiBUS::io::DI::logiBUS_IX" x="-4500" y="0">
+		<FB Name="DigitalInput_CLK" Type="logiBUS::io::DI::logiBUS_IX" x="-4500" y="200">
 			<Parameter Name="QI" Value="TRUE"/>
 			<Parameter Name="Input" Value="Input_I2"/>
 		</FB>
@@ -32,8 +32,8 @@
 			<Connection Source="T_FF.CNF" Destination="DigitalOutput_Q1.REQ" dx1="200"/>
 		</EventConnections>
 		<DataConnections>
-			<Connection Source="DigitalInput_RST.IN" Destination="T_FF.RST" dx1="200"/>
-			<Connection Source="DigitalInput_CLK.IN" Destination="T_FF.CLK" dx1="200"/>
+			<Connection Source="DigitalInput_RST.IN" Destination="T_FF.RST" dx1="1153.33"/>
+			<Connection Source="DigitalInput_CLK.IN" Destination="T_FF.CLK" dx1="1306.67"/>
 			<Connection Source="T_FF.Q" Destination="DigitalOutput_Q1.OUT" dx1="200"/>
 		</DataConnections>
 	</SubAppNetwork>

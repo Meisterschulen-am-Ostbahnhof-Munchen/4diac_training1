@@ -13,7 +13,7 @@
 	<SubAppInterfaceList>
 	</SubAppInterfaceList>
 	<SubAppNetwork>
-		<FB Name="DigitalInput_S" Type="logiBUS::io::DI::logiBUS_IX" x="-4500" y="-800">
+		<FB Name="DigitalInput_S" Type="logiBUS::io::DI::logiBUS_IX" x="-4500" y="-1000">
 			<Parameter Name="QI" Value="TRUE"/>
 			<Parameter Name="Input" Value="Input_I1"/>
 		</FB>
@@ -21,13 +21,13 @@
 			<Parameter Name="QI" Value="TRUE"/>
 			<Parameter Name="Input" Value="Input_I2"/>
 		</FB>
-		<FB Name="DigitalInput_CLK" Type="logiBUS::io::DI::logiBUS_IX" x="-4500" y="800">
+		<FB Name="DigitalInput_CLK" Type="logiBUS::io::DI::logiBUS_IX" x="-4500" y="1000">
 			<Parameter Name="QI" Value="TRUE"/>
 			<Parameter Name="Input" Value="Input_I3"/>
 		</FB>
 		<FB Name="SR_T_FF" Type="logiBUS::bistableElements::FB_SR_T_FF" x="-1500" y="0">
 		</FB>
-		<FB Name="DigitalOutput_Q1" Type="logiBUS::io::DQ::logiBUS_QX" x="1000" y="0">
+		<FB Name="DigitalOutput_Q1" Type="logiBUS::io::DQ::logiBUS_QX" x="1000" y="-100">
 			<Parameter Name="QI" Value="TRUE"/>
 			<Parameter Name="Output" Value="Output_Q1"/>
 		</FB>
@@ -38,9 +38,9 @@
 			<Connection Source="SR_T_FF.CNF" Destination="DigitalOutput_Q1.REQ" dx1="200"/>
 		</EventConnections>
 		<DataConnections>
-			<Connection Source="DigitalInput_S.IN" Destination="SR_T_FF.S1" dx1="200"/>
-			<Connection Source="DigitalInput_R.IN" Destination="SR_T_FF.R" dx1="200"/>
-			<Connection Source="DigitalInput_CLK.IN" Destination="SR_T_FF.CLK" dx1="200"/>
+			<Connection Source="DigitalInput_S.IN" Destination="SR_T_FF.S1" dx1="786.67"/>
+			<Connection Source="DigitalInput_R.IN" Destination="SR_T_FF.R" dx1="853.33"/>
+			<Connection Source="DigitalInput_CLK.IN" Destination="SR_T_FF.CLK" dx1="1460"/>
 			<Connection Source="SR_T_FF.Q1" Destination="DigitalOutput_Q1.OUT" dx1="200"/>
 		</DataConnections>
 	</SubAppNetwork>
