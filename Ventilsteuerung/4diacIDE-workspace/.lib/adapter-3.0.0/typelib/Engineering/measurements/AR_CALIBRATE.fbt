@@ -46,8 +46,8 @@
 			<ECTransition Source="REQ" Destination="REQ" Condition="SCALE.EI1" Comment="" x="-100" y="1533.33"/>
 			<ECTransition Source="CO" Destination="REQ" Condition="1" Comment="" x="1080" y="160"/>
 			<ECTransition Source="CS" Destination="REQ" Condition="1" Comment="" x="1160" y="1000"/>
-			<ECTransition Source="REQ" Destination="CO" Condition="CO.E1" Comment="" x="846.67" y="-200"/>
-			<ECTransition Source="REQ" Destination="CS" Condition="CS.E1" Comment="" x="1006.67" y="1193.33"/>
+			<ECTransition Source="REQ" Destination="CO" Condition="CO.E1[CO.D1]" Comment="" x="846.67" y="-200"/>
+			<ECTransition Source="REQ" Destination="CS" Condition="CS.E1[CS.D1]" Comment="" x="1006.67" y="1193.33"/>
 		</ECC>
 		<Algorithm Name="REQ" Comment="REQ">
 			<ST><![CDATA[
@@ -56,16 +56,12 @@ Y.D1 := (X.D1 + OFFSET.DI1) * SCALE.DI1;
 		</Algorithm>
 		<Algorithm Name="CO" Comment="CO">
 			<ST><![CDATA[
-IF CO.D1 THEN
-	OFFSET.DO1 := Y_Offset - X.D1;
-END_IF;
+OFFSET.DO1 := Y_Offset - X.D1;
 ]]></ST>
 		</Algorithm>
 		<Algorithm Name="CS" Comment="CS">
 			<ST><![CDATA[
-IF CS.D1 THEN
-	SCALE.DO1 := Y_Scale / (X.D1 + OFFSET.DO1);
-END_IF;
+SCALE.DO1 := Y_Scale / (X.D1 + OFFSET.DO1);
 ]]></ST>
 		</Algorithm>
 	</BasicFB>
