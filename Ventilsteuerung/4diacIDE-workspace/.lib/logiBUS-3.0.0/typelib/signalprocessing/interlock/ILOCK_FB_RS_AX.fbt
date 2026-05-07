@@ -26,22 +26,23 @@
 				<ECAction Output="ILOCK_IN.EI1"/>
 				<ECAction Output="ILOCK_OUT.EO1"/>
 			</ECState>
-			<ECTransition Source="START" Destination="REQ" Condition="1" Comment="" x="500" y="250"/>
-			<ECTransition Source="REQ" Destination="REQ" Condition="SET1.E1" Comment="" x="440" y="1473.33"/>
-			<ECTransition Source="REQ" Destination="REQ" Condition="RESET.E1" Comment="" x="2073.33" y="1446.67"/>
-			<ECTransition Source="REQ" Destination="REQ" Condition="ILOCK_IN.EO1" Comment="" x="1466.67" y="1600"/>
-			<ECTransition Source="REQ" Destination="REQ" Condition="ILOCK_OUT.EI1" Comment="" x="953.33" y="1613.33"/>
+			<ECTransition Source="START" Destination="REQ" Condition="1" x="500" y="250"/>
+			<ECTransition Source="REQ" Destination="REQ" Condition="SET1.E1" x="1500" y="200"/>
+			<ECTransition Source="REQ" Destination="REQ" Condition="RESET.E1" x="1500" y="400"/>
+			<ECTransition Source="REQ" Destination="REQ" Condition="ILOCK_IN.EO1" x="1500" y="600"/>
+			<ECTransition Source="REQ" Destination="REQ" Condition="ILOCK_OUT.EI1" x="1500" y="800"/>
 		</ECC>
 		<Algorithm Name="REQ">
 			<ST><![CDATA[ALGORITHM REQ
-LOCAL_R := RESET.D1 OR ILOCK_IN.DO1 OR ILOCK_OUT.DI1;
-Q1.D1 := (SET1.D1 OR Q1.D1) AND (NOT LOCAL_R);
+	(* Reset-dominant logic: Q = (SET OR Q) AND NOT (RESET OR INTERLOCKS) *)
+	Q1.D1 := (SET1.D1 OR Q1.D1) AND NOT (RESET.D1 OR ILOCK_IN.DO1 OR ILOCK_OUT.DI1);
 
-(* Propagate Reset signal *)
-ILOCK_IN.DI1 := RESET.D1 OR ILOCK_OUT.DI1;
-ILOCK_OUT.DO1 := RESET.D1 OR ILOCK_IN.DO1;
-END_ALGORITHM
-]]></ST>
+	(* Propagate Reset signal to neighbors *)
+	ILOCK_IN.DI1 := RESET.D1 OR ILOCK_OUT.DI1;
+	ILOCK_OUT.DO1 := RESET.D1 OR ILOCK_IN.DO1;
+	END_ALGORITHM
+	]]></ST>
 		</Algorithm>
 	</BasicFB>
+
 </FBType>
