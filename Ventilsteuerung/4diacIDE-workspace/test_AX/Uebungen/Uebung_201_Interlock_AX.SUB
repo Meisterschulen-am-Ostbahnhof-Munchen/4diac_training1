@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<SubAppType Name="Uebung_Interlock_AX" Comment="Interlock advanced exercise (AX)">
+<SubAppType Name="Uebung_201_Interlock_AX" Comment="Interlock advanced exercise (AX)">
 	<Identification Standard="61499-2" Description="Copyright (c) 2026 Meisterschulen am Ostbahnhof">
 	</Identification>
 	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Gemini CLI" Date="2026-05-07" Remarks="Interlock exercise">
@@ -7,9 +7,13 @@
 	<CompilerInfo packageName="Uebungen">
 		<Import declaration="logiBUS::signalprocessing::interlock::ILOCK_IO_AX"/>
 	</CompilerInfo>
+	<SubAppInterfaceList>
+	</SubAppInterfaceList>
 	<SubAppNetwork>
-		<FB Name="ILOCK1" Type="logiBUS::signalprocessing::interlock::ILOCK_IO_AX" x="-2000" y="0"/>
-		<FB Name="ILOCK2" Type="logiBUS::signalprocessing::interlock::ILOCK_IO_AX" x="0" y="0"/>
+		<FB Name="ILOCK1" Type="logiBUS::signalprocessing::interlock::ILOCK_IO_AX" x="-2000" y="0">
+		</FB>
+		<FB Name="ILOCK2" Type="logiBUS::signalprocessing::interlock::ILOCK_IO_AX" x="0" y="0">
+		</FB>
 		<AdapterConnections>
 			<Connection Source="ILOCK1.ILOCK_OUT" Destination="ILOCK2.ILOCK_IN"/>
 		</AdapterConnections>
