@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<FBType Name="BYPASS" Comment="Bypass FB">
+	<Identification Standard="61499-2">
+	</Identification>
+	<VersionInfo Version="1.0" Author="franz" Date="2026-05-07">
+	</VersionInfo>
+	<CompilerInfo packageName="logiBUS::signalprocessing::bypass">
+	</CompilerInfo>
+	<InterfaceList>
+		<EventInputs>
+			<Event Name="REQ" Type="Event" Comment="Normal Execution Request">
+				<With Var="IN"/>
+			</Event>
+		</EventInputs>
+		<EventOutputs>
+			<Event Name="CNF" Type="Event" Comment="Execution Confirmation">
+				<With Var="QO"/>
+			</Event>
+		</EventOutputs>
+		<InputVars>
+			<VarDeclaration Name="IN" Type="BOOL" Comment="Input"/>
+		</InputVars>
+		<OutputVars>
+			<VarDeclaration Name="QO" Type="BOOL" Comment="Output"/>
+		</OutputVars>
+		<Plugs>
+			<AdapterDeclaration Name="BY_OUT" Type="adapter::types::unidirectional::AX" Comment="Bypass out" x="66.67" y="66.67"/>
+		</Plugs>
+		<Sockets>
+			<AdapterDeclaration Name="BY_IN" Type="adapter::types::unidirectional::AX" Comment="Bypass in" x="66.67" y="66.67"/>
+		</Sockets>
+	</InterfaceList>
+	<FBNetwork>
+	</FBNetwork>
+</FBType>
