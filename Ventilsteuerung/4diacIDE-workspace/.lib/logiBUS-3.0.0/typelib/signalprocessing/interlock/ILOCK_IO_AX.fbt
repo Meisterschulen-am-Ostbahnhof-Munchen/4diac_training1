@@ -30,7 +30,7 @@
 		<Algorithm Name="REQ" Comment="Momentary latch: Q1 is active if SET is active AND no other element is set">
 			<ST><![CDATA[
 
-OUT.D1 := OUT.D1 AND NOT (ILOCK_IN.DO1 OR ILOCK_OUT.DI1);
+OUT.D1 := IN.D1 AND NOT (ILOCK_IN.DO1 OR ILOCK_OUT.DI1);
 
 (* Propagate status *)
 ILOCK_IN.DI1 := OUT.D1;
