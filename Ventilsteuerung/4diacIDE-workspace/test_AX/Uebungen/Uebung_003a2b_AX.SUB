@@ -56,6 +56,11 @@
 		<Comment Comment="Hausmeister-Aus (alles Aus mit einem Schalter)&#10;Schalter müsste RASTEND sein. Ansonsten ist nur solange aus wie der Taster gehalten wird." x="-4500" y="-2100" width="2200" height="400"/>
 		<FB Name="AX_SPLIT_2" Type="adapter::events::unidirectional::AX_SPLIT_2" x="-4100" y="-1600">
 		</FB>
+		<Comment Comment="AND wäre auch möglich, &#10;dann HAusmeiser ein Zustimmschalter !" x="-2100" y="0" width="1000" height="500"/>
+		<Comment Comment="Vorteil dieser Lösung: wird an RESET1 nichts angeschlossen: ist der Baustein Funktionsfähig.&#10;Prinzip wie FB_RS&#10;" x="-2700" y="-1400" width="1400" height="600"/>
+		<EventConnections>
+			<Connection Source="DigitalInput_CLK_I3.INITO" Destination="DigitalInput_CLK_I3.REQ" dx1="80" dx2="80" dy="53.33"/>
+		</EventConnections>
 		<AdapterConnections>
 			<Connection Source="AX_FB_R_IO_Q1.OUT" Destination="DigitalOutput_Q1.OUT" dx1="673.33"/>
 			<Connection Source="AX_FB_R_IO_Q2.OUT" Destination="DigitalOutput_Q2.OUT" dx1="720"/>
