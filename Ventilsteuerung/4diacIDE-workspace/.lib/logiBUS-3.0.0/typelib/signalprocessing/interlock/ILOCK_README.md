@@ -9,8 +9,10 @@
 | `ILOCK_SWITCH` | Last-Wins | Nein | Schaltet sofort um | ✓ |
 | `ILOCK_SWITCH_PROTECT` | Last-Wins | Ja (`DT_PROTECT`) | Schaltet verzögert | ✓ |
 | `ILOCK_CONFLICT_TRIP` | First-Wins | Nein | TRIP (Reset nötig) | ✓ |
+| `ILOCK_FB_SR` | Set-Dominant Latch | – | AX2-Adapter | ✓ |
+| `ILOCK_FB_RS` | Reset-Dominant Latch | – | AX2-Adapter | ✓ |
 | `ILOCK_2_E` | Event-gesteuert | Nein | Bistabil/Toggle | ✓ |
-| `ILOCK_T_FF` | Toggle-FlipFlop | – | AE2-Adapter, sperrbar | – |
+| `ILOCK_T_FF` | Toggle-FlipFlop | – | AE2-Adapter, sperrbar | ✓ |
 
 ## Details zu jedem Baustein
 
@@ -79,6 +81,11 @@ Composite-FB für ein verriegelbares Toggle-FlipFlop mit AE2-Adapter-Schnittstel
 | Uebung_204b | ILOCK_CONFLICT_TRIP | Motor-Sicherheitsabschaltung mit Reset |
 | Uebung_205 | ILOCK_SWITCH_PROTECT | Umschalt-Priorität mit Schutzzeit |
 | Uebung_205b | ILOCK_SWITCH_PROTECT | Motor Reversierung Priorität mit Schutzzeit |
+| Uebung_206 | ILOCK_T_FF | Verriegelbares Toggle-FlipFlop (2er Kette) |
+| Uebung_206b | ILOCK_T_FF | Verriegelbares Toggle-FlipFlop (3er Kette) |
+| Uebung_207 | ILOCK_2_E | Event-basiertes Bistabil mit Verriegelung |
+| Uebung_208 | ILOCK_FB_SR | Set-Dominantes Latch mit AX2-Verriegelung |
+| Uebung_209 | ILOCK_FB_RS | Reset-Dominantes Latch mit AX2-Verriegelung |
 
 ### AX-Reihe (test_AX)
 | Übung | Baustein |
@@ -93,10 +100,13 @@ Composite-FB für ein verriegelbares Toggle-FlipFlop mit AE2-Adapter-Schnittstel
 | Uebung_204b_AX | ILOCK_CONFLICT_TRIP_AX |
 | Uebung_205_AX | ILOCK_SWITCH_PROTECT_AX |
 | Uebung_205b_AX | ILOCK_SWITCH_PROTECT_AX |
+| Uebung_206_AX | ILOCK_T_FF_AX |
+| Uebung_207_AX | ILOCK_2_E_AX |
+| Uebung_208_AX | ILOCK_FB_SR_AX |
+| Uebung_209_AX | ILOCK_FB_RS_AX |
 
 ### Nicht in Übungen verwendet
-- `ILOCK_2_E` / `ILOCK_2_E_AX` — keine `Uebung_20x` vorhanden
-- `ILOCK_T_FF` — keine Übung vorhanden
+- `ILOCK_T_FF_SR` / `ILOCK_T_FF_SR_AX` — (Varianten ohne eigene Übung)
 
 ## Bewertung: Was fehlt?
 
@@ -114,8 +124,9 @@ Composite-FB für ein verriegelbares Toggle-FlipFlop mit AE2-Adapter-Schnittstel
 | **Entprellung/Hysterese** | **Fehlt** |
 | **Rückmeldeüberwachung** | **Fehlt** (keine Aktor-Plausibilisierung) |
 | Integration Not-Halt | Bewusst extern (Sicherheitskette) |
-| Übungen für ILOCK_2_E / ILOCK_T_FF | **Fehlen** |
+| Übungen für ILOCK_2_E | Vollständig abgedeckt |
 
 ## Fazit
 
 Für eine Ventilsteuerungs-Schulung bietet die Bibliothek eine solide Abdeckung der 2-kanaligen Verriegelungsszenarien. Die fehlenden Punkte (3-Wege, Trip+Protect, QI, Entprellung) können bei Bedarf ergänzt werden.
+prellung) können bei Bedarf ergänzt werden.
