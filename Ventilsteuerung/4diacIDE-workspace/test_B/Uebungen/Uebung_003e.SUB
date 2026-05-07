@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SubAppType Name="Uebung_003e" Comment="DigitalInput_I1-4 auf DigitalOutput_Q1-4 - flach mit Bypass (Druckumlaufventil)">
+	<Identification Standard="61499-2" Description="Copyright (c) 2023 Meisterschulen am Ostbahnhof  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0">
+	</Identification>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2023-10-23" Remarks="initial API and implementation and/or initial documentation">
+	</VersionInfo>
+	<CompilerInfo packageName="Uebungen">
+		<Import declaration="logiBUS::io::DI::logiBUS_DI::Input_I1"/>
+		<Import declaration="logiBUS::io::DI::logiBUS_DI::Input_I2"/>
+		<Import declaration="logiBUS::io::DI::logiBUS_DI::Input_I3"/>
+		<Import declaration="logiBUS::io::DI::logiBUS_DI::Input_I4"/>
+		<Import declaration="logiBUS::io::DQ::logiBUS_DO::Output_Q1"/>
+		<Import declaration="logiBUS::io::DQ::logiBUS_DO::Output_Q2"/>
+		<Import declaration="logiBUS::io::DQ::logiBUS_DO::Output_Q3"/>
+		<Import declaration="logiBUS::io::DQ::logiBUS_DO::Output_Q4"/>
+		<Import declaration="logiBUS::io::DQ::logiBUS_DO::Output_Q8"/>
+	</CompilerInfo>
+	<SubAppInterfaceList>
+	</SubAppInterfaceList>
+	<SubAppNetwork>
+		<FB Name="DigitalOutput_Q1" Type="logiBUS::io::DQ::logiBUS_QX" x="-1900" y="-800">
+			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="Output" Value="Output_Q1"/>
+		</FB>
+		<FB Name="DigitalInput_I1" Type="logiBUS::io::DI::logiBUS_IX" x="-5000" y="-900">
+			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="Input" Value="Input_I1"/>
+		</FB>
+		<FB Name="DigitalOutput_Q2" Type="logiBUS::io::DQ::logiBUS_QX" x="-1900" y="200">
+			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="Output" Value="Output_Q2"/>
+		</FB>
+		<FB Name="DigitalInput_I2" Type="logiBUS::io::DI::logiBUS_IX" x="-5000" y="100">
+			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="Input" Value="Input_I2"/>
+		</FB>
+		<FB Name="BYPASS_1" Type="logiBUS::signalprocessing::bypass::BYPASS" x="-3400" y="-500">
+		</FB>
+		<FB Name="Bypass_Valve" Type="logiBUS::io::DQ::logiBUS_QXA" x="-1900" y="3300">
+			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="Output" Value="Output_Q8"/>
+		</FB>
+		<FB Name="BYPASS_2" Type="logiBUS::signalprocessing::bypass::BYPASS" x="-3400" y="500">
+		</FB>
+		<FB Name="DigitalOutput_Q3" Type="logiBUS::io::DQ::logiBUS_QX" x="-1900" y="1200">
+			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="Output" Value="Output_Q3"/>
+		</FB>
+		<FB Name="DigitalInput_I3" Type="logiBUS::io::DI::logiBUS_IX" x="-5000" y="1100">
+			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="Input" Value="Input_I3"/>
+		</FB>
+		<FB Name="BYPASS_3" Type="logiBUS::signalprocessing::bypass::BYPASS" x="-3400" y="1500">
+		</FB>
+		<FB Name="DigitalOutput_Q4" Type="logiBUS::io::DQ::logiBUS_QX" x="-1900" y="2200">
+			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="Output" Value="Output_Q4"/>
+		</FB>
+		<FB Name="DigitalInput_I4" Type="logiBUS::io::DI::logiBUS_IX" x="-5000" y="2100">
+			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="Input" Value="Input_I4"/>
+		</FB>
+		<FB Name="BYPASS_4" Type="logiBUS::signalprocessing::bypass::BYPASS" x="-3400" y="2500">
+		</FB>
+		<EventConnections>
+			<Connection Source="DigitalInput_I1.IND" Destination="BYPASS_1.REQ" dx1="420"/>
+			<Connection Source="BYPASS_1.CNF" Destination="DigitalOutput_Q1.REQ" dx1="340"/>
+			<Connection Source="DigitalInput_I2.IND" Destination="BYPASS_2.REQ" dx1="420"/>
+			<Connection Source="BYPASS_2.CNF" Destination="DigitalOutput_Q2.REQ" dx1="340"/>
+			<Connection Source="DigitalInput_I3.IND" Destination="BYPASS_3.REQ" dx1="420"/>
+			<Connection Source="BYPASS_3.CNF" Destination="DigitalOutput_Q3.REQ" dx1="340"/>
+			<Connection Source="DigitalInput_I4.IND" Destination="BYPASS_4.REQ" dx1="420"/>
+			<Connection Source="BYPASS_4.CNF" Destination="DigitalOutput_Q4.REQ" dx1="340"/>
+		</EventConnections>
+		<DataConnections>
+			<Connection Source="DigitalInput_I1.IN" Destination="BYPASS_1.IN" dx1="420"/>
+			<Connection Source="BYPASS_1.QO" Destination="DigitalOutput_Q1.OUT" dx1="340"/>
+			<Connection Source="DigitalInput_I2.IN" Destination="BYPASS_2.IN" dx1="420"/>
+			<Connection Source="BYPASS_2.QO" Destination="DigitalOutput_Q2.OUT" dx1="340"/>
+			<Connection Source="DigitalInput_I3.IN" Destination="BYPASS_3.IN" dx1="420"/>
+			<Connection Source="BYPASS_3.QO" Destination="DigitalOutput_Q3.OUT" dx1="400"/>
+			<Connection Source="DigitalInput_I4.IN" Destination="BYPASS_4.IN" dx1="420"/>
+			<Connection Source="BYPASS_4.QO" Destination="DigitalOutput_Q4.OUT" dx1="340"/>
+		</DataConnections>
+		<AdapterConnections>
+			<Connection Source="BYPASS_1.BY_OUT" Destination="BYPASS_2.BY_IN" dx1="80" dx2="80" dy="293.33"/>
+			<Connection Source="BYPASS_2.BY_OUT" Destination="BYPASS_3.BY_IN" dx1="80" dx2="80" dy="446.67"/>
+			<Connection Source="BYPASS_3.BY_OUT" Destination="BYPASS_4.BY_IN" dx1="80" dx2="80" dy="493.33"/>
+			<Connection Source="BYPASS_4.BY_OUT" Destination="Bypass_Valve.OUT" dx1="153.33"/>
+		</AdapterConnections>
+	</SubAppNetwork>
+</SubAppType>
