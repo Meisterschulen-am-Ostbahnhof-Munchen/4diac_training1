@@ -1,15 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<SubAppType Name="Uebung_012a_sub_AUDI" Comment="Numeric Value Input und Speichern (Adapter Version)">
+<SubAppType Name="INI_IN_AND_STORE_AUDI" Comment="Numeric Value Input und Speichern INI mit Subapp (Adapter Version)">
 	<Identification Standard="61499-2" Description="Copyright (c) 2026 Meisterschulen am Ostbahnhof  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0">
 	</Identification>
-	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2026-04-21" Remarks="initial API and implementation (AX version)">
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2026-04-24" Remarks="initial API and implementation (AX version)">
 	</VersionInfo>
-	<CompilerInfo packageName="Uebungen">
+	<CompilerInfo packageName="MyLib::sys">
 		<Import declaration="isobus::UT::Q::const::IDs::ID_NULL"/>
 	</CompilerInfo>
 	<SubAppInterfaceList>
 		<InputVars>
 			<VarDeclaration Name="KEY" Type="STRING"/>
+			<VarDeclaration Name="SECTION" Type="STRING"/>
 			<VarDeclaration Name="u16ObjId" Type="UINT" InitialValue="ID_NULL"/>
 		</InputVars>
 		<Plugs>
@@ -17,7 +18,7 @@
 		</Plugs>
 	</SubAppInterfaceList>
 	<SubAppNetwork>
-		<FB Name="NVS_AUDI" Type="logiBUS::storage::esp32_nvs::NVS_AUDI" x="800" y="-93.33">
+		<FB Name="INI_AUDI" Type="eclipse4diac::storage::INI_AUDI" x="800" y="-93.33">
 			<Parameter Name="QI" Value="TRUE"/>
 			<Parameter Name="DEFAULT_VALUE" Value="UDINT#0"/>
 		</FB>
@@ -34,7 +35,10 @@
 			<Connection Source="u16ObjId" Destination="Q_NumericValue_AUDI.u16ObjId" dx1="8246.67">
 				<Attribute Name="Visible" Value="false"/>
 			</Connection>
-			<Connection Source="KEY" Destination="NVS_AUDI.KEY" dx1="2846.67">
+			<Connection Source="KEY" Destination="INI_AUDI.KEY" dx1="2846.67">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="SECTION" Destination="INI_AUDI.SECTION" dx1="2846.67">
 				<Attribute Name="Visible" Value="false"/>
 			</Connection>
 			<Connection Source="u16ObjId" Destination="ID.u16ObjId" dx1="1046.67">
@@ -42,9 +46,9 @@
 			</Connection>
 		</DataConnections>
 		<AdapterConnections>
-			<Connection Source="NVS_AUDI.AUDI_OUT" Destination="AUDI_SPLIT_2.IN" dx1="106.67"/>
+			<Connection Source="INI_AUDI.AUDI_OUT" Destination="AUDI_SPLIT_2.IN" dx1="106.67"/>
 			<Connection Source="ID.IN" Destination="AD_TO_AUDI.AD_IN"/>
-			<Connection Source="AD_TO_AUDI.AUDI_OUT" Destination="NVS_AUDI.AUDI_IN"/>
+			<Connection Source="AD_TO_AUDI.AUDI_OUT" Destination="INI_AUDI.AUDI_IN"/>
 			<Connection Source="AUDI_SPLIT_2.OUT1" Destination="VALUEO" dx1="2220">
 				<Attribute Name="Visible" Value="false"/>
 			</Connection>
