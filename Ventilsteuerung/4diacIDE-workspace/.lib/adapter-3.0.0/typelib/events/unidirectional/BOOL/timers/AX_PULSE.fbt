@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<FBType Name="AX_PULSE" Comment="standard timer function block (pulse)">
-	<Identification Standard="61499-2" Description="Copyright (c) 2023, 2024 HR Agrartechnik GmbH  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0  &#10;   &#10;   &#10;E_TP -- Impulse forming FB  &#10;&#10;Generate a Impulse with a given Time.  &#10;This FB makes a Impulse of Duration TM on the Output QO.">
+<FBType Name="AX_PULSE" Comment="Standard timer function block (pulse) - non-retriggerable">
+	<Identification Standard="61499-2" Description="Copyright (c) 2023, 2024 HR Agrartechnik GmbH  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0  &#10;   &#10;   &#10;AX_PULSE -- Impulse forming FB with AX adapter interface  &#10;&#10;Generate an Impulse with a given Time.  &#10;This FB makes an Impulse of Duration PT on the Output Q.  &#10;Non-retriggerable.">
 	</Identification>
 	<VersionInfo Version="3.0" Author="Patrick Aigner" Date="2025-04-14" Remarks="changed package">
 	</VersionInfo>
@@ -24,7 +24,7 @@
 			<VarDeclaration Name="PT" Type="TIME" Comment="Pulse time"/>
 		</InputVars>
 		<Plugs>
-			<AdapterDeclaration Name="Q" Type="adapter::types::unidirectional::AX" Comment="Output" x="600" y="-600"/>
+			<AdapterDeclaration Name="Q" Type="adapter::types::unidirectional::AX" Comment="Timer output (AX adapter)" x="600" y="-600"/>
 		</Plugs>
 	</InterfaceList>
 	<FBNetwork>
