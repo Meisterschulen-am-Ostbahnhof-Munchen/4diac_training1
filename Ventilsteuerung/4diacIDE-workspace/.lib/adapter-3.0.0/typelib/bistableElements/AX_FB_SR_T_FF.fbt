@@ -13,7 +13,7 @@
 			<AdapterDeclaration Name="Q1" Type="adapter::types::unidirectional::AX" Comment="Output"/>
 		</Plugs>
 		<Sockets>
-			<AdapterDeclaration Name="SET" Type="adapter::types::unidirectional::AX" Comment="Set"/>
+			<AdapterDeclaration Name="SET1" Type="adapter::types::unidirectional::AX" Comment="Set"/>
 			<AdapterDeclaration Name="RESET" Type="adapter::types::unidirectional::AX" Comment="Reset"/>
 			<AdapterDeclaration Name="CLK" Type="adapter::types::unidirectional::AX" Comment="Clock"/>
 		</Sockets>
@@ -26,13 +26,13 @@
 			<ECState Name="REQ" x="0" y="0">
 				<ECAction Algorithm="REQ" Output="Q1.E1"/>
 			</ECState>
-			<ECTransition Source="REQ" Destination="REQ" Condition="SET.E1" Comment="" x="-233.33" y="646.67"/>
+			<ECTransition Source="REQ" Destination="REQ" Condition="SET1.E1" Comment="" x="-233.33" y="646.67"/>
 			<ECTransition Source="REQ" Destination="REQ" Condition="RESET.E1" Comment="" x="380" y="646.67"/>
 			<ECTransition Source="REQ" Destination="REQ" Condition="CLK.E1" Comment="" x="73.33" y="646.67"/>
 		</ECC>
 		<Algorithm Name="REQ">
 			<ST><![CDATA[
-IF SET.D1 THEN
+IF SET1.D1 THEN
 	Q1.D1 := BOOL#TRUE;
 ELSIF RESET.D1 THEN
 	Q1.D1 := BOOL#FALSE;
