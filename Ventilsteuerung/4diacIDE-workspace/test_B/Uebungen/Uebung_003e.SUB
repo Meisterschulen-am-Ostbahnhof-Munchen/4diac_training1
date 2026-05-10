@@ -34,13 +34,13 @@
 			<Parameter Name="QI" Value="TRUE"/>
 			<Parameter Name="Input" Value="Input_I2"/>
 		</FB>
-		<FB Name="BYPASS_1" Type="logiBUS::signalprocessing::bypass::BYPASS" x="-3400" y="-500">
+		<FB Name="BYPASS_1" Type="logiBUS::signalprocessing::bypass::BYPASS_AX_BOOL" x="-3400" y="-500">
 		</FB>
 		<FB Name="Bypass_Valve" Type="logiBUS::io::DQ::logiBUS_QXA" x="-1900" y="3300">
 			<Parameter Name="QI" Value="TRUE"/>
 			<Parameter Name="Output" Value="Output_Q8"/>
 		</FB>
-		<FB Name="BYPASS_2" Type="logiBUS::signalprocessing::bypass::BYPASS" x="-3400" y="500">
+		<FB Name="BYPASS_2" Type="logiBUS::signalprocessing::bypass::BYPASS_AX_BOOL" x="-3400" y="500">
 		</FB>
 		<FB Name="DigitalOutput_Q3" Type="logiBUS::io::DQ::logiBUS_QX" x="-1900" y="1200">
 			<Parameter Name="QI" Value="TRUE"/>
@@ -50,7 +50,7 @@
 			<Parameter Name="QI" Value="TRUE"/>
 			<Parameter Name="Input" Value="Input_I3"/>
 		</FB>
-		<FB Name="BYPASS_3" Type="logiBUS::signalprocessing::bypass::BYPASS" x="-3400" y="1500">
+		<FB Name="BYPASS_3" Type="logiBUS::signalprocessing::bypass::BYPASS_AX_BOOL" x="-3400" y="1500">
 		</FB>
 		<FB Name="DigitalOutput_Q4" Type="logiBUS::io::DQ::logiBUS_QX" x="-1900" y="2200">
 			<Parameter Name="QI" Value="TRUE"/>
@@ -60,7 +60,7 @@
 			<Parameter Name="QI" Value="TRUE"/>
 			<Parameter Name="Input" Value="Input_I4"/>
 		</FB>
-		<FB Name="BYPASS_4" Type="logiBUS::signalprocessing::bypass::BYPASS" x="-3400" y="2500">
+		<FB Name="BYPASS_4" Type="logiBUS::signalprocessing::bypass::BYPASS_AX_BOOL" x="-3400" y="2500">
 		</FB>
 		<EventConnections>
 			<Connection Source="DigitalInput_I1.IND" Destination="BYPASS_1.REQ" dx1="420"/>
@@ -74,13 +74,13 @@
 		</EventConnections>
 		<DataConnections>
 			<Connection Source="DigitalInput_I1.IN" Destination="BYPASS_1.IN" dx1="420"/>
-			<Connection Source="BYPASS_1.QO" Destination="DigitalOutput_Q1.OUT" dx1="340"/>
+			<Connection Source="BYPASS_1.OUT" Destination="DigitalOutput_Q1.OUT" dx1="340"/>
 			<Connection Source="DigitalInput_I2.IN" Destination="BYPASS_2.IN" dx1="420"/>
-			<Connection Source="BYPASS_2.QO" Destination="DigitalOutput_Q2.OUT" dx1="340"/>
+			<Connection Source="BYPASS_2.OUT" Destination="DigitalOutput_Q2.OUT" dx1="340"/>
 			<Connection Source="DigitalInput_I3.IN" Destination="BYPASS_3.IN" dx1="420"/>
-			<Connection Source="BYPASS_3.QO" Destination="DigitalOutput_Q3.OUT" dx1="400"/>
+			<Connection Source="BYPASS_3.OUT" Destination="DigitalOutput_Q3.OUT" dx1="400"/>
 			<Connection Source="DigitalInput_I4.IN" Destination="BYPASS_4.IN" dx1="420"/>
-			<Connection Source="BYPASS_4.QO" Destination="DigitalOutput_Q4.OUT" dx1="340"/>
+			<Connection Source="BYPASS_4.OUT" Destination="DigitalOutput_Q4.OUT" dx1="340"/>
 		</DataConnections>
 		<AdapterConnections>
 			<Connection Source="BYPASS_1.BY_OUT" Destination="BYPASS_2.BY_IN" dx1="80" dx2="80" dy="293.33"/>
