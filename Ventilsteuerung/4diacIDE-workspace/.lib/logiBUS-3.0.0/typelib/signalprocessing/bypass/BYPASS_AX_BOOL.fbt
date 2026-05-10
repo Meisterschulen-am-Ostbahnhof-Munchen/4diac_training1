@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<FBType Name="BYPASS_AX_BOOL" Comment="Bypass FB">
+	<Identification Standard="61499-2">
+	</Identification>
+	<VersionInfo Version="1.0" Author="franz" Date="2026-05-07">
+	</VersionInfo>
+	<CompilerInfo packageName="logiBUS::signalprocessing::bypass">
+	</CompilerInfo>
+	<InterfaceList>
+		<EventInputs>
+			<Event Name="REQ" Type="Event" Comment="Normal Execution Request">
+				<With Var="IN"/>
+			</Event>
+		</EventInputs>
+		<EventOutputs>
+			<Event Name="CNF" Type="Event" Comment="Execution Confirmation">
+				<With Var="OUT"/>
+			</Event>
+		</EventOutputs>
+		<InputVars>
+			<VarDeclaration Name="IN" Type="BOOL" Comment="Input"/>
+		</InputVars>
+		<OutputVars>
+			<VarDeclaration Name="OUT" Type="BOOL" Comment="Output"/>
+		</OutputVars>
+		<Plugs>
+			<AdapterDeclaration Name="BY_OUT" Type="adapter::types::unidirectional::AX" Comment="Bypass out" x="-1200" y="1100"/>
+		</Plugs>
+		<Sockets>
+			<AdapterDeclaration Name="BY_IN" Type="adapter::types::unidirectional::AX" Comment="Bypass in" x="-4600" y="1100"/>
+		</Sockets>
+	</InterfaceList>
+	<FBNetwork>
+		<FB Name="OR_2_BOOL" Type="iec61131::bitwiseOperators::OR_2_BOOL" x="-3700" y="1100">
+		</FB>
+		<FB Name="E_D_FF" Type="iec61499::events::E_D_FF" x="-2400" y="1100">
+		</FB>
+		<FB Name="F_MOVE" Type="iec61131::selection::F_MOVE" x="-5600" y="200">
+			<Attribute Name="DataType" Value="BOOL"/>
+		</FB>
+		<EventConnections>
+			<Connection Source="OR_2_BOOL.CNF" Destination="E_D_FF.CLK"/>
+			<Connection Source="BY_IN.E1" Destination="OR_2_BOOL.REQ"/>
+			<Connection Source="E_D_FF.EO" Destination="BY_OUT.E1"/>
+			<Connection Source="F_MOVE.CNF" Destination="CNF" dx1="4470.59"/>
+			<Connection Source="F_MOVE.CNF" Destination="OR_2_BOOL.REQ" dx1="900"/>
+			<Connection Source="REQ" Destination="F_MOVE.REQ" dx1="1194.12"/>
+		</EventConnections>
+		<DataConnections>
+			<Connection Source="OR_2_BOOL.OUT" Destination="E_D_FF.D"/>
+			<Connection Source="BY_IN.D1" Destination="OR_2_BOOL.IN1"/>
+			<Connection Source="E_D_FF.Q" Destination="BY_OUT.D1"/>
+			<Connection Source="F_MOVE.OUT" Destination="OR_2_BOOL.IN2" dx1="70.59"/>
+			<Connection Source="F_MOVE.OUT" Destination="OUT" dx1="4470.59"/>
+			<Connection Source="IN" Destination="F_MOVE.IN" dx1="1194.12"/>
+		</DataConnections>
+	</FBNetwork>
+</FBType>

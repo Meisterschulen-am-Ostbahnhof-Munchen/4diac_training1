@@ -51,13 +51,13 @@
 			<Parameter Name="InputEvent" Value="BUTTON_SINGLE_CLICK"/>
 		</FB>
 		<EventConnections>
-			<Connection Source="DigitalInput_CLK_I1.IND" Destination="E_T_FF_SR.S"/>
+			<Connection Source="DigitalInput_CLK_I1.IND" Destination="E_T_FF_SR.S" dx1="453.33"/>
 			<Connection Source="DigitalInput_CLK_I2.IND" Destination="E_T_FF_SR.R" dx1="486.67"/>
-			<Connection Source="E_T_FF_SR.EO" Destination="DigitalOutput_Q1.REQ"/>
+			<Connection Source="E_T_FF_SR.EO" Destination="DigitalOutput_Q1.REQ" dx1="646.67"/>
 			<Connection Source="DigitalInput_CLK_I3.IND" Destination="E_T_FF_SR.CLK" dx1="673.33"/>
 		</EventConnections>
 		<DataConnections>
-			<Connection Source="E_T_FF_SR.Q" Destination="DigitalOutput_Q1.OUT"/>
+			<Connection Source="E_T_FF_SR.Q" Destination="DigitalOutput_Q1.OUT" dx1="646.67"/>
 		</DataConnections>
 	</SubAppNetwork>
 </SubAppType>

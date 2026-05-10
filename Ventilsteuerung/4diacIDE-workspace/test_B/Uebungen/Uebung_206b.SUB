@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SubAppType Name="Uebung_206b" Comment="Interlock: ILOCK_T_FF (Drei gegenseitig verriegelte Toggle-Flip-Flops via Adapter-Kette)">
+	<Identification Standard="61499-2" Description="Copyright (c) 2026 Meisterschulen am Ostbahnhof  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0">
+	</Identification>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Gemini CLI" Date="2026-05-07" Remarks="initial version using library block ILOCK_T_FF">
+	</VersionInfo>
+	<CompilerInfo packageName="Uebungen">
+		<Import declaration="logiBUS::io::DI::logiBUS_DI::Input_I1"/>
+		<Import declaration="logiBUS::io::DI::logiBUS_DI::Input_I2"/>
+		<Import declaration="logiBUS::io::DI::logiBUS_DI::Input_I3"/>
+		<Import declaration="logiBUS::io::DI::logiBUS_DI_Events::BUTTON_SINGLE_CLICK"/>
+		<Import declaration="logiBUS::io::DQ::logiBUS_DO::Output_Q1"/>
+		<Import declaration="logiBUS::io::DQ::logiBUS_DO::Output_Q2"/>
+		<Import declaration="logiBUS::io::DQ::logiBUS_DO::Output_Q3"/>
+	</CompilerInfo>
+	<SubAppInterfaceList>
+	</SubAppInterfaceList>
+	<SubAppNetwork>
+		<FB Name="DigitalInput_CLK_I1" Type="logiBUS::io::DI::logiBUS_IE" x="-5900" y="-1000">
+			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="Input" Value="Input_I1"/>
+			<Parameter Name="InputEvent" Value="BUTTON_SINGLE_CLICK"/>
+		</FB>
+		<FB Name="DigitalInput_CLK_I2" Type="logiBUS::io::DI::logiBUS_IE" x="-5900" y="200">
+			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="Input" Value="Input_I2"/>
+			<Parameter Name="InputEvent" Value="BUTTON_SINGLE_CLICK"/>
+		</FB>
+		<FB Name="DigitalInput_CLK_I3" Type="logiBUS::io::DI::logiBUS_IE" x="-5900" y="1500">
+			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="Input" Value="Input_I3"/>
+			<Parameter Name="InputEvent" Value="BUTTON_SINGLE_CLICK"/>
+		</FB>
+		<FB Name="ILOCK_T_FF_1" Type="logiBUS::signalprocessing::interlock::ILOCK_T_FF" x="-4000" y="-1000">
+		</FB>
+		<FB Name="ILOCK_T_FF_2" Type="logiBUS::signalprocessing::interlock::ILOCK_T_FF" x="-2500" y="200">
+		</FB>
+		<FB Name="ILOCK_T_FF_3" Type="logiBUS::signalprocessing::interlock::ILOCK_T_FF" x="-1000" y="1500">
+		</FB>
+		<FB Name="DigitalOutput_Q1" Type="logiBUS::io::DQ::logiBUS_QX" x="1200" y="-1000">
+			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="Output" Value="Output_Q1"/>
+		</FB>
+		<FB Name="DigitalOutput_Q2" Type="logiBUS::io::DQ::logiBUS_QX" x="1200" y="100">
+			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="Output" Value="Output_Q2"/>
+		</FB>
+		<FB Name="DigitalOutput_Q3" Type="logiBUS::io::DQ::logiBUS_QX" x="1200" y="1400">
+			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="Output" Value="Output_Q3"/>
+		</FB>
+		<Comment Comment="Gegenseitige Verriegelung via AE2-Adapter-Kette (Bidirektional)" x="-800" y="2400" width="1000" height="500"/>
+		<EventConnections>
+			<Connection Source="DigitalInput_CLK_I1.IND" Destination="ILOCK_T_FF_1.CLK" dx1="440"/>
+			<Connection Source="DigitalInput_CLK_I2.IND" Destination="ILOCK_T_FF_2.CLK" dx1="386.67"/>
+			<Connection Source="DigitalInput_CLK_I3.IND" Destination="ILOCK_T_FF_3.CLK" dx1="386.67"/>
+			<Connection Source="ILOCK_T_FF_1.EO" Destination="DigitalOutput_Q1.REQ" dx1="1000"/>
+			<Connection Source="ILOCK_T_FF_2.EO" Destination="DigitalOutput_Q2.REQ" dx1="846.67"/>
+			<Connection Source="ILOCK_T_FF_3.EO" Destination="DigitalOutput_Q3.REQ" dx1="846.67"/>
+		</EventConnections>
+		<DataConnections>
+			<Connection Source="ILOCK_T_FF_1.Q" Destination="DigitalOutput_Q1.OUT" dx1="1000"/>
+			<Connection Source="ILOCK_T_FF_2.Q" Destination="DigitalOutput_Q2.OUT" dx1="846.67"/>
+			<Connection Source="ILOCK_T_FF_3.Q" Destination="DigitalOutput_Q3.OUT" dx1="846.67"/>
+		</DataConnections>
+		<AdapterConnections>
+			<Connection Source="ILOCK_T_FF_1.ILOCK_OUT" Destination="ILOCK_T_FF_2.ILOCK_IN" dx1="160"/>
+			<Connection Source="ILOCK_T_FF_2.ILOCK_OUT" Destination="ILOCK_T_FF_3.ILOCK_IN" dx1="160"/>
+		</AdapterConnections>
+	</SubAppNetwork>
+</SubAppType>

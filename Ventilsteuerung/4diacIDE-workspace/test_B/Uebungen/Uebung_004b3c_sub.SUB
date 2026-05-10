@@ -43,6 +43,8 @@
 			<Connection Source="AE2_E_TO_EVENT.CNF" Destination="E_SR_I1.R" dx1="300"/>
 			<Connection Source="AE2_EVENT_TO_E.CNF" Destination="E_SR_I1.R" dx1="426.67"/>
 			<Connection Source="E_SWITCH_I1.EO0" Destination="AE2_E_TO_EVENT.REQ" dx1="593.33"/>
+			<Connection Source="AE2_E_TO_EVENT.CNF" Destination="AE2_EVENT_TO_E.REQ" dx1="80" dx2="80" dy="300"/>
+			<Connection Source="AE2_EVENT_TO_E.CNF" Destination="AE2_E_TO_EVENT.REQ" dx1="80" dx2="80" dy="-300"/>
 		</EventConnections>
 		<DataConnections>
 			<Connection Source="E_SR_I1.Q" Destination="E_SWITCH_I1.G" dx1="80" dx2="80" dy="160"/>

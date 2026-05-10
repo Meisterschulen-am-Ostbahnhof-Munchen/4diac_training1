@@ -57,6 +57,7 @@
 			<Parameter Name="QI" Value="TRUE"/>
 			<Parameter Name="Output" Value="Output_Q2"/>
 		</FB>
+		<Comment Comment="Hausmeister-Aus (alles Aus mit einem Druck)" x="-5700" y="-2100" width="1000" height="400"/>
 		<EventConnections>
 			<Connection Source="DigitalInput_CLK_I1.IND" Destination="AX_T_FF_SR_Q1.CLK"/>
 			<Connection Source="DigitalInput_CLK_I2.IND" Destination="AX_T_FF_SR_Q2.CLK"/>
@@ -64,8 +65,8 @@
 			<Connection Source="DigitalInput_CLK_I3.IND" Destination="AX_T_FF_SR_Q1.R" dx1="320"/>
 		</EventConnections>
 		<AdapterConnections>
-			<Connection Source="AX_T_FF_SR_Q1.Q" Destination="DigitalOutput_Q1.OUT"/>
-			<Connection Source="AX_T_FF_SR_Q2.Q" Destination="DigitalOutput_Q2.OUT"/>
+			<Connection Source="AX_T_FF_SR_Q1.Q" Destination="DigitalOutput_Q1.OUT" dx1="673.33"/>
+			<Connection Source="AX_T_FF_SR_Q2.Q" Destination="DigitalOutput_Q2.OUT" dx1="720"/>
 		</AdapterConnections>
 	</SubAppNetwork>
 </SubAppType>

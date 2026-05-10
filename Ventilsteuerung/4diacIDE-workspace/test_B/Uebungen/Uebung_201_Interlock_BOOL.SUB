@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SubAppType Name="Uebung_201_Interlock_BOOL" Comment="Interlock basic exercise (BOOL)">
+	<Identification Standard="61499-2" Description="Copyright (c) 2026 Meisterschulen am Ostbahnhof">
+	</Identification>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Gemini CLI" Date="2026-05-07" Remarks="Interlock exercise">
+	</VersionInfo>
+	<CompilerInfo packageName="Uebungen">
+		<Import declaration="logiBUS::io::DI::logiBUS_DI::Input_I1"/>
+		<Import declaration="logiBUS::io::DI::logiBUS_DI::Input_I2"/>
+		<Import declaration="logiBUS::io::DI::logiBUS_DI::Input_I3"/>
+		<Import declaration="logiBUS::io::DI::logiBUS_DI::Input_I4"/>
+		<Import declaration="logiBUS::io::DQ::logiBUS_DO::Output_Q1"/>
+		<Import declaration="logiBUS::io::DQ::logiBUS_DO::Output_Q2"/>
+		<Import declaration="logiBUS::io::DQ::logiBUS_DO::Output_Q3"/>
+		<Import declaration="logiBUS::io::DQ::logiBUS_DO::Output_Q4"/>
+	</CompilerInfo>
+	<SubAppInterfaceList>
+	</SubAppInterfaceList>
+	<SubAppNetwork>
+		<FB Name="DigitalOutput_Q1" Type="logiBUS::io::DQ::logiBUS_QX" x="800" y="1600">
+			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="Output" Value="Output_Q1"/>
+		</FB>
+		<FB Name="DigitalOutput_Q4" Type="logiBUS::io::DQ::logiBUS_QX" x="800" y="4600">
+			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="Output" Value="Output_Q4"/>
+		</FB>
+		<FB Name="DigitalInput_I2" Type="logiBUS::io::DI::logiBUS_IX" x="-2700" y="2500">
+			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="Input" Value="Input_I2"/>
+		</FB>
+		<FB Name="DigitalOutput_Q3" Type="logiBUS::io::DQ::logiBUS_QX" x="800" y="3600">
+			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="Output" Value="Output_Q3"/>
+		</FB>
+		<FB Name="DigitalInput_I3" Type="logiBUS::io::DI::logiBUS_IX" x="-2700" y="3500">
+			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="Input" Value="Input_I3"/>
+		</FB>
+		<FB Name="DigitalOutput_Q2" Type="logiBUS::io::DQ::logiBUS_QX" x="800" y="2600">
+			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="Output" Value="Output_Q2"/>
+		</FB>
+		<FB Name="ILOCK_3" Type="logiBUS::signalprocessing::interlock::ILOCK_IO" x="-1100" y="3900">
+		</FB>
+		<FB Name="ILOCK_4" Type="logiBUS::signalprocessing::interlock::ILOCK_IO" x="-1100" y="4900">
+		</FB>
+		<FB Name="ILOCK_1" Type="logiBUS::signalprocessing::interlock::ILOCK_IO" x="-1100" y="1900">
+		</FB>
+		<FB Name="ILOCK_2" Type="logiBUS::signalprocessing::interlock::ILOCK_IO" x="-1100" y="2900">
+		</FB>
+		<FB Name="DigitalInput_I4" Type="logiBUS::io::DI::logiBUS_IX" x="-2700" y="4500">
+			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="Input" Value="Input_I4"/>
+		</FB>
+		<FB Name="DigitalInput_I1" Type="logiBUS::io::DI::logiBUS_IX" x="-2700" y="1500">
+			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="Input" Value="Input_I1"/>
+		</FB>
+		<EventConnections>
+			<Connection Source="DigitalInput_I2.IND" Destination="ILOCK_2.REQ" dx1="420"/>
+			<Connection Source="ILOCK_4.CNF" Destination="DigitalOutput_Q4.REQ" dx1="340"/>
+			<Connection Source="DigitalInput_I1.IND" Destination="ILOCK_1.REQ" dx1="420"/>
+			<Connection Source="DigitalInput_I3.IND" Destination="ILOCK_3.REQ" dx1="420"/>
+			<Connection Source="ILOCK_3.CNF" Destination="DigitalOutput_Q3.REQ" dx1="340"/>
+			<Connection Source="ILOCK_2.CNF" Destination="DigitalOutput_Q2.REQ" dx1="340"/>
+			<Connection Source="ILOCK_1.CNF" Destination="DigitalOutput_Q1.REQ" dx1="340"/>
+			<Connection Source="DigitalInput_I4.IND" Destination="ILOCK_4.REQ" dx1="420"/>
+		</EventConnections>
+		<DataConnections>
+			<Connection Source="DigitalInput_I3.IN" Destination="ILOCK_3.IN" dx1="420"/>
+			<Connection Source="DigitalInput_I4.IN" Destination="ILOCK_4.IN" dx1="420"/>
+			<Connection Source="ILOCK_4.OUT" Destination="DigitalOutput_Q4.OUT" dx1="340"/>
+			<Connection Source="ILOCK_3.OUT" Destination="DigitalOutput_Q3.OUT" dx1="400"/>
+			<Connection Source="DigitalInput_I1.IN" Destination="ILOCK_1.IN" dx1="420"/>
+			<Connection Source="ILOCK_1.OUT" Destination="DigitalOutput_Q1.OUT" dx1="340"/>
+			<Connection Source="DigitalInput_I2.IN" Destination="ILOCK_2.IN" dx1="420"/>
+			<Connection Source="ILOCK_2.OUT" Destination="DigitalOutput_Q2.OUT" dx1="340"/>
+		</DataConnections>
+		<AdapterConnections>
+			<Connection Source="ILOCK_3.ILOCK_OUT" Destination="ILOCK_4.ILOCK_IN" dx1="80" dx2="80" dy="500"/>
+			<Connection Source="ILOCK_2.ILOCK_OUT" Destination="ILOCK_3.ILOCK_IN" dx1="80" dx2="80" dy="500"/>
+			<Connection Source="ILOCK_1.ILOCK_OUT" Destination="ILOCK_2.ILOCK_IN" dx1="80" dx2="80" dy="500"/>
+		</AdapterConnections>
+	</SubAppNetwork>
+</SubAppType>

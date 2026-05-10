@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<FBType Name="AX_TONOF" Comment="standard timer function block (on/off-delay timing)">
-	<Identification Standard="61499-2" Classification="standard timer function block" Description="Copyright (c) 2024 HR Agrartechnik GmbH  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0">
+<FBType Name="AX_TONOF" Comment="Standard timer function block (on/off-delay timing)">
+	<Identification Standard="61499-2" Classification="standard timer function block" Description="Copyright (c) 2024 HR Agrartechnik GmbH  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0  &#10;   &#10;   &#10;AX_TONOF -- On/Off-delay timer FB with AX adapter interface  &#10;&#10;The adapter input IN triggers execution (E1-&gt;REQ) and provides  &#10;the boolean input value (D1-&gt;IN). The event input R presets  &#10;both delay times PT_ON and PT_OFF and resets the timer.  &#10;When IN goes TRUE, Q becomes TRUE after delay PT_ON.  &#10;When IN goes FALSE, Q becomes FALSE after delay PT_OFF.  &#10;Reset stops both timers and sets Q to FALSE.">
 	</Identification>
 	<VersionInfo Version="3.0" Author="Patrick Aigner" Date="2025-04-14" Remarks="changed package">
 	</VersionInfo>
@@ -19,14 +19,14 @@
 			</Event>
 		</EventInputs>
 		<InputVars>
-			<VarDeclaration Name="PT_ON" Type="TIME" Comment="Process time ON Delay"/>
-			<VarDeclaration Name="PT_OFF" Type="TIME" Comment="Process time OFF Delay"/>
+			<VarDeclaration Name="PT_ON" Type="TIME" Comment="ON delay time"/>
+			<VarDeclaration Name="PT_OFF" Type="TIME" Comment="OFF delay time"/>
 		</InputVars>
 		<Plugs>
-			<AdapterDeclaration Name="Q" Type="adapter::types::unidirectional::AX" Comment="Output" x="-1800" y="-900"/>
+			<AdapterDeclaration Name="Q" Type="adapter::types::unidirectional::AX" Comment="Timer output (AX adapter)" x="-1800" y="-900"/>
 		</Plugs>
 		<Sockets>
-			<AdapterDeclaration Name="IN" Type="adapter::types::unidirectional::AX" Comment="Input" x="-4200" y="-1000"/>
+			<AdapterDeclaration Name="IN" Type="adapter::types::unidirectional::AX" Comment="Timer input (AX adapter)" x="-4200" y="-1000"/>
 		</Sockets>
 	</InterfaceList>
 	<FBNetwork>

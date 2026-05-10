@@ -40,25 +40,33 @@
 		<Plugs>
 			<AdapterDeclaration Name="IN" Type="adapter::types::unidirectional::AD" Comment="Input data from resource" x="3200" y="1200"/>
 		</Plugs>
+		<Sockets>
+			<AdapterDeclaration Name="SREQ" Type="adapter::types::unidirectional::AX" Comment="Service Request" x="-1300" y="1800"/>
+		</Sockets>
 	</InterfaceList>
 	<FBNetwork>
 		<FB Name="AI" Type="logiBUS::io::AI::logiBUS_AI_ID" x="1240" y="460">
 		</FB>
+		<FB Name="E_R_TRIG" Type="iec61499::events::E_R_TRIG" x="-600" y="1800">
+		</FB>
 		<EventConnections>
-			<Connection Source="INIT" Destination="AI.INIT" dx1="3433.33"/>
-			<Connection Source="AI.INITO" Destination="INITO" dx1="1026.67"/>
-			<Connection Source="AI.IND" Destination="IN.E1" dx1="1133.33"/>
-			<Connection Source="AI.CNF" Destination="IN.E1" dx1="1126.67"/>
-			<Connection Source="REQ" Destination="AI.REQ" dx1="1113.33"/>
+			<Connection Source="INIT" Destination="AI.INIT" dx1="1486.67"/>
+			<Connection Source="AI.INITO" Destination="INITO" dx1="2426.67"/>
+			<Connection Source="AI.IND" Destination="IN.E1" dx1="246.67"/>
+			<Connection Source="AI.CNF" Destination="IN.E1" dx1="246.67"/>
+			<Connection Source="REQ" Destination="AI.REQ" dx1="1453.33"/>
+			<Connection Source="E_R_TRIG.EO" Destination="AI.REQ" dx1="246.67"/>
+			<Connection Source="SREQ.E1" Destination="E_R_TRIG.EI"/>
 		</EventConnections>
 		<DataConnections>
-			<Connection Source="AI.IN" Destination="IN.D1" dx1="633.33"/>
-			<Connection Source="QI" Destination="AI.QI" dx1="3360"/>
-			<Connection Source="PARAMS" Destination="AI.PARAMS" dx1="3253.33"/>
-			<Connection Source="AI.QO" Destination="QO" dx1="1880"/>
-			<Connection Source="AI.STATUS" Destination="STATUS" dx1="2053.33"/>
-			<Connection Source="Input" Destination="AI.Input" dx1="3113.33"/>
-			<Connection Source="AnalogInput_hysteresis" Destination="AI.AnalogInput_hysteresis" dx1="3113.33"/>
+			<Connection Source="AI.IN" Destination="IN.D1" dx1="213.33"/>
+			<Connection Source="QI" Destination="AI.QI" dx1="1420"/>
+			<Connection Source="PARAMS" Destination="AI.PARAMS" dx1="1386.67"/>
+			<Connection Source="AI.QO" Destination="QO" dx1="2460"/>
+			<Connection Source="AI.STATUS" Destination="STATUS" dx1="2493.33"/>
+			<Connection Source="Input" Destination="AI.Input" dx1="1353.33"/>
+			<Connection Source="AnalogInput_hysteresis" Destination="AI.AnalogInput_hysteresis" dx1="1320"/>
+			<Connection Source="SREQ.D1" Destination="E_R_TRIG.QI"/>
 		</DataConnections>
 	</FBNetwork>
 	<Attribute Name="eclipse4diac::core::TypeHash" Value="''"/>

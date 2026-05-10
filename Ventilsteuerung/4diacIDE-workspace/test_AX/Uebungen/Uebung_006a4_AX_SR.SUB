@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SubAppType Name="Uebung_006a4_AX_SR" Comment="Exercise for AX_FB_SR_T_FF (Set-Dominant Toggle Flip-Flop with Adapter)">
+	<Identification Standard="61499-2" Description="Copyright (c) 2026 Meisterschulen am Ostbahnhof">
+	</Identification>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Gemini CLI" Date="2026-05-07">
+	</VersionInfo>
+	<CompilerInfo packageName="Uebungen">
+		<Import declaration="logiBUS::io::DI::logiBUS_DI::Input_I1"/>
+		<Import declaration="logiBUS::io::DI::logiBUS_DI::Input_I2"/>
+		<Import declaration="logiBUS::io::DI::logiBUS_DI::Input_I3"/>
+		<Import declaration="logiBUS::io::DQ::logiBUS_DO::Output_Q1"/>
+	</CompilerInfo>
+	<SubAppInterfaceList>
+	</SubAppInterfaceList>
+	<SubAppNetwork>
+		<FB Name="DigitalInput_SET" Type="logiBUS::io::DI::logiBUS_IXA" x="-4500" y="-900">
+			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="Input" Value="Input_I1"/>
+		</FB>
+		<FB Name="DigitalInput_RESET" Type="logiBUS::io::DI::logiBUS_IXA" x="-4500" y="0">
+			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="Input" Value="Input_I2"/>
+		</FB>
+		<FB Name="DigitalInput_CLK" Type="logiBUS::io::DI::logiBUS_IXA" x="-4500" y="900">
+			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="Input" Value="Input_I3"/>
+		</FB>
+		<FB Name="SR_T_FF" Type="adapter::bistableElements::AX_FB_SR_T_FF" x="-1500" y="0">
+		</FB>
+		<FB Name="DigitalOutput_Q1" Type="logiBUS::io::DQ::logiBUS_QXA" x="1000" y="0">
+			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="Output" Value="Output_Q1"/>
+		</FB>
+		<AdapterConnections>
+			<Connection Source="DigitalInput_SET.IN" Destination="SR_T_FF.SET1" dx1="200"/>
+			<Connection Source="DigitalInput_RESET.IN" Destination="SR_T_FF.RESET" dx1="200"/>
+			<Connection Source="DigitalInput_CLK.IN" Destination="SR_T_FF.CLK" dx1="686.67"/>
+			<Connection Source="SR_T_FF.Q1" Destination="DigitalOutput_Q1.OUT" dx1="200"/>
+		</AdapterConnections>
+	</SubAppNetwork>
+</SubAppType>

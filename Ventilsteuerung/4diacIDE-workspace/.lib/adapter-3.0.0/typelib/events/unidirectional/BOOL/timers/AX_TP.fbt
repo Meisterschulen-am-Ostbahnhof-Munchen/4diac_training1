@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<FBType Name="AX_TP" Comment="standard timer function block (pulse)">
-	<Identification Standard="61499-2" Classification="standard timer function block" Description="Copyright (c) 2024 HR Agrartechnik GmbH  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0">
+<FBType Name="AX_TP" Comment="Standard timer function block (pulse) - non-retriggerable">
+	<Identification Standard="61499-2" Classification="standard timer function block" Description="Copyright (c) 2024 HR Agrartechnik GmbH  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0  &#10;   &#10;   &#10;AX_TP -- Impulse forming FB with AX adapter interface  &#10;&#10;The adapter input IN triggers execution (E1-&gt;REQ) and provides  &#10;the boolean input value (D1-&gt;IN). The event input R presets  &#10;the pulse time PT and resets the timer.  &#10;Generate an Impulse with a given Time.  &#10;This FB makes an Impulse of Duration PT on the Output Q on rising edge of IN.  &#10;Non-retriggerable.">
 	</Identification>
 	<VersionInfo Version="3.0" Author="Patrick Aigner" Date="2025-04-14" Remarks="changed package">
 	</VersionInfo>
@@ -21,10 +21,10 @@
 			<VarDeclaration Name="PT" Type="TIME" Comment="Pulse time"/>
 		</InputVars>
 		<Plugs>
-			<AdapterDeclaration Name="Q" Type="adapter::types::unidirectional::AX" Comment="Output" x="-1500" y="-900"/>
+			<AdapterDeclaration Name="Q" Type="adapter::types::unidirectional::AX" Comment="Timer output (AX adapter)" x="-1500" y="-900"/>
 		</Plugs>
 		<Sockets>
-			<AdapterDeclaration Name="IN" Type="adapter::types::unidirectional::AX" Comment="Input" x="-3800" y="-900"/>
+			<AdapterDeclaration Name="IN" Type="adapter::types::unidirectional::AX" Comment="Timer input (AX adapter)" x="-3800" y="-900"/>
 		</Sockets>
 	</InterfaceList>
 	<FBNetwork>

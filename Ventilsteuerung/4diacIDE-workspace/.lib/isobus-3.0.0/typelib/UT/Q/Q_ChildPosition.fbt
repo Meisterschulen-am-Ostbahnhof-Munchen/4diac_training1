@@ -44,11 +44,63 @@
 	</InterfaceList>
 	<Attribute Name="Documentation" Type="CDATA"><![CDATA[<h1>Command change child position ( Part 6 - F.16 )</h1>
 
-<p>The Change Child Location command is used to change the absolute position of an object.</p>
+<p>The Change Child Position command is used to change the absolute position of an object.</p>
+
+<h2>Valid Object IDs</h2>
+
+<p>A child position Object ID is valid if it falls within one of the following ISO 11783-6 ID ranges:</p>
+<ul>
+	<li><strong>Container</strong>: 3000 – 3999</li>
+	<li><strong>Button</strong>: 6000 – 6999</li>
+	<li><strong>InputBooleanField</strong>: 7000 – 7999</li>
+	<li><strong>InputStringField</strong>: 8000 – 8999</li>
+	<li><strong>InputNumberField</strong>: 9000 – 9999</li>
+	<li><strong>InputListField</strong>: 10000 – 10999</li>
+	<li><strong>OutputStringField</strong>: 11000 – 11999</li>
+	<li><strong>OutputNumberField</strong>: 12000 – 12999</li>
+	<li><strong>TypLine</strong>: 13000 – 13999</li>
+	<li><strong>TypRectangle</strong>: 14000 – 14999</li>
+	<li><strong>TypEllipse</strong>: 15000 – 15999</li>
+	<li><strong>TypPolygon</strong>: 16000 – 16999</li>
+	<li><strong>Meter</strong>: 17000 – 17999</li>
+	<li><strong>LinearBarGraph</strong>: 18000 – 18999</li>
+	<li><strong>ArchedBarGraph</strong>: 19000 – 19999</li>
+	<li><strong>PictureGraphic</strong>: 20000 – 20499</li>
+	<li><strong>ObjectPointer</strong>: 27000 – 27999</li>
+	<li><strong>OutputListObject</strong>: 37000 – 37999</li>
+	<li><strong>ExternalObjectPointer</strong>: 43000 – 43999</li>
+	<li><strong>AnimationObject</strong>: 44000 – 44999</li>
+	<li><strong>ScaledGraphicObject</strong>: 48000 – 48999</li>
+	<li><strong>AuxiliaryFunction</strong>: 29000 – 29999</li>
+	<li><strong>AuxiliaryFunctionType2</strong>: 31000 – 31999</li>
+	<li><strong>AuxiliaryInput</strong>: 30000 – 30999</li>
+	<li><strong>AuxiliaryInputType2</strong>: 32000 – 32999</li>
+	<li><strong>AuxiliaryControlDesignator</strong>: 33000 – 33999</li>
+</ul>
+
+<p>ID_NULL (65535) is not a command target but can be used in INIT to deactivate the FB. Any ID outside these ranges is invalid for commanding.</p>
+
+<h2>Activate / Deactivate</h2>
+
+<p>The FB is deactivated by default. It becomes active when INIT provides a valid child position Object ID. Sending INIT with ID_NULL (65535) deactivates the FB again. This toggle can be repeated arbitrarily.</p>
+
+<ul>
+	<li><strong>INIT + ID_NULL (65535)</strong>: FB deactivated, STATUS="DEACTIVATED", s16result=VT_E_DEACTIVATED (-40)</li>
+	<li><strong>INIT + valid child position ID</strong>: FB activated, STATUS="initialized", s16result=VT_E_NO_ERR (0). If a REQ was buffered before, it is executed immediately.</li>
+	<li><strong>INIT + invalid ID</strong>: STATUS="ERROR: Invalid Object ID (not a child position object)", s16result=VT_E_INVALID_OBJECT_ID (-132)</li>
+</ul>
+
+<h2>REQ Handling</h2>
+
+<ul>
+	<li><strong>REQ before any INIT</strong>: Buffered, STATUS="Buffered: INIT not yet completed", s16result=VT_E_NOT_READY (-131)</li>
+	<li><strong>REQ while deactivated (INIT came with NULL or invalid ID)</strong>: STATUS shows the actual deactivation reason, s16result=VT_E_DEACTIVATED (-40) or VT_E_INVALID_OBJECT_ID (-132)</li>
+	<li><strong>REQ while active</strong>: Command sent to VT, result reflected in CNF</li>
+</ul>
 
 <h2>param[in] {objectID, uint16_t}</h2>
 
-<p>Object ID</p>
+<p>Object ID. Use ID_NULL (65535) to deactivate the FB. Use a valid child position object ID to activate.</p>
 
 <h2>param[in] {parentObjectID, uint16_t}</h2>
 
@@ -62,17 +114,20 @@
 
 <p>New Y position relative to the top left corner of parent object.</p>
 
-<h2>Return Values:&nbsp;</h2>
+<h2>Return Values (s16result):</h2>
 
 <h3>int16_t</h3>
 
 <ul>
-	<li><span style="color:#2980b9">VT_E_NO_ERR (0)</span>&nbsp;- OK</li>
-	<li><span style="color:#2980b9">VT_E_OVERFLOW (-6)</span>&nbsp;- buffer overflow</li>
-	<li><span style="color:#2980b9">VT_E_NOACT (-8)</span> - Command not possible in current state</li>
-	<li><span style="color:#2980b9">VT_E_NO_INSTANCE (-21)</span>&nbsp;- No VT client available</li>
-	<li><span style="color:#2980b9">VT_E_ISO_INSTANCE_INVALID (-129)</span> - Identifier for instance (connection) invalid</li>
-	<li><span style="color:#2980b9">VT_E_NOT_ALIVE (-130)</span> - Identifier for instance valid, but VT Dead.</li>
+	<li><span style="color:#27ae60">VT_E_NO_ERR (0)</span> - OK</li>
+	<li><span style="color:#f39c12">VT_E_DEACTIVATED (-40)</span> - FB deactivated (INIT received with ID_NULL)</li>
+	<li><span style="color:#e74c3c">VT_E_INVALID_OBJECT_ID (-132)</span> - Object ID is invalid (not a child position object)</li>
+	<li><span style="color:#e74c3c">VT_E_NOT_READY (-131)</span> - Buffered: INIT not yet completed</li>
+	<li><span style="color:#e74c3c">VT_E_OVERFLOW (-6)</span> - buffer overflow</li>
+	<li><span style="color:#e74c3c">VT_E_NOACT (-8)</span> - Command not possible in current state</li>
+	<li><span style="color:#e74c3c">VT_E_NO_INSTANCE (-21)</span> - No VT client available</li>
+	<li><span style="color:#e74c3c">VT_E_ISO_INSTANCE_INVALID (-129)</span> - Identifier for instance (connection) invalid</li>
+	<li><span style="color:#e74c3c">VT_E_NOT_ALIVE (-130)</span> - Identifier for instance valid, but VT Dead.</li>
 </ul>
 ]]></Attribute>
 	<Attribute Name="eclipse4diac::core::TypeHash" Value="''"/>
