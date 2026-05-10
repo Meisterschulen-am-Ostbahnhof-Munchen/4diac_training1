@@ -29,12 +29,18 @@
 		</OutputVars>
 	</InterfaceList>
 	<FBNetwork>
+		<FB Name="F_NOT_BOOL" Type="iec61131::bitwiseOperators::F_NOT_BOOL" x="300" y="-700">
+		</FB>
 		<EventConnections>
 			<Connection Source="INIT" Destination="INITO"/>
-			<Connection Source="REQ" Destination="CNF"/>
+			<Connection Source="REQ" Destination="F_NOT_BOOL.REQ" dx1="1123.53"/>
+			<Connection Source="F_NOT_BOOL.CNF" Destination="CNF" dx1="1688.24"/>
 		</EventConnections>
 		<DataConnections>
-			<Connection Source="IN" Destination="OUT"/>
+			<Connection Source="IN" Destination="F_NOT_BOOL.IN" dx1="635.29">
+				<Attribute Name="Negated" Value="true"/>
+			</Connection>
+			<Connection Source="F_NOT_BOOL.OUT" Destination="OUT" dx1="2947.06"/>
 		</DataConnections>
 	</FBNetwork>
 </FBType>
