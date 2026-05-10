@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<FBType Name="E_CALIBRATE_3P" Comment="Event-driven 3-point calibration for joysticks (Min, Mid, Max)">
+	<Identification Standard="61499-1" Description="E_CALIBRATE_3P allows for 3-point calibration of an analog input via event triggers. Ideal for joysticks with center drift.">
+	</Identification>
+	<VersionInfo Version="1.0" Author="Gemini CLI" Date="2026-05-10">
+	</VersionInfo>
+	<CompilerInfo packageName="OSCAT::Basic::POUs::Engineering::measurements">
+	</CompilerInfo>
+	<InterfaceList>
+		<EventInputs>
+			<Event Name="REQ" Type="Event" Comment="Normal Execution Request">
+				<With Var="X"/>
+				<With Var="MIN_REF"/>
+				<With Var="MID_REF"/>
+				<With Var="MAX_REF"/>
+				<With Var="X_MIN"/>
+				<With Var="X_MID"/>
+				<With Var="X_MAX"/>
+			</Event>
+			<Event Name="EI_MIN" Type="Event" Comment="Calibrate Min Point">
+				<With Var="X"/>
+			</Event>
+			<Event Name="EI_MID" Type="Event" Comment="Calibrate Mid Point (Center)">
+				<With Var="X"/>
+			</Event>
+			<Event Name="EI_MAX" Type="Event" Comment="Calibrate Max Point">
+				<With Var="X"/>
+			</Event>
+		</EventInputs>
+		<EventOutputs>
+			<Event Name="CNF" Type="Event" Comment="Execution Confirmation">
+				<With Var="Y"/>
+			</Event>
+			<Event Name="EO_MIN" Type="Event" Comment="Min Calibration Confirmed">
+				<With Var="X_MIN"/>
+			</Event>
+			<Event Name="EO_MID" Type="Event" Comment="Mid Calibration Confirmed">
+				<With Var="X_MID"/>
+			</Event>
+			<Event Name="EO_MAX" Type="Event" Comment="Max Calibration Confirmed">
+				<With Var="X_MAX"/>
+			</Event>
+		</EventOutputs>
+		<InputVars>
+			<VarDeclaration Name="X" Type="REAL" Comment="Raw Input"/>
+			<VarDeclaration Name="MIN_REF" Type="REAL" Comment="Target value for Min" InitialValue="0.0"/>
+			<VarDeclaration Name="MID_REF" Type="REAL" Comment="Target value for Mid" InitialValue="50.0"/>
+			<VarDeclaration Name="MAX_REF" Type="REAL" Comment="Target value for Max" InitialValue="100.0"/>
+		</InputVars>
+		<OutputVars>
+			<VarDeclaration Name="Y" Type="REAL" Comment="Calibrated Output"/>
+		</OutputVars>
+		<InOutVars>
+			<VarDeclaration Name="X_MIN" Type="REAL" Comment="Stored Min Value" InitialValue="0.0"/>
+			<VarDeclaration Name="X_MID" Type="REAL" Comment="Stored Mid Value" InitialValue="50.0"/>
+			<VarDeclaration Name="X_MAX" Type="REAL" Comment="Stored Max Value" InitialValue="100.0"/>
+		</InOutVars>
+	</InterfaceList>
+	<BasicFB>
+		<ECC>
+			<ECState Name="START" x="400" y="400">
+			</ECState>
+			<ECState Name="REQ" x="1200" y="400">
+				<ECAction Algorithm="REQ" Output="CNF"/>
+			</ECState>
+			<ECState Name="C_MIN" x="1200" y="0">
+				<ECAction Algorithm="C_MIN" Output="EO_MIN"/>
+			</ECState>
+			<ECState Name="C_MID" x="1200" y="800">
+				<ECAction Algorithm="C_MID" Output="EO_MID"/>
+			</ECState>
+			<ECState Name="C_MAX" x="1200" y="1200">
+				<ECAction Algorithm="C_MAX" Output="EO_MAX"/>
+			</ECState>
+			<ECTransition Source="START" Destination="REQ" Condition="REQ" Comment="" x="800" y="400"/>
+			<ECTransition Source="REQ" Destination="START" Condition="1" Comment="" x="800" y="500"/>
+			<ECTransition Source="START" Destination="C_MIN" Condition="EI_MIN" Comment="" x="800" y="200"/>
+			<ECTransition Source="C_MIN" Destination="START" Condition="1" Comment="" x="800" y="100"/>
+			<ECTransition Source="START" Destination="C_MID" Condition="EI_MID" Comment="" x="800" y="600"/>
+			<ECTransition Source="C_MID" Destination="START" Condition="1" Comment="" x="800" y="700"/>
+			<ECTransition Source="START" Destination="C_MAX" Condition="EI_MAX" Comment="" x="800" y="1000"/>
+			<ECTransition Source="C_MAX" Destination="START" Condition="1" Comment="" x="800" y="1100"/>
+		</ECC>
+		<Algorithm Name="REQ">
+			<ST><![CDATA[
+(* calculate output *)
+IF X < X_MID THEN
+	IF X_MID > X_MIN THEN
+		Y := MIN_REF + (X - X_MIN) * (MID_REF - MIN_REF) / (X_MID - X_MIN);
+	ELSE
+		Y := MIN_REF;
+	END_IF;
+ELSE
+	IF X_MAX > X_MID THEN
+		Y := MID_REF + (X - X_MID) * (MAX_REF - MID_REF) / (X_MAX - X_MID);
+	ELSE
+		Y := MID_REF;
+	END_IF;
+END_IF;
+
+(* clipping *)
+IF Y < MIN_REF THEN
+	Y := MIN_REF;
+ELSIF Y > MAX_REF THEN
+	Y := MAX_REF;
+END_IF;
+]]></ST>
+		</Algorithm>
+		<Algorithm Name="C_MIN">
+			<ST><![CDATA[
+X_MIN := X;
+]]></ST>
+		</Algorithm>
+		<Algorithm Name="C_MID">
+			<ST><![CDATA[
+X_MID := X;
+]]></ST>
+		</Algorithm>
+		<Algorithm Name="C_MAX">
+			<ST><![CDATA[
+X_MAX := X;
+]]></ST>
+		</Algorithm>
+	</BasicFB>
+</FBType>

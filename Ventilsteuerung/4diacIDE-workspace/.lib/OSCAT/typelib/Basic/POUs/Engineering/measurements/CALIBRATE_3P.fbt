@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<FBType Name="CALIBRATE_3P" Comment="3-point calibration for joysticks (Min, Mid, Max)">
+	<Identification Standard="61499-1" Description="Calibrate_3P allows for 3-point calibration of an analog input, ideal for joysticks with center drift.">
+	</Identification>
+	<VersionInfo Version="1.0" Author="Gemini CLI" Date="2026-05-10">
+	</VersionInfo>
+	<CompilerInfo packageName="OSCAT::Basic::POUs::Engineering::measurements">
+	</CompilerInfo>
+	<InterfaceList>
+		<EventInputs>
+			<Event Name="REQ" Type="Event" Comment="Normal Execution Request">
+				<With Var="X"/>
+				<With Var="C_MIN"/>
+				<With Var="C_MID"/>
+				<With Var="C_MAX"/>
+				<With Var="MIN_REF"/>
+				<With Var="MID_REF"/>
+				<With Var="MAX_REF"/>
+				<With Var="X_MIN"/>
+				<With Var="X_MID"/>
+				<With Var="X_MAX"/>
+			</Event>
+		</EventInputs>
+		<EventOutputs>
+			<Event Name="CNF" Type="Event" Comment="Execution Confirmation">
+				<With Var="Y"/>
+				<With Var="X_MIN"/>
+				<With Var="X_MID"/>
+				<With Var="X_MAX"/>
+			</Event>
+		</EventOutputs>
+		<InputVars>
+			<VarDeclaration Name="X" Type="REAL" Comment="Raw Input"/>
+			<VarDeclaration Name="C_MIN" Type="BOOL" Comment="Calibrate Min Point"/>
+			<VarDeclaration Name="C_MID" Type="BOOL" Comment="Calibrate Mid Point (Center)"/>
+			<VarDeclaration Name="C_MAX" Type="BOOL" Comment="Calibrate Max Point"/>
+			<VarDeclaration Name="MIN_REF" Type="REAL" Comment="Target value for Min" InitialValue="0.0"/>
+			<VarDeclaration Name="MID_REF" Type="REAL" Comment="Target value for Mid" InitialValue="50.0"/>
+			<VarDeclaration Name="MAX_REF" Type="REAL" Comment="Target value for Max" InitialValue="100.0"/>
+		</InputVars>
+		<OutputVars>
+			<VarDeclaration Name="Y" Type="REAL" Comment="Calibrated Output"/>
+		</OutputVars>
+		<InOutVars>
+			<VarDeclaration Name="X_MIN" Type="REAL" Comment="Stored Min Value" InitialValue="0.0"/>
+			<VarDeclaration Name="X_MID" Type="REAL" Comment="Stored Mid Value" InitialValue="50.0"/>
+			<VarDeclaration Name="X_MAX" Type="REAL" Comment="Stored Max Value" InitialValue="100.0"/>
+		</InOutVars>
+	</InterfaceList>
+	<SimpleFB>
+		<ECState Name="REQ">
+			<ECAction Algorithm="REQ" Output="CNF"/>
+		</ECState>
+		<Algorithm Name="REQ">
+			<ST><![CDATA[
+(* check for calibration *)
+IF C_MIN THEN
+	X_MIN := X;
+ELSIF C_MID THEN
+	X_MID := X;
+ELSIF C_MAX THEN
+	X_MAX := X;
+END_IF;
+
+(* calculate output *)
+IF X < X_MID THEN
+	IF X_MID > X_MIN THEN
+		Y := MIN_REF + (X - X_MIN) * (MID_REF - MIN_REF) / (X_MID - X_MIN);
+	ELSE
+		Y := MIN_REF;
+	END_IF;
+ELSE
+	IF X_MAX > X_MID THEN
+		Y := MID_REF + (X - X_MID) * (MAX_REF - MID_REF) / (X_MAX - X_MID);
+	ELSE
+		Y := MID_REF;
+	END_IF;
+END_IF;
+
+(* clipping *)
+IF Y < MIN_REF THEN
+	Y := MIN_REF;
+ELSIF Y > MAX_REF THEN
+	Y := MAX_REF;
+END_IF;
+]]></ST>
+		</Algorithm>
+	</SimpleFB>
+</FBType>
