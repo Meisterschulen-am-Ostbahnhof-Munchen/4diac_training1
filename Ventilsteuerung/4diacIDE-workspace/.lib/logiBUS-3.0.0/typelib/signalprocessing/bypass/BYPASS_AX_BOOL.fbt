@@ -24,36 +24,35 @@
 			<VarDeclaration Name="OUT" Type="BOOL" Comment="Output"/>
 		</OutputVars>
 		<Plugs>
-			<AdapterDeclaration Name="BY_OUT" Type="adapter::types::unidirectional::AX" Comment="Bypass out" x="2300" y="1100"/>
+			<AdapterDeclaration Name="BY_OUT" Type="adapter::types::unidirectional::AX" Comment="Bypass out" x="-1200" y="1100"/>
 		</Plugs>
 		<Sockets>
-			<AdapterDeclaration Name="BY_IN" Type="adapter::types::unidirectional::AX" Comment="Bypass in" x="-1100" y="1100"/>
+			<AdapterDeclaration Name="BY_IN" Type="adapter::types::unidirectional::AX" Comment="Bypass in" x="-4600" y="1100"/>
 		</Sockets>
 	</InterfaceList>
 	<FBNetwork>
-		<FB Name="OR_2_BOOL" Type="iec61131::bitwiseOperators::OR_2_BOOL" x="-200" y="1100">
+		<FB Name="OR_2_BOOL" Type="iec61131::bitwiseOperators::OR_2_BOOL" x="-3700" y="1100">
 		</FB>
-		<FB Name="E_D_FF" Type="iec61499::events::E_D_FF" x="1100" y="1100">
+		<FB Name="E_D_FF" Type="iec61499::events::E_D_FF" x="-2400" y="1100">
 		</FB>
-		<FB Name="F_NOT_BOOL" Type="iec61131::bitwiseOperators::F_NOT_BOOL" x="-3900" y="200">
+		<FB Name="F_MOVE" Type="iec61131::selection::F_MOVE" x="-5600" y="200">
+			<Attribute Name="DataType" Value="BOOL"/>
 		</FB>
 		<EventConnections>
 			<Connection Source="OR_2_BOOL.CNF" Destination="E_D_FF.CLK"/>
 			<Connection Source="BY_IN.E1" Destination="OR_2_BOOL.REQ"/>
 			<Connection Source="E_D_FF.EO" Destination="BY_OUT.E1"/>
-			<Connection Source="F_NOT_BOOL.CNF" Destination="CNF" dx1="4470.59"/>
-			<Connection Source="F_NOT_BOOL.CNF" Destination="OR_2_BOOL.REQ" dx1="2847.06"/>
-			<Connection Source="REQ" Destination="F_NOT_BOOL.REQ" dx1="1482.35"/>
+			<Connection Source="F_MOVE.CNF" Destination="CNF" dx1="4470.59"/>
+			<Connection Source="F_MOVE.CNF" Destination="OR_2_BOOL.REQ" dx1="900"/>
+			<Connection Source="REQ" Destination="F_MOVE.REQ" dx1="1194.12"/>
 		</EventConnections>
 		<DataConnections>
 			<Connection Source="OR_2_BOOL.OUT" Destination="E_D_FF.D"/>
 			<Connection Source="BY_IN.D1" Destination="OR_2_BOOL.IN1"/>
 			<Connection Source="E_D_FF.Q" Destination="BY_OUT.D1"/>
-			<Connection Source="F_NOT_BOOL.OUT" Destination="OR_2_BOOL.IN2" dx1="376.47"/>
-			<Connection Source="F_NOT_BOOL.OUT" Destination="OUT" dx1="4470.59"/>
-			<Connection Source="IN" Destination="F_NOT_BOOL.IN" dx1="1482.35">
-				<Attribute Name="Negated" Value="true"/>
-			</Connection>
+			<Connection Source="F_MOVE.OUT" Destination="OR_2_BOOL.IN2" dx1="70.59"/>
+			<Connection Source="F_MOVE.OUT" Destination="OUT" dx1="4470.59"/>
+			<Connection Source="IN" Destination="F_MOVE.IN" dx1="1194.12"/>
 		</DataConnections>
 	</FBNetwork>
 </FBType>
