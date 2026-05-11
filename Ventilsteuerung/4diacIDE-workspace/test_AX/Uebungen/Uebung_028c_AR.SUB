@@ -8,7 +8,7 @@
 		<Import declaration="Uebungen::const::UT::DefaultPool_Numeric::InputNumber_I3"/>
 		<Import declaration="Uebungen::const::UT::DefaultPool_Numeric::InputNumber_I4"/>
 		<Import declaration="Uebungen::const::UT::PWM::DefaultPool_PWM_Numeric::InputNumber_PWM_DUTY"/>
-		<Import declaration="logiBUS::io::AI::logiBUS_AI::AnalogInput_I8"/>
+		<Import declaration="logiBUS::io::AI::logiBUS_AI::AnalogInput_I7"/>
 		<Import declaration="logiBUS::io::DI::logiBUS_DI::Input_I1"/>
 		<Import declaration="logiBUS::io::DI::logiBUS_DI::Input_I2"/>
 		<Import declaration="logiBUS::io::DI::logiBUS_DI::Input_I3"/>
@@ -27,10 +27,8 @@
 		</FB>
 		<FB Name="AnalogInput_I4" Type="logiBUS::io::AI::logiBUS_AI_IDA" x="-4300" y="1900">
 			<Parameter Name="QI" Value="TRUE"/>
-			<Parameter Name="Input" Value="AnalogInput_I8"/>
+			<Parameter Name="Input" Value="AnalogInput_I7"/>
 			<Parameter Name="AnalogInput_hysteresis" Value="50"/>
-		</FB>
-		<FB Name="CONVERT_I4" Type="adapter::conversion::unidirectional::AD_TO_AR" x="-2000" y="1000">
 		</FB>
 		<FB Name="CALIBRATE" Type="adapter::Engineering::measurements::AR_CALIBRATE" x="1000" y="1500">
 			<Parameter Name="Y_Offset" Value="100.0"/>
@@ -77,17 +75,21 @@
 			<Parameter Name="stObj" Value="InputNumber_PWM_DUTY"/>
 		</FB>
 		<Comment Comment="SREQ nicht vorhanden !! BUG !!! " x="-5100" y="3100" width="1000" height="500"/>
+		<FB Name="AD_TO_AUDI" Type="adapter::conversion::unidirectional::AD_TO_AUDI" x="-2300" y="900">
+		</FB>
+		<FB Name="AUDI_TO_AR" Type="adapter::conversion::unidirectional::AUDI_TO_AR" x="-1100" y="900">
+		</FB>
+		<Comment Comment="WICHTIG ! Doppelte Konvertierung. ein AD_TO_AR wäre wie ein &quot;reinterpret_cast&quot; " x="-2100" y="200" width="1700" height="400"/>
 		<EventConnections>
 			<Connection Source="Hysteresis_AR_AX.INITO" Destination="Hysteresis_AR_AX.REQ" dx1="80" dx2="80" dy="53.33"/>
 		</EventConnections>
 		<AdapterConnections>
 			<Connection Source="DigitalInput_I1.IN" Destination="AX_SPLIT_2.IN" dx1="306.67"/>
-			<Connection Source="AnalogInput_I4.IN" Destination="CONVERT_I4.AD_IN" dx1="240"/>
-			<Connection Source="CONVERT_I4.AR_OUT" Destination="CALIBRATE.X" dx1="800"/>
+			<Connection Source="AnalogInput_I4.IN" Destination="AD_TO_AUDI.AD_IN" dx1="173.33"/>
+			<Connection Source="AUDI_TO_AR.AR_OUT" Destination="CALIBRATE.X" dx1="800"/>
 			<Connection Source="DigitalInput_I2_CO.IN" Destination="CALIBRATE.CO" dx1="1086.67"/>
 			<Connection Source="DigitalInput_I3_CS.IN" Destination="CALIBRATE.CS" dx1="800"/>
 			<Connection Source="AX_SPLIT_2.OUT1" Destination="DigitalOutput_Q1.OUT" dx1="220"/>
-			<Connection Source="AX_SPLIT_2.OUT2" Destination="AnalogInput_I4.SREQ" dx1="220"/>
 			<Connection Source="CALIBRATE.OFFSET" Destination="INI_OFFSET.VAL" dx1="320"/>
 			<Connection Source="CALIBRATE.SCALE" Destination="INI_SCALE.VAL" dx1="206.67"/>
 			<Connection Source="CALIBRATE.Y" Destination="AR_SPLIT_2.IN" dx1="926.67"/>
@@ -95,6 +97,7 @@
 			<Connection Source="HYSTERESIS.VALUEO" Destination="Hysteresis_AR_AX.HYSTERESIS" dx1="540"/>
 			<Connection Source="AR_SPLIT_2.OUT2" Destination="Hysteresis_AR_AX.INPUT" dx1="673.33"/>
 			<Connection Source="AR_SPLIT_2.OUT1" Destination="Q_NumericValue_PHYSA.rPhys" dx1="873.33"/>
+			<Connection Source="AD_TO_AUDI.AUDI_OUT" Destination="AUDI_TO_AR.AUDI_IN"/>
 		</AdapterConnections>
 	</SubAppNetwork>
 </SubAppType>

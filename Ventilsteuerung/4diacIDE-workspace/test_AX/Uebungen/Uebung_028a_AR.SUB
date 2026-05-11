@@ -5,10 +5,10 @@
 	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2026-05-07" Remarks="initial API and implementation and/or initial documentation">
 	</VersionInfo>
 	<CompilerInfo packageName="Uebungen">
+		<Import declaration="logiBUS::io::AI::logiBUS_AI::AnalogInput_I4"/>
 		<Import declaration="logiBUS::io::DI::logiBUS_DI::Input_I1"/>
 		<Import declaration="logiBUS::io::DI::logiBUS_DI::Input_I2"/>
 		<Import declaration="logiBUS::io::DI::logiBUS_DI::Input_I3"/>
-		<Import declaration="logiBUS::io::AI::logiBUS_AI::AnalogInput_I4"/>
 		<Import declaration="logiBUS::io::DQ::logiBUS_DO::Output_Q1"/>
 	</CompilerInfo>
 	<SubAppInterfaceList>
@@ -26,8 +26,6 @@
 			<Parameter Name="QI" Value="TRUE"/>
 			<Parameter Name="Input" Value="AnalogInput_I4"/>
 			<Parameter Name="AnalogInput_hysteresis" Value="50"/>
-		</FB>
-		<FB Name="CONVERT_I4" Type="adapter::conversion::unidirectional::AD_TO_AR" x="-2000" y="1000">
 		</FB>
 		<FB Name="CALIBRATE" Type="adapter::Engineering::measurements::AR_CALIBRATE" x="1000" y="1500">
 			<Parameter Name="Y_Offset" Value="100.0"/>
@@ -55,16 +53,22 @@
 		</FB>
 		<FB Name="AX_SPLIT_2" Type="adapter::events::unidirectional::AX_SPLIT_2" x="-6100" y="1000">
 		</FB>
+		<FB Name="AD_TO_AUDI" Type="adapter::conversion::unidirectional::AD_TO_AUDI" x="-2300" y="900">
+		</FB>
+		<FB Name="AUDI_TO_AR" Type="adapter::conversion::unidirectional::AUDI_TO_AR" x="-1100" y="900">
+		</FB>
+		<Comment Comment="WICHTIG ! Doppelte Konvertierung. ein AD_TO_AR wäre wie ein &quot;reinterpret_cast&quot; " x="-2100" y="400" width="1700" height="400"/>
 		<AdapterConnections>
 			<Connection Source="DigitalInput_I1.IN" Destination="AX_SPLIT_2.IN" dx1="306.67"/>
-			<Connection Source="AnalogInput_I4.IN" Destination="CONVERT_I4.AD_IN" dx1="240"/>
-			<Connection Source="CONVERT_I4.AR_OUT" Destination="CALIBRATE.X" dx1="800"/>
+			<Connection Source="AnalogInput_I4.IN" Destination="AD_TO_AUDI.AD_IN" dx1="240"/>
+			<Connection Source="AUDI_TO_AR.AR_OUT" Destination="CALIBRATE.X" dx1="800"/>
 			<Connection Source="DigitalInput_I2_CO.IN" Destination="CALIBRATE.CO" dx1="1086.67"/>
 			<Connection Source="DigitalInput_I3_CS.IN" Destination="CALIBRATE.CS" dx1="800"/>
 			<Connection Source="AX_SPLIT_2.OUT1" Destination="DigitalOutput_Q1.OUT" dx1="220"/>
 			<Connection Source="AX_SPLIT_2.OUT2" Destination="AnalogInput_I4.SREQ" dx1="220"/>
 			<Connection Source="CALIBRATE.OFFSET" Destination="INI_OFFSET.VAL" dx1="320"/>
 			<Connection Source="CALIBRATE.SCALE" Destination="INI_SCALE.VAL" dx1="206.67"/>
+			<Connection Source="AD_TO_AUDI.AUDI_OUT" Destination="AUDI_TO_AR.AUDI_IN"/>
 		</AdapterConnections>
 	</SubAppNetwork>
 </SubAppType>

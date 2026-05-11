@@ -29,8 +29,6 @@
 			<Parameter Name="Input" Value="AnalogInput_I4"/>
 			<Parameter Name="AnalogInput_hysteresis" Value="50"/>
 		</FB>
-		<FB Name="CONVERT_I4" Type="adapter::conversion::unidirectional::AD_TO_AR" x="-2000" y="1000">
-		</FB>
 		<FB Name="CALIBRATE" Type="adapter::Engineering::measurements::AR_CALIBRATE" x="1000" y="1500">
 			<Parameter Name="Y_Offset" Value="100.0"/>
 			<Parameter Name="Y_Scale" Value="600.0"/>
@@ -70,13 +68,18 @@
 		<FB Name="Hysteresis_AR_AX" Type="logiBUS::signalprocessing::Hysteresis_AR_AX" x="6100" y="-100">
 			<Parameter Name="QI" Value="TRUE"/>
 		</FB>
+		<FB Name="AD_TO_AUDI" Type="adapter::conversion::unidirectional::AD_TO_AUDI" x="-2300" y="900">
+		</FB>
+		<FB Name="AUDI_TO_AR" Type="adapter::conversion::unidirectional::AUDI_TO_AR" x="-1100" y="900">
+		</FB>
+		<Comment Comment="WICHTIG ! Doppelte Konvertierung. ein AD_TO_AR wäre wie ein &quot;reinterpret_cast&quot; " x="-2200" y="400" width="1700" height="400"/>
 		<EventConnections>
 			<Connection Source="Hysteresis_AR_AX.INITO" Destination="Hysteresis_AR_AX.REQ" dx1="80" dx2="80" dy="53.33"/>
 		</EventConnections>
 		<AdapterConnections>
 			<Connection Source="DigitalInput_I1.IN" Destination="AX_SPLIT_2.IN" dx1="306.67"/>
-			<Connection Source="AnalogInput_I4.IN" Destination="CONVERT_I4.AD_IN" dx1="240"/>
-			<Connection Source="CONVERT_I4.AR_OUT" Destination="CALIBRATE.X" dx1="800"/>
+			<Connection Source="AnalogInput_I4.IN" Destination="AD_TO_AUDI.AD_IN" dx1="240"/>
+			<Connection Source="AUDI_TO_AR.AR_OUT" Destination="CALIBRATE.X" dx1="800"/>
 			<Connection Source="DigitalInput_I2_CO.IN" Destination="CALIBRATE.CO" dx1="1086.67"/>
 			<Connection Source="DigitalInput_I3_CS.IN" Destination="CALIBRATE.CS" dx1="800"/>
 			<Connection Source="AX_SPLIT_2.OUT1" Destination="DigitalOutput_Q1.OUT" dx1="220"/>
@@ -86,6 +89,7 @@
 			<Connection Source="CALIBRATE.Y" Destination="Hysteresis_AR_AX.INPUT" dx1="926.67"/>
 			<Connection Source="THRESHOLD.VALUEO" Destination="Hysteresis_AR_AX.THRESHOLD" dx1="333.33"/>
 			<Connection Source="HYSTERESIS.VALUEO" Destination="Hysteresis_AR_AX.HYSTERESIS" dx1="540"/>
+			<Connection Source="AD_TO_AUDI.AUDI_OUT" Destination="AUDI_TO_AR.AUDI_IN"/>
 		</AdapterConnections>
 	</SubAppNetwork>
 </SubAppType>
