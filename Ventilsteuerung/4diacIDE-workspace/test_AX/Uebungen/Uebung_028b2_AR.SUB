@@ -33,15 +33,13 @@
 			<Parameter Name="Y_Offset" Value="100.0"/>
 			<Parameter Name="Y_Scale" Value="600.0"/>
 		</FB>
-		<FB Name="NVS_OFFSET" Type="eclipse4diac::storage::NVS_AR2" x="3100" y="2600">
+		<FB Name="NVS_OFFSET" Type="logiBUS::storage::esp32_nvs::NVS_AR2" x="3100" y="2600">
 			<Parameter Name="QI" Value="TRUE"/>
-			<Parameter Name="SECTION" Value="'Uebung_028a_AR'"/>
 			<Parameter Name="KEY" Value="'OFFSET'"/>
 			<Parameter Name="DEFAULT_VALUE" Value="0.0"/>
 		</FB>
-		<FB Name="NVS_SCALE" Type="eclipse4diac::storage::NVS_AR2" x="3100" y="3600">
+		<FB Name="NVS_SCALE" Type="logiBUS::storage::esp32_nvs::NVS_AR2" x="3100" y="3600">
 			<Parameter Name="QI" Value="TRUE"/>
-			<Parameter Name="SECTION" Value="'Uebung_028a_AR'"/>
 			<Parameter Name="KEY" Value="'SCALE'"/>
 			<Parameter Name="DEFAULT_VALUE" Value="1.0"/>
 		</FB>
@@ -57,12 +55,10 @@
 		</FB>
 		<SubApp Name="THRESHOLD" Type="MyLib::sys::NVS_IN_AND_STORE_AR" x="4300" y="800">
 			<Parameter Name="KEY" Value="'THRESHOLD'"/>
-			<Parameter Name="SECTION" Value="'HYSTERESIS'"/>
 			<Parameter Name="stObj" Value="InputNumber_I3"/>
 		</SubApp>
 		<SubApp Name="HYSTERESIS" Type="MyLib::sys::NVS_IN_AND_STORE_AR" x="4300" y="1500">
 			<Parameter Name="KEY" Value="'HYSTERESIS'"/>
-			<Parameter Name="SECTION" Value="'HYSTERESIS'"/>
 			<Parameter Name="stObj" Value="InputNumber_I4"/>
 		</SubApp>
 		<FB Name="Hysteresis_AR_AX" Type="logiBUS::signalprocessing::Hysteresis_AR_AX" x="6100" y="-100">
