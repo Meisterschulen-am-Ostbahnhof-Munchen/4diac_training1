@@ -31,13 +31,13 @@
 			<Parameter Name="Y_Offset" Value="100.0"/>
 			<Parameter Name="Y_Scale" Value="600.0"/>
 		</FB>
-		<FB Name="INI_OFFSET" Type="eclipse4diac::storage::INI_AR2" x="3100" y="2600">
+		<FB Name="NVS_OFFSET" Type="eclipse4diac::storage::NVS_AR2" x="3100" y="2600">
 			<Parameter Name="QI" Value="TRUE"/>
 			<Parameter Name="SECTION" Value="'Uebung_028a_AR'"/>
 			<Parameter Name="KEY" Value="'OFFSET'"/>
 			<Parameter Name="DEFAULT_VALUE" Value="0.0"/>
 		</FB>
-		<FB Name="INI_SCALE" Type="eclipse4diac::storage::INI_AR2" x="3100" y="3600">
+		<FB Name="NVS_SCALE" Type="eclipse4diac::storage::NVS_AR2" x="3100" y="3600">
 			<Parameter Name="QI" Value="TRUE"/>
 			<Parameter Name="SECTION" Value="'Uebung_028a_AR'"/>
 			<Parameter Name="KEY" Value="'SCALE'"/>
@@ -66,8 +66,8 @@
 			<Connection Source="DigitalInput_I3_CS.IN" Destination="CALIBRATE.CS" dx1="800"/>
 			<Connection Source="AX_SPLIT_2.OUT1" Destination="DigitalOutput_Q1.OUT" dx1="220"/>
 			<Connection Source="AX_SPLIT_2.OUT2" Destination="AnalogInput_I4.SREQ" dx1="220"/>
-			<Connection Source="CALIBRATE.OFFSET" Destination="INI_OFFSET.VAL" dx1="320"/>
-			<Connection Source="CALIBRATE.SCALE" Destination="INI_SCALE.VAL" dx1="206.67"/>
+			<Connection Source="CALIBRATE.OFFSET" Destination="NVS_OFFSET.VAL" dx1="320"/>
+			<Connection Source="CALIBRATE.SCALE" Destination="NVS_SCALE.VAL" dx1="206.67"/>
 			<Connection Source="AD_TO_AUDI.AUDI_OUT" Destination="AUDI_TO_AR.AUDI_IN"/>
 		</AdapterConnections>
 	</SubAppNetwork>
