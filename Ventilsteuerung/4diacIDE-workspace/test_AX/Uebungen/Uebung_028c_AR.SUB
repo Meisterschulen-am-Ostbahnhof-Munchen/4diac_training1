@@ -7,6 +7,7 @@
 	<CompilerInfo packageName="Uebungen">
 		<Import declaration="Uebungen::const::UT::DefaultPool_Numeric::InputNumber_I3"/>
 		<Import declaration="Uebungen::const::UT::DefaultPool_Numeric::InputNumber_I4"/>
+		<Import declaration="Uebungen::const::UT::PWM::DefaultPool_PWM_Numeric::InputNumber_PWM_DUTY"/>
 		<Import declaration="logiBUS::io::AI::logiBUS_AI::AnalogInput_I4"/>
 		<Import declaration="logiBUS::io::DI::logiBUS_DI::Input_I1"/>
 		<Import declaration="logiBUS::io::DI::logiBUS_DI::Input_I2"/>
@@ -70,6 +71,11 @@
 		<FB Name="Hysteresis_AR_AX" Type="logiBUS::signalprocessing::Hysteresis_AR_AX" x="6100" y="-100">
 			<Parameter Name="QI" Value="TRUE"/>
 		</FB>
+		<FB Name="AR_SPLIT_2" Type="adapter::events::unidirectional::AR_SPLIT_2" x="4000" y="-800">
+		</FB>
+		<FB Name="Q_NumericValue_PHYSA" Type="isobus::UT::Q::Q_NumericValue_PHYSA" x="6400" y="-1500">
+			<Parameter Name="stObj" Value="InputNumber_PWM_DUTY"/>
+		</FB>
 		<EventConnections>
 			<Connection Source="Hysteresis_AR_AX.INITO" Destination="Hysteresis_AR_AX.REQ" dx1="80" dx2="80" dy="53.33"/>
 		</EventConnections>
@@ -83,9 +89,11 @@
 			<Connection Source="AX_SPLIT_2.OUT2" Destination="AnalogInput_I4.SREQ" dx1="220"/>
 			<Connection Source="CALIBRATE.OFFSET" Destination="INI_OFFSET.VAL" dx1="320"/>
 			<Connection Source="CALIBRATE.SCALE" Destination="INI_SCALE.VAL" dx1="206.67"/>
-			<Connection Source="CALIBRATE.Y" Destination="Hysteresis_AR_AX.INPUT" dx1="926.67"/>
+			<Connection Source="CALIBRATE.Y" Destination="AR_SPLIT_2.IN" dx1="926.67"/>
 			<Connection Source="THRESHOLD.VALUEO" Destination="Hysteresis_AR_AX.THRESHOLD" dx1="333.33"/>
 			<Connection Source="HYSTERESIS.VALUEO" Destination="Hysteresis_AR_AX.HYSTERESIS" dx1="540"/>
+			<Connection Source="AR_SPLIT_2.OUT2" Destination="Hysteresis_AR_AX.INPUT" dx1="673.33"/>
+			<Connection Source="AR_SPLIT_2.OUT1" Destination="Q_NumericValue_PHYSA.rPhys" dx1="873.33"/>
 		</AdapterConnections>
 	</SubAppNetwork>
 </SubAppType>
