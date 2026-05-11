@@ -74,7 +74,6 @@
 		<FB Name="Q_NumericValue_PHYSA" Type="isobus::UT::Q::Q_NumericValue_PHYSA" x="6400" y="-1500">
 			<Parameter Name="stObj" Value="InputNumber_PWM_DUTY"/>
 		</FB>
-		<Comment Comment="SREQ nicht vorhanden !! BUG !!! " x="-5100" y="3100" width="1000" height="500"/>
 		<FB Name="AD_TO_AUDI" Type="adapter::conversion::unidirectional::AD_TO_AUDI" x="-2300" y="900">
 		</FB>
 		<FB Name="AUDI_TO_AR" Type="adapter::conversion::unidirectional::AUDI_TO_AR" x="-1100" y="900">
@@ -99,6 +98,7 @@
 			<Connection Source="AR_SPLIT_2.OUT2" Destination="Hysteresis_AR_AX.INPUT" dx1="673.33"/>
 			<Connection Source="AR_SPLIT_2.OUT1" Destination="Q_NumericValue_PHYSA.rPhys" dx1="873.33"/>
 			<Connection Source="AD_TO_AUDI.AUDI_OUT" Destination="AUDI_TO_AR.AUDI_IN"/>
+			<Connection Source="AX_SPLIT_2.OUT2" Destination="AnalogInput_I4.SREQ" dx1="164.71"/>
 		</AdapterConnections>
 	</SubAppNetwork>
 </SubAppType>
