@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<FBType Name="INI_AR2" Comment="Load and Store REAL Data from settings.ini by Section and Key (AR2 Adapter Interface)">
+<FBType Name="INI_AX2" Comment="Load and Store REAL Data from settings.ini by Section and Key (AX2 Adapter Interface)">
 	<Identification Standard="61499-2" Description="Copyright (c) 2026 Meisterschulen am Ostbahnhof  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0">
 	</Identification>
 	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2026-04-24" Remarks="initial API and implementation and/or initial documentation">
 	</VersionInfo>
-	<CompilerInfo packageName="eclipse4diac::storage">
+	<CompilerInfo packageName="logiBUS::storage::ini">
 		<Import declaration="eclipse4diac::core::TypeHash"/>
 		<Import declaration="adapter::types::unidirectional::AR"/>
 		<Import declaration="eclipse4diac::storage::INI"/>
@@ -35,7 +35,7 @@
 			<VarDeclaration Name="STATUS" Type="STRING" Comment="Service Status"/>
 		</OutputVars>
 		<Sockets>
-			<AdapterDeclaration Name="VAL" Type="adapter::types::bidirectional::AR2" Comment="Value" x="4500" y="2600"/>
+			<AdapterDeclaration Name="VAL" Type="adapter::types::bidirectional::AX2" Comment="Value" x="4500" y="2600"/>
 		</Sockets>
 	</InterfaceList>
 	<FBNetwork>
