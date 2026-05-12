@@ -20,6 +20,8 @@
 		</EventInputs>
 		<EventOutputs>
 			<Event Name="INITO" Type="EInit" Comment="Initialization Confirm">
+				<With Var="QO"/>
+				<With Var="STATUS"/>
 			</Event>
 		</EventOutputs>
 		<InputVars>
@@ -28,12 +30,16 @@
 			<VarDeclaration Name="KEY" Type="STRING" Comment="Key name."/>
 			<VarDeclaration Name="DEFAULT_VALUE" Type="STRING" Comment="The value to read if there is nothing in the settings.ini"/>
 		</InputVars>
-		<Sockets>
-			<AdapterDeclaration Name="AIS_IN" Type="adapter::types::unidirectional::AIS" Comment="Value to store (SET)" x="0" y="0"/>
-		</Sockets>
+		<OutputVars>
+			<VarDeclaration Name="QO" Type="BOOL" Comment="Event Output Qualifier"/>
+			<VarDeclaration Name="STATUS" Type="STRING" Comment="Service Status"/>
+		</OutputVars>
 		<Plugs>
-			<AdapterDeclaration Name="AIS_OUT" Type="adapter::types::unidirectional::AIS" Comment="Stored value output (GETO)" x="2000" y="0"/>
+			<AdapterDeclaration Name="AIS_OUT" Type="adapter::types::unidirectional::AIS" Comment="Stored value output (GETO)" x="3000" y="100"/>
 		</Plugs>
+		<Sockets>
+			<AdapterDeclaration Name="AIS_IN" Type="adapter::types::unidirectional::AIS" Comment="Value to store (SET)" x="-900" y="1100"/>
+		</Sockets>
 	</InterfaceList>
 	<FBNetwork>
 		<FB Name="INI" Type="eclipse4diac::storage::INI" x="1000" y="0">
@@ -50,8 +56,10 @@
 			<Connection Source="SECTION" Destination="INI.SECTION" dx1="100"/>
 			<Connection Source="KEY" Destination="INI.KEY" dx1="100"/>
 			<Connection Source="DEFAULT_VALUE" Destination="INI.DEFAULT_VALUE" dx1="100"/>
-			<Connection Source="AIS_IN.D1" Destination="INI.VALUE" dx1="100"/>
+			<Connection Source="AIS_IN.D1" Destination="INI.VALUE" dx1="493.33"/>
 			<Connection Source="INI.VALUEO" Destination="AIS_OUT.D1" dx1="100"/>
+			<Connection Source="INI.QO" Destination="QO" dx1="1466.67"/>
+			<Connection Source="INI.STATUS" Destination="STATUS" dx1="1466.67"/>
 		</DataConnections>
 	</FBNetwork>
 	<Attribute Name="eclipse4diac::core::TypeHash" Value="''"/>

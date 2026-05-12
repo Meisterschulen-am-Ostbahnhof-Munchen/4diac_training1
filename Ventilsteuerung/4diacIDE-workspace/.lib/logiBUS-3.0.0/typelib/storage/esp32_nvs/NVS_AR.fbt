@@ -19,6 +19,8 @@
 		</EventInputs>
 		<EventOutputs>
 			<Event Name="INITO" Type="EInit" Comment="Initialization Confirm">
+				<With Var="QO"/>
+				<With Var="STATUS"/>
 			</Event>
 		</EventOutputs>
 		<InputVars>
@@ -26,6 +28,10 @@
 			<VarDeclaration Name="KEY" Type="STRING" Comment="Key name."/>
 			<VarDeclaration Name="DEFAULT_VALUE" Type="REAL" Comment="The value to read if there is nothing in the NVS"/>
 		</InputVars>
+		<OutputVars>
+			<VarDeclaration Name="QO" Type="BOOL" Comment="Event Output Qualifier"/>
+			<VarDeclaration Name="STATUS" Type="STRING" Comment="Service Status"/>
+		</OutputVars>
 		<Plugs>
 			<AdapterDeclaration Name="AR_OUT" Type="adapter::types::unidirectional::AR" Comment="Stored value output (GETO)" x="3800" y="2400"/>
 		</Plugs>
@@ -49,6 +55,8 @@
 			<Connection Source="DEFAULT_VALUE" Destination="NVS.DEFAULT_VALUE" dx1="66.67"/>
 			<Connection Source="AR_IN.D1" Destination="NVS.VALUE" dx1="100"/>
 			<Connection Source="NVS.VALUEO" Destination="AR_OUT.D1" dx1="133.33"/>
+			<Connection Source="NVS.QO" Destination="QO" dx1="2613.33"/>
+			<Connection Source="NVS.STATUS" Destination="STATUS" dx1="2613.33"/>
 		</DataConnections>
 	</FBNetwork>
 	<Attribute Name="eclipse4diac::core::TypeHash" Value="''"/>
