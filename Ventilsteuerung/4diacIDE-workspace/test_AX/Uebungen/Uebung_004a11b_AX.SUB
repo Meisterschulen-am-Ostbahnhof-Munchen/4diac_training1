@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SubAppType Name="Uebung_004a11b_AX" Comment="Toggle Flip-Flop mit IE mit BUTTON_SINGLE_CLICK und STORE">
+	<Identification Standard="61499-2" Description="Copyright (c) 2023 Meisterschulen am Ostbahnhof  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0">
+	</Identification>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2023-10-23" Remarks="initial API and implementation and/or initial documentation">
+	</VersionInfo>
+	<CompilerInfo packageName="Uebungen">
+		<Import declaration="logiBUS::io::DI::logiBUS_DI::Input_I1"/>
+		<Import declaration="logiBUS::io::DI::logiBUS_DI_Events::BUTTON_SINGLE_CLICK"/>
+		<Import declaration="logiBUS::io::DQ::logiBUS_DO::Output_Q1"/>
+	</CompilerInfo>
+	<SubAppInterfaceList>
+	</SubAppInterfaceList>
+	<SubAppNetwork>
+		<FB Name="DigitalOutput_Q1" Type="logiBUS::io::DQ::logiBUS_QXA" x="-3400" y="-300">
+			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="Output" Value="Output_Q1"/>
+		</FB>
+		<FB Name="DigitalInput_CLK_I1" Type="logiBUS::io::DI::logiBUS_IE" x="-7400" y="-100">
+			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="Input" Value="Input_I1"/>
+			<Parameter Name="InputEvent" Value="BUTTON_SINGLE_CLICK"/>
+		</FB>
+		<FB Name="AX_T_FF" Type="adapter::events::unidirectional::AX_T_FF_SR_SYM_STORE" x="-5600" y="-100">
+		</FB>
+		<Comment Comment="am Anfang letzten Zustand laden!" x="-6000" y="1100" width="1000" height="500"/>
+		<FB Name="INI_AX2" Type="logiBUS::storage::esp32_nvs::NVS_AX2" x="-2800" y="700">
+			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="KEY" Value="'U004a11a_AX'"/>
+			<Parameter Name="DEFAULT_VALUE" Value="FALSE"/>
+		</FB>
+		<EventConnections>
+			<Connection Source="DigitalInput_CLK_I1.IND" Destination="AX_T_FF.CLK"/>
+		</EventConnections>
+		<AdapterConnections>
+			<Connection Source="AX_T_FF.Q" Destination="DigitalOutput_Q1.OUT" dx1="373.33"/>
+			<Connection Source="AX_T_FF.Q_INIT" Destination="INI_AX2.VAL" dx1="540"/>
+		</AdapterConnections>
+	</SubAppNetwork>
+</SubAppType>
