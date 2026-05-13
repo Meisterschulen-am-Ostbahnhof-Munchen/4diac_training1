@@ -35,7 +35,8 @@
 		</FB>
 		<FB Name="F_DINT_TO_UDINT" Type="iec61131::conversion::F_DINT_TO_UDINT" x="1500" y="1000">
 		</FB>
-		<Comment Comment="F_DINT_TO_UDINT ist großer Quatsch ... keine Negativen Zahlen möglich" x="400" y="1900" width="2200" height="500"/>
+		<Comment Comment="F_DINT_TO_UDINT ist großer Quatsch ... keine Negativen Zahlen möglich" x="1000" y="1600" width="2200" height="500"/>
+		<Comment Comment="hier gegebenenfalls einen E_D_FF einbauen, damit die Events reduziert werden. " x="1300" y="-600" width="1000" height="500"/>
 		<EventConnections>
 			<Connection Source="Input_CU.IND" Destination="FB_CTU_DINT.REQ" dx1="500"/>
 			<Connection Source="Input_R.IND" Destination="FB_CTU_DINT.REQ" dx1="500"/>

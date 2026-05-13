@@ -30,7 +30,7 @@
 			<Parameter Name="QI" Value="TRUE"/>
 			<Parameter Name="Output" Value="Output_Q1"/>
 		</FB>
-		<FB Name="Q_NumericValue_L" Type="isobus::UT::Q::Q_NumericValue_PHYS_LREAL" x="4000" y="1000">
+		<FB Name="Q_NumericValue_PHYS_LREAL" Type="isobus::UT::Q::Q_NumericValue_PHYS_LREAL" x="4000" y="1000">
 			<Parameter Name="stObj" Value="OutputNumber_N3"/>
 		</FB>
 		<FB Name="F_LINT_TO_LREAL" Type="iec61131::conversion::F_LINT_TO_LREAL" x="2000" y="1200">
@@ -40,14 +40,14 @@
 			<Connection Source="Input_R.IND" Destination="FB_CTU_LINT.REQ" dx1="500"/>
 			<Connection Source="FB_CTU_LINT.CNF" Destination="Output_Q1.REQ" dx1="500"/>
 			<Connection Source="FB_CTU_LINT.CNF" Destination="F_LINT_TO_LREAL.REQ" dx1="200"/>
-			<Connection Source="F_LINT_TO_LREAL.CNF" Destination="Q_NumericValue_L.REQ" dx1="200"/>
+			<Connection Source="F_LINT_TO_LREAL.CNF" Destination="Q_NumericValue_PHYS_LREAL.REQ" dx1="200"/>
 		</EventConnections>
 		<DataConnections>
 			<Connection Source="Input_CU.IN" Destination="FB_CTU_LINT.CU" dx1="200"/>
 			<Connection Source="Input_R.IN" Destination="FB_CTU_LINT.R" dx1="200"/>
 			<Connection Source="FB_CTU_LINT.Q" Destination="Output_Q1.OUT" dx1="933.33"/>
 			<Connection Source="FB_CTU_LINT.CV" Destination="F_LINT_TO_LREAL.IN" dx1="100"/>
-			<Connection Source="F_LINT_TO_LREAL.OUT" Destination="Q_NumericValue_L.lrPhys" dx1="200"/>
+			<Connection Source="F_LINT_TO_LREAL.OUT" Destination="Q_NumericValue_PHYS_LREAL.lrPhys" dx1="200"/>
 		</DataConnections>
 	</SubAppNetwork>
 </SubAppType>

@@ -30,20 +30,21 @@
 			<Parameter Name="QI" Value="TRUE"/>
 			<Parameter Name="Output" Value="Output_Q1"/>
 		</FB>
-		<FB Name="Q_NumericValue_1" Type="isobus::UT::Q::Q_NumericValue_PHYS" x="3000" y="1000">
+		<FB Name="Q_NumericValue_PHYS" Type="isobus::UT::Q::Q_NumericValue_PHYS" x="3000" y="1000">
 			<Parameter Name="stObj" Value="OutputNumber_N3"/>
 		</FB>
+		<Comment Comment="INT kann ohne Konvertierung auf REAL geschlossen werden." x="1100" y="1900" width="1300" height="400"/>
 		<EventConnections>
 			<Connection Source="Input_CD.IND" Destination="FB_CTD.REQ" dx1="500"/>
 			<Connection Source="Input_LD.IND" Destination="FB_CTD.REQ" dx1="500"/>
 			<Connection Source="FB_CTD.CNF" Destination="Output_Q1.REQ" dx1="500"/>
-			<Connection Source="FB_CTD.CNF" Destination="Q_NumericValue_1.REQ" dx1="500"/>
+			<Connection Source="FB_CTD.CNF" Destination="Q_NumericValue_PHYS.REQ" dx1="500"/>
 		</EventConnections>
 		<DataConnections>
 			<Connection Source="Input_CD.IN" Destination="FB_CTD.CD" dx1="200"/>
 			<Connection Source="Input_LD.IN" Destination="FB_CTD.LD" dx1="200"/>
 			<Connection Source="FB_CTD.Q" Destination="Output_Q1.OUT" dx1="200"/>
-			<Connection Source="FB_CTD.CV" Destination="Q_NumericValue_1.rPhys" dx1="286.67"/>
+			<Connection Source="FB_CTD.CV" Destination="Q_NumericValue_PHYS.rPhys" dx1="286.67"/>
 		</DataConnections>
 	</SubAppNetwork>
 </SubAppType>

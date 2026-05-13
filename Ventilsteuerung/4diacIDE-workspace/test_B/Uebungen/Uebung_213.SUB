@@ -33,6 +33,8 @@
 		<FB Name="Q_NumericValue" Type="isobus::UT::Q::Q_NumericValue" x="3000" y="1000">
 			<Parameter Name="u16ObjId" Value="OutputNumber_N1"/>
 		</FB>
+		<Comment Comment="gleicher Datentyp, keine Konvertierung nötig. " x="700" y="1700" width="2200" height="300"/>
+		<Comment Comment="hier gegebenenfalls einen E_D_FF einbauen, damit die Events reduziert werden. " x="1300" y="-600" width="1000" height="500"/>
 		<EventConnections>
 			<Connection Source="Input_CU.IND" Destination="FB_CTU_UDINT.REQ" dx1="500"/>
 			<Connection Source="Input_R.IND" Destination="FB_CTU_UDINT.REQ" dx1="500"/>
