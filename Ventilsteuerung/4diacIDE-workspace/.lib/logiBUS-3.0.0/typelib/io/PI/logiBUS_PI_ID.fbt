@@ -6,6 +6,8 @@
 	</VersionInfo>
 	<CompilerInfo packageName="logiBUS::io::PI">
 		<Import declaration="eclipse4diac::core::TypeHash"/>
+		<Import declaration="logiBUS::io::PI::logiBUS_PI::Invalid"/>
+		<Import declaration="logiBUS::io::PI::logiBUS_PI_S"/>
 	</CompilerInfo>
 	<InterfaceList>
 		<EventInputs>
@@ -15,6 +17,7 @@
 				<With Var="Input"/>
 				<With Var="ImpulseDelta"/>
 				<With Var="TimeDelta"/>
+				<With Var="TimeRateLimit"/>
 			</Event>
 			<Event Name="REQ" Type="Event" Comment="Service Request">
 				<With Var="QI"/>
@@ -42,6 +45,7 @@
 			<VarDeclaration Name="Input" Type="logiBUS::io::PI::logiBUS_PI_S" Comment="Identify the Input Input_I1..I8" InitialValue="logiBUS_PI::Invalid"/>
 			<VarDeclaration Name="ImpulseDelta" Type="DWORD" Comment="After How many Impulses an IND"/>
 			<VarDeclaration Name="TimeDelta" Type="DWORD" Comment="After How many ms an IND"/>
+			<VarDeclaration Name="TimeRateLimit" Type="DWORD" Comment="Maximum 1 IND in how many ms. (&gt; delta)"/>
 		</InputVars>
 		<OutputVars>
 			<VarDeclaration Name="QO" Type="BOOL" Comment="Event Output Qualifier"/>

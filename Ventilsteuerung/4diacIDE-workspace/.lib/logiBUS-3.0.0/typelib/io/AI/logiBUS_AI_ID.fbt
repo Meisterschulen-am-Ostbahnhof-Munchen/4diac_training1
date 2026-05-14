@@ -17,6 +17,7 @@
 				<With Var="Input"/>
 				<With Var="AnalogInput_hysteresis"/>
 				<With Var="TimeDelta"/>
+				<With Var="TimeRateLimit"/>
 			</Event>
 			<Event Name="REQ" Type="Event" Comment="Service Request">
 				<With Var="QI"/>
@@ -44,6 +45,7 @@
 			<VarDeclaration Name="Input" Type="logiBUS::io::AI::logiBUS_AI_S" Comment="Identify the Input Input_I1..I8" InitialValue="logiBUS_AI::Invalid"/>
 			<VarDeclaration Name="AnalogInput_hysteresis" Type="DWORD"/>
 			<VarDeclaration Name="TimeDelta" Type="DWORD" Comment="After How many ms an IND"/>
+			<VarDeclaration Name="TimeRateLimit" Type="DWORD" Comment="Maximum 1 IND in how many ms. (&gt; delta)"/>
 		</InputVars>
 		<OutputVars>
 			<VarDeclaration Name="QO" Type="BOOL" Comment="Event Output Qualifier"/>

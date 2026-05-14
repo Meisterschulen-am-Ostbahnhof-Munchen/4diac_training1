@@ -17,6 +17,7 @@
 				<With Var="Input"/>
 				<With Var="ImpulseDelta"/>
 				<With Var="TimeDelta"/>
+				<With Var="TimeRateLimit"/>
 			</Event>
 			<Event Name="REQ" Type="Event" Comment="Service Request">
 				<With Var="QI"/>
@@ -34,6 +35,7 @@
 			<VarDeclaration Name="Input" Type="logiBUS::io::PI::logiBUS_PI_S" Comment="Identify the Input Input_I1..I8" InitialValue="Invalid"/>
 			<VarDeclaration Name="ImpulseDelta" Type="DWORD" Comment="After How many Impulses an IND"/>
 			<VarDeclaration Name="TimeDelta" Type="DWORD" Comment="After How many ms an IND"/>
+			<VarDeclaration Name="TimeRateLimit" Type="DWORD" Comment="Maximum 1 IND in how many ms. (&gt; delta)"/>
 		</InputVars>
 		<OutputVars>
 			<VarDeclaration Name="QO" Type="BOOL" Comment="Event Output Qualifier"/>
@@ -47,21 +49,22 @@
 		<FB Name="PI" Type="logiBUS::io::PI::logiBUS_PI_ID" x="1240" y="460">
 		</FB>
 		<EventConnections>
-			<Connection Source="INIT" Destination="PI.INIT" dx1="3433.33"/>
+			<Connection Source="INIT" Destination="PI.INIT" dx1="2993.33"/>
 			<Connection Source="PI.INITO" Destination="INITO" dx1="1026.67"/>
-			<Connection Source="PI.IND" Destination="IN.E1" dx1="1133.33"/>
-			<Connection Source="PI.CNF" Destination="IN.E1" dx1="1126.67"/>
-			<Connection Source="REQ" Destination="PI.REQ" dx1="1113.33"/>
+			<Connection Source="PI.IND" Destination="IN.E1" dx1="693.33"/>
+			<Connection Source="PI.CNF" Destination="IN.E1" dx1="726.67"/>
+			<Connection Source="REQ" Destination="PI.REQ" dx1="2840"/>
 		</EventConnections>
 		<DataConnections>
 			<Connection Source="PI.IN" Destination="IN.D1" dx1="633.33"/>
-			<Connection Source="QI" Destination="PI.QI" dx1="3360"/>
-			<Connection Source="PARAMS" Destination="PI.PARAMS" dx1="3253.33"/>
+			<Connection Source="QI" Destination="PI.QI" dx1="2346.67"/>
+			<Connection Source="PARAMS" Destination="PI.PARAMS" dx1="2206.67"/>
 			<Connection Source="PI.QO" Destination="QO" dx1="1880"/>
 			<Connection Source="PI.STATUS" Destination="STATUS" dx1="2053.33"/>
-			<Connection Source="Input" Destination="PI.Input" dx1="3113.33"/>
-			<Connection Source="ImpulseDelta" Destination="PI.ImpulseDelta" dx1="3113.33"/>
-			<Connection Source="TimeDelta" Destination="PI.TimeDelta" dx1="3113.33"/>
+			<Connection Source="Input" Destination="PI.Input" dx1="1993.33"/>
+			<Connection Source="ImpulseDelta" Destination="PI.ImpulseDelta" dx1="1880"/>
+			<Connection Source="TimeDelta" Destination="PI.TimeDelta" dx1="1726.67"/>
+			<Connection Source="TimeRateLimit" Destination="PI.TimeRateLimit" dx1="1613.33"/>
 		</DataConnections>
 	</FBNetwork>
 	<Attribute Name="eclipse4diac::core::TypeHash" Value="''"/>
