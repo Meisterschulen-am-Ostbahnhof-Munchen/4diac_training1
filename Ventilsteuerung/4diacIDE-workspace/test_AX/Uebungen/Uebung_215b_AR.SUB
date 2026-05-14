@@ -32,11 +32,13 @@
 			<Parameter Name="QI" Value="TRUE"/>
 			<Parameter Name="Output" Value="Output_Q1"/>
 		</FB>
-		<FB Name="Q_NumericValue_1" Type="isobus::UT::Q::Q_NumericValue_PHYSA" x="2700" y="800">
-			<Parameter Name="stObj" Value="OutputNumber_N3"/>
-		</FB>
 		<FB Name="AI_TO_AR" Type="adapter::conversion::unidirectional::AI_TO_AR" x="1100" y="1300">
 		</FB>
+		<FB Name="Q_NumericValue_PHYSA" Type="isobus::UT::Q::Q_NumericValue_PHYSA" x="2700" y="800">
+			<Parameter Name="stObj" Value="OutputNumber_N3"/>
+		</FB>
+		<Comment Comment="hier sind negative Werte möglich ! " x="800" y="1800" width="1200" height="300"/>
+		<Comment Comment="hier gegebenenfalls einen AX_D_FF einbauen, damit die Events reduziert werden. " x="1000" y="-700" width="1000" height="500"/>
 		<EventConnections>
 			<Connection Source="Input_LD.INITO" Destination="AI_INT_TO_I.REQ"/>
 		</EventConnections>
@@ -45,7 +47,7 @@
 			<Connection Source="Input_LD.IN" Destination="AI_FB_CTD.LD" dx1="200"/>
 			<Connection Source="AI_FB_CTD.Q" Destination="Output_Q1.OUT" dx1="200"/>
 			<Connection Source="AI_FB_CTD.CV" Destination="AI_TO_AR.AI_IN" dx1="173.33"/>
-			<Connection Source="AI_TO_AR.AR_OUT" Destination="Q_NumericValue_1.rPhys" dx1="293.33"/>
+			<Connection Source="AI_TO_AR.AR_OUT" Destination="Q_NumericValue_PHYSA.rPhys" dx1="293.33"/>
 			<Connection Source="AI_INT_TO_I.AI_OUT" Destination="AI_FB_CTD.PV" dx1="146.67"/>
 		</AdapterConnections>
 	</SubAppNetwork>

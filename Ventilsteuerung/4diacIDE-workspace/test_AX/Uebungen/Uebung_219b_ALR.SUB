@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<SubAppType Name="Uebung_219b_AULI" Comment="Standard IEC 61131-3 AULI_FB_CTD (Adapter Version, Rückwärtszähler, ULINT) mit Terminal-Ausgabe (PHYSA_LREAL)">
+<SubAppType Name="Uebung_219b_ALR" Comment="Standard IEC 61131-3 AULI_FB_CTD (Adapter Version, Rückwärtszähler, ULINT) mit Terminal-Ausgabe (PHYSA_LREAL)">
 	<Identification Standard="61131-3" Description="Copyright (c) 2026 Meisterschulen am Ostbahnhof  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0">
 	</Identification>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.2" Author="Franz Höpfinger" Date="2026-05-13" Remarks="Added AULI_ULINT_TO_ULI init block connected to PV">
+	</VersionInfo>
 	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.1" Author="Franz Höpfinger" Date="2026-04-21" Remarks="Added terminal output for counter value">
 	</VersionInfo>
 	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2026-04-21" Remarks="initial API and implementation (Adapter version)">
@@ -17,11 +19,14 @@
 	<SubAppNetwork>
 		<FB Name="AULI_FB_CTD" Type="adapter::iec61131::counters::AULI_FB_CTD" x="0" y="0">
 		</FB>
+		<FB Name="AULI_ULINT_TO_ULI" Type="adapter::conversion::unidirectional::AULI_ULINT_TO_ULI" x="-1400" y="800">
+			<Parameter Name="OUT" Value="ULINT#10"/>
+		</FB>
 		<FB Name="Input_CD" Type="logiBUS::io::DI::logiBUS_IXA" x="-2500" y="-800">
 			<Parameter Name="QI" Value="TRUE"/>
 			<Parameter Name="Input" Value="Input_I1"/>
 		</FB>
-		<FB Name="Input_LD" Type="logiBUS::io::DI::logiBUS_IXA" x="-2500" y="800">
+		<FB Name="Input_LD" Type="logiBUS::io::DI::logiBUS_IXA" x="-2900" y="800">
 			<Parameter Name="QI" Value="TRUE"/>
 			<Parameter Name="Input" Value="Input_I2"/>
 		</FB>
@@ -31,15 +36,21 @@
 		</FB>
 		<FB Name="AULI_TO_ALR" Type="adapter::conversion::unidirectional::AULI_TO_ALR" x="1300" y="1300">
 		</FB>
-		<FB Name="Q_NumericValue_PHYSA_LREAL" Type="isobus::UT::Q::Q_NumericValue_PHYSA_LREAL" x="3100" y="700">
+		<FB Name="Q_NumericValue_PHYSA_LREAL" Type="isobus::UT::Q::Q_NumericValue_PHYSA_LREAL" x="3100" y="800">
 			<Parameter Name="stObj" Value="OutputNumber_N3"/>
 		</FB>
+		<Comment Comment="hier sind negative Werte möglich ! " x="800" y="1800" width="1200" height="300"/>
+		<Comment Comment="hier gegebenenfalls einen AX_D_FF einbauen, damit die Events reduziert werden. " x="1000" y="-700" width="1000" height="500"/>
+		<EventConnections>
+			<Connection Source="Input_LD.INITO" Destination="AULI_ULINT_TO_ULI.REQ"/>
+		</EventConnections>
 		<AdapterConnections>
 			<Connection Source="Input_CD.IN" Destination="AULI_FB_CTD.CD" dx1="400"/>
 			<Connection Source="Input_LD.IN" Destination="AULI_FB_CTD.LD" dx1="200"/>
 			<Connection Source="AULI_FB_CTD.Q" Destination="Output_Q1.OUT" dx1="200"/>
 			<Connection Source="AULI_FB_CTD.CV" Destination="AULI_TO_ALR.AULI_IN" dx1="200"/>
 			<Connection Source="AULI_TO_ALR.ALR_OUT" Destination="Q_NumericValue_PHYSA_LREAL.lrPhys" dx1="546.67"/>
+			<Connection Source="AULI_ULINT_TO_ULI.AULI_OUT" Destination="AULI_FB_CTD.PV" dx1="226.67"/>
 		</AdapterConnections>
 	</SubAppNetwork>
 </SubAppType>
