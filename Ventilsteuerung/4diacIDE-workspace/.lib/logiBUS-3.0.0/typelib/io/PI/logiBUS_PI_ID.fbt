@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <FBType Name="logiBUS_PI_ID" Comment="Input service interface function block for double word input data">
-	<Identification Description="Copyright (c) 2017 fortiss GmbH, HR Agrartechnik GmbH&#10; &#10;This program and the accompanying materials are made &#10;available under the terms of the Eclipse Public License 2.0 &#10;which is available at https://www.eclipse.org/legal/epl-2.0/ &#10;&#10;SPDX-License-Identifier: EPL-2.0">
+	<Identification Description="Copyright (c) 2017 fortiss GmbH, HR Agrartechnik GmbH&#10; &#10;This program and the accompanying materials are made &#10;available under the terms of the Eclipse Public License 2.0 &#10;which is available at https://www.eclipse.org/legal/epl-2.0/ &#10;&#10;SPDX-License-Identifier: EPL-2.0&#10;&#10;&#10;if ImpulseDelta = 0, then TimeDelta cannot be 0.">
 	</Identification>
 	<VersionInfo Organization="fortiss GmbH" Version="1.0" Author="Monika Wenger" Date="2017-03-20" Remarks="initial API and implementation and/or initial documentation">
 	</VersionInfo>
@@ -44,8 +44,8 @@
 			<VarDeclaration Name="PARAMS" Type="STRING" Comment="Service Parameters"/>
 			<VarDeclaration Name="Input" Type="logiBUS::io::PI::logiBUS_PI_S" Comment="Identify the Input Input_I1..I8" InitialValue="logiBUS_PI::Invalid"/>
 			<VarDeclaration Name="ImpulseDelta" Type="DWORD" Comment="After How many Impulses an IND"/>
-			<VarDeclaration Name="TimeDelta" Type="DWORD" Comment="After How many ms an IND"/>
-			<VarDeclaration Name="TimeRateLimit" Type="DWORD" Comment="Maximum 1 IND in how many ms. (&gt; delta)"/>
+			<VarDeclaration Name="TimeDelta" Type="DWORD" Comment="After How many ms an IND" InitialValue="250"/>
+			<VarDeclaration Name="TimeRateLimit" Type="DWORD" Comment="Maximum 1 IND in how many ms. (&lt; delta)" InitialValue="100"/>
 		</InputVars>
 		<OutputVars>
 			<VarDeclaration Name="QO" Type="BOOL" Comment="Event Output Qualifier"/>
