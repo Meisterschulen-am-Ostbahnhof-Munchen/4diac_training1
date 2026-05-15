@@ -31,20 +31,20 @@
 		</FB>
 		<FB Name="E_RS" Type="iec61499::events::E_RS" x="-4900" y="400">
 		</FB>
-		<FB Name="E_DELAY" Type="iec61499::events::E_DELAY" x="-5900" y="600">
+		<FB Name="E_DELAY" Type="iec61499::events::E_DELAY" x="-5900" y="700">
 			<Parameter Name="DT" Value="T#2S"/>
 		</FB>
 		<EventConnections>
-			<Connection Source="DigitalInput_I1.IND" Destination="E_RF_TRIG.EI"/>
-			<Connection Source="E_RS.EO" Destination="DigitalOutput_Q1.REQ"/>
-			<Connection Source="E_RF_TRIG.ER" Destination="E_DELAY.START" dx1="520"/>
+			<Connection Source="E_RS.EO" Destination="DigitalOutput_Q1.REQ" dx1="513.33"/>
+			<Connection Source="E_RF_TRIG.ER" Destination="E_DELAY.START"/>
 			<Connection Source="E_DELAY.EO" Destination="E_RS.S" dx1="146.67"/>
 			<Connection Source="E_RF_TRIG.EF" Destination="E_DELAY.STOP"/>
 			<Connection Source="E_RF_TRIG.EF" Destination="E_RS.R" dx1="346.67"/>
+			<Connection Source="DigitalInput_I1.IND" Destination="E_RF_TRIG.EI" dx1="273.33"/>
 		</EventConnections>
 		<DataConnections>
 			<Connection Source="DigitalInput_I1.IN" Destination="E_RF_TRIG.QI" dx1="273.33"/>
-			<Connection Source="E_RS.Q" Destination="DigitalOutput_Q1.OUT"/>
+			<Connection Source="E_RS.Q" Destination="DigitalOutput_Q1.OUT" dx1="513.33"/>
 		</DataConnections>
 	</SubAppNetwork>
 </SubAppType>
