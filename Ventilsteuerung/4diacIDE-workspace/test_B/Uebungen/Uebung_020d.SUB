@@ -27,7 +27,7 @@
 			<Parameter Name="DT" Value="T#2S"/>
 		</FB>
 		<EventConnections>
-			<Connection Source="DigitalInput_I1.IND" Destination="E_SWITCH.EI"/>
+			<Connection Source="DigitalInput_I1.IND" Destination="E_RF_TRIG.EI"/>
 			<Connection Source="E_RS.EO" Destination="DigitalOutput_Q1.REQ"/>
 			<Connection Source="E_RF_TRIG.ER" Destination="E_RS.S"/>
 			<Connection Source="E_RF_TRIG.EF" Destination="E_DELAY.START" dx1="453.33"/>
@@ -35,7 +35,7 @@
 			<Connection Source="E_RF_TRIG.ER" Destination="E_DELAY.STOP" dx1="600"/>
 		</EventConnections>
 		<DataConnections>
-			<Connection Source="DigitalInput_I1.IN" Destination="E_SWITCH.G" dx1="80"/>
+			<Connection Source="DigitalInput_I1.IN" Destination="E_RF_TRIG.QI" dx1="80"/>
 			<Connection Source="E_RS.Q" Destination="DigitalOutput_Q1.OUT" dx1="73.33"/>
 		</DataConnections>
 	</SubAppNetwork>
