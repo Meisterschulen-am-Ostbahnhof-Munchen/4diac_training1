@@ -29,17 +29,17 @@
 		</FB>
 		<FB Name="E_RF_TRIG" Type="iec61499::events::E_RF_TRIG" x="-5100" y="1900">
 		</FB>
-		<FB Name="E_RS" Type="iec61499::events::E_RS" x="-3900" y="1900">
+		<FB Name="E_SR" Type="iec61499::events::E_SR" x="-3900" y="1900">
 		</FB>
 		<EventConnections>
-			<Connection Source="DigitalInput_I1.IND" Destination="E_SWITCH.EI"/>
-			<Connection Source="E_RF_TRIG.EF" Destination="E_RS.R"/>
-			<Connection Source="E_RF_TRIG.ER" Destination="E_RS.S"/>
-			<Connection Source="E_RS.EO" Destination="DigitalOutput_Q1.REQ"/>
+			<Connection Source="E_RF_TRIG.EF" Destination="E_SR.R" dx1="246.67"/>
+			<Connection Source="E_RF_TRIG.ER" Destination="E_SR.S" dx1="246.67"/>
+			<Connection Source="E_SR.EO" Destination="DigitalOutput_Q1.REQ" dx1="860"/>
+			<Connection Source="DigitalInput_I1.IND" Destination="E_RF_TRIG.EI" dx1="273.33"/>
 		</EventConnections>
 		<DataConnections>
 			<Connection Source="DigitalInput_I1.IN" Destination="E_RF_TRIG.QI" dx1="273.33"/>
-			<Connection Source="E_RS.Q" Destination="DigitalOutput_Q1.OUT"/>
+			<Connection Source="E_SR.Q" Destination="DigitalOutput_Q1.OUT" dx1="860"/>
 		</DataConnections>
 	</SubAppNetwork>
 </SubAppType>
