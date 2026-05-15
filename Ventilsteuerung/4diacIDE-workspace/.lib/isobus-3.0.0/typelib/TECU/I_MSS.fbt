@@ -45,7 +45,7 @@
 			<VarDeclaration Name="Q_timeout" Type="BOOL"/>
 			<VarDeclaration Name="timestamp_timeout" Type="UINT"/>
 			<VarDeclaration Name="timestamp_data" Type="DINT"/>
-			<VarDeclaration Name="SELECTEDMACHINESPEED" Type="UINT" Comment="Machine selected speed (see Attributes for Details)">
+			<VarDeclaration Name="SELECTEDMACHINESPEED" Type="UINT" Comment="Machine selected speed (see Attributes for Details)" InitialValue="UINT#16#FFFF">
 				<Attribute Name="SPN" Type="INT" Value="4305"/>
 				<Attribute Name="SP_Name" Type="STRING" Value="'Machine selected speed'"/>
 				<Attribute Name="SP_Position_In_PG" Type="STRING" Value="'1-2'"/>
@@ -54,7 +54,7 @@
 				<Attribute Name="Offset" Type="INT" Value=""/>
 				<Attribute Name="Link" Type="STRING" Value="'https://docs.ms-muc-docs.de/projects/isobus-other-docs/de/latest/PGN/PGN_61474.html#spn-4305-machine-selected-speed'"/>
 			</VarDeclaration>
-			<VarDeclaration Name="SELECTEDMACHINEDISTANCE" Type="UDINT" Comment="Machine selected distance (see Attributes for Details)">
+			<VarDeclaration Name="SELECTEDMACHINEDISTANCE" Type="UDINT" Comment="Machine selected distance (see Attributes for Details)" InitialValue="UDINT#16#FFFFFFFF">
 				<Attribute Name="SPN" Type="INT" Value="4306"/>
 				<Attribute Name="SP_Name" Type="STRING" Value="'Machine selected distance'"/>
 				<Attribute Name="SP_Position_In_PG" Type="STRING" Value="'3-6'"/>
@@ -63,7 +63,7 @@
 				<Attribute Name="Offset" Type="INT" Value=""/>
 				<Attribute Name="Link" Type="STRING" Value="'https://docs.ms-muc-docs.de/projects/isobus-other-docs/de/latest/PGN/PGN_61474.html#spn-4306-machine-selected-distance'"/>
 			</VarDeclaration>
-			<VarDeclaration Name="SELECTEDMACHINELIMITSTATUS" Type="BYTE" Comment="Machine selected speed limit status">
+			<VarDeclaration Name="SELECTEDMACHINELIMITSTATUS" Type="BYTE" Comment="Machine selected speed limit status" InitialValue="BYTE#16#FF">
 				<Attribute Name="SPN" Type="INT" Value="4307"/>
 				<Attribute Name="SP_Name" Type="STRING" Value="'Machine selected speed limit status'"/>
 				<Attribute Name="SP_Position_In_PG" Type="STRING" Value="'8.6'"/>
@@ -72,7 +72,7 @@
 				<Attribute Name="Offset" Type="INT" Value=""/>
 				<Attribute Name="Link" Type="STRING" Value="'https://docs.ms-muc-docs.de/projects/isobus-other-docs/de/latest/PGN/PGN_61474.html#spn-4307-machine-selected-speed-limit-status'"/>
 			</VarDeclaration>
-			<VarDeclaration Name="SELECTEDMACHINESOURCE" Type="BYTE" Comment="Machine selected speed source">
+			<VarDeclaration Name="SELECTEDMACHINESOURCE" Type="BYTE" Comment="Machine selected speed source" InitialValue="BYTE#16#FF">
 				<Attribute Name="SPN" Type="INT" Value="4308"/>
 				<Attribute Name="SP_Name" Type="STRING" Value="'Machine selected speed source'"/>
 				<Attribute Name="SP_Position_In_PG" Type="STRING" Value="'8.3'"/>
@@ -81,7 +81,7 @@
 				<Attribute Name="Offset" Type="INT" Value=""/>
 				<Attribute Name="Link" Type="STRING" Value="'https://docs.ms-muc-docs.de/projects/isobus-other-docs/de/latest/PGN/PGN_61474.html#spn-4308-machine-selected-speed-source'"/>
 			</VarDeclaration>
-			<VarDeclaration Name="SELECTEDMACHINEDIRECTION" Type="BYTE" Comment="Machine selected direction (see Attributes for Details)">
+			<VarDeclaration Name="SELECTEDMACHINEDIRECTION" Type="BYTE" Comment="Machine selected direction (see Attributes for Details)" InitialValue="BYTE#16#FF">
 				<Attribute Name="SPN" Type="INT" Value="4309"/>
 				<Attribute Name="SP_Name" Type="STRING" Value="'Machine selected direction'"/>
 				<Attribute Name="SP_Position_In_PG" Type="STRING" Value="'8.1'"/>
@@ -90,7 +90,7 @@
 				<Attribute Name="Offset" Type="INT" Value=""/>
 				<Attribute Name="Link" Type="STRING" Value="'https://docs.ms-muc-docs.de/projects/isobus-other-docs/de/latest/PGN/PGN_61474.html#spn-4309-machine-selected-direction'"/>
 			</VarDeclaration>
-			<VarDeclaration Name="SELECTEDMACHINE_EXIT_REASON_CODE" Type="BYTE" Comment="Machine selected speed exit/reason code">
+			<VarDeclaration Name="SELECTEDMACHINE_EXIT_REASON_CODE" Type="BYTE" Comment="Machine selected speed exit/reason code" InitialValue="BYTE#16#FF">
 				<Attribute Name="SPN" Type="INT" Value="5818"/>
 				<Attribute Name="SP_Name" Type="STRING" Value="'Machine selected speed exit/reason code'"/>
 				<Attribute Name="SP_Position_In_PG" Type="STRING" Value="'7.1'"/>

@@ -45,7 +45,7 @@
 			<VarDeclaration Name="Q_timeout" Type="BOOL"/>
 			<VarDeclaration Name="timestamp_timeout" Type="DINT"/>
 			<VarDeclaration Name="timestamp_data" Type="DINT"/>
-			<VarDeclaration Name="FRONT_HITCH_POSITION" Type="USINT" Comment="Front Hitch Position (see Attributes for Details)">
+			<VarDeclaration Name="FRONT_HITCH_POSITION" Type="USINT" Comment="Front Hitch Position (see Attributes for Details)" InitialValue="USINT#16#FF">
 				<Attribute Name="SPN" Type="INT" Value="1872"/>
 				<Attribute Name="SP_Name" Type="STRING" Value="'Front Hitch Position'"/>
 				<Attribute Name="SP_Position_In_PG" Type="STRING" Value="'1'"/>
@@ -54,7 +54,7 @@
 				<Attribute Name="Offset" Type="INT" Value=""/>
 				<Attribute Name="Link" Type="STRING" Value="'https://docs.ms-muc-docs.de/projects/isobus-other-docs/de/latest/PGN/PGN_65094.html#spn-1872-front-hitch-position'"/>
 			</VarDeclaration>
-			<VarDeclaration Name="FRONT_HITCH_WORK_INDICATION" Type="BYTE" Comment="Front Hitch In-work Indication">
+			<VarDeclaration Name="FRONT_HITCH_WORK_INDICATION" Type="BYTE" Comment="Front Hitch In-work Indication" InitialValue="BYTE#16#FF">
 				<Attribute Name="SPN" Type="INT" Value="1876"/>
 				<Attribute Name="SP_Name" Type="STRING" Value="'Front Hitch In-work Indication'"/>
 				<Attribute Name="SP_Position_In_PG" Type="STRING" Value="'2.7'"/>
@@ -63,7 +63,7 @@
 				<Attribute Name="Offset" Type="INT" Value=""/>
 				<Attribute Name="Link" Type="STRING" Value="'https://docs.ms-muc-docs.de/projects/isobus-other-docs/de/latest/PGN/PGN_65094.html#spn-1876-front-hitch-in-work-indication'"/>
 			</VarDeclaration>
-			<VarDeclaration Name="FRONT_HITCH_POS_LIMIT_STATUS" Type="BYTE" Comment="Front Hitch Position Limit status">
+			<VarDeclaration Name="FRONT_HITCH_POS_LIMIT_STATUS" Type="BYTE" Comment="Front Hitch Position Limit status" InitialValue="BYTE#16#FF">
 				<Attribute Name="SPN" Type="INT" Value="5150"/>
 				<Attribute Name="SP_Name" Type="STRING" Value="'Front Hitch Position Limit status'"/>
 				<Attribute Name="SP_Position_In_PG" Type="STRING" Value="'2.4'"/>
@@ -72,7 +72,7 @@
 				<Attribute Name="Offset" Type="INT" Value=""/>
 				<Attribute Name="Link" Type="STRING" Value="'https://docs.ms-muc-docs.de/projects/isobus-other-docs/de/latest/PGN/PGN_65094.html#spn-5150-front-hitch-position-limit-status'"/>
 			</VarDeclaration>
-			<VarDeclaration Name="FRONT_HITCH_NOMINAL_LOWER_LINK_FORCE" Type="USINT" Comment="Front Nominal Lower Link Force">
+			<VarDeclaration Name="FRONT_HITCH_NOMINAL_LOWER_LINK_FORCE" Type="USINT" Comment="Front Nominal Lower Link Force" InitialValue="USINT#16#FF">
 				<Attribute Name="SPN" Type="INT" Value="1880"/>
 				<Attribute Name="SP_Name" Type="STRING" Value="'Front Nominal Lower Link Force'"/>
 				<Attribute Name="SP_Position_In_PG" Type="STRING" Value="'3'"/>
@@ -81,7 +81,7 @@
 				<Attribute Name="Offset" Type="INT" Value="-100"/>
 				<Attribute Name="Link" Type="STRING" Value="'https://docs.ms-muc-docs.de/projects/isobus-other-docs/de/latest/PGN/PGN_65094.html#spn-1880-front-nominal-lower-link-force'"/>
 			</VarDeclaration>
-			<VarDeclaration Name="FRONT_HITCH_DRAFT" Type="UINT" Comment="Front Draft">
+			<VarDeclaration Name="FRONT_HITCH_DRAFT" Type="UINT" Comment="Front Draft" InitialValue="UINT#16#FFFF">
 				<Attribute Name="SPN" Type="INT" Value="1878"/>
 				<Attribute Name="SP_Name" Type="STRING" Value="'Front Draft'"/>
 				<Attribute Name="SP_Position_In_PG" Type="STRING" Value="'4-5'"/>
@@ -90,7 +90,7 @@
 				<Attribute Name="Offset" Type="DINT" Value="-320000"/>
 				<Attribute Name="Link" Type="STRING" Value="'https://docs.ms-muc-docs.de/projects/isobus-other-docs/de/latest/PGN/PGN_65094.html#spn-1878-front-draft'"/>
 			</VarDeclaration>
-			<VarDeclaration Name="FRONT_HITCH_EXIT_REASON_CODE" Type="BYTE" Comment="Front hitch exit/reason code">
+			<VarDeclaration Name="FRONT_HITCH_EXIT_REASON_CODE" Type="BYTE" Comment="Front hitch exit/reason code" InitialValue="BYTE#16#FF">
 				<Attribute Name="SPN" Type="INT" Value="5816"/>
 				<Attribute Name="SP_Name" Type="STRING" Value="'Front hitch exit/reason code'"/>
 				<Attribute Name="SP_Position_In_PG" Type="STRING" Value="'6.1'"/>
