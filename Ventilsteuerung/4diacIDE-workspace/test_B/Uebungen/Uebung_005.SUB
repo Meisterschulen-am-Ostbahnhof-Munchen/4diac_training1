@@ -21,16 +21,16 @@
 			<Parameter Name="QI" Value="TRUE"/>
 			<Parameter Name="Input" Value="Input_I1"/>
 		</FB>
-		<FB Name="E_SWITCH" Type="iec61499::events::E_SWITCH" x="-4500" y="-300">
+		<FB Name="E_R_TRIG" Type="iec61499::events::E_R_TRIG" x="-4500" y="-300">
 		</FB>
 		<EventConnections>
 			<Connection Source="E_T_FF.EO" Destination="DigitalOutput_Q1.REQ"/>
-			<Connection Source="DigitalInput_I1.IND" Destination="E_SWITCH.EI"/>
-			<Connection Source="E_SWITCH.EO1" Destination="E_T_FF.CLK"/>
+			<Connection Source="DigitalInput_I1.IND" Destination="E_R_TRIG.EI"/>
+			<Connection Source="E_R_TRIG.EO" Destination="E_T_FF.CLK"/>
 		</EventConnections>
 		<DataConnections>
 			<Connection Source="E_T_FF.Q" Destination="DigitalOutput_Q1.OUT" dx1="353.33"/>
-			<Connection Source="DigitalInput_I1.IN" Destination="E_SWITCH.G" dx1="560"/>
+			<Connection Source="DigitalInput_I1.IN" Destination="E_R_TRIG.QI" dx1="560"/>
 		</DataConnections>
 	</SubAppNetwork>
 </SubAppType>
