@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<FBType Name="AX_FB_TON" Comment="standard timer function block (on-delay timing) with AX Adapter">
+<FBType Name="AX_FB_TOF_LTIME" Comment="standard timer function block (off-delay timing) with AX Adapter">
 	<Identification Standard="61131-3" Classification="standard timer function block" Description="Copyright (c) 2011 TU Wien ACIN, HR Agrartechnik GmbH&#10; &#10;This program and the accompanying materials are made&#10;available under the terms of the Eclipse Public License 2.0&#10;which is available at https://www.eclipse.org/legal/epl-2.0/&#10;&#10;SPDX-License-Identifier: EPL-2.0">
 	</Identification>
 	<VersionInfo Version="3.0" Author="Patrick Aigner" Date="2025-04-14" Remarks="changed package">
@@ -19,31 +19,31 @@
 			</Event>
 		</EventOutputs>
 		<InputVars>
-			<VarDeclaration Name="PT" Type="TIME" Comment="Process time"/>
+			<VarDeclaration Name="PT" Type="LTIME" Comment="Process time"/>
 		</InputVars>
 		<OutputVars>
-			<VarDeclaration Name="ET" Type="TIME" Comment="Elapsed time"/>
+			<VarDeclaration Name="ET" Type="LTIME" Comment="Elapsed time"/>
 		</OutputVars>
 		<Plugs>
-			<AdapterDeclaration Name="Q" Type="adapter::types::unidirectional::AX" Comment="Output" x="2300" y="-200"/>
+			<AdapterDeclaration Name="Q" Type="adapter::types::unidirectional::AX" Comment="Output" x="2100" y="-500"/>
 		</Plugs>
 		<Sockets>
-			<AdapterDeclaration Name="IN" Type="adapter::types::unidirectional::AX" Comment="Input" x="-1500" y="-800"/>
+			<AdapterDeclaration Name="IN" Type="adapter::types::unidirectional::AX" Comment="Input" x="-900" y="-600"/>
 		</Sockets>
 	</InterfaceList>
 	<FBNetwork>
-		<FB Name="FB_TON" Type="iec61131::timers::FB_TON" x="700" y="-900">
+		<FB Name="FB_TOF_LTIME" Type="iec61131::timers::FB_TOF_LTIME" x="200" y="-500">
 		</FB>
 		<EventConnections>
-			<Connection Source="FB_TON.CNF" Destination="IND" dx1="1913.33"/>
-			<Connection Source="FB_TON.CNF" Destination="Q.E1" dx1="513.33"/>
-			<Connection Source="IN.E1" Destination="FB_TON.REQ" dx1="360"/>
+			<Connection Source="FB_TOF_LTIME.CNF" Destination="Q.E1"/>
+			<Connection Source="FB_TOF_LTIME.CNF" Destination="IND" dx1="546.67"/>
+			<Connection Source="IN.E1" Destination="FB_TOF_LTIME.REQ" dx1="360"/>
 		</EventConnections>
 		<DataConnections>
-			<Connection Source="FB_TON.ET" Destination="ET" dx1="1913.33"/>
-			<Connection Source="FB_TON.Q" Destination="Q.D1" dx1="233.33"/>
-			<Connection Source="IN.D1" Destination="FB_TON.IN" dx1="760"/>
-			<Connection Source="PT" Destination="FB_TON.PT" dx1="2646.67"/>
+			<Connection Source="FB_TOF_LTIME.Q" Destination="Q.D1"/>
+			<Connection Source="FB_TOF_LTIME.ET" Destination="ET" dx1="1206.67"/>
+			<Connection Source="PT" Destination="FB_TOF_LTIME.PT" dx1="633.33"/>
+			<Connection Source="IN.D1" Destination="FB_TOF_LTIME.IN" dx1="360"/>
 		</DataConnections>
 	</FBNetwork>
 	<Service RightInterface="RESOURCE" LeftInterface="APPLICATION">
