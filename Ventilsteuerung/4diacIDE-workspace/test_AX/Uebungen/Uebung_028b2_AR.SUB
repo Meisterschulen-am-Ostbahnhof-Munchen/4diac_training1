@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<SubAppType Name="Uebung_028b2_AR" Comment="Analog-Eingang Kalibrierung mit Adaptern">
+<SubAppType Name="Uebung_028b2_AR" Comment="Analog-Eingang Kalibrierung mit Adaptern NVS und Hysterese-Regler am Ausgang">
 	<Identification Standard="61499-2" Description="Copyright (c) 2026 Meisterschulen am Ostbahnhof  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0">
 	</Identification>
 	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2026-05-07" Remarks="initial API and implementation and/or initial documentation">
@@ -12,6 +12,7 @@
 		<Import declaration="logiBUS::io::DI::logiBUS_DI::Input_I2"/>
 		<Import declaration="logiBUS::io::DI::logiBUS_DI::Input_I3"/>
 		<Import declaration="logiBUS::io::DQ::logiBUS_DO::Output_Q1"/>
+		<Import declaration="logiBUS::io::DQ::logiBUS_DO::Output_Q2"/>
 	</CompilerInfo>
 	<SubAppInterfaceList>
 	</SubAppInterfaceList>
@@ -69,6 +70,10 @@
 		<FB Name="AUDI_TO_AR" Type="adapter::conversion::unidirectional::AUDI_TO_AR" x="-1100" y="900">
 		</FB>
 		<Comment Comment="WICHTIG ! Doppelte Konvertierung. ein AD_TO_AR wäre wie ein &quot;reinterpret_cast&quot; " x="-2200" y="400" width="1700" height="400"/>
+		<FB Name="DigitalOutput_Q2" Type="logiBUS::io::DQ::logiBUS_QXA" x="8400" y="-100">
+			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="Output" Value="Output_Q2"/>
+		</FB>
 		<EventConnections>
 			<Connection Source="Hysteresis_AR_AX.INITO" Destination="Hysteresis_AR_AX.REQ" dx1="80" dx2="80" dy="53.33"/>
 		</EventConnections>
@@ -86,6 +91,7 @@
 			<Connection Source="THRESHOLD.VALUEO" Destination="Hysteresis_AR_AX.THRESHOLD" dx1="333.33"/>
 			<Connection Source="HYSTERESIS.VALUEO" Destination="Hysteresis_AR_AX.HYSTERESIS" dx1="540"/>
 			<Connection Source="AD_TO_AUDI.AUDI_OUT" Destination="AUDI_TO_AR.AUDI_IN"/>
+			<Connection Source="Hysteresis_AR_AX.OUTPUT" Destination="DigitalOutput_Q2.OUT" dx1="633.33"/>
 		</AdapterConnections>
 	</SubAppNetwork>
 </SubAppType>
