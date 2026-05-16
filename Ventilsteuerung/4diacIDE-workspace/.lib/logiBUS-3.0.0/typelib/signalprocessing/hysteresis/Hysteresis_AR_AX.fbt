@@ -11,15 +11,10 @@
 			<Event Name="INIT" Type="EInit" Comment="Initialization Request">
 				<With Var="QI"/>
 			</Event>
-			<Event Name="REQ" Type="Event" Comment="Normal Execution Request">
-				<With Var="QI"/>
-			</Event>
 		</EventInputs>
 		<EventOutputs>
 			<Event Name="INITO" Type="EInit" Comment="Initialization Confirm">
 				<With Var="QO"/>
-			</Event>
-			<Event Name="CNF" Type="Event" Comment="Execution Confirmation">
 			</Event>
 		</EventOutputs>
 		<InputVars>
@@ -46,21 +41,19 @@
 			</ECState>
 			<ECState Name="sOFF" x="2266.67" y="2480">
 				<ECAction Algorithm="alOff" Output="OUTPUT.E1"/>
-				<ECAction Output="CNF"/>
 			</ECState>
 			<ECState Name="DeInit" x="1506.67" y="2860">
 				<ECAction Algorithm="deInitialize" Output="INITO"/>
 			</ECState>
 			<ECState Name="sON" x="5920" y="1360">
 				<ECAction Algorithm="alOn" Output="OUTPUT.E1"/>
-				<ECAction Output="CNF"/>
 			</ECState>
 			<ECTransition Source="START" Destination="Init" Condition="INIT[TRUE = QI]" Comment="" x="1206.67" y="2260"/>
-			<ECTransition Source="Init" Destination="sOFF" Condition="REQ" Comment="" x="2026.67" y="2313.33"/>
+			<ECTransition Source="Init" Destination="sOFF" Condition="INPUT.E1" Comment="" x="2093.33" y="2100"/>
 			<ECTransition Source="sOFF" Destination="DeInit" Condition="INIT[FALSE = QI]" Comment="" x="2053.33" y="2680"/>
-			<ECTransition Source="sOFF" Destination="sON" Condition="REQ[INPUT.D1 &gt;= THRESHOLD.D1 + HYSTERESIS.D1]" Comment="" x="5040" y="1173.33"/>
+			<ECTransition Source="sOFF" Destination="sON" Condition="INPUT.E1[INPUT.D1 &gt;= THRESHOLD.D1 + HYSTERESIS.D1]" Comment="" x="5040" y="1173.33"/>
 			<ECTransition Source="DeInit" Destination="START" Condition="1" Comment="" x="1306.67" y="2780"/>
-			<ECTransition Source="sON" Destination="sOFF" Condition="REQ[INPUT.D1 &lt;= THRESHOLD.D1]" Comment="" x="5173.33" y="2026.67"/>
+			<ECTransition Source="sON" Destination="sOFF" Condition="INPUT.E1[INPUT.D1 &lt;= THRESHOLD.D1]" Comment="" x="5173.33" y="2026.67"/>
 		</ECC>
 		<Algorithm Name="initialize">
 			<ST><![CDATA[

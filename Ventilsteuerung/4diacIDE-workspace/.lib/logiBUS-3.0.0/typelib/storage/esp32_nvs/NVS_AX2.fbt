@@ -33,7 +33,7 @@
 			<VarDeclaration Name="STATUS" Type="STRING" Comment="Service Status"/>
 		</OutputVars>
 		<Sockets>
-			<AdapterDeclaration Name="VAL" Type="adapter::types::bidirectional::AX2" Comment="Value" x="4500" y="2700"/>
+			<AdapterDeclaration Name="VAL" Type="adapter::types::bidirectional::AX2" Comment="Value" x="4500" y="2800"/>
 		</Sockets>
 	</InterfaceList>
 	<FBNetwork>
@@ -52,7 +52,7 @@
 			<Connection Source="KEY" Destination="NVS.KEY" dx1="200"/>
 			<Connection Source="DEFAULT_VALUE" Destination="NVS.DEFAULT_VALUE" dx1="66.67"/>
 			<Connection Source="VAL.DO1" Destination="NVS.VALUE" dx1="246.67" dx2="100" dy="300"/>
-			<Connection Source="NVS.VALUEO" Destination="VAL.DI1" dx1="933.33"/>
+			<Connection Source="NVS.VALUEO" Destination="VAL.DI1" dx1="293.33"/>
 			<Connection Source="NVS.QO" Destination="QO" dx1="2600"/>
 			<Connection Source="NVS.STATUS" Destination="STATUS" dx1="2600"/>
 		</DataConnections>

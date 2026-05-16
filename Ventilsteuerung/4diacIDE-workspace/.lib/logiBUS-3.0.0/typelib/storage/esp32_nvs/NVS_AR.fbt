@@ -33,7 +33,7 @@
 			<VarDeclaration Name="STATUS" Type="STRING" Comment="Service Status"/>
 		</OutputVars>
 		<Plugs>
-			<AdapterDeclaration Name="AR_OUT" Type="adapter::types::unidirectional::AR" Comment="Stored value output (GETO)" x="3800" y="2400"/>
+			<AdapterDeclaration Name="AR_OUT" Type="adapter::types::unidirectional::AR" Comment="Stored value output (GETO)" x="3800" y="3000"/>
 		</Plugs>
 		<Sockets>
 			<AdapterDeclaration Name="AR_IN" Type="adapter::types::unidirectional::AR" Comment="Value to store (SET)" x="-900" y="1200"/>
@@ -47,7 +47,8 @@
 			<Connection Source="NVS.INITO" Destination="INITO" dx1="200"/>
 			<Connection Source="NVS.INITO" Destination="NVS.GET" dx1="133.33" dx2="133.33" dy="-226.67"/>
 			<Connection Source="AR_IN.E1" Destination="NVS.SET" dx1="313.33"/>
-			<Connection Source="NVS.GETO" Destination="AR_OUT.E1" dx1="200"/>
+			<Connection Source="NVS.SETO" Destination="AR_OUT.E1" dx1="700"/>
+			<Connection Source="NVS.GETO" Destination="AR_OUT.E1" dx1="700"/>
 		</EventConnections>
 		<DataConnections>
 			<Connection Source="QI" Destination="NVS.QI" dx1="266.67"/>

@@ -35,7 +35,7 @@
 			<VarDeclaration Name="STATUS" Type="STRING" Comment="Service Status"/>
 		</OutputVars>
 		<Plugs>
-			<AdapterDeclaration Name="AIS_OUT" Type="adapter::types::unidirectional::AIS" Comment="Stored value output (GETO)" x="3000" y="100"/>
+			<AdapterDeclaration Name="AIS_OUT" Type="adapter::types::unidirectional::AIS" Comment="Stored value output (GETO)" x="3000" y="1300"/>
 		</Plugs>
 		<Sockets>
 			<AdapterDeclaration Name="AIS_IN" Type="adapter::types::unidirectional::AIS" Comment="Value to store (SET)" x="-900" y="1100"/>
@@ -49,7 +49,8 @@
 			<Connection Source="INI.INITO" Destination="INITO" dx1="100"/>
 			<Connection Source="INI.INITO" Destination="INI.GET" dx1="80" dx2="80" dy="-400"/>
 			<Connection Source="AIS_IN.E1" Destination="INI.SET" dx1="100"/>
-			<Connection Source="INI.GETO" Destination="AIS_OUT.E1" dx1="100"/>
+			<Connection Source="INI.GETO" Destination="AIS_OUT.E1" dx1="486.67"/>
+			<Connection Source="INI.SETO" Destination="AIS_OUT.E1" dx1="486.67"/>
 		</EventConnections>
 		<DataConnections>
 			<Connection Source="QI" Destination="INI.QI" dx1="100"/>
