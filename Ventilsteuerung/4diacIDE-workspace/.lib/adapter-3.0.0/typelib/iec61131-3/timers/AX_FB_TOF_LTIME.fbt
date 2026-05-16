@@ -10,12 +10,13 @@
 	</CompilerInfo>
 	<InterfaceList>
 		<EventInputs>
-			<Event Name="EIPT" Type="Event" Comment="Set Preset Time (non-triggering)">
+			<Event Name="REQ" Type="Event" Comment="Normal Execution Request (non-triggering)">
 				<With Var="PT"/>
 			</Event>
 		</EventInputs>
 		<EventOutputs>
-			<Event Name="IND" Type="Event" Comment="Indication">
+			<Event Name="CNF" Type="Event" Comment="Execution Confirmation">
+				<With Var="ET"/>
 			</Event>
 		</EventOutputs>
 		<InputVars>
@@ -25,25 +26,30 @@
 			<VarDeclaration Name="ET" Type="LTIME" Comment="Elapsed time"/>
 		</OutputVars>
 		<Plugs>
-			<AdapterDeclaration Name="Q" Type="adapter::types::unidirectional::AX" Comment="Output" x="2100" y="-500"/>
+			<AdapterDeclaration Name="Q" Type="adapter::types::unidirectional::AX" Comment="Output" x="2900" y="-900"/>
 		</Plugs>
 		<Sockets>
-			<AdapterDeclaration Name="IN" Type="adapter::types::unidirectional::AX" Comment="Input" x="-900" y="-600"/>
+			<AdapterDeclaration Name="IN" Type="adapter::types::unidirectional::AX" Comment="Input" x="-900" y="-900"/>
 		</Sockets>
 	</InterfaceList>
 	<FBNetwork>
-		<FB Name="FB_TOF_LTIME" Type="iec61131::timers::FB_TOF_LTIME" x="200" y="-500">
+		<FB Name="FB_TOF_LTIME" Type="iec61131::timers::FB_TOF_LTIME" x="200" y="-900">
+		</FB>
+		<FB Name="E_D_FF" Type="iec61499::events::E_D_FF" x="1700" y="-900">
 		</FB>
 		<EventConnections>
-			<Connection Source="FB_TOF_LTIME.CNF" Destination="Q.E1"/>
-			<Connection Source="FB_TOF_LTIME.CNF" Destination="IND" dx1="546.67"/>
-			<Connection Source="IN.E1" Destination="FB_TOF_LTIME.REQ" dx1="360"/>
+			<Connection Source="IN.E1" Destination="FB_TOF_LTIME.REQ"/>
+			<Connection Source="FB_TOF_LTIME.CNF" Destination="E_D_FF.CLK"/>
+			<Connection Source="E_D_FF.EO" Destination="Q.E1"/>
+			<Connection Source="REQ" Destination="FB_TOF_LTIME.REQ" dx1="2580"/>
+			<Connection Source="FB_TOF_LTIME.CNF" Destination="CNF" dx1="80"/>
 		</EventConnections>
 		<DataConnections>
-			<Connection Source="FB_TOF_LTIME.Q" Destination="Q.D1"/>
-			<Connection Source="FB_TOF_LTIME.ET" Destination="ET" dx1="1206.67"/>
+			<Connection Source="FB_TOF_LTIME.ET" Destination="ET" dx1="3386.67"/>
 			<Connection Source="PT" Destination="FB_TOF_LTIME.PT" dx1="633.33"/>
-			<Connection Source="IN.D1" Destination="FB_TOF_LTIME.IN" dx1="360"/>
+			<Connection Source="IN.D1" Destination="FB_TOF_LTIME.IN"/>
+			<Connection Source="FB_TOF_LTIME.Q" Destination="E_D_FF.D"/>
+			<Connection Source="E_D_FF.Q" Destination="Q.D1"/>
 		</DataConnections>
 	</FBNetwork>
 	<Service RightInterface="RESOURCE" LeftInterface="APPLICATION">
