@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<FBType Name="SPLIT_AD_INTO_AQ" Comment="this Function splits the 16 AQ (QUARTER) adapters from a AD (DWORD)">
+	<Identification Standard="61499-2" Description="Copyright (c) 2026 Meisterschulen am Ostbahnhof&#10;&#10;SPDX-License-Identifier: EPL-2.0">
+	</Identification>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2026-05-16" Remarks="initial API and implementation and/or initial documentation">
+	</VersionInfo>
+	<CompilerInfo packageName="adapter::splitting">
+	</CompilerInfo>
+	<InterfaceList>
+		<Plugs>
+			<AdapterDeclaration Name="QUARTER_BYTE_00" Type="adapter::types::unidirectional::AQ" Comment="Quarter 0" x="700" y="0"/>
+			<AdapterDeclaration Name="QUARTER_BYTE_01" Type="adapter::types::unidirectional::AQ" Comment="Quarter 1" x="700" y="500"/>
+			<AdapterDeclaration Name="QUARTER_BYTE_02" Type="adapter::types::unidirectional::AQ" Comment="Quarter 2" x="700" y="1000"/>
+			<AdapterDeclaration Name="QUARTER_BYTE_03" Type="adapter::types::unidirectional::AQ" Comment="Quarter 3" x="700" y="1500"/>
+			<AdapterDeclaration Name="QUARTER_BYTE_04" Type="adapter::types::unidirectional::AQ" Comment="Quarter 4" x="700" y="2000"/>
+			<AdapterDeclaration Name="QUARTER_BYTE_05" Type="adapter::types::unidirectional::AQ" Comment="Quarter 5" x="700" y="2500"/>
+			<AdapterDeclaration Name="QUARTER_BYTE_06" Type="adapter::types::unidirectional::AQ" Comment="Quarter 6" x="700" y="3000"/>
+			<AdapterDeclaration Name="QUARTER_BYTE_07" Type="adapter::types::unidirectional::AQ" Comment="Quarter 7" x="700" y="3500"/>
+			<AdapterDeclaration Name="QUARTER_BYTE_08" Type="adapter::types::unidirectional::AQ" Comment="Quarter 8" x="700" y="4000"/>
+			<AdapterDeclaration Name="QUARTER_BYTE_09" Type="adapter::types::unidirectional::AQ" Comment="Quarter 9" x="700" y="4500"/>
+			<AdapterDeclaration Name="QUARTER_BYTE_10" Type="adapter::types::unidirectional::AQ" Comment="Quarter 10" x="700" y="5000"/>
+			<AdapterDeclaration Name="QUARTER_BYTE_11" Type="adapter::types::unidirectional::AQ" Comment="Quarter 11" x="700" y="5500"/>
+			<AdapterDeclaration Name="QUARTER_BYTE_12" Type="adapter::types::unidirectional::AQ" Comment="Quarter 12" x="700" y="6000"/>
+			<AdapterDeclaration Name="QUARTER_BYTE_13" Type="adapter::types::unidirectional::AQ" Comment="Quarter 13" x="700" y="6500"/>
+			<AdapterDeclaration Name="QUARTER_BYTE_14" Type="adapter::types::unidirectional::AQ" Comment="Quarter 14" x="700" y="7000"/>
+			<AdapterDeclaration Name="QUARTER_BYTE_15" Type="adapter::types::unidirectional::AQ" Comment="Quarter 15" x="700" y="7500"/>
+		</Plugs>
+		<Sockets>
+			<AdapterDeclaration Name="IN" Type="adapter::types::unidirectional::AD" Comment="DWORD Input" x="-4000" y="1700"/>
+		</Sockets>
+	</InterfaceList>
+	<FBNetwork>
+		<FB Name="E_D_FF_ANY_00" Type="iec61499::events::E_D_FF_ANY" x="-300" y="0"/>
+		<FB Name="E_D_FF_ANY_01" Type="iec61499::events::E_D_FF_ANY" x="-300" y="500"/>
+		<FB Name="E_D_FF_ANY_02" Type="iec61499::events::E_D_FF_ANY" x="-300" y="1000"/>
+		<FB Name="E_D_FF_ANY_03" Type="iec61499::events::E_D_FF_ANY" x="-300" y="1500"/>
+		<FB Name="E_D_FF_ANY_04" Type="iec61499::events::E_D_FF_ANY" x="-300" y="2000"/>
+		<FB Name="E_D_FF_ANY_05" Type="iec61499::events::E_D_FF_ANY" x="-300" y="2500"/>
+		<FB Name="E_D_FF_ANY_06" Type="iec61499::events::E_D_FF_ANY" x="-300" y="3000"/>
+		<FB Name="E_D_FF_ANY_07" Type="iec61499::events::E_D_FF_ANY" x="-300" y="3500"/>
+		<FB Name="E_D_FF_ANY_08" Type="iec61499::events::E_D_FF_ANY" x="-300" y="4000"/>
+		<FB Name="E_D_FF_ANY_09" Type="iec61499::events::E_D_FF_ANY" x="-300" y="4500"/>
+		<FB Name="E_D_FF_ANY_10" Type="iec61499::events::E_D_FF_ANY" x="-300" y="5000"/>
+		<FB Name="E_D_FF_ANY_11" Type="iec61499::events::E_D_FF_ANY" x="-300" y="5500"/>
+		<FB Name="E_D_FF_ANY_12" Type="iec61499::events::E_D_FF_ANY" x="-300" y="6000"/>
+		<FB Name="E_D_FF_ANY_13" Type="iec61499::events::E_D_FF_ANY" x="-300" y="6500"/>
+		<FB Name="E_D_FF_ANY_14" Type="iec61499::events::E_D_FF_ANY" x="-300" y="7000"/>
+		<FB Name="E_D_FF_ANY_15" Type="iec61499::events::E_D_FF_ANY" x="-300" y="7500"/>
+		<FB Name="SPLIT_DWORD_INTO_QUARTERS" Type="eclipse4diac::utils::splitting::SPLIT_DWORD_INTO_QUARTERS" x="-2900" y="1700">
+		</FB>
+		<EventConnections>
+			<Connection Source="IN.E1" Destination="SPLIT_DWORD_INTO_QUARTERS.REQ"/>
+			<Connection Source="SPLIT_DWORD_INTO_QUARTERS.CNF" Destination="E_D_FF_ANY_00.CLK" dx1="673.33"/>
+			<Connection Source="SPLIT_DWORD_INTO_QUARTERS.CNF" Destination="E_D_FF_ANY_01.CLK" dx1="673.33"/>
+			<Connection Source="SPLIT_DWORD_INTO_QUARTERS.CNF" Destination="E_D_FF_ANY_02.CLK" dx1="673.33"/>
+			<Connection Source="SPLIT_DWORD_INTO_QUARTERS.CNF" Destination="E_D_FF_ANY_03.CLK" dx1="673.33"/>
+			<Connection Source="SPLIT_DWORD_INTO_QUARTERS.CNF" Destination="E_D_FF_ANY_04.CLK" dx1="606.67"/>
+			<Connection Source="SPLIT_DWORD_INTO_QUARTERS.CNF" Destination="E_D_FF_ANY_05.CLK" dx1="606.67"/>
+			<Connection Source="SPLIT_DWORD_INTO_QUARTERS.CNF" Destination="E_D_FF_ANY_06.CLK" dx1="606.67"/>
+			<Connection Source="SPLIT_DWORD_INTO_QUARTERS.CNF" Destination="E_D_FF_ANY_07.CLK" dx1="606.67"/>
+			<Connection Source="SPLIT_DWORD_INTO_QUARTERS.CNF" Destination="E_D_FF_ANY_08.CLK" dx1="540"/>
+			<Connection Source="SPLIT_DWORD_INTO_QUARTERS.CNF" Destination="E_D_FF_ANY_09.CLK" dx1="540"/>
+			<Connection Source="SPLIT_DWORD_INTO_QUARTERS.CNF" Destination="E_D_FF_ANY_10.CLK" dx1="540"/>
+			<Connection Source="SPLIT_DWORD_INTO_QUARTERS.CNF" Destination="E_D_FF_ANY_11.CLK" dx1="540"/>
+			<Connection Source="SPLIT_DWORD_INTO_QUARTERS.CNF" Destination="E_D_FF_ANY_12.CLK" dx1="473.33"/>
+			<Connection Source="SPLIT_DWORD_INTO_QUARTERS.CNF" Destination="E_D_FF_ANY_13.CLK" dx1="473.33"/>
+			<Connection Source="SPLIT_DWORD_INTO_QUARTERS.CNF" Destination="E_D_FF_ANY_14.CLK" dx1="473.33"/>
+			<Connection Source="SPLIT_DWORD_INTO_QUARTERS.CNF" Destination="E_D_FF_ANY_15.CLK" dx1="473.33"/>
+			<Connection Source="E_D_FF_ANY_00.EO" Destination="QUARTER_BYTE_00.E1"/>
+			<Connection Source="E_D_FF_ANY_01.EO" Destination="QUARTER_BYTE_01.E1"/>
+			<Connection Source="E_D_FF_ANY_02.EO" Destination="QUARTER_BYTE_02.E1"/>
+			<Connection Source="E_D_FF_ANY_03.EO" Destination="QUARTER_BYTE_03.E1"/>
+			<Connection Source="E_D_FF_ANY_04.EO" Destination="QUARTER_BYTE_04.E1"/>
+			<Connection Source="E_D_FF_ANY_05.EO" Destination="QUARTER_BYTE_05.E1"/>
+			<Connection Source="E_D_FF_ANY_06.EO" Destination="QUARTER_BYTE_06.E1"/>
+			<Connection Source="E_D_FF_ANY_07.EO" Destination="QUARTER_BYTE_07.E1"/>
+			<Connection Source="E_D_FF_ANY_08.EO" Destination="QUARTER_BYTE_08.E1"/>
+			<Connection Source="E_D_FF_ANY_09.EO" Destination="QUARTER_BYTE_09.E1"/>
+			<Connection Source="E_D_FF_ANY_10.EO" Destination="QUARTER_BYTE_10.E1"/>
+			<Connection Source="E_D_FF_ANY_11.EO" Destination="QUARTER_BYTE_11.E1"/>
+			<Connection Source="E_D_FF_ANY_12.EO" Destination="QUARTER_BYTE_12.E1"/>
+			<Connection Source="E_D_FF_ANY_13.EO" Destination="QUARTER_BYTE_13.E1"/>
+			<Connection Source="E_D_FF_ANY_14.EO" Destination="QUARTER_BYTE_14.E1"/>
+			<Connection Source="E_D_FF_ANY_15.EO" Destination="QUARTER_BYTE_15.E1"/>
+		</EventConnections>
+		<DataConnections>
+			<Connection Source="IN.D1" Destination="SPLIT_DWORD_INTO_QUARTERS.IN"/>
+			<Connection Source="SPLIT_DWORD_INTO_QUARTERS.QUARTER_BYTE_15" Destination="E_D_FF_ANY_15.D" dx1="506.67"/>
+			<Connection Source="SPLIT_DWORD_INTO_QUARTERS.QUARTER_BYTE_14" Destination="E_D_FF_ANY_14.D" dx1="540"/>
+			<Connection Source="SPLIT_DWORD_INTO_QUARTERS.QUARTER_BYTE_13" Destination="E_D_FF_ANY_13.D" dx1="573.33"/>
+			<Connection Source="SPLIT_DWORD_INTO_QUARTERS.QUARTER_BYTE_12" Destination="E_D_FF_ANY_12.D" dx1="806.67"/>
+			<Connection Source="SPLIT_DWORD_INTO_QUARTERS.QUARTER_BYTE_11" Destination="E_D_FF_ANY_11.D" dx1="773.33"/>
+			<Connection Source="SPLIT_DWORD_INTO_QUARTERS.QUARTER_BYTE_10" Destination="E_D_FF_ANY_10.D" dx1="740"/>
+			<Connection Source="SPLIT_DWORD_INTO_QUARTERS.QUARTER_BYTE_09" Destination="E_D_FF_ANY_09.D" dx1="706.67"/>
+			<Connection Source="SPLIT_DWORD_INTO_QUARTERS.QUARTER_BYTE_08" Destination="E_D_FF_ANY_08.D" dx1="640"/>
+			<Connection Source="SPLIT_DWORD_INTO_QUARTERS.QUARTER_BYTE_07" Destination="E_D_FF_ANY_07.D" dx1="606.67"/>
+			<Connection Source="SPLIT_DWORD_INTO_QUARTERS.QUARTER_BYTE_06" Destination="E_D_FF_ANY_06.D" dx1="573.33"/>
+			<Connection Source="SPLIT_DWORD_INTO_QUARTERS.QUARTER_BYTE_05" Destination="E_D_FF_ANY_05.D" dx1="540"/>
+			<Connection Source="SPLIT_DWORD_INTO_QUARTERS.QUARTER_BYTE_04" Destination="E_D_FF_ANY_04.D" dx1="506.67"/>
+			<Connection Source="SPLIT_DWORD_INTO_QUARTERS.QUARTER_BYTE_03" Destination="E_D_FF_ANY_03.D" dx1="473.33"/>
+			<Connection Source="SPLIT_DWORD_INTO_QUARTERS.QUARTER_BYTE_02" Destination="E_D_FF_ANY_02.D" dx1="440"/>
+			<Connection Source="SPLIT_DWORD_INTO_QUARTERS.QUARTER_BYTE_01" Destination="E_D_FF_ANY_01.D" dx1="406.67"/>
+			<Connection Source="SPLIT_DWORD_INTO_QUARTERS.QUARTER_BYTE_00" Destination="E_D_FF_ANY_00.D" dx1="373.33"/>
+			<Connection Source="E_D_FF_ANY_00.Q" Destination="QUARTER_BYTE_00.D1"/>
+			<Connection Source="E_D_FF_ANY_01.Q" Destination="QUARTER_BYTE_01.D1"/>
+			<Connection Source="E_D_FF_ANY_02.Q" Destination="QUARTER_BYTE_02.D1"/>
+			<Connection Source="E_D_FF_ANY_03.Q" Destination="QUARTER_BYTE_03.D1"/>
+			<Connection Source="E_D_FF_ANY_04.Q" Destination="QUARTER_BYTE_04.D1"/>
+			<Connection Source="E_D_FF_ANY_05.Q" Destination="QUARTER_BYTE_05.D1"/>
+			<Connection Source="E_D_FF_ANY_06.Q" Destination="QUARTER_BYTE_06.D1"/>
+			<Connection Source="E_D_FF_ANY_07.Q" Destination="QUARTER_BYTE_07.D1"/>
+			<Connection Source="E_D_FF_ANY_08.Q" Destination="QUARTER_BYTE_08.D1"/>
+			<Connection Source="E_D_FF_ANY_09.Q" Destination="QUARTER_BYTE_09.D1"/>
+			<Connection Source="E_D_FF_ANY_10.Q" Destination="QUARTER_BYTE_10.D1"/>
+			<Connection Source="E_D_FF_ANY_11.Q" Destination="QUARTER_BYTE_11.D1"/>
+			<Connection Source="E_D_FF_ANY_12.Q" Destination="QUARTER_BYTE_12.D1"/>
+			<Connection Source="E_D_FF_ANY_13.Q" Destination="QUARTER_BYTE_13.D1"/>
+			<Connection Source="E_D_FF_ANY_14.Q" Destination="QUARTER_BYTE_14.D1"/>
+			<Connection Source="E_D_FF_ANY_15.Q" Destination="QUARTER_BYTE_15.D1"/>
+		</DataConnections>
+	</FBNetwork>
+	<Attribute Name="eclipse4diac::core::TypeHash" Value="''"/>
+</FBType>
