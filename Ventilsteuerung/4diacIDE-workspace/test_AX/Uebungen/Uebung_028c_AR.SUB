@@ -5,9 +5,9 @@
 	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2026-05-07" Remarks="initial API and implementation and/or initial documentation">
 	</VersionInfo>
 	<CompilerInfo packageName="Uebungen">
-		<Import declaration="Uebungen::const::UT::DefaultPool_Numeric::InputNumber_I3"/>
-		<Import declaration="Uebungen::const::UT::DefaultPool_Numeric::InputNumber_I4"/>
+		<Import declaration="Uebungen::const::UT::PWM::DefaultPool_PWM_Numeric::InputNumber_HYSTERESIS"/>
 		<Import declaration="Uebungen::const::UT::PWM::DefaultPool_PWM_Numeric::InputNumber_PWM_DUTY_OUT"/>
+		<Import declaration="Uebungen::const::UT::PWM::DefaultPool_PWM_Numeric::InputNumber_THRESHOLD"/>
 		<Import declaration="logiBUS::io::AI::logiBUS_AI::AnalogInput_I7"/>
 		<Import declaration="logiBUS::io::DI::logiBUS_DI::Input_I1"/>
 		<Import declaration="logiBUS::io::DI::logiBUS_DI::Input_I2"/>
@@ -62,17 +62,17 @@
 		<SubApp Name="THRESHOLD" Type="MyLib::sys::INI_IN_AND_STORE_AR" x="4300" y="800">
 			<Parameter Name="KEY" Value="'THRESHOLD'"/>
 			<Parameter Name="SECTION" Value="'HYSTERESIS'"/>
-			<Parameter Name="stObj" Value="InputNumber_I3"/>
+			<Parameter Name="stObj" Value="InputNumber_THRESHOLD"/>
 		</SubApp>
 		<SubApp Name="HYSTERESIS" Type="MyLib::sys::INI_IN_AND_STORE_AR" x="4300" y="1500">
 			<Parameter Name="KEY" Value="'HYSTERESIS'"/>
 			<Parameter Name="SECTION" Value="'HYSTERESIS'"/>
-			<Parameter Name="stObj" Value="InputNumber_I4"/>
+			<Parameter Name="stObj" Value="InputNumber_HYSTERESIS"/>
 		</SubApp>
 		<FB Name="Hysteresis_AR_AX" Type="logiBUS::signalprocessing::hysteresis::Hysteresis_AR_AX" x="6100" y="-100">
 			<Parameter Name="QI" Value="TRUE"/>
 		</FB>
-		<FB Name="AR_SPLIT_2" Type="adapter::events::unidirectional::AR_SPLIT_2" x="4000" y="-800">
+		<FB Name="AR_SPLIT_2" Type="adapter::events::unidirectional::AR_SPLIT_2" x="4000" y="-500">
 		</FB>
 		<FB Name="Q_NumericValue_PHYSA" Type="isobus::UT::Q::Q_NumericValue_PHYSA" x="6400" y="-1500">
 			<Parameter Name="stObj" Value="InputNumber_PWM_DUTY_OUT"/>
