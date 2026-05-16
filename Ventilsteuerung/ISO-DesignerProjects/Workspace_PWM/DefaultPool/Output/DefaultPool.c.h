@@ -8,36 +8,37 @@
 #define Macro_000_perc_Offset                                  60
 #define Macro_025_perc_Offset                                  73
 #define DataMask_Offset                                        86
-#define Button_050_perc_Offset                                178
-#define Button_075_perc_Offset                                205
-#define Button_000_perc_Offset                                232
-#define Button_025_perc_Offset                                259
-#define Button_100_perc_Offset                                286
-#define InputNumber_PWM_DUTY_Offset                           313
-#define InputNumber_PWM_Value_Offset                          351
-#define OutputString_percent_Offset                           389
-#define OutputString_WS_Offset                                408
-#define OutputNumber_100_Offset                               428
-#define OutputNumber_8129_Offset                              457
-#define OutputNumber_050_Offset                               486
-#define OutputNumber_075_Offset                               515
-#define OutputNumber_000_Offset                               544
-#define OutputNumber_025_Offset                               573
-#define Meter_Offset                                          602
-#define LinearBargraph_Offset                                 623
-#define ArchedBargraph_Offset                                 647
-#define NumberVariable_PWM_Value_Offset                       674
-#define FontAttributes_12x16_Offset                           681
-#define FontAttributes_12x16_B_Offset                         689
-#define FontAttributes_16x16_Offset                           697
-#define FontAttributes_WS_Offset                              705
+#define Button_050_perc_Offset                                184
+#define Button_075_perc_Offset                                211
+#define Button_000_perc_Offset                                238
+#define Button_025_perc_Offset                                265
+#define Button_100_perc_Offset                                292
+#define InputNumber_PWM_DUTY_Offset                           319
+#define InputNumber_PWM_Value_Offset                          357
+#define InputNumber_PWM_DUTY_OUT_Offset                       395
+#define OutputString_percent_Offset                           433
+#define OutputString_WS_Offset                                452
+#define OutputNumber_100_Offset                               472
+#define OutputNumber_8129_Offset                              501
+#define OutputNumber_050_Offset                               530
+#define OutputNumber_075_Offset                               559
+#define OutputNumber_000_Offset                               588
+#define OutputNumber_025_Offset                               617
+#define Meter_Offset                                          646
+#define LinearBargraph_Offset                                 667
+#define ArchedBargraph_Offset                                 691
+#define NumberVariable_PWM_Value_Offset                       718
+#define FontAttributes_12x16_Offset                           725
+#define FontAttributes_12x16_B_Offset                         733
+#define FontAttributes_16x16_Offset                           741
+#define FontAttributes_WS_Offset                              749
 
 #define ISO_OP_MEMORY_CLASS
 
-#define ISO_OP_DefaultPool_Size    713
+#define ISO_OP_DefaultPool_Size    757
 extern const unsigned char ISO_OP_MEMORY_CLASS isoOP_DefaultPool[];
 
-#define ISO_OP_DefaultPool_ObjectNumber     30
+#define ISO_OP_DefaultPool_ObjectNumber     31
 extern const unsigned long ISO_OP_MEMORY_CLASS isoOP_DefaultPool_Offset[];
 extern const unsigned long ISO_OP_MEMORY_CLASS isoOP_DefaultPool_Offset_Id[];
 #define ISO_OP_DefaultPool_Scale_Offset      1

@@ -20,6 +20,7 @@
 #define Button_100_perc                    6006
 #define InputNumber_PWM_DUTY               9000
 #define InputNumber_PWM_Value              9001
+#define InputNumber_PWM_DUTY_OUT           9002
 #define OutputString_percent              11005
 #define OutputString_WS                   11500
 #define OutputNumber_100                  12000
