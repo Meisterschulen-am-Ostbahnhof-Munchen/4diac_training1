@@ -5,7 +5,6 @@
 	<VersionInfo Organization="HR Agrartechnik GmbH" Version="1.0" Author="Franz Höpfinger" Date="2026-02-17">
 	</VersionInfo>
 	<CompilerInfo packageName="adapter::conversion::unidirectional">
-		<Import declaration="iec61131::conversion::F_INT_TO_DINT"/>
 	</CompilerInfo>
 	<InterfaceList>
 		<Plugs>
@@ -16,15 +15,11 @@
 		</Sockets>
 	</InterfaceList>
 	<FBNetwork>
-		<FB Name="Convert" Type="iec61131::conversion::F_INT_TO_DINT" x="1000" y="0">
-		</FB>
 		<EventConnections>
-			<Connection Source="AI_IN.E1" Destination="Convert.REQ" dx1="100"/>
-			<Connection Source="Convert.CNF" Destination="ADI_OUT.E1" dx1="100"/>
+			<Connection Source="AI_IN.E1" Destination="ADI_OUT.E1"/>
 		</EventConnections>
 		<DataConnections>
-			<Connection Source="AI_IN.D1" Destination="Convert.IN" dx1="100"/>
-			<Connection Source="Convert.OUT" Destination="ADI_OUT.D1" dx1="100"/>
+			<Connection Source="AI_IN.D1" Destination="ADI_OUT.D1"/>
 		</DataConnections>
 	</FBNetwork>
 	<Attribute Name="eclipse4diac::core::TypeHash" Value="''"/>

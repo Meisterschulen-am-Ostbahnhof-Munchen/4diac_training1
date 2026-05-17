@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<SubAppType Name="Uebung_216_ADI" Comment="Standard IEC 61131-3 ADI_FB_CTD (Adapter Version, DINT) mit Terminal-Ausgabe">
+<SubAppType Name="Uebung_216_ADI" Comment="Standard IEC 61131-3 ADI_FB_CTD (Adapter Version, Rückwärtszähler, DINT) mit Terminal-Ausgabe">
 	<Identification Standard="61131-3" Description="Copyright (c) 2026 Meisterschulen am Ostbahnhof  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0">
 	</Identification>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.2" Author="Franz Höpfinger" Date="2026-05-13" Remarks="Added ADI_DINT_TO_DI init block connected to PV">
+	</VersionInfo>
 	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.1" Author="Franz Höpfinger" Date="2026-04-21" Remarks="Added terminal output for counter value">
 	</VersionInfo>
 	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2026-04-21" Remarks="initial API and implementation (Adapter version)">
@@ -17,11 +19,14 @@
 	<SubAppNetwork>
 		<FB Name="ADI_FB_CTD" Type="adapter::iec61131::counters::ADI_FB_CTD" x="0" y="0">
 		</FB>
+		<FB Name="ADI_DINT_TO_DI" Type="adapter::conversion::unidirectional::ADI_DINT_TO_DI" x="-1400" y="800">
+			<Parameter Name="OUT" Value="DINT#10"/>
+		</FB>
 		<FB Name="Input_CD" Type="logiBUS::io::DI::logiBUS_IXA" x="-2500" y="-800">
 			<Parameter Name="QI" Value="TRUE"/>
 			<Parameter Name="Input" Value="Input_I1"/>
 		</FB>
-		<FB Name="Input_LD" Type="logiBUS::io::DI::logiBUS_IXA" x="-2500" y="800">
+		<FB Name="Input_LD" Type="logiBUS::io::DI::logiBUS_IXA" x="-2900" y="800">
 			<Parameter Name="QI" Value="TRUE"/>
 			<Parameter Name="Input" Value="Input_I2"/>
 		</FB>
@@ -35,12 +40,16 @@
 			<Parameter Name="u16ObjId" Value="OutputNumber_N1"/>
 		</FB>
 		<Comment Comment="ADI_TO_AUDI ist großer Quatsch ... keine Negativen Zahlen möglich" x="1000" y="1400" width="2200" height="500"/>
+		<EventConnections>
+			<Connection Source="Input_LD.INITO" Destination="ADI_DINT_TO_DI.REQ"/>
+		</EventConnections>
 		<AdapterConnections>
 			<Connection Source="Input_CD.IN" Destination="ADI_FB_CTD.CD" dx1="400"/>
 			<Connection Source="Input_LD.IN" Destination="ADI_FB_CTD.LD" dx1="200"/>
 			<Connection Source="ADI_FB_CTD.Q" Destination="Output_Q1.OUT" dx1="200"/>
 			<Connection Source="ADI_FB_CTD.CV" Destination="ADI_TO_AUDI.ADI_IN" dx1="200"/>
 			<Connection Source="ADI_TO_AUDI.AUDI_OUT" Destination="Q_NumericValue_AUDI.u32NewValue" dx1="200"/>
+			<Connection Source="ADI_DINT_TO_DI.ADI_OUT" Destination="ADI_FB_CTD.PV" dx1="226.67"/>
 		</AdapterConnections>
 	</SubAppNetwork>
 </SubAppType>

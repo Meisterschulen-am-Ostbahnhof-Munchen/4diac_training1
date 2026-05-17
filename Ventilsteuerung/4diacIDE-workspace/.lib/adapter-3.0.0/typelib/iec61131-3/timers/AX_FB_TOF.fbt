@@ -10,10 +10,15 @@
 	</CompilerInfo>
 	<InterfaceList>
 		<EventInputs>
-			<Event Name="REQ" Type="Event" Comment="Normal Execution Request">
+			<Event Name="REQ" Type="Event" Comment="Normal Execution Request (non-triggering)">
 				<With Var="PT"/>
 			</Event>
 		</EventInputs>
+		<EventOutputs>
+			<Event Name="CNF" Type="Event" Comment="Execution Confirmation">
+				<With Var="ET"/>
+			</Event>
+		</EventOutputs>
 		<InputVars>
 			<VarDeclaration Name="PT" Type="TIME" Comment="Process time"/>
 		</InputVars>
@@ -21,11 +26,33 @@
 			<VarDeclaration Name="ET" Type="TIME" Comment="Elapsed time"/>
 		</OutputVars>
 		<Plugs>
-			<AdapterDeclaration Name="Q" Type="adapter::types::unidirectional::AX" Comment="Output"/>
+			<AdapterDeclaration Name="Q" Type="adapter::types::unidirectional::AX" Comment="Output" x="2700" y="-900"/>
 		</Plugs>
 		<Sockets>
-			<AdapterDeclaration Name="IN" Type="adapter::types::unidirectional::AX" Comment="Input"/>
+			<AdapterDeclaration Name="IN" Type="adapter::types::unidirectional::AX" Comment="Input" x="-1000" y="-900"/>
 		</Sockets>
 	</InterfaceList>
+	<FBNetwork>
+		<FB Name="FB_TOF" Type="iec61131::timers::FB_TOF" x="200" y="-900">
+		</FB>
+		<FB Name="E_D_FF" Type="iec61499::events::E_D_FF" x="1700" y="-900">
+		</FB>
+		<EventConnections>
+			<Connection Source="FB_TOF.CNF" Destination="E_D_FF.CLK"/>
+			<Connection Source="IN.E1" Destination="FB_TOF.REQ"/>
+			<Connection Source="REQ" Destination="FB_TOF.REQ" dx1="2580"/>
+			<Connection Source="FB_TOF.CNF" Destination="CNF" dx1="80"/>
+			<Connection Source="E_D_FF.EO" Destination="Q.E1"/>
+		</EventConnections>
+		<DataConnections>
+			<Connection Source="FB_TOF.Q" Destination="E_D_FF.D"/>
+			<Connection Source="FB_TOF.ET" Destination="ET" dx1="3380"/>
+			<Connection Source="PT" Destination="FB_TOF.PT" dx1="633.33"/>
+			<Connection Source="IN.D1" Destination="FB_TOF.IN"/>
+			<Connection Source="E_D_FF.Q" Destination="Q.D1"/>
+		</DataConnections>
+	</FBNetwork>
+	<Service RightInterface="RESOURCE" LeftInterface="APPLICATION">
+	</Service>
 	<Attribute Name="eclipse4diac::core::TypeHash" Value="''"/>
 </FBType>

@@ -30,20 +30,20 @@
 			<Parameter Name="QI" Value="TRUE"/>
 			<Parameter Name="Output" Value="Output_Q1"/>
 		</FB>
-		<FB Name="Q_NumericValue_L" Type="isobus::UT::Q::Q_NumericValue_PHYS_LREAL" x="3000" y="1000">
+		<FB Name="Q_NumericValue_PHYS_LREAL" Type="isobus::UT::Q::Q_NumericValue_PHYS_LREAL" x="3000" y="1000">
 			<Parameter Name="stObj" Value="OutputNumber_N3"/>
 		</FB>
 		<EventConnections>
 			<Connection Source="Input_CU.IND" Destination="FB_CTU_DINT.REQ" dx1="500"/>
 			<Connection Source="Input_R.IND" Destination="FB_CTU_DINT.REQ" dx1="500"/>
 			<Connection Source="FB_CTU_DINT.CNF" Destination="Output_Q1.REQ" dx1="500"/>
-			<Connection Source="FB_CTU_DINT.CNF" Destination="Q_NumericValue_L.REQ" dx1="500"/>
+			<Connection Source="FB_CTU_DINT.CNF" Destination="Q_NumericValue_PHYS_LREAL.REQ" dx1="500"/>
 		</EventConnections>
 		<DataConnections>
 			<Connection Source="Input_CU.IN" Destination="FB_CTU_DINT.CU" dx1="200"/>
 			<Connection Source="Input_R.IN" Destination="FB_CTU_DINT.R" dx1="200"/>
 			<Connection Source="FB_CTU_DINT.Q" Destination="Output_Q1.OUT" dx1="200"/>
-			<Connection Source="FB_CTU_DINT.CV" Destination="Q_NumericValue_L.lrPhys" dx1="300"/>
+			<Connection Source="FB_CTU_DINT.CV" Destination="Q_NumericValue_PHYS_LREAL.lrPhys" dx1="300"/>
 		</DataConnections>
 	</SubAppNetwork>
 </SubAppType>

@@ -20,6 +20,11 @@
 #define Button_100_perc                    6006
 #define InputNumber_PWM_DUTY               9000
 #define InputNumber_PWM_Value              9001
+#define InputNumber_PWM_DUTY_OUT           9002
+#define InputNumber_THRESHOLD              9003
+#define InputNumber_HYSTERESIS             9004
+#define OutputString_THRESHOLD            11000
+#define OutputString_HYSTERESIS           11001
 #define OutputString_percent              11005
 #define OutputString_WS                   11500
 #define OutputNumber_100                  12000
@@ -34,5 +39,6 @@
 #define NumberVariable_PWM_Value          21001
 #define FontAttributes_12x16              23000
 #define FontAttributes_12x16_B            23001
+#define FontAttributes_small              23002
 #define FontAttributes_16x16              23004
 #define FontAttributes_WS                 23500

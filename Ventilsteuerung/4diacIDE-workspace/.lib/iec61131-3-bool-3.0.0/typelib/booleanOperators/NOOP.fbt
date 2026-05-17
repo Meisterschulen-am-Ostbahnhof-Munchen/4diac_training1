@@ -8,15 +8,11 @@
 	</CompilerInfo>
 	<InterfaceList>
 		<EventInputs>
-			<Event Name="INIT" Type="EInit" Comment="Initialization Request">
-			</Event>
 			<Event Name="REQ" Type="Event" Comment="Normal Execution Request">
 				<With Var="IN"/>
 			</Event>
 		</EventInputs>
 		<EventOutputs>
-			<Event Name="INITO" Type="EInit" Comment="Initialization Confirm">
-			</Event>
 			<Event Name="CNF" Type="Event" Comment="Execution Confirmation">
 				<With Var="OUT"/>
 			</Event>
@@ -33,7 +29,6 @@
 			<Attribute Name="DataType" Value="BOOL"/>
 		</FB>
 		<EventConnections>
-			<Connection Source="INIT" Destination="INITO"/>
 			<Connection Source="REQ" Destination="F_MOVE.REQ" dx1="1123.53"/>
 			<Connection Source="F_MOVE.CNF" Destination="CNF" dx1="1688.24"/>
 		</EventConnections>

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<SubAppType Name="Uebung_210_AI" Comment="Standard IEC 61131-3 AI_FB_CTU (Adapter Version, INT) mit Terminal-Ausgabe">
+<SubAppType Name="Uebung_210_AI" Comment="Standard IEC 61131-3 AI_FB_CTU (Adapter Version, Vorwärtszähler, INT) mit Terminal-Ausgabe">
 	<Identification Standard="61131-3" Description="Copyright (c) 2026 Meisterschulen am Ostbahnhof  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0">
 	</Identification>
 	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.1" Author="Franz Höpfinger" Date="2026-04-21" Remarks="Added terminal output for counter value">
@@ -17,11 +17,14 @@
 	<SubAppNetwork>
 		<FB Name="AI_FB_CTU" Type="adapter::iec61131::counters::AI_FB_CTU" x="0" y="0">
 		</FB>
+		<FB Name="AI_INT_TO_I" Type="adapter::conversion::unidirectional::AI_INT_TO_I" x="-1500" y="900">
+			<Parameter Name="OUT" Value="INT#5"/>
+		</FB>
 		<FB Name="Input_CU" Type="logiBUS::io::DI::logiBUS_IXA" x="-2500" y="-800">
 			<Parameter Name="QI" Value="TRUE"/>
 			<Parameter Name="Input" Value="Input_I1"/>
 		</FB>
-		<FB Name="Input_R" Type="logiBUS::io::DI::logiBUS_IXA" x="-2500" y="800">
+		<FB Name="Input_R" Type="logiBUS::io::DI::logiBUS_IXA" x="-2900" y="900">
 			<Parameter Name="QI" Value="TRUE"/>
 			<Parameter Name="Input" Value="Input_I2"/>
 		</FB>
@@ -35,12 +38,17 @@
 			<Parameter Name="u16ObjId" Value="OutputNumber_N1"/>
 		</FB>
 		<Comment Comment="AI_TO_AUDI ist großer Quatsch ... keine Negativen Zahlen möglich" x="300" y="1700" width="2200" height="500"/>
+		<Comment Comment="hier gegebenenfalls einen AX_D_FF einbauen, damit die Events reduziert werden. " x="1000" y="-700" width="1000" height="500"/>
+		<EventConnections>
+			<Connection Source="Input_R.INITO" Destination="AI_INT_TO_I.REQ"/>
+		</EventConnections>
 		<AdapterConnections>
 			<Connection Source="Input_CU.IN" Destination="AI_FB_CTU.CU" dx1="400"/>
 			<Connection Source="Input_R.IN" Destination="AI_FB_CTU.R" dx1="200"/>
 			<Connection Source="AI_FB_CTU.Q" Destination="Output_Q1.OUT" dx1="200"/>
 			<Connection Source="AI_FB_CTU.CV" Destination="AI_TO_AUDI.AI_IN" dx1="200"/>
 			<Connection Source="AI_TO_AUDI.AUDI_OUT" Destination="Q_NumericValue_AUDI.u32NewValue" dx1="200"/>
+			<Connection Source="AI_INT_TO_I.AI_OUT" Destination="AI_FB_CTU.PV" dx1="346.67"/>
 		</AdapterConnections>
 	</SubAppNetwork>
 </SubAppType>

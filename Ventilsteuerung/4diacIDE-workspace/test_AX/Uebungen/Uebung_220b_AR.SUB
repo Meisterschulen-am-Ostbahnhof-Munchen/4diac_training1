@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<SubAppType Name="Uebung_220b_AR" Comment="Standard IEC 61131-3 AI_FB_CTUD (Adapter Version, INT) mit Terminal-Ausgabe (PHYS)">
+<SubAppType Name="Uebung_220b_AR" Comment="Standard IEC 61131-3 AI_FB_CTUD (Adapter Version, Vorwärts-/Rückwärtszähler, INT) mit Terminal-Ausgabe (PHYS)">
 	<Identification Standard="61131-3" Description="Copyright (c) 2026 Meisterschulen am Ostbahnhof  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0">
 	</Identification>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.2" Author="Franz Höpfinger" Date="2026-05-13" Remarks="Added AI_INT_TO_I init block connected to PV">
+	</VersionInfo>
 	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.1" Author="Franz Höpfinger" Date="2026-04-21" Remarks="Added terminal output for counter value (PHYS)">
 	</VersionInfo>
 	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2026-04-21" Remarks="initial API and implementation (Adapter version)">
@@ -20,19 +22,22 @@
 	<SubAppNetwork>
 		<FB Name="AI_FB_CTUD" Type="adapter::iec61131::counters::AI_FB_CTUD" x="0" y="0">
 		</FB>
-		<FB Name="Input_CU" Type="logiBUS::io::DI::logiBUS_IXA" x="-2500" y="-1500">
+		<FB Name="AI_INT_TO_I" Type="adapter::conversion::unidirectional::AI_INT_TO_I" x="-1300" y="1500">
+			<Parameter Name="OUT" Value="INT#5"/>
+		</FB>
+		<FB Name="Input_CU" Type="logiBUS::io::DI::logiBUS_IXA" x="-2900" y="-1500">
 			<Parameter Name="QI" Value="TRUE"/>
 			<Parameter Name="Input" Value="Input_I1"/>
 		</FB>
-		<FB Name="Input_CD" Type="logiBUS::io::DI::logiBUS_IXA" x="-2500" y="-600">
+		<FB Name="Input_CD" Type="logiBUS::io::DI::logiBUS_IXA" x="-2900" y="-600">
 			<Parameter Name="QI" Value="TRUE"/>
 			<Parameter Name="Input" Value="Input_I2"/>
 		</FB>
-		<FB Name="Input_R" Type="logiBUS::io::DI::logiBUS_IXA" x="-2500" y="400">
+		<FB Name="Input_R" Type="logiBUS::io::DI::logiBUS_IXA" x="-2900" y="400">
 			<Parameter Name="QI" Value="TRUE"/>
 			<Parameter Name="Input" Value="Input_I3"/>
 		</FB>
-		<FB Name="Input_LD" Type="logiBUS::io::DI::logiBUS_IXA" x="-2500" y="1500">
+		<FB Name="Input_LD" Type="logiBUS::io::DI::logiBUS_IXA" x="-3100" y="1500">
 			<Parameter Name="QI" Value="TRUE"/>
 			<Parameter Name="Input" Value="Input_I4"/>
 		</FB>
@@ -44,20 +49,26 @@
 			<Parameter Name="QI" Value="TRUE"/>
 			<Parameter Name="Output" Value="Output_Q2"/>
 		</FB>
-		<FB Name="Q_NumericValue_1" Type="isobus::UT::Q::Q_NumericValue_PHYSA" x="2700" y="1000">
-			<Parameter Name="stObj" Value="OutputNumber_N3"/>
-		</FB>
 		<FB Name="AI_TO_AR" Type="adapter::conversion::unidirectional::AI_TO_AR" x="1100" y="1400">
 		</FB>
+		<FB Name="Q_NumericValue_PHYSA" Type="isobus::UT::Q::Q_NumericValue_PHYSA" x="2700" y="1000">
+			<Parameter Name="stObj" Value="OutputNumber_N3"/>
+		</FB>
+		<Comment Comment="hier sind negative Werte möglich ! " x="800" y="1800" width="1500" height="300"/>
+		<Comment Comment="hier gegebenenfalls je einen AX_D_FF einbauen, damit die Events reduziert werden. " x="1300" y="-100" width="1100" height="600"/>
+		<EventConnections>
+			<Connection Source="Input_LD.INITO" Destination="AI_INT_TO_I.REQ"/>
+		</EventConnections>
 		<AdapterConnections>
 			<Connection Source="Input_CU.IN" Destination="AI_FB_CTUD.CU" dx1="500"/>
 			<Connection Source="Input_CD.IN" Destination="AI_FB_CTUD.CD" dx1="400"/>
 			<Connection Source="Input_R.IN" Destination="AI_FB_CTUD.R" dx1="300"/>
-			<Connection Source="Input_LD.IN" Destination="AI_FB_CTUD.LD" dx1="740"/>
+			<Connection Source="Input_LD.IN" Destination="AI_FB_CTUD.LD" dx1="606.67"/>
 			<Connection Source="AI_FB_CTUD.QU" Destination="Output_QU.OUT" dx1="200"/>
 			<Connection Source="AI_FB_CTUD.QD" Destination="Output_QD.OUT" dx1="493.33"/>
 			<Connection Source="AI_FB_CTUD.CV" Destination="AI_TO_AR.AI_IN" dx1="173.33"/>
-			<Connection Source="AI_TO_AR.AR_OUT" Destination="Q_NumericValue_1.rPhys" dx1="293.33"/>
+			<Connection Source="AI_TO_AR.AR_OUT" Destination="Q_NumericValue_PHYSA.rPhys" dx1="293.33"/>
+			<Connection Source="AI_INT_TO_I.AI_OUT" Destination="AI_FB_CTUD.PV" dx1="146.67"/>
 		</AdapterConnections>
 	</SubAppNetwork>
 </SubAppType>

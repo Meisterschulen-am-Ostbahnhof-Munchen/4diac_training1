@@ -15,7 +15,7 @@
 			<Parameter Name="QI" Value="TRUE"/>
 			<Parameter Name="Input" Value="Input_I1"/>
 		</FB>
-		<FB Name="AX_SWITCH" Type="adapter::events::unidirectional::AX_SWITCH" x="-7500" y="700">
+		<FB Name="AX_RF_TRIG" Type="adapter::events::unidirectional::AX_RF_TRIG" x="-7500" y="700">
 		</FB>
 		<FB Name="AX_RS" Type="adapter::events::unidirectional::AX_RS" x="-4900" y="400">
 		</FB>
@@ -27,13 +27,13 @@
 			<Parameter Name="Output" Value="Output_Q1"/>
 		</FB>
 		<EventConnections>
-			<Connection Source="AX_SWITCH.EO1" Destination="E_DELAY.START" dx1="520"/>
+			<Connection Source="AX_RF_TRIG.ER" Destination="E_DELAY.START" dx1="520"/>
 			<Connection Source="E_DELAY.EO" Destination="AX_RS.S" dx1="146.67"/>
-			<Connection Source="AX_SWITCH.EO0" Destination="E_DELAY.STOP"/>
-			<Connection Source="AX_SWITCH.EO0" Destination="AX_RS.R" dx1="346.67"/>
+			<Connection Source="AX_RF_TRIG.EF" Destination="E_DELAY.STOP"/>
+			<Connection Source="AX_RF_TRIG.EF" Destination="AX_RS.R" dx1="346.67"/>
 		</EventConnections>
 		<AdapterConnections>
-			<Connection Source="DigitalInput_I1.IN" Destination="AX_SWITCH.G" dx1="300"/>
+			<Connection Source="DigitalInput_I1.IN" Destination="AX_RF_TRIG.QI" dx1="300"/>
 			<Connection Source="AX_RS.Q" Destination="DigitalOutput_Q1.OUT"/>
 		</AdapterConnections>
 	</SubAppNetwork>

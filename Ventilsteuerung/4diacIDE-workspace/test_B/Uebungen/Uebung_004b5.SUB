@@ -21,16 +21,16 @@
 		</FB>
 		<FB Name="E_T_FF" Type="iec61499::events::E_T_FF" x="-1700" y="-800">
 		</FB>
-		<FB Name="E_SWITCH" Type="iec61499::events::E_SWITCH" x="-2600" y="-800">
+		<FB Name="E_R_TRIG" Type="iec61499::events::E_R_TRIG" x="-2600" y="-800">
 		</FB>
 		<EventConnections>
 			<Connection Source="E_T_FF.EO" Destination="DigitalOutput_Q1.REQ" dx1="613.33"/>
-			<Connection Source="E_SWITCH.EO1" Destination="E_T_FF.CLK" dx1="120"/>
-			<Connection Source="DigitalInput_I1.IND" Destination="E_SWITCH.EI" dx1="406.67"/>
+			<Connection Source="E_R_TRIG.EO" Destination="E_T_FF.CLK" dx1="120"/>
+			<Connection Source="DigitalInput_I1.IND" Destination="E_R_TRIG.EI" dx1="406.67"/>
 		</EventConnections>
 		<DataConnections>
 			<Connection Source="E_T_FF.Q" Destination="DigitalOutput_Q1.OUT" dx1="626.67"/>
-			<Connection Source="DigitalInput_I1.IN" Destination="E_SWITCH.G" dx1="473.33"/>
+			<Connection Source="DigitalInput_I1.IN" Destination="E_R_TRIG.QI" dx1="473.33"/>
 		</DataConnections>
 	</SubAppNetwork>
 </SubAppType>

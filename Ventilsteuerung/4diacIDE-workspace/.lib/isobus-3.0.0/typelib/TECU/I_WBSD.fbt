@@ -46,7 +46,7 @@
 			<VarDeclaration Name="Q_timeout" Type="BOOL"/>
 			<VarDeclaration Name="timestamp_timeout" Type="DINT"/>
 			<VarDeclaration Name="timestamp_data" Type="DINT"/>
-			<VarDeclaration Name="WHEELBASEDMACHINESPEED" Type="UINT" Comment="Wheel-based machine speed (see Attributes for Details)">
+			<VarDeclaration Name="WHEELBASEDMACHINESPEED" Type="UINT" Comment="Wheel-based machine speed (see Attributes for Details)" InitialValue="UINT#16#FFFF">
 				<Attribute Name="SPN" Type="INT" Value="1862"/>
 				<Attribute Name="SP_Name" Type="STRING" Value="'Wheel-based machine speed'"/>
 				<Attribute Name="SP_Position_In_PG" Type="STRING" Value="'1-2'"/>
@@ -55,7 +55,7 @@
 				<Attribute Name="Offset" Type="INT" Value=""/>
 				<Attribute Name="Link" Type="STRING" Value="'https://docs.ms-muc-docs.de/projects/isobus-other-docs/de/latest/PGN/PGN_65096.html#spn-1862-wheel-based-machine-speed'"/>
 			</VarDeclaration>
-			<VarDeclaration Name="WHEELBASEDMACHINEDISTANCE" Type="UDINT" Comment="Wheel-based machine distance (see Attributes for Details)">
+			<VarDeclaration Name="WHEELBASEDMACHINEDISTANCE" Type="UDINT" Comment="Wheel-based machine distance (see Attributes for Details)" InitialValue="UDINT#16#FFFFFFFF">
 				<Attribute Name="SPN" Type="INT" Value="1863"/>
 				<Attribute Name="SP_Name" Type="STRING" Value="'Wheel-based machine distance'"/>
 				<Attribute Name="SP_Position_In_PG" Type="STRING" Value="'3-6'"/>
@@ -64,7 +64,7 @@
 				<Attribute Name="Offset" Type="INT" Value=""/>
 				<Attribute Name="Link" Type="STRING" Value="'https://docs.ms-muc-docs.de/projects/isobus-other-docs/de/latest/PGN/PGN_65096.html#spn-1863-wheel-based-machine-distance'"/>
 			</VarDeclaration>
-			<VarDeclaration Name="MAXI_TIMEOFTRACPOWER" Type="USINT" Comment="Maximum Time of Tractor Power (see Attributes for Details)">
+			<VarDeclaration Name="MAXI_TIMEOFTRACPOWER" Type="USINT" Comment="Maximum Time of Tractor Power (see Attributes for Details)" InitialValue="USINT#16#FF">
 				<Attribute Name="SPN" Type="INT" Value="1866"/>
 				<Attribute Name="SP_Name" Type="STRING" Value="'Maximum Time of Tractor Power'"/>
 				<Attribute Name="SP_Position_In_PG" Type="STRING" Value="'7'"/>
@@ -73,7 +73,7 @@
 				<Attribute Name="Offset" Type="INT" Value=""/>
 				<Attribute Name="Link" Type="STRING" Value="'https://docs.ms-muc-docs.de/projects/isobus-other-docs/de/latest/PGN/PGN_65096.html#spn-1866-maximum-time-of-tractor-power'"/>
 			</VarDeclaration>
-			<VarDeclaration Name="WHEELBASEDMACHINEDIRECTION" Type="BYTE" Comment="Wheel-based machine direction (see Attributes for Details)">
+			<VarDeclaration Name="WHEELBASEDMACHINEDIRECTION" Type="BYTE" Comment="Wheel-based machine direction (see Attributes for Details)" InitialValue="BYTE#16#FF">
 				<Attribute Name="SPN" Type="INT" Value="1864"/>
 				<Attribute Name="SP_Name" Type="STRING" Value="'Wheel-based machine direction'"/>
 				<Attribute Name="SP_Position_In_PG" Type="STRING" Value="'8.1'"/>
@@ -82,7 +82,7 @@
 				<Attribute Name="Offset" Type="INT" Value=""/>
 				<Attribute Name="Link" Type="STRING" Value="'https://docs.ms-muc-docs.de/projects/isobus-other-docs/de/latest/PGN/PGN_65096.html#spn-1864-wheel-based-machine-direction'"/>
 			</VarDeclaration>
-			<VarDeclaration Name="KEYSWITCHSTATE" Type="BYTE" Comment="Key switch state (see Attributes for Details)">
+			<VarDeclaration Name="KEYSWITCHSTATE" Type="BYTE" Comment="Key switch state (see Attributes for Details)" InitialValue="BYTE#16#FF">
 				<Attribute Name="SPN" Type="INT" Value="1865"/>
 				<Attribute Name="SP_Name" Type="STRING" Value="'Key switch state'"/>
 				<Attribute Name="SP_Position_In_PG" Type="STRING" Value="'8.3'"/>
@@ -91,7 +91,7 @@
 				<Attribute Name="Offset" Type="INT" Value=""/>
 				<Attribute Name="Link" Type="STRING" Value="'https://docs.ms-muc-docs.de/projects/isobus-other-docs/de/latest/PGN/PGN_65096.html#spn-1865-key-switch-state'"/>
 			</VarDeclaration>
-			<VarDeclaration Name="START_STOP_STATE" Type="BYTE" Comment="Implement Start/Stop operations (see Attributes for Details)">
+			<VarDeclaration Name="START_STOP_STATE" Type="BYTE" Comment="Implement Start/Stop operations (see Attributes for Details)" InitialValue="BYTE#16#FF">
 				<Attribute Name="SPN" Type="INT" Value="5203"/>
 				<Attribute Name="SP_Name" Type="STRING" Value="'Implement Start/Stop operations'"/>
 				<Attribute Name="SP_Position_In_PG" Type="STRING" Value="'8.5'"/>
@@ -100,7 +100,7 @@
 				<Attribute Name="Offset" Type="INT" Value=""/>
 				<Attribute Name="Link" Type="STRING" Value="'https://docs.ms-muc-docs.de/projects/isobus-other-docs/de/latest/PGN/PGN_65096.html#spn-5203-implement-start-stop-operations'"/>
 			</VarDeclaration>
-			<VarDeclaration Name="OPERATOR_DIREC_REVERSED" Type="BYTE" Comment="Operator direction reversed (see Attributes for Details)">
+			<VarDeclaration Name="OPERATOR_DIREC_REVERSED" Type="BYTE" Comment="Operator direction reversed (see Attributes for Details)" InitialValue="BYTE#16#FF">
 				<Attribute Name="SPN" Type="INT" Value="5244"/>
 				<Attribute Name="SP_Name" Type="STRING" Value="'Operator direction reversed'"/>
 				<Attribute Name="SP_Position_In_PG" Type="STRING" Value="'8.7'"/>

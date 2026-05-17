@@ -1,0 +1,219 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<FBType Name="SPLIT_AD_INTO_AX" Comment="this Function splits the 32 AX (BOOL) adapters from a AD (DWORD)">
+	<Identification Standard="61499-2" Description="Copyright (c) 2026 Meisterschulen am Ostbahnhof&#10;&#10;SPDX-License-Identifier: EPL-2.0">
+	</Identification>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2026-05-16" Remarks="initial API and implementation and/or initial documentation">
+	</VersionInfo>
+	<CompilerInfo packageName="adapter::splitting">
+	</CompilerInfo>
+	<InterfaceList>
+		<Plugs>
+			<AdapterDeclaration Name="BIT_00" Type="adapter::types::unidirectional::AX" Comment="Bool Bit 0" x="700" y="0"/>
+			<AdapterDeclaration Name="BIT_01" Type="adapter::types::unidirectional::AX" Comment="Bool Bit 1" x="700" y="500"/>
+			<AdapterDeclaration Name="BIT_02" Type="adapter::types::unidirectional::AX" Comment="Bool Bit 2" x="700" y="1000"/>
+			<AdapterDeclaration Name="BIT_03" Type="adapter::types::unidirectional::AX" Comment="Bool Bit 3" x="700" y="1500"/>
+			<AdapterDeclaration Name="BIT_04" Type="adapter::types::unidirectional::AX" Comment="Bool Bit 4" x="700" y="2000"/>
+			<AdapterDeclaration Name="BIT_05" Type="adapter::types::unidirectional::AX" Comment="Bool Bit 5" x="700" y="2500"/>
+			<AdapterDeclaration Name="BIT_06" Type="adapter::types::unidirectional::AX" Comment="Bool Bit 6" x="700" y="3000"/>
+			<AdapterDeclaration Name="BIT_07" Type="adapter::types::unidirectional::AX" Comment="Bool Bit 7" x="700" y="3500"/>
+			<AdapterDeclaration Name="BIT_08" Type="adapter::types::unidirectional::AX" Comment="Bool Bit 8" x="700" y="4000"/>
+			<AdapterDeclaration Name="BIT_09" Type="adapter::types::unidirectional::AX" Comment="Bool Bit 9" x="700" y="4500"/>
+			<AdapterDeclaration Name="BIT_10" Type="adapter::types::unidirectional::AX" Comment="Bool Bit 10" x="700" y="5000"/>
+			<AdapterDeclaration Name="BIT_11" Type="adapter::types::unidirectional::AX" Comment="Bool Bit 11" x="700" y="5500"/>
+			<AdapterDeclaration Name="BIT_12" Type="adapter::types::unidirectional::AX" Comment="Bool Bit 12" x="700" y="6000"/>
+			<AdapterDeclaration Name="BIT_13" Type="adapter::types::unidirectional::AX" Comment="Bool Bit 13" x="700" y="6500"/>
+			<AdapterDeclaration Name="BIT_14" Type="adapter::types::unidirectional::AX" Comment="Bool Bit 14" x="700" y="7000"/>
+			<AdapterDeclaration Name="BIT_15" Type="adapter::types::unidirectional::AX" Comment="Bool Bit 15" x="700" y="7500"/>
+			<AdapterDeclaration Name="BIT_16" Type="adapter::types::unidirectional::AX" Comment="Bool Bit 16" x="700" y="8000"/>
+			<AdapterDeclaration Name="BIT_17" Type="adapter::types::unidirectional::AX" Comment="Bool Bit 17" x="700" y="8500"/>
+			<AdapterDeclaration Name="BIT_18" Type="adapter::types::unidirectional::AX" Comment="Bool Bit 18" x="700" y="9000"/>
+			<AdapterDeclaration Name="BIT_19" Type="adapter::types::unidirectional::AX" Comment="Bool Bit 19" x="700" y="9500"/>
+			<AdapterDeclaration Name="BIT_20" Type="adapter::types::unidirectional::AX" Comment="Bool Bit 20" x="700" y="10000"/>
+			<AdapterDeclaration Name="BIT_21" Type="adapter::types::unidirectional::AX" Comment="Bool Bit 21" x="700" y="10500"/>
+			<AdapterDeclaration Name="BIT_22" Type="adapter::types::unidirectional::AX" Comment="Bool Bit 22" x="700" y="11000"/>
+			<AdapterDeclaration Name="BIT_23" Type="adapter::types::unidirectional::AX" Comment="Bool Bit 23" x="700" y="11500"/>
+			<AdapterDeclaration Name="BIT_24" Type="adapter::types::unidirectional::AX" Comment="Bool Bit 24" x="700" y="12000"/>
+			<AdapterDeclaration Name="BIT_25" Type="adapter::types::unidirectional::AX" Comment="Bool Bit 25" x="700" y="12500"/>
+			<AdapterDeclaration Name="BIT_26" Type="adapter::types::unidirectional::AX" Comment="Bool Bit 26" x="700" y="13000"/>
+			<AdapterDeclaration Name="BIT_27" Type="adapter::types::unidirectional::AX" Comment="Bool Bit 27" x="700" y="13500"/>
+			<AdapterDeclaration Name="BIT_28" Type="adapter::types::unidirectional::AX" Comment="Bool Bit 28" x="700" y="14000"/>
+			<AdapterDeclaration Name="BIT_29" Type="adapter::types::unidirectional::AX" Comment="Bool Bit 29" x="700" y="14500"/>
+			<AdapterDeclaration Name="BIT_30" Type="adapter::types::unidirectional::AX" Comment="Bool Bit 30" x="700" y="15000"/>
+			<AdapterDeclaration Name="BIT_31" Type="adapter::types::unidirectional::AX" Comment="Bool Bit 31" x="700" y="15500"/>
+		</Plugs>
+		<Sockets>
+			<AdapterDeclaration Name="IN" Type="adapter::types::unidirectional::AD" Comment="DWORD Input" x="-4000" y="1700"/>
+		</Sockets>
+	</InterfaceList>
+	<FBNetwork>
+		<FB Name="E_D_FF_00" Type="iec61499::events::E_D_FF" x="-300" y="0"/>
+		<FB Name="E_D_FF_01" Type="iec61499::events::E_D_FF" x="-300" y="500"/>
+		<FB Name="E_D_FF_02" Type="iec61499::events::E_D_FF" x="-300" y="1000"/>
+		<FB Name="E_D_FF_03" Type="iec61499::events::E_D_FF" x="-300" y="1500"/>
+		<FB Name="E_D_FF_04" Type="iec61499::events::E_D_FF" x="-300" y="2000"/>
+		<FB Name="E_D_FF_05" Type="iec61499::events::E_D_FF" x="-300" y="2500"/>
+		<FB Name="E_D_FF_06" Type="iec61499::events::E_D_FF" x="-300" y="3000"/>
+		<FB Name="E_D_FF_07" Type="iec61499::events::E_D_FF" x="-300" y="3500"/>
+		<FB Name="E_D_FF_08" Type="iec61499::events::E_D_FF" x="-300" y="4000"/>
+		<FB Name="E_D_FF_09" Type="iec61499::events::E_D_FF" x="-300" y="4500"/>
+		<FB Name="E_D_FF_10" Type="iec61499::events::E_D_FF" x="-300" y="5000"/>
+		<FB Name="E_D_FF_11" Type="iec61499::events::E_D_FF" x="-300" y="5500"/>
+		<FB Name="E_D_FF_12" Type="iec61499::events::E_D_FF" x="-300" y="6000"/>
+		<FB Name="E_D_FF_13" Type="iec61499::events::E_D_FF" x="-300" y="6500"/>
+		<FB Name="E_D_FF_14" Type="iec61499::events::E_D_FF" x="-300" y="7000"/>
+		<FB Name="E_D_FF_15" Type="iec61499::events::E_D_FF" x="-300" y="7500"/>
+		<FB Name="E_D_FF_16" Type="iec61499::events::E_D_FF" x="-300" y="8000"/>
+		<FB Name="E_D_FF_17" Type="iec61499::events::E_D_FF" x="-300" y="8500"/>
+		<FB Name="E_D_FF_18" Type="iec61499::events::E_D_FF" x="-300" y="9000"/>
+		<FB Name="E_D_FF_19" Type="iec61499::events::E_D_FF" x="-300" y="9500"/>
+		<FB Name="E_D_FF_20" Type="iec61499::events::E_D_FF" x="-300" y="10000"/>
+		<FB Name="E_D_FF_21" Type="iec61499::events::E_D_FF" x="-300" y="10500"/>
+		<FB Name="E_D_FF_22" Type="iec61499::events::E_D_FF" x="-300" y="11000"/>
+		<FB Name="E_D_FF_23" Type="iec61499::events::E_D_FF" x="-300" y="11500"/>
+		<FB Name="E_D_FF_24" Type="iec61499::events::E_D_FF" x="-300" y="12000"/>
+		<FB Name="E_D_FF_25" Type="iec61499::events::E_D_FF" x="-300" y="12500"/>
+		<FB Name="E_D_FF_26" Type="iec61499::events::E_D_FF" x="-300" y="13000"/>
+		<FB Name="E_D_FF_27" Type="iec61499::events::E_D_FF" x="-300" y="13500"/>
+		<FB Name="E_D_FF_28" Type="iec61499::events::E_D_FF" x="-300" y="14000"/>
+		<FB Name="E_D_FF_29" Type="iec61499::events::E_D_FF" x="-300" y="14500"/>
+		<FB Name="E_D_FF_30" Type="iec61499::events::E_D_FF" x="-300" y="15000"/>
+		<FB Name="E_D_FF_31" Type="iec61499::events::E_D_FF" x="-300" y="15500"/>
+		<FB Name="SPLIT_DWORD_INTO_BOOLS" Type="eclipse4diac::utils::splitting::SPLIT_DWORD_INTO_BOOLS" x="-2900" y="1700">
+		</FB>
+		<EventConnections>
+			<Connection Source="IN.E1" Destination="SPLIT_DWORD_INTO_BOOLS.REQ"/>
+			<Connection Source="SPLIT_DWORD_INTO_BOOLS.CNF" Destination="E_D_FF_00.CLK" dx1="673.33"/>
+			<Connection Source="SPLIT_DWORD_INTO_BOOLS.CNF" Destination="E_D_FF_01.CLK" dx1="673.33"/>
+			<Connection Source="SPLIT_DWORD_INTO_BOOLS.CNF" Destination="E_D_FF_02.CLK" dx1="673.33"/>
+			<Connection Source="SPLIT_DWORD_INTO_BOOLS.CNF" Destination="E_D_FF_03.CLK" dx1="673.33"/>
+			<Connection Source="SPLIT_DWORD_INTO_BOOLS.CNF" Destination="E_D_FF_04.CLK" dx1="606.67"/>
+			<Connection Source="SPLIT_DWORD_INTO_BOOLS.CNF" Destination="E_D_FF_05.CLK" dx1="606.67"/>
+			<Connection Source="SPLIT_DWORD_INTO_BOOLS.CNF" Destination="E_D_FF_06.CLK" dx1="606.67"/>
+			<Connection Source="SPLIT_DWORD_INTO_BOOLS.CNF" Destination="E_D_FF_07.CLK" dx1="606.67"/>
+			<Connection Source="SPLIT_DWORD_INTO_BOOLS.CNF" Destination="E_D_FF_08.CLK" dx1="540"/>
+			<Connection Source="SPLIT_DWORD_INTO_BOOLS.CNF" Destination="E_D_FF_09.CLK" dx1="540"/>
+			<Connection Source="SPLIT_DWORD_INTO_BOOLS.CNF" Destination="E_D_FF_10.CLK" dx1="540"/>
+			<Connection Source="SPLIT_DWORD_INTO_BOOLS.CNF" Destination="E_D_FF_11.CLK" dx1="540"/>
+			<Connection Source="SPLIT_DWORD_INTO_BOOLS.CNF" Destination="E_D_FF_12.CLK" dx1="473.33"/>
+			<Connection Source="SPLIT_DWORD_INTO_BOOLS.CNF" Destination="E_D_FF_13.CLK" dx1="473.33"/>
+			<Connection Source="SPLIT_DWORD_INTO_BOOLS.CNF" Destination="E_D_FF_14.CLK" dx1="473.33"/>
+			<Connection Source="SPLIT_DWORD_INTO_BOOLS.CNF" Destination="E_D_FF_15.CLK" dx1="473.33"/>
+			<Connection Source="SPLIT_DWORD_INTO_BOOLS.CNF" Destination="E_D_FF_16.CLK" dx1="673.33"/>
+			<Connection Source="SPLIT_DWORD_INTO_BOOLS.CNF" Destination="E_D_FF_17.CLK" dx1="673.33"/>
+			<Connection Source="SPLIT_DWORD_INTO_BOOLS.CNF" Destination="E_D_FF_18.CLK" dx1="673.33"/>
+			<Connection Source="SPLIT_DWORD_INTO_BOOLS.CNF" Destination="E_D_FF_19.CLK" dx1="673.33"/>
+			<Connection Source="SPLIT_DWORD_INTO_BOOLS.CNF" Destination="E_D_FF_20.CLK" dx1="606.67"/>
+			<Connection Source="SPLIT_DWORD_INTO_BOOLS.CNF" Destination="E_D_FF_21.CLK" dx1="606.67"/>
+			<Connection Source="SPLIT_DWORD_INTO_BOOLS.CNF" Destination="E_D_FF_22.CLK" dx1="606.67"/>
+			<Connection Source="SPLIT_DWORD_INTO_BOOLS.CNF" Destination="E_D_FF_23.CLK" dx1="606.67"/>
+			<Connection Source="SPLIT_DWORD_INTO_BOOLS.CNF" Destination="E_D_FF_24.CLK" dx1="540"/>
+			<Connection Source="SPLIT_DWORD_INTO_BOOLS.CNF" Destination="E_D_FF_25.CLK" dx1="540"/>
+			<Connection Source="SPLIT_DWORD_INTO_BOOLS.CNF" Destination="E_D_FF_26.CLK" dx1="540"/>
+			<Connection Source="SPLIT_DWORD_INTO_BOOLS.CNF" Destination="E_D_FF_27.CLK" dx1="540"/>
+			<Connection Source="SPLIT_DWORD_INTO_BOOLS.CNF" Destination="E_D_FF_28.CLK" dx1="473.33"/>
+			<Connection Source="SPLIT_DWORD_INTO_BOOLS.CNF" Destination="E_D_FF_29.CLK" dx1="473.33"/>
+			<Connection Source="SPLIT_DWORD_INTO_BOOLS.CNF" Destination="E_D_FF_30.CLK" dx1="473.33"/>
+			<Connection Source="SPLIT_DWORD_INTO_BOOLS.CNF" Destination="E_D_FF_31.CLK" dx1="473.33"/>
+			<Connection Source="E_D_FF_00.EO" Destination="BIT_00.E1"/>
+			<Connection Source="E_D_FF_01.EO" Destination="BIT_01.E1"/>
+			<Connection Source="E_D_FF_02.EO" Destination="BIT_02.E1"/>
+			<Connection Source="E_D_FF_03.EO" Destination="BIT_03.E1"/>
+			<Connection Source="E_D_FF_04.EO" Destination="BIT_04.E1"/>
+			<Connection Source="E_D_FF_05.EO" Destination="BIT_05.E1"/>
+			<Connection Source="E_D_FF_06.EO" Destination="BIT_06.E1"/>
+			<Connection Source="E_D_FF_07.EO" Destination="BIT_07.E1"/>
+			<Connection Source="E_D_FF_08.EO" Destination="BIT_08.E1"/>
+			<Connection Source="E_D_FF_09.EO" Destination="BIT_09.E1"/>
+			<Connection Source="E_D_FF_10.EO" Destination="BIT_10.E1"/>
+			<Connection Source="E_D_FF_11.EO" Destination="BIT_11.E1"/>
+			<Connection Source="E_D_FF_12.EO" Destination="BIT_12.E1"/>
+			<Connection Source="E_D_FF_13.EO" Destination="BIT_13.E1"/>
+			<Connection Source="E_D_FF_14.EO" Destination="BIT_14.E1"/>
+			<Connection Source="E_D_FF_15.EO" Destination="BIT_15.E1"/>
+			<Connection Source="E_D_FF_16.EO" Destination="BIT_16.E1"/>
+			<Connection Source="E_D_FF_17.EO" Destination="BIT_17.E1"/>
+			<Connection Source="E_D_FF_18.EO" Destination="BIT_18.E1"/>
+			<Connection Source="E_D_FF_19.EO" Destination="BIT_19.E1"/>
+			<Connection Source="E_D_FF_20.EO" Destination="BIT_20.E1"/>
+			<Connection Source="E_D_FF_21.EO" Destination="BIT_21.E1"/>
+			<Connection Source="E_D_FF_22.EO" Destination="BIT_22.E1"/>
+			<Connection Source="E_D_FF_23.EO" Destination="BIT_23.E1"/>
+			<Connection Source="E_D_FF_24.EO" Destination="BIT_24.E1"/>
+			<Connection Source="E_D_FF_25.EO" Destination="BIT_25.E1"/>
+			<Connection Source="E_D_FF_26.EO" Destination="BIT_26.E1"/>
+			<Connection Source="E_D_FF_27.EO" Destination="BIT_27.E1"/>
+			<Connection Source="E_D_FF_28.EO" Destination="BIT_28.E1"/>
+			<Connection Source="E_D_FF_29.EO" Destination="BIT_29.E1"/>
+			<Connection Source="E_D_FF_30.EO" Destination="BIT_30.E1"/>
+			<Connection Source="E_D_FF_31.EO" Destination="BIT_31.E1"/>
+		</EventConnections>
+		<DataConnections>
+			<Connection Source="IN.D1" Destination="SPLIT_DWORD_INTO_BOOLS.IN"/>
+			<Connection Source="SPLIT_DWORD_INTO_BOOLS.BIT_31" Destination="E_D_FF_31.D" dx1="506.67"/>
+			<Connection Source="SPLIT_DWORD_INTO_BOOLS.BIT_30" Destination="E_D_FF_30.D" dx1="540"/>
+			<Connection Source="SPLIT_DWORD_INTO_BOOLS.BIT_29" Destination="E_D_FF_29.D" dx1="573.33"/>
+			<Connection Source="SPLIT_DWORD_INTO_BOOLS.BIT_28" Destination="E_D_FF_28.D" dx1="806.67"/>
+			<Connection Source="SPLIT_DWORD_INTO_BOOLS.BIT_27" Destination="E_D_FF_27.D" dx1="773.33"/>
+			<Connection Source="SPLIT_DWORD_INTO_BOOLS.BIT_26" Destination="E_D_FF_26.D" dx1="740"/>
+			<Connection Source="SPLIT_DWORD_INTO_BOOLS.BIT_25" Destination="E_D_FF_25.D" dx1="706.67"/>
+			<Connection Source="SPLIT_DWORD_INTO_BOOLS.BIT_24" Destination="E_D_FF_24.D" dx1="640"/>
+			<Connection Source="SPLIT_DWORD_INTO_BOOLS.BIT_23" Destination="E_D_FF_23.D" dx1="606.67"/>
+			<Connection Source="SPLIT_DWORD_INTO_BOOLS.BIT_22" Destination="E_D_FF_22.D" dx1="573.33"/>
+			<Connection Source="SPLIT_DWORD_INTO_BOOLS.BIT_21" Destination="E_D_FF_21.D" dx1="540"/>
+			<Connection Source="SPLIT_DWORD_INTO_BOOLS.BIT_20" Destination="E_D_FF_20.D" dx1="506.67"/>
+			<Connection Source="SPLIT_DWORD_INTO_BOOLS.BIT_19" Destination="E_D_FF_19.D" dx1="473.33"/>
+			<Connection Source="SPLIT_DWORD_INTO_BOOLS.BIT_18" Destination="E_D_FF_18.D" dx1="440"/>
+			<Connection Source="SPLIT_DWORD_INTO_BOOLS.BIT_17" Destination="E_D_FF_17.D" dx1="406.67"/>
+			<Connection Source="SPLIT_DWORD_INTO_BOOLS.BIT_16" Destination="E_D_FF_16.D" dx1="373.33"/>
+			<Connection Source="SPLIT_DWORD_INTO_BOOLS.BIT_15" Destination="E_D_FF_15.D" dx1="506.67"/>
+			<Connection Source="SPLIT_DWORD_INTO_BOOLS.BIT_14" Destination="E_D_FF_14.D" dx1="540"/>
+			<Connection Source="SPLIT_DWORD_INTO_BOOLS.BIT_13" Destination="E_D_FF_13.D" dx1="573.33"/>
+			<Connection Source="SPLIT_DWORD_INTO_BOOLS.BIT_12" Destination="E_D_FF_12.D" dx1="806.67"/>
+			<Connection Source="SPLIT_DWORD_INTO_BOOLS.BIT_11" Destination="E_D_FF_11.D" dx1="773.33"/>
+			<Connection Source="SPLIT_DWORD_INTO_BOOLS.BIT_10" Destination="E_D_FF_10.D" dx1="740"/>
+			<Connection Source="SPLIT_DWORD_INTO_BOOLS.BIT_09" Destination="E_D_FF_09.D" dx1="706.67"/>
+			<Connection Source="SPLIT_DWORD_INTO_BOOLS.BIT_08" Destination="E_D_FF_08.D" dx1="640"/>
+			<Connection Source="SPLIT_DWORD_INTO_BOOLS.BIT_07" Destination="E_D_FF_07.D" dx1="606.67"/>
+			<Connection Source="SPLIT_DWORD_INTO_BOOLS.BIT_06" Destination="E_D_FF_06.D" dx1="573.33"/>
+			<Connection Source="SPLIT_DWORD_INTO_BOOLS.BIT_05" Destination="E_D_FF_05.D" dx1="540"/>
+			<Connection Source="SPLIT_DWORD_INTO_BOOLS.BIT_04" Destination="E_D_FF_04.D" dx1="506.67"/>
+			<Connection Source="SPLIT_DWORD_INTO_BOOLS.BIT_03" Destination="E_D_FF_03.D" dx1="473.33"/>
+			<Connection Source="SPLIT_DWORD_INTO_BOOLS.BIT_02" Destination="E_D_FF_02.D" dx1="440"/>
+			<Connection Source="SPLIT_DWORD_INTO_BOOLS.BIT_01" Destination="E_D_FF_01.D" dx1="406.67"/>
+			<Connection Source="SPLIT_DWORD_INTO_BOOLS.BIT_00" Destination="E_D_FF_00.D" dx1="373.33"/>
+			<Connection Source="E_D_FF_00.Q" Destination="BIT_00.D1"/>
+			<Connection Source="E_D_FF_01.Q" Destination="BIT_01.D1"/>
+			<Connection Source="E_D_FF_02.Q" Destination="BIT_02.D1"/>
+			<Connection Source="E_D_FF_03.Q" Destination="BIT_03.D1"/>
+			<Connection Source="E_D_FF_04.Q" Destination="BIT_04.D1"/>
+			<Connection Source="E_D_FF_05.Q" Destination="BIT_05.D1"/>
+			<Connection Source="E_D_FF_06.Q" Destination="BIT_06.D1"/>
+			<Connection Source="E_D_FF_07.Q" Destination="BIT_07.D1"/>
+			<Connection Source="E_D_FF_08.Q" Destination="BIT_08.D1"/>
+			<Connection Source="E_D_FF_09.Q" Destination="BIT_09.D1"/>
+			<Connection Source="E_D_FF_10.Q" Destination="BIT_10.D1"/>
+			<Connection Source="E_D_FF_11.Q" Destination="BIT_11.D1"/>
+			<Connection Source="E_D_FF_12.Q" Destination="BIT_12.D1"/>
+			<Connection Source="E_D_FF_13.Q" Destination="BIT_13.D1"/>
+			<Connection Source="E_D_FF_14.Q" Destination="BIT_14.D1"/>
+			<Connection Source="E_D_FF_15.Q" Destination="BIT_15.D1"/>
+			<Connection Source="E_D_FF_16.Q" Destination="BIT_16.D1"/>
+			<Connection Source="E_D_FF_17.Q" Destination="BIT_17.D1"/>
+			<Connection Source="E_D_FF_18.Q" Destination="BIT_18.D1"/>
+			<Connection Source="E_D_FF_19.Q" Destination="BIT_19.D1"/>
+			<Connection Source="E_D_FF_20.Q" Destination="BIT_20.D1"/>
+			<Connection Source="E_D_FF_21.Q" Destination="BIT_21.D1"/>
+			<Connection Source="E_D_FF_22.Q" Destination="BIT_22.D1"/>
+			<Connection Source="E_D_FF_23.Q" Destination="BIT_23.D1"/>
+			<Connection Source="E_D_FF_24.Q" Destination="BIT_24.D1"/>
+			<Connection Source="E_D_FF_25.Q" Destination="BIT_25.D1"/>
+			<Connection Source="E_D_FF_26.Q" Destination="BIT_26.D1"/>
+			<Connection Source="E_D_FF_27.Q" Destination="BIT_27.D1"/>
+			<Connection Source="E_D_FF_28.Q" Destination="BIT_28.D1"/>
+			<Connection Source="E_D_FF_29.Q" Destination="BIT_29.D1"/>
+			<Connection Source="E_D_FF_30.Q" Destination="BIT_30.D1"/>
+			<Connection Source="E_D_FF_31.Q" Destination="BIT_31.D1"/>
+		</DataConnections>
+	</FBNetwork>
+	<Attribute Name="eclipse4diac::core::TypeHash" Value="''"/>
+</FBType>
