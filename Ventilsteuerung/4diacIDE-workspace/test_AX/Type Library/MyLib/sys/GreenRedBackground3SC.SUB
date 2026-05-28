@@ -6,7 +6,7 @@
 	</VersionInfo>
 	<CompilerInfo packageName="MyLib::sys">
 		<Import declaration="isobus::UT::Q::const::IDs::ID_NULL"/>
-		<Import declaration="isobus::UT::Q::types::s3ObjectIDs"/>
+		<Import declaration="isobus::UT::Q::types::s2ObjectIDs"/>
 	</CompilerInfo>
 	<SubAppInterfaceList>
 		<SubAppEventInputs>
@@ -15,7 +15,7 @@
 		</SubAppEventInputs>
 		<InputVars>
 			<VarDeclaration Name="DI1" Type="BOOL" Comment="Selector"/>
-			<VarDeclaration Name="u16ObjIds" Type="isobus::UT::Q::types::s2ObjectIDs" Comment="Object IDs" InitialValue="(u16ObjId := ID_NULL, u16ObjIdA := ID_NULL, u16ObjIdB := ID_NULL)"/>
+			<VarDeclaration Name="u16ObjIds" Type="isobus::UT::Q::types::s2ObjectIDs" Comment="Object IDs" InitialValue="(u16ObjId := ID_NULL, u16ObjIdA := ID_NULL)"/>
 		</InputVars>
 	</SubAppInterfaceList>
 	<SubAppNetwork>
