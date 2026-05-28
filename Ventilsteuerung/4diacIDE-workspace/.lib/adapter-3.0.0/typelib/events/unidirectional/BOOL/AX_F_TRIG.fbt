@@ -18,18 +18,14 @@
 		</Sockets>
 	</InterfaceList>
 	<FBNetwork>
-		<FB Name="E_D_FF" Type="iec61499::events::E_D_FF" x="0" y="200">
-		</FB>
-		<FB Name="E_SWITCH" Type="iec61499::events::E_SWITCH" x="1000" y="100">
+		<FB Name="E_F_TRIG" Type="iec61499::events::E_F_TRIG" x="0" y="100">
 		</FB>
 		<EventConnections>
-			<Connection Source="E_D_FF.EO" Destination="E_SWITCH.EI" dx1="353.33"/>
-			<Connection Source="E_SWITCH.EO0" Destination="EO" dx1="2373.33"/>
-			<Connection Source="QI.E1" Destination="E_D_FF.CLK" dx1="406.67"/>
+			<Connection Source="QI.E1" Destination="E_F_TRIG.EI"/>
+			<Connection Source="E_F_TRIG.EO" Destination="EO" dx1="2240"/>
 		</EventConnections>
 		<DataConnections>
-			<Connection Source="E_D_FF.Q" Destination="E_SWITCH.G" dx1="353.33"/>
-			<Connection Source="QI.D1" Destination="E_D_FF.D" dx1="406.67"/>
+			<Connection Source="QI.D1" Destination="E_F_TRIG.QI"/>
 		</DataConnections>
 	</FBNetwork>
 	<Attribute Name="eclipse4diac::core::TypeHash" Value="''"/>
