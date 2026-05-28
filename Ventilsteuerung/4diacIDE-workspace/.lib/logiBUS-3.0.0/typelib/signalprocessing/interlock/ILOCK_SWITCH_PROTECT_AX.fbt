@@ -27,8 +27,6 @@
 	</InterfaceList>
 	<BasicFB>
 		<ECC>
-			<ECState Name="START" Comment="Initial State" x="2960" y="560">
-			</ECState>
 			<ECState Name="STOP" x="2800" y="1440">
 			</ECState>
 			<ECState Name="UP" x="5120" y="640">
@@ -46,7 +44,6 @@
 			</ECState>
 			<ECState Name="EVAL" x="7600" y="1520">
 			</ECState>
-			<ECTransition Source="START" Destination="STOP" Condition="1" Comment="" x="2953.33" y="1226.67"/>
 			<ECTransition Source="STOP" Destination="UP" Condition="UP_IN.E1[UP_IN.D1]" Comment="" x="4173.33" y="1020"/>
 			<ECTransition Source="STOP" Destination="DOWN" Condition="DOWN_IN.E1[DOWN_IN.D1]" Comment="" x="3333.33" y="2133.33"/>
 			<ECTransition Source="UP" Destination="PROTECT" Condition="UP_IN.E1[NOT UP_IN.D1]" Comment="" x="5333.33" y="1066.67"/>
