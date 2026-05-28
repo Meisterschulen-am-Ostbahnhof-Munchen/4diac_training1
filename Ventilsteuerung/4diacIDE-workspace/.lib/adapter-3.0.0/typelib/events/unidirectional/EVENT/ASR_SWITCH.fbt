@@ -29,16 +29,16 @@
 		<ECC>
 			<ECState Name="START" Comment="Initial State" x="560" y="400">
 			</ECState>
-			<ECState Name="G0_SET" Comment="Issue EO0 when EI arrives with G=0" x="1680" y="720">
+			<ECState Name="G0_SET" Comment="Issue EO0.SET when EI.SET arrives with G=0" x="1680" y="720">
 				<ECAction Output="EO0.SET"/>
 			</ECState>
-			<ECState Name="G1_SET" Comment="Issue EO1 when EI arrives with G=1" x="1680" y="1200">
+			<ECState Name="G1_SET" Comment="Issue EO1.SET when EI.SET arrives with G=1" x="1680" y="1200">
 				<ECAction Output="EO1.SET"/>
 			</ECState>
-			<ECState Name="G0_RESET" x="1680" y="960">
+			<ECState Name="G0_RESET" Comment="Issue EO0.RESET when EI.RESET arrives with G=0" x="1680" y="960">
 				<ECAction Output="EO0.RESET"/>
 			</ECState>
-			<ECState Name="G1_RESET" x="1680" y="1360">
+			<ECState Name="G1_RESET" Comment="Issue EO1.RESET when EI.RESET arrives with G=1" x="1680" y="1360">
 				<ECAction Output="EO1.RESET"/>
 			</ECState>
 			<ECTransition Source="G0_SET" Destination="START" Condition="1" Comment="" x="1255" y="660"/>
