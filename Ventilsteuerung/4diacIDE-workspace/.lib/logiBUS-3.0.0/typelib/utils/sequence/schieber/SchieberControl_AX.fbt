@@ -8,6 +8,7 @@
 		<Import declaration="eclipse4diac::core::TypeHash"/>
 		<Import declaration="logiBUS::utils::sequence::schieber::const::START"/>
 		<Import declaration="logiBUS::utils::sequence::schieber::const::STATES"/>
+		<Import declaration="logiBUS::utils::sequence::schieber::const::iSTATES"/>
 	</CompilerInfo>
 	<InterfaceList>
 		<EventInputs>
@@ -24,45 +25,31 @@
 			<Event Name="RESET" Type="Event" Comment="Reset to unknown State">
 			</Event>
 			<Event Name="INPUT_DATA" Type="Event">
-				<With Var="BT"/>
-				<With Var="SK"/>
-				<With Var="AUXC"/>
 			</Event>
 		</EventInputs>
 		<EventOutputs>
 			<Event Name="INITO" Type="EInit" Comment="All Values have been Set. Initialization Confirm.">
 				<With Var="QO"/>
 			</Event>
-			<Event Name="EO" Type="EInit">
-				<With Var="Button"/>
-				<With Var="Softkey"/>
-				<With Var="Auxiliary"/>
-				<With Var="STATE"/>
-			</Event>
 			<Event Name="EO1" Type="Event">
 			</Event>
 		</EventOutputs>
 		<InputVars>
 			<VarDeclaration Name="QI" Type="BOOL" Comment="Input event qualifier"/>
-			<VarDeclaration Name="BT" Type="logiBUS::utils::sequence::schieber::SchieberStruct" Comment="Button"/>
-			<VarDeclaration Name="SK" Type="logiBUS::utils::sequence::schieber::SchieberStruct" Comment="SoftKey"/>
-			<VarDeclaration Name="AUXC" Type="logiBUS::utils::sequence::schieber::SchieberAuxInStruct" Comment="Auxiliary Control"/>
 			<VarDeclaration Name="DT_Opening" Type="TIME" Comment="TIME Setting"/>
 			<VarDeclaration Name="DT_Closing" Type="TIME" Comment="TIME Setting"/>
 			<VarDeclaration Name="START" Type="UINT" InitialValue="START::STARTUnknown"/>
 		</InputVars>
 		<OutputVars>
 			<VarDeclaration Name="QO" Type="BOOL" Comment="Output event qualifier"/>
-			<VarDeclaration Name="Button" Type="UINT" Comment="Button Out"/>
-			<VarDeclaration Name="Softkey" Type="UINT" Comment="Softkey Out"/>
-			<VarDeclaration Name="Auxiliary" Type="logiBUS::utils::sequence::schieber::SchieberAuxOutStruct" Comment="Auxiliary Control Out"/>
-			<VarDeclaration Name="STATE" Type="STRING"/>
 		</OutputVars>
 		<Plugs>
 			<AdapterDeclaration Name="Q_POWERED" Type="adapter::types::unidirectional::AX" Comment="Actuate &quot;Open&quot; Valve for Pneumatic"/>
 			<AdapterDeclaration Name="Q_OPEN" Type="adapter::types::unidirectional::AX" Comment="Actuate &quot;Open&quot; Valve"/>
 			<AdapterDeclaration Name="Q_CLOSE" Type="adapter::types::unidirectional::AX" Comment="Actuate &quot;Close&quot; Valve"/>
 			<AdapterDeclaration Name="timeOut" Type="iec61499::events::ATimeOut" Comment="timeOut Adapter"/>
+			<AdapterDeclaration Name="iSTATE" Type="adapter::types::unidirectional::AUS"/>
+			<AdapterDeclaration Name="STATE" Type="adapter::types::unidirectional::AIS"/>
 		</Plugs>
 	</InterfaceList>
 	<BasicFB>
@@ -73,24 +60,24 @@
 				<ECAction Algorithm="initialize" Output="INITO"/>
 			</ECState>
 			<ECState Name="Closed" x="3520" y="1040">
-				<ECAction Algorithm="Closed" Output="EO"/>
+				<ECAction Algorithm="Closed"/>
 				<ECAction Output="Q_CLOSE.E1"/>
 			</ECState>
 			<ECState Name="DeInit" x="1140" y="1520">
 				<ECAction Algorithm="deInitialize" Output="INITO"/>
 			</ECState>
 			<ECState Name="Opened" x="7040" y="1040">
-				<ECAction Algorithm="Opened" Output="EO"/>
+				<ECAction Algorithm="Opened"/>
 				<ECAction Output="Q_OPEN.E1"/>
 			</ECState>
 			<ECState Name="Closing" x="5120" y="2560">
-				<ECAction Algorithm="Closing" Output="EO"/>
+				<ECAction Algorithm="Closing"/>
 				<ECAction Output="Q_CLOSE.E1"/>
 				<ECAction Output="Q_POWERED.E1"/>
 				<ECAction Output="timeOut.START"/>
 			</ECState>
 			<ECState Name="Opening" x="5280" y="160">
-				<ECAction Algorithm="Opening" Output="EO"/>
+				<ECAction Algorithm="Opening"/>
 				<ECAction Output="Q_OPEN.E1"/>
 				<ECAction Output="Q_POWERED.E1"/>
 				<ECAction Output="timeOut.START"/>
@@ -104,7 +91,7 @@
 				<ECAction Output="timeOut.STOP"/>
 			</ECState>
 			<ECState Name="Unknown" x="4640" y="4480">
-				<ECAction Algorithm="Unknown" Output="EO"/>
+				<ECAction Algorithm="Unknown"/>
 			</ECState>
 			<ECState Name="Opening_STOP_R" x="3600" y="2960">
 				<ECAction Algorithm="STOP" Output="Q_OPEN.E1"/>
@@ -142,98 +129,67 @@
 			<ECTransition Source="INIT3" Destination="Unknown" Condition="1" Comment="" x="2840" y="3073.33"/>
 		</ECC>
 		<Algorithm Name="initialize">
-			<ST><![CDATA[ALGORITHM initialize
+			<ST><![CDATA[
 QO := QI;
-END_ALGORITHM]]></ST>
+]]></ST>
 		</Algorithm>
 		<Algorithm Name="deInitialize">
 			<ST><![CDATA[
-
-ALGORITHM deInitialize
 QO := BOOL#FALSE;
-END_ALGORITHM]]></ST>
+]]></ST>
 		</Algorithm>
 		<Algorithm Name="Closed">
 			<ST><![CDATA[
-
-ALGORITHM Closed
-STATE := STATES::Closed;
-Softkey := SK.Closed;
-Button := BT.Closed;
-Auxiliary.Picture := AUXC.Picture.Closed;
-Auxiliary.u8Colour := AUXC.u8Colour.Closed;
+STATE.D1 := STATES::Closed;
+iSTATE.D1 := iSTATES::Closed;
 Q_POWERED.D1 := BOOL#FALSE;
 Q_OPEN.D1 := BOOL#FALSE;
 Q_CLOSE.D1 := BOOL#FALSE;
-END_ALGORITHM]]></ST>
+]]></ST>
 		</Algorithm>
 		<Algorithm Name="Opening">
 			<ST><![CDATA[
-
-ALGORITHM Opening
-STATE := STATES::Opening;
-Softkey := SK.Opening;
-Button := BT.Opening;
-Auxiliary.Picture := AUXC.Picture.Opening;
-Auxiliary.u8Colour := AUXC.u8Colour.Opening;
+STATE.D1 := STATES::Opening;
+iSTATE.D1 := iSTATES::Opening;
 timeOut.DT := DT_Opening;
 Q_POWERED.D1 := BOOL#TRUE;
 Q_OPEN.D1 := BOOL#TRUE;
 Q_CLOSE.D1 := BOOL#FALSE;
-END_ALGORITHM]]></ST>
+]]></ST>
 		</Algorithm>
 		<Algorithm Name="Opened">
 			<ST><![CDATA[
-
-ALGORITHM Opened
-STATE := STATES::Opened;
-Softkey := SK.Opened;
-Button := BT.Opened;
-Auxiliary.Picture := AUXC.Picture.Opened;
-Auxiliary.u8Colour := AUXC.u8Colour.Opened;
+STATE.D1 := STATES::Opened;
+iSTATE.D1 := iSTATES::Opened;
 Q_POWERED.D1 := BOOL#TRUE;
 Q_OPEN.D1 := BOOL#FALSE;
 Q_CLOSE.D1 := BOOL#FALSE;
-END_ALGORITHM]]></ST>
+]]></ST>
 		</Algorithm>
 		<Algorithm Name="Closing">
 			<ST><![CDATA[
-
-ALGORITHM Closing
-STATE := STATES::Closing;
-Softkey := SK.Closing;
-Button := BT.Closing;
-Auxiliary.Picture := AUXC.Picture.Closing;
-Auxiliary.u8Colour := AUXC.u8Colour.Closing;
+STATE.D1 := STATES::Closing;
+iSTATE.D1 := iSTATES::Closing;
 timeOut.DT := DT_Closing;
 Q_POWERED.D1 := BOOL#FALSE;
 Q_OPEN.D1 := BOOL#FALSE;
 Q_CLOSE.D1 := BOOL#TRUE;
-END_ALGORITHM]]></ST>
+]]></ST>
 		</Algorithm>
 		<Algorithm Name="STOP">
 			<ST><![CDATA[
-
-ALGORITHM STOP
 // Powered_unchanged
 Q_OPEN.D1 := BOOL#FALSE;
 Q_CLOSE.D1 := BOOL#FALSE;
-END_ALGORITHM]]></ST>
+]]></ST>
 		</Algorithm>
 		<Algorithm Name="Unknown">
 			<ST><![CDATA[
-
-ALGORITHM Unknown
-STATE := STATES::Unknown;
-Softkey := SK.Unknown;
-Button := BT.Unknown;
-Auxiliary.Picture := AUXC.Picture.Unknown;
-Auxiliary.u8Colour := AUXC.u8Colour.Unknown;
+STATE.D1 := STATES::Unknown;
+iSTATE.D1 := iSTATES::Unknown;
 Q_POWERED.D1 := BOOL#FALSE;
 Q_OPEN.D1 := BOOL#FALSE;
 Q_CLOSE.D1 := BOOL#FALSE;
-END_ALGORITHM
-
 ]]></ST>
 		</Algorithm>
 	</BasicFB>
