@@ -59,7 +59,7 @@
 | AW | WORD (16 bit) |
 | AD | DWORD (32 bit) |
 | AI | INT (16 bit signed) |
-| AUI | UDINT (32 bit unsigned) |
+| AUI | UINT (16 bit unsigned) |
 | AUS | USINT (8 bit unsigned) |
 | AULI | ULINT (64 bit unsigned) |
 | ALI | LINT (64 bit signed) |
