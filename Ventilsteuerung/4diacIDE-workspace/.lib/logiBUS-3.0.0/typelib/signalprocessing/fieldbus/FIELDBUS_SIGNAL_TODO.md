@@ -27,7 +27,7 @@
 
 ## Bereits implementiert
 
-### Basis-Bausteine (8)
+### Basis-Bausteine (10)
 - FIELDBUS_BYTE_TO_SIGNAL
 - FIELDBUS_WORD_TO_SIGNAL
 - FIELDBUS_DWORD_TO_SIGNAL
