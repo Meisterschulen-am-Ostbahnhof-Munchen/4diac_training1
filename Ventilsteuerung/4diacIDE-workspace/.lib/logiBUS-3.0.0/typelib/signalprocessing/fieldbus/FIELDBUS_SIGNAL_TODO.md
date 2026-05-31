@@ -64,6 +64,6 @@
 | AULI | ULINT (64 bit unsigned) |
 | ALI | LINT (64 bit signed) |
 | AUDI | UDINT (32 bit unsigned) |
-| AQ | BYTE (2 bit) |
-| ATRIO | BYTE (3 bit) | ⬅️ OFFEN
-| ANIBBLE | BYTE (4 bit) | ⬅️ OFFEN
+| AQ | QUARTER (2 bit) |
+| ATRIO | TRIO (3 bit) | ⬅️ OFFEN
+| ANIBBLE | NIBBLE (4 bit) | ⬅️ OFFEN
