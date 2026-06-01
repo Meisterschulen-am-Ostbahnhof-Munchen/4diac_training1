@@ -156,8 +156,10 @@ def readJOP(jop_filepath):
         if objs_elem is not None:
             for child_obj in objs_elem.findall("Object"):
                 child_id = child_obj.get("JVS-ID")
-                if child_id in var_names:
+                if child_id and child_id in var_names:
                     alias_name = var_names[child_id]
+                    if alias_name in primary_names:
+                        continue
                     # If multiple objects point to the same variable, prefer the one with the smaller scale factor
                     if alias_name not in result:
                         result[alias_name] = info
