@@ -33,7 +33,7 @@
 #define Meter_Offset                                          851
 #define LinearBargraph_Offset                                 872
 #define ArchedBargraph_Offset                                 896
-#define NumberVariable_Offset                                 923
+#define NumberVariable_PWM_DUTY_NegScale_Offset               923
 #define NumberVariable_PWM_Value_Offset                       930
 #define FontAttributes_12x16_Offset                           937
 #define FontAttributes_12x16_B_Offset                         945

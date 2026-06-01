@@ -38,7 +38,7 @@
 #define Meter                             17000
 #define LinearBargraph                    18000
 #define ArchedBargraph                    19000
-#define NumberVariable                    21000
+#define NumberVariable_PWM_DUTY_NegScale  21000
 #define NumberVariable_PWM_Value          21001
 #define FontAttributes_12x16              23000
 #define FontAttributes_12x16_B            23001

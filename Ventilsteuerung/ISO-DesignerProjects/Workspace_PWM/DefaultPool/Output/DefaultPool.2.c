@@ -36,7 +36,7 @@ const unsigned long ISO_OP_MEMORY_CLASS isoOP_DefaultPool_Offset[] = {
 	   851,  // Meter_Offset
 	   872,  // LinearBargraph_Offset
 	   896,  // ArchedBargraph_Offset
-	   923,  // NumberVariable_Offset
+	   923,  // NumberVariable_PWM_DUTY_NegScale_Offset
 	   930,  // NumberVariable_PWM_Value_Offset
 	   937,  // FontAttributes_12x16_Offset
 	   945,  // FontAttributes_12x16_B_Offset
