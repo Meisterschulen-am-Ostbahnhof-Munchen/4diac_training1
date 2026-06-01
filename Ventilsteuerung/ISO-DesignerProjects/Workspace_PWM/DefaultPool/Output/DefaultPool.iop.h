@@ -13,6 +13,7 @@
 #define Macro_000_perc                        4
 #define Macro_025_perc                        5
 #define DataMask                           1000
+#define DataMask_1001                      1001
 #define Button_050_perc                    6000
 #define Button_075_perc                    6001
 #define Button_000_perc                    6002
@@ -23,6 +24,7 @@
 #define InputNumber_PWM_DUTY_OUT           9002
 #define InputNumber_THRESHOLD              9003
 #define InputNumber_HYSTERESIS             9004
+#define InputNumber_9005                   9005
 #define OutputString_THRESHOLD            11000
 #define OutputString_HYSTERESIS           11001
 #define OutputString_percent              11005
@@ -36,6 +38,7 @@
 #define Meter                             17000
 #define LinearBargraph                    18000
 #define ArchedBargraph                    19000
+#define NumberVariable_21000              21000
 #define NumberVariable_PWM_Value          21001
 #define FontAttributes_12x16              23000
 #define FontAttributes_12x16_B            23001
