@@ -115,7 +115,8 @@ def readJOP(jop_filepath):
                 var_names[v_id] = v_name
         elif cls in ("CInputNumber", "COutputNumber"):
             name = obj.get("ObjectName")
-            if name:
+            jvs_id = obj.get("JVS-ID")
+            if name and jvs_id:
                 primary_names.add(name)
 
     result = {}
