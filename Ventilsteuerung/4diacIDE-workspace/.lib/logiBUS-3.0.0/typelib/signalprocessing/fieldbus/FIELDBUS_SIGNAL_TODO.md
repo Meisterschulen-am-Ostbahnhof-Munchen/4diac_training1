@@ -33,7 +33,7 @@
 
 | Bits | Name | Basis-Baustein | Adapter-Baustein | Status |
 |------|------|----------------|-------------------|--------|
-| 16 bit | WORD | FIELDBUS_WORD_TO_SIGNAL_COMPOUND_SCALE | AW_FIELDBUS_WORD_TO_SIGNAL_COMPOUND_SCALE | ✅ |
+| 16 bit | WORD | FIELDBUS_WORD_TO_SIGNAL_COMPOUND_SCALE | AW_FIELDBUS_WORD_TO_SIGNAL_COMPOUND_SCALE | ✅ |\n| 16 bit | UINT | FIELDBUS_UINT_TO_SIGNAL_COMPOUND_SCALE | AUI_FIELDBUS_UINT_TO_SIGNAL_COMPOUND_SCALE | ✅ |
 
 Verwendet für:
 - MSS Machine Selected Speed (SPN 4305)
