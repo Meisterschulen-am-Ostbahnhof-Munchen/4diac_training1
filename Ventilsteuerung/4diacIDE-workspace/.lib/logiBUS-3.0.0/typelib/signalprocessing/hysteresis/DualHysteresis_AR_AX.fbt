@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<FBType Name="DualHysteresis_AR_AX" Comment="2-way conversion of Analog to Digital with Hysteresis">
-	<Identification Standard="61499-2" Description="Copyright (c) 2023 HR Agrartechnik GmbH   &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0 ">
+<FBType Name="DualHysteresis_AR_AX" Comment="2-way conversion of Analog to Digital with Hysteresis (Switch-on = MI +/- (ABS(DEAD) + ABS(HYSTERESIS)), Switch-off = MI +/- ABS(DEAD))">
+	<Identification Standard="61499-2" Description="Copyright (c) 2023 HR Agrartechnik GmbH&#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0 ">
 	</Identification>
+	<VersionInfo Version="3.1" Author="Gemini CLI" Date="2026-06-01" Remarks="Addressed code review: absolute values for thresholds, explicit comparison semantics.">
+	</VersionInfo>
 	<VersionInfo Version="3.0" Author="Patrick Aigner" Date="2025-04-14" Remarks="changed package">
 	</VersionInfo>
 	<VersionInfo Organization="HR Agrartechnik GmbH" Version="1.0" Author="Franz Höpfinger" Date="2023-06-06">
@@ -31,9 +33,9 @@
 		</Plugs>
 		<Sockets>
 			<AdapterDeclaration Name="INPUT" Type="adapter::types::unidirectional::AR" Comment="Input value"/>
-			<AdapterDeclaration Name="MI" Type="adapter::types::unidirectional::AR" Comment="MID Setting can e.g. be 0.5 meaning 50%"/>
-			<AdapterDeclaration Name="DEAD" Type="adapter::types::unidirectional::AR" Comment="Deadband around MID can be e.g. 0.1 meaning 10%"/>
-			<AdapterDeclaration Name="HYSTERESIS" Type="adapter::types::unidirectional::AR" Comment="Hysteresis can be 0.1 meaning 10%"/>
+			<AdapterDeclaration Name="MI" Type="adapter::types::unidirectional::AR" Comment="Center point (e.g. 0.5 for 50%)"/>
+			<AdapterDeclaration Name="DEAD" Type="adapter::types::unidirectional::AR" Comment="Deadband around MI (absolute value). Switch-off points = MI +/- ABS(DEAD)"/>
+			<AdapterDeclaration Name="HYSTERESIS" Type="adapter::types::unidirectional::AR" Comment="Hysteresis value (absolute value). Switch-on points = MI +/- (ABS(DEAD) + ABS(HYSTERESIS))"/>
 		</Sockets>
 	</InterfaceList>
 	<BasicFB>
@@ -64,11 +66,11 @@
 			<ECTransition Source="START" Destination="Init" Condition="INIT[TRUE = QI]" Comment="" x="1206.67" y="2260"/>
 			<ECTransition Source="Init" Destination="Neutral" Condition="INPUT.E1" Comment="" x="2026.67" y="2313.33"/>
 			<ECTransition Source="Neutral" Destination="DeInit" Condition="INIT[FALSE = QI]" Comment="" x="2053.33" y="2680"/>
-			<ECTransition Source="Neutral" Destination="UP" Condition="INPUT.E1[INPUT.D1 &gt;= MI.D1 + DEAD.D1 + HYSTERESIS.D1]" Comment="" x="5040" y="1173.33"/>
+			<ECTransition Source="Neutral" Destination="UP" Condition="INPUT.E1[INPUT.D1 &gt;= MI.D1 + ABS(DEAD.D1) + ABS(HYSTERESIS.D1)]" Comment="Switch-on UP (inclusive)" x="5040" y="1173.33"/>
 			<ECTransition Source="DeInit" Destination="START" Condition="1" Comment="" x="1306.67" y="2780"/>
-			<ECTransition Source="Neutral" Destination="DOWN" Condition="INPUT.E1[INPUT.D1 &lt;= MI.D1 - DEAD.D1 - HYSTERESIS.D1]" Comment="" x="5513.33" y="3013.33"/>
-			<ECTransition Source="DOWN" Destination="Neutral" Condition="INPUT.E1[INPUT.D1 &gt; MI.D1 - DEAD.D1]" Comment="" x="5173.33" y="3480"/>
-			<ECTransition Source="UP" Destination="Neutral" Condition="INPUT.E1[INPUT.D1 &lt; MI.D1 + DEAD.D1]" Comment="" x="5173.33" y="2026.67"/>
+			<ECTransition Source="Neutral" Destination="DOWN" Condition="INPUT.E1[INPUT.D1 &lt;= MI.D1 - ABS(DEAD.D1) - ABS(HYSTERESIS.D1)]" Comment="Switch-on DOWN (inclusive)" x="5513.33" y="3013.33"/>
+			<ECTransition Source="DOWN" Destination="Neutral" Condition="INPUT.E1[INPUT.D1 &gt; MI.D1 - ABS(DEAD.D1)]" Comment="Switch-off DOWN (strict)" x="5173.33" y="3480"/>
+			<ECTransition Source="UP" Destination="Neutral" Condition="INPUT.E1[INPUT.D1 &lt; MI.D1 + ABS(DEAD.D1)]" Comment="Switch-off UP (strict)" x="5173.33" y="2026.67"/>
 		</ECC>
 		<Algorithm Name="initialize">
 			<ST><![CDATA[
