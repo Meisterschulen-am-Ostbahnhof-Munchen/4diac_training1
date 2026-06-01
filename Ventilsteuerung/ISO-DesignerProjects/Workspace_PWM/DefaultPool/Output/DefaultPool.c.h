@@ -19,7 +19,7 @@
 #define InputNumber_PWM_DUTY_OUT_Offset                       433
 #define InputNumber_THRESHOLD_Offset                          471
 #define InputNumber_HYSTERESIS_Offset                         509
-#define InputNumber_9005_Offset                               547
+#define InputNumber_PWM_DUTY_NegScale_Offset                  547
 #define OutputString_THRESHOLD_Offset                         585
 #define OutputString_HYSTERESIS_Offset                        611
 #define OutputString_percent_Offset                           638
@@ -33,7 +33,7 @@
 #define Meter_Offset                                          851
 #define LinearBargraph_Offset                                 872
 #define ArchedBargraph_Offset                                 896
-#define NumberVariable_21000_Offset                           923
+#define NumberVariable_Offset                                 923
 #define NumberVariable_PWM_Value_Offset                       930
 #define FontAttributes_12x16_Offset                           937
 #define FontAttributes_12x16_B_Offset                         945

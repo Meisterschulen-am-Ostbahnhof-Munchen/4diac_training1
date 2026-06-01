@@ -24,7 +24,7 @@
 #define InputNumber_PWM_DUTY_OUT           9002
 #define InputNumber_THRESHOLD              9003
 #define InputNumber_HYSTERESIS             9004
-#define InputNumber_9005                   9005
+#define InputNumber_PWM_DUTY_NegScale      9005
 #define OutputString_THRESHOLD            11000
 #define OutputString_HYSTERESIS           11001
 #define OutputString_percent              11005
@@ -38,7 +38,7 @@
 #define Meter                             17000
 #define LinearBargraph                    18000
 #define ArchedBargraph                    19000
-#define NumberVariable_21000              21000
+#define NumberVariable                    21000
 #define NumberVariable_PWM_Value          21001
 #define FontAttributes_12x16              23000
 #define FontAttributes_12x16_B            23001
