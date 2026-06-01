@@ -35,7 +35,7 @@
 		<Algorithm Name="REQ" Comment="Executed algorithm">
 			<ST><![CDATA[
 
-IF (IN <= VALID_SIGNAL_LW) THEN
+IF (LWORD_TO_ULINT(IN) <= LWORD_TO_ULINT(VALID_SIGNAL_LW)) THEN
 	OUT := IN;
 	VALID := BOOL#TRUE;
 ELSE

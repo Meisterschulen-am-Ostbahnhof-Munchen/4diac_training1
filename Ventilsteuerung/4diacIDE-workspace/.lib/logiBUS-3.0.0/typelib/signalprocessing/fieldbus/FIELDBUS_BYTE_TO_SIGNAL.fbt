@@ -35,7 +35,7 @@
 		<Algorithm Name="REQ" Comment="Executed algorithm">
 			<ST><![CDATA[
 
-IF (IN <= VALID_SIGNAL_B) THEN
+IF (BYTE_TO_USINT(IN) <= BYTE_TO_USINT(VALID_SIGNAL_B)) THEN
 	OUT := IN;
 	VALID := BOOL#TRUE;
 ELSE
