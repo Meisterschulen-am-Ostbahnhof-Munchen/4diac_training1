@@ -5,8 +5,8 @@
 	<VersionInfo Organization="HR Agrartechnik GmbH" Version="1.0" Author="Franz Höpfinger" Date="2026-05-31">
 	</VersionInfo>
 	<CompilerInfo packageName="logiBUS::signalprocessing::fieldbus">
-		<Import declaration="signalprocessing::FIELDBUS_SIGNAL::NOT_AVAILABLE_LM"/>
-		<Import declaration="signalprocessing::FIELDBUS_SIGNAL::VALID_SIGNAL_LW"/>
+		<Import declaration="eclipse4diac::signalprocessing::FIELDBUS_SIGNAL::NOT_AVAILABLE_LWM"/>
+		<Import declaration="eclipse4diac::signalprocessing::FIELDBUS_SIGNAL::VALID_SIGNAL_LW"/>
 	</CompilerInfo>
 	<InterfaceList>
 		<EventInputs>
@@ -27,7 +27,7 @@
 			</Event>
 		</EventOutputs>
 		<InputVars>
-			<VarDeclaration Name="IN" Type="ULINT" Comment="Input" InitialValue="LWORD_TO_ULINT(NOT_AVAILABLE_LM)"/>
+			<VarDeclaration Name="IN" Type="ULINT" Comment="Input" InitialValue="LWORD_TO_ULINT(NOT_AVAILABLE_LWM)"/>
 			<VarDeclaration Name="SCALE" Type="LREAL" Comment="Scaling factor" InitialValue="LREAL#1.0"/>
 			<VarDeclaration Name="OFFSET" Type="DINT" Comment="Offset added after scaling" InitialValue="DINT#0"/>
 		</InputVars>

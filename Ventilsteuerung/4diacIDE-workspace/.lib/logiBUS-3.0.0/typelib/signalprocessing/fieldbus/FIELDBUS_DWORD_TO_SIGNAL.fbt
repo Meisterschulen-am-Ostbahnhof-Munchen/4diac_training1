@@ -5,8 +5,8 @@
 	<VersionInfo Organization="HR Agrartechnik GmbH" Version="1.0" Author="Franz Höpfinger" Date="2026-05-30">
 	</VersionInfo>
 	<CompilerInfo packageName="logiBUS::signalprocessing::fieldbus">
-		<Import declaration="signalprocessing::FIELDBUS_SIGNAL::NOT_AVAILABLE_DM"/>
-		<Import declaration="signalprocessing::FIELDBUS_SIGNAL::VALID_SIGNAL_DW"/>
+		<Import declaration="eclipse4diac::signalprocessing::FIELDBUS_SIGNAL::NOT_AVAILABLE_DWM"/>
+		<Import declaration="eclipse4diac::signalprocessing::FIELDBUS_SIGNAL::VALID_SIGNAL_DW"/>
 	</CompilerInfo>
 	<InterfaceList>
 		<EventInputs>
@@ -21,7 +21,7 @@
 			</Event>
 		</EventOutputs>
 		<InputVars>
-			<VarDeclaration Name="IN" Type="DWORD" Comment="Input" InitialValue="NOT_AVAILABLE_DM"/>
+			<VarDeclaration Name="IN" Type="DWORD" Comment="Input" InitialValue="NOT_AVAILABLE_DWM"/>
 		</InputVars>
 		<OutputVars>
 			<VarDeclaration Name="OUT" Type="DWORD" Comment="Output Filtered" InitialValue="16#00000000"/>
