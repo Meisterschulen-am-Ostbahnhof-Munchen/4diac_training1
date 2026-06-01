@@ -151,22 +151,26 @@ def readJOP(jop_filepath):
         }
         result[name] = info
 
-        # Alias logic: if this object references a NumberVariable, create an alias
+        # Alias logic: if this object references a NumberVariable, create an alias.
+        # This allows writing to the variable name directly in the application.
         objs_elem = obj.find("Objects")
         if objs_elem is not None:
             for child_obj in objs_elem.findall("Object"):
                 child_id = child_obj.get("JVS-ID")
-                if child_id and child_id in var_names:
+                if not child_id:
+                    continue
+                if child_id in var_names:
                     alias_name = var_names[child_id]
                     if alias_name in primary_names:
                         continue
-                    # If multiple objects point to the same variable, prefer the one with the smaller scale factor
+                    # If multiple objects point to the same variable, prefer the one with the smaller
+                    # scale factor (usually the base SI unit or the highest precision).
                     if alias_name not in result:
-                        result[alias_name] = info
+                        result[alias_name] = info.copy()
                     else:
                         current_scale = result[alias_name]["scale"]
                         if scale < current_scale:
-                            result[alias_name] = info
+                            result[alias_name] = info.copy()
 
     return result
 
