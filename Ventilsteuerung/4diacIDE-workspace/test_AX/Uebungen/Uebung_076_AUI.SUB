@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SubAppType Name="Uebung_076_AUI" Comment="MSS mit Compound Scaling auf UT ausgeben (Adapter Version)">
+	<Identification Standard="61499-2" Description="Copyright (c) 2023 Meisterschulen am Ostbahnhof  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0">
+	</Identification>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2026-06-01" Remarks="MSS Machine Selected Speed mit Compound Scaling (Adapter Version)">
+	</VersionInfo>
+	<CompilerInfo packageName="Uebungen">
+		<Import declaration="Uebungen::const::UT::TECU::DefaultPool_TECU_Numeric::NumberVariable_Wheel_based_machine_speed"/>
+	</CompilerInfo>
+	<SubAppInterfaceList>
+	</SubAppInterfaceList>
+	<SubAppNetwork>
+		<FB Name="IA_MSS" Type="isobus::tecu::IA_MSS" x="-1200" y="900">
+			<Parameter Name="QI" Value="TRUE"/>
+		</FB>
+		<FB Name="COMPOUND_SCALE" Type="logiBUS::signalprocessing::fieldbus::AUI_FIELDBUS_UINT_TO_SIGNAL_COMPOUND_SCALE" x="1100" y="1200">
+			<Parameter Name="SCALE_HIGH" Value="REAL#0.256"/>
+			<Parameter Name="SCALE_LOW" Value="REAL#0.001"/>
+			<Parameter Name="OFFSET" Value="DINT#0"/>
+		</FB>
+		<FB Name="Q_NumericValue" Type="isobus::UT::Q::Q_NumericValue_PHYSA" x="5500" y="900">
+			<Parameter Name="stObj" Value="NumberVariable_Wheel_based_machine_speed"/>
+		</FB>
+		<Comment Comment="TODO: &#10;NumberVariable_Machine_selected_speed&#10;im Object Pool anlegen, und hier umändern.&#10;&#10;solange verwenden wir hier NumberVariable_Wheel_based_machine_speed ersatzweise" x="3600" y="2000" width="3100" height="700"/>
+		<EventConnections>
+			<Connection Source="IA_MSS.INITO" Destination="Q_NumericValue.INIT"/>
+		</EventConnections>
+		<AdapterConnections>
+			<Connection Source="IA_MSS.SPEED" Destination="COMPOUND_SCALE.IN" dx1="826.67"/>
+			<Connection Source="COMPOUND_SCALE.OUT" Destination="Q_NumericValue.rPhys" dx1="1073.33"/>
+		</AdapterConnections>
+	</SubAppNetwork>
+</SubAppType>

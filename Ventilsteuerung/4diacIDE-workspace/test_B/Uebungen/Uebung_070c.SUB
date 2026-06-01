@@ -16,17 +16,17 @@
 		<FB Name="Q_NumericValue" Type="isobus::UT::Q::Q_NumericValue_PHYS" x="600" y="700">
 			<Parameter Name="stObj" Value="NumberVariable_Wheel_based_machine_speed"/>
 		</FB>
-		<FB Name="FIELDBUS_UDINT_TO_SIGNAL_SCALED" Type="logiBUS::signalprocessing::fieldbus::FIELDBUS_UDINT_TO_SIGNAL_SCALED" x="-3500" y="800">
+		<FB Name="FIELDBUS_UINT_TO_SIGNAL_SCALED" Type="logiBUS::signalprocessing::fieldbus::FIELDBUS_UINT_TO_SIGNAL_SCALED" x="-3500" y="800">
 			<Parameter Name="SCALE" Value="0.001"/>
 			<Parameter Name="OFFSET" Value="0"/>
 		</FB>
 		<EventConnections>
-			<Connection Source="I_WBSD.IND" Destination="FIELDBUS_UDINT_TO_SIGNAL_SCALED.REQ" dx1="473.33"/>
-			<Connection Source="FIELDBUS_UDINT_TO_SIGNAL_SCALED.CNF" Destination="Q_NumericValue.REQ" dx1="1153.33"/>
+			<Connection Source="I_WBSD.IND" Destination="FIELDBUS_UINT_TO_SIGNAL_SCALED.REQ" dx1="473.33"/>
+			<Connection Source="FIELDBUS_UINT_TO_SIGNAL_SCALED.CNF" Destination="Q_NumericValue.REQ" dx1="1153.33"/>
 		</EventConnections>
 		<DataConnections>
-			<Connection Source="I_WBSD.WHEELBASEDMACHINESPEED" Destination="FIELDBUS_UDINT_TO_SIGNAL_SCALED.IN" dx1="473.33"/>
-			<Connection Source="FIELDBUS_UDINT_TO_SIGNAL_SCALED.OUT" Destination="Q_NumericValue.rPhys" dx1="1153.33"/>
+			<Connection Source="I_WBSD.WHEELBASEDMACHINESPEED" Destination="FIELDBUS_UINT_TO_SIGNAL_SCALED.IN" dx1="473.33"/>
+			<Connection Source="FIELDBUS_UINT_TO_SIGNAL_SCALED.OUT" Destination="Q_NumericValue.rPhys" dx1="1153.33"/>
 		</DataConnections>
 	</SubAppNetwork>
 </SubAppType>
