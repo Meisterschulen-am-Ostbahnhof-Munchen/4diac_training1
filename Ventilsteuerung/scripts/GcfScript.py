@@ -167,11 +167,11 @@ def readJOP(jop_filepath):
                     # If multiple objects point to the same variable, prefer the one with the smaller
                     # scale factor (usually the base SI unit or the highest precision).
                     if alias_name not in result:
-                        result[alias_name] = info.copy()
+                        result[alias_name] = info
                     else:
                         current_scale = result[alias_name]["scale"]
                         if scale < current_scale:
-                            result[alias_name] = info.copy()
+                            result[alias_name] = info
 
     return result
 
