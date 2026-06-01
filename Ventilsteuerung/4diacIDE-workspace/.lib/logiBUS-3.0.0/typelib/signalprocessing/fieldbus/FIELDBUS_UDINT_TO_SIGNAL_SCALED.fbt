@@ -32,7 +32,7 @@
 			<VarDeclaration Name="OFFSET" Type="DINT" Comment="Offset added after scaling" InitialValue="DINT#0"/>
 		</InputVars>
 		<OutputVars>
-			<VarDeclaration Name="OUT" Type="REAL" Comment="Output Scaled" InitialValue="REAL#0.0"/>
+			<VarDeclaration Name="OUT" Type="LREAL" Comment="Output Scaled" InitialValue="LREAL#0.0"/>
 			<VarDeclaration Name="VALID" Type="BOOL" Comment="TRUE if Signal is VALID" InitialValue="FALSE"/>
 		</OutputVars>
 	</InterfaceList>
@@ -51,10 +51,10 @@
 			<ST><![CDATA[
 
 IF (IN <= DWORD_TO_UDINT(VALID_SIGNAL_DW)) THEN
-	OUT := UDINT_TO_REAL(IN) * SCALE + DINT_TO_REAL(OFFSET);
+	OUT := UDINT_TO_LREAL(IN) * SCALE + DINT_TO_LREAL(OFFSET);
 	VALID := BOOL#TRUE;
 ELSE
-	OUT := REAL#0.0;
+	OUT := LREAL#0.0;
 	VALID := BOOL#FALSE;
 END_IF;
 
