@@ -152,6 +152,8 @@ def readJOP(jop_filepath):
         offset   = int(props.get("Offset", "0"))
         decimals = int(props.get("NoOfDecimals", "0"))
 
+        # The alias uses the parent object's scale/offset/decimals, since
+        # CNumberVariable itself carries no scaling properties.
         info = create_numeric_info(obj_id, scale, offset, decimals)
         result[name] = info
 
@@ -167,6 +169,11 @@ def readJOP(jop_filepath):
                     alias_name = var_names[child_id]
                     # Protect primary object names from being overwritten by aliases.
                     if alias_name in primary_names:
+                        print(f"  Skip alias '{alias_name}': conflicts with primary object name")
+                        continue
+                    
+                    # Guard against physically meaningless zero scales.
+                    if scale == 0.0:
                         continue
                     
                     # If multiple objects point to the same variable, prefer the one with the smaller
@@ -179,6 +186,7 @@ def readJOP(jop_filepath):
                         # Compare absolute values to correctly handle negative scales.
                         current_scale = result[alias_name]["scale"]
                         if abs(scale) < abs(current_scale):
+                            print(f"  Update alias '{alias_name}': scale {current_scale} -> {scale}")
                             result[alias_name] = create_numeric_info(alias_id, scale, offset, decimals)
 
     return result
