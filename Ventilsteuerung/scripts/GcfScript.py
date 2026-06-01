@@ -103,14 +103,20 @@ def readJOP(jop_filepath):
     tree = ET.parse(jop_filepath)
     root = tree.getroot()
 
-    # Pre-scan for CNumberVariable objects to use as aliases
+    # Pre-scan for CNumberVariable objects and primary object names
     var_names = {}
+    primary_names = set()
     for obj in root.iter("Object"):
-        if obj.get("Class") == "CNumberVariable":
+        cls = obj.get("Class")
+        if cls == "CNumberVariable":
             v_id = obj.get("JVS-ID")
             v_name = obj.get("ObjectName")
             if v_id and v_name:
                 var_names[v_id] = v_name
+        elif cls in ("CInputNumber", "COutputNumber"):
+            name = obj.get("ObjectName")
+            if name:
+                primary_names.add(name)
 
     result = {}
 
