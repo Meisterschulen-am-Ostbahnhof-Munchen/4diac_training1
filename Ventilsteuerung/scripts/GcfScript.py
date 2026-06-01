@@ -103,6 +103,15 @@ def readJOP(jop_filepath):
     tree = ET.parse(jop_filepath)
     root = tree.getroot()
 
+    # Pre-scan for CNumberVariable objects to use as aliases
+    var_names = {}
+    for obj in root.iter("Object"):
+        if obj.get("Class") == "CNumberVariable":
+            v_id = obj.get("JVS-ID")
+            v_name = obj.get("ObjectName")
+            if v_id and v_name:
+                var_names[v_id] = v_name
+
     result = {}
 
     for obj in root.iter("Object"):
@@ -128,12 +137,28 @@ def readJOP(jop_filepath):
         offset   = int(props.get("Offset", "0"))
         decimals = int(props.get("NoOfDecimals", "0"))
 
-        result[name] = {
+        info = {
             "id":       obj_id,
             "scale":    scale,
             "offset":   offset,
             "decimals": decimals,
         }
+        result[name] = info
+
+        # Alias logic: if this object references a NumberVariable, create an alias
+        objs_elem = obj.find("Objects")
+        if objs_elem is not None:
+            for child_obj in objs_elem.findall("Object"):
+                child_id = child_obj.get("JVS-ID")
+                if child_id in var_names:
+                    alias_name = var_names[child_id]
+                    # If multiple objects point to the same variable, prefer the one with the smaller scale factor
+                    if alias_name not in result:
+                        result[alias_name] = info
+                    else:
+                        current_scale = result[alias_name]["scale"]
+                        if scale < current_scale:
+                            result[alias_name] = info
 
     return result
 
