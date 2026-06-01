@@ -16,11 +16,8 @@
 		<FB Name="Q_NumericValue_VDS" Type="isobus::UT::Q::Q_NumericValue_AUDI" x="1400" y="500">
 			<Parameter Name="u16ObjId" Value="NumberVariable_Wheel_based_machine_speed"/>
 		</FB>
-		<FB Name="CONV_VDS" Type="adapter::conversion::unidirectional::AUI_TO_AUDI" x="-500" y="500">
+		<FB Name="CONV_VDS" Type="adapter::conversion::unidirectional::AUI_TO_AUDI" x="-1600" y="900">
 		</FB>
-		<EventConnections>
-			<Connection Source="IA_VDS.INITO" Destination="Q_NumericValue_VDS.INIT" dx1="500"/>
-		</EventConnections>
 		<AdapterConnections>
 			<Connection Source="IA_VDS.NAV_SPEED" Destination="CONV_VDS.AUI_IN" dx1="200"/>
 			<Connection Source="CONV_VDS.AUDI_OUT" Destination="Q_NumericValue_VDS.u32NewValue" dx1="200"/>
