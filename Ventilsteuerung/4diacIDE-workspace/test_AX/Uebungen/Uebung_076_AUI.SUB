@@ -13,21 +13,18 @@
 		<FB Name="IA_MSS" Type="isobus::tecu::IA_MSS" x="-1200" y="900">
 			<Parameter Name="QI" Value="TRUE"/>
 		</FB>
-		<FB Name="COMPOUND_SCALE" Type="logiBUS::signalprocessing::fieldbus::AUI_FIELDBUS_UINT_TO_SIGNAL_COMPOUND_SCALE" x="1100" y="1200">
+		<FB Name="COMPOUND_SCALE" Type="logiBUS::signalprocessing::fieldbus::AUI_FIELDBUS_UINT_TO_SIGNAL_COMPOUND_SCALE" x="1100" y="800">
 			<Parameter Name="SCALE_HIGH" Value="REAL#0.256"/>
 			<Parameter Name="SCALE_LOW" Value="REAL#0.001"/>
 			<Parameter Name="OFFSET" Value="DINT#0"/>
 		</FB>
-		<FB Name="Q_NumericValue" Type="isobus::UT::Q::Q_NumericValue_PHYSA" x="5500" y="900">
+		<FB Name="Q_NumericValue" Type="isobus::UT::Q::Q_NumericValue_PHYSA" x="5500" y="800">
 			<Parameter Name="stObj" Value="NumberVariable_Wheel_based_machine_speed"/>
 		</FB>
 		<Comment Comment="TODO: &#10;NumberVariable_Machine_selected_speed&#10;im Object Pool anlegen, und hier umändern.&#10;&#10;solange verwenden wir hier NumberVariable_Wheel_based_machine_speed ersatzweise" x="3600" y="2000" width="3100" height="700"/>
-		<EventConnections>
-			<Connection Source="IA_MSS.INITO" Destination="Q_NumericValue.INIT"/>
-		</EventConnections>
 		<AdapterConnections>
 			<Connection Source="IA_MSS.SPEED" Destination="COMPOUND_SCALE.IN" dx1="826.67"/>
-			<Connection Source="COMPOUND_SCALE.OUT" Destination="Q_NumericValue.rPhys" dx1="1073.33"/>
+			<Connection Source="COMPOUND_SCALE.OUT" Destination="Q_NumericValue.rPhys"/>
 		</AdapterConnections>
 	</SubAppNetwork>
 </SubAppType>
