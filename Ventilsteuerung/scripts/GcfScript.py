@@ -94,6 +94,15 @@ def readIOPH(filepaths):
     renamed = {rename_map.get(name, name): value for name, value in definitions.items()}
     return renamed, rename_map
 
+def create_numeric_info(obj_id, scale, offset, decimals):
+    """Factory to create a numeric info dictionary."""
+    return {
+        "id":       obj_id,
+        "scale":    scale,
+        "offset":   offset,
+        "decimals": decimals,
+    }
+
 def readJOP(jop_filepath):
     """Parse a JetViewSoft .jop XML file and extract InputNumber and OutputNumber objects.
 
@@ -102,10 +111,28 @@ def readJOP(jop_filepath):
     """
     tree = ET.parse(jop_filepath)
     root = tree.getroot()
+    objects_container = root.find("Objects")
+    if objects_container is None:
+        return {}
+
+    # Pre-scan for names to avoid alias collisions
+    var_names = {}
+    primary_names = set()
+    for obj in objects_container.findall("Object"):
+        cls = obj.get("Class")
+        if cls == "CNumberVariable":
+            v_id = obj.get("JVS-ID")
+            v_name = obj.get("ObjectName")
+            if v_id and v_name:
+                var_names[v_id] = v_name
+        elif cls in ("CInputNumber", "COutputNumber"):
+            name = obj.get("ObjectName")
+            if name:
+                primary_names.add(name)
 
     result = {}
 
-    for obj in root.iter("Object"):
+    for obj in objects_container.findall("Object"):
         cls = obj.get("Class")
         if cls not in ("CInputNumber", "COutputNumber"):
             continue
@@ -128,12 +155,42 @@ def readJOP(jop_filepath):
         offset   = int(props.get("Offset", "0"))
         decimals = int(props.get("NoOfDecimals", "0"))
 
-        result[name] = {
-            "id":       obj_id,
-            "scale":    scale,
-            "offset":   offset,
-            "decimals": decimals,
-        }
+        # The alias uses the parent object's scale/offset/decimals, since
+        # CNumberVariable itself carries no scaling properties.
+        info = create_numeric_info(obj_id, scale, offset, decimals)
+        result[name] = info
+
+        # Alias logic: if this object references a NumberVariable, create an alias.
+        # This allows writing to the variable name directly in the application.
+        objs_elem = obj.find("Objects")
+        if objs_elem is not None:
+            for child_obj in objs_elem.findall("Object"):
+                child_id = child_obj.get("JVS-ID")
+                if not child_id:
+                    continue
+                if child_id in var_names:
+                    alias_name = var_names[child_id]
+                    # Protect primary object names from being overwritten by aliases.
+                    if alias_name in primary_names:
+                        print(f"  Skip alias '{alias_name}': conflicts with primary object name")
+                        continue
+                    
+                    # Guard against physically meaningless zero scales.
+                    if scale == 0.0:
+                        continue
+                    
+                    # If multiple objects point to the same variable, prefer the one with the smaller
+                    # absolute scale factor (usually the base SI unit or the highest precision).
+                    # The alias should use the ID of the NumberVariable itself (child_id).
+                    alias_id = int(child_id)
+                    if alias_name not in result:
+                        result[alias_name] = create_numeric_info(alias_id, scale, offset, decimals)
+                    else:
+                        # Compare absolute values to correctly handle negative scales.
+                        current_scale = result[alias_name]["scale"]
+                        if abs(scale) < abs(current_scale):
+                            print(f"  Update alias '{alias_name}': scale {current_scale} -> {scale}")
+                            result[alias_name] = create_numeric_info(alias_id, scale, offset, decimals)
 
     return result
 
@@ -196,7 +253,8 @@ def writeGCFfile(data, filepaths):
 
 def _format_real(value):
     """Format a float as an IEC 61131-3 REAL literal (no scientific notation)."""
-    s = f"{float(value):.10f}".rstrip('0')
+    val = float(value)
+    s = f"{val:.10f}".rstrip('0')
     if s.endswith('.'):
         s += '0'
     return s
