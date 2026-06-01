@@ -170,14 +170,15 @@ def readJOP(jop_filepath):
                         continue
                     
                     # If multiple objects point to the same variable, prefer the one with the smaller
-                    # scale factor (usually the base SI unit or the highest precision).
+                    # absolute scale factor (usually the base SI unit or the highest precision).
                     # The alias should use the ID of the NumberVariable itself (child_id).
                     alias_id = int(child_id)
                     if alias_name not in result:
                         result[alias_name] = create_numeric_info(alias_id, scale, offset, decimals)
                     else:
+                        # Compare absolute values to correctly handle negative scales.
                         current_scale = result[alias_name]["scale"]
-                        if scale < current_scale:
+                        if abs(scale) < abs(current_scale):
                             result[alias_name] = create_numeric_info(alias_id, scale, offset, decimals)
 
     return result
@@ -241,7 +242,8 @@ def writeGCFfile(data, filepaths):
 
 def _format_real(value):
     """Format a float as an IEC 61131-3 REAL literal (no scientific notation)."""
-    s = f"{float(value):.10f}".rstrip('0')
+    val = float(value)
+    s = f"{val:.10f}".rstrip('0')
     if s.endswith('.'):
         s += '0'
     return s
