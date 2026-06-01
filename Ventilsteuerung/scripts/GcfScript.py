@@ -94,6 +94,15 @@ def readIOPH(filepaths):
     renamed = {rename_map.get(name, name): value for name, value in definitions.items()}
     return renamed, rename_map
 
+def create_numeric_info(obj_id, scale, offset, decimals):
+    """Factory to create a numeric info dictionary."""
+    return {
+        "id":       obj_id,
+        "scale":    scale,
+        "offset":   offset,
+        "decimals": decimals,
+    }
+
 def readJOP(jop_filepath):
     """Parse a JetViewSoft .jop XML file and extract InputNumber and OutputNumber objects.
 
@@ -103,7 +112,7 @@ def readJOP(jop_filepath):
     tree = ET.parse(jop_filepath)
     root = tree.getroot()
 
-    # Pre-scan for CNumberVariable objects and primary object names
+    # Pre-scan for names to avoid alias collisions
     var_names = {}
     primary_names = set()
     for obj in root.iter("Object"):
@@ -115,8 +124,7 @@ def readJOP(jop_filepath):
                 var_names[v_id] = v_name
         elif cls in ("CInputNumber", "COutputNumber"):
             name = obj.get("ObjectName")
-            jvs_id = obj.get("JVS-ID")
-            if name and jvs_id:
+            if name:
                 primary_names.add(name)
 
     result = {}
@@ -144,12 +152,7 @@ def readJOP(jop_filepath):
         offset   = int(props.get("Offset", "0"))
         decimals = int(props.get("NoOfDecimals", "0"))
 
-        info = {
-            "id":       obj_id,
-            "scale":    scale,
-            "offset":   offset,
-            "decimals": decimals,
-        }
+        info = create_numeric_info(obj_id, scale, offset, decimals)
         result[name] = info
 
         # Alias logic: if this object references a NumberVariable, create an alias.
@@ -162,16 +165,19 @@ def readJOP(jop_filepath):
                     continue
                 if child_id in var_names:
                     alias_name = var_names[child_id]
+                    # Protect primary object names from being overwritten by aliases.
                     if alias_name in primary_names:
                         continue
+                    
                     # If multiple objects point to the same variable, prefer the one with the smaller
                     # scale factor (usually the base SI unit or the highest precision).
                     if alias_name not in result:
-                        result[alias_name] = info
+                        result[alias_name] = create_numeric_info(obj_id, scale, offset, decimals)
                     else:
+                        # We only overwrite if it's already an alias (guaranteed by the check above).
                         current_scale = result[alias_name]["scale"]
                         if scale < current_scale:
-                            result[alias_name] = info
+                            result[alias_name] = create_numeric_info(obj_id, scale, offset, decimals)
 
     return result
 
