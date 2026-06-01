@@ -10,25 +10,19 @@
 	<SubAppInterfaceList>
 	</SubAppInterfaceList>
 	<SubAppNetwork>
-		<FB Name="IA_WBSD" Type="isobus::tecu::IA_WBSD" x="-1200" y="900">
+		<FB Name="IA_WBSD" Type="isobus::tecu::IA_WBSD" x="-1200" y="1000">
 			<Parameter Name="QI" Value="TRUE"/>
 		</FB>
-		<FB Name="CONV_AUI_AUDI" Type="adapter::conversion::unidirectional::AUI_TO_AUDI" x="300" y="1300">
-		</FB>
-		<FB Name="FIELDBUS_UDINT_TO_SIGNAL_SCALED" Type="logiBUS::signalprocessing::fieldbus::AUDI_FIELDBUS_UDINT_TO_SIGNAL_SCALED" x="1100" y="1200">
-			<Parameter Name="SCALE" Value="LREAL#0.001"/>
+		<FB Name="FIELDBUS_UDINT_TO_SIGNAL_SCALED" Type="logiBUS::signalprocessing::fieldbus::AUI_FIELDBUS_UINT_TO_SIGNAL_SCALED" x="900" y="1000">
+			<Parameter Name="SCALE" Value="REAL#0.001"/>
 			<Parameter Name="OFFSET" Value="DINT#0"/>
 		</FB>
-		<FB Name="Q_NumericValue" Type="isobus::UT::Q::Q_NumericValue_PHYSA_LREAL" x="3200" y="1400">
+		<FB Name="Q_NumericValue" Type="isobus::UT::Q::Q_NumericValue_PHYSA" x="5200" y="900">
 			<Parameter Name="stObj" Value="NumberVariable_Wheel_based_machine_speed"/>
 		</FB>
-		<EventConnections>
-			<Connection Source="IA_WBSD.INITO" Destination="Q_NumericValue.INIT" dx1="66.67"/>
-		</EventConnections>
 		<AdapterConnections>
-			<Connection Source="IA_WBSD.SPEED" Destination="CONV_AUI_AUDI.AUI_IN" dx1="66.67"/>
-			<Connection Source="CONV_AUI_AUDI.AUDI_OUT" Destination="FIELDBUS_UDINT_TO_SIGNAL_SCALED.IN" dx1="66.67"/>
-			<Connection Source="FIELDBUS_UDINT_TO_SIGNAL_SCALED.OUT" Destination="Q_NumericValue.lrPhys" dx1="66.67"/>
+			<Connection Source="FIELDBUS_UDINT_TO_SIGNAL_SCALED.OUT" Destination="Q_NumericValue.rPhys" dx1="66.67"/>
+			<Connection Source="IA_WBSD.SPEED" Destination="FIELDBUS_UDINT_TO_SIGNAL_SCALED.IN"/>
 		</AdapterConnections>
 	</SubAppNetwork>
 </SubAppType>
