@@ -171,13 +171,14 @@ def readJOP(jop_filepath):
                     
                     # If multiple objects point to the same variable, prefer the one with the smaller
                     # scale factor (usually the base SI unit or the highest precision).
+                    # The alias should use the ID of the NumberVariable itself (child_id).
+                    alias_id = int(child_id)
                     if alias_name not in result:
-                        result[alias_name] = create_numeric_info(obj_id, scale, offset, decimals)
+                        result[alias_name] = create_numeric_info(alias_id, scale, offset, decimals)
                     else:
-                        # We only overwrite if it's already an alias (guaranteed by the check above).
                         current_scale = result[alias_name]["scale"]
                         if scale < current_scale:
-                            result[alias_name] = create_numeric_info(obj_id, scale, offset, decimals)
+                            result[alias_name] = create_numeric_info(alias_id, scale, offset, decimals)
 
     return result
 
