@@ -111,11 +111,14 @@ def readJOP(jop_filepath):
     """
     tree = ET.parse(jop_filepath)
     root = tree.getroot()
+    objects_container = root.find("Objects")
+    if objects_container is None:
+        return {}
 
     # Pre-scan for names to avoid alias collisions
     var_names = {}
     primary_names = set()
-    for obj in root.iter("Object"):
+    for obj in objects_container.findall("Object"):
         cls = obj.get("Class")
         if cls == "CNumberVariable":
             v_id = obj.get("JVS-ID")
@@ -129,7 +132,7 @@ def readJOP(jop_filepath):
 
     result = {}
 
-    for obj in root.iter("Object"):
+    for obj in objects_container.findall("Object"):
         cls = obj.get("Class")
         if cls not in ("CInputNumber", "COutputNumber"):
             continue
