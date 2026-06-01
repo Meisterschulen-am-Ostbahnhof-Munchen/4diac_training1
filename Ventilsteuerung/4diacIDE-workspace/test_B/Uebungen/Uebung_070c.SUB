@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SubAppType Name="Uebung_070c" Comment="WBSD auf UT ausgeben, PHYS">
+	<Identification Standard="61499-2" Description="Copyright (c) 2023 Meisterschulen am Ostbahnhof  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0">
+	</Identification>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2023-10-23" Remarks="initial API and implementation and/or initial documentation">
+	</VersionInfo>
+	<CompilerInfo packageName="Uebungen">
+		<Import declaration="Uebungen::const::UT::TECU::DefaultPool_TECU_Numeric::NumberVariable_Wheel_based_machine_speed"/>
+	</CompilerInfo>
+	<SubAppInterfaceList>
+	</SubAppInterfaceList>
+	<SubAppNetwork>
+		<FB Name="I_WBSD" Type="isobus::tecu::I_WBSD" x="-5900" y="500">
+			<Parameter Name="QI" Value="TRUE"/>
+		</FB>
+		<FB Name="Q_NumericValue" Type="isobus::UT::Q::Q_NumericValue_PHYS" x="600" y="700">
+			<Parameter Name="stObj" Value="NumberVariable_Wheel_based_machine_speed"/>
+		</FB>
+		<FB Name="FIELDBUS_UDINT_TO_SIGNAL_SCALED" Type="logiBUS::signalprocessing::fieldbus::FIELDBUS_UDINT_TO_SIGNAL_SCALED" x="-3500" y="800">
+			<Parameter Name="SCALE" Value="0.001"/>
+			<Parameter Name="OFFSET" Value="0"/>
+		</FB>
+		<EventConnections>
+			<Connection Source="I_WBSD.IND" Destination="FIELDBUS_UDINT_TO_SIGNAL_SCALED.REQ" dx1="473.33"/>
+			<Connection Source="FIELDBUS_UDINT_TO_SIGNAL_SCALED.CNF" Destination="Q_NumericValue.REQ" dx1="1153.33"/>
+		</EventConnections>
+		<DataConnections>
+			<Connection Source="I_WBSD.WHEELBASEDMACHINESPEED" Destination="FIELDBUS_UDINT_TO_SIGNAL_SCALED.IN" dx1="473.33"/>
+			<Connection Source="FIELDBUS_UDINT_TO_SIGNAL_SCALED.OUT" Destination="Q_NumericValue.rPhys" dx1="1153.33"/>
+		</DataConnections>
+	</SubAppNetwork>
+</SubAppType>
