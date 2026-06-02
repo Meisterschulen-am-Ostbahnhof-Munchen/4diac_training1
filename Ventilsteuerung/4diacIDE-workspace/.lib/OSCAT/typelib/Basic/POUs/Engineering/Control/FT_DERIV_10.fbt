@@ -87,7 +87,6 @@
 			<VarDeclaration Name="cnt" Type="INT" Comment="Count of valid samples" InitialValue="0"/>
 			<VarDeclaration Name="init_done" Type="BOOL" InitialValue="FALSE"/>
 			<VarDeclaration Name="tx_now" Type="UDINT"/>
-			<VarDeclaration Name="i" Type="INT"/>
 			<VarDeclaration Name="idx_old" Type="INT"/>
 			<VarDeclaration Name="temp_dt" Type="UDINT"/>
 			<VarDeclaration Name="temp_di" Type="REAL"/>
@@ -109,29 +108,29 @@
 			<ECAction Algorithm="RST" Output="CNF"/>
 		</ECState>
 		<Algorithm Name="EINIT">
-			<ST><![CDATA[ALGORITHM EINIT
+			<ST><![CDATA[
 init_done := FALSE;
 cnt := 0;
 ptr := 0;
 out := 0.0;
-END_ALGORITHM]]></ST>
+]]></ST>
 		</Algorithm>
 		<Algorithm Name="RST">
 			<ST><![CDATA[
-
-ALGORITHM RST
 init_done := FALSE;
 cnt := 0;
 ptr := 0;
 out := 0.0;
 valid := FALSE;
 (* Arrays leeren ist in ST oft optional, hier setzen wir Zähler zurück *)
-END_ALGORITHM]]></ST>
+]]></ST>
 		</Algorithm>
 		<Algorithm Name="REQ">
 			<ST><![CDATA[
 
-ALGORITHM REQ
+VAR_TEMP
+	i : INT := 0;
+END_VAR
 
 (* 1. Initialisierung beim allerersten Durchlauf *)
 IF NOT init_done THEN
@@ -259,8 +258,6 @@ IF run THEN
 ELSE
 	out := 0.0;
 END_IF;
-
-END_ALGORITHM
 
 ]]></ST>
 		</Algorithm>
