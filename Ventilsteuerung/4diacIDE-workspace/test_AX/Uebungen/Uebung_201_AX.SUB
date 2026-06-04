@@ -21,7 +21,7 @@
 			<Parameter Name="QI" Value="TRUE"/>
 			<Parameter Name="Input" Value="Input_I2"/>
 		</FB>
-		<FB Name="ILOCK_AX" Type="logiBUS::signalprocessing::interlock::ILOCK_BLOCK_AX" x="-2300" y="-300">
+		<FB Name="ILOCK_BLOCK_AX" Type="logiBUS::signalprocessing::interlock::ILOCK_BLOCK_AX" x="-2300" y="-300">
 		</FB>
 		<FB Name="DigitalOutput_Q1" Type="logiBUS::io::DQ::logiBUS_QXA" x="200" y="-1000">
 			<Parameter Name="QI" Value="TRUE"/>
@@ -32,10 +32,10 @@
 			<Parameter Name="Output" Value="Output_Q2"/>
 		</FB>
 		<AdapterConnections>
-			<Connection Source="DigitalInput_I1.IN" Destination="ILOCK_AX.UP_IN" dx1="200"/>
-			<Connection Source="DigitalInput_I2.IN" Destination="ILOCK_AX.DOWN_IN" dx1="200"/>
-			<Connection Source="ILOCK_AX.UP_OUT" Destination="DigitalOutput_Q1.OUT" dx1="200"/>
-			<Connection Source="ILOCK_AX.DOWN_OUT" Destination="DigitalOutput_Q2.OUT" dx1="200"/>
+			<Connection Source="DigitalInput_I1.IN" Destination="ILOCK_BLOCK_AX.UP_IN" dx1="200"/>
+			<Connection Source="DigitalInput_I2.IN" Destination="ILOCK_BLOCK_AX.DOWN_IN" dx1="200"/>
+			<Connection Source="ILOCK_BLOCK_AX.UP_OUT" Destination="DigitalOutput_Q1.OUT" dx1="200"/>
+			<Connection Source="ILOCK_BLOCK_AX.DOWN_OUT" Destination="DigitalOutput_Q2.OUT" dx1="200"/>
 		</AdapterConnections>
 	</SubAppNetwork>
 </SubAppType>

@@ -19,14 +19,11 @@
 	</InterfaceList>
 	<BasicFB>
 		<ECC>
-			<ECState Name="START" x="0" y="0">
-			</ECState>
 			<ECState Name="REQ" x="1000" y="500">
 				<ECAction Algorithm="REQ" Output="Q1.E1"/>
 				<ECAction Output="ILOCK_IN.EI1"/>
 				<ECAction Output="ILOCK_OUT.EO1"/>
 			</ECState>
-			<ECTransition Source="START" Destination="REQ" Condition="1" Comment="" x="500" y="250"/>
 			<ECTransition Source="REQ" Destination="REQ" Condition="SET1.E1" Comment="" x="1500" y="200"/>
 			<ECTransition Source="REQ" Destination="REQ" Condition="RESET.E1" Comment="" x="1500" y="400"/>
 			<ECTransition Source="REQ" Destination="REQ" Condition="ILOCK_IN.EO1" Comment="" x="1500" y="600"/>

@@ -34,7 +34,7 @@
 	</InterfaceList>
 	<BasicFB>
 		<ECC>
-			<ECState Name="START" Comment="Initial State" x="2960" y="560">
+			<ECState Name="STOP" x="2800" y="1440">
 			</ECState>
 			<ECState Name="UP" x="5040" y="720">
 				<ECAction Algorithm="UP" Output="EO_UP"/>
@@ -44,8 +44,7 @@
 				<ECAction Algorithm="DOWN" Output="EO_DOWN"/>
 				<ECAction Output="EO_UP"/>
 			</ECState>
-			<ECState Name="STOP" x="2800" y="1440">
-			</ECState>
+
 			<ECState Name="UP_STOP" x="5040" y="1280">
 				<ECAction Algorithm="STOP" Output="EO_UP"/>
 			</ECState>
@@ -62,7 +61,6 @@
 			<ECTransition Source="DOWN" Destination="DOWN_STOP" Condition="EI_DOWN[NOT DI_DOWN AND NOT DI_UP]" Comment="" x="5473.33" y="2306.67"/>
 			<ECTransition Source="UP_STOP" Destination="STOP" Condition="1" Comment="" x="4133.33" y="1313.33"/>
 			<ECTransition Source="DOWN_STOP" Destination="STOP" Condition="1" Comment="" x="3913.33" y="2120"/>
-			<ECTransition Source="START" Destination="STOP" Condition="1" Comment="" x="2986.67" y="1060"/>
 		</ECC>
 		<Algorithm Name="UP">
 			<ST><![CDATA[DO_UP := BOOL#TRUE;

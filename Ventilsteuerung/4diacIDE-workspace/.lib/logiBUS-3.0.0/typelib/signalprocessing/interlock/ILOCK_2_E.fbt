@@ -40,7 +40,7 @@
 			<VarDeclaration Name="EDGE2" Type="BOOL" InitialValue="FALSE"/>
 		</InternalVars>
 		<ECC>
-			<ECState Name="START" Comment="Initial State" x="500" y="385">
+			<ECState Name="STOP" Comment="Initial State" x="500" y="385">
 			</ECState>
 			<ECState Name="TOGGLE1" x="2640" y="1280">
 				<ECAction Algorithm="TOGGLE1" Output="EO"/>
@@ -57,16 +57,16 @@
 			<ECState Name="TOGGLE2" x="2960" y="-240">
 				<ECAction Algorithm="TOGGLE2" Output="EO"/>
 			</ECState>
-			<ECTransition Source="START" Destination="SET1" Condition="SET1" Comment="" x="1140" y="620"/>
-			<ECTransition Source="START" Destination="SET2" Condition="SET2" Comment="" x="1946.67" y="53.33"/>
-			<ECTransition Source="START" Destination="TOGGLE1" Condition="CLK1" Comment="" x="1906.67" y="820"/>
-			<ECTransition Source="START" Destination="TOGGLE2" Condition="CLK2" Comment="" x="1653.33" y="53.33"/>
-			<ECTransition Source="START" Destination="RESET" Condition="R" Comment="" x="1800" y="1506.67"/>
-			<ECTransition Source="TOGGLE1" Destination="START" Condition="1" Comment="" x="1866.67" y="1040"/>
-			<ECTransition Source="SET1" Destination="START" Condition="1" Comment="" x="1140" y="980"/>
-			<ECTransition Source="SET2" Destination="START" Condition="1" Comment="" x="1980" y="273.33"/>
-			<ECTransition Source="TOGGLE2" Destination="START" Condition="1" Comment="" x="1353.33" y="73.33"/>
-			<ECTransition Source="RESET" Destination="START" Condition="1" Comment="" x="1606.67" y="1813.33"/>
+			<ECTransition Source="STOP" Destination="SET1" Condition="SET1" Comment="" x="1140" y="620"/>
+			<ECTransition Source="STOP" Destination="SET2" Condition="SET2" Comment="" x="1946.67" y="53.33"/>
+			<ECTransition Source="STOP" Destination="TOGGLE1" Condition="CLK1" Comment="" x="1906.67" y="820"/>
+			<ECTransition Source="STOP" Destination="TOGGLE2" Condition="CLK2" Comment="" x="1653.33" y="53.33"/>
+			<ECTransition Source="STOP" Destination="RESET" Condition="R" Comment="" x="1800" y="1506.67"/>
+			<ECTransition Source="TOGGLE1" Destination="STOP" Condition="1" Comment="" x="1866.67" y="1040"/>
+			<ECTransition Source="SET1" Destination="STOP" Condition="1" Comment="" x="1140" y="980"/>
+			<ECTransition Source="SET2" Destination="STOP" Condition="1" Comment="" x="1980" y="273.33"/>
+			<ECTransition Source="TOGGLE2" Destination="STOP" Condition="1" Comment="" x="1353.33" y="73.33"/>
+			<ECTransition Source="RESET" Destination="STOP" Condition="1" Comment="" x="1606.67" y="1813.33"/>
 		</ECC>
 		<Algorithm Name="SET1">
 			<ST><![CDATA[ALGORITHM SET1

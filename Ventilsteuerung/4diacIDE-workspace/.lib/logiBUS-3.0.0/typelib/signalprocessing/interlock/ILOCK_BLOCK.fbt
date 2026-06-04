@@ -34,7 +34,7 @@
 	</InterfaceList>
 	<BasicFB>
 		<ECC>
-			<ECState Name="START" Comment="Initial State" x="2960" y="560">
+			<ECState Name="STOP" x="2800" y="1440">
 			</ECState>
 			<ECState Name="UP" x="5120" y="640">
 				<ECAction Algorithm="UP" Output="EO_UP"/>
@@ -42,8 +42,7 @@
 			<ECState Name="DOWN" x="4800" y="1920">
 				<ECAction Algorithm="DOWN" Output="EO_DOWN"/>
 			</ECState>
-			<ECState Name="STOP" x="2800" y="1440">
-			</ECState>
+
 			<ECState Name="UP_STOP" x="5040" y="1280">
 				<ECAction Algorithm="STOP" Output="EO_UP"/>
 			</ECState>
@@ -52,7 +51,6 @@
 			</ECState>
 			<ECTransition Source="STOP" Destination="DOWN" Condition="EI_DOWN[DI_DOWN]" Comment="" x="4133.33" y="1733.33"/>
 			<ECTransition Source="STOP" Destination="UP" Condition="EI_UP[DI_UP]" Comment="" x="4173.33" y="1020"/>
-			<ECTransition Source="START" Destination="STOP" Condition="1" Comment="" x="2953.33" y="1226.67"/>
 			<ECTransition Source="DOWN" Destination="DOWN_STOP" Condition="EI_DOWN[NOT DI_DOWN]" Comment="" x="4966.67" y="2306.67"/>
 			<ECTransition Source="UP" Destination="UP_STOP" Condition="EI_UP[NOT DI_UP]" Comment="" x="5146.67" y="1053.33"/>
 			<ECTransition Source="DOWN_STOP" Destination="STOP" Condition="1" Comment="" x="3913.33" y="2120"/>

@@ -16,9 +16,9 @@
 		</InputVars>
 	</SubAppInterfaceList>
 	<SubAppNetwork>
-		<SubApp Name="GreenWhiteBackground_AX" Type="MyLib::sys::GreenWhiteBackground_AX" x="3200" y="1200">
+		<SubApp Name="GreenWhiteBackground_AX" Type="MyLib::sys::GreenWhiteBackground1_AX" x="3600" y="1200">
 		</SubApp>
-		<FB Name="DigitalOutput_Q1" Type="logiBUS::io::DQ::logiBUS_QXA" x="3200" y="200">
+		<FB Name="DigitalOutput_Q1" Type="logiBUS::io::DQ::logiBUS_QXA" x="3800" y="-100">
 			<Parameter Name="QI" Value="TRUE"/>
 			<Parameter Name="PARAMS" Value="">
 				<Attribute Name="Visible" Value="false"/>
@@ -41,7 +41,7 @@
 			</Connection>
 		</DataConnections>
 		<AdapterConnections>
-			<Connection Source="SoftKey_F1.IN" Destination="AX_SPLIT_2.IN"/>
+			<Connection Source="SoftKey_F1.IN" Destination="AX_SPLIT_2.IN" dx1="346.67"/>
 			<Connection Source="AX_SPLIT_2.OUT1" Destination="DigitalOutput_Q1.OUT" dx1="388.24"/>
 			<Connection Source="AX_SPLIT_2.OUT2" Destination="GreenWhiteBackground_AX.DI1" dx1="388.24"/>
 		</AdapterConnections>

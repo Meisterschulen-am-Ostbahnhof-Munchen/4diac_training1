@@ -26,7 +26,7 @@
 			<Parameter Name="QI" Value="TRUE"/>
 			<Parameter Name="Output" Value="Output_Q1"/>
 		</FB>
-		<FB Name="AnalogInput_I4" Type="logiBUS::io::AI::logiBUS_AI_IDA" x="-4300" y="1900">
+		<FB Name="AnalogInput_I7" Type="logiBUS::io::AI::logiBUS_AI_IDA" x="-4300" y="1900">
 			<Parameter Name="QI" Value="TRUE"/>
 			<Parameter Name="Input" Value="AnalogInput_I7"/>
 			<Parameter Name="AnalogInput_hysteresis" Value="50"/>
@@ -89,7 +89,7 @@
 		</FB>
 		<AdapterConnections>
 			<Connection Source="DigitalInput_I1.IN" Destination="AX_SPLIT_2.IN" dx1="306.67"/>
-			<Connection Source="AnalogInput_I4.IN" Destination="AD_TO_AUDI.AD_IN" dx1="173.33"/>
+			<Connection Source="AnalogInput_I7.IN" Destination="AD_TO_AUDI.AD_IN" dx1="173.33"/>
 			<Connection Source="AUDI_TO_AR.AR_OUT" Destination="CALIBRATE.X" dx1="800"/>
 			<Connection Source="DigitalInput_I2_CO.IN" Destination="CALIBRATE.CO" dx1="1086.67"/>
 			<Connection Source="DigitalInput_I3_CS.IN" Destination="CALIBRATE.CS" dx1="800"/>
@@ -102,7 +102,7 @@
 			<Connection Source="AR_SPLIT_2.OUT2" Destination="Hysteresis_AR_AX.INPUT" dx1="673.33"/>
 			<Connection Source="AR_SPLIT_2.OUT1" Destination="Q_NumericValue_PHYSA.rPhys" dx1="873.33"/>
 			<Connection Source="AD_TO_AUDI.AUDI_OUT" Destination="AUDI_TO_AR.AUDI_IN"/>
-			<Connection Source="AX_SPLIT_2.OUT2" Destination="AnalogInput_I4.SREQ" dx1="164.71"/>
+			<Connection Source="AX_SPLIT_2.OUT2" Destination="AnalogInput_I7.SREQ" dx1="164.71"/>
 			<Connection Source="Hysteresis_AR_AX.OUTPUT" Destination="DigitalOutput_Q2.OUT" dx1="580"/>
 		</AdapterConnections>
 	</SubAppNetwork>

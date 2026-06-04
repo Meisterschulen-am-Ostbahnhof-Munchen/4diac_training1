@@ -18,9 +18,6 @@
 		</FB>
 		<FB Name="CONV_AUI_AUDI" Type="adapter::conversion::unidirectional::AUI_TO_AUDI" x="100" y="1900">
 		</FB>
-		<EventConnections>
-			<Connection Source="IA_WBSD.INITO" Destination="Q_NumericValue_WBSD.INIT" dx1="1726.67"/>
-		</EventConnections>
 		<AdapterConnections>
 			<Connection Source="IA_WBSD.SPEED" Destination="CONV_AUI_AUDI.AUI_IN" dx1="533.33"/>
 			<Connection Source="CONV_AUI_AUDI.AUDI_OUT" Destination="Q_NumericValue_WBSD.u32NewValue" dx1="1166.67"/>
