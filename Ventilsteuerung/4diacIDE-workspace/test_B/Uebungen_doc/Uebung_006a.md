@@ -3,7 +3,6 @@
 ```{index} single: Uebung_006a: Universal-Flip-Flop (Toggle/Set/Reset)
 ```
 
-[Uebung_006a](https://docs.ms-muc-docs.de/projects/visual-programming-languages-docs/de/latest/training1/Ventilsteuerung/4diacIDE-workspace/test/FBs/Uebungen/Uebung_006a.html)
 
 [![NotebookLM](media/NotebookLM_logo.png)](https://notebooklm.google.com/notebook/a6872e59-1dfc-4132-a118-aff1bc7bc944)
 
@@ -24,6 +23,9 @@ Einführung des `E_T_FF_SR` Bausteins. Dieser vereint die Funktionen eines Toggl
 [cite_start]Die Subapplikation `Uebung_006a.SUB` verknüpft drei separate Taster mit einem zentralen Speicherglied[cite: 1].
 
 ### Funktionsbausteine (FBs)
+
+
+![Uebung_006a_network](./Uebung_006a_network.svg)
 
   * **`I1` (Set)**: Schaltet den Ausgang ein.
   * **`I2` (Reset)**: Schaltet den Ausgang aus.

@@ -3,7 +3,6 @@
 ```{index} single: Uebung_103: Modus-Selektion (Multiplexer/Demultiplexer)
 ```
 
-[Uebung_103](https://docs.ms-muc-docs.de/projects/visual-programming-languages-docs/de/latest/training1/Ventilsteuerung/4diacIDE-workspace/test/FBs/Uebungen/Uebung_103.html)
 
 [![NotebookLM](media/NotebookLM_logo.png)](https://notebooklm.google.com/notebook/041f4df4-b729-484d-b786-b6dcdf151961)
 
@@ -11,7 +10,6 @@ Dieser Artikel beschreibt die logiBUS®-Übung `Uebung_103`. Dies ist ein komple
 
 ----
 
-![](Uebung_103.png)
 
 ## Ziel der Übung
 
@@ -24,6 +22,11 @@ Dynamische Auswahl zwischen verschiedenen Verarbeitungslogiken (Tastend, Rastend
 [cite_start]Die Subapplikation `Uebung_103.SUB` nutzt ein ISOBUS-Zahlenfeld, um zwischen drei Logik-Zweigen zu wählen[cite: 1].
 
 ### Funktionsbausteine (FBs)
+
+
+
+
+![Uebung_103_network](./Uebung_103_network.svg)
 
   * **`InputNumber_I1`**: Ein Eingabefeld auf dem ISOBUS-Terminal. Der Nutzer gibt hier 1, 2 oder 3 ein.
   * **`AX_DEMUX_3`**: Verteilt das Signal vom Taster `I1` auf einen von drei Ausgängen.

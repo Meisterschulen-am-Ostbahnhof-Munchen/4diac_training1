@@ -3,7 +3,6 @@
 ```{index} single: Uebung_006a3: Motor-Wende-Schaltung (Diskret)
 ```
 
-[Uebung_006a3](https://docs.ms-muc-docs.de/projects/visual-programming-languages-docs/de/latest/training1/Ventilsteuerung/4diacIDE-workspace/test/FBs/Uebungen/Uebung_006a3.html)
 
 [![NotebookLM](media/NotebookLM_logo.png)](https://notebooklm.google.com/notebook/a6872e59-1dfc-4132-a118-aff1bc7bc944)
 
@@ -11,7 +10,6 @@ Dieser Artikel beschreibt die logiBUS®-Übung `Uebung_006a3`. Dies ist eine ans
 
 ----
 
-![](Uebung_006a3.png)
 
 ## Ziel der Übung
 
@@ -24,6 +22,9 @@ Aufbau einer Steuerung für Vorwärts- und Rückwärtslauf mit Software-Verriege
 [cite_start]Die Subapplikation `Uebung_006a3.SUB` kombiniert einen Haupt-Ein/Aus-Speicher mit einer Logik zur Richtungsentscheidung[cite: 1].
 
 ### Funktionsbausteine (FBs)
+
+
+![Uebung_006a3_network](./Uebung_006a3_network.svg)
 
   * **`E_T_FF_SR`**: Bestimmt, ob der Motor läuft (Ein/Aus).
   * **`LinksRechts_T_FF` (SubApp)**: Ein interner Merker, der bei jedem Start die Richtung wechselt.

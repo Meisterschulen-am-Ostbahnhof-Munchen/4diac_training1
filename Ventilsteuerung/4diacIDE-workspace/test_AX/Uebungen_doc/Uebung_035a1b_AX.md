@@ -2,7 +2,11 @@ Hier ist die Dokumentation für die Übung basierend auf den bereitgestellten XM
 
 # Uebung_035a1b_AX: Ampelsteuerung mit Pattern Sequencer (AX) und Bit-Assembler
 
-![Uebung_035a1b_AX](Uebung_035a1b_AX.png)
+
+
+
+
+![Uebung_035a1b_AX_network](./Uebung_035a1b_AX_network.svg)
 
 * * * * * * * * * *
 

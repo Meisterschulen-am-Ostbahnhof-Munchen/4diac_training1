@@ -3,7 +3,6 @@
 ```{index} single: Uebung_150_AX: Impulszähler (Monitoring)
 ```
 
-[Uebung_150_AX](https://docs.ms-muc-docs.de/projects/visual-programming-languages-docs/de/latest/training1/Ventilsteuerung/4diacIDE-workspace/test/FBs/Uebungen/Uebung_150_AX.html)
 
 [![NotebookLM](media/NotebookLM_logo.png)](https://notebooklm.google.com/notebook/041f4df4-b729-484d-b786-b6dcdf151961)
 
@@ -11,7 +10,6 @@ Dieser Artikel beschreibt die logiBUS®-Übung `Uebung_150_AX`. Hier nutzen wir 
 
 ----
 
-![](Uebung_150_AX.png)
 
 ## Ziel der Übung
 
@@ -24,6 +22,11 @@ Erfassung von schnellen Impulsen (z.B. Drehzahl, Durchfluss).
 [cite_start]Die Subapplikation `Uebung_150_AX.SUB` kombiniert eine Standard-Beleuchtungslogik mit einem Impulszähler-Baustein[cite: 1].
 
 ### Funktionsbausteine (FBs)
+
+
+
+
+![Uebung_150_AX_network](./Uebung_150_AX_network.svg)
 
   * **`logiBUS_PI_ID`**: Typ `PulseInput_ID`. Erfasst Impulse am Hardware-Eingang `I8`.
   * **`DigitalInput_I1`**: Taster für die Lampe.

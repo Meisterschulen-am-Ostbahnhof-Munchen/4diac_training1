@@ -2,7 +2,6 @@ Hier ist die Dokumentation für die Übung `Uebung_010b4_sub_AX`, basierend auf 
 
 # Uebung_010b4_sub_AX: IX auf QX (generisch)
 
-![Uebung_010b4_sub_AX](Uebung_010b4_sub_AX.png)
 
 * * * * * * * * * *
 

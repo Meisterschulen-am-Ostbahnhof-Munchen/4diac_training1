@@ -3,7 +3,6 @@
 ```{index} single: Uebung_006a2_AX: Zentral-Reset für mehrere Speicher
 ```
 
-[Uebung_006a2_AX](https://docs.ms-muc-docs.de/projects/visual-programming-languages-docs/de/latest/training1/Ventilsteuerung/4diacIDE-workspace/test/FBs/Uebungen/Uebung_006a2_AX.html)
 
 [![NotebookLM](media/NotebookLM_logo.png)](https://notebooklm.google.com/notebook/041f4df4-b729-484d-b786-b6dcdf151961)
 
@@ -11,7 +10,6 @@ Dieser Artikel beschreibt die logiBUS®-Übung `Uebung_006a2_AX`.
 
 ----
 
-![](Uebung_006a2_AX.png)
 
 ## Ziel der Übung
 
@@ -24,6 +22,11 @@ Demonstration einer Zentral-Aus-Funktion.
 [cite_start]Die Subapplikation `Uebung_006a2_AX.SUB` steuert zwei unabhängige Lampen, die gemeinsam gelöscht werden können[cite: 1].
 
 ### Funktionsbausteine (FBs)
+
+
+
+
+![Uebung_006a2_AX_network](./Uebung_006a2_AX_network.svg)
 
   * **`I1`**: Toggelt Lampe 1.
   * **`I2`**: Toggelt Lampe 2.

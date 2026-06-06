@@ -3,7 +3,6 @@
 ```{index} single: Uebung_020d: Manuelle Ausschaltverzögerung
 ```
 
-[Uebung_020d](https://docs.ms-muc-docs.de/projects/visual-programming-languages-docs/de/latest/training1/Ventilsteuerung/4diacIDE-workspace/test/FBs/Uebungen/Uebung_020d.html)
 
 [![NotebookLM](media/NotebookLM_logo.png)](https://notebooklm.google.com/notebook/a6872e59-1dfc-4132-a118-aff1bc7bc944)
 
@@ -11,7 +10,6 @@ Dieser Artikel beschreibt die logiBUS®-Übung `Uebung_020d`. Hier wird die Funk
 
 ----
 
-![](Uebung_020d.png)
 
 ## Ziel der Übung
 
@@ -24,6 +22,9 @@ Realisierung eines Nachlauf-Verhaltens. Der Ausgang soll beim Drücken des Taste
 [cite_start]In `Uebung_020d.SUB` wird die TOF-Logik durch geschickte Verknüpfung von `E_DELAY` und `E_RS` implementiert[cite: 1].
 
 ### Funktionsweise
+
+
+![Uebung_020d_network](./Uebung_020d_network.svg)
 
 1.  **Einschalten**: Nutzer drückt `I1`. Die Weiche leitet das Event an `EO1`. Dies bewirkt zwei Dinge:
     *   Der Speicher `E_RS` wird sofort gesetzt (Lampe geht an).

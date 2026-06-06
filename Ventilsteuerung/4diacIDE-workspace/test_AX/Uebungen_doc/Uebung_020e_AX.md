@@ -3,7 +3,6 @@
 ```{index} single: Uebung_020e_AX: Ausschaltverzögerung (TOF)
 ```
 
-[Uebung_020e_AX](https://docs.ms-muc-docs.de/projects/visual-programming-languages-docs/de/latest/training1/Ventilsteuerung/4diacIDE-workspace/test/FBs/Uebungen/Uebung_020e_AX.html)
 
 [![NotebookLM](media/NotebookLM_logo.png)](https://notebooklm.google.com/notebook/041f4df4-b729-484d-b786-b6dcdf151961)
 
@@ -11,7 +10,6 @@ Dieser Artikel beschreibt die logiBUS®-Übung `Uebung_020e_AX`.
 
 ----
 
-![](Uebung_020e_AX.png)
 
 ## Ziel der Übung
 
@@ -24,6 +22,11 @@ Kennenlernen des Timer-Bausteins `AX_TOF`.
 [cite_start]Die Subapplikation `Uebung_020e_AX.SUB` verzögert das Ausschaltsignal[cite: 1].
 
 ### Funktionsbausteine (FBs)
+
+
+
+
+![Uebung_020e_AX_network](./Uebung_020e_AX_network.svg)
 
   * **`AX_TOF`**: Timer Off-Delay.
   * **Parameter `PT`**: Preset Time (hier 5 Sekunden).

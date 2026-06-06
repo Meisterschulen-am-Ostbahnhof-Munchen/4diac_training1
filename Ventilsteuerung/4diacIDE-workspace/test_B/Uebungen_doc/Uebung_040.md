@@ -3,13 +3,15 @@
 ```{index} single: Uebung_040: Manuelle Schrittwahl (Zähler & Demux)
 ```
 
-[Uebung_040](https://docs.ms-muc-docs.de/projects/visual-programming-languages-docs/de/latest/training1/Ventilsteuerung/4diacIDE-workspace/test/FBs/Uebungen/Uebung_040.html)
 
 [![NotebookLM](media/NotebookLM_logo.png)](https://notebooklm.google.com/notebook/a6872e59-1dfc-4132-a118-aff1bc7bc944)
 
 Dieser Artikel beschreibt die logiBUS®-Übung `Uebung_040`. Hier wird eine raffinierte Methode gezeigt, um eine 8-stufige Schrittkette mit nur wenigen Tastern manuell durchzuschalten.
 
 ## 📺 Video
+
+
+![Uebung_040_network](./Uebung_040_network.svg)
 
 * [From 1,400 errors to zero](https://www.youtube.com/watch?v=jBk9Y-EX8zE)
 
@@ -21,7 +23,6 @@ Dieser Artikel beschreibt die logiBUS®-Übung `Uebung_040`. Hier wird eine raff
 
 ----
 
-![](Uebung_040.png)
 
 ## Ziel der Übung
 

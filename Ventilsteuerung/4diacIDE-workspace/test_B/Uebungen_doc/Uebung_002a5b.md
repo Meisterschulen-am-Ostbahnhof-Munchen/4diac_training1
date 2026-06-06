@@ -3,7 +3,6 @@
 ```{index} single: Uebung_002a5b: ODER-Verknüpfung mit Signalverteilung
 ```
 
-[Uebung_002a5b](https://docs.ms-muc-docs.de/projects/visual-programming-languages-docs/de/latest/training1/Ventilsteuerung/4diacIDE-workspace/test/FBs/Uebungen/Uebung_002a5b.html)
 
 [![NotebookLM](media/NotebookLM_logo.png)](https://notebooklm.google.com/notebook/a6872e59-1dfc-4132-a118-aff1bc7bc944)
 
@@ -11,7 +10,6 @@ Dieser Artikel beschreibt die logiBUS®-Übung `Uebung_002a5b`. In dieser Übung
 
 ----
 
-![](Uebung_002a5b.png)
 
 ## Ziel der Übung
 
@@ -24,6 +22,9 @@ Das Ziel ist es, eine komplexe E/A-Struktur abzubilden. Es wird gezeigt, wie Inf
 [cite_start]In der Subapplikation `Uebung_002a5b.SUB` werden drei Eingangsbausteine über ein ODER-Gatter mit drei Ausgangsbausteinen verknüpft[cite: 1].
 
 ### Funktionsbausteine (FBs)
+
+
+![Uebung_002a5b_network](./Uebung_002a5b_network.svg)
 
   * **`DigitalInput_I1` bis `I3`**: Drei Instanzen des Typs `logiBUS_IX`. [cite_start]Sie überwachen die Hardware-Eingänge `Input_I1`, `Input_I2` und `Input_I3`[cite: 1].
   * **`OR_3_BOOL`**: Eine Instanz des Typs `OR_3_BOOL` (aus der IEC 61131-Bibliothek). [cite_start]Dieser Baustein führt eine ODER-Operation für drei boolesche Eingänge aus[cite: 1]. Er reagiert auf `REQ` und quittiert mit `CNF`.

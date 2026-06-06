@@ -3,7 +3,9 @@ Hier ist die Dokumentationsseite für die Übung `Uebung_175`, basierend auf den
 ```markdown
 # Uebung_175: Exercise for E_TABLE_CTRL
 
-![Uebung_175](Uebung_175.png)
+
+
+![Uebung_175_network](./Uebung_175_network.svg)
 
 * * * * * * * * * *
 

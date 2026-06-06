@@ -3,13 +3,11 @@
 ```{index} single: Uebung_011_AUDI: Numerische Eingabe mit Adaptern
 ```
 
-[Uebung_011_AUDI](https://docs.ms-muc-docs.de/projects/visual-programming-languages-docs/de/latest/training1/Ventilsteuerung/4diacIDE-workspace/test/FBs/Uebungen/Uebung_011_AUDI.html)
 
 Dieser Artikel beschreibt die logiBUS®-Übung `Uebung_011_AUDI`. Sie ist die adapterbasierte Variante der Übung 011 und zeigt, wie numerische Werte effizient und übersichtlich verarbeitet werden.
 
 ----
 
-![](Uebung_011_AUDI.png)
 
 ## Ziel der Übung
 
@@ -22,6 +20,11 @@ Erlernen der modernen, adapterbasierten Verarbeitung von ISOBUS-Terminal-Eingabe
 Die Subapplikation `Uebung_011_AUDI.SUB` nutzt einen adapterbasierten Eingabe-Baustein.
 
 ### Funktionsbausteine (FBs)
+
+
+
+
+![Uebung_011_AUDI_network](./Uebung_011_AUDI_network.svg)
 
   * **`InputNumber_I1`**: Typ `NumericValue_IDA`. Dieser Baustein stellt ein numerisches Eingabefeld auf dem ISOBUS-Terminal dar. Im Gegensatz zur Standard-Variante (`_ID`) nutzt dieser Baustein einen AX-basierten Adapter-Ausgang (`IN`), der sowohl das Ereignis als auch den DWORD-Wert bündelt.
   * **`F_DWORD_TO_UDINT`**: Hier wird der neue Bausteintyp `AD_TO_AUDI` verwendet. Er nimmt den `AD`-Adapter entgegen und gibt einen `AUDI`-Adapter aus, der den Wert als `UDINT` führt.

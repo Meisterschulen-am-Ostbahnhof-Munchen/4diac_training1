@@ -3,7 +3,6 @@
 ```{index} single: Uebung_004c1_AX: Doppelklick-Auswertung
 ```
 
-[Uebung_004c1_AX](https://docs.ms-muc-docs.de/projects/visual-programming-languages-docs/de/latest/training1/Ventilsteuerung/4diacIDE-workspace/test/FBs/Uebungen/Uebung_004c1_AX.html)
 
 [![NotebookLM](media/NotebookLM_logo.png)](https://notebooklm.google.com/notebook/041f4df4-b729-484d-b786-b6dcdf151961)
 
@@ -11,7 +10,6 @@ Dieser Artikel beschreibt die logiBUS®-Übung `Uebung_004c1_AX`. Ab hier widmen
 
 ----
 
-![](Uebung_004c1_AX.png)
 
 ## Ziel der Übung
 
@@ -24,6 +22,11 @@ Nutzung des Ereignisses `BUTTON_DOUBLE_CLICK`.
 [cite_start]Die Subapplikation `Uebung_004c1_AX.SUB` schaltet eine Lampe nur bei einem Doppelklick um[cite: 1].
 
 ### Funktionsbausteine (FBs)
+
+
+
+
+![Uebung_004c1_AX_network](./Uebung_004c1_AX_network.svg)
 
   * **`DigitalInput_CLK_I1`**: Konfiguriert mit `InputEvent = BUTTON_DOUBLE_CLICK`.
 

@@ -7,6 +7,9 @@ Hier ist die Dokumentation für die Übung basierend auf den bereitgestellten XM
 
 ![Bild der Übung, falls vorhanden]
 
+
+![Uebung_039a_sub_Outputs_network](./Uebung_039a_sub_Outputs_network.svg)
+
 * * * * * * * * * *
 
 ## Einleitung

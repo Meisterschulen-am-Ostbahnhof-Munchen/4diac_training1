@@ -3,7 +3,6 @@
 ```{index} single: Uebung_004a7_AX: SR-Flip-Flop mit Rendezvous
 ```
 
-[Uebung_004a7_AX](https://docs.ms-muc-docs.de/projects/visual-programming-languages-docs/de/latest/training1/Ventilsteuerung/4diacIDE-workspace/test/FBs/Uebungen/Uebung_004a7_AX.html)
 
 [![NotebookLM](media/NotebookLM_logo.png)](https://notebooklm.google.com/notebook/041f4df4-b729-484d-b786-b6dcdf151961)
 
@@ -11,7 +10,6 @@ Dieser Artikel beschreibt die logiBUS®-Übung `Uebung_004a7_AX`. Sie kombiniert
 
 ----
 
-![](Uebung_004a7_AX.png)
 
 ## Ziel der Übung
 
@@ -24,6 +22,11 @@ Demonstration der Interaktion zwischen Ereignis-Logik (`E_REND`) und Zustands-Lo
 [cite_start]Die Subapplikation `Uebung_004a7_AX.SUB` verwendet zwei Taster zum "Scharfschalten" (Rendezvous) und einen dritten zum expliziten Rücksetzen[cite: 1].
 
 ### Funktionsbausteine (FBs)
+
+
+
+
+![Uebung_004a7_AX_network](./Uebung_004a7_AX_network.svg)
 
   * **`I1` & `I2`**: Eingänge für das Rendezvous.
   * **`I3`**: Reset-Eingang.

@@ -3,7 +3,6 @@
 ```{index} single: Uebung_006_AX: Set-Reset Flip-Flop (Speicher)
 ```
 
-[Uebung_006_AX](https://docs.ms-muc-docs.de/projects/visual-programming-languages-docs/de/latest/training1/Ventilsteuerung/4diacIDE-workspace/test/FBs/Uebungen/Uebung_006_AX.html)
 
 [![NotebookLM](media/NotebookLM_logo.png)](https://notebooklm.google.com/notebook/041f4df4-b729-484d-b786-b6dcdf151961)
 
@@ -11,7 +10,6 @@ Dieser Artikel beschreibt die logiBUS®-Übung `Uebung_006_AX`. Hier wird das kl
 
 ----
 
-![](Uebung_006_AX.png)
 
 ## Ziel der Übung
 
@@ -24,6 +22,11 @@ Realisierung einer Schaltung mit getrennten Tastern für "Ein" und "Aus".
 [cite_start]Die Subapplikation `Uebung_006_AX.SUB` nutzt zwei Taster und einen `AX_SR` Baustein[cite: 1].
 
 ### Funktionsbausteine (FBs)
+
+
+
+
+![Uebung_006_AX_network](./Uebung_006_AX_network.svg)
 
   * **`I1` (Set)**: Taster zum Einschalten.
   * **`I2` (Reset)**: Taster zum Ausschalten.

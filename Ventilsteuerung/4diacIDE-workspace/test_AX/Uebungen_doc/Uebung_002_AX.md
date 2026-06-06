@@ -3,7 +3,6 @@
 ```{index} single: Uebung_002_AX: Signalverteilung auf mehrere Ausgänge
 ```
 
-[Uebung_002_AX](https://docs.ms-muc-docs.de/projects/visual-programming-languages-docs/de/latest/training1/Ventilsteuerung/4diacIDE-workspace/test/FBs/Uebungen/Uebung_002_AX.html)
 
 [![NotebookLM](media/NotebookLM_logo.png)](https://notebooklm.google.com/notebook/041f4df4-b729-484d-b786-b6dcdf151961)
 
@@ -11,7 +10,6 @@ Dieser Artikel beschreibt die logiBUS®-Übung `Uebung_002_AX`, bei der ein einz
 
 ----
 
-![](Uebung_002_AX.png)
 
 ## Ziel der Übung
 
@@ -26,6 +24,11 @@ Das Hauptziel dieser Übung ist es, zu zeigen, wie Adapterverbindungen in der IE
 ### Funktionsbausteine (FBs)
 
 Folgende Bausteine kommen zum Einsatz:
+
+
+
+
+![Uebung_002_AX_network](./Uebung_002_AX_network.svg)
 
   * **`DigitalInput_I1`**: Eine Instanz des Typs `logiBUS_IXA`. [cite_start]Dieser Baustein liest den Hardware-Eingang `Input_I1`[cite: 1].
   * **`AX_SPLIT`**: Eine Instanz des Typs `AX_SPLIT_2`. [cite_start]Dieser Baustein verfügt über einen Adapter-Eingang (`IN`) und zwei identische Adapter-Ausgänge (`OUT1`, `OUT2`) und fungiert somit als Signalvervielfältiger[cite: 1].

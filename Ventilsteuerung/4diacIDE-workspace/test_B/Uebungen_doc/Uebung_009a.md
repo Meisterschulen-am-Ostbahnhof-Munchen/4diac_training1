@@ -3,7 +3,6 @@
 ```{index} single: Uebung_009a: Rampen-Generator (RampLimitFS)
 ```
 
-[Uebung_009a](https://docs.ms-muc-docs.de/projects/visual-programming-languages-docs/de/latest/training1/Ventilsteuerung/4diacIDE-workspace/test/FBs/Uebungen/Uebung_009a.html)
 
 [![NotebookLM](media/NotebookLM_logo.png)](https://notebooklm.google.com/notebook/a6872e59-1dfc-4132-a118-aff1bc7bc944)
 
@@ -11,7 +10,6 @@ Dieser Artikel beschreibt die logiBUS®-Übung `Uebung_009a`. Hier wird die komp
 
 ----
 
-![](Uebung_009a.png)
 
 ## Ziel der Übung
 
@@ -24,6 +22,9 @@ Ansteuerung eines Rampen-Bausteins (`RampLimitFS`). Es wird gezeigt, wie verschi
 [cite_start]Die Subapplikation `Uebung_009a.SUB` nutzt einen Rampen-Baustein zur stufenlosen Steuerung eines numerischen Werts zwischen 0 und 100[cite: 1].
 
 ### Funktionsbausteine (FBs)
+
+
+![Uebung_009a_network](./Uebung_009a_network.svg)
 
   * **`RampLimitFS`**: Der Hauptbaustein aus der Signalverarbeitungs-Bibliothek. Er berechnet einen Ausgangswert, der sich zeitlich gleitend (Rampe) verändert.
   * **Eingangstaster**:

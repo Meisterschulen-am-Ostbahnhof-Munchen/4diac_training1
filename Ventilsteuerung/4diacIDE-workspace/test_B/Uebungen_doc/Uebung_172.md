@@ -2,7 +2,9 @@ Hier ist die Dokumentation für die Übung `Uebung_172`, basierend auf den berei
 
 # Uebung_172: Exercise for E_MUX_2
 
-![Uebung_172](Uebung_172.png)
+
+
+![Uebung_172_network](./Uebung_172_network.svg)
 
 * * * * * * * * * *
 

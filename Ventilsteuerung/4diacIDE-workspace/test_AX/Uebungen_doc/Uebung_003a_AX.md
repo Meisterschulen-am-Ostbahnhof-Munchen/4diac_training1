@@ -3,7 +3,6 @@
 ```{index} single: Uebung_003a_AX: Wiederverwendung durch typisierte Sub-Applikationen
 ```
 
-[Uebung_003a_AX](https://docs.ms-muc-docs.de/projects/visual-programming-languages-docs/de/latest/training1/Ventilsteuerung/4diacIDE-workspace/test/FBs/Uebungen/Uebung_003a_AX.html)
 
 [![NotebookLM](media/NotebookLM_logo.png)](https://notebooklm.google.com/notebook/041f4df4-b729-484d-b786-b6dcdf151961)
 
@@ -11,7 +10,6 @@ Dieser Artikel beschreibt die logiBUS®-Übung `Uebung_003a_AX`. Die Übung demo
 
 ----
 
-![](Uebung_003a_AX.png)
 
 ## Ziel der Übung
 
@@ -26,6 +24,8 @@ Das Hauptziel ist es zu zeigen, wie redundanter Code vermieden werden kann. Anst
 ### Typisierte Sub-Applikation: `Uebung_003a_AX_sub`
 
 [cite_start]Dieser Baustein kapselt die grundlegende Logik: "Lies einen Eingang und schreibe auf einen Ausgang"[cite: 2]. Er verfügt über Schnittstellen zur Parametrierung:
+
+
   * **`Input`**: Bestimmt, welcher physische Eingang gelesen werden soll (z.B. `Input_I1`).
   * **`Output`**: Bestimmt, welcher physische Ausgang geschaltet werden soll (z.B. `Output_Q1`).
 

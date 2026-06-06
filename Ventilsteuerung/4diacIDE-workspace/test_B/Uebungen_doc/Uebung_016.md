@@ -3,7 +3,6 @@
 ```{index} single: Uebung_016: Dynamische Hintergrundfarben
 ```
 
-[Uebung_016](https://docs.ms-muc-docs.de/projects/visual-programming-languages-docs/de/latest/training1/Ventilsteuerung/4diacIDE-workspace/test/FBs/Uebungen/Uebung_016.html)
 
 [![NotebookLM](media/NotebookLM_logo.png)](https://notebooklm.google.com/notebook/a6872e59-1dfc-4132-a118-aff1bc7bc944)
 
@@ -11,11 +10,13 @@ Dieser Artikel beschreibt die logiBUS®-Übung `Uebung_016`. Hier wird gezeigt, 
 
 ## 🎧 Podcast
 
+
+![Uebung_016_network](./Uebung_016_network.svg)
+
 * [ESP32-S3-DevKitC-1 Doku-Analyse: Das Speicher-Monster (32MB Flash/16MB PSRAM) und die Macht der Dual-USB-Ports](https://podcasters.spotify.com/pod/show/ms-muc-lama/episodes/ESP32-S3-DevKitC-1-Doku-Analyse-Das-Speicher-Monster-32MB-Flash16MB-PSRAM-und-die-Macht-der-Dual-USB-Ports-e39hamt)
 
 ----
 
-![](Uebung_016.png)
 
 ## Ziel der Übung
 

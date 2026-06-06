@@ -2,7 +2,9 @@ Hier ist die Dokumentation für die Übung 177, basierend auf den bereitgestellt
 
 # Uebung_177: Beispiel für FB_R_TRIG (Rising Edge Detection)
 
-![Uebung_177 Bild](Uebung_177.png)
+
+
+![Uebung_177_network](./Uebung_177_network.svg)
 
 * * * * * * * * * *
 

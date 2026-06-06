@@ -3,7 +3,6 @@
 ```{index} single: Uebung_041: Ein-Tasten-Lauflicht (Zähler-Steuerung)
 ```
 
-[Uebung_041](https://docs.ms-muc-docs.de/projects/visual-programming-languages-docs/de/latest/training1/Ventilsteuerung/4diacIDE-workspace/test/FBs/Uebungen/Uebung_041.html)
 
 [![NotebookLM](media/NotebookLM_logo.png)](https://notebooklm.google.com/notebook/a6872e59-1dfc-4132-a118-aff1bc7bc944)
 
@@ -11,7 +10,6 @@ Dieser Artikel beschreibt die logiBUS®-Übung `Uebung_041`. Hier wird die manue
 
 ----
 
-![](Uebung_041.png)
 
 ## Ziel der Übung
 
@@ -24,6 +22,9 @@ Optimierung der Bedienlogik aus Übung 040. Es wird gezeigt, wie man durch die K
 [cite_start]In `Uebung_041.SUB` wird ein zentraler Ereignispfad genutzt, um den Sequenzer `sequence_E_08_loop` anzusteuern[cite: 1].
 
 ### Funktionsbausteine (FBs)
+
+
+![Uebung_041_network](./Uebung_041_network.svg)
 
   * **`I1` (Start)**: Setzt die Sequenz auf den ersten Schritt.
   * **`I2` (Step)**: Der einzige Taster zum Weiterschalten.

@@ -5,7 +5,9 @@ Hier ist die Dokumentation für die Übung `Uebung_060_sub_Outputs` basierend au
 ```{index} single: Uebung_060_sub_Outputs
 ```
 
-![Uebung_060_sub_Outputs](Uebung_060_sub_Outputs.png)
+
+
+![Uebung_060_sub_Outputs_network](./Uebung_060_sub_Outputs_network.svg)
 
 * * * * * * * * * *
 

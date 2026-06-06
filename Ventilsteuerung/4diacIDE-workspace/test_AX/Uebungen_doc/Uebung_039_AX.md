@@ -24,6 +24,11 @@ Die Ansteuerung der Hardware erfolgt über typisierte AX-Sub-Applikationen (`Ueb
 
 Die Kette wird manuell durch physische Taster (`I1` bis `I4`) gesteuert, wobei ein zentraler Zeitschritt (5s bei `DT_S3_S4`) eine automatische Sicherheits- oder Wartephase einfügt. Dies zeigt die Kombination aus freier Bedienbarkeit und erzwungenen Prozesszeiten.
 
+
+
+
+![Uebung_039_AX_network](./Uebung_039_AX_network.svg)
+
 Der Einsatz von **AX-Adaptern** zwischen dem Sequenzer und den Ausgangs-Sub-Apps vereinfacht die Verdrahtung erheblich, da Status-Events und Schaltzustände in einer einzigen Verbindung übertragen werden.
 
 ## 🛠️ Zugehörige Übungen

@@ -3,7 +3,6 @@
 ```{index} single: Uebung_001_AX: DigitalInput_I1 auf DigitalOutput_Q1, mit Plug and Socket
 ```
 
-[Uebung_001_AX](https://docs.ms-muc-docs.de/projects/visual-programming-languages-docs/de/latest/training1/Ventilsteuerung/4diacIDE-workspace/test/FBs/Uebungen/Uebung_001_AX.html)
 
 [![NotebookLM](media/NotebookLM_logo.png)](https://notebooklm.google.com/notebook/041f4df4-b729-484d-b786-b6dcdf151961)
 
@@ -28,6 +27,11 @@ Das Hauptziel dieser Übung ist es, das grundlegende Prinzip der direkten Signal
 ### Funktionsbausteine (FBs)
 
 In der Subapplikation werden zwei zentrale Funktionsbausteine instanziiert:
+
+
+
+
+![Uebung_001_AX_network](./Uebung_001_AX_network.svg)
 
   * **`DigitalInput_I1`**: Eine Instanz des Typs `logiBUS_IXA`. Dieser Baustein repräsentiert einen physischen digitalen Eingang. [cite\_start]Über den Parameter `Input` wird er fest mit dem Hardware-Eingang `logiBUS_DI::Input_I1` verdrahtet[cite: 1].
   * **`DigitalOutput_Q1`**: Eine Instanz des Typs `logiBUS_QXA`. Dieser Baustein repräsentiert einen physischen digitalen Ausgang. [cite\_start]Sein Parameter `Output` verweist auf den Hardware-Ausgang `logiBUS_DO::Output_Q1`[cite: 1].

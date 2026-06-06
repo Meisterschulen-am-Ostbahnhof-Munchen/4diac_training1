@@ -5,7 +5,6 @@ Hier ist die Dokumentation für die Übung `Uebung_12x_sub` basierend auf den be
 ```{index} single: Uebung_12x_sub
 ```
 
-![Uebung_12x_sub](Uebung_12x_sub.png)
 
 * * * * * * * * * *
 

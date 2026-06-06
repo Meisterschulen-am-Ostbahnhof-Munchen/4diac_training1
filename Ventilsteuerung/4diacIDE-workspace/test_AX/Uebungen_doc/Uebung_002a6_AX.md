@@ -3,7 +3,6 @@
 ```{index} single: Uebung_002a6_AX: Logische UND-Verknüpfung mit drei Eingängen
 ```
 
-[Uebung_002a6_AX](https://docs.ms-muc-docs.de/projects/visual-programming-languages-docs/de/latest/training1/Ventilsteuerung/4diacIDE-workspace/test/FBs/Uebungen/Uebung_002a6_AX.html)
 
 [![NotebookLM](media/NotebookLM_logo.png)](https://notebooklm.google.com/notebook/041f4df4-b729-484d-b786-b6dcdf151961)
 
@@ -11,7 +10,6 @@ Dieser Artikel beschreibt die logiBUS®-Übung `Uebung_002a6_AX`. In dieser Übu
 
 ----
 
-![](Uebung_002a6_AX.png)
 
 ## Ziel der Übung
 
@@ -26,6 +24,11 @@ Das Hauptziel dieser Übung ist die Umsetzung einer komplexeren Bedingungslogik.
 ### Funktionsbausteine (FBs)
 
 Folgende Bausteine werden verwendet:
+
+
+
+
+![Uebung_002a6_AX_network](./Uebung_002a6_AX_network.svg)
 
   * **`DigitalInput_I1`, `I2`, `I3`**: Drei Instanzen des Typs `logiBUS_IXA`. [cite_start]Diese erfassen die Zustände der physischen Eingänge `Input_I1` bis `Input_I3`[cite: 1].
   * **`AX_AND_3`**: Eine Instanz des Typs `AX_AND_3`. [cite_start]Dieser Baustein führt die logische UND-Operation für drei Adapter-Eingänge (`IN1`, `IN2`, `IN3`) aus und stellt das Ergebnis am Adapter-Ausgang `OUT` bereit[cite: 1].

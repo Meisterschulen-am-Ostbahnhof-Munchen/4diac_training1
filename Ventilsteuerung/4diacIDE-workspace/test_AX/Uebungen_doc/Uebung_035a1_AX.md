@@ -2,7 +2,11 @@ Hier ist die Dokumentation für die Übung `Uebung_035a1_AX` basierend auf den b
 
 # Uebung_035a1_AX: Ampelsteuerung mit Pattern Sequencer (AX)
 
-![Uebung_035a1_AX](img/Uebung_035a1_AX.png)
+
+
+
+
+![Uebung_035a1_AX_network](./Uebung_035a1_AX_network.svg)
 
 * * * * * * * * * *
 

@@ -3,7 +3,6 @@
 ```{index} single: Uebung_020a_AX: Gepufferte Signalweiterleitung (RS)
 ```
 
-[Uebung_020a_AX](https://docs.ms-muc-docs.de/projects/visual-programming-languages-docs/de/latest/training1/Ventilsteuerung/4diacIDE-workspace/test/FBs/Uebungen/Uebung_020a_AX.html)
 
 [![NotebookLM](media/NotebookLM_logo.png)](https://notebooklm.google.com/notebook/041f4df4-b729-484d-b786-b6dcdf151961)
 
@@ -11,7 +10,6 @@ Dieser Artikel beschreibt die logiBUS®-Übung `Uebung_020a_AX`, bei der ein dig
 
 ----
 
-![](Uebung_020a_AX.png)
 
 ## Ziel der Übung
 
@@ -24,6 +22,11 @@ Das Hauptziel dieser Übung ist es, die Kombination von Ereignis-Weichen (`AX_SW
 [cite_start]Die Übung besteht aus einer Subapplikation (`Uebung_020a_AX.SUB`), die den Zustand eines Eingangs über eine Weiche in Set/Reset-Befehle für einen Speicher wandelt[cite: 1].
 
 ### Funktionsbausteine (FBs)
+
+
+
+
+![Uebung_020a_AX_network](./Uebung_020a_AX_network.svg)
 
   * **`DigitalInput_I1`**: Typ `logiBUS_IXA`. Liest den physischen Eingang `Input_I1`.
   * **`AX_SWITCH`**: Eine Ereignis-Weiche. [cite_start]Leitet das eintreffende Adapter-Event je nach logischem Zustand des Eingangs `G` an den Ausgang `EO1` (TRUE) oder `EO0` (FALSE) weiter[cite: 1].

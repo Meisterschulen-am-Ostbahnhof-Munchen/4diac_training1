@@ -3,13 +3,15 @@
 ```{index} single: Uebung_018: Melodien und Sequenzen (Audio-Delay)
 ```
 
-[Uebung_018](https://docs.ms-muc-docs.de/projects/visual-programming-languages-docs/de/latest/training1/Ventilsteuerung/4diacIDE-workspace/test/FBs/Uebungen/Uebung_018.html)
 
 [![NotebookLM](media/NotebookLM_logo.png)](https://notebooklm.google.com/notebook/a6872e59-1dfc-4132-a118-aff1bc7bc944)
 
 Dieser Artikel beschreibt die logiBUS®-Übung `Uebung_018`. Hier wird die Audio-Ausgabe erweitert, um zeitlich versetzte Tonfolgen zu erzeugen.
 
 ## 📺 Video
+
+
+![Uebung_018_network](./Uebung_018_network.svg)
 
 * [Der Katalog von 1863](https://www.youtube.com/watch?v=fk7tIjl2pTk)
 
@@ -21,7 +23,6 @@ Dieser Artikel beschreibt die logiBUS®-Übung `Uebung_018`. Hier wird die Audio
 
 ----
 
-![](Uebung_018.png)
 
 ## Ziel der Übung
 

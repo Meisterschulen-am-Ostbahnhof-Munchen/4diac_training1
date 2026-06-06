@@ -1,9 +1,8 @@
-# Uebung_004a2_AX: Toggle Flip-Flop mit IE mit BUTTON_SINGLE_CLICK mit AX_MERGE
+# Uebung_004a2_AX: Toggle Flip-Flop mit IE mit BUTTON_SINGLE_CLICK mit E_MERGE
 
 ```{index} single: Uebung_004a2_AX: Stromstoßschalter von zwei Stellen (Event-Merge)
 ```
 
-[Uebung_004a2_AX](https://docs.ms-muc-docs.de/projects/visual-programming-languages-docs/de/latest/training1/Ventilsteuerung/4diacIDE-workspace/test/FBs/Uebungen/Uebung_004a2_AX.html)
 
 [![NotebookLM](media/NotebookLM_logo.png)](https://notebooklm.google.com/notebook/041f4df4-b729-484d-b786-b6dcdf151961)
 
@@ -11,7 +10,6 @@ Dieser Artikel beschreibt die logiBUS®-Übung `Uebung_004a2_AX`. Hier wird die 
 
 ----
 
-![](Uebung_004a2_AX.png)
 
 ## Ziel der Übung
 
@@ -24,6 +22,11 @@ Das Ziel ist es zu lernen, wie man asynchrone Ereignisströme vereint. Wenn zwei
 [cite_start]Die Subapplikation `Uebung_004a2_AX.SUB` nutzt einen `E_MERGE` Baustein, um zwei Eingangs-Events auf einen Flip-Flop-Eingang zu leiten[cite: 1].
 
 ### Funktionsbausteine (FBs)
+
+
+
+
+![Uebung_004a2_AX_network](./Uebung_004a2_AX_network.svg)
 
   * **`DigitalInput_CLK_I1` & `I2`**: Zwei `logiBUS_IE` Bausteine, konfiguriert auf `BUTTON_SINGLE_CLICK`. [cite_start]Sie erzeugen Ereignisse bei Betätigung von Taster 1 oder 2[cite: 1].
   * **`E_MERGE`**: Typ `E_MERGE`. [cite_start]Dieser Baustein besitzt zwei Ereigniseingänge (`EI1`, `EI2`) und einen Ereignisausgang (`EO`). Egal welcher Eingang ein Event empfängt, es wird sofort an den Ausgang weitergeleitet[cite: 1].

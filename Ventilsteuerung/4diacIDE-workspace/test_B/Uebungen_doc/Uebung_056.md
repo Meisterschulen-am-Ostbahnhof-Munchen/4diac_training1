@@ -3,7 +3,6 @@
 ```{index} single: Uebung_056: Mehrkanal-Statusüberwachung
 ```
 
-[Uebung_056](https://docs.ms-muc-docs.de/projects/visual-programming-languages-docs/de/latest/training1/Ventilsteuerung/4diacIDE-workspace/test/FBs/Uebungen/Uebung_056.html)
 
 [![NotebookLM](media/NotebookLM_logo.png)](https://notebooklm.google.com/notebook/a6872e59-1dfc-4132-a118-aff1bc7bc944)
 
@@ -11,11 +10,13 @@ Dieser Artikel beschreibt die logiBUS®-Übung `Uebung_056`. Hier wird das Quart
 
 ----
 
-![](Uebung_056.png)
 
 ## Übersicht
 
 [cite_start]Die Subapplikation `Uebung_056.SUB` zeigt eine vollständige Diagnose-Pipeline[cite: 1]:
+
+![Uebung_056_network](./Uebung_056_network.svg)
+
 1.  **Eingabe**: Vier Taster (`I1`-`I4`) werden in Quartale gewandelt.
 2.  **Bündelung**: Vier Quartale (4 x 2 Bit = 8 Bit) werden über den Baustein `ASSEMBLE_BYTE_FROM_QUARTERS` zu einem einzigen Byte zusammengefasst.
 3.  **Transport**: Das Byte wird als Paket übertragen.

@@ -3,7 +3,6 @@
 ```{index} single: Uebung_020f2: Zyklischer Impulsgeber (FB_TP)
 ```
 
-[Uebung_020f2](https://docs.ms-muc-docs.de/projects/visual-programming-languages-docs/de/latest/training1/Ventilsteuerung/4diacIDE-workspace/test/FBs/Uebungen/Uebung_020f2.html)
 
 [![NotebookLM](media/NotebookLM_logo.png)](https://notebooklm.google.com/notebook/a6872e59-1dfc-4132-a118-aff1bc7bc944)
 
@@ -11,13 +10,15 @@ Dieser Artikel beschreibt die logiBUS®-Übung `Uebung_020f2`. Hier wird der kla
 
 ----
 
-![](Uebung_020f2.png)
 
 ## Übersicht
 
 Diese Übung implementiert einen Impulsgeber unter Verwendung des klassischen `FB_TP` Bausteins. Da dieser Baustein für eine zyklische SPS-Umgebung entworfen wurde, muss in der ereignisbasierten IEC 61499 ein `E_CYCLE` zur regelmäßigen Triggerung genutzt werden.
 
 ## Funktionsweise
+
+
+![Uebung_020f2_network](./Uebung_020f2_network.svg)
 
 1.  **Trigger**: Die steigende Flanke von `Input_I1` startet über einen `E_SWITCH` den Taktgeber `E_CYCLE`.
 2.  **Berechnung**: Der `E_CYCLE` triggert alle 500ms den `REQ`-Eingang des `FB_TP`. Nur so kann der Timer intern die Zeit hochzählen und den Ausgang `ET` (Elapsed Time) aktualisieren.

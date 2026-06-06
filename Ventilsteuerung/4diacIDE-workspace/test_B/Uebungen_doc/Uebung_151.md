@@ -2,6 +2,9 @@ Hier ist die Dokumentation für die Übung 151 basierend auf den bereitgestellte
 
 # Uebung_151: Impulszähler
 
+
+![Uebung_151_network](./Uebung_151_network.svg)
+
 *(Hier Bild der Übung einfügen, falls vorhanden)*
 
 * * * * * * * * * *

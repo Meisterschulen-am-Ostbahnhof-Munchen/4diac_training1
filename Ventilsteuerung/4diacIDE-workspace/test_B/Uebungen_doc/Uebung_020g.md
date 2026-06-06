@@ -3,7 +3,6 @@
 ```{index} single: Uebung_020g: Kombinierte Verzögerung (E_TONOF)
 ```
 
-[Uebung_020g](https://docs.ms-muc-docs.de/projects/visual-programming-languages-docs/de/latest/training1/Ventilsteuerung/4diacIDE-workspace/test/FBs/Uebungen/Uebung_020g.html)
 
 [![NotebookLM](media/NotebookLM_logo.png)](https://notebooklm.google.com/notebook/a6872e59-1dfc-4132-a118-aff1bc7bc944)
 
@@ -11,7 +10,6 @@ Dieser Artikel beschreibt die logiBUS®-Übung `Uebung_020g`.
 
 ----
 
-![](Uebung_020g.png)
 
 ## Ziel der Übung
 
@@ -22,6 +20,9 @@ Verwendung des Bausteins `E_TONOF`, der sowohl eine Einschalt- als auch eine Aus
 ## Funktionsweise
 
 [cite_start]Der Baustein reagiert auf den Pegel am Eingang `IN`[cite: 1]:
+
+![Uebung_020g_network](./Uebung_020g_network.svg)
+
 *   Wechsel zu `TRUE`: Der Ausgang wird erst nach Ablauf von `PT_ON` (5s) aktiv.
 *   Wechsel zu `FALSE`: Der Ausgang bleibt noch für die Zeit `PT_OFF` (5s) aktiv.
 

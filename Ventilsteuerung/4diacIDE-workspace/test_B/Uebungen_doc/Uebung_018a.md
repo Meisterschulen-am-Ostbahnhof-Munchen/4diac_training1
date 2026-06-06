@@ -2,7 +2,9 @@ Hier ist die Dokumentation für die Übung `Uebung_018a` im gewünschten Format.
 
 # Uebung_018a: Control Audio Signal und Delay
 
-![Bild der Übung Uebung_018a](Uebung_018a.png)
+
+
+![Uebung_018a_network](./Uebung_018a_network.svg)
 
 * * * * * * * * * *
 

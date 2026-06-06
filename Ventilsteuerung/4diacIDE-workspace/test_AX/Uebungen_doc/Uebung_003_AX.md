@@ -3,7 +3,6 @@
 ```{index} single: Uebung_003_AX: Parallele Steuerung zweier Kanäle
 ```
 
-[Uebung_003_AX](https://docs.ms-muc-docs.de/projects/visual-programming-languages-docs/de/latest/training1/Ventilsteuerung/4diacIDE-workspace/test/FBs/Uebungen/Uebung_003_AX.html)
 
 [![NotebookLM](media/NotebookLM_logo.png)](https://notebooklm.google.com/notebook/041f4df4-b729-484d-b786-b6dcdf151961)
 
@@ -11,7 +10,6 @@ Dieser Artikel beschreibt die logiBUS®-Übung `Uebung_003_AX`. In dieser Übung
 
 ----
 
-![](Uebung_003_AX.png)
 
 ## Ziel der Übung
 
@@ -26,6 +24,11 @@ Das Hauptziel dieser Übung ist es, die parallele Verarbeitung von Signalen in d
 ### Funktionsbausteine (FBs)
 
 Es werden zwei Paare von Ein- und Ausgangsbausteinen verwendet:
+
+
+
+
+![Uebung_003_AX_network](./Uebung_003_AX_network.svg)
 
   * **`DigitalInput_I1` & `DigitalOutput_Q1`**: Das erste Paar (Kanal 1). [cite_start]Verbindet Hardware-Eingang `I1` mit Hardware-Ausgang `Q1`[cite: 1].
   * **`DigitalInput_I2` & `DigitalOutput_Q2`**: Das zweite Paar (Kanal 2). [cite_start]Verbindet Hardware-Eingang `I2` mit Hardware-Ausgang `Q2`[cite: 1].

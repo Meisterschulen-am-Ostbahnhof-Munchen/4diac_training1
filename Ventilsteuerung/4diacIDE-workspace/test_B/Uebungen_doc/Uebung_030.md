@@ -3,13 +3,15 @@
 ```{index} single: Uebung_030: PWM-LED Effekte (Breathing)
 ```
 
-[Uebung_030](https://docs.ms-muc-docs.de/projects/visual-programming-languages-docs/de/latest/training1/Ventilsteuerung/4diacIDE-workspace/test/FBs/Uebungen/Uebung_030.html)
 
 [![NotebookLM](media/NotebookLM_logo.png)](https://notebooklm.google.com/notebook/a6872e59-1dfc-4132-a118-aff1bc7bc944)
 
 Dieser Artikel beschreibt die logiBUS®-Übung `Uebung_030`. Hier werden die erweiterten Fähigkeiten der LED-Ansteuerung mittels Pulsweitenmodulation (PWM) demonstriert.
 
 ## 🎧 Podcast
+
+
+![Uebung_030_network](./Uebung_030_network.svg)
 
 * [3000 Watt Lüge Die TVS Diode entschlüsselt](https://podcasters.spotify.com/pod/show/ms-muc-lama/episodes/3000-Watt-Lge-Die-TVS-Diode-entschlsselt-e3aun8t)
 * [Der BTS7030-2EPA intelligenter Auto Stromwächter](https://podcasters.spotify.com/pod/show/ms-muc-lama/episodes/Der-BTS7030-2EPA-intelligenter-Auto-Stromwchter-e3b8n3s)
@@ -18,7 +20,6 @@ Dieser Artikel beschreibt die logiBUS®-Übung `Uebung_030`. Hier werden die erw
 
 ----
 
-![](Uebung_030.png)
 
 ## Ziel der Übung
 

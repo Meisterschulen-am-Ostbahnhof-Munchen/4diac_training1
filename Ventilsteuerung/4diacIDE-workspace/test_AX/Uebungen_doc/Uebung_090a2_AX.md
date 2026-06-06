@@ -3,7 +3,6 @@
 ```{index} single: Uebung_090a2_AX: Signal-Multiplexer (3-fach)
 ```
 
-[Uebung_090a2_AX](https://docs.ms-muc-docs.de/projects/visual-programming-languages-docs/de/latest/training1/Ventilsteuerung/4diacIDE-workspace/test/FBs/Uebungen/Uebung_090a2_AX.html)
 
 [![NotebookLM](media/NotebookLM_logo.png)](https://notebooklm.google.com/notebook/041f4df4-b729-484d-b786-b6dcdf151961)
 
@@ -11,7 +10,6 @@ Dieser Artikel beschreibt die logiBUS®-Übung `Uebung_090a2_AX`.
 
 ----
 
-![](Uebung_090a2_AX.png)
 
 ## Ziel der Übung
 
@@ -28,3 +26,7 @@ Erweiterung des Multiplexers.
 ## Funktionsweise
 
 Da als Selektor weiterhin nur ein boolescher Eingang (`I4`) verwendet wird, können nur die ersten beiden Eingänge (`IN1` bei K=0, `IN2` bei K=1) ausgewählt werden. Der dritte Eingang (`IN3`, Index 2) ist in dieser Konstellation nicht erreichbar. Um alle drei zu nutzen, bräuchte man einen Integer-Eingang oder zwei Bit-Eingänge.
+
+
+
+![Uebung_090a2_AX_network](./Uebung_090a2_AX_network.svg)

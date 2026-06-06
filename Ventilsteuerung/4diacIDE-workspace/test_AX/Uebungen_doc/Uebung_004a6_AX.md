@@ -3,7 +3,6 @@
 ```{index} single: Uebung_004a6_AX: Event-Rendezvous (Synchronisation)
 ```
 
-[Uebung_004a6_AX](https://docs.ms-muc-docs.de/projects/visual-programming-languages-docs/de/latest/training1/Ventilsteuerung/4diacIDE-workspace/test/FBs/Uebungen/Uebung_004a6_AX.html)
 
 [![NotebookLM](media/NotebookLM_logo.png)](https://notebooklm.google.com/notebook/041f4df4-b729-484d-b786-b6dcdf151961)
 
@@ -11,9 +10,13 @@ Dieser Artikel beschreibt die logiBUS®-Übung `Uebung_004a6_AX`. Hier wird ein 
 
 ----
 
-![](Uebung_004a6_AX.png)
 
 ## Ziel der Übung
+
+
+
+
+![Uebung_004a6_AX_network](./Uebung_004a6_AX_network.svg)
 
 Verständnis des `E_REND` Bausteins. Dieser Baustein fungiert wie ein "UND" für Ereignisse. Er merkt sich, welche Eingänge bereits gefeuert haben, und feuert erst am Ausgang, wenn *alle* erforderlichen Eingänge mindestens einmal aktiv waren. Danach setzt er sich zurück.
 
