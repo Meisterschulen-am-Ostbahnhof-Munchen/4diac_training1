@@ -83,6 +83,6 @@ Algorithm CS:
 
 ## Ablauf
 
-1. `CALIBRATE.fbt` editieren: `Y_Offset` → `Y_LOW`, Doku verbessern, Lizenz-Header
+1. `CALIBRATE.fbt` editieren: Doku verbessern, Lizenz-Header
 2. `E_CALIBRATE_SQ.fbt` neu anlegen im selben Ordner
 3. Beide Dateien mit `python script/check_missing_ax.py` und `python script/scan_bad_names.py` validieren
