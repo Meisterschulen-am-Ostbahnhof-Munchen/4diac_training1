@@ -1,9 +1,8 @@
-# Uebung_012b: Numeric Value Input und Speichern
+# Uebung_012b: Numeric Value Input und Speichern INI
 
 ```{index} single: Uebung_012b: Speichern in INI-Dateien
 ```
 
-[Uebung_012b](https://docs.ms-muc-docs.de/projects/visual-programming-languages-docs/de/latest/training1/Ventilsteuerung/4diacIDE-workspace/test/FBs/Uebungen/Uebung_012b.html)
 
 [![NotebookLM](media/NotebookLM_logo.png)](https://notebooklm.google.com/notebook/a6872e59-1dfc-4132-a118-aff1bc7bc944)
 
@@ -11,7 +10,6 @@ Dieser Artikel beschreibt die logiBUS®-Übung `Uebung_012b`. Hier wird eine alt
 
 ----
 
-![](Uebung_012b.png)
 
 ## Ziel der Übung
 
@@ -24,6 +22,9 @@ Verwendung des `INI` Bausteins zur strukturierten Datenspeicherung. Im Gegensatz
 [cite_start]Die Subapplikation `Uebung_012b.SUB` nutzt einen INI-Speicher-Baustein[cite: 1].
 
 ### Funktionsbausteine (FBs)
+
+
+![Uebung_012b_network](./Uebung_012b_network.svg)
 
   * **`INI`**: Typ `eclipse4diac::storage::INI`. [cite_start]Dieser Baustein speichert Werte in einer dateibasierten Struktur ab[cite: 1]. Er benötigt zusätzlich zum `KEY` eine `SECTION`.
   * **Parameter**:

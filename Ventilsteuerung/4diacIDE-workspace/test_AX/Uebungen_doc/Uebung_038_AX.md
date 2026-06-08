@@ -3,7 +3,6 @@
 ```{index} single: Uebung_038_AX: Lauflicht (Zeitgesteuert)
 ```
 
-[Uebung_038_AX](https://docs.ms-muc-docs.de/projects/visual-programming-languages-docs/de/latest/training1/Ventilsteuerung/4diacIDE-workspace/test/FBs/Uebungen/Uebung_038_AX.html)
 
 [![NotebookLM](media/NotebookLM_logo.png)](https://notebooklm.google.com/notebook/041f4df4-b729-484d-b786-b6dcdf151961)
 
@@ -11,7 +10,6 @@ Dieser Artikel beschreibt die logiBUS®-Übung `Uebung_038_AX`. Wir bauen eine k
 
 ----
 
-![](Uebung_038_AX.png)
 
 ## Ziel der Übung
 
@@ -24,6 +22,11 @@ Realisierung einer automatischen Abfolge von 8 Schritten.
 [cite_start]Die Subapplikation `Uebung_038_AX.SUB` verwendet einen Sequenzer-Baustein, um 8 Ausgänge nacheinander zu schalten[cite: 1].
 
 ### Funktionsbausteine (FBs)
+
+
+
+
+![Uebung_038_AX_network](./Uebung_038_AX_network.svg)
 
   * **`sequence_T_08_loop_AX`**: Ein komplexer Baustein, der 8 Zustände (`S1` bis `S8`) verwaltet. Der Übergang zwischen den Zuständen erfolgt zeitgesteuert.
   * **Parameter `DT_S1_S2` etc.**: Definieren die Verweildauer in jedem Schritt (z.B. 200ms oder 100ms).

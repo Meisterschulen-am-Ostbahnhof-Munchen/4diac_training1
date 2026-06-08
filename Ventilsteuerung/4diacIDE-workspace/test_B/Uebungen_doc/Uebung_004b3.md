@@ -3,7 +3,6 @@
 ```{index} single: Uebung_004b3: Gegenseitig verriegelte Toggle-Logik
 ```
 
-[Uebung_004b3](https://docs.ms-muc-docs.de/projects/visual-programming-languages-docs/de/latest/training1/Ventilsteuerung/4diacIDE-workspace/test/FBs/Uebungen/Uebung_004b3.html)
 
 [![NotebookLM](media/NotebookLM_logo.png)](https://notebooklm.google.com/notebook/a6872e59-1dfc-4132-a118-aff1bc7bc944)
 
@@ -11,7 +10,6 @@ Dieser Artikel beschreibt die logiBUS®-Übung `Uebung_004b3`. Diese Übung erwe
 
 ----
 
-![](Uebung_004b3.png)
 
 ## Ziel der Übung
 
@@ -24,6 +22,9 @@ Implementierung einer exklusiven Auswahl-Logik. Das Einschalten eines Kanals mus
 [cite_start]Die Subapplikation `Uebung_004b3.SUB` basiert auf dem Aufbau von 004b2, führt jedoch zusätzliche Ereignisverbindungen zur Verriegelung ein[cite: 1].
 
 ### Funktionsbausteine (FBs)
+
+
+![Uebung_004b3_network](./Uebung_004b3_network.svg)
 
   * Identisch zu 004b2: Taster `I1`/`I2`, Weichen `E_SWITCH_I1`/`I2`, Speicher `E_SR_I1`/`I2`.
 

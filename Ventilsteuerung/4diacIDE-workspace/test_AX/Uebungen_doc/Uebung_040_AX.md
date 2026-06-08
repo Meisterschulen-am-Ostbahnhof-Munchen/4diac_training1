@@ -3,7 +3,6 @@
 ```{index} single: Uebung_040_AX: Lauflicht (Event-Gesteuert / Manuell)
 ```
 
-[Uebung_040_AX](https://docs.ms-muc-docs.de/projects/visual-programming-languages-docs/de/latest/training1/Ventilsteuerung/4diacIDE-workspace/test/FBs/Uebungen/Uebung_040_AX.html)
 
 [![NotebookLM](media/NotebookLM_logo.png)](https://notebooklm.google.com/notebook/041f4df4-b729-484d-b786-b6dcdf151961)
 
@@ -11,7 +10,6 @@ Dieser Artikel beschreibt die logiBUS®-Übung `Uebung_040_AX`. Im Gegensatz zu 
 
 ----
 
-![](Uebung_040_AX.png)
 
 ## Ziel der Übung
 
@@ -26,6 +24,11 @@ Manuelles Weiterschalten einer Schrittkette.
 ### Logik zum Weiterschalten
 
 Um nicht 8 Taster zu benötigen, wurde eine Logik mit Zählern (`E_CTU`) und Demultiplexern (`E_DEMUX`) gebaut:
+
+
+
+![Uebung_040_AX_network](./Uebung_040_AX_network.svg)
+
 *   **Taster `I2`**: Steuert die Schritte 1-4. Jeder Klick erhöht den Zähler `E_CTU_0`. Der Demultiplexer leitet das Event dann an den korrekten Transitions-Eingang (`S1_S2`, `S2_S3`...).
 *   **Taster `I3`**: Steuert analog die Schritte 5-8.
 

@@ -3,7 +3,6 @@
 ```{index} single: Uebung_004a7: T-Flip-Flop mit Reset und Rendezvous
 ```
 
-[Uebung_004a7](https://docs.ms-muc-docs.de/projects/visual-programming-languages-docs/de/latest/training1/Ventilsteuerung/4diacIDE-workspace/test/FBs/Uebungen/Uebung_004a7.html)
 
 [![NotebookLM](media/NotebookLM_logo.png)](https://notebooklm.google.com/notebook/a6872e59-1dfc-4132-a118-aff1bc7bc944)
 
@@ -11,7 +10,6 @@ Dieser Artikel beschreibt die logiBUS®-Übung `Uebung_004a7`. Hier wird das Ren
 
 ----
 
-![](Uebung_004a7.png)
 
 ## Ziel der Übung
 
@@ -24,6 +22,9 @@ Demonstration der Interaktion zwischen komplexer Ereignis-Logik (`E_REND`) und e
 [cite_start]Die Subapplikation `Uebung_004a7.SUB` nutzt drei Taster zur Steuerung eines Lampenzustands[cite: 1].
 
 ### Funktionsbausteine (FBs)
+
+
+![Uebung_004a7_network](./Uebung_004a7_network.svg)
 
   * **`I1` & `I2`**: Eingänge für das Rendezvous (Scharfschalten).
   * **`I3`**: Zentraler Reset-Eingang.

@@ -3,7 +3,6 @@
 ```{index} single: Uebung_004a3: Impliziter Event-Merge (Fan-In)
 ```
 
-[Uebung_004a3](https://docs.ms-muc-docs.de/projects/visual-programming-languages-docs/de/latest/training1/Ventilsteuerung/4diacIDE-workspace/test/FBs/Uebungen/Uebung_004a3.html)
 
 [![NotebookLM](media/NotebookLM_logo.png)](https://notebooklm.google.com/notebook/a6872e59-1dfc-4132-a118-aff1bc7bc944)
 
@@ -11,7 +10,6 @@ Dieser Artikel beschreibt die logiBUS®-Übung `Uebung_004a3`. Diese Übung zeig
 
 ----
 
-![](Uebung_004a3.png)
 
 ## Ziel der Übung
 
@@ -24,6 +22,9 @@ Das Ziel ist die Reduktion der visuellen Komplexität im Netzwerk-Diagramm. Es w
 [cite_start]Die Subapplikation `Uebung_004a3.SUB` verbindet zwei Event-Quellen direkt mit dem Takteingang des Flip-Flops[cite: 1].
 
 ### Funktionsbausteine (FBs)
+
+
+![Uebung_004a3_network](./Uebung_004a3_network.svg)
 
   * **`DigitalInput_CLK_I1` & `I2`**: Die ereignisbasierten Eingänge.
   * **`E_T_FF`**: Das Toggle-Flip-Flop.

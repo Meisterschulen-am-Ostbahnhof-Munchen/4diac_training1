@@ -3,7 +3,6 @@
 ```{index} single: Uebung_007a3: Sicherer Blinker (Definierter AUS-Zustand)
 ```
 
-[Uebung_007a3](https://docs.ms-muc-docs.de/projects/visual-programming-languages-docs/de/latest/training1/Ventilsteuerung/4diacIDE-workspace/test/FBs/Uebungen/Uebung_007a3.html)
 
 [![NotebookLM](media/NotebookLM_logo.png)](https://notebooklm.google.com/notebook/a6872e59-1dfc-4132-a118-aff1bc7bc944)
 
@@ -11,7 +10,6 @@ Dieser Artikel beschreibt die logiBUS®-Übung `Uebung_007a3`. Hier wird die "sa
 
 ----
 
-![](Uebung_007a3.png)
 
 ## Ziel der Übung
 
@@ -24,6 +22,9 @@ Realisierung eines Blinkers mit definiertem Stopp-Verhalten. Es wird demonstrier
 [cite_start]In `Uebung_007a3.SUB` wird die Blinklogik manuell aus Weiche und Speicher aufgebaut, um die volle Kontrolle über den Reset-Vorgang zu haben[cite: 1].
 
 ### Funktionsbausteine (FBs)
+
+
+![Uebung_007a3_network](./Uebung_007a3_network.svg)
 
   * **`E_CYCLE`**: Der Taktgeber.
   * **`E_SWITCH`**: Die Ereignis-Weiche zur Realisierung der Toggle-Funktion.

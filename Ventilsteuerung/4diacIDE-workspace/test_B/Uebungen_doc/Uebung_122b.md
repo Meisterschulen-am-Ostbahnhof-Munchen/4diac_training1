@@ -5,7 +5,9 @@ Hier ist die Dokumentationsseite für die Übung **Uebung_122b** basierend auf d
 ```{index} single: Uebung_122b
 ```
 
-![Übung 122b](Uebung_122b.png)
+
+
+![Uebung_122b_network](./Uebung_122b_network.svg)
 
 * * * * * * * * * *
 

@@ -3,7 +3,6 @@
 ```{index} single: Uebung_020e: Ausschaltverzögerung (E_TOF)
 ```
 
-[Uebung_020e](https://docs.ms-muc-docs.de/projects/visual-programming-languages-docs/de/latest/training1/Ventilsteuerung/4diacIDE-workspace/test/FBs/Uebungen/Uebung_020e.html)
 
 [![NotebookLM](media/NotebookLM_logo.png)](https://notebooklm.google.com/notebook/a6872e59-1dfc-4132-a118-aff1bc7bc944)
 
@@ -11,12 +10,14 @@ Dieser Artikel beschreibt die logiBUS®-Übung `Uebung_020e`.
 
 ## 🎧 Podcast
 
+
+![Uebung_020e_network](./Uebung_020e_network.svg)
+
 * [Infineon BTM9020EP Vollbrücke verstehen](https://podcasters.spotify.com/pod/show/ms-muc-lama/episodes/Infineon-BTM9020EP-Vollbrcke-verstehen-e3b8n24)
 * [integrierten Vollbrücken-ICs MOTIX™ BTM9020EP](https://podcasters.spotify.com/pod/show/ms-muc-lama/episodes/integrierten-Vollbrcken-ICs-MOTIX-BTM9020EP-e368kse)
 
 ----
 
-![](Uebung_020e.png)
 
 ## Übersicht
 

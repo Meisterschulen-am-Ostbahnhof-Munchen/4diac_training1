@@ -3,7 +3,6 @@
 ```{index} single: Uebung_055: Diagnose-Status (Quarter-Konzept)
 ```
 
-[Uebung_055](https://docs.ms-muc-docs.de/projects/visual-programming-languages-docs/de/latest/training1/Ventilsteuerung/4diacIDE-workspace/test/FBs/Uebungen/Uebung_055.html)
 
 [![NotebookLM](media/NotebookLM_logo.png)](https://notebooklm.google.com/notebook/a6872e59-1dfc-4132-a118-aff1bc7bc944)
 
@@ -11,7 +10,6 @@ Dieser Artikel beschreibt die logiBUS®-Übung `Uebung_055`. Hier wird ein zentr
 
 ----
 
-![](Uebung_055.png)
 
 ## Ziel der Übung
 
@@ -24,6 +22,9 @@ Verständnis von erweiterten Signalzuständen. In professionellen Steuerungen re
 [cite_start]Die Subapplikation `Uebung_055.SUB` demonstriert die Wandlung zwischen einfachen booleschen Werten und logiBUS-Quartalen[cite: 1].
 
 ### Funktionsbausteine (FBs)
+
+
+![Uebung_055_network](./Uebung_055_network.svg)
 
   * **`BOOL_TO_Q`**: Wandelt ein Standard-Bit in ein 2-Bit Quartal um.
   * **`Q_TO_BOOL`**: Extrahiert das Haupt-Signal (An/Aus) wieder aus dem Quartal.

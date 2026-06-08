@@ -3,7 +3,6 @@
 ```{index} single: Uebung_004a5: Impliziter Event-Split (Fan-Out)
 ```
 
-[Uebung_004a5](https://docs.ms-muc-docs.de/projects/visual-programming-languages-docs/de/latest/training1/Ventilsteuerung/4diacIDE-workspace/test/FBs/Uebungen/Uebung_004a5.html)
 
 [![NotebookLM](media/NotebookLM_logo.png)](https://notebooklm.google.com/notebook/a6872e59-1dfc-4132-a118-aff1bc7bc944)
 
@@ -11,7 +10,6 @@ Dieser Artikel beschreibt die logiBUS®-Übung `Uebung_004a5`. Ähnlich wie bei 
 
 ----
 
-![](Uebung_004a5.png)
 
 ## Ziel der Übung
 
@@ -24,6 +22,9 @@ Demonstration der "Fan-Out"-Fähigkeit von Ereignisverbindungen in 4diac. Ein ei
 [cite_start]Die Subapplikation `Uebung_004a5.SUB` entfernt den `E_SPLIT` Baustein aus der vorherigen Übung und verbindet den Taster direkt mit beiden Flip-Flops[cite: 1].
 
 ### Funktionsbausteine (FBs)
+
+
+![Uebung_004a5_network](./Uebung_004a5_network.svg)
 
   * **`DigitalInput_CLK_I1`**: Taster.
   * **`E_T_FF_Q1` & `Q2`**: Zwei unabhängige Flip-Flops.

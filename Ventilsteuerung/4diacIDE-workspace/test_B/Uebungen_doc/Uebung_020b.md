@@ -3,7 +3,6 @@
 ```{index} single: Uebung_020b: Manuelle Einschaltverzögerung
 ```
 
-[Uebung_020b](https://docs.ms-muc-docs.de/projects/visual-programming-languages-docs/de/latest/training1/Ventilsteuerung/4diacIDE-workspace/test/FBs/Uebungen/Uebung_020b.html)
 
 [![NotebookLM](media/NotebookLM_logo.png)](https://notebooklm.google.com/notebook/a6872e59-1dfc-4132-a118-aff1bc7bc944)
 
@@ -11,7 +10,6 @@ Dieser Artikel beschreibt die logiBUS®-Übung `Uebung_020b`. Hier wird eine Ein
 
 ----
 
-![](Uebung_020b.png)
 
 ## Ziel der Übung
 
@@ -24,6 +22,9 @@ Verstehen der Zeitsteuerung durch Ereignisverzögerung (`E_DELAY`). Es wird geze
 [cite_start]In `Uebung_020b.SUB` wird ein Verzögerungs-Baustein zwischen die Eingangs-Weiche und den Speicher geschaltet[cite: 1].
 
 ### Funktionsbausteine (FBs)
+
+
+![Uebung_020b_network](./Uebung_020b_network.svg)
 
   * **`E_DELAY`**: Wartet die Zeit `DT` (2 Sekunden) ab.
   * **`E_SWITCH`**: Steuert den Start und Stopp des Timers.

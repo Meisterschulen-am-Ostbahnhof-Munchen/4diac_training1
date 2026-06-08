@@ -3,7 +3,6 @@
 ```{index} single: Uebung_004a: Stromstoßschalter (Toggle Flip-Flop)
 ```
 
-[Uebung_004a](https://docs.ms-muc-docs.de/projects/visual-programming-languages-docs/de/latest/training1/Ventilsteuerung/4diacIDE-workspace/test/FBs/Uebungen/Uebung_004a.html)
 
 [![NotebookLM](media/NotebookLM_logo.png)](https://notebooklm.google.com/notebook/a6872e59-1dfc-4132-a118-aff1bc7bc944)
 
@@ -24,6 +23,9 @@ Das Ziel ist es, den Unterschied zwischen zustandsorientierter (Pegel) und ereig
 [cite_start]Die Subapplikation `Uebung_004a.SUB` verwendet einen speziellen Eingangsbaustein, der Klick-Ereignisse generiert, und ein Toggle-Flip-Flop[cite: 1].
 
 ### Funktionsbausteine (FBs)
+
+
+![Uebung_004a_network](./Uebung_004a_network.svg)
 
   * **`DigitalInput_CLK_I1`**: Typ `logiBUS_IE` (Input Event). [cite_start]Im Gegensatz zum Standard-Eingang liefert dieser Baustein kein kontinuierliches Signal, sondern feuert ein einzelnes Ereignis (`IND`), wenn eine bestimmte Bedingung erfüllt ist. Hier ist er auf `BUTTON_SINGLE_CLICK` konfiguriert[cite: 1].
   * **`E_T_FF`**: Typ `E_T_FF` (Standard-IEC-Event-Baustein). [cite_start]Dieser Baustein hat einen Takteingang (`CLK`). Bei jedem empfangenen Ereignis wechselt er seinen internen Zustand und gibt diesen über den Daten-Ausgang `Q` sowie ein Bestätigungs-Event `EO` aus[cite: 1].

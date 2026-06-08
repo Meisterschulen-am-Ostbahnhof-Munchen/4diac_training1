@@ -3,7 +3,6 @@
 ```{index} single: Uebung_002: Signalverteilung auf mehrere Ausgänge (Fan-Out)
 ```
 
-[Uebung_002](https://docs.ms-muc-docs.de/projects/visual-programming-languages-docs/de/latest/training1/Ventilsteuerung/4diacIDE-workspace/test/FBs/Uebungen/Uebung_002.html)
 
 [![NotebookLM](media/NotebookLM_logo.png)](https://notebooklm.google.com/notebook/a6872e59-1dfc-4132-a118-aff1bc7bc944)
 
@@ -11,7 +10,6 @@ Dieser Artikel beschreibt die logiBUS®-Übung `Uebung_002`, bei der ein einzeln
 
 ----
 
-![](Uebung_002.png)
 
 ## Ziel der Übung
 
@@ -24,6 +22,9 @@ Das Hauptziel dieser Übung ist es, zu zeigen, wie Ereignis- und Datenverbindung
 [cite_start]In der Subapplikation `Uebung_002.SUB` wird ein digitaler Eingang eingelesen und direkt an zwei digitale Ausgänge weitergereicht[cite: 1].
 
 ### Funktionsbausteine (FBs)
+
+
+![Uebung_002_network](./Uebung_002_network.svg)
 
   * **`DigitalInput_I1`**: Eine Instanz des Typs `logiBUS_IX`. [cite_start]Dieser Baustein liest den Hardware-Eingang `Input_I1`[cite: 1].
   * **`DigitalOutput_Q1` & `DigitalOutput_Q2`**: Instanzen des Typs `logiBUS_QX`. [cite_start]Diese repräsentieren die physischen Ausgänge `Output_Q1` und `Output_Q2`[cite: 1].

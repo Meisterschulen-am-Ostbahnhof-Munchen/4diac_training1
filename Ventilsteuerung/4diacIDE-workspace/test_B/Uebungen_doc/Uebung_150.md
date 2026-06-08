@@ -2,7 +2,9 @@ Hier ist die Dokumentation für die Übung `Uebung_150` basierend auf den bereit
 
 # Uebung_150: Impulszähler
 
-![Uebung_150 Bild](Pfad/zum/Bild_Uebung_150.png)
+
+
+![Uebung_150_network](./Uebung_150_network.svg)
 
 * * * * * * * * * *
 

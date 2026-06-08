@@ -3,7 +3,6 @@
 ```{index} single: Uebung_020c2: Parametrierbare Einschaltverzögerung
 ```
 
-[Uebung_020c2](https://docs.ms-muc-docs.de/projects/visual-programming-languages-docs/de/latest/training1/Ventilsteuerung/4diacIDE-workspace/test/FBs/Uebungen/Uebung_020c2.html)
 
 [![NotebookLM](media/NotebookLM_logo.png)](https://notebooklm.google.com/notebook/a6872e59-1dfc-4132-a118-aff1bc7bc944)
 
@@ -11,7 +10,6 @@ Dieser Artikel beschreibt die logiBUS®-Übung `Uebung_020c2`. Hier wird die Ein
 
 ----
 
-![](Uebung_020c2.png)
 
 ## Ziel der Übung
 
@@ -24,6 +22,9 @@ Dynamische Anpassung von Timer-Zeiten zur Laufzeit.
 [cite_start]In `Uebung_020c2.SUB` wird die Verzögerungszeit (`PT`) nicht fest im Programm hinterlegt, sondern vom ISOBUS-Terminal eingelesen[cite: 1].
 
 ### Funktionsbausteine (FBs)
+
+
+![Uebung_020c2_network](./Uebung_020c2_network.svg)
 
   * **`Uebung_020c2_sub`**: Eine Speicher-SubApp (wie in Übung 012a), die den vom Nutzer eingegebenen Zahlenwert verwaltet.
   * **`F_MULTIME`**: Multipliziert einen Zeitwert. Hier wird der Zahlenwert (z.B. "5") mit der Einheit `T#1s` multipliziert, um den Datentyp `TIME` für den Timer zu erzeugen (z.B. 5 Sekunden).

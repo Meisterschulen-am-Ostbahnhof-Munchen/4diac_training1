@@ -3,17 +3,20 @@
 ```{index} single: Uebung_004b_AX: Komplexes Event-Switching (Anti-Pattern?)
 ```
 
-[Uebung_004b_AX](https://docs.ms-muc-docs.de/projects/visual-programming-languages-docs/de/latest/training1/Ventilsteuerung/4diacIDE-workspace/test/FBs/Uebungen/Uebung_004b_AX.html)
 
 [![NotebookLM](media/NotebookLM_logo.png)](https://notebooklm.google.com/notebook/041f4df4-b729-484d-b786-b6dcdf151961)
 
 Dieser Artikel beschreibt die logiBUS®-Übung `Uebung_004b_AX`. Diese Übung zeigt eine alternative Implementierung eines Stromstoßschalters unter Verwendung von Daten-zu-Event-Konvertierung und Weichen.
 
+
+
+
+![Uebung_004b_AX_network](./Uebung_004b_AX_network.svg)
+
 > **Hinweis:** Diese Lösung gilt als "nicht empfohlen" (siehe Kommentar im Code), da sie unnötig komplex ist. Sie dient hier als Lehrbeispiel für die Bausteine `AX_SWITCH`, `AX_BOOL_TO_X` und `AX_X_TO_BOOL`.
 
 ----
 
-![](Uebung_004b_AX.png)
 
 ## Ziel der Übung
 

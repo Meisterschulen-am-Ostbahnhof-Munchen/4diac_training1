@@ -3,7 +3,6 @@
 ```{index} single: Uebung_004a8_AX: Event-Splitter 2-fach (E_SPLIT_2)
 ```
 
-[Uebung_004a8_AX](https://docs.ms-muc-docs.de/projects/visual-programming-languages-docs/de/latest/training1/Ventilsteuerung/4diacIDE-workspace/test/FBs/Uebungen/Uebung_004a8_AX.html)
 
 [![NotebookLM](media/NotebookLM_logo.png)](https://notebooklm.google.com/notebook/041f4df4-b729-484d-b786-b6dcdf151961)
 
@@ -11,7 +10,6 @@ Dieser Artikel beschreibt die logiBUS®-Übung `Uebung_004a8_AX`. Dies ist eine 
 
 ----
 
-![](Uebung_004a8_AX.png)
 
 ## Ziel der Übung
 
@@ -24,6 +22,11 @@ Kennenlernen der spezifischen Splitter-Bausteine. `E_SPLIT` ist oft der generisc
 [cite_start]Die Subapplikation `Uebung_004a8_AX.SUB` nutzt `E_SPLIT_2`, um einen Tasterklick auf zwei unabhängige Flip-Flops zu verteilen[cite: 1].
 
 ### Funktionsbausteine (FBs)
+
+
+
+
+![Uebung_004a8_AX_network](./Uebung_004a8_AX_network.svg)
 
   * **`DigitalInput_CLK_I1`**: Taster.
   * **`E_SPLIT_2`**: Verteilt Eingang `EI` sequenziell auf `EO1` und `EO2`.

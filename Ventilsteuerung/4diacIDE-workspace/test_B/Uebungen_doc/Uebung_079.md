@@ -3,7 +3,6 @@
 ```{index} single: Uebung_079: Tractor ECU (TECU) Gesamtübersicht
 ```
 
-[Uebung_079](https://docs.ms-muc-docs.de/projects/visual-programming-languages-docs/de/latest/training1/Ventilsteuerung/4diacIDE-workspace/test/FBs/Uebungen/Uebung_079.html)
 
 [![NotebookLM](media/NotebookLM_logo.png)](https://notebooklm.google.com/notebook/a6872e59-1dfc-4132-a118-aff1bc7bc944)
 
@@ -11,7 +10,6 @@ Dieser Artikel beschreibt die logiBUS®-Übung `Uebung_079`. Dies ist eine Samme
 
 ----
 
-![](Uebung_079.png)
 
 ## Ziel der Übung
 
@@ -22,6 +20,9 @@ Erlernen der gesamten Palette an TECU-Schnittstellenbausteinen. Ein ISOBUS-Trakt
 ## Übersicht der Bausteine (FBs)
 
 [cite_start]In `Uebung_079.SUB` sind alle relevanten TECU-Eingangsbausteine platziert[cite: 1]:
+
+
+![Uebung_079_network](./Uebung_079_network.svg)
 
 1.  **`I_GBSD`**: Ground Based Speed & Distance (Radar/GPS-Weg).
 2.  **`I_WBSD`**: Wheel Based Speed & Distance (Getriebe-Weg).

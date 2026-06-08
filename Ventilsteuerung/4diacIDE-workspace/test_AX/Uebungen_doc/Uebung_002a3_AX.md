@@ -3,7 +3,6 @@
 ```{index} single: Uebung_002a3_AX: Logische ODER-Verknüpfung zweier Signale
 ```
 
-[Uebung_002a3_AX](https://docs.ms-muc-docs.de/projects/visual-programming-languages-docs/de/latest/training1/Ventilsteuerung/4diacIDE-workspace/test/FBs/Uebungen/Uebung_002a3_AX.html)
 
 [![NotebookLM](media/NotebookLM_logo.png)](https://notebooklm.google.com/notebook/041f4df4-b729-484d-b786-b6dcdf151961)
 
@@ -11,7 +10,6 @@ Dieser Artikel beschreibt die logiBUS®-Übung `Uebung_002a3_AX`. In dieser Übu
 
 ----
 
-![](Uebung_002a3_AX.png)
 
 ## Ziel der Übung
 
@@ -26,6 +24,11 @@ Das Hauptziel dieser Übung ist es, die Funktionsweise einer ODER-Verknüpfung i
 ### Funktionsbausteine (FBs)
 
 Folgende Bausteine werden verwendet:
+
+
+
+
+![Uebung_002a3_AX_network](./Uebung_002a3_AX_network.svg)
 
   * **`DigitalInput_I1` & `DigitalInput_I2`**: Instanzen des Typs `logiBUS_IXA`. [cite_start]Diese Bausteine erfassen die Zustände der physischen Eingänge `Input_I1` und `Input_I2`[cite: 1].
   * **`AX_OR_2`**: Eine Instanz des Typs `AX_OR_2`. [cite_start]Dieser Baustein führt die logische ODER-Operation auf Adapter-Ebene aus. Er besitzt zwei Adapter-Eingänge (`IN1`, `IN2`) und einen Adapter-Ausgang (`OUT`)[cite: 1].

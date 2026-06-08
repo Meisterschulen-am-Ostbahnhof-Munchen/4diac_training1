@@ -3,7 +3,6 @@
 ```{index} single: Uebung_002b3_AX: Kombinatorische Logik (AND/OR)
 ```
 
-[Uebung_002b3_AX](https://docs.ms-muc-docs.de/projects/visual-programming-languages-docs/de/latest/training1/Ventilsteuerung/4diacIDE-workspace/test/FBs/Uebungen/Uebung_002b3_AX.html)
 
 [![NotebookLM](media/NotebookLM_logo.png)](https://notebooklm.google.com/notebook/041f4df4-b729-484d-b786-b6dcdf151961)
 
@@ -11,7 +10,6 @@ Dieser Artikel beschreibt die logiBUS®-Übung `Uebung_002b3_AX`. In dieser Übu
 
 ----
 
-![](Uebung_002b3_AX.png)
 
 ## Ziel der Übung
 
@@ -26,6 +24,11 @@ Das Hauptziel dieser Übung ist die hierarchische Verknüpfung von Logikbaustein
 ### Funktionsbausteine (FBs)
 
 In der Subapplikation werden folgende Komponenten instanziiert:
+
+
+
+
+![Uebung_002b3_AX_network](./Uebung_002b3_AX_network.svg)
 
   * **`DigitalInput_I1`, `I2`, `I3`**: Instanzen des Typs `logiBUS_IXA`. [cite_start]Sie liefern die Eingangssignale für die Logikkette[cite: 1].
   * **`AND_2_BOOL`**: Eine Instanz des Typs `AX_AND_2`. [cite_start]Verknüpft die Eingänge `I1` und `I2`[cite: 1].

@@ -3,7 +3,6 @@
 ```{index} single: Uebung_010bA2_AX: AUX Event (Enabled - Latched vs NonLatched)
 ```
 
-[Uebung_010bA2_AX](https://docs.ms-muc-docs.de/projects/visual-programming-languages-docs/de/latest/training1/Ventilsteuerung/4diacIDE-workspace/test/FBs/Uebungen/Uebung_010bA2_AX.html)
 
 [![NotebookLM](media/NotebookLM_logo.png)](https://notebooklm.google.com/notebook/041f4df4-b729-484d-b786-b6dcdf151961)
 
@@ -11,7 +10,6 @@ Dieser Artikel beschreibt die logiBUS®-Übung `Uebung_010bA2_AX`. Hier geht es 
 
 ----
 
-![](Uebung_010bA2_AX.png)
 
 ## Ziel der Übung
 
@@ -28,6 +26,11 @@ Verhalten von `AuxEnabled`.
 ## Funktionsweise
 
 Kommentar erklärt den Unterschied je nach AUX-Typ (Bool_Latched=0 vs Bool_NonLatched=2).
+
+
+
+![Uebung_010bA2_AX_network](./Uebung_010bA2_AX_network.svg)
+
 Bei einem **Typ 2 (NonLatched)** (z.B. Taster am Joystick) wird `AuxEnabled` **einmal** gesendet beim Drücken.
 Bei einem **Typ 0 (Latched)** (z.B. Kippschalter) wird `AuxEnabled` **zyklisch wiederholt**, solange er an ist.
 

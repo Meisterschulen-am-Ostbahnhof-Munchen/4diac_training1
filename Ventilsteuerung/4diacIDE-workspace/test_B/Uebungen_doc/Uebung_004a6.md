@@ -3,7 +3,6 @@
 ```{index} single: Uebung_004a6: Event-Rendezvous (Synchronisation)
 ```
 
-[Uebung_004a6](https://docs.ms-muc-docs.de/projects/visual-programming-languages-docs/de/latest/training1/Ventilsteuerung/4diacIDE-workspace/test/FBs/Uebungen/Uebung_004a6.html)
 
 [![NotebookLM](media/NotebookLM_logo.png)](https://notebooklm.google.com/notebook/a6872e59-1dfc-4132-a118-aff1bc7bc944)
 
@@ -11,9 +10,11 @@ Dieser Artikel beschreibt die logiBUS®-Übung `Uebung_004a6`. Hier wird ein for
 
 ----
 
-![](Uebung_004a6.png)
 
 ## Ziel der Übung
+
+
+![Uebung_004a6_network](./Uebung_004a6_network.svg)
 
 Erlernen des Umgangs mit dem `E_REND` Baustein. Dieser fungiert wie ein "Gedächtnis-UND" für Ereignisse. Er feuert erst am Ausgang, wenn an *allen* konfigurierten Eingängen mindestens einmal ein Ereignis registriert wurde. Dies dient der Synchronisation von asynchronen Prozessen.
 

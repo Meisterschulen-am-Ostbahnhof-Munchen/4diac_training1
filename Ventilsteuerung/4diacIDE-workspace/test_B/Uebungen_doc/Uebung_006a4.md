@@ -3,7 +3,6 @@
 ```{index} single: Uebung_006a4: Motor-Wende-Schaltung (Bibliothek)
 ```
 
-[Uebung_006a4](https://docs.ms-muc-docs.de/projects/visual-programming-languages-docs/de/latest/training1/Ventilsteuerung/4diacIDE-workspace/test/FBs/Uebungen/Uebung_006a4.html)
 
 [![NotebookLM](media/NotebookLM_logo.png)](https://notebooklm.google.com/notebook/a6872e59-1dfc-4132-a118-aff1bc7bc944)
 
@@ -11,7 +10,6 @@ Dieser Artikel beschreibt die logiBUS®-Übung `Uebung_006a4`. Hier wird die Mot
 
 ----
 
-![](Uebung_006a4.png)
 
 ## Ziel der Übung
 
@@ -24,6 +22,9 @@ Nutzung von spezialisierten Dienstbausteinen zur Reduktion der Diagramm-Komplexi
 [cite_start]In `Uebung_006a4.SUB` wird das Netzwerk aus Gattern und Sub-Apps durch den Baustein `LinksRechts` ersetzt[cite: 1].
 
 ### Funktionsbausteine (FBs)
+
+
+![Uebung_006a4_network](./Uebung_006a4_network.svg)
 
   * **`LinksRechts`**: Typ `logiBUS::utils::sequence::verteiler::LinksRechts`. [cite_start]Dieser Baustein übernimmt die komplette Verwaltung der zwei Ausgänge inklusive der internen Richtungs-Logik[cite: 1].
   * **`E_T_FF_SR`**: Liefert weiterhin das Startsignal an den Eingang `EI_ON`.

@@ -3,7 +3,6 @@
 ```{index} single: Uebung_002b2: Kombinatorische Logik (AND/OR mit F_MOVE)
 ```
 
-[Uebung_002b2](https://docs.ms-muc-docs.de/projects/visual-programming-languages-docs/de/latest/training1/Ventilsteuerung/4diacIDE-workspace/test/FBs/Uebungen/Uebung_002b2.html)
 
 [![NotebookLM](media/NotebookLM_logo.png)](https://notebooklm.google.com/notebook/041f4df4-b729-484d-b786-b6dcdf151961)
 
@@ -11,7 +10,6 @@ Dieser Artikel beschreibt die logiBUS®-Übung `Uebung_002b2`. In dieser Übung 
 
 ----
 
-![](Uebung_002b2.png)
 
 ## Ziel der Übung
 
@@ -24,6 +22,9 @@ Das Hauptziel dieser Übung ist die hierarchische Verknüpfung von Logikbaustein
 [cite_start]Die Subapplikation `Uebung_002b2.SUB` realisiert die logische Funktion `Q1 = (I1 AND I2) OR I3` unter Verwendung von Standard-Logikbausteinen[cite: 1].
 
 ### Funktionsbausteine (FBs)
+
+
+![Uebung_002b2_network](./Uebung_002b2_network.svg)
 
   * **`DigitalInput_I1` bis `I3`**: Drei Instanzen des Typs `logiBUS_IX`. [cite_start]Sie liefern die Eingangssignale für die Logikkette[cite: 1].
   * **`AND_2`**: Eine Instanz des Typs `AND_2`. [cite_start]Verknüpft die Eingänge `I1` und `I2`[cite: 1].

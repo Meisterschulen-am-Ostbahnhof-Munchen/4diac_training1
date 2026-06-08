@@ -3,7 +3,6 @@
 ```{index} single: Uebung_008: Autonomer Blinker-Baustein
 ```
 
-[Uebung_008](https://docs.ms-muc-docs.de/projects/visual-programming-languages-docs/de/latest/training1/Ventilsteuerung/4diacIDE-workspace/test/FBs/Uebungen/Uebung_008.html)
 
 [![NotebookLM](media/NotebookLM_logo.png)](https://notebooklm.google.com/notebook/a6872e59-1dfc-4132-a118-aff1bc7bc944)
 
@@ -11,7 +10,6 @@ Dieser Artikel beschreibt die logiBUS®-Übung `Uebung_008`. Hier wird die Logik
 
 ----
 
-![](Uebung_008.png)
 
 ## Ziel der Übung
 
@@ -28,6 +26,9 @@ Der Taktgeber `E_CYCLE` läuft (nach einmaliger Initialisierung durch das System
 -----
 
 ## Anwendungsbeispiel
+
+
+![Uebung_008_network](./Uebung_008_network.svg)
 
 **Status-LED (Heartbeat)**:
 Eine LED direkt auf der CPU-Platine, die ständig blinkt, solange die Versorgungsspannung anliegt und das Steuerungsprogramm ("Task") fehlerfrei abgearbeitet wird. Hört die LED auf zu blinken, weiß der Techniker sofort, dass die Steuerung abgestürzt ist oder im Stopp-Zustand verharrt.

@@ -1,9 +1,8 @@
-# Uebung_080c: Beispiel für E_CTU
+# Uebung_080c: Beispiel für E_CTU mit Terminal-Ausgabe
 
 ```{index} single: Uebung_080c: Frequenzhalbierung von Events
 ```
 
-[Uebung_080c](https://docs.ms-muc-docs.de/projects/visual-programming-languages-docs/de/latest/training1/Ventilsteuerung/4diacIDE-workspace/test/FBs/Uebungen/Uebung_080c.html)
 
 [![NotebookLM](media/NotebookLM_logo.png)](https://notebooklm.google.com/notebook/a6872e59-1dfc-4132-a118-aff1bc7bc944)
 
@@ -11,7 +10,6 @@ Dieser Artikel beschreibt die logiBUS®-Übung `Uebung_080c`. Hier wird das Gege
 
 ----
 
-![](Uebung_080c.png)
 
 ## Ziel der Übung
 
@@ -22,6 +20,9 @@ Manipulation von Ereignisströmen unter Verwendung von `E_T_FF` und `E_PERMIT`.
 ## Funktionsweise
 
 [cite_start]In `Uebung_080c.SUB` wird ein Toggle-Flip-Flop als Gate-Wächter genutzt[cite: 1].
+
+![Uebung_080c_network](./Uebung_080c_network.svg)
+
 1.  Jeder Klick auf **I1** toggelt das Flip-Flop. Der Zustand wechselt also: TRUE, FALSE, TRUE, FALSE...
 2.  Das `E_PERMIT` lässt Ereignisse nur durch, wenn der `PERMIT` Eingang auf TRUE steht.
 3.  Daher wird nur bei jedem zweiten Klick (wenn das Flip-Flop gerade auf TRUE steht) ein Ereignis an den Zähler weitergereicht.

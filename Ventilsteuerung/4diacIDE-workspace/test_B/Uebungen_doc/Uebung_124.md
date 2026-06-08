@@ -3,7 +3,6 @@
 ```{index} single: Uebung_124: Custom PGN senden (Peer-to-Peer)
 ```
 
-[Uebung_124](https://docs.ms-muc-docs.de/projects/visual-programming-languages-docs/de/latest/training1/Ventilsteuerung/4diacIDE-workspace/test/FBs/Uebungen/Uebung_124.html)
 
 [![NotebookLM](media/NotebookLM_logo.png)](https://notebooklm.google.com/notebook/a6872e59-1dfc-4132-a118-aff1bc7bc944)
 
@@ -11,7 +10,6 @@ Dieser Artikel beschreibt die logiBUS®-Übung `Uebung_124`. Hier verlassen wir 
 
 ----
 
-![](Uebung_124.png)
 
 ## Ziel der Übung
 
@@ -24,6 +22,9 @@ Verwendung des Bausteins `AlPgnTxNew8B`. Es wird gezeigt, wie man eine herstelle
 [cite_start]Die Subapplikation `Uebung_124.SUB` kombiniert die Teilnehmer-Suche mit einem Sende-Baustein[cite: 1].
 
 ### Funktionsbausteine (FBs)
+
+
+![Uebung_124_network](./Uebung_124_network.svg)
 
   * **`NmGetCfInfo_1`**: Sucht den Zielpartner (hier ein Virtual Terminal).
   * **`AlPgnTxNew8B`**: Der Sende-Baustein für 8-Byte Nachrichten.

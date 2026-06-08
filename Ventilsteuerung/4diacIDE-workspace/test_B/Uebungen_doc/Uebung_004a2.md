@@ -3,7 +3,6 @@
 ```{index} single: Uebung_004a2: Stromstoßschalter von zwei Stellen (Event-Merge)
 ```
 
-[Uebung_004a2](https://docs.ms-muc-docs.de/projects/visual-programming-languages-docs/de/latest/training1/Ventilsteuerung/4diacIDE-workspace/test/FBs/Uebungen/Uebung_004a2.html)
 
 [![NotebookLM](media/NotebookLM_logo.png)](https://notebooklm.google.com/notebook/a6872e59-1dfc-4132-a118-aff1bc7bc944)
 
@@ -11,7 +10,6 @@ Dieser Artikel beschreibt die logiBUS®-Übung `Uebung_004a2`. Hier wird die Str
 
 ----
 
-![](Uebung_004a2.png)
 
 ## Ziel der Übung
 
@@ -24,6 +22,9 @@ Das Ziel ist es zu lernen, wie man asynchrone Ereignisströme vereint. Wenn zwei
 [cite_start]Die Subapplikation `Uebung_004a2.SUB` nutzt einen `E_MERGE` Baustein, um zwei Eingangs-Events auf einen gemeinsamen Takteingang zu leiten[cite: 1].
 
 ### Funktionsbausteine (FBs)
+
+
+![Uebung_004a2_network](./Uebung_004a2_network.svg)
 
   * **`DigitalInput_CLK_I1` & `I2`**: Zwei `logiBUS_IE` Bausteine, konfiguriert auf `BUTTON_SINGLE_CLICK`. [cite_start]Sie erzeugen Ereignisse bei Betätigung von Taster 1 oder 2[cite: 1].
   * **`E_MERGE`**: Ein Standard-Ereignis-Baustein. [cite_start]Er besitzt zwei Ereigniseingänge (`EI1`, `EI2`) und einen Ereignisausgang (`EO`). Jedes eintreffende Event wird sofort an den Ausgang weitergereicht[cite: 1].

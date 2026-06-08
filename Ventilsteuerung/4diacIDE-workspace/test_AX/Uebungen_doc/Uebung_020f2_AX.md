@@ -3,7 +3,6 @@
 ```{index} single: Uebung_020f2_AX: FB_TP mit Takteingang
 ```
 
-[Uebung_020f2_AX](https://docs.ms-muc-docs.de/projects/visual-programming-languages-docs/de/latest/training1/Ventilsteuerung/4diacIDE-workspace/test/FBs/Uebungen/Uebung_020f2_AX.html)
 
 [![NotebookLM](media/NotebookLM_logo.png)](https://notebooklm.google.com/notebook/041f4df4-b729-484d-b786-b6dcdf151961)
 
@@ -11,7 +10,6 @@ Dieser Artikel beschreibt die logiBUS®-Übung `Uebung_020f2_AX`. Hier wird der 
 
 ----
 
-![](Uebung_020f2_AX.png)
 
 ## Ziel der Übung
 
@@ -24,6 +22,11 @@ Das Ziel ist es, die Brücke zwischen der klassischen SPS-Programmierung (zyklis
 Die Subapplikation `Uebung_020f2_AX.SUB` nutzt einen `E_CYCLE` Baustein, um den Takt für den Timer zu generieren.
 
 ### Funktionsbausteine (FBs)
+
+
+
+
+![Uebung_020f2_AX_network](./Uebung_020f2_AX_network.svg)
 
   * **`AX_FB_TP`**: Der Impuls-Timer mit Adapter-Schnittstellen. Er reagiert auf die steigende Flanke am Eingang und hält den Ausgang für die Zeit `PT` auf TRUE.
   * **`E_CYCLE`**: Erzeugt alle 500ms ein Ereignis, um den Timer zu aktualisieren.

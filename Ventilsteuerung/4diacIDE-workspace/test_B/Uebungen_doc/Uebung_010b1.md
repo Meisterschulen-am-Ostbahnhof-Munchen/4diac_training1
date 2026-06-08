@@ -3,7 +3,6 @@
 ```{index} single: Uebung_010b1: ISOBUS AUX-N (Joystick-Tasten)
 ```
 
-[Uebung_010b1](https://docs.ms-muc-docs.de/projects/visual-programming-languages-docs/de/latest/training1/Ventilsteuerung/4diacIDE-workspace/test/FBs/Uebungen/Uebung_010b1.html)
 
 [![NotebookLM](media/NotebookLM_logo.png)](https://notebooklm.google.com/notebook/a6872e59-1dfc-4132-a118-aff1bc7bc944)
 
@@ -11,7 +10,6 @@ Dieser Artikel beschreibt die logiBUS®-Übung `Uebung_010b1`. Hier wird die dri
 
 ----
 
-![](Uebung_010b1.png)
 
 ## Ziel der Übung
 
@@ -24,6 +22,9 @@ Anbindung von AUX-Eingabegeräten (z.B. ISOBUS-Joystick).
 [cite_start]In `Uebung_010b1.SUB` wird eine Auxiliary Function genutzt, um einen Ausgang zu schalten[cite: 1].
 
 ### Funktionsbausteine (FBs)
+
+
+![Uebung_010b1_network](./Uebung_010b1_network.svg)
 
   * **`AuxFunction2_X1`**: Typ `isobus::UT::io::Auxiliary::IN::Aux_IX`. Dieser Baustein lauscht auf AUX-Nachrichten der "Funktion 2".
 

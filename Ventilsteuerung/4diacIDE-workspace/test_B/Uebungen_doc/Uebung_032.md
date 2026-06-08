@@ -3,13 +3,15 @@
 ```{index} single: Uebung_032: Mehrfarbige LED-Streifen Effekte
 ```
 
-[Uebung_032](https://docs.ms-muc-docs.de/projects/visual-programming-languages-docs/de/latest/training1/Ventilsteuerung/4diacIDE-workspace/test/FBs/Uebungen/Uebung_032.html)
 
 [![NotebookLM](media/NotebookLM_logo.png)](https://notebooklm.google.com/notebook/a6872e59-1dfc-4132-a118-aff1bc7bc944)
 
 Dieser Artikel beschreibt die logiBUS®-Übung `Uebung_032`. Hier werden vorkonfigurierte Farbbausteine für LED-Streifen genutzt.
 
 ## 📺 Video
+
+
+![Uebung_032_network](./Uebung_032_network.svg)
 
 * [Das ESP32-S3-DevKitC-1](https://www.youtube.com/watch?v=fyQt3THIQEQ)
 
@@ -23,7 +25,6 @@ Dieser Artikel beschreibt die logiBUS®-Übung `Uebung_032`. Hier werden vorkonf
 
 ----
 
-![](Uebung_032.png)
 
 ## Ziel der Übung
 

@@ -1,9 +1,8 @@
-# Uebung_005_AX: Toggle Flip-Flop mit IX
+# Uebung_005_AX: Toggle Flip-Flop mit IXA
 
 ```{index} single: Uebung_005_AX: Toggle mit Pegel-Eingang (Überflüssig kompliziert?)
 ```
 
-[Uebung_005_AX](https://docs.ms-muc-docs.de/projects/visual-programming-languages-docs/de/latest/training1/Ventilsteuerung/4diacIDE-workspace/test/FBs/Uebungen/Uebung_005_AX.html)
 
 [![NotebookLM](media/NotebookLM_logo.png)](https://notebooklm.google.com/notebook/041f4df4-b729-484d-b786-b6dcdf151961)
 
@@ -11,7 +10,6 @@ Dieser Artikel beschreibt die logiBUS®-Übung `Uebung_005_AX`. Diese Übung zei
 
 ----
 
-![](Uebung_005_AX.png)
 
 ## Ziel der Übung
 
@@ -24,6 +22,11 @@ Demonstration der Konvertierung von Daten zu Ereignissen für Steuerungszwecke.
 [cite_start]Die Subapplikation `Uebung_005_AX.SUB` verwendet einen Standard-Digitaleingang (`logiBUS_IXA`) anstelle eines Event-Eingangs (`logiBUS_IE`)[cite: 1].
 
 ### Funktionsbausteine (FBs)
+
+
+
+
+![Uebung_005_AX_network](./Uebung_005_AX_network.svg)
 
   * **`DigitalInput_I1`**: Typ `logiBUS_IXA`. Liefert kontinuierlich TRUE, wenn gedrückt.
   * **`AX_SWITCH`**: Dient hier als Gatter.

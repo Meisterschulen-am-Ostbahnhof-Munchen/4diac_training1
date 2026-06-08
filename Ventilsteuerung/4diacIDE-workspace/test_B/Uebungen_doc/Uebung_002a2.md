@@ -3,7 +3,6 @@
 ```{index} single: Uebung_002a2: Logische UND-Verknüpfung (Generic F_AND)
 ```
 
-[Uebung_002a2](https://docs.ms-muc-docs.de/projects/visual-programming-languages-docs/de/latest/training1/Ventilsteuerung/4diacIDE-workspace/test/FBs/Uebungen/Uebung_002a2.html)
 
 [![NotebookLM](media/NotebookLM_logo.png)](https://notebooklm.google.com/notebook/041f4df4-b729-484d-b786-b6dcdf151961)
 
@@ -11,7 +10,6 @@ Dieser Artikel beschreibt die logiBUS®-Übung `Uebung_002a2`. Diese Übung ist 
 
 ----
 
-![](Uebung_002a2.png)
 
 ## Ziel der Übung
 
@@ -24,6 +22,9 @@ Das Ziel ist es, die Verwendung von generischen Funktionsbausteinen (F-FBs) in d
 [cite_start]In der Subapplikation `Uebung_002a2.SUB` werden zwei digitale Eingänge über ein generisches UND-Gatter verknüpft[cite: 1].
 
 ### Funktionsbausteine (FBs)
+
+
+![Uebung_002a2_network](./Uebung_002a2_network.svg)
 
   * **`DigitalInput_I1` & `DigitalInput_I2`**: Standard-Eingangsbausteine vom Typ `logiBUS_IX`[cite: 1].
   * **`F_AND`**: Ein generischer Funktionsbaustein vom Typ `F_AND`. [cite_start]Er berechnet das logische UND seiner Eingänge `IN1` und `IN2`, sobald er ein Ereignis am Eingang `REQ` empfängt, und gibt das Ergebnis am Ausgang `OUT` sowie ein Bestätigungs-Ereignis am Port `CNF` aus[cite: 1].

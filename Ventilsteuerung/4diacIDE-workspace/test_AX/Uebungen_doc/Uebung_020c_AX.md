@@ -3,7 +3,6 @@
 ```{index} single: Uebung_020c_AX: Einschaltverzögerung (TON)
 ```
 
-[Uebung_020c_AX](https://docs.ms-muc-docs.de/projects/visual-programming-languages-docs/de/latest/training1/Ventilsteuerung/4diacIDE-workspace/test/FBs/Uebungen/Uebung_020c_AX.html)
 
 [![NotebookLM](media/NotebookLM_logo.png)](https://notebooklm.google.com/notebook/041f4df4-b729-484d-b786-b6dcdf151961)
 
@@ -11,7 +10,6 @@ Dieser Artikel beschreibt die logiBUS®-Übung `Uebung_020c_AX`.
 
 ----
 
-![](Uebung_020c_AX.png)
 
 ## Ziel der Übung
 
@@ -24,6 +22,11 @@ Kennenlernen des Timer-Bausteins `AX_TON`.
 [cite_start]Die Subapplikation `Uebung_020c_AX.SUB` verzögert das Einschaltsignal[cite: 1].
 
 ### Funktionsbausteine (FBs)
+
+
+
+
+![Uebung_020c_AX_network](./Uebung_020c_AX_network.svg)
 
   * **`AX_TON`**: Timer On-Delay.
   * **Parameter `PT`**: Preset Time (hier 5 Sekunden).

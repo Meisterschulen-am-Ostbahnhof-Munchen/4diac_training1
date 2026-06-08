@@ -3,7 +3,6 @@
 ```{index} single: Uebung_020f_AX: Impulsglied (TP)
 ```
 
-[Uebung_020f_AX](https://docs.ms-muc-docs.de/projects/visual-programming-languages-docs/de/latest/training1/Ventilsteuerung/4diacIDE-workspace/test/FBs/Uebungen/Uebung_020f_AX.html)
 
 [![NotebookLM](media/NotebookLM_logo.png)](https://notebooklm.google.com/notebook/041f4df4-b729-484d-b786-b6dcdf151961)
 
@@ -11,7 +10,6 @@ Dieser Artikel beschreibt die logiBUS®-Übung `Uebung_020f_AX`. Hier wird ein I
 
 ----
 
-![](Uebung_020f_AX.png)
 
 ## Ziel der Übung
 
@@ -24,6 +22,11 @@ Das Ziel dieser Übung ist die Anwendung des `AX_TP` Bausteins. Ein Impulsglied 
 [cite_start]Die Subapplikation `Uebung_020f_AX.SUB` nutzt einen Adapter-Timer vom Typ `AX_TP`[cite: 1].
 
 ### Funktionsbausteine (FBs)
+
+
+
+
+![Uebung_020f_AX_network](./Uebung_020f_AX_network.svg)
 
   * **`DigitalInput_I1`**: Typ `logiBUS_IXA`. Der Auslöser.
   * **`AX_TP`**: [cite_start]Erzeugt bei einer steigenden Flanke am Eingang einen Impuls der Länge `PT` (hier 5 Sekunden) am Ausgang `Q`[cite: 1].

@@ -3,7 +3,6 @@
 ```{index} single: Uebung_006a_AX: Kombiniertes T/SR Flip-Flop
 ```
 
-[Uebung_006a_AX](https://docs.ms-muc-docs.de/projects/visual-programming-languages-docs/de/latest/training1/Ventilsteuerung/4diacIDE-workspace/test/FBs/Uebungen/Uebung_006a_AX.html)
 
 [![NotebookLM](media/NotebookLM_logo.png)](https://notebooklm.google.com/notebook/041f4df4-b729-484d-b786-b6dcdf151961)
 
@@ -11,7 +10,6 @@ Dieser Artikel beschreibt die logiBUS®-Übung `Uebung_006a_AX`. Diese Übung ze
 
 ----
 
-![](Uebung_006a_AX.png)
 
 ## Ziel der Übung
 
@@ -24,6 +22,11 @@ Kennenlernen des `AX_T_FF_SR`.
 [cite_start]Die Subapplikation `Uebung_006a_AX.SUB` nutzt drei Taster[cite: 1].
 
 ### Funktionsbausteine (FBs)
+
+
+
+
+![Uebung_006a_AX_network](./Uebung_006a_AX_network.svg)
 
   * **`I1` (Set)**
   * **`I2` (Reset)**

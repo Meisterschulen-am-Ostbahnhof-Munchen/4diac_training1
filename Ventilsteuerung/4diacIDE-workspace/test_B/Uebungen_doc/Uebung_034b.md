@@ -1,9 +1,8 @@
-# Uebung_034b: LONG_PRESS_HOLD-Eingang auf PWM Ausgang
+# Uebung_034b: LONG_PRESS_HOLD-Eingang auf PWM Ausgang mit Terminal-Ausgabe
 
 ```{index} single: Uebung_034b: Dynamische PWM-Tastung (Hold)
 ```
 
-[Uebung_034b](https://docs.ms-muc-docs.de/projects/visual-programming-languages-docs/de/latest/training1/Ventilsteuerung/4diacIDE-workspace/test/FBs/Uebungen/Uebung_034b.html)
 
 [![NotebookLM](media/NotebookLM_logo.png)](https://notebooklm.google.com/notebook/a6872e59-1dfc-4132-a118-aff1bc7bc944)
 
@@ -11,7 +10,6 @@ Dieser Artikel beschreibt die logiBUS®-Übung `Uebung_034b`. Hier wird die PWM-
 
 ----
 
-![](Uebung_034b.png)
 
 ## Ziel der Übung
 
@@ -24,6 +22,9 @@ Kombination von repetierenden Ereignissen (`HOLD`) und Zählern zur Steuerung ei
 [cite_start]In `Uebung_034b.SUB` wird ein Up/Down-Zähler als digitaler Integrator genutzt[cite: 1].
 
 ### Funktionsbausteine (FBs)
+
+
+![Uebung_034b_network](./Uebung_034b_network.svg)
 
   * **`IE_SPEED_UP`**: Sendet alle 200ms ein Event, solange Taster **I1** gehalten wird.
   * **`IE_SPEED_DOWN`**: Sendet alle 200ms ein Event, solange Taster **I2** gehalten wird.

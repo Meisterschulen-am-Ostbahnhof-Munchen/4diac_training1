@@ -3,7 +3,6 @@
 ```{index} single: Uebung_006a3_sub: Richtungs-Merker (SubApp)
 ```
 
-[Uebung_006a3_sub](https://docs.ms-muc-docs.de/projects/visual-programming-languages-docs/de/latest/training1/Ventilsteuerung/4diacIDE-workspace/test/FBs/Uebungen/Uebung_006a3_sub.html)
 
 [![NotebookLM](media/NotebookLM_logo.png)](https://notebooklm.google.com/notebook/a6872e59-1dfc-4132-a118-aff1bc7bc944)
 
@@ -20,6 +19,9 @@ Dies wird in der Übung 006a3 genutzt, um einen Motor bei jedem Startvorgang aut
 
 
 ## 🛠️ Zugehörige Übungen
+
+
+![Uebung_006a3_sub_network](./Uebung_006a3_sub_network.svg)
 
 * [Uebung_006a3](Uebung_006a3.md)
 

@@ -3,7 +3,6 @@
 ```{index} single: Uebung_053: Bit-Manipulation (Assemble/Split)
 ```
 
-[Uebung_053](https://docs.ms-muc-docs.de/projects/visual-programming-languages-docs/de/latest/training1/Ventilsteuerung/4diacIDE-workspace/test/FBs/Uebungen/Uebung_053.html)
 
 [![NotebookLM](media/NotebookLM_logo.png)](https://notebooklm.google.com/notebook/a6872e59-1dfc-4132-a118-aff1bc7bc944)
 
@@ -11,7 +10,6 @@ Dieser Artikel beschreibt die logiBUS®-Übung `Uebung_053`.
 
 ----
 
-![](Uebung_053.png)
 
 ## Ziel der Übung
 
@@ -24,6 +22,9 @@ Kombination von Bits zu einem Byte. Dies ist eine hardwarenahe Form der Bündelu
 [cite_start]Die Subapplikation `Uebung_053.SUB` nutzt Konvertierungs-Bausteine für den Datentyp `BYTE`[cite: 1].
 
 ### Funktionsbausteine (FBs)
+
+
+![Uebung_053_network](./Uebung_053_network.svg)
 
   * **`ASSEMBLE_BYTE_FROM_BOOLS`**: Wandelt 8 Einzelbits (hier werden 4 genutzt) in einen 8-Bit Ganzzahlwert (BYTE) um.
   * **`SPLIT_BYTE_INTO_BOOLS`**: Zerlegt das Byte wieder in seine einzelnen Bits.

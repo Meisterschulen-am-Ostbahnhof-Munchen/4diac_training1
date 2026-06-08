@@ -3,7 +3,6 @@
 ```{index} single: Uebung_003b3_AX: Parametrierbare Massenverarbeitung
 ```
 
-[Uebung_003b3_AX](https://docs.ms-muc-docs.de/projects/visual-programming-languages-docs/de/latest/training1/Ventilsteuerung/4diacIDE-workspace/test/FBs/Uebungen/Uebung_003b3_AX.html)
 
 [![NotebookLM](media/NotebookLM_logo.png)](https://notebooklm.google.com/notebook/041f4df4-b729-484d-b786-b6dcdf151961)
 
@@ -11,7 +10,6 @@ Dieser Artikel beschreibt die logiBUS®-Übung `Uebung_003b3_AX`. Diese Übung i
 
 ----
 
-![](Uebung_003b3_AX.png)
 
 ## Ziel der Übung
 
@@ -30,6 +28,8 @@ Das Ziel ist maximale Wiederverwendbarkeit und Übersichtlichkeit. Durch die Ver
 ### Konfiguration der Instanzen
 
 Die Zuweisung ist in der Datei klar lesbar:
+
+
 
 *   **`F1`**: `STOP` -> `Output_1A` (Achtung: Logik prüfen, ob STOP ggf. invertiert oder speziell behandelt wird)
 *   **`F2`**: `START` -> `Output_1B`

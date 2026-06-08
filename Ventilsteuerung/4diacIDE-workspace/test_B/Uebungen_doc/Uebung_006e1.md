@@ -2,7 +2,9 @@ Hier ist die Dokumentationsseite für die Übung `Uebung_006e1` basierend auf de
 
 # Uebung_006e1: SR-Flip-Flop mit 2x IX
 
-![Uebung_006e1](Uebung_006e1.png)
+
+
+![Uebung_006e1_network](./Uebung_006e1_network.svg)
 
 * * * * * * * * * *
 

@@ -3,7 +3,6 @@
 ```{index} single: Uebung_019b: Alarm-Logik mit Hardware-Ausgang
 ```
 
-[Uebung_019b](https://docs.ms-muc-docs.de/projects/visual-programming-languages-docs/de/latest/training1/Ventilsteuerung/4diacIDE-workspace/test/FBs/Uebungen/Uebung_019b.html)
 
 [![NotebookLM](media/NotebookLM_logo.png)](https://notebooklm.google.com/notebook/a6872e59-1dfc-4132-a118-aff1bc7bc944)
 
@@ -11,7 +10,6 @@ Dieser Artikel beschreibt die logiBUS®-Übung `Uebung_019b`. Hier wird der virt
 
 ----
 
-![](Uebung_019b.png)
 
 ## Ziel der Übung
 
@@ -24,6 +22,9 @@ Verknüpfung von UI-Zuständen mit Hardware-Speichern. Es soll sichergestellt we
 [cite_start]In `Uebung_019b.SUB` wird zusätzlich zur Maskenumschaltung ein SR-Flip-Flop für den Alarm-Status verwendet[cite: 1].
 
 ### Funktionsbausteine (FBs)
+
+
+![Uebung_019b_network](./Uebung_019b_network.svg)
 
   * **`E_SR`**: Der Alarm-Speicher.
   * **`Alarmausgang`**: Schaltet eine physische Hupe oder Warnlampe (`Q1`).

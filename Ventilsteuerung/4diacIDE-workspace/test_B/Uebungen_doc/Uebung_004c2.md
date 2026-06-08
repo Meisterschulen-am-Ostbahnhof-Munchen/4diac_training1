@@ -3,7 +3,6 @@
 ```{index} single: Uebung_004c2: Langer Tastendruck (Start-Event)
 ```
 
-[Uebung_004c2](https://docs.ms-muc-docs.de/projects/visual-programming-languages-docs/de/latest/training1/Ventilsteuerung/4diacIDE-workspace/test/FBs/Uebungen/Uebung_004c2.html)
 
 [![NotebookLM](media/NotebookLM_logo.png)](https://notebooklm.google.com/notebook/a6872e59-1dfc-4132-a118-aff1bc7bc944)
 
@@ -11,7 +10,6 @@ Dieser Artikel beschreibt die logiBUS®-Übung `Uebung_004c2`.
 
 ----
 
-![](Uebung_004c2.png)
 
 ## Ziel der Übung
 
@@ -28,5 +26,8 @@ Das Ereignis `IND` wird genau in dem Moment gefeuert, in dem die vordefinierte Z
 -----
 
 ## Anwendungsbeispiel
+
+
+![Uebung_004c2_network](./Uebung_004c2_network.svg)
 
 **Menü-Navigation**: In vielen Steuerungen gelangt man durch einen kurzen Klick zur nächsten Seite, während ein langer Druck (`LONG_PRESS_START`) das Setup-Menü öffnet.
