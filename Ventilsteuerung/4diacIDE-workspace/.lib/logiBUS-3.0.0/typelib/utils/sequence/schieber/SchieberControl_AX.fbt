@@ -24,14 +24,10 @@
 			</Event>
 			<Event Name="RESET" Type="Event" Comment="Reset to unknown State">
 			</Event>
-			<Event Name="INPUT_DATA" Type="Event">
-			</Event>
 		</EventInputs>
 		<EventOutputs>
 			<Event Name="INITO" Type="EInit" Comment="All Values have been Set. Initialization Confirm.">
 				<With Var="QO"/>
-			</Event>
-			<Event Name="EO1" Type="Event">
 			</Event>
 		</EventOutputs>
 		<InputVars>
@@ -55,9 +51,6 @@
 	<BasicFB>
 		<ECC>
 			<ECState Name="START" Comment="Initial State" x="475" y="1125">
-			</ECState>
-			<ECState Name="Init" Comment="Initialization" x="1235" y="665">
-				<ECAction Algorithm="initialize" Output="INITO"/>
 			</ECState>
 			<ECState Name="Closed" x="3520" y="1040">
 				<ECAction Algorithm="Closed"/>
@@ -101,10 +94,9 @@
 				<ECAction Algorithm="STOP" Output="Q_CLOSE.E1"/>
 				<ECAction Output="timeOut.STOP"/>
 			</ECState>
-			<ECState Name="INIT3" x="3493.33" y="13.33">
-				<ECAction Output="EO1"/>
+			<ECState Name="Init" x="3493.33" y="13.33">
+				<ECAction Algorithm="initialize" Output="INITO"/>
 			</ECState>
-			<ECTransition Source="START" Destination="Init" Condition="INIT[TRUE = QI]" Comment="" x="840" y="920"/>
 			<ECTransition Source="DeInit" Destination="START" Condition="1" Comment="" x="940" y="1445"/>
 			<ECTransition Source="Closed" Destination="Opening" Condition="Open" Comment="" x="4333.33" y="446.67"/>
 			<ECTransition Source="Closed" Destination="DeInit" Condition="INIT[FALSE = QI]" Comment="" x="1986.67" y="1253.33"/>
@@ -123,10 +115,10 @@
 			<ECTransition Source="Closing_STOP_R" Destination="Unknown" Condition="1" Comment="" x="5380" y="3980"/>
 			<ECTransition Source="Unknown" Destination="Opening" Condition="Open" Comment="" x="9726.67" y="2206.67"/>
 			<ECTransition Source="Unknown" Destination="Closing" Condition="Close" Comment="" x="5353.33" y="3540"/>
-			<ECTransition Source="INIT3" Destination="Closed" Condition="[START = START::STARTClosed]" Comment="" x="3666.67" y="506.67"/>
-			<ECTransition Source="Init" Destination="INIT3" Condition="INPUT_DATA" Comment="" x="2486.67" y="133.33"/>
-			<ECTransition Source="INIT3" Destination="Opened" Condition="[START = START::STARTOpened]" Comment="" x="6813.33" y="-853.33"/>
-			<ECTransition Source="INIT3" Destination="Unknown" Condition="1" Comment="" x="2840" y="3073.33"/>
+			<ECTransition Source="Init" Destination="Closed" Condition="[START = START::STARTClosed]" Comment="" x="3666.67" y="506.67"/>
+			<ECTransition Source="Init" Destination="Opened" Condition="[START = START::STARTOpened]" Comment="" x="6813.33" y="-853.33"/>
+			<ECTransition Source="Init" Destination="Unknown" Condition="1" Comment="" x="2840" y="3073.33"/>
+			<ECTransition Source="START" Destination="Init" Condition="INIT[TRUE = QI]" Comment="" x="1984.17" y="569.17"/>
 		</ECC>
 		<Algorithm Name="initialize">
 			<ST><![CDATA[
