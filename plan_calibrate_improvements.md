@@ -12,9 +12,9 @@
 
 ## Maßnahmen
 
-### 1. `CALIBRATE.fbt` – Umbenennung + Doku-Aufwertung
+### 1. `CALIBRATE.fbt` – Doku-Aufwertung
 
-- **`Y_Offset` → `Y_LOW`** (Paar mit `Y_Scale`: "Low-Referenz" / "Scale-Referenz", beide von der Ausgangsseite)
+- **`Y_Offset` beibehalten** (zur Wahrung der Abwärtskompatibilität, aber in der Dokumentation klarstellen, dass es sich um einen Sollwert auf der Ausgangsseite handelt)
 - **Dokumentation erweitern (Original-Formel bleibt unverändert):**
   - Formel: `Y = (X + OFFSET) * SCALE`
   - `CO` (Calibrate Offset): `OFFSET := Y_LOW - X` — speichert den Offset. **Achtung:** Nach CO gilt `Y = Y_LOW * SCALE`, also nur korrekt, wenn `SCALE = 1.0`. Für SCALE-unabhängiges CO siehe `E_CALIBRATE_SQ`.
