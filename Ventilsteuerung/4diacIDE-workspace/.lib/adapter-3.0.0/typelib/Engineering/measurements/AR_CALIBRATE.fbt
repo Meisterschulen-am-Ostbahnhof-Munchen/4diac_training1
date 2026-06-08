@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<FBType Name="AR_CALIBRATE" Comment="Calibrate allows for offset and scale calibration of an analog input (with Adapter)">
-	<Identification Standard="61499-1" Description="&#9;version 1.3&#9;11. mar. 2009&#10;&#9;programmer &#9;hugo&#10;&#9;tested BY&#9;&#9;hans&#10;&#10;Calibrate allows for offset and scale calibration of an analog input.&#10;offset is calibrated to a stored reference Y_offset while CO is true.&#10;after the offset is calibrated, scale can be calibrated to a reference value Y_scale while CS is true.">
+<FBType Name="AR_CALIBRATE" Comment="Adapter-based two-point calibration (offset &amp; scale) of an analog input">
+	<Identification Standard="61499-1">
 	</Identification>
-	<VersionInfo Version="1.0" Author="franz" Date="2026-05-06">
+	<VersionInfo Version="2.0" Author="Meisterschulen am Ostbahnhof" Date="2026-06-01">
 	</VersionInfo>
 	<CompilerInfo packageName="adapter::Engineering::measurements">
 	</CompilerInfo>
@@ -51,19 +51,39 @@
 		</ECC>
 		<Algorithm Name="REQ" Comment="REQ">
 			<ST><![CDATA[
+(* calculate calibrated output *)
 Y.D1 := (X.D1 + OFFSET.DI1) * SCALE.DI1;
 ]]></ST>
 		</Algorithm>
 		<Algorithm Name="CO" Comment="CO">
 			<ST><![CDATA[
+(* store offset so that Y = Y_Offset at current X *)
+(* note: after CO, Y = Y_Offset * SCALE, only correct when SCALE = 1 *)
 OFFSET.DO1 := Y_Offset - X.D1;
 ]]></ST>
 		</Algorithm>
 		<Algorithm Name="CS" Comment="CS">
 			<ST><![CDATA[
-SCALE.DO1 := Y_Scale / (X.D1 + OFFSET.DI1);
+(* store scale so that Y = Y_Scale at current X (requires OFFSET from CO!) *)
+IF (X.D1 + OFFSET.DI1) <> 0.0 THEN
+	SCALE.DO1 := Y_Scale / (X.D1 + OFFSET.DI1);
+END_IF;
 ]]></ST>
 		</Algorithm>
 	</BasicFB>
+	<Attribute Name="Documentation" Type="CDATA"><![CDATA[<h2>Formula</h2>
+<pre>Y = (X + OFFSET) * SCALE</pre>
+
+<h2>Calibration (Two-Point)</h2>
+<ol>
+<li><strong>Offset (CO):</strong> Apply low reference, set <code>Y_Offset</code> to desired output, trigger <code>CO</code><br/>
+<code>OFFSET := Y_Offset - X</code> &rarr; shifts <code>X</code> so that <code>Y = Y_Offset * SCALE</code> at this point<br/>
+<strong>Note:</strong> Only correct when <code>SCALE = 1</code>.</li>
+<li><strong>Scale (CS):</strong> Apply high reference, set <code>Y_Scale</code> to desired output, trigger <code>CS</code><br/>
+<code>SCALE := Y_Scale / (X + OFFSET)</code> &rarr; scales so that <code>Y = Y_Scale</code> at this point</li>
+</ol>
+<p><strong>Note:</strong> Both <code>Y_Offset</code> and <code>Y_Scale</code> are target values on the <strong>output side</strong>.</p>
+<p><strong>&#9888; Order requirement:</strong> <code>CO</code> must be executed <strong>before</strong> <code>CS</code>, because <code>CS</code> uses <code>OFFSET</code>.</p>
+]]></Attribute>
 	<Attribute Name="eclipse4diac::core::TypeHash" Value="''"/>
 </FBType>

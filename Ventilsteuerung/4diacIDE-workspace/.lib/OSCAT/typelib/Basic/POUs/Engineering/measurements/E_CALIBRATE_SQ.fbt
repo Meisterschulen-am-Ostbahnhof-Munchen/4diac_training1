@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<FBType Name="E_CALIBRATE" Comment="Event-driven two-point calibration (offset &amp; scale) of an analog input.">
+<FBType Name="E_CALIBRATE_SQ" Comment="Sequential two-point calibration (offset then scale) with ECC-enforced order.">
 	<Identification Standard="61499-1">
 	</Identification>
-	<VersionInfo Version="2.0" Author="Meisterschulen am Ostbahnhof" Date="2026-06-01">
+	<VersionInfo Version="1.0" Author="Meisterschulen am Ostbahnhof" Date="2026-06-01">
 	</VersionInfo>
 	<CompilerInfo packageName="OSCAT::Basic::POUs::Engineering::measurements">
 	</CompilerInfo>
@@ -15,11 +15,12 @@
 				<With Var="OFFSET"/>
 				<With Var="SCALE"/>
 			</Event>
-			<Event Name="EICO" Type="Event" Comment="Calibrate Offset (speichert OFFSET := Y_Offset - X)">
+			<Event Name="EICO" Type="Event" Comment="Calibrate Offset (speichert OFFSET := Y_Offset / SCALE - X)">
 				<With Var="X"/>
 				<With Var="Y_Offset"/>
+				<With Var="SCALE"/>
 			</Event>
-			<Event Name="EICS" Type="Event" Comment="Calibrate Scale (speichert SCALE := Y_Scale / (X + OFFSET))">
+			<Event Name="EICS" Type="Event" Comment="Calibrate Scale (speichert SCALE und korrigiert OFFSET basierend auf beiden Punkten)">
 				<With Var="X"/>
 				<With Var="Y_Scale"/>
 				<With Var="OFFSET"/>
@@ -34,6 +35,7 @@
 			</Event>
 			<Event Name="EOCS" Type="Event" Comment="Scale Calibrated">
 				<With Var="SCALE"/>
+				<With Var="OFFSET"/>
 			</Event>
 		</EventOutputs>
 		<InputVars>
@@ -48,23 +50,38 @@
 			<VarDeclaration Name="OFFSET" Type="REAL" Comment="Stored offset value" InitialValue="0.0"/>
 			<VarDeclaration Name="SCALE" Type="REAL" Comment="Stored scale value" InitialValue="1.0"/>
 		</InOutVars>
+		<InternalVars>
+			<VarDeclaration Name="X_LOW_INT" Type="REAL" Comment="Stored raw value at CO"/>
+			<VarDeclaration Name="Y_LOW_INT" Type="REAL" Comment="Stored target value at CO"/>
+		</InternalVars>
 	</InterfaceList>
 	<BasicFB>
 		<ECC>
-			<ECState Name="REQ" x="0" y="0">
+			<ECState Name="START" x="-240" y="-160">
+			</ECState>
+			<ECState Name="REQ" x="720" y="1360">
 				<ECAction Algorithm="REQ" Output="CNF"/>
 			</ECState>
-			<ECState Name="CO" x="1600" y="0">
+			<ECState Name="CO" x="2000" y="480">
 				<ECAction Algorithm="CO" Output="EOCO"/>
 			</ECState>
-			<ECState Name="CS" x="1600" y="-400">
+			<ECState Name="WAIT_CS" x="2320" y="0">
+			</ECState>
+			<ECState Name="REQ_WAIT" x="1700" y="800">
+				<ECAction Algorithm="REQ" Output="CNF"/>
+			</ECState>
+			<ECState Name="CS" x="2400" y="-400">
 				<ECAction Algorithm="CS" Output="EOCS"/>
 			</ECState>
-			<ECTransition Source="REQ" Destination="CS" Condition="EICS" Comment="" x="760" y="-200"/>
-			<ECTransition Source="REQ" Destination="CO" Condition="EICO" Comment="" x="780" y="453.33"/>
-			<ECTransition Source="CS" Destination="REQ" Condition="1" Comment="" x="706.67" y="-460"/>
-			<ECTransition Source="CO" Destination="REQ" Condition="1" Comment="" x="780" y="653.33"/>
-			<ECTransition Source="REQ" Destination="REQ" Condition="REQ" Comment="" x="-186.67" y="633.33"/>
+			<ECTransition Source="START" Destination="REQ" Condition="REQ" Comment="" x="473.33" y="533.33"/>
+			<ECTransition Source="REQ" Destination="START" Condition="1" Comment="" x="306.67" y="700"/>
+			<ECTransition Source="START" Destination="CO" Condition="EICO" Comment="" x="800" y="400"/>
+			<ECTransition Source="CO" Destination="WAIT_CS" Condition="1" Comment="" x="2060" y="213.33"/>
+			<ECTransition Source="WAIT_CS" Destination="REQ_WAIT" Condition="REQ" Comment="" x="1733.33" y="166.67"/>
+			<ECTransition Source="REQ_WAIT" Destination="WAIT_CS" Condition="1" Comment="" x="1900" y="400"/>
+			<ECTransition Source="WAIT_CS" Destination="CS" Condition="EICS" Comment="" x="3146.67" y="-86.67"/>
+			<ECTransition Source="CS" Destination="START" Condition="1" Comment="" x="1213.33" y="-813.33"/>
+			<ECTransition Source="WAIT_CS" Destination="CO" Condition="EICO" Comment="" x="2846.67" y="380"/>
 		</ECC>
 		<Algorithm Name="REQ">
 			<ST><![CDATA[
@@ -74,16 +91,22 @@ Y := (X + OFFSET) * SCALE;
 		</Algorithm>
 		<Algorithm Name="CO">
 			<ST><![CDATA[
-(* store offset so that Y = Y_Offset at current X *)
-(* note: after CO, Y = Y_Offset * SCALE, only correct when SCALE = 1 *)
-OFFSET := Y_Offset - X;
+X_LOW_INT := X;
+Y_LOW_INT := Y_Offset;
+IF SCALE <> 0.0 THEN
+	OFFSET := Y_Offset / SCALE - X;
+ELSE
+	OFFSET := Y_Offset - X;
+END_IF;
 ]]></ST>
 		</Algorithm>
 		<Algorithm Name="CS">
 			<ST><![CDATA[
-(* store scale so that Y = Y_Scale at current X (requires OFFSET from CO!) *)
-IF (X + OFFSET) <> 0.0 THEN
-	SCALE := Y_Scale / (X + OFFSET);
+IF (X - X_LOW_INT) <> 0.0 THEN
+	SCALE := (Y_Scale - Y_LOW_INT) / (X - X_LOW_INT);
+	IF SCALE <> 0.0 THEN
+		OFFSET := Y_LOW_INT / SCALE - X_LOW_INT;
+	END_IF;
 END_IF;
 ]]></ST>
 		</Algorithm>
@@ -93,41 +116,39 @@ END_IF;
 <pre>
 Y = (X + OFFSET) * SCALE</pre>
 
-<h2>Calibration (Two-Point)</h2>
+<h2>Calibration (Two-Point, ECC-Enforced)</h2>
 
 <ol>
 	<li><strong>Offset (EICO):</strong> Apply low reference, set Y_Offset to desired output, fire EICO<br />
-	OFFSET := Y_Offset - X &rarr; shifts X so that Y = Y_Offset * SCALE at this point<br />
-	<strong>Note:</strong> Only correct when SCALE = 1. See E_CALIBRATE_SQ for a formula that works regardless of SCALE.</li>
+	OFFSET := Y_Offset / SCALE - X &rarr; after CO, Y <strong>always</strong> equals Y_Offset (independent of SCALE)</li>
 	<li><strong>Scale (EICS):</strong> Apply high reference, set Y_Scale to desired output, fire EICS<br />
-	SCALE := Y_Scale / (X + OFFSET) &rarr; scales so that Y = Y_Scale at this point</li>
+	Calculates SCALE and OFFSET decoupled using both reference points &rarr; after CS, the line passes exactly through both points</li>
 </ol>
 
 <p><strong>Note:</strong> Both Y_Offset and Y_Scale are target values on the <strong>output side</strong>.</p>
 
 <ul>
-	<li>REQ (normal operation) is always possible</li>
-	<li>CO must be executed <strong>before</strong> CS, because CS uses OFFSET</li>
-	<li>This FB does <strong>not</strong> enforce the order &ndash; both EICO and EICS are directly accessible from REQ</li>
-	<li>See E_CALIBRATE_SQ for an ECC-enforced variant</li>
+	<li>REQ (normal operation) is always possible, even between CO and CS</li>
+	<li>EICS is only reachable <strong>after</strong> offset calibration (state WAIT_CS)</li>
+	<li>EICO can be repeated at any time to re-calibrate offset</li>
 </ul>
 
 <h2>ECC State Machine</h2>
 
 <pre>
-REQ --EICO--&gt; CO  --1--&gt; REQ     (offset calibration)
-REQ --EICS--&gt; CS  --1--&gt; REQ     (scale calibration)
-REQ --REQ---&gt; REQ --1--&gt; REQ     (normal operation)</pre>
+START --REQ--&gt; REQ --1--&gt; START       (normal operation)
+START -EICO-&gt; CO  --1--&gt; WAIT_CS     (offset calibrated)
+WAIT_CS -REQ--&gt; REQ --1--&gt; WAIT_CS  (operation with offset only)
+WAIT_CS -EICO-&gt; CO  --1--&gt; WAIT_CS  (re-calibrate offset)
+WAIT_CS -EICS-&gt; CS  --1--&gt; START     (scale calibrated, done)</pre>
 
-<p><strong>No order enforcement:</strong> EICO and EICS are both directly reachable from REQ.</p>
-
-<h2>Key Difference: E_CALIBRATE vs. E_CALIBRATE_SQ</h2>
+<h2>Key Difference vs. CALIBRATE</h2>
 
 <table border="1" cellpadding="4" cellspacing="0" style="border-collapse:collapse">
 	<tbody>
 		<tr>
 			<th>Feature</th>
-			<th>E_CALIBRATE</th>
+			<th>CALIBRATE</th>
 			<th>E_CALIBRATE_SQ</th>
 		</tr>
 		<tr>
@@ -144,8 +165,13 @@ REQ --REQ---&gt; REQ --1--&gt; REQ     (normal operation)</pre>
 		</tr>
 		<tr>
 			<td><strong>Order enforcement</strong></td>
-			<td>None (ECC, both accessible from REQ)</td>
+			<td>None (SimpleFB)</td>
 			<td>ECC-enforced (CO before CS)</td>
+		</tr>
+		<tr>
+			<td><strong>Trigger</strong></td>
+			<td>BOOL inputs (CO, CS)</td>
+			<td>Events (EICO, EICS)</td>
 		</tr>
 	</tbody>
 </table>
@@ -165,12 +191,12 @@ Desired output range: 0.0..500.0</p>
 		<tr>
 			<td>1</td>
 			<td>Apply 4 mA (X=0.0), set Y_Offset=0.0, fire EICO</td>
-			<td>OFFSET = 0</td>
+			<td>OFFSET = 0/1 &minus; 0 = 0</td>
 		</tr>
 		<tr>
 			<td>2</td>
 			<td>Apply 20 mA (X=1.0), set Y_Scale=500.0, fire EICS</td>
-			<td>SCALE = 500</td>
+			<td>SCALE = 500/(1+0) = 500</td>
 		</tr>
 	</tbody>
 </table>
