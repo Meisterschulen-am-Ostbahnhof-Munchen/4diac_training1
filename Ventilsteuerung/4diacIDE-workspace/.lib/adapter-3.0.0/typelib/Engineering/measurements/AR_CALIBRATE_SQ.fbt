@@ -27,12 +27,12 @@
 			<AdapterDeclaration Name="CO" Type="adapter::types::unidirectional::AX" Comment="Calibrate Offset"/>
 			<AdapterDeclaration Name="CS" Type="adapter::types::unidirectional::AX" Comment="Calibrate Scale"/>
 		</Sockets>
+	</InterfaceList>
+	<BasicFB>
 		<InternalVars>
 			<VarDeclaration Name="X_LOW_INT" Type="REAL" Comment="Stored raw value at CO"/>
 			<VarDeclaration Name="Y_LOW_INT" Type="REAL" Comment="Stored target value at CO"/>
 		</InternalVars>
-	</InterfaceList>
-	<BasicFB>
 		<ECC>
 			<ECState Name="IDLE" x="0" y="0">
 			</ECState>
