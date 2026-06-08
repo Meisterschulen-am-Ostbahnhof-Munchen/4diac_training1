@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SubAppType Name="Uebung_072c_AUI" Comment="GBSD und WBSD auf UT ausgeben mit PHYS (Adapter Version)">
+	<Identification Standard="61499-2" Description="Copyright (c) 2023 Meisterschulen am Ostbahnhof  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0">
+	</Identification>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2026-06-01" Remarks="GBSD und WBSD mit PHYS Skalierung (Adapter Version)">
+	</VersionInfo>
+	<CompilerInfo packageName="Uebungen">
+		<Import declaration="Uebungen::const::UT::TECU::DefaultPool_TECU_Numeric::NumberVariable_Ground_based_machine_speed"/>
+		<Import declaration="Uebungen::const::UT::TECU::DefaultPool_TECU_Numeric::NumberVariable_Wheel_based_machine_speed"/>
+	</CompilerInfo>
+	<SubAppInterfaceList>
+	</SubAppInterfaceList>
+	<SubAppNetwork>
+		<FB Name="IA_GBSD" Type="isobus::tecu::IA_GBSD" x="-1200" y="400">
+			<Parameter Name="QI" Value="TRUE"/>
+		</FB>
+		<FB Name="IA_WBSD" Type="isobus::tecu::IA_WBSD" x="-1200" y="1700">
+			<Parameter Name="QI" Value="TRUE"/>
+		</FB>
+		<FB Name="FIELDBUS_UINT_TO_SIGNAL_SCALED_GBSD" Type="logiBUS::signalprocessing::fieldbus::AUI_FIELDBUS_UINT_TO_SIGNAL_SCALED" x="800" y="400">
+			<Parameter Name="SCALE" Value="REAL#0.001"/>
+			<Parameter Name="OFFSET" Value="DINT#0"/>
+		</FB>
+		<FB Name="FIELDBUS_UINT_TO_SIGNAL_SCALED_WBSD" Type="logiBUS::signalprocessing::fieldbus::AUI_FIELDBUS_UINT_TO_SIGNAL_SCALED" x="800" y="1700">
+			<Parameter Name="SCALE" Value="REAL#0.001"/>
+			<Parameter Name="OFFSET" Value="DINT#0"/>
+		</FB>
+		<FB Name="Q_NumericValue_GBSD" Type="isobus::UT::Q::Q_NumericValue_PHYSA" x="5100" y="300">
+			<Parameter Name="stObj" Value="NumberVariable_Ground_based_machine_speed"/>
+		</FB>
+		<FB Name="Q_NumericValue_WBSD" Type="isobus::UT::Q::Q_NumericValue_PHYSA" x="5100" y="1600">
+			<Parameter Name="stObj" Value="NumberVariable_Wheel_based_machine_speed"/>
+		</FB>
+		<AdapterConnections>
+			<Connection Source="IA_GBSD.SPEED" Destination="FIELDBUS_UINT_TO_SIGNAL_SCALED_GBSD.IN" dx1="66.67"/>
+			<Connection Source="FIELDBUS_UINT_TO_SIGNAL_SCALED_GBSD.OUT" Destination="Q_NumericValue_GBSD.rPhys" dx1="66.67"/>
+			<Connection Source="IA_WBSD.SPEED" Destination="FIELDBUS_UINT_TO_SIGNAL_SCALED_WBSD.IN"/>
+			<Connection Source="FIELDBUS_UINT_TO_SIGNAL_SCALED_WBSD.OUT" Destination="Q_NumericValue_WBSD.rPhys" dx1="1213.33"/>
+		</AdapterConnections>
+	</SubAppNetwork>
+</SubAppType>
