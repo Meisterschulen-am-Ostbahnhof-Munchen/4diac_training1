@@ -7,6 +7,7 @@
 	<VersionInfo Version="1.0" Author="Martin Jobst" Date="2023-04-28">
 	</VersionInfo>
 	<CompilerInfo packageName="logiBUS::signalprocessing::interlock">
+		<Import declaration="eclipse4diac::core::TypeHash"/>
 	</CompilerInfo>
 	<InterfaceList>
 		<EventInputs>
@@ -71,4 +72,5 @@
 			<Connection Source="ILOCK_OUT.DI1" Destination="OR_3_BOOL.IN3" dx1="200"/>
 		</DataConnections>
 	</FBNetwork>
+	<Attribute Name="eclipse4diac::core::TypeHash" Value="''"/>
 </FBType>

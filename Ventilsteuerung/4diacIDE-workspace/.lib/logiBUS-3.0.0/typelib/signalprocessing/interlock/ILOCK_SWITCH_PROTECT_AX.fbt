@@ -5,6 +5,7 @@
 	<VersionInfo Organization="HR Agrartechnik GmbH" Version="1.2" Author="Franz Höpfinger" Date="2026-04-19" Remarks="Fixed: Re-added UPDATE event for DT_PROTECT and used it in ECC to satisfy Basic FB rules">
 	</VersionInfo>
 	<CompilerInfo packageName="logiBUS::signalprocessing::interlock">
+		<Import declaration="eclipse4diac::core::TypeHash"/>
 	</CompilerInfo>
 	<InterfaceList>
 		<EventInputs>
@@ -75,4 +76,5 @@ UP_OUT.D1 := BOOL#FALSE;
 DOWN_OUT.D1 := BOOL#FALSE;]]></ST>
 		</Algorithm>
 	</BasicFB>
+	<Attribute Name="eclipse4diac::core::TypeHash" Value="''"/>
 </FBType>

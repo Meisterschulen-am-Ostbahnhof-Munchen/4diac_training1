@@ -5,6 +5,7 @@
 	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2026-05-16" Remarks="Initial Version">
 	</VersionInfo>
 	<CompilerInfo packageName="adapter::types::unidirectional">
+		<Import declaration="eclipse4diac::core::TypeHash"/>
 	</CompilerInfo>
 	<InterfaceList>
 		<EventOutputs>
