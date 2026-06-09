@@ -3,7 +3,6 @@
 ```{index} single: Uebung_007a1: Schaltbarer Blinker (Problembehaftet)
 ```
 
-[Uebung_007a1](https://docs.ms-muc-docs.de/projects/visual-programming-languages-docs/de/latest/training1/Ventilsteuerung/4diacIDE-workspace/test/FBs/Uebungen/Uebung_007a1.html)
 
 [![NotebookLM](media/NotebookLM_logo.png)](https://notebooklm.google.com/notebook/a6872e59-1dfc-4132-a118-aff1bc7bc944)
 
@@ -11,7 +10,6 @@ Dieser Artikel beschreibt die logiBUS®-Übung `Uebung_007a1`. Hier wird versuch
 
 ----
 
-![](Uebung_007a1.png)
 
 ## Ziel der Übung
 
@@ -24,6 +22,9 @@ Steuerung eines Taktgebers über Start- und Stopp-Ereignisse.
 [cite_start]In `Uebung_007a1.SUB` werden die Steuerungseingänge des `E_CYCLE` Bausteins genutzt[cite: 1].
 
 ### Funktionsbausteine (FBs)
+
+
+![Uebung_007a1_network](./Uebung_007a1_network.svg)
 
   * **`START` (I1)**: Sendet ein Ereignis an `E_CYCLE.START`.
   * **`STOP` (I2)**: Sendet ein Ereignis an `E_CYCLE.STOP`.

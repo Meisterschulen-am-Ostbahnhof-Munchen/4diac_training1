@@ -3,7 +3,6 @@
 ```{index} single: Uebung_002a3: Logische ODER-Verknüpfung (OR)
 ```
 
-[Uebung_002a3](https://docs.ms-muc-docs.de/projects/visual-programming-languages-docs/de/latest/training1/Ventilsteuerung/4diacIDE-workspace/test/FBs/Uebungen/Uebung_002a3.html)
 
 [![NotebookLM](media/NotebookLM_logo.png)](https://notebooklm.google.com/notebook/a6872e59-1dfc-4132-a118-aff1bc7bc944)
 
@@ -11,7 +10,6 @@ Dieser Artikel beschreibt die logiBUS®-Übung `Uebung_002a3`. In dieser Übung 
 
 ----
 
-![](Uebung_002a3.png)
 
 ## Ziel der Übung
 
@@ -24,6 +22,9 @@ Das Hauptziel dieser Übung ist es, die Funktionsweise einer ODER-Verknüpfung i
 [cite_start]Die Subapplikation `Uebung_002a3.SUB` führt zwei digitale Eingangssignale über einen ODER-Logik-Baustein zusammen[cite: 1].
 
 ### Funktionsbausteine (FBs)
+
+
+![Uebung_002a3_network](./Uebung_002a3_network.svg)
 
   * **`DigitalInput_I1` & `DigitalInput_I2`**: Instanzen des Typs `logiBUS_IX`. [cite_start]Diese Bausteine erfassen die Zustände der physischen Eingänge `Input_I1` und `Input_I2`[cite: 1].
   * **`OR_2`**: Eine Instanz des Typs `OR_2` (aus der IEC 61131-Bibliothek). [cite_start]Dieser Baustein führt die logische ODER-Operation aus. Er besitzt zwei Dateneingänge (`IN1`, `IN2`) und einen Datenausgang (`OUT`)[cite: 1]. Wie der AND-Baustein reagiert er auf ein Ereignis am Port `REQ` und quittiert dies mit `CNF`.

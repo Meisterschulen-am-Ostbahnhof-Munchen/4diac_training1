@@ -3,7 +3,6 @@
 ```{index} single: Uebung_001_AX_b: DigitalInput_I1 auf DigitalOutput_Q1, mit Signalwandlung
 ```
 
-[Uebung_001_AX_b](https://docs.ms-muc-docs.de/projects/visual-programming-languages-docs/de/latest/training1/Ventilsteuerung/4diacIDE-workspace/test/FBs/Uebungen/Uebung_001_AX_b.html)
 
 [![NotebookLM](media/NotebookLM_logo.png)](https://notebooklm.google.com/notebook/041f4df4-b729-484d-b786-b6dcdf151961)
 
@@ -11,7 +10,6 @@ Dieser Artikel beschreibt die logiBUS®-Übung `Uebung_001_AX_b`, bei der ein di
 
 ----
 
-![](Uebung_001_AX_b.png)
 
 ## Ziel der Übung
 
@@ -26,6 +24,11 @@ Das Hauptziel dieser Übung ist es, die Wandlung zwischen Adapter-Schnittstellen
 ### Funktionsbausteine (FBs)
 
 In der Subapplikation werden vier Funktionsbausteine instanziiert:
+
+
+
+
+![Uebung_001_AX_b_network](./Uebung_001_AX_b_network.svg)
 
   * **`DigitalInput_I1`**: Eine Instanz des Typs `logiBUS_IXA`. [cite_start]Dieser Baustein liest den Zustand des physischen Eingangs `Input_I1` und stellt ihn über seinen Adapter-Anschluss `IN` bereit[cite: 1].
   * **`DigitalOutput_Q1`**: Eine Instanz des Typs `logiBUS_QXA`. [cite_start]Dieser Baustein empfängt Signale an seinem Adapter-Anschluss `OUT` und setzt entsprechend den physischen Ausgang `Output_Q1`[cite: 1].

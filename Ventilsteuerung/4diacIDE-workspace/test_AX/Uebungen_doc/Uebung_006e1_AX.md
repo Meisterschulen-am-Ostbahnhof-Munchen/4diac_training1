@@ -1,8 +1,12 @@
 Hier ist die Dokumentation für die Übung `Uebung_006e1_AX` basierend auf den bereitgestellten Daten.
 
-# Uebung_006e1_AX: SR-Flip-Flop mit 2x IX
+# Uebung_006e1_AX: SR-Flip-Flop mit 2x IXA
 
-![Uebung_006e1_AX](Uebung_006e1_AX.png)
+
+
+
+
+![Uebung_006e1_AX_network](./Uebung_006e1_AX_network.svg)
 
 * * * * * * * * * *
 

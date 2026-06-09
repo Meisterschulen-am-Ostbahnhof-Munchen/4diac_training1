@@ -5,7 +5,11 @@ Hier ist die Dokumentation für die Übung basierend auf der bereitgestellten XM
 ```{index} single: Uebung_003b3_sub_AX
 ```
 
-![Bild der Übung, falls vorhanden](path/to/image_placeholder.png)
+
+
+
+
+![Uebung_003b3_sub_AX_network](./Uebung_003b3_sub_AX_network.svg)
 
 * * * * * * * * * *
 

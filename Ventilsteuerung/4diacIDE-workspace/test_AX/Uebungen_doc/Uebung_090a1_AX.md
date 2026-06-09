@@ -3,7 +3,6 @@
 ```{index} single: Uebung_090a1_AX: Signal-Multiplexer (2-fach)
 ```
 
-[Uebung_090a1_AX](https://docs.ms-muc-docs.de/projects/visual-programming-languages-docs/de/latest/training1/Ventilsteuerung/4diacIDE-workspace/test/FBs/Uebungen/Uebung_090a1_AX.html)
 
 [![NotebookLM](media/NotebookLM_logo.png)](https://notebooklm.google.com/notebook/041f4df4-b729-484d-b786-b6dcdf151961)
 
@@ -11,7 +10,6 @@ Dieser Artikel beschreibt die logiBUS®-Übung `Uebung_090a1_AX`.
 
 ----
 
-![](Uebung_090a1_AX.png)
 
 ## Ziel der Übung
 
@@ -24,6 +22,11 @@ Auswahl eines Signals aus mehreren Quellen (Umschalter).
 [cite_start]Die Subapplikation `Uebung_090a1_AX.SUB` verwendet einen `AX_MUX_2` Baustein[cite: 1].
 
 ### Funktionsbausteine (FBs)
+
+
+
+
+![Uebung_090a1_AX_network](./Uebung_090a1_AX_network.svg)
 
   * **`I1` & `I2`**: Die beiden Signalquellen.
   * **`I4`**: Der Wahlschalter (Selector).

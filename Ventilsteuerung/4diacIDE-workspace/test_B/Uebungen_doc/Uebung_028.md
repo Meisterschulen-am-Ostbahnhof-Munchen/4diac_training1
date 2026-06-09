@@ -3,7 +3,6 @@
 ```{index} single: Uebung_028: Analog-Eingänge (Messwerte)
 ```
 
-[Uebung_028](https://docs.ms-muc-docs.de/projects/visual-programming-languages-docs/de/latest/training1/Ventilsteuerung/4diacIDE-workspace/test/FBs/Uebungen/Uebung_028.html)
 
 [![NotebookLM](media/NotebookLM_logo.png)](https://notebooklm.google.com/notebook/a6872e59-1dfc-4132-a118-aff1bc7bc944)
 
@@ -11,7 +10,6 @@ Dieser Artikel beschreibt die logiBUS®-Übung `Uebung_028`. Hier verlassen wir 
 
 ----
 
-![](Uebung_028.png)
 
 ## Ziel der Übung
 
@@ -24,6 +22,9 @@ Verwendung des Bausteins `logiBUS_AI_ID`. Es wird demonstriert, wie analoge Span
 [cite_start]Die Subapplikation `Uebung_028.SUB` liest zwei Analogkanäle der Hardware ein[cite: 1].
 
 ### Funktionsbausteine (FBs)
+
+
+![Uebung_028_network](./Uebung_028_network.svg)
 
   * **`AnalogInput_I4` & `I7`**: Typ `logiBUS_AI_ID`. [cite_start]Diese Bausteine repräsentieren die analogen Hardware-Eingänge. Sie wandeln die elektrische Spannung in einen numerischen Digitalwert um[cite: 1].
   * **Parameter `AnalogInput_hysteresis`**: Bestimmt, um wie viel sich der Wert ändern muss, bevor ein neues Ereignis (`IND`) gefeuert wird (hier 50 Einheiten). Dies unterdrückt Rauschen.

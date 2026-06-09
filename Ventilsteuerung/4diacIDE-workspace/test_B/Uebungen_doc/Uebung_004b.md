@@ -3,7 +3,6 @@
 ```{index} single: Uebung_004b: Manueller Stromstoßschalter (Switch & Speicher)
 ```
 
-[Uebung_004b](https://docs.ms-muc-docs.de/projects/visual-programming-languages-docs/de/latest/training1/Ventilsteuerung/4diacIDE-workspace/test/FBs/Uebungen/Uebung_004b.html)
 
 [![NotebookLM](media/NotebookLM_logo.png)](https://notebooklm.google.com/notebook/a6872e59-1dfc-4132-a118-aff1bc7bc944)
 
@@ -11,7 +10,6 @@ Dieser Artikel beschreibt die logiBUS®-Übung `Uebung_004b`. Hier wird gezeigt,
 
 ----
 
-![](Uebung_004b.png)
 
 ## Ziel der Übung
 
@@ -24,6 +22,9 @@ Verständnis der inneren Logik eines Speicherbausteins. Anstatt den fertigen `E_
 [cite_start]Die Subapplikation `Uebung_004b.SUB` realisiert die Toggle-Funktion durch die Kombination einer Ereignis-Weiche und eines SR-Speichers[cite: 1].
 
 ### Funktionsbausteine (FBs)
+
+
+![Uebung_004b_network](./Uebung_004b_network.svg)
 
   * **`DigitalInput_CLK_I1`**: Liefert ein Ereignis bei jedem Tastendruck.
   * **`E_SWITCH`**: Eine Ereignis-Weiche. [cite_start]Je nach Zustand am Dateneingang `G` leitet sie das Ereignis `EI` entweder an `EO0` (wenn FALSE) oder an `EO1` (wenn TRUE) weiter[cite: 1].

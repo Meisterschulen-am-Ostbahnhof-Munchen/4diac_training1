@@ -3,7 +3,6 @@
 ```{index} single: Uebung_000_AX: Einfache Addition
 ```
 
-[Uebung_000_AX](https://docs.ms-muc-docs.de/projects/visual-programming-languages-docs/de/latest/training1/Ventilsteuerung/4diacIDE-workspace/test/FBs/Uebungen/Uebung_000_AX.html)
 
 [![NotebookLM](media/NotebookLM_logo.png)](https://notebooklm.google.com/notebook/041f4df4-b729-484d-b786-b6dcdf151961)
 
@@ -11,7 +10,6 @@ Dieser Artikel beschreibt die logiBUS®-Übung `Uebung_000_AX`, das absolute Bas
 
 ----
 
-![](Uebung_000_AX.png)
 
 ## Ziel der Übung
 
@@ -24,6 +22,9 @@ Das Ziel ist die Platzierung und Parametrierung eines Standard-Bausteins der IEC
 [cite_start]Die Subapplikation `Uebung_000_AX.SUB` enthält lediglich einen Rechenbaustein[cite: 1].
 
 ### Funktionsbausteine (FBs)
+
+
+![Uebung_000_AX_network](./Uebung_000_AX_network.svg)
 
   * **`ADD_2`**: Typ `iec61131::arithmetic::ADD_2`. [cite_start]Addiert zwei Ganzzahlen (`IN1` und `IN2`)[cite: 1].
 

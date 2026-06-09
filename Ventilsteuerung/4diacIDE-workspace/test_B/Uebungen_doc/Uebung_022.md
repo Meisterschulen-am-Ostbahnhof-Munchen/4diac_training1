@@ -3,7 +3,6 @@
 ```{index} single: Uebung_022: Verkettete Sequenz (2 Zylinder)
 ```
 
-[Uebung_022](https://docs.ms-muc-docs.de/projects/visual-programming-languages-docs/de/latest/training1/Ventilsteuerung/4diacIDE-workspace/test/FBs/Uebungen/Uebung_022.html)
 
 [![NotebookLM](media/NotebookLM_logo.png)](https://notebooklm.google.com/notebook/a6872e59-1dfc-4132-a118-aff1bc7bc944)
 
@@ -11,11 +10,13 @@ Dieser Artikel beschreibt die logiBUS®-Übung `Uebung_022`. Hier wird die Ablau
 
 ## 🎧 Podcast
 
+
+![Uebung_022_network](./Uebung_022_network.svg)
+
 * [Als Landtechnik-Spezialist durch die Hölle: Wie Lanz-Wery Krieg, Besatzung und Hyperinflation überlebte – Einblicke in Original-Geschäftsberichte 1915-1922](https://podcasters.spotify.com/pod/show/ms-muc-lama/episodes/Als-Landtechnik-Spezialist-durch-die-Hlle-Wie-Lanz-Wery-Krieg--Besatzung-und-Hyperinflation-berlebte--Einblicke-in-Original-Geschftsberichte-1915-1922-e39athj)
 
 ----
 
-![](Uebung_022.png)
 
 ## Ziel der Übung
 

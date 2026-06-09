@@ -3,7 +3,6 @@
 ```{index} single: Uebung_002a2_AX: UND-Verknüpfung mit Signalwandlung
 ```
 
-[Uebung_002a2_AX](https://docs.ms-muc-docs.de/projects/visual-programming-languages-docs/de/latest/training1/Ventilsteuerung/4diacIDE-workspace/test/FBs/Uebungen/Uebung_002a2_AX.html)
 
 [![NotebookLM](media/NotebookLM_logo.png)](https://notebooklm.google.com/notebook/041f4df4-b729-484d-b786-b6dcdf151961)
 
@@ -11,7 +10,6 @@ Dieser Artikel beschreibt die logiBUS®-Übung `Uebung_002a2_AX`. Hier wird geze
 
 ----
 
-![](Uebung_002a2_AX.png)
 
 ## Ziel der Übung
 
@@ -24,6 +22,11 @@ Das Hauptziel ist die Demonstration der Interoperabilität. Während spezialisie
 [cite_start]Die Subapplikation `Uebung_002a2_AX.SUB` nutzt Konvertierungsbausteine, um zwei Eingangs-Adapter für ein UND-Gatter aufzubereiten[cite: 1].
 
 ### Funktionsbausteine (FBs)
+
+
+
+
+![Uebung_002a2_AX_network](./Uebung_002a2_AX_network.svg)
 
   * **`AX_X_TO_BOOL_1` & `_2`**: Wandeln das Adapter-Signal (`Event + Data`) in ein explizites Ereignis `CNF` und einen booleschen Wert `IN` um.
   * **`F_AND`**: Ein klassisches bitweises UND-Gatter aus der IEC 61131 Bibliothek.

@@ -3,13 +3,15 @@
 ```{index} single: Uebung_070: Traktor-Geschwindigkeit (WBSD)
 ```
 
-[Uebung_070](https://docs.ms-muc-docs.de/projects/visual-programming-languages-docs/de/latest/training1/Ventilsteuerung/4diacIDE-workspace/test/FBs/Uebungen/Uebung_070.html)
 
 [![NotebookLM](media/NotebookLM_logo.png)](https://notebooklm.google.com/notebook/a6872e59-1dfc-4132-a118-aff1bc7bc944)
 
 Dieser Artikel beschreibt die logiBUS®-Übung `Uebung_070`. Hier wird gezeigt, wie man Daten von der Traktor-ECU (TECU) einliest und auf dem Terminal visualisiert.
 
 ## 🎧 Podcast
+
+
+![Uebung_070_network](./Uebung_070_network.svg)
 
 * [Der BTS7030-2EPA intelligenter Auto Stromwächter](https://podcasters.spotify.com/pod/show/ms-muc-lama/episodes/Der-BTS7030-2EPA-intelligenter-Auto-Stromwchter-e3b8n3s)
 * [Der Intelligente Leistungsschalter: Wie der Infineon BTS7030 Relais und Sicherungen im Auto ersetzt](https://podcasters.spotify.com/pod/show/ms-muc-lama/episodes/Der-Intelligente-Leistungsschalter-Wie-der-Infineon-BTS7030-Relais-und-Sicherungen-im-Auto-ersetzt-e39av14)
@@ -19,7 +21,6 @@ Dieser Artikel beschreibt die logiBUS®-Übung `Uebung_070`. Hier wird gezeigt, 
 
 ----
 
-![](Uebung_070.png)
 
 ## Ziel der Übung
 

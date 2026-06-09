@@ -3,7 +3,6 @@
 ```{index} single: Uebung_004a3_AX: Impliziter Event-Merge
 ```
 
-[Uebung_004a3_AX](https://docs.ms-muc-docs.de/projects/visual-programming-languages-docs/de/latest/training1/Ventilsteuerung/4diacIDE-workspace/test/FBs/Uebungen/Uebung_004a3_AX.html)
 
 [![NotebookLM](media/NotebookLM_logo.png)](https://notebooklm.google.com/notebook/041f4df4-b729-484d-b786-b6dcdf151961)
 
@@ -11,7 +10,6 @@ Dieser Artikel beschreibt die logiBUS®-Übung `Uebung_004a3_AX`. Diese Übung z
 
 ----
 
-![](Uebung_004a3_AX.png)
 
 ## Ziel der Übung
 
@@ -24,6 +22,11 @@ Das Ziel ist die Reduktion der visuellen Komplexität. Es wird demonstriert, das
 [cite_start]Die Subapplikation `Uebung_004a3_AX.SUB` verbindet zwei Event-Quellen direkt mit dem Takteingang des Flip-Flops[cite: 1].
 
 ### Funktionsbausteine (FBs)
+
+
+
+
+![Uebung_004a3_AX_network](./Uebung_004a3_AX_network.svg)
 
   * **`DigitalInput_CLK_I1` & `I2`**: Die Event-Generatoren.
   * **`E_T_FF`**: Das Toggle-Flip-Flop.

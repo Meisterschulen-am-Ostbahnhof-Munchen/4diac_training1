@@ -3,7 +3,6 @@
 ```{index} single: Uebung_093: Zeitgesteuerte Ereignis-Tabelle (E_TABLE)
 ```
 
-[Uebung_093](https://docs.ms-muc-docs.de/projects/visual-programming-languages-docs/de/latest/training1/Ventilsteuerung/4diacIDE-workspace/test/FBs/Uebungen/Uebung_093.html)
 
 [![NotebookLM](media/NotebookLM_logo.png)](https://notebooklm.google.com/notebook/a6872e59-1dfc-4132-a118-aff1bc7bc944)
 
@@ -11,12 +10,14 @@ Dieser Artikel beschreibt die logiBUS®-Übung `Uebung_093`. Hier wird ein kompl
 
 ## 🎧 Podcast
 
+
+![Uebung_093_network](./Uebung_093_network.svg)
+
 * [Infineon CAN-Transceiver TLE9250V versus TLE9351VSJ](https://podcasters.spotify.com/pod/show/ms-muc-lama/episodes/Infineon-CAN-Transceiver-TLE9250V-versus-TLE9351VSJ-e3b8nan)
 * [Infineon TLE9351VSJ der unsichtbare Auto-Bodyguard](https://podcasters.spotify.com/pod/show/ms-muc-lama/episodes/Infineon-TLE9351VSJ-der-unsichtbare-Auto-Bodyguard-e3b8nhl)
 
 ----
 
-![](Uebung_093.png)
 
 ## Ziel der Übung
 

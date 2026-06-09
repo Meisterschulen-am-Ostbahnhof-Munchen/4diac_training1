@@ -3,7 +3,6 @@
 ```{index} single: Uebung_006d_AX: SR-Flip-Flop mit Doppelklick-Set
 ```
 
-[Uebung_006d_AX](https://docs.ms-muc-docs.de/projects/visual-programming-languages-docs/de/latest/training1/Ventilsteuerung/4diacIDE-workspace/test/FBs/Uebungen/Uebung_006d_AX.html)
 
 [![NotebookLM](media/NotebookLM_logo.png)](https://notebooklm.google.com/notebook/041f4df4-b729-484d-b786-b6dcdf151961)
 
@@ -11,7 +10,6 @@ Dieser Artikel beschreibt die logiBUS®-Übung `Uebung_006d_AX`.
 
 ----
 
-![](Uebung_006d_AX.png)
 
 ## Ziel der Übung
 
@@ -24,6 +22,11 @@ Kombination von Input-Events und Speichergliedern.
 [cite_start]Die Subapplikation `Uebung_006d_AX.SUB` definiert eine asymmetrische Bedienung[cite: 1].
 
 ### Funktionsbausteine (FBs)
+
+
+
+
+![Uebung_006d_AX_network](./Uebung_006d_AX_network.svg)
 
   * **`I1` (Set)**: Konfiguriert auf `BUTTON_DOUBLE_CLICK`.
   * **`I2` (Reset)**: Konfiguriert auf `BUTTON_SINGLE_CLICK`.

@@ -3,7 +3,6 @@
 ```{index} single: Uebung_019c: Interaktive Alarm-Verriegelung
 ```
 
-[Uebung_019c](https://docs.ms-muc-docs.de/projects/visual-programming-languages-docs/de/latest/training1/Ventilsteuerung/4diacIDE-workspace/test/FBs/Uebungen/Uebung_019c.html)
 
 [![NotebookLM](media/NotebookLM_logo.png)](https://notebooklm.google.com/notebook/a6872e59-1dfc-4132-a118-aff1bc7bc944)
 
@@ -11,7 +10,6 @@ Dieser Artikel beschreibt die logiBUS®-Übung `Uebung_019c`. Dies ist die kompl
 
 ----
 
-![](Uebung_019c.png)
 
 ## Ziel der Übung
 
@@ -24,6 +22,9 @@ Implementierung einer bedingten Navigationssteuerung. Der Wechsel der Bildschirm
 [cite_start]Die Subapplikation `Uebung_019c.SUB` nutzt mehrere `E_SWITCH` Bausteine als "Türsteher" für die Ereignisse[cite: 1].
 
 ### Funktionsbausteine (FBs)
+
+
+![Uebung_019c_network](./Uebung_019c_network.svg)
 
   * **`Alarmeingang`**: Ein physischer Sensor (`I3`). Solange dieser `TRUE` ist, herrscht Alarmzustand.
   * **`E_SWITCH` (diverse)**: Prüfen vor jeder Aktion, ob der Alarmeingang aktiv ist.

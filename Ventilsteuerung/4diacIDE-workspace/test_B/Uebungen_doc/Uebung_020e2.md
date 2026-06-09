@@ -3,17 +3,18 @@
 ```{index} single: Uebung_020e2: Zyklischer TOF-Timer (FB_TOF)
 ```
 
-[Uebung_020e2](https://docs.ms-muc-docs.de/projects/visual-programming-languages-docs/de/latest/training1/Ventilsteuerung/4diacIDE-workspace/test/FBs/Uebungen/Uebung_020e2.html)
 
 [![NotebookLM](media/NotebookLM_logo.png)](https://notebooklm.google.com/notebook/a6872e59-1dfc-4132-a118-aff1bc7bc944)
 
 Dieser Artikel beschreibt die logiBUS®-Übung `Uebung_020e2`. Hier wird der klassische IEC 61131-3 Timer-Baustein `FB_TOF` verwendet, der eine regelmäßige Triggerung (Takt) benötigt.
 
+
+![Uebung_020e2_network](./Uebung_020e2_network.svg)
+
 **Wichtiger Hinweis: Dieser Baustein funktioniert nur korrekt, wenn er zyklisch aufgerufen wird.**
 
 ----
 
-![](Uebung_020e2.png)
 
 ## Übersicht
 

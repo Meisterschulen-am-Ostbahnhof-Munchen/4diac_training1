@@ -2,7 +2,11 @@ Hier ist die Dokumentation für die Übung `Uebung_035a2_AX` basierend auf den b
 
 # Uebung_035a2_AX: Ampelschaltung Österreich (AX) mit Sequence T05
 
-![Bild der Übung, falls vorhanden](path/to/image.png)
+
+
+
+
+![Uebung_035a2_AX_network](./Uebung_035a2_AX_network.svg)
 
 * * * * * * * * * *
 

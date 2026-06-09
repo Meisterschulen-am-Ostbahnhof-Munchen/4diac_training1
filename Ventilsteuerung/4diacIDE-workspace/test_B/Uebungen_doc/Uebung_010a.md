@@ -3,7 +3,6 @@
 ```{index} single: Uebung_010a: Zwei Softkeys (Parallel)
 ```
 
-[Uebung_010a](https://docs.ms-muc-docs.de/projects/visual-programming-languages-docs/de/latest/training1/Ventilsteuerung/4diacIDE-workspace/test/FBs/Uebungen/Uebung_010a.html)
 
 [![NotebookLM](media/NotebookLM_logo.png)](https://notebooklm.google.com/notebook/a6872e59-1dfc-4132-a118-aff1bc7bc944)
 
@@ -11,11 +10,13 @@ Dieser Artikel beschreibt die logiBUS®-Übung `Uebung_010a`.
 
 ## 🎧 Podcast
 
+
+![Uebung_010a_network](./Uebung_010a_network.svg)
+
 * [ISO 11783-6: Softkeys und das Virtual Terminal verstehen – Dein Schlüssel zur Landmaschinen-Mechatronik](https://podcasters.spotify.com/pod/show/isobus-vt-objects/episodes/ISO-11783-6-Softkeys-und-das-Virtual-Terminal-verstehen--Dein-Schlssel-zur-Landmaschinen-Mechatronik-e36a8b0)
 
 ----
 
-![](Uebung_010a.png)
 
 ## Ziel der Übung
 

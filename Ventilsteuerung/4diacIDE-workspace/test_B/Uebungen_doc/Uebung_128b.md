@@ -2,7 +2,9 @@ Hier ist die Dokumentation für die Übung `Uebung_128b` basierend auf den berei
 
 # Uebung_128b: Übung zu ISOBUS Send Message GLOBAL TP BAM
 
-![Uebung_128b](Uebung_128b.png)
+
+
+![Uebung_128b_network](./Uebung_128b_network.svg)
 
 * * * * * * * * * *
 

@@ -3,7 +3,6 @@
 ```{index} single: Uebung_072b: Versetzte Wegimpulse (Phasenschieber)
 ```
 
-[Uebung_072b](https://docs.ms-muc-docs.de/projects/visual-programming-languages-docs/de/latest/training1/Ventilsteuerung/4diacIDE-workspace/test/FBs/Uebungen/Uebung_072b.html)
 
 [![NotebookLM](media/NotebookLM_logo.png)](https://notebooklm.google.com/notebook/a6872e59-1dfc-4132-a118-aff1bc7bc944)
 
@@ -11,7 +10,6 @@ Dieser Artikel beschreibt die logiBUS®-Übung `Uebung_072b`. Hier wird eine kom
 
 ----
 
-![](Uebung_072b.png)
 
 ## Ziel der Übung
 
@@ -24,6 +22,9 @@ Erzeugung von zeitversetzten Impulsen basierend auf dem GBSD-Distanzwert.
 [cite_start]In `Uebung_072b.SUB` steuern vier `RangeBasedPulse` Bausteine vier Ausgänge (`Q1` bis `Q4`) an[cite: 1].
 
 ### Funktionsweise
+
+
+![Uebung_072b_network](./Uebung_072b_network.svg)
 
 Alle Bausteine reagieren auf den gleichen Distanzwert vom Radar (`I_GBSD`). Sie unterscheiden sich jedoch im Parameter **`DIST_OFF`** (Offset):
 *   `Q1`: Offset 0 mm.

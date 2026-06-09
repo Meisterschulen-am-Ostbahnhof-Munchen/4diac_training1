@@ -3,7 +3,6 @@
 ```{index} single: Uebung_020h_AX: Ereignisgesteuerter Impuls (AX_PULSE)
 ```
 
-[Uebung_020h_AX](https://docs.ms-muc-docs.de/projects/visual-programming-languages-docs/de/latest/training1/Ventilsteuerung/4diacIDE-workspace/test/FBs/Uebungen/Uebung_020h_AX.html)
 
 [![NotebookLM](media/NotebookLM_logo.png)](https://notebooklm.google.com/notebook/041f4df4-b729-484d-b786-b6dcdf151961)
 
@@ -11,7 +10,6 @@ Dieser Artikel beschreibt die logiBUS®-Übung `Uebung_020h_AX`. Hier wird der B
 
 ----
 
-![](Uebung_020h_AX.png)
 
 ## Ziel der Übung
 
@@ -24,6 +22,11 @@ Das Ziel ist es, ein einzelnes, kurzes Ereignis (z.B. einen Mausklick oder Taste
 [cite_start]Die Subapplikation `Uebung_020h_AX.SUB` kombiniert einen Event-Eingang mit einem Adapter-Puls-Baustein[cite: 1].
 
 ### Funktionsbausteine (FBs)
+
+
+
+
+![Uebung_020h_AX_network](./Uebung_020h_AX_network.svg)
 
   * **`DigitalInput_CLK_I1`**: Typ `logiBUS_IE`. Liefert ein Ereignis bei einem Einfachklick (`BUTTON_SINGLE_CLICK`).
   * **`AX_PULSE`**: [cite_start]Startet einen Timer bei Eintreffen eines Ereignisses am `REQ`-Eingang. Der Ausgang `Q` bleibt für die Zeit `PT` (5 Sekunden) auf TRUE[cite: 1].

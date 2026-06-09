@@ -3,13 +3,15 @@
 ```{index} single: Uebung_131: Zyklisches Empfangen mit Überwachung
 ```
 
-[Uebung_131](https://docs.ms-muc-docs.de/projects/visual-programming-languages-docs/de/latest/training1/Ventilsteuerung/4diacIDE-workspace/test/FBs/Uebungen/Uebung_131.html)
 
 [![NotebookLM](media/NotebookLM_logo.png)](https://notebooklm.google.com/notebook/a6872e59-1dfc-4132-a118-aff1bc7bc944)
 
 Dieser Artikel beschreibt die logiBUS®-Übung `Uebung_131`. Hier wird der Empfang von Nachrichten um eine Zeit-Überwachung (Timeout) ergänzt.
 
 ## 🎧 Podcast
+
+
+![Uebung_131_network](./Uebung_131_network.svg)
 
 * [Die drei Timer der DIN EN 61131-3 entschlüsselt – TP, TON & TOF präzise erklärt](https://podcasters.spotify.com/pod/show/iec-61499-grundkurs-de/episodes/Die-drei-Timer-der-DIN-EN-61131-3-entschlsselt--TP--TON--TOF-przise-erklrt-e3dma77)
 * [DIN EN 61131-3 vs. 61499-1: Dein Wegweiser durch die Normen der Industrieautomatisierung](https://podcasters.spotify.com/pod/show/iec-61499-grundkurs-de/episodes/DIN-EN-61131-3-vs--61499-1-Dein-Wegweiser-durch-die-Normen-der-Industrieautomatisierung-e36c6nc)
@@ -19,7 +21,6 @@ Dieser Artikel beschreibt die logiBUS®-Übung `Uebung_131`. Hier wird der Empfa
 
 ----
 
-![](Uebung_131.png)
 
 ## Übersicht
 

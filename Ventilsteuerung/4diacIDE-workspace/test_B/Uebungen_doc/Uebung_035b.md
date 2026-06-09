@@ -2,7 +2,9 @@ Hier ist die Dokumentation für die Übung **Uebung_035b** basierend auf den ber
 
 # Uebung_035b: Spiegelabfolge V2 mit Schrittkette
 
-![Bild der Übung, falls vorhanden](path/to/image_placeholder.png)
+
+
+![Uebung_035b_network](./Uebung_035b_network.svg)
 
 * * * * * * * * * *
 

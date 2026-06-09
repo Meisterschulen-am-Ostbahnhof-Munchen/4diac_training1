@@ -3,7 +3,6 @@
 ```{index} single: Uebung_074: Zapfwellen-Überwachung (PTO)
 ```
 
-[Uebung_074](https://docs.ms-muc-docs.de/projects/visual-programming-languages-docs/de/latest/training1/Ventilsteuerung/4diacIDE-workspace/test/FBs/Uebungen/Uebung_074.html)
 
 [![NotebookLM](media/NotebookLM_logo.png)](https://notebooklm.google.com/notebook/a6872e59-1dfc-4132-a118-aff1bc7bc944)
 
@@ -11,11 +10,13 @@ Dieser Artikel beschreibt die logiBUS®-Übung `Uebung_074`. Hier wird die Drehz
 
 ## 🎧 Podcast
 
+
+![Uebung_074_network](./Uebung_074_network.svg)
+
 * [Verpolungsschutz in der Elektronik: Warum die ideale Diode (LM74700) MOSFETs und Schottky-Dioden in Effizienz und Kosten schlägt](https://podcasters.spotify.com/pod/show/ms-muc-lama/episodes/Verpolungsschutz-in-der-Elektronik-Warum-die-ideale-Diode-LM74700-MOSFETs-und-Schottky-Dioden-in-Effizienz-und-Kosten-schlgt-e3a2487)
 
 ----
 
-![](Uebung_074.png)
 
 ## Ziel der Übung
 

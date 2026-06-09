@@ -3,7 +3,6 @@
 ```{index} single: Uebung_020c2_sub: Persistente Zeitvorgabe (SubApp)
 ```
 
-[Uebung_020c2_sub](https://docs.ms-muc-docs.de/projects/visual-programming-languages-docs/de/latest/training1/Ventilsteuerung/4diacIDE-workspace/test/FBs/Uebungen/Uebung_020c2_sub.html)
 
 [![NotebookLM](media/NotebookLM_logo.png)](https://notebooklm.google.com/notebook/a6872e59-1dfc-4132-a118-aff1bc7bc944)
 
@@ -14,6 +13,9 @@
 
 
 ## 🛠️ Zugehörige Übungen
+
+
+![Uebung_020c2_sub_network](./Uebung_020c2_sub_network.svg)
 
 * [Uebung_020c2](Uebung_020c2.md)
 

@@ -4,6 +4,9 @@ Hier ist die Dokumentation für die Übung basierend auf den bereitgestellten XM
 
 ![Bild der Übung, falls vorhanden]
 
+
+![Uebung_176_network](./Uebung_176_network.svg)
+
 * * * * * * * * * *
 ## Einleitung
 Die `Uebung_176` ist eine Übungseinheit, die sich mit der Ereigniserzeugung bei steigenden Flanken beschäftigt. Der Fokus liegt auf dem Verständnis und der Anwendung des `E_TRIG` (Edge Trigger) Bausteins innerhalb einer IEC 61499 Anwendung. Die Übung stellt ein Grundgerüst bereit, welches durch den Benutzer vervollständigt werden muss.

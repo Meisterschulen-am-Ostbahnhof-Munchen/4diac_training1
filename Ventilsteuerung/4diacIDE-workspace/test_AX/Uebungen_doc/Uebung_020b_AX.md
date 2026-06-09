@@ -3,7 +3,6 @@
 ```{index} single: Uebung_020b_AX: Einschaltverzögerung (aufgelöst)
 ```
 
-[Uebung_020b_AX](https://docs.ms-muc-docs.de/projects/visual-programming-languages-docs/de/latest/training1/Ventilsteuerung/4diacIDE-workspace/test/FBs/Uebungen/Uebung_020b_AX.html)
 
 [![NotebookLM](media/NotebookLM_logo.png)](https://notebooklm.google.com/notebook/041f4df4-b729-484d-b786-b6dcdf151961)
 
@@ -11,7 +10,6 @@ Dieser Artikel beschreibt die logiBUS®-Übung `Uebung_020b_AX`. Hier wird eine 
 
 ----
 
-![](Uebung_020b_AX.png)
 
 ## Ziel der Übung
 
@@ -24,6 +22,11 @@ Das Ziel dieser Übung ist es, das Verständnis für die zeitliche Steuerung von
 [cite_start]Die Subapplikation `Uebung_020b_AX.SUB` kombiniert eine Ereignis-Weiche, eine Zeitverzögerung und einen RS-Speicher[cite: 1].
 
 ### Funktionsbausteine (FBs)
+
+
+
+
+![Uebung_020b_AX_network](./Uebung_020b_AX_network.svg)
 
   * **`DigitalInput_I1`**: Typ `logiBUS_IXA`. Signaleingang.
   * **`AX_SWITCH`**: [cite_start]Leitet das Ereignis bei steigender Flanke an `EO1` und bei fallender Flanke an `EO0` weiter[cite: 1].

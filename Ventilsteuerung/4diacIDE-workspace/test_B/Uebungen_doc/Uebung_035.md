@@ -3,13 +3,15 @@
 ```{index} single: Uebung_035: Schrittketten-Steuerung (4 Phasen)
 ```
 
-[Uebung_035](https://docs.ms-muc-docs.de/projects/visual-programming-languages-docs/de/latest/training1/Ventilsteuerung/4diacIDE-workspace/test/FBs/Uebungen/Uebung_035.html)
 
 [![NotebookLM](media/NotebookLM_logo.png)](https://notebooklm.google.com/notebook/a6872e59-1dfc-4132-a118-aff1bc7bc944)
 
 Dieser Artikel beschreibt die logiBUS®-Übung `Uebung_035`. Hier wird die Steuerung von komplexen Abläufen mittels eines Sequenzers (Schrittkette) demonstriert.
 
 ## 🎧 Podcast
+
+
+![Uebung_035_network](./Uebung_035_network.svg)
 
 * [Automatisierung entschlüsselt: Leiten, Steuern, Regeln – Die unsichtbare Sprache der Technik (DIN IEC 60050-351)](https://podcasters.spotify.com/pod/show/ms-muc-lama/episodes/Automatisierung-entschlsselt-Leiten--Steuern--Regeln--Die-unsichtbare-Sprache-der-Technik-DIN-IEC-60050-351-e36t52b)
 * [Infineon CAN-Transceiver TLE9250V versus TLE9351VSJ](https://podcasters.spotify.com/pod/show/ms-muc-lama/episodes/Infineon-CAN-Transceiver-TLE9250V-versus-TLE9351VSJ-e3b8nan)
@@ -18,7 +20,6 @@ Dieser Artikel beschreibt die logiBUS®-Übung `Uebung_035`. Hier wird die Steue
 
 ----
 
-![](Uebung_035.png)
 
 ## Ziel der Übung
 

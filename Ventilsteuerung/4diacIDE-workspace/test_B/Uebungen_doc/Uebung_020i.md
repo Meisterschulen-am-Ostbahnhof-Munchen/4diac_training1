@@ -3,7 +3,6 @@
 ```{index} single: Uebung_020i: Teach-In Zeitsteuerung
 ```
 
-[Uebung_020i](https://docs.ms-muc-docs.de/projects/visual-programming-languages-docs/de/latest/training1/Ventilsteuerung/4diacIDE-workspace/test/FBs/Uebungen/Uebung_020i.html)
 
 [![NotebookLM](media/NotebookLM_logo.png)](https://notebooklm.google.com/notebook/a6872e59-1dfc-4132-a118-aff1bc7bc944)
 
@@ -11,7 +10,6 @@ Dieser Artikel beschreibt die logiBUS®-Übung `Uebung_020i`. Dies ist eine sehr
 
 ----
 
-![](Uebung_020i.png)
 
 ## Ziel der Übung
 
@@ -24,6 +22,9 @@ Programmierung einer variablen Impulsdauer unter Verwendung des `E_STOPWATCH` Ba
 [cite_start]Die Subapplikation `Uebung_020i.SUB` nutzt zwei Taster: Einen zum Ausführen und einen zum Lernen der Zeit[cite: 1].
 
 ### Funktionsbausteine (FBs)
+
+
+![Uebung_020i_network](./Uebung_020i_network.svg)
 
   * **`E_STOPWATCH`**: Misst die Zeit zwischen einem Start- und einem Stopp-Ereignis.
   * **`E_PULSE`**: Erzeugt den zeitgesteuerten Impuls.

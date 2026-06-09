@@ -3,7 +3,6 @@
 ```{index} single: Uebung_004b2: Doppelte manuelle Toggle-Logik
 ```
 
-[Uebung_004b2](https://docs.ms-muc-docs.de/projects/visual-programming-languages-docs/de/latest/training1/Ventilsteuerung/4diacIDE-workspace/test/FBs/Uebungen/Uebung_004b2.html)
 
 [![NotebookLM](media/NotebookLM_logo.png)](https://notebooklm.google.com/notebook/a6872e59-1dfc-4132-a118-aff1bc7bc944)
 
@@ -11,7 +10,6 @@ Dieser Artikel beschreibt die logiBUS®-Übung `Uebung_004b2`. Hier wird die man
 
 ----
 
-![](Uebung_004b2.png)
 
 ## Ziel der Übung
 
@@ -24,6 +22,9 @@ Vertiefung des Verständnisses für parallele, rückgekoppelte Logikstrukturen. 
 [cite_start]In `Uebung_004b2.SUB` sind zwei identische Logik-Stränge (Switch + Speicher) nebeneinander aufgebaut[cite: 1].
 
 ### Funktionsbausteine (FBs)
+
+
+![Uebung_004b2_network](./Uebung_004b2_network.svg)
 
   * **Kanal 1**: Taster `I1`, Weiche `E_SWITCH_I1`, Speicher `E_SR_I1`, Ausgang `Q1`.
   * **Kanal 2**: Taster `I2`, Weiche `E_SWITCH_I2`, Speicher `E_SR_I2`, Ausgang `Q2`.

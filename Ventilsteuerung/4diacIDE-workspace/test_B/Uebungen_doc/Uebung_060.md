@@ -3,7 +3,6 @@
 ```{index} single: Uebung_060: Task Controller Section Control (TC-SC)
 ```
 
-[Uebung_060](https://docs.ms-muc-docs.de/projects/visual-programming-languages-docs/de/latest/training1/Ventilsteuerung/4diacIDE-workspace/test/FBs/Uebungen/Uebung_060.html)
 
 [![NotebookLM](media/NotebookLM_logo.png)](https://notebooklm.google.com/notebook/a6872e59-1dfc-4132-a118-aff1bc7bc944)
 
@@ -11,11 +10,13 @@ Dieser Artikel beschreibt die logiBUS®-Übung `Uebung_060`. Dies ist eine High-
 
 ## 🎧 Podcast
 
+
+![Uebung_060_network](./Uebung_060_network.svg)
+
 * [Automatisierung entschlüsselt: Leiten, Steuern, Regeln – Die unsichtbare Sprache der Technik (DIN IEC 60050-351)](https://podcasters.spotify.com/pod/show/ms-muc-lama/episodes/Automatisierung-entschlsselt-Leiten--Steuern--Regeln--Die-unsichtbare-Sprache-der-Technik-DIN-IEC-60050-351-e36t52b)
 
 ----
 
-![](Uebung_060.png)
 
 ## Ziel der Übung
 

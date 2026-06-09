@@ -3,7 +3,6 @@
 ```{index} single: Uebung_007a2_AX: Schaltbarer Blinker (Zweite Variante)
 ```
 
-[Uebung_007a2_AX](https://docs.ms-muc-docs.de/projects/visual-programming-languages-docs/de/latest/training1/Ventilsteuerung/4diacIDE-workspace/test/FBs/Uebungen/Uebung_007a2_AX.html)
 
 [![NotebookLM](media/NotebookLM_logo.png)](https://notebooklm.google.com/notebook/041f4df4-b729-484d-b786-b6dcdf151961)
 
@@ -11,7 +10,6 @@ Dieser Artikel beschreibt die logiBUS®-Übung `Uebung_007a2_AX`.
 
 ----
 
-![](Uebung_007a2_AX.png)
 
 ## Ziel der Übung
 
@@ -28,3 +26,7 @@ Untersuchung des Verhaltens.
 ## Fazit
 
 Auch diese Lösung ist für sicherheitskritische Blinker ungeeignet.
+
+
+
+![Uebung_007a2_AX_network](./Uebung_007a2_AX_network.svg)

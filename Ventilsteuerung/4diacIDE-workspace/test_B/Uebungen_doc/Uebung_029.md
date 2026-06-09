@@ -3,7 +3,6 @@
 ```{index} single: Uebung_029: LED-Statusanzeigen (Frequenzen)
 ```
 
-[Uebung_029](https://docs.ms-muc-docs.de/projects/visual-programming-languages-docs/de/latest/training1/Ventilsteuerung/4diacIDE-workspace/test/FBs/Uebungen/Uebung_029.html)
 
 [![NotebookLM](media/NotebookLM_logo.png)](https://notebooklm.google.com/notebook/a6872e59-1dfc-4132-a118-aff1bc7bc944)
 
@@ -11,7 +10,6 @@ Dieser Artikel beschreibt die logiBUS®-Übung `Uebung_029`. Hier wird ein spezi
 
 ----
 
-![](Uebung_029.png)
 
 ## Ziel der Übung
 
@@ -24,6 +22,9 @@ Nutzung des Bausteins `logiBUS_LED_DO_QX`. Es wird gezeigt, wie man eine LED in 
 [cite_start]In `Uebung_029.SUB` werden drei Taster genutzt, um eine einzige LED (`Q1`) in drei verschiedenen Modi anzusteuern[cite: 1].
 
 ### Funktionsbausteine (FBs)
+
+
+![Uebung_029_network](./Uebung_029_network.svg)
 
   * **`logiBUS_LED_DO_QX`**: Ein spezialisierter Ausgangsbaustein. Er besitzt den Parameter `FREQ` (Frequenz).
   * **Parameter `FREQ`**:

@@ -3,7 +3,6 @@
 ```{index} single: Uebung_003d: Wiederholung Parallelsteuerung
 ```
 
-[Uebung_003d](https://docs.ms-muc-docs.de/projects/visual-programming-languages-docs/de/latest/training1/Ventilsteuerung/4diacIDE-workspace/test/FBs/Uebungen/Uebung_003d.html)
 
 [![NotebookLM](media/NotebookLM_logo.png)](https://notebooklm.google.com/notebook/a6872e59-1dfc-4132-a118-aff1bc7bc944)
 
@@ -11,7 +10,6 @@ Dieser Artikel beschreibt die logiBUS®-Übung `Uebung_003d`. Diese Übung ist s
 
 ----
 
-![](Uebung_003d.png)
 
 ## Ziel der Übung
 
@@ -24,6 +22,9 @@ Das Ziel ist die Wiederholung der direkten I/O-Verknüpfung mittels Ereignis- un
 [cite_start]Die Subapplikation `Uebung_003d.SUB` verbindet zwei Eingangsbausteine direkt mit zwei Ausgangsbausteinen[cite: 1].
 
 ### Funktionsbausteine (FBs)
+
+
+![Uebung_003d_network](./Uebung_003d_network.svg)
 
   * **`DigitalInput_I1`** ➡️ **`DigitalOutput_Q1`**
   * **`DigitalInput_I2`** ➡️ **`DigitalOutput_Q2`**

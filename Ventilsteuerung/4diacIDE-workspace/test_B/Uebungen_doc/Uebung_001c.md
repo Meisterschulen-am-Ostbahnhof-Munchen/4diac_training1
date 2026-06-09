@@ -3,7 +3,6 @@
 ```{index} single: Uebung_001c: Eingang abfragen bei Boot (Standard-Pins)
 ```
 
-[Uebung_001c](https://docs.ms-muc-docs.de/projects/visual-programming-languages-docs/de/latest/training1/Ventilsteuerung/4diacIDE-workspace/test/FBs/Uebungen/Uebung_001c.html)
 
 [![NotebookLM](media/NotebookLM_logo.png)](https://notebooklm.google.com/notebook/a6872e59-1dfc-4132-a118-aff1bc7bc944)
 
@@ -11,7 +10,6 @@ Dieser Artikel beschreibt die logiBUS®-Übung `Uebung_001c`. Hier wird demonstr
 
 ----
 
-![](Uebung_001c.png)
 
 ## Ziel der Übung
 
@@ -24,6 +22,9 @@ Das Hauptziel dieser Übung ist das Verständnis des Initialisierungsvorgangs in
 [cite_start]Die Übung nutzt die Subapplikation `Uebung_001c.SUB`, um eine Verbindung zwischen einem digitalen Eingang und einem Ausgang herzustellen, ergänzt um eine Selbst-Triggerung für den Systemstart[cite: 1].
 
 ### Funktionsbausteine (FBs)
+
+
+![Uebung_001c_network](./Uebung_001c_network.svg)
 
   * **`DigitalInput_I1`**: Eine Instanz des Typs `logiBUS_IX`. [cite_start]Dieser Baustein liefert das Ereignis `IND` bei Änderungen und reagiert auf den Befehl `REQ`, um den aktuellen Wert manuell auszulesen[cite: 1].
   * **`DigitalOutput_Q1`**: Eine Instanz des Typs `logiBUS_QX`. [cite_start]Dieser Baustein setzt den Hardware-Ausgang `Output_Q1` bei jedem eintreffenden `REQ`-Ereignis[cite: 1].

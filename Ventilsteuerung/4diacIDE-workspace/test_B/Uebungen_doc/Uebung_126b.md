@@ -2,7 +2,9 @@ Hier ist die Dokumentationsseite für die Übung 126b.
 
 # Uebung_126b: Übung zu ISOBUS Send Message Cyclic (mit CB) SINUS-Funktion Plotten
 
-![Ansicht der Uebung_126b](Uebung_126b.png)
+
+
+![Uebung_126b_network](./Uebung_126b_network.svg)
 
 * * * * * * * * * *
 

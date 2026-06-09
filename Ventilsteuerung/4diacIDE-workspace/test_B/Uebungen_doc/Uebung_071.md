@@ -3,7 +3,6 @@
 ```{index} single: Uebung_071: Geschwindigkeitsabhängiges Schalten
 ```
 
-[Uebung_071](https://docs.ms-muc-docs.de/projects/visual-programming-languages-docs/de/latest/training1/Ventilsteuerung/4diacIDE-workspace/test/FBs/Uebungen/Uebung_071.html)
 
 [![NotebookLM](media/NotebookLM_logo.png)](https://notebooklm.google.com/notebook/a6872e59-1dfc-4132-a118-aff1bc7bc944)
 
@@ -11,7 +10,6 @@ Dieser Artikel beschreibt die logiBUS®-Übung `Uebung_071`. Hier wird die Trakt
 
 ----
 
-![](Uebung_071.png)
 
 ## Ziel der Übung
 
@@ -24,6 +22,9 @@ Implementierung einer Schwellwert-Logik basierend auf TECU-Daten. Der Ausgang so
 [cite_start]In `Uebung_071.SUB` wird die radbasierte Geschwindigkeit mit einem festen Wert verglichen[cite: 1].
 
 ### Funktionsbausteine (FBs)
+
+
+![Uebung_071_network](./Uebung_071_network.svg)
 
   * **`I_WBSD`**: Liefert die aktuelle Geschwindigkeit.
   * **`F_GT`**: Ein Vergleichs-Baustein (Greater Than). [cite_start]Er prüft, ob der Eingangswert größer als 0 ist[cite: 1].

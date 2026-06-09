@@ -3,7 +3,6 @@
 ```{index} single: Uebung_071b: Wegstrecken-Impulse (Wegmesser)
 ```
 
-[Uebung_071b](https://docs.ms-muc-docs.de/projects/visual-programming-languages-docs/de/latest/training1/Ventilsteuerung/4diacIDE-workspace/test/FBs/Uebungen/Uebung_071b.html)
 
 [![NotebookLM](media/NotebookLM_logo.png)](https://notebooklm.google.com/notebook/a6872e59-1dfc-4132-a118-aff1bc7bc944)
 
@@ -11,7 +10,6 @@ Dieser Artikel beschreibt die logiBUS®-Übung `Uebung_071b`. Hier steuern wir e
 
 ----
 
-![](Uebung_071b.png)
 
 ## Ziel der Übung
 
@@ -24,6 +22,9 @@ Verwendung des Bausteins `RangeBasedPulse`. Es wird gezeigt, wie man ein periodi
 [cite_start]Die Subapplikation `Uebung_071b.SUB` liest die kumulierte Wegstrecke vom Traktor ein und erzeugt daraus Impulse[cite: 1].
 
 ### Funktionsbausteine (FBs)
+
+
+![Uebung_071b_network](./Uebung_071b_network.svg)
 
   * **`I_WBSD`**: Liefert den Wert `WHEELBASEDMACHINEDISTANCE`.
   * **`RangeBasedPulse`**: [cite_start]Dieser Baustein erzeugt einen Pegelwechsel am Ausgang `Q`, sobald eine definierte Distanz (hier 5000 mm = 5 Meter) überschritten wurde[cite: 1].

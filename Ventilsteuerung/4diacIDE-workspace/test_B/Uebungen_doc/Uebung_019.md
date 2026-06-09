@@ -3,13 +3,15 @@
 ```{index} single: Uebung_019: Maskenumschaltung (Screen-Switch)
 ```
 
-[Uebung_019](https://docs.ms-muc-docs.de/projects/visual-programming-languages-docs/de/latest/training1/Ventilsteuerung/4diacIDE-workspace/test/FBs/Uebungen/Uebung_019.html)
 
 [![NotebookLM](media/NotebookLM_logo.png)](https://notebooklm.google.com/notebook/a6872e59-1dfc-4132-a118-aff1bc7bc944)
 
 Dieser Artikel beschreibt die logiBUS®-Übung `Uebung_019`. Hier wird gezeigt, wie das Programm die aktive Anzeige (Data Mask) auf dem Terminal umschalten kann.
 
 ## 📺 Video
+
+
+![Uebung_019_network](./Uebung_019_network.svg)
 
 * [Landwirtschaft 1906](https://www.youtube.com/watch?v=rqX10EiEiNM)
 
@@ -23,7 +25,6 @@ Dieser Artikel beschreibt die logiBUS®-Übung `Uebung_019`. Hier wird gezeigt, 
 
 ----
 
-![](Uebung_019.png)
 
 ## Ziel der Übung
 

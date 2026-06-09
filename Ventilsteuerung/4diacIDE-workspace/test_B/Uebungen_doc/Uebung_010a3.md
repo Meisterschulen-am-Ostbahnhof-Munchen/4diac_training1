@@ -3,7 +3,6 @@
 ```{index} single: Uebung_010a3: Latching Button (Einrastend)
 ```
 
-[Uebung_010a3](https://docs.ms-muc-docs.de/projects/visual-programming-languages-docs/de/latest/training1/Ventilsteuerung/4diacIDE-workspace/test/FBs/Uebungen/Uebung_010a3.html)
 
 [![NotebookLM](media/NotebookLM_logo.png)](https://notebooklm.google.com/notebook/a6872e59-1dfc-4132-a118-aff1bc7bc944)
 
@@ -11,7 +10,6 @@ Dieser Artikel beschreibt die logiBUS®-Übung `Uebung_010a3`.
 
 ----
 
-![](Uebung_010a3.png)
 
 ## Ziel der Übung
 
@@ -28,6 +26,9 @@ Umgang mit zustandshaltenden Bedienelementen des Universal Terminals.
 ## Funktionsweise
 
 Ein "Latching Button" ist im ISOBUS-Objektpool so definiert, dass er seinen Zustand bei Betätigung speichert.
+
+![Uebung_010a3_network](./Uebung_010a3_network.svg)
+
 *   Erster Klick: Button rastet visuell ein, sendet dauerhaft `TRUE`.
 *   Zweiter Klick: Button springt zurück, sendet dauerhaft `FALSE`.
 
