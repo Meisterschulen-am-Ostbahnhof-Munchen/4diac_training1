@@ -5,7 +5,6 @@
 	<VersionInfo Organization="HR Agrartechnik GmbH" Version="1.0" Author="Franz Höpfinger" Date="2026-01-17" Remarks="Initial Version">
 	</VersionInfo>
 	<CompilerInfo packageName="adapter::types::bidirectional">
-		<Import declaration="eclipse4diac::core::TypeHash"/>
 	</CompilerInfo>
 	<InterfaceList>
 		<EventInputs>
@@ -25,5 +24,4 @@
 			<VarDeclaration Name="DO1" Type="REAL" Comment="Indication (or Request) Data from Plug"/>
 		</OutputVars>
 	</InterfaceList>
-	<Attribute Name="eclipse4diac::core::TypeHash" Value="''"/>
 </AdapterType>

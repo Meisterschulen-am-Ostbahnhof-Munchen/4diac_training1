@@ -5,7 +5,6 @@
 	<VersionInfo Organization="HR Agrartechnik GmbH" Version="1.0" Author="Franz Höpfinger" Date="2026-01-17" Remarks="Initial Version">
 	</VersionInfo>
 	<CompilerInfo packageName="adapter::types::unidirectional">
-		<Import declaration="eclipse4diac::core::TypeHash"/>
 	</CompilerInfo>
 	<InterfaceList>
 		<EventOutputs>
@@ -17,5 +16,4 @@
 			<VarDeclaration Name="D1" Type="LWORD" Comment="Indication (or Request) Data from Plug"/>
 		</OutputVars>
 	</InterfaceList>
-	<Attribute Name="eclipse4diac::core::TypeHash" Value="''"/>
 </AdapterType>

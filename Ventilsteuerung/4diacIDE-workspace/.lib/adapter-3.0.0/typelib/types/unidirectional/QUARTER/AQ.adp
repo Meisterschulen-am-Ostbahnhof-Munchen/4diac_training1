@@ -16,5 +16,4 @@
 			<VarDeclaration Name="D1" Type="BYTE" Comment="Indication (or Request) Data from Plug (2 bits)"/>
 		</OutputVars>
 	</InterfaceList>
-	<Attribute Name="eclipse4diac::core::TypeHash" Value="''"/>
 </AdapterType>
