@@ -3,7 +3,6 @@
 ```{index} single: Uebung_110: Arithmetischer Überlauf (Integer Overflow)
 ```
 
-[Uebung_110](https://docs.ms-muc-docs.de/projects/visual-programming-languages-docs/de/latest/training1/Ventilsteuerung/4diacIDE-workspace/test/FBs/Uebungen/Uebung_110.html)
 
 [![NotebookLM](media/NotebookLM_logo.png)](https://notebooklm.google.com/notebook/a6872e59-1dfc-4132-a118-aff1bc7bc944)
 
@@ -11,7 +10,6 @@ Dieser Artikel beschreibt die logiBUS®-Übung `Uebung_110`. Hier wird ein wicht
 
 ----
 
-![](Uebung_110.png)
 
 ## Ziel der Übung
 
@@ -24,6 +22,9 @@ Verständnis der Begrenzung von Datentypen. Es wird gezeigt, was passiert, wenn 
 [cite_start]Die Subapplikation `Uebung_110.SUB` nutzt den Datentyp `USINT` (Unsigned Short Integer)[cite: 1]. Dieser hat einen Wertebereich von 0 bis 255.
 
 ### Funktionsbausteine (FBs)
+
+
+![Uebung_110_network](./Uebung_110_network.svg)
 
   * **`ADD_2`**: Addiert zwei Werte.
   * **Parameter**: `IN1 = 200`, `IN2 = 200`.

@@ -3,7 +3,6 @@
 ```{index} single: Uebung_010c_AX: Softkey Feedback (Visuell)
 ```
 
-[Uebung_010c_AX](https://docs.ms-muc-docs.de/projects/visual-programming-languages-docs/de/latest/training1/Ventilsteuerung/4diacIDE-workspace/test/FBs/Uebungen/Uebung_010c_AX.html)
 
 [![NotebookLM](media/NotebookLM_logo.png)](https://notebooklm.google.com/notebook/041f4df4-b729-484d-b786-b6dcdf151961)
 
@@ -11,11 +10,15 @@ Dieser Artikel beschreibt die logiBUS®-Übung `Uebung_010c_AX`. Bisher haben di
 
 ## 🎧 Podcast
 
+
+
+
+![Uebung_010c_AX_network](./Uebung_010c_AX_network.svg)
+
 * [ISO 11783-6: Softkeys und das Virtual Terminal verstehen – Dein Schlüssel zur Landmaschinen-Mechatronik](https://podcasters.spotify.com/pod/show/isobus-vt-objects/episodes/ISO-11783-6-Softkeys-und-das-Virtual-Terminal-verstehen--Dein-Schlssel-zur-Landmaschinen-Mechatronik-e36a8b0)
 
 ----
 
-![](Uebung_010c_AX.png)
 
 ## Ziel der Übung
 

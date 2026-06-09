@@ -3,7 +3,6 @@
 ```{index} single: Uebung_160: Motor-Drehrichtungssteuerung
 ```
 
-[Uebung_160](https://docs.ms-muc-docs.de/projects/visual-programming-languages-docs/de/latest/training1/Ventilsteuerung/4diacIDE-workspace/test/FBs/Uebungen/Uebung_160.html)
 
 [![NotebookLM](media/NotebookLM_logo.png)](https://notebooklm.google.com/notebook/a6872e59-1dfc-4132-a118-aff1bc7bc944)
 
@@ -11,7 +10,6 @@ Dieser Artikel beschreibt die logiBUS®-Übung `Uebung_160`. Hier wird die einfa
 
 ----
 
-![](Uebung_160.png)
 
 ## Ziel der Übung
 
@@ -24,6 +22,9 @@ Realisierung einer Steuerung für Linkslauf, Rechtslauf und ein Summensignal (Mo
 [cite_start]In `Uebung_160.SUB` werden zwei Taster auf drei Ausgänge gemappt[cite: 1].
 
 ### Funktionsbausteine (FBs)
+
+
+![Uebung_160_network](./Uebung_160_network.svg)
 
   * **`I1`**: Taster für Linkslauf.
   * **`I2`**: Taster für Rechtslauf.

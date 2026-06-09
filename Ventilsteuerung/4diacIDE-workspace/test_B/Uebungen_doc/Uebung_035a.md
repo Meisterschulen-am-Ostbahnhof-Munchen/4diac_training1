@@ -3,7 +3,6 @@
 ```{index} single: Uebung_035a: Ampelschaltung (Standard)
 ```
 
-[Uebung_035a](https://docs.ms-muc-docs.de/projects/visual-programming-languages-docs/de/latest/training1/Ventilsteuerung/4diacIDE-workspace/test/FBs/Uebungen/Uebung_035a.html)
 
 [![NotebookLM](media/NotebookLM_logo.png)](https://notebooklm.google.com/notebook/a6872e59-1dfc-4132-a118-aff1bc7bc944)
 
@@ -11,7 +10,6 @@ Dieser Artikel beschreibt die logiBUS®-Übung `Uebung_035a`. Hier wird die Steu
 
 ----
 
-![](Uebung_035a.png)
 
 ## Ziel der Übung
 
@@ -26,6 +24,9 @@ Realisierung eines komplexen Zeitablaufs mit überlappenden Zuständen. Es wird 
 ### Funktionsweise
 
 Die Herausforderung liegt in den Misch-Zuständen (z.B. Rot und Gelb leuchten gleichzeitig). Dies wird durch logische ODER-Gatter in Sub-Applikationen (`RED`, `ORANGE`) gelöst:
+
+![Uebung_035a_network](./Uebung_035a_network.svg)
+
 1.  **Schritt 1 (Rot)**: Nur der Rot-Ausgang ist aktiv (6s).
 2.  **Schritt 2 (Rot-Gelb)**: Das Event triggert beide Lampen (2s).
 3.  **Schritt 3 (Grün)**: Nur Grün leuchtet (8s).

@@ -3,7 +3,6 @@
 ```{index} single: Uebung_003b2_AX: Massenverarbeitung mit untypisierten Sub-Applikationen
 ```
 
-[Uebung_003b2_AX](https://docs.ms-muc-docs.de/projects/visual-programming-languages-docs/de/latest/training1/Ventilsteuerung/4diacIDE-workspace/test/FBs/Uebungen/Uebung_003b2_AX.html)
 
 [![NotebookLM](media/NotebookLM_logo.png)](https://notebooklm.google.com/notebook/041f4df4-b729-484d-b786-b6dcdf151961)
 
@@ -11,7 +10,6 @@ Dieser Artikel beschreibt die logiBUS®-Übung `Uebung_003b2_AX`. Diese Übung z
 
 ----
 
-![](Uebung_003b2_AX.png)
 
 ## Ziel der Übung
 
@@ -26,6 +24,8 @@ Das Ziel dieser Übung ist es, eine große Anzahl von gleichartigen Verbindungen
 ### Sub-Komponente: `Uebung_003b2_sub_AX`
 
 [cite_start]Dieser Sub-Baustein verbindet einen Funkeingang (`Funk_IXA`) mit einem DataPanel-Ausgang (`DataPanel_MI_QXA`)[cite: 2]. Er verfügt über Parameter zur Konfiguration:
+
+
   * **`Input`**: Der Funk-Taster (z.B. `DigitalInput_Key_START`).
   * **`Output`**: Der physische Ausgang (z.B. `DigitalOutput_1B`).
   * **`u8SAMember`**: Die Adresse des DataPanels.

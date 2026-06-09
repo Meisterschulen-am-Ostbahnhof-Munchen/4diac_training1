@@ -2,7 +2,9 @@ Hier ist die Dokumentation für die Übung `Uebung_006e2`, basierend auf den ber
 
 # Uebung_006e2: RS-Flip-Flop mit 2x IX
 
-![Uebung_006e2](Uebung_006e2.png)
+
+
+![Uebung_006e2_network](./Uebung_006e2_network.svg)
 
 * * * * * * * * * *
 

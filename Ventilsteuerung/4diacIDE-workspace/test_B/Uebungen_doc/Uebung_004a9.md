@@ -3,7 +3,6 @@
 ```{index} single: Uebung_004a9: Dreifach Event-Splitter (E_SPLIT_3)
 ```
 
-[Uebung_004a9](https://docs.ms-muc-docs.de/projects/visual-programming-languages-docs/de/latest/training1/Ventilsteuerung/4diacIDE-workspace/test/FBs/Uebungen/Uebung_004a9.html)
 
 [![NotebookLM](media/NotebookLM_logo.png)](https://notebooklm.google.com/notebook/a6872e59-1dfc-4132-a118-aff1bc7bc944)
 
@@ -11,7 +10,6 @@ Dieser Artikel beschreibt die logiBUS®-Übung `Uebung_004a9`. Hier wird das Kon
 
 ----
 
-![](Uebung_004a9.png)
 
 ## Ziel der Übung
 
@@ -24,6 +22,9 @@ Demonstration der Skalierbarkeit von Ereignis-Verteilern. Mit `E_SPLIT_3` könne
 [cite_start]Die Subapplikation `Uebung_004a9.SUB` verteilt das Signal eines Tasters auf drei separate Toggle-Flip-Flops und somit auf drei Ausgänge[cite: 1].
 
 ### Funktionsbausteine (FBs)
+
+
+![Uebung_004a9_network](./Uebung_004a9_network.svg)
 
   * **`DigitalInput_CLK_I1`**: Der zentrale Auslöser (Taster).
   * **`E_SPLIT_3`**: Verteilt den Eingang `EI` nacheinander auf `EO1`, `EO2` und `EO3`.

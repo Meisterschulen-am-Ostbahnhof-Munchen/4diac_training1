@@ -2,7 +2,9 @@ Hier ist die Dokumentation für die Übung `Uebung_174`, basierend auf den berei
 
 # Uebung_174: Exercise for E_RESTART
 
-![Uebung_174](Uebung_174.png)
+
+
+![Uebung_174_network](./Uebung_174_network.svg)
 
 * * * * * * * * * *
 

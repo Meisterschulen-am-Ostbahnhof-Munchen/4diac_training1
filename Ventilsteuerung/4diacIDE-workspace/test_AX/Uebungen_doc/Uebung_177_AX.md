@@ -2,7 +2,11 @@ Hier ist die Dokumentation für die Übung `Uebung_177_AX`, basierend auf den be
 
 # Uebung_177_AX: Beispiel für AX_FB_R_TRIG (Rising Edge Detection)
 
-![Uebung_177_AX](Uebung_177_AX.png)
+
+
+
+
+![Uebung_177_AX_network](./Uebung_177_AX_network.svg)
 
 * * * * * * * * * *
 

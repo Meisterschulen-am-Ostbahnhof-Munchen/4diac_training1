@@ -3,7 +3,6 @@
 ```{index} single: Uebung_006b_AX: RS-Flip-Flop (Rücksetzen dominant)
 ```
 
-[Uebung_006b_AX](https://docs.ms-muc-docs.de/projects/visual-programming-languages-docs/de/latest/training1/Ventilsteuerung/4diacIDE-workspace/test/FBs/Uebungen/Uebung_006b_AX.html)
 
 [![NotebookLM](media/NotebookLM_logo.png)](https://notebooklm.google.com/notebook/041f4df4-b729-484d-b786-b6dcdf151961)
 
@@ -11,7 +10,6 @@ Dieser Artikel beschreibt die logiBUS®-Übung `Uebung_006b_AX`.
 
 ----
 
-![](Uebung_006b_AX.png)
 
 ## Ziel der Übung
 
@@ -24,6 +22,11 @@ Unterschied zwischen SR (Set Priority) und RS (Reset Priority) verstehen.
 [cite_start]Die Subapplikation `Uebung_006b_AX.SUB` nutzt einen `AX_RS` Baustein[cite: 1].
 
 ### Funktionsbausteine (FBs)
+
+
+
+
+![Uebung_006b_AX_network](./Uebung_006b_AX_network.svg)
 
   * **`AX_RS`**: Ein RS-Flip-Flop.
 

@@ -3,7 +3,6 @@
 ```{index} single: Uebung_020f3: Integrierter Blinker (E_BLINK)
 ```
 
-[Uebung_020f3](https://docs.ms-muc-docs.de/projects/visual-programming-languages-docs/de/latest/training1/Ventilsteuerung/4diacIDE-workspace/test/FBs/Uebungen/Uebung_020f3.html)
 
 [![NotebookLM](media/NotebookLM_logo.png)](https://notebooklm.google.com/notebook/a6872e59-1dfc-4132-a118-aff1bc7bc944)
 
@@ -11,9 +10,10 @@ Dieser Artikel beschreibt die logiBUS®-Übung `Uebung_020f3`.
 
 ----
 
-![](Uebung_020f3.png)
 
 ## Übersicht
 
 [cite_start]Verwendung des spezialisierten Blinker-Bausteins `E_BLINK`[cite: 1]. Dieser Baustein fasst die gesamte Logik der Übung 007a3 zusammen.
 Über getrennte Parameter für `TIMELOW` und `TIMEHIGH` können asymmetrische Blinkmuster (z.B. kurzes Blitzen) einfach realisiert werden. Ein Ereignis am Eingang `START` setzt den Blinker in Gang.
+
+![Uebung_020f3_network](./Uebung_020f3_network.svg)

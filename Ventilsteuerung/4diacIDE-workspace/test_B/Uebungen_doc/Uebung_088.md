@@ -3,7 +3,6 @@
 ```{index} single: Uebung_088: Fallende Flanke (F_TRIG)
 ```
 
-[Uebung_088](https://docs.ms-muc-docs.de/projects/visual-programming-languages-docs/de/latest/training1/Ventilsteuerung/4diacIDE-workspace/test/FBs/Uebungen/Uebung_088.html)
 
 [![NotebookLM](media/NotebookLM_logo.png)](https://notebooklm.google.com/notebook/a6872e59-1dfc-4132-a118-aff1bc7bc944)
 
@@ -11,11 +10,13 @@ Dieser Artikel beschreibt die logiBUS®-Übung `Uebung_088`. Hier wird die gezie
 
 ## 🎧 Podcast
 
+
+![Uebung_088_network](./Uebung_088_network.svg)
+
 * [Agrar-Revolution 1883: Wie Max Eyth Englands Landwirtschaft modernisierte](https://podcasters.spotify.com/pod/show/ms-muc-lama/episodes/Agrar-Revolution-1883-Wie-Max-Eyth-Englands-Landwirtschaft-modernisierte-e36faae)
 
 ----
 
-![](Uebung_088.png)
 
 ## Ziel der Übung
 

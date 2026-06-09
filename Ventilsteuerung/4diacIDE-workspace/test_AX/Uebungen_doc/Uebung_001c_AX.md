@@ -3,7 +3,6 @@
 ```{index} single: Uebung_001c_AX: Eingang abfragen bei Boot
 ```
 
-[Uebung_001c_AX](https://docs.ms-muc-docs.de/projects/visual-programming-languages-docs/de/latest/training1/Ventilsteuerung/4diacIDE-workspace/test/FBs/Uebungen/Uebung_001c_AX.html)
 
 [![NotebookLM](media/NotebookLM_logo.png)](https://notebooklm.google.com/notebook/041f4df4-b729-484d-b786-b6dcdf151961)
 
@@ -11,7 +10,6 @@ Dieser Artikel beschreibt die logiBUS®-Übung `Uebung_001c_AX`. Hier wird demon
 
 ----
 
-![](Uebung_001c_AX.png)
 
 ## Ziel der Übung
 
@@ -26,6 +24,11 @@ Das Hauptziel dieser Übung ist das Verständnis des Initialisierungsvorgangs in
 ### Funktionsbausteine (FBs)
 
 In der Subapplikation werden zwei zentrale Bausteine verwendet:
+
+
+
+
+![Uebung_001c_AX_network](./Uebung_001c_AX_network.svg)
 
   * **`DigitalInput_I1`**: Eine Instanz des Typs `logiBUS_IXA`. [cite_start]Zusätzlich zur Standardfunktion wird hier der Ereignisausgang `INITO` (Initialization Output) genutzt, um eine einmalige Abfrage beim Start auszulösen[cite: 1].
   * **`DigitalOutput_Q1`**: Eine Instanz des Typs `logiBUS_QXA`. [cite_start]Dieser Baustein empfängt den initial abgefragten Wert über die Adapterverbindung und setzt den Ausgang `Output_Q1` entsprechend[cite: 1].

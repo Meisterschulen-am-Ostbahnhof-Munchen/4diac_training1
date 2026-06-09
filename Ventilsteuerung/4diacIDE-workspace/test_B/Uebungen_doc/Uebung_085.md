@@ -3,7 +3,6 @@
 ```{index} single: Uebung_085: Zustands-Synchronisation (D-Flip-Flop)
 ```
 
-[Uebung_085](https://docs.ms-muc-docs.de/projects/visual-programming-languages-docs/de/latest/training1/Ventilsteuerung/4diacIDE-workspace/test/FBs/Uebungen/Uebung_085.html)
 
 [![NotebookLM](media/NotebookLM_logo.png)](https://notebooklm.google.com/notebook/a6872e59-1dfc-4132-a118-aff1bc7bc944)
 
@@ -11,11 +10,13 @@ Dieser Artikel beschreibt die logiBUS®-Übung `Uebung_085`. Hier wird das Prinz
 
 ## 🎧 Podcast
 
+
+![Uebung_085_network](./Uebung_085_network.svg)
+
 * [Das Relais im Detail: Schaltverstärker, Schutz und die Geheimnisse von A1/A2, 85/86 und der Hysterese](https://podcasters.spotify.com/pod/show/ms-muc-lama/episodes/Das-Relais-im-Detail-Schaltverstrker--Schutz-und-die-Geheimnisse-von-A1A2--8586-und-der-Hysterese-e3audsc)
 
 ----
 
-![](Uebung_085.png)
 
 ## Ziel der Übung
 

@@ -3,7 +3,6 @@
 ```{index} single: Uebung_003c_sub: ISOBUS AUX-Kanal (SubApp)
 ```
 
-[Uebung_003c_sub](https://docs.ms-muc-docs.de/projects/visual-programming-languages-docs/de/latest/training1/Ventilsteuerung/4diacIDE-workspace/test/FBs/Uebungen/Uebung_003c_sub.html)
 
 [![NotebookLM](media/NotebookLM_logo.png)](https://notebooklm.google.com/notebook/a6872e59-1dfc-4132-a118-aff1bc7bc944)
 
@@ -22,6 +21,9 @@ Kapselung der ISOBUS-Kommunikation. Der Baustein verbirgt die Details des ISOBUS
 [cite_start]Der Typ `Uebung_003c_sub` enthält einen lokalen Eingangs-Baustein und einen ISOBUS-Ausgangs-Baustein[cite: 1].
 
 ### Interne Funktionsbausteine (FBs)
+
+
+![Uebung_003c_sub_network](./Uebung_003c_sub_network.svg)
 
   * **`IX`**: Typ `logiBUS_IX`. Liest den lokalen Hardware-Pin (`Input`) ein.
   * **`QX`**: Typ `Aux_QX`. Sendet den Zustand als ISOBUS-Nachricht für die gewählte Funktionsnummer (`iInpNr`).

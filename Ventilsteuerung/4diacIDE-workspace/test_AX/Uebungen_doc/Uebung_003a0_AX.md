@@ -3,7 +3,6 @@
 ```{index} single: Uebung_003a0_AX: Strukturierung durch untypisierte Sub-Applikationen
 ```
 
-[Uebung_003a0_AX](https://docs.ms-muc-docs.de/projects/visual-programming-languages-docs/de/latest/training1/Ventilsteuerung/4diacIDE-workspace/test/FBs/Uebungen/Uebung_003a0_AX.html)
 
 [![NotebookLM](media/NotebookLM_logo.png)](https://notebooklm.google.com/notebook/041f4df4-b729-484d-b786-b6dcdf151961)
 
@@ -11,7 +10,6 @@ Dieser Artikel beschreibt die logiBUS®-Übung `Uebung_003a0_AX`. Im Gegensatz z
 
 ----
 
-![](Uebung_003a0_AX.png)
 
 ## Ziel der Übung
 
@@ -26,6 +24,8 @@ Das Hauptziel dieser Übung ist es, Möglichkeiten zur rein visuellen Strukturie
 ### Untypisierte Sub-Applikationen
 
 Anders als bei typisierten SubApps, die auf einer externen Definition basieren, existiert die Logik dieser Container nur innerhalb dieser spezifischen Instanz.
+
+
 
 1.  **Container `SubApp`**:
     *   Beinhaltet die Logik für Kanal 2.

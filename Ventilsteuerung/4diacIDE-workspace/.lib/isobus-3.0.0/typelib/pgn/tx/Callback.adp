@@ -5,6 +5,7 @@
 	<VersionInfo Version="1.0" Author="Franz Höpfinger" Date="2025-09-06" Remarks="initial API and implementation and/or initial documentation">
 	</VersionInfo>
 	<CompilerInfo packageName="isobus::pgn::tx">
+		<Import declaration="eclipse4diac::core::TypeHash"/>
 	</CompilerInfo>
 	<InterfaceList>
 		<EventInputs>

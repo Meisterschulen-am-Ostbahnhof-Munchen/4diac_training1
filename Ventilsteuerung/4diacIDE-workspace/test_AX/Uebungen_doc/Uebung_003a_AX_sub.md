@@ -2,7 +2,11 @@ Hier ist die Dokumentation für die Übung basierend auf den bereitgestellten XM
 
 # Uebung_003a_AX_sub: IX auf QX (generisch)
 
-![Uebung_003a_AX_sub](Uebung_003a_AX_sub.png)
+
+
+
+
+![Uebung_003a_AX_sub_network](./Uebung_003a_AX_sub_network.svg)
 
 * * * * * * * * * *
 

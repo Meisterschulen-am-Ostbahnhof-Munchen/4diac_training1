@@ -3,7 +3,6 @@
 ```{index} single: Uebung_011a: Dynamische Anzeige (Repeat Done)
 ```
 
-[Uebung_011a](https://docs.ms-muc-docs.de/projects/visual-programming-languages-docs/de/latest/training1/Ventilsteuerung/4diacIDE-workspace/test/FBs/Uebungen/Uebung_011a.html)
 
 [![NotebookLM](media/NotebookLM_logo.png)](https://notebooklm.google.com/notebook/a6872e59-1dfc-4132-a118-aff1bc7bc944)
 
@@ -11,7 +10,6 @@ Dieser Artikel beschreibt die logiBUS®-Übung `Uebung_011a`. Hier wird die Inte
 
 ----
 
-![](Uebung_011a.png)
 
 ## Ziel der Übung
 
@@ -24,6 +22,9 @@ Nutzung des `BUTTON_PRESS_REPEAT_DONE` Ereignisses zur Aktualisierung eines Anze
 [cite_start]In `Uebung_011a.SUB` wird ein Byte-Wert von einem Taster eingelesen und an eine numerische Anzeige am Terminal gesendet[cite: 1].
 
 ### Funktionsbausteine (FBs)
+
+
+![Uebung_011a_network](./Uebung_011a_network.svg)
 
   * **`logiBUS_IB`**: Eingangsbaustein für Byte-Werte. Er ist auf das Event `BUTTON_PRESS_REPEAT_DONE` konfiguriert.
   * **`Q_NumericValue`**: Ausgangsbaustein zur Anzeige einer Zahl auf dem Terminal.

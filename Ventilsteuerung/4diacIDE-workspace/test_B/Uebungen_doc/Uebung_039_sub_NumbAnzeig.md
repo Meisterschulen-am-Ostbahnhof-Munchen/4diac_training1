@@ -5,7 +5,9 @@ Hier ist die generierte Dokumentation basierend auf dem bereitgestellten XML-Cod
 ```{index} single: Uebung_039_sub_NumbAnzeig
 ```
 
-![Uebung_039_sub_NumbAnzeig](Uebung_039_sub_NumbAnzeig.png)
+
+
+![Uebung_039_sub_NumbAnzeig_network](./Uebung_039_sub_NumbAnzeig_network.svg)
 
 * * * * * * * * * *
 

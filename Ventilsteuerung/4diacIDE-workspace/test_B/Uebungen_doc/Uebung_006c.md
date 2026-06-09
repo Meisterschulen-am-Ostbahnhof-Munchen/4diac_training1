@@ -3,7 +3,6 @@
 ```{index} single: Uebung_006c: Sammelsteuerung (Demultiplexer)
 ```
 
-[Uebung_006c](https://docs.ms-muc-docs.de/projects/visual-programming-languages-docs/de/latest/training1/Ventilsteuerung/4diacIDE-workspace/test/FBs/Uebungen/Uebung_006c.html)
 
 [![NotebookLM](media/NotebookLM_logo.png)](https://notebooklm.google.com/notebook/a6872e59-1dfc-4132-a118-aff1bc7bc944)
 
@@ -11,7 +10,6 @@ Dieser Artikel beschreibt die logiBUS®-Übung `Uebung_006c`. Hier wird eine kom
 
 ----
 
-![](Uebung_006c.png)
 
 ## Ziel der Übung
 
@@ -24,6 +22,9 @@ Erlernen der adressierten Ereignisverteilung. Anstatt für jeden Kanal eine eige
 [cite_start]Die Subapplikation `Uebung_006c.SUB` steuert 8 Lampenspeicher über zwei zentrale Wahlschalter[cite: 1].
 
 ### Funktionsbausteine (FBs)
+
+
+![Uebung_006c_network](./Uebung_006c_network.svg)
 
   * **`logiBUS_IB`**: Ein spezieller Eingangsbaustein für "Input Byte". Er liefert einen Zahlenwert (0-255), der meist von einem Multi-Funktions-Bedienelement (z.B. einem ISOBUS-Joystick mit vielen Tasten) stammt.
   * **`E_DEMUX_8`**: Ein Ereignis-Demultiplexer. Er hat einen Ereignis-Eingang `EI` und einen Daten-Eingang `K` (Selector). Je nach Wert von `K` leitet er das Event an einen der acht Ausgänge `EO1` bis `EO8` weiter.

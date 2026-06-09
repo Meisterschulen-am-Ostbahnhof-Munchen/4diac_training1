@@ -3,7 +3,6 @@
 ```{index} single: Uebung_039: Hydraulik-Ventilsteuerung
 ```
 
-[Uebung_039](https://docs.ms-muc-docs.de/projects/visual-programming-languages-docs/de/latest/training1/Ventilsteuerung/4diacIDE-workspace/test/FBs/Uebungen/Uebung_039.html)
 
 [![NotebookLM](media/NotebookLM_logo.png)](https://notebooklm.google.com/notebook/a6872e59-1dfc-4132-a118-aff1bc7bc944)
 
@@ -11,7 +10,6 @@ Dieser Artikel beschreibt die logiBUS®-Übung `Uebung_039`. Diese Übung ist sp
 
 ----
 
-![](Uebung_039.png)
 
 ## Ziel der Übung
 
@@ -29,3 +27,5 @@ Die Ansteuerung der Hardware erfolgt hier über typisierte Sub-Applikationen (`U
 ## Funktionsweise
 
 Die Kette wird manuell durch physische Taster (`I1` bis `I4`) gesteuert, wobei ein zentraler Zeitschritt (5s bei `DT_S3_S4`) eine automatische Sicherheits- oder Wartephase einfügt. Dies zeigt die Kombination aus freier Bedienbarkeit und erzwungenen Prozesszeiten.
+
+![Uebung_039_network](./Uebung_039_network.svg)

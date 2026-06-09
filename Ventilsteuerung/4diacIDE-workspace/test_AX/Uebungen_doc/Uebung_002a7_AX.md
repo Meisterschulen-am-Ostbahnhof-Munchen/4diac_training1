@@ -3,7 +3,6 @@
 ```{index} single: Uebung_002a7_AX: XOR-Verknüpfung mit drei Eingängen
 ```
 
-[Uebung_002a7_AX](https://docs.ms-muc-docs.de/projects/visual-programming-languages-docs/de/latest/training1/Ventilsteuerung/4diacIDE-workspace/test/FBs/Uebungen/Uebung_002a7_AX.html)
 
 [![NotebookLM](media/NotebookLM_logo.png)](https://notebooklm.google.com/notebook/041f4df4-b729-484d-b786-b6dcdf151961)
 
@@ -11,9 +10,13 @@ Dieser Artikel beschreibt die logiBUS®-Übung `Uebung_002a7_AX`. In dieser Übu
 
 ----
 
-![](Uebung_002a7_AX.png)
 
 ## Ziel der Übung
+
+
+
+
+![Uebung_002a7_AX_network](./Uebung_002a7_AX_network.svg)
 
 Das Hauptziel dieser Übung ist die Demonstration der XOR-Logik bei mehr als zwei Eingängen. Im Gegensatz zur normalen ODER-Verknüpfung, bei der der Ausgang bei *mindestens* einem aktiven Eingang einschaltet, reagiert die XOR-Logik auf die Parität der Eingangssignale. Dies wird oft für Wechselschaltungen oder Paritätsprüfungen verwendet.
 

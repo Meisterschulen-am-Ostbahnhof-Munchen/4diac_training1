@@ -3,6 +3,9 @@
 ```{index} single: Uebung_087a1: Beispiel für E_DEMUX_4
 ```
 
+
+![Uebung_087a1_network](./Uebung_087a1_network.svg)
+
 * * * * * * * * * *
 
 ## Einleitung

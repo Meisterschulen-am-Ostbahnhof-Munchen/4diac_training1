@@ -3,7 +3,6 @@
 ```{index} single: Uebung_004c1: Doppelklick-Auswertung
 ```
 
-[Uebung_004c1](https://docs.ms-muc-docs.de/projects/visual-programming-languages-docs/de/latest/training1/Ventilsteuerung/4diacIDE-workspace/test/FBs/Uebungen/Uebung_004c1.html)
 
 [![NotebookLM](media/NotebookLM_logo.png)](https://notebooklm.google.com/notebook/a6872e59-1dfc-4132-a118-aff1bc7bc944)
 
@@ -11,7 +10,6 @@ Dieser Artikel beschreibt die logiBUS®-Übung `Uebung_004c1`. Ab hier widmen wi
 
 ----
 
-![](Uebung_004c1.png)
 
 ## Ziel der Übung
 
@@ -24,6 +22,9 @@ Nutzung des Ereignisses `BUTTON_DOUBLE_CLICK` zur Steuerung einer Speicherfunkti
 [cite_start]Die Subapplikation `Uebung_004c1.SUB` schaltet eine Lampe nur bei einem Doppelklick um[cite: 1].
 
 ### Funktionsbausteine (FBs)
+
+
+![Uebung_004c1_network](./Uebung_004c1_network.svg)
 
   * **`DigitalInput_CLK_I1`**: Typ `logiBUS_IE`. Dieser ist im Parameter `InputEvent` auf `BUTTON_DOUBLE_CLICK` konfiguriert.
   * **`E_T_FF`**: Das Toggle-Flip-Flop.

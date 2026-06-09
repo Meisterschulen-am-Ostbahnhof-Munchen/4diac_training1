@@ -3,7 +3,6 @@
 ```{index} single: Uebung_103c: Fixierte Modus-Selektion
 ```
 
-[Uebung_103c](https://docs.ms-muc-docs.de/projects/visual-programming-languages-docs/de/latest/training1/Ventilsteuerung/4diacIDE-workspace/test/FBs/Uebungen/Uebung_103c.html)
 
 [![NotebookLM](media/NotebookLM_logo.png)](https://notebooklm.google.com/notebook/041f4df4-b729-484d-b786-b6dcdf151961)
 
@@ -11,7 +10,6 @@ Dieser Artikel beschreibt die logiBUS®-Übung `Uebung_103c`.
 
 ----
 
-![](Uebung_103c.png)
 
 ## Ziel der Übung
 
@@ -28,3 +26,7 @@ Testen eines spezifischen Pfads der MUX/DEMUX Struktur.
 ## Funktionsweise
 
 Der Taster `I1` steuert den Ausgang `Q1` nun permanent im "rastenden" Modus (Toggle), obwohl die Struktur für andere Modi noch vorhanden ist. Dies dient oft zum Debugging oder zum schnellen Einfrieren einer Konfiguration.
+
+
+
+![Uebung_103c_network](./Uebung_103c_network.svg)

@@ -2,7 +2,11 @@ Hier ist die Dokumentation für die Übung `Uebung_170_AX`, basierend auf den be
 
 # Uebung_170_AX: Exercise for AX_D_FF
 
-![Uebung_170_AX](Uebung_170_AX.png)
+
+
+
+
+![Uebung_170_AX_network](./Uebung_170_AX_network.svg)
 
 * * * * * * * * * *
 

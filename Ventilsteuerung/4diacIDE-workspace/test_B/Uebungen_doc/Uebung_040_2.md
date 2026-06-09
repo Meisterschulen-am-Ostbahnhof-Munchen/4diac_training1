@@ -2,7 +2,9 @@ Hier ist die Dokumentation für die Übung `Uebung_040_2` basierend auf den bere
 
 # Uebung_040_2: Lauflicht 8
 
-![Uebung_040_2](Uebung_040_2.png)
+
+
+![Uebung_040_2_network](./Uebung_040_2_network.svg)
 
 * * * * * * * * * *
 

@@ -3,7 +3,6 @@
 ```{index} single: Uebung_026_sub: Sequenz-Aktor-Einheit (SubApp)
 ```
 
-[Uebung_026_sub](https://docs.ms-muc-docs.de/projects/visual-programming-languages-docs/de/latest/training1/Ventilsteuerung/4diacIDE-workspace/test/FBs/Uebungen/Uebung_026_sub.html)
 
 [![NotebookLM](media/NotebookLM_logo.png)](https://notebooklm.google.com/notebook/a6872e59-1dfc-4132-a118-aff1bc7bc944)
 
@@ -22,6 +21,9 @@ Kapselung der Ausgangs-Logik. Der Baustein trennt die Ablauf-Logik (wann muss wa
 [cite_start]Der Typ `Uebung_026_sub` kombiniert einen Speicher mit einer Plausibilitätsprüfung[cite: 1].
 
 ### Interne Funktionsbausteine (FBs)
+
+
+![Uebung_026_sub_network](./Uebung_026_sub_network.svg)
 
   * **`E_SR`**: Speichert, ob der Aktor gerade aktiv sein soll.
   * **`QX`**: Typ `logiBUS_QX`. Steuert den physischen Port an.

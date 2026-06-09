@@ -3,7 +3,6 @@
 ```{index} single: Uebung_152: PI-Regelung (Drehzahlregelung)
 ```
 
-[Uebung_152](https://docs.ms-muc-docs.de/projects/visual-programming-languages-docs/de/latest/training1/Ventilsteuerung/4diacIDE-workspace/test/FBs/Uebungen/Uebung_152.html)
 
 [![NotebookLM](media/NotebookLM_logo.png)](https://notebooklm.google.com/notebook/041f4df4-b729-484d-b786-b6dcdf151961)
 
@@ -11,7 +10,6 @@ Dieser Artikel beschreibt die logiBUS®-Übung `Uebung_152`. Hier wird eine gesc
 
 ----
 
-![](Uebung_152.png)
 
 ## Ziel der Übung
 
@@ -24,6 +22,9 @@ Implementierung eines PI-Reglers zur Konstanthaltung einer physikalischen Größ
 [cite_start]Die Subapplikation `Uebung_152.SUB` verbindet Sensorik, Regelung und Aktorik[cite: 1].
 
 ### Regelkreis-Komponenten
+
+
+![Uebung_152_network](./Uebung_152_network.svg)
 
   * **Sensor (Ist-Wert)**: Impulszähler `logiBUS_PI_ID` + Ableitung `FT_DERIV` (berechnet z.B. die aktuelle Drehzahl).
   * **Regler**: `CTRL_PI` (OSCAT). Er vergleicht den Sollwert (`SET = 16.0`) mit dem Ist-Wert.

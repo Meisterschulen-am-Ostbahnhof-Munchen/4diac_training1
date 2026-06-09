@@ -3,7 +3,6 @@
 ```{index} single: Uebung_003c_AX: Mapping auf ISOBUS AUX
 ```
 
-[Uebung_003c_AX](https://docs.ms-muc-docs.de/projects/visual-programming-languages-docs/de/latest/training1/Ventilsteuerung/4diacIDE-workspace/test/FBs/Uebungen/Uebung_003c_AX.html)
 
 [![NotebookLM](media/NotebookLM_logo.png)](https://notebooklm.google.com/notebook/041f4df4-b729-484d-b786-b6dcdf151961)
 
@@ -11,7 +10,6 @@ Dieser Artikel beschreibt die logiBUS®-Übung `Uebung_003c_AX`. Diese Übung de
 
 ----
 
-![](Uebung_003c_AX.png)
 
 ## Ziel der Übung
 
@@ -26,6 +24,8 @@ Das Ziel ist es, lokale Hardware-Eingänge (`I1` bis `I4`) für das ISOBUS-Netzw
 ### Sub-Komponente: `Uebung_003c_sub_AX`
 
 [cite_start]Dieser Sub-Baustein verbindet einen lokalen digitalen Eingang mit einem ISOBUS-Auxiliary-Ausgangsbaustein[cite: 2].
+
+
   * **Eingang**: `logiBUS_IXA` (Liest den lokalen Pin)
   * **Ausgang**: `Aux_QXA` (Sendet den Status als ISOBUS AUX Nachricht)
   * **Parameter**:

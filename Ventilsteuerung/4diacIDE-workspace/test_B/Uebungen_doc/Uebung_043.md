@@ -3,7 +3,6 @@
 ```{index} single: Uebung_043: Skalierung mit Grenzwerten (SCALE_LIM)
 ```
 
-[Uebung_043](https://docs.ms-muc-docs.de/projects/visual-programming-languages-docs/de/latest/training1/Ventilsteuerung/4diacIDE-workspace/test/FBs/Uebungen/Uebung_043.html)
 
 [![NotebookLM](media/NotebookLM_logo.png)](https://notebooklm.google.com/notebook/a6872e59-1dfc-4132-a118-aff1bc7bc944)
 
@@ -11,7 +10,6 @@ Dieser Artikel beschreibt die logiBUS®-Übung `Uebung_043`. Dies ist eine Erwei
 
 ----
 
-![](Uebung_043.png)
 
 ## Ziel der Übung
 
@@ -24,6 +22,9 @@ Verwendung des Bausteins `SCALE_LIM`. Im Gegensatz zum einfachen `SCALE` bietet 
 [cite_start]In `Uebung_043.SUB` wird ein hochkomplexer Skalierungs-Szenario mit fixen Grenzen aufgebaut[cite: 1].
 
 ### Funktionsbausteine (FBs)
+
+
+![Uebung_043_network](./Uebung_043_network.svg)
 
   * **`SCALE_LIM`**: Skalierung mit Sättigung.
   * **Parameter**:

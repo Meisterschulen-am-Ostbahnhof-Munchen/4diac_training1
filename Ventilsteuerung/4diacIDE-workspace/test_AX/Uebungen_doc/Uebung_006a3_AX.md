@@ -1,9 +1,8 @@
-# Uebung_006a3_AX: SR und T-Flip-Flop mit 3x IE
+# Uebung_006a3_AX: SR und T-Flip-Flop mit 3x IE; links/rechtslauf
 
 ```{index} single: Uebung_006a3_AX: Motorsteuerung (Links/Rechts) mit Verriegelung
 ```
 
-[Uebung_006a3_AX](https://docs.ms-muc-docs.de/projects/visual-programming-languages-docs/de/latest/training1/Ventilsteuerung/4diacIDE-workspace/test/FBs/Uebungen/Uebung_006a3_AX.html)
 
 [![NotebookLM](media/NotebookLM_logo.png)](https://notebooklm.google.com/notebook/041f4df4-b729-484d-b786-b6dcdf151961)
 
@@ -11,7 +10,6 @@ Dieser Artikel beschreibt die logiBUS®-Übung `Uebung_006a3_AX`. Dies ist eine 
 
 ----
 
-![](Uebung_006a3_AX.png)
 
 ## Ziel der Übung
 
@@ -24,6 +22,11 @@ Realisierung einer Wende-Schütz-Steuerung mit Software-Verriegelung. Es darf ni
 [cite_start]Die Subapplikation `Uebung_006a3_AX.SUB` nutzt eine Kombination aus Flip-Flop, Splitter und einer custom Sub-App (`Uebung_006a3_sub_AX`)[cite: 1].
 
 ### Funktionsbausteine (FBs)
+
+
+
+
+![Uebung_006a3_AX_network](./Uebung_006a3_AX_network.svg)
 
   * **`I1` (Set)**: Einschalten (in die zuletzt gewählte Richtung oder Default).
   * **`I2` (Reset)**: Ausschalten.

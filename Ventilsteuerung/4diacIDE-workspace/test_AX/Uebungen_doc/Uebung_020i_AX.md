@@ -3,7 +3,6 @@
 ```{index} single: Uebung_020i_AX: Teach-In Puls (Stoppuhr)
 ```
 
-[Uebung_020i_AX](https://docs.ms-muc-docs.de/projects/visual-programming-languages-docs/de/latest/training1/Ventilsteuerung/4diacIDE-workspace/test/FBs/Uebungen/Uebung_020i_AX.html)
 
 [![NotebookLM](media/NotebookLM_logo.png)](https://notebooklm.google.com/notebook/041f4df4-b729-484d-b786-b6dcdf151961)
 
@@ -11,7 +10,6 @@ Dieser Artikel beschreibt die logiBUS®-Übung `Uebung_020i_AX`. Diese Übung ko
 
 ----
 
-![](Uebung_020i_AX.png)
 
 ## Ziel der Übung
 
@@ -24,6 +22,11 @@ Das Ziel ist die Implementierung eines Teach-In-Verfahrens. Anstatt die Zeit `PT
 [cite_start]Die Subapplikation `Uebung_020i_AX.SUB` nutzt eine Stoppuhr, um die Zeitvorgabe für einen Puls-Baustein dynamisch zu ändern[cite: 1].
 
 ### Funktionsbausteine (FBs)
+
+
+
+
+![Uebung_020i_AX_network](./Uebung_020i_AX_network.svg)
 
   * **`DigitalInput_I2` (Teach-Taste)**: Typ `logiBUS_IXA`. Misst, wie lange der Taster gedrückt wird.
   * **`AX_SWITCH`**: Wandelt das Drücken/Loslassen von `I2` in Start/Stopp-Signale für die Stoppuhr um.

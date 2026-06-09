@@ -3,7 +3,6 @@
 ```{index} single: Uebung_004a8: Zweifach Event-Splitter (E_SPLIT_2)
 ```
 
-[Uebung_004a8](https://docs.ms-muc-docs.de/projects/visual-programming-languages-docs/de/latest/training1/Ventilsteuerung/4diacIDE-workspace/test/FBs/Uebungen/Uebung_004a8.html)
 
 [![NotebookLM](media/NotebookLM_logo.png)](https://notebooklm.google.com/notebook/a6872e59-1dfc-4132-a118-aff1bc7bc944)
 
@@ -11,7 +10,6 @@ Dieser Artikel beschreibt die logiBUS®-Übung `Uebung_004a8`. Dies ist eine Var
 
 ----
 
-![](Uebung_004a8.png)
 
 ## Ziel der Übung
 
@@ -24,6 +22,9 @@ Kennenlernen von typspezifischen Splitter-Bausteinen. Während `E_SPLIT` oft gen
 [cite_start]Die Subapplikation `Uebung_004a8.SUB` nutzt einen `E_SPLIT_2` Baustein zur Ereignisverteilung[cite: 1].
 
 ### Funktionsbausteine (FBs)
+
+
+![Uebung_004a8_network](./Uebung_004a8_network.svg)
 
   * **`DigitalInput_CLK_I1`**: Taster.
   * **`E_SPLIT_2`**: Verteilt den Eingang `EI` nacheinander auf `EO1` und `EO2`.
