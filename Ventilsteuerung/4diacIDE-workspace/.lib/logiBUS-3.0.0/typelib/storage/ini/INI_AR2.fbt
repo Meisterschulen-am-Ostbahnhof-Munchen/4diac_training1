@@ -13,6 +13,7 @@
 		<EventInputs>
 			<Event Name="INIT" Type="EInit" Comment="Service Initialization">
 				<With Var="QI"/>
+				<With Var="SETM"/>
 				<With Var="SECTION"/>
 				<With Var="KEY"/>
 				<With Var="DEFAULT_VALUE"/>
@@ -26,6 +27,7 @@
 		</EventOutputs>
 		<InputVars>
 			<VarDeclaration Name="QI" Type="BOOL" Comment="Event Input Qualifier"/>
+			<VarDeclaration Name="SETM" Type="BOOL" Comment="Enable Mirroring on SET"/>
 			<VarDeclaration Name="SECTION" Type="STRING" Comment="Section name."/>
 			<VarDeclaration Name="KEY" Type="STRING" Comment="Key name."/>
 			<VarDeclaration Name="DEFAULT_VALUE" Type="REAL" Comment="The value to read if there is nothing in the settings.ini"/>
@@ -35,22 +37,28 @@
 			<VarDeclaration Name="STATUS" Type="STRING" Comment="Service Status"/>
 		</OutputVars>
 		<Sockets>
-			<AdapterDeclaration Name="VAL" Type="adapter::types::bidirectional::AR2" Comment="Value" x="4500" y="2600"/>
+			<AdapterDeclaration Name="VAL" Type="adapter::types::bidirectional::AR2" Comment="Value" x="4800" y="2600"/>
 		</Sockets>
 	</InterfaceList>
 	<FBNetwork>
 		<FB Name="INI" Type="eclipse4diac::storage::INI" x="1433.33" y="1940">
 		</FB>
+		<FB Name="SET_PERMIT" Type="iec61499::events::E_PERMIT" x="3800" y="2100">
+		</FB>
 		<EventConnections>
 			<Connection Source="INI.INITO" Destination="INITO" dx1="700"/>
 			<Connection Source="INI.INITO" Destination="INI.GET" dx1="133.33" dx2="133.33" dy="-226.67"/>
 			<Connection Source="VAL.EO1" Destination="INI.SET" dx1="140" dx2="713.33" dy="-1260"/>
-			<Connection Source="INI.SETO" Destination="VAL.EI1" dx1="553.33"/>
+			<Connection Source="SET_PERMIT.EO" Destination="VAL.EI1" dx1="166.67"/>
 			<Connection Source="INI.GETO" Destination="VAL.EI1" dx1="553.33"/>
 			<Connection Source="INIT" Destination="INI.INIT" dx1="1558.82"/>
+			<Connection Source="INI.SETO" Destination="SET_PERMIT.EI" dx1="433.33"/>
 		</EventConnections>
 		<DataConnections>
 			<Connection Source="QI" Destination="INI.QI" dx1="788.24"/>
+			<Connection Source="SETM" Destination="SET_PERMIT.PERMIT" dx1="2746.67">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
 			<Connection Source="KEY" Destination="INI.KEY" dx1="200"/>
 			<Connection Source="DEFAULT_VALUE" Destination="INI.DEFAULT_VALUE" dx1="66.67"/>
 			<Connection Source="VAL.DO1" Destination="INI.VALUE" dx1="246.67" dx2="100" dy="300"/>

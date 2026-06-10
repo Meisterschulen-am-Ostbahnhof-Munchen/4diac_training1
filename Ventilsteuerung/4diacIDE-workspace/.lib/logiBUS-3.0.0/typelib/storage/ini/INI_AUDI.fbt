@@ -13,6 +13,7 @@
 		<EventInputs>
 			<Event Name="INIT" Type="EInit" Comment="Service Initialization">
 				<With Var="QI"/>
+				<With Var="SETM"/>
 				<With Var="SECTION"/>
 				<With Var="KEY"/>
 				<With Var="DEFAULT_VALUE"/>
@@ -26,6 +27,7 @@
 		</EventOutputs>
 		<InputVars>
 			<VarDeclaration Name="QI" Type="BOOL" Comment="Event Input Qualifier"/>
+			<VarDeclaration Name="SETM" Type="BOOL" Comment="Enable Mirroring on SET"/>
 			<VarDeclaration Name="SECTION" Type="STRING" Comment="Section name."/>
 			<VarDeclaration Name="KEY" Type="STRING" Comment="Key name."/>
 			<VarDeclaration Name="DEFAULT_VALUE" Type="UDINT" Comment="The value to read if there is nothing in the settings.ini"/>
@@ -35,7 +37,7 @@
 			<VarDeclaration Name="STATUS" Type="STRING" Comment="Service Status"/>
 		</OutputVars>
 		<Plugs>
-			<AdapterDeclaration Name="AUDI_OUT" Type="adapter::types::unidirectional::AUDI" Comment="Stored value output (GETO)" x="4000" y="1800"/>
+			<AdapterDeclaration Name="AUDI_OUT" Type="adapter::types::unidirectional::AUDI" Comment="Stored value output (GETO)" x="5100" y="2800"/>
 		</Plugs>
 		<Sockets>
 			<AdapterDeclaration Name="AUDI_IN" Type="adapter::types::unidirectional::AUDI" Comment="Value to store (SET)" x="-100" y="1000"/>
@@ -44,21 +46,27 @@
 	<FBNetwork>
 		<FB Name="INI" Type="eclipse4diac::storage::INI" x="1433.33" y="1940">
 		</FB>
+		<FB Name="SET_PERMIT" Type="iec61499::events::E_PERMIT" x="3600" y="2100">
+		</FB>
 		<EventConnections>
 			<Connection Source="INIT" Destination="INI.INIT" dx1="400"/>
 			<Connection Source="INI.INITO" Destination="INITO" dx1="200"/>
 			<Connection Source="INI.INITO" Destination="INI.GET" dx1="133.33" dx2="133.33" dy="-226.67"/>
 			<Connection Source="AUDI_IN.E1" Destination="INI.SET" dx1="313.33"/>
-			<Connection Source="INI.SETO" Destination="AUDI_OUT.E1" dx1="766.67"/>
+			<Connection Source="SET_PERMIT.EO" Destination="AUDI_OUT.E1" dx1="120"/>
 			<Connection Source="INI.GETO" Destination="AUDI_OUT.E1" dx1="766.67"/>
+			<Connection Source="INI.SETO" Destination="SET_PERMIT.EI" dx1="433.33"/>
 		</EventConnections>
 		<DataConnections>
 			<Connection Source="QI" Destination="INI.QI" dx1="333.33"/>
+			<Connection Source="SETM" Destination="SET_PERMIT.PERMIT" dx1="2746.67">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
 			<Connection Source="SECTION" Destination="INI.SECTION" dx1="266.67"/>
 			<Connection Source="KEY" Destination="INI.KEY" dx1="200"/>
 			<Connection Source="DEFAULT_VALUE" Destination="INI.DEFAULT_VALUE" dx1="66.67"/>
 			<Connection Source="AUDI_IN.D1" Destination="INI.VALUE" dx1="113.33"/>
-			<Connection Source="INI.VALUEO" Destination="AUDI_OUT.D1" dx1="1166.67"/>
+			<Connection Source="INI.VALUEO" Destination="AUDI_OUT.D1" dx1="240"/>
 			<Connection Source="INI.QO" Destination="QO" dx1="2580"/>
 			<Connection Source="INI.STATUS" Destination="STATUS" dx1="2580"/>
 		</DataConnections>
