@@ -3,17 +3,7 @@
 ```{index} single: Übungen (Arbeitsbereich test_B)
 ```
 
-```{toctree}
-:maxdepth: 1
 
-Uebungen_Basis_Index
-Uebungen_FlipFlops_Index
-Uebungen_Timer_Index
-Uebungen_Sequenzer_Index
-Uebung_Isobus_Softkeys_Index
-Uebungen_Signale_Index
-Uebungen_SubApps_Index
-```
 
 
 Hier finden Sie die Dokumentation der Übungen für den logiBUS® ohne den **AX Adapter**. Die Übungen sind thematisch gruppiert, um den Lernfortschritt optimal zu unterstützen.
