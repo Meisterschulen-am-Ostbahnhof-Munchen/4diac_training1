@@ -1,7 +1,6 @@
 # Speicherelemente und Klick-Events
 
-```{index} single: Speicherelemente und Klick-Events
-```
+
 
 
 

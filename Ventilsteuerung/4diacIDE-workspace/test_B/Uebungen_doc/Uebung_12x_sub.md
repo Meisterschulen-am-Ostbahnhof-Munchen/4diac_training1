@@ -2,8 +2,7 @@ Hier ist die Dokumentation für die Übung `Uebung_12x_sub` basierend auf den be
 
 # Uebung_12x_sub: Subapplication Type
 
-```{index} single: Uebung_12x_sub
-```
+
 
 
 * * * * * * * * * *

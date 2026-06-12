@@ -1,7 +1,6 @@
 # Uebung_002a3_AX: DigitalInput_I1/_I2 mit OR auf DigitalOutput_Q1, mit Plug and Socket
 
-```{index} single: Uebung_002a3_AX: Logische ODER-Verknüpfung zweier Signale
-```
+
 
 
 [![NotebookLM](media/NotebookLM_logo.png)](https://notebooklm.google.com/notebook/041f4df4-b729-484d-b786-b6dcdf151961)

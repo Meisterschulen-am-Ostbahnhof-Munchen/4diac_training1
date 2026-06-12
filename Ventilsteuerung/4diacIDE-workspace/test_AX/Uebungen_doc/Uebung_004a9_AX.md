@@ -1,7 +1,6 @@
 # Uebung_004a9_AX: mit E_SPLIT_3
 
-```{index} single: Uebung_004a9_AX: Event-Splitter 3-fach (E_SPLIT_3)
-```
+
 
 
 [![NotebookLM](media/NotebookLM_logo.png)](https://notebooklm.google.com/notebook/041f4df4-b729-484d-b786-b6dcdf151961)

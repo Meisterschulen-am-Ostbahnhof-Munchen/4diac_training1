@@ -1,7 +1,6 @@
 # Uebung_002b3_AX: DigitalInput_I1/_I2/_I3 auf DigitalOutput_Q1
 
-```{index} single: Uebung_002b3_AX: Kombinatorische Logik (AND/OR)
-```
+
 
 
 [![NotebookLM](media/NotebookLM_logo.png)](https://notebooklm.google.com/notebook/041f4df4-b729-484d-b786-b6dcdf151961)

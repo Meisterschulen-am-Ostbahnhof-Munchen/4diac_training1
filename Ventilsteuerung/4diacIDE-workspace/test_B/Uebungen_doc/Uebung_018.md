@@ -1,7 +1,6 @@
 # Uebung_018: Control Audio Signal und Delay
 
-```{index} single: Uebung_018: Melodien und Sequenzen (Audio-Delay)
-```
+
 
 
 [![NotebookLM](media/NotebookLM_logo.png)](https://notebooklm.google.com/notebook/a6872e59-1dfc-4132-a118-aff1bc7bc944)

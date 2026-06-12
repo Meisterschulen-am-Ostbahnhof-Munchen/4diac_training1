@@ -1,7 +1,6 @@
 # Uebung_013_AX: SR-Flip-Flop (Softkey)
 
-```{index} single: Uebung_013_AX: Softkey SR-Flip-Flop
-```
+
 
 
 [![NotebookLM](media/NotebookLM_logo.png)](https://notebooklm.google.com/notebook/041f4df4-b729-484d-b786-b6dcdf151961)

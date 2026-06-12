@@ -1,7 +1,6 @@
 # Uebung_010c2: SoftKey_F1 auf DigitalOutput_Q1 mit GreenWhiteBackground mit Subapp
 
-```{index} single: Uebung_010c2: Strukturierung von UI-Feedback (Untyped)
-```
+
 
 
 [![NotebookLM](media/NotebookLM_logo.png)](https://notebooklm.google.com/notebook/a6872e59-1dfc-4132-a118-aff1bc7bc944)

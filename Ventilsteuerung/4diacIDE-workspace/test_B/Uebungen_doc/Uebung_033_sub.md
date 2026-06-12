@@ -1,7 +1,6 @@
 # Uebung_033_sub: LED Strip Blinkende LED
 
-```{index} single: Uebung_033_sub: Modularer RGB-Kanal (SubApp)
-```
+
 
 
 [![NotebookLM](media/NotebookLM_logo.png)](https://notebooklm.google.com/notebook/a6872e59-1dfc-4132-a118-aff1bc7bc944)

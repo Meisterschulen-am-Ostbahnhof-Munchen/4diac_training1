@@ -1,7 +1,6 @@
 # Uebung_020e2: DigitalInput_I1 auf DigitalOutput_Q1; FB_TOF; Ausschaltverzögert
 
-```{index} single: Uebung_020e2: Zyklischer TOF-Timer (FB_TOF)
-```
+
 
 
 [![NotebookLM](media/NotebookLM_logo.png)](https://notebooklm.google.com/notebook/a6872e59-1dfc-4132-a118-aff1bc7bc944)

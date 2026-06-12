@@ -1,7 +1,6 @@
 # 📚 Bibliotheken: Sequenzer (AX Adapter)
 
-```{index} single: Bibliotheken: Sequenzer (AX Adapter)
-```
+
 
 Dieser Abschnitt beschreibt die in der logiBUS®-Bibliothek verfügbaren Sequenzer-Bausteine, die für die Verwendung mit dem **AX Adapter** optimiert sind.
 

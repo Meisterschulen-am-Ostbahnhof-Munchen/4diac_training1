@@ -1,7 +1,6 @@
 # Uebung_130: Übung zu ISOBUS Receive Message
 
-```{index} single: Uebung_130: Custom PGN empfangen (Peer-to-Peer)
-```
+
 
 
 [![NotebookLM](media/NotebookLM_logo.png)](https://notebooklm.google.com/notebook/a6872e59-1dfc-4132-a118-aff1bc7bc944)

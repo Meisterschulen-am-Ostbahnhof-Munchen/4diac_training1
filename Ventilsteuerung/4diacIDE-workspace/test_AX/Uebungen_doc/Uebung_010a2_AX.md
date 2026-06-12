@@ -1,7 +1,6 @@
 # Uebung_010a2_AX: Button_A1 auf DigitalOutput_Q1
 
-```{index} single: Uebung_010a2_AX: ISOBUS Button (A1)
-```
+
 
 
 [![NotebookLM](media/NotebookLM_logo.png)](https://notebooklm.google.com/notebook/041f4df4-b729-484d-b786-b6dcdf151961)

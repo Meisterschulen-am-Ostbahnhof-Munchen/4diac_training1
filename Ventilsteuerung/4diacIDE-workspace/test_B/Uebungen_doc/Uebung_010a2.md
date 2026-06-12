@@ -1,7 +1,6 @@
 # Uebung_010a2: Button_A1 auf DigitalOutput_Q1
 
-```{index} single: Uebung_010a2: ISOBUS Button (Datenmaske)
-```
+
 
 
 [![NotebookLM](media/NotebookLM_logo.png)](https://notebooklm.google.com/notebook/a6872e59-1dfc-4132-a118-aff1bc7bc944)

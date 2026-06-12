@@ -1,7 +1,6 @@
 # Uebung_010b5_sub: IX auf QX (generisch)
 
-```{index} single: Uebung_010b5_sub: Erweiterte Softkey-Einheit (SubApp)
-```
+
 ## 🎧 Podcast
 
 

@@ -1,7 +1,6 @@
 # Uebung_002a2_AX: DigitalInput_I1/_I2 mit F_AND (bitwise) auf DigitalOutput_Q1
 
-```{index} single: Uebung_002a2_AX: UND-Verknüpfung mit Signalwandlung
-```
+
 
 
 [![NotebookLM](media/NotebookLM_logo.png)](https://notebooklm.google.com/notebook/041f4df4-b729-484d-b786-b6dcdf151961)

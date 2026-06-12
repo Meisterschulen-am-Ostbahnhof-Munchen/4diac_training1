@@ -1,7 +1,6 @@
 # Uebung_010: SoftKey_F1 auf DigitalOutput_Q1
 
-```{index} single: Uebung_010: ISOBUS Softkey (Direkt)
-```
+
 
 
 [![NotebookLM](media/NotebookLM_logo.png)](https://notebooklm.google.com/notebook/a6872e59-1dfc-4132-a118-aff1bc7bc944)

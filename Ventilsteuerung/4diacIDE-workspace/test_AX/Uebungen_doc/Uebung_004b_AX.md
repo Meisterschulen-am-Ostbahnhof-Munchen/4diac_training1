@@ -1,7 +1,6 @@
 # Uebung_004b_AX: Toggle Flip-Flop mit IE / E_SWITCH + E_SR
 
-```{index} single: Uebung_004b_AX: Komplexes Event-Switching (Anti-Pattern?)
-```
+
 
 
 [![NotebookLM](media/NotebookLM_logo.png)](https://notebooklm.google.com/notebook/041f4df4-b729-484d-b786-b6dcdf151961)

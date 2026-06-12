@@ -1,7 +1,6 @@
 # Signalverarbeitung, PWM und Regelung
 
-```{index} single: Signalverarbeitung, PWM und Regelung
-```
+
 
 
 

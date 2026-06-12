@@ -1,7 +1,6 @@
 # Uebung_152: Impulszähler &amp; PI Regler
 
-```{index} single: Uebung_152: PI-Regelung (Drehzahlregelung)
-```
+
 
 
 [![NotebookLM](media/NotebookLM_logo.png)](https://notebooklm.google.com/notebook/041f4df4-b729-484d-b786-b6dcdf151961)

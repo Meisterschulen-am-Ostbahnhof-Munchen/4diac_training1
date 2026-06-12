@@ -1,7 +1,6 @@
 # Uebung_010b4: SoftKey_F1-8 auf DigitalOutput_Q1-8
 
-```{index} single: Uebung_010b4: Strukturiertes Softkey-Mapping (8-fach)
-```
+
 
 
 [![NotebookLM](media/NotebookLM_logo.png)](https://notebooklm.google.com/notebook/a6872e59-1dfc-4132-a118-aff1bc7bc944)

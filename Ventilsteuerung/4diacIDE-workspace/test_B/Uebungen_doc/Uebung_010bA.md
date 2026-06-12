@@ -1,7 +1,6 @@
 # Uebung_010bA: Toggle Flip-Flop mit IE Button_A1 BT_STILL_HELD
 
-```{index} single: Uebung_010bA: Einmaliger langer Tastendruck
-```
+
 
 
 [![NotebookLM](media/NotebookLM_logo.png)](https://notebooklm.google.com/notebook/a6872e59-1dfc-4132-a118-aff1bc7bc944)

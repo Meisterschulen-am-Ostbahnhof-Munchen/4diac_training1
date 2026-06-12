@@ -1,7 +1,6 @@
 # Wiederverwendbare Typen (SubApps)
 
-```{index} single: Wiederverwendbare Typen (SubApps)
-```
+
 
 
 

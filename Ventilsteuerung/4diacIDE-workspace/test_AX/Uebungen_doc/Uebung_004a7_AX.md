@@ -1,7 +1,6 @@
 # Uebung_004a7_AX: SR und T-Flip-Flop mit IE und E_REND (Rendezvous)
 
-```{index} single: Uebung_004a7_AX: SR-Flip-Flop mit Rendezvous
-```
+
 
 
 [![NotebookLM](media/NotebookLM_logo.png)](https://notebooklm.google.com/notebook/041f4df4-b729-484d-b786-b6dcdf151961)

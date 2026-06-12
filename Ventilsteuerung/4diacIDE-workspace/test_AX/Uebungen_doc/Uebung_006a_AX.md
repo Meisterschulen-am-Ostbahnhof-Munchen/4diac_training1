@@ -1,7 +1,6 @@
 # Uebung_006a_AX: SR und T-Flip-Flop mit 3x IE
 
-```{index} single: Uebung_006a_AX: Kombiniertes T/SR Flip-Flop
-```
+
 
 
 [![NotebookLM](media/NotebookLM_logo.png)](https://notebooklm.google.com/notebook/041f4df4-b729-484d-b786-b6dcdf151961)

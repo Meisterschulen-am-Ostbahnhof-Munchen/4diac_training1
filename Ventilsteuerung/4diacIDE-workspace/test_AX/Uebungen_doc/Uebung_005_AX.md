@@ -1,7 +1,6 @@
 # Uebung_005_AX: Toggle Flip-Flop mit IXA
 
-```{index} single: Uebung_005_AX: Toggle mit Pegel-Eingang (Überflüssig kompliziert?)
-```
+
 
 
 [![NotebookLM](media/NotebookLM_logo.png)](https://notebooklm.google.com/notebook/041f4df4-b729-484d-b786-b6dcdf151961)

@@ -1,7 +1,6 @@
 # Uebung_002a6_AX: DigitalInput_I1-3 mit AND auf DigitalOutput_Q1, mit Plug and Socket
 
-```{index} single: Uebung_002a6_AX: Logische UND-Verknüpfung mit drei Eingängen
-```
+
 
 
 [![NotebookLM](media/NotebookLM_logo.png)](https://notebooklm.google.com/notebook/041f4df4-b729-484d-b786-b6dcdf151961)

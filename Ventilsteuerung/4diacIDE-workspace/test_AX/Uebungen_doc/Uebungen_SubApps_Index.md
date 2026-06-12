@@ -1,7 +1,6 @@
 # Wiederverwendbare Sub-Applikationen
 
-```{index} single: Wiederverwendbare Sub-Applikationen
-```
+
 
 
 

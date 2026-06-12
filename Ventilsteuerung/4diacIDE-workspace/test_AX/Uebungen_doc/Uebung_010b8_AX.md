@@ -1,7 +1,6 @@
 # Uebung_010b8_AX: Toggle Flip-Flop mit IE Button_A1 BT_PRESSED_LATCHED
 
-```{index} single: Uebung_010b8_AX: Button Event (PRESSED_LATCHED)
-```
+
 
 
 [![NotebookLM](media/NotebookLM_logo.png)](https://notebooklm.google.com/notebook/041f4df4-b729-484d-b786-b6dcdf151961)

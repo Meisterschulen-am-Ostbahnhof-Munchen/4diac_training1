@@ -1,7 +1,6 @@
 # Uebung_003b3_AX: Funk 16 Tasten auf DataPanel 16
 
-```{index} single: Uebung_003b3_AX: Parametrierbare Massenverarbeitung
-```
+
 
 
 [![NotebookLM](media/NotebookLM_logo.png)](https://notebooklm.google.com/notebook/041f4df4-b729-484d-b786-b6dcdf151961)

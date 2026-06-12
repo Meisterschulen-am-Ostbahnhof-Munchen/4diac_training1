@@ -1,7 +1,6 @@
 # Uebung_006b_AX: RS-Flip-Flop mit 2x IE
 
-```{index} single: Uebung_006b_AX: RS-Flip-Flop (Rücksetzen dominant)
-```
+
 
 
 [![NotebookLM](media/NotebookLM_logo.png)](https://notebooklm.google.com/notebook/041f4df4-b729-484d-b786-b6dcdf151961)

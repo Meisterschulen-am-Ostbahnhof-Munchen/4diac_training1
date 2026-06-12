@@ -1,7 +1,6 @@
 # Uebung_007a3: Blinker mit E_CYCLE, E_SWITCH und E_SR
 
-```{index} single: Uebung_007a3: Sicherer Blinker (Definierter AUS-Zustand)
-```
+
 
 
 [![NotebookLM](media/NotebookLM_logo.png)](https://notebooklm.google.com/notebook/a6872e59-1dfc-4132-a118-aff1bc7bc944)

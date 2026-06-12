@@ -1,7 +1,6 @@
 # Uebung_003d: DigitalInput_I1/_I2 auf DigitalOutput_Q1/_I2
 
-```{index} single: Uebung_003d: Wiederholung Parallelsteuerung
-```
+
 
 
 [![NotebookLM](media/NotebookLM_logo.png)](https://notebooklm.google.com/notebook/a6872e59-1dfc-4132-a118-aff1bc7bc944)

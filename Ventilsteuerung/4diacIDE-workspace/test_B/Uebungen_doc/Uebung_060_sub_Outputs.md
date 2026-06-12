@@ -2,8 +2,7 @@ Hier ist die Dokumentation für die Übung `Uebung_060_sub_Outputs` basierend au
 
 # Uebung_060_sub_Outputs: für TC-SC also Task Controller Section Control
 
-```{index} single: Uebung_060_sub_Outputs
-```
+
 
 
 

@@ -2,8 +2,7 @@ Hier ist die Dokumentation für die Übung basierend auf der bereitgestellten XM
 
 # Uebung_003b3_sub_AX: IX auf QX (generisch)
 
-```{index} single: Uebung_003b3_sub_AX
-```
+
 
 
 

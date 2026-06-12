@@ -1,7 +1,6 @@
 # Numerischer Index (test_B)
 
-```{index} single: Numerischer Index (test_B)
-```
+
 
 ```{toctree}
 :maxdepth: 1

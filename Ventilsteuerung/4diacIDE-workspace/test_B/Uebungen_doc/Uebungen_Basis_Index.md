@@ -1,7 +1,6 @@
 # Grundlagen & Logik
 
-```{index} single: Grundlagen & Logik
-```
+
 
 
 

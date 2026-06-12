@@ -1,7 +1,6 @@
 # Uebung_006_AX: SR-Flip-Flop mit 2x IE
 
-```{index} single: Uebung_006_AX: Set-Reset Flip-Flop (Speicher)
-```
+
 
 
 [![NotebookLM](media/NotebookLM_logo.png)](https://notebooklm.google.com/notebook/041f4df4-b729-484d-b786-b6dcdf151961)

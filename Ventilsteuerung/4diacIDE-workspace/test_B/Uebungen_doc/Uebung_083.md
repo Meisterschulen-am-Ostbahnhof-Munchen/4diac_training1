@@ -1,7 +1,6 @@
 # Uebung_083: Beispiel für E_CTUD_UDINT
 
-```{index} single: Uebung_083: Präzisions-Zähler (UDINT)
-```
+
 
 
 [![NotebookLM](media/NotebookLM_logo.png)](https://notebooklm.google.com/notebook/a6872e59-1dfc-4132-a118-aff1bc7bc944)

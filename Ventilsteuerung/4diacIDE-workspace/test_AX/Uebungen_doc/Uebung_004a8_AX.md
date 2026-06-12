@@ -1,7 +1,6 @@
 # Uebung_004a8_AX: mit E_SPLIT_2
 
-```{index} single: Uebung_004a8_AX: Event-Splitter 2-fach (E_SPLIT_2)
-```
+
 
 
 [![NotebookLM](media/NotebookLM_logo.png)](https://notebooklm.google.com/notebook/041f4df4-b729-484d-b786-b6dcdf151961)

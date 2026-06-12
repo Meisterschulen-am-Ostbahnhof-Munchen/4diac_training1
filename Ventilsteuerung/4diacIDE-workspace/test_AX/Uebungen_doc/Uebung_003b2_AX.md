@@ -1,7 +1,6 @@
 # Uebung_003b2_AX: Funk 16 Tasten auf DataPanel 16
 
-```{index} single: Uebung_003b2_AX: Massenverarbeitung mit untypisierten Sub-Applikationen
-```
+
 
 
 [![NotebookLM](media/NotebookLM_logo.png)](https://notebooklm.google.com/notebook/041f4df4-b729-484d-b786-b6dcdf151961)

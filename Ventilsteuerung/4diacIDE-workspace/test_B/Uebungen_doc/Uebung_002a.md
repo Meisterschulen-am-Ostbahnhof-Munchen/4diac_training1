@@ -1,7 +1,6 @@
 # Uebung_002a: DigitalInput_I1/_I2 mit AND auf DigitalOutput_Q1
 
-```{index} single: Uebung_002a: Logische UND-Verknüpfung (AND)
-```
+
 
 
 [![NotebookLM](media/NotebookLM_logo.png)](https://notebooklm.google.com/notebook/a6872e59-1dfc-4132-a118-aff1bc7bc944)

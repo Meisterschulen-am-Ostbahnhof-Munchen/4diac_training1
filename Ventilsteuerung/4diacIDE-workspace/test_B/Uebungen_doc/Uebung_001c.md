@@ -1,7 +1,6 @@
 # Uebung_001c: DigitalInput_I1 auf DigitalOutput_Q1 --&gt; Eingang abfragen bei Boot.
 
-```{index} single: Uebung_001c: Eingang abfragen bei Boot (Standard-Pins)
-```
+
 
 
 [![NotebookLM](media/NotebookLM_logo.png)](https://notebooklm.google.com/notebook/a6872e59-1dfc-4132-a118-aff1bc7bc944)

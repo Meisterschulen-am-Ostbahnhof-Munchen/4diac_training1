@@ -1,7 +1,6 @@
 # Basis-Logik und direkte Verbindungen
 
-```{index} single: Basis-Logik und direkte Verbindungen
-```
+
 
 
 

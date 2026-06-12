@@ -1,7 +1,6 @@
 # Uebung_020f3_AX: DigitalInput_I1 auf DigitalOutput_Q1; BLINKER
 
-```{index} single: Uebung_020f3_AX: Blinker (AX_BLINK)
-```
+
 
 
 [![NotebookLM](media/NotebookLM_logo.png)](https://notebooklm.google.com/notebook/041f4df4-b729-484d-b786-b6dcdf151961)

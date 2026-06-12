@@ -1,7 +1,6 @@
 # Uebung_079: alle TECU FBs
 
-```{index} single: Uebung_079: Tractor ECU (TECU) Gesamtübersicht
-```
+
 
 
 [![NotebookLM](media/NotebookLM_logo.png)](https://notebooklm.google.com/notebook/a6872e59-1dfc-4132-a118-aff1bc7bc944)

@@ -1,7 +1,6 @@
 # Uebung_006a3_sub: Subapplication Type
 
-```{index} single: Uebung_006a3_sub: Richtungs-Merker (SubApp)
-```
+
 
 
 [![NotebookLM](media/NotebookLM_logo.png)](https://notebooklm.google.com/notebook/a6872e59-1dfc-4132-a118-aff1bc7bc944)

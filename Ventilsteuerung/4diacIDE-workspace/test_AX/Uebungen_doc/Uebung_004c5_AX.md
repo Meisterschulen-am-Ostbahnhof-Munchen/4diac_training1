@@ -1,7 +1,6 @@
 # Uebung_004c5_AX: Toggle Flip-Flop mit IE mit BUTTON_PRESS_END
 
-```{index} single: Uebung_004c5_AX: Loslassen (Generell)
-```
+
 
 
 [![NotebookLM](media/NotebookLM_logo.png)](https://notebooklm.google.com/notebook/041f4df4-b729-484d-b786-b6dcdf151961)

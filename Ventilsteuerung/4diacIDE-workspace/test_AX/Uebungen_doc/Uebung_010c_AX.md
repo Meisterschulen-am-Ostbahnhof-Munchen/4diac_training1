@@ -1,7 +1,6 @@
 # Uebung_010c_AX: SoftKey_F1 auf DigitalOutput_Q1 mit GreenWhiteBackground
 
-```{index} single: Uebung_010c_AX: Softkey Feedback (Visuell)
-```
+
 
 
 [![NotebookLM](media/NotebookLM_logo.png)](https://notebooklm.google.com/notebook/041f4df4-b729-484d-b786-b6dcdf151961)

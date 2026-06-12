@@ -1,7 +1,6 @@
 # Uebung_004a3_AX: wie Uebung_004a2 aber ohne E_MERGE
 
-```{index} single: Uebung_004a3_AX: Impliziter Event-Merge
-```
+
 
 
 [![NotebookLM](media/NotebookLM_logo.png)](https://notebooklm.google.com/notebook/041f4df4-b729-484d-b786-b6dcdf151961)

@@ -1,7 +1,6 @@
 # Uebung_004c2_AX: Toggle Flip-Flop mit IE mit BUTTON_LONG_PRESS_START
 
-```{index} single: Uebung_004c2_AX: Langer Tastendruck (Start)
-```
+
 
 
 [![NotebookLM](media/NotebookLM_logo.png)](https://notebooklm.google.com/notebook/041f4df4-b729-484d-b786-b6dcdf151961)

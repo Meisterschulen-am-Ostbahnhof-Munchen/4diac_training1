@@ -1,7 +1,6 @@
 # Uebung_103: DigitalInput_I1 auf DigitalOutput_Q1, mit Plug and Socket und DEMUX
 
-```{index} single: Uebung_103: Modus-Selektion (Multiplexer/Demultiplexer)
-```
+
 
 
 [![NotebookLM](media/NotebookLM_logo.png)](https://notebooklm.google.com/notebook/041f4df4-b729-484d-b786-b6dcdf151961)

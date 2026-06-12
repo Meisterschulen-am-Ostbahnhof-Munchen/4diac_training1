@@ -1,7 +1,6 @@
 # Uebung_004c7: Toggle Flip-Flop mit IE mit BUTTON_PRESS_END
 
-```{index} single: Uebung_004c7: Parametrierter langer Tastendruck
-```
+
 
 
 [![NotebookLM](media/NotebookLM_logo.png)](https://notebooklm.google.com/notebook/a6872e59-1dfc-4132-a118-aff1bc7bc944)

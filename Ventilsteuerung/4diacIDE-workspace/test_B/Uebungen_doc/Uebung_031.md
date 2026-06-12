@@ -1,7 +1,6 @@
 # Uebung_031: LED Strip
 
-```{index} single: Uebung_031: RGB-LED Strip (HSV-Steuerung)
-```
+
 
 
 [![NotebookLM](media/NotebookLM_logo.png)](https://notebooklm.google.com/notebook/a6872e59-1dfc-4132-a118-aff1bc7bc944)

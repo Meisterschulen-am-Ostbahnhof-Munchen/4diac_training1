@@ -1,7 +1,6 @@
 # Uebung_002a7_AX: DigitalInput_I1-3 mit XOR auf DigitalOutput_Q1, mit Plug and Socket
 
-```{index} single: Uebung_002a7_AX: XOR-Verknüpfung mit drei Eingängen
-```
+
 
 
 [![NotebookLM](media/NotebookLM_logo.png)](https://notebooklm.google.com/notebook/041f4df4-b729-484d-b786-b6dcdf151961)

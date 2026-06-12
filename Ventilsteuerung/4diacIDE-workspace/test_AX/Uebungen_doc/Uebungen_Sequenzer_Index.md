@@ -1,7 +1,6 @@
 # Sequenzer und Schrittketten
 
-```{index} single: Sequenzer und Schrittketten
-```
+
 
 
 

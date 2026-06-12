@@ -1,7 +1,6 @@
 # Uebung_007a2_AX: Blinker mit E_CYCLE und E_T_FF
 
-```{index} single: Uebung_007a2_AX: Schaltbarer Blinker (Zweite Variante)
-```
+
 
 
 [![NotebookLM](media/NotebookLM_logo.png)](https://notebooklm.google.com/notebook/041f4df4-b729-484d-b786-b6dcdf151961)

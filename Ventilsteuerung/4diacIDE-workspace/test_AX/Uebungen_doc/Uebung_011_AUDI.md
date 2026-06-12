@@ -1,7 +1,6 @@
 # Uebung_011_AUDI: Numeric Value Input
 
-```{index} single: Uebung_011_AUDI: Numerische Eingabe mit Adaptern
-```
+
 
 
 Dieser Artikel beschreibt die logiBUS®-Übung `Uebung_011_AUDI`. Sie ist die adapterbasierte Variante der Übung 011 und zeigt, wie numerische Werte effizient und übersichtlich verarbeitet werden.

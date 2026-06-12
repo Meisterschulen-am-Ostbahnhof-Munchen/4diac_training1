@@ -1,7 +1,6 @@
 # Uebung_039_AX: Spiegelabfolge V2 mit Schrittkette
 
-```{index} single: Uebung_039_AX: Hydraulik-Ventilsteuerung
-```
+
 
 Dieser Artikel beschreibt die logiBUS®-Übung `Uebung_039_AX`. Diese Übung ist speziell auf die Ansteuerung von hydraulischen oder pneumatischen Wegeventilen zugeschnitten und nutzt durchgängig die AX-Adaptertechnologie.
 

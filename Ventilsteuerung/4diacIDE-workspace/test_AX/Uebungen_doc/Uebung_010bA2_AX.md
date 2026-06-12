@@ -1,7 +1,6 @@
 # Uebung_010bA2_AX: Toggle Flip-Flop mit IE AuxFunction2_X1 AuxEnabled
 
-```{index} single: Uebung_010bA2_AX: AUX Event (Enabled - Latched vs NonLatched)
-```
+
 
 
 [![NotebookLM](media/NotebookLM_logo.png)](https://notebooklm.google.com/notebook/041f4df4-b729-484d-b786-b6dcdf151961)

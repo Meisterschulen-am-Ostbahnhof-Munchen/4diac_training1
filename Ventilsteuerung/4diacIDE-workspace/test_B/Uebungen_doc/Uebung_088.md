@@ -1,7 +1,6 @@
 # Uebung_088: Beispiel für E_F_TRIG
 
-```{index} single: Uebung_088: Fallende Flanke (F_TRIG)
-```
+
 
 
 [![NotebookLM](media/NotebookLM_logo.png)](https://notebooklm.google.com/notebook/a6872e59-1dfc-4132-a118-aff1bc7bc944)

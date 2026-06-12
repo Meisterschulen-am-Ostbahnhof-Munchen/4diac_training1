@@ -1,7 +1,6 @@
 # Uebung_007a3_AX: Blinker mit E_CYCLE, E_SWITCH und E_SR
 
-```{index} single: Uebung_007a3_AX: Korrekter Blinker (Definierter Stopp)
-```
+
 
 
 [![NotebookLM](media/NotebookLM_logo.png)](https://notebooklm.google.com/notebook/041f4df4-b729-484d-b786-b6dcdf151961)

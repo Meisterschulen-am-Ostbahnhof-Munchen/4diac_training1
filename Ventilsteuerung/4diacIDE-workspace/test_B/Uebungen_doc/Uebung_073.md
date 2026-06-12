@@ -1,7 +1,6 @@
 # Uebung_073: VDS auf UT ausgeben
 
-```{index} single: Uebung_073: GPS-Geschwindigkeit (VDS)
-```
+
 
 
 [![NotebookLM](media/NotebookLM_logo.png)](https://notebooklm.google.com/notebook/a6872e59-1dfc-4132-a118-aff1bc7bc944)

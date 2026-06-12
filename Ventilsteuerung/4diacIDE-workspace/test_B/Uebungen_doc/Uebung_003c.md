@@ -1,7 +1,6 @@
 # Uebung_003c: DigitalInput_I1-2-3-4 auf AUX
 
-```{index} single: Uebung_003c: Mapping auf ISOBUS AUX (Standard-Pins)
-```
+
 
 
 [![NotebookLM](media/NotebookLM_logo.png)](https://notebooklm.google.com/notebook/a6872e59-1dfc-4132-a118-aff1bc7bc944)

@@ -1,7 +1,6 @@
 # Uebung_087a2: Beispiel für E_DEMUX_4
 
-```{index} single: Uebung_087a2: Beispiel für E_DEMUX_4
-```
+
 
 
 ![Uebung_087a2_network](./Uebung_087a2_network.svg)

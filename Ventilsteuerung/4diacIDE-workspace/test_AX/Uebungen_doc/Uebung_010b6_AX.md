@@ -1,7 +1,6 @@
 # Uebung_010b6_AX: Toggle Flip-Flop mit IE SoftKey_F1 SK_PRESSED
 
-```{index} single: Uebung_010b6_AX: Softkey Event (SK_PRESSED)
-```
+
 
 
 [![NotebookLM](media/NotebookLM_logo.png)](https://notebooklm.google.com/notebook/041f4df4-b729-484d-b786-b6dcdf151961)

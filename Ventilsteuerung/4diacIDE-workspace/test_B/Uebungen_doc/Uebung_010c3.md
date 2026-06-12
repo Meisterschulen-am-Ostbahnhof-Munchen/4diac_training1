@@ -1,7 +1,6 @@
 # Uebung_010c3: SoftKey_F1 auf DigitalOutput_Q1 mit GreenWhiteBackground mit Typed Subapp
 
-```{index} single: Uebung_010c3: Strukturierung von UI-Feedback (Typed)
-```
+
 
 
 [![NotebookLM](media/NotebookLM_logo.png)](https://notebooklm.google.com/notebook/a6872e59-1dfc-4132-a118-aff1bc7bc944)

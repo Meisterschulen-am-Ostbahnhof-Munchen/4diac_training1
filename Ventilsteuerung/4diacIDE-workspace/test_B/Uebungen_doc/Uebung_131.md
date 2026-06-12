@@ -1,7 +1,6 @@
 # Uebung_131: Übung zu ISOBUS Receive Message Cyclic
 
-```{index} single: Uebung_131: Zyklisches Empfangen mit Überwachung
-```
+
 
 
 [![NotebookLM](media/NotebookLM_logo.png)](https://notebooklm.google.com/notebook/a6872e59-1dfc-4132-a118-aff1bc7bc944)

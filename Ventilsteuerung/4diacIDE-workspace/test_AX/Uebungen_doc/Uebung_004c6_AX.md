@@ -1,7 +1,6 @@
 # Uebung_004c6_AX: Toggle Flip-Flop mit IE mit BUTTON_MULTIPLE_CLICK (3-fach Klick)
 
-```{index} single: Uebung_004c6_AX: Mehrfach-Klick (3-fach)
-```
+
 
 
 [![NotebookLM](media/NotebookLM_logo.png)](https://notebooklm.google.com/notebook/041f4df4-b729-484d-b786-b6dcdf151961)

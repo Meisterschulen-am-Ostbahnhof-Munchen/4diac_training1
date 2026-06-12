@@ -1,7 +1,6 @@
 # Uebung_039_sub_NumbAnzeig_AX: Spiegelabfolge V2 mit Schrittkette SUB Num
 
-```{index} single: Uebung_039_sub_NumbAnzeig_AX
-```
+
 
 * * * * * * * * * *
 

@@ -1,7 +1,6 @@
 # Uebung_020g_AX: DigitalInput_I1 auf DigitalOutput_Q1; AX_TONOF; Ein-/Ausschaltverzögert
 
-```{index} single: Uebung_020g_AX: Ein- und Ausschaltverzögerung (TONOF)
-```
+
 
 
 [![NotebookLM](media/NotebookLM_logo.png)](https://notebooklm.google.com/notebook/041f4df4-b729-484d-b786-b6dcdf151961)

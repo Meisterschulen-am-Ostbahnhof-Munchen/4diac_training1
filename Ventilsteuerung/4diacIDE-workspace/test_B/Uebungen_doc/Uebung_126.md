@@ -1,7 +1,6 @@
 # Uebung_126: Übung zu ISOBUS Send Message Cyclic (mit CB)
 
-```{index} single: Uebung_126: Zyklisches Senden mit Callback
-```
+
 
 
 [![NotebookLM](media/NotebookLM_logo.png)](https://notebooklm.google.com/notebook/a6872e59-1dfc-4132-a118-aff1bc7bc944)

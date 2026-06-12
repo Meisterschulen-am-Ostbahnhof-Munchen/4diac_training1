@@ -1,7 +1,6 @@
 # Uebung_020c3_AX: DigitalInput_I1 auf DigitalOutput_Q1; AX_FB_TON; Einschaltverzögert
 
-```{index} single: Uebung_020c3_AX: AX_FB_TON mit Takteingang
-```
+
 
 
 Dieser Artikel beschreibt die logiBUS®-Übung `Uebung_020c3_AX`. Hier wird der adapterbasierte IEC 61131-3 Timer-Baustein `AX_FB_TON` verwendet, der eine regelmäßige Triggerung (Takt) benötigt, um den internen Status (ET) zu aktualisieren.

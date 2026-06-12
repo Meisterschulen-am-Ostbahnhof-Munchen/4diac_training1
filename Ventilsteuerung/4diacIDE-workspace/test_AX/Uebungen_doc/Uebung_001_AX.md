@@ -1,7 +1,6 @@
 # Uebung_001_AX: DigitalInput_I1 auf DigitalOutput_Q1, mit Plug and Socket
 
-```{index} single: Uebung_001_AX: DigitalInput_I1 auf DigitalOutput_Q1, mit Plug and Socket
-```
+
 
 
 [![NotebookLM](media/NotebookLM_logo.png)](https://notebooklm.google.com/notebook/041f4df4-b729-484d-b786-b6dcdf151961)

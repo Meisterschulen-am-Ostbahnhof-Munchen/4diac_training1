@@ -2,8 +2,7 @@ Hier ist die Dokumentation für die Übung basierend auf den bereitgestellten XM
 
 # Uebung_039a_sub_Outputs: Subapplication Type
 
-```{index} single: Übung 039a - Sub-Applikation Outputs
-```
+
 
 ![Bild der Übung, falls vorhanden]
 

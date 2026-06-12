@@ -1,7 +1,6 @@
 # Uebung_003d_AX: DigitalInput_I1/_I2 auf DigitalOutput_Q1/_I2
 
-```{index} single: Uebung_003d_AX: Wiederholung Parallelsteuerung
-```
+
 
 
 [![NotebookLM](media/NotebookLM_logo.png)](https://notebooklm.google.com/notebook/041f4df4-b729-484d-b786-b6dcdf151961)

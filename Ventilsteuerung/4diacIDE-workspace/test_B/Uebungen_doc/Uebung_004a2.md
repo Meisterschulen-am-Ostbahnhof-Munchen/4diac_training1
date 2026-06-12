@@ -1,7 +1,6 @@
 # Uebung_004a2: Toggle Flip-Flop mit IE mit BUTTON_SINGLE_CLICK mit E_MERGE
 
-```{index} single: Uebung_004a2: Stromstoßschalter von zwei Stellen (Event-Merge)
-```
+
 
 
 [![NotebookLM](media/NotebookLM_logo.png)](https://notebooklm.google.com/notebook/a6872e59-1dfc-4132-a118-aff1bc7bc944)

@@ -1,7 +1,6 @@
 # Flip-Flops & Speicher
 
-```{index} single: Flip-Flops & Speicher
-```
+
 
 
 

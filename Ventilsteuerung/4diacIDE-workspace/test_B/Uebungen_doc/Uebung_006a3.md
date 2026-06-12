@@ -1,7 +1,6 @@
 # Uebung_006a3: SR und T-Flip-Flop mit 3x IE
 
-```{index} single: Uebung_006a3: Motor-Wende-Schaltung (Diskret)
-```
+
 
 
 [![NotebookLM](media/NotebookLM_logo.png)](https://notebooklm.google.com/notebook/a6872e59-1dfc-4132-a118-aff1bc7bc944)

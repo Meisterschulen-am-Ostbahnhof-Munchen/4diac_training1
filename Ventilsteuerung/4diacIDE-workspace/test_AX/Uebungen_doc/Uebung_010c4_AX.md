@@ -1,7 +1,6 @@
 # Uebung_010c4_AX: SoftKey_F1/_F2 auf DigitalOutput_Q1/_Q2 mit GreenWhiteBackground mit Typed Subapp
 
-```{index} single: Uebung_010c4_AX: Mehrfachnutzung Smart Softkey
-```
+
 
 
 [![NotebookLM](media/NotebookLM_logo.png)](https://notebooklm.google.com/notebook/041f4df4-b729-484d-b786-b6dcdf151961)

@@ -1,7 +1,6 @@
 # Uebung_083_AX: Beispiel für AUDI_CTUD_UDINT (Adapter-basiert)
 
-```{index} single: Uebung_083_AX: Präzisions-Zähler (AUDI) mit Adaptern
-```
+
 
 
 Dieser Artikel beschreibt die logiBUS®-Übung `Uebung_083_AX`. Sie ist die adapterbasierte Variante der Übung 083 und demonstriert einen Auf-/Abwärtszähler (`AUDI_CTUD_UDINT`) für vorzeichenlose 32-Bit-Ganzzahlen in einer AX-Umgebung.

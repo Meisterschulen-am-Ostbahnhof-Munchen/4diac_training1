@@ -1,7 +1,6 @@
 # Uebung_010b2: Toggle Flip-Flop mit IE SoftKey_F1 SK_RELEASED
 
-```{index} single: Uebung_010b2: Softkey-Release als Auslöser
-```
+
 
 
 [![NotebookLM](media/NotebookLM_logo.png)](https://notebooklm.google.com/notebook/a6872e59-1dfc-4132-a118-aff1bc7bc944)

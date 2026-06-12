@@ -1,7 +1,6 @@
 # Uebung_060: für TC-SC also Task Controller Section Control
 
-```{index} single: Uebung_060: Task Controller Section Control (TC-SC)
-```
+
 
 
 [![NotebookLM](media/NotebookLM_logo.png)](https://notebooklm.google.com/notebook/a6872e59-1dfc-4132-a118-aff1bc7bc944)

@@ -1,7 +1,6 @@
 # Uebung_006a2_AX: 2x SR und T-Flip-Flop mit IE
 
-```{index} single: Uebung_006a2_AX: Zentral-Reset für mehrere Speicher
-```
+
 
 
 [![NotebookLM](media/NotebookLM_logo.png)](https://notebooklm.google.com/notebook/041f4df4-b729-484d-b786-b6dcdf151961)

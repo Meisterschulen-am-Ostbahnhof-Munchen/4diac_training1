@@ -1,7 +1,6 @@
 # Uebung_054: DigitalInput_I1-_I4 auf DigitalOutput_Q1-_Q4
 
-```{index} single: Uebung_054: Signal-Vektoren (Arrays)
-```
+
 
 
 [![NotebookLM](media/NotebookLM_logo.png)](https://notebooklm.google.com/notebook/a6872e59-1dfc-4132-a118-aff1bc7bc944)

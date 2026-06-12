@@ -1,7 +1,6 @@
 # Uebung_124: Übung zu ISOBUS Send Message
 
-```{index} single: Uebung_124: Custom PGN senden (Peer-to-Peer)
-```
+
 
 
 [![NotebookLM](media/NotebookLM_logo.png)](https://notebooklm.google.com/notebook/a6872e59-1dfc-4132-a118-aff1bc7bc944)

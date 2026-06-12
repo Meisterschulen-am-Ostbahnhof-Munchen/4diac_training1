@@ -1,7 +1,6 @@
 # ISOBUS (UT, TECU, TC)
 
-```{index} single: ISOBUS (UT, TECU, TC)
-```
+
 
 
 

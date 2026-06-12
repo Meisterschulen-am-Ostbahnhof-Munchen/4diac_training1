@@ -1,7 +1,6 @@
 # 🛠️ Übungen (Arbeitsbereich test_B)
 
-```{index} single: Übungen (Arbeitsbereich test_B)
-```
+
 
 
 

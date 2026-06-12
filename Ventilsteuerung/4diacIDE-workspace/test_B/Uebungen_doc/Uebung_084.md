@@ -1,7 +1,6 @@
 # Uebung_084: Beispiel für E_CYCLE
 
-```{index} single: Uebung_084: Automatischer Zähler (Takt & Zählung)
-```
+
 
 
 [![NotebookLM](media/NotebookLM_logo.png)](https://notebooklm.google.com/notebook/a6872e59-1dfc-4132-a118-aff1bc7bc944)

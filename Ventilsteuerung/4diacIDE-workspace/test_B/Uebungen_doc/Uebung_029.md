@@ -1,7 +1,6 @@
 # Uebung_029: LED_DO Blinkende LED
 
-```{index} single: Uebung_029: LED-Statusanzeigen (Frequenzen)
-```
+
 
 
 [![NotebookLM](media/NotebookLM_logo.png)](https://notebooklm.google.com/notebook/a6872e59-1dfc-4132-a118-aff1bc7bc944)

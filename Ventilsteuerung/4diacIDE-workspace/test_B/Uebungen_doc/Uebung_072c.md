@@ -1,7 +1,6 @@
 # Uebung_072c: GBSD auf UT ausgeben
 
-```{index} single: Uebung_072c: Integration der Geschwindigkeit (Wegberechnung)
-```
+
 
 
 [![NotebookLM](media/NotebookLM_logo.png)](https://notebooklm.google.com/notebook/a6872e59-1dfc-4132-a118-aff1bc7bc944)

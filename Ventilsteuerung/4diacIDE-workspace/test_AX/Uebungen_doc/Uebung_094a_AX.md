@@ -1,7 +1,6 @@
 # Uebung_094a_AX: Beispiel für QI anstelle Permit
 
-```{index} single: Uebung_094a_AX: Deaktivieren von Bausteinen (QI)
-```
+
 
 
 [![NotebookLM](media/NotebookLM_logo.png)](https://notebooklm.google.com/notebook/041f4df4-b729-484d-b786-b6dcdf151961)

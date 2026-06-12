@@ -1,7 +1,6 @@
 # Uebung_120: Übung zu ISOBUS Name
 
-```{index} single: Uebung_120: ISOBUS Gerätenamen (NAME) auslesen
-```
+
 
 
 [![NotebookLM](media/NotebookLM_logo.png)](https://notebooklm.google.com/notebook/a6872e59-1dfc-4132-a118-aff1bc7bc944)

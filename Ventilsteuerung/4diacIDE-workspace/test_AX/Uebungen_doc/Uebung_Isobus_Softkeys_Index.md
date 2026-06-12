@@ -1,7 +1,6 @@
 # ISOBUS, Softkeys und Terminals
 
-```{index} single: ISOBUS, Softkeys und Terminals
-```
+
 
 
 

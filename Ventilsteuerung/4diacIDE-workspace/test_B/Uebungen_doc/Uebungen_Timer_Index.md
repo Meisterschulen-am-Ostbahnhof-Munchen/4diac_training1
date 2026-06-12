@@ -1,7 +1,6 @@
 # Timer & Zeitfunktionen
 
-```{index} single: Timer & Zeitfunktionen
-```
+
 
 
 

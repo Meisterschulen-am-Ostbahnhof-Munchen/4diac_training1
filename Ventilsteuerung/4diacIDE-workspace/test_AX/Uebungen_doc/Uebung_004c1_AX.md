@@ -1,7 +1,6 @@
 # Uebung_004c1_AX: Toggle Flip-Flop mit IE mit BUTTON_DOUBLE_CLICK
 
-```{index} single: Uebung_004c1_AX: Doppelklick-Auswertung
-```
+
 
 
 [![NotebookLM](media/NotebookLM_logo.png)](https://notebooklm.google.com/notebook/041f4df4-b729-484d-b786-b6dcdf151961)

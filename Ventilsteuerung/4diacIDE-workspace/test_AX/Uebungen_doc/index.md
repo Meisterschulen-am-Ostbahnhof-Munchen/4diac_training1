@@ -1,7 +1,6 @@
 # Numerischer Index (test_AX)
 
-```{index} single: Numerischer Index (test_AX)
-```
+
 
 
 

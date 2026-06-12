@@ -1,7 +1,6 @@
 # Uebung_006: SR-Flip-Flop mit 2x IE
 
-```{index} single: Uebung_006: Speicherglied (SR-Flip-Flop)
-```
+
 
 
 [![NotebookLM](media/NotebookLM_logo.png)](https://notebooklm.google.com/notebook/a6872e59-1dfc-4132-a118-aff1bc7bc944)

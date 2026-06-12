@@ -1,7 +1,6 @@
 # Uebung_015a: Object Pointer umschalten -- 3-fach
 
-```{index} single: Uebung_015a: Mehrfaches Umschalten von UI-Objekten
-```
+
 
 
 [![NotebookLM](media/NotebookLM_logo.png)](https://notebooklm.google.com/notebook/a6872e59-1dfc-4132-a118-aff1bc7bc944)

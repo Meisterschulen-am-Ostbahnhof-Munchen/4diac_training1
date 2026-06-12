@@ -1,7 +1,6 @@
 # Uebung_134: Übung zu ISOBUS Receive from Unclaimed Partner
 
-```{index} single: Uebung_134: Empfang von unbekannten Partnern
-```
+
 
 
 [![NotebookLM](media/NotebookLM_logo.png)](https://notebooklm.google.com/notebook/a6872e59-1dfc-4132-a118-aff1bc7bc944)

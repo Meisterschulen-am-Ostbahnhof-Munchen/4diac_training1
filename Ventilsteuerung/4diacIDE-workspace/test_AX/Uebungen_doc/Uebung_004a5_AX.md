@@ -1,7 +1,6 @@
 # Uebung_004a5_AX: wie Uebung_004a4 aber ohne E_SPLIT
 
-```{index} single: Uebung_004a5_AX: Impliziter Event-Split (Fan-Out)
-```
+
 
 
 [![NotebookLM](media/NotebookLM_logo.png)](https://notebooklm.google.com/notebook/041f4df4-b729-484d-b786-b6dcdf151961)

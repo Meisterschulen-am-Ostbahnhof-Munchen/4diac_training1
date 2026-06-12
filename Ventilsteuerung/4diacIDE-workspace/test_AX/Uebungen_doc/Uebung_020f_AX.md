@@ -1,7 +1,6 @@
 # Uebung_020f_AX: DigitalInput_I1 auf DigitalOutput_Q1; AX_TP; Impulsformend
 
-```{index} single: Uebung_020f_AX: Impulsglied (TP)
-```
+
 
 
 [![NotebookLM](media/NotebookLM_logo.png)](https://notebooklm.google.com/notebook/041f4df4-b729-484d-b786-b6dcdf151961)

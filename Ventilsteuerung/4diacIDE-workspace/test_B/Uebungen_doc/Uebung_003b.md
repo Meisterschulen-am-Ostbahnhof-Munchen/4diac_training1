@@ -1,7 +1,6 @@
 # Uebung_003b: DigitalInput_I1-2-3-4 auf DigitalOutput_Q1-2-3-4
 
-```{index} single: Uebung_003b: Modulare Parallelsteuerung (4-fach)
-```
+
 
 
 [![NotebookLM](media/NotebookLM_logo.png)](https://notebooklm.google.com/notebook/a6872e59-1dfc-4132-a118-aff1bc7bc944)

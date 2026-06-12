@@ -1,7 +1,6 @@
 # Uebung_090a2_AX: Beispiel für AX_MUX_3
 
-```{index} single: Uebung_090a2_AX: Signal-Multiplexer (3-fach)
-```
+
 
 
 [![NotebookLM](media/NotebookLM_logo.png)](https://notebooklm.google.com/notebook/041f4df4-b729-484d-b786-b6dcdf151961)

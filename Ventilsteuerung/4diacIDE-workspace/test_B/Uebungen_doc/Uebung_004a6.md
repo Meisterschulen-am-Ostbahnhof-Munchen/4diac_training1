@@ -1,7 +1,6 @@
 # Uebung_004a6: Toggle Flip-Flop mit IE und E_REND (Rendezvous)
 
-```{index} single: Uebung_004a6: Event-Rendezvous (Synchronisation)
-```
+
 
 
 [![NotebookLM](media/NotebookLM_logo.png)](https://notebooklm.google.com/notebook/a6872e59-1dfc-4132-a118-aff1bc7bc944)

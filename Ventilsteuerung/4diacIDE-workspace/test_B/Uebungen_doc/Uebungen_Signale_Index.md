@@ -1,7 +1,6 @@
 # Signalverarbeitung & PWM
 
-```{index} single: Signalverarbeitung & PWM
-```
+
 
 
 

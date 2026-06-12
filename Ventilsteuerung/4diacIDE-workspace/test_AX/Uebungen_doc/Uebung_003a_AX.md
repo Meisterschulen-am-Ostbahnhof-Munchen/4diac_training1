@@ -1,7 +1,6 @@
 # Uebung_003a_AX: DigitalInput_I1/_I2 auf DigitalOutput_Q1/_I2 - mit typed Subapp
 
-```{index} single: Uebung_003a_AX: Wiederverwendung durch typisierte Sub-Applikationen
-```
+
 
 
 [![NotebookLM](media/NotebookLM_logo.png)](https://notebooklm.google.com/notebook/041f4df4-b729-484d-b786-b6dcdf151961)

@@ -1,7 +1,6 @@
 # Uebung_095: Beispiel für E_SELECT
 
-```{index} single: Uebung_095: Ereignis-Auswahl (E_SELECT)
-```
+
 
 
 [![NotebookLM](media/NotebookLM_logo.png)](https://notebooklm.google.com/notebook/a6872e59-1dfc-4132-a118-aff1bc7bc944)

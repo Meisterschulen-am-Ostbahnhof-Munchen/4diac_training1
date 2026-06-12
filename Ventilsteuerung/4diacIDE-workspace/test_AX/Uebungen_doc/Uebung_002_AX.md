@@ -1,7 +1,6 @@
 # Uebung_002_AX: DigitalInput_I1 auf DigitalOutput_Q1/_Q2, mit Plug and Socket 
 
-```{index} single: Uebung_002_AX: Signalverteilung auf mehrere Ausgänge
-```
+
 
 
 [![NotebookLM](media/NotebookLM_logo.png)](https://notebooklm.google.com/notebook/041f4df4-b729-484d-b786-b6dcdf151961)

@@ -1,7 +1,6 @@
 # Uebung_132: Übung zu ISOBUS Request Message
 
-```{index} single: Uebung_132: Daten aktiv abfragen (RX on Request)
-```
+
 
 
 [![NotebookLM](media/NotebookLM_logo.png)](https://notebooklm.google.com/notebook/a6872e59-1dfc-4132-a118-aff1bc7bc944)

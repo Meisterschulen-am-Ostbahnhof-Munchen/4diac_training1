@@ -1,7 +1,6 @@
 # Uebung_006a3_AX: SR und T-Flip-Flop mit 3x IE; links/rechtslauf
 
-```{index} single: Uebung_006a3_AX: Motorsteuerung (Links/Rechts) mit Verriegelung
-```
+
 
 
 [![NotebookLM](media/NotebookLM_logo.png)](https://notebooklm.google.com/notebook/041f4df4-b729-484d-b786-b6dcdf151961)

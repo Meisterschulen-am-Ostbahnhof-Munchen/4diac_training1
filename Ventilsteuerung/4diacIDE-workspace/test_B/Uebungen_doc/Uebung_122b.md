@@ -2,8 +2,7 @@ Hier ist die Dokumentationsseite für die Übung **Uebung_122b** basierend auf d
 
 # Uebung_122b: Übung zu ISOBUS Name
 
-```{index} single: Uebung_122b
-```
+
 
 
 

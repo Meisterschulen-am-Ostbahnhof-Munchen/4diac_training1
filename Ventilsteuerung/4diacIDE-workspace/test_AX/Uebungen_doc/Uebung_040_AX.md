@@ -1,7 +1,6 @@
 # Uebung_040_AX: Lauflicht 8 Event gesteuert
 
-```{index} single: Uebung_040_AX: Lauflicht (Event-Gesteuert / Manuell)
-```
+
 
 
 [![NotebookLM](media/NotebookLM_logo.png)](https://notebooklm.google.com/notebook/041f4df4-b729-484d-b786-b6dcdf151961)

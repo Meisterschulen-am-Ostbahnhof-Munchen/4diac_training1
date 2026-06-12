@@ -1,7 +1,6 @@
 # Uebung_010b7_AX: Toggle Flip-Flop mit IE Button_A1 BT_RELEASED_UNLATCHED
 
-```{index} single: Uebung_010b7_AX: Button Event (RELEASED_UNLATCHED)
-```
+
 
 
 [![NotebookLM](media/NotebookLM_logo.png)](https://notebooklm.google.com/notebook/041f4df4-b729-484d-b786-b6dcdf151961)
