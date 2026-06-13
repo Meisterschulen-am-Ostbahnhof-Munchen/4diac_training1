@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<GlobalConstants Name="storageStatusMessages" Comment="Global constants">
+	<Identification Standard="61499-1">
+	</Identification>
+	<VersionInfo Version="1.0" Author="franz" Date="2026-06-13">
+	</VersionInfo>
+	<CompilerInfo packageName="logiBUS::storage::const">
+	</CompilerInfo>
+	<GlobalConstants>
+		<VarDeclaration Name="OK" Type="STRING" InitialValue="'OK'"/>
+		<VarDeclaration Name="NOOP" Type="STRING" InitialValue="'Value was not stored. Old is new'"/>
+	</GlobalConstants>
+	<OriginalSource><![CDATA[PACKAGE logiBUS::storage::const;
+
+GLOBALCONSTANTS storageStatusMessages
+	VAR_GLOBAL CONSTANT
+		OK : STRING := 'OK';
+		NOOP : STRING := 'Value was not stored. Old is new';
+	END_VAR
+END_GLOBALCONSTANTS
+]]></OriginalSource>
+</GlobalConstants>
