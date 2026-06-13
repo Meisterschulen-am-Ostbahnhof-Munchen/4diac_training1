@@ -57,14 +57,17 @@
 				<Attribute Name="Visible" Value="true"/>
 			</Parameter>
 		</FB>
-		<EventConnections>
+		
+		<FB Name="E_SPLIT_3" Type="iec61499::events::E_SPLIT_3" x="-7600" y="700">
+		</FB><EventConnections>
+			<Connection Source="F_MOVE.CNF" Destination="E_SPLIT_3.EI" dx1="1113.33"/>
+			<Connection Source="E_SPLIT_3.EO1" Destination="Q_BackgroundColour_1.REQ" dx1="1113.33"/>
+			<Connection Source="E_SPLIT_3.EO2" Destination="Q_BackgroundColour_2.REQ" dx1="1333.33"/>
+			<Connection Source="E_SPLIT_3.EO3" Destination="Q_BackgroundColour_3.REQ" dx1="1333.33"/>
 			<Connection Source="Q_BackgroundColour_1.CNF" Destination="CNF_1" dx1="1080"/>
 			<Connection Source="Q_BackgroundColour_2.CNF" Destination="CNF_2" dx1="1113.33"/>
 			<Connection Source="Q_BackgroundColour_3.CNF" Destination="CNF_3" dx1="1006.67"/>
-			<Connection Source="F_MOVE.CNF" Destination="Q_BackgroundColour_1.REQ" dx1="1113.33"/>
 			<Connection Source="AX_SEL.CNF" Destination="F_MOVE.REQ" dx1="200"/>
-			<Connection Source="F_MOVE.CNF" Destination="Q_BackgroundColour_2.REQ" dx1="1333.33"/>
-			<Connection Source="F_MOVE.CNF" Destination="Q_BackgroundColour_3.REQ" dx1="1333.33"/>
 		</EventConnections>
 		<DataConnections>
 			<Connection Source="F_MOVE.OUT.u16ObjId" Destination="Q_BackgroundColour_1.u16ObjId" dx1="1146.67"/>

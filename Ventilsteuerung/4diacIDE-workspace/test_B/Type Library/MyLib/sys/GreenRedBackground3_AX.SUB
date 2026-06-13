@@ -48,13 +48,16 @@
 			<Parameter Name="IN0" Value="COLOR_RED"/>
 			<Parameter Name="IN1" Value="COLOR_GREEN"/>
 		</FB>
-		<EventConnections>
+		
+		<FB Name="E_SPLIT_3" Type="iec61499::events::E_SPLIT_3" x="-7600" y="700">
+		</FB><EventConnections>
+			<Connection Source="AX_SEL.CNF" Destination="E_SPLIT_3.EI" dx1="733.33"/>
+			<Connection Source="E_SPLIT_3.EO1" Destination="Q_BackgroundColour_1.REQ" dx1="733.33"/>
+			<Connection Source="E_SPLIT_3.EO2" Destination="Q_BackgroundColour_2.REQ" dx1="633.33"/>
+			<Connection Source="E_SPLIT_3.EO3" Destination="Q_BackgroundColour_3.REQ" dx1="633.33"/>
 			<Connection Source="Q_BackgroundColour_1.CNF" Destination="CNF_1" dx1="1080"/>
 			<Connection Source="Q_BackgroundColour_2.CNF" Destination="CNF_2" dx1="1113.33"/>
 			<Connection Source="Q_BackgroundColour_3.CNF" Destination="CNF_3" dx1="1006.67"/>
-			<Connection Source="AX_SEL.CNF" Destination="Q_BackgroundColour_1.REQ" dx1="733.33"/>
-			<Connection Source="AX_SEL.CNF" Destination="Q_BackgroundColour_2.REQ" dx1="633.33"/>
-			<Connection Source="AX_SEL.CNF" Destination="Q_BackgroundColour_3.REQ" dx1="633.33"/>
 		</EventConnections>
 		<DataConnections>
 			<Connection Source="u16ObjId" Destination="Q_BackgroundColour_1.u16ObjId" dx1="5200"/>

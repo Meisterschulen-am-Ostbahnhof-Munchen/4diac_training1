@@ -58,11 +58,14 @@
 			<Parameter Name="Output" Value="Output_Q2"/>
 		</FB>
 		<Comment Comment="Hausmeister-Aus (alles Aus mit einem Druck)" x="-5700" y="-2100" width="1000" height="400"/>
-		<EventConnections>
+		
+		<FB Name="E_SPLIT_2" Type="iec61499::events::E_SPLIT_2" x="-7600" y="700">
+		</FB><EventConnections>
+			<Connection Source="DigitalInput_CLK_I3.IND" Destination="E_SPLIT_2.EI" dx1="320"/>
+			<Connection Source="E_SPLIT_2.EO1" Destination="AX_T_FF_SR_Q2.R" dx1="320"/>
+			<Connection Source="E_SPLIT_2.EO2" Destination="AX_T_FF_SR_Q1.R" dx1="320"/>
 			<Connection Source="DigitalInput_CLK_I1.IND" Destination="AX_T_FF_SR_Q1.CLK"/>
 			<Connection Source="DigitalInput_CLK_I2.IND" Destination="AX_T_FF_SR_Q2.CLK"/>
-			<Connection Source="DigitalInput_CLK_I3.IND" Destination="AX_T_FF_SR_Q2.R" dx1="320"/>
-			<Connection Source="DigitalInput_CLK_I3.IND" Destination="AX_T_FF_SR_Q1.R" dx1="320"/>
 		</EventConnections>
 		<AdapterConnections>
 			<Connection Source="AX_T_FF_SR_Q1.Q" Destination="DigitalOutput_Q1.OUT" dx1="673.33"/>

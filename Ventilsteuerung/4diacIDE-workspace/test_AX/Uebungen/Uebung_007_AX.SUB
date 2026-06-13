@@ -19,8 +19,12 @@
 		</FB>
 		<FB Name="AX_T_FF" Type="adapter::events::unidirectional::AX_T_FF" x="-1500" y="-600">
 		</FB>
+		<FB Name="INIT" Type="iec61131::bitwiseOperators::INIT" x="-4200" y="-800">
+		</FB>
 		<EventConnections>
 			<Connection Source="E_CYCLE.EO" Destination="AX_T_FF.CLK"/>
+			<Connection Source="INIT.INITO" Destination="INIT.REQ" dx1="80" dx2="80" dy="53.33"/>
+			<Connection Source="INIT.CNF" Destination="E_CYCLE.START" dx1="366.67"/>
 		</EventConnections>
 		<AdapterConnections>
 			<Connection Source="AX_T_FF.Q" Destination="DigitalOutput_Q1.OUT" dx1="333.33"/>

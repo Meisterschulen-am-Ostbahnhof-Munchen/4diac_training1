@@ -4,7 +4,7 @@
 	</Identification>
 	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2023-10-23" Remarks="initial API and implementation and/or initial documentation">
 	</VersionInfo>
-	<CompilerInfo packageName="Uebungen">
+	<CompilerInfo packageName="Meins">
 		<Import declaration="logiBUS::io::DI::logiBUS_DI::Input_I1"/>
 		<Import declaration="logiBUS::io::DI::logiBUS_DI::Input_I2"/>
 		<Import declaration="logiBUS::io::DI::logiBUS_DI::Input_I3"/>
@@ -57,12 +57,16 @@
 		<FB Name="E_DELAY" Type="iec61499::events::E_DELAY" x="-6600" y="1100">
 			<Parameter Name="DT" Value="T#50ms"/>
 		</FB>
+		<FB Name="E_SPLIT_2" Type="iec61499::events::E_SPLIT_2" x="-7600" y="700">
+		</FB>
+		<Comment Comment="E_SPLIT ist in 4diac Optional, in der IEC Pflicht.&#10;" x="-7500" y="300" width="1000" height="400"/>
 		<EventConnections>
 			<Connection Source="DigitalInput_CLK_I1.IND" Destination="E_SR_A.S" dx1="1140"/>
-			<Connection Source="DigitalInput_CLK_I2.IND" Destination="E_SR_A.R" dx1="1140"/>
-			<Connection Source="DigitalInput_CLK_I2.IND" Destination="E_DELAY.START" dx1="1106.67"/>
+			<Connection Source="E_SPLIT_2.EO1" Destination="E_SR_A.R" dx1="1140"/>
+			<Connection Source="E_SPLIT_2.EO2" Destination="E_DELAY.START" dx1="213.33"/>
 			<Connection Source="DigitalInput_CLK_I3.IND" Destination="E_SR_B.R" dx1="1193.33"/>
 			<Connection Source="E_DELAY.EO" Destination="E_SR_B.S" dx1="286.67"/>
+			<Connection Source="DigitalInput_CLK_I2.IND" Destination="E_SPLIT_2.EI" dx1="106.67"/>
 		</EventConnections>
 		<AdapterConnections>
 			<Connection Source="AX_SPLIT_2_A.OUT1" Destination="DigitalOutput_Q5.OUT" dx1="920"/>

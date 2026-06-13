@@ -44,14 +44,15 @@
 		</FB>
 		<FB Name="Q_NumericValueAux" Type="isobus::UT::Q::Q_NumericValueAux" x="5500" y="200">
 		</FB>
-		<EventConnections>
+		
+		<FB Name="E_SPLIT_2" Type="iec61499::events::E_SPLIT_2" x="-7600" y="700">
+		</FB><EventConnections>
+			<Connection Source="F_MUX_2.CNF" Destination="E_SPLIT_2.EI" dx1="440"/>
+			<Connection Source="E_SPLIT_2.EO1" Destination="Q_NumericValue.REQ" dx1="440"/>
+			<Connection Source="E_SPLIT_2.EO2" Destination="Q_NumericValueAux.REQ" dx1="440"/>
 			<Connection Source="EI" Destination="F_MUX_2.REQ" dx1="4026.67"/>
-			<Connection Source="F_MUX_2.CNF" Destination="Q_NumericValue.REQ" dx1="440"/>
-			<Connection Source="INIT" Destination="F_MOVE.REQ" dx1="1246.67">
-				<Attribute Name="Visible" Value="false"/>
-			</Connection>
+			<Connection Source="INIT" Destination="F_MOVE.REQ" dx1="1246.67"/>
 			<Connection Source="F_MOVE.CNF" Destination="Q_NumericValue.INIT" dx1="613.33"/>
-			<Connection Source="F_MUX_2.CNF" Destination="Q_NumericValueAux.REQ" dx1="440"/>
 			<Connection Source="Q_NumericValueAux.INITO" Destination="INITO" dx1="500"/>
 			<Connection Source="Q_NumericValue.INITO" Destination="Q_NumericValueAux.INIT" dx1="80" dx2="80" dy="693.33"/>
 		</EventConnections>

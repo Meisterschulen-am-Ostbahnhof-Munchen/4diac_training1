@@ -46,9 +46,12 @@
 			<Parameter Name="Output" Value="Output_Q2"/>
 		</FB>
 		<Comment Comment="hier 2x T_FF zu verwenden ist sinnlos, das soll nur zeigen wie man E_SPLIT verwenden kann. " x="-7600" y="1400" width="1700" height="500"/>
+		<FB Name="E_SPLIT_2" Type="iec61499::events::E_SPLIT_2" x="-7100" y="600">
+		</FB>
 		<EventConnections>
-			<Connection Source="DigitalInput_CLK_I1.IND" Destination="E_T_FF_Q1.CLK" dx1="1173.33"/>
-			<Connection Source="DigitalInput_CLK_I1.IND" Destination="E_T_FF_Q2.CLK" dx1="1173.33"/>
+			<Connection Source="DigitalInput_CLK_I1.IND" Destination="E_SPLIT_2.EI" dx1="433.33"/>
+			<Connection Source="E_SPLIT_2.EO1" Destination="E_T_FF_Q1.CLK" dx1="713.33"/>
+			<Connection Source="E_SPLIT_2.EO2" Destination="E_T_FF_Q2.CLK" dx1="713.33"/>
 		</EventConnections>
 		<AdapterConnections>
 			<Connection Source="E_T_FF_Q2.Q" Destination="DigitalOutput_Q2.OUT" dx1="666.67"/>

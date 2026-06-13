@@ -55,34 +55,41 @@
 		</FB>
 		<FB Name="F_MUX_a" Type="iec61131::selection::F_SEL" x="2100" y="700">
 		</FB>
+		<FB Name="E_SPLIT_2" Type="iec61499::events::E_SPLIT_2" x="-400" y="-1200">
+		</FB>
+		<FB Name="E_SPLIT_3" Type="iec61499::events::E_SPLIT_3" x="3100" y="-400">
+		</FB>
+		<FB Name="E_SPLIT_3_2" Type="iec61499::events::E_SPLIT_3" x="3100" y="1100">
+		</FB>
 		<EventConnections>
-			<Connection Source="EI" Destination="F_MUX_s.REQ" dx1="4026.67"/>
-			<Connection Source="F_MUX_s.CNF" Destination="Q_NumericValue.REQ" dx1="440"/>
-			<Connection Source="F_MUX_s.CNF" Destination="Q_NumericValueAux.REQ" dx1="440"/>
-			<Connection Source="F_MUX_s.CNF" Destination="Q_NumericValue_B.REQ" dx1="440"/>
-			<Connection Source="INIT" Destination="F_MOVE.REQ" dx1="1246.67">
-				<Attribute Name="Visible" Value="false"/>
-			</Connection>
+			<Connection Source="EI" Destination="E_SPLIT_2.EI" dx1="1746.67"/>
+			<Connection Source="E_SPLIT_2.EO1" Destination="F_MUX_s.REQ" dx1="1626.67"/>
+			<Connection Source="E_SPLIT_2.EO2" Destination="F_MUX_a.REQ" dx1="1173.33"/>
+			<Connection Source="F_MUX_s.CNF" Destination="E_SPLIT_3.EI" dx1="400"/>
+			<Connection Source="E_SPLIT_3.EO1" Destination="Q_NumericValue.REQ" dx1="440"/>
+			<Connection Source="E_SPLIT_3.EO2" Destination="Q_NumericValueAux.REQ" dx1="900"/>
+			<Connection Source="E_SPLIT_3.EO3" Destination="Q_NumericValue_B.REQ" dx1="440"/>
+			<Connection Source="F_MUX_a.CNF" Destination="E_SPLIT_3_2.EI" dx1="400"/>
+			<Connection Source="E_SPLIT_3_2.EO1" Destination="Q_NumericValue.REQ" dx1="700"/>
+			<Connection Source="E_SPLIT_3_2.EO2" Destination="Q_NumericValueAux.REQ" dx1="886.67"/>
+			<Connection Source="E_SPLIT_3_2.EO3" Destination="Q_NumericValue_B.REQ" dx1="980"/>
+			<Connection Source="INIT" Destination="F_MOVE.REQ" dx1="1246.67"/>
 			<Connection Source="F_MOVE.CNF" Destination="Q_NumericValue.INIT" dx1="613.33"/>
 			<Connection Source="Q_NumericValue.INITO" Destination="Q_NumericValueAux.INIT" dx1="80" dx2="80" dy="693.33"/>
 			<Connection Source="Q_NumericValueAux.INITO" Destination="Q_NumericValue_B.INIT" dx1="80" dx2="80" dy="693.33"/>
 			<Connection Source="Q_NumericValue_B.INITO" Destination="INITO" dx1="500"/>
-			<Connection Source="F_MUX_a.CNF" Destination="Q_NumericValue.REQ" dx1="440"/>
-			<Connection Source="F_MUX_a.CNF" Destination="Q_NumericValueAux.REQ" dx1="440"/>
-			<Connection Source="F_MUX_a.CNF" Destination="Q_NumericValue_B.REQ" dx1="440"/>
-			<Connection Source="EI" Destination="F_MUX_a.REQ" dx1="4026.67"/>
 		</EventConnections>
 		<DataConnections>
 			<Connection Source="Picture" Destination="Q_NumericValue.u16ObjId" dx1="7360"/>
 			<Connection Source="PictureB" Destination="Q_NumericValue_B.u16ObjId" dx1="7200"/>
 			<Connection Source="pictures" Destination="F_MOVE.IN" dx1="826.67"/>
-			<Connection Source="DI1" Destination="F_MUX_s.G" dx1="3433.33"/>
+			<Connection Source="DI1" Destination="F_MUX_s.G" dx1="3546.67"/>
 			<Connection Source="F_MUX_a.OUT" Destination="Q_NumericValue.u32NewValue" dx1="706.67"/>
 			<Connection Source="F_MUX_a.OUT" Destination="Q_NumericValueAux.u32NewValue" dx1="706.67"/>
 			<Connection Source="F_MOVE.OUT.up.u16ObjId" Destination="F_MUX_s.IN0" dx1="586.67"/>
 			<Connection Source="F_MOVE.OUT.down.u16ObjId" Destination="F_MUX_s.IN1" dx1="586.67"/>
 			<Connection Source="DI1" Destination="F_MUX_a.G" dx1="3433.33"/>
-			<Connection Source="F_MOVE.OUT.up.u16ObjIdA" Destination="F_MUX_a.IN0" dx1="560"/>
+			<Connection Source="F_MOVE.OUT.up.u16ObjIdA" Destination="F_MUX_a.IN0" dx1="646.67"/>
 			<Connection Source="F_MOVE.OUT.down.u16ObjIdA" Destination="F_MUX_a.IN1" dx1="560"/>
 			<Connection Source="F_MUX_s.OUT" Destination="Q_NumericValue_B.u32NewValue" dx1="1440"/>
 			<Connection Source="Picture" Destination="Q_NumericValueAux.u16ObjId" dx1="7360"/>
