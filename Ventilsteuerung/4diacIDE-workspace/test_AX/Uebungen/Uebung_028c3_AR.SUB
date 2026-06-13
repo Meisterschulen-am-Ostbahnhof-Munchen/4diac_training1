@@ -81,11 +81,14 @@
 		<FB Name="AR_REAL_TO_R_1" Type="adapter::conversion::unidirectional::AR_REAL_TO_R" x="4100" y="800">
 			<Parameter Name="OUT" Value="15.3"/>
 		</FB>
-		<FB Name="INIT" Type="iec61131::bitwiseOperators::INIT" x="3000" y="400">
+		<FB Name="INIT" Type="iec61131::bitwiseOperators::INIT" x="900" y="-400">
+		</FB>
+		<FB Name="E_SPLIT_2" Type="iec61499::events::E_SPLIT_2" x="1700" y="-300">
 		</FB>
 		<EventConnections>
-			<Connection Source="INIT.INITO" Destination="AR_REAL_TO_R.REQ" dx1="266.67"/>
-			<Connection Source="INIT.INITO" Destination="AR_REAL_TO_R_1.REQ" dx1="266.67"/>
+			<Connection Source="INIT.INITO" Destination="E_SPLIT_2.EI" dx1="160"/>
+			<Connection Source="E_SPLIT_2.EO1" Destination="AR_REAL_TO_R.REQ" dx1="686.67"/>
+			<Connection Source="E_SPLIT_2.EO2" Destination="AR_REAL_TO_R_1.REQ" dx1="146.67"/>
 		</EventConnections>
 		<AdapterConnections>
 			<Connection Source="DigitalInput_I1.IN" Destination="AX_SPLIT_2.IN" dx1="306.67"/>

@@ -24,9 +24,12 @@
 		<FB Name="CONV_AUI_AUDI" Type="adapter::conversion::unidirectional::AUI_TO_AUDI" x="1600" y="1200">
 		</FB>
 		<Comment Comment="&quot;Fendt&quot; Schaltung via Adapter: Bei Timeout wird 0 angezeigt!" x="-300" y="1800" width="2000" height="400"/>
-		<EventConnections>
-			<Connection Source="IA_RPTO.INITO" Destination="Q_NumericValue_PTO.INIT" dx1="500"/>
-			<Connection Source="IA_RPTO.INITO" Destination="CONST_ZERO.REQ" dx1="200" dx2="200" dy="800"/>
+		
+		<FB Name="E_SPLIT_2" Type="iec61499::events::E_SPLIT_2" x="-7600" y="700">
+		</FB><EventConnections>
+			<Connection Source="IA_RPTO.INITO" Destination="E_SPLIT_2.EI" dx1="500"/>
+			<Connection Source="E_SPLIT_2.EO1" Destination="Q_NumericValue_PTO.INIT" dx1="500"/>
+			<Connection Source="E_SPLIT_2.EO2" Destination="CONST_ZERO.REQ" dx1="200" dx2="200" dy="800"/>
 		</EventConnections>
 		<AdapterConnections>
 			<Connection Source="AUI_AX_SEL_AUI.OUT" Destination="CONV_AUI_AUDI.AUI_IN" dx1="773.33"/>

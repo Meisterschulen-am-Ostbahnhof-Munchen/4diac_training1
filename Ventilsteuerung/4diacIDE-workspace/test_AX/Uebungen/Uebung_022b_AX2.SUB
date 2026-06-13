@@ -48,10 +48,13 @@
 		</FB>
 		<Comment Comment="Ausfahren_Cyl_1" x="-3400" y="400" width="1373.33" height="366.67"/>
 		<Comment Comment="Ausfahren_Cyl_2" x="-3400" y="2100" width="1373.33" height="366.67"/>
+		<FB Name="E_SPLIT_2" Type="iec61499::events::E_SPLIT_2" x="-5900" y="200">
+		</FB>
 		<EventConnections>
+			<Connection Source="SoftKey_F2_DOWN.IND" Destination="E_SPLIT_2.EI" dx1="733.33"/>
+			<Connection Source="E_SPLIT_2.EO1" Destination="AX_SR_Ausfahren_Cyl_1.R" dx1="186.67"/>
+			<Connection Source="E_SPLIT_2.EO2" Destination="AX_SR_Ausfahren_Cyl_2.S" dx1="186.67"/>
 			<Connection Source="SoftKey_UP_F1.IND" Destination="AX_SR_Ausfahren_Cyl_1.S" dx1="1206.67"/>
-			<Connection Source="SoftKey_F2_DOWN.IND" Destination="AX_SR_Ausfahren_Cyl_1.R" dx1="1206.67"/>
-			<Connection Source="SoftKey_F2_DOWN.IND" Destination="AX_SR_Ausfahren_Cyl_2.S" dx1="1206.67"/>
 			<Connection Source="SoftKey_F3_DOWN.IND" Destination="AX_SR_Ausfahren_Cyl_2.R" dx1="1206.67"/>
 		</EventConnections>
 		<AdapterConnections>

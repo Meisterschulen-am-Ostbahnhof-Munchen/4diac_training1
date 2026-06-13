@@ -29,13 +29,13 @@
 		</InputVars>
 	</SubAppInterfaceList>
 	<SubAppNetwork>
-		<FB Name="PictureVT" Type="isobus::UT::Q::Q_NumericValue" x="3900" y="500">
+		<FB Name="PictureVT" Type="isobus::UT::Q::Q_NumericValue" x="5100" y="500">
 		</FB>
-		<FB Name="ColorAux" Type="isobus::UT::Q::Q_BackgroundColourAux" x="3700" y="1400">
+		<FB Name="ColorAux" Type="isobus::UT::Q::Q_BackgroundColourAux" x="4900" y="1400">
 		</FB>
-		<FB Name="PictureAux" Type="isobus::UT::Q::Q_NumericValueAux" x="3900" y="-300">
+		<FB Name="PictureAux" Type="isobus::UT::Q::Q_NumericValueAux" x="5100" y="-300">
 		</FB>
-		<FB Name="ColorVT" Type="isobus::UT::Q::Q_BackgroundColour" x="3800" y="2200">
+		<FB Name="ColorVT" Type="isobus::UT::Q::Q_BackgroundColour" x="5000" y="2200">
 		</FB>
 		<FB Name="F_MOVE" Type="iec61131::selection::F_MOVE" x="-600" y="300">
 			<Attribute Name="DataType" Value="logiBUS::utils::sequence::schieber::SchieberAuxInStruct"/>
@@ -73,37 +73,32 @@
 				<Attribute Name="Visible" Value="true"/>
 			</Parameter>
 		</FB>
-		<FB Name="F_MUX_5_Picture" Type="iec61131::selection::F_MUX_5" x="1900" y="-200">
+		<FB Name="F_MUX_5_Picture" Type="iec61131::selection::F_MUX_5" x="1900" y="-100">
 		</FB>
 		<FB Name="F_MUX_5_Colour" Type="iec61131::selection::F_MUX_5" x="1900" y="1500">
 		</FB>
+		<FB Name="E_SPLIT_2" Type="iec61499::events::E_SPLIT_2" x="3500" y="300">
+		</FB>
+		<FB Name="E_SPLIT_2_2" Type="iec61499::events::E_SPLIT_2" x="3500" y="1300">
+		</FB>
+		<FB Name="E_SPLIT_2_3" Type="iec61499::events::E_SPLIT_2" x="500" y="-800">
+		</FB>
 		<EventConnections>
-			<Connection Source="F_MUX_5_Picture.CNF" Destination="PictureAux.REQ" dx1="693.33"/>
-			<Connection Source="F_MUX_5_Picture.CNF" Destination="PictureVT.REQ" dx1="693.33"/>
-			<Connection Source="F_MUX_5_Colour.CNF" Destination="ColorAux.REQ" dx1="666.67"/>
-			<Connection Source="F_MUX_5_Colour.CNF" Destination="ColorVT.REQ" dx1="666.67"/>
-			<Connection Source="EI" Destination="F_MUX_5_Picture.REQ" dx1="3373.33">
-				<Attribute Name="Visible" Value="false"/>
-			</Connection>
-			<Connection Source="EI" Destination="F_MUX_5_Colour.REQ" dx1="3373.33">
-				<Attribute Name="Visible" Value="false"/>
-			</Connection>
+			<Connection Source="F_MUX_5_Picture.CNF" Destination="E_SPLIT_2.EI" dx1="340"/>
+			<Connection Source="E_SPLIT_2.EO1" Destination="PictureAux.REQ" dx1="493.33"/>
+			<Connection Source="E_SPLIT_2.EO2" Destination="PictureVT.REQ" dx1="493.33"/>
+			<Connection Source="F_MUX_5_Colour.CNF" Destination="E_SPLIT_2_2.EI" dx1="540"/>
+			<Connection Source="E_SPLIT_2_2.EO1" Destination="ColorAux.REQ" dx1="513.33"/>
+			<Connection Source="E_SPLIT_2_2.EO2" Destination="ColorVT.REQ" dx1="173.33"/>
+			<Connection Source="EI" Destination="E_SPLIT_2_3.EI" dx1="2693.33"/>
+			<Connection Source="E_SPLIT_2_3.EO1" Destination="F_MUX_5_Picture.REQ" dx1="546.67"/>
+			<Connection Source="E_SPLIT_2_3.EO2" Destination="F_MUX_5_Colour.REQ" dx1="246.67"/>
 			<Connection Source="INIT" Destination="F_MOVE.REQ" dx1="833.33"/>
-			<Connection Source="F_MOVE.CNF" Destination="PictureAux.INIT" dx1="80">
-				<Attribute Name="Visible" Value="false"/>
-			</Connection>
-			<Connection Source="PictureAux.INITO" Destination="PictureVT.INIT" dx1="80" dx2="80" dy="400">
-				<Attribute Name="Visible" Value="false"/>
-			</Connection>
-			<Connection Source="PictureVT.INITO" Destination="ColorAux.INIT" dx1="80" dx2="80" dy="446.67">
-				<Attribute Name="Visible" Value="false"/>
-			</Connection>
-			<Connection Source="ColorAux.INITO" Destination="ColorVT.INIT" dx1="80" dx2="80" dy="400">
-				<Attribute Name="Visible" Value="false"/>
-			</Connection>
-			<Connection Source="ColorVT.INITO" Destination="INITO" dx1="1373.33">
-				<Attribute Name="Visible" Value="false"/>
-			</Connection>
+			<Connection Source="F_MOVE.CNF" Destination="PictureAux.INIT" dx1="80"/>
+			<Connection Source="PictureAux.INITO" Destination="PictureVT.INIT" dx1="80" dx2="80" dy="400"/>
+			<Connection Source="PictureVT.INITO" Destination="ColorAux.INIT" dx1="80" dx2="80" dy="446.67"/>
+			<Connection Source="ColorAux.INITO" Destination="ColorVT.INIT" dx1="80" dx2="80" dy="400"/>
+			<Connection Source="ColorVT.INITO" Destination="INITO" dx1="1373.33"/>
 		</EventConnections>
 		<DataConnections>
 			<Connection Source="Color" Destination="ColorAux.u16ObjId" dx1="3200">

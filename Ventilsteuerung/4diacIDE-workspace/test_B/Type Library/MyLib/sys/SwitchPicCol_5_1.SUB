@@ -73,19 +73,16 @@
 		</FB>
 		<FB Name="F_MUX_5_Colour" Type="iec61131::selection::F_MUX_5" x="1900" y="1500">
 		</FB>
-		<EventConnections>
+		
+		<FB Name="E_SPLIT_2" Type="iec61499::events::E_SPLIT_2" x="-7600" y="700">
+		</FB><EventConnections>
+			<Connection Source="EI" Destination="E_SPLIT_2.EI" dx1="3373.33"/>
+			<Connection Source="E_SPLIT_2.EO1" Destination="F_MUX_5_Picture.REQ" dx1="3373.33"/>
+			<Connection Source="E_SPLIT_2.EO2" Destination="F_MUX_5_Colour.REQ" dx1="3373.33"/>
 			<Connection Source="F_MUX_5_Picture.CNF" Destination="PictureVT.REQ" dx1="693.33"/>
 			<Connection Source="F_MUX_5_Colour.CNF" Destination="ColorVT.REQ" dx1="666.67"/>
-			<Connection Source="EI" Destination="F_MUX_5_Picture.REQ" dx1="3373.33">
-				<Attribute Name="Visible" Value="false"/>
-			</Connection>
-			<Connection Source="EI" Destination="F_MUX_5_Colour.REQ" dx1="3373.33">
-				<Attribute Name="Visible" Value="false"/>
-			</Connection>
 			<Connection Source="INIT" Destination="F_MOVE.REQ" dx1="833.33"/>
-			<Connection Source="ColorVT.INITO" Destination="INITO" dx1="1373.33">
-				<Attribute Name="Visible" Value="false"/>
-			</Connection>
+			<Connection Source="ColorVT.INITO" Destination="INITO" dx1="1373.33"/>
 			<Connection Source="F_MOVE.CNF" Destination="PictureVT.INIT" dx1="80"/>
 			<Connection Source="PictureVT.INITO" Destination="ColorVT.INIT" dx1="80" dx2="80" dy="846.67"/>
 		</EventConnections>

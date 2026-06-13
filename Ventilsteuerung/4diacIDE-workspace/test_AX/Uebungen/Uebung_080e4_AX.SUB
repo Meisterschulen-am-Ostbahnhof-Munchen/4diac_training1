@@ -45,10 +45,13 @@
 		</FB>
 		<FB Name="UI_TO_UDI_N1" Type="adapter::conversion::unidirectional::AUI_TO_AUDI" x="-3000" y="800">
 		</FB>
-		<EventConnections>
+		
+		<FB Name="E_SPLIT_2" Type="iec61499::events::E_SPLIT_2" x="-7600" y="700">
+		</FB><EventConnections>
+			<Connection Source="X_TO_B_I2.CNF" Destination="E_SPLIT_2.EI" dx1="80"/>
+			<Connection Source="E_SPLIT_2.EO1" Destination="E_CTU.R" dx1="80"/>
+			<Connection Source="E_SPLIT_2.EO2" Destination="E_CYCLE.STOP" dx1="80"/>
 			<Connection Source="X_TO_B_I1.CNF" Destination="E_CYCLE.START" dx1="80"/>
-			<Connection Source="X_TO_B_I2.CNF" Destination="E_CTU.R" dx1="80"/>
-			<Connection Source="X_TO_B_I2.CNF" Destination="E_CYCLE.STOP" dx1="80"/>
 			<Connection Source="E_CYCLE.EO" Destination="E_CTU.CU" dx1="80" dx2="80" dy="400"/>
 		</EventConnections>
 		<AdapterConnections>

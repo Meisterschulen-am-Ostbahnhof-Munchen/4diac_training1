@@ -19,6 +19,16 @@
 		<FB Name="AX_BOOL_TO_X_1" Type="adapter::conversion::unidirectional::AX_BOOL_TO_X" x="-1000" y="600">
 			<Parameter Name="OUT" Value="TRUE"/>
 		</FB>
+		<FB Name="INIT" Type="iec61131::bitwiseOperators::INIT" x="-3600" y="-500">
+		</FB>
+		<FB Name="E_SPLIT_2" Type="iec61499::events::E_SPLIT_2" x="-2400" y="-100">
+		</FB>
+		<EventConnections>
+			<Connection Source="INIT.CNF" Destination="E_SPLIT_2.EI" dx1="366.67"/>
+			<Connection Source="E_SPLIT_2.EO1" Destination="AX_BOOL_TO_X.REQ"/>
+			<Connection Source="E_SPLIT_2.EO2" Destination="AX_BOOL_TO_X_1.REQ" dx1="366.67"/>
+			<Connection Source="INIT.INITO" Destination="INIT.REQ" dx1="80" dx2="80" dy="53.33"/>
+		</EventConnections>
 		<AdapterConnections>
 			<Connection Source="AX_BOOL_TO_X.AX_OUT" Destination="AX_AND_2.IN1" dx1="326.67"/>
 			<Connection Source="AX_BOOL_TO_X_1.AX_OUT" Destination="AX_AND_2.IN2" dx1="473.33"/>

@@ -57,11 +57,14 @@
 		<FB Name="E_DELAY" Type="iec61499::events::E_DELAY" x="-5300" y="1000">
 			<Parameter Name="DT" Value="T#50ms"/>
 		</FB>
+		<FB Name="E_SPLIT_2" Type="iec61499::events::E_SPLIT_2" x="-5800" y="400">
+		</FB>
 		<EventConnections>
+			<Connection Source="DigitalInput_CLK_I2.IND" Destination="E_SPLIT_2.EI" dx1="133.33"/>
+			<Connection Source="E_SPLIT_2.EO1" Destination="AX_SR_A.R" dx1="80" dx2="80" dy="-293.33"/>
+			<Connection Source="E_SPLIT_2.EO2" Destination="E_DELAY.START" dx1="80" dx2="80" dy="346.67"/>
 			<Connection Source="DigitalInput_CLK_I1.IND" Destination="AX_SR_A.S" dx1="406.67"/>
-			<Connection Source="DigitalInput_CLK_I2.IND" Destination="AX_SR_A.R" dx1="473.33"/>
 			<Connection Source="DigitalInput_CLK_I3.IND" Destination="AX_SR_B.R" dx1="473.33"/>
-			<Connection Source="DigitalInput_CLK_I2.IND" Destination="E_DELAY.START" dx1="466.67"/>
 			<Connection Source="E_DELAY.EO" Destination="AX_SR_B.S" dx1="80" dx2="80" dy="560"/>
 		</EventConnections>
 		<AdapterConnections>

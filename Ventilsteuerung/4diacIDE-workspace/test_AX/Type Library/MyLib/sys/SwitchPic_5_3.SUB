@@ -58,14 +58,15 @@
 		</FB>
 		<FB Name="F_MUX_5" Type="iec61131::selection::F_MUX_5" x="2100" y="0">
 		</FB>
-		<EventConnections>
+		
+		<FB Name="E_SPLIT_3" Type="iec61499::events::E_SPLIT_3" x="-7600" y="700">
+		</FB><EventConnections>
+			<Connection Source="F_MUX_5.CNF" Destination="E_SPLIT_3.EI" dx1="440"/>
+			<Connection Source="E_SPLIT_3.EO1" Destination="Q_NumericValue.REQ" dx1="440"/>
+			<Connection Source="E_SPLIT_3.EO2" Destination="Q_NumericValueAux.REQ" dx1="440"/>
+			<Connection Source="E_SPLIT_3.EO3" Destination="Q_NumericValue_B.REQ" dx1="440"/>
 			<Connection Source="EI" Destination="F_MUX_5.REQ" dx1="3206.67"/>
-			<Connection Source="F_MUX_5.CNF" Destination="Q_NumericValue.REQ" dx1="440"/>
-			<Connection Source="F_MUX_5.CNF" Destination="Q_NumericValueAux.REQ" dx1="440"/>
-			<Connection Source="F_MUX_5.CNF" Destination="Q_NumericValue_B.REQ" dx1="440"/>
-			<Connection Source="INIT" Destination="F_MOVE.REQ" dx1="1246.67">
-				<Attribute Name="Visible" Value="false"/>
-			</Connection>
+			<Connection Source="INIT" Destination="F_MOVE.REQ" dx1="1246.67"/>
 			<Connection Source="F_MOVE.CNF" Destination="Q_NumericValue.INIT" dx1="613.33"/>
 			<Connection Source="Q_NumericValue.INITO" Destination="Q_NumericValueAux.INIT" dx1="80" dx2="80" dy="693.33"/>
 			<Connection Source="Q_NumericValueAux.INITO" Destination="Q_NumericValue_B.INIT" dx1="80" dx2="80" dy="693.33"/>

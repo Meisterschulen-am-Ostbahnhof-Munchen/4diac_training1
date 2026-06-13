@@ -13,5 +13,11 @@
 			<Parameter Name="IN1" Value="INT#5"/>
 			<Parameter Name="IN2" Value="INT#3"/>
 		</FB>
+		<FB Name="INIT" Type="iec61131::bitwiseOperators::INIT" x="-2200" y="-300">
+		</FB>
+		<EventConnections>
+			<Connection Source="INIT.INITO" Destination="INIT.REQ" dx1="80" dx2="80" dy="53.33"/>
+			<Connection Source="INIT.CNF" Destination="ADD_2.REQ" dx1="266.67"/>
+		</EventConnections>
 	</SubAppNetwork>
 </SubAppType>
