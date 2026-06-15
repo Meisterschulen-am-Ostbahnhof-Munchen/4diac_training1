@@ -1,7 +1,6 @@
 # img_monochrome
 
-```{index} single: img_monochrome
-```
+
 
 hier liegen die Bilder nach dem wandlen auf 2 Farben
 

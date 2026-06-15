@@ -1,7 +1,6 @@
 # img_cropped
 
-```{index} single: img_cropped
-```
+
 
 hier liegen die Bilder nach dem Zuschneiden
 
