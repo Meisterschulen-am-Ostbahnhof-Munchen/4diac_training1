@@ -48,30 +48,30 @@
 			</ECState>
 			<ECState Name="UP" Comment="Normal execution" x="6666.67" y="1066.67">
 				<ECAction Algorithm="alUp"/>
-				<ECAction Output="DO_UP.E1"/>
-				<ECAction Output="DO_DOWN.E1"/>
+				<ECAction/>
+				<ECAction/>
 			</ECState>
 			<ECState Name="Neutral" x="2266.67" y="2480">
 				<ECAction Algorithm="alNeutral"/>
-				<ECAction Output="DO_UP.E1"/>
-				<ECAction Output="DO_DOWN.E1"/>
+				<ECAction/>
+				<ECAction/>
 			</ECState>
 			<ECState Name="DeInit" x="1520" y="3040">
 				<ECAction Algorithm="deInitialize" Output="INITO"/>
 			</ECState>
 			<ECState Name="DOWN" x="6666.67" y="3466.67">
 				<ECAction Algorithm="alDown"/>
-				<ECAction Output="DO_UP.E1"/>
-				<ECAction Output="DO_DOWN.E1"/>
+				<ECAction/>
+				<ECAction/>
 			</ECState>
-			<ECTransition Source="START" Destination="Init" Condition="INIT[TRUE = QI]" Comment="" x="1206.67" y="2260"/>
-			<ECTransition Source="Init" Destination="Neutral" Condition="INPUT.E1" Comment="" x="2026.67" y="2313.33"/>
-			<ECTransition Source="Neutral" Destination="DeInit" Condition="INIT[FALSE = QI]" Comment="" x="2053.33" y="2680"/>
-			<ECTransition Source="Neutral" Destination="UP" Condition="INPUT.E1[INPUT.D1 &gt;= MI.D1 + ABS(DEAD.D1) + ABS(HYSTERESIS.D1)]" Comment="Switch-on UP (inclusive)" x="5040" y="1173.33"/>
-			<ECTransition Source="DeInit" Destination="START" Condition="1" Comment="" x="1306.67" y="2780"/>
-			<ECTransition Source="Neutral" Destination="DOWN" Condition="INPUT.E1[INPUT.D1 &lt;= MI.D1 - ABS(DEAD.D1) - ABS(HYSTERESIS.D1)]" Comment="Switch-on DOWN (inclusive)" x="5513.33" y="3013.33"/>
-			<ECTransition Source="DOWN" Destination="Neutral" Condition="INPUT.E1[INPUT.D1 &gt; MI.D1 - ABS(DEAD.D1)]" Comment="Switch-off DOWN (strict)" x="5173.33" y="3480"/>
-			<ECTransition Source="UP" Destination="Neutral" Condition="INPUT.E1[INPUT.D1 &lt; MI.D1 + ABS(DEAD.D1)]" Comment="Switch-off UP (strict)" x="5173.33" y="2026.67"/>
+			<ECTransition Source="START" Destination="Init" Condition="INIT[TRUE = QI]" x="1206.67" y="2260"/>
+			<ECTransition Source="Init" Destination="Neutral" Condition="[INPUT.E1]" x="2026.67" y="2313.33"/>
+			<ECTransition Source="Neutral" Destination="DeInit" Condition="INIT[FALSE = QI]" x="2053.33" y="2680"/>
+			<ECTransition Source="Neutral" Destination="UP" Condition="[INPUT.E1[INPUT.D1 &gt;= MI.D1 + ABS(DEAD.D1) + ABS(HYSTERESIS.D1)]]" Comment="Switch-on UP (inclusive)" x="5040" y="1173.33"/>
+			<ECTransition Source="DeInit" Destination="START" Condition="1" x="1306.67" y="2780"/>
+			<ECTransition Source="Neutral" Destination="DOWN" Condition="[INPUT.E1[INPUT.D1 &lt;= MI.D1 - ABS(DEAD.D1) - ABS(HYSTERESIS.D1)]]" Comment="Switch-on DOWN (inclusive)" x="5513.33" y="3013.33"/>
+			<ECTransition Source="DOWN" Destination="Neutral" Condition="[INPUT.E1[INPUT.D1 &gt; MI.D1 - ABS(DEAD.D1)]]" Comment="Switch-off DOWN (strict)" x="5173.33" y="3480"/>
+			<ECTransition Source="UP" Destination="Neutral" Condition="[INPUT.E1[INPUT.D1 &lt; MI.D1 + ABS(DEAD.D1)]]" Comment="Switch-off UP (strict)" x="5173.33" y="2026.67"/>
 		</ECC>
 		<Algorithm Name="initialize">
 			<ST><![CDATA[

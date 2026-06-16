@@ -11,13 +11,10 @@
 		<EventInputs>
 			<Event Name="REQ" Type="Event" Comment="Request to Adapter">
 				<With Var="OUT"/>
-				<Attribute Name="YPOSITION" Type="DINT" Value="46"/>
 			</Event>
 		</EventInputs>
 		<InputVars>
-			<VarDeclaration Name="OUT" Type="BYTE" Comment="Output data to Adapter">
-				<Attribute Name="YPOSITION" Type="DINT" Value="31"/>
-			</VarDeclaration>
+			<VarDeclaration Name="OUT" Type="BYTE" Comment="Output data to Adapter"/>
 		</InputVars>
 		<Plugs>
 			<AdapterDeclaration Name="AB_OUT" Type="adapter::types::unidirectional::AB" Comment="Adapter Output" x="-3900" y="-500"/>

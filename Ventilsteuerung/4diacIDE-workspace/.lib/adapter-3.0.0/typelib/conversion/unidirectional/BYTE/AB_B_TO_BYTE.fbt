@@ -11,16 +11,13 @@
 		<EventOutputs>
 			<Event Name="CNF" Type="Event" Comment="Confirmation from Adapter">
 				<With Var="IN"/>
-				<Attribute Name="YPOSITION" Type="DINT" Value="46"/>
 			</Event>
 		</EventOutputs>
 		<OutputVars>
-			<VarDeclaration Name="IN" Type="BYTE" Comment="Input data from Adapter">
-				<Attribute Name="YPOSITION" Type="DINT" Value="47"/>
-			</VarDeclaration>
+			<VarDeclaration Name="IN" Type="BYTE" Comment="Input data from Adapter"/>
 		</OutputVars>
 		<Sockets>
-			<AdapterDeclaration Name="AB_IN" Type="adapter::types::unidirectional::AB" Comment="Adapter Input"/>
+			<AdapterDeclaration Name="AB_IN" Type="adapter::types::unidirectional::AB" Comment="Adapter Input" x="0" y="0"/>
 		</Sockets>
 	</InterfaceList>
 	<FBNetwork>

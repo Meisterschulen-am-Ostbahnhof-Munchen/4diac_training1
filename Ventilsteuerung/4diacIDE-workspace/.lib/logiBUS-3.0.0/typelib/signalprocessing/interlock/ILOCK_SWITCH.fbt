@@ -45,35 +45,40 @@
 				<ECAction Algorithm="DOWN" Output="EO_DOWN"/>
 				<ECAction Output="EO_UP"/>
 			</ECState>
-
 			<ECState Name="UP_STOP" x="5040" y="1280">
 				<ECAction Algorithm="STOP" Output="EO_UP"/>
 			</ECState>
 			<ECState Name="DOWN_STOP" x="4720" y="2720">
 				<ECAction Algorithm="STOP" Output="EO_DOWN"/>
 			</ECState>
-			<ECTransition Source="STOP" Destination="UP" Condition="EI_UP[DI_UP]" Comment="" x="4173.33" y="1020"/>
-			<ECTransition Source="STOP" Destination="DOWN" Condition="EI_DOWN[DI_DOWN]" Comment="" x="4133.33" y="1733.33"/>
-			<ECTransition Source="UP" Destination="DOWN" Condition="EI_DOWN[DI_DOWN]" Comment="" x="6306.67" y="1533.33"/>
-			<ECTransition Source="UP" Destination="DOWN" Condition="EI_UP[NOT DI_UP AND DI_DOWN]" Comment="" x="7193.33" y="1400"/>
-			<ECTransition Source="UP" Destination="UP_STOP" Condition="EI_UP[NOT DI_UP AND NOT DI_DOWN]" Comment="" x="5573.33" y="1093.33"/>
-			<ECTransition Source="DOWN" Destination="UP" Condition="EI_UP[DI_UP]" Comment="" x="4586.67" y="1513.33"/>
-			<ECTransition Source="DOWN" Destination="UP" Condition="EI_DOWN[NOT DI_DOWN AND DI_UP]" Comment="" x="8100" y="1286.67"/>
-			<ECTransition Source="DOWN" Destination="DOWN_STOP" Condition="EI_DOWN[NOT DI_DOWN AND NOT DI_UP]" Comment="" x="5473.33" y="2306.67"/>
-			<ECTransition Source="UP_STOP" Destination="STOP" Condition="1" Comment="" x="4133.33" y="1313.33"/>
-			<ECTransition Source="DOWN_STOP" Destination="STOP" Condition="1" Comment="" x="3913.33" y="2120"/>
+			<ECTransition Source="STOP" Destination="UP" Condition="EI_UP[DI_UP]" x="4173.33" y="1020"/>
+			<ECTransition Source="STOP" Destination="DOWN" Condition="EI_DOWN[DI_DOWN]" x="4133.33" y="1733.33"/>
+			<ECTransition Source="UP" Destination="DOWN" Condition="EI_DOWN[DI_DOWN]" x="6306.67" y="1533.33"/>
+			<ECTransition Source="UP" Destination="DOWN" Condition="EI_UP[NOT DI_UP AND DI_DOWN]" x="7193.33" y="1400"/>
+			<ECTransition Source="UP" Destination="UP_STOP" Condition="EI_UP[NOT DI_UP AND NOT DI_DOWN]" x="5573.33" y="1093.33"/>
+			<ECTransition Source="DOWN" Destination="UP" Condition="EI_UP[DI_UP]" x="4586.67" y="1513.33"/>
+			<ECTransition Source="DOWN" Destination="UP" Condition="EI_DOWN[NOT DI_DOWN AND DI_UP]" x="8100" y="1286.67"/>
+			<ECTransition Source="DOWN" Destination="DOWN_STOP" Condition="EI_DOWN[NOT DI_DOWN AND NOT DI_UP]" x="5473.33" y="2306.67"/>
+			<ECTransition Source="UP_STOP" Destination="STOP" Condition="1" x="4133.33" y="1313.33"/>
+			<ECTransition Source="DOWN_STOP" Destination="STOP" Condition="1" x="3913.33" y="2120"/>
 		</ECC>
 		<Algorithm Name="UP">
-			<ST><![CDATA[DO_UP := BOOL#TRUE;
-DO_DOWN := BOOL#FALSE;]]></ST>
+			<ST><![CDATA[
+DO_UP := BOOL#TRUE;
+DO_DOWN := BOOL#FALSE;
+]]></ST>
 		</Algorithm>
 		<Algorithm Name="DOWN">
-			<ST><![CDATA[DO_UP := BOOL#FALSE;
-DO_DOWN := BOOL#TRUE;]]></ST>
+			<ST><![CDATA[
+DO_UP := BOOL#FALSE;
+DO_DOWN := BOOL#TRUE;
+]]></ST>
 		</Algorithm>
 		<Algorithm Name="STOP">
-			<ST><![CDATA[DO_UP := BOOL#FALSE;
-DO_DOWN := BOOL#FALSE;]]></ST>
+			<ST><![CDATA[
+DO_UP := BOOL#FALSE;
+DO_DOWN := BOOL#FALSE;
+]]></ST>
 		</Algorithm>
 	</BasicFB>
 	<Attribute Name="eclipse4diac::core::TypeHash" Value="''"/>

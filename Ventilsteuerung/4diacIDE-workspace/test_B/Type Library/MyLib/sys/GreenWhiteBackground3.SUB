@@ -1,9 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <SubAppType Name="GreenWhiteBackground3" Comment="Hintergrundfarbe (TRUE -> Grün, FALSE -> Weiß) für 3 Objekte">
-	<Identification Standard="61499-2">
-	</Identification>
-	<VersionInfo Version="1.0" Author="franz" Date="2022-11-10">
-	</VersionInfo>
+	<Identification Standard="61499-2"/>
+	<VersionInfo Version="1.0" Author="franz" Date="2022-11-10"/>
 	<CompilerInfo packageName="MyLib::sys">
 		<Import declaration="isobus::UT::Q::const::colours"/>
 	</CompilerInfo>
@@ -14,47 +12,31 @@
 			</SubAppEvent>
 		</SubAppEventInputs>
 		<SubAppEventOutputs>
-			<SubAppEvent Name="CNF_1" Type="Event" Comment="Execution Confirmation">
-			</SubAppEvent>
-			<SubAppEvent Name="CNF_2" Type="Event">
-			</SubAppEvent>
-			<SubAppEvent Name="CNF_3" Type="Event">
-			</SubAppEvent>
+			<SubAppEvent Name="CNF_1" Type="Event" Comment="Execution Confirmation"/>
+			<SubAppEvent Name="CNF_2" Type="Event"/>
+			<SubAppEvent Name="CNF_3" Type="Event"/>
 		</SubAppEventOutputs>
 		<InputVars>
-			<VarDeclaration Name="DI1" Type="BOOL" Comment="Selector">
-				<Attribute Name="YPOSITION" Type="SINT" Value="18"/>
-			</VarDeclaration>
-			<VarDeclaration Name="u16ObjId" Type="UINT" Comment="Object ID Softkey">
-				<Attribute Name="YPOSITION" Type="SINT" Value="45"/>
-			</VarDeclaration>
-			<VarDeclaration Name="u16ObjIdA" Type="UINT" Comment="Object ID AUX">
-				<Attribute Name="YPOSITION" Type="SINT" Value="105"/>
-			</VarDeclaration>
+			<VarDeclaration Name="DI1" Type="BOOL" Comment="Selector"/>
+			<VarDeclaration Name="u16ObjId" Type="UINT" Comment="Object ID Softkey"/>
+			<VarDeclaration Name="u16ObjIdA" Type="UINT" Comment="Object ID AUX"/>
 		</InputVars>
 		<OutputVars>
 			<VarDeclaration Name="STATUS_1" Type="STRING" Comment="Service Status"/>
 			<VarDeclaration Name="u8OldColour_1" Type="USINT" Comment="Old value of ID"/>
 			<VarDeclaration Name="result_1" Type="INT" Comment="retval see description"/>
-			<VarDeclaration Name="STATUS_2" Type="STRING" Comment="Service Status">
-				<Attribute Name="YPOSITION" Type="SINT" Value="33"/>
-			</VarDeclaration>
+			<VarDeclaration Name="STATUS_2" Type="STRING" Comment="Service Status"/>
 			<VarDeclaration Name="u8OldColour_2" Type="USINT" Comment="Old value of ID"/>
 			<VarDeclaration Name="result_2" Type="INT" Comment="retval see description"/>
-			<VarDeclaration Name="STATUS_3" Type="STRING" Comment="Service Status">
-				<Attribute Name="YPOSITION" Type="SINT" Value="75"/>
-			</VarDeclaration>
+			<VarDeclaration Name="STATUS_3" Type="STRING" Comment="Service Status"/>
 			<VarDeclaration Name="u8OldColour_3" Type="USINT" Comment="Old value of ID"/>
 			<VarDeclaration Name="result_3" Type="INT" Comment="retval see description"/>
 		</OutputVars>
 	</SubAppInterfaceList>
 	<SubAppNetwork>
-		<FB Name="Q_BackgroundColour_1" Type="isobus::UT::Q::Q_BackgroundColour" x="1600" y="1500">
-		</FB>
-		<FB Name="Q_BackgroundColour_2" Type="isobus::UT::Q::Q_BackgroundColour" x="1600" y="2300">
-		</FB>
-		<FB Name="Q_BackgroundColour_3" Type="isobus::UT::Q::Q_BackgroundColourAux" x="1600" y="3100">
-		</FB>
+		<FB Name="Q_BackgroundColour_1" Type="isobus::UT::Q::Q_BackgroundColour" x="1600" y="1500"/>
+		<FB Name="Q_BackgroundColour_2" Type="isobus::UT::Q::Q_BackgroundColour" x="1600" y="2300"/>
+		<FB Name="Q_BackgroundColour_3" Type="isobus::UT::Q::Q_BackgroundColourAux" x="1600" y="3100"/>
 		<FB Name="F_SEL_I" Type="iec61131::selection::F_SEL" x="-3400" y="900">
 			<Parameter Name="IN0" Value="colours::COLOR_WHITE"/>
 			<Parameter Name="IN1" Value="colours::COLOR_GREEN"/>

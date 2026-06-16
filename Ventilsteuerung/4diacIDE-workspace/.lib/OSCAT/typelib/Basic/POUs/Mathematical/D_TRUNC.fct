@@ -5,7 +5,6 @@
 	<VersionInfo Version="1.0" Author="Franz Höpfinger" Date="2025-12-21">
 	</VersionInfo>
 	<CompilerInfo packageName="OSCAT::Basic::POUs::Mathematical">
-		<Import declaration="eclipse4diac::core::TypeHash"/>
 	</CompilerInfo>
 	<InterfaceList>
 		<EventInputs>
@@ -36,7 +35,7 @@ END_VAR
 
 (*
  * version 1.2	10. mar. 2009 programmer 	hugo tested by		oscat
- *
+ * *
  * d_trunc truncates a real to a dint 1.5 will be 1 and -1.5 will be -1 d_trunc is necessary because
  * many systems do not offer a trunc to a dint also real_to_dint will not deliver the same result on
  * different systems
@@ -56,9 +55,9 @@ END_FUNCTION
 
 (* for systems that support a dint truncation this routine can be replaced by trunc() *)
 (* revision history hm	21. mar. 2008	rev 1.0 original version
- *
+ * *
  * hm	31. oct. 2008	rev 1.1 optimized performance
- *
+ * *
  * hm	10. mar. 2009	rev 1.2 real constants updated to new systax using dot *) ]]></ST>
 	</FunctionBody>
 	<Attribute Name="eclipse4diac::core::TypeHash" Value="''"/>

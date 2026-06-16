@@ -57,22 +57,18 @@
 			<ECAction Algorithm="RST" Output="CNF"/>
 		</ECState>
 		<Algorithm Name="EINIT">
-			<ST><![CDATA[ALGORITHM EINIT
+			<ST><![CDATA[
 init := FALSE;
-END_ALGORITHM]]></ST>
+]]></ST>
 		</Algorithm>
 		<Algorithm Name="RST">
 			<ST><![CDATA[
-
-ALGORITHM RST
 init := TRUE;
 old := in;
-END_ALGORITHM]]></ST>
+]]></ST>
 		</Algorithm>
 		<Algorithm Name="REQ">
 			<ST><![CDATA[
-
-ALGORITHM REQ
 (* read system time *)
 tx := T_PLC_US();
 delta_t := tx - last;
@@ -89,9 +85,10 @@ ELSIF run AND delta_t > 0 THEN
 ELSE
 	out := 0.0;
 END_IF;
-END_ALGORITHM
-
-(*
+]]></ST>
+		</Algorithm>
+		<Method Name="LOST_AND_FOUND_3" Type="" Comment="lost+found 3">
+			<ST><![CDATA[(*
  * hm 3.1.2007			rev 1.1 added init code for startup set the default for K to 1
  * *
  * hm	15. sep 2007	rev 1.2 replaced Time() with T_PLC_US for compatibility and performance reasons
@@ -103,9 +100,8 @@ END_ALGORITHM
  * hm	6. nov. 2008	rev 1.4 improved performance
  * *
  * hm	11. mar. 2009	rev 1.5 inproved code
- *)
-]]></ST>
-		</Algorithm>
+ *)]]></ST>
+		</Method>
 	</SimpleFB>
 	<Attribute Name="eclipse4diac::core::TypeHash" Value="''"/>
 </FBType>

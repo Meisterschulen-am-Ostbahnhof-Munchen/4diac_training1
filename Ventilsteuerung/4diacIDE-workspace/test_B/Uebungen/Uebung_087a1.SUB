@@ -1,9 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <SubAppType Name="Uebung_087a1" Comment="Beispiel für E_DEMUX_4">
-	<Identification Standard="61499-2" Description="Copyright (c) 2023 Meisterschulen am Ostbahnhof  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0">
-	</Identification>
-	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2023-10-23" Remarks="initial API and implementation and/or initial documentation">
-	</VersionInfo>
+	<Identification Standard="61499-2" Description="Copyright (c) 2023 Meisterschulen am Ostbahnhof  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0"/>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2023-10-23" Remarks="initial API and implementation and/or initial documentation"/>
 	<CompilerInfo packageName="Uebungen">
 		<Import declaration="logiBUS::io::DI::logiBUS_DI::Input_I1"/>
 		<Import declaration="logiBUS::io::DI::logiBUS_DI::Input_I2"/>
@@ -14,13 +12,10 @@
 		<Import declaration="logiBUS::io::DQ::logiBUS_DO::Output_Q3"/>
 		<Import declaration="logiBUS::io::DQ::logiBUS_DO::Output_Q4"/>
 	</CompilerInfo>
-	<SubAppInterfaceList>
-	</SubAppInterfaceList>
+	<SubAppInterfaceList/>
 	<SubAppNetwork>
-		<FB Name="E_DEMUX_4" Type="iec61499::events::E_DEMUX_4" x="3900" y="2900">
-		</FB>
-		<FB Name="ADD_3" Type="iec61131::arithmetic::ADD_3" x="2700" y="3200">
-		</FB>
+		<FB Name="E_DEMUX_4" Type="iec61499::events::E_DEMUX_4" x="3900" y="2900"/>
+		<FB Name="ADD_3" Type="iec61131::arithmetic::ADD_3" x="2700" y="3200"/>
 		<FB Name="DigitalInput_I2" Type="logiBUS::io::DI::logiBUS_IX" x="400" y="2300">
 			<Parameter Name="QI" Value="TRUE"/>
 			<Parameter Name="Input" Value="Input_I2"/>
@@ -33,12 +28,9 @@
 			<Parameter Name="QI" Value="TRUE"/>
 			<Parameter Name="Input" Value="Input_I1"/>
 		</FB>
-		<FB Name="F_BOOL_TO_UINT_I2" Type="iec61131::conversion::F_BOOL_TO_UINT" x="1400" y="2700">
-		</FB>
-		<FB Name="F_BOOL_TO_UINT_I3" Type="iec61131::conversion::F_BOOL_TO_UINT" x="1400" y="3900">
-		</FB>
-		<FB Name="F_BOOL_TO_UINT_I4" Type="iec61131::conversion::F_BOOL_TO_UINT" x="1400" y="5100">
-		</FB>
+		<FB Name="F_BOOL_TO_UINT_I2" Type="iec61131::conversion::F_BOOL_TO_UINT" x="1400" y="2700"/>
+		<FB Name="F_BOOL_TO_UINT_I3" Type="iec61131::conversion::F_BOOL_TO_UINT" x="1400" y="3900"/>
+		<FB Name="F_BOOL_TO_UINT_I4" Type="iec61131::conversion::F_BOOL_TO_UINT" x="1400" y="5100"/>
 		<FB Name="DigitalOutput_Q2" Type="logiBUS::io::DQ::logiBUS_QX" x="7400" y="2400">
 			<Parameter Name="QI" Value="TRUE"/>
 			<Parameter Name="Output" Value="Output_Q2"/>
@@ -55,14 +47,10 @@
 			<Parameter Name="QI" Value="TRUE"/>
 			<Parameter Name="Output" Value="Output_Q3"/>
 		</FB>
-		<FB Name="E_T_FF_Q1" Type="iec61499::events::E_T_FF" x="5600" y="1800">
-		</FB>
-		<FB Name="E_T_FF_Q2" Type="iec61499::events::E_T_FF" x="5600" y="2700">
-		</FB>
-		<FB Name="E_T_FF_Q3" Type="iec61499::events::E_T_FF" x="5600" y="3600">
-		</FB>
-		<FB Name="E_T_FF_Q4" Type="iec61499::events::E_T_FF" x="5600" y="4500">
-		</FB>
+		<FB Name="E_T_FF_Q1" Type="iec61499::events::E_T_FF" x="5600" y="1800"/>
+		<FB Name="E_T_FF_Q2" Type="iec61499::events::E_T_FF" x="5600" y="2700"/>
+		<FB Name="E_T_FF_Q3" Type="iec61499::events::E_T_FF" x="5600" y="3600"/>
+		<FB Name="E_T_FF_Q4" Type="iec61499::events::E_T_FF" x="5600" y="4500"/>
 		<FB Name="DigitalInput_CLK_I1" Type="logiBUS::io::DI::logiBUS_IE" x="400" y="1200">
 			<Parameter Name="QI" Value="TRUE"/>
 			<Parameter Name="Input" Value="Input_I1"/>

@@ -52,21 +52,21 @@
 				<ECAction Algorithm="CS" Output="SCALE.EO1"/>
 				<ECAction Output="OFFSET.EO1"/>
 			</ECState>
-			<ECTransition Source="IDLE" Destination="REQ" Condition="X.E1" Comment="" x="400" y="200"/>
-			<ECTransition Source="REQ" Destination="IDLE" Condition="1" Comment="" x="400" y="600"/>
-			<ECTransition Source="IDLE" Destination="CO" Condition="CO.E1[CO.D1]" Comment="" x="800" y="400"/>
-			<ECTransition Source="CO" Destination="WAIT_CS" Condition="1" Comment="" x="1600" y="-200"/>
-			<ECTransition Source="WAIT_CS" Destination="REQ_WAIT" Condition="X.E1" Comment="" x="1200" y="-200"/>
-			<ECTransition Source="REQ_WAIT" Destination="WAIT_CS" Condition="1" Comment="" x="1400" y="-600"/>
-			<ECTransition Source="WAIT_CS" Destination="CS" Condition="CS.E1[CS.D1]" Comment="" x="2000" y="-400"/>
-			<ECTransition Source="CS" Destination="IDLE" Condition="1" Comment="" x="1200" y="-600"/>
-			<ECTransition Source="WAIT_CS" Destination="CO" Condition="CO.E1[CO.D1]" Comment="" x="1600" y="-600"/>
-			<ECTransition Source="IDLE" Destination="REQ" Condition="SET" Comment="" x="-100" y="200"/>
-			<ECTransition Source="IDLE" Destination="REQ" Condition="OFFSET.EI1" Comment="" x="-100" y="300"/>
-			<ECTransition Source="IDLE" Destination="REQ" Condition="SCALE.EI1" Comment="" x="-100" y="400"/>
-			<ECTransition Source="WAIT_CS" Destination="REQ_WAIT" Condition="SET" Comment="" x="1400" y="-500"/>
-			<ECTransition Source="WAIT_CS" Destination="REQ_WAIT" Condition="OFFSET.EI1" Comment="" x="1400" y="-550"/>
-			<ECTransition Source="WAIT_CS" Destination="REQ_WAIT" Condition="SCALE.EI1" Comment="" x="1400" y="-600"/>
+			<ECTransition Source="IDLE" Destination="REQ" Condition="X.E1" x="400" y="200"/>
+			<ECTransition Source="REQ" Destination="IDLE" Condition="1" x="400" y="600"/>
+			<ECTransition Source="IDLE" Destination="CO" Condition="CO.E1[CO.D1]" x="800" y="400"/>
+			<ECTransition Source="CO" Destination="WAIT_CS" Condition="1" x="1600" y="-200"/>
+			<ECTransition Source="WAIT_CS" Destination="REQ_WAIT" Condition="X.E1" x="1200" y="-200"/>
+			<ECTransition Source="REQ_WAIT" Destination="WAIT_CS" Condition="1" x="1400" y="-600"/>
+			<ECTransition Source="WAIT_CS" Destination="CS" Condition="CS.E1[CS.D1]" x="2000" y="-400"/>
+			<ECTransition Source="CS" Destination="IDLE" Condition="1" x="1200" y="-600"/>
+			<ECTransition Source="WAIT_CS" Destination="CO" Condition="CO.E1[CO.D1]" x="1600" y="-600"/>
+			<ECTransition Source="IDLE" Destination="REQ" Condition="SET" x="-100" y="200"/>
+			<ECTransition Source="IDLE" Destination="REQ" Condition="OFFSET.EI1" x="-100" y="300"/>
+			<ECTransition Source="IDLE" Destination="REQ" Condition="SCALE.EI1" x="-100" y="400"/>
+			<ECTransition Source="WAIT_CS" Destination="REQ_WAIT" Condition="SET" x="1400" y="-500"/>
+			<ECTransition Source="WAIT_CS" Destination="REQ_WAIT" Condition="OFFSET.EI1" x="1400" y="-550"/>
+			<ECTransition Source="WAIT_CS" Destination="REQ_WAIT" Condition="SCALE.EI1" x="1400" y="-600"/>
 		</ECC>
 		<Algorithm Name="REQ" Comment="REQ">
 			<ST><![CDATA[

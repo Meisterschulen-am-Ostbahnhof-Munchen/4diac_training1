@@ -34,8 +34,8 @@
 			<ECState Name="SET" Comment="Initialization" x="1235" y="665">
 				<ECAction Algorithm="LATCH" Output="EO"/>
 			</ECState>
-			<ECTransition Source="SET" Destination="SET" Condition="CLK[GE(SUB(MAX(D, Q), MIN(D, Q)), HYSTERESIS)]" Comment="" x="1506.67" y="180"/>
-			<ECTransition Source="START" Destination="SET" Condition="CLK" Comment="" x="886.67" y="420"/>
+			<ECTransition Source="SET" Destination="SET" Condition="CLK[GE(SUB(MAX(D, Q), MIN(D, Q)), HYSTERESIS)]" x="1506.67" y="180"/>
+			<ECTransition Source="START" Destination="SET" Condition="CLK" x="886.67" y="420"/>
 		</ECC>
 		<Algorithm Name="LATCH" Comment="new algorithm">
 			<ST><![CDATA[

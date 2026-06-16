@@ -117,43 +117,39 @@
 				<ECAction Output="EO_SchieberLinks_Close"/>
 				<ECAction Output="EO_SchieberRechts_Open"/>
 			</ECState>
-			<ECTransition Source="START" Destination="Init" Condition="INIT[TRUE = QI]" Comment="" x="840" y="920"/>
-			<ECTransition Source="DeInit" Destination="START" Condition="1" Comment="" x="940" y="1445"/>
-			<ECTransition Source="AlleZu" Destination="rechtsAuf" Condition="EI_SchieberRechts_Open" Comment="" x="4226.67" y="3286.67"/>
-			<ECTransition Source="AlleZu" Destination="LinksAuf" Condition="EI_SchieberLinks_Open" Comment="" x="7386.67" y="3180"/>
-			<ECTransition Source="rechtsAuf" Destination="AlleZu" Condition="EI_SchieberRechts_Close" Comment="" x="3746.67" y="3133.33"/>
-			<ECTransition Source="LinksAuf" Destination="AlleZu" Condition="EI_SchieberLinks_Close" Comment="" x="8013.33" y="3046.67"/>
-			<ECTransition Source="LinksAuf" Destination="AlleAuf" Condition="EI_SchieberRechts_Open" Comment="" x="6966.67" y="4960"/>
-			<ECTransition Source="rechtsAuf" Destination="AlleAuf" Condition="EI_SchieberLinks_Open" Comment="" x="4420" y="4940"/>
-			<ECTransition Source="AlleAuf" Destination="rechtsAuf" Condition="EI_SchieberLinks_Close" Comment="" x="4700" y="3693.33"/>
-			<ECTransition Source="AlleAuf" Destination="LinksAuf" Condition="EI_SchieberRechts_Close" Comment="" x="7053.33" y="3773.33"/>
-			<ECTransition Source="AlleAuf" Destination="AlleZu" Condition="EI_Hauptschieber_Close" Comment="" x="5593.33" y="3206.67"/>
-			<ECTransition Source="rechtsAuf" Destination="AlleZu" Condition="EI_Hauptschieber_Close" Comment="" x="3193.33" y="2826.67"/>
-			<ECTransition Source="LinksAuf" Destination="AlleZu" Condition="EI_Hauptschieber_Close" Comment="" x="8653.33" y="2593.33"/>
-			<ECTransition Source="AlleZu" Destination="DeInit" Condition="INIT[FALSE = QI]" Comment="" x="2686.67" y="1153.33"/>
-			<ECTransition Source="Init" Destination="AlleZu" Condition="1" Comment="" x="3666.67" y="953.33"/>
-			<ECTransition Source="AlleZu" Destination="LinksAuf" Condition="EI_Hauptschieber_Open[TRUE = DI_RECHTS_GESPERRT]" Comment="" x="9486.67" y="2160"/>
-			<ECTransition Source="AlleZu" Destination="rechtsAuf" Condition="EI_Hauptschieber_Open[TRUE = DI_LINKS_GESPERRT]" Comment="" x="2180" y="2600"/>
-			<ECTransition Source="AlleZu" Destination="AlleAuf" Condition="EI_Hauptschieber_Open" Comment="" x="6373.33" y="3313.33"/>
+			<ECTransition Source="START" Destination="Init" Condition="INIT[TRUE = QI]" x="840" y="920"/>
+			<ECTransition Source="DeInit" Destination="START" Condition="1" x="940" y="1445"/>
+			<ECTransition Source="AlleZu" Destination="rechtsAuf" Condition="EI_SchieberRechts_Open" x="4226.67" y="3286.67"/>
+			<ECTransition Source="AlleZu" Destination="LinksAuf" Condition="EI_SchieberLinks_Open" x="7386.67" y="3180"/>
+			<ECTransition Source="rechtsAuf" Destination="AlleZu" Condition="EI_SchieberRechts_Close" x="3746.67" y="3133.33"/>
+			<ECTransition Source="LinksAuf" Destination="AlleZu" Condition="EI_SchieberLinks_Close" x="8013.33" y="3046.67"/>
+			<ECTransition Source="LinksAuf" Destination="AlleAuf" Condition="EI_SchieberRechts_Open" x="6966.67" y="4960"/>
+			<ECTransition Source="rechtsAuf" Destination="AlleAuf" Condition="EI_SchieberLinks_Open" x="4420" y="4940"/>
+			<ECTransition Source="AlleAuf" Destination="rechtsAuf" Condition="EI_SchieberLinks_Close" x="4700" y="3693.33"/>
+			<ECTransition Source="AlleAuf" Destination="LinksAuf" Condition="EI_SchieberRechts_Close" x="7053.33" y="3773.33"/>
+			<ECTransition Source="AlleAuf" Destination="AlleZu" Condition="EI_Hauptschieber_Close" x="5593.33" y="3206.67"/>
+			<ECTransition Source="rechtsAuf" Destination="AlleZu" Condition="EI_Hauptschieber_Close" x="3193.33" y="2826.67"/>
+			<ECTransition Source="LinksAuf" Destination="AlleZu" Condition="EI_Hauptschieber_Close" x="8653.33" y="2593.33"/>
+			<ECTransition Source="AlleZu" Destination="DeInit" Condition="INIT[FALSE = QI]" x="2686.67" y="1153.33"/>
+			<ECTransition Source="Init" Destination="AlleZu" Condition="1" x="3666.67" y="953.33"/>
+			<ECTransition Source="AlleZu" Destination="LinksAuf" Condition="EI_Hauptschieber_Open[TRUE = DI_RECHTS_GESPERRT]" x="9486.67" y="2160"/>
+			<ECTransition Source="AlleZu" Destination="rechtsAuf" Condition="EI_Hauptschieber_Open[TRUE = DI_LINKS_GESPERRT]" x="2180" y="2600"/>
+			<ECTransition Source="AlleZu" Destination="AlleAuf" Condition="EI_Hauptschieber_Open" x="6373.33" y="3313.33"/>
 		</ECC>
 		<Algorithm Name="initialize">
-			<ST><![CDATA[ALGORITHM initialize
+			<ST><![CDATA[
 
 QO := QI;
-END_ALGORITHM]]></ST>
+]]></ST>
 		</Algorithm>
 		<Algorithm Name="deInitialize">
 			<ST><![CDATA[
 
-ALGORITHM deInitialize
-
 QO := FALSE;
-END_ALGORITHM]]></ST>
+]]></ST>
 		</Algorithm>
 		<Algorithm Name="normalOperation">
 			<ST><![CDATA[
-
-ALGORITHM normalOperation
 QO := QI;
 
 IF TRUE = QI THEN
@@ -162,8 +158,6 @@ IF TRUE = QI THEN
 	DO_RECHTS_GESPERRT := DI_RECHTS_GESPERRT;
 
 END_IF;
-
-END_ALGORITHM
 
 ]]></ST>
 		</Algorithm>

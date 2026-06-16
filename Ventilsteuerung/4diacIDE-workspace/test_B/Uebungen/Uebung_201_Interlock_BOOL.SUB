@@ -1,9 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <SubAppType Name="Uebung_201_Interlock_BOOL" Comment="Interlock basic exercise (BOOL)">
-	<Identification Standard="61499-2" Description="Copyright (c) 2026 Meisterschulen am Ostbahnhof">
-	</Identification>
-	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Gemini CLI" Date="2026-05-07" Remarks="Interlock exercise">
-	</VersionInfo>
+	<Identification Standard="61499-2" Description="Copyright (c) 2026 Meisterschulen am Ostbahnhof"/>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Gemini CLI" Date="2026-05-07" Remarks="Interlock exercise"/>
 	<CompilerInfo packageName="Uebungen">
 		<Import declaration="logiBUS::io::DI::logiBUS_DI::Input_I1"/>
 		<Import declaration="logiBUS::io::DI::logiBUS_DI::Input_I2"/>
@@ -14,8 +12,7 @@
 		<Import declaration="logiBUS::io::DQ::logiBUS_DO::Output_Q3"/>
 		<Import declaration="logiBUS::io::DQ::logiBUS_DO::Output_Q4"/>
 	</CompilerInfo>
-	<SubAppInterfaceList>
-	</SubAppInterfaceList>
+	<SubAppInterfaceList/>
 	<SubAppNetwork>
 		<FB Name="DigitalOutput_Q1" Type="logiBUS::io::DQ::logiBUS_QX" x="800" y="1600">
 			<Parameter Name="QI" Value="TRUE"/>
@@ -41,14 +38,10 @@
 			<Parameter Name="QI" Value="TRUE"/>
 			<Parameter Name="Output" Value="Output_Q2"/>
 		</FB>
-		<FB Name="ILOCK_3" Type="logiBUS::signalprocessing::interlock::ILOCK_IO" x="-1100" y="3900">
-		</FB>
-		<FB Name="ILOCK_4" Type="logiBUS::signalprocessing::interlock::ILOCK_IO" x="-1100" y="4900">
-		</FB>
-		<FB Name="ILOCK_1" Type="logiBUS::signalprocessing::interlock::ILOCK_IO" x="-1100" y="1900">
-		</FB>
-		<FB Name="ILOCK_2" Type="logiBUS::signalprocessing::interlock::ILOCK_IO" x="-1100" y="2900">
-		</FB>
+		<FB Name="ILOCK_3" Type="logiBUS::signalprocessing::interlock::ILOCK_IO" x="-1100" y="3900"/>
+		<FB Name="ILOCK_4" Type="logiBUS::signalprocessing::interlock::ILOCK_IO" x="-1100" y="4900"/>
+		<FB Name="ILOCK_1" Type="logiBUS::signalprocessing::interlock::ILOCK_IO" x="-1100" y="1900"/>
+		<FB Name="ILOCK_2" Type="logiBUS::signalprocessing::interlock::ILOCK_IO" x="-1100" y="2900"/>
 		<FB Name="DigitalInput_I4" Type="logiBUS::io::DI::logiBUS_IX" x="-2700" y="4500">
 			<Parameter Name="QI" Value="TRUE"/>
 			<Parameter Name="Input" Value="Input_I4"/>

@@ -1,9 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <SubAppType Name="Uebung_019c" Comment="Umschalten einer Maske">
-	<Identification Standard="61499-2" Description="Copyright (c) 2023 Meisterschulen am Ostbahnhof  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0">
-	</Identification>
-	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2023-10-23" Remarks="initial API and implementation and/or initial documentation">
-	</VersionInfo>
+	<Identification Standard="61499-2" Description="Copyright (c) 2023 Meisterschulen am Ostbahnhof  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0"/>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2023-10-23" Remarks="initial API and implementation and/or initial documentation"/>
 	<CompilerInfo packageName="Uebungen">
 		<Import declaration="Uebungen::const::UT::DefaultPool::AlarmMask_A2_medium"/>
 		<Import declaration="Uebungen::const::UT::DefaultPool::DataMask_M1"/>
@@ -15,16 +13,14 @@
 		<Import declaration="logiBUS::io::DI::logiBUS_DI_Events::BUTTON_SINGLE_CLICK"/>
 		<Import declaration="logiBUS::io::DQ::logiBUS_DO::Output_Q8"/>
 	</CompilerInfo>
-	<SubAppInterfaceList>
-	</SubAppInterfaceList>
+	<SubAppInterfaceList/>
 	<SubAppNetwork>
 		<FB Name="DigitalInput_CLK_I1" Type="logiBUS::io::DI::logiBUS_IE" x="-8600" y="-400">
 			<Parameter Name="QI" Value="TRUE"/>
 			<Parameter Name="Input" Value="Input_I1"/>
 			<Parameter Name="InputEvent" Value="BUTTON_SINGLE_CLICK"/>
 		</FB>
-		<FB Name="Q_ActiveMask" Type="isobus::UT::Q::Q_ActiveMask" x="-1400" y="-300">
-		</FB>
+		<FB Name="Q_ActiveMask" Type="isobus::UT::Q::Q_ActiveMask" x="-1400" y="-300"/>
 		<FB Name="DigitalInput_CLK_I2" Type="logiBUS::io::DI::logiBUS_IE" x="-8600" y="800">
 			<Parameter Name="QI" Value="TRUE"/>
 			<Parameter Name="Input" Value="Input_I2"/>
@@ -41,8 +37,7 @@
 			<Parameter Name="Input" Value="Input_I4"/>
 			<Parameter Name="InputEvent" Value="BUTTON_SINGLE_CLICK"/>
 		</FB>
-		<FB Name="E_SR" Type="iec61499::events::E_SR" x="-4500" y="2600">
-		</FB>
+		<FB Name="E_SR" Type="iec61499::events::E_SR" x="-4500" y="2600"/>
 		<FB Name="Alarmausgang" Type="logiBUS::io::DQ::logiBUS_QX" x="-2600" y="2500">
 			<Parameter Name="QI" Value="TRUE"/>
 			<Parameter Name="Output" Value="Output_Q8"/>
@@ -51,14 +46,10 @@
 			<Parameter Name="QI" Value="TRUE"/>
 			<Parameter Name="Input" Value="Input_I3"/>
 		</FB>
-		<FB Name="E_SWITCH" Type="iec61499::events::E_SWITCH" x="-6900" y="2400">
-		</FB>
-		<FB Name="E_PERMIT_INVERT" Type="iec61499::events::E_SWITCH" x="-6900" y="3300">
-		</FB>
-		<FB Name="E_PERMIT_INVERT_1" Type="iec61499::events::E_SWITCH" x="-6900" y="-200">
-		</FB>
-		<FB Name="E_PERMIT_INVERT_2" Type="iec61499::events::E_SWITCH" x="-6900" y="1000">
-		</FB>
+		<FB Name="E_SWITCH" Type="iec61499::events::E_SWITCH" x="-6900" y="2400"/>
+		<FB Name="E_PERMIT_INVERT" Type="iec61499::events::E_SWITCH" x="-6900" y="3300"/>
+		<FB Name="E_PERMIT_INVERT_1" Type="iec61499::events::E_SWITCH" x="-6900" y="-200"/>
+		<FB Name="E_PERMIT_INVERT_2" Type="iec61499::events::E_SWITCH" x="-6900" y="1000"/>
 		<EventConnections>
 			<Connection Source="F_SEL_E_4.CNF" Destination="Q_ActiveMask.REQ" dx1="673.33"/>
 			<Connection Source="E_PERMIT_INVERT.EO0" Destination="F_SEL_E_4.REQ4" dx1="840">

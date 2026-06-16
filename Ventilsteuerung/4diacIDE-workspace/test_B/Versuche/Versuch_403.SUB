@@ -1,13 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <SubAppType Name="Versuch_403" Comment="Versuch Array Summe">
-	<Identification Standard="61499-2" Description="Copyright (c) 2023 Meisterschulen am Ostbahnhof  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0">
-	</Identification>
-	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2023-10-23" Remarks="initial API and implementation and/or initial documentation">
-	</VersionInfo>
-	<CompilerInfo packageName="Versuche">
-	</CompilerInfo>
-	<SubAppInterfaceList>
-	</SubAppInterfaceList>
+	<Identification Standard="61499-2" Description="Copyright (c) 2023 Meisterschulen am Ostbahnhof  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0"/>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2023-10-23" Remarks="initial API and implementation and/or initial documentation"/>
+	<CompilerInfo packageName="Versuche"/>
+	<SubAppInterfaceList/>
 	<SubAppNetwork>
 		<FB Name="GET_AT_INDEX" Type="eclipse4diac::convert::GET_AT_INDEX" x="2126.67" y="6320">
 			<Parameter Name="INDEX" Value="0"/>
@@ -15,8 +11,7 @@
 		<FB Name="F_MOVE" Type="iec61131::selection::F_MOVE" x="3286.67" y="6373.33">
 			<Attribute Name="DataType" Value="INT"/>
 		</FB>
-		<FB Name="CountOfElements" Type="eclipse4diac::utils::arrays::F_LEN_ARRAY" x="1786.67" y="7300">
-		</FB>
+		<FB Name="CountOfElements" Type="eclipse4diac::utils::arrays::F_LEN_ARRAY" x="1786.67" y="7300"/>
 		<FB Name="F_UPPER_BOUND" Type="iec61131::arrays::F_UPPER_BOUND" x="2126.67" y="5340">
 			<Parameter Name="DIM" Value="INT#1"/>
 		</FB>
@@ -33,10 +28,8 @@
 			<Parameter Name="IN_7" Value="1"/>
 			<Parameter Name="IN_8" Value="0"/>
 		</FB>
-		<FB Name="ARRAY2ARRAY_8_INT" Type="eclipse4diac::convert::ARRAY2ARRAY_8_INT" x="1786.67" y="4540">
-		</FB>
-		<FB Name="CountOfElements_1" Type="eclipse4diac::utils::arrays::F_LEN_ARRAY" x="3700" y="4600">
-		</FB>
+		<FB Name="ARRAY2ARRAY_8_INT" Type="eclipse4diac::convert::ARRAY2ARRAY_8_INT" x="1786.67" y="4540"/>
+		<FB Name="CountOfElements_1" Type="eclipse4diac::utils::arrays::F_LEN_ARRAY" x="3700" y="4600"/>
 		<EventConnections>
 			<Connection Source="GET_AT_INDEX.CNF" Destination="F_MOVE.REQ" dx1="66.67"/>
 			<Connection Source="VALUES2ARRAY_8_INT.CNF" Destination="GET_AT_INDEX.REQ" dx1="133.33"/>

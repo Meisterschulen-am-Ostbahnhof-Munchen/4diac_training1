@@ -11,27 +11,21 @@
 		<EventInputs>
 			<Event Name="REQ" Type="Event" Comment="Request to Adapter">
 				<With Var="OUT"/>
-				<Attribute Name="YPOSITION" Type="DINT" Value="46"/>
 			</Event>
 		</EventInputs>
 		<EventOutputs>
 			<Event Name="CNF" Type="Event" Comment="Confirmation from Adapter">
 				<With Var="IN"/>
-				<Attribute Name="YPOSITION" Type="DINT" Value="46"/>
 			</Event>
 		</EventOutputs>
 		<InputVars>
-			<VarDeclaration Name="OUT" Type="BYTE" Comment="Output data to Adapter">
-				<Attribute Name="YPOSITION" Type="DINT" Value="31"/>
-			</VarDeclaration>
+			<VarDeclaration Name="OUT" Type="BYTE" Comment="Output data to Adapter"/>
 		</InputVars>
 		<OutputVars>
-			<VarDeclaration Name="IN" Type="BYTE" Comment="Input data from Adapter">
-				<Attribute Name="YPOSITION" Type="DINT" Value="47"/>
-			</VarDeclaration>
+			<VarDeclaration Name="IN" Type="BYTE" Comment="Input data from Adapter"/>
 		</OutputVars>
 		<Sockets>
-			<AdapterDeclaration Name="AB2_IN" Type="adapter::types::bidirectional::AB2" Comment="Adapter Input"/>
+			<AdapterDeclaration Name="AB2_IN" Type="adapter::types::bidirectional::AB2" Comment="Adapter Input" x="0" y="0"/>
 		</Sockets>
 	</InterfaceList>
 	<FBNetwork>

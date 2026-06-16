@@ -35,36 +35,42 @@
 				<ECAction Algorithm="CHECK"/>
 			</ECState>
 			<ECState Name="EMIT" Comment="Fire state change" x="2500" y="700">
-				<ECAction Algorithm="SAVE" Output="OUT.E1"/>
+				<ECAction Algorithm="SAVE"/>
 			</ECState>
-			<ECTransition Source="START" Destination="INIT" Condition="DIST_IN.E1[FirstRun]" Comment="" x="1000" y="200"/>
-			<ECTransition Source="INIT" Destination="CHECK" Condition="1" Comment="" x="1500" y="400"/>
-			<ECTransition Source="START" Destination="CHECK" Condition="DIST_IN.E1[NOT FirstRun]" Comment="" x="1000" y="600"/>
-			<ECTransition Source="CHECK" Destination="EMIT" Condition="[OUT.D1 &lt;&gt; LastState]" Comment="" x="2000" y="700"/>
-			<ECTransition Source="CHECK" Destination="START" Condition="[OUT.D1 = LastState]" Comment="" x="1000" y="800"/>
-			<ECTransition Source="EMIT" Destination="START" Condition="1" Comment="" x="2000" y="400"/>
+			<ECTransition Source="START" Destination="INIT" Condition="[DIST_IN.E1[FirstRun]]" x="1000" y="200"/>
+			<ECTransition Source="INIT" Destination="CHECK" Condition="1" x="1500" y="400"/>
+			<ECTransition Source="START" Destination="CHECK" Condition="[DIST_IN.E1[NOT FirstRun]]" x="1000" y="600"/>
+			<ECTransition Source="CHECK" Destination="EMIT" Condition="[OUT.D1 &lt;&gt; LastState]" x="2000" y="700"/>
+			<ECTransition Source="CHECK" Destination="START" Condition="[OUT.D1 = LastState]" x="1000" y="800"/>
+			<ECTransition Source="EMIT" Destination="START" Condition="1" x="2000" y="400"/>
 		</ECC>
 		<Algorithm Name="INIT">
-			<ST><![CDATA[LastDist := DIST_IN.D1;
+			<ST><![CDATA[
+LastDist := DIST_IN.D1;
 OUT.D1 := BOOL#FALSE;
 LastState := BOOL#FALSE;
-FirstRun := BOOL#FALSE;]]></ST>
+FirstRun := BOOL#FALSE;
+]]></ST>
 		</Algorithm>
 		<Algorithm Name="CHECK">
-			<ST><![CDATA[IF (LastState = BOOL#FALSE) THEN
-  IF (DIST_IN.D1 >= (LastDist + DIST_LOW)) THEN
-    OUT.D1 := BOOL#TRUE;
-    LastDist := DIST_IN.D1;
-  END_IF;
+			<ST><![CDATA[
+IF (LastState = BOOL#FALSE) THEN
+	IF (DIST_IN.D1 >= (LastDist + DIST_LOW)) THEN
+		OUT.D1 := BOOL#TRUE;
+		LastDist := DIST_IN.D1;
+	END_IF;
 ELSE
-  IF (DIST_IN.D1 >= (LastDist + DIST_HIGH)) THEN
-    OUT.D1 := BOOL#FALSE;
-    LastDist := DIST_IN.D1;
-  END_IF;
-END_IF;]]></ST>
+	IF (DIST_IN.D1 >= (LastDist + DIST_HIGH)) THEN
+		OUT.D1 := BOOL#FALSE;
+		LastDist := DIST_IN.D1;
+	END_IF;
+END_IF;
+]]></ST>
 		</Algorithm>
 		<Algorithm Name="SAVE">
-			<ST><![CDATA[LastState := OUT.D1;]]></ST>
+			<ST><![CDATA[
+LastState := OUT.D1;
+]]></ST>
 		</Algorithm>
 	</BasicFB>
 	<Attribute Name="eclipse4diac::core::TypeHash" Value="''"/>

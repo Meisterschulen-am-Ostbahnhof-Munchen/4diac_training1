@@ -1,19 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <SubAppType Name="Uebung_011g1" Comment="Numeric Value Input -- multiple IOObservers">
-	<Identification Standard="61499-2" Description="Copyright (c) 2023 Meisterschulen am Ostbahnhof  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0">
-	</Identification>
-	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.1" Author="Franz Höpfinger" Date="2026-05-05" Remarks="multiple IOObservers">
-	</VersionInfo>
-	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2023-10-23" Remarks="initial API and implementation and/or initial documentation">
-	</VersionInfo>
+	<Identification Standard="61499-2" Description="Copyright (c) 2023 Meisterschulen am Ostbahnhof  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0"/>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.1" Author="Franz Höpfinger" Date="2026-05-05" Remarks="multiple IOObservers"/>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2023-10-23" Remarks="initial API and implementation and/or initial documentation"/>
 	<CompilerInfo packageName="Uebungen">
 		<Import declaration="Uebungen::const::UT::DefaultPool::InputNumber_I1"/>
 	</CompilerInfo>
-	<SubAppInterfaceList>
-	</SubAppInterfaceList>
+	<SubAppInterfaceList/>
 	<SubAppNetwork>
-		<FB Name="F_DWORD_TO_UDINT" Type="iec61131::conversion::F_DWORD_TO_UDINT" x="-3200" y="1000">
-		</FB>
+		<FB Name="F_DWORD_TO_UDINT" Type="iec61131::conversion::F_DWORD_TO_UDINT" x="-3200" y="1000"/>
 		<FB Name="InputNumber_I1_1" Type="isobus::UT::io::NumericValue::NumericValue_ID" x="-5000" y="600">
 			<Parameter Name="QI" Value="TRUE"/>
 			<Parameter Name="u16ObjId" Value="InputNumber_I1"/>
@@ -22,14 +17,12 @@
 			<Parameter Name="QI" Value="TRUE"/>
 			<Parameter Name="u16ObjId" Value="InputNumber_I1"/>
 		</FB>
-		<FB Name="F_DWORD_TO_UDINT_1" Type="iec61131::conversion::F_DWORD_TO_UDINT" x="-3200" y="2000">
-		</FB>
+		<FB Name="F_DWORD_TO_UDINT_1" Type="iec61131::conversion::F_DWORD_TO_UDINT" x="-3200" y="2000"/>
 		<FB Name="InputNumber_I1_3" Type="isobus::UT::io::NumericValue::NumericValue_ID" x="-5000" y="2600">
 			<Parameter Name="QI" Value="TRUE"/>
 			<Parameter Name="u16ObjId" Value="InputNumber_I1"/>
 		</FB>
-		<FB Name="F_DWORD_TO_UDINT_2" Type="iec61131::conversion::F_DWORD_TO_UDINT" x="-3200" y="3000">
-		</FB>
+		<FB Name="F_DWORD_TO_UDINT_2" Type="iec61131::conversion::F_DWORD_TO_UDINT" x="-3200" y="3000"/>
 		<EventConnections>
 			<Connection Source="InputNumber_I1_1.IND" Destination="F_DWORD_TO_UDINT.REQ" dx1="486.67"/>
 			<Connection Source="InputNumber_I1_2.IND" Destination="F_DWORD_TO_UDINT_1.REQ" dx1="486.67"/>

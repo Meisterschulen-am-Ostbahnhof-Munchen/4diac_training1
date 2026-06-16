@@ -1,9 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <SubAppType Name="Uebung_035a3" Comment="Ampelschaltung Österreich">
-	<Identification Standard="61499-2" Description="Copyright (c) 2023 Meisterschulen am Ostbahnhof  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0">
-	</Identification>
-	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2023-10-23" Remarks="initial API and implementation and/or initial documentation">
-	</VersionInfo>
+	<Identification Standard="61499-2" Description="Copyright (c) 2023 Meisterschulen am Ostbahnhof  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0"/>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2023-10-23" Remarks="initial API and implementation and/or initial documentation"/>
 	<CompilerInfo packageName="Uebungen">
 		<Import declaration="logiBUS::io::DI::logiBUS_DI::Input_I1"/>
 		<Import declaration="logiBUS::io::DI::logiBUS_DI_Events::BUTTON_SINGLE_CLICK"/>
@@ -11,15 +9,13 @@
 		<Import declaration="logiBUS::io::DQ::logiBUS_DO::Output_Q2"/>
 		<Import declaration="logiBUS::io::DQ::logiBUS_DO::Output_Q3"/>
 	</CompilerInfo>
-	<SubAppInterfaceList>
-	</SubAppInterfaceList>
+	<SubAppInterfaceList/>
 	<SubAppNetwork>
 		<FB Name="CAR_RED_LIGHT" Type="logiBUS::io::DQ::logiBUS_QX" x="6000" y="-2400">
 			<Parameter Name="QI" Value="TRUE"/>
 			<Parameter Name="Output" Value="Output_Q1"/>
 		</FB>
-		<FB Name="E_TimeOut" Type="iec61499::events::E_TimeOut" x="5000" y="2000">
-		</FB>
+		<FB Name="E_TimeOut" Type="iec61499::events::E_TimeOut" x="5000" y="2000"/>
 		<FB Name="CAR_ORANGE_LIGHT" Type="logiBUS::io::DQ::logiBUS_QX" x="6000" y="-1400">
 			<Parameter Name="QI" Value="TRUE"/>
 			<Parameter Name="Output" Value="Output_Q2"/>
@@ -53,14 +49,11 @@
 		<SubApp Name="RED" x="4000" y="-2200">
 			<SubAppInterfaceList>
 				<SubAppEventInputs>
-					<SubAppEvent Name="EI_RED" Type="Event">
-					</SubAppEvent>
-					<SubAppEvent Name="EI_RED_ORANGE" Type="Event">
-					</SubAppEvent>
+					<SubAppEvent Name="EI_RED" Type="Event"/>
+					<SubAppEvent Name="EI_RED_ORANGE" Type="Event"/>
 				</SubAppEventInputs>
 				<SubAppEventOutputs>
-					<SubAppEvent Name="CNF" Type="Event">
-					</SubAppEvent>
+					<SubAppEvent Name="CNF" Type="Event"/>
 				</SubAppEventOutputs>
 				<InputVars>
 					<VarDeclaration Name="DI_RED" Type="ANY_BIT"/>
@@ -71,8 +64,7 @@
 				</OutputVars>
 			</SubAppInterfaceList>
 			<SubAppNetwork>
-				<FB Name="OR_RED" Type="iec61131::bitwiseOperators::OR_2" x="300" y="-1000">
-				</FB>
+				<FB Name="OR_RED" Type="iec61131::bitwiseOperators::OR_2" x="300" y="-1000"/>
 				<EventConnections>
 					<Connection Source="EI_RED" Destination="OR_RED.REQ" dx1="2393.33"/>
 					<Connection Source="EI_RED_ORANGE" Destination="OR_RED.REQ" dx1="2300"/>
@@ -90,14 +82,11 @@
 		<SubApp Name="ORANGE" x="4000" y="-1200">
 			<SubAppInterfaceList>
 				<SubAppEventInputs>
-					<SubAppEvent Name="EI_RED_ORANGE" Type="Event">
-					</SubAppEvent>
-					<SubAppEvent Name="EI_ORANGE" Type="Event">
-					</SubAppEvent>
+					<SubAppEvent Name="EI_RED_ORANGE" Type="Event"/>
+					<SubAppEvent Name="EI_ORANGE" Type="Event"/>
 				</SubAppEventInputs>
 				<SubAppEventOutputs>
-					<SubAppEvent Name="CNF" Type="Event">
-					</SubAppEvent>
+					<SubAppEvent Name="CNF" Type="Event"/>
 				</SubAppEventOutputs>
 				<InputVars>
 					<VarDeclaration Name="DI_RED_ORANGE" Type="ANY_BIT"/>
@@ -108,8 +97,7 @@
 				</OutputVars>
 			</SubAppInterfaceList>
 			<SubAppNetwork>
-				<FB Name="OR_ORANGE" Type="iec61131::bitwiseOperators::OR_2" x="0" y="0">
-				</FB>
+				<FB Name="OR_ORANGE" Type="iec61131::bitwiseOperators::OR_2" x="0" y="0"/>
 				<EventConnections>
 					<Connection Source="EI_RED_ORANGE" Destination="OR_ORANGE.REQ" dx1="80" dx2="80" dy="-120"/>
 					<Connection Source="EI_ORANGE" Destination="OR_ORANGE.REQ" dx1="80" dx2="80" dy="-173.33"/>
@@ -127,14 +115,11 @@
 		<SubApp Name="GREEN" x="4000" y="-300">
 			<SubAppInterfaceList>
 				<SubAppEventInputs>
-					<SubAppEvent Name="EI_GREEN" Type="Event">
-					</SubAppEvent>
-					<SubAppEvent Name="EI_GREEN_BLINK" Type="Event">
-					</SubAppEvent>
+					<SubAppEvent Name="EI_GREEN" Type="Event"/>
+					<SubAppEvent Name="EI_GREEN_BLINK" Type="Event"/>
 				</SubAppEventInputs>
 				<SubAppEventOutputs>
-					<SubAppEvent Name="CNF" Type="Event">
-					</SubAppEvent>
+					<SubAppEvent Name="CNF" Type="Event"/>
 				</SubAppEventOutputs>
 				<InputVars>
 					<VarDeclaration Name="DI_GREEN" Type="ANY_BIT"/>
@@ -145,8 +130,7 @@
 				</OutputVars>
 			</SubAppInterfaceList>
 			<SubAppNetwork>
-				<FB Name="OR_2" Type="iec61131::bitwiseOperators::OR_2" x="200" y="600">
-				</FB>
+				<FB Name="OR_2" Type="iec61131::bitwiseOperators::OR_2" x="200" y="600"/>
 				<EventConnections>
 					<Connection Source="EI_GREEN" Destination="OR_2.REQ" dx1="86.67"/>
 					<Connection Source="EI_GREEN_BLINK" Destination="OR_2.REQ" dx1="86.67"/>

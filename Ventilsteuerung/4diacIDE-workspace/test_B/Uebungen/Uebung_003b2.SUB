@@ -1,9 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <SubAppType Name="Uebung_003b2" Comment="Funk 16 Tasten auf DataPanel 16">
-	<Identification Standard="61499-2" Description="Copyright (c) 2023 Meisterschulen am Ostbahnhof  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0">
-	</Identification>
-	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2023-10-23" Remarks="initial API and implementation and/or initial documentation">
-	</VersionInfo>
+	<Identification Standard="61499-2" Description="Copyright (c) 2023 Meisterschulen am Ostbahnhof  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0"/>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2023-10-23" Remarks="initial API and implementation and/or initial documentation"/>
 	<CompilerInfo packageName="Uebungen">
 		<Import declaration="DataPanel::io::MI::DQ::DataPanel_MI_DO::DigitalOutput_1A"/>
 		<Import declaration="DataPanel::io::MI::DQ::DataPanel_MI_DO::DigitalOutput_1B"/>
@@ -37,8 +35,7 @@
 		<Import declaration="Funk::io::DI::Funk_DI::DigitalInput_Key_START"/>
 		<Import declaration="Funk::io::DI::Funk_DI::DigitalInput_Key_STOP"/>
 	</CompilerInfo>
-	<SubAppInterfaceList>
-	</SubAppInterfaceList>
+	<SubAppInterfaceList/>
 	<SubAppNetwork>
 		<SubApp Name="F1" Type="Uebungen::Uebung_003b2_sub" x="-500" y="-1100">
 			<Parameter Name="Input" Value="DigitalInput_Key_STOP"/>

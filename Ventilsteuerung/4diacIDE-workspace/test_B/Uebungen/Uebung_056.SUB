@@ -1,9 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <SubAppType Name="Uebung_056" Comment="DigitalInput_I1-_I4 auf DigitalOutput_Q1-_Q4">
-	<Identification Standard="61499-2" Description="Copyright (c) 2023 Meisterschulen am Ostbahnhof  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0">
-	</Identification>
-	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2023-10-23" Remarks="initial API and implementation and/or initial documentation">
-	</VersionInfo>
+	<Identification Standard="61499-2" Description="Copyright (c) 2023 Meisterschulen am Ostbahnhof  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0"/>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2023-10-23" Remarks="initial API and implementation and/or initial documentation"/>
 	<CompilerInfo packageName="Uebungen">
 		<Import declaration="logiBUS::io::DI::logiBUS_DI::Input_I1"/>
 		<Import declaration="logiBUS::io::DI::logiBUS_DI::Input_I2"/>
@@ -14,15 +12,13 @@
 		<Import declaration="logiBUS::io::DQ::logiBUS_DO::Output_Q3"/>
 		<Import declaration="logiBUS::io::DQ::logiBUS_DO::Output_Q4"/>
 	</CompilerInfo>
-	<SubAppInterfaceList>
-	</SubAppInterfaceList>
+	<SubAppInterfaceList/>
 	<SubAppNetwork>
 		<FB Name="DigitalInput_I1" Type="logiBUS::io::DI::logiBUS_IX" x="-11066.67" y="0">
 			<Parameter Name="QI" Value="TRUE"/>
 			<Parameter Name="Input" Value="Input_I1"/>
 		</FB>
-		<FB Name="ASSEMBLE_BYTE_FROM_QUARTERS" Type="eclipse4diac::utils::assembling::ASSEMBLE_BYTE_FROM_QUARTERS" x="-5800" y="1300">
-		</FB>
+		<FB Name="ASSEMBLE_BYTE_FROM_QUARTERS" Type="eclipse4diac::utils::assembling::ASSEMBLE_BYTE_FROM_QUARTERS" x="-5800" y="1300"/>
 		<FB Name="DigitalInput_I2" Type="logiBUS::io::DI::logiBUS_IX" x="-11066.67" y="1073.33">
 			<Parameter Name="QI" Value="TRUE"/>
 			<Parameter Name="Input" Value="Input_I2"/>
@@ -43,8 +39,7 @@
 			<Parameter Name="QI" Value="TRUE"/>
 			<Parameter Name="Output" Value="Output_Q3"/>
 		</FB>
-		<FB Name="SPLIT_BYTE_INTO_QUARTERS" Type="eclipse4diac::utils::splitting::SPLIT_BYTE_INTO_QUARTERS" x="-3300" y="1300">
-		</FB>
+		<FB Name="SPLIT_BYTE_INTO_QUARTERS" Type="eclipse4diac::utils::splitting::SPLIT_BYTE_INTO_QUARTERS" x="-3300" y="1300"/>
 		<FB Name="DigitalOutput_Q1" Type="logiBUS::io::DQ::logiBUS_QX" x="2266.67" y="-706.67">
 			<Parameter Name="QI" Value="TRUE"/>
 			<Parameter Name="Output" Value="Output_Q1"/>
@@ -53,38 +48,22 @@
 			<Parameter Name="QI" Value="TRUE"/>
 			<Parameter Name="Output" Value="Output_Q4"/>
 		</FB>
-		<FB Name="Q_TO_BOOL_Q1" Type="logiBUS::utils::quarter::QUARTER_TO_BOOL" x="-906.67" y="-553.33">
-		</FB>
-		<FB Name="Q_TO_BOOL_Q4" Type="logiBUS::utils::quarter::QUARTER_TO_BOOL" x="-900" y="2300">
-		</FB>
-		<FB Name="Q_TO_BOOL_Q2" Type="logiBUS::utils::quarter::QUARTER_TO_BOOL" x="-906.67" y="386.67">
-		</FB>
-		<FB Name="Q_TO_BOOL_Q3" Type="logiBUS::utils::quarter::QUARTER_TO_BOOL" x="-906.67" y="1333.33">
-		</FB>
-		<FB Name="Q_TO_STR_STATUS_Q3" Type="logiBUS::utils::quarter::QUARTER_TO_STR_STATUS" x="473.33" y="1380">
-		</FB>
-		<FB Name="Q_TO_STR_STATUS_Q1" Type="logiBUS::utils::quarter::QUARTER_TO_STR_STATUS" x="473.33" y="-506.67">
-		</FB>
-		<FB Name="Q_TO_STR_STATUS_I3" Type="logiBUS::utils::quarter::QUARTER_TO_STR_STATUS" x="-7140" y="2720">
-		</FB>
-		<FB Name="Q_TO_STR_STATUS_I1" Type="logiBUS::utils::quarter::QUARTER_TO_STR_STATUS" x="-7386.67" y="173.33">
-		</FB>
-		<FB Name="Q_TO_STR_STATUS_I4" Type="logiBUS::utils::quarter::QUARTER_TO_STR_STATUS" x="-7386.67" y="3513.33">
-		</FB>
-		<FB Name="Q_TO_STR_STATUS_Q4" Type="logiBUS::utils::quarter::QUARTER_TO_STR_STATUS" x="473.33" y="2340">
-		</FB>
-		<FB Name="Q_TO_STR_STATUS_Q2" Type="logiBUS::utils::quarter::QUARTER_TO_STR_STATUS" x="473.33" y="433.33">
-		</FB>
-		<FB Name="Q_TO_STR_STATUS_I2" Type="logiBUS::utils::quarter::QUARTER_TO_STR_STATUS" x="-7466.67" y="800">
-		</FB>
-		<FB Name="BOOL_TO_Q_I1" Type="logiBUS::utils::quarter::BOOL_TO_QUARTER" x="-8633.33" y="173.33">
-		</FB>
-		<FB Name="BOOL_TO_Q_I2" Type="logiBUS::utils::quarter::BOOL_TO_QUARTER" x="-8633.33" y="1253.33">
-		</FB>
-		<FB Name="BOOL_TO_Q_I4" Type="logiBUS::utils::quarter::BOOL_TO_QUARTER" x="-8633.33" y="3513.33">
-		</FB>
-		<FB Name="BOOL_TO_Q_I3" Type="logiBUS::utils::quarter::BOOL_TO_QUARTER" x="-8633.33" y="2333.33">
-		</FB>
+		<FB Name="Q_TO_BOOL_Q1" Type="logiBUS::utils::quarter::QUARTER_TO_BOOL" x="-906.67" y="-553.33"/>
+		<FB Name="Q_TO_BOOL_Q4" Type="logiBUS::utils::quarter::QUARTER_TO_BOOL" x="-900" y="2300"/>
+		<FB Name="Q_TO_BOOL_Q2" Type="logiBUS::utils::quarter::QUARTER_TO_BOOL" x="-906.67" y="386.67"/>
+		<FB Name="Q_TO_BOOL_Q3" Type="logiBUS::utils::quarter::QUARTER_TO_BOOL" x="-906.67" y="1333.33"/>
+		<FB Name="Q_TO_STR_STATUS_Q3" Type="logiBUS::utils::quarter::QUARTER_TO_STR_STATUS" x="473.33" y="1380"/>
+		<FB Name="Q_TO_STR_STATUS_Q1" Type="logiBUS::utils::quarter::QUARTER_TO_STR_STATUS" x="473.33" y="-506.67"/>
+		<FB Name="Q_TO_STR_STATUS_I3" Type="logiBUS::utils::quarter::QUARTER_TO_STR_STATUS" x="-7140" y="2720"/>
+		<FB Name="Q_TO_STR_STATUS_I1" Type="logiBUS::utils::quarter::QUARTER_TO_STR_STATUS" x="-7386.67" y="173.33"/>
+		<FB Name="Q_TO_STR_STATUS_I4" Type="logiBUS::utils::quarter::QUARTER_TO_STR_STATUS" x="-7386.67" y="3513.33"/>
+		<FB Name="Q_TO_STR_STATUS_Q4" Type="logiBUS::utils::quarter::QUARTER_TO_STR_STATUS" x="473.33" y="2340"/>
+		<FB Name="Q_TO_STR_STATUS_Q2" Type="logiBUS::utils::quarter::QUARTER_TO_STR_STATUS" x="473.33" y="433.33"/>
+		<FB Name="Q_TO_STR_STATUS_I2" Type="logiBUS::utils::quarter::QUARTER_TO_STR_STATUS" x="-7466.67" y="800"/>
+		<FB Name="BOOL_TO_Q_I1" Type="logiBUS::utils::quarter::BOOL_TO_QUARTER" x="-8633.33" y="173.33"/>
+		<FB Name="BOOL_TO_Q_I2" Type="logiBUS::utils::quarter::BOOL_TO_QUARTER" x="-8633.33" y="1253.33"/>
+		<FB Name="BOOL_TO_Q_I4" Type="logiBUS::utils::quarter::BOOL_TO_QUARTER" x="-8633.33" y="3513.33"/>
+		<FB Name="BOOL_TO_Q_I3" Type="logiBUS::utils::quarter::BOOL_TO_QUARTER" x="-8633.33" y="2333.33"/>
 		<EventConnections>
 			<Connection Source="ASSEMBLE_BYTE_FROM_QUARTERS.CNF" Destination="SPLIT_BYTE_INTO_QUARTERS.REQ"/>
 			<Connection Source="SPLIT_BYTE_INTO_QUARTERS.CNF" Destination="Q_TO_BOOL_Q1.REQ" dx1="913.33"/>

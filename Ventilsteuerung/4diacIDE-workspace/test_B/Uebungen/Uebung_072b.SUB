@@ -1,9 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <SubAppType Name="Uebung_072b" Comment="GBSD auf UT ausgeben, mit Impulsen.">
-	<Identification Standard="61499-2" Description="Copyright (c) 2023 Meisterschulen am Ostbahnhof  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0">
-	</Identification>
-	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2023-10-23" Remarks="initial API and implementation and/or initial documentation">
-	</VersionInfo>
+	<Identification Standard="61499-2" Description="Copyright (c) 2023 Meisterschulen am Ostbahnhof  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0"/>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2023-10-23" Remarks="initial API and implementation and/or initial documentation"/>
 	<CompilerInfo packageName="Uebungen">
 		<Import declaration="Uebungen::const::UT::TECU::DefaultPool_TECU::NumberVariable_Ground_based_machine_speed"/>
 		<Import declaration="Uebungen::const::UT::TECU::DefaultPool_TECU::NumberVariable_Wheel_based_machine_distance"/>
@@ -13,8 +11,7 @@
 		<Import declaration="logiBUS::io::DQ::logiBUS_DO::Output_Q3"/>
 		<Import declaration="logiBUS::io::DQ::logiBUS_DO::Output_Q4"/>
 	</CompilerInfo>
-	<SubAppInterfaceList>
-	</SubAppInterfaceList>
+	<SubAppInterfaceList/>
 	<SubAppNetwork>
 		<FB Name="I_GBSD" Type="isobus::tecu::I_GBSD" x="-5200" y="500">
 			<Parameter Name="QI" Value="TRUE"/>
@@ -40,8 +37,7 @@
 			<Parameter Name="DIST_HIGH" Value="5000"/>
 			<Parameter Name="DIST_LOW" Value="5000"/>
 		</FB>
-		<FB Name="E_D_FF_Q1" Type="iec61499::events::E_D_FF" x="-193.33" y="2200">
-		</FB>
+		<FB Name="E_D_FF_Q1" Type="iec61499::events::E_D_FF" x="-193.33" y="2200"/>
 		<FB Name="DigitalOutput_Q2" Type="logiBUS::io::DQ::logiBUS_QX" x="1200" y="3000">
 			<Parameter Name="QI" Value="TRUE"/>
 			<Parameter Name="Output" Value="Output_Q2"/>
@@ -51,8 +47,7 @@
 			<Parameter Name="DIST_HIGH" Value="5000"/>
 			<Parameter Name="DIST_LOW" Value="5000"/>
 		</FB>
-		<FB Name="E_D_FF_Q2" Type="iec61499::events::E_D_FF" x="-186.67" y="3100">
-		</FB>
+		<FB Name="E_D_FF_Q2" Type="iec61499::events::E_D_FF" x="-186.67" y="3100"/>
 		<FB Name="DigitalOutput_Q3" Type="logiBUS::io::DQ::logiBUS_QX" x="1186.67" y="3900">
 			<Parameter Name="QI" Value="TRUE"/>
 			<Parameter Name="Output" Value="Output_Q3"/>
@@ -62,8 +57,7 @@
 			<Parameter Name="DIST_HIGH" Value="5000"/>
 			<Parameter Name="DIST_LOW" Value="5000"/>
 		</FB>
-		<FB Name="E_D_FF_Q3" Type="iec61499::events::E_D_FF" x="-200" y="4000">
-		</FB>
+		<FB Name="E_D_FF_Q3" Type="iec61499::events::E_D_FF" x="-200" y="4000"/>
 		<FB Name="DigitalOutput_Q4" Type="logiBUS::io::DQ::logiBUS_QX" x="1200" y="4800">
 			<Parameter Name="QI" Value="TRUE"/>
 			<Parameter Name="Output" Value="Output_Q4"/>
@@ -73,8 +67,7 @@
 			<Parameter Name="DIST_HIGH" Value="5000"/>
 			<Parameter Name="DIST_LOW" Value="5000"/>
 		</FB>
-		<FB Name="E_D_FF_Q4" Type="iec61499::events::E_D_FF" x="-200" y="4900">
-		</FB>
+		<FB Name="E_D_FF_Q4" Type="iec61499::events::E_D_FF" x="-200" y="4900"/>
 		<EventConnections>
 			<Connection Source="I_GBSD.IND" Destination="Q_NumericValue_GBSD.REQ"/>
 			<Connection Source="I_WBSD.IND" Destination="Q_NumericValue_WBSD.REQ"/>

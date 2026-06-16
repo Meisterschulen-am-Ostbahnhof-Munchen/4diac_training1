@@ -1,11 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <SubAppType Name="AX_GT_0_UINT" Comment="Prüft ob UINT-Adapter Wert &gt; 0 ist (AX-Adapter Ausgang)">
-	<Identification Standard="61499-2">
-	</Identification>
-	<VersionInfo Version="1.0" Author="franz" Date="2026-04-20">
-	</VersionInfo>
-	<CompilerInfo packageName="MyLib::sys">
-	</CompilerInfo>
+	<Identification Standard="61499-2"/>
+	<VersionInfo Version="1.0" Author="franz" Date="2026-04-20"/>
+	<CompilerInfo packageName="MyLib::sys"/>
 	<SubAppInterfaceList>
 		<Plugs>
 			<AdapterDeclaration Name="AX_OUT" Type="adapter::types::unidirectional::AX"/>
@@ -15,10 +12,8 @@
 		</Sockets>
 	</SubAppInterfaceList>
 	<SubAppNetwork>
-		<FB Name="AUI_UI_TO_UINT" Type="adapter::conversion::unidirectional::AUI_UI_TO_UINT" x="713.33" y="33.33">
-		</FB>
-		<FB Name="AX_BOOL_TO_X" Type="adapter::conversion::unidirectional::AX_BOOL_TO_X" x="3046.67" y="33.33">
-		</FB>
+		<FB Name="AUI_UI_TO_UINT" Type="adapter::conversion::unidirectional::AUI_UI_TO_UINT" x="713.33" y="33.33"/>
+		<FB Name="AX_BOOL_TO_X" Type="adapter::conversion::unidirectional::AX_BOOL_TO_X" x="3046.67" y="33.33"/>
 		<FB Name="F_GT" Type="iec61131::comparison::F_GT" x="2260" y="33.33">
 			<Parameter Name="IN2" Value="UINT#0"/>
 		</FB>

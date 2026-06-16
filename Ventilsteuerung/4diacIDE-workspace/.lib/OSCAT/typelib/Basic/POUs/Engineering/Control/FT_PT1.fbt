@@ -55,25 +55,21 @@
 			<ECAction Algorithm="RST" Output="CNF"/>
 		</ECState>
 		<Algorithm Name="EINIT">
-			<ST><![CDATA[ALGORITHM EINIT
+			<ST><![CDATA[
 (* Reset logic *)
 init := FALSE;
 out := 0.0;
 last := UDINT#0;
-END_ALGORITHM]]></ST>
+]]></ST>
 		</Algorithm>
 		<Algorithm Name="RST">
 			<ST><![CDATA[
-
-ALGORITHM RST
 init := TRUE;
 out := K * in;
-END_ALGORITHM]]></ST>
+]]></ST>
 		</Algorithm>
 		<Algorithm Name="REQ">
 			<ST><![CDATA[
-
-ALGORITHM REQ
 (* Read system time *)
 tx := T_PLC_US();
 
@@ -98,9 +94,10 @@ END_IF;
 (* Save time for next cycle *)
 last := tx;
 
-END_ALGORITHM
-
-(*
+]]></ST>
+		</Algorithm>
+		<Method Name="LOST_AND_FOUND_3" Type="" Comment="lost+found 3">
+			<ST><![CDATA[(*
  * hm 1.1.2007	rev 1.1 corrected error while startup value was not correct for very small time
  * values real output would run out of range.
  * *
@@ -125,9 +122,8 @@ END_ALGORITHM
  * hm	11. mar. 2009	rev 1.10 real constants updated to new systax using dot
  * *
  * hm	18. jan. 2011	rev 1.11 avoid underrun of out
- *)
-]]></ST>
-		</Algorithm>
+ *)]]></ST>
+		</Method>
 	</SimpleFB>
 	<Attribute Name="eclipse4diac::core::TypeHash" Value="''"/>
 </FBType>

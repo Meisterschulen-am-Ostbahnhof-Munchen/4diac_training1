@@ -1,21 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <SubAppType Name="GreenRedBackground1" Comment="Hintergrundfarbe (TRUE -&gt; Grün, FALSE -&gt; Rot) für 1 Objekt">
-	<Identification Standard="61499-2">
-	</Identification>
-	<VersionInfo Version="1.0" Author="franz" Date="2022-11-10">
-	</VersionInfo>
+	<Identification Standard="61499-2"/>
+	<VersionInfo Version="1.0" Author="franz" Date="2022-11-10"/>
 	<CompilerInfo packageName="MyLib::sys">
 		<Import declaration="isobus::UT::Q::const::IDs::ID_NULL"/>
 		<Import declaration="isobus::UT::Q::const::colours"/>
 	</CompilerInfo>
 	<SubAppInterfaceList>
 		<SubAppEventInputs>
-			<SubAppEvent Name="REQ" Type="Event" Comment="Normal Execution Request">
-			</SubAppEvent>
+			<SubAppEvent Name="REQ" Type="Event" Comment="Normal Execution Request"/>
 		</SubAppEventInputs>
 		<SubAppEventOutputs>
-			<SubAppEvent Name="CNF_1" Type="Event" Comment="Execution Confirmation">
-			</SubAppEvent>
+			<SubAppEvent Name="CNF_1" Type="Event" Comment="Execution Confirmation"/>
 		</SubAppEventOutputs>
 		<InputVars>
 			<VarDeclaration Name="DI1" Type="BOOL" Comment="Selector"/>
@@ -28,8 +24,7 @@
 		</OutputVars>
 	</SubAppInterfaceList>
 	<SubAppNetwork>
-		<FB Name="Q_BackgroundColour" Type="isobus::UT::Q::Q_BackgroundColour" x="900" y="900">
-		</FB>
+		<FB Name="Q_BackgroundColour" Type="isobus::UT::Q::Q_BackgroundColour" x="900" y="900"/>
 		<FB Name="F_SEL_I" Type="iec61131::selection::F_SEL" x="-300" y="2300">
 			<Parameter Name="IN0" Value="colours::COLOR_RED"/>
 			<Parameter Name="IN1" Value="colours::COLOR_GREEN"/>

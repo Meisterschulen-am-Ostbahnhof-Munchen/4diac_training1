@@ -1,19 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <SubAppType Name="AND_AUF" Comment="Logisches UND (IN1 AND IN2) für AUF-Bedingung">
-	<Identification Standard="61499-2">
-	</Identification>
-	<VersionInfo Version="1.0" Author="franz" Date="2025-01-15">
-	</VersionInfo>
-	<CompilerInfo packageName="MyLib::sys">
-	</CompilerInfo>
+	<Identification Standard="61499-2"/>
+	<VersionInfo Version="1.0" Author="franz" Date="2025-01-15"/>
+	<CompilerInfo packageName="MyLib::sys"/>
 	<SubAppInterfaceList>
 		<SubAppEventInputs>
-			<SubAppEvent Name="REQ" Type="Event">
-			</SubAppEvent>
+			<SubAppEvent Name="REQ" Type="Event"/>
 		</SubAppEventInputs>
 		<SubAppEventOutputs>
-			<SubAppEvent Name="CNF" Type="Event">
-			</SubAppEvent>
+			<SubAppEvent Name="CNF" Type="Event"/>
 		</SubAppEventOutputs>
 		<InputVars>
 			<VarDeclaration Name="IN1" Type="BOOL"/>
@@ -24,8 +19,7 @@
 		</OutputVars>
 	</SubAppInterfaceList>
 	<SubAppNetwork>
-		<FB Name="AND_2" Type="iec61131::bitwiseOperators::AND_2" x="800" y="-500">
-		</FB>
+		<FB Name="AND_2" Type="iec61131::bitwiseOperators::AND_2" x="800" y="-500"/>
 		<EventConnections>
 			<Connection Source="REQ" Destination="AND_2.REQ" dx1="2100">
 				<Attribute Name="Visible" Value="false"/>

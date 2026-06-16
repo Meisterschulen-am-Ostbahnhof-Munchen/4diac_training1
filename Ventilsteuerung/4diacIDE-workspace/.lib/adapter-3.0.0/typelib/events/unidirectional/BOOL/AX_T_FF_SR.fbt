@@ -34,25 +34,21 @@
 			<ECState Name="RESET" x="1165" y="845">
 				<ECAction Algorithm="RESET" Output="Q.E1"/>
 			</ECState>
-			<ECTransition Source="START" Destination="SET" Condition="S" Comment="" x="995" y="455"/>
-			<ECTransition Source="SET" Destination="RESET" Condition="R" Comment="" x="1205" y="685"/>
-			<ECTransition Source="RESET" Destination="SET" Condition="S" Comment="" x="1460" y="675"/>
-			<ECTransition Source="SET" Destination="RESET" Condition="CLK" Comment="" x="1673.33" y="666.67"/>
-			<ECTransition Source="RESET" Destination="SET" Condition="CLK" Comment="" x="886.67" y="693.33"/>
-			<ECTransition Source="START" Destination="SET" Condition="CLK" Comment="" x="966.67" y="200"/>
+			<ECTransition Source="START" Destination="SET" Condition="S" x="995" y="455"/>
+			<ECTransition Source="SET" Destination="RESET" Condition="R" x="1205" y="685"/>
+			<ECTransition Source="RESET" Destination="SET" Condition="S" x="1460" y="675"/>
+			<ECTransition Source="SET" Destination="RESET" Condition="CLK" x="1673.33" y="666.67"/>
+			<ECTransition Source="RESET" Destination="SET" Condition="CLK" x="886.67" y="693.33"/>
+			<ECTransition Source="START" Destination="SET" Condition="CLK" x="966.67" y="200"/>
 		</ECC>
 		<Algorithm Name="SET">
-			<ST><![CDATA[ALGORITHM SET
+			<ST><![CDATA[
 Q.D1 := TRUE;
-END_ALGORITHM]]></ST>
+]]></ST>
 		</Algorithm>
 		<Algorithm Name="RESET">
 			<ST><![CDATA[
-
-ALGORITHM RESET
 Q.D1 := FALSE;
-END_ALGORITHM
-
 ]]></ST>
 		</Algorithm>
 	</BasicFB>

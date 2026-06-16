@@ -1,17 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <SubAppType Name="GreenWhiteBackground1SC" Comment="Hintergrundfarbe (TRUE -&gt; Grün, FALSE -&gt; Weiß) für 1 Objekt (Kompakt)">
-	<Identification Standard="61499-2">
-	</Identification>
-	<VersionInfo Version="1.0" Author="franz" Date="2024-01-01">
-	</VersionInfo>
+	<Identification Standard="61499-2"/>
+	<VersionInfo Version="1.0" Author="franz" Date="2024-01-01"/>
 	<CompilerInfo packageName="MyLib::sys">
 		<Import declaration="isobus::UT::Q::const::IDs::ID_NULL"/>
 		<Import declaration="isobus::UT::Q::types::s1ObjectID"/>
 	</CompilerInfo>
 	<SubAppInterfaceList>
 		<SubAppEventInputs>
-			<SubAppEvent Name="EO" Type="Event">
-			</SubAppEvent>
+			<SubAppEvent Name="EO" Type="Event"/>
 		</SubAppEventInputs>
 		<InputVars>
 			<VarDeclaration Name="DI1" Type="BOOL" Comment="Selector"/>
@@ -19,8 +16,7 @@
 		</InputVars>
 	</SubAppInterfaceList>
 	<SubAppNetwork>
-		<SubApp Name="GreenWhiteBackground" Type="MyLib::sys::GreenWhiteBackground1S" x="1700" y="-800">
-		</SubApp>
+		<SubApp Name="GreenWhiteBackground" Type="MyLib::sys::GreenWhiteBackground1S" x="1700" y="-800"/>
 		<EventConnections>
 			<Connection Source="EO" Destination="GreenWhiteBackground.REQ" dx1="666.67"/>
 		</EventConnections>

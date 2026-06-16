@@ -42,15 +42,15 @@
 			<ECState Name="G1_RESET" Comment="Issue EO1.RESET when EI.RESET arrives with G=1" x="1680" y="1360">
 				<ECAction Output="EO1.RESET"/>
 			</ECState>
-			<ECTransition Source="G0_SET" Destination="START" Condition="1" Comment="" x="1255" y="660"/>
-			<ECTransition Source="START" Destination="G0_SET" Condition="EI.SET[NOT G]" Comment="" x="1435" y="440"/>
-			<ECTransition Source="START" Destination="G1_SET" Condition="EI.SET[G]" Comment="" x="1006.67" y="1000"/>
-			<ECTransition Source="START" Destination="START" Condition="EIG" Comment="" x="680" y="180"/>
-			<ECTransition Source="START" Destination="G0_RESET" Condition="EI.RESET[NOT G]" Comment="" x="1213.33" y="766.67"/>
-			<ECTransition Source="G0_RESET" Destination="START" Condition="1" Comment="" x="1006.67" y="786.67"/>
-			<ECTransition Source="START" Destination="G1_RESET" Condition="EI.RESET[G]" Comment="" x="653.33" y="1180"/>
-			<ECTransition Source="G1_SET" Destination="START" Condition="1" Comment="" x="840" y="1113.33"/>
-			<ECTransition Source="G1_RESET" Destination="START" Condition="1" Comment="" x="280" y="1266.67"/>
+			<ECTransition Source="G0_SET" Destination="START" Condition="1" x="1255" y="660"/>
+			<ECTransition Source="START" Destination="G0_SET" Condition="EI.SET[NOT G]" x="1435" y="440"/>
+			<ECTransition Source="START" Destination="G1_SET" Condition="EI.SET[G]" x="1006.67" y="1000"/>
+			<ECTransition Source="START" Destination="START" Condition="EIG" x="680" y="180"/>
+			<ECTransition Source="START" Destination="G0_RESET" Condition="EI.RESET[NOT G]" x="1213.33" y="766.67"/>
+			<ECTransition Source="G0_RESET" Destination="START" Condition="1" x="1006.67" y="786.67"/>
+			<ECTransition Source="START" Destination="G1_RESET" Condition="EI.RESET[G]" x="653.33" y="1180"/>
+			<ECTransition Source="G1_SET" Destination="START" Condition="1" x="840" y="1113.33"/>
+			<ECTransition Source="G1_RESET" Destination="START" Condition="1" x="280" y="1266.67"/>
 		</ECC>
 	</BasicFB>
 	<Attribute Name="eclipse4diac::core::TypeHash" Value="''"/>

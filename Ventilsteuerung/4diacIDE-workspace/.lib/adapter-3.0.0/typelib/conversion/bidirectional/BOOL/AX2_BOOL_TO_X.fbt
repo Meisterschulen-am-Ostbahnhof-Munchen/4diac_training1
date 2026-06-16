@@ -11,24 +11,18 @@
 		<EventInputs>
 			<Event Name="REQ" Type="Event" Comment="Request to Adapter">
 				<With Var="OUT"/>
-				<Attribute Name="YPOSITION" Type="DINT" Value="46"/>
 			</Event>
 		</EventInputs>
 		<EventOutputs>
 			<Event Name="CNF" Type="Event" Comment="Confirmation from Adapter">
 				<With Var="IN"/>
-				<Attribute Name="YPOSITION" Type="DINT" Value="46"/>
 			</Event>
 		</EventOutputs>
 		<InputVars>
-			<VarDeclaration Name="OUT" Type="BOOL">
-				<Attribute Name="YPOSITION" Type="DINT" Value="31"/>
-			</VarDeclaration>
+			<VarDeclaration Name="OUT" Type="BOOL"/>
 		</InputVars>
 		<OutputVars>
-			<VarDeclaration Name="IN" Type="BOOL" Comment="Input data from Adapter">
-				<Attribute Name="YPOSITION" Type="DINT" Value="47"/>
-			</VarDeclaration>
+			<VarDeclaration Name="IN" Type="BOOL" Comment="Input data from Adapter"/>
 		</OutputVars>
 		<Plugs>
 			<AdapterDeclaration Name="AX2_OUT" Type="adapter::types::bidirectional::AX2" Comment="Adapter Output" x="-3900" y="-500"/>

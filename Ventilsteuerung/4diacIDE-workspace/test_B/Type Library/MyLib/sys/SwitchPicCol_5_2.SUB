@@ -1,25 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <SubAppType Name="SwitchPicCol_5_2" Comment="Bild- und Farbumschaltung für AUX-N und VT Objekte; 5 Zustände">
-	<Identification Standard="61499-2">
-	</Identification>
-	<VersionInfo Organization="HR Agrartechnik" Version="1.1" Author="Christoph Behr" Date="2026-04-09" Remarks="Inits verbunden und REQ angeschlossen">
-	</VersionInfo>
-	<VersionInfo Version="1.0" Author="franz" Date="2025-06-12">
-	</VersionInfo>
+	<Identification Standard="61499-2"/>
+	<VersionInfo Organization="HR Agrartechnik" Version="1.1" Author="Christoph Behr" Date="2026-04-09" Remarks="Inits verbunden und REQ angeschlossen"/>
+	<VersionInfo Version="1.0" Author="franz" Date="2025-06-12"/>
 	<CompilerInfo packageName="MyLib::sys">
 		<Import declaration="logiBUS::utils::sequence::schieber::SchieberAuxInStruct"/>
 		<Import declaration="logiBUS::utils::sequence::schieber::const::iSTATES::Unknown"/>
 	</CompilerInfo>
 	<SubAppInterfaceList>
 		<SubAppEventInputs>
-			<SubAppEvent Name="INIT" Type="EInit" Comment="Initialization Request">
-			</SubAppEvent>
-			<SubAppEvent Name="EI" Type="Event">
-			</SubAppEvent>
+			<SubAppEvent Name="INIT" Type="EInit" Comment="Initialization Request"/>
+			<SubAppEvent Name="EI" Type="Event"/>
 		</SubAppEventInputs>
 		<SubAppEventOutputs>
-			<SubAppEvent Name="INITO" Type="EInit" Comment="Initialization Confirm">
-			</SubAppEvent>
+			<SubAppEvent Name="INITO" Type="EInit" Comment="Initialization Confirm"/>
 		</SubAppEventOutputs>
 		<InputVars>
 			<VarDeclaration Name="Picture" Type="UINT" Comment="Object ID of the ObjectPointer to the Picture"/>
@@ -29,14 +23,10 @@
 		</InputVars>
 	</SubAppInterfaceList>
 	<SubAppNetwork>
-		<FB Name="PictureVT" Type="isobus::UT::Q::Q_NumericValue" x="3900" y="500">
-		</FB>
-		<FB Name="ColorAux" Type="isobus::UT::Q::Q_BackgroundColourAux" x="3700" y="1400">
-		</FB>
-		<FB Name="PictureAux" Type="isobus::UT::Q::Q_NumericValueAux" x="3900" y="-300">
-		</FB>
-		<FB Name="ColorVT" Type="isobus::UT::Q::Q_BackgroundColour" x="3800" y="2200">
-		</FB>
+		<FB Name="PictureVT" Type="isobus::UT::Q::Q_NumericValue" x="3900" y="500"/>
+		<FB Name="ColorAux" Type="isobus::UT::Q::Q_BackgroundColourAux" x="3700" y="1400"/>
+		<FB Name="PictureAux" Type="isobus::UT::Q::Q_NumericValueAux" x="3900" y="-300"/>
+		<FB Name="ColorVT" Type="isobus::UT::Q::Q_BackgroundColour" x="3800" y="2200"/>
 		<FB Name="F_MOVE" Type="iec61131::selection::F_MOVE" x="-600" y="300">
 			<Attribute Name="DataType" Value="logiBUS::utils::sequence::schieber::SchieberAuxInStruct"/>
 			<Parameter Name="OUT" Value="">
@@ -73,10 +63,8 @@
 				<Attribute Name="Visible" Value="true"/>
 			</Parameter>
 		</FB>
-		<FB Name="F_MUX_5_Picture" Type="iec61131::selection::F_MUX_5" x="1900" y="-200">
-		</FB>
-		<FB Name="F_MUX_5_Colour" Type="iec61131::selection::F_MUX_5" x="1900" y="1500">
-		</FB>
+		<FB Name="F_MUX_5_Picture" Type="iec61131::selection::F_MUX_5" x="1900" y="-200"/>
+		<FB Name="F_MUX_5_Colour" Type="iec61131::selection::F_MUX_5" x="1900" y="1500"/>
 		<EventConnections>
 			<Connection Source="F_MUX_5_Picture.CNF" Destination="PictureAux.REQ" dx1="693.33"/>
 			<Connection Source="F_MUX_5_Picture.CNF" Destination="PictureVT.REQ" dx1="693.33"/>

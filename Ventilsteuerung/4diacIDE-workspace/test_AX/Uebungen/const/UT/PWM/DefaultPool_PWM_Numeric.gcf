@@ -1,20 +1,70 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <GlobalConstants Name="DefaultPool_PWM_Numeric" Comment="Numeric object pool constants (ID, Scale, Offset, Decimals)">
-	<CompilerInfo packageName="Uebungen::const::UT::PWM"/>
+	<CompilerInfo packageName="Uebungen::const::UT::PWM">
+	</CompilerInfo>
 	<GlobalConstants>
-		<VarDeclaration Name="InputNumber_PWM_DUTY" Type="logiBUS::utils::conversion::phys::NumericObjectPool_S" InitialValue="(u16ObjId := 9000, r32Scale := 0.0122085215, i32Offset := 0, u8Decimals := 3)"/>
-		<VarDeclaration Name="InputNumber_PWM_Value" Type="logiBUS::utils::conversion::phys::NumericObjectPool_S" InitialValue="(u16ObjId := 9001, r32Scale := 1.0, i32Offset := 0, u8Decimals := 0)"/>
-		<VarDeclaration Name="InputNumber_PWM_DUTY_OUT" Type="logiBUS::utils::conversion::phys::NumericObjectPool_S" InitialValue="(u16ObjId := 9002, r32Scale := 0.0122085215, i32Offset := 0, u8Decimals := 3)"/>
-		<VarDeclaration Name="InputNumber_THRESHOLD" Type="logiBUS::utils::conversion::phys::NumericObjectPool_S" InitialValue="(u16ObjId := 9003, r32Scale := 0.0122085215, i32Offset := 0, u8Decimals := 3)"/>
-		<VarDeclaration Name="InputNumber_HYSTERESIS" Type="logiBUS::utils::conversion::phys::NumericObjectPool_S" InitialValue="(u16ObjId := 9004, r32Scale := 0.0122085215, i32Offset := 0, u8Decimals := 3)"/>
-		<VarDeclaration Name="InputNumber_PWM_DUTY_NegScale" Type="logiBUS::utils::conversion::phys::NumericObjectPool_S" InitialValue="(u16ObjId := 9005, r32Scale := -0.0122085, i32Offset := -8191, u8Decimals := 3)"/>
-		<VarDeclaration Name="OutputNumber_100" Type="logiBUS::utils::conversion::phys::NumericObjectPool_S" InitialValue="(u16ObjId := 12000, r32Scale := 1.0, i32Offset := 0, u8Decimals := 0)"/>
-		<VarDeclaration Name="OutputNumber_8129" Type="logiBUS::utils::conversion::phys::NumericObjectPool_S" InitialValue="(u16ObjId := 12001, r32Scale := 1.0, i32Offset := 0, u8Decimals := 0)"/>
-		<VarDeclaration Name="OutputNumber_050" Type="logiBUS::utils::conversion::phys::NumericObjectPool_S" InitialValue="(u16ObjId := 12002, r32Scale := 1.0, i32Offset := 0, u8Decimals := 0)"/>
-		<VarDeclaration Name="OutputNumber_075" Type="logiBUS::utils::conversion::phys::NumericObjectPool_S" InitialValue="(u16ObjId := 12003, r32Scale := 1.0, i32Offset := 0, u8Decimals := 0)"/>
-		<VarDeclaration Name="OutputNumber_000" Type="logiBUS::utils::conversion::phys::NumericObjectPool_S" InitialValue="(u16ObjId := 12004, r32Scale := 1.0, i32Offset := 0, u8Decimals := 0)"/>
-		<VarDeclaration Name="OutputNumber_025" Type="logiBUS::utils::conversion::phys::NumericObjectPool_S" InitialValue="(u16ObjId := 12005, r32Scale := 1.0, i32Offset := 0, u8Decimals := 0)"/>
-		<VarDeclaration Name="NumberVariable_PWM_DUTY_NegScale" Type="logiBUS::utils::conversion::phys::NumericObjectPool_S" InitialValue="(u16ObjId := 21000, r32Scale := -0.0122085, i32Offset := -8191, u8Decimals := 3)"/>
-		<VarDeclaration Name="NumberVariable_PWM_Value" Type="logiBUS::utils::conversion::phys::NumericObjectPool_S" InitialValue="(u16ObjId := 21001, r32Scale := 0.0122085215, i32Offset := 0, u8Decimals := 3)"/>
+		<VarDeclaration Name="InputNumber_PWM_DUTY" Type="logiBUS::utils::conversion::phys::NumericObjectPool_S" InitialValue="(u16ObjId := 9000,
+			r32Scale := 0.0122085215, i32Offset := 0, u8Decimals := 3)"/>
+		<VarDeclaration Name="InputNumber_PWM_Value" Type="logiBUS::utils::conversion::phys::NumericObjectPool_S" InitialValue="(u16ObjId := 9001,
+			r32Scale := 1.0, i32Offset := 0, u8Decimals := 0)"/>
+		<VarDeclaration Name="InputNumber_PWM_DUTY_OUT" Type="logiBUS::utils::conversion::phys::NumericObjectPool_S" InitialValue="(u16ObjId := 9002,
+			r32Scale := 0.0122085215, i32Offset := 0, u8Decimals := 3)"/>
+		<VarDeclaration Name="InputNumber_THRESHOLD" Type="logiBUS::utils::conversion::phys::NumericObjectPool_S" InitialValue="(u16ObjId := 9003,
+			r32Scale := 0.0122085215, i32Offset := 0, u8Decimals := 3)"/>
+		<VarDeclaration Name="InputNumber_HYSTERESIS" Type="logiBUS::utils::conversion::phys::NumericObjectPool_S" InitialValue="(u16ObjId := 9004,
+			r32Scale := 0.0122085215, i32Offset := 0, u8Decimals := 3)"/>
+		<VarDeclaration Name="InputNumber_PWM_DUTY_NegScale" Type="logiBUS::utils::conversion::phys::NumericObjectPool_S" InitialValue="(u16ObjId := 9005,
+			r32Scale := -0.0122085, i32Offset := -8191, u8Decimals := 3)"/>
+		<VarDeclaration Name="OutputNumber_100" Type="logiBUS::utils::conversion::phys::NumericObjectPool_S" InitialValue="(u16ObjId := 12000, r32Scale := 1.0,
+			i32Offset := 0, u8Decimals := 0)"/>
+		<VarDeclaration Name="OutputNumber_8129" Type="logiBUS::utils::conversion::phys::NumericObjectPool_S" InitialValue="(u16ObjId := 12001,
+			r32Scale := 1.0, i32Offset := 0, u8Decimals := 0)"/>
+		<VarDeclaration Name="OutputNumber_050" Type="logiBUS::utils::conversion::phys::NumericObjectPool_S" InitialValue="(u16ObjId := 12002, r32Scale := 1.0,
+			i32Offset := 0, u8Decimals := 0)"/>
+		<VarDeclaration Name="OutputNumber_075" Type="logiBUS::utils::conversion::phys::NumericObjectPool_S" InitialValue="(u16ObjId := 12003, r32Scale := 1.0,
+			i32Offset := 0, u8Decimals := 0)"/>
+		<VarDeclaration Name="OutputNumber_000" Type="logiBUS::utils::conversion::phys::NumericObjectPool_S" InitialValue="(u16ObjId := 12004, r32Scale := 1.0,
+			i32Offset := 0, u8Decimals := 0)"/>
+		<VarDeclaration Name="OutputNumber_025" Type="logiBUS::utils::conversion::phys::NumericObjectPool_S" InitialValue="(u16ObjId := 12005, r32Scale := 1.0,
+			i32Offset := 0, u8Decimals := 0)"/>
+		<VarDeclaration Name="NumberVariable_PWM_DUTY_NegScale" Type="logiBUS::utils::conversion::phys::NumericObjectPool_S" InitialValue="(u16ObjId := 21000,
+			r32Scale := -0.0122085, i32Offset := -8191, u8Decimals := 3)"/>
+		<VarDeclaration Name="NumberVariable_PWM_Value" Type="logiBUS::utils::conversion::phys::NumericObjectPool_S" InitialValue="(u16ObjId := 21001,
+			r32Scale := 0.0122085215, i32Offset := 0, u8Decimals := 3)"/>
 	</GlobalConstants>
+	<OriginalSource><![CDATA[PACKAGE Uebungen::const::UT::PWM;
+
+GLOBALCONSTANTS DefaultPool_PWM_Numeric
+	VAR_GLOBAL CONSTANT
+		InputNumber_PWM_DUTY : logiBUS::utils::conversion::phys::NumericObjectPool_S := (u16ObjId := 9000,
+			r32Scale := 0.0122085215, i32Offset := 0, u8Decimals := 3);
+		InputNumber_PWM_Value : logiBUS::utils::conversion::phys::NumericObjectPool_S := (u16ObjId := 9001,
+			r32Scale := 1.0, i32Offset := 0, u8Decimals := 0);
+		InputNumber_PWM_DUTY_OUT : logiBUS::utils::conversion::phys::NumericObjectPool_S := (u16ObjId := 9002,
+			r32Scale := 0.0122085215, i32Offset := 0, u8Decimals := 3);
+		InputNumber_THRESHOLD : logiBUS::utils::conversion::phys::NumericObjectPool_S := (u16ObjId := 9003,
+			r32Scale := 0.0122085215, i32Offset := 0, u8Decimals := 3);
+		InputNumber_HYSTERESIS : logiBUS::utils::conversion::phys::NumericObjectPool_S := (u16ObjId := 9004,
+			r32Scale := 0.0122085215, i32Offset := 0, u8Decimals := 3);
+		InputNumber_PWM_DUTY_NegScale : logiBUS::utils::conversion::phys::NumericObjectPool_S := (u16ObjId := 9005,
+			r32Scale := -0.0122085, i32Offset := -8191, u8Decimals := 3);
+		OutputNumber_100 : logiBUS::utils::conversion::phys::NumericObjectPool_S := (u16ObjId := 12000, r32Scale := 1.0,
+			i32Offset := 0, u8Decimals := 0);
+		OutputNumber_8129 : logiBUS::utils::conversion::phys::NumericObjectPool_S := (u16ObjId := 12001,
+			r32Scale := 1.0, i32Offset := 0, u8Decimals := 0);
+		OutputNumber_050 : logiBUS::utils::conversion::phys::NumericObjectPool_S := (u16ObjId := 12002, r32Scale := 1.0,
+			i32Offset := 0, u8Decimals := 0);
+		OutputNumber_075 : logiBUS::utils::conversion::phys::NumericObjectPool_S := (u16ObjId := 12003, r32Scale := 1.0,
+			i32Offset := 0, u8Decimals := 0);
+		OutputNumber_000 : logiBUS::utils::conversion::phys::NumericObjectPool_S := (u16ObjId := 12004, r32Scale := 1.0,
+			i32Offset := 0, u8Decimals := 0);
+		OutputNumber_025 : logiBUS::utils::conversion::phys::NumericObjectPool_S := (u16ObjId := 12005, r32Scale := 1.0,
+			i32Offset := 0, u8Decimals := 0);
+		NumberVariable_PWM_DUTY_NegScale : logiBUS::utils::conversion::phys::NumericObjectPool_S := (u16ObjId := 21000,
+			r32Scale := -0.0122085, i32Offset := -8191, u8Decimals := 3);
+		NumberVariable_PWM_Value : logiBUS::utils::conversion::phys::NumericObjectPool_S := (u16ObjId := 21001,
+			r32Scale := 0.0122085215, i32Offset := 0, u8Decimals := 3);
+	END_VAR
+END_GLOBALCONSTANTS
+]]></OriginalSource>
 </GlobalConstants>

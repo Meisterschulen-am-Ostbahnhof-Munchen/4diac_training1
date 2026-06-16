@@ -58,11 +58,11 @@
 			<ECState Name="sON" x="5920" y="1360">
 				<ECAction Algorithm="alOn" Output="CNF"/>
 			</ECState>
-			<ECTransition Source="START" Destination="Init" Condition="INIT[TRUE = QI]" Comment="" x="1206.67" y="2260"/>
-			<ECTransition Source="Init" Destination="sOFF" Condition="REQ" Comment="" x="2026.67" y="2313.33"/>
-			<ECTransition Source="sOFF" Destination="DeInit" Condition="INIT[FALSE = QI]" Comment="" x="2053.33" y="2680"/>
+			<ECTransition Source="START" Destination="Init" Condition="INIT[TRUE = QI]" x="1206.67" y="2260"/>
+			<ECTransition Source="Init" Destination="sOFF" Condition="REQ" x="2026.67" y="2313.33"/>
+			<ECTransition Source="sOFF" Destination="DeInit" Condition="INIT[FALSE = QI]" x="2053.33" y="2680"/>
 			<ECTransition Source="sOFF" Destination="sON" Condition="REQ[INPUT &gt;= THRESHOLD + (ABS(HYSTERESIS) / 2.0)]" Comment="Switch-on (inclusive)" x="5040" y="1173.33"/>
-			<ECTransition Source="DeInit" Destination="START" Condition="1" Comment="" x="1306.67" y="2780"/>
+			<ECTransition Source="DeInit" Destination="START" Condition="1" x="1306.67" y="2780"/>
 			<ECTransition Source="sON" Destination="sOFF" Condition="REQ[INPUT &lt; THRESHOLD - (ABS(HYSTERESIS) / 2.0)]" Comment="Switch-off (strict)" x="5173.33" y="2026.67"/>
 		</ECC>
 		<Algorithm Name="initialize">

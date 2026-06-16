@@ -5,7 +5,6 @@
 	<VersionInfo Organization="HR Agrartechnik GmbH" Version="1.0" Author="Franz Höpfinger" Date="2024-02-23">
 	</VersionInfo>
 	<CompilerInfo packageName="logiBUS::utils::quarter::const">
-		<Import declaration="eclipse4diac::core::TypeHash"/>
 	</CompilerInfo>
 	<GlobalConstants>
 		<VarDeclaration Name="STATUS_DISABLED" Type="BYTE" Comment="Disabled (off, passive, etc.)" InitialValue="2#00"/>
@@ -24,7 +23,7 @@
 		<VarDeclaration Name="COMMAND_ENABLE_msg" Type="STRING" InitialValue="'Command to enable function (turn on, etc.)'"/>
 		<VarDeclaration Name="COMMAND_RESERVED_msg" Type="STRING" InitialValue="'Reserved'"/>
 		<VarDeclaration Name="COMMAND_NO_ACTION_msg" Type="STRING" InitialValue="'Don`t care/take no action (leave function as is)'"/>
-</GlobalConstants>
+	</GlobalConstants>
 	<OriginalSource><![CDATA[PACKAGE logiBUS::utils::quarter::const;
 
 GLOBALCONSTANTS quarter

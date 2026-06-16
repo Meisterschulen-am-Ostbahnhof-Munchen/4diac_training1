@@ -1,9 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <SubAppType Name="SwitchPic_5_1_aux" Comment="Bild umschalten AUX; 5 Zustände">
-	<Identification Standard="61499-2">
-	</Identification>
-	<VersionInfo Version="1.0" Author="franz" Date="2026-05-29">
-	</VersionInfo>
+	<Identification Standard="61499-2"/>
+	<VersionInfo Version="1.0" Author="franz" Date="2026-05-29"/>
 	<CompilerInfo packageName="MyLib::sys">
 		<Import declaration="isobus::UT::Q::const::IDs::ID_NULL"/>
 		<Import declaration="logiBUS::utils::sequence::schieber::SchieberStruct"/>
@@ -11,14 +9,11 @@
 	</CompilerInfo>
 	<SubAppInterfaceList>
 		<SubAppEventInputs>
-			<SubAppEvent Name="INIT" Type="EInit" Comment="Initialization Request">
-			</SubAppEvent>
-			<SubAppEvent Name="EI" Type="Event">
-			</SubAppEvent>
+			<SubAppEvent Name="INIT" Type="EInit" Comment="Initialization Request"/>
+			<SubAppEvent Name="EI" Type="Event"/>
 		</SubAppEventInputs>
 		<SubAppEventOutputs>
-			<SubAppEvent Name="INITO" Type="EInit" Comment="Initialization Confirm">
-			</SubAppEvent>
+			<SubAppEvent Name="INITO" Type="EInit" Comment="Initialization Confirm"/>
 		</SubAppEventOutputs>
 		<InputVars>
 			<VarDeclaration Name="Picture" Type="UINT" Comment="Object ID of the ObjectPointer to the Picture"/>
@@ -48,10 +43,8 @@
 				<Attribute Name="Visible" Value="true"/>
 			</Parameter>
 		</FB>
-		<FB Name="F_MUX_5" Type="iec61131::selection::F_MUX_5" x="2100" y="0">
-		</FB>
-		<FB Name="Q_NumericValueAux" Type="isobus::UT::Q::Q_NumericValueAux" x="5400" y="-400">
-		</FB>
+		<FB Name="F_MUX_5" Type="iec61131::selection::F_MUX_5" x="2100" y="0"/>
+		<FB Name="Q_NumericValueAux" Type="isobus::UT::Q::Q_NumericValueAux" x="5400" y="-400"/>
 		<EventConnections>
 			<Connection Source="EI" Destination="F_MUX_5.REQ" dx1="3206.67"/>
 			<Connection Source="INIT" Destination="F_MOVE.REQ" dx1="1246.67">

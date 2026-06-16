@@ -1,9 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <SubAppType Name="Uebung_160b2" Comment="Motor Links/Rechtslauf Automatisierung IX">
-	<Identification Standard="61499-2" Description="Copyright (c) 2023 Meisterschulen am Ostbahnhof  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0">
-	</Identification>
-	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2023-10-23" Remarks="initial API and implementation and/or initial documentation">
-	</VersionInfo>
+	<Identification Standard="61499-2" Description="Copyright (c) 2023 Meisterschulen am Ostbahnhof  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0"/>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2023-10-23" Remarks="initial API and implementation and/or initial documentation"/>
 	<CompilerInfo packageName="Uebungen">
 		<Import declaration="logiBUS::io::DI::logiBUS_DI::Input_I1"/>
 		<Import declaration="logiBUS::io::DI::logiBUS_DI::Input_I2"/>
@@ -12,19 +10,15 @@
 		<Import declaration="logiBUS::io::DQ::logiBUS_DO::Output_Q56"/>
 		<Import declaration="logiBUS::io::DQ::logiBUS_DO::Output_Q6"/>
 	</CompilerInfo>
-	<SubAppInterfaceList>
-	</SubAppInterfaceList>
+	<SubAppInterfaceList/>
 	<SubAppNetwork>
 		<FB Name="DigitalOutput_Q6" Type="logiBUS::io::DQ::logiBUS_QX" x="-6300" y="1500">
 			<Parameter Name="QI" Value="TRUE"/>
 			<Parameter Name="Output" Value="Output_Q6"/>
 		</FB>
-		<FB Name="FB_RS_B" Type="iec61131::bistableElements::FB_RS" x="-9300" y="1400">
-		</FB>
-		<FB Name="OR_2_BOOL" Type="iec61131::bitwiseOperators::OR_2_BOOL" x="-7800" y="700">
-		</FB>
-		<FB Name="FB_RS_A" Type="iec61131::bistableElements::FB_RS" x="-9300" y="-800">
-		</FB>
+		<FB Name="FB_RS_B" Type="iec61131::bistableElements::FB_RS" x="-9300" y="1400"/>
+		<FB Name="OR_2_BOOL" Type="iec61131::bitwiseOperators::OR_2_BOOL" x="-7800" y="700"/>
+		<FB Name="FB_RS_A" Type="iec61131::bistableElements::FB_RS" x="-9300" y="-800"/>
 		<FB Name="DigitalOutput_Q5" Type="logiBUS::io::DQ::logiBUS_QX" x="-6300" y="-700">
 			<Parameter Name="QI" Value="TRUE"/>
 			<Parameter Name="Output" Value="Output_Q5"/>

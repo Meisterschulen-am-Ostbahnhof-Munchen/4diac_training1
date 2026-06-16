@@ -1,20 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <SubAppType Name="Uebung_020c2_sub" Comment="DigitalInput_I1 auf DigitalOutput_Q1; E_TON Einschaltverzögert; Zeit eingeben und speichern.">
-	<Identification Standard="61499-2" Description="Copyright (c) 2023 Meisterschulen am Ostbahnhof  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0">
-	</Identification>
-	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2023-10-31" Remarks="initial API and implementation and/or initial documentation">
-	</VersionInfo>
+	<Identification Standard="61499-2" Description="Copyright (c) 2023 Meisterschulen am Ostbahnhof  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0"/>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2023-10-31" Remarks="initial API and implementation and/or initial documentation"/>
 	<CompilerInfo packageName="Uebungen">
 		<Import declaration="Uebungen::const::UT::DefaultPool::InputNumber_I1"/>
 	</CompilerInfo>
 	<SubAppInterfaceList>
 		<SubAppEventInputs>
-			<SubAppEvent Name="REQ" Type="Event">
-			</SubAppEvent>
+			<SubAppEvent Name="REQ" Type="Event"/>
 		</SubAppEventInputs>
 		<SubAppEventOutputs>
-			<SubAppEvent Name="IND" Type="Event">
-			</SubAppEvent>
+			<SubAppEvent Name="IND" Type="Event"/>
 		</SubAppEventOutputs>
 		<InputVars>
 			<VarDeclaration Name="KEY" Type="STRING"/>
@@ -29,14 +25,12 @@
 			<Parameter Name="QI" Value="TRUE"/>
 			<Parameter Name="u16ObjId" Value="InputNumber_I1"/>
 		</FB>
-		<FB Name="F_DWORD_TO_UDINT" Type="iec61131::conversion::F_DWORD_TO_UDINT" x="400" y="400">
-		</FB>
+		<FB Name="F_DWORD_TO_UDINT" Type="iec61131::conversion::F_DWORD_TO_UDINT" x="400" y="400"/>
 		<FB Name="NVS" Type="logiBUS::storage::esp32_nvs::NVS" x="2100" y="0">
 			<Parameter Name="QI" Value="TRUE"/>
 			<Parameter Name="DEFAULT_VALUE" Value="UDINT#0"/>
 		</FB>
-		<FB Name="Q_NumericValue" Type="isobus::UT::Q::Q_NumericValue" x="4100" y="200">
-		</FB>
+		<FB Name="Q_NumericValue" Type="isobus::UT::Q::Q_NumericValue" x="4100" y="200"/>
 		<EventConnections>
 			<Connection Source="InputNumber_I1.IND" Destination="F_DWORD_TO_UDINT.REQ" dx1="300"/>
 			<Connection Source="REQ" Destination="Q_NumericValue.REQ" dx1="1600">

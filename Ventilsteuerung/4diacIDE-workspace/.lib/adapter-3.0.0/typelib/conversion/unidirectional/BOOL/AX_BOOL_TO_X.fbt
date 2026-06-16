@@ -11,13 +11,10 @@
 		<EventInputs>
 			<Event Name="REQ" Type="Event" Comment="Request to Adapter">
 				<With Var="OUT"/>
-				<Attribute Name="YPOSITION" Type="DINT" Value="46"/>
 			</Event>
 		</EventInputs>
 		<InputVars>
-			<VarDeclaration Name="OUT" Type="BOOL">
-				<Attribute Name="YPOSITION" Type="DINT" Value="31"/>
-			</VarDeclaration>
+			<VarDeclaration Name="OUT" Type="BOOL"/>
 		</InputVars>
 		<Plugs>
 			<AdapterDeclaration Name="AX_OUT" Type="adapter::types::unidirectional::AX" Comment="Adapter Output" x="-3900" y="-500"/>

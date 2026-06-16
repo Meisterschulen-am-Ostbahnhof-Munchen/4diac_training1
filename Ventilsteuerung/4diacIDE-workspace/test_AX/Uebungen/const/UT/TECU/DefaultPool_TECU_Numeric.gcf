@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <GlobalConstants Name="DefaultPool_TECU_Numeric" Comment="Numeric object pool constants (ID, Scale, Offset, Decimals)">
-	<CompilerInfo packageName="Uebungen::const::UT::TECU"/>
+	<CompilerInfo packageName="Uebungen::const::UT::TECU">
+	</CompilerInfo>
 	<GlobalConstants>
 		<VarDeclaration Name="OutputNumber_Wheel_based_machine_speed_km_h" Type="logiBUS::utils::conversion::phys::NumericObjectPool_S" InitialValue="(u16ObjId := 12000, r32Scale := 0.0036, i32Offset := 0, u8Decimals := 1)"/>
 		<VarDeclaration Name="OutputNumber_Wheel_based_machine_speed_m_s" Type="logiBUS::utils::conversion::phys::NumericObjectPool_S" InitialValue="(u16ObjId := 12001, r32Scale := 0.001, i32Offset := 0, u8Decimals := 1)"/>
@@ -8,10 +9,41 @@
 		<VarDeclaration Name="OutputNumber_Ground_based_machine_speed_m_s" Type="logiBUS::utils::conversion::phys::NumericObjectPool_S" InitialValue="(u16ObjId := 12003, r32Scale := 0.001, i32Offset := 0, u8Decimals := 1)"/>
 		<VarDeclaration Name="OutputNumber_Wheel_based_machine_distance_km" Type="logiBUS::utils::conversion::phys::NumericObjectPool_S" InitialValue="(u16ObjId := 12004, r32Scale := 0.000001, i32Offset := 0, u8Decimals := 1)"/>
 		<VarDeclaration Name="OutputNumber_Wheel_based_machine_distance_m" Type="logiBUS::utils::conversion::phys::NumericObjectPool_S" InitialValue="(u16ObjId := 12005, r32Scale := 0.001, i32Offset := 0, u8Decimals := 1)"/>
-		<VarDeclaration Name="OutputNumber_Rear_PTO_output_shaft_speed" Type="logiBUS::utils::conversion::phys::NumericObjectPool_S" InitialValue="(u16ObjId := 12006, r32Scale := 0.125, i32Offset := 0, u8Decimals := 1)"/>
-		<VarDeclaration Name="NumberVariable_Wheel_based_machine_speed" Type="logiBUS::utils::conversion::phys::NumericObjectPool_S" InitialValue="(u16ObjId := 21000, r32Scale := 0.001, i32Offset := 0, u8Decimals := 1)"/>
+		<VarDeclaration Name="OutputNumber_Rear_PTO_output_shaft_speed" Type="logiBUS::utils::conversion::phys::NumericObjectPool_S" InitialValue="(u16ObjId :=
+			12006, r32Scale := 0.125, i32Offset := 0, u8Decimals := 1)"/>
+		<VarDeclaration Name="NumberVariable_Wheel_based_machine_speed" Type="logiBUS::utils::conversion::phys::NumericObjectPool_S" InitialValue="(u16ObjId :=
+			21000, r32Scale := 0.001, i32Offset := 0, u8Decimals := 1)"/>
 		<VarDeclaration Name="NumberVariable_Ground_based_machine_speed" Type="logiBUS::utils::conversion::phys::NumericObjectPool_S" InitialValue="(u16ObjId := 21001, r32Scale := 0.001, i32Offset := 0, u8Decimals := 1)"/>
 		<VarDeclaration Name="NumberVariable_Wheel_based_machine_distance" Type="logiBUS::utils::conversion::phys::NumericObjectPool_S" InitialValue="(u16ObjId := 21002, r32Scale := 0.000001, i32Offset := 0, u8Decimals := 1)"/>
 		<VarDeclaration Name="NumberVariable_Rear_PTO_output_shaft_speed" Type="logiBUS::utils::conversion::phys::NumericObjectPool_S" InitialValue="(u16ObjId := 21003, r32Scale := 0.125, i32Offset := 0, u8Decimals := 1)"/>
 	</GlobalConstants>
+	<OriginalSource><![CDATA[PACKAGE Uebungen::const::UT::TECU;
+
+GLOBALCONSTANTS DefaultPool_TECU_Numeric
+	VAR_GLOBAL CONSTANT
+		OutputNumber_Wheel_based_machine_speed_km_h : logiBUS::utils::conversion::phys::NumericObjectPool_S :=
+			(u16ObjId := 12000, r32Scale := 0.0036, i32Offset := 0, u8Decimals := 1);
+		OutputNumber_Wheel_based_machine_speed_m_s : logiBUS::utils::conversion::phys::NumericObjectPool_S :=
+			(u16ObjId := 12001, r32Scale := 0.001, i32Offset := 0, u8Decimals := 1);
+		OutputNumber_Ground_based_machine_speed_km_h : logiBUS::utils::conversion::phys::NumericObjectPool_S :=
+			(u16ObjId := 12002, r32Scale := 0.0036, i32Offset := 0, u8Decimals := 1);
+		OutputNumber_Ground_based_machine_speed_m_s : logiBUS::utils::conversion::phys::NumericObjectPool_S :=
+			(u16ObjId := 12003, r32Scale := 0.001, i32Offset := 0, u8Decimals := 1);
+		OutputNumber_Wheel_based_machine_distance_km : logiBUS::utils::conversion::phys::NumericObjectPool_S :=
+			(u16ObjId := 12004, r32Scale := 0.000001, i32Offset := 0, u8Decimals := 1);
+		OutputNumber_Wheel_based_machine_distance_m : logiBUS::utils::conversion::phys::NumericObjectPool_S :=
+			(u16ObjId := 12005, r32Scale := 0.001, i32Offset := 0, u8Decimals := 1);
+		OutputNumber_Rear_PTO_output_shaft_speed : logiBUS::utils::conversion::phys::NumericObjectPool_S := (u16ObjId :=
+			12006, r32Scale := 0.125, i32Offset := 0, u8Decimals := 1);
+		NumberVariable_Wheel_based_machine_speed : logiBUS::utils::conversion::phys::NumericObjectPool_S := (u16ObjId :=
+			21000, r32Scale := 0.001, i32Offset := 0, u8Decimals := 1);
+		NumberVariable_Ground_based_machine_speed : logiBUS::utils::conversion::phys::NumericObjectPool_S :=
+			(u16ObjId := 21001, r32Scale := 0.001, i32Offset := 0, u8Decimals := 1);
+		NumberVariable_Wheel_based_machine_distance : logiBUS::utils::conversion::phys::NumericObjectPool_S :=
+			(u16ObjId := 21002, r32Scale := 0.000001, i32Offset := 0, u8Decimals := 1);
+		NumberVariable_Rear_PTO_output_shaft_speed : logiBUS::utils::conversion::phys::NumericObjectPool_S :=
+			(u16ObjId := 21003, r32Scale := 0.125, i32Offset := 0, u8Decimals := 1);
+	END_VAR
+END_GLOBALCONSTANTS
+]]></OriginalSource>
 </GlobalConstants>

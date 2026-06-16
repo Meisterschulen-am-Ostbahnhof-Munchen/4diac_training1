@@ -1,9 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <SubAppType Name="Uebung_080f" Comment="Beispiel für E_CTU">
-	<Identification Standard="61499-2" Description="Copyright (c) 2023 Meisterschulen am Ostbahnhof  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0">
-	</Identification>
-	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2023-10-23" Remarks="initial API and implementation and/or initial documentation">
-	</VersionInfo>
+	<Identification Standard="61499-2" Description="Copyright (c) 2023 Meisterschulen am Ostbahnhof  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0"/>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2023-10-23" Remarks="initial API and implementation and/or initial documentation"/>
 	<CompilerInfo packageName="Uebungen">
 		<Import declaration="Uebungen::const::UT::Horse::DefaultPool_Horse::ObjectPointer_Horse"/>
 		<Import declaration="Uebungen::const::UT::Horse::DefaultPool_Horse::frame_00"/>
@@ -43,8 +41,7 @@
 		<Import declaration="logiBUS::io::DI::logiBUS_DI_Events::BUTTON_SINGLE_CLICK"/>
 		<Import declaration="logiBUS::io::DQ::logiBUS_DO::Output_Q1"/>
 	</CompilerInfo>
-	<SubAppInterfaceList>
-	</SubAppInterfaceList>
+	<SubAppInterfaceList/>
 	<SubAppNetwork>
 		<FB Name="DigitalOutput_Q1" Type="logiBUS::io::DQ::logiBUS_QX" x="-2900" y="-800">
 			<Parameter Name="QI" Value="TRUE"/>
@@ -63,8 +60,7 @@
 			<Parameter Name="Input" Value="Input_I2"/>
 			<Parameter Name="InputEvent" Value="BUTTON_SINGLE_CLICK"/>
 		</FB>
-		<FB Name="E_MERGE_2" Type="iec61499::events::E_MERGE_2" x="-5100" y="-800">
-		</FB>
+		<FB Name="E_MERGE_2" Type="iec61499::events::E_MERGE_2" x="-5100" y="-800"/>
 		<Comment Comment="da UDINT immer einen UINT aufnehmen kann, ist hier der UINT_TO_UDINT verzichtbar&#10;" x="-5300" y="900" width="1600" height="400"/>
 		<Comment Comment="E_MERGE kann man weglassen, führt hier aber zu viel saubererem Code. (sonst muss man 4 Linien kreuzen)" x="-5500" y="-1500" width="1600" height="400"/>
 		<FB Name="Q_NumericValue_1" Type="isobus::UT::Q::Q_NumericValue" x="-900" y="300">

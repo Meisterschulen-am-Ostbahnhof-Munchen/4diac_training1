@@ -1,16 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <SubAppType Name="Uebung_122" Comment="Übung zu ISOBUS Name">
-	<Identification Standard="61499-2" Description="Copyright (c) 2023 Meisterschulen am Ostbahnhof  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0">
-	</Identification>
-	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2023-10-23" Remarks="initial API and implementation and/or initial documentation">
-	</VersionInfo>
+	<Identification Standard="61499-2" Description="Copyright (c) 2023 Meisterschulen am Ostbahnhof  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0"/>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2023-10-23" Remarks="initial API and implementation and/or initial documentation"/>
 	<CompilerInfo packageName="Uebungen">
 		<Import declaration="isobus::pgn::ISOUSERHOME_e::network"/>
 		<Import declaration="isobus::pgn::ISO_CAN_NODE::NODE1"/>
 		<Import declaration="Uebungen::const::Uebung_120_129::Filter::FLT_ALL_PASS"/>
 	</CompilerInfo>
-	<SubAppInterfaceList>
-	</SubAppInterfaceList>
+	<SubAppInterfaceList/>
 	<SubAppNetwork>
 		<FB Name="NmGetCfInfo" Type="isobus::pgn::NmGetCfInfo" x="-3300" y="-2200">
 			<Parameter Name="u8CanIdx" Value="NODE1"/>
@@ -18,8 +15,7 @@
 			<Parameter Name="address" Value="FLT_ALL_PASS"/>
 			<Parameter Name="mask" Value="FLT_ALL_PASS"/>
 		</FB>
-		<FB Name="LOG_16" Type="logiBUS::utils::logging::LOG_16" x="-1700" y="-2100">
-		</FB>
+		<FB Name="LOG_16" Type="logiBUS::utils::logging::LOG_16" x="-1700" y="-2100"/>
 		<FB Name="SD_A_1" Type="eclipse4diac::convert::STRUCT_DEMUX" x="6306.67" y="-12273.33">
 			<Attribute Name="StructuredType" Type="STRING" Value="isobus::pgn::ISONETEVENT_T"/>
 		</FB>
@@ -68,38 +64,22 @@
 		<FB Name="SD_A_16" Type="eclipse4diac::convert::STRUCT_DEMUX" x="6306.67" y="8526.67">
 			<Attribute Name="StructuredType" Type="STRING" Value="isobus::pgn::ISONETEVENT_T"/>
 		</FB>
-		<FB Name="NmSetNF_1" Type="isobus::pgn::NmSetNameField" x="10500" y="-12300">
-		</FB>
-		<FB Name="NmSetNF_2" Type="isobus::pgn::NmSetNameField" x="10500" y="-10886.67">
-		</FB>
-		<FB Name="NmSetNF_3" Type="isobus::pgn::NmSetNameField" x="10500" y="-9500">
-		</FB>
-		<FB Name="NmSetNF_4" Type="isobus::pgn::NmSetNameField" x="10500" y="-8113.33">
-		</FB>
-		<FB Name="NmSetNF_5" Type="isobus::pgn::NmSetNameField" x="10500" y="-6726.67">
-		</FB>
-		<FB Name="NmSetNF_6" Type="isobus::pgn::NmSetNameField" x="10500" y="-5340">
-		</FB>
-		<FB Name="NmSetNF_7" Type="isobus::pgn::NmSetNameField" x="10500" y="-3953.33">
-		</FB>
-		<FB Name="NmSetNF_8" Type="isobus::pgn::NmSetNameField" x="10500" y="-2566.67">
-		</FB>
-		<FB Name="NmSetNF_9" Type="isobus::pgn::NmSetNameField" x="10500" y="-1180">
-		</FB>
-		<FB Name="NmSetNF_10" Type="isobus::pgn::NmSetNameField" x="10500" y="206.67">
-		</FB>
-		<FB Name="NmSetNF_11" Type="isobus::pgn::NmSetNameField" x="10500" y="1593.33">
-		</FB>
-		<FB Name="NmSetNF_12" Type="isobus::pgn::NmSetNameField" x="10500" y="2980">
-		</FB>
-		<FB Name="NmSetNF_13" Type="isobus::pgn::NmSetNameField" x="10500" y="4366.67">
-		</FB>
-		<FB Name="NmSetNF_14" Type="isobus::pgn::NmSetNameField" x="10500" y="5753.33">
-		</FB>
-		<FB Name="NmSetNF_15" Type="isobus::pgn::NmSetNameField" x="10500" y="7140">
-		</FB>
-		<FB Name="NmSetNF_16" Type="isobus::pgn::NmSetNameField" x="10500" y="8526.67">
-		</FB>
+		<FB Name="NmSetNF_1" Type="isobus::pgn::NmSetNameField" x="10500" y="-12300"/>
+		<FB Name="NmSetNF_2" Type="isobus::pgn::NmSetNameField" x="10500" y="-10886.67"/>
+		<FB Name="NmSetNF_3" Type="isobus::pgn::NmSetNameField" x="10500" y="-9500"/>
+		<FB Name="NmSetNF_4" Type="isobus::pgn::NmSetNameField" x="10500" y="-8113.33"/>
+		<FB Name="NmSetNF_5" Type="isobus::pgn::NmSetNameField" x="10500" y="-6726.67"/>
+		<FB Name="NmSetNF_6" Type="isobus::pgn::NmSetNameField" x="10500" y="-5340"/>
+		<FB Name="NmSetNF_7" Type="isobus::pgn::NmSetNameField" x="10500" y="-3953.33"/>
+		<FB Name="NmSetNF_8" Type="isobus::pgn::NmSetNameField" x="10500" y="-2566.67"/>
+		<FB Name="NmSetNF_9" Type="isobus::pgn::NmSetNameField" x="10500" y="-1180"/>
+		<FB Name="NmSetNF_10" Type="isobus::pgn::NmSetNameField" x="10500" y="206.67"/>
+		<FB Name="NmSetNF_11" Type="isobus::pgn::NmSetNameField" x="10500" y="1593.33"/>
+		<FB Name="NmSetNF_12" Type="isobus::pgn::NmSetNameField" x="10500" y="2980"/>
+		<FB Name="NmSetNF_13" Type="isobus::pgn::NmSetNameField" x="10500" y="4366.67"/>
+		<FB Name="NmSetNF_14" Type="isobus::pgn::NmSetNameField" x="10500" y="5753.33"/>
+		<FB Name="NmSetNF_15" Type="isobus::pgn::NmSetNameField" x="10500" y="7140"/>
+		<FB Name="NmSetNF_16" Type="isobus::pgn::NmSetNameField" x="10500" y="8526.67"/>
 		<FB Name="SD_C_1" Type="eclipse4diac::convert::STRUCT_DEMUX" x="14100" y="-12273.33">
 			<Attribute Name="StructuredType" Type="STRING" Value="isobus::pgn::NAMEFIELD_T"/>
 		</FB>

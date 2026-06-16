@@ -1,13 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <SubAppType Name="Versuch_402" Comment="Versuch Array Summe">
-	<Identification Standard="61499-2" Description="Copyright (c) 2023 Meisterschulen am Ostbahnhof  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0">
-	</Identification>
-	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2023-10-23" Remarks="initial API and implementation and/or initial documentation">
-	</VersionInfo>
-	<CompilerInfo packageName="Versuche">
-	</CompilerInfo>
-	<SubAppInterfaceList>
-	</SubAppInterfaceList>
+	<Identification Standard="61499-2" Description="Copyright (c) 2023 Meisterschulen am Ostbahnhof  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0"/>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2023-10-23" Remarks="initial API and implementation and/or initial documentation"/>
+	<CompilerInfo packageName="Versuche"/>
+	<SubAppInterfaceList/>
 	<SubAppNetwork>
 		<FB Name="GET_AT_INDEX" Type="eclipse4diac::convert::GET_AT_INDEX" x="1140" y="2280">
 			<Parameter Name="INDEX" Value="0"/>
@@ -15,12 +11,9 @@
 		<FB Name="F_MOVE" Type="iec61131::selection::F_MOVE" x="2300" y="2333.33">
 			<Attribute Name="DataType" Value="INT"/>
 		</FB>
-		<FB Name="CountOfElements" Type="eclipse4diac::utils::arrays::F_LEN_ARRAY" x="800" y="500">
-		</FB>
-		<FB Name="F_UPPER_BOUND" Type="iec61131::arrays::F_UPPER_BOUND" x="1140" y="3260">
-		</FB>
-		<FB Name="F_LOWER_BOUND" Type="iec61131::arrays::F_LOWER_BOUND" x="1140" y="1300">
-		</FB>
+		<FB Name="CountOfElements" Type="eclipse4diac::utils::arrays::F_LEN_ARRAY" x="800" y="500"/>
+		<FB Name="F_UPPER_BOUND" Type="iec61131::arrays::F_UPPER_BOUND" x="1140" y="3260"/>
+		<FB Name="F_LOWER_BOUND" Type="iec61131::arrays::F_LOWER_BOUND" x="1140" y="1300"/>
 		<FB Name="VALUES2ARRAY_8_INT" Type="eclipse4diac::convert::VALUES2ARRAY_8_INT" x="-573.33" y="1793.33">
 			<Parameter Name="IN_1" Value="1"/>
 			<Parameter Name="IN_2" Value="22"/>
