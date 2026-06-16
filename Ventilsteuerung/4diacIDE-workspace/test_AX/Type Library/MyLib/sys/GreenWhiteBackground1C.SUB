@@ -1,11 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <SubAppType Name="GreenWhiteBackground1C" Comment="Hintergrundfarbe (TRUE -&gt; Grün, FALSE -&gt; Weiß) für 1 Objekt (Kompakt)">
-	<Identification Standard="61499-2">
-	</Identification>
-	<VersionInfo Version="1.0" Author="franz" Date="2023-02-06">
-	</VersionInfo>
-	<CompilerInfo packageName="MyLib::sys">
-	</CompilerInfo>
+	<Identification Standard="61499-2"/>
+	<VersionInfo Version="1.0" Author="franz" Date="2023-02-06"/>
+	<CompilerInfo packageName="MyLib::sys"/>
 	<SubAppInterfaceList>
 		<SubAppEventInputs>
 			<SubAppEvent Name="EO" Type="Event">
@@ -18,8 +15,7 @@
 		</InputVars>
 	</SubAppInterfaceList>
 	<SubAppNetwork>
-		<SubApp Name="GreenWhiteBackground" Type="MyLib::sys::GreenWhiteBackground1" x="-2533.33" y="-3466.67">
-		</SubApp>
+		<SubApp Name="GreenWhiteBackground" Type="MyLib::sys::GreenWhiteBackground1" x="-2533.33" y="-3466.67"/>
 		<EventConnections>
 			<Connection Source="EO" Destination="GreenWhiteBackground.REQ" dx1="573.33"/>
 		</EventConnections>

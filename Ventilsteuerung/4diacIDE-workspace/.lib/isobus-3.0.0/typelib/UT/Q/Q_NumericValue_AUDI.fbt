@@ -1,9 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <FBType Name="Q_NumericValue_AUDI" Comment="Command change numeric value ( Part 6 - F.22 )">
-	<Identification Standard="ISO 11783-6" Description="Copyright (c) 2022 HR Agrartechnik GmbH  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0  &#10;   &#10;   &#10;see Description Tab">
-	</Identification>
-	<VersionInfo Organization="HR Agrartechnik GmbH" Version="1.0" Author="Franz Höpfinger" Date="2022-07-08">
-	</VersionInfo>
+	<Identification Standard="ISO 11783-6" Description="Copyright (c) 2022 HR Agrartechnik GmbH  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0  &#10;   &#10;   &#10;see Description Tab"/>
+	<VersionInfo Organization="HR Agrartechnik GmbH" Version="1.0" Author="Franz Höpfinger" Date="2022-07-08"/>
 	<CompilerInfo packageName="isobus::UT::Q">
 		<Import declaration="eclipse4diac::core::TypeHash"/>
 		<Import declaration="isobus::UT::Q::const::IDs::ID_NULL"/>
@@ -15,8 +13,7 @@
 			</Event>
 		</EventInputs>
 		<EventOutputs>
-			<Event Name="INITO" Type="EInit" Comment="Initialization Confirm">
-			</Event>
+			<Event Name="INITO" Type="EInit" Comment="Initialization Confirm"/>
 			<Event Name="CNF" Type="Event" Comment="Confirmation of Requested Service">
 				<With Var="STATUS"/>
 				<With Var="s16result"/>
@@ -29,16 +26,15 @@
 			<VarDeclaration Name="STATUS" Type="STRING" Comment="Service Status"/>
 			<VarDeclaration Name="s16result" Type="INT" Comment="retval see description"/>
 		</OutputVars>
-		<Plugs>
-			<AdapterDeclaration Name="u32OldValue" Type="adapter::types::unidirectional::AUDI" Comment="Old value of ID" x="3900" y="1100"/>
-		</Plugs>
 		<Sockets>
 			<AdapterDeclaration Name="u32NewValue" Type="adapter::types::unidirectional::AUDI" Comment="New value of ID" x="-600" y="1200"/>
 		</Sockets>
+		<Plugs>
+			<AdapterDeclaration Name="u32OldValue" Type="adapter::types::unidirectional::AUDI" Comment="Old value of ID" x="3900" y="1100"/>
+		</Plugs>
 	</InterfaceList>
 	<FBNetwork>
-		<FB Name="Q_NumericValue" Type="isobus::UT::Q::Q_NumericValue" x="533.33" y="420">
-		</FB>
+		<FB Name="Q_NumericValue" Type="isobus::UT::Q::Q_NumericValue" x="533.33" y="420"/>
 		<EventConnections>
 			<Connection Source="INIT" Destination="Q_NumericValue.INIT" dx1="1306.67"/>
 			<Connection Source="Q_NumericValue.INITO" Destination="INITO" dx1="1506.67"/>

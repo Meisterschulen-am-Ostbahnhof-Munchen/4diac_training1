@@ -1,13 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <SubAppType Name="Uebung_224_AULI" Comment="Standard IEC 61131-3 AULI_FB_CTUD (Adapter Version, Vorwärts-/Rückwärtszähler, ULINT) mit Terminal-Ausgabe">
-	<Identification Standard="61131-3" Description="Copyright (c) 2026 Meisterschulen am Ostbahnhof  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0">
-	</Identification>
-	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.2" Author="Franz Höpfinger" Date="2026-05-13" Remarks="Added AULI_ULINT_TO_ULI init block connected to PV">
-	</VersionInfo>
-	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.1" Author="Franz Höpfinger" Date="2026-04-21" Remarks="Added terminal output for counter value">
-	</VersionInfo>
-	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2026-04-21" Remarks="initial API and implementation (Adapter version)">
-	</VersionInfo>
+	<Identification Standard="61131-3" Description="Copyright (c) 2026 Meisterschulen am Ostbahnhof  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0"/>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.2" Author="Franz Höpfinger" Date="2026-05-13" Remarks="Added AULI_ULINT_TO_ULI init block connected to PV"/>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.1" Author="Franz Höpfinger" Date="2026-04-21" Remarks="Added terminal output for counter value"/>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2026-04-21" Remarks="initial API and implementation (Adapter version)"/>
 	<CompilerInfo packageName="Uebungen">
 		<Import declaration="Uebungen::const::UT::DefaultPool::OutputNumber_N1"/>
 		<Import declaration="logiBUS::io::DI::logiBUS_DI::Input_I1"/>
@@ -17,11 +13,9 @@
 		<Import declaration="logiBUS::io::DQ::logiBUS_DO::Output_Q1"/>
 		<Import declaration="logiBUS::io::DQ::logiBUS_DO::Output_Q2"/>
 	</CompilerInfo>
-	<SubAppInterfaceList>
-	</SubAppInterfaceList>
+	<SubAppInterfaceList/>
 	<SubAppNetwork>
-		<FB Name="AULI_FB_CTUD" Type="adapter::iec61131::counters::AULI_FB_CTUD" x="0" y="0">
-		</FB>
+		<FB Name="AULI_FB_CTUD" Type="adapter::iec61131::counters::AULI_FB_CTUD" x="0" y="0"/>
 		<FB Name="AULI_ULINT_TO_ULI" Type="adapter::conversion::unidirectional::AULI_ULINT_TO_ULI" x="-1300" y="1400">
 			<Parameter Name="OUT" Value="ULINT#5"/>
 		</FB>
@@ -49,8 +43,7 @@
 			<Parameter Name="QI" Value="TRUE"/>
 			<Parameter Name="Output" Value="Output_Q2"/>
 		</FB>
-		<FB Name="AULI_TO_AUDI" Type="adapter::conversion::unidirectional::AULI_TO_AUDI" x="1100" y="1600">
-		</FB>
+		<FB Name="AULI_TO_AUDI" Type="adapter::conversion::unidirectional::AULI_TO_AUDI" x="1100" y="1600"/>
 		<FB Name="Q_NumericValue_AUDI" Type="isobus::UT::Q::Q_NumericValue_AUDI" x="2800" y="1100">
 			<Parameter Name="u16ObjId" Value="OutputNumber_N1"/>
 		</FB>

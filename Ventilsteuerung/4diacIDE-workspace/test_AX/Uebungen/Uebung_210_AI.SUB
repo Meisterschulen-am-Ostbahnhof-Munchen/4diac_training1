@@ -1,22 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <SubAppType Name="Uebung_210_AI" Comment="Standard IEC 61131-3 AI_FB_CTU (Adapter Version, Vorwärtszähler, INT) mit Terminal-Ausgabe">
-	<Identification Standard="61131-3" Description="Copyright (c) 2026 Meisterschulen am Ostbahnhof  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0">
-	</Identification>
-	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.1" Author="Franz Höpfinger" Date="2026-04-21" Remarks="Added terminal output for counter value">
-	</VersionInfo>
-	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2026-04-21" Remarks="initial API and implementation (Adapter version)">
-	</VersionInfo>
+	<Identification Standard="61131-3" Description="Copyright (c) 2026 Meisterschulen am Ostbahnhof  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0"/>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.1" Author="Franz Höpfinger" Date="2026-04-21" Remarks="Added terminal output for counter value"/>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2026-04-21" Remarks="initial API and implementation (Adapter version)"/>
 	<CompilerInfo packageName="Uebungen">
 		<Import declaration="Uebungen::const::UT::DefaultPool::OutputNumber_N1"/>
 		<Import declaration="logiBUS::io::DI::logiBUS_DI::Input_I1"/>
 		<Import declaration="logiBUS::io::DI::logiBUS_DI::Input_I2"/>
 		<Import declaration="logiBUS::io::DQ::logiBUS_DO::Output_Q1"/>
 	</CompilerInfo>
-	<SubAppInterfaceList>
-	</SubAppInterfaceList>
+	<SubAppInterfaceList/>
 	<SubAppNetwork>
-		<FB Name="AI_FB_CTU" Type="adapter::iec61131::counters::AI_FB_CTU" x="0" y="0">
-		</FB>
+		<FB Name="AI_FB_CTU" Type="adapter::iec61131::counters::AI_FB_CTU" x="0" y="0"/>
 		<FB Name="AI_INT_TO_I" Type="adapter::conversion::unidirectional::AI_INT_TO_I" x="-1500" y="900">
 			<Parameter Name="OUT" Value="INT#5"/>
 		</FB>
@@ -32,8 +27,7 @@
 			<Parameter Name="QI" Value="TRUE"/>
 			<Parameter Name="Output" Value="Output_Q1"/>
 		</FB>
-		<FB Name="AI_TO_AUDI" Type="adapter::conversion::unidirectional::AI_TO_AUDI" x="1000" y="800">
-		</FB>
+		<FB Name="AI_TO_AUDI" Type="adapter::conversion::unidirectional::AI_TO_AUDI" x="1000" y="800"/>
 		<FB Name="Q_NumericValue_AUDI" Type="isobus::UT::Q::Q_NumericValue_AUDI" x="2400" y="300">
 			<Parameter Name="u16ObjId" Value="OutputNumber_N1"/>
 		</FB>

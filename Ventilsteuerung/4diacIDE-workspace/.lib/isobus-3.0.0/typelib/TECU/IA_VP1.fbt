@@ -1,9 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <FBType Name="IA_VP1" Comment="ISOBUS Adapter for Vehicle Position 1 (VP1)">
-	<Identification Standard="ISO 11783-7" Classification="PGN 65267" Description="Copyright (c) 2024-2026 HR Agrartechnik GmbH  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0">
-	</Identification>
-	<VersionInfo Organization="HR Agrartechnik GmbH" Version="1.0" Author="Franz Höpfinger" Date="2026-04-19" Remarks="initial API and implementation (Adapter Wrapper for I_VP1)">
-	</VersionInfo>
+	<Identification Standard="ISO 11783-7" Classification="PGN 65267" Description="Copyright (c) 2024-2026 HR Agrartechnik GmbH  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0"/>
+	<VersionInfo Organization="HR Agrartechnik GmbH" Version="1.0" Author="Franz Höpfinger" Date="2026-04-19" Remarks="initial API and implementation (Adapter Wrapper for I_VP1)"/>
 	<CompilerInfo packageName="isobus::tecu">
 		<Import declaration="eclipse4diac::core::TypeHash"/>
 	</CompilerInfo>
@@ -33,8 +31,7 @@
 		</Plugs>
 	</InterfaceList>
 	<FBNetwork>
-		<FB Name="I_CORE" Type="isobus::tecu::I_VP1" x="680" y="3100">
-		</FB>
+		<FB Name="I_CORE" Type="isobus::tecu::I_VP1" x="680" y="3100"/>
 		<EventConnections>
 			<Connection Source="INIT" Destination="I_CORE.INIT" dx1="66.67"/>
 			<Connection Source="I_CORE.INITO" Destination="INITO" dx1="66.67"/>

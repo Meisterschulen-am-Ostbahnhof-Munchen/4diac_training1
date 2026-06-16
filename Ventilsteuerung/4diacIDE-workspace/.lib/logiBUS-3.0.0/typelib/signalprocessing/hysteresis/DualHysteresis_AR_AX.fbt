@@ -1,13 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <FBType Name="DualHysteresis_AR_AX" Comment="2-way conversion of Analog to Digital with Hysteresis (Switch-on = MI +/- (ABS(DEAD) + ABS(HYSTERESIS)), Switch-off = MI +/- ABS(DEAD))">
-	<Identification Standard="61499-2" Description="Copyright (c) 2023 HR Agrartechnik GmbH&#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0 ">
-	</Identification>
-	<VersionInfo Version="3.1" Author="Gemini CLI" Date="2026-06-01" Remarks="Addressed code review: absolute values for thresholds, explicit comparison semantics.">
-	</VersionInfo>
-	<VersionInfo Version="3.0" Author="Patrick Aigner" Date="2025-04-14" Remarks="changed package">
-	</VersionInfo>
-	<VersionInfo Organization="HR Agrartechnik GmbH" Version="1.0" Author="Franz Höpfinger" Date="2023-06-06">
-	</VersionInfo>
+	<Identification Standard="61499-2" Description="Copyright (c) 2023 HR Agrartechnik GmbH&#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0 "/>
+	<VersionInfo Version="3.1" Author="Gemini CLI" Date="2026-06-01" Remarks="Addressed code review: absolute values for thresholds, explicit comparison semantics."/>
+	<VersionInfo Version="3.0" Author="Patrick Aigner" Date="2025-04-14" Remarks="changed package"/>
+	<VersionInfo Organization="HR Agrartechnik GmbH" Version="1.0" Author="Franz Höpfinger" Date="2023-06-06"/>
 	<CompilerInfo packageName="logiBUS::signalprocessing::hysteresis">
 		<Import declaration="eclipse4diac::core::TypeHash"/>
 	</CompilerInfo>
@@ -28,21 +24,20 @@
 		<OutputVars>
 			<VarDeclaration Name="QO" Type="BOOL"/>
 		</OutputVars>
-		<Plugs>
-			<AdapterDeclaration Name="DO_UP" Type="adapter::types::unidirectional::AX" Comment=" UP"/>
-			<AdapterDeclaration Name="DO_DOWN" Type="adapter::types::unidirectional::AX" Comment="DOWN"/>
-		</Plugs>
 		<Sockets>
 			<AdapterDeclaration Name="INPUT" Type="adapter::types::unidirectional::AR" Comment="Input value"/>
 			<AdapterDeclaration Name="MI" Type="adapter::types::unidirectional::AR" Comment="Center point (e.g. 0.5 for 50%)"/>
 			<AdapterDeclaration Name="DEAD" Type="adapter::types::unidirectional::AR" Comment="Deadband around MI (absolute value). Switch-off points = MI +/- ABS(DEAD)"/>
 			<AdapterDeclaration Name="HYSTERESIS" Type="adapter::types::unidirectional::AR" Comment="Hysteresis value (absolute value). Switch-on points = MI +/- (ABS(DEAD) + ABS(HYSTERESIS))"/>
 		</Sockets>
+		<Plugs>
+			<AdapterDeclaration Name="DO_UP" Type="adapter::types::unidirectional::AX" Comment=" UP"/>
+			<AdapterDeclaration Name="DO_DOWN" Type="adapter::types::unidirectional::AX" Comment="DOWN"/>
+		</Plugs>
 	</InterfaceList>
 	<BasicFB>
 		<ECC>
-			<ECState Name="START" Comment="Initial State" x="840" y="2460">
-			</ECState>
+			<ECState Name="START" Comment="Initial State" x="840" y="2460"/>
 			<ECState Name="Init" Comment="Initialization" x="1600" y="2000">
 				<ECAction Algorithm="initialize" Output="INITO"/>
 			</ECState>

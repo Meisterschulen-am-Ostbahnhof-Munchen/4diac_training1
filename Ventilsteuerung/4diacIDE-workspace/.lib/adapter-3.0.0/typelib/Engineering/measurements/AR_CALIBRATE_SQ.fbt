@@ -1,9 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <FBType Name="AR_CALIBRATE_SQ" Comment="Adapter-based sequential two-point calibration (offset then scale) with ECC-enforced order">
-	<Identification Standard="61499-1">
-	</Identification>
-	<VersionInfo Version="1.0" Author="Meisterschulen am Ostbahnhof" Date="2026-06-01">
-	</VersionInfo>
+	<Identification Standard="61499-1"/>
+	<VersionInfo Version="1.0" Author="Meisterschulen am Ostbahnhof" Date="2026-06-01"/>
 	<CompilerInfo packageName="adapter::Engineering::measurements">
 		<Import declaration="eclipse4diac::core::TypeHash"/>
 	</CompilerInfo>
@@ -18,16 +16,16 @@
 			<VarDeclaration Name="Y_Offset" Type="REAL" Comment="Target output Y at low calibration point (offset)"/>
 			<VarDeclaration Name="Y_Scale" Type="REAL" Comment="Target output Y at high calibration point (scale)"/>
 		</InputVars>
-		<Plugs>
-			<AdapterDeclaration Name="Y" Type="adapter::types::unidirectional::AR" Comment="Calibrated Output"/>
-			<AdapterDeclaration Name="OFFSET" Type="adapter::types::bidirectional::AR2" Comment="Stored offset value (initial 0.0)"/>
-			<AdapterDeclaration Name="SCALE" Type="adapter::types::bidirectional::AR2" Comment="Stored scale value (initial 1.0)"/>
-		</Plugs>
 		<Sockets>
 			<AdapterDeclaration Name="X" Type="adapter::types::unidirectional::AR" Comment="Raw Input"/>
 			<AdapterDeclaration Name="CO" Type="adapter::types::unidirectional::AX" Comment="Calibrate Offset"/>
 			<AdapterDeclaration Name="CS" Type="adapter::types::unidirectional::AX" Comment="Calibrate Scale"/>
 		</Sockets>
+		<Plugs>
+			<AdapterDeclaration Name="Y" Type="adapter::types::unidirectional::AR" Comment="Calibrated Output"/>
+			<AdapterDeclaration Name="OFFSET" Type="adapter::types::bidirectional::AR2" Comment="Stored offset value (initial 0.0)"/>
+			<AdapterDeclaration Name="SCALE" Type="adapter::types::bidirectional::AR2" Comment="Stored scale value (initial 1.0)"/>
+		</Plugs>
 	</InterfaceList>
 	<BasicFB>
 		<InternalVars>
@@ -35,16 +33,14 @@
 			<VarDeclaration Name="Y_LOW_INT" Type="REAL" Comment="Stored target value at CO"/>
 		</InternalVars>
 		<ECC>
-			<ECState Name="IDLE" x="0" y="0">
-			</ECState>
+			<ECState Name="IDLE" x="0" y="0"/>
 			<ECState Name="REQ" x="800" y="0">
 				<ECAction Algorithm="REQ" Output="Y.E1"/>
 			</ECState>
 			<ECState Name="CO" x="1600" y="0">
 				<ECAction Algorithm="CO" Output="OFFSET.EO1"/>
 			</ECState>
-			<ECState Name="WAIT_CS" x="1600" y="-400">
-			</ECState>
+			<ECState Name="WAIT_CS" x="1600" y="-400"/>
 			<ECState Name="REQ_WAIT" x="1200" y="-800">
 				<ECAction Algorithm="REQ" Output="Y.E1"/>
 			</ECState>

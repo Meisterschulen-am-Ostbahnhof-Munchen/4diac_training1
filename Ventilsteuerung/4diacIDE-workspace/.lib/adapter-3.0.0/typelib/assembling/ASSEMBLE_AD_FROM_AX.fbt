@@ -1,16 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <FBType Name="ASSEMBLE_AD_FROM_AX" Comment="this Function combines the 32 AX (BOOL) adapters to a AD (DWORD)">
-	<Identification Standard="61499-2" Description="Copyright (c) 2026 Meisterschulen am Ostbahnhof&#10;&#10;SPDX-License-Identifier: EPL-2.0">
-	</Identification>
-	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2026-05-16" Remarks="initial API and implementation and/or initial documentation">
-	</VersionInfo>
+	<Identification Standard="61499-2" Description="Copyright (c) 2026 Meisterschulen am Ostbahnhof&#10;&#10;SPDX-License-Identifier: EPL-2.0"/>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2026-05-16" Remarks="initial API and implementation and/or initial documentation"/>
 	<CompilerInfo packageName="adapter::assembling">
 		<Import declaration="eclipse4diac::core::TypeHash"/>
 	</CompilerInfo>
 	<InterfaceList>
-		<Plugs>
-			<AdapterDeclaration Name="OUT" Type="adapter::types::unidirectional::AD" Comment="DWORD Output" x="3100" y="100"/>
-		</Plugs>
 		<Sockets>
 			<AdapterDeclaration Name="BIT_00" Type="adapter::types::unidirectional::AX" Comment="Bool Bit 0" x="-1200" y="-800"/>
 			<AdapterDeclaration Name="BIT_01" Type="adapter::types::unidirectional::AX" Comment="Bool Bit 1" x="-1200" y="-300"/>
@@ -45,12 +40,13 @@
 			<AdapterDeclaration Name="BIT_30" Type="adapter::types::unidirectional::AX" Comment="Bool Bit 30" x="-1200" y="14200"/>
 			<AdapterDeclaration Name="BIT_31" Type="adapter::types::unidirectional::AX" Comment="Bool Bit 31" x="-1200" y="14700"/>
 		</Sockets>
+		<Plugs>
+			<AdapterDeclaration Name="OUT" Type="adapter::types::unidirectional::AD" Comment="DWORD Output" x="3100" y="100"/>
+		</Plugs>
 	</InterfaceList>
 	<FBNetwork>
-		<FB Name="ASSEMBLE_DWORD_FROM_BOOLS" Type="eclipse4diac::utils::assembling::ASSEMBLE_DWORD_FROM_BOOLS" x="100" y="100">
-		</FB>
-		<FB Name="E_D_FF_ANY" Type="iec61499::events::E_D_FF_ANY" x="1900" y="100">
-		</FB>
+		<FB Name="ASSEMBLE_DWORD_FROM_BOOLS" Type="eclipse4diac::utils::assembling::ASSEMBLE_DWORD_FROM_BOOLS" x="100" y="100"/>
+		<FB Name="E_D_FF_ANY" Type="iec61499::events::E_D_FF_ANY" x="1900" y="100"/>
 		<EventConnections>
 			<Connection Source="BIT_00.E1" Destination="ASSEMBLE_DWORD_FROM_BOOLS.REQ" dx1="420"/>
 			<Connection Source="BIT_01.E1" Destination="ASSEMBLE_DWORD_FROM_BOOLS.REQ" dx1="420"/>

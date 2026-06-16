@@ -1,16 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <SubAppType Name="Uebung_002a2_AX" Comment="DigitalInput_I1/_I2 mit F_AND (bitwise) auf DigitalOutput_Q1">
-	<Identification Standard="61499-2" Description="Copyright (c) 2023 Meisterschulen am Ostbahnhof  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0">
-	</Identification>
-	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2026-01-16" Remarks="initial API and implementation and/or initial documentation">
-	</VersionInfo>
+	<Identification Standard="61499-2" Description="Copyright (c) 2023 Meisterschulen am Ostbahnhof  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0"/>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2026-01-16" Remarks="initial API and implementation and/or initial documentation"/>
 	<CompilerInfo packageName="Uebungen">
 		<Import declaration="logiBUS::io::DI::logiBUS_DI::Input_I1"/>
 		<Import declaration="logiBUS::io::DI::logiBUS_DI::Input_I2"/>
 		<Import declaration="logiBUS::io::DQ::logiBUS_DO::Output_Q1"/>
 	</CompilerInfo>
-	<SubAppInterfaceList>
-	</SubAppInterfaceList>
+	<SubAppInterfaceList/>
 	<SubAppNetwork>
 		<FB Name="DigitalInput_I1" Type="logiBUS::io::DI::logiBUS_IXA" x="-4500" y="-900">
 			<Parameter Name="QI" Value="TRUE"/>
@@ -20,14 +17,10 @@
 			<Parameter Name="QI" Value="TRUE"/>
 			<Parameter Name="Input" Value="Input_I2"/>
 		</FB>
-		<FB Name="AX_X_TO_BOOL_1" Type="adapter::conversion::unidirectional::AX_X_TO_BOOL" x="-2800" y="-800">
-		</FB>
-		<FB Name="AX_X_TO_BOOL_2" Type="adapter::conversion::unidirectional::AX_X_TO_BOOL" x="-2800" y="200">
-		</FB>
-		<FB Name="F_AND" Type="iec61131::bitwiseOperators::F_AND" x="-1200" y="-300">
-		</FB>
-		<FB Name="AX_BOOL_TO_X" Type="adapter::conversion::unidirectional::AX_BOOL_TO_X" x="200" y="-300">
-		</FB>
+		<FB Name="AX_X_TO_BOOL_1" Type="adapter::conversion::unidirectional::AX_X_TO_BOOL" x="-2800" y="-800"/>
+		<FB Name="AX_X_TO_BOOL_2" Type="adapter::conversion::unidirectional::AX_X_TO_BOOL" x="-2800" y="200"/>
+		<FB Name="F_AND" Type="iec61131::bitwiseOperators::F_AND" x="-1200" y="-300"/>
+		<FB Name="AX_BOOL_TO_X" Type="adapter::conversion::unidirectional::AX_BOOL_TO_X" x="200" y="-300"/>
 		<FB Name="DigitalOutput_Q1" Type="logiBUS::io::DQ::logiBUS_QXA" x="1800" y="-400">
 			<Parameter Name="QI" Value="TRUE"/>
 			<Parameter Name="Output" Value="Output_Q1"/>

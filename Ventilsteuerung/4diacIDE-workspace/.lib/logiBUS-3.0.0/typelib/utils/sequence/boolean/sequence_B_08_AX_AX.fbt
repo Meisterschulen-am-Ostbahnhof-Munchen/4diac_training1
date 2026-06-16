@@ -1,19 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <FBType Name="sequence_B_08_AX_AX" Comment="Sequence with 8 Outputs, Transition by BOOL level, with AX Adapter">
-	<Identification Standard="61499-2" Description="Copyright (c) 2026 HR Agrartechnik GmbH  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0">
-	</Identification>
-	<VersionInfo Organization="HR Agrartechnik GmbH" Version="1.0" Author="Franz Höpfinger" Date="2026-04-20" Remarks="initial API and implementation - Level based transitions for power-fail recovery">
-	</VersionInfo>
+	<Identification Standard="61499-2" Description="Copyright (c) 2026 HR Agrartechnik GmbH  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0"/>
+	<VersionInfo Organization="HR Agrartechnik GmbH" Version="1.0" Author="Franz Höpfinger" Date="2026-04-20" Remarks="initial API and implementation - Level based transitions for power-fail recovery"/>
 	<CompilerInfo packageName="logiBUS::utils::sequence::boolean">
 		<Import declaration="eclipse4diac::core::TypeHash"/>
 		<Import declaration="logiBUS::utils::sequence::const::sequence"/>
 	</CompilerInfo>
 	<InterfaceList>
 		<EventInputs>
-			<Event Name="S8_START" Type="Event" Comment="jump from State_08 to START">
-			</Event>
-			<Event Name="RESET" Type="Event" Comment="Reset from any State to START">
-			</Event>
+			<Event Name="S8_START" Type="Event" Comment="jump from State_08 to START"/>
+			<Event Name="RESET" Type="Event" Comment="Reset from any State to START"/>
 		</EventInputs>
 		<EventOutputs>
 			<Event Name="CNF" Type="Event" Comment="Execution Confirmation">
@@ -23,16 +19,6 @@
 		<OutputVars>
 			<VarDeclaration Name="STATE_NR" Type="SINT" Comment="State Number, START = 0, State_01 = 1 and so on. "/>
 		</OutputVars>
-		<Plugs>
-			<AdapterDeclaration Name="DO_S1" Type="adapter::types::unidirectional::AX" Comment="Output if State_01 is active"/>
-			<AdapterDeclaration Name="DO_S2" Type="adapter::types::unidirectional::AX" Comment="Output if State_02 is active"/>
-			<AdapterDeclaration Name="DO_S3" Type="adapter::types::unidirectional::AX" Comment="Output if State_03 is active"/>
-			<AdapterDeclaration Name="DO_S4" Type="adapter::types::unidirectional::AX" Comment="Output if State_04 is active"/>
-			<AdapterDeclaration Name="DO_S5" Type="adapter::types::unidirectional::AX" Comment="Output if State_05 is active"/>
-			<AdapterDeclaration Name="DO_S6" Type="adapter::types::unidirectional::AX" Comment="Output if State_06 is active"/>
-			<AdapterDeclaration Name="DO_S7" Type="adapter::types::unidirectional::AX" Comment="Output if State_07 is active"/>
-			<AdapterDeclaration Name="DO_S8" Type="adapter::types::unidirectional::AX" Comment="Output if State_08 is active"/>
-		</Plugs>
 		<Sockets>
 			<AdapterDeclaration Name="DI_S1" Type="adapter::types::unidirectional::AX" Comment="jump from START to State_01"/>
 			<AdapterDeclaration Name="DI_S2" Type="adapter::types::unidirectional::AX" Comment="jump from State_01 to State_02"/>
@@ -43,11 +29,20 @@
 			<AdapterDeclaration Name="DI_S7" Type="adapter::types::unidirectional::AX" Comment="jump from State_06 to State_07"/>
 			<AdapterDeclaration Name="DI_S8" Type="adapter::types::unidirectional::AX" Comment="jump from State_07 to State_08"/>
 		</Sockets>
+		<Plugs>
+			<AdapterDeclaration Name="DO_S1" Type="adapter::types::unidirectional::AX" Comment="Output if State_01 is active"/>
+			<AdapterDeclaration Name="DO_S2" Type="adapter::types::unidirectional::AX" Comment="Output if State_02 is active"/>
+			<AdapterDeclaration Name="DO_S3" Type="adapter::types::unidirectional::AX" Comment="Output if State_03 is active"/>
+			<AdapterDeclaration Name="DO_S4" Type="adapter::types::unidirectional::AX" Comment="Output if State_04 is active"/>
+			<AdapterDeclaration Name="DO_S5" Type="adapter::types::unidirectional::AX" Comment="Output if State_05 is active"/>
+			<AdapterDeclaration Name="DO_S6" Type="adapter::types::unidirectional::AX" Comment="Output if State_06 is active"/>
+			<AdapterDeclaration Name="DO_S7" Type="adapter::types::unidirectional::AX" Comment="Output if State_07 is active"/>
+			<AdapterDeclaration Name="DO_S8" Type="adapter::types::unidirectional::AX" Comment="Output if State_08 is active"/>
+		</Plugs>
 	</InterfaceList>
 	<BasicFB>
 		<ECC>
-			<ECState Name="xSTART" Comment="Initial State" x="-1066.67" y="533.33">
-			</ECState>
+			<ECState Name="xSTART" Comment="Initial State" x="-1066.67" y="533.33"/>
 			<ECState Name="sState_01" x="2666.67" y="1333.33">
 				<ECAction Algorithm="State_01_C" Output="CNF"/>
 				<ECAction Algorithm="State_01_E"/>

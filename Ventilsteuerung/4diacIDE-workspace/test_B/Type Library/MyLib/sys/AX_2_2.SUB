@@ -4,14 +4,14 @@
 	<VersionInfo Version="1.0" Author="franz" Date="2026-05-29"/>
 	<CompilerInfo/>
 	<SubAppInterfaceList>
-		<Plugs>
-			<AdapterDeclaration Name="OUT1" Type="adapter::types::unidirectional::AX"/>
-			<AdapterDeclaration Name="OUT2" Type="adapter::types::unidirectional::AX"/>
-		</Plugs>
 		<Sockets>
 			<AdapterDeclaration Name="IN1" Type="adapter::types::unidirectional::AX"/>
 			<AdapterDeclaration Name="IN2" Type="adapter::types::unidirectional::AX"/>
 		</Sockets>
+		<Plugs>
+			<AdapterDeclaration Name="OUT1" Type="adapter::types::unidirectional::AX"/>
+			<AdapterDeclaration Name="OUT2" Type="adapter::types::unidirectional::AX"/>
+		</Plugs>
 	</SubAppInterfaceList>
 	<SubAppNetwork>
 		<FB Name="AX_SPLIT_2" Type="adapter::events::unidirectional::AX_SPLIT_2" x="1300" y="-1000"/>

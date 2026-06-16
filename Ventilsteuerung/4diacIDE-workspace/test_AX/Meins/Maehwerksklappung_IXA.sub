@@ -1,9 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <SubAppType Name="Maehwerksklappung_IXA" Comment="Mähwerksklappung Aufgabe Febr. 2026">
-	<Identification Standard="61499-2">
-	</Identification>
-	<VersionInfo Version="1.0" Author="Herr Lehrer" Date="2026-02-23">
-	</VersionInfo>
+	<Identification Standard="61499-2"/>
+	<VersionInfo Version="1.0" Author="Herr Lehrer" Date="2026-02-23"/>
 	<CompilerInfo packageName="Meins">
 		<Import declaration="logiBUS::io::DI::logiBUS_DI::Input_I1"/>
 		<Import declaration="logiBUS::io::DI::logiBUS_DI::Input_I2"/>
@@ -18,8 +16,7 @@
 		<Import declaration="logiBUS::io::DQ::logiBUS_DO::Output_Q5"/>
 		<Import declaration="logiBUS::io::DQ::logiBUS_DO::Output_Q6"/>
 	</CompilerInfo>
-	<SubAppInterfaceList>
-	</SubAppInterfaceList>
+	<SubAppInterfaceList/>
 	<SubAppNetwork>
 		<FB Name="Ausgang_heben" Type="logiBUS::io::DQ::logiBUS_QXA" x="8100" y="1000">
 			<Parameter Name="QI" Value="TRUE">
@@ -173,49 +170,30 @@
 			<Parameter Name="PT" Value="T#2s"/>
 		</FB>
 		<Comment Comment="A. Entriegeln (Bolzen fährt ein)&#10;Damit das Mähwerk überhaupt fahren darf, muss bei Tastendruck zuerst der Riegel öffnen.Logik: Y_1 = (S_1 or S_2) and not 1B1 Erklärung: Wenn der Taster &quot;Transport&quot; (S_1) oder &quot;Arbeit&quot; (S_2) gedrückt wird UND der Riegel noch nicht in der Position &quot;Offen&quot; ist (1B1) , wird der Ausgang &quot;Riegel öffnen&quot; (Y_1)  angesteuert." x="4700" y="-2200" width="3700" height="833.33"/>
-		<FB Name="NOT_riegel_offen" Type="adapter::booleanOperators::AX_NOT" x="4900" y="-300">
-		</FB>
-		<FB Name="entriegeln" Type="adapter::booleanOperators::AX_AND_2" x="6200" y="-500">
-		</FB>
-		<FB Name="Arbeit_oder_Transport" Type="adapter::booleanOperators::AX_OR_2" x="4900" y="-900">
-		</FB>
+		<FB Name="NOT_riegel_offen" Type="adapter::booleanOperators::AX_NOT" x="4900" y="-300"/>
+		<FB Name="entriegeln" Type="adapter::booleanOperators::AX_AND_2" x="6200" y="-500"/>
+		<FB Name="Arbeit_oder_Transport" Type="adapter::booleanOperators::AX_OR_2" x="4900" y="-900"/>
 		<Comment Comment="Heben (Transport): Y_3 = S_1 and 1B1 and not 2B2 Erklärung: Der Ausgang &quot;Mähwerk heben&quot; (Y_3) ist nur aktiv, solange S_1 gedrückt bleibt, der Riegel &quot;Offen&quot; meldet (1B1) und die obere Endlage (2B2) noch nicht erreicht ist. Lässt der Fahrer S_1 los, wird die Bedingung falsch, Y_3 fällt ab und das 5/3-Wegeventil stoppt den Zylinder sofort." x="5100" y="300" width="2800" height="900"/>
-		<FB Name="riegel_offen2" Type="adapter::events::unidirectional::AX_SPLIT_3" x="400" y="600">
-		</FB>
-		<FB Name="heben" Type="adapter::booleanOperators::AX_AND_3" x="5700" y="1300">
-		</FB>
-		<FB Name="NOT_oben" Type="adapter::booleanOperators::AX_NOT" x="1600" y="1800">
-		</FB>
-		<FB Name="senken" Type="adapter::booleanOperators::AX_AND_3" x="5100" y="2800">
-		</FB>
+		<FB Name="riegel_offen2" Type="adapter::events::unidirectional::AX_SPLIT_3" x="400" y="600"/>
+		<FB Name="heben" Type="adapter::booleanOperators::AX_AND_3" x="5700" y="1300"/>
+		<FB Name="NOT_oben" Type="adapter::booleanOperators::AX_NOT" x="1600" y="1800"/>
+		<FB Name="senken" Type="adapter::booleanOperators::AX_AND_3" x="5100" y="2800"/>
 		<Comment Comment="Senken (Arbeit): Y_4 = S_2 and 1B1 and not 2B1 Erklärung: Analog zum Heben. Der Ausgang &quot;Mähwerk senken&quot; (Y_4) ist nur aktiv, solange S_2 gedrückt ist, der Riegel offen ist und die untere Endlage (2B1) nicht erreicht ist." x="5400" y="1900" width="2800" height="600"/>
-		<FB Name="Arbeit2" Type="adapter::events::unidirectional::AX_SPLIT_2" x="2200" y="-1600">
-		</FB>
-		<FB Name="NOT_unten" Type="adapter::booleanOperators::AX_NOT" x="1400" y="2800">
-		</FB>
+		<FB Name="Arbeit2" Type="adapter::events::unidirectional::AX_SPLIT_2" x="2200" y="-1600"/>
+		<FB Name="NOT_unten" Type="adapter::booleanOperators::AX_NOT" x="1400" y="2800"/>
 		<Comment Comment="Logik: Y_2 = (2B2 or 2B1) and not 1B2 Erklärung: Sobald das Mähwerk ganz oben (2B2) oder ganz unten (2B1) ist UND der Riegel noch nicht zu ist (not 1B2) , wird der Ausgang &quot;Riegel schließen&quot; (Y_2) aktiviert." x="5200" y="3700" width="2300" height="633.33"/>
-		<FB Name="verriegeln" Type="adapter::booleanOperators::AX_AND_2" x="5100" y="4800">
-		</FB>
-		<FB Name="NOT_riegel_geschlossen" Type="adapter::booleanOperators::AX_NOT" x="1200" y="5200">
-		</FB>
-		<FB Name="oben_oder_unten" Type="adapter::booleanOperators::AX_OR_2" x="1600" y="4100">
-		</FB>
-		<FB Name="oben2" Type="adapter::events::unidirectional::AX_SPLIT_2" x="100" y="1500">
-		</FB>
-		<FB Name="unten2" Type="adapter::events::unidirectional::AX_SPLIT_2" x="100" y="2300">
-		</FB>
+		<FB Name="verriegeln" Type="adapter::booleanOperators::AX_AND_2" x="5100" y="4800"/>
+		<FB Name="NOT_riegel_geschlossen" Type="adapter::booleanOperators::AX_NOT" x="1200" y="5200"/>
+		<FB Name="oben_oder_unten" Type="adapter::booleanOperators::AX_OR_2" x="1600" y="4100"/>
+		<FB Name="oben2" Type="adapter::events::unidirectional::AX_SPLIT_2" x="100" y="1500"/>
+		<FB Name="unten2" Type="adapter::events::unidirectional::AX_SPLIT_2" x="100" y="2300"/>
 		<Comment Comment="Warnleuchte (H_1): Soll während des gesamten Bewegungsablaufs leuchten/blinken. Das ist der Fall, solange der Riegel nicht komplett geschlossen ist. H_1 = not 1B2&#10;" x="4900" y="5566.67" width="3600" height="433.33"/>
 		<Comment Comment="Statusleuchte (H_2): Signalisert den sicheren Zustand (Verriegelt in Endlage).H_2 = 1B2 and (2B2 or 2B1)" x="5000" y="7300" width="3600" height="633.33"/>
-		<FB Name="NOT_riegel_geschlossen2" Type="adapter::events::unidirectional::AX_SPLIT_2" x="2500" y="5600">
-		</FB>
-		<FB Name="oben_oder_unten2" Type="adapter::events::unidirectional::AX_SPLIT_2" x="3500" y="4200">
-		</FB>
-		<FB Name="Endlage_verriegelt" Type="adapter::booleanOperators::AX_AND_2" x="3800" y="8100">
-		</FB>
-		<FB Name="riegel_geschlossen2" Type="adapter::events::unidirectional::AX_SPLIT_2" x="100" y="5200">
-		</FB>
-		<FB Name="Transport2" Type="adapter::events::unidirectional::AX_SPLIT_2" x="2300" y="-600">
-		</FB>
+		<FB Name="NOT_riegel_geschlossen2" Type="adapter::events::unidirectional::AX_SPLIT_2" x="2500" y="5600"/>
+		<FB Name="oben_oder_unten2" Type="adapter::events::unidirectional::AX_SPLIT_2" x="3500" y="4200"/>
+		<FB Name="Endlage_verriegelt" Type="adapter::booleanOperators::AX_AND_2" x="3800" y="8100"/>
+		<FB Name="riegel_geschlossen2" Type="adapter::events::unidirectional::AX_SPLIT_2" x="100" y="5200"/>
+		<FB Name="Transport2" Type="adapter::events::unidirectional::AX_SPLIT_2" x="2300" y="-600"/>
 		<AdapterConnections>
 			<Connection Source="Arbeit.IN" Destination="AX_TON_Arbeit.IN" dx1="300"/>
 			<Connection Source="riegel_offen2.OUT1" Destination="NOT_riegel_offen.IN" dx1="1370.59"/>

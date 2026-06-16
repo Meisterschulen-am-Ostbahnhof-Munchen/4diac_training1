@@ -1,9 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <FBType Name="AR_CALIBRATE" Comment="Adapter-based two-point calibration (offset &amp; scale) of an analog input">
-	<Identification Standard="61499-1">
-	</Identification>
-	<VersionInfo Version="2.0" Author="Meisterschulen am Ostbahnhof" Date="2026-06-01">
-	</VersionInfo>
+	<Identification Standard="61499-1"/>
+	<VersionInfo Version="2.0" Author="Meisterschulen am Ostbahnhof" Date="2026-06-01"/>
 	<CompilerInfo packageName="adapter::Engineering::measurements">
 		<Import declaration="eclipse4diac::core::TypeHash"/>
 	</CompilerInfo>
@@ -18,16 +16,16 @@
 			<VarDeclaration Name="Y_Offset" Type="REAL" Comment="Reference for offset calibration"/>
 			<VarDeclaration Name="Y_Scale" Type="REAL" Comment="Reference for scale calibration"/>
 		</InputVars>
-		<Plugs>
-			<AdapterDeclaration Name="Y" Type="adapter::types::unidirectional::AR" Comment="Calibrated Output"/>
-			<AdapterDeclaration Name="OFFSET" Type="adapter::types::bidirectional::AR2" Comment="Offset value"/>
-			<AdapterDeclaration Name="SCALE" Type="adapter::types::bidirectional::AR2" Comment="Scale value"/>
-		</Plugs>
 		<Sockets>
 			<AdapterDeclaration Name="X" Type="adapter::types::unidirectional::AR" Comment="Input"/>
 			<AdapterDeclaration Name="CO" Type="adapter::types::unidirectional::AX" Comment="Calibrate Offset"/>
 			<AdapterDeclaration Name="CS" Type="adapter::types::unidirectional::AX" Comment="Calibrate Scale"/>
 		</Sockets>
+		<Plugs>
+			<AdapterDeclaration Name="Y" Type="adapter::types::unidirectional::AR" Comment="Calibrated Output"/>
+			<AdapterDeclaration Name="OFFSET" Type="adapter::types::bidirectional::AR2" Comment="Offset value"/>
+			<AdapterDeclaration Name="SCALE" Type="adapter::types::bidirectional::AR2" Comment="Scale value"/>
+		</Plugs>
 	</InterfaceList>
 	<BasicFB>
 		<ECC>

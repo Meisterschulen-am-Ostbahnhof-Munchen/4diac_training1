@@ -1,23 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <FBType Name="NOOP_INIT" Comment="No-Op, also known as &quot;no Operation&quot; with INIT">
-	<Identification Standard="61499-2">
-	</Identification>
-	<VersionInfo Version="1.0" Author="franz" Date="2026-05-05">
-	</VersionInfo>
+	<Identification Standard="61499-2"/>
+	<VersionInfo Version="1.0" Author="franz" Date="2026-05-05"/>
 	<CompilerInfo packageName="iec61131::bitwiseOperators">
 		<Import declaration="eclipse4diac::core::TypeHash"/>
 	</CompilerInfo>
 	<InterfaceList>
 		<EventInputs>
-			<Event Name="INIT" Type="EInit" Comment="Initialization Request">
-			</Event>
+			<Event Name="INIT" Type="EInit" Comment="Initialization Request"/>
 			<Event Name="REQ" Type="Event" Comment="Normal Execution Request">
 				<With Var="IN"/>
 			</Event>
 		</EventInputs>
 		<EventOutputs>
-			<Event Name="INITO" Type="EInit" Comment="Initialization Confirm">
-			</Event>
+			<Event Name="INITO" Type="EInit" Comment="Initialization Confirm"/>
 			<Event Name="CNF" Type="Event" Comment="Execution Confirmation">
 				<With Var="OUT"/>
 			</Event>

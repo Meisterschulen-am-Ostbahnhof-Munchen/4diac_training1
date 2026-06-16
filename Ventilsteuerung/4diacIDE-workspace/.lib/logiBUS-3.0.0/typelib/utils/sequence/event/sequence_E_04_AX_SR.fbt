@@ -1,31 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <FBType Name="sequence_E_04_AX_SR" Comment="Sequence with 4 Outputs, Transition by EVENT, with AX Adapter, STOP (safety off) and RESUME Events">
-	<Identification Standard="61499-2" Description="Copyright (c) 2024 HR Agrartechnik GmbH&#10;&#10;This program and the accompanying materials are made&#10;available under the terms of the Eclipse Public License 2.0&#10;which is available at https://www.eclipse.org/legal/epl-2.0/&#10;&#10;SPDX-License-Identifier: EPL-2.0">
-	</Identification>
-	<VersionInfo Organization="HR Agrartechnik GmbH" Version="1.1" Author="Franz Höpfinger" Date="2026-02-23">
-	</VersionInfo>
+	<Identification Standard="61499-2" Description="Copyright (c) 2024 HR Agrartechnik GmbH&#10;&#10;This program and the accompanying materials are made&#10;available under the terms of the Eclipse Public License 2.0&#10;which is available at https://www.eclipse.org/legal/epl-2.0/&#10;&#10;SPDX-License-Identifier: EPL-2.0"/>
+	<VersionInfo Organization="HR Agrartechnik GmbH" Version="1.1" Author="Franz Höpfinger" Date="2026-02-23"/>
 	<CompilerInfo packageName="logiBUS::utils::sequence::event">
 		<Import declaration="eclipse4diac::core::TypeHash"/>
 		<Import declaration="logiBUS::utils::sequence::const::sequence"/>
 	</CompilerInfo>
 	<InterfaceList>
 		<EventInputs>
-			<Event Name="START_S1" Type="Event" Comment="jump from START to State_01">
-			</Event>
-			<Event Name="S1_S2" Type="Event" Comment="jump from State_01 to State_02">
-			</Event>
-			<Event Name="S2_S3" Type="Event" Comment="jump from State_02 to State_03">
-			</Event>
-			<Event Name="S3_S4" Type="Event" Comment="jump from State_03 to State_04">
-			</Event>
-			<Event Name="S4_START" Type="Event" Comment="jump from State_04 to START">
-			</Event>
-			<Event Name="STOP" Type="Event" Comment="Stop current state immediately - ALL outputs go OFF (dead-man stop)">
-			</Event>
-			<Event Name="RESUME" Type="Event" Comment="Resume from pause - continue with current state">
-			</Event>
-			<Event Name="RESET" Type="Event" Comment="Reset from any State to START">
-			</Event>
+			<Event Name="START_S1" Type="Event" Comment="jump from START to State_01"/>
+			<Event Name="S1_S2" Type="Event" Comment="jump from State_01 to State_02"/>
+			<Event Name="S2_S3" Type="Event" Comment="jump from State_02 to State_03"/>
+			<Event Name="S3_S4" Type="Event" Comment="jump from State_03 to State_04"/>
+			<Event Name="S4_START" Type="Event" Comment="jump from State_04 to START"/>
+			<Event Name="STOP" Type="Event" Comment="Stop current state immediately - ALL outputs go OFF (dead-man stop)"/>
+			<Event Name="RESUME" Type="Event" Comment="Resume from pause - continue with current state"/>
+			<Event Name="RESET" Type="Event" Comment="Reset from any State to START"/>
 		</EventInputs>
 		<EventOutputs>
 			<Event Name="CNF" Type="Event" Comment="Execution Confirmation">
@@ -49,8 +39,7 @@
 			<VarDeclaration Name="savedState" Type="SINT" Comment="Store current state when paused"/>
 		</InternalVars>
 		<ECC>
-			<ECState Name="xSTART" Comment="Initial State" x="800" y="800">
-			</ECState>
+			<ECState Name="xSTART" Comment="Initial State" x="800" y="800"/>
 			<ECState Name="sState_01" x="2666.67" y="1200">
 				<ECAction Algorithm="State_01_C" Output="CNF"/>
 				<ECAction Algorithm="State_01_E"/>

@@ -1,11 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <FBType Name="AUDI_UDINT_EQ" Comment="equal">
-	<Identification Standard="61131-3" Classification="standard comparison function" Description="Copyright (c) 2013 TU Wien ACIN\n \nThis program and the accompanying materials are made\navailable under the terms of the Eclipse Public License 2.0\nwhich is available at https://www.eclipse.org/legal/epl-2.0/\n\nSPDX-License-Identifier: EPL-2.0">
-	</Identification>
-	<VersionInfo Version="3.0" Author="Patrick Aigner" Date="2025-04-14" Remarks="changed package">
-	</VersionInfo>
-	<VersionInfo Organization="TU Wien ACIN" Version="1.0" Author="Monika Wenger" Date="2013-03-13">
-	</VersionInfo>
+	<Identification Standard="61131-3" Classification="standard comparison function" Description="Copyright (c) 2013 TU Wien ACIN\n \nThis program and the accompanying materials are made\navailable under the terms of the Eclipse Public License 2.0\nwhich is available at https://www.eclipse.org/legal/epl-2.0/\n\nSPDX-License-Identifier: EPL-2.0"/>
+	<VersionInfo Version="3.0" Author="Patrick Aigner" Date="2025-04-14" Remarks="changed package"/>
+	<VersionInfo Organization="TU Wien ACIN" Version="1.0" Author="Monika Wenger" Date="2013-03-13"/>
 	<CompilerInfo packageName="iec61131::comparison">
 		<Import declaration="eclipse4diac::core::TypeHash"/>
 	</CompilerInfo>
@@ -18,16 +15,15 @@
 		<InputVars>
 			<VarDeclaration Name="IN2" Type="UDINT" Comment="Input value 2"/>
 		</InputVars>
-		<Plugs>
-			<AdapterDeclaration Name="OUT" Type="adapter::types::unidirectional::AX" Comment="value 1 = value2 = true" x="3000" y="500"/>
-		</Plugs>
 		<Sockets>
 			<AdapterDeclaration Name="IN1" Type="adapter::types::unidirectional::AUDI" Comment="Input value 1" x="100" y="0"/>
 		</Sockets>
+		<Plugs>
+			<AdapterDeclaration Name="OUT" Type="adapter::types::unidirectional::AX" Comment="value 1 = value2 = true" x="3000" y="500"/>
+		</Plugs>
 	</InterfaceList>
 	<FBNetwork>
-		<FB Name="F_EQ" Type="iec61131::comparison::F_EQ" x="1600" y="500">
-		</FB>
+		<FB Name="F_EQ" Type="iec61131::comparison::F_EQ" x="1600" y="500"/>
 		<EventConnections>
 			<Connection Source="F_EQ.CNF" Destination="OUT.E1"/>
 			<Connection Source="IN1.E1" Destination="F_EQ.REQ" dx1="800"/>

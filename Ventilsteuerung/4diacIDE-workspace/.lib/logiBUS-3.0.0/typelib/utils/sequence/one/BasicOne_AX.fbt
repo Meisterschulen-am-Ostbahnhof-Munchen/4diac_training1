@@ -1,9 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <FBType Name="BasicOne_AX" Comment="Based on 4diac-Template for a Basic Function Block Type">
-	<Identification Standard="61499-2">
-	</Identification>
-	<VersionInfo Version="1.0" Author="franz" Date="2026-05-05">
-	</VersionInfo>
+	<Identification Standard="61499-2"/>
+	<VersionInfo Version="1.0" Author="franz" Date="2026-05-05"/>
 	<CompilerInfo packageName="logiBUS::utils::sequence::one">
 		<Import declaration="eclipse4diac::core::TypeHash"/>
 	</CompilerInfo>
@@ -24,25 +22,23 @@
 		<OutputVars>
 			<VarDeclaration Name="QO" Type="BOOL" Comment="Output event qualifier"/>
 		</OutputVars>
-		<Plugs>
-			<AdapterDeclaration Name="DO1" Type="adapter::types::unidirectional::AX"/>
-		</Plugs>
 		<Sockets>
 			<AdapterDeclaration Name="DI1" Type="adapter::types::unidirectional::AX"/>
 		</Sockets>
+		<Plugs>
+			<AdapterDeclaration Name="DO1" Type="adapter::types::unidirectional::AX"/>
+		</Plugs>
 	</InterfaceList>
 	<BasicFB>
 		<ECC>
-			<ECState Name="START" Comment="Initial State" x="475" y="1125">
-			</ECState>
+			<ECState Name="START" Comment="Initial State" x="475" y="1125"/>
 			<ECState Name="Init" Comment="Initialization" x="1235" y="665">
 				<ECAction Algorithm="initialize" Output="INITO"/>
 			</ECState>
 			<ECState Name="NormalOp" Comment="Normal execution" x="2850" y="1140">
 				<ECAction Algorithm="normalOperation"/>
 			</ECState>
-			<ECState Name="Initialized" x="1900" y="1140">
-			</ECState>
+			<ECState Name="Initialized" x="1900" y="1140"/>
 			<ECState Name="DeInit" x="1140" y="1520">
 				<ECAction Algorithm="deInitialize" Output="INITO"/>
 			</ECState>

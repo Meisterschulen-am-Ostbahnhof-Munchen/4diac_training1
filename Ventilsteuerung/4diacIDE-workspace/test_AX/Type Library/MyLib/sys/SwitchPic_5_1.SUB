@@ -1,9 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <SubAppType Name="SwitchPic_5_1" Comment="Bild umschalten VT; 5 Zustände">
-	<Identification Standard="61499-2">
-	</Identification>
-	<VersionInfo Version="1.0" Author="franz" Date="2026-05-29">
-	</VersionInfo>
+	<Identification Standard="61499-2"/>
+	<VersionInfo Version="1.0" Author="franz" Date="2026-05-29"/>
 	<CompilerInfo packageName="MyLib::sys">
 		<Import declaration="isobus::UT::Q::const::IDs::ID_NULL"/>
 		<Import declaration="logiBUS::utils::sequence::schieber::SchieberStruct"/>
@@ -11,14 +9,11 @@
 	</CompilerInfo>
 	<SubAppInterfaceList>
 		<SubAppEventInputs>
-			<SubAppEvent Name="INIT" Type="EInit" Comment="Initialization Request">
-			</SubAppEvent>
-			<SubAppEvent Name="EI" Type="Event">
-			</SubAppEvent>
+			<SubAppEvent Name="INIT" Type="EInit" Comment="Initialization Request"/>
+			<SubAppEvent Name="EI" Type="Event"/>
 		</SubAppEventInputs>
 		<SubAppEventOutputs>
-			<SubAppEvent Name="INITO" Type="EInit" Comment="Initialization Confirm">
-			</SubAppEvent>
+			<SubAppEvent Name="INITO" Type="EInit" Comment="Initialization Confirm"/>
 		</SubAppEventOutputs>
 		<InputVars>
 			<VarDeclaration Name="Picture" Type="UINT" Comment="Object ID of the ObjectPointer to the Picture"/>
@@ -27,8 +22,7 @@
 		</InputVars>
 	</SubAppInterfaceList>
 	<SubAppNetwork>
-		<FB Name="Q_NumericValue" Type="isobus::UT::Q::Q_NumericValue" x="5500" y="-700">
-		</FB>
+		<FB Name="Q_NumericValue" Type="isobus::UT::Q::Q_NumericValue" x="5500" y="-700"/>
 		<FB Name="F_MOVE" Type="iec61131::selection::F_MOVE" x="-100" y="100">
 			<Attribute Name="DataType" Value="logiBUS::utils::sequence::schieber::SchieberStruct"/>
 			<Parameter Name="OUT" Value="">
@@ -50,8 +44,7 @@
 				<Attribute Name="Visible" Value="true"/>
 			</Parameter>
 		</FB>
-		<FB Name="F_MUX_5" Type="iec61131::selection::F_MUX_5" x="2100" y="0">
-		</FB>
+		<FB Name="F_MUX_5" Type="iec61131::selection::F_MUX_5" x="2100" y="0"/>
 		<EventConnections>
 			<Connection Source="EI" Destination="F_MUX_5.REQ" dx1="3206.67"/>
 			<Connection Source="F_MUX_5.CNF" Destination="Q_NumericValue.REQ" dx1="440"/>

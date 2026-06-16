@@ -1,35 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <FBType Name="sequence_E_08" Comment="Sequence with 8 Outputs, Transition by EVENT">
-	<Identification Standard="61499-2" Description="Copyright (c) 2024 HR Agrartechnik GmbH  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0">
-	</Identification>
-	<VersionInfo Organization="HR Agrartechnik GmbH" Version="1.0" Author="Franz Höpfinger" Date="2024-03-02">
-	</VersionInfo>
+	<Identification Standard="61499-2" Description="Copyright (c) 2024 HR Agrartechnik GmbH  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0"/>
+	<VersionInfo Organization="HR Agrartechnik GmbH" Version="1.0" Author="Franz Höpfinger" Date="2024-03-02"/>
 	<CompilerInfo packageName="logiBUS::utils::sequence::event">
 		<Import declaration="eclipse4diac::core::TypeHash"/>
 		<Import declaration="logiBUS::utils::sequence::const::sequence"/>
 	</CompilerInfo>
 	<InterfaceList>
 		<EventInputs>
-			<Event Name="START_S1" Type="Event" Comment="jump from START to State_01">
-			</Event>
-			<Event Name="S1_S2" Type="Event" Comment="jump from State_01 to State_02">
-			</Event>
-			<Event Name="S2_S3" Type="Event" Comment="jump from State_02 to State_03">
-			</Event>
-			<Event Name="S3_S4" Type="Event" Comment="jump from State_03 to State_04">
-			</Event>
-			<Event Name="S4_S5" Type="Event" Comment="jump from State_04 to State_05">
-			</Event>
-			<Event Name="S5_S6" Type="Event" Comment="jump from State_05 to State_06">
-			</Event>
-			<Event Name="S6_S7" Type="Event" Comment="jump from State_06 to State_07">
-			</Event>
-			<Event Name="S7_S8" Type="Event" Comment="jump from State_07 to State_08">
-			</Event>
-			<Event Name="S8_START" Type="Event" Comment="jump from State_08 to START">
-			</Event>
-			<Event Name="RESET" Type="Event" Comment="Reset from any State to START">
-			</Event>
+			<Event Name="START_S1" Type="Event" Comment="jump from START to State_01"/>
+			<Event Name="S1_S2" Type="Event" Comment="jump from State_01 to State_02"/>
+			<Event Name="S2_S3" Type="Event" Comment="jump from State_02 to State_03"/>
+			<Event Name="S3_S4" Type="Event" Comment="jump from State_03 to State_04"/>
+			<Event Name="S4_S5" Type="Event" Comment="jump from State_04 to State_05"/>
+			<Event Name="S5_S6" Type="Event" Comment="jump from State_05 to State_06"/>
+			<Event Name="S6_S7" Type="Event" Comment="jump from State_06 to State_07"/>
+			<Event Name="S7_S8" Type="Event" Comment="jump from State_07 to State_08"/>
+			<Event Name="S8_START" Type="Event" Comment="jump from State_08 to START"/>
+			<Event Name="RESET" Type="Event" Comment="Reset from any State to START"/>
 		</EventInputs>
 		<EventOutputs>
 			<Event Name="CNF" Type="Event" Comment="Execution Confirmation">
@@ -74,8 +62,7 @@
 	</InterfaceList>
 	<BasicFB>
 		<ECC>
-			<ECState Name="xSTART" Comment="Initial State" x="-1066.67" y="533.33">
-			</ECState>
+			<ECState Name="xSTART" Comment="Initial State" x="-1066.67" y="533.33"/>
 			<ECState Name="sState_01" x="2666.67" y="1333.33">
 				<ECAction/>
 				<ECAction Algorithm="State_01_C" Output="CNF"/>

@@ -1,9 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <SubAppType Name="RedGreenBackground4S" Comment="Hintergrundfarbe (TRUE -&gt; Rot, FALSE -&gt; Grün) für 4 Objekte">
-	<Identification Standard="61499-2">
-	</Identification>
-	<VersionInfo Version="1.0" Author="franz" Date="2024-01-01">
-	</VersionInfo>
+	<Identification Standard="61499-2"/>
+	<VersionInfo Version="1.0" Author="franz" Date="2024-01-01"/>
 	<CompilerInfo packageName="MyLib::sys">
 		<Import declaration="isobus::UT::Q::const::IDs::ID_NULL"/>
 		<Import declaration="isobus::UT::Q::const::colours"/>
@@ -11,18 +9,13 @@
 	</CompilerInfo>
 	<SubAppInterfaceList>
 		<SubAppEventInputs>
-			<SubAppEvent Name="REQ" Type="Event" Comment="Normal Execution Request">
-			</SubAppEvent>
+			<SubAppEvent Name="REQ" Type="Event" Comment="Normal Execution Request"/>
 		</SubAppEventInputs>
 		<SubAppEventOutputs>
-			<SubAppEvent Name="CNF_1" Type="Event" Comment="Execution Confirmation">
-			</SubAppEvent>
-			<SubAppEvent Name="CNF_2" Type="Event">
-			</SubAppEvent>
-			<SubAppEvent Name="CNF_3" Type="Event">
-			</SubAppEvent>
-			<SubAppEvent Name="CNF_4" Type="Event">
-			</SubAppEvent>
+			<SubAppEvent Name="CNF_1" Type="Event" Comment="Execution Confirmation"/>
+			<SubAppEvent Name="CNF_2" Type="Event"/>
+			<SubAppEvent Name="CNF_3" Type="Event"/>
+			<SubAppEvent Name="CNF_4" Type="Event"/>
 		</SubAppEventOutputs>
 		<InputVars>
 			<VarDeclaration Name="DI1" Type="BOOL" Comment="Selector"/>
@@ -44,14 +37,10 @@
 		</OutputVars>
 	</SubAppInterfaceList>
 	<SubAppNetwork>
-		<FB Name="Q_BackgroundColour_1" Type="isobus::UT::Q::Q_BackgroundColour" x="1600" y="1400">
-		</FB>
-		<FB Name="Q_BackgroundColour_2" Type="isobus::UT::Q::Q_BackgroundColour" x="1600" y="2300">
-		</FB>
-		<FB Name="Q_BackgroundColour_3" Type="isobus::UT::Q::Q_BackgroundColourAux" x="1600" y="3100">
-		</FB>
-		<FB Name="Q_BackgroundColour_4" Type="isobus::UT::Q::Q_BackgroundColour" x="1600" y="4000">
-		</FB>
+		<FB Name="Q_BackgroundColour_1" Type="isobus::UT::Q::Q_BackgroundColour" x="1600" y="1400"/>
+		<FB Name="Q_BackgroundColour_2" Type="isobus::UT::Q::Q_BackgroundColour" x="1600" y="2300"/>
+		<FB Name="Q_BackgroundColour_3" Type="isobus::UT::Q::Q_BackgroundColourAux" x="1600" y="3100"/>
+		<FB Name="Q_BackgroundColour_4" Type="isobus::UT::Q::Q_BackgroundColour" x="1600" y="4000"/>
 		<FB Name="F_SEL_I" Type="iec61131::selection::F_SEL" x="-466.67" y="1200">
 			<Parameter Name="IN0" Value="colours::COLOR_GREEN"/>
 			<Parameter Name="IN1" Value="colours::COLOR_RED"/>

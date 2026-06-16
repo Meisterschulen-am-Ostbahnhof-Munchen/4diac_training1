@@ -1,13 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <FBType Name="Hysteresis_AR_AX" Comment="Analog to Digital with Hysteresis (Switch-on = THRESHOLD + (HYSTERESIS / 2.0), Switch-off = THRESHOLD - (HYSTERESIS / 2.0))">
-	<Identification Standard="61499-2" Description="Copyright (c) 2023 HR Agrartechnik GmbH&#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0 ">
-	</Identification>
-	<VersionInfo Version="1.2" Author="Gemini CLI" Date="2026-06-01" Remarks="Changed switch-off condition to strict inequality to prevent oscillation.">
-	</VersionInfo>
-	<VersionInfo Version="1.1" Author="Gemini CLI" Date="2026-06-01" Remarks="Updated hysteresis documentation and formula clarity.">
-	</VersionInfo>
-	<VersionInfo Version="1.0" Author="4diac IDE" Date="2026-05-08">
-	</VersionInfo>
+	<Identification Standard="61499-2" Description="Copyright (c) 2023 HR Agrartechnik GmbH&#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0 "/>
+	<VersionInfo Version="1.2" Author="Gemini CLI" Date="2026-06-01" Remarks="Changed switch-off condition to strict inequality to prevent oscillation."/>
+	<VersionInfo Version="1.1" Author="Gemini CLI" Date="2026-06-01" Remarks="Updated hysteresis documentation and formula clarity."/>
+	<VersionInfo Version="1.0" Author="4diac IDE" Date="2026-05-08"/>
 	<CompilerInfo packageName="logiBUS::signalprocessing::hysteresis">
 		<Import declaration="eclipse4diac::core::TypeHash"/>
 	</CompilerInfo>
@@ -28,19 +24,18 @@
 		<OutputVars>
 			<VarDeclaration Name="QO" Type="BOOL"/>
 		</OutputVars>
-		<Plugs>
-			<AdapterDeclaration Name="OUTPUT" Type="adapter::types::unidirectional::AX" Comment="Hysteresis output"/>
-		</Plugs>
 		<Sockets>
 			<AdapterDeclaration Name="INPUT" Type="adapter::types::unidirectional::AR" Comment="Input value"/>
 			<AdapterDeclaration Name="THRESHOLD" Type="adapter::types::unidirectional::AR" Comment="Center of the hysteresis band (Switch-on = THRESHOLD + (HYSTERESIS / 2.0), Switch-off = THRESHOLD - (HYSTERESIS / 2.0))"/>
 			<AdapterDeclaration Name="HYSTERESIS" Type="adapter::types::unidirectional::AR" Comment="Hysteresis value (Full width of the hysteresis band)"/>
 		</Sockets>
+		<Plugs>
+			<AdapterDeclaration Name="OUTPUT" Type="adapter::types::unidirectional::AX" Comment="Hysteresis output"/>
+		</Plugs>
 	</InterfaceList>
 	<BasicFB>
 		<ECC>
-			<ECState Name="START" Comment="Initial State" x="840" y="2460">
-			</ECState>
+			<ECState Name="START" Comment="Initial State" x="840" y="2460"/>
 			<ECState Name="Init" Comment="Initialization" x="1520" y="1760">
 				<ECAction Algorithm="initialize" Output="INITO"/>
 			</ECState>

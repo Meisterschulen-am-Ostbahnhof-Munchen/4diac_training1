@@ -1,9 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <FBType Name="sequence_T_08_loop" Comment="Sequence with 8 Outputs looped, Transition by TIME">
-	<Identification Standard="61499-2" Description="Copyright (c) 2024 HR Agrartechnik GmbH  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0">
-	</Identification>
-	<VersionInfo Organization="HR Agrartechnik GmbH" Version="1.0" Author="Franz Höpfinger" Date="2024-03-02">
-	</VersionInfo>
+	<Identification Standard="61499-2" Description="Copyright (c) 2024 HR Agrartechnik GmbH  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0"/>
+	<VersionInfo Organization="HR Agrartechnik GmbH" Version="1.0" Author="Franz Höpfinger" Date="2024-03-02"/>
 	<CompilerInfo packageName="logiBUS::utils::sequence::timed">
 		<Import declaration="eclipse4diac::core::TypeHash"/>
 		<Import declaration="logiBUS::utils::sequence::const::sequence"/>
@@ -21,8 +19,7 @@
 				<With Var="DT_S7_S8"/>
 				<With Var="DT_S8_S1"/>
 			</Event>
-			<Event Name="RESET" Type="Event" Comment="Reset from any State to START">
-			</Event>
+			<Event Name="RESET" Type="Event" Comment="Reset from any State to START"/>
 		</EventInputs>
 		<EventOutputs>
 			<Event Name="CNF" Type="Event" Comment="Execution Confirmation">
@@ -80,8 +77,7 @@
 	</InterfaceList>
 	<BasicFB>
 		<ECC>
-			<ECState Name="xSTART" Comment="Initial State" x="0" y="800">
-			</ECState>
+			<ECState Name="xSTART" Comment="Initial State" x="0" y="800"/>
 			<ECState Name="sState_01" x="2666.67" y="1333.33">
 				<ECAction Algorithm="State_08_X" Output="EO_S8"/>
 				<ECAction Algorithm="State_01_C" Output="CNF"/>

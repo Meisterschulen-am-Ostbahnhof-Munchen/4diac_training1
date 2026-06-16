@@ -1,9 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <SubAppType Name="Uebung_023b_AX2" Comment="Spiegelabfolge (3) - AX Variante">
-	<Identification Standard="61499-2" Description="Copyright (c) 2023 Meisterschulen am Ostbahnhof  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0">
-	</Identification>
-	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2026-04-20" Remarks="AX Variante">
-	</VersionInfo>
+	<Identification Standard="61499-2" Description="Copyright (c) 2023 Meisterschulen am Ostbahnhof  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0"/>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2026-04-20" Remarks="AX Variante"/>
 	<CompilerInfo packageName="Uebungen">
 		<Import declaration="isobus::UT::io::Softkey::SoftKeyActivationCode::SK_PRESSED"/>
 		<Import declaration="isobus::UT::io::Softkey::SoftKeyActivationCode::SK_RELEASED"/>
@@ -18,8 +16,7 @@
 		<Import declaration="logiBUS::io::DQ::logiBUS_DO::Output_Q3"/>
 		<Import declaration="logiBUS::io::DQ::logiBUS_DO::Output_Q4"/>
 	</CompilerInfo>
-	<SubAppInterfaceList>
-	</SubAppInterfaceList>
+	<SubAppInterfaceList/>
 	<SubAppNetwork>
 		<FB Name="DigitalOutput_Q1" Type="logiBUS::io::DQ::logiBUS_QXA" x="-2833.33" y="-500">
 			<Parameter Name="QI" Value="TRUE"/>
@@ -30,8 +27,7 @@
 			<Parameter Name="u16ObjId" Value="SoftKey_F1"/>
 			<Parameter Name="InputEvent" Value="SK_RELEASED"/>
 		</FB>
-		<FB Name="AX_SR_Ausfahren_Cyl_1" Type="adapter::events::unidirectional::AX_SR" x="-4300" y="-300">
-		</FB>
+		<FB Name="AX_SR_Ausfahren_Cyl_1" Type="adapter::events::unidirectional::AX_SR" x="-4300" y="-300"/>
 		<FB Name="SoftKey_F2_DOWN" Type="isobus::UT::io::Softkey::Softkey_IE" x="-7600" y="1000">
 			<Parameter Name="QI" Value="TRUE"/>
 			<Parameter Name="u16ObjId" Value="SoftKey_F2"/>
@@ -43,8 +39,7 @@
 			<Parameter Name="QI" Value="TRUE"/>
 			<Parameter Name="Output" Value="Output_Q2"/>
 		</FB>
-		<FB Name="AX_SR_Ausfahren_Cyl_2" Type="adapter::events::unidirectional::AX_SR" x="-4133.33" y="1366.67">
-		</FB>
+		<FB Name="AX_SR_Ausfahren_Cyl_2" Type="adapter::events::unidirectional::AX_SR" x="-4133.33" y="1366.67"/>
 		<Comment Comment="Endlage Ausfahren_Cyl_2 &#10;" x="-9066.67" y="2500" width="1373.33" height="366.67"/>
 		<FB Name="SoftKey_F3_DOWN" Type="isobus::UT::io::Softkey::Softkey_IE" x="-7600" y="2333.33">
 			<Parameter Name="QI" Value="TRUE"/>
@@ -58,8 +53,7 @@
 			<Parameter Name="u16ObjId" Value="SoftKey_F9"/>
 			<Parameter Name="InputEvent" Value="SK_PRESSED"/>
 		</FB>
-		<FB Name="AX_SR_Einfahren_Cyl_2" Type="adapter::events::unidirectional::AX_SR" x="-4300" y="3953.33">
-		</FB>
+		<FB Name="AX_SR_Einfahren_Cyl_2" Type="adapter::events::unidirectional::AX_SR" x="-4300" y="3953.33"/>
 		<FB Name="DigitalOutput_Q3" Type="logiBUS::io::DQ::logiBUS_QXA" x="-2606.67" y="3753.33">
 			<Parameter Name="QI" Value="TRUE"/>
 			<Parameter Name="Output" Value="Output_Q3"/>
@@ -74,8 +68,7 @@
 			<Parameter Name="u16ObjId" Value="SoftKey_F7"/>
 			<Parameter Name="InputEvent" Value="SK_PRESSED"/>
 		</FB>
-		<FB Name="AX_SR_Einfahren_Cyl_1" Type="adapter::events::unidirectional::AX_SR" x="-4133.33" y="5620">
-		</FB>
+		<FB Name="AX_SR_Einfahren_Cyl_1" Type="adapter::events::unidirectional::AX_SR" x="-4133.33" y="5620"/>
 		<Comment Comment="Endlage Einfahren_Cyl_1  &#10;" x="-9066.67" y="6753.33" width="1373.33" height="366.67"/>
 		<FB Name="SoftKey_F8_DOWN" Type="isobus::UT::io::Softkey::Softkey_IE" x="-7600" y="5253.33">
 			<Parameter Name="QI" Value="TRUE"/>

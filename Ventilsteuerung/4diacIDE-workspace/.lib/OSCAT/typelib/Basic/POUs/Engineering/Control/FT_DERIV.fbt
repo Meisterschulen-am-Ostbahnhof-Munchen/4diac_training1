@@ -1,28 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <FBType Name="FT_DERIV" Comment="Calculate derivative over signal &apos;in&apos; with Factor &apos;K&apos;">
-	<Identification Standard="61499-1">
-	</Identification>
-	<VersionInfo Version="1.1" Author="CodingAssistant" Date="2025-12-21">
-	</VersionInfo>
+	<Identification Standard="61499-1"/>
+	<VersionInfo Version="1.1" Author="CodingAssistant" Date="2025-12-21"/>
 	<CompilerInfo packageName="OSCAT::Basic::POUs::Engineering::Control">
 		<Import declaration="eclipse4diac::core::TypeHash"/>
 		<Import declaration="OSCAT::Basic::POUs::Engineering::measurements::T_PLC_US"/>
 	</CompilerInfo>
 	<InterfaceList>
 		<EventInputs>
-			<Event Name="EINIT" Type="EInit" Comment="Init Request">
-			</Event>
+			<Event Name="EINIT" Type="EInit" Comment="Init Request"/>
 			<Event Name="REQ" Type="Event" Comment="Normal Execution Request">
 				<With Var="in"/>
 				<With Var="K"/>
 				<With Var="run"/>
 			</Event>
-			<Event Name="RST" Type="Event" Comment="Reset">
-			</Event>
+			<Event Name="RST" Type="Event" Comment="Reset"/>
 		</EventInputs>
 		<EventOutputs>
-			<Event Name="INITO" Type="EInit" Comment="Init Confirmation">
-			</Event>
+			<Event Name="INITO" Type="EInit" Comment="Init Confirmation"/>
 			<Event Name="CNF" Type="Event" Comment="Execution Confirmation">
 				<With Var="out"/>
 				<With Var="delta_t"/>

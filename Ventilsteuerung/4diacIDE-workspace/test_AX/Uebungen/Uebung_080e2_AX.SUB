@@ -1,17 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <SubAppType Name="Uebung_080e2_AX" Comment="Beispiel für E_CTU mit Eventbremse durch AX_D_FF / AUI_D_FF_TMIN">
-	<Identification Standard="61499-2" Description="Copyright (c) 2023 Meisterschulen am Ostbahnhof  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0">
-	</Identification>
-	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.1" Author="Franz Höpfinger" Date="2026-05-15" Remarks="Ported to AX Welt">
-	</VersionInfo>
+	<Identification Standard="61499-2" Description="Copyright (c) 2023 Meisterschulen am Ostbahnhof  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0"/>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.1" Author="Franz Höpfinger" Date="2026-05-15" Remarks="Ported to AX Welt"/>
 	<CompilerInfo packageName="Uebungen">
 		<Import declaration="logiBUS::io::DI::logiBUS_DI::Input_I1"/>
 		<Import declaration="logiBUS::io::DI::logiBUS_DI::Input_I2"/>
 		<Import declaration="logiBUS::io::DQ::logiBUS_DO::Output_Q1"/>
 		<Import declaration="Uebungen::const::UT::DefaultPool::OutputNumber_N1"/>
 	</CompilerInfo>
-	<SubAppInterfaceList>
-	</SubAppInterfaceList>
+	<SubAppInterfaceList/>
 	<SubAppNetwork>
 		<FB Name="DigitalOutput_Q1" Type="logiBUS::io::DQ::logiBUS_QXA" x="1300" y="-1200">
 			<Parameter Name="QI" Value="TRUE"/>
@@ -21,14 +18,12 @@
 			<Parameter Name="QI" Value="TRUE"/>
 			<Parameter Name="Input" Value="Input_I1"/>
 		</FB>
-		<FB Name="E_CTU" Type="adapter::events::unidirectional::AUI_CTU" x="-6200" y="-800">
-		</FB>
+		<FB Name="E_CTU" Type="adapter::events::unidirectional::AUI_CTU" x="-6200" y="-800"/>
 		<FB Name="DigitalInput_RST_I2" Type="logiBUS::io::DI::logiBUS_IXA" x="-10600" y="-900">
 			<Parameter Name="QI" Value="TRUE"/>
 			<Parameter Name="Input" Value="Input_I2"/>
 		</FB>
-		<FB Name="AX_D_FF" Type="adapter::events::unidirectional::AX_D_FF" x="-1400" y="-700">
-		</FB>
+		<FB Name="AX_D_FF" Type="adapter::events::unidirectional::AX_D_FF" x="-1400" y="-700"/>
 		<FB Name="AUI_D_FF_TMIN" Type="adapter::events::unidirectional::AUI_D_FF_TMIN" x="-2900" y="300">
 			<Parameter Name="Tmin" Value="T#1s"/>
 		</FB>
@@ -38,12 +33,9 @@
 		<FB Name="E_CYCLE" Type="iec61499::events::E_CYCLE" x="-7700" y="-1900">
 			<Parameter Name="DT" Value="T#1ms"/>
 		</FB>
-		<FB Name="X_TO_B_I1" Type="adapter::conversion::unidirectional::AX_X_TO_BOOL" x="-9000" y="-1900">
-		</FB>
-		<FB Name="X_TO_B_I2" Type="adapter::conversion::unidirectional::AX_X_TO_BOOL" x="-9000" y="-900">
-		</FB>
-		<FB Name="UI_TO_UDI_N1" Type="adapter::conversion::unidirectional::AUI_TO_AUDI" x="-1200" y="500">
-		</FB>
+		<FB Name="X_TO_B_I1" Type="adapter::conversion::unidirectional::AX_X_TO_BOOL" x="-9000" y="-1900"/>
+		<FB Name="X_TO_B_I2" Type="adapter::conversion::unidirectional::AX_X_TO_BOOL" x="-9000" y="-900"/>
+		<FB Name="UI_TO_UDI_N1" Type="adapter::conversion::unidirectional::AUI_TO_AUDI" x="-1200" y="500"/>
 		<EventConnections>
 			<Connection Source="X_TO_B_I1.CNF" Destination="E_CYCLE.START" dx1="80"/>
 			<Connection Source="X_TO_B_I2.CNF" Destination="E_CTU.R" dx1="80"/>

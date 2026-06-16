@@ -1,28 +1,24 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <FBType Name="ASR_AX_SWITCH" Comment="Switching (demultiplexing) ASR events (SET/RESET) based on boolean input G">
-	<Identification Standard="61499-1 Annex A" Description="Copyright (c) 2017 fortiss GmbH&#10; &#10;This program and the accompanying materials are made&#10;available under the terms of the Eclipse Public License 2.0&#10;which is available at https://www.eclipse.org/legal/epl-2.0/&#10;&#10;SPDX-License-Identifier: EPL-2.0">
-	</Identification>
-	<VersionInfo Version="3.0" Author="Patrick Aigner" Date="2025-04-14" Remarks="changed package">
-	</VersionInfo>
-	<VersionInfo Organization="fortiss GmbH" Version="1.0" Author="Alois Zoitl" Date="2017-09-21" Remarks="initial API and implementation and/or initial documentation">
-	</VersionInfo>
+	<Identification Standard="61499-1 Annex A" Description="Copyright (c) 2017 fortiss GmbH&#10; &#10;This program and the accompanying materials are made&#10;available under the terms of the Eclipse Public License 2.0&#10;which is available at https://www.eclipse.org/legal/epl-2.0/&#10;&#10;SPDX-License-Identifier: EPL-2.0"/>
+	<VersionInfo Version="3.0" Author="Patrick Aigner" Date="2025-04-14" Remarks="changed package"/>
+	<VersionInfo Organization="fortiss GmbH" Version="1.0" Author="Alois Zoitl" Date="2017-09-21" Remarks="initial API and implementation and/or initial documentation"/>
 	<CompilerInfo packageName="adapter::events::unidirectional">
 		<Import declaration="eclipse4diac::core::TypeHash"/>
 	</CompilerInfo>
 	<InterfaceList>
-		<Plugs>
-			<AdapterDeclaration Name="EO0" Type="adapter::types::unidirectional::ASR" Comment="Output, switched from EI when G=0"/>
-			<AdapterDeclaration Name="EO1" Type="adapter::types::unidirectional::ASR" Comment="Output, switched from EI when G=1"/>
-		</Plugs>
 		<Sockets>
 			<AdapterDeclaration Name="EI" Type="adapter::types::unidirectional::ASR" Comment="Event Input"/>
 			<AdapterDeclaration Name="G" Type="adapter::types::unidirectional::AX" Comment="Switch EI to EO0 when G=0, to EO1 when G=1"/>
 		</Sockets>
+		<Plugs>
+			<AdapterDeclaration Name="EO0" Type="adapter::types::unidirectional::ASR" Comment="Output, switched from EI when G=0"/>
+			<AdapterDeclaration Name="EO1" Type="adapter::types::unidirectional::ASR" Comment="Output, switched from EI when G=1"/>
+		</Plugs>
 	</InterfaceList>
 	<BasicFB>
 		<ECC>
-			<ECState Name="START" Comment="Initial State" x="560" y="400">
-			</ECState>
+			<ECState Name="START" Comment="Initial State" x="560" y="400"/>
 			<ECState Name="G0_SET" Comment="Issue EO0.SET when EI.SET arrives with G=0" x="1680" y="720">
 				<ECAction Output="EO0.SET"/>
 			</ECState>

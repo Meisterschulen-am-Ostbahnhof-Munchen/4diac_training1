@@ -1,9 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <FBType Name="SchieberControl" Comment="Basic FB with Schieber ECC">
-	<Identification Standard="61499-2" Description="Copyright (c) 2025 HR Agrartechnik GmbH &#10; &#10;This program and the accompanying materials are made &#10;available under the terms of the Eclipse Public License 2.0 &#10;which is available at https://www.eclipse.org/legal/epl-2.0/ &#10; &#10;SPDX-License-Identifier: EPL-2.0">
-	</Identification>
-	<VersionInfo Organization="HR Agrartechnik GmbH" Version="1.0" Author="Franz Höpfinger" Date="2025-06-03">
-	</VersionInfo>
+	<Identification Standard="61499-2" Description="Copyright (c) 2025 HR Agrartechnik GmbH &#10; &#10;This program and the accompanying materials are made &#10;available under the terms of the Eclipse Public License 2.0 &#10;which is available at https://www.eclipse.org/legal/epl-2.0/ &#10; &#10;SPDX-License-Identifier: EPL-2.0"/>
+	<VersionInfo Organization="HR Agrartechnik GmbH" Version="1.0" Author="Franz Höpfinger" Date="2025-06-03"/>
 	<CompilerInfo packageName="logiBUS::utils::sequence::schieber">
 		<Import declaration="eclipse4diac::core::TypeHash"/>
 		<Import declaration="logiBUS::utils::sequence::schieber::const::START"/>
@@ -18,12 +16,9 @@
 				<With Var="DT_Closing"/>
 				<With Var="START"/>
 			</Event>
-			<Event Name="Open" Type="Event" Comment="Open">
-			</Event>
-			<Event Name="Close" Type="Event" Comment="Close">
-			</Event>
-			<Event Name="RESET" Type="Event" Comment="Reset to unknown State">
-			</Event>
+			<Event Name="Open" Type="Event" Comment="Open"/>
+			<Event Name="Close" Type="Event" Comment="Close"/>
+			<Event Name="RESET" Type="Event" Comment="Reset to unknown State"/>
 		</EventInputs>
 		<EventOutputs>
 			<Event Name="INITO" Type="EInit" Comment="All Values have been Set. Initialization Confirm.">
@@ -63,8 +58,7 @@
 	</InterfaceList>
 	<BasicFB>
 		<ECC>
-			<ECState Name="START" Comment="Initial State" x="475" y="1125">
-			</ECState>
+			<ECState Name="START" Comment="Initial State" x="475" y="1125"/>
 			<ECState Name="Closed" x="3520" y="1040">
 				<ECAction Algorithm="Closed" Output="EO"/>
 				<ECAction Output="EO_CLOSE"/>

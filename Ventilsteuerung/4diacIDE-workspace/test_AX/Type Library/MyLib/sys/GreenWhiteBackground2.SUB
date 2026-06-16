@@ -1,9 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <SubAppType Name="GreenWhiteBackground2" Comment="Hintergrundfarbe (TRUE -&gt; Grün, FALSE -&gt; Weiß) für 2 Objekte">
-	<Identification Standard="61499-2">
-	</Identification>
-	<VersionInfo Version="1.0" Author="franz" Date="2022-11-10">
-	</VersionInfo>
+	<Identification Standard="61499-2"/>
+	<VersionInfo Version="1.0" Author="franz" Date="2022-11-10"/>
 	<CompilerInfo packageName="MyLib::sys">
 		<Import declaration="isobus::UT::Q::const::colours"/>
 	</CompilerInfo>
@@ -14,10 +12,8 @@
 			</SubAppEvent>
 		</SubAppEventInputs>
 		<SubAppEventOutputs>
-			<SubAppEvent Name="CNF_2" Type="Event">
-			</SubAppEvent>
-			<SubAppEvent Name="CNF_3" Type="Event">
-			</SubAppEvent>
+			<SubAppEvent Name="CNF_2" Type="Event"/>
+			<SubAppEvent Name="CNF_3" Type="Event"/>
 		</SubAppEventOutputs>
 		<InputVars>
 			<VarDeclaration Name="DI1" Type="BOOL" Comment="Selector"/>
@@ -33,10 +29,8 @@
 		</OutputVars>
 	</SubAppInterfaceList>
 	<SubAppNetwork>
-		<FB Name="Q_BackgroundColour_2" Type="isobus::UT::Q::Q_BackgroundColour" x="300" y="300">
-		</FB>
-		<FB Name="Q_BackgroundColour_3" Type="isobus::UT::Q::Q_BackgroundColourAux" x="300" y="1100">
-		</FB>
+		<FB Name="Q_BackgroundColour_2" Type="isobus::UT::Q::Q_BackgroundColour" x="300" y="300"/>
+		<FB Name="Q_BackgroundColour_3" Type="isobus::UT::Q::Q_BackgroundColourAux" x="300" y="1100"/>
 		<FB Name="F_SEL_I" Type="iec61131::selection::F_SEL" x="-3400" y="900">
 			<Parameter Name="IN0" Value="colours::COLOR_WHITE"/>
 			<Parameter Name="IN1" Value="colours::COLOR_GREEN"/>

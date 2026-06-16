@@ -1,15 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <SubAppType Name="Uebung_020c3_AX" Comment="DigitalInput_I1 auf DigitalOutput_Q1; AX_FB_TON; Einschaltverzögert">
-	<Identification Standard="61499-2" Description="Copyright (c) 2023 Meisterschulen am Ostbahnhof  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0">
-	</Identification>
-	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2023-10-23" Remarks="initial API and implementation and/or initial documentation">
-	</VersionInfo>
+	<Identification Standard="61499-2" Description="Copyright (c) 2023 Meisterschulen am Ostbahnhof  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0"/>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2023-10-23" Remarks="initial API and implementation and/or initial documentation"/>
 	<CompilerInfo packageName="Uebungen">
 		<Import declaration="logiBUS::io::DI::logiBUS_DI::Input_I1"/>
 		<Import declaration="logiBUS::io::DQ::logiBUS_DO::Output_Q1"/>
 	</CompilerInfo>
-	<SubAppInterfaceList>
-	</SubAppInterfaceList>
+	<SubAppInterfaceList/>
 	<SubAppNetwork>
 		<FB Name="DigitalOutput_Q1" Type="logiBUS::io::DQ::logiBUS_QXA" x="-5200" y="700">
 			<Parameter Name="QI" Value="TRUE"/>
@@ -22,14 +19,12 @@
 		<FB Name="AX_FB_TON" Type="adapter::iec61131::timers::AX_FB_TON" x="-7100" y="800">
 			<Parameter Name="PT" Value="T#5s"/>
 		</FB>
-		<FB Name="AX_RF_TRIG_I1" Type="adapter::events::unidirectional::AX_RF_TRIG" x="-9100" y="100">
-		</FB>
+		<FB Name="AX_RF_TRIG_I1" Type="adapter::events::unidirectional::AX_RF_TRIG" x="-9100" y="100"/>
 		<FB Name="E_CYCLE" Type="iec61499::events::E_CYCLE" x="-8000" y="100">
 			<Parameter Name="DT" Value="T#500ms"/>
 		</FB>
 		<Comment Comment="E_CYCLE bestimmt, &#10;wie oft AX_FB_TON den ET aktualisert" x="-8700" y="-400" width="1000" height="400"/>
-		<FB Name="AX_SPLIT_2" Type="adapter::events::unidirectional::AX_SPLIT_2" x="-10300" y="900">
-		</FB>
+		<FB Name="AX_SPLIT_2" Type="adapter::events::unidirectional::AX_SPLIT_2" x="-10300" y="900"/>
 		<EventConnections>
 			<Connection Source="AX_RF_TRIG_I1.EF" Destination="E_CYCLE.STOP" dx1="220"/>
 			<Connection Source="AX_RF_TRIG_I1.ER" Destination="E_CYCLE.START" dx1="220"/>

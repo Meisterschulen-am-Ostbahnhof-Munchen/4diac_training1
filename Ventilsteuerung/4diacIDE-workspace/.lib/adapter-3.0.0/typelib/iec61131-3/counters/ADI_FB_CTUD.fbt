@@ -1,18 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <FBType Name="ADI_FB_CTUD" Comment="Up-Down counter (DINT) ADI-Adapter Version">
-	<Identification Standard="61499-2" Description="Copyright (c) 2026 Meisterschulen am Ostbahnhof  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0 &#10; &#10;NOTE: This block fires the AX output events (QU.E1, QD.E1, CV.E1, etc.) only on value changes using the internal E_D_FF_* change-driven wiring (e.g., E_D_FF_QU, E_D_FF_QD, E_D_FF_ANY_PV, E_D_FF_CU, E_D_FF_CD, E_D_FF_R, E_D_FF_LD). External filtering is no longer required.">
-	</Identification>
-	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2026-04-21" Remarks="initial API and implementation and/or initial documentation">
-	</VersionInfo>
+	<Identification Standard="61499-2" Description="Copyright (c) 2026 Meisterschulen am Ostbahnhof  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0 &#10; &#10;NOTE: This block fires the AX output events (QU.E1, QD.E1, CV.E1, etc.) only on value changes using the internal E_D_FF_* change-driven wiring (e.g., E_D_FF_QU, E_D_FF_QD, E_D_FF_ANY_PV, E_D_FF_CU, E_D_FF_CD, E_D_FF_R, E_D_FF_LD). External filtering is no longer required."/>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2026-04-21" Remarks="initial API and implementation and/or initial documentation"/>
 	<CompilerInfo packageName="adapter::iec61131::counters">
 		<Import declaration="eclipse4diac::core::TypeHash"/>
 	</CompilerInfo>
 	<InterfaceList>
-		<Plugs>
-			<AdapterDeclaration Name="QU" Type="adapter::types::unidirectional::AX" Comment="Output Up" x="2800" y="-200"/>
-			<AdapterDeclaration Name="QD" Type="adapter::types::unidirectional::AX" Comment="Output Down" x="2800" y="600"/>
-			<AdapterDeclaration Name="CV" Type="adapter::types::unidirectional::ADI" Comment="Count value" x="2800" y="1400"/>
-		</Plugs>
 		<Sockets>
 			<AdapterDeclaration Name="CU" Type="adapter::types::unidirectional::AX" Comment="Count up" x="-2300" y="-1000"/>
 			<AdapterDeclaration Name="CD" Type="adapter::types::unidirectional::AX" Comment="Count down" x="-2300" y="-200"/>
@@ -20,26 +13,22 @@
 			<AdapterDeclaration Name="LD" Type="adapter::types::unidirectional::AX" Comment="Load" x="-2300" y="1400"/>
 			<AdapterDeclaration Name="PV" Type="adapter::types::unidirectional::ADI" Comment="Preset value" x="-2300" y="2200"/>
 		</Sockets>
+		<Plugs>
+			<AdapterDeclaration Name="QU" Type="adapter::types::unidirectional::AX" Comment="Output Up" x="2800" y="-200"/>
+			<AdapterDeclaration Name="QD" Type="adapter::types::unidirectional::AX" Comment="Output Down" x="2800" y="600"/>
+			<AdapterDeclaration Name="CV" Type="adapter::types::unidirectional::ADI" Comment="Count value" x="2800" y="1400"/>
+		</Plugs>
 	</InterfaceList>
 	<FBNetwork>
-		<FB Name="FB_CTUD_DINT" Type="iec61131::counters::FB_CTUD_DINT" x="300" y="100">
-		</FB>
-		<FB Name="E_D_FF_CU" Type="iec61499::events::E_D_FF" x="-1300" y="-1000">
-		</FB>
-		<FB Name="E_D_FF_CD" Type="iec61499::events::E_D_FF" x="-1300" y="-200">
-		</FB>
-		<FB Name="E_D_FF_R" Type="iec61499::events::E_D_FF" x="-1300" y="600">
-		</FB>
-		<FB Name="E_D_FF_LD" Type="iec61499::events::E_D_FF" x="-1300" y="1400">
-		</FB>
-		<FB Name="E_D_FF_ANY_PV" Type="iec61499::events::E_D_FF_ANY" x="-1300" y="2200">
-		</FB>
-		<FB Name="E_D_FF_QU" Type="iec61499::events::E_D_FF" x="2000" y="-200">
-		</FB>
-		<FB Name="E_D_FF_QD" Type="iec61499::events::E_D_FF" x="2000" y="600">
-		</FB>
-		<FB Name="E_D_FF_ANY_CV" Type="iec61499::events::E_D_FF_ANY" x="2000" y="1400">
-		</FB>
+		<FB Name="FB_CTUD_DINT" Type="iec61131::counters::FB_CTUD_DINT" x="300" y="100"/>
+		<FB Name="E_D_FF_CU" Type="iec61499::events::E_D_FF" x="-1300" y="-1000"/>
+		<FB Name="E_D_FF_CD" Type="iec61499::events::E_D_FF" x="-1300" y="-200"/>
+		<FB Name="E_D_FF_R" Type="iec61499::events::E_D_FF" x="-1300" y="600"/>
+		<FB Name="E_D_FF_LD" Type="iec61499::events::E_D_FF" x="-1300" y="1400"/>
+		<FB Name="E_D_FF_ANY_PV" Type="iec61499::events::E_D_FF_ANY" x="-1300" y="2200"/>
+		<FB Name="E_D_FF_QU" Type="iec61499::events::E_D_FF" x="2000" y="-200"/>
+		<FB Name="E_D_FF_QD" Type="iec61499::events::E_D_FF" x="2000" y="600"/>
+		<FB Name="E_D_FF_ANY_CV" Type="iec61499::events::E_D_FF_ANY" x="2000" y="1400"/>
 		<EventConnections>
 			<Connection Source="CU.E1" Destination="E_D_FF_CU.CLK"/>
 			<Connection Source="E_D_FF_CU.EO" Destination="FB_CTUD_DINT.REQ" dx1="866.67"/>

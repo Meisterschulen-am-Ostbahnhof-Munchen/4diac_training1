@@ -1,9 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <SubAppType Name="Uebung_035a2_AX" Comment="Ampelschaltung Österreich (AX) mit Sequence T05">
-	<Identification Standard="61499-2" Description="Copyright (c) 2023 Meisterschulen am Ostbahnhof  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0">
-	</Identification>
-	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2026-02-01" Remarks="initial API and implementation and/or initial documentation">
-	</VersionInfo>
+	<Identification Standard="61499-2" Description="Copyright (c) 2023 Meisterschulen am Ostbahnhof  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0"/>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2026-02-01" Remarks="initial API and implementation and/or initial documentation"/>
 	<CompilerInfo packageName="Uebungen">
 		<Import declaration="logiBUS::io::DI::logiBUS_DI::Input_I1"/>
 		<Import declaration="logiBUS::io::DI::logiBUS_DI_Events::BUTTON_SINGLE_CLICK"/>
@@ -11,8 +9,7 @@
 		<Import declaration="logiBUS::io::DQ::logiBUS_DO::Output_Q2"/>
 		<Import declaration="logiBUS::io::DQ::logiBUS_DO::Output_Q3"/>
 	</CompilerInfo>
-	<SubAppInterfaceList>
-	</SubAppInterfaceList>
+	<SubAppInterfaceList/>
 	<SubAppNetwork>
 		<FB Name="Seq" Type="logiBUS::utils::sequence::timed::sequence_T_05_loop_AX" x="-800" y="800">
 			<Parameter Name="DT_S1_S2" Value="T#6s" Comment="RED"/>
@@ -38,24 +35,17 @@
 			<Parameter Name="QI" Value="TRUE"/>
 			<Parameter Name="Output" Value="Output_Q3"/>
 		</FB>
-		<FB Name="OR_Red" Type="adapter::booleanOperators::AX_OR_2" x="1600" y="0">
-		</FB>
-		<FB Name="OR_Yellow" Type="adapter::booleanOperators::AX_OR_2" x="1700" y="1300">
-		</FB>
-		<FB Name="OR_Green" Type="adapter::booleanOperators::AX_OR_2" x="2200" y="2200">
-		</FB>
-		<FB Name="E_TimeOut" Type="iec61499::events::E_TimeOut" x="-400" y="2900">
-		</FB>
-		<FB Name="AX_R_TRIG" Type="adapter::events::unidirectional::AX_R_TRIG" x="1000" y="3600">
-		</FB>
-		<FB Name="AX_SPLIT_2" Type="adapter::events::unidirectional::AX_SPLIT_2" x="800" y="700">
-		</FB>
+		<FB Name="OR_Red" Type="adapter::booleanOperators::AX_OR_2" x="1600" y="0"/>
+		<FB Name="OR_Yellow" Type="adapter::booleanOperators::AX_OR_2" x="1700" y="1300"/>
+		<FB Name="OR_Green" Type="adapter::booleanOperators::AX_OR_2" x="2200" y="2200"/>
+		<FB Name="E_TimeOut" Type="iec61499::events::E_TimeOut" x="-400" y="2900"/>
+		<FB Name="AX_R_TRIG" Type="adapter::events::unidirectional::AX_R_TRIG" x="1000" y="3600"/>
+		<FB Name="AX_SPLIT_2" Type="adapter::events::unidirectional::AX_SPLIT_2" x="800" y="700"/>
 		<FB Name="E_TRAIN" Type="iec61499::events::E_TRAIN" x="2200" y="3700">
 			<Parameter Name="DT" Value="T#500ms"/>
 			<Parameter Name="N" Value="4"/>
 		</FB>
-		<FB Name="AX_T_FF" Type="adapter::events::unidirectional::AX_T_FF" x="3200" y="3700">
-		</FB>
+		<FB Name="AX_T_FF" Type="adapter::events::unidirectional::AX_T_FF" x="3200" y="3700"/>
 		<EventConnections>
 			<Connection Source="DigitalInput_CLK_I1.IND" Destination="Seq.START_S1" dx1="853.33"/>
 			<Connection Source="E_TRAIN.EO" Destination="AX_T_FF.CLK"/>

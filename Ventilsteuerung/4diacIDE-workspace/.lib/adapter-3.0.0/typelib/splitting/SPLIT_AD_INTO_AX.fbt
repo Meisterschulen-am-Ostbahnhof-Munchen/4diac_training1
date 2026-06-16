@@ -1,13 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <FBType Name="SPLIT_AD_INTO_AX" Comment="this Function splits the 32 AX (BOOL) adapters from a AD (DWORD)">
-	<Identification Standard="61499-2" Description="Copyright (c) 2026 Meisterschulen am Ostbahnhof&#10;&#10;SPDX-License-Identifier: EPL-2.0">
-	</Identification>
-	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2026-05-16" Remarks="initial API and implementation and/or initial documentation">
-	</VersionInfo>
+	<Identification Standard="61499-2" Description="Copyright (c) 2026 Meisterschulen am Ostbahnhof&#10;&#10;SPDX-License-Identifier: EPL-2.0"/>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2026-05-16" Remarks="initial API and implementation and/or initial documentation"/>
 	<CompilerInfo packageName="adapter::splitting">
 		<Import declaration="eclipse4diac::core::TypeHash"/>
 	</CompilerInfo>
 	<InterfaceList>
+		<Sockets>
+			<AdapterDeclaration Name="IN" Type="adapter::types::unidirectional::AD" Comment="DWORD Input" x="-4000" y="1700"/>
+		</Sockets>
 		<Plugs>
 			<AdapterDeclaration Name="BIT_00" Type="adapter::types::unidirectional::AX" Comment="Bool Bit 0" x="700" y="0"/>
 			<AdapterDeclaration Name="BIT_01" Type="adapter::types::unidirectional::AX" Comment="Bool Bit 1" x="700" y="500"/>
@@ -42,77 +43,41 @@
 			<AdapterDeclaration Name="BIT_30" Type="adapter::types::unidirectional::AX" Comment="Bool Bit 30" x="700" y="15000"/>
 			<AdapterDeclaration Name="BIT_31" Type="adapter::types::unidirectional::AX" Comment="Bool Bit 31" x="700" y="15500"/>
 		</Plugs>
-		<Sockets>
-			<AdapterDeclaration Name="IN" Type="adapter::types::unidirectional::AD" Comment="DWORD Input" x="-4000" y="1700"/>
-		</Sockets>
 	</InterfaceList>
 	<FBNetwork>
-		<FB Name="E_D_FF_00" Type="iec61499::events::E_D_FF" x="-300" y="0">
-		</FB>
-		<FB Name="E_D_FF_01" Type="iec61499::events::E_D_FF" x="-300" y="500">
-		</FB>
-		<FB Name="E_D_FF_02" Type="iec61499::events::E_D_FF" x="-300" y="1000">
-		</FB>
-		<FB Name="E_D_FF_03" Type="iec61499::events::E_D_FF" x="-300" y="1500">
-		</FB>
-		<FB Name="E_D_FF_04" Type="iec61499::events::E_D_FF" x="-300" y="2000">
-		</FB>
-		<FB Name="E_D_FF_05" Type="iec61499::events::E_D_FF" x="-300" y="2500">
-		</FB>
-		<FB Name="E_D_FF_06" Type="iec61499::events::E_D_FF" x="-300" y="3000">
-		</FB>
-		<FB Name="E_D_FF_07" Type="iec61499::events::E_D_FF" x="-300" y="3500">
-		</FB>
-		<FB Name="E_D_FF_08" Type="iec61499::events::E_D_FF" x="-300" y="4000">
-		</FB>
-		<FB Name="E_D_FF_09" Type="iec61499::events::E_D_FF" x="-300" y="4500">
-		</FB>
-		<FB Name="E_D_FF_10" Type="iec61499::events::E_D_FF" x="-300" y="5000">
-		</FB>
-		<FB Name="E_D_FF_11" Type="iec61499::events::E_D_FF" x="-300" y="5500">
-		</FB>
-		<FB Name="E_D_FF_12" Type="iec61499::events::E_D_FF" x="-300" y="6000">
-		</FB>
-		<FB Name="E_D_FF_13" Type="iec61499::events::E_D_FF" x="-300" y="6500">
-		</FB>
-		<FB Name="E_D_FF_14" Type="iec61499::events::E_D_FF" x="-300" y="7000">
-		</FB>
-		<FB Name="E_D_FF_15" Type="iec61499::events::E_D_FF" x="-300" y="7500">
-		</FB>
-		<FB Name="E_D_FF_16" Type="iec61499::events::E_D_FF" x="-300" y="8000">
-		</FB>
-		<FB Name="E_D_FF_17" Type="iec61499::events::E_D_FF" x="-300" y="8500">
-		</FB>
-		<FB Name="E_D_FF_18" Type="iec61499::events::E_D_FF" x="-300" y="9000">
-		</FB>
-		<FB Name="E_D_FF_19" Type="iec61499::events::E_D_FF" x="-300" y="9500">
-		</FB>
-		<FB Name="E_D_FF_20" Type="iec61499::events::E_D_FF" x="-300" y="10000">
-		</FB>
-		<FB Name="E_D_FF_21" Type="iec61499::events::E_D_FF" x="-300" y="10500">
-		</FB>
-		<FB Name="E_D_FF_22" Type="iec61499::events::E_D_FF" x="-300" y="11000">
-		</FB>
-		<FB Name="E_D_FF_23" Type="iec61499::events::E_D_FF" x="-300" y="11500">
-		</FB>
-		<FB Name="E_D_FF_24" Type="iec61499::events::E_D_FF" x="-300" y="12000">
-		</FB>
-		<FB Name="E_D_FF_25" Type="iec61499::events::E_D_FF" x="-300" y="12500">
-		</FB>
-		<FB Name="E_D_FF_26" Type="iec61499::events::E_D_FF" x="-300" y="13000">
-		</FB>
-		<FB Name="E_D_FF_27" Type="iec61499::events::E_D_FF" x="-300" y="13500">
-		</FB>
-		<FB Name="E_D_FF_28" Type="iec61499::events::E_D_FF" x="-300" y="14000">
-		</FB>
-		<FB Name="E_D_FF_29" Type="iec61499::events::E_D_FF" x="-300" y="14500">
-		</FB>
-		<FB Name="E_D_FF_30" Type="iec61499::events::E_D_FF" x="-300" y="15000">
-		</FB>
-		<FB Name="E_D_FF_31" Type="iec61499::events::E_D_FF" x="-300" y="15500">
-		</FB>
-		<FB Name="SPLIT_DWORD_INTO_BOOLS" Type="eclipse4diac::utils::splitting::SPLIT_DWORD_INTO_BOOLS" x="-2900" y="1700">
-		</FB>
+		<FB Name="E_D_FF_00" Type="iec61499::events::E_D_FF" x="-300" y="0"/>
+		<FB Name="E_D_FF_01" Type="iec61499::events::E_D_FF" x="-300" y="500"/>
+		<FB Name="E_D_FF_02" Type="iec61499::events::E_D_FF" x="-300" y="1000"/>
+		<FB Name="E_D_FF_03" Type="iec61499::events::E_D_FF" x="-300" y="1500"/>
+		<FB Name="E_D_FF_04" Type="iec61499::events::E_D_FF" x="-300" y="2000"/>
+		<FB Name="E_D_FF_05" Type="iec61499::events::E_D_FF" x="-300" y="2500"/>
+		<FB Name="E_D_FF_06" Type="iec61499::events::E_D_FF" x="-300" y="3000"/>
+		<FB Name="E_D_FF_07" Type="iec61499::events::E_D_FF" x="-300" y="3500"/>
+		<FB Name="E_D_FF_08" Type="iec61499::events::E_D_FF" x="-300" y="4000"/>
+		<FB Name="E_D_FF_09" Type="iec61499::events::E_D_FF" x="-300" y="4500"/>
+		<FB Name="E_D_FF_10" Type="iec61499::events::E_D_FF" x="-300" y="5000"/>
+		<FB Name="E_D_FF_11" Type="iec61499::events::E_D_FF" x="-300" y="5500"/>
+		<FB Name="E_D_FF_12" Type="iec61499::events::E_D_FF" x="-300" y="6000"/>
+		<FB Name="E_D_FF_13" Type="iec61499::events::E_D_FF" x="-300" y="6500"/>
+		<FB Name="E_D_FF_14" Type="iec61499::events::E_D_FF" x="-300" y="7000"/>
+		<FB Name="E_D_FF_15" Type="iec61499::events::E_D_FF" x="-300" y="7500"/>
+		<FB Name="E_D_FF_16" Type="iec61499::events::E_D_FF" x="-300" y="8000"/>
+		<FB Name="E_D_FF_17" Type="iec61499::events::E_D_FF" x="-300" y="8500"/>
+		<FB Name="E_D_FF_18" Type="iec61499::events::E_D_FF" x="-300" y="9000"/>
+		<FB Name="E_D_FF_19" Type="iec61499::events::E_D_FF" x="-300" y="9500"/>
+		<FB Name="E_D_FF_20" Type="iec61499::events::E_D_FF" x="-300" y="10000"/>
+		<FB Name="E_D_FF_21" Type="iec61499::events::E_D_FF" x="-300" y="10500"/>
+		<FB Name="E_D_FF_22" Type="iec61499::events::E_D_FF" x="-300" y="11000"/>
+		<FB Name="E_D_FF_23" Type="iec61499::events::E_D_FF" x="-300" y="11500"/>
+		<FB Name="E_D_FF_24" Type="iec61499::events::E_D_FF" x="-300" y="12000"/>
+		<FB Name="E_D_FF_25" Type="iec61499::events::E_D_FF" x="-300" y="12500"/>
+		<FB Name="E_D_FF_26" Type="iec61499::events::E_D_FF" x="-300" y="13000"/>
+		<FB Name="E_D_FF_27" Type="iec61499::events::E_D_FF" x="-300" y="13500"/>
+		<FB Name="E_D_FF_28" Type="iec61499::events::E_D_FF" x="-300" y="14000"/>
+		<FB Name="E_D_FF_29" Type="iec61499::events::E_D_FF" x="-300" y="14500"/>
+		<FB Name="E_D_FF_30" Type="iec61499::events::E_D_FF" x="-300" y="15000"/>
+		<FB Name="E_D_FF_31" Type="iec61499::events::E_D_FF" x="-300" y="15500"/>
+		<FB Name="SPLIT_DWORD_INTO_BOOLS" Type="eclipse4diac::utils::splitting::SPLIT_DWORD_INTO_BOOLS" x="-2900" y="1700"/>
 		<EventConnections>
 			<Connection Source="IN.E1" Destination="SPLIT_DWORD_INTO_BOOLS.REQ"/>
 			<Connection Source="SPLIT_DWORD_INTO_BOOLS.CNF" Destination="E_D_FF_00.CLK" dx1="673.33"/>

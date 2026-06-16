@@ -1,9 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <FBType Name="E_D_FF_ANY_HYS" Comment="Data latch (d) flip flop with a Hysteresis">
-	<Identification Standard="61499-1 Annex A" Description="Copyright (c) 2017 fortiss GmbH, HR Agrartechnik GmbH&#10;&#10;This program and the accompanying materials are made&#10;available under the terms of the Eclipse Public License 2.0&#10;which is available at https://www.eclipse.org/legal/epl-2.0/&#10;&#10;SPDX-License-Identifier: EPL-2.0">
-	</Identification>
-	<VersionInfo Organization="HR Agrartechnik GmbH" Version="1.0" Author="Franz Höpfinger" Date="2026-04-17" Remarks="E_D_FF copied and replace BOOL by ANY">
-	</VersionInfo>
+	<Identification Standard="61499-1 Annex A" Description="Copyright (c) 2017 fortiss GmbH, HR Agrartechnik GmbH&#10;&#10;This program and the accompanying materials are made&#10;available under the terms of the Eclipse Public License 2.0&#10;which is available at https://www.eclipse.org/legal/epl-2.0/&#10;&#10;SPDX-License-Identifier: EPL-2.0"/>
+	<VersionInfo Organization="HR Agrartechnik GmbH" Version="1.0" Author="Franz Höpfinger" Date="2026-04-17" Remarks="E_D_FF copied and replace BOOL by ANY"/>
 	<CompilerInfo packageName="logiBUS::signalprocessing::hysteresis">
 		<Import declaration="eclipse4diac::core::TypeHash"/>
 	</CompilerInfo>
@@ -29,8 +27,7 @@
 	</InterfaceList>
 	<BasicFB>
 		<ECC>
-			<ECState Name="START" Comment="Initial State" x="400" y="700">
-			</ECState>
+			<ECState Name="START" Comment="Initial State" x="400" y="700"/>
 			<ECState Name="SET" Comment="Initialization" x="1235" y="665">
 				<ECAction Algorithm="LATCH" Output="EO"/>
 			</ECState>

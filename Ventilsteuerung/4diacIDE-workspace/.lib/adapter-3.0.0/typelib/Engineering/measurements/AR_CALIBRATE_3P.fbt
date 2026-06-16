@@ -1,9 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <FBType Name="AR_CALIBRATE_3P" Comment="Adapter-based 3-point calibration for joysticks (Min, Mid, Max)">
-	<Identification Standard="61499-1">
-	</Identification>
-	<VersionInfo Version="1.0" Author="Meisterschulen am Ostbahnhof" Date="2026-06-01">
-	</VersionInfo>
+	<Identification Standard="61499-1"/>
+	<VersionInfo Version="1.0" Author="Meisterschulen am Ostbahnhof" Date="2026-06-01"/>
 	<CompilerInfo packageName="adapter::Engineering::measurements">
 		<Import declaration="eclipse4diac::core::TypeHash"/>
 	</CompilerInfo>
@@ -20,23 +18,22 @@
 			<VarDeclaration Name="MID_REF" Type="REAL" Comment="Target value for Mid" InitialValue="50.0"/>
 			<VarDeclaration Name="MAX_REF" Type="REAL" Comment="Target value for Max" InitialValue="100.0"/>
 		</InputVars>
-		<Plugs>
-			<AdapterDeclaration Name="Y" Type="adapter::types::unidirectional::AR" Comment="Calibrated Output"/>
-			<AdapterDeclaration Name="X_MIN" Type="adapter::types::bidirectional::AR2" Comment="Stored Min Value"/>
-			<AdapterDeclaration Name="X_MID" Type="adapter::types::bidirectional::AR2" Comment="Stored Mid Value"/>
-			<AdapterDeclaration Name="X_MAX" Type="adapter::types::bidirectional::AR2" Comment="Stored Max Value"/>
-		</Plugs>
 		<Sockets>
 			<AdapterDeclaration Name="X" Type="adapter::types::unidirectional::AR" Comment="Raw Input"/>
 			<AdapterDeclaration Name="C_MIN" Type="adapter::types::unidirectional::AX" Comment="Calibrate Min Point"/>
 			<AdapterDeclaration Name="C_MID" Type="adapter::types::unidirectional::AX" Comment="Calibrate Mid Point"/>
 			<AdapterDeclaration Name="C_MAX" Type="adapter::types::unidirectional::AX" Comment="Calibrate Max Point"/>
 		</Sockets>
+		<Plugs>
+			<AdapterDeclaration Name="Y" Type="adapter::types::unidirectional::AR" Comment="Calibrated Output"/>
+			<AdapterDeclaration Name="X_MIN" Type="adapter::types::bidirectional::AR2" Comment="Stored Min Value"/>
+			<AdapterDeclaration Name="X_MID" Type="adapter::types::bidirectional::AR2" Comment="Stored Mid Value"/>
+			<AdapterDeclaration Name="X_MAX" Type="adapter::types::bidirectional::AR2" Comment="Stored Max Value"/>
+		</Plugs>
 	</InterfaceList>
 	<BasicFB>
 		<ECC>
-			<ECState Name="IDLE" x="400" y="400">
-			</ECState>
+			<ECState Name="IDLE" x="400" y="400"/>
 			<ECState Name="REQ" x="1200" y="400">
 				<ECAction Algorithm="REQ" Output="Y.E1"/>
 			</ECState>

@@ -1,16 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <FBType Name="FT_PIDWL" Comment="PI Controller with Anti-Windup">
-	<Identification Standard="61499-1" Description="version 1.3&#9;13. nov. 2009&#10;programmer &#9;hugo&#10;tested by&#9;&#9;tobias&#10;&#10;FT_PIDWL is a PID controller with dynamic wind_up reset.&#10;The PID controller works according to the fomula Y = KP *(IN + KI * INTEG(e) + DERIV(e) ).&#10;a rst will reset the integrator to 0&#10;lim_h and Lim_l set the possible output range of the internal integrator.&#10;the output flags lim will signal that the output limits are active.">
-	</Identification>
-	<VersionInfo Version="1.0" Author="Franz Höpfinger" Date="2025-12-19" Remarks="initial API and implementation and/or initial documentation">
-	</VersionInfo>
+	<Identification Standard="61499-1" Description="version 1.3&#9;13. nov. 2009&#10;programmer &#9;hugo&#10;tested by&#9;&#9;tobias&#10;&#10;FT_PIDWL is a PID controller with dynamic wind_up reset.&#10;The PID controller works according to the fomula Y = KP *(IN + KI * INTEG(e) + DERIV(e) ).&#10;a rst will reset the integrator to 0&#10;lim_h and Lim_l set the possible output range of the internal integrator.&#10;the output flags lim will signal that the output limits are active."/>
+	<VersionInfo Version="1.0" Author="Franz Höpfinger" Date="2025-12-19" Remarks="initial API and implementation and/or initial documentation"/>
 	<CompilerInfo packageName="OSCAT::Basic::POUs::Engineering::Control">
 		<Import declaration="eclipse4diac::core::TypeHash"/>
 	</CompilerInfo>
 	<InterfaceList>
 		<EventInputs>
-			<Event Name="EINIT" Type="EInit" Comment="Init Request">
-			</Event>
+			<Event Name="EINIT" Type="EInit" Comment="Init Request"/>
 			<Event Name="REQ" Type="Event" Comment="Normal Execution Request">
 				<With Var="IN"/>
 				<With Var="KP"/>
@@ -48,10 +45,8 @@
 	</InterfaceList>
 	<SimpleFB>
 		<InternalVars>
-			<FB Name="piwl" Type="OSCAT::Basic::POUs::Engineering::Control::FT_PIWL" Comment="Internal PI Controller">
-			</FB>
-			<FB Name="diff" Type="OSCAT::Basic::POUs::Engineering::Control::FT_DERIV" Comment="Internal Differentiator">
-			</FB>
+			<FB Name="piwl" Type="OSCAT::Basic::POUs::Engineering::Control::FT_PIWL" Comment="Internal PI Controller"/>
+			<FB Name="diff" Type="OSCAT::Basic::POUs::Engineering::Control::FT_DERIV" Comment="Internal Differentiator"/>
 		</InternalVars>
 		<ECState Name="EINIT">
 			<ECAction Algorithm="EINIT" Output="INITO"/>

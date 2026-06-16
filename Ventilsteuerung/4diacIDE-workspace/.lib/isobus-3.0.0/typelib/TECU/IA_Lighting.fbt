@@ -1,9 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <FBType Name="IA_Lighting" Comment="ISOBUS Adapter for Lighting Data (LD)">
-	<Identification Standard="ISO 11783-7" Classification="PGN 65088" Description="Copyright (c) 2024-2026 HR Agrartechnik GmbH  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0">
-	</Identification>
-	<VersionInfo Organization="HR Agrartechnik GmbH" Version="1.0" Author="Franz Höpfinger" Date="2026-04-24" Remarks="initial API and implementation (Adapter Wrapper for I_Lighting)">
-	</VersionInfo>
+	<Identification Standard="ISO 11783-7" Classification="PGN 65088" Description="Copyright (c) 2024-2026 HR Agrartechnik GmbH  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0"/>
+	<VersionInfo Organization="HR Agrartechnik GmbH" Version="1.0" Author="Franz Höpfinger" Date="2026-04-24" Remarks="initial API and implementation (Adapter Wrapper for I_Lighting)"/>
 	<CompilerInfo packageName="isobus::tecu">
 		<Import declaration="eclipse4diac::core::TypeHash"/>
 	</CompilerInfo>
@@ -62,70 +60,38 @@
 		</Plugs>
 	</InterfaceList>
 	<FBNetwork>
-		<FB Name="I_CORE" Type="isobus::tecu::I_Lighting" x="1200" y="10400">
-		</FB>
-		<FB Name="C_DAYTIME_RUNNING_LIGHTS" Type="logiBUS::utils::quarter::QUARTER_TO_BOOL" x="4653.33" y="1533.33">
-		</FB>
-		<FB Name="C_ALTERNATE_HEADLIGHTS" Type="logiBUS::utils::quarter::QUARTER_TO_BOOL" x="4653.33" y="2326.67">
-		</FB>
-		<FB Name="C_LOW_BEAM_HEADLIGHTS" Type="logiBUS::utils::quarter::QUARTER_TO_BOOL" x="4653.33" y="3120">
-		</FB>
-		<FB Name="C_HIGH_BEAM_HEADLIGHTS" Type="logiBUS::utils::quarter::QUARTER_TO_BOOL" x="4653.33" y="3913.33">
-		</FB>
-		<FB Name="C_TRACTOR_FRONT_FOG_LIGHTS" Type="logiBUS::utils::quarter::QUARTER_TO_BOOL" x="4653.33" y="4706.67">
-		</FB>
-		<FB Name="C_ROTATING_BEACON_LIGHT" Type="logiBUS::utils::quarter::QUARTER_TO_BOOL" x="4653.33" y="5500">
-		</FB>
-		<FB Name="C_RIGHT_TURN_SIGNAL_LIGHTS" Type="logiBUS::utils::quarter::QUARTER_TO_BOOL" x="4653.33" y="6293.33">
-		</FB>
-		<FB Name="C_LEFT_TURN_SIGNAL_LIGHTS" Type="logiBUS::utils::quarter::QUARTER_TO_BOOL" x="4653.33" y="7086.67">
-		</FB>
-		<FB Name="C_BACK_UP_LIGHTS_AND_ALARM_HORN" Type="logiBUS::utils::quarter::QUARTER_TO_BOOL" x="4653.33" y="7880">
-		</FB>
-		<FB Name="C_CENTER_STOP_LIGHTS" Type="logiBUS::utils::quarter::QUARTER_TO_BOOL" x="4653.33" y="8673.33">
-		</FB>
-		<FB Name="C_RIGHT_STOP_LIGHTS" Type="logiBUS::utils::quarter::QUARTER_TO_BOOL" x="4653.33" y="9466.67">
-		</FB>
-		<FB Name="C_LEFT_STOP_LIGHTS" Type="logiBUS::utils::quarter::QUARTER_TO_BOOL" x="4653.33" y="10260">
-		</FB>
-		<FB Name="C_IMPLEMENT_CLEARANCE_LIGHTS" Type="logiBUS::utils::quarter::QUARTER_TO_BOOL" x="4653.33" y="11053.33">
-		</FB>
-		<FB Name="C_TRACTOR_CLEARANCE_LIGHTS" Type="logiBUS::utils::quarter::QUARTER_TO_BOOL" x="4653.33" y="11846.67">
-		</FB>
-		<FB Name="C_IMPLEMENT_MARKER_LIGHTS" Type="logiBUS::utils::quarter::QUARTER_TO_BOOL" x="4653.33" y="12640">
-		</FB>
-		<FB Name="C_TRACTOR_MARKER_LIGHTS" Type="logiBUS::utils::quarter::QUARTER_TO_BOOL" x="4653.33" y="13433.33">
-		</FB>
-		<FB Name="C_REAR_FOG_LIGHTS" Type="logiBUS::utils::quarter::QUARTER_TO_BOOL" x="4653.33" y="14226.67">
-		</FB>
-		<FB Name="C_TRACTOR_UNDERSIDE_MOUNTED_WORK_LIGHTS" Type="logiBUS::utils::quarter::QUARTER_TO_BOOL" x="4653.33" y="15020">
-		</FB>
-		<FB Name="C_TRACTOR_REAR_LOW_MOUNTED_WORK_LIGHTS" Type="logiBUS::utils::quarter::QUARTER_TO_BOOL" x="4653.33" y="15813.33">
-		</FB>
-		<FB Name="C_TRACTOR_REAR_HIGH_MOUNTED_WORK_LIGHTS" Type="logiBUS::utils::quarter::QUARTER_TO_BOOL" x="4653.33" y="16606.67">
-		</FB>
-		<FB Name="C_TRACTOR_SIDE_LOW_MOUNTED_WORK_LIGHTS" Type="logiBUS::utils::quarter::QUARTER_TO_BOOL" x="4653.33" y="17400">
-		</FB>
-		<FB Name="C_TRACTOR_SIDE_HIGH_MOUNTED_WORK_LIGHTS" Type="logiBUS::utils::quarter::QUARTER_TO_BOOL" x="4653.33" y="18193.33">
-		</FB>
-		<FB Name="C_TRACTOR_FRONT_LOW_MOUNTED_WORK_LIGHTS" Type="logiBUS::utils::quarter::QUARTER_TO_BOOL" x="4653.33" y="18986.67">
-		</FB>
-		<FB Name="C_TRACTOR_FRONT_HIGH_MOUNTED_WORK_LIGHTS" Type="logiBUS::utils::quarter::QUARTER_TO_BOOL" x="4653.33" y="19780">
-		</FB>
-		<FB Name="C_IMPLEMENT_OEM_OPTION_2_LIGHT" Type="logiBUS::utils::quarter::QUARTER_TO_BOOL" x="4653.33" y="20573.33">
-		</FB>
-		<FB Name="C_IMPLEMENT_OEM_OPTION_1_LIGHT" Type="logiBUS::utils::quarter::QUARTER_TO_BOOL" x="4653.33" y="21366.67">
-		</FB>
-		<FB Name="C_IMPLEMENT_RIGHT_FORWARD_WORK_LIGHTS" Type="logiBUS::utils::quarter::QUARTER_TO_BOOL" x="4653.33" y="22160">
-		</FB>
-		<FB Name="C_IMPLEMENT_LEFT_FORWARD_WORK_LIGHTS" Type="logiBUS::utils::quarter::QUARTER_TO_BOOL" x="4653.33" y="22953.33">
-		</FB>
-		<FB Name="C_IMPLEMENT_RIGHT_FACING_WORK_LIGHTS" Type="logiBUS::utils::quarter::QUARTER_TO_BOOL" x="4653.33" y="23746.67">
-		</FB>
-		<FB Name="C_IMPLEMENT_LEFT_FACING_WORK_LIGHTS" Type="logiBUS::utils::quarter::QUARTER_TO_BOOL" x="4653.33" y="24540">
-		</FB>
-		<FB Name="C_IMPLEMENT_REAR_WORK_LIGHTS" Type="logiBUS::utils::quarter::QUARTER_TO_BOOL" x="4653.33" y="25333.33">
-		</FB>
+		<FB Name="I_CORE" Type="isobus::tecu::I_Lighting" x="1200" y="10400"/>
+		<FB Name="C_DAYTIME_RUNNING_LIGHTS" Type="logiBUS::utils::quarter::QUARTER_TO_BOOL" x="4653.33" y="1533.33"/>
+		<FB Name="C_ALTERNATE_HEADLIGHTS" Type="logiBUS::utils::quarter::QUARTER_TO_BOOL" x="4653.33" y="2326.67"/>
+		<FB Name="C_LOW_BEAM_HEADLIGHTS" Type="logiBUS::utils::quarter::QUARTER_TO_BOOL" x="4653.33" y="3120"/>
+		<FB Name="C_HIGH_BEAM_HEADLIGHTS" Type="logiBUS::utils::quarter::QUARTER_TO_BOOL" x="4653.33" y="3913.33"/>
+		<FB Name="C_TRACTOR_FRONT_FOG_LIGHTS" Type="logiBUS::utils::quarter::QUARTER_TO_BOOL" x="4653.33" y="4706.67"/>
+		<FB Name="C_ROTATING_BEACON_LIGHT" Type="logiBUS::utils::quarter::QUARTER_TO_BOOL" x="4653.33" y="5500"/>
+		<FB Name="C_RIGHT_TURN_SIGNAL_LIGHTS" Type="logiBUS::utils::quarter::QUARTER_TO_BOOL" x="4653.33" y="6293.33"/>
+		<FB Name="C_LEFT_TURN_SIGNAL_LIGHTS" Type="logiBUS::utils::quarter::QUARTER_TO_BOOL" x="4653.33" y="7086.67"/>
+		<FB Name="C_BACK_UP_LIGHTS_AND_ALARM_HORN" Type="logiBUS::utils::quarter::QUARTER_TO_BOOL" x="4653.33" y="7880"/>
+		<FB Name="C_CENTER_STOP_LIGHTS" Type="logiBUS::utils::quarter::QUARTER_TO_BOOL" x="4653.33" y="8673.33"/>
+		<FB Name="C_RIGHT_STOP_LIGHTS" Type="logiBUS::utils::quarter::QUARTER_TO_BOOL" x="4653.33" y="9466.67"/>
+		<FB Name="C_LEFT_STOP_LIGHTS" Type="logiBUS::utils::quarter::QUARTER_TO_BOOL" x="4653.33" y="10260"/>
+		<FB Name="C_IMPLEMENT_CLEARANCE_LIGHTS" Type="logiBUS::utils::quarter::QUARTER_TO_BOOL" x="4653.33" y="11053.33"/>
+		<FB Name="C_TRACTOR_CLEARANCE_LIGHTS" Type="logiBUS::utils::quarter::QUARTER_TO_BOOL" x="4653.33" y="11846.67"/>
+		<FB Name="C_IMPLEMENT_MARKER_LIGHTS" Type="logiBUS::utils::quarter::QUARTER_TO_BOOL" x="4653.33" y="12640"/>
+		<FB Name="C_TRACTOR_MARKER_LIGHTS" Type="logiBUS::utils::quarter::QUARTER_TO_BOOL" x="4653.33" y="13433.33"/>
+		<FB Name="C_REAR_FOG_LIGHTS" Type="logiBUS::utils::quarter::QUARTER_TO_BOOL" x="4653.33" y="14226.67"/>
+		<FB Name="C_TRACTOR_UNDERSIDE_MOUNTED_WORK_LIGHTS" Type="logiBUS::utils::quarter::QUARTER_TO_BOOL" x="4653.33" y="15020"/>
+		<FB Name="C_TRACTOR_REAR_LOW_MOUNTED_WORK_LIGHTS" Type="logiBUS::utils::quarter::QUARTER_TO_BOOL" x="4653.33" y="15813.33"/>
+		<FB Name="C_TRACTOR_REAR_HIGH_MOUNTED_WORK_LIGHTS" Type="logiBUS::utils::quarter::QUARTER_TO_BOOL" x="4653.33" y="16606.67"/>
+		<FB Name="C_TRACTOR_SIDE_LOW_MOUNTED_WORK_LIGHTS" Type="logiBUS::utils::quarter::QUARTER_TO_BOOL" x="4653.33" y="17400"/>
+		<FB Name="C_TRACTOR_SIDE_HIGH_MOUNTED_WORK_LIGHTS" Type="logiBUS::utils::quarter::QUARTER_TO_BOOL" x="4653.33" y="18193.33"/>
+		<FB Name="C_TRACTOR_FRONT_LOW_MOUNTED_WORK_LIGHTS" Type="logiBUS::utils::quarter::QUARTER_TO_BOOL" x="4653.33" y="18986.67"/>
+		<FB Name="C_TRACTOR_FRONT_HIGH_MOUNTED_WORK_LIGHTS" Type="logiBUS::utils::quarter::QUARTER_TO_BOOL" x="4653.33" y="19780"/>
+		<FB Name="C_IMPLEMENT_OEM_OPTION_2_LIGHT" Type="logiBUS::utils::quarter::QUARTER_TO_BOOL" x="4653.33" y="20573.33"/>
+		<FB Name="C_IMPLEMENT_OEM_OPTION_1_LIGHT" Type="logiBUS::utils::quarter::QUARTER_TO_BOOL" x="4653.33" y="21366.67"/>
+		<FB Name="C_IMPLEMENT_RIGHT_FORWARD_WORK_LIGHTS" Type="logiBUS::utils::quarter::QUARTER_TO_BOOL" x="4653.33" y="22160"/>
+		<FB Name="C_IMPLEMENT_LEFT_FORWARD_WORK_LIGHTS" Type="logiBUS::utils::quarter::QUARTER_TO_BOOL" x="4653.33" y="22953.33"/>
+		<FB Name="C_IMPLEMENT_RIGHT_FACING_WORK_LIGHTS" Type="logiBUS::utils::quarter::QUARTER_TO_BOOL" x="4653.33" y="23746.67"/>
+		<FB Name="C_IMPLEMENT_LEFT_FACING_WORK_LIGHTS" Type="logiBUS::utils::quarter::QUARTER_TO_BOOL" x="4653.33" y="24540"/>
+		<FB Name="C_IMPLEMENT_REAR_WORK_LIGHTS" Type="logiBUS::utils::quarter::QUARTER_TO_BOOL" x="4653.33" y="25333.33"/>
 		<EventConnections>
 			<Connection Source="INIT" Destination="I_CORE.INIT" dx1="66.67"/>
 			<Connection Source="I_CORE.INITO" Destination="INITO" dx1="66.67"/>

@@ -1,9 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <FBType Name="ILOCK_SWITCH_PROTECT" Comment="Prioritizes the last active input with a protection dead-time before switching.">
-	<Identification Standard="61499-2" Description="Copyright (c) 2023 HR Agrartechnik GmbH  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0">
-	</Identification>
-	<VersionInfo Organization="HR Agrartechnik GmbH" Version="1.0" Author="Franz Höpfinger" Date="2026-04-19" Remarks="initial API and implementation and/or initial documentation">
-	</VersionInfo>
+	<Identification Standard="61499-2" Description="Copyright (c) 2023 HR Agrartechnik GmbH  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0"/>
+	<VersionInfo Organization="HR Agrartechnik GmbH" Version="1.0" Author="Franz Höpfinger" Date="2026-04-19" Remarks="initial API and implementation and/or initial documentation"/>
 	<CompilerInfo packageName="logiBUS::signalprocessing::interlock">
 		<Import declaration="eclipse4diac::core::TypeHash"/>
 	</CompilerInfo>
@@ -41,8 +39,7 @@
 	</InterfaceList>
 	<BasicFB>
 		<ECC>
-			<ECState Name="STOP" x="2800" y="1440">
-			</ECState>
+			<ECState Name="STOP" x="2800" y="1440"/>
 			<ECState Name="UP" x="5120" y="640">
 				<ECAction Algorithm="UP" Output="EO_UP"/>
 				<ECAction Output="EO_DOWN"/>
@@ -56,8 +53,7 @@
 				<ECAction Output="EO_DOWN"/>
 				<ECAction/>
 			</ECState>
-			<ECState Name="EVAL" x="7600" y="1520">
-			</ECState>
+			<ECState Name="EVAL" x="7600" y="1520"/>
 			<ECTransition Source="STOP" Destination="UP" Condition="EI_UP[DI_UP]" x="4173.33" y="1020"/>
 			<ECTransition Source="STOP" Destination="DOWN" Condition="EI_DOWN[DI_DOWN]" x="3333.33" y="2133.33"/>
 			<ECTransition Source="UP" Destination="PROTECT" Condition="EI_UP[NOT DI_UP]" x="5333.33" y="1066.67"/>

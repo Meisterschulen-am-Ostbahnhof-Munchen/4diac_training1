@@ -1,9 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <FBType Name="IA_RHS" Comment="ISOBUS Adapter for Rear Hitch Status (RHS)">
-	<Identification Standard="ISO 11783-7" Classification="PGN 65093" Description="Copyright (c) 2024-2026 HR Agrartechnik GmbH  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0">
-	</Identification>
-	<VersionInfo Organization="HR Agrartechnik GmbH" Version="1.0" Author="Franz Höpfinger" Date="2026-04-19" Remarks="initial API and implementation (Adapter Wrapper for I_RHS)">
-	</VersionInfo>
+	<Identification Standard="ISO 11783-7" Classification="PGN 65093" Description="Copyright (c) 2024-2026 HR Agrartechnik GmbH  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0"/>
+	<VersionInfo Organization="HR Agrartechnik GmbH" Version="1.0" Author="Franz Höpfinger" Date="2026-04-19" Remarks="initial API and implementation (Adapter Wrapper for I_RHS)"/>
 	<CompilerInfo packageName="isobus::tecu">
 		<Import declaration="eclipse4diac::core::TypeHash"/>
 	</CompilerInfo>
@@ -34,8 +32,7 @@
 		</Plugs>
 	</InterfaceList>
 	<FBNetwork>
-		<FB Name="I_CORE" Type="isobus::tecu::I_RHS" x="680" y="3700">
-		</FB>
+		<FB Name="I_CORE" Type="isobus::tecu::I_RHS" x="680" y="3700"/>
 		<EventConnections>
 			<Connection Source="INIT" Destination="I_CORE.INIT" dx1="66.67"/>
 			<Connection Source="I_CORE.INITO" Destination="INITO" dx1="66.67"/>

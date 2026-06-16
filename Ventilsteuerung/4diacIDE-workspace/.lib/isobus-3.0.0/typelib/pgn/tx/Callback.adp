@@ -1,16 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <AdapterType Name="Callback" Comment="Message Callback">
-	<Identification Standard="61499-1">
-	</Identification>
-	<VersionInfo Version="1.0" Author="Franz Höpfinger" Date="2025-09-06" Remarks="initial API and implementation and/or initial documentation">
-	</VersionInfo>
+	<Identification Standard="61499-1"/>
+	<VersionInfo Version="1.0" Author="Franz Höpfinger" Date="2025-09-06" Remarks="initial API and implementation and/or initial documentation"/>
 	<CompilerInfo packageName="isobus::pgn::tx">
 		<Import declaration="eclipse4diac::core::TypeHash"/>
 	</CompilerInfo>
 	<InterfaceList>
 		<EventInputs>
-			<Event Name="REQ" Type="Event" Comment="Request from Socket">
-			</Event>
+			<Event Name="REQ" Type="Event" Comment="Request from Socket"/>
 		</EventInputs>
 		<EventOutputs>
 			<Event Name="CNF" Type="Event" Comment="Confirmation from Plug">

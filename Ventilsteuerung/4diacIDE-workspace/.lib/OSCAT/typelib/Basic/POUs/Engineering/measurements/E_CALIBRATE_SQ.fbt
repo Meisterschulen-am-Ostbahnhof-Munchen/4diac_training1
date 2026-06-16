@@ -1,9 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <FBType Name="E_CALIBRATE_SQ" Comment="Sequential two-point calibration (offset then scale) with ECC-enforced order.">
-	<Identification Standard="61499-1">
-	</Identification>
-	<VersionInfo Version="1.0" Author="Meisterschulen am Ostbahnhof" Date="2026-06-01">
-	</VersionInfo>
+	<Identification Standard="61499-1"/>
+	<VersionInfo Version="1.0" Author="Meisterschulen am Ostbahnhof" Date="2026-06-01"/>
 	<CompilerInfo packageName="OSCAT::Basic::POUs::Engineering::measurements">
 		<Import declaration="eclipse4diac::core::TypeHash"/>
 	</CompilerInfo>
@@ -58,16 +56,14 @@
 			<VarDeclaration Name="Y_LOW_INT" Type="REAL" Comment="Stored target value at CO"/>
 		</InternalVars>
 		<ECC>
-			<ECState Name="START" x="-240" y="-160">
-			</ECState>
+			<ECState Name="START" x="-240" y="-160"/>
 			<ECState Name="REQ" x="720" y="1360">
 				<ECAction Algorithm="REQ" Output="CNF"/>
 			</ECState>
 			<ECState Name="CO" x="2000" y="480">
 				<ECAction Algorithm="CO" Output="EOCO"/>
 			</ECState>
-			<ECState Name="WAIT_CS" x="2320" y="0">
-			</ECState>
+			<ECState Name="WAIT_CS" x="2320" y="0"/>
 			<ECState Name="REQ_WAIT" x="1700" y="800">
 				<ECAction Algorithm="REQ" Output="CNF"/>
 			</ECState>

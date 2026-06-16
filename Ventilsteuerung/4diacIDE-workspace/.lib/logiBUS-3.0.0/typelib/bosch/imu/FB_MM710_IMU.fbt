@@ -1,9 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <FBType Name="FB_MM710_IMU" Comment="Service interface function block for Bosch MM7.10 IMU sensor via CAN/J1939">
-	<Identification Standard="61499-2" Description="Copyright (c) 2026 Meisterschulen am Ostbahnhof  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0">
-	</Identification>
-	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="AI" Date="2026-04-24" Remarks="Initial SIFB for MM710 IMU">
-	</VersionInfo>
+	<Identification Standard="61499-2" Description="Copyright (c) 2026 Meisterschulen am Ostbahnhof  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0"/>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="AI" Date="2026-04-24" Remarks="Initial SIFB for MM710 IMU"/>
 	<CompilerInfo packageName="logiBUS::bosch::imu">
 		<Import declaration="eclipse4diac::core::TypeHash"/>
 		<Import declaration="isobus::pgn::ISO_CAN_NODE"/>
@@ -17,8 +15,7 @@
 				<With Var="u8CanIdx"/>
 				<With Var="SA"/>
 			</Event>
-			<Event Name="REQ" Type="Event" Comment="Service Request">
-			</Event>
+			<Event Name="REQ" Type="Event" Comment="Service Request"/>
 		</EventInputs>
 		<EventOutputs>
 			<Event Name="INITO" Type="EInit" Comment="Initialization Confirm">

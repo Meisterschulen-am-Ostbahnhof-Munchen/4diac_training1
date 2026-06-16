@@ -1,43 +1,32 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <FBType Name="AUDI_CTUD_UDINT" Comment="Event driven up/down counter (Adapter Version) - On Change Triggering">
-	<Identification Standard="61499-2" Description="Copyright (c) 2024 HR Agrartechnik GmbH  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0">
-	</Identification>
-	<VersionInfo Organization="HR Agrartechnik GmbH" Version="1.1" Author="Franz Höpfinger" Date="2026-04-19" Remarks="Fixed ECC: Added sequential on-change check and explicit event firing for QU and QD">
-	</VersionInfo>
-	<VersionInfo Organization="HR Agrartechnik GmbH" Version="1.0" Author="Franz Höpfinger" Date="2026-04-19" Remarks="initial API and implementation based on E_CTUD with adapter support">
-	</VersionInfo>
+	<Identification Standard="61499-2" Description="Copyright (c) 2024 HR Agrartechnik GmbH  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0"/>
+	<VersionInfo Organization="HR Agrartechnik GmbH" Version="1.1" Author="Franz Höpfinger" Date="2026-04-19" Remarks="Fixed ECC: Added sequential on-change check and explicit event firing for QU and QD"/>
+	<VersionInfo Organization="HR Agrartechnik GmbH" Version="1.0" Author="Franz Höpfinger" Date="2026-04-19" Remarks="initial API and implementation based on E_CTUD with adapter support"/>
 	<CompilerInfo packageName="adapter::events::unidirectional">
 		<Import declaration="eclipse4diac::core::TypeHash"/>
 	</CompilerInfo>
 	<InterfaceList>
 		<EventInputs>
-			<Event Name="CU" Type="Event" Comment="Count Up">
-			</Event>
-			<Event Name="CD" Type="Event" Comment="Count Down">
-			</Event>
-			<Event Name="R" Type="Event" Comment="Reset">
-			</Event>
-			<Event Name="LD" Type="Event" Comment="Load CV with PV">
-			</Event>
+			<Event Name="CU" Type="Event" Comment="Count Up"/>
+			<Event Name="CD" Type="Event" Comment="Count Down"/>
+			<Event Name="R" Type="Event" Comment="Reset"/>
+			<Event Name="LD" Type="Event" Comment="Load CV with PV"/>
 		</EventInputs>
 		<EventOutputs>
-			<Event Name="CUO" Type="Event" Comment="Count Up Output">
-			</Event>
-			<Event Name="CDO" Type="Event" Comment="Count Down Output">
-			</Event>
-			<Event Name="RO" Type="Event" Comment="Reset Output">
-			</Event>
-			<Event Name="LDO" Type="Event" Comment="Load Output">
-			</Event>
+			<Event Name="CUO" Type="Event" Comment="Count Up Output"/>
+			<Event Name="CDO" Type="Event" Comment="Count Down Output"/>
+			<Event Name="RO" Type="Event" Comment="Reset Output"/>
+			<Event Name="LDO" Type="Event" Comment="Load Output"/>
 		</EventOutputs>
+		<Sockets>
+			<AdapterDeclaration Name="PV" Type="adapter::types::unidirectional::AUDI" Comment="Preset Value"/>
+		</Sockets>
 		<Plugs>
 			<AdapterDeclaration Name="QU" Type="adapter::types::unidirectional::AX" Comment="True if CV &gt;= PV"/>
 			<AdapterDeclaration Name="QD" Type="adapter::types::unidirectional::AX" Comment="True if CV &lt;= 0"/>
 			<AdapterDeclaration Name="CV" Type="adapter::types::unidirectional::AUDI" Comment="Counter Value"/>
 		</Plugs>
-		<Sockets>
-			<AdapterDeclaration Name="PV" Type="adapter::types::unidirectional::AUDI" Comment="Preset Value"/>
-		</Sockets>
 	</InterfaceList>
 	<BasicFB>
 		<InternalVars>
@@ -49,8 +38,7 @@
 			</VarDeclaration>
 		</InternalVars>
 		<ECC>
-			<ECState Name="START" Comment="Initial State" x="160" y="1760">
-			</ECState>
+			<ECState Name="START" Comment="Initial State" x="160" y="1760"/>
 			<ECState Name="CU" Comment="Count Up" x="1600" y="-400">
 				<ECAction Algorithm="CU" Output="CV.E1"/>
 				<ECAction Output="CUO"/>
@@ -70,13 +58,11 @@
 			<ECState Name="UPDATE_PV" Comment="Re-evaluate status on PV change" x="1570" y="1150">
 				<ECAction Algorithm="UPDATE"/>
 			</ECState>
-			<ECState Name="CHECK_QU" Comment="Check for QU change" x="2800" y="500">
-			</ECState>
+			<ECState Name="CHECK_QU" Comment="Check for QU change" x="2800" y="500"/>
 			<ECState Name="FIRE_QU" Comment="Fire QU Event" x="4640" y="-240">
 				<ECAction Algorithm="SAVE_QU" Output="QU.E1"/>
 			</ECState>
-			<ECState Name="CHECK_QD" Comment="Check for QD change" x="4800" y="500">
-			</ECState>
+			<ECState Name="CHECK_QD" Comment="Check for QD change" x="4800" y="500"/>
 			<ECState Name="FIRE_QD" Comment="Fire QD Event" x="5280" y="1440">
 				<ECAction Algorithm="SAVE_QD" Output="QD.E1"/>
 			</ECState>
