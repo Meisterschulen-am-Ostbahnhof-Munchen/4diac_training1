@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<GlobalConstants Name="AID_AO" Comment="Animation object attribute ids">
+	<Identification Standard="61499-1" Description="Copyright (c) 2023 HR Agrartechnik GmbH  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0">
+	</Identification>
+	<VersionInfo Organization="HR Agrartechnik GmbH" Version="1.0" Author="Franz Höpfinger" Date="2026-06-20">
+	</VersionInfo>
+	<CompilerInfo packageName="isobus::UT::Q::const::AID">
+		<Import declaration="eclipse4diac::core::TypeHash" />
+	</CompilerInfo>
+	<GlobalConstants>
+		<VarDeclaration Name="WIDTH" Type="USINT" InitialValue="USINT#1" Comment="1: AID_AO_WIDTH - Width in pixels." />
+		<VarDeclaration Name="HEIGHT" Type="USINT" InitialValue="USINT#2" Comment="2: AID_AO_HEIGHT - Height in pixels." />
+		<VarDeclaration Name="REFRESHINT" Type="USINT" InitialValue="USINT#3" Comment="3: AID_AO_REFRESHINT" />
+		<VarDeclaration Name="VALUE" Type="USINT" InitialValue="USINT#4" Comment="4: AID_AO_VALUE - Current value." />
+		<VarDeclaration Name="ENABLED" Type="USINT" InitialValue="USINT#5" Comment="5: AID_AO_ENABLED - 0 = Stopped, 1 = Animating." />
+		<VarDeclaration Name="FICHILDINDEX" Type="USINT" InitialValue="USINT#6" Comment="6: AID_AO_FICHILDINDEX" />
+		<VarDeclaration Name="LACHILDINDEX" Type="USINT" InitialValue="USINT#7" Comment="7: AID_AO_LACHILDINDEX" />
+		<VarDeclaration Name="DEFCHILDINDEX" Type="USINT" InitialValue="USINT#8" Comment="8: AID_AO_DEFCHILDINDEX" />
+		<VarDeclaration Name="OBJECTS" Type="USINT" InitialValue="USINT#9" Comment="9: AID_AO_OBJECTS - OPTIONS - Bit 0: Animation Sequence (0=Single Shot, 1=Loop). Bits 1-2: Disabled Behaviour (0=Pause, 1=Reset to First, 2=Default Object, 3=Blank). (Called OBJECTS in 4diac code)." />
+	</GlobalConstants>
+	<OriginalSource><![CDATA[PACKAGE isobus::UT::Q::const::AID;
+
+(* animation object attribute ids *)
+GLOBALCONSTANTS AID_AO
+	VAR_GLOBAL CONSTANT
+		WIDTH         : USINT := USINT#1; (* 1: AID_AO_WIDTH - Width in pixels. *)
+		HEIGHT        : USINT := USINT#2; (* 2: AID_AO_HEIGHT - Height in pixels. *)
+		REFRESHINT    : USINT := USINT#3; (* 3: AID_AO_REFRESHINT *)
+		VALUE         : USINT := USINT#4; (* 4: AID_AO_VALUE - Current value. *)
+		ENABLED       : USINT := USINT#5; (* 5: AID_AO_ENABLED - 0 = Stopped, 1 = Animating. *)
+		FICHILDINDEX  : USINT := USINT#6; (* 6: AID_AO_FICHILDINDEX *)
+		LACHILDINDEX  : USINT := USINT#7; (* 7: AID_AO_LACHILDINDEX *)
+		DEFCHILDINDEX : USINT := USINT#8; (* 8: AID_AO_DEFCHILDINDEX *)
+		OBJECTS       : USINT := USINT#9; (* 9: AID_AO_OBJECTS - OPTIONS - Bit 0: Animation Sequence (0=Single Shot, 1=Loop). Bits 1-2: Disabled Behaviour (0=Pause, 1=Reset to First, 2=Default Object, 3=Blank). (Called OBJECTS in 4diac code). *)
+	END_VAR
+END_GLOBALCONSTANTS
+]]></OriginalSource>
+	<Attribute Name="eclipse4diac::core::TypeHash" Value="''" />
+</GlobalConstants>
