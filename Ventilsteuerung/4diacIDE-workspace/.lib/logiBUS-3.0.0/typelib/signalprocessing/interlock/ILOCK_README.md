@@ -69,6 +69,7 @@ Composite-FB für ein verriegelbares Toggle-FlipFlop mit AE2-Adapter-Schnittstel
 ## Übungsabdeckung
 
 ### Standard-Reihe (test_B)
+
 | Übung | Baustein | Beschreibung |
 |---|---|---|
 | Uebung_201 | ILOCK_BLOCK | Gegenseitige Verriegelung |
@@ -88,6 +89,7 @@ Composite-FB für ein verriegelbares Toggle-FlipFlop mit AE2-Adapter-Schnittstel
 | Uebung_209 | ILOCK_FB_RS | Reset-Dominantes Latch mit AX2-Verriegelung |
 
 ### AX-Reihe (test_AX)
+
 | Übung | Baustein |
 |---|---|
 | Uebung_201_AX | ILOCK_BLOCK_AX |
