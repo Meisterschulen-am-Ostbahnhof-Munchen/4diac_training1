@@ -10,7 +10,7 @@
 	</CompilerInfo>
 	<SubAppInterfaceList>
 		<InputVars>
-			<VarDeclaration Name="KEY" Type="STRING"/>
+			<VarDeclaration Name="KEY" Type="STRING" Comment="Key name."/>
 			<VarDeclaration Name="stObj" Type="logiBUS::utils::conversion::phys::NumericObjectPool_S" InitialValue="(u16ObjId := ID_NULL, r32Scale := 1.0, i32Offset := 0, u8Decimals := 0)"/>
 		</InputVars>
 		<Plugs>
@@ -20,6 +20,7 @@
 	<SubAppNetwork>
 		<FB Name="NVS_AR" Type="logiBUS::storage::esp32_nvs::NVS_AR" x="800" y="-93.33">
 			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="SETM" Value="TRUE"/>
 			<Parameter Name="DEFAULT_VALUE" Value="REAL#0.0"/>
 		</FB>
 		<FB Name="NumericValue_PHYSA" Type="isobus::UT::io::NumericValue::NumericValue_PHYSA" x="-2800" y="-200">
@@ -42,7 +43,7 @@
 		</DataConnections>
 		<AdapterConnections>
 			<Connection Source="NVS_AR.AR_OUT" Destination="AR_SPLIT_2.IN" dx1="106.67"/>
-			<Connection Source="NumericValue_PHYSA.rPhys" Destination="NVS_AR.AR_IN"/>
+			<Connection Source="NumericValue_PHYSA.rPhys" Destination="NVS_AR.AR_IN" dx1="1233.33"/>
 			<Connection Source="AR_SPLIT_2.OUT1" Destination="VALUEO" dx1="2220">
 				<Attribute Name="Visible" Value="false"/>
 			</Connection>

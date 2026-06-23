@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<SubAppType Name="Uebung_020c2" Comment="DigitalInput_I1 auf DigitalOutput_Q1; E_TON Einschaltverzögert; Zeit eingeben und speichern, NVS">
+<SubAppType Name="Uebung_020c4" Comment="DigitalInput_I1 auf DigitalOutput_Q1; E_TON Einschaltverzögert; Zeit eingeben und speichern, INI">
 	<Identification Standard="61499-2" Description="Copyright (c) 2023 Meisterschulen am Ostbahnhof  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0">
 	</Identification>
 	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2023-10-23" Remarks="initial API and implementation and/or initial documentation">
@@ -9,6 +9,7 @@
 		<Import declaration="Uebungen::const::UT::DefaultPool::InputNumber_I1"/>
 		<Import declaration="logiBUS::io::DI::logiBUS_DI::Input_I1"/>
 		<Import declaration="logiBUS::io::DQ::logiBUS_DO::Output_Q1"/>
+		<Import declaration="Uebungen::const::NVS::NVS_Keys::SECTION_I1_STORE"/>
 	</CompilerInfo>
 	<SubAppInterfaceList>
 	</SubAppInterfaceList>
@@ -28,8 +29,9 @@
 		</FB>
 		<FB Name="E_TON" Type="iec61499::events::timers::E_TON" x="-7100" y="500">
 		</FB>
-		<SubApp Name="Uebung_020c2_sub" Type="MyLib::sys::NVS_IN_AND_STORE_UDINT" x="-10100" y="1700">
+		<SubApp Name="INI_IN_AND_STORE_UDINT" Type="MyLib::sys::INI_IN_AND_STORE_UDINT" x="-10500" y="1700">
 			<Parameter Name="KEY" Value="KEY_I1_STORE"/>
+			<Parameter Name="SECTION" Value="SECTION_I1_STORE"/>
 			<Parameter Name="u16ObjId" Value="InputNumber_I1"/>
 		</SubApp>
 		<FB Name="F_MULTIME" Type="iec61131::arithmetic::F_MULTIME" x="-8300" y="1700">
@@ -38,13 +40,13 @@
 		<EventConnections>
 			<Connection Source="DigitalInput_I1.IND" Destination="E_TON.REQ" dx1="573.33"/>
 			<Connection Source="E_TON.CNF" Destination="DigitalOutput_Q1.REQ" dx1="366.67"/>
-			<Connection Source="Uebung_020c2_sub.IND" Destination="F_MULTIME.REQ"/>
+			<Connection Source="INI_IN_AND_STORE_UDINT.IND" Destination="F_MULTIME.REQ"/>
 		</EventConnections>
 		<DataConnections>
 			<Connection Source="DigitalInput_I1.IN" Destination="E_TON.IN" dx1="386.67"/>
 			<Connection Source="E_TON.Q" Destination="DigitalOutput_Q1.OUT" dx1="460"/>
 			<Connection Source="F_MULTIME.OUT" Destination="E_TON.PT" dx1="253.33"/>
-			<Connection Source="Uebung_020c2_sub.VALUEO" Destination="F_MULTIME.IN2" dx1="346.67"/>
+			<Connection Source="INI_IN_AND_STORE_UDINT.VALUEO" Destination="F_MULTIME.IN2" dx1="440"/>
 		</DataConnections>
 	</SubAppNetwork>
 </SubAppType>
