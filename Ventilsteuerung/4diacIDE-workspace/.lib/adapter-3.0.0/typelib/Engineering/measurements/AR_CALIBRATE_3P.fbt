@@ -49,18 +49,18 @@
 			<ECState Name="CAL_MAX" x="1200" y="1200">
 				<ECAction Algorithm="CAL_MAX" Output="X_MAX.EO1"/>
 			</ECState>
-			<ECTransition Source="IDLE" Destination="REQ" Condition="X.E1" Comment="" x="800" y="400"/>
-			<ECTransition Source="REQ" Destination="IDLE" Condition="1" Comment="" x="800" y="500"/>
-			<ECTransition Source="IDLE" Destination="REQ" Condition="SET" Comment="" x="200" y="200"/>
-			<ECTransition Source="IDLE" Destination="REQ" Condition="X_MIN.EI1" Comment="" x="200" y="300"/>
-			<ECTransition Source="IDLE" Destination="REQ" Condition="X_MID.EI1" Comment="" x="200" y="400"/>
-			<ECTransition Source="IDLE" Destination="REQ" Condition="X_MAX.EI1" Comment="" x="200" y="500"/>
-			<ECTransition Source="IDLE" Destination="CAL_MIN" Condition="C_MIN.E1[C_MIN.D1]" Comment="" x="800" y="200"/>
-			<ECTransition Source="CAL_MIN" Destination="IDLE" Condition="1" Comment="" x="800" y="100"/>
-			<ECTransition Source="IDLE" Destination="CAL_MID" Condition="C_MID.E1[C_MID.D1]" Comment="" x="800" y="600"/>
-			<ECTransition Source="CAL_MID" Destination="IDLE" Condition="1" Comment="" x="800" y="700"/>
-			<ECTransition Source="IDLE" Destination="CAL_MAX" Condition="C_MAX.E1[C_MAX.D1]" Comment="" x="800" y="1000"/>
-			<ECTransition Source="CAL_MAX" Destination="IDLE" Condition="1" Comment="" x="800" y="1100"/>
+			<ECTransition Source="IDLE" Destination="REQ" Condition="X.E1" x="800" y="400"/>
+			<ECTransition Source="REQ" Destination="IDLE" Condition="1" x="800" y="500"/>
+			<ECTransition Source="IDLE" Destination="REQ" Condition="SET" x="200" y="200"/>
+			<ECTransition Source="IDLE" Destination="REQ" Condition="X_MIN.EI1" x="200" y="300"/>
+			<ECTransition Source="IDLE" Destination="REQ" Condition="X_MID.EI1" x="200" y="400"/>
+			<ECTransition Source="IDLE" Destination="REQ" Condition="X_MAX.EI1" x="200" y="500"/>
+			<ECTransition Source="IDLE" Destination="CAL_MIN" Condition="C_MIN.E1[C_MIN.D1]" x="800" y="200"/>
+			<ECTransition Source="CAL_MIN" Destination="IDLE" Condition="1" x="800" y="100"/>
+			<ECTransition Source="IDLE" Destination="CAL_MID" Condition="C_MID.E1[C_MID.D1]" x="800" y="600"/>
+			<ECTransition Source="CAL_MID" Destination="IDLE" Condition="1" x="800" y="700"/>
+			<ECTransition Source="IDLE" Destination="CAL_MAX" Condition="C_MAX.E1[C_MAX.D1]" x="800" y="1000"/>
+			<ECTransition Source="CAL_MAX" Destination="IDLE" Condition="1" x="800" y="1100"/>
 		</ECC>
 		<Algorithm Name="REQ">
 			<ST><![CDATA[

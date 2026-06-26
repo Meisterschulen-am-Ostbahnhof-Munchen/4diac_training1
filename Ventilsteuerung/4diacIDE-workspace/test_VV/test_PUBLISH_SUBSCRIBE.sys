@@ -3,12 +3,6 @@
 	<VersionInfo Version="1.0" Author="Franz Höpfinger" Date="2023-10-23">
 	</VersionInfo>
 	<CompilerInfo packageName="Training_PUBLISH_SUBSCRIBE">
-		<Import declaration="VV::const::Computers::myComputers::C_PC_PUBLISH"/>
-		<Import declaration="VV::const::Computers::myComputers::C_PC_SUBSCRIBE"/>
-		<Import declaration="VV::const::ports::myPorts::PORT_0"/>
-		<Import declaration="VV::const::ports::myPorts::PORT_1"/>
-		<Import declaration="VV::const::ports::myPorts::PORT_2"/>
-		<Import declaration="VV::const::ports::myPorts::PORT_3"/>
 		<Import declaration="logiBUS::io::DI::logiBUS_DI::Input_I1"/>
 		<Import declaration="logiBUS::io::DI::logiBUS_DI::Input_I2"/>
 		<Import declaration="logiBUS::io::DI::logiBUS_DI::Input_I3"/>
@@ -77,67 +71,67 @@
 		</SubAppNetwork>
 	</Application>
 	<Device Name="FORTE_PC_PUBLISH" Type="iec61499::system::FORTE_PC" x="1760" y="1840">
-		<Parameter Name="MGR_ID" Value="C_PC_PUBLISH" Comment="Device manager socket ID"/>
+		<Parameter Name="MGR_ID" Value="VV::const::Computers::myComputers::C_PC_PUBLISH" Comment="Device manager socket ID"/>
 		<Attribute Name="Profile" Type="STRING" Value="HOLOBLOC"/>
 		<Attribute Name="Color" Type="STRING" Value="255,190,111"/>
 		<Resource Name="EMB_RES_PUBLISH" Type="iec61499::system::EMB_RES" x="0" y="0">
 			<FBNetwork>
 				<FB Name="PUBLISH_BUTTON_GREEN" Type="iec61499::net::PUBLISH_1" x="4400" y="700">
 					<Parameter Name="QI" Value="TRUE"/>
-					<Parameter Name="ID" Value="PORT_0"/>
+					<Parameter Name="ID" Value="VV::const::ports::myPorts::PORT_0"/>
 				</FB>
 				<FB Name="PUBLISH_BUTTON_YELLOW" Type="iec61499::net::PUBLISH_1" x="4300" y="1800">
 					<Parameter Name="QI" Value="TRUE"/>
-					<Parameter Name="ID" Value="PORT_1"/>
+					<Parameter Name="ID" Value="VV::const::ports::myPorts::PORT_1"/>
 				</FB>
 				<FB Name="PUBLISH_BUTTON_RED" Type="iec61499::net::PUBLISH_1" x="4400" y="3000">
 					<Parameter Name="QI" Value="TRUE"/>
-					<Parameter Name="ID" Value="PORT_2"/>
+					<Parameter Name="ID" Value="VV::const::ports::myPorts::PORT_2"/>
 				</FB>
 				<FB Name="PUBLISH_BUTTON_BLUE" Type="iec61499::net::PUBLISH_1" x="4400" y="4100">
 					<Parameter Name="QI" Value="TRUE"/>
-					<Parameter Name="ID" Value="PORT_3"/>
+					<Parameter Name="ID" Value="VV::const::ports::myPorts::PORT_3"/>
 				</FB>
 				<FB Name="E_TRIG" Type="iec61499::events::E_TRIG" x="2700" y="-1000">
 					<Parameter Name="EVENTTYPE" Value="'EInit'"/>
 				</FB>
 				<EventConnections>
 					<Connection Source="START.COLD" Destination="E_TRIG.REQ" dx1="946.67"/>
-					<Connection Source="App_PUBLISH_SUBSCRIBE.BUTTON_GREEN.IND" Destination="PUBLISH_BUTTON_GREEN.REQ"/>
+					<Connection Source="App_PUBLISH_SUBSCRIBE.BUTTON_GREEN.IND" Destination="PUBLISH_BUTTON_GREEN.REQ" dx1="420"/>
 					<Connection Source="App_PUBLISH_SUBSCRIBE.BUTTON_YELLOW.IND" Destination="PUBLISH_BUTTON_YELLOW.REQ" dx1="366.67"/>
 					<Connection Source="App_PUBLISH_SUBSCRIBE.BUTTON_RED.IND" Destination="PUBLISH_BUTTON_RED.REQ" dx1="380"/>
-					<Connection Source="App_PUBLISH_SUBSCRIBE.BUTTON_BLUE.IND" Destination="PUBLISH_BUTTON_BLUE.REQ"/>
+					<Connection Source="App_PUBLISH_SUBSCRIBE.BUTTON_BLUE.IND" Destination="PUBLISH_BUTTON_BLUE.REQ" dx1="406.67"/>
 				</EventConnections>
 				<DataConnections>
-					<Connection Source="App_PUBLISH_SUBSCRIBE.BUTTON_GREEN.IN" Destination="PUBLISH_BUTTON_GREEN.SD_1"/>
+					<Connection Source="App_PUBLISH_SUBSCRIBE.BUTTON_GREEN.IN" Destination="PUBLISH_BUTTON_GREEN.SD_1" dx1="420"/>
 					<Connection Source="App_PUBLISH_SUBSCRIBE.BUTTON_YELLOW.IN" Destination="PUBLISH_BUTTON_YELLOW.SD_1" dx1="366.67"/>
 					<Connection Source="App_PUBLISH_SUBSCRIBE.BUTTON_RED.IN" Destination="PUBLISH_BUTTON_RED.SD_1" dx1="380"/>
-					<Connection Source="App_PUBLISH_SUBSCRIBE.BUTTON_BLUE.IN" Destination="PUBLISH_BUTTON_BLUE.SD_1"/>
+					<Connection Source="App_PUBLISH_SUBSCRIBE.BUTTON_BLUE.IN" Destination="PUBLISH_BUTTON_BLUE.SD_1" dx1="406.67"/>
 				</DataConnections>
 			</FBNetwork>
 		</Resource>
 	</Device>
-	<Device Name="FORTE_PC_SUBSCRIBE" Type="iec61499::system::FORTE_PC" x="5333.33" y="1866.67">
-		<Parameter Name="MGR_ID" Value="C_PC_SUBSCRIBE" Comment="Device manager socket ID"/>
+	<Device Name="FORTE_PC_SUBSCRIBE" Type="iec61499::system::FORTE_PC" x="2400" y="2560">
+		<Parameter Name="MGR_ID" Value="VV::const::Computers::myComputers::C_PC_SUBSCRIBE" Comment="Device manager socket ID"/>
 		<Attribute Name="Profile" Type="STRING" Value="HOLOBLOC"/>
 		<Attribute Name="Color" Type="STRING" Value="59,215,47"/>
 		<Resource Name="EMB_RES_SUBSCRIBE" Type="iec61499::system::EMB_RES" x="0" y="0">
 			<FBNetwork>
 				<FB Name="SUBSCRIBE_BUTTON_GREEN" Type="iec61499::net::SUBSCRIBE_1" x="2800" y="700">
 					<Parameter Name="QI" Value="TRUE"/>
-					<Parameter Name="ID" Value="PORT_0"/>
+					<Parameter Name="ID" Value="VV::const::ports::myPorts::PORT_0"/>
 				</FB>
 				<FB Name="SUBSCRIBE_BUTTON_YELLOW" Type="iec61499::net::SUBSCRIBE_1" x="2800" y="2000">
 					<Parameter Name="QI" Value="TRUE"/>
-					<Parameter Name="ID" Value="PORT_1"/>
+					<Parameter Name="ID" Value="VV::const::ports::myPorts::PORT_1"/>
 				</FB>
 				<FB Name="SUBSCRIBE_BUTTON_RED" Type="iec61499::net::SUBSCRIBE_1" x="2800" y="3200">
 					<Parameter Name="QI" Value="TRUE"/>
-					<Parameter Name="ID" Value="PORT_2"/>
+					<Parameter Name="ID" Value="VV::const::ports::myPorts::PORT_2"/>
 				</FB>
 				<FB Name="SUBSCRIBE_BUTTON_BLUE" Type="iec61499::net::SUBSCRIBE_1" x="2800" y="4400">
 					<Parameter Name="QI" Value="TRUE"/>
-					<Parameter Name="ID" Value="PORT_3"/>
+					<Parameter Name="ID" Value="VV::const::ports::myPorts::PORT_3"/>
 				</FB>
 				<FB Name="E_TRIG" Type="iec61499::events::E_TRIG" x="2400" y="100">
 					<Parameter Name="EVENTTYPE" Value="'EInit'"/>
@@ -158,6 +152,9 @@
 			</FBNetwork>
 		</Resource>
 	</Device>
+	<Segment Name="Ethernet" Type="iec61499::system::Ethernet" x="2640" y="1440" dx1="2000">
+		<Attribute Name="Color" Type="STRING" Value="56,90,235"/>
+	</Segment>
 	<Mapping From="App_PUBLISH_SUBSCRIBE.BUTTON_BLUE" To="FORTE_PC_PUBLISH.EMB_RES_PUBLISH"/>
 	<Mapping From="App_PUBLISH_SUBSCRIBE.BUTTON_RED" To="FORTE_PC_PUBLISH.EMB_RES_PUBLISH"/>
 	<Mapping From="App_PUBLISH_SUBSCRIBE.BUTTON_YELLOW" To="FORTE_PC_PUBLISH.EMB_RES_PUBLISH"/>
@@ -166,4 +163,8 @@
 	<Mapping From="App_PUBLISH_SUBSCRIBE.LED_BLUE_5HZ" To="FORTE_PC_SUBSCRIBE.EMB_RES_SUBSCRIBE"/>
 	<Mapping From="App_PUBLISH_SUBSCRIBE.LED_GREEN_5HZ" To="FORTE_PC_SUBSCRIBE.EMB_RES_SUBSCRIBE"/>
 	<Mapping From="App_PUBLISH_SUBSCRIBE.BUTTON_GREEN" To="FORTE_PC_PUBLISH.EMB_RES_PUBLISH"/>
+	<Link SegmentName="Ethernet" CommResource="FORTE_PC_PUBLISH" Comment="">
+	</Link>
+	<Link SegmentName="Ethernet" CommResource="FORTE_PC_SUBSCRIBE" Comment="">
+	</Link>
 </System>

@@ -46,12 +46,12 @@
 			<ECState Name="DeInit" x="1140" y="1520">
 				<ECAction Algorithm="deInitialize" Output="INITO"/>
 			</ECState>
-			<ECTransition Source="START" Destination="Init" Condition="INIT[TRUE = QI]" Comment="" x="840" y="920"/>
-			<ECTransition Source="Init" Destination="Initialized" Condition="1" Comment="" x="1660" y="975"/>
-			<ECTransition Source="Initialized" Destination="NormalOp" Condition="DI1.E1" Comment="" x="2615" y="1000"/>
-			<ECTransition Source="NormalOp" Destination="Initialized" Condition="1" Comment="" x="2575" y="1430"/>
-			<ECTransition Source="DeInit" Destination="START" Condition="1" Comment="" x="940" y="1445"/>
-			<ECTransition Source="Initialized" Destination="DeInit" Condition="INIT[FALSE = QI]" Comment="" x="1690" y="1340"/>
+			<ECTransition Source="START" Destination="Init" Condition="INIT[TRUE = QI]" x="840" y="920"/>
+			<ECTransition Source="Init" Destination="Initialized" Condition="1" x="1660" y="975"/>
+			<ECTransition Source="Initialized" Destination="NormalOp" Condition="DI1.E1" x="2615" y="1000"/>
+			<ECTransition Source="NormalOp" Destination="Initialized" Condition="1" x="2575" y="1430"/>
+			<ECTransition Source="DeInit" Destination="START" Condition="1" x="940" y="1445"/>
+			<ECTransition Source="Initialized" Destination="DeInit" Condition="INIT[FALSE = QI]" x="1690" y="1340"/>
 		</ECC>
 		<Algorithm Name="initialize" Comment="Initialization algorithm">
 			<ST><![CDATA[

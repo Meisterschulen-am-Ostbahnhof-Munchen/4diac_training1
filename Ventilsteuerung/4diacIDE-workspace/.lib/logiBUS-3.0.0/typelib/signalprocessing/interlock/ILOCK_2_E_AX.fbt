@@ -57,82 +57,82 @@
 				<ECAction Algorithm="TOGGLE2" Output="OUT2.E1"/>
 				<ECAction Algorithm="TOGGLE2_2" Output="OUT1.E1"/>
 			</ECState>
-			<ECTransition Source="STOP" Destination="SET1" Condition="SET1" Comment="" x="1140" y="620"/>
-			<ECTransition Source="STOP" Destination="SET2" Condition="SET2" Comment="" x="1946.67" y="53.33"/>
-			<ECTransition Source="STOP" Destination="TOGGLE1" Condition="CLK1" Comment="" x="1906.67" y="820"/>
-			<ECTransition Source="STOP" Destination="TOGGLE2" Condition="CLK2" Comment="" x="1653.33" y="53.33"/>
-			<ECTransition Source="STOP" Destination="RESET" Condition="R" Comment="" x="1800" y="1506.67"/>
-			<ECTransition Source="TOGGLE1" Destination="STOP" Condition="1" Comment="" x="1866.67" y="1040"/>
-			<ECTransition Source="SET1" Destination="STOP" Condition="1" Comment="" x="1140" y="980"/>
-			<ECTransition Source="SET2" Destination="STOP" Condition="1" Comment="" x="1980" y="273.33"/>
-			<ECTransition Source="TOGGLE2" Destination="STOP" Condition="1" Comment="" x="1353.33" y="73.33"/>
-			<ECTransition Source="RESET" Destination="STOP" Condition="1" Comment="" x="1606.67" y="1813.33"/>
+			<ECTransition Source="STOP" Destination="SET1" Condition="SET1" x="1140" y="620"/>
+			<ECTransition Source="STOP" Destination="SET2" Condition="SET2" x="1946.67" y="53.33"/>
+			<ECTransition Source="STOP" Destination="TOGGLE1" Condition="CLK1" x="1906.67" y="820"/>
+			<ECTransition Source="STOP" Destination="TOGGLE2" Condition="CLK2" x="1653.33" y="53.33"/>
+			<ECTransition Source="STOP" Destination="RESET" Condition="R" x="1800" y="1506.67"/>
+			<ECTransition Source="TOGGLE1" Destination="STOP" Condition="1" x="1866.67" y="1040"/>
+			<ECTransition Source="SET1" Destination="STOP" Condition="1" x="1140" y="980"/>
+			<ECTransition Source="SET2" Destination="STOP" Condition="1" x="1980" y="273.33"/>
+			<ECTransition Source="TOGGLE2" Destination="STOP" Condition="1" x="1353.33" y="73.33"/>
+			<ECTransition Source="RESET" Destination="STOP" Condition="1" x="1606.67" y="1813.33"/>
 		</ECC>
 		<Algorithm Name="SET1">
-			<ST><![CDATA[ALGORITHM SET1
+			<ST><![CDATA[
 OUT1.D1 := TRUE;
 OUT2.D1 := FALSE;
 EDGE1 := FALSE;
 EDGE2 := FALSE;
-END_ALGORITHM]]></ST>
+]]></ST>
 		</Algorithm>
 		<Algorithm Name="SET2">
-			<ST><![CDATA[ALGORITHM SET2
+			<ST><![CDATA[
 OUT1.D1 := FALSE;
 OUT2.D1 := TRUE;
 EDGE1 := FALSE;
 EDGE2 := FALSE;
-END_ALGORITHM]]></ST>
+]]></ST>
 		</Algorithm>
 		<Algorithm Name="TOGGLE1">
-			<ST><![CDATA[ALGORITHM TOGGLE1
+			<ST><![CDATA[
 IF NOT EDGE1 THEN
-    OUT1.D1 := NOT OUT1.D1;
+	OUT1.D1 := NOT OUT1.D1;
 END_IF;
 EDGE1 := TRUE;
 EDGE2 := FALSE;
-END_ALGORITHM]]></ST>
+]]></ST>
 		</Algorithm>
 		<Algorithm Name="TOGGLE1_2">
-			<ST><![CDATA[ALGORITHM TOGGLE1_2
+			<ST><![CDATA[
 OUT2.D1 := FALSE;
-END_ALGORITHM]]></ST>
+]]></ST>
 		</Algorithm>
 		<Algorithm Name="TOGGLE2">
-			<ST><![CDATA[ALGORITHM TOGGLE2
+			<ST><![CDATA[
 IF NOT EDGE2 THEN
-    OUT2.D1 := NOT OUT2.D1;
+	OUT2.D1 := NOT OUT2.D1;
 END_IF;
 EDGE1 := FALSE;
 EDGE2 := TRUE;
-END_ALGORITHM]]></ST>
+]]></ST>
 		</Algorithm>
 		<Algorithm Name="TOGGLE2_2">
-			<ST><![CDATA[ALGORITHM TOGGLE2_2
+			<ST><![CDATA[
 OUT1.D1 := FALSE;
-END_ALGORITHM]]></ST>
+]]></ST>
 		</Algorithm>
 		<Algorithm Name="RESET">
-			<ST><![CDATA[ALGORITHM RESET
+			<ST><![CDATA[
 OUT1.D1 := FALSE;
 OUT2.D1 := FALSE;
 EDGE1 := FALSE;
 EDGE2 := FALSE;
-END_ALGORITHM]]></ST>
+]]></ST>
 		</Algorithm>
 		<Algorithm Name="RESET1">
-			<ST><![CDATA[ALGORITHM RESET1
+			<ST><![CDATA[
 OUT1.D1 := FALSE;
 EDGE1 := FALSE;
 EDGE2 := FALSE;
-END_ALGORITHM]]></ST>
+]]></ST>
 		</Algorithm>
 		<Algorithm Name="RESET2">
-			<ST><![CDATA[ALGORITHM RESET2
+			<ST><![CDATA[
 OUT2.D1 := FALSE;
 EDGE1 := FALSE;
 EDGE2 := FALSE;
-END_ALGORITHM]]></ST>
+]]></ST>
 		</Algorithm>
 	</BasicFB>
 	<Attribute Name="eclipse4diac::core::TypeHash" Value="''"/>

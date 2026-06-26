@@ -23,14 +23,12 @@
 			<ECState Name="REQ" x="0" y="0">
 				<ECAction Algorithm="REQ" Output="Q1.E1"/>
 			</ECState>
-			<ECTransition Source="REQ" Destination="REQ" Condition="RESET1.E1" Comment="" x="380" y="646.67"/>
-			<ECTransition Source="REQ" Destination="REQ" Condition="SET.E1" Comment="" x="-233.33" y="646.67"/>
+			<ECTransition Source="REQ" Destination="REQ" Condition="RESET1.E1" x="380" y="646.67"/>
+			<ECTransition Source="REQ" Destination="REQ" Condition="SET.E1" x="-233.33" y="646.67"/>
 		</ECC>
 		<Algorithm Name="REQ">
-			<ST><![CDATA[ALGORITHM REQ
+			<ST><![CDATA[
 Q1.D1 := (NOT RESET1.D1) AND (SET.D1 OR Q1.D1);
-END_ALGORITHM
-
 ]]></ST>
 		</Algorithm>
 	</BasicFB>

@@ -57,16 +57,16 @@
 			<ECState Name="EMIT_Q" Comment="Fires Q event and saves state" x="3920" y="1200">
 				<ECAction Algorithm="SAVE_Q" Output="Q.E1"/>
 			</ECState>
-			<ECTransition Source="START" Destination="CU" Condition="CU[CV.D1 &lt; 65535]" Comment="" x="1693.33" y="553.33"/>
-			<ECTransition Source="CU" Destination="EMIT_Q" Condition="[Q.D1 &lt;&gt; Q_OLD]" Comment="" x="3746.67" y="826.67"/>
-			<ECTransition Source="CU" Destination="START" Condition="[Q.D1 = Q_OLD]" Comment="" x="1980" y="746.67"/>
-			<ECTransition Source="START" Destination="R" Condition="R" Comment="" x="1613.33" y="1940"/>
-			<ECTransition Source="R" Destination="EMIT_Q" Condition="[Q.D1 &lt;&gt; Q_OLD]" Comment="" x="2166.67" y="2000"/>
-			<ECTransition Source="R" Destination="START" Condition="[Q.D1 = Q_OLD]" Comment="" x="1153.33" y="2146.67"/>
-			<ECTransition Source="START" Destination="UPDATE_PV" Condition="PV.E1" Comment="" x="3526.67" y="1886.67"/>
-			<ECTransition Source="UPDATE_PV" Destination="EMIT_Q" Condition="[Q.D1 &lt;&gt; Q_OLD]" Comment="" x="4026.67" y="1773.33"/>
-			<ECTransition Source="UPDATE_PV" Destination="START" Condition="[Q.D1 = Q_OLD]" Comment="" x="3333.33" y="2213.33"/>
-			<ECTransition Source="EMIT_Q" Destination="START" Condition="1" Comment="" x="2660" y="1213.33"/>
+			<ECTransition Source="START" Destination="CU" Condition="CU[CV.D1 &lt; 65535]" x="1693.33" y="553.33"/>
+			<ECTransition Source="CU" Destination="EMIT_Q" Condition="[Q.D1 &lt;&gt; Q_OLD]" x="3746.67" y="826.67"/>
+			<ECTransition Source="CU" Destination="START" Condition="[Q.D1 = Q_OLD]" x="1980" y="746.67"/>
+			<ECTransition Source="START" Destination="R" Condition="R" x="1613.33" y="1940"/>
+			<ECTransition Source="R" Destination="EMIT_Q" Condition="[Q.D1 &lt;&gt; Q_OLD]" x="2166.67" y="2000"/>
+			<ECTransition Source="R" Destination="START" Condition="[Q.D1 = Q_OLD]" x="1153.33" y="2146.67"/>
+			<ECTransition Source="START" Destination="UPDATE_PV" Condition="PV.E1" x="3526.67" y="1886.67"/>
+			<ECTransition Source="UPDATE_PV" Destination="EMIT_Q" Condition="[Q.D1 &lt;&gt; Q_OLD]" x="4026.67" y="1773.33"/>
+			<ECTransition Source="UPDATE_PV" Destination="START" Condition="[Q.D1 = Q_OLD]" x="3333.33" y="2213.33"/>
+			<ECTransition Source="EMIT_Q" Destination="START" Condition="1" x="2660" y="1213.33"/>
 		</ECC>
 		<Algorithm Name="R" Comment="reset counter">
 			<ST><![CDATA[

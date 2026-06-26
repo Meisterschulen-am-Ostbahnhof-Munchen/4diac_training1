@@ -1,6 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Manifest xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="platform:/resource/org.eclipse.fordiac.ide.library.model/model/library.xsd" Scope="Library">
-    <Product Name="BlinkMarine" SymbolicName="BlinkMarine" Comment="Function Blocks for BlinkMarine Hardware Integration">
-        <VersionInfo Version="3.0.0" Author="HR Agrartechnik GmbH" Date="2025-11-02"/>
-    </Product>
+  <Dependencies>
+    <Required SymbolicName="adapter" Version="3.0.0"/>
+    <Required SymbolicName="core" Version="3.0.0"/>
+    <Required SymbolicName="iec61131-3" Version="3.0.0"/>
+    <Required SymbolicName="iec61131-3-bool" Version="3.0.0"/>
+    <Required SymbolicName="isobus" Version="3.0.0"/>
+    <Required SymbolicName="logiBUS" Version="3.0.0"/>
+    <Required SymbolicName="signalprocessing" Version="3.0.0"/>
+  </Dependencies>
+  <Product Comment="Function Blocks for BlinkMarine Hardware Integration" Name="BlinkMarine" SymbolicName="BlinkMarine">
+    <VersionInfo Author="HR Agrartechnik GmbH" Date="2025-11-02" Version="3.0.0"/>
+  </Product>
 </Manifest>

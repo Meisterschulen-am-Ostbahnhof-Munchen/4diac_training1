@@ -24,9 +24,9 @@
 				<ECAction Output="ILOCK_IN.EI1"/>
 				<ECAction Output="ILOCK_OUT.EO1"/>
 			</ECState>
-			<ECTransition Source="REQ" Destination="REQ" Condition="IN.E1" Comment="" x="160" y="766.67"/>
-			<ECTransition Source="REQ" Destination="REQ" Condition="ILOCK_IN.EO1" Comment="" x="-160" y="413.33"/>
-			<ECTransition Source="REQ" Destination="REQ" Condition="ILOCK_OUT.EI1" Comment="" x="213.33" y="526.67"/>
+			<ECTransition Source="REQ" Destination="REQ" Condition="IN.E1" x="160" y="766.67"/>
+			<ECTransition Source="REQ" Destination="REQ" Condition="ILOCK_IN.EO1" x="-160" y="413.33"/>
+			<ECTransition Source="REQ" Destination="REQ" Condition="ILOCK_OUT.EI1" x="213.33" y="526.67"/>
 		</ECC>
 		<Algorithm Name="REQ" Comment="Momentary latch: Q1 is active if SET is active AND no other element is set">
 			<ST><![CDATA[

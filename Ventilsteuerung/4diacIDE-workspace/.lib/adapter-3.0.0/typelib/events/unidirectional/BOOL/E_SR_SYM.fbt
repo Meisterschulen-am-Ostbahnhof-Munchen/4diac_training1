@@ -33,16 +33,20 @@
 			<ECState Name="RESET" x="1165" y="845">
 				<ECAction Algorithm="RESET" Output="EO"/>
 			</ECState>
-			<ECTransition Source="START" Destination="SET" Condition="S" Comment="" x="995" y="455"/>
-			<ECTransition Source="SET" Destination="RESET" Condition="R" Comment="" x="1205" y="685"/>
-			<ECTransition Source="RESET" Destination="SET" Condition="S" Comment="" x="1460" y="675"/>
-			<ECTransition Source="START" Destination="RESET" Condition="R" Comment="" x="906.67" y="813.33"/>
+			<ECTransition Source="START" Destination="SET" Condition="S" x="995" y="455"/>
+			<ECTransition Source="SET" Destination="RESET" Condition="R" x="1205" y="685"/>
+			<ECTransition Source="RESET" Destination="SET" Condition="S" x="1460" y="675"/>
+			<ECTransition Source="START" Destination="RESET" Condition="R" x="906.67" y="813.33"/>
 		</ECC>
 		<Algorithm Name="SET" Comment="SET algorithm">
-			<ST><![CDATA[Q := TRUE;]]></ST>
+			<ST><![CDATA[
+Q := TRUE;
+]]></ST>
 		</Algorithm>
 		<Algorithm Name="RESET" Comment="RESET algorithm">
-			<ST><![CDATA[Q := FALSE;]]></ST>
+			<ST><![CDATA[
+Q := FALSE;
+]]></ST>
 		</Algorithm>
 	</BasicFB>
 	<Attribute Name="eclipse4diac::core::TypeHash" Value="''"/>
