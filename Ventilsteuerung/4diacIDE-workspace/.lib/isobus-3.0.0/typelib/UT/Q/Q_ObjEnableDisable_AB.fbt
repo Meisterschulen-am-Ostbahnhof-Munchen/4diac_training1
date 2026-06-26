@@ -6,8 +6,6 @@
 	</VersionInfo>
 	<CompilerInfo packageName="isobus::UT::Q">
 		<Import declaration="eclipse4diac::core::TypeHash"/>
-		<Import declaration="adapter::types::unidirectional::AB"/>
-		<Import declaration="isobus::UT::Q::Q_ObjEnableDisable"/>
 	</CompilerInfo>
 	<InterfaceList>
 		<EventInputs>
@@ -23,7 +21,7 @@
 			<VarDeclaration Name="u16ObjId" Type="UINT" Comment="Object ID"/>
 		</InputVars>
 		<Plugs>
-			<AdapterDeclaration Name="qOldAbility" Type="adapter::types::unidirectional::AB" Comment="0 == disable, 1 == enable, 0xFF == undefined"/>
+			<AdapterDeclaration Name="qOldAbility" Type="adapter::types::unidirectional::AB" Comment="0 == disable, 1 == enable, 0xFF == undefined" x="3100" y="-100"/>
 		</Plugs>
 		<Sockets>
 			<AdapterDeclaration Name="qAbility" Type="adapter::types::unidirectional::AB" Comment="0 == disable, 1 == enable, 0xFF == undefined" x="-1100" y="-400"/>
@@ -41,7 +39,7 @@
 		<DataConnections>
 			<Connection Source="u16ObjId" Destination="Q_ObjEnableDisable.u16ObjId" dx1="200"/>
 			<Connection Source="qAbility.D1" Destination="Q_ObjEnableDisable.qAbility" dx1="846.67"/>
-			<Connection Source="Q_ObjEnableDisable.qOldAbility" Destination="qOldAbility.D1" dx1="733.33"/>
+			<Connection Source="Q_ObjEnableDisable.qOldAbility" Destination="qOldAbility.D1" dx1="266.67"/>
 		</DataConnections>
 	</FBNetwork>
 	<Attribute Name="eclipse4diac::core::TypeHash" Value="''"/>
