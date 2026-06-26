@@ -7,15 +7,15 @@
 	<CompilerInfo packageName="isobus::UT::Q::const::AID">
 	</CompilerInfo>
 	<GlobalConstants>
-		<VarDeclaration Name="VALTYPE" Type="USINT" InitialValue="USINT#1"/>
+		<VarDeclaration Name="VALTYPE" Type="USINT" Comment="1: AID_EIA_VALTYPE - Validation Type: 0 = valid characters are listed, 1 = invalid characters are" InitialValue="USINT#1"/>
 	</GlobalConstants>
 	<OriginalSource><![CDATA[PACKAGE isobus::UT::Q::const::AID;
 
-(* extended input attributes object attribute ids *)
+// extended input attributes object attribute ids
 GLOBALCONSTANTS AID_EIA
 	VAR_GLOBAL CONSTANT
-		VALTYPE : USINT := USINT#1; (* 1: AID_EIA_VALTYPE - Validation Type: 0 = valid characters are listed, 1 = invalid characters
-		                             * are listed. *)
+		VALTYPE : USINT := USINT#1; // 1: AID_EIA_VALTYPE - Validation Type: 0 = valid characters are listed, 1 = invalid characters are
+		                            // listed.
 	END_VAR
 END_GLOBALCONSTANTS
 ]]></OriginalSource>
