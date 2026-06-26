@@ -44,7 +44,8 @@
 			<ECAction Algorithm="REQ" Output="CNF"/>
 		</ECState>
 		<Algorithm Name="REQ" Comment="Normally executed algorithm">
-			<ST><![CDATA[OUT1.u8SAMember := IN.u8SAMember;
+			<ST><![CDATA[
+OUT1.u8SAMember := IN.u8SAMember;
 OUT1.Port := IN.Port1;
 OUT2.u8SAMember := IN.u8SAMember;
 OUT2.Port := IN.Port2;
@@ -59,7 +60,8 @@ OUT6.Port := IN.Port6;
 OUT7.u8SAMember := IN.u8SAMember;
 OUT7.Port := IN.Port7;
 OUT8.u8SAMember := IN.u8SAMember;
-OUT8.Port := IN.Port8;]]></ST>
+OUT8.Port := IN.Port8;
+]]></ST>
 		</Algorithm>
 	</SimpleFB>
 	<Attribute Name="eclipse4diac::core::TypeHash" Value="''"/>

@@ -51,58 +51,48 @@
 			<ECState Name="FireEvent" x="5333.33" y="1333.33">
 				<ECAction Algorithm="HOLD" Output="EO"/>
 			</ECState>
-			<ECTransition Source="START" Destination="SET" Condition="S" Comment="" x="1200" y="546.67"/>
-			<ECTransition Source="START" Destination="RESET" Condition="R" Comment="" x="1313.33" y="1080"/>
-			<ECTransition Source="START" Destination="Error" Condition="ERR" Comment="" x="1460" y="1600"/>
-			<ECTransition Source="SET" Destination="FireEvent" Condition="[(old_Q &lt;&gt; Q) OR (old_QB &lt;&gt; QB)]" Comment="" x="3966.67" y="1006.67"/>
-			<ECTransition Source="RESET" Destination="FireEvent" Condition="[old_Q &lt;&gt; Q OR old_QB &lt;&gt; QB]" Comment="" x="4020" y="1373.33"/>
-			<ECTransition Source="Error" Destination="FireEvent" Condition="[old_Q &lt;&gt; Q OR old_QB &lt;&gt; QB]" Comment="" x="3946.67" y="1646.67"/>
-			<ECTransition Source="none" Destination="FireEvent" Condition="[old_Q &lt;&gt; Q OR old_QB &lt;&gt; QB]" Comment="" x="3893.33" y="1926.67"/>
-			<ECTransition Source="FireEvent" Destination="START" Condition="1" Comment="" x="906.67" y="3266.67"/>
-			<ECTransition Source="SET" Destination="START" Condition="1" Comment="" x="993.33" y="993.33"/>
-			<ECTransition Source="RESET" Destination="START" Condition="1" Comment="" x="1033.33" y="1393.33"/>
-			<ECTransition Source="Error" Destination="START" Condition="1" Comment="" x="1060" y="1713.33"/>
-			<ECTransition Source="none" Destination="START" Condition="1" Comment="" x="926.67" y="2066.67"/>
-			<ECTransition Source="START" Destination="none" Condition="NONE" Comment="" x="1200" y="1946.67"/>
+			<ECTransition Source="START" Destination="SET" Condition="S" x="1200" y="546.67"/>
+			<ECTransition Source="START" Destination="RESET" Condition="R" x="1313.33" y="1080"/>
+			<ECTransition Source="START" Destination="Error" Condition="ERR" x="1460" y="1600"/>
+			<ECTransition Source="SET" Destination="FireEvent" Condition="[(old_Q &lt;&gt; Q) OR (old_QB &lt;&gt; QB)]" x="3966.67" y="1006.67"/>
+			<ECTransition Source="RESET" Destination="FireEvent" Condition="[old_Q &lt;&gt; Q OR old_QB &lt;&gt; QB]" x="4020" y="1373.33"/>
+			<ECTransition Source="Error" Destination="FireEvent" Condition="[old_Q &lt;&gt; Q OR old_QB &lt;&gt; QB]" x="3946.67" y="1646.67"/>
+			<ECTransition Source="none" Destination="FireEvent" Condition="[old_Q &lt;&gt; Q OR old_QB &lt;&gt; QB]" x="3893.33" y="1926.67"/>
+			<ECTransition Source="FireEvent" Destination="START" Condition="1" x="906.67" y="3266.67"/>
+			<ECTransition Source="SET" Destination="START" Condition="1" x="993.33" y="993.33"/>
+			<ECTransition Source="RESET" Destination="START" Condition="1" x="1033.33" y="1393.33"/>
+			<ECTransition Source="Error" Destination="START" Condition="1" x="1060" y="1713.33"/>
+			<ECTransition Source="none" Destination="START" Condition="1" x="926.67" y="2066.67"/>
+			<ECTransition Source="START" Destination="none" Condition="NONE" x="1200" y="1946.67"/>
 		</ECC>
 		<Algorithm Name="SET">
-			<ST><![CDATA[ALGORITHM SET
+			<ST><![CDATA[
 Q := TRUE;
 QB := quarter::COMMAND_ENABLE;
-END_ALGORITHM]]></ST>
+]]></ST>
 		</Algorithm>
 		<Algorithm Name="RESET">
 			<ST><![CDATA[
-
-ALGORITHM RESET
 Q := FALSE;
 QB := quarter::COMMAND_DISABLE;
-END_ALGORITHM]]></ST>
+]]></ST>
 		</Algorithm>
 		<Algorithm Name="ERROR">
 			<ST><![CDATA[
-
-ALGORITHM ERROR
 Q := FALSE;
 QB := quarter::STATUS_ERROR;
-END_ALGORITHM]]></ST>
+]]></ST>
 		</Algorithm>
 		<Algorithm Name="NONE">
 			<ST><![CDATA[
-
-ALGORITHM NONE
 // Q Don't care/take no action (leave function as is)
 QB := quarter::COMMAND_NO_ACTION;
-END_ALGORITHM]]></ST>
+]]></ST>
 		</Algorithm>
 		<Algorithm Name="HOLD">
 			<ST><![CDATA[
-
-ALGORITHM HOLD
 old_Q := Q;
 old_QB := QB;
-END_ALGORITHM
-
 ]]></ST>
 		</Algorithm>
 	</BasicFB>

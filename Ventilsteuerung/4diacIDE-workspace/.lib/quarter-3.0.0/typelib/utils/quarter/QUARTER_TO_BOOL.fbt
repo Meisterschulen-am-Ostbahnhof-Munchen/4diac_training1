@@ -45,42 +45,34 @@
 			<ECState Name="ok" x="6746.67" y="1353.33">
 				<ECAction Output="CNF"/>
 			</ECState>
-			<ECTransition Source="START" Destination="SET" Condition="REQ[IB = quarter::STATUS_ENABLED]" Comment="" x="2640" y="1080"/>
-			<ECTransition Source="START" Destination="RESET" Condition="REQ[IB = quarter::STATUS_DISABLED]" Comment="" x="2673.33" y="1446.67"/>
-			<ECTransition Source="START" Destination="Error" Condition="REQ[IB = quarter::STATUS_ERROR]" Comment="" x="2700" y="1840"/>
-			<ECTransition Source="START" Destination="none" Condition="REQ[IB = quarter::STATUS_NOT_AVAILABLE]" Comment="" x="2653.33" y="2200"/>
-			<ECTransition Source="SET" Destination="ok" Condition="1" Comment="" x="4700" y="393.33"/>
-			<ECTransition Source="RESET" Destination="ok" Condition="1" Comment="" x="4546.67" y="1040"/>
-			<ECTransition Source="Error" Destination="ok" Condition="1" Comment="" x="4593.33" y="1753.33"/>
-			<ECTransition Source="none" Destination="ok" Condition="1" Comment="" x="4713.33" y="2380"/>
-			<ECTransition Source="ok" Destination="START" Condition="1" Comment="" x="4426.67" y="3606.67"/>
+			<ECTransition Source="START" Destination="SET" Condition="REQ[IB = quarter::STATUS_ENABLED]" x="2640" y="1080"/>
+			<ECTransition Source="START" Destination="RESET" Condition="REQ[IB = quarter::STATUS_DISABLED]" x="2673.33" y="1446.67"/>
+			<ECTransition Source="START" Destination="Error" Condition="REQ[IB = quarter::STATUS_ERROR]" x="2700" y="1840"/>
+			<ECTransition Source="START" Destination="none" Condition="REQ[IB = quarter::STATUS_NOT_AVAILABLE]" x="2653.33" y="2200"/>
+			<ECTransition Source="SET" Destination="ok" Condition="1" x="4700" y="393.33"/>
+			<ECTransition Source="RESET" Destination="ok" Condition="1" x="4546.67" y="1040"/>
+			<ECTransition Source="Error" Destination="ok" Condition="1" x="4593.33" y="1753.33"/>
+			<ECTransition Source="none" Destination="ok" Condition="1" x="4713.33" y="2380"/>
+			<ECTransition Source="ok" Destination="START" Condition="1" x="4426.67" y="3606.67"/>
 		</ECC>
 		<Algorithm Name="SET">
-			<ST><![CDATA[ALGORITHM SET
+			<ST><![CDATA[
 Q := TRUE;
-END_ALGORITHM]]></ST>
+]]></ST>
 		</Algorithm>
 		<Algorithm Name="RESET">
 			<ST><![CDATA[
-
-ALGORITHM RESET
 Q := FALSE;
-END_ALGORITHM]]></ST>
+]]></ST>
 		</Algorithm>
 		<Algorithm Name="ERROR">
 			<ST><![CDATA[
-
-ALGORITHM ERROR
 Q := FALSE;
-END_ALGORITHM]]></ST>
+]]></ST>
 		</Algorithm>
 		<Algorithm Name="NONE">
 			<ST><![CDATA[
-
-ALGORITHM NONE
 // Q Don't care/take no action (leave function as is)
-END_ALGORITHM
-
 ]]></ST>
 		</Algorithm>
 	</BasicFB>

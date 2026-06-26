@@ -5,31 +5,30 @@
 	<VersionInfo Organization="HR Agrartechnik GmbH" Version="1.0" Author="Franz Höpfinger" Date="2026-06-20">
 	</VersionInfo>
 	<CompilerInfo packageName="isobus::UT::Q::const::AID">
-		<Import declaration="eclipse4diac::core::TypeHash" />
 	</CompilerInfo>
 	<GlobalConstants>
-		<VarDeclaration Name="LINE_ATT" Type="USINT" InitialValue="USINT#1" Comment="1: AID_OE_LINE_ATT - Object ID of a Line Attributes object." />
-		<VarDeclaration Name="WIDTH" Type="USINT" InitialValue="USINT#2" Comment="2: AID_OE_WIDTH - Width in pixels." />
-		<VarDeclaration Name="HEIGHT" Type="USINT" InitialValue="USINT#3" Comment="3: AID_OE_HEIGHT - Height in pixels." />
-		<VarDeclaration Name="ELLIPSE_TYPE" Type="USINT" InitialValue="USINT#4" Comment="4: AID_OE_ELLIPSE_TYPE - 0=Closed Ellipse, 1=Open Ellipse, 2=Closed Segment, 3=Closed Section." />
-		<VarDeclaration Name="START_ANGLE" Type="USINT" InitialValue="USINT#5" Comment="5: AID_OE_START_ANGLE" />
-		<VarDeclaration Name="END_ANGLE" Type="USINT" InitialValue="USINT#6" Comment="6: AID_OE_END_ANGLE" />
-		<VarDeclaration Name="FILL_ATT" Type="USINT" InitialValue="USINT#7" Comment="7: AID_OE_FILL_ATT - Object ID of a Fill Attributes object." />
+		<VarDeclaration Name="LINE_ATT" Type="USINT" Comment="1: AID_OE_LINE_ATT - Object ID of a Line Attributes object." InitialValue="USINT#1"/>
+		<VarDeclaration Name="WIDTH" Type="USINT" Comment="2: AID_OE_WIDTH - Width in pixels." InitialValue="USINT#2"/>
+		<VarDeclaration Name="HEIGHT" Type="USINT" Comment="3: AID_OE_HEIGHT - Height in pixels." InitialValue="USINT#3"/>
+		<VarDeclaration Name="ELLIPSE_TYPE" Type="USINT" Comment="4: AID_OE_ELLIPSE_TYPE - 0=Closed Ellipse, 1=Open Ellipse, 2=Closed Segment, 3=Closed Section." InitialValue="USINT#4"/>
+		<VarDeclaration Name="START_ANGLE" Type="USINT" Comment="5: AID_OE_START_ANGLE" InitialValue="USINT#5"/>
+		<VarDeclaration Name="END_ANGLE" Type="USINT" Comment="6: AID_OE_END_ANGLE" InitialValue="USINT#6"/>
+		<VarDeclaration Name="FILL_ATT" Type="USINT" Comment="7: AID_OE_FILL_ATT - Object ID of a Fill Attributes object." InitialValue="USINT#7"/>
 	</GlobalConstants>
 	<OriginalSource><![CDATA[PACKAGE isobus::UT::Q::const::AID;
 
-// output ellipse object attribute ids 
+// output ellipse object attribute ids
 GLOBALCONSTANTS AID_OE
 	VAR_GLOBAL CONSTANT
-		LINE_ATT     : USINT := USINT#1; // 1: AID_OE_LINE_ATT - Object ID of a Line Attributes object. 
-		WIDTH        : USINT := USINT#2; // 2: AID_OE_WIDTH - Width in pixels. 
-		HEIGHT       : USINT := USINT#3; // 3: AID_OE_HEIGHT - Height in pixels. 
-		ELLIPSE_TYPE : USINT := USINT#4; // 4: AID_OE_ELLIPSE_TYPE - 0=Closed Ellipse, 1=Open Ellipse, 2=Closed Segment, 3=Closed Section. 
-		START_ANGLE  : USINT := USINT#5; // 5: AID_OE_START_ANGLE 
-		END_ANGLE    : USINT := USINT#6; // 6: AID_OE_END_ANGLE 
-		FILL_ATT     : USINT := USINT#7; // 7: AID_OE_FILL_ATT - Object ID of a Fill Attributes object. 
+		LINE_ATT : USINT := USINT#1; // 1: AID_OE_LINE_ATT - Object ID of a Line Attributes object.
+		WIDTH : USINT := USINT#2; // 2: AID_OE_WIDTH - Width in pixels.
+		HEIGHT : USINT := USINT#3; // 3: AID_OE_HEIGHT - Height in pixels.
+		ELLIPSE_TYPE : USINT := USINT#4; // 4: AID_OE_ELLIPSE_TYPE - 0=Closed Ellipse, 1=Open Ellipse, 2=Closed Segment, 3=Closed Section.
+		START_ANGLE : USINT := USINT#5; // 5: AID_OE_START_ANGLE
+		END_ANGLE : USINT := USINT#6; // 6: AID_OE_END_ANGLE
+		FILL_ATT : USINT := USINT#7; // 7: AID_OE_FILL_ATT - Object ID of a Fill Attributes object.
 	END_VAR
 END_GLOBALCONSTANTS
 ]]></OriginalSource>
-	<Attribute Name="eclipse4diac::core::TypeHash" Value="''" />
+	<Attribute Name="eclipse4diac::core::TypeHash" Value="''"/>
 </GlobalConstants>

@@ -23,8 +23,8 @@
 			<ECState Name="REQ" x="0" y="0">
 				<ECAction Algorithm="REQ" Output="OUT.E1"/>
 			</ECState>
-			<ECTransition Source="REQ" Destination="REQ" Condition="RESET1.E1" Comment="" x="200" y="713.33"/>
-			<ECTransition Source="REQ" Destination="REQ" Condition="IN.E1" Comment="" x="-406.67" y="666.67"/>
+			<ECTransition Source="REQ" Destination="REQ" Condition="RESET1.E1" x="200" y="713.33"/>
+			<ECTransition Source="REQ" Destination="REQ" Condition="IN.E1" x="-406.67" y="666.67"/>
 		</ECC>
 		<Algorithm Name="REQ" Comment="This algorithm passes the input signal (IN.D1) directly to the output (OUT.D1) during normal&#10;operation. However, if the prioritized reset signal (RESET1.D1) is active, it overrides the input&#10;and forces the output to FALSE.">
 			<ST><![CDATA[

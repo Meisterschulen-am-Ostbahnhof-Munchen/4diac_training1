@@ -62,23 +62,19 @@
 			<ECAction Algorithm="RST" Output="CNF"/>
 		</ECState>
 		<Algorithm Name="EINIT">
-			<ST><![CDATA[ALGORITHM EINIT
+			<ST><![CDATA[
 init := FALSE;
-END_ALGORITHM]]></ST>
+]]></ST>
 		</Algorithm>
 		<Algorithm Name="RST">
 			<ST><![CDATA[
-
-ALGORITHM RST
 init := TRUE;
 last := tx;
 tx := T#0s;
-END_ALGORITHM]]></ST>
+]]></ST>
 		</Algorithm>
 		<Algorithm Name="REQ">
 			<ST><![CDATA[
-
-ALGORITHM REQ
 (* read system time and prepare input data *)
 tx := NOW_MONOTONIC() - last;
 DL_M := MODR(DL, 1.0);
@@ -106,9 +102,10 @@ OUT := AM * temp + OS;
 
 (* boolean output Q *)
 Q := temp < ltemp;
-END_ALGORITHM
-
-(* revision history hm	3. mar 2007		rev 1.0 original version
+]]></ST>
+		</Algorithm>
+		<Method Name="LOST_AND_FOUND_3" Type="" Comment="lost+found 3">
+			<ST><![CDATA[(* revision history hm	3. mar 2007		rev 1.0 original version
  * *
  * hm	17 sep 2007		rev 1.1 replaced time() with t_plc_ms for compatibilitx reasons
  * *
@@ -116,8 +113,8 @@ END_ALGORITHM
  * *
  * ks	26. oct. 2008	rev 1.3 code optimization
  * *
- * hm	10. mar. 2009	rev 1.4 changed real constants to use dot syntax *) ]]></ST>
-		</Algorithm>
+ * hm	10. mar. 2009	rev 1.4 changed real constants to use dot syntax *)]]></ST>
+		</Method>
 	</SimpleFB>
 	<Attribute Name="eclipse4diac::core::TypeHash" Value="''"/>
 </FBType>

@@ -5,23 +5,22 @@
 	<VersionInfo Organization="HR Agrartechnik GmbH" Version="1.0" Author="Franz Höpfinger" Date="2026-06-20">
 	</VersionInfo>
 	<CompilerInfo packageName="isobus::UT::Q::const::AID">
-		<Import declaration="eclipse4diac::core::TypeHash" />
 	</CompilerInfo>
 	<GlobalConstants>
-		<VarDeclaration Name="NUMOFBYTES" Type="USINT" InitialValue="USINT#1" Comment="1: AID_WSSC_NUMOFBYTES - Number of bytes to follow in this object." />
-		<VarDeclaration Name="COLOUR_MAP" Type="USINT" InitialValue="USINT#2" Comment="2: AID_WSSC_COLOUR_MAP - Object ID of a Colour Map object, or NULL." />
-		<VarDeclaration Name="COLOUR_PALETTE" Type="USINT" InitialValue="USINT#3" Comment="3: AID_WSSC_COLOUR_PALETTE - Object ID of a Colour Palette object, or NULL." />
+		<VarDeclaration Name="NUMOFBYTES" Type="USINT" Comment="1: AID_WSSC_NUMOFBYTES - Number of bytes to follow in this object." InitialValue="USINT#1"/>
+		<VarDeclaration Name="COLOUR_MAP" Type="USINT" Comment="2: AID_WSSC_COLOUR_MAP - Object ID of a Colour Map object, or NULL." InitialValue="USINT#2"/>
+		<VarDeclaration Name="COLOUR_PALETTE" Type="USINT" Comment="3: AID_WSSC_COLOUR_PALETTE - Object ID of a Colour Palette object, or NULL." InitialValue="USINT#3"/>
 	</GlobalConstants>
 	<OriginalSource><![CDATA[PACKAGE isobus::UT::Q::const::AID;
 
-// working set special controls object attribute ids 
+// working set special controls object attribute ids
 GLOBALCONSTANTS AID_WSSC
 	VAR_GLOBAL CONSTANT
-		NUMOFBYTES     : USINT := USINT#1; // 1: AID_WSSC_NUMOFBYTES - Number of bytes to follow in this object. 
-		COLOUR_MAP     : USINT := USINT#2; // 2: AID_WSSC_COLOUR_MAP - Object ID of a Colour Map object, or NULL. 
-		COLOUR_PALETTE : USINT := USINT#3; // 3: AID_WSSC_COLOUR_PALETTE - Object ID of a Colour Palette object, or NULL. 
+		NUMOFBYTES : USINT := USINT#1; // 1: AID_WSSC_NUMOFBYTES - Number of bytes to follow in this object.
+		COLOUR_MAP : USINT := USINT#2; // 2: AID_WSSC_COLOUR_MAP - Object ID of a Colour Map object, or NULL.
+		COLOUR_PALETTE : USINT := USINT#3; // 3: AID_WSSC_COLOUR_PALETTE - Object ID of a Colour Palette object, or NULL.
 	END_VAR
 END_GLOBALCONSTANTS
 ]]></OriginalSource>
-	<Attribute Name="eclipse4diac::core::TypeHash" Value="''" />
+	<Attribute Name="eclipse4diac::core::TypeHash" Value="''"/>
 </GlobalConstants>

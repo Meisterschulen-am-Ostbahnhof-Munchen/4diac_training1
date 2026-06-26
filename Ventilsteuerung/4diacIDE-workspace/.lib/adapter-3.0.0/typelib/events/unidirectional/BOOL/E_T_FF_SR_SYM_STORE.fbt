@@ -43,13 +43,13 @@
 				<ECAction Algorithm="RESET" Output="EO"/>
 				<ECAction Output="Q_INIT.EO1"/>
 			</ECState>
-			<ECTransition Source="SET" Destination="RESET" Condition="R" Comment="" x="5240" y="1360"/>
-			<ECTransition Source="RESET" Destination="SET" Condition="S" Comment="" x="5493.33" y="1346.67"/>
-			<ECTransition Source="SET" Destination="RESET" Condition="CLK" Comment="" x="5706.67" y="1340"/>
-			<ECTransition Source="RESET" Destination="SET" Condition="CLK" Comment="" x="4920" y="1366.67"/>
-			<ECTransition Source="START" Destination="Init" Condition="Q_INIT.EI1" Comment="" x="2220" y="466.67"/>
-			<ECTransition Source="Init" Destination="RESET" Condition="[FALSE = Q_INIT.DI1]" Comment="" x="4120" y="266.67"/>
-			<ECTransition Source="Init" Destination="SET" Condition="[TRUE = Q_INIT.DI1]" Comment="" x="4353.33" y="6.67"/>
+			<ECTransition Source="SET" Destination="RESET" Condition="R" x="5240" y="1360"/>
+			<ECTransition Source="RESET" Destination="SET" Condition="S" x="5493.33" y="1346.67"/>
+			<ECTransition Source="SET" Destination="RESET" Condition="CLK" x="5706.67" y="1340"/>
+			<ECTransition Source="RESET" Destination="SET" Condition="CLK" x="4920" y="1366.67"/>
+			<ECTransition Source="START" Destination="Init" Condition="Q_INIT.EI1" x="2220" y="466.67"/>
+			<ECTransition Source="Init" Destination="RESET" Condition="[FALSE = Q_INIT.DI1]" x="4120" y="266.67"/>
+			<ECTransition Source="Init" Destination="SET" Condition="[TRUE = Q_INIT.DI1]" x="4353.33" y="6.67"/>
 		</ECC>
 		<Algorithm Name="SET" Comment="SET algorithm">
 			<ST><![CDATA[

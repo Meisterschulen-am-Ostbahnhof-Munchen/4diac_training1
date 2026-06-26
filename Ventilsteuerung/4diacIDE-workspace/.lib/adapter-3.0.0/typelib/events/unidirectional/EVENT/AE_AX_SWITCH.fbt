@@ -29,11 +29,11 @@
 			<ECState Name="G1" Comment="Issue EO1 when EI arrives with G=1" x="320" y="1020">
 				<ECAction Output="EO1.E1"/>
 			</ECState>
-			<ECTransition Source="G0" Destination="START" Condition="1" Comment="" x="1255" y="660"/>
-			<ECTransition Source="G1" Destination="START" Condition="1" Comment="" x="535" y="795"/>
-			<ECTransition Source="START" Destination="G0" Condition="EI.E1[NOT G.D1]" Comment="" x="1435" y="440"/>
-			<ECTransition Source="START" Destination="G1" Condition="EI.E1[G.D1]" Comment="" x="350" y="550"/>
-			<ECTransition Source="START" Destination="START" Condition="G.E1" Comment="" x="680" y="180"/>
+			<ECTransition Source="G0" Destination="START" Condition="1" x="1255" y="660"/>
+			<ECTransition Source="G1" Destination="START" Condition="1" x="535" y="795"/>
+			<ECTransition Source="START" Destination="G0" Condition="EI.E1[NOT G.D1]" x="1435" y="440"/>
+			<ECTransition Source="START" Destination="G1" Condition="EI.E1[G.D1]" x="350" y="550"/>
+			<ECTransition Source="START" Destination="START" Condition="G.E1" x="680" y="180"/>
 		</ECC>
 	</BasicFB>
 	<Attribute Name="eclipse4diac::core::TypeHash" Value="''"/>

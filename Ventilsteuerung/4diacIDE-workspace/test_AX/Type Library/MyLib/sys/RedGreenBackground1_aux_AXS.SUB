@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <SubAppType Name="RedGreenBackground1_aux_AXS" Comment="Hintergrundfarbe (TRUE -&gt; Rot, FALSE -&gt; Grün) für 1 Objekt (AX-Adapter)">
-	<Identification Standard="61499-2" Description="Copyright (c) 2022 HR Agrartechnik GmbH  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0"/>
-	<VersionInfo Organization="HR Agrartechnik GmbH" Version="1.0" Author="Franz Höpfinger" Date="2022-11-10"/>
+	<Identification Standard="61499-2" Description="Copyright (c) 2022 HR Agrartechnik GmbH  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0">
+	</Identification>
+	<VersionInfo Organization="HR Agrartechnik GmbH" Version="1.0" Author="Franz Höpfinger" Date="2022-11-10">
+	</VersionInfo>
 	<CompilerInfo packageName="MyLib::sys">
 		<Import declaration="isobus::UT::Q::const::IDs::ID_NULL"/>
 		<Import declaration="isobus::UT::Q::const::colours::COLOR_GREEN"/>
@@ -10,7 +12,8 @@
 	</CompilerInfo>
 	<SubAppInterfaceList>
 		<SubAppEventOutputs>
-			<SubAppEvent Name="CNF" Type="Event" Comment="Execution Confirmation"/>
+			<SubAppEvent Name="CNF" Type="Event" Comment="Execution Confirmation">
+			</SubAppEvent>
 		</SubAppEventOutputs>
 		<InputVars>
 			<VarDeclaration Name="u16ObjIds" Type="isobus::UT::Q::types::s1ObjectID" Comment="Object ID" InitialValue="(u16ObjId := ID_NULL)"/>
@@ -25,7 +28,8 @@
 		</Sockets>
 	</SubAppInterfaceList>
 	<SubAppNetwork>
-		<FB Name="Q_BackgroundColourAux" Type="isobus::UT::Q::Q_BackgroundColourAux" x="-3106.67" y="706.67"/>
+		<FB Name="Q_BackgroundColourAux" Type="isobus::UT::Q::Q_BackgroundColourAux" x="-3106.67" y="706.67">
+		</FB>
 		<FB Name="AX_SEL" Type="adapter::iec61131::selection::AX_SEL" x="-4306.67" y="2040">
 			<Parameter Name="IN0" Value="COLOR_GREEN"/>
 			<Parameter Name="IN1" Value="COLOR_RED"/>

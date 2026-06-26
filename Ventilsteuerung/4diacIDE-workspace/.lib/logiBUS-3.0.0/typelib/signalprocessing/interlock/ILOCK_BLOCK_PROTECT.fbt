@@ -49,7 +49,6 @@
 			<ECState Name="DOWN" x="4800" y="1920">
 				<ECAction Algorithm="DOWN" Output="EO_DOWN"/>
 			</ECState>
-
 			<ECState Name="UP_STOP" x="5040" y="1280">
 				<ECAction Algorithm="STOP" Output="EO_UP"/>
 				<ECAction Output="timeOut.START"/>
@@ -60,30 +59,36 @@
 			</ECState>
 			<ECState Name="EVAL" x="8080" y="1520">
 			</ECState>
-			<ECTransition Source="STOP" Destination="DOWN" Condition="EI_DOWN[DI_DOWN]" Comment="" x="4133.33" y="1733.33"/>
-			<ECTransition Source="STOP" Destination="UP" Condition="EI_UP[DI_UP]" Comment="" x="4173.33" y="1020"/>
-			<ECTransition Source="DOWN" Destination="DOWN_STOP" Condition="EI_DOWN[NOT DI_DOWN]" Comment="" x="4766.67" y="2293.33"/>
-			<ECTransition Source="UP" Destination="UP_STOP" Condition="EI_UP[NOT DI_UP]" Comment="" x="5146.67" y="1053.33"/>
-			<ECTransition Source="UP_STOP" Destination="EVAL" Condition="timeOut.TimeOut" Comment="" x="5273.33" y="1700"/>
-			<ECTransition Source="DOWN_STOP" Destination="EVAL" Condition="timeOut.TimeOut" Comment="" x="5653.33" y="2206.67"/>
-			<ECTransition Source="EVAL" Destination="UP" Condition="[DI_UP AND NOT DI_DOWN]" Comment="" x="6433.33" y="1073.33"/>
-			<ECTransition Source="EVAL" Destination="DOWN" Condition="[DI_DOWN AND NOT DI_UP]" Comment="" x="6520" y="1833.33"/>
-			<ECTransition Source="EVAL" Destination="STOP" Condition="[(NOT DI_UP AND NOT DI_DOWN) OR (DI_UP AND DI_DOWN)]" Comment="" x="5400" y="260"/>
+			<ECTransition Source="STOP" Destination="DOWN" Condition="EI_DOWN[DI_DOWN]" x="4133.33" y="1733.33"/>
+			<ECTransition Source="STOP" Destination="UP" Condition="EI_UP[DI_UP]" x="4173.33" y="1020"/>
+			<ECTransition Source="DOWN" Destination="DOWN_STOP" Condition="EI_DOWN[NOT DI_DOWN]" x="4766.67" y="2293.33"/>
+			<ECTransition Source="UP" Destination="UP_STOP" Condition="EI_UP[NOT DI_UP]" x="5146.67" y="1053.33"/>
+			<ECTransition Source="UP_STOP" Destination="EVAL" Condition="timeOut.TimeOut" x="5273.33" y="1700"/>
+			<ECTransition Source="DOWN_STOP" Destination="EVAL" Condition="timeOut.TimeOut" x="5653.33" y="2206.67"/>
+			<ECTransition Source="EVAL" Destination="UP" Condition="[DI_UP AND NOT DI_DOWN]" x="6433.33" y="1073.33"/>
+			<ECTransition Source="EVAL" Destination="DOWN" Condition="[DI_DOWN AND NOT DI_UP]" x="6520" y="1833.33"/>
+			<ECTransition Source="EVAL" Destination="STOP" Condition="[(NOT DI_UP AND NOT DI_DOWN) OR (DI_UP AND DI_DOWN)]" x="5400" y="260"/>
 		</ECC>
 		<Algorithm Name="UP">
-			<ST><![CDATA[timeOut.DT := DT_PROTECT;
+			<ST><![CDATA[
+timeOut.DT := DT_PROTECT;
 DO_UP := BOOL#TRUE;
-DO_DOWN := BOOL#FALSE;]]></ST>
+DO_DOWN := BOOL#FALSE;
+]]></ST>
 		</Algorithm>
 		<Algorithm Name="DOWN">
-			<ST><![CDATA[timeOut.DT := DT_PROTECT;
+			<ST><![CDATA[
+timeOut.DT := DT_PROTECT;
 DO_UP := BOOL#FALSE;
-DO_DOWN := BOOL#TRUE;]]></ST>
+DO_DOWN := BOOL#TRUE;
+]]></ST>
 		</Algorithm>
 		<Algorithm Name="STOP">
-			<ST><![CDATA[timeOut.DT := DT_PROTECT;
+			<ST><![CDATA[
+timeOut.DT := DT_PROTECT;
 DO_UP := BOOL#FALSE;
-DO_DOWN := BOOL#FALSE;]]></ST>
+DO_DOWN := BOOL#FALSE;
+]]></ST>
 		</Algorithm>
 	</BasicFB>
 	<Attribute Name="eclipse4diac::core::TypeHash" Value="''"/>

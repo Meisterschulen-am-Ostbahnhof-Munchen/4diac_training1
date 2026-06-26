@@ -65,25 +65,21 @@
 			<ECAction Algorithm="RST" Output="CNF"/>
 		</ECState>
 		<Algorithm Name="EINIT">
-			<ST><![CDATA[ALGORITHM EINIT
+			<ST><![CDATA[
 (* Startup Initialization *)
 init := FALSE;
 
-END_ALGORITHM]]></ST>
+]]></ST>
 		</Algorithm>
 		<Algorithm Name="RST">
 			<ST><![CDATA[
-
-ALGORITHM RST
 init := TRUE;
 out := K * in;
 I2 := out;
-END_ALGORITHM]]></ST>
+]]></ST>
 		</Algorithm>
 		<Algorithm Name="REQ">
 			<ST><![CDATA[
-
-ALGORITHM REQ
 (* startup initialisation *)
 IF NOT init OR TM = T#0s THEN
 	this.RST();
@@ -94,9 +90,10 @@ ELSE
 	int2.REQ(X := I1, Y := I2);
 	out := I2;
 END_IF;
-END_ALGORITHM
-
-(* revision history
+]]></ST>
+		</Algorithm>
+		<Method Name="LOST_AND_FOUND_3" Type="" Comment="lost+found 3">
+			<ST><![CDATA[(* revision history
  * *
  * 15.1.2007 hm		rev 1.1 changed formula to new more acurate formula
  * *
@@ -108,9 +105,8 @@ END_ALGORITHM
  * hm	3. nov. 2008	rev 1.4 optimized code and fixed a problem with init
  * *
  * hm	11. mar. 2009	rev 1.5 real constants updated to new systax using dot 
- * * *)
-]]></ST>
-		</Algorithm>
+ * * *)]]></ST>
+		</Method>
 	</SimpleFB>
 	<Attribute Name="eclipse4diac::core::TypeHash" Value="''"/>
 </FBType>

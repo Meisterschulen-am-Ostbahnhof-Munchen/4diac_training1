@@ -5,21 +5,20 @@
 	<VersionInfo Organization="HR Agrartechnik GmbH" Version="1.0" Author="Franz Höpfinger" Date="2026-06-20">
 	</VersionInfo>
 	<CompilerInfo packageName="isobus::UT::Q::const::AID">
-		<Import declaration="eclipse4diac::core::TypeHash" />
 	</CompilerInfo>
 	<GlobalConstants>
-		<VarDeclaration Name="BACKGROUND_COLOUR" Type="USINT" InitialValue="USINT#1" Comment="1: AID_DM_BACKGROUND_COLOUR - Background colour index." />
-		<VarDeclaration Name="SOFT_KEY_MASK" Type="USINT" InitialValue="USINT#2" Comment="2: AID_DM_SOFT_KEY_MASK - Object ID of a Soft Key Mask associated with this Data Mask." />
+		<VarDeclaration Name="BACKGROUND_COLOUR" Type="USINT" Comment="1: AID_DM_BACKGROUND_COLOUR - Background colour index." InitialValue="USINT#1"/>
+		<VarDeclaration Name="SOFT_KEY_MASK" Type="USINT" Comment="2: AID_DM_SOFT_KEY_MASK - Object ID of a Soft Key Mask associated with this Data Mask." InitialValue="USINT#2"/>
 	</GlobalConstants>
 	<OriginalSource><![CDATA[PACKAGE isobus::UT::Q::const::AID;
 
-// data mask object attribute ids 
+// data mask object attribute ids
 GLOBALCONSTANTS AID_DM
 	VAR_GLOBAL CONSTANT
-		BACKGROUND_COLOUR : USINT := USINT#1; // 1: AID_DM_BACKGROUND_COLOUR - Background colour index. 
-		SOFT_KEY_MASK     : USINT := USINT#2; // 2: AID_DM_SOFT_KEY_MASK - Object ID of a Soft Key Mask associated with this Data Mask. 
+		BACKGROUND_COLOUR : USINT := USINT#1; // 1: AID_DM_BACKGROUND_COLOUR - Background colour index.
+		SOFT_KEY_MASK : USINT := USINT#2; // 2: AID_DM_SOFT_KEY_MASK - Object ID of a Soft Key Mask associated with this Data Mask.
 	END_VAR
 END_GLOBALCONSTANTS
 ]]></OriginalSource>
-	<Attribute Name="eclipse4diac::core::TypeHash" Value="''" />
+	<Attribute Name="eclipse4diac::core::TypeHash" Value="''"/>
 </GlobalConstants>
