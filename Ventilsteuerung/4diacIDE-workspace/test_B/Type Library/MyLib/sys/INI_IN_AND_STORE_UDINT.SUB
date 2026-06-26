@@ -1,13 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<SubAppType Name="Uebung_012c_sub" Comment="Numeric Value Input und Speichern INI mit Subapp">
+<SubAppType Name="INI_IN_AND_STORE_UDINT" Comment="DigitalInput_I1 auf DigitalOutput_Q1; E_TON Einschaltverzögert; Zeit eingeben und speichern, INI">
 	<Identification Standard="61499-2" Description="Copyright (c) 2023 Meisterschulen am Ostbahnhof  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0">
 	</Identification>
 	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2023-10-31" Remarks="initial API and implementation and/or initial documentation">
 	</VersionInfo>
-	<CompilerInfo packageName="Uebungen">
+	<CompilerInfo packageName="MyLib::sys">
 		<Import declaration="isobus::UT::Q::const::IDs::ID_NULL"/>
 	</CompilerInfo>
 	<SubAppInterfaceList>
+		<SubAppEventInputs>
+			<SubAppEvent Name="REQ" Type="Event">
+			</SubAppEvent>
+		</SubAppEventInputs>
 		<SubAppEventOutputs>
 			<SubAppEvent Name="IND" Type="Event">
 			</SubAppEvent>
@@ -22,31 +26,34 @@
 		</OutputVars>
 	</SubAppInterfaceList>
 	<SubAppNetwork>
-		<FB Name="ID" Type="isobus::UT::io::NumericValue::NumericValue_ID" x="-1300" y="300">
+		<FB Name="InputNumber_I1" Type="isobus::UT::io::NumericValue::NumericValue_ID" x="-1300" y="0">
 			<Parameter Name="QI" Value="TRUE"/>
 		</FB>
-		<FB Name="F_DWORD_TO_UDINT" Type="iec61131::conversion::F_DWORD_TO_UDINT" x="400" y="500">
+		<FB Name="F_DWORD_TO_UDINT" Type="iec61131::conversion::F_DWORD_TO_UDINT" x="400" y="400">
 		</FB>
-		<FB Name="INI" Type="eclipse4diac::storage::INI" x="2100" y="100">
+		<FB Name="INI" Type="eclipse4diac::storage::INI" x="2100" y="0">
 			<Parameter Name="QI" Value="TRUE"/>
 			<Parameter Name="DEFAULT_VALUE" Value="UDINT#0"/>
 		</FB>
-		<FB Name="Q_NumericValue" Type="isobus::UT::Q::Q_NumericValue" x="4100" y="300">
+		<FB Name="Q_NumericValue" Type="isobus::UT::Q::Q_NumericValue" x="4100" y="200">
 		</FB>
 		<EventConnections>
-			<Connection Source="ID.IND" Destination="F_DWORD_TO_UDINT.REQ" dx1="353.33"/>
+			<Connection Source="InputNumber_I1.IND" Destination="F_DWORD_TO_UDINT.REQ" dx1="300"/>
+			<Connection Source="REQ" Destination="Q_NumericValue.REQ" dx1="1600">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
 			<Connection Source="F_DWORD_TO_UDINT.CNF" Destination="INI.SET" dx1="380"/>
 			<Connection Source="INI.SETO" Destination="IND" dx1="2933.33">
 				<Attribute Name="Visible" Value="false"/>
 			</Connection>
-			<Connection Source="INI.GETO" Destination="Q_NumericValue.REQ" dx1="546.67"/>
+			<Connection Source="INI.GETO" Destination="Q_NumericValue.REQ" dx1="520"/>
 			<Connection Source="INI.GETO" Destination="IND" dx1="2933.33">
 				<Attribute Name="Visible" Value="false"/>
 			</Connection>
-			<Connection Source="INI.INITO" Destination="INI.GET" dx1="80" dx2="80" dy="-580"/>
+			<Connection Source="INI.INITO" Destination="INI.GET" dx1="80" dx2="80" dy="-286.67"/>
 		</EventConnections>
 		<DataConnections>
-			<Connection Source="ID.IN" Destination="F_DWORD_TO_UDINT.IN" dx1="186.67"/>
+			<Connection Source="InputNumber_I1.IN" Destination="F_DWORD_TO_UDINT.IN" dx1="353.33"/>
 			<Connection Source="u16ObjId" Destination="Q_NumericValue.u16ObjId" dx1="2933.33">
 				<Attribute Name="Visible" Value="false"/>
 			</Connection>
@@ -58,7 +65,7 @@
 			<Connection Source="INI.VALUEO" Destination="VALUEO" dx1="2933.33">
 				<Attribute Name="Visible" Value="false"/>
 			</Connection>
-			<Connection Source="u16ObjId" Destination="ID.u16ObjId" dx1="1793.33">
+			<Connection Source="u16ObjId" Destination="InputNumber_I1.u16ObjId" dx1="1793.33">
 				<Attribute Name="Visible" Value="false"/>
 			</Connection>
 			<Connection Source="SECTION" Destination="INI.SECTION" dx1="3493.33">
