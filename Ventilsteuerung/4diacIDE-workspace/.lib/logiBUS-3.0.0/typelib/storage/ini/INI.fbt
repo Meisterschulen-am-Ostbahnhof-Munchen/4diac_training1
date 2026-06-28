@@ -2,9 +2,11 @@
 <FBType Name="INI" Comment="Load and Store Data from settings.ini by Section and Key">
 	<Identification Standard="61499-2" Description="Copyright (c) 2024 HR Agrartechnik GmbH   &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0 ">
 	</Identification>
-	<VersionInfo Organization="HR Agrartechnik GmbH" Version="1.0" Author="Franz Höpfinger" Date="2024-09-17">
+	<VersionInfo Organization="HR Agrartechnik GmbH" Version="3.1" Author="Franz Höpfinger" Date="2026-06-12" Remarks="added Error Handling">
 	</VersionInfo>
 	<VersionInfo Version="3.0" Author="Patrick Aigner" Date="2025-04-14" Remarks="changed package">
+	</VersionInfo>
+	<VersionInfo Organization="HR Agrartechnik GmbH" Version="1.0" Author="Franz Höpfinger" Date="2024-09-17">
 	</VersionInfo>
 	<CompilerInfo packageName="eclipse4diac::storage">
 		<Import declaration="eclipse4diac::core::TypeHash"/>
@@ -36,15 +38,23 @@
 				<With Var="STATUS"/>
 				<With Var="VALUEO"/>
 			</Event>
+			<Event Name="SETOE" Type="Event" Comment="Confirmation of SET in Error Case (see STATUS)">
+				<With Var="QO"/>
+				<With Var="STATUS"/>
+			</Event>
 			<Event Name="GETO" Type="Event" Comment="Confirmation of GET">
 				<With Var="QO"/>
 				<With Var="STATUS"/>
 				<With Var="VALUEO"/>
 			</Event>
+			<Event Name="GETOE" Type="Event" Comment="Confirmation of GET in Error Case (see STATUS)">
+				<With Var="QO"/>
+				<With Var="STATUS"/>
+			</Event>
 		</EventOutputs>
 		<InputVars>
 			<VarDeclaration Name="QI" Type="BOOL" Comment="Event Input Qualifier"/>
-			<VarDeclaration Name="SECTION" Type="STRING"/>
+			<VarDeclaration Name="SECTION" Type="STRING" Comment="Section name."/>
 			<VarDeclaration Name="KEY" Type="STRING" Comment="Key name."/>
 			<VarDeclaration Name="VALUE" Type="ANY" Comment="The value to set."/>
 			<VarDeclaration Name="DEFAULT_VALUE" Type="ANY" Comment="The value to read if there is noting in the settings.ini"/>

@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SubAppType Name="Uebung_020c2_AX" Comment="DigitalInput_I1 auf DigitalOutput_Q1; E_TON Einschaltverzögert; Zeit eingeben und speichern, NVS">
+	<Identification Standard="61499-2" Description="Copyright (c) 2023 Meisterschulen am Ostbahnhof  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0">
+	</Identification>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2023-10-23" Remarks="initial API and implementation and/or initial documentation">
+	</VersionInfo>
+	<CompilerInfo packageName="Uebungen">
+		<Import declaration="Uebungen::const::NVS::NVS_Keys::KEY_I1_STORE"/>
+		<Import declaration="Uebungen::const::UT::DefaultPool_Numeric::InputNumber_I1"/>
+		<Import declaration="logiBUS::io::DI::logiBUS_DI::Input_I1"/>
+		<Import declaration="logiBUS::io::DQ::logiBUS_DO::Output_Q1"/>
+	</CompilerInfo>
+	<SubAppInterfaceList>
+	</SubAppInterfaceList>
+	<SubAppNetwork>
+		<FB Name="DigitalOutput_Q1" Type="logiBUS::io::DQ::logiBUS_QXA" x="-5600" y="400">
+			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="Output" Value="Output_Q1"/>
+		</FB>
+		<FB Name="DigitalInput_I1" Type="logiBUS::io::DI::logiBUS_IXA" x="-9800" y="500">
+			<Parameter Name="QI" Value="TRUE">
+				<Attribute Name="Visible" Value="false"/>
+			</Parameter>
+			<Parameter Name="PARAMS" Value="">
+				<Attribute Name="Visible" Value="false"/>
+			</Parameter>
+			<Parameter Name="Input" Value="Input_I1"/>
+		</FB>
+		<FB Name="AX_TON" Type="adapter::events::unidirectional::timers::ATM_AX_TON" x="-7200" y="800">
+		</FB>
+		<SubApp Name="NVS_IN_AND_STORE_AR" Type="MyLib::sys::NVS_IN_AND_STORE_AR" x="-10700" y="1600">
+			<Parameter Name="KEY" Value="KEY_I1_STORE"/>
+			<Parameter Name="stObj" Value="InputNumber_I1"/>
+		</SubApp>
+		<FB Name="F_MULTIME" Type="adapter::iec61131::arithmetic::AR_MULTIME" x="-8300" y="1600">
+			<Parameter Name="IN1" Value="T#1s"/>
+		</FB>
+		<AdapterConnections>
+			<Connection Source="F_MULTIME.OUT" Destination="AX_TON.PT" dx1="253.33"/>
+			<Connection Source="AX_TON.Q" Destination="DigitalOutput_Q1.OUT" dx1="460"/>
+			<Connection Source="DigitalInput_I1.IN" Destination="AX_TON.IN" dx1="386.67"/>
+			<Connection Source="NVS_IN_AND_STORE_AR.VALUEO" Destination="F_MULTIME.IN2"/>
+		</AdapterConnections>
+	</SubAppNetwork>
+</SubAppType>

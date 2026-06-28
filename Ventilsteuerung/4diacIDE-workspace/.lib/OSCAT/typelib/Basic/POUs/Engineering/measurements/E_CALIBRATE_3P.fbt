@@ -73,14 +73,14 @@
 			<ECState Name="C_MAX" x="1200" y="1200">
 				<ECAction Algorithm="C_MAX" Output="EO_MAX"/>
 			</ECState>
-			<ECTransition Source="START" Destination="REQ" Condition="REQ" Comment="" x="800" y="400"/>
-			<ECTransition Source="REQ" Destination="START" Condition="1" Comment="" x="800" y="500"/>
-			<ECTransition Source="START" Destination="C_MIN" Condition="EI_MIN" Comment="" x="800" y="200"/>
-			<ECTransition Source="C_MIN" Destination="START" Condition="1" Comment="" x="800" y="100"/>
-			<ECTransition Source="START" Destination="C_MID" Condition="EI_MID" Comment="" x="800" y="600"/>
-			<ECTransition Source="C_MID" Destination="START" Condition="1" Comment="" x="800" y="700"/>
-			<ECTransition Source="START" Destination="C_MAX" Condition="EI_MAX" Comment="" x="800" y="1000"/>
-			<ECTransition Source="C_MAX" Destination="START" Condition="1" Comment="" x="800" y="1100"/>
+			<ECTransition Source="START" Destination="REQ" Condition="REQ" x="800" y="400"/>
+			<ECTransition Source="REQ" Destination="START" Condition="1" x="800" y="500"/>
+			<ECTransition Source="START" Destination="C_MIN" Condition="EI_MIN" x="800" y="200"/>
+			<ECTransition Source="C_MIN" Destination="START" Condition="1" x="800" y="100"/>
+			<ECTransition Source="START" Destination="C_MID" Condition="EI_MID" x="800" y="600"/>
+			<ECTransition Source="C_MID" Destination="START" Condition="1" x="800" y="700"/>
+			<ECTransition Source="START" Destination="C_MAX" Condition="EI_MAX" x="800" y="1000"/>
+			<ECTransition Source="C_MAX" Destination="START" Condition="1" x="800" y="1100"/>
 		</ECC>
 		<Algorithm Name="REQ">
 			<ST><![CDATA[

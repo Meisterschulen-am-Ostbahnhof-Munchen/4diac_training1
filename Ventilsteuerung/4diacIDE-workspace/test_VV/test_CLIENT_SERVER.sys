@@ -3,16 +3,6 @@
 	<VersionInfo Version="1.0" Author="Franz Höpfinger" Date="2023-10-23">
 	</VersionInfo>
 	<CompilerInfo packageName="Training_CLIENT_SERVER">
-		<Import declaration="VV::const::Computers::myComputers::C_PC_CLIENT"/>
-		<Import declaration="VV::const::Computers::myComputers::C_PC_SERVER"/>
-		<Import declaration="VV::const::ports::myPorts::PORT_A0"/>
-		<Import declaration="VV::const::ports::myPorts::PORT_A1"/>
-		<Import declaration="VV::const::ports::myPorts::PORT_A2"/>
-		<Import declaration="VV::const::ports::myPorts::PORT_A3"/>
-		<Import declaration="VV::const::ports::myPorts::PORT_B0"/>
-		<Import declaration="VV::const::ports::myPorts::PORT_B1"/>
-		<Import declaration="VV::const::ports::myPorts::PORT_B2"/>
-		<Import declaration="VV::const::ports::myPorts::PORT_B3"/>
 		<Import declaration="logiBUS::io::DI::logiBUS_DI::Input_I1"/>
 		<Import declaration="logiBUS::io::DI::logiBUS_DI::Input_I2"/>
 		<Import declaration="logiBUS::io::DI::logiBUS_DI::Input_I3"/>
@@ -96,27 +86,27 @@
 			</DataConnections>
 		</SubAppNetwork>
 	</Application>
-	<Device Name="FORTE_PC_CLIENT" Type="iec61499::system::FORTE_PC" x="1760" y="1760">
-		<Parameter Name="MGR_ID" Value="C_PC_SERVER" Comment="Device manager socket ID"/>
+	<Device Name="FORTE_PC_CLIENT" Type="iec61499::system::FORTE_PC" x="2160" y="2080">
+		<Parameter Name="MGR_ID" Value="VV::const::Computers::myComputers::C_PC_SERVER" Comment="Device manager socket ID"/>
 		<Attribute Name="Profile" Type="STRING" Value="HOLOBLOC"/>
 		<Attribute Name="Color" Type="STRING" Value="255,190,111"/>
 		<Resource Name="EMB_RES_CLIENT" Type="iec61499::system::EMB_RES" x="0" y="0">
 			<FBNetwork>
 				<FB Name="CLIENT_BUTTON_GREEN" Type="iec61499::net::CLIENT_1" x="4400" y="400">
 					<Parameter Name="QI" Value="TRUE"/>
-					<Parameter Name="ID" Value="PORT_B0"/>
+					<Parameter Name="ID" Value="VV::const::ports::myPorts::PORT_B0"/>
 				</FB>
 				<FB Name="CLIENT_BUTTON_YELLOW" Type="iec61499::net::CLIENT_1" x="4353.33" y="1500">
 					<Parameter Name="QI" Value="TRUE"/>
-					<Parameter Name="ID" Value="PORT_B1"/>
+					<Parameter Name="ID" Value="VV::const::ports::myPorts::PORT_B1"/>
 				</FB>
 				<FB Name="CLIENT_BUTTON_RED" Type="iec61499::net::CLIENT_1" x="4500" y="2900">
 					<Parameter Name="QI" Value="TRUE"/>
-					<Parameter Name="ID" Value="PORT_B2"/>
+					<Parameter Name="ID" Value="VV::const::ports::myPorts::PORT_B2"/>
 				</FB>
 				<FB Name="CLIENT_BUTTON_BLUE" Type="iec61499::net::CLIENT_1" x="4446.67" y="4200">
 					<Parameter Name="QI" Value="TRUE"/>
-					<Parameter Name="ID" Value="PORT_B3"/>
+					<Parameter Name="ID" Value="VV::const::ports::myPorts::PORT_B3"/>
 				</FB>
 				<FB Name="UINT2UINT_0" Type="iec61131::selection::F_MOVE" x="5900" y="700">
 					<Attribute Name="DataType" Value="UINT"/>
@@ -157,27 +147,27 @@
 			</FBNetwork>
 		</Resource>
 	</Device>
-	<Device Name="FORTE_PC_SERVER" Type="iec61499::system::FORTE_PC" x="5333.33" y="1866.67">
-		<Parameter Name="MGR_ID" Value="C_PC_CLIENT" Comment="Device manager socket ID"/>
+	<Device Name="FORTE_PC_SERVER" Type="iec61499::system::FORTE_PC" x="3200" y="2880">
+		<Parameter Name="MGR_ID" Value="VV::const::Computers::myComputers::C_PC_CLIENT" Comment="Device manager socket ID"/>
 		<Attribute Name="Profile" Type="STRING" Value="HOLOBLOC"/>
 		<Attribute Name="Color" Type="STRING" Value="59,215,47"/>
 		<Resource Name="EMB_RES_SERVER" Type="iec61499::system::EMB_RES" x="0" y="0">
 			<FBNetwork>
 				<FB Name="SERVER_BUTTON_GREEN" Type="iec61499::net::SERVER_1" x="2700" y="700">
 					<Parameter Name="QI" Value="TRUE"/>
-					<Parameter Name="ID" Value="PORT_A0"/>
+					<Parameter Name="ID" Value="VV::const::ports::myPorts::PORT_A0"/>
 				</FB>
 				<FB Name="SERVER_BUTTON_RED" Type="iec61499::net::SERVER_1" x="2700" y="3700">
 					<Parameter Name="QI" Value="TRUE"/>
-					<Parameter Name="ID" Value="PORT_A2"/>
+					<Parameter Name="ID" Value="VV::const::ports::myPorts::PORT_A2"/>
 				</FB>
 				<FB Name="SERVER_BUTTON_YELLOW" Type="iec61499::net::SERVER_1" x="2700" y="2300">
 					<Parameter Name="QI" Value="TRUE"/>
-					<Parameter Name="ID" Value="PORT_A1"/>
+					<Parameter Name="ID" Value="VV::const::ports::myPorts::PORT_A1"/>
 				</FB>
 				<FB Name="SERVER_BUTTON_BLUE" Type="iec61499::net::SERVER_1" x="2700" y="5000">
 					<Parameter Name="QI" Value="TRUE"/>
-					<Parameter Name="ID" Value="PORT_A3"/>
+					<Parameter Name="ID" Value="VV::const::ports::myPorts::PORT_A3"/>
 				</FB>
 				<FB Name="E_TRIG" Type="iec61499::events::E_TRIG" x="2400" y="-1200">
 					<Parameter Name="EVENTTYPE" Value="'EInit'"/>
@@ -187,7 +177,7 @@
 					<Connection Source="App_CLIENT_SERVER.E_CTU_LED_BLUE_5HZ.CUO" Destination="SERVER_BUTTON_BLUE.RSP" dx1="306.67" dx2="626.67" dy="940"/>
 					<Connection Source="App_CLIENT_SERVER.E_CTU_LED_RED_5HZ.CUO" Destination="SERVER_BUTTON_RED.RSP" dx1="260" dx2="526.67" dy="926.67"/>
 					<Connection Source="App_CLIENT_SERVER.E_CTU_LED_YELLOW_5HZ.CUO" Destination="SERVER_BUTTON_YELLOW.RSP" dx1="233.33" dx2="453.33" dy="873.33"/>
-					<Connection Source="App_CLIENT_SERVER.E_CTU_LED_GREEN_5HZ.CUO" Destination="SERVER_BUTTON_GREEN.RSP" dx1="166.67" dx2="846.67" dy="1020"/>
+					<Connection Source="App_CLIENT_SERVER.E_CTU_LED_GREEN_5HZ.CUO" Destination="SERVER_BUTTON_GREEN.RSP" dx1="166.67" dx2="2573.33" dy="1020"/>
 					<Connection Source="SERVER_BUTTON_BLUE.IND" Destination="App_CLIENT_SERVER.LED_BLUE_5HZ.REQ" dx1="1273.33"/>
 					<Connection Source="SERVER_BUTTON_RED.IND" Destination="App_CLIENT_SERVER.LED_RED_5HZ.REQ"/>
 					<Connection Source="SERVER_BUTTON_YELLOW.IND" Destination="App_CLIENT_SERVER.LED_YELLOW_5HZ.REQ" dx1="1253.33"/>
@@ -206,6 +196,9 @@
 			</FBNetwork>
 		</Resource>
 	</Device>
+	<Segment Name="Ethernet" Type="iec61499::system::Ethernet" x="2940" y="1486.67" dx1="2000">
+		<Attribute Name="Color" Type="STRING" Value="176,74,223"/>
+	</Segment>
 	<Mapping From="App_CLIENT_SERVER.BUTTON_BLUE" To="FORTE_PC_CLIENT.EMB_RES_CLIENT"/>
 	<Mapping From="App_CLIENT_SERVER.BUTTON_RED" To="FORTE_PC_CLIENT.EMB_RES_CLIENT"/>
 	<Mapping From="App_CLIENT_SERVER.BUTTON_YELLOW" To="FORTE_PC_CLIENT.EMB_RES_CLIENT"/>
@@ -218,4 +211,8 @@
 	<Mapping From="App_CLIENT_SERVER.E_CTU_LED_RED_5HZ" To="FORTE_PC_SERVER.EMB_RES_SERVER"/>
 	<Mapping From="App_CLIENT_SERVER.E_CTU_LED_GREEN_5HZ" To="FORTE_PC_SERVER.EMB_RES_SERVER"/>
 	<Mapping From="App_CLIENT_SERVER.E_CTU_LED_BLUE_5HZ" To="FORTE_PC_SERVER.EMB_RES_SERVER"/>
+	<Link SegmentName="Ethernet" CommResource="FORTE_PC_CLIENT" Comment="">
+	</Link>
+	<Link SegmentName="Ethernet" CommResource="FORTE_PC_SERVER" Comment="">
+	</Link>
 </System>

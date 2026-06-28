@@ -25,14 +25,12 @@
 			<ECState Name="REQ" x="0" y="0">
 				<ECAction Algorithm="REQ" Output="Q.E1"/>
 			</ECState>
-			<ECTransition Source="REQ" Destination="REQ" Condition="CLK.E1" Comment="" x="140" y="433.33"/>
+			<ECTransition Source="REQ" Destination="REQ" Condition="CLK.E1" x="140" y="433.33"/>
 		</ECC>
 		<Algorithm Name="REQ">
-			<ST><![CDATA[ALGORITHM REQ
+			<ST><![CDATA[
 Q.D1 := NOT CLK.D1 AND NOT MEM;
 MEM := NOT CLK.D1;
-END_ALGORITHM
-
 ]]></ST>
 		</Algorithm>
 	</BasicFB>

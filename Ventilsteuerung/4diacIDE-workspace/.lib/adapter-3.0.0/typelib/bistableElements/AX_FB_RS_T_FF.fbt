@@ -27,12 +27,12 @@
 			<ECState Name="REQ" x="0" y="0">
 				<ECAction Algorithm="REQ" Output="Q1.E1"/>
 			</ECState>
-			<ECTransition Source="REQ" Destination="REQ" Condition="RESET1.E1" Comment="" x="380" y="646.67"/>
-			<ECTransition Source="REQ" Destination="REQ" Condition="SET.E1" Comment="" x="-233.33" y="646.67"/>
-			<ECTransition Source="REQ" Destination="REQ" Condition="CLK.E1" Comment="" x="73.33" y="646.67"/>
+			<ECTransition Source="REQ" Destination="REQ" Condition="RESET1.E1" x="380" y="646.67"/>
+			<ECTransition Source="REQ" Destination="REQ" Condition="SET.E1" x="-233.33" y="646.67"/>
+			<ECTransition Source="REQ" Destination="REQ" Condition="CLK.E1" x="73.33" y="646.67"/>
 		</ECC>
 		<Algorithm Name="REQ">
-			<ST><![CDATA[ALGORITHM REQ
+			<ST><![CDATA[
 IF RESET1.D1 THEN
 	Q1.D1 := BOOL#FALSE;
 ELSIF SET.D1 THEN
@@ -41,8 +41,6 @@ ELSIF CLK.D1 AND NOT EDGE THEN
 	Q1.D1 := NOT Q1.D1;
 END_IF;
 EDGE := CLK.D1;
-END_ALGORITHM
-
 ]]></ST>
 		</Algorithm>
 	</BasicFB>

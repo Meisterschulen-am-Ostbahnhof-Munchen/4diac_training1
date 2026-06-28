@@ -65,27 +65,23 @@
 			<ECAction Algorithm="RST" Output="CNF"/>
 		</ECState>
 		<Algorithm Name="EINIT">
-			<ST><![CDATA[ALGORITHM EINIT
+			<ST><![CDATA[
 (* Reset internal states *)
 init := FALSE;
 in_last := IN;
 t_last := T_PLC_US();
 i := 0.0;
 tc := 0.0;
-END_ALGORITHM]]></ST>
+]]></ST>
 		</Algorithm>
 		<Algorithm Name="RST">
 			<ST><![CDATA[
-
-ALGORITHM RST
 this.EINIT();
 init := TRUE;
-END_ALGORITHM]]></ST>
+]]></ST>
 		</Algorithm>
 		<Algorithm Name="REQ">
 			<ST><![CDATA[
-
-ALGORITHM REQ
 (* initialize at power_up *)
 IF NOT init THEN
 	this.RST();
@@ -126,16 +122,6 @@ ELSE
 		LIM := FALSE;
 	END_IF;
 END_IF;
-END_ALGORITHM
-
-(* revision history hm 13. jun. 2008 	rev 1.0 original version
- * *
- * hm	27. oct. 2008	rev 1.1 integrator will not be adjusted when ki = 0
- * *
- * hm	25. jan 2009	rev 1.2 module will also work with negative K
- * *
- * hm	11. mar. 2009	rev 1.3 real constants updated to new systax using dot 
- * * *)
 ]]></ST>
 		</Algorithm>
 	</SimpleFB>

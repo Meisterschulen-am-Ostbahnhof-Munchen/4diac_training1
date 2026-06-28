@@ -32,15 +32,13 @@
 			<ECAction Algorithm="REQ" Output="CNF"/>
 		</ECState>
 		<Algorithm Name="REQ">
-			<ST><![CDATA[ALGORITHM REQ
+			<ST><![CDATA[
 
 IF (FIRST = 0) THEN
 	FIRST := IN;
 END_IF;
 
 OUT := IN - FIRST;
-
-END_ALGORITHM
 
 ]]></ST>
 		</Algorithm>

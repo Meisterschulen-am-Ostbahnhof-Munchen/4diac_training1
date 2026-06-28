@@ -9,7 +9,7 @@
 	</CompilerInfo>
 	<SubAppInterfaceList>
 		<InputVars>
-			<VarDeclaration Name="KEY" Type="STRING"/>
+			<VarDeclaration Name="KEY" Type="STRING" Comment="Key name."/>
 			<VarDeclaration Name="u16ObjId" Type="UINT" InitialValue="ID_NULL"/>
 		</InputVars>
 		<Plugs>
@@ -19,6 +19,7 @@
 	<SubAppNetwork>
 		<FB Name="NVS_AIS" Type="logiBUS::storage::esp32_nvs::NVS_AIS" x="800" y="-93.33">
 			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="SETM" Value="TRUE"/>
 			<Parameter Name="DEFAULT_VALUE" Value="STRING#''"/>
 		</FB>
 		<FB Name="StringValue_AIS" Type="isobus::UT::io::StringValue::StringValue_AIS" x="-2800" y="-200">
@@ -41,7 +42,7 @@
 		</DataConnections>
 		<AdapterConnections>
 			<Connection Source="NVS_AIS.AIS_OUT" Destination="AIS_SPLIT_2.IN" dx1="106.67"/>
-			<Connection Source="StringValue_AIS.IN" Destination="NVS_AIS.AIS_IN"/>
+			<Connection Source="StringValue_AIS.IN" Destination="NVS_AIS.AIS_IN" dx1="1306.67"/>
 			<Connection Source="AIS_SPLIT_2.OUT1" Destination="VALUEO" dx1="2220">
 				<Attribute Name="Visible" Value="false"/>
 			</Connection>

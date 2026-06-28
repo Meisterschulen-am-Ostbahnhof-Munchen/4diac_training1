@@ -1,6 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Manifest xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="platform:/resource/org.eclipse.fordiac.ide.library.model/model/library.xsd" Scope="Library">
-    <Product Name="Adapter" SymbolicName="adapter" Comment="Function Blocks for Adapter Implementation">
-        <VersionInfo Version="3.0.0" Author="HR Agrartechnik GmbH" Date="2025-11-02"/>
-    </Product>
+  <Dependencies>
+    <Required SymbolicName="events" Version="3.0.0"/>
+    <Required SymbolicName="iec61131-3-bool" Version="3.0.0"/>
+    <Required SymbolicName="quarter" Version="3.0.0"/>
+    <Required SymbolicName="utils" Version="3.0.0"/>
+  </Dependencies>
+  <Product Comment="Function Blocks for Adapter Implementation" Name="Adapter" SymbolicName="adapter">
+    <VersionInfo Author="HR Agrartechnik GmbH" Date="2025-11-02" Version="3.0.0"/>
+  </Product>
 </Manifest>

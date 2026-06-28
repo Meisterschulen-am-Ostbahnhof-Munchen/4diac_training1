@@ -9,26 +9,26 @@
 	</CompilerInfo>
 	<InterfaceList>
 		<Plugs>
-			<AdapterDeclaration Name="OUT" Type="adapter::types::unidirectional::AUDI" Comment="Selected Output" x="0" y="0"/>
+			<AdapterDeclaration Name="OUT" Type="adapter::types::unidirectional::AUDI" Comment="Selected Output" x="2400" y="-100"/>
 		</Plugs>
 		<Sockets>
-			<AdapterDeclaration Name="IN0" Type="adapter::types::unidirectional::AUDI" Comment="Selectable input variable" x="0" y="0"/>
-			<AdapterDeclaration Name="IN1" Type="adapter::types::unidirectional::AUDI" Comment="Selectable input variable" x="0" y="0"/>
-			<AdapterDeclaration Name="G" Type="adapter::types::unidirectional::AX" Comment="Selector" x="0" y="0"/>
+			<AdapterDeclaration Name="IN0" Type="adapter::types::unidirectional::AUDI" Comment="Selectable input variable" x="-300" y="400"/>
+			<AdapterDeclaration Name="IN1" Type="adapter::types::unidirectional::AUDI" Comment="Selectable input variable" x="-300" y="900"/>
+			<AdapterDeclaration Name="G" Type="adapter::types::unidirectional::AX" Comment="Selector" x="-300" y="-100"/>
 		</Sockets>
 	</InterfaceList>
 	<FBNetwork>
 		<FB Name="F_SEL" Type="iec61131::selection::F_SEL" x="1500" y="-100">
 		</FB>
 		<EventConnections>
-			<Connection Source="F_SEL.CNF" Destination="OUT.E1" dx1="80" dx2="80" dy="46.67"/>
-			<Connection Source="G.E1" Destination="F_SEL.REQ" dx1="460"/>
+			<Connection Source="F_SEL.CNF" Destination="OUT.E1"/>
+			<Connection Source="G.E1" Destination="F_SEL.REQ"/>
 		</EventConnections>
 		<DataConnections>
-			<Connection Source="F_SEL.OUT" Destination="OUT.D1" dx1="80" dx2="80" dy="46.67"/>
-			<Connection Source="G.D1" Destination="F_SEL.G" dx1="460"/>
-			<Connection Source="IN1.D1" Destination="F_SEL.IN1" dx1="633.33"/>
-			<Connection Source="IN0.D1" Destination="F_SEL.IN0" dx1="433.33"/>
+			<Connection Source="F_SEL.OUT" Destination="OUT.D1"/>
+			<Connection Source="G.D1" Destination="F_SEL.G"/>
+			<Connection Source="IN1.D1" Destination="F_SEL.IN1" dx1="1246.67"/>
+			<Connection Source="IN0.D1" Destination="F_SEL.IN0" dx1="1013.33"/>
 		</DataConnections>
 	</FBNetwork>
 	<Service RightInterface="RESOURCE" LeftInterface="APPLICATION">

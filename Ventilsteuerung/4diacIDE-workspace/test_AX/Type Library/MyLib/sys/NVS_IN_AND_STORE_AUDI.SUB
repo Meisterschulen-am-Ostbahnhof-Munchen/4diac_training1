@@ -9,7 +9,7 @@
 	</CompilerInfo>
 	<SubAppInterfaceList>
 		<InputVars>
-			<VarDeclaration Name="KEY" Type="STRING"/>
+			<VarDeclaration Name="KEY" Type="STRING" Comment="Key name."/>
 			<VarDeclaration Name="u16ObjId" Type="UINT" InitialValue="ID_NULL"/>
 		</InputVars>
 		<Plugs>
@@ -19,6 +19,7 @@
 	<SubAppNetwork>
 		<FB Name="NVS_AUDI" Type="logiBUS::storage::esp32_nvs::NVS_AUDI" x="800" y="-93.33">
 			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="SETM" Value="TRUE"/>
 			<Parameter Name="DEFAULT_VALUE" Value="UDINT#0"/>
 		</FB>
 		<FB Name="ID" Type="isobus::UT::io::NumericValue::NumericValue_IDA" x="-2800" y="-200">
@@ -44,7 +45,7 @@
 		<AdapterConnections>
 			<Connection Source="NVS_AUDI.AUDI_OUT" Destination="AUDI_SPLIT_2.IN" dx1="106.67"/>
 			<Connection Source="ID.IN" Destination="AD_TO_AUDI.AD_IN"/>
-			<Connection Source="AD_TO_AUDI.AUDI_OUT" Destination="NVS_AUDI.AUDI_IN"/>
+			<Connection Source="AD_TO_AUDI.AUDI_OUT" Destination="NVS_AUDI.AUDI_IN" dx1="440"/>
 			<Connection Source="AUDI_SPLIT_2.OUT1" Destination="VALUEO" dx1="2220">
 				<Attribute Name="Visible" Value="false"/>
 			</Connection>

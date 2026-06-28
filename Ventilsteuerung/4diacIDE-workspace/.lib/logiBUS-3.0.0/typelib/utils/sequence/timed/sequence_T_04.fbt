@@ -95,112 +95,85 @@
 				<ECAction Algorithm="State_03_X" Output="EO_S3"/>
 				<ECAction Algorithm="State_04_X" Output="EO_S4"/>
 			</ECState>
-			<ECTransition Source="sState_01" Destination="sState_02" Condition="timeOut.TimeOut" Comment="" x="2873.33" y="1686.67"/>
-			<ECTransition Source="sState_02" Destination="sState_03" Condition="timeOut.TimeOut" Comment="" x="2860" y="2373.33"/>
-			<ECTransition Source="sState_03" Destination="sState_04" Condition="timeOut.TimeOut" Comment="" x="2860" y="3020"/>
-			<ECTransition Source="sState_00" Destination="sState_01" Condition="START_S1" Comment="" x="1753.33" y="2580"/>
-			<ECTransition Source="sState_04" Destination="sState_00" Condition="timeOut.TimeOut" Comment="" x="2866.67" y="3733.33"/>
-			<ECTransition Source="xSTART" Destination="sState_01" Condition="START_S1" Comment="" x="2213.33" y="846.67"/>
-			<ECTransition Source="sState_01" Destination="sRESET" Condition="RESET" Comment="" x="586.67" y="1760"/>
-			<ECTransition Source="sState_04" Destination="sRESET" Condition="RESET" Comment="" x="606.67" y="2526.67"/>
-			<ECTransition Source="sState_02" Destination="sRESET" Condition="RESET" Comment="" x="640" y="1993.33"/>
-			<ECTransition Source="sState_03" Destination="sRESET" Condition="RESET" Comment="" x="580" y="2313.33"/>
-			<ECTransition Source="sRESET" Destination="sState_00" Condition="1" Comment="" x="-360" y="3400"/>
+			<ECTransition Source="sState_01" Destination="sState_02" Condition="timeOut.TimeOut" x="2873.33" y="1686.67"/>
+			<ECTransition Source="sState_02" Destination="sState_03" Condition="timeOut.TimeOut" x="2860" y="2373.33"/>
+			<ECTransition Source="sState_03" Destination="sState_04" Condition="timeOut.TimeOut" x="2860" y="3020"/>
+			<ECTransition Source="sState_00" Destination="sState_01" Condition="START_S1" x="1753.33" y="2580"/>
+			<ECTransition Source="sState_04" Destination="sState_00" Condition="timeOut.TimeOut" x="2866.67" y="3733.33"/>
+			<ECTransition Source="xSTART" Destination="sState_01" Condition="START_S1" x="2213.33" y="846.67"/>
+			<ECTransition Source="sState_01" Destination="sRESET" Condition="RESET" x="586.67" y="1760"/>
+			<ECTransition Source="sState_04" Destination="sRESET" Condition="RESET" x="606.67" y="2526.67"/>
+			<ECTransition Source="sState_02" Destination="sRESET" Condition="RESET" x="640" y="1993.33"/>
+			<ECTransition Source="sState_03" Destination="sRESET" Condition="RESET" x="580" y="2313.33"/>
+			<ECTransition Source="sRESET" Destination="sState_00" Condition="1" x="-360" y="3400"/>
 		</ECC>
 		<Algorithm Name="State_00_C">
-			<ST><![CDATA[ // Confirmation STEPS
-ALGORITHM State_00_C // State_00 Confirmation Step
+			<ST><![CDATA[ // State_00 Confirmation Step
 STATE_NR := sequence::State_00;
-END_ALGORITHM]]></ST>
+]]></ST>
 		</Algorithm>
 		<Algorithm Name="State_01_C">
-			<ST><![CDATA[
-
-ALGORITHM State_01_C // State_01 Confirmation Step
+			<ST><![CDATA[ // State_01 Confirmation Step
 STATE_NR := sequence::State_01;
 timeOut.DT := DT_S1_S2;
-END_ALGORITHM]]></ST>
+]]></ST>
 		</Algorithm>
 		<Algorithm Name="State_02_C">
-			<ST><![CDATA[
-
-ALGORITHM State_02_C // State_02 Confirmation Step
+			<ST><![CDATA[ // State_02 Confirmation Step
 STATE_NR := sequence::State_02;
 timeOut.DT := DT_S2_S3;
-END_ALGORITHM]]></ST>
+]]></ST>
 		</Algorithm>
 		<Algorithm Name="State_03_C">
-			<ST><![CDATA[
-
-ALGORITHM State_03_C // State_03 Confirmation Step
+			<ST><![CDATA[ // State_03 Confirmation Step
 STATE_NR := sequence::State_03;
 timeOut.DT := DT_S3_S4;
-END_ALGORITHM]]></ST>
+]]></ST>
 		</Algorithm>
 		<Algorithm Name="State_04_C">
-			<ST><![CDATA[
-
-ALGORITHM State_04_C // State_04 Confirmation Step
+			<ST><![CDATA[ // State_04 Confirmation Step
 STATE_NR := sequence::State_04;
 timeOut.DT := DT_S4_START;
-END_ALGORITHM]]></ST>
+]]></ST>
 		</Algorithm>
 		<Algorithm Name="State_01_E">
-			<ST><![CDATA[
-
-ALGORITHM State_01_E // State_01 Entry Step
+			<ST><![CDATA[ // State_01 Entry Step
 DO_S1 := BOOL#TRUE; // ON
-END_ALGORITHM]]></ST>
+]]></ST>
 		</Algorithm>
 		<Algorithm Name="State_01_X">
-			<ST><![CDATA[
-
-ALGORITHM State_01_X // State_01 Exit Step
+			<ST><![CDATA[ // State_01 Exit Step
 DO_S1 := BOOL#FALSE;
-END_ALGORITHM]]></ST>
+]]></ST>
 		</Algorithm>
 		<Algorithm Name="State_02_E">
-			<ST><![CDATA[
-
-ALGORITHM State_02_E // State_02 Entry Step
+			<ST><![CDATA[ // State_02 Entry Step
 DO_S2 := BOOL#TRUE; // ON
-END_ALGORITHM]]></ST>
+]]></ST>
 		</Algorithm>
 		<Algorithm Name="State_02_X">
-			<ST><![CDATA[
-
-ALGORITHM State_02_X // State_02 Exit Step
+			<ST><![CDATA[ // State_02 Exit Step
 DO_S2 := BOOL#FALSE;
-END_ALGORITHM]]></ST>
+]]></ST>
 		</Algorithm>
 		<Algorithm Name="State_03_E">
-			<ST><![CDATA[
-
-ALGORITHM State_03_E // State_03 Entry Step
+			<ST><![CDATA[ // State_03 Entry Step
 DO_S3 := BOOL#TRUE; // ON
-END_ALGORITHM]]></ST>
+]]></ST>
 		</Algorithm>
 		<Algorithm Name="State_03_X">
-			<ST><![CDATA[
-
-ALGORITHM State_03_X // State_03 Exit Step
+			<ST><![CDATA[ // State_03 Exit Step
 DO_S3 := BOOL#FALSE;
-END_ALGORITHM]]></ST>
+]]></ST>
 		</Algorithm>
 		<Algorithm Name="State_04_E">
-			<ST><![CDATA[
-
-ALGORITHM State_04_E // State_04 Entry Step
+			<ST><![CDATA[ // State_04 Entry Step
 DO_S4 := BOOL#TRUE; // ON
-END_ALGORITHM]]></ST>
+]]></ST>
 		</Algorithm>
 		<Algorithm Name="State_04_X">
-			<ST><![CDATA[
-
-ALGORITHM State_04_X // State_04 Exit Step
+			<ST><![CDATA[ // State_04 Exit Step
 DO_S4 := BOOL#FALSE;
-END_ALGORITHM
-
 ]]></ST>
 		</Algorithm>
 	</BasicFB>
