@@ -9,6 +9,7 @@
 		<Import declaration="Uebungen::const::Uebung_120_129::Filter::PEAK_FLT"/>
 		<Import declaration="isobus::pgn::ISOUSERHOME_e::network"/>
 		<Import declaration="isobus::pgn::ISO_CAN_NODE::NODE1"/>
+		<Import declaration="isobus::pgn::const::PgnDef::PGN_PDU1_PropA"/>
 	</CompilerInfo>
 	<SubAppInterfaceList>
 	</SubAppInterfaceList>
@@ -20,7 +21,7 @@
 			<Parameter Name="mask" Value="PEAK_FLT"/>
 		</FB>
 		<FB Name="AlPgnTxNew8Bcycl_REQ" Type="isobus::pgn::tx::AlPgnTxNew8Bcycl_REQ" x="-4400" y="3700">
-			<Parameter Name="u32Pgn" Value="61184"/>
+			<Parameter Name="u32Pgn" Value="PGN_PDU1_PropA"/>
 			<Parameter Name="u16DaSize" Value="8"/>
 			<Parameter Name="u8Priority" Value="3"/>
 			<Parameter Name="u16DefRepRate" Value="500"/>
