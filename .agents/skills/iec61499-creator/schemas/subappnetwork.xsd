@@ -65,8 +65,8 @@
     </xs:documentation>
   </xs:annotation>
   <xs:sequence>
-    <xs:element name="SubAppInterfaceList" type="SubAppInterfaceList"/>
-    <xs:element name="SubAppNetwork"       type="SubAppNetwork"/>
+    <xs:element name="SubAppInterfaceList" type="SubAppInterfaceList" minOccurs="0"/>
+    <xs:element name="SubAppNetwork"       type="SubAppNetwork"       minOccurs="0"/>
     <xs:group ref="ParameterAttributeGroup"/>
   </xs:sequence>
   <xs:attributeGroup ref="NameCommentAttributes"/>

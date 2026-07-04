@@ -47,9 +47,9 @@
 <xs:complexType name="Device">
   <xs:sequence>
     <xs:element name="Parameter"       type="Parameter"       minOccurs="0" maxOccurs="unbounded"/>
+    <xs:group   ref="AttributeGroup"/>
     <xs:element name="Resource"        type="Resource"        minOccurs="0" maxOccurs="unbounded"/>
     <xs:element name="DataConnections" type="DataConnections" minOccurs="0" maxOccurs="1"/>
-    <xs:group   ref="AttributeGroup"/>
   </xs:sequence>
   <xs:attributeGroup ref="NameTypeCommentAttributes"/>
   <xs:attributeGroup ref="PositionAttributes"/>
@@ -76,7 +76,7 @@
 <xs:complexType name="Resource">
   <xs:sequence>
     <xs:element name="Parameter" type="Parameter" minOccurs="0" maxOccurs="unbounded"/>
-    <xs:element name="FBAppNetwork" type="SubAppNetwork" minOccurs="0" maxOccurs="1"/>
+    <xs:element name="FBNetwork" type="FBNetwork" minOccurs="0" maxOccurs="1"/>
   </xs:sequence>
   <xs:attributeGroup ref="NameTypeCommentAttributes"/>
   <xs:attributeGroup ref="PositionAttributes"/>
