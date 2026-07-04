@@ -192,9 +192,6 @@
 			</FBNetwork>
 		</Resource>
 	</Device>
-	<Segment Name="Ethernet" Type="iec61499::system::Ethernet" x="2940" y="1486.67" dx1="2000">
-		<Attribute Name="Color" Type="STRING" Value="176,74,223"/>
-	</Segment>
 	<Mapping From="App_CLIENT_SERVER.BUTTON_BLUE" To="FORTE_PC_CLIENT.EMB_RES_CLIENT"/>
 	<Mapping From="App_CLIENT_SERVER.BUTTON_RED" To="FORTE_PC_CLIENT.EMB_RES_CLIENT"/>
 	<Mapping From="App_CLIENT_SERVER.BUTTON_YELLOW" To="FORTE_PC_CLIENT.EMB_RES_CLIENT"/>
@@ -207,6 +204,9 @@
 	<Mapping From="App_CLIENT_SERVER.E_CTU_LED_RED_5HZ" To="FORTE_PC_SERVER.EMB_RES_SERVER"/>
 	<Mapping From="App_CLIENT_SERVER.E_CTU_LED_GREEN_5HZ" To="FORTE_PC_SERVER.EMB_RES_SERVER"/>
 	<Mapping From="App_CLIENT_SERVER.E_CTU_LED_BLUE_5HZ" To="FORTE_PC_SERVER.EMB_RES_SERVER"/>
+	<Segment Name="Ethernet" Type="iec61499::system::Ethernet" x="2940" y="1486.67" dx1="2000">
+		<Attribute Name="Color" Type="STRING" Value="176,74,223"/>
+	</Segment>
 	<Link SegmentName="Ethernet" CommResource="FORTE_PC_CLIENT" Comment="">
 	</Link>
 	<Link SegmentName="Ethernet" CommResource="FORTE_PC_SERVER" Comment="">

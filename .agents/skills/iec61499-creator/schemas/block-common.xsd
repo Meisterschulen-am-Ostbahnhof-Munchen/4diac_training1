@@ -92,9 +92,19 @@
 </xs:complexType>
 
 <xs:complexType name="Parameter">
-  <xs:attributeGroup ref="NameCommentAttributes"/>
-  <xs:attribute name="Value" type="xs:string" use="required"/>
+  <xs:sequence>
+    <xs:element name="Attribute" type="Attribute" minOccurs="0" maxOccurs="unbounded"/>
+  </xs:sequence>
+  <xs:attributeGroup ref="StructNameCommentAttributes"/>
+  <xs:attribute name="Value"   type="xs:string"        use="required"/>
 </xs:complexType>
+
+<xs:group name="ParameterAttributeGroup">
+  <xs:choice>
+    <xs:element name="Parameter" type="Parameter"/>
+    <xs:element name="Attribute" type="Attribute"/>
+  </xs:choice>
+</xs:group>
 
 
 <!-- ============================================== -->

@@ -13,7 +13,7 @@
 -->
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
 
-<xs:include schemaLocation="common.xsd"/>
+<xs:include schemaLocation="block-common.xsd"/>
 
 <xs:complexType name="FBNetwork">
   <xs:sequence>
@@ -35,6 +35,9 @@
 </xs:group>
 
 <xs:complexType name="FB">
+  <xs:sequence>
+    <xs:group ref="ParameterAttributeGroup" minOccurs="0" maxOccurs="unbounded"/>
+  </xs:sequence>
   <xs:attributeGroup ref="NameTypeCommentAttributes"/>
   <xs:attributeGroup ref="PositionAttributes"/>
 </xs:complexType>
@@ -73,12 +76,15 @@
 </xs:complexType>
 
 <xs:complexType name="Connection">
+  <xs:sequence>
+    <xs:element name="Attribute" type="Attribute" minOccurs="0" maxOccurs="unbounded"/>
+  </xs:sequence>
   <xs:attribute name="Source"      type="xs:string"  use="required"/>
   <xs:attribute name="Destination" type="xs:string"  use="required"/>
   <xs:attribute name="Comment"     type="xs:string"  use="optional"/>
   <xs:attribute name="dx1"         type="Coordinate" use="optional"/>
   <xs:attribute name="dx2"         type="Coordinate" use="optional"/>
-  <xs:attribute name="y"           type="Coordinate" use="optional"/>
+  <xs:attribute name="dy"          type="Coordinate" use="optional"/>
 </xs:complexType>
 
 

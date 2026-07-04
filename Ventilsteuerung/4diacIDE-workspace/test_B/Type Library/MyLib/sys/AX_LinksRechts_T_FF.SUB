@@ -7,13 +7,13 @@
 	<CompilerInfo packageName="MyLib::sys">
 	</CompilerInfo>
 	<SubAppInterfaceList>
+		<Sockets>
+			<AdapterDeclaration Name="IN" Type="adapter::types::unidirectional::AX"/>
+		</Sockets>
 		<Plugs>
 			<AdapterDeclaration Name="Links" Type="adapter::types::unidirectional::AX"/>
 			<AdapterDeclaration Name="Rechts" Type="adapter::types::unidirectional::AX"/>
 		</Plugs>
-		<Sockets>
-			<AdapterDeclaration Name="IN" Type="adapter::types::unidirectional::AX"/>
-		</Sockets>
 	</SubAppInterfaceList>
 	<SubAppNetwork>
 		<FB Name="AX_T_FF_INIT" Type="adapter::events::unidirectional::AX_T_FF_INIT" x="100" y="-500">

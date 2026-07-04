@@ -47,6 +47,7 @@
 <xs:complexType name="Device">
   <xs:sequence>
     <xs:element name="Parameter"       type="Parameter"       minOccurs="0" maxOccurs="unbounded"/>
+    <xs:element name="Attribute"       type="Attribute"       minOccurs="0" maxOccurs="unbounded"/>
     <xs:element name="Resource"        type="Resource"        minOccurs="0" maxOccurs="unbounded"/>
     <xs:element name="DataConnections" type="DataConnections" minOccurs="0" maxOccurs="1"/>
   </xs:sequence>
@@ -56,7 +57,7 @@
 
 <xs:complexType name="Segment">
   <xs:sequence>
-    <xs:element name="Parameter" type="Parameter" minOccurs="0" maxOccurs="unbounded"/>
+    <xs:group ref="ParameterAttributeGroup" minOccurs="0" maxOccurs="unbounded"/>
   </xs:sequence>
   <xs:attributeGroup ref="NameTypeCommentAttributes"/>
   <xs:attributeGroup ref="PositionAttributes"/>
@@ -65,7 +66,7 @@
 
 <xs:complexType name="Link">
   <xs:sequence>
-    <xs:element name="Parameter" type="Parameter" minOccurs="0" maxOccurs="unbounded"/>
+    <xs:group ref="ParameterAttributeGroup" minOccurs="0" maxOccurs="unbounded"/>
   </xs:sequence>
   <xs:attribute name="SegmentName"  type="xs:string" use="required"/>
   <xs:attribute name="CommResource" type="xs:string" use="required"/>
@@ -75,7 +76,7 @@
 <xs:complexType name="Resource">
   <xs:sequence>
     <xs:element name="Parameter" type="Parameter" minOccurs="0" maxOccurs="unbounded"/>
-    <xs:element name="SubAppNetwork" type="SubAppNetwork" minOccurs="0" maxOccurs="1"/>
+    <xs:element name="FBNetwork" type="FBNetwork" minOccurs="0" maxOccurs="1"/>
   </xs:sequence>
   <xs:attributeGroup ref="NameTypeCommentAttributes"/>
   <xs:attributeGroup ref="PositionAttributes"/>
