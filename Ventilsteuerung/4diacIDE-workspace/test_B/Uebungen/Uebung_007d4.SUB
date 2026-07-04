@@ -23,7 +23,7 @@
 		<FB Name="F_GT" Type="iec61131::comparison::F_GT" x="-1300" y="500">
 			<Parameter Name="IN2" Value="REAL#0.49"/>
 		</FB>
-		<FB Name="E_D_FF_ANY_HYS" Type="logiBUS::signalprocessing::hysteresis::E_D_FF_ANY_HYS_TMIN" x="-4400" y="400">
+		<FB Name="E_D_FF_ANY_HYS_TMIN" Type="logiBUS::signalprocessing::hysteresis::E_D_FF_ANY_HYS_TMIN" x="-4400" y="400">
 			<Parameter Name="HYSTERESIS" Value="REAL#0.95"/>
 			<Parameter Name="Tmin" Value="T#150ms"/>
 		</FB>
@@ -32,15 +32,15 @@
 		</FB>
 		<EventConnections>
 			<Connection Source="E_CYCLE.EO" Destination="FB_RANDOM.REQ" dx1="206.67"/>
-			<Connection Source="FB_RANDOM.CNF" Destination="E_D_FF_ANY_HYS.CLK"/>
+			<Connection Source="FB_RANDOM.CNF" Destination="E_D_FF_ANY_HYS_TMIN.CLK"/>
 			<Connection Source="F_GT.CNF" Destination="DigitalOutput_Q1.REQ" dx1="613.33"/>
-			<Connection Source="E_D_FF_ANY_HYS.EO" Destination="F_MOVE.REQ" dx1="260"/>
+			<Connection Source="E_D_FF_ANY_HYS_TMIN.EO" Destination="F_MOVE.REQ" dx1="260"/>
 			<Connection Source="F_MOVE.CNF" Destination="F_GT.REQ"/>
 		</EventConnections>
 		<DataConnections>
-			<Connection Source="FB_RANDOM.VAL" Destination="E_D_FF_ANY_HYS.D"/>
+			<Connection Source="FB_RANDOM.VAL" Destination="E_D_FF_ANY_HYS_TMIN.D"/>
 			<Connection Source="F_GT.OUT" Destination="DigitalOutput_Q1.OUT" dx1="613.33"/>
-			<Connection Source="E_D_FF_ANY_HYS.Q" Destination="F_MOVE.IN" dx1="260"/>
+			<Connection Source="E_D_FF_ANY_HYS_TMIN.Q" Destination="F_MOVE.IN" dx1="260"/>
 			<Connection Source="F_MOVE.OUT" Destination="F_GT.IN1"/>
 		</DataConnections>
 	</SubAppNetwork>

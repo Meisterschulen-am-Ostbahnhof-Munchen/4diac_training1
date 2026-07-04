@@ -19,16 +19,16 @@
 			<Parameter Name="QI" Value="TRUE"/>
 			<Parameter Name="Input" Value="Input_I1"/>
 		</FB>
-		<FB Name="AND_2" Type="iec61131::bitwiseOperators::AND_2_BOOL" x="-1400" y="-600">
+		<FB Name="AND_2_BOOL" Type="iec61131::bitwiseOperators::AND_2_BOOL" x="-1400" y="-600">
 		</FB>
 		<EventConnections>
-			<Connection Source="AND_2.CNF" Destination="DigitalOutput_Q1.REQ" dx1="686.67"/>
-			<Connection Source="DigitalInput_I1.IND" Destination="AND_2.REQ" dx1="1220"/>
+			<Connection Source="AND_2_BOOL.CNF" Destination="DigitalOutput_Q1.REQ" dx1="686.67"/>
+			<Connection Source="DigitalInput_I1.IND" Destination="AND_2_BOOL.REQ" dx1="1220"/>
 		</EventConnections>
 		<DataConnections>
-			<Connection Source="AND_2.OUT" Destination="DigitalOutput_Q1.OUT" dx1="686.67"/>
-			<Connection Source="DigitalInput_I1.IN" Destination="AND_2.IN1" dx1="1273.33"/>
-			<Connection Source="DigitalInput_I1.IN" Destination="AND_2.IN2" dx1="1273.33"/>
+			<Connection Source="AND_2_BOOL.OUT" Destination="DigitalOutput_Q1.OUT" dx1="686.67"/>
+			<Connection Source="DigitalInput_I1.IN" Destination="AND_2_BOOL.IN1" dx1="1273.33"/>
+			<Connection Source="DigitalInput_I1.IN" Destination="AND_2_BOOL.IN2" dx1="1273.33"/>
 		</DataConnections>
 	</SubAppNetwork>
 </SubAppType>

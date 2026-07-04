@@ -21,7 +21,7 @@
 			<Parameter Name="QI" Value="TRUE"/>
 			<Parameter Name="Input" Value="Input_I1"/>
 		</FB>
-		<FB Name="E_CTU" Type="adapter::events::unidirectional::AUI_CTU" x="-6200" y="-800">
+		<FB Name="AUI_CTU" Type="adapter::events::unidirectional::AUI_CTU" x="-6200" y="-800">
 		</FB>
 		<FB Name="DigitalInput_RST_I2" Type="logiBUS::io::DI::logiBUS_IXA" x="-10600" y="-900">
 			<Parameter Name="QI" Value="TRUE"/>
@@ -46,9 +46,9 @@
 		</FB>
 		<EventConnections>
 			<Connection Source="X_TO_B_I1.CNF" Destination="E_CYCLE.START" dx1="80"/>
-			<Connection Source="X_TO_B_I2.CNF" Destination="E_CTU.R" dx1="80"/>
+			<Connection Source="X_TO_B_I2.CNF" Destination="AUI_CTU.R" dx1="80"/>
 			<Connection Source="X_TO_B_I2.CNF" Destination="E_CYCLE.STOP" dx1="80"/>
-			<Connection Source="E_CYCLE.EO" Destination="E_CTU.CU" dx1="80" dx2="80" dy="400"/>
+			<Connection Source="E_CYCLE.EO" Destination="AUI_CTU.CU" dx1="80" dx2="80" dy="400"/>
 		</EventConnections>
 		<AdapterConnections>
 			<Connection Source="DigitalInput_CLK_I1.IN" Destination="X_TO_B_I1.AX_IN" dx1="80"/>
@@ -56,8 +56,8 @@
 			<Connection Source="AX_D_FF.Q" Destination="DigitalOutput_Q1.OUT" dx1="80"/>
 			<Connection Source="AUI_D_FF_TMIN.Q" Destination="UI_TO_UDI_N1.AUI_IN" dx1="80"/>
 			<Connection Source="UI_TO_UDI_N1.AUDI_OUT" Destination="Q_NumericValue.u32NewValue" dx1="80"/>
-			<Connection Source="E_CTU.Q" Destination="AX_D_FF.I" dx1="3793.33"/>
-			<Connection Source="E_CTU.CV" Destination="AUI_D_FF_TMIN.I" dx1="80"/>
+			<Connection Source="AUI_CTU.Q" Destination="AX_D_FF.I" dx1="3793.33"/>
+			<Connection Source="AUI_CTU.CV" Destination="AUI_D_FF_TMIN.I" dx1="80"/>
 		</AdapterConnections>
 	</SubAppNetwork>
 </SubAppType>
