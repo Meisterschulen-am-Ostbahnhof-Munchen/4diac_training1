@@ -9,26 +9,59 @@
 	</CompilerInfo>
 	<InterfaceList>
 		<Plugs>
-			<AdapterDeclaration Name="OUT" Type="adapter::types::unidirectional::AUI" Comment="Selected Output" x="2800" y="-100"/>
+			<AdapterDeclaration Name="OUT" Type="adapter::types::unidirectional::AUI" Comment="Selected Output" x="4400" y="-200"/>
 		</Plugs>
 		<Sockets>
-			<AdapterDeclaration Name="IN0" Type="adapter::types::unidirectional::AUI" Comment="Selectable input variable" x="200" y="300"/>
-			<AdapterDeclaration Name="IN1" Type="adapter::types::unidirectional::AUI" Comment="Selectable input variable" x="200" y="800"/>
-			<AdapterDeclaration Name="G" Type="adapter::types::unidirectional::AX" Comment="Selector" x="200" y="-200"/>
+			<AdapterDeclaration Name="IN0" Type="adapter::types::unidirectional::AUI" Comment="Selectable input variable" x="-1600" y="300"/>
+			<AdapterDeclaration Name="IN1" Type="adapter::types::unidirectional::AUI" Comment="Selectable input variable" x="-1600" y="800"/>
+			<AdapterDeclaration Name="G" Type="adapter::types::unidirectional::AX" Comment="Selector" x="-1600" y="-200"/>
 		</Sockets>
 	</InterfaceList>
 	<FBNetwork>
-		<FB Name="F_SEL" Type="iec61131::selection::F_SEL" x="1500" y="-100">
+		<FB Name="F_SEL" Type="iec61131::selection::F_SEL" x="1500" y="-200">
+		</FB>
+		<FB Name="E_D_FF_ANY_OUT" Type="iec61499::events::E_D_FF_ANY" x="3400" y="-200">
+		</FB>
+		<FB Name="F_MOVE_OUT" Type="iec61131::selection::F_MOVE" x="2400" y="-200">
+			<Attribute Name="DataType" Value="UINT"/>
+		</FB>
+		<FB Name="E_D_FF_ANY_IN1" Type="iec61499::events::E_D_FF_ANY" x="-800" y="800">
+		</FB>
+		<FB Name="E_D_FF_ANY_IN0" Type="iec61499::events::E_D_FF_ANY" x="-800" y="300">
+		</FB>
+		<FB Name="E_D_FF_G" Type="iec61499::events::E_D_FF" x="-800" y="-200">
+		</FB>
+		<FB Name="F_MOVE_IN0" Type="iec61131::selection::F_MOVE" x="100" y="300">
+			<Attribute Name="DataType" Value="UINT"/>
+		</FB>
+		<FB Name="F_MOVE_IN1" Type="iec61131::selection::F_MOVE" x="100" y="800">
+			<Attribute Name="DataType" Value="UINT"/>
 		</FB>
 		<EventConnections>
-			<Connection Source="F_SEL.CNF" Destination="OUT.E1"/>
-			<Connection Source="G.E1" Destination="F_SEL.REQ" dx1="460"/>
+			<Connection Source="E_D_FF_ANY_OUT.EO" Destination="OUT.E1"/>
+			<Connection Source="F_MOVE_OUT.CNF" Destination="E_D_FF_ANY_OUT.CLK"/>
+			<Connection Source="F_SEL.CNF" Destination="F_MOVE_OUT.REQ"/>
+			<Connection Source="G.E1" Destination="E_D_FF_G.CLK"/>
+			<Connection Source="IN0.E1" Destination="E_D_FF_ANY_IN0.CLK"/>
+			<Connection Source="IN1.E1" Destination="E_D_FF_ANY_IN1.CLK"/>
+			<Connection Source="E_D_FF_G.EO" Destination="F_SEL.REQ"/>
+			<Connection Source="E_D_FF_ANY_IN0.EO" Destination="F_MOVE_IN0.REQ"/>
+			<Connection Source="E_D_FF_ANY_IN1.EO" Destination="F_MOVE_IN1.REQ"/>
+			<Connection Source="F_MOVE_IN1.CNF" Destination="F_SEL.REQ" dx1="413.33"/>
+			<Connection Source="F_MOVE_IN0.CNF" Destination="F_SEL.REQ" dx1="413.33"/>
 		</EventConnections>
 		<DataConnections>
-			<Connection Source="F_SEL.OUT" Destination="OUT.D1"/>
-			<Connection Source="G.D1" Destination="F_SEL.G" dx1="460"/>
-			<Connection Source="IN1.D1" Destination="F_SEL.IN1" dx1="633.33"/>
-			<Connection Source="IN0.D1" Destination="F_SEL.IN0" dx1="433.33"/>
+			<Connection Source="E_D_FF_ANY_OUT.Q" Destination="OUT.D1"/>
+			<Connection Source="F_MOVE_OUT.OUT" Destination="E_D_FF_ANY_OUT.D"/>
+			<Connection Source="F_SEL.OUT" Destination="F_MOVE_OUT.IN"/>
+			<Connection Source="G.D1" Destination="E_D_FF_G.D"/>
+			<Connection Source="IN0.D1" Destination="E_D_FF_ANY_IN0.D"/>
+			<Connection Source="IN1.D1" Destination="E_D_FF_ANY_IN1.D"/>
+			<Connection Source="E_D_FF_G.Q" Destination="F_SEL.G"/>
+			<Connection Source="E_D_FF_ANY_IN0.Q" Destination="F_MOVE_IN0.IN"/>
+			<Connection Source="E_D_FF_ANY_IN1.Q" Destination="F_MOVE_IN1.IN"/>
+			<Connection Source="F_MOVE_IN1.OUT" Destination="F_SEL.IN1" dx1="753.33"/>
+			<Connection Source="F_MOVE_IN0.OUT" Destination="F_SEL.IN0" dx1="613.33"/>
 		</DataConnections>
 	</FBNetwork>
 	<Service RightInterface="RESOURCE" LeftInterface="APPLICATION">
