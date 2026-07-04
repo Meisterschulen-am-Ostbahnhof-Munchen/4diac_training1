@@ -25,13 +25,13 @@
 			<Parameter Name="QI" Value="TRUE"/>
 			<Parameter Name="Input" Value="Input_I2"/>
 		</FB>
-		<FB Name="AND_2_BOOL" Type="iec61131::bitwiseOperators::AND_2_BOOL" x="-2100" y="700">
+		<FB Name="AND_2_BOOL" Type="iec61131::booleanOperators::AND_2_BOOL" x="-2100" y="700">
 		</FB>
 		<FB Name="DigitalInput_I3" Type="logiBUS::io::DI::logiBUS_IX" x="-4500" y="1400">
 			<Parameter Name="QI" Value="TRUE"/>
 			<Parameter Name="Input" Value="Input_I3"/>
 		</FB>
-		<FB Name="OR_2_BOOL" Type="iec61131::bitwiseOperators::OR_2_BOOL" x="100" y="1720">
+		<FB Name="OR_2_BOOL" Type="iec61131::booleanOperators::OR_2_BOOL" x="100" y="1720">
 		</FB>
 		<Comment Comment="kein F_MOVE mehr nötig. " x="-300" y="800" width="1300" height="200"/>
 		<EventConnections>
@@ -44,7 +44,7 @@
 		<DataConnections>
 			<Connection Source="DigitalInput_I1.IN" Destination="AND_2_BOOL.IN1" dx1="1160"/>
 			<Connection Source="DigitalInput_I2.IN" Destination="AND_2_BOOL.IN2"/>
-			<Connection Source="DigitalInput_I3.IN" Destination="OR_2_BOOL.IN2"/>
+			<Connection Source="DigitalInput_I3.IN" Destination="OR_2_BOOL.IN2" dx1="1920"/>
 			<Connection Source="OR_2_BOOL.OUT" Destination="DigitalOutput_Q1.OUT"/>
 			<Connection Source="AND_2_BOOL.OUT" Destination="OR_2_BOOL.IN1" dx1="680"/>
 		</DataConnections>

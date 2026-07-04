@@ -26,7 +26,7 @@
 	<SubAppNetwork>
 		<FB Name="AND_3" Type="iec61131::bitwiseOperators::AND_2" x="2100" y="-100">
 		</FB>
-		<FB Name="F_NOT" Type="iec61131::bitwiseOperators::F_NOT_BOOL_INIT" x="0" y="-100">
+		<FB Name="F_NOT" Type="iec61131::booleanOperators::F_NOT_BOOL_INIT" x="0" y="-100">
 		</FB>
 		<EventConnections>
 			<Connection Source="AND_3.CNF" Destination="CNF" dx1="2400">
@@ -47,7 +47,7 @@
 			<Connection Source="IN2" Destination="F_NOT.IN" dx1="1126.67">
 				<Attribute Name="Visible" Value="false"/>
 			</Connection>
-			<Connection Source="F_NOT.OUT" Destination="AND_3.IN2"/>
+			<Connection Source="F_NOT.OUT" Destination="AND_3.IN2" dx1="613.33"/>
 		</DataConnections>
 	</SubAppNetwork>
 </SubAppType>

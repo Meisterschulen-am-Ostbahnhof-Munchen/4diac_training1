@@ -17,15 +17,15 @@
 		</Sockets>
 	</InterfaceList>
 	<FBNetwork>
-		<FB Name="OR_2_BOOL" Type="iec61131::bitwiseOperators::OR_2_BOOL" x="-300" y="1600">
+		<FB Name="OR_2_BOOL" Type="iec61131::booleanOperators::OR_2_BOOL" x="-300" y="1600">
 		</FB>
 		<FB Name="E_D_FF" Type="iec61499::events::E_D_FF" x="1000" y="1600">
 		</FB>
 		<EventConnections>
 			<Connection Source="IN.E1" Destination="OUT.E1"/>
-			<Connection Source="BY_IN.E1" Destination="OR_2_BOOL.REQ"/>
+			<Connection Source="BY_IN.E1" Destination="OR_2_BOOL.REQ" dx1="460"/>
 			<Connection Source="IN.E1" Destination="OR_2_BOOL.REQ" dx1="460"/>
-			<Connection Source="OR_2_BOOL.CNF" Destination="E_D_FF.CLK"/>
+			<Connection Source="OR_2_BOOL.CNF" Destination="E_D_FF.CLK" dx1="353.33"/>
 			<Connection Source="E_D_FF.EO" Destination="BY_OUT.E1"/>
 		</EventConnections>
 		<DataConnections>
