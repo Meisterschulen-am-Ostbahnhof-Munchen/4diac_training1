@@ -61,12 +61,13 @@
   <xs:annotation>
     <xs:documentation>
       Constraint: Type and the children SubAppInterfaceList and SubAppNetwork are mutually exclusive.
+                  Parameter children are only valid when no SubAppInterfaceList and SubAppNetwork is present.
     </xs:documentation>
   </xs:annotation>
   <xs:sequence>
-    <xs:element name="SubAppInterfaceList" type="SubAppInterfaceList" minOccurs="0"/>
-    <xs:element name="SubAppNetwork"       type="SubAppNetwork"       minOccurs="0"/>
-    <xs:group ref="ParameterAttributeGroup" minOccurs="0" maxOccurs="unbounded"/>
+    <xs:element name="SubAppInterfaceList" type="SubAppInterfaceList"/>
+    <xs:element name="SubAppNetwork"       type="SubAppNetwork"/>
+    <xs:group ref="ParameterAttributeGroup"/>
   </xs:sequence>
   <xs:attributeGroup ref="NameCommentAttributes"/>
   <xs:attributeGroup ref="PositionAttributes"/>

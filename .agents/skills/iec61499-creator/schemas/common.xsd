@@ -19,17 +19,18 @@
   </xs:restriction>
 </xs:simpleType>
 
-<xs:simpleType name="StructIdentifier">
-  <xs:restriction base="xs:string">
-    <xs:pattern value="([_a-zA-Z][a-zA-Z0-9]+(_[a-zA-Z0-9]+)*|[_a-zA-Z])(\.([_a-zA-Z][a-zA-Z0-9]+(_[a-zA-Z0-9]+)*|[_a-zA-Z]))*"/>
-  </xs:restriction>
-</xs:simpleType>
-
 
 <xs:simpleType name="PackageName">
   <xs:restriction base="xs:string">
     <!-- Regex from Identifier needs to be duplicated as XSD can not refer to it -->
     <xs:pattern value="([_a-zA-Z][a-zA-Z0-9]+(_[a-zA-Z0-9]+)*|[_a-zA-Z])(::([_a-zA-Z][a-zA-Z0-9]+(_[a-zA-Z0-9]+)*|[_a-zA-Z]))*"/>
+  </xs:restriction>
+</xs:simpleType>
+
+<xs:simpleType name="FullQualifiedInstanceName">
+  <xs:restriction base="xs:string">
+    <!-- Regex from Identifier needs to be duplicated as XSD can not refer to it -->
+    <xs:pattern value="([_a-zA-Z][a-zA-Z0-9]+(_[a-zA-Z0-9]+)*|[_a-zA-Z])(\.([_a-zA-Z][a-zA-Z0-9]+(_[a-zA-Z0-9]+)*|[_a-zA-Z]))*"/>
   </xs:restriction>
 </xs:simpleType>
 
@@ -102,14 +103,24 @@
   </xs:sequence>
 </xs:group>
 
+<xs:complexType name="Parameter">
+  <xs:attribute name="Name"    type="FullQualifiedInstanceName" use="required"/>
+  <xs:attribute name="Comment" type="xs:string"  use="optional"/>
+  <xs:attribute name="Value" type="xs:string" use="required"/>
+</xs:complexType>
+
+<xs:group name="ParameterAttributeGroup">
+  <xs:sequence>
+   <xs:choice  minOccurs="0" maxOccurs="unbounded">
+     <xs:element name="Parameter" type="Parameter"/>
+     <xs:element name="Attribute" type="Attribute"/>
+   </xs:choice>
+  </xs:sequence>
+</xs:group>
+
 <xs:attributeGroup name="NameCommentAttributes">
   <xs:attribute name="Name"    type="Identifier" use="required"/>
   <xs:attribute name="Comment" type="xs:string"  use="optional"/>
-</xs:attributeGroup>
-
-<xs:attributeGroup name="StructNameCommentAttributes">
-  <xs:attribute name="Name"    type="StructIdentifier" use="required"/>
-  <xs:attribute name="Comment" type="xs:string"        use="optional"/>
 </xs:attributeGroup>
 
 <xs:attributeGroup name="NameTypeCommentAttributes">

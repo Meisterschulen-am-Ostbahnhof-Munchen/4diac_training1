@@ -22,7 +22,7 @@
         <xs:sequence>
           <xs:element name="FBTypeName"    type="FBTypeName"    minOccurs="0" maxOccurs="unbounded"/>
           <xs:element ref="VarDeclaration" minOccurs="0"        maxOccurs="unbounded"/>
-          <xs:element name="SubAppNetwork" type="SubAppNetwork" minOccurs="0" maxOccurs="1"/>
+          <xs:element name="FBNetwork" type="SubAppNetwork" minOccurs="0" maxOccurs="1"/>
         </xs:sequence>
       </xs:extension>
     </xs:complexContent>
@@ -30,7 +30,7 @@
 </xs:element>
 
 <xs:complexType name="FBTypeName">
-  <xs:attribute name="Name" type="xs:string" use="required"/>
+  <xs:attribute name="Name" type="ImportDeclaration" use="required"/>
 </xs:complexType>
 
 </xs:schema>

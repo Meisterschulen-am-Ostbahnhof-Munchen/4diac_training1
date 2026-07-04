@@ -91,21 +91,6 @@
   <xs:attributeGroup ref="PositionAttributes"/>
 </xs:complexType>
 
-<xs:complexType name="Parameter">
-  <xs:sequence>
-    <xs:element name="Attribute" type="Attribute" minOccurs="0" maxOccurs="unbounded"/>
-  </xs:sequence>
-  <xs:attributeGroup ref="StructNameCommentAttributes"/>
-  <xs:attribute name="Value"   type="xs:string"        use="required"/>
-</xs:complexType>
-
-<xs:group name="ParameterAttributeGroup">
-  <xs:choice>
-    <xs:element name="Parameter" type="Parameter"/>
-    <xs:element name="Attribute" type="Attribute"/>
-  </xs:choice>
-</xs:group>
-
 
 <!-- ============================================== -->
 <!-- Service Sequence Diagram                       -->
@@ -146,21 +131,5 @@
   <xs:attribute name="Event"      type="xs:string" use="required"/>
   <xs:attribute name="Parameters" type="xs:string" use="optional"/>
 </xs:attributeGroup>
-
-<xs:complexType name="ST">
-  <xs:simpleContent>
-    <xs:extension base="xs:string">
-      <xs:attribute name="Text" type="xs:string" use="optional"/>
-    </xs:extension>
-  </xs:simpleContent>
-</xs:complexType>
-
-<xs:complexType name="Other">
-  <xs:simpleContent>
-    <xs:extension base="xs:string">
-      <xs:attribute name="Language" type="xs:string" use="required"/>
-    </xs:extension>
-  </xs:simpleContent>
-</xs:complexType>
 
 </xs:schema>
