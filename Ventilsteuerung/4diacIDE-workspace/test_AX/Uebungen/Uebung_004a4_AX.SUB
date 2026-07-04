@@ -32,9 +32,9 @@
 			<Parameter Name="Input" Value="Input_I1"/>
 			<Parameter Name="InputEvent" Value="BUTTON_SINGLE_CLICK"/>
 		</FB>
-		<FB Name="E_T_FF_Q1" Type="adapter::events::unidirectional::AX_T_FF" x="-5500" y="-100">
+		<FB Name="AX_T_FF_Q1" Type="adapter::events::unidirectional::AX_T_FF" x="-5500" y="-100">
 		</FB>
-		<FB Name="E_T_FF_Q2" Type="adapter::events::unidirectional::AX_T_FF" x="-5500" y="900">
+		<FB Name="AX_T_FF_Q2" Type="adapter::events::unidirectional::AX_T_FF" x="-5500" y="900">
 		</FB>
 		<FB Name="DigitalOutput_Q2" Type="logiBUS::io::DQ::logiBUS_QXA" x="-3700" y="600">
 			<Parameter Name="QI" Value="TRUE">
@@ -49,13 +49,13 @@
 		</FB>
 		<Comment Comment="hier 2x T_FF zu verwenden ist sinnlos, das soll nur zeigen wie man E_SPLIT verwenden kann. " x="-7800" y="1200" width="1700" height="500"/>
 		<EventConnections>
-			<Connection Source="E_SPLIT.EO1" Destination="E_T_FF_Q1.CLK" dx1="493.33"/>
-			<Connection Source="E_SPLIT.EO2" Destination="E_T_FF_Q2.CLK" dx1="493.33"/>
+			<Connection Source="E_SPLIT.EO1" Destination="AX_T_FF_Q1.CLK" dx1="493.33"/>
+			<Connection Source="E_SPLIT.EO2" Destination="AX_T_FF_Q2.CLK" dx1="493.33"/>
 			<Connection Source="DigitalInput_CLK_I1.IND" Destination="E_SPLIT.EI" dx1="166.67"/>
 		</EventConnections>
 		<AdapterConnections>
-			<Connection Source="E_T_FF_Q2.Q" Destination="DigitalOutput_Q2.OUT" dx1="620"/>
-			<Connection Source="E_T_FF_Q1.Q" Destination="DigitalOutput_Q1.OUT" dx1="600"/>
+			<Connection Source="AX_T_FF_Q2.Q" Destination="DigitalOutput_Q2.OUT" dx1="620"/>
+			<Connection Source="AX_T_FF_Q1.Q" Destination="DigitalOutput_Q1.OUT" dx1="600"/>
 		</AdapterConnections>
 	</SubAppNetwork>
 </SubAppType>

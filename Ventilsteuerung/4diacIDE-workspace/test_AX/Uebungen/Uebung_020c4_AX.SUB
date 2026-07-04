@@ -27,7 +27,7 @@
 			</Parameter>
 			<Parameter Name="Input" Value="Input_I1"/>
 		</FB>
-		<FB Name="E_TON" Type="adapter::events::unidirectional::timers::ATM_AX_TON" x="-7100" y="500">
+		<FB Name="ATM_AX_TON" Type="adapter::events::unidirectional::timers::ATM_AX_TON" x="-7100" y="500">
 		</FB>
 		<SubApp Name="INI_IN_AND_STORE_AR" Type="MyLib::sys::INI_IN_AND_STORE_AR" x="-11200" y="1700">
 			<Parameter Name="KEY" Value="KEY_I1_STORE"/>
@@ -38,9 +38,9 @@
 			<Parameter Name="IN1" Value="T#1s"/>
 		</FB>
 		<AdapterConnections>
-			<Connection Source="AR_MULTIME.OUT" Destination="E_TON.PT" dx1="253.33"/>
-			<Connection Source="DigitalInput_I1.IN" Destination="E_TON.IN" dx1="386.67"/>
-			<Connection Source="E_TON.Q" Destination="DigitalOutput_Q1.OUT" dx1="460"/>
+			<Connection Source="AR_MULTIME.OUT" Destination="ATM_AX_TON.PT" dx1="253.33"/>
+			<Connection Source="DigitalInput_I1.IN" Destination="ATM_AX_TON.IN" dx1="386.67"/>
+			<Connection Source="ATM_AX_TON.Q" Destination="DigitalOutput_Q1.OUT" dx1="460"/>
 			<Connection Source="INI_IN_AND_STORE_AR.VALUEO" Destination="AR_MULTIME.IN2" dx1="313.33"/>
 		</AdapterConnections>
 	</SubAppNetwork>

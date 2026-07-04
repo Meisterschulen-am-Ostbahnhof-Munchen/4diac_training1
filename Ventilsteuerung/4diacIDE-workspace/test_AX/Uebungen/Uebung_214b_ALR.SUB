@@ -34,7 +34,7 @@
 			<Parameter Name="QI" Value="TRUE"/>
 			<Parameter Name="Output" Value="Output_Q1"/>
 		</FB>
-		<FB Name="AULI_TO_AUDI" Type="adapter::conversion::unidirectional::AULI_TO_ALR" x="1300" y="1400">
+		<FB Name="AULI_TO_ALR" Type="adapter::conversion::unidirectional::AULI_TO_ALR" x="1300" y="1400">
 		</FB>
 		<FB Name="Q_NumericValue_PHYSA_LREAL" Type="isobus::UT::Q::Q_NumericValue_PHYSA_LREAL" x="2900" y="800">
 			<Parameter Name="stObj" Value="OutputNumber_N3"/>
@@ -48,8 +48,8 @@
 			<Connection Source="Input_CU.IN" Destination="AULI_FB_CTU.CU" dx1="400"/>
 			<Connection Source="Input_R.IN" Destination="AULI_FB_CTU.R" dx1="200"/>
 			<Connection Source="AULI_FB_CTU.Q" Destination="Output_Q1.OUT" dx1="200"/>
-			<Connection Source="AULI_FB_CTU.CV" Destination="AULI_TO_AUDI.AULI_IN" dx1="200"/>
-			<Connection Source="AULI_TO_AUDI.ALR_OUT" Destination="Q_NumericValue_PHYSA_LREAL.lrPhys" dx1="366.67"/>
+			<Connection Source="AULI_FB_CTU.CV" Destination="AULI_TO_ALR.AULI_IN" dx1="200"/>
+			<Connection Source="AULI_TO_ALR.ALR_OUT" Destination="Q_NumericValue_PHYSA_LREAL.lrPhys" dx1="366.67"/>
 			<Connection Source="AULI_ULINT_TO_ULI.AULI_OUT" Destination="AULI_FB_CTU.PV" dx1="226.67"/>
 		</AdapterConnections>
 	</SubAppNetwork>

@@ -25,7 +25,7 @@
 		<FB Name="IX" Type="isobus::UT::io::Softkey::Softkey_IXA" x="-3800" y="-1000">
 			<Parameter Name="QI" Value="TRUE"/>
 		</FB>
-		<FB Name="OR_2" Type="adapter::booleanOperators::AX_OR_2" x="-2140" y="-193.33">
+		<FB Name="AX_OR_2" Type="adapter::booleanOperators::AX_OR_2" x="-2140" y="-193.33">
 		</FB>
 		<SubApp Name="GreenWhiteBackground" Type="MyLib::sys::GreenWhiteBackground1_AX" x="1800" y="0">
 		</SubApp>
@@ -42,10 +42,10 @@
 		</DataConnections>
 		<AdapterConnections>
 			<Connection Source="AX_SPLIT_2.OUT1" Destination="QX.OUT" dx1="520"/>
-			<Connection Source="IX.IN" Destination="OR_2.IN1" dx1="240"/>
+			<Connection Source="IX.IN" Destination="AX_OR_2.IN1" dx1="240"/>
 			<Connection Source="AX_SPLIT_2.OUT2" Destination="GreenWhiteBackground.DI1" dx1="960"/>
-			<Connection Source="OR_2.OUT" Destination="AX_SPLIT_2.IN" dx1="213.33"/>
-			<Connection Source="OUT" Destination="OR_2.IN2" dx1="2706.67"/>
+			<Connection Source="AX_OR_2.OUT" Destination="AX_SPLIT_2.IN" dx1="213.33"/>
+			<Connection Source="OUT" Destination="AX_OR_2.IN2" dx1="2706.67"/>
 		</AdapterConnections>
 	</SubAppNetwork>
 </SubAppType>
