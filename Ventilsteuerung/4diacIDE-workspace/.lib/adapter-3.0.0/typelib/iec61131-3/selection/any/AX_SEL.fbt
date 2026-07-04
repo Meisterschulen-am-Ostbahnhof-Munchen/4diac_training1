@@ -32,21 +32,25 @@
 			<VarDeclaration Name="OUT" Type="ANY" Comment="Selected input"/>
 		</OutputVars>
 		<Sockets>
-			<AdapterDeclaration Name="G" Type="adapter::types::unidirectional::AX" Comment="Selelctor" x="-1200" y="-1300"/>
+			<AdapterDeclaration Name="G" Type="adapter::types::unidirectional::AX" Comment="Selelctor" x="-1200" y="-1100"/>
 		</Sockets>
 	</InterfaceList>
 	<FBNetwork>
 		<FB Name="F_SEL" Type="iec61131::selection::F_SEL" x="600" y="-1100">
 		</FB>
+		<FB Name="E_D_FF_G" Type="iec61499::events::E_D_FF" x="-400" y="-1100">
+		</FB>
 		<EventConnections>
 			<Connection Source="F_SEL.CNF" Destination="CNF" dx1="2486.67"/>
-			<Connection Source="G.E1" Destination="F_SEL.REQ" dx1="206.67"/>
+			<Connection Source="G.E1" Destination="E_D_FF_G.CLK"/>
+			<Connection Source="E_D_FF_G.EO" Destination="F_SEL.REQ"/>
 		</EventConnections>
 		<DataConnections>
 			<Connection Source="IN0" Destination="F_SEL.IN0" dx1="1026.67"/>
 			<Connection Source="IN1" Destination="F_SEL.IN1" dx1="666.67"/>
 			<Connection Source="F_SEL.OUT" Destination="OUT" dx1="3020"/>
-			<Connection Source="G.D1" Destination="F_SEL.G" dx1="80"/>
+			<Connection Source="G.D1" Destination="E_D_FF_G.D"/>
+			<Connection Source="E_D_FF_G.Q" Destination="F_SEL.G"/>
 		</DataConnections>
 	</FBNetwork>
 	<Service RightInterface="RESOURCE" LeftInterface="APPLICATION">
