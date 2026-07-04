@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Copyright (c) 2026 Johannes Kepler University Linz
+
+  This program and the accompanying materials are made available under the
+  terms of the Eclipse Public License 2.0 which is available at
+  http://www.eclipse.org/legal/epl-2.0.
+
+  SPDX-License-Identifier: EPL-2.0
+
+  Contributors:
+    Alois Zoitl - initial API and implementation and/or initial documentation
+-->
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+
+<xs:include schemaLocation="block-common.xsd"/>
+
+<xs:element name="Function">
+  <xs:complexType>
+    <xs:complexContent>
+      <xs:extension base="LibraryElement">
+        <xs:choice minOccurs="0" maxOccurs="unbounded">
+          <xs:element name="InterfaceList" type="InterfaceList"/>
+          <xs:element name="FunctionBody"  type="FunctionBody"/>
+          <xs:group ref="AttributeGroup"/>
+        </xs:choice>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+</xs:element>
+
+<xs:complexType name="FunctionBody" mixed="true">
+  <xs:choice minOccurs="0" maxOccurs="unbounded">
+    <xs:element name="ST"    type="ST"/>
+    <xs:element name="Other" type="Other"/>
+  </xs:choice>
+</xs:complexType>
+
+</xs:schema>
