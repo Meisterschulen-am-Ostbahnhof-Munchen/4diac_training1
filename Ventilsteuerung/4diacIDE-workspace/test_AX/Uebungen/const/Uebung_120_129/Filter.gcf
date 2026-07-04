@@ -6,45 +6,253 @@
 	</VersionInfo>
 	<CompilerInfo packageName="Uebungen::const::Uebung_120_129">
 		<Import declaration="isobus::pgn::NAMEFIELD_T"/>
+		<Import declaration="isobus::pgn::const::Industry_Groups::IG_AGRICULTURAL_AND_FORESTRY_EQUIPMENT"/>
+		<Import declaration="isobus::pgn::const::Industry_Groups::IG_MARINE"/>
+		<Import declaration="isobus::pgn::const::Global_NAME_Functions::F_VTERMINAL"/>
+		<Import declaration="isobus::pgn::const::IG2_NAME_Functions::F_TRACTOR_ECU"/>
+		<Import declaration="isobus::pgn::const::IG2_Device_Classes::DC_TRACTOR"/>
 	</CompilerInfo>
 	<GlobalConstants>
-		<VarDeclaration Name="VT_ADD" Type="isobus::pgn::NAMEFIELD_T" InitialValue="(bSelfConf := FALSE, bIndGroup := 0, bDevClassInst := 0, bDevClass := 0,
-			bReserved := FALSE, bFunction := 29, bFunctionInst := 0, bEcuInstance := 0, wManufCode := 0,
-			dwIdentNumb := 0)"/>
-		<VarDeclaration Name="VT_FLT" Type="isobus::pgn::NAMEFIELD_T" InitialValue="(bSelfConf := FALSE, bIndGroup := 0, bDevClassInst := 0, bDevClass := 0,
-			bReserved := FALSE, bFunction := 16#FF, bFunctionInst := 0, bEcuInstance := 0, wManufCode := 0,
-			dwIdentNumb := 0)"/>
-		<VarDeclaration Name="FLT_ALL_PASS" Type="isobus::pgn::NAMEFIELD_T" InitialValue="(bSelfConf := FALSE, bIndGroup := 0, bDevClassInst := 0, bDevClass := 0,
-			bReserved := FALSE, bFunction := 0, bFunctionInst := 0, bEcuInstance := 0, wManufCode := 0,
-			dwIdentNumb := 0)"/>
-		<VarDeclaration Name="PEAK_ADD" Type="isobus::pgn::NAMEFIELD_T" InitialValue="(bSelfConf := FALSE, bIndGroup := 4, bDevClassInst := 0, bDevClass := 0,
-			bReserved := FALSE, bFunction := 99, bFunctionInst := 9, bEcuInstance := 0, wManufCode := 0,
-			dwIdentNumb := 0)"/>
-		<VarDeclaration Name="PEAK_FLT" Type="isobus::pgn::NAMEFIELD_T" InitialValue="(bSelfConf := FALSE, bIndGroup := 16#FF, bDevClassInst := 0, bDevClass := 0,
-			bReserved := FALSE, bFunction := 16#FF, bFunctionInst := 16#FF, bEcuInstance := 0, wManufCode := 0,
-			dwIdentNumb := 0)"/>
+		<VarDeclaration Name="VT_ADD" Type="isobus::pgn::NAMEFIELD_T" Comment="=================================================================" InitialValue="( //
+		bSelfConf := TRUE, // Meist TRUE bei ISOBUS/J1939 ECUs zur dynamischen Adressierung
+		bIndGroup := IG_AGRICULTURAL_AND_FORESTRY_EQUIPMENT, //
+		bDevClassInst := 0, // Don't Care if VT_FLT set to 0
+		bDevClass := 0, // Don't Care if VT_FLT set to 0
+		bReserved := FALSE, // Don't Care if VT_FLT set to 0
+		bFunction := F_VTERMINAL, // Function: Virtual Terminal (in cab)
+		bFunctionInst := 0, // Don't Care if VT_FLT set to 0
+		bEcuInstance := 0, // Don't Care if VT_FLT set to 0
+		wManufCode := 0, // Don't Care if VT_FLT set to 0
+		dwIdentNumb := 0 // Don't Care if VT_FLT set to 0
+		)"/>
+		<VarDeclaration Name="VT_FLT" Type="isobus::pgn::NAMEFIELD_T" Comment="=================================================================" InitialValue="( //
+		bSelfConf := FALSE, // Für den Filter meist irrelevant, daher FALSE oder Don't Care
+		bIndGroup := 0, // Don't Care
+		bDevClassInst := 0, // Don't Care
+		bDevClass := 0, // Don't Care
+		bReserved := FALSE, // Don't Care
+		bFunction := 16#FF, // filtert auf bFunction
+		bFunctionInst := 0, // Don't Care
+		bEcuInstance := 0, // Don't Care
+		wManufCode := 0, // Don't Care
+		dwIdentNumb := 0 // Don't Care
+		)"/>
+		<VarDeclaration Name="ADD_ALL_PASS" Type="isobus::pgn::NAMEFIELD_T" Comment="=================================================================" InitialValue="( //
+		bSelfConf := TRUE, // Meist TRUE bei ISOBUS/J1939 ECUs zur dynamischen Adressierung
+		bIndGroup := 0, // Don't Care
+		bDevClassInst := 0, // Don't Care
+		bDevClass := 0, // Don't Care
+		bReserved := FALSE, // Don't Care
+		bFunction := 0, // Don't Care
+		bFunctionInst := 0, // Don't Care
+		bEcuInstance := 0, // Don't Care
+		wManufCode := 0, // Don't Care
+		dwIdentNumb := 0 // Don't Care
+		)"/>
+		<VarDeclaration Name="FLT_ALL_PASS" Type="isobus::pgn::NAMEFIELD_T" Comment="=================================================================" InitialValue="( //
+		bSelfConf := FALSE, // Für den Filter meist irrelevant, daher FALSE oder Don't Care
+		bIndGroup := 0, // Don't Care
+		bDevClassInst := 0, // Don't Care
+		bDevClass := 0, // Don't Care
+		bReserved := FALSE, // Don't Care
+		bFunction := 0, // Don't Care
+		bFunctionInst := 0, // Don't Care
+		bEcuInstance := 0, // Don't Care
+		wManufCode := 0, // Don't Care
+		dwIdentNumb := 0 // Don't Care
+		)"/>
+		<VarDeclaration Name="PEAK_ADD" Type="isobus::pgn::NAMEFIELD_T" Comment="=================================================================" InitialValue="( //
+		bSelfConf := TRUE, // Meist TRUE bei ISOBUS/J1939 ECUs zur dynamischen Adressierung
+		bIndGroup := IG_MARINE, // PEAK Spezial
+		bDevClassInst := 0, //
+		bDevClass := 0, //
+		bReserved := FALSE, //
+		bFunction := 99, // PEAK Spezial
+		bFunctionInst := 9, // PEAK Spezial
+		bEcuInstance := 0, //
+		wManufCode := 0, //
+		dwIdentNumb := 0 //
+		)"/>
+		<VarDeclaration Name="PEAK_FLT" Type="isobus::pgn::NAMEFIELD_T" Comment="=================================================================" InitialValue="( //
+		bSelfConf := FALSE, // Für den Filter meist irrelevant, daher FALSE oder Don't Care
+		bIndGroup := 16#FF, // Filtert auf bIndGroup
+		bDevClassInst := 0, // Don't Care
+		bDevClass := 0, // Don't Care
+		bReserved := FALSE, // Don't Care
+		bFunction := 16#FF, // Filtert auf bFunction
+		bFunctionInst := 16#FF, // Filtert auf bFunctionInst
+		bEcuInstance := 0, // Don't Care
+		wManufCode := 0, // Don't Care
+		dwIdentNumb := 0 // Don't Care
+		)"/>
+		<VarDeclaration Name="PRIM_TECU_ADD" Type="isobus::pgn::NAMEFIELD_T" Comment="=================================================================" InitialValue="( //
+		bSelfConf := TRUE, // Meist TRUE bei ISOBUS/J1939 ECUs zur dynamischen Adressierung
+		bIndGroup := IG_AGRICULTURAL_AND_FORESTRY_EQUIPMENT, // 2 = Agricultural and Forestry Equipment
+		bDevClassInst := 0, // 0 = Erste Traktor-Klasse
+		bDevClass := DC_TRACTOR, // 1 = Tractor
+		bReserved := FALSE, // Reserviert (immer FALSE/0)
+		bFunction := F_TRACTOR_ECU, // 134 = Tractor ECU (TECU)
+		bFunctionInst := 0, // 0 = Primary TECU
+		bEcuInstance := 0, // 0 = Erste ECU-Instanz
+		wManufCode := 0, // Don't Care
+		dwIdentNumb := 0 // Don't Care
+		)"/>
+		<VarDeclaration Name="PRIM_TECU_FLT" Type="isobus::pgn::NAMEFIELD_T" InitialValue="( //
+		bSelfConf := TRUE, // Filtert auf bSelfConf
+		bIndGroup := 16#FF, // Filtert auf bIndGroup
+		bDevClassInst := 0, // Don't Care
+		bDevClass := 16#FF, // Filtert auf bDevClass
+		bReserved := FALSE, // Don't Care
+		bFunction := 16#FF, // Filtert auf Tractor ECU (TECU)
+		bFunctionInst := 16#FF, // Filtert auf Primary TECU
+		bEcuInstance := 16#FF, // Filtert auf ECU Instance 0
+		wManufCode := 0, // Don't Care
+		dwIdentNumb := 0 // Don't Care
+		)"/>
 	</GlobalConstants>
 	<OriginalSource><![CDATA[PACKAGE Uebungen::const::Uebung_120_129;
 
 IMPORT isobus::pgn::NAMEFIELD_T;
+IMPORT isobus::pgn::const::Industry_Groups::IG_AGRICULTURAL_AND_FORESTRY_EQUIPMENT;
+IMPORT isobus::pgn::const::Industry_Groups::IG_MARINE;
+IMPORT isobus::pgn::const::Global_NAME_Functions::F_VTERMINAL;
+IMPORT isobus::pgn::const::IG2_NAME_Functions::F_TRACTOR_ECU;
+IMPORT isobus::pgn::const::IG2_Device_Classes::DC_TRACTOR;
 
 GLOBALCONSTANTS Filter
 	VAR_GLOBAL CONSTANT
-		VT_ADD : NAMEFIELD_T := (bSelfConf := FALSE, bIndGroup := 0, bDevClassInst := 0, bDevClass := 0,
-			bReserved := FALSE, bFunction := 29, bFunctionInst := 0, bEcuInstance := 0, wManufCode := 0,
-			dwIdentNumb := 0);
-		VT_FLT : NAMEFIELD_T := (bSelfConf := FALSE, bIndGroup := 0, bDevClassInst := 0, bDevClass := 0,
-			bReserved := FALSE, bFunction := 16#FF, bFunctionInst := 0, bEcuInstance := 0, wManufCode := 0,
-			dwIdentNumb := 0);
-		FLT_ALL_PASS : NAMEFIELD_T := (bSelfConf := FALSE, bIndGroup := 0, bDevClassInst := 0, bDevClass := 0,
-			bReserved := FALSE, bFunction := 0, bFunctionInst := 0, bEcuInstance := 0, wManufCode := 0,
-			dwIdentNumb := 0);
-		PEAK_ADD : NAMEFIELD_T := (bSelfConf := FALSE, bIndGroup := 4, bDevClassInst := 0, bDevClass := 0,
-			bReserved := FALSE, bFunction := 99, bFunctionInst := 9, bEcuInstance := 0, wManufCode := 0,
-			dwIdentNumb := 0);
-		PEAK_FLT : NAMEFIELD_T := (bSelfConf := FALSE, bIndGroup := 16#FF, bDevClassInst := 0, bDevClass := 0,
-			bReserved := FALSE, bFunction := 16#FF, bFunctionInst := 16#FF, bEcuInstance := 0, wManufCode := 0,
-			dwIdentNumb := 0);
+		// =================================================================
+		// VIRTUAL TERMINAL (VT) CONFIGURATION
+		// =================================================================
+		VT_ADD : //
+		NAMEFIELD_T := ( //
+		bSelfConf := TRUE, // Meist TRUE bei ISOBUS/J1939 ECUs zur dynamischen Adressierung
+		bIndGroup := IG_AGRICULTURAL_AND_FORESTRY_EQUIPMENT, //
+		bDevClassInst := 0, // Don't Care if VT_FLT set to 0
+		bDevClass := 0, // Don't Care if VT_FLT set to 0
+		bReserved := FALSE, // Don't Care if VT_FLT set to 0
+		bFunction := F_VTERMINAL, // Function: Virtual Terminal (in cab)
+		bFunctionInst := 0, // Don't Care if VT_FLT set to 0
+		bEcuInstance := 0, // Don't Care if VT_FLT set to 0
+		wManufCode := 0, // Don't Care if VT_FLT set to 0
+		dwIdentNumb := 0 // Don't Care if VT_FLT set to 0
+		);
+		// =================================================================
+		// VIRTUAL TERMINAL (VT) CONFIGURATION
+		// =================================================================
+		VT_FLT : //
+		NAMEFIELD_T := ( //
+		bSelfConf := FALSE, // Für den Filter meist irrelevant, daher FALSE oder Don't Care
+		bIndGroup := 0, // Don't Care
+		bDevClassInst := 0, // Don't Care
+		bDevClass := 0, // Don't Care
+		bReserved := FALSE, // Don't Care
+		bFunction := 16#FF, // filtert auf bFunction
+		bFunctionInst := 0, // Don't Care
+		bEcuInstance := 0, // Don't Care
+		wManufCode := 0, // Don't Care
+		dwIdentNumb := 0 // Don't Care
+		);
+		// =================================================================
+		// GLOBAL FILTER (PASS ALL)
+		// =================================================================
+		ADD_ALL_PASS : //
+		NAMEFIELD_T := ( //
+		bSelfConf := TRUE, // Meist TRUE bei ISOBUS/J1939 ECUs zur dynamischen Adressierung
+		bIndGroup := 0, // Don't Care
+		bDevClassInst := 0, // Don't Care
+		bDevClass := 0, // Don't Care
+		bReserved := FALSE, // Don't Care
+		bFunction := 0, // Don't Care
+		bFunctionInst := 0, // Don't Care
+		bEcuInstance := 0, // Don't Care
+		wManufCode := 0, // Don't Care
+		dwIdentNumb := 0 // Don't Care
+		);
+		// =================================================================
+		// GLOBAL FILTER (PASS ALL)
+		// =================================================================
+		FLT_ALL_PASS : //
+		NAMEFIELD_T := ( //
+		bSelfConf := FALSE, // Für den Filter meist irrelevant, daher FALSE oder Don't Care
+		bIndGroup := 0, // Don't Care
+		bDevClassInst := 0, // Don't Care
+		bDevClass := 0, // Don't Care
+		bReserved := FALSE, // Don't Care
+		bFunction := 0, // Don't Care
+		bFunctionInst := 0, // Don't Care
+		bEcuInstance := 0, // Don't Care
+		wManufCode := 0, // Don't Care
+		dwIdentNumb := 0 // Don't Care
+		);
+
+		// =================================================================
+		// PEAK-CAN Explorer
+		// =================================================================
+		PEAK_ADD : //
+		NAMEFIELD_T := ( //
+		bSelfConf := TRUE, // Meist TRUE bei ISOBUS/J1939 ECUs zur dynamischen Adressierung
+		bIndGroup := IG_MARINE, // PEAK Spezial
+		bDevClassInst := 0, //
+		bDevClass := 0, //
+		bReserved := FALSE, //
+		bFunction := 99, // PEAK Spezial
+		bFunctionInst := 9, // PEAK Spezial
+		bEcuInstance := 0, //
+		wManufCode := 0, //
+		dwIdentNumb := 0 //
+		);
+		// =================================================================
+		// PEAK-CAN Explorer
+		// =================================================================
+		PEAK_FLT : //
+		NAMEFIELD_T := ( //
+		bSelfConf := FALSE, // Für den Filter meist irrelevant, daher FALSE oder Don't Care
+		bIndGroup := 16#FF, // Filtert auf bIndGroup
+		bDevClassInst := 0, // Don't Care
+		bDevClass := 0, // Don't Care
+		bReserved := FALSE, // Don't Care
+		bFunction := 16#FF, // Filtert auf bFunction
+		bFunctionInst := 16#FF, // Filtert auf bFunctionInst
+		bEcuInstance := 0, // Don't Care
+		wManufCode := 0, // Don't Care
+		dwIdentNumb := 0 // Don't Care
+		);
+
+		// =================================================================
+		// ADDRESS CLAIM CONFIGURATION FOR PRIMARY TECU
+		// =================================================================
+		PRIM_TECU_ADD : //
+		NAMEFIELD_T := ( //
+		bSelfConf := TRUE, // Meist TRUE bei ISOBUS/J1939 ECUs zur dynamischen Adressierung
+		bIndGroup := IG_AGRICULTURAL_AND_FORESTRY_EQUIPMENT, // 2 = Agricultural and Forestry Equipment
+		bDevClassInst := 0, // 0 = Erste Traktor-Klasse
+		bDevClass := DC_TRACTOR, // 1 = Tractor
+		bReserved := FALSE, // Reserviert (immer FALSE/0)
+		bFunction := F_TRACTOR_ECU, // 134 = Tractor ECU (TECU)
+		bFunctionInst := 0, // 0 = Primary TECU
+		bEcuInstance := 0, // 0 = Erste ECU-Instanz
+		wManufCode := 0, // Don't Care
+		dwIdentNumb := 0 // Don't Care
+		);
+		// =================================================================
+		// FILTER CONFIGURATION FOR PRIMARY TECU
+		// =================================================================
+		// FILTER CONFIGURATION FOR PRIMARY TECU
+		// (Filtert gezielt auf Nachrichten, die von einer Primary TECU stammen)
+		PRIM_TECU_FLT : //
+		NAMEFIELD_T := ( //
+		bSelfConf := TRUE, // Filtert auf bSelfConf
+		bIndGroup := 16#FF, // Filtert auf bIndGroup
+		bDevClassInst := 0, // Don't Care
+		bDevClass := 16#FF, // Filtert auf bDevClass
+		bReserved := FALSE, // Don't Care
+		bFunction := 16#FF, // Filtert auf Tractor ECU (TECU)
+		bFunctionInst := 16#FF, // Filtert auf Primary TECU
+		bEcuInstance := 16#FF, // Filtert auf ECU Instance 0
+		wManufCode := 0, // Don't Care
+		dwIdentNumb := 0 // Don't Care
+		);
 	END_VAR
 END_GLOBALCONSTANTS
 ]]></OriginalSource>
