@@ -27,11 +27,11 @@
 		</Sockets>
 	</InterfaceList>
 	<FBNetwork>
-		<FB Name="F_NOT_BOOL" Type="iec61131::bitwiseOperators::F_NOT_BOOL" x="1400" y="1100">
+		<FB Name="F_NOT_BOOL" Type="iec61131::booleanOperators::F_NOT_BOOL" x="1400" y="1100">
 		</FB>
 		<EventConnections>
-			<Connection Source="F_NOT_BOOL.CNF" Destination="OUT.E1"/>
-			<Connection Source="IN.E1" Destination="F_NOT_BOOL.REQ"/>
+			<Connection Source="F_NOT_BOOL.CNF" Destination="OUT.E1" dx1="433.33"/>
+			<Connection Source="IN.E1" Destination="F_NOT_BOOL.REQ" dx1="406.67"/>
 			<Connection Source="INIT" Destination="INITO"/>
 			<Connection Source="INIT" Destination="F_NOT_BOOL.REQ" dx1="3513.33"/>
 		</EventConnections>
