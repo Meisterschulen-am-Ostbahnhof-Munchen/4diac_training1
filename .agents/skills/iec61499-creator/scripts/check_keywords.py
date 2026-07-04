@@ -29,7 +29,12 @@ def check_keywords_in_xml(xml_path, keywords, allowed_contexts):
     """Checks an XML file for reserved keyword violations in 'Name' attributes."""
     violations = []
     try:
-        parser = etree.XMLParser(remove_blank_text=True)
+        parser = etree.XMLParser(
+            remove_blank_text=True,
+            resolve_entities=False,
+            no_network=True,
+            load_dtd=False,
+        )
         xml_doc = etree.parse(xml_path, parser)
         
         # Traverse all elements
@@ -44,7 +49,9 @@ def check_keywords_in_xml(xml_path, keywords, allowed_contexts):
                         tag = tag.split('}', 1)[1]
                     
                     allowed_tags = allowed_contexts.get(name_upper, [])
-                    if tag.lower() not in allowed_tags:
+                    tag_lower = tag.lower()
+                    allowed_tags_lower = [t.lower() for t in allowed_tags]
+                    if tag_lower not in allowed_tags_lower:
                         violations.append({
                             "line": elem.sourceline,
                             "tag": tag,

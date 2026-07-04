@@ -22,7 +22,7 @@ To create a new element (e.g., a Basic Function Block, Adapter, or Subapp), star
 - **Service Interface FB (SIFB)**: Use `templates/ServiceInterface.fbt`
 - **Adapter**: Use `templates/Adapter.adp`
 - **Subapplication**: Use `templates/SubApp.sub`
-- **Data Type**: Use `templates/Struct.dtp`
+- **Data Type**: Use `templates/TemplateStruct.dtp`
 - **Attribute Declaration**: Use `templates/AttributeDeclaration.atp`
 
 Copy the template to the desired location and rename it, then update its `Name` attribute on the root tag.

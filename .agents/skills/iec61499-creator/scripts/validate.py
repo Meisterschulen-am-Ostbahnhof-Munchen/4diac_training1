@@ -27,7 +27,8 @@ def validate_xml(xml_path, schemas_dir):
     try:
         # Parse XML to find the root element type
         parser = etree.XMLParser(remove_blank_text=True, resolve_entities=False, no_network=True, load_dtd=False)
-        xml_doc = etree.parse(xml_path, parser=parser)
+        parser = etree.XMLParser(remove_blank_text=True, resolve_entities=False, no_network=True, load_dtd=False)
+        xml_doc = etree.parse(xml_path, parser)
         root_tag = xml_doc.getroot().tag
         
         # Strip namespace prefix if any
@@ -72,7 +73,7 @@ def validate_xml(xml_path, schemas_dir):
     if xsd_valid:
         print("Running Keyword validation...")
         keywords, allowed_contexts = load_keywords()
-        violations = check_keywords_in_xml(xml_path, keywords, allowed_contexts)
+        violations = check_keywords_in_xml(xml_doc, keywords, allowed_contexts)
         if violations:
             print("Keyword Validation FAILED:")
             for v in violations:
