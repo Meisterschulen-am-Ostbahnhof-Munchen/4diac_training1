@@ -43,11 +43,11 @@
         <With Var="QI" />
         <With Var="PARAMS" />
       </Event>
-      <Event Name="REQ" Comment="Service Request">
+      <Event Name="REQ" Type="Event" Comment="Service Request">
         <With Var="QI" />
         <With Var="SD" />
       </Event>
-      <Event Name="RSP" Comment="Application Response to IND">
+      <Event Name="RSP" Type="Event" Comment="Application Response to IND">
         <With Var="QI" />
         <With Var="SD" />
       </Event>
@@ -57,12 +57,12 @@
         <With Var="QO" />
         <With Var="STATUS" />
       </Event>
-      <Event Name="CNF" Comment="Confirmation of Requested Service">
+      <Event Name="CNF" Type="Event" Comment="Confirmation of Requested Service">
         <With Var="QO" />
         <With Var="STATUS" />
         <With Var="RD" />
       </Event>
-      <Event Name="IND" Comment="Indication from Resource">
+      <Event Name="IND" Type="Event" Comment="Indication from Resource">
         <With Var="QO" />
         <With Var="STATUS" />
         <With Var="RD" />

@@ -38,14 +38,33 @@
   <Identification Standard="61499-2"/>
   <VersionInfo Author="AZ" Date="2016-05-26" Organization="fortiss GmbH" Version="1.0"/>
   <InterfaceList>
-    <EventInputs/>
-    <EventOutputs/>
-    <InputVars/>
-    <OutputVars/>
+    <EventInputs>
+      <Event Name="INIT" Type="EInit" Comment="Initialization Request">
+        <With Var="QI" />
+      </Event>
+      <Event Name="REQ" Type="Event" Comment="Normal Execution Request">
+        <With Var="QI" />
+      </Event>
+    </EventInputs>
+    <EventOutputs>
+      <Event Name="INITO" Type="EInit" Comment="Initialization Confirm">
+        <With Var="QO" />
+      </Event>
+      <Event Name="CNF" Type="Event" Comment="Execution Confirmation">
+        <With Var="QO" />
+      </Event>
+    </EventOutputs>
+    <InputVars>
+      <VarDeclaration Name="QI" Type="BOOL" Comment="Input event qualifier" />
+    </InputVars>
+    <OutputVars>
+      <VarDeclaration Name="QO" Type="BOOL" Comment="Output event qualifier" />
+    </OutputVars>
   </InterfaceList>
   <BasicFB>
     <ECC>
       <ECState Comment="Initial State" Name="START" x="550.0" y="425.0"/>
+      <ECTransition Source="START" Destination="START" Condition="1" Comment="pls modify this!" x="550.0" y="425.0"/>
     </ECC>
   </BasicFB>
 </FBType>

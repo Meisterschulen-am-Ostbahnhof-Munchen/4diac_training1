@@ -15,14 +15,14 @@
 		</EventInputs>
 		<EventOutputs>
 			<Event Name="CNF" Type="Event">
-				<With Var="QB"/>
+				<With Var=""/>
 			</Event>
 		</EventOutputs>
 		<InputVars>
 			<VarDeclaration Name="I" Type="BOOL" Comment="BOOL Input" InitialValue="BOOL#FALSE"/>
 		</InputVars>
 		<OutputVars>
-			<VarDeclaration Name="QB" Type="BYTE" Comment="2bit (quarter Byte) Output with 4 States (only 2 used)" InitialValue="quarter::COMMAND_DISABLE"/>
+			<VarDeclaration Name="" Type="BYTE"/>
 		</OutputVars>
 	</InterfaceList>
 	<FunctionBody>
@@ -30,21 +30,17 @@
 
 IMPORT logiBUS::utils::quarter::const::quarter;
 
-FUNCTION BOOL_TO_QUARTER
+FUNCTION BOOL_TO_QUARTER : BYTE // 2bit (quarter Byte) Output with 4 States (only 2 used)
 
 VAR_INPUT
 	I : BOOL := BOOL#FALSE; // BOOL Input
 END_VAR
 
-VAR_OUTPUT
-	QB : BYTE := quarter::COMMAND_DISABLE; // 2bit (quarter Byte) Output with 4 States (only 2 used)
-END_VAR
-
 CASE I OF
 	BOOL#TRUE :
-		QB := quarter::COMMAND_ENABLE;
+		BOOL_TO_QUARTER := quarter::COMMAND_ENABLE;
 	ELSE
-		QB := quarter::COMMAND_DISABLE;
+		BOOL_TO_QUARTER := quarter::COMMAND_DISABLE;
 END_CASE;
 
 END_FUNCTION

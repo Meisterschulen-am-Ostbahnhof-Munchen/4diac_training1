@@ -36,7 +36,7 @@
 <Function Name="TemplateFunction" Comment="Function with empty body">
 	<Identification Standard="61499-1">
 	</Identification>
-	<VersionInfo Version="1.0" Author="mjobst" Date="2023-06-29">
+	<VersionInfo Version="1.0" Author="mjobst" Date="2023-06-29" Organization="4DIAC-Consortium">
 	</VersionInfo>
 	<InterfaceList>
 		<EventInputs>
@@ -48,8 +48,10 @@
 			</Event>
 		</EventOutputs>
 		<InputVars>
+			<VarDeclaration Name="INPUT_VAR" Type="BOOL" Comment="Input variable" />
 		</InputVars>
 		<OutputVars>
+			<VarDeclaration Name="OUTPUT_VAR" Type="BOOL" Comment="Output variable (normally not used!)" />
 		</OutputVars>
 	</InterfaceList>
 </Function>

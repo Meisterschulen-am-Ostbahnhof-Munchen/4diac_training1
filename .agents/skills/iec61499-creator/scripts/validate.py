@@ -27,8 +27,16 @@ def validate_xml(xml_path, schemas_dir):
     try:
         # Parse XML to find the root element type
         parser = etree.XMLParser(remove_blank_text=True, resolve_entities=False, no_network=True, load_dtd=False)
-        parser = etree.XMLParser(remove_blank_text=True, resolve_entities=False, no_network=True, load_dtd=False)
+
         xml_doc = etree.parse(xml_path, parser)
+        
+        # Remove blank text/tail nodes (whitespaces) so that empty tags with spacing don't fail XSD validation
+        for el in xml_doc.iter():
+            if el.text is not None and not el.text.strip():
+                el.text = None
+            if el.tail is not None and not el.tail.strip():
+                el.tail = None
+                
         root_tag = xml_doc.getroot().tag
         
         # Strip namespace prefix if any

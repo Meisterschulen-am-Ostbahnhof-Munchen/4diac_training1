@@ -147,4 +147,20 @@
   <xs:attribute name="Parameters" type="xs:string" use="optional"/>
 </xs:attributeGroup>
 
+<xs:complexType name="ST">
+  <xs:simpleContent>
+    <xs:extension base="xs:string">
+      <xs:attribute name="Text" type="xs:string" use="optional"/>
+    </xs:extension>
+  </xs:simpleContent>
+</xs:complexType>
+
+<xs:complexType name="Other">
+  <xs:simpleContent>
+    <xs:extension base="xs:string">
+      <xs:attribute name="Language" type="xs:string" use="required"/>
+    </xs:extension>
+  </xs:simpleContent>
+</xs:complexType>
+
 </xs:schema>

@@ -38,18 +38,18 @@
   <VersionInfo Organization="4DIAC-Consortium" Version="0.0" Author="GE" Date="2008-04-22" />
   <InterfaceList>
     <EventInputs>
-      <Event Name="REQ" Comment="Request from Socket">
+      <Event Name="REQ" Type="Event" Comment="Request from Socket">
         <With Var="REQD" />
       </Event>
-      <Event Name="RSP" Comment="Response from Socket">
+      <Event Name="RSP" Type="Event" Comment="Response from Socket">
         <With Var="RSPD" />
       </Event>
     </EventInputs>
     <EventOutputs>
-      <Event Name="CNF" Comment="Confirmation from Plug">
+      <Event Name="CNF" Type="Event" Comment="Confirmation from Plug">
         <With Var="CNFD" />
       </Event>
-      <Event Name="IND" Comment="Indication from Plug">
+      <Event Name="IND" Type="Event" Comment="Indication from Plug">
         <With Var="INDD" />
       </Event>
     </EventOutputs>
