@@ -115,7 +115,7 @@ def validate_xml(xml_path, schemas_dir):
     # 2.2. Keywords validation
     try:
         keywords, allowed_contexts = load_keywords()
-        violations = check_keywords_in_xml(xml_doc, keywords, allowed_contexts)
+        violations = check_keywords_in_xml(xml_path, keywords, allowed_contexts)
         if violations:
             semantic_errors.append("Keyword Validation FAILED:")
             for v in violations:

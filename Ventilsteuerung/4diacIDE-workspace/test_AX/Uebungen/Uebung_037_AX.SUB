@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SubAppType Name="Uebung_037_AX" Comment="Kombinierte 4-Kanal-Schrittkette (Event &amp; Zeit)">
+	<Identification Standard="61499-2" Description="Copyright (c) 2026 Meisterschulen am Ostbahnhof  &#10;  &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10;  &#10;SPDX-License-Identifier: EPL-2.0">
+	</Identification>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2026-07-05" Remarks="initial API and implementation and/or initial documentation">
+	</VersionInfo>
+	<CompilerInfo packageName="Uebungen">
+		<Import declaration="Uebungen::const::UT::DefaultPool::OutputNumber_N1"/>
+		<Import declaration="logiBUS::io::DI::logiBUS_DI::Input_I1"/>
+		<Import declaration="logiBUS::io::DI::logiBUS_DI::Input_I2"/>
+		<Import declaration="logiBUS::io::DI::logiBUS_DI::Input_I3"/>
+		<Import declaration="logiBUS::io::DI::logiBUS_DI::Input_I4"/>
+		<Import declaration="logiBUS::io::DI::logiBUS_DI_Events::BUTTON_SINGLE_CLICK"/>
+		<Import declaration="logiBUS::io::DQ::logiBUS_DO::Output_Q1"/>
+		<Import declaration="logiBUS::io::DQ::logiBUS_DO::Output_Q2"/>
+		<Import declaration="logiBUS::io::DQ::logiBUS_DO::Output_Q3"/>
+		<Import declaration="logiBUS::io::DQ::logiBUS_DO::Output_Q4"/>
+	</CompilerInfo>
+	<SubAppInterfaceList>
+	</SubAppInterfaceList>
+	<SubAppNetwork>
+		<FB Name="DigitalOutput_Q1" Type="logiBUS::io::DQ::logiBUS_QXA" x="-6666.67" y="-2400">
+			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="Output" Value="Output_Q1"/>
+		</FB>
+		<FB Name="DigitalOutput_Q2" Type="logiBUS::io::DQ::logiBUS_QXA" x="-6666.67" y="-1333.33">
+			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="Output" Value="Output_Q2"/>
+		</FB>
+		<FB Name="DigitalOutput_Q3" Type="logiBUS::io::DQ::logiBUS_QXA" x="-6666.67" y="-266.67">
+			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="Output" Value="Output_Q3"/>
+		</FB>
+		<FB Name="DigitalOutput_Q4" Type="logiBUS::io::DQ::logiBUS_QXA" x="-6666.67" y="800">
+			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="Output" Value="Output_Q4"/>
+		</FB>
+		<FB Name="DigitalInput_CLK_I1" Type="logiBUS::io::DI::logiBUS_IE" Comment="Vorspülen" x="-12000" y="-2400">
+			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="Input" Value="Input_I1"/>
+			<Parameter Name="InputEvent" Value="BUTTON_SINGLE_CLICK"/>
+		</FB>
+		<FB Name="DigitalInput_CLK_I2" Type="logiBUS::io::DI::logiBUS_IE" x="-12000" y="-1333.33">
+			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="Input" Value="Input_I2"/>
+			<Parameter Name="InputEvent" Value="BUTTON_SINGLE_CLICK"/>
+		</FB>
+		<FB Name="DigitalInput_CLK_I3" Type="logiBUS::io::DI::logiBUS_IE" x="-12000" y="-266.67">
+			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="Input" Value="Input_I3"/>
+			<Parameter Name="InputEvent" Value="BUTTON_SINGLE_CLICK"/>
+		</FB>
+		<FB Name="DigitalInput_CLK_I4" Type="logiBUS::io::DI::logiBUS_IE" x="-12000" y="800">
+			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="Input" Value="Input_I4"/>
+			<Parameter Name="InputEvent" Value="BUTTON_SINGLE_CLICK"/>
+		</FB>
+		<FB Name="Q_NumericValue" Type="isobus::UT::Q::Q_NumericValue" x="-4460" y="1820">
+			<Parameter Name="u16ObjId" Value="OutputNumber_N1"/>
+		</FB>
+		<FB Name="F_SINT_TO_UINT" Type="iec61131::conversion::F_SINT_TO_UINT" x="-6700" y="2000">
+		</FB>
+		<FB Name="E_TimeOut" Type="iec61499::events::E_TimeOut" x="-9613.33" y="1800">
+		</FB>
+		<FB Name="sequence_04" Type="logiBUS::utils::sequence::combi::sequence_ET_04_AX" x="-9613.33" y="-600">
+			<Parameter Name="DT_S1_S2" Value="T#5s" Comment="Vorspülen"/>
+			<Parameter Name="DT_S2_S3" Value="T#10s" Comment="Hauptspülen"/>
+			<Parameter Name="DT_S3_S4" Value="T#5s" Comment="Klarspülen"/>
+			<Parameter Name="DT_S4_START" Value="T#3s" Comment="Ausblasen/Abtropfen"/>
+		</FB>
+		<EventConnections>
+			<Connection Source="F_SINT_TO_UINT.CNF" Destination="Q_NumericValue.REQ" dx1="633.33"/>
+			<Connection Source="sequence_04.CNF" Destination="F_SINT_TO_UINT.REQ" dx1="433.33">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="DigitalInput_CLK_I1.IND" Destination="sequence_04.START_S1" dx1="953.33"/>
+			<Connection Source="DigitalInput_CLK_I2.IND" Destination="sequence_04.S1_S2" dx1="800"/>
+			<Connection Source="DigitalInput_CLK_I3.IND" Destination="sequence_04.S2_S3" dx1="800"/>
+			<Connection Source="DigitalInput_CLK_I4.IND" Destination="sequence_04.S3_S4" dx1="1080"/>
+		</EventConnections>
+		<DataConnections>
+			<Connection Source="F_SINT_TO_UINT.OUT" Destination="Q_NumericValue.u32NewValue" dx1="286.67"/>
+			<Connection Source="sequence_04.STATE_NR" Destination="F_SINT_TO_UINT.IN" dx1="726.67">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+		</DataConnections>
+		<AdapterConnections>
+			<Connection Source="sequence_04.DO_S1" Destination="DigitalOutput_Q1.OUT" dx1="693.33"/>
+			<Connection Source="sequence_04.DO_S2" Destination="DigitalOutput_Q2.OUT" dx1="793.33"/>
+			<Connection Source="sequence_04.DO_S3" Destination="DigitalOutput_Q3.OUT" dx1="906.67"/>
+			<Connection Source="sequence_04.DO_S4" Destination="DigitalOutput_Q4.OUT" dx1="660"/>
+			<Connection Source="sequence_04.timeOut" Destination="E_TimeOut.TimeOutSocket" dx1="80" dx2="80" dy="226.67"/>
+		</AdapterConnections>
+	</SubAppNetwork>
+</SubAppType>
