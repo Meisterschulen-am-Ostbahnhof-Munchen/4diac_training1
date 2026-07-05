@@ -55,28 +55,25 @@
 				<Parameter Name="Input" Value="Input_I4"/>
 				<Parameter Name="InputEvent" Value="BUTTON_SINGLE_CLICK"/>
 			</FB>
-		<FB Name="Q_NumericValue" Type="isobus::UT::Q::Q_NumericValue" x="-2666.67" y="-2000">
+		<FB Name="Q_NumericValue" Type="isobus::UT::Q::Q_NumericValue_AUDI" x="-2666.67" y="-2000">
 			<Parameter Name="u16ObjId" Value="OutputNumber_N1"/>
 		</FB>
-		<FB Name="F_SINT_TO_UINT" Type="iec61131::conversion::F_SINT_TO_UINT" x="-4906.67" y="-1820">
+		<FB Name="AS_TO_AUDI" Type="adapter::conversion::unidirectional::AS_TO_AUDI" x="-4906.67" y="-1820">
 		</FB>
 		<FB Name="sequence_block" Type="logiBUS::utils::sequence::event::sequence_E_04_loop_AX" x="-9613.33" y="-600">
 
 		</FB>
 		<EventConnections>
-			<Connection Source="F_SINT_TO_UINT.CNF" Destination="Q_NumericValue.REQ" dx1="633.33"/>
-			<Connection Source="sequence_block.CNF" Destination="F_SINT_TO_UINT.REQ" dx1="3060"/>
 			<Connection Source="DigitalInput_CLK_I1.IND" Destination="sequence_block.START_S1" dx1="800"/>
 			<Connection Source="DigitalInput_CLK_I2.IND" Destination="sequence_block.S1_S2" dx1="800"/>
 			<Connection Source="DigitalInput_CLK_I3.IND" Destination="sequence_block.S2_S3" dx1="800"/>
 			<Connection Source="DigitalInput_CLK_I4.IND" Destination="sequence_block.S3_S4" dx1="800"/>
 			<Connection Source="DigitalInput_CLK_I4.IND" Destination="sequence_block.RESET" dx1="800"/>
 		</EventConnections>
-		<DataConnections>
-			<Connection Source="F_SINT_TO_UINT.OUT" Destination="Q_NumericValue.u32NewValue" dx1="286.67"/>
-			<Connection Source="sequence_block.STATE_NR" Destination="F_SINT_TO_UINT.IN" dx1="726.67"/>
-		</DataConnections>
+
 		<AdapterConnections>
+			<Connection Source="sequence_block.STATE_NR" Destination="AS_TO_AUDI.AS_IN" dx1="340"/>
+			<Connection Source="AS_TO_AUDI.AUDI_OUT" Destination="Q_NumericValue.u32NewValue" dx1="893.33"/>
 			<Connection Source="sequence_block.DO_S1" Destination="DigitalOutput_Q1.OUT" dx1="650"/>
 			<Connection Source="sequence_block.DO_S2" Destination="DigitalOutput_Q2.OUT" dx1="700"/>
 			<Connection Source="sequence_block.DO_S3" Destination="DigitalOutput_Q3.OUT" dx1="750"/>
