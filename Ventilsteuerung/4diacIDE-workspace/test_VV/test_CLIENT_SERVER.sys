@@ -84,8 +84,6 @@
 	</Application>
 	<Device Name="FORTE_PC_CLIENT" Type="iec61499::system::FORTE_PC" x="2160" y="2080">
 		<Parameter Name="MGR_ID" Value="VV::const::Computers::myComputers::C_PC_SERVER" Comment="Device manager socket ID"/>
-		<Attribute Name="Profile" Type="STRING" Value="HOLOBLOC"/>
-		<Attribute Name="Color" Type="STRING" Value="255,190,111"/>
 		<Resource Name="EMB_RES_CLIENT" Type="iec61499::system::EMB_RES" x="0" y="0">
 			<FBNetwork>
 				<FB Name="CLIENT_BUTTON_GREEN" Type="iec61499::net::CLIENT_1" x="4400" y="400">
@@ -142,11 +140,11 @@
 				</DataConnections>
 			</FBNetwork>
 		</Resource>
+		<Attribute Name="Profile" Type="STRING" Value="HOLOBLOC"/>
+		<Attribute Name="Color" Type="STRING" Value="255,190,111"/>
 	</Device>
 	<Device Name="FORTE_PC_SERVER" Type="iec61499::system::FORTE_PC" x="3200" y="2880">
 		<Parameter Name="MGR_ID" Value="VV::const::Computers::myComputers::C_PC_CLIENT" Comment="Device manager socket ID"/>
-		<Attribute Name="Profile" Type="STRING" Value="HOLOBLOC"/>
-		<Attribute Name="Color" Type="STRING" Value="59,215,47"/>
 		<Resource Name="EMB_RES_SERVER" Type="iec61499::system::EMB_RES" x="0" y="0">
 			<FBNetwork>
 				<FB Name="SERVER_BUTTON_GREEN" Type="iec61499::net::SERVER_1" x="2700" y="700">
@@ -191,6 +189,8 @@
 				</DataConnections>
 			</FBNetwork>
 		</Resource>
+		<Attribute Name="Profile" Type="STRING" Value="HOLOBLOC"/>
+		<Attribute Name="Color" Type="STRING" Value="59,215,47"/>
 	</Device>
 	<Mapping From="App_CLIENT_SERVER.BUTTON_BLUE" To="FORTE_PC_CLIENT.EMB_RES_CLIENT"/>
 	<Mapping From="App_CLIENT_SERVER.BUTTON_RED" To="FORTE_PC_CLIENT.EMB_RES_CLIENT"/>

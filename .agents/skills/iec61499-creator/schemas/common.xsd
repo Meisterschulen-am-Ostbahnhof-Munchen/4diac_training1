@@ -105,7 +105,7 @@
 
 <xs:complexType name="Parameter">
   <xs:sequence>
-    <xs:element name="Attribute" type="Attribute" minOccurs="0" maxOccurs="unbounded"/>
+    <xs:group ref="AttributeGroup"/>
   </xs:sequence>
   <xs:attribute name="Name"    type="FullQualifiedInstanceName" use="required"/>
   <xs:attribute name="Comment" type="xs:string"                 use="optional"/>

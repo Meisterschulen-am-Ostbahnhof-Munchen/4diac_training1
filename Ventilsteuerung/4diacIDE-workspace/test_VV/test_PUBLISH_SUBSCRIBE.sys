@@ -72,8 +72,6 @@
 	</Application>
 	<Device Name="FORTE_PC_PUBLISH" Type="iec61499::system::FORTE_PC" x="1760" y="1840">
 		<Parameter Name="MGR_ID" Value="VV::const::Computers::myComputers::C_PC_PUBLISH" Comment="Device manager socket ID"/>
-		<Attribute Name="Profile" Type="STRING" Value="HOLOBLOC"/>
-		<Attribute Name="Color" Type="STRING" Value="255,190,111"/>
 		<Resource Name="EMB_RES_PUBLISH" Type="iec61499::system::EMB_RES" x="0" y="0">
 			<FBNetwork>
 				<FB Name="PUBLISH_BUTTON_GREEN" Type="iec61499::net::PUBLISH_1" x="4400" y="700">
@@ -110,11 +108,11 @@
 				</DataConnections>
 			</FBNetwork>
 		</Resource>
+		<Attribute Name="Profile" Type="STRING" Value="HOLOBLOC"/>
+		<Attribute Name="Color" Type="STRING" Value="255,190,111"/>
 	</Device>
 	<Device Name="FORTE_PC_SUBSCRIBE" Type="iec61499::system::FORTE_PC" x="2400" y="2560">
 		<Parameter Name="MGR_ID" Value="VV::const::Computers::myComputers::C_PC_SUBSCRIBE" Comment="Device manager socket ID"/>
-		<Attribute Name="Profile" Type="STRING" Value="HOLOBLOC"/>
-		<Attribute Name="Color" Type="STRING" Value="59,215,47"/>
 		<Resource Name="EMB_RES_SUBSCRIBE" Type="iec61499::system::EMB_RES" x="0" y="0">
 			<FBNetwork>
 				<FB Name="SUBSCRIBE_BUTTON_GREEN" Type="iec61499::net::SUBSCRIBE_1" x="2800" y="700">
@@ -151,6 +149,8 @@
 				</DataConnections>
 			</FBNetwork>
 		</Resource>
+		<Attribute Name="Profile" Type="STRING" Value="HOLOBLOC"/>
+		<Attribute Name="Color" Type="STRING" Value="59,215,47"/>
 	</Device>
 	<Mapping From="App_PUBLISH_SUBSCRIBE.BUTTON_BLUE" To="FORTE_PC_PUBLISH.EMB_RES_PUBLISH"/>
 	<Mapping From="App_PUBLISH_SUBSCRIBE.BUTTON_RED" To="FORTE_PC_PUBLISH.EMB_RES_PUBLISH"/>
