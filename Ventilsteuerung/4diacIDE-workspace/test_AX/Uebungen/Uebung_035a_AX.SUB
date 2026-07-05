@@ -48,10 +48,10 @@
 		</FB>
 		<FB Name="E_TimeOut" Type="iec61499::events::E_TimeOut" x="-9613.33" y="1800">
 		</FB>
-		<FB Name="Q_NumericValue" Type="isobus::UT::Q::Q_NumericValue" x="-2666.67" y="-2000">
+		<FB Name="Q_NumericValue" Type="isobus::UT::Q::Q_NumericValue" x="-6460" y="-3180">
 			<Parameter Name="u16ObjId" Value="OutputNumber_N1"/>
 		</FB>
-		<FB Name="F_SINT_TO_UINT" Type="iec61131::conversion::F_SINT_TO_UINT" x="-4906.67" y="-1820">
+		<FB Name="F_SINT_TO_UINT" Type="iec61131::conversion::F_SINT_TO_UINT" x="-8700" y="-3000">
 		</FB>
 		<FB Name="sequence_block" Type="logiBUS::utils::sequence::timed::sequence_T_04_loop_AX" x="-9613.33" y="-600">
 			<Parameter Name="DT_S1_S2" Value="T#1s"/>
@@ -61,13 +61,13 @@
 		</FB>
 		<EventConnections>
 			<Connection Source="F_SINT_TO_UINT.CNF" Destination="Q_NumericValue.REQ" dx1="633.33"/>
-			<Connection Source="sequence_block.CNF" Destination="F_SINT_TO_UINT.REQ" dx1="3060"/>
+			<Connection Source="sequence_block.CNF" Destination="F_SINT_TO_UINT.REQ" dx1="80" dx2="406.67" dy="-1200"/>
 			<Connection Source="DigitalInput_CLK_I1.IND" Destination="sequence_block.START_S1" dx1="800"/>
 			<Connection Source="DigitalInput_CLK_I4.IND" Destination="sequence_block.RESET" dx1="800"/>
 		</EventConnections>
 		<DataConnections>
 			<Connection Source="F_SINT_TO_UINT.OUT" Destination="Q_NumericValue.u32NewValue" dx1="286.67"/>
-			<Connection Source="sequence_block.STATE_NR" Destination="F_SINT_TO_UINT.IN" dx1="726.67"/>
+			<Connection Source="sequence_block.STATE_NR" Destination="F_SINT_TO_UINT.IN" dx1="386.67" dx2="80" dy="-1253.33"/>
 		</DataConnections>
 		<AdapterConnections>
 			<Connection Source="sequence_block.DO_S1" Destination="DigitalOutput_Q1.OUT" dx1="650"/>

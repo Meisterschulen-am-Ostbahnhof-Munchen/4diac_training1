@@ -10,6 +10,7 @@
 		<Import declaration="logiBUS::io::DI::logiBUS_DI::Input_I2"/>
 		<Import declaration="logiBUS::io::DI::logiBUS_DI::Input_I3"/>
 		<Import declaration="logiBUS::io::DI::logiBUS_DI::Input_I4"/>
+		<Import declaration="logiBUS::io::DI::logiBUS_DI::Input_I5"/>
 		<Import declaration="logiBUS::io::DI::logiBUS_DI_Events::BUTTON_SINGLE_CLICK"/>
 		<Import declaration="logiBUS::io::DQ::logiBUS_DO::Output_Q1"/>
 		<Import declaration="logiBUS::io::DQ::logiBUS_DO::Output_Q2"/>
@@ -46,32 +47,31 @@
 			<Parameter Name="InputEvent" Value="BUTTON_SINGLE_CLICK"/>
 		</FB>
 		<FB Name="DigitalInput_CLK_I2" Type="logiBUS::io::DI::logiBUS_IE" x="-11600" y="700">
-				<Parameter Name="QI" Value="TRUE"/>
-				<Parameter Name="Input" Value="Input_I2"/>
-				<Parameter Name="InputEvent" Value="BUTTON_SINGLE_CLICK"/>
-			</FB>
+			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="Input" Value="Input_I2"/>
+			<Parameter Name="InputEvent" Value="BUTTON_SINGLE_CLICK"/>
+		</FB>
 		<FB Name="DigitalInput_CLK_I3" Type="logiBUS::io::DI::logiBUS_IE" x="-11600" y="1700">
-				<Parameter Name="QI" Value="TRUE"/>
-				<Parameter Name="Input" Value="Input_I3"/>
-				<Parameter Name="InputEvent" Value="BUTTON_SINGLE_CLICK"/>
-			</FB>
+			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="Input" Value="Input_I3"/>
+			<Parameter Name="InputEvent" Value="BUTTON_SINGLE_CLICK"/>
+		</FB>
 		<FB Name="DigitalInput_CLK_I4" Type="logiBUS::io::DI::logiBUS_IE" x="-11600" y="2700">
-				<Parameter Name="QI" Value="TRUE"/>
-				<Parameter Name="Input" Value="Input_I4"/>
-				<Parameter Name="InputEvent" Value="BUTTON_SINGLE_CLICK"/>
-			</FB>
+			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="Input" Value="Input_I4"/>
+			<Parameter Name="InputEvent" Value="BUTTON_SINGLE_CLICK"/>
+		</FB>
 		<FB Name="DigitalInput_CLK_I5" Type="logiBUS::io::DI::logiBUS_IE" x="-11600" y="3700">
-				<Parameter Name="QI" Value="TRUE"/>
-				<Parameter Name="Input" Value="Input_I5"/>
-				<Parameter Name="InputEvent" Value="BUTTON_SINGLE_CLICK"/>
-			</FB>
+			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="Input" Value="Input_I5"/>
+			<Parameter Name="InputEvent" Value="BUTTON_SINGLE_CLICK"/>
+		</FB>
 		<FB Name="Q_NumericValue" Type="isobus::UT::Q::Q_NumericValue" x="-3200" y="2400">
 			<Parameter Name="u16ObjId" Value="OutputNumber_N1"/>
 		</FB>
 		<FB Name="F_SINT_TO_UINT" Type="iec61131::conversion::F_SINT_TO_UINT" x="-5600" y="2600">
 		</FB>
 		<FB Name="sequence_block" Type="logiBUS::utils::sequence::event::sequence_E_05_loop" x="-9700" y="1700">
-
 		</FB>
 		<EventConnections>
 			<Connection Source="F_SINT_TO_UINT.CNF" Destination="Q_NumericValue.REQ" dx1="733.33"/>
@@ -89,7 +89,7 @@
 			<Connection Source="sequence_block.EO_S5" Destination="DigitalOutput_Q5.REQ" dx1="480"/>
 		</EventConnections>
 		<DataConnections>
-			<Connection Source="F_SINT_TO_UINT.OUT" Destination="Q_NumericValue.u32NewValue"/>
+			<Connection Source="F_SINT_TO_UINT.OUT" Destination="Q_NumericValue.u32NewValue" dx1="726.67"/>
 			<Connection Source="sequence_block.STATE_NR" Destination="F_SINT_TO_UINT.IN" dx1="566.67"/>
 			<Connection Source="sequence_block.DO_S1" Destination="DigitalOutput_Q1.OUT" dx1="280"/>
 			<Connection Source="sequence_block.DO_S2" Destination="DigitalOutput_Q2.OUT" dx1="340"/>
@@ -97,6 +97,5 @@
 			<Connection Source="sequence_block.DO_S4" Destination="DigitalOutput_Q4.OUT" dx1="460"/>
 			<Connection Source="sequence_block.DO_S5" Destination="DigitalOutput_Q5.OUT" dx1="520"/>
 		</DataConnections>
-
 	</SubAppNetwork>
 </SubAppType>
