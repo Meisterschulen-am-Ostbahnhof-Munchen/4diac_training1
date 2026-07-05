@@ -63,7 +63,7 @@
 			<Parameter Name="Input" Value="Input_I4"/>
 			<Parameter Name="InputEvent" Value="BUTTON_SINGLE_CLICK"/>
 		</FB>
-		<FB Name="E_TimeOut" Type="iec61499::events::E_TimeOut" x="-9100" y="3500">
+		<FB Name="E_TimeOut" Type="iec61499::events::E_TimeOut" x="-9400" y="4500">
 		</FB>
 		<FB Name="Q_NumericValue" Type="isobus::UT::Q::Q_NumericValue" x="-3200" y="2400">
 			<Parameter Name="u16ObjId" Value="OutputNumber_N1"/>
@@ -81,33 +81,33 @@
 			<Parameter Name="DT_S8_START" Value="T#1s"/>
 		</FB>
 		<EventConnections>
-			<Connection Source="F_SINT_TO_UINT.CNF" Destination="Q_NumericValue.REQ" dx1="733.33"/>
-			<Connection Source="sequence_block.CNF" Destination="F_SINT_TO_UINT.REQ" dx1="2540"/>
-			<Connection Source="DigitalInput_CLK_I1.IND" Destination="sequence_block.START_S1" dx1="406.67"/>
-			<Connection Source="DigitalInput_CLK_I4.IND" Destination="sequence_block.RESET" dx1="253.33"/>
-			<Connection Source="sequence_block.EO_S1" Destination="DigitalOutput_Q1.REQ" dx1="240"/>
-			<Connection Source="sequence_block.EO_S2" Destination="DigitalOutput_Q2.REQ" dx1="300"/>
-			<Connection Source="sequence_block.EO_S3" Destination="DigitalOutput_Q3.REQ" dx1="360"/>
-			<Connection Source="sequence_block.EO_S4" Destination="DigitalOutput_Q4.REQ" dx1="420"/>
-			<Connection Source="sequence_block.EO_S5" Destination="DigitalOutput_Q5.REQ" dx1="480"/>
-			<Connection Source="sequence_block.EO_S6" Destination="DigitalOutput_Q6.REQ" dx1="540"/>
-			<Connection Source="sequence_block.EO_S7" Destination="DigitalOutput_Q7.REQ" dx1="600"/>
-			<Connection Source="sequence_block.EO_S8" Destination="DigitalOutput_Q8.REQ" dx1="660"/>
+			<Connection Source="F_SINT_TO_UINT.CNF" Destination="Q_NumericValue.REQ" dx1="713.33"/>
+			<Connection Source="sequence_block.CNF" Destination="F_SINT_TO_UINT.REQ" dx1="1040" dx2="206.67" dy="-2926.67"/>
+			<Connection Source="DigitalInput_CLK_I1.IND" Destination="sequence_block.START_S1" dx1="486.67"/>
+			<Connection Source="DigitalInput_CLK_I4.IND" Destination="sequence_block.RESET" dx1="486.67"/>
+			<Connection Source="sequence_block.EO_S1" Destination="DigitalOutput_Q1.REQ" dx1="1073.33"/>
+			<Connection Source="sequence_block.EO_S2" Destination="DigitalOutput_Q2.REQ" dx1="1106.67"/>
+			<Connection Source="sequence_block.EO_S3" Destination="DigitalOutput_Q3.REQ" dx1="1140"/>
+			<Connection Source="sequence_block.EO_S4" Destination="DigitalOutput_Q4.REQ" dx1="1040"/>
+			<Connection Source="sequence_block.EO_S5" Destination="DigitalOutput_Q5.REQ" dx1="906.67"/>
+			<Connection Source="sequence_block.EO_S6" Destination="DigitalOutput_Q6.REQ" dx1="873.33"/>
+			<Connection Source="sequence_block.EO_S7" Destination="DigitalOutput_Q7.REQ" dx1="806.67"/>
+			<Connection Source="sequence_block.EO_S8" Destination="DigitalOutput_Q8.REQ" dx1="740"/>
 		</EventConnections>
 		<DataConnections>
-			<Connection Source="F_SINT_TO_UINT.OUT" Destination="Q_NumericValue.u32NewValue"/>
-			<Connection Source="sequence_block.STATE_NR" Destination="F_SINT_TO_UINT.IN" dx1="566.67"/>
-			<Connection Source="sequence_block.DO_S1" Destination="DigitalOutput_Q1.OUT" dx1="280"/>
-			<Connection Source="sequence_block.DO_S2" Destination="DigitalOutput_Q2.OUT" dx1="340"/>
-			<Connection Source="sequence_block.DO_S3" Destination="DigitalOutput_Q3.OUT" dx1="400"/>
-			<Connection Source="sequence_block.DO_S4" Destination="DigitalOutput_Q4.OUT" dx1="460"/>
-			<Connection Source="sequence_block.DO_S5" Destination="DigitalOutput_Q5.OUT" dx1="520"/>
-			<Connection Source="sequence_block.DO_S6" Destination="DigitalOutput_Q6.OUT" dx1="580"/>
-			<Connection Source="sequence_block.DO_S7" Destination="DigitalOutput_Q7.OUT" dx1="640"/>
-			<Connection Source="sequence_block.DO_S8" Destination="DigitalOutput_Q8.OUT" dx1="700"/>
+			<Connection Source="F_SINT_TO_UINT.OUT" Destination="Q_NumericValue.u32NewValue" dx1="713.33"/>
+			<Connection Source="sequence_block.STATE_NR" Destination="F_SINT_TO_UINT.IN" dx1="673.33" dx2="206.67" dy="3920"/>
+			<Connection Source="sequence_block.DO_S1" Destination="DigitalOutput_Q1.OUT" dx1="940"/>
+			<Connection Source="sequence_block.DO_S2" Destination="DigitalOutput_Q2.OUT" dx1="973.33"/>
+			<Connection Source="sequence_block.DO_S3" Destination="DigitalOutput_Q3.OUT" dx1="1006.67"/>
+			<Connection Source="sequence_block.DO_S4" Destination="DigitalOutput_Q4.OUT" dx1="1040"/>
+			<Connection Source="sequence_block.DO_S5" Destination="DigitalOutput_Q5.OUT" dx1="920"/>
+			<Connection Source="sequence_block.DO_S6" Destination="DigitalOutput_Q6.OUT" dx1="840"/>
+			<Connection Source="sequence_block.DO_S7" Destination="DigitalOutput_Q7.OUT" dx1="773.33"/>
+			<Connection Source="sequence_block.DO_S8" Destination="DigitalOutput_Q8.OUT" dx1="706.67"/>
 		</DataConnections>
 		<AdapterConnections>
-			<Connection Source="sequence_block.timeOut" Destination="E_TimeOut.TimeOutSocket" dx1="80" dx2="80" dy="346.67"/>
+			<Connection Source="sequence_block.timeOut" Destination="E_TimeOut.TimeOutSocket" dx1="66.67" dx2="66.67" dy="293.33"/>
 		</AdapterConnections>
 	</SubAppNetwork>
 </SubAppType>

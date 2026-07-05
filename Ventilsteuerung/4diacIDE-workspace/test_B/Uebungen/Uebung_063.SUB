@@ -63,7 +63,7 @@
 			<Parameter Name="Input" Value="Input_I4"/>
 			<Parameter Name="InputEvent" Value="BUTTON_SINGLE_CLICK"/>
 		</FB>
-		<FB Name="E_TimeOut" Type="iec61499::events::E_TimeOut" x="-9100" y="3500">
+		<FB Name="E_TimeOut" Type="iec61499::events::E_TimeOut" x="-9400" y="4400">
 		</FB>
 		<FB Name="Q_NumericValue" Type="isobus::UT::Q::Q_NumericValue" x="-3200" y="2400">
 			<Parameter Name="u16ObjId" Value="OutputNumber_N1"/>
@@ -95,7 +95,7 @@
 			<Connection Source="sequence_block.EO_S8" Destination="DigitalOutput_Q8.REQ" dx1="660"/>
 		</EventConnections>
 		<DataConnections>
-			<Connection Source="F_SINT_TO_UINT.OUT" Destination="Q_NumericValue.u32NewValue"/>
+			<Connection Source="F_SINT_TO_UINT.OUT" Destination="Q_NumericValue.u32NewValue" dx1="726.67"/>
 			<Connection Source="sequence_block.STATE_NR" Destination="F_SINT_TO_UINT.IN" dx1="566.67"/>
 			<Connection Source="sequence_block.DO_S1" Destination="DigitalOutput_Q1.OUT" dx1="280"/>
 			<Connection Source="sequence_block.DO_S2" Destination="DigitalOutput_Q2.OUT" dx1="340"/>

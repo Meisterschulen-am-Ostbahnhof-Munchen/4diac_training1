@@ -63,14 +63,14 @@
 			<Parameter Name="Input" Value="Input_I4"/>
 			<Parameter Name="InputEvent" Value="BUTTON_SINGLE_CLICK"/>
 		</FB>
-		<FB Name="E_TimeOut" Type="iec61499::events::E_TimeOut" x="-9613.33" y="1800">
+		<FB Name="E_TimeOut" Type="iec61499::events::E_TimeOut" x="-9600" y="2700">
 		</FB>
 		<FB Name="Q_NumericValue" Type="isobus::UT::Q::Q_NumericValue_AUDI" x="-2666.67" y="-2000">
 			<Parameter Name="u16ObjId" Value="OutputNumber_N1"/>
 		</FB>
 		<FB Name="AS_TO_AUDI" Type="adapter::conversion::unidirectional::AS_TO_AUDI" x="-4906.67" y="-1820">
 		</FB>
-		<FB Name="sequence_block" Type="logiBUS::utils::sequence::combi::sequence_ET_08_AX" x="-9613.33" y="-600">
+		<FB Name="sequence_block" Type="logiBUS::utils::sequence::combi::sequence_ET_08_AX" x="-9600" y="-900">
 			<Parameter Name="DT_S1_S2" Value="T#1s"/>
 			<Parameter Name="DT_S2_S3" Value="T#1s"/>
 			<Parameter Name="DT_S3_S4" Value="T#1s"/>
@@ -81,22 +81,21 @@
 			<Parameter Name="DT_S8_START" Value="T#1s"/>
 		</FB>
 		<EventConnections>
-			<Connection Source="DigitalInput_CLK_I1.IND" Destination="sequence_block.START_S1" dx1="800"/>
-			<Connection Source="DigitalInput_CLK_I4.IND" Destination="sequence_block.RESET" dx1="800"/>
+			<Connection Source="DigitalInput_CLK_I1.IND" Destination="sequence_block.START_S1" dx1="740"/>
+			<Connection Source="DigitalInput_CLK_I4.IND" Destination="sequence_block.RESET" dx1="740"/>
 		</EventConnections>
-
 		<AdapterConnections>
-			<Connection Source="sequence_block.STATE_NR" Destination="AS_TO_AUDI.AS_IN" dx1="340"/>
-			<Connection Source="AS_TO_AUDI.AUDI_OUT" Destination="Q_NumericValue.u32NewValue" dx1="893.33"/>
-			<Connection Source="sequence_block.DO_S1" Destination="DigitalOutput_Q1.OUT" dx1="650"/>
-			<Connection Source="sequence_block.DO_S2" Destination="DigitalOutput_Q2.OUT" dx1="700"/>
-			<Connection Source="sequence_block.DO_S3" Destination="DigitalOutput_Q3.OUT" dx1="750"/>
-			<Connection Source="sequence_block.DO_S4" Destination="DigitalOutput_Q4.OUT" dx1="800"/>
-			<Connection Source="sequence_block.DO_S5" Destination="DigitalOutput_Q5.OUT" dx1="850"/>
-			<Connection Source="sequence_block.DO_S6" Destination="DigitalOutput_Q6.OUT" dx1="900"/>
-			<Connection Source="sequence_block.DO_S7" Destination="DigitalOutput_Q7.OUT" dx1="950"/>
-			<Connection Source="sequence_block.DO_S8" Destination="DigitalOutput_Q8.OUT" dx1="1000"/>
-			<Connection Source="sequence_block.timeOut" Destination="E_TimeOut.TimeOutSocket" dx1="80" dx2="80" dy="226.67"/>
+			<Connection Source="sequence_block.STATE_NR" Destination="AS_TO_AUDI.AS_IN" dx1="846.67" dx2="460" dy="-3753.33"/>
+			<Connection Source="AS_TO_AUDI.AUDI_OUT" Destination="Q_NumericValue.u32NewValue" dx1="700"/>
+			<Connection Source="sequence_block.DO_S1" Destination="DigitalOutput_Q1.OUT" dx1="880"/>
+			<Connection Source="sequence_block.DO_S2" Destination="DigitalOutput_Q2.OUT" dx1="913.33"/>
+			<Connection Source="sequence_block.DO_S3" Destination="DigitalOutput_Q3.OUT" dx1="946.67"/>
+			<Connection Source="sequence_block.DO_S4" Destination="DigitalOutput_Q4.OUT" dx1="980"/>
+			<Connection Source="sequence_block.DO_S5" Destination="DigitalOutput_Q5.OUT" dx1="960"/>
+			<Connection Source="sequence_block.DO_S6" Destination="DigitalOutput_Q6.OUT" dx1="926.67"/>
+			<Connection Source="sequence_block.DO_S7" Destination="DigitalOutput_Q7.OUT" dx1="893.33"/>
+			<Connection Source="sequence_block.DO_S8" Destination="DigitalOutput_Q8.OUT" dx1="860"/>
+			<Connection Source="sequence_block.timeOut" Destination="E_TimeOut.TimeOutSocket" dx1="66.67" dx2="66.67" dy="266.67"/>
 		</AdapterConnections>
 	</SubAppNetwork>
 </SubAppType>
