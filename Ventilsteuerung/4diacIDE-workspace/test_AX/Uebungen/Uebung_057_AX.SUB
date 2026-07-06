@@ -73,21 +73,22 @@
 		</FB>
 		<FB Name="sequence_block" Type="logiBUS::utils::sequence::event::sequence_E_05_AX" x="-9613.33" y="-600">
 		</FB>
+		<Comment Comment="die zustände 4 und 5 werden hier NIE erreicht ! &#10;Wichtige Info!" x="-9700" y="1300" width="1700" height="800"/>
 		<EventConnections>
-			<Connection Source="DigitalInput_CLK_I1.IND" Destination="sequence_block.START_S1" dx1="1000"/>
-			<Connection Source="DigitalInput_CLK_I2.IND" Destination="sequence_block.S1_S2" dx1="800"/>
-			<Connection Source="DigitalInput_CLK_I3.IND" Destination="sequence_block.S2_S3" dx1="800"/>
-			<Connection Source="DigitalInput_CLK_I4.IND" Destination="sequence_block.S3_S4" dx1="946.67"/>
-			<Connection Source="DigitalInput_CLK_I5.IND" Destination="sequence_block.RESET" dx1="1066.67"/>
+			<Connection Source="DigitalInput_CLK_I1.IND" Destination="sequence_block.START_S1" dx1="746.67"/>
+			<Connection Source="DigitalInput_CLK_I2.IND" Destination="sequence_block.S1_S2" dx1="713.33"/>
+			<Connection Source="DigitalInput_CLK_I3.IND" Destination="sequence_block.S2_S3" dx1="686.67"/>
+			<Connection Source="DigitalInput_CLK_I4.IND" Destination="sequence_block.S3_S4" dx1="720"/>
+			<Connection Source="DigitalInput_CLK_I5.IND" Destination="sequence_block.RESET" dx1="753.33"/>
 		</EventConnections>
 		<AdapterConnections>
-			<Connection Source="sequence_block.STATE_NR" Destination="AS_TO_AUDI.AS_IN" dx1="340"/>
-			<Connection Source="AS_TO_AUDI.AUDI_OUT" Destination="Q_NumericValue.u32NewValue" dx1="106.67"/>
-			<Connection Source="sequence_block.DO_S1" Destination="DigitalOutput_Q1.OUT" dx1="650"/>
-			<Connection Source="sequence_block.DO_S2" Destination="DigitalOutput_Q2.OUT" dx1="700"/>
-			<Connection Source="sequence_block.DO_S3" Destination="DigitalOutput_Q3.OUT" dx1="750"/>
-			<Connection Source="sequence_block.DO_S4" Destination="DigitalOutput_Q4.OUT" dx1="800"/>
-			<Connection Source="sequence_block.DO_S5" Destination="DigitalOutput_Q5.OUT" dx1="850"/>
+			<Connection Source="sequence_block.STATE_NR" Destination="AS_TO_AUDI.AS_IN" dx1="873.33"/>
+			<Connection Source="AS_TO_AUDI.AUDI_OUT" Destination="Q_NumericValue.u32NewValue" dx1="80"/>
+			<Connection Source="sequence_block.DO_S1" Destination="DigitalOutput_Q1.OUT" dx1="906.67"/>
+			<Connection Source="sequence_block.DO_S2" Destination="DigitalOutput_Q2.OUT" dx1="940"/>
+			<Connection Source="sequence_block.DO_S3" Destination="DigitalOutput_Q3.OUT" dx1="973.33"/>
+			<Connection Source="sequence_block.DO_S4" Destination="DigitalOutput_Q4.OUT" dx1="1233.33"/>
+			<Connection Source="sequence_block.DO_S5" Destination="DigitalOutput_Q5.OUT" dx1="1200"/>
 		</AdapterConnections>
 	</SubAppNetwork>
 </SubAppType>

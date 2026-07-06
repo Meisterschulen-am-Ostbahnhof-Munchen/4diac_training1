@@ -73,28 +73,29 @@
 		</FB>
 		<FB Name="sequence_block" Type="logiBUS::utils::sequence::event::sequence_E_05" x="-9700" y="1700">
 		</FB>
+		<Comment Comment="die zustände 4 und 5 werden hier NIE erreicht ! &#10;Wichtige Info!" x="-10000" y="3500" width="1700" height="800"/>
 		<EventConnections>
 			<Connection Source="F_SINT_TO_UINT.CNF" Destination="Q_NumericValue.REQ" dx1="613.33"/>
 			<Connection Source="sequence_block.CNF" Destination="F_SINT_TO_UINT.REQ" dx1="840"/>
 			<Connection Source="DigitalInput_CLK_I1.IND" Destination="sequence_block.START_S1" dx1="506.67"/>
 			<Connection Source="DigitalInput_CLK_I2.IND" Destination="sequence_block.S1_S2" dx1="473.33"/>
 			<Connection Source="DigitalInput_CLK_I3.IND" Destination="sequence_block.S2_S3"/>
-			<Connection Source="DigitalInput_CLK_I4.IND" Destination="sequence_block.S3_S4" dx1="473.33"/>
-			<Connection Source="DigitalInput_CLK_I5.IND" Destination="sequence_block.RESET" dx1="506.67"/>
-			<Connection Source="sequence_block.EO_S1" Destination="DigitalOutput_Q1.REQ" dx1="913.33"/>
-			<Connection Source="sequence_block.EO_S2" Destination="DigitalOutput_Q2.REQ" dx1="980"/>
-			<Connection Source="sequence_block.EO_S3" Destination="DigitalOutput_Q3.REQ" dx1="1046.67"/>
-			<Connection Source="sequence_block.EO_S4" Destination="DigitalOutput_Q4.REQ" dx1="1113.33"/>
-			<Connection Source="sequence_block.EO_S5" Destination="DigitalOutput_Q5.REQ" dx1="846.67"/>
+			<Connection Source="DigitalInput_CLK_I4.IND" Destination="sequence_block.S3_S4" dx1="400"/>
+			<Connection Source="DigitalInput_CLK_I5.IND" Destination="sequence_block.RESET" dx1="433.33"/>
+			<Connection Source="sequence_block.EO_S1" Destination="DigitalOutput_Q1.REQ" dx1="933.33"/>
+			<Connection Source="sequence_block.EO_S2" Destination="DigitalOutput_Q2.REQ" dx1="1000"/>
+			<Connection Source="sequence_block.EO_S3" Destination="DigitalOutput_Q3.REQ" dx1="1066.67"/>
+			<Connection Source="sequence_block.EO_S4" Destination="DigitalOutput_Q4.REQ" dx1="1133.33"/>
+			<Connection Source="sequence_block.EO_S5" Destination="DigitalOutput_Q5.REQ" dx1="866.67"/>
 		</EventConnections>
 		<DataConnections>
 			<Connection Source="F_SINT_TO_UINT.OUT" Destination="Q_NumericValue.u32NewValue" dx1="613.33"/>
-			<Connection Source="sequence_block.STATE_NR" Destination="F_SINT_TO_UINT.IN" dx1="880"/>
-			<Connection Source="sequence_block.DO_S1" Destination="DigitalOutput_Q1.OUT" dx1="946.67"/>
-			<Connection Source="sequence_block.DO_S2" Destination="DigitalOutput_Q2.OUT" dx1="1013.33"/>
-			<Connection Source="sequence_block.DO_S3" Destination="DigitalOutput_Q3.OUT" dx1="1080"/>
-			<Connection Source="sequence_block.DO_S4" Destination="DigitalOutput_Q4.OUT" dx1="1113.33"/>
-			<Connection Source="sequence_block.DO_S5" Destination="DigitalOutput_Q5.OUT" dx1="813.33"/>
+			<Connection Source="sequence_block.STATE_NR" Destination="F_SINT_TO_UINT.IN" dx1="900"/>
+			<Connection Source="sequence_block.DO_S1" Destination="DigitalOutput_Q1.OUT" dx1="966.67"/>
+			<Connection Source="sequence_block.DO_S2" Destination="DigitalOutput_Q2.OUT" dx1="1033.33"/>
+			<Connection Source="sequence_block.DO_S3" Destination="DigitalOutput_Q3.OUT" dx1="1100"/>
+			<Connection Source="sequence_block.DO_S4" Destination="DigitalOutput_Q4.OUT" dx1="1133.33"/>
+			<Connection Source="sequence_block.DO_S5" Destination="DigitalOutput_Q5.OUT" dx1="833.33"/>
 		</DataConnections>
 	</SubAppNetwork>
 </SubAppType>
