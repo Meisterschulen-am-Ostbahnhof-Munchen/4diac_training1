@@ -65,7 +65,7 @@
 		</FB>
 		<FB Name="E_TimeOut" Type="iec61499::events::E_TimeOut" x="-9100" y="3200">
 		</FB>
-		<FB Name="Q_NumericValue" Type="isobus::UT::Q::Q_NumericValue_AUDI" x="-2666.67" y="-2000">
+		<FB Name="Q_NumericValue_AUDI" Type="isobus::UT::Q::Q_NumericValue_AUDI" x="-2666.67" y="-2000">
 			<Parameter Name="u16ObjId" Value="OutputNumber_N1"/>
 		</FB>
 		<FB Name="AS_TO_AUDI" Type="adapter::conversion::unidirectional::AS_TO_AUDI" x="-4906.67" y="-1820">
@@ -86,7 +86,7 @@
 		</EventConnections>
 		<AdapterConnections>
 			<Connection Source="sequence_block.STATE_NR" Destination="AS_TO_AUDI.AS_IN" dx1="593.33" dx2="460" dy="-4206.67"/>
-			<Connection Source="AS_TO_AUDI.AUDI_OUT" Destination="Q_NumericValue.u32NewValue" dx1="700"/>
+			<Connection Source="AS_TO_AUDI.AUDI_OUT" Destination="Q_NumericValue_AUDI.u32NewValue" dx1="700"/>
 			<Connection Source="sequence_block.Q1" Destination="DigitalOutput_Q1.OUT" dx1="626.67"/>
 			<Connection Source="sequence_block.Q2" Destination="DigitalOutput_Q2.OUT" dx1="660"/>
 			<Connection Source="sequence_block.Q3" Destination="DigitalOutput_Q3.OUT" dx1="693.33"/>

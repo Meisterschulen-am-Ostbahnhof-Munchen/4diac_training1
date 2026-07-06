@@ -15,8 +15,6 @@
 		<Import declaration="logiBUS::io::DQ::logiBUS_DO::Output_Q2"/>
 		<Import declaration="logiBUS::io::DQ::logiBUS_DO::Output_Q3"/>
 		<Import declaration="logiBUS::io::DQ::logiBUS_DO::Output_Q4"/>
-		<Import declaration="logiBUS::io::DQ::logiBUS_DO::Output_Q5"/>
-		<Import declaration="logiBUS::io::DI::logiBUS_DI::Input_I5"/>
 	</CompilerInfo>
 	<SubAppInterfaceList>
 	</SubAppInterfaceList>
@@ -64,7 +62,7 @@
 		</FB>
 		<FB Name="sequence_block" Type="logiBUS::utils::sequence::event::sequence_E_04" x="-9700" y="1700">
 		</FB>
-		<Comment Comment="die zustände 4 und 5 werden hier NIE erreicht ! &#10;Wichtige Info!" x="-9800" y="3400" width="1700" height="800"/>
+		<Comment Comment="der zustand 4 wird hier NIE erreicht ! &#10;Wichtige Info!" x="-9800" y="3400" width="1700" height="800"/>
 		<EventConnections>
 			<Connection Source="F_SINT_TO_UINT.CNF" Destination="Q_NumericValue.REQ" dx1="613.33"/>
 			<Connection Source="sequence_block.CNF" Destination="F_SINT_TO_UINT.REQ" dx1="833.33"/>

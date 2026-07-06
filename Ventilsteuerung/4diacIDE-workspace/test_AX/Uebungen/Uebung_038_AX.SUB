@@ -65,7 +65,7 @@
 			<Parameter Name="QI" Value="TRUE"/>
 			<Parameter Name="Output" Value="Output_Q8"/>
 		</FB>
-		<FB Name="Q_NumericValue" Type="isobus::UT::Q::Q_NumericValue_AUDI" x="-4800" y="-3600">
+		<FB Name="Q_NumericValue_AUDI" Type="isobus::UT::Q::Q_NumericValue_AUDI" x="-4800" y="-3600">
 			<Parameter Name="u16ObjId" Value="OutputNumber_N1"/>
 		</FB>
 		<FB Name="AS_TO_AUDI" Type="adapter::conversion::unidirectional::AS_TO_AUDI" x="-6300" y="-3000">
@@ -86,7 +86,7 @@
 		</EventConnections>
 		<AdapterConnections>
 			<Connection Source="loop.STATE_NR" Destination="AS_TO_AUDI.AS_IN" dx1="340"/>
-			<Connection Source="AS_TO_AUDI.AUDI_OUT" Destination="Q_NumericValue.u32NewValue" dx1="606.67"/>
+			<Connection Source="AS_TO_AUDI.AUDI_OUT" Destination="Q_NumericValue_AUDI.u32NewValue" dx1="606.67"/>
 			<Connection Source="loop.timeOut" Destination="E_TimeOut.TimeOutSocket" dx1="80" dx2="80" dy="226.67"/>
 			<Connection Source="loop.DO_S1" Destination="DigitalOutput_Q1.OUT" dx1="1020"/>
 			<Connection Source="loop.DO_S2" Destination="DigitalOutput_Q2.OUT" dx1="1126.67"/>

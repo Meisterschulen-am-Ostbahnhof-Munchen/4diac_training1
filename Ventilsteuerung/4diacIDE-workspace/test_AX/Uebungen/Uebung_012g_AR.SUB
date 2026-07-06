@@ -20,12 +20,12 @@
 			<Parameter Name="KEY" Value="KEY_I1_STORE"/>
 			<Parameter Name="DEFAULT_VALUE" Value="REAL#0.0"/>
 		</FB>
-		<FB Name="Q_NumericValue" Type="isobus::UT::Q::Q_NumericValue_PHYSA" x="1600" y="800">
+		<FB Name="Q_NumericValue_PHYSA" Type="isobus::UT::Q::Q_NumericValue_PHYSA" x="1600" y="800">
 			<Parameter Name="stObj" Value="InputNumber_I3"/>
 		</FB>
 		<AdapterConnections>
-			<Connection Source="InputNumber_I3.rPhys" Destination="INI_AR.AR_IN"/>
-			<Connection Source="INI_AR.AR_OUT" Destination="Q_NumericValue.rPhys" dx1="733.33"/>
+			<Connection Source="InputNumber_I3.rPhys" Destination="INI_AR.AR_IN" dx1="1286.67"/>
+			<Connection Source="INI_AR.AR_OUT" Destination="Q_NumericValue_PHYSA.rPhys" dx1="733.33"/>
 		</AdapterConnections>
 	</SubAppNetwork>
 </SubAppType>

@@ -67,7 +67,7 @@
 			<Parameter Name="Input" Value="Input_I6"/>
 			<Parameter Name="InputEvent" Value="BUTTON_SINGLE_CLICK"/>
 		</FB>
-		<FB Name="Q_NumericValue" Type="isobus::UT::Q::Q_NumericValue_AUDI" x="-5900" y="-3800">
+		<FB Name="Q_NumericValue_AUDI" Type="isobus::UT::Q::Q_NumericValue_AUDI" x="-5900" y="-3800">
 			<Parameter Name="u16ObjId" Value="OutputNumber_N1"/>
 		</FB>
 		<FB Name="AS_TO_AUDI" Type="adapter::conversion::unidirectional::AS_TO_AUDI" x="-6900" y="-2900">
@@ -84,7 +84,7 @@
 		</EventConnections>
 		<AdapterConnections>
 			<Connection Source="sequence_block.STATE_NR" Destination="AS_TO_AUDI.AS_IN" dx1="706.67"/>
-			<Connection Source="AS_TO_AUDI.AUDI_OUT" Destination="Q_NumericValue.u32NewValue" dx1="80"/>
+			<Connection Source="AS_TO_AUDI.AUDI_OUT" Destination="Q_NumericValue_AUDI.u32NewValue" dx1="80"/>
 			<Connection Source="sequence_block.DO_S1" Destination="DigitalOutput_Q1.OUT" dx1="793.33"/>
 			<Connection Source="sequence_block.DO_S2" Destination="DigitalOutput_Q2.OUT" dx1="826.67"/>
 			<Connection Source="sequence_block.DO_S3" Destination="DigitalOutput_Q3.OUT" dx1="860"/>

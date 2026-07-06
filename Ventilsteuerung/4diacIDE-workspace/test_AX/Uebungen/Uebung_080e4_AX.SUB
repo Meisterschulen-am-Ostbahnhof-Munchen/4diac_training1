@@ -33,7 +33,7 @@
 			<Parameter Name="HYSTERESIS" Value="UINT#25"/>
 			<Parameter Name="Tmin" Value="T#1s"/>
 		</FB>
-		<FB Name="Q_NumericValue" Type="isobus::UT::Q::Q_NumericValue_AUDI" x="-1100" y="400">
+		<FB Name="Q_NumericValue_AUDI" Type="isobus::UT::Q::Q_NumericValue_AUDI" x="-1100" y="400">
 			<Parameter Name="u16ObjId" Value="OutputNumber_N1"/>
 		</FB>
 		<FB Name="E_CYCLE" Type="iec61499::events::E_CYCLE" x="-7700" y="-1900">
@@ -56,7 +56,7 @@
 			<Connection Source="DigitalInput_RST_I2.IN" Destination="X_TO_B_I2.AX_IN" dx1="80"/>
 			<Connection Source="AX_D_FF.Q" Destination="DigitalOutput_Q1.OUT" dx1="493.33"/>
 			<Connection Source="AUI_D_FF_HYS_TMIN.Q" Destination="UI_TO_UDI_N1.AUI_IN" dx1="80"/>
-			<Connection Source="UI_TO_UDI_N1.AUDI_OUT" Destination="Q_NumericValue.u32NewValue" dx1="80"/>
+			<Connection Source="UI_TO_UDI_N1.AUDI_OUT" Destination="Q_NumericValue_AUDI.u32NewValue" dx1="80"/>
 			<Connection Source="AUI_CTU.Q" Destination="AX_D_FF.I" dx1="1406.67"/>
 			<Connection Source="AUI_CTU.CV" Destination="AUI_D_FF_HYS_TMIN.I" dx1="326.67"/>
 		</AdapterConnections>

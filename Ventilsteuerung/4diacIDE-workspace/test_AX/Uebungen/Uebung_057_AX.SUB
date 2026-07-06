@@ -66,14 +66,14 @@
 			<Parameter Name="Input" Value="Input_I5"/>
 			<Parameter Name="InputEvent" Value="BUTTON_SINGLE_CLICK"/>
 		</FB>
-		<FB Name="Q_NumericValue" Type="isobus::UT::Q::Q_NumericValue_AUDI" x="-5800" y="-3800">
+		<FB Name="Q_NumericValue_AUDI" Type="isobus::UT::Q::Q_NumericValue_AUDI" x="-5800" y="-3800">
 			<Parameter Name="u16ObjId" Value="OutputNumber_N1"/>
 		</FB>
 		<FB Name="AS_TO_AUDI" Type="adapter::conversion::unidirectional::AS_TO_AUDI" x="-6800" y="-2900">
 		</FB>
 		<FB Name="sequence_block" Type="logiBUS::utils::sequence::event::sequence_E_05_AX" x="-9613.33" y="-600">
 		</FB>
-		<Comment Comment="die zustände 4 und 5 werden hier NIE erreicht ! &#10;Wichtige Info!" x="-9700" y="1300" width="1700" height="800"/>
+		<Comment Comment="der zustand 5 wird hier NIE erreicht ! &#10;Wichtige Info!" x="-9700" y="1300" width="1700" height="800"/>
 		<EventConnections>
 			<Connection Source="DigitalInput_CLK_I1.IND" Destination="sequence_block.START_S1" dx1="746.67"/>
 			<Connection Source="DigitalInput_CLK_I2.IND" Destination="sequence_block.S1_S2" dx1="713.33"/>
@@ -83,7 +83,7 @@
 		</EventConnections>
 		<AdapterConnections>
 			<Connection Source="sequence_block.STATE_NR" Destination="AS_TO_AUDI.AS_IN" dx1="873.33"/>
-			<Connection Source="AS_TO_AUDI.AUDI_OUT" Destination="Q_NumericValue.u32NewValue" dx1="80"/>
+			<Connection Source="AS_TO_AUDI.AUDI_OUT" Destination="Q_NumericValue_AUDI.u32NewValue" dx1="80"/>
 			<Connection Source="sequence_block.DO_S1" Destination="DigitalOutput_Q1.OUT" dx1="906.67"/>
 			<Connection Source="sequence_block.DO_S2" Destination="DigitalOutput_Q2.OUT" dx1="940"/>
 			<Connection Source="sequence_block.DO_S3" Destination="DigitalOutput_Q3.OUT" dx1="973.33"/>
