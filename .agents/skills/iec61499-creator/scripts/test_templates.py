@@ -12,7 +12,7 @@ def main():
         print(f"Error: Templates directory does not exist: {templates_dir}")
         sys.exit(1)
         
-    files = [f for f in os.listdir(templates_dir) if os.path.isfile(os.path.join(templates_dir, f)) and os.path.splitext(f)[1].lower() in valid_ext]
+    files = sorted([f for f in os.listdir(templates_dir) if os.path.isfile(os.path.join(templates_dir, f)) and os.path.splitext(f)[1].lower() in valid_ext])
     
     if not files:
         print(f"Error: No templates found in {templates_dir}")
