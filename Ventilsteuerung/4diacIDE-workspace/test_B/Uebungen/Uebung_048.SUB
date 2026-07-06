@@ -15,6 +15,8 @@
 		<Import declaration="logiBUS::io::DQ::logiBUS_DO::Output_Q2"/>
 		<Import declaration="logiBUS::io::DQ::logiBUS_DO::Output_Q3"/>
 		<Import declaration="logiBUS::io::DQ::logiBUS_DO::Output_Q4"/>
+		<Import declaration="logiBUS::io::DI::logiBUS_DI::Input_I5"/>
+		<Import declaration="logiBUS::io::DI::logiBUS_DI::Input_I6"/>
 	</CompilerInfo>
 	<SubAppInterfaceList>
 	</SubAppInterfaceList>
@@ -55,6 +57,16 @@
 			<Parameter Name="Input" Value="Input_I4"/>
 			<Parameter Name="InputEvent" Value="BUTTON_SINGLE_CLICK"/>
 		</FB>
+		<FB Name="DigitalInput_CLK_I5" Type="logiBUS::io::DI::logiBUS_IE" x="-11600" y="3700">
+			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="Input" Value="Input_I5"/>
+			<Parameter Name="InputEvent" Value="BUTTON_SINGLE_CLICK"/>
+		</FB>
+		<FB Name="DigitalInput_CLK_I6" Type="logiBUS::io::DI::logiBUS_IE" x="-11600" y="4700">
+			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="Input" Value="Input_I6"/>
+			<Parameter Name="InputEvent" Value="BUTTON_SINGLE_CLICK"/>
+		</FB>
 		<FB Name="Q_NumericValue" Type="isobus::UT::Q::Q_NumericValue" x="-5000" y="-1800">
 			<Parameter Name="u16ObjId" Value="OutputNumber_N1"/>
 		</FB>
@@ -68,7 +80,9 @@
 			<Connection Source="DigitalInput_CLK_I1.IND" Destination="sequence_block.START_S1" dx1="633.33"/>
 			<Connection Source="DigitalInput_CLK_I2.IND" Destination="sequence_block.S1_S2" dx1="473.33"/>
 			<Connection Source="DigitalInput_CLK_I3.IND" Destination="sequence_block.S2_S3"/>
-			<Connection Source="DigitalInput_CLK_I4.IND" Destination="sequence_block.RESET" dx1="486.67"/>
+			<Connection Source="DigitalInput_CLK_I4.IND" Destination="sequence_block.S3_S4" dx1="486.67"/>
+			<Connection Source="DigitalInput_CLK_I5.IND" Destination="sequence_block.S4_S1" dx1="500"/>
+			<Connection Source="DigitalInput_CLK_I6.IND" Destination="sequence_block.RESET" dx1="500"/>
 			<Connection Source="sequence_block.EO_S1" Destination="DigitalOutput_Q1.REQ" dx1="773.33"/>
 			<Connection Source="sequence_block.EO_S2" Destination="DigitalOutput_Q2.REQ" dx1="840"/>
 			<Connection Source="sequence_block.EO_S3" Destination="DigitalOutput_Q3.REQ" dx1="906.67"/>
