@@ -79,8 +79,37 @@ def validate_xml(xml_path, schemas_dir):
         print(f"Unexpected Error during XSD validation: {e}")
         sys.exit(1)
 
-    # Keywords validation
+    # Custom semantic validation checks (only if XSD validation succeeds)
     if xsd_valid:
+        has_errors = False
+        
+        # 1. OutputVars VarDeclaration name check (only the first one is allowed to be empty)
+        print("Running OutputVars VarDeclaration Name validation...")
+        output_var_violations = []
+        for elem in xml_doc.iter():
+            tag = elem.tag.split('}', 1)[1] if '}' in elem.tag else elem.tag
+            if tag == "OutputVars":
+                parent = elem.getparent()
+                parent_tag = parent.tag.split('}', 1)[1] if parent is not None and '}' in parent.tag else (parent.tag if parent is not None else '')
+                if root_tag == "Function" and parent_tag == "InterfaceList":
+                    var_children = [c for c in elem if (c.tag.split('}', 1)[1] if '}' in c.tag else c.tag) == "VarDeclaration"]
+                    for idx, var_child in enumerate(var_children):
+                        name_val = var_child.get("Name", "")
+                        if idx > 0 and name_val == "":
+                            output_var_violations.append({
+                                "line": var_child.sourceline,
+                                "message": f"Only the first VarDeclaration in Function OutputVars can have an empty Name. Variable {idx + 1} must have a name."
+                            })
+        
+        if output_var_violations:
+            print("OutputVars VarDeclaration Name Validation FAILED:")
+            for v in output_var_violations:
+                print(f"  Line {v['line']}: {v['message']}")
+            has_errors = True
+        else:
+            print("OutputVars VarDeclaration Name Validation SUCCESS.")
+
+        # 2. Keywords validation
         print("Running Keyword validation...")
         keywords, allowed_contexts = load_keywords()
         violations = check_keywords_in_xml(xml_doc, keywords, allowed_contexts)
@@ -88,9 +117,13 @@ def validate_xml(xml_path, schemas_dir):
             print("Keyword Validation FAILED:")
             for v in violations:
                 print(f"  Line {v['line']}: {v['message']}")
-            sys.exit(1)
+            has_errors = True
         else:
             print("Keyword Validation SUCCESS: No reserved keyword violations found.")
+            
+        if has_errors:
+            sys.exit(1)
+        else:
             sys.exit(0)
 
 if __name__ == '__main__':
