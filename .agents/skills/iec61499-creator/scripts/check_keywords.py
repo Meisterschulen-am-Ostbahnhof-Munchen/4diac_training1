@@ -45,6 +45,8 @@ def check_keywords_in_xml(xml_path_or_doc, keywords, allowed_contexts):
         
         # Traverse all elements
         for elem in xml_doc.iter():
+            if not isinstance(elem.tag, str):
+                continue
             name_val = elem.get("Name")
             if name_val:
                 name_upper = name_val.upper()
