@@ -56,10 +56,10 @@
 			<Parameter Name="Input" Value="Input_I4"/>
 			<Parameter Name="InputEvent" Value="BUTTON_SINGLE_CLICK"/>
 		</FB>
-		<FB Name="Q_NumericValue" Type="isobus::UT::Q::Q_NumericValue_AUDI" x="-2666.67" y="-2000">
+		<FB Name="Q_NumericValue" Type="isobus::UT::Q::Q_NumericValue_AUDI" x="-5400" y="-3400">
 			<Parameter Name="u16ObjId" Value="OutputNumber_N1"/>
 		</FB>
-		<FB Name="AS_TO_AUDI" Type="adapter::conversion::unidirectional::AS_TO_AUDI" x="-4906.67" y="-1820">
+		<FB Name="AS_TO_AUDI" Type="adapter::conversion::unidirectional::AS_TO_AUDI" x="-6700" y="-2800">
 		</FB>
 		<FB Name="E_TimeOut" Type="iec61499::events::E_TimeOut" x="-9613.33" y="1800">
 		</FB>
@@ -70,15 +70,15 @@
 			<Parameter Name="DT_S4_START" Value="T#2s"/>
 		</FB>
 		<EventConnections>
-			<Connection Source="DigitalInput_CLK_I1.IND" Destination="sequence_04.START_S1" dx1="800"/>
+			<Connection Source="DigitalInput_CLK_I1.IND" Destination="sequence_04.START_S1" dx1="1033.33"/>
 			<Connection Source="DigitalInput_CLK_I2.IND" Destination="sequence_04.S1_S2" dx1="800"/>
 			<Connection Source="DigitalInput_CLK_I3.IND" Destination="sequence_04.S2_S3" dx1="800"/>
 			<Connection Source="DigitalInput_CLK_I4.IND" Destination="sequence_04.RESET" dx1="800"/>
 		</EventConnections>
 		<AdapterConnections>
 			<Connection Source="sequence_04.STATE_NR" Destination="AS_TO_AUDI.AS_IN" dx1="340"/>
-			<Connection Source="AS_TO_AUDI.AUDI_OUT" Destination="Q_NumericValue.u32NewValue" dx1="893.33"/>
-<Connection Source="sequence_04.DO_S1" Destination="DigitalOutput_Q1.OUT" dx1="693.33"/>
+			<Connection Source="AS_TO_AUDI.AUDI_OUT" Destination="Q_NumericValue.u32NewValue" dx1="206.67"/>
+			<Connection Source="sequence_04.DO_S1" Destination="DigitalOutput_Q1.OUT" dx1="693.33"/>
 			<Connection Source="sequence_04.DO_S2" Destination="DigitalOutput_Q2.OUT" dx1="793.33"/>
 			<Connection Source="sequence_04.DO_S3" Destination="DigitalOutput_Q3.OUT" dx1="826.67"/>
 			<Connection Source="sequence_04.DO_S4" Destination="DigitalOutput_Q4.OUT" dx1="660"/>

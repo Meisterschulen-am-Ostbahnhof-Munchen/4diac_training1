@@ -8,7 +8,7 @@ Ein Landwirt möchte die Reinigungsprozedur seiner Feldspritze teil-automatisier
 Die ersten beiden Phasen (Vorspülen, Hauptspülen) sollen manuell durch den Bediener per Knopfdruck weitergeschaltet werden, da diese je nach Verschmutzung unterschiedlich lange dauern. Die letzten beiden Phasen (Klarspülen, Ausblasen) sollen vollautomatisch für jeweils 2 Sekunden laufen.
 
 ### Funktionsbeschreibung der Ablaufsteuerung
-Die Logik soll mit dem Funktionsbaustein [sequence_ET_04_AX.fbt](file:///C:/git/ms/4diac_training1/Ventilsteuerung/4diacIDE-workspace/.lib/logiBUS-3.0.0/typelib/utils/sequence/combi/sequence_ET_04_AX.fbt) realisiert werden.
+Die Logik soll mit dem Funktionsbaustein [sequence_ET_04_AX.fbt](../../.lib/logiBUS-3.0.0/typelib/utils/sequence/combi/sequence_ET_04_AX.fbt) realisiert werden.
 
 #### Phasen des Spülprozesses:
 1. **Zustand 0 (Bereit / Idle):** Das System wartet auf den Start. Kein Ventil ist aktiv (`STATE_NR = 0`).

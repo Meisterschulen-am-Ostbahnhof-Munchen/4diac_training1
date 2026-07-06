@@ -7,7 +7,7 @@ Ein Landwirt möchte die Reinigungsprozedur seiner Feldspritze teil-automatisier
 Die Reinigung soll in vier aufeinanderfolgenden Phasen ablaufen. Jede Phase soll eine maximale Dauer haben (Zeitsteuerung), kann jedoch vom Bediener in der Traktorkabine bei Bedarf vorzeitig per Tastendruck auf die nächste Stufe geschaltet werden (Eventsteuerung).
 
 ### Funktionsbeschreibung der Ablaufsteuerung
-Die Logik soll mit dem Funktionsbaustein [sequence_ET_04_AX.fbt](file:///C:/git/ms/4diac_training1/Ventilsteuerung/4diacIDE-workspace/.lib/logiBUS-3.0.0/typelib/utils/sequence/combi/sequence_ET_04_AX.fbt) realisiert werden.
+Die Logik soll mit dem Funktionsbaustein [sequence_ET_04_AX.fbt](../../.lib/logiBUS-3.0.0/typelib/utils/sequence/combi/sequence_ET_04_AX.fbt) realisiert werden.
 
 #### Phasen des Spülprozesses:
 1. **Zustand 0 (Bereit / Idle):** Das System wartet auf den Start. Kein Ventil ist aktiv (`STATE_NR = 0`).
