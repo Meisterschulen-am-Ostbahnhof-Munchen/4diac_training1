@@ -17,7 +17,7 @@ Die Logik soll mit dem Funktionsbaustein [sequence_ET_04_AX.fbt](file:///C:/git/
 5. **Schritt 4 (Ausblasen/Abtropfen):** Ventil 4 öffnet (`DO_S4` wird aktiv). Maximale Dauer: **3 Sekunden** (`DT_S4_START = T#3s`). Nach Ablauf dieser Zeit wechselt das System automatisch wieder in den Zustand 0 (Bereit).
 
 ### Arbeitsauftrag
-1. Öffnen Sie das 4diac-Projekt und legen Sie die SubApp `Uebung_037_AX` an (eine Vorlage befindet sich bereits im Ordner `Uebungen`).
+1. Öffnen Sie das 4diac-Projekt und legen Sie die SubApp `Uebung_036b_AX` an (eine Vorlage befindet sich bereits im Ordner `Uebungen`).
 2. Platzieren Sie den Sequenzer-Baustein `sequence_ET_04_AX` und konfigurieren Sie die Zeitparameter (`DT_S1_S2` bis `DT_S4_START`) entsprechend den Vorgaben.
 3. Verbinden Sie den Start-Taster `I1` (über das Event `BUTTON_SINGLE_CLICK` von `DigitalInput_CLK_I1`) mit dem Eingang `START_S1` des Sequenzers.
 4. Verbinden Sie die Taster `I2`, `I3` und `I4` mit den entsprechenden Weiterschalt-Ereignissen (`S1_S2`, `S2_S3`, `S3_S4`).

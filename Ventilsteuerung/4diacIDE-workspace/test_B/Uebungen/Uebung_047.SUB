@@ -41,49 +41,46 @@
 			<Parameter Name="InputEvent" Value="BUTTON_SINGLE_CLICK"/>
 		</FB>
 		<FB Name="DigitalInput_CLK_I2" Type="logiBUS::io::DI::logiBUS_IE" x="-11600" y="700">
-				<Parameter Name="QI" Value="TRUE"/>
-				<Parameter Name="Input" Value="Input_I2"/>
-				<Parameter Name="InputEvent" Value="BUTTON_SINGLE_CLICK"/>
-			</FB>
+			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="Input" Value="Input_I2"/>
+			<Parameter Name="InputEvent" Value="BUTTON_SINGLE_CLICK"/>
+		</FB>
 		<FB Name="DigitalInput_CLK_I3" Type="logiBUS::io::DI::logiBUS_IE" x="-11600" y="1700">
-				<Parameter Name="QI" Value="TRUE"/>
-				<Parameter Name="Input" Value="Input_I3"/>
-				<Parameter Name="InputEvent" Value="BUTTON_SINGLE_CLICK"/>
-			</FB>
+			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="Input" Value="Input_I3"/>
+			<Parameter Name="InputEvent" Value="BUTTON_SINGLE_CLICK"/>
+		</FB>
 		<FB Name="DigitalInput_CLK_I4" Type="logiBUS::io::DI::logiBUS_IE" x="-11600" y="2700">
-				<Parameter Name="QI" Value="TRUE"/>
-				<Parameter Name="Input" Value="Input_I4"/>
-				<Parameter Name="InputEvent" Value="BUTTON_SINGLE_CLICK"/>
-			</FB>
-		<FB Name="Q_NumericValue" Type="isobus::UT::Q::Q_NumericValue" x="-3200" y="2400">
+			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="Input" Value="Input_I4"/>
+			<Parameter Name="InputEvent" Value="BUTTON_SINGLE_CLICK"/>
+		</FB>
+		<FB Name="Q_NumericValue" Type="isobus::UT::Q::Q_NumericValue" x="-4700" y="-1700">
 			<Parameter Name="u16ObjId" Value="OutputNumber_N1"/>
 		</FB>
-		<FB Name="F_SINT_TO_UINT" Type="iec61131::conversion::F_SINT_TO_UINT" x="-5600" y="2600">
+		<FB Name="F_SINT_TO_UINT" Type="iec61131::conversion::F_SINT_TO_UINT" x="-6900" y="-1500">
 		</FB>
 		<FB Name="sequence_block" Type="logiBUS::utils::sequence::event::sequence_E_04" x="-9700" y="1700">
-
 		</FB>
 		<EventConnections>
-			<Connection Source="F_SINT_TO_UINT.CNF" Destination="Q_NumericValue.REQ" dx1="733.33"/>
-			<Connection Source="sequence_block.CNF" Destination="F_SINT_TO_UINT.REQ" dx1="2540"/>
-			<Connection Source="DigitalInput_CLK_I1.IND" Destination="sequence_block.START_S1" dx1="406.67"/>
-			<Connection Source="DigitalInput_CLK_I2.IND" Destination="sequence_block.S1_S2" dx1="373.33"/>
-			<Connection Source="DigitalInput_CLK_I3.IND" Destination="sequence_block.S2_S3" dx1="373.33"/>
-			<Connection Source="DigitalInput_CLK_I4.IND" Destination="sequence_block.S3_S4" dx1="373.33"/>
-			<Connection Source="DigitalInput_CLK_I4.IND" Destination="sequence_block.RESET" dx1="133.33"/>
-			<Connection Source="sequence_block.EO_S1" Destination="DigitalOutput_Q1.REQ" dx1="240"/>
-			<Connection Source="sequence_block.EO_S2" Destination="DigitalOutput_Q2.REQ" dx1="300"/>
-			<Connection Source="sequence_block.EO_S3" Destination="DigitalOutput_Q3.REQ" dx1="360"/>
-			<Connection Source="sequence_block.EO_S4" Destination="DigitalOutput_Q4.REQ" dx1="420"/>
+			<Connection Source="F_SINT_TO_UINT.CNF" Destination="Q_NumericValue.REQ" dx1="613.33"/>
+			<Connection Source="sequence_block.CNF" Destination="F_SINT_TO_UINT.REQ" dx1="833.33"/>
+			<Connection Source="DigitalInput_CLK_I1.IND" Destination="sequence_block.START_S1" dx1="506.67"/>
+			<Connection Source="DigitalInput_CLK_I2.IND" Destination="sequence_block.S1_S2" dx1="473.33"/>
+			<Connection Source="DigitalInput_CLK_I3.IND" Destination="sequence_block.S2_S3"/>
+			<Connection Source="DigitalInput_CLK_I4.IND" Destination="sequence_block.RESET" dx1="486.67"/>
+			<Connection Source="sequence_block.EO_S1" Destination="DigitalOutput_Q1.REQ" dx1="900"/>
+			<Connection Source="sequence_block.EO_S2" Destination="DigitalOutput_Q2.REQ" dx1="966.67"/>
+			<Connection Source="sequence_block.EO_S3" Destination="DigitalOutput_Q3.REQ" dx1="1033.33"/>
+			<Connection Source="sequence_block.EO_S4" Destination="DigitalOutput_Q4.REQ" dx1="1100"/>
 		</EventConnections>
 		<DataConnections>
-			<Connection Source="F_SINT_TO_UINT.OUT" Destination="Q_NumericValue.u32NewValue"/>
-			<Connection Source="sequence_block.STATE_NR" Destination="F_SINT_TO_UINT.IN" dx1="566.67"/>
-			<Connection Source="sequence_block.DO_S1" Destination="DigitalOutput_Q1.OUT" dx1="280"/>
-			<Connection Source="sequence_block.DO_S2" Destination="DigitalOutput_Q2.OUT" dx1="340"/>
-			<Connection Source="sequence_block.DO_S3" Destination="DigitalOutput_Q3.OUT" dx1="400"/>
-			<Connection Source="sequence_block.DO_S4" Destination="DigitalOutput_Q4.OUT" dx1="460"/>
+			<Connection Source="F_SINT_TO_UINT.OUT" Destination="Q_NumericValue.u32NewValue" dx1="613.33"/>
+			<Connection Source="sequence_block.STATE_NR" Destination="F_SINT_TO_UINT.IN" dx1="866.67"/>
+			<Connection Source="sequence_block.DO_S1" Destination="DigitalOutput_Q1.OUT" dx1="933.33"/>
+			<Connection Source="sequence_block.DO_S2" Destination="DigitalOutput_Q2.OUT" dx1="1000"/>
+			<Connection Source="sequence_block.DO_S3" Destination="DigitalOutput_Q3.OUT" dx1="1066.67"/>
+			<Connection Source="sequence_block.DO_S4" Destination="DigitalOutput_Q4.OUT" dx1="1100"/>
 		</DataConnections>
-
 	</SubAppNetwork>
 </SubAppType>

@@ -47,45 +47,42 @@
 			<Parameter Name="InputEvent" Value="BUTTON_SINGLE_CLICK"/>
 		</FB>
 		<FB Name="DigitalInput_CLK_I2" Type="logiBUS::io::DI::logiBUS_IE" x="-12000" y="-1400">
-				<Parameter Name="QI" Value="TRUE"/>
-				<Parameter Name="Input" Value="Input_I2"/>
-				<Parameter Name="InputEvent" Value="BUTTON_SINGLE_CLICK"/>
-			</FB>
+			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="Input" Value="Input_I2"/>
+			<Parameter Name="InputEvent" Value="BUTTON_SINGLE_CLICK"/>
+		</FB>
 		<FB Name="DigitalInput_CLK_I3" Type="logiBUS::io::DI::logiBUS_IE" x="-12000" y="-400">
-				<Parameter Name="QI" Value="TRUE"/>
-				<Parameter Name="Input" Value="Input_I3"/>
-				<Parameter Name="InputEvent" Value="BUTTON_SINGLE_CLICK"/>
-			</FB>
+			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="Input" Value="Input_I3"/>
+			<Parameter Name="InputEvent" Value="BUTTON_SINGLE_CLICK"/>
+		</FB>
 		<FB Name="DigitalInput_CLK_I4" Type="logiBUS::io::DI::logiBUS_IE" x="-12000" y="600">
-				<Parameter Name="QI" Value="TRUE"/>
-				<Parameter Name="Input" Value="Input_I4"/>
-				<Parameter Name="InputEvent" Value="BUTTON_SINGLE_CLICK"/>
-			</FB>
+			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="Input" Value="Input_I4"/>
+			<Parameter Name="InputEvent" Value="BUTTON_SINGLE_CLICK"/>
+		</FB>
 		<FB Name="DigitalInput_CLK_I5" Type="logiBUS::io::DI::logiBUS_IE" x="-12000" y="1600">
-				<Parameter Name="QI" Value="TRUE"/>
-				<Parameter Name="Input" Value="Input_I5"/>
-				<Parameter Name="InputEvent" Value="BUTTON_SINGLE_CLICK"/>
-			</FB>
-		<FB Name="Q_NumericValue" Type="isobus::UT::Q::Q_NumericValue_AUDI" x="-2666.67" y="-2000">
+			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="Input" Value="Input_I5"/>
+			<Parameter Name="InputEvent" Value="BUTTON_SINGLE_CLICK"/>
+		</FB>
+		<FB Name="Q_NumericValue" Type="isobus::UT::Q::Q_NumericValue_AUDI" x="-5400" y="-3700">
 			<Parameter Name="u16ObjId" Value="OutputNumber_N1"/>
 		</FB>
-		<FB Name="AS_TO_AUDI" Type="adapter::conversion::unidirectional::AS_TO_AUDI" x="-4906.67" y="-1820">
+		<FB Name="AS_TO_AUDI" Type="adapter::conversion::unidirectional::AS_TO_AUDI" x="-6700" y="-2900">
 		</FB>
 		<FB Name="sequence_block" Type="logiBUS::utils::sequence::event::sequence_E_05_loop_AX" x="-9613.33" y="-600">
-
 		</FB>
 		<EventConnections>
-			<Connection Source="DigitalInput_CLK_I1.IND" Destination="sequence_block.START_S1" dx1="800"/>
+			<Connection Source="DigitalInput_CLK_I1.IND" Destination="sequence_block.START_S1" dx1="1000"/>
 			<Connection Source="DigitalInput_CLK_I2.IND" Destination="sequence_block.S1_S2" dx1="800"/>
 			<Connection Source="DigitalInput_CLK_I3.IND" Destination="sequence_block.S2_S3" dx1="800"/>
-			<Connection Source="DigitalInput_CLK_I4.IND" Destination="sequence_block.S3_S4" dx1="800"/>
-			<Connection Source="DigitalInput_CLK_I5.IND" Destination="sequence_block.S4_S5" dx1="800"/>
-			<Connection Source="DigitalInput_CLK_I5.IND" Destination="sequence_block.RESET" dx1="800"/>
+			<Connection Source="DigitalInput_CLK_I4.IND" Destination="sequence_block.S3_S4" dx1="886.67"/>
+			<Connection Source="DigitalInput_CLK_I5.IND" Destination="sequence_block.RESET" dx1="1093.33"/>
 		</EventConnections>
-
 		<AdapterConnections>
 			<Connection Source="sequence_block.STATE_NR" Destination="AS_TO_AUDI.AS_IN" dx1="340"/>
-			<Connection Source="AS_TO_AUDI.AUDI_OUT" Destination="Q_NumericValue.u32NewValue" dx1="893.33"/>
+			<Connection Source="AS_TO_AUDI.AUDI_OUT" Destination="Q_NumericValue.u32NewValue" dx1="240"/>
 			<Connection Source="sequence_block.DO_S1" Destination="DigitalOutput_Q1.OUT" dx1="650"/>
 			<Connection Source="sequence_block.DO_S2" Destination="DigitalOutput_Q2.OUT" dx1="700"/>
 			<Connection Source="sequence_block.DO_S3" Destination="DigitalOutput_Q3.OUT" dx1="750"/>
