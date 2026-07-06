@@ -10,19 +10,13 @@ def load_keywords():
     script_dir = os.path.dirname(os.path.realpath(__file__))
     json_path = os.path.abspath(os.path.join(script_dir, '..', 'resources', 'keywords.json'))
     
-    try:
-        with open(json_path, "r", encoding="utf-8") as f:
-            data = json.load(f)
-        keywords = set(data.get("keywords", []))
-        allowed_contexts = data.get("allowed_contexts", {})
-        if keywords:
-            return keywords, allowed_contexts
-    except Exception as e:
-        print(f"Error: Failed to load local keywords.json: {e}")
-        sys.exit(1)
-            
-    print("Error: keywords.json is empty or invalid.")
-    sys.exit(1)
+    with open(json_path, "r", encoding="utf-8") as f:
+        data = json.load(f)
+    keywords = {k.upper() for k in data.get("keywords", [])}
+    allowed_contexts = {k.upper(): v for k, v in data.get("allowed_contexts", {}).items()}
+    if not keywords:
+        raise ValueError("keywords.json is empty or invalid.")
+    return keywords, allowed_contexts
 
 
 def check_keywords_in_xml(xml_path_or_doc, keywords, allowed_contexts):
@@ -91,7 +85,11 @@ def main():
         sys.exit(1)
 
     xml_path = sys.argv[1]
-    keywords, allowed_contexts = load_keywords()
+    try:
+        keywords, allowed_contexts = load_keywords()
+    except Exception as e:
+        print(f"Error: Failed to load keywords.json: {e}")
+        sys.exit(1)
     
     violations = check_keywords_in_xml(xml_path, keywords, allowed_contexts)
     if violations:
