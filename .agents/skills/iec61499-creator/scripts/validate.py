@@ -87,12 +87,21 @@ def validate_xml(xml_path, schemas_dir):
         print("Running OutputVars VarDeclaration Name validation...")
         output_var_violations = []
         for elem in xml_doc.iter():
+            if not isinstance(elem.tag, str):
+                continue
             tag = elem.tag.split('}', 1)[1] if '}' in elem.tag else elem.tag
             if tag == "OutputVars":
                 parent = elem.getparent()
-                parent_tag = parent.tag.split('}', 1)[1] if parent is not None and '}' in parent.tag else (parent.tag if parent is not None else '')
+                if parent is not None and isinstance(parent.tag, str):
+                    parent_tag = parent.tag.split('}', 1)[1] if '}' in parent.tag else parent.tag
+                else:
+                    parent_tag = ''
                 if root_tag == "Function" and parent_tag == "InterfaceList":
-                    var_children = [c for c in elem if (c.tag.split('}', 1)[1] if '}' in c.tag else c.tag) == "VarDeclaration"]
+                    var_children = [
+                        c for c in elem 
+                        if isinstance(c.tag, str) and 
+                        (c.tag.split('}', 1)[1] if '}' in c.tag else c.tag) == "VarDeclaration"
+                    ]
                     for idx, var_child in enumerate(var_children):
                         name_val = var_child.get("Name", "")
                         if idx > 0 and name_val == "":
