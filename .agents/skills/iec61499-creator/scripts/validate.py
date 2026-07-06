@@ -28,7 +28,8 @@ def validate_xml(xml_path, schemas_dir):
         # Parse XML to find the root element type
         parser = etree.XMLParser(remove_blank_text=True, resolve_entities=False, no_network=True, load_dtd=False)
 
-        xml_doc = etree.parse(xml_path, parser)
+        with open(xml_path, 'rb') as f:
+            xml_doc = etree.parse(f, parser)
         
         # Remove blank text/tail nodes (whitespaces) so that empty tags with spacing don't fail XSD validation
         for el in xml_doc.iter():
@@ -58,7 +59,8 @@ def validate_xml(xml_path, schemas_dir):
             print(f"Validating against: {schema_file}...")
             
             # Load and parse the schema
-            schema_doc = etree.parse(schema_path)
+            with open(schema_path, 'rb') as f:
+                schema_doc = etree.parse(f)
             xml_schema = etree.XMLSchema(schema_doc)
             
             if xml_schema.validate(xml_doc):

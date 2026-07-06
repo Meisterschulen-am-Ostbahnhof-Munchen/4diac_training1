@@ -25,17 +25,23 @@ def load_keywords():
     sys.exit(1)
 
 
-def check_keywords_in_xml(xml_path, keywords, allowed_contexts):
-    """Checks an XML file for reserved keyword violations in 'Name' attributes."""
+def check_keywords_in_xml(xml_path_or_doc, keywords, allowed_contexts):
+    """Checks an XML file or parsed document for reserved keyword violations in 'Name' attributes."""
     violations = []
     try:
-        parser = etree.XMLParser(
-            remove_blank_text=True,
-            resolve_entities=False,
-            no_network=True,
-            load_dtd=False,
-        )
-        xml_doc = etree.parse(xml_path, parser)
+        if isinstance(xml_path_or_doc, (str, bytes)) or hasattr(xml_path_or_doc, '__fspath__'):
+            # Securely parse the XML file using a binary stream
+            parser = etree.XMLParser(
+                remove_blank_text=True,
+                resolve_entities=False,
+                no_network=True,
+                load_dtd=False,
+            )
+            with open(xml_path_or_doc, 'rb') as f:
+                xml_doc = etree.parse(f, parser)
+        else:
+            # Use already parsed document directly to improve efficiency
+            xml_doc = xml_path_or_doc
         
         # Traverse all elements
         for elem in xml_doc.iter():
