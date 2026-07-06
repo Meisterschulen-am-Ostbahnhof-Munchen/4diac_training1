@@ -2,7 +2,7 @@
 <SubAppType Name="RedGreenBackground4" Comment="Hintergrundfarbe (TRUE -&gt; Rot, FALSE -&gt; Grün) für 4 Objekte">
 	<Identification Standard="61499-2">
 	</Identification>
-	<VersionInfo Version="1.0" Author="franz" Date="2022-11-10">
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="franz" Date="2022-11-10">
 	</VersionInfo>
 	<CompilerInfo packageName="MyLib::sys">
 		<Import declaration="isobus::UT::Q::const::colours"/>
@@ -10,7 +10,6 @@
 	<SubAppInterfaceList>
 		<SubAppEventInputs>
 			<SubAppEvent Name="REQ" Type="Event" Comment="Normal Execution Request">
-				<Attribute Name="YPOSITION" Type="USINT" Value="175"/>
 			</SubAppEvent>
 		</SubAppEventInputs>
 		<SubAppEventOutputs>
@@ -25,13 +24,10 @@
 		</SubAppEventOutputs>
 		<InputVars>
 			<VarDeclaration Name="DI1" Type="BOOL" Comment="Selector">
-				<Attribute Name="YPOSITION" Type="SINT" Value="18"/>
 			</VarDeclaration>
 			<VarDeclaration Name="u16ObjId" Type="UINT" Comment="Object ID Softkey">
-				<Attribute Name="YPOSITION" Type="SINT" Value="45"/>
 			</VarDeclaration>
 			<VarDeclaration Name="u16ObjIdA" Type="UINT" Comment="Object ID AUX">
-				<Attribute Name="YPOSITION" Type="SINT" Value="105"/>
 			</VarDeclaration>
 			<VarDeclaration Name="u16ObjIdB" Type="UINT"/>
 		</InputVars>
@@ -40,12 +36,10 @@
 			<VarDeclaration Name="u8OldColour_1" Type="USINT" Comment="Old value of ID"/>
 			<VarDeclaration Name="result_1" Type="INT" Comment="retval see description"/>
 			<VarDeclaration Name="STATUS_2" Type="STRING" Comment="Service Status">
-				<Attribute Name="YPOSITION" Type="SINT" Value="33"/>
 			</VarDeclaration>
 			<VarDeclaration Name="u8OldColour_2" Type="USINT" Comment="Old value of ID"/>
 			<VarDeclaration Name="result_2" Type="INT" Comment="retval see description"/>
 			<VarDeclaration Name="STATUS_3" Type="STRING" Comment="Service Status">
-				<Attribute Name="YPOSITION" Type="SINT" Value="75"/>
 			</VarDeclaration>
 			<VarDeclaration Name="u8OldColour_3" Type="USINT" Comment="Old value of ID"/>
 			<VarDeclaration Name="result_3" Type="INT" Comment="retval see description"/>

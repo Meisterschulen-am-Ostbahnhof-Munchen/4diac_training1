@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <System Name="test_PUBLISH_SUBSCRIBE">
-	<VersionInfo Version="1.0" Author="Franz Höpfinger" Date="2023-10-23">
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2023-10-23">
 	</VersionInfo>
 	<CompilerInfo packageName="Training_PUBLISH_SUBSCRIBE">
 		<Import declaration="logiBUS::io::DI::logiBUS_DI::Input_I1"/>
@@ -72,8 +72,6 @@
 	</Application>
 	<Device Name="FORTE_PC_PUBLISH" Type="iec61499::system::FORTE_PC" x="1760" y="1840">
 		<Parameter Name="MGR_ID" Value="VV::const::Computers::myComputers::C_PC_PUBLISH" Comment="Device manager socket ID"/>
-		<Attribute Name="Profile" Type="STRING" Value="HOLOBLOC"/>
-		<Attribute Name="Color" Type="STRING" Value="255,190,111"/>
 		<Resource Name="EMB_RES_PUBLISH" Type="iec61499::system::EMB_RES" x="0" y="0">
 			<FBNetwork>
 				<FB Name="PUBLISH_BUTTON_GREEN" Type="iec61499::net::PUBLISH_1" x="4400" y="700">
@@ -110,11 +108,11 @@
 				</DataConnections>
 			</FBNetwork>
 		</Resource>
+		<Attribute Name="Profile" Type="STRING" Value="HOLOBLOC"/>
+		<Attribute Name="Color" Type="STRING" Value="255,190,111"/>
 	</Device>
 	<Device Name="FORTE_PC_SUBSCRIBE" Type="iec61499::system::FORTE_PC" x="2400" y="2560">
 		<Parameter Name="MGR_ID" Value="VV::const::Computers::myComputers::C_PC_SUBSCRIBE" Comment="Device manager socket ID"/>
-		<Attribute Name="Profile" Type="STRING" Value="HOLOBLOC"/>
-		<Attribute Name="Color" Type="STRING" Value="59,215,47"/>
 		<Resource Name="EMB_RES_SUBSCRIBE" Type="iec61499::system::EMB_RES" x="0" y="0">
 			<FBNetwork>
 				<FB Name="SUBSCRIBE_BUTTON_GREEN" Type="iec61499::net::SUBSCRIBE_1" x="2800" y="700">
@@ -151,10 +149,9 @@
 				</DataConnections>
 			</FBNetwork>
 		</Resource>
+		<Attribute Name="Profile" Type="STRING" Value="HOLOBLOC"/>
+		<Attribute Name="Color" Type="STRING" Value="59,215,47"/>
 	</Device>
-	<Segment Name="Ethernet" Type="iec61499::system::Ethernet" x="2640" y="1440" dx1="2000">
-		<Attribute Name="Color" Type="STRING" Value="56,90,235"/>
-	</Segment>
 	<Mapping From="App_PUBLISH_SUBSCRIBE.BUTTON_BLUE" To="FORTE_PC_PUBLISH.EMB_RES_PUBLISH"/>
 	<Mapping From="App_PUBLISH_SUBSCRIBE.BUTTON_RED" To="FORTE_PC_PUBLISH.EMB_RES_PUBLISH"/>
 	<Mapping From="App_PUBLISH_SUBSCRIBE.BUTTON_YELLOW" To="FORTE_PC_PUBLISH.EMB_RES_PUBLISH"/>
@@ -163,6 +160,9 @@
 	<Mapping From="App_PUBLISH_SUBSCRIBE.LED_BLUE_5HZ" To="FORTE_PC_SUBSCRIBE.EMB_RES_SUBSCRIBE"/>
 	<Mapping From="App_PUBLISH_SUBSCRIBE.LED_GREEN_5HZ" To="FORTE_PC_SUBSCRIBE.EMB_RES_SUBSCRIBE"/>
 	<Mapping From="App_PUBLISH_SUBSCRIBE.BUTTON_GREEN" To="FORTE_PC_PUBLISH.EMB_RES_PUBLISH"/>
+	<Segment Name="Ethernet" Type="iec61499::system::Ethernet" x="2640" y="1440" dx1="2000">
+		<Attribute Name="Color" Type="STRING" Value="56,90,235"/>
+	</Segment>
 	<Link SegmentName="Ethernet" CommResource="FORTE_PC_PUBLISH" Comment="">
 	</Link>
 	<Link SegmentName="Ethernet" CommResource="FORTE_PC_SUBSCRIBE" Comment="">

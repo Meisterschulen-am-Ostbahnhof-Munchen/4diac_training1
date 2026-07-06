@@ -8,14 +8,14 @@
 		<Import declaration="eclipse4diac::core::TypeHash"/>
 	</CompilerInfo>
 	<SubAppInterfaceList>
-		<Plugs>
-			<AdapterDeclaration Name="OUT" Type="adapter::types::unidirectional::AUI" Comment="Selected Output"/>
-		</Plugs>
 		<Sockets>
 			<AdapterDeclaration Name="IN0" Type="adapter::types::unidirectional::AUI" Comment="Selectable input variable"/>
 			<AdapterDeclaration Name="IN1" Type="adapter::types::unidirectional::AUI" Comment="Selectable input variable"/>
 			<AdapterDeclaration Name="G" Type="adapter::types::unidirectional::AX" Comment="Selector"/>
 		</Sockets>
+		<Plugs>
+			<AdapterDeclaration Name="OUT" Type="adapter::types::unidirectional::AUI" Comment="Selected Output"/>
+		</Plugs>
 	</SubAppInterfaceList>
 	<SubAppNetwork>
 		<FB Name="IN_0" Type="adapter::conversion::unidirectional::AUI_UI_TO_UINT" x="-1900" y="600">
@@ -78,7 +78,5 @@
 			<Connection Source="IN0" Destination="IN_0.AUI_IN" dx1="646.67"/>
 		</AdapterConnections>
 	</SubAppNetwork>
-	<Service RightInterface="RESOURCE" LeftInterface="APPLICATION">
-	</Service>
 	<Attribute Name="eclipse4diac::core::TypeHash" Value="''"/>
 </SubAppType>

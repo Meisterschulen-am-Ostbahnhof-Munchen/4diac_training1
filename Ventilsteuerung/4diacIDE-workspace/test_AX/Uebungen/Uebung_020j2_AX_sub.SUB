@@ -11,13 +11,13 @@
 			<VarDeclaration Name="TQ1" Type="TIME"/>
 			<VarDeclaration Name="TQ2" Type="TIME"/>
 		</InputVars>
+		<Sockets>
+			<AdapterDeclaration Name="IN" Type="adapter::types::unidirectional::AX"/>
+		</Sockets>
 		<Plugs>
 			<AdapterDeclaration Name="Q1" Type="adapter::types::unidirectional::AX"/>
 			<AdapterDeclaration Name="Q2" Type="adapter::types::unidirectional::AX"/>
 		</Plugs>
-		<Sockets>
-			<AdapterDeclaration Name="IN" Type="adapter::types::unidirectional::AX"/>
-		</Sockets>
 	</SubAppInterfaceList>
 	<SubAppNetwork>
 		<FB Name="AX_TP_Q2" Type="adapter::events::unidirectional::timers::AX_TP" x="1200" y="1100">
