@@ -49,7 +49,8 @@ python .agents/skills/iec61499-creator/scripts/validate.py <path_to_xml_file>
 
 ### 4. ST Code, Datatypes & Conversions Guidelines
 When writing Structured Text (ST) code in Algorithms or choosing Datatypes/Conversions:
-- **Avoid Reserved Keywords**: Do not use reserved IEC 61131-3 / IEC 61499 keywords (e.g., control flow, standard types, time units) as variable, block, or event names. See [Keywords.md](references/Keywords.md) for the complete list.\n- **Type Compatibility**: Ensure data connections follow the rule "Target must be able to hold Source" (e.g. `SINT` -> `INT` is allowed, but `INT` -> `UINT` is not). See [Typkompatibilitaet.md](references/Typkompatibilitaet.md) for compatibility matrices.
+- **Avoid Reserved Keywords**: Do not use reserved IEC 61131-3 / IEC 61499 keywords (e.g., control flow, standard types, time units) as variable, block, or event names. See [Keywords.md](references/Keywords.md) for the complete list.
+- **Type Compatibility**: Ensure data connections follow the rule "Target must be able to hold Source" (e.g. `SINT` -> `INT` is allowed, but `INT` -> `UINT` is not). See [Typkompatibilitaet.md](references/Typkompatibilitaet.md) for compatibility matrices.
 - **Explicit Casting & Reinterpret Casts**: In ST or networks, use explicit functions (e.g., `[SOURCE]_TO_[TARGET]`). Note that converting bit-strings (like `DWORD`) directly to float/numeric types performs a `reinterpret_cast` of the raw bits. For mathematical float conversion from integer-valued DWORDs, use double casting: `UDINT_TO_REAL(DWORD_TO_UDINT(var))`.
 - **Precision Limits**: Use `LREAL` instead of `REAL` for signal values or values exceeding `16,777,216` to prevent precision loss.
 
