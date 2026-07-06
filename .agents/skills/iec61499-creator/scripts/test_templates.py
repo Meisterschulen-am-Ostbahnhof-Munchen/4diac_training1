@@ -8,8 +8,16 @@ def main():
     validate_script = os.path.join(script_dir, 'validate.py')
     
     valid_ext = {'.fbt', '.adp', '.sub', '.dtp', '.atp', '.fct', '.gcf'}
+    if not os.path.isdir(templates_dir):
+        print(f"Error: Templates directory does not exist: {templates_dir}")
+        sys.exit(1)
+        
     files = [f for f in os.listdir(templates_dir) if os.path.isfile(os.path.join(templates_dir, f)) and os.path.splitext(f)[1].lower() in valid_ext]
     
+    if not files:
+        print(f"Error: No templates found in {templates_dir}")
+        sys.exit(1)
+        
     all_success = True
     for file in files:
         full_path = os.path.join(templates_dir, file)
