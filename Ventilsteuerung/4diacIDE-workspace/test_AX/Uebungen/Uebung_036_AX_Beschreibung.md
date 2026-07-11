@@ -25,5 +25,5 @@ Die Logik soll mit dem Funktionsbaustein [sequence_ET_04_AX.fbt](../../.lib/logi
 4. Verbinden Sie die Taster `I2` und `I3` mit den Weiterschalt-Ereignissen (`S1_S2`, `S2_S3`).
 5. Verbinden Sie den Reset-Taster `I4` mit dem Eingang `RESET` des Sequenzers.
 6. Schalten Sie die vier Ausgänge `DO_S1` bis `DO_S4` auf die digitalen Ausgänge `Output_Q1` bis `Output_Q4` der Ventilsteuerung.
-7. Zur Visualisierung des aktuellen Schrittes soll die Zustandsnummer `STATE_NR` in einen `UINT` konvertiert und an den ISOBUS Virtual Terminal-Ausgang `OutputNumber_N1` gesendet werden.
+7. Zur Visualisierung des aktuellen Schrittes soll die Zustandsnummer `STATE_NR` über den Baustein `AS_TO_AUDI` in einen `UDINT`-Wert (AUDI) konvertiert und an den ISOBUS Virtual Terminal-Ausgang `OutputNumber_N1` gesendet werden.
 8. Testen Sie das Verhalten der Ablaufsteuerung in der Simulation (FORTE) oder auf der realen Hardware.
