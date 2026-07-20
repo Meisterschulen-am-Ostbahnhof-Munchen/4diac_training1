@@ -24,7 +24,7 @@
 				<Attribute Name="Visible" Value="false"/>
 			</Parameter>
 		</FB>
-		<FB Name="Softkey_IXA" Type="isobus::UT::io::Softkey::Softkey_IX" x="-5000" y="-1000">
+		<FB Name="Softkey_IX" Type="isobus::UT::io::Softkey::Softkey_IX" x="-5000" y="-1000">
 			<Parameter Name="QI" Value="TRUE"/>
 		</FB>
 		<SubApp Name="GreenWhiteBackground1_AX" Type="MyLib::sys::GreenWhiteBackground1C" x="-1300" y="800">
@@ -32,12 +32,12 @@
 		<FB Name="E_SPLIT_2" Type="iec61499::events::E_SPLIT_2" x="-3500" y="300">
 		</FB>
 		<EventConnections>
-			<Connection Source="Softkey_IXA.IND" Destination="E_SPLIT_2.EI" dx1="353.33"/>
+			<Connection Source="Softkey_IX.IND" Destination="E_SPLIT_2.EI" dx1="353.33"/>
 			<Connection Source="E_SPLIT_2.EO1" Destination="logiBUS_QXA.REQ" dx1="646.67"/>
 			<Connection Source="E_SPLIT_2.EO2" Destination="GreenWhiteBackground1_AX.EO" dx1="646.67"/>
 		</EventConnections>
 		<DataConnections>
-			<Connection Source="u16ObjId" Destination="Softkey_IXA.u16ObjId" dx1="1952.94">
+			<Connection Source="u16ObjId" Destination="Softkey_IX.u16ObjId" dx1="1952.94">
 				<Attribute Name="Visible" Value="false"/>
 			</Connection>
 			<Connection Source="Output" Destination="logiBUS_QXA.Output" dx1="4113.33">
@@ -46,8 +46,8 @@
 			<Connection Source="u16ObjId" Destination="GreenWhiteBackground1_AX.u16ObjId" dx1="3126.67">
 				<Attribute Name="Visible" Value="false"/>
 			</Connection>
-			<Connection Source="Softkey_IXA.IN" Destination="GreenWhiteBackground1_AX.DI" dx1="120"/>
-			<Connection Source="Softkey_IXA.IN" Destination="logiBUS_QXA.OUT" dx1="1453.33"/>
+			<Connection Source="Softkey_IX.IN" Destination="GreenWhiteBackground1_AX.DI" dx1="120"/>
+			<Connection Source="Softkey_IX.IN" Destination="logiBUS_QXA.OUT" dx1="1453.33"/>
 		</DataConnections>
 	</SubAppNetwork>
 </SubAppType>

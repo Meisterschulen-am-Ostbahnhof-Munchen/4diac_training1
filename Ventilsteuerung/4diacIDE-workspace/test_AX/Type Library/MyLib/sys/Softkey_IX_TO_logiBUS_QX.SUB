@@ -22,15 +22,15 @@
 				<Attribute Name="Visible" Value="false"/>
 			</Parameter>
 		</FB>
-		<FB Name="Softkey_IXA" Type="isobus::UT::io::Softkey::Softkey_IX" x="-4600" y="-900">
+		<FB Name="Softkey_IX" Type="isobus::UT::io::Softkey::Softkey_IX" x="-4600" y="-900">
 			<Parameter Name="QI" Value="TRUE"/>
 		</FB>
 		<EventConnections>
-			<Connection Source="Softkey_IXA.IND" Destination="logiBUS_QXA.REQ" dx1="900"/>
+			<Connection Source="Softkey_IX.IND" Destination="logiBUS_QXA.REQ" dx1="900"/>
 		</EventConnections>
 		<DataConnections>
-			<Connection Source="Softkey_IXA.IN" Destination="logiBUS_QXA.OUT" dx1="900"/>
-			<Connection Source="u16ObjId" Destination="Softkey_IXA.u16ObjId" dx1="1952.94">
+			<Connection Source="Softkey_IX.IN" Destination="logiBUS_QXA.OUT" dx1="900"/>
+			<Connection Source="u16ObjId" Destination="Softkey_IX.u16ObjId" dx1="1952.94">
 				<Attribute Name="Visible" Value="false"/>
 			</Connection>
 			<Connection Source="Output" Destination="logiBUS_QXA.Output" dx1="4113.33">
