@@ -16,7 +16,7 @@
 		</InputVars>
 	</SubAppInterfaceList>
 	<SubAppNetwork>
-		<FB Name="logiBUS_QXA" Type="logiBUS::io::DQ::logiBUS_QX" x="-2000" y="-700">
+		<FB Name="logiBUS_QX" Type="logiBUS::io::DQ::logiBUS_QX" x="-2000" y="-700">
 			<Parameter Name="QI" Value="TRUE"/>
 			<Parameter Name="PARAMS" Value="">
 				<Attribute Name="Visible" Value="false"/>
@@ -26,14 +26,14 @@
 			<Parameter Name="QI" Value="TRUE"/>
 		</FB>
 		<EventConnections>
-			<Connection Source="Button_IX.IND" Destination="logiBUS_QXA.REQ" dx1="900"/>
+			<Connection Source="Button_IX.IND" Destination="logiBUS_QX.REQ" dx1="900"/>
 		</EventConnections>
 		<DataConnections>
-			<Connection Source="Button_IX.IN" Destination="logiBUS_QXA.OUT" dx1="900"/>
+			<Connection Source="Button_IX.IN" Destination="logiBUS_QX.OUT" dx1="900"/>
 			<Connection Source="u16ObjId" Destination="Button_IX.u16ObjId" dx1="1952.94">
 				<Attribute Name="Visible" Value="false"/>
 			</Connection>
-			<Connection Source="Output" Destination="logiBUS_QXA.Output" dx1="4113.33">
+			<Connection Source="Output" Destination="logiBUS_QX.Output" dx1="4113.33">
 				<Attribute Name="Visible" Value="false"/>
 			</Connection>
 		</DataConnections>

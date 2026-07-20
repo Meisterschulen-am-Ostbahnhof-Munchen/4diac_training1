@@ -90,13 +90,16 @@ def check_file(path, plain_to_adapter, adapter_to_plain):
                     continue
 
                 type_base = type_.rsplit("::", 1)[-1]
-                name_base = instance_base_name(name)
 
                 expected_other = None
-                if type_base in plain_to_adapter and name_base == plain_to_adapter[type_base]:
-                    expected_other = f"plain variant '{type_base}'"
-                elif type_base in adapter_to_plain and name_base == adapter_to_plain[type_base]:
-                    expected_other = f"adapter variant '{type_base}'"
+                if type_base in plain_to_adapter:
+                    candidate = plain_to_adapter[type_base]
+                    if name_indicates(name, candidate):
+                        expected_other = f"adapter variant '{candidate}'"
+                elif type_base in adapter_to_plain:
+                    candidate = adapter_to_plain[type_base]
+                    if name_indicates(name, candidate):
+                        expected_other = f"plain variant '{candidate}'"
 
                 if expected_other:
                     issues.append((lineno, name, type_, expected_other))
