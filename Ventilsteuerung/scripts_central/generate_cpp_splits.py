@@ -1,8 +1,13 @@
 import os
 import xml.etree.ElementTree as ET
 
-# Paths
-base_types_dir = "Ventilsteuerung/4diacIDE-workspace/.lib/adapter-3.0.0/typelib/types/unidirectional"
+# Paths (base_types_dir is relative to this script's location, so it works regardless of CWD)
+SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
+VENTILSTEUERUNG_DIR = os.path.dirname(SCRIPT_DIR)
+base_types_dir = os.path.join(VENTILSTEUERUNG_DIR, "4diacIDE-workspace", ".lib", "adapter-3.0.0", "typelib", "types", "unidirectional")
+# NOTE: these two point into the separate 4diac-forte/logiBUS-modules/adapter repo (C:\git\ms\4diac-forte),
+# not into this repo. Still CWD-relative -- run this script with that repo's "logiBUS-modules" as CWD,
+# or update to an absolute path.
 src_out_dir = "adapter/src/adapter/events/unidirectional"
 inc_out_dir = "adapter/include/forte/adapter/events/unidirectional"
 

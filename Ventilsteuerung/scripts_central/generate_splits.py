@@ -1,8 +1,10 @@
 import os
 
-# Base paths
-base_types_dir = "Ventilsteuerung/4diacIDE-workspace/.lib/adapter-3.0.0/typelib/types/unidirectional"
-base_events_dir = "Ventilsteuerung/4diacIDE-workspace/.lib/adapter-3.0.0/typelib/events/unidirectional"
+# Base paths (relative to this script's location, so it works regardless of CWD)
+SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
+VENTILSTEUERUNG_DIR = os.path.dirname(SCRIPT_DIR)
+base_types_dir = os.path.join(VENTILSTEUERUNG_DIR, "4diacIDE-workspace", ".lib", "adapter-3.0.0", "typelib", "types", "unidirectional")
+base_events_dir = os.path.join(VENTILSTEUERUNG_DIR, "4diacIDE-workspace", ".lib", "adapter-3.0.0", "typelib", "events", "unidirectional")
 
 # Ensure base events dir exists
 if not os.path.exists(base_events_dir):
