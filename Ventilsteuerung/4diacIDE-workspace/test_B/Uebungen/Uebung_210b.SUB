@@ -7,7 +7,7 @@
 	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2026-04-20" Remarks="initial API and implementation (IEC 61131-3 version)">
 	</VersionInfo>
 	<CompilerInfo packageName="Uebungen">
-		<Import declaration="Uebungen::const::UT::DefaultPool_Numeric::OutputNumber_N3"/>
+		<Import declaration="Uebungen::const::UT::DefaultPool_Numeric::OutputNumber_N3_N"/>
 		<Import declaration="logiBUS::io::DI::logiBUS_DI::Input_I1"/>
 		<Import declaration="logiBUS::io::DI::logiBUS_DI::Input_I2"/>
 		<Import declaration="logiBUS::io::DQ::logiBUS_DO::Output_Q1"/>
@@ -32,7 +32,7 @@
 		</FB>
 		<Comment Comment="F_INT_TO_UDINT ist großer Quatsch ... keine Negativen Zahlen möglich&#10;F_INT_TO_REAL kann man weglassen.&#10;jetzt geht auch negativ. z.B. PV auf INT#-5&#10;&#10;" x="0" y="1800" width="2200" height="500"/>
 		<FB Name="Q_NumericValue_PHYS" Type="isobus::UT::Q::Q_NumericValue_PHYS" x="2700" y="1000">
-			<Parameter Name="stObj" Value="OutputNumber_N3"/>
+			<Parameter Name="stObj" Value="OutputNumber_N3_N"/>
 		</FB>
 		<Comment Comment="hier gegebenenfalls einen E_D_FF einbauen, damit die Events reduziert werden. " x="1000" y="-500" width="1000" height="500"/>
 		<Comment Comment="INT kann ohne Konvertierung auf REAL geschlossen werden." x="2400" y="2100" width="1300" height="400"/>

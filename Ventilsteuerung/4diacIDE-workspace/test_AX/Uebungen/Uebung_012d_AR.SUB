@@ -6,27 +6,28 @@
 	</VersionInfo>
 	<CompilerInfo packageName="Uebungen">
 		<Import declaration="Uebungen::const::NVS::NVS_Keys::KEY_I1_STORE"/>
-		<Import declaration="Uebungen::const::UT::DefaultPool_Numeric::InputNumber_I3"/>
-		<Import declaration="Uebungen::const::UT::DefaultPool_Numeric::OutputNumber_N3"/>
+		<Import declaration="Uebungen::const::UT::DefaultPool_Numeric::InputNumber_I3_N"/>
+		<Import declaration="Uebungen::const::UT::DefaultPool_Numeric::OutputNumber_N3_N"/>
 	</CompilerInfo>
 	<SubAppInterfaceList>
 	</SubAppInterfaceList>
 	<SubAppNetwork>
-		<FB Name="InputNumber_I3" Type="isobus::UT::io::NumericValue::NumericValue_PHYSA" x="-4800" y="700">
+		<FB Name="InputNumber_I3_N" Type="isobus::UT::io::NumericValue::NumericValue_PHYSA" x="-4800" y="700">
 			<Parameter Name="QI" Value="TRUE"/>
-			<Parameter Name="stObj" Value="InputNumber_I3"/>
+			<Parameter Name="stObj" Value="InputNumber_I3_N"/>
 		</FB>
 		<FB Name="NVS_AR" Type="logiBUS::storage::esp32_nvs::NVS_AR" x="-1000" y="800">
 			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="SETM" Value="FALSE"/>
 			<Parameter Name="KEY" Value="KEY_I1_STORE"/>
 			<Parameter Name="DEFAULT_VALUE" Value="REAL#0.0"/>
 		</FB>
 		<FB Name="Q_NumericValue_PHYSA" Type="isobus::UT::Q::Q_NumericValue_PHYSA" x="1700" y="800">
-			<Parameter Name="stObj" Value="OutputNumber_N3"/>
+			<Parameter Name="stObj" Value="OutputNumber_N3_N"/>
 		</FB>
 		<AdapterConnections>
-			<Connection Source="InputNumber_I3.rPhys" Destination="NVS_AR.AR_IN" dx1="1660"/>
 			<Connection Source="NVS_AR.AR_OUT" Destination="Q_NumericValue_PHYSA.rPhys" dx1="820"/>
+			<Connection Source="InputNumber_I3_N.rPhys" Destination="NVS_AR.AR_IN" dx1="1333.33"/>
 		</AdapterConnections>
 	</SubAppNetwork>
 </SubAppType>
