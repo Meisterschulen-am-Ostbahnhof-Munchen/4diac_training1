@@ -259,8 +259,15 @@ def _format_real(value):
         s += '0'
     return s
 
+NUMERIC_NAME_SUFFIX = "_N"
+
 def writeNumericGCFfile(data, filepaths):
-    """Write a <name>_Numeric.gcf with NumericObjectPool_S constants for each InputNumber/OutputNumber."""
+    """Write a <name>_Numeric.gcf with NumericObjectPool_S constants for each InputNumber/OutputNumber.
+
+    Each constant name gets NUMERIC_NAME_SUFFIX appended, since the plain name is
+    already used by the UINT constant of the same name in the non-numeric .gcf
+    (same package) - without the suffix, 4diac's name resolution collides.
+    """
     newfilepath = os.path.join(filepaths[1], filepaths[2] + '_Numeric.gcf')
     gcf_name    = filepaths[2] + '_Numeric'
     package     = filepaths[3]
@@ -289,7 +296,7 @@ def writeNumericGCFfile(data, filepaths):
         ET.SubElement(
             global_constants,
             "VarDeclaration",
-            Name=name,
+            Name=name + NUMERIC_NAME_SUFFIX,
             Type=struct_type,
             InitialValue=initial_value,
         )
