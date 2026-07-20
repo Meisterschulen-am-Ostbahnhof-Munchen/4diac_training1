@@ -10,6 +10,6 @@ echo "Starting GcfScript processing..."
 ./RunSkript_Workspace_Horse.sh
 ./RunSkript_Workspace_Tester.sh
 ./RunSkript_Workspace_Joystick.sh
-./RunSkript_Workspace_TC-SC.sh"
+./RunSkript_Workspace_TC_SC.sh"
 
 echo "Processing finished."
