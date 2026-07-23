@@ -6,7 +6,7 @@
 	</VersionInfo>
 	<CompilerInfo packageName="Uebungen">
 		<Import declaration="Uebungen::const::UT::DefaultPool::InputNumber_I1"/>
-		<Import declaration="Uebungen::const::UT::DefaultPool_Numeric::OutputNumber_N3"/>
+		<Import declaration="Uebungen::const::UT::DefaultPool_Numeric::OutputNumber_N3_N"/>
 	</CompilerInfo>
 	<SubAppInterfaceList>
 	</SubAppInterfaceList>
@@ -18,11 +18,11 @@
 		<FB Name="F_DWORD_TO_REAL" Type="iec61131::conversion::F_DWORD_TO_REAL" x="-4900" y="700">
 		</FB>
 		<FB Name="Q_NumericValue_PHYS" Type="isobus::UT::Q::Q_NumericValue_PHYS" x="-1600" y="500">
-			<Parameter Name="stObj" Value="OutputNumber_N3"/>
+			<Parameter Name="stObj" Value="OutputNumber_N3_N"/>
 		</FB>
 		<Comment Comment=" Beispiel: I1-Eingabe 10 → F_RAW_TO_PHYS(I1) → 10.0 → Q_NumericValue_PHYS(N3) → N3 zeigt 10.00.&#10;&#10;die beiden Namespaces sind INKOMPATIBEL !!!&#10;" x="-6300" y="1800" width="5300" height="500"/>
 		<Comment Comment="Uebungen::const::UT::DefaultPool::InputNumber_I1" x="-7400" y="1500" width="2400" height="200"/>
-		<Comment Comment="Uebungen::const::UT::DefaultPool_Numeric::OutputNumber_N3" x="-2600" y="1500" width="3200" height="200"/>
+		<Comment Comment="Uebungen::const::UT::DefaultPool_Numeric::OutputNumber_N3_N" x="-2600" y="1500" width="3200" height="200"/>
 		<EventConnections>
 			<Connection Source="InputNumber_I1.IND" Destination="F_DWORD_TO_REAL.REQ" dx1="486.67"/>
 			<Connection Source="F_DWORD_TO_REAL.CNF" Destination="Q_NumericValue_PHYS.REQ" dx1="1953.33"/>

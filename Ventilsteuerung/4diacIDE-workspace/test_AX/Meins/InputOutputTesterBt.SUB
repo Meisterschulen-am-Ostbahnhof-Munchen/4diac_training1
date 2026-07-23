@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SubAppType Name="InputOutputTesterBt" Comment="Tester">
+	<Identification Standard="61499-2" Description="Copyright (c) 2023 Meisterschulen am Ostbahnhof  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0">
+	</Identification>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2023-10-23" Remarks="initial API and implementation and/or initial documentation">
+	</VersionInfo>
+	<CompilerInfo packageName="Meins">
+		<Import declaration="Uebungen::const::UT::Tester::DefaultPool_Tester::Button_I01"/>
+		<Import declaration="Uebungen::const::UT::Tester::DefaultPool_Tester::Button_I02"/>
+		<Import declaration="Uebungen::const::UT::Tester::DefaultPool_Tester::Button_I03"/>
+		<Import declaration="Uebungen::const::UT::Tester::DefaultPool_Tester::Button_I04"/>
+		<Import declaration="Uebungen::const::UT::Tester::DefaultPool_Tester::Button_I05"/>
+		<Import declaration="Uebungen::const::UT::Tester::DefaultPool_Tester::Button_I06"/>
+		<Import declaration="Uebungen::const::UT::Tester::DefaultPool_Tester::Button_I07"/>
+		<Import declaration="Uebungen::const::UT::Tester::DefaultPool_Tester::Button_I08"/>
+		<Import declaration="Uebungen::const::UT::Tester::DefaultPool_Tester::Button_Q01"/>
+		<Import declaration="Uebungen::const::UT::Tester::DefaultPool_Tester::Button_Q02"/>
+		<Import declaration="Uebungen::const::UT::Tester::DefaultPool_Tester::Button_Q03"/>
+		<Import declaration="Uebungen::const::UT::Tester::DefaultPool_Tester::Button_Q04"/>
+		<Import declaration="Uebungen::const::UT::Tester::DefaultPool_Tester::Button_Q05"/>
+		<Import declaration="Uebungen::const::UT::Tester::DefaultPool_Tester::Button_Q06"/>
+		<Import declaration="Uebungen::const::UT::Tester::DefaultPool_Tester::Button_Q07"/>
+		<Import declaration="Uebungen::const::UT::Tester::DefaultPool_Tester::Button_Q08"/>
+		<Import declaration="Uebungen::const::UT::Tester::DefaultPool_Tester::Button_Q09"/>
+		<Import declaration="Uebungen::const::UT::Tester::DefaultPool_Tester::Button_Q10"/>
+		<Import declaration="Uebungen::const::UT::Tester::DefaultPool_Tester::Button_Q11"/>
+		<Import declaration="Uebungen::const::UT::Tester::DefaultPool_Tester::Button_Q12"/>
+		<Import declaration="logiBUS::io::DQ::logiBUS_DO"/>
+		<Import declaration="logiBUS::io::DI::logiBUS_DI"/>
+	</CompilerInfo>
+	<SubAppInterfaceList>
+	</SubAppInterfaceList>
+	<SubAppNetwork>
+		<SubApp Name="Input_I1" Type="MyLib::sys::logiBUS_IXA_BG" x="-1500" y="-700">
+			<Parameter Name="u16ObjId" Value="Button_I01"/>
+			<Parameter Name="Input" Value="logiBUS_DI::Input_I1"/>
+		</SubApp>
+		<SubApp Name="Input_I2" Type="MyLib::sys::logiBUS_IXA_BG" x="-1500" y="-200">
+			<Parameter Name="u16ObjId" Value="Button_I02"/>
+			<Parameter Name="Input" Value="logiBUS_DI::Input_I2"/>
+		</SubApp>
+		<SubApp Name="Input_I3" Type="MyLib::sys::logiBUS_IXA_BG" x="-1500" y="300">
+			<Parameter Name="u16ObjId" Value="Button_I03"/>
+			<Parameter Name="Input" Value="logiBUS_DI::Input_I3"/>
+		</SubApp>
+		<SubApp Name="Input_I4" Type="MyLib::sys::logiBUS_IXA_BG" x="-1500" y="800">
+			<Parameter Name="u16ObjId" Value="Button_I04"/>
+			<Parameter Name="Input" Value="logiBUS_DI::Input_I4"/>
+		</SubApp>
+		<SubApp Name="Input_I5" Type="MyLib::sys::logiBUS_IXA_BG" x="-1500" y="1300">
+			<Parameter Name="u16ObjId" Value="Button_I05"/>
+			<Parameter Name="Input" Value="logiBUS_DI::Input_I5"/>
+		</SubApp>
+		<SubApp Name="Input_I6" Type="MyLib::sys::logiBUS_IXA_BG" x="-1500" y="1800">
+			<Parameter Name="u16ObjId" Value="Button_I06"/>
+			<Parameter Name="Input" Value="logiBUS_DI::Input_I6"/>
+		</SubApp>
+		<SubApp Name="Input_I7" Type="MyLib::sys::logiBUS_IXA_BG" x="-1500" y="2300">
+			<Parameter Name="u16ObjId" Value="Button_I07"/>
+			<Parameter Name="Input" Value="logiBUS_DI::Input_I7"/>
+		</SubApp>
+		<SubApp Name="Input_I8" Type="MyLib::sys::logiBUS_IXA_BG" x="-1500" y="2800">
+			<Parameter Name="u16ObjId" Value="Button_I08"/>
+			<Parameter Name="Input" Value="logiBUS_DI::Input_I8"/>
+		</SubApp>
+		<SubApp Name="Output_Q1" Type="MyLib::sys::Button_IXA_TO_logiBUS_QXA_BG" x="-4600" y="-700">
+			<Parameter Name="u16ObjId" Value="Button_Q01"/>
+			<Parameter Name="Output" Value="logiBUS_DO::Output_Q1"/>
+		</SubApp>
+		<SubApp Name="Output_Q2" Type="MyLib::sys::Button_IXA_TO_logiBUS_QXA_BG" x="-4600" y="-200">
+			<Parameter Name="u16ObjId" Value="Button_Q02"/>
+			<Parameter Name="Output" Value="logiBUS_DO::Output_Q2"/>
+		</SubApp>
+		<SubApp Name="Output_Q3" Type="MyLib::sys::Button_IXA_TO_logiBUS_QXA_BG" x="-4600" y="300">
+			<Parameter Name="u16ObjId" Value="Button_Q03"/>
+			<Parameter Name="Output" Value="logiBUS_DO::Output_Q3"/>
+		</SubApp>
+		<SubApp Name="Output_Q4" Type="MyLib::sys::Button_IXA_TO_logiBUS_QXA_BG" x="-4600" y="800">
+			<Parameter Name="u16ObjId" Value="Button_Q04"/>
+			<Parameter Name="Output" Value="logiBUS_DO::Output_Q4"/>
+		</SubApp>
+		<SubApp Name="Output_Q5" Type="MyLib::sys::Button_IXA_TO_logiBUS_QXA_BG" x="-4600" y="1300">
+			<Parameter Name="u16ObjId" Value="Button_Q05"/>
+			<Parameter Name="Output" Value="logiBUS_DO::Output_Q5"/>
+		</SubApp>
+		<SubApp Name="Output_Q6" Type="MyLib::sys::Button_IXA_TO_logiBUS_QXA_BG" x="-4600" y="1800">
+			<Parameter Name="u16ObjId" Value="Button_Q06"/>
+			<Parameter Name="Output" Value="logiBUS_DO::Output_Q6"/>
+		</SubApp>
+		<SubApp Name="Output_Q7" Type="MyLib::sys::Button_IXA_TO_logiBUS_QXA_BG" x="-4600" y="2300">
+			<Parameter Name="u16ObjId" Value="Button_Q07"/>
+			<Parameter Name="Output" Value="logiBUS_DO::Output_Q7"/>
+		</SubApp>
+		<SubApp Name="Output_Q8" Type="MyLib::sys::Button_IXA_TO_logiBUS_QXA_BG" x="-4600" y="2800">
+			<Parameter Name="u16ObjId" Value="Button_Q08"/>
+			<Parameter Name="Output" Value="logiBUS_DO::Output_Q8"/>
+		</SubApp>
+		<SubApp Name="Output_Q9" Type="MyLib::sys::Button_IXA_TO_logiBUS_QXA_BG" x="-4600" y="3300">
+			<Parameter Name="u16ObjId" Value="Button_Q09"/>
+			<Parameter Name="Output" Value="logiBUS_DO::Output_Q9"/>
+		</SubApp>
+		<SubApp Name="Output_Q10" Type="MyLib::sys::Button_IXA_TO_logiBUS_QXA_BG" x="-4600" y="3800">
+			<Parameter Name="u16ObjId" Value="Button_Q10"/>
+			<Parameter Name="Output" Value="logiBUS_DO::Output_Q10"/>
+		</SubApp>
+		<SubApp Name="Output_Q11" Type="MyLib::sys::Button_IXA_TO_logiBUS_QXA_BG" x="-4600" y="4300">
+			<Parameter Name="u16ObjId" Value="Button_Q11"/>
+			<Parameter Name="Output" Value="logiBUS_DO::Output_Q11"/>
+		</SubApp>
+		<SubApp Name="Output_Q12" Type="MyLib::sys::Button_IXA_TO_logiBUS_QXA_BG" x="-4600" y="4800">
+			<Parameter Name="u16ObjId" Value="Button_Q12"/>
+			<Parameter Name="Output" Value="logiBUS_DO::Output_Q12"/>
+		</SubApp>
+	</SubAppNetwork>
+</SubAppType>

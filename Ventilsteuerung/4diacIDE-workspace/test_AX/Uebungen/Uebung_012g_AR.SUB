@@ -6,26 +6,29 @@
 	</VersionInfo>
 	<CompilerInfo packageName="Uebungen">
 		<Import declaration="Uebungen::const::NVS::NVS_Keys::KEY_I1_STORE"/>
-		<Import declaration="Uebungen::const::UT::DefaultPool_Numeric::InputNumber_I3"/>
+		<Import declaration="Uebungen::const::NVS::NVS_Keys::SECTION_I1_STORE"/>
+		<Import declaration="Uebungen::const::UT::DefaultPool_Numeric::InputNumber_I3_N"/>
 	</CompilerInfo>
 	<SubAppInterfaceList>
 	</SubAppInterfaceList>
 	<SubAppNetwork>
-		<FB Name="InputNumber_I3" Type="isobus::UT::io::NumericValue::NumericValue_PHYSA" x="-4900" y="700">
+		<FB Name="InputNumber_I3_N" Type="isobus::UT::io::NumericValue::NumericValue_PHYSA" x="-4900" y="700">
 			<Parameter Name="QI" Value="TRUE"/>
-			<Parameter Name="stObj" Value="InputNumber_I3"/>
+			<Parameter Name="stObj" Value="InputNumber_I3_N"/>
 		</FB>
 		<FB Name="INI_AR" Type="eclipse4diac::storage::INI_AR" x="-1200" y="700">
 			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="SETM" Value="FALSE"/>
+			<Parameter Name="SECTION" Value="SECTION_I1_STORE"/>
 			<Parameter Name="KEY" Value="KEY_I1_STORE"/>
 			<Parameter Name="DEFAULT_VALUE" Value="REAL#0.0"/>
 		</FB>
-		<FB Name="Q_NumericValue" Type="isobus::UT::Q::Q_NumericValue_PHYSA" x="1600" y="800">
-			<Parameter Name="stObj" Value="InputNumber_I3"/>
+		<FB Name="Q_NumericValue_PHYSA" Type="isobus::UT::Q::Q_NumericValue_PHYSA" x="1600" y="800">
+			<Parameter Name="stObj" Value="InputNumber_I3_N"/>
 		</FB>
 		<AdapterConnections>
-			<Connection Source="InputNumber_I3.rPhys" Destination="INI_AR.AR_IN"/>
-			<Connection Source="INI_AR.AR_OUT" Destination="Q_NumericValue.rPhys" dx1="733.33"/>
+			<Connection Source="INI_AR.AR_OUT" Destination="Q_NumericValue_PHYSA.rPhys" dx1="733.33"/>
+			<Connection Source="InputNumber_I3_N.rPhys" Destination="INI_AR.AR_IN" dx1="1286.67"/>
 		</AdapterConnections>
 	</SubAppNetwork>
 </SubAppType>

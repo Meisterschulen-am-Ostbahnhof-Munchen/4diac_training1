@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SubAppType Name="GreenWhiteBackground3_AXC" Comment="Hintergrundfarbe (TRUE -&gt; Grün, FALSE -&gt; Weiß) für 3 Objekte (AX-Adapter) (Kompakt)">
+	<Identification Standard="61499-2">
+	</Identification>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="franz" Date="2026-07-21">
+	</VersionInfo>
+	<CompilerInfo packageName="MyLib::sys">
+	</CompilerInfo>
+	<SubAppInterfaceList>
+		<InputVars>
+			<VarDeclaration Name="u16ObjId" Type="UINT"/>
+			<VarDeclaration Name="u16ObjIdA" Type="UINT"/>
+		</InputVars>
+		<Sockets>
+			<AdapterDeclaration Name="DI1" Type="adapter::types::unidirectional::AX"/>
+		</Sockets>
+	</SubAppInterfaceList>
+	<SubAppNetwork>
+		<SubApp Name="GreenWhiteBackground3" Type="MyLib::sys::GreenWhiteBackground3_AX" x="1700" y="-800">
+		</SubApp>
+		<DataConnections>
+			<Connection Source="u16ObjId" Destination="GreenWhiteBackground3.u16ObjId" dx1="700"/>
+			<Connection Source="u16ObjIdA" Destination="GreenWhiteBackground3.u16ObjIdA" dx1="700"/>
+		</DataConnections>
+		<AdapterConnections>
+			<Connection Source="DI1" Destination="GreenWhiteBackground3.DI1" dx1="680"/>
+		</AdapterConnections>
+	</SubAppNetwork>
+</SubAppType>

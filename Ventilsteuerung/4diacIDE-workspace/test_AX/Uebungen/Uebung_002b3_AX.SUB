@@ -25,21 +25,21 @@
 			<Parameter Name="QI" Value="TRUE"/>
 			<Parameter Name="Input" Value="Input_I2"/>
 		</FB>
-		<FB Name="AND_2_BOOL" Type="adapter::booleanOperators::AX_AND_2" x="-2100" y="300">
+		<FB Name="AND_BOOL_2" Type="adapter::booleanOperators::AX_AND_2" x="-2100" y="300">
 		</FB>
 		<FB Name="DigitalInput_I3" Type="logiBUS::io::DI::logiBUS_IXA" x="-4500" y="1400">
 			<Parameter Name="QI" Value="TRUE"/>
 			<Parameter Name="Input" Value="Input_I3"/>
 		</FB>
-		<FB Name="OR_2_BOOL" Type="adapter::booleanOperators::AX_OR_2" x="-400" y="1200">
+		<FB Name="OR_BOOL_2" Type="adapter::booleanOperators::AX_OR_2" x="-400" y="1200">
 		</FB>
 		<Comment Comment="kein F_MOVE mehr nötig. " x="-300" y="800" width="1300" height="200"/>
 		<AdapterConnections>
-			<Connection Source="OR_2_BOOL.OUT" Destination="DigitalOutput_Q1.OUT" dx1="373.33"/>
-			<Connection Source="DigitalInput_I3.IN" Destination="OR_2_BOOL.IN2" dx1="2926.67"/>
-			<Connection Source="AND_2_BOOL.OUT" Destination="OR_2_BOOL.IN1" dx1="680"/>
-			<Connection Source="DigitalInput_I2.IN" Destination="AND_2_BOOL.IN2" dx1="940"/>
-			<Connection Source="DigitalInput_I1.IN" Destination="AND_2_BOOL.IN1" dx1="900"/>
+			<Connection Source="OR_BOOL_2.OUT" Destination="DigitalOutput_Q1.OUT" dx1="373.33"/>
+			<Connection Source="DigitalInput_I3.IN" Destination="OR_BOOL_2.IN2" dx1="2926.67"/>
+			<Connection Source="AND_BOOL_2.OUT" Destination="OR_BOOL_2.IN1" dx1="680"/>
+			<Connection Source="DigitalInput_I2.IN" Destination="AND_BOOL_2.IN2" dx1="940"/>
+			<Connection Source="DigitalInput_I1.IN" Destination="AND_BOOL_2.IN1" dx1="900"/>
 		</AdapterConnections>
 	</SubAppNetwork>
 </SubAppType>

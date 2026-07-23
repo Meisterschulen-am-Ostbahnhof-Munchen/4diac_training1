@@ -6,18 +6,18 @@
 #define ISO_VERSION_LABEL             "       "
 #define MASK_WIDTH                          480
 #define MASK_HEIGHT                         480
-#define WorkingSet_0                          0
-#define DataMask_1000                      1000
+#define WorkingSet                            0
+#define DataMask_Main                      1000
 #define Container_3000                     3000
 #define Container_3001                     3001
 #define Container_3002                     3002
 #define Container_3003                     3003
 #define OutputString_WS                   11500
-#define DM_main_20000                     20000
-#define I1_20001                          20001
-#define I2_20002                          20002
-#define I3_20003                          20003
-#define I4_20004                          20004
+#define DM_main                           20000
+#define I1                                20001
+#define I2                                20002
+#define I3                                20003
+#define I4                                20004
 #define FontAttributes_WS                 23500
 #define AuxInput2_32000                   32000
 #define AuxInput2_32001                   32001

@@ -17,22 +17,22 @@
 		</Sockets>
 	</InterfaceList>
 	<FBNetwork>
-		<FB Name="OR_2_BOOL" Type="iec61131::booleanOperators::OR_2_BOOL" x="-300" y="1600">
+		<FB Name="OR_BOOL_2" Type="iec61131::booleanOperators::OR_BOOL_2" x="-300" y="1600">
 		</FB>
 		<FB Name="E_D_FF" Type="iec61499::events::E_D_FF" x="1000" y="1600">
 		</FB>
 		<EventConnections>
 			<Connection Source="IN.E1" Destination="OUT.E1"/>
-			<Connection Source="BY_IN.E1" Destination="OR_2_BOOL.REQ" dx1="460"/>
-			<Connection Source="IN.E1" Destination="OR_2_BOOL.REQ" dx1="460"/>
-			<Connection Source="OR_2_BOOL.CNF" Destination="E_D_FF.CLK" dx1="353.33"/>
+			<Connection Source="BY_IN.E1" Destination="OR_BOOL_2.REQ" dx1="460"/>
+			<Connection Source="IN.E1" Destination="OR_BOOL_2.REQ" dx1="460"/>
+			<Connection Source="OR_BOOL_2.CNF" Destination="E_D_FF.CLK" dx1="353.33"/>
 			<Connection Source="E_D_FF.EO" Destination="BY_OUT.E1"/>
 		</EventConnections>
 		<DataConnections>
 			<Connection Source="IN.D1" Destination="OUT.D1"/>
-			<Connection Source="BY_IN.D1" Destination="OR_2_BOOL.IN1"/>
-			<Connection Source="IN.D1" Destination="OR_2_BOOL.IN2" dx1="673.33"/>
-			<Connection Source="OR_2_BOOL.OUT" Destination="E_D_FF.D"/>
+			<Connection Source="BY_IN.D1" Destination="OR_BOOL_2.IN1"/>
+			<Connection Source="IN.D1" Destination="OR_BOOL_2.IN2" dx1="673.33"/>
+			<Connection Source="OR_BOOL_2.OUT" Destination="E_D_FF.D"/>
 			<Connection Source="E_D_FF.Q" Destination="BY_OUT.D1"/>
 		</DataConnections>
 	</FBNetwork>

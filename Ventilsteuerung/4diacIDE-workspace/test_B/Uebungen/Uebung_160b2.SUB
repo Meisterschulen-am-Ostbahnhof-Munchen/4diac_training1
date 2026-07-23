@@ -21,7 +21,7 @@
 		</FB>
 		<FB Name="FB_RS_B" Type="iec61131::bistableElements::FB_RS" x="-9300" y="1400">
 		</FB>
-		<FB Name="OR_2_BOOL" Type="iec61131::booleanOperators::OR_2_BOOL" x="-7800" y="700">
+		<FB Name="OR_BOOL_2" Type="iec61131::booleanOperators::OR_BOOL_2" x="-7800" y="700">
 		</FB>
 		<FB Name="FB_RS_A" Type="iec61131::bistableElements::FB_RS" x="-9300" y="-800">
 		</FB>
@@ -51,9 +51,9 @@
 		<EventConnections>
 			<Connection Source="FB_RS_B.CNF" Destination="DigitalOutput_Q6.REQ" dx1="953.33"/>
 			<Connection Source="FB_RS_A.CNF" Destination="DigitalOutput_Q5.REQ" dx1="953.33"/>
-			<Connection Source="OR_2_BOOL.CNF" Destination="DigitalOutput_Q56.REQ" dx1="393.33"/>
-			<Connection Source="FB_RS_B.CNF" Destination="OR_2_BOOL.REQ" dx1="553.33"/>
-			<Connection Source="FB_RS_A.CNF" Destination="OR_2_BOOL.REQ" dx1="600"/>
+			<Connection Source="OR_BOOL_2.CNF" Destination="DigitalOutput_Q56.REQ" dx1="393.33"/>
+			<Connection Source="FB_RS_B.CNF" Destination="OR_BOOL_2.REQ" dx1="553.33"/>
+			<Connection Source="FB_RS_A.CNF" Destination="OR_BOOL_2.REQ" dx1="600"/>
 			<Connection Source="DigitalInput_I2.IND" Destination="E_TON.REQ" dx1="473.33"/>
 			<Connection Source="E_TON.CNF" Destination="FB_RS_B.REQ" dx1="380"/>
 			<Connection Source="DigitalInput_I3.IND" Destination="FB_RS_B.REQ" dx1="973.33"/>
@@ -63,9 +63,9 @@
 		<DataConnections>
 			<Connection Source="FB_RS_B.Q1" Destination="DigitalOutput_Q6.OUT" dx1="953.33"/>
 			<Connection Source="FB_RS_A.Q1" Destination="DigitalOutput_Q5.OUT" dx1="953.33"/>
-			<Connection Source="OR_2_BOOL.OUT" Destination="DigitalOutput_Q56.OUT" dx1="393.33"/>
-			<Connection Source="FB_RS_A.Q1" Destination="OR_2_BOOL.IN1" dx1="373.33"/>
-			<Connection Source="FB_RS_B.Q1" Destination="OR_2_BOOL.IN2" dx1="373.33"/>
+			<Connection Source="OR_BOOL_2.OUT" Destination="DigitalOutput_Q56.OUT" dx1="393.33"/>
+			<Connection Source="FB_RS_A.Q1" Destination="OR_BOOL_2.IN1" dx1="373.33"/>
+			<Connection Source="FB_RS_B.Q1" Destination="OR_BOOL_2.IN2" dx1="373.33"/>
 			<Connection Source="E_TON.Q" Destination="FB_RS_B.S" dx1="240"/>
 			<Connection Source="DigitalInput_I2.IN" Destination="E_TON.IN" dx1="306.67"/>
 			<Connection Source="DigitalInput_I3.IN" Destination="FB_RS_B.R1" dx1="973.33"/>
