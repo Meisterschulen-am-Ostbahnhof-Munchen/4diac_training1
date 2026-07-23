@@ -23,7 +23,7 @@
 		</FB>
 		<FB Name="E_SR_Linkslauf" Type="iec61499::events::E_SR" x="-9300" y="1400">
 		</FB>
-		<FB Name="OR_2_BOOL" Type="iec61131::booleanOperators::OR_2_BOOL" x="-7800" y="700">
+		<FB Name="OR_BOOL_2" Type="iec61131::booleanOperators::OR_BOOL_2" x="-7800" y="700">
 		</FB>
 		<FB Name="E_SR_Rechtslauf" Type="iec61499::events::E_SR" x="-9300" y="-800">
 		</FB>
@@ -56,9 +56,9 @@
 		<EventConnections>
 			<Connection Source="E_SR_Linkslauf.EO" Destination="Linkslauf.REQ" dx1="953.33"/>
 			<Connection Source="E_SR_Rechtslauf.EO" Destination="Rechtslauf.REQ" dx1="953.33"/>
-			<Connection Source="OR_2_BOOL.CNF" Destination="LowSide_Treiber.REQ" dx1="393.33"/>
-			<Connection Source="E_SR_Linkslauf.EO" Destination="OR_2_BOOL.REQ" dx1="553.33"/>
-			<Connection Source="E_SR_Rechtslauf.EO" Destination="OR_2_BOOL.REQ" dx1="600"/>
+			<Connection Source="OR_BOOL_2.CNF" Destination="LowSide_Treiber.REQ" dx1="393.33"/>
+			<Connection Source="E_SR_Linkslauf.EO" Destination="OR_BOOL_2.REQ" dx1="553.33"/>
+			<Connection Source="E_SR_Rechtslauf.EO" Destination="OR_BOOL_2.REQ" dx1="600"/>
 			<Connection Source="DigitalInput_CLK_I1.IND" Destination="E_SR_Rechtslauf.S" dx1="460"/>
 			<Connection Source="DigitalInput_CLK_I2.IND" Destination="E_SR_Rechtslauf.R" dx1="460"/>
 			<Connection Source="DigitalInput_CLK_I2.IND" Destination="E_DELAY.START" dx1="253.33"/>
@@ -68,9 +68,9 @@
 		<DataConnections>
 			<Connection Source="E_SR_Linkslauf.Q" Destination="Linkslauf.OUT" dx1="953.33"/>
 			<Connection Source="E_SR_Rechtslauf.Q" Destination="Rechtslauf.OUT" dx1="953.33"/>
-			<Connection Source="OR_2_BOOL.OUT" Destination="LowSide_Treiber.OUT" dx1="393.33"/>
-			<Connection Source="E_SR_Rechtslauf.Q" Destination="OR_2_BOOL.IN1" dx1="373.33"/>
-			<Connection Source="E_SR_Linkslauf.Q" Destination="OR_2_BOOL.IN2" dx1="373.33"/>
+			<Connection Source="OR_BOOL_2.OUT" Destination="LowSide_Treiber.OUT" dx1="393.33"/>
+			<Connection Source="E_SR_Rechtslauf.Q" Destination="OR_BOOL_2.IN1" dx1="373.33"/>
+			<Connection Source="E_SR_Linkslauf.Q" Destination="OR_BOOL_2.IN2" dx1="373.33"/>
 		</DataConnections>
 	</SubAppNetwork>
 </SubAppType>

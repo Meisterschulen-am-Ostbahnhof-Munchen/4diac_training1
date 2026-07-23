@@ -22,7 +22,7 @@
 			<Parameter Name="QI" Value="TRUE"/>
 			<Parameter Name="Input" Value="Input_I2"/>
 		</FB>
-		<FB Name="OR_2_BOOL" Type="iec61131::booleanOperators::OR_2_BOOL" x="-7800" y="700">
+		<FB Name="OR_BOOL_2" Type="iec61131::booleanOperators::OR_BOOL_2" x="-7800" y="700">
 		</FB>
 		<FB Name="DigitalInput_I1" Type="logiBUS::io::DI::logiBUS_IX" x="-9300" y="-800">
 			<Parameter Name="QI" Value="TRUE"/>
@@ -39,16 +39,16 @@
 		<EventConnections>
 			<Connection Source="DigitalInput_I2.IND" Destination="Linkslauf.REQ" dx1="953.33"/>
 			<Connection Source="DigitalInput_I1.IND" Destination="Rechtslauf.REQ" dx1="953.33"/>
-			<Connection Source="OR_2_BOOL.CNF" Destination="LowSide_Treiber.REQ" dx1="393.33"/>
-			<Connection Source="DigitalInput_I2.IND" Destination="OR_2_BOOL.REQ" dx1="553.33"/>
-			<Connection Source="DigitalInput_I1.IND" Destination="OR_2_BOOL.REQ" dx1="600"/>
+			<Connection Source="OR_BOOL_2.CNF" Destination="LowSide_Treiber.REQ" dx1="393.33"/>
+			<Connection Source="DigitalInput_I2.IND" Destination="OR_BOOL_2.REQ" dx1="553.33"/>
+			<Connection Source="DigitalInput_I1.IND" Destination="OR_BOOL_2.REQ" dx1="600"/>
 		</EventConnections>
 		<DataConnections>
 			<Connection Source="DigitalInput_I2.IN" Destination="Linkslauf.OUT" dx1="953.33"/>
 			<Connection Source="DigitalInput_I1.IN" Destination="Rechtslauf.OUT" dx1="953.33"/>
-			<Connection Source="OR_2_BOOL.OUT" Destination="LowSide_Treiber.OUT" dx1="393.33"/>
-			<Connection Source="DigitalInput_I1.IN" Destination="OR_2_BOOL.IN1" dx1="373.33"/>
-			<Connection Source="DigitalInput_I2.IN" Destination="OR_2_BOOL.IN2" dx1="373.33"/>
+			<Connection Source="OR_BOOL_2.OUT" Destination="LowSide_Treiber.OUT" dx1="393.33"/>
+			<Connection Source="DigitalInput_I1.IN" Destination="OR_BOOL_2.IN1" dx1="373.33"/>
+			<Connection Source="DigitalInput_I2.IN" Destination="OR_BOOL_2.IN2" dx1="373.33"/>
 		</DataConnections>
 	</SubAppNetwork>
 </SubAppType>
