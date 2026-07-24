@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Copyright (c) 2026 Johannes Kepler University Linz
+
+  This program and the accompanying materials are made available under the
+  terms of the Eclipse Public License 2.0 which is available at
+  http://www.eclipse.org/legal/epl-2.0.
+
+  SPDX-License-Identifier: EPL-2.0
+
+  Contributors:
+    Alois Zoitl - initial API and implementation and/or initial documentation
+-->
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+
+<xs:include schemaLocation="common.xsd"/>
+<xs:include schemaLocation="datatype.xsd"/>
+
+<xs:element name="GlobalConstants">
+  <xs:complexType>
+    <xs:complexContent>
+      <xs:extension base="LibraryElement">
+        <xs:choice minOccurs="0" maxOccurs="unbounded">
+          <xs:element name="GlobalConstants" type="GlobalConstantsContainer"/>
+          <xs:element name="OriginalSource"  type="OriginalSource"/>
+          <xs:group ref="AttributeGroup"/>
+        </xs:choice>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+</xs:element>
+
+<xs:complexType name="GlobalConstantsContainer" mixed="true">
+  <xs:choice minOccurs="0" maxOccurs="unbounded">
+    <xs:element ref="VarDeclaration"/>
+    <xs:group ref="AttributeGroup"/>
+  </xs:choice>
+</xs:complexType>
+
+<xs:complexType name="OriginalSource" mixed="true">
+  <xs:simpleContent>
+    <xs:extension base="xs:string">
+    </xs:extension>
+  </xs:simpleContent>
+</xs:complexType>
+
+</xs:schema>

@@ -5,7 +5,6 @@
 	<VersionInfo Version="1.0" Author="franz" Date="2026-05-07">
 	</VersionInfo>
 	<CompilerInfo packageName="logiBUS::signalprocessing::bypass">
-		<Import declaration="eclipse4diac::core::TypeHash"/>
 	</CompilerInfo>
 	<InterfaceList>
 		<EventInputs>
@@ -32,23 +31,23 @@
 		</Sockets>
 	</InterfaceList>
 	<FBNetwork>
-		<FB Name="OR_2_BOOL" Type="iec61131::bitwiseOperators::OR_2_BOOL" x="-3700" y="1100">
+		<FB Name="OR_BOOL_2" Type="iec61131::booleanOperators::OR_BOOL_2" x="-3700" y="1100">
 		</FB>
 		<FB Name="E_D_FF" Type="iec61499::events::E_D_FF" x="-2400" y="1100">
 		</FB>
 		<EventConnections>
-			<Connection Source="OR_2_BOOL.CNF" Destination="E_D_FF.CLK"/>
-			<Connection Source="BY_IN.E1" Destination="OR_2_BOOL.REQ"/>
+			<Connection Source="OR_BOOL_2.CNF" Destination="E_D_FF.CLK" dx1="353.33"/>
+			<Connection Source="BY_IN.E1" Destination="OR_BOOL_2.REQ" dx1="260"/>
 			<Connection Source="E_D_FF.EO" Destination="BY_OUT.E1"/>
 			<Connection Source="REQ" Destination="CNF"/>
-			<Connection Source="REQ" Destination="OR_2_BOOL.REQ" dx1="3082.35"/>
+			<Connection Source="REQ" Destination="OR_BOOL_2.REQ" dx1="3082.35"/>
 		</EventConnections>
 		<DataConnections>
-			<Connection Source="OR_2_BOOL.OUT" Destination="E_D_FF.D"/>
-			<Connection Source="BY_IN.D1" Destination="OR_2_BOOL.IN1"/>
+			<Connection Source="OR_BOOL_2.OUT" Destination="E_D_FF.D"/>
+			<Connection Source="BY_IN.D1" Destination="OR_BOOL_2.IN1"/>
 			<Connection Source="E_D_FF.Q" Destination="BY_OUT.D1"/>
 			<Connection Source="IN" Destination="OUT"/>
-			<Connection Source="IN" Destination="OR_2_BOOL.IN2" dx1="1576.47"/>
+			<Connection Source="IN" Destination="OR_BOOL_2.IN2" dx1="1576.47"/>
 		</DataConnections>
 	</FBNetwork>
 	<Attribute Name="eclipse4diac::core::TypeHash" Value="''"/>

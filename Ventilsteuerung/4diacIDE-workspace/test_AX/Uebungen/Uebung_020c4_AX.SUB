@@ -6,10 +6,10 @@
 	</VersionInfo>
 	<CompilerInfo packageName="Uebungen">
 		<Import declaration="Uebungen::const::NVS::NVS_Keys::KEY_I1_STORE"/>
-		<Import declaration="Uebungen::const::UT::DefaultPool_Numeric::InputNumber_I1"/>
+		<Import declaration="Uebungen::const::NVS::NVS_Keys::SECTION_I1_STORE"/>
+		<Import declaration="Uebungen::const::UT::DefaultPool_Numeric::InputNumber_I1_N"/>
 		<Import declaration="logiBUS::io::DI::logiBUS_DI::Input_I1"/>
 		<Import declaration="logiBUS::io::DQ::logiBUS_DO::Output_Q1"/>
-		<Import declaration="Uebungen::const::NVS::NVS_Keys::SECTION_I1_STORE"/>
 	</CompilerInfo>
 	<SubAppInterfaceList>
 	</SubAppInterfaceList>
@@ -27,20 +27,20 @@
 			</Parameter>
 			<Parameter Name="Input" Value="Input_I1"/>
 		</FB>
-		<FB Name="E_TON" Type="adapter::events::unidirectional::timers::ATM_AX_TON" x="-7100" y="500">
+		<FB Name="ATM_AX_TON" Type="adapter::events::unidirectional::timers::ATM_AX_TON" x="-7100" y="500">
 		</FB>
 		<SubApp Name="INI_IN_AND_STORE_AR" Type="MyLib::sys::INI_IN_AND_STORE_AR" x="-11200" y="1700">
 			<Parameter Name="KEY" Value="KEY_I1_STORE"/>
 			<Parameter Name="SECTION" Value="SECTION_I1_STORE"/>
-			<Parameter Name="stObj" Value="InputNumber_I1"/>
+			<Parameter Name="stObj" Value="InputNumber_I1_N"/>
 		</SubApp>
 		<FB Name="AR_MULTIME" Type="adapter::iec61131::arithmetic::AR_MULTIME" x="-9400" y="1800">
 			<Parameter Name="IN1" Value="T#1s"/>
 		</FB>
 		<AdapterConnections>
-			<Connection Source="AR_MULTIME.OUT" Destination="E_TON.PT" dx1="253.33"/>
-			<Connection Source="DigitalInput_I1.IN" Destination="E_TON.IN" dx1="386.67"/>
-			<Connection Source="E_TON.Q" Destination="DigitalOutput_Q1.OUT" dx1="460"/>
+			<Connection Source="AR_MULTIME.OUT" Destination="ATM_AX_TON.PT" dx1="253.33"/>
+			<Connection Source="DigitalInput_I1.IN" Destination="ATM_AX_TON.IN" dx1="386.67"/>
+			<Connection Source="ATM_AX_TON.Q" Destination="DigitalOutput_Q1.OUT" dx1="460"/>
 			<Connection Source="INI_IN_AND_STORE_AR.VALUEO" Destination="AR_MULTIME.IN2" dx1="313.33"/>
 		</AdapterConnections>
 	</SubAppNetwork>

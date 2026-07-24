@@ -46,7 +46,7 @@
 			<Parameter Name="QI" Value="TRUE"/>
 			<Parameter Name="Output" Value="Output_Q56"/>
 		</FB>
-		<FB Name="OR_2_BOOL" Type="iec61131::bitwiseOperators::OR_2_BOOL" x="400" y="1200">
+		<FB Name="OR_BOOL_2" Type="iec61131::booleanOperators::OR_BOOL_2" x="400" y="1200">
 		</FB>
 		<EventConnections>
 			<Connection Source="DigitalInput_I1.IND" Destination="ILOCK.EI_UP" dx1="200"/>
@@ -55,9 +55,9 @@
 			<Connection Source="ILOCK.EO_UP" Destination="Rechtslauf.REQ" dx1="200"/>
 			<Connection Source="ILOCK.EO_DOWN" Destination="Linkslauf.REQ" dx1="200"/>
 			<Connection Source="ILOCK.EO_TRIP" Destination="Trip_Anzeige.REQ" dx1="200"/>
-			<Connection Source="ILOCK.EO_UP" Destination="OR_2_BOOL.REQ" dx1="100"/>
-			<Connection Source="ILOCK.EO_DOWN" Destination="OR_2_BOOL.REQ" dx1="100"/>
-			<Connection Source="OR_2_BOOL.CNF" Destination="LowSide_Treiber.REQ" dx1="200"/>
+			<Connection Source="ILOCK.EO_UP" Destination="OR_BOOL_2.REQ" dx1="100"/>
+			<Connection Source="ILOCK.EO_DOWN" Destination="OR_BOOL_2.REQ" dx1="100"/>
+			<Connection Source="OR_BOOL_2.CNF" Destination="LowSide_Treiber.REQ" dx1="200"/>
 		</EventConnections>
 		<DataConnections>
 			<Connection Source="DigitalInput_I1.IN" Destination="ILOCK.DI_UP" dx1="100"/>
@@ -65,9 +65,9 @@
 			<Connection Source="ILOCK.DO_UP" Destination="Rechtslauf.OUT" dx1="100"/>
 			<Connection Source="ILOCK.DO_DOWN" Destination="Linkslauf.OUT" dx1="100"/>
 			<Connection Source="ILOCK.DO_TRIP" Destination="Trip_Anzeige.OUT" dx1="100"/>
-			<Connection Source="ILOCK.DO_UP" Destination="OR_2_BOOL.IN1" dx1="50"/>
-			<Connection Source="ILOCK.DO_DOWN" Destination="OR_2_BOOL.IN2" dx1="50"/>
-			<Connection Source="OR_2_BOOL.OUT" Destination="LowSide_Treiber.OUT" dx1="200"/>
+			<Connection Source="ILOCK.DO_UP" Destination="OR_BOOL_2.IN1" dx1="50"/>
+			<Connection Source="ILOCK.DO_DOWN" Destination="OR_BOOL_2.IN2" dx1="50"/>
+			<Connection Source="OR_BOOL_2.OUT" Destination="LowSide_Treiber.OUT" dx1="200"/>
 		</DataConnections>
 	</SubAppNetwork>
 </SubAppType>

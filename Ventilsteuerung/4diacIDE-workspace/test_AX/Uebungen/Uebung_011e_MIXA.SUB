@@ -6,7 +6,7 @@
 	</VersionInfo>
 	<CompilerInfo packageName="Uebungen">
 		<Import declaration="Uebungen::const::UT::DefaultPool::InputNumber_I1"/>
-		<Import declaration="Uebungen::const::UT::DefaultPool_Numeric::OutputNumber_N3"/>
+		<Import declaration="Uebungen::const::UT::DefaultPool_Numeric::OutputNumber_N3_N"/>
 	</CompilerInfo>
 	<SubAppInterfaceList>
 	</SubAppInterfaceList>
@@ -15,17 +15,17 @@
 			<Parameter Name="QI" Value="TRUE"/>
 			<Parameter Name="u16ObjId" Value="InputNumber_I1"/>
 		</FB>
-		<FB Name="F_DWORD_TO_UDINT" Type="adapter::conversion::unidirectional::AD_TO_AR" x="-4500" y="900">
+		<FB Name="AD_TO_AR" Type="adapter::conversion::unidirectional::AD_TO_AR" x="-4500" y="900">
 		</FB>
 		<FB Name="Q_NumericValue_PHYS" Type="isobus::UT::Q::Q_NumericValue_PHYSA" x="-1600" y="366.67">
-			<Parameter Name="stObj" Value="OutputNumber_N3"/>
+			<Parameter Name="stObj" Value="OutputNumber_N3_N"/>
 		</FB>
 		<Comment Comment=" Beispiel: I1-Eingabe 10 → F_RAW_TO_PHYS(I1) → 10.0 → Q_NumericValue_PHYS(N3) → N3 zeigt 10.00.&#10;&#10;die beiden Namespaces sind INKOMPATIBEL !!!&#10;" x="-6100" y="1800" width="5300" height="500"/>
-		<Comment Comment="Uebungen::const::UT::DefaultPool_Numeric::OutputNumber_N3" x="-2400" y="1500" width="3200" height="200"/>
+		<Comment Comment="Uebungen::const::UT::DefaultPool_Numeric::OutputNumber_N3_N" x="-2400" y="1500" width="3200" height="200"/>
 		<Comment Comment="Uebungen::const::UT::DefaultPool::InputNumber_I1" x="-7200" y="1500" width="2400" height="200"/>
 		<AdapterConnections>
-			<Connection Source="F_DWORD_TO_UDINT.AR_OUT" Destination="Q_NumericValue_PHYS.rPhys" dx1="1833.33"/>
-			<Connection Source="InputNumber_I1.IN" Destination="F_DWORD_TO_UDINT.AD_IN"/>
+			<Connection Source="AD_TO_AR.AR_OUT" Destination="Q_NumericValue_PHYS.rPhys" dx1="1833.33"/>
+			<Connection Source="InputNumber_I1.IN" Destination="AD_TO_AR.AD_IN"/>
 		</AdapterConnections>
 	</SubAppNetwork>
 </SubAppType>

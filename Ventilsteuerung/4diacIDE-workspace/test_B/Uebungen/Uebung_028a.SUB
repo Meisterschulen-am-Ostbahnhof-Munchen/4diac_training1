@@ -41,7 +41,7 @@
 		</FB>
 		<FB Name="F_DWORD_TO_UDINT_I4" Type="iec61131::conversion::F_DWORD_TO_REAL" x="2100" y="1500">
 		</FB>
-		<FB Name="CALIBRATE" Type="OSCAT::Basic::POUs::Engineering::measurements::E_CALIBRATE" x="6000" y="1600">
+		<FB Name="E_CALIBRATE" Type="OSCAT::Basic::POUs::Engineering::measurements::E_CALIBRATE" x="6000" y="1600">
 			<Parameter Name="Y_Offset" Value="100.0"/>
 			<Parameter Name="Y_Scale" Value="600.0"/>
 		</FB>
@@ -84,28 +84,28 @@
 			<Connection Source="AnalogInput_I4.IND" Destination="F_DWORD_TO_UDINT_I4.REQ" dx1="960"/>
 			<Connection Source="DigitalInput_I1.IND" Destination="AnalogInput_I4.REQ" dx1="1213.33"/>
 			<Connection Source="AnalogInput_I4.CNF" Destination="F_DWORD_TO_UDINT_I4.REQ" dx1="960"/>
-			<Connection Source="F_DWORD_TO_UDINT_I4.CNF" Destination="CALIBRATE.REQ" dx1="553.33"/>
+			<Connection Source="F_DWORD_TO_UDINT_I4.CNF" Destination="E_CALIBRATE.REQ" dx1="553.33"/>
 			<Connection Source="INI_OFFSET.GETO" Destination="SET_REAL_OFFSET.REQ" dx1="386.67"/>
 			<Connection Source="INI_OFFSET.INITO" Destination="INI_OFFSET.GET" dx1="80" dx2="80" dy="-266.67"/>
 			<Connection Source="INI_SCALE.INITO" Destination="INI_SCALE.GET" dx1="80" dx2="80" dy="-266.67"/>
 			<Connection Source="INI_SCALE.GETO" Destination="SET_REAL_SCALE.REQ" dx1="386.67"/>
-			<Connection Source="SET_REAL_OFFSET.CNF" Destination="CALIBRATE.REQ" dx1="80"/>
-			<Connection Source="SET_REAL_SCALE.CNF" Destination="CALIBRATE.REQ" dx1="300"/>
-			<Connection Source="DigitalInput_I2.IND" Destination="CALIBRATE.EICO" dx1="1026.67"/>
-			<Connection Source="DigitalInput_I3.IND" Destination="CALIBRATE.EICS" dx1="906.67"/>
-			<Connection Source="CALIBRATE.EOCO" Destination="INI_OFFSET.SET" dx1="893.33" dx2="660" dy="946.67"/>
-			<Connection Source="CALIBRATE.EOCS" Destination="INI_SCALE.SET" dx1="1113.33" dx2="786.67" dy="1206.67"/>
+			<Connection Source="SET_REAL_OFFSET.CNF" Destination="E_CALIBRATE.REQ" dx1="80"/>
+			<Connection Source="SET_REAL_SCALE.CNF" Destination="E_CALIBRATE.REQ" dx1="300"/>
+			<Connection Source="DigitalInput_I2.IND" Destination="E_CALIBRATE.EICO" dx1="1026.67"/>
+			<Connection Source="DigitalInput_I3.IND" Destination="E_CALIBRATE.EICS" dx1="906.67"/>
+			<Connection Source="E_CALIBRATE.EOCO" Destination="INI_OFFSET.SET" dx1="893.33" dx2="660" dy="946.67"/>
+			<Connection Source="E_CALIBRATE.EOCS" Destination="INI_SCALE.SET" dx1="1113.33" dx2="786.67" dy="1206.67"/>
 		</EventConnections>
 		<DataConnections>
 			<Connection Source="DigitalInput_I1.IN" Destination="DigitalOutput_Q1.OUT" dx1="1673.33"/>
 			<Connection Source="AnalogInput_I4.IN" Destination="F_DWORD_TO_UDINT_I4.IN" dx1="673.33"/>
-			<Connection Source="F_DWORD_TO_UDINT_I4.OUT" Destination="CALIBRATE.X" dx1="680"/>
+			<Connection Source="F_DWORD_TO_UDINT_I4.OUT" Destination="E_CALIBRATE.X" dx1="680"/>
 			<Connection Source="INI_OFFSET.VALUEO" Destination="SET_REAL_OFFSET.IN" dx1="386.67"/>
-			<Connection Source="SET_REAL_OFFSET.OUT" Destination="CALIBRATE.OFFSET" dx1="166.67"/>
+			<Connection Source="SET_REAL_OFFSET.OUT" Destination="E_CALIBRATE.OFFSET" dx1="166.67"/>
 			<Connection Source="INI_SCALE.VALUEO" Destination="SET_REAL_SCALE.IN" dx1="386.67"/>
-			<Connection Source="SET_REAL_SCALE.OUT" Destination="CALIBRATE.SCALE" dx1="480"/>
-			<Connection Source="CALIBRATE.SCALE" Destination="INI_SCALE.VALUE" dx1="506.67" dx2="506.67" dy="3506.67"/>
-			<Connection Source="CALIBRATE.OFFSET" Destination="INI_OFFSET.VALUE" dx1="80" dx2="546.67" dy="2140"/>
+			<Connection Source="SET_REAL_SCALE.OUT" Destination="E_CALIBRATE.SCALE" dx1="480"/>
+			<Connection Source="E_CALIBRATE.SCALE" Destination="INI_SCALE.VALUE" dx1="506.67" dx2="506.67" dy="3506.67"/>
+			<Connection Source="E_CALIBRATE.OFFSET" Destination="INI_OFFSET.VALUE" dx1="80" dx2="546.67" dy="2140"/>
 		</DataConnections>
 	</SubAppNetwork>
 </SubAppType>

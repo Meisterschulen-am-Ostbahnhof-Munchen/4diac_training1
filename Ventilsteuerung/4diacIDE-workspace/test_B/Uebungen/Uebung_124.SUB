@@ -5,12 +5,13 @@
 	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2023-10-23" Remarks="initial API and implementation and/or initial documentation">
 	</VersionInfo>
 	<CompilerInfo packageName="Uebungen">
-		<Import declaration="isobus::pgn::ISOUSERHOME_e::network"/>
-		<Import declaration="isobus::pgn::ISO_CAN_NODE::NODE1"/>
-		<Import declaration="logiBUS::io::DI::logiBUS_DI::Input_I1"/>
-		<Import declaration="logiBUS::io::DI::logiBUS_DI_Events::BUTTON_SINGLE_CLICK"/>
 		<Import declaration="Uebungen::const::Uebung_120_129::Filter::VT_ADD"/>
 		<Import declaration="Uebungen::const::Uebung_120_129::Filter::VT_FLT"/>
+		<Import declaration="isobus::pgn::ISOUSERHOME_e::network"/>
+		<Import declaration="isobus::pgn::ISO_CAN_NODE::NODE1"/>
+		<Import declaration="isobus::pgn::const::PgnDef::PGN_PDU1_PropA"/>
+		<Import declaration="logiBUS::io::DI::logiBUS_DI::Input_I1"/>
+		<Import declaration="logiBUS::io::DI::logiBUS_DI_Events::BUTTON_SINGLE_CLICK"/>
 	</CompilerInfo>
 	<SubAppInterfaceList>
 	</SubAppInterfaceList>
@@ -31,7 +32,7 @@
 			<Attribute Name="StructuredType" Type="STRING" Value="isobus::pgn::ISONETEVENT_T"/>
 		</FB>
 		<FB Name="AlPgnTxNew8B" Type="isobus::pgn::tx::AlPgnTxNew8B" x="-4400" y="3600">
-			<Parameter Name="u32Pgn" Value="61184"/>
+			<Parameter Name="u32Pgn" Value="PGN_PDU1_PropA"/>
 			<Parameter Name="u16DaSize" Value="8"/>
 			<Parameter Name="u8Priority" Value="3"/>
 			<Parameter Name="Data" Value="(data := [16#FA, 16#FB, 16#FC, 16#FD, 16#FE, 16#FF, 16#F1, 16#F2])"/>
@@ -52,7 +53,7 @@
 			<Connection Source="NmGetCfInfo_1.sNameField" Destination="STRUCT_DEMUX_3.IN" dx1="560"/>
 			<Connection Source="NmGetCfInfo_1.sNetEv" Destination="STRUCT_DEMUX_5.IN" dx1="660"/>
 			<Connection Source="NmGetCfInfo_1.sCfInfo" Destination="STRUCT_DEMUX_4.IN" dx1="626.67"/>
-			<Connection Source="NmGetCfInfo_1.sNetEv" Destination="AlPgnTxNew8B.NmDestin"/>
+			<Connection Source="NmGetCfInfo_1.sNetEv" Destination="AlPgnTxNew8B.NmDestin" dx1="2266.67"/>
 		</DataConnections>
 	</SubAppNetwork>
 </SubAppType>
