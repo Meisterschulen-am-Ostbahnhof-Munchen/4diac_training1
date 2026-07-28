@@ -21,7 +21,6 @@
     <xs:complexContent>
       <xs:extension base="LibraryElement">
         <xs:sequence>
-          <xs:element name="ASN1Tag" type="ASN1Tag" minOccurs="0" maxOccurs="1"/>
           <xs:choice>
             <xs:element ref="DirectlyDerivedType"/>
             <xs:element ref="EnumeratedType"/>
@@ -140,20 +139,6 @@
     <xs:enumeration value="UINT"/>
     <xs:enumeration value="UDINT"/>
     <xs:enumeration value="ULINT"/>
-  </xs:restriction>
-</xs:simpleType>
-
-<xs:complexType name="ASN1Tag">
-  <xs:attribute name="Class" type="ASN1TagClass" use="required"/>
-  <xs:attribute name="Number" type="xs:nonNegativeInteger" use="required"/>
-</xs:complexType>
-
-<xs:simpleType name="ASN1TagClass">
-  <xs:restriction base="xs:string">
-    <xs:enumeration value="UNIVERSAL"/>
-    <xs:enumeration value="APPLICATION"/>
-    <xs:enumeration value="CONTEXT"/>
-    <xs:enumeration value="PRIVATE"/>
   </xs:restriction>
 </xs:simpleType>
 
