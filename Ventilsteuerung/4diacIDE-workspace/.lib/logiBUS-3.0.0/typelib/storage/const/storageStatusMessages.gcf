@@ -2,6 +2,8 @@
 <GlobalConstants Name="storageStatusMessages" Comment="Global constants for storage status messages (INI and NVS)">
 	<Identification Standard="61499-1">
 	</Identification>
+	<VersionInfo Version="1.2" Author="franz" Date="2026-08-01" Remarks="added read-only settings error message">
+	</VersionInfo>
 	<VersionInfo Version="1.1" Author="franz" Date="2026-06-13">
 	</VersionInfo>
 	<CompilerInfo packageName="logiBUS::storage::const">
@@ -18,6 +20,7 @@
 		<VarDeclaration Name="ERR_KEY_EMPTY" Type="STRING" InitialValue="'KEY empty'"/>
 		<VarDeclaration Name="ERR_SECTION_WHITESPACE" Type="STRING" InitialValue="'SECTION contains whitespace'"/>
 		<VarDeclaration Name="ERR_KEY_WHITESPACE" Type="STRING" InitialValue="'KEY contains whitespace'"/>
+		<VarDeclaration Name="ERR_READ_ONLY" Type="STRING" InitialValue="'Key is read-only'"/>
 	</GlobalConstants>
 	<OriginalSource><![CDATA[PACKAGE logiBUS::storage::const;
 
@@ -34,6 +37,7 @@ GLOBALCONSTANTS storageStatusMessages
 		ERR_KEY_EMPTY : STRING := 'KEY empty';
 		ERR_SECTION_WHITESPACE : STRING := 'SECTION contains whitespace';
 		ERR_KEY_WHITESPACE : STRING := 'KEY contains whitespace';
+		ERR_READ_ONLY : STRING := 'Key is read-only';
 	END_VAR
 END_GLOBALCONSTANTS
 ]]></OriginalSource>
