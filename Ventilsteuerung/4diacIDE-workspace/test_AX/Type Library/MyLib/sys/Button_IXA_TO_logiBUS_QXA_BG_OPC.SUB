@@ -30,7 +30,7 @@
 		</FB>
 		<FB Name="AX_SPLIT_2" Type="adapter::events::unidirectional::AX_SPLIT_2" x="-1800" y="-1200">
 		</FB>
-		<SubApp Name="GreenWhiteBackground1_AX" Type="MyLib::sys::GreenWhiteBackground1_AX" x="-500" y="-400">
+		<SubApp Name="GreenWhiteBackground1_AX" Type="MyLib::sys::GreenWhiteBackground1_AX" x="400" y="-1000">
 		</SubApp>
 		<FB Name="SUBSCRIBE_1" Type="iec61499::net::SUBSCRIBE_1" x="-5900" y="-1800">
 			<Parameter Name="QI" Value="TRUE"/>
@@ -60,7 +60,7 @@
 		<AdapterConnections>
 			<Connection Source="Button_IXA.IN" Destination="AX_OR_2.IN2" dx1="246.67"/>
 			<Connection Source="AX_SPLIT_2.OUT1" Destination="logiBUS_QXA.OUT" dx1="273.33"/>
-			<Connection Source="AX_SPLIT_2.OUT2" Destination="GreenWhiteBackground1_AX.DI1" dx1="466.67"/>
+			<Connection Source="AX_SPLIT_2.OUT2" Destination="GreenWhiteBackground1_AX.DI1" dx1="240"/>
 			<Connection Source="AX_BOOL_TO_X.AX_OUT" Destination="AX_OR_2.IN1" dx1="126.67"/>
 			<Connection Source="AX_OR_2.OUT" Destination="AX_SPLIT_2.IN" dx1="340"/>
 		</AdapterConnections>
