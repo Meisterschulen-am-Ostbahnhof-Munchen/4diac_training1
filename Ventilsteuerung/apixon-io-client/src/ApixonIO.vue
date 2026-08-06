@@ -54,12 +54,8 @@ import {
   ClientSubscription,
   AttributeIds,
   TimestampsToReturn,
-  DataValue,
-  Variant,
   DataType,
   coerceNodeId,
-  WriteValue,
-  StatusCodes,
 } from '@wsopcua/wsopcua'
 
 const endpointUrl = ref(`ws://${window.location.hostname || 'localhost'}:4444`)
