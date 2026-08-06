@@ -25,7 +25,7 @@
 		</FB>
 		<SubApp Name="GreenWhiteBackground1_AX" Type="MyLib::sys::GreenWhiteBackground1_AX" x="-2200" y="-1000">
 		</SubApp>
-		<FB Name="PUBLISH_I1" Type="iec61499::net::PUBLISH_1" x="200" y="-100">
+		<FB Name="PUBLISH_1" Type="iec61499::net::PUBLISH_1" x="200" y="-100">
 			<Parameter Name="QI" Value="TRUE"/>
 		</FB>
 		<FB Name="AX_SPLIT_2" Type="adapter::events::unidirectional::AX_SPLIT_2" x="-3300" y="0">
@@ -33,7 +33,7 @@
 		<FB Name="AX_X_TO_BOOL" Type="adapter::conversion::unidirectional::AX_X_TO_BOOL" x="-1700" y="200">
 		</FB>
 		<EventConnections>
-			<Connection Source="AX_X_TO_BOOL.CNF" Destination="PUBLISH_I1.REQ" dx1="473.33"/>
+			<Connection Source="AX_X_TO_BOOL.CNF" Destination="PUBLISH_1.REQ" dx1="473.33"/>
 		</EventConnections>
 		<DataConnections>
 			<Connection Source="Input" Destination="logiBUS_IXA.Input" dx1="2926.67">
@@ -42,8 +42,8 @@
 			<Connection Source="u16ObjId" Destination="GreenWhiteBackground1_AX.u16ObjId" dx1="2680">
 				<Attribute Name="Visible" Value="false"/>
 			</Connection>
-			<Connection Source="AX_X_TO_BOOL.IN" Destination="PUBLISH_I1.SD_1" dx1="473.33"/>
-			<Connection Source="ID" Destination="PUBLISH_I1.ID" dx1="4280">
+			<Connection Source="AX_X_TO_BOOL.IN" Destination="PUBLISH_1.SD_1" dx1="473.33"/>
+			<Connection Source="ID" Destination="PUBLISH_1.ID" dx1="4280">
 				<Attribute Name="Visible" Value="false"/>
 			</Connection>
 		</DataConnections>
