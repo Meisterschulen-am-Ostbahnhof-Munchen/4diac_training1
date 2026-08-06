@@ -58,7 +58,7 @@ import {
   coerceNodeId,
 } from '@wsopcua/wsopcua'
 
-const endpointUrl = ref(`ws://${window.location.hostname || 'localhost'}:4444`)
+const endpointUrl = ref(`ws://${window.location.hostname || 'localhost'}:4841`)
 const status = ref('Getrennt')
 const connected = ref(false)
 const inputs = ref<boolean[]>(Array(8).fill(false))
