@@ -33,17 +33,11 @@
 		</FB>
 		<SubApp Name="GreenWhiteBackground1_AX" Type="MyLib::sys::GreenWhiteBackground1_AX" x="1400" y="-1100">
 		</SubApp>
-		<FB Name="SUBSCRIBE_1" Type="iec61499::net::SUBSCRIBE_1" x="-8700" y="-2500">
+		<FB Name="AX_SUBSCRIBE_1" Type="adapter::net::AX_SUBSCRIBE_1" x="-7300" y="-2200">
 			<Parameter Name="QI" Value="TRUE"/>
 		</FB>
-		<FB Name="AX_BOOL_TO_X" Type="adapter::conversion::unidirectional::AX_BOOL_TO_X" x="-7000" y="-2300">
-		</FB>
-		<FB Name="AX_X_TO_BOOL" Type="adapter::conversion::unidirectional::AX_X_TO_BOOL" x="1600" y="0">
-		</FB>
-		<FB Name="PUBLISH_1" Type="iec61499::net::PUBLISH_1" x="3500" y="-300">
+		<FB Name="AX_PUBLISH_1" Type="adapter::net::AX_PUBLISH_1" x="2000" y="-200">
 			<Parameter Name="QI" Value="TRUE"/>
-		</FB>
-		<FB Name="AX_D_FF_IN" Type="adapter::events::unidirectional::AX_D_FF" x="-5800" y="-1700">
 		</FB>
 		<FB Name="AX_RF_TRIG_BT" Type="adapter::events::unidirectional::AX_RF_TRIG" x="-4600" y="-1000">
 		</FB>
@@ -52,9 +46,7 @@
 		<FB Name="AX_RF_TRIG_OPC" Type="adapter::events::unidirectional::AX_RF_TRIG" x="-4600" y="-1600">
 		</FB>
 		<EventConnections>
-			<Connection Source="SUBSCRIBE_1.IND" Destination="AX_BOOL_TO_X.REQ" dx1="473.33"/>
-			<Connection Source="AX_X_TO_BOOL.CNF" Destination="PUBLISH_1.REQ" dx1="473.33"/>
-			<Connection Source="SUBSCRIBE_1.INITO" Destination="PUBLISH_1.INIT" dx1="3800">
+			<Connection Source="AX_SUBSCRIBE_1.INITO" Destination="AX_PUBLISH_1.INIT" dx1="3800">
 				<Attribute Name="Visible" Value="false"/>
 			</Connection>
 			<Connection Source="AX_RF_TRIG_OPC.ER" Destination="AX_SR.S"/>
@@ -72,12 +64,10 @@
 			<Connection Source="u16ObjId" Destination="GreenWhiteBackground1_AX.u16ObjId" dx1="3126.67">
 				<Attribute Name="Visible" Value="false"/>
 			</Connection>
-			<Connection Source="ID_READ" Destination="SUBSCRIBE_1.ID" dx1="760">
+			<Connection Source="ID_READ" Destination="AX_SUBSCRIBE_1.ID" dx1="760">
 				<Attribute Name="Visible" Value="false"/>
 			</Connection>
-			<Connection Source="SUBSCRIBE_1.RD_1" Destination="AX_BOOL_TO_X.OUT" dx1="473.33"/>
-			<Connection Source="AX_X_TO_BOOL.IN" Destination="PUBLISH_1.SD_1" dx1="473.33"/>
-			<Connection Source="ID_WRITE" Destination="PUBLISH_1.ID" dx1="5026.67">
+			<Connection Source="ID_WRITE" Destination="AX_PUBLISH_1.ID" dx1="5026.67">
 				<Attribute Name="Visible" Value="false"/>
 			</Connection>
 		</DataConnections>
@@ -85,10 +75,9 @@
 			<Connection Source="Button_IXA.IN" Destination="AX_RF_TRIG_BT.QI" dx1="1580"/>
 			<Connection Source="AX_SPLIT_3.OUT1" Destination="logiBUS_QXA.OUT" dx1="273.33"/>
 			<Connection Source="AX_SPLIT_3.OUT2" Destination="GreenWhiteBackground1_AX.DI1" dx1="800"/>
-			<Connection Source="AX_BOOL_TO_X.AX_OUT" Destination="AX_D_FF_IN.I" dx1="126.67"/>
-			<Connection Source="AX_SPLIT_3.OUT3" Destination="AX_X_TO_BOOL.AX_IN" dx1="400"/>
-			<Connection Source="AX_D_FF_IN.Q" Destination="AX_RF_TRIG_OPC.QI" dx1="193.33"/>
 			<Connection Source="AX_SR.Q" Destination="AX_SPLIT_3.IN" dx1="840"/>
+			<Connection Source="AX_SUBSCRIBE_1.OUT" Destination="AX_RF_TRIG_OPC.QI" dx1="1580"/>
+			<Connection Source="AX_SPLIT_3.OUT3" Destination="AX_PUBLISH_1.IN" dx1="460"/>
 		</AdapterConnections>
 	</SubAppNetwork>
 </SubAppType>
