@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<GlobalConstants Name="SubStrings" Comment="Global constants">
+	<Identification Standard="61499-1">
+	</Identification>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2026-08-07">
+	</VersionInfo>
+	<CompilerInfo packageName="Meins::InputOutputTester::Button_OPC_UA">
+	</CompilerInfo>
+	<GlobalConstants>
+		<VarDeclaration Name="I1_WRITE" Type="WSTRING" InitialValue="&quot;opc_ua[WRITE;/Objects/I1,1:s=I1]&quot;"/>
+		<VarDeclaration Name="I2_WRITE" Type="WSTRING" InitialValue="&quot;opc_ua[WRITE;/Objects/I2,1:s=I2]&quot;"/>
+		<VarDeclaration Name="I3_WRITE" Type="WSTRING" InitialValue="&quot;opc_ua[WRITE;/Objects/I3,1:s=I3]&quot;"/>
+		<VarDeclaration Name="I4_WRITE" Type="WSTRING" InitialValue="&quot;opc_ua[WRITE;/Objects/I4,1:s=I4]&quot;"/>
+		<VarDeclaration Name="I5_WRITE" Type="WSTRING" InitialValue="&quot;opc_ua[WRITE;/Objects/I5,1:s=I5]&quot;"/>
+		<VarDeclaration Name="I6_WRITE" Type="WSTRING" InitialValue="&quot;opc_ua[WRITE;/Objects/I6,1:s=I6]&quot;"/>
+		<VarDeclaration Name="I7_WRITE" Type="WSTRING" InitialValue="&quot;opc_ua[WRITE;/Objects/I7,1:s=I7]&quot;"/>
+		<VarDeclaration Name="I8_WRITE" Type="WSTRING" InitialValue="&quot;opc_ua[WRITE;/Objects/I8,1:s=I8]&quot;"/>
+		<VarDeclaration Name="Q01_READ" Type="WSTRING" InitialValue="&quot;opc_ua[READ;/Objects/Q01,1:s=Q01]&quot;"/>
+		<VarDeclaration Name="Q01_WRITE" Type="WSTRING" InitialValue="&quot;opc_ua[WRITE;/Objects/Q01,1:s=Q01]&quot;"/>
+		<VarDeclaration Name="Q02_READ" Type="WSTRING" InitialValue="&quot;opc_ua[READ;/Objects/Q02,1:s=Q02]&quot;"/>
+		<VarDeclaration Name="Q02_WRITE" Type="WSTRING" InitialValue="&quot;opc_ua[WRITE;/Objects/Q02,1:s=Q02]&quot;"/>
+		<VarDeclaration Name="Q03_READ" Type="WSTRING" InitialValue="&quot;opc_ua[READ;/Objects/Q03,1:s=Q03]&quot;"/>
+		<VarDeclaration Name="Q03_WRITE" Type="WSTRING" InitialValue="&quot;opc_ua[WRITE;/Objects/Q03,1:s=Q03]&quot;"/>
+		<VarDeclaration Name="Q04_READ" Type="WSTRING" InitialValue="&quot;opc_ua[READ;/Objects/Q04,1:s=Q04]&quot;"/>
+		<VarDeclaration Name="Q04_WRITE" Type="WSTRING" InitialValue="&quot;opc_ua[WRITE;/Objects/Q04,1:s=Q04]&quot;"/>
+		<VarDeclaration Name="Q05_READ" Type="WSTRING" InitialValue="&quot;opc_ua[READ;/Objects/Q05,1:s=Q05]&quot;"/>
+		<VarDeclaration Name="Q05_WRITE" Type="WSTRING" InitialValue="&quot;opc_ua[WRITE;/Objects/Q05,1:s=Q05]&quot;"/>
+		<VarDeclaration Name="Q06_READ" Type="WSTRING" InitialValue="&quot;opc_ua[READ;/Objects/Q06,1:s=Q06]&quot;"/>
+		<VarDeclaration Name="Q06_WRITE" Type="WSTRING" InitialValue="&quot;opc_ua[WRITE;/Objects/Q06,1:s=Q06]&quot;"/>
+		<VarDeclaration Name="Q07_READ" Type="WSTRING" InitialValue="&quot;opc_ua[READ;/Objects/Q07,1:s=Q07]&quot;"/>
+		<VarDeclaration Name="Q07_WRITE" Type="WSTRING" InitialValue="&quot;opc_ua[WRITE;/Objects/Q07,1:s=Q07]&quot;"/>
+		<VarDeclaration Name="Q08_READ" Type="WSTRING" InitialValue="&quot;opc_ua[READ;/Objects/Q08,1:s=Q08]&quot;"/>
+		<VarDeclaration Name="Q08_WRITE" Type="WSTRING" InitialValue="&quot;opc_ua[WRITE;/Objects/Q08,1:s=Q08]&quot;"/>
+		<VarDeclaration Name="Q09_READ" Type="WSTRING" InitialValue="&quot;opc_ua[READ;/Objects/Q09,1:s=Q09]&quot;"/>
+		<VarDeclaration Name="Q09_WRITE" Type="WSTRING" InitialValue="&quot;opc_ua[WRITE;/Objects/Q09,1:s=Q09]&quot;"/>
+		<VarDeclaration Name="Q10_READ" Type="WSTRING" InitialValue="&quot;opc_ua[READ;/Objects/Q10,1:s=Q10]&quot;"/>
+		<VarDeclaration Name="Q10_WRITE" Type="WSTRING" InitialValue="&quot;opc_ua[WRITE;/Objects/Q10,1:s=Q10]&quot;"/>
+		<VarDeclaration Name="Q11_READ" Type="WSTRING" InitialValue="&quot;opc_ua[READ;/Objects/Q11,1:s=Q11]&quot;"/>
+		<VarDeclaration Name="Q11_WRITE" Type="WSTRING" InitialValue="&quot;opc_ua[WRITE;/Objects/Q11,1:s=Q11]&quot;"/>
+		<VarDeclaration Name="Q12_READ" Type="WSTRING" InitialValue="&quot;opc_ua[READ;/Objects/Q12,1:s=Q12]&quot;"/>
+		<VarDeclaration Name="Q12_WRITE" Type="WSTRING" InitialValue="&quot;opc_ua[WRITE;/Objects/Q12,1:s=Q12]&quot;"/>
+	</GlobalConstants>
+	<OriginalSource><![CDATA[PACKAGE Meins::InputOutputTester::Button_OPC_UA;
+
+// OPC-UA Strings
+GLOBALCONSTANTS SubStrings
+	VAR_GLOBAL CONSTANT
+		I1_WRITE : WSTRING := "opc_ua[WRITE;/Objects/I1,1:s=I1]";
+		I2_WRITE : WSTRING := "opc_ua[WRITE;/Objects/I2,1:s=I2]";
+		I3_WRITE : WSTRING := "opc_ua[WRITE;/Objects/I3,1:s=I3]";
+		I4_WRITE : WSTRING := "opc_ua[WRITE;/Objects/I4,1:s=I4]";
+		I5_WRITE : WSTRING := "opc_ua[WRITE;/Objects/I5,1:s=I5]";
+		I6_WRITE : WSTRING := "opc_ua[WRITE;/Objects/I6,1:s=I6]";
+		I7_WRITE : WSTRING := "opc_ua[WRITE;/Objects/I7,1:s=I7]";
+		I8_WRITE : WSTRING := "opc_ua[WRITE;/Objects/I8,1:s=I8]";
+		Q01_READ : WSTRING := "opc_ua[READ;/Objects/Q01,1:s=Q01]";
+		Q01_WRITE : WSTRING := "opc_ua[WRITE;/Objects/Q01,1:s=Q01]";
+		Q02_READ : WSTRING := "opc_ua[READ;/Objects/Q02,1:s=Q02]";
+		Q02_WRITE : WSTRING := "opc_ua[WRITE;/Objects/Q02,1:s=Q02]";
+		Q03_READ : WSTRING := "opc_ua[READ;/Objects/Q03,1:s=Q03]";
+		Q03_WRITE : WSTRING := "opc_ua[WRITE;/Objects/Q03,1:s=Q03]";
+		Q04_READ : WSTRING := "opc_ua[READ;/Objects/Q04,1:s=Q04]";
+		Q04_WRITE : WSTRING := "opc_ua[WRITE;/Objects/Q04,1:s=Q04]";
+		Q05_READ : WSTRING := "opc_ua[READ;/Objects/Q05,1:s=Q05]";
+		Q05_WRITE : WSTRING := "opc_ua[WRITE;/Objects/Q05,1:s=Q05]";
+		Q06_READ : WSTRING := "opc_ua[READ;/Objects/Q06,1:s=Q06]";
+		Q06_WRITE : WSTRING := "opc_ua[WRITE;/Objects/Q06,1:s=Q06]";
+		Q07_READ : WSTRING := "opc_ua[READ;/Objects/Q07,1:s=Q07]";
+		Q07_WRITE : WSTRING := "opc_ua[WRITE;/Objects/Q07,1:s=Q07]";
+		Q08_READ : WSTRING := "opc_ua[READ;/Objects/Q08,1:s=Q08]";
+		Q08_WRITE : WSTRING := "opc_ua[WRITE;/Objects/Q08,1:s=Q08]";
+		Q09_READ : WSTRING := "opc_ua[READ;/Objects/Q09,1:s=Q09]";
+		Q09_WRITE : WSTRING := "opc_ua[WRITE;/Objects/Q09,1:s=Q09]";
+		Q10_READ : WSTRING := "opc_ua[READ;/Objects/Q10,1:s=Q10]";
+		Q10_WRITE : WSTRING := "opc_ua[WRITE;/Objects/Q10,1:s=Q10]";
+		Q11_READ : WSTRING := "opc_ua[READ;/Objects/Q11,1:s=Q11]";
+		Q11_WRITE : WSTRING := "opc_ua[WRITE;/Objects/Q11,1:s=Q11]";
+		Q12_READ : WSTRING := "opc_ua[READ;/Objects/Q12,1:s=Q12]";
+		Q12_WRITE : WSTRING := "opc_ua[WRITE;/Objects/Q12,1:s=Q12]";
+	END_VAR
+END_GLOBALCONSTANTS
+]]></OriginalSource>
+</GlobalConstants>

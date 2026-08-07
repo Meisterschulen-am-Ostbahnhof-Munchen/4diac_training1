@@ -13,7 +13,7 @@
 		<InputVars>
 			<VarDeclaration Name="u16ObjId" Type="UINT" Comment="Object ID" InitialValue="ID_NULL"/>
 			<VarDeclaration Name="Input" Type="logiBUS::io::DI::logiBUS_DI_S" Comment="Identify the Input Input_I1..I8" InitialValue="logiBUS_DI::Invalid"/>
-			<VarDeclaration Name="ID" Type="WSTRING"/>
+			<VarDeclaration Name="ID_WRITE" Type="WSTRING"/>
 		</InputVars>
 	</SubAppInterfaceList>
 	<SubAppNetwork>
@@ -43,7 +43,7 @@
 				<Attribute Name="Visible" Value="false"/>
 			</Connection>
 			<Connection Source="AX_X_TO_BOOL.IN" Destination="PUBLISH_1.SD_1" dx1="473.33"/>
-			<Connection Source="ID" Destination="PUBLISH_1.ID" dx1="4280">
+			<Connection Source="ID_WRITE" Destination="PUBLISH_1.ID" dx1="4280">
 				<Attribute Name="Visible" Value="false"/>
 			</Connection>
 		</DataConnections>
