@@ -5,6 +5,38 @@
 	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2023-10-23" Remarks="initial API and implementation and/or initial documentation">
 	</VersionInfo>
 	<CompilerInfo packageName="Meins::InputOutputTester::Button_OPC_UA">
+		<Import declaration="Meins::InputOutputTester::Button_OPC_UA::SubStrings::I1_WRITE"/>
+		<Import declaration="Meins::InputOutputTester::Button_OPC_UA::SubStrings::I2_WRITE"/>
+		<Import declaration="Meins::InputOutputTester::Button_OPC_UA::SubStrings::I3_WRITE"/>
+		<Import declaration="Meins::InputOutputTester::Button_OPC_UA::SubStrings::I4_WRITE"/>
+		<Import declaration="Meins::InputOutputTester::Button_OPC_UA::SubStrings::I5_WRITE"/>
+		<Import declaration="Meins::InputOutputTester::Button_OPC_UA::SubStrings::I6_WRITE"/>
+		<Import declaration="Meins::InputOutputTester::Button_OPC_UA::SubStrings::I7_WRITE"/>
+		<Import declaration="Meins::InputOutputTester::Button_OPC_UA::SubStrings::I8_WRITE"/>
+		<Import declaration="Meins::InputOutputTester::Button_OPC_UA::SubStrings::Q01_READ"/>
+		<Import declaration="Meins::InputOutputTester::Button_OPC_UA::SubStrings::Q01_WRITE"/>
+		<Import declaration="Meins::InputOutputTester::Button_OPC_UA::SubStrings::Q02_READ"/>
+		<Import declaration="Meins::InputOutputTester::Button_OPC_UA::SubStrings::Q02_WRITE"/>
+		<Import declaration="Meins::InputOutputTester::Button_OPC_UA::SubStrings::Q03_READ"/>
+		<Import declaration="Meins::InputOutputTester::Button_OPC_UA::SubStrings::Q03_WRITE"/>
+		<Import declaration="Meins::InputOutputTester::Button_OPC_UA::SubStrings::Q04_READ"/>
+		<Import declaration="Meins::InputOutputTester::Button_OPC_UA::SubStrings::Q04_WRITE"/>
+		<Import declaration="Meins::InputOutputTester::Button_OPC_UA::SubStrings::Q05_READ"/>
+		<Import declaration="Meins::InputOutputTester::Button_OPC_UA::SubStrings::Q05_WRITE"/>
+		<Import declaration="Meins::InputOutputTester::Button_OPC_UA::SubStrings::Q06_READ"/>
+		<Import declaration="Meins::InputOutputTester::Button_OPC_UA::SubStrings::Q06_WRITE"/>
+		<Import declaration="Meins::InputOutputTester::Button_OPC_UA::SubStrings::Q07_READ"/>
+		<Import declaration="Meins::InputOutputTester::Button_OPC_UA::SubStrings::Q07_WRITE"/>
+		<Import declaration="Meins::InputOutputTester::Button_OPC_UA::SubStrings::Q08_READ"/>
+		<Import declaration="Meins::InputOutputTester::Button_OPC_UA::SubStrings::Q08_WRITE"/>
+		<Import declaration="Meins::InputOutputTester::Button_OPC_UA::SubStrings::Q09_READ"/>
+		<Import declaration="Meins::InputOutputTester::Button_OPC_UA::SubStrings::Q09_WRITE"/>
+		<Import declaration="Meins::InputOutputTester::Button_OPC_UA::SubStrings::Q10_READ"/>
+		<Import declaration="Meins::InputOutputTester::Button_OPC_UA::SubStrings::Q10_WRITE"/>
+		<Import declaration="Meins::InputOutputTester::Button_OPC_UA::SubStrings::Q11_READ"/>
+		<Import declaration="Meins::InputOutputTester::Button_OPC_UA::SubStrings::Q11_WRITE"/>
+		<Import declaration="Meins::InputOutputTester::Button_OPC_UA::SubStrings::Q12_READ"/>
+		<Import declaration="Meins::InputOutputTester::Button_OPC_UA::SubStrings::Q12_WRITE"/>
 		<Import declaration="Uebungen::const::UT::Tester::DefaultPool_Tester::Button_I01"/>
 		<Import declaration="Uebungen::const::UT::Tester::DefaultPool_Tester::Button_I02"/>
 		<Import declaration="Uebungen::const::UT::Tester::DefaultPool_Tester::Button_I03"/>
@@ -25,123 +57,141 @@
 		<Import declaration="Uebungen::const::UT::Tester::DefaultPool_Tester::Button_Q10"/>
 		<Import declaration="Uebungen::const::UT::Tester::DefaultPool_Tester::Button_Q11"/>
 		<Import declaration="Uebungen::const::UT::Tester::DefaultPool_Tester::Button_Q12"/>
-		<Import declaration="logiBUS::io::DQ::logiBUS_DO"/>
-		<Import declaration="logiBUS::io::DI::logiBUS_DI"/>
+		<Import declaration="logiBUS::io::DI::logiBUS_DI::Input_I1"/>
+		<Import declaration="logiBUS::io::DI::logiBUS_DI::Input_I2"/>
+		<Import declaration="logiBUS::io::DI::logiBUS_DI::Input_I3"/>
+		<Import declaration="logiBUS::io::DI::logiBUS_DI::Input_I4"/>
+		<Import declaration="logiBUS::io::DI::logiBUS_DI::Input_I5"/>
+		<Import declaration="logiBUS::io::DI::logiBUS_DI::Input_I6"/>
+		<Import declaration="logiBUS::io::DI::logiBUS_DI::Input_I7"/>
+		<Import declaration="logiBUS::io::DI::logiBUS_DI::Input_I8"/>
+		<Import declaration="logiBUS::io::DQ::logiBUS_DO::Output_Q1"/>
+		<Import declaration="logiBUS::io::DQ::logiBUS_DO::Output_Q10"/>
+		<Import declaration="logiBUS::io::DQ::logiBUS_DO::Output_Q11"/>
+		<Import declaration="logiBUS::io::DQ::logiBUS_DO::Output_Q12"/>
+		<Import declaration="logiBUS::io::DQ::logiBUS_DO::Output_Q2"/>
+		<Import declaration="logiBUS::io::DQ::logiBUS_DO::Output_Q3"/>
+		<Import declaration="logiBUS::io::DQ::logiBUS_DO::Output_Q4"/>
+		<Import declaration="logiBUS::io::DQ::logiBUS_DO::Output_Q5"/>
+		<Import declaration="logiBUS::io::DQ::logiBUS_DO::Output_Q6"/>
+		<Import declaration="logiBUS::io::DQ::logiBUS_DO::Output_Q7"/>
+		<Import declaration="logiBUS::io::DQ::logiBUS_DO::Output_Q8"/>
+		<Import declaration="logiBUS::io::DQ::logiBUS_DO::Output_Q9"/>
 	</CompilerInfo>
 	<SubAppInterfaceList>
 	</SubAppInterfaceList>
 	<SubAppNetwork>
 		<SubApp Name="Input_I1" Type="MyLib::sys::logiBUS_IXA_BG_OPC" x="-1000" y="-700">
 			<Parameter Name="u16ObjId" Value="Button_I01"/>
-			<Parameter Name="Input" Value="logiBUS_DI::Input_I1"/>
-			<Parameter Name="ID_WRITE" Value="SubStrings::I1_WRITE"/>
+			<Parameter Name="Input" Value="Input_I1"/>
+			<Parameter Name="ID_WRITE" Value="I1_WRITE"/>
 		</SubApp>
 		<SubApp Name="Input_I2" Type="MyLib::sys::logiBUS_IXA_BG_OPC" x="-1000" y="100">
 			<Parameter Name="u16ObjId" Value="Button_I02"/>
-			<Parameter Name="Input" Value="logiBUS_DI::Input_I2"/>
-			<Parameter Name="ID_WRITE" Value="SubStrings::I2_WRITE"/>
+			<Parameter Name="Input" Value="Input_I2"/>
+			<Parameter Name="ID_WRITE" Value="I2_WRITE"/>
 		</SubApp>
 		<SubApp Name="Input_I3" Type="MyLib::sys::logiBUS_IXA_BG_OPC" x="-1000" y="900">
 			<Parameter Name="u16ObjId" Value="Button_I03"/>
-			<Parameter Name="Input" Value="logiBUS_DI::Input_I3"/>
-			<Parameter Name="ID_WRITE" Value="SubStrings::I3_WRITE"/>
+			<Parameter Name="Input" Value="Input_I3"/>
+			<Parameter Name="ID_WRITE" Value="I3_WRITE"/>
 		</SubApp>
 		<SubApp Name="Input_I4" Type="MyLib::sys::logiBUS_IXA_BG_OPC" x="-1000" y="1700">
 			<Parameter Name="u16ObjId" Value="Button_I04"/>
-			<Parameter Name="Input" Value="logiBUS_DI::Input_I4"/>
-			<Parameter Name="ID_WRITE" Value="SubStrings::I4_WRITE"/>
+			<Parameter Name="Input" Value="Input_I4"/>
+			<Parameter Name="ID_WRITE" Value="I4_WRITE"/>
 		</SubApp>
 		<SubApp Name="Input_I5" Type="MyLib::sys::logiBUS_IXA_BG_OPC" x="-1000" y="2500">
 			<Parameter Name="u16ObjId" Value="Button_I05"/>
-			<Parameter Name="Input" Value="logiBUS_DI::Input_I5"/>
-			<Parameter Name="ID_WRITE" Value="SubStrings::I5_WRITE"/>
+			<Parameter Name="Input" Value="Input_I5"/>
+			<Parameter Name="ID_WRITE" Value="I5_WRITE"/>
 		</SubApp>
 		<SubApp Name="Input_I6" Type="MyLib::sys::logiBUS_IXA_BG_OPC" x="-1000" y="3300">
 			<Parameter Name="u16ObjId" Value="Button_I06"/>
-			<Parameter Name="Input" Value="logiBUS_DI::Input_I6"/>
-			<Parameter Name="ID_WRITE" Value="SubStrings::I6_WRITE"/>
+			<Parameter Name="Input" Value="Input_I6"/>
+			<Parameter Name="ID_WRITE" Value="I6_WRITE"/>
 		</SubApp>
 		<SubApp Name="Input_I7" Type="MyLib::sys::logiBUS_IXA_BG_OPC" x="-1000" y="4100">
 			<Parameter Name="u16ObjId" Value="Button_I07"/>
-			<Parameter Name="Input" Value="logiBUS_DI::Input_I7"/>
-			<Parameter Name="ID_WRITE" Value="SubStrings::I7_WRITE"/>
+			<Parameter Name="Input" Value="Input_I7"/>
+			<Parameter Name="ID_WRITE" Value="I7_WRITE"/>
 		</SubApp>
 		<SubApp Name="Input_I8" Type="MyLib::sys::logiBUS_IXA_BG_OPC" x="-1000" y="4900">
 			<Parameter Name="u16ObjId" Value="Button_I08"/>
-			<Parameter Name="Input" Value="logiBUS_DI::Input_I8"/>
-			<Parameter Name="ID_WRITE" Value="SubStrings::I8_WRITE"/>
+			<Parameter Name="Input" Value="Input_I8"/>
+			<Parameter Name="ID_WRITE" Value="I8_WRITE"/>
 		</SubApp>
 		<SubApp Name="Output_Q1" Type="MyLib::sys::Button_IXA_TO_logiBUS_QXA_BG_OPC" x="-4600" y="-700">
 			<Parameter Name="u16ObjId" Value="Button_Q01"/>
-			<Parameter Name="Output" Value="logiBUS_DO::Output_Q1"/>
-			<Parameter Name="ID_READ" Value="SubStrings::Q01_READ"/>
-			<Parameter Name="ID_WRITE" Value="SubStrings::Q01_WRITE"/>
+			<Parameter Name="Output" Value="Output_Q1"/>
+			<Parameter Name="ID_READ" Value="Q01_READ"/>
+			<Parameter Name="ID_WRITE" Value="Q01_WRITE"/>
 		</SubApp>
 		<SubApp Name="Output_Q2" Type="MyLib::sys::Button_IXA_TO_logiBUS_QXA_BG_OPC" x="-4600" y="100">
 			<Parameter Name="u16ObjId" Value="Button_Q02"/>
-			<Parameter Name="Output" Value="logiBUS_DO::Output_Q2"/>
-			<Parameter Name="ID_READ" Value="SubStrings::Q02_READ"/>
-			<Parameter Name="ID_WRITE" Value="SubStrings::Q02_WRITE"/>
+			<Parameter Name="Output" Value="Output_Q2"/>
+			<Parameter Name="ID_READ" Value="Q02_READ"/>
+			<Parameter Name="ID_WRITE" Value="Q02_WRITE"/>
 		</SubApp>
 		<SubApp Name="Output_Q3" Type="MyLib::sys::Button_IXA_TO_logiBUS_QXA_BG_OPC" x="-4600" y="900">
 			<Parameter Name="u16ObjId" Value="Button_Q03"/>
-			<Parameter Name="Output" Value="logiBUS_DO::Output_Q3"/>
-			<Parameter Name="ID_READ" Value="SubStrings::Q03_READ"/>
-			<Parameter Name="ID_WRITE" Value="SubStrings::Q03_WRITE"/>
+			<Parameter Name="Output" Value="Output_Q3"/>
+			<Parameter Name="ID_READ" Value="Q03_READ"/>
+			<Parameter Name="ID_WRITE" Value="Q03_WRITE"/>
 		</SubApp>
 		<SubApp Name="Output_Q4" Type="MyLib::sys::Button_IXA_TO_logiBUS_QXA_BG_OPC" x="-4600" y="1700">
 			<Parameter Name="u16ObjId" Value="Button_Q04"/>
-			<Parameter Name="Output" Value="logiBUS_DO::Output_Q4"/>
-			<Parameter Name="ID_READ" Value="SubStrings::Q04_READ"/>
-			<Parameter Name="ID_WRITE" Value="SubStrings::Q04_WRITE"/>
+			<Parameter Name="Output" Value="Output_Q4"/>
+			<Parameter Name="ID_READ" Value="Q04_READ"/>
+			<Parameter Name="ID_WRITE" Value="Q04_WRITE"/>
 		</SubApp>
 		<SubApp Name="Output_Q5" Type="MyLib::sys::Button_IXA_TO_logiBUS_QXA_BG_OPC" x="-4600" y="2500">
 			<Parameter Name="u16ObjId" Value="Button_Q05"/>
-			<Parameter Name="Output" Value="logiBUS_DO::Output_Q5"/>
-			<Parameter Name="ID_READ" Value="SubStrings::Q05_READ"/>
-			<Parameter Name="ID_WRITE" Value="SubStrings::Q05_WRITE"/>
+			<Parameter Name="Output" Value="Output_Q5"/>
+			<Parameter Name="ID_READ" Value="Q05_READ"/>
+			<Parameter Name="ID_WRITE" Value="Q05_WRITE"/>
 		</SubApp>
 		<SubApp Name="Output_Q6" Type="MyLib::sys::Button_IXA_TO_logiBUS_QXA_BG_OPC" x="-4600" y="3300">
 			<Parameter Name="u16ObjId" Value="Button_Q06"/>
-			<Parameter Name="Output" Value="logiBUS_DO::Output_Q6"/>
-			<Parameter Name="ID_READ" Value="SubStrings::Q06_READ"/>
-			<Parameter Name="ID_WRITE" Value="SubStrings::Q06_WRITE"/>
+			<Parameter Name="Output" Value="Output_Q6"/>
+			<Parameter Name="ID_READ" Value="Q06_READ"/>
+			<Parameter Name="ID_WRITE" Value="Q06_WRITE"/>
 		</SubApp>
 		<SubApp Name="Output_Q7" Type="MyLib::sys::Button_IXA_TO_logiBUS_QXA_BG_OPC" x="-4600" y="4100">
 			<Parameter Name="u16ObjId" Value="Button_Q07"/>
-			<Parameter Name="Output" Value="logiBUS_DO::Output_Q7"/>
-			<Parameter Name="ID_READ" Value="SubStrings::Q07_READ"/>
-			<Parameter Name="ID_WRITE" Value="SubStrings::Q07_WRITE"/>
+			<Parameter Name="Output" Value="Output_Q7"/>
+			<Parameter Name="ID_READ" Value="Q07_READ"/>
+			<Parameter Name="ID_WRITE" Value="Q07_WRITE"/>
 		</SubApp>
 		<SubApp Name="Output_Q8" Type="MyLib::sys::Button_IXA_TO_logiBUS_QXA_BG_OPC" x="-4600" y="4900">
 			<Parameter Name="u16ObjId" Value="Button_Q08"/>
-			<Parameter Name="Output" Value="logiBUS_DO::Output_Q8"/>
-			<Parameter Name="ID_READ" Value="SubStrings::Q08_READ"/>
-			<Parameter Name="ID_WRITE" Value="SubStrings::Q08_WRITE"/>
+			<Parameter Name="Output" Value="Output_Q8"/>
+			<Parameter Name="ID_READ" Value="Q08_READ"/>
+			<Parameter Name="ID_WRITE" Value="Q08_WRITE"/>
 		</SubApp>
 		<SubApp Name="Output_Q9" Type="MyLib::sys::Button_IXA_TO_logiBUS_QXA_BG_OPC" x="-4600" y="5700">
 			<Parameter Name="u16ObjId" Value="Button_Q09"/>
-			<Parameter Name="Output" Value="logiBUS_DO::Output_Q9"/>
-			<Parameter Name="ID_READ" Value="SubStrings::Q09_READ"/>
-			<Parameter Name="ID_WRITE" Value="SubStrings::Q09_WRITE"/>
+			<Parameter Name="Output" Value="Output_Q9"/>
+			<Parameter Name="ID_READ" Value="Q09_READ"/>
+			<Parameter Name="ID_WRITE" Value="Q09_WRITE"/>
 		</SubApp>
 		<SubApp Name="Output_Q10" Type="MyLib::sys::Button_IXA_TO_logiBUS_QXA_BG_OPC" x="-4600" y="6500">
 			<Parameter Name="u16ObjId" Value="Button_Q10"/>
-			<Parameter Name="Output" Value="logiBUS_DO::Output_Q10"/>
-			<Parameter Name="ID_READ" Value="SubStrings::Q10_READ"/>
-			<Parameter Name="ID_WRITE" Value="SubStrings::Q10_WRITE"/>
+			<Parameter Name="Output" Value="Output_Q10"/>
+			<Parameter Name="ID_READ" Value="Q10_READ"/>
+			<Parameter Name="ID_WRITE" Value="Q10_WRITE"/>
 		</SubApp>
 		<SubApp Name="Output_Q11" Type="MyLib::sys::Button_IXA_TO_logiBUS_QXA_BG_OPC" x="-4600" y="7300">
 			<Parameter Name="u16ObjId" Value="Button_Q11"/>
-			<Parameter Name="Output" Value="logiBUS_DO::Output_Q11"/>
-			<Parameter Name="ID_READ" Value="SubStrings::Q11_READ"/>
-			<Parameter Name="ID_WRITE" Value="SubStrings::Q11_WRITE"/>
+			<Parameter Name="Output" Value="Output_Q11"/>
+			<Parameter Name="ID_READ" Value="Q11_READ"/>
+			<Parameter Name="ID_WRITE" Value="Q11_WRITE"/>
 		</SubApp>
 		<SubApp Name="Output_Q12" Type="MyLib::sys::Button_IXA_TO_logiBUS_QXA_BG_OPC" x="-4600" y="8100">
 			<Parameter Name="u16ObjId" Value="Button_Q12"/>
-			<Parameter Name="Output" Value="logiBUS_DO::Output_Q12"/>
-			<Parameter Name="ID_READ" Value="SubStrings::Q12_READ"/>
-			<Parameter Name="ID_WRITE" Value="SubStrings::Q12_WRITE"/>
+			<Parameter Name="Output" Value="Output_Q12"/>
+			<Parameter Name="ID_READ" Value="Q12_READ"/>
+			<Parameter Name="ID_WRITE" Value="Q12_WRITE"/>
 		</SubApp>
 	</SubAppNetwork>
 </SubAppType>
