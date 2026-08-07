@@ -4,6 +4,7 @@
       <h1>APIXON Node 20 — I/O Test</h1>
       <div class="connection">
         <span class="dot" :class="statusClass"></span>
+        <span v-if="connected" class="tick-badge" :class="{ pulse: tickPulse }">{{ tick }}</span>
         <span>{{ status }}</span>
         <input v-model="endpointUrl" class="url-input" :disabled="connected" />
         <button @click="connected ? disconnect() : connect()">
@@ -66,6 +67,8 @@ const status = ref('Getrennt')
 const connected = ref(false)
 const inputs = ref<boolean[]>(Array(8).fill(false))
 const outputs = ref<boolean[]>(Array(12).fill(false))
+const tick = ref<number | string>('–')
+const tickPulse = ref(false)
 
 const statusClass = computed(() => {
   if (status.value === 'Verbunden') return 'green'
@@ -82,6 +85,7 @@ function handleLost() {
   status.value = 'Fehler: Verbindung verloren'
   inputs.value.fill(false)
   outputs.value.fill(false)
+  tick.value = '–'
 }
 
 async function connect() {
@@ -90,7 +94,7 @@ async function connect() {
     securityMode: MessageSecurityMode.None,
     securityPolicy: SecurityPolicy.None,
     endpoint_must_exist: false,
-    connectionStrategy: { maxRetry: 3, initialDelay: 1000, maxDelay: 5000 },
+    connectionStrategy: { maxRetry: 0 },
   })
 
   try {
@@ -136,6 +140,18 @@ async function connect() {
     )
     outputGroup.on('changed', (_item: any, dataValue: any, index: number) => {
       outputs.value[index] = !!dataValue.value?.value
+    })
+
+    /* Monitor the heartbeat/tick counter */
+    const tickGroup = await subscription.monitorItemsP(
+      [{ nodeId: coerceNodeId('ns=1;s=System.Tick'), attributeId: AttributeIds.Value }],
+      { samplingInterval: 100, discardOldest: true, queueSize: 2 },
+      TimestampsToReturn.Neither
+    )
+    tickGroup.on('changed', (_item: any, dataValue: any) => {
+      tick.value = dataValue.value?.value ?? '–'
+      tickPulse.value = true
+      setTimeout(() => { tickPulse.value = false }, 400)
     })
   } catch (err) {
     status.value = 'Fehler: ' + (err as Error).message
@@ -222,6 +238,17 @@ h2 {
 .dot.green  { background: #4caf50; box-shadow: 0 0 6px #4caf50; }
 .dot.red    { background: #f44336; }
 .dot.yellow { background: #ff9800; }
+
+.tick-badge {
+  font-size: 0.75rem;
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+  color: #4caf50;
+  min-width: 1.5rem;
+  text-align: center;
+  transition: opacity 0.2s;
+}
+.tick-badge.pulse { color: #fff; }
 
 .url-input {
   flex: 1;
