@@ -56,6 +56,9 @@ import {
   TimestampsToReturn,
   DataType,
   coerceNodeId,
+  WriteValue,
+  DataValue,
+  Variant,
 } from '@wsopcua/wsopcua'
 
 const endpointUrl = ref(`ws://${window.location.hostname || 'localhost'}:4841`)
@@ -73,6 +76,14 @@ const statusClass = computed(() => {
 let client: any = null
 let session: any = null
 
+function handleLost() {
+  if (!connected.value) return
+  connected.value = false
+  status.value = 'Fehler: Verbindung verloren'
+  inputs.value.fill(false)
+  outputs.value.fill(false)
+}
+
 async function connect() {
   status.value = 'Verbinde…'
   client = new OPCUAClient({
@@ -84,6 +95,8 @@ async function connect() {
 
   try {
     await client.connectP(endpointUrl.value)
+    client.on('connection_lost', handleLost)
+    client.on('close', handleLost)
     session = await client.createSessionP({})
     connected.value = true
     status.value = 'Verbunden'
@@ -134,16 +147,12 @@ async function toggleOutput(n: number) {
   if (!session) return
   const newVal = !outputs.value[n - 1]
   try {
-    await session.writeP([{
+    const wv = new WriteValue({
       nodeId: coerceNodeId(`ns=1;s=Q${String(n).padStart(2, '0')}`),
       attributeId: AttributeIds.Value,
-      value: {
-        value: {
-          dataType: DataType.Boolean,
-          value: newVal,
-        },
-      },
-    }])
+      value: new DataValue({ value: new Variant({ dataType: DataType.Boolean, value: newVal }) }),
+    })
+    await session.writeP([wv])
     /* optimistic update — subscription will confirm */
     outputs.value[n - 1] = newVal
   } catch (err) {
@@ -152,7 +161,11 @@ async function toggleOutput(n: number) {
 }
 
 async function disconnect() {
-  if (client) await client.disconnectP()
+  if (client) {
+    client.off('connection_lost', handleLost)
+    client.off('close', handleLost)
+    await client.disconnectP()
+  }
   connected.value = false
   status.value = 'Getrennt'
   inputs.value.fill(false)
