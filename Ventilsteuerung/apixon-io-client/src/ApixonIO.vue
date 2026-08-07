@@ -113,7 +113,7 @@ async function connect() {
 
     /* Monitor all outputs Q1-Q12 (reflect actual hardware state) */
     const outputItems = Array.from({ length: 12 }, (_, i) => ({
-      nodeId: coerceNodeId(`ns=1;s=Q${i + 1}`),
+      nodeId: coerceNodeId(`ns=1;s=Q${String(i + 1).padStart(2, '0')}`),
       attributeId: AttributeIds.Value,
     }))
     const outputGroup = await subscription.monitorItemsP(
@@ -135,7 +135,7 @@ async function toggleOutput(n: number) {
   const newVal = !outputs.value[n - 1]
   try {
     await session.writeP([{
-      nodeId: coerceNodeId(`ns=1;s=Q${n}`),
+      nodeId: coerceNodeId(`ns=1;s=Q${String(n).padStart(2, '0')}`),
       attributeId: AttributeIds.Value,
       value: {
         value: {
