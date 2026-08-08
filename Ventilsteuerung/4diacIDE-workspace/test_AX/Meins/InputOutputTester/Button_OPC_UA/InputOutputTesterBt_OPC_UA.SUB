@@ -37,6 +37,7 @@
 		<Import declaration="Meins::InputOutputTester::Button_OPC_UA::SubStrings::Q11_WRITE"/>
 		<Import declaration="Meins::InputOutputTester::Button_OPC_UA::SubStrings::Q12_READ"/>
 		<Import declaration="Meins::InputOutputTester::Button_OPC_UA::SubStrings::Q12_WRITE"/>
+		<Import declaration="Meins::InputOutputTester::Button_OPC_UA::SubStrings::Tick_WRITE"/>
 		<Import declaration="Uebungen::const::UT::Tester::DefaultPool_Tester::Button_I01"/>
 		<Import declaration="Uebungen::const::UT::Tester::DefaultPool_Tester::Button_I02"/>
 		<Import declaration="Uebungen::const::UT::Tester::DefaultPool_Tester::Button_I03"/>
@@ -57,6 +58,7 @@
 		<Import declaration="Uebungen::const::UT::Tester::DefaultPool_Tester::Button_Q10"/>
 		<Import declaration="Uebungen::const::UT::Tester::DefaultPool_Tester::Button_Q11"/>
 		<Import declaration="Uebungen::const::UT::Tester::DefaultPool_Tester::Button_Q12"/>
+		<Import declaration="Uebungen::const::UT::Tester::DefaultPool_Tester::OutputNumber_Tick"/>
 		<Import declaration="logiBUS::io::DI::logiBUS_DI::Input_I1"/>
 		<Import declaration="logiBUS::io::DI::logiBUS_DI::Input_I2"/>
 		<Import declaration="logiBUS::io::DI::logiBUS_DI::Input_I3"/>
@@ -192,6 +194,10 @@
 			<Parameter Name="Output" Value="Output_Q12"/>
 			<Parameter Name="ID_READ" Value="Q12_READ"/>
 			<Parameter Name="ID_WRITE" Value="Q12_WRITE"/>
+		</SubApp>
+		<SubApp Name="SystemTickSender" Type="MyLib::sys::SystemTickSender" x="-4400" y="-1200">
+			<Parameter Name="u16ObjId" Value="OutputNumber_Tick"/>
+			<Parameter Name="ID_WRITE" Value="Tick_WRITE"/>
 		</SubApp>
 	</SubAppNetwork>
 </SubAppType>
