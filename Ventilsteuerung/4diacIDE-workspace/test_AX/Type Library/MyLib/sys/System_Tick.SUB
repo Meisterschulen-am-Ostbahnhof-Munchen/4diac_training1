@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SubAppType Name="System_Tick" Comment="Subapplication Type">
+	<Identification Standard="61499-2">
+	</Identification>
+	<VersionInfo Version="1.0" Author="franz" Date="2026-08-07">
+	</VersionInfo>
+	<CompilerInfo packageName="MyLib::sys">
+	</CompilerInfo>
+	<SubAppInterfaceList>
+		<Plugs>
+			<AdapterDeclaration Name="ADI_OUT" Type="adapter::types::unidirectional::ADI"/>
+		</Plugs>
+	</SubAppInterfaceList>
+	<SubAppNetwork>
+		<FB Name="F_MOD" Type="iec61131::arithmetic::F_MOD" x="4200" y="100">
+			<Parameter Name="IN2" Value="DINT#100"/>
+		</FB>
+		<FB Name="ADD_2" Type="iec61131::arithmetic::ADD_2" x="2000" y="100">
+			<Parameter Name="IN1" Value="DINT#1"/>
+		</FB>
+		<FB Name="E_CYCLE" Type="iec61499::events::E_CYCLE" x="900" y="100">
+			<Parameter Name="DT" Value="T#200ms"/>
+		</FB>
+		<FB Name="INIT" Type="iec61131::booleanOperators::INIT" x="0" y="0">
+		</FB>
+		<FB Name="F_MOVE" Type="iec61131::selection::F_MOVE" x="3000" y="100">
+			<Attribute Name="DataType" Value="DINT"/>
+		</FB>
+		<FB Name="ADI_DINT_TO_DI" Type="adapter::conversion::unidirectional::ADI_DINT_TO_DI" x="5000" y="100">
+		</FB>
+		<EventConnections>
+			<Connection Source="F_MOVE.CNF" Destination="F_MOD.REQ"/>
+			<Connection Source="F_MOD.CNF" Destination="ADI_DINT_TO_DI.REQ"/>
+			<Connection Source="E_CYCLE.EO" Destination="ADD_2.REQ"/>
+			<Connection Source="ADD_2.CNF" Destination="F_MOVE.REQ"/>
+			<Connection Source="INIT.CNF" Destination="E_CYCLE.START" dx1="260"/>
+			<Connection Source="INIT.INITO" Destination="INIT.REQ" dx1="80" dx2="80" dy="53.33"/>
+		</EventConnections>
+		<DataConnections>
+			<Connection Source="F_MOVE.OUT" Destination="F_MOD.IN1"/>
+			<Connection Source="F_MOD.OUT" Destination="ADI_DINT_TO_DI.OUT"/>
+			<Connection Source="F_MOVE.OUT" Destination="ADD_2.IN2" dx1="80" dx2="80" dy="206.67"/>
+			<Connection Source="ADD_2.OUT" Destination="F_MOVE.IN"/>
+		</DataConnections>
+		<AdapterConnections>
+			<Connection Source="ADI_DINT_TO_DI.ADI_OUT" Destination="ADI_OUT" dx1="1160"/>
+		</AdapterConnections>
+	</SubAppNetwork>
+</SubAppType>

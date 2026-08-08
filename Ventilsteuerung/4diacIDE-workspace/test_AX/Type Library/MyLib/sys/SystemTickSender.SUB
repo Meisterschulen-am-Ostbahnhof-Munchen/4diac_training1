@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SubAppType Name="SystemTickSender" Comment="Subapplication Type">
+	<Identification Standard="61499-2">
+	</Identification>
+	<VersionInfo Version="1.0" Author="franz" Date="2026-08-07">
+	</VersionInfo>
+	<CompilerInfo packageName="MyLib::sys">
+		<Import declaration="isobus::UT::Q::const::IDs::ID_NULL"/>
+	</CompilerInfo>
+	<SubAppInterfaceList>
+		<InputVars>
+			<VarDeclaration Name="u16ObjId" Type="UINT" Comment="Object ID" InitialValue="ID_NULL"/>
+			<VarDeclaration Name="ID_WRITE" Type="WSTRING" Comment="OPC UA publish ID"/>
+		</InputVars>
+	</SubAppInterfaceList>
+	<SubAppNetwork>
+		<SubApp Name="System_Tick" Type="MyLib::sys::System_Tick" x="0" y="0">
+		</SubApp>
+		<FB Name="Q_NumericValue_AUDI" Type="isobus::UT::Q::Q_NumericValue_AUDI" x="4500" y="-800">
+		</FB>
+		<FB Name="ADI_SPLIT_2" Type="adapter::events::unidirectional::ADI_SPLIT_2" x="1100" y="0">
+		</FB>
+		<FB Name="ADI_TO_AUDI" Type="adapter::conversion::unidirectional::ADI_TO_AUDI" x="3000" y="-400">
+		</FB>
+		<FB Name="ADI_PUBLISH_1" Type="adapter::net::ADI_PUBLISH_1" x="4600" y="200">
+			<Parameter Name="QI" Value="TRUE"/>
+		</FB>
+		<DataConnections>
+			<Connection Source="u16ObjId" Destination="Q_NumericValue_AUDI.u16ObjId" dx1="2513.33">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="ID_WRITE" Destination="ADI_PUBLISH_1.ID" dx1="2513.33">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+		</DataConnections>
+		<AdapterConnections>
+			<Connection Source="System_Tick.ADI_OUT" Destination="ADI_SPLIT_2.IN"/>
+			<Connection Source="ADI_TO_AUDI.AUDI_OUT" Destination="Q_NumericValue_AUDI.u32NewValue" dx1="266.67"/>
+			<Connection Source="ADI_SPLIT_2.OUT1" Destination="ADI_TO_AUDI.ADI_IN" dx1="646.67"/>
+			<Connection Source="ADI_SPLIT_2.OUT2" Destination="ADI_PUBLISH_1.IN" dx1="646.67"/>
+		</AdapterConnections>
+	</SubAppNetwork>
+</SubAppType>
