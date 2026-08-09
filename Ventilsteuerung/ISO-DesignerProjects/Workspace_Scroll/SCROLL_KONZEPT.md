@@ -30,9 +30,10 @@ MainMask.jvi (480×480)
 │     ├─ …
 │     └─ Container_Row_20 (Top=798)   ← Zeile 20
 │
-└─ Container_Scrollbar_Parent (JVS-ID 3000, CGroup, 12×288, ClipsChildren=1)    ← schmaler Scrollbalken
-   ├─ Rectangle_Scrollbar (14000, 12×288)         ← Balken-Hintergrund/Track, füllt die volle Höhe
-   └─ Rectangle_Scroll_Indicator (14001, 12×36)   ← "Thumb"/Positionsanzeige, aktuell Top=0
+└─ Container_Scrollbar_Parent (JVS-ID 3000, CGroup, 12×288, ClipsChildren=1)    ← schmaler Scrollbalken (Sichtfenster)
+   ├─ Rectangle_Scrollbar (14000, 12×288, Top=0 fix)                           ← Balken-Hintergrund/Track, volle Höhe
+   └─ Container_Scrollbar_Content (JVS-ID 3010, CGroup, 12×288, Top=−252)      ← bewegter Inhalt (analog Scrolling_Content)
+      └─ Rectangle_Scroll_Indicator (14001, 12×36, Top=252 fix innerhalb)      ← "Thumb", Nettoposition = −252+252 = 0
 ```
 
 - **`Containerr_Scrolling_Parent`** ist das sichtbare Fenster für die Liste:
@@ -40,19 +41,31 @@ MainMask.jvi (480×480)
   **~6–7 Zeilen** sichtbar. (Tippfehler im Namen — siehe Offene Punkte.)
 - **`Container_Scrolling_Content`** ist die eigentliche Liste, 850 px hoch
   (20 × 42 px + Rand) — deutlich größer als das Sichtfenster.
-- **`Container_Scrollbar_Parent`** ist der optische Scrollbalken neben der
-  Liste, exakt so hoch wie das Sichtfenster (288 px). Er enthält zwei
-  Rectangles: `Rectangle_Scrollbar` als Track über die volle Höhe, und
-  `Rectangle_Scroll_Indicator` (36 px hoch, also eine Zeilenhöhe) als
-  bewegliche Positionsanzeige — dessen `Top` soll proportional zur
-  Scrollposition der Liste mitwandern.
+- **`Container_Scrollbar_Parent`** ist das Sichtfenster für den Scrollbalken
+  neben der Liste, exakt so hoch wie das Listen-Sichtfenster (288 px). Er
+  enthält `Rectangle_Scrollbar` als unbeweglichen Track über die volle Höhe,
+  sowie — seit der jüngsten GUI-Überarbeitung — einen eigenen bewegten
+  Inhalts-Container `Container_Scrollbar_Content` (12×288, genau wie sein
+  Parent), der wiederum `Rectangle_Scroll_Indicator` (36 px hoch, eine
+  Zeilenhöhe) an einer festen internen Position (Top=252) enthält. Diese
+  zusätzliche Verschachtelung spiegelt bewusst das Muster von
+  `Containerr_Scrolling_Parent`/`Container_Scrolling_Content` — vermutlich
+  damit dieselbe Art von Objekt (ein `Container`) sowohl für die Liste als
+  auch für den Indikator per `Q_ChildPosition` bewegt werden kann, statt für
+  den Indikator eine Ausnahme (direktes Bewegen eines `Rectangle`) zu
+  brauchen. Da `Container_Scrollbar_Content` genauso hoch wie sein Parent
+  ist, verschiebt sein `Top` effektiv nur die Position des Indikators
+  innerhalb des Balkens — es gibt (anders als bei der Liste) keinen
+  zusätzlichen, sonst verdeckten Inhalt, der dadurch sichtbar würde.
 - **Scrollen** heißt: die `Top`-Eigenschaft von `Container_Scrolling_Content`
   innerhalb des Sichtfensters negativ verschieben (z. B. −42, −84, …), damit
   andere Zeilen in den sichtbaren Bereich rutschen — **und gleichzeitig**
-  `Rectangle_Scroll_Indicator.Top` proportional mitverschieben, damit der
-  Scrollbalken die Position widerspiegelt. Jede Zeile selbst bleibt dabei
-  unverändert an ihrer festen Position (`Top = 42 × (Zeilennummer−1)`)
-  innerhalb der Content-Liste.
+  die `Top`-Eigenschaft von `Container_Scrollbar_Content` innerhalb seines
+  Sichtfensters passend mitverschieben, damit der Scrollbalken die Position
+  widerspiegelt. Jede Zeile selbst bleibt dabei unverändert an ihrer festen
+  Position (`Top = 42 × (Zeilennummer−1)`) innerhalb der Content-Liste; das
+  Rechteck `Rectangle_Scroll_Indicator` bleibt ebenso unverändert an seiner
+  festen Position (Top=252) innerhalb von `Container_Scrollbar_Content`.
 - **Bedienung über 4 Softkeys**: `UP`, `UP_UP`, `DOWN`, `DOWN_DOWN` — je ein
   Softkey für "eine Zeile" und "mehrere Zeilen auf einmal" pro Richtung
   (analog "kurz drücken = 1 Schritt, lang/UP_UP drücken = großer Schritt").
@@ -65,7 +78,7 @@ MainMask.jvi (480×480)
 > ⚠️ **Offen / noch nicht verdrahtet:** `EnableScrolling` ist auf allen
 > Masken `0` — das native VT-Scrollen wird also nicht genutzt. Die
 > eigentliche Logik, die bei Softkey-Tastendruck den `Top`-Wert von 3031
-> (und passend dazu den `Top`-Wert von `Rectangle_Scroll_Indicator`)
+> (und passend dazu den `Top`-Wert von `Container_Scrollbar_Content`)
 > verändert, ist noch nicht umgesetzt — siehe BEISPIEL/Verallgemeinerung
 > für einen konkreten Vorschlag, wie das auf FORTE-Seite aussehen könnte.
 
@@ -139,9 +152,10 @@ Steuerungslogik dafür noch nicht. Konkret vorgeschlagen:
 
 | Bauteil | Objekt | Rolle |
 |---|---|---|
-| `Container_Scrollbar_Parent` | `CGroup` 3000 | Sichtfenster für den Scrollbalken, 12×288, fix |
+| `Container_Scrollbar_Parent` | `CGroup` 3000 | Sichtfenster für den Scrollbalken, 12×288, fix (Top=0 auf der Maske) |
 | `Rectangle_Scrollbar` | `CRectangle` 14000 | Balken-Hintergrund, 12×288, unbeweglich |
-| `Rectangle_Scroll_Indicator` | `CRectangle` 14001 | "Thumb", 12×36 — `Top` soll sich mit der Scrollposition mitbewegen |
+| `Container_Scrollbar_Content` | `CGroup` 3010 | bewegter Inhalt, 12×288 — `Top` soll sich mit der Scrollposition mitbewegen (Startwert −252) |
+| `Rectangle_Scroll_Indicator` | `CRectangle` 14001 | "Thumb", 12×36 — feste Position Top=252 *innerhalb* von `Container_Scrollbar_Content` |
 | Softkey `UP` | `CPointer` (einer von 27025–27029, noch nicht benannt) | 1 Zeile nach oben |
 | Softkey `UP_UP` | `CPointer` (dto.) | mehrere Zeilen auf einmal nach oben (schnell) |
 | Softkey `DOWN` | `CPointer` (dto.) | 1 Zeile nach unten |
@@ -157,28 +171,66 @@ gebaut werden könnte:
 
 | `RampLimitFS` | Bedeutung dort | Übertragen auf Scroll |
 |---|---|---|
-| Event `UP_SLOW` / `UP_FAST` | Sollwert +1 / +SLOW\|FAST | Softkey `UP` / `UP_UP` |
-| Event `DOWN_SLOW` / `DOWN_FAST` | Sollwert −1 / −SLOW\|FAST | Softkey `DOWN` / `DOWN_DOWN` |
-| Input `SLOW`, `FAST` | Schrittweite langsam/schnell | Schrittweite 1 Zeile / N Zeilen |
-| Input `VAL_ZERO`, `VAL_FULL` | Wertebereich-Grenzen | Scroll-Anschlag oben (0) / unten (Zeilenanzahl − sichtbare Zeilen = 20 − 7 = 13) |
-| Output `OUT` (via `CNF`) | aktueller Sollwert | aktuelle Scroll-Position (in Zeilen) |
+| Event `ZERO` | Sollwert := VAL_ZERO | Event `TOP` |
+| Event `UP_SLOW` / `UP_FAST` | Sollwert +1 / +SLOW\|FAST | Event `UP` / `UP_UP` |
+| Event `DOWN_SLOW` / `DOWN_FAST` | Sollwert −1 / −SLOW\|FAST | Event `DOWN` / `DOWN_DOWN` |
+| Event `FULL` | Sollwert := VAL_FULL | Event `BOTTOM` |
+| Event `LOAD` (mit Input `PV`) | Sollwert := PV | Event `POS` (mit Input `SET_POS`) |
+| Input `SLOW`, `FAST` | Schrittweite langsam/schnell | Schrittweite 1 Zeile / `STEP` Zeilen |
+| Input `VAL_ZERO`, `VAL_FULL` | Wertebereich-Grenzen | Scroll-Anschlag oben (0) / unten (`POS_MAX` = Zeilenanzahl − sichtbare Zeilen = 20 − 7 = 13) |
+| Output `OUT` (via `CNF`) | aktueller Sollwert | aktuelle Scroll-Position `OUT` (in Zeilen, 0…`POS_MAX`) |
 
-Ein `ScrollFS`-FB nach diesem Muster hätte als `OUT` die aktuelle
-Zeilen-Offset-Zahl; diese müsste dann auf zwei VT-Werte umgerechnet und
+**`ScrollFS` hat also — mit den 7 vorgeschlagenen Events — exakt dieselbe
+Zahl und Struktur von Event-Eingängen wie `RampLimitFS`**, 1:1 übersetzt:
+
+| Event | Wirkung auf `OUT` | Schönerer Name (Vorschlag) |
+|---|---|---|
+| `TOP` | `OUT := 0` — Listenanfang | `FIRST` |
+| `UP_UP` | `OUT -= STEP` (geklemmt bei 0) | `PAGE_UP` |
+| `UP` | `OUT -= 1` (geklemmt bei 0) | `LINE_UP` |
+| `DOWN` | `OUT += 1` (geklemmt bei `POS_MAX`) | `LINE_DOWN` |
+| `DOWN_DOWN` | `OUT += STEP` (geklemmt bei `POS_MAX`) | `PAGE_DOWN` |
+| `BOTTOM` | `OUT := POS_MAX` — Listenende | `LAST` |
+| `POS` (mit Input `SET_POS`) | `OUT := SET_POS`, geklemmt auf `0…POS_MAX` | `GOTO` |
+
+Zusätzliche Inputs (analog `SLOW`/`FAST`/`VAL_ZERO`/`VAL_FULL`/`PV` bei
+`RampLimitFS`): `STEP` (Schrittweite für `UP_UP`/`DOWN_DOWN`, sinnvoll = 7 =
+Anzahl sichtbarer Zeilen, also "eine Bildschirmseite"), `POS_MAX` (hier 13),
+`SET_POS` (Zielwert für `POS`/`GOTO`). Output: `OUT` (aktuelle Position,
+0…13), ausgegeben über `CNF` wie bei `RampLimitFS`.
+
+**Konkret in unserem Fall (20 Zeilen, 42 px Zeilenhöhe):** ein einzelnes
+`UP`- oder `DOWN`-Event ändert `OUT` um genau 1, und da
+`Container_Scrolling_Content.Top = -42 × OUT` ist, bedeutet das: **ein
+`UP`/`DOWN`-Tastendruck scrollt die Liste um exakt 42 Pixel — eine ganze
+Zeile.** Das ist kein Zufall, sondern folgt direkt daraus, dass `OUT` in
+Zeilen-Einheiten geführt wird und erst beim Schreiben auf den VT (über
+`Q_ChildPosition`, siehe unten) mit der Zeilenhöhe skaliert wird — dieselbe
+`OUT`-Zahl treibt gleichzeitig beide VT-Ziele (Liste *und* Scroll-Indikator)
+mit jeweils eigener Skalierung, ohne dass `ScrollFS` selbst irgendetwas von
+Pixeln wissen muss.
+
+Diese `OUT`-Zahl (0…13) müsste dann auf zwei VT-Werte umgerechnet und
 geschrieben werden: `Container_Scrolling_Content.Top = -42 × OUT` und
-`Rectangle_Scroll_Indicator.Top = OUT × (288-36)/13` (linear zwischen 0 und
-`288-36`, je nachdem wie weit `OUT` zwischen 0 und 13 steht).
+`Container_Scrollbar_Content.Top = -252 + OUT × (288-36)/13`. Die zweite
+Formel ergibt sich aus der neuen Verschachtelung (siehe Architektur):
+`Rectangle_Scroll_Indicator` sitzt fest bei Top=252 *innerhalb* von
+`Container_Scrollbar_Content` — bei `OUT=0` muss `Container_Scrollbar_Content.Top`
+also bei −252 stehen, damit der Indikator netto auf Y=0 landet (Balken-Anfang);
+bei `OUT=13` (Anschlag unten) ergibt sich `Top = -252 + 252 = 0`, der
+Indikator landet netto auf Y=252 (Balken-Ende minus Indikatorhöhe, korrekt).
 
 **Wie `OUT` tatsächlich beim VT ankommt:** über den ISOBUS-Baustein
 [`Q_ChildPosition`](C:\git\ms\4diac_training1\Ventilsteuerung\4diacIDE-workspace\.lib\isobus-3.0.0\typelib\UT\Q\Q_ChildPosition.fbt)
 (ISO 11783-6 Annex F.16, „Change Child Position") — setzt die **absolute**
 Position eines Kind-Objekts relativ zu einem Parent-Objekt. Zwei Instanzen
-nötig, eine pro bewegtem Objekt:
+nötig, eine pro bewegtem Objekt — bei beiden ist das bewegte Kind jetzt ein
+`Container`, nicht mehr direkt ein `Rectangle`:
 
 | `Q_ChildPosition`-Instanz | `u16ObjIdParent` | `u16ObjId` (Kind, wird bewegt) | `s16Xposition`/`s16Yposition` |
 |---|---|---|---|
 | Liste scrollen | `Containerr_Scrolling_Parent` (3006) | `Container_Scrolling_Content` (3031) | `0` / `-42 × OUT` |
-| Scroll-Indikator | `Container_Scrollbar_Parent` (3000) | `Rectangle_Scroll_Indicator` (14001) | `0` / `OUT × (288-36)/13` |
+| Scroll-Indikator | `Container_Scrollbar_Parent` (3000) | `Container_Scrollbar_Content` (3010) | `0` / `-252 + OUT × (288-36)/13` |
 
 Wichtig — und das war ein Fehler in unserer ersten Beschreibung dieser
 Bausteine: `u16ObjId` (Kind) und `u16ObjIdParent` (Parent) haben **getrennte
@@ -196,6 +248,78 @@ Seiten bereits korrekt getrennt und wurde nicht verändert — nur die
 Dokumentation der beiden `.fbt`-Bausteine und der zugehörigen
 `visual-programming-languages-docs`-Seiten war unpräzise und wurde
 korrigiert.
+
+### Beispiel B (Fortsetzung): Struct-basierter Wrapper `ScrollFS_PHYS`
+
+Statt `ScrollFS` mit lauter einzelnen Skalar-Eingängen (zwei Parent-IDs,
+zwei Kind-IDs, Zeilenhöhe, Anschläge, …) zu bauen, folgt der Baustein dem
+Muster von
+[`Q_NumericValue_PHYS.fbt`](C:\git\ms\4diac_training1\Ventilsteuerung\4diacIDE-workspace\.lib\isobus-3.0.0\typelib\UT\Q\Q_NumericValue_PHYS.fbt):
+eine Composite-FB (FBNetwork), die alle Objektpool-Eigenschaften einer
+konkreten Scroll-Liste in **einer Struct** bündelt und intern verdrahtet.
+Bei `Q_NumericValue_PHYS` heißt diese Struct `NumericObjectPool_S`
+(`u16ObjId`, `r32Scale`, `i32Offset`, `u8Decimals`) und wird von
+`GcfScript.py` (`Ventilsteuerung\scripts_central\GcfScript.py`,
+Funktion `writeNumericGCFfile`) automatisch aus der `.jop` erzeugt — pro
+`OutputNumber`/`InputNumber` eine `.gcf`-Konstante wie
+`(u16ObjId := 12009, r32Scale := 0.01, i32Offset := 0, u8Decimals := 2)`.
+
+**Analog für Scroll-Listen — neue Struct `ScrollObjectPool_S`:**
+
+```
+ScrollObjectPool_S:
+  u16ListParentId   : UINT  -- Containerr_Scrolling_Parent
+  u16ListContentId  : UINT  -- Container_Scrolling_Content
+  i32RowHeight      : DINT  -- Zeilenhöhe in px
+  u16BarParentId    : UINT  -- Container_Scrollbar_Parent
+  u16BarContentId   : UINT  -- Container_Scrollbar_Content
+  i32BarBaseOffset  : DINT  -- Bar-Content.Top bei OUT=0
+  i32BarTravel      : DINT  -- Fensterhöhe − Indikatorhöhe
+  i32PosMax         : DINT  -- Zeilenanzahl − sichtbare Zeilen
+  i32Step           : DINT  -- Schrittweite für UP_UP/DOWN_DOWN
+```
+
+Für unsere konkrete Liste (20 Zeilen, 7 sichtbar, 42 px Zeilenhöhe, Bar
+288/36 px) wäre die generierte Konstante:
+
+```
+(u16ListParentId := 3006, u16ListContentId := 3031, i32RowHeight := 42,
+ u16BarParentId := 3000, u16BarContentId := 3010, i32BarBaseOffset := -252,
+ i32BarTravel := 252, i32PosMax := 13, i32Step := 7)
+```
+
+**Interner Aufbau von `ScrollFS_PHYS` (FBNetwork, geplant):**
+
+- **`RampLimitFS` wird direkt als interner Sub-FB wiederverwendet** (kein
+  neuer Zustandsautomat nötig) — Events 1:1 gemappt (`TOP→ZERO`,
+  `UP→UP_SLOW`, `UP_UP→UP_FAST`, `DOWN→DOWN_SLOW`, `DOWN_DOWN→DOWN_FAST`,
+  `BOTTOM→FULL`, `POS→LOAD` mit `PV:=SET_POS`), `VAL_ZERO:=0`,
+  `VAL_FULL:=stObj.i32PosMax`, `SLOW:=1`, `FAST:=stObj.i32Step`.
+- Bei jedem `RampLimitFS.CNF` (liefert `OUT`) werden zwei
+  `Q_ChildPosition`-Instanzen mit neuen Y-Werten angestoßen:
+  - Liste: `u16ObjIdParent := stObj.u16ListParentId`,
+    `u16ObjId := stObj.u16ListContentId`,
+    `s16Yposition := -stObj.i32RowHeight × OUT`
+  - Balken: `u16ObjIdParent := stObj.u16BarParentId`,
+    `u16ObjId := stObj.u16BarContentId`,
+    `s16Yposition := stObj.i32BarBaseOffset + OUT × stObj.i32BarTravel / stObj.i32PosMax`
+- `INIT` von `ScrollFS_PHYS` nimmt `stObj` entgegen (analog `Q_NumericValue_PHYS`)
+  und initialisiert beide `Q_ChildPosition`-Instanzen mit den passenden
+  Parent-/Kind-IDs aus der Struct.
+
+**Geplante Erweiterung von `GcfScript.py`:** neue Funktion
+`writeScrollGCFfile()` (analog `writeNumericGCFfile`) plus eine
+`readScrollJOP()`-Erweiterung, die pro Scroll-Liste (erkennbar an den
+Namenskonventionen `*_Scrolling_Parent`/`*_Scrolling_Content`/
+`*_Scrollbar_Parent`/`*_Scrollbar_Content`) automatisch alle neun
+Struct-Felder aus der `.jop` zieht (`RowHeight` aus der Höhe eines
+`Container_Row_*`, `PosMax` aus Zeilenanzahl minus
+`floor(Fensterhöhe/RowHeight)`, `BarBaseOffset`/`BarTravel` aus den
+`Top`/`Height`-Werten von Indikator und Balken-Fenster).
+
+**Status:** Design festgelegt, noch nicht implementiert. Geplante
+Reihenfolge: (1) `ScrollObjectPool_S.dtp`, (2) `GcfScript.py`-Erweiterung,
+(3) Composite-FB `ScrollFS_PHYS.fbt`.
 
 ## Verallgemeinerung
 
@@ -231,8 +355,12 @@ Für die Scroll-Steuerung (Beispiel B) verallgemeinert sich das Muster so:
   ändert sich nur diese Obergrenze (`N − sichtbare_Zeilen`) und die
   Umrechnungsfaktoren unten — die Struktur bleibt gleich.
 - `Container_Scrolling_Content.Top = -H × pos` (H = Zeilenhöhe, hier 42).
-- `Rectangle_Scroll_Indicator.Top = pos × (Fensterhöhe − Indikatorhöhe) / pos_max`
-  (hier: `pos × (288−36)/13`).
+- `Container_Scrollbar_Content.Top = -Offset + pos × (Fensterhöhe − Indikatorhöhe) / pos_max`
+  (hier: `-252 + pos × (288−36)/13`). `Offset` (hier 252) ist die feste
+  interne `Top`-Position von `Rectangle_Scroll_Indicator` innerhalb von
+  `Container_Scrollbar_Content` und muss vom Vorzeichen her immer genau
+  gegenläufig zum Startwert von `Container_Scrollbar_Content.Top` gewählt
+  sein, damit der Indikator bei `pos=0` netto auf Y=0 steht.
 - Die 4 Softkeys ändern `pos` um ±1 (`UP`/`DOWN`) bzw. ±N (`UP_UP`/
   `DOWN_DOWN`, z. B. N=3 für "eine Bildschirmseite"), jeweils geklemmt auf
   `0…pos_max` — exakt das `ZERO`/`UP_SLOW`/`UP_FAST`/`DOWN_SLOW`/
@@ -243,12 +371,12 @@ Für die Scroll-Steuerung (Beispiel B) verallgemeinert sich das Muster so:
 
 | Klasse | Anzahl | höchste ID |
 |---|---|---|
-| `CGroup` (Container) | 51 | 3067 |
+| `CGroup` (Container) | 52 | 3067 |
 | `COutputText` (OutputString) | 83 | 11102 |
 | `COutputNumber` | 41 | 12044 |
 | `CPointer` (ObjectPointer) | 30 | 27029 |
 | `CStringVariable` | 21 | 22026 |
-| `CProxy` | 441 | 4194859 |
+| `CProxy` | 443 | 4194859 |
 | `CRectangle` | 13 | 14107 |
 | `CImage` (PictureGraphic) | 13 | 20329 |
 
@@ -257,7 +385,7 @@ Für die Scroll-Steuerung (Beispiel B) verallgemeinert sich das Muster so:
 - **Scroll-Logik nicht verdrahtet**: die 6 SoftKey-Pointer auf
   `MainSoftKeyMask.jvi` (27024–27029) haben noch keine Makro-/
   Programmlogik, die beim Drücken `Container_Scrolling_Content.Top` und
-  `Rectangle_Scroll_Indicator.Top` ändert. Kandidat für das Muster:
+  `Container_Scrollbar_Content.Top` ändert. Kandidat für das Muster:
   ein `ScrollFS`-FB nach Vorbild von `RampLimitFS.fbt`, dessen `OUT` über
   zwei `Q_ChildPosition`-Instanzen (ISO 11783-6 F.16) an den VT geschrieben
   wird — siehe Beispiel B. Noch nicht als FB-Netzwerk umgesetzt, nur als
