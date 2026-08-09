@@ -1,7 +1,7 @@
 // ISO-Designer ISO 11783   Version 5.7.2.6664 Bucher Automation AG
 // Do not change!
 
-#define WorkingSet_0_Offset                                     1
+#define WorkingSet_Offset                                       1
 #define MainMask_Offset                                        21
 #define DataMask_invisible_Offset                              53
 #define Container_Scrollbar_Parent_Offset                      67
@@ -191,7 +191,7 @@
 #define OutputNumber_Row_18_SubValue_Offset                  5798
 #define OutputNumber_Row_19_SubValue_Offset                  5827
 #define OutputNumber_Row_20_SubValue_Offset                  5856
-#define Line_13000_Offset                                    5885
+#define Line_Offset                                          5885
 #define Rectangle_Scrollbar_Offset                           5896
 #define Rectangle_Scroll_Indicator_Offset                    5909
 #define Rectangle_14002_Offset                               5922
@@ -209,14 +209,14 @@
 #define Image_20001_Offset                                   7132
 #define Image_20002_Offset                                   7207
 #define Image_20003_Offset                                   7548
-#define Image_20086_20004_Offset                             7955
+#define Image_20086_Offset                                   7955
 #define Image_55027_20005_Offset                            14372
 #define Image_55027_20006_Offset                            20789
 #define Image_55028_20007_Offset                            27206
 #define Image_55028_20008_Offset                            33623
 #define Image_55028_20009_Offset                            40040
 #define Image_55027_20010_Offset                            46457
-#define Image_20343_20011_Offset                            52874
+#define Image_20343_Offset                                  52874
 #define Image_20329_Offset                                  59291
 #define StringVariable_22000_Offset                         60314
 #define StringVariable_22001_Offset                         60319
@@ -289,11 +289,11 @@
 #define ObjectPointer_Row_19_Status_Offset                  60729
 #define ObjectPointer_Row_20_Status_Offset                  60734
 #define ObjectPointer_SoftKey_Back_Offset                   60739
-#define ObjectPointer_27025_Offset                          60744
-#define ObjectPointer_27026_Offset                          60749
-#define ObjectPointer_27027_Offset                          60754
-#define ObjectPointer_27028_Offset                          60759
-#define ObjectPointer_27029_Offset                          60764
+#define ObjectPointer_SoftKey_Lock_Offset                   60744
+#define ObjectPointer_SoftKey_UP_UP_Offset                  60749
+#define ObjectPointer_SoftKey_UP_Offset                     60754
+#define ObjectPointer_SoftKey_DOWN_Offset                   60759
+#define ObjectPointer_SoftKey_DOWN_DOWN_Offset              60764
 
 #define ISO_OP_MEMORY_CLASS
 

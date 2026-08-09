@@ -4,7 +4,7 @@
 #include "DefaultPool.c.h"
 
 const unsigned long ISO_OP_MEMORY_CLASS isoOP_DefaultPool_Offset_Id[] = {
-	     1,  // WorkingSet_0_Offset
+	     1,  // WorkingSet_Offset
 	    21,  // MainMask_Offset
 	    53,  // DataMask_invisible_Offset
 	    67,  // Container_Scrollbar_Parent_Offset
@@ -194,7 +194,7 @@ const unsigned long ISO_OP_MEMORY_CLASS isoOP_DefaultPool_Offset_Id[] = {
 	  5798,  // OutputNumber_Row_18_SubValue_Offset
 	  5827,  // OutputNumber_Row_19_SubValue_Offset
 	  5856,  // OutputNumber_Row_20_SubValue_Offset
-	  5885,  // Line_13000_Offset
+	  5885,  // Line_Offset
 	  5896,  // Rectangle_Scrollbar_Offset
 	  5909,  // Rectangle_Scroll_Indicator_Offset
 	  5922,  // Rectangle_14002_Offset
@@ -212,14 +212,14 @@ const unsigned long ISO_OP_MEMORY_CLASS isoOP_DefaultPool_Offset_Id[] = {
 	  7132,  // Image_20001_Offset
 	  7207,  // Image_20002_Offset
 	  7548,  // Image_20003_Offset
-	  7955,  // Image_20086_20004_Offset
+	  7955,  // Image_20086_Offset
 	 14372,  // Image_55027_20005_Offset
 	 20789,  // Image_55027_20006_Offset
 	 27206,  // Image_55028_20007_Offset
 	 33623,  // Image_55028_20008_Offset
 	 40040,  // Image_55028_20009_Offset
 	 46457,  // Image_55027_20010_Offset
-	 52874,  // Image_20343_20011_Offset
+	 52874,  // Image_20343_Offset
 	 59291,  // Image_20329_Offset
 	 60314,  // StringVariable_22000_Offset
 	 60319,  // StringVariable_22001_Offset
@@ -292,9 +292,9 @@ const unsigned long ISO_OP_MEMORY_CLASS isoOP_DefaultPool_Offset_Id[] = {
 	 60729,  // ObjectPointer_Row_19_Status_Offset
 	 60734,  // ObjectPointer_Row_20_Status_Offset
 	 60739,  // ObjectPointer_SoftKey_Back_Offset
-	 60744,  // ObjectPointer_27025_Offset
-	 60749,  // ObjectPointer_27026_Offset
-	 60754,  // ObjectPointer_27027_Offset
-	 60759,  // ObjectPointer_27028_Offset
-	 60764,  // ObjectPointer_27029_Offset
+	 60744,  // ObjectPointer_SoftKey_Lock_Offset
+	 60749,  // ObjectPointer_SoftKey_UP_UP_Offset
+	 60754,  // ObjectPointer_SoftKey_UP_Offset
+	 60759,  // ObjectPointer_SoftKey_DOWN_Offset
+	 60764,  // ObjectPointer_SoftKey_DOWN_DOWN_Offset
 };  // isoOP_DefaultPool_Offset_Id

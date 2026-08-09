@@ -1,4 +1,5 @@
 from argparse import ArgumentParser
+import glob
 import os
 import re
 import xml.etree.ElementTree as ET
@@ -332,6 +333,161 @@ def _resolve_proxy_target(proxy_obj, by_id):
     return by_id.get(target_ref.get("JVS-ID"))
 
 
+def _get_jvi_property(jvi_root, prop_name):
+    """Read a <PropertySheets><PropertySheet><Property Name="..."><Value> from a .jvi root element."""
+    sheets = jvi_root.find("PropertySheets")
+    if sheets is None:
+        return None
+    for sheet in sheets.findall("PropertySheet"):
+        for prop in sheet.findall("Property"):
+            if prop.get("Name") == prop_name:
+                val = prop.find("Value")
+                if val is not None and val.text:
+                    return val.text.strip()
+    return None
+
+
+def _find_hosting_jvi(jop_dir, object_jvs_id):
+    """Find the .jvi file in jop_dir whose <Components> places object_jvs_id directly.
+
+    Returns (jvi_path, jvi_root) or (None, None) if not found in any .jvi in jop_dir.
+    """
+    for jvi_path in glob.glob(os.path.join(jop_dir, "*.jvi")):
+        root = ET.parse(jvi_path).getroot()
+        components = root.find("Components")
+        if components is None:
+            continue
+        for comp in components.findall("Component"):
+            objs = comp.find("Objects")
+            if objs is None:
+                continue
+            for obj_ref in objs.findall("Object"):
+                if obj_ref.get("JVS-ID") == str(object_jvs_id):
+                    return jvi_path, root
+    return None, None
+
+
+BUTTON_ROLE_KEYWORDS = [
+    # Check the more specific "fast/page" keywords before the plain up/down ones, so
+    # e.g. a "SoftKey_UP_UP" or "PageUp" object name isn't also claimed by the generic
+    # "up" role. Both the original terse naming (UP_UP/DOWN_DOWN) and the "nicer"
+    # PAGE_UP/PAGE_DOWN naming are recognized, since ISO-Designer object names and the
+    # FB's own event names are independent naming spaces.
+    ("u16BtnPageUpId", ("pageup", "page_up", "up_up")),
+    ("u16BtnPageDownId", ("pagedown", "page_down", "down_down")),
+    ("u16BtnTopId", ("top", "first")),
+    ("u16BtnBottomId", ("bottom", "last")),
+    ("u16BtnUpId", ("up",)),
+    ("u16BtnDownId", ("down",)),
+]
+
+
+def _match_button_roles(candidates):
+    """Match a list of (jvs_id, object_name) candidates to the 6 ScrollControls_S button
+    roles by keyword in the object name (case-insensitive). Each candidate is used for at
+    most one role. Returns (roles_dict, unmatched_candidates); roles_dict values are the
+    matched jvs_id string or None if no candidate matched that role.
+    """
+    remaining = list(candidates)
+    roles = {}
+    for field, keywords in BUTTON_ROLE_KEYWORDS:
+        match = None
+        for cand in remaining:
+            _, cand_name = cand
+            lname = (cand_name or "").lower()
+            if any(kw in lname for kw in keywords):
+                match = cand
+                break
+        if match:
+            roles[field] = match[0]
+            remaining.remove(match)
+        else:
+            roles[field] = None
+    return roles, remaining
+
+
+def _find_scroll_button_controls(jop_dir, jop_root, by_id, list_parent_id):
+    """Trace list_parent_id -> hosting mask .jvi -> its SoftKeyMask JVS-ID -> that
+    SoftKeyMask's own .jvi -> candidate button/key objects placed there, then match
+    those candidates to the 6 ScrollControls_S button roles by name.
+
+    Returns (roles_dict, warnings_list). roles_dict always has all 6 keys; values are
+    the matched real object JVS-ID (int) or None if nothing could be determined.
+    """
+    roles = {field: None for field, _ in BUTTON_ROLE_KEYWORDS}
+    warnings = []
+
+    mask_jvi_path, mask_jvi_root = _find_hosting_jvi(jop_dir, list_parent_id)
+    if mask_jvi_root is None:
+        warnings.append("could not find a .jvi mask hosting the list parent container "
+                         "- button IDs left as ID_NULL placeholders")
+        return roles, warnings
+
+    softkeymask_id = _get_jvi_property(mask_jvi_root, "SoftKeyMask")
+    if not softkeymask_id or softkeymask_id == "-1":
+        warnings.append(f"hosting mask ({os.path.basename(mask_jvi_path)}) has no "
+                         "associated SoftKeyMask - button IDs left as ID_NULL placeholders")
+        return roles, warnings
+
+    skm_obj = by_id.get(softkeymask_id)
+    if skm_obj is None:
+        warnings.append(f"SoftKeyMask object {softkeymask_id} not found in .jop "
+                         "- button IDs left as ID_NULL placeholders")
+        return roles, warnings
+
+    skm_jvi_rel = _get_prop(skm_obj, "Path")
+    if not skm_jvi_rel:
+        warnings.append(f"SoftKeyMask object {softkeymask_id} has no Path property "
+                         "- button IDs left as ID_NULL placeholders")
+        return roles, warnings
+
+    skm_jvi_path = os.path.join(jop_dir, skm_jvi_rel.lstrip(".\\/"))
+    if not os.path.exists(skm_jvi_path):
+        warnings.append(f"SoftKeyMask .jvi file not found: {skm_jvi_path} "
+                         "- button IDs left as ID_NULL placeholders")
+        return roles, warnings
+
+    skm_root = ET.parse(skm_jvi_path).getroot()
+    components = skm_root.find("Components")
+    if components is None:
+        warnings.append(f"{os.path.basename(skm_jvi_path)} has no <Components> "
+                         "- button IDs left as ID_NULL placeholders")
+        return roles, warnings
+
+    candidates = []
+    for comp in components.findall("Component"):
+        objs = comp.find("Objects")
+        if objs is None:
+            continue
+        for obj_ref in objs.findall("Object"):
+            real_id = obj_ref.get("JVS-ID")
+            real_obj = by_id.get(real_id)
+            name = real_obj.get("ObjectName") if real_obj is not None else ""
+            candidates.append((real_id, name))
+
+    if not candidates:
+        warnings.append(f"SoftKeyMask {softkeymask_id} ({os.path.basename(skm_jvi_path)}) "
+                         "has no child objects - button IDs left as ID_NULL placeholders")
+        return roles, warnings
+
+    matched, unmatched = _match_button_roles(candidates)
+    roles = {field: (int(v) if v is not None else None) for field, v in matched.items()}
+
+    missing = [field for field, v in roles.items() if v is None]
+    if missing:
+        warnings.append(
+            f"could not match a candidate for: {', '.join(missing)} (found "
+            f"{len(candidates)} objects on SoftKeyMask {softkeymask_id}, none of their "
+            "names matched the expected keywords - left as ID_NULL, rename in ISO-Designer "
+            "and rerun, or fill in by hand)")
+    if unmatched:
+        names = ", ".join(f"{jid}:{name or '?'}" for jid, name in unmatched)
+        warnings.append(f"{len(unmatched)} object(s) on SoftKeyMask {softkeymask_id} were "
+                         f"not claimed by any role ({names}) - e.g. a 'Back' key is expected here")
+
+    return roles, warnings
+
+
 def readScrollJOP(jop_filepath):
     """Parse a .jop file and extract scroll-list geometry into ScrollObjectPool_S data.
 
@@ -348,6 +504,7 @@ def readScrollJOP(jop_filepath):
                          "bar_parent_id": 3000, "bar_content_id": 3010, "bar_base_offset": -252,
                          "bar_travel": 252, "pos_max": 13, "step": 6}, ... }
     """
+    jop_dir = os.path.dirname(jop_filepath)
     tree = ET.parse(jop_filepath)
     root = tree.getroot()
     objects_container = root.find("Objects")
@@ -477,6 +634,15 @@ def readScrollJOP(jop_filepath):
     suffix = "_Scrolling_Content"
     key_name = content_name[:-len(suffix)] if content_name.endswith(suffix) else content_name
 
+    # Button IDs: traced via list_parent_id's hosting mask -> its associated SoftKeyMask
+    # -> that SoftKeyMask's own child objects, matched to the 6 roles by name. The direct-
+    # position InputNumber field has no analogous discoverable link (nothing in the pool
+    # currently marks a field as "the goto input") - stays None/ID_NULL until such a
+    # field exists and gets a naming convention.
+    button_roles, button_warnings = _find_scroll_button_controls(jop_dir, root, by_id, list_parent_id)
+    for w in button_warnings:
+        print(f"  Warning: {w}")
+
     return {
         key_name: {
             "list_parent_id":  list_parent_id,
@@ -488,6 +654,7 @@ def readScrollJOP(jop_filepath):
             "bar_travel":       bar_travel,
             "pos_max":          pos_max,
             "step":             step,
+            "controls":        button_roles,
         }
     }
 
@@ -502,34 +669,24 @@ SCROLL_ID_NULL = 65535  # isobus::UT::Q::const::IDs::ID_NULL, spelled out since 
 def writeScrollGCFfile(data, filepaths):
     """Write a <name>_Scroll.gcf with ScrollFull_S constants for each detected scroll list.
 
-    Only stGeometry can be derived from the .jop (list/scrollbar container geometry).
-    stControls (the 6 softkey button object IDs + the direct-position InputNumber field)
-    lives in the *.jvi mask files, not the .jop, and those softkeys don't yet follow a
-    naming convention that ties them to TOP/UP_UP/UP/DOWN/DOWN_DOWN/BOTTOM/GOTO - so
-    stControls is emitted as ID_NULL placeholders. Fill those in by hand (or extend this
-    function once the softkeys have a stable naming convention).
+    stGeometry is derived from the .jop (list/scrollbar container geometry). stControls'
+    6 button IDs are traced via the list's hosting mask -> its SoftKeyMask -> that mask's
+    child objects, matched to a role by name (see _find_scroll_button_controls); any role
+    that couldn't be matched falls back to ID_NULL (readScrollJOP already printed a
+    warning for those). u16GotoInputId has no discoverable link in the pool yet and is
+    always ID_NULL until such a field exists with a naming convention.
     """
     newfilepath = os.path.join(filepaths[1], filepaths[2] + '_Scroll.gcf')
     gcf_name    = filepaths[2] + '_Scroll'
     package     = filepaths[3]
     struct_type = "isobus::utils::scroll::ScrollFull_S"
 
-    root = ET.Element("GlobalConstants", Name=gcf_name, Comment="Scroll list configuration constants (geometry + placeholder controls)")
+    root = ET.Element("GlobalConstants", Name=gcf_name, Comment="Scroll list configuration constants (geometry + controls)")
 
     compiler_info = ET.SubElement(root, "CompilerInfo")
     compiler_info.set("packageName", package)
 
     global_constants = ET.SubElement(root, "GlobalConstants")
-
-    controls_placeholder = (
-        f"(u16BtnTopId := {SCROLL_ID_NULL}, "
-        f"u16BtnPageUpId := {SCROLL_ID_NULL}, "
-        f"u16BtnUpId := {SCROLL_ID_NULL}, "
-        f"u16BtnDownId := {SCROLL_ID_NULL}, "
-        f"u16BtnPageDownId := {SCROLL_ID_NULL}, "
-        f"u16BtnBottomId := {SCROLL_ID_NULL}, "
-        f"u16GotoInputId := {SCROLL_ID_NULL})"
-    )
 
     for name, info in sorted(data.items()):
         geometry = (
@@ -543,7 +700,21 @@ def writeScrollGCFfile(data, filepaths):
             f"i32PosMax := {info['pos_max']}, "
             f"i32Step := {info['step']})"
         )
-        initial_value = f"(stGeometry := {geometry}, stControls := {controls_placeholder})"
+
+        controls_info = info.get("controls") or {}
+        def _ctl(field):
+            v = controls_info.get(field)
+            return v if v is not None else SCROLL_ID_NULL
+        controls = (
+            f"(u16BtnTopId := {_ctl('u16BtnTopId')}, "
+            f"u16BtnPageUpId := {_ctl('u16BtnPageUpId')}, "
+            f"u16BtnUpId := {_ctl('u16BtnUpId')}, "
+            f"u16BtnDownId := {_ctl('u16BtnDownId')}, "
+            f"u16BtnPageDownId := {_ctl('u16BtnPageDownId')}, "
+            f"u16BtnBottomId := {_ctl('u16BtnBottomId')}, "
+            f"u16GotoInputId := {SCROLL_ID_NULL})"
+        )
+        initial_value = f"(stGeometry := {geometry}, stControls := {controls})"
 
         ET.SubElement(
             global_constants,
@@ -552,8 +723,8 @@ def writeScrollGCFfile(data, filepaths):
             Type=struct_type,
             InitialValue=initial_value,
         )
-        print(f"  Note: {name}{SCROLL_NAME_SUFFIX}.stControls left as ID_NULL placeholders "
-              f"- fill in the 6 button IDs + GOTO input ID by hand.")
+        print(f"  Note: {name}{SCROLL_NAME_SUFFIX}.stControls.u16GotoInputId left as "
+              f"ID_NULL - no direct-position input field exists in the pool yet.")
 
     xml_str = ET.tostring(root, encoding='utf-8').decode()
     xml_str = minidom.parseString(xml_str).toprettyxml(indent="\t")

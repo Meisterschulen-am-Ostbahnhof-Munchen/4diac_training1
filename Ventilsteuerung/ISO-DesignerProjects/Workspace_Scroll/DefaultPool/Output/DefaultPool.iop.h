@@ -6,7 +6,7 @@
 #define ISO_VERSION_LABEL             "       "
 #define MASK_WIDTH                          480
 #define MASK_HEIGHT                         480
-#define WorkingSet_0                          0
+#define WorkingSet                            0
 #define MainMask                           1000
 #define DataMask_invisible                 1001
 #define Container_Scrollbar_Parent         3000
@@ -196,7 +196,7 @@
 #define OutputNumber_Row_18_SubValue      12042
 #define OutputNumber_Row_19_SubValue      12043
 #define OutputNumber_Row_20_SubValue      12044
-#define Line_13000                        13000
+#define Line                              13000
 #define Rectangle_Scrollbar               14000
 #define Rectangle_Scroll_Indicator        14001
 #define Rectangle_14002                   14002
@@ -214,14 +214,14 @@
 #define Image_20001                       20001
 #define Image_20002                       20002
 #define Image_20003                       20003
-#define Image_20086_20004                 20004
+#define Image_20086                       20004
 #define Image_55027_20005                 20005
 #define Image_55027_20006                 20006
 #define Image_55028_20007                 20007
 #define Image_55028_20008                 20008
 #define Image_55028_20009                 20009
 #define Image_55027_20010                 20010
-#define Image_20343_20011                 20011
+#define Image_20343                       20011
 #define Image_20329                       20329
 #define StringVariable_22000              22000
 #define StringVariable_22001              22001
@@ -294,8 +294,8 @@
 #define ObjectPointer_Row_19_Status       27022
 #define ObjectPointer_Row_20_Status       27023
 #define ObjectPointer_SoftKey_Back        27024
-#define ObjectPointer_27025               27025
-#define ObjectPointer_27026               27026
-#define ObjectPointer_27027               27027
-#define ObjectPointer_27028               27028
-#define ObjectPointer_27029               27029
+#define ObjectPointer_SoftKey_Lock        27025
+#define ObjectPointer_SoftKey_UP_UP       27026
+#define ObjectPointer_SoftKey_UP          27027
+#define ObjectPointer_SoftKey_DOWN        27028
+#define ObjectPointer_SoftKey_DOWN_DOWN   27029
