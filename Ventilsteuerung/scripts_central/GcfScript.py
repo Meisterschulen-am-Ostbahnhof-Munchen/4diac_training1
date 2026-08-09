@@ -311,6 +311,260 @@ def writeNumericGCFfile(data, filepaths):
     print(f"Written: {newfilepath}")
 
 
+def _get_prop(obj, prop_name):
+    """Read a top-level <Property Name="..."><Value>...</Value></Property> from a .jop Object element."""
+    for prop in obj.iter("Property"):
+        if prop.get("Name") == prop_name:
+            value_el = prop.find("Value")
+            if value_el is not None and value_el.text:
+                return value_el.text.strip()
+    return None
+
+
+def _resolve_proxy_target(proxy_obj, by_id):
+    """Follow a CProxy's own <Objects><Object JVS-ID="X"/></Objects> to the real target Object element."""
+    objs_el = proxy_obj.find("Objects")
+    if objs_el is None:
+        return None
+    target_ref = objs_el.find("Object")
+    if target_ref is None:
+        return None
+    return by_id.get(target_ref.get("JVS-ID"))
+
+
+def readScrollJOP(jop_filepath):
+    """Parse a .jop file and extract scroll-list geometry into ScrollObjectPool_S data.
+
+    Detects a scroll list by four CGroup ObjectNames ending in "_Scrolling_Parent",
+    "_Scrolling_Content", "_Scrollbar_Parent", "_Scrollbar_Content" (see SCROLL_KONZEPT.md
+    in Workspace_Scroll). Only the single-scroll-list-per-pool case is supported; if more
+    than one candidate is found for any suffix, generation is skipped with a warning
+    (multi-list prefix pairing is not implemented, since real object names in this project
+    are not guaranteed to share a consistent prefix - e.g. "Containerr_Scrolling_Parent" vs
+    "Container_Scrolling_Content").
+
+    Returns a dict keyed by a name derived from the content container's ObjectName:
+        { "Container": {"list_parent_id": 3006, "list_content_id": 3031, "row_height": 42,
+                         "bar_parent_id": 3000, "bar_content_id": 3010, "bar_base_offset": -252,
+                         "bar_travel": 252, "pos_max": 13, "step": 6}, ... }
+    """
+    tree = ET.parse(jop_filepath)
+    root = tree.getroot()
+    objects_container = root.find("Objects")
+    if objects_container is None:
+        return {}
+
+    all_objects = objects_container.findall("Object")
+    by_name = {}
+    by_id = {}
+    for obj in all_objects:
+        cls = obj.get("Class")
+        if not cls:
+            continue
+        jvs_id = obj.get("JVS-ID")
+        if jvs_id:
+            by_id[jvs_id] = obj
+        name = obj.get("ObjectName")
+        if name:
+            by_name[name] = obj
+
+    def names_ending(suffix):
+        return [n for n in by_name if n.endswith(suffix)]
+
+    list_parents  = names_ending("_Scrolling_Parent")
+    list_contents = names_ending("_Scrolling_Content")
+    bar_parents   = names_ending("_Scrollbar_Parent")
+    bar_contents  = names_ending("_Scrollbar_Content")
+
+    if not (list_parents and list_contents and bar_parents and bar_contents):
+        return {}
+
+    if max(len(list_parents), len(list_contents), len(bar_parents), len(bar_contents)) > 1:
+        print("  Warning: multiple scroll lists detected in this pool - prefix-based "
+              "pairing is not implemented, skipping scroll struct generation.")
+        return {}
+
+    list_parent_obj  = by_name[list_parents[0]]
+    list_content_obj = by_name[list_contents[0]]
+    bar_parent_obj    = by_name[bar_parents[0]]
+    bar_content_obj   = by_name[bar_contents[0]]
+
+    list_parent_id  = int(list_parent_obj.get("JVS-ID"))
+    list_content_id = int(list_content_obj.get("JVS-ID"))
+    bar_parent_id    = int(bar_parent_obj.get("JVS-ID"))
+    bar_content_id   = int(bar_content_obj.get("JVS-ID"))
+
+    list_parent_height  = int(_get_prop(list_parent_obj, "Height") or 0)
+    list_content_height = int(_get_prop(list_content_obj, "Height") or 0)
+    bar_parent_height    = int(_get_prop(bar_parent_obj, "Height") or 0)
+
+    # Row height = vertical spacing between rows (Top of row 2 minus Top of row 1 as
+    # positioned inside ListContent), NOT a row container's own Height property - rows
+    # are typically drawn shorter than their spacing to leave a visible gap between them.
+    row_tops = {}
+    lc_children = list_content_obj.find("Objects")
+    if lc_children is not None:
+        for child_ref in lc_children.findall("Object"):
+            proxy_obj = by_id.get(child_ref.get("JVS-ID"))
+            if proxy_obj is None:
+                continue
+            target_obj = _resolve_proxy_target(proxy_obj, by_id)
+            if target_obj is None:
+                continue
+            target_name = target_obj.get("ObjectName") or ""
+            m = re.search(r'_Row_0*([12])$', target_name)
+            if m:
+                top_val = _get_prop(proxy_obj, "Top")
+                if top_val:
+                    row_tops[int(m.group(1))] = int(top_val)
+
+    row_height = None
+    if 1 in row_tops and 2 in row_tops:
+        row_height = row_tops[2] - row_tops[1]
+
+    if not row_height:
+        print("  Warning: could not determine row height (need '*_Row_01' and '*_Row_02' "
+              "containers positioned inside the list content) - skipping scroll struct "
+              "generation.")
+        return {}
+
+    pos_max = max(0, (list_content_height - list_parent_height) // row_height)
+    step = max(1, list_parent_height // row_height)
+
+    # Scrollbar indicator height: BarContent's single child proxy -> its real target -> Height.
+    indicator_height = None
+    bc_children = bar_content_obj.find("Objects")
+    if bc_children is not None:
+        child_ref = bc_children.find("Object")
+        if child_ref is not None:
+            proxy_obj = by_id.get(child_ref.get("JVS-ID"))
+            if proxy_obj is not None:
+                target_obj = _resolve_proxy_target(proxy_obj, by_id)
+                if target_obj is not None:
+                    h = _get_prop(target_obj, "Height")
+                    if h:
+                        indicator_height = int(h)
+
+    if indicator_height is None:
+        print("  Warning: could not determine scrollbar indicator height "
+              "- skipping scroll struct generation.")
+        return {}
+
+    bar_travel = bar_parent_height - indicator_height
+
+    # Bar base offset: current Top of the proxy positioning BarContent inside BarParent
+    # (this is the pos=0 baseline as currently set up in ISO-Designer).
+    bar_base_offset = None
+    bp_children = bar_parent_obj.find("Objects")
+    if bp_children is not None:
+        for child_ref in bp_children.findall("Object"):
+            proxy_obj = by_id.get(child_ref.get("JVS-ID"))
+            if proxy_obj is None:
+                continue
+            target_obj = _resolve_proxy_target(proxy_obj, by_id)
+            if target_obj is not None and target_obj.get("JVS-ID") == str(bar_content_id):
+                top_val = _get_prop(proxy_obj, "Top")
+                if top_val:
+                    bar_base_offset = int(top_val)
+                break
+
+    if bar_base_offset is None:
+        print("  Warning: could not determine scrollbar content base offset "
+              "- skipping scroll struct generation.")
+        return {}
+
+    content_name = list_contents[0]
+    suffix = "_Scrolling_Content"
+    key_name = content_name[:-len(suffix)] if content_name.endswith(suffix) else content_name
+
+    return {
+        key_name: {
+            "list_parent_id":  list_parent_id,
+            "list_content_id": list_content_id,
+            "row_height":      row_height,
+            "bar_parent_id":    bar_parent_id,
+            "bar_content_id":   bar_content_id,
+            "bar_base_offset":  bar_base_offset,
+            "bar_travel":       bar_travel,
+            "pos_max":          pos_max,
+            "step":             step,
+        }
+    }
+
+
+SCROLL_NAME_SUFFIX = "_Scroll"
+
+
+SCROLL_ID_NULL = 65535  # isobus::UT::Q::const::IDs::ID_NULL, spelled out since .gcf
+                        # InitialValue expressions aren't resolved against other packages
+
+
+def writeScrollGCFfile(data, filepaths):
+    """Write a <name>_Scroll.gcf with ScrollFull_S constants for each detected scroll list.
+
+    Only stGeometry can be derived from the .jop (list/scrollbar container geometry).
+    stControls (the 6 softkey button object IDs + the direct-position InputNumber field)
+    lives in the *.jvi mask files, not the .jop, and those softkeys don't yet follow a
+    naming convention that ties them to TOP/UP_UP/UP/DOWN/DOWN_DOWN/BOTTOM/GOTO - so
+    stControls is emitted as ID_NULL placeholders. Fill those in by hand (or extend this
+    function once the softkeys have a stable naming convention).
+    """
+    newfilepath = os.path.join(filepaths[1], filepaths[2] + '_Scroll.gcf')
+    gcf_name    = filepaths[2] + '_Scroll'
+    package     = filepaths[3]
+    struct_type = "isobus::utils::scroll::ScrollFull_S"
+
+    root = ET.Element("GlobalConstants", Name=gcf_name, Comment="Scroll list configuration constants (geometry + placeholder controls)")
+
+    compiler_info = ET.SubElement(root, "CompilerInfo")
+    compiler_info.set("packageName", package)
+
+    global_constants = ET.SubElement(root, "GlobalConstants")
+
+    controls_placeholder = (
+        f"(u16BtnTopId := {SCROLL_ID_NULL}, "
+        f"u16BtnPageUpId := {SCROLL_ID_NULL}, "
+        f"u16BtnUpId := {SCROLL_ID_NULL}, "
+        f"u16BtnDownId := {SCROLL_ID_NULL}, "
+        f"u16BtnPageDownId := {SCROLL_ID_NULL}, "
+        f"u16BtnBottomId := {SCROLL_ID_NULL}, "
+        f"u16GotoInputId := {SCROLL_ID_NULL})"
+    )
+
+    for name, info in sorted(data.items()):
+        geometry = (
+            f"(u16ListParentId := {info['list_parent_id']}, "
+            f"u16ListContentId := {info['list_content_id']}, "
+            f"i32RowHeight := {info['row_height']}, "
+            f"u16BarParentId := {info['bar_parent_id']}, "
+            f"u16BarContentId := {info['bar_content_id']}, "
+            f"i32BarBaseOffset := {info['bar_base_offset']}, "
+            f"i32BarTravel := {info['bar_travel']}, "
+            f"i32PosMax := {info['pos_max']}, "
+            f"i32Step := {info['step']})"
+        )
+        initial_value = f"(stGeometry := {geometry}, stControls := {controls_placeholder})"
+
+        ET.SubElement(
+            global_constants,
+            "VarDeclaration",
+            Name=name + SCROLL_NAME_SUFFIX,
+            Type=struct_type,
+            InitialValue=initial_value,
+        )
+        print(f"  Note: {name}{SCROLL_NAME_SUFFIX}.stControls left as ID_NULL placeholders "
+              f"- fill in the 6 button IDs + GOTO input ID by hand.")
+
+    xml_str = ET.tostring(root, encoding='utf-8').decode()
+    xml_str = minidom.parseString(xml_str).toprettyxml(indent="\t")
+    xml_str = xml_str[:19] + ' ' + 'encoding="UTF-8"' + xml_str[20:]
+
+    with open(newfilepath, "w") as file:
+        file.write(xml_str)
+
+    print(f"Written: {newfilepath}")
+
+
 if __name__ == "__main__":
 
     # Gets filepaths and saves it in a variable
@@ -329,6 +583,10 @@ if __name__ == "__main__":
         update_jop_objectnames(filepaths[4], rename_map)
         numeric_data = readJOP(filepaths[4])
         writeNumericGCFfile(numeric_data, filepaths)
+
+        scroll_data = readScrollJOP(filepaths[4])
+        if scroll_data:
+            writeScrollGCFfile(scroll_data, filepaths)
 
 
 __author__ = "Lorenz Bauer / Franz Höpfinger"
