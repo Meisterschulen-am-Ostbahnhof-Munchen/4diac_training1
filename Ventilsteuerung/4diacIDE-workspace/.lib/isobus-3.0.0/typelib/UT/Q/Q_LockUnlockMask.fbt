@@ -46,6 +46,16 @@
 <p>This message is available in VT Version 4 and later.
 This command is used by a Working Set to disallow or allow screen refreshes at the VT for the visible Data Mask or User-Layout Data Mask owned by the requesting Working Set.</p>
 
+<h2>Valid values for u16MaskId (the mask to lock or unlock)</h2>
+
+<p>A mask Object ID is valid if it falls within one of the following ISO 11783-6 ID ranges (Annex F.46):</p>
+<ul>
+	<li><strong>DataMask</strong>: 1000 – 1999</li>
+	<li><strong>WindowMask (User-Layout Data Mask)</strong>: 34000 – 34999</li>
+</ul>
+
+<p>ID_NULL (65535) is not a valid command target — the command fails with a response code (the mask to lock/unlock must match the currently visible mask).</p>
+
 <h2>param[in] {state, uint8_t}</h2>
 
 <p>0 = Unlock, 1 = Lock data mask or user-layout data mask</p>

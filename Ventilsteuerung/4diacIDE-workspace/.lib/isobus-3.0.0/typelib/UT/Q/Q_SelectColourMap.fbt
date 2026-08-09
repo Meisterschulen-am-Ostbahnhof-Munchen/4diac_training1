@@ -40,6 +40,17 @@ This command can take a long time to execute.
 The command applies to any presentation from the originating Working Set, which includes objects that may be shown on other Working Set screens
 (e.g. Auxiliary Control objects as may be presented on VT proprietary and other Working Set masks using the Auxiliary Control Designator Type 2 Object Pointer).</p>
 
+<h2>Valid values for u16ObjIdColourMap</h2>
+
+<p>The Select Colour Map or Palette command (F.60) carries, in bytes 2,3, the Object ID of the Colour Map object, the Colour Palette object, or FFFF16 to restore the default colour mapping (see A.3):</p>
+<ul>
+	<li><strong>ColourMap</strong>: 39000 – 39999 (VT version 4 and later)</li>
+	<li><strong>ColourPalette</strong>: 45000 – 45999 (VT version 6 and later, per Annex F.60)</li>
+	<li><strong>FFFF16</strong>: restores the default colour table (see A.3)</li>
+</ul>
+
+<p><em>Implementation note (VTClientHelper):</em> <code>iso_is_colour_map_id</code> only accepts the ColourMap range — a ColourPalette ID (45000 – 45999) is rejected. In addition, ID_NULL (65535), the documented FFFF16 value to restore the default colour table, is swallowed by <code>cmd_select_colour_map_or_palette</code>, which returns VT_E_NO_ERR (0) without sending any command to the VT. These are known deviations.</p>
+
 <h2>param[in] {objectID, uint16_t}</h2>
 
 <p>Object ID of Colour map object or FFFF to restore the default colour table (see A.3)</p>

@@ -55,7 +55,16 @@
 	</FBNetwork>
 	<Attribute Name="Documentation" Type="CDATA"><![CDATA[<h1>Command change priority( Part 6 - F.40 )</h1>
 
-<p>This command is used to change the priority of an alarm mask.</p>
+<p>This command is used to change the priority of an alarm mask. This FB wraps <code>isobus::UT::Q::Q_Priority</code>.</p>
+
+<h2>Valid values for u16ObjId (the alarm mask)</h2>
+
+<p>A change-priority Object ID is valid if it falls within the following ISO 11783-6 ID range (Annex F.40):</p>
+<ul>
+	<li><strong>AlarmMask</strong>: 2000 – 2999</li>
+</ul>
+
+<p>ID_NULL (65535) is not a command target but can be used in INIT to deactivate the FB. Any ID outside this range is invalid for commanding.</p>
 
 <h2>param[in] {alarmMaskObjectID, uint16_t}</h2>
 

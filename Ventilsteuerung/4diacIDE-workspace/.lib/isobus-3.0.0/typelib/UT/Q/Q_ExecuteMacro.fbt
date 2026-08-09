@@ -35,11 +35,11 @@
 
 <p>This message is available in VT Version 4 and later. This command is used to execute a Macro.</p>
 
-<h2>Valid Object IDs</h2>
+<h2>Valid values for u16ObjId</h2>
 
-<p>A macro Object ID is valid if it falls within the following ISO 11783-6 ID range:</p>
+<p>The Execute Macro command (F.48) carries the Macro Object ID in a <strong>single byte</strong> (Byte 2). Annex A defines the Macro ID range as 1 – 999, but with an 8-bit field only IDs <strong>1 – 255</strong> can actually be addressed by this FB — values &gt; 255 are truncated by the implementation (the C function passes only the low byte). Use <strong>Q_ExecuteExtendedMacro (F.62)</strong> for Macro IDs 256 – 999.</p>
 <ul>
-	<li><strong>Macro</strong>: 1 – 999</li>
+	<li><strong>Macro</strong>: 1 – 255 (8-bit field; Annex A range 1 – 999)</li>
 </ul>
 
 <p>ID_NULL (65535) is not a command target but can be used in INIT to deactivate the FB. Any ID outside this range is invalid for commanding.</p>
@@ -64,7 +64,7 @@
 
 <h2>param[in] {objectID, uint16_t}</h2>
 
-<p>Object ID of Macro object (range 1 – 999). Use ID_NULL (65535) to deactivate the FB. Use a valid macro ID to activate.</p>
+<p>Object ID of Macro object (range 1 – 255, 8-bit field in F.48). Use ID_NULL (65535) to deactivate the FB. Use a valid macro ID to activate.</p>
 
 <h2>Return Values (s16result):</h2>
 

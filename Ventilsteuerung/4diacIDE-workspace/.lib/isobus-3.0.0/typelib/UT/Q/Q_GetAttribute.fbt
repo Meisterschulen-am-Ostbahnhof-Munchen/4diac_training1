@@ -39,6 +39,12 @@
 
 <p>This message is available in VT Version 4 and later. This command is used by a Working Set to query the VT for the current state of objects within the VT.</p>
 
+<h2>Valid values for u16ObjId</h2>
+
+<p>The Get Attribute Value command (F.58) is a fixed 8-byte message (Object ID in bytes 2,3, Attribute ID in Byte 4; no Transport Protocol). It places <strong>no restriction on the object type</strong> — any Object ID of an object in the object pool can be queried (the C implementation performs no type check, only ID_NULL handling). The VT validates the Object ID and the Attribute ID and returns an error response if either is invalid.</p>
+
+<p>ID_NULL (65535) is not a command target but can be used in INIT to deactivate the FB.</p>
+
 <h2>param[in] {objectID, uint16_t}</h2>
 
 <p>Object ID</p>
@@ -53,9 +59,12 @@
 
 <ul>
 	<li><span style="color:#2980b9">VT_E_NO_ERR (0)</span>&nbsp;- OK</li>
+	<li><span style="color:#e74c3c">VT_E_INVALID_OBJECT_ID (-132)</span> - Object ID is invalid (ID_NULL)</li>
+	<li><span style="color:#e74c3c">VT_E_NOT_READY (-131)</span> - Buffered: INIT not yet completed / VT not yet ready</li>
 	<li><span style="color:#2980b9">VT_E_OVERFLOW (-6)</span>&nbsp;- buffer overflow</li>
 	<li><span style="color:#2980b9">VT_E_NOACT (-8)</span> - Command not possible in current state</li>
 	<li><span style="color:#2980b9">VT_E_NO_INSTANCE (-21)</span>&nbsp;- No VT client available</li>
+	<li><span style="color:#e74c3c">VT_E_HANDLE_INVALID (-128)</span> - ErrorCause: invalid Handle</li>
 	<li><span style="color:#2980b9">VT_E_ISO_INSTANCE_INVALID (-129)</span> - Identifier for instance (connection) invalid</li>
 	<li><span style="color:#2980b9">VT_E_NOT_ALIVE (-130)</span> - Identifier for instance valid, but VT Dead.</li>
 </ul>

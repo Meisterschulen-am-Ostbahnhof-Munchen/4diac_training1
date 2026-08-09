@@ -40,6 +40,16 @@
 
 <p><strong>Note:</strong> The WorkingSet Object ID (<code>u16WorkSetId</code>) is fixed to <strong>0</strong> by the authors of <a href="https://www.logibus.tech/">logiBUS®</a>. The user must ensure that the WorkingSet object in the object pool always has Object ID 0. This is the default in most tools (e.g., <a href="https://www.bucherautomation.com/iso-designer/sw10133">ISO-Designer</a> by Bucher Automation AG, or <a href="https://isobus-studio.com/">Isobus Studio</a> by <a href="https://www.to-the-future.de/">to-the-future / Tobias Tenberg</a>). Since there is only one WorkingSet object, this restriction does not cause any practical limitation.</p>
 
+<h2>Valid Object IDs</h2>
+
+<p>A new-active-mask Object ID is valid if it falls within one of the following ISO 11783-6 ID ranges (Annex F.34):</p>
+<ul>
+	<li><strong>DataMask</strong>: 1000 – 1999</li>
+	<li><strong>AlarmMask</strong>: 2000 – 2999</li>
+</ul>
+
+<p>ID_NULL (65535) is not a valid command target for the new active mask. Any ID outside these ranges is invalid for commanding.</p>
+
 <h2>param[in] {u16NewMaskId, uint16_t}</h2>
 
 <p>Object ID of new active (data/alarm)-mask</p>
