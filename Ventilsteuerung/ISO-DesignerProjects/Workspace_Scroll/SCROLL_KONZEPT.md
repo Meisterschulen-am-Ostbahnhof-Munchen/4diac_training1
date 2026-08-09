@@ -177,7 +177,7 @@ gebaut werden könnte:
 | Event `FULL` | Sollwert := VAL_FULL | Event `BOTTOM` |
 | Event `LOAD` (mit Input `PV`) | Sollwert := PV | Event `POS` (mit Input `SET_POS`) |
 | Input `SLOW`, `FAST` | Schrittweite langsam/schnell | Schrittweite 1 Zeile / `STEP` Zeilen |
-| Input `VAL_ZERO`, `VAL_FULL` | Wertebereich-Grenzen | Scroll-Anschlag oben (0) / unten (`POS_MAX` = Zeilenanzahl − sichtbare Zeilen = 20 − 7 = 13) |
+| Input `VAL_ZERO`, `VAL_FULL` | Wertebereich-Grenzen | Scroll-Anschlag oben (0) / unten (`POS_MAX` = `floor((ContentHöhe − FensterHöhe) / Zeilenhöhe)` = `floor((850−288)/42)` = 13) |
 | Output `OUT` (via `CNF`) | aktueller Sollwert | aktuelle Scroll-Position `OUT` (in Zeilen, 0…`POS_MAX`) |
 
 **`ScrollFS` hat also — mit den 7 vorgeschlagenen Events — exakt dieselbe
@@ -194,10 +194,11 @@ Zahl und Struktur von Event-Eingängen wie `RampLimitFS`**, 1:1 übersetzt:
 | `POS` (mit Input `SET_POS`) | `OUT := SET_POS`, geklemmt auf `0…POS_MAX` | `GOTO` |
 
 Zusätzliche Inputs (analog `SLOW`/`FAST`/`VAL_ZERO`/`VAL_FULL`/`PV` bei
-`RampLimitFS`): `STEP` (Schrittweite für `UP_UP`/`DOWN_DOWN`, sinnvoll = 7 =
-Anzahl sichtbarer Zeilen, also "eine Bildschirmseite"), `POS_MAX` (hier 13),
-`SET_POS` (Zielwert für `POS`/`GOTO`). Output: `OUT` (aktuelle Position,
-0…13), ausgegeben über `CNF` wie bei `RampLimitFS`.
+`RampLimitFS`): `STEP` (Schrittweite für `UP_UP`/`DOWN_DOWN` — vom Skript
+automatisch abgeleitet als `floor(Fensterhöhe / Zeilenhöhe)` = `floor(288/42)`
+= **6** vollständig sichtbare Zeilen, also "eine Bildschirmseite"), `POS_MAX`
+(hier 13), `SET_POS` (Zielwert für `POS`/`GOTO`). Output: `OUT` (aktuelle
+Position, 0…13), ausgegeben über `CNF` wie bei `RampLimitFS`.
 
 **Konkret in unserem Fall (20 Zeilen, 42 px Zeilenhöhe):** ein einzelnes
 `UP`- oder `DOWN`-Event ändert `OUT` um genau 1, und da
@@ -279,47 +280,75 @@ ScrollObjectPool_S:
   i32Step           : DINT  -- Schrittweite für UP_UP/DOWN_DOWN
 ```
 
-Für unsere konkrete Liste (20 Zeilen, 7 sichtbar, 42 px Zeilenhöhe, Bar
-288/36 px) wäre die generierte Konstante:
+Für unsere konkrete Liste (20 Zeilen, 6 vollständig sichtbar, 42 px
+Zeilenhöhe, Bar 288/36 px) — tatsächlich von `GcfScript.py` gegen die echte
+`.jop` erzeugte Konstante (siehe unten):
 
 ```
 (u16ListParentId := 3006, u16ListContentId := 3031, i32RowHeight := 42,
  u16BarParentId := 3000, u16BarContentId := 3010, i32BarBaseOffset := -252,
- i32BarTravel := 252, i32PosMax := 13, i32Step := 7)
+ i32BarTravel := 252, i32PosMax := 13, i32Step := 6)
 ```
 
-**Interner Aufbau von `ScrollFS_PHYS` (FBNetwork, geplant):**
+**Interner Aufbau von `ScrollFS_PHYS` (FBNetwork, umgesetzt):**
 
+- `stObj` wird bei `INIT` einmalig über einen `F_MOVE`-Baustein („Snap",
+  `DataType`-Attribut auf `ScrollObjectPool_S` gebunden) geschnappt — danach
+  bleiben alle neun Felder als `Snap.OUT.<Feldname>` dauerhaft verfügbar.
+  Das ist keine Kür, sondern nötig: `F_MOVE.IN`/`.OUT` sind generisch `ANY`
+  typisiert, und eine `ANY`-Verbindung (hier: der konkret typisierte `stObj`
+  auf den generischen `Snap.IN`) läuft in 4diac grundsätzlich nur über genau
+  so einen `MOVE`-Baustein, nie direkt. Alle *anderen* Verbindungen im
+  Netzwerk sind beidseitig bereits konkret typisiert (`DINT`→`DINT`,
+  `UINT`→`UINT`) oder laufen über die zahlenspezifische Baustein-Familie
+  `ANY_NUM` (Multiplikation/Division/Addition), die 4diac ohne `MOVE`
+  generisch auflöst — nur der Struct-Durchgriff brauchte die Sonderbehandlung.
 - **`RampLimitFS` wird direkt als interner Sub-FB wiederverwendet** (kein
   neuer Zustandsautomat nötig) — Events 1:1 gemappt (`TOP→ZERO`,
   `UP→UP_SLOW`, `UP_UP→UP_FAST`, `DOWN→DOWN_SLOW`, `DOWN_DOWN→DOWN_FAST`,
   `BOTTOM→FULL`, `POS→LOAD` mit `PV:=SET_POS`), `VAL_ZERO:=0`,
-  `VAL_FULL:=stObj.i32PosMax`, `SLOW:=1`, `FAST:=stObj.i32Step`.
-- Bei jedem `RampLimitFS.CNF` (liefert `OUT`) werden zwei
-  `Q_ChildPosition`-Instanzen mit neuen Y-Werten angestoßen:
-  - Liste: `u16ObjIdParent := stObj.u16ListParentId`,
-    `u16ObjId := stObj.u16ListContentId`,
-    `s16Yposition := -stObj.i32RowHeight × OUT`
-  - Balken: `u16ObjIdParent := stObj.u16BarParentId`,
-    `u16ObjId := stObj.u16BarContentId`,
-    `s16Yposition := stObj.i32BarBaseOffset + OUT × stObj.i32BarTravel / stObj.i32PosMax`
-- `INIT` von `ScrollFS_PHYS` nimmt `stObj` entgegen (analog `Q_NumericValue_PHYS`)
-  und initialisiert beide `Q_ChildPosition`-Instanzen mit den passenden
-  Parent-/Kind-IDs aus der Struct.
+  `VAL_FULL:=Snap.OUT.i32PosMax`, `SLOW:=1`, `FAST:=Snap.OUT.i32Step`.
+- Bei jedem `RampLimitFS.CNF` (liefert `OUT`) werden **parallel** zwei
+  Rechenketten angestoßen, die je in einer `Q_ChildPosition`-Instanz enden:
+  - Liste: `F_MUL(OUT, Snap.OUT.i32RowHeight)` → `F_SUB(0, …)` (Vorzeichen
+    drehen) → `F_DINT_TO_INT` (Q_ChildPosition erwartet `INT`, nicht
+    `DINT`) → `MoveList.REQ` mit `s16Yposition`. Parent-/Kind-ID
+    (`u16ObjIdParent`/`u16ObjId`) kommen als Dauerverbindung von
+    `Snap.OUT.u16ListParentId`/`u16ListContentId`.
+  - Balken: `F_MUL(OUT, Snap.OUT.i32BarTravel)` → `F_DIV(…, Snap.OUT.i32PosMax)`
+    → `F_ADD(Snap.OUT.i32BarBaseOffset, …)` → `F_DINT_TO_INT` →
+    `MoveBar.REQ` mit `s16Yposition`.
+- `INIT` (extern, mit `stObj`) löst `Snap.REQ` aus; `Snap.CNF` initialisiert
+  `MoveList` (Parent-/Kind-ID aus der Struct), danach `MoveList.INITO` →
+  `MoveBar.INIT`, danach `MoveBar.INITO` → externes `INITO` — serielle
+  Kette, kein zusätzlicher „Join"-Baustein nötig.
+- Datei: `Ventilsteuerung\4diacIDE-workspace\.lib\isobus-3.0.0\typelib\UT\Q\ScrollFS_PHYS.fbt`,
+  Package `isobus::UT::Q`. XSD-validiert (`iec61499-creator`-Skill,
+  `fbtype.xsd`).
 
-**Geplante Erweiterung von `GcfScript.py`:** neue Funktion
-`writeScrollGCFfile()` (analog `writeNumericGCFfile`) plus eine
-`readScrollJOP()`-Erweiterung, die pro Scroll-Liste (erkennbar an den
-Namenskonventionen `*_Scrolling_Parent`/`*_Scrolling_Content`/
-`*_Scrollbar_Parent`/`*_Scrollbar_Content`) automatisch alle neun
-Struct-Felder aus der `.jop` zieht (`RowHeight` aus der Höhe eines
-`Container_Row_*`, `PosMax` aus Zeilenanzahl minus
-`floor(Fensterhöhe/RowHeight)`, `BarBaseOffset`/`BarTravel` aus den
-`Top`/`Height`-Werten von Indikator und Balken-Fenster).
+**Umgesetzte Erweiterung von `GcfScript.py`:** `readScrollJOP()` erkennt
+eine Scroll-Liste an den Namenskonventionen `*_Scrolling_Parent`/
+`*_Scrolling_Content`/`*_Scrollbar_Parent`/`*_Scrollbar_Content` (nur
+eine Liste pro Pool unterstützt — bei mehreren Treffern pro Suffix wird die
+Generierung mit einer Warnung übersprungen, da eine präfixbasierte Zuordnung
+angesichts inkonsistenter Namen wie `Containerr_Scrolling_Parent` vs.
+`Container_Scrolling_Content` nicht robust wäre). `RowHeight` wird als
+Top-Abstand zwischen `*_Row_01` und `*_Row_02` berechnet (nicht als eigene
+`Height`-Property der Zeile — die ist mit 36 px kleiner als der tatsächliche
+Zeilenabstand von 42 px, da zwischen den Zeilen eine sichtbare Lücke
+liegt). `PosMax = floor((ContentHeight − ParentHeight) / RowHeight)`,
+`Step = floor(ParentHeight / RowHeight)`, `BarBaseOffset` wird als aktuell
+im Pool gesetzter `Top`-Wert der Bar-Content-Proxy übernommen (nicht neu
+berechnet), `BarTravel = BarParentHeight − Indikatorhöhe` (Indikatorhöhe
+über den Bar-Content-Kind-Proxy aufgelöst). `writeScrollGCFfile()` schreibt
+eine `<Name>_Scroll.gcf` mit `ScrollObjectPool_S`-Konstanten, Namensschema
+`<abgeleiteter Name>_Scroll` (Suffix analog `_N` bei den Numeric-Konstanten).
+Gegen die echte `Workspace_Scroll/DefaultPool.jop` getestet, Ergebnis siehe
+Konstante oben.
 
-**Status:** Design festgelegt, noch nicht implementiert. Geplante
-Reihenfolge: (1) `ScrollObjectPool_S.dtp`, (2) `GcfScript.py`-Erweiterung,
-(3) Composite-FB `ScrollFS_PHYS.fbt`.
+**Status:** Implementiert (alle drei Teile: `.dtp`, `GcfScript.py`,
+`.fbt`), noch nicht in der eigentlichen Steuerungsanwendung verdrahtet
+(kein FB-Netzwerk-Beispiel mit den 4 Softkeys, das ist der nächste Schritt).
 
 ## Verallgemeinerung
 
@@ -350,10 +379,10 @@ fortzusetzen.
 Für die Scroll-Steuerung (Beispiel B) verallgemeinert sich das Muster so:
 
 - Scroll-Position wird als **eine ganze Zahl `pos`** geführt, Bereich
-  `0 … (Zeilenanzahl − sichtbare Zeilen)` = `0…13` bei 20 Zeilen / 7
-  sichtbaren Zeilen. Bei einer anderen Zeilenanzahl N oder Zeilenhöhe H
-  ändert sich nur diese Obergrenze (`N − sichtbare_Zeilen`) und die
-  Umrechnungsfaktoren unten — die Struktur bleibt gleich.
+  `0 … floor((ContentHöhe − FensterHöhe) / Zeilenhöhe)` = `0…13` in unserem
+  Fall. Bei anderer Zeilenanzahl/-höhe oder Fenstergröße ändert sich nur
+  diese Obergrenze und die Umrechnungsfaktoren unten — die Struktur bleibt
+  gleich; `GcfScript.py` berechnet das automatisch aus der `.jop`.
 - `Container_Scrolling_Content.Top = -H × pos` (H = Zeilenhöhe, hier 42).
 - `Container_Scrollbar_Content.Top = -Offset + pos × (Fensterhöhe − Indikatorhöhe) / pos_max`
   (hier: `-252 + pos × (288−36)/13`). `Offset` (hier 252) ist die feste
