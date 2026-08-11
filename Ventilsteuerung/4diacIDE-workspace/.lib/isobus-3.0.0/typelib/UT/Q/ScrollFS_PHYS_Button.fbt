@@ -92,7 +92,6 @@
 		</FB>
 		<EventConnections>
 			<Connection Source="INIT" Destination="Snap.REQ" dx1="780"/>
-			<Connection Source="Snap.CNF" Destination="Inner.INIT" dx1="4393.33"/>
 			<Connection Source="BtnFirst.IND" Destination="Inner.FIRST" dx1="1273.33"/>
 			<Connection Source="BtnPageUp.IND" Destination="Inner.PAGE_UP" dx1="1240"/>
 			<Connection Source="BtnLineUp.IND" Destination="Inner.LINE_UP" dx1="1273.33"/>
@@ -102,6 +101,14 @@
 			<Connection Source="GotoInput.IND" Destination="GotoConv.REQ" dx1="140"/>
 			<Connection Source="GotoConv.CNF" Destination="Inner.GOTO" dx1="573.33"/>
 			<Connection Source="Inner.CNF" Destination="CNF" dx1="460"/>
+			<Connection Source="Snap.CNF" Destination="BtnFirst.INIT" dx1="1446.67"/>
+			<Connection Source="BtnFirst.INITO" Destination="BtnPageUp.INIT" dx1="80" dx2="80" dy="840"/>
+			<Connection Source="BtnPageUp.INITO" Destination="BtnLineUp.INIT" dx1="80" dx2="80" dy="880"/>
+			<Connection Source="BtnLineUp.INITO" Destination="BtnLineDown.INIT" dx1="80" dx2="80" dy="913.33"/>
+			<Connection Source="BtnLineDown.INITO" Destination="BtnPageDown.INIT" dx1="80" dx2="80" dy="913.33"/>
+			<Connection Source="BtnPageDown.INITO" Destination="BtnLast.INIT" dx1="80" dx2="80" dy="820"/>
+			<Connection Source="BtnLast.INITO" Destination="GotoInput.INIT" dx1="80" dx2="80" dy="833.33"/>
+			<Connection Source="GotoInput.INITO" Destination="Inner.INIT" dx1="1800"/>
 		</EventConnections>
 		<DataConnections>
 			<Connection Source="stObj" Destination="Snap.IN" dx1="780"/>
