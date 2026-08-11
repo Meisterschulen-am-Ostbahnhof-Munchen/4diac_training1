@@ -66,6 +66,19 @@ MainMask.jvi (480×480)
   Position (`Top = 42 × (Zeilennummer−1)`) innerhalb der Content-Liste; das
   Rechteck `Rectangle_Scroll_Indicator` bleibt ebenso unverändert an seiner
   festen Position (Top=252) innerhalb von `Container_Scrollbar_Content`.
+- **Konvention: X-Koordinate immer 0.** `Container_Scrolling_Content` und
+  `Container_Scrollbar_Content` — die beiden per `Q_ChildPosition` bewegten
+  Inhalts-Container — werden **nur in Y** verschoben (kein horizontales
+  Scrollen vorgesehen); ihre X-Koordinate (`Left`) muss deshalb **immer 0**
+  sein. Das war zunächst nicht der Fall (`Container_Scrolling_Content` hatte
+  einen von 0 abweichenden X-Wert — ein Fehler), wurde aber direkt im
+  ISO-Designer korrigiert und gilt ab jetzt als feste Regel für jeden
+  Scroll-Content-Container. Praktischer Nebeneffekt: X=0 ist ein zusätzliches,
+  robustes Merkmal, an dem sich ein Scroll-Content-Container erkennen lässt
+  (ergänzend zur Namenskonvention `*_Scrolling_Content`/`*_Scrollbar_Content`,
+  siehe `GcfScript.py`-Erkennung weiter unten) — ein Container mit
+  abweichendem X ist entweder kein Scroll-Content-Container oder falsch
+  konfiguriert.
 - **Bedienung über 4 Softkeys**: `UP`, `UP_UP`, `DOWN`, `DOWN_DOWN` — je ein
   Softkey für "eine Zeile" und "mehrere Zeilen auf einmal" pro Richtung
   (analog "kurz drücken = 1 Schritt, lang/UP_UP drücken = großer Schritt").
@@ -344,7 +357,11 @@ berechnet), `BarTravel = BarParentHeight − Indikatorhöhe` (Indikatorhöhe
 eine `<Name>_Scroll.gcf` mit `ScrollObjectPool_S`-Konstanten, Namensschema
 `<abgeleiteter Name>_Scroll` (Suffix analog `_N` bei den Numeric-Konstanten).
 Gegen die echte `Workspace_Scroll/DefaultPool.jop` getestet, Ergebnis siehe
-Konstante oben.
+Konstante oben. Prüft aktuell nur die Namenskonvention, nicht die X=0-Regel
+(siehe Architektur oben) — als zusätzliche Plausibilitätsprüfung (Warnung bei
+X≠0 statt hartem Fehler) noch nicht umgesetzt, aber ein naheliegender
+nächster Schritt, sobald mehr als eine Scroll-Liste pro Pool unterstützt
+werden soll und die Namenskonvention allein nicht mehr robust genug ist.
 
 **Status:** Implementiert (alle drei Teile: `.dtp`, `GcfScript.py`,
 `.fbt`), noch nicht in der eigentlichen Steuerungsanwendung verdrahtet
