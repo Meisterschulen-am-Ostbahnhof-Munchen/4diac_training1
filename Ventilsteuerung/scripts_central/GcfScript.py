@@ -382,77 +382,124 @@ BUTTON_ROLE_KEYWORDS = [
 ]
 
 
+def _resolve_to_real_object(obj_id, by_id, max_hops=5):
+    """Follow CPointer/CProxy indirection (obj's own <Objects> single child) until a
+    non-pointer, non-proxy object is reached.
+
+    A SoftKeyMask's children are typically ObjectPointer objects (Annex B.5), which point
+    at a CProxy, which in turn wraps the real Key object - so resolving "the softkey
+    behind this SoftKeyMask child" is normally a 2-hop walk, but this also transparently
+    handles a SoftKeyMask child that's already a direct Key object (0 hops).
+
+    Returns (real_id, real_obj), or (None, None) if unresolvable within max_hops.
+    """
+    current_id = obj_id
+    for _ in range(max_hops):
+        obj = by_id.get(current_id)
+        if obj is None:
+            return None, None
+        if obj.get("Class") not in ("CPointer", "CProxy"):
+            return current_id, obj
+        target = _resolve_proxy_target(obj, by_id)
+        if target is None:
+            return None, None
+        current_id = target.get("JVS-ID")
+    return None, None
+
+
 def _match_button_roles(candidates):
-    """Match a list of (jvs_id, object_name) candidates to the 6 ScrollControls_S button
-    roles by keyword in the object name (case-insensitive). Each candidate is used for at
-    most one role. Returns (roles_dict, unmatched_candidates); roles_dict values are the
-    matched jvs_id string or None if no candidate matched that role.
+    """Match a list of (pointer_id, key_id, object_name) candidates to the 6
+    ScrollControls_S button roles by keyword in the object name (case-insensitive).
+    `object_name` is the name of the SoftKeyMask child itself (normally an
+    ObjectPointer, which is where the descriptive naming lives - see
+    _resolve_to_real_object), `key_id` is its resolved real Key object.
+
+    Each candidate is used for at most one role. Returns (roles, pointer_roles,
+    unmatched_candidates):
+      - roles: role field -> matched key_id (str) or None - this is what Softkey_IE
+        needs (u16ObjId must be the real Key, not the ObjectPointer).
+      - pointer_roles: role field -> matched pointer_id (str) or None - kept
+        separately since the ObjectPointer itself is needed for a later feature
+        (redirecting/hiding the softkey icon when scroll is at a limit), even though
+        it's not part of ScrollControls_S yet.
     """
     remaining = list(candidates)
     roles = {}
+    pointer_roles = {}
     for field, keywords in BUTTON_ROLE_KEYWORDS:
         match = None
         for cand in remaining:
-            _, cand_name = cand
+            _, _, cand_name = cand
             lname = (cand_name or "").lower()
             if any(kw in lname for kw in keywords):
                 match = cand
                 break
         if match:
-            roles[field] = match[0]
+            pointer_id, key_id, _ = match
+            roles[field] = key_id
+            pointer_roles[field] = pointer_id
             remaining.remove(match)
         else:
             roles[field] = None
-    return roles, remaining
+            pointer_roles[field] = None
+    return roles, pointer_roles, remaining
 
 
 def _find_scroll_button_controls(jop_dir, jop_root, by_id, list_parent_id):
     """Trace list_parent_id -> hosting mask .jvi -> its SoftKeyMask JVS-ID -> that
-    SoftKeyMask's own .jvi -> candidate button/key objects placed there, then match
-    those candidates to the 6 ScrollControls_S button roles by name.
+    SoftKeyMask's own .jvi -> candidate SoftKeyMask children (normally ObjectPointer
+    objects, Annex B.5) -> resolved real Key object behind each (see
+    _resolve_to_real_object), then match candidates to the 6 ScrollControls_S button
+    roles by the ObjectPointer's name (that's where the descriptive naming lives, e.g.
+    "ObjectPointer_SoftKey_DOWN" pointing at real Key object "SoftKey_DOWN").
 
-    Returns (roles_dict, warnings_list). roles_dict always has all 6 keys; values are
-    the matched real object JVS-ID (int) or None if nothing could be determined.
+    Returns (roles, pointer_roles, warnings_list):
+      - roles: all 6 ScrollControls_S fields -> resolved real Key JVS-ID (int) or None.
+        This is what Softkey_IE.u16ObjId needs - NOT the ObjectPointer's own ID.
+      - pointer_roles: same 6 fields -> the ObjectPointer's own JVS-ID (int) or None.
+        Not part of ScrollControls_S (yet) - kept for a later feature (redirecting the
+        ObjectPointer to hide/change the softkey icon when scroll is at a limit).
     """
     roles = {field: None for field, _ in BUTTON_ROLE_KEYWORDS}
+    pointer_roles = {field: None for field, _ in BUTTON_ROLE_KEYWORDS}
     warnings = []
 
     mask_jvi_path, mask_jvi_root = _find_hosting_jvi(jop_dir, list_parent_id)
     if mask_jvi_root is None:
         warnings.append("could not find a .jvi mask hosting the list parent container "
                          "- button IDs left as ID_NULL placeholders")
-        return roles, warnings
+        return roles, pointer_roles, warnings
 
     softkeymask_id = _get_jvi_property(mask_jvi_root, "SoftKeyMask")
     if not softkeymask_id or softkeymask_id == "-1":
         warnings.append(f"hosting mask ({os.path.basename(mask_jvi_path)}) has no "
                          "associated SoftKeyMask - button IDs left as ID_NULL placeholders")
-        return roles, warnings
+        return roles, pointer_roles, warnings
 
     skm_obj = by_id.get(softkeymask_id)
     if skm_obj is None:
         warnings.append(f"SoftKeyMask object {softkeymask_id} not found in .jop "
                          "- button IDs left as ID_NULL placeholders")
-        return roles, warnings
+        return roles, pointer_roles, warnings
 
     skm_jvi_rel = _get_prop(skm_obj, "Path")
     if not skm_jvi_rel:
         warnings.append(f"SoftKeyMask object {softkeymask_id} has no Path property "
                          "- button IDs left as ID_NULL placeholders")
-        return roles, warnings
+        return roles, pointer_roles, warnings
 
     skm_jvi_path = os.path.join(jop_dir, skm_jvi_rel.lstrip(".\\/"))
     if not os.path.exists(skm_jvi_path):
         warnings.append(f"SoftKeyMask .jvi file not found: {skm_jvi_path} "
                          "- button IDs left as ID_NULL placeholders")
-        return roles, warnings
+        return roles, pointer_roles, warnings
 
     skm_root = ET.parse(skm_jvi_path).getroot()
     components = skm_root.find("Components")
     if components is None:
         warnings.append(f"{os.path.basename(skm_jvi_path)} has no <Components> "
                          "- button IDs left as ID_NULL placeholders")
-        return roles, warnings
+        return roles, pointer_roles, warnings
 
     candidates = []
     for comp in components.findall("Component"):
@@ -460,32 +507,41 @@ def _find_scroll_button_controls(jop_dir, jop_root, by_id, list_parent_id):
         if objs is None:
             continue
         for obj_ref in objs.findall("Object"):
-            real_id = obj_ref.get("JVS-ID")
-            real_obj = by_id.get(real_id)
-            name = real_obj.get("ObjectName") if real_obj is not None else ""
-            candidates.append((real_id, name))
+            pointer_id = obj_ref.get("JVS-ID")
+            pointer_obj = by_id.get(pointer_id)
+            name = pointer_obj.get("ObjectName") if pointer_obj is not None else ""
+            key_id, _key_obj = _resolve_to_real_object(pointer_id, by_id)
+            candidates.append((pointer_id, key_id, name))
 
     if not candidates:
         warnings.append(f"SoftKeyMask {softkeymask_id} ({os.path.basename(skm_jvi_path)}) "
                          "has no child objects - button IDs left as ID_NULL placeholders")
-        return roles, warnings
+        return roles, pointer_roles, warnings
 
-    matched, unmatched = _match_button_roles(candidates)
-    roles = {field: (int(v) if v is not None else None) for field, v in matched.items()}
+    unresolved = [(pid, name) for pid, kid, name in candidates if kid is None]
+    if unresolved:
+        names = ", ".join(f"{pid}:{name or '?'}" for pid, name in unresolved)
+        warnings.append(f"could not resolve the real Key object behind {len(unresolved)} "
+                         f"SoftKeyMask child(ren) ({names}) - excluded from role matching")
+    candidates = [c for c in candidates if c[1] is not None]
+
+    matched_roles, matched_pointers, unmatched = _match_button_roles(candidates)
+    roles = {field: (int(v) if v is not None else None) for field, v in matched_roles.items()}
+    pointer_roles = {field: (int(v) if v is not None else None) for field, v in matched_pointers.items()}
 
     missing = [field for field, v in roles.items() if v is None]
     if missing:
         warnings.append(
             f"could not match a candidate for: {', '.join(missing)} (found "
-            f"{len(candidates)} objects on SoftKeyMask {softkeymask_id}, none of their "
-            "names matched the expected keywords - left as ID_NULL, rename in ISO-Designer "
-            "and rerun, or fill in by hand)")
+            f"{len(candidates)} resolvable objects on SoftKeyMask {softkeymask_id}, none "
+            "of their names matched the expected keywords - left as ID_NULL, rename in "
+            "ISO-Designer and rerun, or fill in by hand)")
     if unmatched:
-        names = ", ".join(f"{jid}:{name or '?'}" for jid, name in unmatched)
+        names = ", ".join(f"{pid}:{name or '?'}" for pid, kid, name in unmatched)
         warnings.append(f"{len(unmatched)} object(s) on SoftKeyMask {softkeymask_id} were "
                          f"not claimed by any role ({names}) - e.g. a 'Back' key is expected here")
 
-    return roles, warnings
+    return roles, pointer_roles, warnings
 
 
 def readScrollJOP(jop_filepath):
@@ -635,11 +691,15 @@ def readScrollJOP(jop_filepath):
     key_name = content_name[:-len(suffix)] if content_name.endswith(suffix) else content_name
 
     # Button IDs: traced via list_parent_id's hosting mask -> its associated SoftKeyMask
-    # -> that SoftKeyMask's own child objects, matched to the 6 roles by name. The direct-
-    # position InputNumber field has no analogous discoverable link (nothing in the pool
-    # currently marks a field as "the goto input") - stays None/ID_NULL until such a
-    # field exists and gets a naming convention.
-    button_roles, button_warnings = _find_scroll_button_controls(jop_dir, root, by_id, list_parent_id)
+    # -> that SoftKeyMask's own child objects (ObjectPointers) -> the real Key object
+    # each one resolves to, matched to the 6 roles by the ObjectPointer's name. The
+    # ObjectPointer IDs themselves are kept too (control_pointers) - not used yet, but
+    # needed later to redirect/hide a softkey's icon when the scroll position is at a
+    # limit. The direct-position InputNumber field has no analogous discoverable link
+    # (nothing in the pool currently marks a field as "the goto input") - stays
+    # None/ID_NULL until such a field exists and gets a naming convention.
+    button_roles, button_pointer_roles, button_warnings = _find_scroll_button_controls(
+        jop_dir, root, by_id, list_parent_id)
     for w in button_warnings:
         print(f"  Warning: {w}")
 
@@ -654,7 +714,8 @@ def readScrollJOP(jop_filepath):
             "bar_travel":       bar_travel,
             "pos_max":          pos_max,
             "step":             step,
-            "controls":        button_roles,
+            "controls":         button_roles,
+            "control_pointers": button_pointer_roles,
         }
     }
 
