@@ -107,22 +107,22 @@
 		<FB Name="GotoConv" Type="iec61131::conversion::F_DWORD_TO_DINT" x="3800" y="7500">
 		</FB>
 		<FB Name="PageUpSel" Type="iec61131::selection::F_SEL" x="3500" y="8500">
-			<Parameter Name="IN0" Value="ID_NULL"/>
+			<Parameter Name="IN1" Value="ID_NULL"/>
 		</FB>
 		<FB Name="PtrPageUp" Type="isobus::UT::Q::Q_NumericValue" x="5200" y="8300">
 		</FB>
 		<FB Name="UpSel" Type="iec61131::selection::F_SEL" x="3500" y="9300">
-			<Parameter Name="IN0" Value="ID_NULL"/>
+			<Parameter Name="IN1" Value="ID_NULL"/>
 		</FB>
 		<FB Name="PtrUp" Type="isobus::UT::Q::Q_NumericValue" x="5200" y="9100">
 		</FB>
 		<FB Name="DownSel" Type="iec61131::selection::F_SEL" x="3500" y="10100">
-			<Parameter Name="IN0" Value="ID_NULL"/>
+			<Parameter Name="IN1" Value="ID_NULL"/>
 		</FB>
 		<FB Name="PtrDown" Type="isobus::UT::Q::Q_NumericValue" x="5200" y="9900">
 		</FB>
 		<FB Name="PageDownSel" Type="iec61131::selection::F_SEL" x="3500" y="10900">
-			<Parameter Name="IN0" Value="ID_NULL"/>
+			<Parameter Name="IN1" Value="ID_NULL"/>
 		</FB>
 		<FB Name="PtrPageDown" Type="isobus::UT::Q::Q_NumericValue" x="5200" y="10700">
 		</FB>
@@ -182,7 +182,7 @@
 			<Connection Source="Snap.OUT.stControls.u16BtnPageUpPtrId" Destination="PtrPageUp.u16ObjId" dx1="893.33">
 				<Attribute Name="Visible" Value="false"/>
 			</Connection>
-			<Connection Source="Snap.OUT.stControls.u16BtnPageUpId" Destination="PageUpSel.IN1" dx1="600">
+			<Connection Source="Snap.OUT.stControls.u16BtnPageUpId" Destination="PageUpSel.IN0" dx1="600">
 				<Attribute Name="Visible" Value="false"/>
 			</Connection>
 			<Connection Source="Inner.qAtFirst" Destination="PageUpSel.G" dx1="80" dx2="80" dy="3020">
@@ -192,7 +192,7 @@
 			<Connection Source="Snap.OUT.stControls.u16BtnUpPtrId" Destination="PtrUp.u16ObjId" dx1="893.33">
 				<Attribute Name="Visible" Value="false"/>
 			</Connection>
-			<Connection Source="Snap.OUT.stControls.u16BtnUpId" Destination="UpSel.IN1" dx1="893.33">
+			<Connection Source="Snap.OUT.stControls.u16BtnUpId" Destination="UpSel.IN0" dx1="893.33">
 				<Attribute Name="Visible" Value="false"/>
 			</Connection>
 			<Connection Source="Inner.qAtFirst" Destination="UpSel.G" dx1="80" dx2="80" dy="3420">
@@ -202,7 +202,7 @@
 			<Connection Source="Snap.OUT.stControls.u16BtnDownPtrId" Destination="PtrDown.u16ObjId" dx1="893.33">
 				<Attribute Name="Visible" Value="false"/>
 			</Connection>
-			<Connection Source="Snap.OUT.stControls.u16BtnDownId" Destination="DownSel.IN1" dx1="893.33">
+			<Connection Source="Snap.OUT.stControls.u16BtnDownId" Destination="DownSel.IN0" dx1="893.33">
 				<Attribute Name="Visible" Value="false"/>
 			</Connection>
 			<Connection Source="Inner.qAtLast" Destination="DownSel.G" dx1="80" dx2="80" dy="3766.67">
@@ -212,7 +212,7 @@
 			<Connection Source="Snap.OUT.stControls.u16BtnPageDownPtrId" Destination="PtrPageDown.u16ObjId" dx1="893.33">
 				<Attribute Name="Visible" Value="false"/>
 			</Connection>
-			<Connection Source="Snap.OUT.stControls.u16BtnPageDownId" Destination="PageDownSel.IN1" dx1="893.33">
+			<Connection Source="Snap.OUT.stControls.u16BtnPageDownId" Destination="PageDownSel.IN0" dx1="893.33">
 				<Attribute Name="Visible" Value="false"/>
 			</Connection>
 			<Connection Source="Inner.qAtLast" Destination="PageDownSel.G" dx1="80" dx2="80" dy="4166.67">
