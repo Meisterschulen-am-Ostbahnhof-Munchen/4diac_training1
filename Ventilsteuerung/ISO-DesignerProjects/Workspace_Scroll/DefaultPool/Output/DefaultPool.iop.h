@@ -210,6 +210,7 @@
 #define Rectangle_14028                   14028
 #define Rectangle_14029                   14029
 #define Rectangle_14107                   14107
+#define Rectangle_RowAlt                  14108
 #define Image_20000                       20000
 #define Image_20001                       20001
 #define Image_20002                       20002
@@ -269,6 +270,7 @@
 #define FillAttributes_25006              25006
 #define FillAttributes_white              25007
 #define FillAttributes_25020              25020
+#define FillAttributes_RowAlt             25021
 #define ObjectPointer_Container_Dialog_Speichern  27000
 #define ObjectPointer_27001               27001
 #define ObjectPointer_27002               27002
