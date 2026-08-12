@@ -92,12 +92,6 @@
 		</FB>
 		<EventConnections>
 			<Connection Source="INIT" Destination="Snap.REQ" dx1="420"/>
-			<Connection Source="Snap.CNF" Destination="MoveList.INIT" dx1="4466.67">
-				<Attribute Name="Visible" Value="false"/>
-			</Connection>
-			<Connection Source="Snap.CNF" Destination="MoveBar.INIT" dx1="3513.33">
-				<Attribute Name="Visible" Value="false"/>
-			</Connection>
 			<Connection Source="Snap.CNF" Destination="Ramp.INIT" dx1="1946.67">
 				<Attribute Name="Visible" Value="false"/>
 			</Connection>
@@ -119,6 +113,12 @@
 				<Attribute Name="Visible" Value="false"/>
 			</Connection>
 			<Connection Source="BarY.CNF" Destination="MoveBar.REQ" dx1="200"/>
+			<Connection Source="Ramp.INITO" Destination="MoveList.INIT">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="Ramp.INITO" Destination="MoveBar.INIT" dx1="2646.67">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
 		</EventConnections>
 		<DataConnections>
 			<Connection Source="stObj" Destination="Snap.IN" dx1="386.67"/>
