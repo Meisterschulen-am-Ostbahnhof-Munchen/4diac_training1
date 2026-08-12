@@ -35,6 +35,8 @@
 		<EventOutputs>
 			<Event Name="CNF" Type="Event" Comment="Confirmation of a position change">
 				<With Var="OUT"/>
+				<With Var="qAtFirst"/>
+				<With Var="qAtLast"/>
 			</Event>
 		</EventOutputs>
 		<InputVars>
@@ -43,6 +45,8 @@
 		</InputVars>
 		<OutputVars>
 			<VarDeclaration Name="OUT" Type="DINT" Comment="Current scroll position (0..stObj.i32PosMax, in rows)"/>
+			<VarDeclaration Name="qAtFirst" Type="BOOL" Comment="TRUE if OUT is at row 0 (FIRST reached) - straight passthrough of Ramp.qAtZero"/>
+			<VarDeclaration Name="qAtLast" Type="BOOL" Comment="TRUE if OUT is at row stObj.i32PosMax (LAST reached) - straight passthrough of Ramp.qAtFull"/>
 		</OutputVars>
 	</InterfaceList>
 	<FBNetwork>
@@ -126,6 +130,12 @@
 			<Connection Source="Snap.OUT.i32Step" Destination="Ramp.FAST" dx1="1446.67"/>
 			<Connection Source="SET_POS" Destination="Ramp.PV" dx1="1180"/>
 			<Connection Source="Ramp.OUT" Destination="OUT" dx1="5940">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="Ramp.qAtZero" Destination="qAtFirst">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="Ramp.qAtFull" Destination="qAtLast">
 				<Attribute Name="Visible" Value="false"/>
 			</Connection>
 			<Connection Source="Snap.OUT.u16ListContentId" Destination="MoveList.u16ObjId" dx1="3146.67">

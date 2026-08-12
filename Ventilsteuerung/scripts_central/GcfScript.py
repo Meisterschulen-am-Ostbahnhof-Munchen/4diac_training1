@@ -766,6 +766,10 @@ def writeScrollGCFfile(data, filepaths):
         def _ctl(field):
             v = controls_info.get(field)
             return v if v is not None else SCROLL_ID_NULL
+        pointers_info = info.get("control_pointers") or {}
+        def _ptr(field):
+            v = pointers_info.get(field)
+            return v if v is not None else SCROLL_ID_NULL
         controls = (
             f"(u16BtnTopId := {_ctl('u16BtnTopId')}, "
             f"u16BtnPageUpId := {_ctl('u16BtnPageUpId')}, "
@@ -773,7 +777,11 @@ def writeScrollGCFfile(data, filepaths):
             f"u16BtnDownId := {_ctl('u16BtnDownId')}, "
             f"u16BtnPageDownId := {_ctl('u16BtnPageDownId')}, "
             f"u16BtnBottomId := {_ctl('u16BtnBottomId')}, "
-            f"u16GotoInputId := {SCROLL_ID_NULL})"
+            f"u16GotoInputId := {SCROLL_ID_NULL}, "
+            f"u16BtnPageUpPtrId := {_ptr('u16BtnPageUpId')}, "
+            f"u16BtnUpPtrId := {_ptr('u16BtnUpId')}, "
+            f"u16BtnDownPtrId := {_ptr('u16BtnDownId')}, "
+            f"u16BtnPageDownPtrId := {_ptr('u16BtnPageDownId')})"
         )
         initial_value = f"(stGeometry := {geometry}, stControls := {controls})"
 

@@ -15,6 +15,10 @@
 		<VarDeclaration Name="u16BtnPageDownId" Type="UINT" Comment="Object ID of the softkey/button that fires the DOWN_DOWN event" InitialValue="IDs::ID_NULL"/>
 		<VarDeclaration Name="u16BtnBottomId" Type="UINT" Comment="Object ID of the softkey/button that fires the BOTTOM event" InitialValue="IDs::ID_NULL"/>
 		<VarDeclaration Name="u16GotoInputId" Type="UINT" Comment="Object ID of the InputNumber field for direct row-position entry (drives the POS/GOTO event's SET_POS value)" InitialValue="IDs::ID_NULL"/>
+		<VarDeclaration Name="u16BtnPageUpPtrId" Type="UINT" Comment="Object ID of the ObjectPointer (SoftKeyMask/Container child) that currently resolves to u16BtnPageUpId - redirected to ID_NULL to hide the button when qAtFirst, restored to u16BtnPageUpId otherwise" InitialValue="IDs::ID_NULL"/>
+		<VarDeclaration Name="u16BtnUpPtrId" Type="UINT" Comment="Object ID of the ObjectPointer that currently resolves to u16BtnUpId - redirected to ID_NULL to hide the button when qAtFirst, restored to u16BtnUpId otherwise" InitialValue="IDs::ID_NULL"/>
+		<VarDeclaration Name="u16BtnDownPtrId" Type="UINT" Comment="Object ID of the ObjectPointer that currently resolves to u16BtnDownId - redirected to ID_NULL to hide the button when qAtLast, restored to u16BtnDownId otherwise" InitialValue="IDs::ID_NULL"/>
+		<VarDeclaration Name="u16BtnPageDownPtrId" Type="UINT" Comment="Object ID of the ObjectPointer that currently resolves to u16BtnPageDownId - redirected to ID_NULL to hide the button when qAtLast, restored to u16BtnPageDownId otherwise" InitialValue="IDs::ID_NULL"/>
 	</StructuredType>
 	<Attribute Name="eclipse4diac::core::TypeHash" Value="''"/>
 </DataType>
