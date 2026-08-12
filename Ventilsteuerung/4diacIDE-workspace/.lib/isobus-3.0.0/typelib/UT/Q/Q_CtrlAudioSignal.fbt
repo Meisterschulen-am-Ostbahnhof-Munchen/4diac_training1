@@ -48,6 +48,8 @@
 
 <p>This command can be used to control the audio on the VT.</p>
 
+<p>The Control Audio Signal command (F.10) addresses the VT's <strong>audio device</strong> directly — it does <strong>not reference any object</strong>, so this FB has no Object ID input and no "Valid Object IDs" restriction. Data length is a fixed 8 bytes (Activations, Frequency, On-time, Off-time). <strong>Activations = 0</strong> terminates any audio in process from the originating Working Set (Frequency and Duration values are ignored); 1 – 255 sets the number of audio activations.</p>
+
 <h2>param[in] {u8NumOfRepit, uint8_t}</h2>
 
 <p>Number of repetitions Range: 1 - 255</p>

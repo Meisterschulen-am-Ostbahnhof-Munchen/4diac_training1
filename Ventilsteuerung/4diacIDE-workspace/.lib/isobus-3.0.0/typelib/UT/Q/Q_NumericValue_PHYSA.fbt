@@ -57,5 +57,30 @@
 			<Connection Source="Q_NumericValue_PHYS.xUnder" Destination="xUnder.D1" dx1="913.33"/>
 		</DataConnections>
 	</FBNetwork>
+	<Attribute Name="Documentation" Type="CDATA"><![CDATA[<h1>Command change numeric value ( Part 6 - F.22 ) — physical-value AR adapter wrapper</h1>
+
+<p>This FB is an AR adapter wrapper around <strong>Q_NumericValue_PHYS</strong> (which in turn wraps <strong>Q_NumericValue</strong>). The physical REAL value is supplied via the <code>rPhys</code> AR adapter socket, the object pool properties (including <code>stObj.u16ObjId</code>) via <code>INIT</code>. Limit violations are reported on the <code>xOver</code>/<code>xUnder</code> AX adapter plugs.</p>
+
+<h2>Valid Object IDs</h2>
+
+<p>stObj.u16ObjId is valid if it falls within one of the following ISO 11783-6 ID ranges (Annex F.22 — see Q_NumericValue):</p>
+<ul>
+	<li><strong>InputBooleanField</strong>: 7000 – 7999</li>
+	<li><strong>InputNumberField</strong>: 9000 – 9999</li>
+	<li><strong>InputListField</strong>: 10000 – 10999</li>
+	<li><strong>OutputNumberField</strong>: 12000 – 12999</li>
+	<li><strong>Meter</strong>: 17000 – 17999</li>
+	<li><strong>LinearBarGraph</strong>: 18000 – 18999</li>
+	<li><strong>ArchedBarGraph</strong>: 19000 – 19999</li>
+	<li><strong>NumberVariable</strong>: 21000 – 21999</li>
+	<li><strong>ObjectPointer</strong>: 27000 – 27999</li>
+	<li><strong>OutputListObject</strong>: 37000 – 37999</li>
+	<li><strong>ExternalObjectPointer</strong>: 43000 – 43999</li>
+	<li><strong>AnimationObject</strong>: 44000 – 44999</li>
+	<li><strong>ScaledGraphicObject</strong>: 48000 – 48999</li>
+</ul>
+
+<p>ID_NULL (65535) is not a command target but can be used in stObj.u16ObjId via INIT to deactivate the FB. Any ID outside these ranges is invalid for commanding. The result codes (s16result) are identical to <strong>Q_NumericValue</strong>.</p>
+]]></Attribute>
 	<Attribute Name="eclipse4diac::core::TypeHash" Value="''"/>
 </FBType>

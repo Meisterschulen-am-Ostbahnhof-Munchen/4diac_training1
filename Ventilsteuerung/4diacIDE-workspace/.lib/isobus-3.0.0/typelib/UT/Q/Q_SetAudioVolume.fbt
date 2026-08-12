@@ -36,6 +36,8 @@
 
 <p>This command can be used to control the audio on the VT (volume) ( Part 6 - F.12 )</p>
 
+<p>The Set Audio Volume command (F.12) addresses the VT's <strong>audio device</strong> directly — it does <strong>not reference any object</strong>, so this FB has no Object ID input and no "Valid Object IDs" restriction. Data length is a fixed 8 bytes; Byte 2 carries the volume percentage (0 % – 100 %).</p>
+
 <h2>param[in] {volume_percent, uint8_t}</h2>
 
 <p>Volume 0 - 100 (%)</p>
