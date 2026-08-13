@@ -363,9 +363,25 @@ X≠0 statt hartem Fehler) noch nicht umgesetzt, aber ein naheliegender
 nächster Schritt, sobald mehr als eine Scroll-Liste pro Pool unterstützt
 werden soll und die Namenskonvention allein nicht mehr robust genug ist.
 
-**Status:** Implementiert (alle drei Teile: `.dtp`, `GcfScript.py`,
-`.fbt`), noch nicht in der eigentlichen Steuerungsanwendung verdrahtet
-(kein FB-Netzwerk-Beispiel mit den 4 Softkeys, das ist der nächste Schritt).
+**Status: ✅ FERTIG UND GETESTET.** Implementiert (`.dtp`, `GcfScript.py`, `.fbt`), in der
+Steuerungsanwendung verdrahtet und **am echten Terminal erfolgreich getestet** — Scrollbalken
+und Zeileninhalt laufen synchron, zeilen- und seitenweise, in beide Richtungen. Seither zusätzlich
+umgesetzt (nicht mehr Teil dieses "nächsten Schritts", sondern erledigt):
+
+- **Anschlag-Ausblendung**: `RampLimitFS` liefert `qAtZero`/`qAtFull`, `ScrollFS` reicht das als
+  `qAtFirst`/`qAtLast` durch. `ScrollFS_PHYS`/`_Button` blenden darüber die UP/PAGE_UP- bzw.
+  DOWN/PAGE_DOWN-Softkeys am jeweiligen Anschlag aus — per `Q_NumericValue` auf die
+  Object-Pointer-ID umgeleitet auf `ID_NULL` (ausgeblendet) bzw. zurück auf die echte
+  SoftKey-ID (sichtbar), gesteuert über `F_SEL` (`IN0`=echte ID, `IN1`=`ID_NULL`, `G`=`qAtFirst`/
+  `qAtLast` — Reihenfolge wichtig, `F_SEL.OUT := G ? IN1 : IN0`).
+- **Scroll-Richtung korrigiert**: `LINE_UP`/`PAGE_UP` und `LINE_DOWN`/`PAGE_DOWN` waren anfangs an
+  die falschen `RampLimitFS`-Events gebunden (vertauscht).
+- **Zebra-Streifen**: jede 2. Zeile bekommt einen eigenen, leicht grauen Hintergrund
+  (`Rectangle_RowAlt`/`FillAttributes_RowAlt`), macht das Scrollen optisch besser erkennbar.
+- **Doppelpfeil-Icons** für `PAGE_UP`/`PAGE_DOWN` (`Arr_UP_UP.bmp`/`Arr_DOWN_DOWN.bmp`), vorher
+  Kopien der Einzelpfeile.
+
+Gesamtaufwand für den kompletten Baustein (Konzept bis getestet funktionierend): ca. 4 Tage.
 
 ## Verallgemeinerung
 
@@ -428,18 +444,13 @@ Für die Scroll-Steuerung (Beispiel B) verallgemeinert sich das Muster so:
 
 ## Offene Punkte
 
-- **Scroll-Logik nicht verdrahtet**: die 6 SoftKey-Pointer auf
-  `MainSoftKeyMask.jvi` (27024–27029) haben noch keine Makro-/
-  Programmlogik, die beim Drücken `Container_Scrolling_Content.Top` und
-  `Container_Scrollbar_Content.Top` ändert. Kandidat für das Muster:
-  ein `ScrollFS`-FB nach Vorbild von `RampLimitFS.fbt`, dessen `OUT` über
-  zwei `Q_ChildPosition`-Instanzen (ISO 11783-6 F.16) an den VT geschrieben
-  wird — siehe Beispiel B. Noch nicht als FB-Netzwerk umgesetzt, nur als
-  Konzept dokumentiert.
-- **Softkey-ObjectNames noch generisch**: nur 27024 heißt bereits
-  `ObjectPointer_SoftKey_Back`; welche der übrigen fünf (27025–27029) zu
-  `UP`/`UP_UP`/`DOWN`/`DOWN_DOWN` werden sollen, ist mündlich festgelegt
-  (siehe Beispiel B), aber noch nicht als `ObjectName` im Pool benannt.
+- ~~Scroll-Logik nicht verdrahtet~~ — **erledigt**, siehe Status oben (Beispiel B Fortsetzung):
+  `ScrollFS`/`ScrollFS_PHYS` sind als FB-Netzwerk umgesetzt, verdrahtet und am echten Terminal
+  getestet.
+- ~~Softkey-ObjectNames noch generisch~~ — **erledigt**: die Softkey-Zuordnung ist über
+  `GcfScript.py`s SoftKeyMask-Traversal automatisch aufgelöst (siehe `control_pointers`/
+  `controls` in `readScrollJOP()`), zusätzliche Icons (Back/Lock/Dialog OK/Cancel) sind im Pool
+  benannt und verdrahtet.
 - **Zeile 2 heißt strukturell noch `Container_Row_02`, ObjectName der
   Objekte ist aber älteren Datums** (z. B. `OutputString_11003` statt dem
   neueren `OutputString_Row_02_Label`-Schema) — Zeile 1 und 2 stammen aus
