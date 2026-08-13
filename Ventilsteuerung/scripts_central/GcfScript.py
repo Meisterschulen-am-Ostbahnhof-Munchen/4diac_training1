@@ -5,6 +5,8 @@ import re
 import xml.etree.ElementTree as ET
 from xml.dom import minidom
 
+# Security Audit.
+
 def getPaths():
     script_path = os.path.dirname(os.path.abspath(__file__))
     parser = ArgumentParser()
