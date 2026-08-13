@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <FBType Name="AX_ATM_FB_TP" Comment="standard timer function block (pulse) with AX/ATM Adapter, PT and ET as adapters">
-	<Identification Standard="61131-3" Classification="standard timer function block" Description="Copyright (c) 2026 HR Agrartechnik GmbH  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0  &#10; &#10;Wie AX_FB_TP, aber PT (Socket) und ET (Plug) sind ATM-Adapter statt&#10;einfacher Datenvariablen, s. AX_ATM_FB_TON fuer die Begruendung.">
+	<Identification Standard="61131-3" Classification="standard timer function block" Description="Copyright (c) 2026 HR Agrartechnik GmbH  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0  &#10; &#10;Wie AX_FB_TP, aber PT (Socket) und ET (Plug) sind ATM-Adapter statt&#10;einfacher Datenvariablen, s. AX_ATM_FB_TON fuer die Begruendung.  &#10; &#10;PT-Verhalten: PT.D1 liegt als reine Datenverbindung dauerhaft am internen&#10;FB_TP.PT an - der Adapter puffert/entprellt PT nicht. IN.E1, PT.E1 und das&#10;externe REQ sind gleichwertige Ausloeser fuer dieselbe FB_TP.REQ-Auswertung.&#10;Eine Aenderung von PT waehrend eines laufenden Impulses wirkt bei der&#10;naechsten Auswertung sofort mit dem dann aktuellen ET zusammen - siehe&#10;Technische Besonderheiten in der Doku fuer die Grenzfaelle PT=0 (Impuls kann&#10;fuer den Beobachter praktisch keine sichtbare TRUE-Phase haben) und schnell&#10;aufeinanderfolgende PT-Aenderungen. Vor dem allerersten PT.E1 liegt an&#10;FB_TP.PT der TIME-Standardwert T#0s an, nicht ein projektspezifischer Default.">
 	</Identification>
 	<VersionInfo Organization="HR Agrartechnik GmbH" Version="1.0" Author="Franz Höpfinger" Date="2026-08-13" Remarks="initial API and implementation">
 	</VersionInfo>
@@ -8,7 +8,7 @@
 	</CompilerInfo>
 	<InterfaceList>
 		<EventInputs>
-			<Event Name="REQ" Type="Event" Comment="Normal Execution Request (non-triggering); Anwendung haengt hier periodisch einen E_CYCLE an, damit ET aktualisiert wird">
+			<Event Name="REQ" Type="Event" Comment="Normal Execution Request (non-triggering); gleichwertig zu IN.E1/PT.E1 (alle drei loesen dieselbe interne Neuauswertung aus). Anwendung haengt hier periodisch einen E_CYCLE an, damit ET auch ohne IN-/PT-Aenderung aktualisiert wird">
 			</Event>
 		</EventInputs>
 		<Plugs>
@@ -17,7 +17,7 @@
 		</Plugs>
 		<Sockets>
 			<AdapterDeclaration Name="IN" Type="adapter::types::unidirectional::AX" Comment="Input" x="200" y="1400"/>
-			<AdapterDeclaration Name="PT" Type="adapter::types::unidirectional::ATM" Comment="Pulse time" x="200" y="1900"/>
+			<AdapterDeclaration Name="PT" Type="adapter::types::unidirectional::ATM" Comment="Pulse time; live/nicht gelatched - PT.E1 loest wie IN.E1/REQ sofort eine Neuauswertung mit dem neuen PT-Wert aus, keine Entprellung. PT=0 laesst den Impuls bei der naechsten Auswertung bereits als abgelaufen gelten" x="200" y="1900"/>
 		</Sockets>
 	</InterfaceList>
 	<FBNetwork>
