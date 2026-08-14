@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<FBType Name="AnlagenSequenz_06_ADAPTER" Comment="Composite wrapper around AnlagenSequenz_06: DO_Mx/STOERUNG_Mx (Event+BOOL) bundled into AX adapters, ZE*_EIN/AUS each fed via its own ATM adapter socket. timeOut stays internal, not exposed.">
+	<Identification Standard="61499-2" ApplicationDomain="Fördertechnik" Description="Copyright (c) 2026 HR Agrartechnik GmbH  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0">
+	</Identification>
+	<VersionInfo Organization="HR Agrartechnik GmbH" Version="1.0" Author="Franz Höpfinger" Date="2026-08-14" Remarks="initial API and implementation">
+	</VersionInfo>
+	<CompilerInfo packageName="logiBUS::utils::sequence::timed">
+	</CompilerInfo>
+	<InterfaceList>
+		<EventInputs>
+			<Event Name="EIN" Type="Event" Comment="Startsequenz auslösen; nur wirksam wenn EINSCHALTBEREIT=TRUE; quittiert dabei zugleich eine anstehende Störungsanzeige">
+			</Event>
+			<Event Name="AUS" Type="Event" Comment="Stopsequenz auslösen, aus jedem Schritt der Vorlauf-Kette oder aus S_LAEUFT">
+			</Event>
+		</EventInputs>
+		<EventOutputs>
+			<Event Name="CNF" Type="Event" Comment="Ausführungsbestätigung, mit jedem Zustands-Update">
+				<With Var="STATUS_BETRIEB"/>
+				<With Var="STATUS_STOERUNG"/>
+				<With Var="ZAEHLSTAND"/>
+				<With Var="EINSCHALTBEREIT"/>
+			</Event>
+		</EventOutputs>
+		<OutputVars>
+			<VarDeclaration Name="STATUS_BETRIEB" Type="SINT" Comment="0=Aus 1=Hochfahren 2=Läuft 3=Herunterfahren"/>
+			<VarDeclaration Name="STATUS_STOERUNG" Type="SINT" Comment="0=keine 4=aktiv, verriegelt bis EIN"/>
+			<VarDeclaration Name="EINSCHALTBEREIT" Type="BOOL" Comment="TRUE nur wenn alle Motoren stehen UND alle Motoren störungsfrei sind"/>
+			<VarDeclaration Name="ZAEHLSTAND" Type="SINT" Comment="0..6, Anzahl aktuell laufender Motoren"/>
+		</OutputVars>
+		<Plugs>
+			<AdapterDeclaration Name="DO_M1" Type="adapter::types::unidirectional::AX" Comment="Laufbefehl Motor 1" x="5793.33" y="3246.67"/>
+			<AdapterDeclaration Name="DO_M2" Type="adapter::types::unidirectional::AX" Comment="Laufbefehl Motor 2" x="5726.67" y="4040"/>
+			<AdapterDeclaration Name="DO_M3" Type="adapter::types::unidirectional::AX" Comment="Laufbefehl Motor 3" x="5593.33" y="4833.33"/>
+			<AdapterDeclaration Name="DO_M4" Type="adapter::types::unidirectional::AX" Comment="Laufbefehl Motor 4" x="5460" y="5626.67"/>
+			<AdapterDeclaration Name="DO_M5" Type="adapter::types::unidirectional::AX" Comment="Laufbefehl Motor 5" x="5326.67" y="6420"/>
+			<AdapterDeclaration Name="DO_M6" Type="adapter::types::unidirectional::AX" Comment="Laufbefehl Motor 6" x="5193.33" y="7213.33"/>
+		</Plugs>
+		<Sockets>
+			<AdapterDeclaration Name="ATM_ZE1_EIN" Type="adapter::types::unidirectional::ATM" Comment="S_VOR1 zu S_VOR2, M5 startet (Vorlauf)" x="673.33" y="-786.67"/>
+			<AdapterDeclaration Name="ATM_ZE2_EIN" Type="adapter::types::unidirectional::ATM" Comment="S_VOR2 zu S_VOR3, M4 startet (Vorlauf)" x="673.33" y="6.67"/>
+			<AdapterDeclaration Name="ATM_ZE3_EIN" Type="adapter::types::unidirectional::ATM" Comment="S_VOR3 zu S_VOR4, M3 startet (Vorlauf)" x="673.33" y="800"/>
+			<AdapterDeclaration Name="ATM_ZE4_EIN" Type="adapter::types::unidirectional::ATM" Comment="S_VOR4 zu S_VOR5, M2 startet (Vorlauf)" x="1366.67" y="1400"/>
+			<AdapterDeclaration Name="ATM_ZE5_EIN" Type="adapter::types::unidirectional::ATM" Comment="S_VOR5 zu S_LAEUFT, M1 startet (Vorlauf)" x="1366.67" y="2193.33"/>
+			<AdapterDeclaration Name="ATM_ZE1_AUS" Type="adapter::types::unidirectional::ATM" Comment="S_NACH1 zu S_NACH2, M2 stoppt (Nachlauf)" x="1433.33" y="2793.33"/>
+			<AdapterDeclaration Name="ATM_ZE2_AUS" Type="adapter::types::unidirectional::ATM" Comment="S_NACH2 zu S_NACH3, M3 stoppt (Nachlauf)" x="1566.67" y="4180"/>
+			<AdapterDeclaration Name="ATM_ZE3_AUS" Type="adapter::types::unidirectional::ATM" Comment="S_NACH3 zu S_NACH4, M4 stoppt (Nachlauf)" x="1700" y="4880"/>
+			<AdapterDeclaration Name="ATM_ZE4_AUS" Type="adapter::types::unidirectional::ATM" Comment="S_NACH4 zu S_NACH5, M5 stoppt (Nachlauf)" x="1700" y="5673.33"/>
+			<AdapterDeclaration Name="ATM_ZE5_AUS" Type="adapter::types::unidirectional::ATM" Comment="S_NACH5 zu S_AUS, M6 stoppt (Nachlauf)" x="1766.67" y="6466.67"/>
+			<AdapterDeclaration Name="STOERUNG_M1" Type="adapter::types::unidirectional::AX" Comment="Motor 1 hat aktuell eine Störung anstehen" x="1766.67" y="7260"/>
+			<AdapterDeclaration Name="STOERUNG_M2" Type="adapter::types::unidirectional::AX" Comment="Motor 2 hat aktuell eine Störung anstehen" x="673.33" y="6066.67"/>
+			<AdapterDeclaration Name="STOERUNG_M3" Type="adapter::types::unidirectional::AX" Comment="Motor 3 hat aktuell eine Störung anstehen" x="673.33" y="6860"/>
+			<AdapterDeclaration Name="STOERUNG_M4" Type="adapter::types::unidirectional::AX" Comment="Motor 4 hat aktuell eine Störung anstehen" x="673.33" y="7653.33"/>
+			<AdapterDeclaration Name="STOERUNG_M5" Type="adapter::types::unidirectional::AX" Comment="Motor 5 hat aktuell eine Störung anstehen" x="673.33" y="8446.67"/>
+			<AdapterDeclaration Name="STOERUNG_M6" Type="adapter::types::unidirectional::AX" Comment="Motor 6 hat aktuell eine Störung anstehen" x="673.33" y="9240"/>
+		</Sockets>
+	</InterfaceList>
+	<FBNetwork>
+		<FB Name="Sequence" Type="logiBUS::utils::sequence::timed::AnlagenSequenz_06" x="3600" y="1900">
+		</FB>
+		<FB Name="E_TimeOut" Type="iec61499::events::E_TimeOut" x="4993.33" y="8033.33">
+		</FB>
+		<EventConnections>
+			<Connection Source="EIN" Destination="Sequence.EIN" dx1="2626.67"/>
+			<Connection Source="AUS" Destination="Sequence.AUS" dx1="2560"/>
+			<Connection Source="ATM_ZE1_EIN.E1" Destination="Sequence.SET_ZE1_EIN" dx1="2160"/>
+			<Connection Source="ATM_ZE2_EIN.E1" Destination="Sequence.SET_ZE2_EIN" dx1="2026.67"/>
+			<Connection Source="ATM_ZE3_EIN.E1" Destination="Sequence.SET_ZE3_EIN" dx1="1893.33"/>
+			<Connection Source="ATM_ZE4_EIN.E1" Destination="Sequence.SET_ZE4_EIN" dx1="1000"/>
+			<Connection Source="ATM_ZE5_EIN.E1" Destination="Sequence.SET_ZE5_EIN" dx1="866.67"/>
+			<Connection Source="ATM_ZE1_AUS.E1" Destination="Sequence.SET_ZE1_AUS" dx1="66.67"/>
+			<Connection Source="ATM_ZE2_AUS.E1" Destination="Sequence.SET_ZE2_AUS" dx1="66.67"/>
+			<Connection Source="ATM_ZE3_AUS.E1" Destination="Sequence.SET_ZE3_AUS" dx1="66.67"/>
+			<Connection Source="ATM_ZE4_AUS.E1" Destination="Sequence.SET_ZE4_AUS" dx1="200"/>
+			<Connection Source="ATM_ZE5_AUS.E1" Destination="Sequence.SET_ZE5_AUS" dx1="266.67"/>
+			<Connection Source="STOERUNG_M1.E1" Destination="Sequence.EI_M1" dx1="466.67"/>
+			<Connection Source="STOERUNG_M2.E1" Destination="Sequence.EI_M2" dx1="1233.33"/>
+			<Connection Source="STOERUNG_M3.E1" Destination="Sequence.EI_M3" dx1="1233.33"/>
+			<Connection Source="STOERUNG_M4.E1" Destination="Sequence.EI_M4" dx1="1233.33"/>
+			<Connection Source="STOERUNG_M5.E1" Destination="Sequence.EI_M5" dx1="1233.33"/>
+			<Connection Source="STOERUNG_M6.E1" Destination="Sequence.EI_M6" dx1="1233.33"/>
+			<Connection Source="Sequence.CNF" Destination="CNF" dx1="66.67"/>
+			<Connection Source="Sequence.EO_M1" Destination="DO_M1.E1" dx1="866.67"/>
+			<Connection Source="Sequence.EO_M2" Destination="DO_M2.E1" dx1="800"/>
+			<Connection Source="Sequence.EO_M3" Destination="DO_M3.E1" dx1="666.67"/>
+			<Connection Source="Sequence.EO_M4" Destination="DO_M4.E1" dx1="533.33"/>
+			<Connection Source="Sequence.EO_M5" Destination="DO_M5.E1" dx1="400"/>
+			<Connection Source="Sequence.EO_M6" Destination="DO_M6.E1" dx1="266.67"/>
+		</EventConnections>
+		<DataConnections>
+			<Connection Source="ATM_ZE1_EIN.D1" Destination="Sequence.ZE1_EIN" dx1="2093.33"/>
+			<Connection Source="ATM_ZE2_EIN.D1" Destination="Sequence.ZE2_EIN" dx1="1960"/>
+			<Connection Source="ATM_ZE3_EIN.D1" Destination="Sequence.ZE3_EIN" dx1="1826.67"/>
+			<Connection Source="ATM_ZE4_EIN.D1" Destination="Sequence.ZE4_EIN" dx1="933.33"/>
+			<Connection Source="ATM_ZE5_EIN.D1" Destination="Sequence.ZE5_EIN" dx1="800"/>
+			<Connection Source="ATM_ZE1_AUS.D1" Destination="Sequence.ZE1_AUS" dx1="533.33"/>
+			<Connection Source="ATM_ZE2_AUS.D1" Destination="Sequence.ZE2_AUS" dx1="66.67"/>
+			<Connection Source="ATM_ZE3_AUS.D1" Destination="Sequence.ZE3_AUS" dx1="266.67"/>
+			<Connection Source="ATM_ZE4_AUS.D1" Destination="Sequence.ZE4_AUS" dx1="400"/>
+			<Connection Source="ATM_ZE5_AUS.D1" Destination="Sequence.ZE5_AUS" dx1="533.33"/>
+			<Connection Source="STOERUNG_M1.D1" Destination="Sequence.STOERUNG_M1" dx1="600"/>
+			<Connection Source="STOERUNG_M2.D1" Destination="Sequence.STOERUNG_M2" dx1="1233.33"/>
+			<Connection Source="STOERUNG_M3.D1" Destination="Sequence.STOERUNG_M3" dx1="1233.33"/>
+			<Connection Source="STOERUNG_M4.D1" Destination="Sequence.STOERUNG_M4" dx1="1233.33"/>
+			<Connection Source="STOERUNG_M5.D1" Destination="Sequence.STOERUNG_M5" dx1="1233.33"/>
+			<Connection Source="STOERUNG_M6.D1" Destination="Sequence.STOERUNG_M6" dx1="2026.67"/>
+			<Connection Source="Sequence.STATUS_BETRIEB" Destination="STATUS_BETRIEB" dx1="133.33"/>
+			<Connection Source="Sequence.STATUS_STOERUNG" Destination="STATUS_STOERUNG" dx1="333.33"/>
+			<Connection Source="Sequence.ZAEHLSTAND" Destination="ZAEHLSTAND" dx1="600"/>
+			<Connection Source="Sequence.EINSCHALTBEREIT" Destination="EINSCHALTBEREIT" dx1="466.67"/>
+			<Connection Source="Sequence.DO_M1" Destination="DO_M1.D1" dx1="733.33"/>
+			<Connection Source="Sequence.DO_M2" Destination="DO_M2.D1" dx1="800"/>
+			<Connection Source="Sequence.DO_M3" Destination="DO_M3.D1" dx1="466.67"/>
+			<Connection Source="Sequence.DO_M4" Destination="DO_M4.D1" dx1="333.33"/>
+			<Connection Source="Sequence.DO_M5" Destination="DO_M5.D1" dx1="200"/>
+			<Connection Source="Sequence.DO_M6" Destination="DO_M6.D1" dx1="133.33"/>
+		</DataConnections>
+		<AdapterConnections>
+			<Connection Source="Sequence.timeOut" Destination="E_TimeOut.TimeOutSocket" dx1="66.67"/>
+		</AdapterConnections>
+	</FBNetwork>
+	<Attribute Name="eclipse4diac::core::TypeHash" Value="''"/>
+</FBType>

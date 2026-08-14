@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <FBType Name="AnlagenSequenz_06" Comment="Ring aus getrennter Vorlauf- und Nachlauf-Kette (je 5 Zwischenschritte) für 6 Motoren mit Störungs-Kaskade, s. KONZEPT_Anlagensequenz.md">
-	<Identification Standard="61499-2" Description="Copyright (c) 2026 HR Agrartechnik GmbH  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0  &#10; &#10;DRAFT (2026-08-12), 2. Fassung: Vorlauf und Nachlauf sind jetzt zwei getrennte,  &#10;jeweils rein lineare Ketten (S_VOR1..S_VOR5 bzw. S_NACH1..S_NACH5), verbunden  &#10;über S_AUS (unten) und S_LAEUFT (oben) zu einem Ring - anstelle der ersten  &#10;Fassung mit 7 bidirektional genutzten Zuständen. Jeder Zustand hat dadurch genau  &#10;einen festen Zeitwert (ZEk_EIN bzw. ZEk_AUS) und ein festes Motor-Muster, keine  &#10;Richtungs-Fallunterscheidung mehr pro Zustand nötig.  &#10; &#10;Bekannte, bewusste Vereinfachungen:  &#10;1) Jede STOERUNG_Mx hat ein eigenes Event EI_Mx (analog EO_Mx/DO_Mx), das direkt  &#10;   von jedem Zustand vor dem jeweiligen Zielschritt (S_NACH_x, bzw. S_AUS bei  &#10;   x=6) dorthin springt - kein Umweg mehr über einen Spiegelpunkt und kein  &#10;   Nachfassen über mehrere Zyklen. Ein AUS-Abbruch aus dem Vorlauf springt  &#10;   weiterhin auf den Spiegelpunkt (S_VOR_k -&gt; S_NACH_(6-k)), da dort keine  &#10;   Motoren-Störung, sondern nur der Bedienerwunsch vorliegt.  &#10;2) Pro Motor gibt es ein Event EO_Mx mit angehängtem DO_Mx (analog EO_Sx/DO_Sx in  &#10;   sequence_T_04/_08). Der Baustein hat keine Selbstschleifen mehr (alle bisherigen  &#10;   liefen über das inzwischen entfernte EI_CYCLIC) - EO_Mx feuert also nur noch bei  &#10;   einem echten Zustandswechsel.  &#10;3) MaxBetriebRest/Nachlauf-Reste (Demo-Server-Schema) sind noch nicht abgebildet.">
+	<Identification Standard="61499-2" ApplicationDomain="Fördertechnik" Description="Copyright (c) 2026 HR Agrartechnik GmbH  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0  &#10; &#10;DRAFT (2026-08-12), 2. Fassung: Vorlauf und Nachlauf sind jetzt zwei getrennte,  &#10;jeweils rein lineare Ketten (S_VOR1..S_VOR5 bzw. S_NACH1..S_NACH5), verbunden  &#10;über S_AUS (unten) und S_LAEUFT (oben) zu einem Ring - anstelle der ersten  &#10;Fassung mit 7 bidirektional genutzten Zuständen. Jeder Zustand hat dadurch genau  &#10;einen festen Zeitwert (ZEk_EIN bzw. ZEk_AUS) und ein festes Motor-Muster, keine  &#10;Richtungs-Fallunterscheidung mehr pro Zustand nötig.  &#10; &#10;Bekannte, bewusste Vereinfachungen:  &#10;1) Jede STOERUNG_Mx hat ein eigenes Event EI_Mx (analog EO_Mx/DO_Mx), das direkt  &#10;   von jedem Zustand vor dem jeweiligen Zielschritt (S_NACH_x, bzw. S_AUS bei  &#10;   x=6) dorthin springt - kein Umweg mehr über einen Spiegelpunkt und kein  &#10;   Nachfassen über mehrere Zyklen. Ein AUS-Abbruch aus dem Vorlauf springt  &#10;   weiterhin auf den Spiegelpunkt (S_VOR_k -&gt; S_NACH_(6-k)), da dort keine  &#10;   Motoren-Störung, sondern nur der Bedienerwunsch vorliegt.  &#10;2) Pro Motor gibt es ein Event EO_Mx mit angehängtem DO_Mx (analog EO_Sx/DO_Sx in  &#10;   sequence_T_04/_08). Der Baustein hat keine Selbstschleifen mehr (alle bisherigen  &#10;   liefen über das inzwischen entfernte EI_CYCLIC) - EO_Mx feuert also nur noch bei  &#10;   einem echten Zustandswechsel.  &#10;3) MaxBetriebRest/Nachlauf-Reste (Demo-Server-Schema) sind noch nicht abgebildet.">
 	</Identification>
 	<VersionInfo Organization="HR Agrartechnik GmbH" Version="0.6" Author="Franz Höpfinger" Date="2026-08-12">
 	</VersionInfo>
@@ -20,6 +20,36 @@
 			<Event Name="EIN" Type="Event" Comment="Startsequenz auslösen; nur wirksam wenn EINSCHALTBEREIT=TRUE; quittiert dabei zugleich eine anstehende Störungsanzeige">
 			</Event>
 			<Event Name="AUS" Type="Event" Comment="Stopsequenz auslösen, aus jedem Schritt der Vorlauf-Kette oder aus S_LAEUFT">
+			</Event>
+			<Event Name="SET_ZE1_EIN" Type="Event" Comment="Update ZE1_EIN independently of EIN">
+				<With Var="ZE1_EIN"/>
+			</Event>
+			<Event Name="SET_ZE2_EIN" Type="Event" Comment="Update ZE2_EIN independently of EIN">
+				<With Var="ZE2_EIN"/>
+			</Event>
+			<Event Name="SET_ZE3_EIN" Type="Event" Comment="Update ZE3_EIN independently of EIN">
+				<With Var="ZE3_EIN"/>
+			</Event>
+			<Event Name="SET_ZE4_EIN" Type="Event" Comment="Update ZE4_EIN independently of EIN">
+				<With Var="ZE4_EIN"/>
+			</Event>
+			<Event Name="SET_ZE5_EIN" Type="Event" Comment="Update ZE5_EIN independently of EIN">
+				<With Var="ZE5_EIN"/>
+			</Event>
+			<Event Name="SET_ZE1_AUS" Type="Event" Comment="Update ZE1_AUS independently of AUS">
+				<With Var="ZE1_AUS"/>
+			</Event>
+			<Event Name="SET_ZE2_AUS" Type="Event" Comment="Update ZE2_AUS independently of AUS">
+				<With Var="ZE2_AUS"/>
+			</Event>
+			<Event Name="SET_ZE3_AUS" Type="Event" Comment="Update ZE3_AUS independently of AUS">
+				<With Var="ZE3_AUS"/>
+			</Event>
+			<Event Name="SET_ZE4_AUS" Type="Event" Comment="Update ZE4_AUS independently of AUS">
+				<With Var="ZE4_AUS"/>
+			</Event>
+			<Event Name="SET_ZE5_AUS" Type="Event" Comment="Update ZE5_AUS independently of AUS">
+				<With Var="ZE5_AUS"/>
 			</Event>
 			<Event Name="EI_M1" Type="Event" Comment="Störungsstatus Motor 1 hat sich geändert">
 				<With Var="STOERUNG_M1"/>
@@ -315,6 +345,16 @@
 			<ECTransition Source="sNACH4" Destination="sAUS" Condition="EI_M6[STOERUNG_M6]" Comment="" x="4666.67" y="8960"/>
 			<ECTransition Source="sNACH5" Destination="sAUS" Condition="timeOut.TimeOut" Comment="" x="5540" y="8853.33"/>
 			<ECTransition Source="sNACH5" Destination="sAUS" Condition="EI_M6[STOERUNG_M6]" Comment="" x="4666.67" y="9226.67"/>
+			<ECTransition Source="sVOR1" Destination="sVOR1" Condition="SET_ZE1_EIN" Comment="Live-Update: laeuft timeOut mit ZE1_EIN gerade, S_VOR1_Setup neu ausfuehren"/>
+			<ECTransition Source="sVOR2" Destination="sVOR2" Condition="SET_ZE2_EIN" Comment="Live-Update: laeuft timeOut mit ZE2_EIN gerade, S_VOR2_Setup neu ausfuehren"/>
+			<ECTransition Source="sVOR3" Destination="sVOR3" Condition="SET_ZE3_EIN" Comment="Live-Update: laeuft timeOut mit ZE3_EIN gerade, S_VOR3_Setup neu ausfuehren"/>
+			<ECTransition Source="sVOR4" Destination="sVOR4" Condition="SET_ZE4_EIN" Comment="Live-Update: laeuft timeOut mit ZE4_EIN gerade, S_VOR4_Setup neu ausfuehren"/>
+			<ECTransition Source="sVOR5" Destination="sVOR5" Condition="SET_ZE5_EIN" Comment="Live-Update: laeuft timeOut mit ZE5_EIN gerade, S_VOR5_Setup neu ausfuehren"/>
+			<ECTransition Source="sNACH1" Destination="sNACH1" Condition="SET_ZE1_AUS" Comment="Live-Update: laeuft timeOut mit ZE1_AUS gerade, S_NACH1_Setup neu ausfuehren"/>
+			<ECTransition Source="sNACH2" Destination="sNACH2" Condition="SET_ZE2_AUS" Comment="Live-Update: laeuft timeOut mit ZE2_AUS gerade, S_NACH2_Setup neu ausfuehren"/>
+			<ECTransition Source="sNACH3" Destination="sNACH3" Condition="SET_ZE3_AUS" Comment="Live-Update: laeuft timeOut mit ZE3_AUS gerade, S_NACH3_Setup neu ausfuehren"/>
+			<ECTransition Source="sNACH4" Destination="sNACH4" Condition="SET_ZE4_AUS" Comment="Live-Update: laeuft timeOut mit ZE4_AUS gerade, S_NACH4_Setup neu ausfuehren"/>
+			<ECTransition Source="sNACH5" Destination="sNACH5" Condition="SET_ZE5_AUS" Comment="Live-Update: laeuft timeOut mit ZE5_AUS gerade, S_NACH5_Setup neu ausfuehren"/>
 		</ECC>
 		<Algorithm Name="EI_CYCLIC_Auswertung" Comment="Liest STOERUNG_M1..M6 neu ein, setzt STATUS_STOERUNG falls eine aktiv ist, und berechnet&#10;EINSCHALTBEREIT">
 			<ST><![CDATA[
