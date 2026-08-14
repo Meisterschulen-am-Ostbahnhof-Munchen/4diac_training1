@@ -13,15 +13,13 @@
 	<SubAppInterfaceList>
 	</SubAppInterfaceList>
 	<SubAppNetwork>
-		<FB Name="AX_MUX_2" Type="adapter::selection::unidirectional::AX_MUX_2" x="2700" y="3700">
+		<FB Name="AX_MUX_2" Type="adapter::selection::unidirectional::AX_AUI_MUX_2" x="2700" y="3700">
 		</FB>
-		<FB Name="DigitalInput_I4" Type="logiBUS::io::DI::logiBUS_IX" x="-1400" y="3500">
+		<FB Name="DigitalInput_I4" Type="logiBUS::io::DI::logiBUS_IXA" x="-1400" y="3100">
 			<Parameter Name="QI" Value="TRUE"/>
 			<Parameter Name="Input" Value="Input_I4"/>
 		</FB>
-		<FB Name="F_BOOL_TO_UINT_I4" Type="iec61131::conversion::F_BOOL_TO_UINT" x="-300" y="3700">
-		</FB>
-		<FB Name="DigitalOutput_Q1" Type="logiBUS::io::DQ::logiBUS_QXA" x="4500" y="3400">
+		<FB Name="DigitalOutput_Q1" Type="logiBUS::io::DQ::logiBUS_QXA" x="4500" y="3300">
 			<Parameter Name="QI" Value="TRUE"/>
 			<Parameter Name="Output" Value="Output_Q1"/>
 		</FB>
@@ -33,18 +31,14 @@
 			<Parameter Name="QI" Value="TRUE"/>
 			<Parameter Name="Input" Value="Input_I2"/>
 		</FB>
-		<EventConnections>
-			<Connection Source="DigitalInput_I4.IND" Destination="F_BOOL_TO_UINT_I4.REQ" dx1="173.33"/>
-			<Connection Source="F_BOOL_TO_UINT_I4.CNF" Destination="AX_MUX_2.REQ"/>
-		</EventConnections>
-		<DataConnections>
-			<Connection Source="DigitalInput_I4.IN" Destination="F_BOOL_TO_UINT_I4.IN" dx1="173.33"/>
-			<Connection Source="F_BOOL_TO_UINT_I4.OUT" Destination="AX_MUX_2.K"/>
-		</DataConnections>
+		<FB Name="AX_TO_AUI" Type="adapter::conversion::unidirectional::AX_TO_AUI" x="0" y="3800">
+		</FB>
 		<AdapterConnections>
 			<Connection Source="DigitalInput_I2.IN" Destination="AX_MUX_2.IN2" dx1="2360"/>
 			<Connection Source="DigitalInput_I1.IN" Destination="AX_MUX_2.IN1" dx1="1653.33"/>
 			<Connection Source="AX_MUX_2.OUT" Destination="DigitalOutput_Q1.OUT" dx1="493.33"/>
+			<Connection Source="DigitalInput_I4.IN" Destination="AX_TO_AUI.AX_IN" dx1="346.67"/>
+			<Connection Source="AX_TO_AUI.AUI_OUT" Destination="AX_MUX_2.K" dx1="913.33"/>
 		</AdapterConnections>
 	</SubAppNetwork>
 </SubAppType>
