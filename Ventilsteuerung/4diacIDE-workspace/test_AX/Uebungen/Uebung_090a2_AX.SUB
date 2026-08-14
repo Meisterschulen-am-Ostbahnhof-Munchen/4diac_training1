@@ -13,13 +13,11 @@
 	<SubAppInterfaceList>
 	</SubAppInterfaceList>
 	<SubAppNetwork>
-		<FB Name="AX_MUX_3" Type="adapter::selection::unidirectional::AX_MUX_3" x="2700" y="3700">
+		<FB Name="AX_MUX_3" Type="adapter::selection::unidirectional::AX_AUI_MUX_3" x="2700" y="3700">
 		</FB>
-		<FB Name="DigitalInput_I4" Type="logiBUS::io::DI::logiBUS_IX" x="-1300" y="3300">
+		<FB Name="DigitalInput_I4" Type="logiBUS::io::DI::logiBUS_IXA" x="-1300" y="3300">
 			<Parameter Name="QI" Value="TRUE"/>
 			<Parameter Name="Input" Value="Input_I4"/>
-		</FB>
-		<FB Name="F_BOOL_TO_UINT_I4" Type="iec61131::conversion::F_BOOL_TO_UINT" x="-300" y="3700">
 		</FB>
 		<FB Name="DigitalOutput_Q1" Type="logiBUS::io::DQ::logiBUS_QXA" x="4700" y="3600">
 			<Parameter Name="QI" Value="TRUE"/>
@@ -33,18 +31,14 @@
 			<Parameter Name="QI" Value="TRUE"/>
 			<Parameter Name="Input" Value="Input_I2"/>
 		</FB>
-		<EventConnections>
-			<Connection Source="DigitalInput_I4.IND" Destination="F_BOOL_TO_UINT_I4.REQ" dx1="73.33"/>
-			<Connection Source="F_BOOL_TO_UINT_I4.CNF" Destination="AX_MUX_3.REQ"/>
-		</EventConnections>
-		<DataConnections>
-			<Connection Source="DigitalInput_I4.IN" Destination="F_BOOL_TO_UINT_I4.IN" dx1="120"/>
-			<Connection Source="F_BOOL_TO_UINT_I4.OUT" Destination="AX_MUX_3.K"/>
-		</DataConnections>
+		<FB Name="AX_TO_AUI" Type="adapter::conversion::unidirectional::AX_TO_AUI" x="100" y="3800">
+		</FB>
 		<AdapterConnections>
 			<Connection Source="DigitalInput_I2.IN" Destination="AX_MUX_3.IN2" dx1="2360"/>
 			<Connection Source="DigitalInput_I1.IN" Destination="AX_MUX_3.IN1" dx1="1653.33"/>
 			<Connection Source="AX_MUX_3.OUT" Destination="DigitalOutput_Q1.OUT" dx1="546.67"/>
+			<Connection Source="DigitalInput_I4.IN" Destination="AX_TO_AUI.AX_IN" dx1="246.67"/>
+			<Connection Source="AX_TO_AUI.AUI_OUT" Destination="AX_MUX_3.K" dx1="966.67"/>
 		</AdapterConnections>
 	</SubAppNetwork>
 </SubAppType>
