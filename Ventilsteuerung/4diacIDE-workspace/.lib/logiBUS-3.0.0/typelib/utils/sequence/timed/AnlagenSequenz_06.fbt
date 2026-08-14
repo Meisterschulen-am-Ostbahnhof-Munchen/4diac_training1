@@ -17,6 +17,8 @@
 	</CompilerInfo>
 	<InterfaceList>
 		<EventInputs>
+			<Event Name="INIT" Type="EInit" Comment="Initialization Request">
+			</Event>
 			<Event Name="EIN" Type="Event" Comment="Startsequenz auslösen; nur wirksam wenn EINSCHALTBEREIT=TRUE; quittiert dabei zugleich eine anstehende Störungsanzeige">
 			</Event>
 			<Event Name="AUS" Type="Event" Comment="Stopsequenz auslösen, aus jedem Schritt der Vorlauf-Kette oder aus S_LAEUFT">
@@ -71,11 +73,14 @@
 			</Event>
 		</EventInputs>
 		<EventOutputs>
+			<Event Name="INITO" Type="EInit" Comment="Initialization Confirm">
+			</Event>
 			<Event Name="CNF" Type="Event" Comment="Ausführungsbestätigung, mit jedem Zustands-Update">
 				<With Var="STATUS_BETRIEB"/>
 				<With Var="STATUS_STOERUNG"/>
 				<With Var="ZAEHLSTAND"/>
 				<With Var="EINSCHALTBEREIT"/>
+				<With Var="ANLAGE_AUS"/>
 			</Event>
 			<Event Name="EO_M1" Type="Event" Comment="Laufbefehl Motor 1 aktualisiert (analog EO_Sx in sequence_T_04/_08)">
 				<With Var="DO_M1"/>
@@ -119,6 +124,7 @@
 			<VarDeclaration Name="STATUS_STOERUNG" Type="SINT" Comment="0=keine 4=aktiv, verriegelt bis EIN"/>
 			<VarDeclaration Name="EINSCHALTBEREIT" Type="BOOL" Comment="TRUE nur wenn alle Motoren stehen UND alle Motoren störungsfrei sind"/>
 			<VarDeclaration Name="ZAEHLSTAND" Type="SINT" Comment="0..6, Anzahl aktuell laufender Motoren, s. Konzept"/>
+			<VarDeclaration Name="ANLAGE_AUS" Type="BOOL" Comment="TRUE nur in S_AUS (STATUS_BETRIEB = Aus) - Voraussetzung fuer Handbetrieb"/>
 			<VarDeclaration Name="DO_M1" Type="BOOL" Comment="Laufbefehl Motor 1"/>
 			<VarDeclaration Name="DO_M2" Type="BOOL" Comment="Laufbefehl Motor 2"/>
 			<VarDeclaration Name="DO_M3" Type="BOOL" Comment="Laufbefehl Motor 3"/>
@@ -133,6 +139,9 @@
 	<BasicFB>
 		<ECC>
 			<ECState Name="xSTART" Comment="Initial State" x="5600" y="11200">
+			</ECState>
+			<ECState Name="Init" Comment="Initialization" x="4240" y="11280">
+				<ECAction Output="INITO"/>
 			</ECState>
 			<ECState Name="sAUS" Comment="S_AUS, unten im Ring: keine Motoren laufen" x="5600" y="9600">
 				<ECAction Algorithm="S_AUS_Setup"/>
@@ -276,7 +285,6 @@
 				<ECAction Output="timeOut.START"/>
 				<ECAction Output="CNF"/>
 			</ECState>
-			<ECTransition Source="xSTART" Destination="sAUS" Condition="1" Comment="" x="5566.67" y="0"/>
 			<ECTransition Source="sAUS" Destination="sVOR1" Condition="EIN[NOT (STOERUNG_M1 OR STOERUNG_M2 OR STOERUNG_M3 OR STOERUNG_M4 OR STOERUNG_M5 OR STOERUNG_M6)]" Comment="" x="2746.67" y="9840"/>
 			<ECTransition Source="sVOR1" Destination="sVOR2" Condition="timeOut.TimeOut" Comment="" x="673.33" y="7133.33"/>
 			<ECTransition Source="sVOR1" Destination="sNACH5" Condition="AUS" Comment="" x="3560" y="8160"/>
@@ -345,18 +353,30 @@
 			<ECTransition Source="sNACH4" Destination="sAUS" Condition="EI_M6[STOERUNG_M6]" Comment="" x="4666.67" y="8960"/>
 			<ECTransition Source="sNACH5" Destination="sAUS" Condition="timeOut.TimeOut" Comment="" x="5540" y="8853.33"/>
 			<ECTransition Source="sNACH5" Destination="sAUS" Condition="EI_M6[STOERUNG_M6]" Comment="" x="4666.67" y="9226.67"/>
-			<ECTransition Source="sVOR1" Destination="sVOR1" Condition="SET_ZE1_EIN" Comment="Live-Update: laeuft timeOut mit ZE1_EIN gerade, S_VOR1_Setup neu ausfuehren"/>
-			<ECTransition Source="sVOR2" Destination="sVOR2" Condition="SET_ZE2_EIN" Comment="Live-Update: laeuft timeOut mit ZE2_EIN gerade, S_VOR2_Setup neu ausfuehren"/>
-			<ECTransition Source="sVOR3" Destination="sVOR3" Condition="SET_ZE3_EIN" Comment="Live-Update: laeuft timeOut mit ZE3_EIN gerade, S_VOR3_Setup neu ausfuehren"/>
-			<ECTransition Source="sVOR4" Destination="sVOR4" Condition="SET_ZE4_EIN" Comment="Live-Update: laeuft timeOut mit ZE4_EIN gerade, S_VOR4_Setup neu ausfuehren"/>
-			<ECTransition Source="sVOR5" Destination="sVOR5" Condition="SET_ZE5_EIN" Comment="Live-Update: laeuft timeOut mit ZE5_EIN gerade, S_VOR5_Setup neu ausfuehren"/>
-			<ECTransition Source="sNACH1" Destination="sNACH1" Condition="SET_ZE1_AUS" Comment="Live-Update: laeuft timeOut mit ZE1_AUS gerade, S_NACH1_Setup neu ausfuehren"/>
-			<ECTransition Source="sNACH2" Destination="sNACH2" Condition="SET_ZE2_AUS" Comment="Live-Update: laeuft timeOut mit ZE2_AUS gerade, S_NACH2_Setup neu ausfuehren"/>
-			<ECTransition Source="sNACH3" Destination="sNACH3" Condition="SET_ZE3_AUS" Comment="Live-Update: laeuft timeOut mit ZE3_AUS gerade, S_NACH3_Setup neu ausfuehren"/>
-			<ECTransition Source="sNACH4" Destination="sNACH4" Condition="SET_ZE4_AUS" Comment="Live-Update: laeuft timeOut mit ZE4_AUS gerade, S_NACH4_Setup neu ausfuehren"/>
-			<ECTransition Source="sNACH5" Destination="sNACH5" Condition="SET_ZE5_AUS" Comment="Live-Update: laeuft timeOut mit ZE5_AUS gerade, S_NACH5_Setup neu ausfuehren"/>
+			<ECTransition Source="sVOR1" Destination="sVOR1" Condition="SET_ZE1_EIN" Comment="" x="0" y="0"/>
+			<ECTransition Source="sVOR2" Destination="sVOR2" Condition="SET_ZE2_EIN" Comment="" x="0" y="0"/>
+			<ECTransition Source="sVOR3" Destination="sVOR3" Condition="SET_ZE3_EIN" Comment="" x="0" y="0"/>
+			<ECTransition Source="sVOR4" Destination="sVOR4" Condition="SET_ZE4_EIN" Comment="" x="0" y="0"/>
+			<ECTransition Source="sVOR5" Destination="sVOR5" Condition="SET_ZE5_EIN" Comment="" x="0" y="0"/>
+			<ECTransition Source="sNACH1" Destination="sNACH1" Condition="SET_ZE1_AUS" Comment="" x="0" y="0"/>
+			<ECTransition Source="sNACH2" Destination="sNACH2" Condition="SET_ZE2_AUS" Comment="" x="0" y="0"/>
+			<ECTransition Source="sNACH3" Destination="sNACH3" Condition="SET_ZE3_AUS" Comment="" x="0" y="0"/>
+			<ECTransition Source="sNACH4" Destination="sNACH4" Condition="SET_ZE4_AUS" Comment="" x="0" y="0"/>
+			<ECTransition Source="sNACH5" Destination="sNACH5" Condition="SET_ZE5_AUS" Comment="" x="0" y="0"/>
+			<ECTransition Source="xSTART" Destination="Init" Condition="INIT" Comment="" x="4826.67" y="11806.67"/>
+			<ECTransition Source="Init" Destination="sAUS" Condition="1" Comment="" x="4920" y="10440"/>
 		</ECC>
-		<Algorithm Name="EI_CYCLIC_Auswertung" Comment="Liest STOERUNG_M1..M6 neu ein, setzt STATUS_STOERUNG falls eine aktiv ist, und berechnet&#10;EINSCHALTBEREIT">
+		<Algorithm Name="initialize" Comment="Initialization algorithm">
+			<ST><![CDATA[
+
+]]></ST>
+		</Algorithm>
+		<Algorithm Name="deInitialize" Comment="Normally executed algorithm">
+			<ST><![CDATA[
+
+]]></ST>
+		</Algorithm>
+		<Algorithm Name="EI_CYCLIC_Auswertung" Comment="Liest STOERUNG_M1..M6 neu ein, setzt STATUS_STOERUNG falls eine aktiv ist, und berechnet&#10;EINSCHALTBEREIT/ANLAGE_AUS">
 			<ST><![CDATA[
 // Störungssignale frisch einlesen (BOOL-Dauersignale, kein Event-Consumption-Problem, s. Konzept
 // Frage 4)
@@ -369,6 +389,10 @@ END_IF;
 // selbst kommt aber nur an, wenn EINSCHALTBEREIT die Visu-Sperre freigibt - sonst Deadlock.
 EINSCHALTBEREIT := (ZAEHLSTAND = 0)
 	AND NOT (STOERUNG_M1 OR STOERUNG_M2 OR STOERUNG_M3 OR STOERUNG_M4 OR STOERUNG_M5 OR STOERUNG_M6);
+
+// Voraussetzung fuer Handbetrieb: nur wenn die Anlage wirklich in S_AUS steht (unabhaengig von
+// Stoerungen - eine Stoerung soll Handbetrieb zum Freifahren nicht zusaetzlich blockieren).
+ANLAGE_AUS := (STATUS_BETRIEB = anlagenSequenz::STATUS_BETRIEB_AUS);
 ]]></ST>
 		</Algorithm>
 		<Algorithm Name="M1_EIN" Comment="Setzt den Laufbefehl DO_M1 auf TRUE (Motor 1 einschalten)">
