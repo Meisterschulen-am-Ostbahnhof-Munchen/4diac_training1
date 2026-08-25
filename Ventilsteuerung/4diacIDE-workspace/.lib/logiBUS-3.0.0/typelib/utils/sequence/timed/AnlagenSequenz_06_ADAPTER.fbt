@@ -30,7 +30,7 @@
 			<AdapterDeclaration Name="STATUS_STOERUNG" Type="adapter::types::unidirectional::AS" Comment="0=keine 4=aktiv, verriegelt bis EIN" x="10200" y="5500"/>
 			<AdapterDeclaration Name="ZAEHLSTAND" Type="adapter::types::unidirectional::AS" Comment="0..6, Anzahl aktuell laufender Motoren" x="10200" y="6000"/>
 			<AdapterDeclaration Name="EINSCHALTBEREIT" Type="adapter::types::unidirectional::AX" Comment="TRUE nur wenn alle Motoren stehen UND alle Motoren störungsfrei sind" x="10200" y="6500"/>
-			<AdapterDeclaration Name="TRANSIT_MOTOR" Type="adapter::types::unidirectional::AS" Comment="0 = keiner (S_AUS/S_LAEUFT), 1..6 = Motor-Nr., der aktuell im Vor-/Nachlauf ist" x="10200" y="7000"/>
+			<AdapterDeclaration Name="TRANSIT_MOTOR" Type="adapter::types::unidirectional::AS" Comment="0 = keiner (S_AUS/S_LAEUFT), 1..6 = Motor-Nr., der nach Ablauf der aktuellen Zeit startet/stoppt (siehe TRANSIT_ART)" x="10200" y="7000"/>
 			<AdapterDeclaration Name="TRANSIT_ART" Type="adapter::types::unidirectional::AS" Comment="anlagenSequenz::TRANSIT_ART_KEINE/_VORLAUF/_NACHLAUF" x="10200" y="7500"/>
 			<AdapterDeclaration Name="DO_M1" Type="adapter::types::unidirectional::AX" Comment="Laufbefehl Motor 1" x="10200" y="1500"/>
 			<AdapterDeclaration Name="DO_M2" Type="adapter::types::unidirectional::AX" Comment="Laufbefehl Motor 2" x="10200" y="2000"/>

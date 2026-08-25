@@ -146,7 +146,7 @@
 			<VarDeclaration Name="EINSCHALTBEREIT" Type="BOOL" Comment="TRUE nur wenn alle Motoren stehen UND alle Motoren störungsfrei sind"/>
 			<VarDeclaration Name="ZAEHLSTAND" Type="SINT" Comment="0..6, Anzahl aktuell laufender Motoren, s. Konzept"/>
 			<VarDeclaration Name="ANLAGE_AUS" Type="BOOL" Comment="TRUE nur in S_AUS (STATUS_BETRIEB = Aus) - Voraussetzung fuer Handbetrieb"/>
-			<VarDeclaration Name="TRANSIT_MOTOR" Type="SINT" Comment="0 = keiner (S_AUS/S_LAEUFT), 1..6 = Motor-Nr., der aktuell im Vor-/Nachlauf ist"/>
+			<VarDeclaration Name="TRANSIT_MOTOR" Type="SINT" Comment="0 = keiner (S_AUS/S_LAEUFT), 1..6 = Motor-Nr., der nach Ablauf der aktuellen Zeit startet/stoppt (siehe TRANSIT_ART)"/>
 			<VarDeclaration Name="TRANSIT_ART" Type="SINT" Comment="anlagenSequenz::TRANSIT_ART_KEINE/_VORLAUF/_NACHLAUF"/>
 			<VarDeclaration Name="DO_M1" Type="BOOL" Comment="Laufbefehl Motor 1"/>
 			<VarDeclaration Name="DO_M2" Type="BOOL" Comment="Laufbefehl Motor 2"/>
