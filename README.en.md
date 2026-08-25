@@ -109,7 +109,7 @@ A brief overview of the most important directories:
 
 * [Eclipse 4diac IDE](https://www.eclipse.org/4diac/) (tested with `4diac-ide_3.2.0`, see `readme.txt`) incl. Java runtime environment
 * Jetter / Bucher **ISO-Designer** for editing the `.jop`/`.jvi` VT pool files
-* **Node.js** (for `apixon-io-client`, `npm install && npm run build`)
+* **Node.js** (for `apixon-io-client`, `npm --prefix Ventilsteuerung/apixon-io-client install && npm --prefix Ventilsteuerung/apixon-io-client run build`)
 * **Python 3** (for the helper scripts in `scripts_central/`)
 * Optional: FORTE runtime environment (PC or target device) for deploying the `.fboot` files
 
@@ -139,13 +139,13 @@ Use the `.launch` files, or the `.fboot` files in the `Ventilsteuerung/boot-file
 
 ## 📚 Documentation & Exercise Series
 
-Detailed guides and descriptions of the individual exercise packages are available in our ReadTheDocs documentation.
+Detailed guides and descriptions of the individual exercise packages are available in our ReadTheDocs documentation (German only for now).
 
 | Area | Description | Documentation |
 | :--- | :--- | :--- |
-| **Exercises AX** | Fundamentals of valve control (series AX) | [📘 Go to documentation](https://meisterschulen-am-ostbahnhof-munchen-docs.readthedocs.io/projects/visual-programming-languages-docs/de/latest/training1/Ventilsteuerung/4diacIDE-workspace/test_AX/Uebungen_doc/Uebungen.html) |
-| **Exercises B** | Advanced exercises without the AX prefix | [📙 Go to documentation](https://meisterschulen-am-ostbahnhof-munchen-docs.readthedocs.io/projects/visual-programming-languages-docs/de/latest/training1/Ventilsteuerung/4diacIDE-workspace/test_B/Uebungen_doc/Uebungen.html) |
-| **Exercises VV** | Distributed processing & communication | [🚀 Go to documentation](https://meisterschulen-am-ostbahnhof-munchen-docs.readthedocs.io/projects/visual-programming-languages-docs/de/latest/training1/Ventilsteuerung/4diacIDE-workspace/test_VV/Uebungen_doc/Uebungen.html) |
+| **Exercises AX** | Fundamentals of valve control (series AX) | [📘 Go to German documentation](https://meisterschulen-am-ostbahnhof-munchen-docs.readthedocs.io/projects/visual-programming-languages-docs/de/latest/training1/Ventilsteuerung/4diacIDE-workspace/test_AX/Uebungen_doc/Uebungen.html) |
+| **Exercises B** | Advanced exercises without the AX prefix | [📙 Go to German documentation](https://meisterschulen-am-ostbahnhof-munchen-docs.readthedocs.io/projects/visual-programming-languages-docs/de/latest/training1/Ventilsteuerung/4diacIDE-workspace/test_B/Uebungen_doc/Uebungen.html) |
+| **Exercises VV** | Distributed processing & communication | [🚀 Go to German documentation](https://meisterschulen-am-ostbahnhof-munchen-docs.readthedocs.io/projects/visual-programming-languages-docs/de/latest/training1/Ventilsteuerung/4diacIDE-workspace/test_VV/Uebungen_doc/Uebungen.html) |
 
 ## 🔍 SEO & Keywords
 
