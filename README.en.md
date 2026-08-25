@@ -140,13 +140,13 @@ Use the `.launch` files, or the `.fboot` files in the `Ventilsteuerung/boot-file
 
 ## 📚 Documentation & Exercise Series
 
-Detailed guides and descriptions of the individual exercise packages are available in our ReadTheDocs documentation (German only for now).
+Detailed guides and descriptions of the individual exercise packages are available in our ReadTheDocs documentation.
 
 | Area | Description | Documentation |
 | :--- | :--- | :--- |
-| **Exercises AX** | Fundamentals of valve control (series AX) | [📘 Go to German documentation](https://meisterschulen-am-ostbahnhof-munchen-docs.readthedocs.io/projects/visual-programming-languages-docs/de/latest/training1/Ventilsteuerung/4diacIDE-workspace/test_AX/Uebungen_doc/Uebungen.html) |
-| **Exercises B** | Advanced exercises without the AX prefix | [📙 Go to German documentation](https://meisterschulen-am-ostbahnhof-munchen-docs.readthedocs.io/projects/visual-programming-languages-docs/de/latest/training1/Ventilsteuerung/4diacIDE-workspace/test_B/Uebungen_doc/Uebungen.html) |
-| **Exercises VV** | Distributed processing & communication | [🚀 Go to German documentation](https://meisterschulen-am-ostbahnhof-munchen-docs.readthedocs.io/projects/visual-programming-languages-docs/de/latest/training1/Ventilsteuerung/4diacIDE-workspace/test_VV/Uebungen_doc/Uebungen.html) |
+| **Exercises AX** | Fundamentals of valve control (series AX) | [📘 Go to documentation](https://meisterschulen-am-ostbahnhof-munchen-docs.readthedocs.io/projects/visual-programming-languages-docs/en/latest/training1/Ventilsteuerung/4diacIDE-workspace/test_AX/Uebungen_doc/Uebungen.html) |
+| **Exercises B** | Advanced exercises without the AX prefix | [📙 Go to documentation](https://meisterschulen-am-ostbahnhof-munchen-docs.readthedocs.io/projects/visual-programming-languages-docs/en/latest/training1/Ventilsteuerung/4diacIDE-workspace/test_B/Uebungen_doc/Uebungen.html) |
+| **Exercises VV** | Distributed processing & communication | [🚀 Go to documentation](https://meisterschulen-am-ostbahnhof-munchen-docs.readthedocs.io/projects/visual-programming-languages-docs/en/latest/training1/Ventilsteuerung/4diacIDE-workspace/test_VV/Uebungen_doc/Uebungen.html) |
 
 ## 🔍 SEO & Keywords
 
