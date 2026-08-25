@@ -1,4 +1,4 @@
-import { defineConfig } from 'vite'
+import { defineConfig } from 'vitest/config'
 import vue from '@vitejs/plugin-vue'
 import { viteSingleFile } from 'vite-plugin-singlefile'
 
@@ -11,6 +11,14 @@ export default defineConfig({
     outDir: 'dist',
     rollupOptions: {
       input: 'apixon-io.html',
+    },
+  },
+  test: {
+    environment: 'jsdom',
+    coverage: {
+      provider: 'v8',
+      reporter: ['cobertura'],
+      reportsDirectory: 'coverage',
     },
   },
 })
