@@ -1,7 +1,5 @@
 # 🚜 4diac Training: Ventilsteuerung & ISOBUS Automation
 
-
-
 [![License](https://img.shields.io/badge/License-EPL%202.0-red.svg)](LICENSE.md)
 [![4diac](https://img.shields.io/badge/Eclipse-4diac-purple)](https://www.eclipse.org/4diac/)
 [![Standard](https://img.shields.io/badge/Standard-IEC%2061131--3-green)](https://en.wikipedia.org/wiki/IEC_61131-3)
@@ -9,6 +7,8 @@
 [![Standard](https://img.shields.io/badge/Standard-IEC%2061499-green)](https://en.wikipedia.org/wiki/IEC_61499)
 [![Standard](https://img.shields.io/badge/Standard-DIN%20EN%2061499-green)](https://de.wikipedia.org/wiki/EN_61499)
 [![Protocol](https://img.shields.io/badge/Protocol-ISOBUS%20%2F%20J1939-orange)]()
+
+🇩🇪 Deutsch | 🇬🇧 [English](README.en.md)
 
 Dieses Repository bietet eine umfassende Sammlung von Trainingsmaterialien, Beispielprojekten und Implementierungen für die **Ventilsteuerung** unter Verwendung von **Eclipse 4diac™**. Der Fokus liegt auf der mobilen Automation, insbesondere der Integration von **ISOBUS (ISO 11783)** Technologien.
 
@@ -24,6 +24,7 @@ logiBUS® <https://www.logibus.tech/>
 - [Ordnerstruktur](#ordnerstruktur)
 - [Voraussetzungen](#voraussetzungen)
 - [Erste Schritte](#erste-schritte)
+- [Dokumentation & Übungsreihen](#dokumentation--übungsreihen)
 - [SEO & Schlagwörter](#seo--schlagwörter)
 
 ---
@@ -45,11 +46,16 @@ Implementierung der Steuerungslogik für Hydraulikventile.
 
 ### 2. ISOBUS Integration (HMI)
 Vollständige Design-Projekte für **Virtual Terminals (VT)**.
-- **ISO-Designer Projekte:** Enthalten Masken, Softkeys und Alarmmeldungen.
+- **ISO-Designer Projekte:** Enthalten Masken, Softkeys und Alarmmeldungen (`Workspace`, `Workspace_Joystick`, `Workspace_PWM`, `Workspace_TECU`, `Workspace_TC_SC`, `Workspace_Horse`, `Workspace_Scroll`, `Workspace_Tester`).
 - **Pool-Dateien:** `.jop`, `.jvi` und Bildressourcen für verschiedene Auflösungen (Monochrom & Farbe).
 - **Task Controller (TC-SC):** Beispiele für Section Control (`.dvc` Dateien).
 
-### 3. Trainingsübungen
+### 3. APIXON I/O Client (OPC UA)
+Ein browserbasierter Test-Client (`apixon-io-client/`) für den I/O-Zugriff über **OPC UA**.
+- **Technologien:** Vue 3, TypeScript, Vite (Single-File-Build), Vitest für Unit-/Coverage-Tests.
+- **Zweck:** Manuelles Setzen/Beobachten von Ein-/Ausgängen einer FORTE-Applikation direkt im Browser, ohne zusätzliche Tools.
+
+### 4. Trainingsübungen
 Eine strukturierte Reihe von Lernmodulen:
 - Grundlagen der digitalen Logik (AND, OR, XOR).
 - Zeitglieder (TON, TOF, TP).
@@ -78,17 +84,32 @@ Ein kurzer Überblick über die wichtigsten Verzeichnisse:
 │   ├── 4diacIDE-workspace/       # Haupt-Arbeitsbereich für 4diac Projekte
 │   │   ├── test_AX/              # Übungsprojekte Serie AX (mit AX Adapter)
 │   │   ├── test_B/               # Übungsprojekte Serie B (ohne AX Adapter)
-│   │   ├── test_VV/              # Übungsprojekte Serie VV (Verteile Verarbeitung)
-│   │   └── .lib/                 # Bibliotheken (logiBUS®, isobus, iec61131, iec61499)
+│   │   ├── test_VV/              # Übungsprojekte Serie VV (Verteilte Verarbeitung)
+│   │   └── .lib/                 # Bibliotheken (logiBUS®, isobus, iec61131, iec61499, OSCAT)
 │   ├── ISO-DesignerProjects/     # HMI/VT Designs
 │   │   ├── Workspace/            # Basis Pool für die meisten Übungen
 │   │   ├── Workspace_Joystick/   # Joystick-Integration
 │   │   ├── Workspace_PWM/        # PWM-Visualisierung
-│   │   └── Workspace_TECU/       # Tractor ECU auslesen
-│   ├── TaskController-SC/        # Section Control Konfigurationen
-│   └── scripts/                  # Python & Batch Hilfsskripte
+│   │   ├── Workspace_TECU/       # Tractor ECU auslesen
+│   │   ├── Workspace_TC_SC/      # Task Controller / Section Control Masken
+│   │   ├── Workspace_Horse/      # Erweiterte HMI-Übung
+│   │   ├── Workspace_Scroll/     # Scroll-/Listendarstellung
+│   │   └── Workspace_Tester/     # I/O-Testmasken
+│   ├── TaskController-SC/        # Section Control Konfigurationen (.dvc)
+│   ├── boot-files/               # FORTE .fboot Startdateien für die Zielgeräte
+│   ├── apixon-io-client/         # Browserbasierter OPC-UA I/O-Testclient (Vue/TypeScript/Vite)
+│   └── scripts_central/          # Python-Hilfsskripte (Bibliotheks-/Namenskonsistenz, Konvertierung)
+├── .github/                      # CI-Workflows (u. a. Test-Coverage für den I/O-Client)
 └── README.md
 ```
+
+## ✅ Voraussetzungen
+
+* [Eclipse 4diac IDE](https://www.eclipse.org/4diac/) (getestet mit `4diac-ide_3.2.0`, siehe `readme.txt`) inkl. Java-Laufzeitumgebung
+* Jetter / Bucher **ISO-Designer** zum Bearbeiten der `.jop`/`.jvi` VT-Pool-Dateien
+* **Node.js** (für den `apixon-io-client`, `npm install && npm run build`)
+* **Python 3** (für die Hilfsskripte in `scripts_central/`)
+* Optional: FORTE-Laufzeitumgebung (PC oder Zielgerät) zum Deployen der `.fboot`-Dateien
 
 ## 🚀 Erste Schritte
 
@@ -100,7 +121,7 @@ Sie haben zwei Möglichkeiten, die Dateien zu erhalten:
 
 * **Option B: Repository klonen (Für Entwickler)** Nutzen Sie diese Methode, wenn Sie Versionskontrolle verwenden möchten:
     ```bash
-    git clone [https://github.com/Meisterschulen-am-Ostbahnhof-Munchen/4diac_training1.git](https://github.com/Meisterschulen-am-Ostbahnhof-Munchen/4diac_training1.git)
+    git clone https://github.com/Meisterschulen-am-Ostbahnhof-Munchen/4diac_training1.git
     ```
 
 ### 2. 4diac IDE starten
@@ -110,13 +131,7 @@ Wähle den Ordner `Ventilsteuerung/4diacIDE-workspace` aus dem heruntergeladenen
 Stelle sicher, dass die `isobus`, `logiBUS` und `iec61131` Bibliotheken korrekt im Pfad eingebunden sind.
 
 ### 4. Deploy
-Nutze die `.launch` Dateien im Ordner `Launches`, um die Applikation auf dein Zielgerät (oder FORTE PC) zu laden.
-2.  **4diac IDE starten:**
-    Wähle `Ventilsteuerung/4diacIDE-workspace` als deinen Workspace.
-3.  **Bibliotheken importieren:**
-    Stelle sicher, dass die `isobus`, `logiBUS` und `iec61131` Bibliotheken korrekt im Pfad eingebunden sind.
-4.  **Deploy:**
-    Nutze die `.launch` Dateien im Ordner `Launches`, um die Applikation auf dein Zielgerät (oder FORTE PC) zu laden.
+Nutze die `.launch`-Dateien bzw. die `.fboot`-Dateien im Ordner `Ventilsteuerung/boot-files`, um die Applikation auf dein Zielgerät (oder FORTE PC) zu laden.
 
 -----
 
