@@ -13,4 +13,12 @@ export default defineConfig({
       input: 'apixon-io.html',
     },
   },
+  test: {
+    environment: 'jsdom',
+    coverage: {
+      provider: 'v8',
+      reporter: ['cobertura'],
+      reportsDirectory: 'coverage',
+    },
+  },
 })
