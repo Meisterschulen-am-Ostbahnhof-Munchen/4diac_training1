@@ -100,14 +100,15 @@ Ein kurzer Überblick über die wichtigsten Verzeichnisse:
 │   ├── apixon-io-client/         # Browserbasierter OPC-UA I/O-Testclient (Vue/TypeScript/Vite)
 │   └── scripts_central/          # Python-Hilfsskripte (Bibliotheks-/Namenskonsistenz, Konvertierung)
 ├── .github/                      # CI-Workflows (u. a. Test-Coverage für den I/O-Client)
-└── README.md
+├── README.md
+└── README.en.md
 ```
 
 ## ✅ Voraussetzungen
 
 * [Eclipse 4diac IDE](https://www.eclipse.org/4diac/) (getestet mit `4diac-ide_3.2.0`, siehe `readme.txt`) inkl. Java-Laufzeitumgebung
 * Jetter / Bucher **ISO-Designer** zum Bearbeiten der `.jop`/`.jvi` VT-Pool-Dateien
-* **Node.js** (für den `apixon-io-client`, `npm install && npm run build`)
+* **Node.js** (für den `apixon-io-client`, `npm --prefix Ventilsteuerung/apixon-io-client install && npm --prefix Ventilsteuerung/apixon-io-client run build`)
 * **Python 3** (für die Hilfsskripte in `scripts_central/`)
 * Optional: FORTE-Laufzeitumgebung (PC oder Zielgerät) zum Deployen der `.fboot`-Dateien
 
