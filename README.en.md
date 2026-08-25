@@ -134,7 +134,7 @@ Select the `Ventilsteuerung/4diacIDE-workspace` folder from the downloaded packa
 Make sure the `isobus`, `logiBUS`, and `iec61131` libraries are correctly linked on the path.
 
 ### 4. Deploy
-Use the `.launch` files, or the `.fboot` files in the `Ventilsteuerung/boot-files` folder, to load the application onto your target device (or the FORTE PC).
+Use the `.launch` files in `Ventilsteuerung/4diacIDE-workspace/test_*/Launches`, or the `.fboot` files in the `Ventilsteuerung/boot-files` folder, to load the application onto your target device (or the FORTE PC).
 
 -----
 

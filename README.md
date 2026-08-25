@@ -132,7 +132,7 @@ Wähle den Ordner `Ventilsteuerung/4diacIDE-workspace` aus dem heruntergeladenen
 Stelle sicher, dass die `isobus`, `logiBUS` und `iec61131` Bibliotheken korrekt im Pfad eingebunden sind.
 
 ### 4. Deploy
-Nutze die `.launch`-Dateien bzw. die `.fboot`-Dateien im Ordner `Ventilsteuerung/boot-files`, um die Applikation auf dein Zielgerät (oder FORTE PC) zu laden.
+Nutze die `.launch`-Dateien im Ordner `Ventilsteuerung/4diacIDE-workspace/test_*/Launches` bzw. die `.fboot`-Dateien im Ordner `Ventilsteuerung/boot-files`, um die Applikation auf dein Zielgerät (oder FORTE PC) zu laden.
 
 -----
 
