@@ -21,12 +21,12 @@ describe('ApixonIO', () => {
   it('renders 8 input items', () => {
     const wrapper = mount(ApixonIO)
     const inputs = wrapper.findAll('.io-item:not(.output)')
-    expect(inputs.length).toBe(8)
+    expect(inputs).toHaveLength(8)
   })
 
   it('renders 12 output items', () => {
     const wrapper = mount(ApixonIO)
     const outputs = wrapper.findAll('.io-item.output')
-    expect(outputs.length).toBe(12)
+    expect(outputs).toHaveLength(12)
   })
 })

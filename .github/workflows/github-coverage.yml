@@ -6,12 +6,11 @@ on:
       - main
   pull_request:
 
-permissions:
-  contents: read
-
 jobs:
   test:
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
     defaults:
       run:
         working-directory: Ventilsteuerung/apixon-io-client
@@ -25,7 +24,7 @@ jobs:
           cache-dependency-path: Ventilsteuerung/apixon-io-client/package-lock.json
 
       - name: Install dependencies
-        run: npm ci
+        run: npm ci --ignore-scripts
         shell: bash
 
       - name: Run tests with coverage
