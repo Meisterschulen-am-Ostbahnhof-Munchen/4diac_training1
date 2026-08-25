@@ -14,6 +14,25 @@
 		<Import declaration="logiBUS::utils::sequence::const::anlagenSequenz::STATUS_BETRIEB_HERUNTERFAHREN"/>
 		<Import declaration="logiBUS::utils::sequence::const::anlagenSequenz::STATUS_STOERUNG_KEINE"/>
 		<Import declaration="logiBUS::utils::sequence::const::anlagenSequenz::STATUS_STOERUNG_AKTIV"/>
+		<Import declaration="logiBUS::utils::sequence::const::anlagenSequenz::TRANSIT_ART_KEINE"/>
+		<Import declaration="logiBUS::utils::sequence::const::anlagenSequenz::TRANSIT_ART_VORLAUF"/>
+		<Import declaration="logiBUS::utils::sequence::const::anlagenSequenz::TRANSIT_ART_NACHLAUF"/>
+		<Import declaration="logiBUS::utils::sequence::const::motorNummer"/>
+		<Import declaration="logiBUS::utils::sequence::const::motorNummer::MOTOR_KEINER"/>
+		<Import declaration="logiBUS::utils::sequence::const::motorNummer::MOTOR_M1"/>
+		<Import declaration="logiBUS::utils::sequence::const::motorNummer::MOTOR_M2"/>
+		<Import declaration="logiBUS::utils::sequence::const::motorNummer::MOTOR_M3"/>
+		<Import declaration="logiBUS::utils::sequence::const::motorNummer::MOTOR_M4"/>
+		<Import declaration="logiBUS::utils::sequence::const::motorNummer::MOTOR_M5"/>
+		<Import declaration="logiBUS::utils::sequence::const::motorNummer::MOTOR_M6"/>
+		<Import declaration="logiBUS::utils::sequence::const::zaehlstand"/>
+		<Import declaration="logiBUS::utils::sequence::const::zaehlstand::ZAEHLSTAND_0"/>
+		<Import declaration="logiBUS::utils::sequence::const::zaehlstand::ZAEHLSTAND_1"/>
+		<Import declaration="logiBUS::utils::sequence::const::zaehlstand::ZAEHLSTAND_2"/>
+		<Import declaration="logiBUS::utils::sequence::const::zaehlstand::ZAEHLSTAND_3"/>
+		<Import declaration="logiBUS::utils::sequence::const::zaehlstand::ZAEHLSTAND_4"/>
+		<Import declaration="logiBUS::utils::sequence::const::zaehlstand::ZAEHLSTAND_5"/>
+		<Import declaration="logiBUS::utils::sequence::const::zaehlstand::ZAEHLSTAND_6"/>
 	</CompilerInfo>
 	<InterfaceList>
 		<EventInputs>
@@ -81,6 +100,8 @@
 				<With Var="ZAEHLSTAND"/>
 				<With Var="EINSCHALTBEREIT"/>
 				<With Var="ANLAGE_AUS"/>
+				<With Var="TRANSIT_MOTOR"/>
+				<With Var="TRANSIT_ART"/>
 			</Event>
 			<Event Name="EO_M1" Type="Event" Comment="Laufbefehl Motor 1 aktualisiert (analog EO_Sx in sequence_T_04/_08)">
 				<With Var="DO_M1"/>
@@ -125,6 +146,8 @@
 			<VarDeclaration Name="EINSCHALTBEREIT" Type="BOOL" Comment="TRUE nur wenn alle Motoren stehen UND alle Motoren störungsfrei sind"/>
 			<VarDeclaration Name="ZAEHLSTAND" Type="SINT" Comment="0..6, Anzahl aktuell laufender Motoren, s. Konzept"/>
 			<VarDeclaration Name="ANLAGE_AUS" Type="BOOL" Comment="TRUE nur in S_AUS (STATUS_BETRIEB = Aus) - Voraussetzung fuer Handbetrieb"/>
+			<VarDeclaration Name="TRANSIT_MOTOR" Type="SINT" Comment="0 = keiner (S_AUS/S_LAEUFT), 1..6 = Motor-Nr., der aktuell im Vor-/Nachlauf ist"/>
+			<VarDeclaration Name="TRANSIT_ART" Type="SINT" Comment="anlagenSequenz::TRANSIT_ART_KEINE/_VORLAUF/_NACHLAUF"/>
 			<VarDeclaration Name="DO_M1" Type="BOOL" Comment="Laufbefehl Motor 1"/>
 			<VarDeclaration Name="DO_M2" Type="BOOL" Comment="Laufbefehl Motor 2"/>
 			<VarDeclaration Name="DO_M3" Type="BOOL" Comment="Laufbefehl Motor 3"/>
@@ -145,6 +168,7 @@
 			</ECState>
 			<ECState Name="sAUS" Comment="S_AUS, unten im Ring: keine Motoren laufen" x="5600" y="9600">
 				<ECAction Algorithm="S_AUS_Setup"/>
+				<ECAction Algorithm="EI_CYCLIC_Auswertung"/>
 				<ECAction Algorithm="M1_AUS" Output="EO_M1"/>
 				<ECAction Algorithm="M2_AUS" Output="EO_M2"/>
 				<ECAction Algorithm="M3_AUS" Output="EO_M3"/>
@@ -152,11 +176,10 @@
 				<ECAction Algorithm="M5_AUS" Output="EO_M5"/>
 				<ECAction Algorithm="M6_AUS" Output="EO_M6"/>
 				<ECAction Output="CNF"/>
-				<ECAction Algorithm="EI_CYCLIC_Auswertung"/>
 			</ECState>
 			<ECState Name="sVOR1" Comment="S_VOR1 (Vorlauf-Kette): nur M6 läuft" x="800" y="8000">
-				<ECAction Algorithm="EI_CYCLIC_Auswertung"/>
 				<ECAction Algorithm="S_VOR1_Setup"/>
+				<ECAction Algorithm="EI_CYCLIC_Auswertung"/>
 				<ECAction Algorithm="M1_AUS" Output="EO_M1"/>
 				<ECAction Algorithm="M2_AUS" Output="EO_M2"/>
 				<ECAction Algorithm="M3_AUS" Output="EO_M3"/>
@@ -167,8 +190,8 @@
 				<ECAction Output="CNF"/>
 			</ECState>
 			<ECState Name="sVOR2" Comment="S_VOR2 (Vorlauf-Kette): M5,M6 laufen" x="800" y="6400">
-				<ECAction Algorithm="EI_CYCLIC_Auswertung"/>
 				<ECAction Algorithm="S_VOR2_Setup"/>
+				<ECAction Algorithm="EI_CYCLIC_Auswertung"/>
 				<ECAction Algorithm="M1_AUS" Output="EO_M1"/>
 				<ECAction Algorithm="M2_AUS" Output="EO_M2"/>
 				<ECAction Algorithm="M3_AUS" Output="EO_M3"/>
@@ -179,8 +202,8 @@
 				<ECAction Output="CNF"/>
 			</ECState>
 			<ECState Name="sVOR3" Comment="S_VOR3 (Vorlauf-Kette): M4,M5,M6 laufen" x="800" y="4800">
-				<ECAction Algorithm="EI_CYCLIC_Auswertung"/>
 				<ECAction Algorithm="S_VOR3_Setup"/>
+				<ECAction Algorithm="EI_CYCLIC_Auswertung"/>
 				<ECAction Algorithm="M1_AUS" Output="EO_M1"/>
 				<ECAction Algorithm="M2_AUS" Output="EO_M2"/>
 				<ECAction Algorithm="M3_AUS" Output="EO_M3"/>
@@ -191,8 +214,8 @@
 				<ECAction Output="CNF"/>
 			</ECState>
 			<ECState Name="sVOR4" Comment="S_VOR4 (Vorlauf-Kette): M3,M4,M5,M6 laufen" x="800" y="3200">
-				<ECAction Algorithm="EI_CYCLIC_Auswertung"/>
 				<ECAction Algorithm="S_VOR4_Setup"/>
+				<ECAction Algorithm="EI_CYCLIC_Auswertung"/>
 				<ECAction Algorithm="M1_AUS" Output="EO_M1"/>
 				<ECAction Algorithm="M2_AUS" Output="EO_M2"/>
 				<ECAction Algorithm="M3_EIN" Output="EO_M3"/>
@@ -203,8 +226,8 @@
 				<ECAction Output="CNF"/>
 			</ECState>
 			<ECState Name="sVOR5" Comment="S_VOR5 (Vorlauf-Kette): M2,M3,M4,M5,M6 laufen" x="800" y="1600">
-				<ECAction Algorithm="EI_CYCLIC_Auswertung"/>
 				<ECAction Algorithm="S_VOR5_Setup"/>
+				<ECAction Algorithm="EI_CYCLIC_Auswertung"/>
 				<ECAction Algorithm="M1_AUS" Output="EO_M1"/>
 				<ECAction Algorithm="M2_EIN" Output="EO_M2"/>
 				<ECAction Algorithm="M3_EIN" Output="EO_M3"/>
@@ -215,8 +238,8 @@
 				<ECAction Output="CNF"/>
 			</ECState>
 			<ECState Name="sLAEUFT" Comment="S_LAEUFT, oben im Ring: alle 6 Motoren laufen" x="800" y="0">
-				<ECAction Algorithm="EI_CYCLIC_Auswertung"/>
 				<ECAction Algorithm="S_LAEUFT_Setup"/>
+				<ECAction Algorithm="EI_CYCLIC_Auswertung"/>
 				<ECAction Algorithm="M1_EIN" Output="EO_M1"/>
 				<ECAction Algorithm="M2_EIN" Output="EO_M2"/>
 				<ECAction Algorithm="M3_EIN" Output="EO_M3"/>
@@ -226,8 +249,8 @@
 				<ECAction Output="CNF"/>
 			</ECState>
 			<ECState Name="sNACH1" Comment="S_NACH1 (Nachlauf-Kette): M2,M3,M4,M5,M6 laufen (M1 gestoppt)" x="5600" y="1600">
-				<ECAction Algorithm="EI_CYCLIC_Auswertung"/>
 				<ECAction Algorithm="S_NACH1_Setup"/>
+				<ECAction Algorithm="EI_CYCLIC_Auswertung"/>
 				<ECAction Algorithm="M1_AUS" Output="EO_M1"/>
 				<ECAction Algorithm="M2_EIN" Output="EO_M2"/>
 				<ECAction Algorithm="M3_EIN" Output="EO_M3"/>
@@ -238,8 +261,8 @@
 				<ECAction Output="CNF"/>
 			</ECState>
 			<ECState Name="sNACH2" Comment="S_NACH2 (Nachlauf-Kette): M3,M4,M5,M6 laufen" x="5600" y="3200">
-				<ECAction Algorithm="EI_CYCLIC_Auswertung"/>
 				<ECAction Algorithm="S_NACH2_Setup"/>
+				<ECAction Algorithm="EI_CYCLIC_Auswertung"/>
 				<ECAction Algorithm="M1_AUS" Output="EO_M1"/>
 				<ECAction Algorithm="M2_AUS" Output="EO_M2"/>
 				<ECAction Algorithm="M3_EIN" Output="EO_M3"/>
@@ -250,8 +273,8 @@
 				<ECAction Output="CNF"/>
 			</ECState>
 			<ECState Name="sNACH3" Comment="S_NACH3 (Nachlauf-Kette): M4,M5,M6 laufen" x="5600" y="4800">
-				<ECAction Algorithm="EI_CYCLIC_Auswertung"/>
 				<ECAction Algorithm="S_NACH3_Setup"/>
+				<ECAction Algorithm="EI_CYCLIC_Auswertung"/>
 				<ECAction Algorithm="M1_AUS" Output="EO_M1"/>
 				<ECAction Algorithm="M2_AUS" Output="EO_M2"/>
 				<ECAction Algorithm="M3_AUS" Output="EO_M3"/>
@@ -262,8 +285,8 @@
 				<ECAction Output="CNF"/>
 			</ECState>
 			<ECState Name="sNACH4" Comment="S_NACH4 (Nachlauf-Kette): M5,M6 laufen" x="5600" y="6400">
-				<ECAction Algorithm="EI_CYCLIC_Auswertung"/>
 				<ECAction Algorithm="S_NACH4_Setup"/>
+				<ECAction Algorithm="EI_CYCLIC_Auswertung"/>
 				<ECAction Algorithm="M1_AUS" Output="EO_M1"/>
 				<ECAction Algorithm="M2_AUS" Output="EO_M2"/>
 				<ECAction Algorithm="M3_AUS" Output="EO_M3"/>
@@ -274,8 +297,8 @@
 				<ECAction Output="CNF"/>
 			</ECState>
 			<ECState Name="sNACH5" Comment="S_NACH5 (Nachlauf-Kette): nur M6 läuft" x="5600" y="8000">
-				<ECAction Algorithm="EI_CYCLIC_Auswertung"/>
 				<ECAction Algorithm="S_NACH5_Setup"/>
+				<ECAction Algorithm="EI_CYCLIC_Auswertung"/>
 				<ECAction Algorithm="M1_AUS" Output="EO_M1"/>
 				<ECAction Algorithm="M2_AUS" Output="EO_M2"/>
 				<ECAction Algorithm="M3_AUS" Output="EO_M3"/>
@@ -458,96 +481,120 @@ DO_M6 := BOOL#FALSE;
 		<Algorithm Name="S_AUS_Setup" Comment="Setup für S_AUS: ZAEHLSTAND auf 0, STATUS_BETRIEB auf Aus - keine Motoren laufen,&#10;Ring-Grundzustand">
 			<ST><![CDATA[
 // S_AUS: keine Motoren laufen
-ZAEHLSTAND := 0;
+ZAEHLSTAND := zaehlstand::ZAEHLSTAND_0;
 STATUS_BETRIEB := anlagenSequenz::STATUS_BETRIEB_AUS;
+TRANSIT_MOTOR := motorNummer::MOTOR_KEINER;
+TRANSIT_ART := anlagenSequenz::TRANSIT_ART_KEINE;
 ]]></ST>
 		</Algorithm>
 		<Algorithm Name="S_VOR1_Setup" Comment="Setup für S_VOR1: ZAEHLSTAND auf 1, STATUS_BETRIEB auf Hochfahren, quittiert STATUS_STOERUNG (nur&#10;über EIN erreichbar) und lädt Timer ZE1_EIN für den nächsten Vorlauf-Schritt">
 			<ST><![CDATA[
 // S_VOR1: M6 läuft
-ZAEHLSTAND := 1;
+ZAEHLSTAND := zaehlstand::ZAEHLSTAND_1;
 STATUS_BETRIEB := anlagenSequenz::STATUS_BETRIEB_HOCHFAHREN;
 STATUS_STOERUNG := anlagenSequenz::STATUS_STOERUNG_KEINE; // Quittierung: EIN wurde soeben angenommen (S_VOR1 ist nur über EIN erreichbar)
 timeOut.DT := ZE1_EIN;
+TRANSIT_MOTOR := motorNummer::MOTOR_M5;
+TRANSIT_ART := anlagenSequenz::TRANSIT_ART_VORLAUF;
 ]]></ST>
 		</Algorithm>
 		<Algorithm Name="S_VOR2_Setup" Comment="Setup für S_VOR2: ZAEHLSTAND auf 2, STATUS_BETRIEB auf Hochfahren, lädt Timer ZE2_EIN für den&#10;nächsten Vorlauf-Schritt">
 			<ST><![CDATA[
 // S_VOR2: M5,M6 laufen
-ZAEHLSTAND := 2;
+ZAEHLSTAND := zaehlstand::ZAEHLSTAND_2;
 STATUS_BETRIEB := anlagenSequenz::STATUS_BETRIEB_HOCHFAHREN;
 timeOut.DT := ZE2_EIN;
+TRANSIT_MOTOR := motorNummer::MOTOR_M4;
+TRANSIT_ART := anlagenSequenz::TRANSIT_ART_VORLAUF;
 ]]></ST>
 		</Algorithm>
 		<Algorithm Name="S_VOR3_Setup" Comment="Setup für S_VOR3: ZAEHLSTAND auf 3, STATUS_BETRIEB auf Hochfahren, lädt Timer ZE3_EIN für den&#10;nächsten Vorlauf-Schritt">
 			<ST><![CDATA[
 // S_VOR3: M4,M5,M6 laufen
-ZAEHLSTAND := 3;
+ZAEHLSTAND := zaehlstand::ZAEHLSTAND_3;
 STATUS_BETRIEB := anlagenSequenz::STATUS_BETRIEB_HOCHFAHREN;
 timeOut.DT := ZE3_EIN;
+TRANSIT_MOTOR := motorNummer::MOTOR_M3;
+TRANSIT_ART := anlagenSequenz::TRANSIT_ART_VORLAUF;
 ]]></ST>
 		</Algorithm>
 		<Algorithm Name="S_VOR4_Setup" Comment="Setup für S_VOR4: ZAEHLSTAND auf 4, STATUS_BETRIEB auf Hochfahren, lädt Timer ZE4_EIN für den&#10;nächsten Vorlauf-Schritt">
 			<ST><![CDATA[
 // S_VOR4: M3,M4,M5,M6 laufen
-ZAEHLSTAND := 4;
+ZAEHLSTAND := zaehlstand::ZAEHLSTAND_4;
 STATUS_BETRIEB := anlagenSequenz::STATUS_BETRIEB_HOCHFAHREN;
 timeOut.DT := ZE4_EIN;
+TRANSIT_MOTOR := motorNummer::MOTOR_M2;
+TRANSIT_ART := anlagenSequenz::TRANSIT_ART_VORLAUF;
 ]]></ST>
 		</Algorithm>
 		<Algorithm Name="S_VOR5_Setup" Comment="Setup für S_VOR5: ZAEHLSTAND auf 5, STATUS_BETRIEB auf Hochfahren, lädt Timer ZE5_EIN für den&#10;letzten Vorlauf-Schritt (M1 startet danach)">
 			<ST><![CDATA[
 // S_VOR5: M2,M3,M4,M5,M6 laufen
-ZAEHLSTAND := 5;
+ZAEHLSTAND := zaehlstand::ZAEHLSTAND_5;
 STATUS_BETRIEB := anlagenSequenz::STATUS_BETRIEB_HOCHFAHREN;
 timeOut.DT := ZE5_EIN;
+TRANSIT_MOTOR := motorNummer::MOTOR_M1;
+TRANSIT_ART := anlagenSequenz::TRANSIT_ART_VORLAUF;
 ]]></ST>
 		</Algorithm>
 		<Algorithm Name="S_LAEUFT_Setup" Comment="Setup für S_LAEUFT: ZAEHLSTAND auf 6, STATUS_BETRIEB auf Läuft - alle 6 Motoren laufen, oberer&#10;Ring-Zustand">
 			<ST><![CDATA[
 // S_LAEUFT: alle 6 Motoren laufen
-ZAEHLSTAND := 6;
+ZAEHLSTAND := zaehlstand::ZAEHLSTAND_6;
 STATUS_BETRIEB := anlagenSequenz::STATUS_BETRIEB_LAEUFT;
+TRANSIT_MOTOR := motorNummer::MOTOR_KEINER;
+TRANSIT_ART := anlagenSequenz::TRANSIT_ART_KEINE;
 ]]></ST>
 		</Algorithm>
 		<Algorithm Name="S_NACH1_Setup" Comment="Setup für S_NACH1: ZAEHLSTAND auf 5, STATUS_BETRIEB auf Herunterfahren, lädt den Nachlauf-Timer&#10;ZE1_AUS">
 			<ST><![CDATA[
 // S_NACH1: M2,M3,M4,M5,M6 laufen (M1 gestoppt)
-ZAEHLSTAND := 5;
+ZAEHLSTAND := zaehlstand::ZAEHLSTAND_5;
 STATUS_BETRIEB := anlagenSequenz::STATUS_BETRIEB_HERUNTERFAHREN;
 timeOut.DT := ZE1_AUS;
+TRANSIT_MOTOR := motorNummer::MOTOR_M2;
+TRANSIT_ART := anlagenSequenz::TRANSIT_ART_NACHLAUF;
 ]]></ST>
 		</Algorithm>
 		<Algorithm Name="S_NACH2_Setup" Comment="Setup für S_NACH2: ZAEHLSTAND auf 4, STATUS_BETRIEB auf Herunterfahren, lädt den Nachlauf-Timer&#10;ZE2_AUS">
 			<ST><![CDATA[
 // S_NACH2: M3,M4,M5,M6 laufen
-ZAEHLSTAND := 4;
+ZAEHLSTAND := zaehlstand::ZAEHLSTAND_4;
 STATUS_BETRIEB := anlagenSequenz::STATUS_BETRIEB_HERUNTERFAHREN;
 timeOut.DT := ZE2_AUS;
+TRANSIT_MOTOR := motorNummer::MOTOR_M3;
+TRANSIT_ART := anlagenSequenz::TRANSIT_ART_NACHLAUF;
 ]]></ST>
 		</Algorithm>
 		<Algorithm Name="S_NACH3_Setup" Comment="Setup für S_NACH3: ZAEHLSTAND auf 3, STATUS_BETRIEB auf Herunterfahren, lädt den Nachlauf-Timer&#10;ZE3_AUS">
 			<ST><![CDATA[
 // S_NACH3: M4,M5,M6 laufen
-ZAEHLSTAND := 3;
+ZAEHLSTAND := zaehlstand::ZAEHLSTAND_3;
 STATUS_BETRIEB := anlagenSequenz::STATUS_BETRIEB_HERUNTERFAHREN;
 timeOut.DT := ZE3_AUS;
+TRANSIT_MOTOR := motorNummer::MOTOR_M4;
+TRANSIT_ART := anlagenSequenz::TRANSIT_ART_NACHLAUF;
 ]]></ST>
 		</Algorithm>
 		<Algorithm Name="S_NACH4_Setup" Comment="Setup für S_NACH4: ZAEHLSTAND auf 2, STATUS_BETRIEB auf Herunterfahren, lädt den Nachlauf-Timer&#10;ZE4_AUS">
 			<ST><![CDATA[
 // S_NACH4: M5,M6 laufen
-ZAEHLSTAND := 2;
+ZAEHLSTAND := zaehlstand::ZAEHLSTAND_2;
 STATUS_BETRIEB := anlagenSequenz::STATUS_BETRIEB_HERUNTERFAHREN;
 timeOut.DT := ZE4_AUS;
+TRANSIT_MOTOR := motorNummer::MOTOR_M5;
+TRANSIT_ART := anlagenSequenz::TRANSIT_ART_NACHLAUF;
 ]]></ST>
 		</Algorithm>
 		<Algorithm Name="S_NACH5_Setup" Comment="Setup für S_NACH5: ZAEHLSTAND auf 1, STATUS_BETRIEB auf Herunterfahren, lädt den Nachlauf-Timer&#10;ZE5_AUS (letzter Schritt vor S_AUS)">
 			<ST><![CDATA[
 // S_NACH5: nur M6 läuft
-ZAEHLSTAND := 1;
+ZAEHLSTAND := zaehlstand::ZAEHLSTAND_1;
 STATUS_BETRIEB := anlagenSequenz::STATUS_BETRIEB_HERUNTERFAHREN;
 timeOut.DT := ZE5_AUS;
+TRANSIT_MOTOR := motorNummer::MOTOR_M6;
+TRANSIT_ART := anlagenSequenz::TRANSIT_ART_NACHLAUF;
 ]]></ST>
 		</Algorithm>
 	</BasicFB>

@@ -9,7 +9,7 @@
 	<InterfaceList>
 		<EventInputs>
 			<Event Name="INIT" Type="EInit" Comment="Initialization Request">
-				<With Var="DC"/>
+				<With Var="TC"/>
 			</Event>
 		</EventInputs>
 		<EventOutputs>
@@ -26,7 +26,7 @@
 			</Event>
 		</EventOutputs>
 		<InputVars>
-			<VarDeclaration Name="DC" Type="TIME" Comment="cycleTime" InitialValue="T#200ms"/>
+			<VarDeclaration Name="TC" Type="TIME" Comment="cycleTime" InitialValue="T#200ms"/>
 		</InputVars>
 		<OutputVars>
 			<VarDeclaration Name="Q" Type="BOOL" Comment="Output"/>
@@ -34,7 +34,7 @@
 			<VarDeclaration Name="ET" Type="TIME" Comment="Elapsed time"/>
 		</OutputVars>
 		<Plugs>
-			<AdapterDeclaration Name="TimeTickSocket" Type="adapter::events::TimeOut::ATimeTick"/>
+			<AdapterDeclaration Name="TimeTickSocket" Type="adapter::events::TimeOut::ATimeTick" x="0" y="0"/>
 		</Plugs>
 	</InterfaceList>
 	<FBNetwork>
@@ -50,7 +50,7 @@
 			<Connection Source="TimeTickSocket.STOPO_IN" Destination="E_CYCLE.STOP" dx1="213.33" dx2="213.33" dy="-706.67"/>
 		</EventConnections>
 		<DataConnections>
-			<Connection Source="DC" Destination="E_CYCLE.DT" dx1="653.33"/>
+			<Connection Source="TC" Destination="E_CYCLE.DT" dx1="653.33"/>
 			<Connection Source="TimeTickSocket.Q" Destination="Q" dx1="3060"/>
 			<Connection Source="TimeTickSocket.ET" Destination="ET" dx1="3340"/>
 			<Connection Source="TimeTickSocket.PT" Destination="PT" dx1="3206.67"/>

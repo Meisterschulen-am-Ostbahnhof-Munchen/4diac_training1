@@ -13,6 +13,9 @@
 		<VarDeclaration Name="STATUS_BETRIEB_HERUNTERFAHREN" Type="SINT" Comment="Nachlauf-Kette aktiv" InitialValue="SINT#3"/>
 		<VarDeclaration Name="STATUS_STOERUNG_KEINE" Type="SINT" Comment="keine aktive Störung" InitialValue="SINT#0"/>
 		<VarDeclaration Name="STATUS_STOERUNG_AKTIV" Type="SINT" Comment="Störung aktiv, verriegelt bis EIN" InitialValue="SINT#4"/>
+		<VarDeclaration Name="TRANSIT_ART_KEINE" Type="SINT" Comment="kein Motor aktuell im Vor-/Nachlauf (S_AUS, S_LAEUFT)" InitialValue="SINT#0"/>
+		<VarDeclaration Name="TRANSIT_ART_VORLAUF" Type="SINT" Comment="TRANSIT_MOTOR startet nach Ablauf der aktuellen Zeit" InitialValue="SINT#1"/>
+		<VarDeclaration Name="TRANSIT_ART_NACHLAUF" Type="SINT" Comment="TRANSIT_MOTOR stoppt nach Ablauf der aktuellen Zeit" InitialValue="SINT#2"/>
 	</GlobalConstants>
 	<OriginalSource><![CDATA[PACKAGE logiBUS::utils::sequence::const;
 
@@ -24,6 +27,9 @@ GLOBALCONSTANTS anlagenSequenz
 		STATUS_BETRIEB_HERUNTERFAHREN : SINT := SINT#3; // Nachlauf-Kette aktiv
 		STATUS_STOERUNG_KEINE : SINT := SINT#0; // keine aktive Störung
 		STATUS_STOERUNG_AKTIV : SINT := SINT#4; // Störung aktiv, verriegelt bis EIN
+		TRANSIT_ART_KEINE : SINT := SINT#0; // kein Motor aktuell im Vor-/Nachlauf (S_AUS, S_LAEUFT)
+		TRANSIT_ART_VORLAUF : SINT := SINT#1; // TRANSIT_MOTOR startet nach Ablauf der aktuellen Zeit
+		TRANSIT_ART_NACHLAUF : SINT := SINT#2; // TRANSIT_MOTOR stoppt nach Ablauf der aktuellen Zeit
 	END_VAR
 END_GLOBALCONSTANTS
 ]]></OriginalSource>
