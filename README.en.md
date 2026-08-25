@@ -102,7 +102,8 @@ A brief overview of the most important directories:
 │   ├── apixon-io-client/         # Browser-based OPC UA I/O test client (Vue/TypeScript/Vite)
 │   └── scripts_central/          # Python helper scripts (library/naming consistency, conversion)
 ├── .github/                      # CI workflows (incl. test coverage for the I/O client)
-└── README.md
+├── README.md
+└── README.en.md
 ```
 
 ## ✅ Prerequisites

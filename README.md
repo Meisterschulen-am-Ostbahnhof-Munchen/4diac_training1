@@ -100,7 +100,8 @@ Ein kurzer Überblick über die wichtigsten Verzeichnisse:
 │   ├── apixon-io-client/         # Browserbasierter OPC-UA I/O-Testclient (Vue/TypeScript/Vite)
 │   └── scripts_central/          # Python-Hilfsskripte (Bibliotheks-/Namenskonsistenz, Konvertierung)
 ├── .github/                      # CI-Workflows (u. a. Test-Coverage für den I/O-Client)
-└── README.md
+├── README.md
+└── README.en.md
 ```
 
 ## ✅ Voraussetzungen
