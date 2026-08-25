@@ -10,7 +10,7 @@
 		<Import declaration="isobus::pgn::const::Industry_Groups::IG_MARINE"/>
 		<Import declaration="isobus::pgn::const::Global_NAME_Functions::F_VTERMINAL"/>
 		<Import declaration="isobus::pgn::const::IG2_NAME_Functions::F_TRACTOR_ECU"/>
-		<Import declaration="isobus::pgn::const::IG2_Device_Classes::DC_TRACTOR"/>
+		<Import declaration="isobus::pgn::const::IG2_Device_Classes::DC_NON_SPECIFIC_SYSTEM"/>
 	</CompilerInfo>
 	<GlobalConstants>
 		<VarDeclaration Name="VT_ADD" Type="isobus::pgn::NAMEFIELD_T" Comment="=================================================================" InitialValue="( //
@@ -89,7 +89,7 @@
 		bSelfConf := TRUE, // Meist TRUE bei ISOBUS/J1939 ECUs zur dynamischen Adressierung
 		bIndGroup := IG_AGRICULTURAL_AND_FORESTRY_EQUIPMENT, // 2 = Agricultural and Forestry Equipment
 		bDevClassInst := 0, // 0 = Erste Traktor-Klasse
-		bDevClass := DC_TRACTOR, // 1 = Tractor
+		bDevClass := DC_NON_SPECIFIC_SYSTEM, // Device Class / Vehicle System: Non-specific System
 		bReserved := FALSE, // Reserviert (immer FALSE/0)
 		bFunction := F_TRACTOR_ECU, // 134 = Tractor ECU (TECU)
 		bFunctionInst := 0, // 0 = Primary TECU
@@ -117,7 +117,7 @@ IMPORT isobus::pgn::const::Industry_Groups::IG_AGRICULTURAL_AND_FORESTRY_EQUIPME
 IMPORT isobus::pgn::const::Industry_Groups::IG_MARINE;
 IMPORT isobus::pgn::const::Global_NAME_Functions::F_VTERMINAL;
 IMPORT isobus::pgn::const::IG2_NAME_Functions::F_TRACTOR_ECU;
-IMPORT isobus::pgn::const::IG2_Device_Classes::DC_TRACTOR;
+IMPORT isobus::pgn::const::IG2_Device_Classes::DC_NON_SPECIFIC_SYSTEM;
 
 GLOBALCONSTANTS Filter
 	VAR_GLOBAL CONSTANT
@@ -227,7 +227,7 @@ GLOBALCONSTANTS Filter
 		bSelfConf := TRUE, // Meist TRUE bei ISOBUS/J1939 ECUs zur dynamischen Adressierung
 		bIndGroup := IG_AGRICULTURAL_AND_FORESTRY_EQUIPMENT, // 2 = Agricultural and Forestry Equipment
 		bDevClassInst := 0, // 0 = Erste Traktor-Klasse
-		bDevClass := DC_TRACTOR, // 1 = Tractor
+		bDevClass := DC_NON_SPECIFIC_SYSTEM, // Device Class / Vehicle System: Non-specific System
 		bReserved := FALSE, // Reserviert (immer FALSE/0)
 		bFunction := F_TRACTOR_ECU, // 134 = Tractor ECU (TECU)
 		bFunctionInst := 0, // 0 = Primary TECU
