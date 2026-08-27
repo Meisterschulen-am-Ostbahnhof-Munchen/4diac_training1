@@ -1,7 +1,7 @@
 <template>
   <div class="app">
     <header>
-      <h1>APIXON Node 20 — I/O Test</h1>
+      <h1>APIXON Node 20 — DIDO Test</h1>
       <div class="connection">
         <span class="dot" :class="statusClass"></span>
         <span v-if="connected" class="tick-badge" :class="{ pulse: tickPulse }">{{ tick }}</span>
