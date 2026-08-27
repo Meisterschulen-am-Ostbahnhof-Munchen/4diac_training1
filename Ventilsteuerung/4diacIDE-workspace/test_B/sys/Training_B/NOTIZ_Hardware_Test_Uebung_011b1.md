@@ -18,4 +18,4 @@ Dokumentiert den Testaufbau, mit dem `test_B.sys` aktuell (Branch
 
 ## Stand
 
-Testaufbau dokumentiert, Ergebnisse noch offen.
+✅ Erfolgreich getestet auf der echten Hardware: 5+5 = 10.
