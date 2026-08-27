@@ -48,5 +48,21 @@
 			<Connection Source="Q_StringValue.s16result" Destination="s16result" dx1="2573.33"/>
 		</DataConnections>
 	</FBNetwork>
+	<Attribute Name="Documentation" Type="CDATA"><![CDATA[<h1>Command change string value ( Part 6 - F.24 )</h1>
+
+<p>This command is used to change the value of an object. It applies only to objects that have a string value attribute. This FB is an AIS adapter wrapper around <strong>Q_StringValue</strong> — the same object-type validity rules and the F.24 variable data length / transport protocol behaviour apply.</p>
+
+<h2>Valid Object IDs</h2>
+
+<p>u16ObjId is valid if it falls within one of the following ISO 11783-6 ID ranges (see Q_StringValue, Annex F.24):</p>
+<ul>
+	<li><strong>InputStringField</strong>: 8000 – 8999</li>
+	<li><strong>OutputStringField</strong>: 11000 – 11999</li>
+	<li><strong>StringVariable</strong>: 22000 – 22999</li>
+	<li><strong>InputAttributesObject</strong>: 26000 – 26999</li>
+</ul>
+
+<p>ID_NULL (65535) is not a command target but can be used in INIT to deactivate the FB. Any ID outside these ranges is invalid for commanding.</p>
+]]></Attribute>
 	<Attribute Name="eclipse4diac::core::TypeHash" Value="''"/>
 </FBType>

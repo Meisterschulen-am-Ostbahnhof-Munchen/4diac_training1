@@ -31,12 +31,16 @@
 			<Parameter Name="IN_7" Value="1"/>
 			<Parameter Name="IN_8" Value="0"/>
 		</FB>
+		<FB Name="INIT" Type="iec61131::booleanOperators::INIT" x="-1700" y="1400">
+		</FB>
 		<EventConnections>
 			<Connection Source="GET_AT_INDEX.CNF" Destination="F_MOVE.REQ" dx1="66.67"/>
 			<Connection Source="VALUES2ARRAY_8_INT.CNF" Destination="GET_AT_INDEX.REQ" dx1="133.33"/>
 			<Connection Source="VALUES2ARRAY_8_INT.CNF" Destination="CountOfElements.REQ" dx1="133.33"/>
 			<Connection Source="VALUES2ARRAY_8_INT.CNF" Destination="F_LOWER_BOUND.REQ" dx1="133.33"/>
 			<Connection Source="VALUES2ARRAY_8_INT.CNF" Destination="F_UPPER_BOUND.REQ" dx1="133.33"/>
+			<Connection Source="INIT.INITO" Destination="INIT.REQ" dx1="80" dx2="80" dy="53.33"/>
+			<Connection Source="INIT.CNF" Destination="VALUES2ARRAY_8_INT.REQ" dx1="280"/>
 		</EventConnections>
 		<DataConnections>
 			<Connection Source="GET_AT_INDEX.OUT" Destination="F_MOVE.IN" dx1="66.67"/>

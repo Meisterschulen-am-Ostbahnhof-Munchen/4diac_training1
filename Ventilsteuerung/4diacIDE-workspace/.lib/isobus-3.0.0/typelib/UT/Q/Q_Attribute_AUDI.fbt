@@ -58,7 +58,29 @@
 	</FBNetwork>
 	<Attribute Name="Documentation" Type="CDATA"><![CDATA[<h1>Command change attribute( Part 6 - F.38 )</h1>
 
-<p>This command is used to change any attribute with an assigned AID. This message cannot be used to change strings.</p>
+<p>This command is used to change any attribute with an assigned AID. This message cannot be used to change strings. This FB wraps <code>isobus::UT::Q::Q_Attribute</code> and addresses <strong>two distinct parameters</strong> — <code>u16ObjId</code> (the object whose attribute is changed) and <code>u8IdAttribute</code> (the Attribute ID, AID).</p>
+
+<h2>Valid values for u16ObjId (the object whose attribute is changed)</h2>
+
+<p>A change-attribute Object ID is valid if it falls within one of the following ISO 11783-6 ID ranges (Annex F.38):</p>
+<ul>
+	<li><strong>DataMask</strong>: 1000 – 1999</li>
+	<li><strong>AlarmMask</strong>: 2000 – 2999</li>
+	<li><strong>SoftKeyMask</strong>: 4000 – 4999</li>
+	<li><strong>Key</strong>: 5000 – 5999</li>
+	<li><strong>Button</strong>: 6000 – 6999</li>
+	<li><strong>InputBooleanField</strong>: 7000 – 7999</li>
+	<li><strong>InputStringField</strong>: 8000 – 8999</li>
+	<li><strong>InputNumberField</strong>: 9000 – 9999</li>
+	<li><strong>InputListField</strong>: 10000 – 10999</li>
+	<li><strong>AuxiliaryFunctionType2</strong>: 31000 – 31999</li>
+</ul>
+
+<h2>Valid values for u8IdAttribute (AID)</h2>
+
+<p>The Attribute ID (AID) selects which attribute of the addressed object is changed. Valid AIDs are object-type specific and are defined in ISO 11783-6 Annex B, in the attribute table of each object type. An AID with no attribute assigned is rejected by the VT (F.39, bit 1 = Invalid Attribute ID).</p>
+
+<p>ID_NULL (65535) is not a command target but can be used in INIT to deactivate the FB. Any ID outside these ranges is invalid for commanding.</p>
 
 <h2>param[in] {u16ObjId, uint16_t}</h2>
 

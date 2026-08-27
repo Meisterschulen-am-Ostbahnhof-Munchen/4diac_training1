@@ -44,11 +44,16 @@
 		<FB Name="F_UINT_TO_UDINT_1" Type="iec61131::conversion::F_UINT_TO_UDINT" x="-2833.33" y="566.67">
 			<Parameter Name="IN" Value="Button_A2"/>
 		</FB>
+		<FB Name="INIT" Type="iec61131::booleanOperators::INIT" x="-4100" y="-300">
+		</FB>
 		<EventConnections>
 			<Connection Source="F_SEL_E_3.CNF" Destination="Q_NumericValue.REQ" dx1="573.33"/>
-			<Connection Source="SoftKey_UP_F1.IND" Destination="F_SEL_E_3.REQ1"/>
+			<Connection Source="SoftKey_UP_F1.IND" Destination="F_SEL_E_3.REQ1" dx1="1806.67"/>
 			<Connection Source="SoftKey_UP_F2.IND" Destination="F_SEL_E_3.REQ2" dx1="280"/>
 			<Connection Source="SoftKey_UP_F3.IND" Destination="F_SEL_E_3.REQ3" dx1="446.67"/>
+			<Connection Source="INIT.INITO" Destination="INIT.REQ" dx1="80" dx2="80" dy="53.33"/>
+			<Connection Source="INIT.CNF" Destination="F_UINT_TO_UDINT.REQ" dx1="366.67"/>
+			<Connection Source="INIT.CNF" Destination="F_UINT_TO_UDINT_1.REQ" dx1="353.33"/>
 		</EventConnections>
 		<DataConnections>
 			<Connection Source="F_UINT_TO_UDINT.OUT" Destination="F_SEL_E_3.IN2" dx1="360"/>

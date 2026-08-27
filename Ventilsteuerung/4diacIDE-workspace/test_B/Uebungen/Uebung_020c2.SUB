@@ -35,10 +35,14 @@
 		<FB Name="F_MULTIME" Type="iec61131::arithmetic::F_MULTIME" x="-8300" y="1700">
 			<Parameter Name="IN1" Value="T#1s"/>
 		</FB>
+		<FB Name="INIT" Type="iec61131::booleanOperators::INIT" x="-11500" y="1700">
+		</FB>
 		<EventConnections>
 			<Connection Source="DigitalInput_I1.IND" Destination="E_TON.REQ" dx1="573.33"/>
 			<Connection Source="E_TON.CNF" Destination="DigitalOutput_Q1.REQ" dx1="366.67"/>
-			<Connection Source="Uebung_020c2_sub.IND" Destination="F_MULTIME.REQ"/>
+			<Connection Source="Uebung_020c2_sub.IND" Destination="F_MULTIME.REQ" dx1="240"/>
+			<Connection Source="INIT.INITO" Destination="INIT.REQ" dx1="80" dx2="80" dy="53.33"/>
+			<Connection Source="INIT.INITO" Destination="Uebung_020c2_sub.INIT"/>
 		</EventConnections>
 		<DataConnections>
 			<Connection Source="DigitalInput_I1.IN" Destination="E_TON.IN" dx1="386.67"/>

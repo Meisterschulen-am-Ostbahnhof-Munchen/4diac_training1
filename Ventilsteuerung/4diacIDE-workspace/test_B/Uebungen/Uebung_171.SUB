@@ -16,8 +16,12 @@
 			<Attribute Name="DataType" Value="DINT"/>
 		</FB>
 		<Comment Comment="E_D_FF_ANY ist eine &quot;Event Bremse&quot; die nur weiterleitet wenn sich D geändert hat. &#10;" x="-2800" y="400" width="3700" height="300"/>
+		<FB Name="INIT" Type="iec61131::booleanOperators::INIT" x="-3700" y="-400">
+		</FB>
 		<EventConnections>
 			<Connection Source="E_D_FF_ANY.EO" Destination="F_MOVE.REQ"/>
+			<Connection Source="INIT.INITO" Destination="INIT.REQ" dx1="80" dx2="80" dy="53.33"/>
+			<Connection Source="INIT.CNF" Destination="E_D_FF_ANY.CLK" dx1="366.67"/>
 		</EventConnections>
 		<DataConnections>
 			<Connection Source="E_D_FF_ANY.Q" Destination="F_MOVE.IN"/>

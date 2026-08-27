@@ -43,13 +43,14 @@
 	</InterfaceList>
 	<Attribute Name="Documentation" Type="CDATA"><![CDATA[<h1>Command change child location ( Part 6 - F.14 )</h1>
 
-<p>The Change Child Location command is used to change the relative position of an object.</p>
+<p>The Change Child Location command is used to change the relative position of an object. The command addresses <strong>two distinct Object IDs</strong> with <strong>different validity rules each</strong> — <code>u16ObjId</code> (the child object to move) and <code>u16ObjIdParent</code> (the parent it is moved within). Annex F only defines which object types are valid as the child; which object types may act as parent for this command is defined separately in Annex B, under each object type's "Allowed commands" list.</p>
 
-<h2>Valid Object IDs</h2>
+<h2>Valid values for u16ObjId (the child object to move)</h2>
 
-<p>A child location Object ID is valid if it falls within one of the following ISO 11783-6 ID ranges:</p>
+<p>Valid if it falls within one of the following ISO 11783-6 ID ranges (Annex F.14):</p>
 <ul>
 	<li><strong>Container</strong>: 3000 – 3999</li>
+	<li><strong>Key</strong>: 5000 – 5999</li>
 	<li><strong>Button</strong>: 6000 – 6999</li>
 	<li><strong>InputBooleanField</strong>: 7000 – 7999</li>
 	<li><strong>InputStringField</strong>: 8000 – 8999</li>
@@ -77,7 +78,24 @@
 	<li><strong>AuxiliaryControlDesignator</strong>: 33000 – 33999</li>
 </ul>
 
-<p>ID_NULL (65535) is not a command target but can be used in INIT to deactivate the FB. Any ID outside these ranges is invalid for commanding.</p>
+<h2>Valid values for u16ObjIdParent (the parent object)</h2>
+
+<p>Only object types whose ISO 11783-6 Annex B definition lists "Change Child Location command" / "Change Child Position command" among its Allowed commands:</p>
+<ul>
+	<li><strong>WorkingSet</strong> (Annex B.1)</li>
+	<li><strong>DataMask</strong> (Annex B.2)</li>
+	<li><strong>AlarmMask</strong> (Annex B.3)</li>
+	<li><strong>Container</strong> (Annex B.4)</li>
+	<li><strong>Key</strong> (Annex B.6)</li>
+	<li><strong>WindowMask</strong></li>
+	<li><strong>Button</strong></li>
+	<li><strong>AuxiliaryFunction</strong> / <strong>AuxiliaryFunctionType2</strong></li>
+	<li><strong>AuxiliaryInput</strong> / <strong>AuxiliaryInputType2</strong></li>
+</ul>
+
+<p><strong>Not valid as parent:</strong> <strong>SoftKeyMask</strong> (Annex B.5 does not list either command as allowed) and <strong>AnimationObject</strong> (its children are indexed frames, not X/Y-positioned).</p>
+
+<p>ID_NULL (65535) is not a command target but can be used in INIT to deactivate the FB. Any child ID outside the child ranges above, or any parent ID that is not one of the parent-capable types above, is invalid for commanding — independent of each other.</p>
 
 <h2>Activate / Deactivate</h2>
 

@@ -57,6 +57,23 @@
 
 <p>Object ID of (new) soft key mask</p>
 
+<h2>Valid values for u16DataMaskId (the data or alarm mask object)</h2>
+
+<p>The Change Soft Key Mask command (Annex F.36) associates a Soft Key Mask with a Data Mask or an Alarm Mask. Valid if <code>u16DataMaskId</code> falls within one of the following ISO 11783-6 ID ranges:</p>
+<ul>
+	<li><strong>DataMask</strong>: 1000 – 1999</li>
+	<li><strong>AlarmMask</strong>: 2000 – 2999</li>
+</ul>
+
+<h2>Valid values for u16SoftKeyMaskId (the soft key mask object)</h2>
+
+<p>Valid if <code>u16SoftKeyMaskId</code> falls within the ISO 11783-6 ID range for a Soft Key Mask:</p>
+<ul>
+	<li><strong>SoftKeyMask</strong>: 4000 – 4999</li>
+</ul>
+
+<p>ID_NULL (65535) is not a command target but can be used in INIT to deactivate the FB. Any data/alarm mask ID outside the ranges above, or any soft key mask ID that is not a SoftKeyMask, is invalid for commanding — independent of each other.</p>
+
 <h2>Return Values (s16result):</h2>
 
 <h3>int16_t</h3>

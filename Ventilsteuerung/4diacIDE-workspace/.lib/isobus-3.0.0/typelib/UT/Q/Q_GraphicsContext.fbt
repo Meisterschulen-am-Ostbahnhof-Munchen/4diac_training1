@@ -47,7 +47,9 @@
 
 <p>This command is used to manipulate a graphics Context object (only on version 4 or later VTs).</p>
 
-<h2>Valid Object IDs</h2>
+<p>The Graphics Context command (F.56) has a <strong>variable data length</strong> (Data length: Variable). <strong>Messages larger than 8 bytes are sent using the Transport Protocol (TP)</strong>; commands smaller than 8 bytes are padded to 8 bytes with FF16. With the 5-byte parameter list of this FB (<code>u8ParaList</code>, ArraySize 5) the total message becomes 1 + 2 + 1 + 5 = <strong>9 bytes and therefore uses TP</strong>. Note that with only 5 parameter bytes, sub-commands requiring more parameters (e.g. Draw Polygon with several points, or Pan &amp; Zoom Viewport) cannot be fully expressed through this FB.</p>
+
+<h2>Valid values for u16ObjId</h2>
 
 <p>A graphics context Object ID is valid if it falls within the following ISO 11783-6 ID range:</p>
 <ul>

@@ -43,17 +43,21 @@
 
 <p>This command is used to change a list item in an Input List, Output List, Animation, or External Object Definition object.</p>
 
-<h2>Valid Object IDs</h2>
+<h2>Valid values for u16ObjId (the list object)</h2>
 
-<p>A list item Object ID is valid if it falls within one of the following ISO 11783-6 ID ranges:</p>
+<p>A list item Object ID is valid if it falls within one of the following ISO 11783-6 ID ranges (Annex F.42):</p>
 <ul>
 	<li><strong>InputListField</strong>: 10000 – 10999</li>
-	<li><strong>OutputListObject</strong>: 37000 – 37999</li>
-	<li><strong>AnimationObject</strong>: 44000 – 44999</li>
-	<li><strong>ExternalObjectDef</strong>: 41000 – 41999</li>
+	<li><strong>OutputListObject</strong>: 37000 – 37999 (VT version 4 and later)</li>
+	<li><strong>AnimationObject</strong>: 44000 – 44999 (VT version 5 and later)</li>
+	<li><strong>ExternalObjectDef</strong>: 41000 – 41999 (VT version 5 and later)</li>
 </ul>
 
 <p>ID_NULL (65535) is not a command target but can be used in INIT to deactivate the FB. Any ID outside these ranges is invalid for commanding.</p>
+
+<h2>Valid values for u16NewObjId (the new list item)</h2>
+
+<p>Annex F.42 permits <strong>any</strong> Object ID as the new list item — the item simply points to that object — or <code>FFFF</code><sub>16</sub> (ID_NULL) to set an empty item. The validity of the new Object ID is verified by the VT and reported back in the F.43 response (bit 2 = Invalid New List Item Object ID).</p>
 
 <h2>Activate / Deactivate</h2>
 

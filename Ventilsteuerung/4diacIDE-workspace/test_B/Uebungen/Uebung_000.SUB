@@ -9,9 +9,15 @@
 	<SubAppInterfaceList>
 	</SubAppInterfaceList>
 	<SubAppNetwork>
-		<FB Name="ADD_2" Type="iec61131::arithmetic::ADD_2" x="-1100" y="0">
+		<FB Name="ADD_2" Type="iec61131::arithmetic::ADD_2" x="-1000" y="-100">
 			<Parameter Name="IN1" Value="INT#5"/>
 			<Parameter Name="IN2" Value="INT#3"/>
 		</FB>
+		<FB Name="INIT" Type="iec61131::booleanOperators::INIT" x="-2300" y="-200">
+		</FB>
+		<EventConnections>
+			<Connection Source="INIT.INITO" Destination="INIT.REQ" dx1="80" dx2="80" dy="53.33"/>
+			<Connection Source="INIT.CNF" Destination="ADD_2.REQ" dx1="166.67"/>
+		</EventConnections>
 	</SubAppNetwork>
 </SubAppType>

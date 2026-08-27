@@ -40,6 +40,8 @@
 <p>This command sends a string to the VT. If the ObjectID is already in the command FIFO then the value of this FIFO entry is updated. 
 The length of the string including '\0' may not be longer than the define ISO_VTC_CMD_STR_MAX_LENGTH. Take care that '\0' is trailed.</p>
 
+<p><strong>Data length / Transport Protocol (F.24):</strong> The Change String Value command has a <strong>variable data length</strong> (command frame: bytes 2–3 Object ID, bytes 4–5 number of string bytes, bytes 6–n string value). Strings that fit into a single CAN message are sent directly; longer strings are transmitted using the ISO 11783 <strong>transport protocol</strong>. Per Annex F.24 the transferred string may be shorter than the target object's length attribute — the VT pads it with space characters — but the number of bytes transferred shall not exceed the target object's length attribute.</p>
+
 <h2>Valid Object IDs</h2>
 
 <p>A string value Object ID is valid if it falls within one of the following ISO 11783-6 ID ranges:</p>

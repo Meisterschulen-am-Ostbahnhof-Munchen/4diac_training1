@@ -6,6 +6,7 @@ call RunSkript_Workspace_AX.bat
 call RunSkript_Workspace_PWM_AX.bat
 call RunSkript_Workspace_TECU_AX.bat
 call RunSkript_Workspace_Horse_AX.bat
-call RunSkript_Workspace_Tester_AX.bat
+call RunSkript_Workspace_DIDO_AX.bat
 call RunSkript_Workspace_Joystick_AX.bat
 call RunSkript_Workspace_TC_SC_AX.bat
+call RunSkript_Workspace_Scroll_AX.bat

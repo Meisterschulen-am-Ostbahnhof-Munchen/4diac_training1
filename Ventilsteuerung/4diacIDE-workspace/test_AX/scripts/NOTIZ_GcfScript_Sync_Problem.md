@@ -1,4 +1,4 @@
-# Notiz: `RunSkript_Workspace_Tester_AX.bat` aktualisiert per Skript hinzugefügte Objekte nicht
+# Notiz: `RunSkript_Workspace_DIDO_AX.bat` aktualisiert per Skript hinzugefügte Objekte nicht
 
 Schmierzettel, damit das nicht vergessen wird. Betrifft potenziell auch Krauternter
 (`G:\Geteilte Ablagen\Büngener Schuder GmbH\Krauternter Steuerung 2026`), wo dieselbe
@@ -6,7 +6,7 @@ Art von Tooling (`iop_to_xml.py`/`xml_to_iop.py`) benutzt wurde.
 
 ## Problem
 
-`RunSkript_Workspace_Tester_AX.bat` → `GcfScript.py` liest **nicht** aus `.iop`/`.xml`,
+`RunSkript_Workspace_DIDO_AX.bat` → `GcfScript.py` liest **nicht** aus `.iop`/`.xml`,
 sondern aus:
 
 - `DefaultPool.iop.h` (C-Header, `#define NAME WERT`-Zeilen)
@@ -25,8 +25,8 @@ der `.iop`-Binärdatei, aber:
 
 ## Konsequenzen
 
-1. Führt man `RunSkript_Workspace_Tester_AX.bat` erneut aus, baut `GcfScript.py`
-   `DefaultPool_Tester.gcf` komplett neu aus `.iop.h` – die per Hand ergänzte
+1. Führt man `RunSkript_Workspace_DIDO_AX.bat` erneut aus, baut `GcfScript.py`
+   `DefaultPool_DIDO.gcf` komplett neu aus `.iop.h` – die per Hand ergänzte
    Konstante (`OutputNumber_Tick`) geht dabei **stillschweigend wieder verloren**.
 2. Öffnet man das Projekt im echten ISO-Designer-GUI, taucht das neue Objekt dort
    **nicht auf** – unsichtbar für die eigentliche Projektquelle.
@@ -36,7 +36,7 @@ der `.iop`-Binärdatei, aber:
 ## Aktueller Stand (Stopgap)
 
 Für `OutputNumber_Tick` wurde die Konstante direkt in
-`Uebungen/const/UT/Tester/DefaultPool_Tester.gcf` ergänzt (nicht über `GcfScript.py`
+`Uebungen/const/UT/DIDO/DefaultPool_DIDO.gcf` ergänzt (nicht über `GcfScript.py`
 generiert). Das reicht fürs Erste zum Weiterarbeiten, ist aber nicht dauerhaft
 robust gegen einen erneuten Skriptlauf.
 

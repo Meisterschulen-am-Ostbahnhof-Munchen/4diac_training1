@@ -50,9 +50,11 @@
 
 <p>This command is used by a Working Set to change a label of an object.</p>
 
-<h2>Valid Object IDs</h2>
+<h2>Valid values for u16ObjId (the object to label)</h2>
 
-<p>An object label Object ID is valid if it falls within the following ISO 11783-6 ID range:</p>
+<p>The Change Object Label command (F.50) carries, in bytes 2,3, the <strong>Object ID of the object to associate a label with</strong>. Per Annex F.51 (response error Bit 0) and B.21, the addressed object must be <strong>listed in the Object Label Reference List object</strong> — i.e. any pool object (e.g. a Soft Key, WorkingSet or input object) whose ID is an entry of the Object Label Reference List.</p>
+
+<p><em>Implementation note (VTClientHelper):</em> the C function <code>iso_is_object_label_refer_list_id</code> instead accepts only the <strong>ObjectLabelReferList</strong> type range (the Object Label Reference List object's own ID range). This is a known deviation from the Annex F.50 semantics — the FB commands only IDs in this range:</p>
 <ul>
 	<li><strong>ObjectLabelReferList</strong>: 40000 – 40999</li>
 </ul>
