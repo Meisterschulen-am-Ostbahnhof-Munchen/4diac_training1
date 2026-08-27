@@ -22,6 +22,15 @@ per Zweierkomplement-Wraparound um (`1 - 12 = -11 ≡ 2^32 - 11 =
 Verhalten für vorzeichenlose Ganzzahltypen — **kein Fehler in `F_SUB`
 oder in dieser Übung.**
 
+## Vergleich: Uebung_011b3_PHYS (REAL statt UDINT)
+
+✅ **Ebenfalls getestet, GEHT** — `Uebung_011b3_PHYS.SUB` verwendet dieselbe
+`F_SUB`-Verschaltung, aber auf `rPhys` (REAL, via `NumericValue_PHYS`/
+`Q_NumericValue_PHYS`) statt auf UDINT. Ein negatives Ergebnis ist hier
+einfach ein normaler negativer Float-Wert — **kein Wraparound**, da REAL
+vorzeichenbehaftet ist. Bestätigt, dass das UDINT-Wraparound-Problem oben
+spezifisch am vorzeichenlosen Ganzzahltyp hängt, nicht an `F_SUB` selbst.
+
 ## Offener Punkt: SAFE Arithmetic Lib
 
 Für die praktische Anwendung ist ein solcher stiller Wraparound
