@@ -29,12 +29,16 @@
 		<FB Name="F_MOVE" Type="iec61131::selection::F_MOVE" x="-2700" y="500">
 			<Attribute Name="DataType" Value="REAL"/>
 		</FB>
+		<FB Name="INIT" Type="iec61131::booleanOperators::INIT" x="-8200" y="200">
+		</FB>
 		<EventConnections>
 			<Connection Source="E_CYCLE.EO" Destination="FB_RANDOM.REQ" dx1="206.67"/>
 			<Connection Source="FB_RANDOM.CNF" Destination="E_D_FF_ANY_HYS.CLK" dx1="740"/>
 			<Connection Source="F_GT.CNF" Destination="DigitalOutput_Q1.REQ" dx1="613.33"/>
 			<Connection Source="E_D_FF_ANY_HYS.EO" Destination="F_MOVE.REQ"/>
 			<Connection Source="F_MOVE.CNF" Destination="F_GT.REQ"/>
+			<Connection Source="INIT.INITO" Destination="INIT.REQ" dx1="80" dx2="80" dy="53.33"/>
+			<Connection Source="INIT.CNF" Destination="E_CYCLE.START" dx1="166.67"/>
 		</EventConnections>
 		<DataConnections>
 			<Connection Source="FB_RANDOM.VAL" Destination="E_D_FF_ANY_HYS.D" dx1="446.67"/>

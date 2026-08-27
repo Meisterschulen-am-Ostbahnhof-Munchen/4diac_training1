@@ -12,5 +12,11 @@
 		<FB Name="E_MUX_2_1" Type="iec61499::events::E_MUX_2" x="-3000" y="-1000">
 		</FB>
 		<Comment Comment="TODO&#10;" x="-1900" y="-400" width="1500" height="300"/>
+		<FB Name="INIT" Type="iec61131::booleanOperators::INIT" x="-4000" y="-1100">
+		</FB>
+		<EventConnections>
+			<Connection Source="INIT.INITO" Destination="INIT.REQ" dx1="80" dx2="80" dy="53.33"/>
+			<Connection Source="INIT.CNF" Destination="E_MUX_2_1.EI1" dx1="220"/>
+		</EventConnections>
 	</SubAppNetwork>
 </SubAppType>
