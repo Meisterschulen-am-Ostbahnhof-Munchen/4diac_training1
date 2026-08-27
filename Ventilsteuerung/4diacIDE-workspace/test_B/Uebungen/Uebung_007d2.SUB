@@ -26,11 +26,15 @@
 		<FB Name="E_D_FF_TMIN" Type="iec61499::events::E_D_FF_TMIN" x="-1300" y="400">
 			<Parameter Name="Tmin" Value="T#3s"/>
 		</FB>
+		<FB Name="INIT" Type="iec61131::booleanOperators::INIT" x="-6600" y="300">
+		</FB>
 		<EventConnections>
 			<Connection Source="E_CYCLE.EO" Destination="FB_RANDOM.REQ" dx1="206.67"/>
 			<Connection Source="FB_RANDOM.CNF" Destination="F_GT.REQ" dx1="740"/>
 			<Connection Source="F_GT.CNF" Destination="E_D_FF_TMIN.CLK" dx1="260"/>
 			<Connection Source="E_D_FF_TMIN.EO" Destination="DigitalOutput_Q1.REQ" dx1="446.67"/>
+			<Connection Source="INIT.INITO" Destination="INIT.REQ" dx1="80" dx2="80" dy="53.33"/>
+			<Connection Source="INIT.CNF" Destination="E_CYCLE.START" dx1="420"/>
 		</EventConnections>
 		<DataConnections>
 			<Connection Source="FB_RANDOM.VAL" Destination="F_GT.IN1" dx1="446.67"/>

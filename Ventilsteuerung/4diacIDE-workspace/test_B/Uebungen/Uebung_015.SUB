@@ -36,11 +36,15 @@
 		<FB Name="Q_NumericValue" Type="isobus::UT::Q::Q_NumericValue" x="1300" y="-1000">
 			<Parameter Name="u16ObjId" Value="ObjectPointer_P1"/>
 		</FB>
+		<FB Name="INIT" Type="iec61131::booleanOperators::INIT" x="-5800" y="800">
+		</FB>
 		<EventConnections>
-			<Connection Source="SoftKey_UP_F1.IND" Destination="E_SR.S"/>
+			<Connection Source="SoftKey_UP_F1.IND" Destination="E_SR.S" dx1="406.67"/>
 			<Connection Source="SoftKey_UP_F2.IND" Destination="E_SR.R" dx1="473.33"/>
-			<Connection Source="F_SEL.CNF" Destination="Q_NumericValue.REQ"/>
+			<Connection Source="F_SEL.CNF" Destination="Q_NumericValue.REQ" dx1="940"/>
 			<Connection Source="E_SR.EO" Destination="F_SEL.REQ"/>
+			<Connection Source="INIT.INITO" Destination="INIT.REQ" dx1="80" dx2="80" dy="53.33"/>
+			<Connection Source="INIT.CNF" Destination="F_UINT_TO_UDINT.REQ" dx1="366.67"/>
 		</EventConnections>
 		<DataConnections>
 			<Connection Source="F_SEL.OUT" Destination="Q_NumericValue.u32NewValue" dx1="313.33"/>

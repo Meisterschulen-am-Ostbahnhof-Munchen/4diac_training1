@@ -29,7 +29,8 @@
 		<FB Name="Q_NumericValue" Type="isobus::UT::Q::Q_NumericValue" x="4200" y="100">
 			<Parameter Name="u16ObjId" Value="OutputNumber_N1"/>
 		</FB>
-		<Comment Comment="In Watch wechseln, &#10;und bei START ein Event auslösen. " x="-4600" y="-800" width="1600" height="600"/>
+		<FB Name="INIT" Type="iec61131::booleanOperators::INIT" x="-3600" y="-1400">
+		</FB>
 		<EventConnections>
 			<Connection Source="E_CYCLE.EO" Destination="E_SWITCH.EI"/>
 			<Connection Source="E_SWITCH.EO0" Destination="E_SR.S"/>
@@ -38,6 +39,8 @@
 			<Connection Source="E_SR.EO" Destination="E_PERMIT.EI" dx1="480"/>
 			<Connection Source="E_PERMIT.EO" Destination="E_CTUD_UDINT.CU"/>
 			<Connection Source="E_CTUD_UDINT.CO" Destination="Q_NumericValue.REQ" dx1="773.33"/>
+			<Connection Source="INIT.INITO" Destination="INIT.REQ" dx1="80" dx2="80" dy="53.33"/>
+			<Connection Source="INIT.CNF" Destination="E_CYCLE.START" dx1="266.67"/>
 		</EventConnections>
 		<DataConnections>
 			<Connection Source="E_SR.Q" Destination="E_SWITCH.G" dx1="80" dx2="80" dy="160"/>
