@@ -51,6 +51,7 @@
 #define OutputNumber_12017                12017
 #define OutputNumber_12018                12018
 #define OutputNumber_12019                12019
+#define OutputNumber_Tick                 12020
 #define Logos_icon                        20500
 #define FontAttributes_6x8                23000
 #define FontAttributes_24x32              23001
