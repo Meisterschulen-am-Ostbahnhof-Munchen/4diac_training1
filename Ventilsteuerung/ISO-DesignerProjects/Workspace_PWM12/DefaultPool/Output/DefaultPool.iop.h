@@ -113,6 +113,18 @@
 #define InputNumber_PWM_Q10                9009
 #define InputNumber_PWM_Q11                9010
 #define InputNumber_PWM_Q12                9011
+#define InputNumberRaw_PWM_Q01             9012
+#define InputNumberRaw_PWM_Q02             9013
+#define InputNumberRaw_PWM_Q03             9014
+#define InputNumberRaw_PWM_Q04             9015
+#define InputNumberRaw_PWM_Q05             9016
+#define InputNumberRaw_PWM_Q06             9017
+#define InputNumberRaw_PWM_Q07             9018
+#define InputNumberRaw_PWM_Q08             9019
+#define InputNumberRaw_PWM_Q09             9020
+#define InputNumberRaw_PWM_Q10             9021
+#define InputNumberRaw_PWM_Q11             9022
+#define InputNumberRaw_PWM_Q12             9023
 #define OutputString_WorkingSet_0         11000
 #define Label_Btn_ZERO                    11001
 #define Label_Btn_DOWN_FAST               11002
@@ -172,4 +184,5 @@
 #define NumberVariable_PWM_Q12            21011
 #define FontAttributes_6x8                23000
 #define FontAttributes_24x32              23001
+#define FontAttributes_16x16              23002
 #define AuxFunction2_X1                   31000
