@@ -85,90 +85,63 @@ VT-Projekt, Web-Client), damit Lernende beide Beispiele klar auseinanderhalten k
       (`PWM_Q01_READ/WRITE`..), VT-Skalierung (`0.0015560939` = 100/64255) und
       Web-Client-Knoten-IDs (`ns=1;s=PWM_Q01..12`) stimmen überein.
 
-### Gefunden beim Live-Test (noch zu fixen) 🔴
+### Gefunden beim Live-Test — behoben ✅
 
-- **Wertebereich-Architektur (Entscheidung noch am Reifen, Stand aktuell):**
-  Erst-Idee war, `RampLimitFS.VAL_FULL` von `64255` auf `8191` zu ändern
-  (weil Bargraph/CInputNumber im Test mit `0-8191` funktionierten, wie im
-  Referenzprojekt `Workspace_PWM`, Objekt 18000: `Min=0`/`Max=8191`).
-  **Korrigierte Richtung:** `RampLimitFS.VAL_FULL` bleibt `64255` — das ist
-  die korrekte J1939/ISO-11783-Konvention für ein 16-bit-Signal
-  (`VALID_SIGNAL_W = 0x0000-0xFAFF = 0-64255`, alles darüber wird laut
-  Protokoll ignoriert/ist reserviert; Quelle:
-  `C:\4diac\4diac-ide_3.3.0-win32.win32.x86_64_nightly_2026-08-26_2003_sp10\4diac-ide\typelibrary\signalprocessing-3.0.0\typelib\FIELDBUS_SIGNAL.gcf`).
-  Stattdessen kommt **eine zusätzliche Skalierungsstufe vor `logiBUS_QD_PWM`**
-  hinzu, die von `64255` auf den vom PWM-Ausgang tatsächlich erwarteten
-  Rohwertbereich (vermutlich `8191`, wie in `Workspace_PWM`) umrechnet.
-  Damit bleibt der Netzwerk-/RampLimitFS-Wert J1939-konform, und nur die
-  letzte Stufe vor der Hardware bekommt die geräteeigene Skalierung.
-  **Noch offen:** wie genau sich das zur VT-Anzeige (Bargraph/CInputNumber,
-  aktuell mit `Min=0`/`Max=8191`/`Scale=0.01220852` getestet) verhält — ob
-  die VT-Anzeige direkt am `64255`er RampLimitFS-Wert hängt (dann bräuchte
-  *sie* auch eine eigene 64255→8191-Umrechnung vor der Anzeige) oder ob sie
-  ohnehin schon über eine eigene Konvertierungsstufe läuft. Nicht selbst
-  entscheiden, sondern auf weitere Ansage warten.
-- **`logiBUS_QD_PWM` fehlt `TRUE` an `QI`** — der Ausgang bekommt dadurch
-  kein Enable/Init-Signal und funktioniert nicht. Muss verdrahtet werden.
-- **Zweites Eingabefeld (PWM-Rohwert) fehlt komplett** — pro Kanal soll es
-  neben dem Prozent-Zahlenfeld (mit Komma/Skalierung) noch ein zweites
-  Eingabefeld für den PWM-**Rohwert** geben (ganzzahlig, kein Komma/Scale=1),
-  wie im Referenzprojekt `Workspace_PWM`. In `Workspace_PWM12` ist aktuell
-  pro Kanal nur ein `CInputNumber` gebaut — das zweite Feld muss ergänzt
-  werden (eigenes `CInputNumber`-Objekt + CProxy + Verdrahtung).
-- **`E_RS_PV`-Event kommt nicht durch, sobald einmal `S` gesetzt wurde:**
-  Sobald `E_RS`s `Q`-Ausgang einmal auf `TRUE` steht (durch `S`), feuert das
-  `EO`-Ereignisausgang bei weiteren `S`-Events offenbar nicht mehr erneut
-  (Bistabile FBs lösen ihr Ausgangsevent typischerweise nur bei echtem
-  Zustandswechsel aus, nicht bei jedem `REQ`, wenn der Zustand schon steht).
-  Damit wird der nachgeschaltete `F_SEL.G` nie erneut getriggert, und keine
-  weiteren Werte von dieser Quelle laufen mehr durch den Mux —
-  der Zwei-Quellen-Merge auf `RampLimitFS.PV` "friert" nach dem ersten
-  `S`-Event ein. Betrifft das `E_RS`+`F_SEL`-Muster aus
-  `RampLimitFS_TO_logiBUS_QDA_PWM_OPC.SUB` (siehe Architektur-Entscheidungen
-  oben). Noch zu klären: anderer Bistabil-Baustein, oder zusätzliches
-  Re-Trigger-Event nötig, oder Muster grundsätzlich überdenken.
-  **Passendes Symptom:** VT→Web zieht den Web-Slider korrekt nach; Web→VT
-  (Slider ziehen) hat keine Wirkung — vermutlich dieselbe Ursache, da der
-  Web-Schreibpfad über `AR_SUBSCRIBE_1` genau den `E_RS_PV`-Zweig des Mux
-  benutzt und nach dem ersten erfolgreichen Durchlauf einfriert.
+- **Wertebereich-Architektur — entschieden und umgesetzt:** `RampLimitFS.VAL_FULL`
+  bleibt `64255` (J1939/`FIELDBUS_SIGNAL_W`-konform, VT-Anzeige und OPC-UA
+  bleiben in diesem Bereich). Empirisch bestätigt (nicht geraten), dass
+  `logiBUS_QD_PWM.OUT` einen rohen 13-bit-Wert (`0-8191`) erwartet: die
+  echten, funktionierenden Beispiele `test_B/Uebungen/Uebung_034.SUB`
+  (Analogeingang `F_SHL`-geshiftet direkt auf `PWMOutput_Q4.OUT`) und
+  `Uebung_034a1_Q1.SUB` (VT-Variable `NumberVariable_PWM_Value` direkt,
+  ohne jede Umrechnung, auf `PWMOutput_Q1.OUT`) belegen das. Fix in
+  `RampLimitFS_TO_logiBUS_QDA_PWM_OPC.SUB`: neue Kette
+  `RampLimitFS.OUT →(×8191)→(÷64255)→ F_DINT_TO_DWORD_OUT → logiBUS_QD_PWM.OUT`
+  (`F_MUL_TO_PWM13BIT`/`F_DIV_TO_PWM13BIT`, `iec61131::arithmetic`).
+  Bargraph-`Min`/`Max` in `Workspace_PWM12` entsprechend von `0/100` auf
+  `0/64255` korrigiert (alle 12 Kanäle) — muss exakt zum Prozent-/Rohwert-
+  Eingabefeld passen, da alle drei dieselbe `CNumberVariable` teilen.
+- **`logiBUS_QD_PWM` fehlt `TRUE` an `QI`** — behoben, Parameter ergänzt.
+- **Zweites Eingabefeld (PWM-Rohwert)** — pro Kanal ergänzt
+  (`InputNumberRaw_PWM_Q01..12`, `Scale=1`, `NoOfDecimals=0`, `0-64255`,
+  teilt sich die `CNumberVariable` mit dem Prozent-Feld).
+- **Listener-Bug (beide Eingabefelder reagierten nicht auf Tippen):**
+  `NumericValue_Duty.u16ObjId` hing fälschlich am Objekt-ID des
+  Prozent-**Feldes** (`u16ObjId_INPUT`) statt an der **Variable**
+  (`u16ObjId_VALUEVAR`). Sobald ein Zahlenfeld eine Variable-Referenz hat,
+  deaktiviert das VT laut ISO 11783-6 das Editier-Listening auf das
+  Feld selbst und meldet Änderungen stattdessen über die Variable — bestätigt
+  durch das echte, funktionierende `Uebung_034a1_Q1.SUB`
+  (`PWM_Value.u16ObjId = NumberVariable_PWM_Value`, nicht das Feld). Fix
+  macht beide Eingabefelder (Prozent + Rohwert) funktional, ohne dass das
+  zweite Feld eine eigene FB-Verdrahtung braucht.
+- **`E_RS_PV`-Event kam nicht durch, sobald einmal `S` gesetzt war** — behoben:
+  `F_UDINT_TO_DINT_VT.CNF` und `F_PWM_PERCENT_TO_RAW.CNF` triggern
+  `F_SEL_PV.REQ` jetzt zusätzlich direkt (nicht mehr nur über `E_RS_PV.EO`,
+  das nur bei echtem `Q`-Zustandswechsel feuert), sodass jede Aktualisierung
+  von jeder der beiden Quellen den Mux neu auswählen und laden lässt.
+  Behebt auch das Symptom "Web→VT (Slider ziehen) hat keine Wirkung".
 
-### Layout-Redesign gewünscht (VT-Kanalzeile) 🎨
+### Layout-Redesign — umgesetzt ✅ (VT-Kanalzeile)
 
-- **Balkengrafik viel zu groß** — nimmt aktuell unverhältnismäßig viel Platz
-  weg (Stand: `Bargraph_PWM_Q0n` vertikal, 110×200px, 4 Kanäle als Spalten
-  pro Seite).
-- **Umstellung auf horizontales Layout:** Seite in **3 oder 4 Zeilen**
-  einteilen (nicht Spalten wie bisher) — je eine Zeile pro PWM-Kanal, alle
-  Bedienelemente eines Kanals horizontal nebeneinander in dieser Zeile.
-- **Balkengrafik horizontal, links-nach-rechts**, in genau dieser
-  Reihenfolge (identisch mit der ursprünglichen Button-Reihenfolge):
-  `0 -- - + ++ F` — also ganz links der `0`-Button, ganz rechts der
-  `F`-Button (Full), Balken füllt sich dazwischen von links (leer/0) nach
-  rechts (voll/F).
-- **Begründung/Workflow:** Drückt man rechts (Richtung `F`), bewegt sich der
-  Balken nach rechts (Wert steigt); drückt man links (Richtung `0`), bewegt
-  er sich nach links (Wert sinkt) — Button-Position und Balken-Bewegungsrichtung
-  stimmen dann visuell überein, das ist intuitiver als das bisherige
-  vertikale Layout.
-- Betrifft `Workspace_PWM12`s `DataMask_PWM1/2/3.jvi` (aktuelles Pro-Kanal-
-  Layout aus dem ursprünglichen Plan: Zahlenfeld + vertikaler Bargraph +
-  6 Tasten in 2×3-Raster) — kompletter Neuentwurf des Kanal-Layouts nötig,
-  nicht nur eine Anpassung.
-- **Screenshot-Bestätigung (`DataMask_PWM1.jvi`, 4-Spalten-Ansicht):** Zeigt
-  genau die beschriebenen Probleme visuell — die Prozent-Zahlenfelder
-  (Font `24x32`) laufen über die Spaltenbreite hinaus und überlappen sich
-  zu einer einzigen unlesbaren Zeile quer über alle 4 Kanäle
-  (`0 .0000.0000.0000.000`); darunter je ein großer leerer grauer
-  Rechteck-Platzhalter (vertikaler Bargraph, ~110×200px, nimmt den Großteil
-  der Spaltenhöhe ein); darunter die 6 Tasten aktuell im 2×3-Raster
-  (`0`/`F` oben, `-`/`+` Mitte, `--`/`++` unten) — bestätigt, dass die
-  Tasten noch nicht in der gewünschten horizontalen `0 -- - + ++ F`-Reihe
-  liegen.
-- **Schriftgröße:** `6x8` ist kaum lesbar, `24x32` ist so riesig, dass die
-  Zahlenfelder nicht mehr auseinanderzuhalten sind (siehe Screenshot). Eine
-  Zwischengröße ist nötig — z. B. aus Krauternters Font-Katalog (siehe
-  `Objekthierarchie`-Recherche oben): `12x16`, `16x16` oder `16x24` als
-  Kandidaten, noch nicht final entschieden.
+Ursprünglich gefordert (Balkengrafik viel zu groß/vertikal, Spalten- statt
+Zeilenlayout, Tasten nicht in `0 -- - + ++ F`-Reihenfolge, Schriftgröße
+6×8/24×32 beide ungeeignet — siehe Screenshot-Bestätigung, `DataMask_PWM1.jvi`
+4-Spalten-Ansicht mit überlappenden Zahlenfeldern). Jetzt umgesetzt in
+`Workspace_PWM12`:
+
+- **4 horizontale Zeilen** pro Seite (`DataMask_PWM1/2/3.jvi`, 3 Seiten),
+  je eine Zeile pro Kanal: Label → Prozent-Feld → Rohwert-Feld →
+  horizontaler Bargraph (90×28px, Ausrichtung folgt Width/Height-
+  Seitenverhältnis, Vorlage aus `Workspace_PWM` Objekt 18000) → 6 Tasten in
+  exakt der Reihenfolge `0 -- - + ++ F` links nach rechts (bestätigt:
+  `Button_PWM_Q01_{ZERO,DOWN_FAST,DOWN_SLOW,UP_SLOW,UP_FAST,FULL}` in dieser
+  Positions-Reihenfolge).
+- **Schrift `FontAttributes_16x16`** (ID 23002) aus Krauternners Katalog
+  importiert und auf Prozent-/Rohwert-Feld sowie Kanal-Labels angewendet
+  (Kompromiss zwischen 6×8/24×32).
+- 260→273 Objekte, GCF (163 Konstanten) 1:1 cross-validiert, keine
+  Duplikate/hängenden Referenzen, jedes Text-Objekt hat ein Font.
 
 ### Bestätigt funktionierend ✅ (Live-Test)
 
@@ -176,18 +149,28 @@ VT-Projekt, Web-Client), damit Lernende beide Beispiele klar auseinanderhalten k
 - **`AR_SUBSCRIBE_1` vom Web-Schieberegler her** funktioniert — ein Wert, der
   im Web-Client per Slider geschrieben wird, kommt im Composite an.
 
-### Noch offen (nicht automatisiert prüfbar) ⚠️
+### Design-Entscheidungen (kein offener TODO, nur dokumentiert) ℹ️
 
-- **Reale Verifikation in ISO-Designer/4diac IDE** — alle Validierungen in dieser
-  Session waren strukturell (wohlgeformt, keine dangling refs, keine doppelten
-  IDs). Der eigentliche Test (Pool öffnen, kompilieren, "Change Type" auf die
-  PWM-Composite, echte Hardware) steht noch aus.
-- **`DataType.Float` vs `Double`** für OPC-UA REAL im Web-Client — Annahme
-  `Float` (korrekte 32-Bit-IEC-61499-REAL-Zuordnung), noch nicht gegen echtes
-  FORTE verifiziert (Kommentar im Code hinterlassen).
-- **RampLimitFS-Abhängigkeit** — referenziert weiterhin extern
-  (`eclipse4diac::signalprocessing::RampLimitFS`, Nightly-Build), wie mit dem
-  Nutzer abgestimmt (spezifische IDE wird den Lernenden bereitgestellt).
+- **RampLimitFS-Abhängigkeit ist bewusst extern** — referenziert
+  `eclipse4diac::signalprocessing::RampLimitFS` (Nightly-Build), nicht ins
+  Repo vendored. Mit dem Nutzer abgestimmt: eine spezifische IDE-Version mit
+  diesem Baustein wird den Lernenden bereitgestellt. Keine offene Frage,
+  bleibt so.
+
+### Live-Test-Fortschritt (durch den Nutzer, laufend) 🧪
+
+- **Reale Verifikation in ISO-Designer/4diac IDE** — läuft bereits und hat
+  alle oben behobenen Bugs erst zutage gefördert (Build 0 Fehler/0 Warnungen,
+  Eingänge zeigen korrekt an, `AR_SUBSCRIBE_1` vom Web-Slider funktioniert).
+  Naturgemäß nur durch den Nutzer selbst am echten Gerät fortsetzbar, nicht
+  durch mich automatisierbar — kein separater TODO, sondern der Prozess, in
+  dem alle Punkte oben gefunden und nacheinander gefixt wurden.
+- **`DataType.Float` für OPC-UA REAL im Web-Client — bestätigt, nicht mehr nur
+  Annahme:** direkt im FORTE-Quellcode verifiziert
+  (`C:\git2\ms\4diac-forte\com\opc_ua\src\opcua_helper.cpp`): `CIEC_REAL`
+  (IEC 61499 32-bit `REAL`) mappt auf `UA_TYPES_FLOAT`, `CIEC_LREAL` (64-bit
+  `LREAL`) auf `UA_TYPES_DOUBLE`. Die im Web-Client-Code hinterlassene
+  Unsicherheits-Notiz kann raus.
 
 ## Kritische Dateien
 

@@ -193,9 +193,8 @@ async function writeOutput(n: number) {
     const wv = new WriteValue({
       nodeId: coerceNodeId(`ns=1;s=PWM_Q${String(n).padStart(2, '0')}`),
       attributeId: AttributeIds.Value,
-      /* IEC 61499 REAL ist 32-bit - DataType.Float ist die semantisch korrekte
-       * OPC-UA-Zuordnung. Noch nicht gegen echtes FORTE verifiziert (siehe
-       * plan_pwm_sample.md) - falls Werte nicht ankommen, hier Double probieren. */
+      /* IEC 61499 REAL ist 32-bit -> DataType.Float, bestaetigt in FORTEs
+       * eigenem Quellcode (opcua_helper.cpp: CIEC_REAL -> UA_TYPES_FLOAT). */
       value: new DataValue({ value: new Variant({ dataType: DataType.Float, value: clamped }) }),
     })
     await session.writeP([wv])
