@@ -1,5 +1,10 @@
 # SAFE Arithmetic Lib — SAFE_ADD/SUB/MUL/DIV (saturating, ANY-generic)
 
+> Status: implemented (typelib + native FORTE backend), not yet built/flashed/hardware-tested.
+> This document was originally written as a plan before implementation; it has been rewritten
+> to describe what was actually built, since the plan diverged from the final result in several
+> places (repo locations, and the shape of SAFE_ADD/SAFE_MUL — see below).
+
 ## Context
 
 `Uebung_011b3` (`test_B/Uebungen/Uebung_011b3.SUB`) demonstrates on real ESP32-P4
@@ -13,168 +18,176 @@ differences, remaining-distance calculations) a silent wraparound is
 dangerous. The note explicitly calls for a **SAFE Arithmetic Lib**
 (clamping and/or overflow/underflow detection).
 
-This plan starts that library: `SAFE_ADD`, `SAFE_SUB`, `SAFE_MUL`,
-`SAFE_DIV` — generic (`ANY_MAGNITUDE`-typed, like the standard `F_ADD` /
-`F_SUB` / `F_MUL` / `F_DIV`), **not** per-type variants, and **not**
-including the `TIME`-flavored siblings (`F_ADD_DT_TIME`, `F_MULTIME`, …)
-for now. Behavior on overflow/underflow: **saturating arithmetic** — the
-result is clamped into the valid range of the concrete type, and a new
+Behavior on overflow/underflow/division-by-zero: **saturating arithmetic** —
+the result is clamped into the valid range of the concrete type, and a
 `LIMIT_HIT: BOOL` output signals that clamping occurred (division by zero
 counts as a clamp: `OUT := 0`, `LIMIT_HIT := TRUE`).
 
-Two repositories are involved, mirroring how the *existing* generic
-functions (`F_SUB`, `F_GE`) are built:
+## Repos and locations actually used
 
-- **`C:\git\ms\4diac_training1`** (this repo) — the 4diac IDE workspace.
-  The IDE only ever sees a `.fbt` XML **interface stub** for a generic
-  function; there is no `.fbt` XML for `F_SUB` anywhere in this repo or in
-  `4diac-forte` — it ships inside the 4diac IDE's own bundled
-  `iec61131-3-3.0.0` typelib
-  (`C:\4diac\4diac-ide_...\4diac-ide\typelibrary\iec61131-3-3.0.0\typelib\arithmetic\F_SUB.fbt`).
-  Our new library is project-specific, so its `.fbt` stubs belong in this
-  repo's `Ventilsteuerung\4diacIDE-workspace\.lib\` (same place as
-  `adapter-3.0.0`, `iec61131-3-bool-3.0.0`, etc.), as a new bundle
-  `SafeArithmetic-3.0.0`.
-- **`C:\git\ms\4diac-forte`** (separate git repo, own Azure DevOps
-  remote) — the FORTE C++ runtime that actually gets cross-compiled and
-  flashed to the ESP32-P4 (`setup_esp32p4.sh`). `F_SUB`/`F_GE` are
-  **hand-written** C++ (not IDE-codegen'd — no `4DIAC FORTE Export
-  Filter` marker) using `CIEC_ANY_MAGNITUDE_VARIANT` /
-  `CIEC_ANY_ELEMENTARY_VARIANT` + `std::visit` runtime type dispatch. Our
-  `SAFE_*` FBs must follow the same hand-written pattern, extended with
-  overflow-checked arithmetic (`__builtin_add_overflow` /
-  `__builtin_sub_overflow` / `__builtin_mul_overflow` for integer types;
-  finite-check + clamp for `REAL`/`LREAL`), based on the candidates the
-  user pointed at (GCC/Clang overflow builtins, intel/safe-arithmetic,
-  boost::safe_numerics — the builtins are the simplest fit since they're
-  natively available in the ESP-IDF GCC toolchain and need no extra
-  dependency).
+Three repos ended up involved, all local clones of the user's GitHub-hosted
+training forks (`Meisterschulen-am-Ostbahnhof-Munchen/*`) — **not** the
+`C:\git\ms\*` clones (those track different remotes, e.g. `4diac-forte`'s
+`C:\git\ms` clone points at an internal Azure DevOps remote, not GitHub):
 
-**Scope of this session:** implement the `.fbt` interface stubs, the
-native C++ implementation, and the CMake/build registration in both
-repos. **No compiling, cross-building, or flashing** — that is left to
-the user to run afterward (confirmed explicitly: "Code + Registrierung,
-kein Build/Flash").
+- **`C:\git\proj3\4diac_training1`**, branch `feature/SafeArithmetic` — the
+  4diac IDE workspace. New library bundle
+  `Ventilsteuerung\4diacIDE-workspace\.lib\SafeArithmetic-3.0.0\`.
+- **`C:\git2\ms\4diac-forte`**, branch `feature/SafeArithmetic` — the FORTE
+  C++ runtime. New module `modules\SafeArithmetic\`.
+- **`C:\git2\ms\4diac-ide`** — the 4diac IDE source repo itself (typelibrary
+  shipped with the IDE). Related but separate upstream contributions (not
+  part of the `SafeArithmetic` library): adding the missing generic
+  `MUL_2/3/4.fbt` (branch `GEN_MUL`) and fixing generic
+  `First/Second function input` comments to proper math terminology across
+  `F_ADD/F_SUB/F_MUL/F_DIV`, `ADD_2/3/4` (branch `arithm`). These informed
+  the design of `SAFE_ADD`/`SAFE_MUL` below (IEC 61131-3 defines both ADD
+  and MUL as *extensible* — see next section) and the `IN1`/`IN2` comment
+  wording used throughout `SafeArithmetic`.
 
-## Part A — IDE typelib stub (repo: `4diac_training1`)
+`F_SUB`/`F_GE` (the standard library's generic functions) are
+**hand-written** C++ (not IDE-codegen'd — no `4DIAC FORTE Export Filter`
+marker) using `CIEC_ANY_MAGNITUDE_VARIANT` / `CIEC_ANY_ELEMENTARY_VARIANT` +
+`std::visit` runtime type dispatch; there is no `.fbt` XML for `F_SUB`
+anywhere in `4diac-forte` — the IDE-facing interface stub lives separately,
+bundled inside the IDE's own `iec61131-3-3.0.0` typelib
+(`C:\4diac\4diac-ide_...\typelibrary\iec61131-3-3.0.0\typelib\arithmetic\F_SUB.fbt`).
+`SafeArithmetic` follows the same split: `.fbt` interface stubs in the IDE
+workspace repo, hand-written C++ backend in the forte repo.
 
-New bundle `Ventilsteuerung\4diacIDE-workspace\.lib\SafeArithmetic-3.0.0\`,
-modeled directly on `iec61131-3-bool-3.0.0` (smallest existing bundle,
-same dependency shape):
+## What SAFE_ADD/SAFE_SUB/SAFE_MUL/SAFE_DIV actually are
 
-- `.project` — copy `iec61131-3-bool-3.0.0/.project`, rename
-  `<name>SafeArithmetic-3.0.0</name>`; keep the `Standard Libraries/core`
-  and `Standard Libraries/iec61131-3` linked-resource entries (we depend
-  on `ANY_MAGNITUDE` from `iec61131-3`).
-- `MANIFEST.MF` — copy `iec61131-3-bool-3.0.0/MANIFEST.MF`, set
-  `Product Name="SafeArithmetic" SymbolicName="SafeArithmetic" Comment="Saturating/checked arithmetic for measurement-technology use"`,
-  keep `Required SymbolicName="core"` and `Required SymbolicName="iec61131-3"`
-  (both `Version="3.0.0"`), `VersionInfo Author="Franz Höpfinger"`.
-- `.settings/org.eclipse.core.resources.prefs` — copy verbatim from
-  `iec61131-3-bool-3.0.0`.
-- `typelib\arithmetic\SAFE_ADD.fbt`, `SAFE_SUB.fbt`, `SAFE_MUL.fbt`,
-  `SAFE_DIV.fbt` — each modeled on
-  `C:\4diac\4diac-ide_...\typelibrary\iec61131-3-3.0.0\typelib\arithmetic\F_ADD.fbt`
-  (etc.), i.e. an **interface-only** `FBType` (no `BasicFB`/`ECC` —
-  matches the hand-written-native pattern), `CompilerInfo
-  packageName="SafeArithmetic::arithmetic"`, `Classification="saturating arithmetic function"`.
-  Interface, using `SAFE_SUB` as the concrete example:
-  - `EventInputs`: `REQ` (`Event`, `With IN1`, `With IN2`)
-  - `EventOutputs`: `CNF` (`Event`, `With OUT`, `With LIMIT_HIT`)
-  - `InputVars`: `IN1: ANY_MAGNITUDE`, `IN2: ANY_MAGNITUDE`
-  - `OutputVars`: `OUT: ANY_MAGNITUDE`, `LIMIT_HIT: BOOL` (comment:
-    "TRUE if the result was clamped due to overflow/underflow/division-by-zero")
+Correcting the original plan: **not** four uniform fixed-2-input FBs.
+IEC 61131-3 defines ADD and MUL as *extensible* arithmetic functions
+(`OUT := IN1 op IN2 op ... op INn`), same as the standard library's
+`ADD_2/3/4.fbt` (generic, backed by `GEN_ADD`) — but the standard library
+is missing an equivalent `MUL_2/3/4` (a gap fixed upstream in `4diac-ide`,
+see above). SUB and DIV are **not** extensible this way (not
+associative/commutative in a useful sense), so they stay fixed 2-input,
+matching `F_SUB`/`F_DIV`.
 
-Run `python .agents/skills/iec61499-creator/scripts/validate.py <file>`
-on each new `.fbt` against `schemas/fbtype.xsd` before considering Part A
-done (per the `iec61499-creator` skill).
+- **`SAFE_ADD_2/3/4`** and **`SAFE_MUL_2/3/4`** — generic N-ary FBs,
+  `Attribute GenericClassName="'GEN_SAFE_ADD'"` / `'GEN_SAFE_MUL'`,
+  backed by native `GEN_SAFE_ADD`/`GEN_SAFE_MUL` classes
+  (`CGenFunctionBlock<CFunctionBlock>`, mirroring the standard `GEN_ADD`).
+  `SAFE_ADD_*` uses `ANY_MAGNITUDE` (like `F_ADD`), `SAFE_MUL_*` uses
+  `ANY_NUM` (like `F_MUL`).
+- **`SAFE_SUB`** and **`SAFE_DIV`** — fixed 2-input FBs, hand-written
+  directly like `F_SUB`/`F_DIV` (no generic-arity mechanism).
+  `SAFE_SUB` uses `ANY_MAGNITUDE`, `SAFE_DIV` uses `ANY_NUM`.
+- No `TIME`-flavored siblings (`F_ADD_DT_TIME`, `F_MULTIME`, …) — out of
+  scope for this first version, per the original request ("ANY erst mal,
+  TIME nicht").
+- `IN1`/`IN2`(`/IN3`/`IN4`) input comments use proper mathematical
+  terminology, not generic "input N": **summand** (`SAFE_ADD_*`),
+  **minuend**/**subtrahend** (`SAFE_SUB`), **factor** (`SAFE_MUL_*`),
+  **dividend**/**divisor** (`SAFE_DIV`) — matching the fix applied
+  upstream to `F_ADD/F_SUB/F_MUL/F_DIV`/`ADD_2/3/4` in `4diac-ide`.
 
-## Part B — Native FORTE backend (repo: `4diac-forte`)
+## Part A — IDE typelib stubs (repo: `C:\git\proj3\4diac_training1`)
 
-New top-level module `SafeArithmetic-modules\SafeArithmetic-arithmetic\`,
-structured exactly like `logiBUS-modules\logiBUS-utils\` (Franz
-Höpfinger's own prior module in this fork) — **not** nested under
-`modules\IEC61131-3\`, since `func_SUB.h`, `func_ADD.h`, `func_MUL.h`,
-`func_DIV.h` and `forte_any_magnitude_variant.h` all live in
-`core\include\forte\...`, so a new module only needs `forte-core`, no
-dependency on `forte-iec61131-3`.
+Bundle `Ventilsteuerung\4diacIDE-workspace\.lib\SafeArithmetic-3.0.0\`,
+modeled on `iec61131-3-bool-3.0.0` (smallest existing bundle, same
+dependency shape: `.project`/`MANIFEST.MF` require `core` and
+`iec61131-3`, both `Version="3.0.0"`).
 
-- `SafeArithmetic-modules\SafeArithmetic-arithmetic\CMakeLists.txt` —
-  copy `logiBUS-modules/logiBUS-utils/CMakeLists.txt`, adapt:
-  `option(FORTE_MODULE_SAFEARITHMETIC "SAFE Arithmetic FBs (saturating, overflow-checked)" OFF)`,
-  `add_library(forte-safearithmetic-arithmetic)`,
-  `target_link_libraries(forte-safearithmetic-arithmetic PUBLIC forte-core)`,
-  whole-archive-link into `forte` (same `$<IF:$<BOOL:${BUILD_SHARED_LIBS}>,...>` pattern),
-  `add_subdirectory(include)` / `add_subdirectory(src)`, `install(...)`.
-- Root `CMakeLists.txt` (repo root, near the existing
-  `add_subdirectory(logiBUS-modules)` / `add_subdirectory(OSCAT-modules)`
-  lines) — add `add_subdirectory(SafeArithmetic-modules)`, and
-  `SafeArithmetic-modules\CMakeLists.txt` — add
-  `add_subdirectory(SafeArithmetic-arithmetic)` (mirrors `modules/CMakeLists.txt`).
-- `setup_esp32p4.sh` — add `-DFORTE_MODULE_SAFEARITHMETIC=ON` alongside
-  the existing `-DFORTE_MODULE_IEC61131=ON` etc. flags.
-- `include\forte\SafeArithmetic\arithmetic\safe_arithmetic_ops.h` — new
-  shared header with template helpers `safe_add<T,U>`, `safe_sub<T,U>`,
-  `safe_mul<T,U>`, `safe_div<T,U>`, each `(T in1, U in2, bool &limitHit) -> ResultType`:
-  - Integral `ResultType`: use `__builtin_add_overflow` /
-    `__builtin_sub_overflow` / `__builtin_mul_overflow` on the deduced
-    result type; on overflow, set `limitHit = true` and clamp to
-    `std::numeric_limits<ResultType>::max()` or `::min()` — direction
-    determined from operand signs (e.g. for `SAFE_ADD`: clamp high when
-    `in2 >= 0`, clamp low otherwise; for `SAFE_SUB`: clamp low when
-    `in2 >= 0` — exactly the `1 - 12` case from `Uebung_011b3`, which
-    should now clamp to `UDINT#0` instead of wrapping — clamp high
-    otherwise; for `SAFE_MUL`: clamp high when operand signs match, low
-    otherwise).
-  - Integral `SAFE_DIV`: `in2 == 0` → `limitHit = true`, return `0`;
-    else plain division (integer division cannot overflow except the
-    `INT_MIN / -1` edge case, which also sets `limitHit`).
-  - Floating (`REAL`/`LREAL`) `ResultType`: perform the plain operation,
-    then `limitHit = std::isfinite(in1) && std::isfinite(in2) &&
-    !std::isfinite(result)`; on hit, clamp to `±std::numeric_limits<ResultType>::max()`
-    (sign from the unclamped result). `SAFE_DIV` additionally treats
-    `in2 == 0.0` as a clamp (`limitHit = true`, `OUT := 0`) rather than
-    producing `INF`/`NaN`.
-- `include\forte\SafeArithmetic\arithmetic\SAFE_ADD_fbt.h` (+ `SAFE_SUB`,
-  `SAFE_MUL`, `SAFE_DIV`) and matching `src\SafeArithmetic\arithmetic\SAFE_ADD_fbt.cpp`
-  (+ 3 more) — copy `F_SUB_fbt.h`/`.cpp` (arithmetic) as the direct
-  template (and `F_ADD_fbt.cpp`/`F_MUL_fbt.cpp`/`F_DIV_fbt.cpp` for the
-  respective `mpl::get_add_operator_result_type` /
-  `get_mul_operator_result_type` / `get_div_operator_result_type` trait
-  names — confirm each exists in `core/include/forte/...` before using
-  it), with these changes:
-  - Namespace `forte::SafeArithmetic::arithmetic`, class
-    `FORTE_SAFE_ADD` (etc.), `DECLARE_FIRMWARE_FB(FORTE_SAFE_ADD)` /
-    `DEFINE_FIRMWARE_FB(FORTE_SAFE_ADD, "SafeArithmetic::arithmetic::SAFE_ADD"_STRID)`
-    — the string **must** exactly match the `.fbt`'s
-    `packageName::Name` from Part A for FORTE to resolve the type at
-    deployment.
-  - Add `CIEC_BOOL var_LIMIT_HIT` data output alongside `var_OUT`, wired
-    through `cFBInterfaceSpec.mDONames = {"OUT"_STRID, "LIMIT_HIT"_STRID}`,
-    `getDO`/`writeOutputData`/`getDOConUnchecked` extended for index 1,
-    plus a second `COutDataConnection<CIEC_BOOL> conn_LIMIT_HIT`.
-  - In `executeEvent`'s `std::visit` lambda, replace the direct
-    `func_SUB(paIN1, paIN2)` call with
-    `safe_sub(paIN1, paIN2, limitHit)` (etc.), assign the result into
-    `var_OUT` and `limitHit` into `var_LIMIT_HIT` before
-    `sendOutputEvent`.
-- Each new leaf `CMakeLists.txt` under `include\SafeArithmetic\arithmetic\`
-  and `src\SafeArithmetic\arithmetic\` — copy the
-  `modules/IEC61131-3/src/iec61131/arithmetic/CMakeLists.txt` pattern
-  (explicit `target_sources(... PRIVATE SAFE_ADD_fbt.cpp ...)` /
-  `FILE_SET HEADERS FILES SAFE_ADD_fbt.h ...)`, one entry per new file.
+`typelib\arithmetic\` contains 8 `.fbt` files, all interface-only `FBType`
+(no `BasicFB`/`ECC` — matches the hand-written-native pattern),
+`CompilerInfo packageName="SafeArithmetic::arithmetic"`,
+`Classification="saturating arithmetic function"`, `EventOutputs`/`CNF`
+carries both `OUT` and `LIMIT_HIT`:
 
-## Verification (this session)
+- `SAFE_ADD_2.fbt`, `SAFE_ADD_3.fbt`, `SAFE_ADD_4.fbt` — generic,
+  `ANY_MAGNITUDE`, `GenericClassName="'GEN_SAFE_ADD'"`.
+- `SAFE_MUL_2.fbt`, `SAFE_MUL_3.fbt`, `SAFE_MUL_4.fbt` — generic,
+  `ANY_NUM`, `GenericClassName="'GEN_SAFE_MUL'"`.
+- `SAFE_SUB.fbt` — fixed 2-input, `ANY_MAGNITUDE`.
+- `SAFE_DIV.fbt` — fixed 2-input, `ANY_NUM`.
 
-- Run `python .agents/skills/iec61499-creator/scripts/validate.py` on
-  each new `.fbt` in Part A.
-- Manual review: confirm each `SAFE_*_fbt.h`/`.cpp` pair structurally
-  matches its `F_*_fbt` template (same boilerplate methods present, same
-  `DEFINE_FIRMWARE_FB` string matches the `.fbt` exactly, `LIMIT_HIT`
-  wired consistently across all 4 FBs).
-- **Not done this session** (explicitly deferred to the user): compiling
-  `4diac-forte` (POSIX or ESP32-P4), flashing, or hardware-testing. A
-  natural next step once the user builds it themselves would be a
-  `Uebung_011b3`-style exercise swapping `F_SUB` → `SAFE_SUB` to
-  re-confirm `1 - 12` now clamps to `UDINT#0` with `LIMIT_HIT = TRUE`
-  instead of wrapping to `4294967285` — left for a follow-up session.
+All 8 validated with
+`python .agents/skills/iec61499-creator/scripts/validate.py <file>`
+against `schemas/fbtype.xsd`.
+
+## Part B — Native FORTE backend (repo: `C:\git2\ms\4diac-forte`)
+
+Module `modules\SafeArithmetic\` — **nested under `modules\`**, mirroring
+`modules\IEC61131-3\`'s exact layout and CMake chain (not a top-level
+sibling of `logiBUS-modules`/`OSCAT-modules` as the original plan assumed).
+`option(FORTE_MODULE_SAFEARITHMETIC ...)`, `add_library(forte-safearithmetic)`,
+linked against `forte-core` only (no dependency on `forte-iec61131-3`, since
+`func_ADD.h` etc. and `forte_any_magnitude_variant.h`/`forte_any_num_variant.h`
+live in `core/include/forte/...`). Registered in `modules\CMakeLists.txt`
+(alphabetical, between `rt_events` and `signalprocessing`). No
+`setup_esp32p4.sh` in this repo/clone — the root `CMakeLists.txt`'s
+`add_subdirectory(modules)` picks the new module up automatically once the
+`FORTE_MODULE_SAFEARITHMETIC` option is turned on at configure time.
+
+`include\forte\SafeArithmetic\arithmetic\` / `src\SafeArithmetic\arithmetic\`
+(namespace `forte::SafeArithmetic::arithmetic`):
+
+- **`safe_arithmetic_ops.h`** — shared header with:
+  - Native (`safe_add_native<V>`/`safe_sub_native<V>`/`safe_mul_native<V>`/`safe_div_native<V>`)
+    helpers operating on the plain C++ value type `V`:
+    - Integral `V`: `__builtin_{add,sub,mul}_overflow`; on overflow, clamp
+      to `std::numeric_limits<V>::max()`/`::min()`, direction from operand
+      signs (`if constexpr (std::is_signed_v<V>)`, unsigned always clamps
+      in the one direction that's possible for that op — e.g. unsigned
+      `SAFE_SUB` underflow always clamps to `0`, exactly the
+      `UDINT#1 - UDINT#12` case from `Uebung_011b3`). `SAFE_DIV`: divide
+      by zero clamps to `0`; the `INT_MIN / -1` edge case clamps to `max()`.
+      Requires GCC/Clang (`#error` on other compilers — not yet ported to
+      MSVC intrinsics).
+    - Floating (`REAL`/`LREAL`) `V`: plain operation, then
+      `limitHit = isfinite(in1) && isfinite(in2) && !isfinite(result)`,
+      clamp to `±numeric_limits<V>::max()`. `SAFE_DIV` treats `in2 == 0.0`
+      as a clamp too (avoids producing `INF`/`NaN`).
+  - CIEC-level wrappers (`safe_add<T,U>`/`safe_sub<T,U>`/`safe_mul<T,U>`/`safe_div<T,U>`)
+    that deduce the result type via `mpl::get_{add,sub,mul,div}_operator_result_type_t<T,U>`
+    (same traits `func_ADD`/`func_SUB`/`func_MUL`/`func_DIV` use), and for
+    `safe_add`/`safe_sub` fall back unchanged to `func_ADD`/`func_SUB` when
+    the result type's `TValueType` isn't arithmetic (i.e. a `TIME`/`DATE`
+    pair result) — `safe_mul`/`safe_div` `static_assert` instead, since
+    `ANY_NUM` never produces those.
+- **`SAFE_SUB_fbt.h`/`.cpp`**, **`SAFE_DIV_fbt.h`/`.cpp`** — hand-written
+  fixed-2-input FBs, copied from `F_SUB_fbt`/`F_DIV_fbt`'s structure
+  (`CIEC_ANY_MAGNITUDE_VARIANT`/`CIEC_ANY_NUM_VARIANT` + `std::visit`
+  dispatch), extended with a `CIEC_BOOL var_LIMIT_HIT` data output
+  (index 1, alongside `var_OUT` at index 0) and calling `safe_sub`/`safe_div`
+  instead of `func_SUB`/`func_DIV`. `DEFINE_FIRMWARE_FB` string
+  (`"SafeArithmetic::arithmetic::SAFE_SUB"_STRID` etc.) matches the `.fbt`'s
+  `packageName::Name` exactly.
+- **`GEN_SAFE_ADD_fbt.h`/`.cpp`**, **`GEN_SAFE_MUL_fbt.h`/`.cpp`** —
+  generic N-ary FBs, copied from the standard library's `GEN_ADD_fbt`
+  structure (`CGenFunctionBlock<CFunctionBlock>`, `createInterfaceSpec`
+  parses the arity from the trailing `_<N>` in the instance type name via
+  `strrchr`/`util::strtoul`, `mGenDIs` is a runtime-sized
+  `CIEC_ANY_MAGNITUDE_VARIANT[]`/`CIEC_ANY_NUM_VARIANT[]`). `OUT` and
+  `LIMIT_HIT` are fixed (non-generic) data outputs (`getGenDOOffset()`
+  returns `2`), only the inputs are variable-arity. `executeEvent` folds
+  the inputs pairwise via `safe_add`/`safe_mul`, OR-ing `LIMIT_HIT` across
+  every step. `DEFINE_GENERIC_FIRMWARE_FB` string matches the `.fbt`'s
+  `GenericClassName` attribute.
+
+## Verification
+
+- All 8 `.fbt` files validated against `schemas/fbtype.xsd`
+  (`iec61499-creator` skill's `validate.py`) — pass.
+- Manual review: each `SAFE_*`/`GEN_SAFE_*` C++ pair structurally matches
+  its `F_*`/`GEN_ADD` template; `DEFINE_(GENERIC_)FIRMWARE_FB` strings
+  match their `.fbt` counterparts; `LIMIT_HIT` wired consistently across
+  all 6 FB implementations.
+- **Not done**: compiling `4diac-forte` (POSIX or ESP32-P4), flashing, or
+  hardware-testing — left to the user. A natural follow-up once built:
+  a `Uebung_011b3`-style exercise swapping `F_SUB` → `SAFE_SUB` to confirm
+  `1 - 12` now clamps to `UDINT#0` with `LIMIT_HIT = TRUE` instead of
+  wrapping to `4294967285`.
+
+## Commits
+
+- `4diac_training1` (`feature/SafeArithmetic`): typelib bundle + `SAFE_ADD_2/3/4`/`SAFE_MUL_2/3/4`
+  as generic FBs, plus the terminology fix, both on top of the initial plan-document commit.
+- `4diac-forte` (`feature/SafeArithmetic`, `C:\git2\ms\4diac-forte`):
+  `modules/SafeArithmetic/` (`SAFE_SUB`/`SAFE_DIV`/`GEN_SAFE_ADD`/`GEN_SAFE_MUL`).
+- `4diac-ide` (branches `GEN_MUL`, `arithm`, `C:\git2\ms\4diac-ide`): related
+  upstream fixes (`MUL_2/3/4.fbt`, IN1/IN2 terminology) that this library's
+  design follows.
