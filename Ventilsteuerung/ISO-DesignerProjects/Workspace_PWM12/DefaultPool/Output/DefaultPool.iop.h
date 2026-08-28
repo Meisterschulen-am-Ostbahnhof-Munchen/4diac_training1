@@ -7,6 +7,10 @@
 #define MASK_WIDTH                          480
 #define MASK_HEIGHT                         480
 #define WorkingSet                            0
+#define Macro_PWM_1                           1
+#define Macro_M1                              2
+#define Macro_PWM_2                           3
+#define Macro_PWM_3                           4
 #define DataMask_M1                        1000
 #define DataMask_PWM1                      1001
 #define DataMask_PWM2                      1002
