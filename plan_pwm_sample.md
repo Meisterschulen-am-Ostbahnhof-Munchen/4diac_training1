@@ -106,4 +106,4 @@ VT-Projekt, Web-Client), damit Lernende beide Beispiele klar auseinanderhalten k
 - `Ventilsteuerung/4diacIDE-workspace/test_AX/Meins/InputOutputTester/Button_PWM_OPC_UA/SubStrings.gcf`
 - `Ventilsteuerung/ISO-DesignerProjects/Workspace_PWM12/DefaultPool/DefaultPool.jop`
 - `Ventilsteuerung/4diacIDE-workspace/test_AX/sys/Training_AX/test_AX.sys`
-- `Ventilsteuerung/apixon-diodo-client/` (Vorlage für `apixon-pwm-client`)
+- `Ventilsteuerung/Web-Clients/apixon-diodo-client/` (Vorlage für `apixon-pwm-client`)
