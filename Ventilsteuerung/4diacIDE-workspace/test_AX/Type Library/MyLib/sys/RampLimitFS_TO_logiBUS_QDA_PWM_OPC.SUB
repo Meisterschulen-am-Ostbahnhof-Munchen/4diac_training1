@@ -12,7 +12,6 @@
 	</CompilerInfo>
 	<SubAppInterfaceList>
 		<InputVars>
-			<VarDeclaration Name="u16ObjId_INPUT" Type="UINT" Comment="Object ID CInputNumber (Duty-Eingabe/-Anzeige, roh 0..64255 = 0.000-100.000%)" InitialValue="ID_NULL"/>
 			<VarDeclaration Name="u16ObjId_VALUEVAR" Type="UINT" Comment="Object ID CNumberVariable (Prozent 0-100, gemeinsam gebunden an Balkengrafik und CInputNumber-Anzeige)" InitialValue="ID_NULL"/>
 			<VarDeclaration Name="u16ObjId_ZERO" Type="UINT" Comment="Object ID Taste &apos;0&apos; (RampLimitFS.ZERO)" InitialValue="ID_NULL"/>
 			<VarDeclaration Name="u16ObjId_DOWN_FAST" Type="UINT" Comment="Object ID Taste &apos;--&apos; (RampLimitFS.DOWN_FAST, ~10%)" InitialValue="ID_NULL"/>
@@ -72,20 +71,15 @@
 			<Parameter Name="QI" Value="TRUE"/>
 			<Parameter Name="InputEvent" Value="BT_PRESSED_LATCHED"/>
 		</FB>
-		<!-- logiBUS_QD_PWM expects a raw 13-bit duty value (0-8191), confirmed
-		     from the real, working Uebung_034/Uebung_034a1_Q1 examples - not
-		     the J1939/FIELDBUS_SIGNAL 0-64255 range RampLimitFS/the VT use.
-		     Rescale here, right before the hardware output, so the rest of
-		     the composite (VT display, OPC-UA) stays J1939-compliant. -->
 		<FB Name="F_MUL_TO_PWM13BIT" Type="iec61131::arithmetic::F_MUL" x="-1600" y="-2600">
 			<Parameter Name="IN2" Value="DINT#8191"/>
 		</FB>
-		<FB Name="F_DIV_TO_PWM13BIT" Type="iec61131::arithmetic::F_DIV" x="-1200" y="-2600">
+		<FB Name="F_DIV_TO_PWM13BIT" Type="iec61131::arithmetic::F_DIV" x="1300" y="-2600">
 			<Parameter Name="IN2" Value="DINT#64255"/>
 		</FB>
-		<FB Name="F_DINT_TO_DWORD_OUT" Type="iec61131::conversion::F_DINT_TO_DWORD" x="-1600" y="-2200">
+		<FB Name="F_DINT_TO_DWORD_OUT" Type="iec61131::conversion::F_DINT_TO_DWORD" x="2900" y="-2500">
 		</FB>
-		<FB Name="logiBUS_QD_PWM" Type="logiBUS::io::DQ::logiBUS_QD_PWM" x="200" y="-2200">
+		<FB Name="logiBUS_QD_PWM" Type="logiBUS::io::DQ::logiBUS_QD_PWM" x="4900" y="-2600">
 			<Parameter Name="QI" Value="TRUE"/>
 			<Parameter Name="PARAMS" Value="">
 				<Attribute Name="Visible" Value="false"/>
@@ -108,6 +102,9 @@
 		</FB>
 		<FB Name="F_SEL_PV" Type="iec61131::selection::F_SEL" x="-5700" y="-1100">
 		</FB>
+		<FB Name="F_MOVE" Type="iec61131::selection::F_MOVE" x="0" y="-2600">
+			<Attribute Name="DataType" Value="DINT"/>
+		</FB>
 		<EventConnections>
 			<Connection Source="NumericValue_Duty.IND" Destination="F_DWORD_TO_UDINT_VT.REQ" dx1="493.33"/>
 			<Connection Source="F_DWORD_TO_UDINT_VT.CNF" Destination="F_UDINT_TO_DINT_VT.REQ"/>
@@ -118,13 +115,6 @@
 			<Connection Source="AR_R_TO_REAL_SUB.CNF" Destination="F_PERCENT_TO_FRACTION_SUB.REQ"/>
 			<Connection Source="F_PERCENT_TO_FRACTION_SUB.CNF" Destination="F_PWM_PERCENT_TO_RAW.REQ"/>
 			<Connection Source="F_PWM_PERCENT_TO_RAW.CNF" Destination="E_RS_PV.S" dx1="500"/>
-			<!-- E_RS's EO only fires on an actual Q transition, not on every S/R
-			     (e.g. repeated web writes while Q is already TRUE never re-fire it),
-			     so F_SEL_PV.REQ is fed directly from both sources instead - it must
-			     re-select+reload on every single update, not just on source changes.
-			     E_RS_PV.R/S still run first and update Q (the G selector) since
-			     each source's CNF also drives them directly, and FORTE executes a
-			     single event's multiple destination connections in declaration order. -->
 			<Connection Source="F_UDINT_TO_DINT_VT.CNF" Destination="F_SEL_PV.REQ" dx1="1646.67"/>
 			<Connection Source="F_PWM_PERCENT_TO_RAW.CNF" Destination="F_SEL_PV.REQ" dx1="246.67"/>
 			<Connection Source="F_SEL_PV.CNF" Destination="RampLimitFS.LOAD" dx1="1186.67"/>
@@ -135,25 +125,17 @@
 			<Connection Source="Button_UP_FAST.IND" Destination="RampLimitFS.UP_FAST" dx1="5726.67"/>
 			<Connection Source="Button_FULL.IND" Destination="RampLimitFS.FULL" dx1="5813.33"/>
 			<Connection Source="RampLimitFS.CNF" Destination="F_MUL_TO_PWM13BIT.REQ" dx1="160"/>
-			<Connection Source="F_MUL_TO_PWM13BIT.CNF" Destination="F_DIV_TO_PWM13BIT.REQ"/>
-			<Connection Source="F_DIV_TO_PWM13BIT.CNF" Destination="F_DINT_TO_DWORD_OUT.REQ"/>
+			<Connection Source="F_MUL_TO_PWM13BIT.CNF" Destination="F_MOVE.REQ"/>
+			<Connection Source="F_DIV_TO_PWM13BIT.CNF" Destination="F_DINT_TO_DWORD_OUT.REQ" dx1="466.67"/>
 			<Connection Source="RampLimitFS.CNF" Destination="F_DINT_TO_UDINT_DISP.REQ" dx1="160"/>
 			<Connection Source="RampLimitFS.CNF" Destination="F_PWM_RAW_TO_PERCENT.REQ" dx1="160"/>
 			<Connection Source="F_DINT_TO_DWORD_OUT.CNF" Destination="logiBUS_QD_PWM.REQ" dx1="393.33"/>
 			<Connection Source="F_DINT_TO_UDINT_DISP.CNF" Destination="Q_NumericValue.REQ" dx1="393.33"/>
 			<Connection Source="F_PWM_RAW_TO_PERCENT.CNF" Destination="F_FRACTION_TO_PERCENT_PUB.REQ"/>
 			<Connection Source="F_FRACTION_TO_PERCENT_PUB.CNF" Destination="AR_REAL_TO_R_PUB.REQ"/>
+			<Connection Source="F_MOVE.CNF" Destination="F_DIV_TO_PWM13BIT.REQ"/>
 		</EventConnections>
 		<DataConnections>
-			<!-- NumericValue_Duty listens on the shared CNumberVariable
-			     (u16ObjId_VALUEVAR), not on a specific CInputNumber's own
-			     Object ID: per ISO 11783-6, once a numeric input field has a
-			     Variable Reference bound, the VT disables per-field edit
-			     listening on that field's own ID and reports edits against
-			     the variable instead (confirmed via the real, working
-			     Uebung_034a1_Q1.SUB: PWM_Value.u16ObjId = NumberVariable_PWM_Value,
-			     the variable, not the field). This also makes both input
-			     fields (percent and raw) work, since they share this variable. -->
 			<Connection Source="u16ObjId_VALUEVAR" Destination="NumericValue_Duty.u16ObjId" dx1="1600">
 				<Attribute Name="Visible" Value="false"/>
 			</Connection>
@@ -196,14 +178,15 @@
 			<Connection Source="E_RS_PV.Q" Destination="F_SEL_PV.G" dx1="113.33"/>
 			<Connection Source="F_SEL_PV.OUT" Destination="RampLimitFS.PV" dx1="1186.67"/>
 			<Connection Source="RampLimitFS.OUT" Destination="F_MUL_TO_PWM13BIT.IN1" dx1="193.33"/>
-			<Connection Source="F_MUL_TO_PWM13BIT.OUT" Destination="F_DIV_TO_PWM13BIT.IN1"/>
-			<Connection Source="F_DIV_TO_PWM13BIT.OUT" Destination="F_DINT_TO_DWORD_OUT.IN"/>
+			<Connection Source="F_MUL_TO_PWM13BIT.OUT" Destination="F_MOVE.IN"/>
+			<Connection Source="F_DIV_TO_PWM13BIT.OUT" Destination="F_DINT_TO_DWORD_OUT.IN" dx1="466.67"/>
 			<Connection Source="RampLimitFS.OUT" Destination="F_DINT_TO_UDINT_DISP.IN" dx1="193.33"/>
 			<Connection Source="RampLimitFS.OUT" Destination="F_PWM_RAW_TO_PERCENT.IN" dx1="126.67"/>
 			<Connection Source="F_DINT_TO_DWORD_OUT.OUT" Destination="logiBUS_QD_PWM.OUT" dx1="393.33"/>
 			<Connection Source="F_DINT_TO_UDINT_DISP.OUT" Destination="Q_NumericValue.u32NewValue" dx1="393.33"/>
 			<Connection Source="F_PWM_RAW_TO_PERCENT.OUT" Destination="F_FRACTION_TO_PERCENT_PUB.rFraction"/>
 			<Connection Source="F_FRACTION_TO_PERCENT_PUB.rPercent" Destination="AR_REAL_TO_R_PUB.OUT"/>
+			<Connection Source="F_MOVE.OUT" Destination="F_DIV_TO_PWM13BIT.IN1"/>
 		</DataConnections>
 		<AdapterConnections>
 			<Connection Source="AR_SUBSCRIBE_1.OUT" Destination="AR_R_TO_REAL_SUB.AR_IN" dx1="513.33"/>
