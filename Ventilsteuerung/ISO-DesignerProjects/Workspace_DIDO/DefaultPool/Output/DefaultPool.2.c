@@ -29,29 +29,21 @@ const unsigned long ISO_OP_MEMORY_CLASS isoOP_DefaultPool_Offset[] = {
 	   529,  // Button_I07_Offset
 	   548,  // Button_I08_Offset
 	   567,  // OutputString_WorkingSet_0_Offset
-	   596,  // OutputNumber_12000_Offset
-	   625,  // OutputNumber_c1_Offset
-	   654,  // OutputNumber_12002_Offset
-	   683,  // OutputNumber_12003_Offset
-	   712,  // OutputNumber_12004_Offset
-	   741,  // OutputNumber_12005_Offset
-	   770,  // OutputNumber_12006_Offset
-	   799,  // OutputNumber_12007_Offset
-	   828,  // OutputNumber_12008_Offset
-	   857,  // OutputNumber_12009_Offset
-	   886,  // OutputNumber_12010_Offset
-	   915,  // OutputNumber_12011_Offset
-	   944,  // OutputNumber_12012_Offset
-	   973,  // OutputNumber_c2_Offset
-	  1002,  // OutputNumber_c3_Offset
-	  1031,  // OutputNumber_c4_Offset
-	  1060,  // OutputNumber_c5_Offset
-	  1089,  // OutputNumber_c6_Offset
-	  1118,  // OutputNumber_c7_Offset
-	  1147,  // OutputNumber_c8_Offset
-	  1176,  // OutputNumber_Tick_Offset
-	  1205,  // Logos_icon_Offset
-	  1734,  // FontAttributes_6x8_Offset
-	  1742,  // FontAttributes_24x32_Offset
-	  1750,  // AuxFunction2_X1_Offset
+	   596,  // OutputNumber_c1_Offset
+	   625,  // OutputNumber_c9_Offset
+	   654,  // OutputNumber_c10_Offset
+	   683,  // OutputNumber_c11_Offset
+	   712,  // OutputNumber_c12_Offset
+	   741,  // OutputNumber_c2_Offset
+	   770,  // OutputNumber_c3_Offset
+	   799,  // OutputNumber_c4_Offset
+	   828,  // OutputNumber_c5_Offset
+	   857,  // OutputNumber_c6_Offset
+	   886,  // OutputNumber_c7_Offset
+	   915,  // OutputNumber_c8_Offset
+	   944,  // OutputNumber_Tick_Offset
+	   973,  // Logos_icon_Offset
+	  1502,  // FontAttributes_6x8_Offset
+	  1510,  // FontAttributes_24x32_Offset
+	  1518,  // AuxFunction2_X1_Offset
 };  // isoOP_DefaultPool_Offset
