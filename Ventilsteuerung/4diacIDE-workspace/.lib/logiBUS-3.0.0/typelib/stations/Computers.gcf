@@ -7,19 +7,31 @@
 	<CompilerInfo packageName="logiBUS::stations">
 	</CompilerInfo>
 	<GlobalConstants>
-		<VarDeclaration Name="C_LO" Type="WSTRING" InitialValue="&quot;localhost:61499&quot;"/>
-		<VarDeclaration Name="C_ET" Type="WSTRING" InitialValue="&quot;192.168.5.1:61499&quot;"/>
-		<VarDeclaration Name="C_ST" Type="WSTRING" InitialValue="&quot;192.168.4.1:61499&quot;"/>
-		<VarDeclaration Name="C_00" Type="WSTRING" InitialValue="&quot;192.168.4.1:61499&quot;"/>
+		<VarDeclaration Name="C_LO" Type="WSTRING" InitialValue="&quot;opc.tcp://localhost:4840&quot;"/>
+		<VarDeclaration Name="C_ET" Type="WSTRING" InitialValue="&quot;opc.tcp://192.168.5.1:4840&quot;"/>
+		<VarDeclaration Name="C_ST" Type="WSTRING" InitialValue="&quot;opc.tcp://192.168.4.1:4840&quot;"/>
+		<VarDeclaration Name="C_00" Type="WSTRING" InitialValue="&quot;opc.tcp://192.168.4.1:4840&quot;"/>
+		<VarDeclaration Name="C_11" Type="WSTRING" InitialValue="&quot;opc.tcp://192.168.1.11:4840&quot;"/>
 	</GlobalConstants>
 	<OriginalSource><![CDATA[PACKAGE logiBUS::stations;
 
+(*
+ * Feste OPC-UA-Endpunkte bekannter Stationen/Rechner im logiBUS-Netzwerk
+ * (z.B. als MGR_ID fuer ein FORTE_PC-Device), damit Projekte nicht mit
+ * literalen IP-Adressen arbeiten muessen:
+ *   C_LO - lokaler Rechner (localhost)
+ *   C_ET - Ethernet-Station 192.168.5.1
+ *   C_ST - Standard-Steuerung 192.168.4.1
+ *   C_00 - Station 00 (192.168.4.1)
+ *   C_11 - Station 11 (192.168.1.11)
+ *)
 GLOBALCONSTANTS Computers
 	VAR_GLOBAL CONSTANT
-		C_LO : WSTRING := "localhost:61499";
-		C_ET : WSTRING := "192.168.5.1:61499";
-		C_ST : WSTRING := "192.168.4.1:61499";
-		C_00 : WSTRING := "192.168.4.1:61499";
+		C_LO : WSTRING := "opc.tcp://localhost:4840";
+		C_ET : WSTRING := "opc.tcp://192.168.5.1:4840";
+		C_ST : WSTRING := "opc.tcp://192.168.4.1:4840";
+		C_00 : WSTRING := "opc.tcp://192.168.4.1:4840";
+		C_11 : WSTRING := "opc.tcp://192.168.1.11:4840";
 	END_VAR
 END_GLOBALCONSTANTS
 ]]></OriginalSource>
