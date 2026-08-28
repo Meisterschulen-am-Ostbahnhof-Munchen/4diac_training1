@@ -51,6 +51,15 @@
             v-model.number="outputs[n - 1]"
             @change="writeOutput(n)"
           />
+          <button
+            class="pwm-switch"
+            :class="{ on: channelSwitches[n - 1] }"
+            @click="writeSwitch(n)"
+            :title="channelSwitches[n - 1] ? 'Kanal aktiv (klicken zum Deaktivieren)' : 'Kanal inaktiv (klicken zum Aktivieren)'"
+          >
+            <span class="pwm-switch-knob"></span>
+          </button>
+          <div class="led led-small" :class="{ on: channelStatus[n - 1] }" title="Kanal-Status (QO)"></div>
         </div>
       </div>
     </section>
@@ -79,6 +88,10 @@ const connected = ref(false)
 const inputs = ref<boolean[]>(Array(8).fill(false))
 /* Prozent 0.0-100.0 (REAL), nicht Bool wie beim DIDO-Beispiel */
 const outputs = ref<number[]>(Array(12).fill(0))
+/* Kanal-Ein/Aus (BOOL), echo des Kanal-Schalters (E_T_FF_SWITCH.Q) */
+const channelSwitches = ref<boolean[]>(Array(12).fill(false))
+/* Kanal-Status (BOOL), logiBUS_QD_PWM.QO, nur lesend */
+const channelStatus = ref<boolean[]>(Array(12).fill(false))
 const tick = ref<number | string>('–')
 const tickPulse = ref(false)
 
@@ -97,6 +110,8 @@ function handleLost() {
   status.value = 'Fehler: Verbindung verloren'
   inputs.value.fill(false)
   outputs.value.fill(0)
+  channelSwitches.value.fill(false)
+  channelStatus.value.fill(false)
   tick.value = '–'
 }
 
@@ -154,6 +169,34 @@ async function connect() {
       outputs.value[index] = Number(dataValue.value?.value ?? 0)
     })
 
+    /* Monitor all channel switches Q1-Q12 (BOOL, echo of the actual enable state) */
+    const switchItems = Array.from({ length: 12 }, (_, i) => ({
+      nodeId: coerceNodeId(`ns=1;s=PWM_Q${String(i + 1).padStart(2, '0')}_SWITCH`),
+      attributeId: AttributeIds.Value,
+    }))
+    const switchGroup = await subscription.monitorItemsP(
+      switchItems,
+      { samplingInterval: 100, discardOldest: true, queueSize: 2 },
+      TimestampsToReturn.Neither
+    )
+    switchGroup.on('changed', (_item: any, dataValue: any, index: number) => {
+      channelSwitches.value[index] = !!dataValue.value?.value
+    })
+
+    /* Monitor all channel status LEDs Q1-Q12 (BOOL, logiBUS_QD_PWM.QO, read-only) */
+    const statusItems = Array.from({ length: 12 }, (_, i) => ({
+      nodeId: coerceNodeId(`ns=1;s=PWM_Q${String(i + 1).padStart(2, '0')}_STATUS`),
+      attributeId: AttributeIds.Value,
+    }))
+    const statusGroup = await subscription.monitorItemsP(
+      statusItems,
+      { samplingInterval: 100, discardOldest: true, queueSize: 2 },
+      TimestampsToReturn.Neither
+    )
+    statusGroup.on('changed', (_item: any, dataValue: any, index: number) => {
+      channelStatus.value[index] = !!dataValue.value?.value
+    })
+
     /* Monitor the heartbeat/tick counter */
     const tickGroup = await subscription.monitorItemsP(
       [{ nodeId: coerceNodeId('ns=1;s=System.Tick'), attributeId: AttributeIds.Value }],
@@ -203,6 +246,26 @@ async function writeOutput(n: number) {
   }
 }
 
+/* Der Kanal-Schalter im SUB ist ein Toggle-FlipFlop (E_T_FF): jeder Schreib-
+ * zugriff auf den SWITCH-Knoten togglet den Kanal, unabhaengig vom
+ * uebertragenen Wert selbst (genau wie ein physischer Tastendruck). Der
+ * geschriebene Wert dient nur der optischen Konsistenz mit dem erwarteten
+ * neuen Zustand, nicht als tatsaechlich ausgewerteter Soll-Zustand. */
+async function writeSwitch(n: number) {
+  if (!session) return
+  const next = !channelSwitches.value[n - 1]
+  try {
+    const wv = new WriteValue({
+      nodeId: coerceNodeId(`ns=1;s=PWM_Q${String(n).padStart(2, '0')}_SWITCH`),
+      attributeId: AttributeIds.Value,
+      value: new DataValue({ value: new Variant({ dataType: DataType.Boolean, value: next }) }),
+    })
+    await session.writeP([wv])
+  } catch (err) {
+    console.error(`PWM_Q${n}_SWITCH write failed:`, err)
+  }
+}
+
 async function disconnect() {
   if (client) {
     client.off('connection_lost', handleLost)
@@ -213,6 +276,8 @@ async function disconnect() {
   status.value = 'Getrennt'
   inputs.value.fill(false)
   outputs.value.fill(0)
+  channelSwitches.value.fill(false)
+  channelStatus.value.fill(false)
 }
 
 onUnmounted(() => disconnect())
@@ -382,6 +447,42 @@ span {
   background: #1a1a2e;
   color: #e0e0e0;
   font-size: 0.8rem;
+  flex-shrink: 0;
+}
+
+.pwm-switch {
+  position: relative;
+  width: 34px;
+  height: 18px;
+  flex-shrink: 0;
+  padding: 0;
+  border-radius: 9px;
+  border: 1px solid #444;
+  background: #2a2a3e;
+  cursor: pointer;
+  transition: background 0.15s, border-color 0.15s;
+}
+.pwm-switch.on {
+  background: #4caf50;
+  border-color: #81c784;
+}
+.pwm-switch-knob {
+  position: absolute;
+  top: 1px;
+  left: 1px;
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: #e0e0e0;
+  transition: transform 0.15s;
+}
+.pwm-switch.on .pwm-switch-knob {
+  transform: translateX(16px);
+}
+
+.led-small {
+  width: 16px;
+  height: 16px;
   flex-shrink: 0;
 }
 </style>

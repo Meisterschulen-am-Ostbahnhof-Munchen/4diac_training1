@@ -9,10 +9,15 @@
 		<Import declaration="logiBUS::io::DQ::logiBUS_DO"/>
 		<Import declaration="logiBUS::io::DQ::logiBUS_DO_S"/>
 		<Import declaration="isobus::UT::io::Button::ButtonActivationCode::BT_PRESSED_LATCHED"/>
+		<Import declaration="isobus::UT::Q::const::colours::COLOR_GREEN"/>
+		<Import declaration="isobus::UT::Q::const::colours::COLOR_RED"/>
 	</CompilerInfo>
 	<SubAppInterfaceList>
 		<InputVars>
 			<VarDeclaration Name="u16ObjId_VALUEVAR" Type="UINT" Comment="Object ID CNumberVariable (Prozent 0-100, gemeinsam gebunden an Balkengrafik und CInputNumber-Anzeige)" InitialValue="ID_NULL"/>
+			<VarDeclaration Name="u16ObjId_SWITCH" Type="UINT" Comment="Object ID Kanal-Ein/Aus-Taste (Klick togglet Enable)" InitialValue="ID_NULL"/>
+			<VarDeclaration Name="u16ObjId_STATUS" Type="UINT" Comment="Object ID Status-Anzeige (Hintergrundfarbe Gruen=logiBUS_QD_PWM.QO TRUE / Rot=FALSE)" InitialValue="ID_NULL"/>
+			<VarDeclaration Name="bDefaultEnabled" Type="BOOL" Comment="Kanal-Zustand beim Start: TRUE=aktiv (Kanaele 1-8), FALSE=inaktiv (Kanaele 9-12, da nur 8 Kanaele pro Controller gleichzeitig verfuegbar sind)"/>
 			<VarDeclaration Name="u16ObjId_ZERO" Type="UINT" Comment="Object ID Taste &apos;0&apos; (RampLimitFS.ZERO)" InitialValue="ID_NULL"/>
 			<VarDeclaration Name="u16ObjId_DOWN_FAST" Type="UINT" Comment="Object ID Taste &apos;--&apos; (RampLimitFS.DOWN_FAST, ~10%)" InitialValue="ID_NULL"/>
 			<VarDeclaration Name="u16ObjId_DOWN_SLOW" Type="UINT" Comment="Object ID Taste &apos;-&apos; (RampLimitFS.DOWN_SLOW, ~1%)" InitialValue="ID_NULL"/>
@@ -22,6 +27,9 @@
 			<VarDeclaration Name="Output" Type="logiBUS::io::DQ::logiBUS_DO_S" Comment="Identify the PWM Output Output_Q1..Q12" InitialValue="logiBUS_DO::Invalid"/>
 			<VarDeclaration Name="ID_READ" Type="WSTRING" Comment="Remote-Sollwert-Adresse (Prozent REAL, ACTION=SUBSCRIBE)"/>
 			<VarDeclaration Name="ID_WRITE" Type="WSTRING" Comment="Echo-Ruckmelde-Adresse (Prozent REAL, ACTION=PUBLISH)"/>
+			<VarDeclaration Name="ID_SWITCH_READ" Type="WSTRING" Comment="Remote-Schalter-Adresse (BOOL, ACTION=SUBSCRIBE, togglet Kanal-Enable wie ein Tastendruck)"/>
+			<VarDeclaration Name="ID_SWITCH_WRITE" Type="WSTRING" Comment="Echo-Ruckmelde-Adresse (BOOL, ACTION=PUBLISH, aktueller Kanal-Enable-Zustand)"/>
+			<VarDeclaration Name="ID_STATUS_WRITE" Type="WSTRING" Comment="Status-Ruckmelde-Adresse (BOOL, ACTION=PUBLISH, nur lesend, logiBUS_QD_PWM.QO)"/>
 		</InputVars>
 	</SubAppInterfaceList>
 	<SubAppNetwork>
@@ -111,6 +119,75 @@
 		</FB>
 		<FB Name="E_MERGE_SEL" Type="iec61499::events::E_MERGE_2" x="-7400" y="-1100">
 		</FB>
+		<!-- Kanal-Schalter: Button_SWITCH togglet E_T_FF_SWITCH.Q bei jedem Klick.
+		     INIT_SWITCH_DEFAULT feuert einmalig beim Deployment (unverbundenes .INIT,
+		     4diac-Konvention); E_PERMIT_DEFAULT laesst diesen einmaligen Impuls nur
+		     durch, wenn bDefaultEnabled=TRUE, und togglet damit E_T_FF_SWITCH von
+		     FALSE (Startwert) auf TRUE - genau einmal, pro Instanz per Parameter
+		     steuerbar, ohne dass sich die Verdrahtung selbst je Kanal unterscheidet. -->
+		<FB Name="Button_SWITCH" Type="isobus::UT::io::Button::Button_IE" x="-9600" y="-1100">
+			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="InputEvent" Value="BT_PRESSED_LATCHED"/>
+		</FB>
+		<FB Name="E_T_FF_SWITCH" Type="iec61499::events::E_T_FF" x="-7900" y="-1900">
+		</FB>
+		<FB Name="INIT_SWITCH_DEFAULT" Type="iec61131::booleanOperators::INIT" x="-9600" y="-2400">
+		</FB>
+		<FB Name="E_PERMIT_DEFAULT" Type="iec61499::events::E_PERMIT" x="-8600" y="-2400">
+		</FB>
+		<!-- 7 einzelne E_PERMIT-Gates statt einer implizit gemeinsamen Loesung -
+		     genau ein Gate pro RampLimitFS-Event-Eingang, alle mit demselben
+		     PERMIT=E_T_FF_SWITCH.Q gespeist. "Deaktiviert" heisst hier: alle
+		     Steuer-Events werden geblockt, RampLimitFS friert beim aktuellen
+		     Duty-Wert ein (kein automatisches Runterfahren auf 0). -->
+		<FB Name="E_PERMIT_ZERO" Type="iec61499::events::E_PERMIT" x="-8600" y="-100">
+		</FB>
+		<FB Name="E_PERMIT_DOWN_FAST" Type="iec61499::events::E_PERMIT" x="-8600" y="900">
+		</FB>
+		<FB Name="E_PERMIT_DOWN_SLOW" Type="iec61499::events::E_PERMIT" x="-8600" y="1900">
+		</FB>
+		<FB Name="E_PERMIT_UP_SLOW" Type="iec61499::events::E_PERMIT" x="-8600" y="2900">
+		</FB>
+		<FB Name="E_PERMIT_UP_FAST" Type="iec61499::events::E_PERMIT" x="-8600" y="3900">
+		</FB>
+		<FB Name="E_PERMIT_FULL" Type="iec61499::events::E_PERMIT" x="-8600" y="4900">
+		</FB>
+		<FB Name="E_PERMIT_LOAD" Type="iec61499::events::E_PERMIT" x="-4700" y="-1100">
+		</FB>
+		<!-- Status-Anzeige: logiBUS_QD_PWM.QO (Service-Confirm-Qualifier, TRUE=letzter
+		     Schreibzugriff erfolgreich) faehrt F_SEL_STATUS.G, waehlt COLOR_GREEN/
+		     COLOR_RED, Q_BackgroundColour_STATUS faerbt u16ObjId_STATUS entsprechend
+		     ein - dasselbe Muster wie GreenRedBackground1_AX, aber mit einem
+		     einfachen F_SEL statt AX-Adapter/AX_SEL, da QO ein simples BOOL ist. -->
+		<FB Name="F_SEL_STATUS" Type="iec61131::selection::F_SEL" x="5300" y="-1900">
+			<Parameter Name="IN0" Value="COLOR_RED"/>
+			<Parameter Name="IN1" Value="COLOR_GREEN"/>
+		</FB>
+		<FB Name="Q_BackgroundColour_STATUS" Type="isobus::UT::Q::Q_BackgroundColour" x="6800" y="-1900">
+		</FB>
+		<!-- Kanal-Schalter ueber OPC-UA: Remote-Schreibzugriff togglet E_T_FF_SWITCH
+		     genau wie ein physischer Tastendruck (drittes CLK-Ereignis neben
+		     Button_SWITCH.IND und E_PERMIT_DEFAULT.EO). Echo (aktueller Zustand)
+		     und Status (logiBUS_QD_PWM.QO, nur lesend) werden beide auf
+		     logiBUS_QD_PWM.CNF publiziert - demselben Ereignis, das bereits
+		     F_SEL_STATUS.REQ speist - damit kein Race zwischen Toggle-Event und
+		     Publish-Event entstehen kann (Q wird nur bei bereits abgeschlossenem
+		     Ausgabe-Zyklus gelesen, nicht direkt beim Klick-Event selbst). -->
+		<FB Name="AX_SUBSCRIBE_SWITCH" Type="adapter::net::AX_SUBSCRIBE_1" x="-15400" y="-1900">
+			<Parameter Name="QI" Value="TRUE"/>
+		</FB>
+		<FB Name="AX_X_TO_BOOL_SWITCH" Type="adapter::conversion::unidirectional::AX_X_TO_BOOL" x="-13700" y="-1900">
+		</FB>
+		<FB Name="AX_BOOL_TO_X_SWITCH" Type="adapter::conversion::unidirectional::AX_BOOL_TO_X" x="8500" y="-1200">
+		</FB>
+		<FB Name="AX_PUBLISH_SWITCH" Type="adapter::net::AX_PUBLISH_1" x="10200" y="-1200">
+			<Parameter Name="QI" Value="TRUE"/>
+		</FB>
+		<FB Name="AX_BOOL_TO_X_STATUS" Type="adapter::conversion::unidirectional::AX_BOOL_TO_X" x="8500" y="-2600">
+		</FB>
+		<FB Name="AX_PUBLISH_STATUS" Type="adapter::net::AX_PUBLISH_1" x="10200" y="-2600">
+			<Parameter Name="QI" Value="TRUE"/>
+		</FB>
 		<Comment Comment="Ja, gerechnet: 64255 × 8191 = 526.406.305. DINT (32-bit signed) geht bis 2.147.483.647 — der Zwischenwert nutzt nur ~25% des Wertebereichs, keine Überlauf-Gefahr." x="-1900" y="-3300" width="2000" height="600"/>
 		<EventConnections>
 			<Connection Source="NumericValue_Duty.IND" Destination="F_DWORD_TO_UDINT_VT.REQ" dx1="493.33"/>
@@ -121,19 +198,43 @@
 			<Connection Source="AR_SUBSCRIBE_1.INITO" Destination="AR_PUBLISH_1.INIT" dx1="7266.67">
 				<Attribute Name="Visible" Value="false"/>
 			</Connection>
+			<Connection Source="AR_PUBLISH_1.INITO" Destination="AX_SUBSCRIBE_SWITCH.INIT">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="AX_SUBSCRIBE_SWITCH.INITO" Destination="AX_PUBLISH_SWITCH.INIT">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="AX_PUBLISH_SWITCH.INITO" Destination="AX_PUBLISH_STATUS.INIT">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
 			<Connection Source="AR_R_TO_REAL_SUB.CNF" Destination="F_PERCENT_TO_FRACTION_SUB.REQ"/>
 			<Connection Source="F_PERCENT_TO_FRACTION_SUB.CNF" Destination="F_PWM_PERCENT_TO_RAW.REQ"/>
 			<Connection Source="F_PWM_PERCENT_TO_RAW.CNF" Destination="E_SPLIT_WEB.EI" dx1="140"/>
 			<Connection Source="E_SPLIT_WEB.EO1" Destination="E_RS_PV.S" dx1="1213.33"/>
 			<Connection Source="E_SPLIT_WEB.EO2" Destination="E_MERGE_SEL.EI2" dx1="393.33"/>
 			<Connection Source="E_MERGE_SEL.EO" Destination="F_SEL_PV.REQ"/>
-			<Connection Source="F_SEL_PV.CNF" Destination="RampLimitFS.LOAD" dx1="1513.33"/>
-			<Connection Source="Button_ZERO.IND" Destination="RampLimitFS.ZERO" dx1="5666.67"/>
-			<Connection Source="Button_DOWN_FAST.IND" Destination="RampLimitFS.DOWN_FAST" dx1="5786.67"/>
-			<Connection Source="Button_DOWN_SLOW.IND" Destination="RampLimitFS.DOWN_SLOW" dx1="5753.33"/>
-			<Connection Source="Button_UP_SLOW.IND" Destination="RampLimitFS.UP_SLOW" dx1="5693.33"/>
-			<Connection Source="Button_UP_FAST.IND" Destination="RampLimitFS.UP_FAST" dx1="5726.67"/>
-			<Connection Source="Button_FULL.IND" Destination="RampLimitFS.FULL" dx1="5813.33"/>
+			<Connection Source="F_SEL_PV.CNF" Destination="E_PERMIT_LOAD.EI" dx1="1513.33"/>
+			<Connection Source="E_PERMIT_LOAD.EO" Destination="RampLimitFS.LOAD"/>
+			<Connection Source="Button_ZERO.IND" Destination="E_PERMIT_ZERO.EI" dx1="5666.67"/>
+			<Connection Source="E_PERMIT_ZERO.EO" Destination="RampLimitFS.ZERO"/>
+			<Connection Source="Button_DOWN_FAST.IND" Destination="E_PERMIT_DOWN_FAST.EI" dx1="5786.67"/>
+			<Connection Source="E_PERMIT_DOWN_FAST.EO" Destination="RampLimitFS.DOWN_FAST"/>
+			<Connection Source="Button_DOWN_SLOW.IND" Destination="E_PERMIT_DOWN_SLOW.EI" dx1="5753.33"/>
+			<Connection Source="E_PERMIT_DOWN_SLOW.EO" Destination="RampLimitFS.DOWN_SLOW"/>
+			<Connection Source="Button_UP_SLOW.IND" Destination="E_PERMIT_UP_SLOW.EI" dx1="5693.33"/>
+			<Connection Source="E_PERMIT_UP_SLOW.EO" Destination="RampLimitFS.UP_SLOW"/>
+			<Connection Source="Button_UP_FAST.IND" Destination="E_PERMIT_UP_FAST.EI" dx1="5726.67"/>
+			<Connection Source="E_PERMIT_UP_FAST.EO" Destination="RampLimitFS.UP_FAST"/>
+			<Connection Source="Button_FULL.IND" Destination="E_PERMIT_FULL.EI" dx1="5813.33"/>
+			<Connection Source="E_PERMIT_FULL.EO" Destination="RampLimitFS.FULL"/>
+			<Connection Source="Button_SWITCH.IND" Destination="E_T_FF_SWITCH.CLK"/>
+			<Connection Source="INIT_SWITCH_DEFAULT.INITO" Destination="E_PERMIT_DEFAULT.EI"/>
+			<Connection Source="E_PERMIT_DEFAULT.EO" Destination="E_T_FF_SWITCH.CLK"/>
+			<Connection Source="AX_X_TO_BOOL_SWITCH.CNF" Destination="E_T_FF_SWITCH.CLK"/>
+			<Connection Source="logiBUS_QD_PWM.CNF" Destination="F_SEL_STATUS.REQ"/>
+			<Connection Source="logiBUS_QD_PWM.CNF" Destination="AX_BOOL_TO_X_SWITCH.REQ"/>
+			<Connection Source="logiBUS_QD_PWM.CNF" Destination="AX_BOOL_TO_X_STATUS.REQ"/>
+			<Connection Source="F_SEL_STATUS.CNF" Destination="Q_BackgroundColour_STATUS.REQ"/>
 			<Connection Source="RampLimitFS.CNF" Destination="F_MUL_TO_PWM13BIT.REQ" dx1="160"/>
 			<Connection Source="F_MUL_TO_PWM13BIT.CNF" Destination="F_MOVE.REQ"/>
 			<Connection Source="F_DIV_TO_PWM13BIT.CNF" Destination="F_DINT_TO_DWORD_OUT.REQ" dx1="466.67"/>
@@ -170,6 +271,24 @@
 			<Connection Source="u16ObjId_FULL" Destination="Button_FULL.u16ObjId" dx1="1600">
 				<Attribute Name="Visible" Value="false"/>
 			</Connection>
+			<Connection Source="u16ObjId_SWITCH" Destination="Button_SWITCH.u16ObjId" dx1="1600">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="u16ObjId_STATUS" Destination="Q_BackgroundColour_STATUS.u16ObjId" dx1="1600">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="bDefaultEnabled" Destination="E_PERMIT_DEFAULT.PERMIT" dx1="1600">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="E_T_FF_SWITCH.Q" Destination="E_PERMIT_ZERO.PERMIT"/>
+			<Connection Source="E_T_FF_SWITCH.Q" Destination="E_PERMIT_DOWN_FAST.PERMIT"/>
+			<Connection Source="E_T_FF_SWITCH.Q" Destination="E_PERMIT_DOWN_SLOW.PERMIT"/>
+			<Connection Source="E_T_FF_SWITCH.Q" Destination="E_PERMIT_UP_SLOW.PERMIT"/>
+			<Connection Source="E_T_FF_SWITCH.Q" Destination="E_PERMIT_UP_FAST.PERMIT"/>
+			<Connection Source="E_T_FF_SWITCH.Q" Destination="E_PERMIT_FULL.PERMIT"/>
+			<Connection Source="E_T_FF_SWITCH.Q" Destination="E_PERMIT_LOAD.PERMIT"/>
+			<Connection Source="logiBUS_QD_PWM.QO" Destination="F_SEL_STATUS.G"/>
+			<Connection Source="F_SEL_STATUS.OUT" Destination="Q_BackgroundColour_STATUS.u8Colour"/>
 			<Connection Source="Output" Destination="logiBUS_QD_PWM.Output" dx1="12266.67">
 				<Attribute Name="Visible" Value="false"/>
 			</Connection>
@@ -179,6 +298,17 @@
 			<Connection Source="ID_WRITE" Destination="AR_PUBLISH_1.ID" dx1="12266.67">
 				<Attribute Name="Visible" Value="false"/>
 			</Connection>
+			<Connection Source="ID_SWITCH_READ" Destination="AX_SUBSCRIBE_SWITCH.ID" dx1="1046.67">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="ID_SWITCH_WRITE" Destination="AX_PUBLISH_SWITCH.ID" dx1="12266.67">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="ID_STATUS_WRITE" Destination="AX_PUBLISH_STATUS.ID" dx1="12266.67">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="E_T_FF_SWITCH.Q" Destination="AX_BOOL_TO_X_SWITCH.OUT"/>
+			<Connection Source="logiBUS_QD_PWM.QO" Destination="AX_BOOL_TO_X_STATUS.OUT"/>
 			<Connection Source="NumericValue_Duty.IN" Destination="F_DWORD_TO_UDINT_VT.IN" dx1="493.33"/>
 			<Connection Source="F_DWORD_TO_UDINT_VT.OUT" Destination="F_UDINT_TO_DINT_VT.IN"/>
 			<Connection Source="F_UDINT_TO_DINT_VT.OUT" Destination="F_SEL_PV.IN0" dx1="2066.67"/>
@@ -200,7 +330,10 @@
 		</DataConnections>
 		<AdapterConnections>
 			<Connection Source="AR_SUBSCRIBE_1.OUT" Destination="AR_R_TO_REAL_SUB.AR_IN" dx1="513.33"/>
+			<Connection Source="AX_SUBSCRIBE_SWITCH.OUT" Destination="AX_X_TO_BOOL_SWITCH.AX_IN" dx1="513.33"/>
 			<Connection Source="AR_REAL_TO_R_PUB.AR_OUT" Destination="AR_PUBLISH_1.IN" dx1="360"/>
+			<Connection Source="AX_BOOL_TO_X_SWITCH.AX_OUT" Destination="AX_PUBLISH_SWITCH.IN" dx1="360"/>
+			<Connection Source="AX_BOOL_TO_X_STATUS.AX_OUT" Destination="AX_PUBLISH_STATUS.IN" dx1="360"/>
 		</AdapterConnections>
 	</SubAppNetwork>
 </SubAppType>
