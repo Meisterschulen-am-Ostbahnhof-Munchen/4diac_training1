@@ -75,6 +75,7 @@
 		<FB Name="F_DINT_TO_DWORD_OUT" Type="iec61131::conversion::F_DINT_TO_DWORD" x="-1600" y="-2200">
 		</FB>
 		<FB Name="logiBUS_QD_PWM" Type="logiBUS::io::DQ::logiBUS_QD_PWM" x="200" y="-2200">
+			<Parameter Name="QI" Value="TRUE"/>
 			<Parameter Name="PARAMS" Value="">
 				<Attribute Name="Visible" Value="false"/>
 			</Parameter>
@@ -106,7 +107,15 @@
 			<Connection Source="AR_R_TO_REAL_SUB.CNF" Destination="F_PERCENT_TO_FRACTION_SUB.REQ"/>
 			<Connection Source="F_PERCENT_TO_FRACTION_SUB.CNF" Destination="F_PWM_PERCENT_TO_RAW.REQ"/>
 			<Connection Source="F_PWM_PERCENT_TO_RAW.CNF" Destination="E_RS_PV.S" dx1="500"/>
-			<Connection Source="E_RS_PV.EO" Destination="F_SEL_PV.REQ" dx1="246.67"/>
+			<!-- E_RS's EO only fires on an actual Q transition, not on every S/R
+			     (e.g. repeated web writes while Q is already TRUE never re-fire it),
+			     so F_SEL_PV.REQ is fed directly from both sources instead - it must
+			     re-select+reload on every single update, not just on source changes.
+			     E_RS_PV.R/S still run first and update Q (the G selector) since
+			     each source's CNF also drives them directly, and FORTE executes a
+			     single event's multiple destination connections in declaration order. -->
+			<Connection Source="F_UDINT_TO_DINT_VT.CNF" Destination="F_SEL_PV.REQ" dx1="1646.67"/>
+			<Connection Source="F_PWM_PERCENT_TO_RAW.CNF" Destination="F_SEL_PV.REQ" dx1="246.67"/>
 			<Connection Source="F_SEL_PV.CNF" Destination="RampLimitFS.LOAD" dx1="1186.67"/>
 			<Connection Source="Button_ZERO.IND" Destination="RampLimitFS.ZERO" dx1="5666.67"/>
 			<Connection Source="Button_DOWN_FAST.IND" Destination="RampLimitFS.DOWN_FAST" dx1="5786.67"/>
