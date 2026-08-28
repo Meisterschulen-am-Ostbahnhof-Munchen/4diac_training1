@@ -85,6 +85,97 @@ VT-Projekt, Web-Client), damit Lernende beide Beispiele klar auseinanderhalten k
       (`PWM_Q01_READ/WRITE`..), VT-Skalierung (`0.0015560939` = 100/64255) und
       Web-Client-Knoten-IDs (`ns=1;s=PWM_Q01..12`) stimmen überein.
 
+### Gefunden beim Live-Test (noch zu fixen) 🔴
+
+- **Wertebereich-Architektur (Entscheidung noch am Reifen, Stand aktuell):**
+  Erst-Idee war, `RampLimitFS.VAL_FULL` von `64255` auf `8191` zu ändern
+  (weil Bargraph/CInputNumber im Test mit `0-8191` funktionierten, wie im
+  Referenzprojekt `Workspace_PWM`, Objekt 18000: `Min=0`/`Max=8191`).
+  **Korrigierte Richtung:** `RampLimitFS.VAL_FULL` bleibt `64255` — das ist
+  die korrekte J1939/ISO-11783-Konvention für ein 16-bit-Signal
+  (`VALID_SIGNAL_W = 0x0000-0xFAFF = 0-64255`, alles darüber wird laut
+  Protokoll ignoriert/ist reserviert; Quelle:
+  `C:\4diac\4diac-ide_3.3.0-win32.win32.x86_64_nightly_2026-08-26_2003_sp10\4diac-ide\typelibrary\signalprocessing-3.0.0\typelib\FIELDBUS_SIGNAL.gcf`).
+  Stattdessen kommt **eine zusätzliche Skalierungsstufe vor `logiBUS_QD_PWM`**
+  hinzu, die von `64255` auf den vom PWM-Ausgang tatsächlich erwarteten
+  Rohwertbereich (vermutlich `8191`, wie in `Workspace_PWM`) umrechnet.
+  Damit bleibt der Netzwerk-/RampLimitFS-Wert J1939-konform, und nur die
+  letzte Stufe vor der Hardware bekommt die geräteeigene Skalierung.
+  **Noch offen:** wie genau sich das zur VT-Anzeige (Bargraph/CInputNumber,
+  aktuell mit `Min=0`/`Max=8191`/`Scale=0.01220852` getestet) verhält — ob
+  die VT-Anzeige direkt am `64255`er RampLimitFS-Wert hängt (dann bräuchte
+  *sie* auch eine eigene 64255→8191-Umrechnung vor der Anzeige) oder ob sie
+  ohnehin schon über eine eigene Konvertierungsstufe läuft. Nicht selbst
+  entscheiden, sondern auf weitere Ansage warten.
+- **`logiBUS_QD_PWM` fehlt `TRUE` an `QI`** — der Ausgang bekommt dadurch
+  kein Enable/Init-Signal und funktioniert nicht. Muss verdrahtet werden.
+- **Zweites Eingabefeld (PWM-Rohwert) fehlt komplett** — pro Kanal soll es
+  neben dem Prozent-Zahlenfeld (mit Komma/Skalierung) noch ein zweites
+  Eingabefeld für den PWM-**Rohwert** geben (ganzzahlig, kein Komma/Scale=1),
+  wie im Referenzprojekt `Workspace_PWM`. In `Workspace_PWM12` ist aktuell
+  pro Kanal nur ein `CInputNumber` gebaut — das zweite Feld muss ergänzt
+  werden (eigenes `CInputNumber`-Objekt + CProxy + Verdrahtung).
+- **`E_RS_PV`-Event kommt nicht durch, sobald einmal `S` gesetzt wurde:**
+  Sobald `E_RS`s `Q`-Ausgang einmal auf `TRUE` steht (durch `S`), feuert das
+  `EO`-Ereignisausgang bei weiteren `S`-Events offenbar nicht mehr erneut
+  (Bistabile FBs lösen ihr Ausgangsevent typischerweise nur bei echtem
+  Zustandswechsel aus, nicht bei jedem `REQ`, wenn der Zustand schon steht).
+  Damit wird der nachgeschaltete `F_SEL.G` nie erneut getriggert, und keine
+  weiteren Werte von dieser Quelle laufen mehr durch den Mux —
+  der Zwei-Quellen-Merge auf `RampLimitFS.PV` "friert" nach dem ersten
+  `S`-Event ein. Betrifft das `E_RS`+`F_SEL`-Muster aus
+  `RampLimitFS_TO_logiBUS_QDA_PWM_OPC.SUB` (siehe Architektur-Entscheidungen
+  oben). Noch zu klären: anderer Bistabil-Baustein, oder zusätzliches
+  Re-Trigger-Event nötig, oder Muster grundsätzlich überdenken.
+  **Passendes Symptom:** VT→Web zieht den Web-Slider korrekt nach; Web→VT
+  (Slider ziehen) hat keine Wirkung — vermutlich dieselbe Ursache, da der
+  Web-Schreibpfad über `AR_SUBSCRIBE_1` genau den `E_RS_PV`-Zweig des Mux
+  benutzt und nach dem ersten erfolgreichen Durchlauf einfriert.
+
+### Layout-Redesign gewünscht (VT-Kanalzeile) 🎨
+
+- **Balkengrafik viel zu groß** — nimmt aktuell unverhältnismäßig viel Platz
+  weg (Stand: `Bargraph_PWM_Q0n` vertikal, 110×200px, 4 Kanäle als Spalten
+  pro Seite).
+- **Umstellung auf horizontales Layout:** Seite in **3 oder 4 Zeilen**
+  einteilen (nicht Spalten wie bisher) — je eine Zeile pro PWM-Kanal, alle
+  Bedienelemente eines Kanals horizontal nebeneinander in dieser Zeile.
+- **Balkengrafik horizontal, links-nach-rechts**, in genau dieser
+  Reihenfolge (identisch mit der ursprünglichen Button-Reihenfolge):
+  `0 -- - + ++ F` — also ganz links der `0`-Button, ganz rechts der
+  `F`-Button (Full), Balken füllt sich dazwischen von links (leer/0) nach
+  rechts (voll/F).
+- **Begründung/Workflow:** Drückt man rechts (Richtung `F`), bewegt sich der
+  Balken nach rechts (Wert steigt); drückt man links (Richtung `0`), bewegt
+  er sich nach links (Wert sinkt) — Button-Position und Balken-Bewegungsrichtung
+  stimmen dann visuell überein, das ist intuitiver als das bisherige
+  vertikale Layout.
+- Betrifft `Workspace_PWM12`s `DataMask_PWM1/2/3.jvi` (aktuelles Pro-Kanal-
+  Layout aus dem ursprünglichen Plan: Zahlenfeld + vertikaler Bargraph +
+  6 Tasten in 2×3-Raster) — kompletter Neuentwurf des Kanal-Layouts nötig,
+  nicht nur eine Anpassung.
+- **Screenshot-Bestätigung (`DataMask_PWM1.jvi`, 4-Spalten-Ansicht):** Zeigt
+  genau die beschriebenen Probleme visuell — die Prozent-Zahlenfelder
+  (Font `24x32`) laufen über die Spaltenbreite hinaus und überlappen sich
+  zu einer einzigen unlesbaren Zeile quer über alle 4 Kanäle
+  (`0 .0000.0000.0000.000`); darunter je ein großer leerer grauer
+  Rechteck-Platzhalter (vertikaler Bargraph, ~110×200px, nimmt den Großteil
+  der Spaltenhöhe ein); darunter die 6 Tasten aktuell im 2×3-Raster
+  (`0`/`F` oben, `-`/`+` Mitte, `--`/`++` unten) — bestätigt, dass die
+  Tasten noch nicht in der gewünschten horizontalen `0 -- - + ++ F`-Reihe
+  liegen.
+- **Schriftgröße:** `6x8` ist kaum lesbar, `24x32` ist so riesig, dass die
+  Zahlenfelder nicht mehr auseinanderzuhalten sind (siehe Screenshot). Eine
+  Zwischengröße ist nötig — z. B. aus Krauternters Font-Katalog (siehe
+  `Objekthierarchie`-Recherche oben): `12x16`, `16x16` oder `16x24` als
+  Kandidaten, noch nicht final entschieden.
+
+### Bestätigt funktionierend ✅ (Live-Test)
+
+- **Eingänge (I1-I8)** werden auf der VT korrekt angezeigt.
+- **`AR_SUBSCRIBE_1` vom Web-Schieberegler her** funktioniert — ein Wert, der
+  im Web-Client per Slider geschrieben wird, kommt im Composite an.
+
 ### Noch offen (nicht automatisiert prüfbar) ⚠️
 
 - **Reale Verifikation in ISO-Designer/4diac IDE** — alle Validierungen in dieser
