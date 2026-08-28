@@ -55,32 +55,48 @@ VT-Projekt, Web-Client), damit Lernende beide Beispiele klar auseinanderhalten k
       `F_FRACTION_TO_PERCENT.fbt`
 - [x] `Meins::InputOutputTester::Button_PWM_OPC_UA::SubStrings.gcf` (OPC-UA-Adressen
       für 12 PWM-Kanäle, Kategorie `PWM`)
-- [x] `Workspace_PWM12` als Kopie von `Workspace_DIDO` angelegt (nur Umbenennung,
-      **noch keine PWM-VT-Objekte**)
+- [x] `Meins::InputOutputTester::Button_PWM_OPC_UA::InputOutputTesterButton_PWM_OPC_UA.SUB`
+      — Top-Level-Composite: 8 unveränderte Eingänge (`logiBUS_IXA_BG_OPC`) + 12×
+      `RampLimitFS_TO_logiBUS_QDA_PWM_OPC` + `SystemTickSender` (21 Instanzen, 159
+      Imports, cross-validiert gegen beide GCF-Dateien)
+- [x] **Registrierung:** kein neues `Application`-Element nötig — dieses
+      Trainingssystem hat genau EINEN `Control`-Slot pro `System`, der per
+      "Change Type" (im 4diac IDE) auf den gewünschten Übungstyp umgeschaltet
+      wird (so wurde jede Uebung_* in dieser Session auch getestet). Die PWM-
+      Composite ist damit automatisch ein wählbares Ziel, ohne `test_AX.sys`
+      strukturell zu ändern.
+- [x] **VT-Objekte in `Workspace_PWM12`** — Container_Q (alte DIDO-Ausgabetasten)
+      entfernt, 3 neue `CDataMask`-Seiten (`DataMask_PWM1/2/3`, 4 Kanäle/Seite) +
+      `CSoftKeyMask` mit 4 Navigations-Softkeys (Eingänge/PWM1/PWM2/PWM3) gebaut.
+      Pro Kanal: `CInputNumber` + `CRectangle`(Bargraph-PropertySheet, Vorlage aus
+      `4diac_EasyExampleCounter`) + gemeinsame `CNumberVariable` + 6 `CButton`
+      (0/--/-/+/++/F, Label-Objekte geteilt über CProxy). Validiert: wohlgeformt,
+      keine doppelten IDs, keine hängenden Referenzen (256 Objekte, 4 `.jvi`-Dateien
+      neu, `DataMask_M1.jvi` bereinigt + `SoftKeyMask=4000` gesetzt).
+- [x] **GCF** `Uebungen::const::UT::PWM12::DefaultPool_PWM12.gcf` — von Hand
+      erzeugt, aber Eins-zu-eins aus denselben IDs wie im echten `.jop` (150
+      Konstanten, 100 % gegen die Pool-Objekte cross-validiert — kein
+      "OutputNumber_Tick"-Risiko, da hier keine IOP-Binärmanipulation im Spiel war,
+      sondern Pool und GCF im selben Zug konsistent erzeugt wurden).
+- [x] **Web-Client `apixon-pwm-client`** — Kopie von `apixon-diodo-client`, 12
+      Ausgänge als REAL-Slider+Zahlenfeld (0-100 %, Node-IDs `PWM_Q01..Q12`), 8
+      Eingänge unverändert. Build + 5/5 Tests grün.
+- [x] **Adressierungs-Konsistenz-Check** — SUB-`SubStrings.gcf`
+      (`PWM_Q01_READ/WRITE`..), VT-Skalierung (`0.0015560939` = 100/64255) und
+      Web-Client-Knoten-IDs (`ns=1;s=PWM_Q01..12`) stimmen überein.
 
-### Offen ❌
+### Noch offen (nicht automatisiert prüfbar) ⚠️
 
-1. **`Meins::InputOutputTester::Button_PWM_OPC_UA::InputOutputTesterButton_PWM_OPC_UA.SUB`**
-   — Top-Level-Composite: 8 unveränderte Eingänge (`logiBUS_IXA_BG_OPC`) + 12×
-   `RampLimitFS_TO_logiBUS_QDA_PWM_OPC` + `SystemTickSender`. Noch nicht gebaut.
-2. **Registrierung in `test_AX.sys`** — neue `Application`/`SubApp`-Zuordnung
-   (eigene Application, nicht `App_AX` wiederverwenden, damit DIDO/PWM unabhängig
-   testbar bleiben).
-3. **VT-Objekte in `Workspace_PWM12`** (größter offener Punkt): 3 neue
-   `CDataMask`-Seiten (4 Kanäle/Seite), pro Kanal `CInputNumber` + `CRectangle`
-   (Bargraph-PropertySheet) + gemeinsame `CNumberVariable` + 6 `CButton`
-   (0/--/-/+/++/F), `CSoftKeyMask` mit 3 Navigations-Softkeys
-   (`isobus::UT::io::Softkey::Softkey_IE` → `isobus::UT::Q::Q_ActiveMask`, Muster
-   aus `test_B/Uebungen/Uebung_019b.SUB`). ID-Bereiche siehe ursprünglicher Plan.
-4. **GCF-Regenerierung** `Uebungen::const::UT::PWM12::DefaultPool_PWM12.gcf` — erst
-   nach Punkt 3 möglich (wird aus dem echten `.jop` generiert, nicht von Hand
-   vorgeschrieben — siehe Lehre aus `OutputNumber_Tick` im DIDO-Beispiel).
-5. **Web-Client `apixon-pwm-client`** — Kopie von `apixon-diodo-client`, 12
-   Ausgänge als REAL-Slider/Zahlenfeld (0-100 %) statt Bool-Toggle, 8 Eingänge
-   unverändert. `DataType.Float` vs `Double` für OPC-UA REAL empirisch prüfen,
-   nicht annehmen.
-6. **Adressierungs-Konsistenz-Check** — SUB-`SubStrings.gcf`, VT-Skalierung und
-   Web-Client-Knoten-ID-Strings müssen am Ende übereinstimmen.
+- **Reale Verifikation in ISO-Designer/4diac IDE** — alle Validierungen in dieser
+  Session waren strukturell (wohlgeformt, keine dangling refs, keine doppelten
+  IDs). Der eigentliche Test (Pool öffnen, kompilieren, "Change Type" auf die
+  PWM-Composite, echte Hardware) steht noch aus.
+- **`DataType.Float` vs `Double`** für OPC-UA REAL im Web-Client — Annahme
+  `Float` (korrekte 32-Bit-IEC-61499-REAL-Zuordnung), noch nicht gegen echtes
+  FORTE verifiziert (Kommentar im Code hinterlassen).
+- **RampLimitFS-Abhängigkeit** — referenziert weiterhin extern
+  (`eclipse4diac::signalprocessing::RampLimitFS`, Nightly-Build), wie mit dem
+  Nutzer abgestimmt (spezifische IDE wird den Lernenden bereitgestellt).
 
 ## Kritische Dateien
 
