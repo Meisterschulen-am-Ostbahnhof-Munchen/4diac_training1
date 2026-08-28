@@ -30,7 +30,7 @@ const unsigned long ISO_OP_MEMORY_CLASS isoOP_DefaultPool_Offset[] = {
 	   548,  // Button_I08_Offset
 	   567,  // OutputString_WorkingSet_0_Offset
 	   596,  // OutputNumber_12000_Offset
-	   625,  // OutputNumber_12001_Offset
+	   625,  // OutputNumber_c1_Offset
 	   654,  // OutputNumber_12002_Offset
 	   683,  // OutputNumber_12003_Offset
 	   712,  // OutputNumber_12004_Offset
@@ -42,13 +42,13 @@ const unsigned long ISO_OP_MEMORY_CLASS isoOP_DefaultPool_Offset[] = {
 	   886,  // OutputNumber_12010_Offset
 	   915,  // OutputNumber_12011_Offset
 	   944,  // OutputNumber_12012_Offset
-	   973,  // OutputNumber_12013_Offset
-	  1002,  // OutputNumber_12014_Offset
-	  1031,  // OutputNumber_12015_Offset
-	  1060,  // OutputNumber_12016_Offset
-	  1089,  // OutputNumber_12017_Offset
-	  1118,  // OutputNumber_12018_Offset
-	  1147,  // OutputNumber_12019_Offset
+	   973,  // OutputNumber_c2_Offset
+	  1002,  // OutputNumber_c3_Offset
+	  1031,  // OutputNumber_c4_Offset
+	  1060,  // OutputNumber_c5_Offset
+	  1089,  // OutputNumber_c6_Offset
+	  1118,  // OutputNumber_c7_Offset
+	  1147,  // OutputNumber_c8_Offset
 	  1176,  // OutputNumber_Tick_Offset
 	  1205,  // Logos_icon_Offset
 	  1734,  // FontAttributes_6x8_Offset

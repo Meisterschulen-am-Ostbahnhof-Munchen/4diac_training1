@@ -131,13 +131,13 @@ const unsigned long ISO_OP_MEMORY_CLASS isoOP_DefaultPool_Offset[] = {
 	  3244,  // Label_Q11_Offset
 	  3264,  // Label_Q12_Offset
 	  3284,  // OutputNumber_c1_Offset
-	  3313,  // OutputNumber_12013_Offset
-	  3342,  // OutputNumber_12014_Offset
-	  3371,  // OutputNumber_12015_Offset
-	  3400,  // OutputNumber_12016_Offset
-	  3429,  // OutputNumber_12017_Offset
-	  3458,  // OutputNumber_12018_Offset
-	  3487,  // OutputNumber_12019_Offset
+	  3313,  // OutputNumber_c2_Offset
+	  3342,  // OutputNumber_c3_Offset
+	  3371,  // OutputNumber_c4_Offset
+	  3400,  // OutputNumber_c5_Offset
+	  3429,  // OutputNumber_c6_Offset
+	  3458,  // OutputNumber_c7_Offset
+	  3487,  // OutputNumber_c8_Offset
 	  3516,  // OutputNumber_Tick_Offset
 	  3545,  // Bargraph_PWM_Q01_Offset
 	  3569,  // Bargraph_PWM_Q02_Offset
