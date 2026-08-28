@@ -1,0 +1,172 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SubAppType Name="RampLimitFS_TO_logiBUS_QDA_PWM_OPC" Comment="Ein PWM-Kanal (0-100% Duty): VT-Zahlenfeld+Balkengrafik+6 Ramp-Tasten, physischer PWM-Ausgang, OPC-UA Publish/Subscribe (generisch, ein Kanal)">
+	<Identification Standard="61499-2" Description="Copyright (c) 2026 Meisterschulen am Ostbahnhof  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0">
+	</Identification>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2026-08-28" Remarks="initial API and implementation and/or initial documentation">
+	</VersionInfo>
+	<CompilerInfo packageName="MyLib::sys">
+		<Import declaration="isobus::UT::Q::const::IDs::ID_NULL"/>
+		<Import declaration="logiBUS::io::DQ::logiBUS_DO"/>
+		<Import declaration="logiBUS::io::DQ::logiBUS_DO_S"/>
+		<Import declaration="isobus::UT::io::Button::ButtonActivationCode::BT_PRESSED_LATCHED"/>
+	</CompilerInfo>
+	<SubAppInterfaceList>
+		<InputVars>
+			<VarDeclaration Name="u16ObjId_INPUT" Type="UINT" Comment="Object ID CInputNumber (Duty-Eingabe/-Anzeige, roh 0..64255 = 0.000-100.000%)" InitialValue="ID_NULL"/>
+			<VarDeclaration Name="u16ObjId_VALUEVAR" Type="UINT" Comment="Object ID CNumberVariable (Prozent 0-100, gemeinsam gebunden an Balkengrafik und CInputNumber-Anzeige)" InitialValue="ID_NULL"/>
+			<VarDeclaration Name="u16ObjId_ZERO" Type="UINT" Comment="Object ID Taste &apos;0&apos; (RampLimitFS.ZERO)" InitialValue="ID_NULL"/>
+			<VarDeclaration Name="u16ObjId_DOWN_FAST" Type="UINT" Comment="Object ID Taste &apos;--&apos; (RampLimitFS.DOWN_FAST, ~10%)" InitialValue="ID_NULL"/>
+			<VarDeclaration Name="u16ObjId_DOWN_SLOW" Type="UINT" Comment="Object ID Taste &apos;-&apos; (RampLimitFS.DOWN_SLOW, ~1%)" InitialValue="ID_NULL"/>
+			<VarDeclaration Name="u16ObjId_UP_SLOW" Type="UINT" Comment="Object ID Taste &apos;+&apos; (RampLimitFS.UP_SLOW, ~1%)" InitialValue="ID_NULL"/>
+			<VarDeclaration Name="u16ObjId_UP_FAST" Type="UINT" Comment="Object ID Taste &apos;++&apos; (RampLimitFS.UP_FAST, ~10%)" InitialValue="ID_NULL"/>
+			<VarDeclaration Name="u16ObjId_FULL" Type="UINT" Comment="Object ID Taste &apos;F&apos; (RampLimitFS.FULL, 100%)" InitialValue="ID_NULL"/>
+			<VarDeclaration Name="Output" Type="logiBUS::io::DQ::logiBUS_DO_S" Comment="Identify the PWM Output Output_Q1..Q12" InitialValue="logiBUS_DO::Invalid"/>
+			<VarDeclaration Name="ID_READ" Type="WSTRING" Comment="Remote-Sollwert-Adresse (Prozent REAL, ACTION=SUBSCRIBE)"/>
+			<VarDeclaration Name="ID_WRITE" Type="WSTRING" Comment="Echo-Ruckmelde-Adresse (Prozent REAL, ACTION=PUBLISH)"/>
+		</InputVars>
+	</SubAppInterfaceList>
+	<SubAppNetwork>
+		<FB Name="NumericValue_Duty" Type="isobus::UT::io::NumericValue::NumericValue_ID" x="-9600" y="-2200">
+			<Parameter Name="QI" Value="TRUE"/>
+		</FB>
+		<FB Name="F_DWORD_TO_UDINT_VT" Type="iec61131::conversion::F_DWORD_TO_UDINT" x="-7600" y="-2200">
+		</FB>
+		<FB Name="F_UDINT_TO_DINT_VT" Type="iec61131::conversion::F_UDINT_TO_DINT" x="-6000" y="-2200">
+		</FB>
+		<FB Name="AR_SUBSCRIBE_1" Type="adapter::net::AR_SUBSCRIBE_1" x="-9600" y="-900">
+			<Parameter Name="QI" Value="TRUE"/>
+		</FB>
+		<FB Name="AR_R_TO_REAL_SUB" Type="adapter::conversion::unidirectional::AR_R_TO_REAL" x="-7600" y="-800">
+		</FB>
+		<FB Name="F_PERCENT_TO_FRACTION_SUB" Type="logiBUS::signalprocessing::fieldbus::F_PERCENT_TO_FRACTION" x="-6000" y="-800">
+		</FB>
+		<SubApp Name="F_PWM_PERCENT_TO_RAW" Type="MyLib::sys::F_PWM_PERCENT_TO_RAW" x="-4400" y="-800">
+		</SubApp>
+		<FB Name="RampLimitFS" Type="eclipse4diac::signalprocessing::RampLimitFS" x="-2800" y="-1500">
+			<Parameter Name="VAL_ZERO" Value="DINT#0"/>
+			<Parameter Name="SLOW" Value="DINT#643"/>
+			<Parameter Name="FAST" Value="DINT#6426"/>
+			<Parameter Name="VAL_FULL" Value="DINT#64255"/>
+		</FB>
+		<FB Name="Button_ZERO" Type="isobus::UT::io::Button::Button_IE" x="-9600" y="-100">
+			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="InputEvent" Value="BT_PRESSED_LATCHED"/>
+		</FB>
+		<FB Name="Button_DOWN_FAST" Type="isobus::UT::io::Button::Button_IE" x="-9600" y="900">
+			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="InputEvent" Value="BT_PRESSED_LATCHED"/>
+		</FB>
+		<FB Name="Button_DOWN_SLOW" Type="isobus::UT::io::Button::Button_IE" x="-9600" y="1900">
+			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="InputEvent" Value="BT_PRESSED_LATCHED"/>
+		</FB>
+		<FB Name="Button_UP_SLOW" Type="isobus::UT::io::Button::Button_IE" x="-9600" y="2900">
+			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="InputEvent" Value="BT_PRESSED_LATCHED"/>
+		</FB>
+		<FB Name="Button_UP_FAST" Type="isobus::UT::io::Button::Button_IE" x="-9600" y="3900">
+			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="InputEvent" Value="BT_PRESSED_LATCHED"/>
+		</FB>
+		<FB Name="Button_FULL" Type="isobus::UT::io::Button::Button_IE" x="-9600" y="4900">
+			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="InputEvent" Value="BT_PRESSED_LATCHED"/>
+		</FB>
+		<FB Name="F_DINT_TO_DWORD_OUT" Type="iec61131::conversion::F_DINT_TO_DWORD" x="-1600" y="-2200">
+		</FB>
+		<FB Name="logiBUS_QD_PWM" Type="logiBUS::io::DQ::logiBUS_QD_PWM" x="200" y="-2200">
+			<Parameter Name="PARAMS" Value="">
+				<Attribute Name="Visible" Value="false"/>
+			</Parameter>
+		</FB>
+		<FB Name="F_DINT_TO_UDINT_DISP" Type="iec61131::conversion::F_DINT_TO_UDINT" x="-1600" y="-800">
+		</FB>
+		<FB Name="Q_NumericValue" Type="isobus::UT::Q::Q_NumericValue" x="200" y="-800">
+		</FB>
+		<SubApp Name="F_PWM_RAW_TO_PERCENT" Type="MyLib::sys::F_PWM_RAW_TO_PERCENT" x="-1600" y="600">
+		</SubApp>
+		<FB Name="F_FRACTION_TO_PERCENT_PUB" Type="logiBUS::signalprocessing::fieldbus::F_FRACTION_TO_PERCENT" x="0" y="600">
+		</FB>
+		<FB Name="AR_REAL_TO_R_PUB" Type="adapter::conversion::unidirectional::AR_REAL_TO_R" x="1600" y="600">
+		</FB>
+		<FB Name="AR_PUBLISH_1" Type="adapter::net::AR_PUBLISH_1" x="3200" y="600">
+			<Parameter Name="QI" Value="TRUE"/>
+		</FB>
+		<EventConnections>
+			<Connection Source="NumericValue_Duty.IND" Destination="F_DWORD_TO_UDINT_VT.REQ" dx1="493.33"/>
+			<Connection Source="F_DWORD_TO_UDINT_VT.CNF" Destination="F_UDINT_TO_DINT_VT.REQ"/>
+			<Connection Source="F_UDINT_TO_DINT_VT.CNF" Destination="RampLimitFS.LOAD" dx1="1933.33"/>
+			<Connection Source="AR_SUBSCRIBE_1.INITO" Destination="AR_PUBLISH_1.INIT" dx1="7266.67">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="AR_R_TO_REAL_SUB.CNF" Destination="F_PERCENT_TO_FRACTION_SUB.REQ"/>
+			<Connection Source="F_PERCENT_TO_FRACTION_SUB.CNF" Destination="F_PWM_PERCENT_TO_RAW.REQ"/>
+			<Connection Source="F_PWM_PERCENT_TO_RAW.CNF" Destination="RampLimitFS.LOAD" dx1="100"/>
+			<Connection Source="Button_ZERO.IND" Destination="RampLimitFS.ZERO" dx1="5666.67"/>
+			<Connection Source="Button_DOWN_FAST.IND" Destination="RampLimitFS.DOWN_FAST" dx1="5786.67"/>
+			<Connection Source="Button_DOWN_SLOW.IND" Destination="RampLimitFS.DOWN_SLOW" dx1="5753.33"/>
+			<Connection Source="Button_UP_SLOW.IND" Destination="RampLimitFS.UP_SLOW" dx1="5693.33"/>
+			<Connection Source="Button_UP_FAST.IND" Destination="RampLimitFS.UP_FAST" dx1="5726.67"/>
+			<Connection Source="Button_FULL.IND" Destination="RampLimitFS.FULL" dx1="5813.33"/>
+			<Connection Source="RampLimitFS.CNF" Destination="F_DINT_TO_DWORD_OUT.REQ" dx1="160"/>
+			<Connection Source="RampLimitFS.CNF" Destination="F_DINT_TO_UDINT_DISP.REQ" dx1="160"/>
+			<Connection Source="RampLimitFS.CNF" Destination="F_PWM_RAW_TO_PERCENT.REQ" dx1="160"/>
+			<Connection Source="F_DINT_TO_DWORD_OUT.CNF" Destination="logiBUS_QD_PWM.REQ" dx1="393.33"/>
+			<Connection Source="F_DINT_TO_UDINT_DISP.CNF" Destination="Q_NumericValue.REQ" dx1="393.33"/>
+			<Connection Source="F_PWM_RAW_TO_PERCENT.CNF" Destination="F_FRACTION_TO_PERCENT_PUB.REQ"/>
+			<Connection Source="F_FRACTION_TO_PERCENT_PUB.CNF" Destination="AR_REAL_TO_R_PUB.REQ"/>
+		</EventConnections>
+		<DataConnections>
+			<Connection Source="u16ObjId_INPUT" Destination="NumericValue_Duty.u16ObjId" dx1="1600">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="u16ObjId_VALUEVAR" Destination="Q_NumericValue.u16ObjId" dx1="12266.67">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="u16ObjId_ZERO" Destination="Button_ZERO.u16ObjId" dx1="1600">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="u16ObjId_DOWN_FAST" Destination="Button_DOWN_FAST.u16ObjId" dx1="1600">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="u16ObjId_DOWN_SLOW" Destination="Button_DOWN_SLOW.u16ObjId" dx1="1600">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="u16ObjId_UP_SLOW" Destination="Button_UP_SLOW.u16ObjId" dx1="1600">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="u16ObjId_UP_FAST" Destination="Button_UP_FAST.u16ObjId" dx1="1600">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="u16ObjId_FULL" Destination="Button_FULL.u16ObjId" dx1="1600">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="Output" Destination="logiBUS_QD_PWM.Output" dx1="12266.67">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="ID_READ" Destination="AR_SUBSCRIBE_1.ID" dx1="1600">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="ID_WRITE" Destination="AR_PUBLISH_1.ID" dx1="12266.67">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="NumericValue_Duty.IN" Destination="F_DWORD_TO_UDINT_VT.IN" dx1="493.33"/>
+			<Connection Source="F_DWORD_TO_UDINT_VT.OUT" Destination="F_UDINT_TO_DINT_VT.IN"/>
+			<Connection Source="F_UDINT_TO_DINT_VT.OUT" Destination="RampLimitFS.PV" dx1="1906.67"/>
+			<Connection Source="AR_R_TO_REAL_SUB.IN" Destination="F_PERCENT_TO_FRACTION_SUB.rPercent"/>
+			<Connection Source="F_PERCENT_TO_FRACTION_SUB.rFraction" Destination="F_PWM_PERCENT_TO_RAW.IN"/>
+			<Connection Source="F_PWM_PERCENT_TO_RAW.OUT" Destination="RampLimitFS.PV" dx1="73.33"/>
+			<Connection Source="RampLimitFS.OUT" Destination="F_DINT_TO_DWORD_OUT.IN" dx1="193.33"/>
+			<Connection Source="RampLimitFS.OUT" Destination="F_DINT_TO_UDINT_DISP.IN" dx1="193.33"/>
+			<Connection Source="RampLimitFS.OUT" Destination="F_PWM_RAW_TO_PERCENT.IN" dx1="126.67"/>
+			<Connection Source="F_DINT_TO_DWORD_OUT.OUT" Destination="logiBUS_QD_PWM.OUT" dx1="393.33"/>
+			<Connection Source="F_DINT_TO_UDINT_DISP.OUT" Destination="Q_NumericValue.u32NewValue" dx1="393.33"/>
+			<Connection Source="F_PWM_RAW_TO_PERCENT.OUT" Destination="F_FRACTION_TO_PERCENT_PUB.rFraction"/>
+			<Connection Source="F_FRACTION_TO_PERCENT_PUB.rPercent" Destination="AR_REAL_TO_R_PUB.OUT"/>
+		</DataConnections>
+		<AdapterConnections>
+			<Connection Source="AR_SUBSCRIBE_1.OUT" Destination="AR_R_TO_REAL_SUB.AR_IN" dx1="513.33"/>
+			<Connection Source="AR_REAL_TO_R_PUB.AR_OUT" Destination="AR_PUBLISH_1.IN" dx1="360"/>
+		</AdapterConnections>
+	</SubAppNetwork>
+</SubAppType>
