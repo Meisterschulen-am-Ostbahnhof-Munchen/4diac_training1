@@ -39,6 +39,7 @@
             max="100"
             step="0.1"
             v-model.number="outputs[n - 1]"
+            @input="writeOutputThrottled(n)"
             @change="writeOutput(n)"
           />
           <input
@@ -168,6 +169,20 @@ async function connect() {
     status.value = 'Fehler: ' + (err as Error).message
     connected.value = false
   }
+}
+
+/* Leading-edge throttle while dragging the slider, so the PWM value updates live
+ * without flooding the OPC-UA write channel; @change still fires one final,
+ * unthrottled write on mouse-up to guarantee the committed value is sent. */
+const THROTTLE_MS = 150
+const throttleTimers: (ReturnType<typeof setTimeout> | null)[] = Array(12).fill(null)
+
+function writeOutputThrottled(n: number) {
+  if (throttleTimers[n - 1]) return
+  writeOutput(n)
+  throttleTimers[n - 1] = setTimeout(() => {
+    throttleTimers[n - 1] = null
+  }, THROTTLE_MS)
 }
 
 async function writeOutput(n: number) {
