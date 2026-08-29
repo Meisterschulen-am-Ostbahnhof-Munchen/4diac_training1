@@ -110,6 +110,39 @@ VT-Projekt, Web-Client), damit Lernende beide Beispiele klar auseinanderhalten k
   (dessen `INIT`-With-Liste enthält `QI`). Validiert: wohlgeformt, keine
   verwaisten Verbindungsziele, `grep E_PERMIT` liefert 0 Treffer.
 
+### Gefunden beim Live-Test (2026-08-29) — noch offen 🔴
+
+- **`logiBUS_QD_PWM.QO` kommt zwar korrekt TRUE/FALSE, aber der Status
+  (Hintergrundfarbe / Web-UI-LED) aktualisiert sich nicht zuverlässig.**
+  Vom Nutzer selbst diagnostiziert: **`logiBUS_QD_PWM` schickt bei `.INIT`
+  nur `INITO`, nicht `CNF`.** Die aktuelle Verdrahtung
+  (`F_XOR_ENABLED.CNF -> logiBUS_QD_PWM.INIT`, dann
+  `logiBUS_QD_PWM.CNF -> F_SEL_OK_FAULT.REQ` / `-> AX_BOOL_TO_X_STATUS.REQ`)
+  geht fälschlich davon aus, dass das `INIT`-Event auch `CNF` auslöst — tut
+  es aber nicht, nur `INITO`. Die Status-/Web-Kette hängt also weiterhin nur
+  am regulären `REQ`/`CNF`-Zyklus (ausgelöst durch `RampLimitFS`-Events),
+  nicht am Schalter-Toggle selbst. **Nur notiert, noch nicht angefasst** —
+  der Nutzer testet weiter. Vermutlich muss zusätzlich `logiBUS_QD_PWM.INITO`
+  (statt/neben `.CNF`) die Status-Kette (`F_SEL_OK_FAULT.REQ`,
+  `AX_BOOL_TO_X_STATUS.REQ`) anstoßen — Detailanalyse steht noch aus.
+- **`AX_SUBSCRIBE_SWITCH` empfängt korrekt TRUE/FALSE vom OPC-UA-Schreib-
+  zugriff, aber der empfangene Wert selbst wird nirgends verwendet.** Die
+  aktuelle Verdrahtung nutzt nur `AX_X_TO_BOOL_SWITCH.CNF` (das reine
+  Ereignis "es wurde geschrieben"), um `E_T_FF_SWITCH.CLK` auszulösen — ein
+  blindes Toggle, das den tatsächlich geschriebenen Bool-Wert
+  (`AX_X_TO_BOOL_SWITCH.OUT`) komplett ignoriert (so auch schon im
+  Vue-Client-Kommentar dokumentiert: "togglet den Kanal, unabhängig vom
+  übertragenen Wert selbst"). Vom Nutzer beim Live-Test beobachtet: **gerade
+  zufällig invertiert** — d.h. ob ein externer OPC-UA-Schreibzugriff mit
+  TRUE/FALSE am Ende den erwarteten Kanalzustand ergibt, hängt rein vom
+  Zufall der aktuellen Parität mit `E_T_FF_SWITCH.Q` ab, nicht von der
+  tatsächlichen Absicht des Schreibzugriffs. **Nur notiert, noch nicht
+  angefasst** — der Nutzer testet weiter. Vermutlich muss der Enable-Zustand
+  bei externem Schreibzugriff auf den tatsächlich geschriebenen Wert gesetzt
+  werden (statt getoggelt), z.B. über `AX_X_TO_BOOL_SWITCH.OUT` als weiteren
+  XOR-Operanden oder eine direkte Set/Reset-Logik statt `E_T_FF` für diesen
+  Pfad — Detailanalyse steht noch aus.
+
 ### Gefunden beim Live-Test — behoben ✅
 
 - **Wertebereich-Architektur — entschieden und umgesetzt:** `RampLimitFS.VAL_FULL`
