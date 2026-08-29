@@ -423,6 +423,7 @@ span {
   padding: 0.6rem 0.75rem;
   border-radius: 8px;
   background: #0d0d1a;
+  min-width: 0;
 }
 
 .pwm-label {
