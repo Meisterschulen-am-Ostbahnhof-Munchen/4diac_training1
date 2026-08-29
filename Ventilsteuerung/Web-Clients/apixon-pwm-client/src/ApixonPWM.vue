@@ -59,7 +59,11 @@
           >
             <span class="pwm-switch-knob"></span>
           </button>
-          <div class="led led-small" :class="{ on: channelStatus[n - 1] }" title="Kanal-Status (QO)"></div>
+          <div
+            class="led led-small"
+            :class="channelColorClass(n)"
+            :title="channelStatusTitle(n)"
+          ></div>
         </div>
       </div>
     </section>
@@ -100,6 +104,21 @@ const statusClass = computed(() => {
   if (status.value.startsWith('Fehler')) return 'red'
   return 'yellow'
 })
+
+/* Kanal-Farbe wie auf der ISOBUS-VT (F_SEL_OK_FAULT -> F_SEL_STATUS):
+ * deaktiviert (SWITCH=FALSE) -> WEISS, unabhaengig vom STATUS-Bit;
+ * aktiviert -> GRUEN (STATUS/QO=TRUE, ok) oder ROT (QO=FALSE, gestoert).
+ * Ein einzelnes Bool (STATUS allein) kann diese 3 Zustaende nicht codieren -
+ * beide bereits vorhandenen Nodes (SWITCH + STATUS) muessen kombiniert werden. */
+function channelColorClass(n: number): string {
+  if (!channelSwitches.value[n - 1]) return 'white'
+  return channelStatus.value[n - 1] ? 'on' : 'red'
+}
+
+function channelStatusTitle(n: number): string {
+  if (!channelSwitches.value[n - 1]) return 'Kanal deaktiviert'
+  return channelStatus.value[n - 1] ? 'Kanal aktiv, OK' : 'Kanal aktiv, Störung'
+}
 
 let client: any = null
 let session: any = null
@@ -401,6 +420,16 @@ section {
   background: #4caf50;
   border-color: #81c784;
   box-shadow: 0 0 10px #4caf50, 0 0 20px #4caf5066;
+}
+.led.red {
+  background: #f44336;
+  border-color: #ff8a80;
+  box-shadow: 0 0 10px #f44336, 0 0 20px #f4433666;
+}
+.led.white {
+  background: #e0e0e0;
+  border-color: #fff;
+  box-shadow: 0 0 8px #ffffff88;
 }
 
 span {
