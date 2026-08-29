@@ -85,6 +85,31 @@ VT-Projekt, Web-Client), damit Lernende beide Beispiele klar auseinanderhalten k
       (`PWM_Q01_READ/WRITE`..), VT-Skalierung (`0.0015560939` = 100/64255) und
       Web-Client-Knoten-IDs (`ns=1;s=PWM_Q01..12`) stimmen überein.
 
+### Gefunden beim Live-Test — behoben ✅ (Kanal-Schalter neu entworfen, PERMIT-frei)
+
+- **`logiBUS_QD_PWM`-Anbindung des Kanal-Schalters entsprach NICHT dem
+  Muster aus `Uebung_094a`, und die 7× `E_PERMIT`-Gates waren gar nicht
+  verlangt** — beides vom Nutzer nach dem Live-Test explizit zurückgemeldet
+  ("der QD_PWM Baustein ist mitnichten so angebunden wie in der Übung 094a";
+  "irgendwie hast du mit PERMIT um dich geworfen, war nicht verlangt"; auf
+  Nachfrage klargestellt: "nein, nicht 1 Permit war verlangt. Gar keines" —
+  `Uebung_094a` ist explizit das Beispiel für "QI anstelle Permit", nicht nur
+  ein weniger extremes PERMIT-Beispiel).
+- **Neuentwurf in `RampLimitFS_TO_logiBUS_QDA_PWM_OPC.SUB` (2026-08-28):**
+  alle `E_PERMIT_*`-Gates entfernt, `Button_X.IND`/`F_SEL_PV.CNF` wieder
+  direkt an `RampLimitFS` verdrahtet (wie vor dem Feature). Neu:
+  `F_XOR_ENABLED` (`iec61131::bitwiseOperators::F_XOR`) berechnet
+  `bEnabled = bDefaultEnabled XOR E_T_FF_SWITCH.Q` und speist
+  `logiBUS_QD_PWM.QI` direkt als Datenverbindung (kein Parameter mehr) —
+  exakt das `E_T_FF.Q -> DigitalInput_I1.QI`-Muster aus `Uebung_094a`, nur
+  mit einem zwischengeschalteten XOR, weil `E_T_FF` selbst keinen
+  Seed-Mechanismus für einen anderen Startwert als FALSE hat.
+  `INIT_ENABLED.INITO` (einmalig beim Deployment) und `E_T_FF_SWITCH.EO`
+  (bei jedem Toggle) stoßen `F_XOR_ENABLED.REQ` an; `F_XOR_ENABLED.CNF`
+  feuert `logiBUS_QD_PWM.INIT`, damit der neue `QI`-Wert re-gelatcht wird
+  (dessen `INIT`-With-Liste enthält `QI`). Validiert: wohlgeformt, keine
+  verwaisten Verbindungsziele, `grep E_PERMIT` liefert 0 Treffer.
+
 ### Gefunden beim Live-Test — behoben ✅
 
 - **Wertebereich-Architektur — entschieden und umgesetzt:** `RampLimitFS.VAL_FULL`
