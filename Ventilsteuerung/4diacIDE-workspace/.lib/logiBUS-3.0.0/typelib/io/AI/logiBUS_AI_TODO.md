@@ -52,17 +52,15 @@ konsistent mit einem nativen 0-4095-Eingangsbereich.
 ### Noch zu erledigen (im Baustein + in der Doku festhalten)
 
 1. ~~Realen Wert bestätigen~~ ✅ erledigt (siehe oben).
-2. **Im Baustein dokumentieren:** `Identification`/`Comment` von
+2. ~~**Im Baustein dokumentieren:** `Identification`/`Comment` von
    `logiBUS_AI_ID.fbt` und `logiBUS_AI_IDA.fbt` um den Wertebereich
    `IN = 0-4095 (12 bit, fix, kein Auswahlspielraum im Continuous-Mode)`
-   ergänzen (analog zu anderen Bausteinen in diesem Repo, die ihren
-   Wertebereich explizit nennen, z.B.
-   `eclipse4diac::signalprocessing::FIELDBUS_SIGNAL::VALID_SIGNAL_W`).
-3. **In der Hardware-Doku ergänzen:**
-   `C:\git2\ms\visual-programming-languages-docs\docs\de\hw\logiBUS\APIXON_Node-ISO_20.md`,
-   Abschnitt "Analoge Eingänge" — Vollausschlag-Rohwert (0-4095, 12 bit,
-   ESP32-P4-ADC-Continuous-Mode-Fixwert) pro Kanal ergänzen (aktuell nur
-   Pin-Zuordnung + ADC-Kanal-Namen, kein Wertebereich).
+   ergänzen~~ ✅ erledigt (siehe Änderungshistorie).
+3. ~~**In der Hardware-Doku ergänzen:** `APIXON_Node-ISO_20.md`, Abschnitt
+   "Analoge Eingänge" — Vollausschlag-Rohwert ergänzen~~ ✅ erledigt (siehe
+   Änderungshistorie).
+
+**Alle Punkte erledigt ✅ — TODO abgeschlossen.**
 
 ## Änderungshistorie
 
@@ -72,3 +70,12 @@ konsistent mit einem nativen 0-4095-Eingangsbereich.
 - Roh-Vollausschlag bestätigt (0-4095, 12 bit, fix) über ESP-IDF-Quellcode
   (`soc_caps.h`) und den echten Firmware-Treiber
   (`IOHandleESP32AnalogIN.cpp`) in `C:\git\hr\LOGIBUS_integration_datapanel`.
+- `Identification`-Beschreibung sowie der `IN`-Kommentar (`OutputVars` bei
+  `logiBUS_AI_ID.fbt`, `Plugs`-Adapter bei `logiBUS_AI_IDA.fbt`) um den
+  Wertebereich `0-4095 (12 bit, fixed ESP32-P4 ADC continuous-mode full
+  scale)` ergänzt.
+- Hardware-Doku `visual-programming-languages-docs/docs/{de,en}/hw/logiBUS/APIXON_Node-ISO_20.md`,
+  Abschnitt "Analoge Eingänge", um Roh-Vollausschlag (0-4095, 12 bit) und
+  Rohwert-zu-Volt-Umrechnungsformel ergänzt.
+- Referenzseiten `visual-programming-languages-docs/docs/{de,en}/Bibliotheken/ExternalLibraries/logiBUS/io/AI/logiBUS_AI_ID{,A}.md`
+  ebenfalls um den Wertebereich ergänzt.
