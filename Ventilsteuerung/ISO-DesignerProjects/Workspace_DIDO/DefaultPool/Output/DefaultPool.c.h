@@ -26,38 +26,30 @@
 #define Button_I07_Offset                                     529
 #define Button_I08_Offset                                     548
 #define OutputString_WorkingSet_0_Offset                      567
-#define OutputNumber_12000_Offset                             596
-#define OutputNumber_12001_Offset                             625
-#define OutputNumber_12002_Offset                             654
-#define OutputNumber_12003_Offset                             683
-#define OutputNumber_12004_Offset                             712
-#define OutputNumber_12005_Offset                             741
-#define OutputNumber_12006_Offset                             770
-#define OutputNumber_12007_Offset                             799
-#define OutputNumber_12008_Offset                             828
-#define OutputNumber_12009_Offset                             857
-#define OutputNumber_12010_Offset                             886
-#define OutputNumber_12011_Offset                             915
-#define OutputNumber_12012_Offset                             944
-#define OutputNumber_12013_Offset                             973
-#define OutputNumber_12014_Offset                            1002
-#define OutputNumber_12015_Offset                            1031
-#define OutputNumber_12016_Offset                            1060
-#define OutputNumber_12017_Offset                            1089
-#define OutputNumber_12018_Offset                            1118
-#define OutputNumber_12019_Offset                            1147
-#define OutputNumber_Tick_Offset                             1176
-#define Logos_icon_Offset                                    1205
-#define FontAttributes_6x8_Offset                            1734
-#define FontAttributes_24x32_Offset                          1742
-#define AuxFunction2_X1_Offset                               1750
+#define OutputNumber_c1_Offset                                596
+#define OutputNumber_c9_Offset                                625
+#define OutputNumber_c10_Offset                               654
+#define OutputNumber_c11_Offset                               683
+#define OutputNumber_c12_Offset                               712
+#define OutputNumber_c2_Offset                                741
+#define OutputNumber_c3_Offset                                770
+#define OutputNumber_c4_Offset                                799
+#define OutputNumber_c5_Offset                                828
+#define OutputNumber_c6_Offset                                857
+#define OutputNumber_c7_Offset                                886
+#define OutputNumber_c8_Offset                                915
+#define OutputNumber_Tick_Offset                              944
+#define Logos_icon_Offset                                     973
+#define FontAttributes_6x8_Offset                            1502
+#define FontAttributes_24x32_Offset                          1510
+#define AuxFunction2_X1_Offset                               1518
 
 #define ISO_OP_MEMORY_CLASS
 
-#define ISO_OP_DefaultPool_Size   1762
+#define ISO_OP_DefaultPool_Size   1530
 extern const unsigned char ISO_OP_MEMORY_CLASS isoOP_DefaultPool[];
 
-#define ISO_OP_DefaultPool_ObjectNumber     50
+#define ISO_OP_DefaultPool_ObjectNumber     42
 extern const unsigned long ISO_OP_MEMORY_CLASS isoOP_DefaultPool_Offset[];
 extern const unsigned long ISO_OP_MEMORY_CLASS isoOP_DefaultPool_Offset_Id[];
 #define ISO_OP_DefaultPool_Scale_Offset      1

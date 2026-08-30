@@ -1,0 +1,479 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SubAppType Name="InputOutputTesterButton_PWM_OPC_UA" Comment="PWM Tester (OPC-UA): 8 unveraenderte digitale Eingaenge + 12 PWM-Ausgaenge (VT-Zahlenfeld/Balken/6 Ramp-Tasten je Kanal)">
+	<Identification Standard="61499-2" Description="Copyright (c) 2026 Meisterschulen am Ostbahnhof  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0">
+	</Identification>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2026-08-28" Remarks="initial API and implementation and/or initial documentation">
+	</VersionInfo>
+	<CompilerInfo packageName="Meins::InputOutputTester::Button_PWM_OPC_UA">
+		<Import declaration="Meins::InputOutputTester::Button_PWM_OPC_UA::SubStrings::I1_WRITE"/>
+		<Import declaration="Meins::InputOutputTester::Button_PWM_OPC_UA::SubStrings::I2_WRITE"/>
+		<Import declaration="Meins::InputOutputTester::Button_PWM_OPC_UA::SubStrings::I3_WRITE"/>
+		<Import declaration="Meins::InputOutputTester::Button_PWM_OPC_UA::SubStrings::I4_WRITE"/>
+		<Import declaration="Meins::InputOutputTester::Button_PWM_OPC_UA::SubStrings::I5_WRITE"/>
+		<Import declaration="Meins::InputOutputTester::Button_PWM_OPC_UA::SubStrings::I6_WRITE"/>
+		<Import declaration="Meins::InputOutputTester::Button_PWM_OPC_UA::SubStrings::I7_WRITE"/>
+		<Import declaration="Meins::InputOutputTester::Button_PWM_OPC_UA::SubStrings::I8_WRITE"/>
+		<Import declaration="Meins::InputOutputTester::Button_PWM_OPC_UA::SubStrings::PWM_Q01_READ"/>
+		<Import declaration="Meins::InputOutputTester::Button_PWM_OPC_UA::SubStrings::PWM_Q01_WRITE"/>
+		<Import declaration="Meins::InputOutputTester::Button_PWM_OPC_UA::SubStrings::PWM_Q01_SWITCH_READ"/>
+		<Import declaration="Meins::InputOutputTester::Button_PWM_OPC_UA::SubStrings::PWM_Q01_SWITCH_WRITE"/>
+		<Import declaration="Meins::InputOutputTester::Button_PWM_OPC_UA::SubStrings::PWM_Q01_STATUS_WRITE"/>
+		<Import declaration="Meins::InputOutputTester::Button_PWM_OPC_UA::SubStrings::PWM_Q02_READ"/>
+		<Import declaration="Meins::InputOutputTester::Button_PWM_OPC_UA::SubStrings::PWM_Q02_WRITE"/>
+		<Import declaration="Meins::InputOutputTester::Button_PWM_OPC_UA::SubStrings::PWM_Q02_SWITCH_READ"/>
+		<Import declaration="Meins::InputOutputTester::Button_PWM_OPC_UA::SubStrings::PWM_Q02_SWITCH_WRITE"/>
+		<Import declaration="Meins::InputOutputTester::Button_PWM_OPC_UA::SubStrings::PWM_Q02_STATUS_WRITE"/>
+		<Import declaration="Meins::InputOutputTester::Button_PWM_OPC_UA::SubStrings::PWM_Q03_READ"/>
+		<Import declaration="Meins::InputOutputTester::Button_PWM_OPC_UA::SubStrings::PWM_Q03_WRITE"/>
+		<Import declaration="Meins::InputOutputTester::Button_PWM_OPC_UA::SubStrings::PWM_Q03_SWITCH_READ"/>
+		<Import declaration="Meins::InputOutputTester::Button_PWM_OPC_UA::SubStrings::PWM_Q03_SWITCH_WRITE"/>
+		<Import declaration="Meins::InputOutputTester::Button_PWM_OPC_UA::SubStrings::PWM_Q03_STATUS_WRITE"/>
+		<Import declaration="Meins::InputOutputTester::Button_PWM_OPC_UA::SubStrings::PWM_Q04_READ"/>
+		<Import declaration="Meins::InputOutputTester::Button_PWM_OPC_UA::SubStrings::PWM_Q04_WRITE"/>
+		<Import declaration="Meins::InputOutputTester::Button_PWM_OPC_UA::SubStrings::PWM_Q04_SWITCH_READ"/>
+		<Import declaration="Meins::InputOutputTester::Button_PWM_OPC_UA::SubStrings::PWM_Q04_SWITCH_WRITE"/>
+		<Import declaration="Meins::InputOutputTester::Button_PWM_OPC_UA::SubStrings::PWM_Q04_STATUS_WRITE"/>
+		<Import declaration="Meins::InputOutputTester::Button_PWM_OPC_UA::SubStrings::PWM_Q05_READ"/>
+		<Import declaration="Meins::InputOutputTester::Button_PWM_OPC_UA::SubStrings::PWM_Q05_WRITE"/>
+		<Import declaration="Meins::InputOutputTester::Button_PWM_OPC_UA::SubStrings::PWM_Q05_SWITCH_READ"/>
+		<Import declaration="Meins::InputOutputTester::Button_PWM_OPC_UA::SubStrings::PWM_Q05_SWITCH_WRITE"/>
+		<Import declaration="Meins::InputOutputTester::Button_PWM_OPC_UA::SubStrings::PWM_Q05_STATUS_WRITE"/>
+		<Import declaration="Meins::InputOutputTester::Button_PWM_OPC_UA::SubStrings::PWM_Q06_READ"/>
+		<Import declaration="Meins::InputOutputTester::Button_PWM_OPC_UA::SubStrings::PWM_Q06_WRITE"/>
+		<Import declaration="Meins::InputOutputTester::Button_PWM_OPC_UA::SubStrings::PWM_Q06_SWITCH_READ"/>
+		<Import declaration="Meins::InputOutputTester::Button_PWM_OPC_UA::SubStrings::PWM_Q06_SWITCH_WRITE"/>
+		<Import declaration="Meins::InputOutputTester::Button_PWM_OPC_UA::SubStrings::PWM_Q06_STATUS_WRITE"/>
+		<Import declaration="Meins::InputOutputTester::Button_PWM_OPC_UA::SubStrings::PWM_Q07_READ"/>
+		<Import declaration="Meins::InputOutputTester::Button_PWM_OPC_UA::SubStrings::PWM_Q07_WRITE"/>
+		<Import declaration="Meins::InputOutputTester::Button_PWM_OPC_UA::SubStrings::PWM_Q07_SWITCH_READ"/>
+		<Import declaration="Meins::InputOutputTester::Button_PWM_OPC_UA::SubStrings::PWM_Q07_SWITCH_WRITE"/>
+		<Import declaration="Meins::InputOutputTester::Button_PWM_OPC_UA::SubStrings::PWM_Q07_STATUS_WRITE"/>
+		<Import declaration="Meins::InputOutputTester::Button_PWM_OPC_UA::SubStrings::PWM_Q08_READ"/>
+		<Import declaration="Meins::InputOutputTester::Button_PWM_OPC_UA::SubStrings::PWM_Q08_WRITE"/>
+		<Import declaration="Meins::InputOutputTester::Button_PWM_OPC_UA::SubStrings::PWM_Q08_SWITCH_READ"/>
+		<Import declaration="Meins::InputOutputTester::Button_PWM_OPC_UA::SubStrings::PWM_Q08_SWITCH_WRITE"/>
+		<Import declaration="Meins::InputOutputTester::Button_PWM_OPC_UA::SubStrings::PWM_Q08_STATUS_WRITE"/>
+		<Import declaration="Meins::InputOutputTester::Button_PWM_OPC_UA::SubStrings::PWM_Q09_READ"/>
+		<Import declaration="Meins::InputOutputTester::Button_PWM_OPC_UA::SubStrings::PWM_Q09_WRITE"/>
+		<Import declaration="Meins::InputOutputTester::Button_PWM_OPC_UA::SubStrings::PWM_Q09_SWITCH_READ"/>
+		<Import declaration="Meins::InputOutputTester::Button_PWM_OPC_UA::SubStrings::PWM_Q09_SWITCH_WRITE"/>
+		<Import declaration="Meins::InputOutputTester::Button_PWM_OPC_UA::SubStrings::PWM_Q09_STATUS_WRITE"/>
+		<Import declaration="Meins::InputOutputTester::Button_PWM_OPC_UA::SubStrings::PWM_Q10_READ"/>
+		<Import declaration="Meins::InputOutputTester::Button_PWM_OPC_UA::SubStrings::PWM_Q10_WRITE"/>
+		<Import declaration="Meins::InputOutputTester::Button_PWM_OPC_UA::SubStrings::PWM_Q10_SWITCH_READ"/>
+		<Import declaration="Meins::InputOutputTester::Button_PWM_OPC_UA::SubStrings::PWM_Q10_SWITCH_WRITE"/>
+		<Import declaration="Meins::InputOutputTester::Button_PWM_OPC_UA::SubStrings::PWM_Q10_STATUS_WRITE"/>
+		<Import declaration="Meins::InputOutputTester::Button_PWM_OPC_UA::SubStrings::PWM_Q11_READ"/>
+		<Import declaration="Meins::InputOutputTester::Button_PWM_OPC_UA::SubStrings::PWM_Q11_WRITE"/>
+		<Import declaration="Meins::InputOutputTester::Button_PWM_OPC_UA::SubStrings::PWM_Q11_SWITCH_READ"/>
+		<Import declaration="Meins::InputOutputTester::Button_PWM_OPC_UA::SubStrings::PWM_Q11_SWITCH_WRITE"/>
+		<Import declaration="Meins::InputOutputTester::Button_PWM_OPC_UA::SubStrings::PWM_Q11_STATUS_WRITE"/>
+		<Import declaration="Meins::InputOutputTester::Button_PWM_OPC_UA::SubStrings::PWM_Q12_READ"/>
+		<Import declaration="Meins::InputOutputTester::Button_PWM_OPC_UA::SubStrings::PWM_Q12_WRITE"/>
+		<Import declaration="Meins::InputOutputTester::Button_PWM_OPC_UA::SubStrings::PWM_Q12_SWITCH_READ"/>
+		<Import declaration="Meins::InputOutputTester::Button_PWM_OPC_UA::SubStrings::PWM_Q12_SWITCH_WRITE"/>
+		<Import declaration="Meins::InputOutputTester::Button_PWM_OPC_UA::SubStrings::PWM_Q12_STATUS_WRITE"/>
+		<Import declaration="Meins::InputOutputTester::Button_PWM_OPC_UA::SubStrings::Tick_WRITE"/>
+		<Import declaration="Uebungen::const::UT::PWM12::DefaultPool_PWM12::Button_I01"/>
+		<Import declaration="Uebungen::const::UT::PWM12::DefaultPool_PWM12::Button_I02"/>
+		<Import declaration="Uebungen::const::UT::PWM12::DefaultPool_PWM12::Button_I03"/>
+		<Import declaration="Uebungen::const::UT::PWM12::DefaultPool_PWM12::Button_I04"/>
+		<Import declaration="Uebungen::const::UT::PWM12::DefaultPool_PWM12::Button_I05"/>
+		<Import declaration="Uebungen::const::UT::PWM12::DefaultPool_PWM12::Button_I06"/>
+		<Import declaration="Uebungen::const::UT::PWM12::DefaultPool_PWM12::Button_I07"/>
+		<Import declaration="Uebungen::const::UT::PWM12::DefaultPool_PWM12::Button_I08"/>
+		<Import declaration="Uebungen::const::UT::PWM12::DefaultPool_PWM12::NumberVariable_PWM_Q01"/>
+		<Import declaration="Uebungen::const::UT::PWM12::DefaultPool_PWM12::Button_PWM_Q01_ZERO"/>
+		<Import declaration="Uebungen::const::UT::PWM12::DefaultPool_PWM12::Button_PWM_Q01_DOWN_FAST"/>
+		<Import declaration="Uebungen::const::UT::PWM12::DefaultPool_PWM12::Button_PWM_Q01_DOWN_SLOW"/>
+		<Import declaration="Uebungen::const::UT::PWM12::DefaultPool_PWM12::Button_PWM_Q01_UP_SLOW"/>
+		<Import declaration="Uebungen::const::UT::PWM12::DefaultPool_PWM12::Button_PWM_Q01_UP_FAST"/>
+		<Import declaration="Uebungen::const::UT::PWM12::DefaultPool_PWM12::Button_PWM_Q01_FULL"/>
+		<Import declaration="Uebungen::const::UT::PWM12::DefaultPool_PWM12::Button_PWM_Q01_SWITCH"/>
+		<Import declaration="Uebungen::const::UT::PWM12::DefaultPool_PWM12::Button_PWM_Q01_STATUS"/>
+		<Import declaration="Uebungen::const::UT::PWM12::DefaultPool_PWM12::NumberVariable_PWM_Q02"/>
+		<Import declaration="Uebungen::const::UT::PWM12::DefaultPool_PWM12::Button_PWM_Q02_ZERO"/>
+		<Import declaration="Uebungen::const::UT::PWM12::DefaultPool_PWM12::Button_PWM_Q02_DOWN_FAST"/>
+		<Import declaration="Uebungen::const::UT::PWM12::DefaultPool_PWM12::Button_PWM_Q02_DOWN_SLOW"/>
+		<Import declaration="Uebungen::const::UT::PWM12::DefaultPool_PWM12::Button_PWM_Q02_UP_SLOW"/>
+		<Import declaration="Uebungen::const::UT::PWM12::DefaultPool_PWM12::Button_PWM_Q02_UP_FAST"/>
+		<Import declaration="Uebungen::const::UT::PWM12::DefaultPool_PWM12::Button_PWM_Q02_FULL"/>
+		<Import declaration="Uebungen::const::UT::PWM12::DefaultPool_PWM12::Button_PWM_Q02_SWITCH"/>
+		<Import declaration="Uebungen::const::UT::PWM12::DefaultPool_PWM12::Button_PWM_Q02_STATUS"/>
+		<Import declaration="Uebungen::const::UT::PWM12::DefaultPool_PWM12::NumberVariable_PWM_Q03"/>
+		<Import declaration="Uebungen::const::UT::PWM12::DefaultPool_PWM12::Button_PWM_Q03_ZERO"/>
+		<Import declaration="Uebungen::const::UT::PWM12::DefaultPool_PWM12::Button_PWM_Q03_DOWN_FAST"/>
+		<Import declaration="Uebungen::const::UT::PWM12::DefaultPool_PWM12::Button_PWM_Q03_DOWN_SLOW"/>
+		<Import declaration="Uebungen::const::UT::PWM12::DefaultPool_PWM12::Button_PWM_Q03_UP_SLOW"/>
+		<Import declaration="Uebungen::const::UT::PWM12::DefaultPool_PWM12::Button_PWM_Q03_UP_FAST"/>
+		<Import declaration="Uebungen::const::UT::PWM12::DefaultPool_PWM12::Button_PWM_Q03_FULL"/>
+		<Import declaration="Uebungen::const::UT::PWM12::DefaultPool_PWM12::Button_PWM_Q03_SWITCH"/>
+		<Import declaration="Uebungen::const::UT::PWM12::DefaultPool_PWM12::Button_PWM_Q03_STATUS"/>
+		<Import declaration="Uebungen::const::UT::PWM12::DefaultPool_PWM12::NumberVariable_PWM_Q04"/>
+		<Import declaration="Uebungen::const::UT::PWM12::DefaultPool_PWM12::Button_PWM_Q04_ZERO"/>
+		<Import declaration="Uebungen::const::UT::PWM12::DefaultPool_PWM12::Button_PWM_Q04_DOWN_FAST"/>
+		<Import declaration="Uebungen::const::UT::PWM12::DefaultPool_PWM12::Button_PWM_Q04_DOWN_SLOW"/>
+		<Import declaration="Uebungen::const::UT::PWM12::DefaultPool_PWM12::Button_PWM_Q04_UP_SLOW"/>
+		<Import declaration="Uebungen::const::UT::PWM12::DefaultPool_PWM12::Button_PWM_Q04_UP_FAST"/>
+		<Import declaration="Uebungen::const::UT::PWM12::DefaultPool_PWM12::Button_PWM_Q04_FULL"/>
+		<Import declaration="Uebungen::const::UT::PWM12::DefaultPool_PWM12::Button_PWM_Q04_SWITCH"/>
+		<Import declaration="Uebungen::const::UT::PWM12::DefaultPool_PWM12::Button_PWM_Q04_STATUS"/>
+		<Import declaration="Uebungen::const::UT::PWM12::DefaultPool_PWM12::NumberVariable_PWM_Q05"/>
+		<Import declaration="Uebungen::const::UT::PWM12::DefaultPool_PWM12::Button_PWM_Q05_ZERO"/>
+		<Import declaration="Uebungen::const::UT::PWM12::DefaultPool_PWM12::Button_PWM_Q05_DOWN_FAST"/>
+		<Import declaration="Uebungen::const::UT::PWM12::DefaultPool_PWM12::Button_PWM_Q05_DOWN_SLOW"/>
+		<Import declaration="Uebungen::const::UT::PWM12::DefaultPool_PWM12::Button_PWM_Q05_UP_SLOW"/>
+		<Import declaration="Uebungen::const::UT::PWM12::DefaultPool_PWM12::Button_PWM_Q05_UP_FAST"/>
+		<Import declaration="Uebungen::const::UT::PWM12::DefaultPool_PWM12::Button_PWM_Q05_FULL"/>
+		<Import declaration="Uebungen::const::UT::PWM12::DefaultPool_PWM12::Button_PWM_Q05_SWITCH"/>
+		<Import declaration="Uebungen::const::UT::PWM12::DefaultPool_PWM12::Button_PWM_Q05_STATUS"/>
+		<Import declaration="Uebungen::const::UT::PWM12::DefaultPool_PWM12::NumberVariable_PWM_Q06"/>
+		<Import declaration="Uebungen::const::UT::PWM12::DefaultPool_PWM12::Button_PWM_Q06_ZERO"/>
+		<Import declaration="Uebungen::const::UT::PWM12::DefaultPool_PWM12::Button_PWM_Q06_DOWN_FAST"/>
+		<Import declaration="Uebungen::const::UT::PWM12::DefaultPool_PWM12::Button_PWM_Q06_DOWN_SLOW"/>
+		<Import declaration="Uebungen::const::UT::PWM12::DefaultPool_PWM12::Button_PWM_Q06_UP_SLOW"/>
+		<Import declaration="Uebungen::const::UT::PWM12::DefaultPool_PWM12::Button_PWM_Q06_UP_FAST"/>
+		<Import declaration="Uebungen::const::UT::PWM12::DefaultPool_PWM12::Button_PWM_Q06_FULL"/>
+		<Import declaration="Uebungen::const::UT::PWM12::DefaultPool_PWM12::Button_PWM_Q06_SWITCH"/>
+		<Import declaration="Uebungen::const::UT::PWM12::DefaultPool_PWM12::Button_PWM_Q06_STATUS"/>
+		<Import declaration="Uebungen::const::UT::PWM12::DefaultPool_PWM12::NumberVariable_PWM_Q07"/>
+		<Import declaration="Uebungen::const::UT::PWM12::DefaultPool_PWM12::Button_PWM_Q07_ZERO"/>
+		<Import declaration="Uebungen::const::UT::PWM12::DefaultPool_PWM12::Button_PWM_Q07_DOWN_FAST"/>
+		<Import declaration="Uebungen::const::UT::PWM12::DefaultPool_PWM12::Button_PWM_Q07_DOWN_SLOW"/>
+		<Import declaration="Uebungen::const::UT::PWM12::DefaultPool_PWM12::Button_PWM_Q07_UP_SLOW"/>
+		<Import declaration="Uebungen::const::UT::PWM12::DefaultPool_PWM12::Button_PWM_Q07_UP_FAST"/>
+		<Import declaration="Uebungen::const::UT::PWM12::DefaultPool_PWM12::Button_PWM_Q07_FULL"/>
+		<Import declaration="Uebungen::const::UT::PWM12::DefaultPool_PWM12::Button_PWM_Q07_SWITCH"/>
+		<Import declaration="Uebungen::const::UT::PWM12::DefaultPool_PWM12::Button_PWM_Q07_STATUS"/>
+		<Import declaration="Uebungen::const::UT::PWM12::DefaultPool_PWM12::NumberVariable_PWM_Q08"/>
+		<Import declaration="Uebungen::const::UT::PWM12::DefaultPool_PWM12::Button_PWM_Q08_ZERO"/>
+		<Import declaration="Uebungen::const::UT::PWM12::DefaultPool_PWM12::Button_PWM_Q08_DOWN_FAST"/>
+		<Import declaration="Uebungen::const::UT::PWM12::DefaultPool_PWM12::Button_PWM_Q08_DOWN_SLOW"/>
+		<Import declaration="Uebungen::const::UT::PWM12::DefaultPool_PWM12::Button_PWM_Q08_UP_SLOW"/>
+		<Import declaration="Uebungen::const::UT::PWM12::DefaultPool_PWM12::Button_PWM_Q08_UP_FAST"/>
+		<Import declaration="Uebungen::const::UT::PWM12::DefaultPool_PWM12::Button_PWM_Q08_FULL"/>
+		<Import declaration="Uebungen::const::UT::PWM12::DefaultPool_PWM12::Button_PWM_Q08_SWITCH"/>
+		<Import declaration="Uebungen::const::UT::PWM12::DefaultPool_PWM12::Button_PWM_Q08_STATUS"/>
+		<Import declaration="Uebungen::const::UT::PWM12::DefaultPool_PWM12::NumberVariable_PWM_Q09"/>
+		<Import declaration="Uebungen::const::UT::PWM12::DefaultPool_PWM12::Button_PWM_Q09_ZERO"/>
+		<Import declaration="Uebungen::const::UT::PWM12::DefaultPool_PWM12::Button_PWM_Q09_DOWN_FAST"/>
+		<Import declaration="Uebungen::const::UT::PWM12::DefaultPool_PWM12::Button_PWM_Q09_DOWN_SLOW"/>
+		<Import declaration="Uebungen::const::UT::PWM12::DefaultPool_PWM12::Button_PWM_Q09_UP_SLOW"/>
+		<Import declaration="Uebungen::const::UT::PWM12::DefaultPool_PWM12::Button_PWM_Q09_UP_FAST"/>
+		<Import declaration="Uebungen::const::UT::PWM12::DefaultPool_PWM12::Button_PWM_Q09_FULL"/>
+		<Import declaration="Uebungen::const::UT::PWM12::DefaultPool_PWM12::Button_PWM_Q09_SWITCH"/>
+		<Import declaration="Uebungen::const::UT::PWM12::DefaultPool_PWM12::Button_PWM_Q09_STATUS"/>
+		<Import declaration="Uebungen::const::UT::PWM12::DefaultPool_PWM12::NumberVariable_PWM_Q10"/>
+		<Import declaration="Uebungen::const::UT::PWM12::DefaultPool_PWM12::Button_PWM_Q10_ZERO"/>
+		<Import declaration="Uebungen::const::UT::PWM12::DefaultPool_PWM12::Button_PWM_Q10_DOWN_FAST"/>
+		<Import declaration="Uebungen::const::UT::PWM12::DefaultPool_PWM12::Button_PWM_Q10_DOWN_SLOW"/>
+		<Import declaration="Uebungen::const::UT::PWM12::DefaultPool_PWM12::Button_PWM_Q10_UP_SLOW"/>
+		<Import declaration="Uebungen::const::UT::PWM12::DefaultPool_PWM12::Button_PWM_Q10_UP_FAST"/>
+		<Import declaration="Uebungen::const::UT::PWM12::DefaultPool_PWM12::Button_PWM_Q10_FULL"/>
+		<Import declaration="Uebungen::const::UT::PWM12::DefaultPool_PWM12::Button_PWM_Q10_SWITCH"/>
+		<Import declaration="Uebungen::const::UT::PWM12::DefaultPool_PWM12::Button_PWM_Q10_STATUS"/>
+		<Import declaration="Uebungen::const::UT::PWM12::DefaultPool_PWM12::NumberVariable_PWM_Q11"/>
+		<Import declaration="Uebungen::const::UT::PWM12::DefaultPool_PWM12::Button_PWM_Q11_ZERO"/>
+		<Import declaration="Uebungen::const::UT::PWM12::DefaultPool_PWM12::Button_PWM_Q11_DOWN_FAST"/>
+		<Import declaration="Uebungen::const::UT::PWM12::DefaultPool_PWM12::Button_PWM_Q11_DOWN_SLOW"/>
+		<Import declaration="Uebungen::const::UT::PWM12::DefaultPool_PWM12::Button_PWM_Q11_UP_SLOW"/>
+		<Import declaration="Uebungen::const::UT::PWM12::DefaultPool_PWM12::Button_PWM_Q11_UP_FAST"/>
+		<Import declaration="Uebungen::const::UT::PWM12::DefaultPool_PWM12::Button_PWM_Q11_FULL"/>
+		<Import declaration="Uebungen::const::UT::PWM12::DefaultPool_PWM12::Button_PWM_Q11_SWITCH"/>
+		<Import declaration="Uebungen::const::UT::PWM12::DefaultPool_PWM12::Button_PWM_Q11_STATUS"/>
+		<Import declaration="Uebungen::const::UT::PWM12::DefaultPool_PWM12::NumberVariable_PWM_Q12"/>
+		<Import declaration="Uebungen::const::UT::PWM12::DefaultPool_PWM12::Button_PWM_Q12_ZERO"/>
+		<Import declaration="Uebungen::const::UT::PWM12::DefaultPool_PWM12::Button_PWM_Q12_DOWN_FAST"/>
+		<Import declaration="Uebungen::const::UT::PWM12::DefaultPool_PWM12::Button_PWM_Q12_DOWN_SLOW"/>
+		<Import declaration="Uebungen::const::UT::PWM12::DefaultPool_PWM12::Button_PWM_Q12_UP_SLOW"/>
+		<Import declaration="Uebungen::const::UT::PWM12::DefaultPool_PWM12::Button_PWM_Q12_UP_FAST"/>
+		<Import declaration="Uebungen::const::UT::PWM12::DefaultPool_PWM12::Button_PWM_Q12_FULL"/>
+		<Import declaration="Uebungen::const::UT::PWM12::DefaultPool_PWM12::Button_PWM_Q12_SWITCH"/>
+		<Import declaration="Uebungen::const::UT::PWM12::DefaultPool_PWM12::Button_PWM_Q12_STATUS"/>
+		<Import declaration="Uebungen::const::UT::PWM12::DefaultPool_PWM12::OutputNumber_Tick"/>
+		<Import declaration="logiBUS::io::DI::logiBUS_DI::Input_I1"/>
+		<Import declaration="logiBUS::io::DI::logiBUS_DI::Input_I2"/>
+		<Import declaration="logiBUS::io::DI::logiBUS_DI::Input_I3"/>
+		<Import declaration="logiBUS::io::DI::logiBUS_DI::Input_I4"/>
+		<Import declaration="logiBUS::io::DI::logiBUS_DI::Input_I5"/>
+		<Import declaration="logiBUS::io::DI::logiBUS_DI::Input_I6"/>
+		<Import declaration="logiBUS::io::DI::logiBUS_DI::Input_I7"/>
+		<Import declaration="logiBUS::io::DI::logiBUS_DI::Input_I8"/>
+		<Import declaration="logiBUS::io::DQ::logiBUS_DO::Output_Q1"/>
+		<Import declaration="logiBUS::io::DQ::logiBUS_DO::Output_Q2"/>
+		<Import declaration="logiBUS::io::DQ::logiBUS_DO::Output_Q3"/>
+		<Import declaration="logiBUS::io::DQ::logiBUS_DO::Output_Q4"/>
+		<Import declaration="logiBUS::io::DQ::logiBUS_DO::Output_Q5"/>
+		<Import declaration="logiBUS::io::DQ::logiBUS_DO::Output_Q6"/>
+		<Import declaration="logiBUS::io::DQ::logiBUS_DO::Output_Q7"/>
+		<Import declaration="logiBUS::io::DQ::logiBUS_DO::Output_Q8"/>
+		<Import declaration="logiBUS::io::DQ::logiBUS_DO::Output_Q9"/>
+		<Import declaration="logiBUS::io::DQ::logiBUS_DO::Output_Q10"/>
+		<Import declaration="logiBUS::io::DQ::logiBUS_DO::Output_Q11"/>
+		<Import declaration="logiBUS::io::DQ::logiBUS_DO::Output_Q12"/>
+	</CompilerInfo>
+	<SubAppInterfaceList>
+	</SubAppInterfaceList>
+	<SubAppNetwork>
+		<SubApp Name="Input_I1" Type="MyLib::sys::logiBUS_IXA_BG_OPC" x="3200" y="-500">
+			<Parameter Name="u16ObjId" Value="Button_I01"/>
+			<Parameter Name="Input" Value="Input_I1"/>
+			<Parameter Name="ID_WRITE" Value="I1_WRITE"/>
+		</SubApp>
+		<SubApp Name="Input_I2" Type="MyLib::sys::logiBUS_IXA_BG_OPC" x="3200" y="100">
+			<Parameter Name="u16ObjId" Value="Button_I02"/>
+			<Parameter Name="Input" Value="Input_I2"/>
+			<Parameter Name="ID_WRITE" Value="I2_WRITE"/>
+		</SubApp>
+		<SubApp Name="Input_I3" Type="MyLib::sys::logiBUS_IXA_BG_OPC" x="3200" y="700">
+			<Parameter Name="u16ObjId" Value="Button_I03"/>
+			<Parameter Name="Input" Value="Input_I3"/>
+			<Parameter Name="ID_WRITE" Value="I3_WRITE"/>
+		</SubApp>
+		<SubApp Name="Input_I4" Type="MyLib::sys::logiBUS_IXA_BG_OPC" x="3200" y="1300">
+			<Parameter Name="u16ObjId" Value="Button_I04"/>
+			<Parameter Name="Input" Value="Input_I4"/>
+			<Parameter Name="ID_WRITE" Value="I4_WRITE"/>
+		</SubApp>
+		<SubApp Name="Input_I5" Type="MyLib::sys::logiBUS_IXA_BG_OPC" x="3200" y="1900">
+			<Parameter Name="u16ObjId" Value="Button_I05"/>
+			<Parameter Name="Input" Value="Input_I5"/>
+			<Parameter Name="ID_WRITE" Value="I5_WRITE"/>
+		</SubApp>
+		<SubApp Name="Input_I6" Type="MyLib::sys::logiBUS_IXA_BG_OPC" x="3200" y="2500">
+			<Parameter Name="u16ObjId" Value="Button_I06"/>
+			<Parameter Name="Input" Value="Input_I6"/>
+			<Parameter Name="ID_WRITE" Value="I6_WRITE"/>
+		</SubApp>
+		<SubApp Name="Input_I7" Type="MyLib::sys::logiBUS_IXA_BG_OPC" x="3200" y="3100">
+			<Parameter Name="u16ObjId" Value="Button_I07"/>
+			<Parameter Name="Input" Value="Input_I7"/>
+			<Parameter Name="ID_WRITE" Value="I7_WRITE"/>
+		</SubApp>
+		<SubApp Name="Input_I8" Type="MyLib::sys::logiBUS_IXA_BG_OPC" x="3200" y="3700">
+			<Parameter Name="u16ObjId" Value="Button_I08"/>
+			<Parameter Name="Input" Value="Input_I8"/>
+			<Parameter Name="ID_WRITE" Value="I8_WRITE"/>
+		</SubApp>
+		<SubApp Name="Output_Q1" Type="MyLib::sys::RampLimitFS_TO_logiBUS_QDA_PWM_OPC" x="0" y="0">
+			<Parameter Name="u16ObjId_VALUEVAR" Value="NumberVariable_PWM_Q01"/>
+			<Parameter Name="u16ObjId_ZERO" Value="Button_PWM_Q01_ZERO"/>
+			<Parameter Name="u16ObjId_DOWN_FAST" Value="Button_PWM_Q01_DOWN_FAST"/>
+			<Parameter Name="u16ObjId_DOWN_SLOW" Value="Button_PWM_Q01_DOWN_SLOW"/>
+			<Parameter Name="u16ObjId_UP_SLOW" Value="Button_PWM_Q01_UP_SLOW"/>
+			<Parameter Name="u16ObjId_UP_FAST" Value="Button_PWM_Q01_UP_FAST"/>
+			<Parameter Name="u16ObjId_FULL" Value="Button_PWM_Q01_FULL"/>
+			<Parameter Name="u16ObjId_SWITCH" Value="Button_PWM_Q01_SWITCH"/>
+			<Parameter Name="u16ObjId_STATUS" Value="Button_PWM_Q01_STATUS"/>
+			<Parameter Name="bDefaultEnabled" Value="TRUE"/>
+			<Parameter Name="Output" Value="Output_Q1"/>
+			<Parameter Name="ID_READ" Value="PWM_Q01_READ"/>
+			<Parameter Name="ID_WRITE" Value="PWM_Q01_WRITE"/>
+			<Parameter Name="ID_SWITCH_READ" Value="PWM_Q01_SWITCH_READ"/>
+			<Parameter Name="ID_SWITCH_WRITE" Value="PWM_Q01_SWITCH_WRITE"/>
+			<Parameter Name="ID_STATUS_WRITE" Value="PWM_Q01_STATUS_WRITE"/>
+		</SubApp>
+		<SubApp Name="Output_Q2" Type="MyLib::sys::RampLimitFS_TO_logiBUS_QDA_PWM_OPC" x="0" y="2400">
+			<Parameter Name="u16ObjId_VALUEVAR" Value="NumberVariable_PWM_Q02"/>
+			<Parameter Name="u16ObjId_ZERO" Value="Button_PWM_Q02_ZERO"/>
+			<Parameter Name="u16ObjId_DOWN_FAST" Value="Button_PWM_Q02_DOWN_FAST"/>
+			<Parameter Name="u16ObjId_DOWN_SLOW" Value="Button_PWM_Q02_DOWN_SLOW"/>
+			<Parameter Name="u16ObjId_UP_SLOW" Value="Button_PWM_Q02_UP_SLOW"/>
+			<Parameter Name="u16ObjId_UP_FAST" Value="Button_PWM_Q02_UP_FAST"/>
+			<Parameter Name="u16ObjId_FULL" Value="Button_PWM_Q02_FULL"/>
+			<Parameter Name="u16ObjId_SWITCH" Value="Button_PWM_Q02_SWITCH"/>
+			<Parameter Name="u16ObjId_STATUS" Value="Button_PWM_Q02_STATUS"/>
+			<Parameter Name="bDefaultEnabled" Value="TRUE"/>
+			<Parameter Name="Output" Value="Output_Q2"/>
+			<Parameter Name="ID_READ" Value="PWM_Q02_READ"/>
+			<Parameter Name="ID_WRITE" Value="PWM_Q02_WRITE"/>
+			<Parameter Name="ID_SWITCH_READ" Value="PWM_Q02_SWITCH_READ"/>
+			<Parameter Name="ID_SWITCH_WRITE" Value="PWM_Q02_SWITCH_WRITE"/>
+			<Parameter Name="ID_STATUS_WRITE" Value="PWM_Q02_STATUS_WRITE"/>
+		</SubApp>
+		<SubApp Name="Output_Q3" Type="MyLib::sys::RampLimitFS_TO_logiBUS_QDA_PWM_OPC" x="0" y="4800">
+			<Parameter Name="u16ObjId_VALUEVAR" Value="NumberVariable_PWM_Q03"/>
+			<Parameter Name="u16ObjId_ZERO" Value="Button_PWM_Q03_ZERO"/>
+			<Parameter Name="u16ObjId_DOWN_FAST" Value="Button_PWM_Q03_DOWN_FAST"/>
+			<Parameter Name="u16ObjId_DOWN_SLOW" Value="Button_PWM_Q03_DOWN_SLOW"/>
+			<Parameter Name="u16ObjId_UP_SLOW" Value="Button_PWM_Q03_UP_SLOW"/>
+			<Parameter Name="u16ObjId_UP_FAST" Value="Button_PWM_Q03_UP_FAST"/>
+			<Parameter Name="u16ObjId_FULL" Value="Button_PWM_Q03_FULL"/>
+			<Parameter Name="u16ObjId_SWITCH" Value="Button_PWM_Q03_SWITCH"/>
+			<Parameter Name="u16ObjId_STATUS" Value="Button_PWM_Q03_STATUS"/>
+			<Parameter Name="bDefaultEnabled" Value="TRUE"/>
+			<Parameter Name="Output" Value="Output_Q3"/>
+			<Parameter Name="ID_READ" Value="PWM_Q03_READ"/>
+			<Parameter Name="ID_WRITE" Value="PWM_Q03_WRITE"/>
+			<Parameter Name="ID_SWITCH_READ" Value="PWM_Q03_SWITCH_READ"/>
+			<Parameter Name="ID_SWITCH_WRITE" Value="PWM_Q03_SWITCH_WRITE"/>
+			<Parameter Name="ID_STATUS_WRITE" Value="PWM_Q03_STATUS_WRITE"/>
+		</SubApp>
+		<SubApp Name="Output_Q4" Type="MyLib::sys::RampLimitFS_TO_logiBUS_QDA_PWM_OPC" x="0" y="7200">
+			<Parameter Name="u16ObjId_VALUEVAR" Value="NumberVariable_PWM_Q04"/>
+			<Parameter Name="u16ObjId_ZERO" Value="Button_PWM_Q04_ZERO"/>
+			<Parameter Name="u16ObjId_DOWN_FAST" Value="Button_PWM_Q04_DOWN_FAST"/>
+			<Parameter Name="u16ObjId_DOWN_SLOW" Value="Button_PWM_Q04_DOWN_SLOW"/>
+			<Parameter Name="u16ObjId_UP_SLOW" Value="Button_PWM_Q04_UP_SLOW"/>
+			<Parameter Name="u16ObjId_UP_FAST" Value="Button_PWM_Q04_UP_FAST"/>
+			<Parameter Name="u16ObjId_FULL" Value="Button_PWM_Q04_FULL"/>
+			<Parameter Name="u16ObjId_SWITCH" Value="Button_PWM_Q04_SWITCH"/>
+			<Parameter Name="u16ObjId_STATUS" Value="Button_PWM_Q04_STATUS"/>
+			<Parameter Name="bDefaultEnabled" Value="TRUE"/>
+			<Parameter Name="Output" Value="Output_Q4"/>
+			<Parameter Name="ID_READ" Value="PWM_Q04_READ"/>
+			<Parameter Name="ID_WRITE" Value="PWM_Q04_WRITE"/>
+			<Parameter Name="ID_SWITCH_READ" Value="PWM_Q04_SWITCH_READ"/>
+			<Parameter Name="ID_SWITCH_WRITE" Value="PWM_Q04_SWITCH_WRITE"/>
+			<Parameter Name="ID_STATUS_WRITE" Value="PWM_Q04_STATUS_WRITE"/>
+		</SubApp>
+		<SubApp Name="Output_Q5" Type="MyLib::sys::RampLimitFS_TO_logiBUS_QDA_PWM_OPC" x="0" y="9600">
+			<Parameter Name="u16ObjId_VALUEVAR" Value="NumberVariable_PWM_Q05"/>
+			<Parameter Name="u16ObjId_ZERO" Value="Button_PWM_Q05_ZERO"/>
+			<Parameter Name="u16ObjId_DOWN_FAST" Value="Button_PWM_Q05_DOWN_FAST"/>
+			<Parameter Name="u16ObjId_DOWN_SLOW" Value="Button_PWM_Q05_DOWN_SLOW"/>
+			<Parameter Name="u16ObjId_UP_SLOW" Value="Button_PWM_Q05_UP_SLOW"/>
+			<Parameter Name="u16ObjId_UP_FAST" Value="Button_PWM_Q05_UP_FAST"/>
+			<Parameter Name="u16ObjId_FULL" Value="Button_PWM_Q05_FULL"/>
+			<Parameter Name="u16ObjId_SWITCH" Value="Button_PWM_Q05_SWITCH"/>
+			<Parameter Name="u16ObjId_STATUS" Value="Button_PWM_Q05_STATUS"/>
+			<Parameter Name="bDefaultEnabled" Value="TRUE"/>
+			<Parameter Name="Output" Value="Output_Q5"/>
+			<Parameter Name="ID_READ" Value="PWM_Q05_READ"/>
+			<Parameter Name="ID_WRITE" Value="PWM_Q05_WRITE"/>
+			<Parameter Name="ID_SWITCH_READ" Value="PWM_Q05_SWITCH_READ"/>
+			<Parameter Name="ID_SWITCH_WRITE" Value="PWM_Q05_SWITCH_WRITE"/>
+			<Parameter Name="ID_STATUS_WRITE" Value="PWM_Q05_STATUS_WRITE"/>
+		</SubApp>
+		<SubApp Name="Output_Q6" Type="MyLib::sys::RampLimitFS_TO_logiBUS_QDA_PWM_OPC" x="0" y="12000">
+			<Parameter Name="u16ObjId_VALUEVAR" Value="NumberVariable_PWM_Q06"/>
+			<Parameter Name="u16ObjId_ZERO" Value="Button_PWM_Q06_ZERO"/>
+			<Parameter Name="u16ObjId_DOWN_FAST" Value="Button_PWM_Q06_DOWN_FAST"/>
+			<Parameter Name="u16ObjId_DOWN_SLOW" Value="Button_PWM_Q06_DOWN_SLOW"/>
+			<Parameter Name="u16ObjId_UP_SLOW" Value="Button_PWM_Q06_UP_SLOW"/>
+			<Parameter Name="u16ObjId_UP_FAST" Value="Button_PWM_Q06_UP_FAST"/>
+			<Parameter Name="u16ObjId_FULL" Value="Button_PWM_Q06_FULL"/>
+			<Parameter Name="u16ObjId_SWITCH" Value="Button_PWM_Q06_SWITCH"/>
+			<Parameter Name="u16ObjId_STATUS" Value="Button_PWM_Q06_STATUS"/>
+			<Parameter Name="bDefaultEnabled" Value="TRUE"/>
+			<Parameter Name="Output" Value="Output_Q6"/>
+			<Parameter Name="ID_READ" Value="PWM_Q06_READ"/>
+			<Parameter Name="ID_WRITE" Value="PWM_Q06_WRITE"/>
+			<Parameter Name="ID_SWITCH_READ" Value="PWM_Q06_SWITCH_READ"/>
+			<Parameter Name="ID_SWITCH_WRITE" Value="PWM_Q06_SWITCH_WRITE"/>
+			<Parameter Name="ID_STATUS_WRITE" Value="PWM_Q06_STATUS_WRITE"/>
+		</SubApp>
+		<SubApp Name="Output_Q7" Type="MyLib::sys::RampLimitFS_TO_logiBUS_QDA_PWM_OPC" x="0" y="14400">
+			<Parameter Name="u16ObjId_VALUEVAR" Value="NumberVariable_PWM_Q07"/>
+			<Parameter Name="u16ObjId_ZERO" Value="Button_PWM_Q07_ZERO"/>
+			<Parameter Name="u16ObjId_DOWN_FAST" Value="Button_PWM_Q07_DOWN_FAST"/>
+			<Parameter Name="u16ObjId_DOWN_SLOW" Value="Button_PWM_Q07_DOWN_SLOW"/>
+			<Parameter Name="u16ObjId_UP_SLOW" Value="Button_PWM_Q07_UP_SLOW"/>
+			<Parameter Name="u16ObjId_UP_FAST" Value="Button_PWM_Q07_UP_FAST"/>
+			<Parameter Name="u16ObjId_FULL" Value="Button_PWM_Q07_FULL"/>
+			<Parameter Name="u16ObjId_SWITCH" Value="Button_PWM_Q07_SWITCH"/>
+			<Parameter Name="u16ObjId_STATUS" Value="Button_PWM_Q07_STATUS"/>
+			<Parameter Name="bDefaultEnabled" Value="TRUE"/>
+			<Parameter Name="Output" Value="Output_Q7"/>
+			<Parameter Name="ID_READ" Value="PWM_Q07_READ"/>
+			<Parameter Name="ID_WRITE" Value="PWM_Q07_WRITE"/>
+			<Parameter Name="ID_SWITCH_READ" Value="PWM_Q07_SWITCH_READ"/>
+			<Parameter Name="ID_SWITCH_WRITE" Value="PWM_Q07_SWITCH_WRITE"/>
+			<Parameter Name="ID_STATUS_WRITE" Value="PWM_Q07_STATUS_WRITE"/>
+		</SubApp>
+		<SubApp Name="Output_Q8" Type="MyLib::sys::RampLimitFS_TO_logiBUS_QDA_PWM_OPC" x="0" y="16800">
+			<Parameter Name="u16ObjId_VALUEVAR" Value="NumberVariable_PWM_Q08"/>
+			<Parameter Name="u16ObjId_ZERO" Value="Button_PWM_Q08_ZERO"/>
+			<Parameter Name="u16ObjId_DOWN_FAST" Value="Button_PWM_Q08_DOWN_FAST"/>
+			<Parameter Name="u16ObjId_DOWN_SLOW" Value="Button_PWM_Q08_DOWN_SLOW"/>
+			<Parameter Name="u16ObjId_UP_SLOW" Value="Button_PWM_Q08_UP_SLOW"/>
+			<Parameter Name="u16ObjId_UP_FAST" Value="Button_PWM_Q08_UP_FAST"/>
+			<Parameter Name="u16ObjId_FULL" Value="Button_PWM_Q08_FULL"/>
+			<Parameter Name="u16ObjId_SWITCH" Value="Button_PWM_Q08_SWITCH"/>
+			<Parameter Name="u16ObjId_STATUS" Value="Button_PWM_Q08_STATUS"/>
+			<Parameter Name="bDefaultEnabled" Value="TRUE"/>
+			<Parameter Name="Output" Value="Output_Q8"/>
+			<Parameter Name="ID_READ" Value="PWM_Q08_READ"/>
+			<Parameter Name="ID_WRITE" Value="PWM_Q08_WRITE"/>
+			<Parameter Name="ID_SWITCH_READ" Value="PWM_Q08_SWITCH_READ"/>
+			<Parameter Name="ID_SWITCH_WRITE" Value="PWM_Q08_SWITCH_WRITE"/>
+			<Parameter Name="ID_STATUS_WRITE" Value="PWM_Q08_STATUS_WRITE"/>
+		</SubApp>
+		<SubApp Name="Output_Q9" Type="MyLib::sys::RampLimitFS_TO_logiBUS_QDA_PWM_OPC" x="0" y="19200">
+			<Parameter Name="u16ObjId_VALUEVAR" Value="NumberVariable_PWM_Q09"/>
+			<Parameter Name="u16ObjId_ZERO" Value="Button_PWM_Q09_ZERO"/>
+			<Parameter Name="u16ObjId_DOWN_FAST" Value="Button_PWM_Q09_DOWN_FAST"/>
+			<Parameter Name="u16ObjId_DOWN_SLOW" Value="Button_PWM_Q09_DOWN_SLOW"/>
+			<Parameter Name="u16ObjId_UP_SLOW" Value="Button_PWM_Q09_UP_SLOW"/>
+			<Parameter Name="u16ObjId_UP_FAST" Value="Button_PWM_Q09_UP_FAST"/>
+			<Parameter Name="u16ObjId_FULL" Value="Button_PWM_Q09_FULL"/>
+			<Parameter Name="u16ObjId_SWITCH" Value="Button_PWM_Q09_SWITCH"/>
+			<Parameter Name="u16ObjId_STATUS" Value="Button_PWM_Q09_STATUS"/>
+			<Parameter Name="bDefaultEnabled" Value="FALSE"/>
+			<Parameter Name="Output" Value="Output_Q9"/>
+			<Parameter Name="ID_READ" Value="PWM_Q09_READ"/>
+			<Parameter Name="ID_WRITE" Value="PWM_Q09_WRITE"/>
+			<Parameter Name="ID_SWITCH_READ" Value="PWM_Q09_SWITCH_READ"/>
+			<Parameter Name="ID_SWITCH_WRITE" Value="PWM_Q09_SWITCH_WRITE"/>
+			<Parameter Name="ID_STATUS_WRITE" Value="PWM_Q09_STATUS_WRITE"/>
+		</SubApp>
+		<SubApp Name="Output_Q10" Type="MyLib::sys::RampLimitFS_TO_logiBUS_QDA_PWM_OPC" x="0" y="21600">
+			<Parameter Name="u16ObjId_VALUEVAR" Value="NumberVariable_PWM_Q10"/>
+			<Parameter Name="u16ObjId_ZERO" Value="Button_PWM_Q10_ZERO"/>
+			<Parameter Name="u16ObjId_DOWN_FAST" Value="Button_PWM_Q10_DOWN_FAST"/>
+			<Parameter Name="u16ObjId_DOWN_SLOW" Value="Button_PWM_Q10_DOWN_SLOW"/>
+			<Parameter Name="u16ObjId_UP_SLOW" Value="Button_PWM_Q10_UP_SLOW"/>
+			<Parameter Name="u16ObjId_UP_FAST" Value="Button_PWM_Q10_UP_FAST"/>
+			<Parameter Name="u16ObjId_FULL" Value="Button_PWM_Q10_FULL"/>
+			<Parameter Name="u16ObjId_SWITCH" Value="Button_PWM_Q10_SWITCH"/>
+			<Parameter Name="u16ObjId_STATUS" Value="Button_PWM_Q10_STATUS"/>
+			<Parameter Name="bDefaultEnabled" Value="FALSE"/>
+			<Parameter Name="Output" Value="Output_Q10"/>
+			<Parameter Name="ID_READ" Value="PWM_Q10_READ"/>
+			<Parameter Name="ID_WRITE" Value="PWM_Q10_WRITE"/>
+			<Parameter Name="ID_SWITCH_READ" Value="PWM_Q10_SWITCH_READ"/>
+			<Parameter Name="ID_SWITCH_WRITE" Value="PWM_Q10_SWITCH_WRITE"/>
+			<Parameter Name="ID_STATUS_WRITE" Value="PWM_Q10_STATUS_WRITE"/>
+		</SubApp>
+		<SubApp Name="Output_Q11" Type="MyLib::sys::RampLimitFS_TO_logiBUS_QDA_PWM_OPC" x="0" y="24000">
+			<Parameter Name="u16ObjId_VALUEVAR" Value="NumberVariable_PWM_Q11"/>
+			<Parameter Name="u16ObjId_ZERO" Value="Button_PWM_Q11_ZERO"/>
+			<Parameter Name="u16ObjId_DOWN_FAST" Value="Button_PWM_Q11_DOWN_FAST"/>
+			<Parameter Name="u16ObjId_DOWN_SLOW" Value="Button_PWM_Q11_DOWN_SLOW"/>
+			<Parameter Name="u16ObjId_UP_SLOW" Value="Button_PWM_Q11_UP_SLOW"/>
+			<Parameter Name="u16ObjId_UP_FAST" Value="Button_PWM_Q11_UP_FAST"/>
+			<Parameter Name="u16ObjId_FULL" Value="Button_PWM_Q11_FULL"/>
+			<Parameter Name="u16ObjId_SWITCH" Value="Button_PWM_Q11_SWITCH"/>
+			<Parameter Name="u16ObjId_STATUS" Value="Button_PWM_Q11_STATUS"/>
+			<Parameter Name="bDefaultEnabled" Value="FALSE"/>
+			<Parameter Name="Output" Value="Output_Q11"/>
+			<Parameter Name="ID_READ" Value="PWM_Q11_READ"/>
+			<Parameter Name="ID_WRITE" Value="PWM_Q11_WRITE"/>
+			<Parameter Name="ID_SWITCH_READ" Value="PWM_Q11_SWITCH_READ"/>
+			<Parameter Name="ID_SWITCH_WRITE" Value="PWM_Q11_SWITCH_WRITE"/>
+			<Parameter Name="ID_STATUS_WRITE" Value="PWM_Q11_STATUS_WRITE"/>
+		</SubApp>
+		<SubApp Name="Output_Q12" Type="MyLib::sys::RampLimitFS_TO_logiBUS_QDA_PWM_OPC" x="0" y="26400">
+			<Parameter Name="u16ObjId_VALUEVAR" Value="NumberVariable_PWM_Q12"/>
+			<Parameter Name="u16ObjId_ZERO" Value="Button_PWM_Q12_ZERO"/>
+			<Parameter Name="u16ObjId_DOWN_FAST" Value="Button_PWM_Q12_DOWN_FAST"/>
+			<Parameter Name="u16ObjId_DOWN_SLOW" Value="Button_PWM_Q12_DOWN_SLOW"/>
+			<Parameter Name="u16ObjId_UP_SLOW" Value="Button_PWM_Q12_UP_SLOW"/>
+			<Parameter Name="u16ObjId_UP_FAST" Value="Button_PWM_Q12_UP_FAST"/>
+			<Parameter Name="u16ObjId_FULL" Value="Button_PWM_Q12_FULL"/>
+			<Parameter Name="u16ObjId_SWITCH" Value="Button_PWM_Q12_SWITCH"/>
+			<Parameter Name="u16ObjId_STATUS" Value="Button_PWM_Q12_STATUS"/>
+			<Parameter Name="bDefaultEnabled" Value="FALSE"/>
+			<Parameter Name="Output" Value="Output_Q12"/>
+			<Parameter Name="ID_READ" Value="PWM_Q12_READ"/>
+			<Parameter Name="ID_WRITE" Value="PWM_Q12_WRITE"/>
+			<Parameter Name="ID_SWITCH_READ" Value="PWM_Q12_SWITCH_READ"/>
+			<Parameter Name="ID_SWITCH_WRITE" Value="PWM_Q12_SWITCH_WRITE"/>
+			<Parameter Name="ID_STATUS_WRITE" Value="PWM_Q12_STATUS_WRITE"/>
+		</SubApp>
+		<SubApp Name="SystemTickSender" Type="MyLib::sys::SystemTickSender" x="-4400" y="-1600">
+			<Parameter Name="u16ObjId" Value="OutputNumber_Tick"/>
+			<Parameter Name="ID_WRITE" Value="Tick_WRITE"/>
+		</SubApp>
+	</SubAppNetwork>
+</SubAppType>

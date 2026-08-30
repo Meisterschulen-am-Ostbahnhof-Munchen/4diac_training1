@@ -11,9 +11,12 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       contents: read
+    strategy:
+      matrix:
+        client: [apixon-diodo-client, apixon-pwm-client]
     defaults:
       run:
-        working-directory: Ventilsteuerung/apixon-io-client
+        working-directory: Ventilsteuerung/Web-Clients/${{ matrix.client }}
     steps:
       - uses: actions/checkout@v4
 
@@ -21,7 +24,7 @@ jobs:
         with:
           node-version: '22'
           cache: 'npm'
-          cache-dependency-path: Ventilsteuerung/apixon-io-client/package-lock.json
+          cache-dependency-path: Ventilsteuerung/Web-Clients/${{ matrix.client }}/package-lock.json
 
       - name: Install dependencies
         run: npm ci --ignore-scripts
@@ -35,12 +38,15 @@ jobs:
         if: github.event_name != 'pull_request' || github.event.pull_request.head.repo.full_name == github.repository
         uses: actions/upload-artifact@v4
         with:
-          name: coverage-report-typescript
-          path: Ventilsteuerung/apixon-io-client/coverage/cobertura-coverage.xml
+          name: coverage-report-typescript-${{ matrix.client }}
+          path: Ventilsteuerung/Web-Clients/${{ matrix.client }}/coverage/cobertura-coverage.xml
 
   upload-coverage-typescript:
     needs: test
     if: ${{ !cancelled() && needs.test.result == 'success' && (github.event_name != 'pull_request' || github.event.pull_request.head.repo.full_name == github.repository) }}
+    strategy:
+      matrix:
+        client: [apixon-diodo-client, apixon-pwm-client]
     runs-on: ubuntu-latest
     permissions:
       contents: read
@@ -49,10 +55,10 @@ jobs:
       - name: Download coverage artifact
         uses: actions/download-artifact@v4.1.3
         with:
-          name: coverage-report-typescript
+          name: coverage-report-typescript-${{ matrix.client }}
 
       - uses: actions/upload-code-coverage@v1
         with:
           file: cobertura-coverage.xml
           language: TypeScript
-          label: code-coverage-agent
+          label: code-coverage-agent-${{ matrix.client }}
