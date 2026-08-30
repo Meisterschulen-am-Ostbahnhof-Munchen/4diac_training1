@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<FBType Name="FT_DERIV_AR" Comment="AR-Adapter-Wrapper um OSCAT FT_DERIV (K=1.0, run=TRUE, einfache Ableitung ohne Glaettung) - bruckt zwischen adapter und OSCAT, ohne dass eine der beiden Basisbibliotheken von der anderen abhaengt">
+	<Identification Standard="61499-2" Description="Copyright (c) 2026 Meisterschulen am Ostbahnhof  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0">
+	</Identification>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2026-08-30" Remarks="initial API and implementation and/or initial documentation">
+	</VersionInfo>
+	<CompilerInfo packageName="OSCAT_adapter::Control">
+	</CompilerInfo>
+	<InterfaceList>
+		<EventOutputs>
+			<Event Name="CNF" Type="Event" Comment="Ableitung berechnet (Klartext-Ausgabe zusaetzlich zum AR_OUT-Adapter, fuer direkte Weiterverdrahtung an plain FBs wie Q_NumericValue_PHYS)">
+				<With Var="out"/>
+			</Event>
+		</EventOutputs>
+		<OutputVars>
+			<VarDeclaration Name="out" Type="REAL" Comment="Berechnete Ableitung (bei K=1.0 direkt in Hz, wenn IN Impulse/Zaehlerstand ist)"/>
+		</OutputVars>
+		<Plugs>
+			<AdapterDeclaration Name="AR_OUT" Type="adapter::types::unidirectional::AR" Comment="Ableitung (REAL), fuer Weiterverdrahtung an weitere Adapter-Bausteine (z.B. AR_PUBLISH_1)" x="2300" y="0"/>
+		</Plugs>
+		<Sockets>
+			<AdapterDeclaration Name="AR_IN" Type="adapter::types::unidirectional::AR" Comment="Eingangssignal (REAL)" x="0" y="0"/>
+		</Sockets>
+	</InterfaceList>
+	<FBNetwork>
+		<FB Name="FT_DERIV" Type="OSCAT::Basic::POUs::Engineering::Control::FT_DERIV" x="800" y="0">
+			<Parameter Name="K" Value="REAL#1.0"/>
+			<Parameter Name="run" Value="TRUE"/>
+		</FB>
+		<EventConnections>
+			<Connection Source="AR_IN.E1" Destination="FT_DERIV.REQ" dx1="100"/>
+			<Connection Source="FT_DERIV.CNF" Destination="AR_OUT.E1" dx1="100"/>
+			<Connection Source="FT_DERIV.CNF" Destination="CNF" dx1="100"/>
+		</EventConnections>
+		<DataConnections>
+			<Connection Source="AR_IN.D1" Destination="FT_DERIV.in" dx1="100"/>
+			<Connection Source="FT_DERIV.out" Destination="AR_OUT.D1" dx1="100"/>
+			<Connection Source="FT_DERIV.out" Destination="out" dx1="100"/>
+		</DataConnections>
+	</FBNetwork>
+	<Attribute Name="eclipse4diac::core::TypeHash" Value="''"/>
+	<Attribute Name="Documentation" Type="CDATA"><![CDATA[<h1>FT_DERIV_AR</h1>
+
+<h2>🇩🇪 Deutsch</h2>
+
+<p>AR-Adapter-Wrapper um <code>OSCAT::Basic::POUs::Engineering::Control::FT_DERIV</code> (feste Parametrierung <code>K=1.0</code>, <code>run=TRUE</code>, keine Glaettung).</p>
+
+<h3>Warum ein eigener Wrapper (und nicht direkt FT_DERIV in der Komposition verdrahten)?</h3>
+
+<p><code>FT_DERIV</code> ist ein reines OSCAT-FB ohne Adapter-Schnittstelle (<code>REQ</code>/<code>CNF</code> sind einfache Events, keine <code>AR</code>-Sockets/Plugs). Ein einzelnes Roh-Sub-Signal (<code>.E1</code>/<code>.D1</code>) eines FREMD-instanzierten Adapter-Bausteins (z. B. <code>AD_TO_AR_NUM.AR_OUT</code>) laesst sich in einem uebergeordneten SubApp-Netzwerk NICHT direkt an ein einfaches Event/Datum eines anderen, ebenfalls fremd-instanzierten FBs verdrahten - diese <code>.E1</code>/<code>.D1</code>-Zugriffssyntax ist nur INNERHALB der Definition eines FBTyps fuer dessen EIGENE Grenz-Sockets/-Plugs gueltig (siehe z. B. <code>Q_NumericValue_AUDI</code>, das genau so intern <code>Q_NumericValue</code> einwickelt).</p>
+
+<p>Zugleich soll <code>adapter</code> nicht von <code>OSCAT</code> abhaengen (und umgekehrt) - beide sollen unabhaengige, generische Basisbibliotheken bleiben. Die Loesung: ein DRITTES, eigenes Bibliotheks-Projekt (<code>OSCAT_adapter</code>), das von BEIDEN abhaengt und die Bruecke in einem eigenen FBTyp kapselt. <code>FT_DERIV_AR</code> exponiert dafuer <code>AR_IN</code> (Socket) und <code>AR_OUT</code> (Plug) als saubere Adapter-Grenzen - eine aufrufende Komposition verbindet es per normaler <code>AdapterConnection</code> (kein <code>.E1</code>/<code>.D1</code> noetig) mit anderen AR-Bausteinen wie <code>AD_TO_AR_NUM</code> oder <code>AR_PUBLISH_1</code>.</p>
+
+<p>Zusaetzlich re-exponiert <code>FT_DERIV_AR</code> das Ergebnis auch als einfaches <code>CNF</code>-Event mit <code>out:REAL</code> (kein Adapter) - fuer Verbraucher, die selbst keine Adapter-Schnittstelle haben (z. B. <code>Q_NumericValue_PHYS</code> fuer die VT-Zahlenfeld-Anzeige). Diese Verdrahtung ist unproblematisch, da <code>CNF</code>/<code>out</code> ganz normale, am FBTyp selbst deklarierte Grenz-Signale sind - keine fremden Adapter-Sub-Signale.</p>
+
+<h2>🇬🇧 English</h2>
+
+<p>AR-adapter wrapper around <code>OSCAT::Basic::POUs::Engineering::Control::FT_DERIV</code> (fixed parametrization <code>K=1.0</code>, <code>run=TRUE</code>, no smoothing).</p>
+
+<h3>Why a dedicated wrapper (instead of wiring FT_DERIV directly into a composition)?</h3>
+
+<p><code>FT_DERIV</code> is a plain OSCAT FB with no adapter interface (<code>REQ</code>/<code>CNF</code> are ordinary events, not <code>AR</code> sockets/plugs). A raw sub-signal (<code>.E1</code>/<code>.D1</code>) of an EXTERNALLY instantiated adapter FB (e.g. <code>AD_TO_AR_NUM.AR_OUT</code>) cannot be wired directly, from a parent SubApp network, into a plain event/data pin of another externally instantiated FB - this <code>.E1</code>/<code>.D1</code> access syntax is only valid INSIDE an FBType's own definition, for its OWN boundary sockets/plugs (see e.g. <code>Q_NumericValue_AUDI</code>, which wraps <code>Q_NumericValue</code> internally in exactly this way).</p>
+
+<p>At the same time, <code>adapter</code> must not depend on <code>OSCAT</code> (nor vice versa) - both should stay independent, generic base libraries. The solution: a THIRD, dedicated library project (<code>OSCAT_adapter</code>) that depends on BOTH and encapsulates the bridge in its own FBType. <code>FT_DERIV_AR</code> exposes <code>AR_IN</code> (socket) and <code>AR_OUT</code> (plug) as clean adapter boundaries - a calling composition connects it via a normal <code>AdapterConnection</code> (no <code>.E1</code>/<code>.D1</code> needed) to other AR blocks such as <code>AD_TO_AR_NUM</code> or <code>AR_PUBLISH_1</code>.</p>
+
+<p><code>FT_DERIV_AR</code> additionally re-exposes the result as a plain <code>CNF</code> event with <code>out:REAL</code> (no adapter) - for consumers that have no adapter interface of their own (e.g. <code>Q_NumericValue_PHYS</code> for the VT number-field display). This wiring is unproblematic, since <code>CNF</code>/<code>out</code> are ordinary boundary signals declared on the FBType itself - not foreign adapter sub-signals.</p>
+]]></Attribute>
+</FBType>
