@@ -74,4 +74,42 @@
 		</DataConnections>
 	</FBNetwork>
 	<Attribute Name="eclipse4diac::core::TypeHash" Value="''"/>
+	<Attribute Name="Documentation" Type="CDATA"><![CDATA[<h1>logiBUS_AI_IDA</h1>
+
+<h2>🇩🇪 Deutsch</h2>
+
+<p>Composite-Baustein, der den Service-Interface-Baustein <code>logiBUS_AI_ID</code> um eine Adapter-Schnittstelle erweitert: Der Rohwert steht statt über die klassischen <code>IN</code>/<code>CNF</code>/<code>IND</code>-Ereignisse als Plug <code>IN</code> (Typ <code>adapter::types::unidirectional::AD</code>) bereit, zusätzlich kann über den Socket <code>SREQ</code> ein externer Adapter eine Abfrage anstoßen (per <code>E_R_TRIG</code> flankengetriggert auf <code>REQ</code>).</p>
+
+<h3>Schnittstelle</h3>
+
+<ul>
+	<li><strong>INIT</strong> (mit QI, PARAMS, Input, AnalogInput_hysteresis, TimeDelta, TimeRateLimit): wie <code>logiBUS_AI_ID</code>, wird direkt durchgereicht.</li>
+	<li><strong>REQ</strong> (mit QI): sofortige Abfrage; kann zusätzlich über den Socket <code>SREQ</code> extern ausgelöst werden.</li>
+	<li><strong>INITO</strong> (mit QO, STATUS): Bestätigung der Initialisierung.</li>
+	<li><strong>Plug IN</strong> (<code>adapter::types::unidirectional::AD</code>): liefert den Rohwert als Adapter-Ereignis/-Daten (<code>E1</code>/<code>D1</code>) statt der einzelnen <code>CNF</code>/<code>IND</code>-Events des inneren Bausteins.</li>
+	<li><strong>Socket SREQ</strong> (<code>adapter::types::unidirectional::AX</code>): externe Service-Anforderung, über <code>E_R_TRIG</code> flankengetriggert auf <code>AI.REQ</code>.</li>
+</ul>
+
+<h3>Roh-Vollausschlag von IN</h3>
+
+<p>Wie beim inneren Baustein <a href="./logiBUS_AI_ID.md"><code>logiBUS_AI_ID</code></a>: <code>IN</code> liefert den ADC-Rohwert im Bereich <strong>0-4095 (12 bit)</strong>, auf dem ESP32-P4 im Continuous/DMA-ADC-Modus fix (keine andere Bit-Breite wählbar). Details und Umrechnung Rohwert→Volt siehe dort.</p>
+
+<h2>🇬🇧 English</h2>
+
+<p>Composite block that extends the service interface block <code>logiBUS_AI_ID</code> with an adapter interface: instead of the classic <code>IN</code>/<code>CNF</code>/<code>IND</code> events, the raw value is exposed as a plug <code>IN</code> (type <code>adapter::types::unidirectional::AD</code>); additionally, an external adapter can trigger a read via the socket <code>SREQ</code> (edge-triggered onto <code>REQ</code> via <code>E_R_TRIG</code>).</p>
+
+<h3>Interface</h3>
+
+<ul>
+	<li><strong>INIT</strong> (with QI, PARAMS, Input, AnalogInput_hysteresis, TimeDelta, TimeRateLimit): same as <code>logiBUS_AI_ID</code>, passed straight through.</li>
+	<li><strong>REQ</strong> (with QI): immediate read; can also be triggered externally via the <code>SREQ</code> socket.</li>
+	<li><strong>INITO</strong> (with QO, STATUS): initialization confirmation.</li>
+	<li><strong>Plug IN</strong> (<code>adapter::types::unidirectional::AD</code>): delivers the raw value as an adapter event/data pair (<code>E1</code>/<code>D1</code>) instead of the internal block's individual <code>CNF</code>/<code>IND</code> events.</li>
+	<li><strong>Socket SREQ</strong> (<code>adapter::types::unidirectional::AX</code>): external service request, edge-triggered onto <code>AI.REQ</code> via <code>E_R_TRIG</code>.</li>
+</ul>
+
+<h3>Raw full-scale value of IN</h3>
+
+<p>Same as the internal <a href="./logiBUS_AI_ID.md"><code>logiBUS_AI_ID</code></a> block: <code>IN</code> delivers the raw ADC value in the range <strong>0-4095 (12 bit)</strong>, fixed on the ESP32-P4 in continuous/DMA ADC mode (no other bit width selectable). See there for details and the raw-to-volt conversion.</p>
+]]></Attribute>
 </FBType>
