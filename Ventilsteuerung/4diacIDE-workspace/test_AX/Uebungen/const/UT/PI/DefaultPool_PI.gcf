@@ -2,7 +2,18 @@
 <GlobalConstants Name="DefaultPool_PI" Comment="Global constants">
     <CompilerInfo packageName="Uebungen::const::UT::PI"/>
     <GlobalConstants>
+        <VarDeclaration Name="ISO_DESIGNATOR_WIDTH" Type="UINT" InitialValue="80"/>
+        <VarDeclaration Name="ISO_DESIGNATOR_HEIGHT" Type="UINT" InitialValue="80"/>
+        <VarDeclaration Name="ISO_MASK_SIZE" Type="UINT" InitialValue="480"/>
+        <VarDeclaration Name="ISO_VERSION_LABEL" Type="STRING" InitialValue=""/>
+        <VarDeclaration Name="MASK_WIDTH" Type="UINT" InitialValue="480"/>
+        <VarDeclaration Name="MASK_HEIGHT" Type="UINT" InitialValue="480"/>
         <VarDeclaration Name="WorkingSet" Type="UINT" InitialValue="0"/>
+        <VarDeclaration Name="Macro_M1" Type="UINT" InitialValue="1"/>
+        <VarDeclaration Name="Macro_PI_1" Type="UINT" InitialValue="2"/>
+        <VarDeclaration Name="Macro_PI_2" Type="UINT" InitialValue="3"/>
+        <VarDeclaration Name="Macro_PI_3" Type="UINT" InitialValue="4"/>
+        <VarDeclaration Name="Macro_PI_4" Type="UINT" InitialValue="5"/>
         <VarDeclaration Name="DataMask_M1" Type="UINT" InitialValue="1000"/>
         <VarDeclaration Name="DataMask_PI1" Type="UINT" InitialValue="1001"/>
         <VarDeclaration Name="DataMask_PI2" Type="UINT" InitialValue="1002"/>
@@ -27,6 +38,58 @@
         <VarDeclaration Name="Button_Q10" Type="UINT" InitialValue="6010"/>
         <VarDeclaration Name="Button_Q11" Type="UINT" InitialValue="6011"/>
         <VarDeclaration Name="Button_Q12" Type="UINT" InitialValue="6012"/>
+        <VarDeclaration Name="OutputString_WorkingSet_0" Type="UINT" InitialValue="11000"/>
+        <VarDeclaration Name="Label_SoftKey_Ausgaenge" Type="UINT" InitialValue="11001"/>
+        <VarDeclaration Name="Label_SoftKey_PI1" Type="UINT" InitialValue="11002"/>
+        <VarDeclaration Name="Label_SoftKey_PI2" Type="UINT" InitialValue="11003"/>
+        <VarDeclaration Name="Label_SoftKey_PI3" Type="UINT" InitialValue="11004"/>
+        <VarDeclaration Name="Label_SoftKey_PI4" Type="UINT" InitialValue="11005"/>
+        <VarDeclaration Name="Label_PI_I01" Type="UINT" InitialValue="11006"/>
+        <VarDeclaration Name="Label_PI_I02" Type="UINT" InitialValue="11007"/>
+        <VarDeclaration Name="Label_PI_I03" Type="UINT" InitialValue="11008"/>
+        <VarDeclaration Name="Label_PI_I04" Type="UINT" InitialValue="11009"/>
+        <VarDeclaration Name="Label_PI_I05" Type="UINT" InitialValue="11010"/>
+        <VarDeclaration Name="Label_PI_I06" Type="UINT" InitialValue="11011"/>
+        <VarDeclaration Name="Label_PI_I07" Type="UINT" InitialValue="11012"/>
+        <VarDeclaration Name="Label_PI_I08" Type="UINT" InitialValue="11013"/>
+        <VarDeclaration Name="OutputNumber_c1" Type="UINT" InitialValue="12001"/>
+        <VarDeclaration Name="OutputNumber_c9" Type="UINT" InitialValue="12009"/>
+        <VarDeclaration Name="OutputNumber_c10" Type="UINT" InitialValue="12010"/>
+        <VarDeclaration Name="OutputNumber_c11" Type="UINT" InitialValue="12011"/>
+        <VarDeclaration Name="OutputNumber_c12" Type="UINT" InitialValue="12012"/>
+        <VarDeclaration Name="OutputNumber_c2" Type="UINT" InitialValue="12013"/>
+        <VarDeclaration Name="OutputNumber_c3" Type="UINT" InitialValue="12014"/>
+        <VarDeclaration Name="OutputNumber_c4" Type="UINT" InitialValue="12015"/>
+        <VarDeclaration Name="OutputNumber_c5" Type="UINT" InitialValue="12016"/>
+        <VarDeclaration Name="OutputNumber_c6" Type="UINT" InitialValue="12017"/>
+        <VarDeclaration Name="OutputNumber_c7" Type="UINT" InitialValue="12018"/>
+        <VarDeclaration Name="OutputNumber_c8" Type="UINT" InitialValue="12019"/>
+        <VarDeclaration Name="OutputNumber_Tick" Type="UINT" InitialValue="12020"/>
+        <VarDeclaration Name="OutputNumber_PI_I01_FREQ" Type="UINT" InitialValue="12021"/>
+        <VarDeclaration Name="OutputNumber_PI_I01_COUNT" Type="UINT" InitialValue="12022"/>
+        <VarDeclaration Name="OutputNumber_PI_I02_FREQ" Type="UINT" InitialValue="12023"/>
+        <VarDeclaration Name="OutputNumber_PI_I02_COUNT" Type="UINT" InitialValue="12024"/>
+        <VarDeclaration Name="OutputNumber_PI_I03_FREQ" Type="UINT" InitialValue="12025"/>
+        <VarDeclaration Name="OutputNumber_PI_I03_COUNT" Type="UINT" InitialValue="12026"/>
+        <VarDeclaration Name="OutputNumber_PI_I04_FREQ" Type="UINT" InitialValue="12027"/>
+        <VarDeclaration Name="OutputNumber_PI_I04_COUNT" Type="UINT" InitialValue="12028"/>
+        <VarDeclaration Name="OutputNumber_PI_I05_FREQ" Type="UINT" InitialValue="12029"/>
+        <VarDeclaration Name="OutputNumber_PI_I05_COUNT" Type="UINT" InitialValue="12030"/>
+        <VarDeclaration Name="OutputNumber_PI_I06_FREQ" Type="UINT" InitialValue="12031"/>
+        <VarDeclaration Name="OutputNumber_PI_I06_COUNT" Type="UINT" InitialValue="12032"/>
+        <VarDeclaration Name="OutputNumber_PI_I07_FREQ" Type="UINT" InitialValue="12033"/>
+        <VarDeclaration Name="OutputNumber_PI_I07_COUNT" Type="UINT" InitialValue="12034"/>
+        <VarDeclaration Name="OutputNumber_PI_I08_FREQ" Type="UINT" InitialValue="12035"/>
+        <VarDeclaration Name="OutputNumber_PI_I08_COUNT" Type="UINT" InitialValue="12036"/>
+        <VarDeclaration Name="Bargraph_PI_I01" Type="UINT" InitialValue="18000"/>
+        <VarDeclaration Name="Bargraph_PI_I02" Type="UINT" InitialValue="18001"/>
+        <VarDeclaration Name="Bargraph_PI_I03" Type="UINT" InitialValue="18002"/>
+        <VarDeclaration Name="Bargraph_PI_I04" Type="UINT" InitialValue="18003"/>
+        <VarDeclaration Name="Bargraph_PI_I05" Type="UINT" InitialValue="18004"/>
+        <VarDeclaration Name="Bargraph_PI_I06" Type="UINT" InitialValue="18005"/>
+        <VarDeclaration Name="Bargraph_PI_I07" Type="UINT" InitialValue="18006"/>
+        <VarDeclaration Name="Bargraph_PI_I08" Type="UINT" InitialValue="18007"/>
+        <VarDeclaration Name="Logos_icon" Type="UINT" InitialValue="20500"/>
         <VarDeclaration Name="NumberVariable_PI_FREQ_I01" Type="UINT" InitialValue="21000"/>
         <VarDeclaration Name="NumberVariable_PI_FREQ_I02" Type="UINT" InitialValue="21001"/>
         <VarDeclaration Name="NumberVariable_PI_FREQ_I03" Type="UINT" InitialValue="21002"/>
@@ -43,65 +106,9 @@
         <VarDeclaration Name="NumberVariable_PI_COUNT_I06" Type="UINT" InitialValue="21013"/>
         <VarDeclaration Name="NumberVariable_PI_COUNT_I07" Type="UINT" InitialValue="21014"/>
         <VarDeclaration Name="NumberVariable_PI_COUNT_I08" Type="UINT" InitialValue="21015"/>
-        <VarDeclaration Name="OutputNumber_Tick" Type="UINT" InitialValue="12020"/>
         <VarDeclaration Name="FontAttributes_6x8" Type="UINT" InitialValue="23000"/>
         <VarDeclaration Name="FontAttributes_24x32" Type="UINT" InitialValue="23001"/>
         <VarDeclaration Name="FontAttributes_16x16" Type="UINT" InitialValue="23002"/>
-        <VarDeclaration Name="Logos_icon" Type="UINT" InitialValue="20500"/>
         <VarDeclaration Name="AuxFunction2_X1" Type="UINT" InitialValue="31000"/>
     </GlobalConstants>
-    <OriginalSource><![CDATA[PACKAGE Uebungen::const::UT::PI;
-
-GLOBALCONSTANTS DefaultPool_PI
-	VAR_GLOBAL CONSTANT
-		WorkingSet : UINT := 0;
-		DataMask_M1 : UINT := 1000;
-		DataMask_PI1 : UINT := 1001;
-		DataMask_PI2 : UINT := 1002;
-		DataMask_PI3 : UINT := 1003;
-		DataMask_PI4 : UINT := 1004;
-		Container_Q : UINT := 3000;
-		SoftKeyMask_PI : UINT := 4000;
-		SoftKey_Ausgaenge : UINT := 5000;
-		SoftKey_PI1 : UINT := 5001;
-		SoftKey_PI2 : UINT := 5002;
-		SoftKey_PI3 : UINT := 5003;
-		SoftKey_PI4 : UINT := 5004;
-		Button_Q01 : UINT := 6001;
-		Button_Q02 : UINT := 6002;
-		Button_Q03 : UINT := 6003;
-		Button_Q04 : UINT := 6004;
-		Button_Q05 : UINT := 6005;
-		Button_Q06 : UINT := 6006;
-		Button_Q07 : UINT := 6007;
-		Button_Q08 : UINT := 6008;
-		Button_Q09 : UINT := 6009;
-		Button_Q10 : UINT := 6010;
-		Button_Q11 : UINT := 6011;
-		Button_Q12 : UINT := 6012;
-		NumberVariable_PI_FREQ_I01 : UINT := 21000;
-		NumberVariable_PI_FREQ_I02 : UINT := 21001;
-		NumberVariable_PI_FREQ_I03 : UINT := 21002;
-		NumberVariable_PI_FREQ_I04 : UINT := 21003;
-		NumberVariable_PI_FREQ_I05 : UINT := 21004;
-		NumberVariable_PI_FREQ_I06 : UINT := 21005;
-		NumberVariable_PI_FREQ_I07 : UINT := 21006;
-		NumberVariable_PI_FREQ_I08 : UINT := 21007;
-		NumberVariable_PI_COUNT_I01 : UINT := 21008;
-		NumberVariable_PI_COUNT_I02 : UINT := 21009;
-		NumberVariable_PI_COUNT_I03 : UINT := 21010;
-		NumberVariable_PI_COUNT_I04 : UINT := 21011;
-		NumberVariable_PI_COUNT_I05 : UINT := 21012;
-		NumberVariable_PI_COUNT_I06 : UINT := 21013;
-		NumberVariable_PI_COUNT_I07 : UINT := 21014;
-		NumberVariable_PI_COUNT_I08 : UINT := 21015;
-		OutputNumber_Tick : UINT := 12020;
-		FontAttributes_6x8 : UINT := 23000;
-		FontAttributes_24x32 : UINT := 23001;
-		FontAttributes_16x16 : UINT := 23002;
-		Logos_icon : UINT := 20500;
-		AuxFunction2_X1 : UINT := 31000;
-	END_VAR
-END_GLOBALCONSTANTS
-]]></OriginalSource>
 </GlobalConstants>
