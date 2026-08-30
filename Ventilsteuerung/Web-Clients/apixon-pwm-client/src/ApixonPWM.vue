@@ -6,7 +6,8 @@
         <span class="dot" :class="statusClass"></span>
         <span v-if="connected" class="tick-badge" :class="{ pulse: tickPulse }">{{ tick }}</span>
         <span>{{ status }}</span>
-        <input v-model="endpointUrl" class="url-input" :disabled="connected" />
+        <label for="endpoint-url" class="sr-only">OPC-UA Endpoint-URL</label>
+        <input id="endpoint-url" v-model="endpointUrl" class="url-input" :disabled="connected" />
         <button @click="connected ? disconnect() : connect()">
           {{ connected ? 'Trennen' : 'Verbinden' }}
         </button>
@@ -33,7 +34,9 @@
       <div class="pwm-grid">
         <div v-for="n in 12" :key="'Q' + n" class="pwm-item">
           <span class="pwm-label">Q{{ n }}</span>
+          <label :for="`pwm-range-${n}`" class="sr-only">PWM-Kanal {{ n }} Prozentwert (Schieberegler)</label>
           <input
+            :id="`pwm-range-${n}`"
             type="range"
             min="0"
             max="100"
@@ -42,7 +45,9 @@
             @input="writeOutputThrottled(n)"
             @change="writeOutput(n)"
           />
+          <label :for="`pwm-number-${n}`" class="sr-only">PWM-Kanal {{ n }} Prozentwert (Eingabefeld)</label>
           <input
+            :id="`pwm-number-${n}`"
             type="number"
             min="0"
             max="100"
@@ -89,13 +94,13 @@ import {
 const endpointUrl = ref(`ws://${window.location.hostname || 'localhost'}:4841`)
 const status = ref('Getrennt')
 const connected = ref(false)
-const inputs = ref<boolean[]>(Array(8).fill(false))
+const inputs = ref<boolean[]>(new Array(8).fill(false))
 /* Prozent 0.0-100.0 (REAL), nicht Bool wie beim DIDO-Beispiel */
-const outputs = ref<number[]>(Array(12).fill(0))
+const outputs = ref<number[]>(new Array(12).fill(0))
 /* Kanal-Ein/Aus (BOOL), echo des Kanal-Schalters (E_T_FF_SWITCH.Q) */
-const channelSwitches = ref<boolean[]>(Array(12).fill(false))
+const channelSwitches = ref<boolean[]>(new Array(12).fill(false))
 /* Kanal-Status (BOOL), logiBUS_QD_PWM.QO, nur lesend */
-const channelStatus = ref<boolean[]>(Array(12).fill(false))
+const channelStatus = ref<boolean[]>(new Array(12).fill(false))
 const tick = ref<number | string>('–')
 const tickPulse = ref(false)
 
@@ -237,7 +242,7 @@ async function connect() {
  * without flooding the OPC-UA write channel; @change still fires one final,
  * unthrottled write on mouse-up to guarantee the committed value is sent. */
 const THROTTLE_MS = 150
-const throttleTimers: (ReturnType<typeof setTimeout> | null)[] = Array(12).fill(null)
+const throttleTimers: (ReturnType<typeof setTimeout> | null)[] = new Array(12).fill(null)
 
 function writeOutputThrottled(n: number) {
   if (throttleTimers[n - 1]) return
@@ -304,6 +309,18 @@ onUnmounted(() => disconnect())
 
 <style scoped>
 * { box-sizing: border-box; margin: 0; padding: 0; }
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
 
 .app {
   font-family: system-ui, sans-serif;
