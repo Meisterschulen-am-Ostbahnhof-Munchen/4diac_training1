@@ -1,5 +1,9 @@
 # Plan: PWM-Trainingsbeispiel (12 Kanäle)
 
+**Status: abgeschlossen ✅ (2026-08-30)** — Feature fertig, alle beim Live-Test
+gefundenen Bugs behoben und vom Nutzer bestätigt (VT + Web-UI stimmen für
+alle 12 Kanäle inkl. Fehlerzustand überein, siehe unten).
+
 ## Ausgangslage
 
 Analog zum bestehenden DI/DO-Trainingsbeispiel (`Uebungen::Uebung_011b1` /
@@ -110,38 +114,88 @@ VT-Projekt, Web-Client), damit Lernende beide Beispiele klar auseinanderhalten k
   (dessen `INIT`-With-Liste enthält `QI`). Validiert: wohlgeformt, keine
   verwaisten Verbindungsziele, `grep E_PERMIT` liefert 0 Treffer.
 
-### Gefunden beim Live-Test (2026-08-29) — noch offen 🔴
+### Gefunden beim Live-Test (2026-08-29/30) — behoben ✅ (Kanal-Schalter, Runde 2)
 
-- **`logiBUS_QD_PWM.QO` kommt zwar korrekt TRUE/FALSE, aber der Status
-  (Hintergrundfarbe / Web-UI-LED) aktualisiert sich nicht zuverlässig.**
-  Vom Nutzer selbst diagnostiziert: **`logiBUS_QD_PWM` schickt bei `.INIT`
-  nur `INITO`, nicht `CNF`.** Die aktuelle Verdrahtung
-  (`F_XOR_ENABLED.CNF -> logiBUS_QD_PWM.INIT`, dann
-  `logiBUS_QD_PWM.CNF -> F_SEL_OK_FAULT.REQ` / `-> AX_BOOL_TO_X_STATUS.REQ`)
-  geht fälschlich davon aus, dass das `INIT`-Event auch `CNF` auslöst — tut
-  es aber nicht, nur `INITO`. Die Status-/Web-Kette hängt also weiterhin nur
-  am regulären `REQ`/`CNF`-Zyklus (ausgelöst durch `RampLimitFS`-Events),
-  nicht am Schalter-Toggle selbst. **Nur notiert, noch nicht angefasst** —
-  der Nutzer testet weiter. Vermutlich muss zusätzlich `logiBUS_QD_PWM.INITO`
-  (statt/neben `.CNF`) die Status-Kette (`F_SEL_OK_FAULT.REQ`,
-  `AX_BOOL_TO_X_STATUS.REQ`) anstoßen — Detailanalyse steht noch aus.
-- **`AX_SUBSCRIBE_SWITCH` empfängt korrekt TRUE/FALSE vom OPC-UA-Schreib-
-  zugriff, aber der empfangene Wert selbst wird nirgends verwendet.** Die
-  aktuelle Verdrahtung nutzt nur `AX_X_TO_BOOL_SWITCH.CNF` (das reine
-  Ereignis "es wurde geschrieben"), um `E_T_FF_SWITCH.CLK` auszulösen — ein
-  blindes Toggle, das den tatsächlich geschriebenen Bool-Wert
-  (`AX_X_TO_BOOL_SWITCH.OUT`) komplett ignoriert (so auch schon im
-  Vue-Client-Kommentar dokumentiert: "togglet den Kanal, unabhängig vom
-  übertragenen Wert selbst"). Vom Nutzer beim Live-Test beobachtet: **gerade
-  zufällig invertiert** — d.h. ob ein externer OPC-UA-Schreibzugriff mit
-  TRUE/FALSE am Ende den erwarteten Kanalzustand ergibt, hängt rein vom
-  Zufall der aktuellen Parität mit `E_T_FF_SWITCH.Q` ab, nicht von der
-  tatsächlichen Absicht des Schreibzugriffs. **Nur notiert, noch nicht
-  angefasst** — der Nutzer testet weiter. Vermutlich muss der Enable-Zustand
-  bei externem Schreibzugriff auf den tatsächlich geschriebenen Wert gesetzt
-  werden (statt getoggelt), z.B. über `AX_X_TO_BOOL_SWITCH.OUT` als weiteren
-  XOR-Operanden oder eine direkte Set/Reset-Logik statt `E_T_FF` für diesen
-  Pfad — Detailanalyse steht noch aus.
+- **`logiBUS_QD_PWM.QO` kam korrekt TRUE/FALSE, aber Status (Hintergrundfarbe/
+  Web-UI) aktualisierte sich nicht zuverlässig.** Ursache (vom Nutzer selbst
+  diagnostiziert): `logiBUS_QD_PWM` schickt bei `.INIT` nur `INITO`, nicht
+  `CNF` — die Status-Kette hing nur am `.CNF` und wurde vom Umschalten des
+  Kanal-Schalters nie ausgelöst. **Fix:** `logiBUS_QD_PWM.INITO` (dessen
+  With-Liste ebenfalls `QO`/`STATUS` enthält, wie `.CNF`) speist jetzt
+  zusätzlich `F_SEL_OK_FAULT.REQ`, `AX_BOOL_TO_X_SWITCH.REQ`,
+  `AX_BOOL_TO_X_STATUS.REQ`.
+- **`AX_SUBSCRIBE_SWITCH` empfing korrekt TRUE/FALSE, aber der Wert wurde
+  nirgends verwendet — nur `AX_X_TO_BOOL_SWITCH.CNF` (reines "es wurde
+  geschrieben"-Ereignis) togglete blind `E_T_FF_SWITCH.CLK`.** Nicht
+  idempotent: zwei Schreibzugriffe mit demselben Wert togglen zweimal,
+  Ergebnis "zufällig invertiert". **Fix:** `AX_X_TO_BOOL_SWITCH` (Typ
+  `AX_X_TO_BOOL`) ersetzt durch `AX_RF_TRIG_SWITCH`
+  (`adapter::events::unidirectional::AX_RF_TRIG`, IEC 61499 Annex A
+  Rising/Falling-Edge-Trigger) — feuert `ER`/`EF` nur bei echter
+  Wertänderung. `E_T_FF_SWITCH` (reines Toggle, kein Set/Reset, kein
+  Seed-Mechanismus) ersetzt durch `E_T_FF_SR_SWITCH`
+  (`iec61499::events::E_T_FF_SR_SYM_INIT`): `ER -> S`, `EF -> R` (externer
+  Schreibzugriff setzt jetzt den tatsächlich geschriebenen Wert statt zu
+  toggeln), `CLK` bleibt für den physischen VT-Taster (togglet weiterhin).
+  `Q_INIT` wird direkt aus `bDefaultEnabled` gespeist — der bisherige
+  `F_XOR_ENABLED`-Workaround (`bEnabled = bDefaultEnabled XOR Q`, nötig weil
+  das alte `E_T_FF` immer bei FALSE startete) ist damit komplett entfallen,
+  `logiBUS_QD_PWM.QI`/`F_SEL_STATUS.G` hängen jetzt direkt an
+  `E_T_FF_SR_SWITCH.Q`.
+- **Boot-Reihenfolge-Race gefunden und behoben:** `E_T_FF_SR_SWITCH.INIT`
+  wurde zunächst von einem eigenen, parallel zur OPC-UA-Adapter-Bootstrap-
+  Kette startenden `INIT_ENABLED` gefeuert. Race: der allererste
+  Kanal-Enable-Zustand konnte den `AX_PUBLISH_SWITCH`-Adapter erreichen,
+  bevor dessen eigene `.INIT`-Sequenz (`AR_SUBSCRIBE_1 -> AR_PUBLISH_1 ->
+  AX_SUBSCRIBE_SWITCH -> AX_PUBLISH_SWITCH -> AX_PUBLISH_STATUS`, jeweils
+  `.INITO -> .INIT` verkettet) fertig war — der Schreibversuch wurde dann
+  vom noch nicht bereiten Adapter verworfen, der OPC-UA-Knoten blieb für
+  Kanal 1-8 dauerhaft auf FALSE stehen. **Fix:** `E_T_FF_SR_SWITCH.INIT`
+  wird jetzt vom Ende dieser bestehenden Adapter-Kette
+  (`AX_PUBLISH_STATUS.INITO`) gefeuert statt von einem eigenen parallelen
+  Trigger — garantiert, dass alle Adapter bereit sind, bevor der erste
+  Enable-Zustand publiziert wird.
+- Bestätigt durch den Nutzer per UA Expert/Web-UI: alle 12 Kanäle zeigen
+  beim Deployment korrekt Enabled/Disabled (1-8 an, 9-12 aus), Kanal 9
+  manuell aktiviert zeigt korrekt ROT (Kanal-Limit überschritten) auf
+  ISOBUS UND Web-UI.
+
+### Erweiterungen nach Live-Test — umgesetzt ✅
+
+- **3-Farben-Status (WEISS/GRÜN/ROT) statt nur GRÜN/ROT:** ursprünglich nur
+  `logiBUS_QD_PWM.QO` (ein einzelnes BOOL) für die Statusfarbe verwendet —
+  kann WEISS (deaktiviert) nicht codieren. VT-seitig zweistufiges `F_SEL`
+  (`F_SEL_OK_FAULT`: `QO` → ROT/GRÜN; `F_SEL_STATUS`: Enable-Zustand →
+  WEISS oder Ergebnis von `F_SEL_OK_FAULT`). Web-UI kombiniert dieselben
+  zwei bereits publizierten Bits (`PWM_Qnn_SWITCH`=enabled,
+  `PWM_Qnn_STATUS`=QO) client-seitig zur selben 3-Farben-Logik, statt
+  `STATUS` als einfaches An/Aus-LED zu behandeln — keine neue OPC-UA-Node
+  nötig, da beide Bits schon publiziert wurden.
+- **`Ramp6Buttons.SUB` extrahiert:** die 7 Taster (6 Ramp-Tasten + Kanal-
+  Schalter) aus `RampLimitFS_TO_logiBUS_QDA_PWM_OPC.SUB` in eine eigene
+  wiederverwendbare SubApp ausgelagert, Event-Ausgänge/Input-Vars/FB-
+  Reihenfolge an `RampLimitFS`s eigene Event-Reihenfolge angeglichen
+  (`SWITCH, ZERO, UP_SLOW, UP_FAST, DOWN_SLOW, DOWN_FAST, FULL`).
+- **OPC-UA-Adressraum verschachtelt:** von flachen Geschwister-Knoten
+  (`/Objects/PWM/PWM_Q04`, `PWM_Q04_SWITCH`, `PWM_Q04_STATUS`) auf einen
+  Ordner pro Kanal umgestellt (`/Objects/PWM/Q04/VALUE`, `/SWITCH`,
+  `/STATUS`). Vorher in FORTEs `opcua_local_handler.cpp` geprüft: fehlende
+  Zwischenordner werden automatisch als `FolderType`-Objekte angelegt, und
+  die Node-ID (`s=PWM_Q04...`) ist vom Browse-Pfad unabhängig — Web-Client
+  brauchte daher keine Änderung.
+  Betrifft nur `test_AX`; `test_B` hat keine eigene PWM12-Instanz und ist
+  daher nicht betroffen.
+- **Web-Client responsive:** `.pwm-grid` hatte ein festes `repeat(2, 1fr)`,
+  das bei schmalem Fenster nicht auf eine Spalte umgebrochen ist — stattdessen
+  wurde der Regler (einziges schrumpfbares Element der Zeile) auf fast 0px
+  gequetscht. Fix: `repeat(auto-fit, minmax(280px, 1fr))`.
+- **Button-Overflow behoben:** `.pwm-item` als Grid-Zelle hatte
+  `min-width: auto` (Standard), wodurch die fixen Breiten von Zahlenfeld/
+  Schalter/LED die Spalte nach rechts aus der Karte drückten. Fix:
+  `min-width: 0` auf `.pwm-item`.
+- **10 zusätzliche Verbindungsstrings** (`Computers.gcf`, 5× 61499-Format
+  `IP:61499`, 5× OPC-UA `opc.tcp://IP:4840`) — allgemeine Infrastruktur,
+  nicht PWM12-spezifisch, aber im selben Zeitraum ergänzt.
 
 ### Gefunden beim Live-Test — behoben ✅
 
@@ -233,9 +287,12 @@ Zeilenlayout, Tasten nicht in `0 -- - + ++ F`-Reihenfolge, Schriftgröße
 ## Kritische Dateien
 
 - `Ventilsteuerung/4diacIDE-workspace/test_AX/Type Library/MyLib/sys/RampLimitFS_TO_logiBUS_QDA_PWM_OPC.SUB`
+- `Ventilsteuerung/4diacIDE-workspace/test_AX/Type Library/MyLib/sys/Ramp6Buttons.SUB` (die 7 Taster, ausgelagert)
 - `Ventilsteuerung/4diacIDE-workspace/test_AX/Type Library/MyLib/sys/F_PWM_PERCENT_TO_RAW.SUB` / `F_PWM_RAW_TO_PERCENT.SUB`
 - `Ventilsteuerung/4diacIDE-workspace/.lib/logiBUS-3.0.0/typelib/signalprocessing/fieldbus/F_PERCENT_TO_FRACTION.fbt` / `F_FRACTION_TO_PERCENT.fbt`
 - `Ventilsteuerung/4diacIDE-workspace/test_AX/Meins/InputOutputTester/Button_PWM_OPC_UA/SubStrings.gcf`
+- `Ventilsteuerung/4diacIDE-workspace/test_AX/Meins/InputOutputTester/Button_PWM_OPC_UA/InputOutputTesterButton_PWM_OPC_UA.SUB`
 - `Ventilsteuerung/ISO-DesignerProjects/Workspace_PWM12/DefaultPool/DefaultPool.jop`
 - `Ventilsteuerung/4diacIDE-workspace/test_AX/sys/Training_AX/test_AX.sys`
-- `Ventilsteuerung/Web-Clients/apixon-diodo-client/` (Vorlage für `apixon-pwm-client`)
+- `Ventilsteuerung/Web-Clients/apixon-pwm-client/src/ApixonPWM.vue` (Kopie von `apixon-diodo-client` als Vorlage)
+- `Ventilsteuerung/boot-files/test_AX_FORTE_PC_AX.fboot` (generiert — nicht von Hand editieren, nach jeder Adressraum-/Namensänderung über die IDE neu erzeugen)

@@ -48,14 +48,15 @@ Implementation of control logic for hydraulic valves.
 
 ### 2. ISOBUS Integration (HMI)
 Complete design projects for **Virtual Terminals (VT)**.
-- **ISO-Designer projects:** Contain masks, softkeys, and alarm messages (`Workspace`, `Workspace_Joystick`, `Workspace_PWM`, `Workspace_TECU`, `Workspace_TC_SC`, `Workspace_Horse`, `Workspace_Scroll`, `Workspace_Tester`).
+- **ISO-Designer projects:** Contain masks, softkeys, and alarm messages (`Workspace`, `Workspace_Joystick`, `Workspace_PWM`, `Workspace_PWM12`, `Workspace_TECU`, `Workspace_TC_SC`, `Workspace_Horse`, `Workspace_Scroll`, `Workspace_DIDO`).
 - **Pool files:** `.jop`, `.jvi`, and image resources for various resolutions (monochrome & color).
 - **Task Controller (TC-SC):** Section Control examples (`.dvc` files).
 
-### 3. APIXON I/O Client (OPC UA)
-A browser-based test client (`apixon-io-client/`) for I/O access via **OPC UA**.
+### 3. APIXON Web Clients (OPC UA)
+Browser-based test clients (`Ventilsteuerung/Web-Clients/`) for access via **OPC UA**, usable directly in the browser without additional tools.
 - **Technologies:** Vue 3, TypeScript, Vite (single-file build), Vitest for unit/coverage tests.
-- **Purpose:** Manually setting/observing inputs/outputs of a FORTE application directly in the browser, without additional tools.
+- **`apixon-diodo-client/`:** 8 digital inputs, 12 digital outputs.
+- **`apixon-pwm-client/`:** 12 PWM outputs (0-100 % duty) incl. per-channel enable/disable switch and status LED (white/green/red).
 
 ### 4. Training Exercises
 A structured series of learning modules:
@@ -91,17 +92,20 @@ A brief overview of the most important directories:
 │   ├── ISO-DesignerProjects/     # HMI/VT designs
 │   │   ├── Workspace/            # Base pool for most exercises
 │   │   ├── Workspace_Joystick/   # Joystick integration
-│   │   ├── Workspace_PWM/        # PWM visualization
+│   │   ├── Workspace_PWM/        # PWM visualization (single-channel showcase)
+│   │   ├── Workspace_PWM12/      # PWM training example (12 channels)
 │   │   ├── Workspace_TECU/       # Reading the tractor ECU
 │   │   ├── Workspace_TC_SC/      # Task Controller / Section Control masks
 │   │   ├── Workspace_Horse/      # Extended HMI exercise
 │   │   ├── Workspace_Scroll/     # Scroll/list display
-│   │   └── Workspace_Tester/     # I/O test masks
+│   │   └── Workspace_DIDO/       # I/O test masks (digital, 8 inputs/12 outputs)
 │   ├── TaskController-SC/        # Section Control configurations (.dvc)
 │   ├── boot-files/               # FORTE .fboot startup files for the target devices
-│   ├── apixon-io-client/         # Browser-based OPC UA I/O test client (Vue/TypeScript/Vite)
+│   ├── Web-Clients/              # Browser-based OPC UA test clients (Vue/TypeScript/Vite)
+│   │   ├── apixon-diodo-client/  # Digital I/O (8 inputs, 12 outputs)
+│   │   └── apixon-pwm-client/    # 12 PWM outputs + channel switch/status
 │   └── scripts_central/          # Python helper scripts (library/naming consistency, conversion)
-├── .github/                      # CI workflows (incl. test coverage for the I/O client)
+├── .github/                      # CI workflows (incl. test coverage for the web clients)
 ├── README.md
 └── README.en.md
 ```
@@ -110,7 +114,7 @@ A brief overview of the most important directories:
 
 * [Eclipse 4diac IDE](https://www.eclipse.org/4diac/) (tested with `4diac-ide_3.2.0`, see `readme.txt`) incl. Java runtime environment
 * Jetter / Bucher **ISO-Designer** for editing the `.jop`/`.jvi` VT pool files
-* **Node.js** (for `apixon-io-client`, `npm --prefix Ventilsteuerung/apixon-io-client install && npm --prefix Ventilsteuerung/apixon-io-client run build`)
+* **Node.js** (for the web clients, e.g. `npm --prefix Ventilsteuerung/Web-Clients/apixon-diodo-client install && npm --prefix Ventilsteuerung/Web-Clients/apixon-diodo-client run build`, likewise for `apixon-pwm-client`)
 * **Python 3** (for the helper scripts in `scripts_central/`)
 * Optional: FORTE runtime environment (PC or target device) for deploying the `.fboot` files
 
