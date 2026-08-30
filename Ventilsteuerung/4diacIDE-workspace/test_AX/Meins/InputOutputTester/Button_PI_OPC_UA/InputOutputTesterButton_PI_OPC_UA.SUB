@@ -1,0 +1,235 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SubAppType Name="InputOutputTesterButton_PI_OPC_UA" Comment="PI Tester (OPC-UA): 8 Puls-Eingaenge (Zaehler+Frequenz+Bargraph) + 12 unveraenderte digitale Ausgaenge">
+	<Identification Standard="61499-2" Description="Copyright (c) 2026 Meisterschulen am Ostbahnhof  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0">
+	</Identification>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2026-08-30" Remarks="initial API and implementation and/or initial documentation">
+	</VersionInfo>
+	<CompilerInfo packageName="Meins::InputOutputTester::Button_PI_OPC_UA">
+		<Import declaration="Meins::InputOutputTester::Button_PI_OPC_UA::SubStrings::PI_I1_COUNT_WRITE"/>
+		<Import declaration="Meins::InputOutputTester::Button_PI_OPC_UA::SubStrings::PI_I1_FREQ_WRITE"/>
+		<Import declaration="Meins::InputOutputTester::Button_PI_OPC_UA::SubStrings::PI_I2_COUNT_WRITE"/>
+		<Import declaration="Meins::InputOutputTester::Button_PI_OPC_UA::SubStrings::PI_I2_FREQ_WRITE"/>
+		<Import declaration="Meins::InputOutputTester::Button_PI_OPC_UA::SubStrings::PI_I3_COUNT_WRITE"/>
+		<Import declaration="Meins::InputOutputTester::Button_PI_OPC_UA::SubStrings::PI_I3_FREQ_WRITE"/>
+		<Import declaration="Meins::InputOutputTester::Button_PI_OPC_UA::SubStrings::PI_I4_COUNT_WRITE"/>
+		<Import declaration="Meins::InputOutputTester::Button_PI_OPC_UA::SubStrings::PI_I4_FREQ_WRITE"/>
+		<Import declaration="Meins::InputOutputTester::Button_PI_OPC_UA::SubStrings::PI_I5_COUNT_WRITE"/>
+		<Import declaration="Meins::InputOutputTester::Button_PI_OPC_UA::SubStrings::PI_I5_FREQ_WRITE"/>
+		<Import declaration="Meins::InputOutputTester::Button_PI_OPC_UA::SubStrings::PI_I6_COUNT_WRITE"/>
+		<Import declaration="Meins::InputOutputTester::Button_PI_OPC_UA::SubStrings::PI_I6_FREQ_WRITE"/>
+		<Import declaration="Meins::InputOutputTester::Button_PI_OPC_UA::SubStrings::PI_I7_COUNT_WRITE"/>
+		<Import declaration="Meins::InputOutputTester::Button_PI_OPC_UA::SubStrings::PI_I7_FREQ_WRITE"/>
+		<Import declaration="Meins::InputOutputTester::Button_PI_OPC_UA::SubStrings::PI_I8_COUNT_WRITE"/>
+		<Import declaration="Meins::InputOutputTester::Button_PI_OPC_UA::SubStrings::PI_I8_FREQ_WRITE"/>
+		<Import declaration="Meins::InputOutputTester::Button_PI_OPC_UA::SubStrings::Q01_READ"/>
+		<Import declaration="Meins::InputOutputTester::Button_PI_OPC_UA::SubStrings::Q01_WRITE"/>
+		<Import declaration="Meins::InputOutputTester::Button_PI_OPC_UA::SubStrings::Q02_READ"/>
+		<Import declaration="Meins::InputOutputTester::Button_PI_OPC_UA::SubStrings::Q02_WRITE"/>
+		<Import declaration="Meins::InputOutputTester::Button_PI_OPC_UA::SubStrings::Q03_READ"/>
+		<Import declaration="Meins::InputOutputTester::Button_PI_OPC_UA::SubStrings::Q03_WRITE"/>
+		<Import declaration="Meins::InputOutputTester::Button_PI_OPC_UA::SubStrings::Q04_READ"/>
+		<Import declaration="Meins::InputOutputTester::Button_PI_OPC_UA::SubStrings::Q04_WRITE"/>
+		<Import declaration="Meins::InputOutputTester::Button_PI_OPC_UA::SubStrings::Q05_READ"/>
+		<Import declaration="Meins::InputOutputTester::Button_PI_OPC_UA::SubStrings::Q05_WRITE"/>
+		<Import declaration="Meins::InputOutputTester::Button_PI_OPC_UA::SubStrings::Q06_READ"/>
+		<Import declaration="Meins::InputOutputTester::Button_PI_OPC_UA::SubStrings::Q06_WRITE"/>
+		<Import declaration="Meins::InputOutputTester::Button_PI_OPC_UA::SubStrings::Q07_READ"/>
+		<Import declaration="Meins::InputOutputTester::Button_PI_OPC_UA::SubStrings::Q07_WRITE"/>
+		<Import declaration="Meins::InputOutputTester::Button_PI_OPC_UA::SubStrings::Q08_READ"/>
+		<Import declaration="Meins::InputOutputTester::Button_PI_OPC_UA::SubStrings::Q08_WRITE"/>
+		<Import declaration="Meins::InputOutputTester::Button_PI_OPC_UA::SubStrings::Q09_READ"/>
+		<Import declaration="Meins::InputOutputTester::Button_PI_OPC_UA::SubStrings::Q09_WRITE"/>
+		<Import declaration="Meins::InputOutputTester::Button_PI_OPC_UA::SubStrings::Q10_READ"/>
+		<Import declaration="Meins::InputOutputTester::Button_PI_OPC_UA::SubStrings::Q10_WRITE"/>
+		<Import declaration="Meins::InputOutputTester::Button_PI_OPC_UA::SubStrings::Q11_READ"/>
+		<Import declaration="Meins::InputOutputTester::Button_PI_OPC_UA::SubStrings::Q11_WRITE"/>
+		<Import declaration="Meins::InputOutputTester::Button_PI_OPC_UA::SubStrings::Q12_READ"/>
+		<Import declaration="Meins::InputOutputTester::Button_PI_OPC_UA::SubStrings::Q12_WRITE"/>
+		<Import declaration="Meins::InputOutputTester::Button_PI_OPC_UA::SubStrings::Tick_WRITE"/>
+		<Import declaration="Uebungen::const::UT::PI::DefaultPool_PI_Numeric::NumberVariable_PI_FREQ_I01_N"/>
+		<Import declaration="Uebungen::const::UT::PI::DefaultPool_PI_Numeric::NumberVariable_PI_FREQ_I02_N"/>
+		<Import declaration="Uebungen::const::UT::PI::DefaultPool_PI_Numeric::NumberVariable_PI_FREQ_I03_N"/>
+		<Import declaration="Uebungen::const::UT::PI::DefaultPool_PI_Numeric::NumberVariable_PI_FREQ_I04_N"/>
+		<Import declaration="Uebungen::const::UT::PI::DefaultPool_PI_Numeric::NumberVariable_PI_FREQ_I05_N"/>
+		<Import declaration="Uebungen::const::UT::PI::DefaultPool_PI_Numeric::NumberVariable_PI_FREQ_I06_N"/>
+		<Import declaration="Uebungen::const::UT::PI::DefaultPool_PI_Numeric::NumberVariable_PI_FREQ_I07_N"/>
+		<Import declaration="Uebungen::const::UT::PI::DefaultPool_PI_Numeric::NumberVariable_PI_FREQ_I08_N"/>
+		<Import declaration="Uebungen::const::UT::PI::DefaultPool_PI::NumberVariable_PI_COUNT_I01"/>
+		<Import declaration="Uebungen::const::UT::PI::DefaultPool_PI::NumberVariable_PI_COUNT_I02"/>
+		<Import declaration="Uebungen::const::UT::PI::DefaultPool_PI::NumberVariable_PI_COUNT_I03"/>
+		<Import declaration="Uebungen::const::UT::PI::DefaultPool_PI::NumberVariable_PI_COUNT_I04"/>
+		<Import declaration="Uebungen::const::UT::PI::DefaultPool_PI::NumberVariable_PI_COUNT_I05"/>
+		<Import declaration="Uebungen::const::UT::PI::DefaultPool_PI::NumberVariable_PI_COUNT_I06"/>
+		<Import declaration="Uebungen::const::UT::PI::DefaultPool_PI::NumberVariable_PI_COUNT_I07"/>
+		<Import declaration="Uebungen::const::UT::PI::DefaultPool_PI::NumberVariable_PI_COUNT_I08"/>
+		<Import declaration="Uebungen::const::UT::PI::DefaultPool_PI::Button_Q01"/>
+		<Import declaration="Uebungen::const::UT::PI::DefaultPool_PI::Button_Q02"/>
+		<Import declaration="Uebungen::const::UT::PI::DefaultPool_PI::Button_Q03"/>
+		<Import declaration="Uebungen::const::UT::PI::DefaultPool_PI::Button_Q04"/>
+		<Import declaration="Uebungen::const::UT::PI::DefaultPool_PI::Button_Q05"/>
+		<Import declaration="Uebungen::const::UT::PI::DefaultPool_PI::Button_Q06"/>
+		<Import declaration="Uebungen::const::UT::PI::DefaultPool_PI::Button_Q07"/>
+		<Import declaration="Uebungen::const::UT::PI::DefaultPool_PI::Button_Q08"/>
+		<Import declaration="Uebungen::const::UT::PI::DefaultPool_PI::Button_Q09"/>
+		<Import declaration="Uebungen::const::UT::PI::DefaultPool_PI::Button_Q10"/>
+		<Import declaration="Uebungen::const::UT::PI::DefaultPool_PI::Button_Q11"/>
+		<Import declaration="Uebungen::const::UT::PI::DefaultPool_PI::Button_Q12"/>
+		<Import declaration="Uebungen::const::UT::PI::DefaultPool_PI::OutputNumber_Tick"/>
+		<Import declaration="logiBUS::io::PI::logiBUS_PI::PulseInput_I1"/>
+		<Import declaration="logiBUS::io::PI::logiBUS_PI::PulseInput_I2"/>
+		<Import declaration="logiBUS::io::PI::logiBUS_PI::PulseInput_I3"/>
+		<Import declaration="logiBUS::io::PI::logiBUS_PI::PulseInput_I4"/>
+		<Import declaration="logiBUS::io::PI::logiBUS_PI::PulseInput_I5"/>
+		<Import declaration="logiBUS::io::PI::logiBUS_PI::PulseInput_I6"/>
+		<Import declaration="logiBUS::io::PI::logiBUS_PI::PulseInput_I7"/>
+		<Import declaration="logiBUS::io::PI::logiBUS_PI::PulseInput_I8"/>
+		<Import declaration="logiBUS::io::DQ::logiBUS_DO::Output_Q1"/>
+		<Import declaration="logiBUS::io::DQ::logiBUS_DO::Output_Q10"/>
+		<Import declaration="logiBUS::io::DQ::logiBUS_DO::Output_Q11"/>
+		<Import declaration="logiBUS::io::DQ::logiBUS_DO::Output_Q12"/>
+		<Import declaration="logiBUS::io::DQ::logiBUS_DO::Output_Q2"/>
+		<Import declaration="logiBUS::io::DQ::logiBUS_DO::Output_Q3"/>
+		<Import declaration="logiBUS::io::DQ::logiBUS_DO::Output_Q4"/>
+		<Import declaration="logiBUS::io::DQ::logiBUS_DO::Output_Q5"/>
+		<Import declaration="logiBUS::io::DQ::logiBUS_DO::Output_Q6"/>
+		<Import declaration="logiBUS::io::DQ::logiBUS_DO::Output_Q7"/>
+		<Import declaration="logiBUS::io::DQ::logiBUS_DO::Output_Q8"/>
+		<Import declaration="logiBUS::io::DQ::logiBUS_DO::Output_Q9"/>
+	</CompilerInfo>
+	<SubAppInterfaceList>
+	</SubAppInterfaceList>
+	<SubAppNetwork>
+		<SubApp Name="PulseChannel_I1" Type="MyLib::sys::logiBUS_PI_IDA_OPC" x="-1000" y="-700">
+			<Parameter Name="u16ObjId_COUNTVAR" Value="NumberVariable_PI_COUNT_I01"/>
+			<Parameter Name="stObjFreq" Value="NumberVariable_PI_FREQ_I01_N"/>
+			<Parameter Name="Input" Value="PulseInput_I1"/>
+			<Parameter Name="ID_COUNT_WRITE" Value="PI_I1_COUNT_WRITE"/>
+			<Parameter Name="ID_FREQ_WRITE" Value="PI_I1_FREQ_WRITE"/>
+		</SubApp>
+		<SubApp Name="PulseChannel_I2" Type="MyLib::sys::logiBUS_PI_IDA_OPC" x="-1000" y="100">
+			<Parameter Name="u16ObjId_COUNTVAR" Value="NumberVariable_PI_COUNT_I02"/>
+			<Parameter Name="stObjFreq" Value="NumberVariable_PI_FREQ_I02_N"/>
+			<Parameter Name="Input" Value="PulseInput_I2"/>
+			<Parameter Name="ID_COUNT_WRITE" Value="PI_I2_COUNT_WRITE"/>
+			<Parameter Name="ID_FREQ_WRITE" Value="PI_I2_FREQ_WRITE"/>
+		</SubApp>
+		<SubApp Name="PulseChannel_I3" Type="MyLib::sys::logiBUS_PI_IDA_OPC" x="-1000" y="900">
+			<Parameter Name="u16ObjId_COUNTVAR" Value="NumberVariable_PI_COUNT_I03"/>
+			<Parameter Name="stObjFreq" Value="NumberVariable_PI_FREQ_I03_N"/>
+			<Parameter Name="Input" Value="PulseInput_I3"/>
+			<Parameter Name="ID_COUNT_WRITE" Value="PI_I3_COUNT_WRITE"/>
+			<Parameter Name="ID_FREQ_WRITE" Value="PI_I3_FREQ_WRITE"/>
+		</SubApp>
+		<SubApp Name="PulseChannel_I4" Type="MyLib::sys::logiBUS_PI_IDA_OPC" x="-1000" y="1700">
+			<Parameter Name="u16ObjId_COUNTVAR" Value="NumberVariable_PI_COUNT_I04"/>
+			<Parameter Name="stObjFreq" Value="NumberVariable_PI_FREQ_I04_N"/>
+			<Parameter Name="Input" Value="PulseInput_I4"/>
+			<Parameter Name="ID_COUNT_WRITE" Value="PI_I4_COUNT_WRITE"/>
+			<Parameter Name="ID_FREQ_WRITE" Value="PI_I4_FREQ_WRITE"/>
+		</SubApp>
+		<SubApp Name="PulseChannel_I5" Type="MyLib::sys::logiBUS_PI_IDA_OPC" x="-1000" y="2500">
+			<Parameter Name="u16ObjId_COUNTVAR" Value="NumberVariable_PI_COUNT_I05"/>
+			<Parameter Name="stObjFreq" Value="NumberVariable_PI_FREQ_I05_N"/>
+			<Parameter Name="Input" Value="PulseInput_I5"/>
+			<Parameter Name="ID_COUNT_WRITE" Value="PI_I5_COUNT_WRITE"/>
+			<Parameter Name="ID_FREQ_WRITE" Value="PI_I5_FREQ_WRITE"/>
+		</SubApp>
+		<SubApp Name="PulseChannel_I6" Type="MyLib::sys::logiBUS_PI_IDA_OPC" x="-1000" y="3300">
+			<Parameter Name="u16ObjId_COUNTVAR" Value="NumberVariable_PI_COUNT_I06"/>
+			<Parameter Name="stObjFreq" Value="NumberVariable_PI_FREQ_I06_N"/>
+			<Parameter Name="Input" Value="PulseInput_I6"/>
+			<Parameter Name="ID_COUNT_WRITE" Value="PI_I6_COUNT_WRITE"/>
+			<Parameter Name="ID_FREQ_WRITE" Value="PI_I6_FREQ_WRITE"/>
+		</SubApp>
+		<SubApp Name="PulseChannel_I7" Type="MyLib::sys::logiBUS_PI_IDA_OPC" x="-1000" y="4100">
+			<Parameter Name="u16ObjId_COUNTVAR" Value="NumberVariable_PI_COUNT_I07"/>
+			<Parameter Name="stObjFreq" Value="NumberVariable_PI_FREQ_I07_N"/>
+			<Parameter Name="Input" Value="PulseInput_I7"/>
+			<Parameter Name="ID_COUNT_WRITE" Value="PI_I7_COUNT_WRITE"/>
+			<Parameter Name="ID_FREQ_WRITE" Value="PI_I7_FREQ_WRITE"/>
+		</SubApp>
+		<SubApp Name="PulseChannel_I8" Type="MyLib::sys::logiBUS_PI_IDA_OPC" x="-1000" y="4900">
+			<Parameter Name="u16ObjId_COUNTVAR" Value="NumberVariable_PI_COUNT_I08"/>
+			<Parameter Name="stObjFreq" Value="NumberVariable_PI_FREQ_I08_N"/>
+			<Parameter Name="Input" Value="PulseInput_I8"/>
+			<Parameter Name="ID_COUNT_WRITE" Value="PI_I8_COUNT_WRITE"/>
+			<Parameter Name="ID_FREQ_WRITE" Value="PI_I8_FREQ_WRITE"/>
+		</SubApp>
+		<SubApp Name="Output_Q1" Type="MyLib::sys::Button_IXA_TO_logiBUS_QXA_BG_OPC" x="-4600" y="-700">
+			<Parameter Name="u16ObjId" Value="Button_Q01"/>
+			<Parameter Name="Output" Value="Output_Q1"/>
+			<Parameter Name="ID_READ" Value="Q01_READ"/>
+			<Parameter Name="ID_WRITE" Value="Q01_WRITE"/>
+		</SubApp>
+		<SubApp Name="Output_Q2" Type="MyLib::sys::Button_IXA_TO_logiBUS_QXA_BG_OPC" x="-4600" y="100">
+			<Parameter Name="u16ObjId" Value="Button_Q02"/>
+			<Parameter Name="Output" Value="Output_Q2"/>
+			<Parameter Name="ID_READ" Value="Q02_READ"/>
+			<Parameter Name="ID_WRITE" Value="Q02_WRITE"/>
+		</SubApp>
+		<SubApp Name="Output_Q3" Type="MyLib::sys::Button_IXA_TO_logiBUS_QXA_BG_OPC" x="-4600" y="900">
+			<Parameter Name="u16ObjId" Value="Button_Q03"/>
+			<Parameter Name="Output" Value="Output_Q3"/>
+			<Parameter Name="ID_READ" Value="Q03_READ"/>
+			<Parameter Name="ID_WRITE" Value="Q03_WRITE"/>
+		</SubApp>
+		<SubApp Name="Output_Q4" Type="MyLib::sys::Button_IXA_TO_logiBUS_QXA_BG_OPC" x="-4600" y="1700">
+			<Parameter Name="u16ObjId" Value="Button_Q04"/>
+			<Parameter Name="Output" Value="Output_Q4"/>
+			<Parameter Name="ID_READ" Value="Q04_READ"/>
+			<Parameter Name="ID_WRITE" Value="Q04_WRITE"/>
+		</SubApp>
+		<SubApp Name="Output_Q5" Type="MyLib::sys::Button_IXA_TO_logiBUS_QXA_BG_OPC" x="-4600" y="2500">
+			<Parameter Name="u16ObjId" Value="Button_Q05"/>
+			<Parameter Name="Output" Value="Output_Q5"/>
+			<Parameter Name="ID_READ" Value="Q05_READ"/>
+			<Parameter Name="ID_WRITE" Value="Q05_WRITE"/>
+		</SubApp>
+		<SubApp Name="Output_Q6" Type="MyLib::sys::Button_IXA_TO_logiBUS_QXA_BG_OPC" x="-4600" y="3300">
+			<Parameter Name="u16ObjId" Value="Button_Q06"/>
+			<Parameter Name="Output" Value="Output_Q6"/>
+			<Parameter Name="ID_READ" Value="Q06_READ"/>
+			<Parameter Name="ID_WRITE" Value="Q06_WRITE"/>
+		</SubApp>
+		<SubApp Name="Output_Q7" Type="MyLib::sys::Button_IXA_TO_logiBUS_QXA_BG_OPC" x="-4600" y="4100">
+			<Parameter Name="u16ObjId" Value="Button_Q07"/>
+			<Parameter Name="Output" Value="Output_Q7"/>
+			<Parameter Name="ID_READ" Value="Q07_READ"/>
+			<Parameter Name="ID_WRITE" Value="Q07_WRITE"/>
+		</SubApp>
+		<SubApp Name="Output_Q8" Type="MyLib::sys::Button_IXA_TO_logiBUS_QXA_BG_OPC" x="-4600" y="4900">
+			<Parameter Name="u16ObjId" Value="Button_Q08"/>
+			<Parameter Name="Output" Value="Output_Q8"/>
+			<Parameter Name="ID_READ" Value="Q08_READ"/>
+			<Parameter Name="ID_WRITE" Value="Q08_WRITE"/>
+		</SubApp>
+		<SubApp Name="Output_Q9" Type="MyLib::sys::Button_IXA_TO_logiBUS_QXA_BG_OPC" x="-4600" y="5700">
+			<Parameter Name="u16ObjId" Value="Button_Q09"/>
+			<Parameter Name="Output" Value="Output_Q9"/>
+			<Parameter Name="ID_READ" Value="Q09_READ"/>
+			<Parameter Name="ID_WRITE" Value="Q09_WRITE"/>
+		</SubApp>
+		<SubApp Name="Output_Q10" Type="MyLib::sys::Button_IXA_TO_logiBUS_QXA_BG_OPC" x="-4600" y="6500">
+			<Parameter Name="u16ObjId" Value="Button_Q10"/>
+			<Parameter Name="Output" Value="Output_Q10"/>
+			<Parameter Name="ID_READ" Value="Q10_READ"/>
+			<Parameter Name="ID_WRITE" Value="Q10_WRITE"/>
+		</SubApp>
+		<SubApp Name="Output_Q11" Type="MyLib::sys::Button_IXA_TO_logiBUS_QXA_BG_OPC" x="-4600" y="7300">
+			<Parameter Name="u16ObjId" Value="Button_Q11"/>
+			<Parameter Name="Output" Value="Output_Q11"/>
+			<Parameter Name="ID_READ" Value="Q11_READ"/>
+			<Parameter Name="ID_WRITE" Value="Q11_WRITE"/>
+		</SubApp>
+		<SubApp Name="Output_Q12" Type="MyLib::sys::Button_IXA_TO_logiBUS_QXA_BG_OPC" x="-4600" y="8100">
+			<Parameter Name="u16ObjId" Value="Button_Q12"/>
+			<Parameter Name="Output" Value="Output_Q12"/>
+			<Parameter Name="ID_READ" Value="Q12_READ"/>
+			<Parameter Name="ID_WRITE" Value="Q12_WRITE"/>
+		</SubApp>
+		<SubApp Name="SystemTickSender" Type="MyLib::sys::SystemTickSender" x="-4400" y="-1200">
+			<Parameter Name="u16ObjId" Value="OutputNumber_Tick"/>
+			<Parameter Name="ID_WRITE" Value="Tick_WRITE"/>
+		</SubApp>
+	</SubAppNetwork>
+</SubAppType>
