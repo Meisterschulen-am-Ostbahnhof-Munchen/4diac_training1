@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SubAppType Name="logiBUS_AI_IDA_OPC" Comment="logiBUS_AI_IDA (Analog-Eingang) auf VT-Zahlenfeld (Rohwert+Prozent, geteilte CNumberVariable) + Bargraph + OPC-UA (Rohwert DWORD + Prozent REAL, generisch, ein Kanal)">
+	<Identification Standard="61499-2" Description="Copyright (c) 2026 Meisterschulen am Ostbahnhof  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0">
+	</Identification>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2026-08-30" Remarks="initial API and implementation and/or initial documentation">
+	</VersionInfo>
+	<CompilerInfo packageName="MyLib::sys">
+		<Import declaration="isobus::UT::Q::const::IDs::ID_NULL"/>
+		<Import declaration="logiBUS::io::AI::logiBUS_AI"/>
+		<Import declaration="logiBUS::io::AI::logiBUS_AI_S"/>
+	</CompilerInfo>
+	<SubAppInterfaceList>
+		<InputVars>
+			<VarDeclaration Name="u16ObjId_VALUEVAR" Type="UINT" Comment="Object ID CNumberVariable (Rohwert 0-4095, gemeinsam gebunden an Rohwert-Zahlenfeld, Prozent-Zahlenfeld und Bargraph - Prozent/Bargraph nutzen ihre eigene VT-Scale auf denselben Rohwert)" InitialValue="ID_NULL"/>
+			<VarDeclaration Name="Input" Type="logiBUS::io::AI::logiBUS_AI_S" Comment="Identify the Input AnalogInput_I1..I8" InitialValue="logiBUS_AI::Invalid"/>
+			<VarDeclaration Name="ID_RAW_WRITE" Type="WSTRING" Comment="Rohwert-Ruckmelde-Adresse (DWORD 0-4095, ACTION=PUBLISH)"/>
+			<VarDeclaration Name="ID_PERCENT_WRITE" Type="WSTRING" Comment="Prozent-Ruckmelde-Adresse (REAL 0.0-100.0, ACTION=PUBLISH, linear ohne physikalische Kalibrierung)"/>
+		</InputVars>
+	</SubAppInterfaceList>
+	<SubAppNetwork>
+		<FB Name="logiBUS_AI_IDA" Type="logiBUS::io::AI::logiBUS_AI_IDA" x="-5600" y="-1700">
+			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="PARAMS" Value="">
+				<Attribute Name="Visible" Value="false"/>
+			</Parameter>
+			<Parameter Name="AnalogInput_hysteresis" Value="DWORD#0"/>
+			<Parameter Name="TimeDelta" Value="DWORD#250"/>
+			<Parameter Name="TimeRateLimit" Value="DWORD#100"/>
+		</FB>
+		<FB Name="AD_SPLIT_2" Type="adapter::events::unidirectional::AD_SPLIT_3" x="-3300" y="-1000">
+		</FB>
+		<FB Name="AD_PUBLISH_RAW" Type="adapter::net::AD_PUBLISH_1" x="2000" y="-1700">
+			<Parameter Name="QI" Value="TRUE"/>
+		</FB>
+		<FB Name="AD_D_TO_DWORD" Type="adapter::conversion::unidirectional::AD_D_TO_DWORD" x="-1900" y="500">
+		</FB>
+		<FB Name="Q_NumericValue" Type="isobus::UT::Q::Q_NumericValue_AUDI" x="1900" y="-800">
+		</FB>
+		<SubApp Name="F_AI_RAW_TO_PERCENT" Type="MyLib::sys::F_AI_RAW_TO_PERCENT" x="-400" y="400">
+		</SubApp>
+		<FB Name="AR_REAL_TO_R_PUB" Type="adapter::conversion::unidirectional::AR_REAL_TO_R" x="1000" y="400">
+		</FB>
+		<FB Name="AR_PUBLISH_PERCENT" Type="adapter::net::AR_PUBLISH_1" x="2900" y="200">
+			<Parameter Name="QI" Value="TRUE"/>
+		</FB>
+		<FB Name="AD_TO_AUDI" Type="adapter::conversion::unidirectional::AD_TO_AUDI" x="0" y="-400">
+		</FB>
+		<EventConnections>
+			<Connection Source="AD_D_TO_DWORD.CNF" Destination="F_AI_RAW_TO_PERCENT.REQ" dx1="200"/>
+			<Connection Source="F_AI_RAW_TO_PERCENT.CNF" Destination="AR_REAL_TO_R_PUB.REQ"/>
+		</EventConnections>
+		<DataConnections>
+			<Connection Source="Input" Destination="logiBUS_AI_IDA.Input" dx1="1460">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="u16ObjId_VALUEVAR" Destination="Q_NumericValue.u16ObjId" dx1="2680">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="ID_RAW_WRITE" Destination="AD_PUBLISH_RAW.ID" dx1="4280">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="ID_PERCENT_WRITE" Destination="AR_PUBLISH_PERCENT.ID" dx1="4280">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="AD_D_TO_DWORD.IN" Destination="F_AI_RAW_TO_PERCENT.IN" dx1="200"/>
+			<Connection Source="F_AI_RAW_TO_PERCENT.OUT" Destination="AR_REAL_TO_R_PUB.OUT"/>
+		</DataConnections>
+		<AdapterConnections>
+			<Connection Source="logiBUS_AI_IDA.IN" Destination="AD_SPLIT_2.IN" dx1="420"/>
+			<Connection Source="AD_SPLIT_2.OUT1" Destination="AD_PUBLISH_RAW.IN" dx1="173.33"/>
+			<Connection Source="AD_SPLIT_2.OUT3" Destination="AD_D_TO_DWORD.AD_IN" dx1="153.33"/>
+			<Connection Source="AR_REAL_TO_R_PUB.AR_OUT" Destination="AR_PUBLISH_PERCENT.IN" dx1="360"/>
+			<Connection Source="AD_TO_AUDI.AUDI_OUT" Destination="Q_NumericValue.u32NewValue" dx1="540"/>
+			<Connection Source="AD_SPLIT_2.OUT2" Destination="AD_TO_AUDI.AD_IN" dx1="1273.33"/>
+		</AdapterConnections>
+	</SubAppNetwork>
+</SubAppType>
