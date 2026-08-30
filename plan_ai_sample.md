@@ -51,56 +51,80 @@ Namensschema (dritte Variante nach `_DIDO`/`_PWM`): **`_AI`**
   sofern nicht anders gewünscht — reine Dauerpoll-Anzeige, keine
   Schwellwert-Logik in diesem Schritt.
 
-## Offene Fragen (vor dem Bauen zu klären)
+## Offene Fragen — beantwortet ✅
 
-1. **Skalierungs-Baustein:** neue kleine SubApp/FB `MyLib::sys::F_AI_RAW_TO_PERCENT`
-   bauen (`percent = raw / 4095 * 100`, analog zu `F_PWM_RAW_TO_PERCENT`),
-   oder reicht eine Inline-Verdrahtung mit Standard-`iec61131::arithmetic`-
-   Funktionen direkt im Kanal-Composite? (Ich tendiere zu einer eigenen
-   SubApp, für Konsistenz mit dem PWM-Sample-Stil — aber sag Bescheid, falls
-   das für nur eine Formel zu viel Bürokratie ist.)
-2. **ID-Bereiche für die neuen VT-Objekte** (`Workspace_AI`): da eine
-   AI-Kanalzeile doppelt so breit wird wie eine PWM-Zeile, passen vermutlich
-   nur 2 Kanäle nebeneinander/pro Seite statt 4 wie bei PWM12 — wie viele
-   Seiten/Layout genau, entscheide ich beim Bauen, es sei denn du hast schon
-   eine konkrete Vorstellung.
-3. **Seitenlayout:** volle 12-Ausgänge-Seite(n) unverändert aus DIDO
-   übernehmen, plus neue Analog-Seite(n) — oder eine gemischte Seite pro
-   Blick (Eingänge+Ausgänge zusammen wie DIDO es evtl. schon macht)? Ich
-   schaue mir DIDOs tatsächliches Seitenlayout nochmal genau an, bevor ich
-   das für AI übernehme.
+1. **Skalierungs-Baustein:** ja, eigene SubApp (`F_AI_RAW_TO_PERCENT.SUB`) —
+   gebaut, dazu spaeter auch eine volladapterbasierte Parallel-Variante
+   (`F_AI_RAW_TO_PERCENT_AD.SUB`, siehe unten).
+2. **ID-Bereiche/Kanaele pro Seite:** 2 Zeilen/Seite, also 4 Seiten (2
+   Kanaele je Seite) — umgesetzt.
+3. **Seitenlayout:** wie bei PWM — 1. Seite identisch (hier: die
+   unveraenderte Ausgaenge-Seite aus DIDO, `Container_Q`/`Button_Q01-12`),
+   dann 4 neue Seiten fuer die 8 Analog-Kanaele angehaengt.
 
 ## Stand / Checkliste
 
-### TODO
+### Fertig ✅
 
-- [ ] `MyLib::sys::logiBUS_AI_ID_BG_OPC.SUB` (oder ähnlicher Name) — Ein-
-      Kanal-Analog-Composite: `logiBUS_AI_ID` liest Rohwert, Skalierung auf
-      Prozent, beide Werte via OPC-UA publizieren (`AR_PUBLISH_1`-Paar oder
-      neuer BOOL/DWORD-Adapter-Pfad, je nach Datentyp), VT-Anzeige
-      (`COutputNumber`×2 + Bargraph) aktualisieren.
-- [ ] `MyLib::sys::F_AI_RAW_TO_PERCENT.SUB` (falls Frage 1 mit "eigene
-      SubApp" beantwortet wird).
-- [ ] `Meins::InputOutputTester::Button_AI_OPC_UA::InputOutputTesterButton_AI_OPC_UA.SUB`
-      — Top-Level-Composite: 8× neue Analog-Kanäle + 12× unveränderte
-      `Button_IXA_TO_logiBUS_QXA_BG_OPC`-Ausgänge (1:1 aus DIDO) +
-      `SystemTickSender`.
-- [ ] `SubStrings.gcf` für `Button_AI_OPC_UA` — verschachtelte OPC-UA-
-      Adressen für 8 Analog-Kanäle (`/Objects/Analog/I1/RAW`, `/PERCENT`),
-      unveränderte Digital-Ausgangs-Adressen aus DIDO übernehmen.
-- [ ] VT-Projekt `Workspace_AI` — Kopie von `Workspace_DIDO`, Eingänge-
-      Container durch neue Analog-Anzeige-Zeilen ersetzen, Ausgänge-
-      Container unverändert übernehmen.
-- [ ] GCF `Uebungen::const::UT::AI::DefaultPool_AI.gcf` (oder passender
-      Name) — 1:1 aus den echten `.jop`-Objekt-IDs erzeugt.
-- [ ] Web-Client `apixon-ai-client` — Kopie von `apixon-diodo-client`,
-      Eingänge-Sektion durch 8× (Rohwert+Prozent+Bargraph) ersetzen,
-      Ausgänge-Sektion unverändert.
-- [ ] Registrierung in `test_AX.sys` prüfen (`Change Type`-Mechanismus wie
-      bei PWM — vermutlich kein neues `Application`-Element nötig).
-- [ ] Adressierungs-Konsistenz-Check (SUB-`SubStrings.gcf` ↔ VT-Skalierung
-      ↔ Web-Client-Knoten-IDs).
+- [x] `MyLib::sys::F_AI_RAW_TO_PERCENT.SUB` — Rohwert (DWORD 0-4095) linear
+      in Prozent (REAL 0.0-100.0) via `F_DWORD_TO_UDINT`→`F_UDINT_TO_REAL`→
+      `F_MUL` (Faktor `100/4095=0.0244200244`).
+- [x] `MyLib::sys::F_AI_RAW_TO_PERCENT_AD.SUB` — volladapterbasierte
+      Parallel-Variante (gleiches Ergebnis, `AD_TO_AUDI`→`AUDI_TO_AR`→
+      `AR_MUL_2`+`initval_AR` statt Daten-FBs mit expliziter REQ/CNF-Kette).
+      **Wichtiger Fund dabei:** `AD_TO_AR` (der naheliegende 1-Schritt-Weg)
+      ist eine Bit-Reinterpretation, keine numerische Umwandlung — verifiziert
+      im echten FORTE-Quellcode (`forte_real.cpp`, `CIEC_REAL::setValue`,
+      Case `e_DWORD`). Dokumentiert in
+      `Ventilsteuerung/4diacIDE-workspace/.lib/adapter-3.0.0/typelib/conversion/unidirectional/AD_AR/AD_TO_AR_TODO.md`
+      inkl. Querverweis auf 7 bereits existierende `Uebung_028*_AR`-Uebungen,
+      die dieselbe Falle schon dokumentiert hatten (nicht neu entdeckt).
+- [x] `MyLib::sys::logiBUS_AI_IDA_OPC.SUB` — Ein-Kanal-Analog-Composite:
+      `logiBUS_AI_IDA` liest Rohwert per Adapter, `AD_SPLIT_2`/`_3` verteilt
+      auf OPC-UA-Rohwert-Publish (`AD_PUBLISH_1`), VT-Anzeige
+      (`Q_NumericValue`/`Q_NumericValue_AUDI`) und Prozent-Berechnung
+      (`F_AI_RAW_TO_PERCENT`) → `AR_PUBLISH_1` fuer OPC-UA-Prozent.
+- [x] `Meins::InputOutputTester::Button_AI_OPC_UA::InputOutputTesterButton_AI_OPC_UA.SUB`
+      — Top-Level-Composite: 8× `logiBUS_AI_IDA_OPC` + 12× unveraenderte
+      `Button_IXA_TO_logiBUS_QXA_BG_OPC`-Ausgaenge (1:1 aus DIDO) +
+      `SystemTickSender`. Validiert: alle Imports/Parameter/SubApp-Typen
+      loesen auf.
+- [x] `SubStrings.gcf` fuer `Button_AI_OPC_UA` — verschachtelte OPC-UA-
+      Adressen (`/Objects/Analog/I1/RAW`, `/PERCENT`, ... `I8`), unveraenderte
+      Digital-Ausgangs-Adressen 1:1 aus DIDO.
+- [x] VT-Projekt `Workspace_AI` — Kopie von `Workspace_DIDO`: `Container_I`
+      entfernt, `Container_Q`/`Button_Q01-12` unveraendert. Neu:
+      `CSoftKeyMask` + 5 Softkeys (Ausgaenge, AI1-2/AI3-4/AI5-6/AI7-8 —
+      Beschriftung nach Kanal-Bereich pro Seite benannt, nicht nach
+      Seitennummer, um Verwechslung zu vermeiden), 4 neue `CDataMask`-Seiten
+      (2 Kanaele/Seite). Pro Kanal: Label + Rohwert-`COutputNumber` +
+      Prozent-`COutputNumber` (teilen sich eine `CNumberVariable`,
+      Scale=1 bzw. 0.0244200244) + Bargraph (`CRectangle`, Min=0/Max=4095,
+      LinearBargraph-ID-Block 18000 statt PWM12s Rectangle-Block 14000 —
+      bewusste Abweichung, folgt der offiziellen ID-Konvention). Validiert:
+      wohlgeformt, 0 doppelte JVS-IDs, 0 haengende Referenzen, alle Text-
+      Objekte haben einen Font, GCF-IDs 1:1 gegen den echten Pool geprueft.
+- [x] GCF `Uebungen::const::UT::AI::DefaultPool_AI.gcf` — 1:1 aus den echten
+      `.jop`-Objekt-IDs erzeugt (39 Konstanten, cross-validiert).
+- [x] Web-Client `apixon-ai-client` — Kopie von `apixon-diodo-client`,
+      Eingaenge-Sektion durch 8× (Rohwert+Prozent+Mini-Bargraph, rein
+      lesend) ersetzt, Ausgaenge-Sektion unveraendert. Build + 5/5 Tests
+      gruen, `vue-tsc` sauber, visuell im Browser geprueft (auch bei
+      schmalem Viewport, responsive ohne Overflow).
+
+### Noch offen
+
+- [ ] Registrierung in `test_AX.sys` — noch nicht angefasst (aktuell auf
+      die PWM-Composite verdrahtet), `Change Type`-Mechanismus wie bei PWM
+      erwartet, kein neues `Application`-Element noetig.
+- [ ] Entscheidung: `logiBUS_AI_IDA_OPC.SUB` mit der daten- oder der
+      adapterbasierten Prozent-Variante final verdrahten (aktuell nutzt die
+      SUB `F_AI_RAW_TO_PERCENT` [Daten], `F_AI_RAW_TO_PERCENT_AD` liegt als
+      gleichwertige Alternative daneben).
 - [ ] Live-Test durch den Nutzer (ich kann das nicht automatisieren).
+- [ ] Committen (aktuell nur `logiBUS_AI_TODO.md`, `AD_TO_AR_TODO.md` und
+      dieser Plan sind committed — der eigentliche Sample-Code liegt noch
+      unstaged, wartet auf dein Go).
 
 ## Kritische Dateien
 
@@ -108,6 +132,10 @@ Namensschema (dritte Variante nach `_DIDO`/`_PWM`): **`_AI`**
 - `Ventilsteuerung/4diacIDE-workspace/test_AX/Type Library/MyLib/sys/logiBUS_IXA_BG_OPC.SUB` (digitales Vorbild für die neue Analog-Variante)
 - `Ventilsteuerung/4diacIDE-workspace/.lib/logiBUS-3.0.0/typelib/io/AI/logiBUS_AI_ID.fbt` / `logiBUS_AI_IDA.fbt` / `logiBUS_AI.gcf`
 - `Ventilsteuerung/4diacIDE-workspace/.lib/logiBUS-3.0.0/typelib/io/AI/logiBUS_AI_TODO.md`
+- `Ventilsteuerung/4diacIDE-workspace/.lib/adapter-3.0.0/typelib/conversion/unidirectional/AD_AR/AD_TO_AR_TODO.md`
+- `Ventilsteuerung/4diacIDE-workspace/test_AX/Type Library/MyLib/sys/F_AI_RAW_TO_PERCENT.SUB` / `F_AI_RAW_TO_PERCENT_AD.SUB`
+- `Ventilsteuerung/4diacIDE-workspace/test_AX/Type Library/MyLib/sys/logiBUS_AI_IDA_OPC.SUB`
 - `Ventilsteuerung/ISO-DesignerProjects/Workspace_DIDO/DefaultPool/DefaultPool.jop` (Vorlage)
+- `Ventilsteuerung/ISO-DesignerProjects/Workspace_AI/DefaultPool/DefaultPool.jop`
 - `Ventilsteuerung/Web-Clients/apixon-diodo-client/` (Vorlage für `apixon-ai-client`)
 - `Ventilsteuerung/4diacIDE-workspace/test_AX/sys/Training_AX/test_AX.sys`
