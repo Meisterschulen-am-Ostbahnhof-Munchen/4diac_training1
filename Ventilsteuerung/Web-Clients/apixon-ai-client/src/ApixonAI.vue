@@ -14,7 +14,18 @@
     </header>
 
     <section>
-      <h2>Analog-Eingänge (Rohwert 0-4095 / 0-100 %)</h2>
+      <div class="scope-header">
+        <h2>Analog-Eingänge (Rohwert 0-4095 / 0-100 %)</h2>
+        <label class="scope-window-label">
+          Oszi-Zeitfenster:
+          <select v-model.number="scopeWindowSec">
+            <option :value="5">5 s</option>
+            <option :value="10">10 s</option>
+            <option :value="30">30 s</option>
+            <option :value="60">60 s</option>
+          </select>
+        </label>
+      </div>
       <div class="ai-grid">
         <div v-for="n in 8" :key="'AI' + n" class="ai-item">
           <span class="ai-label">AI{{ n }}</span>
@@ -23,6 +34,15 @@
           <div class="ai-bar-track">
             <div class="ai-bar-fill" :style="{ width: percent[n - 1] + '%' }"></div>
           </div>
+          <canvas
+            class="ai-scope"
+            :ref="(el) => setScopeRef(el as HTMLCanvasElement | null, n - 1)"
+            width="240"
+            height="60"
+          ></canvas>
+          <span class="ai-scope-info">
+            Δt letzte Samples: {{ sampleIntervalMs[n - 1] !== null ? sampleIntervalMs[n - 1] + ' ms' : '–' }}
+          </span>
         </div>
       </div>
     </section>
@@ -72,6 +92,88 @@ const outputs = ref<boolean[]>(Array(12).fill(false))
 const tick = ref<number | string>('–')
 const tickPulse = ref(false)
 
+/* Oszilloskop-Ansicht pro Kanal: rollierendes Liniendiagramm des Prozentwerts,
+ * um live zu sehen/messen, wie sich logiBUS_AI_ID's Poll-Parameter (TimeDelta/
+ * TimeRateLimit/AnalogInput_hysteresis) auf das dargestellte Signal auswirken
+ * (Abtastrate/Aliasing) - im Gegensatz zu ISOBUS-VT, das keine Zeitachsen-
+ * Grafik kennt. Reiner Web-Client-Zusatz, kein Einfluss auf FORTE/SUB. */
+interface ScopeSample { t: number; v: number }
+const scopeWindowSec = ref(10)
+const scopeBuffers: ScopeSample[][] = Array.from({ length: 8 }, () => [])
+const scopeCanvases: (HTMLCanvasElement | null)[] = Array(8).fill(null)
+const sampleIntervalMs = ref<(number | null)[]>(Array(8).fill(null))
+let scopeRafId: number | null = null
+/* Puffer laenger als das aktuell gewaehlte Fenster behalten, damit ein
+ * groesseres Zeitfenster rueckwirkend mehr Historie zeigt, ohne neu zu
+ * subscriben. */
+const SCOPE_BUFFER_MS = 120_000
+
+function setScopeRef(el: HTMLCanvasElement | null, index: number) {
+  scopeCanvases[index] = el
+}
+
+function pushScopeSample(index: number, value: number) {
+  const now = performance.now()
+  const buf = scopeBuffers[index]
+  if (buf.length > 0) {
+    sampleIntervalMs.value[index] = Math.round(now - buf[buf.length - 1].t)
+  }
+  buf.push({ t: now, v: value })
+  const cutoff = now - SCOPE_BUFFER_MS
+  while (buf.length > 0 && buf[0].t < cutoff) buf.shift()
+}
+
+function drawScopes() {
+  const now = performance.now()
+  const windowMs = scopeWindowSec.value * 1000
+  for (let i = 0; i < 8; i++) {
+    const canvas = scopeCanvases[i]
+    if (!canvas) continue
+    const ctx = canvas.getContext('2d')
+    if (!ctx) continue
+    const w = canvas.width
+    const h = canvas.height
+
+    ctx.fillStyle = '#0d0d1a'
+    ctx.fillRect(0, 0, w, h)
+
+    ctx.strokeStyle = '#2a2a3e'
+    ctx.lineWidth = 1
+    for (const frac of [0, 0.25, 0.5, 0.75, 1]) {
+      const y = Math.round(h - frac * h) + 0.5
+      ctx.beginPath()
+      ctx.moveTo(0, y)
+      ctx.lineTo(w, y)
+      ctx.stroke()
+    }
+
+    const visible = scopeBuffers[i].filter((s) => s.t >= now - windowMs)
+    if (visible.length > 0) {
+      ctx.strokeStyle = '#4caf50'
+      ctx.lineWidth = 1.5
+      ctx.beginPath()
+      visible.forEach((s, idx) => {
+        const x = w - ((now - s.t) / windowMs) * w
+        const y = h - (s.v / 100) * h
+        if (idx === 0) ctx.moveTo(x, y)
+        else ctx.lineTo(x, y)
+      })
+      /* letzten bekannten Wert bis "jetzt" durchziehen (Step-Hold) - zeigt
+       * ehrlich, wie "alt" der letzte Sample gerade ist, statt eine
+       * Interpolation vorzutaeuschen, die es nicht gab. */
+      const last = visible[visible.length - 1]
+      ctx.lineTo(w, h - (last.v / 100) * h)
+      ctx.stroke()
+    }
+  }
+  scopeRafId = requestAnimationFrame(drawScopes)
+}
+
+function resetScopes() {
+  scopeBuffers.forEach((b) => (b.length = 0))
+  sampleIntervalMs.value.fill(null)
+}
+
 const statusClass = computed(() => {
   if (status.value === 'Verbunden') return 'green'
   if (status.value.startsWith('Fehler')) return 'red'
@@ -89,6 +191,10 @@ function handleLost() {
   percent.value.fill(0)
   outputs.value.fill(false)
   tick.value = '–'
+  if (scopeRafId !== null) {
+    cancelAnimationFrame(scopeRafId)
+    scopeRafId = null
+  }
 }
 
 async function connect() {
@@ -142,7 +248,9 @@ async function connect() {
       TimestampsToReturn.Neither
     )
     percentGroup.on('changed', (_item: any, dataValue: any, index: number) => {
-      percent.value[index] = Number(dataValue.value?.value ?? 0)
+      const v = Number(dataValue.value?.value ?? 0)
+      percent.value[index] = v
+      pushScopeSample(index, v)
     })
 
     /* Monitor all outputs Q1-Q12 (reflect actual hardware state, unveraendert wie im DIDO-Beispiel) */
@@ -170,6 +278,9 @@ async function connect() {
       tickPulse.value = true
       setTimeout(() => { tickPulse.value = false }, 400)
     })
+
+    resetScopes()
+    if (scopeRafId === null) scopeRafId = requestAnimationFrame(drawScopes)
   } catch (err) {
     status.value = 'Fehler: ' + (err as Error).message
     connected.value = false
@@ -204,6 +315,11 @@ async function disconnect() {
   raw.value.fill(0)
   percent.value.fill(0)
   outputs.value.fill(false)
+  if (scopeRafId !== null) {
+    cancelAnimationFrame(scopeRafId)
+    scopeRafId = null
+  }
+  resetScopes()
 }
 
 onUnmounted(() => disconnect())
@@ -394,5 +510,45 @@ span {
   height: 100%;
   background: #4caf50;
   transition: width 0.15s;
+}
+
+.scope-header {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-bottom: 0.75rem;
+}
+.scope-header h2 { margin-bottom: 0; }
+
+.scope-window-label {
+  font-size: 0.8rem;
+  color: #aaa;
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+.scope-window-label select {
+  padding: 0.2rem 0.4rem;
+  border-radius: 4px;
+  border: 1px solid #444;
+  background: #0d0d1a;
+  color: #e0e0e0;
+  font-size: 0.8rem;
+}
+
+.ai-scope {
+  width: 100%;
+  height: 60px;
+  border-radius: 4px;
+  border: 1px solid #2a2a3e;
+  display: block;
+}
+
+.ai-scope-info {
+  font-size: 0.65rem;
+  color: #777;
+  font-variant-numeric: tabular-nums;
 }
 </style>
