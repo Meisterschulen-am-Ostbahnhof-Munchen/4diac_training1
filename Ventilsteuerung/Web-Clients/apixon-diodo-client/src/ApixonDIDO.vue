@@ -6,7 +6,8 @@
         <span class="dot" :class="statusClass"></span>
         <span v-if="connected" class="tick-badge" :class="{ pulse: tickPulse }">{{ tick }}</span>
         <span>{{ status }}</span>
-        <input v-model="endpointUrl" class="url-input" :disabled="connected" />
+        <label for="endpoint-url" class="sr-only">OPC-UA Endpoint-URL</label>
+        <input id="endpoint-url" v-model="endpointUrl" class="url-input" :disabled="connected" />
         <button @click="connected ? disconnect() : connect()">
           {{ connected ? 'Trennen' : 'Verbinden' }}
         </button>
@@ -65,8 +66,8 @@ import {
 const endpointUrl = ref(`ws://${window.location.hostname || 'localhost'}:4841`)
 const status = ref('Getrennt')
 const connected = ref(false)
-const inputs = ref<boolean[]>(Array(8).fill(false))
-const outputs = ref<boolean[]>(Array(12).fill(false))
+const inputs = ref<boolean[]>(new Array(8).fill(false))
+const outputs = ref<boolean[]>(new Array(12).fill(false))
 const tick = ref<number | string>('–')
 const tickPulse = ref(false)
 
@@ -193,6 +194,18 @@ onUnmounted(() => disconnect())
 
 <style scoped>
 * { box-sizing: border-box; margin: 0; padding: 0; }
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
 
 .app {
   font-family: system-ui, sans-serif;
