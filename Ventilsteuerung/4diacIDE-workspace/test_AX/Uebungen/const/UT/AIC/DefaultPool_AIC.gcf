@@ -2,7 +2,18 @@
 <GlobalConstants Name="DefaultPool_AIC" Comment="Global constants">
     <CompilerInfo packageName="Uebungen::const::UT::AIC"/>
     <GlobalConstants>
+        <VarDeclaration Name="ISO_DESIGNATOR_WIDTH" Type="UINT" InitialValue="80"/>
+        <VarDeclaration Name="ISO_DESIGNATOR_HEIGHT" Type="UINT" InitialValue="80"/>
+        <VarDeclaration Name="ISO_MASK_SIZE" Type="UINT" InitialValue="480"/>
+        <VarDeclaration Name="ISO_VERSION_LABEL" Type="STRING" InitialValue=""/>
+        <VarDeclaration Name="MASK_WIDTH" Type="UINT" InitialValue="480"/>
+        <VarDeclaration Name="MASK_HEIGHT" Type="UINT" InitialValue="480"/>
         <VarDeclaration Name="WorkingSet" Type="UINT" InitialValue="0"/>
+        <VarDeclaration Name="Macro_M1" Type="UINT" InitialValue="1"/>
+        <VarDeclaration Name="Macro_AIC_1" Type="UINT" InitialValue="2"/>
+        <VarDeclaration Name="Macro_AIC_2" Type="UINT" InitialValue="3"/>
+        <VarDeclaration Name="Macro_AIC_3" Type="UINT" InitialValue="4"/>
+        <VarDeclaration Name="Macro_AIC_4" Type="UINT" InitialValue="5"/>
         <VarDeclaration Name="DataMask_M1" Type="UINT" InitialValue="1000"/>
         <VarDeclaration Name="DataMask_AIC1" Type="UINT" InitialValue="1001"/>
         <VarDeclaration Name="DataMask_AIC2" Type="UINT" InitialValue="1002"/>
@@ -43,7 +54,51 @@
         <VarDeclaration Name="Button_AIC_I07_CS" Type="UINT" InitialValue="6026"/>
         <VarDeclaration Name="Button_AIC_I08_CO" Type="UINT" InitialValue="6027"/>
         <VarDeclaration Name="Button_AIC_I08_CS" Type="UINT" InitialValue="6028"/>
+        <VarDeclaration Name="OutputString_WorkingSet_0" Type="UINT" InitialValue="11000"/>
+        <VarDeclaration Name="Label_SoftKey_Ausgaenge" Type="UINT" InitialValue="11001"/>
+        <VarDeclaration Name="Label_SoftKey_AIC1" Type="UINT" InitialValue="11002"/>
+        <VarDeclaration Name="Label_SoftKey_AIC2" Type="UINT" InitialValue="11003"/>
+        <VarDeclaration Name="Label_SoftKey_AIC3" Type="UINT" InitialValue="11004"/>
+        <VarDeclaration Name="Label_SoftKey_AIC4" Type="UINT" InitialValue="11005"/>
+        <VarDeclaration Name="Label_AIC_I01" Type="UINT" InitialValue="11006"/>
+        <VarDeclaration Name="Label_AIC_I02" Type="UINT" InitialValue="11007"/>
+        <VarDeclaration Name="Label_AIC_I03" Type="UINT" InitialValue="11008"/>
+        <VarDeclaration Name="Label_AIC_I04" Type="UINT" InitialValue="11009"/>
+        <VarDeclaration Name="Label_AIC_I05" Type="UINT" InitialValue="11010"/>
+        <VarDeclaration Name="Label_AIC_I06" Type="UINT" InitialValue="11011"/>
+        <VarDeclaration Name="Label_AIC_I07" Type="UINT" InitialValue="11012"/>
+        <VarDeclaration Name="Label_AIC_I08" Type="UINT" InitialValue="11013"/>
+        <VarDeclaration Name="Caption_CO" Type="UINT" InitialValue="11014"/>
+        <VarDeclaration Name="Caption_CS" Type="UINT" InitialValue="11015"/>
+        <VarDeclaration Name="OutputNumber_c1" Type="UINT" InitialValue="12001"/>
+        <VarDeclaration Name="OutputNumber_c9" Type="UINT" InitialValue="12009"/>
+        <VarDeclaration Name="OutputNumber_c10" Type="UINT" InitialValue="12010"/>
+        <VarDeclaration Name="OutputNumber_c11" Type="UINT" InitialValue="12011"/>
+        <VarDeclaration Name="OutputNumber_c12" Type="UINT" InitialValue="12012"/>
+        <VarDeclaration Name="OutputNumber_c2" Type="UINT" InitialValue="12013"/>
+        <VarDeclaration Name="OutputNumber_c3" Type="UINT" InitialValue="12014"/>
+        <VarDeclaration Name="OutputNumber_c4" Type="UINT" InitialValue="12015"/>
+        <VarDeclaration Name="OutputNumber_c5" Type="UINT" InitialValue="12016"/>
+        <VarDeclaration Name="OutputNumber_c6" Type="UINT" InitialValue="12017"/>
+        <VarDeclaration Name="OutputNumber_c7" Type="UINT" InitialValue="12018"/>
+        <VarDeclaration Name="OutputNumber_c8" Type="UINT" InitialValue="12019"/>
         <VarDeclaration Name="OutputNumber_Tick" Type="UINT" InitialValue="12020"/>
+        <VarDeclaration Name="OutputNumber_AIC_I01_RAW" Type="UINT" InitialValue="12021"/>
+        <VarDeclaration Name="OutputNumber_AIC_I01_CAL" Type="UINT" InitialValue="12022"/>
+        <VarDeclaration Name="OutputNumber_AIC_I02_RAW" Type="UINT" InitialValue="12023"/>
+        <VarDeclaration Name="OutputNumber_AIC_I02_CAL" Type="UINT" InitialValue="12024"/>
+        <VarDeclaration Name="OutputNumber_AIC_I03_RAW" Type="UINT" InitialValue="12025"/>
+        <VarDeclaration Name="OutputNumber_AIC_I03_CAL" Type="UINT" InitialValue="12026"/>
+        <VarDeclaration Name="OutputNumber_AIC_I04_RAW" Type="UINT" InitialValue="12027"/>
+        <VarDeclaration Name="OutputNumber_AIC_I04_CAL" Type="UINT" InitialValue="12028"/>
+        <VarDeclaration Name="OutputNumber_AIC_I05_RAW" Type="UINT" InitialValue="12029"/>
+        <VarDeclaration Name="OutputNumber_AIC_I05_CAL" Type="UINT" InitialValue="12030"/>
+        <VarDeclaration Name="OutputNumber_AIC_I06_RAW" Type="UINT" InitialValue="12031"/>
+        <VarDeclaration Name="OutputNumber_AIC_I06_CAL" Type="UINT" InitialValue="12032"/>
+        <VarDeclaration Name="OutputNumber_AIC_I07_RAW" Type="UINT" InitialValue="12033"/>
+        <VarDeclaration Name="OutputNumber_AIC_I07_CAL" Type="UINT" InitialValue="12034"/>
+        <VarDeclaration Name="OutputNumber_AIC_I08_RAW" Type="UINT" InitialValue="12035"/>
+        <VarDeclaration Name="OutputNumber_AIC_I08_CAL" Type="UINT" InitialValue="12036"/>
         <VarDeclaration Name="Bargraph_AIC_I01" Type="UINT" InitialValue="18000"/>
         <VarDeclaration Name="Bargraph_AIC_I02" Type="UINT" InitialValue="18001"/>
         <VarDeclaration Name="Bargraph_AIC_I03" Type="UINT" InitialValue="18002"/>
@@ -52,6 +107,7 @@
         <VarDeclaration Name="Bargraph_AIC_I06" Type="UINT" InitialValue="18005"/>
         <VarDeclaration Name="Bargraph_AIC_I07" Type="UINT" InitialValue="18006"/>
         <VarDeclaration Name="Bargraph_AIC_I08" Type="UINT" InitialValue="18007"/>
+        <VarDeclaration Name="Logos_icon" Type="UINT" InitialValue="20500"/>
         <VarDeclaration Name="NumberVariable_AIC_RAW_I01" Type="UINT" InitialValue="21000"/>
         <VarDeclaration Name="NumberVariable_AIC_RAW_I02" Type="UINT" InitialValue="21001"/>
         <VarDeclaration Name="NumberVariable_AIC_RAW_I03" Type="UINT" InitialValue="21002"/>
@@ -71,85 +127,6 @@
         <VarDeclaration Name="FontAttributes_6x8" Type="UINT" InitialValue="23000"/>
         <VarDeclaration Name="FontAttributes_24x32" Type="UINT" InitialValue="23001"/>
         <VarDeclaration Name="FontAttributes_16x16" Type="UINT" InitialValue="23002"/>
-        <VarDeclaration Name="Logos_icon" Type="UINT" InitialValue="20500"/>
         <VarDeclaration Name="AuxFunction2_X1" Type="UINT" InitialValue="31000"/>
     </GlobalConstants>
-    <OriginalSource><![CDATA[PACKAGE Uebungen::const::UT::AIC;
-
-GLOBALCONSTANTS DefaultPool_AIC
-	VAR_GLOBAL CONSTANT
-		WorkingSet : UINT := 0;
-		DataMask_M1 : UINT := 1000;
-		DataMask_AIC1 : UINT := 1001;
-		DataMask_AIC2 : UINT := 1002;
-		DataMask_AIC3 : UINT := 1003;
-		DataMask_AIC4 : UINT := 1004;
-		Container_Q : UINT := 3000;
-		SoftKeyMask_AIC : UINT := 4000;
-		SoftKey_Ausgaenge : UINT := 5000;
-		SoftKey_AIC1 : UINT := 5001;
-		SoftKey_AIC2 : UINT := 5002;
-		SoftKey_AIC3 : UINT := 5003;
-		SoftKey_AIC4 : UINT := 5004;
-		Button_Q01 : UINT := 6001;
-		Button_Q02 : UINT := 6002;
-		Button_Q03 : UINT := 6003;
-		Button_Q04 : UINT := 6004;
-		Button_Q05 : UINT := 6005;
-		Button_Q06 : UINT := 6006;
-		Button_Q07 : UINT := 6007;
-		Button_Q08 : UINT := 6008;
-		Button_Q09 : UINT := 6009;
-		Button_Q10 : UINT := 6010;
-		Button_Q11 : UINT := 6011;
-		Button_Q12 : UINT := 6012;
-		Button_AIC_I01_CO : UINT := 6013;
-		Button_AIC_I01_CS : UINT := 6014;
-		Button_AIC_I02_CO : UINT := 6015;
-		Button_AIC_I02_CS : UINT := 6016;
-		Button_AIC_I03_CO : UINT := 6017;
-		Button_AIC_I03_CS : UINT := 6018;
-		Button_AIC_I04_CO : UINT := 6019;
-		Button_AIC_I04_CS : UINT := 6020;
-		Button_AIC_I05_CO : UINT := 6021;
-		Button_AIC_I05_CS : UINT := 6022;
-		Button_AIC_I06_CO : UINT := 6023;
-		Button_AIC_I06_CS : UINT := 6024;
-		Button_AIC_I07_CO : UINT := 6025;
-		Button_AIC_I07_CS : UINT := 6026;
-		Button_AIC_I08_CO : UINT := 6027;
-		Button_AIC_I08_CS : UINT := 6028;
-		OutputNumber_Tick : UINT := 12020;
-		Bargraph_AIC_I01 : UINT := 18000;
-		Bargraph_AIC_I02 : UINT := 18001;
-		Bargraph_AIC_I03 : UINT := 18002;
-		Bargraph_AIC_I04 : UINT := 18003;
-		Bargraph_AIC_I05 : UINT := 18004;
-		Bargraph_AIC_I06 : UINT := 18005;
-		Bargraph_AIC_I07 : UINT := 18006;
-		Bargraph_AIC_I08 : UINT := 18007;
-		NumberVariable_AIC_RAW_I01 : UINT := 21000;
-		NumberVariable_AIC_RAW_I02 : UINT := 21001;
-		NumberVariable_AIC_RAW_I03 : UINT := 21002;
-		NumberVariable_AIC_RAW_I04 : UINT := 21003;
-		NumberVariable_AIC_RAW_I05 : UINT := 21004;
-		NumberVariable_AIC_RAW_I06 : UINT := 21005;
-		NumberVariable_AIC_RAW_I07 : UINT := 21006;
-		NumberVariable_AIC_RAW_I08 : UINT := 21007;
-		NumberVariable_AIC_CAL_I01 : UINT := 21008;
-		NumberVariable_AIC_CAL_I02 : UINT := 21009;
-		NumberVariable_AIC_CAL_I03 : UINT := 21010;
-		NumberVariable_AIC_CAL_I04 : UINT := 21011;
-		NumberVariable_AIC_CAL_I05 : UINT := 21012;
-		NumberVariable_AIC_CAL_I06 : UINT := 21013;
-		NumberVariable_AIC_CAL_I07 : UINT := 21014;
-		NumberVariable_AIC_CAL_I08 : UINT := 21015;
-		FontAttributes_6x8 : UINT := 23000;
-		FontAttributes_24x32 : UINT := 23001;
-		FontAttributes_16x16 : UINT := 23002;
-		Logos_icon : UINT := 20500;
-		AuxFunction2_X1 : UINT := 31000;
-	END_VAR
-END_GLOBALCONSTANTS
-]]></OriginalSource>
 </GlobalConstants>
