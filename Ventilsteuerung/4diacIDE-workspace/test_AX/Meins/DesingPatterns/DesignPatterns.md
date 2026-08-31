@@ -19,7 +19,7 @@ mit mindestens:
 
 | Kategorie | Pattern | Ordner | Status |
 |---|---|---|---|
-| Structural (creational) | Purely Event-Driven function blocks | – | offen |
+| Structural (creational) | Purely Event-Driven function blocks | [`PurelyEventDrivenPattern/`](PurelyEventDrivenPattern/PurelyEventDrivenPattern.md) | **umgesetzt, ungetestet in 4diac** |
 | Structural (creational) | Generic Actuation | [`ChainOfActionsPattern/`](ChainOfActionsPattern/ChainOfActionsPattern.md) (`TrueUntil.fbt`) | **umgesetzt** (zusammen mit Chain of actions, Folie 65) |
 | Structural (creational) | Decorator | [`DecoratorPattern/`](DecoratorPattern/DecoratorPattern.md) | **umgesetzt, ungetestet in 4diac** |
 | Architectural | IO abstraction layer | – | offen |
@@ -139,8 +139,24 @@ Ordner: [`ResetPattern/`](ResetPattern/ResetPattern.md)
 
 Noch nicht in 4diac getestet.
 
+### Purely Event-Driven function blocks
+
+Ordner: [`PurelyEventDrivenPattern/`](PurelyEventDrivenPattern/PurelyEventDrivenPattern.md)
+
+- Baustein `EventDrivenCylinder.fbt` (Folie 64): vollständig
+  event-getriebene Fassung des Folienbeispiels `DoubleActingCylinder`
+  – **null BOOL-Datenpins**, Sensoren (`AT_HOME`/`AT_END`) und
+  Aktuatorbefehle (`EXTEND`/`RETRACT`) laufen komplett über Events,
+  keine Algorithmen nötig.
+- Kein separates Demo-Subapp – der Baustein ist wegen der fehlenden
+  Datenpins direkt im FORTE-Monitoring testbar.
+
+Offener Punkt: Interface-Namen sind von der Folie ablesbar, die genaue
+ECC-Verdrahtung ist eine eigene, in sich schlüssige Rekonstruktion
+(nicht pixelgenau von der Folie verifizierbar) – siehe
+`PurelyEventDrivenPattern.md`. Noch nicht in 4diac getestet.
+
 ## Offen / geplant
 
-Die übrigen Patterns aus Modul 6 (IO abstraction layer, Purely
-Event-Driven function blocks) werden nach und nach in eigenen
-Unterordnern nach demselben Schema ergänzt.
+Das letzte noch offene Pattern aus Modul 6 (IO abstraction layer,
+Folie 63) wird bei Bedarf noch ergänzt.
