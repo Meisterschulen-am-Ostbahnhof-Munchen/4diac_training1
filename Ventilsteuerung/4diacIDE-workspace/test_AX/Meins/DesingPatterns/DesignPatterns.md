@@ -30,7 +30,7 @@ mit mindestens:
 
 | Kategorie | Pattern | Ordner | Status |
 |---|---|---|---|
-| Compositional / Architectural | Start/Stop pattern | – | offen |
+| Compositional / Architectural | Start/Stop pattern | [`StartStopPattern/`](StartStopPattern/StartStopPattern.md) | **umgesetzt, ungetestet in 4diac** |
 | Compositional / Architectural | reset pattern | – | offen |
 | Behavioural | **Handshake pattern** | [`HandshakePattern/`](HandshakePattern/HandshakePattern.md) | **umgesetzt** (Adapter `EVENT_HS`, dataless, wie auf Folie 72) |
 
@@ -104,12 +104,28 @@ Ordner: [`DecoratorPattern/`](DecoratorPattern/DecoratorPattern.md)
   ECC-Erweiterung mit einem zweiten `TE`-Eingang)
 
 `E_PERMIT` ist generisch und wiederverwendbar über Decorator hinaus –
-z. B. für das noch offene Start/Stop-Pattern (Folie 70), das laut Folie
-denselben Baustein nutzt. Noch nicht in 4diac getestet.
+genutzt vom Start/Stop-Pattern (siehe unten).
+
+### Start/Stop pattern
+
+Ordner: [`StartStopPattern/`](StartStopPattern/StartStopPattern.md)
+
+- **Keine neuen Bausteine** – nur Standardbausteine
+  `iec61499::events::E_SR` (Start/Stop-Zustand) und
+  `iec61499::events::E_PERMIT` (Freigabe-Gate, wie beim Decorator).
+  Dieselbe Kombination (`E_SR.Q` → `E_PERMIT.PERMIT`) existiert schon
+  real im Repo für einen anderen Zweck: `test_B/Uebungen/Uebung_009.SUB`.
+- Demo-Subapplication `StartStopDemo.sub`: `START`/`STOP` setzen ein
+  `E_SR`; dessen `Q` gibt ein `E_PERMIT` frei, das ein `TRIGGER` zur
+  (aus dem Chain-of-Actions-Pattern wiederverwendeten) `TrueUntil`-
+  Instanz durchlässt – strukturell fast identisch zur Decorator-Demo,
+  nur mit persistentem Start/Stop-Zustand statt einer beliebigen
+  externen Bedingung.
+
+Noch nicht in 4diac getestet.
 
 ## Offen / geplant
 
 Die übrigen Patterns aus Modul 6 (IO abstraction layer, Purely
-Event-Driven function blocks, Start/Stop pattern, reset pattern)
-werden nach und nach in eigenen Unterordnern nach demselben Schema
-ergänzt.
+Event-Driven function blocks, reset pattern) werden nach und nach in
+eigenen Unterordnern nach demselben Schema ergänzt.
