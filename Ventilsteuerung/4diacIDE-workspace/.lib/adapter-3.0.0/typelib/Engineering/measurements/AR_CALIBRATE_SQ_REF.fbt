@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<FBType Name="AR_CALIBRATE_SQ_REF" Comment="Adapter-based sequential two-point calibration (offset then scale) with ECC-enforced order - reference targets (Y_Offset/Y_Scale) are live AR sockets, persisted via 2 additional AR2 plugs (ZERO/SPAN)">
+	<Identification Standard="61499-1">
+	</Identification>
+	<VersionInfo Version="1.0" Author="Meisterschulen am Ostbahnhof" Date="2026-08-31">
+	</VersionInfo>
+	<CompilerInfo packageName="adapter::Engineering::measurements">
+	</CompilerInfo>
+	<InterfaceList>
+		<Plugs>
+			<AdapterDeclaration Name="Y" Type="adapter::types::unidirectional::AR" Comment="Calibrated Output"/>
+			<AdapterDeclaration Name="OFFSET" Type="adapter::types::bidirectional::AR2" Comment="Stored offset value (initial 0.0)"/>
+			<AdapterDeclaration Name="SCALE" Type="adapter::types::bidirectional::AR2" Comment="Stored scale value (initial 1.0)"/>
+			<AdapterDeclaration Name="ZERO" Type="adapter::types::bidirectional::AR2" Comment="Persisted low-point target reference (Y_Offset / Nullpunkt)"/>
+			<AdapterDeclaration Name="SPAN" Type="adapter::types::bidirectional::AR2" Comment="Persisted high-point target reference (Y_Scale / Spanne)"/>
+		</Plugs>
+		<Sockets>
+			<AdapterDeclaration Name="X" Type="adapter::types::unidirectional::AR" Comment="Raw Input"/>
+			<AdapterDeclaration Name="CO" Type="adapter::types::unidirectional::AX" Comment="Calibrate Offset"/>
+			<AdapterDeclaration Name="CS" Type="adapter::types::unidirectional::AX" Comment="Calibrate Scale"/>
+			<AdapterDeclaration Name="Y_Offset" Type="adapter::types::unidirectional::AR" Comment="Target output Y at low calibration point (ZERO), live input"/>
+			<AdapterDeclaration Name="Y_Scale" Type="adapter::types::unidirectional::AR" Comment="Target output Y at high calibration point (SPAN), live input"/>
+		</Sockets>
+	</InterfaceList>
+	<BasicFB>
+		<InternalVars>
+			<VarDeclaration Name="X_LOW_INT" Type="REAL" Comment="Stored raw value at CO"/>
+			<VarDeclaration Name="Y_LOW_INT" Type="REAL" Comment="Stored target value at CO"/>
+		</InternalVars>
+		<ECC>
+			<ECState Name="IDLE" x="0" y="0">
+			</ECState>
+			<ECState Name="REQ" x="800" y="0">
+				<ECAction Algorithm="REQ" Output="Y.E1"/>
+			</ECState>
+			<ECState Name="CO" x="1600" y="0">
+				<ECAction Algorithm="CO" Output="OFFSET.EO1"/>
+			</ECState>
+			<ECState Name="WAIT_CS" x="1600" y="-400">
+			</ECState>
+			<ECState Name="REQ_WAIT" x="1200" y="-800">
+				<ECAction Algorithm="REQ" Output="Y.E1"/>
+			</ECState>
+			<ECState Name="CS" x="2400" y="-400">
+				<ECAction Algorithm="CS" Output="SCALE.EO1"/>
+				<ECAction Output="OFFSET.EO1"/>
+			</ECState>
+			<ECState Name="ZERO_ECHO" x="-800" y="400">
+				<ECAction Algorithm="ZERO_ECHO" Output="ZERO.EO1"/>
+			</ECState>
+			<ECState Name="SPAN_ECHO" x="-800" y="800">
+				<ECAction Algorithm="SPAN_ECHO" Output="SPAN.EO1"/>
+			</ECState>
+			<ECTransition Source="IDLE" Destination="REQ" Condition="X.E1" x="400" y="200"/>
+			<ECTransition Source="REQ" Destination="IDLE" Condition="1" x="400" y="600"/>
+			<ECTransition Source="IDLE" Destination="CO" Condition="CO.E1[CO.D1]" x="800" y="400"/>
+			<ECTransition Source="CO" Destination="WAIT_CS" Condition="1" x="1600" y="-200"/>
+			<ECTransition Source="WAIT_CS" Destination="REQ_WAIT" Condition="X.E1" x="1200" y="-200"/>
+			<ECTransition Source="REQ_WAIT" Destination="WAIT_CS" Condition="1" x="1400" y="-600"/>
+			<ECTransition Source="WAIT_CS" Destination="CS" Condition="CS.E1[CS.D1]" x="2000" y="-400"/>
+			<ECTransition Source="CS" Destination="IDLE" Condition="1" x="1200" y="-600"/>
+			<ECTransition Source="WAIT_CS" Destination="CO" Condition="CO.E1[CO.D1]" x="1600" y="-600"/>
+			<ECTransition Source="IDLE" Destination="REQ" Condition="OFFSET.EI1" x="-100" y="300"/>
+			<ECTransition Source="IDLE" Destination="REQ" Condition="SCALE.EI1" x="-100" y="400"/>
+			<ECTransition Source="WAIT_CS" Destination="REQ_WAIT" Condition="OFFSET.EI1" x="1400" y="-550"/>
+			<ECTransition Source="WAIT_CS" Destination="REQ_WAIT" Condition="SCALE.EI1" x="1400" y="-600"/>
+			<ECTransition Source="IDLE" Destination="ZERO_ECHO" Condition="Y_Offset.E1" x="-400" y="400"/>
+			<ECTransition Source="ZERO_ECHO" Destination="IDLE" Condition="1" x="-400" y="500"/>
+			<ECTransition Source="IDLE" Destination="SPAN_ECHO" Condition="Y_Scale.E1" x="-400" y="800"/>
+			<ECTransition Source="SPAN_ECHO" Destination="IDLE" Condition="1" x="-400" y="900"/>
+		</ECC>
+		<Algorithm Name="REQ" Comment="REQ">
+			<ST><![CDATA[
+(* calculate calibrated output *)
+Y.D1 := (X.D1 + OFFSET.DI1) * SCALE.DI1;
+]]></ST>
+		</Algorithm>
+		<Algorithm Name="CO" Comment="CO">
+			<ST><![CDATA[
+X_LOW_INT := X.D1;
+Y_LOW_INT := ZERO.DI1;
+IF SCALE.DI1 <> 0.0 THEN
+	OFFSET.DO1 := ZERO.DI1 / SCALE.DI1 - X.D1;
+ELSE
+	OFFSET.DO1 := ZERO.DI1 - X.D1;
+END_IF;
+]]></ST>
+		</Algorithm>
+		<Algorithm Name="CS" Comment="CS">
+			<ST><![CDATA[
+IF (X.D1 - X_LOW_INT) <> 0.0 THEN
+	SCALE.DO1 := (SPAN.DI1 - Y_LOW_INT) / (X.D1 - X_LOW_INT);
+	IF SCALE.DO1 <> 0.0 THEN
+		OFFSET.DO1 := Y_LOW_INT / SCALE.DO1 - X_LOW_INT;
+	END_IF;
+END_IF;
+]]></ST>
+		</Algorithm>
+		<Algorithm Name="ZERO_ECHO" Comment="Persist live Y_Offset reference (ZERO) to INI">
+			<ST><![CDATA[
+ZERO.DO1 := Y_Offset.D1;
+]]></ST>
+		</Algorithm>
+		<Algorithm Name="SPAN_ECHO" Comment="Persist live Y_Scale reference (SPAN) to INI">
+			<ST><![CDATA[
+SPAN.DO1 := Y_Scale.D1;
+]]></ST>
+		</Algorithm>
+	</BasicFB>
+	<Attribute Name="Documentation" Type="CDATA"><![CDATA[<h2>Formula</h2>
+
+<pre>
+Y = (X + OFFSET) * SCALE</pre>
+
+<h2>Reference Targets (Y_Offset / Y_Scale) are live AR Sockets</h2>
+
+<p>Unlike <strong>AR_CALIBRATE_SQ</strong>, the two target values are not plain
+InputVars set via a <code>SET</code> event - they are live <strong>AR</strong>
+Sockets (<code>Y_Offset</code>, <code>Y_Scale</code>), fed the same way as
+<code>X</code> (e.g. from an editable VT input field). Every time a new value
+arrives, it is immediately mirrored out through the new <strong>AR2</strong>
+Plugs <code>ZERO</code>/<code>SPAN</code> so it can be persisted (INI_AR2 or
+NVS_AR2) exactly like <code>OFFSET</code>/<code>SCALE</code> already are.</p>
+
+<p><strong>Important:</strong> exactly like <code>OFFSET</code>/<code>SCALE</code>,
+the <code>CO</code>/<code>CS</code> algorithms never read the raw incoming
+<code>Y_Offset.D1</code>/<code>Y_Scale.D1</code> directly for their math - they
+read the round-tripped <code>ZERO.DI1</code>/<code>SPAN.DI1</code> instead (the
+value echoed back by the external INI_AR2, which requires
+<code>SETM=TRUE</code> on that instance to actually echo). This keeps both
+reference values consistent with what's really persisted, and is what makes a
+boot-restored default usable without the operator having to re-enter it first.</p>
+
+<h2>Calibration (Two-Point, ECC-Enforced)</h2>
+
+<ol>
+	<li><strong>Offset (CO):</strong> Apply low reference, set Y_Offset (ZERO) to desired output, trigger CO<br />
+	OFFSET := ZERO.DI1 / SCALE - X &rarr; after CO, Y <strong>always</strong> equals ZERO.DI1 (independent of SCALE)</li>
+	<li><strong>Scale (CS):</strong> Apply high reference, set Y_Scale (SPAN) to desired output, trigger CS<br />
+	Calculates SCALE and OFFSET decoupled using both reference points (SPAN.DI1 and the CO-time ZERO.DI1) &rarr; after CS, the line passes exactly through both points</li>
+</ol>
+
+<p><strong>Note:</strong> Both Y_Offset and Y_Scale are target values on the <strong>output side</strong>.</p>
+
+<ul>
+	<li>CS is only reachable <strong>after</strong> offset calibration (state WAIT_CS) &ndash; enforced by ECC</li>
+	<li>CO can be repeated at any time to re-calibrate offset</li>
+	<li>Normal calculation via X.E1 works in all states</li>
+</ul>
+]]></Attribute>
+	<Attribute Name="eclipse4diac::core::TypeHash" Value="''"/>
+</FBType>
