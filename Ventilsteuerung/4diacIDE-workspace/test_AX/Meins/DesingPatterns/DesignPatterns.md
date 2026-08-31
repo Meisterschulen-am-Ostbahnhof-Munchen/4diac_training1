@@ -20,11 +20,11 @@ mit mindestens:
 | Kategorie | Pattern | Ordner | Status |
 |---|---|---|---|
 | Structural (creational) | Purely Event-Driven function blocks | – | offen |
-| Structural (creational) | Generic Actuation | – | offen |
+| Structural (creational) | Generic Actuation | [`ChainOfActionsPattern/`](ChainOfActionsPattern/ChainOfActionsPattern.md) (`TrueUntil.fbt`) | **umgesetzt** (zusammen mit Chain of actions, Folie 65) |
 | Structural (creational) | Decorator | – | offen |
 | Architectural | IO abstraction layer | – | offen |
-| Compositional | Chain of actions | – | offen |
-| Behavioural | Chain of actions | – | offen |
+| Compositional | Chain of actions | [`ChainOfActionsPattern/`](ChainOfActionsPattern/ChainOfActionsPattern.md) | **umgesetzt, ungetestet in 4diac** |
+| Behavioural | Chain of actions | [`ChainOfActionsPattern/`](ChainOfActionsPattern/ChainOfActionsPattern.md) | **umgesetzt, ungetestet in 4diac** |
 
 ## Weitere Patterns laut Folie 69 ("Miscellaneous design patterns")
 
@@ -73,9 +73,24 @@ GIVE/RCV-Rollenzuordnung (Socket=`MTXIN`, Plug=`MTXOUT`) gegen die
 Originalquelle bestätigt (Dai/Vyatkin/Christensen/Dubinin, IEEE INDIN
 2014 – siehe `TokenRingPattern.md`). Noch nicht in 4diac getestet.
 
+### Chain of Actions (inkl. Generic Actuation)
+
+Ordner: [`ChainOfActionsPattern/`](ChainOfActionsPattern/ChainOfActionsPattern.md)
+
+- Baustein `TrueUntil.fbt` (Folie 65 "Generic Actuation"): generischer
+  Aktions-Baustein, kein Adapter nötig – `TRIGGER`/`REQ` → `TO_POSITION`,
+  wartet auf `inPosition`, feuert `STOP`+`DONE`
+- Demo-Subapplication `ChainOfActionsDemo.sub` (Folie 66): vier
+  `TrueUntil`-Instanzen verkettet über `DONE`→`TRIGGER`, statt eines
+  großen "Spaghetti"-ECC
+
+Offener Punkt: genaue Rolle von `REQ` neben `TRIGGER` aus der Folie
+nicht zweifelsfrei ablesbar (vorerst wie `TRIGGER` behandelt) – siehe
+`ChainOfActionsPattern.md`. Noch nicht in 4diac getestet.
+
 ## Offen / geplant
 
-Die übrigen Patterns aus Modul 6 (Purely Event-Driven function blocks,
-Generic Actuation, Decorator, IO abstraction layer, Chain of actions,
-Start/Stop pattern, reset pattern) werden nach und nach in eigenen
-Unterordnern nach demselben Schema ergänzt.
+Die übrigen Patterns aus Modul 6 (Decorator, IO abstraction layer,
+Purely Event-Driven function blocks, Start/Stop pattern, reset pattern)
+werden nach und nach in eigenen Unterordnern nach demselben Schema
+ergänzt.

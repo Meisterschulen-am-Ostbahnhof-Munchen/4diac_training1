@@ -73,9 +73,14 @@ ECC (aus der Folien-Grafik abgeleitet):
 
 - **START** (initial)
 - `START` → `OPERATE` bei `TRIGGER`
-- `OPERATE` → `MOVE` (unbedingt) – feuert `TO_POSITION`
-- `MOVE` → `STOP` bei `inPosition` – feuert `STOP` und `DONE`
-- `STOP` → `OPERATE` (zurück, bereit für den nächsten `TRIGGER`)
+- `OPERATE` → `MOVING` (unbedingt) – feuert `TO_POSITION`
+  (`MOVE` ist ein reserviertes ST-Schlüsselwort, daher `MOVING` im
+  Baustein)
+- `MOVING` → `STOP` bei `inPosition` – feuert `STOP` und `DONE`
+- `STOP` → `START` (zurück in den Idle-Zustand, bereit für den nächsten
+  `TRIGGER`/`REQ`) – **nicht** zurück nach `OPERATE`, sonst würde sich
+  wegen `OPERATE`s unbedingter Transition nach `MOVING` eine
+  Endlosschleife ergeben
 
 **Offener Punkt:** Die genaue Rolle von `REQ` neben `TRIGGER` ist aus
 der komprimierten Folien-Grafik nicht zweifelsfrei ablesbar (evtl. ein
@@ -107,21 +112,29 @@ ist die Erweiterung des Grundmusters um Verzweigung/Zusammenführung –
 für die Erstumsetzung hier zunächst nicht nachgebaut (siehe
 "Umsetzung", Abgrenzung).
 
-## Umsetzung in diesem Repository (geplant)
+## Umsetzung in diesem Repository (fertig, ungetestet in 4diac)
 
 - **Baustein:** `TrueUntil.fbt` – generischer Aktions-Baustein wie auf
-  Folie 65/66, kein Adapter nötig (reine Events/BOOL).
+  Folie 65/66, kein Adapter nötig (reine Events/BOOL), kein
+  INIT/INITO (wie auf der Folie – bewusst weggelassen, kein Zustand,
+  der initialisiert werden müsste).
   Ablageort: `test_AX/Meins/DesingPatterns/ChainOfActionsPattern/`.
-- **Demo:** Kette aus 3–4 `TrueUntil`-Instanzen (analog zum
-  LCExtend/RCExtend/RCRetract/LCRetract-Beispiel von Folie 66, aber
-  generisch benannt statt zylinderspezifisch, wie schon beim
-  Handshake-Pattern von der konkreten Zylinder-Domäne losgelöst) in
-  einer Demo-Subapplication, verkettet über `DONE`→`TRIGGER`.
+- **Demo:** `ChainOfActionsDemo.sub` – Kette aus 4 `TrueUntil`-Instanzen
+  (`Step1`…`Step4`, analog zum LCExtend/RCExtend/RCRetract/LCRetract-
+  Beispiel von Folie 66, aber generisch benannt statt
+  zylinderspezifisch, wie schon beim Handshake-Pattern von der
+  konkreten Zylinder-Domäne losgelöst), verkettet über
+  `DONE`→`TRIGGER`. Jede Stufe hat ein eigenes, an der Subapp-
+  Schnittstelle exponiertes `StepN_InPosition`-BOOL, mit dem sich das
+  "Erreichen der Position" beim Testen manuell simulieren lässt.
 - **Abgrenzung:** Das komplexere Beispiel mit Verzweigung/`E_MERGE`
-  (Folie 67) ist eine spätere Erweiterung, kein Teil der Erstumsetzung.
+  (Folie 67) ist eine spätere Erweiterung, kein Teil dieser Umsetzung.
 - **Decorator** (Folie 68, `TrueUntil` + `TE`-Bedingung) ist ein
   eigenes Pattern und hier nicht enthalten – siehe
   `../DesignPatterns.md`.
+
+Noch offen: reale 4diac-Validierung (XSD ist grün, das prüft aber wie
+bei den anderen Patterns weder Socket/Plug-Richtung noch ECC-Logik).
 
 ## Weitere Design Patterns aus Modul 6 (zur späteren Umsetzung)
 
