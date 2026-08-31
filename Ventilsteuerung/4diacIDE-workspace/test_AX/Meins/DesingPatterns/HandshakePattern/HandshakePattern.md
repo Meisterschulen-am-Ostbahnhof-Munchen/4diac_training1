@@ -228,11 +228,39 @@ weitere, enger typisierte Variante ergänzen, analog zur bestehenden
 `typelib/types/`-Familie (`AX`/`ADI`/`AR`/`AL`/`ALR`/`AS`/`AB`, je
 unidirektional und bidirektional).
 
-Für `EVENT_HS_WSTRING` existieren noch keine Beispielbausteine – die
-für `EVENT_HS` gebauten (`HandshakeRequester`/`HandshakeResponder`/
-`HandshakePatternDemo`) sind fest an den dataless `EVENT_HS` gekoppelt
-und müssten für die datentragende Variante separat (oder parametrisiert)
-nachgebaut werden.
+Beispielbausteine (analog zu `EVENT_HS`, gleiches Init/Initialized/DeInit-
+Muster, gleiche Zustandsnamen):
+
+- `HandshakeRequesterWSTRING.fbt` – Plug/Requester. `START` trägt
+  `ReqPayload` (Default `"push,100"`), lädt es vor dem Senden in
+  `HS.REQD`; `DONE`/`NOTIFIED` liefern `CnfPayload`/`IndPayload` aus
+  `HS.CNFD`/`HS.INDD`.
+- `HandshakeResponderWSTRING.fbt` – Socket/Responder. Liest `HS.REQD`
+  nach `LastReqPayload`, antwortet mit fixem `HS.CNFD := "ack"`; `TRIGGER`
+  lädt `IndPayload` (Default `"status,ok"`) in `HS.INDD`; liest
+  `HS.RSPD` nach `LastRspPayload`.
+- `HandshakePatternDemoWSTRING.sub` – koppelt beide, analog zu
+  `HandshakePatternDemo.sub`.
+
+**Verifiziert:** Adaptereigene Datenvariablen (`REQD`/`CNFD`/`INDD`/
+`RSPD`) werden in ST-Algorithmen genauso mit `HS.`-Präfix angesprochen
+wie die Events (`HS.REQD`, `HS.CNFD` usw.) – in 4diac gegengetestet,
+keine Fehlermeldung.
+
+Die feste Bestätigungs-Payload `"ack"` (Responder-CNF, Requester-RSP)
+steht nicht als Literal im Code, sondern als globale Konstante:
+`const/HandshakeConst.gcf` (Package
+`Meins::DesingPatterns::HandshakePattern::const`, Konstante
+`ACK_PAYLOAD`), per `<Import>` in beide `...WSTRING.fbt`-Bausteine
+eingebunden und dort als `HandshakeConst::ACK_PAYLOAD` referenziert –
+gleiches Muster wie `logiBUS::utils::quarter::const::quarter` im
+`quarter`-Paket.
+
+`HandshakePatternDemoWSTRING.sub` exponiert `ReqPayload`/`IndPayload`
+zusätzlich als eigene `InputVars` (Defaults `"push,100"`/`"status,ok"`),
+sodass sie beim Instanziieren per `Parameter` überschrieben werden
+können, statt nur an den internen Requester/Responder-Defaults zu
+hängen.
 
 ## Weitere Design Patterns aus Modul 6 (zur späteren Umsetzung)
 

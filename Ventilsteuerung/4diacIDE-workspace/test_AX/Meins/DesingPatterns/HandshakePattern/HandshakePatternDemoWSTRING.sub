@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SubAppType Name="HandshakePatternDemoWSTRING" Comment="Handshake pattern demo (WSTRING payload): Requester (Plug) coupled to Responder (Socket) via a single EVENT_HS_WSTRING adapter connection">
+	<Identification Standard="61499-2" Description="Copyright (c) 2026 Meisterschulen am Ostbahnhof &#10; &#10;This program and the accompanying materials are made &#10;available under the terms of the Eclipse Public License 2.0 &#10;which is available at https://www.eclipse.org/legal/epl-2.0/ &#10; &#10;SPDX-License-Identifier: EPL-2.0">
+	</Identification>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2026-08-31" Remarks="Handshake design pattern (IEC 61499 primer course, Module 6, Valeriy Vyatkin), demo application with WSTRING payload">
+	</VersionInfo>
+	<CompilerInfo packageName="Meins::DesingPatterns::HandshakePattern">
+	</CompilerInfo>
+	<SubAppInterfaceList>
+		<SubAppEventInputs>
+			<SubAppEvent Name="INIT" Type="EInit" Comment="Initialization Request">
+			</SubAppEvent>
+			<SubAppEvent Name="START" Type="Event" Comment="Trigger the Requester to send a REQ (with ReqPayload)">
+			</SubAppEvent>
+			<SubAppEvent Name="TRIGGER" Type="Event" Comment="Trigger the Responder to send an unsolicited IND (with IndPayload)">
+			</SubAppEvent>
+		</SubAppEventInputs>
+		<SubAppEventOutputs>
+			<SubAppEvent Name="INITO" Type="EInit" Comment="Initialization Confirm">
+			</SubAppEvent>
+			<SubAppEvent Name="DONE" Type="Event" Comment="Requester received the CNF for the last REQ">
+			</SubAppEvent>
+			<SubAppEvent Name="NOTIFIED" Type="Event" Comment="Requester received an IND and answered with RSP">
+			</SubAppEvent>
+		</SubAppEventOutputs>
+		<InputVars>
+			<VarDeclaration Name="QI" Type="BOOL" Comment="Input event qualifier"/>
+			<VarDeclaration Name="ReqPayload" Type="WSTRING" Comment="Payload the Requester sends with the next REQ" InitialValue="&quot;push,100&quot;"/>
+			<VarDeclaration Name="IndPayload" Type="WSTRING" Comment="Payload the Responder sends with the next IND" InitialValue="&quot;status,ok&quot;"/>
+		</InputVars>
+		<OutputVars>
+			<VarDeclaration Name="QO" Type="BOOL" Comment="Output event qualifier"/>
+			<VarDeclaration Name="Requester_CnfPayload" Type="WSTRING" Comment="Requester: payload of the last received CNF"/>
+			<VarDeclaration Name="Requester_IndPayload" Type="WSTRING" Comment="Requester: payload of the last received IND"/>
+			<VarDeclaration Name="Requester_CnfCount" Type="UINT" Comment="Requester: number of CNF received"/>
+			<VarDeclaration Name="Requester_IndCount" Type="UINT" Comment="Requester: number of IND received / RSP sent"/>
+			<VarDeclaration Name="Responder_LastReqPayload" Type="WSTRING" Comment="Responder: payload of the last received REQ"/>
+			<VarDeclaration Name="Responder_LastRspPayload" Type="WSTRING" Comment="Responder: payload of the last received RSP"/>
+			<VarDeclaration Name="Responder_ReqCount" Type="UINT" Comment="Responder: number of REQ received"/>
+			<VarDeclaration Name="Responder_IndCount" Type="UINT" Comment="Responder: number of IND sent"/>
+			<VarDeclaration Name="Responder_RspCount" Type="UINT" Comment="Responder: number of RSP received"/>
+		</OutputVars>
+	</SubAppInterfaceList>
+	<SubAppNetwork>
+		<FB Name="Requester" Type="Meins::DesingPatterns::HandshakePattern::HandshakeRequesterWSTRING" x="3000" y="700">
+		</FB>
+		<FB Name="Responder" Type="Meins::DesingPatterns::HandshakePattern::HandshakeResponderWSTRING" x="6200" y="700">
+		</FB>
+		<EventConnections>
+			<Connection Source="INIT" Destination="Requester.INIT" dx1="1800">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="Requester.INITO" Destination="Responder.INIT">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="Responder.INITO" Destination="INITO" dx1="1200">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="START" Destination="Requester.START" dx1="400">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="TRIGGER" Destination="Responder.TRIGGER" dx1="400">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="Requester.DONE" Destination="DONE" dx1="400">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="Requester.NOTIFIED" Destination="NOTIFIED" dx1="400">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+		</EventConnections>
+		<DataConnections>
+			<Connection Source="QI" Destination="Requester.QI" dx1="400">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="ReqPayload" Destination="Requester.ReqPayload" dx1="400">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="IndPayload" Destination="Responder.IndPayload" dx1="400">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="Requester.QO" Destination="Responder.QI" dx1="400">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="Responder.QO" Destination="QO" dx1="160">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="Requester.CnfPayload" Destination="Requester_CnfPayload" dx1="400">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="Requester.IndPayload" Destination="Requester_IndPayload" dx1="400">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="Requester.CnfCount" Destination="Requester_CnfCount" dx1="400">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="Requester.IndCount" Destination="Requester_IndCount" dx1="400">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="Responder.LastReqPayload" Destination="Responder_LastReqPayload" dx1="160">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="Responder.LastRspPayload" Destination="Responder_LastRspPayload" dx1="160">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="Responder.ReqCount" Destination="Responder_ReqCount" dx1="160">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="Responder.IndCount" Destination="Responder_IndCount" dx1="160">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="Responder.RspCount" Destination="Responder_RspCount" dx1="160">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+		</DataConnections>
+		<AdapterConnections>
+			<Connection Source="Requester.HS" Destination="Responder.HS" Comment="The single Handshake adapter connection (WSTRING payload) replacing REQ/CNF/IND/RSP as four separate event+data links (Requester=Plug is the Source, Responder=Socket is the Destination)"/>
+		</AdapterConnections>
+	</SubAppNetwork>
+</SubAppType>
