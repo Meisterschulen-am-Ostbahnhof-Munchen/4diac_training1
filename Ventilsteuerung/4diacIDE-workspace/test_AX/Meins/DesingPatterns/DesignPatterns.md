@@ -34,6 +34,13 @@ mit mindestens:
 | Compositional / Architectural | reset pattern | – | offen |
 | Behavioural | **Handshake pattern** | [`HandshakePattern/`](HandshakePattern/HandshakePattern.md) | **umgesetzt** (Adapter `EVENT_HS`, dataless, wie auf Folie 72) |
 
+## Weitere Adapter-Patterns (nicht in der Folie-62/69-Taxonomie, aber konkret vorgeschlagen)
+
+| Pattern | Fundstelle | Ordner | Status |
+|---|---|---|---|
+| **TokenRing (Mutual Exclusion)** | Folie 15, Quelle: Dai/Vyatkin/Christensen/Dubinin, IEEE INDIN 2014 | [`TokenRingPattern/`](TokenRingPattern/TokenRingPattern.md) | **umgesetzt, ungetestet in 4diac** |
+| service-Adapter (datentragende Handshake-Variante) | Folie 48 | [`HandshakePattern/`](HandshakePattern/HandshakePattern.md) (`EVENT_HS_WSTRING`) | **umgesetzt** |
+
 ## Umgesetzt
 
 ### Handshake pattern
@@ -41,14 +48,30 @@ mit mindestens:
 Ordner: [`HandshakePattern/`](HandshakePattern/HandshakePattern.md)
 
 - Adapter-Typ `EVENT_HS` (dataless, REQ/RSP-Eingänge, CNF/IND-Ausgänge) in
-  `.lib/adapter-3.0.0/typelib/events/Handshake/EVENT_HS.adp`
-- Beispielbausteine `HandshakeRequester.fbt` (Plug/Client-Rolle) und
-  `HandshakeResponder.fbt` (Socket/Server-Rolle)
-- Demo-Subapplication `HandshakePatternDemo.sub`, die beide über die
-  Adapterverbindung koppelt
+  `.lib/adapter-3.0.0/typelib/events/Handshake/EVENT_HS.adp`, plus
+  datentragende Variante `EVENT_HS_WSTRING`
+- Beispielbausteine `HandshakeRequester(WSTRING).fbt` (Plug/Client-Rolle)
+  und `HandshakeResponder(WSTRING).fbt` (Socket/Server-Rolle)
+- Demo-Subapplications `HandshakePatternDemo(WSTRING).sub`, die beide
+  über die Adapterverbindung koppeln, sowie `HandshakePatternDemoIO.sub`
+  (physisches I/O: Taster löst aus, LED zeigt abgeschlossenen Handshake)
 
 Details, Theorie und Bezug zur Kursfolie: siehe
 [`HandshakePattern/HandshakePattern.md`](HandshakePattern/HandshakePattern.md).
+
+### TokenRing / Mutual Exclusion pattern
+
+Ordner: [`TokenRingPattern/`](TokenRingPattern/TokenRingPattern.md)
+
+- Adapter-Typ `TokenRing` (dataless, RCV-Eingang, GIVE-Ausgang) in
+  `.lib/adapter-3.0.0/typelib/events/TokenRing/TokenRing.adp`
+- Beispielbaustein `TokenRingNode.fbt` (ein Controller im Ring, mit
+  `MTXIN`-Socket und `MTXOUT`-Plug)
+- Demo-Subapplication `TokenRingPatternDemo.sub` (2-Knoten-Ring)
+
+GIVE/RCV-Rollenzuordnung (Socket=`MTXIN`, Plug=`MTXOUT`) gegen die
+Originalquelle bestätigt (Dai/Vyatkin/Christensen/Dubinin, IEEE INDIN
+2014 – siehe `TokenRingPattern.md`). Noch nicht in 4diac getestet.
 
 ## Offen / geplant
 
