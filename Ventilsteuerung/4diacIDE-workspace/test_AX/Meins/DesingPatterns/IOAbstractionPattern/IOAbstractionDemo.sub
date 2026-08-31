@@ -16,12 +16,12 @@
 	<SubAppInterfaceList>
 	</SubAppInterfaceList>
 	<SubAppNetwork>
-		<FB Name="DigitalInput_ExtendReq" Type="logiBUS::io::DI::logiBUS_IE" x="-4000" y="-1200">
+		<FB Name="DigitalInput_ExtendReq" Type="logiBUS::io::DI::logiBUS_IE" x="-4000" y="-1700">
 			<Parameter Name="QI" Value="TRUE"/>
 			<Parameter Name="Input" Value="Input_I1"/>
 			<Parameter Name="InputEvent" Value="BUTTON_SINGLE_CLICK"/>
 		</FB>
-		<FB Name="DigitalInput_RetractReq" Type="logiBUS::io::DI::logiBUS_IE" x="-4000" y="-400">
+		<FB Name="DigitalInput_RetractReq" Type="logiBUS::io::DI::logiBUS_IE" x="-4000" y="-700">
 			<Parameter Name="QI" Value="TRUE"/>
 			<Parameter Name="Input" Value="Input_I2"/>
 			<Parameter Name="InputEvent" Value="BUTTON_SINGLE_CLICK"/>
@@ -31,7 +31,7 @@
 			<Parameter Name="Input" Value="Input_I3"/>
 			<Parameter Name="InputEvent" Value="BUTTON_SINGLE_CLICK"/>
 		</FB>
-		<FB Name="DigitalInput_AtEnd" Type="logiBUS::io::DI::logiBUS_IE" x="-4000" y="1200">
+		<FB Name="DigitalInput_AtEnd" Type="logiBUS::io::DI::logiBUS_IE" x="-4000" y="1600">
 			<Parameter Name="QI" Value="TRUE"/>
 			<Parameter Name="Input" Value="Input_I4"/>
 			<Parameter Name="InputEvent" Value="BUTTON_SINGLE_CLICK"/>
@@ -42,7 +42,7 @@
 		</FB>
 		<FB Name="RetractLatch" Type="iec61499::events::E_SR" x="1600" y="400">
 		</FB>
-		<FB Name="DigitalOutput_Extend" Type="logiBUS::io::DQ::logiBUS_QX" x="4000" y="-400">
+		<FB Name="DigitalOutput_Extend" Type="logiBUS::io::DQ::logiBUS_QX" x="4000" y="-500">
 			<Parameter Name="QI" Value="TRUE"/>
 			<Parameter Name="Output" Value="Output_Q1"/>
 		</FB>
@@ -51,21 +51,21 @@
 			<Parameter Name="Output" Value="Output_Q2"/>
 		</FB>
 		<EventConnections>
-			<Connection Source="DigitalInput_ExtendReq.INITO" Destination="App.START" dx1="300" Comment="Bootstrap: fires once at deployment"/>
-			<Connection Source="DigitalInput_ExtendReq.IND" Destination="App.EXTEND_REQ" dx1="300"/>
-			<Connection Source="DigitalInput_RetractReq.IND" Destination="App.RETRACT_REQ" dx1="300"/>
-			<Connection Source="DigitalInput_AtHome.IND" Destination="App.AT_HOME" dx1="300"/>
-			<Connection Source="DigitalInput_AtEnd.IND" Destination="App.AT_END" dx1="300"/>
-			<Connection Source="App.EXTEND" Destination="ExtendLatch.S" dx1="300"/>
-			<Connection Source="App.EXTEND" Destination="RetractLatch.R" dx1="300"/>
-			<Connection Source="App.RETRACT" Destination="RetractLatch.S" dx1="300"/>
-			<Connection Source="App.RETRACT" Destination="ExtendLatch.R" dx1="300"/>
-			<Connection Source="ExtendLatch.EO" Destination="DigitalOutput_Extend.REQ" dx1="300"/>
-			<Connection Source="RetractLatch.EO" Destination="DigitalOutput_Retract.REQ" dx1="300"/>
+			<Connection Source="DigitalInput_ExtendReq.INITO" Destination="App.START" Comment="Bootstrap: fires once at deployment" dx1="973.33"/>
+			<Connection Source="DigitalInput_ExtendReq.IND" Destination="App.EXTEND_REQ" dx1="940"/>
+			<Connection Source="DigitalInput_RetractReq.IND" Destination="App.RETRACT_REQ" dx1="906.67"/>
+			<Connection Source="DigitalInput_AtHome.IND" Destination="App.AT_HOME" dx1="926.67"/>
+			<Connection Source="DigitalInput_AtEnd.IND" Destination="App.AT_END" dx1="960"/>
+			<Connection Source="App.EXTEND" Destination="ExtendLatch.S" dx1="780"/>
+			<Connection Source="App.EXTEND" Destination="RetractLatch.R" dx1="780"/>
+			<Connection Source="App.RETRACT" Destination="RetractLatch.S" dx1="813.33"/>
+			<Connection Source="App.RETRACT" Destination="ExtendLatch.R" dx1="813.33"/>
+			<Connection Source="ExtendLatch.EO" Destination="DigitalOutput_Extend.REQ" dx1="946.67"/>
+			<Connection Source="RetractLatch.EO" Destination="DigitalOutput_Retract.REQ" dx1="946.67"/>
 		</EventConnections>
 		<DataConnections>
-			<Connection Source="ExtendLatch.Q" Destination="DigitalOutput_Extend.OUT" dx1="300"/>
-			<Connection Source="RetractLatch.Q" Destination="DigitalOutput_Retract.OUT" dx1="300"/>
+			<Connection Source="ExtendLatch.Q" Destination="DigitalOutput_Extend.OUT" dx1="946.67"/>
+			<Connection Source="RetractLatch.Q" Destination="DigitalOutput_Retract.OUT" dx1="946.67"/>
 		</DataConnections>
 	</SubAppNetwork>
 </SubAppType>
