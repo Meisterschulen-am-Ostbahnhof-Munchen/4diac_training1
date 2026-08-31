@@ -35,7 +35,9 @@
 			<Parameter Name="TimeDelta" Value="DWORD#250"/>
 			<Parameter Name="TimeRateLimit" Value="DWORD#100"/>
 		</FB>
-		<FB Name="AD_SPLIT_2" Type="adapter::events::unidirectional::AD_SPLIT_3" x="-3300" y="-1000">
+		<SubApp Name="AD_SPLIT_2_UNGATED_FREQ" Type="MyLib::sys::AD_SPLIT_2_UNGATED" x="-4100" y="-1000">
+		</SubApp>
+		<FB Name="AD_SPLIT_2" Type="adapter::events::unidirectional::AD_SPLIT_2" x="-2400" y="-1000">
 		</FB>
 		<FB Name="AD_PUBLISH_COUNT" Type="adapter::net::AD_PUBLISH_1" x="2000" y="-1700">
 			<Parameter Name="QI" Value="TRUE"/>
@@ -147,10 +149,11 @@
 			</Connection>
 		</DataConnections>
 		<AdapterConnections>
-			<Connection Source="logiBUS_PI_IDA.IN" Destination="AD_SPLIT_2.IN" dx1="420"/>
+			<Connection Source="logiBUS_PI_IDA.IN" Destination="AD_SPLIT_2_UNGATED_FREQ.IN" dx1="393.33"/>
+			<Connection Source="AD_SPLIT_2_UNGATED_FREQ.OUT1" Destination="AD_SPLIT_2.IN"/>
+			<Connection Source="AD_SPLIT_2_UNGATED_FREQ.OUT2" Destination="AD_TO_AR_NUM.AD_IN" dx1="300"/>
 			<Connection Source="AD_SPLIT_2.OUT1" Destination="AD_PUBLISH_COUNT.IN" dx1="173.33"/>
 			<Connection Source="AD_SPLIT_2.OUT2" Destination="AD_TO_AUDI.AD_IN" dx1="1273.33"/>
-			<Connection Source="AD_SPLIT_2.OUT3" Destination="AD_TO_AR_NUM.AD_IN" dx1="153.33"/>
 			<Connection Source="AD_TO_AUDI.AUDI_OUT" Destination="Q_NumericValue_COUNT.u32NewValue" dx1="540"/>
 			<Connection Source="AD_TO_AR_NUM.AR_OUT" Destination="FT_DERIV_AR.AR_IN" dx1="426.67"/>
 			<Connection Source="AR_SPLIT_2.OUT1" Destination="AR_PUBLISH_FREQ.IN" dx1="850"/>
