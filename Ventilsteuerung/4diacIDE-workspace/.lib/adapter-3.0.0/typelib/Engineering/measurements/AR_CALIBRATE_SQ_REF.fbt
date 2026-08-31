@@ -30,54 +30,54 @@
 		<ECC>
 			<ECState Name="IDLE" x="0" y="0">
 			</ECState>
-			<ECState Name="REQ" x="800" y="0">
+			<ECState Name="REQ" x="-1120" y="-1280">
 				<ECAction Algorithm="REQ" Output="Y.E1"/>
 			</ECState>
-			<ECState Name="CO" x="1600" y="0">
+			<ECState Name="CO" x="2320" y="160">
 				<ECAction Algorithm="CO" Output="OFFSET.EO1"/>
 			</ECState>
-			<ECState Name="WAIT_CS" x="1600" y="-400">
+			<ECState Name="WAIT_CS" x="2960" y="-1760">
 			</ECState>
-			<ECState Name="REQ_WAIT" x="1200" y="-800">
+			<ECState Name="REQ_WAIT" x="480" y="-1760">
 				<ECAction Algorithm="REQ" Output="Y.E1"/>
 			</ECState>
-			<ECState Name="CS" x="2400" y="-400">
+			<ECState Name="CS" x="3360" y="-240">
 				<ECAction Algorithm="CS" Output="SCALE.EO1"/>
 				<ECAction Output="OFFSET.EO1"/>
 			</ECState>
-			<ECState Name="ZERO_ECHO" x="1440" y="1120">
+			<ECState Name="ZERO_ECHO" x="2160" y="800">
 				<ECAction Algorithm="ZERO_ECHO" Output="ZERO.EO1"/>
 			</ECState>
 			<ECState Name="SPAN_ECHO" x="1360" y="1440">
 				<ECAction Algorithm="SPAN_ECHO" Output="SPAN.EO1"/>
 			</ECState>
-			<ECState Name="Y_OFFSET_DISP" x="-1920" y="1920">
+			<ECState Name="Y_OFFSET_DISP" x="-2080" y="2080">
 				<ECAction Algorithm="Y_OFFSET_DISP"/>
 			</ECState>
 			<ECState Name="Y_SCALE_DISP" x="-1520" y="1680">
 				<ECAction Algorithm="Y_SCALE_DISP"/>
 			</ECState>
-			<ECTransition Source="IDLE" Destination="REQ" Condition="X.E1" x="400" y="200"/>
-			<ECTransition Source="REQ" Destination="IDLE" Condition="1" x="400" y="600"/>
-			<ECTransition Source="IDLE" Destination="CO" Condition="CO.E1[CO.D1]" x="800" y="400"/>
-			<ECTransition Source="CO" Destination="WAIT_CS" Condition="1" x="1600" y="-200"/>
-			<ECTransition Source="WAIT_CS" Destination="REQ_WAIT" Condition="X.E1" x="1200" y="-200"/>
-			<ECTransition Source="REQ_WAIT" Destination="WAIT_CS" Condition="1" x="1400" y="-600"/>
-			<ECTransition Source="WAIT_CS" Destination="CS" Condition="CS.E1[CS.D1]" x="2000" y="-400"/>
-			<ECTransition Source="CS" Destination="IDLE" Condition="1" x="1200" y="-600"/>
-			<ECTransition Source="WAIT_CS" Destination="CO" Condition="CO.E1[CO.D1]" x="1600" y="-600"/>
-			<ECTransition Source="IDLE" Destination="REQ" Condition="OFFSET.EI1" x="-100" y="300"/>
-			<ECTransition Source="IDLE" Destination="REQ" Condition="SCALE.EI1" x="-100" y="400"/>
-			<ECTransition Source="WAIT_CS" Destination="REQ_WAIT" Condition="OFFSET.EI1" x="1400" y="-550"/>
-			<ECTransition Source="WAIT_CS" Destination="REQ_WAIT" Condition="SCALE.EI1" x="1400" y="-600"/>
-			<ECTransition Source="IDLE" Destination="ZERO_ECHO" Condition="Y_Offset.EO1" x="653.33" y="926.67"/>
-			<ECTransition Source="ZERO_ECHO" Destination="IDLE" Condition="1" x="1493.33" y="920"/>
-			<ECTransition Source="IDLE" Destination="SPAN_ECHO" Condition="Y_Scale.EO1" x="-720" y="826.67"/>
-			<ECTransition Source="SPAN_ECHO" Destination="IDLE" Condition="1" x="-440" y="866.67"/>
-			<ECTransition Source="IDLE" Destination="Y_OFFSET_DISP" Condition="ZERO.EI1" x="-1506.67" y="620"/>
-			<ECTransition Source="Y_OFFSET_DISP" Destination="IDLE" Condition="1" x="-1386.67" y="800"/>
-			<ECTransition Source="IDLE" Destination="Y_SCALE_DISP" Condition="SPAN.EI1" x="-1200" y="1293.33"/>
-			<ECTransition Source="Y_SCALE_DISP" Destination="IDLE" Condition="1" x="-906.67" y="1353.33"/>
+			<ECTransition Source="IDLE" Destination="REQ" Condition="X.E1" x="-253.33" y="-940"/>
+			<ECTransition Source="REQ" Destination="IDLE" Condition="1" x="-526.67" y="-826.67"/>
+			<ECTransition Source="IDLE" Destination="CO" Condition="CO.E1[CO.D1]" x="1540" y="33.33"/>
+			<ECTransition Source="CO" Destination="WAIT_CS" Condition="1" x="2773.33" y="-960"/>
+			<ECTransition Source="WAIT_CS" Destination="REQ_WAIT" Condition="X.E1" x="2313.33" y="-2326.67"/>
+			<ECTransition Source="REQ_WAIT" Destination="WAIT_CS" Condition="1" x="2186.67" y="-1986.67"/>
+			<ECTransition Source="WAIT_CS" Destination="CS" Condition="CS.E1[CS.D1]" x="3680" y="-893.33"/>
+			<ECTransition Source="CS" Destination="IDLE" Condition="1" x="1620" y="-240"/>
+			<ECTransition Source="WAIT_CS" Destination="CO" Condition="CO.E1[CO.D1]" x="2466.67" y="-1046.67"/>
+			<ECTransition Source="IDLE" Destination="REQ" Condition="OFFSET.EI1" x="-486.67" y="-566.67"/>
+			<ECTransition Source="IDLE" Destination="REQ" Condition="SCALE.EI1" x="-806.67" y="-433.33"/>
+			<ECTransition Source="WAIT_CS" Destination="REQ_WAIT" Condition="OFFSET.EI1" x="2253.33" y="-2220"/>
+			<ECTransition Source="WAIT_CS" Destination="REQ_WAIT" Condition="SCALE.EI1" x="2220" y="-2106.67"/>
+			<ECTransition Source="IDLE" Destination="ZERO_ECHO" Condition="Y_Offset.EO1" x="1586.67" y="646.67"/>
+			<ECTransition Source="ZERO_ECHO" Destination="IDLE" Condition="1" x="1966.67" y="560"/>
+			<ECTransition Source="IDLE" Destination="SPAN_ECHO" Condition="Y_Scale.EO1" x="900" y="1006.67"/>
+			<ECTransition Source="SPAN_ECHO" Destination="IDLE" Condition="1" x="1126.67" y="780"/>
+			<ECTransition Source="IDLE" Destination="Y_OFFSET_DISP" Condition="ZERO.EI1" x="-1693.33" y="520"/>
+			<ECTransition Source="Y_OFFSET_DISP" Destination="IDLE" Condition="1" x="-1473.33" y="766.67"/>
+			<ECTransition Source="IDLE" Destination="Y_SCALE_DISP" Condition="SPAN.EI1" x="-753.33" y="933.33"/>
+			<ECTransition Source="Y_SCALE_DISP" Destination="IDLE" Condition="1" x="-1046.67" y="840"/>
 		</ECC>
 		<Algorithm Name="REQ" Comment="REQ">
 			<ST><![CDATA[
