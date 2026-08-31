@@ -9,15 +9,13 @@
 		<Import declaration="logiBUS::io::PI::logiBUS_PI"/>
 		<Import declaration="logiBUS::io::PI::logiBUS_PI_S"/>
 		<Import declaration="logiBUS::utils::conversion::phys::NumericObjectPool_S"/>
-		<Import declaration="isobus::UT::Q::const::colours::COLOR_GREEN"/>
-		<Import declaration="isobus::UT::Q::const::colours::COLOR_RED"/>
-		<Import declaration="isobus::UT::Q::const::colours::COLOR_WHITE"/>
+		<Import declaration="isobus::UT::io::Button::ButtonActivationCode::BT_PRESSED_LATCHED"/>
 	</CompilerInfo>
 	<SubAppInterfaceList>
 		<InputVars>
 			<VarDeclaration Name="u16ObjId_COUNTVAR" Type="UINT" Comment="Object ID CNumberVariable (roher Zaehlerstand, unbegrenzt wachsend, Scale=1 im VT-Pool)" InitialValue="ID_NULL"/>
 			<VarDeclaration Name="stObjFreq" Type="logiBUS::utils::conversion::phys::NumericObjectPool_S" Comment="Object ID + Scale/Offset/Decimals CNumberVariable (Frequenz Hz, eigene, unabhaengige CNumberVariable - keine Reskalierung des Zaehlers)" InitialValue="(u16ObjId := ID_NULL, r32Scale := 1.0, i32Offset := 0, u8Decimals := 0)"/>
-			<VarDeclaration Name="u16ObjId_SWITCH" Type="UINT" Comment="Object ID Kanal-Ein/Aus-Taste (Klick togglet Enable)" InitialValue="ID_NULL"/>
+			<VarDeclaration Name="u16ObjId_SWITCH" Type="UINT" Comment="Object ID Kanal-Ein/Aus-Taste auf der VT (physischer Tastendruck togglet Enable, ueber Button_IE)" InitialValue="ID_NULL"/>
 			<VarDeclaration Name="u16ObjId_STATUS" Type="UINT" Comment="Object ID Status-Anzeige (Hintergrundfarbe Weiss=Kanal deaktiviert / Gruen=aktiv+logiBUS_PI_IDA.QO TRUE / Rot=aktiv+QO FALSE, Stoerung)" InitialValue="ID_NULL"/>
 			<VarDeclaration Name="bDefaultEnabled" Type="BOOL" Comment="Kanal-Zustand beim Start: TRUE=aktiv (Kanaele 1-4), FALSE=inaktiv (Kanaele 5-8, da nur 4 Kanaele gleichzeitig verfuegbar sind)"/>
 			<VarDeclaration Name="Input" Type="logiBUS::io::PI::logiBUS_PI_S" Comment="Identify the Input PulseInput_I1..I8" InitialValue="logiBUS_PI::Invalid"/>
@@ -52,7 +50,7 @@
 			<Parameter Name="K" Value="1.0"/>
 			<Parameter Name="run" Value="TRUE"/>
 		</FB>
-		<FB Name="AR_PUBLISH_FREQ" Type="adapter::net::AR_PUBLISH_1" x="3700" y="400">
+		<FB Name="AR_PUBLISH_FREQ" Type="adapter::net::AR_PUBLISH_1" x="5300" y="300">
 			<Parameter Name="QI" Value="TRUE"/>
 		</FB>
 		<FB Name="Q_NumericValue_FREQ" Type="isobus::UT::Q::Q_NumericValue_PHYSA" x="3500" y="1200">
@@ -62,49 +60,51 @@
 		<FB Name="E_T_FF_SR_SWITCH" Type="iec61499::events::E_T_FF_SR_SYM_INIT" x="-4200" y="2200">
 			<Parameter Name="QI" Value="TRUE"/>
 		</FB>
-		<FB Name="AX_SUBSCRIBE_SWITCH" Type="adapter::net::AX_SUBSCRIBE_1" x="-6200" y="2200">
+		<FB Name="Button_SWITCH" Type="isobus::UT::io::Button::Button_IE" x="-7000" y="3000">
+			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="InputEvent" Value="BT_PRESSED_LATCHED"/>
+		</FB>
+		<FB Name="AX_SUBSCRIBE_SWITCH" Type="adapter::net::AX_SUBSCRIBE_1" x="-8200" y="2000">
 			<Parameter Name="QI" Value="TRUE"/>
 		</FB>
-		<FB Name="AX_RF_TRIG_SWITCH" Type="adapter::events::unidirectional::AX_RF_TRIG" x="-5300" y="2200">
+		<FB Name="AX_RF_TRIG_SWITCH" Type="adapter::events::unidirectional::AX_RF_TRIG" x="-7000" y="2300">
 		</FB>
-		<FB Name="AX_BOOL_TO_X_SWITCH" Type="adapter::conversion::unidirectional::AX_BOOL_TO_X" x="-2600" y="1800">
+		<FB Name="AX_BOOL_TO_X_SWITCH" Type="adapter::conversion::unidirectional::AX_BOOL_TO_X" x="-1700" y="2600">
 		</FB>
-		<FB Name="AX_PUBLISH_SWITCH" Type="adapter::net::AX_PUBLISH_1" x="-1200" y="1800">
+		<FB Name="AX_PUBLISH_SWITCH" Type="adapter::net::AX_PUBLISH_1" x="-100" y="2200">
 			<Parameter Name="QI" Value="TRUE"/>
 		</FB>
-		<FB Name="F_SEL_OK_FAULT" Type="iec61131::selection::F_SEL" x="-2600" y="2600">
-			<Parameter Name="IN0" Value="COLOR_RED"/>
-			<Parameter Name="IN1" Value="COLOR_GREEN"/>
+		<SubApp Name="Q_BackgroundColour_EnableOk_STATUS" Type="MyLib::sys::Q_BackgroundColour_EnableOk" x="-3600" y="-3600">
+		</SubApp>
+		<FB Name="AX_BOOL_TO_X_STATUS" Type="adapter::conversion::unidirectional::AX_BOOL_TO_X" x="-2500" y="-1800">
 		</FB>
-		<FB Name="F_MOVE_1" Type="iec61131::selection::F_MOVE" x="-1200" y="2600">
-			<Attribute Name="DataType" Value="USINT"/>
-		</FB>
-		<FB Name="F_SEL_STATUS" Type="iec61131::selection::F_SEL" x="200" y="2200">
-			<Parameter Name="IN0" Value="COLOR_WHITE"/>
-		</FB>
-		<FB Name="Q_BackgroundColour_STATUS" Type="isobus::UT::Q::Q_BackgroundColour" x="1600" y="2200">
-		</FB>
-		<FB Name="AX_BOOL_TO_X_STATUS" Type="adapter::conversion::unidirectional::AX_BOOL_TO_X" x="-2600" y="3200">
-		</FB>
-		<FB Name="AX_PUBLISH_STATUS" Type="adapter::net::AX_PUBLISH_1" x="-1200" y="3200">
+		<FB Name="AX_PUBLISH_STATUS" Type="adapter::net::AX_PUBLISH_1" x="-1000" y="-2000">
 			<Parameter Name="QI" Value="TRUE"/>
 		</FB>
 		<EventConnections>
-			<Connection Source="AD_PUBLISH_COUNT.INITO" Destination="AR_PUBLISH_FREQ.INIT" dx1="1600"/>
-			<Connection Source="AR_PUBLISH_FREQ.INITO" Destination="AX_SUBSCRIBE_SWITCH.INIT" dx1="80" dx2="80" dy="1300"/>
-			<Connection Source="AX_SUBSCRIBE_SWITCH.INITO" Destination="AX_PUBLISH_SWITCH.INIT" dx1="4600"/>
-			<Connection Source="AX_PUBLISH_SWITCH.INITO" Destination="AX_PUBLISH_STATUS.INIT" dx1="80" dx2="80" dy="1400"/>
-			<Connection Source="AX_PUBLISH_STATUS.INITO" Destination="E_T_FF_SR_SWITCH.INIT" dx1="80" dx2="80" dy="-1000"/>
+			<Connection Source="AD_PUBLISH_COUNT.INITO" Destination="AR_PUBLISH_FREQ.INIT" dx1="1600">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="AR_PUBLISH_FREQ.INITO" Destination="AX_SUBSCRIBE_SWITCH.INIT" dx1="80" dx2="80" dy="1300">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="AX_SUBSCRIBE_SWITCH.INITO" Destination="AX_PUBLISH_SWITCH.INIT" dx1="2673.33">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="AX_PUBLISH_SWITCH.INITO" Destination="AX_PUBLISH_STATUS.INIT" dx1="80" dx2="80" dy="1400">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="AX_PUBLISH_STATUS.INITO" Destination="E_T_FF_SR_SWITCH.INIT" dx1="80" dx2="80" dy="-1000">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
 			<Connection Source="E_T_FF_SR_SWITCH.EO" Destination="logiBUS_PI_IDA.INIT" dx1="80" dx2="80" dy="-3900"/>
-			<Connection Source="E_T_FF_SR_SWITCH.EO" Destination="F_SEL_STATUS.REQ" dx1="4400"/>
-			<Connection Source="logiBUS_PI_IDA.INITO" Destination="AX_BOOL_TO_X_SWITCH.REQ" dx1="80" dx2="80" dy="3500"/>
-			<Connection Source="logiBUS_PI_IDA.INITO" Destination="F_SEL_OK_FAULT.REQ" dx1="80" dx2="80" dy="4300"/>
-			<Connection Source="logiBUS_PI_IDA.INITO" Destination="AX_BOOL_TO_X_STATUS.REQ" dx1="80" dx2="80" dy="4900"/>
-			<Connection Source="F_SEL_OK_FAULT.CNF" Destination="F_MOVE_1.REQ" dx1="1400"/>
-			<Connection Source="F_MOVE_1.CNF" Destination="F_SEL_STATUS.REQ" dx1="1400"/>
-			<Connection Source="F_SEL_STATUS.CNF" Destination="Q_BackgroundColour_STATUS.REQ" dx1="1400"/>
-			<Connection Source="AX_RF_TRIG_SWITCH.ER" Destination="E_T_FF_SR_SWITCH.S" dx1="900"/>
-			<Connection Source="AX_RF_TRIG_SWITCH.EF" Destination="E_T_FF_SR_SWITCH.R" dx1="900"/>
+			<Connection Source="E_T_FF_SR_SWITCH.EO" Destination="Q_BackgroundColour_EnableOk_STATUS.REQ" dx1="406.67"/>
+			<Connection Source="logiBUS_PI_IDA.INITO" Destination="Q_BackgroundColour_EnableOk_STATUS.REQ" dx1="140"/>
+			<Connection Source="logiBUS_PI_IDA.INITO" Destination="AX_BOOL_TO_X_STATUS.REQ" dx1="1146.67"/>
+			<Connection Source="AX_RF_TRIG_SWITCH.ER" Destination="E_T_FF_SR_SWITCH.S" dx1="1713.33"/>
+			<Connection Source="AX_RF_TRIG_SWITCH.EF" Destination="E_T_FF_SR_SWITCH.R" dx1="1713.33"/>
+			<Connection Source="Button_SWITCH.IND" Destination="E_T_FF_SR_SWITCH.CLK" dx1="933.33"/>
+			<Connection Source="E_T_FF_SR_SWITCH.EO" Destination="AX_BOOL_TO_X_SWITCH.REQ" dx1="593.33"/>
 		</EventConnections>
 		<DataConnections>
 			<Connection Source="Input" Destination="logiBUS_PI_IDA.Input" dx1="1460">
@@ -126,23 +126,23 @@
 				<Attribute Name="Visible" Value="false"/>
 			</Connection>
 			<Connection Source="E_T_FF_SR_SWITCH.Q" Destination="logiBUS_PI_IDA.QI" dx1="80" dx2="80" dy="-4700"/>
-			<Connection Source="E_T_FF_SR_SWITCH.Q" Destination="F_SEL_STATUS.G" dx1="4400"/>
-			<Connection Source="logiBUS_PI_IDA.QO" Destination="F_SEL_OK_FAULT.G" dx1="80" dx2="80" dy="4300"/>
-			<Connection Source="F_SEL_OK_FAULT.OUT" Destination="F_MOVE_1.IN" dx1="1400"/>
-			<Connection Source="F_SEL_STATUS.OUT" Destination="Q_BackgroundColour_STATUS.u8Colour" dx1="1400"/>
-			<Connection Source="u16ObjId_STATUS" Destination="Q_BackgroundColour_STATUS.u16ObjId" dx1="1400">
+			<Connection Source="E_T_FF_SR_SWITCH.Q" Destination="Q_BackgroundColour_EnableOk_STATUS.bEnable" dx1="606.67"/>
+			<Connection Source="logiBUS_PI_IDA.QO" Destination="Q_BackgroundColour_EnableOk_STATUS.bOk" dx1="413.33"/>
+			<Connection Source="u16ObjId_STATUS" Destination="Q_BackgroundColour_EnableOk_STATUS.u16ObjId" dx1="1400">
 				<Attribute Name="Visible" Value="false"/>
 			</Connection>
-			<Connection Source="F_MOVE_1.OUT" Destination="F_SEL_STATUS.IN1" dx1="1400"/>
-			<Connection Source="E_T_FF_SR_SWITCH.Q" Destination="AX_BOOL_TO_X_SWITCH.OUT" dx1="1400"/>
-			<Connection Source="logiBUS_PI_IDA.QO" Destination="AX_BOOL_TO_X_STATUS.OUT" dx1="80" dx2="80" dy="4900"/>
-			<Connection Source="ID_SWITCH_READ" Destination="AX_SUBSCRIBE_SWITCH.ID" dx1="1600">
+			<Connection Source="E_T_FF_SR_SWITCH.Q" Destination="AX_BOOL_TO_X_SWITCH.OUT" dx1="1113.33"/>
+			<Connection Source="logiBUS_PI_IDA.QO" Destination="AX_BOOL_TO_X_STATUS.OUT" dx1="1146.67"/>
+			<Connection Source="ID_SWITCH_READ" Destination="AX_SUBSCRIBE_SWITCH.ID" dx1="1520">
 				<Attribute Name="Visible" Value="false"/>
 			</Connection>
 			<Connection Source="ID_SWITCH_WRITE" Destination="AX_PUBLISH_SWITCH.ID" dx1="1600">
 				<Attribute Name="Visible" Value="false"/>
 			</Connection>
 			<Connection Source="ID_STATUS_WRITE" Destination="AX_PUBLISH_STATUS.ID" dx1="1600">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="u16ObjId_SWITCH" Destination="Button_SWITCH.u16ObjId" dx1="973.33">
 				<Attribute Name="Visible" Value="false"/>
 			</Connection>
 		</DataConnections>
@@ -156,9 +156,9 @@
 			<Connection Source="AR_SPLIT_2.OUT1" Destination="AR_PUBLISH_FREQ.IN" dx1="850"/>
 			<Connection Source="AR_SPLIT_2.OUT2" Destination="Q_NumericValue_FREQ.rPhys" dx1="1020"/>
 			<Connection Source="FT_DERIV_AR.AR_OUT" Destination="AR_SPLIT_2.IN" dx1="200"/>
-			<Connection Source="AX_SUBSCRIBE_SWITCH.OUT" Destination="AX_RF_TRIG_SWITCH.QI" dx1="513.33"/>
-			<Connection Source="AX_BOOL_TO_X_SWITCH.AX_OUT" Destination="AX_PUBLISH_SWITCH.IN" dx1="360"/>
-			<Connection Source="AX_BOOL_TO_X_STATUS.AX_OUT" Destination="AX_PUBLISH_STATUS.IN" dx1="360"/>
+			<Connection Source="AX_SUBSCRIBE_SWITCH.OUT" Destination="AX_RF_TRIG_SWITCH.QI" dx1="133.33"/>
+			<Connection Source="AX_BOOL_TO_X_SWITCH.AX_OUT" Destination="AX_PUBLISH_SWITCH.IN" dx1="413.33"/>
+			<Connection Source="AX_BOOL_TO_X_STATUS.AX_OUT" Destination="AX_PUBLISH_STATUS.IN" dx1="146.67"/>
 		</AdapterConnections>
 	</SubAppNetwork>
 </SubAppType>

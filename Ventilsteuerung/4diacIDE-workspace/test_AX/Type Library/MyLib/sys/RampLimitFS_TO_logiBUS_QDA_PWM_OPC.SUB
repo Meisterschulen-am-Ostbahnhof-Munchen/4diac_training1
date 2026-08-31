@@ -8,9 +8,6 @@
 		<Import declaration="isobus::UT::Q::const::IDs::ID_NULL"/>
 		<Import declaration="logiBUS::io::DQ::logiBUS_DO"/>
 		<Import declaration="logiBUS::io::DQ::logiBUS_DO_S"/>
-		<Import declaration="isobus::UT::Q::const::colours::COLOR_GREEN"/>
-		<Import declaration="isobus::UT::Q::const::colours::COLOR_RED"/>
-		<Import declaration="isobus::UT::Q::const::colours::COLOR_WHITE"/>
 	</CompilerInfo>
 	<SubAppInterfaceList>
 		<InputVars>
@@ -97,15 +94,8 @@
 		<FB Name="E_T_FF_SR_SWITCH" Type="iec61499::events::E_T_FF_SR_SYM_INIT" x="-7900" y="-2300">
 			<Parameter Name="QI" Value="TRUE"/>
 		</FB>
-		<FB Name="F_SEL_OK_FAULT" Type="iec61131::selection::F_SEL" x="6400" y="-4000">
-			<Parameter Name="IN0" Value="COLOR_RED"/>
-			<Parameter Name="IN1" Value="COLOR_GREEN"/>
-		</FB>
-		<FB Name="F_SEL_STATUS" Type="iec61131::selection::F_SEL" x="9000" y="-4500">
-			<Parameter Name="IN0" Value="COLOR_WHITE"/>
-		</FB>
-		<FB Name="Q_BackgroundColour_STATUS" Type="isobus::UT::Q::Q_BackgroundColour" x="10400" y="-4700">
-		</FB>
+		<SubApp Name="Q_BackgroundColour_EnableOk_STATUS" Type="MyLib::sys::Q_BackgroundColour_EnableOk" x="6400" y="-4000">
+		</SubApp>
 		<FB Name="AX_SUBSCRIBE_SWITCH" Type="adapter::net::AX_SUBSCRIBE_1" x="-15400" y="-1900">
 			<Parameter Name="QI" Value="TRUE"/>
 		</FB>
@@ -122,9 +112,6 @@
 			<Parameter Name="QI" Value="TRUE"/>
 		</FB>
 		<Comment Comment="Ja, gerechnet: 64255 × 8191 = 526.406.305. DINT (32-bit signed) geht bis 2.147.483.647 — der Zwischenwert nutzt nur ~25% des Wertebereichs, keine Überlauf-Gefahr." x="-1900" y="-3300" width="2000" height="600"/>
-		<FB Name="F_MOVE_1" Type="iec61131::selection::F_MOVE" x="7500" y="-4000">
-			<Attribute Name="DataType" Value="USINT"/>
-		</FB>
 		<SubApp Name="Ramp6Buttons" Type="MyLib::sys::Ramp6Buttons" x="-4500" y="-1500">
 		</SubApp>
 		<EventConnections>
@@ -155,11 +142,10 @@
 				<Attribute Name="Visible" Value="false"/>
 			</Connection>
 			<Connection Source="E_T_FF_SR_SWITCH.EO" Destination="logiBUS_QD_PWM.INIT" dx1="653.33"/>
-			<Connection Source="E_T_FF_SR_SWITCH.EO" Destination="F_SEL_STATUS.REQ" dx1="1360"/>
+			<Connection Source="E_T_FF_SR_SWITCH.EO" Destination="Q_BackgroundColour_EnableOk_STATUS.REQ" dx1="1360"/>
 			<Connection Source="logiBUS_QD_PWM.INITO" Destination="AX_BOOL_TO_X_SWITCH.REQ" dx1="1100"/>
-			<Connection Source="logiBUS_QD_PWM.INITO" Destination="F_SEL_OK_FAULT.REQ" dx1="313.33"/>
+			<Connection Source="logiBUS_QD_PWM.INITO" Destination="Q_BackgroundColour_EnableOk_STATUS.REQ" dx1="313.33"/>
 			<Connection Source="logiBUS_QD_PWM.INITO" Destination="AX_BOOL_TO_X_STATUS.REQ" dx1="2166.67"/>
-			<Connection Source="F_SEL_STATUS.CNF" Destination="Q_BackgroundColour_STATUS.REQ" dx1="233.33"/>
 			<Connection Source="RampLimitFS.CNF" Destination="F_MUL_TO_PWM13BIT.REQ" dx1="160"/>
 			<Connection Source="F_MUL_TO_PWM13BIT.CNF" Destination="F_MOVE.REQ"/>
 			<Connection Source="F_DIV_TO_PWM13BIT.CNF" Destination="F_DINT_TO_DWORD_OUT.REQ" dx1="466.67"/>
@@ -170,8 +156,6 @@
 			<Connection Source="F_PWM_RAW_TO_PERCENT.CNF" Destination="F_FRACTION_TO_PERCENT_PUB.REQ"/>
 			<Connection Source="F_FRACTION_TO_PERCENT_PUB.CNF" Destination="AR_REAL_TO_R_PUB.REQ"/>
 			<Connection Source="F_MOVE.CNF" Destination="F_DIV_TO_PWM13BIT.REQ"/>
-			<Connection Source="F_SEL_OK_FAULT.CNF" Destination="F_MOVE_1.REQ"/>
-			<Connection Source="F_MOVE_1.CNF" Destination="F_SEL_STATUS.REQ" dx1="526.67"/>
 			<Connection Source="Ramp6Buttons.IND_SWITCH" Destination="E_T_FF_SR_SWITCH.CLK" dx1="80" dx2="80" dy="-46.67">
 				<Attribute Name="Visible" Value="false"/>
 			</Connection>
@@ -194,14 +178,12 @@
 			<Connection Source="u16ObjId_VALUEVAR" Destination="Q_NumericValue.u16ObjId" dx1="12266.67">
 				<Attribute Name="Visible" Value="false"/>
 			</Connection>
-			<Connection Source="u16ObjId_STATUS" Destination="Q_BackgroundColour_STATUS.u16ObjId" dx1="1600">
+			<Connection Source="u16ObjId_STATUS" Destination="Q_BackgroundColour_EnableOk_STATUS.u16ObjId" dx1="1600">
 				<Attribute Name="Visible" Value="false"/>
 			</Connection>
 			<Connection Source="E_T_FF_SR_SWITCH.Q" Destination="logiBUS_QD_PWM.QI" dx1="1706.67"/>
-			<Connection Source="E_T_FF_SR_SWITCH.Q" Destination="F_SEL_STATUS.G" dx1="1526.67"/>
-			<Connection Source="logiBUS_QD_PWM.QO" Destination="F_SEL_OK_FAULT.G" dx1="546.67"/>
-			<Connection Source="F_SEL_OK_FAULT.OUT" Destination="F_MOVE_1.IN"/>
-			<Connection Source="F_SEL_STATUS.OUT" Destination="Q_BackgroundColour_STATUS.u8Colour" dx1="640"/>
+			<Connection Source="E_T_FF_SR_SWITCH.Q" Destination="Q_BackgroundColour_EnableOk_STATUS.bEnable" dx1="1526.67"/>
+			<Connection Source="logiBUS_QD_PWM.QO" Destination="Q_BackgroundColour_EnableOk_STATUS.bOk" dx1="546.67"/>
 			<Connection Source="Output" Destination="logiBUS_QD_PWM.Output" dx1="12266.67">
 				<Attribute Name="Visible" Value="false"/>
 			</Connection>
@@ -242,10 +224,7 @@
 			<Connection Source="F_PWM_RAW_TO_PERCENT.OUT" Destination="F_FRACTION_TO_PERCENT_PUB.rFraction"/>
 			<Connection Source="F_FRACTION_TO_PERCENT_PUB.rPercent" Destination="AR_REAL_TO_R_PUB.OUT"/>
 			<Connection Source="F_MOVE.OUT" Destination="F_DIV_TO_PWM13BIT.IN1"/>
-			<Connection Source="F_MOVE_1.OUT" Destination="F_SEL_STATUS.IN1" dx1="780"/>
-			<Connection Source="u16ObjId_SWITCH" Destination="Ramp6Buttons.u16ObjId_SWITCH" dx1="4026.67">
-				<Attribute Name="Visible" Value="false"/>
-			</Connection>
+			<Connection Source="u16ObjId_SWITCH" Destination="Ramp6Buttons.u16ObjId_SWITCH" dx1="4026.67"/>
 			<Connection Source="u16ObjId_ZERO" Destination="Ramp6Buttons.u16ObjId_ZERO" dx1="4026.67">
 				<Attribute Name="Visible" Value="false"/>
 			</Connection>
