@@ -22,7 +22,7 @@ mit mindestens:
 | Structural (creational) | Purely Event-Driven function blocks | [`PurelyEventDrivenPattern/`](PurelyEventDrivenPattern/PurelyEventDrivenPattern.md) | **umgesetzt, ungetestet in 4diac** |
 | Structural (creational) | Generic Actuation | [`ChainOfActionsPattern/`](ChainOfActionsPattern/ChainOfActionsPattern.md) (`TrueUntil.fbt`) | **umgesetzt** (zusammen mit Chain of actions, Folie 65) |
 | Structural (creational) | Decorator | [`DecoratorPattern/`](DecoratorPattern/DecoratorPattern.md) | **umgesetzt, ungetestet in 4diac** |
-| Architectural | IO abstraction layer | – | offen |
+| Architectural | IO abstraction layer | [`IOAbstractionPattern/`](IOAbstractionPattern/IOAbstractionPattern.md) | **umgesetzt, ungetestet in 4diac** |
 | Compositional | Chain of actions | [`ChainOfActionsPattern/`](ChainOfActionsPattern/ChainOfActionsPattern.md) | **umgesetzt, ungetestet in 4diac** |
 | Behavioural | Chain of actions | [`ChainOfActionsPattern/`](ChainOfActionsPattern/ChainOfActionsPattern.md) | **umgesetzt, ungetestet in 4diac** |
 
@@ -156,7 +156,29 @@ ECC-Verdrahtung ist eine eigene, in sich schlüssige Rekonstruktion
 (nicht pixelgenau von der Folie verifizierbar) – siehe
 `PurelyEventDrivenPattern.md`. Noch nicht in 4diac getestet.
 
+### IO Abstraction Layer
+
+Ordner: [`IOAbstractionPattern/`](IOAbstractionPattern/IOAbstractionPattern.md)
+
+5-Schichten-Architektur (Folie 63): Hardware Layer (Input) → Input HAL
+→ Application Layer → Output HAL → Hardware Layer (Output). Die
+Folie nennt dafür `SYMLINKMULTIVARDST`/`SYMLINKMULTIVARSRC` – **weder
+Standard-4diac-Baustein noch im Repo vorhanden** (geprüft). Umgesetzt
+stattdessen mit dem repo-eigenen, real funktionierenden
+`logiBUS_IE`/`logiBUS_QX`-Mechanismus (Hardware+Input-HAL bzw.
+Output-HAL+Hardware in einem Baustein vereint):
+
+- **Application Layer:** `EventDrivenCylinder.fbt` (aus dem
+  Purely-Event-Driven-Pattern, unverändert wiederverwendet)
+- **Input-Seite:** vier `logiBUS_IE`-Instanzen für `EXTEND_REQ`/
+  `RETRACT_REQ`/`AT_HOME`/`AT_END`
+- **Output-Seite:** zwei `E_SR`-Latches (Output HAL, Event→BOOL) vor
+  zwei `logiBUS_QX`-Instanzen (Hardware Layer Output)
+
+Demo-Subapplication `IOAbstractionDemo.sub`. Damit sind alle zehn in
+Modul 6 gezeigten Patterns umgesetzt (noch keines in 4diac getestet).
+
 ## Offen / geplant
 
-Das letzte noch offene Pattern aus Modul 6 (IO abstraction layer,
-Folie 63) wird bei Bedarf noch ergänzt.
+Alle zehn Patterns aus Modul 6 sind umgesetzt (Doku + Bausteine +
+Demos), aber noch keines in 4diac gebaut/getestet.
