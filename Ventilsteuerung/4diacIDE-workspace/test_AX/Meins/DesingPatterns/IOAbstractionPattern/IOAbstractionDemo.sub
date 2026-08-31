@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SubAppType Name="IOAbstractionDemo" Comment="IO Abstraction Layer pattern demo: logiBUS_IE/logiBUS_QX as Hardware+HAL layers around the fully event-driven EventDrivenCylinder application layer">
+	<Identification Standard="61499-2" Description="Copyright (c) 2026 Meisterschulen am Ostbahnhof &#10; &#10;This program and the accompanying materials are made &#10;available under the terms of the Eclipse Public License 2.0 &#10;which is available at https://www.eclipse.org/legal/epl-2.0/ &#10; &#10;SPDX-License-Identifier: EPL-2.0">
+	</Identification>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2026-08-31" Remarks="IO Abstraction Layer design pattern (IEC 61499 primer course, Module 6, Valeriy Vyatkin, slide 63), demo application">
+	</VersionInfo>
+	<CompilerInfo packageName="Meins::DesingPatterns::IOAbstractionPattern">
+		<Import declaration="logiBUS::io::DI::logiBUS_DI::Input_I1"/>
+		<Import declaration="logiBUS::io::DI::logiBUS_DI::Input_I2"/>
+		<Import declaration="logiBUS::io::DI::logiBUS_DI::Input_I3"/>
+		<Import declaration="logiBUS::io::DI::logiBUS_DI::Input_I4"/>
+		<Import declaration="logiBUS::io::DI::logiBUS_DI_Events::BUTTON_SINGLE_CLICK"/>
+		<Import declaration="logiBUS::io::DQ::logiBUS_DO::Output_Q1"/>
+		<Import declaration="logiBUS::io::DQ::logiBUS_DO::Output_Q2"/>
+	</CompilerInfo>
+	<SubAppInterfaceList>
+	</SubAppInterfaceList>
+	<SubAppNetwork>
+		<FB Name="DigitalInput_ExtendReq" Type="logiBUS::io::DI::logiBUS_IE" x="-4000" y="-1700">
+			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="Input" Value="Input_I1"/>
+			<Parameter Name="InputEvent" Value="BUTTON_SINGLE_CLICK"/>
+		</FB>
+		<FB Name="DigitalInput_RetractReq" Type="logiBUS::io::DI::logiBUS_IE" x="-4000" y="-700">
+			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="Input" Value="Input_I2"/>
+			<Parameter Name="InputEvent" Value="BUTTON_SINGLE_CLICK"/>
+		</FB>
+		<FB Name="DigitalInput_AtHome" Type="logiBUS::io::DI::logiBUS_IE" x="-4000" y="400">
+			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="Input" Value="Input_I3"/>
+			<Parameter Name="InputEvent" Value="BUTTON_SINGLE_CLICK"/>
+		</FB>
+		<FB Name="DigitalInput_AtEnd" Type="logiBUS::io::DI::logiBUS_IE" x="-4000" y="1600">
+			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="Input" Value="Input_I4"/>
+			<Parameter Name="InputEvent" Value="BUTTON_SINGLE_CLICK"/>
+		</FB>
+		<FB Name="App" Type="Meins::DesingPatterns::PurelyEventDrivenPattern::EventDrivenCylinder" x="-1200" y="0">
+		</FB>
+		<FB Name="ExtendLatch" Type="iec61499::events::E_SR" x="1600" y="-400">
+		</FB>
+		<FB Name="RetractLatch" Type="iec61499::events::E_SR" x="1600" y="400">
+		</FB>
+		<FB Name="DigitalOutput_Extend" Type="logiBUS::io::DQ::logiBUS_QX" x="4000" y="-500">
+			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="Output" Value="Output_Q1"/>
+		</FB>
+		<FB Name="DigitalOutput_Retract" Type="logiBUS::io::DQ::logiBUS_QX" x="4000" y="400">
+			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="Output" Value="Output_Q2"/>
+		</FB>
+		<EventConnections>
+			<Connection Source="DigitalInput_ExtendReq.INITO" Destination="App.START" Comment="Bootstrap: fires once at deployment" dx1="973.33"/>
+			<Connection Source="DigitalInput_ExtendReq.IND" Destination="App.EXTEND_REQ" dx1="940"/>
+			<Connection Source="DigitalInput_RetractReq.IND" Destination="App.RETRACT_REQ" dx1="906.67"/>
+			<Connection Source="DigitalInput_AtHome.IND" Destination="App.AT_HOME" dx1="926.67"/>
+			<Connection Source="DigitalInput_AtEnd.IND" Destination="App.AT_END" dx1="960"/>
+			<Connection Source="App.EXTEND" Destination="ExtendLatch.S" dx1="780"/>
+			<Connection Source="App.EXTEND" Destination="RetractLatch.R" dx1="780"/>
+			<Connection Source="App.RETRACT" Destination="RetractLatch.S" dx1="813.33"/>
+			<Connection Source="App.RETRACT" Destination="ExtendLatch.R" dx1="813.33"/>
+			<Connection Source="ExtendLatch.EO" Destination="DigitalOutput_Extend.REQ" dx1="946.67"/>
+			<Connection Source="RetractLatch.EO" Destination="DigitalOutput_Retract.REQ" dx1="946.67"/>
+		</EventConnections>
+		<DataConnections>
+			<Connection Source="ExtendLatch.Q" Destination="DigitalOutput_Extend.OUT" dx1="946.67"/>
+			<Connection Source="RetractLatch.Q" Destination="DigitalOutput_Retract.OUT" dx1="946.67"/>
+		</DataConnections>
+	</SubAppNetwork>
+</SubAppType>

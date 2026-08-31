@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<FBType Name="HandshakeResponder" Comment="Handshake pattern demo: Socket / Responder role">
+	<Identification Standard="61499-2" Description="Copyright (c) 2026 Meisterschulen am Ostbahnhof &#10; &#10;This program and the accompanying materials are made &#10;available under the terms of the Eclipse Public License 2.0 &#10;which is available at https://www.eclipse.org/legal/epl-2.0/ &#10; &#10;SPDX-License-Identifier: EPL-2.0">
+	</Identification>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.3" Author="Franz Höpfinger" Date="2026-08-31" Remarks="Fixed INIT handling: dedicated Init/Initialized/DeInit states with INIT[TRUE=QI]/INIT[FALSE=QI] guards (per TemplateBasic.fbt), instead of resetting counters on every re-entry to idle">
+	</VersionInfo>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.2" Author="Franz Höpfinger" Date="2026-08-31" Remarks="EVENT_HS EventInputs/EventOutputs swapped so the Responder is now a Socket (more natural layout) - back to Sockets here">
+	</VersionInfo>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.1" Author="Franz Höpfinger" Date="2026-08-31" Remarks="Handshake design pattern (IEC 61499 primer course, Module 6, Valeriy Vyatkin), demo Responder">
+	</VersionInfo>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2026-08-31" Remarks="initial version, wrongly declared as Socket - fixed to Plug">
+	</VersionInfo>
+	<CompilerInfo packageName="Meins::DesingPatterns::HandshakePattern">
+	</CompilerInfo>
+	<InterfaceList>
+		<EventInputs>
+			<Event Name="INIT" Type="EInit" Comment="Initialization Request">
+				<With Var="QI"/>
+			</Event>
+			<Event Name="TRIGGER" Type="Event" Comment="Demo: fire an unsolicited IND towards the Requester">
+			</Event>
+		</EventInputs>
+		<EventOutputs>
+			<Event Name="INITO" Type="EInit" Comment="Initialization Confirm">
+				<With Var="QO"/>
+			</Event>
+		</EventOutputs>
+		<InputVars>
+			<VarDeclaration Name="QI" Type="BOOL" Comment="Input event qualifier"/>
+		</InputVars>
+		<OutputVars>
+			<VarDeclaration Name="QO" Type="BOOL" Comment="Output event qualifier"/>
+			<VarDeclaration Name="ReqCount" Type="UINT" Comment="Number of REQ received (demo counter)"/>
+			<VarDeclaration Name="IndCount" Type="UINT" Comment="Number of IND sent (demo counter)"/>
+			<VarDeclaration Name="RspCount" Type="UINT" Comment="Number of RSP received (demo counter)"/>
+		</OutputVars>
+		<Sockets>
+			<AdapterDeclaration Name="HS" Type="adapter::types::bidirectional::Handshake::EVENT_HS" Comment="Handshake socket: receives REQ/RSP, emits CNF/IND"/>
+		</Sockets>
+	</InterfaceList>
+	<BasicFB>
+		<ECC>
+			<ECState Name="START" Comment="Uninitialized" x="200" y="400">
+			</ECState>
+			<ECState Name="Init" Comment="Initialization" x="1040" y="-160">
+				<ECAction Algorithm="OnInit" Output="INITO"/>
+			</ECState>
+			<ECState Name="Initialized" Comment="Idle, ready to react" x="1600" y="400">
+			</ECState>
+			<ECState Name="DeInit" Comment="De-initialization" x="560" y="1040">
+				<ECAction Algorithm="OnDeInit" Output="INITO"/>
+			</ECState>
+			<ECState Name="HANDLE_REQ" Comment="Answer a REQ with CNF" x="2720" y="-160">
+				<ECAction Algorithm="OnReq"/>
+			</ECState>
+			<ECState Name="HANDLE_TRIGGER" Comment="Send an unsolicited IND" x="3120" y="400">
+				<ECAction Algorithm="OnTrigger"/>
+			</ECState>
+			<ECState Name="HANDLE_RSP" Comment="Acknowledge an RSP" x="3120" y="1120">
+				<ECAction Algorithm="OnRsp"/>
+			</ECState>
+			<ECTransition Source="START" Destination="Init" Condition="INIT[TRUE = QI]" x="566.67" y="153.33"/>
+			<ECTransition Source="Init" Destination="Initialized" Condition="1" x="1250" y="400"/>
+			<ECTransition Source="Initialized" Destination="DeInit" Condition="INIT[FALSE = QI]" x="1346.67" y="813.33"/>
+			<ECTransition Source="DeInit" Destination="START" Condition="1" x="353.33" y="700"/>
+			<ECTransition Source="Initialized" Destination="HANDLE_REQ" Condition="HS.REQ" x="2386.67" y="0"/>
+			<ECTransition Source="HANDLE_REQ" Destination="Initialized" Condition="1" x="2780" y="200"/>
+			<ECTransition Source="Initialized" Destination="HANDLE_TRIGGER" Condition="TRIGGER" x="2753.33" y="386.67"/>
+			<ECTransition Source="HANDLE_TRIGGER" Destination="Initialized" Condition="1" x="2746.67" y="566.67"/>
+			<ECTransition Source="Initialized" Destination="HANDLE_RSP" Condition="HS.RSP" x="2513.33" y="1013.33"/>
+			<ECTransition Source="HANDLE_RSP" Destination="Initialized" Condition="1" x="2633.33" y="840"/>
+		</ECC>
+		<Algorithm Name="OnInit" Comment="Reset demo counters">
+			<ST><![CDATA[ReqCount := 0;
+IndCount := 0;
+RspCount := 0;
+QO := QI;]]></ST>
+		</Algorithm>
+		<Algorithm Name="OnDeInit" Comment="De-initialize">
+			<ST><![CDATA[QO := FALSE;]]></ST>
+		</Algorithm>
+		<Algorithm Name="OnReq" Comment="Count a received REQ">
+			<ST><![CDATA[ReqCount := ReqCount + 1;]]></ST>
+		</Algorithm>
+		<Algorithm Name="OnTrigger" Comment="Count an IND about to be sent">
+			<ST><![CDATA[IndCount := IndCount + 1;]]></ST>
+		</Algorithm>
+		<Algorithm Name="OnRsp" Comment="Count a received RSP">
+			<ST><![CDATA[RspCount := RspCount + 1;]]></ST>
+		</Algorithm>
+	</BasicFB>
+	<Attribute Name="eclipse4diac::core::TypeHash" Value="''"/>
+	<Attribute Name="Documentation" Type="CDATA"><![CDATA[<p>Responder ("server") side of the <b>Handshake design pattern</b>
+(IEC 61499 primer course, Module 6, Valeriy Vyatkin, slide 72).</p>
+<p>Uses the dataless <code>adapter::events::Handshake::EVENT_HS</code>
+adapter as a <b>Socket</b>: receives <b>REQ</b> and answers with
+<b>CNF</b>; on <b>TRIGGER</b> it sends an unsolicited <b>IND</b> and
+counts the matching <b>RSP</b> once the Requester acknowledges it.</p>
+<p>Per the adapter's own declaration, the <b>Socket</b> side is the one
+that fires <b>CNF</b>/<b>IND</b> and reacts to <b>REQ</b>/<b>RSP</b> -
+i.e. the Socket plays the server/Responder role here, the Plug plays
+the client/Requester role. See <code>HandshakePattern.md</code> in this
+folder for the full write-up.</p>
+]]></Attribute>
+</FBType>

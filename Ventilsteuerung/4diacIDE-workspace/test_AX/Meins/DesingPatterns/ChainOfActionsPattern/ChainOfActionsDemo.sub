@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SubAppType Name="ChainOfActionsDemo" Comment="Chain of Actions pattern demo: four TrueUntil instances chained via DONE-&gt;TRIGGER instead of one large ECC">
+	<Identification Standard="61499-2" Description="Copyright (c) 2026 Meisterschulen am Ostbahnhof &#10; &#10;This program and the accompanying materials are made &#10;available under the terms of the Eclipse Public License 2.0 &#10;which is available at https://www.eclipse.org/legal/epl-2.0/ &#10; &#10;SPDX-License-Identifier: EPL-2.0">
+	</Identification>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2026-08-31" Remarks="Chain of Actions design pattern (IEC 61499 primer course, Module 6, Valeriy Vyatkin, slide 66), demo application">
+	</VersionInfo>
+	<CompilerInfo packageName="Meins::DesingPatterns::ChainOfActionsPattern">
+	</CompilerInfo>
+	<SubAppInterfaceList>
+		<SubAppEventInputs>
+			<SubAppEvent Name="START" Type="Event" Comment="Start the chain: triggers Step1">
+			</SubAppEvent>
+		</SubAppEventInputs>
+		<SubAppEventOutputs>
+			<SubAppEvent Name="DONE" Type="Event" Comment="The whole chain completed (Step4 reported DONE)">
+			</SubAppEvent>
+		</SubAppEventOutputs>
+		<InputVars>
+			<VarDeclaration Name="Step1_InPosition" Type="BOOL" Comment="Demo: simulate Step1&apos;s actuator reaching its position"/>
+			<VarDeclaration Name="Step2_InPosition" Type="BOOL" Comment="Demo: simulate Step2&apos;s actuator reaching its position"/>
+			<VarDeclaration Name="Step3_InPosition" Type="BOOL" Comment="Demo: simulate Step3&apos;s actuator reaching its position"/>
+			<VarDeclaration Name="Step4_InPosition" Type="BOOL" Comment="Demo: simulate Step4&apos;s actuator reaching its position"/>
+		</InputVars>
+	</SubAppInterfaceList>
+	<SubAppNetwork>
+		<FB Name="Step1" Type="Meins::DesingPatterns::ChainOfActionsPattern::TrueUntil" x="1400" y="300">
+		</FB>
+		<FB Name="Step2" Type="Meins::DesingPatterns::ChainOfActionsPattern::TrueUntil" x="3100" y="600">
+		</FB>
+		<FB Name="Step3" Type="Meins::DesingPatterns::ChainOfActionsPattern::TrueUntil" x="4900" y="900">
+		</FB>
+		<FB Name="Step4" Type="Meins::DesingPatterns::ChainOfActionsPattern::TrueUntil" x="6800" y="1100">
+		</FB>
+		<EventConnections>
+			<Connection Source="START" Destination="Step1.TRIGGER" dx1="400"/>
+			<Connection Source="Step1.DONE" Destination="Step2.TRIGGER" dx1="400"/>
+			<Connection Source="Step2.DONE" Destination="Step3.TRIGGER" dx1="400"/>
+			<Connection Source="Step3.DONE" Destination="Step4.TRIGGER" dx1="400"/>
+			<Connection Source="Step4.DONE" Destination="DONE" dx1="400"/>
+		</EventConnections>
+		<DataConnections>
+			<Connection Source="Step1_InPosition" Destination="Step1.inPosition" dx1="886.67"/>
+			<Connection Source="Step2_InPosition" Destination="Step2.inPosition" dx1="726.67"/>
+			<Connection Source="Step3_InPosition" Destination="Step3.inPosition" dx1="573.33"/>
+			<Connection Source="Step4_InPosition" Destination="Step4.inPosition" dx1="400"/>
+		</DataConnections>
+	</SubAppNetwork>
+</SubAppType>

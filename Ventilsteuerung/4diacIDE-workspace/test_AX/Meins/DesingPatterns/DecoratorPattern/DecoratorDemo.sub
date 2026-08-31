@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SubAppType Name="DecoratorDemo" Comment="Decorator pattern demo: E_PERMIT gates TrueUntil.TRIGGER without modifying TrueUntil itself">
+	<Identification Standard="61499-2" Description="Copyright (c) 2026 Meisterschulen am Ostbahnhof &#10; &#10;This program and the accompanying materials are made &#10;available under the terms of the Eclipse Public License 2.0 &#10;which is available at https://www.eclipse.org/legal/epl-2.0/ &#10; &#10;SPDX-License-Identifier: EPL-2.0">
+	</Identification>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2026-08-31" Remarks="Decorator design pattern (IEC 61499 primer course, Module 6, Valeriy Vyatkin, slide 68), demo application">
+	</VersionInfo>
+	<CompilerInfo packageName="Meins::DesingPatterns::DecoratorPattern">
+	</CompilerInfo>
+	<SubAppInterfaceList>
+		<SubAppEventInputs>
+			<SubAppEvent Name="TRIGGER" Type="Event" Comment="Ask the step to run - only actually runs while TE is TRUE">
+			</SubAppEvent>
+		</SubAppEventInputs>
+		<SubAppEventOutputs>
+			<SubAppEvent Name="DONE" Type="Event" Comment="The step completed (only fires if TE was TRUE when TRIGGER arrived)">
+			</SubAppEvent>
+		</SubAppEventOutputs>
+		<InputVars>
+			<VarDeclaration Name="TE" Type="BOOL" Comment="Decorator condition: TRIGGER only reaches the step while this is TRUE" InitialValue="TRUE"/>
+			<VarDeclaration Name="InPosition" Type="BOOL" Comment="Demo: simulate the step&apos;s actuator reaching its position"/>
+		</InputVars>
+	</SubAppInterfaceList>
+	<SubAppNetwork>
+		<FB Name="Gate" Type="iec61499::events::E_PERMIT" x="1500" y="700">
+		</FB>
+		<FB Name="Worker" Type="Meins::DesingPatterns::ChainOfActionsPattern::TrueUntil" x="4000" y="700">
+		</FB>
+		<EventConnections>
+			<Connection Source="TRIGGER" Destination="Gate.EI" dx1="1826.67"/>
+			<Connection Source="Gate.EO" Destination="Worker.TRIGGER"/>
+			<Connection Source="Worker.DONE" Destination="DONE" dx1="1360"/>
+		</EventConnections>
+		<DataConnections>
+			<Connection Source="TE" Destination="Gate.PERMIT" dx1="1793.33"/>
+			<Connection Source="InPosition" Destination="Worker.inPosition" dx1="5213.33"/>
+		</DataConnections>
+	</SubAppNetwork>
+</SubAppType>

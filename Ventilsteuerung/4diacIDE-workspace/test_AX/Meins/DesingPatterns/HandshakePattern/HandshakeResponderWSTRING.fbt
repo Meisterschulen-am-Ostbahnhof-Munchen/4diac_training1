@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<FBType Name="HandshakeResponderWSTRING" Comment="Handshake pattern demo (WSTRING payload): Socket / Responder role">
+	<Identification Standard="61499-2" Description="Copyright (c) 2026 Meisterschulen am Ostbahnhof &#10; &#10;This program and the accompanying materials are made &#10;available under the terms of the Eclipse Public License 2.0 &#10;which is available at https://www.eclipse.org/legal/epl-2.0/ &#10; &#10;SPDX-License-Identifier: EPL-2.0">
+	</Identification>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.1" Author="Franz Höpfinger" Date="2026-08-31" Remarks="HS.REQD/HS.CNFD/HS.INDD/HS.RSPD access syntax confirmed working in 4diac; ack payload moved to HandshakeConst::ACK_PAYLOAD (const/HandshakeConst.gcf) instead of a literal">
+	</VersionInfo>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2026-08-31" Remarks="Handshake design pattern (IEC 61499 primer course, Module 6, Valeriy Vyatkin), demo Responder with WSTRING payload via EVENT_HS_WSTRING">
+	</VersionInfo>
+	<CompilerInfo packageName="Meins::DesingPatterns::HandshakePattern">
+		<Import declaration="Meins::DesingPatterns::HandshakePattern::const::HandshakeConst"/>
+	</CompilerInfo>
+	<InterfaceList>
+		<EventInputs>
+			<Event Name="INIT" Type="EInit" Comment="Initialization Request">
+				<With Var="QI"/>
+			</Event>
+			<Event Name="TRIGGER" Type="Event" Comment="Demo: fire an unsolicited IND (with IndPayload) towards the Requester">
+				<With Var="IndPayload"/>
+			</Event>
+		</EventInputs>
+		<EventOutputs>
+			<Event Name="INITO" Type="EInit" Comment="Initialization Confirm">
+				<With Var="QO"/>
+			</Event>
+		</EventOutputs>
+		<InputVars>
+			<VarDeclaration Name="QI" Type="BOOL" Comment="Input event qualifier"/>
+			<VarDeclaration Name="IndPayload" Type="WSTRING" Comment="Payload sent with the next IND" InitialValue="&quot;status,ok&quot;"/>
+		</InputVars>
+		<OutputVars>
+			<VarDeclaration Name="QO" Type="BOOL" Comment="Output event qualifier"/>
+			<VarDeclaration Name="LastReqPayload" Type="WSTRING" Comment="Payload of the last received REQ"/>
+			<VarDeclaration Name="LastRspPayload" Type="WSTRING" Comment="Payload of the last received RSP"/>
+			<VarDeclaration Name="ReqCount" Type="UINT" Comment="Number of REQ received (demo counter)"/>
+			<VarDeclaration Name="IndCount" Type="UINT" Comment="Number of IND sent (demo counter)"/>
+			<VarDeclaration Name="RspCount" Type="UINT" Comment="Number of RSP received (demo counter)"/>
+		</OutputVars>
+		<Sockets>
+			<AdapterDeclaration Name="HS" Type="adapter::types::bidirectional::Handshake::EVENT_HS_WSTRING" Comment="Handshake socket: receives REQ/RSP (+REQD/RSPD), emits CNF/IND (+CNFD/INDD)"/>
+		</Sockets>
+	</InterfaceList>
+	<BasicFB>
+		<ECC>
+			<ECState Name="START" Comment="Uninitialized" x="200" y="400">
+			</ECState>
+			<ECState Name="Init" Comment="Initialization" x="900" y="400">
+				<ECAction Algorithm="OnInit" Output="INITO"/>
+			</ECState>
+			<ECState Name="Initialized" Comment="Idle, ready to react" x="1600" y="400">
+			</ECState>
+			<ECState Name="DeInit" Comment="De-initialization" x="900" y="1600">
+				<ECAction Algorithm="OnDeInit" Output="INITO"/>
+			</ECState>
+			<ECState Name="HANDLE_REQ" Comment="Read REQD, answer with a fixed CNFD" x="2400" y="160">
+				<ECAction Algorithm="OnReq" Output="HS.CNF"/>
+			</ECState>
+			<ECState Name="HANDLE_TRIGGER" Comment="Load INDD from IndPayload, send an unsolicited IND" x="2400" y="640">
+				<ECAction Algorithm="OnTrigger" Output="HS.IND"/>
+			</ECState>
+			<ECState Name="HANDLE_RSP" Comment="Read RSPD, acknowledge an RSP" x="2320" y="1120">
+				<ECAction Algorithm="OnRsp"/>
+			</ECState>
+			<ECTransition Source="START" Destination="Init" Condition="INIT[TRUE = QI]" x="550" y="400"/>
+			<ECTransition Source="Init" Destination="Initialized" Condition="1" x="1250" y="400"/>
+			<ECTransition Source="Initialized" Destination="DeInit" Condition="INIT[FALSE = QI]" x="1250" y="1000"/>
+			<ECTransition Source="DeInit" Destination="START" Condition="1" x="550" y="1600"/>
+			<ECTransition Source="Initialized" Destination="HANDLE_REQ" Condition="HS.REQ" x="1900" y="66.67"/>
+			<ECTransition Source="HANDLE_REQ" Destination="Initialized" Condition="1" x="1760" y="193.33"/>
+			<ECTransition Source="Initialized" Destination="HANDLE_TRIGGER" Condition="TRIGGER" x="1900" y="433.33"/>
+			<ECTransition Source="HANDLE_TRIGGER" Destination="Initialized" Condition="1" x="1580" y="686.67"/>
+			<ECTransition Source="Initialized" Destination="HANDLE_RSP" Condition="HS.RSP" x="1900" y="1020"/>
+			<ECTransition Source="HANDLE_RSP" Destination="Initialized" Condition="1" x="500" y="850"/>
+		</ECC>
+		<Algorithm Name="OnInit" Comment="Reset demo counters/payloads">
+			<ST><![CDATA[ReqCount := 0;
+IndCount := 0;
+RspCount := 0;
+LastReqPayload := "";
+LastRspPayload := "";
+QO := QI;]]></ST>
+		</Algorithm>
+		<Algorithm Name="OnDeInit" Comment="De-initialize">
+			<ST><![CDATA[QO := FALSE;]]></ST>
+		</Algorithm>
+		<Algorithm Name="OnReq" Comment="Read REQD, count a received REQ, prepare a fixed CNFD">
+			<ST><![CDATA[LastReqPayload := HS.REQD;
+ReqCount := ReqCount + 1;
+HS.CNFD := HandshakeConst::ACK_PAYLOAD;]]></ST>
+		</Algorithm>
+		<Algorithm Name="OnTrigger" Comment="Load INDD from IndPayload, count an IND about to be sent">
+			<ST><![CDATA[HS.INDD := IndPayload;
+IndCount := IndCount + 1;]]></ST>
+		</Algorithm>
+		<Algorithm Name="OnRsp" Comment="Read RSPD, count a received RSP">
+			<ST><![CDATA[LastRspPayload := HS.RSPD;
+RspCount := RspCount + 1;]]></ST>
+		</Algorithm>
+	</BasicFB>
+	<Attribute Name="eclipse4diac::core::TypeHash" Value="''"/>
+	<Attribute Name="Documentation" Type="CDATA"><![CDATA[<p>Responder ("server") side of the <b>Handshake design pattern</b>,
+data-carrying variant (IEC 61499 primer course, Module 6, Valeriy
+Vyatkin; adapter matches slide 48's generic "service" adapter).</p>
+<p>Uses <code>adapter::events::Handshake::EVENT_HS_WSTRING</code> as a
+<b>Socket</b>: receives <b>REQ</b> (reads <code>HS.REQD</code> into
+<code>LastReqPayload</code>) and answers with a fixed
+<code>"ack"</code> <b>CNF</b>; on <b>TRIGGER</b> it loads
+<code>IndPayload</code> into <code>HS.INDD</code> and sends an
+unsolicited <b>IND</b>; reads the matching <b>RSP</b>'s payload into
+<code>LastRspPayload</code>.</p>
+<p>See <code>HandshakePattern.md</code> in this folder for the full
+write-up.</p>
+]]></Attribute>
+</FBType>
