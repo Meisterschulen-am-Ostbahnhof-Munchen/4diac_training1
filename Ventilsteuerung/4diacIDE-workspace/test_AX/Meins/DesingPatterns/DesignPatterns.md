@@ -31,7 +31,7 @@ mit mindestens:
 | Kategorie | Pattern | Ordner | Status |
 |---|---|---|---|
 | Compositional / Architectural | Start/Stop pattern | [`StartStopPattern/`](StartStopPattern/StartStopPattern.md) | **umgesetzt, ungetestet in 4diac** |
-| Compositional / Architectural | reset pattern | – | offen |
+| Compositional / Architectural | reset pattern | [`ResetPattern/`](ResetPattern/ResetPattern.md) | **umgesetzt, ungetestet in 4diac** |
 | Behavioural | **Handshake pattern** | [`HandshakePattern/`](HandshakePattern/HandshakePattern.md) | **umgesetzt** (Adapter `EVENT_HS`, dataless, wie auf Folie 72) |
 
 ## Weitere Adapter-Patterns (nicht in der Folie-62/69-Taxonomie, aber konkret vorgeschlagen)
@@ -124,8 +124,23 @@ Ordner: [`StartStopPattern/`](StartStopPattern/StartStopPattern.md)
 
 Noch nicht in 4diac getestet.
 
+### Reset pattern
+
+Ordner: [`ResetPattern/`](ResetPattern/ResetPattern.md)
+
+- **Keine neuen Bausteine** – Wiederverwendung von `TrueUntil.fbt` für
+  den Reset-Baustein selbst, kein Gate davor.
+- Demo-Subapplication `ResetDemo.sub`: kombiniert das Start/Stop-Muster
+  (`START`/`STOP` → `E_SR` → `E_PERMIT` → `Worker.TRIGGER`) mit einem
+  **separaten, ungegateten** `RESET` → `ResetWorker.TRIGGER`-Pfad, um
+  den architektonischen Kernpunkt zu zeigen: Reset funktioniert auch,
+  wenn die Anlage gestoppt ist (`E_SR.Q=FALSE`), der normale `TRIGGER`
+  dagegen nicht.
+
+Noch nicht in 4diac getestet.
+
 ## Offen / geplant
 
 Die übrigen Patterns aus Modul 6 (IO abstraction layer, Purely
-Event-Driven function blocks, reset pattern) werden nach und nach in
-eigenen Unterordnern nach demselben Schema ergänzt.
+Event-Driven function blocks) werden nach und nach in eigenen
+Unterordnern nach demselben Schema ergänzt.

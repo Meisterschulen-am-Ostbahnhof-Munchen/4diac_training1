@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SubAppType Name="ResetDemo" Comment="Reset pattern demo: RESET drives its own TrueUntil directly, bypassing the E_SR/E_PERMIT start/stop gate that guards the normal TRIGGER path">
+	<Identification Standard="61499-2" Description="Copyright (c) 2026 Meisterschulen am Ostbahnhof &#10; &#10;This program and the accompanying materials are made &#10;available under the terms of the Eclipse Public License 2.0 &#10;which is available at https://www.eclipse.org/legal/epl-2.0/ &#10; &#10;SPDX-License-Identifier: EPL-2.0">
+	</Identification>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2026-08-31" Remarks="Reset design pattern (IEC 61499 primer course, Module 6, Valeriy Vyatkin, slide 71), demo application">
+	</VersionInfo>
+	<CompilerInfo packageName="Meins::DesingPatterns::ResetPattern">
+	</CompilerInfo>
+	<SubAppInterfaceList>
+		<SubAppEventInputs>
+			<SubAppEvent Name="START" Type="Event" Comment="Start the plant: opens the permit gate for the normal TRIGGER path">
+			</SubAppEvent>
+			<SubAppEvent Name="STOP" Type="Event" Comment="Stop the plant: closes the permit gate for the normal TRIGGER path">
+			</SubAppEvent>
+			<SubAppEvent Name="TRIGGER" Type="Event" Comment="Ask the normal step to run - only reaches it while the plant is started">
+			</SubAppEvent>
+			<SubAppEvent Name="RESET" Type="Event" Comment="Ask the reset step to run - bypasses the start/stop gate entirely, works even while stopped">
+			</SubAppEvent>
+		</SubAppEventInputs>
+		<SubAppEventOutputs>
+			<SubAppEvent Name="DONE" Type="Event" Comment="The normal step completed">
+			</SubAppEvent>
+			<SubAppEvent Name="RESET_DONE" Type="Event" Comment="The reset step completed">
+			</SubAppEvent>
+		</SubAppEventOutputs>
+		<InputVars>
+			<VarDeclaration Name="InPosition" Type="BOOL" Comment="Demo: simulate the normal step&apos;s actuator reaching its position"/>
+			<VarDeclaration Name="AtHome" Type="BOOL" Comment="Demo: simulate the reset step&apos;s actuator reaching the home position"/>
+		</InputVars>
+		<OutputVars>
+			<VarDeclaration Name="Running" Type="BOOL" Comment="Current start/stop state (E_SR.Q): TRUE while the plant is started - RESET ignores this"/>
+		</OutputVars>
+	</SubAppInterfaceList>
+	<SubAppNetwork>
+		<FB Name="StartStopHandle" Type="iec61499::events::E_SR" x="1600" y="300">
+		</FB>
+		<FB Name="Gate" Type="iec61499::events::E_PERMIT" x="3200" y="800">
+		</FB>
+		<FB Name="Worker" Type="Meins::DesingPatterns::ChainOfActionsPattern::TrueUntil" x="6600" y="900">
+		</FB>
+		<FB Name="ResetWorker" Type="Meins::DesingPatterns::ChainOfActionsPattern::TrueUntil" x="4000" y="1600">
+		</FB>
+		<EventConnections>
+			<Connection Source="START" Destination="StartStopHandle.S" dx1="400"/>
+			<Connection Source="STOP" Destination="StartStopHandle.R" dx1="400"/>
+			<Connection Source="TRIGGER" Destination="Gate.EI" dx1="400"/>
+			<Connection Source="Gate.EO" Destination="Worker.TRIGGER" dx1="400"/>
+			<Connection Source="Worker.DONE" Destination="DONE" dx1="400"/>
+			<Connection Source="RESET" Destination="ResetWorker.TRIGGER" Comment="Bypasses StartStopHandle/Gate entirely - works even while stopped" dx1="826.67"/>
+			<Connection Source="ResetWorker.DONE" Destination="RESET_DONE" dx1="400"/>
+		</EventConnections>
+		<DataConnections>
+			<Connection Source="StartStopHandle.Q" Destination="Gate.PERMIT" dx1="700"/>
+			<Connection Source="StartStopHandle.Q" Destination="Running" dx1="400"/>
+			<Connection Source="InPosition" Destination="Worker.inPosition" dx1="233.33"/>
+			<Connection Source="AtHome" Destination="ResetWorker.inPosition" dx1="160"/>
+		</DataConnections>
+	</SubAppNetwork>
+</SubAppType>
