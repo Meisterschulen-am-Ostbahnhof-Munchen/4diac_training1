@@ -52,10 +52,10 @@
 		</FB>
 		<FB Name="INIT_REF" Type="iec61131::booleanOperators::INIT" x="-8500" y="-1300">
 		</FB>
-		<FB Name="Y_OFFSET_LIT" Type="adapter::conversion::unidirectional::AR_REAL_TO_R" x="-8400" y="4400">
+		<FB Name="Y_OFFSET_LIT" Type="adapter::conversion::bidirectional::AR2_REAL_TO_R" x="-8400" y="4400">
 			<Parameter Name="OUT" Value="REAL#0.0"/>
 		</FB>
-		<FB Name="Y_SCALE_LIT" Type="adapter::conversion::unidirectional::AR_REAL_TO_R" x="-8500" y="5000">
+		<FB Name="Y_SCALE_LIT" Type="adapter::conversion::bidirectional::AR2_REAL_TO_R" x="-8500" y="5000">
 			<Parameter Name="OUT" Value="REAL#100.0"/>
 		</FB>
 		<FB Name="Button_CO" Type="isobus::UT::io::Button::Button_IE" x="-8500" y="0">
@@ -203,8 +203,8 @@
 			<Connection Source="CALIBRATE.SCALE" Destination="INI_SCALE.VAL" dx1="340"/>
 			<Connection Source="CALIBRATE.ZERO" Destination="INI_ZERO.VAL" dx1="253.33"/>
 			<Connection Source="CALIBRATE.SPAN" Destination="INI_SPAN.VAL" dx1="180"/>
-			<Connection Source="Y_OFFSET_LIT.AR_OUT" Destination="CALIBRATE.Y_Offset" dx1="7153.33"/>
-			<Connection Source="Y_SCALE_LIT.AR_OUT" Destination="CALIBRATE.Y_Scale" dx1="7373.33"/>
+			<Connection Source="Y_OFFSET_LIT.AR2_OUT" Destination="CALIBRATE.Y_Offset" dx1="7153.33"/>
+			<Connection Source="Y_SCALE_LIT.AR2_OUT" Destination="CALIBRATE.Y_Scale" dx1="7373.33"/>
 			<Connection Source="CALIBRATE.Y" Destination="AR_SPLIT_2.IN" dx1="300"/>
 			<Connection Source="AR_SPLIT_2.OUT1" Destination="AR_PUBLISH_CAL.IN" dx1="300"/>
 			<Connection Source="AR_SPLIT_2.OUT2" Destination="Q_NumericValue_CAL.rPhys" dx1="300"/>
