@@ -13,36 +13,42 @@
 			<VarDeclaration Name="valFault" Type="USINT" Comment="Ausgabewert wenn bEnable=TRUE und bOk=FALSE - einmalig bei Instanziierung per Parameter gesetzt"/>
 		</InputVars>
 		<Plugs>
-			<AdapterDeclaration Name="value" Type="adapter::types::unidirectional::AUS" Comment="Ausgewaehlter Wert" x="5600" y="200"/>
+			<AdapterDeclaration Name="value" Type="adapter::types::unidirectional::AUS" Comment="Ausgewaehlter Wert"/>
 		</Plugs>
 		<Sockets>
-			<AdapterDeclaration Name="bEnable" Type="adapter::types::unidirectional::AX" Comment="Aktiviert (BOOL, ueber Adapter statt Klartext)" x="-2600" y="-200"/>
-			<AdapterDeclaration Name="bOk" Type="adapter::types::unidirectional::AX" Comment="OK-Zustand (BOOL, ueber Adapter statt Klartext) - nur relevant wenn bEnable=TRUE" x="-2600" y="1400"/>
+			<AdapterDeclaration Name="bEnable" Type="adapter::types::unidirectional::AX" Comment="Aktiviert (BOOL, ueber Adapter statt Klartext)"/>
+			<AdapterDeclaration Name="bOk" Type="adapter::types::unidirectional::AX" Comment="OK-Zustand (BOOL, ueber Adapter statt Klartext) - nur relevant wenn bEnable=TRUE"/>
 		</Sockets>
 	</SubAppInterfaceList>
 	<SubAppNetwork>
-		<FB Name="initval_AUS_FAULT" Type="adapter::types::unidirectional::AUS::initval::initval_AUS" x="-1000" y="800">
+		<FB Name="initval_AUS_FAULT" Type="adapter::types::unidirectional::AUS::initval::initval_AUS" x="-800" y="1000">
 		</FB>
-		<FB Name="initval_AUS_OK" Type="adapter::types::unidirectional::AUS::initval::initval_AUS" x="-1000" y="1400">
+		<FB Name="initval_AUS_OK" Type="adapter::types::unidirectional::AUS::initval::initval_AUS" x="-800" y="400">
 		</FB>
-		<FB Name="initval_AUS_DISABLED" Type="adapter::types::unidirectional::AUS::initval::initval_AUS" x="800" y="-200">
+		<FB Name="initval_AUS_DISABLED" Type="adapter::types::unidirectional::AUS::initval::initval_AUS" x="-900" y="-200">
 		</FB>
-		<FB Name="F_SEL_OK_FAULT" Type="adapter::iec61131::selection::AUS_AX_SEL_AUS" x="800" y="1000">
+		<FB Name="F_SEL_OK_FAULT" Type="adapter::iec61131::selection::AUS_AX_SEL_AUS" x="2400" y="-1000">
 		</FB>
-		<FB Name="F_SEL_ENABLE" Type="adapter::iec61131::selection::AUS_AX_SEL_AUS" x="3200" y="200">
+		<FB Name="F_SEL_ENABLE" Type="adapter::iec61131::selection::AUS_AX_SEL_AUS" x="3800" y="-400">
 		</FB>
 		<DataConnections>
-			<Connection Source="valFault" Destination="initval_AUS_FAULT.INIT_VAL" dx1="1200"/>
-			<Connection Source="valOk" Destination="initval_AUS_OK.INIT_VAL" dx1="1446.67"/>
-			<Connection Source="valDisabled" Destination="initval_AUS_DISABLED.INIT_VAL" dx1="3800"/>
+			<Connection Source="valFault" Destination="initval_AUS_FAULT.INIT_VAL" dx1="493.33"/>
+			<Connection Source="valOk" Destination="initval_AUS_OK.INIT_VAL" dx1="600"/>
+			<Connection Source="valDisabled" Destination="initval_AUS_DISABLED.INIT_VAL" dx1="693.33"/>
 		</DataConnections>
 		<AdapterConnections>
-			<Connection Source="bOk" Destination="F_SEL_OK_FAULT.G" dx1="893.33"/>
-			<Connection Source="initval_AUS_FAULT.OUT" Destination="F_SEL_OK_FAULT.IN0" dx1="300"/>
-			<Connection Source="initval_AUS_OK.OUT" Destination="F_SEL_OK_FAULT.IN1" dx1="300"/>
-			<Connection Source="initval_AUS_DISABLED.OUT" Destination="F_SEL_ENABLE.IN0" dx1="300"/>
-			<Connection Source="F_SEL_OK_FAULT.OUT" Destination="F_SEL_ENABLE.IN1" dx1="826.67"/>
-			<Connection Source="bEnable" Destination="F_SEL_ENABLE.G" dx1="3306.67"/>
+			<Connection Source="bOk" Destination="F_SEL_OK_FAULT.G" dx1="2440"/>
+			<Connection Source="initval_AUS_FAULT.OUT" Destination="F_SEL_OK_FAULT.IN0" dx1="300">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="initval_AUS_OK.OUT" Destination="F_SEL_OK_FAULT.IN1" dx1="300">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="initval_AUS_DISABLED.OUT" Destination="F_SEL_ENABLE.IN0" dx1="300">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="F_SEL_OK_FAULT.OUT" Destination="F_SEL_ENABLE.IN1" dx1="126.67"/>
+			<Connection Source="bEnable" Destination="F_SEL_ENABLE.G" dx1="3466.67"/>
 			<Connection Source="F_SEL_ENABLE.OUT" Destination="value" dx1="2780"/>
 		</AdapterConnections>
 	</SubAppNetwork>
