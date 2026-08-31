@@ -21,7 +21,7 @@ mit mindestens:
 |---|---|---|---|
 | Structural (creational) | Purely Event-Driven function blocks | – | offen |
 | Structural (creational) | Generic Actuation | [`ChainOfActionsPattern/`](ChainOfActionsPattern/ChainOfActionsPattern.md) (`TrueUntil.fbt`) | **umgesetzt** (zusammen mit Chain of actions, Folie 65) |
-| Structural (creational) | Decorator | – | offen |
+| Structural (creational) | Decorator | [`DecoratorPattern/`](DecoratorPattern/DecoratorPattern.md) | **umgesetzt, ungetestet in 4diac** |
 | Architectural | IO abstraction layer | – | offen |
 | Compositional | Chain of actions | [`ChainOfActionsPattern/`](ChainOfActionsPattern/ChainOfActionsPattern.md) | **umgesetzt, ungetestet in 4diac** |
 | Behavioural | Chain of actions | [`ChainOfActionsPattern/`](ChainOfActionsPattern/ChainOfActionsPattern.md) | **umgesetzt, ungetestet in 4diac** |
@@ -88,9 +88,28 @@ Offener Punkt: genaue Rolle von `REQ` neben `TRIGGER` aus der Folie
 nicht zweifelsfrei ablesbar (vorerst wie `TRIGGER` behandelt) – siehe
 `ChainOfActionsPattern.md`. Noch nicht in 4diac getestet.
 
+### Decorator
+
+Ordner: [`DecoratorPattern/`](DecoratorPattern/DecoratorPattern.md)
+
+- Baustein `E_PERMIT` (Folie 68) – **Standardbaustein**
+  `iec61499::events::E_PERMIT` aus der 4diac-Standardbibliothek
+  (`EI[PERMIT]` → `EO`), kein eigener; bereits an anderer Stelle im
+  Repo genutzt (z. B. `test_B/Uebungen/Uebung_009.SUB`). Gegen die
+  echte Datei im 4diac-Install (`typelibrary/events-3.0.0/typelib/
+  E_PERMIT.fbt`) verifiziert. Kein eigener Baustein nötig.
+- Demo-Subapplication `DecoratorDemo.sub`: `E_PERMIT` gatet
+  `TrueUntil.TRIGGER` von außen, ohne `TrueUntil` selbst zu verändern
+  (die "echte" Decorator-Variante der Folie, nicht die interne
+  ECC-Erweiterung mit einem zweiten `TE`-Eingang)
+
+`E_PERMIT` ist generisch und wiederverwendbar über Decorator hinaus –
+z. B. für das noch offene Start/Stop-Pattern (Folie 70), das laut Folie
+denselben Baustein nutzt. Noch nicht in 4diac getestet.
+
 ## Offen / geplant
 
-Die übrigen Patterns aus Modul 6 (Decorator, IO abstraction layer,
-Purely Event-Driven function blocks, Start/Stop pattern, reset pattern)
+Die übrigen Patterns aus Modul 6 (IO abstraction layer, Purely
+Event-Driven function blocks, Start/Stop pattern, reset pattern)
 werden nach und nach in eigenen Unterordnern nach demselben Schema
 ergänzt.
