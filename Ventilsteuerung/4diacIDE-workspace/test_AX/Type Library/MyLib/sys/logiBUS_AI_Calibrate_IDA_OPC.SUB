@@ -23,6 +23,12 @@
 			<VarDeclaration Name="ID_CAL_WRITE" Type="WSTRING" Comment="Kalibrierter-Wert-Ruckmelde-Adresse (REAL, ACTION=PUBLISH)"/>
 			<VarDeclaration Name="ID_CO_READ" Type="WSTRING" Comment="Remote-CO-Adresse (BOOL, ACTION=SUBSCRIBE, togglet Kalibrier-Nullpunkt-Trigger wie ein Tastendruck - Web-Client schreibt bei jedem Klick den invertierten letzten Wert, jede Flanke (steigend ODER fallend) loest CO aus)"/>
 			<VarDeclaration Name="ID_CS_READ" Type="WSTRING" Comment="Remote-CS-Adresse (BOOL, ACTION=SUBSCRIBE, togglet Kalibrier-Spanne-Trigger wie ein Tastendruck - siehe ID_CO_READ)"/>
+			<VarDeclaration Name="stObjZero" Type="logiBUS::utils::conversion::phys::NumericObjectPool_S" Comment="Object ID + Scale/Offset/Decimals CNumberVariable (ZERO-Referenzwert, VT-Eingabefeld + OPC-UA)" InitialValue="(u16ObjId := ID_NULL, r32Scale := 1.0, i32Offset := 0, u8Decimals := 1)"/>
+			<VarDeclaration Name="stObjSpan" Type="logiBUS::utils::conversion::phys::NumericObjectPool_S" Comment="Object ID + Scale/Offset/Decimals CNumberVariable (SPAN-Referenzwert, VT-Eingabefeld + OPC-UA)" InitialValue="(u16ObjId := ID_NULL, r32Scale := 1.0, i32Offset := 0, u8Decimals := 1)"/>
+			<VarDeclaration Name="ID_ZERO_READ" Type="WSTRING" Comment="Remote-Subscribe-Adresse ZERO-Referenzwert (REAL, ACTION=SUBSCRIBE)"/>
+			<VarDeclaration Name="ID_ZERO_WRITE" Type="WSTRING" Comment="Remote-Echo-Adresse ZERO-Referenzwert (REAL, ACTION=PUBLISH)"/>
+			<VarDeclaration Name="ID_SPAN_READ" Type="WSTRING" Comment="Remote-Subscribe-Adresse SPAN-Referenzwert (REAL, ACTION=SUBSCRIBE)"/>
+			<VarDeclaration Name="ID_SPAN_WRITE" Type="WSTRING" Comment="Remote-Echo-Adresse SPAN-Referenzwert (REAL, ACTION=PUBLISH)"/>
 		</InputVars>
 	</SubAppInterfaceList>
 	<SubAppNetwork>
@@ -50,9 +56,9 @@
 		</FB>
 		<FB Name="CALIBRATE" Type="adapter::Engineering::measurements::AR_CALIBRATE_SQ_REF" x="-200" y="200">
 		</FB>
-		<SubApp Name="Y_OFFSET_LIT" Type="MyLib::sys::NumericValue_TO_AR2" x="-8400" y="4200">
+		<SubApp Name="Y_OFFSET_LIT" Type="MyLib::sys::NumericValue_TO_AR2_OPC" x="-8400" y="4200">
 		</SubApp>
-		<SubApp Name="Y_SCALE_LIT" Type="MyLib::sys::NumericValue_TO_AR2" x="-8400" y="4700">
+		<SubApp Name="Y_SCALE_LIT" Type="MyLib::sys::NumericValue_TO_AR2_OPC" x="-8400" y="5000">
 		</SubApp>
 		<FB Name="Button_CO" Type="isobus::UT::io::Button::Button_IE" x="-8500" y="0">
 			<Parameter Name="QI" Value="TRUE"/>
@@ -178,6 +184,24 @@
 			<Connection Source="ID_CS_READ" Destination="AX_SUBSCRIBE_CS.ID" dx1="1400">
 				<Attribute Name="Visible" Value="false"/>
 			</Connection>
+			<Connection Source="stObjZero" Destination="Y_OFFSET_LIT.stObj" dx1="1400">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="ID_ZERO_READ" Destination="Y_OFFSET_LIT.ID_READ" dx1="1400">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="ID_ZERO_WRITE" Destination="Y_OFFSET_LIT.ID_WRITE" dx1="1400">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="stObjSpan" Destination="Y_SCALE_LIT.stObj" dx1="1400">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="ID_SPAN_READ" Destination="Y_SCALE_LIT.ID_READ" dx1="1400">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="ID_SPAN_WRITE" Destination="Y_SCALE_LIT.ID_WRITE" dx1="1400">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
 		</DataConnections>
 		<AdapterConnections>
 			<Connection Source="logiBUS_AI_IDA.IN" Destination="AD_SPLIT_2.IN" dx1="420"/>
@@ -194,7 +218,7 @@
 			<Connection Source="CALIBRATE.ZERO" Destination="INI_ZERO.VAL" dx1="253.33"/>
 			<Connection Source="CALIBRATE.SPAN" Destination="INI_SPAN.VAL" dx1="180"/>
 			<Connection Source="Y_OFFSET_LIT.VALUEO" Destination="CALIBRATE.Y_Offset" dx1="6806.67"/>
-			<Connection Source="Y_SCALE_LIT.VALUEO" Destination="CALIBRATE.Y_Scale" dx1="6946.67"/>
+			<Connection Source="Y_SCALE_LIT.VALUEO" Destination="CALIBRATE.Y_Scale" dx1="6760"/>
 			<Connection Source="CALIBRATE.Y" Destination="AR_SPLIT_2.IN" dx1="300"/>
 			<Connection Source="AR_SPLIT_2.OUT1" Destination="AR_PUBLISH_CAL.IN" dx1="300"/>
 			<Connection Source="AR_SPLIT_2.OUT2" Destination="Q_NumericValue_CAL.rPhys" dx1="300"/>
