@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SubAppType Name="logiBUS_AI_Calibrate_IDA_OPC" Comment="logiBUS_AI_IDA (Analog-Eingang) mit 2-Punkt-Kalibrierung (AR_CALIBRATE_SQ, INI-persistiert) auf VT-Zahlenfelder (Rohwert + kalibrierter Wert, je eigene CNumberVariable) + Bargraph (kalibriert) + 2 VT-Tasten (CO/CS) + OPC-UA (Rohwert DWORD + kalibrierter Wert REAL, generisch, ein Kanal)">
+	<Identification Standard="61499-2" Description="Copyright (c) 2026 Meisterschulen am Ostbahnhof  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0">
+	</Identification>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2026-08-31" Remarks="initial API and implementation and/or initial documentation - Kalibrierlogik nach Vorbild Uebung_028c3_AR.SUB, aber AR_CALIBRATE_SQ (korrigierte Offset-Formel, ECC-erzwungene CO-vor-CS-Reihenfolge) statt AR_CALIBRATE">
+	</VersionInfo>
+	<CompilerInfo packageName="MyLib::sys">
+		<Import declaration="isobus::UT::Q::const::IDs::ID_NULL"/>
+		<Import declaration="logiBUS::io::AI::logiBUS_AI"/>
+		<Import declaration="logiBUS::io::AI::logiBUS_AI_S"/>
+		<Import declaration="logiBUS::utils::conversion::phys::NumericObjectPool_S"/>
+		<Import declaration="isobus::UT::io::Button::ButtonActivationCode::BT_PRESSED_LATCHED"/>
+	</CompilerInfo>
+	<SubAppInterfaceList>
+		<InputVars>
+			<VarDeclaration Name="u16ObjId_RAWVAR" Type="UINT" Comment="Object ID CNumberVariable (Rohwert 0-4095, unkalibriert, reine Diagnose-Anzeige)" InitialValue="ID_NULL"/>
+			<VarDeclaration Name="stObjCal" Type="logiBUS::utils::conversion::phys::NumericObjectPool_S" Comment="Object ID + Scale/Offset/Decimals CNumberVariable (kalibrierter Wert, eigene, unabhaengige CNumberVariable)" InitialValue="(u16ObjId := ID_NULL, r32Scale := 1.0, i32Offset := 0, u8Decimals := 1)"/>
+			<VarDeclaration Name="u16ObjId_CO" Type="UINT" Comment="Object ID Taste 'CO' (Kalibrier-Nullpunkt: Referenz 1 anlegen, dann druecken)" InitialValue="ID_NULL"/>
+			<VarDeclaration Name="u16ObjId_CS" Type="UINT" Comment="Object ID Taste 'CS' (Kalibrier-Spanne: Referenz 2 anlegen, dann druecken - erst nach CO moeglich)" InitialValue="ID_NULL"/>
+			<VarDeclaration Name="Input" Type="logiBUS::io::AI::logiBUS_AI_S" Comment="Identify the Input AnalogInput_I1..I8" InitialValue="logiBUS_AI::Invalid"/>
+			<VarDeclaration Name="sSection" Type="STRING" Comment="INI-Sektionsname fuer OFFSET/SCALE-Persistenz - pro Kanal eindeutig (z.B. 'AI_Calibrate_I1'), sonst kollidieren die Kanaele in settings.ini"/>
+			<VarDeclaration Name="ID_RAW_WRITE" Type="WSTRING" Comment="Rohwert-Ruckmelde-Adresse (DWORD 0-4095, ACTION=PUBLISH)"/>
+			<VarDeclaration Name="ID_CAL_WRITE" Type="WSTRING" Comment="Kalibrierter-Wert-Ruckmelde-Adresse (REAL, ACTION=PUBLISH)"/>
+		</InputVars>
+	</SubAppInterfaceList>
+	<SubAppNetwork>
+		<FB Name="logiBUS_AI_IDA" Type="logiBUS::io::AI::logiBUS_AI_IDA" x="-9200" y="-1700">
+			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="PARAMS" Value="">
+				<Attribute Name="Visible" Value="false"/>
+			</Parameter>
+			<Parameter Name="AnalogInput_hysteresis" Value="DWORD#0"/>
+			<Parameter Name="TimeDelta" Value="DWORD#250"/>
+			<Parameter Name="TimeRateLimit" Value="DWORD#100"/>
+		</FB>
+		<FB Name="AD_SPLIT_2" Type="adapter::events::unidirectional::AD_SPLIT_2" x="-7300" y="-1000">
+		</FB>
+		<FB Name="AD_PUBLISH_RAW" Type="adapter::net::AD_PUBLISH_1" x="-5600" y="-1700">
+			<Parameter Name="QI" Value="TRUE"/>
+		</FB>
+		<FB Name="AD_TO_AUDI" Type="adapter::conversion::unidirectional::AD_TO_AUDI" x="-5600" y="-400">
+		</FB>
+		<FB Name="AUDI_SPLIT_2" Type="adapter::events::unidirectional::AUDI_SPLIT_2" x="-4000" y="-400">
+		</FB>
+		<FB Name="Q_NumericValue_RAW" Type="isobus::UT::Q::Q_NumericValue_AUDI" x="-2300" y="-1000">
+		</FB>
+		<FB Name="AUDI_TO_AR" Type="adapter::conversion::unidirectional::AUDI_TO_AR" x="-2300" y="200">
+		</FB>
+		<FB Name="CALIBRATE" Type="adapter::Engineering::measurements::AR_CALIBRATE_SQ" x="-200" y="200">
+			<Parameter Name="Y_Offset" Value="REAL#0.0"/>
+			<Parameter Name="Y_Scale" Value="REAL#100.0"/>
+		</FB>
+		<FB Name="Button_CO" Type="isobus::UT::io::Button::Button_IE" x="-4000" y="1400">
+			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="InputEvent" Value="BT_PRESSED_LATCHED"/>
+		</FB>
+		<FB Name="Button_CS" Type="isobus::UT::io::Button::Button_IE" x="-4000" y="2400">
+			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="InputEvent" Value="BT_PRESSED_LATCHED"/>
+		</FB>
+		<FB Name="AX_BOOL_TO_X_CO" Type="adapter::conversion::unidirectional::AX_BOOL_TO_X" x="-2300" y="1400">
+			<Parameter Name="OUT" Value="TRUE"/>
+		</FB>
+		<FB Name="AX_BOOL_TO_X_CS" Type="adapter::conversion::unidirectional::AX_BOOL_TO_X" x="-2300" y="2400">
+			<Parameter Name="OUT" Value="TRUE"/>
+		</FB>
+		<FB Name="INI_OFFSET" Type="eclipse4diac::storage::INI_AR2" x="1600" y="1400">
+			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="KEY" Value="'OFFSET'"/>
+			<Parameter Name="DEFAULT_VALUE" Value="REAL#0.0"/>
+		</FB>
+		<FB Name="INI_SCALE" Type="eclipse4diac::storage::INI_AR2" x="1600" y="2400">
+			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="KEY" Value="'SCALE'"/>
+			<Parameter Name="DEFAULT_VALUE" Value="REAL#1.0"/>
+		</FB>
+		<FB Name="AR_SPLIT_2" Type="adapter::events::unidirectional::AR_SPLIT_2" x="1600" y="200">
+		</FB>
+		<FB Name="AR_PUBLISH_CAL" Type="adapter::net::AR_PUBLISH_1" x="3400" y="-400">
+			<Parameter Name="QI" Value="TRUE"/>
+		</FB>
+		<FB Name="Q_NumericValue_CAL" Type="isobus::UT::Q::Q_NumericValue_PHYSA" x="3400" y="900">
+		</FB>
+		<EventConnections>
+			<Connection Source="AD_PUBLISH_RAW.INITO" Destination="AR_PUBLISH_CAL.INIT" dx1="600">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="Button_CO.IND" Destination="AX_BOOL_TO_X_CO.REQ" dx1="400"/>
+			<Connection Source="Button_CS.IND" Destination="AX_BOOL_TO_X_CS.REQ" dx1="400"/>
+		</EventConnections>
+		<DataConnections>
+			<Connection Source="Input" Destination="logiBUS_AI_IDA.Input" dx1="1460">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="u16ObjId_RAWVAR" Destination="Q_NumericValue_RAW.u16ObjId" dx1="1400">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="stObjCal" Destination="Q_NumericValue_CAL.stObj" dx1="1400">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="u16ObjId_CO" Destination="Button_CO.u16ObjId" dx1="1400">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="u16ObjId_CS" Destination="Button_CS.u16ObjId" dx1="1400">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="sSection" Destination="INI_OFFSET.SECTION" dx1="1400">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="sSection" Destination="INI_SCALE.SECTION" dx1="1400">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="ID_RAW_WRITE" Destination="AD_PUBLISH_RAW.ID" dx1="1400">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="ID_CAL_WRITE" Destination="AR_PUBLISH_CAL.ID" dx1="1400">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+		</DataConnections>
+		<AdapterConnections>
+			<Connection Source="logiBUS_AI_IDA.IN" Destination="AD_SPLIT_2.IN" dx1="420"/>
+			<Connection Source="AD_SPLIT_2.OUT1" Destination="AD_PUBLISH_RAW.IN" dx1="300"/>
+			<Connection Source="AD_SPLIT_2.OUT2" Destination="AD_TO_AUDI.AD_IN" dx1="300"/>
+			<Connection Source="AD_TO_AUDI.AUDI_OUT" Destination="AUDI_SPLIT_2.IN" dx1="300"/>
+			<Connection Source="AUDI_SPLIT_2.OUT1" Destination="Q_NumericValue_RAW.u32NewValue" dx1="300"/>
+			<Connection Source="AUDI_SPLIT_2.OUT2" Destination="AUDI_TO_AR.AUDI_IN" dx1="300"/>
+			<Connection Source="AUDI_TO_AR.AR_OUT" Destination="CALIBRATE.X" dx1="300"/>
+			<Connection Source="AX_BOOL_TO_X_CO.AX_OUT" Destination="CALIBRATE.CO" dx1="300"/>
+			<Connection Source="AX_BOOL_TO_X_CS.AX_OUT" Destination="CALIBRATE.CS" dx1="300"/>
+			<Connection Source="CALIBRATE.OFFSET" Destination="INI_OFFSET.VAL" dx1="300"/>
+			<Connection Source="CALIBRATE.SCALE" Destination="INI_SCALE.VAL" dx1="300"/>
+			<Connection Source="CALIBRATE.Y" Destination="AR_SPLIT_2.IN" dx1="300"/>
+			<Connection Source="AR_SPLIT_2.OUT1" Destination="AR_PUBLISH_CAL.IN" dx1="300"/>
+			<Connection Source="AR_SPLIT_2.OUT2" Destination="Q_NumericValue_CAL.rPhys" dx1="300"/>
+		</AdapterConnections>
+	</SubAppNetwork>
+</SubAppType>
