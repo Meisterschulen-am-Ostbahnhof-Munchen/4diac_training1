@@ -181,6 +181,18 @@ falschen Rolle (Condition statt Output oder umgekehrt) verwendet werden,
 kompiliert trotzdem fehlerfrei – die Logik muss man selbst korrekt
 zusammenbauen, siehe Abschnitt "Socket vs. Plug" oben.
 
+**Zweiter Stolperstein (INIT-Sequenz):** Die INIT-Behandlung darf nicht als
+Entry-Action des Idle-Zustands eingebaut werden (`ECState "Idle"` mit
+`Algorithm="OnInit" Output="INITO"` direkt dran) – sonst feuert `OnInit`
+(und damit `INITO`, und ein Reset der Zähler) bei jedem Rücksprung in den
+Idle-Zustand erneut, nicht nur beim echten Initialisieren. Richtig ist das
+Muster aus `TemplateBasic.fbt`: ein eigener `Init`-Zustand, nur erreichbar
+über eine mit dem Qualifier bewachte Transition `Condition="INIT[TRUE = QI]"`,
+danach eine unbedingte Transition in einen separaten `Initialized`-Idle-
+Zustand (von dem aus die eigentliche Handshake-Logik abzweigt); dazu
+symmetrisch ein `DeInit`-Zustand über `Condition="INIT[FALSE = QI]"`
+zurück nach `START`. Beide Demo-Bausteine sind entsprechend aufgebaut.
+
 ### 3. Validierung
 
 Jede `.adp`/`.fbt`/`.sub`-Datei wird gegen die zugehörige XSD-Schema

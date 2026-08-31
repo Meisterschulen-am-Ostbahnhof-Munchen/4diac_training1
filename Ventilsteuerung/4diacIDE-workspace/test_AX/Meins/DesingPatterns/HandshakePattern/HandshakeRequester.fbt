@@ -2,6 +2,8 @@
 <FBType Name="HandshakeRequester" Comment="Handshake pattern demo: Plug / Requester role">
 	<Identification Standard="61499-2" Description="Copyright (c) 2026 Meisterschulen am Ostbahnhof &#10; &#10;This program and the accompanying materials are made &#10;available under the terms of the Eclipse Public License 2.0 &#10;which is available at https://www.eclipse.org/legal/epl-2.0/ &#10; &#10;SPDX-License-Identifier: EPL-2.0">
 	</Identification>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.3" Author="Franz Höpfinger" Date="2026-08-31" Remarks="Fixed INIT handling: dedicated Init/Initialized/DeInit states with INIT[TRUE=QI]/INIT[FALSE=QI] guards (per TemplateBasic.fbt), instead of resetting counters on every re-entry to idle">
+	</VersionInfo>
 	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.2" Author="Franz Höpfinger" Date="2026-08-31" Remarks="EVENT_HS EventInputs/EventOutputs swapped so the Requester is now a Plug (more natural layout) - back to Plugs here">
 	</VersionInfo>
 	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.1" Author="Franz Höpfinger" Date="2026-08-31" Remarks="Handshake design pattern (IEC 61499 primer course, Module 6, Valeriy Vyatkin), demo Requester">
@@ -41,30 +43,44 @@
 	</InterfaceList>
 	<BasicFB>
 		<ECC>
-			<ECState Name="START_ST" Comment="Idle" x="200" y="400">
+			<ECState Name="START" Comment="Uninitialized" x="200" y="400">
+			</ECState>
+			<ECState Name="Init" Comment="Initialization" x="720" y="-80">
 				<ECAction Algorithm="OnInit" Output="INITO"/>
 			</ECState>
-			<ECState Name="HANDLE_START" Comment="Send a REQ" x="2640" y="80">
+			<ECState Name="Initialized" Comment="Idle, ready to react" x="1600" y="400">
+			</ECState>
+			<ECState Name="DeInit" Comment="De-initialization" x="880" y="1280">
+				<ECAction Algorithm="OnDeInit" Output="INITO"/>
+			</ECState>
+			<ECState Name="HANDLE_START" Comment="Send a REQ" x="4000" y="-320">
 				<ECAction Output="HS.REQ"/>
 			</ECState>
-			<ECState Name="HANDLE_CNF" Comment="A CNF arrived, report DONE" x="2480" y="640">
+			<ECState Name="HANDLE_CNF" Comment="A CNF arrived, report DONE" x="3920" y="640">
 				<ECAction Algorithm="OnCnf" Output="DONE"/>
 			</ECState>
-			<ECState Name="HANDLE_IND" Comment="An IND arrived, answer with RSP and report NOTIFIED" x="2480" y="1280">
+			<ECState Name="HANDLE_IND" Comment="An IND arrived, answer with RSP and report NOTIFIED" x="3920" y="1280">
 				<ECAction Algorithm="OnInd" Output="HS.RSP"/>
 				<ECAction Output="NOTIFIED"/>
 			</ECState>
-			<ECTransition Source="START_ST" Destination="HANDLE_START" Condition="START" x="1366.67" y="-300"/>
-			<ECTransition Source="HANDLE_START" Destination="START_ST" Condition="1" x="2246.67" y="-466.67"/>
-			<ECTransition Source="START_ST" Destination="HANDLE_CNF" Condition="HS.CNF" x="1806.67" y="360"/>
-			<ECTransition Source="HANDLE_CNF" Destination="START_ST" Condition="1" x="500" y="550"/>
-			<ECTransition Source="START_ST" Destination="HANDLE_IND" Condition="HS.IND" x="1806.67" y="1033.33"/>
-			<ECTransition Source="HANDLE_IND" Destination="START_ST" Condition="1" x="500" y="850"/>
+			<ECTransition Source="START" Destination="Init" Condition="INIT[TRUE = QI]" x="413.33" y="146.67"/>
+			<ECTransition Source="Init" Destination="Initialized" Condition="1" x="1293.33" y="286.67"/>
+			<ECTransition Source="Initialized" Destination="DeInit" Condition="INIT[FALSE = QI]" x="1250" y="1000"/>
+			<ECTransition Source="DeInit" Destination="START" Condition="1" x="406.67" y="880"/>
+			<ECTransition Source="Initialized" Destination="HANDLE_START" Condition="START" x="2740" y="40"/>
+			<ECTransition Source="HANDLE_START" Destination="Initialized" Condition="1" x="3053.33" y="273.33"/>
+			<ECTransition Source="Initialized" Destination="HANDLE_CNF" Condition="HS.CNF" x="2960" y="733.33"/>
+			<ECTransition Source="HANDLE_CNF" Destination="Initialized" Condition="1" x="3140" y="586.67"/>
+			<ECTransition Source="Initialized" Destination="HANDLE_IND" Condition="HS.IND" x="3046.67" y="1146.67"/>
+			<ECTransition Source="HANDLE_IND" Destination="Initialized" Condition="1" x="2813.33" y="1333.33"/>
 		</ECC>
 		<Algorithm Name="OnInit" Comment="Reset demo counters">
 			<ST><![CDATA[CnfCount := 0;
 IndCount := 0;
 QO := QI;]]></ST>
+		</Algorithm>
+		<Algorithm Name="OnDeInit" Comment="De-initialize">
+			<ST><![CDATA[QO := FALSE;]]></ST>
 		</Algorithm>
 		<Algorithm Name="OnCnf" Comment="Count a received CNF">
 			<ST><![CDATA[CnfCount := CnfCount + 1;]]></ST>
