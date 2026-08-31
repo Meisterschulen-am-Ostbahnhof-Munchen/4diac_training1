@@ -10,45 +10,30 @@
 		<Import declaration="logiBUS::io::DQ::logiBUS_DO::Output_Q1"/>
 	</CompilerInfo>
 	<SubAppInterfaceList>
-		<SubAppEventInputs>
-			<SubAppEvent Name="INIT" Type="EInit" Comment="Initialization Request">
-			</SubAppEvent>
-		</SubAppEventInputs>
-		<SubAppEventOutputs>
-			<SubAppEvent Name="INITO" Type="EInit" Comment="Initialization Confirm">
-			</SubAppEvent>
-		</SubAppEventOutputs>
-		<InputVars>
-			<VarDeclaration Name="QI" Type="BOOL" Comment="Input event qualifier"/>
-		</InputVars>
-		<OutputVars>
-			<VarDeclaration Name="QO" Type="BOOL" Comment="Output event qualifier"/>
-		</OutputVars>
 	</SubAppInterfaceList>
 	<SubAppNetwork>
-		<FB Name="DigitalInput_CLK_I1" Type="logiBUS::io::DI::logiBUS_IE" x="-4000" y="0">
+		<FB Name="DigitalInput_CLK_I1" Type="logiBUS::io::DI::logiBUS_IE" x="-4200" y="0">
 			<Parameter Name="QI" Value="TRUE"/>
 			<Parameter Name="Input" Value="Input_I1"/>
 			<Parameter Name="InputEvent" Value="BUTTON_SINGLE_CLICK"/>
 		</FB>
 		<SubApp Name="HandshakeDemo" Type="Meins::DesingPatterns::HandshakePattern::HandshakePatternDemo" x="-1600" y="0">
+			<Parameter Name="QI" Value="TRUE"/>
 		</SubApp>
-		<FB Name="E_T_FF" Type="iec61499::events::E_T_FF" x="1200" y="0">
+		<FB Name="E_T_FF" Type="iec61499::events::E_T_FF" x="900" y="300">
 		</FB>
 		<FB Name="DigitalOutput_Q1" Type="logiBUS::io::DQ::logiBUS_QX" x="2800" y="0">
 			<Parameter Name="QI" Value="TRUE"/>
 			<Parameter Name="Output" Value="Output_Q1"/>
 		</FB>
 		<EventConnections>
-			<Connection Source="INIT" Destination="HandshakeDemo.INIT" dx1="400"/>
-			<Connection Source="HandshakeDemo.INITO" Destination="INITO" dx1="400"/>
-			<Connection Source="DigitalInput_CLK_I1.IND" Destination="HandshakeDemo.START" dx1="300" Comment="Button press starts the handshake: the Requester sends REQ"/>
-			<Connection Source="HandshakeDemo.DONE" Destination="E_T_FF.CLK" dx1="300" Comment="Toggle the LED only once the Responder's CNF actually came back"/>
+			<Connection Source="DigitalInput_CLK_I1.IND" Destination="HandshakeDemo.START" Comment="Button press starts the handshake: the Requester sends REQ" dx1="300"/>
+			<Connection Source="HandshakeDemo.DONE" Destination="E_T_FF.CLK" Comment="Toggle the LED only once the Responder&apos;s CNF actually came back" dx1="300"/>
 			<Connection Source="E_T_FF.EO" Destination="DigitalOutput_Q1.REQ" dx1="300"/>
+			<Connection Source="DigitalInput_CLK_I1.INITO" Destination="HandshakeDemo.INIT"/>
+			<Connection Source="HandshakeDemo.INITO" Destination="DigitalOutput_Q1.INIT"/>
 		</EventConnections>
 		<DataConnections>
-			<Connection Source="QI" Destination="HandshakeDemo.QI" dx1="400"/>
-			<Connection Source="HandshakeDemo.QO" Destination="QO" dx1="400"/>
 			<Connection Source="E_T_FF.Q" Destination="DigitalOutput_Q1.OUT" dx1="300"/>
 		</DataConnections>
 	</SubAppNetwork>
