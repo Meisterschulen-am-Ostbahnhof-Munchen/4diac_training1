@@ -206,6 +206,34 @@ XSD-grün heißt dabei **nicht** semantisch korrekt (siehe Stolperstein
 oben) – die eigentliche Verhaltensprüfung passiert nur beim Test in der
 4diac IDE / FORTE-Monitoring.
 
+## Erweiterungen
+
+### Datentragende Variante: `EVENT_HS_WSTRING`
+
+Ablageort: `.lib/adapter-3.0.0/typelib/events/Handshake/EVENT_HS_WSTRING.adp`
+(gleicher Ordner, gleiches Socket/Plug-Rollenschema wie `EVENT_HS`).
+
+Entspricht 1:1 Vyatkins eigenem generischen **"service"-Adapter**
+(Folie 48, genutzt auf Folien 15/47 für SoA-Service-Interfaces und
+Prozessdaten-Interfaces): dieselben vier Events `REQ`/`CNF`/`IND`/`RSP`,
+jedes zusätzlich mit einer `WSTRING`-Nutzlast gekoppelt
+(`REQD`/`CNFD`/`INDD`/`RSPD`, jeweils über `<With Var="...">` an das
+zugehörige Event gebunden – wie im offiziellen 4diac-Standardadapter
+`templates/Adapter.adp`). Passt zum textbasierten Nachrichtenstil aus
+den Message-Sequence-Beispielen der Folie (z. B. `"push,100"`).
+
+Bewusst (noch) kein eigener, engerer Datentyp (z. B. `LREAL` für eine
+Zylinderposition) – lässt sich bei konkretem Bedarf jederzeit als
+weitere, enger typisierte Variante ergänzen, analog zur bestehenden
+`typelib/types/`-Familie (`AX`/`ADI`/`AR`/`AL`/`ALR`/`AS`/`AB`, je
+unidirektional und bidirektional).
+
+Für `EVENT_HS_WSTRING` existieren noch keine Beispielbausteine – die
+für `EVENT_HS` gebauten (`HandshakeRequester`/`HandshakeResponder`/
+`HandshakePatternDemo`) sind fest an den dataless `EVENT_HS` gekoppelt
+und müssten für die datentragende Variante separat (oder parametrisiert)
+nachgebaut werden.
+
 ## Weitere Design Patterns aus Modul 6 (zur späteren Umsetzung)
 
 Aus derselben Foliensammlung, für spätere Iterationen in
