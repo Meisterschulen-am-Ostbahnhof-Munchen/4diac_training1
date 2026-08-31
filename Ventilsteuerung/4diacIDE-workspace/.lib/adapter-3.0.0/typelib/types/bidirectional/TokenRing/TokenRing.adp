@@ -6,7 +6,7 @@
 	</VersionInfo>
 	<VersionInfo Organization="HR Agrartechnik GmbH" Version="1.0" Author="Franz Höpfinger" Date="2026-08-31" Remarks="Mutual Exclusion / TokenRing design pattern (IEC 61499 primer course, Module 6, Valeriy Vyatkin, slide 15), initial version">
 	</VersionInfo>
-	<CompilerInfo packageName="adapter::events::TokenRing">
+	<CompilerInfo packageName="adapter::types::bidirectional::TokenRing">
 	</CompilerInfo>
 	<InterfaceList>
 		<EventInputs>
@@ -18,7 +18,7 @@
 			</Event>
 		</EventOutputs>
 	</InterfaceList>
-	<Service LeftInterface="PLUG" RightInterface="SOCKET">
+	<Service RightInterface="SOCKET" LeftInterface="PLUG">
 		<ServiceSequence Name="token_pass">
 			<ServiceTransaction>
 				<InputPrimitive Interface="PLUG" Event="GIVE"/>

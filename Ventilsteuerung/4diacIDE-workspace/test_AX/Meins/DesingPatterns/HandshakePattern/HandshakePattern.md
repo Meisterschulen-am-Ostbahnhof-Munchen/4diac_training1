@@ -145,7 +145,7 @@ und in diesem Repo generisch implementiert.
 
 ### 1. Adapter-Typ
 
-- **Ablageort:** `Ventilsteuerung/4diacIDE-workspace/.lib/adapter-3.0.0/typelib/events/Handshake/EVENT_HS.adp`
+- **Ablageort:** `Ventilsteuerung/4diacIDE-workspace/.lib/adapter-3.0.0/typelib/types/bidirectional/Handshake/EVENT_HS.adp`
   (parallel zu den bestehenden `events/TimeOut/`, `events/bidirectional/`,
   `events/unidirectional/`).
 - **Name:** `EVENT_HS` (1:1 wie in der Kursfolie).
@@ -210,7 +210,7 @@ oben) – die eigentliche Verhaltensprüfung passiert nur beim Test in der
 
 ### Datentragende Variante: `EVENT_HS_WSTRING`
 
-Ablageort: `.lib/adapter-3.0.0/typelib/events/Handshake/EVENT_HS_WSTRING.adp`
+Ablageort: `.lib/adapter-3.0.0/typelib/types/bidirectional/Handshake/EVENT_HS_WSTRING.adp`
 (gleicher Ordner, gleiches Socket/Plug-Rollenschema wie `EVENT_HS`).
 
 Entspricht 1:1 Vyatkins eigenem generischen **"service"-Adapter**

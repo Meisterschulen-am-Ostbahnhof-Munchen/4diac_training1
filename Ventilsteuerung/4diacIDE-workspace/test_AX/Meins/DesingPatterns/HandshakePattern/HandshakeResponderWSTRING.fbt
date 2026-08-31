@@ -36,7 +36,7 @@
 			<VarDeclaration Name="RspCount" Type="UINT" Comment="Number of RSP received (demo counter)"/>
 		</OutputVars>
 		<Sockets>
-			<AdapterDeclaration Name="HS" Type="adapter::events::Handshake::EVENT_HS_WSTRING" Comment="Handshake socket: receives REQ/RSP (+REQD/RSPD), emits CNF/IND (+CNFD/INDD)"/>
+			<AdapterDeclaration Name="HS" Type="adapter::types::bidirectional::Handshake::EVENT_HS_WSTRING" Comment="Handshake socket: receives REQ/RSP (+REQD/RSPD), emits CNF/IND (+CNFD/INDD)"/>
 		</Sockets>
 	</InterfaceList>
 	<BasicFB>

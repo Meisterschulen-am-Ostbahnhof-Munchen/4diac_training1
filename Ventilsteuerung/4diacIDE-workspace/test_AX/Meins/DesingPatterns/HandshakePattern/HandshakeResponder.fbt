@@ -35,7 +35,7 @@
 			<VarDeclaration Name="RspCount" Type="UINT" Comment="Number of RSP received (demo counter)"/>
 		</OutputVars>
 		<Sockets>
-			<AdapterDeclaration Name="HS" Type="adapter::events::Handshake::EVENT_HS" Comment="Handshake socket: receives REQ/RSP, emits CNF/IND"/>
+			<AdapterDeclaration Name="HS" Type="adapter::types::bidirectional::Handshake::EVENT_HS" Comment="Handshake socket: receives REQ/RSP, emits CNF/IND"/>
 		</Sockets>
 	</InterfaceList>
 	<BasicFB>
@@ -51,10 +51,10 @@
 				<ECAction Algorithm="OnDeInit" Output="INITO"/>
 			</ECState>
 			<ECState Name="HANDLE_REQ" Comment="Answer a REQ with CNF" x="2720" y="-160">
-				<ECAction Algorithm="OnReq" Output="HS.CNF"/>
+				<ECAction Algorithm="OnReq"/>
 			</ECState>
 			<ECState Name="HANDLE_TRIGGER" Comment="Send an unsolicited IND" x="3120" y="400">
-				<ECAction Algorithm="OnTrigger" Output="HS.IND"/>
+				<ECAction Algorithm="OnTrigger"/>
 			</ECState>
 			<ECState Name="HANDLE_RSP" Comment="Acknowledge an RSP" x="3120" y="1120">
 				<ECAction Algorithm="OnRsp"/>

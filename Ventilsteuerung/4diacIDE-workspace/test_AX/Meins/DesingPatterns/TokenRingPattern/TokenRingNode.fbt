@@ -35,10 +35,10 @@
 			<VarDeclaration Name="PassCount" Type="UINT" Comment="Number of times this node&apos;s hand-off was acknowledged (demo counter)"/>
 		</OutputVars>
 		<Sockets>
-			<AdapterDeclaration Name="MTXIN" Type="adapter::events::TokenRing::TokenRing" Comment="Receives the token from the upstream neighbour, acknowledges receipt"/>
+			<AdapterDeclaration Name="MTXIN" Type="adapter::types::bidirectional::TokenRing::TokenRing" Comment="Receives the token from the upstream neighbour, acknowledges receipt"/>
 		</Sockets>
 		<Plugs>
-			<AdapterDeclaration Name="MTXOUT" Type="adapter::events::TokenRing::TokenRing" Comment="Hands the token to the downstream neighbour, waits for its acknowledgement"/>
+			<AdapterDeclaration Name="MTXOUT" Type="adapter::types::bidirectional::TokenRing::TokenRing" Comment="Hands the token to the downstream neighbour, waits for its acknowledgement"/>
 		</Plugs>
 	</InterfaceList>
 	<BasicFB>

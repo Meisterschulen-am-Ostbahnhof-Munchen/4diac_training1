@@ -41,7 +41,7 @@
 			<VarDeclaration Name="IndCount" Type="UINT" Comment="Number of IND received / RSP sent (demo counter)"/>
 		</OutputVars>
 		<Plugs>
-			<AdapterDeclaration Name="HS" Type="adapter::events::Handshake::EVENT_HS_WSTRING" Comment="Handshake plug: sends REQ/RSP (+REQD/RSPD), receives CNF/IND (+CNFD/INDD)"/>
+			<AdapterDeclaration Name="HS" Type="adapter::types::bidirectional::Handshake::EVENT_HS_WSTRING" Comment="Handshake plug: sends REQ/RSP (+REQD/RSPD), receives CNF/IND (+CNFD/INDD)"/>
 		</Plugs>
 	</InterfaceList>
 	<BasicFB>

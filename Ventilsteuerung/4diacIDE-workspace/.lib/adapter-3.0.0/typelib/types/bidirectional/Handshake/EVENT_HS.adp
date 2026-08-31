@@ -6,7 +6,7 @@
 	</VersionInfo>
 	<VersionInfo Organization="HR Agrartechnik GmbH" Version="1.0" Author="Franz Höpfinger" Date="2026-08-31" Remarks="Handshake design pattern (IEC 61499 primer course, Module 6, Valeriy Vyatkin), dataless variant as shown on slide 72 - initial version, Socket was the Requester">
 	</VersionInfo>
-	<CompilerInfo packageName="adapter::events::Handshake">
+	<CompilerInfo packageName="adapter::types::bidirectional::Handshake">
 	</CompilerInfo>
 	<InterfaceList>
 		<EventInputs>
@@ -22,7 +22,7 @@
 			</Event>
 		</EventOutputs>
 	</InterfaceList>
-	<Service LeftInterface="PLUG" RightInterface="SOCKET">
+	<Service RightInterface="SOCKET" LeftInterface="PLUG">
 		<ServiceSequence Name="request_confirm">
 			<ServiceTransaction>
 				<InputPrimitive Interface="PLUG" Event="REQ"/>

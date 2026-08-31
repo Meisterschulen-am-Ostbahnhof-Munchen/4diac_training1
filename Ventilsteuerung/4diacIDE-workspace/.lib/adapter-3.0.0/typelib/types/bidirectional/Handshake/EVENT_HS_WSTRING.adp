@@ -4,7 +4,7 @@
 	</Identification>
 	<VersionInfo Organization="HR Agrartechnik GmbH" Version="1.0" Author="Franz Höpfinger" Date="2026-08-31" Remarks="Data-carrying variant of EVENT_HS, matching Vyatkin's own 'service' adapter (Module 6, slide 48): same REQ/CNF/IND/RSP events, plus a WSTRING payload per event, exactly like the 'push,100' style messages in the slide's message-sequence examples (slide 42)">
 	</VersionInfo>
-	<CompilerInfo packageName="adapter::events::Handshake">
+	<CompilerInfo packageName="adapter::types::bidirectional::Handshake">
 	</CompilerInfo>
 	<InterfaceList>
 		<EventInputs>
@@ -32,7 +32,7 @@
 			<VarDeclaration Name="RSPD" Type="WSTRING" Comment="Response payload, accompanies RSP"/>
 		</OutputVars>
 	</InterfaceList>
-	<Service LeftInterface="PLUG" RightInterface="SOCKET">
+	<Service RightInterface="SOCKET" LeftInterface="PLUG">
 		<ServiceSequence Name="request_confirm">
 			<ServiceTransaction>
 				<InputPrimitive Interface="PLUG" Event="REQ" Parameters="REQD"/>

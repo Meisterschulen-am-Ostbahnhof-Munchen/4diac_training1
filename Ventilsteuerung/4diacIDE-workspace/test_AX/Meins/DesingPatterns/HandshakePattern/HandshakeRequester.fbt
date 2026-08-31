@@ -38,7 +38,7 @@
 			<VarDeclaration Name="IndCount" Type="UINT" Comment="Number of IND received / RSP sent (demo counter)"/>
 		</OutputVars>
 		<Plugs>
-			<AdapterDeclaration Name="HS" Type="adapter::events::Handshake::EVENT_HS" Comment="Handshake plug: sends REQ/RSP, receives CNF/IND"/>
+			<AdapterDeclaration Name="HS" Type="adapter::types::bidirectional::Handshake::EVENT_HS" Comment="Handshake plug: sends REQ/RSP, receives CNF/IND"/>
 		</Plugs>
 	</InterfaceList>
 	<BasicFB>
@@ -54,13 +54,13 @@
 				<ECAction Algorithm="OnDeInit" Output="INITO"/>
 			</ECState>
 			<ECState Name="HANDLE_START" Comment="Send a REQ" x="4000" y="-320">
-				<ECAction Output="HS.REQ"/>
+				<ECAction/>
 			</ECState>
 			<ECState Name="HANDLE_CNF" Comment="A CNF arrived, report DONE" x="3920" y="640">
 				<ECAction Algorithm="OnCnf" Output="DONE"/>
 			</ECState>
 			<ECState Name="HANDLE_IND" Comment="An IND arrived, answer with RSP and report NOTIFIED" x="3920" y="1280">
-				<ECAction Algorithm="OnInd" Output="HS.RSP"/>
+				<ECAction Algorithm="OnInd"/>
 				<ECAction Output="NOTIFIED"/>
 			</ECState>
 			<ECTransition Source="START" Destination="Init" Condition="INIT[TRUE = QI]" x="413.33" y="146.67"/>

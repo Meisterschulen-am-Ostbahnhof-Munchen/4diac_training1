@@ -132,7 +132,7 @@ nötig). Genau dieses Verzweigungsverhalten (`CHECK_WANT` →
 
 - **Adapter-Typ:** `TokenRing` (dataless, EventInputs `RCV`,
   EventOutputs `GIVE`) in
-  `.lib/adapter-3.0.0/typelib/events/TokenRing/TokenRing.adp`.
+  `.lib/adapter-3.0.0/typelib/types/bidirectional/TokenRing/TokenRing.adp`.
 - **Beispielbaustein:** `TokenRingNode.fbt` – ein Controller im Ring,
   mit `MTXIN` (Socket) und `MTXOUT` (Plug), Init/Initialized/DeInit-
   Muster wie bei den Handshake-Bausteinen, `REQUEST`-Event zum Anfordern

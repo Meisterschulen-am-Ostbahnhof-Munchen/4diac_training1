@@ -48,7 +48,7 @@ mit mindestens:
 Ordner: [`HandshakePattern/`](HandshakePattern/HandshakePattern.md)
 
 - Adapter-Typ `EVENT_HS` (dataless, REQ/RSP-Eingänge, CNF/IND-Ausgänge) in
-  `.lib/adapter-3.0.0/typelib/events/Handshake/EVENT_HS.adp`, plus
+  `.lib/adapter-3.0.0/typelib/types/bidirectional/Handshake/EVENT_HS.adp`, plus
   datentragende Variante `EVENT_HS_WSTRING`
 - Beispielbausteine `HandshakeRequester(WSTRING).fbt` (Plug/Client-Rolle)
   und `HandshakeResponder(WSTRING).fbt` (Socket/Server-Rolle)
@@ -64,10 +64,10 @@ Details, Theorie und Bezug zur Kursfolie: siehe
 Ordner: [`TokenRingPattern/`](TokenRingPattern/TokenRingPattern.md)
 
 - Adapter-Typ `TokenRing` (dataless, RCV-Eingang, GIVE-Ausgang) in
-  `.lib/adapter-3.0.0/typelib/events/TokenRing/TokenRing.adp`
+  `.lib/adapter-3.0.0/typelib/types/bidirectional/TokenRing/TokenRing.adp`
 - Beispielbaustein `TokenRingNode.fbt` (ein Controller im Ring, mit
   `MTXIN`-Socket und `MTXOUT`-Plug)
-- Demo-Subapplication `TokenRingPatternDemo.sub` (2-Knoten-Ring)
+- Demo-Subapplication `TokenRingPatternDemo.sub` (5-Knoten-Ring)
 
 GIVE/RCV-Rollenzuordnung (Socket=`MTXIN`, Plug=`MTXOUT`) gegen die
 Originalquelle bestätigt (Dai/Vyatkin/Christensen/Dubinin, IEEE INDIN
