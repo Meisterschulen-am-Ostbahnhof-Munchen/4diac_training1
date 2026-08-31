@@ -34,18 +34,20 @@
 			<Parameter Name="valOk" Value="COLOR_GREEN"/>
 			<Parameter Name="valFault" Value="COLOR_RED"/>
 		</SubApp>
-		<FB Name="Q_BackgroundColour" Type="isobus::UT::Q::Q_BackgroundColour" x="1800" y="-100">
+		<FB Name="Q_BackgroundColour" Type="isobus::UT::Q::Q_BackgroundColour" x="1600" y="0">
 		</FB>
 		<EventConnections>
-			<Connection Source="REQ" Destination="Select_EnableOk_Colour.REQ" dx1="626.67"/>
+			<Connection Source="REQ" Destination="Select_EnableOk_Colour.REQ" dx1="400"/>
 			<Connection Source="Select_EnableOk_Colour.CNF" Destination="Q_BackgroundColour.REQ" dx1="400"/>
 			<Connection Source="Q_BackgroundColour.CNF" Destination="CNF" dx1="400"/>
 		</EventConnections>
 		<DataConnections>
 			<Connection Source="bOk" Destination="Select_EnableOk_Colour.bOk" dx1="400"/>
-			<Connection Source="bEnable" Destination="Select_EnableOk_Colour.bEnable" dx1="486.67"/>
+			<Connection Source="bEnable" Destination="Select_EnableOk_Colour.bEnable" dx1="400"/>
 			<Connection Source="Select_EnableOk_Colour.value" Destination="Q_BackgroundColour.u8Colour" dx1="400"/>
-			<Connection Source="u16ObjId" Destination="Q_BackgroundColour.u16ObjId" dx1="3746.67"/>
+			<Connection Source="u16ObjId" Destination="Q_BackgroundColour.u16ObjId" dx1="1600">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
 			<Connection Source="Q_BackgroundColour.STATUS" Destination="STATUS" dx1="1600"/>
 			<Connection Source="Q_BackgroundColour.s16result" Destination="s16result" dx1="1600"/>
 		</DataConnections>
