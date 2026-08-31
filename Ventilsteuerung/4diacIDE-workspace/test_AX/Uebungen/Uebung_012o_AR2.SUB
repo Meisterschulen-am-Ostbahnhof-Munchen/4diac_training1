@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SubAppType Name="Uebung_012o_AR2" Comment="VT-Feld UND OPC-UA (letzter Schreiber gewinnt) und Speichern INI via AR2 - NumericValue_TO_AR2_OPC direkt an ein INI_AR2 angeschlossen">
+	<Identification Standard="61499-2" Description="Copyright (c) 2026 Meisterschulen am Ostbahnhof  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0">
+	</Identification>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2026-08-31" Remarks="VT+OPC sibling of Uebung_012g_AR2 (VT only) / Uebung_012i_AR2 (OPC only) - NumericValue_TO_AR2_OPC direkt an INI_AR2">
+	</VersionInfo>
+	<CompilerInfo packageName="Uebungen">
+		<Import declaration="Uebungen::const::NVS::NVS_Keys::KEY_I1_STORE"/>
+		<Import declaration="Uebungen::const::NVS::NVS_Keys::SECTION_I1_STORE"/>
+		<Import declaration="Uebungen::const::UT::DefaultPool_Numeric::InputNumber_I1_N"/>
+		<Import declaration="Uebungen::const::OPC::OPC_Strings::Uebung12o_READ"/>
+		<Import declaration="Uebungen::const::OPC::OPC_Strings::Uebung12o_WRITE"/>
+	</CompilerInfo>
+	<SubAppInterfaceList>
+	</SubAppInterfaceList>
+	<SubAppNetwork>
+		<SubApp Name="InputNumber_I1_N" Type="MyLib::sys::NumericValue_TO_AR2_OPC" x="-4700" y="1100">
+			<Parameter Name="stObj" Value="InputNumber_I1_N"/>
+			<Parameter Name="ID_READ" Value="Uebung12o_READ"/>
+			<Parameter Name="ID_WRITE" Value="Uebung12o_WRITE"/>
+		</SubApp>
+		<FB Name="INI_AR2" Type="eclipse4diac::storage::INI_AR2" x="-1400" y="800">
+			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="SETM" Value="TRUE"/>
+			<Parameter Name="SECTION" Value="SECTION_I1_STORE"/>
+			<Parameter Name="KEY" Value="KEY_I1_STORE"/>
+			<Parameter Name="DEFAULT_VALUE" Value="REAL#0.0"/>
+		</FB>
+		<Comment Comment="SETM=TRUE ist hier ESSENTIELL (anders als bei den reinen VT- oder OPC-Uebungen): es gibt ZWEI Quellen (VT + Remote). Aendert der Operator den Wert am VT-Feld, muss die Remote-Seite das sofort mitbekommen (Publish-Echo) - und umgekehrt. Ohne SETM=TRUE wuerde die jeweils andere Seite von einer Live-Aenderung nichts erfahren, erst der naechste Neustart wuerde sie synchronisieren." x="-1400" y="0" width="3200" height="700"/>
+		<AdapterConnections>
+			<Connection Source="InputNumber_I1_N.VALUEO" Destination="INI_AR2.VAL" dx1="1313.33"/>
+		</AdapterConnections>
+	</SubAppNetwork>
+</SubAppType>
