@@ -28,7 +28,22 @@
       </div>
       <div class="pi-grid">
         <div v-for="n in 8" :key="'PI' + n" class="pi-item">
-          <span class="pi-label">PI{{ n }}</span>
+          <div class="pi-item-head">
+            <span class="pi-label">PI{{ n }}</span>
+            <button
+              class="pi-switch"
+              :class="{ on: channelSwitches[n - 1] }"
+              @click="writeSwitch(n)"
+              :title="channelSwitches[n - 1] ? 'Kanal aktiv (klicken zum Deaktivieren)' : 'Kanal inaktiv (klicken zum Aktivieren)'"
+            >
+              <span class="pi-switch-knob"></span>
+            </button>
+            <div
+              class="led led-small"
+              :class="channelColorClass(n)"
+              :title="channelStatusTitle(n)"
+            ></div>
+          </div>
           <span class="pi-count">{{ count[n - 1] }}</span>
           <span class="pi-freq">{{ freq[n - 1].toFixed(1) }} Hz</span>
           <div class="pi-bar-track">
@@ -88,9 +103,28 @@ const connected = ref(false)
 const count = ref<number[]>(Array(8).fill(0))
 /* Frequenz 0.0-100.0 Hz (REAL), FT_DERIV(K=1.0) ueber den Zaehler */
 const freq = ref<number[]>(Array(8).fill(0))
+/* Kanal-Ein/Aus (BOOL), echo des Kanal-Schalters (E_T_FF_SR_SWITCH.Q) -
+ * nur 4 von 8 Kanaelen funktionieren gleichzeitig auf echter Hardware. */
+const channelSwitches = ref<boolean[]>(Array(8).fill(false))
+/* Kanal-Status (BOOL), logiBUS_PI_IDA.QO, nur lesend */
+const channelStatus = ref<boolean[]>(Array(8).fill(false))
 const outputs = ref<boolean[]>(Array(12).fill(false))
 const tick = ref<number | string>('–')
 const tickPulse = ref(false)
+
+/* Kanal-Farbe wie auf der ISOBUS-VT (F_SEL_OK_FAULT -> F_SEL_STATUS):
+ * deaktiviert (SWITCH=FALSE) -> WEISS, unabhaengig vom STATUS-Bit;
+ * aktiviert -> GRUEN (STATUS/QO=TRUE, ok) oder ROT (QO=FALSE, gestoert,
+ * z.B. weil bereits 4 andere Kanaele aktiv sind). */
+function channelColorClass(n: number): string {
+  if (!channelSwitches.value[n - 1]) return 'white'
+  return channelStatus.value[n - 1] ? 'on' : 'red'
+}
+
+function channelStatusTitle(n: number): string {
+  if (!channelSwitches.value[n - 1]) return 'Kanal deaktiviert'
+  return channelStatus.value[n - 1] ? 'Kanal aktiv, OK' : 'Kanal aktiv, Störung'
+}
 
 /* Oszilloskop-Ansicht pro Kanal: rollierendes Liniendiagramm der Frequenz,
  * um live zu sehen/messen, wie sich logiBUS_PI_ID's Poll-Parameter (TimeDelta/
@@ -189,6 +223,8 @@ function handleLost() {
   status.value = 'Fehler: Verbindung verloren'
   count.value.fill(0)
   freq.value.fill(0)
+  channelSwitches.value.fill(false)
+  channelStatus.value.fill(false)
   outputs.value.fill(false)
   tick.value = '–'
   if (scopeRafId !== null) {
@@ -253,6 +289,34 @@ async function connect() {
       pushScopeSample(index, v)
     })
 
+    /* Monitor all channel switches PI_I1-PI_I8 (BOOL, echo of the actual enable state) */
+    const switchItems = Array.from({ length: 8 }, (_, i) => ({
+      nodeId: coerceNodeId(`ns=1;s=PI_I${i + 1}_SWITCH`),
+      attributeId: AttributeIds.Value,
+    }))
+    const switchGroup = await subscription.monitorItemsP(
+      switchItems,
+      { samplingInterval: 100, discardOldest: true, queueSize: 2 },
+      TimestampsToReturn.Neither
+    )
+    switchGroup.on('changed', (_item: any, dataValue: any, index: number) => {
+      channelSwitches.value[index] = !!dataValue.value?.value
+    })
+
+    /* Monitor all channel status LEDs PI_I1-PI_I8 (BOOL, logiBUS_PI_IDA.QO, read-only) */
+    const statusItems = Array.from({ length: 8 }, (_, i) => ({
+      nodeId: coerceNodeId(`ns=1;s=PI_I${i + 1}_STATUS`),
+      attributeId: AttributeIds.Value,
+    }))
+    const statusGroup = await subscription.monitorItemsP(
+      statusItems,
+      { samplingInterval: 100, discardOldest: true, queueSize: 2 },
+      TimestampsToReturn.Neither
+    )
+    statusGroup.on('changed', (_item: any, dataValue: any, index: number) => {
+      channelStatus.value[index] = !!dataValue.value?.value
+    })
+
     /* Monitor all outputs Q1-Q12 (reflect actual hardware state, unveraendert wie im DIDO-Beispiel) */
     const outputItems = Array.from({ length: 12 }, (_, i) => ({
       nodeId: coerceNodeId(`ns=1;s=Q${String(i + 1).padStart(2, '0')}`),
@@ -304,6 +368,27 @@ async function toggleOutput(n: number) {
   }
 }
 
+/* Der Kanal-Schalter im SUB ist ein seedbares Set/Reset-FlipFlop
+ * (E_T_FF_SR_SYM_INIT), getriggert ueber einen Flankendetektor (AX_RF_TRIG):
+ * jeder Schreibzugriff auf den SWITCH-Knoten togglet den Kanal, unabhaengig
+ * vom uebertragenen Wert selbst (genau wie ein physischer Tastendruck). Der
+ * geschriebene Wert dient nur der optischen Konsistenz mit dem erwarteten
+ * neuen Zustand, nicht als tatsaechlich ausgewerteter Soll-Zustand. */
+async function writeSwitch(n: number) {
+  if (!session) return
+  const next = !channelSwitches.value[n - 1]
+  try {
+    const wv = new WriteValue({
+      nodeId: coerceNodeId(`ns=1;s=PI_I${n}_SWITCH`),
+      attributeId: AttributeIds.Value,
+      value: new DataValue({ value: new Variant({ dataType: DataType.Boolean, value: next }) }),
+    })
+    await session.writeP([wv])
+  } catch (err) {
+    console.error(`PI_I${n}_SWITCH write failed:`, err)
+  }
+}
+
 async function disconnect() {
   if (client) {
     client.off('connection_lost', handleLost)
@@ -314,6 +399,8 @@ async function disconnect() {
   status.value = 'Getrennt'
   count.value.fill(0)
   freq.value.fill(0)
+  channelSwitches.value.fill(false)
+  channelStatus.value.fill(false)
   outputs.value.fill(false)
   if (scopeRafId !== null) {
     cancelAnimationFrame(scopeRafId)
@@ -451,6 +538,21 @@ section {
   border-color: #81c784;
   box-shadow: 0 0 10px #4caf50, 0 0 20px #4caf5066;
 }
+.led.red {
+  background: #f44336;
+  border-color: #ff8a80;
+  box-shadow: 0 0 10px #f44336, 0 0 20px #f4433666;
+}
+.led.white {
+  background: #e0e0e0;
+  border-color: #fff;
+  box-shadow: 0 0 8px #ffffff88;
+}
+.led-small {
+  width: 16px;
+  height: 16px;
+  flex-shrink: 0;
+}
 
 span {
   font-size: 0.8rem;
@@ -478,10 +580,46 @@ span {
   user-select: none;
 }
 
+.pi-item-head {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
 .pi-label {
   font-size: 0.8rem;
   font-weight: 600;
   color: #aaa;
+}
+
+.pi-switch {
+  position: relative;
+  width: 34px;
+  height: 18px;
+  flex-shrink: 0;
+  padding: 0;
+  border-radius: 9px;
+  border: 1px solid #444;
+  background: #2a2a3e;
+  cursor: pointer;
+  transition: background 0.15s, border-color 0.15s;
+}
+.pi-switch.on {
+  background: #4caf50;
+  border-color: #81c784;
+}
+.pi-switch-knob {
+  position: absolute;
+  top: 1px;
+  left: 1px;
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: #e0e0e0;
+  transition: transform 0.15s;
+}
+.pi-switch.on .pi-switch-knob {
+  transform: translateX(16px);
 }
 
 .pi-count {
