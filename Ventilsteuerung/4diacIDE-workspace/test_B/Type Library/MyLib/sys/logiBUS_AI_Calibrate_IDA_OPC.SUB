@@ -21,6 +21,8 @@
 			<VarDeclaration Name="sSection" Type="STRING" Comment="INI-Sektionsname fuer OFFSET/SCALE-Persistenz - pro Kanal eindeutig (z.B. 'AI_Calibrate_I1'), sonst kollidieren die Kanaele in settings.ini"/>
 			<VarDeclaration Name="ID_RAW_WRITE" Type="WSTRING" Comment="Rohwert-Ruckmelde-Adresse (DWORD 0-4095, ACTION=PUBLISH)"/>
 			<VarDeclaration Name="ID_CAL_WRITE" Type="WSTRING" Comment="Kalibrierter-Wert-Ruckmelde-Adresse (REAL, ACTION=PUBLISH)"/>
+			<VarDeclaration Name="ID_CO_READ" Type="WSTRING" Comment="Remote-CO-Adresse (BOOL, ACTION=SUBSCRIBE, togglet Kalibrier-Nullpunkt-Trigger wie ein Tastendruck - Web-Client schreibt bei jedem Klick den invertierten letzten Wert, jede Flanke (steigend ODER fallend) loest CO aus)"/>
+			<VarDeclaration Name="ID_CS_READ" Type="WSTRING" Comment="Remote-CS-Adresse (BOOL, ACTION=SUBSCRIBE, togglet Kalibrier-Spanne-Trigger wie ein Tastendruck - siehe ID_CO_READ)"/>
 		</InputVars>
 	</SubAppInterfaceList>
 	<SubAppNetwork>
@@ -64,6 +66,24 @@
 		<FB Name="AX_BOOL_TO_X_CS" Type="adapter::conversion::unidirectional::AX_BOOL_TO_X" x="-2300" y="2400">
 			<Parameter Name="OUT" Value="TRUE"/>
 		</FB>
+		<FB Name="AX_SUBSCRIBE_CO" Type="adapter::net::AX_SUBSCRIBE_1" x="-6800" y="1000">
+			<Parameter Name="QI" Value="TRUE"/>
+		</FB>
+		<FB Name="AX_RF_TRIG_CO" Type="adapter::events::unidirectional::AX_RF_TRIG" x="-5600" y="1000">
+		</FB>
+		<FB Name="E_MERGE_CO_A" Type="iec61499::events::E_MERGE_2" x="-4600" y="1000">
+		</FB>
+		<FB Name="E_MERGE_CO_B" Type="iec61499::events::E_MERGE_2" x="-3400" y="1000">
+		</FB>
+		<FB Name="AX_SUBSCRIBE_CS" Type="adapter::net::AX_SUBSCRIBE_1" x="-6800" y="2000">
+			<Parameter Name="QI" Value="TRUE"/>
+		</FB>
+		<FB Name="AX_RF_TRIG_CS" Type="adapter::events::unidirectional::AX_RF_TRIG" x="-5600" y="2000">
+		</FB>
+		<FB Name="E_MERGE_CS_A" Type="iec61499::events::E_MERGE_2" x="-4600" y="2000">
+		</FB>
+		<FB Name="E_MERGE_CS_B" Type="iec61499::events::E_MERGE_2" x="-3400" y="2000">
+		</FB>
 		<FB Name="INI_OFFSET" Type="eclipse4diac::storage::INI_AR2" x="1600" y="1400">
 			<Parameter Name="QI" Value="TRUE"/>
 			<Parameter Name="KEY" Value="'OFFSET'"/>
@@ -85,8 +105,22 @@
 			<Connection Source="AD_PUBLISH_RAW.INITO" Destination="AR_PUBLISH_CAL.INIT" dx1="600">
 				<Attribute Name="Visible" Value="false"/>
 			</Connection>
-			<Connection Source="Button_CO.IND" Destination="AX_BOOL_TO_X_CO.REQ" dx1="400"/>
-			<Connection Source="Button_CS.IND" Destination="AX_BOOL_TO_X_CS.REQ" dx1="400"/>
+			<Connection Source="AR_PUBLISH_CAL.INITO" Destination="AX_SUBSCRIBE_CO.INIT" dx1="600">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="AX_SUBSCRIBE_CO.INITO" Destination="AX_SUBSCRIBE_CS.INIT" dx1="600">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="Button_CO.IND" Destination="E_MERGE_CO_A.EI1" dx1="400"/>
+			<Connection Source="AX_RF_TRIG_CO.ER" Destination="E_MERGE_CO_A.EI2" dx1="400"/>
+			<Connection Source="E_MERGE_CO_A.EO" Destination="E_MERGE_CO_B.EI1" dx1="400"/>
+			<Connection Source="AX_RF_TRIG_CO.EF" Destination="E_MERGE_CO_B.EI2" dx1="400"/>
+			<Connection Source="E_MERGE_CO_B.EO" Destination="AX_BOOL_TO_X_CO.REQ" dx1="400"/>
+			<Connection Source="Button_CS.IND" Destination="E_MERGE_CS_A.EI1" dx1="400"/>
+			<Connection Source="AX_RF_TRIG_CS.ER" Destination="E_MERGE_CS_A.EI2" dx1="400"/>
+			<Connection Source="E_MERGE_CS_A.EO" Destination="E_MERGE_CS_B.EI1" dx1="400"/>
+			<Connection Source="AX_RF_TRIG_CS.EF" Destination="E_MERGE_CS_B.EI2" dx1="400"/>
+			<Connection Source="E_MERGE_CS_B.EO" Destination="AX_BOOL_TO_X_CS.REQ" dx1="400"/>
 		</EventConnections>
 		<DataConnections>
 			<Connection Source="Input" Destination="logiBUS_AI_IDA.Input" dx1="1460">
@@ -116,6 +150,12 @@
 			<Connection Source="ID_CAL_WRITE" Destination="AR_PUBLISH_CAL.ID" dx1="1400">
 				<Attribute Name="Visible" Value="false"/>
 			</Connection>
+			<Connection Source="ID_CO_READ" Destination="AX_SUBSCRIBE_CO.ID" dx1="1400">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="ID_CS_READ" Destination="AX_SUBSCRIBE_CS.ID" dx1="1400">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
 		</DataConnections>
 		<AdapterConnections>
 			<Connection Source="logiBUS_AI_IDA.IN" Destination="AD_SPLIT_2.IN" dx1="420"/>
@@ -132,6 +172,8 @@
 			<Connection Source="CALIBRATE.Y" Destination="AR_SPLIT_2.IN" dx1="300"/>
 			<Connection Source="AR_SPLIT_2.OUT1" Destination="AR_PUBLISH_CAL.IN" dx1="300"/>
 			<Connection Source="AR_SPLIT_2.OUT2" Destination="Q_NumericValue_CAL.rPhys" dx1="300"/>
+			<Connection Source="AX_SUBSCRIBE_CO.OUT" Destination="AX_RF_TRIG_CO.QI" dx1="300"/>
+			<Connection Source="AX_SUBSCRIBE_CS.OUT" Destination="AX_RF_TRIG_CS.QI" dx1="300"/>
 		</AdapterConnections>
 	</SubAppNetwork>
 </SubAppType>

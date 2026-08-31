@@ -21,6 +21,22 @@
 		<Import declaration="Meins::InputOutputTester::Button_AI_Calibrate_OPC_UA::SubStrings::AIC_I7_CAL_WRITE"/>
 		<Import declaration="Meins::InputOutputTester::Button_AI_Calibrate_OPC_UA::SubStrings::AIC_I8_RAW_WRITE"/>
 		<Import declaration="Meins::InputOutputTester::Button_AI_Calibrate_OPC_UA::SubStrings::AIC_I8_CAL_WRITE"/>
+		<Import declaration="Meins::InputOutputTester::Button_AI_Calibrate_OPC_UA::SubStrings::AIC_I1_CO_READ"/>
+		<Import declaration="Meins::InputOutputTester::Button_AI_Calibrate_OPC_UA::SubStrings::AIC_I1_CS_READ"/>
+		<Import declaration="Meins::InputOutputTester::Button_AI_Calibrate_OPC_UA::SubStrings::AIC_I2_CO_READ"/>
+		<Import declaration="Meins::InputOutputTester::Button_AI_Calibrate_OPC_UA::SubStrings::AIC_I2_CS_READ"/>
+		<Import declaration="Meins::InputOutputTester::Button_AI_Calibrate_OPC_UA::SubStrings::AIC_I3_CO_READ"/>
+		<Import declaration="Meins::InputOutputTester::Button_AI_Calibrate_OPC_UA::SubStrings::AIC_I3_CS_READ"/>
+		<Import declaration="Meins::InputOutputTester::Button_AI_Calibrate_OPC_UA::SubStrings::AIC_I4_CO_READ"/>
+		<Import declaration="Meins::InputOutputTester::Button_AI_Calibrate_OPC_UA::SubStrings::AIC_I4_CS_READ"/>
+		<Import declaration="Meins::InputOutputTester::Button_AI_Calibrate_OPC_UA::SubStrings::AIC_I5_CO_READ"/>
+		<Import declaration="Meins::InputOutputTester::Button_AI_Calibrate_OPC_UA::SubStrings::AIC_I5_CS_READ"/>
+		<Import declaration="Meins::InputOutputTester::Button_AI_Calibrate_OPC_UA::SubStrings::AIC_I6_CO_READ"/>
+		<Import declaration="Meins::InputOutputTester::Button_AI_Calibrate_OPC_UA::SubStrings::AIC_I6_CS_READ"/>
+		<Import declaration="Meins::InputOutputTester::Button_AI_Calibrate_OPC_UA::SubStrings::AIC_I7_CO_READ"/>
+		<Import declaration="Meins::InputOutputTester::Button_AI_Calibrate_OPC_UA::SubStrings::AIC_I7_CS_READ"/>
+		<Import declaration="Meins::InputOutputTester::Button_AI_Calibrate_OPC_UA::SubStrings::AIC_I8_CO_READ"/>
+		<Import declaration="Meins::InputOutputTester::Button_AI_Calibrate_OPC_UA::SubStrings::AIC_I8_CS_READ"/>
 		<Import declaration="Meins::InputOutputTester::Button_AI_Calibrate_OPC_UA::SubStrings::Q01_READ"/>
 		<Import declaration="Meins::InputOutputTester::Button_AI_Calibrate_OPC_UA::SubStrings::Q01_WRITE"/>
 		<Import declaration="Meins::InputOutputTester::Button_AI_Calibrate_OPC_UA::SubStrings::Q02_READ"/>
@@ -124,6 +140,8 @@
 			<Parameter Name="sSection" Value="'AI_Calibrate_I1'"/>
 			<Parameter Name="ID_RAW_WRITE" Value="AIC_I1_RAW_WRITE"/>
 			<Parameter Name="ID_CAL_WRITE" Value="AIC_I1_CAL_WRITE"/>
+			<Parameter Name="ID_CO_READ" Value="AIC_I1_CO_READ"/>
+			<Parameter Name="ID_CS_READ" Value="AIC_I1_CS_READ"/>
 		</SubApp>
 		<SubApp Name="AnalogChannel_I2" Type="MyLib::sys::logiBUS_AI_Calibrate_IDA_OPC" x="-1000" y="1100">
 			<Parameter Name="u16ObjId_RAWVAR" Value="NumberVariable_AIC_RAW_I02"/>
@@ -134,6 +152,8 @@
 			<Parameter Name="sSection" Value="'AI_Calibrate_I2'"/>
 			<Parameter Name="ID_RAW_WRITE" Value="AIC_I2_RAW_WRITE"/>
 			<Parameter Name="ID_CAL_WRITE" Value="AIC_I2_CAL_WRITE"/>
+			<Parameter Name="ID_CO_READ" Value="AIC_I2_CO_READ"/>
+			<Parameter Name="ID_CS_READ" Value="AIC_I2_CS_READ"/>
 		</SubApp>
 		<SubApp Name="AnalogChannel_I3" Type="MyLib::sys::logiBUS_AI_Calibrate_IDA_OPC" x="-1000" y="2900">
 			<Parameter Name="u16ObjId_RAWVAR" Value="NumberVariable_AIC_RAW_I03"/>
@@ -144,6 +164,8 @@
 			<Parameter Name="sSection" Value="'AI_Calibrate_I3'"/>
 			<Parameter Name="ID_RAW_WRITE" Value="AIC_I3_RAW_WRITE"/>
 			<Parameter Name="ID_CAL_WRITE" Value="AIC_I3_CAL_WRITE"/>
+			<Parameter Name="ID_CO_READ" Value="AIC_I3_CO_READ"/>
+			<Parameter Name="ID_CS_READ" Value="AIC_I3_CS_READ"/>
 		</SubApp>
 		<SubApp Name="AnalogChannel_I4" Type="MyLib::sys::logiBUS_AI_Calibrate_IDA_OPC" x="-1000" y="4700">
 			<Parameter Name="u16ObjId_RAWVAR" Value="NumberVariable_AIC_RAW_I04"/>
@@ -154,6 +176,8 @@
 			<Parameter Name="sSection" Value="'AI_Calibrate_I4'"/>
 			<Parameter Name="ID_RAW_WRITE" Value="AIC_I4_RAW_WRITE"/>
 			<Parameter Name="ID_CAL_WRITE" Value="AIC_I4_CAL_WRITE"/>
+			<Parameter Name="ID_CO_READ" Value="AIC_I4_CO_READ"/>
+			<Parameter Name="ID_CS_READ" Value="AIC_I4_CS_READ"/>
 		</SubApp>
 		<SubApp Name="AnalogChannel_I5" Type="MyLib::sys::logiBUS_AI_Calibrate_IDA_OPC" x="-1000" y="6500">
 			<Parameter Name="u16ObjId_RAWVAR" Value="NumberVariable_AIC_RAW_I05"/>
@@ -164,6 +188,8 @@
 			<Parameter Name="sSection" Value="'AI_Calibrate_I5'"/>
 			<Parameter Name="ID_RAW_WRITE" Value="AIC_I5_RAW_WRITE"/>
 			<Parameter Name="ID_CAL_WRITE" Value="AIC_I5_CAL_WRITE"/>
+			<Parameter Name="ID_CO_READ" Value="AIC_I5_CO_READ"/>
+			<Parameter Name="ID_CS_READ" Value="AIC_I5_CS_READ"/>
 		</SubApp>
 		<SubApp Name="AnalogChannel_I6" Type="MyLib::sys::logiBUS_AI_Calibrate_IDA_OPC" x="-1000" y="8300">
 			<Parameter Name="u16ObjId_RAWVAR" Value="NumberVariable_AIC_RAW_I06"/>
@@ -174,6 +200,8 @@
 			<Parameter Name="sSection" Value="'AI_Calibrate_I6'"/>
 			<Parameter Name="ID_RAW_WRITE" Value="AIC_I6_RAW_WRITE"/>
 			<Parameter Name="ID_CAL_WRITE" Value="AIC_I6_CAL_WRITE"/>
+			<Parameter Name="ID_CO_READ" Value="AIC_I6_CO_READ"/>
+			<Parameter Name="ID_CS_READ" Value="AIC_I6_CS_READ"/>
 		</SubApp>
 		<SubApp Name="AnalogChannel_I7" Type="MyLib::sys::logiBUS_AI_Calibrate_IDA_OPC" x="-1000" y="10100">
 			<Parameter Name="u16ObjId_RAWVAR" Value="NumberVariable_AIC_RAW_I07"/>
@@ -184,6 +212,8 @@
 			<Parameter Name="sSection" Value="'AI_Calibrate_I7'"/>
 			<Parameter Name="ID_RAW_WRITE" Value="AIC_I7_RAW_WRITE"/>
 			<Parameter Name="ID_CAL_WRITE" Value="AIC_I7_CAL_WRITE"/>
+			<Parameter Name="ID_CO_READ" Value="AIC_I7_CO_READ"/>
+			<Parameter Name="ID_CS_READ" Value="AIC_I7_CS_READ"/>
 		</SubApp>
 		<SubApp Name="AnalogChannel_I8" Type="MyLib::sys::logiBUS_AI_Calibrate_IDA_OPC" x="-1000" y="11900">
 			<Parameter Name="u16ObjId_RAWVAR" Value="NumberVariable_AIC_RAW_I08"/>
@@ -194,6 +224,8 @@
 			<Parameter Name="sSection" Value="'AI_Calibrate_I8'"/>
 			<Parameter Name="ID_RAW_WRITE" Value="AIC_I8_RAW_WRITE"/>
 			<Parameter Name="ID_CAL_WRITE" Value="AIC_I8_CAL_WRITE"/>
+			<Parameter Name="ID_CO_READ" Value="AIC_I8_CO_READ"/>
+			<Parameter Name="ID_CS_READ" Value="AIC_I8_CS_READ"/>
 		</SubApp>
 		<SubApp Name="Output_Q1" Type="MyLib::sys::Button_IXA_TO_logiBUS_QXA_BG_OPC" x="-4600" y="-700">
 			<Parameter Name="u16ObjId" Value="Button_Q01"/>

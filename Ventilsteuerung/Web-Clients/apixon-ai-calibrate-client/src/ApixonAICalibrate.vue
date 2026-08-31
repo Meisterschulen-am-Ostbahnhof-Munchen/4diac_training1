@@ -15,9 +15,9 @@
     </header>
 
     <p class="calib-note">
-      Kalibrierung (Nullpunkt „CO“ / Spanne „CS“) erfolgt ausschließlich über die 2 Tasten je
-      Kanal am ISOBUS-VT-Bildschirm — dieser Web-Client zeigt Rohwert und kalibrierten Wert nur an
-      und kann die Kalibrierung nicht auslösen.
+      Kalibrierung (Nullpunkt „CO“ / Spanne „CS“) kann sowohl über die 2 Tasten je Kanal am
+      ISOBUS-VT-Bildschirm als auch hier im Web-Client ausgelöst werden — Referenzwert anlegen,
+      dann die passende Taste drücken (erst „CO“, danach „CS“).
     </p>
 
     <section>
@@ -50,6 +50,10 @@
           <span class="ai-scope-info">
             {{ scopeRangeLabel(n - 1) }} · Δt: {{ sampleIntervalMs[n - 1] !== null ? sampleIntervalMs[n - 1] + ' ms' : '–' }}
           </span>
+          <div class="calib-buttons">
+            <button class="calib-btn" :disabled="!connected" @click="triggerCalibrate(n, 'CO')">CO</button>
+            <button class="calib-btn" :disabled="!connected" @click="triggerCalibrate(n, 'CS')">CS</button>
+          </div>
         </div>
       </div>
     </section>
@@ -100,6 +104,14 @@ const cal = ref<number[]>(new Array(8).fill(0))
 const outputs = ref<boolean[]>(new Array(12).fill(false))
 const tick = ref<number | string>('–')
 const tickPulse = ref(false)
+
+/* CO/CS sind reine One-Shot-Trigger (kein persistenter Zustand am FB), daher gibt es nichts,
+ * das von FORTE zurückgelesen werden könnte - der Web-Client merkt sich nur den zuletzt selbst
+ * geschriebenen BOOL-Wert pro Kanal/Taste und schreibt bei jedem Klick dessen Invertierung
+ * (Toggle-Write). AX_SUBSCRIBE_1 im FB-Netzwerk erkennt intern nur Wertänderungen (E_D_FF), ein
+ * wiederholtes Schreiben desselben Literals würde also kein zweites Mal auslösen. */
+const coState = ref<boolean[]>(new Array(8).fill(false))
+const csState = ref<boolean[]>(new Array(8).fill(false))
 
 interface ScopeSample { t: number; v: number }
 const scopeWindowSec = ref(10)
@@ -218,6 +230,8 @@ function handleLost() {
   raw.value.fill(0)
   cal.value.fill(0)
   outputs.value.fill(false)
+  coState.value.fill(false)
+  csState.value.fill(false)
   tick.value = '–'
   if (scopeRafId !== null) {
     cancelAnimationFrame(scopeRafId)
@@ -332,6 +346,23 @@ async function toggleOutput(n: number) {
   }
 }
 
+async function triggerCalibrate(n: number, which: 'CO' | 'CS') {
+  if (!session) return
+  const state = which === 'CO' ? coState : csState
+  const newVal = !state.value[n - 1]
+  try {
+    const wv = new WriteValue({
+      nodeId: coerceNodeId(`ns=1;s=AIC_I${n}_${which}`),
+      attributeId: AttributeIds.Value,
+      value: new DataValue({ value: new Variant({ dataType: DataType.Boolean, value: newVal }) }),
+    })
+    await session.writeP([wv])
+    state.value[n - 1] = newVal
+  } catch (err) {
+    console.error(`AI${n} ${which} write failed:`, err)
+  }
+}
+
 async function disconnect() {
   if (client) {
     client.off('connection_lost', handleLost)
@@ -343,6 +374,8 @@ async function disconnect() {
   raw.value.fill(0)
   cal.value.fill(0)
   outputs.value.fill(false)
+  coState.value.fill(false)
+  csState.value.fill(false)
   if (scopeRafId !== null) {
     cancelAnimationFrame(scopeRafId)
     scopeRafId = null
@@ -599,4 +632,21 @@ span {
   color: #777;
   font-variant-numeric: tabular-nums;
 }
+
+.calib-buttons {
+  display: flex;
+  gap: 0.4rem;
+  margin-top: 0.2rem;
+}
+
+.calib-btn {
+  flex: 1;
+  padding: 0.25rem 0;
+  font-size: 0.75rem;
+  background: #2a2a3e;
+  border: 1px solid #444;
+}
+.calib-btn:hover:not(:disabled) { background: #3f51b5; }
+.calib-btn:active:not(:disabled) { transform: scale(0.95); }
+.calib-btn:disabled { opacity: 0.4; cursor: not-allowed; }
 </style>

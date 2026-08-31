@@ -36,8 +36,26 @@ describe('ApixonAICalibrate', () => {
     expect(wrapper.findAll('.ai-cal')).toHaveLength(8)
   })
 
-  it('documents that calibration is VT-only, not remotely triggerable', () => {
+  it('documents that calibration can be triggered from VT and web client', () => {
     const wrapper = mount(ApixonAICalibrate)
-    expect(wrapper.find('.calib-note').text()).toContain('VT-Bildschirm')
+    const note = wrapper.find('.calib-note').text()
+    expect(note).toContain('VT-Bildschirm')
+    expect(note).toContain('Web-Client')
+  })
+
+  it('renders CO/CS calibration trigger buttons for each analog channel', () => {
+    const wrapper = mount(ApixonAICalibrate)
+    expect(wrapper.findAll('.calib-buttons')).toHaveLength(8)
+    const coButtons = wrapper.findAll('.calib-btn').filter((b) => b.text() === 'CO')
+    const csButtons = wrapper.findAll('.calib-btn').filter((b) => b.text() === 'CS')
+    expect(coButtons).toHaveLength(8)
+    expect(csButtons).toHaveLength(8)
+  })
+
+  it('disables CO/CS buttons while disconnected', () => {
+    const wrapper = mount(ApixonAICalibrate)
+    wrapper.findAll('.calib-btn').forEach((b) => {
+      expect(b.attributes('disabled')).toBeDefined()
+    })
   })
 })
