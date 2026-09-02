@@ -208,14 +208,27 @@ oben) – die eigentliche Verhaltensprüfung passiert nur beim Test in der
 
 ## Erweiterungen
 
-### Die Quelle der `"push,100"`-Notation: Message Exchange zwischen Services (Folie 44–48)
+### Die Quelle der `"push,100"`-Notation: Message Exchange zwischen Services (Folie 41–48)
 
 Bisher stand in diesem Dokument nur ein beiläufiger Verweis auf
-`"push,100"`. Das eigentliche Diagramm dazu – **Folie 44 "Message
-exchange between services"** (mit den Wiederholungs-/Build-Varianten
-Folie 45/46, jeweils ein weiterer Ausschnitt des Ablaufs hervorgehoben)
-– war bisher nirgends beschrieben, obwohl es in der PDF sehr
-ausführlich behandelt wird. Nachgetragen:
+`"push,100"`. Das eigentliche Diagramm dazu – **"Message exchange
+between services"** – war bisher nirgends beschrieben, obwohl es in
+der PDF sehr ausführlich behandelt wird. Nachgetragen (Korrektur
+2026-09-02: exakt nachgezählt, es sind fünf Folien, nicht drei):
+
+- **Folie 41** – Titelfolie mit den beiden Struktur-/Rollen-Diagrammen
+  (`MES`→`WP Sensor`/`Cylinder`/`Drop`, sowie `Cylinder`→
+  `Start Sens`/`End Sens`/`Push Valve`/`Pop Valve`) und der `CylH`-
+  Mechanik-Skizze – **noch ohne** das eigentliche Message-Sequence-
+  Chart (MSC).
+- **Folien 42–46** – dieselbe MSC-Grafik fünfmal wiederholt (Build-
+  Animation): Inhalt (alle Lifelines, alle Nachrichten) ist auf allen
+  fünf Folien **identisch**, nur der gelb hinterlegte
+  Hervorhebungsbereich wandert von Folie zu Folie weiter nach unten
+  (Folie 42: keine Hervorhebung; Folie 43: INIT-Sequenz +
+  "Workpiece arrived"; Folien 44–46: weitere Ausschnitte bis
+  "Service completed"). Jede der 18 unten aufgelisteten Konstanten
+  ist bereits auf Folie 42 vollständig sichtbar.
 
 **Das Beispiel:** Ein Zylinder `CylH` transportiert ein Werkstück
 zwischen Startposition (`WPS`-Sensor) und Endposition. Er besteht aus
@@ -227,7 +240,8 @@ Service für den Orchestrator `MES` ("Manufacturing Execution System");
 `DS` ist der Ziel-Sink, an den das Werkstück am Ende übergeben wird.
 Jeder dieser Teilnehmer (`MES`, `WPS`, `CYL`, `CYL.start`, `CYL.end`,
 `CYL.push`, `CYL.pop`, `DS`) ist eine eigene Lifeline im Message-
-Sequence-Chart (MSC) auf Folie 44.
+Sequence-Chart (MSC) auf Folie 42 (identisch auch auf 43–46, siehe
+oben).
 
 **Die Nachrichten-Konvention:** Jede Anfrage/Antwort ist ein einzelner
 String (WSTRING), nach einem einfachen, selbstbeschreibenden Schema:
@@ -243,7 +257,7 @@ Notation, die in `EVENT_HS_WSTRING`s Default-Payloads (`"push,100"`,
 weiter unten in diesem Dokument) zitiert, aber bisher nie referenziert
 wurde.
 
-**Der Ablauf (verkürzt, aus dem MSC auf Folie 44/45/46):**
+**Der Ablauf (verkürzt, aus dem MSC auf Folie 42–46):**
 
 1. Alle Teilnehmer initialisieren (`INIT` → `RSP,"start,1"` /
    `RSP,"end,0"` / `RSP,"WPS,0"` usw.).
