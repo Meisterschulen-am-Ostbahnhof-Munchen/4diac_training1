@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<FBType Name="ASR_LAST_2" Comment="MERGE 2 ASR in 1 ASR (letztes Event gewinnt, reines Event-Fan-in - ASR traegt keine Nutzdaten, daher kein ECC noetig)">
+	<Identification Standard="61499-2" Description="Copyright (c) 2026 Meisterschulen am Ostbahnhof  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0">
+	</Identification>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2026-08-31" Remarks="pure event fan-in composite - both Sockets' events feed the same Plug event(s) directly; legal in 4diac since EventConnections (unlike DataConnections) allow multiple sources into one destination">
+	</VersionInfo>
+	<CompilerInfo packageName="adapter::events::unidirectional">
+	</CompilerInfo>
+	<InterfaceList>
+		<Plugs>
+			<AdapterDeclaration Name="OUT" Type="adapter::types::unidirectional::ASR"/>
+		</Plugs>
+		<Sockets>
+			<AdapterDeclaration Name="IN1" Type="adapter::types::unidirectional::ASR"/>
+			<AdapterDeclaration Name="IN2" Type="adapter::types::unidirectional::ASR"/>
+		</Sockets>
+	</InterfaceList>
+	<FBNetwork>
+		<EventConnections>
+			<Connection Source="IN1.SET" Destination="OUT.SET"/>
+			<Connection Source="IN2.SET" Destination="OUT.SET"/>
+			<Connection Source="IN1.RESET" Destination="OUT.RESET"/>
+			<Connection Source="IN2.RESET" Destination="OUT.RESET"/>
+		</EventConnections>
+	</FBNetwork>
+	<Attribute Name="eclipse4diac::core::TypeHash" Value="''"/>
+</FBType>
