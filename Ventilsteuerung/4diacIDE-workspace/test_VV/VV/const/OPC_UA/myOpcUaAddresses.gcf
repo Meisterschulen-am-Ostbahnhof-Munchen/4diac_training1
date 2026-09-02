@@ -13,6 +13,14 @@
 		<VarDeclaration Name="FF1_TRIGGER_REMOTE_CALL" Type="WSTRING" Comment="Geraet A (Station 11): aktiver Remote-Methodenaufruf ueber CLIENT_0 auf dieselbe Methode wie FF1_TRIGGER_LOCAL_METHOD auf Geraet B (ACTION=CALL_METHOD, passend zu CLIENT - Remote/CALL_METHOD/CLIENT) - Pfad/Name-Suffix muss identisch bleiben, IP muss als Literal dupliziert werden" InitialValue="&quot;opc_ua[CALL_METHOD;opc.tcp://192.168.1.12:4840#;/Objects/ToggleFF/FF1_Trigger]&quot;"/>
 		<VarDeclaration Name="FF1_STATE_LOCAL_READ" Type="WSTRING" Comment="Geraet A (Station 11): lokal ueberwachter Flipflop-Zustandsknoten (ACTION=READ, passend zu AX_SUBSCRIBE_1 - Local/READ/SUBSCRIBE), von Geraet B per CLIENT_1_0 remote beschrieben, speist GreenWhiteBackground" InitialValue="&quot;opc_ua[READ;/Objects/ToggleFF/FF1_State,1:s=FF1_State]&quot;"/>
 		<VarDeclaration Name="FF1_STATE_REMOTE_WRITE" Type="WSTRING" Comment="Geraet B (Station 12): aktiver Remote-Write ueber CLIENT_1_0 auf denselben Knoten wie FF1_STATE_LOCAL_READ auf Geraet A (ACTION=WRITE, passend zu CLIENT - Remote/WRITE/CLIENT) - Pfad/Name-Suffix muss identisch bleiben, IP muss als Literal dupliziert werden" InitialValue="&quot;opc_ua[WRITE;opc.tcp://192.168.1.11:4840#;/Objects/ToggleFF/FF1_State,1:s=FF1_State]&quot;"/>
+		<VarDeclaration Name="SR1_SET_LOCAL_METHOD" Type="WSTRING" Comment="Geraet B (Station 12): lokal erzeugte Set-Methode (ACTION=CREATE_METHOD) fuer AX_T_FF_SR.S, von Geraet A per CLIENT_0 remote aufgerufen (Option A: eigene Methode statt String-Parameter)" InitialValue="&quot;opc_ua[CREATE_METHOD;/Objects/SRFlipflop/SR1_Set]&quot;"/>
+		<VarDeclaration Name="SR1_SET_REMOTE_CALL" Type="WSTRING" Comment="Geraet A (Station 11): aktiver Remote-Methodenaufruf ueber CLIENT_0 auf dieselbe Methode wie SR1_SET_LOCAL_METHOD auf Geraet B (ACTION=CALL_METHOD) - Pfad/Name-Suffix muss identisch bleiben, IP muss als Literal dupliziert werden" InitialValue="&quot;opc_ua[CALL_METHOD;opc.tcp://192.168.1.12:4840#;/Objects/SRFlipflop/SR1_Set]&quot;"/>
+		<VarDeclaration Name="SR1_RESET_LOCAL_METHOD" Type="WSTRING" Comment="Geraet B (Station 12): lokal erzeugte Reset-Methode (ACTION=CREATE_METHOD) fuer AX_T_FF_SR.R, von Geraet A per CLIENT_0 remote aufgerufen" InitialValue="&quot;opc_ua[CREATE_METHOD;/Objects/SRFlipflop/SR1_Reset]&quot;"/>
+		<VarDeclaration Name="SR1_RESET_REMOTE_CALL" Type="WSTRING" Comment="Geraet A (Station 11): aktiver Remote-Methodenaufruf ueber CLIENT_0 auf dieselbe Methode wie SR1_RESET_LOCAL_METHOD auf Geraet B (ACTION=CALL_METHOD) - Pfad/Name-Suffix muss identisch bleiben, IP muss als Literal dupliziert werden" InitialValue="&quot;opc_ua[CALL_METHOD;opc.tcp://192.168.1.12:4840#;/Objects/SRFlipflop/SR1_Reset]&quot;"/>
+		<VarDeclaration Name="SR1_TOGGLE_LOCAL_METHOD" Type="WSTRING" Comment="Geraet B (Station 12): lokal erzeugte Toggle-Methode (ACTION=CREATE_METHOD) fuer AX_T_FF_SR.CLK, von Geraet A per CLIENT_0 remote aufgerufen" InitialValue="&quot;opc_ua[CREATE_METHOD;/Objects/SRFlipflop/SR1_Toggle]&quot;"/>
+		<VarDeclaration Name="SR1_TOGGLE_REMOTE_CALL" Type="WSTRING" Comment="Geraet A (Station 11): aktiver Remote-Methodenaufruf ueber CLIENT_0 auf dieselbe Methode wie SR1_TOGGLE_LOCAL_METHOD auf Geraet B (ACTION=CALL_METHOD) - Pfad/Name-Suffix muss identisch bleiben, IP muss als Literal dupliziert werden" InitialValue="&quot;opc_ua[CALL_METHOD;opc.tcp://192.168.1.12:4840#;/Objects/SRFlipflop/SR1_Toggle]&quot;"/>
+		<VarDeclaration Name="SR1_STATE_LOCAL_READ" Type="WSTRING" Comment="Geraet A (Station 11): lokal ueberwachter Flipflop-Zustandsknoten (ACTION=READ, passend zu AX_SUBSCRIBE_1 - Local/READ/SUBSCRIBE), von Geraet B per CLIENT_1_0 remote beschrieben, speist GreenWhiteBackground am Toggle-SoftKey" InitialValue="&quot;opc_ua[READ;/Objects/SRFlipflop/SR1_State,1:s=SR1_State]&quot;"/>
+		<VarDeclaration Name="SR1_STATE_REMOTE_WRITE" Type="WSTRING" Comment="Geraet B (Station 12): aktiver Remote-Write ueber CLIENT_1_0 auf denselben Knoten wie SR1_STATE_LOCAL_READ auf Geraet A (ACTION=WRITE, passend zu CLIENT - Remote/WRITE/CLIENT) - Pfad/Name-Suffix muss identisch bleiben, IP muss als Literal dupliziert werden" InitialValue="&quot;opc_ua[WRITE;opc.tcp://192.168.1.11:4840#;/Objects/SRFlipflop/SR1_State,1:s=SR1_State]&quot;"/>
 	</GlobalConstants>
 	<OriginalSource><![CDATA[PACKAGE VV::const::OPC_UA;
 
@@ -24,6 +32,14 @@ GLOBALCONSTANTS myOpcUaAddresses
 		FF1_TRIGGER_REMOTE_CALL : WSTRING := "opc_ua[CALL_METHOD;opc.tcp://192.168.1.12:4840#;/Objects/ToggleFF/FF1_Trigger]";
 		FF1_STATE_LOCAL_READ : WSTRING := "opc_ua[READ;/Objects/ToggleFF/FF1_State,1:s=FF1_State]";
 		FF1_STATE_REMOTE_WRITE : WSTRING := "opc_ua[WRITE;opc.tcp://192.168.1.11:4840#;/Objects/ToggleFF/FF1_State,1:s=FF1_State]";
+		SR1_SET_LOCAL_METHOD : WSTRING := "opc_ua[CREATE_METHOD;/Objects/SRFlipflop/SR1_Set]";
+		SR1_SET_REMOTE_CALL : WSTRING := "opc_ua[CALL_METHOD;opc.tcp://192.168.1.12:4840#;/Objects/SRFlipflop/SR1_Set]";
+		SR1_RESET_LOCAL_METHOD : WSTRING := "opc_ua[CREATE_METHOD;/Objects/SRFlipflop/SR1_Reset]";
+		SR1_RESET_REMOTE_CALL : WSTRING := "opc_ua[CALL_METHOD;opc.tcp://192.168.1.12:4840#;/Objects/SRFlipflop/SR1_Reset]";
+		SR1_TOGGLE_LOCAL_METHOD : WSTRING := "opc_ua[CREATE_METHOD;/Objects/SRFlipflop/SR1_Toggle]";
+		SR1_TOGGLE_REMOTE_CALL : WSTRING := "opc_ua[CALL_METHOD;opc.tcp://192.168.1.12:4840#;/Objects/SRFlipflop/SR1_Toggle]";
+		SR1_STATE_LOCAL_READ : WSTRING := "opc_ua[READ;/Objects/SRFlipflop/SR1_State,1:s=SR1_State]";
+		SR1_STATE_REMOTE_WRITE : WSTRING := "opc_ua[WRITE;opc.tcp://192.168.1.11:4840#;/Objects/SRFlipflop/SR1_State,1:s=SR1_State]";
 	END_VAR
 END_GLOBALCONSTANTS
 ]]></OriginalSource>
