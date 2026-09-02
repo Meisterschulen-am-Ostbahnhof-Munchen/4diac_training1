@@ -166,6 +166,25 @@ erkennbar machen – genau das haben wir beim Handshake-Pattern mit
 `EVENT_HS_WSTRING` als datentragende Zusatzvariante gemacht, hier
 (bewusst, siehe "Datenlos" unten) bisher nicht.
 
+## Zweite Fundstelle: TokenRing auch in der SoA-Beispielanwendung (Folie 47)
+
+Ergänzung vom 2026-09-02: Beim Nachtragen der bisher fehlenden
+"Message exchange between services"-Dokumentation (siehe
+[`HandshakePattern.md`](../HandshakePattern/HandshakePattern.md),
+Abschnitt "Die Quelle der `push,100`-Notation") zeigte sich, dass
+`TokenRing` auch auf **Folie 47 ("SoA implementation in function
+blocks")** derselben Foliensammlung auftaucht: Der Orchestrator-
+Baustein `CylMES` (Typ `CControlTRAS`) hat dort einen `TokenRing`-
+Adapter (`>>MTXIN`/`MTXOUT>>`) **zusätzlich zu** zwei generischen
+Service-Adaptern (`SREQ1>>`/`SREQ2>>`). Hier dient `TokenRing` nicht
+dem gegenseitigen Ausschluss zweier gleichberechtigter Zylinder (wie
+im `CylH`/`CylV`-Beispiel oben), sondern dem reihum-Ansprechen
+mehrerer nachgeschalteter Service-Teilnehmer – derselbe Adaptertyp,
+zweite, andere Verwendung. Bestätigt zusätzlich unabhängig vom
+INDIN14-Paper, dass `TokenRing` ein durchgängig in Vyatkins Material
+wiederverwendetes generisches Muster ist, nicht nur eine Einzelfall-
+Lösung für das Mutual-Exclusion-Beispiel.
+
 ## Umsetzung in diesem Repository (fertig, ungetestet in 4diac)
 
 - **Adapter-Typ:** `TokenRing` (dataless, EventInputs `RCV`,

@@ -208,6 +208,92 @@ oben) – die eigentliche Verhaltensprüfung passiert nur beim Test in der
 
 ## Erweiterungen
 
+### Die Quelle der `"push,100"`-Notation: Message Exchange zwischen Services (Folie 44–48)
+
+Bisher stand in diesem Dokument nur ein beiläufiger Verweis auf
+`"push,100"`. Das eigentliche Diagramm dazu – **Folie 44 "Message
+exchange between services"** (mit den Wiederholungs-/Build-Varianten
+Folie 45/46, jeweils ein weiterer Ausschnitt des Ablaufs hervorgehoben)
+– war bisher nirgends beschrieben, obwohl es in der PDF sehr
+ausführlich behandelt wird. Nachgetragen:
+
+**Das Beispiel:** Ein Zylinder `CylH` transportiert ein Werkstück
+zwischen Startposition (`WPS`-Sensor) und Endposition. Er besteht aus
+vier unabhängigen, jeweils eigenständig service-fähigen Teilen:
+`CYL.start` (Startpositions-Sensor), `CYL.end` (Endpositions-Sensor),
+`CYL.push` (Push-Ventil) und `CYL.pop` (Pop-/Rückhol-Ventil). Ein
+übergeordneter Controller `CYL` bündelt diese vier zu einem einzigen
+Service für den Orchestrator `MES` ("Manufacturing Execution System");
+`DS` ist der Ziel-Sink, an den das Werkstück am Ende übergeben wird.
+Jeder dieser Teilnehmer (`MES`, `WPS`, `CYL`, `CYL.start`, `CYL.end`,
+`CYL.push`, `CYL.pop`, `DS`) ist eine eigene Lifeline im Message-
+Sequence-Chart (MSC) auf Folie 44.
+
+**Die Nachrichten-Konvention:** Jede Anfrage/Antwort ist ein einzelner
+String (WSTRING), nach einem einfachen, selbstbeschreibenden Schema:
+
+- `REQ,"<value>"` – Anfrage, trägt nur den rohen Parameter (z. B.
+  `REQ,"100"` an `CYL.push`: "fahre auf 100").
+- `RSP,"<name>,<value>"` – Antwort, trägt zusätzlich den Namen des
+  gemeldeten Zustands/Service (z. B. `RSP,"push,100"`: "push-Ventil
+  steht jetzt auf 100"; `RSP,"start,1"`: "Startsensor meldet 1").
+
+Diese `"name,value"`-Formatierung in der Antwort ist genau die
+Notation, die in `EVENT_HS_WSTRING`s Default-Payloads (`"push,100"`,
+weiter unten in diesem Dokument) zitiert, aber bisher nie referenziert
+wurde.
+
+**Der Ablauf (verkürzt, aus dem MSC auf Folie 44/45/46):**
+
+1. Alle Teilnehmer initialisieren (`INIT` → `RSP,"start,1"` /
+   `RSP,"end,0"` / `RSP,"WPS,0"` usw.).
+2. *Workpiece arrived:* `WPS` meldet `RSP,"WPS,1"` an `MES`; `MES`
+   schickt `REQ,"trip"` an `CYL` ("mach die Rundfahrt"); `CYL` schickt
+   `REQ,"100"` an `CYL.push`, bekommt `RSP,"push,100"` zurück, meldet
+   `RSP,"CYL,STARTED"` an `MES`.
+3. *Pusher reached end position:* `CYL.end` meldet `RSP,"end,1"`; `CYL`
+   meldet `RSP,"CYL, END POS"` an `MES`, schickt `REQ,"drop"` an `DS`
+   (bekommt `RSP,"ack"`), fährt dann `CYL.push` zurück auf `0`
+   (`REQ,"0"` → `RSP,"push,0"`) und `CYL.pop` auf `100`
+   (`REQ,"100"` → `RSP,"pop,100"`); `CYL.end` fällt zurück auf
+   `RSP,"end,0"`.
+4. *Pusher reached start position:* `CYL.start` meldet `RSP,"start,1"`;
+   `CYL` meldet `RSP,"CYL, START POS"`; `CYL.pop` wird auf `0`
+   zurückgefahren (`REQ,"0"` → `RSP,"pop,0"`).
+5. *Service completed:* `CYL` meldet `RSP,"CYL, Trip Complete"` an
+   `MES`.
+
+**Verbindung zur SoA-Implementierung (Folie 47/48):** Dieselbe
+`CylH`-Anwendung zeigt Folie 47 ("SoA implementation in function
+blocks") als konkrete Function-Block-Schaltung: Der Orchestrator-
+Baustein `CylMES` (Typ `CControlTRAS`) hat einen `TokenRing`-Adapter
+(`>>MTXIN`/`MTXOUT>>`) **und** zwei generische Service-Adapter
+(`SREQ1>>`/`SREQ2>>`) – der Beleg dafür, dass `TokenRing` in diesem
+Beispiel nicht für gegenseitigen Ausschluss zwischen zwei Zylindern
+verwendet wird (wie im `CylH`/`CylV`-Mutual-Exclusion-Beispiel, siehe
+[`TokenRingPattern.md`](../TokenRingPattern/TokenRingPattern.md)),
+sondern zum reihum-Ansprechen mehrerer Service-Teilnehmer (`SREQ1`,
+`SREQ2`) – derselbe Adaptertyp, zweite, andersartige Anwendung.
+
+Folie 48 ("Implementation of Adapters") zeigt daneben die generische
+**Adapter-Typ-Deklaration** des `"service"`-Adapters selbst: EventInputs
+`REQ`/`RSP`, EventOutputs `CNF`/`IND`, dazu `REQD`/`RSPD` (WSTRING-Inputs)
+und `CNFD`/`INDD` (WSTRING-Outputs) – exakt die vier Events und vier
+Datenpins, die `EVENT_HS_WSTRING` (unten) 1:1 übernimmt.
+
+**Offene Diskrepanz (noch nicht live gegen 4diac geprüft):** Die
+Bildunterschrift auf Folie 48 lautet *"When used as Plug the adapter's
+instance is mirrored"* – wörtlich genommen widerspricht das der in
+Abschnitt "Socket vs. Plug" oben **live gegen den echten 4diac-Compiler
+verifizierten** Regel dieses Repos ("Plug behält die deklarierte
+Richtung bei, Socket spiegelt"). Möglich ist, dass die Folie aus einer
+anderen Werkzeugkette (EAE/nxtSTUDIO) stammt und dort Plug/Socket
+umgekehrt implementiert sind, oder dass "mirrored" sich auf etwas
+anderes bezieht als die Socket/Plug-Richtungsregel (z. B. nur auf die
+Instanz-Grafik/Spiegelbild-Darstellung im Editor). Bis das jemand mit
+Zugriff auf beide Werkzeuge klärt, gilt für dieses Repo weiterhin die
+selbst verifizierte Regel oben – nicht die Foliennotiz.
+
 ### Datentragende Variante: `EVENT_HS_WSTRING`
 
 Ablageort: `.lib/adapter-3.0.0/typelib/types/bidirectional/Handshake/EVENT_HS_WSTRING.adp`
