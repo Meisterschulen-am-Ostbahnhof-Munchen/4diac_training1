@@ -149,7 +149,7 @@
 		<Attribute Name="Color" Type="STRING" Value="59,215,47"/>
 		<Resource Name="EMB_RES_SERVER" Type="iec61499::system::EMB_RES" x="0" y="0">
 			<FBNetwork>
-				<FB Name="SERVER_BUTTON_GREEN" Type="iec61499::net::SERVER_1" x="2700" y="700">
+				<FB Name="SERVER_BUTTON_GREEN" Type="iec61499::net::SERVER_1" x="2700" y="800">
 					<Parameter Name="QI" Value="TRUE"/>
 					<Parameter Name="ID" Value="VV::const::ports::myPorts::PORT_A0"/>
 				</FB>
@@ -157,7 +157,7 @@
 					<Parameter Name="QI" Value="TRUE"/>
 					<Parameter Name="ID" Value="VV::const::ports::myPorts::PORT_A2"/>
 				</FB>
-				<FB Name="SERVER_BUTTON_YELLOW" Type="iec61499::net::SERVER_1" x="2700" y="2300">
+				<FB Name="SERVER_BUTTON_YELLOW" Type="iec61499::net::SERVER_1" x="2700" y="2400">
 					<Parameter Name="QI" Value="TRUE"/>
 					<Parameter Name="ID" Value="VV::const::ports::myPorts::PORT_A1"/>
 				</FB>
@@ -170,24 +170,24 @@
 				</FB>
 				<EventConnections>
 					<Connection Source="START.COLD" Destination="E_TRIG.REQ" dx1="93.33"/>
-					<Connection Source="App_CLIENT_SERVER.E_CTU_LED_BLUE_5HZ.CUO" Destination="SERVER_BUTTON_BLUE.RSP" dx1="306.67" dx2="626.67" dy="940"/>
+					<Connection Source="App_CLIENT_SERVER.E_CTU_LED_BLUE_5HZ.CUO" Destination="SERVER_BUTTON_BLUE.RSP" dx1="306.67" dx2="626.67" dy="1033.33"/>
 					<Connection Source="App_CLIENT_SERVER.E_CTU_LED_RED_5HZ.CUO" Destination="SERVER_BUTTON_RED.RSP" dx1="260" dx2="526.67" dy="926.67"/>
 					<Connection Source="App_CLIENT_SERVER.E_CTU_LED_YELLOW_5HZ.CUO" Destination="SERVER_BUTTON_YELLOW.RSP" dx1="233.33" dx2="453.33" dy="873.33"/>
 					<Connection Source="App_CLIENT_SERVER.E_CTU_LED_GREEN_5HZ.CUO" Destination="SERVER_BUTTON_GREEN.RSP" dx1="166.67" dx2="2573.33" dy="1020"/>
-					<Connection Source="SERVER_BUTTON_BLUE.IND" Destination="App_CLIENT_SERVER.LED_BLUE_5HZ.REQ" dx1="1273.33"/>
+					<Connection Source="SERVER_BUTTON_BLUE.IND" Destination="App_CLIENT_SERVER.LED_BLUE_5HZ.REQ"/>
 					<Connection Source="SERVER_BUTTON_RED.IND" Destination="App_CLIENT_SERVER.LED_RED_5HZ.REQ"/>
-					<Connection Source="SERVER_BUTTON_YELLOW.IND" Destination="App_CLIENT_SERVER.LED_YELLOW_5HZ.REQ" dx1="1253.33"/>
-					<Connection Source="SERVER_BUTTON_GREEN.IND" Destination="App_CLIENT_SERVER.LED_GREEN_5HZ.REQ" dx1="1266.67"/>
+					<Connection Source="SERVER_BUTTON_YELLOW.IND" Destination="App_CLIENT_SERVER.LED_YELLOW_5HZ.REQ"/>
+					<Connection Source="SERVER_BUTTON_GREEN.IND" Destination="App_CLIENT_SERVER.LED_GREEN_5HZ.REQ"/>
 				</EventConnections>
 				<DataConnections>
 					<Connection Source="App_CLIENT_SERVER.E_CTU_LED_GREEN_5HZ.CV" Destination="SERVER_BUTTON_GREEN.SD_1" dx1="66.67" dx2="633.33" dy="493.33"/>
 					<Connection Source="App_CLIENT_SERVER.E_CTU_LED_YELLOW_5HZ.CV" Destination="SERVER_BUTTON_YELLOW.SD_1" dx1="66.67" dx2="206.67" dy="400"/>
 					<Connection Source="App_CLIENT_SERVER.E_CTU_LED_RED_5HZ.CV" Destination="SERVER_BUTTON_RED.SD_1" dx1="66.67" dx2="280" dy="466.67"/>
-					<Connection Source="App_CLIENT_SERVER.E_CTU_LED_BLUE_5HZ.CV" Destination="SERVER_BUTTON_BLUE.SD_1" dx1="66.67" dx2="253.33" dy="446.67"/>
-					<Connection Source="SERVER_BUTTON_BLUE.RD_1" Destination="App_CLIENT_SERVER.LED_BLUE_5HZ.OUT" dx1="1273.33"/>
+					<Connection Source="App_CLIENT_SERVER.E_CTU_LED_BLUE_5HZ.CV" Destination="SERVER_BUTTON_BLUE.SD_1" dx1="66.67" dx2="253.33" dy="533.33"/>
+					<Connection Source="SERVER_BUTTON_BLUE.RD_1" Destination="App_CLIENT_SERVER.LED_BLUE_5HZ.OUT"/>
 					<Connection Source="SERVER_BUTTON_RED.RD_1" Destination="App_CLIENT_SERVER.LED_RED_5HZ.OUT"/>
-					<Connection Source="SERVER_BUTTON_YELLOW.RD_1" Destination="App_CLIENT_SERVER.LED_YELLOW_5HZ.OUT" dx1="1253.33"/>
-					<Connection Source="SERVER_BUTTON_GREEN.RD_1" Destination="App_CLIENT_SERVER.LED_GREEN_5HZ.OUT" dx1="1266.67"/>
+					<Connection Source="SERVER_BUTTON_YELLOW.RD_1" Destination="App_CLIENT_SERVER.LED_YELLOW_5HZ.OUT"/>
+					<Connection Source="SERVER_BUTTON_GREEN.RD_1" Destination="App_CLIENT_SERVER.LED_GREEN_5HZ.OUT"/>
 				</DataConnections>
 			</FBNetwork>
 		</Resource>
