@@ -6,7 +6,7 @@
 	</VersionInfo>
 	<CompilerInfo packageName="subapp::Training_03_OPC_UA_RES">
 		<Import declaration="logiBUS::io::DQ::logiBUS_DO::Output_Q1"/>
-		<Import declaration="VV::const::OPC_UA::myOpcUaAddresses::FF1_TRIGGER_LOCAL_READ"/>
+		<Import declaration="VV::const::OPC_UA::myOpcUaAddresses::FF1_TRIGGER_LOCAL_METHOD"/>
 		<Import declaration="VV::const::OPC_UA::myOpcUaAddresses::FF1_STATE_REMOTE_WRITE"/>
 	</CompilerInfo>
 	<SubAppInterfaceList>
@@ -14,7 +14,7 @@
 	<SubAppNetwork>
 		<SubApp Name="Uebung_010d_PC_B_OPC" Type="MyLib::sys::Uebung_010d_PC_B_OPC" x="0" y="0">
 			<Parameter Name="Output" Value="Output_Q1"/>
-			<Parameter Name="ID_TRIGGER_READ" Value="FF1_TRIGGER_LOCAL_READ"/>
+			<Parameter Name="ID_TRIGGER_READ" Value="FF1_TRIGGER_LOCAL_METHOD"/>
 			<Parameter Name="ID_STATE_WRITE" Value="FF1_STATE_REMOTE_WRITE"/>
 		</SubApp>
 	</SubAppNetwork>

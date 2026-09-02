@@ -6,7 +6,7 @@
 	</VersionInfo>
 	<CompilerInfo packageName="subapp::Training_03_OPC_UA_RES">
 		<Import declaration="Uebungen::const::UT::DefaultPool::SoftKey_F1"/>
-		<Import declaration="VV::const::OPC_UA::myOpcUaAddresses::FF1_TRIGGER_REMOTE_WRITE"/>
+		<Import declaration="VV::const::OPC_UA::myOpcUaAddresses::FF1_TRIGGER_REMOTE_CALL"/>
 		<Import declaration="VV::const::OPC_UA::myOpcUaAddresses::FF1_STATE_LOCAL_READ"/>
 	</CompilerInfo>
 	<SubAppInterfaceList>
@@ -14,7 +14,7 @@
 	<SubAppNetwork>
 		<SubApp Name="Uebung_010d_PC_A_OPC" Type="MyLib::sys::Uebung_010d_PC_A_OPC" x="0" y="0">
 			<Parameter Name="u16ObjId" Value="SoftKey_F1"/>
-			<Parameter Name="ID_TRIGGER_WRITE" Value="FF1_TRIGGER_REMOTE_WRITE"/>
+			<Parameter Name="ID_TRIGGER_WRITE" Value="FF1_TRIGGER_REMOTE_CALL"/>
 			<Parameter Name="ID_STATE_READ" Value="FF1_STATE_LOCAL_READ"/>
 		</SubApp>
 	</SubAppNetwork>
