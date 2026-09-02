@@ -166,30 +166,34 @@ function drawScopes() {
       ctx.stroke()
     }
 
-    const visible = scopeBuffers[i].filter((s) => s.t >= now - windowMs)
+const visible = scopeBuffers[i].filter((s) => s.t >= now - windowMs)
 
-    /* Auto-Skalierung: der kalibrierte Wert hat keinen a priori bekannten Bereich
-     * (haengt von der am VT durchgefuehrten Kalibrierung ab) - daher min/max des
-     * sichtbaren Fensters selbst bestimmen, statt wie bei AI's Prozentwert eine
-     * feste 0-100 Skala anzunehmen. Kleines Padding, damit die Kurve nicht am
-     * Rand klebt; ein einzelner/konstanter Wert bekommt eine minimale Spannweite,
-     * damit durch 0 division vermieden wird. */
-    let lo = 0
-    let hi = 1
-    if (visible.length > 0) {
-      lo = Math.min(...visible.map((s) => s.v))
-      hi = Math.max(...visible.map((s) => s.v))
-      if (hi - lo < 1e-6) {
-        lo -= 0.5
-        hi += 0.5
-      } else {
-        const pad = (hi - lo) * 0.1
-        lo -= pad
-        hi += pad
-      }
-    }
-    scopeVisibleRange.value[i] = [lo, hi]
-
+/* Auto-Skalierung: der kalibrierte Wert hat keinen a priori bekannten Bereich
+ * (haengt von der am VT durchgefuehrten Kalibrierung ab) - daher min/max des
+ * sichtbaren Fensters selbst bestimmen, statt wie bei AI's Prozentwert eine
+ * feste 0-100 Skala anzunehmen. Kleines Padding, damit die Kurve nicht am
+ * Rand klebt; ein einzelner/konstanter Wert bekommt eine minimale Spannweite,
+ * damit durch 0 division vermieden wird. */
+let lo = 0
+let hi = 1
+if (visible.length > 0) {
+  lo = visible[0].v
+  hi = visible[0].v
+  for (let j = 1; j < visible.length; j++) {
+    const v = visible[j].v
+    if (v < lo) lo = v
+    if (v > hi) hi = v
+  }
+  if (hi - lo < 1e-6) {
+    lo -= 0.5
+    hi += 0.5
+  } else {
+    const pad = (hi - lo) * 0.1
+    lo -= pad
+    hi += pad
+  }
+}
+scopeVisibleRange.value[i] = [lo, hi]
     if (visible.length > 0) {
       ctx.strokeStyle = '#4caf50'
       ctx.lineWidth = 1.5
@@ -228,6 +232,18 @@ function handleLost() {
   connected.value = false
   status.value = 'Fehler: Verbindung verloren'
   raw.value.fill(0)
+  cal.value.fill(0)
+  outputs.value.fill(false)
+  coState.value.fill(false)
+  csState.value.fill(false)
+  tick.value = '–'
+  if (scopeRafId !== null) {
+    cancelAnimationFrame(scopeRafId)
+    scopeRafId = null
+  }
+  session = null
+  client = null
+}
   cal.value.fill(0)
   outputs.value.fill(false)
   coState.value.fill(false)
