@@ -21,6 +21,10 @@
 				<With Var="QO"/>
 				<With Var="STATUS"/>
 			</Event>
+			<Event Name="IND" Type="Event" Comment="New data available">
+				<With Var="QO"/>
+				<With Var="STATUS"/>
+			</Event>
 		</EventOutputs>
 		<InputVars>
 			<VarDeclaration Name="QI" Type="BOOL"/>
@@ -45,12 +49,13 @@
 			<Connection Source="SUBSCRIBE_1.INITO" Destination="INITO" dx1="2686.67"/>
 			<Connection Source="SUBSCRIBE_1.IND" Destination="E_D_FF.CLK" dx1="673.33"/>
 			<Connection Source="E_D_FF.EO" Destination="OUT.E1"/>
+			<Connection Source="SUBSCRIBE_1.IND" Destination="IND"/>
 		</EventConnections>
 		<DataConnections>
 			<Connection Source="QI" Destination="SUBSCRIBE_1.QI" dx1="1060"/>
 			<Connection Source="ID" Destination="SUBSCRIBE_1.ID" dx1="800"/>
-			<Connection Source="SUBSCRIBE_1.QO" Destination="QO" dx1="2853.33"/>
-			<Connection Source="SUBSCRIBE_1.STATUS" Destination="STATUS" dx1="3086.67"/>
+			<Connection Source="SUBSCRIBE_1.QO" Destination="QO"/>
+			<Connection Source="SUBSCRIBE_1.STATUS" Destination="STATUS"/>
 			<Connection Source="SUBSCRIBE_1.RD_1" Destination="E_D_FF.D" dx1="506.67"/>
 			<Connection Source="E_D_FF.Q" Destination="OUT.D1"/>
 		</DataConnections>
