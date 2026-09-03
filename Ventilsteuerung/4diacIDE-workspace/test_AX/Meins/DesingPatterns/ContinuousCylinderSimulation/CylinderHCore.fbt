@@ -8,7 +8,7 @@
 	</VersionInfo>
 	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.1" Author="Franz Höpfinger" Date="2026-09-03" Remarks="PR #160 review feedback: INIT/INITO must be Type=EInit (were Type=Event) - fixed; renamed the init-confirm event from INTO to INITO to match this repo's convention (Copilot review comment). Also restored the E_CYCLE Import declaration, which had gone empty.">
 	</VersionInfo>
-	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.2" Author="Franz Höpfinger" Date="2026-09-03" Remarks="PR #160 review feedback (coderabbitai): a repeated INIT after the cylinder had already moved forwarded Model.INITO to Tick.START/INITO without first updating Filter, so POSITION still showed the stale pre-reset value instead of the freshly-reset 0.0. Fixed by also wiring Model.INITO -> Filter.REQ, declared before the other two INITO fan-out connections so Filter.OUT/POSITION update first">
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.2" Author="Franz Höpfinger" Date="2026-09-03" Remarks="PR #160 review feedback (coderabbitai): a repeated INIT, sent after the cylinder had already moved, forwarded Model.INITO to Tick.START/INITO without first updating Filter, so POSITION still showed the stale pre-reset value instead of the freshly-reset 0.0. Fixed by also wiring Model.INITO -> Filter.REQ, declared before the other two INITO fan-out connections so Filter.OUT/POSITION update first">
 	</VersionInfo>
 	<CompilerInfo packageName="Meins::DesingPatterns::ContinuousCylinderSimulation">
 		<Import declaration="iec61499::events::E_CYCLE"/>
