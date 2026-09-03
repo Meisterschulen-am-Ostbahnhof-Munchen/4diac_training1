@@ -5,77 +5,19 @@
 	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2026-09-02" Remarks="initial API and implementation and/or initial documentation">
 	</VersionInfo>
 	<CompilerInfo packageName="Uebungen">
-		<Import declaration="isobus::UT::io::Softkey::SoftKeyActivationCode::SK_RELEASED"/>
 		<Import declaration="Uebungen::const::UT::DefaultPool::SoftKey_F1"/>
 		<Import declaration="Uebungen::const::UT::DefaultPool::SoftKey_F2"/>
 		<Import declaration="Uebungen::const::UT::DefaultPool::SoftKey_F3"/>
-		<Import declaration="logiBUS::io::DQ::logiBUS_DO"/>
-		<Import declaration="logiBUS::io::DQ::logiBUS_DO_S"/>
+		<Import declaration="logiBUS::io::DQ::logiBUS_DO::Output_Q1"/>
 	</CompilerInfo>
 	<SubAppInterfaceList>
 	</SubAppInterfaceList>
 	<SubAppNetwork>
-		<SubApp Name="Uebung_10e2_sub_AX" x="-4600" y="-500">
-			<SubAppInterfaceList>
-				<InputVars>
-					<VarDeclaration Name="u16ObjId_SET" Type="UINT" Comment="Object ID SET SoftKey" InitialValue="SoftKey_F1"/>
-					<VarDeclaration Name="u16ObjId_RESET" Type="UINT" Comment="Object ID RESET SoftKey" InitialValue="SoftKey_F2"/>
-					<VarDeclaration Name="u16ObjId_TOGGLE" Type="UINT" Comment="Object ID TOGGLE SoftKey (auch fuer GreenWhiteBackground)" InitialValue="SoftKey_F3"/>
-					<VarDeclaration Name="Output" Type="logiBUS::io::DQ::logiBUS_DO_S" Comment="Identify the Output Output_Q1..Q8" InitialValue="logiBUS_DO::Output_Q1"/>
-				</InputVars>
-			</SubAppInterfaceList>
-			<SubAppNetwork>
-				<FB Name="SoftKey_SET" Type="isobus::UT::io::Softkey::Softkey_IE" x="100" y="-800">
-					<Parameter Name="QI" Value="TRUE"/>
-					<Parameter Name="InputEvent" Value="SK_RELEASED"/>
-				</FB>
-				<FB Name="SoftKey_RESET" Type="isobus::UT::io::Softkey::Softkey_IE" x="100" y="100">
-					<Parameter Name="QI" Value="TRUE"/>
-					<Parameter Name="InputEvent" Value="SK_RELEASED"/>
-				</FB>
-				<FB Name="SoftKey_TOGGLE" Type="isobus::UT::io::Softkey::Softkey_IE" x="100" y="1200">
-					<Parameter Name="QI" Value="TRUE"/>
-					<Parameter Name="InputEvent" Value="SK_RELEASED"/>
-				</FB>
-				<FB Name="AX_T_FF_SR" Type="adapter::events::unidirectional::AX_T_FF_SR" x="1600" y="300">
-				</FB>
-				<FB Name="AX_SPLIT_2" Type="adapter::events::unidirectional::AX_SPLIT_2" x="2800" y="600">
-				</FB>
-				<FB Name="DigitalOutput_Q1" Type="logiBUS::io::DQ::logiBUS_QXA" x="4000" y="-400">
-					<Parameter Name="QI" Value="TRUE"/>
-				</FB>
-				<SubApp Name="GreenWhiteBackground_AX" Type="MyLib::sys::GreenWhiteBackground1_AX" x="4000" y="1500">
-				</SubApp>
-				<EventConnections>
-					<Connection Source="SoftKey_SET.IND" Destination="AX_T_FF_SR.S" dx1="533.33"/>
-					<Connection Source="SoftKey_RESET.IND" Destination="AX_T_FF_SR.R" dx1="373.33"/>
-					<Connection Source="SoftKey_TOGGLE.IND" Destination="AX_T_FF_SR.CLK" dx1="373.33"/>
-				</EventConnections>
-				<DataConnections>
-					<Connection Source="u16ObjId_SET" Destination="SoftKey_SET.u16ObjId" dx1="2946.67">
-						<Attribute Name="Visible" Value="false"/>
-					</Connection>
-					<Connection Source="u16ObjId_RESET" Destination="SoftKey_RESET.u16ObjId" dx1="2946.67">
-						<Attribute Name="Visible" Value="false"/>
-					</Connection>
-					<Connection Source="u16ObjId_TOGGLE" Destination="SoftKey_TOGGLE.u16ObjId" dx1="2946.67">
-						<Attribute Name="Visible" Value="false"/>
-					</Connection>
-					<Connection Source="u16ObjId_TOGGLE" Destination="GreenWhiteBackground_AX.u16ObjId" dx1="4393.33">
-						<Attribute Name="Visible" Value="false"/>
-					</Connection>
-					<Connection Source="Output" Destination="DigitalOutput_Q1.Output" dx1="4646.67">
-						<Attribute Name="Visible" Value="false"/>
-					</Connection>
-				</DataConnections>
-				<AdapterConnections>
-					<Connection Source="AX_T_FF_SR.Q" Destination="AX_SPLIT_2.IN" dx1="580"/>
-					<Connection Source="AX_SPLIT_2.OUT1" Destination="DigitalOutput_Q1.OUT" dx1="366.67"/>
-					<Connection Source="AX_SPLIT_2.OUT2" Destination="GreenWhiteBackground_AX.DI1" dx1="488.24"/>
-				</AdapterConnections>
-			</SubAppNetwork>
-			<Attribute Name="width" Type="LREAL" Value="200"/>
-			<Attribute Name="height" Type="LREAL" Value="100"/>
+		<SubApp Name="Uebung_010e2_sub_AX" Type="Uebungen::Uebung_010e2_sub_AX" x="-4600" y="-500">
+			<Parameter Name="u16ObjId_SET" Value="SoftKey_F1" Comment="Object ID SET SoftKey"/>
+			<Parameter Name="u16ObjId_RESET" Value="SoftKey_F2" Comment="Object ID RESET SoftKey"/>
+			<Parameter Name="u16ObjId_TOGGLE" Value="SoftKey_F3" Comment="Object ID TOGGLE SoftKey (auch fuer GreenWhiteBackground)"/>
+			<Parameter Name="Output" Value="Output_Q1" Comment="Identify the Output Output_Q1..Q8"/>
 		</SubApp>
 	</SubAppNetwork>
 </SubAppType>
