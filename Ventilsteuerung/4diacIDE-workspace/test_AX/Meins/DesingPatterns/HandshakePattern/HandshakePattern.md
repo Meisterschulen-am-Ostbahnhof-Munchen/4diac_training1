@@ -308,6 +308,64 @@ Instanz-Grafik/Spiegelbild-Darstellung im Editor). Bis das jemand mit
 Zugriff auf beide Werkzeuge klärt, gilt für dieses Repo weiterhin die
 selbst verifizierte Regel oben – nicht die Foliennotiz.
 
+### Das konkrete Beispiel: `MessageExchangeDemo` (Folie 47, fertig, ungetestet in 4diac)
+
+Vollständige Umsetzung des `CylH`-Beispiels aus "SoA implementation in
+function blocks" (Folie 47) als vier zusammenspielende Bausteine, alle
+in diesem Ordner:
+
+- **`const/MessageExchangeConst.gcf`** – alle 18 auf Folie 42–46
+  vorkommenden Nachrichtenwerte als benannte `WSTRING`-Konstanten
+  (`REQ_TRIP`, `REQ_EXTEND`="100", `REQ_RETRACT`="0", `REQ_DROP`,
+  `RSP_WPS_ABSENT`/`ARRIVED`, `RSP_START_TRIGGERED`,
+  `RSP_END_IDLE`/`TRIGGERED`, `RSP_PUSH_EXTENDED`/`RETRACTED`,
+  `RSP_POP_EXTENDED`/`RETRACTED`,
+  `RSP_CYL_STARTED`/`END_POS`/`START_POS`/`TRIP_COMPLETE`, `RSP_ACK`).
+- **`WorkpieceSensor.fbt`** (`WPSensor`/`a1WPS1`) – Plug `ACTIVATE`
+  (`EVENT_HS_ACK_WSTRING`). Auf `DETECT` (manuell in FORTE feuerbar)
+  sendet es `REQ` mit `REQ_TRIP`; meldet `DONE`, sobald das `CNF`
+  zurückkommt. Vereint bewusst die beiden MSC-Lifelines `WPS` und
+  `MES` in einem Baustein, genau wie auf der Folie.
+- **`CylinderOrchestrator.fbt`** (`CylMES`/`CControlTRAS`) – Socket
+  `SRSP` (`EVENT_HS_ACK_WSTRING`, von `WorkpieceSensor`), Plug `SREQ1`
+  (volles `EVENT_HS_WSTRING`, zu `CylinderService` – braucht die
+  Zwischenmeldung), Plug `SREQ2` (`EVENT_HS_ACK_WSTRING`, zu
+  `DropSinkService`). Reagiert auf `SREQ1.IND` ("Endposition erreicht")
+  mit einer `SREQ2.REQ` (Drop anfordern) und erst nach deren `CNF` mit
+  einer `SREQ1.RSP` ("darfst jetzt einfahren").
+- **`CylinderService.fbt`** (`SCylH`/`CylHServ`) – Socket `SRSP`
+  (volles `EVENT_HS_WSTRING`). Simulierte Sensor-Events `AT_END`/
+  `AT_START` (manuell feuerbar) statt echter Hardware, analog zu
+  `EventDrivenCylinder.fbt`. Feuert `IND` bei `RSP_CYL_STARTED` und bei
+  `RSP_CYL_END_POS` – **wartet dort auf `RSP` vom Orchestrator**, bevor
+  es einfährt (der einzige echte Synchronisationspunkt im Beispiel:
+  der Zylinder darf erst zurückfahren, wenn der Drop bestätigt ist).
+  Schließt mit `CNF`=`RSP_CYL_TRIP_COMPLETE` ab.
+- **`DropSinkService.fbt`** (`DSServ`) – Socket `SRSP`
+  (`EVENT_HS_ACK_WSTRING`). Jede `REQ` wird unbedingt mit
+  `CNF`=`RSP_ACK` bestätigt.
+- **`MessageExchangeDemo.sub`** – koppelt alle vier über drei
+  `AdapterConnections` (`WorkpieceSensor.ACTIVATE→Orchestrator.SRSP`,
+  `Orchestrator.SREQ1→Cylinder.SRSP`, `Orchestrator.SREQ2→Sink.SRSP`),
+  reicht `DETECT`/`AT_END`/`AT_START` zum manuellen Durchsteppen des
+  Ablaufs sowie `WPS_TripResult`/`WPS_TripCount`/`DS_LastReqPayload`/
+  `DS_ReqCount` zur Beobachtung nach außen durch.
+
+**Bewusst weggelassen gegenüber der Folie:** Der `TokenRing`-Adapter
+(`MTXIN`/`MTXOUT`) für die Mehr-Controller-Verriegelung und der
+konstant-`TRUE`-`Enable`/`Permit`-Adapter (`CONST1`). Diese Demo hat
+nur einen `CylinderOrchestrator`, also nichts, wogegen zu
+verriegeln wäre, und keinen Grund, einen immer-`TRUE`-Permit extra zu
+verdrahten. `TokenRing` selbst ist bereits separat umgesetzt, siehe
+[`TokenRingPattern.md`](../TokenRingPattern/TokenRingPattern.md).
+
+**Zeigt alle drei Adapter-Reduktionsstufen der `EVENT_HS`-Familie in
+einem realistischen Zusammenhang:** volles `EVENT_HS_WSTRING` dort, wo
+eine echte Zwischenmeldung nötig ist (`SREQ1`), reduziertes
+`EVENT_HS_ACK_WSTRING` dort, wo nur Anfrage+Bestätigung gebraucht
+werden (`SRSP`, `SREQ2`) – genau die Motivation hinter den vier
+reduzierten Varianten unten in "Weitere Handshake-Varianten".
+
 ### Datentragende Variante: `EVENT_HS_WSTRING`
 
 Ablageort: `.lib/adapter-3.0.0/typelib/types/bidirectional/Handshake/EVENT_HS_WSTRING.adp`
@@ -361,6 +419,34 @@ zusätzlich als eigene `InputVars` (Defaults `"push,100"`/`"status,ok"`),
 sodass sie beim Instanziieren per `Parameter` überschrieben werden
 können, statt nur an den internen Requester/Responder-Defaults zu
 hängen.
+
+### Weitere Handshake-Varianten: reduzierte Event-Sets
+
+Vier zusätzliche Adaptertypen, alle im selben Ordner wie `EVENT_HS`/
+`EVENT_HS_WSTRING`, die das volle REQ/CNF/IND/RSP-Vokabular gezielt
+reduzieren – nützlich, wenn eine Beziehung nachweislich nie die volle
+Vier-Event-Choreografie braucht (siehe `MessageExchangeDemo` oben für
+ein Beispiel, das drei dieser Varianten nebeneinander einsetzt):
+
+- **`EVENT_HS_UNI`** – nur `REQ` (datenlos), keinerlei Antwort. Reines
+  Fire-and-Forget, **kein echter Handshake** (der Socket kann weder
+  bestätigen noch ablehnen, der Plug erfährt nie, ob die Anfrage
+  überhaupt ankam) – bewusst so dokumentiert, nicht versehentlich als
+  Ersatz für `EVENT_HS` gedacht.
+- **`EVENT_HS_UNI_WSTRING`** – wie `EVENT_HS_UNI`, plus `REQD`-Payload
+  (`WSTRING`).
+- **`EVENT_HS_ACK`** – nur `REQ`/`CNF` (datenlos), kein `IND`/`RSP`.
+  Anders als `EVENT_HS_UNI` ein **echter** (wenn auch einseitiger)
+  Handshake: jede `REQ` bekommt eine `CNF`. Passend, wenn der Socket
+  nie unaufgefordert etwas melden muss.
+- **`EVENT_HS_ACK_WSTRING`** – wie `EVENT_HS_ACK`, plus `REQD`/`CNFD`-
+  Payload (`WSTRING`). Wird in `MessageExchangeDemo` für `SRSP` und
+  `SREQ2` verwendet (reine Anfrage/Bestätigung, keine
+  Zwischenmeldung nötig).
+
+Alle vier folgen demselben Socket/Plug-Rollenschema wie `EVENT_HS`
+(Plug behält die deklarierte Richtung, Socket spiegelt) und sind
+gegen die XSD validiert.
 
 ## Weitere Design Patterns aus Modul 6 (zur späteren Umsetzung)
 

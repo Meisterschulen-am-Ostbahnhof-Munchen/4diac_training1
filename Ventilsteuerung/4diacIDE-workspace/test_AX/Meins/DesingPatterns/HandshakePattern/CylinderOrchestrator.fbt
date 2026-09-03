@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<FBType Name="CylinderOrchestrator" Comment="Message Exchange example (slide 47): CylMES / CControlTRAS - orchestrates the round trip between the cylinder and the drop sink">
+	<Identification Standard="61499-2" Description="Copyright (c) 2026 Meisterschulen am Ostbahnhof &#10; &#10;This program and the accompanying materials are made &#10;available under the terms of the Eclipse Public License 2.0 &#10;which is available at https://www.eclipse.org/legal/epl-2.0/ &#10; &#10;SPDX-License-Identifier: EPL-2.0">
+	</Identification>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2026-09-03" Remarks="SoA implementation in function blocks (IEC 61499 primer course, Module 6, Valeriy Vyatkin, slide 47), CylMES/CControlTRAS role: SRSP (from WorkpieceSensor) and SREQ2 (to DropSinkService) use EVENT_HS_ACK_WSTRING (REQ/CNF only), SREQ1 (to CylinderService) uses full EVENT_HS_WSTRING since it must react to the mid-trip IND. Deliberately omits the slide's TokenRing (MTXIN/MTXOUT) interlock and the constant-TRUE Enable/Permit adapter: this demo has only one controller, so there is nothing to interlock against - see HandshakePattern.md for the full rationale">
+	</VersionInfo>
+	<CompilerInfo packageName="Meins::DesingPatterns::HandshakePattern">
+		<Import declaration="Meins::DesingPatterns::HandshakePattern::const::MessageExchangeConst"/>
+	</CompilerInfo>
+	<InterfaceList>
+		<EventInputs>
+			<Event Name="INIT" Type="EInit" Comment="Initialization Request">
+				<With Var="QI"/>
+			</Event>
+		</EventInputs>
+		<EventOutputs>
+			<Event Name="INITO" Type="EInit" Comment="Initialization Confirm">
+				<With Var="QO"/>
+			</Event>
+		</EventOutputs>
+		<InputVars>
+			<VarDeclaration Name="QI" Type="BOOL" Comment="Input event qualifier"/>
+		</InputVars>
+		<OutputVars>
+			<VarDeclaration Name="QO" Type="BOOL" Comment="Output event qualifier"/>
+		</OutputVars>
+		<Sockets>
+			<AdapterDeclaration Name="SRSP" Type="adapter::types::bidirectional::Handshake::EVENT_HS_ACK_WSTRING" Comment="Service socket towards WorkpieceSensor: receives the trip REQ (+REQD), answers with CNF (+CNFD) once the whole trip is done"/>
+		</Sockets>
+		<Plugs>
+			<AdapterDeclaration Name="SREQ1" Type="adapter::types::bidirectional::Handshake::EVENT_HS_WSTRING" Comment="Service plug towards CylinderService: full REQ/CNF/IND/RSP - reacts to the mid-trip IND (reached end position)"/>
+			<AdapterDeclaration Name="SREQ2" Type="adapter::types::bidirectional::Handshake::EVENT_HS_ACK_WSTRING" Comment="Service plug towards DropSinkService: REQ/CNF only"/>
+		</Plugs>
+	</InterfaceList>
+	<BasicFB>
+		<ECC>
+			<ECState Name="START" Comment="Uninitialized" x="200" y="700">
+			</ECState>
+			<ECState Name="Init" Comment="Initialization" x="900" y="700">
+				<ECAction Algorithm="OnInit" Output="INITO"/>
+			</ECState>
+			<ECState Name="Initialized" Comment="Idle, ready to react to any of the three adapters" x="1600" y="700">
+			</ECState>
+			<ECState Name="DeInit" Comment="De-initialization" x="900" y="1300">
+				<ECAction Algorithm="OnDeInit" Output="INITO"/>
+			</ECState>
+			<ECState Name="FORWARD_TRIP" Comment="WorkpieceSensor requested a trip: forward it to the cylinder" x="2400" y="80">
+				<ECAction Algorithm="OnSrspReq" Output="SREQ1.REQ"/>
+			</ECState>
+			<ECState Name="REQUEST_DROP" Comment="Cylinder reached end position: request the sink to accept the workpiece" x="2400" y="500">
+				<ECAction Algorithm="OnSreq1Ind" Output="SREQ2.REQ"/>
+			</ECState>
+			<ECState Name="ACK_DROP" Comment="Sink acknowledged the drop: let the cylinder retract" x="2400" y="920">
+				<ECAction Algorithm="OnSreq2Cnf" Output="SREQ1.RSP"/>
+			</ECState>
+			<ECState Name="RELAY_COMPLETE" Comment="Cylinder confirms the trip is complete: relay it to WorkpieceSensor" x="2400" y="1340">
+				<ECAction Algorithm="OnSreq1Cnf" Output="SRSP.CNF"/>
+			</ECState>
+			<ECTransition Source="START" Destination="Init" Condition="INIT[TRUE = QI]" x="550" y="700"/>
+			<ECTransition Source="Init" Destination="Initialized" Condition="1" x="1250" y="700"/>
+			<ECTransition Source="Initialized" Destination="DeInit" Condition="INIT[FALSE = QI]" x="1250" y="1000"/>
+			<ECTransition Source="DeInit" Destination="START" Condition="1" x="550" y="1300"/>
+			<ECTransition Source="Initialized" Destination="FORWARD_TRIP" Condition="SRSP.REQ" x="2000" y="330"/>
+			<ECTransition Source="FORWARD_TRIP" Destination="Initialized" Condition="1" x="1760" y="193.33"/>
+			<ECTransition Source="Initialized" Destination="REQUEST_DROP" Condition="SREQ1.IND" x="2000" y="620"/>
+			<ECTransition Source="REQUEST_DROP" Destination="Initialized" Condition="1" x="1500" y="500"/>
+			<ECTransition Source="Initialized" Destination="ACK_DROP" Condition="SREQ2.CNF" x="2000" y="920"/>
+			<ECTransition Source="ACK_DROP" Destination="Initialized" Condition="1" x="1500" y="800"/>
+			<ECTransition Source="Initialized" Destination="RELAY_COMPLETE" Condition="SREQ1.CNF" x="2000" y="1220"/>
+			<ECTransition Source="RELAY_COMPLETE" Destination="Initialized" Condition="1" x="1500" y="1100"/>
+		</ECC>
+		<Algorithm Name="OnInit" Comment="Initialize">
+			<ST><![CDATA[QO := QI;]]></ST>
+		</Algorithm>
+		<Algorithm Name="OnDeInit" Comment="De-initialize">
+			<ST><![CDATA[QO := FALSE;]]></ST>
+		</Algorithm>
+		<Algorithm Name="OnSrspReq" Comment="Pass the trip request through to the cylinder unchanged">
+			<ST><![CDATA[SREQ1.REQD := SRSP.REQD;]]></ST>
+		</Algorithm>
+		<Algorithm Name="OnSreq1Ind" Comment="Cylinder reported reaching the end position: request the drop">
+			<ST><![CDATA[SREQ2.REQD := MessageExchangeConst::REQ_DROP;]]></ST>
+		</Algorithm>
+		<Algorithm Name="OnSreq2Cnf" Comment="Sink acknowledged the drop: tell the cylinder it may retract">
+			<ST><![CDATA[SREQ1.RSPD := MessageExchangeConst::RSP_ACK;]]></ST>
+		</Algorithm>
+		<Algorithm Name="OnSreq1Cnf" Comment="Trip fully complete: relay the confirmation upward">
+			<ST><![CDATA[SRSP.CNFD := SREQ1.CNFD;]]></ST>
+		</Algorithm>
+	</BasicFB>
+	<Attribute Name="eclipse4diac::core::TypeHash" Value="''"/>
+	<Attribute Name="Documentation" Type="CDATA"><![CDATA[<p>Cylinder orchestrator (<code>CylMES</code>, type
+<code>CControlTRAS</code> on the slide) in the "SoA implementation in
+function blocks" diagram (IEC 61499 primer course, Module 6, Valeriy
+Vyatkin, slide 47) - one of the four function blocks in the
+<code>CylH</code> message-exchange example (slides 42-46 for the
+message sequence chart this reconstructs).</p>
+<p>Three adapter connections, exactly as on the slide:</p>
+<ul>
+<li><b>SRSP</b> (Socket, <code>EVENT_HS_ACK_WSTRING</code>) towards
+<code>WorkpieceSensor</code> - receives the trip request, answers once
+the whole round trip is done.</li>
+<li><b>SREQ1</b> (Plug, full <code>EVENT_HS_WSTRING</code>) towards
+<code>CylinderService</code> - forwards the trip request; reacts to
+the mid-trip <b>IND</b> (cylinder reached the end position) by
+requesting the drop, then answers with <b>RSP</b> once the sink has
+acknowledged it, letting the cylinder retract.</li>
+<li><b>SREQ2</b> (Plug, <code>EVENT_HS_ACK_WSTRING</code>) towards
+<code>DropSinkService</code> - requests the drop, waits for its
+acknowledgement.</li>
+</ul>
+<p><b>Deliberately omitted</b> vs. the slide: the <code>TokenRing</code>
+adapter (<code>MTXIN</code>/<code>MTXOUT</code>) for mutual-exclusion
+interlocking between multiple cylinder controllers, and the
+constant-<code>TRUE</code> <code>Enable</code>/<code>Permit</code>
+adapter gating execution. Both exist on the slide for a
+multi-controller deployment; this demo has exactly one
+<code>CylinderOrchestrator</code> instance, so there is nothing to
+interlock against and no reason to gate a permit that is always
+<code>TRUE</code>. See <code>TokenRingPattern.md</code> for the
+<code>TokenRing</code> adapter itself, already implemented separately
+in this repository.</p>
+<p>See <code>HandshakePattern.md</code> in this folder, section
+"Die Quelle der 'push,100'-Notation", for the full write-up and the
+other three function blocks of this example
+(<code>WorkpieceSensor</code>, <code>DropSinkService</code>,
+<code>CylinderService</code>).</p>
+]]></Attribute>
+</FBType>
