@@ -32,6 +32,25 @@ typelibrary\net-3.0.0\typelib\{CLIENT_0,SERVER_0}.fbt`, `Type="Event"` →
 `Type="EInit"`). Kein eigener Adapter-Wrapper mehr nötig, da die native
 FBs seitdem selbst auto-initen.
 
+**Update:** Der Root Cause ist inzwischen als PR gegen eclipse-4diac
+eingereicht (noch offen, nicht gemergt):
+[eclipse-4diac/4diac-ide#2822](https://github.com/eclipse-4diac/4diac-ide/pull/2822)
+– behebt exakt dieses `Type="Event"`→`Type="EInit"`-Problem für
+`CLIENT_0`/`SERVER_0` sowie 14 weitere `-3.0.0`-Typen (`GPIOChip`,
+13× `powerlink-3.0.0`-Bausteine), inklusive einer bewusst
+ausgenommenen Gegenprobe (`E_TABLE_CTRL.fbt`, wo die Umstellung den
+Build von `E_TABLE.fbt` brechen würde). Bis der PR gemerged und in
+einer Release-Version enthalten ist, bleibt der lokale IDE-Patch die
+einzige reproduzierbare Lösung auf einer 4diac-IDE-Version, die den
+Fix noch nicht enthält – der Patch ist also kein Workaround-Hack,
+sondern der vorgezogene Fix aus diesem PR. Alternative ohne
+IDE-Patch, falls "RES style" (Resource statt SUB-Composite) gewählt
+wird: `START.COLD`/`WARM` explizit auf Resource-Ebene an die
+`INIT`-Ports von `CLIENT_0`/`SERVER_0` verdrahten (siehe `opcua.adoc`:
+"Do not forget to connect the COLD/WARM events ... to the INIT event
+ports") – noch nicht in diesem Projekt ausprobiert, nicht als
+validiert markieren, bis das jemand gebaut und getestet hat.
+
 **Falls deine Option-B-Methode `CLIENT_1_0`/`SERVER_1_0` (1 WSTRING-Argument,
 kein Rückgabewert) statt `CLIENT_0`/`SERVER_0` braucht**: dieselbe Prüfung
 machen! Vermutlich hat auch `CLIENT_1_0.fbt`/`SERVER_1_0.fbt` (und alle
