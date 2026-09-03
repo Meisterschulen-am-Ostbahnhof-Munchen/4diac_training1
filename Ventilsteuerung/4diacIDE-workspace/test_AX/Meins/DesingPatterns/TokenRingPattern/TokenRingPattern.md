@@ -130,7 +130,7 @@ nötig). Genau dieses Verzweigungsverhalten (`CHECK_WANT` →
 
 ## Wo wird das Token tatsächlich übergeben?
 
-Kurze Antwort: **Es wird gar kein Datum übergeben — das Token IST das
+Kurze Antwort: **Es werden gar keine Daten übergeben — das Token IST das
 Event.**
 
 `TokenRing.adp` ist bewusst datenlos:
@@ -141,13 +141,13 @@ EventOutputs: GIVE  (Event, keine Nutzlast)
 ```
 
 Es gibt keine `VarDeclaration`, kein `WSTRING`/`BOOL`-Feld, nichts, das
-man "das Token" als Datum nennen könnte. Die Semantik ist: **das
+man als "das Token" tragende Nutzdaten bezeichnen könnte. Die Semantik ist: **das
 Feuern von `GIVE` selbst ist die Übergabe.** Wer gerade zwischen "hat
 `MTXIN.GIVE` empfangen" und "hat `MTXOUT.GIVE` weitergereicht" steht
 (in `TokenRingNode.fbt` zwischen den ECC-Zuständen `HANDLE_GIVE` und
 `PASS_ON`), "hat" das Token – nicht weil irgendwo eine Variable das
 sagt, sondern weil in diesem Moment genau dieser Baustein gerade in
-dieser Phase seiner Zustandsmaschine steckt. Kein Datum trägt den
+dieser Phase seiner Zustandsmaschine steckt. Keine Daten tragen den
 Zustand, der Kontrollfluss tut es.
 
 Das ist kein Bug, sondern die klassische Umsetzung eines
