@@ -96,7 +96,7 @@ doesn't matter:
 ```
 
 Bracket-guard syntax reference (confirmed real, established 4diac
-syntax, precedent: `quarter-3.0.0/typelib/utils/quarter/QUARTER_TO_STR_STATUS.fbt`):
+syntax, precedent: `typelibrary/quarter-3.0.0/typelib/utils/quarter/QUARTER_TO_STR_STATUS.fbt`):
 - `EventName[BoolExpr]` — fires only on that specific event, gated by the
   boolean expression (e.g. `REQ[IB = quarter::STATUS_ENABLED]`).
 - `[BoolExpr]` (no event name) — evaluated on **any** incoming event, no
