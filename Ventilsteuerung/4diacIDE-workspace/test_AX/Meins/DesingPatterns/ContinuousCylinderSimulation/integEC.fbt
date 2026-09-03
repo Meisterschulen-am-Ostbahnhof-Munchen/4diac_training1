@@ -130,12 +130,12 @@ error := (tBase1 <= 0.0) OR (tBase2 <= 0.0) OR (cycleTime <= 0.0);]]></ST>
 			<ST><![CDATA[aTotal := aTotal + cycleTime * (pv1/tBase1 + pv2/tBase2);
 
 IF inv1 THEN
-	sumPv := pv1/tBase1 * -1;
+	sumPv := pv1/tBase1 * -1.0;
 ELSE
 	sumPv := pv1/tBase1;
 END_IF;
 IF inv2 THEN
-	sumPv := sumPv + pv2/tBase2 * -1;
+	sumPv := sumPv + pv2/tBase2 * -1.0;
 ELSE
 	sumPv := sumPv + pv2/tBase2;
 END_IF;

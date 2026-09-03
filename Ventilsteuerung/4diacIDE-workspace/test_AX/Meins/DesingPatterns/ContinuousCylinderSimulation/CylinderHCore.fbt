@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <FBType Name="CylinderHCore" Comment="Ground-truth reference: continuous-time cylinder position model (E_CYCLE tick + integEC integrator + ChangeDetect filter)">
-	<Identification Standard="61499-2" Description="Educational reference, ported for the Meisterschulen am Ostbahnhof IEC 61499 training repository. Original design (c) nxtControl GmbH, from the UniversalAutomation.org 'IEC 61499: primer course' curriculum exercise Final.sln (also present in the LiftingLuggage_*.sln/Starter.sln exercises), IEC61499/CylinderH/CylinderH.fbt - included here under the same educational-use terms as the rest of that curriculum. This port: Copyright (c) 2026 Meisterschulen am Ostbahnhof, EPL-2.0, https://www.eclipse.org/legal/epl-2.0/">
+	<Identification Standard="61499-2" Description="Educational reference, ported for the Meisterschulen am Ostbahnhof IEC 61499 training repository. Original design (c) nxtControl GmbH, from the UniversalAutomation.org &apos;IEC 61499: primer course&apos; curriculum exercise Final.sln (also present in the LiftingLuggage_*.sln/Starter.sln exercises), IEC61499/CylinderH/CylinderH.fbt - included here under the same educational-use terms as the rest of that curriculum. This port: Copyright (c) 2026 Meisterschulen am Ostbahnhof, EPL-2.0, https://www.eclipse.org/legal/epl-2.0/">
 	</Identification>
 	<VersionInfo Organization="nxtControl GmbH" Version="0.0" Author="Andrei" Date="2016-05-25" Remarks="Original EAE/nxtControl design (Template), source: Final.sln (identical copies in LiftingLuggage_*.sln, Starter.sln), original name CylinderH">
 	</VersionInfo>
-	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2026-09-03" Remarks="Core-only port: renamed CylinderH -> CylinderHCore. Dropped LABEL (display-only) and the CylinderH_HMI instance (a native Service Interface FB with no portable ECC/algorithm - just a QI/QO init passthrough plus an HMI display, not part of the physical model) and replaced its structural role (relaying INITO onward to start the E_CYCLE ticker and to this block's own INTO) with a direct connection. Uses the standard iec61499::events::E_CYCLE instead of porting a duplicate - see the check-standard-lib-before-creating lesson. integEC/ChangeDetect otherwise unchanged, see ContinuousCylinderSimulation.md">
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2026-09-03" Remarks="Core-only port: renamed CylinderH -&gt; CylinderHCore. Dropped LABEL (display-only) and the CylinderH_HMI instance (a native Service Interface FB with no portable ECC/algorithm - just a QI/QO init passthrough plus an HMI display, not part of the physical model) and replaced its structural role (relaying INITO onward to start the E_CYCLE ticker and to this block's own INTO) with a direct connection. Uses the standard iec61499::events::E_CYCLE instead of porting a duplicate - see the check-standard-lib-before-creating lesson. integEC/ChangeDetect otherwise unchanged, see ContinuousCylinderSimulation.md">
 	</VersionInfo>
 	<CompilerInfo packageName="Meins::DesingPatterns::ContinuousCylinderSimulation">
-		<Import declaration="iec61499::events::E_CYCLE"/>
+		<Import declaration=""/>
 	</CompilerInfo>
 	<InterfaceList>
 		<EventInputs>
@@ -37,38 +37,38 @@
 		</OutputVars>
 	</InterfaceList>
 	<FBNetwork>
-		<FB Name="Tick" Type="iec61499::events::E_CYCLE" x="200" y="1200">
+		<FB Name="Tick" Type="iec61499::events::E_CYCLE" x="-100" y="1800">
 			<Parameter Name="DT" Value="T#20ms"/>
 		</FB>
 		<FB Name="Model" Type="Meins::DesingPatterns::ContinuousCylinderSimulation::integEC" x="1200" y="700">
-			<Parameter Name="cycleTime" Value="0.02"/>
-			<Parameter Name="integType" Value="0"/>
-			<Parameter Name="preTrip" Value="0.0"/>
-			<Parameter Name="sp" Value="100.0"/>
-			<Parameter Name="inv2" Value="TRUE"/>
 			<Parameter Name="inv1" Value="FALSE"/>
+			<Parameter Name="inv2" Value="TRUE"/>
 			<Parameter Name="tBase1" Value="4.0"/>
 			<Parameter Name="tBase2" Value="4.0"/>
-			<Parameter Name="maxValue" Value="130"/>
+			<Parameter Name="sp" Value="100.0"/>
+			<Parameter Name="preTrip" Value="0.0"/>
+			<Parameter Name="integType" Value="0"/>
+			<Parameter Name="cycleTime" Value="0.02"/>
+			<Parameter Name="maxValue" Value="130.0"/>
 			<Parameter Name="minValue" Value="0.0"/>
 			<Parameter Name="useLimits" Value="TRUE"/>
 		</FB>
-		<FB Name="Filter" Type="Meins::DesingPatterns::ContinuousCylinderSimulation::ChangeDetect" x="2400" y="1000">
+		<FB Name="Filter" Type="Meins::DesingPatterns::ContinuousCylinderSimulation::ChangeDetect" x="2700" y="1000">
 		</FB>
 		<EventConnections>
-			<Connection Source="INIT" Destination="Model.INIT" dx1="600"/>
-			<Connection Source="Model.INITO" Destination="Tick.START" dx1="600"/>
-			<Connection Source="Model.INITO" Destination="INTO" dx1="600"/>
-			<Connection Source="Tick.EO" Destination="Model.C_CYCLE" dx1="600"/>
-			<Connection Source="REQ" Destination="Model.OP_UPD" dx1="600"/>
-			<Connection Source="Model.CNF" Destination="Filter.REQ" dx1="600"/>
-			<Connection Source="Filter.CHG" Destination="IND" dx1="600"/>
+			<Connection Source="INIT" Destination="Model.INIT" dx1="1853.33"/>
+			<Connection Source="Model.INITO" Destination="Tick.START" dx1="73.33" dx2="66.67" dy="-226.67"/>
+			<Connection Source="Model.INITO" Destination="INTO" dx1="73.33"/>
+			<Connection Source="Tick.EO" Destination="Model.C_CYCLE" dx1="326.67"/>
+			<Connection Source="REQ" Destination="Model.OP_UPD" dx1="1820"/>
+			<Connection Source="Model.CNF" Destination="Filter.REQ" dx1="313.33"/>
+			<Connection Source="Filter.CHG" Destination="IND" dx1="633.33"/>
 		</EventConnections>
 		<DataConnections>
-			<Connection Source="PV1" Destination="Model.pv1" dx1="600"/>
-			<Connection Source="PV2" Destination="Model.pv2" dx1="600"/>
-			<Connection Source="Model.out" Destination="Filter.INP" dx1="600"/>
-			<Connection Source="Filter.OUT" Destination="POSITION" dx1="600"/>
+			<Connection Source="PV1" Destination="Model.pv1" dx1="1786.67"/>
+			<Connection Source="PV2" Destination="Model.pv2" dx1="1753.33"/>
+			<Connection Source="Model.out" Destination="Filter.INP" dx1="313.33"/>
+			<Connection Source="Filter.OUT" Destination="POSITION" dx1="666.67"/>
 		</DataConnections>
 	</FBNetwork>
 	<Attribute Name="eclipse4diac::core::TypeHash" Value="''"/>
