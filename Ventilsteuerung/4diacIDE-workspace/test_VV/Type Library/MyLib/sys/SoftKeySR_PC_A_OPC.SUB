@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<SubAppType Name="SoftKeySR_PC_A_OPC" Comment="Geraet A (Station 11, 192.168.1.11): 2 SoftKeys (Set/Reset) rufen je einen eigenen argument- und rueckgabewertlosen OPC-UA-Methodenaufruf auf Geraet B auf (CLIENT_0, 2 eigene Methoden - wie Training_04, aber ohne Toggle); GreenWhiteBackground am Set-SoftKey zeigt den von Geraet B lokal ueberwachten Flipflop-Zustand - 'SUB style': das Protokoll steckt im MyLib::sys-Composite, nicht in der Resource des Geraets">
+<SubAppType Name="SoftKeySR_PC_A_OPC" Comment="Geraet A (Station 11, 192.168.1.11): 2 SoftKeys (Set/Reset) rufen je einen eigenen argument- und rueckgabewertlosen OPC-UA-Methodenaufruf auf Geraet B auf (CLIENT_0, 2 eigene Methoden - wie Training_04, aber ohne Toggle); GreenWhiteBackground am Set-SoftKey zeigt den von Geraet B lokal ueberwachten Flipflop-Zustand - &apos;SUB style&apos;: das Protokoll steckt im MyLib::sys-Composite, nicht in der Resource des Geraets">
 	<Identification Standard="61499-2" Description="Copyright (c) 2026 Meisterschulen am Ostbahnhof  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0">
 	</Identification>
 	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2026-09-03" Remarks="initial API and implementation and/or initial documentation">
@@ -26,15 +26,15 @@
 			<Parameter Name="QI" Value="TRUE"/>
 			<Parameter Name="InputEvent" Value="SK_RELEASED"/>
 		</FB>
-		<FB Name="TRIGGER_SET_CLIENT" Type="iec61499::net::CLIENT_0" x="-4000" y="-1000">
+		<FB Name="TRIGGER_SET_CLIENT" Type="iec61499::net::CLIENT_0" x="-4000" y="-900">
 			<Parameter Name="QI" Value="TRUE"/>
 		</FB>
-		<FB Name="TRIGGER_RESET_CLIENT" Type="iec61499::net::CLIENT_0" x="-4000" y="0">
+		<FB Name="TRIGGER_RESET_CLIENT" Type="iec61499::net::CLIENT_0" x="-4000" y="100">
 			<Parameter Name="QI" Value="TRUE"/>
 		</FB>
-		<SubApp Name="GreenWhiteBackground_AX" Type="MyLib::sys::GreenWhiteBackground1_AX" x="-4000" y="900">
+		<SubApp Name="GreenWhiteBackground_AX" Type="MyLib::sys::GreenWhiteBackground1_AX" x="-4000" y="1100">
 		</SubApp>
-		<FB Name="STATE_SUBSCRIBE" Type="adapter::net::AX_SUBSCRIBE_1" x="-7200" y="900">
+		<FB Name="STATE_SUBSCRIBE" Type="adapter::net::AX_SUBSCRIBE_1" x="-7200" y="1100">
 			<Parameter Name="QI" Value="TRUE"/>
 		</FB>
 		<EventConnections>
@@ -62,7 +62,7 @@
 			</Connection>
 		</DataConnections>
 		<AdapterConnections>
-			<Connection Source="STATE_SUBSCRIBE.OUT" Destination="GreenWhiteBackground_AX.DI1" dx1="580"/>
+			<Connection Source="STATE_SUBSCRIBE.OUT" Destination="GreenWhiteBackground_AX.DI1"/>
 		</AdapterConnections>
 	</SubAppNetwork>
 </SubAppType>

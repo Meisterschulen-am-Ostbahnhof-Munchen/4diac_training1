@@ -21,6 +21,10 @@
 				<With Var="QO"/>
 				<With Var="STATUS"/>
 			</Event>
+			<Event Name="IND" Type="Event" Comment="New data available">
+				<With Var="QO"/>
+				<With Var="STATUS"/>
+			</Event>
 		</EventOutputs>
 		<InputVars>
 			<VarDeclaration Name="QI" Type="BOOL"/>
@@ -42,6 +46,8 @@
 		<FB Name="F_MOVE" Type="iec61131::selection::F_MOVE" x="-1200" y="700">
 			<Attribute Name="DataType" Value="WSTRING"/>
 		</FB>
+		<FB Name="E_D_FF_ANY_2" Type="iec61499::events::E_D_FF_ANY_2" x="-600" y="-600">
+		</FB>
 		<EventConnections>
 			<Connection Source="INIT" Destination="SUBSCRIBE_1.INIT" dx1="1593.33"/>
 			<Connection Source="RSP" Destination="SUBSCRIBE_1.RSP" dx1="1280"/>
@@ -49,15 +55,19 @@
 			<Connection Source="SUBSCRIBE_1.IND" Destination="F_MOVE.REQ" dx1="673.33"/>
 			<Connection Source="E_D_FF_ANY.EO" Destination="OUT.E1"/>
 			<Connection Source="F_MOVE.CNF" Destination="E_D_FF_ANY.CLK"/>
+				<Connection Source="SUBSCRIBE_1.IND" Destination="E_D_FF_ANY_2.CLK"/>
+			<Connection Source="E_D_FF_ANY_2.EO" Destination="IND"/>
 		</EventConnections>
 		<DataConnections>
 			<Connection Source="QI" Destination="SUBSCRIBE_1.QI" dx1="1060"/>
 			<Connection Source="ID" Destination="SUBSCRIBE_1.ID" dx1="800"/>
-			<Connection Source="SUBSCRIBE_1.QO" Destination="QO" dx1="2853.33"/>
-			<Connection Source="SUBSCRIBE_1.STATUS" Destination="STATUS" dx1="3086.67"/>
+			<Connection Source="SUBSCRIBE_1.QO" Destination="E_D_FF_ANY_2.D1"/>
+			<Connection Source="SUBSCRIBE_1.STATUS" Destination="E_D_FF_ANY_2.D2"/>
 			<Connection Source="SUBSCRIBE_1.RD_1" Destination="F_MOVE.IN" dx1="506.67"/>
 			<Connection Source="E_D_FF_ANY.Q" Destination="OUT.D1"/>
 			<Connection Source="F_MOVE.OUT" Destination="E_D_FF_ANY.D"/>
+				<Connection Source="E_D_FF_ANY_2.Q1" Destination="QO"/>
+			<Connection Source="E_D_FF_ANY_2.Q2" Destination="STATUS"/>
 		</DataConnections>
 	</FBNetwork>
 	<Attribute Name="eclipse4diac::core::TypeHash" Value="''"/>
