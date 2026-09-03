@@ -8,6 +8,8 @@
 	</VersionInfo>
 	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.1" Author="Franz Höpfinger" Date="2026-09-03" Remarks="PR #160 review feedback: INIT/INITO must be Type=EInit (were Type=Event) - fixed, With-Var lists unchanged">
 	</VersionInfo>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.2" Author="Franz Höpfinger" Date="2026-09-03" Remarks="PR #160 review feedback (coderabbitai): the INIT algorithm declared Floor_Req_*/Cabin_Req_* as With-Vars but never read them, so a request already active at deployment was ignored until a later REQ - fixed by latching requests[]/pending_reqs from the INIT snapshot, same as READ_REQS does. A genuine behavior fix, not a faithfulness-preserving port choice like the other two VersionInfo entries above">
+	</VersionInfo>
 	<CompilerInfo packageName="Meins::DesingPatterns::ChainOfActionsPattern">
 	</CompilerInfo>
 	<InterfaceList>
@@ -123,7 +125,7 @@
 			<ECTransition Source="DONE_FLOOR" Destination="WAITING" Condition="1" x="2000" y="650"/>
 			<ECTransition Source="WAITING" Destination="READ_REQS" Condition="[pending_reqs]" x="1250" y="900"/>
 		</ECC>
-		<Algorithm Name="INIT" Comment="Reset all outputs and internal state">
+		<Algorithm Name="INIT" Comment="Reset all outputs and internal state, latching any request already present at deployment">
 			<ST><![CDATA[Req_Is_Done_0 := FALSE;
 Req_Is_Done_1 := FALSE;
 Req_Is_Done_2 := FALSE;
@@ -136,10 +138,12 @@ DoOpen2 := FALSE;
 up_direction := TRUE;
 index := -1;
 do_request := FALSE;
-pending_reqs := FALSE;
-requests[0] := FALSE;
-requests[1] := FALSE;
-requests[2] := FALSE;]]></ST>
+// Latch the request snapshot carried by INIT itself (fixes: an initial
+// request was previously ignored until a later REQ event)
+requests[0] := Floor_Req_0 OR Cabin_Req_0;
+requests[1] := Floor_Req_1 OR Cabin_Req_1;
+requests[2] := Floor_Req_2 OR Cabin_Req_2;
+pending_reqs := requests[0] OR requests[1] OR requests[2];]]></ST>
 		</Algorithm>
 		<Algorithm Name="READ_REQS" Comment="Latch the button inputs into the requests array">
 			<ST><![CDATA[requests[0] := Floor_Req_0 OR Cabin_Req_0;
