@@ -136,6 +136,26 @@ für die Erstumsetzung hier zunächst nicht nachgebaut (siehe
 Noch offen: reale 4diac-Validierung (XSD ist grün, das prüft aber wie
 bei den anderen Patterns weder Socket/Plug-Richtung noch ECC-Logik).
 
+## Ground-truth-Referenz: `RequestQueueManager.fbt`
+
+Kein Vyatkin-Folien-Pattern, sondern ein echter, funktionierender
+Baustein aus dem UAO-Curriculum-Download (`Elevator_DumbButtons_EAE_
+Final.sln`, `IEC61499/RequestQueueManager.fbt`, EAE/nxtControl-Format),
+1:1 nach 4diac portiert (gleiche Interface/ECC/Algorithmen, nur
+Format-Übersetzung). Gefunden bei der Suche nach zusätzlichem
+Referenzmaterial im Downloads-Curriculum-Ordner.
+
+Ein Aufzug-Anfragen-Arbitrierer: klassischer SCAN-Sweep über 3 Etagen,
+kombiniert Chain-of-Actions-artige Sequenzierung (eine Handvoll
+Zustände, ein linearer Ablaufkreis) mit REQ/CNF-Service-Vokabular
+(dasselbe Vokabular wie beim Handshake-Pattern). `CNF` feuert zweimal
+pro bedienter Anfrage (Ankunft, dann Fertigstellung) mit
+unterschiedlicher Payload statt zwei separater Event-Namen – ein
+reales, nicht selbst erdachtes Beispiel für diesen Stil. **Löst nicht**
+die oben offene Frage zu `TrueUntil`s `REQ` vs. `TRIGGER` (anderer
+Baustein, andere REQ-Semantik) – nur ein thematisch verwandter,
+unabhängiger Präzedenzfall.
+
 ## Weitere Design Patterns aus Modul 6 (zur späteren Umsetzung)
 
 Siehe `../DesignPatterns.md` für die Gesamtübersicht.

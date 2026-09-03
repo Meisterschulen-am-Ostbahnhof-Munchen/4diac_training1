@@ -1,0 +1,240 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<FBType Name="RequestQueueManager" Comment="Ground-truth reference: elevator request arbitration (ported from the UAO curriculum&apos;s Elevator_DumbButtons exercise)">
+	<Identification Standard="61499-2" Description="Educational reference, ported for the Meisterschulen am Ostbahnhof IEC 61499 training repository. Original design (c) nxtControl GmbH, from the UniversalAutomation.org &apos;IEC 61499: primer course&apos; curriculum exercise Elevator_DumbButtons_EAE_Final.sln, IEC61499/RequestQueueManager.fbt - included here under the same educational-use terms as the rest of that curriculum. This port: Copyright (c) 2026 Meisterschulen am Ostbahnhof, EPL-2.0, https://www.eclipse.org/legal/epl-2.0/">
+	</Identification>
+	<VersionInfo Organization="nxtControl GmbH" Version="0.0" Author="ferch" Date="2021-09-24" Remarks="Original EAE/nxtControl design (Template), source: Elevator_DumbButtons_EAE_Final.sln">
+	</VersionInfo>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2026-09-03" Remarks="Ported from EAE/nxtControl format (LibraryElement.dtd) to 4diac's FBType XSD: dropped EAE-only bookkeeping attributes (GUID, Configuration.FB.IDCounter, FBType.Basic.Algorithm.Order), added Type= on every Event (originally untyped) - interface, ECC, and all seven algorithms otherwise unchanged from the original. Found while searching the curriculum for ground truth on the Chain-of-Actions pattern (see ChainOfActionsPattern.md, 'Ground-truth reference' section) - a real, working example combining REQ/CNF service-style events with chain-style sequencing. NOTE: this FB's own REQ is unrelated to TrueUntil.fbt's still-open REQ-vs-TRIGGER question in the same folder - different block, does not resolve that ambiguity, just a topically similar precedent">
+	</VersionInfo>
+	<CompilerInfo packageName="Meins::DesingPatterns::ChainOfActionsPattern">
+	</CompilerInfo>
+	<InterfaceList>
+		<EventInputs>
+			<Event Name="INIT" Type="Event" Comment="Initialization Request - carries the initial request snapshot, not the repo&apos;s usual QI qualifier">
+				<With Var="Floor_Req_0"/>
+				<With Var="Floor_Req_1"/>
+				<With Var="Floor_Req_2"/>
+				<With Var="Cabin_Req_0"/>
+				<With Var="Cabin_Req_1"/>
+				<With Var="Cabin_Req_2"/>
+			</Event>
+			<Event Name="REQ" Type="Event" Comment="Normal Execution Request: a floor or cabin button was pressed">
+				<With Var="Floor_Req_0"/>
+				<With Var="Floor_Req_1"/>
+				<With Var="Floor_Req_2"/>
+				<With Var="Cabin_Req_0"/>
+				<With Var="Cabin_Req_1"/>
+				<With Var="Cabin_Req_2"/>
+			</Event>
+			<Event Name="DONE_MOVE" Type="Event" Comment="The elevator actuator confirms it reached FloorToGo">
+			</Event>
+			<Event Name="DONE_DOOR" Type="Event" Comment="The door actuator confirms the open/close cycle is done">
+			</Event>
+		</EventInputs>
+		<EventOutputs>
+			<Event Name="INITO" Type="Event" Comment="Initialization Confirm">
+				<With Var="Req_Is_Done_0"/>
+				<With Var="Req_Is_Done_1"/>
+				<With Var="Req_Is_Done_2"/>
+				<With Var="FloorToGo"/>
+				<With Var="DoOpen0"/>
+				<With Var="DoOpen1"/>
+				<With Var="DoOpen2"/>
+			</Event>
+			<Event Name="CNF" Type="Event" Comment="Execution Confirmation - fired twice per serviced request: once on arrival (door opens), once on completion (door closes)">
+				<With Var="Req_Is_Done_0"/>
+				<With Var="Req_Is_Done_1"/>
+				<With Var="Req_Is_Done_2"/>
+			</Event>
+			<Event Name="DOOR_IN" Type="Event" Comment="Command the door actuator to open">
+				<With Var="DoOpen0"/>
+				<With Var="DoOpen1"/>
+				<With Var="DoOpen2"/>
+			</Event>
+			<Event Name="MOVE_ELEVATOR" Type="Event" Comment="Command the elevator actuator to move to FloorToGo">
+				<With Var="FloorToGo"/>
+			</Event>
+		</EventOutputs>
+		<InputVars>
+			<VarDeclaration Name="Floor_Req_0" Type="BOOL"/>
+			<VarDeclaration Name="Floor_Req_1" Type="BOOL"/>
+			<VarDeclaration Name="Floor_Req_2" Type="BOOL"/>
+			<VarDeclaration Name="Cabin_Req_0" Type="BOOL"/>
+			<VarDeclaration Name="Cabin_Req_1" Type="BOOL"/>
+			<VarDeclaration Name="Cabin_Req_2" Type="BOOL"/>
+		</InputVars>
+		<OutputVars>
+			<VarDeclaration Name="Req_Is_Done_0" Type="BOOL"/>
+			<VarDeclaration Name="Req_Is_Done_1" Type="BOOL"/>
+			<VarDeclaration Name="Req_Is_Done_2" Type="BOOL"/>
+			<VarDeclaration Name="FloorToGo" Type="INT"/>
+			<VarDeclaration Name="DoOpen0" Type="BOOL"/>
+			<VarDeclaration Name="DoOpen1" Type="BOOL"/>
+			<VarDeclaration Name="DoOpen2" Type="BOOL"/>
+		</OutputVars>
+	</InterfaceList>
+	<BasicFB>
+		<InternalVars>
+			<VarDeclaration Name="up_direction" Type="BOOL" Comment="SCAN-style sweep direction: TRUE = scanning floors upward"/>
+			<VarDeclaration Name="index" Type="INT" Comment="Floor currently being scanned/serviced"/>
+			<VarDeclaration Name="do_request" Type="BOOL" Comment="DETERMINE loop exit flag: a pending request was found at index"/>
+			<VarDeclaration Name="pending_reqs" Type="BOOL" Comment="TRUE while any floor/cabin request is still outstanding"/>
+			<VarDeclaration Name="requests" Type="BOOL" Comment="Per-floor outstanding-request flags (floor OR cabin button)" ArraySize="3" InitialValue="[3(FALSE)]"/>
+		</InternalVars>
+		<ECC>
+			<ECState Name="START" Comment="Initial State" x="200" y="400">
+			</ECState>
+			<ECState Name="INIT" Comment="Initialization" x="900" y="400">
+				<ECAction Algorithm="INIT" Output="INITO"/>
+			</ECState>
+			<ECState Name="WAITING" Comment="Idle, no move in progress" x="1600" y="700">
+			</ECState>
+			<ECState Name="READ_REQS" Comment="Latch Floor_Req_*/Cabin_Req_* into the requests array" x="900" y="1100">
+				<ECAction Algorithm="READ_REQS"/>
+			</ECState>
+			<ECState Name="DETERMINE_NEXT" Comment="SCAN-style sweep to the next pending floor" x="1600" y="1800">
+				<ECAction Algorithm="DETERMINE" Output="MOVE_ELEVATOR"/>
+			</ECState>
+			<ECState Name="MOVING_TO_FLOOR" Comment="Waiting for the elevator actuator" x="2400" y="2100">
+				<ECAction Algorithm="READ_REQS"/>
+			</ECState>
+			<ECState Name="REACHED_FLOOR" Comment="Arrived at index: decide whether to open the door" x="3100" y="1600">
+			</ECState>
+			<ECState Name="OPEN_DOOR" Comment="Ack the request, command the door open" x="3100" y="1100">
+				<ECAction Algorithm="ACK_REQ" Output="CNF"/>
+				<ECAction Algorithm="OPEN_DOOR" Output="DOOR_IN"/>
+			</ECState>
+			<ECState Name="DONE_FLOOR" Comment="Door confirmed open/closed: clear the request, close the door" x="2400" y="600">
+				<ECAction Algorithm="RESET_REQ" Output="CNF"/>
+				<ECAction Algorithm="CLOSE_DOOR"/>
+			</ECState>
+			<ECTransition Source="START" Destination="INIT" Condition="INIT" x="550" y="400"/>
+			<ECTransition Source="INIT" Destination="WAITING" Condition="1" x="1250" y="550"/>
+			<ECTransition Source="WAITING" Destination="READ_REQS" Condition="REQ" x="1106.67" y="800"/>
+			<ECTransition Source="READ_REQS" Destination="WAITING" Condition="[NOT pending_reqs]" x="1250" y="1400"/>
+			<ECTransition Source="READ_REQS" Destination="DETERMINE_NEXT" Condition="[pending_reqs]" x="1250" y="1450"/>
+			<ECTransition Source="DETERMINE_NEXT" Destination="MOVING_TO_FLOOR" Condition="1" x="2000" y="1950"/>
+			<ECTransition Source="MOVING_TO_FLOOR" Destination="REACHED_FLOOR" Condition="DONE_MOVE" x="2750" y="1850"/>
+			<ECTransition Source="REACHED_FLOOR" Destination="OPEN_DOOR" Condition="[requests[index]]" x="3100" y="1350"/>
+			<ECTransition Source="REACHED_FLOOR" Destination="WAITING" Condition="[NOT requests[index]]" x="2350" y="1350"/>
+			<ECTransition Source="OPEN_DOOR" Destination="DONE_FLOOR" Condition="DONE_DOOR" x="2750" y="850"/>
+			<ECTransition Source="DONE_FLOOR" Destination="WAITING" Condition="1" x="2000" y="650"/>
+			<ECTransition Source="WAITING" Destination="READ_REQS" Condition="[pending_reqs]" x="1250" y="900"/>
+		</ECC>
+		<Algorithm Name="INIT" Comment="Reset all outputs and internal state">
+			<ST><![CDATA[Req_Is_Done_0 := FALSE;
+Req_Is_Done_1 := FALSE;
+Req_Is_Done_2 := FALSE;
+// Initialize the elevator at 0 floor on startup
+FloorToGo := 0;
+DoOpen0 := FALSE;
+DoOpen1 := FALSE;
+DoOpen2 := FALSE;
+// Internal variables
+up_direction := TRUE;
+index := -1;
+do_request := FALSE;
+pending_reqs := FALSE;
+requests[0] := FALSE;
+requests[1] := FALSE;
+requests[2] := FALSE;]]></ST>
+		</Algorithm>
+		<Algorithm Name="READ_REQS" Comment="Latch the button inputs into the requests array">
+			<ST><![CDATA[requests[0] := Floor_Req_0 OR Cabin_Req_0;
+requests[1] := Floor_Req_1 OR Cabin_Req_1;
+requests[2] := Floor_Req_2 OR Cabin_Req_2;
+pending_reqs := requests[0] OR requests[1] OR requests[2];]]></ST>
+		</Algorithm>
+		<Algorithm Name="DETERMINE" Comment="SCAN elevator algorithm: sweep up then down, stop at the next pending floor">
+			<ST><![CDATA[do_request := FALSE;
+WHILE NOT do_request DO
+	// Change index direction
+	IF index = 2 THEN
+		up_direction := FALSE;
+	ELSIF index = 0 THEN
+		up_direction := TRUE;
+	END_IF;
+	// Increment/Decrement index consequently to direction
+	IF up_direction THEN
+		index := index + 1;
+	ELSE
+		index := index - 1;
+	END_IF;
+	// Check whether there is a pending request in this index
+	IF requests[index] THEN
+		do_request := TRUE;
+		// Output the floor_to_go to the ElevatorMoveControl
+		FloorToGo := index;
+	END_IF;
+END_WHILE;]]></ST>
+		</Algorithm>
+		<Algorithm Name="OPEN_DOOR" Comment="Command the door at the current index open">
+			<ST><![CDATA[IF index = 0 THEN
+	DoOpen0 := TRUE;
+ELSIF index = 1 THEN
+	DoOpen1 := TRUE;
+ELSE
+	DoOpen2 := TRUE;
+END_IF;]]></ST>
+		</Algorithm>
+		<Algorithm Name="RESET_REQ" Comment="Clear the serviced request and recompute pending_reqs">
+			<ST><![CDATA[// Reset all output variables (only one was TRUE, but for simplicity all are cleared)
+Req_Is_Done_0 := FALSE;
+Req_Is_Done_1 := FALSE;
+Req_Is_Done_2 := FALSE;
+// Clear the attended request on the request array
+requests[index] := FALSE;
+// Update pending_requests variable
+pending_reqs := requests[0] OR requests[1] OR requests[2];]]></ST>
+		</Algorithm>
+		<Algorithm Name="CLOSE_DOOR" Comment="Command all doors closed">
+			<ST><![CDATA[// For simplicity, all of them are reset to FALSE
+DoOpen0 := FALSE;
+DoOpen1 := FALSE;
+DoOpen2 := FALSE;]]></ST>
+		</Algorithm>
+		<Algorithm Name="ACK_REQ" Comment="Mark the request at the current index as being handled">
+			<ST><![CDATA[IF index = 0 THEN
+	Req_Is_Done_0 := TRUE;
+ELSIF index = 1 THEN
+	Req_Is_Done_1 := TRUE;
+ELSE
+	Req_Is_Done_2 := TRUE;
+END_IF;]]></ST>
+		</Algorithm>
+	</BasicFB>
+	<Attribute Name="eclipse4diac::core::TypeHash" Value="''"/>
+	<Attribute Name="Documentation" Type="CDATA"><![CDATA[<p><b>Ground-truth reference, not a Vyatkin Module 6 slide pattern.</b>
+Ported as-is (same interface, same ECC, same seven algorithms) from
+the UniversalAutomation.org "IEC 61499: primer course" curriculum
+exercise <code>Elevator_DumbButtons_EAE_Final.sln</code>
+(<code>IEC61499/RequestQueueManager.fbt</code>, original format:
+EAE/nxtControl <code>LibraryElement.dtd</code>), found while searching
+that curriculum's Downloads export for material relevant to this
+repo's <a href="../ChainOfActionsPattern.md">Chain of Actions</a>
+pattern implementation.</p>
+<p>Real elevator-request arbitrator: a classic SCAN-disk-style sweep
+(<code>DETERMINE</code>) picks the next pending floor in the current
+sweep direction, sends <code>MOVE_ELEVATOR</code>, waits for
+<code>DONE_MOVE</code>, opens the door (<code>DOOR_IN</code>, with a
+first <code>CNF</code> acknowledging arrival), waits for
+<code>DONE_DOOR</code>, then closes it and clears the request (a
+second <code>CNF</code> confirming completion) before returning to
+<code>WAITING</code>. Combines this repo's two adjacent ideas in one
+real, working block: <b>Chain-of-Actions-style sequencing</b> (a
+handful of small states forming one linear worklist loop) and
+<b>REQ/CNF service-style events</b> (matching the vocabulary also seen
+in the Handshake pattern and the slide-47 message-exchange example) -
+worth comparing against <code>TrueUntil.fbt</code> in this same
+folder - though this block's own <b>REQ</b> is unrelated to
+<code>TrueUntil.fbt</code>'s still-open REQ-vs-TRIGGER question, it
+does not resolve that ambiguity.</p>
+<p>Kept faithful to the original on purpose, including its quirks: no
+<code>QI</code>/<code>QO</code> initialization qualifier (this repo's
+usual Init/Initialized/DeInit convention does not apply here - `INIT`
+is just a regular event that happens to carry the initial request
+snapshot), and <code>CNF</code> firing twice per serviced request with
+different payload each time (arrival vs. completion) rather than using
+two distinct event names.</p>
+]]></Attribute>
+</FBType>
