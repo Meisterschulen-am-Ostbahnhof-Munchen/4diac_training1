@@ -6,11 +6,13 @@
 	</VersionInfo>
 	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2026-09-03" Remarks="Ported from EAE/nxtControl format (LibraryElement.dtd) to 4diac's FBType XSD: dropped EAE-only bookkeeping attributes (GUID, Configuration.FB.IDCounter, FBType.Basic.Algorithm.Order), added Type= on every Event (originally untyped) - interface, ECC, and all seven algorithms otherwise unchanged from the original. Found while searching the curriculum for ground truth on the Chain-of-Actions pattern (see ChainOfActionsPattern.md, 'Ground-truth reference' section) - a real, working example combining REQ/CNF service-style events with chain-style sequencing. NOTE: this FB's own REQ is unrelated to TrueUntil.fbt's still-open REQ-vs-TRIGGER question in the same folder - different block, does not resolve that ambiguity, just a topically similar precedent">
 	</VersionInfo>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.1" Author="Franz Höpfinger" Date="2026-09-03" Remarks="PR #160 review feedback: INIT/INITO must be Type=EInit (were Type=Event) - fixed, With-Var lists unchanged">
+	</VersionInfo>
 	<CompilerInfo packageName="Meins::DesingPatterns::ChainOfActionsPattern">
 	</CompilerInfo>
 	<InterfaceList>
 		<EventInputs>
-			<Event Name="INIT" Type="Event" Comment="Initialization Request - carries the initial request snapshot, not the repo&apos;s usual QI qualifier">
+			<Event Name="INIT" Type="EInit" Comment="Initialization Request - carries the initial request snapshot, not the repo&apos;s usual QI qualifier">
 				<With Var="Floor_Req_0"/>
 				<With Var="Floor_Req_1"/>
 				<With Var="Floor_Req_2"/>
@@ -32,7 +34,7 @@
 			</Event>
 		</EventInputs>
 		<EventOutputs>
-			<Event Name="INITO" Type="Event" Comment="Initialization Confirm">
+			<Event Name="INITO" Type="EInit" Comment="Initialization Confirm">
 				<With Var="Req_Is_Done_0"/>
 				<With Var="Req_Is_Done_1"/>
 				<With Var="Req_Is_Done_2"/>

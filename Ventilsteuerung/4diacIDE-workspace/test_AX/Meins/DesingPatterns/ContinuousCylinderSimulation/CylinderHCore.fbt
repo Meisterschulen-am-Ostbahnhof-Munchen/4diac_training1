@@ -6,12 +6,14 @@
 	</VersionInfo>
 	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2026-09-03" Remarks="Core-only port: renamed CylinderH -&gt; CylinderHCore. Dropped LABEL (display-only) and the CylinderH_HMI instance (a native Service Interface FB with no portable ECC/algorithm - just a QI/QO init passthrough plus an HMI display, not part of the physical model) and replaced its structural role (relaying INITO onward to start the E_CYCLE ticker and to this block's own INTO) with a direct connection. Uses the standard iec61499::events::E_CYCLE instead of porting a duplicate - see the check-standard-lib-before-creating lesson. integEC/ChangeDetect otherwise unchanged, see ContinuousCylinderSimulation.md">
 	</VersionInfo>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.1" Author="Franz Höpfinger" Date="2026-09-03" Remarks="PR #160 review feedback: INIT/INITO must be Type=EInit (were Type=Event) - fixed; renamed the init-confirm event from INTO to INITO to match this repo's convention (Copilot review comment). Also restored the E_CYCLE Import declaration, which had gone empty.">
+	</VersionInfo>
 	<CompilerInfo packageName="Meins::DesingPatterns::ContinuousCylinderSimulation">
-		<Import declaration=""/>
+		<Import declaration="iec61499::events::E_CYCLE"/>
 	</CompilerInfo>
 	<InterfaceList>
 		<EventInputs>
-			<Event Name="INIT" Type="Event" Comment="Initialization Request">
+			<Event Name="INIT" Type="EInit" Comment="Initialization Request">
 				<With Var="PV1"/>
 				<With Var="PV2"/>
 			</Event>
@@ -21,7 +23,7 @@
 			</Event>
 		</EventInputs>
 		<EventOutputs>
-			<Event Name="INTO" Type="Event" Comment="Initialization Confirm">
+			<Event Name="INITO" Type="EInit" Comment="Initialization Confirm">
 				<With Var="POSITION"/>
 			</Event>
 			<Event Name="IND" Type="Event" Comment="Position changed">
@@ -58,7 +60,7 @@
 		<EventConnections>
 			<Connection Source="INIT" Destination="Model.INIT" dx1="1853.33"/>
 			<Connection Source="Model.INITO" Destination="Tick.START" dx1="73.33" dx2="66.67" dy="-226.67"/>
-			<Connection Source="Model.INITO" Destination="INTO" dx1="73.33"/>
+			<Connection Source="Model.INITO" Destination="INITO" dx1="73.33"/>
 			<Connection Source="Tick.EO" Destination="Model.C_CYCLE" dx1="326.67"/>
 			<Connection Source="REQ" Destination="Model.OP_UPD" dx1="1820"/>
 			<Connection Source="Model.CNF" Destination="Filter.REQ" dx1="313.33"/>
@@ -89,7 +91,11 @@ data; this is a <b>continuous-time physics simulation</b> - an
 <code>POSITION</code> value between 0.0 (retracted) and 130.0
 (extended) based on the <code>PV1</code>/<code>PV2</code> drive
 signals, filtered through <code>ChangeDetect</code> so <code>IND</code>
-only fires when the position actually moved. Matches the "Modelling
+only fires when the position actually moved. <code>INIT</code>/<code>INITO</code>
+use <code>Type="EInit"</code> (fixed from the original port's
+<code>Type="Event"</code> and the original event name <code>INTO</code>,
+renamed to <code>INITO</code> to match this repo's convention - PR #160
+review feedback). Matches the "Modelling
 Event-driven PLCs system" / "Modelling a Scan-based PLCs System"
 slides (Module 6, slides 50-52) more closely than any pattern actually
 implemented in this repo so far - found while searching the curriculum
@@ -103,7 +109,7 @@ FB (<code>Interface1</code> in the original) with no portable
 ECC/algorithm of its own, just a <code>QI</code>/<code>QO</code> init
 passthrough plus an HMI panel. Its one <i>structural</i> role - relaying
 <code>Model.INITO</code> onward to start the <code>E_CYCLE</code>
-ticker and to this block's own <code>INTO</code> - is preserved here
+ticker and to this block's own <code>INITO</code> - is preserved here
 as a direct connection instead. See
 <code>CylinderH_HMI.fbt</code>/<code>CylinderHSens.fbt</code>/
 <code>CylinderHSensValve.fbt</code> in the original curriculum export
