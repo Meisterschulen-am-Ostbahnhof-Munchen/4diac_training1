@@ -9,7 +9,7 @@ EAE (EcoStruxure Automation Expert) and 4diac use different, incompatible
 XML dialects to represent the same IEC 61499 concepts. This skill covers
 translating an EAE-format `.fbt` into a valid, working 4diac `.fbt` — always
 validate the result with `iec61499-creator`'s
-`scripts/validate.py`, this skill only covers the parts validate.py can't
+`.agents/skills/iec61499-creator/scripts/validate.py`, this skill only covers the parts validate.py can't
 catch (semantic/convention issues, not XSD schema issues).
 
 **Identify the source format first:** an EAE file starts with
