@@ -35,13 +35,13 @@
 		</OutputVars>
 	</SubAppInterfaceList>
 	<SubAppNetwork>
-		<FB Name="WorkpieceSensor" Type="Meins::DesingPatterns::HandshakePattern::WorkpieceSensor" x="-4000" y="0">
+		<FB Name="WorkpieceSensor" Type="Meins::DesingPatterns::HandshakePattern::WorkpieceSensor" x="-5100" y="0">
 		</FB>
-		<FB Name="Orchestrator" Type="Meins::DesingPatterns::HandshakePattern::CylinderOrchestrator" x="-1000" y="0">
+		<FB Name="Orchestrator" Type="Meins::DesingPatterns::HandshakePattern::CylinderOrchestrator" x="-2100" y="0">
 		</FB>
-		<FB Name="Cylinder" Type="Meins::DesingPatterns::HandshakePattern::CylinderService" x="2000" y="-800">
+		<FB Name="Cylinder" Type="Meins::DesingPatterns::HandshakePattern::CylinderService" x="900" y="-800">
 		</FB>
-		<FB Name="Sink" Type="Meins::DesingPatterns::HandshakePattern::DropSinkService" x="2000" y="800">
+		<FB Name="Sink" Type="Meins::DesingPatterns::HandshakePattern::DropSinkService" x="900" y="800">
 		</FB>
 		<EventConnections>
 			<Connection Source="INIT" Destination="WorkpieceSensor.INIT" dx1="800">
@@ -50,10 +50,10 @@
 			<Connection Source="WorkpieceSensor.INITO" Destination="Orchestrator.INIT">
 				<Attribute Name="Visible" Value="false"/>
 			</Connection>
-			<Connection Source="Orchestrator.INITO" Destination="Cylinder.INIT">
+			<Connection Source="Orchestrator.INITO" Destination="Cylinder.INIT" dx1="886.67">
 				<Attribute Name="Visible" Value="false"/>
 			</Connection>
-			<Connection Source="Cylinder.INITO" Destination="Sink.INIT">
+			<Connection Source="Cylinder.INITO" Destination="Sink.INIT" dx1="80" dx2="80" dy="800">
 				<Attribute Name="Visible" Value="false"/>
 			</Connection>
 			<Connection Source="Sink.INITO" Destination="INITO" dx1="800">
@@ -82,7 +82,7 @@
 			<Connection Source="Orchestrator.QO" Destination="Cylinder.QI" dx1="400">
 				<Attribute Name="Visible" Value="false"/>
 			</Connection>
-			<Connection Source="Cylinder.QO" Destination="Sink.QI" dx1="400">
+			<Connection Source="Cylinder.QO" Destination="Sink.QI" dx1="80" dx2="80" dy="693.33">
 				<Attribute Name="Visible" Value="false"/>
 			</Connection>
 			<Connection Source="Sink.QO" Destination="QO" dx1="160">
@@ -102,9 +102,9 @@
 			</Connection>
 		</DataConnections>
 		<AdapterConnections>
-			<Connection Source="WorkpieceSensor.ACTIVATE" Destination="Orchestrator.SRSP" Comment="WorkpieceSensor requests the round trip (REQ_TRIP); Orchestrator answers once the whole trip is confirmed complete"/>
-			<Connection Source="Orchestrator.SREQ1" Destination="Cylinder.SRSP" Comment="Orchestrator forwards the trip request; reacts to the mid-trip IND (end position reached) and the closing CNF (trip complete)"/>
-			<Connection Source="Orchestrator.SREQ2" Destination="Sink.SRSP" Comment="Orchestrator requests the drop once the cylinder reports reaching the end position"/>
+			<Connection Source="WorkpieceSensor.ACTIVATE" Destination="Orchestrator.SRSP" Comment="WorkpieceSensor requests the round trip (REQ_TRIP); Orchestrator answers once the whole trip is confirmed complete" dx1="1006.67"/>
+			<Connection Source="Orchestrator.SREQ1" Destination="Cylinder.SRSP" Comment="Orchestrator forwards the trip request; reacts to the mid-trip IND (end position reached) and the closing CNF (trip complete)" dx1="886.67"/>
+			<Connection Source="Orchestrator.SREQ2" Destination="Sink.SRSP" Comment="Orchestrator requests the drop once the cylinder reports reaching the end position" dx1="886.67"/>
 		</AdapterConnections>
 	</SubAppNetwork>
 </SubAppType>
