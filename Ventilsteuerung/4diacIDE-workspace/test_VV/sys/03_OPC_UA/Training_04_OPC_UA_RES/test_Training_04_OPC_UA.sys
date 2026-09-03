@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<System Name="test_Training_04_OPC_UA">
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2026-09-02">
+	</VersionInfo>
+	<CompilerInfo packageName="Training_OPC_UA_RES3">
+		<Import declaration="logiBUS::stations::Computers::C_11"/>
+		<Import declaration="logiBUS::stations::Computers::C_12"/>
+	</CompilerInfo>
+	<Application Name="App_OPC_UA_RES3">
+		<SubAppNetwork>
+			<SubApp Name="SubApp_PC_A" Type="subapp::Training_04_OPC_UA_RES::SubApp_PC_A" x="2900" y="1200">
+			</SubApp>
+			<SubApp Name="SubApp_PC_B" Type="subapp::Training_04_OPC_UA_RES::SubApp_PC_B" x="6000" y="1300">
+			</SubApp>
+		</SubAppNetwork>
+	</Application>
+	<Device Name="FORTE_PC_A" Type="iec61499::system::FORTE_PC" x="1760" y="1840">
+		<Parameter Name="MGR_ID" Value="C_11" Comment="Device manager socket ID"/>
+		<Attribute Name="Profile" Type="STRING" Value="HOLOBLOC"/>
+		<Attribute Name="Color" Type="STRING" Value="255,190,111"/>
+		<Resource Name="EMB_RES_A" Type="iec61499::system::EMB_RES" x="0" y="0">
+			<FBNetwork>
+				<FB Name="E_TRIG" Type="iec61499::events::E_TRIG" x="1900" y="100">
+					<Parameter Name="EVENTTYPE" Value="'EInit'"/>
+				</FB>
+				<EventConnections>
+					<Connection Source="START.COLD" Destination="E_TRIG.REQ" dx1="546.67"/>
+				</EventConnections>
+			</FBNetwork>
+		</Resource>
+	</Device>
+	<Device Name="FORTE_PC_B" Type="iec61499::system::FORTE_PC" x="2400" y="2560">
+		<Parameter Name="MGR_ID" Value="C_12" Comment="Device manager socket ID"/>
+		<Attribute Name="Profile" Type="STRING" Value="HOLOBLOC"/>
+		<Attribute Name="Color" Type="STRING" Value="59,215,47"/>
+		<Resource Name="EMB_RES_B" Type="iec61499::system::EMB_RES" x="0" y="0">
+			<FBNetwork>
+				<FB Name="E_TRIG" Type="iec61499::events::E_TRIG" x="2300" y="200">
+					<Parameter Name="EVENTTYPE" Value="'EInit'"/>
+				</FB>
+				<EventConnections>
+					<Connection Source="START.COLD" Destination="E_TRIG.REQ" dx1="746.67"/>
+				</EventConnections>
+			</FBNetwork>
+		</Resource>
+	</Device>
+	<Segment Name="Ethernet" Type="iec61499::system::Ethernet" x="2640" y="1440" dx1="2000">
+		<Attribute Name="Color" Type="STRING" Value="56,90,235"/>
+	</Segment>
+	<Mapping From="App_OPC_UA_RES3.SubApp_PC_A" To="FORTE_PC_A.EMB_RES_A"/>
+	<Mapping From="App_OPC_UA_RES3.SubApp_PC_B" To="FORTE_PC_B.EMB_RES_B"/>
+	<Link SegmentName="Ethernet" CommResource="FORTE_PC_A" Comment="">
+	</Link>
+	<Link SegmentName="Ethernet" CommResource="FORTE_PC_B" Comment="">
+	</Link>
+</System>
