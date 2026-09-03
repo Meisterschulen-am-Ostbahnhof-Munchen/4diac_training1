@@ -12,6 +12,14 @@
 			</Event>
 		</EventOutputs>
 	</InterfaceList>
+	<Service RightInterface="SOCKET" LeftInterface="PLUG">
+		<ServiceSequence Name="notify">
+			<ServiceTransaction>
+				<InputPrimitive Interface="PLUG" Event="REQ"/>
+				<OutputPrimitive Interface="SOCKET" Event="REQ"/>
+			</ServiceTransaction>
+		</ServiceSequence>
+	</Service>
 	<Attribute Name="eclipse4diac::core::TypeHash" Value="''"/>
 	<Attribute Name="Documentation" Type="CDATA"><![CDATA[<p>Reduced, unidirectional member of the <code>EVENT_HS</code> family
 (Handshake design pattern, IEC 61499 primer course, Module 6, Valeriy
@@ -32,5 +40,11 @@ for the full write-up of the <code>EVENT_HS</code> family, including
 this and the other three reduced variants
 (<code>EVENT_HS_UNI_WSTRING</code>, <code>EVENT_HS_ACK</code>,
 <code>EVENT_HS_ACK_WSTRING</code>).</p>
+<p>The <code>&lt;Service&gt;</code> block below is purely
+documentation (a service-sequence diagram, per the XSD's
+<code>minOccurs="0"</code> - optional, not required for the adapter
+connection to actually forward events; the standard 4diac
+<code>AE.adp</code> has none either). Added anyway since it does not
+hurt and makes the single REQ transaction explicit.</p>
 ]]></Attribute>
 </AdapterType>
