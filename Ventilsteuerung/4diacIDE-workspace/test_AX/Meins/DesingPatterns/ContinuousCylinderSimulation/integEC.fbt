@@ -85,7 +85,7 @@
 		<OutputVars>
 			<VarDeclaration Name="out" Type="REAL" Comment="out value (depends on integType)" InitialValue="0.0"/>
 			<VarDeclaration Name="total" Type="REAL" Comment="integrated summation of all pv" InitialValue="0.0"/>
-			<VarDeclaration Name="aTotal" Type="REAL" Comment="integrated summation of all ABS(pv)" InitialValue="0.0"/>
+			<VarDeclaration Name="aTotal" Type="REAL" Comment="signed integrated summation of pv1/tBase1+pv2/tBase2, without inv1/inv2 correction (despite the name, calcTotal never applies ABS() - an inconsistency already present in the original nxtControl source, preserved as-is here)" InitialValue="0.0"/>
 			<VarDeclaration Name="error" Type="BOOL" Comment="error detected" InitialValue="FALSE"/>
 		</OutputVars>
 	</InterfaceList>
