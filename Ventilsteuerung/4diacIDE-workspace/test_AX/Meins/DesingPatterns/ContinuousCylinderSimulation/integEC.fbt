@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<FBType Name="integEC" Comment="Ground-truth reference: generic time-based integrator (physical cylinder position model)">
+	<Identification Standard="61499-2" Description="Educational reference, ported for the Meisterschulen am Ostbahnhof IEC 61499 training repository. Original design (c) nxtControl GmbH, from the UniversalAutomation.org 'IEC 61499: primer course' curriculum exercise Final.sln (also present in the LiftingLuggage_*.sln/Starter.sln exercises), IEC61499/integEC.fbt - included here under the same educational-use terms as the rest of that curriculum. This port: Copyright (c) 2026 Meisterschulen am Ostbahnhof, EPL-2.0, https://www.eclipse.org/legal/epl-2.0/">
+	</Identification>
+	<VersionInfo Organization="nxtControl GmbH" Version="0.0" Author="milos" Date="2007-06-14" Remarks="Original EAE/nxtControl design (Template), source: Final.sln (identical copies in LiftingLuggage_*.sln, Starter.sln)">
+	</VersionInfo>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2026-09-03" Remarks="Ported from EAE/nxtControl format (LibraryElement.dtd, ST as an attribute with &#xD;&#xA; escapes) to 4diac's FBType XSD (ST as CDATA). Interface, ECC, and both algorithms otherwise unchanged. Part of the CylinderH continuous-simulation reference - see ContinuousCylinderSimulation.md">
+	</VersionInfo>
+	<CompilerInfo packageName="Meins::DesingPatterns::ContinuousCylinderSimulation">
+	</CompilerInfo>
+	<InterfaceList>
+		<EventInputs>
+			<Event Name="INIT" Type="Event" Comment="Initialization Request">
+				<With Var="inv1"/>
+				<With Var="inv2"/>
+				<With Var="tBase1"/>
+				<With Var="tBase2"/>
+				<With Var="sp"/>
+				<With Var="preTrip"/>
+				<With Var="integType"/>
+				<With Var="cycleTime"/>
+				<With Var="maxValue"/>
+				<With Var="minValue"/>
+				<With Var="useLimits"/>
+			</Event>
+			<Event Name="RESET" Type="Event" Comment="reset integrator">
+				<With Var="tBase1"/>
+				<With Var="tBase2"/>
+				<With Var="cycleTime"/>
+				<With Var="maxValue"/>
+				<With Var="minValue"/>
+				<With Var="useLimits"/>
+			</Event>
+			<Event Name="C_CYCLE" Type="Event" Comment="cycle calculation call">
+				<With Var="pv1"/>
+				<With Var="pv2"/>
+			</Event>
+			<Event Name="OP_UPD" Type="Event" Comment="new operator parameter">
+				<With Var="sp"/>
+				<With Var="preTrip"/>
+				<With Var="inv1"/>
+				<With Var="inv2"/>
+				<With Var="integType"/>
+				<With Var="maxValue"/>
+				<With Var="minValue"/>
+				<With Var="useLimits"/>
+			</Event>
+		</EventInputs>
+		<EventOutputs>
+			<Event Name="INITO" Type="Event" Comment="Initialization Confirm">
+				<With Var="out"/>
+				<With Var="total"/>
+				<With Var="aTotal"/>
+				<With Var="error"/>
+			</Event>
+			<Event Name="CNF" Type="Event" Comment="Execution Confirmation">
+				<With Var="out"/>
+				<With Var="total"/>
+				<With Var="aTotal"/>
+			</Event>
+			<Event Name="TRIP" Type="Event" Comment="total &gt;= sp">
+				<With Var="total"/>
+			</Event>
+			<Event Name="P_TRIP" Type="Event" Comment="preTrip &gt; (sp - total)">
+				<With Var="total"/>
+			</Event>
+		</EventOutputs>
+		<InputVars>
+			<VarDeclaration Name="pv1" Type="REAL" Comment="pv1 to integrate" InitialValue="0.0"/>
+			<VarDeclaration Name="pv2" Type="REAL" Comment="pv2 to integrate" InitialValue="0.0"/>
+			<VarDeclaration Name="inv1" Type="BOOL" Comment="invert (multiply with -1) pv1" InitialValue="FALSE"/>
+			<VarDeclaration Name="inv2" Type="BOOL" Comment="invert (multiply with -1) pv2" InitialValue="FALSE"/>
+			<VarDeclaration Name="tBase1" Type="REAL" Comment="timebase of pv1 [s]" InitialValue="3600.0"/>
+			<VarDeclaration Name="tBase2" Type="REAL" Comment="timebase of pv2 [s]" InitialValue="3600.0"/>
+			<VarDeclaration Name="sp" Type="REAL" Comment="setpoint of integrator" InitialValue="0.0"/>
+			<VarDeclaration Name="preTrip" Type="REAL" Comment="distance to setpoint for preTrip to set" InitialValue="0.0"/>
+			<VarDeclaration Name="integType" Type="INT" Comment="integration Type" InitialValue="0"/>
+			<VarDeclaration Name="cycleTime" Type="REAL" Comment="cycle Time for calculation" InitialValue="1.0"/>
+			<VarDeclaration Name="maxValue" Type="REAL" Comment=""/>
+			<VarDeclaration Name="minValue" Type="REAL" Comment=""/>
+			<VarDeclaration Name="useLimits" Type="BOOL" Comment=""/>
+		</InputVars>
+		<OutputVars>
+			<VarDeclaration Name="out" Type="REAL" Comment="out value (depends on integType)" InitialValue="0.0"/>
+			<VarDeclaration Name="total" Type="REAL" Comment="integrated summation of all pv" InitialValue="0.0"/>
+			<VarDeclaration Name="aTotal" Type="REAL" Comment="integrated summation of all ABS(pv)" InitialValue="0.0"/>
+			<VarDeclaration Name="error" Type="BOOL" Comment="error detected" InitialValue="FALSE"/>
+		</OutputVars>
+	</InterfaceList>
+	<BasicFB>
+		<InternalVars>
+			<VarDeclaration Name="sumPv" Type="REAL" Comment="time based sum of pv (with inv correction)" InitialValue="0.0"/>
+		</InternalVars>
+		<ECC>
+			<ECState Name="START" Comment="Initial State" x="200" y="700">
+			</ECState>
+			<ECState Name="INIT" Comment="Initialization" x="900" y="400">
+				<ECAction Algorithm="INIT" Output="INITO"/>
+			</ECState>
+			<ECState Name="execIntegration" Comment="Normal execution: one integration step" x="1600" y="700">
+				<ECAction Algorithm="calcTotal" Output="CNF"/>
+			</ECState>
+			<ECState Name="raiseTrip" Comment="total reached the setpoint" x="900" y="1300">
+				<ECAction Output="TRIP"/>
+			</ECState>
+			<ECState Name="raisePTrip" Comment="total is within preTrip of the setpoint" x="900" y="1000">
+				<ECAction Output="P_TRIP"/>
+			</ECState>
+			<ECState Name="RESET_ST" Comment="Reset the integrator" x="1600" y="200">
+				<ECAction Algorithm="INIT" Output="CNF"/>
+			</ECState>
+			<ECTransition Source="START" Destination="INIT" Condition="INIT" x="550" y="550"/>
+			<ECTransition Source="INIT" Destination="START" Condition="1" x="550" y="850"/>
+			<ECTransition Source="START" Destination="execIntegration" Condition="C_CYCLE[NOT error]" x="1250" y="700"/>
+			<ECTransition Source="execIntegration" Destination="START" Condition="1" x="1250" y="1150"/>
+			<ECTransition Source="START" Destination="raiseTrip" Condition="C_CYCLE[total &gt;= sp AND sp &gt; 0.0]" x="550" y="1150"/>
+			<ECTransition Source="raiseTrip" Destination="START" Condition="1" x="550" y="1000"/>
+			<ECTransition Source="START" Destination="raisePTrip" Condition="C_CYCLE[preTrip &gt; (sp - total) AND sp &gt; 0.0 AND preTrip &gt; 0.0]" x="550" y="900"/>
+			<ECTransition Source="raisePTrip" Destination="START" Condition="1" x="550" y="800"/>
+			<ECTransition Source="START" Destination="RESET_ST" Condition="RESET" x="900" y="450"/>
+			<ECTransition Source="RESET_ST" Destination="START" Condition="1" x="1250" y="400"/>
+		</ECC>
+		<Algorithm Name="INIT" Comment="Reset the integrator outputs">
+			<ST><![CDATA[out := 0.0;
+total := 0.0;
+aTotal := 0.0;
+error := (tBase1 <= 0.0) OR (tBase2 <= 0.0) OR (cycleTime <= 0.0);]]></ST>
+		</Algorithm>
+		<Algorithm Name="calcTotal" Comment="One integration step over cycleTime">
+			<ST><![CDATA[aTotal := aTotal + cycleTime * (pv1/tBase1 + pv2/tBase2);
+
+IF inv1 THEN
+	sumPv := pv1/tBase1 * -1;
+ELSE
+	sumPv := pv1/tBase1;
+END_IF;
+IF inv2 THEN
+	sumPv := sumPv + pv2/tBase2 * -1;
+ELSE
+	sumPv := sumPv + pv2/tBase2;
+END_IF;
+
+total := total + cycleTime * sumPv;
+
+IF useLimits THEN
+	total := LIMIT(minValue, total, maxValue);
+END_IF;
+
+IF integType = 1 AND sp > 0.0 THEN
+	out := sp-total;
+ELSE
+	out := total;
+END_IF;]]></ST>
+		</Algorithm>
+	</BasicFB>
+	<Attribute Name="eclipse4diac::core::TypeHash" Value="''"/>
+	<Attribute Name="Documentation" Type="CDATA"><![CDATA[<p><b>Ground-truth reference, not a Vyatkin Module 6 slide pattern.</b>
+Generic time-based integrator, ported as-is from the UniversalAutomation.org
+"IEC 61499: primer course" curriculum (<code>Final.sln</code>,
+<code>IEC61499/integEC.fbt</code>, original format: EAE/nxtControl
+<code>LibraryElement.dtd</code>). Used by <code>CylinderHCore.fbt</code>
+in this folder as the physical cylinder's position model: on every
+<code>C_CYCLE</code> tick it integrates <code>pv1</code>/<code>pv2</code>
+(the two extend/retract drive signals) over <code>cycleTime</code>,
+optionally clamped to <code>[minValue, maxValue]</code>, producing
+<code>total</code> (raw position) and <code>out</code> (position, or
+distance-to-setpoint if <code>integType=1</code>).</p>
+<p><b>Renamed state vs. the original:</b> the original names its reset
+state <code>RESET</code>, identical to its own <code>RESET</code>
+event. Renamed to <code>RESET_ST</code> here purely as a precaution
+against a same-name event/state clash (not confirmed to actually be a
+problem in 4diac, just untested either way) - no functional change.</p>
+]]></Attribute>
+</FBType>

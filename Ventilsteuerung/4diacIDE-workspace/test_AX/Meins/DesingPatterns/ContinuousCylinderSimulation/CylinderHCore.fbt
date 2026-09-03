@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<FBType Name="CylinderHCore" Comment="Ground-truth reference: continuous-time cylinder position model (E_CYCLE tick + integEC integrator + ChangeDetect filter)">
+	<Identification Standard="61499-2" Description="Educational reference, ported for the Meisterschulen am Ostbahnhof IEC 61499 training repository. Original design (c) nxtControl GmbH, from the UniversalAutomation.org 'IEC 61499: primer course' curriculum exercise Final.sln (also present in the LiftingLuggage_*.sln/Starter.sln exercises), IEC61499/CylinderH/CylinderH.fbt - included here under the same educational-use terms as the rest of that curriculum. This port: Copyright (c) 2026 Meisterschulen am Ostbahnhof, EPL-2.0, https://www.eclipse.org/legal/epl-2.0/">
+	</Identification>
+	<VersionInfo Organization="nxtControl GmbH" Version="0.0" Author="Andrei" Date="2016-05-25" Remarks="Original EAE/nxtControl design (Template), source: Final.sln (identical copies in LiftingLuggage_*.sln, Starter.sln), original name CylinderH">
+	</VersionInfo>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2026-09-03" Remarks="Core-only port: renamed CylinderH -> CylinderHCore. Dropped LABEL (display-only) and the CylinderH_HMI instance (a native Service Interface FB with no portable ECC/algorithm - just a QI/QO init passthrough plus an HMI display, not part of the physical model) and replaced its structural role (relaying INITO onward to start the E_CYCLE ticker and to this block's own INTO) with a direct connection. Uses the standard iec61499::events::E_CYCLE instead of porting a duplicate - see the check-standard-lib-before-creating lesson. integEC/ChangeDetect otherwise unchanged, see ContinuousCylinderSimulation.md">
+	</VersionInfo>
+	<CompilerInfo packageName="Meins::DesingPatterns::ContinuousCylinderSimulation">
+		<Import declaration="iec61499::events::E_CYCLE"/>
+	</CompilerInfo>
+	<InterfaceList>
+		<EventInputs>
+			<Event Name="INIT" Type="Event" Comment="Initialization Request">
+				<With Var="PV1"/>
+				<With Var="PV2"/>
+			</Event>
+			<Event Name="REQ" Type="Event" Comment="Normal Execution Request: apply new PV1/PV2 drive signals">
+				<With Var="PV1"/>
+				<With Var="PV2"/>
+			</Event>
+		</EventInputs>
+		<EventOutputs>
+			<Event Name="INTO" Type="Event" Comment="Initialization Confirm">
+				<With Var="POSITION"/>
+			</Event>
+			<Event Name="IND" Type="Event" Comment="Position changed">
+				<With Var="POSITION"/>
+			</Event>
+		</EventOutputs>
+		<InputVars>
+			<VarDeclaration Name="PV1" Type="REAL" Comment="Extend drive signal, fed to integEC.pv1"/>
+			<VarDeclaration Name="PV2" Type="REAL" Comment="Retract drive signal (inverted), fed to integEC.pv2"/>
+		</InputVars>
+		<OutputVars>
+			<VarDeclaration Name="POSITION" Type="REAL" Comment="Current cylinder position, 0.0 (retracted) to 130.0 (extended)"/>
+		</OutputVars>
+	</InterfaceList>
+	<FBNetwork>
+		<FB Name="Tick" Type="iec61499::events::E_CYCLE" x="200" y="1200">
+			<Parameter Name="DT" Value="T#20ms"/>
+		</FB>
+		<FB Name="Model" Type="Meins::DesingPatterns::ContinuousCylinderSimulation::integEC" x="1200" y="700">
+			<Parameter Name="cycleTime" Value="0.02"/>
+			<Parameter Name="integType" Value="0"/>
+			<Parameter Name="preTrip" Value="0.0"/>
+			<Parameter Name="sp" Value="100.0"/>
+			<Parameter Name="inv2" Value="TRUE"/>
+			<Parameter Name="inv1" Value="FALSE"/>
+			<Parameter Name="tBase1" Value="4.0"/>
+			<Parameter Name="tBase2" Value="4.0"/>
+			<Parameter Name="maxValue" Value="130"/>
+			<Parameter Name="minValue" Value="0.0"/>
+			<Parameter Name="useLimits" Value="TRUE"/>
+		</FB>
+		<FB Name="Filter" Type="Meins::DesingPatterns::ContinuousCylinderSimulation::ChangeDetect" x="2400" y="1000">
+		</FB>
+		<EventConnections>
+			<Connection Source="INIT" Destination="Model.INIT" dx1="600"/>
+			<Connection Source="Model.INITO" Destination="Tick.START" dx1="600"/>
+			<Connection Source="Model.INITO" Destination="INTO" dx1="600"/>
+			<Connection Source="Tick.EO" Destination="Model.C_CYCLE" dx1="600"/>
+			<Connection Source="REQ" Destination="Model.OP_UPD" dx1="600"/>
+			<Connection Source="Model.CNF" Destination="Filter.REQ" dx1="600"/>
+			<Connection Source="Filter.CHG" Destination="IND" dx1="600"/>
+		</EventConnections>
+		<DataConnections>
+			<Connection Source="PV1" Destination="Model.pv1" dx1="600"/>
+			<Connection Source="PV2" Destination="Model.pv2" dx1="600"/>
+			<Connection Source="Model.out" Destination="Filter.INP" dx1="600"/>
+			<Connection Source="Filter.OUT" Destination="POSITION" dx1="600"/>
+		</DataConnections>
+	</FBNetwork>
+	<Attribute Name="eclipse4diac::core::TypeHash" Value="''"/>
+	<Attribute Name="Documentation" Type="CDATA"><![CDATA[<p><b>Ground-truth reference, not a Vyatkin Module 6 slide pattern.</b>
+Core-only port of the UniversalAutomation.org "IEC 61499: primer
+course" curriculum's <code>CylinderH</code> (<code>Final.sln</code>,
+<code>IEC61499/CylinderH/CylinderH.fbt</code> - identical copies exist
+in the <code>LiftingLuggage_*.sln</code>/<code>Starter.sln</code>
+exercises, and it is itself the innermost layer of the
+<code>CylinderHSens</code>/<code>CylinderHSensValve</code> composites
+seen there). A genuinely different modelling technique from this
+repo's <code>EventDrivenCylinder.fbt</code>/<code>CylinderService.fbt</code>
+(Purely-Event-Driven pattern / slide-47 message-exchange example):
+those are discrete event-driven state machines with zero continuous
+data; this is a <b>continuous-time physics simulation</b> - an
+<code>E_CYCLE</code> ticks every 20&nbsp;ms, driving
+<code>integEC</code> (a generic time-based integrator) to ramp a REAL
+<code>POSITION</code> value between 0.0 (retracted) and 130.0
+(extended) based on the <code>PV1</code>/<code>PV2</code> drive
+signals, filtered through <code>ChangeDetect</code> so <code>IND</code>
+only fires when the position actually moved. Matches the "Modelling
+Event-driven PLCs system" / "Modelling a Scan-based PLCs System"
+slides (Module 6, slides 50-52) more closely than any pattern actually
+implemented in this repo so far - found while searching the curriculum
+for material relevant to already-implemented patterns, kept here as
+its own standalone reference rather than folded into an existing
+pattern folder.</p>
+<p><b>Reduced vs. the original</b> (by explicit choice, not full
+fidelity): dropped the <code>LABEL</code> display string and the
+<code>CylinderH_HMI</code> instance - a native EAE Service Interface
+FB (<code>Interface1</code> in the original) with no portable
+ECC/algorithm of its own, just a <code>QI</code>/<code>QO</code> init
+passthrough plus an HMI panel. Its one <i>structural</i> role - relaying
+<code>Model.INITO</code> onward to start the <code>E_CYCLE</code>
+ticker and to this block's own <code>INTO</code> - is preserved here
+as a direct connection instead. See
+<code>CylinderH_HMI.fbt</code>/<code>CylinderHSens.fbt</code>/
+<code>CylinderHSensValve.fbt</code> in the original curriculum export
+for the full chain (sensor wrapping, valve control, HMI) if a more
+complete port is ever needed.</p>
+]]></Attribute>
+</FBType>
