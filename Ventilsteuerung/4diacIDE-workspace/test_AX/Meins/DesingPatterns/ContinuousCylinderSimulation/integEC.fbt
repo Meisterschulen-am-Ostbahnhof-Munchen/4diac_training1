@@ -8,6 +8,8 @@
 	</VersionInfo>
 	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.1" Author="Franz Höpfinger" Date="2026-09-03" Remarks="PR #160 review feedback: INIT/INITO must be Type=EInit (were Type=Event) - fixed, With-Var lists unchanged">
 	</VersionInfo>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.2" Author="Franz Höpfinger" Date="2026-09-03" Remarks="PR #160 review feedback (coderabbitai): documented that TRIP/P_TRIP are practically unreachable due to ECC transition declaration order (execIntegration's C_CYCLE[NOT error] always wins first), inherited unchanged from the original nxtControl source. Not fixed - no effect on CylinderHCore.fbt, which never wires these outputs; would need a real ECC restructuring">
+	</VersionInfo>
 	<CompilerInfo packageName="Meins::DesingPatterns::ContinuousCylinderSimulation">
 	</CompilerInfo>
 	<InterfaceList>
@@ -102,10 +104,10 @@
 			<ECState Name="execIntegration" Comment="Normal execution: one integration step" x="1600" y="700">
 				<ECAction Algorithm="calcTotal" Output="CNF"/>
 			</ECState>
-			<ECState Name="raiseTrip" Comment="total reached the setpoint" x="900" y="1300">
+			<ECState Name="raiseTrip" Comment="total reached the setpoint - KNOWN LIMITATION: unreachable while error=FALSE, see Documentation" x="900" y="1300">
 				<ECAction Output="TRIP"/>
 			</ECState>
-			<ECState Name="raisePTrip" Comment="total is within preTrip of the setpoint" x="900" y="1000">
+			<ECState Name="raisePTrip" Comment="total is within preTrip of the setpoint - KNOWN LIMITATION: unreachable while error=FALSE, see Documentation" x="900" y="1000">
 				<ECAction Output="P_TRIP"/>
 			</ECState>
 			<ECState Name="RESET_ST" Comment="Reset the integrator" x="1600" y="200">
@@ -172,5 +174,21 @@ state <code>RESET</code>, identical to its own <code>RESET</code>
 event. Renamed to <code>RESET_ST</code> here purely as a precaution
 against a same-name event/state clash (not confirmed to actually be a
 problem in 4diac, just untested either way) - no functional change.</p>
+<p><b>Known limitation, inherited from the original (PR #160 review,
+coderabbitai):</b> <code>TRIP</code>/<code>P_TRIP</code> are
+practically unreachable. IEC 61499 ECC evaluates a state's outgoing
+transitions in declaration order and takes the first whose condition
+is true; <code>START -&gt; execIntegration</code> (<code>C_CYCLE[NOT
+error]</code>) is declared before <code>START -&gt; raiseTrip</code>/
+<code>raisePTrip</code>, and its condition is true on every
+<code>C_CYCLE</code> as long as <code>error=FALSE</code> - so the
+threshold transitions never get evaluated during normal operation.
+This exact transition order already exists unchanged in the original
+nxtControl source. Not fixed here: it is a real ECC restructuring (a
+dedicated calculation state, then mutually exclusive threshold checks
+afterward), and it has no effect on <code>CylinderHCore.fbt</code> in
+this folder, which never wires <code>Model.TRIP</code>/
+<code>Model.P_TRIP</code> to anything. Worth fixing if this block is
+ever reused somewhere that actually needs the trip outputs.</p>
 ]]></Attribute>
 </FBType>
