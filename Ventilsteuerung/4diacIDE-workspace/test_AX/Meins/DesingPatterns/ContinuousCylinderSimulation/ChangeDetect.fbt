@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<FBType Name="ChangeDetect" Comment="Ground-truth reference: fires CHG only when the REAL input value actually changed">
+	<Identification Standard="61499-2" Description="Educational reference, ported for the Meisterschulen am Ostbahnhof IEC 61499 training repository. Original design (c) nxtControl GmbH, from the UniversalAutomation.org 'IEC 61499: primer course' curriculum exercise Final.sln (also present in the LiftingLuggage_*.sln/Starter.sln exercises), IEC61499/ChangeDetect.fbt - included here under the same educational-use terms as the rest of that curriculum. This port: Copyright (c) 2026 Meisterschulen am Ostbahnhof, EPL-2.0, https://www.eclipse.org/legal/epl-2.0/">
+	</Identification>
+	<VersionInfo Organization="nxtControl GmbH" Version="0.0" Author="Andrei" Date="2016-05-28" Remarks="Original EAE/nxtControl design (Template), source: Final.sln (identical copies in LiftingLuggage_*.sln, Starter.sln)">
+	</VersionInfo>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2026-09-03" Remarks="Ported from EAE/nxtControl format (LibraryElement.dtd, ST as an attribute with &#xD;&#xA; escapes) to 4diac's FBType XSD (ST as CDATA). Interface, ECC, and both algorithms otherwise unchanged. Part of the CylinderH continuous-simulation reference - see ContinuousCylinderSimulation.md">
+	</VersionInfo>
+	<CompilerInfo packageName="Meins::DesingPatterns::ContinuousCylinderSimulation">
+	</CompilerInfo>
+	<InterfaceList>
+		<EventInputs>
+			<Event Name="REQ" Type="Event" Comment="Normal Execution Request">
+				<With Var="INP"/>
+			</Event>
+		</EventInputs>
+		<EventOutputs>
+			<Event Name="CHG" Type="Event" Comment="Execution Confirmation: fired every REQ, but only carries a new value on an actual change">
+				<With Var="OUT"/>
+			</Event>
+		</EventOutputs>
+		<InputVars>
+			<VarDeclaration Name="INP" Type="REAL" Comment=""/>
+		</InputVars>
+		<OutputVars>
+			<VarDeclaration Name="OUT" Type="REAL" Comment=""/>
+		</OutputVars>
+	</InterfaceList>
+	<BasicFB>
+		<InternalVars>
+			<VarDeclaration Name="PREV" Type="REAL" Comment="Value seen on the previous REQ"/>
+		</InternalVars>
+		<ECC>
+			<ECState Name="START" Comment="Initial State" x="200" y="400">
+			</ECState>
+			<ECState Name="FIRST" Comment="First REQ ever received: always report it" x="900" y="400">
+				<ECAction Algorithm="INIT" Output="CHG"/>
+			</ECState>
+			<ECState Name="WAIT" Comment="Waiting for the next REQ" x="1600" y="700">
+			</ECState>
+			<ECState Name="NOCHANGE" Comment="Value unchanged: stay quiet" x="2400" y="400">
+				<ECAction Algorithm="REQ"/>
+			</ECState>
+			<ECState Name="CHANGED" Comment="Value changed: report it" x="900" y="1300">
+				<ECAction Algorithm="REQ" Output="CHG"/>
+			</ECState>
+			<ECTransition Source="START" Destination="FIRST" Condition="REQ" x="550" y="400"/>
+			<ECTransition Source="FIRST" Destination="WAIT" Condition="1" x="1250" y="550"/>
+			<ECTransition Source="WAIT" Destination="NOCHANGE" Condition="REQ[PREV = INP]" x="2000" y="550"/>
+			<ECTransition Source="NOCHANGE" Destination="WAIT" Condition="1" x="2000" y="850"/>
+			<ECTransition Source="WAIT" Destination="CHANGED" Condition="REQ[PREV &lt;&gt; INP]" x="1250" y="1000"/>
+			<ECTransition Source="CHANGED" Destination="WAIT" Condition="1" x="1250" y="1150"/>
+		</ECC>
+		<Algorithm Name="INIT" Comment="First value ever seen: store and report it">
+			<ST><![CDATA[PREV := INP;
+OUT := INP;]]></ST>
+		</Algorithm>
+		<Algorithm Name="REQ" Comment="Store the current value; OUT is only meaningful when this state also fires CHG">
+			<ST><![CDATA[PREV := INP;
+OUT := INP;]]></ST>
+		</Algorithm>
+	</BasicFB>
+	<Attribute Name="eclipse4diac::core::TypeHash" Value="''"/>
+	<Attribute Name="Documentation" Type="CDATA"><![CDATA[<p><b>Ground-truth reference, not a Vyatkin Module 6 slide pattern.</b>
+Simple REAL change-detection filter, ported as-is from the
+UniversalAutomation.org "IEC 61499: primer course" curriculum
+(<code>Final.sln</code>, <code>IEC61499/ChangeDetect.fbt</code>,
+original format: EAE/nxtControl <code>LibraryElement.dtd</code>). Used
+by <code>CylinderHCore.fbt</code> in this folder to throttle the
+integrator's continuous <code>out</code> value down to only the
+moments it actually changes, before reporting the cylinder's
+<code>Position</code> onward.</p>
+]]></Attribute>
+</FBType>

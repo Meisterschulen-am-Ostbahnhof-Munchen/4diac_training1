@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<FBType Name="WorkpieceSensor" Comment="Message Exchange example (slide 47): WPSensor / a1WPS1 - requests the cylinder's round trip service when a workpiece arrives">
+	<Identification Standard="61499-2" Description="Copyright (c) 2026 Meisterschulen am Ostbahnhof &#10; &#10;This program and the accompanying materials are made &#10;available under the terms of the Eclipse Public License 2.0 &#10;which is available at https://www.eclipse.org/legal/epl-2.0/ &#10; &#10;SPDX-License-Identifier: EPL-2.0">
+	</Identification>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2026-09-03" Remarks="SoA implementation in function blocks (IEC 61499 primer course, Module 6, Valeriy Vyatkin, slide 47), WPSensor/a1WPS1 role: uses EVENT_HS_ACK_WSTRING (REQ/CNF only) on its ACTIVATE plug, matching the slide's ACTIVATE>> pin name">
+	</VersionInfo>
+	<CompilerInfo packageName="Meins::DesingPatterns::HandshakePattern">
+		<Import declaration="Meins::DesingPatterns::HandshakePattern::const::MessageExchangeConst"/>
+	</CompilerInfo>
+	<InterfaceList>
+		<EventInputs>
+			<Event Name="INIT" Type="EInit" Comment="Initialization Request">
+				<With Var="QI"/>
+			</Event>
+			<Event Name="DETECT" Type="Event" Comment="Simulated sensor trigger: a workpiece has arrived at the designated place">
+			</Event>
+		</EventInputs>
+		<EventOutputs>
+			<Event Name="INITO" Type="EInit" Comment="Initialization Confirm">
+				<With Var="QO"/>
+			</Event>
+			<Event Name="DONE" Type="Event" Comment="The round trip was confirmed complete">
+				<With Var="TripResult"/>
+			</Event>
+		</EventOutputs>
+		<InputVars>
+			<VarDeclaration Name="QI" Type="BOOL" Comment="Input event qualifier"/>
+		</InputVars>
+		<OutputVars>
+			<VarDeclaration Name="QO" Type="BOOL" Comment="Output event qualifier"/>
+			<VarDeclaration Name="TripResult" Type="WSTRING" Comment="Payload of the last received CNF (expected: MessageExchangeConst::RSP_CYL_TRIP_COMPLETE)"/>
+			<VarDeclaration Name="TripCount" Type="UINT" Comment="Number of completed round trips (demo counter)"/>
+		</OutputVars>
+		<Plugs>
+			<AdapterDeclaration Name="ACTIVATE" Type="adapter::types::bidirectional::Handshake::EVENT_HS_ACK_WSTRING" Comment="Service plug: sends REQ (+REQD) requesting the round trip, receives CNF (+CNFD) when it completes"/>
+		</Plugs>
+	</InterfaceList>
+	<BasicFB>
+		<ECC>
+			<ECState Name="START" Comment="Uninitialized" x="200" y="400">
+			</ECState>
+			<ECState Name="Init" Comment="Initialization" x="900" y="400">
+				<ECAction Algorithm="OnInit" Output="INITO"/>
+			</ECState>
+			<ECState Name="Initialized" Comment="Idle, ready to react" x="1600" y="400">
+			</ECState>
+			<ECState Name="DeInit" Comment="De-initialization" x="900" y="1000">
+				<ECAction Algorithm="OnDeInit" Output="INITO"/>
+			</ECState>
+			<ECState Name="HANDLE_DETECT" Comment="Workpiece arrived: request the round trip" x="2400" y="160">
+				<ECAction Algorithm="PrepareReq" Output="ACTIVATE.REQ"/>
+			</ECState>
+			<ECState Name="HANDLE_CNF" Comment="Round trip confirmed complete" x="2400" y="640">
+				<ECAction Algorithm="OnCnf" Output="DONE"/>
+			</ECState>
+			<ECTransition Source="START" Destination="Init" Condition="INIT[TRUE = QI]" x="550" y="400"/>
+			<ECTransition Source="Init" Destination="Initialized" Condition="1" x="1250" y="400"/>
+			<ECTransition Source="Initialized" Destination="DeInit" Condition="INIT[FALSE = QI]" x="1250" y="700"/>
+			<ECTransition Source="DeInit" Destination="START" Condition="1" x="550" y="1000"/>
+			<ECTransition Source="Initialized" Destination="HANDLE_DETECT" Condition="DETECT" x="1900" y="66.67"/>
+			<ECTransition Source="HANDLE_DETECT" Destination="Initialized" Condition="1" x="1760" y="193.33"/>
+			<ECTransition Source="Initialized" Destination="HANDLE_CNF" Condition="ACTIVATE.CNF" x="1900" y="640"/>
+			<ECTransition Source="HANDLE_CNF" Destination="Initialized" Condition="1" x="500" y="550"/>
+		</ECC>
+		<Algorithm Name="OnInit" Comment="Reset demo counters/payloads">
+			<ST><![CDATA[TripResult := "";
+TripCount := 0;
+QO := QI;]]></ST>
+		</Algorithm>
+		<Algorithm Name="OnDeInit" Comment="De-initialize">
+			<ST><![CDATA[QO := FALSE;]]></ST>
+		</Algorithm>
+		<Algorithm Name="PrepareReq" Comment="Load REQD with the round-trip request before ACTIVATE.REQ fires">
+			<ST><![CDATA[ACTIVATE.REQD := MessageExchangeConst::REQ_TRIP;]]></ST>
+		</Algorithm>
+		<Algorithm Name="OnCnf" Comment="Read CNFD, count a completed round trip">
+			<ST><![CDATA[TripResult := ACTIVATE.CNFD;
+TripCount := TripCount + 1;]]></ST>
+		</Algorithm>
+	</BasicFB>
+	<Attribute Name="eclipse4diac::core::TypeHash" Value="''"/>
+	<Attribute Name="Documentation" Type="CDATA"><![CDATA[<p>Workpiece-arrival sensor (<code>WPSensor</code>/<code>a1WPS1</code>
+in the "SoA implementation in function blocks" diagram, IEC 61499
+primer course, Module 6, Valeriy Vyatkin, slide 47) - one of the four
+function blocks in the <code>CylH</code> message-exchange example
+(slides 42-46 for the message sequence chart this reconstructs).</p>
+<p>Uses <code>EVENT_HS_ACK_WSTRING</code> as a <b>Plug</b> named
+<code>ACTIVATE</code> (matching the slide's <code>ACTIVATE&gt;&gt;</code>
+pin): on <b>DETECT</b> (the simulated sensor firing - fire it manually
+in FORTE monitoring to drive the demo) it sends <b>REQ</b> carrying
+<code>MessageExchangeConst::REQ_TRIP</code> (<code>"trip"</code>,
+matching the MSC's <code>REQ,"trip"</code>); reports <b>DONE</b> once
+the matching <b>CNF</b> (expected payload
+<code>RSP_CYL_TRIP_COMPLETE</code>) comes back from
+<code>CylinderOrchestrator</code>.</p>
+<p>In the real MSC (slides 42-46) this role is split between two
+lifelines, <code>WPS</code> (reports its own arrival,
+<code>RSP,"WPS,1"</code>) and <code>MES</code> (decides to request the
+trip, <code>REQ,"trip"</code>); the FB diagram on slide 47 merges both
+into this single <code>WPSensor</code> block with one
+<code>ACTIVATE</code> connection straight into the orchestrator -
+followed here 1:1.</p>
+<p>See <code>HandshakePattern.md</code> in this folder, section
+"Die Quelle der 'push,100'-Notation", for the full write-up and the
+other three function blocks of this example
+(<code>DropSinkService</code>, <code>CylinderOrchestrator</code>,
+<code>CylinderService</code>).</p>
+]]></Attribute>
+</FBType>

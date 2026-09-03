@@ -208,6 +208,164 @@ oben) – die eigentliche Verhaltensprüfung passiert nur beim Test in der
 
 ## Erweiterungen
 
+### Die Quelle der `"push,100"`-Notation: Message Exchange zwischen Services (Folie 41–48)
+
+Bisher stand in diesem Dokument nur ein beiläufiger Verweis auf
+`"push,100"`. Das eigentliche Diagramm dazu – **"Message exchange
+between services"** – war bisher nirgends beschrieben, obwohl es in
+der PDF sehr ausführlich behandelt wird. Nachgetragen (Korrektur
+2026-09-02: exakt nachgezählt, es sind fünf Folien, nicht drei):
+
+- **Folie 41** – Titelfolie mit den beiden Struktur-/Rollen-Diagrammen
+  (`MES`→`WP Sensor`/`Cylinder`/`Drop`, sowie `Cylinder`→
+  `Start Sens`/`End Sens`/`Push Valve`/`Pop Valve`) und der `CylH`-
+  Mechanik-Skizze – **noch ohne** das eigentliche Message-Sequence-
+  Chart (MSC).
+- **Folien 42–46** – dieselbe MSC-Grafik fünfmal wiederholt (Build-
+  Animation): Inhalt (alle Lifelines, alle Nachrichten) ist auf allen
+  fünf Folien **identisch**, nur der gelb hinterlegte
+  Hervorhebungsbereich wandert von Folie zu Folie weiter nach unten
+  (Folie 42: keine Hervorhebung; Folie 43: INIT-Sequenz +
+  "Workpiece arrived"; Folien 44–46: weitere Ausschnitte bis
+  "Service completed"). Jede der 18 unten aufgelisteten Konstanten
+  ist bereits auf Folie 42 vollständig sichtbar.
+
+**Das Beispiel:** Ein Zylinder `CylH` transportiert ein Werkstück
+zwischen Startposition (`WPS`-Sensor) und Endposition. Er besteht aus
+vier unabhängigen, jeweils eigenständig service-fähigen Teilen:
+`CYL.start` (Startpositions-Sensor), `CYL.end` (Endpositions-Sensor),
+`CYL.push` (Push-Ventil) und `CYL.pop` (Pop-/Rückhol-Ventil). Ein
+übergeordneter Controller `CYL` bündelt diese vier zu einem einzigen
+Service für den Orchestrator `MES` ("Manufacturing Execution System");
+`DS` ist der Ziel-Sink, an den das Werkstück am Ende übergeben wird.
+Jeder dieser Teilnehmer (`MES`, `WPS`, `CYL`, `CYL.start`, `CYL.end`,
+`CYL.push`, `CYL.pop`, `DS`) ist eine eigene Lifeline im Message-
+Sequence-Chart (MSC) auf Folie 42 (identisch auch auf 43–46, siehe
+oben).
+
+**Die Nachrichten-Konvention:** Jede Anfrage/Antwort ist ein einzelner
+String (WSTRING), nach einem einfachen, selbstbeschreibenden Schema:
+
+- `REQ,"<value>"` – Anfrage, trägt nur den rohen Parameter (z. B.
+  `REQ,"100"` an `CYL.push`: "fahre auf 100").
+- `RSP,"<name>,<value>"` – Antwort, trägt zusätzlich den Namen des
+  gemeldeten Zustands/Service (z. B. `RSP,"push,100"`: "push-Ventil
+  steht jetzt auf 100"; `RSP,"start,1"`: "Startsensor meldet 1").
+
+Diese `"name,value"`-Formatierung in der Antwort ist genau die
+Notation, die in `EVENT_HS_WSTRING`s Default-Payloads (`"push,100"`,
+weiter unten in diesem Dokument) zitiert, aber bisher nie referenziert
+wurde.
+
+**Der Ablauf (verkürzt, aus dem MSC auf Folie 42–46):**
+
+1. Alle Teilnehmer initialisieren (`INIT` → `RSP,"start,1"` /
+   `RSP,"end,0"` / `RSP,"WPS,0"` usw.).
+2. *Workpiece arrived:* `WPS` meldet `RSP,"WPS,1"` an `MES`; `MES`
+   schickt `REQ,"trip"` an `CYL` ("mach die Rundfahrt"); `CYL` schickt
+   `REQ,"100"` an `CYL.push`, bekommt `RSP,"push,100"` zurück, meldet
+   `RSP,"CYL,STARTED"` an `MES`.
+3. *Pusher reached end position:* `CYL.end` meldet `RSP,"end,1"`; `CYL`
+   meldet `RSP,"CYL, END POS"` an `MES`, schickt `REQ,"drop"` an `DS`
+   (bekommt `RSP,"ack"`), fährt dann `CYL.push` zurück auf `0`
+   (`REQ,"0"` → `RSP,"push,0"`) und `CYL.pop` auf `100`
+   (`REQ,"100"` → `RSP,"pop,100"`); `CYL.end` fällt zurück auf
+   `RSP,"end,0"`.
+4. *Pusher reached start position:* `CYL.start` meldet `RSP,"start,1"`;
+   `CYL` meldet `RSP,"CYL, START POS"`; `CYL.pop` wird auf `0`
+   zurückgefahren (`REQ,"0"` → `RSP,"pop,0"`).
+5. *Service completed:* `CYL` meldet `RSP,"CYL, Trip Complete"` an
+   `MES`.
+
+**Verbindung zur SoA-Implementierung (Folie 47/48):** Dieselbe
+`CylH`-Anwendung zeigt Folie 47 ("SoA implementation in function
+blocks") als konkrete Function-Block-Schaltung: Der Orchestrator-
+Baustein `CylMES` (Typ `CControlTRAS`) hat einen `TokenRing`-Adapter
+(`>>MTXIN`/`MTXOUT>>`) **und** zwei generische Service-Adapter
+(`SREQ1>>`/`SREQ2>>`) – der Beleg dafür, dass `TokenRing` in diesem
+Beispiel nicht für gegenseitigen Ausschluss zwischen zwei Zylindern
+verwendet wird (wie im `CylH`/`CylV`-Mutual-Exclusion-Beispiel, siehe
+[`TokenRingPattern.md`](../TokenRingPattern/TokenRingPattern.md)),
+sondern zum reihum-Ansprechen mehrerer Service-Teilnehmer (`SREQ1`,
+`SREQ2`) – derselbe Adaptertyp, zweite, andersartige Anwendung.
+
+Folie 48 ("Implementation of Adapters") zeigt daneben die generische
+**Adapter-Typ-Deklaration** des `"service"`-Adapters selbst: EventInputs
+`REQ`/`RSP`, EventOutputs `CNF`/`IND`, dazu `REQD`/`RSPD` (WSTRING-Inputs)
+und `CNFD`/`INDD` (WSTRING-Outputs) – exakt die vier Events und vier
+Datenpins, die `EVENT_HS_WSTRING` (unten) 1:1 übernimmt.
+
+**Offene Diskrepanz (noch nicht live gegen 4diac geprüft):** Die
+Bildunterschrift auf Folie 48 lautet *"When used as Plug the adapter's
+instance is mirrored"* – wörtlich genommen widerspricht das der in
+Abschnitt "Socket vs. Plug" oben **live gegen den echten 4diac-Compiler
+verifizierten** Regel dieses Repos ("Plug behält die deklarierte
+Richtung bei, Socket spiegelt"). Möglich ist, dass die Folie aus einer
+anderen Werkzeugkette (EAE/nxtSTUDIO) stammt und dort Plug/Socket
+umgekehrt implementiert sind, oder dass "mirrored" sich auf etwas
+anderes bezieht als die Socket/Plug-Richtungsregel (z. B. nur auf die
+Instanz-Grafik/Spiegelbild-Darstellung im Editor). Bis das jemand mit
+Zugriff auf beide Werkzeuge klärt, gilt für dieses Repo weiterhin die
+selbst verifizierte Regel oben – nicht die Foliennotiz.
+
+### Das konkrete Beispiel: `MessageExchangeDemo` (Folie 47, fertig, ungetestet in 4diac)
+
+Vollständige Umsetzung des `CylH`-Beispiels aus "SoA implementation in
+function blocks" (Folie 47) als vier zusammenspielende Bausteine, alle
+in diesem Ordner:
+
+- **`const/MessageExchangeConst.gcf`** – alle 18 auf Folie 42–46
+  vorkommenden Nachrichtenwerte als benannte `WSTRING`-Konstanten
+  (`REQ_TRIP`, `REQ_EXTEND`="100", `REQ_RETRACT`="0", `REQ_DROP`,
+  `RSP_WPS_ABSENT`/`ARRIVED`, `RSP_START_TRIGGERED`,
+  `RSP_END_IDLE`/`TRIGGERED`, `RSP_PUSH_EXTENDED`/`RETRACTED`,
+  `RSP_POP_EXTENDED`/`RETRACTED`,
+  `RSP_CYL_STARTED`/`END_POS`/`START_POS`/`TRIP_COMPLETE`, `RSP_ACK`).
+- **`WorkpieceSensor.fbt`** (`WPSensor`/`a1WPS1`) – Plug `ACTIVATE`
+  (`EVENT_HS_ACK_WSTRING`). Auf `DETECT` (manuell in FORTE feuerbar)
+  sendet es `REQ` mit `REQ_TRIP`; meldet `DONE`, sobald das `CNF`
+  zurückkommt. Vereint bewusst die beiden MSC-Lifelines `WPS` und
+  `MES` in einem Baustein, genau wie auf der Folie.
+- **`CylinderOrchestrator.fbt`** (`CylMES`/`CControlTRAS`) – Socket
+  `SRSP` (`EVENT_HS_ACK_WSTRING`, von `WorkpieceSensor`), Plug `SREQ1`
+  (volles `EVENT_HS_WSTRING`, zu `CylinderService` – braucht die
+  Zwischenmeldung), Plug `SREQ2` (`EVENT_HS_ACK_WSTRING`, zu
+  `DropSinkService`). Reagiert auf `SREQ1.IND` ("Endposition erreicht")
+  mit einer `SREQ2.REQ` (Drop anfordern) und erst nach deren `CNF` mit
+  einer `SREQ1.RSP` ("darfst jetzt einfahren").
+- **`CylinderService.fbt`** (`SCylH`/`CylHServ`) – Socket `SRSP`
+  (volles `EVENT_HS_WSTRING`). Simulierte Sensor-Events `AT_END`/
+  `AT_START` (manuell feuerbar) statt echter Hardware, analog zu
+  `EventDrivenCylinder.fbt`. Feuert `IND` bei `RSP_CYL_STARTED` und bei
+  `RSP_CYL_END_POS` – **wartet dort auf `RSP` vom Orchestrator**, bevor
+  es einfährt (der einzige echte Synchronisationspunkt im Beispiel:
+  der Zylinder darf erst zurückfahren, wenn der Drop bestätigt ist).
+  Schließt mit `CNF`=`RSP_CYL_TRIP_COMPLETE` ab.
+- **`DropSinkService.fbt`** (`DSServ`) – Socket `SRSP`
+  (`EVENT_HS_ACK_WSTRING`). Jede `REQ` wird unbedingt mit
+  `CNF`=`RSP_ACK` bestätigt.
+- **`MessageExchangeDemo.sub`** – koppelt alle vier über drei
+  `AdapterConnections` (`WorkpieceSensor.ACTIVATE→Orchestrator.SRSP`,
+  `Orchestrator.SREQ1→Cylinder.SRSP`, `Orchestrator.SREQ2→Sink.SRSP`),
+  reicht `DETECT`/`AT_END`/`AT_START` zum manuellen Durchsteppen des
+  Ablaufs sowie `WPS_TripResult`/`WPS_TripCount`/`DS_LastReqPayload`/
+  `DS_ReqCount` zur Beobachtung nach außen durch.
+
+**Bewusst weggelassen gegenüber der Folie:** Der `TokenRing`-Adapter
+(`MTXIN`/`MTXOUT`) für die Mehr-Controller-Verriegelung und der
+konstant-`TRUE`-`Enable`/`Permit`-Adapter (`CONST1`). Diese Demo hat
+nur einen `CylinderOrchestrator`, also nichts, wogegen zu
+verriegeln wäre, und keinen Grund, einen immer-`TRUE`-Permit extra zu
+verdrahten. `TokenRing` selbst ist bereits separat umgesetzt, siehe
+[`TokenRingPattern.md`](../TokenRingPattern/TokenRingPattern.md).
+
+**Zeigt alle drei Adapter-Reduktionsstufen der `EVENT_HS`-Familie in
+einem realistischen Zusammenhang:** volles `EVENT_HS_WSTRING` dort, wo
+eine echte Zwischenmeldung nötig ist (`SREQ1`), reduziertes
+`EVENT_HS_ACK_WSTRING` dort, wo nur Anfrage+Bestätigung gebraucht
+werden (`SRSP`, `SREQ2`) – genau die Motivation hinter den vier
+reduzierten Varianten unten in "Weitere Handshake-Varianten".
+
 ### Datentragende Variante: `EVENT_HS_WSTRING`
 
 Ablageort: `.lib/adapter-3.0.0/typelib/types/bidirectional/Handshake/EVENT_HS_WSTRING.adp`
@@ -261,6 +419,34 @@ zusätzlich als eigene `InputVars` (Defaults `"push,100"`/`"status,ok"`),
 sodass sie beim Instanziieren per `Parameter` überschrieben werden
 können, statt nur an den internen Requester/Responder-Defaults zu
 hängen.
+
+### Weitere Handshake-Varianten: reduzierte Event-Sets
+
+Vier zusätzliche Adaptertypen, alle im selben Ordner wie `EVENT_HS`/
+`EVENT_HS_WSTRING`, die das volle REQ/CNF/IND/RSP-Vokabular gezielt
+reduzieren – nützlich, wenn eine Beziehung nachweislich nie die volle
+Vier-Event-Choreografie braucht (siehe `MessageExchangeDemo` oben für
+ein Beispiel, das drei dieser Varianten nebeneinander einsetzt):
+
+- **`EVENT_HS_UNI`** – nur `REQ` (datenlos), keinerlei Antwort. Reines
+  Fire-and-Forget, **kein echter Handshake** (der Socket kann weder
+  bestätigen noch ablehnen, der Plug erfährt nie, ob die Anfrage
+  überhaupt ankam) – bewusst so dokumentiert, nicht versehentlich als
+  Ersatz für `EVENT_HS` gedacht.
+- **`EVENT_HS_UNI_WSTRING`** – wie `EVENT_HS_UNI`, plus `REQD`-Payload
+  (`WSTRING`).
+- **`EVENT_HS_ACK`** – nur `REQ`/`CNF` (datenlos), kein `IND`/`RSP`.
+  Anders als `EVENT_HS_UNI` ein **echter** (wenn auch einseitiger)
+  Handshake: jede `REQ` bekommt eine `CNF`. Passend, wenn der Socket
+  nie unaufgefordert etwas melden muss.
+- **`EVENT_HS_ACK_WSTRING`** – wie `EVENT_HS_ACK`, plus `REQD`/`CNFD`-
+  Payload (`WSTRING`). Wird in `MessageExchangeDemo` für `SRSP` und
+  `SREQ2` verwendet (reine Anfrage/Bestätigung, keine
+  Zwischenmeldung nötig).
+
+Alle vier folgen demselben Socket/Plug-Rollenschema wie `EVENT_HS`
+(Plug behält die deklarierte Richtung, Socket spiegelt) und sind
+gegen die XSD validiert.
 
 ## Weitere Design Patterns aus Modul 6 (zur späteren Umsetzung)
 

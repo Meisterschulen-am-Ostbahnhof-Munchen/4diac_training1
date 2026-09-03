@@ -128,6 +128,63 @@ sofort weiter, falls kein Werkstück wartet (kein Warten auf Arbeit
 nötig). Genau dieses Verzweigungsverhalten (`CHECK_WANT` →
 `DO_CS`/direkt `PASS_ON`) implementiert `TokenRingNode.fbt`.
 
+## Wo wird das Token tatsächlich übergeben?
+
+Kurze Antwort: **Es werden gar keine Daten übergeben — das Token IST das
+Event.**
+
+`TokenRing.adp` ist bewusst datenlos:
+
+```
+EventInputs:  RCV   (Event, keine Nutzlast)
+EventOutputs: GIVE  (Event, keine Nutzlast)
+```
+
+Es gibt keine `VarDeclaration`, kein `WSTRING`/`BOOL`-Feld, nichts, das
+man als "das Token" tragende Nutzdaten bezeichnen könnte. Die Semantik ist: **das
+Feuern von `GIVE` selbst ist die Übergabe.** Wer gerade zwischen "hat
+`MTXIN.GIVE` empfangen" und "hat `MTXOUT.GIVE` weitergereicht" steht
+(in `TokenRingNode.fbt` zwischen den ECC-Zuständen `HANDLE_GIVE` und
+`PASS_ON`), "hat" das Token – nicht weil irgendwo eine Variable das
+sagt, sondern weil in diesem Moment genau dieser Baustein gerade in
+dieser Phase seiner Zustandsmaschine steckt. Keine Daten tragen den
+Zustand, der Kontrollfluss tut es.
+
+Das ist kein Bug, sondern die klassische Umsetzung eines
+Token-Ring-Protokolls in einem Event-System – analog zu echten
+Token-Ring-Netzwerken, wo das "Token" auch nur ein bestimmtes
+Bitmuster/Frame ist, dessen bloßes Eintreffen die Sendeberechtigung
+überträgt, ohne dass eine fachliche Nutzlast nötig wäre. Auch Vyatkins
+Original (INDIN14-Paper) spezifiziert keine Nutzlast für GIVE/RCV.
+
+**Wo das aber tatsächlich eine Schwäche ist:** Es gibt keine
+Möglichkeit, ein dupliziertes oder verlorenes Token zu erkennen (z. B.
+wenn `SEED` versehentlich zweimal gefeuert wird, zirkulieren zwei
+Token gleichzeitig, und nichts im System bemerkt das). Ein Token mit
+Nutzlast (z. B. laufende Sequenznummer oder Ersteller-ID) würde das
+erkennbar machen – genau das haben wir beim Handshake-Pattern mit
+`EVENT_HS_WSTRING` als datentragende Zusatzvariante gemacht, hier
+(bewusst, siehe "Datenlos" unten) bisher nicht.
+
+## Zweite Fundstelle: TokenRing auch in der SoA-Beispielanwendung (Folie 47)
+
+Ergänzung vom 2026-09-02: Beim Nachtragen der bisher fehlenden
+"Message exchange between services"-Dokumentation (siehe
+[`HandshakePattern.md`](../HandshakePattern/HandshakePattern.md),
+Abschnitt "Die Quelle der `push,100`-Notation") zeigte sich, dass
+`TokenRing` auch auf **Folie 47 ("SoA implementation in function
+blocks")** derselben Foliensammlung auftaucht: Der Orchestrator-
+Baustein `CylMES` (Typ `CControlTRAS`) hat dort einen `TokenRing`-
+Adapter (`>>MTXIN`/`MTXOUT>>`) **zusätzlich zu** zwei generischen
+Service-Adaptern (`SREQ1>>`/`SREQ2>>`). Hier dient `TokenRing` nicht
+dem gegenseitigen Ausschluss zweier gleichberechtigter Zylinder (wie
+im `CylH`/`CylV`-Beispiel oben), sondern dem reihum-Ansprechen
+mehrerer nachgeschalteter Service-Teilnehmer – derselbe Adaptertyp,
+zweite, andere Verwendung. Bestätigt zusätzlich unabhängig vom
+INDIN14-Paper, dass `TokenRing` ein durchgängig in Vyatkins Material
+wiederverwendetes generisches Muster ist, nicht nur eine Einzelfall-
+Lösung für das Mutual-Exclusion-Beispiel.
+
 ## Umsetzung in diesem Repository (fertig, ungetestet in 4diac)
 
 - **Adapter-Typ:** `TokenRing` (dataless, EventInputs `RCV`,
