@@ -37,6 +37,34 @@ System" im Kapitel "Modelling PLC systems") als für das
 "Purely Event-Driven function blocks"-Pattern (Folie 63/64) – eine
 andere, bisher in diesem Repo nicht umgesetzte Modellierungsart.
 
+## Bestätigung durch Vyatkins Video-Transkript (2026-09-04)
+
+Das Auto-Transkript zu Folie 50-52 (`Module 6.4 Modelling PLC
+systems.mp4`,
+`G:\Geteilte Ablagen\Classroom\Students\UAO-Curriculum\en\Module 06 – Design Patterns\Videos\Module 6.4 Modelling PLC systems.transcript.txt`,
+Quelle: https://www.youtube.com/watch?v=2t0AZtp2WPs) bestätigt genau
+den hier verwendeten Mechanismus – zyklische Aktivierung per `E_CYCLE`
+mit konfigurierbarem `DT`, um unterschiedliche PLC-Geschwindigkeiten
+zu modellieren:
+
+> "using the very same structure we can also Implement even modeling
+> of scan based plcs of a classic PLC so we can take the very same
+> interface blocks but Implement them as a basic blocks with just one
+> additional state where the original control code written in
+> structure text is executed [...] to implement different speed of
+> each PLC one can activate this function block cyclically using
+> e cycle block and the DT constant of each e cycle block can be set
+> to the required value to model the particular speed of the PLC like
+> [...] 20 milliseconds in one case and 100 milliseconds in the other"
+
+Das bestätigt unabhängig die `E_CYCLE`+`DT`-basierte Grundidee hinter
+`CylinderHCore.fbt` (hier `T#20ms`) – allerdings anhand des
+Zweizylinder-Beispiels mit geteilter Variable (Shared-Variable-Sync
+über Event+Daten), nicht anhand von `CylinderH`s konkreter
+Integrator-Mathematik selbst; die genaue ECC/Formel von `integEC`
+bleibt weiterhin nur durch den Curriculum-Quellcode belegt, nicht
+durch dieses Video.
+
 ## Aufbau
 
 - **`integEC.fbt`** – generischer zeitbasierter Integrator (Basic FB,

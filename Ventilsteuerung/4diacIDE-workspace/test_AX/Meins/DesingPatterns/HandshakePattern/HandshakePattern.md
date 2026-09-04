@@ -295,18 +295,33 @@ Folie 48 ("Implementation of Adapters") zeigt daneben die generische
 und `CNFD`/`INDD` (WSTRING-Outputs) – exakt die vier Events und vier
 Datenpins, die `EVENT_HS_WSTRING` (unten) 1:1 übernimmt.
 
-**Offene Diskrepanz (noch nicht live gegen 4diac geprüft):** Die
+**Diskrepanz gelöst (2026-09-04, per Video-Transkript):** Die
 Bildunterschrift auf Folie 48 lautet *"When used as Plug the adapter's
-instance is mirrored"* – wörtlich genommen widerspricht das der in
-Abschnitt "Socket vs. Plug" oben **live gegen den echten 4diac-Compiler
-verifizierten** Regel dieses Repos ("Plug behält die deklarierte
-Richtung bei, Socket spiegelt"). Möglich ist, dass die Folie aus einer
-anderen Werkzeugkette (EAE/nxtSTUDIO) stammt und dort Plug/Socket
-umgekehrt implementiert sind, oder dass "mirrored" sich auf etwas
-anderes bezieht als die Socket/Plug-Richtungsregel (z. B. nur auf die
-Instanz-Grafik/Spiegelbild-Darstellung im Editor). Bis das jemand mit
-Zugriff auf beide Werkzeuge klärt, gilt für dieses Repo weiterhin die
-selbst verifizierte Regel oben – nicht die Foliennotiz.
+instance is mirrored"* – wörtlich genommen schien das der in Abschnitt
+"Socket vs. Plug" oben **live gegen den echten 4diac-Compiler
+verifizierten** Regel dieses Repos zu widersprechen ("Plug behält die
+deklarierte Richtung bei, Socket spiegelt"). Aufgelöst durch Vyatkins
+eigenes Auto-Transkript zu genau dieser Folie
+(`G:\Geteilte Ablagen\Classroom\Students\UAO-Curriculum\en\Module 06 – Design Patterns\Videos\Module 6.2 Adapters.transcript.txt`,
+Quelle: https://www.youtube.com/watch?v=zDQRY5efevQ), wörtlich:
+
+> "the adapter interface in the composite block on the left hand side
+> is declared as [...] output [...] which is called plug but on the
+> right hand side it's declared as a socket so plug is plugged into
+> the socket **and it is mirrored** [...] we can see that [...] the
+> left hand side composite block has three inputs and four data
+> outputs while here [rechts, Socket] it's mirrored so it has three
+> data output and four inputs"
+
+Das bestätigt **exakt** die in diesem Repo verifizierte Regel: Plug
+behält seine deklarierte Richtung (links, 3 in/4 out), Socket ist die
+gespiegelte Seite (rechts, 4 in/3 out) – "it is mirrored" bezieht sich
+im Video eindeutig auf die **Socket**-Seite, nicht wörtlich auf "when
+used as Plug" wie die Folienunterschrift knapp/missverständlich
+formuliert. Die Folie 48 selbst bleibt also leicht irreführend
+formuliert, aber Vyatkins gesprochene Erklärung UND die live gegen
+4diac verifizierte Regel stimmen überein – kein echter Widerspruch
+mehr.
 
 ### Das konkrete Beispiel: `MessageExchangeDemo` (Folie 47, fertig, ungetestet in 4diac)
 
