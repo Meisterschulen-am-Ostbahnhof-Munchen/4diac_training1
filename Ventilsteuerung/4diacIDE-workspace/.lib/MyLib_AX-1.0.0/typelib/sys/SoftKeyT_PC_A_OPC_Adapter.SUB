@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SubAppType Name="SoftKeyT_PC_A_OPC_Adapter" Comment="Geraet A (Station 11, 192.168.1.11): wie Uebung_010d_PC_A_OPC, aber HMI (SoftKey + GreenWhiteBackground) und OPC-UA-Trigger sind getrennt - SoftKeyT_AE_AX buendelt die HMI hinter einem AE_AX-Plug, AE_AX_CLIENT_0_SUBSCRIBE_1 buendelt CLIENT_0 + AX_SUBSCRIBE_1 hinter einem AE_AX-Socket - &apos;SUB style&apos;: das Protokoll steckt im MyLib::sys-Composite, nicht in der Resource des Geraets">
+	<Identification Standard="61499-2" Description="Copyright (c) 2026 Meisterschulen am Ostbahnhof  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0">
+	</Identification>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2026-09-04" Remarks="initial API and implementation and/or initial documentation">
+	</VersionInfo>
+	<CompilerInfo packageName="MyLib::sys">
+		<Import declaration="isobus::UT::Q::const::IDs::ID_NULL"/>
+	</CompilerInfo>
+	<SubAppInterfaceList>
+		<InputVars>
+			<VarDeclaration Name="u16ObjId" Type="UINT" Comment="Object ID Softkey/Background" InitialValue="ID_NULL"/>
+			<VarDeclaration Name="ID_TRIGGER_CALL" Type="WSTRING" Comment="Remote-Methodenadresse (ACTION=CALL_METHOD) fuer den argumentlosen Trigger-Methodenaufruf auf Geraet B"/>
+			<VarDeclaration Name="ID_STATE_READ" Type="WSTRING" Comment="Lokal ueberwachte Adresse (BOOL, ACTION=READ) fuer den Flipflop-Zustand, wird von Geraet B remote beschrieben"/>
+		</InputVars>
+	</SubAppInterfaceList>
+	<SubAppNetwork>
+		<SubApp Name="SoftKeyT_AE_AX" Type="MyLib::sys::SoftKeyT_AE_AX" x="-6200" y="1200">
+		</SubApp>
+		<FB Name="TRIGGER" Type="adapter::net::AE_AX_CLIENT_0_SUBSCRIBE_1" x="-3400" y="300">
+			<Parameter Name="QI" Value="TRUE"/>
+		</FB>
+		<DataConnections>
+			<Connection Source="ID_TRIGGER_CALL" Destination="TRIGGER.ID" dx1="1400">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="ID_STATE_READ" Destination="TRIGGER.ID_STATE" dx1="1400">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="u16ObjId" Destination="SoftKeyT_AE_AX.u16ObjId" dx1="1346.67">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+		</DataConnections>
+		<AdapterConnections>
+			<Connection Source="SoftKeyT_AE_AX.OUT" Destination="TRIGGER.TRIGGER" dx1="900"/>
+		</AdapterConnections>
+	</SubAppNetwork>
+</SubAppType>

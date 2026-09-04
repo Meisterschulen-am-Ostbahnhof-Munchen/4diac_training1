@@ -15,6 +15,10 @@
 		<EventOutputs>
 			<Event Name="INITO" Type="EInit" Comment="Initialization Confirm">
 			</Event>
+			<Event Name="CNF" Type="Event" Comment="QO/STATUS updated">
+				<With Var="QO"/>
+				<With Var="STATUS"/>
+			</Event>
 		</EventOutputs>
 		<InputVars>
 			<VarDeclaration Name="QI" Type="BOOL"/>
@@ -35,6 +39,7 @@
 			<Connection Source="INIT" Destination="CLIENT_0_1.INIT"/>
 			<Connection Source="CLIENT_0_1.INITO" Destination="INITO"/>
 			<Connection Source="TRIGGER.E1" Destination="CLIENT_0_1.REQ" dx1="340"/>
+			<Connection Source="CLIENT_0_1.CNF" Destination="CNF"/>
 		</EventConnections>
 		<DataConnections>
 			<Connection Source="QI" Destination="CLIENT_0_1.QI" dx1="1000"/>
