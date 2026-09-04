@@ -13,7 +13,7 @@ jobs:
       contents: read
     strategy:
       matrix:
-        client: [apixon-diodo-client, apixon-pwm-client]
+        client: [apixon-diodo-client, apixon-pwm-client, apixon-ai-client, apixon-ai-calibrate-client, apixon-pi-client]
     defaults:
       run:
         working-directory: Ventilsteuerung/Web-Clients/${{ matrix.client }}
@@ -46,7 +46,7 @@ jobs:
     if: ${{ !cancelled() && needs.test.result == 'success' && (github.event_name != 'pull_request' || github.event.pull_request.head.repo.full_name == github.repository) }}
     strategy:
       matrix:
-        client: [apixon-diodo-client, apixon-pwm-client]
+        client: [apixon-diodo-client, apixon-pwm-client, apixon-ai-client, apixon-ai-calibrate-client, apixon-pi-client]
     runs-on: ubuntu-latest
     permissions:
       contents: read

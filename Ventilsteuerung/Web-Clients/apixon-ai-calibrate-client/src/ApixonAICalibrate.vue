@@ -244,16 +244,6 @@ function handleLost() {
   session = null
   client = null
 }
-  cal.value.fill(0)
-  outputs.value.fill(false)
-  coState.value.fill(false)
-  csState.value.fill(false)
-  tick.value = '–'
-  if (scopeRafId !== null) {
-    cancelAnimationFrame(scopeRafId)
-    scopeRafId = null
-  }
-}
 
 async function connect() {
   status.value = 'Verbinde…'
