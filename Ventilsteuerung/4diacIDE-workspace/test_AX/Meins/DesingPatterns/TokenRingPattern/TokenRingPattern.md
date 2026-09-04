@@ -185,6 +185,36 @@ INDIN14-Paper, dass `TokenRing` ein durchgängig in Vyatkins Material
 wiederverwendetes generisches Muster ist, nicht nur eine Einzelfall-
 Lösung für das Mutual-Exclusion-Beispiel.
 
+## Dritte Fundstelle: Vyatkins eigene mündliche Erklärung (Video-Transkript)
+
+Ergänzung 2026-09-04: Das Auto-Transkript von Vyatkins eigenem Vortrag
+zu Folie 48 (`Module 6.2 Adapters.mp4`,
+`G:\Geteilte Ablagen\Classroom\Students\UAO-Curriculum\en\Module 06 – Design Patterns\Videos\Module 6.2 Adapters.transcript.txt`,
+Quelle: https://www.youtube.com/watch?v=zDQRY5efevQ) beschreibt exakt
+dieses Pattern in eigenen Worten, unabhängig von den beiden Papers
+oben:
+
+> "we can slightly modify the previous design by adding one more
+> adapter connection between these two controller blocks that will be
+> passing the token and this way implementing Mutual exclusion so that
+> only one cylinder can operate the one which has a token and then we
+> can Implement simple ring token protocol uh where the token is
+> passed all the time from One controller to another until the
+> controller receives the [I]n signal that workpiece has arrived and
+> in this case it performs pushing operation keeping the token and not
+> letting the other cylinder to operate [...] this design helps us to
+> build a lot more complex systems like in this case we have four
+> interacting cylinders we can easily scale up this design"
+
+Bestätigt unabhängig: (a) das Token zirkuliert kontinuierlich, bis ein
+Controller ein Werkstück meldet, (b) der Controller behält das Token
+während der Operation (kein Loslassen, während gearbeitet wird),
+(c) genau das in `TokenRingNode.fbt` implementierte Verzweigungsverhalten
+(`CHECK_WANT`→`DO_CS`/direkt `PASS_ON`), (d) die Skalierbarkeit auf
+mehr als zwei Knoten ("four interacting cylinders") – deckt sich mit
+der bewussten Entscheidung, `TokenRingPatternDemo.sub` mit 5 statt nur
+2 Knoten zu bauen.
+
 ## Umsetzung in diesem Repository (fertig, ungetestet in 4diac)
 
 - **Adapter-Typ:** `TokenRing` (dataless, EventInputs `RCV`,
