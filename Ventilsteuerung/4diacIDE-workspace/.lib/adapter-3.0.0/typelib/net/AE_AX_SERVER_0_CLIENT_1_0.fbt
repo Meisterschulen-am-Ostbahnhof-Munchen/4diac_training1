@@ -15,6 +15,11 @@
 		<EventOutputs>
 			<Event Name="INITO" Type="EInit" Comment="Initialization Confirm">
 			</Event>
+			<Event Name="CNF" Type="Event" Comment="QO/STATUS updated">
+				<With Var="QO"/>
+				<With Var="STATUS_TRIGGER"/>
+				<With Var="STATUS_STATE"/>
+			</Event>
 		</EventOutputs>
 		<InputVars>
 			<VarDeclaration Name="QI" Type="BOOL"/>
@@ -27,41 +32,42 @@
 			<VarDeclaration Name="STATUS_STATE" Type="WSTRING" Comment="STATUS von STATE_CLIENT"/>
 		</OutputVars>
 		<Plugs>
-			<AdapterDeclaration Name="TRIGGER" Type="adapter::types::bidirectional::AE_AX" Comment="Trigger (in), Zustand (out)" x="600" y="500"/>
+			<AdapterDeclaration Name="TRIGGER" Type="adapter::types::bidirectional::AE_AX" Comment="Trigger (in), Zustand (out)" x="500" y="1300"/>
 		</Plugs>
 	</InterfaceList>
 	<FBNetwork>
-		<FB Name="SERVER_0_1" Type="iec61499::net::SERVER_0" x="-500" y="300">
+		<FB Name="SERVER_0_1" Type="iec61499::net::SERVER_0" x="-500" y="400">
 		</FB>
-		<FB Name="E_D_FF" Type="iec61499::events::E_D_FF" x="1400" y="600">
+		<FB Name="E_D_FF" Type="iec61499::events::E_D_FF" x="1300" y="1400">
 		</FB>
-		<FB Name="STATE_CLIENT" Type="iec61499::net::CLIENT_1_0" x="2500" y="700">
+		<FB Name="STATE_CLIENT" Type="iec61499::net::CLIENT_1_0" x="2700" y="1700">
 		</FB>
-		<FB Name="AND_QO" Type="iec61131::booleanOperators::AND_BOOL_2" x="4200" y="1300">
+		<FB Name="AND_QO" Type="iec61131::booleanOperators::AND_BOOL_2" x="4300" y="1200">
 		</FB>
 		<EventConnections>
-			<Connection Source="INIT" Destination="SERVER_0_1.INIT" dx1="80" dx2="80" dy="33.33"/>
-			<Connection Source="STATE_CLIENT.INITO" Destination="INITO" dx1="3540"/>
-			<Connection Source="STATE_CLIENT.INITO" Destination="AND_QO.REQ"/>
-			<Connection Source="SERVER_0_1.IND" Destination="TRIGGER.E1" dx1="200"/>
+			<Connection Source="INIT" Destination="SERVER_0_1.INIT" dx1="886.67"/>
+			<Connection Source="STATE_CLIENT.INITO" Destination="INITO" dx1="2640"/>
+			<Connection Source="STATE_CLIENT.INITO" Destination="AND_QO.REQ" dx1="393.33"/>
+			<Connection Source="SERVER_0_1.IND" Destination="TRIGGER.E1" dx1="153.33"/>
 			<Connection Source="TRIGGER.EI1" Destination="E_D_FF.CLK" dx1="120"/>
-			<Connection Source="E_D_FF.EO" Destination="STATE_CLIENT.REQ" dx1="246.67"/>
-			<Connection Source="SERVER_0_1.INITO" Destination="STATE_CLIENT.INIT" dx1="2226.67"/>
-			<Connection Source="SERVER_0_1.IND" Destination="AND_QO.REQ"/>
-			<Connection Source="STATE_CLIENT.CNF" Destination="AND_QO.REQ"/>
+			<Connection Source="E_D_FF.EO" Destination="STATE_CLIENT.REQ" dx1="400"/>
+			<Connection Source="SERVER_0_1.INITO" Destination="STATE_CLIENT.INIT" dx1="2140"/>
+			<Connection Source="SERVER_0_1.IND" Destination="AND_QO.REQ" dx1="2920"/>
+			<Connection Source="STATE_CLIENT.CNF" Destination="AND_QO.REQ" dx1="393.33"/>
+			<Connection Source="AND_QO.CNF" Destination="CNF" dx1="1073.33"/>
 		</EventConnections>
 		<DataConnections>
-			<Connection Source="QI" Destination="SERVER_0_1.QI" dx1="860"/>
-			<Connection Source="QI" Destination="STATE_CLIENT.QI" dx1="860"/>
-			<Connection Source="ID" Destination="SERVER_0_1.ID" dx1="893.33"/>
-			<Connection Source="ID_STATE" Destination="STATE_CLIENT.ID" dx1="826.67"/>
+			<Connection Source="QI" Destination="SERVER_0_1.QI" dx1="853.33"/>
+			<Connection Source="QI" Destination="STATE_CLIENT.QI" dx1="853.33"/>
+			<Connection Source="ID" Destination="SERVER_0_1.ID" dx1="886.67"/>
+			<Connection Source="ID_STATE" Destination="STATE_CLIENT.ID" dx1="820"/>
 			<Connection Source="TRIGGER.DI1" Destination="E_D_FF.D" dx1="120"/>
-			<Connection Source="E_D_FF.Q" Destination="STATE_CLIENT.SD_1" dx1="246.67"/>
-			<Connection Source="SERVER_0_1.QO" Destination="AND_QO.IN1"/>
-			<Connection Source="STATE_CLIENT.QO" Destination="AND_QO.IN2"/>
-			<Connection Source="AND_QO.OUT" Destination="QO"/>
-			<Connection Source="SERVER_0_1.STATUS" Destination="STATUS_TRIGGER"/>
-			<Connection Source="STATE_CLIENT.STATUS" Destination="STATUS_STATE"/>
+			<Connection Source="E_D_FF.Q" Destination="STATE_CLIENT.SD_1" dx1="366.67"/>
+			<Connection Source="SERVER_0_1.QO" Destination="AND_QO.IN1" dx1="2886.67"/>
+			<Connection Source="STATE_CLIENT.QO" Destination="AND_QO.IN2" dx1="426.67"/>
+			<Connection Source="AND_QO.OUT" Destination="QO" dx1="1106.67"/>
+			<Connection Source="SERVER_0_1.STATUS" Destination="STATUS_TRIGGER" dx1="3533.33"/>
+			<Connection Source="STATE_CLIENT.STATUS" Destination="STATUS_STATE" dx1="2740"/>
 		</DataConnections>
 	</FBNetwork>
 	<Attribute Name="eclipse4diac::core::TypeHash" Value="''"/>

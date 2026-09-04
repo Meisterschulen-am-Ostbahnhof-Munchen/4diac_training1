@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SubAppType Name="SubApp_PC_B" Comment="Geraet B (Station 12, 192.168.1.12): Toggle-Flipflop-Logik (AX_T_FF) und DigitalOutput_Q1 - 'SUB style', das Protokoll steckt im MyLib::sys-Composite (Uebung_010d_PC_B_OPC, wiederverwendet von Training_03), nicht in der Resource des Geraets - Toggle-alleine-Variante von Training_04/06, manuelle Verdrahtung (wie Training_04), gleiche OPC-UA-Adressen wie Training_03">
+	<Identification Standard="61499-2" Description="Copyright (c) 2026 Meisterschulen am Ostbahnhof  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0">
+	</Identification>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2026-09-04" Remarks="initial API and implementation and/or initial documentation">
+	</VersionInfo>
+	<CompilerInfo packageName="subapp::Training_08_OPC_UA_RES">
+		<Import declaration="logiBUS::io::DQ::logiBUS_DO::Output_Q1"/>
+		<Import declaration="VV::const::OPC_UA::myOpcUaAddresses::FF1_TRIGGER_LOCAL_METHOD"/>
+		<Import declaration="VV::const::OPC_UA::myOpcUaAddresses::FF1_STATE_REMOTE_WRITE"/>
+	</CompilerInfo>
+	<SubAppInterfaceList>
+	</SubAppInterfaceList>
+	<SubAppNetwork>
+		<SubApp Name="Uebung_010d_PC_B_OPC" Type="MyLib::sys::Uebung_010d_PC_B_OPC" x="0" y="0">
+			<Parameter Name="Output" Value="Output_Q1"/>
+			<Parameter Name="ID_TRIGGER_METHOD" Value="FF1_TRIGGER_LOCAL_METHOD"/>
+			<Parameter Name="ID_STATE_WRITE" Value="FF1_STATE_REMOTE_WRITE"/>
+		</SubApp>
+	</SubAppNetwork>
+</SubAppType>

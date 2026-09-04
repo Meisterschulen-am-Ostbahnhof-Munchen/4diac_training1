@@ -15,6 +15,11 @@
 		<EventOutputs>
 			<Event Name="INITO" Type="EInit" Comment="Initialization Confirm">
 			</Event>
+			<Event Name="CNF" Type="Event" Comment="QO/STATUS updated">
+				<With Var="QO"/>
+				<With Var="STATUS_TRIGGER"/>
+				<With Var="STATUS_STATE"/>
+			</Event>
 		</EventOutputs>
 		<InputVars>
 			<VarDeclaration Name="QI" Type="BOOL"/>
@@ -41,14 +46,15 @@
 		</FB>
 		<EventConnections>
 			<Connection Source="INIT" Destination="STATE_SUBSCRIBE.INIT" dx1="1733.33"/>
-			<Connection Source="CLIENT_0_1.INITO" Destination="INITO" dx1="3140"/>
+			<Connection Source="CLIENT_0_1.INITO" Destination="INITO" dx1="2266.67"/>
 			<Connection Source="CLIENT_0_1.INITO" Destination="AND_QO.REQ" dx1="380"/>
 			<Connection Source="TRIGGER.E1" Destination="CLIENT_0_1.REQ" dx1="340"/>
 			<Connection Source="STATE_SUBSCRIBE.IND" Destination="E_D_FF.CLK" dx1="280"/>
 			<Connection Source="E_D_FF.EO" Destination="TRIGGER.EI1" dx1="246.67"/>
 			<Connection Source="STATE_SUBSCRIBE.INITO" Destination="CLIENT_0_1.INIT" dx1="2820"/>
-			<Connection Source="CLIENT_0_1.CNF" Destination="AND_QO.REQ" dx1="473.33"/>
+			<Connection Source="CLIENT_0_1.CNF" Destination="AND_QO.REQ" dx1="460"/>
 			<Connection Source="STATE_SUBSCRIBE.IND" Destination="AND_QO.REQ" dx1="146.67"/>
+			<Connection Source="AND_QO.CNF" Destination="CNF" dx1="1060"/>
 		</EventConnections>
 		<DataConnections>
 			<Connection Source="QI" Destination="CLIENT_0_1.QI" dx1="5146.67"/>

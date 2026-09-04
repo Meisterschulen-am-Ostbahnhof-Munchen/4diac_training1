@@ -15,6 +15,12 @@
 		<EventOutputs>
 			<Event Name="INITO" Type="EInit" Comment="Initialization Confirm">
 			</Event>
+			<Event Name="CNF" Type="Event" Comment="QO/STATUS updated">
+				<With Var="QO"/>
+				<With Var="STATUS_SET"/>
+				<With Var="STATUS_RESET"/>
+				<With Var="STATUS_TOGGLE"/>
+			</Event>
 		</EventOutputs>
 		<InputVars>
 			<VarDeclaration Name="QI" Type="BOOL"/>
@@ -53,6 +59,7 @@
 			<Connection Source="SET_CLIENT.CNF" Destination="AND_QO.REQ"/>
 			<Connection Source="RESET_CLIENT.CNF" Destination="AND_QO.REQ"/>
 			<Connection Source="TOGGLE_CLIENT.CNF" Destination="AND_QO.REQ"/>
+			<Connection Source="AND_QO.CNF" Destination="CNF"/>
 		</EventConnections>
 		<DataConnections>
 			<Connection Source="QI" Destination="SET_CLIENT.QI" dx1="3640"/>
