@@ -40,6 +40,19 @@ def checkPath(path):
     else:
         raise FileNotFoundError(f"The new file '{path}' does not exist.")
 
+def safe_output_path(folder, filename):
+    """Join folder/filename for writing, and verify the result actually stays inside folder.
+
+    filename is built from CLI-supplied arguments (--newfile plus a fixed suffix); this guards
+    against it accidentally (or via a malformed CLI invocation) containing ".." or an absolute
+    path component that would otherwise let a write escape the intended --newfolder directory.
+    """
+    folder = os.path.realpath(folder)
+    candidate = os.path.realpath(os.path.join(folder, filename))
+    if os.path.commonpath([folder, candidate]) != folder:
+        raise ValueError(f"Refusing to write outside of '{folder}': '{candidate}'")
+    return candidate
+
 def compute_rename_map(definitions):
     """For names that end with _<value> (numeric), strip the suffix if the result is unique.
 
@@ -224,7 +237,7 @@ def update_jop_objectnames(jop_path, rename_map):
         print(f"No ObjectName changes needed in {jop_path}")
 
 def writeGCFfile(data, filepaths):
-    newfilepath = os.path.join(filepaths[1], filepaths[2]+'.gcf')
+    newfilepath = safe_output_path(filepaths[1], filepaths[2]+'.gcf')
 
     root = ET.Element("GlobalConstants", Name=filepaths[2], Comment="Global constants")
 
@@ -271,7 +284,7 @@ def writeNumericGCFfile(data, filepaths):
     already used by the UINT constant of the same name in the non-numeric .gcf
     (same package) - without the suffix, 4diac's name resolution collides.
     """
-    newfilepath = os.path.join(filepaths[1], filepaths[2] + '_Numeric.gcf')
+    newfilepath = safe_output_path(filepaths[1], filepaths[2] + '_Numeric.gcf')
     gcf_name    = filepaths[2] + '_Numeric'
     package     = filepaths[3]
     struct_type = "logiBUS::utils::conversion::phys::NumericObjectPool_S"
@@ -739,7 +752,7 @@ def writeScrollGCFfile(data, filepaths):
     warning for those). u16GotoInputId has no discoverable link in the pool yet and is
     always ID_NULL until such a field exists with a naming convention.
     """
-    newfilepath = os.path.join(filepaths[1], filepaths[2] + '_Scroll.gcf')
+    newfilepath = safe_output_path(filepaths[1], filepaths[2] + '_Scroll.gcf')
     gcf_name    = filepaths[2] + '_Scroll'
     package     = filepaths[3]
     struct_type = "isobus::utils::scroll::ScrollFull_S"
@@ -920,7 +933,7 @@ def readPositionMarkerJOP(jop_filepath):
 
 def writePositionMarkerGCFfile(data, filepaths):
     """Write a <name>_PositionMarker.gcf with PositionMarker_S constants for each detected marker."""
-    newfilepath = os.path.join(filepaths[1], filepaths[2] + '_PositionMarker.gcf')
+    newfilepath = safe_output_path(filepaths[1], filepaths[2] + '_PositionMarker.gcf')
     gcf_name    = filepaths[2] + '_PositionMarker'
     package     = filepaths[3]
     struct_type = "isobus::utils::childposition::PositionMarker_S"
