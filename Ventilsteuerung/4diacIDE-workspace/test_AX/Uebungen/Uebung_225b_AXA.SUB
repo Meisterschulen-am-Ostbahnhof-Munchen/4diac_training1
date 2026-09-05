@@ -6,7 +6,7 @@
 	</VersionInfo>
 	<CompilerInfo packageName="Uebungen">
 		<Import declaration="Uebungen::const::UT::Dreieck::DefaultPool_Dreieck_PositionMarker::Container_PositionMarker"/>
-		<Import declaration="Uebungen::const::UT::Dreieck::DefaultPool_Dreieck_Numeric::InputNumber_Sollwert_N"/>
+		<Import declaration="Uebungen::const::UT::Dreieck::DefaultPool_Dreieck_Numeric::NumberVariable_Sollwert_N"/>
 		<Import declaration="Uebungen::const::UT::Dreieck::DefaultPool_Dreieck_Numeric::NumberVariable_Istwert_N"/>
 	</CompilerInfo>
 	<SubAppInterfaceList>
@@ -14,7 +14,7 @@
 	<SubAppNetwork>
 		<FB Name="Sollwert_N" Type="isobus::UT::io::NumericValue::NumericValue_PHYSA" x="-7300" y="900">
 			<Parameter Name="QI" Value="TRUE"/>
-			<Parameter Name="stObj" Value="InputNumber_Sollwert_N"/>
+			<Parameter Name="stObj" Value="NumberVariable_Sollwert_N"/>
 		</FB>
 		<FB Name="Split" Type="adapter::events::unidirectional::AR_SPLIT_2" x="-4700" y="1200">
 		</FB>

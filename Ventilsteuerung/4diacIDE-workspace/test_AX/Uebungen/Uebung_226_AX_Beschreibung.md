@@ -34,7 +34,10 @@ Bediener gibt über `InputNumber_Sollwert` (VT-Objekt 9000) einen Wert zwischen 
 ### Arbeitsauftrag
 1. Legen Sie die SubApp `Uebung_226_AX` an (bereits als Referenzlösung vorhanden).
 2. Lesen Sie `InputNumber_Sollwert` (VT-Objekt 9000) mit einer `NumericValue_PHYS`-Instanz
-   (`stObj := InputNumber_Sollwert_N` aus `DefaultPool_Dreieck_Numeric.gcf`).
+   (`stObj := NumberVariable_Sollwert_N` aus `DefaultPool_Dreieck_Numeric.gcf`) — das VT meldet
+   Wertänderungen eines an eine `NumberVariable` gebundenen Eingabefelds unter der Objekt-ID der
+   Variable (hier `NumberVariable_Sollwert`, 21000), nicht unter der ID des Eingabefelds selbst
+   (9000).
 3. Steuern Sie den Split-Bargraph mit einer `BargraphSplitFS`-Instanz
    (`stObj := Bargraph_Split_BargraphSplit` aus `DefaultPool_Dreieck_BargraphSplit.gcf`, `rValue :=`
    der physikalische Sollwert aus Schritt 2).

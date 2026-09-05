@@ -7,7 +7,7 @@
 	<CompilerInfo packageName="Uebungen">
 		<Import declaration="Uebungen::const::UT::Dreieck::DefaultPool_Dreieck::Polygon_Bargraph_Mittelmarker"/>
 		<Import declaration="Uebungen::const::UT::Dreieck::DefaultPool_Dreieck::Container_Sollwertmarker"/>
-		<Import declaration="Uebungen::const::UT::Dreieck::DefaultPool_Dreieck_Numeric::InputNumber_Sollwert_N"/>
+		<Import declaration="Uebungen::const::UT::Dreieck::DefaultPool_Dreieck_Numeric::NumberVariable_Sollwert_N"/>
 		<Import declaration="Uebungen::const::UT::Dreieck::DefaultPool_Dreieck_Numeric::NumberVariable_Istwert_N"/>
 	</CompilerInfo>
 	<SubAppInterfaceList>
@@ -15,7 +15,7 @@
 	<SubAppNetwork>
 		<FB Name="Sollwert_N" Type="isobus::UT::io::NumericValue::NumericValue_PHYS" x="-6400" y="800">
 			<Parameter Name="QI" Value="TRUE"/>
-			<Parameter Name="stObj" Value="InputNumber_Sollwert_N"/>
+			<Parameter Name="stObj" Value="NumberVariable_Sollwert_N"/>
 		</FB>
 		<FB Name="F_ADD_Center" Type="iec61131::arithmetic::F_ADD" x="-3800" y="300">
 			<Parameter Name="IN2" Value="REAL#42.0"/>
