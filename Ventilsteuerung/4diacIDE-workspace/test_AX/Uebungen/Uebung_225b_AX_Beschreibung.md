@@ -40,7 +40,10 @@ zurückgemeldet werden.
 ### Arbeitsauftrag
 1. Legen Sie die SubApp `Uebung_225b_AX` an (bereits als Referenzlösung vorhanden).
 2. Lesen Sie `InputNumber_Sollwert` (VT-Objekt 9000) mit einer `NumericValue_PHYS`-Instanz
-   (`stObj := InputNumber_Sollwert_N` aus `DefaultPool_Dreieck_Numeric.gcf`).
+   (`stObj := NumberVariable_Sollwert_N` aus `DefaultPool_Dreieck_Numeric.gcf`) — das VT meldet
+   Wertänderungen eines an eine `NumberVariable` gebundenen Eingabefelds unter der Objekt-ID der
+   Variable (hier `NumberVariable_Sollwert`, 21000), nicht unter der ID des Eingabefelds selbst
+   (9000).
 3. Bewegen Sie das Dreieck mit einer `PositionMarkerFS`-Instanz (`stObj := Container_PositionMarker`
    aus `DefaultPool_Dreieck_PositionMarker.gcf`, `rValue :=` der physikalische Sollwert aus Schritt 2).
 4. Schreiben Sie parallel denselben physikalischen Sollwert mit `Q_NumericValue_PHYS`

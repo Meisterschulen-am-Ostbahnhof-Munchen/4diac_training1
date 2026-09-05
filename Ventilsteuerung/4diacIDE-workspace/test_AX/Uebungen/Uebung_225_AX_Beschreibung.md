@@ -28,7 +28,10 @@ zurückgemeldet werden.
 ### Arbeitsauftrag
 1. Legen Sie die SubApp `Uebung_225_AX` an (bereits als Referenzlösung vorhanden).
 2. Lesen Sie `InputNumber_Sollwert` (VT-Objekt 9000) mit einer `NumericValue_PHYS`-Instanz
-   (`stObj := InputNumber_Sollwert_N` aus `DefaultPool_Dreieck_Numeric.gcf`).
+   (`stObj := NumberVariable_Sollwert_N` aus `DefaultPool_Dreieck_Numeric.gcf`) — das VT meldet
+   Wertänderungen eines an eine `NumberVariable` gebundenen Eingabefelds unter der Objekt-ID der
+   Variable (hier `NumberVariable_Sollwert`, 21000), nicht unter der ID des Eingabefelds selbst
+   (9000).
 3. Rechnen Sie den physikalischen Wert per `F_ADD` (+42.0) und `F_REAL_TO_INT` auf die
    Pixel-X-Position (0…84) um.
 4. Schreiben Sie die neue Position mit `Q_ChildPosition` (`u16ObjId := Polygon_Bargraph_Mittelmarker`,
