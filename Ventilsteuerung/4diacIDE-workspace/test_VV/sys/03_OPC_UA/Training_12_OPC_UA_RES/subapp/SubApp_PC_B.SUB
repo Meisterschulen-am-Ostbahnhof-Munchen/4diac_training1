@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SubAppType Name="SubApp_PC_B" Comment="Geraet B (Station 12, 192.168.1.12): wie Training_11, aber Transport-Layer UND die Bridge/Interlock-Kette bleiben A2X-gebuendelt bis unmittelbar vor der physischen Hardware. EIN A2X2_CLIENT_2_0_SUBSCRIBE_2_PLUG uebernimmt den kompletten Roundtrip fuer UP+DOWN. MyLib::sys::A2X2_ILOCK_SWITCH_PROTECT kapselt Bridge (A2X2_TO_A2X), Interlock (ILOCK_SWITCH_PROTECT_A2X) und Split (A2X_SPLIT_2) in einem Composite (DT_PROTECT als Parameter) und liefert direkt den interlocked Zustand als A2X-Plug. MyLib::sys::A2X_TO_QXA2 kapselt - analog zu Softkey2_TO_A2X2_BG auf PC_A - das Entbuendeln auf die 2 physischen logiBUS_QXA-Ausgaenge.">
+	<Identification Standard="61499-2" Description="Copyright (c) 2026 Meisterschulen am Ostbahnhof  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0">
+	</Identification>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2026-09-05" Remarks="initial API and implementation and/or initial documentation">
+	</VersionInfo>
+	<CompilerInfo packageName="subapp::Training_12_OPC_UA_RES">
+		<Import declaration="VV::const::OPC_UA::myOpcUaAddresses::SW2_PRESS_LOCAL_READ"/>
+		<Import declaration="VV::const::OPC_UA::myOpcUaAddresses::SW2_STATE_REMOTE_WRITE"/>
+		<Import declaration="logiBUS::io::DQ::logiBUS_DO::Output_Q7"/>
+		<Import declaration="logiBUS::io::DQ::logiBUS_DO::Output_Q8"/>
+	</CompilerInfo>
+	<SubAppInterfaceList>
+	</SubAppInterfaceList>
+	<SubAppNetwork>
+		<FB Name="NET" Type="adapter::net::A2X2_CLIENT_2_0_SUBSCRIBE_2_PLUG" x="-7900" y="200">
+			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="ID_WRITE" Value="SW2_STATE_REMOTE_WRITE"/>
+			<Parameter Name="ID_READ" Value="SW2_PRESS_LOCAL_READ"/>
+		</FB>
+		<SubApp Name="ILOCK" Type="MyLib::sys::A2X2_ILOCK_SWITCH_PROTECT" x="-5300" y="600">
+			<Parameter Name="DT_PROTECT" Value="T#1s"/>
+		</SubApp>
+		<SubApp Name="Outputs" Type="MyLib::sys::A2X_TO_QXA2" x="-3200" y="500">
+			<Parameter Name="Output_UP" Value="Output_Q7"/>
+			<Parameter Name="Output_DOWN" Value="Output_Q8"/>
+		</SubApp>
+		<AdapterConnections>
+			<Connection Source="NET.IO" Destination="ILOCK.IO" dx1="640"/>
+			<Connection Source="ILOCK.OUT" Destination="Outputs.IN" dx1="566.67"/>
+		</AdapterConnections>
+	</SubAppNetwork>
+</SubAppType>

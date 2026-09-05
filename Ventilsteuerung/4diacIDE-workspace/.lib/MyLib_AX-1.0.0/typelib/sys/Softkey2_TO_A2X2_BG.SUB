@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SubAppType Name="Softkey2_TO_A2X2_BG" Comment="2 VT-SoftKeys (Softkey_IXA, Hoch/Runter) gebuendelt auf einen einzigen bidirektionalen A2X2-Adapterausgang: Tastendruecke gehen ueber A2X2_4AX_TO_2X nach draussen, der ueber denselben Adapter zurueckkommende, tatsaechlich erreichte Zustand faerbt beide SoftKeys per GreenWhiteBackground1_AX - &apos;SUB style&apos;: das Buendeln steckt im Composite, nicht in der Resource des Geraets.">
+	<Identification Standard="61499-2" Description="Copyright (c) 2026 HR Agrartechnik GmbH  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0">
+	</Identification>
+	<VersionInfo Organization="HR Agrartechnik GmbH" Version="1.0" Author="Franz Höpfinger" Date="2026-09-05" Remarks="initial API and implementation and/or initial documentation">
+	</VersionInfo>
+	<CompilerInfo packageName="MyLib::sys">
+		<Import declaration="isobus::UT::Q::const::IDs::ID_NULL"/>
+	</CompilerInfo>
+	<SubAppInterfaceList>
+		<InputVars>
+			<VarDeclaration Name="u16ObjId_UP" Type="UINT" Comment="Object ID SoftKey Hoch (traegt auch das GreenWhiteBackground)" InitialValue="ID_NULL"/>
+			<VarDeclaration Name="u16ObjId_DOWN" Type="UINT" Comment="Object ID SoftKey Runter (traegt auch das GreenWhiteBackground)" InitialValue="ID_NULL"/>
+		</InputVars>
+		<Plugs>
+			<AdapterDeclaration Name="OUT" Type="adapter::types::bidirectional::A2X2" Comment="Gebuendelter Roundtrip: sendet UP/DOWN-Tastendruecke, empfaengt UP/DOWN-Rueckmeldezustand"/>
+		</Plugs>
+	</SubAppInterfaceList>
+	<SubAppNetwork>
+		<FB Name="UpKey" Type="isobus::UT::io::Softkey::Softkey_IXA" x="-4800" y="-1400">
+			<Parameter Name="QI" Value="TRUE"/>
+		</FB>
+		<FB Name="DownKey" Type="isobus::UT::io::Softkey::Softkey_IXA" x="-4800" y="-200">
+			<Parameter Name="QI" Value="TRUE"/>
+		</FB>
+		<FB Name="CONV" Type="adapter::conversion::bidirectional::A2X2_4AX_TO_2X" x="-2400" y="-700">
+		</FB>
+		<SubApp Name="BG_Up" Type="MyLib::sys::GreenWhiteBackground1_AX" x="700" y="-1200">
+		</SubApp>
+		<SubApp Name="BG_Down" Type="MyLib::sys::GreenWhiteBackground1_AX" x="700" y="0">
+		</SubApp>
+		<DataConnections>
+			<Connection Source="u16ObjId_UP" Destination="UpKey.u16ObjId" dx1="2446.67">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="u16ObjId_DOWN" Destination="DownKey.u16ObjId" dx1="2446.67">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="u16ObjId_UP" Destination="BG_Up.u16ObjId" dx1="3893.33">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="u16ObjId_DOWN" Destination="BG_Down.u16ObjId" dx1="3893.33">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+		</DataConnections>
+		<AdapterConnections>
+			<Connection Source="UpKey.IN" Destination="CONV.IND_UP" dx1="1200"/>
+			<Connection Source="DownKey.IN" Destination="CONV.IND_DOWN" dx1="1200"/>
+			<Connection Source="CONV.REQ_UP" Destination="BG_Up.DI1" dx1="1200"/>
+			<Connection Source="CONV.REQ_DOWN" Destination="BG_Down.DI1" dx1="1200"/>
+			<Connection Source="CONV.A2X2_OUT" Destination="OUT" dx1="560"/>
+		</AdapterConnections>
+	</SubAppNetwork>
+</SubAppType>
