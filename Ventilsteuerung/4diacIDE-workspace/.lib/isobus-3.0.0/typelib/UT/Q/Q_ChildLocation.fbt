@@ -12,6 +12,9 @@
 			<Event Name="INIT" Type="EInit" Comment="Service Initialization">
 				<With Var="u16ObjId"/>
 				<With Var="u16ObjIdParent"/>
+				<With Var="xScale"/>
+				<With Var="rScaleFactorDM"/>
+				<With Var="rScaleFactorSKM"/>
 			</Event>
 			<Event Name="REQ" Type="Event" Comment="Service Request">
 				<With Var="u8Xchange"/>
@@ -31,6 +34,9 @@
 		<InputVars>
 			<VarDeclaration Name="u16ObjId" Type="UINT" Comment="Object ID" InitialValue="ID_NULL"/>
 			<VarDeclaration Name="u16ObjIdParent" Type="UINT" Comment="Parent object ID " InitialValue="ID_NULL"/>
+			<VarDeclaration Name="xScale" Type="BOOL" Comment="FALSE (default) = bypass, send u8Xchange/u8Ychange through unchanged. TRUE = scale them by the DM/SKM factor for u16ObjIdParent." InitialValue="FALSE"/>
+			<VarDeclaration Name="rScaleFactorDM" Type="REAL" Comment="Factor applied when u16ObjIdParent falls in a DataMask ID range and xScale=TRUE" InitialValue="1.0"/>
+			<VarDeclaration Name="rScaleFactorSKM" Type="REAL" Comment="Factor applied when u16ObjIdParent falls in a SoftKeyMask/Aux ID range and xScale=TRUE" InitialValue="1.0"/>
 			<VarDeclaration Name="u8Xchange" Type="USINT" Comment="Relative change in x position (interpreted as signed!)"/>
 			<VarDeclaration Name="u8Ychange" Type="USINT" Comment="Relative change in y position (interpreted as signed!)"/>
 		</InputVars>

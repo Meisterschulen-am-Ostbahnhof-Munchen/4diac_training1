@@ -11,6 +11,9 @@
 		<EventInputs>
 			<Event Name="INIT" Type="EInit" Comment="Service Initialization">
 				<With Var="u16ObjId"/>
+				<With Var="xScale"/>
+				<With Var="rScaleFactorDM"/>
+				<With Var="rScaleFactorSKM"/>
 			</Event>
 			<Event Name="REQ" Type="Event" Comment="Service Request">
 				<With Var="u8PointIndex"/>
@@ -31,6 +34,9 @@
 		</EventOutputs>
 		<InputVars>
 			<VarDeclaration Name="u16ObjId" Type="UINT" Comment="Object ID of the Output Polygon object to change " InitialValue="ID_NULL"/>
+			<VarDeclaration Name="xScale" Type="BOOL" Comment="FALSE (default) = bypass, send u16NewXValue/u16NewYValue through unchanged. TRUE = scale them by the DM/SKM factor for u16ObjId." InitialValue="FALSE"/>
+			<VarDeclaration Name="rScaleFactorDM" Type="REAL" Comment="Factor applied when u16ObjId falls in a DataMask ID range and xScale=TRUE" InitialValue="1.0"/>
+			<VarDeclaration Name="rScaleFactorSKM" Type="REAL" Comment="Factor applied when u16ObjId falls in a SoftKeyMask/Aux ID range and xScale=TRUE" InitialValue="1.0"/>
 			<VarDeclaration Name="u8PointIndex" Type="USINT" Comment="Point index of the point to replace."/>
 			<VarDeclaration Name="u16NewXValue" Type="UINT" Comment="New X value of a point relative to the top left corner of the polygon "/>
 			<VarDeclaration Name="u16NewYValue" Type="UINT" Comment="New Y value of a point relative to the top left corner of the polygon "/>

@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Function Name="F_ScalePixel" Comment="Bypass (xScale=FALSE) or scale (xScale=TRUE) one raw pixel value by the DM/SKM factor for u16ObjId.">
+	<Identification Standard="61499-2" Description="Copyright (c) 2026 Meisterschulen am Ostbahnhof  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0">
+	</Identification>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2026-09-05" Remarks="initial API and implementation and/or initial documentation">
+	</VersionInfo>
+	<CompilerInfo packageName="isobus::UT::Q::helpers">
+		<Import declaration="isobus::UT::Q::helpers::F_VTScaleFactor"/>
+	</CompilerInfo>
+	<InterfaceList>
+		<EventInputs>
+			<Event Name="REQ" Type="Event">
+				<With Var="xScale"/>
+				<With Var="u16ObjId"/>
+				<With Var="iValue"/>
+				<With Var="rScaleFactorDM"/>
+				<With Var="rScaleFactorSKM"/>
+			</Event>
+		</EventInputs>
+		<EventOutputs>
+			<Event Name="CNF" Type="Event">
+				<With Var=""/>
+			</Event>
+		</EventOutputs>
+		<InputVars>
+			<VarDeclaration Name="xScale" Type="BOOL" Comment="FALSE (default) = bypass, pass iValue through unchanged. TRUE = multiply iValue by the DM/SKM scale factor for u16ObjId."/>
+			<VarDeclaration Name="u16ObjId" Type="UINT" Comment="Object ID the pixel value belongs to - decides DM vs SKM factor, see F_VTScaleFactor"/>
+			<VarDeclaration Name="iValue" Type="DINT" Comment="Raw pixel value (caller converts its native INT/UINT/USINT field to/from DINT)"/>
+			<VarDeclaration Name="rScaleFactorDM" Type="REAL"/>
+			<VarDeclaration Name="rScaleFactorSKM" Type="REAL"/>
+		</InputVars>
+		<OutputVars>
+			<VarDeclaration Name="" Type="DINT"/>
+		</OutputVars>
+	</InterfaceList>
+	<FunctionBody>
+		<ST><![CDATA[PACKAGE isobus::UT::Q::helpers;
+
+(* Bypass (xScale=FALSE) or scale (xScale=TRUE) one raw pixel value by the DM/SKM factor
+ * for u16ObjId. See F_VTScaleFactor for the ID-range decision. *)
+FUNCTION F_ScalePixel : DINT
+
+VAR_INPUT
+	xScale : BOOL;
+	u16ObjId : UINT;
+	iValue : DINT;
+	rScaleFactorDM : REAL;
+	rScaleFactorSKM : REAL;
+END_VAR
+
+IF NOT xScale THEN
+	F_ScalePixel := iValue;
+ELSE
+	F_ScalePixel := REAL_TO_DINT(DINT_TO_REAL(iValue) * F_VTScaleFactor(u16ObjId := u16ObjId, rScaleFactorDM := rScaleFactorDM, rScaleFactorSKM := rScaleFactorSKM));
+END_IF;
+
+END_FUNCTION
+]]></ST>
+	</FunctionBody>
+	<Attribute Name="eclipse4diac::core::TypeHash" Value="''"/>
+</Function>
