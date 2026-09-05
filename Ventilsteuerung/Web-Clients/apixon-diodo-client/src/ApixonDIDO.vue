@@ -48,7 +48,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed, onUnmounted } from 'vue'
+import { ref, computed, onMounted, onUnmounted } from 'vue'
 import {
   OPCUAClient,
   MessageSecurityMode,
@@ -63,7 +63,10 @@ import {
   Variant,
 } from '@wsopcua/wsopcua'
 
-const endpointUrl = ref(`ws://${window.location.hostname || 'localhost'}:4841`)
+/* Ermittelt automatisch die IP/Domain, über die die Seite aufgerufen wurde,
+ * damit beim Aufruf direkt vom Controller keine manuelle Eingabe nötig ist. */
+const wsProtocol = window.location.protocol === 'https:' ? 'wss:' : 'ws:'
+const endpointUrl = ref(`${wsProtocol}//${window.location.hostname || 'localhost'}:4841`)
 const status = ref('Getrennt')
 const connected = ref(false)
 const inputs = ref<boolean[]>(new Array(8).fill(false))
@@ -189,6 +192,7 @@ async function disconnect() {
   outputs.value.fill(false)
 }
 
+onMounted(() => connect())
 onUnmounted(() => disconnect())
 </script>
 
