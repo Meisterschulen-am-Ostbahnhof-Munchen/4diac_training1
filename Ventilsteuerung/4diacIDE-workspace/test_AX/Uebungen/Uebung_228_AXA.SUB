@@ -24,23 +24,23 @@
 			<Parameter Name="stObj" Value="Container_PositionMarker"/>
 			<Parameter Name="xScale" Value="TRUE"/>
 		</FB>
-		<FB Name="SplitBar" Type="isobus::UT::Q::BargraphSplitFS_AR" x="-3600" y="1300">
+		<FB Name="SplitBar" Type="isobus::UT::Q::BargraphSplitFS_AR" x="-3600" y="1100">
 			<Parameter Name="stObj" Value="Bargraph_Split_BargraphSplit"/>
 		</FB>
-		<FB Name="Istwert_N" Type="isobus::UT::Q::Q_NumericValue_PHYSA" x="-3600" y="2400">
+		<FB Name="Istwert_N" Type="isobus::UT::Q::Q_NumericValue_PHYSA" x="-3600" y="2200">
 			<Parameter Name="stObj" Value="NumberVariable_Istwert_N"/>
 		</FB>
-		<FB Name="MarkerColor" Type="isobus::UT::Q::FillWindowFS_AR" x="-3600" y="3500">
+		<SubApp Name="MarkerColor" Type="isobus::UT::Q::FillWindowFS_AR" x="-3500" y="3100">
 			<Parameter Name="u16ObjId" Value="FillStyle_Bargraph_Mittelmarker_Gruen"/>
 			<Parameter Name="rWindowMin" Value="REAL#-2.0"/>
 			<Parameter Name="rWindowMax" Value="REAL#2.0"/>
-		</FB>
+		</SubApp>
 		<AdapterConnections>
 			<Connection Source="Sollwert_N.rPhys" Destination="Split.IN" dx1="1100"/>
 			<Connection Source="Split.OUT1" Destination="Marker_Dreieck.rPhys" dx1="1300"/>
 			<Connection Source="Split.OUT2" Destination="SplitBar.rPhys" dx1="1300"/>
-			<Connection Source="Split.OUT3" Destination="Istwert_N.rPhys" dx1="1300"/>
-			<Connection Source="Split.OUT4" Destination="MarkerColor.rPhys" dx1="1300"/>
+			<Connection Source="Split.OUT3" Destination="Istwert_N.rPhys" dx1="1033.33"/>
+			<Connection Source="Split.OUT4" Destination="MarkerColor.rPhys" dx1="760"/>
 		</AdapterConnections>
 	</SubAppNetwork>
 </SubAppType>

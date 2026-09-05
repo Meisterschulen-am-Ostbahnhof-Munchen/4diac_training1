@@ -18,11 +18,15 @@ grün in der Nähe von 0 (Fenster -2…+2), rot außerhalb.
   Muster). Die Farbe eines FillAttributes-Objekts wird per **Change Fill Attributes** (ISO
   11783-6 F.32, `Q_FillAttributes`) gesetzt. Da dieses FillAttributes-Objekt exklusiv vom Dreieck
   verwendet wird, ändert das Umfärben keine anderen Objekte.
-- Der neue Baustein `FillWindowFS_AR` (`isobus::UT::Q`) kapselt das: er nimmt den Sollwert über
-  einen AR-Socket entgegen, prüft mit `F_WindowColor` (`isobus::UT::Q::helpers`), ob der Wert im
-  Fenster `[rWindowMin, rWindowMax]` liegt, und schreibt `u8ColorIn` (Standard: `COLOR_GREEN`) oder
-  `u8ColorOut` (Standard: `COLOR_RED`) auf das FillAttributes-Objekt — `FillType`/`FillPatternId`
-  bleiben dabei fest auf "feste Farbe, kein Muster", genau wie im Pool konfiguriert.
+- Der neue Baustein `FillWindowFS_AR` (`isobus::UT::Q`) kapselt das — als `SubAppType`, nach dem
+  Vorbild von `MyLib_AX-1.0.0\typelib\sys\GreenRedBackground1_AX.SUB`, statt als eigener `FBType`
+  mit einer ST-Hilfsfunktion: er nimmt den Sollwert über einen AR-Socket entgegen, verteilt ihn mit
+  `AR_SPLIT_2` auf `AR_GE` (`>= rWindowMin`) und `AR_LE` (`<= rWindowMax`), UND-verknüpft beide
+  Ergebnisse mit `AX_AND_2` und wählt darüber mit `AX_SEL` (`G` = "im Fenster?") zwischen
+  `COLOR_RED`/`COLOR_GREEN` — ausschließlich vorhandene generische Adapter-Bausteine, keine
+  eigene ST-Logik. `FillType`/`FillPatternId` bleiben dabei fest auf "feste Farbe, kein Muster",
+  genau wie im Pool konfiguriert. Ein sauberer, generischer `Q_FillAttributes`-Adapter-Wrapper
+  (als `FBType`) ist als spätere Verfeinerung sinnvoll, aber für den Moment bewusst zurückgestellt.
 - **Verteilen:** `Split` (`AR_SPLIT_4`, eine Stelle mehr als in Übung 227) verteilt den einen
   AR-Sollwert jetzt auf vier Verbraucher: Dreieck-Position, Split-Bargraph, Istwert-Rückschreibung
   und die neue Farblogik.
@@ -36,6 +40,5 @@ grün in der Nähe von 0 (Fenster -2…+2), rot außerhalb.
 4. Am echten Terminal testen: Sollwert zwischen -2 und +2 → Dreieck grün; außerhalb → Dreieck rot.
 
 ### Referenzlösung
-`Uebung_228_AXA.SUB` — validiert gegen `subapptype.xsd`. Neue Bausteine:
-`Ventilsteuerung\4diacIDE-workspace\.lib\isobus-3.0.0\typelib\UT\Q\FillWindowFS_AR.fbt` und
-`Ventilsteuerung\4diacIDE-workspace\.lib\isobus-3.0.0\typelib\UT\Q\helpers\F_WindowColor.fct`.
+`Uebung_228_AXA.SUB` — validiert gegen `subapptype.xsd`. Neuer Baustein:
+`Ventilsteuerung\4diacIDE-workspace\.lib\isobus-3.0.0\typelib\UT\Q\FillWindowFS_AR.SUB`.
