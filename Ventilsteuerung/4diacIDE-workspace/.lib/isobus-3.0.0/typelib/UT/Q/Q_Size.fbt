@@ -12,8 +12,6 @@
 			<Event Name="INIT" Type="EInit" Comment="Service Initialization">
 				<With Var="u16ObjId"/>
 				<With Var="xScale"/>
-				<With Var="rScaleFactorDM"/>
-				<With Var="rScaleFactorSKM"/>
 			</Event>
 			<Event Name="REQ" Type="Event" Comment="Service Request">
 				<With Var="u16Width"/>
@@ -33,8 +31,6 @@
 		<InputVars>
 			<VarDeclaration Name="u16ObjId" Type="UINT" Comment="Object ID" InitialValue="ID_NULL"/>
 			<VarDeclaration Name="xScale" Type="BOOL" Comment="FALSE (default) = bypass, send u16Width/u16Height through unchanged. TRUE = scale them by the DM/SKM factor for u16ObjId." InitialValue="FALSE"/>
-			<VarDeclaration Name="rScaleFactorDM" Type="REAL" Comment="Factor applied when u16ObjId falls in a DataMask ID range and xScale=TRUE" InitialValue="1.0"/>
-			<VarDeclaration Name="rScaleFactorSKM" Type="REAL" Comment="Factor applied when u16ObjId falls in a SoftKeyMask/Aux ID range and xScale=TRUE" InitialValue="1.0"/>
 			<VarDeclaration Name="u16Width" Type="UINT" Comment="New width "/>
 			<VarDeclaration Name="u16Height" Type="UINT" Comment="New height"/>
 		</InputVars>
