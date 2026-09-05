@@ -977,6 +977,134 @@ def writePositionMarkerGCFfile(data, filepaths):
     print(f"Written: {newfilepath}")
 
 
+BARGRAPHSPLIT_NAME_SUFFIXES = ("_links", "_rechts")  # exactly 2, unlike Scroll's 4
+
+BARGRAPHSPLIT_NAME_SUFFIX = "_BargraphSplit"
+
+
+def _is_bargraph_rectangle(obj):
+    """A CRectangle configured as an ISO 11783-6 Annex B.11.3 Output Linear Bar Graph
+    carries its own nested PropertySheet Name="Bargraph" - this excludes any other
+    CRectangle that merely happens to end in a matched suffix."""
+    if obj.get("Class") != "CRectangle":
+        return False
+    return any(sheet.get("Name") == "Bargraph" for sheet in obj.findall("PropertySheet"))
+
+
+def readBargraphSplitJOP(jop_filepath):
+    """Parse a .jop file and extract split-bargraph pairs into BargraphSplit_S data.
+
+    Detects each pair by two Bargraph CRectangle ObjectNames sharing a common prefix and
+    ending in "_links"/"_rechts" (BARGRAPHSPLIT_NAME_SUFFIXES). Unlike Scroll's single-
+    pair-per-pool limit, every distinct prefix is processed independently (like
+    readPositionMarkerJOP) - multiple split-bargraph pairs per pool are supported. A
+    prefix missing one side, or with more than one match for a side, is skipped with a
+    warning; other pairs still succeed. A pair whose two sides disagree on Min/Max is
+    also skipped with a warning, since a split bargraph is by construction one signed
+    range mirrored around a shared zero.
+
+    Returns a dict keyed by the shared prefix:
+        { "Bargraph_Split": {"left_id": 18001, "right_id": 18002, "min": 0.0, "max": 42.0}, ... }
+    """
+    tree = ET.parse(jop_filepath)
+    root = tree.getroot()
+    objects_container = root.find("Objects")
+    if objects_container is None:
+        return {}
+
+    by_suffix = {suffix: {} for suffix in BARGRAPHSPLIT_NAME_SUFFIXES}
+    for obj in objects_container.findall("Object"):
+        name = obj.get("ObjectName")
+        if not name or not _is_bargraph_rectangle(obj):
+            continue
+        for suffix in BARGRAPHSPLIT_NAME_SUFFIXES:
+            if name.endswith(suffix):
+                prefix = name[:-len(suffix)]
+                by_suffix[suffix].setdefault(prefix, []).append(obj)
+                break
+
+    prefixes = set()
+    for suffix_map in by_suffix.values():
+        prefixes.update(suffix_map.keys())
+
+    result = {}
+    for prefix in sorted(prefixes):
+        left_suffix, right_suffix = BARGRAPHSPLIT_NAME_SUFFIXES
+        left_matches = by_suffix[left_suffix].get(prefix, [])
+        right_matches = by_suffix[right_suffix].get(prefix, [])
+
+        if len(left_matches) != 1 or len(right_matches) != 1:
+            print(f"  Warning: '{prefix}' has {len(left_matches)} '{left_suffix}' and "
+                  f"{len(right_matches)} '{right_suffix}' Bargraph object(s) - need exactly "
+                  "one of each, skipping split-bargraph generation for this prefix.")
+            continue
+
+        left_obj, right_obj = left_matches[0], right_matches[0]
+        left_min, left_max = _get_prop(left_obj, "Min"), _get_prop(left_obj, "Max")
+        right_min, right_max = _get_prop(right_obj, "Min"), _get_prop(right_obj, "Max")
+        if left_min is None or left_max is None or right_min is None or right_max is None:
+            print(f"  Warning: '{prefix}' Bargraph object(s) missing Min/Max - skipping "
+                  "split-bargraph generation for this prefix.")
+            continue
+        if float(left_min) != float(right_min) or float(left_max) != float(right_max):
+            print(f"  Warning: '{prefix}' left/right Bargraph Min/Max mismatch "
+                  f"({left_suffix}: {left_min}..{left_max}, {right_suffix}: {right_min}..{right_max}) "
+                  "- a split bargraph must share one symmetric range, skipping.")
+            continue
+
+        result[prefix] = {
+            "left_id":  int(left_obj.get("JVS-ID")),
+            "right_id": int(right_obj.get("JVS-ID")),
+            "min":      float(left_min),
+            "max":      float(left_max),
+        }
+
+    return result
+
+
+def writeBargraphSplitGCFfile(data, filepaths):
+    """Write a <name>_BargraphSplit.gcf with BargraphSplit_S constants for each detected pair."""
+    newfilepath = safe_output_path(filepaths[1], filepaths[2] + '_BargraphSplit.gcf')
+    gcf_name    = filepaths[2] + '_BargraphSplit'
+    package     = filepaths[3]
+    struct_type = "isobus::utils::bargraph::BargraphSplit_S"
+
+    root = ET.Element("GlobalConstants", Name=gcf_name, Comment="Split-bargraph constants (left/right object IDs, shared magnitude bounds)")
+    compiler_info = ET.SubElement(root, "CompilerInfo")
+    compiler_info.set("packageName", package)
+    global_constants = ET.SubElement(root, "GlobalConstants")
+
+    for name, info in sorted(data.items()):
+        side_left = (
+            f"(u16ObjId := {info['left_id']}, r32Scale := 1.0, i32Offset := 0, u8Decimals := 0)"
+        )
+        side_right = (
+            f"(u16ObjId := {info['right_id']}, r32Scale := 1.0, i32Offset := 0, u8Decimals := 0)"
+        )
+        initial_value = (
+            f"(stLeft := {side_left}, "
+            f"stRight := {side_right}, "
+            f"r32MinMagnitude := {_format_real(info['min'])}, "
+            f"r32MaxMagnitude := {_format_real(info['max'])})"
+        )
+        ET.SubElement(
+            global_constants,
+            "VarDeclaration",
+            Name=name + BARGRAPHSPLIT_NAME_SUFFIX,
+            Type=struct_type,
+            InitialValue=initial_value,
+        )
+
+    xml_str = ET.tostring(root, encoding='utf-8').decode()
+    xml_str = minidom.parseString(xml_str).toprettyxml(indent="\t")
+    xml_str = xml_str[:19] + ' ' + 'encoding="UTF-8"' + xml_str[20:]
+
+    with open(newfilepath, "w") as file:
+        file.write(xml_str)
+
+    print(f"Written: {newfilepath}")
+
+
 if __name__ == "__main__":
 
     # Gets filepaths and saves it in a variable
@@ -1003,6 +1131,10 @@ if __name__ == "__main__":
         position_marker_data = readPositionMarkerJOP(filepaths[4])
         if position_marker_data:
             writePositionMarkerGCFfile(position_marker_data, filepaths)
+
+        bargraph_split_data = readBargraphSplitJOP(filepaths[4])
+        if bargraph_split_data:
+            writeBargraphSplitGCFfile(bargraph_split_data, filepaths)
 
 
 __author__ = "Lorenz Bauer / Franz Höpfinger"
