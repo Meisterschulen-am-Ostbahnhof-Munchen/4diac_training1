@@ -144,13 +144,18 @@ Use the `.launch` files in `Ventilsteuerung/4diacIDE-workspace/test_*/Launches`,
 
 ## 📚 Documentation & Exercise Series
 
-Detailed guides and descriptions of the individual exercise packages are available in our ReadTheDocs documentation.
+Detailed guides and descriptions of the individual exercise packages are available in our ReadTheDocs documentation. The docs are split across three wikis:
 
 | Area | Description | Documentation |
 | :--- | :--- | :--- |
-| **Exercises AX** | Fundamentals of valve control (series AX) | [📘 Go to documentation](https://meisterschulen-am-ostbahnhof-munchen-docs.readthedocs.io/projects/visual-programming-languages-docs/en/latest/training1/Ventilsteuerung/4diacIDE-workspace/test_AX/Uebungen_doc/Uebungen.html) |
-| **Exercises B** | Advanced exercises without the AX prefix | [📙 Go to documentation](https://meisterschulen-am-ostbahnhof-munchen-docs.readthedocs.io/projects/visual-programming-languages-docs/en/latest/training1/Ventilsteuerung/4diacIDE-workspace/test_B/Uebungen_doc/Uebungen.html) |
-| **Exercises VV** | Distributed processing & communication | [🚀 Go to documentation](https://meisterschulen-am-ostbahnhof-munchen-docs.readthedocs.io/projects/visual-programming-languages-docs/en/latest/training1/Ventilsteuerung/4diacIDE-workspace/test_VV/Uebungen_doc/Uebungen.html) |
+| **Exercises AX** | Fundamentals of valve control (series AX) | [📘 Go to documentation](https://docs.ms-muc-docs.de/projects/4diac-exercises-docs/en/latest/Uebungen/test_AX/Uebungen_doc/) |
+| **Exercises B** | Advanced exercises without the AX prefix | [📙 Go to documentation](https://docs.ms-muc-docs.de/projects/4diac-exercises-docs/en/latest/Uebungen/test_B/Uebungen_doc/) |
+| **Versuche B** | Array processing & logiBUS adapter demos (series B) | [📗 Go to documentation](https://docs.ms-muc-docs.de/projects/4diac-exercises-docs/en/latest/Uebungen/test_B/Versuche_doc/) |
+| **Exercises VV** | Distributed processing & communication | [🚀 Go to documentation](https://docs.ms-muc-docs.de/projects/4diac-exercises-docs/en/latest/Uebungen/test_VV/Uebungen_doc/Uebungen/) |
+| **Libraries** | FB & adapter reference (all function blocks & adapters) | [📚 Go to documentation](https://docs.ms-muc-docs.de/projects/4diac-library-reference-docs/en/latest/) |
+| **Fundamentals & Design Patterns** | IEC 61499 concepts, design patterns (module 6) | [🧩 Go to documentation](https://docs.ms-muc-docs.de/projects/visual-programming-languages-docs/en/latest/) |
+
+Each of the three wikis (4, 4.1, 4.2) also has a downloadable PDF handbook, linked from its own landing page.
 
 ## 🔍 SEO & Keywords
 

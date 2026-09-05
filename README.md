@@ -142,13 +142,18 @@ Nutze die `.launch`-Dateien im Ordner `Ventilsteuerung/4diacIDE-workspace/test_*
 
 ## 📚 Dokumentation & Übungsreihen
 
-Detaillierte Anleitungen und Beschreibungen zu den einzelnen Übungspaketen finden Sie in unserer ReadTheDocs-Dokumentation.
+Detaillierte Anleitungen und Beschreibungen zu den einzelnen Übungspaketen finden Sie in unserer ReadTheDocs-Dokumentation. Die Doku ist auf drei Wikis aufgeteilt:
 
 | Bereich | Beschreibung | Dokumentation |
 | :--- | :--- | :--- |
-| **Übungen AX** | Grundlagen der Ventilsteuerung (Serie AX) | [📘 Zur Dokumentation](https://meisterschulen-am-ostbahnhof-munchen-docs.readthedocs.io/projects/visual-programming-languages-docs/de/latest/training1/Ventilsteuerung/4diacIDE-workspace/test_AX/Uebungen_doc/Uebungen.html) |
-| **Übungen B** | Erweiterte Übungen ohne AX-Präfix | [📙 Zur Dokumentation](https://meisterschulen-am-ostbahnhof-munchen-docs.readthedocs.io/projects/visual-programming-languages-docs/de/latest/training1/Ventilsteuerung/4diacIDE-workspace/test_B/Uebungen_doc/Uebungen.html) |
-| **Übungen VV** | Verteilte Verarbeitung & Kommunikation | [🚀 Zur Dokumentation](https://meisterschulen-am-ostbahnhof-munchen-docs.readthedocs.io/projects/visual-programming-languages-docs/de/latest/training1/Ventilsteuerung/4diacIDE-workspace/test_VV/Uebungen_doc/Uebungen.html) |
+| **Übungen AX** | Grundlagen der Ventilsteuerung (Serie AX) | [📘 Zur Dokumentation](https://docs.ms-muc-docs.de/projects/4diac-exercises-docs/de/latest/Uebungen/test_AX/Uebungen_doc/) |
+| **Übungen B** | Erweiterte Übungen ohne AX-Präfix | [📙 Zur Dokumentation](https://docs.ms-muc-docs.de/projects/4diac-exercises-docs/de/latest/Uebungen/test_B/Uebungen_doc/) |
+| **Versuche B** | Array-Verarbeitung & logiBUS-Adapter-Demos (Serie B) | [📗 Zur Dokumentation](https://docs.ms-muc-docs.de/projects/4diac-exercises-docs/de/latest/Uebungen/test_B/Versuche_doc/) |
+| **Übungen VV** | Verteilte Verarbeitung & Kommunikation | [🚀 Zur Dokumentation](https://docs.ms-muc-docs.de/projects/4diac-exercises-docs/de/latest/Uebungen/test_VV/Uebungen_doc/Uebungen/) |
+| **Bibliotheken** | FB- & Adapter-Referenz (alle Function Blocks & Adapter) | [📚 Zur Dokumentation](https://docs.ms-muc-docs.de/projects/4diac-library-reference-docs/de/latest/) |
+| **Grundlagen & Design Patterns** | IEC 61499-Konzepte, Entwurfsmuster (Modul 6) | [🧩 Zur Dokumentation](https://docs.ms-muc-docs.de/projects/visual-programming-languages-docs/de/latest/) |
+
+Jedes der drei Wikis (4, 4.1, 4.2) hat auch ein herunterladbares PDF-Handbuch, verlinkt auf der jeweiligen Startseite.
 
 ## 🔍 SEO & Schlagwörter
 
