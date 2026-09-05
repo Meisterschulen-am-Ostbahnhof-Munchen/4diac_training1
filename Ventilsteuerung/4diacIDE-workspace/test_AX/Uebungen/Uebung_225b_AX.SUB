@@ -16,19 +16,19 @@
 			<Parameter Name="QI" Value="TRUE"/>
 			<Parameter Name="stObj" Value="InputNumber_Sollwert_N"/>
 		</FB>
-		<FB Name="Marker_Dreieck" Type="isobus::UT::Q::PositionMarkerFS" x="-2600" y="400">
+		<FB Name="Marker_Dreieck" Type="isobus::UT::Q::PositionMarkerFS" x="-2600" y="200">
 			<Parameter Name="stObj" Value="Container_PositionMarker"/>
 			<Parameter Name="xScale" Value="TRUE"/>
 		</FB>
-		<FB Name="Istwert_N" Type="isobus::UT::Q::Q_NumericValue_PHYS" x="-2700" y="1300">
+		<FB Name="Istwert_N" Type="isobus::UT::Q::Q_NumericValue_PHYS" x="-2700" y="1400">
 			<Parameter Name="stObj" Value="NumberVariable_Istwert_N"/>
 		</FB>
 		<EventConnections>
 			<Connection Source="Sollwert_N.IND" Destination="Marker_Dreieck.REQ" dx1="633.33"/>
-			<Connection Source="Sollwert_N.IND" Destination="Istwert_N.REQ" dx1="1900"/>
+			<Connection Source="Sollwert_N.IND" Destination="Istwert_N.REQ" dx1="1313.33"/>
 		</EventConnections>
 		<DataConnections>
-			<Connection Source="Sollwert_N.rPhys" Destination="Marker_Dreieck.rValue" dx1="1000"/>
+			<Connection Source="Sollwert_N.rPhys" Destination="Marker_Dreieck.rValue" dx1="733.33"/>
 			<Connection Source="Sollwert_N.rPhys" Destination="Istwert_N.rPhys" dx1="1153.33"/>
 		</DataConnections>
 	</SubAppNetwork>
