@@ -18,7 +18,7 @@
 			<Parameter Name="QI" Value="TRUE"/>
 			<Parameter Name="stObj" Value="NumberVariable_Sollwert_N"/>
 		</FB>
-		<FB Name="Split" Type="adapter::events::unidirectional::AR_SPLIT_4" x="-6200" y="1300">
+		<FB Name="Split" Type="adapter::events::unidirectional::AR_SPLIT_4" x="-6600" y="1300">
 		</FB>
 		<FB Name="Marker_Dreieck" Type="isobus::UT::Q::PositionMarkerFSA" x="-3600" y="200">
 			<Parameter Name="stObj" Value="Container_PositionMarker"/>
@@ -36,7 +36,7 @@
 			<Parameter Name="rWindowMax" Value="REAL#2.0"/>
 		</SubApp>
 		<AdapterConnections>
-			<Connection Source="Sollwert_N.rPhys" Destination="Split.IN" dx1="1100"/>
+			<Connection Source="Sollwert_N.rPhys" Destination="Split.IN" dx1="593.33"/>
 			<Connection Source="Split.OUT1" Destination="Marker_Dreieck.rPhys" dx1="1300"/>
 			<Connection Source="Split.OUT2" Destination="SplitBar.rPhys" dx1="1300"/>
 			<Connection Source="Split.OUT3" Destination="Istwert_N.rPhys" dx1="1033.33"/>
