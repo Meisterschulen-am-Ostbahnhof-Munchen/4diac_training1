@@ -40,6 +40,26 @@ def checkPath(path):
     else:
         raise FileNotFoundError(f"The new file '{path}' does not exist.")
 
+def safe_output_path(folder, filename):
+    """Join folder/filename for writing, rejecting any filename that isn't a plain, single
+    path component, then double-check the joined result still resolves inside folder.
+
+    filename is built from CLI-supplied arguments (--newfile plus a fixed suffix); this guards
+    against it accidentally (or via a malformed CLI invocation) containing "..", a path
+    separator, or an absolute path component that would otherwise let a write escape the
+    intended --newfolder directory.
+    """
+    if not filename or filename in (os.curdir, os.pardir):
+        raise ValueError(f"Invalid output filename: {filename!r}")
+    if os.path.basename(filename) != filename:
+        raise ValueError(f"Output filename must not contain path separators: {filename!r}")
+
+    folder = os.path.realpath(folder)
+    candidate = os.path.realpath(os.path.join(folder, filename))
+    if os.path.commonpath([folder, candidate]) != folder:
+        raise ValueError(f"Refusing to write outside of '{folder}': '{candidate}'")
+    return candidate
+
 def compute_rename_map(definitions):
     """For names that end with _<value> (numeric), strip the suffix if the result is unique.
 
@@ -224,7 +244,7 @@ def update_jop_objectnames(jop_path, rename_map):
         print(f"No ObjectName changes needed in {jop_path}")
 
 def writeGCFfile(data, filepaths):
-    newfilepath = os.path.join(filepaths[1], filepaths[2]+'.gcf')
+    newfilepath = safe_output_path(filepaths[1], filepaths[2]+'.gcf')
 
     root = ET.Element("GlobalConstants", Name=filepaths[2], Comment="Global constants")
 
@@ -271,7 +291,7 @@ def writeNumericGCFfile(data, filepaths):
     already used by the UINT constant of the same name in the non-numeric .gcf
     (same package) - without the suffix, 4diac's name resolution collides.
     """
-    newfilepath = os.path.join(filepaths[1], filepaths[2] + '_Numeric.gcf')
+    newfilepath = safe_output_path(filepaths[1], filepaths[2] + '_Numeric.gcf')
     gcf_name    = filepaths[2] + '_Numeric'
     package     = filepaths[3]
     struct_type = "logiBUS::utils::conversion::phys::NumericObjectPool_S"
@@ -739,7 +759,7 @@ def writeScrollGCFfile(data, filepaths):
     warning for those). u16GotoInputId has no discoverable link in the pool yet and is
     always ID_NULL until such a field exists with a naming convention.
     """
-    newfilepath = os.path.join(filepaths[1], filepaths[2] + '_Scroll.gcf')
+    newfilepath = safe_output_path(filepaths[1], filepaths[2] + '_Scroll.gcf')
     gcf_name    = filepaths[2] + '_Scroll'
     package     = filepaths[3]
     struct_type = "isobus::utils::scroll::ScrollFull_S"
@@ -807,6 +827,156 @@ def writeScrollGCFfile(data, filepaths):
     print(f"Written: {newfilepath}")
 
 
+POSITIONMARKER_NAME_SUFFIXES = ("_Sollwertmarker",)  # tuple: room to add more suffixes later
+
+POSITIONMARKER_NAME_SUFFIX = "_PositionMarker"
+
+
+def _bbox_width(obj):
+    """Return an object's bounding-box width in pixels: prefer an explicit Width
+    property (CRectangle, CGroup, ...); fall back to parsing a CPolygon's Points
+    property (which has no Width of its own) as max(x) - min(x)."""
+    width = _get_prop(obj, "Width")
+    if width is not None:
+        return int(width)
+    points = _get_prop(obj, "Points")
+    if points is None:
+        return None
+    coords = re.findall(r'\(([-\d]+),([-\d]+)\)', points)
+    if not coords:
+        return None
+    xs = [int(x) for x, _y in coords]
+    return max(xs) - min(xs)
+
+
+def readPositionMarkerJOP(jop_filepath):
+    """Parse a .jop file and extract position-marker geometry into PositionMarker_S data.
+
+    Detects each marker by a container (CGroup) ObjectName ending in one of
+    POSITIONMARKER_NAME_SUFFIXES (e.g. "_Sollwertmarker"). Unlike Scroll, any number
+    of markers per pool is supported - each is processed independently, since there is
+    no cross-suffix pairing ambiguity here (a marker needs only one container name plus
+    its already-nested child reference).
+
+    r32MinPos is always 0.0 (a marker can't travel left of the container's own left
+    edge). r32MaxPos is derived from ContainerWidth - ChildBoundingBoxWidth. r32Center
+    is read from the child's own CProxy "Left" property - the pos=0 baseline as
+    currently set up in ISO-Designer, exactly like readScrollJOP derives bar_base_offset
+    from the scrollbar proxy's "Top" rather than assuming a formula.
+
+    Returns a dict keyed by the container's ObjectName with its suffix stripped:
+        { "Container": {"child_id": 16000, "parent_id": 3000, "min_pos": 0.0,
+                         "max_pos": 84.0, "center": 42.0, "y_position": 0}, ... }
+    """
+    tree = ET.parse(jop_filepath)
+    root = tree.getroot()
+    objects_container = root.find("Objects")
+    if objects_container is None:
+        return {}
+
+    by_name = {}
+    by_id = {}
+    for obj in objects_container.findall("Object"):
+        jvs_id = obj.get("JVS-ID")
+        if jvs_id:
+            by_id[jvs_id] = obj
+        name = obj.get("ObjectName")
+        if name:
+            by_name[name] = obj
+
+    result = {}
+    for name, container_obj in by_name.items():
+        suffix = next((s for s in POSITIONMARKER_NAME_SUFFIXES if name.endswith(s)), None)
+        if suffix is None:
+            continue
+        key_name = name[:-len(suffix)]
+
+        width_str = _get_prop(container_obj, "Width")
+        if width_str is None:
+            print(f"  Warning: '{name}' has no Width property - skipping position marker generation.")
+            continue
+        container_width = int(width_str)
+
+        child_refs = container_obj.find("Objects")
+        child_ref = child_refs.find("Object") if child_refs is not None else None
+        if child_ref is None:
+            print(f"  Warning: '{name}' has no child object - skipping position marker generation.")
+            continue
+        proxy_obj = by_id.get(child_ref.get("JVS-ID"))
+        if proxy_obj is None:
+            print(f"  Warning: '{name}' child reference not found - skipping position marker generation.")
+            continue
+
+        if proxy_obj.get("Class") == "CProxy":
+            target_obj = _resolve_proxy_target(proxy_obj, by_id)
+            proxy_left = _get_prop(proxy_obj, "Left")
+        else:
+            target_obj = proxy_obj
+            proxy_left = _get_prop(proxy_obj, "Left")
+
+        if target_obj is None:
+            print(f"  Warning: '{name}' proxy target not found - skipping position marker generation.")
+            continue
+
+        child_width = _bbox_width(target_obj)
+        if child_width is None:
+            print(f"  Warning: '{name}' child object has neither Points nor Width - skipping position marker generation.")
+            continue
+        if proxy_left is None:
+            print(f"  Warning: '{name}' child reference has no Left property - skipping position marker generation.")
+            continue
+
+        result[key_name] = {
+            "child_id":   int(target_obj.get("JVS-ID")),
+            "parent_id":  int(container_obj.get("JVS-ID")),
+            "min_pos":    0.0,
+            "max_pos":    float(container_width - child_width),
+            "center":     float(proxy_left),
+            "y_position": 0,
+        }
+
+    return result
+
+
+def writePositionMarkerGCFfile(data, filepaths):
+    """Write a <name>_PositionMarker.gcf with PositionMarker_S constants for each detected marker."""
+    newfilepath = safe_output_path(filepaths[1], filepaths[2] + '_PositionMarker.gcf')
+    gcf_name    = filepaths[2] + '_PositionMarker'
+    package     = filepaths[3]
+    struct_type = "isobus::utils::childposition::PositionMarker_S"
+
+    root = ET.Element("GlobalConstants", Name=gcf_name, Comment="Position marker constants (child/parent object IDs, travel bounds, center offset)")
+    compiler_info = ET.SubElement(root, "CompilerInfo")
+    compiler_info.set("packageName", package)
+    global_constants = ET.SubElement(root, "GlobalConstants")
+
+    for name, info in sorted(data.items()):
+        initial_value = (
+            f"(u16ChildId := {info['child_id']}, "
+            f"u16ParentId := {info['parent_id']}, "
+            f"r32MinPos := {_format_real(info['min_pos'])}, "
+            f"r32MaxPos := {_format_real(info['max_pos'])}, "
+            f"r32Center := {_format_real(info['center'])}, "
+            f"s16YPosition := {info['y_position']})"
+        )
+        ET.SubElement(
+            global_constants,
+            "VarDeclaration",
+            Name=name + POSITIONMARKER_NAME_SUFFIX,
+            Type=struct_type,
+            InitialValue=initial_value,
+        )
+
+    xml_str = ET.tostring(root, encoding='utf-8').decode()
+    xml_str = minidom.parseString(xml_str).toprettyxml(indent="\t")
+    xml_str = xml_str[:19] + ' ' + 'encoding="UTF-8"' + xml_str[20:]
+
+    with open(newfilepath, "w") as file:
+        file.write(xml_str)
+
+    print(f"Written: {newfilepath}")
+
+
 if __name__ == "__main__":
 
     # Gets filepaths and saves it in a variable
@@ -829,6 +999,10 @@ if __name__ == "__main__":
         scroll_data = readScrollJOP(filepaths[4])
         if scroll_data:
             writeScrollGCFfile(scroll_data, filepaths)
+
+        position_marker_data = readPositionMarkerJOP(filepaths[4])
+        if position_marker_data:
+            writePositionMarkerGCFfile(position_marker_data, filepaths)
 
 
 __author__ = "Lorenz Bauer / Franz Höpfinger"

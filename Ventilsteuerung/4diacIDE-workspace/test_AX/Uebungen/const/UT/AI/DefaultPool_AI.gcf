@@ -2,7 +2,18 @@
 <GlobalConstants Name="DefaultPool_AI" Comment="Global constants">
     <CompilerInfo packageName="Uebungen::const::UT::AI"/>
     <GlobalConstants>
+        <VarDeclaration Name="ISO_DESIGNATOR_WIDTH" Type="UINT" InitialValue="80"/>
+        <VarDeclaration Name="ISO_DESIGNATOR_HEIGHT" Type="UINT" InitialValue="80"/>
+        <VarDeclaration Name="ISO_MASK_SIZE" Type="UINT" InitialValue="480"/>
+        <VarDeclaration Name="ISO_VERSION_LABEL" Type="STRING" InitialValue=""/>
+        <VarDeclaration Name="MASK_WIDTH" Type="UINT" InitialValue="480"/>
+        <VarDeclaration Name="MASK_HEIGHT" Type="UINT" InitialValue="480"/>
         <VarDeclaration Name="WorkingSet" Type="UINT" InitialValue="0"/>
+        <VarDeclaration Name="Macro_M1" Type="UINT" InitialValue="1"/>
+        <VarDeclaration Name="Macro_AI_1" Type="UINT" InitialValue="2"/>
+        <VarDeclaration Name="Macro_AI_2" Type="UINT" InitialValue="3"/>
+        <VarDeclaration Name="Macro_AI_3" Type="UINT" InitialValue="4"/>
+        <VarDeclaration Name="Macro_AI_4" Type="UINT" InitialValue="5"/>
         <VarDeclaration Name="DataMask_M1" Type="UINT" InitialValue="1000"/>
         <VarDeclaration Name="DataMask_AI1" Type="UINT" InitialValue="1001"/>
         <VarDeclaration Name="DataMask_AI2" Type="UINT" InitialValue="1002"/>
@@ -27,6 +38,58 @@
         <VarDeclaration Name="Button_Q10" Type="UINT" InitialValue="6010"/>
         <VarDeclaration Name="Button_Q11" Type="UINT" InitialValue="6011"/>
         <VarDeclaration Name="Button_Q12" Type="UINT" InitialValue="6012"/>
+        <VarDeclaration Name="OutputString_WorkingSet_0" Type="UINT" InitialValue="11000"/>
+        <VarDeclaration Name="Label_SoftKey_Ausgaenge" Type="UINT" InitialValue="11001"/>
+        <VarDeclaration Name="Label_SoftKey_AI1" Type="UINT" InitialValue="11002"/>
+        <VarDeclaration Name="Label_SoftKey_AI2" Type="UINT" InitialValue="11003"/>
+        <VarDeclaration Name="Label_SoftKey_AI3" Type="UINT" InitialValue="11004"/>
+        <VarDeclaration Name="Label_SoftKey_AI4" Type="UINT" InitialValue="11005"/>
+        <VarDeclaration Name="Label_AI_I01" Type="UINT" InitialValue="11006"/>
+        <VarDeclaration Name="Label_AI_I02" Type="UINT" InitialValue="11007"/>
+        <VarDeclaration Name="Label_AI_I03" Type="UINT" InitialValue="11008"/>
+        <VarDeclaration Name="Label_AI_I04" Type="UINT" InitialValue="11009"/>
+        <VarDeclaration Name="Label_AI_I05" Type="UINT" InitialValue="11010"/>
+        <VarDeclaration Name="Label_AI_I06" Type="UINT" InitialValue="11011"/>
+        <VarDeclaration Name="Label_AI_I07" Type="UINT" InitialValue="11012"/>
+        <VarDeclaration Name="Label_AI_I08" Type="UINT" InitialValue="11013"/>
+        <VarDeclaration Name="OutputNumber_c1" Type="UINT" InitialValue="12001"/>
+        <VarDeclaration Name="OutputNumber_c9" Type="UINT" InitialValue="12009"/>
+        <VarDeclaration Name="OutputNumber_c10" Type="UINT" InitialValue="12010"/>
+        <VarDeclaration Name="OutputNumber_c11" Type="UINT" InitialValue="12011"/>
+        <VarDeclaration Name="OutputNumber_c12" Type="UINT" InitialValue="12012"/>
+        <VarDeclaration Name="OutputNumber_c2" Type="UINT" InitialValue="12013"/>
+        <VarDeclaration Name="OutputNumber_c3" Type="UINT" InitialValue="12014"/>
+        <VarDeclaration Name="OutputNumber_c4" Type="UINT" InitialValue="12015"/>
+        <VarDeclaration Name="OutputNumber_c5" Type="UINT" InitialValue="12016"/>
+        <VarDeclaration Name="OutputNumber_c6" Type="UINT" InitialValue="12017"/>
+        <VarDeclaration Name="OutputNumber_c7" Type="UINT" InitialValue="12018"/>
+        <VarDeclaration Name="OutputNumber_c8" Type="UINT" InitialValue="12019"/>
+        <VarDeclaration Name="OutputNumber_Tick" Type="UINT" InitialValue="12020"/>
+        <VarDeclaration Name="OutputNumber_AI_I01_RAW" Type="UINT" InitialValue="12021"/>
+        <VarDeclaration Name="OutputNumber_AI_I01_PERCENT" Type="UINT" InitialValue="12022"/>
+        <VarDeclaration Name="OutputNumber_AI_I02_RAW" Type="UINT" InitialValue="12023"/>
+        <VarDeclaration Name="OutputNumber_AI_I02_PERCENT" Type="UINT" InitialValue="12024"/>
+        <VarDeclaration Name="OutputNumber_AI_I03_RAW" Type="UINT" InitialValue="12025"/>
+        <VarDeclaration Name="OutputNumber_AI_I03_PERCENT" Type="UINT" InitialValue="12026"/>
+        <VarDeclaration Name="OutputNumber_AI_I04_RAW" Type="UINT" InitialValue="12027"/>
+        <VarDeclaration Name="OutputNumber_AI_I04_PERCENT" Type="UINT" InitialValue="12028"/>
+        <VarDeclaration Name="OutputNumber_AI_I05_RAW" Type="UINT" InitialValue="12029"/>
+        <VarDeclaration Name="OutputNumber_AI_I05_PERCENT" Type="UINT" InitialValue="12030"/>
+        <VarDeclaration Name="OutputNumber_AI_I06_RAW" Type="UINT" InitialValue="12031"/>
+        <VarDeclaration Name="OutputNumber_AI_I06_PERCENT" Type="UINT" InitialValue="12032"/>
+        <VarDeclaration Name="OutputNumber_AI_I07_RAW" Type="UINT" InitialValue="12033"/>
+        <VarDeclaration Name="OutputNumber_AI_I07_PERCENT" Type="UINT" InitialValue="12034"/>
+        <VarDeclaration Name="OutputNumber_AI_I08_RAW" Type="UINT" InitialValue="12035"/>
+        <VarDeclaration Name="OutputNumber_AI_I08_PERCENT" Type="UINT" InitialValue="12036"/>
+        <VarDeclaration Name="Bargraph_AI_I01" Type="UINT" InitialValue="18000"/>
+        <VarDeclaration Name="Bargraph_AI_I02" Type="UINT" InitialValue="18001"/>
+        <VarDeclaration Name="Bargraph_AI_I03" Type="UINT" InitialValue="18002"/>
+        <VarDeclaration Name="Bargraph_AI_I04" Type="UINT" InitialValue="18003"/>
+        <VarDeclaration Name="Bargraph_AI_I05" Type="UINT" InitialValue="18004"/>
+        <VarDeclaration Name="Bargraph_AI_I06" Type="UINT" InitialValue="18005"/>
+        <VarDeclaration Name="Bargraph_AI_I07" Type="UINT" InitialValue="18006"/>
+        <VarDeclaration Name="Bargraph_AI_I08" Type="UINT" InitialValue="18007"/>
+        <VarDeclaration Name="Logos_icon" Type="UINT" InitialValue="20500"/>
         <VarDeclaration Name="NumberVariable_AI_I01" Type="UINT" InitialValue="21000"/>
         <VarDeclaration Name="NumberVariable_AI_I02" Type="UINT" InitialValue="21001"/>
         <VarDeclaration Name="NumberVariable_AI_I03" Type="UINT" InitialValue="21002"/>
@@ -35,57 +98,9 @@
         <VarDeclaration Name="NumberVariable_AI_I06" Type="UINT" InitialValue="21005"/>
         <VarDeclaration Name="NumberVariable_AI_I07" Type="UINT" InitialValue="21006"/>
         <VarDeclaration Name="NumberVariable_AI_I08" Type="UINT" InitialValue="21007"/>
-        <VarDeclaration Name="OutputNumber_Tick" Type="UINT" InitialValue="12020"/>
         <VarDeclaration Name="FontAttributes_6x8" Type="UINT" InitialValue="23000"/>
         <VarDeclaration Name="FontAttributes_24x32" Type="UINT" InitialValue="23001"/>
         <VarDeclaration Name="FontAttributes_16x16" Type="UINT" InitialValue="23002"/>
-        <VarDeclaration Name="Logos_icon" Type="UINT" InitialValue="20500"/>
         <VarDeclaration Name="AuxFunction2_X1" Type="UINT" InitialValue="31000"/>
     </GlobalConstants>
-    <OriginalSource><![CDATA[PACKAGE Uebungen::const::UT::AI;
-
-GLOBALCONSTANTS DefaultPool_AI
-	VAR_GLOBAL CONSTANT
-		WorkingSet : UINT := 0;
-		DataMask_M1 : UINT := 1000;
-		DataMask_AI1 : UINT := 1001;
-		DataMask_AI2 : UINT := 1002;
-		DataMask_AI3 : UINT := 1003;
-		DataMask_AI4 : UINT := 1004;
-		Container_Q : UINT := 3000;
-		SoftKeyMask_AI : UINT := 4000;
-		SoftKey_Ausgaenge : UINT := 5000;
-		SoftKey_AI1 : UINT := 5001;
-		SoftKey_AI2 : UINT := 5002;
-		SoftKey_AI3 : UINT := 5003;
-		SoftKey_AI4 : UINT := 5004;
-		Button_Q01 : UINT := 6001;
-		Button_Q02 : UINT := 6002;
-		Button_Q03 : UINT := 6003;
-		Button_Q04 : UINT := 6004;
-		Button_Q05 : UINT := 6005;
-		Button_Q06 : UINT := 6006;
-		Button_Q07 : UINT := 6007;
-		Button_Q08 : UINT := 6008;
-		Button_Q09 : UINT := 6009;
-		Button_Q10 : UINT := 6010;
-		Button_Q11 : UINT := 6011;
-		Button_Q12 : UINT := 6012;
-		NumberVariable_AI_I01 : UINT := 21000;
-		NumberVariable_AI_I02 : UINT := 21001;
-		NumberVariable_AI_I03 : UINT := 21002;
-		NumberVariable_AI_I04 : UINT := 21003;
-		NumberVariable_AI_I05 : UINT := 21004;
-		NumberVariable_AI_I06 : UINT := 21005;
-		NumberVariable_AI_I07 : UINT := 21006;
-		NumberVariable_AI_I08 : UINT := 21007;
-		OutputNumber_Tick : UINT := 12020;
-		FontAttributes_6x8 : UINT := 23000;
-		FontAttributes_24x32 : UINT := 23001;
-		FontAttributes_16x16 : UINT := 23002;
-		Logos_icon : UINT := 20500;
-		AuxFunction2_X1 : UINT := 31000;
-	END_VAR
-END_GLOBALCONSTANTS
-]]></OriginalSource>
 </GlobalConstants>

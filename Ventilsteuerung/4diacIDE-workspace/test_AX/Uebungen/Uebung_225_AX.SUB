@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SubAppType Name="Uebung_225_AX" Comment="Dreieck-Sollwertmarker: Sollwert-Eingabe bewegt das Dreieck und schreibt den Istwert zurueck">
+	<Identification Standard="61499-2" Description="Copyright (c) 2026 Meisterschulen am Ostbahnhof  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0">
+	</Identification>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2026-09-05" Remarks="initial API and implementation and/or initial documentation">
+	</VersionInfo>
+	<CompilerInfo packageName="Uebungen">
+		<Import declaration="Uebungen::const::UT::Dreieck::DefaultPool_Dreieck::Polygon_Bargraph_Mittelmarker"/>
+		<Import declaration="Uebungen::const::UT::Dreieck::DefaultPool_Dreieck::Container_Sollwertmarker"/>
+		<Import declaration="Uebungen::const::UT::Dreieck::DefaultPool_Dreieck_Numeric::InputNumber_Sollwert_N"/>
+		<Import declaration="Uebungen::const::UT::Dreieck::DefaultPool_Dreieck_Numeric::NumberVariable_Istwert_N"/>
+	</CompilerInfo>
+	<SubAppInterfaceList>
+	</SubAppInterfaceList>
+	<SubAppNetwork>
+		<FB Name="Sollwert_N" Type="isobus::UT::io::NumericValue::NumericValue_PHYS" x="-6400" y="800">
+			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="stObj" Value="InputNumber_Sollwert_N"/>
+		</FB>
+		<FB Name="F_ADD_Center" Type="iec61131::arithmetic::F_ADD" x="-3800" y="300">
+			<Parameter Name="IN2" Value="REAL#42.0"/>
+		</FB>
+		<FB Name="F_REAL_TO_INT_Pos" Type="iec61131::conversion::F_REAL_TO_INT" x="-2200" y="500">
+		</FB>
+		<FB Name="Q_ChildPosition_Dreieck" Type="isobus::UT::Q::Q_ChildPosition" x="600" y="400">
+			<Parameter Name="u16ObjId" Value="Polygon_Bargraph_Mittelmarker"/>
+			<Parameter Name="u16ObjIdParent" Value="Container_Sollwertmarker"/>
+			<Parameter Name="s16Yposition" Value="0"/>
+		</FB>
+		<FB Name="Istwert_N" Type="isobus::UT::Q::Q_NumericValue_PHYS" x="600" y="1400">
+			<Parameter Name="stObj" Value="NumberVariable_Istwert_N"/>
+		</FB>
+		<EventConnections>
+			<Connection Source="Sollwert_N.IND" Destination="F_ADD_Center.REQ" dx1="633.33"/>
+			<Connection Source="F_ADD_Center.CNF" Destination="F_REAL_TO_INT_Pos.REQ" dx1="526.67"/>
+			<Connection Source="F_REAL_TO_INT_Pos.CNF" Destination="Q_ChildPosition_Dreieck.REQ" dx1="900"/>
+			<Connection Source="Sollwert_N.IND" Destination="Istwert_N.REQ" dx1="1900"/>
+		</EventConnections>
+		<DataConnections>
+			<Connection Source="Sollwert_N.rPhys" Destination="F_ADD_Center.IN1" dx1="1000"/>
+			<Connection Source="F_ADD_Center.OUT" Destination="F_REAL_TO_INT_Pos.IN" dx1="526.67"/>
+			<Connection Source="F_REAL_TO_INT_Pos.OUT" Destination="Q_ChildPosition_Dreieck.s16Xposition" dx1="900"/>
+			<Connection Source="Sollwert_N.rPhys" Destination="Istwert_N.rPhys" dx1="1153.33"/>
+		</DataConnections>
+	</SubAppNetwork>
+</SubAppType>
