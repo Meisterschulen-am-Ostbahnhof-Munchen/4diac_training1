@@ -1,4 +1,5 @@
 #!/bin/bash
+set -e
 
 # Script to run all GcfScript.py configurations on Linux
 

@@ -1,4 +1,5 @@
 #!/bin/bash
+set -e
 
 # Script to run GcfScript.py for Workspace_PWM12 on Linux
 
