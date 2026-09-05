@@ -3,25 +3,27 @@
 
 #define WorkingSet_Offset                                       1
 #define DataMask_M1_Offset                                     21
-#define Container_Sollwertmarker_Offset                        53
-#define InputNumber_9000_Offset                                69
-#define InputNumber_Istwert_Offset                            107
-#define OutputString_WorkingSet_0_Offset                      145
-#define Polygon_Bargraph_Mittelmarker_Offset                  174
-#define LinearBargraph_18000_Offset                           200
-#define NumberVariable_Sollwert_Offset                        224
-#define NumberVariable_Istwert_Offset                         231
-#define FontAttributes_6x8_Offset                             238
-#define FontAttributes_Werte_Offset                           246
-#define LineStyle_Bargraph_Mittelmarker_Gruen_Offset          254
-#define FillStyle_Bargraph_Mittelmarker_Gruen_Offset          262
+#define Container_Sollwertmarker_Offset                        65
+#define InputNumber_Sollwert_Offset                            81
+#define InputNumber_Istwert_Offset                            119
+#define OutputString_WorkingSet_0_Offset                      157
+#define Polygon_Bargraph_Mittelmarker_Offset                  186
+#define LinearBargraph_Offset                                 212
+#define Bargraph_Split_links_Offset                           236
+#define Bargraph_Split_rechts_Offset                          260
+#define NumberVariable_Sollwert_Offset                        284
+#define NumberVariable_Istwert_Offset                         291
+#define FontAttributes_6x8_Offset                             298
+#define FontAttributes_Werte_Offset                           306
+#define LineStyle_Bargraph_Mittelmarker_Gruen_Offset          314
+#define FillStyle_Bargraph_Mittelmarker_Gruen_Offset          322
 
 #define ISO_OP_MEMORY_CLASS
 
-#define ISO_OP_DefaultPool_Size    270
+#define ISO_OP_DefaultPool_Size    330
 extern const unsigned char ISO_OP_MEMORY_CLASS isoOP_DefaultPool[];
 
-#define ISO_OP_DefaultPool_ObjectNumber     14
+#define ISO_OP_DefaultPool_ObjectNumber     16
 extern const unsigned long ISO_OP_MEMORY_CLASS isoOP_DefaultPool_Offset[];
 extern const unsigned long ISO_OP_MEMORY_CLASS isoOP_DefaultPool_Offset_Id[];
 #define ISO_OP_DefaultPool_Scale_Offset      1

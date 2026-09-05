@@ -11,6 +11,7 @@
 		<EventInputs>
 			<Event Name="INIT" Type="EInit" Comment="Service Initialization">
 				<With Var="u16ObjId"/>
+				<With Var="xScale"/>
 			</Event>
 			<Event Name="REQ" Type="Event" Comment="Service Request">
 				<With Var="u8LineColour"/>
@@ -31,6 +32,7 @@
 		</EventOutputs>
 		<InputVars>
 			<VarDeclaration Name="u16ObjId" Type="UINT" Comment="Object ID" InitialValue="ID_NULL"/>
+			<VarDeclaration Name="xScale" Type="BOOL" Comment="FALSE (default) = bypass, send u8LineWidth through unchanged. TRUE = scale it by the DM/SKM factor for u16ObjId." InitialValue="FALSE"/>
 			<VarDeclaration Name="u8LineColour" Type="USINT" Comment="New line colour "/>
 			<VarDeclaration Name="u8LineWidth" Type="USINT" Comment="New line width (see Part 6 - B.14.3)"/>
 			<VarDeclaration Name="u16LineArt" Type="UINT" Comment="New line art (see Part 6 - B.14.3) "/>

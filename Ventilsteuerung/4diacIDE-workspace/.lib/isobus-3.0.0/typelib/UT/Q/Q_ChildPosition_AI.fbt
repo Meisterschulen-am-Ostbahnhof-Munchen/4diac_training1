@@ -13,6 +13,7 @@
 			<Event Name="INIT" Type="EInit" Comment="Service Initialization">
 				<With Var="u16ObjId"/>
 				<With Var="u16ObjIdParent"/>
+				<With Var="xScale"/>
 			</Event>
 		</EventInputs>
 		<EventOutputs>
@@ -28,6 +29,7 @@
 		<InputVars>
 			<VarDeclaration Name="u16ObjId" Type="UINT" Comment="Object ID" InitialValue="ID_NULL"/>
 			<VarDeclaration Name="u16ObjIdParent" Type="UINT" Comment="Parent object ID" InitialValue="ID_NULL"/>
+			<VarDeclaration Name="xScale" Type="BOOL" Comment="FALSE (default) = bypass, send s16Xposition/s16Yposition through unchanged. TRUE = scale them by the DM/SKM factor for u16ObjIdParent." InitialValue="FALSE"/>
 		</InputVars>
 		<OutputVars>
 			<VarDeclaration Name="STATUS" Type="STRING" Comment="Service Status - passthrough from the internal Q_ChildPosition"/>
@@ -53,6 +55,7 @@
 		<DataConnections>
 			<Connection Source="u16ObjId" Destination="Inner.u16ObjId" dx1="973.33"/>
 			<Connection Source="u16ObjIdParent" Destination="Inner.u16ObjIdParent" dx1="973.33"/>
+			<Connection Source="xScale" Destination="Inner.xScale" dx1="973.33"/>
 			<Connection Source="s16Xposition.D1" Destination="Inner.s16Xposition" dx1="1120"/>
 			<Connection Source="s16Yposition.D1" Destination="Inner.s16Yposition" dx1="1120"/>
 			<Connection Source="Inner.STATUS" Destination="STATUS" dx1="2000"/>
