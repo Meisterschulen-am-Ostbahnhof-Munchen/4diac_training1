@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<FBType Name="FillWindowFS_AR" Comment="Colors a fill attributes object green/red (or any two colors) depending on whether an incoming AR value lies within a window">
+	<Identification Standard="ISO 11783-6" Description="Copyright (c) 2026 Meisterschulen am Ostbahnhof  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0&#10;&#10;Wraps a single Q_FillAttributes instance (ISO 11783-6 F.32) that commands a FillAttributes object's colour. The incoming AR value is checked against [rWindowMin, rWindowMax] via F_WindowColor; u8ColorIn is sent while the value is inside the window, u8ColorOut otherwise. FillType and FillPatternId are fixed to solid colour (no pattern) - this block only ever changes the colour, not the fill style itself.">
+	</Identification>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2026-09-06" Remarks="initial API and implementation and/or initial documentation">
+	</VersionInfo>
+	<CompilerInfo packageName="isobus::UT::Q">
+		<Import declaration="isobus::UT::Q::Q_FillAttributes"/>
+		<Import declaration="isobus::UT::Q::helpers::F_WindowColor"/>
+		<Import declaration="isobus::UT::Q::const::IDs::ID_NULL"/>
+		<Import declaration="isobus::UT::Q::const::colours::COLOR_GREEN"/>
+		<Import declaration="isobus::UT::Q::const::colours::COLOR_RED"/>
+	</CompilerInfo>
+	<InterfaceList>
+		<EventInputs>
+			<Event Name="INIT" Type="EInit" Comment="Service Initialization">
+				<With Var="u16ObjId"/>
+				<With Var="rWindowMin"/>
+				<With Var="rWindowMax"/>
+				<With Var="u8ColorIn"/>
+				<With Var="u8ColorOut"/>
+			</Event>
+		</EventInputs>
+		<EventOutputs>
+			<Event Name="INITO" Type="EInit" Comment="Initialization Confirm">
+			</Event>
+			<Event Name="CNF" Type="Event" Comment="Confirmation of Requested Service">
+				<With Var="STATUS"/>
+				<With Var="s16result"/>
+			</Event>
+		</EventOutputs>
+		<InputVars>
+			<VarDeclaration Name="u16ObjId" Type="UINT" Comment="FillAttributes object ID to command" InitialValue="ID_NULL"/>
+			<VarDeclaration Name="rWindowMin" Type="REAL" Comment="Lower bound of the window that shows u8ColorIn"/>
+			<VarDeclaration Name="rWindowMax" Type="REAL" Comment="Upper bound of the window that shows u8ColorIn"/>
+			<VarDeclaration Name="u8ColorIn" Type="USINT" Comment="Colour shown while the AR value is within [rWindowMin, rWindowMax]" InitialValue="COLOR_GREEN"/>
+			<VarDeclaration Name="u8ColorOut" Type="USINT" Comment="Colour shown while the AR value is outside [rWindowMin, rWindowMax]" InitialValue="COLOR_RED"/>
+		</InputVars>
+		<OutputVars>
+			<VarDeclaration Name="STATUS" Type="STRING" Comment="Service Status - passthrough from the internal Q_FillAttributes"/>
+			<VarDeclaration Name="s16result" Type="INT" Comment="retval - passthrough from the internal Q_FillAttributes"/>
+		</OutputVars>
+		<Sockets>
+			<AdapterDeclaration Name="rPhys" Type="adapter::types::unidirectional::AR" Comment="Value whose position relative to the window decides the colour" x="-1400" y="1000"/>
+		</Sockets>
+	</InterfaceList>
+	<FBNetwork>
+		<FB Name="Inner" Type="isobus::UT::Q::Q_FillAttributes" x="1700" y="420">
+			<Parameter Name="u8FillType" Value="USINT#2"/>
+			<Parameter Name="u16FillPatternId" Value="ID_NULL"/>
+		</FB>
+		<FB Name="ColorCalc" Type="isobus::UT::Q::helpers::F_WindowColor" x="0" y="900">
+		</FB>
+		<EventConnections>
+			<Connection Source="INIT" Destination="Inner.INIT" dx1="1306.67"/>
+			<Connection Source="rPhys.E1" Destination="ColorCalc.REQ" dx1="320"/>
+			<Connection Source="ColorCalc.CNF" Destination="Inner.REQ" dx1="526.67"/>
+			<Connection Source="Inner.INITO" Destination="INITO" dx1="1506.67"/>
+			<Connection Source="Inner.CNF" Destination="CNF" dx1="1760"/>
+		</EventConnections>
+		<DataConnections>
+			<Connection Source="u16ObjId" Destination="Inner.u16ObjId" dx1="973.33"/>
+			<Connection Source="rPhys.D1" Destination="ColorCalc.rValue" dx1="1120"/>
+			<Connection Source="rWindowMin" Destination="ColorCalc.rMin" dx1="973.33"/>
+			<Connection Source="rWindowMax" Destination="ColorCalc.rMax" dx1="973.33"/>
+			<Connection Source="u8ColorIn" Destination="ColorCalc.u8ColorIn" dx1="973.33"/>
+			<Connection Source="u8ColorOut" Destination="ColorCalc.u8ColorOut" dx1="973.33"/>
+			<Connection Source="ColorCalc." Destination="Inner.u8FillColour" dx1="526.67"/>
+			<Connection Source="Inner.STATUS" Destination="STATUS" dx1="2000"/>
+			<Connection Source="Inner.s16result" Destination="s16result" dx1="2573.33"/>
+		</DataConnections>
+	</FBNetwork>
+	<Attribute Name="eclipse4diac::core::TypeHash" Value="''"/>
+</FBType>

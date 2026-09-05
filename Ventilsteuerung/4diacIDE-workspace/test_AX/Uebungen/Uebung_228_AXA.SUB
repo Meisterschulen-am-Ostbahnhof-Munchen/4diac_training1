@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SubAppType Name="Uebung_228_AXA" Comment="Ableitung von 227_AXA: das Dreieck wird ROT außerhalb des Fensters -2..+2, GRÜN innerhalb">
+	<Identification Standard="61499-2" Description="Copyright (c) 2026 Meisterschulen am Ostbahnhof  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0">
+	</Identification>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2026-09-06" Remarks="initial API and implementation and/or initial documentation">
+	</VersionInfo>
+	<CompilerInfo packageName="Uebungen">
+		<Import declaration="Uebungen::const::UT::Dreieck::DefaultPool_Dreieck::FillStyle_Bargraph_Mittelmarker_Gruen"/>
+		<Import declaration="Uebungen::const::UT::Dreieck::DefaultPool_Dreieck_PositionMarker::Container_PositionMarker"/>
+		<Import declaration="Uebungen::const::UT::Dreieck::DefaultPool_Dreieck_BargraphSplit::Bargraph_Split_BargraphSplit"/>
+		<Import declaration="Uebungen::const::UT::Dreieck::DefaultPool_Dreieck_Numeric::NumberVariable_Sollwert_N"/>
+		<Import declaration="Uebungen::const::UT::Dreieck::DefaultPool_Dreieck_Numeric::NumberVariable_Istwert_N"/>
+	</CompilerInfo>
+	<SubAppInterfaceList>
+	</SubAppInterfaceList>
+	<SubAppNetwork>
+		<FB Name="Sollwert_N" Type="isobus::UT::io::NumericValue::NumericValue_PHYSA" x="-8400" y="900">
+			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="stObj" Value="NumberVariable_Sollwert_N"/>
+		</FB>
+		<FB Name="Split" Type="adapter::events::unidirectional::AR_SPLIT_4" x="-6200" y="1300">
+		</FB>
+		<FB Name="Marker_Dreieck" Type="isobus::UT::Q::PositionMarkerFSA" x="-3600" y="200">
+			<Parameter Name="stObj" Value="Container_PositionMarker"/>
+			<Parameter Name="xScale" Value="TRUE"/>
+		</FB>
+		<FB Name="SplitBar" Type="isobus::UT::Q::BargraphSplitFS_AR" x="-3600" y="1300">
+			<Parameter Name="stObj" Value="Bargraph_Split_BargraphSplit"/>
+		</FB>
+		<FB Name="Istwert_N" Type="isobus::UT::Q::Q_NumericValue_PHYSA" x="-3600" y="2400">
+			<Parameter Name="stObj" Value="NumberVariable_Istwert_N"/>
+		</FB>
+		<FB Name="MarkerColor" Type="isobus::UT::Q::FillWindowFS_AR" x="-3600" y="3500">
+			<Parameter Name="u16ObjId" Value="FillStyle_Bargraph_Mittelmarker_Gruen"/>
+			<Parameter Name="rWindowMin" Value="REAL#-2.0"/>
+			<Parameter Name="rWindowMax" Value="REAL#2.0"/>
+		</FB>
+		<AdapterConnections>
+			<Connection Source="Sollwert_N.rPhys" Destination="Split.IN" dx1="1100"/>
+			<Connection Source="Split.OUT1" Destination="Marker_Dreieck.rPhys" dx1="1300"/>
+			<Connection Source="Split.OUT2" Destination="SplitBar.rPhys" dx1="1300"/>
+			<Connection Source="Split.OUT3" Destination="Istwert_N.rPhys" dx1="1300"/>
+			<Connection Source="Split.OUT4" Destination="MarkerColor.rPhys" dx1="1300"/>
+		</AdapterConnections>
+	</SubAppNetwork>
+</SubAppType>

@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Function Name="F_WindowColor" Comment="Pick u8ColorIn if rValue lies within [rMin, rMax], otherwise u8ColorOut.">
+	<Identification Standard="61499-2" Description="Copyright (c) 2026 Meisterschulen am Ostbahnhof  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0">
+	</Identification>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2026-09-06" Remarks="initial API and implementation and/or initial documentation">
+	</VersionInfo>
+	<CompilerInfo packageName="isobus::UT::Q::helpers">
+	</CompilerInfo>
+	<InterfaceList>
+		<EventInputs>
+			<Event Name="REQ" Type="Event">
+				<With Var="rValue"/>
+				<With Var="rMin"/>
+				<With Var="rMax"/>
+				<With Var="u8ColorIn"/>
+				<With Var="u8ColorOut"/>
+			</Event>
+		</EventInputs>
+		<EventOutputs>
+			<Event Name="CNF" Type="Event">
+				<With Var=""/>
+			</Event>
+		</EventOutputs>
+		<InputVars>
+			<VarDeclaration Name="rValue" Type="REAL"/>
+			<VarDeclaration Name="rMin" Type="REAL"/>
+			<VarDeclaration Name="rMax" Type="REAL"/>
+			<VarDeclaration Name="u8ColorIn" Type="USINT" Comment="Returned when rMin &lt;= rValue &lt;= rMax"/>
+			<VarDeclaration Name="u8ColorOut" Type="USINT" Comment="Returned otherwise"/>
+		</InputVars>
+		<OutputVars>
+			<VarDeclaration Name="" Type="USINT"/>
+		</OutputVars>
+	</InterfaceList>
+	<FunctionBody>
+		<ST><![CDATA[PACKAGE isobus::UT::Q::helpers;
+
+(* Pick u8ColorIn if rValue lies within [rMin, rMax], otherwise u8ColorOut. *)
+FUNCTION F_WindowColor : USINT
+
+VAR_INPUT
+	rValue : REAL;
+	rMin : REAL;
+	rMax : REAL;
+	u8ColorIn : USINT;
+	u8ColorOut : USINT;
+END_VAR
+
+IF rValue >= rMin AND rValue <= rMax THEN
+	F_WindowColor := u8ColorIn;
+ELSE
+	F_WindowColor := u8ColorOut;
+END_IF;
+
+END_FUNCTION
+]]></ST>
+	</FunctionBody>
+	<Attribute Name="eclipse4diac::core::TypeHash" Value="''"/>
+</Function>
