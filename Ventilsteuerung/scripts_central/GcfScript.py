@@ -41,12 +41,19 @@ def checkPath(path):
         raise FileNotFoundError(f"The new file '{path}' does not exist.")
 
 def safe_output_path(folder, filename):
-    """Join folder/filename for writing, and verify the result actually stays inside folder.
+    """Join folder/filename for writing, rejecting any filename that isn't a plain, single
+    path component, then double-check the joined result still resolves inside folder.
 
     filename is built from CLI-supplied arguments (--newfile plus a fixed suffix); this guards
-    against it accidentally (or via a malformed CLI invocation) containing ".." or an absolute
-    path component that would otherwise let a write escape the intended --newfolder directory.
+    against it accidentally (or via a malformed CLI invocation) containing "..", a path
+    separator, or an absolute path component that would otherwise let a write escape the
+    intended --newfolder directory.
     """
+    if not filename or filename in (os.curdir, os.pardir):
+        raise ValueError(f"Invalid output filename: {filename!r}")
+    if os.path.basename(filename) != filename:
+        raise ValueError(f"Output filename must not contain path separators: {filename!r}")
+
     folder = os.path.realpath(folder)
     candidate = os.path.realpath(os.path.join(folder, filename))
     if os.path.commonpath([folder, candidate]) != folder:
