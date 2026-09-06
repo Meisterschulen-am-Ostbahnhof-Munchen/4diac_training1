@@ -2,7 +2,7 @@
 <SubAppType Name="Softkey_Aux_IXA_TO_Remote_WRITE_BG_OPC" Comment="VT-SoftKey lesen ODER AUX-Zuweisung (Joystick) lesen ODER lokaler Web-Override (z.B. vt-ui-mirror auf demselben Modul) + Remote-OPC-UA-Write an Zielmodul + VT-Hintergrundfarbe (SoftKey UND AUX) aus Remote-Subscribe (generisch, ein Kanal, fuer Funktionen ohne lokalen physischen Ausgang - Bedienung sitzt auf STG1, Aktor auf einem Modul ohne eigene VT-Anbindung)">
 	<Identification Standard="61499-2">
 	</Identification>
-	<VersionInfo Version="1.0" Author="franz" Date="2026-09-06">
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="franz" Date="2026-09-06">
 	</VersionInfo>
 	<CompilerInfo packageName="MyLib::sys">
 		<Import declaration="isobus::UT::Q::const::IDs::ID_NULL"/>
@@ -67,4 +67,29 @@
 			<Connection Source="AX_SUBSCRIBE_1.OUT" Destination="GreenWhiteBackground3_AX.DI1" dx1="280"/>
 		</AdapterConnections>
 	</SubAppNetwork>
+	<Attribute Name="Documentation" Type="CDATA"><![CDATA[<h1>SoftKey UND Aux → Remote-OPC-UA-Write mit Status-Feedback auf beiden (ein Kanal)</h1>
+
+<p>Erweiterung von <code>Softkey_IXA_TO_Remote_WRITE_BG_OPC</code> um eine dritte Bedienquelle: dieselbe
+Funktion ist zusätzlich über einen physischen Aux-Taster/Joystick auslösbar, und beide Bedienelemente
+(SoftKey und Aux) zeigen den vom Zielmodul zurückgemeldeten Zustand synchron als Hintergrundfarbe.</p>
+
+<h2>Funktionsbeschreibung</h2>
+
+<ul>
+	<li><code>Softkey_IXA</code> (<code>u16ObjId</code>), <code>Aux_IXA</code> (<code>u16ObjIdA</code>)
+	und <code>SUBSCRIBE_WEB</code> (<code>ID_WEB_READ</code>, lokaler Web-Override) liefern je eine
+	Quelle - <code>OR_MERGE</code> (<code>AX_OR_3</code>) verknüpft alle drei per ODER.</li>
+	<li><code>AX_CLIENT_1_0</code> (<code>ID_WRITE_REMOTE</code>) schreibt das gemergte Signal per
+	OPC-UA an das Zielmodul, <code>AX_SUBSCRIBE_1</code> (<code>ID_SUBSCRIBE</code>) empfängt den
+	tatsächlichen Zustand zurück.</li>
+	<li><strong><code>GreenWhiteBackground3_AX</code> statt <code>GreenWhiteBackground1_AX</code></strong>,
+	weil hier zwei unterschiedliche Objektarten gleichzeitig gefärbt werden müssen: der SoftKey
+	(<code>u16ObjId</code>, reines VT-Objekt) und die Aux-Funktion (<code>u16ObjIdA</code>,
+	Auxiliary-Function-Type-2 - deren Zuweisung zusätzlich am Aux-Handle selbst angezeigt wird). Siehe
+	Dokumentation von <code>GreenWhiteBackground3_AX</code> bzw. <code>Uebung_010f3_AX</code>.</li>
+</ul>
+
+<p>Wird nur ein SoftKey ohne Aux gebraucht, <code>Softkey_IXA_TO_Remote_WRITE_BG_OPC</code>
+verwenden.</p>
+]]></Attribute>
 </SubAppType>

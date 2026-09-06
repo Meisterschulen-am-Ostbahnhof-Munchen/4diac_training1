@@ -29,4 +29,17 @@
 			<Connection Source="IN2" Destination="AX_OR_2.IN2" dx1="1386.67"/>
 		</AdapterConnections>
 	</SubAppNetwork>
+	<Attribute Name="Documentation" Type="CDATA"><![CDATA[<h1>2 AX-Quellen ODER-verknüpft auf 2 AX-Ziele verteilt</h1>
+
+<p>Kombiniert <code>AX_OR_2</code> und <code>AX_SPLIT_2</code> zu einem fertigen Baustein: nimmt
+<code>IN1</code>/<code>IN2</code> entgegen, verknüpft beide per ODER zu einem gemeinsamen Signal
+und verteilt dieses anschließend auf <code>OUT1</code>/<code>OUT2</code>.</p>
+
+<p>Typischer Einsatz: mehrere Bedienelemente (z.B. SoftKey und Aux-Taster) sollen gemeinsam mehrere
+Ziele ansteuern (z.B. einen Ausgang UND eine Hintergrundfarbe-SubApp), ohne <code>AX_OR_2</code> und
+<code>AX_SPLIT_2</code> jedes Mal einzeln zu verdrahten.</p>
+
+<p>Für andere Quellen-/Ziel-Anzahlen: <code>AX_3_3</code> (3→3), <code>AX_2_3</code> (2→3),
+<code>AX_3_2</code> (3→2).</p>
+]]></Attribute>
 </SubAppType>
