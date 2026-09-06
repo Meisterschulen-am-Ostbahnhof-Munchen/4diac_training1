@@ -2,7 +2,7 @@
 <SubAppType Name="ILOCK_SWITCH_2_QXA_OPC" Comment="2-Richtungs-Doppelwirkungs-Ausgang (Last-Wins mit Schutzzeit): je Richtung wird das echte Funktions-Kommando (Remote-Subscribe) mit dem bestehenden IO-Test-Kommando (Remote-Subscribe) per AX_OR_2 zusammengefuehrt, bevor es in den Interlock geht - IO-Test bleibt nutzbar, kann aber die beiden Richtungen nicht mehr dauerhaft gleichzeitig schalten. Interlocked Ausgang treibt den physischen logiBUS-Kanal UND meldet seinen tatsaechlichen Zustand sowohl an die bestehende IO-Test-Ueberwachung als auch an die echte Funktions-Rueckmeldung (z.B. GreenWhiteBackground am SoftKey) zurueck. Generisch fuer jeden &apos;digital DW&apos;-Aktor (siehe IO-Liste_Vereinheitlicht.md) mit Bedienung von einem Modul ohne eigenes VT.">
 	<Identification Standard="61499-2">
 	</Identification>
-	<VersionInfo Version="1.0" Author="franz" Date="2026-09-05">
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="franz" Date="2026-09-05">
 	</VersionInfo>
 	<CompilerInfo packageName="MyLib::sys">
 		<Import declaration="logiBUS::io::DQ::logiBUS_DO"/>
