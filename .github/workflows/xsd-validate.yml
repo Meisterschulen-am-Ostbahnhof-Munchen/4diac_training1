@@ -1,0 +1,52 @@
+name: XSD Validation
+
+on:
+  pull_request:
+    paths:
+      - '**/*.fbt'
+      - '**/*.adp'
+      - '**/*.sub'
+      - '**/*.dtp'
+      - '**/*.atp'
+      - '.agents/skills/iec61499-creator/**'
+  push:
+    branches:
+      - main
+    paths:
+      - '**/*.fbt'
+      - '**/*.adp'
+      - '**/*.sub'
+      - '**/*.dtp'
+      - '**/*.atp'
+      - '.agents/skills/iec61499-creator/**'
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    runs-on: ubuntu-24.04
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v6
+
+      - name: Set up Python
+        uses: actions/setup-python@v6
+        with:
+          python-version: '3.12'
+
+      - name: Install lxml
+        run: pip install --no-input lxml
+
+      - name: Validate IEC 61499 library elements
+        run: |
+          set -e
+          status=0
+          while IFS= read -r -d '' f; do
+            echo "::group::$f"
+            if ! python .agents/skills/iec61499-creator/scripts/validate.py "$f"; then
+              status=1
+            fi
+            echo "::endgroup::"
+          done < <(git ls-files -z -- '*.fbt' '*.adp' '*.sub' '*.dtp' '*.atp' | grep -zv '/\.lib/')
+          exit $status
