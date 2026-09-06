@@ -11,7 +11,7 @@
 	<SubAppInterfaceList>
 	</SubAppInterfaceList>
 	<SubAppNetwork>
-		<FB Name="DigitalOutput_Q1" Type="logiBUS::io::DQ::logiBUS_QXA" x="-1500" y="-300">
+		<FB Name="DigitalOutput_Q1" Type="logiBUS::io::DQ::logiBUS_QXA" x="-500" y="-300">
 			<Parameter Name="QI" Value="TRUE"/>
 			<Parameter Name="PARAMS" Value="">
 				<Attribute Name="Visible" Value="false"/>
@@ -22,15 +22,43 @@
 			<Parameter Name="QI" Value="TRUE"/>
 			<Parameter Name="u16ObjId" Value="AuxFunction2_X1"/>
 		</FB>
-		<SubApp Name="GreenWhiteBackground_AX" Type="MyLib::sys::GreenWhiteBackground1_AX" x="-1500" y="700">
-			<Parameter Name="u16ObjId" Value="AuxFunction2_X1"/>
+		<SubApp Name="GreenWhiteBackground2_AX" Type="MyLib::sys::GreenWhiteBackground2_AX" x="-500" y="700">
+			<Parameter Name="u16ObjIdA" Value="AuxFunction2_X1"/>
 		</SubApp>
 		<FB Name="AX_SPLIT_2" Type="adapter::events::unidirectional::AX_SPLIT_2" x="-3100" y="100">
 		</FB>
+		<Comment Comment="Nachteil: &#10;AuxFunction2_X1 &#10;muss 2x angegeben werden (Aux_IXA.u16ObjId und GreenWhiteBackground2_AX.u16ObjIdA). &#10;Wichtig: hier MUSS GreenWhiteBackground2_AX (nicht _1_AX) verwendet werden, weil AuxFunction2_X1 ein Auxiliary-Function-Type-2-Objekt ist - seine Farbe muss sowohl an den VT-Bildschirm als auch an das Aux-Handle (Joystick) selbst gesendet werden." x="-2200" y="2100" width="3400" height="800"/>
 		<AdapterConnections>
 			<Connection Source="AuxFunction2_X1.IN" Destination="AX_SPLIT_2.IN" dx1="511.76"/>
 			<Connection Source="AX_SPLIT_2.OUT1" Destination="DigitalOutput_Q1.OUT" dx1="488.24"/>
-			<Connection Source="AX_SPLIT_2.OUT2" Destination="GreenWhiteBackground_AX.DI1" dx1="341.18"/>
+			<Connection Source="AX_SPLIT_2.OUT2" Destination="GreenWhiteBackground2_AX.DI1" dx1="341.18"/>
 		</AdapterConnections>
 	</SubAppNetwork>
+	<Attribute Name="Documentation" Type="CDATA"><![CDATA[<h1>AuxFunction2_X1 auf DigitalOutput_Q1 mit GreenWhiteBackground</h1>
+
+<p>Erweiterung von <code>Uebung_010b1_AX</code>: zusätzlich zur Ansteuerung von <code>DigitalOutput_Q1</code>
+wird der Zustand von <code>AuxFunction2_X1</code> als Hintergrundfarbe (grün = EIN, weiß = AUS)
+zurückgemeldet.</p>
+
+<h2>Funktionsbeschreibung</h2>
+
+<ul>
+	<li><code>AuxFunction2_X1</code> (<code>Aux_IXA</code>) liefert den booleschen Zustand des zugewiesenen
+	physischen Aux-Tasters/Joysticks.</li>
+	<li><code>AX_SPLIT_2</code> verteilt dieses eine Signal auf zwei Ziele: <code>DigitalOutput_Q1</code>
+	(physischer Ausgang) und <code>GreenWhiteBackground2_AX</code> (visuelles Feedback).</li>
+	<li><strong><code>GreenWhiteBackground2_AX</code> statt <code>GreenWhiteBackground1_AX</code></strong>,
+	weil <code>AuxFunction2_X1</code> ein Auxiliary-Function-Type-2-Objekt ist: seine Zuweisung wird sowohl
+	auf dem VT-Bildschirm als auch am Aux-Handle (Joystick) selbst angezeigt. Beide Anzeigen hängen an
+	getrennten Verbindungen und müssen daher separat angesprochen werden (<code>Q_BackgroundColour</code>
+	für das VT, <code>Q_BackgroundColourAux</code> für das Aux-Handle) - siehe Dokumentation von
+	<code>GreenWhiteBackground2_AX</code>.</li>
+</ul>
+
+<h2>Arbeitsauftrag</h2>
+
+<p>Testen Sie: Aux-Taster drücken/loslassen → <code>Q1</code> folgt dem Tasterzustand, und die
+Hintergrundfarbe des Aux-Objekts wechselt gleichzeitig auf dem VT-Bildschirm UND am Aux-Handle
+selbst zwischen Weiß und Grün.</p>
+]]></Attribute>
 </SubAppType>

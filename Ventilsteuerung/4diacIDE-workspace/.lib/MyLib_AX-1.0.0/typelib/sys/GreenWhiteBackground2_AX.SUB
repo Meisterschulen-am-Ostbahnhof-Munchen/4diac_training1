@@ -62,4 +62,24 @@
 			<Connection Source="DI1" Destination="AX_SEL.G" dx1="1920"/>
 		</AdapterConnections>
 	</SubAppNetwork>
+	<Attribute Name="Documentation" Type="CDATA"><![CDATA[<h1>Hintergrundfarbe für ein Auxiliary-Function-Objekt (VT + Aux-Handle)</h1>
+
+<p>Setzt die Hintergrundfarbe (TRUE -&gt; Grün, FALSE -&gt; Weiß) eines Auxiliary-Function-Type-2-Objekts
+(Object-ID-Bereich 31000&ndash;31999) über <strong>dieselbe</strong> u16ObjIdA an <strong>zwei</strong>
+Empfänger gleichzeitig, weil die Zuweisung eines solchen Objekts an zwei Stellen angezeigt wird:</p>
+
+<ul>
+	<li><strong>VT-Bildschirm</strong> (<code>Q_BackgroundColour_1</code>, FB <code>Q_BackgroundColour</code>):
+	die Vorschau der Aux-Zuweisung im Objekt-Pool.</li>
+	<li><strong>Aux-Handle selbst</strong> (<code>Q_BackgroundColour_2</code>, FB <code>Q_BackgroundColourAux</code>):
+	die Anzeige am physischen Eingabegerät (z.B. Joystick), das über seine eigene Auxiliary-Connection
+	zum VT-Client separat angesprochen werden muss.</li>
+</ul>
+
+<p>Beide FBs senden das exakt gleiche ISO-11783-6-Kommando (Part 6 - F.20, "Change Background Colour")
+mit identischem Interface und identischen gültigen Object-ID-Bereichen - der einzige Unterschied ist
+die Verbindung, über die es geschickt wird. Für normale VT-Objekte (SoftKeys, Buttons, Output-Felder
+usw.), die keine eigene Aux-Verbindung haben, genügt dagegen <code>GreenWhiteBackground1_AX</code> mit
+nur einem <code>Q_BackgroundColour</code>.</p>
+]]></Attribute>
 </SubAppType>
