@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SubAppType Name="logiBUS_QXA_OPC" Comment="logiBUS DQ Kanal: OPC-UA Read/Write (generisch, ein Kanal, ohne VT-Button/Hintergrundfarbe - fuer Module ohne ISOBUS/VT-Anbindung)">
+	<Identification Standard="61499-2">
+	</Identification>
+	<VersionInfo Version="1.0" Author="franz" Date="2026-08-27">
+	</VersionInfo>
+	<CompilerInfo packageName="MyLib::sys">
+		<Import declaration="logiBUS::io::DQ::logiBUS_DO"/>
+		<Import declaration="logiBUS::io::DQ::logiBUS_DO_S"/>
+	</CompilerInfo>
+	<SubAppInterfaceList>
+		<InputVars>
+			<VarDeclaration Name="Output" Type="logiBUS::io::DQ::logiBUS_DO_S" Comment="Identify the Output Output_Q1..Q12" InitialValue="logiBUS_DO::Invalid"/>
+			<VarDeclaration Name="ID_READ" Type="WSTRING" Comment="OPC-UA Subscribe-Key (schreibbar)"/>
+			<VarDeclaration Name="ID_WRITE" Type="WSTRING" Comment="OPC-UA Publish-Key (lesbar)"/>
+		</InputVars>
+	</SubAppInterfaceList>
+	<SubAppNetwork>
+		<FB Name="logiBUS_QXA" Type="logiBUS::io::DQ::logiBUS_QXA" x="3500" y="-900">
+			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="PARAMS" Value="">
+				<Attribute Name="Visible" Value="false"/>
+			</Parameter>
+		</FB>
+		<FB Name="AX_SUBSCRIBE_1" Type="adapter::net::AX_SUBSCRIBE_1" x="500" y="-400">
+			<Parameter Name="QI" Value="TRUE"/>
+		</FB>
+		<FB Name="AX_SPLIT_2" Type="adapter::events::unidirectional::AX_SPLIT_2" x="1900" y="0">
+		</FB>
+		<FB Name="AX_PUBLISH_1" Type="adapter::net::AX_PUBLISH_1" x="3500" y="0">
+			<Parameter Name="QI" Value="TRUE"/>
+		</FB>
+		<DataConnections>
+			<Connection Source="Output" Destination="logiBUS_QXA.Output" dx1="2913.33">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="ID_READ" Destination="AX_SUBSCRIBE_1.ID" dx1="280">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="ID_WRITE" Destination="AX_PUBLISH_1.ID" dx1="1280">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+		</DataConnections>
+		<AdapterConnections>
+			<Connection Source="AX_SUBSCRIBE_1.OUT" Destination="AX_SPLIT_2.IN" dx1="280"/>
+			<Connection Source="AX_SPLIT_2.OUT1" Destination="logiBUS_QXA.OUT" dx1="80"/>
+			<Connection Source="AX_SPLIT_2.OUT2" Destination="AX_PUBLISH_1.IN" dx1="80"/>
+		</AdapterConnections>
+	</SubAppNetwork>
+</SubAppType>

@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SubAppType Name="Uebung_229_AX" Comment="2 Taster (I1/I2) auf 1 SR-Latch (Last-Wins) via 2x AX_RF_TRIG + AX_SR, Ausgang Q1">
+	<Identification Standard="61499-2" Description="Copyright (c) 2026 Meisterschulen am Ostbahnhof  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0">
+	</Identification>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2026-09-06" Remarks="initial API and implementation and/or initial documentation">
+	</VersionInfo>
+	<CompilerInfo packageName="Uebungen">
+		<Import declaration="logiBUS::io::DI::logiBUS_DI::Input_I1"/>
+		<Import declaration="logiBUS::io::DI::logiBUS_DI::Input_I2"/>
+		<Import declaration="logiBUS::io::DQ::logiBUS_DO::Output_Q1"/>
+	</CompilerInfo>
+	<SubAppInterfaceList>
+	</SubAppInterfaceList>
+	<SubAppNetwork>
+		<FB Name="DigitalInput_I1" Type="logiBUS::io::DI::logiBUS_IXA" x="-6000" y="-900">
+			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="Input" Value="Input_I1"/>
+		</FB>
+		<FB Name="DigitalInput_I2" Type="logiBUS::io::DI::logiBUS_IXA" x="-6000" y="300">
+			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="Input" Value="Input_I2"/>
+		</FB>
+		<FB Name="AX_RF_TRIG_1" Type="adapter::events::unidirectional::AX_RF_TRIG" x="-4500" y="-600">
+		</FB>
+		<FB Name="AX_RF_TRIG_2" Type="adapter::events::unidirectional::AX_RF_TRIG" x="-4500" y="600">
+		</FB>
+		<FB Name="AX_SR" Type="adapter::events::unidirectional::AX_SR" x="-3000" y="0">
+		</FB>
+		<FB Name="DigitalOutput_Q1" Type="logiBUS::io::DQ::logiBUS_QXA" x="-1500" y="-300">
+			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="Output" Value="Output_Q1"/>
+		</FB>
+		<EventConnections>
+			<Connection Source="AX_RF_TRIG_1.ER" Destination="AX_SR.S" dx1="360"/>
+			<Connection Source="AX_RF_TRIG_2.ER" Destination="AX_SR.S" dx1="360"/>
+			<Connection Source="AX_RF_TRIG_1.EF" Destination="AX_SR.R" dx1="326.67"/>
+			<Connection Source="AX_RF_TRIG_2.EF" Destination="AX_SR.R" dx1="393.33"/>
+		</EventConnections>
+		<AdapterConnections>
+			<Connection Source="DigitalInput_I1.IN" Destination="AX_RF_TRIG_1.QI" dx1="333.33"/>
+			<Connection Source="DigitalInput_I2.IN" Destination="AX_RF_TRIG_2.QI" dx1="333.33"/>
+			<Connection Source="AX_SR.Q" Destination="DigitalOutput_Q1.OUT" dx1="526.67"/>
+		</AdapterConnections>
+	</SubAppNetwork>
+</SubAppType>
