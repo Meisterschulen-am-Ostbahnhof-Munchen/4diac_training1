@@ -3,9 +3,11 @@
 ## Thema: Flankenerkennung + Set/Reset-Verriegelung, zwei Quellen auf einer Verriegelung
 
 ### Situationsbeschreibung
-Zwei tastende Taster `I1` und `I2` sollen denselben Ausgang `Q1` schalten: `I1` schaltet EIN,
-`I2` schaltet AUS. Da beide Taster tastend sind (kein Dauersignal), braucht es eine Verriegelung
-(SR-Latch), die den zuletzt gedrückten Zustand hält, bis der jeweils andere Taster betätigt wird.
+Zwei tastende Taster `I1` und `I2` sollen denselben Ausgang `Q1` schalten. Da beide Taster tastend
+sind (kein Dauersignal), braucht es eine Verriegelung (SR-Latch). Diese Übung baut bewusst eine
+"Last-Wins"-Verriegelung: nicht nur das Drücken (steigende Flanke), sondern auch das Loslassen
+(fallende Flanke) BEIDER Taster wirkt auf denselben Latch - welche Flanke (Drücken oder Loslassen,
+egal an welchem Taster) zuletzt auftrat, bestimmt den Zustand von `Q1`.
 
 ### Funktionsbeschreibung
 - **Flankenerkennung:** Jeder physische Eingang wird über einen eigenen `AX_RF_TRIG` beobachtet -
@@ -21,9 +23,10 @@ Zwei tastende Taster `I1` und `I2` sollen denselben Ausgang `Q1` schalten: `I1` 
 ### Arbeitsauftrag
 1. Legen Sie die SubApp `Uebung_229_AX` an (bereits als Referenzlösung vorhanden).
 2. Verbinden Sie `Input_I1`/`Input_I2` über je einen `AX_RF_TRIG` mit dem gemeinsamen `AX_SR`.
-3. Testen Sie: `I1` drücken → `Q1` EIN und bleibt EIN nach Loslassen; `I2` drücken → `Q1` AUS und
-   bleibt AUS; beide Taster können beliebig oft in beliebiger Reihenfolge gedrückt werden, der
-   Ausgang folgt immer dem zuletzt gedrückten Taster.
+3. Testen Sie: `I1` drücken → `Q1` EIN; `I1` loslassen → `Q1` wieder AUS (die fallende Flanke von
+   `I1` wirkt ebenfalls auf `AX_SR.R`). Ebenso setzt `I2`s steigende Flanke `Q1` auf EIN, `I2`s
+   fallende Flanke wieder auf AUS. Der Ausgang folgt also nicht dem Tasterzustand, sondern immer der
+   zuletzt aufgetretenen Flanke (Drücken oder Loslassen, an welchem Taster auch immer).
 
 ### Referenzlösung
 `Uebung_229_AX.SUB`. Siehe auch `Uebung_230_AX` für dieselbe Funktion, umgebaut auf die
