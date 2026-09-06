@@ -3,13 +3,16 @@
 ## Thema: Ablaufsteuerungen in der Landtechnik
 
 ### Situationsbeschreibung
+
 Ein Landwirt möchte die Reinigungsprozedur seiner Feldspritze teil-automatisieren, um Wasser zu sparen und den Spülvorgang zu beschleunigen. Das Spülsystem besitzt vier Ventile für verschiedene Spülstufen (Vorspülen, Hauptspülen, Klarspülen, Ausblasen). 
 Die Reinigung soll in vier aufeinanderfolgenden Phasen ablaufen. Jede Phase soll eine maximale Dauer haben (Zeitsteuerung), kann jedoch vom Bediener in der Traktorkabine bei Bedarf vorzeitig per Tastendruck auf die nächste Stufe geschaltet werden (Eventsteuerung).
 
 ### Funktionsbeschreibung der Ablaufsteuerung
+
 Die Logik soll mit dem Funktionsbaustein [sequence_ET_04_AX.fbt](../../.lib/logiBUS-3.0.0/typelib/utils/sequence/combi/sequence_ET_04_AX.fbt) realisiert werden.
 
-#### Phasen des Spülprozesses:
+#### Phasen des Spülprozesses
+
 1. **Zustand 0 (Bereit / Idle):** Das System wartet auf den Start. Kein Ventil ist aktiv (`STATE_NR = 0`).
 2. **Schritt 1 (Vorspülen):** Ventil 1 öffnet (`DO_S1` wird aktiv). Maximale Dauer: **5 Sekunden** (`DT_S1_S2 = T#5s`). Ein Impuls auf Taster `I2` (`S1_S2`) schaltet vorzeitig in Schritt 2.
 3. **Schritt 2 (Hauptspülen):** Ventil 2 öffnet (`DO_S2` wird aktiv). Maximale Dauer: **10 Sekunden** (`DT_S2_S3 = T#10s`). Ein Impuls auf Taster `I3` (`S2_S3`) schaltet vorzeitig in Schritt 3.
@@ -17,6 +20,7 @@ Die Logik soll mit dem Funktionsbaustein [sequence_ET_04_AX.fbt](../../.lib/logi
 5. **Schritt 4 (Ausblasen/Abtropfen):** Ventil 4 öffnet (`DO_S4` wird aktiv). Maximale Dauer: **3 Sekunden** (`DT_S4_START = T#3s`). Nach Ablauf dieser Zeit wechselt das System automatisch wieder in den Zustand 0 (Bereit).
 
 ### Arbeitsauftrag
+
 1. Öffnen Sie das 4diac-Projekt und legen Sie die SubApp `Uebung_036b_AX` an (eine Vorlage befindet sich bereits im Ordner `Uebungen`).
 2. Platzieren Sie den Sequenzer-Baustein `sequence_ET_04_AX` und konfigurieren Sie die Zeitparameter (`DT_S1_S2` bis `DT_S4_START`) entsprechend den Vorgaben.
 3. Verbinden Sie den Start-Taster `I1` (über das Event `BUTTON_SINGLE_CLICK` von `DigitalInput_CLK_I1`) mit dem Eingang `START_S1` des Sequenzers.

@@ -101,7 +101,7 @@ the object count actually requires — no block will realistically overflow
 1000 objects of one type on a VT pool.
 
 | TypeName | Block start | Class attr (ISO-Designer `.jop`) |
-|---|---|---|
+| --- | --- | --- |
 | WorkingSet | 0 | — |
 | DataMask | 1000 | |
 | AlarmMask | 2000 | |
