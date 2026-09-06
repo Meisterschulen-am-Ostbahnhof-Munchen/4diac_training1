@@ -6,14 +6,14 @@
 	</VersionInfo>
 	<CompilerInfo packageName="Uebungen">
 		<Import declaration="Uebungen::const::UT::Dreieck::DefaultPool_Dreieck_BargraphSplit::Bargraph_Split_BargraphSplit"/>
-		<Import declaration="Uebungen::const::UT::Dreieck::DefaultPool_Dreieck_Numeric::InputNumber_Sollwert_N"/>
+		<Import declaration="Uebungen::const::UT::Dreieck::DefaultPool_Dreieck_Numeric::NumberVariable_Sollwert_N"/>
 	</CompilerInfo>
 	<SubAppInterfaceList>
 	</SubAppInterfaceList>
 	<SubAppNetwork>
 		<FB Name="Sollwert_N" Type="isobus::UT::io::NumericValue::NumericValue_PHYSA" x="-6400" y="800">
 			<Parameter Name="QI" Value="TRUE"/>
-			<Parameter Name="stObj" Value="InputNumber_Sollwert_N"/>
+			<Parameter Name="stObj" Value="NumberVariable_Sollwert_N"/>
 		</FB>
 		<FB Name="SplitBar" Type="isobus::UT::Q::BargraphSplitFS_AR" x="-2600" y="400">
 			<Parameter Name="stObj" Value="Bargraph_Split_BargraphSplit"/>

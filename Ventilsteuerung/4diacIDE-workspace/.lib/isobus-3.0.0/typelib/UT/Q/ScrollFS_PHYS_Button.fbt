@@ -2,6 +2,8 @@
 <FBType Name="ScrollFS_PHYS_Button" Comment="Scroll list — accepts a single ScrollFull_S struct (geometry + physical controls), reads 6 on-screen Buttons and the direct-position input field, drives ScrollFS internally">
 	<Identification Standard="ISO 11783-6" Description="Copyright (c) 2026 Meisterschulen am Ostbahnhof  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0&#10;&#10;Same as ScrollFS_PHYS, but reads the 6 scroll controls as on-screen Button objects (Button_IE, listening for BT_PRESSED_LATCHED) instead of physical SoftKeys — for masks where scrolling is operated via touch/on-screen buttons rather than the SoftKey column. Reuses the same ScrollFull_S / ScrollControls_S structs (the 6 IDs just point at Button objects instead of Key objects) and the same internal ScrollFS position engine. See Workspace_Scroll/SCROLL_KONZEPT.md for the full derivation.">
 	</Identification>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.1" Author="Franz Höpfinger" Date="2026-09-05" Remarks="Add xScale flag, passed through to the internal ScrollFS">
+	</VersionInfo>
 	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2026-08-09" Remarks="initial API and implementation and/or initial documentation">
 	</VersionInfo>
 	<CompilerInfo packageName="isobus::UT::Q">
@@ -21,6 +23,7 @@
 		<EventInputs>
 			<Event Name="INIT" Type="EInit" Comment="Service Initialization">
 				<With Var="stObj"/>
+				<With Var="xScale"/>
 			</Event>
 		</EventInputs>
 		<EventOutputs>
@@ -30,6 +33,7 @@
 		</EventOutputs>
 		<InputVars>
 			<VarDeclaration Name="stObj" Type="isobus::utils::scroll::ScrollFull_S" Comment="Complete scroll list configuration (geometry + operator controls), snapshotted at INIT"/>
+			<VarDeclaration Name="xScale" Type="BOOL" Comment="FALSE (default) = bypass. TRUE = scale by the DM/SKM factor. Passed straight through to the internal ScrollFS instance." InitialValue="FALSE"/>
 		</InputVars>
 		<OutputVars>
 			<VarDeclaration Name="OUT" Type="DINT" Comment="Current scroll position (0..stObj.stGeometry.i32PosMax, in rows)"/>
@@ -169,6 +173,7 @@
 		<DataConnections>
 			<Connection Source="stObj" Destination="Snap.IN" dx1="780"/>
 			<Connection Source="Snap.OUT.stGeometry" Destination="Inner.stObj" dx1="3173.33"/>
+			<Connection Source="xScale" Destination="Inner.xScale" dx1="3173.33"/>
 			<Connection Source="Snap.OUT.stControls.u16BtnTopId" Destination="BtnFirst.u16ObjId" dx1="893.33"/>
 			<Connection Source="Snap.OUT.stControls.u16BtnPageUpId" Destination="BtnPageUp.u16ObjId" dx1="860"/>
 			<Connection Source="Snap.OUT.stControls.u16BtnUpId" Destination="BtnLineUp.u16ObjId" dx1="826.67"/>

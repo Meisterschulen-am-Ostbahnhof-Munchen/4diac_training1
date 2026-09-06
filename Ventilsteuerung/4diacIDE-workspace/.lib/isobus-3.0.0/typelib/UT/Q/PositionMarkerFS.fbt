@@ -2,6 +2,8 @@
 <FBType Name="PositionMarkerFS" Comment="Moves a VT marker object to reflect an incoming REAL value — accepts PositionMarker_S struct, clamps to the marker&apos;s travel range, drives Q_ChildPosition">
 	<Identification Standard="ISO 11783-6" Description="Copyright (c) 2026 Meisterschulen am Ostbahnhof  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0&#10;&#10;Wraps a single Q_ChildPosition instance (ISO 11783-6 F.16) that moves a marker object (e.g. a triangle) within its container, given an arbitrary REAL value (from any source - a VT InputNumber via NumericValue_PHYS, a sensor, or anything else). stObj is snapshotted once at INIT via F_MOVE, matching the ScrollFS/Q_NumericValue_PHYS pattern. The incoming value is offset by stObj.r32Center, clamped to stObj.r32MinPos..r32MaxPos (reporting xOver/xUnder), then integerized once for Q_ChildPosition.s16Xposition. s16Yposition is a fixed passthrough of stObj.s16YPosition.">
 	</Identification>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.1" Author="Franz Höpfinger" Date="2026-09-05" Remarks="Add xScale flag, passed through to the internal MoveMarker (Q_ChildPosition)">
+	</VersionInfo>
 	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2026-09-05" Remarks="initial API and implementation and/or initial documentation">
 	</VersionInfo>
 	<CompilerInfo packageName="isobus::UT::Q">
@@ -16,6 +18,7 @@
 		<EventInputs>
 			<Event Name="INIT" Type="EInit" Comment="Service Initialization">
 				<With Var="stObj"/>
+				<With Var="xScale"/>
 			</Event>
 			<Event Name="REQ" Type="Event" Comment="Move the marker to reflect a new value">
 				<With Var="rValue"/>
@@ -33,6 +36,7 @@
 		</EventOutputs>
 		<InputVars>
 			<VarDeclaration Name="stObj" Type="isobus::utils::childposition::PositionMarker_S" Comment="Marker object pool properties (child/parent IDs, travel bounds, center offset), snapshotted at INIT"/>
+			<VarDeclaration Name="xScale" Type="BOOL" Comment="FALSE (default) = bypass, send s16Xposition/s16Yposition through unchanged. TRUE = scale them by the DM/SKM factor for stObj.u16ParentId. Passed straight through to the internal MoveMarker (Q_ChildPosition)." InitialValue="FALSE"/>
 			<VarDeclaration Name="rValue" Type="REAL" Comment="Physical value to display - from any source, not limited to NumericValue_PHYS"/>
 		</InputVars>
 		<OutputVars>
@@ -92,6 +96,9 @@
 				<Attribute Name="Visible" Value="false"/>
 			</Connection>
 			<Connection Source="Snap.OUT.u16ParentId" Destination="MoveMarker.u16ObjIdParent" dx1="2033.33">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="xScale" Destination="MoveMarker.xScale" dx1="2033.33">
 				<Attribute Name="Visible" Value="false"/>
 			</Connection>
 			<Connection Source="rValue" Destination="AddCenter.IN1" dx1="1000"/>

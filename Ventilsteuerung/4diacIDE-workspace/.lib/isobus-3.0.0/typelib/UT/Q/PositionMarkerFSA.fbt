@@ -2,6 +2,8 @@
 <FBType Name="PositionMarkerFSA" Comment="AR adapter wrapper around PositionMarkerFS — accepts the Sollwert REAL value via AR adapter socket instead of a plain REQ/rValue pair">
 	<Identification Standard="ISO 11783-6" Description="Copyright (c) 2026 Meisterschulen am Ostbahnhof  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0&#10;&#10;Same wrapper shape as Q_NumericValue_PHYSA around Q_NumericValue_PHYS: the AR adapter socket's rPhys value drives the internally-owned PositionMarkerFS instance's REQ/rValue directly. xOver/xUnder are re-exposed as AX adapter plugs, exactly like Q_NumericValue_PHYSA does.">
 	</Identification>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.1" Author="Franz Höpfinger" Date="2026-09-05" Remarks="Add xScale flag, passed through to the internal PositionMarkerFS">
+	</VersionInfo>
 	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2026-09-05" Remarks="initial API and implementation and/or initial documentation">
 	</VersionInfo>
 	<CompilerInfo packageName="isobus::UT::Q">
@@ -12,6 +14,7 @@
 		<EventInputs>
 			<Event Name="INIT" Type="EInit" Comment="Service Initialization">
 				<With Var="stObj"/>
+				<With Var="xScale"/>
 			</Event>
 		</EventInputs>
 		<EventOutputs>
@@ -24,6 +27,7 @@
 		</EventOutputs>
 		<InputVars>
 			<VarDeclaration Name="stObj" Type="isobus::utils::childposition::PositionMarker_S" Comment="Marker object pool properties (child/parent IDs, travel bounds, center offset), snapshotted at INIT"/>
+			<VarDeclaration Name="xScale" Type="BOOL" Comment="FALSE (default) = bypass. TRUE = scale by the DM/SKM factor. Passed straight through to the internal PositionMarkerFS instance." InitialValue="FALSE"/>
 		</InputVars>
 		<OutputVars>
 			<VarDeclaration Name="STATUS" Type="STRING" Comment="Service Status - passthrough from the internal PositionMarkerFS"/>
@@ -50,6 +54,7 @@
 		</EventConnections>
 		<DataConnections>
 			<Connection Source="stObj" Destination="Inner.stObj" dx1="973.33"/>
+			<Connection Source="xScale" Destination="Inner.xScale" dx1="973.33"/>
 			<Connection Source="rPhys.D1" Destination="Inner.rValue" dx1="1120"/>
 			<Connection Source="Inner.STATUS" Destination="STATUS" dx1="2000"/>
 			<Connection Source="Inner.s16result" Destination="s16result" dx1="2573.33"/>
