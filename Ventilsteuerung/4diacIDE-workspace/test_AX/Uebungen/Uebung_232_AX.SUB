@@ -13,24 +13,24 @@
 	<SubAppInterfaceList>
 	</SubAppInterfaceList>
 	<SubAppNetwork>
-		<FB Name="DigitalInput_I1" Type="logiBUS::io::DI::logiBUS_IXA" x="-6000" y="-900">
+		<FB Name="DigitalInput_I1" Type="logiBUS::io::DI::logiBUS_IXA" x="-6200" y="-900">
 			<Parameter Name="QI" Value="TRUE"/>
 			<Parameter Name="Input" Value="Input_I1"/>
 		</FB>
-		<FB Name="DigitalInput_CLK_I2" Type="logiBUS::io::DI::logiBUS_IE" x="-6000" y="300">
+		<FB Name="DigitalInput_CLK_I2" Type="logiBUS::io::DI::logiBUS_IE" x="-6300" y="300">
 			<Parameter Name="QI" Value="TRUE"/>
 			<Parameter Name="Input" Value="Input_I2"/>
 			<Parameter Name="InputEvent" Value="BUTTON_SINGLE_CLICK"/>
 		</FB>
-		<SubApp Name="AX_ASRT_RF_TRIG_1" Type="MyLib::sys::AX_ASRT_RF_TRIG" x="-4500" y="-600">
+		<SubApp Name="AX_ASRT_RF_TRIG_1" Type="MyLib::sys::AX_ASRT_RF_TRIG" x="-4700" y="-600">
 		</SubApp>
-		<FB Name="ASRT_3EVENTS_TO_SRT_1" Type="adapter::conversion::unidirectional::ASRT_3EVENTS_TO_SRT" x="-4500" y="600">
+		<FB Name="ASRT_3EVENTS_TO_SRT_1" Type="adapter::conversion::unidirectional::ASRT_3EVENTS_TO_SRT" x="-4700" y="500">
 		</FB>
-		<FB Name="ASRT_MERGE_2" Type="adapter::events::unidirectional::ASRT_MERGE_2" x="-3000" y="0">
+		<FB Name="ASRT_MERGE_2" Type="adapter::events::unidirectional::ASRT_MERGE_2" x="-2600" y="0">
 		</FB>
 		<FB Name="ASRT_AX_T_FF_SR_1" Type="adapter::events::unidirectional::ASRT_AX_T_FF_SR" x="-1500" y="0">
 		</FB>
-		<FB Name="DigitalOutput_Q1" Type="logiBUS::io::DQ::logiBUS_QXA" x="0" y="-300">
+		<FB Name="DigitalOutput_Q1" Type="logiBUS::io::DQ::logiBUS_QXA" x="900" y="-300">
 			<Parameter Name="QI" Value="TRUE"/>
 			<Parameter Name="Output" Value="Output_Q1"/>
 		</FB>
@@ -42,7 +42,7 @@
 			<Connection Source="DigitalInput_I1.IN" Destination="AX_ASRT_RF_TRIG_1.QI" dx1="333.33"/>
 			<Connection Source="AX_ASRT_RF_TRIG_1.Q" Destination="ASRT_MERGE_2.IN1" dx1="500"/>
 			<Connection Source="ASRT_3EVENTS_TO_SRT_1.ASRT_OUT" Destination="ASRT_MERGE_2.IN2" dx1="500"/>
-			<Connection Source="ASRT_MERGE_2.OUT" Destination="ASRT_AX_T_FF_SR_1.S_R_T" dx1="500"/>
+			<Connection Source="ASRT_MERGE_2.OUT" Destination="ASRT_AX_T_FF_SR_1.S_R_T"/>
 			<Connection Source="ASRT_AX_T_FF_SR_1.Q" Destination="DigitalOutput_Q1.OUT" dx1="500"/>
 		</AdapterConnections>
 	</SubAppNetwork>
