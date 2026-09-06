@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SubAppType Name="Uebung_232_AX" Comment="2 ASRT-Quellen (Taster Last-Wins + echter Toggle-Taster) auf 1 ASRT-Latch via ASRT_MERGE_2, Ausgang Q1">
+	<Identification Standard="61499-2" Description="Copyright (c) 2026 Meisterschulen am Ostbahnhof  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0">
+	</Identification>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2026-09-06" Remarks="initial API and implementation and/or initial documentation">
+	</VersionInfo>
+	<CompilerInfo packageName="Uebungen">
+		<Import declaration="logiBUS::io::DI::logiBUS_DI::Input_I1"/>
+		<Import declaration="logiBUS::io::DI::logiBUS_DI::Input_I2"/>
+		<Import declaration="logiBUS::io::DI::logiBUS_DI_Events::BUTTON_SINGLE_CLICK"/>
+		<Import declaration="logiBUS::io::DQ::logiBUS_DO::Output_Q1"/>
+	</CompilerInfo>
+	<SubAppInterfaceList>
+	</SubAppInterfaceList>
+	<SubAppNetwork>
+		<FB Name="DigitalInput_I1" Type="logiBUS::io::DI::logiBUS_IXA" x="-6000" y="-900">
+			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="Input" Value="Input_I1"/>
+		</FB>
+		<FB Name="DigitalInput_CLK_I2" Type="logiBUS::io::DI::logiBUS_IE" x="-6000" y="300">
+			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="Input" Value="Input_I2"/>
+			<Parameter Name="InputEvent" Value="BUTTON_SINGLE_CLICK"/>
+		</FB>
+		<SubApp Name="AX_ASRT_RF_TRIG_1" Type="MyLib::sys::AX_ASRT_RF_TRIG" x="-4500" y="-600">
+		</SubApp>
+		<FB Name="ASRT_3EVENTS_TO_SRT_1" Type="adapter::conversion::unidirectional::ASRT_3EVENTS_TO_SRT" x="-4500" y="600">
+		</FB>
+		<FB Name="ASRT_MERGE_2" Type="adapter::events::unidirectional::ASRT_MERGE_2" x="-3000" y="0">
+		</FB>
+		<FB Name="ASRT_AX_T_FF_SR_1" Type="adapter::events::unidirectional::ASRT_AX_T_FF_SR" x="-1500" y="0">
+		</FB>
+		<FB Name="DigitalOutput_Q1" Type="logiBUS::io::DQ::logiBUS_QXA" x="0" y="-300">
+			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="Output" Value="Output_Q1"/>
+		</FB>
+		<Comment Comment="Quelle 1 (AX_ASRT_RF_TRIG): Taster gedrueckt=SET, losgelassen=RESET - TOGGLE bleibt ungenutzt. &#10;Quelle 2 (ASRT_3EVENTS_TO_SRT): nur TOGGLE verdrahtet, SET/RESET bleiben offen - ein echter Taster mit Klick-Umschaltung. &#10;ASRT_MERGE_2 fuehrt beide ASRT-Streams zusammen, bevor sie auf denselben ASRT_AX_T_FF_SR treffen." x="-6000" y="1600" width="4000" height="900"/>
+		<EventConnections>
+			<Connection Source="DigitalInput_CLK_I2.IND" Destination="ASRT_3EVENTS_TO_SRT_1.TOGGLE" dx1="500"/>
+		</EventConnections>
+		<AdapterConnections>
+			<Connection Source="DigitalInput_I1.IN" Destination="AX_ASRT_RF_TRIG_1.QI" dx1="333.33"/>
+			<Connection Source="AX_ASRT_RF_TRIG_1.Q" Destination="ASRT_MERGE_2.IN1" dx1="500"/>
+			<Connection Source="ASRT_3EVENTS_TO_SRT_1.ASRT_OUT" Destination="ASRT_MERGE_2.IN2" dx1="500"/>
+			<Connection Source="ASRT_MERGE_2.OUT" Destination="ASRT_AX_T_FF_SR_1.S_R_T" dx1="500"/>
+			<Connection Source="ASRT_AX_T_FF_SR_1.Q" Destination="DigitalOutput_Q1.OUT" dx1="500"/>
+		</AdapterConnections>
+	</SubAppNetwork>
+	<Attribute Name="Documentation" Type="CDATA"><![CDATA[<h1>2 ASRT-Quellen ODER-verknüpft auf 1 ASRT-Latch</h1>
+
+<p>Direktes Geschwister zu <code>Uebung_229_AX</code>/<code>Uebung_230_AX</code>, aber mit
+<code>ASRT</code> (Set/Reset/Toggle) statt <code>ASR</code> (nur Set/Reset) durchgängig: zwei
+unabhängige Quellen liefern je einen Teil der SET/RESET/TOGGLE-Semantik, <code>ASRT_MERGE_2</code>
+führt beide zu einem gemeinsamen <code>ASRT_AX_T_FF_SR</code>-Latch zusammen.</p>
+
+<h2>Funktionsbeschreibung</h2>
+
+<ul>
+	<li><strong>Quelle 1 (<code>AX_ASRT_RF_TRIG</code>)</strong>: klassischer Taster an
+	<code>Input_I1</code>. Drücken (steigende Flanke) → <code>SET</code>, Loslassen (fallende Flanke)
+	→ <code>RESET</code>. <code>TOGGLE</code> feuert hier nie - aus einem reinen Flankensignal lässt
+	sich kein drittes, unabhängiges Ereignis ableiten.</li>
+	<li><strong>Quelle 2 (<code>ASRT_3EVENTS_TO_SRT</code>)</strong>: ein waschechter Toggle-Taster an
+	<code>Input_I2</code> (<code>BUTTON_SINGLE_CLICK</code>) - hier ist nur <code>TOGGLE</code>
+	verdrahtet, <code>SET</code>/<code>RESET</code> bleiben unbenutzt.</li>
+	<li><code>ASRT_MERGE_2</code> vereinigt beide Streams zu einem gemeinsamen <code>ASRT</code>-Signal,
+	bevor es auf <code>ASRT_AX_T_FF_SR.S_R_T</code> trifft - dieselbe ODER-Zusammenführung wie bei
+	<code>ASR_MERGE_2</code> in <code>Uebung_230_AX</code>, jetzt eben inklusive der dritten
+	(Toggle-)Schiene.</li>
+</ul>
+
+<h2>Arbeitsauftrag</h2>
+
+<p>Testen Sie: Taster I1 drücken und halten → <code>Q1</code> EIN, solange gedrückt (Last-Wins wie in
+229/230). Taster I1 loslassen → <code>Q1</code> AUS. Unabhängig davon jederzeit den Toggle-Taster I2
+klicken → <code>Q1</code> wechselt seinen aktuellen Zustand, egal was I1 gerade macht.</p>
+
+<h2>Referenzlösung</h2>
+
+<p><code>Uebung_232_AX.SUB</code>. Der neue Baustein <code>AX_ASRT_RF_TRIG</code> liegt als
+Composite-SubApp in <code>MyLib_AX-1.0.0/typelib/sys/AX_ASRT_RF_TRIG.SUB</code> - aus dem
+bestehenden <code>AX_ASR_RF_TRIG</code> plus <code>ASRT_SR_AE_TO_SRT</code> (SR_IN direkt aus dem
+ASR, TOGGLE_IN unverdrahtet), statt eines neuen Low-Level-FBTypes.</p>
+]]></Attribute>
+</SubAppType>

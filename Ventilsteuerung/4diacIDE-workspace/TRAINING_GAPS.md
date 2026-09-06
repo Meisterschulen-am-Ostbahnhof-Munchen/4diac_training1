@@ -32,11 +32,16 @@ ganze ILOCK-Familie, Entprellung/Hysterese, Aktor-Rückmeldung/Plausibilisierung
 
 ## Priorisierte Top-Lücken
 
-1. **`ASRT_MERGE_2`-Übung (höchster Wert, auffälligste Lücke).** Direktes
-   Geschwister zu `Uebung_229/230_AX`: 2 Quellen inkl. einer echten
-   Toggle-Taste, mit `ASRT` (nicht `ASR`) durchgängig — Flankenerkennung im
-   `AX_ASRT_RF_TRIG`-Stil → `ASRT_MERGE_2` → ASRT-basiertes Latch. SET/RESET/
-   TOGGLE-Semantik von ASRT wird aktuell in keiner Übung hands-on vermittelt.
+1. ~~**`ASRT_MERGE_2`-Übung (höchster Wert, auffälligste Lücke).**~~ **Erledigt
+   2026-09-06**: `Uebung_232_AX.SUB` (+ Beschreibung im Documentation-Attribut).
+   Direktes Geschwister zu `Uebung_229/230_AX`, mit `ASRT` durchgängig: Quelle 1
+   ist eine neue Composite-SubApp `AX_ASRT_RF_TRIG` (Pendant zu `AX_ASR_RF_TRIG`,
+   aus diesem plus `ASRT_SR_AE_TO_SRT` zusammengesetzt - SR_IN direkt aus dem ASR,
+   TOGGLE_IN unverdrahtet) an einem klassischen Taster; Quelle 2 ist
+   `ASRT_3EVENTS_TO_SRT` mit nur `TOGGLE` verdrahtet an einem echten
+   Toggle-Taster; `ASRT_MERGE_2` führt beide zu einem gemeinsamen
+   `ASRT_AX_T_FF_SR`-Latch zusammen. Neuer Baustein:
+   `MyLib_AX-1.0.0/typelib/sys/AX_ASRT_RF_TRIG.SUB`.
 
 2. **Eine `*_SPLIT`-Übung (Fan-out, beliebige Familie).** Ein physischer
    Trigger steuert 2-3 unabhängige nachgelagerte Verbraucher über
