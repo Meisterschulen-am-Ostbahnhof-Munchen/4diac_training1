@@ -370,11 +370,13 @@ def _get_jvi_property(jvi_root, prop_name):
 
 
 def _find_hosting_jvi(jop_dir, object_jvs_id):
-    """Find the .jvi file in jop_dir whose <Components> places object_jvs_id directly.
+    """Find the .jvi file in jop_dir (searched recursively, since ISO-Designer lets
+    masks live in subfolders, e.g. Diagnosis/Ausgaenge/AusgaengeMask.jvi) whose
+    <Components> places object_jvs_id directly.
 
-    Returns (jvi_path, jvi_root) or (None, None) if not found in any .jvi in jop_dir.
+    Returns (jvi_path, jvi_root) or (None, None) if not found in any .jvi under jop_dir.
     """
-    for jvi_path in glob.glob(os.path.join(jop_dir, "*.jvi")):
+    for jvi_path in glob.glob(os.path.join(jop_dir, "**", "*.jvi"), recursive=True):
         root = ET.parse(jvi_path).getroot()
         components = root.find("Components")
         if components is None:
@@ -566,63 +568,55 @@ def _find_scroll_button_controls(jop_dir, jop_root, by_id, list_parent_id):
     return roles, pointer_roles, warnings
 
 
-def readScrollJOP(jop_filepath):
-    """Parse a .jop file and extract scroll-list geometry into ScrollObjectPool_S data.
+def _pair_scroll_lists_by_prefix(by_name):
+    """Group *_Scrolling_Parent/_Scrolling_Content/_Scrollbar_Parent/_Scrollbar_Content
+    ObjectNames by their common prefix (the part before the suffix).
 
-    Detects a scroll list by four CGroup ObjectNames ending in "_Scrolling_Parent",
-    "_Scrolling_Content", "_Scrollbar_Parent", "_Scrollbar_Content" (see SCROLL_KONZEPT.md
-    in Workspace_Scroll). Only the single-scroll-list-per-pool case is supported; if more
-    than one candidate is found for any suffix, generation is skipped with a warning
-    (multi-list prefix pairing is not implemented, since real object names in this project
-    are not guaranteed to share a consistent prefix - e.g. "Containerr_Scrolling_Parent" vs
-    "Container_Scrolling_Content").
+    Multiple scroll lists per pool are supported as long as each list's four container
+    names share one consistent prefix (e.g. "Ausgaenge_Scrolling_Parent",
+    "Ausgaenge_Scrolling_Content", ... all prefixed "Ausgaenge") - true for pools built
+    fresh by a generator script. A pool with historically inconsistent naming (e.g. the
+    original Workspace_Scroll pool's "Containerr_Scrolling_Parent" typo vs.
+    "Container_Scrolling_Content") would fail to pair here and is skipped with a warning -
+    rename in ISO-Designer to a consistent prefix if that happens.
 
-    Returns a dict keyed by a name derived from the content container's ObjectName:
-        { "Container": {"list_parent_id": 3006, "list_content_id": 3031, "row_height": 42,
-                         "bar_parent_id": 3000, "bar_content_id": 3010, "bar_base_offset": -252,
-                         "bar_travel": 252, "pos_max": 13, "step": 6}, ... }
+    Returns {prefix: {"list_parent": name, "list_content": name, "bar_parent": name,
+                       "bar_content": name}}, only for prefixes where all four are present.
     """
-    jop_dir = os.path.dirname(jop_filepath)
-    tree = ET.parse(jop_filepath)
-    root = tree.getroot()
-    objects_container = root.find("Objects")
-    if objects_container is None:
-        return {}
+    suffixes = {
+        "list_parent":  "_Scrolling_Parent",
+        "list_content": "_Scrolling_Content",
+        "bar_parent":   "_Scrollbar_Parent",
+        "bar_content":  "_Scrollbar_Content",
+    }
+    by_prefix = {}
+    for name in by_name:
+        for role, suffix in suffixes.items():
+            if name.endswith(suffix):
+                prefix = name[:-len(suffix)]
+                by_prefix.setdefault(prefix, {})[role] = name
 
-    all_objects = objects_container.findall("Object")
-    by_name = {}
-    by_id = {}
-    for obj in all_objects:
-        cls = obj.get("Class")
-        if not cls:
-            continue
-        jvs_id = obj.get("JVS-ID")
-        if jvs_id:
-            by_id[jvs_id] = obj
-        name = obj.get("ObjectName")
-        if name:
-            by_name[name] = obj
+    complete = {p: roles for p, roles in by_prefix.items() if len(roles) == 4}
+    incomplete = {p: roles for p, roles in by_prefix.items() if len(roles) != 4}
+    for prefix, roles in incomplete.items():
+        missing = [role for role in suffixes if role not in roles]
+        print(f"  Warning: scroll list prefix '{prefix}' is missing {missing} - "
+              "skipped (needs all four *_Scrolling_Parent/_Scrolling_Content/"
+              "_Scrollbar_Parent/_Scrollbar_Content names with this exact prefix).")
+    return complete
 
-    def names_ending(suffix):
-        return [n for n in by_name if n.endswith(suffix)]
 
-    list_parents  = names_ending("_Scrolling_Parent")
-    list_contents = names_ending("_Scrolling_Content")
-    bar_parents   = names_ending("_Scrollbar_Parent")
-    bar_contents  = names_ending("_Scrollbar_Content")
+def _read_one_scroll_list(jop_dir, root, by_id, by_name, roles):
+    """Extract ScrollObjectPool_S-shaped geometry + button-role data for one scroll list.
 
-    if not (list_parents and list_contents and bar_parents and bar_contents):
-        return {}
-
-    if max(len(list_parents), len(list_contents), len(bar_parents), len(bar_contents)) > 1:
-        print("  Warning: multiple scroll lists detected in this pool - prefix-based "
-              "pairing is not implemented, skipping scroll struct generation.")
-        return {}
-
-    list_parent_obj  = by_name[list_parents[0]]
-    list_content_obj = by_name[list_contents[0]]
-    bar_parent_obj    = by_name[bar_parents[0]]
-    bar_content_obj   = by_name[bar_contents[0]]
+    `roles` is one entry from _pair_scroll_lists_by_prefix()'s return value. Returns the
+    info dict (see readScrollJOP docstring) or None if geometry couldn't be determined
+    (a warning is printed for the specific reason).
+    """
+    list_parent_obj  = by_name[roles["list_parent"]]
+    list_content_obj = by_name[roles["list_content"]]
+    bar_parent_obj    = by_name[roles["bar_parent"]]
+    bar_content_obj   = by_name[roles["bar_content"]]
 
     list_parent_id  = int(list_parent_obj.get("JVS-ID"))
     list_content_id = int(list_content_obj.get("JVS-ID"))
@@ -633,35 +627,34 @@ def readScrollJOP(jop_filepath):
     list_content_height = int(_get_prop(list_content_obj, "Height") or 0)
     bar_parent_height    = int(_get_prop(bar_parent_obj, "Height") or 0)
 
-    # Row height = vertical spacing between rows (Top of row 2 minus Top of row 1 as
-    # positioned inside ListContent), NOT a row container's own Height property - rows
-    # are typically drawn shorter than their spacing to leave a visible gap between them.
-    row_tops = {}
+    # Row height = vertical spacing between rows (Top of the second-lowest row minus Top
+    # of the lowest, as positioned inside ListContent), NOT a row container's own Height
+    # property - rows are typically drawn shorter than their spacing to leave a visible
+    # gap between them. Determined from the two smallest Top values among ListContent's
+    # children rather than name matching (e.g. '*_Row_01'/'*_Row_02') - row containers may
+    # carry descriptive names (e.g. 'Ausgang_STG1_Q01') instead, and header rows share the
+    # same uniform slot spacing as data rows, so any two adjacent rows give the same answer.
+    tops = set()
     lc_children = list_content_obj.find("Objects")
     if lc_children is not None:
         for child_ref in lc_children.findall("Object"):
             proxy_obj = by_id.get(child_ref.get("JVS-ID"))
             if proxy_obj is None:
                 continue
-            target_obj = _resolve_proxy_target(proxy_obj, by_id)
-            if target_obj is None:
-                continue
-            target_name = target_obj.get("ObjectName") or ""
-            m = re.search(r'_Row_0*([12])$', target_name)
-            if m:
-                top_val = _get_prop(proxy_obj, "Top")
-                if top_val:
-                    row_tops[int(m.group(1))] = int(top_val)
+            top_val = _get_prop(proxy_obj, "Top")
+            if top_val:
+                tops.add(int(top_val))
 
     row_height = None
-    if 1 in row_tops and 2 in row_tops:
-        row_height = row_tops[2] - row_tops[1]
+    if len(tops) >= 2:
+        lowest_two = sorted(tops)[:2]
+        row_height = lowest_two[1] - lowest_two[0]
 
     if not row_height:
-        print("  Warning: could not determine row height (need '*_Row_01' and '*_Row_02' "
+        print("  Warning: could not determine row height (need at least two row "
               "containers positioned inside the list content) - skipping scroll struct "
               "generation.")
-        return {}
+        return None
 
     pos_max = max(0, (list_content_height - list_parent_height) // row_height)
     step = max(1, list_parent_height // row_height)
@@ -683,7 +676,7 @@ def readScrollJOP(jop_filepath):
     if indicator_height is None:
         print("  Warning: could not determine scrollbar indicator height "
               "- skipping scroll struct generation.")
-        return {}
+        return None
 
     bar_travel = bar_parent_height - indicator_height
 
@@ -706,11 +699,7 @@ def readScrollJOP(jop_filepath):
     if bar_base_offset is None:
         print("  Warning: could not determine scrollbar content base offset "
               "- skipping scroll struct generation.")
-        return {}
-
-    content_name = list_contents[0]
-    suffix = "_Scrolling_Content"
-    key_name = content_name[:-len(suffix)] if content_name.endswith(suffix) else content_name
+        return None
 
     # Button IDs: traced via list_parent_id's hosting mask -> its associated SoftKeyMask
     # -> that SoftKeyMask's own child objects (ObjectPointers) -> the real Key object
@@ -726,20 +715,65 @@ def readScrollJOP(jop_filepath):
         print(f"  Warning: {w}")
 
     return {
-        key_name: {
-            "list_parent_id":  list_parent_id,
-            "list_content_id": list_content_id,
-            "row_height":      row_height,
-            "bar_parent_id":    bar_parent_id,
-            "bar_content_id":   bar_content_id,
-            "bar_base_offset":  bar_base_offset,
-            "bar_travel":       bar_travel,
-            "pos_max":          pos_max,
-            "step":             step,
-            "controls":         button_roles,
-            "control_pointers": button_pointer_roles,
-        }
+        "list_parent_id":  list_parent_id,
+        "list_content_id": list_content_id,
+        "row_height":      row_height,
+        "bar_parent_id":    bar_parent_id,
+        "bar_content_id":   bar_content_id,
+        "bar_base_offset":  bar_base_offset,
+        "bar_travel":       bar_travel,
+        "pos_max":          pos_max,
+        "step":             step,
+        "controls":         button_roles,
+        "control_pointers": button_pointer_roles,
     }
+
+
+def readScrollJOP(jop_filepath):
+    """Parse a .jop file and extract scroll-list geometry into ScrollObjectPool_S data,
+    for every scroll list found in the pool (see _pair_scroll_lists_by_prefix()).
+
+    Detects each scroll list by four CGroup ObjectNames sharing one prefix and ending in
+    "_Scrolling_Parent", "_Scrolling_Content", "_Scrollbar_Parent", "_Scrollbar_Content"
+    (see SCROLL_KONZEPT.md in Workspace_Scroll). Multiple scroll lists per pool are
+    supported as long as each one's four names share a consistent prefix.
+
+    Returns a dict keyed by each list's prefix:
+        { "Ausgaenge": {"list_parent_id": 3006, "list_content_id": 3031, "row_height": 42,
+                         "bar_parent_id": 3000, "bar_content_id": 3010, "bar_base_offset": -252,
+                         "bar_travel": 252, "pos_max": 13, "step": 6, ...}, ... }
+    """
+    jop_dir = os.path.dirname(jop_filepath)
+    tree = ET.parse(jop_filepath)
+    root = tree.getroot()
+    objects_container = root.find("Objects")
+    if objects_container is None:
+        return {}
+
+    all_objects = objects_container.findall("Object")
+    by_name = {}
+    by_id = {}
+    for obj in all_objects:
+        cls = obj.get("Class")
+        if not cls:
+            continue
+        jvs_id = obj.get("JVS-ID")
+        if jvs_id:
+            by_id[jvs_id] = obj
+        name = obj.get("ObjectName")
+        if name:
+            by_name[name] = obj
+
+    lists_by_prefix = _pair_scroll_lists_by_prefix(by_name)
+    if not lists_by_prefix:
+        return {}
+
+    result = {}
+    for prefix, roles in sorted(lists_by_prefix.items()):
+        info = _read_one_scroll_list(jop_dir, root, by_id, by_name, roles)
+        if info is not None:
+            result[prefix] = info
+    return result
 
 
 SCROLL_NAME_SUFFIX = "_Scroll"
