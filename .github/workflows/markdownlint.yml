@@ -26,4 +26,4 @@ jobs:
         run: npm install --no-save --ignore-scripts markdownlint-cli2@0.23.2
 
       - name: Run markdownlint-cli2
-        run: npx --no-install markdownlint-cli2 --config .markdownlint.yaml "**/*.md" "!**/.lib/**" "!LICENSE.md"
+        run: npx --no-install markdownlint-cli2 --config .markdownlint.yaml "**/*.md" "!**/.lib/**" "!**/node_modules/**" "!LICENSE.md"
