@@ -7,8 +7,8 @@
         <span v-if="connected" class="tick-badge" :class="{ pulse: tickPulse }">{{ tick }}</span>
         <span>{{ status }}</span>
         <label for="endpoint-url" class="sr-only">OPC-UA Endpoint-URL</label>
-        <input id="endpoint-url" v-model="endpointUrl" class="url-input" :disabled="connected" />
-        <button @click="connected ? disconnect() : connect()">
+        <input id="endpoint-url" v-model="endpointUrl" class="url-input" :disabled="connected || connecting" />
+        <button :disabled="connecting" @click="connected ? disconnect() : connect()">
           {{ connected ? 'Trennen' : 'Verbinden' }}
         </button>
       </div>
@@ -69,6 +69,7 @@ const wsProtocol = window.location.protocol === 'https:' ? 'wss:' : 'ws:'
 const endpointUrl = ref(`${wsProtocol}//${window.location.hostname || 'localhost'}:4841`)
 const status = ref('Getrennt')
 const connected = ref(false)
+const connecting = ref(false)
 const inputs = ref<boolean[]>(new Array(8).fill(false))
 const outputs = ref<boolean[]>(new Array(12).fill(false))
 const tick = ref<number | string>('–')
@@ -82,6 +83,10 @@ const statusClass = computed(() => {
 
 let client: any = null
 let session: any = null
+/* Bumped by disconnect() to invalidate any connect() attempt still in
+ * flight (e.g. the unmount triggers disconnect() while the automatic
+ * connect() from onMounted is still awaiting connectP/createSessionP). */
+let connectToken = 0
 
 function handleLost() {
   if (!connected.value) return
@@ -93,8 +98,11 @@ function handleLost() {
 }
 
 async function connect() {
+  if (connecting.value || connected.value) return
+  const token = ++connectToken
+  connecting.value = true
   status.value = 'Verbinde…'
-  client = new OPCUAClient({
+  const localClient = new OPCUAClient({
     securityMode: MessageSecurityMode.None,
     securityPolicy: SecurityPolicy.None,
     endpoint_must_exist: false,
@@ -102,11 +110,24 @@ async function connect() {
   })
 
   try {
-    await client.connectP(endpointUrl.value)
-    client.on('connection_lost', handleLost)
-    client.on('close', handleLost)
-    session = await client.createSessionP({})
+    await localClient.connectP(endpointUrl.value)
+    if (token !== connectToken) {
+      await localClient.disconnectP().catch(() => {})
+      return
+    }
+
+    localClient.on('connection_lost', handleLost)
+    localClient.on('close', handleLost)
+    const localSession = await localClient.createSessionP({})
+    if (token !== connectToken) {
+      await localClient.disconnectP().catch(() => {})
+      return
+    }
+
+    client = localClient
+    session = localSession
     connected.value = true
+    connecting.value = false
     status.value = 'Verbunden'
 
     const subscription = new ClientSubscription(session, {
@@ -158,8 +179,18 @@ async function connect() {
       setTimeout(() => { tickPulse.value = false }, 400)
     })
   } catch (err) {
-    status.value = 'Fehler: ' + (err as Error).message
-    connected.value = false
+    if (token === connectToken) {
+      status.value = 'Fehler: ' + (err as Error).message
+      connected.value = false
+    } else {
+      /* Superseded by a disconnect()/newer connect() - just release
+       * whatever this stale attempt had opened. */
+      await localClient.disconnectP().catch(() => {})
+    }
+  } finally {
+    if (token === connectToken) {
+      connecting.value = false
+    }
   }
 }
 
@@ -181,12 +212,19 @@ async function toggleOutput(n: number) {
 }
 
 async function disconnect() {
+  /* Invalidate any connect() attempt still in flight so it closes its own
+   * (not yet published) client/session instead of resurrecting the
+   * connection after we've torn down. */
+  connectToken++
   if (client) {
     client.off('connection_lost', handleLost)
     client.off('close', handleLost)
     await client.disconnectP()
   }
+  client = null
+  session = null
   connected.value = false
+  connecting.value = false
   status.value = 'Getrennt'
   inputs.value.fill(false)
   outputs.value.fill(false)
