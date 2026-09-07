@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SubAppType Name="Uebung_172c_ASRT" Comment="Exercise for ASRT_AX_T_FF_SR, ueber AE-Adapter mit logiBUS_IEA statt logiBUS_IE+AE_EVENT_TO_E">
+	<Identification Standard="61499-2" Description="Copyright (c) 2026 Meisterschulen am Ostbahnhof  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0">
+	</Identification>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2026-09-07" Remarks="initial API and implementation and/or initial documentation">
+	</VersionInfo>
+	<CompilerInfo packageName="Uebungen">
+		<Import declaration="logiBUS::io::DI::logiBUS_DI::Input_I1"/>
+		<Import declaration="logiBUS::io::DI::logiBUS_DI::Input_I2"/>
+		<Import declaration="logiBUS::io::DI::logiBUS_DI::Input_I3"/>
+		<Import declaration="logiBUS::io::DI::logiBUS_DI_Events::BUTTON_SINGLE_CLICK"/>
+		<Import declaration="logiBUS::io::DQ::logiBUS_DO::Output_Q1"/>
+	</CompilerInfo>
+	<SubAppInterfaceList>
+	</SubAppInterfaceList>
+	<SubAppNetwork>
+		<FB Name="ASRT_AX_T_FF_SR_1" Type="adapter::events::unidirectional::ASRT_AX_T_FF_SR" x="-600" y="1400">
+		</FB>
+		<FB Name="ASRT_3AE_TO_SRT_1" Type="adapter::conversion::unidirectional::ASRT_3AE_TO_SRT" x="-2500" y="1400">
+		</FB>
+		<FB Name="DigitalInput_CLK_I1" Type="logiBUS::io::DI::logiBUS_IEA" x="-4300" y="900">
+			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="Input" Value="Input_I1"/>
+			<Parameter Name="InputEvent" Value="BUTTON_SINGLE_CLICK"/>
+		</FB>
+		<FB Name="DigitalOutput_Q1" Type="logiBUS::io::DQ::logiBUS_QXA" x="800" y="1100">
+			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="Output" Value="Output_Q1"/>
+		</FB>
+		<FB Name="DigitalInput_CLK_I2" Type="logiBUS::io::DI::logiBUS_IEA" x="-4300" y="1900">
+			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="Input" Value="Input_I2"/>
+			<Parameter Name="InputEvent" Value="BUTTON_SINGLE_CLICK"/>
+		</FB>
+		<FB Name="DigitalInput_CLK_I3" Type="logiBUS::io::DI::logiBUS_IEA" x="-4300" y="2900">
+			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="Input" Value="Input_I3"/>
+			<Parameter Name="InputEvent" Value="BUTTON_SINGLE_CLICK"/>
+		</FB>
+		<Comment Comment="Vergleich zu Uebung_172b_ASRT: dort baute je ein AE_EVENT_TO_E die Bruecke vom rohen logiBUS_IE-Klick-Event zum AE-Plug. &#10;Hier liefert logiBUS_IEA (statt logiBUS_IE) den AE-Plug bereits eingebaut - dieselbe Bruecke steckt schon im Baustein, kein separates AE_EVENT_TO_E noetig." x="-4300" y="3900" width="4200" height="700"/>
+		<AdapterConnections>
+			<Connection Source="DigitalInput_CLK_I1.IN" Destination="ASRT_3AE_TO_SRT_1.SET_IN" dx1="500"/>
+			<Connection Source="DigitalInput_CLK_I2.IN" Destination="ASRT_3AE_TO_SRT_1.RESET_IN" dx1="500"/>
+			<Connection Source="DigitalInput_CLK_I3.IN" Destination="ASRT_3AE_TO_SRT_1.TOGGLE_IN" dx1="500"/>
+			<Connection Source="ASRT_3AE_TO_SRT_1.ASRT_OUT" Destination="ASRT_AX_T_FF_SR_1.S_R_T" dx1="406.67"/>
+			<Connection Source="ASRT_AX_T_FF_SR_1.Q" Destination="DigitalOutput_Q1.OUT" dx1="346.67"/>
+		</AdapterConnections>
+	</SubAppNetwork>
+	<Attribute Name="Documentation" Type="CDATA"><![CDATA[<h1>SET/RESET/TOGGLE über AE-Adapter mit logiBUS_IEA (AE bereits eingebaut)</h1>
+
+<p>Dieselbe Funktion wie <code>Uebung_172b_ASRT</code>, aber ohne die manuelle
+<code>AE_EVENT_TO_E</code>-Brücke pro Kanal: <code>logiBUS_IEA</code> ersetzt
+<code>logiBUS_IE</code> und liefert den <code>AE</code>-Plug (<code>IN</code>) bereits eingebaut.</p>
+
+<h2>Funktionsbeschreibung</h2>
+
+<ul>
+	<li><code>logiBUS_IEA</code> kapselt intern einen <code>logiBUS_IE</code> und leitet dessen
+	Klick-Events direkt auf einen eigenen <code>AE</code>-Plug (<code>IN</code>) um - derselbe
+	Mechanismus wie <code>IX</code> → <code>IXA</code> für Pegelsignale, nur für Event-Eingänge.</li>
+	<li><code>ASRT_3AE_TO_SRT_1</code> bekommt seine <code>SET_IN</code>/<code>RESET_IN</code>/
+	<code>TOGGLE_IN</code> jetzt direkt von den drei <code>logiBUS_IEA</code>-Instanzen, ohne
+	Zwischenbaustein.</li>
+</ul>
+
+<h2>Arbeitsauftrag</h2>
+
+<p>Testen Sie identisch zu <code>Uebung_172_ASRT</code>/<code>Uebung_172b_ASRT</code>: I1 klicken →
+<code>Q1</code> EIN, I2 klicken → <code>Q1</code> AUS, I3 klicken → <code>Q1</code> wechselt den
+Zustand. Vergleichen Sie alle drei SubApps im Editor: gleiches Verhalten, aber
+<code>Uebung_172c_ASRT</code> kommt mit den wenigsten Bausteinen aus.</p>
+]]></Attribute>
+</SubAppType>

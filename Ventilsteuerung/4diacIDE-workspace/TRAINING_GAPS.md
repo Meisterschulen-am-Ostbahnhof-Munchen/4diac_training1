@@ -55,11 +55,17 @@ ganze ILOCK-Familie, Entprellung/Hysterese, Aktor-Rückmeldung/Plausibilisierung
    unabhängige `ASR_AX_SR`-Latches mit je eigenem Ausgang (`Q1`/`Q2`) - "MERGE
    war N→1, hier ist SPLIT 1→N", explizit so gerahmt.
 
-3. **`ASR_2AE_TO_SR`/`ASRT_3AE_TO_SRT` in einer aktualisierten
-   171/172-Variante.** Da 171/172 schon die Plain-Event-Konvertierung lehren,
-   würde eine `171b`/`172b`-Variante mit den AE-Adapter-Konvertern direkt
-   zeigen, WARUM der AE-basierte Weg existiert (komponierbare Einzelsignal-
-   AE-Stecker vs. gebündelte rohe Events), ohne neue Pädagogik zu erfinden.
+3. ~~**`ASR_2AE_TO_SR`/`ASRT_3AE_TO_SRT` in einer aktualisierten
+   171/172-Variante.**~~ **Erledigt 2026-09-07**: `Uebung_171b_ASR.SUB` und
+   `Uebung_172b_ASRT.SUB`. Identisches Verhalten zu 171/172, aber
+   `ASR_2AE_TO_SR`/`ASRT_3AE_TO_SRT` (AE-Adapter-Sockets) statt
+   `ASR_2EVENTS_TO_SR`/`ASRT_3EVENTS_TO_SRT` (rohe EventInputs), mit je einem
+   `AE_EVENT_TO_E` pro Kanal als Brücke vom rohen Klick-Event zum getypten
+   AE-Plug - zeigt den Gewinn (AE-Plugs sind wie jeder Adapter mit
+   `AE_SPLIT_2` weiterverarbeitbar, rohe Events nicht). Zusätzlich
+   `Uebung_171c_ASR.SUB`/`Uebung_172c_ASRT.SUB`: dieselbe Funktion nochmal mit
+   `logiBUS_IEA` statt `logiBUS_IE` - der AE-Plug ist dort schon eingebaut,
+   macht `AE_EVENT_TO_E` überflüssig (Pendant zu `IX`→`IXA` für Event-Eingänge).
 
 4. **`ASR_MERGE_3`** (oder höher) — natürliche Fortsetzung von 229/230s
    "2 Taster, Last-Wins" zu "3 Taster, Last-Wins", validiert, dass die
