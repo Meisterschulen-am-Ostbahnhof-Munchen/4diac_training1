@@ -332,8 +332,10 @@ Key points, each confirmed the hard way:
   spec-backed validity rules section, `Leere_Objekte.md`) — the icon
   `CProxy` *is* that required child; don't ship a bare `CAuxFunction` with
   an empty (or missing) `<Objects>` block.
-- Fresh IDs: `CAuxFunction` from the `AuxFunction2` block (31000+, scan for
-  current max as usual), icon `CProxy` from the shared 4194304+ Proxy space.
+- Fresh IDs: `CAuxFunction` from the `AuxFunction2` block (31000–31999 only —
+  scan bounded to this range, since `AuxInput2` starts immediately above it
+  at 32000 and an unbounded "max used + 1" scan can wander into that
+  reserved block), icon `CProxy` from the shared 4194304+ Proxy space.
 
 ## Sharing a mask-placed object (SoftKey, icon, ...) across multiple masks
 

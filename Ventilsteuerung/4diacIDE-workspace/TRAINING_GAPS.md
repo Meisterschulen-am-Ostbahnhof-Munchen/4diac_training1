@@ -1,32 +1,28 @@
 # Trainings-Lücken-Analyse (test_AX / test_VV / .lib)
 
-Stand: 2026-09-06. Gap-Analyse per Fork-Agent, basierend auf tatsächlicher
-Grep-Prüfung (nicht nur Dateinamen) gegen `test_AX/Uebungen`, `test_B`,
-`test_VV/sys/03_OPC_UA` und die vendorierten Typelibs. Reine Bestandsaufnahme,
-keine Umsetzung.
+Stand: 2026-09-07. Gap-Analyse per Fork-Agent, ursprünglich basierend auf
+tatsächlicher Grep-Prüfung (nicht nur Dateinamen) gegen `test_AX/Uebungen`,
+`test_B`, `test_VV/sys/03_OPC_UA` und die vendorierten Typelibs; die
+Zero-Usage-Liste unten wurde am 2026-09-07 gegen die inzwischen ergänzten
+Übungen aktualisiert (siehe die "Erledigt"-Einträge weiter unten).
 
 ## Bestätigt (0 Verwendung in irgendeiner Übung)
 
-- **`AE_SPLIT_2..9`, `ASR_SPLIT_2..9`, `ASRT_SPLIT_2..9`** — die gesamte
-  Fan-out-Seite der Event-Adapter-Familie wird nirgends geübt, obwohl Fan-in
-  (`*_MERGE`) seit `Uebung_229/230_AX` abgedeckt ist.
-- Alles ASRT-spezifische aus dieser Session: `ASRT_MERGE_2..7`, sowie die 4
-  neuen AE-basierten Konverter (`ASRT_3AE_TO_SRT`, `ASRT_SRT_TO_3AE`,
-  `ASRT_SRT_TO_SR_AE`, `ASRT_SR_AE_TO_SRT`, plus `ASR_2AE_TO_SR`/
-  `ASR_SR_TO_2AE`). `Uebung_171_ASR`/`Uebung_172_ASRT` zeigen zwar schon den
-  ALTEN Plain-Event-Konvertierungsweg (`ASR_2EVENTS_TO_SR`,
-  `ASRT_3EVENTS_TO_SRT`) in `ASR_AX_SR`/`ASRT_AX_T_FF_SR`, aber nichts zeigt
-  die neueren AE-Adapter-Konverter oder MERGE/SPLIT.
-- **`DualHysteresis_AR_A2X`** (zusammen mit `BargraphSplitFS`/
-  `PositionMarkerFS` in dieser Session vendoriert) — die beiden Geschwister
-  haben je 7-9 Übungen, DualHysteresis hat 0.
-- **`ILOCK_T_FF_SR`/`ILOCK_T_FF_SR_AX`** — bestätigt ungenutzt, die
-  ILOCK-README nennt das selbst schon.
-- **`AX_LAST_2`** (`adapter-3.0.0/.../BOOL/AX_LAST_2.fbt`, Last-Writer-Wins-Merge
-  für 2 AX-Sockets) — laut Grep 0 Verwendung in irgendeiner Übung oder SubApp,
-  taucht nur in seiner eigenen `.fbt`-Datei auf. Verwandtes Muster
-  (last-writer-wins) wird an anderer Stelle nur über `ASR_MERGE_2`+`ASR_AX_SR`
-  gezeigt (z.B. `Uebung_230_AX`), nicht über `AX_LAST_2` selbst.
+- **`AE_SPLIT_2..9`, `ASRT_SPLIT_2..9`, `ASR_SPLIT_3..9`** — die Fan-out-Seite
+  der Event-Adapter-Familie bleibt größtenteils ungeübt, obwohl Fan-in
+  (`*_MERGE`) seit `Uebung_229/230_AX` abgedeckt ist. `ASR_SPLIT_2` selbst ist
+  davon ausgenommen — siehe Punkt 2 unten (`Uebung_231_AX`).
+- Alles ASRT-spezifische aus dieser Session außer `ASRT_MERGE_2` (siehe
+  Punkt 1 unten): `ASRT_MERGE_3..7`, sowie die 4 neuen AE-basierten
+  Konverter (`ASRT_3AE_TO_SRT`, `ASRT_SRT_TO_3AE`, `ASRT_SRT_TO_SR_AE`,
+  `ASRT_SR_AE_TO_SRT`, plus `ASR_2AE_TO_SR`/`ASR_SR_TO_2AE`).
+  `Uebung_171_ASR`/`Uebung_172_ASRT` zeigen zwar schon den ALTEN
+  Plain-Event-Konvertierungsweg (`ASR_2EVENTS_TO_SR`, `ASRT_3EVENTS_TO_SRT`)
+  in `ASR_AX_SR`/`ASRT_AX_T_FF_SR`, aber nichts zeigt die neueren
+  AE-Adapter-Konverter.
+- **`ILOCK_T_FF_SR`** (klassische, nicht-AX-Variante) — bestätigt ungenutzt,
+  die ILOCK-README nennt das selbst schon. `ILOCK_T_FF_SR_AX` ist davon
+  ausgenommen — siehe Punkt 7 unten (`Uebung_206b_AX`).
 
 ## Starkes vorhandenes Signal — ILOCK_README.md's eigene "Was fehlt?"-Tabelle
 
