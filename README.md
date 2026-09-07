@@ -7,6 +7,7 @@
 [![Standard](https://img.shields.io/badge/Standard-IEC%2061499-green)](https://en.wikipedia.org/wiki/IEC_61499)
 [![Standard](https://img.shields.io/badge/Standard-DIN%20EN%2061499-green)](https://de.wikipedia.org/wiki/EN_61499)
 [![Protocol](https://img.shields.io/badge/Protocol-ISOBUS%20%2F%20J1939-orange)](https://en.wikipedia.org/wiki/ISO_11783)
+[![MegaLinter](https://github.com/Meisterschulen-am-Ostbahnhof-Munchen/4diac_training1/actions/workflows/megalinter.yml/badge.svg)](https://github.com/Meisterschulen-am-Ostbahnhof-Munchen/4diac_training1/actions/workflows/megalinter.yml)
 
 🇩🇪 Deutsch | 🇬🇧 [English](README.en.md)
 
