@@ -112,13 +112,17 @@ ganze ILOCK-Familie, Entprellung/Hysterese, Aktor-Rückmeldung/Plausibilisierung
    einbettet. `Uebung_230_AX` selbst bleibt die sauberste vorhandene
    Demonstration (aber komplett im AX-Stil, nicht gemischt).
 
-9. **`AX_LAST_2`-Übung fehlt komplett.** Nachgefragt 2026-09-07, 0 Verwendung
-   bestätigt (siehe oben). Naheliegender Rahmen: 2 unabhängige AX-Quellen auf
-   denselben Ausgang, explizit kontrastiert mit `ASR_MERGE_2`+`ASR_AX_SR`
-   ("Last-Wins ohne Latch, nur der zuletzt geschriebene Wert zählt" vs.
-   "Last-Wins ALS Latch, hält den Zustand bis zum nächsten Set/Reset") - der
-   Unterschied zwischen den beiden "Last-Wins"-Mustern wird sonst nirgends
-   explizit gegenübergestellt.
+9. ~~**`AX_LAST_2`-Übung fehlt komplett.**~~ **Erledigt 2026-09-07**:
+   `Uebung_236_AX.SUB`. Zwei Taster direkt (ohne `AX_ASR_RF_TRIG`) auf
+   `AX_LAST_2.IN1`/`IN2`, `OUT` treibt `Q1` — verhält sich **beobachtbar
+   identisch** zu `Uebung_229/230_AX` (beide sind "letzte Flanke gewinnt",
+   da `AX_(ASR_)RF_TRIG` Loslassen ebenfalls als RESET wertet - kein
+   "hält nach Loslassen"-Latch, siehe Korrektur in
+   `Uebung_236_AX_Beschreibung.md`), nur mit einem einzigen Baustein statt
+   drei. Der substantielle Unterschied zur `ASR_MERGE_N`-Familie ist
+   Skalierbarkeit: `ASR_MERGE_2..7` deckt beliebig viele Quellen ab,
+   `AX_LAST_2` hat kein `AX_LAST_3` und müsste kaskadiert werden (ändert
+   die Semantik zu einer zweistufigen Rangfolge statt flacher N-fach-ODER).
 
 10. **`AD_TO_AR_NUM`/`AD_TO_AR`/`AD_TO_AUDI`+`AUDI_TO_AR` — Bit-Reinterpretation-
     Falle wird nirgends als Übung/Beispiel gezeigt.** Nachgefragt 2026-09-07.
