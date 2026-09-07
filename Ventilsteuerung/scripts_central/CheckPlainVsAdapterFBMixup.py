@@ -73,7 +73,7 @@ def find_plain_to_adapter_pairs():
 def instance_base_name(name):
     """Best-effort strip of a trailing disambiguator ('_1', '_S1', ...) from
     an FB instance name, to compare against a base type name."""
-    match = INSTANCE_NAME_PATTERN.match(name)
+    match = INSTANCE_NAME_PATTERN.match(name)  # noqa: F821 - INSTANCE_NAME_PATTERN was never defined; this function is dead code (never called), flagged for the repo owner rather than guessed at
     return match.group(1) if match else name
 
 

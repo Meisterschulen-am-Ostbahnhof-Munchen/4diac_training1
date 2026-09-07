@@ -20,7 +20,8 @@ LIB_DIRS = [
 def scan_valid_types():
     types = set()
     for lib_root in LIB_DIRS:
-        if not os.path.exists(lib_root): continue
+        if not os.path.exists(lib_root):
+            continue
         for root, _, files in os.walk(lib_root):
             for f in files:
                 if f.endswith(".fbt") or f.endswith(".adp"):
@@ -117,7 +118,8 @@ def main():
     
     print("Fixing Exercises...")
     for d in EX_DIRS:
-        if not os.path.exists(d): continue
+        if not os.path.exists(d):
+            continue
         for f in sorted(os.listdir(d)):
             if f.endswith(".SUB"):
                 fix_file(os.path.join(d, f), valid_types)

@@ -6,7 +6,7 @@ script_dir = os.path.dirname(os.path.realpath(__file__))
 if script_dir not in sys.path:
     sys.path.append(script_dir)
 
-from validate import validate_xml, ValidationError
+from validate import validate_xml, ValidationError  # noqa: E402 - must come after the sys.path patch above
 
 def test_all_templates(templates_dir, schemas_dir):
     """

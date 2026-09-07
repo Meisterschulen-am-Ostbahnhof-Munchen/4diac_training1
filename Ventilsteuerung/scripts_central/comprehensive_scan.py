@@ -25,14 +25,15 @@ def get_fb_types_from_sub(filepath):
                     types.add(t.split('::')[-1])
                 else:
                     types.add(t)
-    except:
+    except Exception:
         pass
     return types
 
 def map_all_used_fbs():
     used = set()
     for d in [STD_EX_DIR, AX_EX_DIR]:
-        if not os.path.exists(d): continue
+        if not os.path.exists(d):
+            continue
         for f in os.listdir(d):
             if f.endswith(".SUB"):
                 used.update(get_fb_types_from_sub(os.path.join(d, f)))
@@ -41,7 +42,8 @@ def map_all_used_fbs():
 def scan_libs():
     all_fbs = {} # FB_Name -> Path
     for lib_root in LIB_DIRS:
-        if not os.path.exists(lib_root): continue
+        if not os.path.exists(lib_root):
+            continue
         for root, dirs, files in os.walk(lib_root):
             for f in files:
                 if f.endswith(".fbt") or f.endswith(".adp"):
