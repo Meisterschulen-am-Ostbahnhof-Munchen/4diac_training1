@@ -73,9 +73,15 @@ ganze ILOCK-Familie, Entprellung/Hysterese, Aktor-Rückmeldung/Plausibilisierung
    `ASR_AX_SR`-Latch - validiert, dass die MERGE-Familie kein reiner
    2-Input-Spezialfall ist.
 
-5. **`DualHysteresis_AR_A2X`-Übung** — eine echte Analogsignal-Übung (z.B.
-   Zweipunkt-Regelung, klassisches Thermostat-/Füllstandsschalter-Muster),
-   passend zur Tiefe, die `BargraphSplitFS`/`PositionMarkerFS` schon haben.
+5. ~~**`DualHysteresis_AR_A2X`-Übung**~~ **Erledigt 2026-09-07**, als Paar:
+   `Uebung_234_AX.SUB` (reine Hardware-Variante: echter Analogsensor über
+   `logiBUS_AI_IDA`, UP/DOWN auf 2 physische Ausgänge via `A2X_TO_QXA2`) und
+   `Uebung_235_AX.SUB` + `Uebung_235_AX_Beschreibung.md` (VT-Variante, passend
+   zur Tiefe von `BargraphSplitFS`/`PositionMarkerFS`: Messwert per
+   `InputNumber_Messwert` simuliert, UP/DOWN als Hintergrundfarbe auf zwei
+   neuen VT-Textfeldern in `Workspace_Dreieck`/`DataMask_M1`). Beide zeigen
+   dasselbe Zweipunktregler-Muster mit denselben MI/DEAD/HYSTERESIS-Werten
+   (500/20/30), einmal hardwarenah, einmal VT-nah.
 
 6. **`ILOCK_CONFLICT_TRIP` + Dead-Time-Variante** und **eine QI-gegatete
    ILOCK-Übung** — beide von der README selbst markiert, weder Baustein noch
@@ -109,6 +115,30 @@ ganze ILOCK-Familie, Entprellung/Hysterese, Aktor-Rückmeldung/Plausibilisierung
    "Last-Wins ALS Latch, hält den Zustand bis zum nächsten Set/Reset") - der
    Unterschied zwischen den beiden "Last-Wins"-Mustern wird sonst nirgends
    explizit gegenübergestellt.
+
+10. **`AD_TO_AR_NUM`/`AD_TO_AR`/`AD_TO_AUDI`+`AUDI_TO_AR` — Bit-Reinterpretation-
+    Falle wird nirgends als Übung/Beispiel gezeigt.** Nachgefragt 2026-09-07.
+    Drei Wege von einem rohen AD-Analogwert (DWORD) zu `AR` (REAL), mit einem
+    echten Stolperstein dazwischen:
+    - `AD_TO_AR` sieht wie die naheliegende direkte Konvertierung aus, ist
+      aber intern eine reine IEEE754-Bit-Reinterpretation (`F_DWORD_TO_REAL`)
+      - `DWORD#2048` wird NICHT zu `REAL#2048.0`, sondern zu einer
+        bedeutungslosen Zahl nahe Null. Nur richtig, wenn `AD_IN` bereits ein
+        Bitmuster ist, das als REAL gemeint war (z.B. Ergebnis von
+        `F_REAL_TO_DWORD`).
+      - `AD_TO_AR_NUM` macht denselben Job aber numerisch korrekt in einem
+        Baustein (DWORD→UDINT→REAL).
+      - `AD_TO_AUDI`+`AUDI_TO_AR` ist dieselbe korrekte Kette manuell verdrahtet
+        (2 Bausteine statt 1) - so bereits in `Uebung_028a_AR`,
+        `Uebung_234_AX` u.a. verwendet, aber nie mit `AD_TO_AR_NUM` oder dem
+        `AD_TO_AR`-Fehler direkt verglichen.
+    Naheliegender Rahmen für eine Übung/ein Negativbeispiel-Paar (Muster wie
+    `Uebung_010f4_AX`): denselben Analogwert einmal fälschlich über `AD_TO_AR`
+    lesen (Wert zeigt sich als Zahl nahe Null trotz plausiblem Rohsignal) und
+    daneben korrekt über `AD_TO_AR_NUM`, mit Kommentar/Dokumentation, die
+    genau erklärt, warum die vermeintlich "direkte" Variante falsch ist -
+    dieselbe Falle, vor der `AD_TO_AR.fbt`s eigene Doku bereits warnt, aber
+    noch nirgends hands-on in einer Übung sichtbar gemacht wird.
 
 ## Außerhalb des Fokus / niedrigere Priorität
 

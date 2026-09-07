@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SubAppType Name="Uebung_234_AX" Comment="Zweipunktregler (Fuellstand/Thermostat-Muster) via DualHysteresis_AR_A2X + A2X_TO_QXA2 - reiner Hardware-Aufbau ohne VT">
+	<Identification Standard="61499-2" Description="Copyright (c) 2026 Meisterschulen am Ostbahnhof  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0">
+	</Identification>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2026-09-07" Remarks="initial API and implementation and/or initial documentation">
+	</VersionInfo>
+	<CompilerInfo packageName="Uebungen">
+		<Import declaration="logiBUS::io::AI::logiBUS_AI::AnalogInput_I4"/>
+		<Import declaration="logiBUS::io::DQ::logiBUS_DO::Output_Q1"/>
+		<Import declaration="logiBUS::io::DQ::logiBUS_DO::Output_Q2"/>
+	</CompilerInfo>
+	<SubAppInterfaceList>
+	</SubAppInterfaceList>
+	<SubAppNetwork>
+		<FB Name="AnalogInput_I4" Type="logiBUS::io::AI::logiBUS_AI_IDA" x="-6900" y="-900">
+			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="Input" Value="AnalogInput_I4"/>
+			<Parameter Name="AnalogInput_hysteresis" Value="5"/>
+			<Parameter Name="TimeDelta" Value="250"/>
+			<Parameter Name="TimeRateLimit" Value="100"/>
+		</FB>
+		<FB Name="AD_TO_AUDI" Type="adapter::conversion::unidirectional::AD_TO_AUDI" x="-4800" y="-100">
+		</FB>
+		<FB Name="AUDI_TO_AR" Type="adapter::conversion::unidirectional::AUDI_TO_AR" x="-3500" y="-100">
+		</FB>
+		<SubApp Name="HysteresisParams_AR" Type="MyLib::sys::HysteresisParams_AR" x="-3800" y="1200">
+			<Parameter Name="rMI" Value="500.0"/>
+			<Parameter Name="rDEAD" Value="20.0"/>
+			<Parameter Name="rHYSTERESIS" Value="30.0"/>
+		</SubApp>
+		<FB Name="DualHysteresis" Type="logiBUS::signalprocessing::hysteresis::DualHysteresis_AR_A2X" x="-1800" y="1200">
+			<Parameter Name="QI" Value="TRUE"/>
+		</FB>
+		<SubApp Name="A2X_TO_QXA2" Type="MyLib::sys::A2X_TO_QXA2" x="300" y="1200">
+			<Parameter Name="Output_UP" Value="Output_Q1"/>
+			<Parameter Name="Output_DOWN" Value="Output_Q2"/>
+		</SubApp>
+		<Comment Comment="Zweipunktregelung mit Totzone + Hysterese um einen Mittelwert MI: &#10;- ueber MI+DEAD+HYSTERESIS schaltet UP ein (z.B. Heizen/Befuellen), unter MI-DEAD-HYSTERESIS schaltet DOWN ein (z.B. Kuehlen/Entleeren). &#10;- Ausschalten erst innerhalb der reinen Totzone (MI +/- DEAD) - die Hysterese verhindert Flattern nahe der Schaltschwelle. &#10;- MI/DEAD/HYSTERESIS hier als feste Beispielwerte (initval_AR) - in echten Anlagen typischerweise per INI/OPC-UA parametrierbar." x="-6500" y="4000" width="4500" height="1000"/>
+		<AdapterConnections>
+			<Connection Source="AnalogInput_I4.IN" Destination="AD_TO_AUDI.AD_IN" dx1="500"/>
+			<Connection Source="AD_TO_AUDI.AUDI_OUT" Destination="AUDI_TO_AR.AUDI_IN"/>
+			<Connection Source="AUDI_TO_AR.AR_OUT" Destination="DualHysteresis.INPUT" dx1="500"/>
+			<Connection Source="HysteresisParams_AR.MI" Destination="DualHysteresis.MI"/>
+			<Connection Source="HysteresisParams_AR.DEAD" Destination="DualHysteresis.DEAD"/>
+			<Connection Source="HysteresisParams_AR.HYSTERESIS" Destination="DualHysteresis.HYSTERESIS"/>
+			<Connection Source="DualHysteresis.OUT" Destination="A2X_TO_QXA2.IN"/>
+		</AdapterConnections>
+	</SubAppNetwork>
+	<Attribute Name="Documentation" Type="CDATA"><![CDATA[<h1>Zweipunktregler mit Hysterese (reine Hardware-Übung, ohne VT)</h1>
+
+<p>Klassisches Thermostat-/Füllstandsschalter-Muster: ein analoger Messwert (z.B. Füllstand oder
+Temperatur) wird gegen einen Mittelwert <code>MI</code> mit Totzone (<code>DEAD</code>) und
+Hysterese (<code>HYSTERESIS</code>) geprüft und steuert darüber zwei entgegengesetzte Aktoren
+(z.B. Befüllen/Entleeren oder Heizen/Kühlen) - nie beide gleichzeitig.</p>
+
+<h2>Funktionsbeschreibung</h2>
+
+<ul>
+	<li><code>AnalogInput_I4</code> (<code>logiBUS_AI_IDA</code>) liefert den rohen AD-Messwert;
+	<code>AD_TO_AUDI</code> → <code>AUDI_TO_AR</code> wandeln ihn in eine <code>AR</code>
+	(REAL-Adapter) um - dieselbe doppelte Konvertierung wie in <code>Uebung_028a_AR</code>
+	("ein AD_TO_AR wäre wie ein reinterpret_cast").</li>
+	<li><code>DualHysteresis_AR_A2X</code> vergleicht den Messwert gegen <code>MI</code> (hier fest
+	500.0 über <code>HysteresisParams_AR</code>, im echten Einsatz parametrierbar): steigt der Wert über
+	<code>MI + DEAD + HYSTERESIS</code>, schaltet <code>UP</code> ein; fällt er unter
+	<code>MI - DEAD - HYSTERESIS</code>, schaltet <code>DOWN</code> ein. Ausgeschaltet wird erst
+	wieder, wenn der Wert in die reine Totzone <code>MI ± DEAD</code> zurückkehrt - die Differenz
+	zwischen Ein- und Ausschaltpunkt (<code>HYSTERESIS</code>) verhindert Flattern nahe der
+	Schaltschwelle.</li>
+	<li><code>A2X_TO_QXA2</code> entbündelt das eine <code>A2X</code>-Ausgangssignal
+	(<code>UP</code>/<code>DOWN</code>) auf zwei physische logiBUS-Ausgänge - siehe Doku dieses
+	Bausteins für das "SUB style"-Prinzip dahinter.</li>
+</ul>
+
+<h2>Arbeitsauftrag</h2>
+
+<p>Testen Sie mit einem Potentiometer oder simuliertem Analogwert an <code>AnalogInput_I4</code>:
+Wert weit über 500 → <code>Q1</code> (UP) EIN, <code>Q2</code> (DOWN) AUS. Wert weit unter 500 →
+umgekehrt. Wert nahe 500 (innerhalb ±20) → beide AUS. Beobachten Sie das Hysterese-Verhalten: der
+Ausschaltpunkt liegt näher an <code>MI</code> als der Einschaltpunkt.</p>
+
+<p>Für dieselbe Funktion mit VT-Anzeige (Messwert als Zahlenfeld, UP/DOWN als Lampen) siehe
+<code>Uebung_235_AX</code>.</p>
+]]></Attribute>
+</SubAppType>
