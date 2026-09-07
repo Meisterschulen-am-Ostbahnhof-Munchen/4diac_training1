@@ -269,6 +269,110 @@ target mask, one `<Events>` block per softkey referencing its own macro's
 ID. Validate exactly as any other change (well-formed, no duplicate JVS-IDs,
 no dangling refs) — nothing about this mechanism is exempt.
 
+## AuxFunction2 (AUX joystick mapping) objects — worked pattern
+
+An `AuxFunction2` (`Class="CAuxFunction"`) object lets a physical joystick
+button be mapped (via ISO 11783-6 AUX assignment) to the same logical action
+as an existing on-screen `CSoftKey`. Confirmed real template (from a
+user-built, ISO-Designer-GUI-saved example — trust this shape over any
+from-memory reconstruction):
+
+```xml
+<Object Class="CAuxFunction" Name="AuxFunction" ObjectName="AuxFunction2_Achslenkung_Links" Pinned="FALSE" JVS-ID="31002">
+  <PropertySheet Name="AuxFunction">
+    <Property Name="BackColor"><Value>13421772</Value></Property>
+    <Property Name="FunctionType"><Value>0</Value></Property>
+    <Property Name="FunctionType2"><Value>2</Value></Property>
+    <Property Name="CriticalControl"><Value>0</Value></Property>
+    <Property Name="AssignmentLock"><Value>0</Value></Property>
+    <Property Name="SingleAssignment"><Value>1</Value></Property>
+    <Property Name="ISO-Version"><Value>ISO_2010</Value></Property>
+    <Property Name="EnableExport"><Value>0</Value></Property>
+    <Property Name="FileName"><Value/></Property>
+    <Property Name="Width"><Value>80</Value></Property>
+    <Property Name="Height"><Value>80</Value></Property>
+    <Property Name="Visible"><Value>1</Value></Property>
+    <Property Name="Locked"><Value>0</Value></Property>
+    <Property Name="Comment"><Value><![CDATA[AAA=]]></Value></Property>
+    <Property Name="Disabled"><Value>0</Value></Property>
+    <Property Name="ExternalReferenceAllowed"><Value>0</Value></Property>
+  </PropertySheet>
+  <Objects>
+    <Object JVS-ID="4195485"/>   <!-- icon CProxy, see below -->
+  </Objects>
+</Object>
+```
+
+Key points, each confirmed the hard way:
+
+- **Reuse the target SoftKey's own icon** (don't create a new `CImage`): the
+  AUX function's icon child should be a **fresh `CProxy`** wrapping the
+  *same* `CImage` JVS-ID that the corresponding real `CSoftKey` already uses.
+  One physical action → one icon, shown consistently whether triggered from
+  the touchscreen or an assigned joystick button.
+- **The icon `CProxy` is `Top=0, Left=0`, identity `Transform`** — same
+  reasoning as SoftKey icons: `AuxFunction2` objects live in the always-
+  centered/unscaled ID range (29000s–32999, see the DataMask/SoftKeyMask
+  scaling section), so any other stored offset is dead data.
+- **ISO-Designer's own GUI writes this icon `CProxy` as a separate
+  top-level object in the flat list**, referenced by ID from the
+  `CAuxFunction`'s `<Objects>` — **not** nested inline inside the
+  `CAuxFunction` block. Nesting it inline is structurally equally valid per
+  the general CProxy mechanism, but matching the GUI's own placement keeps
+  hand-edits indistinguishable from a GUI resave (smaller/cleaner diffs,
+  and avoids surprising the user when they next open the file). When
+  templating a new `AuxFunction2` off an existing one, don't assume the
+  icon proxy is nested just because other examples in this skill nest their
+  CProxy children — check whether the `<Objects>` entry is a reference to
+  an ID defined elsewhere before writing a substitution regex against it; a
+  regex written for "nested CProxy" silently finds nothing against a
+  top-level reference and can leave two different `AuxFunction2` objects
+  pointing at the same stale icon.
+- **This object type is one of the five that must have ≥1 child** (see the
+  spec-backed validity rules section, `Leere_Objekte.md`) — the icon
+  `CProxy` *is* that required child; don't ship a bare `CAuxFunction` with
+  an empty (or missing) `<Objects>` block.
+- Fresh IDs: `CAuxFunction` from the `AuxFunction2` block (31000+, scan for
+  current max as usual), icon `CProxy` from the shared 4194304+ Proxy space.
+
+## Sharing a mask-placed object (SoftKey, icon, ...) across multiple masks
+
+A top-level object placed on a mask via a `.jvi` `<Component>` (see File
+roles above) can be placed on **several different masks** by simply
+referencing its **same** JVS-ID from a `<Component>` in each mask's own
+`.jvi` file — no extra `CProxy` needed at this layer, because the `.jvi`
+Component itself already acts as that mask's positioning wrapper (parallel
+to how a `CProxy` wraps a shared object *inside* the flat `.jop`, covered in
+the CProxy section above, but one layer up, at mask-placement level).
+
+**Confirmed real bug from this pattern going wrong**: a single logical
+"AUS" (all-off) `CSoftKey` had been duplicated into 5 separate `CSoftKey`
+objects (`SoftKey_AUS`, `_AUS_1`, `_AUS_2`, `_AUS_3`,
+`SoftKey_Hauptmenue_AUS`), one per menu, instead of placing one shared
+`SoftKey_AUS` on all 5 `.jvi` files — likely from copy-pasting the key in
+the GUI instead of reusing it. Confirmed the fix is safe by finding that
+**two** of the six menus already shared a single `SoftKey_AUS` correctly
+(proof the sharing pattern works in this exact pool, not just in theory).
+Fixed by:
+
+1. Pick the one CSoftKey object to keep (check none of the duplicates carry
+   pool-level `<Events>`/macros the others lack, and grep the whole project
+   — not just the pool — for the duplicate names/IDs in case any FB/`.gcf`
+   already references one specifically as a distinct input).
+2. In every other `.jvi` file's `<Component>` that referenced a duplicate,
+   change its `<Object JVS-ID="OLD_DUPLICATE"/>` to the kept object's ID.
+3. Delete the now-unreferenced duplicate `CSoftKey` objects **and** their
+   own exclusive icon `CProxy` children from the `.jop` (first confirm each
+   icon proxy's target `CImage` is the shared icon and not something
+   duplicate-specific, so you don't delete a still-needed picture).
+4. Validate as usual (no dangling refs — deleting the duplicates must not
+   orphan anything still pointing at them).
+
+The same approach generalizes to any object wrongly copy-pasted across
+masks instead of shared: a `.gcf`-generated constant existing once per
+duplicate (e.g. `SoftKey_AUS_1 = 5028`) that no `.SUB`/`.fbt` file actually
+consumes is a strong signal the duplicate was never functionally distinct.
+
 ## Renumbering / renaming an object: everything that must stay in sync
 
 Renumbering is deceptively easy to get half-right. An object's identity is
@@ -449,6 +553,28 @@ the button's interior, inset by its border on all four sides:
 This scales to any border thickness: content size = button size minus twice
 the border, content origin = the border thickness itself (not zero) in each
 axis.
+
+**This applies to EVERY child CProxy inside the button, not just a single
+full-size content object** — easy to miss when a button holds many small
+children (e.g. a whole row of icon/value/unit fields regrouped into one big
+button) rather than one caption. If you compute each child's position as
+plain `local = original_absolute - button_origin` (ignoring the border
+entirely), every child ends up shifted "up-left" by exactly the border
+thickness relative to where it needs to be — **confirmed real symptom**: in
+ISO-Designer, selecting such a child shows its position as `-4` (or whatever
+the border is) instead of `0`, even though the file's own stored `Top`/`Left`
+really is `0`. Read that `-4` literally: it means "4px inside the border,
+measured from the content-area origin" — the GUI is telling you the content
+origin, not the raw stored coordinate. The fix is `local = (original_absolute
+- button_origin) + border_thickness` for **every** child, not just the ones
+that happen to sit at the button's own `0,0`. Forgetting this on a button
+whose content already fills the button's Width/Height with zero slack (a
+common case when the button was sized as the exact bounding box of
+regrouped content) also means the button itself needs to grow by
+`2 × border` in that dimension, or the trailing children clip past the far
+border — check every group's require width/height against its button's
+actual `Width`/`Height` after adding the border offset, not just the
+individual `-4` symptom.
 
 ## Duplicating a repeated structure (e.g. table rows, list items)
 

@@ -12,10 +12,10 @@ into button/icon graphics ready to drop into an ISO-Designer VT pool
 pool XML itself; this skill is only about producing the image assets).
 
 Canonical implementation: `vt_crop_tools.py` + `mark_and_crop.bat`, first
-built in `C:\git\fh\Krauternter\UI-Spec\`. Copy/adapt these into any project
-that needs this pipeline rather than re-deriving it — the tool is generic
-(nothing Krauternter-specific except the numbers baked into `mark_and_crop.bat`
-for that project's own mockups).
+built for a different ISO-Designer project's UI-Spec folder. Copy/adapt
+these into any project that needs this pipeline rather than re-deriving it —
+the tool is generic (nothing project-specific except the numbers baked into
+`mark_and_crop.bat` for that project's own mockups).
 
 ## Two completely different output conventions — decide first
 
