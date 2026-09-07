@@ -220,7 +220,7 @@ def build_compact_wrapper(source_content, wrapped_type_qualified, new_name, new_
             f'\t\t<Sockets>\n\t\t\t<AdapterDeclaration Name="DI1" Type="adapter::types::unidirectional::AX"/>\n\t\t</Sockets>\n'
         )
         network_extra = (
-            f'\t\t<AdapterConnections>\n\t\t\t<Connection Source="DI1" Destination="Wrapped.DI1" dx1="680"/>\n\t\t</AdapterConnections>\n'
+            '\t\t<AdapterConnections>\n\t\t\t<Connection Source="DI1" Destination="Wrapped.DI1" dx1="680"/>\n\t\t</AdapterConnections>\n'
         )
         events_iface = ""
         events_conn = ""

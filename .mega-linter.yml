@@ -1,0 +1,29 @@
+# Configuration for MegaLinter
+# https://megalinter.io/latest/config-file/
+#
+# Scoped narrower than the ms-docs repos on purpose: this repo also
+# contains real C/C++ (FORTE runtime sources), several independent
+# Vue/TypeScript/Vite web-client projects (each with its own
+# package.json/tsconfig.json), and a large body of ISOBUS/4diac
+# project files that no generic linter understands. Enabling those
+# properly needs per-subproject configuration this rollout doesn't
+# attempt yet. First pass: Python (real maintenance/tooling scripts
+# under Ventilsteuerung/scripts_central and .agents/skills) and the
+# GitHub Actions workflows themselves - both self-contained, low-risk,
+# and already verified clean locally.
+#
+# Markdown is intentionally left out - already covered by this repo's
+# dedicated markdownlint CI workflow (tuned config, node_modules
+# excluded).
+ENABLE:
+  - ACTION
+  - PYTHON
+
+# Restricted to one linter (ruff) instead of every Python linter
+# MegaLinter knows (7 at once). See .github/workflows/megalinter.yml -
+# DISABLE_LINTERS is set as an env var there; the YAML-list form of
+# ENABLE_LINTERS in this file was found not to be honored by the
+# runner during the ms-docs rollout.
+
+SHOW_ELAPSED_TIME: true
+FILEIO_REPORTER: false

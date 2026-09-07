@@ -1,8 +1,6 @@
 import xml.etree.ElementTree as ET
-import os
 import re
 from pathlib import Path
-from collections import defaultdict
 
 def find_sub_files(root_dir):
     """Find all .SUB files recursively."""
@@ -317,8 +315,8 @@ def main():
     
     # Print summary
     print("=" * 80)
-    print(f"NVS/INI Input/Output Consistency Check")
-    print(f"=" * 80)
+    print("NVS/INI Input/Output Consistency Check")
+    print("=" * 80)
     print(f"Total .SUB files scanned: {checked}")
     print(f"Files with NVS/INI + NumericValue blocks: {len(results)}")
     print(f"Files skipped (no relevant blocks): {skipped}")

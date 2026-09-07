@@ -36,7 +36,7 @@ def main():
             
     for h, filenames in hashes.items():
         if len(filenames) > 1:
-            print(f"Duplicate content found in:")
+            print("Duplicate content found in:")
             for f in filenames:
                 # Extract the Name attribute to show it's different
                 with open(f, 'r', encoding='utf-8') as file:

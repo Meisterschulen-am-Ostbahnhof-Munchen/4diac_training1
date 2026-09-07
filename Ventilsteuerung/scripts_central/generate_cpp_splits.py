@@ -122,8 +122,10 @@ for root_dir, dirs, files in os.walk(base_types_dir):
             # Cleanup old base files if they exist
             base_h_old = os.path.join(inc_out_dir, f"gen{adapter_name_lower}splitbase_fbt.h")
             base_cpp_old = os.path.join(src_out_dir, f"gen{adapter_name_lower}splitbase_fbt.cpp")
-            if os.path.exists(base_h_old): os.remove(base_h_old)
-            if os.path.exists(base_cpp_old): os.remove(base_cpp_old)
+            if os.path.exists(base_h_old):
+                os.remove(base_h_old)
+            if os.path.exists(base_cpp_old):
+                os.remove(base_cpp_old)
             
             print(f"Refactored files for {adapter_name}")
 
