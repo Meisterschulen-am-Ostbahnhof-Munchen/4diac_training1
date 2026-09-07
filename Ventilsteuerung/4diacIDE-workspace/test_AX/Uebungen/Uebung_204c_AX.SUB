@@ -32,21 +32,21 @@
 		<FB Name="ILOCK_AX" Type="logiBUS::signalprocessing::interlock::ILOCK_CONFLICT_TRIP_PROTECT_AX" x="-1800" y="0">
 			<Parameter Name="DT_PROTECT" Value="T#1s"/>
 		</FB>
-		<FB Name="DigitalOutput_Q1" Type="logiBUS::io::DQ::logiBUS_QXA" x="400" y="-1400">
+		<FB Name="DigitalOutput_Q1" Type="logiBUS::io::DQ::logiBUS_QXA" x="600" y="-1600">
 			<Parameter Name="QI" Value="TRUE"/>
 			<Parameter Name="Output" Value="Output_Q1"/>
 		</FB>
-		<FB Name="DigitalOutput_Q2" Type="logiBUS::io::DQ::logiBUS_QXA" x="500" y="-300">
+		<FB Name="DigitalOutput_Q2" Type="logiBUS::io::DQ::logiBUS_QXA" x="1300" y="-300">
 			<Parameter Name="QI" Value="TRUE"/>
 			<Parameter Name="Output" Value="Output_Q2"/>
 		</FB>
-		<FB Name="Trip_Anzeige" Type="logiBUS::io::DQ::logiBUS_QXA" x="500" y="600">
+		<FB Name="Trip_Anzeige" Type="logiBUS::io::DQ::logiBUS_QXA" x="1300" y="600">
 			<Parameter Name="QI" Value="TRUE"/>
 			<Parameter Name="Output" Value="Output_Q4"/>
 		</FB>
-		<FB Name="E_TimeOut" Type="iec61499::events::E_TimeOut" x="-100" y="1700">
+		<FB Name="E_TimeOut" Type="iec61499::events::E_TimeOut" x="500" y="1600">
 		</FB>
-		<Comment Comment="Gegenueber Uebung_204_AX (ILOCK_CONFLICT_TRIP_AX): nach Freigabe des aktiven Eingangs wird DT_PROTECT (hier 1s) abgewartet, bevor eine neue Richtung (oder erneut TRIP, falls waehrenddessen der andere Eingang aktiviert wurde) uebernommen wird - dieselbe Schutzzeit-Logik wie bei ILOCK_SWITCH_PROTECT_AX (Uebung_205_AX), hier kombiniert mit der TRIP-Semantik." x="-4000" y="1200" width="4200" height="700"/>
+		<Comment Comment="Gegenueber Uebung_204_AX (ILOCK_CONFLICT_TRIP_AX): nach Freigabe des aktiven Eingangs wird DT_PROTECT (hier 1s) abgewartet, bevor eine neue Richtung (oder erneut TRIP, falls waehrenddessen der andere Eingang aktiviert wurde) uebernommen wird - dieselbe Schutzzeit-Logik wie bei ILOCK_SWITCH_PROTECT_AX (Uebung_205_AX), hier kombiniert mit der TRIP-Semantik." x="-5200" y="1200" width="4200" height="700"/>
 		<EventConnections>
 			<Connection Source="DigitalInput_Reset.IND" Destination="ILOCK_AX.EI_RESET" dx1="900"/>
 		</EventConnections>
@@ -54,9 +54,9 @@
 			<Connection Source="DigitalInput_I1.IN" Destination="ILOCK_AX.UP_IN" dx1="200"/>
 			<Connection Source="DigitalInput_I2.IN" Destination="ILOCK_AX.DOWN_IN" dx1="200"/>
 			<Connection Source="ILOCK_AX.UP_OUT" Destination="DigitalOutput_Q1.OUT" dx1="200"/>
-			<Connection Source="ILOCK_AX.DOWN_OUT" Destination="DigitalOutput_Q2.OUT" dx1="200"/>
-			<Connection Source="ILOCK_AX.TRIP_OUT" Destination="Trip_Anzeige.OUT" dx1="200"/>
-			<Connection Source="ILOCK_AX.timeOut" Destination="E_TimeOut.TimeOutSocket" dx1="220"/>
+			<Connection Source="ILOCK_AX.DOWN_OUT" Destination="DigitalOutput_Q2.OUT" dx1="406.67"/>
+			<Connection Source="ILOCK_AX.TRIP_OUT" Destination="Trip_Anzeige.OUT" dx1="426.67"/>
+			<Connection Source="ILOCK_AX.timeOut" Destination="E_TimeOut.TimeOutSocket" dx1="306.67"/>
 		</AdapterConnections>
 	</SubAppNetwork>
 </SubAppType>

@@ -173,7 +173,7 @@ ganze ILOCK-Familie, Entprellung/Hysterese, Aktor-Rückmeldung/Plausibilisierung
 - ~~`Q_ChildPosition`/Scaling-Flag-Familie — laut Doku bewusst nativer Stub,
   keine Übungslücke.~~ **Korrigiert 2026-09-07**: falsch. Das `xScale`-Flag
   wird bereits real getestet - `Uebung_225_AX` (test_AX), `Uebung_225b`/`_AX`
-  (test_B/test_AX) und `Uebung_227_AXA` setzen `xScale="TRUE"` auf
+  (test_B/test_AX) und `Uebung_227_AX` setzen `xScale="TRUE"` auf
   `PositionMarkerFS`/`FSA` (`Marker_Dreieck`), der Dreieck-Sollwertmarker
   bewegt sich dadurch tatsächlich mit dem DataMask-Scaling-Faktor
   multipliziert statt 1:1 - siehe Kommentar in `Uebung_225b.SUB` (test_B).

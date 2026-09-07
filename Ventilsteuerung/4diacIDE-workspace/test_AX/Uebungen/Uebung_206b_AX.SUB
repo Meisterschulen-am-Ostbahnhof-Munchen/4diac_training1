@@ -16,49 +16,49 @@
 	<SubAppInterfaceList>
 	</SubAppInterfaceList>
 	<SubAppNetwork>
-		<FB Name="DigitalInput_CLK_I1" Type="logiBUS::io::DI::logiBUS_IE" x="-5900" y="-1500">
+		<FB Name="DigitalInput_CLK_I1" Type="logiBUS::io::DI::logiBUS_IE" x="-6000" y="-500">
 			<Parameter Name="QI" Value="TRUE"/>
 			<Parameter Name="Input" Value="Input_I1"/>
 			<Parameter Name="InputEvent" Value="BUTTON_SINGLE_CLICK"/>
 		</FB>
-		<FB Name="DigitalInput_Set_I3" Type="logiBUS::io::DI::logiBUS_IE" x="-5900" y="-700">
+		<FB Name="DigitalInput_Set_I3" Type="logiBUS::io::DI::logiBUS_IE" x="-6000" y="-2700">
 			<Parameter Name="QI" Value="TRUE"/>
 			<Parameter Name="Input" Value="Input_I3"/>
 			<Parameter Name="InputEvent" Value="BUTTON_SINGLE_CLICK"/>
 		</FB>
-		<FB Name="DigitalInput_Reset_I4" Type="logiBUS::io::DI::logiBUS_IE" x="-5900" y="100">
+		<FB Name="DigitalInput_Reset_I4" Type="logiBUS::io::DI::logiBUS_IE" x="-6000" y="-1600">
 			<Parameter Name="QI" Value="TRUE"/>
 			<Parameter Name="Input" Value="Input_I4"/>
 			<Parameter Name="InputEvent" Value="BUTTON_SINGLE_CLICK"/>
 		</FB>
-		<FB Name="DigitalInput_CLK_I2" Type="logiBUS::io::DI::logiBUS_IE" x="-5900" y="1000">
+		<FB Name="DigitalInput_CLK_I2" Type="logiBUS::io::DI::logiBUS_IE" x="-6000" y="600">
 			<Parameter Name="QI" Value="TRUE"/>
 			<Parameter Name="Input" Value="Input_I2"/>
 			<Parameter Name="InputEvent" Value="BUTTON_SINGLE_CLICK"/>
 		</FB>
 		<FB Name="ILOCK_T_FF_SR_1" Type="logiBUS::signalprocessing::interlock::ILOCK_T_FF_SR_AX" x="-4000" y="-1000">
 		</FB>
-		<FB Name="ILOCK_T_FF_SR_2" Type="logiBUS::signalprocessing::interlock::ILOCK_T_FF_SR_AX" x="-1000" y="1000">
+		<FB Name="ILOCK_T_FF_SR_2" Type="logiBUS::signalprocessing::interlock::ILOCK_T_FF_SR_AX" x="-1800" y="500">
 		</FB>
-		<FB Name="DigitalOutput_Q1" Type="logiBUS::io::DQ::logiBUS_QXA" x="1000" y="-1000">
+		<FB Name="DigitalOutput_Q1" Type="logiBUS::io::DQ::logiBUS_QXA" x="0" y="1300">
 			<Parameter Name="QI" Value="TRUE"/>
 			<Parameter Name="Output" Value="Output_Q1"/>
 		</FB>
-		<FB Name="DigitalOutput_Q2" Type="logiBUS::io::DQ::logiBUS_QXA" x="1000" y="1000">
+		<FB Name="DigitalOutput_Q2" Type="logiBUS::io::DQ::logiBUS_QXA" x="-100" y="300">
 			<Parameter Name="QI" Value="TRUE"/>
 			<Parameter Name="Output" Value="Output_Q2"/>
 		</FB>
-		<Comment Comment="Wie Uebung_206_AX (ILOCK_T_FF_AX), aber ILOCK_T_FF_SR_AX statt ILOCK_T_FF_AX: zusaetzlich zum CLK-Toggle gibt es je Instanz direkte S/R-Eingaenge. Hier nur an FF1 gezeigt (I3=Set, I4=Reset) - Set/Reset auf FF1 loest ueber die Adapter-Kette (ILOCK_OUT->ILOCK_IN) dieselbe gegenseitige Verriegelung aus wie ein CLK-Toggle: wird FF1 gesetzt, wird FF2 automatisch zurueckgesetzt und umgekehrt." x="-5900" y="2000" width="5000" height="800"/>
+		<Comment Comment="Wie Uebung_206_AX (ILOCK_T_FF_AX), aber ILOCK_T_FF_SR_AX statt ILOCK_T_FF_AX: zusaetzlich zum CLK-Toggle gibt es je Instanz direkte S/R-Eingaenge. Hier nur an FF1 gezeigt (I3=Set, I4=Reset) - Set/Reset auf FF1 loest ueber die Adapter-Kette (ILOCK_OUT-&gt;ILOCK_IN) dieselbe gegenseitige Verriegelung aus wie ein CLK-Toggle: wird FF1 gesetzt, wird FF2 automatisch zurueckgesetzt und umgekehrt." x="-6100" y="1900" width="3100" height="1600"/>
 		<EventConnections>
 			<Connection Source="DigitalInput_CLK_I1.IND" Destination="ILOCK_T_FF_SR_1.CLK" dx1="440"/>
-			<Connection Source="DigitalInput_Set_I3.IND" Destination="ILOCK_T_FF_SR_1.S" dx1="440"/>
+			<Connection Source="DigitalInput_Set_I3.IND" Destination="ILOCK_T_FF_SR_1.S" dx1="553.33"/>
 			<Connection Source="DigitalInput_Reset_I4.IND" Destination="ILOCK_T_FF_SR_1.R" dx1="440"/>
 			<Connection Source="DigitalInput_CLK_I2.IND" Destination="ILOCK_T_FF_SR_2.CLK" dx1="386.67"/>
 		</EventConnections>
 		<AdapterConnections>
-			<Connection Source="ILOCK_T_FF_SR_1.ILOCK_OUT" Destination="ILOCK_T_FF_SR_2.ILOCK_IN" dx1="160"/>
-			<Connection Source="ILOCK_T_FF_SR_1.Q" Destination="DigitalOutput_Q1.OUT" dx1="1000"/>
-			<Connection Source="ILOCK_T_FF_SR_2.Q" Destination="DigitalOutput_Q2.OUT" dx1="1000"/>
+			<Connection Source="ILOCK_T_FF_SR_1.ILOCK_OUT" Destination="ILOCK_T_FF_SR_2.ILOCK_IN" dx1="766.67"/>
+			<Connection Source="ILOCK_T_FF_SR_1.Q" Destination="DigitalOutput_Q1.OUT" dx1="486.67"/>
+			<Connection Source="ILOCK_T_FF_SR_2.Q" Destination="DigitalOutput_Q2.OUT" dx1="586.67"/>
 		</AdapterConnections>
 	</SubAppNetwork>
 	<Attribute Name="Documentation" Type="CDATA"><![CDATA[<h1>ILOCK_T_FF_SR_AX: Verriegelbares Toggle-Flip-Flop mit direktem Set/Reset</h1>
