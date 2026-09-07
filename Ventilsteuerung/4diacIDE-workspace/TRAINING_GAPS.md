@@ -124,29 +124,14 @@ ganze ILOCK-Familie, Entprellung/Hysterese, Aktor-Rückmeldung/Plausibilisierung
    `AX_LAST_2` hat kein `AX_LAST_3` und müsste kaskadiert werden (ändert
    die Semantik zu einer zweistufigen Rangfolge statt flacher N-fach-ODER).
 
-10. **`AD_TO_AR_NUM`/`AD_TO_AR`/`AD_TO_AUDI`+`AUDI_TO_AR` — Bit-Reinterpretation-
-    Falle wird nirgends als Übung/Beispiel gezeigt.** Nachgefragt 2026-09-07.
-    Drei Wege von einem rohen AD-Analogwert (DWORD) zu `AR` (REAL), mit einem
-    echten Stolperstein dazwischen:
-    - `AD_TO_AR` sieht wie die naheliegende direkte Konvertierung aus, ist
-      aber intern eine reine IEEE754-Bit-Reinterpretation (`F_DWORD_TO_REAL`)
-      - `DWORD#2048` wird NICHT zu `REAL#2048.0`, sondern zu einer
-        bedeutungslosen Zahl nahe Null. Nur richtig, wenn `AD_IN` bereits ein
-        Bitmuster ist, das als REAL gemeint war (z.B. Ergebnis von
-        `F_REAL_TO_DWORD`).
-      - `AD_TO_AR_NUM` macht denselben Job aber numerisch korrekt in einem
-        Baustein (DWORD→UDINT→REAL).
-      - `AD_TO_AUDI`+`AUDI_TO_AR` ist dieselbe korrekte Kette manuell verdrahtet
-        (2 Bausteine statt 1) - so bereits in `Uebung_028a_AR`,
-        `Uebung_234_AX` u.a. verwendet, aber nie mit `AD_TO_AR_NUM` oder dem
-        `AD_TO_AR`-Fehler direkt verglichen.
-    Naheliegender Rahmen für eine Übung/ein Negativbeispiel-Paar (Muster wie
-    `Uebung_010f4_AX`): denselben Analogwert einmal fälschlich über `AD_TO_AR`
-    lesen (Wert zeigt sich als Zahl nahe Null trotz plausiblem Rohsignal) und
-    daneben korrekt über `AD_TO_AR_NUM`, mit Kommentar/Dokumentation, die
-    genau erklärt, warum die vermeintlich "direkte" Variante falsch ist -
-    dieselbe Falle, vor der `AD_TO_AR.fbt`s eigene Doku bereits warnt, aber
-    noch nirgends hands-on in einer Übung sichtbar gemacht wird.
+10. ~~**`AD_TO_AR_NUM`/`AD_TO_AR`/`AD_TO_AUDI`+`AUDI_TO_AR` — Bit-Reinterpretation-
+    Falle wird nirgends als Übung/Beispiel gezeigt.**~~ **Erledigt 2026-09-07**:
+    `Uebung_237_AX.SUB`. Derselbe Analogwert (`AnalogInput_I4`, per `AD_SPLIT_2`
+    verdoppelt) läuft parallel durch `AD_TO_AR_WRONG` (`AD_TO_AR` - liefert
+    eine bedeutungslose Zahl nahe Null) und `AD_TO_AR_NUM_CORRECT`
+    (`AD_TO_AR_NUM` - liefert den echten Messwert); beide `AR_OUT.D1` sollen
+    im 4diac-Monitor per Watch verglichen werden. Dokumentation im
+    Documentation-Attribut der SubApp, kein separates .md nötig.
 
 19. **QI-gegatete ILOCK-Übung — noch nicht entschieden, ob gewollt.**
     Ausgelagert aus Punkt 6 am 2026-09-07: kein ILOCK-Baustein (7 Grundtypen,
