@@ -48,11 +48,12 @@ ganze ILOCK-Familie, Entprellung/Hysterese, Aktor-Rückmeldung/Plausibilisierung
    `ASRT_AX_T_FF_SR`-Latch zusammen. Neuer Baustein:
    `MyLib_AX-1.0.0/typelib/sys/AX_ASRT_RF_TRIG.SUB`.
 
-2. **Eine `*_SPLIT`-Übung (Fan-out, beliebige Familie).** Ein physischer
-   Trigger steuert 2-3 unabhängige nachgelagerte Verbraucher über
-   `AE_SPLIT_2` oder `ASR_SPLIT_2` an — das Spiegelbild zur Fan-in-Lektion
-   aus 229/230. Naheliegender Slot: `Uebung_231_AX`, explizit als
-   "MERGE war N→1, hier ist 1→N" gerahmt.
+2. ~~**Eine `*_SPLIT`-Übung (Fan-out, beliebige Familie).**~~ **Erledigt
+   2026-09-07**: `Uebung_231_AX.SUB`. Direktes Spiegelbild zu `Uebung_230_AX`:
+   ein Taster liefert über `AX_ASR_RF_TRIG` ein ASR-Signal, `ASR_SPLIT_2`
+   dupliziert es (weil ein Adapter-Plug nur punkt-zu-punkt geht) auf zwei
+   unabhängige `ASR_AX_SR`-Latches mit je eigenem Ausgang (`Q1`/`Q2`) - "MERGE
+   war N→1, hier ist SPLIT 1→N", explizit so gerahmt.
 
 3. **`ASR_2AE_TO_SR`/`ASRT_3AE_TO_SRT` in einer aktualisierten
    171/172-Variante.** Da 171/172 schon die Plain-Event-Konvertierung lehren,
