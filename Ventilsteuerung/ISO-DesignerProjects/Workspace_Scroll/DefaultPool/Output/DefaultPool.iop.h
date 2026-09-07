@@ -15,7 +15,7 @@
 #define Container_3003                     3003
 #define Container_Dialog_Speichern         3004
 #define Container_page_header              3005
-#define Containerr_Scrolling_Parent        3006
+#define Container_Scrolling_Parent         3006
 #define Container_Row_01                   3007
 #define Container_3008                     3008
 #define Container_Row_02                   3009
@@ -212,9 +212,9 @@
 #define Rectangle_14107                   14107
 #define Rectangle_RowAlt                  14108
 #define Image_20001                       20001
-#define OK_20002                          20002
-#define Dialog_OK_20003                   20003
-#define Dialog_CANCEL_20004               20004
+#define OK                                20002
+#define Dialog_OK                         20003
+#define Dialog_CANCEL                     20004
 #define Image_20329                       20329
 #define PictureGraphic_BACK               20501
 #define PictureGraphic_Arr_UP_UP          20502
