@@ -8,6 +8,7 @@ Lesen und Istwert-Schreiben laufen über die AR-Adapter-Bausteine (`NumericValue
 wiederverwendbaren `PositionMarkerFS` — inklusive Klammern und `xOver`/`xUnder` — passend zu 225b.
 
 ### Warum ein neuer Baustein nötig war
+
 `PositionMarkerFS` hat keine AR-Adapter-Schnittstelle. Genau wie bei `Q_NumericValue_PHYSA`, das
 `Q_NumericValue_PHYS` um einen AR-Socket herum verpackt, gibt es jetzt `PositionMarkerFSA`
 (`isobus::UT::Q`): ein neuer, kleiner Wrapper, der **intern eine einzige Instanz von
@@ -17,6 +18,7 @@ bestehenden Bausteine `NumericValue_PHYSA`/`Q_NumericValue_PHYSA`/`PositionMarke
 **nicht** verändert.
 
 ### Verdrahtung
+
 - `Sollwert_N` (`NumericValue_PHYSA`) liest `InputNumber_Sollwert`, liefert den Wert als AR-Plug `rPhys`.
 - `Split` (`AR_SPLIT_2`) verteilt diesen einen AR-Wert sauber auf zwei Verbraucher (ein Adapter darf
   nicht direkt auf mehrere Ziele zeigen — siehe `iec61499-creator`-Skill, Regel 8).
@@ -26,5 +28,6 @@ bestehenden Bausteine `NumericValue_PHYSA`/`Q_NumericValue_PHYSA`/`PositionMarke
   DataConnection nötig, genau wie bei `Uebung_011b1_PHYSA`.
 
 ### Referenzlösung
+
 `Uebung_225b_AXA.SUB` — validiert gegen `subapptype.xsd`. Neuer Baustein:
 `Ventilsteuerung\4diacIDE-workspace\.lib\isobus-3.0.0\typelib\UT\Q\PositionMarkerFSA.fbt`.

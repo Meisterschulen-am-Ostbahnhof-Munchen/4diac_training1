@@ -27,8 +27,9 @@
 Event-gesteuerter BasicFB mit **ECC-erzwungener Reihenfolge** CO → CS.
 
 #### Interface
+
 | Typ | Name | Beschreibung |
-|-----|------|-------------|
+| ----- | ------ | ------------- |
 | EI | `REQ` | Normalbetrieb: berechne Y |
 | EI | `EICO` | Offset kalibrieren (Punkt 1 setzen) |
 | EI | `EICS` | Scale kalibrieren (Punkt 2 setzen) |
@@ -43,6 +44,7 @@ Event-gesteuerter BasicFB mit **ECC-erzwungener Reihenfolge** CO → CS.
 | InOut | `SCALE` (1.0) | Gespeicherte Skalierung |
 
 #### Interne Variablen
+
 - `X_LOW_INT` (REAL): Speichert X-Wert von EICO
 - `Y_LOW_INT` (REAL): Speichert Y_Offset von EICO
 

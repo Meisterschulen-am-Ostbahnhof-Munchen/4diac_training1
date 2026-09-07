@@ -10,12 +10,15 @@ AR-Adapter (`NumericValue_PHYSA`) liest — für eine gemeinsame Quelle müssen 
 denselben Verdrahtungsstil (Adapter) verwenden.
 
 ### Situationsbeschreibung
+
 Derselbe Sollwert (`InputNumber_Sollwert`, VT-Objekt 9000, Bereich -42…+42) steuert gleichzeitig:
+
 - das Dreieck (`Polygon_Bargraph_Mittelmarker`) im Container `Container_Sollwertmarker`,
 - den Split-Bargraph (`Bargraph_Split_links`/`_rechts`),
 - und schreibt wie bisher den Istwert (`NumberVariable_Istwert`) zurück.
 
 ### Funktionsbeschreibung
+
 - **Sollwert lesen:** `Sollwert_N` (`NumericValue_PHYSA`) liest `NumberVariable_Sollwert_N`
   (VT-Objekt 21000 — die an `InputNumber_Sollwert` gebundene Variable, siehe
   [Übung 225 Beschreibung](Uebung_225_AX_Beschreibung.md) zur Begründung) und liefert den Wert als
@@ -34,6 +37,7 @@ Derselbe Sollwert (`InputNumber_Sollwert`, VT-Objekt 9000, Bereich -42…+42) st
   DataConnection nötig.
 
 ### Arbeitsauftrag
+
 1. Legen Sie die SubApp `Uebung_227_AXA` an (bereits als Referenzlösung vorhanden).
 2. Lesen Sie `NumberVariable_Sollwert_N` mit `NumericValue_PHYSA`.
 3. Verteilen Sie den Wert mit `AR_SPLIT_3` auf drei Ziele.
@@ -47,6 +51,7 @@ Derselbe Sollwert (`InputNumber_Sollwert`, VT-Objekt 9000, Bereich -42…+42) st
    Seite, Istwert-Feld und der bestehende Einzel-Bargraph-Zeiger zeigen denselben Wert.
 
 ### Referenzlösung
+
 `Uebung_227_AXA.SUB` — validiert gegen `subapptype.xsd`. Verwendet ausschließlich bereits
 bestehende Bausteine (`PositionMarkerFSA`, `BargraphSplitFS_AR`, `AR_SPLIT_3`) — keine neuen
 Typen für diese Übung nötig.
