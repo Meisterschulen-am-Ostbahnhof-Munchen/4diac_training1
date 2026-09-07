@@ -22,6 +22,11 @@ keine Umsetzung.
   haben je 7-9 Übungen, DualHysteresis hat 0.
 - **`ILOCK_T_FF_SR`/`ILOCK_T_FF_SR_AX`** — bestätigt ungenutzt, die
   ILOCK-README nennt das selbst schon.
+- **`AX_LAST_2`** (`adapter-3.0.0/.../BOOL/AX_LAST_2.fbt`, Last-Writer-Wins-Merge
+  für 2 AX-Sockets) — laut Grep 0 Verwendung in irgendeiner Übung oder SubApp,
+  taucht nur in seiner eigenen `.fbt`-Datei auf. Verwandtes Muster
+  (last-writer-wins) wird an anderer Stelle nur über `ASR_MERGE_2`+`ASR_AX_SR`
+  gezeigt (z.B. `Uebung_230_AX`), nicht über `AX_LAST_2` selbst.
 
 ## Starkes vorhandenes Signal — ILOCK_README.md's eigene "Was fehlt?"-Tabelle
 
@@ -71,6 +76,30 @@ ganze ILOCK-Familie, Entprellung/Hysterese, Aktor-Rückmeldung/Plausibilisierung
 7. **`ILOCK_T_FF_SR`/`_AX`** — der letzte ungenutzte, aber existierende
    ILOCK-Typ. Billigster Quick-Win: eine Übung, die ihn mit dem etablierten
    Toggle-FF-Muster (analog zu `ILOCK_T_FF`) paart.
+
+8. **Klassische (nicht-AX) Vorführung von 2x Flankentrigger + Set/Reset-Merge
+   fehlt als Übung.** Nachgefragt 2026-09-07: Es gibt KEINE Übung, die
+   `AX_ASR_RF_TRIG` (2x) + `ASR_AX_SR` mit einfachem `logiBUS_IX`/`QX` statt
+   `logiBUS_IXA`/`QXA` zeigt. Die einzige Stelle, an der genau dieses
+   FB-Trio (`AX_ASR_RF_TRIG` 2x + `ASR_MERGE_2` + `ASR_AX_SR`) überhaupt
+   vorkommt, ist die Library-SubApp
+   `Button_IXA_TO_logiBUS_QXA_BG_OPC_LATCHING.SUB` (Produktions-Baustein,
+   keine Übung) - und selbst die nutzt durchgängig die AX-Adapter-Varianten
+   (`Button_IXA`/`logiBUS_QXA`), nicht die klassischen `_IX`/`_QX`. Da
+   `AX_ASR_RF_TRIG`/`ASR_AX_SR` inhärent AX-Adapter-Sockets sind, bräuchte
+   eine echte "mit einfachem IX/QX"-Variante zusätzlich eine BOOL-zu-AX-Brücke
+   an den Rändern - didaktisch fraglich, ob das die Lektion verwässert oder
+   gerade zeigt, wie man AX-Verarbeitung in eine klassische Schaltung
+   einbettet. `Uebung_230_AX` selbst bleibt die sauberste vorhandene
+   Demonstration (aber komplett im AX-Stil, nicht gemischt).
+
+9. **`AX_LAST_2`-Übung fehlt komplett.** Nachgefragt 2026-09-07, 0 Verwendung
+   bestätigt (siehe oben). Naheliegender Rahmen: 2 unabhängige AX-Quellen auf
+   denselben Ausgang, explizit kontrastiert mit `ASR_MERGE_2`+`ASR_AX_SR`
+   ("Last-Wins ohne Latch, nur der zuletzt geschriebene Wert zählt" vs.
+   "Last-Wins ALS Latch, hält den Zustand bis zum nächsten Set/Reset") - der
+   Unterschied zwischen den beiden "Last-Wins"-Mustern wird sonst nirgends
+   explizit gegenübergestellt.
 
 ## Außerhalb des Fokus / niedrigere Priorität
 
