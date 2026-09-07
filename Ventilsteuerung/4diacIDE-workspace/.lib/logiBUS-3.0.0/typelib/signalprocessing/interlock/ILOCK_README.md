@@ -110,6 +110,7 @@ Composite-FB für ein verriegelbares Toggle-FlipFlop mit AE2-Adapter-Schnittstel
 | Uebung_205_AX | ILOCK_SWITCH_PROTECT_AX |
 | Uebung_205b_AX | ILOCK_SWITCH_PROTECT_AX |
 | Uebung_206_AX | ILOCK_T_FF_AX |
+| Uebung_206b_AX | ILOCK_T_FF_SR_AX |
 | Uebung_207_AX | ILOCK_2_E_AX |
 | Uebung_208_AX | ILOCK_FB_SR_AX |
 | Uebung_209_AX | ILOCK_FB_RS_AX |
@@ -122,7 +123,8 @@ Composite-FB für ein verriegelbares Toggle-FlipFlop mit AE2-Adapter-Schnittstel
 | Training_12_OPC_UA_RES | ILOCK_SWITCH_PROTECT_A2X | Wie Training_11, aber Transport-Layer UND Bridge/Interlock-Kette bleiben A2X-gebuendelt bis unmittelbar vor der Hardware: statt 4 einzelnen AX_SUBSCRIBE_1/AX_CLIENT_1_0 uebernimmt je 1 A2X2_CLIENT_2_0_SUBSCRIBE_2(_PLUG) den kompletten UP+DOWN-Roundtrip (2 Konstanten statt 4); A2X2_TO_A2X spaltet das bidirektionale A2X2-Paar in ein unidirektionales A2X-Socket + -Plug, ILOCK_SWITCH_PROTECT_A2X arbeitet direkt darauf, erst MyLib::sys::A2X_TO_QXA2 entbuendelt unmittelbar vor den 2 logiBUS_QXA-Ausgaengen |
 
 ### Nicht in Übungen verwendet
-- `ILOCK_T_FF_SR` / `ILOCK_T_FF_SR_AX` — (Varianten ohne eigene Übung)
+- `ILOCK_T_FF_SR` (klassisch, test_B) — `_AX`-Variante wird seit 2026-09-07 von
+  `Uebung_206b_AX` abgedeckt, das klassische Pendant hat noch keine Übung.
 
 ## Bewertung: Was fehlt?
 

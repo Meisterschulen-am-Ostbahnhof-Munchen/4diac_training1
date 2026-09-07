@@ -86,14 +86,15 @@ ganze ILOCK-Familie, Entprellung/Hysterese, Aktor-Rückmeldung/Plausibilisierung
 6. ~~**`ILOCK_CONFLICT_TRIP` + Dead-Time-Variante**~~ **Erledigt 2026-09-07**:
    neue Bausteine `ILOCK_CONFLICT_TRIP_PROTECT`/`_AX` (TRIP-Semantik von
    `ILOCK_CONFLICT_TRIP` + `DT_PROTECT`-Totzeit von `ILOCK_BLOCK_PROTECT`),
-   dazu `Uebung_204c_AX.SUB`. ILOCK_README.md aktualisiert.
-   **Weiterhin offen: eine QI-gegatete ILOCK-Übung** — von der README selbst
-   markiert, kein genereller Freigabe-Eingang existiert bisher in der
-   ILOCK-Familie (braucht erst einen neuen `.fbt`, keine reine Übungslücke).
+   dazu `Uebung_204c_AX.SUB`. ILOCK_README.md aktualisiert. (Die
+   QI-gegatete-ILOCK-Hälfte wurde nach Punkt 19 ausgelagert.)
 
-7. **`ILOCK_T_FF_SR`/`_AX`** — der letzte ungenutzte, aber existierende
-   ILOCK-Typ. Billigster Quick-Win: eine Übung, die ihn mit dem etablierten
-   Toggle-FF-Muster (analog zu `ILOCK_T_FF`) paart.
+7. ~~**`ILOCK_T_FF_SR`/`_AX`**~~ **Erledigt 2026-09-07** (AX-Hälfte):
+   `Uebung_206b_AX.SUB` - wie `Uebung_206_AX` (`ILOCK_T_FF_AX`, 2 verkettete
+   Toggle-FFs), aber `ILOCK_T_FF_SR_AX` mit zusätzlichem direktem Set/Reset
+   auf FF1, das über dieselbe Adapterkette genauso verriegelnd wirkt wie ein
+   CLK-Toggle. Die klassische (nicht-AX) `ILOCK_T_FF_SR`-Variante hat noch
+   keine Übung.
 
 8. **Klassische (nicht-AX) Vorführung von 2x Flankentrigger + Set/Reset-Merge
    fehlt als Übung.** Nachgefragt 2026-09-07: Es gibt KEINE Übung, die
@@ -143,9 +144,46 @@ ganze ILOCK-Familie, Entprellung/Hysterese, Aktor-Rückmeldung/Plausibilisierung
     dieselbe Falle, vor der `AD_TO_AR.fbt`s eigene Doku bereits warnt, aber
     noch nirgends hands-on in einer Übung sichtbar gemacht wird.
 
+19. **QI-gegatete ILOCK-Übung — noch nicht entschieden, ob gewollt.**
+    Ausgelagert aus Punkt 6 am 2026-09-07: kein ILOCK-Baustein (7 Grundtypen,
+    14 Dateien mit AX-Varianten) hat einen generellen Freigabe-/Qualitäts-
+    Eingang - einmal verdrahtet, arbitriert ein ILOCK immer aktiv, ohne
+    Möglichkeit, ihn von außen einzufrieren (Wartungsmodus, übergeordnete
+    Sicherheitsfreigabe, Signalqualitätsverlust).
+
+    Zwei diskutierte Umsetzungen, keine davon bisher beschlossen:
+    - **Nativ pro Baustein**: jeden der 13 `.fbt`s einzeln um ein
+      `QI`-EventInput/ECC-Gate erweitern - der Zustandsautomat selbst wird
+      eingefroren, aber 13 bestehende, verifizierte Dateien anfassen, mit
+      echtem Risiko fürs etablierte Verhalten.
+    - **Generischer QI-Gate-Wrapper**: eine SubApp, die die
+      `UP_OUT`/`DOWN_OUT`(/`TRIP_OUT`) eines beliebigen bestehenden
+      ILOCK-Bausteins per UND mit `QI` maskiert - kein bestehender `.fbt`
+      wird angefasst, funktioniert sofort mit allen 13 Varianten, passt zum
+      "SUB style"-Prinzip der Bibliothek. Nachteil: der interne
+      Zustandsautomat läuft im Hintergrund weiter, nur die Ausgänge werden
+      stumm geschaltet (matcht aber das übliche `QI`-Verhalten anderswo im
+      Projekt, z.B. `logiBUS_IXA`/`AI_IDA` - dort ist `QI` auch nur ein Gate,
+      kein State-Reset).
+
+    Zurückgestellt, bis geklärt ist, ob das Training das überhaupt braucht.
+
 ## Außerhalb des Fokus / niedrigere Priorität
 
-- `Q_ChildPosition`/Scaling-Flag-Familie — laut Doku bewusst nativer Stub,
-  keine Übungslücke.
+- ~~`Q_ChildPosition`/Scaling-Flag-Familie — laut Doku bewusst nativer Stub,
+  keine Übungslücke.~~ **Korrigiert 2026-09-07**: falsch. Das `xScale`-Flag
+  wird bereits real getestet - `Uebung_225_AX` (test_AX), `Uebung_225b`/`_AX`
+  (test_B/test_AX) und `Uebung_227_AXA` setzen `xScale="TRUE"` auf
+  `PositionMarkerFS`/`FSA` (`Marker_Dreieck`), der Dreieck-Sollwertmarker
+  bewegt sich dadurch tatsächlich mit dem DataMask-Scaling-Faktor
+  multipliziert statt 1:1 - siehe Kommentar in `Uebung_225b.SUB` (test_B).
+  (Nebenbei am selben Tag korrigiert: `Uebung_225_AX`/`Uebung_225b_AX`
+  hießen fälschlich so, obwohl sie klassisch/nicht adapter-basiert waren -
+  jetzt als `Uebung_225`/`Uebung_225b` nach test_B verschoben, die
+  tatsächlichen Adapter-Varianten `Uebung_225_AXA`/`_225b_AXA` entsprechend
+  zu `Uebung_225_AX`/`_225b_AX` umbenannt.) Nur die zugrundeliegende
+  Multiplikation selbst läuft nativ in FORTE (siehe
+  `SCALING_FLAG_KONZEPT.md`), aber das Flag/Vertrag ist über diese Übungen
+  bereits abgedeckt, nicht ungeübt.
 - Volle 3-Wege-Verriegelung — echte neue `.fbt`-Arbeit, keine reine fehlende
   Übung.
