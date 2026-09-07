@@ -77,4 +77,26 @@
 			<Connection Source="DI1" Destination="AX_SEL.G" dx1="1920"/>
 		</AdapterConnections>
 	</SubAppNetwork>
+	<Attribute Name="Documentation" Type="CDATA"><![CDATA[<h1>Hintergrundfarbe für ein normales VT-Objekt UND ein Auxiliary-Function-Objekt gemeinsam</h1>
+
+<p>Setzt aus einem einzigen <code>DI1</code>-Eingang (und einem gemeinsamen Farb-Select) die
+Hintergrundfarbe (TRUE -&gt; Grün, FALSE -&gt; Weiß) für zwei unterschiedliche Objekte gleichzeitig:</p>
+
+<ul>
+	<li><strong><code>u16ObjId</code></strong>: ein normales VT-Objekt (z.B. SoftKey) - ein
+	<code>Q_BackgroundColour</code>-Kommando ans VT.</li>
+	<li><strong><code>u16ObjIdA</code></strong>: ein Auxiliary-Function-Type-2-Objekt
+	(Object-ID-Bereich 31000&ndash;31999) - wie bei <code>GreenWhiteBackground2_AX</code> zwei
+	Kommandos (<code>Q_BackgroundColour</code> ans VT für die Vorschau, <code>Q_BackgroundColourAux</code>
+	ans Aux-Handle selbst).</li>
+</ul>
+
+<p>Insgesamt also drei Kommandos (daher der Name) aus einer einzigen, gemeinsamen Farbauswahl -
+gedacht für den Fall, dass ein normales VT-Objekt (z.B. SoftKey) und ein Aux-Objekt (z.B. Joystick)
+dieselbe Funktion auslösen und ihr Feedback synchron zeigen sollen (siehe <code>Uebung_010f3_AX</code>).
+Für nur ein normales Objekt <code>GreenWhiteBackground1_AX</code>, für nur ein Aux-Objekt
+<code>GreenWhiteBackground2_AX</code> verwenden - <strong>nicht</strong> beide einzeln
+kombinieren, wenn <code>GreenWhiteBackground3_AX</code> den Fall bereits abdeckt (siehe
+<code>Uebung_010f4_AX</code> als Negativbeispiel dafür).</p>
+]]></Attribute>
 </SubAppType>
