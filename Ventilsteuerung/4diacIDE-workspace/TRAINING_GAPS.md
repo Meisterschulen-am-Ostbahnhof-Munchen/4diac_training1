@@ -83,10 +83,13 @@ ganze ILOCK-Familie, Entprellung/Hysterese, Aktor-Rückmeldung/Plausibilisierung
    dasselbe Zweipunktregler-Muster mit denselben MI/DEAD/HYSTERESIS-Werten
    (500/20/30), einmal hardwarenah, einmal VT-nah.
 
-6. **`ILOCK_CONFLICT_TRIP` + Dead-Time-Variante** und **eine QI-gegatete
-   ILOCK-Übung** — beide von der README selbst markiert, weder Baustein noch
-   Übung existiert bisher (braucht erst einen neuen `.fbt`, keine reine
-   Übungslücke).
+6. ~~**`ILOCK_CONFLICT_TRIP` + Dead-Time-Variante**~~ **Erledigt 2026-09-07**:
+   neue Bausteine `ILOCK_CONFLICT_TRIP_PROTECT`/`_AX` (TRIP-Semantik von
+   `ILOCK_CONFLICT_TRIP` + `DT_PROTECT`-Totzeit von `ILOCK_BLOCK_PROTECT`),
+   dazu `Uebung_204c_AX.SUB`. ILOCK_README.md aktualisiert.
+   **Weiterhin offen: eine QI-gegatete ILOCK-Übung** — von der README selbst
+   markiert, kein genereller Freigabe-Eingang existiert bisher in der
+   ILOCK-Familie (braucht erst einen neuen `.fbt`, keine reine Übungslücke).
 
 7. **`ILOCK_T_FF_SR`/`_AX`** — der letzte ungenutzte, aber existierende
    ILOCK-Typ. Billigster Quick-Win: eine Übung, die ihn mit dem etablierten

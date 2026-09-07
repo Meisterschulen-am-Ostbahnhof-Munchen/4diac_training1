@@ -9,6 +9,7 @@
 | `ILOCK_SWITCH` | Last-Wins | Nein | Schaltet sofort um | ✓ |
 | `ILOCK_SWITCH_PROTECT` | Last-Wins | Ja (`DT_PROTECT`) | Schaltet verzögert | ✓ |
 | `ILOCK_CONFLICT_TRIP` | First-Wins | Nein | TRIP (Reset nötig) | ✓ |
+| `ILOCK_CONFLICT_TRIP_PROTECT` | First-Wins | Ja (`DT_PROTECT`) | TRIP (Reset nötig) | ✓ |
 | `ILOCK_FB_SR` | Set-Dominant Latch | – | AX2-Adapter | ✓ |
 | `ILOCK_FB_RS` | Reset-Dominant Latch | – | AX2-Adapter | ✓ |
 | `ILOCK_2_E` | Event-gesteuert | Nein | Bistabil/Toggle | ✓ |
@@ -50,6 +51,13 @@ Priorisiert den ersten aktiven Eingang und löst bei Konflikt (beide Eingänge g
 - **Eingänge**: `EI_UP` (mit `DI_UP:BOOL`), `EI_DOWN` (mit `DI_DOWN:BOOL`), `EI_RESET`
 - **Ausgänge**: `EO_UP`, `EO_DOWN`, `EO_TRIP` (mit `DO_TRIP:BOOL`)
 - **AX**: Adapter `UP_IN`, `DOWN_IN`, `TRIP_OUT` (Plugs), `UP_OUT`, `DOWN_OUT` (Plugs), Reset als Event `EI_RESET`
+
+### ILOCK_CONFLICT_TRIP_PROTECT / ILOCK_CONFLICT_TRIP_PROTECT_AX
+Wie ILOCK_CONFLICT_TRIP, jedoch mit Schutz-Totzeit (`DT_PROTECT:TIME`, Default `T#50ms`) nach Freigabe des aktiven Eingangs, bevor eine neue Richtung (oder erneut TRIP, falls währenddessen der andere Eingang aktiviert wurde) übernommen wird - kombiniert die TRIP-Semantik von ILOCK_CONFLICT_TRIP mit der Dead-Time-Logik von ILOCK_BLOCK_PROTECT/ILOCK_SWITCH_PROTECT.
+
+- **Zusätzlicher Eingang**: `DT_PROTECT:TIME`
+- **Intern**: Nutzt `iec61499::events::ATimeOut`-Adapter (wie \*_PROTECT-Varianten)
+- **AX**: Adapter-Schnittstelle wie ILOCK_CONFLICT_TRIP_AX, zusätzlich `UPDATE`-Event (mit `DT_PROTECT`) und `timeOut`-Plug wie ILOCK_BLOCK_PROTECT_AX
 
 ### ILOCK_2_E / ILOCK_2_E_AX
 Event-gesteuertes Bistabil und Toggle mit gegenseitiger Verriegelung (abgeleitet von `E_SR`).
@@ -98,6 +106,7 @@ Composite-FB für ein verriegelbares Toggle-FlipFlop mit AE2-Adapter-Schnittstel
 | Uebung_203b_AX | ILOCK_SWITCH_AX |
 | Uebung_204_AX | ILOCK_CONFLICT_TRIP_AX |
 | Uebung_204b_AX | ILOCK_CONFLICT_TRIP_AX |
+| Uebung_204c_AX | ILOCK_CONFLICT_TRIP_PROTECT_AX |
 | Uebung_205_AX | ILOCK_SWITCH_PROTECT_AX |
 | Uebung_205b_AX | ILOCK_SWITCH_PROTECT_AX |
 | Uebung_206_AX | ILOCK_T_FF_AX |
@@ -126,7 +135,7 @@ Composite-FB für ein verriegelbares Toggle-FlipFlop mit AE2-Adapter-Schnittstel
 | Event-gesteuerte Verriegelung | Vorhanden (ILOCK_2_E) |
 | Toggle mit Sperre | Vorhanden (ILOCK_T_FF) |
 | **3-Wege-Verriegelung** | **Fehlt** (nur 2-Kanal) |
-| **CONFLICT_TRIP mit Dead-Time** | **Fehlt** (Trip hat keinen DT_PROTECT) |
+| CONFLICT_TRIP mit Dead-Time | Vorhanden (`ILOCK_CONFLICT_TRIP_PROTECT`/`_AX`, Uebung_204c_AX) |
 | **QI (Enable/Qualität)-Eingang** | **Fehlt** (kein genereller Freigabe-Eingang) |
 | **Entprellung/Hysterese** | **Fehlt** |
 | **Rückmeldeüberwachung** | **Fehlt** (keine Aktor-Plausibilisierung) |
