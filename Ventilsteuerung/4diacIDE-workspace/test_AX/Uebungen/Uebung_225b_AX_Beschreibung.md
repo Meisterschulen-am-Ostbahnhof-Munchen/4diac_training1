@@ -8,6 +8,7 @@ der neue wiederverwendbare Baustein `PositionMarkerFS` (`isobus::UT::Q`) eingese
 bleibt unverändert als eigenständige Referenz stehen.
 
 ### Situationsbeschreibung
+
 Im ISO-Designer-Pool `Workspace_Dreieck` zeigt ein kleines Dreieck (`Polygon_Bargraph_Mittelmarker`)
 innerhalb eines 96×14 px großen Containers (`Container_Sollwertmarker`) eine Sollposition an —
 analog zum Mittelmarker, wie er in der echten Krauternter-Anwendung für Achslenkung/Hangausgleich
@@ -18,6 +19,7 @@ Istwert (`NumberVariable_Istwert`, treibt sowohl `InputNumber_Istwert` als auch 
 zurückgemeldet werden.
 
 ### Funktionsbeschreibung
+
 - **Sollwert lesen:** Ändert der Bediener `InputNumber_Sollwert`, liefert das VT den physikalischen
   Wert (bereits skaliert/versetzt gemäß Offset -42) als `REAL`.
 - **Dreieck bewegen:** übernimmt der wiederverwendbare Baustein `PositionMarkerFS`
@@ -38,6 +40,7 @@ zurückgemeldet werden.
   Sensor gespeist werden. Deshalb bleibt `NumericValue_PHYS` bewusst außerhalb des Bausteins.
 
 ### Arbeitsauftrag
+
 1. Legen Sie die SubApp `Uebung_225b_AX` an (bereits als Referenzlösung vorhanden).
 2. Lesen Sie `InputNumber_Sollwert` (VT-Objekt 9000) mit einer `NumericValue_PHYS`-Instanz
    (`stObj := NumberVariable_Sollwert_N` aus `DefaultPool_Dreieck_Numeric.gcf`) — das VT meldet
@@ -53,6 +56,7 @@ zurückgemeldet werden.
    gültigen Bereich liegt.
 
 ### Referenzlösung
+
 `Uebung_225b_AX.SUB` — validiert gegen `subapptype.xsd` (siehe `iec61499-creator`-Skill). Der
 wiederverwendbare Baustein liegt in
 `Ventilsteuerung\4diacIDE-workspace\.lib\isobus-3.0.0\typelib\UT\Q\PositionMarkerFS.fbt`

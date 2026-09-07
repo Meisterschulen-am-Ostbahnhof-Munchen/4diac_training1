@@ -116,6 +116,7 @@ check fails in both directions on real icons:
   reclassified as foreground and rendered solid black in mono mode.
 
 The fix implemented in `_detect_bg_mask` (search `vt_crop_tools.py`):
+
 1. Threshold by color distance to get a loose "candidate" background mask.
 2. Label connected components (`scipy.ndimage.label`); components that
    touch the image border are real background.

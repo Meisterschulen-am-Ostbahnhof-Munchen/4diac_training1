@@ -9,6 +9,7 @@ Dreieck-Bewegung über eine reine Kette generischer Adapter-Bausteine statt eine
 Composite-FBs.
 
 ### Verdrahtung
+
 - `Sollwert_N` (`NumericValue_PHYSA`) liest `InputNumber_Sollwert`, liefert den Wert als AR-Plug `rPhys`.
 - `Split` (`AR_SPLIT_2`) verteilt diesen einen AR-Wert sauber auf zwei Verbraucher (ein Adapter darf
   nicht direkt auf mehrere Ziele zeigen — siehe `iec61499-creator`-Skill, Regel 8):
@@ -22,6 +23,7 @@ Composite-FBs.
   eigener AI-Adapter-Socket statt als plain INT-Eingang.
 
 ### Referenzlösung
+
 `Uebung_225_AXA.SUB` — validiert gegen `subapptype.xsd`. Verwendete Bausteine:
 `isobus::UT::io::NumericValue::NumericValue_PHYSA`, `adapter::events::unidirectional::AR_SPLIT_2`,
 `adapter::iec61131::arithmetic::AR_ADD_2`, `adapter::types::unidirectional::AR::initval::initval_AR`,

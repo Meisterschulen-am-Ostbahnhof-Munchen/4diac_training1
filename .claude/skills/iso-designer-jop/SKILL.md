@@ -242,7 +242,7 @@ and issue the mask change). Two pieces wire together:
    namespace, unrelated to the 1000+/6000+/etc. ObjectID blocks above (see
    the block-convention table's `Macro | 0 (own space)` row).
 
-2. **The event that fires it** — an `<Events>` block on the `CSoftKey`/`CKey`
+1. **The event that fires it** — an `<Events>` block on the `CSoftKey`/`CKey`
    object, sibling to its `<PropertySheet>` and `<Objects>` (goes between
    them):
 
