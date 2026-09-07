@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SubAppType Name="Uebung_231_AX" Comment="Sollwert mit festem Korrekturfaktor skalieren (F_MUL) - Lastteiler-Kompensation, I3 nach N3">
+	<Identification Standard="61499-2" Description="Copyright (c) 2026 Meisterschulen am Ostbahnhof  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0">
+	</Identification>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2026-09-07" Remarks="initial API and implementation and/or initial documentation">
+	</VersionInfo>
+	<CompilerInfo packageName="Uebungen">
+		<Import declaration="Uebungen::const::UT::DefaultPool_Numeric::InputNumber_I3_N"/>
+		<Import declaration="Uebungen::const::UT::DefaultPool_Numeric::OutputNumber_N3_N"/>
+	</CompilerInfo>
+	<SubAppInterfaceList>
+	</SubAppInterfaceList>
+	<SubAppNetwork>
+		<FB Name="NumericValue_PHYSA" Type="isobus::UT::io::NumericValue::NumericValue_PHYSA" x="-6900" y="800">
+			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="stObj" Value="InputNumber_I3_N"/>
+		</FB>
+		<FB Name="AR_R_TO_REAL" Type="adapter::conversion::unidirectional::AR_R_TO_REAL" x="-5000" y="800">
+		</FB>
+		<FB Name="F_MUL_KORREKTUR" Type="iec61131::arithmetic::F_MUL" x="-3400" y="800">
+			<Parameter Name="IN2" Value="REAL#1.17619"/>
+		</FB>
+		<FB Name="AR_REAL_TO_R" Type="adapter::conversion::unidirectional::AR_REAL_TO_R" x="-1800" y="800">
+		</FB>
+		<FB Name="Q_NumericValue_PHYSA" Type="isobus::UT::Q::Q_NumericValue_PHYSA" x="-200" y="800">
+			<Parameter Name="stObj" Value="OutputNumber_N3_N"/>
+		</FB>
+		<Comment Comment="Korrekturfaktor 1,17619 = 1 / 0,8502: kompensiert einen Lastteiler (z.B. PWM-Tiefpassfilter, dessen Ausgangsimpedanz gegen die Eingangsimpedanz des angeschlossenen Verbrauchers belastet wird - siehe Krauternter PVEA-Kompensationsrechnung). I3 = unkorrigierter Sollwert 0-100%, N3 = korrigierter Wert, der am unbelasteten Ausgang eingestellt werden muss, damit am Verbraucher der ursprüngliche Sollwert ankommt." x="-6900" y="1900" width="6700" height="900"/>
+		<EventConnections>
+			<Connection Source="AR_R_TO_REAL.CNF" Destination="F_MUL_KORREKTUR.REQ" dx1="1000"/>
+			<Connection Source="F_MUL_KORREKTUR.CNF" Destination="AR_REAL_TO_R.REQ" dx1="1000"/>
+		</EventConnections>
+		<DataConnections>
+			<Connection Source="AR_R_TO_REAL.IN" Destination="F_MUL_KORREKTUR.IN1" dx1="1000"/>
+			<Connection Source="F_MUL_KORREKTUR.OUT" Destination="AR_REAL_TO_R.OUT" dx1="1000"/>
+		</DataConnections>
+		<AdapterConnections>
+			<Connection Source="NumericValue_PHYSA.rPhys" Destination="AR_R_TO_REAL.AR_IN" dx1="1000"/>
+			<Connection Source="AR_REAL_TO_R.AR_OUT" Destination="Q_NumericValue_PHYSA.rPhys" dx1="1000"/>
+		</AdapterConnections>
+	</SubAppNetwork>
+</SubAppType>
