@@ -67,9 +67,11 @@ ganze ILOCK-Familie, Entprellung/Hysterese, Aktor-Rückmeldung/Plausibilisierung
    `logiBUS_IEA` statt `logiBUS_IE` - der AE-Plug ist dort schon eingebaut,
    macht `AE_EVENT_TO_E` überflüssig (Pendant zu `IX`→`IXA` für Event-Eingänge).
 
-4. **`ASR_MERGE_3`** (oder höher) — natürliche Fortsetzung von 229/230s
-   "2 Taster, Last-Wins" zu "3 Taster, Last-Wins", validiert, dass die
-   N-beliebig-Behauptung der MERGE-Familie kein reiner 2-Input-Spezialfall ist.
+4. ~~**`ASR_MERGE_3`** (oder höher)~~ **Erledigt 2026-09-07**: `Uebung_233_AX.SUB`.
+   Direkte Fortsetzung von `Uebung_230_AX`: 3 Taster über je einen
+   `AX_ASR_RF_TRIG`, zusammengeführt via `ASR_MERGE_3` auf ein gemeinsames
+   `ASR_AX_SR`-Latch - validiert, dass die MERGE-Familie kein reiner
+   2-Input-Spezialfall ist.
 
 5. **`DualHysteresis_AR_A2X`-Übung** — eine echte Analogsignal-Übung (z.B.
    Zweipunkt-Regelung, klassisches Thermostat-/Füllstandsschalter-Muster),
