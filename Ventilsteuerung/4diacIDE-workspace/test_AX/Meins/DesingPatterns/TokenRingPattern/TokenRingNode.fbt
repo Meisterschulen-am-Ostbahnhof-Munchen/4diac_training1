@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<FBType Name="TokenRingNode" Comment="TokenRing pattern demo: one controller&apos;s position in a mutual-exclusion token ring">
+	<Identification Standard="61499-2" Description="Copyright (c) 2026 Meisterschulen am Ostbahnhof &#10; &#10;This program and the accompanying materials are made &#10;available under the terms of the Eclipse Public License 2.0 &#10;which is available at https://www.eclipse.org/legal/epl-2.0/ &#10; &#10;SPDX-License-Identifier: EPL-2.0">
+	</Identification>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2026-08-31" Remarks="Mutual Exclusion / TokenRing design pattern (IEC 61499 primer course, Module 6, Valeriy Vyatkin, slide 15), demo node. GIVE/RCV Socket/Plug roles confirmed against Dai/Vyatkin/Christensen/Dubinin, IEEE INDIN 2014, see TokenRingPattern.md">
+	</VersionInfo>
+	<CompilerInfo packageName="Meins::DesingPatterns::TokenRingPattern">
+	</CompilerInfo>
+	<InterfaceList>
+		<EventInputs>
+			<Event Name="INIT" Type="EInit" Comment="Initialization Request">
+				<With Var="QI"/>
+			</Event>
+			<Event Name="REQUEST" Type="Event" Comment="Demo: request the critical section for the next time this node holds the token">
+			</Event>
+			<Event Name="SEED" Type="Event" Comment="Demo: bootstrap the ring by injecting the token here once, on exactly one node, after INIT">
+			</Event>
+		</EventInputs>
+		<EventOutputs>
+			<Event Name="INITO" Type="EInit" Comment="Initialization Confirm">
+				<With Var="QO"/>
+			</Event>
+			<Event Name="ENTERED" Type="Event" Comment="This node entered its critical section (demo: instantaneous, no real work modelled)">
+			</Event>
+			<Event Name="EXITED" Type="Event" Comment="This node left its critical section and is passing the token on">
+			</Event>
+		</EventOutputs>
+		<InputVars>
+			<VarDeclaration Name="QI" Type="BOOL" Comment="Input event qualifier"/>
+		</InputVars>
+		<OutputVars>
+			<VarDeclaration Name="QO" Type="BOOL" Comment="Output event qualifier"/>
+			<VarDeclaration Name="HeldCount" Type="UINT" Comment="Number of times this node received the token (demo counter)"/>
+			<VarDeclaration Name="EnteredCount" Type="UINT" Comment="Number of times this node used the critical section (demo counter)"/>
+			<VarDeclaration Name="PassCount" Type="UINT" Comment="Number of times this node&apos;s hand-off was acknowledged (demo counter)"/>
+		</OutputVars>
+		<Sockets>
+			<AdapterDeclaration Name="MTXIN" Type="adapter::types::bidirectional::TokenRing::TokenRing" Comment="Receives the token from the upstream neighbour, acknowledges receipt"/>
+		</Sockets>
+		<Plugs>
+			<AdapterDeclaration Name="MTXOUT" Type="adapter::types::bidirectional::TokenRing::TokenRing" Comment="Hands the token to the downstream neighbour, waits for its acknowledgement"/>
+		</Plugs>
+	</InterfaceList>
+	<BasicFB>
+		<InternalVars>
+			<VarDeclaration Name="Want" Type="BOOL" Comment="Critical section requested for the next token hold"/>
+		</InternalVars>
+		<ECC>
+			<ECState Name="START" Comment="Uninitialized" x="200" y="400">
+			</ECState>
+			<ECState Name="Init" Comment="Initialization" x="960" y="-320">
+				<ECAction Algorithm="OnInit" Output="INITO"/>
+			</ECState>
+			<ECState Name="Initialized" Comment="Idle, waiting for the token or a local request" x="2880" y="640">
+			</ECState>
+			<ECState Name="DeInit" Comment="De-initialization" x="900" y="1600">
+				<ECAction Algorithm="OnDeInit" Output="INITO"/>
+			</ECState>
+			<ECState Name="SET_WANT" Comment="Remember that this node wants the critical section next time it holds the token" x="3760" y="80">
+				<ECAction Algorithm="SetWant"/>
+			</ECState>
+			<ECState Name="HANDLE_GIVE" Comment="Token arrived: count it, acknowledge receipt" x="3440" y="1280">
+				<ECAction Algorithm="OnGive" Output="MTXIN.RCV"/>
+			</ECState>
+			<ECState Name="CHECK_WANT" Comment="Decide whether to use the critical section before passing the token on" x="4240" y="640">
+			</ECState>
+			<ECState Name="DO_CS" Comment="Use the critical section (demo: instantaneous)" x="5200" y="240">
+				<ECAction Algorithm="OnEnterCs" Output="ENTERED"/>
+				<ECAction Output="EXITED"/>
+			</ECState>
+			<ECState Name="PASS_ON" Comment="Hand the token to the downstream neighbour" x="5120" y="1440">
+				<ECAction Output="MTXOUT.GIVE"/>
+			</ECState>
+			<ECState Name="HANDLE_RCV" Comment="Downstream neighbour acknowledged receipt" x="3440" y="1840">
+				<ECAction Algorithm="OnRcv"/>
+			</ECState>
+			<ECTransition Source="START" Destination="Init" Condition="INIT[TRUE = QI]" x="640" y="93.33"/>
+			<ECTransition Source="Init" Destination="Initialized" Condition="1" x="1406.67" y="313.33"/>
+			<ECTransition Source="Initialized" Destination="DeInit" Condition="INIT[FALSE = QI]" x="1260" y="913.33"/>
+			<ECTransition Source="DeInit" Destination="START" Condition="1" x="550" y="1600"/>
+			<ECTransition Source="Initialized" Destination="SET_WANT" Condition="REQUEST" x="2700" y="400"/>
+			<ECTransition Source="SET_WANT" Destination="Initialized" Condition="1" x="3046.67" y="120"/>
+			<ECTransition Source="Initialized" Destination="HANDLE_GIVE" Condition="MTXIN.GIVE" x="3526.67" y="1173.33"/>
+			<ECTransition Source="HANDLE_GIVE" Destination="CHECK_WANT" Condition="1" x="3560" y="960"/>
+			<ECTransition Source="CHECK_WANT" Destination="DO_CS" Condition="[Want]" x="4880" y="360"/>
+			<ECTransition Source="CHECK_WANT" Destination="PASS_ON" Condition="[NOT Want]" x="5413.33" y="1040"/>
+			<ECTransition Source="Initialized" Destination="PASS_ON" Condition="SEED" x="3000" y="1220"/>
+			<ECTransition Source="DO_CS" Destination="PASS_ON" Condition="1" x="5793.33" y="980"/>
+			<ECTransition Source="PASS_ON" Destination="Initialized" Condition="1" x="3300" y="1420"/>
+			<ECTransition Source="Initialized" Destination="HANDLE_RCV" Condition="MTXOUT.RCV" x="2700" y="1520"/>
+			<ECTransition Source="HANDLE_RCV" Destination="Initialized" Condition="1" x="2400" y="1720"/>
+		</ECC>
+		<Algorithm Name="OnInit" Comment="Reset demo counters/flags">
+			<ST><![CDATA[HeldCount := 0;
+EnteredCount := 0;
+PassCount := 0;
+Want := FALSE;
+QO := QI;]]></ST>
+		</Algorithm>
+		<Algorithm Name="OnDeInit" Comment="De-initialize">
+			<ST><![CDATA[QO := FALSE;]]></ST>
+		</Algorithm>
+		<Algorithm Name="SetWant" Comment="Remember to use the critical section next time the token arrives">
+			<ST><![CDATA[Want := TRUE;]]></ST>
+		</Algorithm>
+		<Algorithm Name="OnGive" Comment="Count a received token">
+			<ST><![CDATA[HeldCount := HeldCount + 1;]]></ST>
+		</Algorithm>
+		<Algorithm Name="OnEnterCs" Comment="Count and clear the pending request">
+			<ST><![CDATA[EnteredCount := EnteredCount + 1;
+Want := FALSE;]]></ST>
+		</Algorithm>
+		<Algorithm Name="OnRcv" Comment="Count an acknowledged hand-off">
+			<ST><![CDATA[PassCount := PassCount + 1;]]></ST>
+		</Algorithm>
+	</BasicFB>
+	<Attribute Name="eclipse4diac::core::TypeHash" Value="''"/>
+	<Attribute Name="Documentation" Type="CDATA"><![CDATA[<p>One controller's position in a <b>TokenRing / Mutual Exclusion</b>
+demo ring (IEC 61499 primer course, Module 6, Valeriy Vyatkin, slide 15).</p>
+<p>Has an <code>MTXIN</code> <b>Socket</b> (receives the token from the
+upstream neighbour, acknowledges with <b>RCV</b>) and an
+<code>MTXOUT</code> <b>Plug</b> (hands the token to the downstream
+neighbour with <b>GIVE</b>, reacts to its <b>RCV</b> acknowledgement).
+On <b>REQUEST</b> it remembers to use the critical section the next
+time it holds the token; on token arrival it optionally does so
+(demo: instantaneous, fires <b>ENTERED</b> then <b>EXITED</b> with no
+real work in between) before passing the token on. <b>SEED</b>
+bootstraps the ring by injecting the token once, without having
+received it first - fire it on exactly one node after INIT.</p>
+<p>See <code>TokenRingPattern.md</code> in this folder for the full
+write-up, including the (unverified) reasoning behind the GIVE/RCV
+Socket/Plug role split.</p>
+]]></Attribute>
+</FBType>

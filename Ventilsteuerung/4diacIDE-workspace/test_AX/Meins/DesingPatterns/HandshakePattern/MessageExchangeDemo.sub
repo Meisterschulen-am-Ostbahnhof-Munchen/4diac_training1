@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SubAppType Name="MessageExchangeDemo" Comment="SoA implementation in function blocks (slide 47): WorkpieceSensor -&gt; CylinderOrchestrator -&gt; CylinderService / DropSinkService, coupled via three EVENT_HS_WSTRING-family adapter connections">
+	<Identification Standard="61499-2" Description="Copyright (c) 2026 Meisterschulen am Ostbahnhof &#10; &#10;This program and the accompanying materials are made &#10;available under the terms of the Eclipse Public License 2.0 &#10;which is available at https://www.eclipse.org/legal/epl-2.0/ &#10; &#10;SPDX-License-Identifier: EPL-2.0">
+	</Identification>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2026-09-03" Remarks="SoA implementation in function blocks (IEC 61499 primer course, Module 6, Valeriy Vyatkin, slide 47), demo application reconstructing the CylH message exchange (slides 42-46) as four cooperating function blocks">
+	</VersionInfo>
+	<CompilerInfo packageName="Meins::DesingPatterns::HandshakePattern">
+	</CompilerInfo>
+	<SubAppInterfaceList>
+		<SubAppEventInputs>
+			<SubAppEvent Name="INIT" Type="EInit" Comment="Initialization Request">
+			</SubAppEvent>
+			<SubAppEvent Name="DETECT" Type="Event" Comment="Simulated WPS sensor: a workpiece has arrived, starts the round trip">
+			</SubAppEvent>
+			<SubAppEvent Name="AT_END" Type="Event" Comment="Simulated CYL.end sensor: pusher reached the end position">
+			</SubAppEvent>
+			<SubAppEvent Name="AT_START" Type="Event" Comment="Simulated CYL.start sensor: pusher reached the start position again">
+			</SubAppEvent>
+		</SubAppEventInputs>
+		<SubAppEventOutputs>
+			<SubAppEvent Name="INITO" Type="EInit" Comment="Initialization Confirm">
+			</SubAppEvent>
+			<SubAppEvent Name="DONE" Type="Event" Comment="WorkpieceSensor received the CNF confirming the round trip is complete">
+			</SubAppEvent>
+		</SubAppEventOutputs>
+		<InputVars>
+			<VarDeclaration Name="QI" Type="BOOL" Comment="Input event qualifier"/>
+		</InputVars>
+		<OutputVars>
+			<VarDeclaration Name="QO" Type="BOOL" Comment="Output event qualifier"/>
+			<VarDeclaration Name="WPS_TripResult" Type="WSTRING" Comment="WorkpieceSensor: payload of the last received CNF (expect RSP_CYL_TRIP_COMPLETE)"/>
+			<VarDeclaration Name="WPS_TripCount" Type="UINT" Comment="WorkpieceSensor: number of completed round trips"/>
+			<VarDeclaration Name="DS_LastReqPayload" Type="WSTRING" Comment="DropSinkService: payload of the last received REQ (expect REQ_DROP)"/>
+			<VarDeclaration Name="DS_ReqCount" Type="UINT" Comment="DropSinkService: number of drop REQ received"/>
+		</OutputVars>
+	</SubAppInterfaceList>
+	<SubAppNetwork>
+		<FB Name="WorkpieceSensor" Type="Meins::DesingPatterns::HandshakePattern::WorkpieceSensor" x="-5100" y="0">
+		</FB>
+		<FB Name="Orchestrator" Type="Meins::DesingPatterns::HandshakePattern::CylinderOrchestrator" x="-2100" y="0">
+		</FB>
+		<FB Name="Cylinder" Type="Meins::DesingPatterns::HandshakePattern::CylinderService" x="900" y="-800">
+		</FB>
+		<FB Name="Sink" Type="Meins::DesingPatterns::HandshakePattern::DropSinkService" x="900" y="800">
+		</FB>
+		<EventConnections>
+			<Connection Source="INIT" Destination="WorkpieceSensor.INIT" dx1="800">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="WorkpieceSensor.INITO" Destination="Orchestrator.INIT">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="Orchestrator.INITO" Destination="Cylinder.INIT" dx1="886.67">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="Cylinder.INITO" Destination="Sink.INIT" dx1="80" dx2="80" dy="800">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="Sink.INITO" Destination="INITO" dx1="800">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="DETECT" Destination="WorkpieceSensor.DETECT" dx1="400">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="AT_END" Destination="Cylinder.AT_END" dx1="400">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="AT_START" Destination="Cylinder.AT_START" dx1="400">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="WorkpieceSensor.DONE" Destination="DONE" dx1="400">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+		</EventConnections>
+		<DataConnections>
+			<Connection Source="QI" Destination="WorkpieceSensor.QI" dx1="400">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="WorkpieceSensor.QO" Destination="Orchestrator.QI" dx1="400">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="Orchestrator.QO" Destination="Cylinder.QI" dx1="400">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="Cylinder.QO" Destination="Sink.QI" dx1="80" dx2="80" dy="693.33">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="Sink.QO" Destination="QO" dx1="160">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="WorkpieceSensor.TripResult" Destination="WPS_TripResult" dx1="400">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="WorkpieceSensor.TripCount" Destination="WPS_TripCount" dx1="400">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="Sink.LastReqPayload" Destination="DS_LastReqPayload" dx1="160">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="Sink.ReqCount" Destination="DS_ReqCount" dx1="160">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+		</DataConnections>
+		<AdapterConnections>
+			<Connection Source="WorkpieceSensor.ACTIVATE" Destination="Orchestrator.SRSP" Comment="WorkpieceSensor requests the round trip (REQ_TRIP); Orchestrator answers once the whole trip is confirmed complete" dx1="1006.67"/>
+			<Connection Source="Orchestrator.SREQ1" Destination="Cylinder.SRSP" Comment="Orchestrator forwards the trip request; reacts to the mid-trip IND (end position reached) and the closing CNF (trip complete)" dx1="886.67"/>
+			<Connection Source="Orchestrator.SREQ2" Destination="Sink.SRSP" Comment="Orchestrator requests the drop once the cylinder reports reaching the end position" dx1="886.67"/>
+		</AdapterConnections>
+	</SubAppNetwork>
+</SubAppType>

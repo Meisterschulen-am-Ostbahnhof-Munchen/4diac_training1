@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<FBType Name="DropSinkService" Comment="Message Exchange example (slide 47): DSServ - service-oriented drop sink, acknowledges every drop request">
+	<Identification Standard="61499-2" Description="Copyright (c) 2026 Meisterschulen am Ostbahnhof &#10; &#10;This program and the accompanying materials are made &#10;available under the terms of the Eclipse Public License 2.0 &#10;which is available at https://www.eclipse.org/legal/epl-2.0/ &#10; &#10;SPDX-License-Identifier: EPL-2.0">
+	</Identification>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2026-09-03" Remarks="SoA implementation in function blocks (IEC 61499 primer course, Module 6, Valeriy Vyatkin, slide 47), DSServ role: uses EVENT_HS_ACK_WSTRING (REQ/CNF only, no IND/RSP needed - the sink never sends unsolicited notifications)">
+	</VersionInfo>
+	<CompilerInfo packageName="Meins::DesingPatterns::HandshakePattern">
+		<Import declaration="Meins::DesingPatterns::HandshakePattern::const::MessageExchangeConst"/>
+	</CompilerInfo>
+	<InterfaceList>
+		<EventInputs>
+			<Event Name="INIT" Type="EInit" Comment="Initialization Request">
+				<With Var="QI"/>
+			</Event>
+		</EventInputs>
+		<EventOutputs>
+			<Event Name="INITO" Type="EInit" Comment="Initialization Confirm">
+				<With Var="QO"/>
+			</Event>
+		</EventOutputs>
+		<InputVars>
+			<VarDeclaration Name="QI" Type="BOOL" Comment="Input event qualifier"/>
+		</InputVars>
+		<OutputVars>
+			<VarDeclaration Name="QO" Type="BOOL" Comment="Output event qualifier"/>
+			<VarDeclaration Name="LastReqPayload" Type="WSTRING" Comment="Payload of the last received REQ (expected: MessageExchangeConst::REQ_DROP)"/>
+			<VarDeclaration Name="ReqCount" Type="UINT" Comment="Number of drop REQ received (demo counter)"/>
+		</OutputVars>
+		<Sockets>
+			<AdapterDeclaration Name="SRSP" Type="adapter::types::bidirectional::Handshake::EVENT_HS_ACK_WSTRING" Comment="Service socket: receives REQ (+REQD), answers with CNF (+CNFD)"/>
+		</Sockets>
+	</InterfaceList>
+	<BasicFB>
+		<ECC>
+			<ECState Name="START" Comment="Uninitialized" x="200" y="400">
+			</ECState>
+			<ECState Name="Init" Comment="Initialization" x="900" y="400">
+				<ECAction Algorithm="OnInit" Output="INITO"/>
+			</ECState>
+			<ECState Name="Initialized" Comment="Idle, ready to react" x="1600" y="400">
+			</ECState>
+			<ECState Name="DeInit" Comment="De-initialization" x="900" y="1000">
+				<ECAction Algorithm="OnDeInit" Output="INITO"/>
+			</ECState>
+			<ECState Name="HANDLE_REQ" Comment="Read REQD, acknowledge every drop with RSP_ACK" x="2400" y="160">
+				<ECAction Algorithm="OnReq" Output="SRSP.CNF"/>
+			</ECState>
+			<ECTransition Source="START" Destination="Init" Condition="INIT[TRUE = QI]" x="550" y="400"/>
+			<ECTransition Source="Init" Destination="Initialized" Condition="1" x="1250" y="400"/>
+			<ECTransition Source="Initialized" Destination="DeInit" Condition="INIT[FALSE = QI]" x="1250" y="700"/>
+			<ECTransition Source="DeInit" Destination="START" Condition="1" x="550" y="1000"/>
+			<ECTransition Source="Initialized" Destination="HANDLE_REQ" Condition="SRSP.REQ" x="1900" y="66.67"/>
+			<ECTransition Source="HANDLE_REQ" Destination="Initialized" Condition="1" x="1760" y="193.33"/>
+		</ECC>
+		<Algorithm Name="OnInit" Comment="Reset demo counters">
+			<ST><![CDATA[LastReqPayload := "";
+ReqCount := 0;
+QO := QI;]]></ST>
+		</Algorithm>
+		<Algorithm Name="OnDeInit" Comment="De-initialize">
+			<ST><![CDATA[QO := FALSE;]]></ST>
+		</Algorithm>
+		<Algorithm Name="OnReq" Comment="Read REQD, count it, always answer with the fixed ack payload">
+			<ST><![CDATA[LastReqPayload := SRSP.REQD;
+ReqCount := ReqCount + 1;
+SRSP.CNFD := MessageExchangeConst::RSP_ACK;]]></ST>
+		</Algorithm>
+	</BasicFB>
+	<Attribute Name="eclipse4diac::core::TypeHash" Value="''"/>
+	<Attribute Name="Documentation" Type="CDATA"><![CDATA[<p>Service-oriented drop sink (<code>DSServ</code> in the "SoA
+implementation in function blocks" diagram, IEC 61499 primer course,
+Module 6, Valeriy Vyatkin, slide 47) - one of the four function blocks
+in the <code>CylH</code> message-exchange example (slides 42-46 for
+the message sequence chart this reconstructs).</p>
+<p>Uses <code>EVENT_HS_ACK_WSTRING</code> as a <b>Socket</b>: every
+<b>REQ</b> (expected payload <code>MessageExchangeConst::REQ_DROP</code>,
+i.e. <code>"drop"</code>) is unconditionally acknowledged with
+<b>CNF</b> carrying <code>MessageExchangeConst::RSP_ACK</code>
+(<code>"ack"</code>) - matching the MSC's <code>REQ,"drop"</code> /
+<code>RSP,"ack"</code> exchange between <code>CYL</code> and
+<code>DS</code>. No <b>IND</b>/<b>RSP</b> needed: the sink never sends
+an unsolicited notification.</p>
+<p>See <code>HandshakePattern.md</code> in this folder, section
+"Die Quelle der 'push,100'-Notation", for the full write-up and the
+other three function blocks of this example
+(<code>WorkpieceSensor</code>, <code>CylinderOrchestrator</code>,
+<code>CylinderService</code>).</p>
+]]></Attribute>
+</FBType>

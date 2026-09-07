@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SubAppType Name="Uebung_012h_AR2" Comment="Nur OPC-UA (kein VT-Feld) und Speichern NVS via AR2 - OPC_TO_AR2 direkt an ein NVS_AR2 angeschlossen">
+	<Identification Standard="61499-2" Description="Copyright (c) 2026 Meisterschulen am Ostbahnhof  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0">
+	</Identification>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2026-08-31" Remarks="OPC-only sibling of Uebung_012d_AR2 (VT only) - kein VT-Objekt, nur Remote-Subscribe/Publish via OPC_TO_AR2 direkt an NVS_AR2">
+	</VersionInfo>
+	<CompilerInfo packageName="Uebungen">
+		<Import declaration="Uebungen::const::NVS::NVS_Keys::KEY_I1_STORE"/>
+		<Import declaration="Uebungen::const::OPC::OPC_Strings::Uebung12h_READ"/>
+		<Import declaration="Uebungen::const::OPC::OPC_Strings::Uebung12h_WRITE"/>
+	</CompilerInfo>
+	<SubAppInterfaceList>
+	</SubAppInterfaceList>
+	<SubAppNetwork>
+		<SubApp Name="OPC_TO_AR2" Type="MyLib::sys::OPC_TO_AR2" x="-4700" y="1100">
+			<Parameter Name="ID_READ" Value="Uebung12h_READ"/>
+			<Parameter Name="ID_WRITE" Value="Uebung12h_WRITE"/>
+		</SubApp>
+		<FB Name="NVS_AR2" Type="logiBUS::storage::esp32_nvs::NVS_AR2" x="-1400" y="800">
+			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="SETM" Value="FALSE"/>
+			<Parameter Name="KEY" Value="KEY_I1_STORE"/>
+			<Parameter Name="DEFAULT_VALUE" Value="REAL#0.0"/>
+		</FB>
+		<Comment Comment="Kein VT-Feld noetig - der Wert kommt ausschliesslich per OPC-UA. SETM=FALSE reicht hier: es gibt nur EINE Quelle (Remote), also keine &apos;andere Seite&apos;, die live ueber eine Aenderung informiert werden muesste. Der Boot-Wert laedt trotzdem immer korrekt (INIT-&gt;INITO-&gt;GET-&gt;GETO, unabhaengig von SETM)." x="-4700" y="0" width="4000" height="700"/>
+		<AdapterConnections>
+			<Connection Source="OPC_TO_AR2.VALUEO" Destination="NVS_AR2.VAL" dx1="1313.33"/>
+		</AdapterConnections>
+	</SubAppNetwork>
+</SubAppType>

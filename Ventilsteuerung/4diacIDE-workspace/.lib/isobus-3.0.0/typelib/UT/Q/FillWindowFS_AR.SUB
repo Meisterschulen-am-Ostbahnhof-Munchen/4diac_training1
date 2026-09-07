@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SubAppType Name="FillWindowFS_AR" Comment="Färbt ein FillAttributes-Objekt grün innerhalb [rWindowMin, rWindowMax], rot außerhalb (AR-Eingang)">
+	<Identification Standard="61499-2" Description="Copyright (c) 2026 Meisterschulen am Ostbahnhof  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0">
+	</Identification>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2026-09-06" Remarks="initial API and implementation and/or initial documentation - built as a SubAppType (like MyLib_AX's GreenRedBackground1_AX) rather than a custom FBType with an ST helper function; a proper Q_FillAttributes adapter-wrapper FBType is a possible later refinement">
+	</VersionInfo>
+	<CompilerInfo packageName="isobus::UT::Q">
+		<Import declaration="isobus::UT::Q::Q_FillAttributes"/>
+		<Import declaration="isobus::UT::Q::const::IDs::ID_NULL"/>
+		<Import declaration="isobus::UT::Q::const::colours::COLOR_GREEN"/>
+		<Import declaration="isobus::UT::Q::const::colours::COLOR_RED"/>
+	</CompilerInfo>
+	<SubAppInterfaceList>
+		<SubAppEventOutputs>
+			<SubAppEvent Name="CNF" Type="Event" Comment="Confirmation of Requested Service">
+			</SubAppEvent>
+		</SubAppEventOutputs>
+		<InputVars>
+			<VarDeclaration Name="u16ObjId" Type="UINT" Comment="FillAttributes object ID to command" InitialValue="ID_NULL">
+			</VarDeclaration>
+			<VarDeclaration Name="rWindowMin" Type="REAL" Comment="Lower bound of the window that shows green">
+			</VarDeclaration>
+			<VarDeclaration Name="rWindowMax" Type="REAL" Comment="Upper bound of the window that shows green">
+			</VarDeclaration>
+		</InputVars>
+		<OutputVars>
+			<VarDeclaration Name="STATUS" Type="STRING" Comment="Service Status - passthrough from the internal Q_FillAttributes">
+			</VarDeclaration>
+			<VarDeclaration Name="s16result" Type="INT" Comment="retval - passthrough from the internal Q_FillAttributes">
+			</VarDeclaration>
+		</OutputVars>
+		<Sockets>
+			<AdapterDeclaration Name="rPhys" Type="adapter::types::unidirectional::AR" Comment="Value whose position relative to the window decides the colour"/>
+		</Sockets>
+	</SubAppInterfaceList>
+	<SubAppNetwork>
+		<FB Name="Split" Type="adapter::events::unidirectional::AR_SPLIT_2" x="-6600" y="1300">
+		</FB>
+		<FB Name="WindowMinConst" Type="adapter::types::unidirectional::AR::initval::initval_AR" x="-5200" y="600">
+		</FB>
+		<FB Name="WindowMaxConst" Type="adapter::types::unidirectional::AR::initval::initval_AR" x="-5200" y="2200">
+		</FB>
+		<FB Name="GE_Min" Type="adapter::iec61131::comparison::AR_GE" x="-3600" y="600">
+		</FB>
+		<FB Name="LE_Max" Type="adapter::iec61131::comparison::AR_LE" x="-3600" y="2200">
+		</FB>
+		<FB Name="InWindow" Type="adapter::booleanOperators::AX_AND_2" x="-2000" y="1300">
+		</FB>
+		<FB Name="ColorSel" Type="adapter::iec61131::selection::AX_SEL" x="-500" y="1300">
+			<Parameter Name="IN0" Value="COLOR_RED"/>
+			<Parameter Name="IN1" Value="COLOR_GREEN"/>
+		</FB>
+		<FB Name="Inner" Type="isobus::UT::Q::Q_FillAttributes" x="1300" y="700">
+			<Parameter Name="u8FillType" Value="USINT#2"/>
+			<Parameter Name="u16FillPatternId" Value="ID_NULL"/>
+		</FB>
+		<EventConnections>
+			<Connection Source="ColorSel.CNF" Destination="Inner.REQ" dx1="500"/>
+			<Connection Source="Inner.CNF" Destination="CNF" dx1="1000"/>
+		</EventConnections>
+		<DataConnections>
+			<Connection Source="rWindowMin" Destination="WindowMinConst.INIT_VAL" dx1="700"/>
+			<Connection Source="rWindowMax" Destination="WindowMaxConst.INIT_VAL" dx1="700"/>
+			<Connection Source="u16ObjId" Destination="Inner.u16ObjId" dx1="1000"/>
+			<Connection Source="ColorSel.OUT" Destination="Inner.u8FillColour" dx1="500"/>
+			<Connection Source="Inner.STATUS" Destination="STATUS" dx1="1000"/>
+			<Connection Source="Inner.s16result" Destination="s16result" dx1="1000"/>
+		</DataConnections>
+		<AdapterConnections>
+			<Connection Source="rPhys" Destination="Split.IN" dx1="700"/>
+			<Connection Source="Split.OUT1" Destination="GE_Min.IN1" dx1="700"/>
+			<Connection Source="Split.OUT2" Destination="LE_Max.IN1" dx1="700"/>
+			<Connection Source="WindowMinConst.OUT" Destination="GE_Min.IN2" dx1="700"/>
+			<Connection Source="WindowMaxConst.OUT" Destination="LE_Max.IN2" dx1="700"/>
+			<Connection Source="GE_Min.OUT" Destination="InWindow.IN1" dx1="700"/>
+			<Connection Source="LE_Max.OUT" Destination="InWindow.IN2" dx1="700"/>
+			<Connection Source="InWindow.OUT" Destination="ColorSel.G" dx1="700"/>
+		</AdapterConnections>
+	</SubAppNetwork>
+</SubAppType>

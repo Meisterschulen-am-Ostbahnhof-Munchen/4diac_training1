@@ -2,6 +2,10 @@
 <FBType Name="Q_ChildLocation" Comment="Command change child location ( Part 6 - F.14 )">
 	<Identification Standard="ISO 11783-6" Description="Copyright (c) 2022 HR Agrartechnik GmbH  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0  &#10;   &#10;   &#10;see Description Tab">
 	</Identification>
+	<VersionInfo Organization="HR Agrartechnik GmbH" Version="1.2" Author="Franz Höpfinger" Date="2026-09-05" Remarks="Implement xScale scaling multiply">
+	</VersionInfo>
+	<VersionInfo Organization="HR Agrartechnik GmbH" Version="1.1" Author="Franz Höpfinger" Date="2026-09-05" Remarks="Add xScale flag">
+	</VersionInfo>
 	<VersionInfo Organization="HR Agrartechnik GmbH" Version="1.0" Author="Franz Höpfinger" Date="2022-07-08">
 	</VersionInfo>
 	<CompilerInfo packageName="isobus::UT::Q">
@@ -12,6 +16,7 @@
 			<Event Name="INIT" Type="EInit" Comment="Service Initialization">
 				<With Var="u16ObjId"/>
 				<With Var="u16ObjIdParent"/>
+				<With Var="xScale"/>
 			</Event>
 			<Event Name="REQ" Type="Event" Comment="Service Request">
 				<With Var="u8Xchange"/>
@@ -31,6 +36,7 @@
 		<InputVars>
 			<VarDeclaration Name="u16ObjId" Type="UINT" Comment="Object ID" InitialValue="ID_NULL"/>
 			<VarDeclaration Name="u16ObjIdParent" Type="UINT" Comment="Parent object ID " InitialValue="ID_NULL"/>
+			<VarDeclaration Name="xScale" Type="BOOL" Comment="FALSE (default) = bypass, send u8Xchange/u8Ychange through unchanged. TRUE = scale them by the DM/SKM factor for u16ObjIdParent." InitialValue="FALSE"/>
 			<VarDeclaration Name="u8Xchange" Type="USINT" Comment="Relative change in x position (interpreted as signed!)"/>
 			<VarDeclaration Name="u8Ychange" Type="USINT" Comment="Relative change in y position (interpreted as signed!)"/>
 		</InputVars>

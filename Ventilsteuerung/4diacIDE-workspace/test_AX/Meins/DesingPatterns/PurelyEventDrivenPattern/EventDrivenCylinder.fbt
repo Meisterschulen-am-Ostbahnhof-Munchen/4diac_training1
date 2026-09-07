@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<FBType Name="EventDrivenCylinder" Comment="Purely Event-Driven function blocks pattern: double-acting cylinder control with zero BOOL data pins">
+	<Identification Standard="61499-2" Description="Copyright (c) 2026 Meisterschulen am Ostbahnhof &#10; &#10;This program and the accompanying materials are made &#10;available under the terms of the Eclipse Public License 2.0 &#10;which is available at https://www.eclipse.org/legal/epl-2.0/ &#10; &#10;SPDX-License-Identifier: EPL-2.0">
+	</Identification>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2026-08-31" Remarks="Purely Event-Driven function blocks design pattern (IEC 61499 primer course, Module 6, Valeriy Vyatkin, slide 64). Interface names read directly off the slide's transformed DoubleActingCylinder icon; exact ECC transition wiring is this repo's own consistent reconstruction, not pixel-verified against the compressed slide diagram - see PurelyEventDrivenPattern.md">
+	</VersionInfo>
+	<CompilerInfo packageName="Meins::DesingPatterns::PurelyEventDrivenPattern">
+	</CompilerInfo>
+	<InterfaceList>
+		<EventInputs>
+			<Event Name="START" Type="Event" Comment="Initialize: go to the idle HOME state and confirm with INITO">
+			</Event>
+			<Event Name="EXTEND_REQ" Type="Event" Comment="Request the cylinder to extend">
+			</Event>
+			<Event Name="RETRACT_REQ" Type="Event" Comment="Request the cylinder to retract">
+			</Event>
+			<Event Name="AT_HOME" Type="Event" Comment="Fired by the home position sensor: the cylinder is fully retracted">
+			</Event>
+			<Event Name="AT_END" Type="Event" Comment="Fired by the end position sensor: the cylinder is fully extended">
+			</Event>
+		</EventInputs>
+		<EventOutputs>
+			<Event Name="INITO" Type="Event" Comment="Initialization confirmed, now in the idle HOME state">
+			</Event>
+			<Event Name="EXTEND" Type="Event" Comment="Command the actuator to extend">
+			</Event>
+			<Event Name="RETRACT" Type="Event" Comment="Command the actuator to retract">
+			</Event>
+			<Event Name="STOP" Type="Event" Comment="Fired once at the end of every movement (whichever direction), before CNF">
+			</Event>
+			<Event Name="CNF" Type="Event" Comment="Fired once at the end of every movement, confirming the request is complete">
+			</Event>
+		</EventOutputs>
+	</InterfaceList>
+	<BasicFB>
+		<ECC>
+			<ECState Name="START_ST" Comment="Uninitialized" x="200" y="700">
+			</ECState>
+			<ECState Name="INITIALIZING" Comment="START received: go idle at HOME" x="900" y="700">
+				<ECAction Output="INITO"/>
+			</ECState>
+			<ECState Name="HOME" Comment="Idle, fully retracted" x="1600" y="400">
+			</ECState>
+			<ECState Name="EXTENDING" Comment="Moving out, waiting for AT_END" x="2400" y="80">
+				<ECAction Output="EXTEND"/>
+			</ECState>
+			<ECState Name="EXTEND_DONE" Comment="AT_END received: stop and confirm" x="3100" y="80">
+				<ECAction Output="STOP"/>
+				<ECAction Output="CNF"/>
+			</ECState>
+			<ECState Name="EXTENDED" Comment="Idle, fully extended" x="1600" y="1000">
+			</ECState>
+			<ECState Name="RETRACTING" Comment="Moving in, waiting for AT_HOME" x="2400" y="1300">
+				<ECAction Output="RETRACT"/>
+			</ECState>
+			<ECState Name="RETRACT_DONE" Comment="AT_HOME received: stop and confirm" x="3100" y="1300">
+				<ECAction Output="STOP"/>
+				<ECAction Output="CNF"/>
+			</ECState>
+			<ECTransition Source="START_ST" Destination="INITIALIZING" Condition="START" x="550" y="700"/>
+			<ECTransition Source="INITIALIZING" Destination="HOME" Condition="1" x="1250" y="550"/>
+			<ECTransition Source="HOME" Destination="EXTENDING" Condition="EXTEND_REQ" x="2000" y="240"/>
+			<ECTransition Source="EXTENDING" Destination="EXTEND_DONE" Condition="AT_END" x="2750" y="80"/>
+			<ECTransition Source="EXTEND_DONE" Destination="EXTENDED" Condition="1" x="2400" y="540"/>
+			<ECTransition Source="EXTENDED" Destination="RETRACTING" Condition="RETRACT_REQ" x="2000" y="1160"/>
+			<ECTransition Source="RETRACTING" Destination="RETRACT_DONE" Condition="AT_HOME" x="2750" y="1300"/>
+			<ECTransition Source="RETRACT_DONE" Destination="HOME" Condition="1" x="2400" y="860"/>
+		</ECC>
+	</BasicFB>
+	<Attribute Name="eclipse4diac::core::TypeHash" Value="''"/>
+	<Attribute Name="Documentation" Type="CDATA"><![CDATA[<p>Fully event-driven double-acting cylinder controller for the
+<b>Purely Event-Driven function blocks</b> design pattern (IEC 61499
+primer course, Module 6, Valeriy Vyatkin, slide 64) - the transformed
+end state of the slide's <code>DoubleActingCylinder</code> example.</p>
+<p><b>Zero BOOL data pins.</b> Position sensors are wired in as
+<b>events</b> (<code>AT_HOME</code>/<code>AT_END</code>, fired once by
+the physical sensor edge) instead of continuously-polled BOOL inputs;
+actuator commands are <b>events</b>
+(<code>EXTEND</code>/<code>RETRACT</code>) fired directly by the ECC
+instead of BOOL outputs needing a one-line assignment algorithm. No
+algorithms at all are needed anywhere in this block - purely event
+routing.</p>
+<p>Cycle: <code>START</code> &rarr; idle at <b>HOME</b>;
+<code>EXTEND_REQ</code> &rarr; fires <code>EXTEND</code>, waits for
+<code>AT_END</code> &rarr; fires <code>STOP</code>+<code>CNF</code>
+&rarr; idle at <b>EXTENDED</b>; <code>RETRACT_REQ</code> &rarr; fires
+<code>RETRACT</code>, waits for <code>AT_HOME</code> &rarr; fires
+<code>STOP</code>+<code>CNF</code> &rarr; back to <b>HOME</b>.</p>
+<p>Because there are no data pins, this block is directly testable in
+FORTE online monitoring - fire the events on the instance by hand, no
+BOOL values to simulate. See
+<code>PurelyEventDrivenPattern.md</code> in this folder for the full
+write-up, including the open question about the exact ECC wiring on
+the (compressed, hard to pixel-verify) slide diagram.</p>
+]]></Attribute>
+</FBType>

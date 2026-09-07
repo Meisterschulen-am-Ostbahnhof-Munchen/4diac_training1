@@ -40,6 +40,26 @@ def checkPath(path):
     else:
         raise FileNotFoundError(f"The new file '{path}' does not exist.")
 
+def safe_output_path(folder, filename):
+    """Join folder/filename for writing, rejecting any filename that isn't a plain, single
+    path component, then double-check the joined result still resolves inside folder.
+
+    filename is built from CLI-supplied arguments (--newfile plus a fixed suffix); this guards
+    against it accidentally (or via a malformed CLI invocation) containing "..", a path
+    separator, or an absolute path component that would otherwise let a write escape the
+    intended --newfolder directory.
+    """
+    if not filename or filename in (os.curdir, os.pardir):
+        raise ValueError(f"Invalid output filename: {filename!r}")
+    if os.path.basename(filename) != filename:
+        raise ValueError(f"Output filename must not contain path separators: {filename!r}")
+
+    folder = os.path.realpath(folder)
+    candidate = os.path.realpath(os.path.join(folder, filename))
+    if os.path.commonpath([folder, candidate]) != folder:
+        raise ValueError(f"Refusing to write outside of '{folder}': '{candidate}'")
+    return candidate
+
 def compute_rename_map(definitions):
     """For names that end with _<value> (numeric), strip the suffix if the result is unique.
 
@@ -224,7 +244,7 @@ def update_jop_objectnames(jop_path, rename_map):
         print(f"No ObjectName changes needed in {jop_path}")
 
 def writeGCFfile(data, filepaths):
-    newfilepath = os.path.join(filepaths[1], filepaths[2]+'.gcf')
+    newfilepath = safe_output_path(filepaths[1], filepaths[2]+'.gcf')
 
     root = ET.Element("GlobalConstants", Name=filepaths[2], Comment="Global constants")
 
@@ -271,7 +291,7 @@ def writeNumericGCFfile(data, filepaths):
     already used by the UINT constant of the same name in the non-numeric .gcf
     (same package) - without the suffix, 4diac's name resolution collides.
     """
-    newfilepath = os.path.join(filepaths[1], filepaths[2] + '_Numeric.gcf')
+    newfilepath = safe_output_path(filepaths[1], filepaths[2] + '_Numeric.gcf')
     gcf_name    = filepaths[2] + '_Numeric'
     package     = filepaths[3]
     struct_type = "logiBUS::utils::conversion::phys::NumericObjectPool_S"
@@ -350,11 +370,13 @@ def _get_jvi_property(jvi_root, prop_name):
 
 
 def _find_hosting_jvi(jop_dir, object_jvs_id):
-    """Find the .jvi file in jop_dir whose <Components> places object_jvs_id directly.
+    """Find the .jvi file in jop_dir (searched recursively, since ISO-Designer lets
+    masks live in subfolders, e.g. Diagnosis/Ausgaenge/AusgaengeMask.jvi) whose
+    <Components> places object_jvs_id directly.
 
-    Returns (jvi_path, jvi_root) or (None, None) if not found in any .jvi in jop_dir.
+    Returns (jvi_path, jvi_root) or (None, None) if not found in any .jvi under jop_dir.
     """
-    for jvi_path in glob.glob(os.path.join(jop_dir, "*.jvi")):
+    for jvi_path in glob.glob(os.path.join(jop_dir, "**", "*.jvi"), recursive=True):
         root = ET.parse(jvi_path).getroot()
         components = root.find("Components")
         if components is None:
@@ -546,63 +568,55 @@ def _find_scroll_button_controls(jop_dir, jop_root, by_id, list_parent_id):
     return roles, pointer_roles, warnings
 
 
-def readScrollJOP(jop_filepath):
-    """Parse a .jop file and extract scroll-list geometry into ScrollObjectPool_S data.
+def _pair_scroll_lists_by_prefix(by_name):
+    """Group *_Scrolling_Parent/_Scrolling_Content/_Scrollbar_Parent/_Scrollbar_Content
+    ObjectNames by their common prefix (the part before the suffix).
 
-    Detects a scroll list by four CGroup ObjectNames ending in "_Scrolling_Parent",
-    "_Scrolling_Content", "_Scrollbar_Parent", "_Scrollbar_Content" (see SCROLL_KONZEPT.md
-    in Workspace_Scroll). Only the single-scroll-list-per-pool case is supported; if more
-    than one candidate is found for any suffix, generation is skipped with a warning
-    (multi-list prefix pairing is not implemented, since real object names in this project
-    are not guaranteed to share a consistent prefix - e.g. "Containerr_Scrolling_Parent" vs
-    "Container_Scrolling_Content").
+    Multiple scroll lists per pool are supported as long as each list's four container
+    names share one consistent prefix (e.g. "Ausgaenge_Scrolling_Parent",
+    "Ausgaenge_Scrolling_Content", ... all prefixed "Ausgaenge") - true for pools built
+    fresh by a generator script. A pool with historically inconsistent naming (e.g. the
+    original Workspace_Scroll pool's "Containerr_Scrolling_Parent" typo vs.
+    "Container_Scrolling_Content") would fail to pair here and is skipped with a warning -
+    rename in ISO-Designer to a consistent prefix if that happens.
 
-    Returns a dict keyed by a name derived from the content container's ObjectName:
-        { "Container": {"list_parent_id": 3006, "list_content_id": 3031, "row_height": 42,
-                         "bar_parent_id": 3000, "bar_content_id": 3010, "bar_base_offset": -252,
-                         "bar_travel": 252, "pos_max": 13, "step": 6}, ... }
+    Returns {prefix: {"list_parent": name, "list_content": name, "bar_parent": name,
+                       "bar_content": name}}, only for prefixes where all four are present.
     """
-    jop_dir = os.path.dirname(jop_filepath)
-    tree = ET.parse(jop_filepath)
-    root = tree.getroot()
-    objects_container = root.find("Objects")
-    if objects_container is None:
-        return {}
+    suffixes = {
+        "list_parent":  "_Scrolling_Parent",
+        "list_content": "_Scrolling_Content",
+        "bar_parent":   "_Scrollbar_Parent",
+        "bar_content":  "_Scrollbar_Content",
+    }
+    by_prefix = {}
+    for name in by_name:
+        for role, suffix in suffixes.items():
+            if name.endswith(suffix):
+                prefix = name[:-len(suffix)]
+                by_prefix.setdefault(prefix, {})[role] = name
 
-    all_objects = objects_container.findall("Object")
-    by_name = {}
-    by_id = {}
-    for obj in all_objects:
-        cls = obj.get("Class")
-        if not cls:
-            continue
-        jvs_id = obj.get("JVS-ID")
-        if jvs_id:
-            by_id[jvs_id] = obj
-        name = obj.get("ObjectName")
-        if name:
-            by_name[name] = obj
+    complete = {p: roles for p, roles in by_prefix.items() if len(roles) == 4}
+    incomplete = {p: roles for p, roles in by_prefix.items() if len(roles) != 4}
+    for prefix, roles in incomplete.items():
+        missing = [role for role in suffixes if role not in roles]
+        print(f"  Warning: scroll list prefix '{prefix}' is missing {missing} - "
+              "skipped (needs all four *_Scrolling_Parent/_Scrolling_Content/"
+              "_Scrollbar_Parent/_Scrollbar_Content names with this exact prefix).")
+    return complete
 
-    def names_ending(suffix):
-        return [n for n in by_name if n.endswith(suffix)]
 
-    list_parents  = names_ending("_Scrolling_Parent")
-    list_contents = names_ending("_Scrolling_Content")
-    bar_parents   = names_ending("_Scrollbar_Parent")
-    bar_contents  = names_ending("_Scrollbar_Content")
+def _read_one_scroll_list(jop_dir, root, by_id, by_name, roles):
+    """Extract ScrollObjectPool_S-shaped geometry + button-role data for one scroll list.
 
-    if not (list_parents and list_contents and bar_parents and bar_contents):
-        return {}
-
-    if max(len(list_parents), len(list_contents), len(bar_parents), len(bar_contents)) > 1:
-        print("  Warning: multiple scroll lists detected in this pool - prefix-based "
-              "pairing is not implemented, skipping scroll struct generation.")
-        return {}
-
-    list_parent_obj  = by_name[list_parents[0]]
-    list_content_obj = by_name[list_contents[0]]
-    bar_parent_obj    = by_name[bar_parents[0]]
-    bar_content_obj   = by_name[bar_contents[0]]
+    `roles` is one entry from _pair_scroll_lists_by_prefix()'s return value. Returns the
+    info dict (see readScrollJOP docstring) or None if geometry couldn't be determined
+    (a warning is printed for the specific reason).
+    """
+    list_parent_obj  = by_name[roles["list_parent"]]
+    list_content_obj = by_name[roles["list_content"]]
+    bar_parent_obj    = by_name[roles["bar_parent"]]
+    bar_content_obj   = by_name[roles["bar_content"]]
 
     list_parent_id  = int(list_parent_obj.get("JVS-ID"))
     list_content_id = int(list_content_obj.get("JVS-ID"))
@@ -613,35 +627,34 @@ def readScrollJOP(jop_filepath):
     list_content_height = int(_get_prop(list_content_obj, "Height") or 0)
     bar_parent_height    = int(_get_prop(bar_parent_obj, "Height") or 0)
 
-    # Row height = vertical spacing between rows (Top of row 2 minus Top of row 1 as
-    # positioned inside ListContent), NOT a row container's own Height property - rows
-    # are typically drawn shorter than their spacing to leave a visible gap between them.
-    row_tops = {}
+    # Row height = vertical spacing between rows (Top of the second-lowest row minus Top
+    # of the lowest, as positioned inside ListContent), NOT a row container's own Height
+    # property - rows are typically drawn shorter than their spacing to leave a visible
+    # gap between them. Determined from the two smallest Top values among ListContent's
+    # children rather than name matching (e.g. '*_Row_01'/'*_Row_02') - row containers may
+    # carry descriptive names (e.g. 'Ausgang_STG1_Q01') instead, and header rows share the
+    # same uniform slot spacing as data rows, so any two adjacent rows give the same answer.
+    tops = set()
     lc_children = list_content_obj.find("Objects")
     if lc_children is not None:
         for child_ref in lc_children.findall("Object"):
             proxy_obj = by_id.get(child_ref.get("JVS-ID"))
             if proxy_obj is None:
                 continue
-            target_obj = _resolve_proxy_target(proxy_obj, by_id)
-            if target_obj is None:
-                continue
-            target_name = target_obj.get("ObjectName") or ""
-            m = re.search(r'_Row_0*([12])$', target_name)
-            if m:
-                top_val = _get_prop(proxy_obj, "Top")
-                if top_val:
-                    row_tops[int(m.group(1))] = int(top_val)
+            top_val = _get_prop(proxy_obj, "Top")
+            if top_val:
+                tops.add(int(top_val))
 
     row_height = None
-    if 1 in row_tops and 2 in row_tops:
-        row_height = row_tops[2] - row_tops[1]
+    if len(tops) >= 2:
+        lowest_two = sorted(tops)[:2]
+        row_height = lowest_two[1] - lowest_two[0]
 
     if not row_height:
-        print("  Warning: could not determine row height (need '*_Row_01' and '*_Row_02' "
+        print("  Warning: could not determine row height (need at least two row "
               "containers positioned inside the list content) - skipping scroll struct "
               "generation.")
-        return {}
+        return None
 
     pos_max = max(0, (list_content_height - list_parent_height) // row_height)
     step = max(1, list_parent_height // row_height)
@@ -663,7 +676,7 @@ def readScrollJOP(jop_filepath):
     if indicator_height is None:
         print("  Warning: could not determine scrollbar indicator height "
               "- skipping scroll struct generation.")
-        return {}
+        return None
 
     bar_travel = bar_parent_height - indicator_height
 
@@ -686,11 +699,7 @@ def readScrollJOP(jop_filepath):
     if bar_base_offset is None:
         print("  Warning: could not determine scrollbar content base offset "
               "- skipping scroll struct generation.")
-        return {}
-
-    content_name = list_contents[0]
-    suffix = "_Scrolling_Content"
-    key_name = content_name[:-len(suffix)] if content_name.endswith(suffix) else content_name
+        return None
 
     # Button IDs: traced via list_parent_id's hosting mask -> its associated SoftKeyMask
     # -> that SoftKeyMask's own child objects (ObjectPointers) -> the real Key object
@@ -706,20 +715,65 @@ def readScrollJOP(jop_filepath):
         print(f"  Warning: {w}")
 
     return {
-        key_name: {
-            "list_parent_id":  list_parent_id,
-            "list_content_id": list_content_id,
-            "row_height":      row_height,
-            "bar_parent_id":    bar_parent_id,
-            "bar_content_id":   bar_content_id,
-            "bar_base_offset":  bar_base_offset,
-            "bar_travel":       bar_travel,
-            "pos_max":          pos_max,
-            "step":             step,
-            "controls":         button_roles,
-            "control_pointers": button_pointer_roles,
-        }
+        "list_parent_id":  list_parent_id,
+        "list_content_id": list_content_id,
+        "row_height":      row_height,
+        "bar_parent_id":    bar_parent_id,
+        "bar_content_id":   bar_content_id,
+        "bar_base_offset":  bar_base_offset,
+        "bar_travel":       bar_travel,
+        "pos_max":          pos_max,
+        "step":             step,
+        "controls":         button_roles,
+        "control_pointers": button_pointer_roles,
     }
+
+
+def readScrollJOP(jop_filepath):
+    """Parse a .jop file and extract scroll-list geometry into ScrollObjectPool_S data,
+    for every scroll list found in the pool (see _pair_scroll_lists_by_prefix()).
+
+    Detects each scroll list by four CGroup ObjectNames sharing one prefix and ending in
+    "_Scrolling_Parent", "_Scrolling_Content", "_Scrollbar_Parent", "_Scrollbar_Content"
+    (see SCROLL_KONZEPT.md in Workspace_Scroll). Multiple scroll lists per pool are
+    supported as long as each one's four names share a consistent prefix.
+
+    Returns a dict keyed by each list's prefix:
+        { "Ausgaenge": {"list_parent_id": 3006, "list_content_id": 3031, "row_height": 42,
+                         "bar_parent_id": 3000, "bar_content_id": 3010, "bar_base_offset": -252,
+                         "bar_travel": 252, "pos_max": 13, "step": 6, ...}, ... }
+    """
+    jop_dir = os.path.dirname(jop_filepath)
+    tree = ET.parse(jop_filepath)
+    root = tree.getroot()
+    objects_container = root.find("Objects")
+    if objects_container is None:
+        return {}
+
+    all_objects = objects_container.findall("Object")
+    by_name = {}
+    by_id = {}
+    for obj in all_objects:
+        cls = obj.get("Class")
+        if not cls:
+            continue
+        jvs_id = obj.get("JVS-ID")
+        if jvs_id:
+            by_id[jvs_id] = obj
+        name = obj.get("ObjectName")
+        if name:
+            by_name[name] = obj
+
+    lists_by_prefix = _pair_scroll_lists_by_prefix(by_name)
+    if not lists_by_prefix:
+        return {}
+
+    result = {}
+    for prefix, roles in sorted(lists_by_prefix.items()):
+        info = _read_one_scroll_list(jop_dir, root, by_id, by_name, roles)
+        if info is not None:
+            result[prefix] = info
+    return result
 
 
 SCROLL_NAME_SUFFIX = "_Scroll"
@@ -739,7 +793,7 @@ def writeScrollGCFfile(data, filepaths):
     warning for those). u16GotoInputId has no discoverable link in the pool yet and is
     always ID_NULL until such a field exists with a naming convention.
     """
-    newfilepath = os.path.join(filepaths[1], filepaths[2] + '_Scroll.gcf')
+    newfilepath = safe_output_path(filepaths[1], filepaths[2] + '_Scroll.gcf')
     gcf_name    = filepaths[2] + '_Scroll'
     package     = filepaths[3]
     struct_type = "isobus::utils::scroll::ScrollFull_S"
@@ -807,6 +861,284 @@ def writeScrollGCFfile(data, filepaths):
     print(f"Written: {newfilepath}")
 
 
+POSITIONMARKER_NAME_SUFFIXES = ("_Sollwertmarker",)  # tuple: room to add more suffixes later
+
+POSITIONMARKER_NAME_SUFFIX = "_PositionMarker"
+
+
+def _bbox_width(obj):
+    """Return an object's bounding-box width in pixels: prefer an explicit Width
+    property (CRectangle, CGroup, ...); fall back to parsing a CPolygon's Points
+    property (which has no Width of its own) as max(x) - min(x)."""
+    width = _get_prop(obj, "Width")
+    if width is not None:
+        return int(width)
+    points = _get_prop(obj, "Points")
+    if points is None:
+        return None
+    coords = re.findall(r'\(([-\d]+),([-\d]+)\)', points)
+    if not coords:
+        return None
+    xs = [int(x) for x, _y in coords]
+    return max(xs) - min(xs)
+
+
+def readPositionMarkerJOP(jop_filepath):
+    """Parse a .jop file and extract position-marker geometry into PositionMarker_S data.
+
+    Detects each marker by a container (CGroup) ObjectName ending in one of
+    POSITIONMARKER_NAME_SUFFIXES (e.g. "_Sollwertmarker"). Unlike Scroll, any number
+    of markers per pool is supported - each is processed independently, since there is
+    no cross-suffix pairing ambiguity here (a marker needs only one container name plus
+    its already-nested child reference).
+
+    r32MinPos is always 0.0 (a marker can't travel left of the container's own left
+    edge). r32MaxPos is derived from ContainerWidth - ChildBoundingBoxWidth. r32Center
+    is read from the child's own CProxy "Left" property - the pos=0 baseline as
+    currently set up in ISO-Designer, exactly like readScrollJOP derives bar_base_offset
+    from the scrollbar proxy's "Top" rather than assuming a formula.
+
+    Returns a dict keyed by the container's ObjectName with its suffix stripped:
+        { "Container": {"child_id": 16000, "parent_id": 3000, "min_pos": 0.0,
+                         "max_pos": 84.0, "center": 42.0, "y_position": 0}, ... }
+    """
+    tree = ET.parse(jop_filepath)
+    root = tree.getroot()
+    objects_container = root.find("Objects")
+    if objects_container is None:
+        return {}
+
+    by_name = {}
+    by_id = {}
+    for obj in objects_container.findall("Object"):
+        jvs_id = obj.get("JVS-ID")
+        if jvs_id:
+            by_id[jvs_id] = obj
+        name = obj.get("ObjectName")
+        if name:
+            by_name[name] = obj
+
+    result = {}
+    for name, container_obj in by_name.items():
+        suffix = next((s for s in POSITIONMARKER_NAME_SUFFIXES if name.endswith(s)), None)
+        if suffix is None:
+            continue
+        key_name = name[:-len(suffix)]
+
+        width_str = _get_prop(container_obj, "Width")
+        if width_str is None:
+            print(f"  Warning: '{name}' has no Width property - skipping position marker generation.")
+            continue
+        container_width = int(width_str)
+
+        child_refs = container_obj.find("Objects")
+        child_ref = child_refs.find("Object") if child_refs is not None else None
+        if child_ref is None:
+            print(f"  Warning: '{name}' has no child object - skipping position marker generation.")
+            continue
+        proxy_obj = by_id.get(child_ref.get("JVS-ID"))
+        if proxy_obj is None:
+            print(f"  Warning: '{name}' child reference not found - skipping position marker generation.")
+            continue
+
+        if proxy_obj.get("Class") == "CProxy":
+            target_obj = _resolve_proxy_target(proxy_obj, by_id)
+            proxy_left = _get_prop(proxy_obj, "Left")
+        else:
+            target_obj = proxy_obj
+            proxy_left = _get_prop(proxy_obj, "Left")
+
+        if target_obj is None:
+            print(f"  Warning: '{name}' proxy target not found - skipping position marker generation.")
+            continue
+
+        child_width = _bbox_width(target_obj)
+        if child_width is None:
+            print(f"  Warning: '{name}' child object has neither Points nor Width - skipping position marker generation.")
+            continue
+        if proxy_left is None:
+            print(f"  Warning: '{name}' child reference has no Left property - skipping position marker generation.")
+            continue
+
+        result[key_name] = {
+            "child_id":   int(target_obj.get("JVS-ID")),
+            "parent_id":  int(container_obj.get("JVS-ID")),
+            "min_pos":    0.0,
+            "max_pos":    float(container_width - child_width),
+            "center":     float(proxy_left),
+            "y_position": 0,
+        }
+
+    return result
+
+
+def writePositionMarkerGCFfile(data, filepaths):
+    """Write a <name>_PositionMarker.gcf with PositionMarker_S constants for each detected marker."""
+    newfilepath = safe_output_path(filepaths[1], filepaths[2] + '_PositionMarker.gcf')
+    gcf_name    = filepaths[2] + '_PositionMarker'
+    package     = filepaths[3]
+    struct_type = "isobus::utils::childposition::PositionMarker_S"
+
+    root = ET.Element("GlobalConstants", Name=gcf_name, Comment="Position marker constants (child/parent object IDs, travel bounds, center offset)")
+    compiler_info = ET.SubElement(root, "CompilerInfo")
+    compiler_info.set("packageName", package)
+    global_constants = ET.SubElement(root, "GlobalConstants")
+
+    for name, info in sorted(data.items()):
+        initial_value = (
+            f"(u16ChildId := {info['child_id']}, "
+            f"u16ParentId := {info['parent_id']}, "
+            f"r32MinPos := {_format_real(info['min_pos'])}, "
+            f"r32MaxPos := {_format_real(info['max_pos'])}, "
+            f"r32Center := {_format_real(info['center'])}, "
+            f"s16YPosition := {info['y_position']})"
+        )
+        ET.SubElement(
+            global_constants,
+            "VarDeclaration",
+            Name=name + POSITIONMARKER_NAME_SUFFIX,
+            Type=struct_type,
+            InitialValue=initial_value,
+        )
+
+    xml_str = ET.tostring(root, encoding='utf-8').decode()
+    xml_str = minidom.parseString(xml_str).toprettyxml(indent="\t")
+    xml_str = xml_str[:19] + ' ' + 'encoding="UTF-8"' + xml_str[20:]
+
+    with open(newfilepath, "w") as file:
+        file.write(xml_str)
+
+    print(f"Written: {newfilepath}")
+
+
+BARGRAPHSPLIT_NAME_SUFFIXES = ("_links", "_rechts")  # exactly 2, unlike Scroll's 4
+
+BARGRAPHSPLIT_NAME_SUFFIX = "_BargraphSplit"
+
+
+def _is_bargraph_rectangle(obj):
+    """A CRectangle configured as an ISO 11783-6 Annex B.11.3 Output Linear Bar Graph
+    carries its own nested PropertySheet Name="Bargraph" - this excludes any other
+    CRectangle that merely happens to end in a matched suffix."""
+    if obj.get("Class") != "CRectangle":
+        return False
+    return any(sheet.get("Name") == "Bargraph" for sheet in obj.findall("PropertySheet"))
+
+
+def readBargraphSplitJOP(jop_filepath):
+    """Parse a .jop file and extract split-bargraph pairs into BargraphSplit_S data.
+
+    Detects each pair by two Bargraph CRectangle ObjectNames sharing a common prefix and
+    ending in "_links"/"_rechts" (BARGRAPHSPLIT_NAME_SUFFIXES). Unlike Scroll's single-
+    pair-per-pool limit, every distinct prefix is processed independently (like
+    readPositionMarkerJOP) - multiple split-bargraph pairs per pool are supported. A
+    prefix missing one side, or with more than one match for a side, is skipped with a
+    warning; other pairs still succeed. A pair whose two sides disagree on Min/Max is
+    also skipped with a warning, since a split bargraph is by construction one signed
+    range mirrored around a shared zero.
+
+    Returns a dict keyed by the shared prefix:
+        { "Bargraph_Split": {"left_id": 18001, "right_id": 18002, "min": 0.0, "max": 42.0}, ... }
+    """
+    tree = ET.parse(jop_filepath)
+    root = tree.getroot()
+    objects_container = root.find("Objects")
+    if objects_container is None:
+        return {}
+
+    by_suffix = {suffix: {} for suffix in BARGRAPHSPLIT_NAME_SUFFIXES}
+    for obj in objects_container.findall("Object"):
+        name = obj.get("ObjectName")
+        if not name or not _is_bargraph_rectangle(obj):
+            continue
+        for suffix in BARGRAPHSPLIT_NAME_SUFFIXES:
+            if name.endswith(suffix):
+                prefix = name[:-len(suffix)]
+                by_suffix[suffix].setdefault(prefix, []).append(obj)
+                break
+
+    prefixes = set()
+    for suffix_map in by_suffix.values():
+        prefixes.update(suffix_map.keys())
+
+    result = {}
+    for prefix in sorted(prefixes):
+        left_suffix, right_suffix = BARGRAPHSPLIT_NAME_SUFFIXES
+        left_matches = by_suffix[left_suffix].get(prefix, [])
+        right_matches = by_suffix[right_suffix].get(prefix, [])
+
+        if len(left_matches) != 1 or len(right_matches) != 1:
+            print(f"  Warning: '{prefix}' has {len(left_matches)} '{left_suffix}' and "
+                  f"{len(right_matches)} '{right_suffix}' Bargraph object(s) - need exactly "
+                  "one of each, skipping split-bargraph generation for this prefix.")
+            continue
+
+        left_obj, right_obj = left_matches[0], right_matches[0]
+        left_min, left_max = _get_prop(left_obj, "Min"), _get_prop(left_obj, "Max")
+        right_min, right_max = _get_prop(right_obj, "Min"), _get_prop(right_obj, "Max")
+        if left_min is None or left_max is None or right_min is None or right_max is None:
+            print(f"  Warning: '{prefix}' Bargraph object(s) missing Min/Max - skipping "
+                  "split-bargraph generation for this prefix.")
+            continue
+        if float(left_min) != float(right_min) or float(left_max) != float(right_max):
+            print(f"  Warning: '{prefix}' left/right Bargraph Min/Max mismatch "
+                  f"({left_suffix}: {left_min}..{left_max}, {right_suffix}: {right_min}..{right_max}) "
+                  "- a split bargraph must share one symmetric range, skipping.")
+            continue
+
+        result[prefix] = {
+            "left_id":  int(left_obj.get("JVS-ID")),
+            "right_id": int(right_obj.get("JVS-ID")),
+            "min":      float(left_min),
+            "max":      float(left_max),
+        }
+
+    return result
+
+
+def writeBargraphSplitGCFfile(data, filepaths):
+    """Write a <name>_BargraphSplit.gcf with BargraphSplit_S constants for each detected pair."""
+    newfilepath = safe_output_path(filepaths[1], filepaths[2] + '_BargraphSplit.gcf')
+    gcf_name    = filepaths[2] + '_BargraphSplit'
+    package     = filepaths[3]
+    struct_type = "isobus::utils::bargraph::BargraphSplit_S"
+
+    root = ET.Element("GlobalConstants", Name=gcf_name, Comment="Split-bargraph constants (left/right object IDs, shared magnitude bounds)")
+    compiler_info = ET.SubElement(root, "CompilerInfo")
+    compiler_info.set("packageName", package)
+    global_constants = ET.SubElement(root, "GlobalConstants")
+
+    for name, info in sorted(data.items()):
+        side_left = (
+            f"(u16ObjId := {info['left_id']}, r32Scale := 1.0, i32Offset := 0, u8Decimals := 0)"
+        )
+        side_right = (
+            f"(u16ObjId := {info['right_id']}, r32Scale := 1.0, i32Offset := 0, u8Decimals := 0)"
+        )
+        initial_value = (
+            f"(stLeft := {side_left}, "
+            f"stRight := {side_right}, "
+            f"r32MinMagnitude := {_format_real(info['min'])}, "
+            f"r32MaxMagnitude := {_format_real(info['max'])})"
+        )
+        ET.SubElement(
+            global_constants,
+            "VarDeclaration",
+            Name=name + BARGRAPHSPLIT_NAME_SUFFIX,
+            Type=struct_type,
+            InitialValue=initial_value,
+        )
+
+    xml_str = ET.tostring(root, encoding='utf-8').decode()
+    xml_str = minidom.parseString(xml_str).toprettyxml(indent="\t")
+    xml_str = xml_str[:19] + ' ' + 'encoding="UTF-8"' + xml_str[20:]
+
+    with open(newfilepath, "w") as file:
+        file.write(xml_str)
+
+    print(f"Written: {newfilepath}")
+
+
 if __name__ == "__main__":
 
     # Gets filepaths and saves it in a variable
@@ -829,6 +1161,14 @@ if __name__ == "__main__":
         scroll_data = readScrollJOP(filepaths[4])
         if scroll_data:
             writeScrollGCFfile(scroll_data, filepaths)
+
+        position_marker_data = readPositionMarkerJOP(filepaths[4])
+        if position_marker_data:
+            writePositionMarkerGCFfile(position_marker_data, filepaths)
+
+        bargraph_split_data = readBargraphSplitJOP(filepaths[4])
+        if bargraph_split_data:
+            writeBargraphSplitGCFfile(bargraph_split_data, filepaths)
 
 
 __author__ = "Lorenz Bauer / Franz Höpfinger"

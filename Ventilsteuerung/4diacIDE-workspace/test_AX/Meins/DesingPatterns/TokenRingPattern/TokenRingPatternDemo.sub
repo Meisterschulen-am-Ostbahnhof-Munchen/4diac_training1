@@ -1,0 +1,185 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SubAppType Name="TokenRingPatternDemo" Comment="TokenRing pattern demo: five-node ring (NodeA..NodeE), a real cycle rather than a two-node back-and-forth">
+	<Identification Standard="61499-2" Description="Copyright (c) 2026 Meisterschulen am Ostbahnhof &#10; &#10;This program and the accompanying materials are made &#10;available under the terms of the Eclipse Public License 2.0 &#10;which is available at https://www.eclipse.org/legal/epl-2.0/ &#10; &#10;SPDX-License-Identifier: EPL-2.0">
+	</Identification>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.1" Author="Franz Höpfinger" Date="2026-08-31" Remarks="Expanded from a 2-node pair to a real 5-node ring (2 nodes is just a back-and-forth, not a ring)">
+	</VersionInfo>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2026-08-31" Remarks="Mutual Exclusion / TokenRing design pattern (IEC 61499 primer course, Module 6, Valeriy Vyatkin), demo application">
+	</VersionInfo>
+	<CompilerInfo packageName="Meins::DesingPatterns::TokenRingPattern">
+	</CompilerInfo>
+	<SubAppInterfaceList>
+		<SubAppEventInputs>
+			<SubAppEvent Name="INIT" Type="EInit" Comment="Initialization Request">
+			</SubAppEvent>
+			<SubAppEvent Name="SEED" Type="Event" Comment="Bootstrap the ring: inject the token at NodeA once, after INIT">
+			</SubAppEvent>
+			<SubAppEvent Name="REQUEST_A" Type="Event" Comment="NodeA: request the critical section for its next token hold">
+			</SubAppEvent>
+			<SubAppEvent Name="REQUEST_B" Type="Event" Comment="NodeB: request the critical section for its next token hold">
+			</SubAppEvent>
+			<SubAppEvent Name="REQUEST_C" Type="Event" Comment="NodeC: request the critical section for its next token hold">
+			</SubAppEvent>
+			<SubAppEvent Name="REQUEST_D" Type="Event" Comment="NodeD: request the critical section for its next token hold">
+			</SubAppEvent>
+			<SubAppEvent Name="REQUEST_E" Type="Event" Comment="NodeE: request the critical section for its next token hold">
+			</SubAppEvent>
+		</SubAppEventInputs>
+		<SubAppEventOutputs>
+			<SubAppEvent Name="INITO" Type="EInit" Comment="Initialization Confirm">
+			</SubAppEvent>
+			<SubAppEvent Name="ENTERED_A" Type="Event" Comment="NodeA entered its critical section">
+			</SubAppEvent>
+			<SubAppEvent Name="ENTERED_B" Type="Event" Comment="NodeB entered its critical section">
+			</SubAppEvent>
+			<SubAppEvent Name="ENTERED_C" Type="Event" Comment="NodeC entered its critical section">
+			</SubAppEvent>
+			<SubAppEvent Name="ENTERED_D" Type="Event" Comment="NodeD entered its critical section">
+			</SubAppEvent>
+			<SubAppEvent Name="ENTERED_E" Type="Event" Comment="NodeE entered its critical section">
+			</SubAppEvent>
+		</SubAppEventOutputs>
+		<InputVars>
+			<VarDeclaration Name="QI" Type="BOOL" Comment="Input event qualifier"/>
+		</InputVars>
+		<OutputVars>
+			<VarDeclaration Name="QO" Type="BOOL" Comment="Output event qualifier"/>
+			<VarDeclaration Name="NodeA_HeldCount" Type="UINT" Comment="NodeA: number of times it received the token"/>
+			<VarDeclaration Name="NodeA_EnteredCount" Type="UINT" Comment="NodeA: number of times it used the critical section"/>
+			<VarDeclaration Name="NodeA_PassCount" Type="UINT" Comment="NodeA: number of acknowledged hand-offs"/>
+			<VarDeclaration Name="NodeB_HeldCount" Type="UINT" Comment="NodeB: number of times it received the token"/>
+			<VarDeclaration Name="NodeB_EnteredCount" Type="UINT" Comment="NodeB: number of times it used the critical section"/>
+			<VarDeclaration Name="NodeB_PassCount" Type="UINT" Comment="NodeB: number of acknowledged hand-offs"/>
+			<VarDeclaration Name="NodeC_HeldCount" Type="UINT" Comment="NodeC: number of times it received the token"/>
+			<VarDeclaration Name="NodeC_EnteredCount" Type="UINT" Comment="NodeC: number of times it used the critical section"/>
+			<VarDeclaration Name="NodeC_PassCount" Type="UINT" Comment="NodeC: number of acknowledged hand-offs"/>
+			<VarDeclaration Name="NodeD_HeldCount" Type="UINT" Comment="NodeD: number of times it received the token"/>
+			<VarDeclaration Name="NodeD_EnteredCount" Type="UINT" Comment="NodeD: number of times it used the critical section"/>
+			<VarDeclaration Name="NodeD_PassCount" Type="UINT" Comment="NodeD: number of acknowledged hand-offs"/>
+			<VarDeclaration Name="NodeE_HeldCount" Type="UINT" Comment="NodeE: number of times it received the token"/>
+			<VarDeclaration Name="NodeE_EnteredCount" Type="UINT" Comment="NodeE: number of times it used the critical section"/>
+			<VarDeclaration Name="NodeE_PassCount" Type="UINT" Comment="NodeE: number of acknowledged hand-offs"/>
+		</OutputVars>
+	</SubAppInterfaceList>
+	<SubAppNetwork>
+		<FB Name="NodeA" Type="Meins::DesingPatterns::TokenRingPattern::TokenRingNode" x="6000" y="500">
+		</FB>
+		<FB Name="NodeB" Type="Meins::DesingPatterns::TokenRingPattern::TokenRingNode" x="8850" y="2570">
+		</FB>
+		<FB Name="NodeC" Type="Meins::DesingPatterns::TokenRingPattern::TokenRingNode" x="7800" y="6000">
+		</FB>
+		<FB Name="NodeD" Type="Meins::DesingPatterns::TokenRingPattern::TokenRingNode" x="4240" y="5930">
+		</FB>
+		<FB Name="NodeE" Type="Meins::DesingPatterns::TokenRingPattern::TokenRingNode" x="3150" y="2570">
+		</FB>
+		<EventConnections>
+			<Connection Source="INIT" Destination="NodeA.INIT" dx1="1800">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="NodeA.INITO" Destination="NodeB.INIT" dx1="960"/>
+			<Connection Source="NodeB.INITO" Destination="NodeC.INIT" dx1="133.33" dx2="66.67" dy="2153.33"/>
+			<Connection Source="NodeC.INITO" Destination="NodeD.INIT" dx1="160" dx2="153.33" dy="1113.33"/>
+			<Connection Source="NodeD.INITO" Destination="NodeE.INIT" dx1="66.67" dx2="133.33" dy="-1240"/>
+			<Connection Source="NodeE.INITO" Destination="INITO" dx1="1200">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="SEED" Destination="NodeA.SEED" dx1="400">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="REQUEST_A" Destination="NodeA.REQUEST" dx1="400">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="REQUEST_B" Destination="NodeB.REQUEST" dx1="400">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="REQUEST_C" Destination="NodeC.REQUEST" dx1="400">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="REQUEST_D" Destination="NodeD.REQUEST" dx1="400">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="REQUEST_E" Destination="NodeE.REQUEST" dx1="400">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="NodeA.ENTERED" Destination="ENTERED_A" dx1="400">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="NodeB.ENTERED" Destination="ENTERED_B" dx1="400">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="NodeC.ENTERED" Destination="ENTERED_C" dx1="400">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="NodeD.ENTERED" Destination="ENTERED_D" dx1="400">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="NodeE.ENTERED" Destination="ENTERED_E" dx1="400">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+		</EventConnections>
+		<DataConnections>
+			<Connection Source="QI" Destination="NodeA.QI" dx1="400">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="NodeA.QO" Destination="NodeB.QI" dx1="926.67"/>
+			<Connection Source="NodeB.QO" Destination="NodeC.QI" dx1="100" dx2="100" dy="1693.33"/>
+			<Connection Source="NodeC.QO" Destination="NodeD.QI" dx1="100" dx2="100" dy="613.33"/>
+			<Connection Source="NodeD.QO" Destination="NodeE.QI" dx1="100" dx2="100" dy="-1700"/>
+			<Connection Source="NodeE.QO" Destination="QO" dx1="160">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="NodeA.HeldCount" Destination="NodeA_HeldCount" dx1="400">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="NodeA.EnteredCount" Destination="NodeA_EnteredCount" dx1="400">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="NodeA.PassCount" Destination="NodeA_PassCount" dx1="400">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="NodeB.HeldCount" Destination="NodeB_HeldCount" dx1="400">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="NodeB.EnteredCount" Destination="NodeB_EnteredCount" dx1="400">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="NodeB.PassCount" Destination="NodeB_PassCount" dx1="400">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="NodeC.HeldCount" Destination="NodeC_HeldCount" dx1="400">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="NodeC.EnteredCount" Destination="NodeC_EnteredCount" dx1="400">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="NodeC.PassCount" Destination="NodeC_PassCount" dx1="400">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="NodeD.HeldCount" Destination="NodeD_HeldCount" dx1="400">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="NodeD.EnteredCount" Destination="NodeD_EnteredCount" dx1="400">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="NodeD.PassCount" Destination="NodeD_PassCount" dx1="400">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="NodeE.HeldCount" Destination="NodeE_HeldCount" dx1="160">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="NodeE.EnteredCount" Destination="NodeE_EnteredCount" dx1="160">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="NodeE.PassCount" Destination="NodeE_PassCount" dx1="160">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+		</DataConnections>
+		<AdapterConnections>
+			<Connection Source="NodeA.MTXOUT" Destination="NodeB.MTXIN" Comment="NodeA gives the token to NodeB" dx1="893.33"/>
+			<Connection Source="NodeB.MTXOUT" Destination="NodeC.MTXIN" Comment="NodeB gives the token to NodeC" dx1="66.67" dx2="133.33" dy="1233.33"/>
+			<Connection Source="NodeC.MTXOUT" Destination="NodeD.MTXIN" Comment="NodeC gives the token to NodeD" dx1="66.67" dx2="66.67" dy="153.33"/>
+			<Connection Source="NodeD.MTXOUT" Destination="NodeE.MTXIN" Comment="NodeD gives the token to NodeE" dx1="133.33" dx2="66.67" dy="-2160"/>
+			<Connection Source="NodeE.MTXOUT" Destination="NodeA.MTXIN" Comment="NodeE gives the token back to NodeA, closing the ring" dx1="920"/>
+		</AdapterConnections>
+	</SubAppNetwork>
+</SubAppType>

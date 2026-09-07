@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SubAppType Name="AX_SUBSCRIBE_BG_OPC" Comment="OPC-UA Remote-Subscribe + VT-Hintergrundfarbe (generisch, ein Kanal)">
+	<Identification Standard="61499-2">
+	</Identification>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="franz" Date="2026-08-27">
+	</VersionInfo>
+	<CompilerInfo packageName="MyLib::sys">
+		<Import declaration="isobus::UT::Q::const::IDs::ID_NULL"/>
+	</CompilerInfo>
+	<SubAppInterfaceList>
+		<InputVars>
+			<VarDeclaration Name="u16ObjId" Type="UINT" Comment="Object ID Hintergrund-Rechteck (VT)" InitialValue="ID_NULL"/>
+			<VarDeclaration Name="ID" Type="WSTRING" Comment="OPC-UA Remote-Subscribe-Adresse"/>
+		</InputVars>
+	</SubAppInterfaceList>
+	<SubAppNetwork>
+		<FB Name="AX_SUBSCRIBE_1" Type="adapter::net::AX_SUBSCRIBE_1" x="0" y="0">
+			<Parameter Name="QI" Value="TRUE"/>
+		</FB>
+		<SubApp Name="GreenWhiteBackground1_AX" Type="MyLib::sys::GreenWhiteBackground1_AX" x="1500" y="0">
+		</SubApp>
+		<DataConnections>
+			<Connection Source="ID" Destination="AX_SUBSCRIBE_1.ID" dx1="80" dx2="80" dy="40">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="u16ObjId" Destination="GreenWhiteBackground1_AX.u16ObjId" dx1="526.67">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+		</DataConnections>
+		<AdapterConnections>
+			<Connection Source="AX_SUBSCRIBE_1.OUT" Destination="GreenWhiteBackground1_AX.DI1" dx1="280"/>
+		</AdapterConnections>
+	</SubAppNetwork>
+</SubAppType>

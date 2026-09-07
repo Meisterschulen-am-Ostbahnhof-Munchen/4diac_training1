@@ -105,6 +105,13 @@ Composite-FB für ein verriegelbares Toggle-FlipFlop mit AE2-Adapter-Schnittstel
 | Uebung_208_AX | ILOCK_FB_SR_AX |
 | Uebung_209_AX | ILOCK_FB_RS_AX |
 
+### Verteilte OPC-UA-Reihe (test_VV/sys/03_OPC_UA)
+| Übung | Baustein | Beschreibung |
+|---|---|---|
+| Training_10_OPC_UA_RES | ILOCK_SWITCH_PROTECT_AX | Hoch/Runter-Schalter (SW1) an 2 physischen Tastern (tastend): 2 tastende Taster auf Geraet A, per OPC-UA (AX_SUBSCRIBE_1/AX_CLIENT_1_0) auf Geraet B uebertragen, dort Last-Wins mit Schutzzeit |
+| Training_11_OPC_UA_RES | ILOCK_SWITCH_PROTECT_AX | Wie Training_10, aber Taster durch 2 VT-SoftKeys (Softkey_IXA) ersetzt; der auf Geraet B nach Arbitrierung/Schutzzeit tatsaechlich erreichte Zustand wird per OPC-UA an Geraet A zurueckgemeldet und faerbt die SoftKeys per GreenWhiteBackground |
+| Training_12_OPC_UA_RES | ILOCK_SWITCH_PROTECT_A2X | Wie Training_11, aber Transport-Layer UND Bridge/Interlock-Kette bleiben A2X-gebuendelt bis unmittelbar vor der Hardware: statt 4 einzelnen AX_SUBSCRIBE_1/AX_CLIENT_1_0 uebernimmt je 1 A2X2_CLIENT_2_0_SUBSCRIBE_2(_PLUG) den kompletten UP+DOWN-Roundtrip (2 Konstanten statt 4); A2X2_TO_A2X spaltet das bidirektionale A2X2-Paar in ein unidirektionales A2X-Socket + -Plug, ILOCK_SWITCH_PROTECT_A2X arbeitet direkt darauf, erst MyLib::sys::A2X_TO_QXA2 entbuendelt unmittelbar vor den 2 logiBUS_QXA-Ausgaengen |
+
 ### Nicht in Übungen verwendet
 - `ILOCK_T_FF_SR` / `ILOCK_T_FF_SR_AX` — (Varianten ohne eigene Übung)
 

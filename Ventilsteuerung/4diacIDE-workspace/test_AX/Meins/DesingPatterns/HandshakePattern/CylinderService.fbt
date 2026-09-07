@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<FBType Name="CylinderService" Comment="Message Exchange example (slide 47): SCylH / CylHServ - service-oriented cylinder, runs the physical round trip">
+	<Identification Standard="61499-2" Description="Copyright (c) 2026 Meisterschulen am Ostbahnhof &#10; &#10;This program and the accompanying materials are made &#10;available under the terms of the Eclipse Public License 2.0 &#10;which is available at https://www.eclipse.org/legal/epl-2.0/ &#10; &#10;SPDX-License-Identifier: EPL-2.0">
+	</Identification>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2026-09-03" Remarks="SoA implementation in function blocks (IEC 61499 primer course, Module 6, Valeriy Vyatkin, slide 47), SCylH/CylHServ role: uses full EVENT_HS_WSTRING (REQ/CNF/IND/RSP) - the only one of the four blocks that needs the mid-trip IND/RSP coordination (must pause after reaching the end position until the orchestrator confirms the drop)">
+	</VersionInfo>
+	<CompilerInfo packageName="Meins::DesingPatterns::HandshakePattern">
+		<Import declaration="Meins::DesingPatterns::HandshakePattern::const::MessageExchangeConst"/>
+	</CompilerInfo>
+	<InterfaceList>
+		<EventInputs>
+			<Event Name="INIT" Type="EInit" Comment="Initialization Request">
+				<With Var="QI"/>
+			</Event>
+			<Event Name="AT_END" Type="Event" Comment="Simulated end-position sensor trigger: pusher reached the end position">
+			</Event>
+			<Event Name="AT_START" Type="Event" Comment="Simulated start-position sensor trigger: pusher reached the start position again">
+			</Event>
+		</EventInputs>
+		<EventOutputs>
+			<Event Name="INITO" Type="EInit" Comment="Initialization Confirm">
+				<With Var="QO"/>
+			</Event>
+		</EventOutputs>
+		<InputVars>
+			<VarDeclaration Name="QI" Type="BOOL" Comment="Input event qualifier"/>
+		</InputVars>
+		<OutputVars>
+			<VarDeclaration Name="QO" Type="BOOL" Comment="Output event qualifier"/>
+		</OutputVars>
+		<Sockets>
+			<AdapterDeclaration Name="SRSP" Type="adapter::types::bidirectional::Handshake::EVENT_HS_WSTRING" Comment="Service socket: receives REQ/RSP (+REQD/RSPD), emits CNF/IND (+CNFD/INDD)"/>
+		</Sockets>
+	</InterfaceList>
+	<BasicFB>
+		<ECC>
+			<ECState Name="START" Comment="Uninitialized" x="200" y="700">
+			</ECState>
+			<ECState Name="Init" Comment="Initialization" x="900" y="700">
+				<ECAction Algorithm="OnInit" Output="INITO"/>
+			</ECState>
+			<ECState Name="Initialized" Comment="Idle at start position, ready for a trip REQ" x="1600" y="700">
+			</ECState>
+			<ECState Name="DeInit" Comment="De-initialization" x="900" y="1300">
+				<ECAction Algorithm="OnDeInit" Output="INITO"/>
+			</ECState>
+			<ECState Name="EXTENDING" Comment="Trip started, push valve extending, waiting for AT_END" x="2400" y="200">
+				<ECAction Algorithm="OnReq" Output="SRSP.IND"/>
+			</ECState>
+			<ECState Name="WAIT_DROP" Comment="Reached end position, reported it, waiting for the orchestrator's RSP before retracting" x="3100" y="200">
+				<ECAction Algorithm="OnAtEnd" Output="SRSP.IND"/>
+			</ECState>
+			<ECState Name="RETRACTING" Comment="Drop acknowledged, push valve retracting / pop valve extending, waiting for AT_START" x="2400" y="1000">
+			</ECState>
+			<ECState Name="COMPLETE" Comment="Start position reached: close the transaction with CNF" x="3100" y="1000">
+				<ECAction Algorithm="OnAtStart" Output="SRSP.CNF"/>
+			</ECState>
+			<ECTransition Source="START" Destination="Init" Condition="INIT[TRUE = QI]" x="550" y="700"/>
+			<ECTransition Source="Init" Destination="Initialized" Condition="1" x="1250" y="700"/>
+			<ECTransition Source="Initialized" Destination="DeInit" Condition="INIT[FALSE = QI]" x="1250" y="1000"/>
+			<ECTransition Source="DeInit" Destination="START" Condition="1" x="550" y="1300"/>
+			<ECTransition Source="Initialized" Destination="EXTENDING" Condition="SRSP.REQ" x="2000" y="450"/>
+			<ECTransition Source="EXTENDING" Destination="WAIT_DROP" Condition="AT_END" x="2750" y="200"/>
+			<ECTransition Source="WAIT_DROP" Destination="RETRACTING" Condition="SRSP.RSP" x="2750" y="600"/>
+			<ECTransition Source="RETRACTING" Destination="COMPLETE" Condition="AT_START" x="2750" y="1000"/>
+			<ECTransition Source="COMPLETE" Destination="Initialized" Condition="1" x="2400" y="850"/>
+		</ECC>
+		<Algorithm Name="OnInit" Comment="Initialize">
+			<ST><![CDATA[QO := QI;]]></ST>
+		</Algorithm>
+		<Algorithm Name="OnDeInit" Comment="De-initialize">
+			<ST><![CDATA[QO := FALSE;]]></ST>
+		</Algorithm>
+		<Algorithm Name="OnReq" Comment="Trip requested: begin extending, report the started status">
+			<ST><![CDATA[SRSP.INDD := MessageExchangeConst::RSP_CYL_STARTED;]]></ST>
+		</Algorithm>
+		<Algorithm Name="OnAtEnd" Comment="End position reached: report it, then wait for the orchestrator's go-ahead">
+			<ST><![CDATA[SRSP.INDD := MessageExchangeConst::RSP_CYL_END_POS;]]></ST>
+		</Algorithm>
+		<Algorithm Name="OnAtStart" Comment="Start position reached again: trip is complete">
+			<ST><![CDATA[SRSP.CNFD := MessageExchangeConst::RSP_CYL_TRIP_COMPLETE;]]></ST>
+		</Algorithm>
+	</BasicFB>
+	<Attribute Name="eclipse4diac::core::TypeHash" Value="''"/>
+	<Attribute Name="Documentation" Type="CDATA"><![CDATA[<p>Service-oriented cylinder (<code>SCylH</code>/<code>CylHServ</code>
+in the "SoA implementation in function blocks" diagram, IEC 61499
+primer course, Module 6, Valeriy Vyatkin, slide 47) - one of the four
+function blocks in the <code>CylH</code> message-exchange example
+(slides 42-46 for the message sequence chart this reconstructs).</p>
+<p>Uses <code>EVENT_HS_WSTRING</code> as a <b>Socket</b> (the only one
+of the four blocks that needs the full REQ/CNF/IND/RSP vocabulary,
+not a reduced variant): on <b>REQ</b> it starts the trip and fires an
+<b>IND</b> with <code>RSP_CYL_STARTED</code>; on the simulated
+<b>AT_END</b> sensor event it fires a second <b>IND</b> with
+<code>RSP_CYL_END_POS</code> and then <b>waits</b> for the matching
+<b>RSP</b> from <code>CylinderOrchestrator</code> before retracting -
+this is the one real synchronization point in the example: the physical
+cylinder must not start pulling back until the orchestrator confirms
+the workpiece was actually dropped. Once <b>AT_START</b> fires
+(pusher back home), it closes the transaction with <b>CNF</b> carrying
+<code>RSP_CYL_TRIP_COMPLETE</code>.</p>
+<p>Deliberate simplification vs. the full message-sequence chart: the
+low-level <code>CYL.start</code>/<code>CYL.end</code>/<code>CYL.push</code>/
+<code>CYL.pop</code> sub-services from the MSC are not modelled as
+separate function blocks here - slide 47 itself treats
+<code>SCylH</code>/<code>CylHServ</code> as a single black box
+("Interface to service-oriented cylinder"), so their internal
+push/pop/sensor choreography is folded into this one block's ECC
+instead, using <code>AT_END</code>/<code>AT_START</code> as the
+manually-fireable stand-ins for the physical sensors (same testing
+philosophy as <code>EventDrivenCylinder.fbt</code> in the
+Purely-Event-Driven pattern).</p>
+<p>See <code>HandshakePattern.md</code> in this folder, section
+"Die Quelle der 'push,100'-Notation", for the full write-up and the
+other three function blocks of this example
+(<code>WorkpieceSensor</code>, <code>DropSinkService</code>,
+<code>CylinderOrchestrator</code>).</p>
+]]></Attribute>
+</FBType>

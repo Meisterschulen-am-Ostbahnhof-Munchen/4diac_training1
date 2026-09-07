@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SubAppType Name="Uebung_227_AXA" Comment="Kombiniert 225b_AX (Dreieck-Sollwertmarker) und 226b_AX (Split-Bargraph): ein Sollwert treibt beide Anzeigen, komplett über AR-Adapter-Bausteine">
+	<Identification Standard="61499-2" Description="Copyright (c) 2026 Meisterschulen am Ostbahnhof  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0">
+	</Identification>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2026-09-06" Remarks="initial API and implementation and/or initial documentation">
+	</VersionInfo>
+	<CompilerInfo packageName="Uebungen">
+		<Import declaration="Uebungen::const::UT::Dreieck::DefaultPool_Dreieck_PositionMarker::Container_PositionMarker"/>
+		<Import declaration="Uebungen::const::UT::Dreieck::DefaultPool_Dreieck_BargraphSplit::Bargraph_Split_BargraphSplit"/>
+		<Import declaration="Uebungen::const::UT::Dreieck::DefaultPool_Dreieck_Numeric::NumberVariable_Sollwert_N"/>
+		<Import declaration="Uebungen::const::UT::Dreieck::DefaultPool_Dreieck_Numeric::NumberVariable_Istwert_N"/>
+	</CompilerInfo>
+	<SubAppInterfaceList>
+	</SubAppInterfaceList>
+	<SubAppNetwork>
+		<FB Name="Sollwert_N" Type="isobus::UT::io::NumericValue::NumericValue_PHYSA" x="-8200" y="800">
+			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="stObj" Value="NumberVariable_Sollwert_N"/>
+		</FB>
+		<FB Name="Split" Type="adapter::events::unidirectional::AR_SPLIT_3" x="-6200" y="1300">
+		</FB>
+		<FB Name="Marker_Dreieck" Type="isobus::UT::Q::PositionMarkerFSA" x="-3400" y="200">
+			<Parameter Name="stObj" Value="Container_PositionMarker"/>
+			<Parameter Name="xScale" Value="TRUE"/>
+		</FB>
+		<FB Name="SplitBar" Type="isobus::UT::Q::BargraphSplitFS_AR" x="-3400" y="1100">
+			<Parameter Name="stObj" Value="Bargraph_Split_BargraphSplit"/>
+		</FB>
+		<FB Name="Istwert_N" Type="isobus::UT::Q::Q_NumericValue_PHYSA" x="-3400" y="2200">
+			<Parameter Name="stObj" Value="NumberVariable_Istwert_N"/>
+		</FB>
+		<AdapterConnections>
+			<Connection Source="Sollwert_N.rPhys" Destination="Split.IN" dx1="793.33"/>
+			<Connection Source="Split.OUT1" Destination="Marker_Dreieck.rPhys" dx1="126.67"/>
+			<Connection Source="Split.OUT2" Destination="SplitBar.rPhys" dx1="533.33"/>
+			<Connection Source="Split.OUT3" Destination="Istwert_N.rPhys" dx1="286.67"/>
+		</AdapterConnections>
+	</SubAppNetwork>
+</SubAppType>

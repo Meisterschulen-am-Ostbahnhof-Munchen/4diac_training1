@@ -34,20 +34,20 @@
 			<VarDeclaration Name="Y_LOW_INT" Type="REAL" Comment="Stored target value at CO"/>
 		</InternalVars>
 		<ECC>
-			<ECState Name="IDLE" x="0" y="0">
+			<ECState Name="IDLE" x="-640" y="-560">
 			</ECState>
-			<ECState Name="REQ" x="800" y="0">
+			<ECState Name="REQ" x="720" y="800">
 				<ECAction Algorithm="REQ" Output="Y.E1"/>
 			</ECState>
-			<ECState Name="CO" x="1600" y="0">
+			<ECState Name="CO" x="1760" y="480">
 				<ECAction Algorithm="CO" Output="OFFSET.EO1"/>
 			</ECState>
-			<ECState Name="WAIT_CS" x="1600" y="-400">
+			<ECState Name="WAIT_CS" x="800" y="-80">
 			</ECState>
-			<ECState Name="REQ_WAIT" x="1200" y="-800">
+			<ECState Name="REQ_WAIT" x="1120" y="-1200">
 				<ECAction Algorithm="REQ" Output="Y.E1"/>
 			</ECState>
-			<ECState Name="CS" x="2400" y="-400">
+			<ECState Name="CS" x="2880" y="-560">
 				<ECAction Algorithm="CS" Output="SCALE.EO1"/>
 				<ECAction Output="OFFSET.EO1"/>
 			</ECState>

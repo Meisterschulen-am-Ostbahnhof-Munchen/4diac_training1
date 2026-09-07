@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<FBType Name="TrueUntil" Comment="Generic Actuation / Chain of Actions pattern: move to a position and wait until inPosition becomes true">
+	<Identification Standard="61499-2" Description="Copyright (c) 2026 Meisterschulen am Ostbahnhof &#10; &#10;This program and the accompanying materials are made &#10;available under the terms of the Eclipse Public License 2.0 &#10;which is available at https://www.eclipse.org/legal/epl-2.0/ &#10; &#10;SPDX-License-Identifier: EPL-2.0">
+	</Identification>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2026-08-31" Remarks="Generic Actuation / Chain of Actions design pattern (IEC 61499 primer course, Module 6, Valeriy Vyatkin, slides 65-67). REQ treated the same as TRIGGER (re-trigger the move) - the exact intended role of REQ next to TRIGGER on the slide's compact icon is not fully certain, see ChainOfActionsPattern.md">
+	</VersionInfo>
+	<CompilerInfo packageName="Meins::DesingPatterns::ChainOfActionsPattern">
+	</CompilerInfo>
+	<InterfaceList>
+		<EventInputs>
+			<Event Name="TRIGGER" Type="Event" Comment="Start moving to the position">
+			</Event>
+			<Event Name="REQ" Type="Event" Comment="Alternate trigger, treated the same as TRIGGER">
+			</Event>
+		</EventInputs>
+		<EventOutputs>
+			<Event Name="TO_POSITION" Type="Event" Comment="Command the actuator to move (wire to the concrete actuator&apos;s own move-request event)">
+			</Event>
+			<Event Name="STOP" Type="Event" Comment="Position reached: stop the actuator">
+			</Event>
+			<Event Name="DONE" Type="Event" Comment="Position reached: notify the chain to continue with the next action">
+			</Event>
+		</EventOutputs>
+		<InputVars>
+			<VarDeclaration Name="inPosition" Type="BOOL" Comment="TRUE once the actuator has reached the position (wire to the concrete actuator&apos;s own feedback sensor)"/>
+		</InputVars>
+	</InterfaceList>
+	<BasicFB>
+		<ECC>
+			<ECState Name="START" Comment="Idle, waiting for TRIGGER/REQ" x="1280" y="1280">
+			</ECState>
+			<ECState Name="OPERATE" Comment="Triggered, about to move" x="1920" y="640">
+			</ECState>
+			<ECState Name="MOVING" Comment="Moving: command the actuator, wait for inPosition" x="3120" y="640">
+				<ECAction Output="TO_POSITION"/>
+			</ECState>
+			<ECState Name="STOP" Comment="Position reached: stop and report done" x="2960" y="1920">
+				<ECAction Output="STOP"/>
+				<ECAction Output="DONE"/>
+			</ECState>
+			<ECTransition Source="START" Destination="OPERATE" Condition="TRIGGER" x="1526.67" y="820"/>
+			<ECTransition Source="START" Destination="OPERATE" Condition="REQ" x="1900" y="1053.33"/>
+			<ECTransition Source="OPERATE" Destination="MOVING" Condition="1" x="2333.33" y="1160"/>
+			<ECTransition Source="MOVING" Destination="STOP" Condition="[inPosition]" x="3713.33" y="1353.33"/>
+			<ECTransition Source="STOP" Destination="START" Condition="1" x="1980" y="1480"/>
+		</ECC>
+	</BasicFB>
+	<Attribute Name="eclipse4diac::core::TypeHash" Value="''"/>
+	<Attribute Name="Documentation" Type="CDATA"><![CDATA[<p>Generic, reusable action block for the <b>Generic Actuation</b> /
+<b>Chain of Actions</b> design patterns (IEC 61499 primer course,
+Module 6, Valeriy Vyatkin, slides 65-67).</p>
+<p>Same block type for every step of a movement sequence (extend a
+cylinder, retract a cylinder, slide a workpiece, ...): on
+<b>TRIGGER</b> (or <b>REQ</b>) it fires <b>TO_POSITION</b> to command
+the concrete actuator, then waits for <b>inPosition</b> to become
+<code>TRUE</code> (wired to the actuator's own feedback sensor), then
+fires <b>STOP</b> and <b>DONE</b>. Chaining several instances via
+<code>DONE</code>&rarr;<code>TRIGGER</code> replaces one large,
+"spaghetti" ECC covering the whole sequence with a straight-line
+composition of identical, reusable blocks - see
+<code>ChainOfActionsPattern.md</code> in this folder for the full
+write-up, including the demo chain and the open question about the
+exact role of <b>REQ</b> next to <b>TRIGGER</b>.</p>
+]]></Attribute>
+</FBType>

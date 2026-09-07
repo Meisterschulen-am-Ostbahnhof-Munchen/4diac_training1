@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SubAppType Name="SoftKeySR_PC_A_OPC_Adapter" Comment="Geraet A (Station 11, 192.168.1.11): wie SoftKeySR_PC_A_OPC, aber HMI (2 SoftKeys + GreenWhiteBackground) und OPC-UA-Trigger sind getrennt - SoftKeySR_ASR_AX buendelt die HMI hinter einem ASR_AX-Plug, ASR_AX_CLIENT_0_SUBSCRIBE_1 buendelt die 2 CLIENT_0-Instanzen + AX_SUBSCRIBE_1 hinter einem ASR_AX-Socket - &apos;SUB style&apos;: das Protokoll steckt im MyLib::sys-Composite, nicht in der Resource des Geraets">
+	<Identification Standard="61499-2" Description="Copyright (c) 2026 Meisterschulen am Ostbahnhof  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0">
+	</Identification>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2026-09-04" Remarks="initial API and implementation and/or initial documentation">
+	</VersionInfo>
+	<CompilerInfo packageName="MyLib::sys">
+		<Import declaration="isobus::UT::Q::const::IDs::ID_NULL"/>
+	</CompilerInfo>
+	<SubAppInterfaceList>
+		<InputVars>
+			<VarDeclaration Name="u16ObjId_SET" Type="UINT" Comment="Object ID SoftKey Set (traegt auch das GreenWhiteBackground)" InitialValue="ID_NULL"/>
+			<VarDeclaration Name="u16ObjId_RESET" Type="UINT" Comment="Object ID SoftKey Reset" InitialValue="ID_NULL"/>
+			<VarDeclaration Name="ID_SET_CALL" Type="WSTRING" Comment="Remote-Methodenadresse (ACTION=CALL_METHOD) fuer den Set-Methodenaufruf auf Geraet B"/>
+			<VarDeclaration Name="ID_RESET_CALL" Type="WSTRING" Comment="Remote-Methodenadresse (ACTION=CALL_METHOD) fuer den Reset-Methodenaufruf auf Geraet B"/>
+			<VarDeclaration Name="ID_STATE_READ" Type="WSTRING" Comment="Lokal ueberwachte Adresse (BOOL, ACTION=READ) fuer den Flipflop-Zustand, wird von Geraet B remote beschrieben"/>
+		</InputVars>
+	</SubAppInterfaceList>
+	<SubAppNetwork>
+		<SubApp Name="SoftKeySR_ASR_AX" Type="MyLib::sys::SoftKeySR_ASR_AX" x="-6300" y="1100">
+		</SubApp>
+		<FB Name="TRIGGER" Type="adapter::net::ASR_AX_CLIENT_0_SUBSCRIBE_1" x="-4000" y="100">
+			<Parameter Name="QI" Value="TRUE"/>
+		</FB>
+		<DataConnections>
+			<Connection Source="ID_SET_CALL" Destination="TRIGGER.ID_SET" dx1="1400">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="ID_RESET_CALL" Destination="TRIGGER.ID_RESET" dx1="1400">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="ID_STATE_READ" Destination="TRIGGER.ID_STATE" dx1="1400">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="u16ObjId_SET" Destination="SoftKeySR_ASR_AX.u16ObjId_SET" dx1="1580">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="u16ObjId_RESET" Destination="SoftKeySR_ASR_AX.u16ObjId_RESET" dx1="1373.33">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+		</DataConnections>
+		<AdapterConnections>
+			<Connection Source="SoftKeySR_ASR_AX.OUT" Destination="TRIGGER.S_R" dx1="900"/>
+		</AdapterConnections>
+	</SubAppNetwork>
+</SubAppType>

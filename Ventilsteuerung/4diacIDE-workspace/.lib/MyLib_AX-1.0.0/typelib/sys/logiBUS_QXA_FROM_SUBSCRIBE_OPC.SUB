@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SubAppType Name="logiBUS_QXA_FROM_SUBSCRIBE_OPC" Comment="Digitaler Ausgang, gesteuert von einem lokal ueberwachten OPC-UA-Knoten (von einem ANDEREN Geraet per CLIENT_1_0 remote beschrieben) - &apos;Krauternter-Stil&apos;: das Protokoll (AX_SUBSCRIBE_1) steckt IM Baustein selbst, nicht in der Resource des Geraets">
+	<Identification Standard="61499-2" Description="Copyright (c) 2026 Meisterschulen am Ostbahnhof  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0">
+	</Identification>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2026-09-02" Remarks="initial API and implementation and/or initial documentation">
+	</VersionInfo>
+	<CompilerInfo packageName="MyLib::sys">
+		<Import declaration="logiBUS::io::DQ::logiBUS_DO"/>
+		<Import declaration="logiBUS::io::DQ::logiBUS_DO_S"/>
+	</CompilerInfo>
+	<SubAppInterfaceList>
+		<InputVars>
+			<VarDeclaration Name="Output" Type="logiBUS::io::DQ::logiBUS_DO_S" Comment="Identify the Output Output_Q1..Q8" InitialValue="logiBUS_DO::Invalid"/>
+			<VarDeclaration Name="ID" Type="WSTRING" Comment="Lokal ueberwachte Adresse (BOOL, ACTION=READ) - wird von einem anderen Geraet per CLIENT_1_0 remote beschrieben"/>
+		</InputVars>
+	</SubAppInterfaceList>
+	<SubAppNetwork>
+		<FB Name="AX_SUBSCRIBE_1" Type="adapter::net::AX_SUBSCRIBE_1" x="-2800" y="-200">
+			<Parameter Name="QI" Value="TRUE"/>
+		</FB>
+		<FB Name="logiBUS_QXA" Type="logiBUS::io::DQ::logiBUS_QXA" x="-500" y="100">
+			<Parameter Name="QI" Value="TRUE"/>
+		</FB>
+		<DataConnections>
+			<Connection Source="Output" Destination="logiBUS_QXA.Output" dx1="1460">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="ID" Destination="AX_SUBSCRIBE_1.ID" dx1="1400">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+		</DataConnections>
+		<AdapterConnections>
+			<Connection Source="AX_SUBSCRIBE_1.OUT" Destination="logiBUS_QXA.OUT" dx1="1000"/>
+		</AdapterConnections>
+	</SubAppNetwork>
+</SubAppType>
