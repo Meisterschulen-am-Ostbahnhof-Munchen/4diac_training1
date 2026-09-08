@@ -65,6 +65,7 @@ INIT event ports").
 
 Namensschema für neue Konstanten (siehe `VV/const/OPC_UA/myOpcUaAddresses.gcf`
 im test_VV-Workspace der anderen Clone):
+
 - Zustandswerte: `<Prefix>_LOCAL_READ` (ACTION=READ, AX_SUBSCRIBE_1) +
   `<Prefix>_REMOTE_WRITE` (ACTION=WRITE, AX_CLIENT_1_0) — Pfad/Name-Suffix
   MUSS in beiden identisch sein.

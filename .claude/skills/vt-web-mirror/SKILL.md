@@ -148,6 +148,7 @@ const softkeys = [
   // ...
 ]
 ```
+
 ```html
 <VtSoftKeyButton v-for="b in softkeys" :key="b.name" :icon="b.icon" @press="b.name && emit('navigate', b.name)" />
 ```
@@ -167,6 +168,7 @@ matching the new macro's naming, not the shared icon's name.
 ## Doc-comment block: write down what a fresh reader can't derive
 
 Every page's `<script setup>` opens with a comment block covering, in order:
+
 1. Which pool object this mirrors (`DataMask_X`, JVS-ID) and where its
    content spec came from (Strichzeichnung page N).
 2. Deliberate scope cuts — what was left out and why (a customer ask like

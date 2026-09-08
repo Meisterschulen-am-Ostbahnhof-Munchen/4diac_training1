@@ -20,7 +20,7 @@ script_dir = os.path.dirname(os.path.realpath(__file__))
 if script_dir not in sys.path:
     sys.path.append(script_dir)
 
-from check_keywords import load_keywords, check_keywords_in_xml
+from check_keywords import load_keywords, check_keywords_in_xml  # noqa: E402 - must come after the sys.path patch above
 
 class ValidationError(Exception):
     """Exception raised when XML validation fails."""

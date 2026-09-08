@@ -101,11 +101,13 @@ Jede Zeile ist ein `CGroup`-Container (432×36) mit zwei Arten von Kindern,
 über `CProxy`-Wrapper eingehängt:
 
 **Geteilt (nicht dupliziert — dieselben realen Objekte in jeder Zeile):**
+
 - 4× Hintergrund-/Rahmen-`Rectangle` (Objekte 14003, 14004, 14005, 14013)
 - 1× Status-`PictureGraphic` (Objekt 20001) — als Standard-Ziel des
   Object-Pointers, siehe unten
 
 **Individuell (pro Zeile ein eigenes reales Objekt):**
+
 - 1× `OutputString` — Label (z. B. „Label_03")
 - 1× `OutputString` — Name/Freitext (Platzhalter „langer Name was weiß ich")
 - 1× `OutputString` — Einheit („kg")
@@ -136,7 +138,7 @@ Datenbindung.
 Erntegewicht 12,47 kg, Status OK.
 
 | Feld | Objekt (Klasse, JVS-ID) | ObjectName | Inhalt aktuell | Wäre inhaltlich |
-|---|---|---|---|---|
+| --- | --- | --- | --- | --- |
 | Label | `COutputText` 11031 | `OutputString_Row_03_Label` | „Label_03" | Positions-Nr. „3" |
 | Name | `COutputText` 11049 | `OutputString_Row_03_Name` | „langer Name was weiß ich" (Platzhalter) | „Petersilie" |
 | Wert | `COutputNumber` 12009 | `OutputNumber_Row_03_Value` | Platzhalterzahl | 12.47 (kg) |
@@ -148,6 +150,7 @@ Erntegewicht 12,47 kg, Status OK.
 Damit diese Zeile wirklich „Petersilie / 12.47 kg / OK" anzeigt, fehlen noch
 zwei Dinge, die **nicht** Teil dieses ISO-Designer-Konzepts sind, sondern in
 der Steuerungslogik (SPS-Seite / FORTE) passieren müssen:
+
 1. `OutputNumber_Row_03_Value` (12009) an eine echte Prozessvariable binden
    (aktuell nur ein statischer Platzhalterwert in der `.jop`).
 2. `ObjectPointer_Row_03_Status` (27006) je nach Zustand zur Laufzeit auf
@@ -164,7 +167,7 @@ Die Anzeige-Seite (Rectangles, Softkey-Pointer) steht schon im Pool, die
 Steuerungslogik dafür noch nicht. Konkret vorgeschlagen:
 
 | Bauteil | Objekt | Rolle |
-|---|---|---|
+| --- | --- | --- |
 | `Container_Scrollbar_Parent` | `CGroup` 3000 | Sichtfenster für den Scrollbalken, 12×288, fix (Top=0 auf der Maske) |
 | `Rectangle_Scrollbar` | `CRectangle` 14000 | Balken-Hintergrund, 12×288, unbeweglich |
 | `Container_Scrollbar_Content` | `CGroup` 3010 | bewegter Inhalt, 12×288 — `Top` soll sich mit der Scrollposition mitbewegen (Startwert −252) |
@@ -183,7 +186,7 @@ fertige Lösung**, sondern als Bauplan, nach dem ein eigener `ScrollFS`-FB
 gebaut werden könnte:
 
 | `RampLimitFS` | Bedeutung dort | Übertragen auf Scroll |
-|---|---|---|
+| --- | --- | --- |
 | Event `ZERO` | Sollwert := VAL_ZERO | Event `TOP` |
 | Event `UP_SLOW` / `UP_FAST` | Sollwert +1 / +SLOW\|FAST | Event `UP` / `UP_UP` |
 | Event `DOWN_SLOW` / `DOWN_FAST` | Sollwert −1 / −SLOW\|FAST | Event `DOWN` / `DOWN_DOWN` |
@@ -197,7 +200,7 @@ gebaut werden könnte:
 Zahl und Struktur von Event-Eingängen wie `RampLimitFS`**, 1:1 übersetzt:
 
 | Event | Wirkung auf `OUT` | Schönerer Name (Vorschlag) |
-|---|---|---|
+| --- | --- | --- |
 | `TOP` | `OUT := 0` — Listenanfang | `FIRST` |
 | `UP_UP` | `OUT -= STEP` (geklemmt bei 0) | `PAGE_UP` |
 | `UP` | `OUT -= 1` (geklemmt bei 0) | `LINE_UP` |
@@ -242,7 +245,7 @@ nötig, eine pro bewegtem Objekt — bei beiden ist das bewegte Kind jetzt ein
 `Container`, nicht mehr direkt ein `Rectangle`:
 
 | `Q_ChildPosition`-Instanz | `u16ObjIdParent` | `u16ObjId` (Kind, wird bewegt) | `s16Xposition`/`s16Yposition` |
-|---|---|---|---|
+| --- | --- | --- | --- |
 | Liste scrollen | `Containerr_Scrolling_Parent` (3006) | `Container_Scrolling_Content` (3031) | `0` / `-42 × OUT` |
 | Scroll-Indikator | `Container_Scrollbar_Parent` (3000) | `Container_Scrollbar_Content` (3010) | `0` / `-252 + OUT × (288-36)/13` |
 
@@ -432,7 +435,7 @@ Für die Scroll-Steuerung (Beispiel B) verallgemeinert sich das Muster so:
 ## Aktueller ID-Stand (Stand: nach GUI-Re-Save)
 
 | Klasse | Anzahl | höchste ID |
-|---|---|---|
+| --- | --- | --- |
 | `CGroup` (Container) | 52 | 3067 |
 | `COutputText` (OutputString) | 83 | 11102 |
 | `COutputNumber` | 41 | 12044 |

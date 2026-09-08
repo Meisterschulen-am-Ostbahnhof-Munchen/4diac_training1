@@ -8,7 +8,8 @@
 [![Standard](https://img.shields.io/badge/Standard-DIN%20EN%2061131--3-green)](https://de.wikipedia.org/wiki/EN_61131-3)
 [![Standard](https://img.shields.io/badge/Standard-IEC%2061499-green)](https://en.wikipedia.org/wiki/IEC_61499)
 [![Standard](https://img.shields.io/badge/Standard-DIN%20EN%2061499-green)](https://de.wikipedia.org/wiki/EN_61499)
-[![Protocol](https://img.shields.io/badge/Protocol-ISOBUS%20%2F%20J1939-orange)]()
+[![Protocol](https://img.shields.io/badge/Protocol-ISOBUS%20%2F%20J1939-orange)](https://en.wikipedia.org/wiki/ISO_11783)
+[![MegaLinter](https://github.com/Meisterschulen-am-Ostbahnhof-Munchen/4diac_training1/actions/workflows/megalinter.yml/badge.svg)](https://github.com/Meisterschulen-am-Ostbahnhof-Munchen/4diac_training1/actions/workflows/megalinter.yml)
 
 🇩🇪 [Deutsch](README.md) | 🇬🇧 English
 
@@ -20,14 +21,14 @@ logiBUS® <https://www.logibus.tech/>
 
 ## 📋 Table of Contents
 
-- [About the Project](#about-the-project)
-- [Main Components](#main-components)
-- [Technologies Used](#technologies-used)
-- [Folder Structure](#folder-structure)
-- [Prerequisites](#prerequisites)
-- [Getting Started](#getting-started)
-- [Documentation & Exercise Series](#documentation--exercise-series)
-- [SEO & Keywords](#seo--keywords)
+- [About the Project](#-about-the-project)
+- [Main Components](#️-main-components)
+- [Technologies Used](#-technologies-used)
+- [Folder Structure](#-folder-structure)
+- [Prerequisites](#-prerequisites)
+- [Getting Started](#-getting-started)
+- [Documentation & Exercise Series](#-documentation--exercise-series)
+- [SEO & Keywords](#-seo--keywords)
 
 ---
 
@@ -42,24 +43,32 @@ It includes numerous exercises (`Uebung_001` through `Uebung_160`) that lead ste
 ## ⚙️ Main Components
 
 ### 1. Valve Control (Logic)
+
 Implementation of control logic for hydraulic valves.
+
 - **Functions:** Time-controlled sequences, interlocks, PWM actuation.
 - **Safety:** Emergency-stop routines and error handling.
 
 ### 2. ISOBUS Integration (HMI)
+
 Complete design projects for **Virtual Terminals (VT)**.
+
 - **ISO-Designer projects:** Contain masks, softkeys, and alarm messages (`Workspace`, `Workspace_Joystick`, `Workspace_PWM`, `Workspace_PWM12`, `Workspace_TECU`, `Workspace_TC_SC`, `Workspace_Horse`, `Workspace_Scroll`, `Workspace_DIDO`).
 - **Pool files:** `.jop`, `.jvi`, and image resources for various resolutions (monochrome & color).
 - **Task Controller (TC-SC):** Section Control examples (`.dvc` files).
 
 ### 3. APIXON Web Clients (OPC UA)
+
 Browser-based test clients (`Ventilsteuerung/Web-Clients/`) for access via **OPC UA**, usable directly in the browser without additional tools.
+
 - **Technologies:** Vue 3, TypeScript, Vite (single-file build), Vitest for unit/coverage tests.
 - **`apixon-diodo-client/`:** 8 digital inputs, 12 digital outputs.
 - **`apixon-pwm-client/`:** 12 PWM outputs (0-100 % duty) incl. per-channel enable/disable switch and status LED (white/green/red).
 
 ### 4. Training Exercises
+
 A structured series of learning modules:
+
 - Fundamentals of digital logic (AND, OR, XOR).
 - Timers (TON, TOF, TP).
 - State machines and sequences.
@@ -69,11 +78,11 @@ A structured series of learning modules:
 
 ## 🛠 Technologies Used
 
-* **IDE:** [Eclipse 4diac IDE](https://www.eclipse.org/4diac/) (IEC 61131-3 / IEC 61499 Standard)
-* **Runtime:** Eclipse FORTE (4diac RTE)
-* **HMI Design:** Jetter / Bucher ISO-Designer (for ISOBUS VT)
-* **Communication:** CAN bus, SAE J1939, ISO 11783 (ISOBUS)
-* **Hardware targets:** ESP32, PC (soft-PLC), mobile controller
+- **IDE:** [Eclipse 4diac IDE](https://www.eclipse.org/4diac/) (IEC 61131-3 / IEC 61499 Standard)
+- **Runtime:** Eclipse FORTE (4diac RTE)
+- **HMI Design:** Jetter / Bucher ISO-Designer (for ISOBUS VT)
+- **Communication:** CAN bus, SAE J1939, ISO 11783 (ISOBUS)
+- **Hardware targets:** ESP32, PC (soft-PLC), mobile controller
 
 ---
 
@@ -112,35 +121,40 @@ A brief overview of the most important directories:
 
 ## ✅ Prerequisites
 
-* [Eclipse 4diac IDE](https://www.eclipse.org/4diac/) (tested with `4diac-ide_3.2.0`, see `readme.txt`) incl. Java runtime environment
-* Jetter / Bucher **ISO-Designer** for editing the `.jop`/`.jvi` VT pool files
-* **Node.js** (for the web clients, e.g. `npm --prefix Ventilsteuerung/Web-Clients/apixon-diodo-client install && npm --prefix Ventilsteuerung/Web-Clients/apixon-diodo-client run build`, likewise for `apixon-pwm-client`)
-* **Python 3** (for the helper scripts in `scripts_central/`)
-* Optional: FORTE runtime environment (PC or target device) for deploying the `.fboot` files
+- [Eclipse 4diac IDE](https://www.eclipse.org/4diac/) (tested with `4diac-ide_3.2.0`, see `readme.txt`) incl. Java runtime environment
+- Jetter / Bucher **ISO-Designer** for editing the `.jop`/`.jvi` VT pool files
+- **Node.js** (for the web clients, e.g. `npm --prefix Ventilsteuerung/Web-Clients/apixon-diodo-client install && npm --prefix Ventilsteuerung/Web-Clients/apixon-diodo-client run build`, likewise for `apixon-pwm-client`)
+- **Python 3** (for the helper scripts in `scripts_central/`)
+- Optional: FORTE runtime environment (PC or target device) for deploying the `.fboot` files
 
 ## 🚀 Getting Started
 
 ### 1. Get the project
+
 You have two options for obtaining the files:
 
-* **Option A: ZIP download (simple & fast)** You can download the current state directly as a ZIP file. This requires **no Git client**.  
+- **Option A: ZIP download (simple & fast)** You can download the current state directly as a ZIP file. This requires **no Git client**.  
     📦 [**Go to Downloads / Releases**](https://github.com/Meisterschulen-am-Ostbahnhof-Munchen/4diac_training1/releases)
 
-* **Option B: Clone the repository (for developers)** Use this method if you want to use version control:
+- **Option B: Clone the repository (for developers)** Use this method if you want to use version control:
+
     ```bash
     git clone https://github.com/Meisterschulen-am-Ostbahnhof-Munchen/4diac_training1.git
     ```
 
 ### 2. Start the 4diac IDE
+
 Select the `Ventilsteuerung/4diacIDE-workspace` folder from the downloaded package as your workspace.
 
 ### 3. Import libraries
+
 Make sure the `isobus`, `logiBUS`, and `iec61131` libraries are correctly linked on the path.
 
 ### 4. Deploy
+
 Use the `.launch` files in `Ventilsteuerung/4diacIDE-workspace/test_*/Launches`, or the `.fboot` files in the `Ventilsteuerung/boot-files` folder, to load the application onto your target device (or the FORTE PC).
 
------
+---
 
 ## 📚 Documentation & Exercise Series
 
@@ -171,7 +185,7 @@ Each of the three wikis (4, 4.1, 4.2) also has a downloadable PDF handbook, link
 **Specific:**
 `Valve Control`, `Hydraulics`, `Master Craftsman School Project`, `Open Source PLC`
 
------
+---
 
 **Note:** This project is primarily intended for educational purposes as part of the Meisterschulen am Ostbahnhof München (Master Craftsman Schools at Munich East Station).
 

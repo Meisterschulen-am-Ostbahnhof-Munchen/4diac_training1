@@ -1,6 +1,5 @@
 import os
 import sys
-import re
 from lxml import etree
 
 import json
