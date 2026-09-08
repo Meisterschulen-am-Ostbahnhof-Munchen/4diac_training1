@@ -109,6 +109,16 @@ async function connect() {
     connectionStrategy: { maxRetry: 0 },
   })
 
+  /* Guards against a stale/abandoned attempt's own listener firing on this
+   * client after a newer connect()/disconnect() has already run - without
+   * this, this client's self-emitted 'close' during its own cleanup
+   * disconnectP() could clear the state of a meanwhile-active newer
+   * connection, since `!connected.value` alone can't tell the two apart. */
+  const onLost = () => {
+    if (token !== connectToken) return
+    handleLost()
+  }
+
   try {
     await localClient.connectP(endpointUrl.value)
     if (token !== connectToken) {
@@ -116,21 +126,15 @@ async function connect() {
       return
     }
 
-    localClient.on('connection_lost', handleLost)
-    localClient.on('close', handleLost)
+    localClient.on('connection_lost', onLost)
+    localClient.on('close', onLost)
     const localSession = await localClient.createSessionP({})
     if (token !== connectToken) {
       await localClient.disconnectP().catch(() => {})
       return
     }
 
-    client = localClient
-    session = localSession
-    connected.value = true
-    connecting.value = false
-    status.value = 'Verbunden'
-
-    const subscription = new ClientSubscription(session, {
+    const subscription = new ClientSubscription(localSession, {
       requestedPublishingInterval: 100,
       requestedLifetimeCount: 100,
       requestedMaxKeepAliveCount: 2,
@@ -178,15 +182,33 @@ async function connect() {
       tickPulse.value = true
       setTimeout(() => { tickPulse.value = false }, 400)
     })
+
+    if (token !== connectToken) {
+      await localClient.disconnectP().catch(() => {})
+      return
+    }
+
+    /* Only published once the whole chain (transport, session, and all
+     * three subscriptions) has succeeded. Publishing earlier and only
+     * resetting connected.value on a later failure left client/session
+     * pointing at a half-initialized connection - a retry would then
+     * overwrite them with a new attempt's client/session without ever
+     * closing the failed one. */
+    client = localClient
+    session = localSession
+    connected.value = true
+    connecting.value = false
+    status.value = 'Verbunden'
   } catch (err) {
     if (token === connectToken) {
       status.value = 'Fehler: ' + (err as Error).message
       connected.value = false
-    } else {
-      /* Superseded by a disconnect()/newer connect() - just release
-       * whatever this stale attempt had opened. */
-      await localClient.disconnectP().catch(() => {})
     }
+    /* client/session are only published on full success (see above), so a
+     * failure here never corrupts the shared state - but the connection/
+     * session this attempt itself opened still needs closing, or it leaks
+     * silently once the next connect() retry moves on. */
+    await localClient.disconnectP().catch(() => {})
   } finally {
     if (token === connectToken) {
       connecting.value = false
@@ -212,13 +234,12 @@ async function toggleOutput(n: number) {
 }
 
 async function disconnect() {
-  /* Invalidate any connect() attempt still in flight so it closes its own
-   * (not yet published) client/session instead of resurrecting the
-   * connection after we've torn down. */
+  /* Invalidate any connect() attempt still in flight - including this
+   * client's own onLost listener, which checks connectToken before acting -
+   * so it closes its own (not yet published) client/session instead of
+   * resurrecting the connection after we've torn down. */
   connectToken++
   if (client) {
-    client.off('connection_lost', handleLost)
-    client.off('close', handleLost)
     await client.disconnectP()
   }
   client = null
