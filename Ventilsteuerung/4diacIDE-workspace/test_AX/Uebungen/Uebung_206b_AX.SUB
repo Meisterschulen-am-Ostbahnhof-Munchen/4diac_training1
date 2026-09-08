@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SubAppType Name="Uebung_206b_AX" Comment="Interlock: ILOCK_T_FF_SR_AX (2 gegenseitig verriegelte Toggle-Flip-Flops via Adapter-Kette, zusaetzlich direktes Set/Reset auf FF1)">
+	<Identification Standard="61499-2" Description="Copyright (c) 2026 Meisterschulen am Ostbahnhof  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0">
+	</Identification>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2026-09-07" Remarks="initial API and implementation and/or initial documentation - TRAINING_GAPS.md Punkt 7">
+	</VersionInfo>
+	<CompilerInfo packageName="Uebungen">
+		<Import declaration="logiBUS::io::DI::logiBUS_DI::Input_I1"/>
+		<Import declaration="logiBUS::io::DI::logiBUS_DI::Input_I2"/>
+		<Import declaration="logiBUS::io::DI::logiBUS_DI::Input_I3"/>
+		<Import declaration="logiBUS::io::DI::logiBUS_DI::Input_I4"/>
+		<Import declaration="logiBUS::io::DI::logiBUS_DI_Events::BUTTON_SINGLE_CLICK"/>
+		<Import declaration="logiBUS::io::DQ::logiBUS_DO::Output_Q1"/>
+		<Import declaration="logiBUS::io::DQ::logiBUS_DO::Output_Q2"/>
+	</CompilerInfo>
+	<SubAppInterfaceList>
+	</SubAppInterfaceList>
+	<SubAppNetwork>
+		<FB Name="DigitalInput_CLK_I1" Type="logiBUS::io::DI::logiBUS_IE" x="-6000" y="-500">
+			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="Input" Value="Input_I1"/>
+			<Parameter Name="InputEvent" Value="BUTTON_SINGLE_CLICK"/>
+		</FB>
+		<FB Name="DigitalInput_Set_I3" Type="logiBUS::io::DI::logiBUS_IE" x="-6000" y="-2700">
+			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="Input" Value="Input_I3"/>
+			<Parameter Name="InputEvent" Value="BUTTON_SINGLE_CLICK"/>
+		</FB>
+		<FB Name="DigitalInput_Reset_I4" Type="logiBUS::io::DI::logiBUS_IE" x="-6000" y="-1600">
+			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="Input" Value="Input_I4"/>
+			<Parameter Name="InputEvent" Value="BUTTON_SINGLE_CLICK"/>
+		</FB>
+		<FB Name="DigitalInput_CLK_I2" Type="logiBUS::io::DI::logiBUS_IE" x="-6000" y="600">
+			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="Input" Value="Input_I2"/>
+			<Parameter Name="InputEvent" Value="BUTTON_SINGLE_CLICK"/>
+		</FB>
+		<FB Name="ILOCK_T_FF_SR_1" Type="logiBUS::signalprocessing::interlock::ILOCK_T_FF_SR_AX" x="-4000" y="-1000">
+		</FB>
+		<FB Name="ILOCK_T_FF_SR_2" Type="logiBUS::signalprocessing::interlock::ILOCK_T_FF_SR_AX" x="-1800" y="500">
+		</FB>
+		<FB Name="DigitalOutput_Q1" Type="logiBUS::io::DQ::logiBUS_QXA" x="0" y="1300">
+			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="Output" Value="Output_Q1"/>
+		</FB>
+		<FB Name="DigitalOutput_Q2" Type="logiBUS::io::DQ::logiBUS_QXA" x="-100" y="300">
+			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="Output" Value="Output_Q2"/>
+		</FB>
+		<Comment Comment="Wie Uebung_206_AX (ILOCK_T_FF_AX), aber ILOCK_T_FF_SR_AX statt ILOCK_T_FF_AX: zusaetzlich zum CLK-Toggle gibt es je Instanz direkte S/R-Eingaenge. Hier nur an FF1 gezeigt (I3=Set, I4=Reset) - Set/Reset auf FF1 loest ueber die Adapter-Kette (ILOCK_OUT-&gt;ILOCK_IN) dieselbe gegenseitige Verriegelung aus wie ein CLK-Toggle: wird FF1 gesetzt, wird FF2 automatisch zurueckgesetzt und umgekehrt." x="-6100" y="1900" width="3100" height="1600"/>
+		<EventConnections>
+			<Connection Source="DigitalInput_CLK_I1.IND" Destination="ILOCK_T_FF_SR_1.CLK" dx1="440"/>
+			<Connection Source="DigitalInput_Set_I3.IND" Destination="ILOCK_T_FF_SR_1.S" dx1="553.33"/>
+			<Connection Source="DigitalInput_Reset_I4.IND" Destination="ILOCK_T_FF_SR_1.R" dx1="440"/>
+			<Connection Source="DigitalInput_CLK_I2.IND" Destination="ILOCK_T_FF_SR_2.CLK" dx1="386.67"/>
+		</EventConnections>
+		<AdapterConnections>
+			<Connection Source="ILOCK_T_FF_SR_1.ILOCK_OUT" Destination="ILOCK_T_FF_SR_2.ILOCK_IN" dx1="766.67"/>
+			<Connection Source="ILOCK_T_FF_SR_1.Q" Destination="DigitalOutput_Q1.OUT" dx1="486.67"/>
+			<Connection Source="ILOCK_T_FF_SR_2.Q" Destination="DigitalOutput_Q2.OUT" dx1="586.67"/>
+		</AdapterConnections>
+	</SubAppNetwork>
+	<Attribute Name="Documentation" Type="CDATA"><![CDATA[<h1>ILOCK_T_FF_SR_AX: Verriegelbares Toggle-Flip-Flop mit direktem Set/Reset</h1>
+
+<p>Letzter bisher ungenutzter ILOCK-Typ (siehe ILOCK_README.md, "Nicht in Übungen verwendet").
+Erweitert <code>ILOCK_T_FF_AX</code> (siehe <code>Uebung_206_AX</code>) um zwei zusätzliche
+EventInputs <code>S</code>/<code>R</code>: der Ausgang lässt sich nicht nur per
+<code>CLK</code> togglen, sondern auch direkt setzen/rücksetzen - beides wirkt über dieselbe
+<code>ILOCK_IN</code>/<code>ILOCK_OUT</code>-Adapterkette gegenseitig verriegelnd auf die
+anderen Kettenglieder.</p>
+
+<h2>Funktionsbeschreibung</h2>
+
+<ul>
+	<li>Zwei <code>ILOCK_T_FF_SR_AX</code>-Instanzen sind über
+	<code>ILOCK_T_FF_SR_1.ILOCK_OUT</code> → <code>ILOCK_T_FF_SR_2.ILOCK_IN</code> verkettet -
+	genau wie bei <code>ILOCK_T_FF_AX</code>.</li>
+	<li><code>FF1</code> hat zusätzlich eigene Set-/Reset-Taster (<code>I3</code>/<code>I4</code>).
+	Ein direktes Set auf FF1 verriegelt FF2 genauso, als hätte man FF1 per CLK eingeschaltet - die
+	Verriegelungskette unterscheidet nicht, ob ein Zustandswechsel durch Toggle oder durch
+	direktes S/R ausgelöst wurde.</li>
+</ul>
+
+<h2>Arbeitsauftrag</h2>
+
+<p>Testen Sie: I1 (CLK FF1) klicken → Q1 EIN, Q2 automatisch AUS (wie in 206). I3 (Set FF1)
+klicken → dasselbe Ergebnis, aber ohne Toggle - Q1 ist danach garantiert EIN, unabhängig vom
+vorherigen Zustand. I4 (Reset FF1) klicken → Q1 AUS (Q2 bleibt unverändert, da Reset kein
+Verriegelungssignal an die Kette sendet - vergleichen Sie das Verhalten von CLK/S vs. R im
+Baustein-Netzwerk von <code>ILOCK_T_FF_SR_AX</code>).</p>
+]]></Attribute>
+</SubAppType>
