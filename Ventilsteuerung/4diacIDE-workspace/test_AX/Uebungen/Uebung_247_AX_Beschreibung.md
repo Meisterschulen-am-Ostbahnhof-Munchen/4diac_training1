@@ -6,21 +6,21 @@
 `Uebung_245_AX` hat den Korrekturfaktor nur auf dem VT-Zahlenfeld sichtbar gemacht. Diese Übung
 ist eine Kopie von `Uebung_245_AX` mit einem zusätzlichen, echten `logiBUS_QDA_PWM`-Ausgang auf
 `Q1` — damit lässt sich der korrigierte Wert nicht nur ablesen, sondern mit Multimeter oder
-Oszilloskop direkt am Ausgang nachmessen. Das ist derselbe letzte Schritt, der auch in der
-echten Krauternter-PWM-auf-PVEA-Kette (`RampLimitFS_TO_logiBUS_QDA_PWM_OPC.SUB`) den Sollwert an
-die Hardware bringt.
+Oszilloskop direkt am Ausgang nachmessen. Das ist derselbe letzte Schritt, der auch in einer
+realen PWM-auf-PVEA-Kette (siehe `RampLimitFS_TO_logiBUS_QDA_PWM_OPC.SUB` in `MyLib_AX-1.0.0`)
+den Sollwert an die Hardware bringt.
 
 ### Funktionsbeschreibung
 - **Unverändert wie `Uebung_245_AX`:** `NumericValue_PHYSA` (`I3`) → `AR_MUL_2`
   (`F_MUL_KORREKTUR`, `IN2` fest über `initval_AR` auf `REAL#1,17619`) liefert den korrigierten
   Prozentwert.
 - **Verzweigen mit `AR_SPLIT_2`:** Ein AR-Adapter-Plug kann nur an EINEN Socket angeschlossen
-  werden (dieselbe 1:1-Regel wie bei den anderen Adapter-Typen, siehe z.B. `AX_SPLIT_n` in
-  Krauternters `Softkey_Aux_TO_Remote_WRITE`-Familie). `AR_SPLIT_2` fächert den korrigierten Wert
+  werden (dieselbe 1:1-Regel wie bei den anderen Adapter-Typen, siehe z.B. `AX_SPLIT_n` in der
+  `Softkey_Aux_IXA_TO_Remote_WRITE`-Familie). `AR_SPLIT_2` fächert den korrigierten Wert
   auf zwei Ziele auf: `OUT1` weiter zum VT-Feld `N3` (wie bisher), `OUT2` neu zur PWM-Kette.
 - **Prozent auf 13-Bit-Tastgrad:** ein zweiter `AR_MUL_2` (mit `initval_AR = REAL#81,91`, das ist
   8191/100) skaliert den 0-100%-Wert auf den 13-Bit-LEDC-Tastgrad 0-8191 — exakt dieselbe
-  Umrechnung, die in Krauternters `RampLimitFS_TO_logiBUS_QDA_PWM_OPC.SUB` über
+  Umrechnung, die in `RampLimitFS_TO_logiBUS_QDA_PWM_OPC.SUB` (`MyLib_AX-1.0.0`) über
   `F_MUL_TO_PWM13BIT`/`F_DIV_TO_PWM13BIT` läuft, hier aber als reine AR-Multiplikation mit einem
   einzigen festen Faktor (da wir schon in Prozent, nicht im ISO-11783-Rohwert 0-64255, rechnen).
 - **REAL nach DWORD, aber richtig herum:** `AR_TO_AD_NUM` — numerische Wandlung `REAL`→`DWORD`

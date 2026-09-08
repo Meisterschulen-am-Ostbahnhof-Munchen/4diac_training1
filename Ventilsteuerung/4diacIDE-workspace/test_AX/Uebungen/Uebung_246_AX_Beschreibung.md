@@ -7,9 +7,9 @@ Viele reale Funktionen (siehe `Uebung_245_AX` und die zugehörige PVEA-Kompensat
 brauchen keinen echten stufenlosen Analogeingang, sondern nur zwei einfache Taster "Hoch" und
 "Runter", deren Zustand auf drei feste Sollwerte abgebildet wird: gedrückt "Hoch" → oberer
 Wert, gedrückt "Runter" → unterer Wert, keiner gedrückt (bzw. losgelassen) → Neutralwert in der
-Mitte. Das ist die digitale Vorstufe zu einem echten Proportional-Joystick und genau das Muster,
-das für die Krauternter-Funktionen "Aufnahme Heben/Senken" (Danfoss PVEA) gebraucht wird: dort
-sind 25 %/50 %/75 % von `U_DC` die drei Sollwerte.
+Mitte. Das ist die digitale Vorstufe zu einem echten Proportional-Joystick — z.B. für ein
+Heben/Senken-Funktion mit einem Danfoss-PVEA-Proportionalventil, bei der 25 %/50 %/75 % von
+`U_DC` als die drei Sollwerte dienen.
 
 ### Funktionsbeschreibung
 - **Eingabe:** `I1` (Hoch) und `I2` (Runter) werden wie in `Uebung_001_AX` über `logiBUS_IXA`

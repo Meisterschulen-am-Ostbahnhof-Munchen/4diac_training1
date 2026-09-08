@@ -29,8 +29,8 @@ zweiten Faktor skaliert ihn, ein Ausgabe-Zahlenfeld (`N3`) zeigt das Ergebnis.
   `AR_ADD_2` aus `Uebung_011b1_PHYSA`, nur mit `MUL` statt `ADD`) multipliziert `IN1` (der
   durchgereichte Sollwert von `I3`) mit `IN2` (der Konstante aus `initval_AR`) — rein über
   AR-Adapter-Verbindungen, ganz ohne eigene `REQ`/`CNF`-Verkabelung. Der Faktor 1,17619 ist der
-  Kehrwert von 0,8502 — dem Lastteiler-Verhältnis aus der Krauternter-PVEA-Kompensationsrechnung
-  (`KrauternterSchaltplan/Zeichnungen/Schaltplan PWM auf PVG v24 - Uebersicht.md`): 12 kΩ
+  Kehrwert von 0,8502 — einem beispielhaften Lastteiler-Verhältnis, wie es bei einem Danfoss-PVEA-
+  Proportionalventil mit vorgeschaltetem PWM-Tiefpassfilter auftreten kann: 12 kΩ
   Verbraucher-Eingangsimpedanz gegen 2,115 kΩ Filter-Ausgangsimpedanz.
 - **Ausgabe:** `AR_MUL_2.OUT` geht direkt (AR-Adapter) auf `Q_NumericValue_PHYSA.rPhys`, das das
   Ergebnis auf `OutputNumber_N3_N` schreibt.
@@ -48,9 +48,9 @@ AR-Adapter, je nachdem was die Nachbarbausteine schon anbieten).
    Sockets von `AR_MUL_2`, dessen `OUT`-Plug mit `Q_NumericValue_PHYSA.rPhys`.
 3. Testen Sie: Geben Sie auf dem VT-Eingabefeld `I3` einen Wert ein (z.B. 50,00) und prüfen Sie,
    dass `N3` den mit dem Faktor multiplizierten Wert anzeigt (bei 1,17619: 58,81).
-4. Zusatzaufgabe: Welche `INIT_VAL`-Werte würden 25 % und 75 % auf die aus der
-   PVEA-Kompensationsrechnung bekannten 29,41 % bzw. 88,22 % korrigieren? (Antwort: derselbe
-   Faktor 1,17619 — die Korrektur ist linear und gilt für den gesamten Bereich einheitlich.)
+4. Zusatzaufgabe: Auf welche Werte korrigiert derselbe Faktor 1,17619 die Eingaben 25 % und 75 %?
+   (Antwort: 29,40 % bzw. 88,21 % — die Korrektur ist linear und gilt mit demselben Faktor für
+   den gesamten Bereich einheitlich, keine gesonderten `INIT_VAL`-Werte pro Eingabe nötig.)
 
 ### Referenzlösung
 `Uebung_245_AX.SUB`. Verwandte Übungen: `Uebung_011f_PHYSA` (reines Durchschleifen ohne

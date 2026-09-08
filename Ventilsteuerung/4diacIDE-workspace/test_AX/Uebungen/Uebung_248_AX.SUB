@@ -48,7 +48,7 @@
 			<Parameter Name="QI" Value="TRUE"/>
 			<Parameter Name="Output" Value="Output_Q1"/>
 		</FB>
-		<Comment Comment="0-100% Tastgrad = 0-8191 (13-Bit LEDC, siehe Krauternter RampLimitFS_TO_logiBUS_QDA_PWM_OPC.SUB): Faktor 81,91 = 8191/100. Mit Multimeter/Oszilloskop an Q1 gegen GND: Mittelwert = Tastgrad% x Versorgungsspannung - bei 25/50/75% Tastgrad direkt vergleichbar mit den PVEA-Sollspannungen 0,25/0,50/0,75 x U_DC." x="-10100" y="2800" width="9000" height="900"/>
+		<Comment Comment="0-100% Tastgrad = 0-8191 (13-Bit LEDC, siehe RampLimitFS_TO_logiBUS_QDA_PWM_OPC.SUB in MyLib_AX-1.0.0): Faktor 81,91 = 8191/100. Mit Multimeter/Oszilloskop an Q1 gegen GND: Mittelwert = Tastgrad% x Versorgungsspannung - bei 25/50/75% Tastgrad direkt vergleichbar mit den PVEA-Sollspannungen 0,25/0,50/0,75 x U_DC." x="-10100" y="2800" width="9000" height="900"/>
 		<FB Name="AR_TO_AD_NUM" Type="adapter::conversion::unidirectional::AR_TO_AD_NUM" x="3500" y="1100">
 		</FB>
 		<AdapterConnections>

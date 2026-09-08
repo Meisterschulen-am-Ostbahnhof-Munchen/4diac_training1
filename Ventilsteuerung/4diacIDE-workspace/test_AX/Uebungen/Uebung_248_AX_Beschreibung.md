@@ -7,7 +7,7 @@
 Diese Übung ist eine Kopie von `Uebung_246_AX` mit einem zusätzlichen, echten
 `logiBUS_QDA_PWM`-Ausgang auf `Q1` — damit lässt sich das Ergebnis direkt mit Multimeter oder
 Oszilloskop nachmessen, statt es nur auf dem VT zu prüfen. Zusammen mit `Uebung_247_AX` deckt das
-beide Bausteine der Krauternter-PVEA-Funktion "Aufnahme Heben/Senken" ab: dort Taster →
+beide Bausteine einer typischen Heben/Senken-Funktion mit Taster-Sollwertvorgabe ab: dort Taster →
 75/50/25 %-Sollwert (wie hier), hier zusätzlich die Umsetzung in ein echtes PWM-Signal.
 
 ### Funktionsbeschreibung
@@ -23,8 +23,8 @@ beide Bausteine der Krauternter-PVEA-Funktion "Aufnahme Heben/Senken" ab: dort T
 
 **Messen:** Mittelwert an `Q1` gegen GND = Tastgrad% × Versorgungsspannung. Da hier keine
 Korrektur stattfindet, sollten `I1` gehalten 75 % (0,75 × U_DC), `I2` gehalten 25 % (0,25 × U_DC)
-und Neutralstellung 50 % (0,50 × U_DC) ergeben — direkt vergleichbar mit den PVEA-Sollspannungen
-aus der Krauternter-Kompensationsrechnung.
+und Neutralstellung 50 % (0,50 × U_DC) ergeben — direkt vergleichbar mit den erwarteten
+PVEA-Sollspannungen aus einer entsprechenden Kompensationsrechnung.
 
 ### Arbeitsauftrag
 1. Legen Sie die SubApp `Uebung_248_AX` an (bereits als Referenzlösung vorhanden).
