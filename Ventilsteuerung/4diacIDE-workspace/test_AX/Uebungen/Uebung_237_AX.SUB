@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SubAppType Name="Uebung_237_AX" Comment="AD_TO_AR-Bitfalle: derselbe Analogwert einmal FALSCH ueber AD_TO_AR (Bit-Reinterpretation) und einmal RICHTIG ueber AD_TO_AR_NUM (echter numerischer Cast) gelesen">
+	<Identification Standard="61499-2" Description="Copyright (c) 2026 Meisterschulen am Ostbahnhof  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0">
+	</Identification>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2026-09-07" Remarks="initial API and implementation and/or initial documentation">
+	</VersionInfo>
+	<CompilerInfo packageName="Uebungen">
+		<Import declaration="logiBUS::io::AI::logiBUS_AI::AnalogInput_I4"/>
+	</CompilerInfo>
+	<SubAppInterfaceList>
+	</SubAppInterfaceList>
+	<SubAppNetwork>
+		<FB Name="AnalogInput_I4" Type="logiBUS::io::AI::logiBUS_AI_IDA" x="-6200" y="0">
+			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="Input" Value="AnalogInput_I4"/>
+			<Parameter Name="AnalogInput_hysteresis" Value="50"/>
+			<Parameter Name="TimeDelta" Value="250"/>
+			<Parameter Name="TimeRateLimit" Value="100"/>
+		</FB>
+		<FB Name="AD_SPLIT_2" Type="adapter::events::unidirectional::AD_SPLIT_2" x="-4400" y="0">
+		</FB>
+		<FB Name="AD_TO_AR_WRONG" Type="adapter::conversion::unidirectional::AD_TO_AR" x="-2400" y="-800">
+		</FB>
+		<FB Name="AD_TO_AR_NUM_CORRECT" Type="adapter::conversion::unidirectional::AD_TO_AR_NUM" x="-2400" y="800">
+		</FB>
+		<Comment Comment="FALSCH: AD_TO_AR ist eine reine IEEE754-Bit-Reinterpretation (F_DWORD_TO_REAL), kein numerischer Cast. &#10;Derselbe Analog-Rohwert, der ueber AD_TO_AR_NUM_CORRECT (unten) den richtigen Zahlenwert liefert, ergibt hier eine bedeutungslose Zahl nahe Null. &#10;AR_OUT.D1 beider Bausteine im 4diac-Monitor beobachten (rechte Maustaste auf den Pin -&gt; Watch) und vergleichen." x="-6200" y="-2400" width="4600" height="1300"/>
+		<AdapterConnections>
+			<Connection Source="AnalogInput_I4.IN" Destination="AD_SPLIT_2.IN" dx1="500"/>
+			<Connection Source="AD_SPLIT_2.OUT1" Destination="AD_TO_AR_WRONG.AD_IN" dx1="600"/>
+			<Connection Source="AD_SPLIT_2.OUT2" Destination="AD_TO_AR_NUM_CORRECT.AD_IN" dx1="600"/>
+		</AdapterConnections>
+	</SubAppNetwork>
+	<Attribute Name="Documentation" Type="CDATA"><![CDATA[<h1>AD_TO_AR-Bitfalle: Bit-Reinterpretation vs. numerischer Cast</h1>
+
+<p>Derselbe rohe Analogwert (<code>AnalogInput_I4</code>, ueber <code>AD_SPLIT_2</code> verdoppelt)
+wird hier auf zwei Arten von <code>AD</code> (DWORD-Adapter) nach <code>AR</code> (REAL-Adapter)
+konvertiert:</p>
+
+<ul>
+	<li><strong><code>AD_TO_AR_WRONG</code></strong> (<code>AD_TO_AR</code>): sieht wie die
+	naheliegende direkte Konvertierung aus, ist intern aber <code>F_DWORD_TO_REAL</code> - eine
+	reine IEEE754-Bit-Reinterpretation. Ein roher Analogwert wie <code>DWORD#2048</code> wird
+	dadurch NICHT zu <code>REAL#2048.0</code>, sondern zu einer bedeutungslosen Zahl nahe Null.</li>
+	<li><strong><code>AD_TO_AR_NUM_CORRECT</code></strong> (<code>AD_TO_AR_NUM</code>): macht
+	denselben Job numerisch korrekt, ueber die Zwischenkette DWORD-&gt;UDINT-&gt;REAL (dieselbe
+	Kette, die <code>Uebung_028a_AR</code> von Hand aus <code>AD_TO_AUDI</code>+<code>AUDI_TO_AR</code>
+	zusammensetzt - <code>AD_TO_AR_NUM</code> ist das drop-in-kompatible Einzelbaustein-Aequivalent).</li>
+</ul>
+
+<h2>Arbeitsauftrag</h2>
+
+<p>Beide <code>AR_OUT.D1</code>-Pins im laufenden 4diac-Monitor beobachten (rechte Maustaste auf den
+Pin -&gt; Watch) und vergleichen: <code>AD_TO_AR_WRONG</code> zeigt eine kleine, mit dem tatsaechlichen
+Analogwert scheinbar unzusammenhaengende Zahl; <code>AD_TO_AR_NUM_CORRECT</code> zeigt den
+plausiblen, tatsaechlichen Messwert. Erklaeren Sie, warum der "direkt aussehende" Weg
+(<code>AD_TO_AR</code>) hier der falsche ist - siehe auch die Dokumentation in
+<code>AD_TO_AR.fbt</code> selbst, die genau vor dieser Falle warnt.</p>
+
+<h2>Wann ist AD_TO_AR trotzdem richtig?</h2>
+
+<p>Wenn <code>AD_IN</code> bereits ein Bitmuster ist, das als REAL gemeint war (z.B. das Ergebnis
+von <code>F_REAL_TO_DWORD</code> an anderer Stelle) - dann ist die Bit-Reinterpretation genau die
+richtige, verlustfreie Rueckrichtung. Ein roher Analog-/Zaehlerwert wie in dieser Uebung ist das
+Gegenbeispiel: hier ist der numerische Cast (<code>AD_TO_AR_NUM</code>) richtig.</p>
+]]></Attribute>
+</SubAppType>

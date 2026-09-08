@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SubAppType Name="Uebung_172b_ASRT" Comment="Exercise for ASRT_AX_T_FF_SR, ueber AE-Adapter statt rohe Events (ASRT_3AE_TO_SRT statt ASRT_3EVENTS_TO_SRT)">
+	<Identification Standard="61499-2" Description="Copyright (c) 2026 Meisterschulen am Ostbahnhof  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0">
+	</Identification>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2026-09-07" Remarks="initial API and implementation and/or initial documentation">
+	</VersionInfo>
+	<CompilerInfo packageName="Uebungen">
+		<Import declaration="logiBUS::io::DI::logiBUS_DI::Input_I1"/>
+		<Import declaration="logiBUS::io::DI::logiBUS_DI::Input_I2"/>
+		<Import declaration="logiBUS::io::DI::logiBUS_DI::Input_I3"/>
+		<Import declaration="logiBUS::io::DI::logiBUS_DI_Events::BUTTON_SINGLE_CLICK"/>
+		<Import declaration="logiBUS::io::DQ::logiBUS_DO::Output_Q1"/>
+	</CompilerInfo>
+	<SubAppInterfaceList>
+	</SubAppInterfaceList>
+	<SubAppNetwork>
+		<FB Name="ASRT_AX_T_FF_SR_1" Type="adapter::events::unidirectional::ASRT_AX_T_FF_SR" x="-600" y="2100">
+		</FB>
+		<FB Name="ASRT_3AE_TO_SRT_1" Type="adapter::conversion::unidirectional::ASRT_3AE_TO_SRT" x="-2500" y="1800">
+		</FB>
+		<FB Name="AE_EVENT_TO_E_SET" Type="adapter::conversion::unidirectional::AE_EVENT_TO_E" x="-4300" y="1300">
+		</FB>
+		<FB Name="AE_EVENT_TO_E_RESET" Type="adapter::conversion::unidirectional::AE_EVENT_TO_E" x="-4300" y="2500">
+		</FB>
+		<FB Name="AE_EVENT_TO_E_TOGGLE" Type="adapter::conversion::unidirectional::AE_EVENT_TO_E" x="-4300" y="3700">
+		</FB>
+		<FB Name="DigitalInput_CLK_I1" Type="logiBUS::io::DI::logiBUS_IE" x="-5800" y="1300">
+			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="Input" Value="Input_I1"/>
+			<Parameter Name="InputEvent" Value="BUTTON_SINGLE_CLICK"/>
+		</FB>
+		<FB Name="DigitalOutput_Q1" Type="logiBUS::io::DQ::logiBUS_QXA" x="800" y="1500">
+			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="Output" Value="Output_Q1"/>
+		</FB>
+		<FB Name="DigitalInput_CLK_I2" Type="logiBUS::io::DI::logiBUS_IE" x="-5800" y="2500">
+			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="Input" Value="Input_I2"/>
+			<Parameter Name="InputEvent" Value="BUTTON_SINGLE_CLICK"/>
+		</FB>
+		<FB Name="DigitalInput_CLK_I3" Type="logiBUS::io::DI::logiBUS_IE" x="-5800" y="3700">
+			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="Input" Value="Input_I3"/>
+			<Parameter Name="InputEvent" Value="BUTTON_SINGLE_CLICK"/>
+		</FB>
+		<Comment Comment="Vergleich zu Uebung_172_ASRT: dort ASRT_3EVENTS_TO_SRT mit rohen EventInputs (jede beliebige Quelle passt, ohne Typ). &#10;Hier ASRT_3AE_TO_SRT mit AE-Adapter-Sockets: jede Quelle muss selbst einen AE-Plug liefern - AE_EVENT_TO_E baut je Kanal die Bruecke vom rohen Klick-Event zum typisierten AE. &#10;Vorteil: AE-Plugs lassen sich wie jeder Adapter mit AE_SPLIT_2 vervielfaeltigen oder zusammenfuehren, ein rohes Event nicht." x="-5800" y="4800" width="4200" height="900"/>
+		<EventConnections>
+			<Connection Source="DigitalInput_CLK_I1.IND" Destination="AE_EVENT_TO_E_SET.REQ" dx1="153.33"/>
+			<Connection Source="DigitalInput_CLK_I2.IND" Destination="AE_EVENT_TO_E_RESET.REQ" dx1="153.33"/>
+			<Connection Source="DigitalInput_CLK_I3.IND" Destination="AE_EVENT_TO_E_TOGGLE.REQ" dx1="153.33"/>
+		</EventConnections>
+		<AdapterConnections>
+			<Connection Source="AE_EVENT_TO_E_SET.AE_OUT" Destination="ASRT_3AE_TO_SRT_1.SET_IN" dx1="500"/>
+			<Connection Source="AE_EVENT_TO_E_RESET.AE_OUT" Destination="ASRT_3AE_TO_SRT_1.RESET_IN" dx1="500"/>
+			<Connection Source="AE_EVENT_TO_E_TOGGLE.AE_OUT" Destination="ASRT_3AE_TO_SRT_1.TOGGLE_IN" dx1="500"/>
+			<Connection Source="ASRT_3AE_TO_SRT_1.ASRT_OUT" Destination="ASRT_AX_T_FF_SR_1.S_R_T" dx1="406.67"/>
+			<Connection Source="ASRT_AX_T_FF_SR_1.Q" Destination="DigitalOutput_Q1.OUT" dx1="346.67"/>
+		</AdapterConnections>
+	</SubAppNetwork>
+	<Attribute Name="Documentation" Type="CDATA"><![CDATA[<h1>SET/RESET/TOGGLE über AE-Adapter statt rohe Events</h1>
+
+<p>Dieselbe Funktion wie <code>Uebung_172_ASRT</code> (I1 = SET-Klick, I2 = RESET-Klick, I3 =
+TOGGLE-Klick, Latch via <code>ASRT_AX_T_FF_SR</code>), aber der Umweg über
+<code>ASRT_3AE_TO_SRT</code> statt <code>ASRT_3EVENTS_TO_SRT</code> zeigt, WARUM es den
+AE-Adapter-Weg überhaupt gibt.</p>
+
+<h2>Funktionsbeschreibung</h2>
+
+<ul>
+	<li><code>ASRT_3EVENTS_TO_SRT</code> (in <code>Uebung_172_ASRT</code>) hat rohe
+	<code>EventInputs</code> - jede beliebige Event-Quelle passt direkt, ohne Typ-Zwang, aber auch
+	ohne dass sich das Signal wie ein Adapter weiterverarbeiten lässt.</li>
+	<li><code>ASRT_3AE_TO_SRT</code> hat stattdessen <code>SET_IN</code>/<code>RESET_IN</code>/
+	<code>TOGGLE_IN</code> als <strong>AE-Adapter-Sockets</strong> - jede Quelle muss selbst einen
+	<code>AE</code>-Plug liefern. Je ein <code>AE_EVENT_TO_E</code> baut die Brücke: rohes
+	Klick-Event (<code>logiBUS_IE.IND</code>) hinein, getypter <code>AE</code>-Plug heraus.</li>
+	<li><strong>Der Gewinn</strong>: ein <code>AE</code>-Plug ist ein normaler Adapter wie
+	<code>AX</code>/<code>ASR</code>/<code>ASRT</code> - er lässt sich mit <code>AE_SPLIT_2</code>
+	vervielfältigen oder zusammenführen, genau wie es <code>Uebung_231_AX</code> für <code>ASR</code>
+	zeigt. Ein rohes Event kann das nicht.</li>
+</ul>
+
+<h2>Arbeitsauftrag</h2>
+
+<p>Testen Sie identisch zu <code>Uebung_172_ASRT</code>: I1 klicken → <code>Q1</code> EIN, I2
+klicken → <code>Q1</code> AUS, I3 klicken → <code>Q1</code> wechselt den Zustand. Vergleichen Sie im
+Editor beide SubApps - gleiches Verhalten, aber <code>Uebung_172b_ASRT</code> hat zwischen Tastern
+und Latch drei zusätzliche <code>AE_EVENT_TO_E</code>-Bausteine.</p>
+]]></Attribute>
+</SubAppType>

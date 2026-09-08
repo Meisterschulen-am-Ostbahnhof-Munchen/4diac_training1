@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SubAppType Name="Uebung_233_AX" Comment="3 Taster (I1/I2/I3) auf 1 SR-Latch (Last-Wins) via 3x AX_ASR_RF_TRIG + ASR_MERGE_3 + ASR_AX_SR, Ausgang Q1">
+	<Identification Standard="61499-2" Description="Copyright (c) 2026 Meisterschulen am Ostbahnhof  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0">
+	</Identification>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2026-09-07" Remarks="initial API and implementation and/or initial documentation">
+	</VersionInfo>
+	<CompilerInfo packageName="Uebungen">
+		<Import declaration="logiBUS::io::DI::logiBUS_DI::Input_I1"/>
+		<Import declaration="logiBUS::io::DI::logiBUS_DI::Input_I2"/>
+		<Import declaration="logiBUS::io::DI::logiBUS_DI::Input_I3"/>
+		<Import declaration="logiBUS::io::DQ::logiBUS_DO::Output_Q1"/>
+	</CompilerInfo>
+	<SubAppInterfaceList>
+	</SubAppInterfaceList>
+	<SubAppNetwork>
+		<FB Name="DigitalInput_I1" Type="logiBUS::io::DI::logiBUS_IXA" x="-6100" y="-2100">
+			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="Input" Value="Input_I1"/>
+		</FB>
+		<FB Name="DigitalInput_I2" Type="logiBUS::io::DI::logiBUS_IXA" x="-6100" y="-900">
+			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="Input" Value="Input_I2"/>
+		</FB>
+		<FB Name="DigitalInput_I3" Type="logiBUS::io::DI::logiBUS_IXA" x="-6100" y="400">
+			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="Input" Value="Input_I3"/>
+		</FB>
+		<FB Name="AX_ASR_RF_TRIG_1" Type="adapter::events::unidirectional::AX_ASR_RF_TRIG" x="-4600" y="-1500">
+		</FB>
+		<FB Name="AX_ASR_RF_TRIG_2" Type="adapter::events::unidirectional::AX_ASR_RF_TRIG" x="-4600" y="-300">
+		</FB>
+		<FB Name="AX_ASR_RF_TRIG_3" Type="adapter::events::unidirectional::AX_ASR_RF_TRIG" x="-4600" y="900">
+		</FB>
+		<FB Name="ASR_MERGE_3" Type="adapter::events::unidirectional::ASR_MERGE_3" x="-3000" y="-400">
+		</FB>
+		<FB Name="ASR_AX_SR" Type="adapter::events::unidirectional::ASR_AX_SR" x="-1600" y="-400">
+		</FB>
+		<FB Name="DigitalOutput_Q1" Type="logiBUS::io::DQ::logiBUS_QXA" x="0" y="-1000">
+			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="Output" Value="Output_Q1"/>
+		</FB>
+		<Comment Comment="Fortsetzung von Uebung_230_AX: dort fuehrte ASR_MERGE_2 genau 2 Quellen zusammen. &#10;Hier zeigt ASR_MERGE_3 mit 3 Quellen, dass die MERGE-Familie kein reiner 2-Input-Spezialfall ist - dieselbe ODER-Verknuepfung, nur mit einem IN3 mehr." x="-6100" y="1900" width="4200" height="700"/>
+		<AdapterConnections>
+			<Connection Source="DigitalInput_I1.IN" Destination="AX_ASR_RF_TRIG_1.QI" dx1="333.33"/>
+			<Connection Source="DigitalInput_I2.IN" Destination="AX_ASR_RF_TRIG_2.QI" dx1="333.33"/>
+			<Connection Source="DigitalInput_I3.IN" Destination="AX_ASR_RF_TRIG_3.QI" dx1="333.33"/>
+			<Connection Source="AX_ASR_RF_TRIG_1.Q" Destination="ASR_MERGE_3.IN1" dx1="480"/>
+			<Connection Source="AX_ASR_RF_TRIG_2.Q" Destination="ASR_MERGE_3.IN2" dx1="480"/>
+			<Connection Source="AX_ASR_RF_TRIG_3.Q" Destination="ASR_MERGE_3.IN3" dx1="480"/>
+			<Connection Source="ASR_MERGE_3.OUT" Destination="ASR_AX_SR.S_R"/>
+			<Connection Source="ASR_AX_SR.Q" Destination="DigitalOutput_Q1.OUT" dx1="500"/>
+		</AdapterConnections>
+	</SubAppNetwork>
+	<Attribute Name="Documentation" Type="CDATA"><![CDATA[<h1>3 Taster über ASR_MERGE_3 auf 1 gemeinsames Latch</h1>
+
+<p>Fortsetzung von <code>Uebung_230_AX</code> ("2 Taster, Last-Wins" via <code>ASR_MERGE_2</code>):
+hier sind es <strong>drei</strong> unabhängige Taster, zusammengeführt über
+<code>ASR_MERGE_3</code>. Zeigt, dass die MERGE-Familie kein reiner 2-Input-Spezialfall ist,
+sondern für beliebig viele Quellen existiert (<code>ASR_MERGE_2..7</code>).</p>
+
+<h2>Funktionsbeschreibung</h2>
+
+<ul>
+	<li>Jeder der drei Taster (<code>Input_I1..I3</code>) wird über einen eigenen
+	<code>AX_ASR_RF_TRIG</code> beobachtet: Drücken → <code>SET</code>, Loslassen →
+	<code>RESET</code>, als gebündeltes <code>ASR</code>.</li>
+	<li><code>ASR_MERGE_3</code> führt alle drei ASR-Streams zu einem gemeinsamen zusammen -
+	strukturell identisch zu <code>ASR_MERGE_2</code> in <code>Uebung_230_AX</code>, nur mit einem
+	dritten Socket (<code>IN3</code>).</li>
+	<li><code>ASR_AX_SR</code> latcht das gemergte Signal wie gehabt: Last-Wins - welcher Taster
+	zuletzt gedrückt ODER losgelassen wurde (egal welcher der drei), bestimmt den Zustand von
+	<code>Q1</code>.</li>
+</ul>
+
+<h2>Arbeitsauftrag</h2>
+
+<p>Testen Sie: jeder der drei Taster kann <code>Q1</code> beliebig oft in beliebiger Reihenfolge
+ein- und ausschalten (Last-Wins, wie in 229/230 - siehe dort für die genaue Funktionsbeschreibung
+des Last-Wins-Verhaltens). Vergleichen Sie mit <code>Uebung_230_AX</code>: identisches Muster, nur
+eine Quelle mehr.</p>
+]]></Attribute>
+</SubAppType>

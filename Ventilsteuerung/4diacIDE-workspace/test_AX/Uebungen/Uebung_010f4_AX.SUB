@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SubAppType Name="Uebung_010f4_AX" Comment="SCHLECHTER STIL (Punktabzug!): SoftKey_F1 ODER AuxFunction2_X1 auf DigitalOutput_Q1 mit 2x GreenWhiteBackground statt GreenWhiteBackground3_AX - siehe Uebung_010f3_AX fuer die korrekte Loesung">
+	<Identification Standard="61499-2" Description="Copyright (c) 2026 Meisterschulen am Ostbahnhof  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0">
+	</Identification>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2026-09-06" Remarks="initial API and implementation and/or initial documentation">
+	</VersionInfo>
+	<CompilerInfo packageName="Uebungen">
+		<Import declaration="Uebungen::const::UT::DefaultPool::SoftKey_F1"/>
+		<Import declaration="Uebungen::const::UT::DefaultPool::AuxFunction2_X1"/>
+		<Import declaration="logiBUS::io::DQ::logiBUS_DO::Output_Q1"/>
+	</CompilerInfo>
+	<SubAppInterfaceList>
+	</SubAppInterfaceList>
+	<SubAppNetwork>
+		<FB Name="DigitalOutput_Q1" Type="logiBUS::io::DQ::logiBUS_QXA" x="-2000" y="-1100">
+			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="PARAMS" Value="">
+				<Attribute Name="Visible" Value="false"/>
+			</Parameter>
+			<Parameter Name="Output" Value="Output_Q1"/>
+		</FB>
+		<FB Name="SoftKey_F1" Type="isobus::UT::io::Softkey::Softkey_IXA" x="-6100" y="-900">
+			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="u16ObjId" Value="SoftKey_F1"/>
+		</FB>
+		<FB Name="AuxFunction2_X1" Type="isobus::UT::io::Auxiliary::IN::Aux_IXA" x="-6200" y="100">
+			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="u16ObjId" Value="AuxFunction2_X1"/>
+		</FB>
+		<FB Name="AX_OR_2" Type="adapter::booleanOperators::AX_OR_2" x="-4500" y="-300">
+		</FB>
+		<FB Name="AX_SPLIT_3" Type="adapter::events::unidirectional::AX_SPLIT_3" x="-3500" y="-300">
+		</FB>
+		<SubApp Name="GreenWhiteBackground1_AX" Type="MyLib::sys::GreenWhiteBackground1_AX" x="-1700" y="-100">
+			<Parameter Name="u16ObjId" Value="SoftKey_F1"/>
+		</SubApp>
+		<SubApp Name="GreenWhiteBackground2_AX" Type="MyLib::sys::GreenWhiteBackground2_AX" x="-1800" y="800">
+			<Parameter Name="u16ObjIdA" Value="AuxFunction2_X1"/>
+		</SubApp>
+		<Comment Comment="SCHLECHTER STIL - Punktabzug! &#10;Hier wurden GreenWhiteBackground1_AX UND GreenWhiteBackground2_AX einzeln verdrahtet (+ AX_SPLIT_3 fuer 3 Ziele), obwohl es mit GreenWhiteBackground3_AX (ein Baustein, u16ObjId + u16ObjIdA, nur AX_SPLIT_2 noetig) genau fuer diesen Fall (1 normales VT-Objekt + 1 Aux-Objekt) schon fertig existiert. Unnoetige Verdopplung der Farbauswahl-Logik (2x AX_SEL statt 1x). &#10;Korrekte Loesung: Uebung_010f3_AX." x="-6000" y="2400" width="4200" height="1100"/>
+		<AdapterConnections>
+			<Connection Source="SoftKey_F1.IN" Destination="AX_OR_2.IN1" dx1="720"/>
+			<Connection Source="AuxFunction2_X1.IN" Destination="AX_OR_2.IN2" dx1="750"/>
+			<Connection Source="AX_OR_2.OUT" Destination="AX_SPLIT_3.IN"/>
+			<Connection Source="AX_SPLIT_3.OUT1" Destination="DigitalOutput_Q1.OUT" dx1="666.67"/>
+			<Connection Source="AX_SPLIT_3.OUT2" Destination="GreenWhiteBackground1_AX.DI1" dx1="633.33"/>
+			<Connection Source="AX_SPLIT_3.OUT3" Destination="GreenWhiteBackground2_AX.DI1" dx1="286.67"/>
+		</AdapterConnections>
+	</SubAppNetwork>
+	<Attribute Name="Documentation" Type="CDATA"><![CDATA[<h1>SCHLECHTER STIL (Punktabzug!) - siehe Uebung_010f3_AX für die korrekte Lösung</h1>
+
+<p>Diese Datei ist absichtlich als <strong>Negativbeispiel</strong> stehen gelassen: sie erreicht
+funktional dasselbe wie <code>Uebung_010f3_AX</code>, tut es aber mit unnötig aufgeblähter
+Verdrahtung.</p>
+
+<h2>Was hier falsch gemacht wurde</h2>
+
+<ul>
+	<li>Statt des dafür gebauten Bausteins <code>GreenWhiteBackground3_AX</code> (nimmt
+	<code>u16ObjId</code> UND <code>u16ObjIdA</code> gleichzeitig und braucht nur einen
+	<code>DI1</code>-Eingang) wurden hier <code>GreenWhiteBackground1_AX</code> und
+	<code>GreenWhiteBackground2_AX</code> als zwei separate Instanzen verdrahtet.</li>
+	<li>Dadurch war fälschlich ein <code>AX_SPLIT_3</code> (3 Ziele) statt eines simplen
+	<code>AX_SPLIT_2</code> (2 Ziele) nötig.</li>
+	<li>Die Farbauswahl-Logik (<code>AX_SEL</code> Weiß/Grün) läuft dadurch doppelt statt einmal -
+	unnötiger Ressourcenverbrauch und unnötig große Diagramme, ohne jeden funktionalen Vorteil.</li>
+</ul>
+
+<h2>Lernziel</h2>
+
+<p>Bevor man für einen kombinierten Fall (normales VT-Objekt + Aux-Objekt) mehrere generische
+Bausteine einzeln zusammenschraubt, erst prüfen, ob es dafür nicht schon einen passenden,
+fertigen Baustein in der Bibliothek gibt (hier: <code>GreenWhiteBackground3_AX</code>). Vergleichen
+Sie diese Datei mit <code>Uebung_010f3_AX</code>, um den Unterschied zu sehen.</p>
+]]></Attribute>
+</SubAppType>
