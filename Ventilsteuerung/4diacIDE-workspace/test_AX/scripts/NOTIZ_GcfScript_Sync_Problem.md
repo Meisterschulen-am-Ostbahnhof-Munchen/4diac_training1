@@ -1,8 +1,7 @@
 # Notiz: `RunSkript_Workspace_DIDO_AX.bat` aktualisiert per Skript hinzugefügte Objekte nicht
 
-Schmierzettel, damit das nicht vergessen wird. Betrifft potenziell auch Krauternter
-(`G:\Geteilte Ablagen\Büngener Schuder GmbH\Krauternter Steuerung 2026`), wo dieselbe
-Art von Tooling (`iop_to_xml.py`/`xml_to_iop.py`) benutzt wurde.
+Schmierzettel, damit das nicht vergessen wird. Betrifft potenziell auch andere Projekte,
+wo dieselbe Art von Tooling (`iop_to_xml.py`/`xml_to_iop.py`) benutzt wurde.
 
 ## Problem
 
@@ -31,7 +30,7 @@ der `.iop`-Binärdatei, aber:
 2. Öffnet man das Projekt im echten ISO-Designer-GUI, taucht das neue Objekt dort
    **nicht auf** – unsichtbar für die eigentliche Projektquelle.
 3. Dasselbe Risiko besteht für jedes Objekt, das per Skript statt über die GUI in
-   einen ISOBUS-Pool eingefügt wurde – auch bei Krauternter.
+   einen ISOBUS-Pool eingefügt wurde – auch in anderen Projekten.
 
 ## Aktueller Stand (Stopgap)
 
