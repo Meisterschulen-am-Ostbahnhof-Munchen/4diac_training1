@@ -1,6 +1,6 @@
 # Interlock-Bausteine – Übersicht & Bewertung
 
-## Bibliothekstypen (7 Typen, 13 Dateien mit AX-Varianten)
+## Bibliothekstypen (10 Typen, 20 Dateien mit AX-Varianten)
 
 | Baustein | Strategie | Dead-Time | Konfliktverhalten | AX |
 |---|---|---|---|---|
