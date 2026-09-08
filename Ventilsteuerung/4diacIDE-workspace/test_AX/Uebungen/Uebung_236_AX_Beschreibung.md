@@ -48,13 +48,17 @@ Verhalten, sondern wie gut sie auf mehr als 2 Quellen skalieren:
   `ASR_MERGE_3` ersetzen (ein zusätzlicher Socket `IN3`, sonst identisch). Eine vierte Quelle wäre
   genauso einfach `ASR_MERGE_4`.
 - **`AX_LAST_2`** hat dagegen **keine** höherwertige Geschwister — es gibt kein `AX_LAST_3` in der
-  Bibliothek. Eine dritte Rohquelle ließe sich nur durch **Kaskadieren** zweier `AX_LAST_2`-Instanzen
-  einbinden (`OUT` der einen auf `IN1`/`IN2` der nächsten) — das ändert aber die Semantik: es ist
-  dann kein flaches "wer zuletzt schrieb, gewinnt" über alle drei Quellen gleichberechtigt mehr,
-  sondern eine zweistufige Rangfolge (die kaskadierte Quelle gewinnt gegen die erste Stufe nur,
-  wenn *sie* zuletzt geschrieben hat, unabhängig davon, wann die beiden Quellen der ersten Stufe
-  zuletzt schrieben). `ASR_MERGE_N` bleibt bei jeder Eingangszahl eine echte flache N-fache
-  ODER-Verknüpfung, `AX_LAST_2` nicht.
+  Bibliothek. Eine dritte Rohquelle lässt sich nur durch **Kaskadieren** zweier `AX_LAST_2`-Instanzen
+  einbinden (`OUT` der einen auf `IN1`/`IN2` der nächsten). Das bleibt aber semantisch korrektes
+  Last-Wins über alle drei Quellen, keine zweistufige Rangfolge: `AX_LAST_2` kopiert bei jeder
+  Übernahme sowohl den Wert nach `OUT.D1` als auch löst es `OUT.E1` aus, jede Änderung an einer der
+  ursprünglichen Quellen läuft also bei jedem Kaskadenschritt als frisches Event durch. Der
+  Unterschied zu `ASR_MERGE_N` ist rein baulich (1 Baustein pro Eingangszahl vs. N-1 kaskadierte
+  Instanzen), keine andere Semantik. Wie bei jeder IEC-61499-Anwendung mit mehreren unabhängigen
+  Event-Quellen garantiert die Norm allerdings keine feste Reihenfolge für nahezu gleichzeitig
+  eintreffende Events an verschiedenen Sockets (`IN1`/`IN2`) — "wer zuletzt schrieb" bezieht sich auf
+  die tatsächliche Verarbeitungsreihenfolge im Laufzeitsystem, nicht auf einen exakten
+  Quell-Zeitstempel.
 
 ### Arbeitsauftrag
 1. Legen Sie die SubApp `Uebung_236_AX` an (bereits als Referenzlösung vorhanden).
