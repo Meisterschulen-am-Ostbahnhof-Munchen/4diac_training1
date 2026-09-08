@@ -7,8 +7,8 @@
         <span v-if="connected" class="tick-badge" :class="{ pulse: tickPulse }">{{ tick }}</span>
         <span>{{ status }}</span>
         <label for="endpoint-url" class="sr-only">OPC-UA Endpoint-URL</label>
-        <input id="endpoint-url" v-model="endpointUrl" class="url-input" :disabled="connected" />
-        <button @click="connected ? disconnect() : connect()">
+        <input id="endpoint-url" v-model="endpointUrl" class="url-input" :disabled="connected || connecting" />
+        <button :disabled="connecting" @click="connected ? disconnect() : connect()">
           {{ connected ? 'Trennen' : 'Verbinden' }}
         </button>
       </div>
@@ -48,7 +48,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed, onUnmounted } from 'vue'
+import { ref, computed, onMounted, onUnmounted } from 'vue'
 import {
   OPCUAClient,
   MessageSecurityMode,
@@ -63,9 +63,13 @@ import {
   Variant,
 } from '@wsopcua/wsopcua'
 
-const endpointUrl = ref(`ws://${window.location.hostname || 'localhost'}:4841`)
+/* Ermittelt automatisch die IP/Domain, über die die Seite aufgerufen wurde,
+ * damit beim Aufruf direkt vom Controller keine manuelle Eingabe nötig ist. */
+const wsProtocol = window.location.protocol === 'https:' ? 'wss:' : 'ws:'
+const endpointUrl = ref(`${wsProtocol}//${window.location.hostname || 'localhost'}:4841`)
 const status = ref('Getrennt')
 const connected = ref(false)
+const connecting = ref(false)
 const inputs = ref<boolean[]>(new Array(8).fill(false))
 const outputs = ref<boolean[]>(new Array(12).fill(false))
 const tick = ref<number | string>('–')
@@ -79,6 +83,10 @@ const statusClass = computed(() => {
 
 let client: any = null
 let session: any = null
+/* Bumped by disconnect() to invalidate any connect() attempt still in
+ * flight (e.g. the unmount triggers disconnect() while the automatic
+ * connect() from onMounted is still awaiting connectP/createSessionP). */
+let connectToken = 0
 
 function handleLost() {
   if (!connected.value) return
@@ -90,23 +98,43 @@ function handleLost() {
 }
 
 async function connect() {
+  if (connecting.value || connected.value) return
+  const token = ++connectToken
+  connecting.value = true
   status.value = 'Verbinde…'
-  client = new OPCUAClient({
+  const localClient = new OPCUAClient({
     securityMode: MessageSecurityMode.None,
     securityPolicy: SecurityPolicy.None,
     endpoint_must_exist: false,
     connectionStrategy: { maxRetry: 0 },
   })
 
-  try {
-    await client.connectP(endpointUrl.value)
-    client.on('connection_lost', handleLost)
-    client.on('close', handleLost)
-    session = await client.createSessionP({})
-    connected.value = true
-    status.value = 'Verbunden'
+  /* Guards against a stale/abandoned attempt's own listener firing on this
+   * client after a newer connect()/disconnect() has already run - without
+   * this, this client's self-emitted 'close' during its own cleanup
+   * disconnectP() could clear the state of a meanwhile-active newer
+   * connection, since `!connected.value` alone can't tell the two apart. */
+  const onLost = () => {
+    if (token !== connectToken) return
+    handleLost()
+  }
 
-    const subscription = new ClientSubscription(session, {
+  try {
+    await localClient.connectP(endpointUrl.value)
+    if (token !== connectToken) {
+      await localClient.disconnectP().catch(() => {})
+      return
+    }
+
+    localClient.on('connection_lost', onLost)
+    localClient.on('close', onLost)
+    const localSession = await localClient.createSessionP({})
+    if (token !== connectToken) {
+      await localClient.disconnectP().catch(() => {})
+      return
+    }
+
+    const subscription = new ClientSubscription(localSession, {
       requestedPublishingInterval: 100,
       requestedLifetimeCount: 100,
       requestedMaxKeepAliveCount: 2,
@@ -154,9 +182,37 @@ async function connect() {
       tickPulse.value = true
       setTimeout(() => { tickPulse.value = false }, 400)
     })
+
+    if (token !== connectToken) {
+      await localClient.disconnectP().catch(() => {})
+      return
+    }
+
+    /* Only published once the whole chain (transport, session, and all
+     * three subscriptions) has succeeded. Publishing earlier and only
+     * resetting connected.value on a later failure left client/session
+     * pointing at a half-initialized connection - a retry would then
+     * overwrite them with a new attempt's client/session without ever
+     * closing the failed one. */
+    client = localClient
+    session = localSession
+    connected.value = true
+    connecting.value = false
+    status.value = 'Verbunden'
   } catch (err) {
-    status.value = 'Fehler: ' + (err as Error).message
-    connected.value = false
+    if (token === connectToken) {
+      status.value = 'Fehler: ' + (err as Error).message
+      connected.value = false
+    }
+    /* client/session are only published on full success (see above), so a
+     * failure here never corrupts the shared state - but the connection/
+     * session this attempt itself opened still needs closing, or it leaks
+     * silently once the next connect() retry moves on. */
+    await localClient.disconnectP().catch(() => {})
+  } finally {
+    if (token === connectToken) {
+      connecting.value = false
+    }
   }
 }
 
@@ -178,17 +234,24 @@ async function toggleOutput(n: number) {
 }
 
 async function disconnect() {
+  /* Invalidate any connect() attempt still in flight - including this
+   * client's own onLost listener, which checks connectToken before acting -
+   * so it closes its own (not yet published) client/session instead of
+   * resurrecting the connection after we've torn down. */
+  connectToken++
   if (client) {
-    client.off('connection_lost', handleLost)
-    client.off('close', handleLost)
     await client.disconnectP()
   }
+  client = null
+  session = null
   connected.value = false
+  connecting.value = false
   status.value = 'Getrennt'
   inputs.value.fill(false)
   outputs.value.fill(false)
 }
 
+onMounted(() => connect())
 onUnmounted(() => disconnect())
 </script>
 

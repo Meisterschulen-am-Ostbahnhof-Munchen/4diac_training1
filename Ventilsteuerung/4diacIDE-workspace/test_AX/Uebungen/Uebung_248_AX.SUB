@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SubAppType Name="Uebung_248_AX" Comment="Wie Uebung_246_AX (Hoch/Runter auf 75/50/25%), zusaetzlich echter logiBUS_QDA_PWM-Ausgang Q1 zum Nachmessen">
+	<Identification Standard="61499-2" Description="Copyright (c) 2026 Meisterschulen am Ostbahnhof  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0">
+	</Identification>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2026-09-07" Remarks="initial API and implementation and/or initial documentation">
+	</VersionInfo>
+	<CompilerInfo packageName="Uebungen">
+		<Import declaration="logiBUS::io::DI::logiBUS_DI::Input_I1"/>
+		<Import declaration="logiBUS::io::DI::logiBUS_DI::Input_I2"/>
+		<Import declaration="Uebungen::const::UT::DefaultPool_Numeric::OutputNumber_N3_N"/>
+		<Import declaration="logiBUS::io::DQ::logiBUS_DO::Output_Q1"/>
+	</CompilerInfo>
+	<SubAppInterfaceList>
+	</SubAppInterfaceList>
+	<SubAppNetwork>
+		<FB Name="DigitalInput_I1" Type="logiBUS::io::DI::logiBUS_IXA" x="-5800" y="1700">
+			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="Input" Value="Input_I1"/>
+		</FB>
+		<FB Name="DigitalInput_I2" Type="logiBUS::io::DI::logiBUS_IXA" x="-9600" y="1400">
+			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="Input" Value="Input_I2"/>
+		</FB>
+		<FB Name="initval_AR_50_Neutral" Type="adapter::types::unidirectional::AR::initval::initval_AR" x="-8000" y="600">
+			<Parameter Name="INIT_VAL" Value="REAL#50.0"/>
+		</FB>
+		<FB Name="initval_AR_25_Runter" Type="adapter::types::unidirectional::AR::initval::initval_AR" x="-8000" y="1200">
+			<Parameter Name="INIT_VAL" Value="REAL#25.0"/>
+		</FB>
+		<FB Name="initval_AR_75_Hoch" Type="adapter::types::unidirectional::AR::initval::initval_AR" x="-5000" y="500">
+			<Parameter Name="INIT_VAL" Value="REAL#75.0"/>
+		</FB>
+		<FB Name="AR_AX_SEL_AR_Runter" Type="adapter::iec61131::selection::AR_AX_SEL_AR" x="-6400" y="1000">
+		</FB>
+		<FB Name="AR_AX_SEL_AR_Hoch" Type="adapter::iec61131::selection::AR_AX_SEL_AR" x="-3400" y="0">
+		</FB>
+		<FB Name="AR_SPLIT_2_Anzeige_PWM" Type="adapter::events::unidirectional::AR_SPLIT_2" x="-1400" y="200">
+		</FB>
+		<FB Name="Q_NumericValue_PHYSA" Type="isobus::UT::Q::Q_NumericValue_PHYSA" x="600" y="-400">
+			<Parameter Name="stObj" Value="OutputNumber_N3_N"/>
+		</FB>
+		<FB Name="AR_MUL_2_PWM13BIT" Type="adapter::iec61131::arithmetic::AR_MUL_2" x="600" y="1000">
+		</FB>
+		<FB Name="initval_AR_81_91" Type="adapter::types::unidirectional::AR::initval::initval_AR" x="-1400" y="1000">
+			<Parameter Name="INIT_VAL" Value="REAL#81.91"/>
+		</FB>
+		<FB Name="DigitalOutput_Q1_PWM" Type="logiBUS::io::DQ::logiBUS_QDA_PWM" x="6200" y="1000">
+			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="Output" Value="Output_Q1"/>
+		</FB>
+		<Comment Comment="0-100% Tastgrad = 0-8191 (13-Bit LEDC, siehe RampLimitFS_TO_logiBUS_QDA_PWM_OPC.SUB in MyLib_AX-1.0.0): Faktor 81,91 = 8191/100. Mit Multimeter/Oszilloskop an Q1 gegen GND: Mittelwert = Tastgrad% x Versorgungsspannung - bei 25/50/75% Tastgrad direkt vergleichbar mit den PVEA-Sollspannungen 0,25/0,50/0,75 x U_DC." x="-10100" y="2800" width="9000" height="900"/>
+		<FB Name="AR_TO_AD_NUM" Type="adapter::conversion::unidirectional::AR_TO_AD_NUM" x="3500" y="1100">
+		</FB>
+		<AdapterConnections>
+			<Connection Source="initval_AR_50_Neutral.OUT" Destination="AR_AX_SEL_AR_Runter.IN0" dx1="533.33"/>
+			<Connection Source="initval_AR_25_Runter.OUT" Destination="AR_AX_SEL_AR_Runter.IN1" dx1="533.33"/>
+			<Connection Source="DigitalInput_I2.IN" Destination="AR_AX_SEL_AR_Runter.G" dx1="2340"/>
+			<Connection Source="AR_AX_SEL_AR_Runter.OUT" Destination="AR_AX_SEL_AR_Hoch.IN0" dx1="80"/>
+			<Connection Source="initval_AR_75_Hoch.OUT" Destination="AR_AX_SEL_AR_Hoch.IN1" dx1="520"/>
+			<Connection Source="DigitalInput_I1.IN" Destination="AR_AX_SEL_AR_Hoch.G" dx1="1520"/>
+			<Connection Source="AR_AX_SEL_AR_Hoch.OUT" Destination="AR_SPLIT_2_Anzeige_PWM.IN" dx1="700"/>
+			<Connection Source="AR_SPLIT_2_Anzeige_PWM.OUT1" Destination="Q_NumericValue_PHYSA.rPhys" dx1="900"/>
+			<Connection Source="AR_SPLIT_2_Anzeige_PWM.OUT2" Destination="AR_MUL_2_PWM13BIT.IN1" dx1="900"/>
+			<Connection Source="initval_AR_81_91.OUT" Destination="AR_MUL_2_PWM13BIT.IN2" dx1="533.33"/>
+			<Connection Source="AR_MUL_2_PWM13BIT.OUT" Destination="AR_TO_AD_NUM.AR_IN" dx1="600"/>
+			<Connection Source="AR_TO_AD_NUM.AD_OUT" Destination="DigitalOutput_Q1_PWM.OUT" dx1="600"/>
+		</AdapterConnections>
+	</SubAppNetwork>
+</SubAppType>

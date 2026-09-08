@@ -52,4 +52,17 @@
 			<Connection Source="DI1" Destination="AX_SEL.G" dx1="660"/>
 		</AdapterConnections>
 	</SubAppNetwork>
+	<Attribute Name="Documentation" Type="CDATA"><![CDATA[<h1>Hintergrundfarbe für ein normales VT-Objekt</h1>
+
+<p>Setzt die Hintergrundfarbe (TRUE -&gt; Grün, FALSE -&gt; Weiß) eines einzelnen normalen VT-Objekts
+(SoftKey, Button, Output-Feld, Container usw.) über <code>u16ObjId</code>. Sendet dafür genau ein
+ISO-11783-6-Kommando (Part 6 - F.20, "Change Background Colour", FB <code>Q_BackgroundColour</code>)
+an das VT.</p>
+
+<p>Für ein Auxiliary-Function-Type-2-Objekt (Object-ID-Bereich 31000&ndash;31999) reicht dieser
+Baustein <strong>nicht</strong>, weil dessen Zuweisung zusätzlich am physischen Aux-Handle (Joystick)
+angezeigt wird und dafür ein zweites Kommando über die Aux-Verbindung nötig ist - dafür
+<code>GreenWhiteBackground2_AX</code> verwenden. Für die Kombination "1 normales Objekt + 1
+Aux-Objekt gemeinsam schalten" <code>GreenWhiteBackground3_AX</code> verwenden.</p>
+]]></Attribute>
 </SubAppType>

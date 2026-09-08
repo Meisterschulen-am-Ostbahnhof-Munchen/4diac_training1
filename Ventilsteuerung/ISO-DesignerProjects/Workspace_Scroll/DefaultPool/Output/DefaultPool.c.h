@@ -10,7 +10,7 @@
 #define Container_3003_Offset                                 163
 #define Container_Dialog_Speichern_Offset                     179
 #define Container_page_header_Offset                          213
-#define Containerr_Scrolling_Parent_Offset                    247
+#define Container_Scrolling_Parent_Offset                     247
 #define Container_Row_01_Offset                               269
 #define Container_3008_Offset                                 339
 #define Container_Row_02_Offset                               367
@@ -207,9 +207,9 @@
 #define Rectangle_14107_Offset                               6052
 #define Rectangle_RowAlt_Offset                              6065
 #define Image_20001_Offset                                   6078
-#define OK_20002_Offset                                      6153
-#define Dialog_OK_20003_Offset                               9770
-#define Dialog_CANCEL_20004_Offset                          11587
+#define OK_Offset                                            6153
+#define Dialog_OK_Offset                                     9770
+#define Dialog_CANCEL_Offset                                11587
 #define Image_20329_Offset                                  15204
 #define PictureGraphic_BACK_Offset                          16001
 #define PictureGraphic_Arr_UP_UP_Offset                     16818

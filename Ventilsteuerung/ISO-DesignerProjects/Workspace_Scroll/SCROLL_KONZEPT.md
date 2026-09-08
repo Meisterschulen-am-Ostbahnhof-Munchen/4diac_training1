@@ -129,9 +129,9 @@ selbst (Balken + Softkeys + mögliche FORTE-Logik).
 ### Beispiel A: Zeileninhalt
 
 Um das Zeilen-Muster greifbar zu machen, an dieser Stelle **eine konkrete
-Zeile** durchgespielt — Zeile 3, wie sie tatsächlich im Pool steht. Der
-Kontext (Krauternter) legt nahe, dass hier später mal eine Kraut-Charge
-angezeigt wird; die Werte unten sind aktuell noch Platzhalter, keine echte
+Zeile** durchgespielt — Zeile 3, wie sie tatsächlich im Pool steht. Die
+Beschriftung legt nahe, dass hier später mal ein Prozesswert angezeigt
+wird; die Werte unten sind aktuell noch Platzhalter, keine echte
 Datenbindung.
 
 **Angenommen, Zeile 3 soll zeigen:** Position 3, Kraut „Petersilie",

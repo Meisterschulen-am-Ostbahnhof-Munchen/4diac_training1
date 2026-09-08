@@ -10,3 +10,4 @@ call RunSkript_Workspace_DIDO_B.bat
 call RunSkript_Workspace_Joystick_B.bat
 call RunSkript_Workspace_TC_SC_B.bat
 call RunSkript_Workspace_Scroll_B.bat
+call RunSkript_Workspace_Dreieck_B.bat

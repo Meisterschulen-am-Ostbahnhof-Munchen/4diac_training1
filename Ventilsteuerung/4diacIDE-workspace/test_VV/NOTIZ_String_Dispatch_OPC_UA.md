@@ -80,8 +80,8 @@ im test_VV-Workspace der anderen Clone):
 Fertige, validierte Option-A-Umsetzung zum Vergleich/Wiederverwenden:
 `C:\git\ms\4diac_training1` (Branch `feature/test_VV`),
 `Ventilsteuerung/4diacIDE-workspace/test_VV/sys/03_OPC_UA/Training_04_OPC_UA_RES/`
-(+ `Type Library/MyLib/sys/Uebung_010e_PC_A_OPC.SUB` /
-`Uebung_010e_PC_B_OPC.SUB`). Für Option B: gleiche Struktur, nur die 3
+(+ `Type Library/MyLib/sys/Softkey_SRT_RPC_TO_Remote_BG_OPC.SUB` /
+`SRT_RPC_FROM_Remote_QXA_OPC.SUB`). Für Option B: gleiche Struktur, nur die 3
 `CLIENT_0`/`SERVER_0`-Paare durch 1 `CLIENT_1_0`/`SERVER_1_0`-Paar +
 String-Vergleichslogik (z.B. `F_STRING_EQUAL`/`E_SWITCH`) auf Geraet B
 ersetzen, die dann auf `AX_T_FF_SR.S`/`.R`/`.CLK` routet.

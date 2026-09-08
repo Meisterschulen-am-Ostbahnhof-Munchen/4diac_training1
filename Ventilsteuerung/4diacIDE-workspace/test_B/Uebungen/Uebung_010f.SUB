@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SubAppType Name="Uebung_010f" Comment="AuxFunction2_X1 auf DigitalOutput_Q1 mit GreenWhiteBackground">
+	<Identification Standard="61499-2" Description="Copyright (c) 2026 Meisterschulen am Ostbahnhof  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0">
+	</Identification>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2026-09-06" Remarks="initial API and implementation and/or initial documentation">
+	</VersionInfo>
+	<CompilerInfo packageName="Uebungen">
+		<Import declaration="Uebungen::const::UT::DefaultPool::AuxFunction2_X1"/>
+		<Import declaration="logiBUS::io::DQ::logiBUS_DO::Output_Q1"/>
+	</CompilerInfo>
+	<SubAppInterfaceList>
+	</SubAppInterfaceList>
+	<SubAppNetwork>
+		<FB Name="DigitalOutput_Q1" Type="logiBUS::io::DQ::logiBUS_QX" x="-1500" y="-300">
+			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="PARAMS" Value="">
+				<Attribute Name="Visible" Value="false"/>
+			</Parameter>
+			<Parameter Name="Output" Value="Output_Q1"/>
+		</FB>
+		<FB Name="AuxFunction2_X1" Type="isobus::UT::io::Auxiliary::IN::Aux_IX" x="-4600" y="-500">
+			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="u16ObjId" Value="AuxFunction2_X1"/>
+		</FB>
+		<SubApp Name="GreenWhiteBackground" Type="MyLib::sys::GreenWhiteBackground2" x="-1700" y="800">
+			<Parameter Name="u16ObjIdA" Value="AuxFunction2_X1"/>
+		</SubApp>
+		<Comment Comment="Nachteil: &#10;AuxFunction2_X1 &#10;muss 2x angegeben werden (Aux_IX.u16ObjId und GreenWhiteBackground.u16ObjIdA). &#10;Wichtig: hier MUSS GreenWhiteBackground2 (nicht GreenWhiteBackground1) verwendet werden, weil AuxFunction2_X1 ein Auxiliary-Function-Type-2-Objekt ist - seine Farbe muss sowohl an den VT-Bildschirm als auch an das Aux-Handle (Joystick) selbst gesendet werden." x="-4600" y="2100" width="3400" height="800"/>
+		<EventConnections>
+			<Connection Source="AuxFunction2_X1.IND" Destination="DigitalOutput_Q1.REQ" dx1="1080"/>
+			<Connection Source="AuxFunction2_X1.IND" Destination="GreenWhiteBackground.REQ" dx1="1080"/>
+		</EventConnections>
+		<DataConnections>
+			<Connection Source="AuxFunction2_X1.IN" Destination="DigitalOutput_Q1.OUT" dx1="1093.33"/>
+			<Connection Source="AuxFunction2_X1.IN" Destination="GreenWhiteBackground.DI1" dx1="1060"/>
+		</DataConnections>
+	</SubAppNetwork>
+	<Attribute Name="Documentation" Type="CDATA"><![CDATA[<h1>AuxFunction2_X1 auf DigitalOutput_Q1 mit GreenWhiteBackground</h1>
+
+<p>Klassische (nicht-AX-Adapter) Variante von <code>Uebung_010f_AX</code>, aufbauend auf
+<code>Uebung_010b1</code>: zusätzlich zur Ansteuerung von <code>DigitalOutput_Q1</code> wird der
+Zustand von <code>AuxFunction2_X1</code> als Hintergrundfarbe (grün = EIN, weiß = AUS)
+zurückgemeldet.</p>
+
+<h2>Funktionsbeschreibung</h2>
+
+<ul>
+	<li><code>AuxFunction2_X1</code> (<code>Aux_IX</code>) liefert den booleschen Zustand des
+	zugewiesenen physischen Aux-Tasters/Joysticks über <code>IND</code>/<code>IN</code>.</li>
+	<li>Da klassische EventConnections/DataConnections mehrere Ziele aus einer Quelle erlauben, braucht
+	es - anders als bei der AX-Adapter-Variante - keinen expliziten Split-Baustein: <code>IND</code> und
+	<code>IN</code> gehen direkt sowohl an <code>DigitalOutput_Q1</code> als auch an
+	<code>GreenWhiteBackground</code>.</li>
+	<li><strong><code>GreenWhiteBackground2</code> statt <code>GreenWhiteBackground1</code></strong>,
+	weil <code>AuxFunction2_X1</code> ein Auxiliary-Function-Type-2-Objekt ist: seine Zuweisung wird
+	sowohl auf dem VT-Bildschirm als auch am Aux-Handle (Joystick) selbst angezeigt. Beide Anzeigen
+	hängen an getrennten Verbindungen und müssen daher separat angesprochen werden
+	(<code>Q_BackgroundColour</code> für das VT, <code>Q_BackgroundColourAux</code> für das
+	Aux-Handle).</li>
+</ul>
+
+<h2>Arbeitsauftrag</h2>
+
+<p>Testen Sie: Aux-Taster drücken/loslassen → <code>Q1</code> folgt dem Tasterzustand, und die
+Hintergrundfarbe des Aux-Objekts wechselt gleichzeitig auf dem VT-Bildschirm UND am Aux-Handle
+selbst zwischen Weiß und Grün.</p>
+]]></Attribute>
+</SubAppType>

@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SubAppType Name="INI_OPC_PARAM_AR" Comment="OPC_UA Parameter lesen/Schreiben, remanent per INI, mit AR-Ausgang fuer den gespeicherten Wert (z.B. Drehzahl).">
+	<Identification Standard="61499-2" Description="Copyright (c) 2023 Meisterschulen am Ostbahnhof  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0">
+	</Identification>
+	<VersionInfo Organization="HR Agrartechnik GmbH" Version="1.0" Author="Franz Höpfinger" Date="2026-08-14" Remarks="INI_OPC_PARAM mit zusaetzlichem AR-Ausgang">
+	</VersionInfo>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.1" Author="Franz Höpfinger" Date="2026-07-20" Remarks="Background">
+	</VersionInfo>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2026-01-15" Remarks="initial API and implementation and/or initial documentation">
+	</VersionInfo>
+	<CompilerInfo packageName="FBs::sys">
+	</CompilerInfo>
+	<SubAppInterfaceList>
+		<InputVars>
+			<VarDeclaration Name="SECTION" Type="STRING" Comment="INI-Abschnitt (settings.ini)"/>
+			<VarDeclaration Name="KEY" Type="STRING" Comment="INI-Schluessel innerhalb SECTION"/>
+			<VarDeclaration Name="DEFAULT_VALUE" Type="REAL" Comment="Wert falls in settings.ini nicht vorhanden"/>
+			<VarDeclaration Name="ID_READ" Type="WSTRING" Comment="OPC-UA-Verbindungsstring (READ) - Client schreibt hier einen neuen Wert"/>
+			<VarDeclaration Name="ID_WRITE" Type="WSTRING" Comment="OPC-UA-Verbindungsstring (WRITE) - aktuell gespeicherter Wert wird hier publiziert"/>
+		</InputVars>
+		<Plugs>
+			<AdapterDeclaration Name="OUT" Type="adapter::types::unidirectional::AR" Comment="Aktuell gespeicherter/geladener Wert"/>
+		</Plugs>
+	</SubAppInterfaceList>
+	<SubAppNetwork>
+		<FB Name="AX_SUBSCRIBE_1" Type="adapter::net::AR_SUBSCRIBE_1" x="-7300" y="-1400">
+			<Parameter Name="QI" Value="TRUE"/>
+		</FB>
+		<FB Name="AX_PUBLISH_1" Type="adapter::net::AR_PUBLISH_1" x="-2700" y="-1500">
+			<Parameter Name="QI" Value="TRUE"/>
+		</FB>
+		<FB Name="INI_AR" Type="eclipse4diac::storage::INI_AR" x="-4800" y="-1600">
+			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="SETM" Value="FALSE"/>
+		</FB>
+		<EventConnections>
+			<Connection Source="AX_SUBSCRIBE_1.INITO" Destination="INI_AR.INIT" dx1="780"/>
+			<Connection Source="INI_AR.INITO" Destination="AX_PUBLISH_1.INIT" dx1="493.33"/>
+		</EventConnections>
+		<DataConnections>
+			<Connection Source="SECTION" Destination="INI_AR.SECTION" dx1="760">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="KEY" Destination="INI_AR.KEY" dx1="760">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="DEFAULT_VALUE" Destination="INI_AR.DEFAULT_VALUE" dx1="760">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="ID_READ" Destination="AX_SUBSCRIBE_1.ID" dx1="760">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="ID_WRITE" Destination="AX_PUBLISH_1.ID" dx1="5026.67">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+		</DataConnections>
+		<AdapterConnections>
+			<Connection Source="AX_SUBSCRIBE_1.OUT" Destination="INI_AR.AR_IN" dx1="780"/>
+			<Connection Source="INI_AR.AR_OUT" Destination="AX_PUBLISH_1.IN" dx1="493.33"/>
+			<Connection Source="INI_AR.AR_OUT" Destination="OUT" dx1="493.33"/>
+		</AdapterConnections>
+	</SubAppNetwork>
+</SubAppType>

@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SubAppType Name="Uebung_231_AX" Comment="1 Taster via AX_ASR_RF_TRIG + ASR_SPLIT_2 auf 2 unabhaengige ASR_AX_SR-Latches (Q1+Q2) - Spiegelbild zu Uebung_230_AX (dort MERGE N-&gt;1, hier SPLIT 1-&gt;N)">
+	<Identification Standard="61499-2" Description="Copyright (c) 2026 Meisterschulen am Ostbahnhof  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0">
+	</Identification>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2026-09-07" Remarks="initial API and implementation and/or initial documentation">
+	</VersionInfo>
+	<CompilerInfo packageName="Uebungen">
+		<Import declaration="logiBUS::io::DI::logiBUS_DI::Input_I1"/>
+		<Import declaration="logiBUS::io::DQ::logiBUS_DO::Output_Q1"/>
+		<Import declaration="logiBUS::io::DQ::logiBUS_DO::Output_Q2"/>
+	</CompilerInfo>
+	<SubAppInterfaceList>
+	</SubAppInterfaceList>
+	<SubAppNetwork>
+		<FB Name="DigitalInput_I1" Type="logiBUS::io::DI::logiBUS_IXA" x="-6100" y="-800">
+			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="Input" Value="Input_I1"/>
+		</FB>
+		<FB Name="AX_ASR_RF_TRIG_1" Type="adapter::events::unidirectional::AX_ASR_RF_TRIG" x="-4500" y="-300">
+		</FB>
+		<FB Name="ASR_SPLIT_2" Type="adapter::events::unidirectional::ASR_SPLIT_2" x="-3000" y="-300">
+		</FB>
+		<FB Name="ASR_AX_SR_1" Type="adapter::events::unidirectional::ASR_AX_SR" x="-1500" y="-900">
+		</FB>
+		<FB Name="ASR_AX_SR_2" Type="adapter::events::unidirectional::ASR_AX_SR" x="-1500" y="300">
+		</FB>
+		<FB Name="DigitalOutput_Q1" Type="logiBUS::io::DQ::logiBUS_QXA" x="0" y="-1500">
+			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="Output" Value="Output_Q1"/>
+		</FB>
+		<FB Name="DigitalOutput_Q2" Type="logiBUS::io::DQ::logiBUS_QXA" x="0" y="-300">
+			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="Output" Value="Output_Q2"/>
+		</FB>
+		<Comment Comment="Spiegelbild zu Uebung_230_AX: dort fuehrte ASR_MERGE_2 2 Quellen auf 1 Latch zusammen (N-&gt;1), weil ein Adapter-Socket nur eine Quelle annimmt. &#10;Hier ist es umgekehrt: AX_ASR_RF_TRIG_1.Q ist auch nur EIN Socket-Ausgang und kann nicht direkt an 2 ASR_AX_SR.S_R gleichzeitig angeschlossen werden - ASR_SPLIT_2 dupliziert den EINEN ASR-Stream auf 2 Ziele (1-&gt;N)." x="-6000" y="1200" width="4000" height="800"/>
+		<AdapterConnections>
+			<Connection Source="DigitalInput_I1.IN" Destination="AX_ASR_RF_TRIG_1.QI" dx1="333.33"/>
+			<Connection Source="AX_ASR_RF_TRIG_1.Q" Destination="ASR_SPLIT_2.IN" dx1="500"/>
+			<Connection Source="ASR_SPLIT_2.OUT1" Destination="ASR_AX_SR_1.S_R" dx1="500"/>
+			<Connection Source="ASR_SPLIT_2.OUT2" Destination="ASR_AX_SR_2.S_R" dx1="500"/>
+			<Connection Source="ASR_AX_SR_1.Q" Destination="DigitalOutput_Q1.OUT" dx1="500"/>
+			<Connection Source="ASR_AX_SR_2.Q" Destination="DigitalOutput_Q2.OUT" dx1="500"/>
+		</AdapterConnections>
+	</SubAppNetwork>
+	<Attribute Name="Documentation" Type="CDATA"><![CDATA[<h1>1 Taster über ASR_SPLIT_2 auf 2 unabhängige Latches (Fan-out)</h1>
+
+<p>Spiegelbild zu <code>Uebung_230_AX</code>: dort führte <code>ASR_MERGE_2</code> zwei Quellen zu
+einem gemeinsamen Latch zusammen (N→1, Fan-in). Hier ist es umgekehrt: <strong>ein</strong> Taster
+steuert über <code>ASR_SPLIT_2</code> <strong>zwei</strong> unabhängige Latches gleichzeitig
+(1→N, Fan-out).</p>
+
+<h2>Funktionsbeschreibung</h2>
+
+<ul>
+	<li><code>AX_ASR_RF_TRIG_1</code>: Taster drücken → <code>SET</code>, loslassen →
+	<code>RESET</code>, als ein einziges gebündeltes <code>ASR</code>-Signal.</li>
+	<li><strong>Warum <code>ASR_SPLIT_2</code> nötig ist</strong>: ein Adapter-Plug
+	(<code>AX_ASR_RF_TRIG_1.Q</code>) ist strikt punkt-zu-punkt - er kann nicht direkt gleichzeitig an
+	zwei <code>ASR_AX_SR.S_R</code>-Sockets angeschlossen werden. Genau dieselbe Grunderegel, die in
+	229/230 <code>ASR_MERGE_2</code> nötig machte (mehrere Quellen können nicht direkt auf einen
+	Socket), erzwingt hier umgekehrt <code>ASR_SPLIT_2</code> (eine Quelle kann nicht direkt zwei
+	Plugs gleichzeitig bedienen).</li>
+	<li><code>ASR_SPLIT_2</code> dupliziert den einen ASR-Stream verlustfrei auf
+	<code>ASR_AX_SR_1</code> und <code>ASR_AX_SR_2</code> - beide Latches erhalten exakt dieselben
+	SET/RESET-Kommandos zur exakt gleichen Zeit und laufen daher synchron, obwohl sie zwei komplett
+	unabhängige Bausteine mit je eigenem Ausgang (<code>Q1</code>/<code>Q2</code>) sind.</li>
+</ul>
+
+<h2>Arbeitsauftrag</h2>
+
+<p>Testen Sie: Taster I1 drücken und halten → <code>Q1</code> UND <code>Q2</code> gleichzeitig EIN.
+Loslassen → beide gleichzeitig AUS. Beobachten Sie im 4diac-Editor, dass <code>ASR_AX_SR_1</code>
+und <code>ASR_AX_SR_2</code> zwei getrennte Instanzen sind, die nur über den gemeinsamen
+<code>ASR_SPLIT_2</code>-Ursprung gekoppelt sind - keine direkte Verbindung zwischen ihnen.</p>
+]]></Attribute>
+</SubAppType>

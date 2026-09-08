@@ -3,27 +3,31 @@
 
 #define WorkingSet_Offset                                       1
 #define DataMask_M1_Offset                                     21
-#define Container_Sollwertmarker_Offset                        65
-#define InputNumber_Sollwert_Offset                            81
-#define InputNumber_Istwert_Offset                            119
-#define OutputString_WorkingSet_0_Offset                      157
-#define Polygon_Bargraph_Mittelmarker_Offset                  186
-#define LinearBargraph_Offset                                 212
-#define Bargraph_Split_links_Offset                           236
-#define Bargraph_Split_rechts_Offset                          260
-#define NumberVariable_Sollwert_Offset                        284
-#define NumberVariable_Istwert_Offset                         291
-#define FontAttributes_6x8_Offset                             298
-#define FontAttributes_Werte_Offset                           306
-#define LineStyle_Bargraph_Mittelmarker_Gruen_Offset          314
-#define FillStyle_Bargraph_Mittelmarker_Gruen_Offset          322
+#define Container_Sollwertmarker_Offset                        83
+#define InputNumber_Sollwert_Offset                            99
+#define InputNumber_Istwert_Offset                            137
+#define InputNumber_Messwert_Offset                           175
+#define OutputString_WorkingSet_0_Offset                      213
+#define OutputString_UP_Offset                                242
+#define OutputString_DOWN_Offset                              261
+#define Polygon_Bargraph_Mittelmarker_Offset                  282
+#define LinearBargraph_Offset                                 308
+#define Bargraph_Split_links_Offset                           332
+#define Bargraph_Split_rechts_Offset                          356
+#define NumberVariable_Sollwert_Offset                        380
+#define NumberVariable_Istwert_Offset                         387
+#define NumberVariable_Messwert_Offset                        394
+#define FontAttributes_6x8_Offset                             401
+#define FontAttributes_Werte_Offset                           409
+#define LineStyle_Bargraph_Mittelmarker_Gruen_Offset          417
+#define FillStyle_Bargraph_Mittelmarker_Gruen_Offset          425
 
 #define ISO_OP_MEMORY_CLASS
 
-#define ISO_OP_DefaultPool_Size    330
+#define ISO_OP_DefaultPool_Size    433
 extern const unsigned char ISO_OP_MEMORY_CLASS isoOP_DefaultPool[];
 
-#define ISO_OP_DefaultPool_ObjectNumber     16
+#define ISO_OP_DefaultPool_ObjectNumber     20
 extern const unsigned long ISO_OP_MEMORY_CLASS isoOP_DefaultPool_Offset[];
 extern const unsigned long ISO_OP_MEMORY_CLASS isoOP_DefaultPool_Offset_Id[];
 #define ISO_OP_DefaultPool_Scale_Offset      1

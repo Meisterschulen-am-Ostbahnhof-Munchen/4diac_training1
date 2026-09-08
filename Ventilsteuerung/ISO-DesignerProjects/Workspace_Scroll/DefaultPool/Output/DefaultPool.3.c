@@ -13,7 +13,7 @@ const unsigned long ISO_OP_MEMORY_CLASS isoOP_DefaultPool_Offset_Id[] = {
 	   163,  // Container_3003_Offset
 	   179,  // Container_Dialog_Speichern_Offset
 	   213,  // Container_page_header_Offset
-	   247,  // Containerr_Scrolling_Parent_Offset
+	   247,  // Container_Scrolling_Parent_Offset
 	   269,  // Container_Row_01_Offset
 	   339,  // Container_3008_Offset
 	   367,  // Container_Row_02_Offset
@@ -210,9 +210,9 @@ const unsigned long ISO_OP_MEMORY_CLASS isoOP_DefaultPool_Offset_Id[] = {
 	  6052,  // Rectangle_14107_Offset
 	  6065,  // Rectangle_RowAlt_Offset
 	  6078,  // Image_20001_Offset
-	  6153,  // OK_20002_Offset
-	  9770,  // Dialog_OK_20003_Offset
-	 11587,  // Dialog_CANCEL_20004_Offset
+	  6153,  // OK_Offset
+	  9770,  // Dialog_OK_Offset
+	 11587,  // Dialog_CANCEL_Offset
 	 15204,  // Image_20329_Offset
 	 16001,  // PictureGraphic_BACK_Offset
 	 16818,  // PictureGraphic_Arr_UP_UP_Offset

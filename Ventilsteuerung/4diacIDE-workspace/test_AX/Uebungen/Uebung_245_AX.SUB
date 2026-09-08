@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SubAppType Name="Uebung_245_AX" Comment="Sollwert mit festem Korrekturfaktor skalieren (AR_MUL_2 + initval_AR) - Lastteiler-Kompensation, I3 nach N3">
+	<Identification Standard="61499-2" Description="Copyright (c) 2026 Meisterschulen am Ostbahnhof  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0">
+	</Identification>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2026-09-07" Remarks="initial API and implementation and/or initial documentation">
+	</VersionInfo>
+	<CompilerInfo packageName="Uebungen">
+		<Import declaration="Uebungen::const::UT::DefaultPool_Numeric::InputNumber_I3_N"/>
+		<Import declaration="Uebungen::const::UT::DefaultPool_Numeric::OutputNumber_N3_N"/>
+	</CompilerInfo>
+	<SubAppInterfaceList>
+	</SubAppInterfaceList>
+	<SubAppNetwork>
+		<FB Name="NumericValue_PHYSA" Type="isobus::UT::io::NumericValue::NumericValue_PHYSA" x="-7200" y="600">
+			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="stObj" Value="InputNumber_I3_N"/>
+		</FB>
+		<FB Name="F_MUL_KORREKTUR" Type="adapter::iec61131::arithmetic::AR_MUL_2" x="-3400" y="1100">
+		</FB>
+		<FB Name="Q_NumericValue_PHYSA" Type="isobus::UT::Q::Q_NumericValue_PHYSA" x="-200" y="800">
+			<Parameter Name="stObj" Value="OutputNumber_N3_N"/>
+		</FB>
+		<Comment Comment="Korrekturfaktor 1,17619 = 1 / 0,8502: kompensiert einen Lastteiler (z.B. PWM-Tiefpassfilter, dessen Ausgangsimpedanz gegen die Eingangsimpedanz des angeschlossenen Verbrauchers belastet wird - siehe PVEA-Kompensationsrechnung). I3 = unkorrigierter Sollwert 0-100%, N3 = korrigierter Wert, der am unbelasteten Ausgang eingestellt werden muss, damit am Verbraucher der ursprüngliche Sollwert ankommt." x="-6800" y="2500" width="6700" height="900"/>
+		<FB Name="initval_AR" Type="adapter::types::unidirectional::AR::initval::initval_AR" x="-4600" y="1600">
+			<Parameter Name="INIT_VAL" Value="REAL#1.17619"/>
+		</FB>
+		<AdapterConnections>
+			<Connection Source="F_MUL_KORREKTUR.OUT" Destination="Q_NumericValue_PHYSA.rPhys" dx1="1260"/>
+			<Connection Source="initval_AR.OUT" Destination="F_MUL_KORREKTUR.IN2" dx1="233.33"/>
+			<Connection Source="NumericValue_PHYSA.rPhys" Destination="F_MUL_KORREKTUR.IN1" dx1="1346.67"/>
+		</AdapterConnections>
+	</SubAppNetwork>
+</SubAppType>

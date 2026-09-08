@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SubAppType Name="Uebung_171b_ASR" Comment="Exercise for ASR_AX_SR, ueber AE-Adapter statt rohe Events (ASR_2AE_TO_SR statt ASR_2EVENTS_TO_SR)">
+	<Identification Standard="61499-2" Description="Copyright (c) 2026 Meisterschulen am Ostbahnhof  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0">
+	</Identification>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2026-09-07" Remarks="initial API and implementation and/or initial documentation">
+	</VersionInfo>
+	<CompilerInfo packageName="Uebungen">
+		<Import declaration="logiBUS::io::DI::logiBUS_DI::Input_I1"/>
+		<Import declaration="logiBUS::io::DI::logiBUS_DI::Input_I2"/>
+		<Import declaration="logiBUS::io::DI::logiBUS_DI_Events::BUTTON_SINGLE_CLICK"/>
+		<Import declaration="logiBUS::io::DQ::logiBUS_DO::Output_Q1"/>
+	</CompilerInfo>
+	<SubAppInterfaceList>
+	</SubAppInterfaceList>
+	<SubAppNetwork>
+		<FB Name="ASR_AX_SR_1" Type="adapter::events::unidirectional::ASR_AX_SR" x="-700" y="1800">
+		</FB>
+		<FB Name="ASR_2AE_TO_SR_1" Type="adapter::conversion::unidirectional::ASR_2AE_TO_SR" x="-2500" y="1800">
+		</FB>
+		<FB Name="AE_EVENT_TO_E_SET" Type="adapter::conversion::unidirectional::AE_EVENT_TO_E" x="-4300" y="1300">
+		</FB>
+		<FB Name="AE_EVENT_TO_E_RESET" Type="adapter::conversion::unidirectional::AE_EVENT_TO_E" x="-4300" y="2500">
+		</FB>
+		<FB Name="DigitalInput_CLK_I1" Type="logiBUS::io::DI::logiBUS_IE" x="-5700" y="1100">
+			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="Input" Value="Input_I1"/>
+			<Parameter Name="InputEvent" Value="BUTTON_SINGLE_CLICK"/>
+		</FB>
+		<FB Name="DigitalOutput_Q1" Type="logiBUS::io::DQ::logiBUS_QXA" x="900" y="1300">
+			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="Output" Value="Output_Q1"/>
+		</FB>
+		<FB Name="DigitalInput_CLK_I2" Type="logiBUS::io::DI::logiBUS_IE" x="-5700" y="2300">
+			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="Input" Value="Input_I2"/>
+			<Parameter Name="InputEvent" Value="BUTTON_SINGLE_CLICK"/>
+		</FB>
+		<Comment Comment="Vergleich zu Uebung_171_ASR: dort ASR_2EVENTS_TO_SR mit rohen EventInputs (jede beliebige Quelle passt, ohne Typ). &#10;Hier ASR_2AE_TO_SR mit AE-Adapter-Sockets: die Quelle muss selbst einen AE-Plug liefern - AE_EVENT_TO_E baut die Bruecke vom rohen Klick-Event zum typisierten AE. &#10;Vorteil: AE-Plugs lassen sich wie jeder Adapter mit AE_SPLIT_2/AE_MERGE_2 weiterverarbeiten, ein rohes Event nicht." x="-5800" y="3600" width="4200" height="900"/>
+		<EventConnections>
+			<Connection Source="DigitalInput_CLK_I1.IND" Destination="AE_EVENT_TO_E_SET.REQ" dx1="153.33"/>
+			<Connection Source="DigitalInput_CLK_I2.IND" Destination="AE_EVENT_TO_E_RESET.REQ" dx1="153.33"/>
+		</EventConnections>
+		<AdapterConnections>
+			<Connection Source="AE_EVENT_TO_E_SET.AE_OUT" Destination="ASR_2AE_TO_SR_1.SET_IN" dx1="500"/>
+			<Connection Source="AE_EVENT_TO_E_RESET.AE_OUT" Destination="ASR_2AE_TO_SR_1.RESET_IN" dx1="500"/>
+			<Connection Source="ASR_2AE_TO_SR_1.ASR_OUT" Destination="ASR_AX_SR_1.S_R"/>
+			<Connection Source="ASR_AX_SR_1.Q" Destination="DigitalOutput_Q1.OUT" dx1="346.67"/>
+		</AdapterConnections>
+	</SubAppNetwork>
+	<Attribute Name="Documentation" Type="CDATA"><![CDATA[<h1>SET/RESET über AE-Adapter statt rohe Events</h1>
+
+<p>Dieselbe Funktion wie <code>Uebung_171_ASR</code> (I1 = SET-Klick, I2 = RESET-Klick, Latch via
+<code>ASR_AX_SR</code>), aber der Umweg über <code>ASR_2AE_TO_SR</code> statt
+<code>ASR_2EVENTS_TO_SR</code> zeigt, WARUM es den AE-Adapter-Weg überhaupt gibt.</p>
+
+<h2>Funktionsbeschreibung</h2>
+
+<ul>
+	<li><code>ASR_2EVENTS_TO_SR</code> (in <code>Uebung_171_ASR</code>) hat rohe
+	<code>EventInputs</code> - jede beliebige Event-Quelle passt direkt, ohne Typ-Zwang, aber auch
+	ohne dass sich das Signal wie ein Adapter weiterverarbeiten lässt.</li>
+	<li><code>ASR_2AE_TO_SR</code> hat stattdessen <code>SET_IN</code>/<code>RESET_IN</code> als
+	<strong>AE-Adapter-Sockets</strong> - die Quelle muss selbst einen <code>AE</code>-Plug liefern.
+	<code>AE_EVENT_TO_E</code> baut die Brücke: rohes Klick-Event (<code>logiBUS_IE.IND</code>) hinein,
+	getypter <code>AE</code>-Plug heraus.</li>
+	<li><strong>Der Gewinn</strong>: ein <code>AE</code>-Plug ist ein normaler Adapter wie
+	<code>AX</code>/<code>ASR</code>/<code>ASRT</code> - er lässt sich mit <code>AE_SPLIT_2</code>
+	vervielfältigen oder mit einem künftigen <code>AE_MERGE_2</code> zusammenführen, genau wie es
+	<code>Uebung_231_AX</code> für <code>ASR</code> zeigt. Ein rohes Event kann das nicht - es ist nur
+	über EventConnections verdrahtbar, nicht als eigenständiges, weiterreichbares Adapter-Signal.</li>
+</ul>
+
+<h2>Arbeitsauftrag</h2>
+
+<p>Testen Sie identisch zu <code>Uebung_171_ASR</code>: I1 klicken → <code>Q1</code> EIN, I2 klicken
+→ <code>Q1</code> AUS. Vergleichen Sie im Editor beide SubApps - gleiches Verhalten, aber
+<code>Uebung_171b_ASR</code> hat zwischen Taster und Latch zwei zusätzliche
+<code>AE_EVENT_TO_E</code>-Bausteine.</p>
+]]></Attribute>
+</SubAppType>

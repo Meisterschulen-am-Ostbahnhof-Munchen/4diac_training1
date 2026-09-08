@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SubAppType Name="Uebung_247_AX" Comment="Wie Uebung_245_AX (Korrekturfaktor via AR_MUL_2/initval_AR), zusaetzlich echter logiBUS_QDA_PWM-Ausgang Q1 zum Nachmessen">
+	<Identification Standard="61499-2" Description="Copyright (c) 2026 Meisterschulen am Ostbahnhof  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0">
+	</Identification>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2026-09-07" Remarks="initial API and implementation and/or initial documentation">
+	</VersionInfo>
+	<CompilerInfo packageName="Uebungen">
+		<Import declaration="Uebungen::const::UT::DefaultPool_Numeric::InputNumber_I3_N"/>
+		<Import declaration="Uebungen::const::UT::DefaultPool_Numeric::OutputNumber_N3_N"/>
+		<Import declaration="logiBUS::io::DQ::logiBUS_DO::Output_Q1"/>
+	</CompilerInfo>
+	<SubAppInterfaceList>
+	</SubAppInterfaceList>
+	<SubAppNetwork>
+		<FB Name="NumericValue_PHYSA" Type="isobus::UT::io::NumericValue::NumericValue_PHYSA" x="-9600" y="600">
+			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="stObj" Value="InputNumber_I3_N"/>
+		</FB>
+		<FB Name="F_MUL_KORREKTUR" Type="adapter::iec61131::arithmetic::AR_MUL_2" x="-7000" y="1100">
+		</FB>
+		<FB Name="initval_AR_Korrekturfaktor" Type="adapter::types::unidirectional::AR::initval::initval_AR" x="-8600" y="1600">
+			<Parameter Name="INIT_VAL" Value="REAL#1.17619"/>
+		</FB>
+		<FB Name="AR_SPLIT_2_Anzeige_PWM" Type="adapter::events::unidirectional::AR_SPLIT_2" x="-5200" y="800">
+		</FB>
+		<FB Name="Q_NumericValue_PHYSA" Type="isobus::UT::Q::Q_NumericValue_PHYSA" x="-3200" y="200">
+			<Parameter Name="stObj" Value="OutputNumber_N3_N"/>
+		</FB>
+		<FB Name="AR_MUL_2_PWM13BIT" Type="adapter::iec61131::arithmetic::AR_MUL_2" x="-3200" y="1400">
+		</FB>
+		<FB Name="initval_AR_81_91" Type="adapter::types::unidirectional::AR::initval::initval_AR" x="-4600" y="1700">
+			<Parameter Name="INIT_VAL" Value="REAL#81.91"/>
+		</FB>
+		<FB Name="DigitalOutput_Q1_PWM" Type="logiBUS::io::DQ::logiBUS_QDA_PWM" x="2200" y="1400">
+			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="Output" Value="Output_Q1"/>
+		</FB>
+		<Comment Comment="0-100% Tastgrad = 0-8191 (13-Bit LEDC, siehe RampLimitFS_TO_logiBUS_QDA_PWM_OPC.SUB in MyLib_AX-1.0.0): Faktor 81,91 = 8191/100. Korrigierter Wert (bis 117,619% bei I3&gt;85%) wird NICHT geklemmt - zum Nachmessen absichtlich so belassen, siehe Beschreibung. Mit Multimeter/Oszilloskop an Q1 gegen GND: Mittelwert = Tastgrad% x Versorgungsspannung." x="-9600" y="2900" width="9000" height="900"/>
+		<FB Name="AR_TO_AD_NUM" Type="adapter::conversion::unidirectional::AR_TO_AD_NUM" x="-700" y="1400">
+		</FB>
+		<AdapterConnections>
+			<Connection Source="NumericValue_PHYSA.rPhys" Destination="F_MUL_KORREKTUR.IN1" dx1="1200"/>
+			<Connection Source="initval_AR_Korrekturfaktor.OUT" Destination="F_MUL_KORREKTUR.IN2" dx1="353.33"/>
+			<Connection Source="F_MUL_KORREKTUR.OUT" Destination="AR_SPLIT_2_Anzeige_PWM.IN" dx1="700"/>
+			<Connection Source="AR_SPLIT_2_Anzeige_PWM.OUT1" Destination="Q_NumericValue_PHYSA.rPhys" dx1="900"/>
+			<Connection Source="AR_SPLIT_2_Anzeige_PWM.OUT2" Destination="AR_MUL_2_PWM13BIT.IN1" dx1="900"/>
+			<Connection Source="initval_AR_81_91.OUT" Destination="AR_MUL_2_PWM13BIT.IN2" dx1="533.33"/>
+			<Connection Source="AR_MUL_2_PWM13BIT.OUT" Destination="AR_TO_AD_NUM.AR_IN"/>
+			<Connection Source="AR_TO_AD_NUM.AD_OUT" Destination="DigitalOutput_Q1_PWM.OUT" dx1="600"/>
+		</AdapterConnections>
+	</SubAppNetwork>
+</SubAppType>
