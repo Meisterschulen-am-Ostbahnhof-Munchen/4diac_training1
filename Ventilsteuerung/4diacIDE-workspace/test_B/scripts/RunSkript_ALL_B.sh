@@ -11,5 +11,6 @@ echo "Starting GcfScript processing..."
 ./RunSkript_Workspace_DIDO_B.sh
 ./RunSkript_Workspace_Joystick_B.sh
 ./RunSkript_Workspace_TC_SC_B.sh
+./RunSkript_Workspace_Dreieck_B.sh
 
 echo "Processing finished."

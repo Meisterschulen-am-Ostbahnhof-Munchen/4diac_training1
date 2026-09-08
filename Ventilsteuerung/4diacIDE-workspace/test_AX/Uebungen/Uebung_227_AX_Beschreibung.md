@@ -3,9 +3,9 @@
 ## Thema: mehrere VT-Anzeigen aus einer Sollwertquelle — durchgängig über AR-Adapter
 
 Kombiniert [Übung 225b](Uebung_225b_AX_Beschreibung.md) (Dreieck-Sollwertmarker) und
-[Übung 226b](Uebung_226b_AX_Beschreibung.md) (Split-Bargraph): **ein** Sollwert treibt **beide**
+[Übung 226b](Uebung_226_AX_Beschreibung.md) (Split-Bargraph): **ein** Sollwert treibt **beide**
 Anzeigen gleichzeitig. Anders als die beiden Einzelübungen läuft hier alles konsequent über
-AR-Adapter-Bausteine (wie `225b_AXA`), da `226b_AX` seinen Sollwert bereits nur über den
+AR-Adapter-Bausteine (wie `225b_AX`), da `226_AX` seinen Sollwert bereits nur über den
 AR-Adapter (`NumericValue_PHYSA`) liest — für eine gemeinsame Quelle müssen beide Verbraucher
 denselben Verdrahtungsstil (Adapter) verwenden.
 
@@ -34,7 +34,7 @@ Derselbe Sollwert (`InputNumber_Sollwert`, VT-Objekt 9000, Bereich -42…+42) st
   DataConnection nötig.
 
 ### Arbeitsauftrag
-1. Legen Sie die SubApp `Uebung_227_AXA` an (bereits als Referenzlösung vorhanden).
+1. Legen Sie die SubApp `Uebung_227_AX` an (bereits als Referenzlösung vorhanden).
 2. Lesen Sie `NumberVariable_Sollwert_N` mit `NumericValue_PHYSA`.
 3. Verteilen Sie den Wert mit `AR_SPLIT_3` auf drei Ziele.
 4. Bewegen Sie das Dreieck mit `PositionMarkerFSA` (`stObj := Container_PositionMarker`,
@@ -47,6 +47,6 @@ Derselbe Sollwert (`InputNumber_Sollwert`, VT-Objekt 9000, Bereich -42…+42) st
    Seite, Istwert-Feld und der bestehende Einzel-Bargraph-Zeiger zeigen denselben Wert.
 
 ### Referenzlösung
-`Uebung_227_AXA.SUB` — validiert gegen `subapptype.xsd`. Verwendet ausschließlich bereits
+`Uebung_227_AX.SUB` — validiert gegen `subapptype.xsd`. Verwendet ausschließlich bereits
 bestehende Bausteine (`PositionMarkerFSA`, `BargraphSplitFS_AR`, `AR_SPLIT_3`) — keine neuen
 Typen für diese Übung nötig.
