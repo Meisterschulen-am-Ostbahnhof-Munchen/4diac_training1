@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<SubAppType Name="Uebung_026_sub" Comment="Spiegelabfolge (6)">
-	<Identification Standard="61499-2" Description="Copyright (c) 2023 Meisterschulen am Ostbahnhof  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0">
+<SubAppType Name="SR_TO_QX_TRIG_EO" Comment="SET/RESET-Latch (E_SR) auf QX, mit Event-Echo EO1 nach jeder steigenden Flanke des Latch-Zustands. Generisch.">
+	<Identification Standard="61499-2">
 	</Identification>
-	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2024-02-05" Remarks="initial API and implementation and/or initial documentation">
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2026-09-09" Remarks="Ausgelagert aus Uebung_026_sub zur Wiederverwendung.">
 	</VersionInfo>
-	<CompilerInfo packageName="Uebungen">
+	<CompilerInfo packageName="MyLib::sys">
 		<Import declaration="logiBUS::io::DQ::logiBUS_DO"/>
 		<Import declaration="logiBUS::io::DQ::logiBUS_DO_S"/>
 	</CompilerInfo>
@@ -29,10 +29,10 @@
 		<FB Name="QX" Type="logiBUS::io::DQ::logiBUS_QX" x="2100" y="-900">
 			<Parameter Name="QI" Value="TRUE"/>
 		</FB>
-		<FB Name="E_SWITCH" Type="iec61499::events::E_SWITCH" x="1333.33" y="33.33">
+		<FB Name="E_SWITCH" Type="iec61499::events::E_R_TRIG" x="1333.33" y="33.33">
 		</FB>
 		<EventConnections>
-			<Connection Source="E_SR.EO" Destination="QX.REQ"/>
+			<Connection Source="E_SR.EO" Destination="QX.REQ" dx1="746.67"/>
 			<Connection Source="E_SR.EO" Destination="E_SWITCH.EI" dx1="140"/>
 			<Connection Source="SET" Destination="E_SR.S" dx1="473.33">
 				<Attribute Name="Visible" Value="false"/>
@@ -40,11 +40,11 @@
 			<Connection Source="RESET" Destination="E_SR.R" dx1="406.67">
 				<Attribute Name="Visible" Value="false"/>
 			</Connection>
-			<Connection Source="E_SWITCH.EO1" Destination="EO1" dx1="1453.33"/>
+			<Connection Source="E_SWITCH.EO" Destination="EO1" dx1="1453.33"/>
 		</EventConnections>
 		<DataConnections>
 			<Connection Source="E_SR.Q" Destination="QX.OUT" dx1="753.33"/>
-			<Connection Source="E_SR.Q" Destination="E_SWITCH.G" dx1="73.33"/>
+			<Connection Source="E_SR.Q" Destination="E_SWITCH.QI" dx1="73.33"/>
 			<Connection Source="Output" Destination="QX.Output" dx1="3540">
 				<Attribute Name="Visible" Value="false"/>
 			</Connection>
