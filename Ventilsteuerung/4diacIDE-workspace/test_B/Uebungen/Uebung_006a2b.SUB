@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SubAppType Name="Uebung_006a2b" Comment="2x SR und T-Flip-Flop mit IX">
+	<Identification Standard="61499-2" Description="Copyright (c) 2023 Meisterschulen am Ostbahnhof  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0">
+	</Identification>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2026-01-13" Remarks="initial API and implementation and/or initial documentation">
+	</VersionInfo>
+	<CompilerInfo packageName="Uebungen">
+		<Import declaration="logiBUS::io::DI::logiBUS_DI::Input_I1"/>
+		<Import declaration="logiBUS::io::DI::logiBUS_DI::Input_I2"/>
+		<Import declaration="logiBUS::io::DI::logiBUS_DI::Input_I3"/>
+		<Import declaration="logiBUS::io::DQ::logiBUS_DO::Output_Q1"/>
+		<Import declaration="logiBUS::io::DQ::logiBUS_DO::Output_Q2"/>
+	</CompilerInfo>
+	<SubAppInterfaceList>
+	</SubAppInterfaceList>
+	<SubAppNetwork>
+		<FB Name="DigitalOutput_Q1" Type="logiBUS::io::DQ::logiBUS_QX" x="-700" y="-1200">
+			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="Output" Value="Output_Q1"/>
+		</FB>
+		<FB Name="DigitalInput_CLK_I1" Type="logiBUS::io::DI::logiBUS_IX" x="-5500" y="-900">
+			<Parameter Name="QI" Value="TRUE">
+				<Attribute Name="Visible" Value="false"/>
+			</Parameter>
+			<Parameter Name="PARAMS" Value="">
+				<Attribute Name="Visible" Value="false"/>
+			</Parameter>
+			<Parameter Name="Input" Value="Input_I1"/>
+		</FB>
+		<FB Name="DigitalInput_CLK_I2" Type="logiBUS::io::DI::logiBUS_IX" x="-5500" y="200">
+			<Parameter Name="QI" Value="TRUE">
+				<Attribute Name="Visible" Value="false"/>
+			</Parameter>
+			<Parameter Name="PARAMS" Value="">
+				<Attribute Name="Visible" Value="false"/>
+			</Parameter>
+			<Parameter Name="Input" Value="Input_I2"/>
+		</FB>
+		<FB Name="E_T_FF_SR_Q1" Type="logiBUS::bistableElements::FB_RS_T_FF" x="-2800" y="-1100">
+		</FB>
+		<FB Name="DigitalInput_CLK_I3" Type="logiBUS::io::DI::logiBUS_IX" x="-5500" y="-2000">
+			<Parameter Name="QI" Value="TRUE">
+				<Attribute Name="Visible" Value="false"/>
+			</Parameter>
+			<Parameter Name="PARAMS" Value="">
+				<Attribute Name="Visible" Value="false"/>
+			</Parameter>
+			<Parameter Name="Input" Value="Input_I3"/>
+		</FB>
+		<FB Name="E_T_FF_SR_Q2" Type="logiBUS::bistableElements::FB_RS_T_FF" x="-2900" y="-100">
+		</FB>
+		<FB Name="DigitalOutput_Q2" Type="logiBUS::io::DQ::logiBUS_QX" x="-700" y="-200">
+			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="Output" Value="Output_Q2"/>
+		</FB>
+		<Comment Comment="Hausmeister-Aus (alles Aus mit einem Druck)" x="-4500" y="-2100" width="1000" height="400"/>
+		<EventConnections>
+			<Connection Source="DigitalInput_CLK_I1.IND" Destination="E_T_FF_SR_Q1.REQ" dx1="833.33"/>
+			<Connection Source="DigitalInput_CLK_I2.IND" Destination="E_T_FF_SR_Q2.REQ" dx1="820"/>
+			<Connection Source="DigitalInput_CLK_I3.IND" Destination="E_T_FF_SR_Q1.REQ" dx1="900"/>
+			<Connection Source="DigitalInput_CLK_I3.IND" Destination="E_T_FF_SR_Q2.REQ" dx1="900"/>
+			<Connection Source="E_T_FF_SR_Q1.CNF" Destination="DigitalOutput_Q1.REQ" dx1="660"/>
+			<Connection Source="E_T_FF_SR_Q2.CNF" Destination="DigitalOutput_Q2.REQ" dx1="706.67"/>
+		</EventConnections>
+		<DataConnections>
+			<Connection Source="DigitalInput_CLK_I1.IN" Destination="E_T_FF_SR_Q1.CLK" dx1="833.33"/>
+			<Connection Source="DigitalInput_CLK_I2.IN" Destination="E_T_FF_SR_Q2.CLK" dx1="853.33"/>
+			<Connection Source="DigitalInput_CLK_I3.IN" Destination="E_T_FF_SR_Q1.R1" dx1="866.67"/>
+			<Connection Source="DigitalInput_CLK_I3.IN" Destination="E_T_FF_SR_Q2.R1" dx1="866.67"/>
+			<Connection Source="E_T_FF_SR_Q1.Q1" Destination="DigitalOutput_Q1.OUT" dx1="660"/>
+			<Connection Source="E_T_FF_SR_Q2.Q1" Destination="DigitalOutput_Q2.OUT" dx1="706.67"/>
+		</DataConnections>
+	</SubAppNetwork>
+</SubAppType>

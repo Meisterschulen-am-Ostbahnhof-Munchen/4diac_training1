@@ -1,0 +1,208 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SubAppType Name="Uebung_080f_AX" Comment="Beispiel für E_CTU">
+	<Identification Standard="61499-2" Description="Copyright (c) 2023 Meisterschulen am Ostbahnhof  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0">
+	</Identification>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2023-10-23" Remarks="initial API and implementation and/or initial documentation">
+	</VersionInfo>
+	<CompilerInfo packageName="Uebungen">
+		<Import declaration="Uebungen::const::UT::Horse::DefaultPool_Horse::ObjectPointer_Horse"/>
+		<Import declaration="Uebungen::const::UT::Horse::DefaultPool_Horse::frame_00"/>
+		<Import declaration="Uebungen::const::UT::Horse::DefaultPool_Horse::frame_01"/>
+		<Import declaration="Uebungen::const::UT::Horse::DefaultPool_Horse::frame_02"/>
+		<Import declaration="Uebungen::const::UT::Horse::DefaultPool_Horse::frame_03"/>
+		<Import declaration="Uebungen::const::UT::Horse::DefaultPool_Horse::frame_04"/>
+		<Import declaration="Uebungen::const::UT::Horse::DefaultPool_Horse::frame_05"/>
+		<Import declaration="Uebungen::const::UT::Horse::DefaultPool_Horse::frame_06"/>
+		<Import declaration="Uebungen::const::UT::Horse::DefaultPool_Horse::frame_07"/>
+		<Import declaration="Uebungen::const::UT::Horse::DefaultPool_Horse::frame_08"/>
+		<Import declaration="Uebungen::const::UT::Horse::DefaultPool_Horse::frame_09"/>
+		<Import declaration="Uebungen::const::UT::Horse::DefaultPool_Horse::frame_10"/>
+		<Import declaration="Uebungen::const::UT::Horse::DefaultPool_Horse::frame_11"/>
+		<Import declaration="Uebungen::const::UT::Horse::DefaultPool_Horse::frame_12"/>
+		<Import declaration="Uebungen::const::UT::Horse::DefaultPool_Horse::frame_13"/>
+		<Import declaration="Uebungen::const::UT::Horse::DefaultPool_Horse::frame_14"/>
+		<Import declaration="Uebungen::const::UT::Horse::DefaultPool_Horse::frame_15"/>
+		<Import declaration="Uebungen::const::UT::Horse::DefaultPool_Horse::frame_16"/>
+		<Import declaration="Uebungen::const::UT::Horse::DefaultPool_Horse::frame_17"/>
+		<Import declaration="Uebungen::const::UT::Horse::DefaultPool_Horse::frame_18"/>
+		<Import declaration="Uebungen::const::UT::Horse::DefaultPool_Horse::frame_19"/>
+		<Import declaration="Uebungen::const::UT::Horse::DefaultPool_Horse::frame_20"/>
+		<Import declaration="Uebungen::const::UT::Horse::DefaultPool_Horse::frame_21"/>
+		<Import declaration="Uebungen::const::UT::Horse::DefaultPool_Horse::frame_22"/>
+		<Import declaration="Uebungen::const::UT::Horse::DefaultPool_Horse::frame_23"/>
+		<Import declaration="Uebungen::const::UT::Horse::DefaultPool_Horse::frame_24"/>
+		<Import declaration="Uebungen::const::UT::Horse::DefaultPool_Horse::frame_25"/>
+		<Import declaration="Uebungen::const::UT::Horse::DefaultPool_Horse::frame_26"/>
+		<Import declaration="Uebungen::const::UT::Horse::DefaultPool_Horse::frame_27"/>
+		<Import declaration="Uebungen::const::UT::Horse::DefaultPool_Horse::frame_28"/>
+		<Import declaration="Uebungen::const::UT::Horse::DefaultPool_Horse::frame_29"/>
+		<Import declaration="Uebungen::const::UT::Horse::DefaultPool_Horse::frame_30"/>
+		<Import declaration="Uebungen::const::UT::Horse::DefaultPool_Horse::frame_31"/>
+		<Import declaration="logiBUS::io::DI::logiBUS_DI::Input_I1"/>
+		<Import declaration="logiBUS::io::DI::logiBUS_DI::Input_I2"/>
+		<Import declaration="logiBUS::io::DI::logiBUS_DI_Events::BUTTON_SINGLE_CLICK"/>
+		<Import declaration="logiBUS::io::DQ::logiBUS_DO::Output_Q1"/>
+	</CompilerInfo>
+	<SubAppInterfaceList>
+	</SubAppInterfaceList>
+	<SubAppNetwork>
+		<FB Name="DigitalOutput_Q1" Type="logiBUS::io::DQ::logiBUS_QXA" x="4640" y="573.33">
+			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="Output" Value="Output_Q1"/>
+		</FB>
+		<FB Name="DigitalInput_CLK_I1" Type="logiBUS::io::DI::logiBUS_IE" x="1453.33" y="33.33">
+			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="Input" Value="Input_I1"/>
+			<Parameter Name="InputEvent" Value="BUTTON_SINGLE_CLICK"/>
+		</FB>
+		<FB Name="AUI_CTU" Type="adapter::events::unidirectional::AUI_CTU" x="2660" y="893.33">
+		</FB>
+		<FB Name="DigitalInput_CLK_I2" Type="logiBUS::io::DI::logiBUS_IE" x="1453.33" y="1440">
+			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="Input" Value="Input_I2"/>
+			<Parameter Name="InputEvent" Value="BUTTON_SINGLE_CLICK"/>
+		</FB>
+		<FB Name="initval_00" Type="adapter::types::unidirectional::AUDI::initval::initval_AUDI" x="3046.67" y="1900">
+			<Parameter Name="INIT_VAL" Value="frame_00"/>
+		</FB>
+		<FB Name="initval_01" Type="adapter::types::unidirectional::AUDI::initval::initval_AUDI" x="3046.67" y="2800">
+			<Parameter Name="INIT_VAL" Value="frame_01"/>
+		</FB>
+		<FB Name="initval_02" Type="adapter::types::unidirectional::AUDI::initval::initval_AUDI" x="940" y="3700">
+			<Parameter Name="INIT_VAL" Value="frame_02"/>
+		</FB>
+		<FB Name="initval_03" Type="adapter::types::unidirectional::AUDI::initval::initval_AUDI" x="940" y="4600">
+			<Parameter Name="INIT_VAL" Value="frame_03"/>
+		</FB>
+		<FB Name="initval_04" Type="adapter::types::unidirectional::AUDI::initval::initval_AUDI" x="940" y="5500">
+			<Parameter Name="INIT_VAL" Value="frame_04"/>
+		</FB>
+		<FB Name="initval_05" Type="adapter::types::unidirectional::AUDI::initval::initval_AUDI" x="940" y="6400">
+			<Parameter Name="INIT_VAL" Value="frame_05"/>
+		</FB>
+		<FB Name="initval_06" Type="adapter::types::unidirectional::AUDI::initval::initval_AUDI" x="940" y="7300">
+			<Parameter Name="INIT_VAL" Value="frame_06"/>
+		</FB>
+		<FB Name="initval_07" Type="adapter::types::unidirectional::AUDI::initval::initval_AUDI" x="940" y="8200">
+			<Parameter Name="INIT_VAL" Value="frame_07"/>
+		</FB>
+		<FB Name="initval_08" Type="adapter::types::unidirectional::AUDI::initval::initval_AUDI" x="940" y="9100">
+			<Parameter Name="INIT_VAL" Value="frame_08"/>
+		</FB>
+		<FB Name="initval_09" Type="adapter::types::unidirectional::AUDI::initval::initval_AUDI" x="940" y="10000">
+			<Parameter Name="INIT_VAL" Value="frame_09"/>
+		</FB>
+		<FB Name="initval_10" Type="adapter::types::unidirectional::AUDI::initval::initval_AUDI" x="940" y="10900">
+			<Parameter Name="INIT_VAL" Value="frame_10"/>
+		</FB>
+		<FB Name="initval_11" Type="adapter::types::unidirectional::AUDI::initval::initval_AUDI" x="940" y="11800">
+			<Parameter Name="INIT_VAL" Value="frame_11"/>
+		</FB>
+		<FB Name="initval_12" Type="adapter::types::unidirectional::AUDI::initval::initval_AUDI" x="940" y="12700">
+			<Parameter Name="INIT_VAL" Value="frame_12"/>
+		</FB>
+		<FB Name="initval_13" Type="adapter::types::unidirectional::AUDI::initval::initval_AUDI" x="940" y="13600">
+			<Parameter Name="INIT_VAL" Value="frame_13"/>
+		</FB>
+		<FB Name="initval_14" Type="adapter::types::unidirectional::AUDI::initval::initval_AUDI" x="940" y="14500">
+			<Parameter Name="INIT_VAL" Value="frame_14"/>
+		</FB>
+		<FB Name="initval_15" Type="adapter::types::unidirectional::AUDI::initval::initval_AUDI" x="940" y="15400">
+			<Parameter Name="INIT_VAL" Value="frame_15"/>
+		</FB>
+		<FB Name="initval_16" Type="adapter::types::unidirectional::AUDI::initval::initval_AUDI" x="940" y="16300">
+			<Parameter Name="INIT_VAL" Value="frame_16"/>
+		</FB>
+		<FB Name="initval_17" Type="adapter::types::unidirectional::AUDI::initval::initval_AUDI" x="940" y="17200">
+			<Parameter Name="INIT_VAL" Value="frame_17"/>
+		</FB>
+		<FB Name="initval_18" Type="adapter::types::unidirectional::AUDI::initval::initval_AUDI" x="940" y="18100">
+			<Parameter Name="INIT_VAL" Value="frame_18"/>
+		</FB>
+		<FB Name="initval_19" Type="adapter::types::unidirectional::AUDI::initval::initval_AUDI" x="940" y="19000">
+			<Parameter Name="INIT_VAL" Value="frame_19"/>
+		</FB>
+		<FB Name="initval_20" Type="adapter::types::unidirectional::AUDI::initval::initval_AUDI" x="940" y="19900">
+			<Parameter Name="INIT_VAL" Value="frame_20"/>
+		</FB>
+		<FB Name="initval_21" Type="adapter::types::unidirectional::AUDI::initval::initval_AUDI" x="940" y="20800">
+			<Parameter Name="INIT_VAL" Value="frame_21"/>
+		</FB>
+		<FB Name="initval_22" Type="adapter::types::unidirectional::AUDI::initval::initval_AUDI" x="940" y="21700">
+			<Parameter Name="INIT_VAL" Value="frame_22"/>
+		</FB>
+		<FB Name="initval_23" Type="adapter::types::unidirectional::AUDI::initval::initval_AUDI" x="940" y="22600">
+			<Parameter Name="INIT_VAL" Value="frame_23"/>
+		</FB>
+		<FB Name="initval_24" Type="adapter::types::unidirectional::AUDI::initval::initval_AUDI" x="940" y="23500">
+			<Parameter Name="INIT_VAL" Value="frame_24"/>
+		</FB>
+		<FB Name="initval_25" Type="adapter::types::unidirectional::AUDI::initval::initval_AUDI" x="940" y="24400">
+			<Parameter Name="INIT_VAL" Value="frame_25"/>
+		</FB>
+		<FB Name="initval_26" Type="adapter::types::unidirectional::AUDI::initval::initval_AUDI" x="940" y="25300">
+			<Parameter Name="INIT_VAL" Value="frame_26"/>
+		</FB>
+		<FB Name="initval_27" Type="adapter::types::unidirectional::AUDI::initval::initval_AUDI" x="940" y="26200">
+			<Parameter Name="INIT_VAL" Value="frame_27"/>
+		</FB>
+		<FB Name="initval_28" Type="adapter::types::unidirectional::AUDI::initval::initval_AUDI" x="940" y="27100">
+			<Parameter Name="INIT_VAL" Value="frame_28"/>
+		</FB>
+		<FB Name="initval_29" Type="adapter::types::unidirectional::AUDI::initval::initval_AUDI" x="940" y="28000">
+			<Parameter Name="INIT_VAL" Value="frame_29"/>
+		</FB>
+		<FB Name="initval_30" Type="adapter::types::unidirectional::AUDI::initval::initval_AUDI" x="940" y="28900">
+			<Parameter Name="INIT_VAL" Value="frame_30"/>
+		</FB>
+		<FB Name="initval_31" Type="adapter::types::unidirectional::AUDI::initval::initval_AUDI" x="940" y="29800">
+			<Parameter Name="INIT_VAL" Value="frame_31"/>
+		</FB>
+		<FB Name="AUDI_AUI_MUX_32" Type="adapter::selection::unidirectional::AUDI_AUI_MUX_32" x="4206.67" y="13800">
+		</FB>
+		<FB Name="Q_NumericValue_1" Type="isobus::UT::Q::Q_NumericValue_AUDI" x="6406.67" y="13480">
+			<Parameter Name="u16ObjId" Value="ObjectPointer_Horse"/>
+		</FB>
+		<EventConnections>
+			<Connection Source="DigitalInput_CLK_I1.IND" Destination="AUI_CTU.CU" dx1="66.67"/>
+			<Connection Source="DigitalInput_CLK_I2.IND" Destination="AUI_CTU.R" dx1="66.67"/>
+		</EventConnections>
+		<AdapterConnections>
+			<Connection Source="AUI_CTU.Q" Destination="DigitalOutput_Q1.OUT"/>
+			<Connection Source="AUI_CTU.CV" Destination="AUDI_AUI_MUX_32.K" dx1="820"/>
+			<Connection Source="initval_00.OUT" Destination="AUDI_AUI_MUX_32.IN1" dx1="133.33"/>
+			<Connection Source="initval_01.OUT" Destination="AUDI_AUI_MUX_32.IN2" dx1="66.67"/>
+			<Connection Source="initval_02.OUT" Destination="AUDI_AUI_MUX_32.IN3" dx1="866.67"/>
+			<Connection Source="initval_03.OUT" Destination="AUDI_AUI_MUX_32.IN4" dx1="800"/>
+			<Connection Source="initval_04.OUT" Destination="AUDI_AUI_MUX_32.IN5" dx1="733.33"/>
+			<Connection Source="initval_05.OUT" Destination="AUDI_AUI_MUX_32.IN6" dx1="666.67"/>
+			<Connection Source="initval_06.OUT" Destination="AUDI_AUI_MUX_32.IN7" dx1="600"/>
+			<Connection Source="initval_07.OUT" Destination="AUDI_AUI_MUX_32.IN8" dx1="533.33"/>
+			<Connection Source="initval_08.OUT" Destination="AUDI_AUI_MUX_32.IN9" dx1="466.67"/>
+			<Connection Source="initval_09.OUT" Destination="AUDI_AUI_MUX_32.IN10" dx1="400"/>
+			<Connection Source="initval_10.OUT" Destination="AUDI_AUI_MUX_32.IN11" dx1="333.33"/>
+			<Connection Source="initval_11.OUT" Destination="AUDI_AUI_MUX_32.IN12" dx1="266.67"/>
+			<Connection Source="initval_12.OUT" Destination="AUDI_AUI_MUX_32.IN13" dx1="200"/>
+			<Connection Source="initval_13.OUT" Destination="AUDI_AUI_MUX_32.IN14" dx1="133.33"/>
+			<Connection Source="initval_14.OUT" Destination="AUDI_AUI_MUX_32.IN15" dx1="66.67"/>
+			<Connection Source="initval_15.OUT" Destination="AUDI_AUI_MUX_32.IN16"/>
+			<Connection Source="initval_16.OUT" Destination="AUDI_AUI_MUX_32.IN17" dx1="66.67"/>
+			<Connection Source="initval_17.OUT" Destination="AUDI_AUI_MUX_32.IN18" dx1="133.33"/>
+			<Connection Source="initval_18.OUT" Destination="AUDI_AUI_MUX_32.IN19" dx1="200"/>
+			<Connection Source="initval_19.OUT" Destination="AUDI_AUI_MUX_32.IN20" dx1="266.67"/>
+			<Connection Source="initval_20.OUT" Destination="AUDI_AUI_MUX_32.IN21" dx1="333.33"/>
+			<Connection Source="initval_21.OUT" Destination="AUDI_AUI_MUX_32.IN22" dx1="400"/>
+			<Connection Source="initval_22.OUT" Destination="AUDI_AUI_MUX_32.IN23" dx1="466.67"/>
+			<Connection Source="initval_23.OUT" Destination="AUDI_AUI_MUX_32.IN24" dx1="533.33"/>
+			<Connection Source="initval_24.OUT" Destination="AUDI_AUI_MUX_32.IN25" dx1="600"/>
+			<Connection Source="initval_25.OUT" Destination="AUDI_AUI_MUX_32.IN26" dx1="666.67"/>
+			<Connection Source="initval_26.OUT" Destination="AUDI_AUI_MUX_32.IN27" dx1="733.33"/>
+			<Connection Source="initval_27.OUT" Destination="AUDI_AUI_MUX_32.IN28" dx1="800"/>
+			<Connection Source="initval_28.OUT" Destination="AUDI_AUI_MUX_32.IN29" dx1="866.67"/>
+			<Connection Source="initval_29.OUT" Destination="AUDI_AUI_MUX_32.IN30" dx1="933.33"/>
+			<Connection Source="initval_30.OUT" Destination="AUDI_AUI_MUX_32.IN31" dx1="1000"/>
+			<Connection Source="initval_31.OUT" Destination="AUDI_AUI_MUX_32.IN32" dx1="1066.67"/>
+			<Connection Source="AUDI_AUI_MUX_32.OUT" Destination="Q_NumericValue_1.u32NewValue"/>
+		</AdapterConnections>
+	</SubAppNetwork>
+</SubAppType>

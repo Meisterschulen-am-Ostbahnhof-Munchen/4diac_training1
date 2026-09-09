@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SubAppType Name="Uebung_015b_AX" Comment="Object Pointer umschalten -- 3-fach">
+	<Identification Standard="61499-2" Description="Copyright (c) 2026 Meisterschulen am Ostbahnhof  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0">
+	</Identification>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2026-09-10" Remarks="initial API and implementation and/or initial documentation">
+	</VersionInfo>
+	<CompilerInfo packageName="Uebungen">
+		<Import declaration="isobus::UT::io::Softkey::SoftKeyActivationCode::SK_RELEASED"/>
+		<Import declaration="Uebungen::const::UT::DefaultPool::Button_A1"/>
+		<Import declaration="Uebungen::const::UT::DefaultPool::Button_A2"/>
+		<Import declaration="Uebungen::const::UT::DefaultPool::ObjectPointer_P1"/>
+		<Import declaration="Uebungen::const::UT::DefaultPool::SoftKey_F1"/>
+		<Import declaration="Uebungen::const::UT::DefaultPool::SoftKey_F2"/>
+		<Import declaration="Uebungen::const::UT::DefaultPool::SoftKey_F3"/>
+		<Import declaration="isobus::UT::Q::const::IDs::ID_NULL"/>
+	</CompilerInfo>
+	<SubAppInterfaceList>
+	</SubAppInterfaceList>
+	<SubAppNetwork>
+		<FB Name="SoftKey_UP_F1" Type="isobus::UT::io::Softkey::Softkey_IE" x="-5600" y="-1900">
+			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="u16ObjId" Value="SoftKey_F1"/>
+			<Parameter Name="InputEvent" Value="SK_RELEASED"/>
+		</FB>
+		<FB Name="SoftKey_UP_F2" Type="isobus::UT::io::Softkey::Softkey_IE" x="-5600" y="-900">
+			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="u16ObjId" Value="SoftKey_F2"/>
+			<Parameter Name="InputEvent" Value="SK_RELEASED"/>
+		</FB>
+		<FB Name="SoftKey_UP_F3" Type="isobus::UT::io::Softkey::Softkey_IE" x="-5600" y="100">
+			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="u16ObjId" Value="SoftKey_F3"/>
+			<Parameter Name="InputEvent" Value="SK_RELEASED"/>
+		</FB>
+		<SubApp Name="Select_3_AUDI" Type="MyLib::sys::AUDI_AUI_MUX_3_VAL" x="-2300" y="-900">
+			<Parameter Name="val1" Value="ID_NULL"/>
+			<Parameter Name="val2" Value="Button_A1"/>
+			<Parameter Name="val3" Value="Button_A2"/>
+		</SubApp>
+		<FB Name="Q_NumericValue_AUDI" Type="isobus::UT::Q::Q_NumericValue_AUDI" x="2900" y="-1000">
+			<Parameter Name="u16ObjId" Value="ObjectPointer_P1"/>
+		</FB>
+		<EventConnections>
+			<Connection Source="SoftKey_UP_F1.IND" Destination="Select_3_AUDI.EI1" dx1="1106.67"/>
+			<Connection Source="SoftKey_UP_F2.IND" Destination="Select_3_AUDI.EI2" dx1="1106.67"/>
+			<Connection Source="SoftKey_UP_F3.IND" Destination="Select_3_AUDI.EI3" dx1="1420"/>
+		</EventConnections>
+		<AdapterConnections>
+			<Connection Source="Select_3_AUDI.OUT" Destination="Q_NumericValue_AUDI.u32NewValue" dx1="700"/>
+		</AdapterConnections>
+	</SubAppNetwork>
+</SubAppType>

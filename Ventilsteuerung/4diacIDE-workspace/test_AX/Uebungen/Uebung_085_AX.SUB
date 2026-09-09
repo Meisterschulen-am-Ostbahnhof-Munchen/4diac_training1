@@ -6,14 +6,12 @@
 	</VersionInfo>
 	<CompilerInfo packageName="Uebungen">
 		<Import declaration="logiBUS::io::DI::logiBUS_DI::Input_I1"/>
-		<Import declaration="logiBUS::io::DI::logiBUS_DI::Input_I2"/>
-		<Import declaration="logiBUS::io::DI::logiBUS_DI_Events::BUTTON_SINGLE_CLICK"/>
 		<Import declaration="logiBUS::io::DQ::logiBUS_DO::Output_Q1"/>
 	</CompilerInfo>
 	<SubAppInterfaceList>
 	</SubAppInterfaceList>
 	<SubAppNetwork>
-		<FB Name="DigitalOutput_Q1" Type="logiBUS::io::DQ::logiBUS_QXA" x="1700" y="-700">
+		<FB Name="DigitalOutput_Q1" Type="logiBUS::io::DQ::logiBUS_QXA" x="-4300" y="300">
 			<Parameter Name="QI" Value="TRUE"/>
 			<Parameter Name="Output" Value="Output_Q1"/>
 		</FB>
@@ -21,28 +19,11 @@
 			<Parameter Name="QI" Value="TRUE"/>
 			<Parameter Name="Input" Value="Input_I1"/>
 		</FB>
-		<FB Name="DigitalInput_CLK_I2" Type="logiBUS::io::DI::logiBUS_IE" x="-8100" y="-800">
-			<Parameter Name="QI" Value="TRUE"/>
-			<Parameter Name="Input" Value="Input_I2"/>
-			<Parameter Name="InputEvent" Value="BUTTON_SINGLE_CLICK"/>
+		<FB Name="AX_D_FF" Type="adapter::events::unidirectional::AX_D_FF" x="-6200" y="800">
 		</FB>
-		<FB Name="E_D_FF" Type="iec61499::events::E_D_FF" x="-3800" y="-600">
-		</FB>
-		<FB Name="AX_X_TO_BOOL" Type="adapter::conversion::unidirectional::AX_X_TO_BOOL" x="-6000" y="200">
-		</FB>
-		<FB Name="AX_BOOL_TO_X" Type="adapter::conversion::unidirectional::AX_BOOL_TO_X" x="700" y="-700">
-		</FB>
-		<EventConnections>
-			<Connection Source="DigitalInput_CLK_I2.IND" Destination="E_D_FF.CLK"/>
-			<Connection Source="E_D_FF.EO" Destination="AX_BOOL_TO_X.REQ"/>
-		</EventConnections>
-		<DataConnections>
-			<Connection Source="AX_X_TO_BOOL.IN" Destination="E_D_FF.D" dx1="406.67"/>
-			<Connection Source="E_D_FF.Q" Destination="AX_BOOL_TO_X.OUT" dx1="520"/>
-		</DataConnections>
 		<AdapterConnections>
-			<Connection Source="DigitalInput_I1.IN" Destination="AX_X_TO_BOOL.AX_IN" dx1="700"/>
-			<Connection Source="AX_BOOL_TO_X.AX_OUT" Destination="DigitalOutput_Q1.OUT" dx1="700"/>
+			<Connection Source="DigitalInput_I1.IN" Destination="AX_D_FF.I" dx1="700"/>
+			<Connection Source="AX_D_FF.Q" Destination="DigitalOutput_Q1.OUT" dx1="700"/>
 		</AdapterConnections>
 	</SubAppNetwork>
 </SubAppType>

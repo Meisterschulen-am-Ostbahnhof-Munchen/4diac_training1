@@ -80,13 +80,39 @@ A computed status flag (e.g. an internal "ready"/"enable" BOOL, or an OutputVar 
 
 A FUNCTION instance (e.g. `ASSEMBLE_BYTE_FROM_BOOLS`) has no named output variable to address with `.VarName`. Its single return value is referenced by the **instance name followed by a trailing dot with nothing after it**: `Source="MyFunctionInstance."` — this is correct, valid syntax, not a broken/incomplete reference. Don't "fix" it by removing the dot or by guessing/adding a plausible-sounding suffix like `.OUT`. This is easy to get wrong because some standard blocks that *look* like functions (e.g. `F_MUX_32`, `F_MOD`) are actually declared with an explicit `OutputVars` section named `OUT` and genuinely do take `.OUT` — check the block's own `OutputVars`/interface definition rather than assuming either convention.
 
-### 7. `INIT` Wiring: Required in a Composite FB, Automatic in a SubApp — but only for `Type="EInit"` events
+### 7. `INIT` / `INITO` Wiring: Required in Composite FBs (`.fbt`), Automatic in SubApps (`.SUB`)
 
-An FB instance with an `INIT` event input (e.g. `initval_A*`) needs that `INIT` explicitly wired inside a **Composite FB's** (`.fbt`) own `FBNetwork` — nothing fires it otherwise. Inside a **SubAppType** (`.SUB`), this does *not* apply: `INIT` is automatically distributed to every FB instance in the resource via `E_TRIG` at the `EMB_RES` level once the SubApp is deployed/flattened into an actual Application/Resource — **but only to events declared `Type="EInit"`** (confirmed by the project owner). An event merely *named* `INIT`/similar with `Type="Event"` does not get this auto-distribution inside a `.SUB` either — check the declaring FB's own `<Event Name="INIT" Type="...">` before assuming auto-distribution applies. Don't flag an unwired `INIT` inside a `.SUB`'s `SubAppNetwork` as a bug when it's genuinely `EInit`-typed — check whether the file is a `FBType` or a `SubAppType` first (see section on FBType vs SubAppType structural differences), and confirm the event's `Type` attribute, before raising this.
+- **In Composite FBs (`.fbt`) / Wrappers**:
+  Any wrapper or Composite FB must **ALWAYS** expose `INIT` (`Type="EInit"`) and `INITO` (`Type="EInit"`) on its interface list and explicitly wire them inside the `FBNetwork` (`INIT` $\rightarrow$ `internal_FB.INIT`, `internal_FB.INITO` $\rightarrow$ `INITO`). Nothing fires internal `EInit` events in a Composite FB unless explicitly wired from the interface.
+  
+- **In SubApplications (`.SUB`)**:
+  `INIT` is automatically distributed by 4diac IDE to every FB instance in the resource via `E_TRIG` at the `EMB_RES` level once the SubApp is deployed/flattened into an Application/Resource — **for all events declared `Type="EInit"`** (such as `initval_*` blocks).
+
+> [!IMPORTANT]
+> **THE RULE "DO NOT CONNECT `INIT` ON `initval`" APPLIES ONLY IN A `.SUB` FILE.**
+> In a `.SUB` network, `INIT` on `initval_*` blocks is automatically wired by 4diac IDE upon deployment, so do NOT add explicit event connections to `initval.INIT` or `AR_D_FF_HYS_TMIN.INIT` in a `.SUB`. Conversely, in a Composite FB (`.fbt`), `INIT` and `INITO` **MUST** be exposed on the interface and wired internally.
+
+
 
 ### 8. Fanning Out One Adapter to Multiple Destinations: Always Use a `*_SPLIT_N`, Never a Bare Multi-Connection
 
 Plain data/event connections can legitimately fan out from one `Source` to several `Destination`s (broadcast semantics apply there). **Adapters do not follow this rule** — do not write several `<Connection Source="SameAdapterName" Destination="..."/>` entries in `AdapterConnections` pointing at different targets. Instead, route the single Socket/Plug through the matching `*_SPLIT_N` block for that adapter type (e.g. `AX_SPLIT_2`..`AX_SPLIT_9` for `AX`, `ATM_SPLIT_2`..`_4` for `ATM`, `AR_SPLIT_2`..for `AR`, etc. — one Socket `IN`, `N` Plugs `OUT1..OUTn`) and connect each `OUTn` individually to its destination. This applies even when fanning out to more than one *inner* FB instance's Socket, not just when delegating outward.
+
+> [!IMPORTANT]
+> **CRITICAL CHECKLIST FOR ADAPTER FLIP-FLOPS / FEEDBACK LOOPS:**
+> Whenever creating or porting an adapter-native block or subapplication (such as a Toggle Flip-Flop with `AX_E_SWITCH` + `AX_SR`, or any latch / feedback circuit), `AX_SR.Q` is ALWAYS needed in TWO places:
+> 1. Fed back to `AX_E_SWITCH.G` (gate input to determine the current toggle state).
+> 2. Connected to the output (e.g., `DigitalOutput_Q1.OUT` or SubApp interface plug `Q`).
+> 
+> Because `AX_SR.Q` has TWO destinations, **IT MUST ALWAYS BE ROUTED THROUGH AN `AX_SPLIT_2` FB**:
+> - `AX_SR.Q` $\rightarrow$ `AX_SPLIT_2.IN`
+> - `AX_SPLIT_2.OUT1` $\rightarrow$ `Q` (or `DigitalOutput_QXA.OUT`) — *forward signal (top pin)*
+> - `AX_SPLIT_2.OUT2` $\rightarrow$ `AX_E_SWITCH.G` — *feedback signal (bottom pin)*
+> 
+> **Note on Routing Cleanliness**: Wire `OUT1` forward to the output plug/block and `OUT2` backward to `AX_E_SWITCH.G` so the adapter connection lines do not cross in the 4diac IDE graphical editor!
+> 
+> **NEVER CONNECT `AX_SR.Q` DIRECTLY TO BOTH `AX_E_SWITCH.G` AND `Q` WITHOUT AN `AX_SPLIT_2`!**
+
 
 ### 9. Never Vendor a Standard-Library Block Into the Project's `.lib` Without Asking First
 
@@ -95,4 +121,25 @@ Plain data/event connections can legitimately fan out from one `Source` to sever
 - **`C:\4diac\4diac-ide_...\typelibrary\` is *not* an authoritative source.** It's a local, unversioned nightly-build install on this machine — not a git repo, not necessarily current, not something to treat as "the" upstream. Copying a block from there and calling it vendored is wrong.
 - **`C:\git2\ms\4diac-ide` is the actual canonical upstream** — a real git checkout of the eclipse4diac/4diac-ide source. If a standard block genuinely needs vendoring after discussing it with the user, source it from there, not from the nightly install folder.
 - This applies to every external/standard block (conversion, comparison, bitwiseOperators, signalprocessing, etc.) — not just ones that happened to come up before. Confirm with the user which exact block, from which exact source, before creating any file under `.lib`.
+
+
+### 10. Connection Categorization: `<AdapterConnections>` vs `<DataConnections>`
+
+Always strictly place connections in their proper XML tag:
+- **`<AdapterConnections>`**: Used ONLY for connections where source and destination are adapter plugs/sockets (e.g. `AX_SR.Q`, `logiBUS_IXA.IN`, `logiBUS_QXA.OUT`, `AX_SPLIT_2.IN`, `AB_TO_AUI.AB_IN`, `AUI_DEMUX_8.K`).
+- **`<DataConnections>`**: Used ONLY for primitive data variables (`BOOL`, `BYTE`, `UINT`, `INT`, `DINT`, `REAL`, `LREAL`, `STRING` etc. e.g. `AX_X_TO_BOOL.IN`, `AND_BOOL_2.IN1`, `F_BYTE_TO_UINT.IN`).
+- **`<EventConnections>`**: Used ONLY for event triggers (`EI`, `EO`, `REQ`, `CNF`, `IND`, `S`, `R`, `CLK`).
+
+Do NOT place adapter plug/socket connections inside `<DataConnections>`.
+
+
+### 11. Adapter Block Selection in `test_AX` Exercises
+
+In `test_AX` exercises, always check `.lib/adapter-3.0.0/` and `.lib/MyLib_AX-1.0.0/` for native adapter implementations before placing standard non-adapter FBs:
+- **Bistable Elements**: Use `adapter::bistableElements::AX_FB_T_FF`, `AX_FB_RS_T_FF`, `AX_FB_SR_T_FF` (with adapter sockets `CLK`, `SET`/`RESET`, plug `Q1`) instead of standard `FB_T_FF`, `FB_RS_T_FF`, `FB_SR_T_FF`.
+- **Event Demultiplexers**: Use `adapter::events::unidirectional::AUI_DEMUX_8` (with `AUI` adapter socket `K`) paired with `adapter::conversion::unidirectional::AB_TO_AUI` instead of standard `E_DEMUX_8` + `F_BYTE_TO_UINT`.
+- **SubApplications**: Check if an `_AX` SubApp type exists in `MyLib::sys` (e.g. `T_FF_EVENT_AX`, `T_FF_ILOCK_EVENT_AX`, `AE2_ILOCK_T_FF_TO_AX`) before using non-adapter SubApp types (`T_FF_EVENT`, `T_FF_ILOCK_EVENT`).
+- **Analog/Real Random & Hysteresis**: Use `adapter::utils::FB_AR_RANDOM` (wrapping `FB_RANDOM`), `adapter::events::unidirectional::AR_D_FF_HYS_TMIN`, `adapter::types::unidirectional::AR::initval::initval_AR`, and `adapter::iec61131::comparison::AR_GT` for adapter-native analog/real hysteresis flip-flops.
+
+
 

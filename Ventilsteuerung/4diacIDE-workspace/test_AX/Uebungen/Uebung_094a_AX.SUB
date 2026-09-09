@@ -32,7 +32,7 @@
 			<Parameter Name="QI" Value="TRUE"/>
 			<Parameter Name="Output" Value="Output_Q2"/>
 		</FB>
-		<FB Name="AX_X_TO_BOOL" Type="adapter::conversion::unidirectional::AX_X_TO_BOOL" x="1400" y="100">
+		<FB Name="AX_X_TO_BOOL" Type="adapter::conversion::unidirectional::AX_X_TO_BOOL" x="1000" y="100">
 		</FB>
 		<FB Name="AX_SPLIT_2" Type="adapter::events::unidirectional::AX_SPLIT_2" x="-200" y="1000">
 		</FB>
@@ -41,12 +41,12 @@
 			<Connection Source="AX_X_TO_BOOL.CNF" Destination="DigitalInput_I1.INIT" dx1="220"/>
 		</EventConnections>
 		<DataConnections>
-			<Connection Source="AX_X_TO_BOOL.IN" Destination="DigitalInput_I1.QI" dx1="220"/>
+			<Connection Source="AX_X_TO_BOOL.IN" Destination="DigitalInput_I1.QI" dx1="426.67"/>
 		</DataConnections>
 		<AdapterConnections>
 			<Connection Source="DigitalInput_I1.IN" Destination="DigitalOutput_Q1.OUT"/>
 			<Connection Source="AX_T_FF.Q" Destination="AX_SPLIT_2.IN" dx1="93.33"/>
-			<Connection Source="AX_SPLIT_2.OUT1" Destination="AX_X_TO_BOOL.AX_IN" dx1="420"/>
+			<Connection Source="AX_SPLIT_2.OUT1" Destination="AX_X_TO_BOOL.AX_IN" dx1="366.67"/>
 			<Connection Source="AX_SPLIT_2.OUT2" Destination="DigitalOutput_Q2.OUT" dx1="1966.67"/>
 		</AdapterConnections>
 	</SubAppNetwork>

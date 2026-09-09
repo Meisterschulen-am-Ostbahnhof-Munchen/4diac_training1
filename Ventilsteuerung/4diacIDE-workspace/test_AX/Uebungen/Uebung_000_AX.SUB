@@ -9,15 +9,17 @@
 	<SubAppInterfaceList>
 	</SubAppInterfaceList>
 	<SubAppNetwork>
-		<FB Name="ADD_2" Type="iec61131::arithmetic::ADD_2" x="-1900" y="2300">
-			<Parameter Name="IN1" Value="INT#5"/>
-			<Parameter Name="IN2" Value="INT#3"/>
+		<FB Name="ADD_2" Type="adapter::iec61131::arithmetic::AI_ADD_2" x="-1500" y="3400">
 		</FB>
-		<FB Name="INIT" Type="iec61131::booleanOperators::INIT" x="-3000" y="2200">
+		<FB Name="initval_AI" Type="adapter::types::unidirectional::AI::initval::initval_AI" x="-2800" y="3000">
+			<Parameter Name="INIT_VAL" Value="INT#5"/>
 		</FB>
-		<EventConnections>
-			<Connection Source="INIT.INITO" Destination="INIT.REQ" dx1="80" dx2="80" dy="53.33"/>
-			<Connection Source="INIT.CNF" Destination="ADD_2.REQ" dx1="266.67"/>
-		</EventConnections>
+		<FB Name="initval_AI_1" Type="adapter::types::unidirectional::AI::initval::initval_AI" x="-2800" y="3600">
+			<Parameter Name="INIT_VAL" Value="INT#3"/>
+		</FB>
+		<AdapterConnections>
+			<Connection Source="initval_AI.OUT" Destination="ADD_2.IN1" dx1="273.33"/>
+			<Connection Source="initval_AI_1.OUT" Destination="ADD_2.IN2" dx1="273.33"/>
+		</AdapterConnections>
 	</SubAppNetwork>
 </SubAppType>

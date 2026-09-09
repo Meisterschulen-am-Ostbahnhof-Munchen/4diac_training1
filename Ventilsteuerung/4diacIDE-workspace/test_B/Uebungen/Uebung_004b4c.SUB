@@ -34,11 +34,11 @@
 			<Parameter Name="Input" Value="Input_I2"/>
 			<Parameter Name="InputEvent" Value="BUTTON_SINGLE_CLICK"/>
 		</FB>
-		<SubApp Name="Uebung_004b3b_sub1" Type="MyLib::sys::AE2_ILOCK_T_FF_TO_BOOL_EVENT" x="-4100" y="-900">
+		<SubApp Name="Uebung_004b3b_sub1" Type="MyLib::sys::AE2_ILOCK_T_FF_TO_BOOL_EVENT" x="-4200" y="-900">
 		</SubApp>
 		<SubApp Name="Uebung_004b3b_sub2" Type="MyLib::sys::AE2_ILOCK_T_FF_TO_BOOL_EVENT" x="-2700" y="400">
 		</SubApp>
-		<SubApp Name="Uebung_004b3b_sub3" Type="MyLib::sys::AE2_ILOCK_T_FF_TO_BOOL_EVENT" x="-1300" y="1700">
+		<SubApp Name="Uebung_004b3b_sub3" Type="MyLib::sys::AE2_ILOCK_T_FF_TO_BOOL_EVENT" x="-1100" y="1700">
 		</SubApp>
 		<FB Name="DigitalOutput_Q3" Type="logiBUS::io::DQ::logiBUS_QX" x="1200" y="1400">
 			<Parameter Name="QI" Value="TRUE"/>
@@ -55,17 +55,17 @@
 			<Connection Source="Uebung_004b3b_sub1.EO" Destination="DigitalOutput_Q1.REQ" dx1="793.33"/>
 			<Connection Source="DigitalInput_CLK_I1.IND" Destination="Uebung_004b3b_sub1.IND" dx1="440"/>
 			<Connection Source="Uebung_004b3b_sub2.EO" Destination="DigitalOutput_Q2.REQ" dx1="846.67"/>
-			<Connection Source="Uebung_004b3b_sub3.EO" Destination="DigitalOutput_Q3.REQ" dx1="846.67"/>
+			<Connection Source="Uebung_004b3b_sub3.EO" Destination="DigitalOutput_Q3.REQ" dx1="626.67"/>
 			<Connection Source="DigitalInput_CLK_I3.IND" Destination="Uebung_004b3b_sub3.IND" dx1="386.67"/>
 		</EventConnections>
 		<DataConnections>
 			<Connection Source="Uebung_004b3b_sub2.Q" Destination="DigitalOutput_Q2.OUT" dx1="846.67"/>
 			<Connection Source="Uebung_004b3b_sub1.Q" Destination="DigitalOutput_Q1.OUT" dx1="793.33"/>
-			<Connection Source="Uebung_004b3b_sub3.Q" Destination="DigitalOutput_Q3.OUT" dx1="846.67"/>
+			<Connection Source="Uebung_004b3b_sub3.Q" Destination="DigitalOutput_Q3.OUT" dx1="626.67"/>
 		</DataConnections>
 		<AdapterConnections>
-			<Connection Source="Uebung_004b3b_sub1.PLUG" Destination="Uebung_004b3b_sub2.SOCKET" dx1="160"/>
-			<Connection Source="Uebung_004b3b_sub2.PLUG" Destination="Uebung_004b3b_sub3.SOCKET" dx1="160"/>
+			<Connection Source="Uebung_004b3b_sub1.PLUG" Destination="Uebung_004b3b_sub2.SOCKET" dx1="80" dx2="80" dy="646.67"/>
+			<Connection Source="Uebung_004b3b_sub2.PLUG" Destination="Uebung_004b3b_sub3.SOCKET" dx1="80" dx2="80" dy="646.67"/>
 		</AdapterConnections>
 	</SubAppNetwork>
 </SubAppType>

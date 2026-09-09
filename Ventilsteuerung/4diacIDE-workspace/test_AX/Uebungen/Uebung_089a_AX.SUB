@@ -16,11 +16,11 @@
 			<Parameter Name="QI" Value="TRUE"/>
 			<Parameter Name="Input" Value="Input_I1"/>
 		</FB>
-		<FB Name="E_RF_TRIG" Type="iec61499::events::E_RF_TRIG" x="-1600" y="-200">
+		<FB Name="AX_RF_TRIG" Type="adapter::events::unidirectional::AX_RF_TRIG" x="-1600" y="-200">
 		</FB>
-		<FB Name="E_T_FF_Q1" Type="iec61499::events::E_T_FF" x="800" y="-800">
+		<FB Name="AX_T_FF_Q1" Type="adapter::events::unidirectional::AX_T_FF" x="800" y="-800">
 		</FB>
-		<FB Name="E_T_FF_Q2" Type="iec61499::events::E_T_FF" x="800" y="700">
+		<FB Name="AX_T_FF_Q2" Type="adapter::events::unidirectional::AX_T_FF" x="800" y="700">
 		</FB>
 		<FB Name="DigitalOutput_Q1" Type="logiBUS::io::DQ::logiBUS_QXA" x="3400" y="-800">
 			<Parameter Name="QI" Value="TRUE"/>
@@ -30,29 +30,15 @@
 			<Parameter Name="QI" Value="TRUE"/>
 			<Parameter Name="Output" Value="Output_Q2"/>
 		</FB>
-		<FB Name="AX_X_TO_BOOL" Type="adapter::conversion::unidirectional::AX_X_TO_BOOL" x="-3200" y="-200">
-		</FB>
-		<FB Name="AX_BOOL_TO_X_1" Type="adapter::conversion::unidirectional::AX_BOOL_TO_X" x="1900" y="-800">
-		</FB>
-		<FB Name="AX_BOOL_TO_X_2" Type="adapter::conversion::unidirectional::AX_BOOL_TO_X" x="1900" y="700">
-		</FB>
-		<Comment Comment="Ein einziger Eingang, EIN Signal - E_RF_TRIG liefert beide Flanken gleichzeitig (ER=steigend, EF=fallend). Q1 togglet bei steigender, Q2 bei fallender Flanke." x="-4500" y="1600" width="2200" height="700"/>
+		<Comment Comment="Ein einziger Eingang, EIN Signal - AX_RF_TRIG liefert beide Flanken gleichzeitig (ER=steigend, EF=fallend). Q1 togglet bei steigender, Q2 bei fallender Flanke." x="-4500" y="1600" width="2200" height="700"/>
 		<EventConnections>
-			<Connection Source="AX_X_TO_BOOL.CNF" Destination="E_RF_TRIG.EI" dx1="273.33"/>
-			<Connection Source="E_RF_TRIG.ER" Destination="E_T_FF_Q1.CLK" dx1="246.67"/>
-			<Connection Source="E_RF_TRIG.EF" Destination="E_T_FF_Q2.CLK" dx1="246.67"/>
-			<Connection Source="E_T_FF_Q1.EO" Destination="AX_BOOL_TO_X_1.REQ"/>
-			<Connection Source="E_T_FF_Q2.EO" Destination="AX_BOOL_TO_X_2.REQ"/>
+			<Connection Source="AX_RF_TRIG.ER" Destination="AX_T_FF_Q1.CLK"/>
+			<Connection Source="AX_RF_TRIG.EF" Destination="AX_T_FF_Q2.CLK"/>
 		</EventConnections>
-		<DataConnections>
-			<Connection Source="AX_X_TO_BOOL.IN" Destination="E_RF_TRIG.QI" dx1="273.33"/>
-			<Connection Source="E_T_FF_Q1.Q" Destination="AX_BOOL_TO_X_1.OUT"/>
-			<Connection Source="E_T_FF_Q2.Q" Destination="AX_BOOL_TO_X_2.OUT"/>
-		</DataConnections>
 		<AdapterConnections>
-			<Connection Source="DigitalInput_I1.IN" Destination="AX_X_TO_BOOL.AX_IN" dx1="700"/>
-			<Connection Source="AX_BOOL_TO_X_1.AX_OUT" Destination="DigitalOutput_Q1.OUT"/>
-			<Connection Source="AX_BOOL_TO_X_2.AX_OUT" Destination="DigitalOutput_Q2.OUT"/>
+			<Connection Source="DigitalInput_I1.IN" Destination="AX_RF_TRIG.QI"/>
+			<Connection Source="AX_T_FF_Q1.Q" Destination="DigitalOutput_Q1.OUT"/>
+			<Connection Source="AX_T_FF_Q2.Q" Destination="DigitalOutput_Q2.OUT"/>
 		</AdapterConnections>
 	</SubAppNetwork>
 </SubAppType>
