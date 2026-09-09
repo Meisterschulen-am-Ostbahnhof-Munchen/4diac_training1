@@ -2,6 +2,8 @@
 <SubAppType Name="TOGGLE_RPC_MASTER_QXA_OPC" Comment="Klick-Toggle-'Kopf' fuer eine Gruppe von bis zu 6 gleichzeitig geschalteten Kanaelen OHNE eigenen physischen Ausgang: RPC-Trigger (CREATE_METHOD/SERVER_0) taktet ein AX_T_FF, dessen Zustand ueber 6 AX-Plugs (OUT1..OUT6) an Geschwister-SubApps (je ein AX_TON_MERGE_QXA_OPC pro Kanal) weitergereicht wird UND lokal publiziert wird, damit das Bedienmodul den Zustand als Hintergrundfarbe zeigen kann. Ungenutzte OUTn-Plugs bleiben einfach unverdrahtet. Fuer EINEN Ausgang stattdessen TOGGLE_RPC_MERGE_QXA_OPC verwenden (hat den physischen Ausgang schon eingebaut).">
 	<Identification Standard="61499-2" Description="Copyright (c) 2026 Meisterschulen am Ostbahnhof  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0">
 	</Identification>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.2" Author="Franz Höpfinger" Date="2026-09-09" Remarks="Fix: TRIGGER_SERVER.RSP war nie verdrahtet - blockierte den OPC-UA-Server-Thread bis zu 4s (haelt open62541s globalen serviceMutex), verzoegerte dadurch JEDE OPC-UA-Statusmeldung projektweit. IND-&gt;RSP direkt verdrahtet. Siehe OPC_UA_VERNETZUNG.md Punkt 12.">
+	</VersionInfo>
 	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.1" Author="Franz Höpfinger" Date="2026-09-07" Remarks="OUT-Plug durch OUT1..OUT6 (AX_SPLIT_7 statt AX_SPLIT_2) ersetzt - Adapter-Verbindungen sind 1:1, ein einzelner Plug kann nicht an mehrere Sockets gleichzeitig verdrahtet werden">
 	</VersionInfo>
 	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2026-09-07" Remarks="initial API and implementation and/or initial documentation - fuer Scheinwerfer (6 Kanaele, 1 SoftKey, versetztes Einschalten gegen kapazitive Einschaltstrom-Spitzen)">
@@ -35,6 +37,7 @@
 		</FB>
 		<EventConnections>
 			<Connection Source="TRIGGER_SERVER.IND" Destination="AX_T_FF.CLK" dx1="373.33"/>
+			<Connection Source="TRIGGER_SERVER.IND" Destination="TRIGGER_SERVER.RSP"/>
 		</EventConnections>
 		<DataConnections>
 			<Connection Source="ID_TRIGGER_METHOD" Destination="TRIGGER_SERVER.ID" dx1="1400">
