@@ -32,8 +32,10 @@
 			<Parameter Name="QI" Value="TRUE"/>
 		</FB>
 		<Comment Comment="AX_T_FF_INIT.Q ist die EINZIGE Source of Truth fuer DigitalOutput_DO - KEIN AX_OR_2 nach dem Flipflop (anders als TOGGLE_RPC_MERGE_QXA_OPC/Blitzer). Der Methodenaufruf (ID_DO_TOGGLE_METHOD) ist der einzige Eingang und wird von mehreren Aufrufern gemeinsam genutzt - alle takten denselben CLK, kein Merge auf Datenebene noetig." x="1600" y="2700" width="5500" height="700"/>
+		<Comment Comment="RSP MUSS auf IND zurueckverdrahtet werden (argumentloser Trigger, keine Verarbeitung noetig - wie FORTEs eigener systemtests/clientFailAction.fboot: IND-&gt;RSP direkt). Ohne RSP blockiert FORTEs onServerMethodCall den OPC-UA-Server-Thread bis zu 4s (scmMethodCallTimeoutInNanoSeconds) und haelt dabei open62541s globalen serviceMutex - der von JEDEM AX_PUBLISH_1 auf einem anderen FORTE-Thread ebenfalls gebraucht wird. Folge: physischer Ausgang reagiert sofort (kein Lock noetig), aber JEDE OPC-UA-Statusmeldung (nicht nur diese hier) haengt bis zu 4s fest. Siehe Ventilsteuerung/OPC_UA_VERNETZUNG.md Punkt 12." x="1600" y="1900" width="5500" height="600"/>
 		<EventConnections>
 			<Connection Source="DO_TOGGLE_SERVER.IND" Destination="AX_T_FF_INIT_DO.CLK"/>
+			<Connection Source="DO_TOGGLE_SERVER.IND" Destination="DO_TOGGLE_SERVER.RSP"/>
 		</EventConnections>
 		<DataConnections>
 			<Connection Source="Output_DO" Destination="DigitalOutput_DO.Output" dx1="6913.33">
