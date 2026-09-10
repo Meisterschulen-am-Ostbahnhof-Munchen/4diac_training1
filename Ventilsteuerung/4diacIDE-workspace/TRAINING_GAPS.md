@@ -129,6 +129,24 @@ ganze ILOCK-Familie, Entprellung/Hysterese, Aktor-Rückmeldung/Plausibilisierung
     im 4diac-Monitor per Watch verglichen werden. Dokumentation im
     Documentation-Attribut der SubApp, kein separates .md nötig.
 
+20. **SAFE-Arithmetik (`SafeArithmetic::arithmetic::SAFE_ADD_2/_3/_4`,
+    `SAFE_MUL_2/_3/_4`, `SAFE_SUB`, `SAFE_DIV`) hat noch keine Adapter-Variante
+    — `Uebung_011b4..011b7_AX` deshalb am 2026-09-10 aus `test_AX` entfernt.**
+    Geprüft: kein `.fbt` in `.lib` bietet einen AUDI/AX-Adapter-Ersatz für
+    diese Bausteine (anders als z.B. `F_SEL`→`AUDI_AX_SEL_AUDI` oder
+    `F_UINT_TO_UDINT`(Konstante)→`initval_AUDI`, die es für die
+    Rand-Konvertierung schon gibt). Die reine Rand-Brücken-Lösung
+    (`NumericValue_IDA`→`AD_TO_AUDI`→`AUDI_UDI_TO_UDINT`→**plain**
+    `SAFE_ADD_2`→`AUDI_UDINT_TO_UDI`→`Q_NumericValue_AUDI`) wurde verworfen,
+    weil sie im Kern weiterhin plain rechnet - genau das Muster, das test_AX
+    NICHT lehren soll. `test_B/Uebungen/Uebung_011b4..011b7.SUB` bleiben die
+    einzige Heimat für diese Übungen, bis es Adapter-typisierte SAFE-Bausteine
+    gibt. Offene Frage für später: eigene `AUDI_SAFE_ADD_2`/`_SUB`/`_MUL_2`/
+    `_DIV`-Familie in `adapter-3.0.0` entwerfen (Sockets `IN1`/`IN2: AUDI`,
+    Plug `OUT: AUDI`, `LIMIT_HIT` bleibt plain BOOL-Event-Ausgang oder wird
+    selbst zu einem AX-Adapter) - erst dann können 011b4-011b7 nach AX
+    portiert werden, im vollen Adapter-Stil wie `Uebung_015_AX`.
+
 19. **QI-gegatete ILOCK-Übung — noch nicht entschieden, ob gewollt.**
     Ausgelagert aus Punkt 6 am 2026-09-07: kein ILOCK-Baustein (7 Grundtypen,
     14 Dateien mit AX-Varianten) hat einen generellen Freigabe-/Qualitäts-

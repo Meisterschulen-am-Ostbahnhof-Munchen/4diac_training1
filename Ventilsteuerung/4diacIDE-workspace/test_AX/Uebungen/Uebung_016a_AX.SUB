@@ -13,41 +13,56 @@
 		<Import declaration="isobus::UT::Q::const::colours::COLOR_GREEN"/>
 		<Import declaration="isobus::UT::Q::const::colours::COLOR_RED"/>
 		<Import declaration="isobus::UT::Q::const::colours::COLOR_WHITE"/>
+		<Import declaration=""/>
+		<Import declaration=""/>
+		<Import declaration=""/>
+		<Import declaration=""/>
 	</CompilerInfo>
 	<SubAppInterfaceList>
 	</SubAppInterfaceList>
 	<SubAppNetwork>
-		<FB Name="SoftKey_UP_F1" Type="isobus::UT::io::Softkey::Softkey_IE" x="-4500" y="-1100">
+		<FB Name="SoftKey_UP_F1" Type="isobus::UT::io::Softkey::Softkey_IE" x="-4600" y="-2100">
 			<Parameter Name="QI" Value="TRUE"/>
 			<Parameter Name="u16ObjId" Value="SoftKey_F1"/>
 			<Parameter Name="InputEvent" Value="SK_RELEASED"/>
 		</FB>
-		<FB Name="SoftKey_UP_F2" Type="isobus::UT::io::Softkey::Softkey_IE" x="-4500" y="-100">
+		<FB Name="SoftKey_UP_F2" Type="isobus::UT::io::Softkey::Softkey_IE" x="-4600" y="-1100">
 			<Parameter Name="QI" Value="TRUE"/>
 			<Parameter Name="u16ObjId" Value="SoftKey_F2"/>
 			<Parameter Name="InputEvent" Value="SK_RELEASED"/>
 		</FB>
-		<FB Name="F_SEL_E_3" Type="eclipse4diac::utils::selection::F_SEL_E_3" x="-1100" y="-900">
-			<Parameter Name="IN1" Value="COLOR_WHITE"/>
-			<Parameter Name="IN2" Value="COLOR_GREEN"/>
-			<Parameter Name="IN3" Value="COLOR_RED"/>
-		</FB>
-		<FB Name="Q_BackgroundColour" Type="isobus::UT::Q::Q_BackgroundColour" x="800" y="-900">
-			<Parameter Name="u16ObjId" Value="SoftKey_F7"/>
-		</FB>
-		<FB Name="SoftKey_UP_F3" Type="isobus::UT::io::Softkey::Softkey_IE" x="-4500" y="900">
+		<FB Name="SoftKey_UP_F3" Type="isobus::UT::io::Softkey::Softkey_IE" x="-4600" y="-100">
 			<Parameter Name="QI" Value="TRUE"/>
 			<Parameter Name="u16ObjId" Value="SoftKey_F3"/>
 			<Parameter Name="InputEvent" Value="SK_RELEASED"/>
 		</FB>
+		<FB Name="F_SEL_E_3" Type="adapter::selection::unidirectional::AUS_AUI_MUX_3" x="0" y="-1000">
+		</FB>
+		<FB Name="Q_BackgroundColour" Type="isobus::UT::Q::Q_BackgroundColour_AUS" x="2000" y="-1300">
+			<Parameter Name="u16ObjId" Value="SoftKey_F7"/>
+		</FB>
+		<FB Name="initval_AUS" Type="adapter::types::unidirectional::AUS::initval::initval_AUS" x="-1800" y="-900">
+			<Parameter Name="INIT_VAL" Value="COLOR_WHITE"/>
+		</FB>
+		<FB Name="initval_AUS_1" Type="adapter::types::unidirectional::AUS::initval::initval_AUS" x="-1700" y="-300">
+			<Parameter Name="INIT_VAL" Value="COLOR_GREEN"/>
+		</FB>
+		<FB Name="initval_AUS_2" Type="adapter::types::unidirectional::AUS::initval::initval_AUS" x="-1700" y="300">
+			<Parameter Name="INIT_VAL" Value="COLOR_RED"/>
+		</FB>
+		<FB Name="AUI_MUX_3" Type="adapter::events::unidirectional::AUI_MUX_3" x="-1800" y="-1600">
+		</FB>
 		<EventConnections>
-			<Connection Source="F_SEL_E_3.CNF" Destination="Q_BackgroundColour.REQ" dx1="613.33"/>
-			<Connection Source="SoftKey_UP_F1.IND" Destination="F_SEL_E_3.REQ1"/>
-			<Connection Source="SoftKey_UP_F2.IND" Destination="F_SEL_E_3.REQ2" dx1="1040"/>
-			<Connection Source="SoftKey_UP_F3.IND" Destination="F_SEL_E_3.REQ3" dx1="1353.33"/>
+			<Connection Source="SoftKey_UP_F1.IND" Destination="AUI_MUX_3.EI1" dx1="1253.33"/>
+			<Connection Source="SoftKey_UP_F2.IND" Destination="AUI_MUX_3.EI2" dx1="1040"/>
+			<Connection Source="SoftKey_UP_F3.IND" Destination="AUI_MUX_3.EI3" dx1="1353.33"/>
 		</EventConnections>
-		<DataConnections>
-			<Connection Source="F_SEL_E_3.OUT" Destination="Q_BackgroundColour.u8Colour" dx1="426.67"/>
-		</DataConnections>
+		<AdapterConnections>
+			<Connection Source="F_SEL_E_3.OUT" Destination="Q_BackgroundColour.u8Colour" dx1="926.67"/>
+			<Connection Source="initval_AUS.OUT" Destination="F_SEL_E_3.IN1" dx1="300"/>
+			<Connection Source="initval_AUS_1.OUT" Destination="F_SEL_E_3.IN2" dx1="346.67"/>
+			<Connection Source="initval_AUS_2.OUT" Destination="F_SEL_E_3.IN3" dx1="400"/>
+			<Connection Source="AUI_MUX_3.K" Destination="F_SEL_E_3.K" dx1="546.67"/>
+		</AdapterConnections>
 	</SubAppNetwork>
 </SubAppType>

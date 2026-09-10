@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SubAppType Name="Uebung_007d3_AX" Comment="Blinker mit E_CYCLE, FB_AR_RANDOM, AR_D_FF_HYS und AR_GT">
+	<Identification Standard="61499-2" Description="Copyright (c) 2023 Meisterschulen am Ostbahnhof  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0">
+	</Identification>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2023-10-23" Remarks="initial API and implementation and/or initial documentation">
+	</VersionInfo>
+	<CompilerInfo packageName="Uebungen">
+		<Import declaration="logiBUS::io::DQ::logiBUS_DO::Output_Q1"/>
+	</CompilerInfo>
+	<SubAppInterfaceList>
+	</SubAppInterfaceList>
+	<SubAppNetwork>
+		<FB Name="DigitalOutput_Q1" Type="logiBUS::io::DQ::logiBUS_QXA" x="400" y="200">
+			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="Output" Value="Output_Q1"/>
+		</FB>
+		<FB Name="E_CYCLE" Type="iec61499::events::E_CYCLE" x="-7300" y="500">
+			<Parameter Name="DT" Value="T#1ms"/>
+		</FB>
+		<FB Name="FB_AR_RANDOM" Type="adapter::utils::FB_AR_RANDOM" x="-6200" y="400">
+			<Parameter Name="SEED" Value="0"/>
+		</FB>
+		<FB Name="AR_D_FF_HYS" Type="adapter::events::unidirectional::AR_D_FF_HYS" x="-4400" y="400">
+			<Parameter Name="HYSTERESIS" Value="REAL#0.95"/>
+		</FB>
+		<FB Name="initval_AR" Type="adapter::types::unidirectional::AR::initval::initval_AR" x="-2600" y="1100">
+			<Parameter Name="INIT_VAL" Value="REAL#0.49"/>
+		</FB>
+		<FB Name="AR_GT" Type="adapter::iec61131::comparison::AR_GT" x="-1300" y="700">
+		</FB>
+		<FB Name="INIT" Type="iec61131::booleanOperators::INIT" x="-8400" y="200">
+		</FB>
+		<EventConnections>
+			<Connection Source="INIT.INITO" Destination="INIT.REQ" dx1="80" dx2="80" dy="53.33"/>
+			<Connection Source="INIT.CNF" Destination="E_CYCLE.START" dx1="166.67"/>
+			<Connection Source="E_CYCLE.EO" Destination="FB_AR_RANDOM.REQ" dx1="206.67"/>
+		</EventConnections>
+		<AdapterConnections>
+			<Connection Source="FB_AR_RANDOM.OUT" Destination="AR_D_FF_HYS.I"/>
+			<Connection Source="AR_D_FF_HYS.Q" Destination="AR_GT.IN1" dx1="1033.33"/>
+			<Connection Source="initval_AR.OUT" Destination="AR_GT.IN2" dx1="320"/>
+			<Connection Source="AR_GT.OUT" Destination="DigitalOutput_Q1.OUT" dx1="613.33"/>
+		</AdapterConnections>
+	</SubAppNetwork>
+</SubAppType>

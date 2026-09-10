@@ -33,7 +33,7 @@
 		</FB>
 		<FB Name="F_UDINT_TO_REAL" Type="iec61131::conversion::F_UDINT_TO_REAL" x="-1300" y="700">
 		</FB>
-		<FB Name="PWMOutput_Q1" Type="logiBUS::io::DQ::logiBUS_QD_PWM" x="7300" y="1000">
+		<FB Name="PWMOutput_Q1" Type="logiBUS::io::DQ::logiBUS_QDA_PWM" x="7300" y="1000">
 			<Parameter Name="QI" Value="TRUE"/>
 			<Parameter Name="Output" Value="Output_Q1"/>
 		</FB>
@@ -52,11 +52,15 @@
 			<Parameter Name="Input" Value="Input_I1"/>
 			<Parameter Name="InputEvent" Value="BUTTON_SINGLE_CLICK"/>
 		</FB>
-		<FB Name="E_T_FF" Type="iec61499::events::E_T_FF" x="-2300" y="1900">
+		<FB Name="AX_T_FF" Type="adapter::events::unidirectional::AX_T_FF" x="-2300" y="1900">
+		</FB>
+		<FB Name="AX_X_TO_BOOL" Type="adapter::conversion::unidirectional::AX_X_TO_BOOL" x="-900" y="1900">
 		</FB>
 		<FB Name="F_LREAL_TO_UDINT" Type="iec61131::conversion::F_LREAL_TO_UDINT" x="3900" y="1300">
 		</FB>
-		<FB Name="F_UDINT_TO_DWORD" Type="iec61131::conversion::F_UDINT_TO_DWORD" x="5500" y="1300">
+		<FB Name="AUDI_UDINT_TO_UDI" Type="adapter::conversion::unidirectional::AUDI_UDINT_TO_UDI" x="5100" y="1300">
+		</FB>
+		<FB Name="AUDI_TO_AD" Type="adapter::conversion::unidirectional::AUDI_TO_AD" x="6200" y="1300">
 		</FB>
 		<FB Name="E_CYCLE" Type="iec61499::events::E_CYCLE" x="-6500" y="500">
 			<Parameter Name="DT" Value="T#200ms"/>
@@ -76,11 +80,10 @@
 			<Connection Source="F_DWORD_TO_UDINT.CNF" Destination="F_UDINT_TO_REAL.REQ" dx1="80" dx2="80" dy="346.67"/>
 			<Connection Source="F_UDINT_TO_REAL.CNF" Destination="FT_DERIV.REQ" dx1="146.67"/>
 			<Connection Source="FT_DERIV.CNF" Destination="CTRL_PI.REQ" dx1="1266.67"/>
-			<Connection Source="DigitalInput_I1.IND" Destination="E_T_FF.CLK" dx1="806.67"/>
-			<Connection Source="E_T_FF.EO" Destination="CTRL_PI.REQ" dx1="280"/>
+			<Connection Source="DigitalInput_I1.IND" Destination="AX_T_FF.CLK" dx1="806.67"/>
+			<Connection Source="AX_X_TO_BOOL.CNF" Destination="CTRL_PI.REQ" dx1="280"/>
 			<Connection Source="CTRL_PI.CNF" Destination="F_LREAL_TO_UDINT.REQ"/>
-			<Connection Source="F_LREAL_TO_UDINT.CNF" Destination="F_UDINT_TO_DWORD.REQ"/>
-			<Connection Source="F_UDINT_TO_DWORD.CNF" Destination="PWMOutput_Q1.REQ" dx1="380"/>
+			<Connection Source="F_LREAL_TO_UDINT.CNF" Destination="AUDI_UDINT_TO_UDI.REQ"/>
 			<Connection Source="DigitalInput_I2.IND" Destination="E_CYCLE.START" dx1="533.33"/>
 			<Connection Source="DigitalInput_I3.IND" Destination="E_CYCLE.STOP" dx1="360"/>
 			<Connection Source="E_CYCLE.EO" Destination="logiBUS_PI_IDA.REQ" dx1="80"/>
@@ -90,13 +93,15 @@
 			<Connection Source="F_DWORD_TO_UDINT.OUT" Destination="F_UDINT_TO_REAL.IN" dx1="80" dx2="80" dy="346.67"/>
 			<Connection Source="F_UDINT_TO_REAL.OUT" Destination="FT_DERIV.in" dx1="353.33"/>
 			<Connection Source="FT_DERIV.out" Destination="CTRL_PI.ACT" dx1="766.67"/>
-			<Connection Source="E_T_FF.Q" Destination="CTRL_PI.MAN" dx1="3646.67"/>
+			<Connection Source="AX_X_TO_BOOL.IN" Destination="CTRL_PI.MAN" dx1="3646.67"/>
 			<Connection Source="CTRL_PI.Y" Destination="F_LREAL_TO_UDINT.IN" dx1="340"/>
-			<Connection Source="F_LREAL_TO_UDINT.OUT" Destination="F_UDINT_TO_DWORD.IN"/>
-			<Connection Source="F_UDINT_TO_DWORD.OUT" Destination="PWMOutput_Q1.OUT" dx1="380"/>
+			<Connection Source="F_LREAL_TO_UDINT.OUT" Destination="AUDI_UDINT_TO_UDI.OUT"/>
 		</DataConnections>
 		<AdapterConnections>
 			<Connection Source="logiBUS_PI_IDA.IN" Destination="AD_D_TO_DWORD.AD_IN" dx1="700"/>
+			<Connection Source="AX_T_FF.Q" Destination="AX_X_TO_BOOL.AX_IN"/>
+			<Connection Source="AUDI_UDINT_TO_UDI.AUDI_OUT" Destination="AUDI_TO_AD.AUDI_IN"/>
+			<Connection Source="AUDI_TO_AD.AD_OUT" Destination="PWMOutput_Q1.OUT"/>
 		</AdapterConnections>
 	</SubAppNetwork>
 </SubAppType>

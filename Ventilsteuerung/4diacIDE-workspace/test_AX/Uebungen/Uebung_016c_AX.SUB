@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SubAppType Name="Uebung_016c_AX" Comment="Background Colour umschalten -- mit SubApp für SEL und INITVAL">
+	<Identification Standard="61499-2" Description="Copyright (c) 2026 Meisterschulen am Ostbahnhof  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0">
+	</Identification>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2026-09-10" Remarks="initial API and implementation and/or initial documentation">
+	</VersionInfo>
+	<CompilerInfo packageName="Uebungen">
+		<Import declaration="isobus::UT::io::Softkey::SoftKeyActivationCode::SK_RELEASED"/>
+		<Import declaration="Uebungen::const::UT::DefaultPool::SoftKey_F1"/>
+		<Import declaration="Uebungen::const::UT::DefaultPool::SoftKey_F2"/>
+		<Import declaration="Uebungen::const::UT::DefaultPool::SoftKey_F7"/>
+		<Import declaration="isobus::UT::Q::const::colours::COLOR_GREEN"/>
+		<Import declaration="isobus::UT::Q::const::colours::COLOR_WHITE"/>
+	</CompilerInfo>
+	<SubAppInterfaceList>
+	</SubAppInterfaceList>
+	<SubAppNetwork>
+		<FB Name="SoftKey_UP_F1" Type="isobus::UT::io::Softkey::Softkey_IE" x="-4500" y="-1100">
+			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="u16ObjId" Value="SoftKey_F1"/>
+			<Parameter Name="InputEvent" Value="SK_RELEASED"/>
+		</FB>
+		<FB Name="SoftKey_UP_F2" Type="isobus::UT::io::Softkey::Softkey_IE" x="-4500" y="0">
+			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="u16ObjId" Value="SoftKey_F2"/>
+			<Parameter Name="InputEvent" Value="SK_RELEASED"/>
+		</FB>
+		<FB Name="AX_SR" Type="adapter::events::unidirectional::AX_SR" x="-2800" y="-900">
+		</FB>
+		<SubApp Name="Select_Colour" Type="MyLib::sys::AUS_AX_SEL_AUS_2_VAL" x="-900" y="-700">
+			<Parameter Name="val0" Value="COLOR_WHITE"/>
+			<Parameter Name="val1" Value="COLOR_GREEN"/>
+		</SubApp>
+		<FB Name="Q_BackgroundColour_AUS" Type="isobus::UT::Q::Q_BackgroundColour_AUS" x="1900" y="-700">
+			<Parameter Name="u16ObjId" Value="SoftKey_F7"/>
+		</FB>
+		<EventConnections>
+			<Connection Source="SoftKey_UP_F1.IND" Destination="AX_SR.S" dx1="406.67"/>
+			<Connection Source="SoftKey_UP_F2.IND" Destination="AX_SR.R" dx1="473.33"/>
+		</EventConnections>
+		<AdapterConnections>
+			<Connection Source="AX_SR.Q" Destination="Select_Colour.G" dx1="686.67"/>
+			<Connection Source="Select_Colour.OUT" Destination="Q_BackgroundColour_AUS.u8Colour" dx1="926.67"/>
+		</AdapterConnections>
+	</SubAppNetwork>
+</SubAppType>

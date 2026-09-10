@@ -2,7 +2,7 @@
 <SubAppType Name="Uebung_015a_AX" Comment="Object Pointer umschalten -- 3-fach">
 	<Identification Standard="61499-2" Description="Copyright (c) 2026 Meisterschulen am Ostbahnhof  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0">
 	</Identification>
-	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2026-09-09" Remarks="initial API and implementation and/or initial documentation">
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2026-09-10" Remarks="initial API and implementation and/or initial documentation">
 	</VersionInfo>
 	<CompilerInfo packageName="Uebungen">
 		<Import declaration="isobus::UT::io::Softkey::SoftKeyActivationCode::SK_RELEASED"/>
@@ -17,48 +17,48 @@
 	<SubAppInterfaceList>
 	</SubAppInterfaceList>
 	<SubAppNetwork>
-		<FB Name="SoftKey_UP_F1" Type="isobus::UT::io::Softkey::Softkey_IE" x="-5600" y="-1100">
+		<FB Name="SoftKey_UP_F1" Type="isobus::UT::io::Softkey::Softkey_IE" x="-5600" y="-1900">
 			<Parameter Name="QI" Value="TRUE"/>
 			<Parameter Name="u16ObjId" Value="SoftKey_F1"/>
 			<Parameter Name="InputEvent" Value="SK_RELEASED"/>
 		</FB>
-		<FB Name="SoftKey_UP_F2" Type="isobus::UT::io::Softkey::Softkey_IE" x="-5600" y="200">
+		<FB Name="SoftKey_UP_F2" Type="isobus::UT::io::Softkey::Softkey_IE" x="-5600" y="-900">
 			<Parameter Name="QI" Value="TRUE"/>
 			<Parameter Name="u16ObjId" Value="SoftKey_F2"/>
 			<Parameter Name="InputEvent" Value="SK_RELEASED"/>
 		</FB>
-		<FB Name="F_UINT_TO_UDINT" Type="iec61131::conversion::F_UINT_TO_UDINT" x="-2800" y="0">
-			<Parameter Name="IN" Value="Button_A1"/>
+		<FB Name="F_UINT_TO_UDINT" Type="adapter::types::unidirectional::AUDI::initval::initval_AUDI" x="-2300" y="200">
+			<Parameter Name="INIT_VAL" Value="Button_A1"/>
 		</FB>
-		<FB Name="F_SEL_E_3" Type="eclipse4diac::utils::selection::F_SEL_E_3" x="-1100" y="-900">
-			<Parameter Name="IN1" Value="ID_NULL"/>
-		</FB>
-		<FB Name="Q_NumericValue" Type="isobus::UT::Q::Q_NumericValue" x="1100" y="-1000">
+		<FB Name="Q_NumericValue_AUDI" Type="isobus::UT::Q::Q_NumericValue_AUDI" x="2900" y="-1000">
 			<Parameter Name="u16ObjId" Value="ObjectPointer_P1"/>
 		</FB>
-		<FB Name="SoftKey_UP_F3" Type="isobus::UT::io::Softkey::Softkey_IE" x="-5600" y="1400">
+		<FB Name="SoftKey_UP_F3" Type="isobus::UT::io::Softkey::Softkey_IE" x="-5600" y="100">
 			<Parameter Name="QI" Value="TRUE"/>
 			<Parameter Name="u16ObjId" Value="SoftKey_F3"/>
 			<Parameter Name="InputEvent" Value="SK_RELEASED"/>
 		</FB>
-		<FB Name="F_UINT_TO_UDINT_1" Type="iec61131::conversion::F_UINT_TO_UDINT" x="-2833.33" y="566.67">
-			<Parameter Name="IN" Value="Button_A2"/>
+		<FB Name="F_UINT_TO_UDINT_1" Type="adapter::types::unidirectional::AUDI::initval::initval_AUDI" x="-2300" y="800">
+			<Parameter Name="INIT_VAL" Value="Button_A2"/>
 		</FB>
-		<FB Name="INIT" Type="iec61131::booleanOperators::INIT" x="-4100" y="-300">
+		<FB Name="initval_AUDI" Type="adapter::types::unidirectional::AUDI::initval::initval_AUDI" x="-2300" y="-400">
+			<Parameter Name="INIT_VAL" Value="ID_NULL"/>
+		</FB>
+		<FB Name="AUDI_AUI_MUX_3" Type="adapter::selection::unidirectional::AUDI_AUI_MUX_3" x="100" y="-800">
+		</FB>
+		<FB Name="AUI_MUX_3" Type="adapter::events::unidirectional::AUI_MUX_3" x="-2200" y="-1100">
 		</FB>
 		<EventConnections>
-			<Connection Source="F_SEL_E_3.CNF" Destination="Q_NumericValue.REQ" dx1="573.33"/>
-			<Connection Source="SoftKey_UP_F1.IND" Destination="F_SEL_E_3.REQ1" dx1="1806.67"/>
-			<Connection Source="SoftKey_UP_F2.IND" Destination="F_SEL_E_3.REQ2" dx1="280"/>
-			<Connection Source="SoftKey_UP_F3.IND" Destination="F_SEL_E_3.REQ3" dx1="446.67"/>
-			<Connection Source="INIT.INITO" Destination="INIT.REQ" dx1="80" dx2="80" dy="53.33"/>
-			<Connection Source="INIT.CNF" Destination="F_UINT_TO_UDINT.REQ" dx1="366.67"/>
-			<Connection Source="INIT.CNF" Destination="F_UINT_TO_UDINT_1.REQ" dx1="353.33"/>
+			<Connection Source="SoftKey_UP_F1.IND" Destination="AUI_MUX_3.EI1" dx1="1106.67"/>
+			<Connection Source="SoftKey_UP_F2.IND" Destination="AUI_MUX_3.EI2" dx1="1106.67"/>
+			<Connection Source="SoftKey_UP_F3.IND" Destination="AUI_MUX_3.EI3" dx1="1420"/>
 		</EventConnections>
-		<DataConnections>
-			<Connection Source="F_UINT_TO_UDINT.OUT" Destination="F_SEL_E_3.IN2" dx1="360"/>
-			<Connection Source="F_SEL_E_3.OUT" Destination="Q_NumericValue.u32NewValue" dx1="600"/>
-			<Connection Source="F_UINT_TO_UDINT_1.OUT" Destination="F_SEL_E_3.IN3" dx1="500"/>
-		</DataConnections>
+		<AdapterConnections>
+			<Connection Source="AUDI_AUI_MUX_3.OUT" Destination="Q_NumericValue_AUDI.u32NewValue" dx1="700"/>
+			<Connection Source="F_UINT_TO_UDINT_1.OUT" Destination="AUDI_AUI_MUX_3.IN3" dx1="573.33"/>
+			<Connection Source="F_UINT_TO_UDINT.OUT" Destination="AUDI_AUI_MUX_3.IN2" dx1="420"/>
+			<Connection Source="initval_AUDI.OUT" Destination="AUDI_AUI_MUX_3.IN1" dx1="320"/>
+			<Connection Source="AUI_MUX_3.K" Destination="AUDI_AUI_MUX_3.K" dx1="946.67"/>
+		</AdapterConnections>
 	</SubAppNetwork>
 </SubAppType>
