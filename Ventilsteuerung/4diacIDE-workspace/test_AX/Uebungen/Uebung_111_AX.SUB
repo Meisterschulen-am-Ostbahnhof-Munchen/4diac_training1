@@ -12,7 +12,7 @@
 	<SubAppInterfaceList>
 	</SubAppInterfaceList>
 	<SubAppNetwork>
-		<FB Name="DigitalOutput_Q1" Type="logiBUS::io::DQ::logiBUS_QXA" x="2500" y="200">
+		<FB Name="DigitalOutput_Q1" Type="logiBUS::io::DQ::logiBUS_QXA" x="3600" y="-300">
 			<Parameter Name="QI" Value="TRUE"/>
 			<Parameter Name="Output" Value="Output_Q1"/>
 		</FB>
@@ -39,7 +39,7 @@
 		<FB Name="AX_BOOL_TO_X" Type="adapter::conversion::unidirectional::AX_BOOL_TO_X" x="1900" y="200">
 		</FB>
 		<EventConnections>
-			<Connection Source="DigitalInput_CLK_I1.IND" Destination="ADD_2.REQ"/>
+			<Connection Source="DigitalInput_CLK_I1.IND" Destination="ADD_2.REQ" dx1="506.67"/>
 			<Connection Source="F_GT.CNF" Destination="AX_BOOL_TO_X.REQ" dx1="193.33"/>
 			<Connection Source="ADD_2.CNF" Destination="F_USINT_TO_UDINT.REQ" dx1="193.33"/>
 			<Connection Source="F_USINT_TO_UDINT.CNF" Destination="F_DIV.REQ" dx1="160"/>
