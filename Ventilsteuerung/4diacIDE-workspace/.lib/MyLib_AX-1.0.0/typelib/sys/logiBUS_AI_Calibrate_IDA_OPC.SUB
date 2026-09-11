@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<SubAppType Name="logiBUS_AI_Calibrate_IDA_OPC" Comment="logiBUS_AI_IDA (Analog-Eingang) mit 2-Punkt-Kalibrierung (AR_CALIBRATE_SQ_REF, OFFSET/SCALE + Referenzwerte ZERO/SPAN alle INI-persistiert) auf VT-Zahlenfelder (Rohwert + kalibrierter Wert, je eigene CNumberVariable) + Bargraph (kalibriert) + 2 VT-Tasten (CO/CS) + OPC-UA (Rohwert DWORD + kalibrierter Wert REAL, generisch, ein Kanal)">
+<SubAppType Name="logiBUS_AI_Calibrate_IDA_OPC" Comment="logiBUS_AI_IDA (Analog-Eingang) mit 2-Punkt-Kalibrierung (AR_CALIBRATE_2P_REF, unabhaengig gespeicherte Rohwerte X_LOW/X_HIGH + Referenzwerte LOW_REF/HIGH_REF alle INI-persistiert) auf VT-Zahlenfelder (Rohwert + kalibrierter Wert, je eigene CNumberVariable) + Bargraph (kalibriert) + 2 VT-Tasten (CO/CS) + OPC-UA (Rohwert DWORD + kalibrierter Wert REAL, generisch, ein Kanal)">
 	<Identification Standard="61499-2" Description="Copyright (c) 2026 Meisterschulen am Ostbahnhof  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0">
 	</Identification>
 	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2026-08-31" Remarks="initial API and implementation and/or initial documentation - Kalibrierlogik nach Vorbild Uebung_028c3_AR.SUB, aber AR_CALIBRATE_SQ (korrigierte Offset-Formel, ECC-erzwungene CO-vor-CS-Reihenfolge) statt AR_CALIBRATE">
+	</VersionInfo>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.1" Author="Franz Höpfinger" Date="2026-09-11" Remarks="Migriert auf AR_CALIBRATE_2P_REF: CO/CS speichern jetzt unabhaengig X_LOW/X_HIGH (wie AR_CALIBRATE_3P/_REF), keine ECC-erzwungene Reihenfolge mehr noetig, da CS mathematisch nie von CO abhing - nur die alte OFFSET/SCALE-Inkrementalrechnung erzwang das kuenstlich. Aeussere Schnittstelle (InputVars, VT-Tasten CO/CS, GCF-IDs) unveraendert, nur interne INI-Keys OFFSET/SCALE/ZERO/SPAN -> X_LOW/X_HIGH/LOW_REF/HIGH_REF umbenannt (Klarheit, keine bestehenden Feldgeraete betroffen).">
 	</VersionInfo>
 	<CompilerInfo packageName="MyLib::sys">
 		<Import declaration="isobus::UT::Q::const::IDs::ID_NULL"/>
@@ -54,7 +56,7 @@
 		</FB>
 		<FB Name="AUDI_TO_AR" Type="adapter::conversion::unidirectional::AUDI_TO_AR" x="-2300" y="200">
 		</FB>
-		<FB Name="CALIBRATE" Type="adapter::Engineering::measurements::AR_CALIBRATE_SQ_REF" x="-200" y="200">
+		<FB Name="CALIBRATE" Type="adapter::Engineering::measurements::AR_CALIBRATE_2P_REF" x="-200" y="200">
 		</FB>
 		<SubApp Name="Y_OFFSET_LIT" Type="MyLib::sys::NumericValue_TO_AR2_OPC" x="-8400" y="4200">
 		</SubApp>
@@ -92,28 +94,28 @@
 		</FB>
 		<FB Name="E_MERGE_CS_B" Type="iec61499::events::E_MERGE_2" x="-3600" y="2800">
 		</FB>
-		<FB Name="INI_OFFSET" Type="eclipse4diac::storage::INI_AR2" x="3400" y="1300">
+		<FB Name="INI_X_LOW" Type="eclipse4diac::storage::INI_AR2" x="3400" y="1300">
 			<Parameter Name="QI" Value="TRUE"/>
 			<Parameter Name="SETM" Value="TRUE"/>
-			<Parameter Name="KEY" Value="'OFFSET'"/>
+			<Parameter Name="KEY" Value="'X_LOW'"/>
 			<Parameter Name="DEFAULT_VALUE" Value="REAL#0.0"/>
 		</FB>
-		<FB Name="INI_SCALE" Type="eclipse4diac::storage::INI_AR2" x="3500" y="2300">
+		<FB Name="INI_X_HIGH" Type="eclipse4diac::storage::INI_AR2" x="3500" y="2300">
 			<Parameter Name="QI" Value="TRUE"/>
 			<Parameter Name="SETM" Value="TRUE"/>
-			<Parameter Name="KEY" Value="'SCALE'"/>
+			<Parameter Name="KEY" Value="'X_HIGH'"/>
 			<Parameter Name="DEFAULT_VALUE" Value="REAL#1.0"/>
 		</FB>
-		<FB Name="INI_ZERO" Type="eclipse4diac::storage::INI_AR2" x="3400" y="3300">
+		<FB Name="INI_LOW_REF" Type="eclipse4diac::storage::INI_AR2" x="3400" y="3300">
 			<Parameter Name="QI" Value="TRUE"/>
 			<Parameter Name="SETM" Value="TRUE"/>
-			<Parameter Name="KEY" Value="'ZERO'"/>
+			<Parameter Name="KEY" Value="'LOW_REF'"/>
 			<Parameter Name="DEFAULT_VALUE" Value="REAL#0.0"/>
 		</FB>
-		<FB Name="INI_SPAN" Type="eclipse4diac::storage::INI_AR2" x="3500" y="4300">
+		<FB Name="INI_HIGH_REF" Type="eclipse4diac::storage::INI_AR2" x="3500" y="4300">
 			<Parameter Name="QI" Value="TRUE"/>
 			<Parameter Name="SETM" Value="TRUE"/>
-			<Parameter Name="KEY" Value="'SPAN'"/>
+			<Parameter Name="KEY" Value="'HIGH_REF'"/>
 			<Parameter Name="DEFAULT_VALUE" Value="REAL#100.0"/>
 		</FB>
 		<FB Name="AR_SPLIT_2" Type="adapter::events::unidirectional::AR_SPLIT_2" x="1600" y="200">
@@ -160,16 +162,16 @@
 			<Connection Source="u16ObjId_CS" Destination="Button_CS.u16ObjId" dx1="1400">
 				<Attribute Name="Visible" Value="false"/>
 			</Connection>
-			<Connection Source="sSection" Destination="INI_OFFSET.SECTION" dx1="1400">
+			<Connection Source="sSection" Destination="INI_X_LOW.SECTION" dx1="1400">
 				<Attribute Name="Visible" Value="false"/>
 			</Connection>
-			<Connection Source="sSection" Destination="INI_SCALE.SECTION" dx1="1400">
+			<Connection Source="sSection" Destination="INI_X_HIGH.SECTION" dx1="1400">
 				<Attribute Name="Visible" Value="false"/>
 			</Connection>
-			<Connection Source="sSection" Destination="INI_ZERO.SECTION" dx1="1400">
+			<Connection Source="sSection" Destination="INI_LOW_REF.SECTION" dx1="1400">
 				<Attribute Name="Visible" Value="false"/>
 			</Connection>
-			<Connection Source="sSection" Destination="INI_SPAN.SECTION" dx1="1400">
+			<Connection Source="sSection" Destination="INI_HIGH_REF.SECTION" dx1="1400">
 				<Attribute Name="Visible" Value="false"/>
 			</Connection>
 			<Connection Source="ID_RAW_WRITE" Destination="AD_PUBLISH_RAW.ID" dx1="1400">
@@ -211,14 +213,14 @@
 			<Connection Source="AUDI_SPLIT_2.OUT1" Destination="Q_NumericValue_RAW.u32NewValue" dx1="300"/>
 			<Connection Source="AUDI_SPLIT_2.OUT2" Destination="AUDI_TO_AR.AUDI_IN" dx1="300"/>
 			<Connection Source="AUDI_TO_AR.AR_OUT" Destination="CALIBRATE.X" dx1="300"/>
-			<Connection Source="AX_BOOL_TO_X_CO.AX_OUT" Destination="CALIBRATE.CO" dx1="566.67"/>
-			<Connection Source="AX_BOOL_TO_X_CS.AX_OUT" Destination="CALIBRATE.CS" dx1="1013.33"/>
-			<Connection Source="CALIBRATE.OFFSET" Destination="INI_OFFSET.VAL" dx1="580"/>
-			<Connection Source="CALIBRATE.SCALE" Destination="INI_SCALE.VAL" dx1="340"/>
-			<Connection Source="CALIBRATE.ZERO" Destination="INI_ZERO.VAL" dx1="253.33"/>
-			<Connection Source="CALIBRATE.SPAN" Destination="INI_SPAN.VAL" dx1="180"/>
-			<Connection Source="Y_OFFSET_LIT.VALUEO" Destination="CALIBRATE.Y_Offset" dx1="6806.67"/>
-			<Connection Source="Y_SCALE_LIT.VALUEO" Destination="CALIBRATE.Y_Scale" dx1="6760"/>
+			<Connection Source="AX_BOOL_TO_X_CO.AX_OUT" Destination="CALIBRATE.C_LOW" dx1="566.67"/>
+			<Connection Source="AX_BOOL_TO_X_CS.AX_OUT" Destination="CALIBRATE.C_HIGH" dx1="1013.33"/>
+			<Connection Source="CALIBRATE.X_LOW" Destination="INI_X_LOW.VAL" dx1="580"/>
+			<Connection Source="CALIBRATE.X_HIGH" Destination="INI_X_HIGH.VAL" dx1="340"/>
+			<Connection Source="CALIBRATE.LOW_REF" Destination="INI_LOW_REF.VAL" dx1="253.33"/>
+			<Connection Source="CALIBRATE.HIGH_REF" Destination="INI_HIGH_REF.VAL" dx1="180"/>
+			<Connection Source="Y_OFFSET_LIT.VALUEO" Destination="CALIBRATE.Y_LOW" dx1="6806.67"/>
+			<Connection Source="Y_SCALE_LIT.VALUEO" Destination="CALIBRATE.Y_HIGH" dx1="6760"/>
 			<Connection Source="CALIBRATE.Y" Destination="AR_SPLIT_2.IN" dx1="300"/>
 			<Connection Source="AR_SPLIT_2.OUT1" Destination="AR_PUBLISH_CAL.IN" dx1="300"/>
 			<Connection Source="AR_SPLIT_2.OUT2" Destination="Q_NumericValue_CAL.rPhys" dx1="300"/>
