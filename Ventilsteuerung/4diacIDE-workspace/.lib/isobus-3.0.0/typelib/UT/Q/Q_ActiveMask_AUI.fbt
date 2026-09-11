@@ -23,12 +23,12 @@
 			<VarDeclaration Name="STATUS" Type="STRING" Comment="Service Status"/>
 			<VarDeclaration Name="s16result" Type="INT" Comment="retval see description"/>
 		</OutputVars>
-		<Plugs>
-			<AdapterDeclaration Name="u16OldMaskId" Type="adapter::types::unidirectional::AUI" Comment="Old active mask ID" x="3900" y="1100"/>
-		</Plugs>
 		<Sockets>
 			<AdapterDeclaration Name="u16NewMaskId" Type="adapter::types::unidirectional::AUI" Comment="New active mask ID" x="-600" y="1200"/>
 		</Sockets>
+		<Plugs>
+			<AdapterDeclaration Name="u16OldMaskId" Type="adapter::types::unidirectional::AUI" Comment="Old active mask ID" x="3900" y="1100"/>
+		</Plugs>
 	</InterfaceList>
 	<FBNetwork>
 		<FB Name="Q_ActiveMask" Type="isobus::UT::Q::Q_ActiveMask" x="533.33" y="420">
