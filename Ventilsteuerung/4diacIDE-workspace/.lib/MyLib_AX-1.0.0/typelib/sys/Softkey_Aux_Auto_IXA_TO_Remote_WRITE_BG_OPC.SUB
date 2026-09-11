@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SubAppType Name="Softkey_Aux_Auto_IXA_TO_Remote_WRITE_BG_OPC" Comment="VT-SoftKey lesen ODER AUX-Zuweisung (Joystick) lesen ODER lokaler Web-Override ODER Automatik-Kommando + Remote-OPC-UA-Write an Zielmodul + VT-Hintergrundfarbe (SoftKey UND AUX) aus Remote-Subscribe (generisch, ein Kanal). Kopie von Softkey_Aux_IXA_TO_Remote_WRITE_BG_OPC mit Softkey_Aux_Auto_IXA_TO_Remote_WRITE statt Softkey_Aux_IXA_TO_Remote_WRITE als Kommando-Haelfte - Status-Haelfte (AX_SUBSCRIBE_BG3_WEB_OPC) unveraendert.">
+	<Identification Standard="61499-2">
+	</Identification>
+	<VersionInfo Version="1.0" Author="Franz Höpfinger" Date="2026-09-11" Remarks="Kopie von Softkey_Aux_IXA_TO_Remote_WRITE_BG_OPC (Version 1.2, 2026-09-07) mit Softkey_Aux_Auto_IXA_TO_Remote_WRITE als Kommando-Haelfte, fuer Achslenkung-Mittelpunkt-Automatik.">
+	</VersionInfo>
+	<CompilerInfo packageName="MyLib::sys">
+	</CompilerInfo>
+	<SubAppInterfaceList>
+		<InputVars>
+			<VarDeclaration Name="u16ObjId" Type="UINT" Comment="Object ID SoftKey/Hintergrund (VT)"/>
+			<VarDeclaration Name="u16ObjIdA" Type="UINT" Comment="Object ID AuxFunction2/Hintergrund (VT)"/>
+			<VarDeclaration Name="ID_SUBSCRIBE" Type="WSTRING" Comment="Remote-Subscribe-Adresse (Status/Farbe, ACTION=SUBSCRIBE)"/>
+			<VarDeclaration Name="ID_WRITE_REMOTE" Type="WSTRING" Comment="Remote-Write-Adresse zum Zielmodul (Befehl, ACTION=WRITE, CLIENT)"/>
+			<VarDeclaration Name="ID_WEB_READ" Type="WSTRING" Comment="Lokale Subscribe-Adresse fuer einen Web-Client (z.B. vt-ui-mirror) auf demselben Modul, ODER-verknuepft mit SoftKey und AUX"/>
+			<VarDeclaration Name="ID_STATUS_WEB" Type="WSTRING" Comment="Lokale Publish-Adresse (auf diesem Modul) fuer den vom Zielmodul zurueckgemeldeten Zustand - damit ein Web-Client (z.B. vt-ui-mirror) dieselbe Hintergrundfarbe wie das echte VT zeigen kann"/>
+		</InputVars>
+		<Sockets>
+			<AdapterDeclaration Name="AUTO_IN" Type="adapter::types::unidirectional::AX" Comment="Autonomes Kommando (z.B. Achslenkung-Mittelpunkt-Automatik), ODER-verknuepft mit SoftKey/Aux/Web"/>
+		</Sockets>
+	</SubAppInterfaceList>
+	<SubAppNetwork>
+		<SubApp Name="Command" Type="MyLib::sys::Softkey_Aux_Auto_IXA_TO_Remote_WRITE" x="0" y="0">
+		</SubApp>
+		<SubApp Name="Status" Type="MyLib::sys::AX_SUBSCRIBE_BG3_WEB_OPC" x="0" y="1500">
+		</SubApp>
+		<DataConnections>
+			<Connection Source="u16ObjId" Destination="Command.u16ObjId" dx1="366.67">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="u16ObjIdA" Destination="Command.u16ObjIdA" dx1="366.67">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="ID_WRITE_REMOTE" Destination="Command.ID_WRITE_REMOTE" dx1="366.67">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="ID_WEB_READ" Destination="Command.ID_WEB_READ" dx1="366.67">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="u16ObjId" Destination="Status.u16ObjId" dx1="366.67">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="u16ObjIdA" Destination="Status.u16ObjIdA" dx1="366.67">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="ID_SUBSCRIBE" Destination="Status.ID_SUBSCRIBE" dx1="366.67">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="ID_STATUS_WEB" Destination="Status.ID_STATUS_WEB" dx1="366.67">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+		</DataConnections>
+		<AdapterConnections>
+			<Connection Source="AUTO_IN" Destination="Command.AUTO_IN" dx1="366.67"/>
+		</AdapterConnections>
+	</SubAppNetwork>
+	<Attribute Name="Documentation" Type="CDATA"><![CDATA[<h1>SoftKey UND Aux UND Automatik → Remote-OPC-UA-Write mit Status-Feedback (ein Kanal)</h1>
+
+<p>Duennwandiger Wrapper, der <code>Softkey_Aux_Auto_IXA_TO_Remote_WRITE</code> (Kommando: SoftKey
+ODER Aux ODER lokaler Web-Override ODER Automatik → Remote-Write) und
+<code>AX_SUBSCRIBE_BG3_WEB_OPC</code> (Status: Remote-Subscribe → Hintergrundfarbe auf SoftKey UND
+Aux + lokaler Web-Republish, unveraendert) nebeneinanderstellt.</p>
+
+<p>Nur fuer Kanaele mit Automatik-Bedarf verwenden (aktuell: Achslenkung Links/Rechts) - fuer alle
+anderen weiterhin <code>Softkey_Aux_IXA_TO_Remote_WRITE_BG_OPC</code>.</p>
+]]></Attribute>
+</SubAppType>

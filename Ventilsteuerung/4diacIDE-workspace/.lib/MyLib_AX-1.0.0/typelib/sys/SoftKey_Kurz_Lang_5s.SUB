@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SubAppType Name="SoftKey_Kurz_Lang_5s" Comment="Unterscheidet kurzen Tastendruck (Loslassen vor 5s) von langem Tastendruck (5s gehalten) auf einem AX-Adapter-Eingang (z.B. Softkey_IXA.IN). LANG feuert sofort beim Erreichen von 5s (nicht erst beim Loslassen); KURZ feuert beim Loslassen, wenn 5s noch nicht erreicht waren.">
+	<Identification Standard="61499-2" Description="Copyright (c) 2026 Meisterschulen am Ostbahnhof  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0">
+	</Identification>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2026-09-11" Remarks="initial implementation - fuer Achslenkung-Mittelpunkt-Taste (kurz=Anfahren, lang=Speichern), generisch fuer jede Softkey-Kurz/Lang-Unterscheidung">
+	</VersionInfo>
+	<CompilerInfo packageName="MyLib::sys">
+	</CompilerInfo>
+	<SubAppInterfaceList>
+		<SubAppEventOutputs>
+			<SubAppEvent Name="KURZ" Type="Event" Comment="Kurzer Druck bestaetigt (Loslassen vor Ablauf 5s)"/>
+			<SubAppEvent Name="LANG" Type="Event" Comment="Langer Druck bestaetigt (5s erreicht, feuert sofort - nicht erst beim Loslassen)"/>
+		</SubAppEventOutputs>
+		<Sockets>
+			<AdapterDeclaration Name="IN" Type="adapter::types::unidirectional::AX" Comment="Rohzustand der Taste (z.B. Softkey_IXA.IN)"/>
+		</Sockets>
+	</SubAppInterfaceList>
+	<SubAppNetwork>
+		<FB Name="E_TON" Type="adapter::events::unidirectional::timers::AX_TON" x="-6600" y="-1400">
+			<Parameter Name="PT" Value="t#5s"/>
+		</FB>
+		<FB Name="R_TRIG_LONG" Type="adapter::events::unidirectional::AX_R_TRIG" x="-4600" y="-1400">
+		</FB>
+		<FB Name="F_TRIG_RELEASE" Type="adapter::events::unidirectional::AX_F_TRIG" x="-4600" y="-400">
+		</FB>
+		<SubApp Name="PERMIT_KURZ" Type="MyLib::sys::AX_E_PERMIT_INVERT_1" x="-2600" y="-400">
+		</SubApp>
+		<EventConnections>
+			<Connection Source="R_TRIG_LONG.EO" Destination="LANG" dx1="1200"/>
+			<Connection Source="F_TRIG_RELEASE.EO" Destination="PERMIT_KURZ.EI" dx1="600"/>
+			<Connection Source="PERMIT_KURZ.EO" Destination="KURZ" dx1="1200"/>
+		</EventConnections>
+		<AdapterConnections>
+			<Connection Source="IN" Destination="E_TON.IN" dx1="600"/>
+			<Connection Source="IN" Destination="F_TRIG_RELEASE.QI" dx1="600" dy="400"/>
+			<Connection Source="E_TON.Q" Destination="R_TRIG_LONG.QI" dx1="600"/>
+			<Connection Source="E_TON.Q" Destination="PERMIT_KURZ.PERMIT" dx1="600" dy="800"/>
+		</AdapterConnections>
+	</SubAppNetwork>
+	<Attribute Name="Documentation" Type="CDATA"><![CDATA[<h1>Kurz/Lang-Druck-Unterscheidung (5s)</h1>
+
+<p><code>E_TON</code> (<code>AX_TON</code>, <code>PT=5s</code>) laeuft solange <code>IN</code> gehalten wird.
+<code>R_TRIG_LONG</code> erkennt die steigende Flanke von <code>E_TON.Q</code> - das ist der Moment,
+in dem 5s erreicht sind, waehrend die Taste noch gehalten wird - und feuert <code>LANG</code> sofort,
+ohne auf das Loslassen zu warten.</p>
+
+<p><code>F_TRIG_RELEASE</code> erkennt die fallende Flanke von <code>IN</code> (Loslassen).
+<code>PERMIT_KURZ</code> (<code>AX_E_PERMIT_INVERT_1</code>) laesst dieses Ereignis nur durch, wenn
+<code>E_TON.Q</code> zu diesem Zeitpunkt noch FALSE ist - also wenn losgelassen wurde, BEVOR 5s erreicht
+waren. Wurde bereits <code>LANG</code> gefeuert, unterdrueckt <code>PERMIT_KURZ</code> das nachtraegliche
+<code>KURZ</code> beim Loslassen.</p>
+]]></Attribute>
+</SubAppType>
