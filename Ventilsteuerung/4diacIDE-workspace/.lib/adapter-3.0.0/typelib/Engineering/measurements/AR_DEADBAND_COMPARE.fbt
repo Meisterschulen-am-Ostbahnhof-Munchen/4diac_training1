@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<FBType Name="AR_DEADBAND_COMPARE" Comment="Vergleicht einen REAL-Messwert gegen ein symmetrisches Totband um Null (z.B. Lenkwinkel-Zentrierung): ABOVE/BELOW/CENTERED, alle drei aktualisiert bei jeder neuen Messung oder Totband-Aenderung.">
+	<Identification Standard="61499-2" Description="Copyright (c) 2026 Meisterschulen am Ostbahnhof  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0">
+	</Identification>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.1" Author="Franz Höpfinger" Date="2026-09-11" Remarks="DEADBAND von InputVar auf AR-Socket umgestellt (konsistent mit Y) - fester Wert weiterhin ueber adapter::types::unidirectional::AR::initval::initval_AR moeglich">
+	</VersionInfo>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2026-09-11" Remarks="initial implementation - fuer Achslenkung-Mittelpunkt-Automatik, generisch fuer jede Totband-Zentrierung (z.B. spaeter Hangausgleich)">
+	</VersionInfo>
+	<CompilerInfo packageName="adapter::Engineering::measurements">
+	</CompilerInfo>
+	<InterfaceList>
+		<Plugs>
+			<AdapterDeclaration Name="ABOVE" Type="adapter::types::unidirectional::AX" Comment="TRUE wenn Y &gt; DEADBAND" x="3000" y="0"/>
+			<AdapterDeclaration Name="BELOW" Type="adapter::types::unidirectional::AX" Comment="TRUE wenn Y &lt; -DEADBAND" x="3000" y="900"/>
+			<AdapterDeclaration Name="CENTERED" Type="adapter::types::unidirectional::AX" Comment="TRUE wenn -DEADBAND &lt;= Y &lt;= DEADBAND" x="3000" y="1800"/>
+		</Plugs>
+		<Sockets>
+			<AdapterDeclaration Name="Y" Type="adapter::types::unidirectional::AR" Comment="zu vergleichender Messwert" x="100" y="900"/>
+			<AdapterDeclaration Name="DEADBAND" Type="adapter::types::unidirectional::AR" Comment="Totband um Null, symmetrisch (z.B. 2.0 = zentriert wenn -2.0 &lt;= Y &lt;= 2.0) - fester Wert ueber initval_AR moeglich" x="100" y="1800"/>
+		</Sockets>
+	</InterfaceList>
+	<BasicFB>
+		<ECC>
+			<ECState Name="IDLE" Comment="Initial State" x="0" y="0">
+			</ECState>
+			<ECState Name="COMPARE" x="900" y="0">
+				<ECAction Algorithm="COMPARE" Output="ABOVE.E1"/>
+				<ECAction Algorithm="COMPARE" Output="BELOW.E1"/>
+				<ECAction Algorithm="COMPARE" Output="CENTERED.E1"/>
+			</ECState>
+			<ECTransition Source="IDLE" Destination="COMPARE" Condition="Y.E1" x="450" y="0"/>
+			<ECTransition Source="COMPARE" Destination="IDLE" Condition="1" x="450" y="300"/>
+			<ECTransition Source="IDLE" Destination="COMPARE" Condition="DEADBAND.E1" x="450" y="600"/>
+		</ECC>
+		<Algorithm Name="COMPARE">
+			<ST><![CDATA[
+IF Y.D1 > DEADBAND.D1 THEN
+	ABOVE.D1 := TRUE;
+ELSE
+	ABOVE.D1 := FALSE;
+END_IF;
+
+IF Y.D1 < -DEADBAND.D1 THEN
+	BELOW.D1 := TRUE;
+ELSE
+	BELOW.D1 := FALSE;
+END_IF;
+
+IF (Y.D1 <= DEADBAND.D1) AND (Y.D1 >= -DEADBAND.D1) THEN
+	CENTERED.D1 := TRUE;
+ELSE
+	CENTERED.D1 := FALSE;
+END_IF;
+]]></ST>
+		</Algorithm>
+	</BasicFB>
+	<Attribute Name="eclipse4diac::core::TypeHash" Value="''"/>
+</FBType>
