@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<FBType Name="ALR_SPLIT_SIGNED" Comment="Teilt einen LREAL-Wert in 2 einseitige Betragswerte auf (z.B. fuer 2 getrennte Bargraphen links/rechts einer Mittelstellung): NEG_MAG = MAX(0,-Y), POS_MAG = MAX(0,Y). Jede Seite feuert ihr Event nur bei tatsaechlicher Wertaenderung gegenueber ihrem eigenen aktuellen Ausgangswert (nicht bei jedem Y-Update), analog zu AX_OR_2 (&quot;Adapter-Ausgang wird nur bei Wertaenderung aktualisiert&quot;) - wichtig, wenn Y lange auf einer Seite bleibt und die andere Seite konstant 0 haelt.">
+	<Identification Standard="61499-2">
+	</Identification>
+	<VersionInfo Version="2.1" Author="Franz Höpfinger" Date="2026-09-11" Remarks="Kein eigener prevNeg/prevPos-Internal mehr noetig - Vergleich direkt gegen NEG_MAG.D1/POS_MAG.D1 (Plug-Ausgang haelt den letzten Wert bereits selbst)">
+	</VersionInfo>
+	<VersionInfo Version="2.0" Author="Franz Höpfinger" Date="2026-09-11" Remarks="Event nur noch bei tatsaechlicher Wertaenderung je Seite (vorher: bei jedem Y-Update immer beide Events, unabhaengig ob sich der Wert aendert)">
+	</VersionInfo>
+	<VersionInfo Version="1.0" Author="Franz Höpfinger" Date="2026-09-11" Remarks="Typfamilie zu AR_SPLIT_SIGNED, generisch fuer jede aehnliche Anzeige">
+	</VersionInfo>
+	<CompilerInfo packageName="adapter::Engineering::splitting::signed">
+	</CompilerInfo>
+	<InterfaceList>
+		<Plugs>
+			<AdapterDeclaration Name="NEG_MAG" Type="adapter::types::unidirectional::ALR" Comment="MAX(0, -Y) - Betrag der negativen Auslenkung, Event nur bei Aenderung"/>
+			<AdapterDeclaration Name="POS_MAG" Type="adapter::types::unidirectional::ALR" Comment="MAX(0, Y) - Betrag der positiven Auslenkung, Event nur bei Aenderung"/>
+		</Plugs>
+		<Sockets>
+			<AdapterDeclaration Name="Y" Type="adapter::types::unidirectional::ALR" Comment="Eingangswert"/>
+		</Sockets>
+	</InterfaceList>
+	<BasicFB>
+		<ECC>
+			<ECState Name="IDLE" Comment="Initial State" x="-960" y="0">
+			</ECState>
+			<ECState Name="EMIT_BOTH" x="1600" y="-800">
+				<ECAction Algorithm="EMIT_BOTH" Output="NEG_MAG.E1"/>
+				<ECAction Algorithm="EMIT_BOTH" Output="POS_MAG.E1"/>
+			</ECState>
+			<ECState Name="EMIT_NEG_ONLY" x="1600" y="0">
+				<ECAction Algorithm="EMIT_NEG_ONLY" Output="NEG_MAG.E1"/>
+			</ECState>
+			<ECState Name="EMIT_POS_ONLY" x="1600" y="640">
+				<ECAction Algorithm="EMIT_POS_ONLY" Output="POS_MAG.E1"/>
+			</ECState>
+			<ECTransition Source="IDLE" Destination="EMIT_BOTH" Condition="Y.E1[(MAX(0.0,-Y.D1) &lt;&gt; NEG_MAG.D1) AND (MAX(0.0,Y.D1) &lt;&gt; POS_MAG.D1)]" x="26.67" y="-880"/>
+			<ECTransition Source="IDLE" Destination="EMIT_NEG_ONLY" Condition="Y.E1[MAX(0.0,-Y.D1) &lt;&gt; NEG_MAG.D1]" x="613.33" y="-286.67"/>
+			<ECTransition Source="IDLE" Destination="EMIT_POS_ONLY" Condition="Y.E1[MAX(0.0,Y.D1) &lt;&gt; POS_MAG.D1]" x="813.33" y="506.67"/>
+			<ECTransition Source="IDLE" Destination="IDLE" Condition="Y.E1" x="-1160" y="166.67"/>
+			<ECTransition Source="EMIT_BOTH" Destination="IDLE" Condition="1" x="220" y="-593.33"/>
+			<ECTransition Source="EMIT_NEG_ONLY" Destination="IDLE" Condition="1" x="693.33" y="-120"/>
+			<ECTransition Source="EMIT_POS_ONLY" Destination="IDLE" Condition="1" x="366.67" y="833.33"/>
+		</ECC>
+		<Algorithm Name="EMIT_BOTH">
+			<ST><![CDATA[
+NEG_MAG.D1 := MAX(0.0,-Y.D1);
+POS_MAG.D1 := MAX(0.0,Y.D1);
+]]></ST>
+		</Algorithm>
+		<Algorithm Name="EMIT_NEG_ONLY">
+			<ST><![CDATA[
+NEG_MAG.D1 := MAX(0.0,-Y.D1);
+]]></ST>
+		</Algorithm>
+		<Algorithm Name="EMIT_POS_ONLY">
+			<ST><![CDATA[
+POS_MAG.D1 := MAX(0.0,Y.D1);
+]]></ST>
+		</Algorithm>
+	</BasicFB>
+	<Attribute Name="eclipse4diac::core::TypeHash" Value="''"/>
+</FBType>
