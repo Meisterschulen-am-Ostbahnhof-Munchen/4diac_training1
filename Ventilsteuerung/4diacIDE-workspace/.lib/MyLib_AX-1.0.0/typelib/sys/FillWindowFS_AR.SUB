@@ -18,31 +18,26 @@
 			</SubAppEvent>
 		</SubAppEventOutputs>
 		<InputVars>
-			<VarDeclaration Name="u16ObjId" Type="UINT" Comment="FillAttributes object ID to command" InitialValue="ID_NULL">
-			</VarDeclaration>
-			<VarDeclaration Name="rWindowMin" Type="REAL" Comment="Lower bound of the window that shows green">
-			</VarDeclaration>
-			<VarDeclaration Name="rWindowMax" Type="REAL" Comment="Upper bound of the window that shows green">
-			</VarDeclaration>
+			<VarDeclaration Name="u16ObjId" Type="UINT" Comment="FillAttributes object ID to command" InitialValue="ID_NULL"/>
+			<VarDeclaration Name="rWindowMin" Type="REAL" Comment="Lower bound of the window that shows green"/>
+			<VarDeclaration Name="rWindowMax" Type="REAL" Comment="Upper bound of the window that shows green"/>
 		</InputVars>
 		<OutputVars>
-			<VarDeclaration Name="STATUS" Type="STRING" Comment="Service Status - passthrough from the internal Q_FillAttributes">
-			</VarDeclaration>
-			<VarDeclaration Name="s16result" Type="INT" Comment="retval - passthrough from the internal Q_FillAttributes">
-			</VarDeclaration>
+			<VarDeclaration Name="STATUS" Type="STRING" Comment="Service Status - passthrough from the internal Q_FillAttributes"/>
+			<VarDeclaration Name="s16result" Type="INT" Comment="retval - passthrough from the internal Q_FillAttributes"/>
 		</OutputVars>
 		<Sockets>
 			<AdapterDeclaration Name="rPhys" Type="adapter::types::unidirectional::AR" Comment="Value whose position relative to the window decides the colour"/>
 		</Sockets>
 	</SubAppInterfaceList>
 	<SubAppNetwork>
-		<FB Name="WindowMinConst" Type="adapter::types::unidirectional::AR::initval::initval_AR" x="-5200" y="600">
+		<FB Name="WindowMinConst" Type="adapter::types::unidirectional::AR::initval::initval_AR" x="-5200" y="1900">
 		</FB>
-		<FB Name="WindowMaxConst" Type="adapter::types::unidirectional::AR::initval::initval_AR" x="-5200" y="2200">
+		<FB Name="WindowMaxConst" Type="adapter::types::unidirectional::AR::initval::initval_AR" x="-5200" y="500">
 		</FB>
-		<FB Name="CENTER_CMP" Type="adapter::Engineering::measurements::AR_DEADBAND_COMPARE" x="-3600" y="1300">
+		<FB Name="CENTER_CMP" Type="adapter::Engineering::measurements::AR_DEADBAND_COMPARE" x="-3400" y="1300">
 		</FB>
-		<FB Name="ColorSel" Type="adapter::iec61131::selection::AX_SEL" x="-500" y="1300">
+		<FB Name="ColorSel" Type="adapter::iec61131::selection::AX_SEL" x="-600" y="1200">
 			<Parameter Name="IN0" Value="COLOR_RED"/>
 			<Parameter Name="IN1" Value="COLOR_GREEN"/>
 		</FB>
