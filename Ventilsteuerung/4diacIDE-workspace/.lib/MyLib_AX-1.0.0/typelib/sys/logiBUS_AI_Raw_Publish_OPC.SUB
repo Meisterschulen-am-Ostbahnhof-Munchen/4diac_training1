@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SubAppType Name="logiBUS_AI_Raw_Publish_OPC" Comment="logiBUS_AI_IDA (Analog-Eingang) rein Rohwert lesen + per OPC-UA publizieren (DWORD 0-4095), OHNE jegliche VT-Interaktion. Fuer Sensoren, deren physischer Analog-Eingang auf einer Station OHNE VT-Anschluss sitzt (z.B. Hangausgleich-Winkelsensor B14 auf APIXON STG3) - die Kalibrierung + VT-Taster/-Anzeigen laufen dann auf der Station mit VT-Anschluss, gespeist per Remote-Subscribe dieses Rohwerts (siehe logiBUS_AI_Calibrate_3P_Remote_IDA_OPC).">
+	<Identification Standard="61499-2" Description="Copyright (c) 2026 Meisterschulen am Ostbahnhof  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0">
+	</Identification>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2026-09-11" Remarks="initial implementation - Rohwert-Haelfte von logiBUS_AI_Calibrate_3P_IDA_OPC, fuer Sensoren auf einer Station ohne VT-Anschluss (z.B. Hangausgleich B14 auf STG3).">
+	</VersionInfo>
+	<CompilerInfo packageName="MyLib::sys">
+		<Import declaration="logiBUS::io::AI::logiBUS_AI"/>
+		<Import declaration="logiBUS::io::AI::logiBUS_AI_S"/>
+	</CompilerInfo>
+	<SubAppInterfaceList>
+		<InputVars>
+			<VarDeclaration Name="Input" Type="logiBUS::io::AI::logiBUS_AI_S" Comment="Identify the Input AnalogInput_I1..I8" InitialValue="logiBUS_AI::Invalid"/>
+			<VarDeclaration Name="ID_RAW_WRITE" Type="WSTRING" Comment="Rohwert-Publish-Adresse (DWORD 0-4095, ACTION=PUBLISH), lokal auf dieser Station"/>
+		</InputVars>
+	</SubAppInterfaceList>
+	<SubAppNetwork>
+		<FB Name="logiBUS_AI_IDA" Type="logiBUS::io::AI::logiBUS_AI_IDA" x="-9200" y="-1700">
+			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="PARAMS" Value="">
+				<Attribute Name="Visible" Value="false"/>
+			</Parameter>
+			<Parameter Name="AnalogInput_hysteresis" Value="DWORD#0"/>
+			<Parameter Name="TimeDelta" Value="DWORD#250"/>
+			<Parameter Name="TimeRateLimit" Value="DWORD#100"/>
+		</FB>
+		<FB Name="AD_PUBLISH_RAW" Type="adapter::net::AD_PUBLISH_1" x="-5600" y="-1700">
+			<Parameter Name="QI" Value="TRUE"/>
+		</FB>
+		<DataConnections>
+			<Connection Source="Input" Destination="logiBUS_AI_IDA.Input" dx1="1460">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="ID_RAW_WRITE" Destination="AD_PUBLISH_RAW.ID" dx1="1400">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+		</DataConnections>
+		<AdapterConnections>
+			<Connection Source="logiBUS_AI_IDA.IN" Destination="AD_PUBLISH_RAW.IN" dx1="420"/>
+		</AdapterConnections>
+	</SubAppNetwork>
+</SubAppType>

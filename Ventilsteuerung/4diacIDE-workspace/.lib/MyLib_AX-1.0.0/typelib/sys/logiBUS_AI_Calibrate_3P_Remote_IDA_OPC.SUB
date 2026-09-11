@@ -1,0 +1,293 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SubAppType Name="logiBUS_AI_Calibrate_3P_Remote_IDA_OPC" Comment="3-Punkt-Kalibrierung (AR_CALIBRATE_3P_REF, unabhaengig gespeicherte Rohwerte X_MIN/X_MID/X_MAX + Referenzwerte MIN_REF/MID_REF/MAX_REF alle INI-persistiert) auf VT-Zahlenfelder (Rohwert + kalibrierter Wert, je eigene CNumberVariable) + Bargraph (kalibriert) + 3 VT-Tasten (C_MIN/C_MID/C_MAX) + OPC-UA (Rohwert DWORD + kalibrierter Wert REAL, generisch, ein Kanal). Wie logiBUS_AI_Calibrate_3P_IDA_OPC, aber der Rohwert kommt per Remote-Subscribe (AD_SUBSCRIBE_1) statt von einem lokalen logiBUS_AI_IDA - fuer Sensoren, deren physischer Analog-Eingang auf einer Station OHNE VT-Anschluss sitzt (z.B. Hangausgleich-Winkelsensor B14 auf APIXON STG3, waehrend Kalibrierung+VT auf der Station mit VT-Anschluss laufen). Der Rohwert wird dort per logiBUS_AI_Raw_Publish_OPC publiziert.">
+	<Identification Standard="61499-2" Description="Copyright (c) 2026 Meisterschulen am Ostbahnhof&#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0">
+	</Identification>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2026-09-11" Remarks="Remote-Rohwert-Variante von logiBUS_AI_Calibrate_3P_IDA_OPC - logiBUS_AI_IDA+AD_SPLIT_2+AD_PUBLISH_RAW durch AD_SUBSCRIBE_1 ersetzt, Rest der Kalibrier-/VT-Kette unveraendert. Fuer Hangausgleich-Winkelsensor B14 (STG3), Kalibrierung+VT auf STG1.">
+	</VersionInfo>
+	<CompilerInfo packageName="MyLib::sys">
+		<Import declaration="isobus::UT::Q::const::IDs::ID_NULL"/>
+		<Import declaration="logiBUS::utils::conversion::phys::NumericObjectPool_S"/>
+		<Import declaration="isobus::UT::io::Button::ButtonActivationCode::BT_PRESSED_LATCHED"/>
+	</CompilerInfo>
+	<SubAppInterfaceList>
+		<InputVars>
+			<VarDeclaration Name="u16ObjId_RAWVAR" Type="UINT" Comment="Object ID CNumberVariable (Rohwert 0-4095, unkalibriert, reine Diagnose-Anzeige)" InitialValue="ID_NULL"/>
+			<VarDeclaration Name="stObjCal" Type="logiBUS::utils::conversion::phys::NumericObjectPool_S" Comment="Object ID + Scale/Offset/Decimals CNumberVariable (kalibrierter Wert, eigene, unabhaengige CNumberVariable)" InitialValue="(u16ObjId := ID_NULL, r32Scale := 1.0, i32Offset := 0, u8Decimals := 1)"/>
+			<VarDeclaration Name="u16ObjId_C_MIN" Type="UINT" Comment="Object ID Taste &apos;C_MIN&apos; (Min-Position anfahren, dann druecken)" InitialValue="ID_NULL"/>
+			<VarDeclaration Name="u16ObjId_C_MID" Type="UINT" Comment="Object ID Taste &apos;C_MID&apos; (Mittelstellung anfahren, dann druecken)" InitialValue="ID_NULL"/>
+			<VarDeclaration Name="u16ObjId_C_MAX" Type="UINT" Comment="Object ID Taste &apos;C_MAX&apos; (Max-Position anfahren, dann druecken)" InitialValue="ID_NULL"/>
+			<VarDeclaration Name="ID_RAW_REMOTE_READ" Type="WSTRING" Comment="Remote-Subscribe-Adresse des Rohwerts (DWORD 0-4095, ACTION=SUBSCRIBE) - Gegenstueck zu ID_RAW_WRITE auf der Sensor-Station (logiBUS_AI_Raw_Publish_OPC)"/>
+			<VarDeclaration Name="sSection" Type="STRING" Comment="INI-Sektionsname fuer X_MIN/X_MID/X_MAX/MIN_REF/MID_REF/MAX_REF-Persistenz - pro Kanal eindeutig, sonst kollidieren die Kanaele in settings.ini"/>
+			<VarDeclaration Name="ID_CAL_WRITE" Type="WSTRING" Comment="Kalibrierter-Wert-Ruckmelde-Adresse (REAL, ACTION=PUBLISH)"/>
+			<VarDeclaration Name="ID_MIN_READ" Type="WSTRING" Comment="Remote-C_MIN-Adresse (BOOL, ACTION=SUBSCRIBE, togglet Kalibrier-Min-Trigger wie ein Tastendruck - Web-Client schreibt bei jedem Klick den invertierten letzten Wert, jede Flanke loest C_MIN aus)"/>
+			<VarDeclaration Name="ID_MID_READ" Type="WSTRING" Comment="Remote-C_MID-Adresse (BOOL, ACTION=SUBSCRIBE, siehe ID_MIN_READ)"/>
+			<VarDeclaration Name="ID_MID_TRIGGER_METHOD" Type="WSTRING" Comment="Lokale Methodenadresse (ACTION=CREATE_METHOD) fuer den argument- und rueckgabewertlosen C_MID-Trigger - von einem lokalen CLIENT_0 (z.B. Fahrwerk_Mittelpunkt_Automatik.SUB) per CALL_METHOD aufgerufen, loest wie Button_C_MID/ID_MID_READ ebenfalls C_MID aus"/>
+			<VarDeclaration Name="ID_MAX_READ" Type="WSTRING" Comment="Remote-C_MAX-Adresse (BOOL, ACTION=SUBSCRIBE, siehe ID_MIN_READ)"/>
+			<VarDeclaration Name="stObjMinRef" Type="logiBUS::utils::conversion::phys::NumericObjectPool_S" Comment="Object ID + Scale/Offset/Decimals CNumberVariable (MIN_REF-Referenzwert, VT-Eingabefeld + OPC-UA)" InitialValue="(u16ObjId := ID_NULL, r32Scale := 1.0, i32Offset := 0, u8Decimals := 1)"/>
+			<VarDeclaration Name="stObjMidRef" Type="logiBUS::utils::conversion::phys::NumericObjectPool_S" Comment="Object ID + Scale/Offset/Decimals CNumberVariable (MID_REF-Referenzwert, VT-Eingabefeld + OPC-UA)" InitialValue="(u16ObjId := ID_NULL, r32Scale := 1.0, i32Offset := 0, u8Decimals := 1)"/>
+			<VarDeclaration Name="stObjMaxRef" Type="logiBUS::utils::conversion::phys::NumericObjectPool_S" Comment="Object ID + Scale/Offset/Decimals CNumberVariable (MAX_REF-Referenzwert, VT-Eingabefeld + OPC-UA)" InitialValue="(u16ObjId := ID_NULL, r32Scale := 1.0, i32Offset := 0, u8Decimals := 1)"/>
+			<VarDeclaration Name="ID_MINREF_READ" Type="WSTRING" Comment="Remote-Subscribe-Adresse MIN_REF-Referenzwert (REAL, ACTION=SUBSCRIBE)"/>
+			<VarDeclaration Name="ID_MINREF_WRITE" Type="WSTRING" Comment="Remote-Echo-Adresse MIN_REF-Referenzwert (REAL, ACTION=PUBLISH)"/>
+			<VarDeclaration Name="ID_MIDREF_READ" Type="WSTRING" Comment="Remote-Subscribe-Adresse MID_REF-Referenzwert (REAL, ACTION=SUBSCRIBE)"/>
+			<VarDeclaration Name="ID_MIDREF_WRITE" Type="WSTRING" Comment="Remote-Echo-Adresse MID_REF-Referenzwert (REAL, ACTION=PUBLISH)"/>
+			<VarDeclaration Name="ID_MAXREF_READ" Type="WSTRING" Comment="Remote-Subscribe-Adresse MAX_REF-Referenzwert (REAL, ACTION=SUBSCRIBE)"/>
+			<VarDeclaration Name="ID_MAXREF_WRITE" Type="WSTRING" Comment="Remote-Echo-Adresse MAX_REF-Referenzwert (REAL, ACTION=PUBLISH)"/>
+		</InputVars>
+	</SubAppInterfaceList>
+	<SubAppNetwork>
+		<FB Name="AD_SUBSCRIBE_RAW" Type="adapter::net::AD_SUBSCRIBE_1" x="-9200" y="-1700">
+			<Parameter Name="QI" Value="TRUE"/>
+		</FB>
+		<FB Name="AD_TO_AUDI" Type="adapter::conversion::unidirectional::AD_TO_AUDI" x="-5600" y="-400">
+		</FB>
+		<FB Name="AUDI_SPLIT_2" Type="adapter::events::unidirectional::AUDI_SPLIT_2" x="-4000" y="-400">
+		</FB>
+		<FB Name="Q_NumericValue_RAW" Type="isobus::UT::Q::Q_NumericValue_AUDI" x="-2300" y="-1000">
+		</FB>
+		<FB Name="AUDI_TO_AR" Type="adapter::conversion::unidirectional::AUDI_TO_AR" x="-2300" y="200">
+		</FB>
+		<FB Name="CALIBRATE" Type="adapter::Engineering::measurements::AR_CALIBRATE_3P_REF" x="-200" y="200">
+		</FB>
+		<SubApp Name="MIN_REF_LIT" Type="MyLib::sys::NumericValue_TO_AR2_OPC" x="-8400" y="4200">
+		</SubApp>
+		<SubApp Name="MID_REF_LIT" Type="MyLib::sys::NumericValue_TO_AR2_OPC" x="-8400" y="5000">
+		</SubApp>
+		<SubApp Name="MAX_REF_LIT" Type="MyLib::sys::NumericValue_TO_AR2_OPC" x="-8400" y="5800">
+		</SubApp>
+		<FB Name="Button_C_MIN" Type="isobus::UT::io::Button::Button_IE" x="-8500" y="0">
+			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="InputEvent" Value="BT_PRESSED_LATCHED"/>
+		</FB>
+		<FB Name="Button_C_MID" Type="isobus::UT::io::Button::Button_IE" x="-8550" y="1000">
+			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="InputEvent" Value="BT_PRESSED_LATCHED"/>
+		</FB>
+		<FB Name="Button_C_MAX" Type="isobus::UT::io::Button::Button_IE" x="-8600" y="2000">
+			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="InputEvent" Value="BT_PRESSED_LATCHED"/>
+		</FB>
+		<FB Name="AX_BOOL_TO_X_MIN" Type="adapter::conversion::unidirectional::AX_BOOL_TO_X" x="-2300" y="900">
+			<Parameter Name="OUT" Value="TRUE"/>
+		</FB>
+		<FB Name="AX_BOOL_TO_X_MID" Type="adapter::conversion::unidirectional::AX_BOOL_TO_X" x="-2350" y="1850">
+			<Parameter Name="OUT" Value="TRUE"/>
+		</FB>
+		<FB Name="AX_BOOL_TO_X_MAX" Type="adapter::conversion::unidirectional::AX_BOOL_TO_X" x="-2400" y="2800">
+			<Parameter Name="OUT" Value="TRUE"/>
+		</FB>
+		<FB Name="AX_SUBSCRIBE_MIN" Type="adapter::net::AX_SUBSCRIBE_1" x="-8500" y="1000">
+			<Parameter Name="QI" Value="TRUE"/>
+		</FB>
+		<FB Name="AX_RF_TRIG_MIN" Type="adapter::events::unidirectional::AX_RF_TRIG" x="-6600" y="1000">
+		</FB>
+		<FB Name="E_MERGE_MIN_A" Type="iec61499::events::E_MERGE_2" x="-5300" y="600">
+		</FB>
+		<FB Name="E_MERGE_MIN_B" Type="iec61499::events::E_MERGE_2" x="-3400" y="1000">
+		</FB>
+		<FB Name="AX_SUBSCRIBE_MID" Type="adapter::net::AX_SUBSCRIBE_1" x="-8550" y="2000">
+			<Parameter Name="QI" Value="TRUE"/>
+		</FB>
+		<FB Name="AX_RF_TRIG_MID" Type="adapter::events::unidirectional::AX_RF_TRIG" x="-6750" y="2150">
+		</FB>
+		<FB Name="E_MERGE_MID_A" Type="iec61499::events::E_MERGE_2" x="-5150" y="1600">
+		</FB>
+		<FB Name="E_MERGE_MID_B" Type="iec61499::events::E_MERGE_2" x="-3500" y="1900">
+		</FB>
+		<FB Name="SERVER_MID_TRIGGER" Type="iec61499::net::SERVER_0" x="-6750" y="2700">
+			<Parameter Name="QI" Value="TRUE"/>
+		</FB>
+		<FB Name="E_MERGE_MID_C" Type="iec61499::events::E_MERGE_2" x="-2900" y="2200">
+		</FB>
+		<FB Name="AX_SUBSCRIBE_MAX" Type="adapter::net::AX_SUBSCRIBE_1" x="-8600" y="3000">
+			<Parameter Name="QI" Value="TRUE"/>
+		</FB>
+		<FB Name="AX_RF_TRIG_MAX" Type="adapter::events::unidirectional::AX_RF_TRIG" x="-6900" y="3300">
+		</FB>
+		<FB Name="E_MERGE_MAX_A" Type="iec61499::events::E_MERGE_2" x="-5000" y="2600">
+		</FB>
+		<FB Name="E_MERGE_MAX_B" Type="iec61499::events::E_MERGE_2" x="-3600" y="2800">
+		</FB>
+		<FB Name="INI_X_MIN" Type="eclipse4diac::storage::INI_AR2" x="3400" y="1300">
+			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="SETM" Value="TRUE"/>
+			<Parameter Name="KEY" Value="'X_MIN'"/>
+			<Parameter Name="DEFAULT_VALUE" Value="REAL#0.0"/>
+		</FB>
+		<FB Name="INI_X_MID" Type="eclipse4diac::storage::INI_AR2" x="3450" y="1800">
+			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="SETM" Value="TRUE"/>
+			<Parameter Name="KEY" Value="'X_MID'"/>
+			<Parameter Name="DEFAULT_VALUE" Value="REAL#0.5"/>
+		</FB>
+		<FB Name="INI_X_MAX" Type="eclipse4diac::storage::INI_AR2" x="3500" y="2300">
+			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="SETM" Value="TRUE"/>
+			<Parameter Name="KEY" Value="'X_MAX'"/>
+			<Parameter Name="DEFAULT_VALUE" Value="REAL#1.0"/>
+		</FB>
+		<FB Name="INI_MIN_REF" Type="eclipse4diac::storage::INI_AR2" x="3400" y="3300">
+			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="SETM" Value="TRUE"/>
+			<Parameter Name="KEY" Value="'MIN_REF'"/>
+			<Parameter Name="DEFAULT_VALUE" Value="REAL#-100.0"/>
+		</FB>
+		<FB Name="INI_MID_REF" Type="eclipse4diac::storage::INI_AR2" x="3450" y="3800">
+			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="SETM" Value="TRUE"/>
+			<Parameter Name="KEY" Value="'MID_REF'"/>
+			<Parameter Name="DEFAULT_VALUE" Value="REAL#50.0"/>
+		</FB>
+		<FB Name="INI_MAX_REF" Type="eclipse4diac::storage::INI_AR2" x="3500" y="4300">
+			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="SETM" Value="TRUE"/>
+			<Parameter Name="KEY" Value="'MAX_REF'"/>
+			<Parameter Name="DEFAULT_VALUE" Value="REAL#100.0"/>
+		</FB>
+		<FB Name="AR_SPLIT_2" Type="adapter::events::unidirectional::AR_SPLIT_2" x="1600" y="200">
+		</FB>
+		<FB Name="AR_PUBLISH_CAL" Type="adapter::net::AR_PUBLISH_1" x="3400" y="-400">
+			<Parameter Name="QI" Value="TRUE"/>
+		</FB>
+		<FB Name="Q_NumericValue_CAL" Type="isobus::UT::Q::Q_NumericValue_PHYSA" x="3300" y="400">
+		</FB>
+		<EventConnections>
+			<Connection Source="AD_SUBSCRIBE_RAW.INITO" Destination="AR_PUBLISH_CAL.INIT" dx1="600">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="AR_PUBLISH_CAL.INITO" Destination="AX_SUBSCRIBE_MIN.INIT" dx1="80" dx2="80" dy="700">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="AX_SUBSCRIBE_MIN.INITO" Destination="AX_SUBSCRIBE_MID.INIT" dx1="80" dx2="80" dy="500">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="AX_SUBSCRIBE_MID.INITO" Destination="AX_SUBSCRIBE_MAX.INIT" dx1="80" dx2="80" dy="500">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="AX_SUBSCRIBE_MAX.INITO" Destination="SERVER_MID_TRIGGER.INIT" dx1="80" dx2="80" dy="500">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="Button_C_MIN.IND" Destination="E_MERGE_MIN_A.EI1" dx1="2060"/>
+			<Connection Source="AX_RF_TRIG_MIN.ER" Destination="E_MERGE_MIN_A.EI2" dx1="400"/>
+			<Connection Source="E_MERGE_MIN_A.EO" Destination="E_MERGE_MIN_B.EI1" dx1="400"/>
+			<Connection Source="AX_RF_TRIG_MIN.EF" Destination="E_MERGE_MIN_B.EI2"/>
+			<Connection Source="E_MERGE_MIN_B.EO" Destination="AX_BOOL_TO_X_MIN.REQ" dx1="313.33"/>
+			<Connection Source="Button_C_MID.IND" Destination="E_MERGE_MID_A.EI1" dx1="1780"/>
+			<Connection Source="AX_RF_TRIG_MID.ER" Destination="E_MERGE_MID_A.EI2" dx1="400"/>
+			<Connection Source="E_MERGE_MID_A.EO" Destination="E_MERGE_MID_B.EI1" dx1="470"/>
+			<Connection Source="AX_RF_TRIG_MID.EF" Destination="E_MERGE_MID_B.EI2" dx1="1150"/>
+			<Connection Source="E_MERGE_MID_B.EO" Destination="E_MERGE_MID_C.EI1" dx1="400"/>
+			<Connection Source="SERVER_MID_TRIGGER.IND" Destination="E_MERGE_MID_C.EI2" dx1="400"/>
+			<Connection Source="E_MERGE_MID_C.EO" Destination="AX_BOOL_TO_X_MID.REQ" dx1="400"/>
+			<Connection Source="Button_C_MAX.IND" Destination="E_MERGE_MAX_A.EI1" dx1="1506.67"/>
+			<Connection Source="AX_RF_TRIG_MAX.ER" Destination="E_MERGE_MAX_A.EI2" dx1="400"/>
+			<Connection Source="E_MERGE_MAX_A.EO" Destination="E_MERGE_MAX_B.EI1" dx1="546.67"/>
+			<Connection Source="AX_RF_TRIG_MAX.EF" Destination="E_MERGE_MAX_B.EI2" dx1="2226.67"/>
+			<Connection Source="E_MERGE_MAX_B.EO" Destination="AX_BOOL_TO_X_MAX.REQ"/>
+		</EventConnections>
+		<DataConnections>
+			<Connection Source="u16ObjId_RAWVAR" Destination="Q_NumericValue_RAW.u16ObjId" dx1="1400">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="stObjCal" Destination="Q_NumericValue_CAL.stObj" dx1="1400">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="u16ObjId_C_MIN" Destination="Button_C_MIN.u16ObjId" dx1="1400">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="u16ObjId_C_MID" Destination="Button_C_MID.u16ObjId" dx1="1400">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="u16ObjId_C_MAX" Destination="Button_C_MAX.u16ObjId" dx1="1400">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="ID_RAW_REMOTE_READ" Destination="AD_SUBSCRIBE_RAW.ID" dx1="1400">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="sSection" Destination="INI_X_MIN.SECTION" dx1="1400">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="sSection" Destination="INI_X_MID.SECTION" dx1="1400">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="sSection" Destination="INI_X_MAX.SECTION" dx1="1400">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="sSection" Destination="INI_MIN_REF.SECTION" dx1="1400">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="sSection" Destination="INI_MID_REF.SECTION" dx1="1400">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="sSection" Destination="INI_MAX_REF.SECTION" dx1="1400">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="ID_CAL_WRITE" Destination="AR_PUBLISH_CAL.ID" dx1="1400">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="ID_MIN_READ" Destination="AX_SUBSCRIBE_MIN.ID" dx1="1400">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="ID_MID_READ" Destination="AX_SUBSCRIBE_MID.ID" dx1="1400">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="ID_MID_TRIGGER_METHOD" Destination="SERVER_MID_TRIGGER.ID" dx1="1400">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="ID_MAX_READ" Destination="AX_SUBSCRIBE_MAX.ID" dx1="1400">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="stObjMinRef" Destination="MIN_REF_LIT.stObj" dx1="1400">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="ID_MINREF_READ" Destination="MIN_REF_LIT.ID_READ" dx1="1400">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="ID_MINREF_WRITE" Destination="MIN_REF_LIT.ID_WRITE" dx1="1400">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="stObjMidRef" Destination="MID_REF_LIT.stObj" dx1="1400">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="ID_MIDREF_READ" Destination="MID_REF_LIT.ID_READ" dx1="1400">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="ID_MIDREF_WRITE" Destination="MID_REF_LIT.ID_WRITE" dx1="1400">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="stObjMaxRef" Destination="MAX_REF_LIT.stObj" dx1="1400">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="ID_MAXREF_READ" Destination="MAX_REF_LIT.ID_READ" dx1="1400">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="ID_MAXREF_WRITE" Destination="MAX_REF_LIT.ID_WRITE" dx1="1400">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+		</DataConnections>
+		<AdapterConnections>
+			<Connection Source="AD_SUBSCRIBE_RAW.OUT" Destination="AD_TO_AUDI.AD_IN" dx1="300"/>
+			<Connection Source="AD_TO_AUDI.AUDI_OUT" Destination="AUDI_SPLIT_2.IN" dx1="300"/>
+			<Connection Source="AUDI_SPLIT_2.OUT1" Destination="Q_NumericValue_RAW.u32NewValue" dx1="300"/>
+			<Connection Source="AUDI_SPLIT_2.OUT2" Destination="AUDI_TO_AR.AUDI_IN" dx1="300"/>
+			<Connection Source="AUDI_TO_AR.AR_OUT" Destination="CALIBRATE.X" dx1="300"/>
+			<Connection Source="AX_BOOL_TO_X_MIN.AX_OUT" Destination="CALIBRATE.C_MIN" dx1="566.67"/>
+			<Connection Source="AX_BOOL_TO_X_MID.AX_OUT" Destination="CALIBRATE.C_MID" dx1="700"/>
+			<Connection Source="AX_BOOL_TO_X_MAX.AX_OUT" Destination="CALIBRATE.C_MAX" dx1="1013.33"/>
+			<Connection Source="CALIBRATE.X_MIN" Destination="INI_X_MIN.VAL" dx1="580"/>
+			<Connection Source="CALIBRATE.X_MID" Destination="INI_X_MID.VAL" dx1="460"/>
+			<Connection Source="CALIBRATE.X_MAX" Destination="INI_X_MAX.VAL" dx1="340"/>
+			<Connection Source="CALIBRATE.MIN_REF" Destination="INI_MIN_REF.VAL" dx1="253.33"/>
+			<Connection Source="CALIBRATE.MID_REF" Destination="INI_MID_REF.VAL" dx1="220"/>
+			<Connection Source="CALIBRATE.MAX_REF" Destination="INI_MAX_REF.VAL" dx1="180"/>
+			<Connection Source="MIN_REF_LIT.VALUEO" Destination="CALIBRATE.Y_MIN" dx1="6806.67"/>
+			<Connection Source="MID_REF_LIT.VALUEO" Destination="CALIBRATE.Y_MID" dx1="6780"/>
+			<Connection Source="MAX_REF_LIT.VALUEO" Destination="CALIBRATE.Y_MAX" dx1="6760"/>
+			<Connection Source="CALIBRATE.Y" Destination="AR_SPLIT_2.IN" dx1="300"/>
+			<Connection Source="AR_SPLIT_2.OUT1" Destination="AR_PUBLISH_CAL.IN" dx1="300"/>
+			<Connection Source="AR_SPLIT_2.OUT2" Destination="Q_NumericValue_CAL.rPhys" dx1="300"/>
+			<Connection Source="AX_SUBSCRIBE_MIN.OUT" Destination="AX_RF_TRIG_MIN.QI" dx1="300"/>
+			<Connection Source="AX_SUBSCRIBE_MID.OUT" Destination="AX_RF_TRIG_MID.QI" dx1="300"/>
+			<Connection Source="AX_SUBSCRIBE_MAX.OUT" Destination="AX_RF_TRIG_MAX.QI" dx1="300"/>
+		</AdapterConnections>
+	</SubAppNetwork>
+</SubAppType>
