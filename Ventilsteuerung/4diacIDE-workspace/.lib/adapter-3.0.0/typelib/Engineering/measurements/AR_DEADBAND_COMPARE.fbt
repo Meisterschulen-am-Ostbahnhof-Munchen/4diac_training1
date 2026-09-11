@@ -1,58 +1,141 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<FBType Name="AR_DEADBAND_COMPARE" Comment="Vergleicht einen REAL-Messwert gegen ein symmetrisches Totband um Null (z.B. Lenkwinkel-Zentrierung): ABOVE/BELOW/CENTERED, alle drei aktualisiert bei jeder neuen Messung oder Totband-Aenderung.">
-	<Identification Standard="61499-2" Description="Copyright (c) 2026 Meisterschulen am Ostbahnhof  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0">
+<FBType Name="AR_DEADBAND_COMPARE" Comment="Vergleicht einen REAL-Messwert gegen ein Fenster [WINDOW_MIN, WINDOW_MAX]: ABOVE (Y &gt; WINDOW_MAX), BELOW (Y &lt; WINDOW_MIN), CENTERED (dazwischen). Fuer ein symmetrisches Totband um Null WINDOW_MIN=-Totband/WINDOW_MAX=+Totband setzen (z.B. Lenkwinkel-Zentrierung); genauso fuer ein beliebiges Fenster nutzbar (z.B. Farbgrenzen). Jedes Plug feuert sein Event bei Y-Aenderung nur, wenn sich sein eigener Wert tatsaechlich aendert (nicht bei jedem Y-Update alle drei); bei WINDOW_MIN/WINDOW_MAX-Aenderung (in der Praxis meist nur einmal beim Start) werden der Einfachheit halber immer alle drei neu gesetzt.">
+	<Identification Standard="61499-2" Description="Fenstervergleich / Totbandauswertung für AR-Messwerte (ABOVE, BELOW, CENTERED)">
 	</Identification>
-	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.1" Author="Franz Höpfinger" Date="2026-09-11" Remarks="DEADBAND von InputVar auf AR-Socket umgestellt (konsistent mit Y) - fester Wert weiterhin ueber adapter::types::unidirectional::AR::initval::initval_AR moeglich">
+	<VersionInfo Version="2.0" Author="Franz Höpfinger" Date="2026-09-11" Remarks="Verallgemeinert von symmetrischem Totband (1 DEADBAND-Socket) auf beliebiges Fenster (WINDOW_MIN/WINDOW_MAX) - z.B. fuer FillWindowFS_AR nutzbar. Y-Aenderung setzt ABOVE/BELOW/CENTERED jetzt nur noch einzeln bei tatsaechlicher Aenderung (vorher immer alle drei).">
 	</VersionInfo>
-	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2026-09-11" Remarks="initial implementation - fuer Achslenkung-Mittelpunkt-Automatik, generisch fuer jede Totband-Zentrierung (z.B. spaeter Hangausgleich)">
+	<VersionInfo Version="1.1" Author="Franz Höpfinger" Date="2026-09-11" Remarks="DEADBAND von InputVar auf AR-Socket umgestellt (konsistent mit Y) - fester Wert weiterhin ueber adapter::types::unidirectional::AR::initval::initval_AR moeglich">
+	</VersionInfo>
+	<VersionInfo Version="1.0" Author="Franz Höpfinger" Date="2026-09-11" Remarks="initial implementation - fuer Achslenkung-Mittelpunkt-Automatik, generisch fuer jede Totband-Zentrierung (z.B. spaeter Hangausgleich)">
 	</VersionInfo>
 	<CompilerInfo packageName="adapter::Engineering::measurements">
 	</CompilerInfo>
 	<InterfaceList>
 		<Plugs>
-			<AdapterDeclaration Name="ABOVE" Type="adapter::types::unidirectional::AX" Comment="TRUE wenn Y &gt; DEADBAND" x="3000" y="0"/>
-			<AdapterDeclaration Name="BELOW" Type="adapter::types::unidirectional::AX" Comment="TRUE wenn Y &lt; -DEADBAND" x="3000" y="900"/>
-			<AdapterDeclaration Name="CENTERED" Type="adapter::types::unidirectional::AX" Comment="TRUE wenn -DEADBAND &lt;= Y &lt;= DEADBAND" x="3000" y="1800"/>
+			<AdapterDeclaration Name="ABOVE" Type="adapter::types::unidirectional::AX" Comment="AX-Plug (Ausgang): TRUE wenn Messwert Y &gt; WINDOW_MAX, Ereignis E1 nur bei Zustandsänderung"/>
+			<AdapterDeclaration Name="CENTERED" Type="adapter::types::unidirectional::AX" Comment="AX-Plug (Ausgang): TRUE wenn WINDOW_MIN &lt;= Y &lt;= WINDOW_MAX (im Fenster/Totband), Ereignis E1 nur bei Zustandsänderung"/>
+			<AdapterDeclaration Name="BELOW" Type="adapter::types::unidirectional::AX" Comment="AX-Plug (Ausgang): TRUE wenn Messwert Y &lt; WINDOW_MIN, Ereignis E1 nur bei Zustandsänderung"/>
 		</Plugs>
 		<Sockets>
-			<AdapterDeclaration Name="Y" Type="adapter::types::unidirectional::AR" Comment="zu vergleichender Messwert" x="100" y="900"/>
-			<AdapterDeclaration Name="DEADBAND" Type="adapter::types::unidirectional::AR" Comment="Totband um Null, symmetrisch (z.B. 2.0 = zentriert wenn -2.0 &lt;= Y &lt;= 2.0) - fester Wert ueber initval_AR moeglich" x="100" y="1800"/>
+			<AdapterDeclaration Name="WINDOW_MAX" Type="adapter::types::unidirectional::AR" Comment="AR-Socket (Eingang): Obere Fenstergrenze (z. B. +Totband oder oberer Grenzwert)"/>
+			<AdapterDeclaration Name="Y" Type="adapter::types::unidirectional::AR" Comment="AR-Socket (Eingang): Zu vergleichender Eingangsmesswert"/>
+			<AdapterDeclaration Name="WINDOW_MIN" Type="adapter::types::unidirectional::AR" Comment="AR-Socket (Eingang): Untere Fenstergrenze (z. B. -Totband oder unterer Grenzwert)"/>
 		</Sockets>
 	</InterfaceList>
 	<BasicFB>
 		<ECC>
-			<ECState Name="IDLE" Comment="Initial State" x="0" y="0">
+			<ECState Name="IDLE" Comment="Ruhezustand – Wartet auf Ereignisse an Y.E1, WINDOW_MIN.E1 oder WINDOW_MAX.E1" x="0" y="0">
 			</ECState>
-			<ECState Name="COMPARE" x="900" y="0">
-				<ECAction Algorithm="COMPARE" Output="ABOVE.E1"/>
-				<ECAction Algorithm="COMPARE" Output="BELOW.E1"/>
-				<ECAction Algorithm="COMPARE" Output="CENTERED.E1"/>
+			<ECState Name="EMIT_ABOVE_BELOW" Comment="Aktualisiert ABOVE und BELOW und sendet E1-Ereignisse an beide Plugs" x="1600" y="-1200">
+				<ECAction Algorithm="EMIT_ABOVE_BELOW" Output="ABOVE.E1"/>
+				<ECAction Algorithm="EMIT_ABOVE_BELOW" Output="BELOW.E1"/>
 			</ECState>
-			<ECTransition Source="IDLE" Destination="COMPARE" Condition="Y.E1" x="450" y="0"/>
-			<ECTransition Source="COMPARE" Destination="IDLE" Condition="1" x="450" y="300"/>
-			<ECTransition Source="IDLE" Destination="COMPARE" Condition="DEADBAND.E1" x="450" y="600"/>
+			<ECState Name="EMIT_ABOVE_CENTERED" Comment="Aktualisiert ABOVE und CENTERED und sendet E1-Ereignisse an beide Plugs" x="1600" y="-800">
+				<ECAction Algorithm="EMIT_ABOVE_CENTERED" Output="ABOVE.E1"/>
+				<ECAction Algorithm="EMIT_ABOVE_CENTERED" Output="CENTERED.E1"/>
+			</ECState>
+			<ECState Name="EMIT_BELOW_CENTERED" Comment="Aktualisiert BELOW und CENTERED und sendet E1-Ereignisse an beide Plugs" x="1600" y="-400">
+				<ECAction Algorithm="EMIT_BELOW_CENTERED" Output="BELOW.E1"/>
+				<ECAction Algorithm="EMIT_BELOW_CENTERED" Output="CENTERED.E1"/>
+			</ECState>
+			<ECState Name="EMIT_ABOVE_ONLY" Comment="Aktualisiert nur ABOVE und sendet E1-Ereignis an ABOVE" x="1600" y="0">
+				<ECAction Algorithm="EMIT_ABOVE_ONLY" Output="ABOVE.E1"/>
+			</ECState>
+			<ECState Name="EMIT_BELOW_ONLY" Comment="Aktualisiert nur BELOW und sendet E1-Ereignis an BELOW" x="1600" y="400">
+				<ECAction Algorithm="EMIT_BELOW_ONLY" Output="BELOW.E1"/>
+			</ECState>
+			<ECState Name="EMIT_CENTERED_ONLY" Comment="Aktualisiert nur CENTERED und sendet E1-Ereignis an CENTERED" x="1600" y="800">
+				<ECAction Algorithm="EMIT_CENTERED_ONLY" Output="CENTERED.E1"/>
+			</ECState>
+			<ECState Name="EMIT_ALL" Comment="Aktualisiert ABOVE, BELOW sowie CENTERED und sendet E1-Ereignisse an alle drei Plugs (z. B. bei Fenstergrenzenänderung)" x="1600" y="1600">
+				<ECAction Algorithm="EMIT_ALL" Output="ABOVE.E1"/>
+				<ECAction Algorithm="EMIT_ALL" Output="BELOW.E1"/>
+				<ECAction Algorithm="EMIT_ALL" Output="CENTERED.E1"/>
+			</ECState>
+			<ECTransition Source="IDLE" Destination="EMIT_ABOVE_BELOW" Condition="Y.E1[((Y.D1 &gt; WINDOW_MAX.D1) &lt;&gt; ABOVE.D1) AND ((Y.D1 &lt; WINDOW_MIN.D1) &lt;&gt; BELOW.D1)]" x="400" y="-1200"/>
+			<ECTransition Source="IDLE" Destination="EMIT_ABOVE_CENTERED" Condition="Y.E1[((Y.D1 &gt; WINDOW_MAX.D1) &lt;&gt; ABOVE.D1) AND (((Y.D1 &lt;= WINDOW_MAX.D1) AND (Y.D1 &gt;= WINDOW_MIN.D1)) &lt;&gt; CENTERED.D1)]" x="400" y="-800"/>
+			<ECTransition Source="IDLE" Destination="EMIT_BELOW_CENTERED" Condition="Y.E1[((Y.D1 &lt; WINDOW_MIN.D1) &lt;&gt; BELOW.D1) AND (((Y.D1 &lt;= WINDOW_MAX.D1) AND (Y.D1 &gt;= WINDOW_MIN.D1)) &lt;&gt; CENTERED.D1)]" x="400" y="-400"/>
+			<ECTransition Source="IDLE" Destination="EMIT_ABOVE_ONLY" Condition="Y.E1[(Y.D1 &gt; WINDOW_MAX.D1) &lt;&gt; ABOVE.D1]" x="400" y="0"/>
+			<ECTransition Source="IDLE" Destination="EMIT_BELOW_ONLY" Condition="Y.E1[(Y.D1 &lt; WINDOW_MIN.D1) &lt;&gt; BELOW.D1]" x="400" y="400"/>
+			<ECTransition Source="IDLE" Destination="EMIT_CENTERED_ONLY" Condition="Y.E1[((Y.D1 &lt;= WINDOW_MAX.D1) AND (Y.D1 &gt;= WINDOW_MIN.D1)) &lt;&gt; CENTERED.D1]" x="400" y="800"/>
+			<ECTransition Source="IDLE" Destination="IDLE" Condition="Y.E1" x="-713.33" y="373.33"/>
+			<ECTransition Source="IDLE" Destination="EMIT_ALL" Condition="WINDOW_MIN.E1" x="400" y="1600"/>
+			<ECTransition Source="IDLE" Destination="EMIT_ALL" Condition="WINDOW_MAX.E1" x="400" y="2000"/>
+			<ECTransition Source="EMIT_ABOVE_BELOW" Destination="IDLE" Condition="1" x="900" y="-1200"/>
+			<ECTransition Source="EMIT_ABOVE_CENTERED" Destination="IDLE" Condition="1" x="900" y="-800"/>
+			<ECTransition Source="EMIT_BELOW_CENTERED" Destination="IDLE" Condition="1" x="900" y="-400"/>
+			<ECTransition Source="EMIT_ABOVE_ONLY" Destination="IDLE" Condition="1" x="900" y="0"/>
+			<ECTransition Source="EMIT_BELOW_ONLY" Destination="IDLE" Condition="1" x="900" y="400"/>
+			<ECTransition Source="EMIT_CENTERED_ONLY" Destination="IDLE" Condition="1" x="900" y="800"/>
+			<ECTransition Source="EMIT_ALL" Destination="IDLE" Condition="1" x="900" y="1600"/>
 		</ECC>
-		<Algorithm Name="COMPARE">
+		<Algorithm Name="EMIT_ABOVE_BELOW" Comment="Berechnet ABOVE (Y &gt; WINDOW_MAX) und BELOW (Y &lt; WINDOW_MIN)">
 			<ST><![CDATA[
-IF Y.D1 > DEADBAND.D1 THEN
-	ABOVE.D1 := TRUE;
-ELSE
-	ABOVE.D1 := FALSE;
-END_IF;
-
-IF Y.D1 < -DEADBAND.D1 THEN
-	BELOW.D1 := TRUE;
-ELSE
-	BELOW.D1 := FALSE;
-END_IF;
-
-IF (Y.D1 <= DEADBAND.D1) AND (Y.D1 >= -DEADBAND.D1) THEN
-	CENTERED.D1 := TRUE;
-ELSE
-	CENTERED.D1 := FALSE;
-END_IF;
+ABOVE.D1 := Y.D1 > WINDOW_MAX.D1;
+BELOW.D1 := Y.D1 < WINDOW_MIN.D1;
+]]></ST>
+		</Algorithm>
+		<Algorithm Name="EMIT_ABOVE_CENTERED" Comment="Berechnet ABOVE (Y &gt; WINDOW_MAX) und CENTERED (WINDOW_MIN &lt;= Y &lt;= WINDOW_MAX)">
+			<ST><![CDATA[
+ABOVE.D1 := Y.D1 > WINDOW_MAX.D1;
+CENTERED.D1 := (Y.D1 <= WINDOW_MAX.D1) AND (Y.D1 >= WINDOW_MIN.D1);
+]]></ST>
+		</Algorithm>
+		<Algorithm Name="EMIT_BELOW_CENTERED" Comment="Berechnet BELOW (Y &lt; WINDOW_MIN) und CENTERED (WINDOW_MIN &lt;= Y &lt;= WINDOW_MAX)">
+			<ST><![CDATA[
+BELOW.D1 := Y.D1 < WINDOW_MIN.D1;
+CENTERED.D1 := (Y.D1 <= WINDOW_MAX.D1) AND (Y.D1 >= WINDOW_MIN.D1);
+]]></ST>
+		</Algorithm>
+		<Algorithm Name="EMIT_ABOVE_ONLY" Comment="Berechnet ABOVE (Y &gt; WINDOW_MAX)">
+			<ST><![CDATA[
+ABOVE.D1 := Y.D1 > WINDOW_MAX.D1;
+]]></ST>
+		</Algorithm>
+		<Algorithm Name="EMIT_BELOW_ONLY" Comment="Berechnet BELOW (Y &lt; WINDOW_MIN)">
+			<ST><![CDATA[
+BELOW.D1 := Y.D1 < WINDOW_MIN.D1;
+]]></ST>
+		</Algorithm>
+		<Algorithm Name="EMIT_CENTERED_ONLY" Comment="Berechnet CENTERED (WINDOW_MIN &lt;= Y &lt;= WINDOW_MAX)">
+			<ST><![CDATA[
+CENTERED.D1 := (Y.D1 <= WINDOW_MAX.D1) AND (Y.D1 >= WINDOW_MIN.D1);
+]]></ST>
+		</Algorithm>
+		<Algorithm Name="EMIT_ALL" Comment="Berechnet alle Ausgänge: ABOVE, BELOW und CENTERED">
+			<ST><![CDATA[
+ABOVE.D1 := Y.D1 > WINDOW_MAX.D1;
+BELOW.D1 := Y.D1 < WINDOW_MIN.D1;
+CENTERED.D1 := (Y.D1 <= WINDOW_MAX.D1) AND (Y.D1 >= WINDOW_MIN.D1);
 ]]></ST>
 		</Algorithm>
 	</BasicFB>
+	<Attribute Name="Documentation" Type="CDATA"><![CDATA[<h1>Fenstervergleich / Totbandauswertung (AR_DEADBAND_COMPARE)</h1>
+
+<p>Der Funktionsbaustein <strong>AR_DEADBAND_COMPARE</strong> vergleicht einen analogen Messwert <code>Y</code> (über ein AR-Adapter-Socket) dynamisch gegen ein definiertes Wertefenster <code>[WINDOW_MIN, WINDOW_MAX]</code>.</p>
+
+<h2>Ausgangs-Plugs (AX)</h2>
+<ul>
+	<li><strong>ABOVE</strong>: Geht auf TRUE, wenn <code>Y > WINDOW_MAX</code>.</li>
+	<li><strong>CENTERED</strong>: Geht auf TRUE, wenn <code>WINDOW_MIN <= Y <= WINDOW_MAX</code> (Messwert im Totband / Fenster).</li>
+	<li><strong>BELOW</strong>: Geht auf TRUE, wenn <code>Y < WINDOW_MIN</code>.</li>
+</ul>
+
+<h2>Eingangs-Sockets (AR)</h2>
+<ul>
+	<li><strong>Y</strong>: Analoger Eingangsmesswert.</li>
+	<li><strong>WINDOW_MIN</strong>: Untere Fenstergrenze (z. B. negatives Totband <code>-DEADBAND</code> oder unterer Schwellwert).</li>
+	<li><strong>WINDOW_MAX</strong>: Obere Fenstergrenze (z. B. positives Totband <code>+DEADBAND</code> oder oberer Schwellwert).</li>
+</ul>
+
+<h2>Ereignis-Verhalten</h2>
+<p>Bei einer Änderung des Messwerts <code>Y</code> lösen nur diejenigen Plugs ein Ereignis aus, deren boolescher Zustand sich tatsächlich geändert hat (ereignisdiskrete Effizienz). Bei einer Änderung von <code>WINDOW_MIN</code> oder <code>WINDOW_MAX</code> werden alle drei Ausgänge neu berechnet und aktualisiert.</p>
+
+<h2>Anwendungsszenarien</h2>
+<ul>
+	<li><strong>Lenkwinkel-Mittelpunktzentrierung:</strong> Überprüfung, ob sich ein Lenksensor innerhalb des Totbandes um 0° befindet (<code>WINDOW_MIN = -Totband</code>, <code>WINDOW_MAX = +Totband</code>).</li>
+	<li><strong>Fenster- / Hysterese-Überwachung:</strong> Auswertung von Grenzwert- oder Farbbereichen (z. B. grün/rot in Visualisierungen).</li>
+</ul>
+]]></Attribute>
 	<Attribute Name="eclipse4diac::core::TypeHash" Value="''"/>
 </FBType>
