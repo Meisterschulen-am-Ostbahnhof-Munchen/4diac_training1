@@ -3,6 +3,7 @@
 ## Thema: Von der VT-Anzeige zur echten Hardware — 3-Stufen-Sollwert auf 13-Bit-PWM-Tastgrad
 
 ### Situationsbeschreibung
+
 `Uebung_246_AX` hat die drei Sollwerte (75/50/25 %) nur auf dem VT-Zahlenfeld sichtbar gemacht.
 Diese Übung ist eine Kopie von `Uebung_246_AX` mit einem zusätzlichen, echten
 `logiBUS_QDA_PWM`-Ausgang auf `Q1` — damit lässt sich das Ergebnis direkt mit Multimeter oder
@@ -11,6 +12,7 @@ beide Bausteine einer typischen Heben/Senken-Funktion mit Taster-Sollwertvorgabe
 75/50/25 %-Sollwert (wie hier), hier zusätzlich die Umsetzung in ein echtes PWM-Signal.
 
 ### Funktionsbeschreibung
+
 - **Unverändert wie `Uebung_246_AX`:** `I1`(Hoch)/`I2`(Runter) über `logiBUS_IXA`, zwei
   verkettete `AR_AX_SEL_AR` liefern 75/50/25 % je nach Tasterzustand.
 - **Verzweigen mit `AR_SPLIT_2`:** genau wie in `Uebung_247_AX` fächert `AR_SPLIT_2` den
@@ -27,6 +29,7 @@ und Neutralstellung 50 % (0,50 × U_DC) ergeben — direkt vergleichbar mit den 
 PVEA-Sollspannungen aus einer entsprechenden Kompensationsrechnung.
 
 ### Arbeitsauftrag
+
 1. Legen Sie die SubApp `Uebung_248_AX` an (bereits als Referenzlösung vorhanden).
 2. Schließen Sie ein Messgerät an `Q1` gegen GND an.
 3. Halten Sie `I1` bzw. `I2` und prüfen Sie den gemessenen Mittelwert gegen die erwarteten 75 %
@@ -35,5 +38,6 @@ PVEA-Sollspannungen aus einer entsprechenden Kompensationsrechnung.
    einem rohen Sollwert gespeist — messen Sie den Unterschied direkt am Ausgang.
 
 ### Referenzlösung
+
 `Uebung_248_AX.SUB`. Basiert auf `Uebung_246_AX`. Verwandte Übung: `Uebung_247_AX` (derselbe
 PWM-Messaufbau, aber mit dem Korrekturfaktor aus `Uebung_245_AX`).

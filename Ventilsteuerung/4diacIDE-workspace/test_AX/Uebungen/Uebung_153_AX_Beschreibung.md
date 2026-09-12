@@ -14,4 +14,5 @@ In landtechnischen Anwendungen (z. B. Säwellenantrieb, Düngerstreuer-Dosiersch
 - **Stellgrößenausgabe:** Die Stellgröße `AR_Y` des Reglers wird über den Konvertierungsbaustein `AR_TO_AD_NUM` direkt an den PWM-Ausgabe-Baustein `PWMOutput_Q1` (`logiBUS_QDA_PWM`) auf `Output_Q1` übergeben.
 
 ### Referenzlösung
+
 `Uebung_153_AX.SUB` — validiert in 4diac IDE.
