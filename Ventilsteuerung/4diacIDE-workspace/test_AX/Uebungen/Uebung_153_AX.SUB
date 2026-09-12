@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<SubAppType Name="Uebung_153_AX" Comment="Impulszähler &amp; PID Regler, mit Plug and Socket">
+<SubAppType Name="Uebung_153_AX" Comment="Impulszähler &amp; PID Regler, mit Plug and Socket (Adapter-Native)">
 	<Identification Standard="61499-2" Description="Copyright (c) 2026 Meisterschulen am Ostbahnhof  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0">
 	</Identification>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.2" Author="Franz Höpfinger" Date="2026-09-12" Remarks="Vollstaendig auf Adapter-Architektur umgestellt: FT_DERIV_10_AR und CTRL_PID_AR aus OSCAT_adapter, AD_TO_AR_NUM und AR_TO_AD_NUM fuer sauberen Adapterdatenfluss.">
+	</VersionInfo>
 	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.1" Author="Franz Höpfinger" Date="2026-09-12" Remarks="SubApp-Netzwerk-Layout aufgeräumt, Koordinaten und Signalfluss von FT_DERIV/CTRL_PID korrigiert und sauber ausgerichtet.">
 	</VersionInfo>
 	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2026-09-10" Remarks="initial API and implementation and/or initial documentation">
@@ -17,47 +19,41 @@
 	<SubAppInterfaceList>
 	</SubAppInterfaceList>
 	<SubAppNetwork>
-		<FB Name="DigitalInput_I2" Type="logiBUS::io::DI::logiBUS_IE" x="-8400" y="0">
+		<FB Name="DigitalInput_I2" Type="logiBUS::io::DI::logiBUS_IE" x="-7000" y="0">
 			<Parameter Name="QI" Value="TRUE"/>
 			<Parameter Name="Input" Value="Input_I2"/>
 			<Parameter Name="InputEvent" Value="BUTTON_SINGLE_CLICK"/>
 		</FB>
-		<FB Name="DigitalInput_I3" Type="logiBUS::io::DI::logiBUS_IE" x="-8400" y="1000">
+		<FB Name="DigitalInput_I3" Type="logiBUS::io::DI::logiBUS_IE" x="-7000" y="1000">
 			<Parameter Name="QI" Value="TRUE"/>
 			<Parameter Name="Input" Value="Input_I3"/>
 			<Parameter Name="InputEvent" Value="BUTTON_SINGLE_CLICK"/>
 		</FB>
-		<FB Name="E_CYCLE" Type="iec61499::events::E_CYCLE" x="-6500" y="500">
+		<FB Name="E_CYCLE" Type="iec61499::events::E_CYCLE" x="-5500" y="500">
 			<Parameter Name="DT" Value="T#200ms"/>
 		</FB>
-		<FB Name="logiBUS_PI_IDA" Type="logiBUS::io::PI::logiBUS_PI_IDA" x="-5200" y="400">
+		<FB Name="logiBUS_PI_IDA" Type="logiBUS::io::PI::logiBUS_PI_IDA" x="-4000" y="400">
 			<Parameter Name="QI" Value="TRUE"/>
 			<Parameter Name="Input" Value="PulseInput_I8"/>
 			<Parameter Name="ImpulseDelta" Value="100"/>
 			<Parameter Name="TimeDelta" Value="50000"/>
 			<Parameter Name="TimeRateLimit" Value="10000"/>
 		</FB>
-		<FB Name="AD_D_TO_DWORD" Type="adapter::conversion::unidirectional::AD_D_TO_DWORD" x="-3800" y="600">
+		<FB Name="AD_TO_AR_NUM" Type="adapter::conversion::unidirectional::AD_AR::AD_TO_AR_NUM" x="-2500" y="400">
 		</FB>
-		<FB Name="F_DWORD_TO_UDINT" Type="iec61131::conversion::F_DWORD_TO_UDINT" x="-2600" y="700">
-		</FB>
-		<FB Name="F_UDINT_TO_REAL" Type="iec61131::conversion::F_UDINT_TO_REAL" x="-1300" y="700">
-		</FB>
-		<FB Name="FT_DERIV" Type="OSCAT::Basic::POUs::Engineering::Control::FT_DERIV_10" x="0" y="700">
+		<FB Name="FT_DERIV" Type="OSCAT_adapter::Control::FT_DERIV_10_AR" x="-1000" y="400">
 			<Parameter Name="K" Value="9"/>
 			<Parameter Name="Faktor" Value="1.0"/>
 			<Parameter Name="run" Value="TRUE"/>
 		</FB>
-		<FB Name="DigitalInput_I1" Type="logiBUS::io::DI::logiBUS_IE" x="-4800" y="1800">
+		<FB Name="DigitalInput_I1" Type="logiBUS::io::DI::logiBUS_IE" x="-4000" y="1800">
 			<Parameter Name="QI" Value="TRUE"/>
 			<Parameter Name="Input" Value="Input_I1"/>
 			<Parameter Name="InputEvent" Value="BUTTON_SINGLE_CLICK"/>
 		</FB>
-		<FB Name="AX_T_FF" Type="adapter::events::unidirectional::AX_T_FF" x="-2300" y="1900">
+		<FB Name="AX_T_FF" Type="adapter::events::unidirectional::AX_T_FF" x="-2500" y="1800">
 		</FB>
-		<FB Name="AX_X_TO_BOOL" Type="adapter::conversion::unidirectional::AX_X_TO_BOOL" x="-1000" y="1900">
-		</FB>
-		<FB Name="CTRL_PID" Type="OSCAT::Basic::POUs::Engineering::Control::CTRL_PID" x="1500" y="1300">
+		<FB Name="CTRL_PID" Type="OSCAT_adapter::Control::CTRL_PID_AR" x="600" y="400">
 			<Parameter Name="SET" Value="16.0"/>
 			<Parameter Name="SUP" Value="0.0"/>
 			<Parameter Name="OFS" Value="0.0"/>
@@ -68,13 +64,9 @@
 			<Parameter Name="LL" Value="0.0"/>
 			<Parameter Name="LH" Value="8184.0"/>
 		</FB>
-		<FB Name="F_LREAL_TO_UDINT" Type="iec61131::conversion::F_LREAL_TO_UDINT" x="2900" y="1300">
+		<FB Name="AR_TO_AD_NUM" Type="adapter::conversion::unidirectional::AD_AR::AR_TO_AD_NUM" x="2100" y="400">
 		</FB>
-		<FB Name="AUDI_UDINT_TO_UDI" Type="adapter::conversion::unidirectional::AUDI_UDINT_TO_UDI" x="4100" y="1300">
-		</FB>
-		<FB Name="AUDI_TO_AD" Type="adapter::conversion::unidirectional::AUDI_TO_AD" x="5300" y="1300">
-		</FB>
-		<FB Name="PWMOutput_Q1" Type="logiBUS::io::DQ::logiBUS_QDA_PWM" x="6500" y="1000">
+		<FB Name="PWMOutput_Q1" Type="logiBUS::io::DQ::logiBUS_QDA_PWM" x="3600" y="400">
 			<Parameter Name="QI" Value="TRUE"/>
 			<Parameter Name="Output" Value="Output_Q1"/>
 		</FB>
@@ -82,29 +74,15 @@
 			<Connection Source="DigitalInput_I2.IND" Destination="E_CYCLE.START" dx1="533.33"/>
 			<Connection Source="DigitalInput_I3.IND" Destination="E_CYCLE.STOP" dx1="360"/>
 			<Connection Source="E_CYCLE.EO" Destination="logiBUS_PI_IDA.REQ" dx1="593.33"/>
-			<Connection Source="AD_D_TO_DWORD.CNF" Destination="F_DWORD_TO_UDINT.REQ" dx1="100"/>
-			<Connection Source="F_DWORD_TO_UDINT.CNF" Destination="F_UDINT_TO_REAL.REQ"/>
-			<Connection Source="F_UDINT_TO_REAL.CNF" Destination="FT_DERIV.REQ" dx1="160"/>
-			<Connection Source="FT_DERIV.CNF" Destination="CTRL_PID.REQ" dx1="200"/>
 			<Connection Source="DigitalInput_I1.IND" Destination="AX_T_FF.CLK" dx1="806.67"/>
-			<Connection Source="AX_X_TO_BOOL.CNF" Destination="CTRL_PID.REQ" dx1="300"/>
-			<Connection Source="CTRL_PID.CNF" Destination="F_LREAL_TO_UDINT.REQ" dx1="200"/>
-			<Connection Source="F_LREAL_TO_UDINT.CNF" Destination="AUDI_UDINT_TO_UDI.REQ" dx1="200"/>
 		</EventConnections>
-		<DataConnections>
-			<Connection Source="AD_D_TO_DWORD.IN" Destination="F_DWORD_TO_UDINT.IN" dx1="100"/>
-			<Connection Source="F_DWORD_TO_UDINT.OUT" Destination="F_UDINT_TO_REAL.IN"/>
-			<Connection Source="F_UDINT_TO_REAL.OUT" Destination="FT_DERIV.in" dx1="353.33"/>
-			<Connection Source="FT_DERIV.out" Destination="CTRL_PID.ACT" dx1="200"/>
-			<Connection Source="AX_X_TO_BOOL.IN" Destination="CTRL_PID.MAN" dx1="500"/>
-			<Connection Source="CTRL_PID.Y" Destination="F_LREAL_TO_UDINT.IN" dx1="200"/>
-			<Connection Source="F_LREAL_TO_UDINT.OUT" Destination="AUDI_UDINT_TO_UDI.OUT" dx1="200"/>
-		</DataConnections>
 		<AdapterConnections>
-			<Connection Source="logiBUS_PI_IDA.IN" Destination="AD_D_TO_DWORD.AD_IN" dx1="293.33"/>
-			<Connection Source="AX_T_FF.Q" Destination="AX_X_TO_BOOL.AX_IN" dx1="393.33"/>
-			<Connection Source="AUDI_UDINT_TO_UDI.AUDI_OUT" Destination="AUDI_TO_AD.AUDI_IN" dx1="300"/>
-			<Connection Source="AUDI_TO_AD.AD_OUT" Destination="PWMOutput_Q1.OUT" dx1="300"/>
+			<Connection Source="logiBUS_PI_IDA.IN" Destination="AD_TO_AR_NUM.AD_IN" dx1="293.33"/>
+			<Connection Source="AD_TO_AR_NUM.AR_OUT" Destination="FT_DERIV.AR_IN" dx1="300"/>
+			<Connection Source="FT_DERIV.AR_OUT" Destination="CTRL_PID.AR_ACT" dx1="300"/>
+			<Connection Source="AX_T_FF.Q" Destination="CTRL_PID.AX_MAN" dx1="393.33"/>
+			<Connection Source="CTRL_PID.AR_Y" Destination="AR_TO_AD_NUM.AR_IN" dx1="300"/>
+			<Connection Source="AR_TO_AD_NUM.AD_OUT" Destination="PWMOutput_Q1.OUT" dx1="300"/>
 		</AdapterConnections>
 	</SubAppNetwork>
 </SubAppType>
