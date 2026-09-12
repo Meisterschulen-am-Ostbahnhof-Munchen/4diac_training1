@@ -68,20 +68,34 @@
 
 <h2>🇩🇪 Deutsch</h2>
 
-<p>AR-Adapter-Wrapper um <code>OSCAT::Basic::POUs::Engineering::Control::FT_DERIV_10</code>. <code>K</code> (Window Select, Default 0), <code>Faktor</code> (Multiplikationsfaktor, Default 1.0) und <code>run</code> (Berechnung aktiv, Default TRUE) sind Klartext-<code>InputVars</code> auf diesem Wrapper - kein Adapter noetig, da diese Werte pro Aufruf konstant sind.</p>
+<p>AR-Adapter-Wrapper um <code>OSCAT::Basic::POUs::Engineering::Control::FT_DERIV_10</code>. <code>K</code> (Window Select, Default 0), <code>Faktor</code> (Multiplikationsfaktor, Default 1.0) und <code>run</code> (Berechnung aktiv, Default TRUE) sind Klartext-<code>InputVars</code> auf diesem Wrapper — kein Adapter noetig, da diese Werte pro Aufruf konstant sind.</p>
 
 <h3>Reine Adapter-Grenze</h3>
 
-<p>Alle Hauptausgaenge von <code>FT_DERIV_10</code> werden als eigene Adapter exponiert:</p>
+<p>Alle Hauptausgaenge von <code>FT_DERIV_10</code> werden als eigene Adapter exponiert — kein Klartext-Event/-Datum verlaesst diesen Baustein:</p>
 <ul>
-	<li><strong>AR_OUT</strong> (Plug, <code>AR</code>): die berechnete Ableitung (<code>out</code>, REAL)</li>
+	<li><strong>AR_IN</strong> (Socket, <code>AR</code>): Eingangssignal (REAL, z. B. Impulszaehler-Rohwert von <code>AD_TO_AR_NUM.AR_OUT</code>)</li>
+	<li><strong>AR_OUT</strong> (Plug, <code>AR</code>): die berechnete Ableitung (<code>out</code>, REAL, z. B. zur Weitergabe an <code>CTRL_PID_AR.AR_ACT</code>)</li>
 	<li><strong>AUDI_DELTA_T</strong> (Plug, <code>AUDI</code>): Zeitdifferenz in Mikrosekunden (<code>DT_0</code>, UDINT)</li>
 	<li><strong>AR_DELTA_IN</strong> (Plug, <code>AR</code>): Differenz des Eingangssignals (<code>DI_0</code>, REAL)</li>
 	<li><strong>AB_VALID</strong> (Plug, <code>AB</code>): Gueltigkeit des Messpuffers (<code>valid</code>, BOOL)</li>
 </ul>
 
+<p><code>INIT</code>/<code>INITO</code> und <code>RST</code> werden 1:1 an <code>FT_DERIV_10.EINIT</code>/<code>.INITO</code>/<code>.RST</code> durchgereicht.</p>
+
 <h2>🇬🇧 English</h2>
 
 <p>AR-adapter wrapper around <code>OSCAT::Basic::POUs::Engineering::Control::FT_DERIV_10</code>. <code>K</code> (window select, default 0), <code>Faktor</code> (multiplication factor, default 1.0) and <code>run</code> (calculation enabled, default TRUE) are plain <code>InputVars</code> on this wrapper.</p>
+
+<h3>Pure Adapter Boundary</h3>
+
+<p>All main outputs of <code>FT_DERIV_10</code> are exposed as dedicated adapters:</p>
+<ul>
+	<li><strong>AR_IN</strong> (Socket, <code>AR</code>): input signal (REAL)</li>
+	<li><strong>AR_OUT</strong> (Plug, <code>AR</code>): calculated derivative (<code>out</code>, REAL)</li>
+	<li><strong>AUDI_DELTA_T</strong> (Plug, <code>AUDI</code>): time difference in microseconds (<code>DT_0</code>, UDINT)</li>
+	<li><strong>AR_DELTA_IN</strong> (Plug, <code>AR</code>): input signal difference (<code>DI_0</code>, REAL)</li>
+	<li><strong>AB_VALID</strong> (Plug, <code>AB</code>): measurement buffer validity flag (<code>valid</code>, BOOL)</li>
+</ul>
 ]]></Attribute>
 </FBType>

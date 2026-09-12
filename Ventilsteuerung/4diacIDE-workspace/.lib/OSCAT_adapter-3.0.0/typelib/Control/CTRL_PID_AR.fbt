@@ -79,10 +79,20 @@
 
 <h2>🇩🇪 Deutsch</h2>
 
-<p>AR-Adapter-Wrapper um <code>OSCAT::Basic::POUs::Engineering::Control::CTRL_PID</code>. Der Istwert (<code>AR_ACT</code>) und die optional umschaltbare Handbetriebssteuerung (<code>AX_MAN</code>) sind als Adapter-Sockets ausgefuehrt. Stellwert (<code>AR_Y</code>), Regelabweichung (<code>AR_DIFF</code>) und Begrenzungsflag (<code>AB_LIM</code>) werden als Adapter-Plugs bereitgestellt.</p>
+<p>AR-Adapter-Wrapper um <code>OSCAT::Basic::POUs::Engineering::Control::CTRL_PID</code>. Der Istwert (<code>AR_ACT</code>) und die optional umschaltbare Handbetriebssteuerung (<code>AX_MAN</code>) sind als Adapter-Sockets ausgefuehrt. Sollwert (<code>SET</code>), Handwert (<code>M_I</code>), Grenzen (<code>LL</code>/<code>LH</code>) und Reglerparameter (<code>KP</code>/<code>TN</code>/<code>TV</code>) werden als Klartext-<code>InputVars</code> konfiguriert.</p>
+
+<h3>Reine Adapter-Grenze</h3>
+
+<ul>
+	<li><strong>AR_ACT</strong> (Socket, <code>AR</code>): Istwert (REAL, z. B. von <code>FT_DERIV_10_AR.AR_OUT</code>)</li>
+	<li><strong>AX_MAN</strong> (Socket, <code>AX</code>): Handbetrieb-Umschaltung (optional, z. B. von <code>AX_T_FF.Q</code>)</li>
+	<li><strong>AR_Y</strong> (Plug, <code>AR</code>): Stellwert (REAL, z. B. zur Weitergabe an <code>AR_TO_AD_NUM.AR_IN</code>)</li>
+	<li><strong>AR_DIFF</strong> (Plug, <code>AR</code>): Regelabweichung (<code>DIFF = SET - ACT</code>, REAL)</li>
+	<li><strong>AB_LIM</strong> (Plug, <code>AB</code>): Begrenzung aktiv Flag (<code>LIM</code>, BOOL)</li>
+</ul>
 
 <h2>🇬🇧 English</h2>
 
-<p>AR-adapter wrapper around <code>OSCAT::Basic::POUs::Engineering::Control::CTRL_PID</code>.</p>
+<p>AR-adapter wrapper around <code>OSCAT::Basic::POUs::Engineering::Control::CTRL_PID</code>. Actual value (<code>AR_ACT</code>) and optional manual mode switch (<code>AX_MAN</code>) are adapter sockets. Control output (<code>AR_Y</code>), control error (<code>AR_DIFF</code>) and limit flag (<code>AB_LIM</code>) are adapter plugs.</p>
 ]]></Attribute>
 </FBType>
