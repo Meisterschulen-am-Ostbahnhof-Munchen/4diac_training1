@@ -39,17 +39,26 @@ not twice).
 """
 import argparse
 import os
+import sys
 from collections import defaultdict
 
-# Intentionally plain xml.etree, not defusedxml: this tool only ever parses
-# the local .jop/.jvi pool files this same team authors via ISO-Designer -
-# never externally supplied/untrusted XML - so the XXE risk defusedxml
-# guards against does not apply here. Adding it as a dependency also failed
-# in practice: this repo has no Python dependency management, and the
-# `python` on PATH used by the .bat/.launch invocation didn't have it
-# installed, breaking the tool with no established way to fix it for the
-# end user.
-import xml.etree.ElementTree as ET
+# Prefer defusedxml (guards against XXE) when it's available, but don't hard-
+# require it: this repo has no Python dependency management, so a `python` on
+# PATH without it installed would otherwise break the tool outright. This
+# tool only ever parses local .jop/.jvi pool files this same team authors via
+# ISO-Designer - never externally supplied/untrusted XML - so falling back to
+# the standard library is safe, just not defense-in-depth.
+try:
+    import defusedxml.ElementTree as ET
+except ImportError:
+    import xml.etree.ElementTree as ET
+    print(
+        "Note: defusedxml not installed - using the standard library's "
+        "xml.etree.ElementTree instead (safe here: this tool only parses "
+        "locally-authored .jop/.jvi files, never untrusted input). For "
+        "defense-in-depth, run: pip install defusedxml",
+        file=sys.stderr,
+    )
 
 DATA_CLASSES = {"CNumberVariable", "CStringVariable"}
 
