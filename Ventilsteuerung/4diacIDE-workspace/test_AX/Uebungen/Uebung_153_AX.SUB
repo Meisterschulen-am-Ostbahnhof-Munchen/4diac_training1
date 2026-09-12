@@ -39,7 +39,7 @@
 			<Parameter Name="TimeDelta" Value="50000"/>
 			<Parameter Name="TimeRateLimit" Value="10000"/>
 		</FB>
-		<FB Name="AD_TO_AR_NUM" Type="adapter::conversion::unidirectional::AD_AR::AD_TO_AR_NUM" x="-2500" y="400">
+		<FB Name="AD_TO_AR_NUM" Type="adapter::conversion::unidirectional::AD_TO_AR_NUM" x="-2600" y="1100">
 		</FB>
 		<FB Name="FT_DERIV" Type="OSCAT_adapter::Control::FT_DERIV_10_AR" x="-1000" y="400">
 			<Parameter Name="K" Value="9"/>
@@ -51,7 +51,7 @@
 			<Parameter Name="Input" Value="Input_I1"/>
 			<Parameter Name="InputEvent" Value="BUTTON_SINGLE_CLICK"/>
 		</FB>
-		<FB Name="AX_T_FF" Type="adapter::events::unidirectional::AX_T_FF" x="-2500" y="1800">
+		<FB Name="AX_T_FF" Type="adapter::events::unidirectional::AX_T_FF" x="-2100" y="2000">
 		</FB>
 		<FB Name="CTRL_PID" Type="OSCAT_adapter::Control::CTRL_PID_AR" x="600" y="400">
 			<Parameter Name="SET" Value="16.0"/>
@@ -64,9 +64,9 @@
 			<Parameter Name="LL" Value="0.0"/>
 			<Parameter Name="LH" Value="8184.0"/>
 		</FB>
-		<FB Name="AR_TO_AD_NUM" Type="adapter::conversion::unidirectional::AD_AR::AR_TO_AD_NUM" x="2100" y="400">
+		<FB Name="AR_TO_AD_NUM" Type="adapter::conversion::unidirectional::AR_TO_AD_NUM" x="2300" y="1500">
 		</FB>
-		<FB Name="PWMOutput_Q1" Type="logiBUS::io::DQ::logiBUS_QDA_PWM" x="3600" y="400">
+		<FB Name="PWMOutput_Q1" Type="logiBUS::io::DQ::logiBUS_QDA_PWM" x="4000" y="900">
 			<Parameter Name="QI" Value="TRUE"/>
 			<Parameter Name="Output" Value="Output_Q1"/>
 		</FB>
