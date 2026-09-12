@@ -38,7 +38,11 @@
 		</ECC>
 		<Algorithm Name="SPLIT">
 			<ST><![CDATA[
-NEG_MAG := MAX(SINT#0,SEL(Y = SINT#-128,-Y,SINT#127));
+IF Y = SINT#-128 THEN
+	NEG_MAG := SINT#127;
+ELSE
+	NEG_MAG := MAX(SINT#0,-Y);
+END_IF;
 POS_MAG := MAX(SINT#0,Y);
 ]]></ST>
 		</Algorithm>
