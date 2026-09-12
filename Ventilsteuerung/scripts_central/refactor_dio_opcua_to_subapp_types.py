@@ -30,7 +30,17 @@ Usage: python3 refactor_dio_opcua_to_subapp_types.py
 import os
 import re
 
-BASE = "4diacIDE-workspace/test/FBs/Ventilsteuerung"
+import argparse
+
+_parser = argparse.ArgumentParser(description=__doc__)
+_parser.add_argument(
+    "-b", "--base", dest="base", required=True,
+    help="FBs/Ventilsteuerung folder for this project, relative to the "
+         "current working directory - e.g. "
+         "4diacIDE-workspace/test/FBs/Ventilsteuerung for Krauternter",
+)
+_args, _ = _parser.parse_known_args()
+BASE = _args.base
 MODULES = [1, 2, 3, 4, 5]
 NUM_I = 8
 NUM_Q = 12

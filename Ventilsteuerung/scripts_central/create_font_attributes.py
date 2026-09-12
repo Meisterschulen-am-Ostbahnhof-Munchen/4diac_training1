@@ -7,10 +7,22 @@ convention. FontAttributes_23000 (24x32) and FontAttributes_23001 (12x16) alread
 exist (used by the HOME menu) and are reused/renamed rather than duplicated -
 renumbering them would break existing references.
 """
+import argparse
 import io
+import os
 import re
 
-JOP_PATH = r"C:\git\fh\Krauternter\Ventilsteuerung\ISO-DesignerProjects\Workspace\DefaultPool\DefaultPool.jop"
+_parser = argparse.ArgumentParser(description=__doc__)
+_parser.add_argument(
+    "-d", "--pool-dir", dest="pool_dir", required=True,
+    help="ISO-Designer pool workspace folder, relative to this script's "
+         "parent directory (i.e. relative to the project's Ventilsteuerung/ "
+         "folder) - e.g. ISO-DesignerProjects/Workspace/DefaultPool",
+)
+_args, _ = _parser.parse_known_args()
+_script_dir = os.path.dirname(os.path.abspath(__file__))
+POOL_DIR = os.path.join(os.path.dirname(_script_dir), _args.pool_dir)
+JOP_PATH = os.path.join(POOL_DIR, "DefaultPool.jop")
 
 # (width, height) - ISO 11783-6 Annex B FontAttributes.FontSize enum, 0..14
 SIZES = [

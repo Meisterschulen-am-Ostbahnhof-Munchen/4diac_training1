@@ -27,7 +27,18 @@ Usage: python3 wire_remote_status_colors.py
 """
 import re
 
-BASE = "4diacIDE-workspace/test/FBs/Ventilsteuerung"
+import argparse
+import os
+
+_parser = argparse.ArgumentParser(description=__doc__)
+_parser.add_argument(
+    "-b", "--base", dest="base", required=True,
+    help="FBs/Ventilsteuerung folder for this project, relative to the "
+         "current working directory - e.g. "
+         "4diacIDE-workspace/test/FBs/Ventilsteuerung for Krauternter",
+)
+_args, _ = _parser.parse_known_args()
+BASE = _args.base
 STG1_DIR = f"{BASE}/Ventilsteuerung_STG1"
 NUM_I = 8
 NUM_Q = 12

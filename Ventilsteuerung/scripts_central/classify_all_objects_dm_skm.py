@@ -21,21 +21,33 @@ Only creates a DM/SKM sub-category when it would be non-empty (a class
 that's currently single-context, e.g. Button = DM-only in this pool,
 gets just one sub-category, not an empty second one).
 """
+import argparse
 import io
+import os
 import re
 import xml.etree.ElementTree as ET
 from collections import defaultdict
 
-JOP_PATH = r"C:\git\fh\Krauternter\Ventilsteuerung\ISO-DesignerProjects\Workspace\DefaultPool\DefaultPool.jop"
-JOPS_PATH = r"C:\git\fh\Krauternter\Ventilsteuerung\ISO-DesignerProjects\Workspace\DefaultPool\DefaultPool.jops"
+_parser = argparse.ArgumentParser(description=__doc__)
+_parser.add_argument(
+    "-d", "--pool-dir", dest="pool_dir", required=True,
+    help="ISO-Designer pool workspace folder, relative to this script's "
+         "parent directory (i.e. relative to the project's Ventilsteuerung/ "
+         "folder) - e.g. ISO-DesignerProjects/Workspace/DefaultPool",
+)
+_args, _ = _parser.parse_known_args()
+_script_dir = os.path.dirname(os.path.abspath(__file__))
+POOL_DIR = os.path.join(os.path.dirname(_script_dir), _args.pool_dir)
+JOP_PATH = os.path.join(POOL_DIR, "DefaultPool.jop")
+JOPS_PATH = os.path.join(POOL_DIR, "DefaultPool.jops")
 
 JVI_FILES = {
-    r"C:\git\fh\Krauternter\Ventilsteuerung\ISO-DesignerProjects\Workspace\DefaultPool\DataMask_HOME.jvi": "DM",
-    r"C:\git\fh\Krauternter\Ventilsteuerung\ISO-DesignerProjects\Workspace\DefaultPool\SoftKeyMask_4000.jvi": "SKM",
-    r"C:\git\fh\Krauternter\Ventilsteuerung\ISO-DesignerProjects\Workspace\DefaultPool\Diagnosis\Ausgaenge\AusgaengeMask.jvi": "DM",
-    r"C:\git\fh\Krauternter\Ventilsteuerung\ISO-DesignerProjects\Workspace\DefaultPool\Diagnosis\Eingaenge\EingaengeMask.jvi": "DM",
-    r"C:\git\fh\Krauternter\Ventilsteuerung\ISO-DesignerProjects\Workspace\DefaultPool\Diagnosis\Ausgaenge\AusgaengeSoftKeyMask.jvi": "SKM",
-    r"C:\git\fh\Krauternter\Ventilsteuerung\ISO-DesignerProjects\Workspace\DefaultPool\Diagnosis\Eingaenge\EingaengeSoftKeyMask.jvi": "SKM",
+    os.path.join(POOL_DIR, "DataMask_HOME.jvi"): "DM",
+    os.path.join(POOL_DIR, "SoftKeyMask_4000.jvi"): "SKM",
+    os.path.join(POOL_DIR, "Diagnosis", "Ausgaenge", "AusgaengeMask.jvi"): "DM",
+    os.path.join(POOL_DIR, "Diagnosis", "Eingaenge", "EingaengeMask.jvi"): "DM",
+    os.path.join(POOL_DIR, "Diagnosis", "Ausgaenge", "AusgaengeSoftKeyMask.jvi"): "SKM",
+    os.path.join(POOL_DIR, "Diagnosis", "Eingaenge", "EingaengeSoftKeyMask.jvi"): "SKM",
 }
 
 # class -> (category label, DM range, SKM range)

@@ -9,6 +9,7 @@ CRLF line endings. See AUSGAENGE_EINGAENGE_POOL_PLAN.md for the design.
 Structure only - no live-value wiring, no macros/navigation (added by hand),
 no FB-side ScrollFS_PHYS wiring (separate next step).
 """
+import argparse
 import base64
 import csv
 import io
@@ -16,9 +17,23 @@ import os
 import re
 from collections import OrderedDict
 
-JOP_PATH = r"C:\git\fh\Krauternter\Ventilsteuerung\ISO-DesignerProjects\Workspace\DefaultPool\DefaultPool.jop"
+_parser = argparse.ArgumentParser(description=__doc__)
+_parser.add_argument(
+    "-d", "--pool-dir", dest="pool_dir", required=True,
+    help="ISO-Designer pool workspace folder, relative to this script's "
+         "parent directory (i.e. relative to the project's Ventilsteuerung/ "
+         "folder) - e.g. ISO-DesignerProjects/Workspace/DefaultPool",
+)
+_parser.add_argument(
+    "-c", "--csv", dest="csv_path", required=True,
+    help="Path to combined_APIXON_Pin_Zuordnung.csv (not committed to the "
+         "repo - supply the actual location, e.g. on a shared drive)",
+)
+_args, _ = _parser.parse_known_args()
+_script_dir = os.path.dirname(os.path.abspath(__file__))
+JOP_PATH = os.path.join(os.path.dirname(_script_dir), _args.pool_dir, "DefaultPool.jop")
 JOP_DIR = os.path.dirname(JOP_PATH)
-CSV_PATH = r"G:\Geteilte Ablagen\Büngener Schuder GmbH\Krauternter Steuerung 2026\combined_APIXON_Pin_Zuordnung.csv"
+CSV_PATH = _args.csv_path
 
 ROW_HEIGHT = 42
 ROW_H = 36  # row container's own Height (leaves a visible gap, matching Workspace_Scroll)

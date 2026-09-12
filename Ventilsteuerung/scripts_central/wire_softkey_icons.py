@@ -29,12 +29,24 @@ wrapper chains - already correctly resolved by GcfScript.py. This script:
    (currently completely empty - no designators placed at all), using the
    template's Component/CPointer format.
 """
+import argparse
 import io
+import os
 import re
 
-JOP_PATH = r"C:\git\fh\Krauternter\Ventilsteuerung\ISO-DesignerProjects\Workspace\DefaultPool\DefaultPool.jop"
-AUSGAENGE_JVI = r"C:\git\fh\Krauternter\Ventilsteuerung\ISO-DesignerProjects\Workspace\DefaultPool\Diagnosis\Ausgaenge\AusgaengeSoftKeyMask.jvi"
-EINGAENGE_JVI = r"C:\git\fh\Krauternter\Ventilsteuerung\ISO-DesignerProjects\Workspace\DefaultPool\Diagnosis\Eingaenge\EingaengeSoftKeyMask.jvi"
+_parser = argparse.ArgumentParser(description=__doc__)
+_parser.add_argument(
+    "-d", "--pool-dir", dest="pool_dir", required=True,
+    help="ISO-Designer pool workspace folder, relative to this script's "
+         "parent directory (i.e. relative to the project's Ventilsteuerung/ "
+         "folder) - e.g. ISO-DesignerProjects/Workspace/DefaultPool",
+)
+_args, _ = _parser.parse_known_args()
+_script_dir = os.path.dirname(os.path.abspath(__file__))
+POOL_DIR = os.path.join(os.path.dirname(_script_dir), _args.pool_dir)
+JOP_PATH = os.path.join(POOL_DIR, "DefaultPool.jop")
+AUSGAENGE_JVI = os.path.join(POOL_DIR, "Diagnosis", "Ausgaenge", "AusgaengeSoftKeyMask.jvi")
+EINGAENGE_JVI = os.path.join(POOL_DIR, "Diagnosis", "Eingaenge", "EingaengeSoftKeyMask.jvi")
 
 PLACEHOLDER_RECT_ID = 14002
 
