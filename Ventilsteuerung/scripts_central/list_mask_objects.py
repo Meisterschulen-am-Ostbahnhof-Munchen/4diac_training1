@@ -15,31 +15,76 @@ actually visible while that mask is active, so publish/subscribe traffic for
 data objects belonging to a mask nobody is currently looking at can be
 throttled or paused.
 
-Usage:
-    python list_mask_objects.py                     # list every mask
-    python list_mask_objects.py DataMask_Ernte       # only masks whose
-                                                      # ObjectName contains this
-    python list_mask_objects.py --data-only          # only CNumberVariable /
-                                                      # CStringVariable leaves
-    python list_mask_objects.py --data-only Ernte     # combine both
+No path is hardcoded - the pool directory is always a required argument (see
+--pool-dir below), matching GcfScript.py's convention in this same folder.
+Project-specific invocation goes through a thin .bat/.sh wrapper (which
+supplies the concrete relative path for that project) plus an IDE .launch
+entry, not by editing this file - see
+Ventilsteuerung/4diacIDE-workspace/test/scripts/RunSkript_ListMaskObjects.bat
+and .sh, and the matching entry under .../test/Launches/, in this repo.
+
+Usage (arguments after -- pass-through, as the .bat/.sh wrappers do):
+    python list_mask_objects.py --pool-dir <path/to/DefaultPool>
+    python list_mask_objects.py --pool-dir <path> --jop DefaultPool.jop
+    python list_mask_objects.py --pool-dir <path> DataMask_Ernte   # only
+        # masks whose ObjectName or JVS-ID contains this
+    python list_mask_objects.py --pool-dir <path> --data-only       # only
+        # CNumberVariable/CStringVariable leaves
+    python list_mask_objects.py --pool-dir <path> --data-only Ernte # combine
 
 Prints, per DataMask (paired with its SoftKeyMask): every reachable object as
-"depth  Class  ObjectName  (JVS-ID)", plus a summary count by class.
+"depth  Class  ObjectName  (JVS-ID)", plus a summary count by class (objects
+reachable from both the DataMask and its paired SoftKeyMask are counted once,
+not twice).
 """
-import re
-import sys
-import xml.etree.ElementTree as ET
-from pathlib import Path
+import argparse
+import os
 from collections import defaultdict
 
-POOL_DIR = Path(r"C:\git\fh\Krauternter\Ventilsteuerung\ISO-DesignerProjects\Workspace\DefaultPool")
-JOP_PATH = POOL_DIR / "DefaultPool.jop"
+# Intentionally plain xml.etree, not defusedxml: this tool only ever parses
+# the local .jop/.jvi pool files this same team authors via ISO-Designer -
+# never externally supplied/untrusted XML - so the XXE risk defusedxml
+# guards against does not apply here. Adding it as a dependency also failed
+# in practice: this repo has no Python dependency management, and the
+# `python` on PATH used by the .bat/.launch invocation didn't have it
+# installed, breaking the tool with no established way to fix it for the
+# end user.
+import xml.etree.ElementTree as ET
 
 DATA_CLASSES = {"CNumberVariable", "CStringVariable"}
 
 
+def parse_args():
+    script_dir = os.path.dirname(os.path.abspath(__file__))
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument(
+        "-d", "--pool-dir", dest="pool_dir", required=True,
+        help="ISO-Designer pool workspace folder (the one containing the "
+             ".jop file), relative to this script's parent directory "
+             "(i.e. relative to the project's Ventilsteuerung/ folder) - "
+             "e.g. ISO-DesignerProjects/Workspace/DefaultPool",
+    )
+    parser.add_argument(
+        "-j", "--jop", dest="jop_file", default="DefaultPool.jop",
+        help="Pool file name inside --pool-dir (default: DefaultPool.jop)",
+    )
+    parser.add_argument(
+        "--data-only", action="store_true",
+        help="Only list CNumberVariable/CStringVariable leaves",
+    )
+    parser.add_argument(
+        "name", nargs="?", default=None,
+        help="Only masks whose ObjectName or JVS-ID contains this (case-insensitive)",
+    )
+    args = parser.parse_args()
+
+    pool_dir = os.path.join(os.path.dirname(script_dir), args.pool_dir)
+    jop_path = os.path.join(pool_dir, args.jop_file)
+    return pool_dir, jop_path, args.data_only, (args.name.lower() if args.name else None)
+
+
 def load_pool(jop_path):
-    """Return (obj_class, obj_name, obj_children) dicts keyed by JVS-ID (int)."""
+    """Return (obj_class, obj_name, obj_children, obj_path) dicts keyed by JVS-ID (int)."""
     tree = ET.parse(jop_path)
     root = tree.getroot()
 
@@ -99,14 +144,14 @@ def jvi_softkeymask_id(jvi_path):
     return None
 
 
-def resolve_tree(root_ids, obj_children, obj_class, obj_name):
+def resolve_tree(root_ids, obj_children, seen):
     """DFS from root_ids through obj_children; returns list of (depth, jid) in
     parent-immediately-followed-by-children order (so printed indentation
-    reads as an actual tree), each jid visited exactly once (dedup on
-    re-entry via shared CProxy targets, e.g. a common background rectangle -
-    a repeat visit is skipped, not reprinted under its second parent)."""
+    reads as an actual tree). `seen` is shared across calls (e.g. across a
+    DataMask's tree and its paired SoftKeyMask's tree) so an object reachable
+    from both is only visited - and counted - once, under whichever root
+    reaches it first."""
     order = []
-    seen = set()
 
     def visit(jid, depth):
         if jid in seen:
@@ -122,66 +167,67 @@ def resolve_tree(root_ids, obj_children, obj_class, obj_name):
 
 
 def main():
-    args = sys.argv[1:]
-    data_only = "--data-only" in args
-    args = [a for a in args if a != "--data-only"]
-    name_filter = args[0].lower() if args else None
+    pool_dir, jop_path, data_only, name_filter = parse_args()
 
-    obj_class, obj_name, obj_children, obj_path = load_pool(JOP_PATH)
+    obj_class, obj_name, obj_children, obj_path = load_pool(jop_path)
 
-    # id -> (class, name) for the *_MASK* objects only, to iterate DataMasks
-    datamasks = sorted(
-        (jid for jid, cls in obj_class.items() if cls == "CDataMask"),
-        key=lambda jid: jid,
-    )
+    datamasks = sorted(jid for jid, cls in obj_class.items() if cls == "CDataMask")
 
     total_data_objs_seen = set()
+    any_mask_selected = False
 
     for dm_jid in datamasks:
         dm_name = obj_name.get(dm_jid, "")
         if name_filter and name_filter not in dm_name.lower() and name_filter not in str(dm_jid):
             continue
+        any_mask_selected = True
 
         dm_path_rel = obj_path.get(dm_jid)
         if not dm_path_rel:
             print(f"DataMask {dm_jid} {dm_name!r}: no .jvi Path property, skipping")
             continue
-        dm_jvi = (POOL_DIR / dm_path_rel).resolve()
-        if not dm_jvi.exists():
+        dm_jvi = os.path.normpath(os.path.join(pool_dir, dm_path_rel))
+        if not os.path.exists(dm_jvi):
             print(f"DataMask {dm_jid} {dm_name!r}: .jvi not found at {dm_jvi}, skipping")
             continue
 
+        seen = set()
         roots = jvi_component_roots(dm_jvi)
-        tree = resolve_tree(roots, obj_children, obj_class, obj_name)
+        tree = resolve_tree(roots, obj_children, seen)
 
         skm_jid = jvi_softkeymask_id(dm_jvi)
         skm_tree = []
         skm_name = None
         if skm_jid is not None and skm_jid in obj_path:
             skm_name = obj_name.get(skm_jid, "")
-            skm_jvi = (POOL_DIR / obj_path[skm_jid]).resolve()
-            if skm_jvi.exists():
+            skm_jvi = os.path.normpath(os.path.join(pool_dir, obj_path[skm_jid]))
+            if os.path.exists(skm_jvi):
                 skm_roots = jvi_component_roots(skm_jvi)
-                skm_tree = resolve_tree(skm_roots, obj_children, obj_class, obj_name)
+                skm_tree = resolve_tree(skm_roots, obj_children, seen)
 
         print(f"=== DataMask {dm_jid} {dm_name!r}  (+ SoftKeyMask {skm_jid} {skm_name!r}) ===")
         by_class = defaultdict(int)
-        for depth, jid in tree + [(d, j) for d, j in skm_tree]:
+        for depth, jid in tree + skm_tree:
             cls = obj_class.get(jid, "?")
             by_class[cls] += 1
+            if cls in DATA_CLASSES:
+                total_data_objs_seen.add(jid)
             if data_only and cls not in DATA_CLASSES:
                 continue
             nm = obj_name.get(jid, "")
             print(f"  {'  ' * depth}{cls:<16} {nm:<55} ({jid})")
-            if cls in DATA_CLASSES:
-                total_data_objs_seen.add(jid)
         summary = ", ".join(f"{c}:{n}" for c, n in sorted(by_class.items()))
-        print(f"  -- {len(tree) + len(skm_tree)} objects total ({summary})")
+        print(f"  -- {len(tree) + len(skm_tree)} objects total, deduplicated ({summary})")
         print()
 
-    print(f"Data objects (CNumberVariable/CStringVariable) reachable from at least one mask: "
-          f"{len(total_data_objs_seen)} of "
-          f"{sum(1 for c in obj_class.values() if c in DATA_CLASSES)} total in pool")
+    if name_filter and not any_mask_selected:
+        print(f"No DataMask matched filter {name_filter!r}")
+        return
+
+    total_data_in_pool = sum(1 for c in obj_class.values() if c in DATA_CLASSES)
+    scope = f"selected mask(s) matching {name_filter!r}" if name_filter else "at least one mask"
+    print(f"Data objects (CNumberVariable/CStringVariable) reachable from {scope}: "
+          f"{len(total_data_objs_seen)} of {total_data_in_pool} total in pool")
 
 
 if __name__ == "__main__":
