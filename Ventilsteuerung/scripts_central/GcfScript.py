@@ -260,6 +260,9 @@ def writeGCFfile(data, filepaths):
             var_declaration.set('Type', 'STRING')
             var_declaration.set('InitialValue', '')
 
+    # Create an ElementTree object and write it to a file
+    tree = ET.ElementTree(root)
+
     # Create a string with indentation
     xml_str = ET.tostring(root, encoding='utf-8').decode()
     xml_str = minidom.parseString(xml_str).toprettyxml(indent="    ")
