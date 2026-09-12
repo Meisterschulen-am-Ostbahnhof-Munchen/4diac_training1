@@ -3,6 +3,7 @@
 ## Thema: `DualHysteresis_AR_A2X` — Totzone + Hysterese um einen Mittelwert, Messwert und Rückmeldung komplett auf dem VT
 
 ### Situationsbeschreibung
+
 Klassisches Thermostat-/Füllstandsschalter-Muster: ein analoger Messwert wird gegen einen
 Mittelwert `MI` mit Totzone (`DEAD`) und Hysterese (`HYSTERESIS`) geprüft und schaltet darüber
 zwei entgegengesetzte Aktoren (z.B. Heizen/Kühlen oder Befüllen/Entleeren) — nie beide
@@ -12,6 +13,7 @@ gleichzeitig. Im Pool `Workspace_Dreieck` simuliert der Bediener den Messwert ü
 welcher der beiden Aktoren gerade aktiv wäre.
 
 ### Funktionsbeschreibung
+
 - **Messwert lesen:** `Messwert_N` (`NumericValue_PHYSA`, `stObj := InputNumber_Messwert_N`)
   liefert bei jeder Änderung von `InputNumber_Messwert` den physikalischen Wert bereits direkt als
   `AR`-Adapter-Plug (`rPhys`) — anders als die reine Event-/Datenvariante `NumericValue_PHYS`
@@ -28,6 +30,7 @@ welcher der beiden Aktoren gerade aktiv wäre.
   `OutputString_UP` bzw. `OutputString_DOWN` grün/weiß.
 
 ### Arbeitsauftrag
+
 1. Legen Sie die SubApp `Uebung_235_AX` an (bereits als Referenzlösung vorhanden).
 2. Lesen Sie `InputNumber_Messwert` (VT-Objekt 9002) mit einer `NumericValue_PHYSA`-Instanz
    (`Messwert_N`, `stObj := InputNumber_Messwert_N` aus `DefaultPool_Dreieck_Numeric.gcf`) — sie
@@ -45,6 +48,7 @@ welcher der beiden Aktoren gerade aktiv wäre.
    aktive Zustand bleibt erhalten, bis die jeweilige Totzonen-Grenze erreicht wird.
 
 ### Referenzlösung
+
 `Uebung_235_AX.SUB`. Für die reine Hardware-Variante (Analogsensor statt VT-Eingabe, physische
 Ausgänge statt Hintergrundfarbe) siehe `Uebung_234_AX`. Die neuen VT-Objekte
 (`InputNumber_Messwert` 9002, `NumberVariable_Messwert` 21002, `OutputString_UP` 11001,

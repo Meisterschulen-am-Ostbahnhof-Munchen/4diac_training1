@@ -7,11 +7,13 @@ Split-Bargraph + Istwert, alles über AR-Adapter), zusätzlich wird das Dreieck 
 Sollwert das Fenster **-2…+2** verlässt, und **grün**, solange er darin liegt.
 
 ### Situationsbeschreibung
+
 Der Sollwert bewegt weiterhin das Dreieck und den Split-Bargraph und wird als Istwert
 zurückgeschrieben (siehe Übung 227). Zusätzlich färbt sich das Dreieck selbst je nach Sollwert:
 grün in der Nähe von 0 (Fenster -2…+2), rot außerhalb.
 
 ### Funktionsbeschreibung
+
 - **Warum ein neuer Baustein nötig war:** Das Dreieck (`Polygon_Bargraph_Mittelmarker`) bezieht
   seine Füllfarbe von einem eigenen, nur für dieses Objekt genutzten `FillStyle`-Objekt
   (`FillStyle_Bargraph_Mittelmarker_Gruen`, VT-Objekt 25000, `FillType=2` = feste Farbe, kein
@@ -32,6 +34,7 @@ grün in der Nähe von 0 (Fenster -2…+2), rot außerhalb.
   und die neue Farblogik.
 
 ### Arbeitsauftrag
+
 1. Legen Sie die SubApp `Uebung_228_AX` an (bereits als Referenzlösung vorhanden).
 2. Verteilen Sie den gelesenen Sollwert mit `AR_SPLIT_4` auf vier Ziele (wie Übung 227, plus eins).
 3. Färben Sie das Dreieck mit `MarkerColor` (`FillWindowFS_AR`,
@@ -40,5 +43,6 @@ grün in der Nähe von 0 (Fenster -2…+2), rot außerhalb.
 4. Am echten Terminal testen: Sollwert zwischen -2 und +2 → Dreieck grün; außerhalb → Dreieck rot.
 
 ### Referenzlösung
+
 `Uebung_228_AX.SUB` — validiert gegen `subapptype.xsd`. Neuer Baustein:
 `Ventilsteuerung\4diacIDE-workspace\.lib\isobus-3.0.0\typelib\UT\Q\FillWindowFS_AR.SUB`.

@@ -3,6 +3,7 @@
 ## Thema: Feste lineare Korrektur eines REAL-Sollwerts, rein über AR-Adapter (kein REQ/CNF nötig)
 
 ### Situationsbeschreibung
+
 Ein Sollwert (z.B. ein Tastgrad in Prozent) durchläuft auf dem Weg zum Verbraucher eine
 Signalkette mit einem systematischen, aber bekannten und konstanten Fehler — z.B. einen
 Tiefpassfilter, dessen Ausgangsimpedanz gegen die Eingangsimpedanz des angeschlossenen
@@ -17,6 +18,7 @@ den unkorrigierten Sollwert, ein `AR_MUL_2` mit einem über `initval_AR` fest ei
 zweiten Faktor skaliert ihn, ein Ausgabe-Zahlenfeld (`N3`) zeigt das Ergebnis.
 
 ### Funktionsbeschreibung
+
 - **Eingabe:** `NumericValue_PHYSA` liest das VT-Eingabefeld `InputNumber_I3_N` und liefert den
   physikalischen (bereits skalierten) REAL-Wert über den `rPhys`-AR-Adapter — siehe
   `Uebung_011f_PHYSA` für das reine Durchschleifen ohne Umrechnung.
@@ -43,6 +45,7 @@ Konstante (siehe `MyLib::sys::F_AI_RAW_TO_PERCENT`, das ebenso einen Standard-`F
 AR-Adapter, je nachdem was die Nachbarbausteine schon anbieten).
 
 ### Arbeitsauftrag
+
 1. Legen Sie die SubApp `Uebung_245_AX` an (bereits als Referenzlösung vorhanden).
 2. Verbinden Sie `NumericValue_PHYSA.rPhys` (`IN1`) und `initval_AR.OUT` (`IN2`) mit den beiden
    Sockets von `AR_MUL_2`, dessen `OUT`-Plug mit `Q_NumericValue_PHYSA.rPhys`.
@@ -53,6 +56,7 @@ AR-Adapter, je nachdem was die Nachbarbausteine schon anbieten).
    den gesamten Bereich einheitlich, keine gesonderten `INIT_VAL`-Werte pro Eingabe nötig.)
 
 ### Referenzlösung
+
 `Uebung_245_AX.SUB`. Verwandte Übungen: `Uebung_011f_PHYSA` (reines Durchschleifen ohne
 Korrektur), `Uebung_011b1_PHYSA` (Verknüpfung zweier Eingabefelder über `AR_ADD_2`, dasselbe
 AR-native Verdrahtungsmuster wie hier, nur mit `ADD` statt `MUL` und ohne `initval_AR`).

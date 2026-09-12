@@ -3,6 +3,7 @@
 ## Thema: Von der VT-Anzeige zur echten Hardware — REAL-Prozent auf 13-Bit-PWM-Tastgrad, AR_SPLIT_2 zum Verzweigen
 
 ### Situationsbeschreibung
+
 `Uebung_245_AX` hat den Korrekturfaktor nur auf dem VT-Zahlenfeld sichtbar gemacht. Diese Übung
 ist eine Kopie von `Uebung_245_AX` mit einem zusätzlichen, echten `logiBUS_QDA_PWM`-Ausgang auf
 `Q1` — damit lässt sich der korrigierte Wert nicht nur ablesen, sondern mit Multimeter oder
@@ -11,6 +12,7 @@ realen PWM-auf-PVEA-Kette (siehe `RampLimitFS_TO_logiBUS_QDA_PWM_OPC.SUB` in `My
 den Sollwert an die Hardware bringt.
 
 ### Funktionsbeschreibung
+
 - **Unverändert wie `Uebung_245_AX`:** `NumericValue_PHYSA` (`I3`) → `AR_MUL_2`
   (`F_MUL_KORREKTUR`, `IN2` fest über `initval_AR` auf `REAL#1,17619`) liefert den korrigierten
   Prozentwert.
@@ -44,6 +46,7 @@ Tastgrad über 100 % (>8191) — was am Ausgang passiert (Sättigung bei 100 %, 
 Fehlerstatus), ist absichtlich nicht vorgegeben: das selbst zu beobachten ist Teil der Übung.
 
 ### Arbeitsauftrag
+
 1. Legen Sie die SubApp `Uebung_247_AX` an (bereits als Referenzlösung vorhanden).
 2. Schließen Sie ein Messgerät an `Q1` gegen GND an.
 3. Geben Sie auf `I3` verschiedene Werte im Bereich 0-85 ein und vergleichen Sie den gemessenen
@@ -52,5 +55,6 @@ Fehlerstatus), ist absichtlich nicht vorgegeben: das selbst zu beobachten ist Te
 4. Geben Sie testweise einen Wert über 85 ein und beobachten Sie, was am Ausgang passiert.
 
 ### Referenzlösung
+
 `Uebung_247_AX.SUB`. Basiert auf `Uebung_245_AX`. Verwandte Übung: `Uebung_248_AX` (derselbe
 PWM-Messaufbau, aber mit dem Hoch/Runter-Sollwert aus `Uebung_246_AX`).

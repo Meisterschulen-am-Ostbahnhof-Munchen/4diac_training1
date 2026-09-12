@@ -3,6 +3,7 @@
 ## Thema: Digitale Taster als "3-Stufen-Joystick", Kaskadierung von binären AR-Selektoren
 
 ### Situationsbeschreibung
+
 Viele reale Funktionen (siehe `Uebung_245_AX` und die zugehörige PVEA-Kompensationsrechnung)
 brauchen keinen echten stufenlosen Analogeingang, sondern nur zwei einfache Taster "Hoch" und
 "Runter", deren Zustand auf drei feste Sollwerte abgebildet wird: gedrückt "Hoch" → oberer
@@ -12,6 +13,7 @@ Heben/Senken-Funktion mit einem Danfoss-PVEA-Proportionalventil, bei der 25 %/50
 `U_DC` als die drei Sollwerte dienen.
 
 ### Funktionsbeschreibung
+
 - **Eingabe:** `I1` (Hoch) und `I2` (Runter) werden wie in `Uebung_001_AX` über `logiBUS_IXA`
   gelesen — deren `IN`-Plug ist ein AX-Adapter (kontinuierlicher Pegel, kein Tastenimpuls).
 - **Feste Sollwerte als AR-Konstanten:** drei `initval_AR`-Instanzen liefern `REAL#25.0`,
@@ -30,6 +32,7 @@ Heben/Senken-Funktion mit einem Danfoss-PVEA-Proportionalventil, bei der 25 %/50
   bleiben.
 
 ### Arbeitsauftrag
+
 1. Legen Sie die SubApp `Uebung_246_AX` an (bereits als Referenzlösung vorhanden).
 2. Verdrahten Sie die drei `initval_AR`-Konstanten und die zwei `AR_AX_SEL_AR` wie beschrieben.
 3. Testen Sie: `I1` halten → Anzeige 75; loslassen → Anzeige zurück auf 50. `I2` halten → Anzeige
@@ -38,5 +41,6 @@ Heben/Senken-Funktion mit einem Danfoss-PVEA-Proportionalventil, bei der 25 %/50
    ändert sich das Verhalten bei gleichzeitigem Drücken?
 
 ### Referenzlösung
+
 `Uebung_246_AX.SUB`. Verwandte Übungen: `Uebung_001_AX` (`logiBUS_IXA`-Grundmuster),
 `Uebung_245_AX` (`initval_AR`, feste AR-Konstanten).

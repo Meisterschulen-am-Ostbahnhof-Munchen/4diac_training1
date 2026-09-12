@@ -3,6 +3,7 @@
 ## Thema: `AX_LAST_2` — gleiches Verhalten, drastisch weniger Bausteine
 
 ### Situationsbeschreibung
+
 Zwei Taster `I1`/`I2` steuern gemeinsam einen Ausgang `Q1` — dieselbe Grundidee wie in
 `Uebung_229_AX`/`Uebung_230_AX`, aber mit einem völlig anderen Baustein: `AX_LAST_2`
 (`adapter::events::unidirectional`) statt `AX_RF_TRIG`/`AX_ASR_RF_TRIG`+`ASR_MERGE_2`+`AX_SR`/
@@ -14,6 +15,7 @@ anders, wie hier ursprünglich fälschlich behauptet wurde. Der Unterschied lieg
 im Verhalten.
 
 ### Warum 229/230/233 KEIN "hält nach Loslassen"-Latch sind
+
 `AX_RF_TRIG`/`AX_ASR_RF_TRIG` meldet die steigende Flanke (Drücken) als `SET` UND die fallende
 Flanke (Loslassen) als `RESET` — beide Flanken BEIDER (bzw. aller drei) Taster wirken auf denselben
 `AX_SR`/`ASR_AX_SR`. Das bedeutet: **jedes** Loslassen irgendeines Tasters schaltet `Q1` sofort AUS,
@@ -24,6 +26,7 @@ kein Speicher, der "merkt", dass ein anderer Taster noch aktiv ist — es ist be
 "letzte Flanke gewinnt"-Logik wie bei `AX_LAST_2`.
 
 ### Funktionsbeschreibung
+
 - **`AX_LAST_2`** hat zwei AX-Sockets (`IN1`, `IN2`) und einen AX-Plug (`OUT`). Sein ECC ist denkbar
   einfach: welcher Socket zuletzt sein eigenes Event (`IN1.E1`/`IN2.E1`) ausgelöst hat, dessen
   aktueller Datenwert (`D1`) wird sofort 1:1 an `OUT` durchgereicht.
@@ -41,8 +44,10 @@ kein Speicher, der "merkt", dass ein anderer Taster noch aktiv ist — es ist be
     statt auf explizit erzeugten SET/RESET-Kommandos.
 
 ### Unterschied zu Übung 233 (`ASR_MERGE_3`) — Skalierbarkeit der Baustein-Familie
+
 Der einzige *substantielle* Unterschied zwischen dieser Familie und `AX_LAST_2` ist nicht das
 Verhalten, sondern wie gut sie auf mehr als 2 Quellen skalieren:
+
 - **`ASR_MERGE_N`** existiert als ganze Familie (`ASR_MERGE_2..7`) — von 2 auf 3 Quellen zu gehen
   (Übung 230 → 233) heißt nur: einen weiteren `AX_ASR_RF_TRIG` anschließen und `ASR_MERGE_2` durch
   `ASR_MERGE_3` ersetzen (ein zusätzlicher Socket `IN3`, sonst identisch). Eine vierte Quelle wäre
@@ -61,6 +66,7 @@ Verhalten, sondern wie gut sie auf mehr als 2 Quellen skalieren:
   Quell-Zeitstempel.
 
 ### Arbeitsauftrag
+
 1. Legen Sie die SubApp `Uebung_236_AX` an (bereits als Referenzlösung vorhanden).
 2. Verbinden Sie `Input_I1`/`Input_I2` direkt (ohne Zwischenbaustein) mit `AX_LAST_2.IN1`/`IN2`.
 3. Verbinden Sie `AX_LAST_2.OUT` mit `Output_Q1`.
@@ -73,5 +79,6 @@ Verhalten, sondern wie gut sie auf mehr als 2 Quellen skalieren:
    nur einen einzigen (`AX_LAST_2`) — für exakt dasselbe Verhalten.
 
 ### Referenzlösung
+
 `Uebung_236_AX.SUB`. Der verwendete Baustein liegt in
 `Ventilsteuerung\4diacIDE-workspace\.lib\adapter-3.0.0\typelib\events\unidirectional\BOOL\AX_LAST_2.fbt`.

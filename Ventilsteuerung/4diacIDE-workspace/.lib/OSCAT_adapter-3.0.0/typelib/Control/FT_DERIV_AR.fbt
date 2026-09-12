@@ -21,14 +21,14 @@
 			<VarDeclaration Name="K" Type="REAL" Comment="Ableitungsfaktor (durchgereicht an FT_DERIV.K)" InitialValue="1.0"/>
 			<VarDeclaration Name="run" Type="BOOL" Comment="Berechnung aktiv (durchgereicht an FT_DERIV.run)" InitialValue="TRUE"/>
 		</InputVars>
+		<Sockets>
+			<AdapterDeclaration Name="AR_IN" Type="adapter::types::unidirectional::AR" Comment="Eingangssignal (REAL)" x="-700" y="100"/>
+		</Sockets>
 		<Plugs>
 			<AdapterDeclaration Name="AR_OUT" Type="adapter::types::unidirectional::AR" Comment="Berechnete Ableitung (REAL, bei K=1.0 direkt in Hz, wenn IN Impulse/Zaehlerstand ist)" x="5300" y="200"/>
 			<AdapterDeclaration Name="AR_DELTA_IN" Type="adapter::types::unidirectional::AR" Comment="Differenz des Eingangssignals (REAL, durchgereicht von FT_DERIV.delta_in)" x="5100" y="1200"/>
 			<AdapterDeclaration Name="AUDI_DELTA_T" Type="adapter::types::unidirectional::AUDI" Comment="Zeitdifferenz in Mikrosekunden (UDINT, durchgereicht von FT_DERIV.delta_t)" x="5100" y="700"/>
 		</Plugs>
-		<Sockets>
-			<AdapterDeclaration Name="AR_IN" Type="adapter::types::unidirectional::AR" Comment="Eingangssignal (REAL)" x="-700" y="100"/>
-		</Sockets>
 	</InterfaceList>
 	<FBNetwork>
 		<FB Name="FT_DERIV" Type="OSCAT::Basic::POUs::Engineering::Control::FT_DERIV" x="800" y="0">

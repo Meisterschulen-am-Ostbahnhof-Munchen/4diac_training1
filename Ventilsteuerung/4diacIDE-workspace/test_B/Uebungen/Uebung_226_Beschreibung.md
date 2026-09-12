@@ -3,6 +3,7 @@
 ## Thema: Virtual-Terminal-Bargraphen (ISO 11783-6 Annex B.11.3) — vorzeichenbehafteter Ausschlag über zwei Balken
 
 ### Situationsbeschreibung
+
 Im ISO-Designer-Pool `Workspace_Dreieck` liegen zwei Linear-Bargraphen (`Bargraph_Split_links`,
 `Bargraph_Split_rechts`, VT-Objekte 18001/18002) unmittelbar nebeneinander — eine
 Darstellungsvariante, wie sie in echten Produktions-Pools für Signalgrößen mit Nulllage in der Mitte
@@ -13,6 +14,7 @@ Balken von der Mitte nach außen, bei negativem Wert der linke, der jeweils ande
 Bediener gibt über `InputNumber_Sollwert` (VT-Objekt 9000) einen Wert zwischen -42 und +42 ein.
 
 ### Funktionsbeschreibung
+
 - **Sollwert lesen:** Ändert der Bediener `InputNumber_Sollwert`, liefert das VT den physikalischen
   Wert als `REAL`.
 - **Split-Bargraph ansteuern:** übernimmt der wiederverwendbare Baustein `BargraphSplitFS`
@@ -32,6 +34,7 @@ Bediener gibt über `InputNumber_Sollwert` (VT-Objekt 9000) einen Wert zwischen 
   keine Diagnoseinformation wäre (anders als bei `PositionMarkerFS`, wo Rand-Werte selten sind).
 
 ### Arbeitsauftrag
+
 1. Legen Sie die SubApp `Uebung_226` an (bereits als Referenzlösung vorhanden).
 2. Lesen Sie `InputNumber_Sollwert` (VT-Objekt 9000) mit einer `NumericValue_PHYS`-Instanz
    (`stObj := NumberVariable_Sollwert_N` aus `DefaultPool_Dreieck_Numeric.gcf`) — das VT meldet
@@ -45,6 +48,7 @@ Bediener gibt über `InputNumber_Sollwert` (VT-Objekt 9000) einen Wert zwischen 
    Sollwert negativ → umgekehrt; `xOverRight`/`xOverLeft` bleiben `FALSE` solange `|Sollwert| <= 42`.
 
 ### Referenzlösung
+
 `Uebung_226.SUB` — validiert gegen `subapptype.xsd` (siehe `iec61499-creator`-Skill). Für die
 vollständig über Adapter verdrahtete Variante siehe `Uebung_226_AX` in `test_AX`. Der
 wiederverwendbare Baustein liegt in

@@ -129,7 +129,7 @@ ganze ILOCK-Familie, Entprellung/Hysterese, Aktor-Rückmeldung/Plausibilisierung
     im 4diac-Monitor per Watch verglichen werden. Dokumentation im
     Documentation-Attribut der SubApp, kein separates .md nötig.
 
-20. **SAFE-Arithmetik (`SafeArithmetic::arithmetic::SAFE_ADD_2/_3/_4`,
+11. **SAFE-Arithmetik (`SafeArithmetic::arithmetic::SAFE_ADD_2/_3/_4`,
     `SAFE_MUL_2/_3/_4`, `SAFE_SUB`, `SAFE_DIV`) hat noch keine Adapter-Variante
     — `Uebung_011b4..011b7_AX` deshalb am 2026-09-10 aus `test_AX` entfernt.**
     Geprüft: kein `.fbt` in `.lib` bietet einen AUDI/AX-Adapter-Ersatz für
@@ -147,7 +147,7 @@ ganze ILOCK-Familie, Entprellung/Hysterese, Aktor-Rückmeldung/Plausibilisierung
     selbst zu einem AX-Adapter) - erst dann können 011b4-011b7 nach AX
     portiert werden, im vollen Adapter-Stil wie `Uebung_015_AX`.
 
-19. **QI-gegatete ILOCK-Übung — noch nicht entschieden, ob gewollt.**
+12. **QI-gegatete ILOCK-Übung — noch nicht entschieden, ob gewollt.**
     Ausgelagert aus Punkt 6 am 2026-09-07: kein ILOCK-Baustein (7 Grundtypen,
     14 Dateien mit AX-Varianten) hat einen generellen Freigabe-/Qualitäts-
     Eingang - einmal verdrahtet, arbitriert ein ILOCK immer aktiv, ohne

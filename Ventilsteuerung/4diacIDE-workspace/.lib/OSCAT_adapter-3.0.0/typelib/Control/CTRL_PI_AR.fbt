@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<FBType Name="CTRL_PI_AR" Comment="AR-Adapter-Wrapper um OSCAT CTRL_PI - bruckt zwischen adapter und OSCAT PI-Regler. Istwert (AR_ACT) und Hand-Umschaltung (AX_MAN) als Adapter, Sollwert und Reglerparameter als InputVars">
+	<Identification Standard="61499-2" Description="Copyright (c) 2026 Meisterschulen am Ostbahnhof  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0">
+	</Identification>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2026-09-12" Remarks="Initial implementation of CTRL_PI_AR wrapper FB">
+	</VersionInfo>
+	<CompilerInfo packageName="OSCAT_adapter::Control">
+	</CompilerInfo>
+	<InterfaceList>
+		<EventInputs>
+			<Event Name="INIT" Type="EInit" Comment="Service Initialization (setzt Regler zurueck)">
+			</Event>
+			<Event Name="RST" Type="Event" Comment="Reset des Integrators (durchgereicht an CTRL_PI.RST)">
+			</Event>
+		</EventInputs>
+		<EventOutputs>
+			<Event Name="INITO" Type="EInit" Comment="Initialization Confirm">
+			</Event>
+		</EventOutputs>
+		<InputVars>
+			<VarDeclaration Name="SET" Type="REAL" Comment="Sollwert (REAL)" InitialValue="0.0"/>
+			<VarDeclaration Name="SUP" Type="REAL" Comment="Rauschunterdrueckung (REAL)" InitialValue="0.0"/>
+			<VarDeclaration Name="OFS" Type="REAL" Comment="Offset (REAL)" InitialValue="0.0"/>
+			<VarDeclaration Name="M_I" Type="REAL" Comment="Handwert (REAL)" InitialValue="0.0"/>
+			<VarDeclaration Name="KP" Type="REAL" Comment="Proportionalbeiwert (REAL)" InitialValue="1.0"/>
+			<VarDeclaration Name="KI" Type="REAL" Comment="Integralbeiwert (REAL)" InitialValue="1.0"/>
+			<VarDeclaration Name="LL" Type="REAL" Comment="Unterer Grenzwert (REAL)" InitialValue="-1000.0"/>
+			<VarDeclaration Name="LH" Type="REAL" Comment="Oberer Grenzwert (REAL)" InitialValue="1000.0"/>
+		</InputVars>
+		<Sockets>
+			<AdapterDeclaration Name="AR_ACT" Type="adapter::types::unidirectional::AR" Comment="Istwert (REAL)" x="-700" y="100"/>
+			<AdapterDeclaration Name="AX_MAN" Type="adapter::types::unidirectional::AX" Comment="Handbetrieb Umschaltung (BOOL/Event, optional)" x="-700" y="600"/>
+		</Sockets>
+		<Plugs>
+			<AdapterDeclaration Name="AR_Y" Type="adapter::types::unidirectional::AR" Comment="Stellwert (REAL)" x="5300" y="200"/>
+			<AdapterDeclaration Name="AR_DIFF" Type="adapter::types::unidirectional::AR" Comment="Regelabweichung / Differenz (REAL)" x="5100" y="700"/>
+			<AdapterDeclaration Name="AB_LIM" Type="adapter::types::unidirectional::AB" Comment="Begrenzung aktiv Flag (BOOL)" x="5100" y="1200"/>
+		</Plugs>
+	</InterfaceList>
+	<FBNetwork>
+		<FB Name="CTRL_PI" Type="OSCAT::Basic::POUs::Engineering::Control::CTRL_PI" x="800" y="0">
+		</FB>
+		<FB Name="E_D_FF_ANY" Type="iec61499::events::E_D_FF_ANY_3" x="2400" y="200">
+		</FB>
+		<EventConnections>
+			<Connection Source="INIT" Destination="CTRL_PI.RST" dx1="2800"/>
+			<Connection Source="INIT" Destination="INITO" dx1="4500"/>
+			<Connection Source="RST" Destination="CTRL_PI.RST" dx1="2473.33"/>
+			<Connection Source="AR_ACT.E1" Destination="CTRL_PI.REQ" dx1="626.67"/>
+			<Connection Source="AX_MAN.E1" Destination="CTRL_PI.REQ" dx1="626.67"/>
+			<Connection Source="CTRL_PI.CNF" Destination="E_D_FF_ANY.CLK" dx1="453.33"/>
+			<Connection Source="E_D_FF_ANY.EO" Destination="AR_Y.E1"/>
+			<Connection Source="E_D_FF_ANY.EO" Destination="AR_DIFF.E1" dx1="906.67"/>
+			<Connection Source="E_D_FF_ANY.EO" Destination="AB_LIM.E1" dx1="906.67"/>
+		</EventConnections>
+		<DataConnections>
+			<Connection Source="AR_ACT.D1" Destination="CTRL_PI.ACT" dx1="540"/>
+			<Connection Source="SET" Destination="CTRL_PI.SET" dx1="540"/>
+			<Connection Source="SUP" Destination="CTRL_PI.SUP" dx1="540"/>
+			<Connection Source="OFS" Destination="CTRL_PI.OFS" dx1="540"/>
+			<Connection Source="M_I" Destination="CTRL_PI.M_I" dx1="540"/>
+			<Connection Source="AX_MAN.D1" Destination="CTRL_PI.MAN" dx1="540"/>
+			<Connection Source="KP" Destination="CTRL_PI.KP" dx1="540"/>
+			<Connection Source="KI" Destination="CTRL_PI.KI" dx1="540"/>
+			<Connection Source="LL" Destination="CTRL_PI.LL" dx1="540"/>
+			<Connection Source="LH" Destination="CTRL_PI.LH" dx1="540"/>
+			<Connection Source="CTRL_PI.Y" Destination="E_D_FF_ANY.D1" dx1="453.33"/>
+			<Connection Source="CTRL_PI.DIFF" Destination="E_D_FF_ANY.D2" dx1="453.33"/>
+			<Connection Source="CTRL_PI.LIM" Destination="E_D_FF_ANY.D3" dx1="453.33"/>
+			<Connection Source="E_D_FF_ANY.Q1" Destination="AR_Y.D1"/>
+			<Connection Source="E_D_FF_ANY.Q2" Destination="AR_DIFF.D1" dx1="940"/>
+			<Connection Source="E_D_FF_ANY.Q3" Destination="AB_LIM.D1" dx1="873.33"/>
+		</DataConnections>
+	</FBNetwork>
+	<Attribute Name="eclipse4diac::core::TypeHash" Value="''"/>
+	<Attribute Name="Documentation" Type="CDATA"><![CDATA[<h1>CTRL_PI_AR</h1>
+
+<h2>🇩🇪 Deutsch</h2>
+
+<p>AR-Adapter-Wrapper um <code>OSCAT::Basic::POUs::Engineering::Control::CTRL_PI</code>. Der Istwert (<code>AR_ACT</code>) und die optional umschaltbare Handbetriebssteuerung (<code>AX_MAN</code>) sind als Adapter-Sockets ausgefuehrt. Sollwert (<code>SET</code>), Handwert (<code>M_I</code>), Grenzen (<code>LL</code>/<code>LH</code>) und Reglerparameter (<code>KP</code>/<code>KI</code>) werden als Klartext-<code>InputVars</code> konfiguriert.</p>
+
+<h3>Reine Adapter-Grenze</h3>
+
+<ul>
+	<li><strong>AR_ACT</strong> (Socket, <code>AR</code>): Istwert (REAL, z. B. von <code>FT_DERIV_10_AR.AR_OUT</code>)</li>
+	<li><strong>AX_MAN</strong> (Socket, <code>AX</code>): Handbetrieb-Umschaltung (optional, z. B. von <code>AX_T_FF.Q</code>)</li>
+	<li><strong>AR_Y</strong> (Plug, <code>AR</code>): Stellwert (REAL, z. B. zur Weitergabe an <code>AR_TO_AD_NUM.AR_IN</code>)</li>
+	<li><strong>AR_DIFF</strong> (Plug, <code>AR</code>): Regelabweichung (<code>DIFF = SET - ACT</code>, REAL)</li>
+	<li><strong>AB_LIM</strong> (Plug, <code>AB</code>): Begrenzung aktiv Flag (<code>LIM</code>, BOOL)</li>
+</ul>
+
+<h2>🇬🇧 English</h2>
+
+<p>AR-adapter wrapper around <code>OSCAT::Basic::POUs::Engineering::Control::CTRL_PI</code>. Actual value (<code>AR_ACT</code>) and optional manual mode switch (<code>AX_MAN</code>) are adapter sockets. Control output (<code>AR_Y</code>), control error (<code>AR_DIFF</code>) and limit flag (<code>AB_LIM</code>) are adapter plugs.</p>
+]]></Attribute>
+</FBType>
