@@ -116,16 +116,21 @@ Plain data/event connections can legitimately fan out from one `Source` to sever
 ### 9. Binding a GCF Constant to an FB's InputVar: `Parameter`, Never a `DataConnections` Source
 
 A bare imported `GlobalConstants`/GCF constant (e.g. `NumberVariable_TECU_Speed_WBSD_N`, or any `ID_..._WRITE`/`ID_..._READ` OPC-address constant) is **not a valid `DataConnections` `Source` endpoint**, even though it's imported via `<Import declaration="...">` in the file's `CompilerInfo` and is visible/resolvable elsewhere. Writing something like:
+
 ```xml
 <Connection Source="NumberVariable_TECU_Speed_WBSD_N" Destination="Q_NumericValue_WBSD.stObj"/>
 ```
+
 fails 4diac IDE validation with **"Connection source endpoint missing: NumberVariable_TECU_Speed_WBSD_N"** — a `DataConnections` `Source` must be either another FB's `OutputVar` in the same network, or an `InputVar` declared on the enclosing `SubAppInterfaceList`/`InterfaceList` itself (i.e. something that is actually a node in this file's own dataflow graph). A GCF constant is a compile-time literal, not a dataflow node.
+
 - **The correct way to bind a constant directly to an FB instance's `InputVar`** (e.g. `stObj`, `ID_WRITE`, `u16ObjId`) is a `Parameter` on that FB's own tag:
+
 ```xml
 <FB Name="Q_NumericValue_WBSD" Type="isobus::UT::Q::Q_NumericValue_PHYSA" ...>
     <Parameter Name="stObj" Value="NumberVariable_TECU_Speed_WBSD_N"/>
 </FB>
 ```
+
 - This applies to every FB/SubApp instance, not just `Q_NumericValue_PHYSA` — any InputVar you're binding to a fixed, already-known constant name (rather than to something computed at runtime or passed through from the enclosing SubApp's own interface) belongs in a `Parameter`, never in `DataConnections`.
 - If the value genuinely needs to come from the *enclosing* SubApp's own caller (i.e. it varies per instantiation), expose it as an `InputVar` on this file's own `SubAppInterfaceList`, and let the *caller* bind that with a `Parameter` at its own instantiation site — the constant is still ultimately attached via `Parameter` somewhere, never via a bare-constant `DataConnections` `Source`.
 
