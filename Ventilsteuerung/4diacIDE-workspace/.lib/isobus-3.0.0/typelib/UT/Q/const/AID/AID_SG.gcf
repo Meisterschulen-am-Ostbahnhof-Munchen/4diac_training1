@@ -11,7 +11,7 @@
 		<VarDeclaration Name="HEIGHT" Type="USINT" Comment="2: AID_SG_HEIGHT - Height in pixels." InitialValue="USINT#2"/>
 		<VarDeclaration Name="SCALE_TYPE" Type="USINT" Comment="3: AID_SG_SCALE_TYPE - Bits 0-2: Scaling Value (0=no scale, 1=scale to width, 2=scale to height," InitialValue="USINT#3"/>
 		<VarDeclaration Name="OPTIONS" Type="USINT" Comment="4: AID_SG_OPTIONS - Bitmask: Bit 0=Flashing." InitialValue="USINT#4"/>
-		<VarDeclaration Name="VALUE" Type="USINT" Comment="5: AID_SG_VALUE - [5] Read-only attribute. Object ID of referenced graphic object. Runtime mod via F.22." InitialValue="USINT#5"/>
+		<VarDeclaration Name="VALUE" Type="USINT" Comment="5: AID_SG_VALUE - Object ID of referenced graphic object. Runtime mod via F.22." InitialValue="USINT#5"/>
 	</GlobalConstants>
 	<OriginalSource><![CDATA[PACKAGE isobus::UT::Q::const::AID;
 
@@ -24,7 +24,7 @@ GLOBALCONSTANTS AID_SG
 		                               // 3=scale to width and height, 4=scale to fit). Bits 3-4: Horizontal Justification (0=Left,
 		                               // 1=Middle, 2=Right). Bits 5-6: Vertical Justification (0=Top, 1=Middle, 2=Bottom).
 		OPTIONS : USINT := USINT#4; // 4: AID_SG_OPTIONS - Bitmask: Bit 0=Flashing.
-		VALUE : USINT := USINT#5; // 5: AID_SG_VALUE - [5] Read-only attribute. Object ID of referenced graphic object. Runtime mod via F.22.
+		VALUE : USINT := USINT#5; // 5: AID_SG_VALUE - Object ID of referenced graphic object. Runtime mod via F.22.
 	END_VAR
 END_GLOBALCONSTANTS
 ]]></OriginalSource>
