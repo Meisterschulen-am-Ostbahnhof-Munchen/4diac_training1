@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<FBType Name="Attribute_IDA" Comment="Input service interface function block for VT object attribute data with AUDI adapter output">
-	<Identification Description="Copyright (c) 2026 HR Agrartechnik GmbH&#10; &#10;This program and the accompanying materials are made &#10;available under the terms of the Eclipse Public License 2.0 &#10;which is available at https://www.eclipse.org/legal/epl-2.0/ &#10;&#10;SPDX-License-Identifier: EPL-2.0">
+<FBType Name="Attribute_IDA" Comment="Input service interface function block for double word attribute input data">
+	<Identification Description="Copyright (c) 2017 fortiss GmbH, HR Agrartechnik GmbH&#10; &#10;This program and the accompanying materials are made &#10;available under the terms of the Eclipse Public License 2.0 &#10;which is available at https://www.eclipse.org/legal/epl-2.0/ &#10;&#10;SPDX-License-Identifier: EPL-2.0">
 	</Identification>
-	<VersionInfo Organization="HR Agrartechnik GmbH" Version="1.0" Author="Franz Höpfinger" Date="2026-09-15" Remarks="Initial implementation of Attribute_IDA composite adapter wrapper">
+	<VersionInfo Organization="HR Agrartechnik GmbH" Version="1.0" Author="Franz Höpfinger" Date="2026-09-15" Remarks="initial API and implementation and/or initial documentation">
 	</VersionInfo>
-	<CompilerInfo packageName="isobus::UT::I">
+	<CompilerInfo packageName="isobus::UT::io::Attribute">
 		<Import declaration="isobus::UT::Q::const::IDs::ID_NULL"/>
-		<Import declaration="isobus::UT::I::Attribute_ID"/>
+		<Import declaration="isobus::UT::io::Attribute::Attribute_ID"/>
 	</CompilerInfo>
 	<InterfaceList>
 		<EventInputs>
@@ -37,11 +37,11 @@
 			<VarDeclaration Name="STATUS" Type="STRING" Comment="Service Status"/>
 		</OutputVars>
 		<Plugs>
-			<AdapterDeclaration Name="IN" Type="adapter::types::unidirectional::AUDI" Comment="Input attribute data from resource (AUDI adapter)" x="2800" y="1300"/>
+			<AdapterDeclaration Name="IN" Type="adapter::types::unidirectional::AD" Comment="Input data from resource" x="2800" y="1300"/>
 		</Plugs>
 	</InterfaceList>
 	<FBNetwork>
-		<FB Name="Attribute_ID" Type="isobus::UT::I::Attribute_ID" x="426.67" y="553.33">
+		<FB Name="Attribute_ID" Type="isobus::UT::io::Attribute::Attribute_ID" x="426.67" y="553.33">
 		</FB>
 		<EventConnections>
 			<Connection Source="INIT" Destination="Attribute_ID.INIT" dx1="1320"/>
@@ -55,14 +55,10 @@
 			<Connection Source="u8AID" Destination="Attribute_ID.u8AID" dx1="180"/>
 			<Connection Source="PARAMS" Destination="Attribute_ID.PARAMS" dx1="180"/>
 			<Connection Source="QI" Destination="Attribute_ID.QI" dx1="700"/>
-			<Connection Source="Attribute_ID.u32ValueAttribute" Destination="IN.D1" dx1="206.67"/>
+			<Connection Source="Attribute_ID.IN" Destination="IN.D1" dx1="206.67"/>
 			<Connection Source="Attribute_ID.STATUS" Destination="STATUS" dx1="1766.67"/>
 			<Connection Source="Attribute_ID.QO" Destination="QO" dx1="1480"/>
 		</DataConnections>
 	</FBNetwork>
-	<Attribute Name="Documentation" Type="CDATA"><![CDATA[<h1>Attribute_IDA Composite Adapter Wrapper</h1>
-
-<p>Adapter wrapper FB for Attribute_ID. Exposes an AUDI adapter plug (IN) to provide attribute data to adapter-native networks upon CNF / IND events.</p>
-]]></Attribute>
 	<Attribute Name="eclipse4diac::core::TypeHash" Value="''"/>
 </FBType>
