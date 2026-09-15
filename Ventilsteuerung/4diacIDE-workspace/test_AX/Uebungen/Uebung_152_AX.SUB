@@ -46,12 +46,12 @@
 			<Parameter Name="Faktor" Value="1.0"/>
 			<Parameter Name="run" Value="TRUE"/>
 		</FB>
-		<FB Name="DigitalInput_I1" Type="logiBUS::io::DI::logiBUS_IE" x="-4000" y="1800">
+		<FB Name="DigitalInput_I1" Type="logiBUS::io::DI::logiBUS_IE" x="-4000" y="2200">
 			<Parameter Name="QI" Value="TRUE"/>
 			<Parameter Name="Input" Value="Input_I1"/>
 			<Parameter Name="InputEvent" Value="BUTTON_SINGLE_CLICK"/>
 		</FB>
-		<FB Name="AX_T_FF" Type="adapter::events::unidirectional::AX_T_FF" x="-2500" y="1800">
+		<FB Name="AX_T_FF" Type="adapter::events::unidirectional::AX_T_FF" x="-1500" y="2400">
 		</FB>
 		<FB Name="CTRL_PI" Type="OSCAT_adapter::Control::CTRL_PI_AR" x="600" y="400">
 			<Parameter Name="SUP" Value="0.0"/>
@@ -68,7 +68,7 @@
 			<Parameter Name="QI" Value="TRUE"/>
 			<Parameter Name="Output" Value="Output_Q1"/>
 		</FB>
-		<FB Name="initval_AR" Type="adapter::types::unidirectional::AR::initval::initval_AR" x="-3400" y="1800">
+		<FB Name="initval_AR" Type="adapter::types::unidirectional::AR::initval::initval_AR" x="-2400" y="1500">
 			<Parameter Name="INIT_VAL" Value="16.0"/>
 		</FB>
 		<EventConnections>
@@ -81,10 +81,10 @@
 			<Connection Source="logiBUS_PI_IDA.IN" Destination="AD_TO_AR_NUM.AD_IN" dx1="293.33"/>
 			<Connection Source="AD_TO_AR_NUM.AR_OUT" Destination="FT_DERIV.AR_IN" dx1="300"/>
 			<Connection Source="FT_DERIV.AR_OUT" Destination="CTRL_PI.AR_ACT" dx1="300"/>
-			<Connection Source="AX_T_FF.Q" Destination="CTRL_PI.AX_MAN" dx1="393.33"/>
+			<Connection Source="AX_T_FF.Q" Destination="CTRL_PI.AX_MAN" dx1="740"/>
 			<Connection Source="CTRL_PI.AR_Y" Destination="AR_TO_AD_NUM.AR_IN" dx1="300"/>
 			<Connection Source="AR_TO_AD_NUM.AD_OUT" Destination="PWMOutput_Q1.OUT" dx1="300"/>
-			<Connection Source="initval_AR.OUT" Destination="CTRL_PI.SET" dx1="1620"/>
+			<Connection Source="initval_AR.OUT" Destination="CTRL_PI.SET" dx1="1040"/>
 		</AdapterConnections>
 	</SubAppNetwork>
 </SubAppType>
