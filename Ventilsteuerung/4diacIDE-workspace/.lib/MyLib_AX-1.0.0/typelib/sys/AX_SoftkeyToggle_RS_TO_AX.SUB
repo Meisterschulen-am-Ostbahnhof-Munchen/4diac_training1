@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SubAppType Name="AX_SoftkeyToggle_RS_TO_AX" Comment="Toggle-Trigger (SoftKey ODER AUX ODER lokale Web-/Dashboard-Methode ODER IO-Diag-Testbutton, via Softkey_Aux_Method_Button_IE) und Reset-Trigger (SoftKey ODER AUX ODER lokale Web-/Dashboard-Methode, via Softkey_Aux_Method_IE) treiben einen reinen AX-Zustand (AX_T_FF_SR.Q) - KEIN physischer Ausgang, KEINE Hintergrundfarbe, KEIN State-Publish. Basis-Baustein: fuer 1 Ausgang MyLib::sys::AX_SoftkeyToggle_RS_TO_QXA_BG (wrapt diesen Baustein), fuer mehrere zeitversetzte Ausgaenge (z.B. Baender-Sequenzierung) diesen Baustein direkt verwenden und den OUT-Zustand selbst mit AX_TON/AX_TOF pro Kanal weiterverarbeiten.">
+	<Identification Standard="61499-2" Description="Copyright (c) 2026 Meisterschulen am Ostbahnhof  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0">
+	</Identification>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.1" Author="Franz Höpfinger" Date="2026-09-15" Remarks="Toggle.u16ObjId_TEST -&gt; Toggle.u16ObjIdB nachgezogen (Softkey_Aux_Method_Button_IE v1.1: u16ObjId_TEST dort auf u16ObjIdB umbenannt). Eigenes u16ObjId_TEST bleibt unveraendert.">
+	</VersionInfo>
+	<CompilerInfo packageName="MyLib::sys">
+		<Import declaration="isobus::UT::Q::const::IDs::ID_NULL"/>
+	</CompilerInfo>
+	<SubAppInterfaceList>
+		<InputVars>
+			<VarDeclaration Name="u16ObjId" Type="UINT" Comment="Object ID Softkey Ein/Aus (Toggle)" InitialValue="ID_NULL"/>
+			<VarDeclaration Name="u16ObjIdA" Type="UINT" Comment="Object ID AuxFunction2 (Joystick) fuer den Toggle - gleichberechtigt zum SoftKey" InitialValue="ID_NULL"/>
+			<VarDeclaration Name="u16ObjIdB" Type="UINT" Comment="Object ID IO-Diag-Testbutton (Ausgaenge-Diagnoseseite) - toggelt gleichberechtigt mit. ID_NULL lassen, wenn kein IO-Diag-Testbutton an diesem Toggle beteiligt sein soll" InitialValue="ID_NULL"/>
+			<VarDeclaration Name="u16ObjId_RESET" Type="UINT" Comment="Object ID Softkey &apos;Alles Aus&apos; (Reset, hart auf AUS) - z.B. SoftKey_AUS" InitialValue="ID_NULL"/>
+			<VarDeclaration Name="u16ObjIdA_RESET" Type="UINT" Comment="Object ID AuxFunction2 (Joystick) fuer den Reset - gleichberechtigt zum Softkey &apos;Alles Aus&apos;" InitialValue="ID_NULL"/>
+			<VarDeclaration Name="ID_TOGGLE_METHOD" Type="WSTRING" Comment="Lokale Methodenadresse (ACTION=CREATE_METHOD) fuer den argumentlosen Toggle-Trigger - wird von Web-Client (vt-ui-mirror) UND direkt vom OPC-Dashboard aufgerufen"/>
+			<VarDeclaration Name="ID_RESET_METHOD" Type="WSTRING" Comment="Lokale Methodenadresse (ACTION=CREATE_METHOD) fuer den argumentlosen Reset-Trigger (hart auf AUS) - wird von Web-Client UND OPC-Dashboard aufgerufen"/>
+		</InputVars>
+		<Plugs>
+			<AdapterDeclaration Name="OUT" Type="adapter::types::unidirectional::AX" Comment="Toggle-Zustand (AX_T_FF_SR.Q) - Weiterverarbeitung (Ausgang, Hintergrund, Verzoegerung) bleibt dem Aufrufer ueberlassen"/>
+		</Plugs>
+	</SubAppInterfaceList>
+	<SubAppNetwork>
+		<SubApp Name="Toggle" Type="MyLib::sys::Softkey_Aux_Method_Button_IE" x="-700" y="800">
+		</SubApp>
+		<SubApp Name="Reset" Type="MyLib::sys::Softkey_Aux_Method_IE" x="-700" y="100">
+		</SubApp>
+		<FB Name="AX_T_FF_SR" Type="adapter::events::unidirectional::AX_T_FF_SR" x="1700" y="400">
+		</FB>
+		<Comment Comment="AX_T_FF_SR.Q ist die EINZIGE Source of Truth - Toggle (SoftKey+AUX+Web/Dashboard-Methode+IO-Diag-Testbutton) und Reset (SoftKey+AUX+Web/Dashboard-Methode) sind alle reine argumentlose Event-Trigger - keine gemeinsame Variable." x="0" y="2600" width="4000" height="500"/>
+		<EventConnections>
+			<Connection Source="Toggle.IND" Destination="AX_T_FF_SR.CLK" dx1="726.67"/>
+			<Connection Source="Reset.IND" Destination="AX_T_FF_SR.R" dx1="1053.33"/>
+		</EventConnections>
+		<DataConnections>
+			<Connection Source="u16ObjId" Destination="Toggle.u16ObjId" dx1="1846.67">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="u16ObjIdA" Destination="Toggle.u16ObjIdA" dx1="1846.67">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="ID_TOGGLE_METHOD" Destination="Toggle.ID_METHOD" dx1="1400">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="u16ObjIdB" Destination="Toggle.u16ObjIdB" dx1="1846.67">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="u16ObjId_RESET" Destination="Reset.u16ObjId" dx1="1846.67">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="u16ObjIdA_RESET" Destination="Reset.u16ObjIdA" dx1="1846.67">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="ID_RESET_METHOD" Destination="Reset.ID_METHOD" dx1="1400">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+		</DataConnections>
+		<AdapterConnections>
+			<Connection Source="AX_T_FF_SR.Q" Destination="OUT" dx1="600"/>
+		</AdapterConnections>
+	</SubAppNetwork>
+</SubAppType>
