@@ -10,7 +10,8 @@
 		<Import declaration="isobus::UT::io::Attribute::Attribute_IDA"/>
 		<Import declaration="isobus::UT::Q::Q_NumericValue_PHYSA"/>
 		<Import declaration="adapter::conversion::unidirectional::AD_TO_AR_NUM"/>
-		<Import declaration="Uebungen::const::UT::DefaultPool_Numeric::InputNumber_I1_N"/>
+		<Import declaration="Uebungen::const::UT::DefaultPool::InputNumber_I1"/>
+		<Import declaration="isobus::UT::Q::const::AID::AID_IN::VALUE"/>
 		<Import declaration="Uebungen::const::UT::DefaultPool_Numeric::OutputNumber_N1_N"/>
 	</CompilerInfo>
 	<SubAppInterfaceList/>
@@ -20,13 +21,13 @@
 			<Parameter Name="Input" Value="Input_I1"/>
 		</FB>
 		<FB Name="GetAttribute_I1" Type="isobus::UT::I::I_GetAttribute" x="-3000" y="-1000">
-			<Parameter Name="u16ObjId" Value="9000"/>
-			<Parameter Name="u8AID" Value="USINT#14"/>
+			<Parameter Name="u16ObjId" Value="InputNumber_I1"/>
+			<Parameter Name="u8AID" Value="VALUE"/>
 		</FB>
 		<FB Name="Attribute_IDA_I1" Type="isobus::UT::io::Attribute::Attribute_IDA" x="-3000" y="1000">
 			<Parameter Name="QI" Value="TRUE"/>
-			<Parameter Name="u16ObjId" Value="9000"/>
-			<Parameter Name="u8AID" Value="USINT#14"/>
+			<Parameter Name="u16ObjId" Value="InputNumber_I1"/>
+			<Parameter Name="u8AID" Value="VALUE"/>
 		</FB>
 		<FB Name="AD_TO_AR_NUM" Type="adapter::conversion::unidirectional::AD_TO_AR_NUM" x="1000" y="1000"/>
 		<FB Name="OutputNumber_N1" Type="isobus::UT::Q::Q_NumericValue_PHYSA" x="4000" y="1000">
