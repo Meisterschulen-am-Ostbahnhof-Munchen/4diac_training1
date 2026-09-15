@@ -15,7 +15,7 @@
 		<VarDeclaration Name="FICHILDINDEX" Type="USINT" Comment="6: AID_AO_FICHILDINDEX" InitialValue="USINT#6"/>
 		<VarDeclaration Name="LACHILDINDEX" Type="USINT" Comment="7: AID_AO_LACHILDINDEX" InitialValue="USINT#7"/>
 		<VarDeclaration Name="DEFCHILDINDEX" Type="USINT" Comment="8: AID_AO_DEFCHILDINDEX" InitialValue="USINT#8"/>
-		<VarDeclaration Name="OBJECTS" Type="USINT" Comment="9: AID_AO_OBJECTS - OPTIONS - Bit 0: Animation Sequence (0=Single Shot, 1=Loop). Bits 1-2:" InitialValue="USINT#9"/>
+		<VarDeclaration Name="OBJECTS" Type="USINT" Comment="9: AID_AO_OBJECTS - OPTIONS - Bit 0: Animation Sequence (0=Single Shot, 1=Loop). Bits 1-2: Disabled Behaviour (0=Pause, 1=Reset to First, 2=Default Object, 3=Blank)." InitialValue="USINT#9"/>
 	</GlobalConstants>
 	<OriginalSource><![CDATA[PACKAGE isobus::UT::Q::const::AID;
 
@@ -31,8 +31,7 @@ GLOBALCONSTANTS AID_AO
 		LACHILDINDEX : USINT := USINT#7; // 7: AID_AO_LACHILDINDEX
 		DEFCHILDINDEX : USINT := USINT#8; // 8: AID_AO_DEFCHILDINDEX
 		OBJECTS : USINT := USINT#9; // 9: AID_AO_OBJECTS - OPTIONS - Bit 0: Animation Sequence (0=Single Shot, 1=Loop). Bits 1-2:
-		                            // Disabled Behaviour (0=Pause, 1=Reset to First, 2=Default Object, 3=Blank). (Called OBJECTS in
-		                            // 4diac code).
+		                            // Disabled Behaviour (0=Pause, 1=Reset to First, 2=Default Object, 3=Blank). (ISO 11783-6 attribute: Options).
 	END_VAR
 END_GLOBALCONSTANTS
 ]]></OriginalSource>
