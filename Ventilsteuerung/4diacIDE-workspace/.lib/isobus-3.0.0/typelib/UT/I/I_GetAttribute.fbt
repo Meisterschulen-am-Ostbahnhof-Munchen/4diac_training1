@@ -21,7 +21,6 @@
 			</Event>
 			<Event Name="CNF" Type="Event" Comment="Confirmation of Requested Service">
 				<With Var="STATUS"/>
-				<With Var="u32ValueAttribute"/>
 				<With Var="s16result"/>
 			</Event>
 		</EventOutputs>
@@ -31,7 +30,6 @@
 		</InputVars>
 		<OutputVars>
 			<VarDeclaration Name="STATUS" Type="STRING" Comment="Service Status"/>
-			<VarDeclaration Name="u32ValueAttribute" Type="UDINT" Comment="value for attribute "/>
 			<VarDeclaration Name="s16result" Type="INT" Comment="retval see description"/>
 		</OutputVars>
 	</InterfaceList>
