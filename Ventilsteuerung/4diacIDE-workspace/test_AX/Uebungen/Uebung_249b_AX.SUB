@@ -10,7 +10,7 @@
 		<Import declaration="isobus::UT::Q::const::AID::AID_IN::VALUE"/>
 		<Import declaration="Uebungen::const::UT::DefaultPool_Numeric::OutputNumber_N1_N"/>
 		<Import declaration="logiBUS::io::DI::logiBUS_DI_Events::BUTTON_SINGLE_CLICK"/>
-		<Import declaration="isobus::UT::io::Attribute::I_GetAttribute_IDA"/>
+		<Import declaration="MyLib::sys::I_GetAttribute_IDA"/>
 	</CompilerInfo>
 	<SubAppInterfaceList>
 	</SubAppInterfaceList>
@@ -20,7 +20,7 @@
 			<Parameter Name="Input" Value="Input_I1"/>
 			<Parameter Name="InputEvent" Value="BUTTON_SINGLE_CLICK"/>
 		</FB>
-		<SubApp Name="I_GetAttribute_IDA_I1" Type="isobus::UT::io::Attribute::I_GetAttribute_IDA" x="-3600" y="-700">
+		<SubApp Name="I_GetAttribute_IDA_I1" Type="MyLib::sys::I_GetAttribute_IDA" x="-3600" y="-700">
 			<Parameter Name="u16ObjId" Value="InputNumber_I1"/>
 			<Parameter Name="u8AID" Value="VALUE"/>
 		</SubApp>

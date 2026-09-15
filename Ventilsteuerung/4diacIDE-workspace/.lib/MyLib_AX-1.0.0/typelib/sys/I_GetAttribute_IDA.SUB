@@ -4,30 +4,19 @@
 	</Identification>
 	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2026-09-15" Remarks="Initial implementation combining I_GetAttribute and Attribute_IDA">
 	</VersionInfo>
-	<CompilerInfo packageName="isobus::UT::io::Attribute">
+	<CompilerInfo packageName="MyLib::sys">
 		<Import declaration="isobus::UT::Q::const::IDs::ID_NULL"/>
 		<Import declaration="isobus::UT::I::I_GetAttribute"/>
 		<Import declaration="isobus::UT::io::Attribute::Attribute_IDA"/>
 	</CompilerInfo>
 	<SubAppInterfaceList>
-		<EventInputs>
-			<Event Name="INIT" Type="EInit" Comment="Service Initialization">
-				<With Var="u16ObjId"/>
-				<With Var="u8AID"/>
-				<With Var="QI"/>
-				<With Var="PARAMS"/>
-			</Event>
-			<Event Name="REQ" Type="Event" Comment="Service Request">
-				<With Var="u8AID"/>
-				<With Var="QI"/>
-			</Event>
-		</EventInputs>
-		<EventOutputs>
-			<Event Name="INITO" Type="EInit" Comment="Initialization Confirm">
-				<With Var="QO"/>
-				<With Var="STATUS"/>
-			</Event>
-		</EventOutputs>
+		<SubAppEventInputs>
+			<SubAppEvent Name="INIT" Type="EInit" Comment="Service Initialization"/>
+			<SubAppEvent Name="REQ" Type="Event" Comment="Service Request"/>
+		</SubAppEventInputs>
+		<SubAppEventOutputs>
+			<SubAppEvent Name="INITO" Type="EInit" Comment="Initialization Confirm"/>
+		</SubAppEventOutputs>
 		<InputVars>
 			<VarDeclaration Name="QI" Type="BOOL" Comment="Event Input Qualifier" InitialValue="TRUE"/>
 			<VarDeclaration Name="PARAMS" Type="STRING" Comment="Service Parameters"/>
