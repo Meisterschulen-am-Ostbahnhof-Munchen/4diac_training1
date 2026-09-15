@@ -15,7 +15,7 @@
 		<VarDeclaration Name="OPTIONS" Type="USINT" Comment="6: AID_IS_OPTIONS - Options bitmask." InitialValue="USINT#6"/>
 		<VarDeclaration Name="VARIABLE_REF" Type="USINT" Comment="7: AID_IS_VARIABLE_REF - Object ID of a String Variable object." InitialValue="USINT#7"/>
 		<VarDeclaration Name="JUSTIFICATION" Type="USINT" Comment="8: AID_IS_JUSTIFICATION - Justification: Bits 0-1 (Horizontal: 0=Left, 1=Middle, 2=Right), Bits" InitialValue="USINT#8"/>
-		<VarDeclaration Name="ENABLED" Type="USINT" Comment="9: AID_IS_ENABLED - 0 = Disabled, 1 = Enabled." InitialValue="USINT#9"/>
+		<VarDeclaration Name="ENABLED" Type="USINT" Comment="9: AID_IS_ENABLED (read-only) - 0 = Disabled, 1 = Enabled." InitialValue="USINT#9"/>
 	</GlobalConstants>
 	<OriginalSource><![CDATA[PACKAGE isobus::UT::Q::const::AID;
 
@@ -31,7 +31,7 @@ GLOBALCONSTANTS AID_IS
 		VARIABLE_REF : USINT := USINT#7; // 7: AID_IS_VARIABLE_REF - Object ID of a String Variable object.
 		JUSTIFICATION : USINT := USINT#8; // 8: AID_IS_JUSTIFICATION - Justification: Bits 0-1 (Horizontal: 0=Left, 1=Middle, 2=Right), Bits
 		                                  // 2-3 (Vertical: 0=Top, 1=Middle, 2=Bottom).
-		ENABLED : USINT := USINT#9; // 9: AID_IS_ENABLED - 0 = Disabled, 1 = Enabled.
+		ENABLED : USINT := USINT#9; // 9: AID_IS_ENABLED (read-only) - 0 = Disabled, 1 = Enabled.
 	END_VAR
 END_GLOBALCONSTANTS
 ]]></OriginalSource>
