@@ -39,7 +39,7 @@
 
 <h2>Valid values for u16ObjId</h2>
 
-<p>The Get Attribute Value command (F.58) is a fixed 8-byte message (Object ID in bytes 2,3, Attribute ID in Byte 4; no Transport Protocol). It places <strong>no restriction on the object type</strong> — any Object ID of an object in the object pool can be queried (the C implementation performs no type check, only ID_NULL handling). The VT validates the Object ID and the Attribute ID and returns an error response if either is invalid.</p>
+<p>The Get Attribute Value command (F.58) is a fixed 8-byte message (Object ID in bytes 2,3, Attribute ID in Byte 4; no Transport Protocol). INIT validates both the object type (iso_has_readable_attribute_id - does this object type have any AID at all, read-only or writable?) and the specific Attribute ID against that type's attribute table (iso_is_readable_attribute), before the command is ever sent - unlike Change Attribute, both read-only and writable AIDs are accepted here. The underlying C implementation itself (cmd_get_attribute_value) performs no type check of its own, only ID_NULL handling; the VT additionally validates the Object ID and the Attribute ID on its side and returns an error response if either is invalid.</p>
 
 <p>ID_NULL (65535) is not a command target but can be used in INIT to deactivate the FB.</p>
 
@@ -57,7 +57,9 @@
 
 <ul>
 	<li><span style="color:#2980b9">VT_E_NO_ERR (0)</span>&nbsp;- OK</li>
-	<li><span style="color:#e74c3c">VT_E_INVALID_OBJECT_ID (-132)</span> - Object ID is invalid (ID_NULL)</li>
+	<li><span style="color:#e74c3c">VT_E_DEACTIVATED (-40)</span> - FB deactivated via ID_NULL on INIT</li>
+	<li><span style="color:#e74c3c">VT_E_INVALID_OBJECT_ID (-132)</span> - Object ID's type has no readable AID at all (iso_has_readable_attribute_id)</li>
+	<li><span style="color:#e74c3c">VT_E_INVALID_ATTRIBUTE_ID (-133)</span> - Attribute ID is not a valid/readable AID for this object type (iso_is_readable_attribute)</li>
 	<li><span style="color:#e74c3c">VT_E_NOT_READY (-131)</span> - Buffered: INIT not yet completed / VT not yet ready</li>
 	<li><span style="color:#2980b9">VT_E_OVERFLOW (-6)</span>&nbsp;- buffer overflow</li>
 	<li><span style="color:#2980b9">VT_E_NOACT (-8)</span> - Command not possible in current state</li>
