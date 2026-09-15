@@ -21,8 +21,8 @@ GLOBALCONSTANTS AID_IL
 		WIDTH : USINT := USINT#1; // 1: AID_IL_WIDTH - Width in pixels.
 		HEIGHT : USINT := USINT#2; // 2: AID_IL_HEIGHT - Height in pixels.
 		VARIABLE_REF : USINT := USINT#3; // 3: AID_IL_VARIABLE_REF - Object ID of a Number Variable object.
-		VALUE : USINT := USINT#4; // [4] Read-only for Change Attribute (ISO 11783-6). Selected list index (0-254, 255=none). Query via Get Attribute Value (F.58); update via Change Numeric Value (F.22).
-		OPTIONS : USINT := USINT#5; // [5] Read-only for Change Attribute (ISO 11783-6). Bit 0 = Enabled, Bit 1 = Real time editing. Query via Get Attribute Value (F.58); manage via Select Input Object (F.6).
+		VALUE : USINT := USINT#4; // 4: AID_IL_VALUE - [4] Read-only for Change Attribute (ISO 11783-6). Selected list index (0-254, 255=none). Query via Get Attribute Value (F.58); update via Change Numeric Value (F.22).
+		OPTIONS : USINT := USINT#5; // 5: AID_IL_OPTIONS - [5] Read-only for Change Attribute (ISO 11783-6). Bit 0 = Enabled, Bit 1 = Real time editing. Query via Get Attribute Value (F.58); manage via Select Input Object (F.6).
 	END_VAR
 END_GLOBALCONSTANTS
 ]]></OriginalSource>

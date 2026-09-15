@@ -24,8 +24,8 @@ GLOBALCONSTANTS AID_IB
 		FG_COLOUR : USINT := USINT#3; // 3: AID_IB_FG_COLOUR - Object ID of a Font Attributes object to use for font colour.
 		VARIABLE_REF : USINT := USINT#4; // 4: AID_IB_VARIABLE_REF - Object ID of a Number Variable object. If NULL, value is stored
 		                                 // directly.
-		VALUE : USINT := USINT#5; // [5] Read-only for Change Attribute (ISO 11783-6). Query via Get Attribute Value (F.58); modify via Change Numeric Value (F.22). 0 = FALSE, >0 = TRUE.
-		ENABLED : USINT := USINT#6; // [6] Read-only for Change Attribute (ISO 11783-6). Query via Get Attribute Value (F.58). 0 = Disabled, 1 = Enabled.
+		VALUE : USINT := USINT#5; // 5: AID_IB_VALUE - [5] Read-only for Change Attribute (ISO 11783-6). Query via Get Attribute Value (F.58); modify via Change Numeric Value (F.22). 0 = FALSE, >0 = TRUE.
+		ENABLED : USINT := USINT#6; // 6: AID_IB_ENABLED - [6] Read-only for Change Attribute (ISO 11783-6). Query via Get Attribute Value (F.58). 0 = Disabled, 1 = Enabled.
 	END_VAR
 END_GLOBALCONSTANTS
 ]]></OriginalSource>
