@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SubAppType Name="Uebung_249_AX" Comment="Asynchrone Objektattribut-Abfrage mittels I_GetAttribute bei Tasterdruck (Input_I1) und Anzeige des UDINT-Werts auf OutputNumber_N1">
+	<Identification Standard="61499-2" Description="Copyright (c) 2026 Meisterschulen am Ostbahnhof  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0">
+	</Identification>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2026-09-15" Remarks="Initial implementation of I_GetAttribute exercise">
+	</VersionInfo>
+	<CompilerInfo packageName="Uebungen">
+		<Import declaration="logiBUS::io::DI::logiBUS_DI::Input_I1"/>
+		<Import declaration="isobus::UT::I::I_GetAttribute"/>
+		<Import declaration="isobus::UT::Q::Q_NumericValue_PHYSA"/>
+		<Import declaration="adapter::conversion::unidirectional::AUDI_UDINT_TO_UDI"/>
+		<Import declaration="adapter::conversion::unidirectional::AUDI_TO_AR"/>
+		<Import declaration="Uebungen::const::UT::DefaultPool_Numeric::InputNumber_I1_N"/>
+		<Import declaration="Uebungen::const::UT::DefaultPool_Numeric::OutputNumber_N1_N"/>
+	</CompilerInfo>
+	<SubAppInterfaceList/>
+	<SubAppNetwork>
+		<FB Name="DigitalInput_I1" Type="logiBUS::io::DI::logiBUS_IXA" x="-6000" y="0">
+			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="Input" Value="Input_I1"/>
+		</FB>
+		<FB Name="GetAttribute_I1" Type="isobus::UT::I::I_GetAttribute" x="-3000" y="0">
+			<Parameter Name="u16ObjId" Value="9000"/>
+			<Parameter Name="u8AID" Value="USINT#14"/>
+		</FB>
+		<FB Name="UDINT_TO_AUDI" Type="adapter::conversion::unidirectional::AUDI_UDINT_TO_UDI" x="0" y="0"/>
+		<FB Name="AUDI_TO_AR" Type="adapter::conversion::unidirectional::AUDI_TO_AR" x="2500" y="0"/>
+		<FB Name="OutputNumber_N1" Type="isobus::UT::Q::Q_NumericValue_PHYSA" x="5000" y="0">
+			<Parameter Name="stObj" Value="OutputNumber_N1_N"/>
+		</FB>
+		<EventConnections>
+			<Connection Source="DigitalInput_I1.IND" Destination="GetAttribute_I1.REQ" dx1="600"/>
+			<Connection Source="GetAttribute_I1.CNF" Destination="UDINT_TO_AUDI.REQ" dx1="600"/>
+		</EventConnections>
+		<DataConnections>
+			<Connection Source="GetAttribute_I1.u32ValueAttribute" Destination="UDINT_TO_AUDI.OUT" dx1="600"/>
+		</DataConnections>
+		<AdapterConnections>
+			<Connection Source="UDINT_TO_AUDI.AUDI_OUT" Destination="AUDI_TO_AR.AUDI_IN" dx1="600"/>
+			<Connection Source="AUDI_TO_AR.AR_OUT" Destination="OutputNumber_N1.rPhys" dx1="600"/>
+		</AdapterConnections>
+	</SubAppNetwork>
+</SubAppType>
