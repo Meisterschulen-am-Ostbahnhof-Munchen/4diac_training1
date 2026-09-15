@@ -13,6 +13,7 @@
 				<With Var="QI"/>
 				<With Var="PARAMS"/>
 				<With Var="u16ObjId"/>
+				<With Var="u8AID"/>
 			</Event>
 			<Event Name="REQ" Type="Event" Comment="Service Request">
 				<With Var="QI"/>
@@ -38,6 +39,7 @@
 			<VarDeclaration Name="QI" Type="BOOL" Comment="Event Input Qualifier"/>
 			<VarDeclaration Name="PARAMS" Type="STRING" Comment="Service Parameters"/>
 			<VarDeclaration Name="u16ObjId" Type="UINT" Comment="Object ID" InitialValue="ID_NULL"/>
+			<VarDeclaration Name="u8AID" Type="USINT" Comment="Attribute ID of the object "/>
 		</InputVars>
 		<OutputVars>
 			<VarDeclaration Name="QO" Type="BOOL" Comment="Event Output Qualifier"/>
