@@ -11,22 +11,13 @@
 	</CompilerInfo>
 	<SubAppInterfaceList>
 		<SubAppEventInputs>
-			<SubAppEvent Name="INIT" Type="EInit" Comment="Service Initialization"/>
-			<SubAppEvent Name="REQ" Type="Event" Comment="Service Request"/>
+			<SubAppEvent Name="REQ" Type="Event" Comment="Service Request">
+			</SubAppEvent>
 		</SubAppEventInputs>
-		<SubAppEventOutputs>
-			<SubAppEvent Name="INITO" Type="EInit" Comment="Initialization Confirm"/>
-		</SubAppEventOutputs>
 		<InputVars>
-			<VarDeclaration Name="QI" Type="BOOL" Comment="Event Input Qualifier" InitialValue="TRUE"/>
-			<VarDeclaration Name="PARAMS" Type="STRING" Comment="Service Parameters"/>
 			<VarDeclaration Name="u16ObjId" Type="UINT" Comment="Object ID" InitialValue="ID_NULL"/>
 			<VarDeclaration Name="u8AID" Type="USINT" Comment="Attribute ID of the object"/>
 		</InputVars>
-		<OutputVars>
-			<VarDeclaration Name="QO" Type="BOOL" Comment="Event Output Qualifier"/>
-			<VarDeclaration Name="STATUS" Type="STRING" Comment="Service Status"/>
-		</OutputVars>
 		<Plugs>
 			<AdapterDeclaration Name="IN" Type="adapter::types::unidirectional::AD" Comment="Input data from resource"/>
 		</Plugs>
@@ -34,27 +25,21 @@
 	<SubAppNetwork>
 		<FB Name="GetAttribute" Type="isobus::UT::I::I_GetAttribute" x="-2000" y="-800">
 		</FB>
-		<FB Name="Attribute_IDA" Type="isobus::UT::io::Attribute::Attribute_IDA" x="-2000" y="400">
+		<FB Name="Attribute_IDA" Type="isobus::UT::io::Attribute::Attribute_IDA" x="-2000" y="0">
+			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="PARAMS" Value="''"/>
 		</FB>
 		<EventConnections>
-			<Connection Source="INIT" Destination="GetAttribute.INIT" dx1="600"/>
-			<Connection Source="INIT" Destination="Attribute_IDA.INIT" dx1="600"/>
-			<Connection Source="REQ" Destination="GetAttribute.REQ" dx1="600"/>
-			<Connection Source="REQ" Destination="Attribute_IDA.REQ" dx1="600"/>
-			<Connection Source="Attribute_IDA.INITO" Destination="INITO" dx1="600"/>
+			<Connection Source="REQ" Destination="GetAttribute.REQ" dx1="1480"/>
 		</EventConnections>
 		<DataConnections>
-			<Connection Source="u16ObjId" Destination="GetAttribute.u16ObjId" dx1="600"/>
-			<Connection Source="u16ObjId" Destination="Attribute_IDA.u16ObjId" dx1="600"/>
-			<Connection Source="u8AID" Destination="GetAttribute.u8AID" dx1="600"/>
-			<Connection Source="u8AID" Destination="Attribute_IDA.u8AID" dx1="600"/>
-			<Connection Source="QI" Destination="Attribute_IDA.QI" dx1="600"/>
-			<Connection Source="PARAMS" Destination="Attribute_IDA.PARAMS" dx1="600"/>
-			<Connection Source="Attribute_IDA.QO" Destination="QO" dx1="600"/>
-			<Connection Source="Attribute_IDA.STATUS" Destination="STATUS" dx1="600"/>
+			<Connection Source="u16ObjId" Destination="GetAttribute.u16ObjId" dx1="1446.67"/>
+			<Connection Source="u16ObjId" Destination="Attribute_IDA.u16ObjId" dx1="1446.67"/>
+			<Connection Source="u8AID" Destination="GetAttribute.u8AID" dx1="1413.33"/>
+			<Connection Source="u8AID" Destination="Attribute_IDA.u8AID" dx1="1413.33"/>
 		</DataConnections>
 		<AdapterConnections>
-			<Connection Source="Attribute_IDA.IN" Destination="IN" dx1="600"/>
+			<Connection Source="Attribute_IDA.IN" Destination="IN" dx1="3633.33"/>
 		</AdapterConnections>
 	</SubAppNetwork>
 </SubAppType>
