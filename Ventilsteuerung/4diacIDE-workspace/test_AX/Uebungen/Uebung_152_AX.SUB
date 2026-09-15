@@ -2,6 +2,8 @@
 <SubAppType Name="Uebung_152_AX" Comment="Impulszähler &amp; PI Regler, mit Plug and Socket (Adapter-Native)">
 	<Identification Standard="61499-2" Description="Copyright (c) 2026 Meisterschulen am Ostbahnhof  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0">
 	</Identification>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.2" Author="Franz Höpfinger" Date="2026-09-15" Remarks="SET-Eingang an CTRL_PI auf AR-Adapter (initval_AR) umgestellt.">
+	</VersionInfo>
 	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.1" Author="Franz Höpfinger" Date="2026-09-12" Remarks="Vollstaendig auf Adapter-Architektur umgestellt: FT_DERIV_10_AR und CTRL_PI_AR aus OSCAT_adapter, AD_TO_AR_NUM und AR_TO_AD_NUM fuer sauberen Adapterdatenfluss.">
 	</VersionInfo>
 	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2026-09-10" Remarks="initial API and implementation and/or initial documentation">
@@ -52,7 +54,6 @@
 		<FB Name="AX_T_FF" Type="adapter::events::unidirectional::AX_T_FF" x="-2500" y="1800">
 		</FB>
 		<FB Name="CTRL_PI" Type="OSCAT_adapter::Control::CTRL_PI_AR" x="600" y="400">
-			<Parameter Name="SET" Value="16.0"/>
 			<Parameter Name="SUP" Value="0.0"/>
 			<Parameter Name="OFS" Value="0.0"/>
 			<Parameter Name="M_I" Value="8184.0"/>
@@ -67,6 +68,9 @@
 			<Parameter Name="QI" Value="TRUE"/>
 			<Parameter Name="Output" Value="Output_Q1"/>
 		</FB>
+		<FB Name="initval_AR" Type="adapter::types::unidirectional::AR::initval::initval_AR" x="-3400" y="1800">
+			<Parameter Name="INIT_VAL" Value="16.0"/>
+		</FB>
 		<EventConnections>
 			<Connection Source="DigitalInput_I2.IND" Destination="E_CYCLE.START" dx1="533.33"/>
 			<Connection Source="DigitalInput_I3.IND" Destination="E_CYCLE.STOP" dx1="360"/>
@@ -80,6 +84,7 @@
 			<Connection Source="AX_T_FF.Q" Destination="CTRL_PI.AX_MAN" dx1="393.33"/>
 			<Connection Source="CTRL_PI.AR_Y" Destination="AR_TO_AD_NUM.AR_IN" dx1="300"/>
 			<Connection Source="AR_TO_AD_NUM.AD_OUT" Destination="PWMOutput_Q1.OUT" dx1="300"/>
+			<Connection Source="initval_AR.OUT" Destination="CTRL_PI.SET" dx1="1620"/>
 		</AdapterConnections>
 	</SubAppNetwork>
 </SubAppType>
