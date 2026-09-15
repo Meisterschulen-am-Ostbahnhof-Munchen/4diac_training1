@@ -12,7 +12,7 @@
 		<VarDeclaration Name="BACKGROUND_COLOUR" Type="USINT" Comment="3: AID_BO_BACKGROUND_COLOUR - Background colour index." InitialValue="USINT#3"/>
 		<VarDeclaration Name="BORDER_COLOUR" Type="USINT" Comment="4: AID_BO_BORDER_COLOUR - Border colour index." InitialValue="USINT#4"/>
 		<VarDeclaration Name="KEY_CODE" Type="USINT" Comment="5: AID_BO_KEY_CODE - Key code." InitialValue="USINT#5"/>
-		<VarDeclaration Name="OPTIONS" Type="USINT" Comment="6: AID_BO_OPTIONS - Bitmask: Bit 0=latchable, Bit 1=state (0=released, 1=latched), Bit 2=suppress" InitialValue="USINT#6"/>
+		<VarDeclaration Name="OPTIONS" Type="USINT" Comment="6: AID_BO_OPTIONS - [6] Read-only attribute. Bitmask: Bit 0=latchable, Bit 1=state (0=released, 1=latched), Bit 2=suppress border, Bit 3=transparent bg, Bit 4=disabled, Bit 5=no border. Runtime mod via F.4 / F.6." InitialValue="USINT#6"/>
 	</GlobalConstants>
 	<OriginalSource><![CDATA[PACKAGE isobus::UT::Q::const::AID;
 
@@ -24,8 +24,8 @@ GLOBALCONSTANTS AID_BO
 		BACKGROUND_COLOUR : USINT := USINT#3; // 3: AID_BO_BACKGROUND_COLOUR - Background colour index.
 		BORDER_COLOUR : USINT := USINT#4; // 4: AID_BO_BORDER_COLOUR - Border colour index.
 		KEY_CODE : USINT := USINT#5; // 5: AID_BO_KEY_CODE - Key code.
-		OPTIONS : USINT := USINT#6; // 6: AID_BO_OPTIONS - Bitmask: Bit 0=latchable, Bit 1=state (0=released, 1=latched), Bit 2=suppress
-		                            // border, Bit 3=transparent bg, Bit 4=disabled, Bit 5=no border.
+		OPTIONS : USINT := USINT#6; // 6: AID_BO_OPTIONS - [6] Read-only attribute. Bitmask: Bit 0=latchable, Bit 1=state (0=released, 1=latched), Bit 2=suppress
+		                            // border, Bit 3=transparent bg, Bit 4=disabled, Bit 5=no border. Runtime mod via F.4 / F.6.
 	END_VAR
 END_GLOBALCONSTANTS
 ]]></OriginalSource>

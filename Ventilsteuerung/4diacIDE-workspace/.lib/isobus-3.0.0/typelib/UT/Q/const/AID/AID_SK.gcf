@@ -8,7 +8,7 @@
 	</CompilerInfo>
 	<GlobalConstants>
 		<VarDeclaration Name="BACKGROUND_COLOUR" Type="USINT" Comment="1: AID_SK_BACKGROUND_COLOUR - Background colour index." InitialValue="USINT#1"/>
-		<VarDeclaration Name="KEY_CODE" Type="USINT" Comment="2: AID_SK_KEY_CODE - VT reports this code in the Soft Key Activation message." InitialValue="USINT#2"/>
+		<VarDeclaration Name="KEY_CODE" Type="USINT" Comment="2: AID_SK_KEY_CODE - [2] Read-only attribute. VT reports this code in the Soft Key Activation message." InitialValue="USINT#2"/>
 	</GlobalConstants>
 	<OriginalSource><![CDATA[PACKAGE isobus::UT::Q::const::AID;
 
@@ -16,7 +16,7 @@
 GLOBALCONSTANTS AID_SK
 	VAR_GLOBAL CONSTANT
 		BACKGROUND_COLOUR : USINT := USINT#1; // 1: AID_SK_BACKGROUND_COLOUR - Background colour index.
-		KEY_CODE : USINT := USINT#2; // 2: AID_SK_KEY_CODE - VT reports this code in the Soft Key Activation message.
+		KEY_CODE : USINT := USINT#2; // 2: AID_SK_KEY_CODE - [2] Read-only attribute. VT reports this code in the Soft Key Activation message.
 	END_VAR
 END_GLOBALCONSTANTS
 ]]></OriginalSource>
