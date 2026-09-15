@@ -8,7 +8,7 @@
 	</CompilerInfo>
 	<GlobalConstants>
 		<VarDeclaration Name="DEF_OBJ_ID" Type="USINT" Comment="1: AID_EXOP_DEF_OBJ_ID - Default Object ID to display if external ID is not valid or is the NULL" InitialValue="USINT#1"/>
-		<VarDeclaration Name="EXT_REF_NAME_ID" Type="USINT" Comment="2: AID_EXOP_EXT_REF_NAME_ID" InitialValue="USINT#2"/>
+		<VarDeclaration Name="EXT_REF_NAME_ID" Type="USINT" Comment="2: AID_EXOP_EXT_REF_NAME_ID - [2] Read-only for Change Attribute (ISO 11783-6 Table B.70). Query via Get Attribute Value (F.58)." InitialValue="USINT#2"/>
 		<VarDeclaration Name="EXT_OBJ" Type="USINT" Comment="3: AID_EXOP_EXT_OBJ" InitialValue="USINT#3"/>
 	</GlobalConstants>
 	<OriginalSource><![CDATA[PACKAGE isobus::UT::Q::const::AID;
@@ -18,7 +18,7 @@ GLOBALCONSTANTS AID_EXOP
 	VAR_GLOBAL CONSTANT
 		DEF_OBJ_ID : USINT := USINT#1; // 1: AID_EXOP_DEF_OBJ_ID - Default Object ID to display if external ID is not valid or is the NULL
 		                               // Object ID.
-		EXT_REF_NAME_ID : USINT := USINT#2; // 2: AID_EXOP_EXT_REF_NAME_ID
+		EXT_REF_NAME_ID : USINT := USINT#2; // 2: AID_EXOP_EXT_REF_NAME_ID - [2] Read-only for Change Attribute (ISO 11783-6 Table B.70). Query via Get Attribute Value (F.58).
 		EXT_OBJ : USINT := USINT#3; // 3: AID_EXOP_EXT_OBJ
 	END_VAR
 END_GLOBALCONSTANTS

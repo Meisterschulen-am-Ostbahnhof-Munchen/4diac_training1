@@ -7,14 +7,14 @@
 	<CompilerInfo packageName="isobus::UT::Q::const::AID">
 	</CompilerInfo>
 	<GlobalConstants>
-		<VarDeclaration Name="OPTIONS" Type="USINT" Comment="1: AID_CP_OPTIONS - Options (always 0)." InitialValue="USINT#1"/>
+		<VarDeclaration Name="OPTIONS" Type="USINT" Comment="1: AID_CP_OPTIONS - [1] Read-only for Change Attribute (ISO 11783-6 Table B.73: Number of ARGB values). Query via Get Attribute Value (F.58)." InitialValue="USINT#1"/>
 	</GlobalConstants>
 	<OriginalSource><![CDATA[PACKAGE isobus::UT::Q::const::AID;
 
 // colour palette object attribute ids
 GLOBALCONSTANTS AID_CP
 	VAR_GLOBAL CONSTANT
-		OPTIONS : USINT := USINT#1; // 1: AID_CP_OPTIONS - Options (always 0).
+		OPTIONS : USINT := USINT#1; // 1: AID_CP_OPTIONS - [1] Read-only for Change Attribute (ISO 11783-6 Table B.73: Number of ARGB values). Query via Get Attribute Value (F.58).
 	END_VAR
 END_GLOBALCONSTANTS
 ]]></OriginalSource>

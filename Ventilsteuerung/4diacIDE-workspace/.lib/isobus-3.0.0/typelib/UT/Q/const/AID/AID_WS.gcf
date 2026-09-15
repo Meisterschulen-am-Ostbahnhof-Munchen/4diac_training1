@@ -9,7 +9,7 @@
 	<GlobalConstants>
 		<VarDeclaration Name="BACKGROUND_COLOUR" Type="USINT" Comment="1: AID_WS_BACKGROUND_COLOUR (read-only) - Background colour index." InitialValue="USINT#1"/>
 		<VarDeclaration Name="SELECTABLE" Type="USINT" Comment="2: AID_WS_SELECTABLE (read-only) - 0 = FALSE, 1 = TRUE. Indicates whether or not this Working Set can be" InitialValue="USINT#2"/>
-		<VarDeclaration Name="ACTIVE_MASK" Type="USINT" Comment="3: AID_WS_ACTIVE_MASK (read-only) - The Object ID of the Data or Alarm Mask to display whenever the Working" InitialValue="USINT#3"/>
+		<VarDeclaration Name="ACTIVE_MASK" Type="USINT" Comment="3: AID_WS_ACTIVE_MASK (read-only) - The Object ID of the Data or Alarm Mask to display whenever the Working Set is active. Query via Get Attribute Value (F.58); modify via Change Active Mask (F.34)." InitialValue="USINT#3"/>
 	</GlobalConstants>
 	<OriginalSource><![CDATA[PACKAGE isobus::UT::Q::const::AID;
 
@@ -20,7 +20,7 @@ GLOBALCONSTANTS AID_WS
 		SELECTABLE : USINT := USINT#2; // 2: AID_WS_SELECTABLE (read-only) - 0 = FALSE, 1 = TRUE. Indicates whether or not this Working Set can be
 		                               // selected by the operator.
 		ACTIVE_MASK : USINT := USINT#3; // 3: AID_WS_ACTIVE_MASK (read-only) - The Object ID of the Data or Alarm Mask to display whenever the Working
-		                                // Set is active.
+		                                // Set is active. Query via Get Attribute Value (F.58); modify via Change Active Mask (F.34).
 	END_VAR
 END_GLOBALCONSTANTS
 ]]></OriginalSource>
