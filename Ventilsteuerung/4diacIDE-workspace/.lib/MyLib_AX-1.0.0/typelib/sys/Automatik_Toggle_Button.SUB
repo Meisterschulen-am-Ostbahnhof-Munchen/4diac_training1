@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SubAppType Name="Automatik_Toggle_Button" Comment="Automatik/Hand-Umschalter: 1 VT-Button (latched Toggle) -&gt; Automatik-Zustand als AX-Plug (AUTOMATIK) + dessen Inverses (AX_MAN, fuer PID-Regler MAN-Eingang) + lokaler Publish (ID_AUTOMATIK_STATE_WRITE) fuer VT-Status/Web-Dashboard. Wiederverwendbar fuer jede Automatik-Funktion (Oelkuehler, Aufnahme, ...).">
+	<Identification Standard="61499-2" Description="Copyright (c) 2026 Meisterschulen am Ostbahnhof  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0">
+	</Identification>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.3" Author="Franz Höpfinger" Date="2026-09-15" Remarks="AUX-Unterstuetzung ergaenzt: Button_Automatik_Toggle von isobus::UT::io::Button::Button_IE (nur SoftKey) auf MyLib::sys::Softkey_Aux_IE (SoftKey ODER AUX) umgestellt, neuer optionaler InputVar u16ObjIdA_Automatik_Toggle (Default ID_NULL) - etabliertes Muster aus AX_SoftkeyToggle_RS_TO_AX.SUB uebernommen. Rein additiv, bestehende Instanzen ohne AUX-Wert funktionieren unveraendert.">
+	</VersionInfo>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.2" Author="Franz Höpfinger" Date="2026-09-13" Remarks="FORCE_ON/FORCE_OFF Sockets (AX) ergaenzt - rein FB-interne (nicht VT-Objekt-basierte) Gegenstuecke zum bestehenden VT-Reset, je per AX_R_TRIG (steigende Flanke) auf E_T_FF_Automatik.S bzw. .R. Fuer Automatik-zu-Automatik-Verknuepfungen (z.B. Befuellautomatik EIN schaltet Bunker-Ernte-Automatik automatisch mit ein; ein Kollisionsschutz schaltet eine Automatik hart aus) - rein additiv, bestehende Instanzen unveraendert nutzbar.">
+	</VersionInfo>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.1" Author="Franz Höpfinger" Date="2026-09-13" Remarks="Reset-Eingang ergaenzt (u16ObjId_RESET/u16ObjIdA_RESET/ID_RESET_METHOD -&gt; MyLib::sys::Softkey_Aux_Method_IE -&gt; E_T_FF_Automatik.R), analog AX_SoftkeyToggle_RS_TO_AX - fuer eine globale Sammel-AUS-Taste (SoftKey_AUS), die die Automatik hart auf Hand/AUS zurueckschalten muss (KVE14 Funktionen und Bedingungen Zeile 19, 'Aufnahme, Saege und Baender AUS').">
+	</VersionInfo>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2026-09-12" Remarks="initial implementation - aus Aufnahme_Automatik.SUB herausgeloest (Button_Automatik_Toggle/E_T_FF_Automatik/AX_SPLIT_3_Automatik/AX_NOT_Man/AX_PUBLISH_Automatik), generisch wiederverwendbar.">
+	</VersionInfo>
+	<CompilerInfo packageName="MyLib::sys">
+		<Import declaration="isobus::UT::Q::const::IDs::ID_NULL"/>
+	</CompilerInfo>
+	<SubAppInterfaceList>
+		<InputVars>
+			<VarDeclaration Name="u16ObjId_Automatik_Toggle" Type="UINT" Comment="Object ID VT-Button (Automatik/Hand-Umschalter)" InitialValue="ID_NULL"/>
+			<VarDeclaration Name="u16ObjIdA_Automatik_Toggle" Type="UINT" Comment="Object ID AuxFunction2 (Joystick), gleichberechtigt zum VT-Button - optional, ID_NULL wenn kein AUX gebraucht wird" InitialValue="ID_NULL"/>
+			<VarDeclaration Name="bDefaultAutomatik" Type="BOOL" Comment="Automatik-Zustand beim Start" InitialValue="FALSE"/>
+			<VarDeclaration Name="ID_AUTOMATIK_STATE_WRITE" Type="WSTRING" Comment="Lokale Publish-Adresse (BOOL, ACTION=WRITE) fuer den Automatik-Ein/Aus-Zustand - Status-Text auf der VT + Web-Client/Dashboard"/>
+			<VarDeclaration Name="u16ObjId_RESET" Type="UINT" Comment="Object ID Softkey 'Alles Aus' (Reset, hart auf Hand/AUS) - z.B. SoftKey_AUS" InitialValue="ID_NULL"/>
+			<VarDeclaration Name="u16ObjIdA_RESET" Type="UINT" Comment="Object ID AuxFunction2 (Joystick) fuer den Reset - gleichberechtigt zum Softkey 'Alles Aus'" InitialValue="ID_NULL"/>
+			<VarDeclaration Name="ID_RESET_METHOD" Type="WSTRING" Comment="Lokale Methodenadresse (ACTION=CREATE_METHOD) fuer den argumentlosen Reset-Trigger (hart auf Hand/AUS) - wird von Web-Client UND OPC-Dashboard aufgerufen"/>
+		</InputVars>
+		<Plugs>
+			<AdapterDeclaration Name="AUTOMATIK" Type="adapter::types::unidirectional::AX" Comment="Automatik aktiv (roh, z.B. fuer eine Freigabe-UND-Verknuepfung)"/>
+			<AdapterDeclaration Name="AX_MAN" Type="adapter::types::unidirectional::AX" Comment="NICHT Automatik aktiv (fuer PID-Regler MAN-Eingang)"/>
+		</Plugs>
+		<Sockets>
+			<AdapterDeclaration Name="FORCE_ON" Type="adapter::types::unidirectional::AX" Comment="Optional: steigende Flanke schaltet die Automatik hart EIN (z.B. von einer anderen, uebergeordneten Automatik). Unverdrahtet lassen, wenn nicht gebraucht."/>
+			<AdapterDeclaration Name="FORCE_OFF" Type="adapter::types::unidirectional::AX" Comment="Optional: steigende Flanke schaltet die Automatik hart AUS (z.B. von einem Kollisionsschutz). Unverdrahtet lassen, wenn nicht gebraucht."/>
+		</Sockets>
+	</SubAppInterfaceList>
+	<SubAppNetwork>
+		<SubApp Name="Button_Automatik_Toggle" Type="MyLib::sys::Softkey_Aux_IE" x="0" y="0">
+		</SubApp>
+		<FB Name="E_T_FF_Automatik" Type="adapter::events::unidirectional::AX_T_FF_SR_SYM_INIT" x="2000" y="-100">
+			<Parameter Name="QI" Value="TRUE"/>
+		</FB>
+		<FB Name="AX_SPLIT_3_Automatik" Type="adapter::events::unidirectional::AX_SPLIT_3" x="4000" y="500">
+		</FB>
+		<FB Name="AX_NOT_Man" Type="adapter::booleanOperators::AX_NOT" x="7700" y="600">
+		</FB>
+		<FB Name="AX_PUBLISH_Automatik" Type="adapter::net::AX_PUBLISH_1" x="9400" y="500">
+			<Parameter Name="QI" Value="TRUE"/>
+		</FB>
+		<SubApp Name="Reset" Type="MyLib::sys::Softkey_Aux_Method_IE" x="2000" y="1400">
+		</SubApp>
+		<FB Name="AX_R_TRIG_ForceOn" Type="adapter::events::unidirectional::AX_R_TRIG" x="0" y="2400">
+		</FB>
+		<FB Name="AX_R_TRIG_ForceOff" Type="adapter::events::unidirectional::AX_R_TRIG" x="0" y="3200">
+		</FB>
+		<EventConnections>
+			<Connection Source="Button_Automatik_Toggle.IND" Destination="E_T_FF_Automatik.CLK" dx1="906.67"/>
+			<Connection Source="Reset.IND" Destination="E_T_FF_Automatik.R" dx1="906.67"/>
+			<Connection Source="AX_R_TRIG_ForceOn.EO" Destination="E_T_FF_Automatik.S" dx1="906.67"/>
+			<Connection Source="AX_R_TRIG_ForceOff.EO" Destination="E_T_FF_Automatik.R" dx1="906.67"/>
+		</EventConnections>
+		<DataConnections>
+			<Connection Source="u16ObjId_Automatik_Toggle" Destination="Button_Automatik_Toggle.u16ObjId" dx1="1400">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="u16ObjIdA_Automatik_Toggle" Destination="Button_Automatik_Toggle.u16ObjIdA" dx1="1400">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="bDefaultAutomatik" Destination="E_T_FF_Automatik.Q_INIT" dx1="1400">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="ID_AUTOMATIK_STATE_WRITE" Destination="AX_PUBLISH_Automatik.ID" dx1="1400">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="u16ObjId_RESET" Destination="Reset.u16ObjId" dx1="1400">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="u16ObjIdA_RESET" Destination="Reset.u16ObjIdA" dx1="1400">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="ID_RESET_METHOD" Destination="Reset.ID_METHOD" dx1="1400">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+		</DataConnections>
+		<AdapterConnections>
+			<Connection Source="E_T_FF_Automatik.Q" Destination="AX_SPLIT_3_Automatik.IN" dx1="600"/>
+			<Connection Source="AX_SPLIT_3_Automatik.OUT2" Destination="AX_NOT_Man.IN" dx1="1406.67"/>
+			<Connection Source="AX_SPLIT_3_Automatik.OUT3" Destination="AX_PUBLISH_Automatik.IN" dx1="880"/>
+			<Connection Source="AX_NOT_Man.OUT" Destination="AX_MAN" dx1="600"/>
+			<Connection Source="AX_SPLIT_3_Automatik.OUT1" Destination="AUTOMATIK" dx1="1213.33"/>
+			<Connection Source="FORCE_ON" Destination="AX_R_TRIG_ForceOn.QI" dx1="600"/>
+			<Connection Source="FORCE_OFF" Destination="AX_R_TRIG_ForceOff.QI" dx1="600"/>
+		</AdapterConnections>
+	</SubAppNetwork>
+</SubAppType>
