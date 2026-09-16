@@ -2,6 +2,8 @@
 <SubAppType Name="AX_SoftkeyToggle_RS_TO_QXA_BG" Comment="Wraps AX_SoftkeyToggle_RS_TO_AX (Toggle/Reset-Zustand: SoftKey ODER AUX ODER lokale Web-/Dashboard-Methode ODER IO-Diag-Testbutton fuer den Toggle, SoftKey ODER AUX ODER Methode fuer den Reset) und treibt daraus 1 physischen Ausgang + Hintergrundfarbe (SoftKey+AUX-Handle+IO-Diag-Testbutton gemeinsam aus 1 GreenWhiteBackground4_AX) + lokalen State-Publish fuer Web-Client/OPC-Dashboard-Hintergrundfarbe. Generisch fuer jeden Ein/Aus-Ausgang, der von einer globalen Sammel-AUS-Taste mit-resettet werden muss (z.B. Saegeblattantrieb).">
 	<Identification Standard="61499-2" Description="Copyright (c) 2026 Meisterschulen am Ostbahnhof  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0">
 	</Identification>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="8.0" Author="Franz Höpfinger" Date="2026-09-15" Remarks="FORCE_OFF Socket (AX) ergaenzt - reiner Durchreich-Socket an ToggleState.FORCE_OFF (AX_SoftkeyToggle_RS_TO_AX v1.2), analog AX_SoftkeyToggle_RS_TO_AX_BG_PUBLISH v1.1. Rein additiv, bestehende Instanzen muessen den neuen Socket verdrahten (z.B. auf einen festen FALSE-Literal, wenn nicht gebraucht).">
+	</VersionInfo>
 	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="7.0" Author="Franz Höpfinger" Date="2026-09-12" Remarks="Toggle+Reset+AX_T_FF_SR nach MyLib::sys::AX_SoftkeyToggle_RS_TO_AX ausgelagert (Basis fuer Baender-Mehrkanal-Sequenzierung, die denselben Toggle/Reset-Unterbau braucht, aber mehrere zeitversetzte Ausgaenge statt 1). Diese SubApp ist jetzt nur noch der Wrapper: AX_SoftkeyToggle_RS_TO_AX + Ausgang/Hintergrund/Publish. Schnittstelle unveraendert.">
 	</VersionInfo>
 	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="6.0" Author="Franz Höpfinger" Date="2026-09-11" Remarks="GreenWhiteBackground1_AX (2x, SoftKey allein + Testbutton allein) war falsch - ignorierte u16ObjIdA (AuxFunction2), Joystick-Handle bekam nie eine Rueckmeldung. Ersetzt durch 1 GreenWhiteBackground4_AX (SoftKey+AUX+Testbutton gemeinsam aus 1 Farbauswahl). AX_SPLIT_4 dadurch auf AX_SPLIT_3 verkleinert (nur noch logiBUS_QXA/Background/PUBLISH_STATE als Verbraucher).">
@@ -33,6 +35,9 @@
 			<VarDeclaration Name="ID_RESET_METHOD" Type="WSTRING" Comment="Lokale Methodenadresse (ACTION=CREATE_METHOD) fuer den argumentlosen Reset-Trigger (hart auf AUS) - wird von Web-Client UND OPC-Dashboard aufgerufen"/>
 			<VarDeclaration Name="ID_STATE_WRITE" Type="WSTRING" Comment="Lokale Publish-Adresse (ACTION=WRITE) fuer den tatsaechlichen Toggle-Zustand (AX_T_FF_SR.Q) - wird von Web-Client/Dashboard remote abonniert"/>
 		</InputVars>
+		<Sockets>
+			<AdapterDeclaration Name="FORCE_OFF" Type="adapter::types::unidirectional::AX" Comment="Optional: steigende Flanke resettet hart auf AUS (z.B. Sicherheitsabschaltung) - reiner Durchreich-Socket an ToggleState.FORCE_OFF. Unverdrahtet lassen (fester FALSE-Literal), wenn nicht gebraucht."/>
+		</Sockets>
 	</SubAppInterfaceList>
 	<SubAppNetwork>
 		<SubApp Name="ToggleState" Type="MyLib::sys::AX_SoftkeyToggle_RS_TO_AX" x="-2400" y="-1400">
@@ -90,6 +95,7 @@
 			<Connection Source="AX_SPLIT_3.OUT1" Destination="logiBUS_QXA.OUT" dx1="600"/>
 			<Connection Source="AX_SPLIT_3.OUT2" Destination="GreenWhiteBackground_AX.DI1" dx1="600"/>
 			<Connection Source="AX_SPLIT_3.OUT3" Destination="PUBLISH_STATE.IN" dx1="600"/>
+			<Connection Source="FORCE_OFF" Destination="ToggleState.FORCE_OFF" dx1="600"/>
 		</AdapterConnections>
 	</SubAppNetwork>
 </SubAppType>
