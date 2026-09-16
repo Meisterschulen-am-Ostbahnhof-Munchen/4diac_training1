@@ -28,7 +28,7 @@
 		</FB>
 		<SubApp Name="GreenWhiteBackground_AX" Type="MyLib::sys::GreenWhiteBackground3_AX" x="1700" y="0">
 		</SubApp>
-		<FB Name="PUBLISH_STATE" Type="adapter::net::AX_PUBLISH_1" x="1700" y="1200">
+		<FB Name="PUBLISH_STATE" Type="adapter::net::AX_PUBLISH_1" x="1700" y="1900">
 			<Parameter Name="QI" Value="TRUE"/>
 		</FB>
 		<DataConnections>
@@ -49,7 +49,7 @@
 			<Connection Source="IN" Destination="AX_SPLIT_3.IN" dx1="600"/>
 			<Connection Source="AX_SPLIT_3.OUT1" Destination="DigitalOutput.OUT" dx1="600"/>
 			<Connection Source="AX_SPLIT_3.OUT2" Destination="GreenWhiteBackground_AX.DI1" dx1="600"/>
-			<Connection Source="AX_SPLIT_3.OUT3" Destination="PUBLISH_STATE.IN" dx1="600"/>
+			<Connection Source="AX_SPLIT_3.OUT3" Destination="PUBLISH_STATE.IN" dx1="200"/>
 		</AdapterConnections>
 	</SubAppNetwork>
 </SubAppType>
