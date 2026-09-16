@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SubAppType Name="HebenSenken_ILOCK_QDA_PWM_OPC" Comment="2 Remote-Kommandos (Heben/Senken, je Subscribe+State-Publish, ODER-verknuepft mit IO-Test wie bei ILOCK_SWITCH_2_QXA_OPC) auf 1 ratiometrisches PWM-Signal (Danfoss PVEA: 25%=Senken, 50%=Neutral, 75%=Heben, Lastteiler-korrigiert). ILOCK_SWITCH_PROTECT_AX (Last-Wins mit Schutzzeit) sorgt dafuer, dass Heben und Senken nie gleichzeitig aktiv sind. Generisch fuer jeden PVEA-Aktor mit ratiometrischem 3-Stufen-PWM-Kanal.">
+	<Identification Standard="61499-2">
+	</Identification>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2026-09-08" Remarks="Ausgelagert aus Heben_Senken_TO_QDA_PWM_OPC (PWM/ILOCK/Mux-Teilnetz, ohne die Freigabe-DO) zur Wiederverwendung.">
+	</VersionInfo>
+	<CompilerInfo packageName="MyLib::sys">
+		<Import declaration="logiBUS::io::DQ::logiBUS_DO"/>
+		<Import declaration="logiBUS::io::DQ::logiBUS_DO_S"/>
+	</CompilerInfo>
+	<SubAppInterfaceList>
+		<InputVars>
+			<VarDeclaration Name="Output_PWM" Type="logiBUS::io::DQ::logiBUS_DO_S" Comment="Physischer PWM-Ausgang: 25/50/75% Tastgrad, ratiometrisch" InitialValue="logiBUS_DO::Invalid"/>
+			<VarDeclaration Name="DT_PROTECT" Type="TIME" Comment="Schutz-Totzeit vor Richtungswechsel" InitialValue="T#300ms"/>
+			<VarDeclaration Name="ID_HEBEN_READ" Type="WSTRING" Comment="Echtes Funktions-Kommando Heben (Subscribe)"/>
+			<VarDeclaration Name="ID_HEBEN_WRITE" Type="WSTRING" Comment="Echte Funktions-Rueckmeldung Heben, HINTER dem ILOCK (Publish)"/>
+			<VarDeclaration Name="ID_SENKEN_READ" Type="WSTRING" Comment="Echtes Funktions-Kommando Senken (Subscribe)"/>
+			<VarDeclaration Name="ID_SENKEN_WRITE" Type="WSTRING" Comment="Echte Funktions-Rueckmeldung Senken, HINTER dem ILOCK (Publish)"/>
+			<VarDeclaration Name="ID_TEST_READ_HEBEN" Type="WSTRING" Comment="Bestehende IO-Test-Subscribe-Adresse Heben (z.B. STG2_Q0x_READ), ODER-verknuepft mit ID_HEBEN_READ vor dem ILOCK"/>
+			<VarDeclaration Name="ID_TEST_WRITE_HEBEN" Type="WSTRING" Comment="Bestehende IO-Test-Publish-Adresse Heben, HINTER dem ILOCK (z.B. STG2_Q0x_WRITE)"/>
+			<VarDeclaration Name="ID_TEST_READ_SENKEN" Type="WSTRING" Comment="Bestehende IO-Test-Subscribe-Adresse Senken, ODER-verknuepft mit ID_SENKEN_READ vor dem ILOCK"/>
+			<VarDeclaration Name="ID_TEST_WRITE_SENKEN" Type="WSTRING" Comment="Bestehende IO-Test-Publish-Adresse Senken, HINTER dem ILOCK"/>
+		</InputVars>
+	</SubAppInterfaceList>
+	<SubAppNetwork>
+		<FB Name="SUBSCRIBE_HEBEN" Type="adapter::net::AX_SUBSCRIBE_1" x="-12500" y="-2600">
+			<Parameter Name="QI" Value="TRUE"/>
+		</FB>
+		<FB Name="SUBSCRIBE_TEST_HEBEN" Type="adapter::net::AX_SUBSCRIBE_1" x="-12500" y="-1800">
+			<Parameter Name="QI" Value="TRUE"/>
+		</FB>
+		<FB Name="OR_HEBEN" Type="adapter::booleanOperators::AX_OR_2" x="-10700" y="-1900">
+		</FB>
+		<FB Name="SUBSCRIBE_SENKEN" Type="adapter::net::AX_SUBSCRIBE_1" x="-12500" y="-900">
+			<Parameter Name="QI" Value="TRUE"/>
+		</FB>
+		<FB Name="SUBSCRIBE_TEST_SENKEN" Type="adapter::net::AX_SUBSCRIBE_1" x="-12500" y="-100">
+			<Parameter Name="QI" Value="TRUE"/>
+		</FB>
+		<FB Name="OR_SENKEN" Type="adapter::booleanOperators::AX_OR_2" x="-10700" y="-500">
+		</FB>
+		<FB Name="ILOCK" Type="logiBUS::signalprocessing::interlock::ILOCK_SWITCH_PROTECT_AX" x="-9400" y="-1200">
+		</FB>
+		<FB Name="E_TimeOut" Type="iec61499::events::E_TimeOut" x="-7700" y="600">
+		</FB>
+		<FB Name="SPLIT_HEBEN_OUT" Type="adapter::events::unidirectional::AX_SPLIT_3" x="-7300" y="-1600">
+		</FB>
+		<FB Name="SPLIT_SENKEN_OUT" Type="adapter::events::unidirectional::AX_SPLIT_3" x="-7300" y="-600">
+		</FB>
+		<FB Name="PUBLISH_TEST_HEBEN" Type="adapter::net::AX_PUBLISH_1" x="-5400" y="-2000">
+			<Parameter Name="QI" Value="TRUE"/>
+		</FB>
+		<FB Name="PUBLISH_STATE_HEBEN" Type="adapter::net::AX_PUBLISH_1" x="-5400" y="-2800">
+			<Parameter Name="QI" Value="TRUE"/>
+		</FB>
+		<FB Name="PUBLISH_TEST_SENKEN" Type="adapter::net::AX_PUBLISH_1" x="-5500" y="-100">
+			<Parameter Name="QI" Value="TRUE"/>
+		</FB>
+		<FB Name="PUBLISH_STATE_SENKEN" Type="adapter::net::AX_PUBLISH_1" x="-5500" y="700">
+			<Parameter Name="QI" Value="TRUE"/>
+		</FB>
+		<FB Name="ASSEMBLE_AB_FROM_AX" Type="adapter::assembling::ASSEMBLE_AB_FROM_AX" x="-5500" y="-1200">
+		</FB>
+		<FB Name="AB_TO_AUI" Type="adapter::conversion::unidirectional::AB_TO_AUI" x="-3900" y="-1200">
+		</FB>
+		<SubApp Name="values_50_75_25" Type="MyLib::sys::values_50_75_25" x="-4000" y="-800">
+		</SubApp>
+		<FB Name="AR_AUI_MUX_3" Type="adapter::selection::unidirectional::AR_AUI_MUX_3" x="-2600" y="-1000">
+		</FB>
+		<SubApp Name="AR_R_MUL_Korrektur" Type="MyLib::sys::AR_R_MUL" x="-2000" y="-100">
+			<Parameter Name="FACTOR" Value="REAL#1.17619"/>
+		</SubApp>
+		<SubApp Name="AR_R_MUL_PWM13BIT" Type="MyLib::sys::AR_R_MUL" x="-2000" y="600">
+			<Parameter Name="FACTOR" Value="REAL#81.91"/>
+		</SubApp>
+		<FB Name="AR_TO_AD_NUM" Type="adapter::conversion::unidirectional::AR_TO_AD_NUM" x="-2100" y="1200">
+		</FB>
+		<FB Name="DigitalOutput_PWM" Type="logiBUS::io::DQ::logiBUS_QDA_PWM" x="-2100" y="1700">
+			<Parameter Name="QI" Value="TRUE"/>
+		</FB>
+		<Comment Comment="Korrekturfaktor 1,17619 = 1/0,8502 und Skalierung x81,91 = 8191/100: siehe 4diac_training1 Uebung_245/247_AX (PWM-auf-PVEA-Kompensationsrechnung als Lehrbeispiel). ILOCK_SWITCH_PROTECT_AX (Last-Wins mit Schutzzeit DT_PROTECT, gleiches Muster wie ILOCK_SWITCH_2_QXA_OPC) sorgt dafuer, dass Heben und Senken NIE gleichzeitig aktiv sind - K=3 (beide Bits gesetzt) kann dadurch nicht auftreten, deshalb genuegt ein 3-Wege- statt 4-Wege-Mux." x="-9800" y="2200" width="6400" height="900"/>
+		<DataConnections>
+			<Connection Source="ID_HEBEN_READ" Destination="SUBSCRIBE_HEBEN.ID" dx1="280">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="ID_TEST_READ_HEBEN" Destination="SUBSCRIBE_TEST_HEBEN.ID" dx1="280">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="ID_TEST_WRITE_HEBEN" Destination="PUBLISH_TEST_HEBEN.ID" dx1="1280">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="ID_HEBEN_WRITE" Destination="PUBLISH_STATE_HEBEN.ID" dx1="1280">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="ID_SENKEN_READ" Destination="SUBSCRIBE_SENKEN.ID" dx1="280">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="ID_TEST_READ_SENKEN" Destination="SUBSCRIBE_TEST_SENKEN.ID" dx1="280">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="ID_TEST_WRITE_SENKEN" Destination="PUBLISH_TEST_SENKEN.ID" dx1="1280">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="ID_SENKEN_WRITE" Destination="PUBLISH_STATE_SENKEN.ID" dx1="1280">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="Output_PWM" Destination="DigitalOutput_PWM.Output" dx1="6913.33">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="DT_PROTECT" Destination="ILOCK.DT_PROTECT" dx1="1200">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+		</DataConnections>
+		<AdapterConnections>
+			<Connection Source="SUBSCRIBE_HEBEN.OUT" Destination="OR_HEBEN.IN1" dx1="280"/>
+			<Connection Source="SUBSCRIBE_TEST_HEBEN.OUT" Destination="OR_HEBEN.IN2" dx1="280"/>
+			<Connection Source="OR_HEBEN.OUT" Destination="ILOCK.UP_IN" dx1="606.67"/>
+			<Connection Source="SUBSCRIBE_SENKEN.OUT" Destination="OR_SENKEN.IN1" dx1="280"/>
+			<Connection Source="SUBSCRIBE_TEST_SENKEN.OUT" Destination="OR_SENKEN.IN2" dx1="280"/>
+			<Connection Source="OR_SENKEN.OUT" Destination="ILOCK.DOWN_IN" dx1="606.67"/>
+			<Connection Source="ILOCK.timeOut" Destination="E_TimeOut.TimeOutSocket" dx1="166.67"/>
+			<Connection Source="ILOCK.UP_OUT" Destination="SPLIT_HEBEN_OUT.IN" dx1="360"/>
+			<Connection Source="SPLIT_HEBEN_OUT.OUT3" Destination="ASSEMBLE_AB_FROM_AX.BIT_00" dx1="600"/>
+			<Connection Source="SPLIT_HEBEN_OUT.OUT2" Destination="PUBLISH_TEST_HEBEN.IN" dx1="920"/>
+			<Connection Source="ILOCK.DOWN_OUT" Destination="SPLIT_SENKEN_OUT.IN" dx1="360"/>
+			<Connection Source="SPLIT_SENKEN_OUT.OUT1" Destination="ASSEMBLE_AB_FROM_AX.BIT_01" dx1="600"/>
+			<Connection Source="SPLIT_SENKEN_OUT.OUT2" Destination="PUBLISH_TEST_SENKEN.IN" dx1="600"/>
+			<Connection Source="SPLIT_SENKEN_OUT.OUT3" Destination="PUBLISH_STATE_SENKEN.IN" dx1="420"/>
+			<Connection Source="AR_AUI_MUX_3.OUT" Destination="AR_R_MUL_Korrektur.IN1" dx1="80" dx2="693.33" dy="446.67"/>
+			<Connection Source="AR_R_MUL_Korrektur.OUT" Destination="AR_R_MUL_PWM13BIT.IN1" dx1="80" dx2="620" dy="246.67"/>
+			<Connection Source="AR_R_MUL_PWM13BIT.OUT" Destination="AR_TO_AD_NUM.AR_IN" dx1="80" dx2="80" dy="160"/>
+			<Connection Source="AR_TO_AD_NUM.AD_OUT" Destination="DigitalOutput_PWM.OUT" dx1="80" dx2="546.67" dy="186.67"/>
+			<Connection Source="AB_TO_AUI.AUI_OUT" Destination="AR_AUI_MUX_3.K" dx1="453.33"/>
+			<Connection Source="ASSEMBLE_AB_FROM_AX.OUT" Destination="AB_TO_AUI.AB_IN"/>
+			<Connection Source="values_50_75_25.OUT_50" Destination="AR_AUI_MUX_3.IN1" dx1="333.33"/>
+			<Connection Source="values_50_75_25.OUT_75" Destination="AR_AUI_MUX_3.IN2" dx1="333.33"/>
+			<Connection Source="values_50_75_25.OUT_25" Destination="AR_AUI_MUX_3.IN3" dx1="333.33"/>
+			<Connection Source="SPLIT_HEBEN_OUT.OUT1" Destination="PUBLISH_STATE_HEBEN.IN" dx1="580"/>
+		</AdapterConnections>
+	</SubAppNetwork>
+</SubAppType>

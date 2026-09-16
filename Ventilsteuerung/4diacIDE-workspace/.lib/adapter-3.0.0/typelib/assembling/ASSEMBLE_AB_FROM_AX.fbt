@@ -21,36 +21,6 @@
 			<AdapterDeclaration Name="BIT_07" Type="adapter::types::unidirectional::AX" Comment="Bool Bit 7" x="-1200" y="2700"/>
 		</Sockets>
 	</InterfaceList>
-	<FBNetwork>
-		<FB Name="ASSEMBLE_BYTE_FROM_BOOLS" Type="eclipse4diac::utils::assembling::ASSEMBLE_BYTE_FROM_BOOLS" x="100" y="100">
-		</FB>
-		<FB Name="E_D_FF_ANY" Type="iec61499::events::E_D_FF_ANY" x="1900" y="100">
-		</FB>
-		<EventConnections>
-			<Connection Source="BIT_00.E1" Destination="ASSEMBLE_BYTE_FROM_BOOLS.REQ" dx1="420"/>
-			<Connection Source="BIT_01.E1" Destination="ASSEMBLE_BYTE_FROM_BOOLS.REQ" dx1="420"/>
-			<Connection Source="BIT_02.E1" Destination="ASSEMBLE_BYTE_FROM_BOOLS.REQ" dx1="420"/>
-			<Connection Source="BIT_03.E1" Destination="ASSEMBLE_BYTE_FROM_BOOLS.REQ" dx1="420"/>
-			<Connection Source="BIT_04.E1" Destination="ASSEMBLE_BYTE_FROM_BOOLS.REQ" dx1="420"/>
-			<Connection Source="BIT_05.E1" Destination="ASSEMBLE_BYTE_FROM_BOOLS.REQ" dx1="420"/>
-			<Connection Source="BIT_06.E1" Destination="ASSEMBLE_BYTE_FROM_BOOLS.REQ" dx1="420"/>
-			<Connection Source="BIT_07.E1" Destination="ASSEMBLE_BYTE_FROM_BOOLS.REQ" dx1="420"/>
-			<Connection Source="ASSEMBLE_BYTE_FROM_BOOLS.CNF" Destination="E_D_FF_ANY.CLK"/>
-			<Connection Source="E_D_FF_ANY.EO" Destination="OUT.E1"/>
-		</EventConnections>
-		<DataConnections>
-			<Connection Source="ASSEMBLE_BYTE_FROM_BOOLS." Destination="E_D_FF_ANY.D" dx1="180"/>
-			<Connection Source="E_D_FF_ANY.Q" Destination="OUT.D1"/>
-			<Connection Source="BIT_07.D1" Destination="ASSEMBLE_BYTE_FROM_BOOLS.BIT_07" dx1="586.67"/>
-			<Connection Source="BIT_06.D1" Destination="ASSEMBLE_BYTE_FROM_BOOLS.BIT_06" dx1="553.33"/>
-			<Connection Source="BIT_05.D1" Destination="ASSEMBLE_BYTE_FROM_BOOLS.BIT_05" dx1="520"/>
-			<Connection Source="BIT_04.D1" Destination="ASSEMBLE_BYTE_FROM_BOOLS.BIT_04" dx1="486.67"/>
-			<Connection Source="BIT_03.D1" Destination="ASSEMBLE_BYTE_FROM_BOOLS.BIT_03" dx1="453.33"/>
-			<Connection Source="BIT_02.D1" Destination="ASSEMBLE_BYTE_FROM_BOOLS.BIT_02" dx1="320"/>
-			<Connection Source="BIT_01.D1" Destination="ASSEMBLE_BYTE_FROM_BOOLS.BIT_01" dx1="353.33"/>
-			<Connection Source="BIT_00.D1" Destination="ASSEMBLE_BYTE_FROM_BOOLS.BIT_00" dx1="386.67"/>
-		</DataConnections>
-	</FBNetwork>
 	<Service RightInterface="RESOURCE" LeftInterface="APPLICATION">
 	</Service>
 	<Attribute Name="eclipse4diac::core::TypeHash" Value="''"/>

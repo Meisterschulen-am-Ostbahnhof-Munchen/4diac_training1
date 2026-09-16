@@ -14,9 +14,9 @@
 	<SubAppInterfaceList>
 	</SubAppInterfaceList>
 	<SubAppNetwork>
-		<FB Name="ASRT_AX_T_FF_SR_1" Type="adapter::events::unidirectional::ASRT_AX_T_FF_SR" x="-600" y="1400">
+		<FB Name="ASRT_AX_T_FF_SR_1" Type="adapter::events::unidirectional::ASRT_AX_T_FF_SR" x="-1100" y="1500">
 		</FB>
-		<FB Name="ASRT_3AE_TO_SRT_1" Type="adapter::conversion::unidirectional::ASRT_3AE_TO_SRT" x="-2500" y="1400">
+		<FB Name="ASRT_3AE_TO_SRT_1" Type="adapter::conversion::unidirectional::ASRT_3AE_TO_SRT" x="-2500" y="1500">
 		</FB>
 		<FB Name="DigitalInput_CLK_I1" Type="logiBUS::io::DI::logiBUS_IEA" x="-4300" y="900">
 			<Parameter Name="QI" Value="TRUE"/>
@@ -40,9 +40,9 @@
 		<Comment Comment="Vergleich zu Uebung_172b_ASRT: dort baute je ein AE_EVENT_TO_E die Bruecke vom rohen logiBUS_IE-Klick-Event zum AE-Plug. &#10;Hier liefert logiBUS_IEA (statt logiBUS_IE) den AE-Plug bereits eingebaut - dieselbe Bruecke steckt schon im Baustein, kein separates AE_EVENT_TO_E noetig." x="-4300" y="3900" width="4200" height="700"/>
 		<AdapterConnections>
 			<Connection Source="DigitalInput_CLK_I1.IN" Destination="ASRT_3AE_TO_SRT_1.SET_IN" dx1="500"/>
-			<Connection Source="DigitalInput_CLK_I2.IN" Destination="ASRT_3AE_TO_SRT_1.RESET_IN" dx1="500"/>
-			<Connection Source="DigitalInput_CLK_I3.IN" Destination="ASRT_3AE_TO_SRT_1.TOGGLE_IN" dx1="500"/>
-			<Connection Source="ASRT_3AE_TO_SRT_1.ASRT_OUT" Destination="ASRT_AX_T_FF_SR_1.S_R_T" dx1="406.67"/>
+			<Connection Source="DigitalInput_CLK_I2.IN" Destination="ASRT_3AE_TO_SRT_1.RESET_IN" dx1="566.67"/>
+			<Connection Source="DigitalInput_CLK_I3.IN" Destination="ASRT_3AE_TO_SRT_1.TOGGLE_IN" dx1="733.33"/>
+			<Connection Source="ASRT_3AE_TO_SRT_1.ASRT_OUT" Destination="ASRT_AX_T_FF_SR_1.S_R_T"/>
 			<Connection Source="ASRT_AX_T_FF_SR_1.Q" Destination="DigitalOutput_Q1.OUT" dx1="346.67"/>
 		</AdapterConnections>
 	</SubAppNetwork>

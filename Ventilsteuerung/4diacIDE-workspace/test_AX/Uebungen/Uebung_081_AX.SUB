@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SubAppType Name="Uebung_081_AX" Comment="Beispiel für E_CTD, mit Plug and Socket">
+	<Identification Standard="61499-2" Description="Copyright (c) 2026 Meisterschulen am Ostbahnhof  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0">
+	</Identification>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2026-09-09" Remarks="initial API and implementation and/or initial documentation">
+	</VersionInfo>
+	<CompilerInfo packageName="Uebungen">
+		<Import declaration="logiBUS::io::DI::logiBUS_DI::Input_I1"/>
+		<Import declaration="logiBUS::io::DI::logiBUS_DI::Input_I2"/>
+		<Import declaration="logiBUS::io::DI::logiBUS_DI_Events::BUTTON_SINGLE_CLICK"/>
+		<Import declaration="logiBUS::io::DQ::logiBUS_DO::Output_Q1"/>
+	</CompilerInfo>
+	<SubAppInterfaceList>
+	</SubAppInterfaceList>
+	<SubAppNetwork>
+		<FB Name="DigitalOutput_Q1" Type="logiBUS::io::DQ::logiBUS_QXA" x="3400" y="-800">
+			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="Output" Value="Output_Q1"/>
+		</FB>
+		<FB Name="DigitalInput_CLK_I1" Type="logiBUS::io::DI::logiBUS_IE" x="-4000" y="-1000">
+			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="Input" Value="Input_I1"/>
+			<Parameter Name="InputEvent" Value="BUTTON_SINGLE_CLICK"/>
+		</FB>
+		<FB Name="E_CTD" Type="iec61499::events::E_CTD" x="-2200" y="-800">
+			<Parameter Name="PV" Value="UINT#5"/>
+		</FB>
+		<FB Name="DigitalInput_CLK_I2" Type="logiBUS::io::DI::logiBUS_IE" x="-4000" y="100">
+			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="Input" Value="Input_I2"/>
+			<Parameter Name="InputEvent" Value="BUTTON_SINGLE_CLICK"/>
+		</FB>
+		<FB Name="AX_BOOL_TO_X" Type="adapter::conversion::unidirectional::AX_BOOL_TO_X" x="1600" y="-800">
+		</FB>
+		<EventConnections>
+			<Connection Source="DigitalInput_CLK_I1.IND" Destination="E_CTD.CD"/>
+			<Connection Source="E_CTD.CDO" Destination="AX_BOOL_TO_X.REQ" dx1="413.33"/>
+			<Connection Source="E_CTD.LDO" Destination="AX_BOOL_TO_X.REQ"/>
+			<Connection Source="DigitalInput_CLK_I2.IND" Destination="E_CTD.LD" dx1="460"/>
+		</EventConnections>
+		<DataConnections>
+			<Connection Source="E_CTD.Q" Destination="AX_BOOL_TO_X.OUT" dx1="286.67"/>
+		</DataConnections>
+		<AdapterConnections>
+			<Connection Source="AX_BOOL_TO_X.AX_OUT" Destination="DigitalOutput_Q1.OUT" dx1="700"/>
+		</AdapterConnections>
+	</SubAppNetwork>
+</SubAppType>

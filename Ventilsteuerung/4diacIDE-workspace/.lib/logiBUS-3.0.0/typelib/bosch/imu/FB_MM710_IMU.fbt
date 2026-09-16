@@ -15,15 +15,14 @@
 				<With Var="u8CanIdx"/>
 				<With Var="SA"/>
 			</Event>
-			<Event Name="REQ" Type="Event" Comment="Service Request">
-			</Event>
 		</EventInputs>
 		<EventOutputs>
 			<Event Name="INITO" Type="EInit" Comment="Initialization Confirm">
 				<With Var="QO"/>
 				<With Var="STATUS"/>
 			</Event>
-			<Event Name="CNF" Type="Event" Comment="Confirmation of Requested Service">
+			<Event Name="IND" Type="Event" Comment="Indication from Resource">
+				<With Var="QO"/>
 				<With Var="STATUS"/>
 				<With Var="rAccX"/>
 				<With Var="rAccY"/>
@@ -49,6 +48,7 @@
 				<With Var="uiMessageCounter"/>
 			</Event>
 			<Event Name="ERROR" Type="Event" Comment="Error indication">
+				<With Var="QO"/>
 				<With Var="STATUS"/>
 				<With Var="bCommError"/>
 				<With Var="bCRCError"/>

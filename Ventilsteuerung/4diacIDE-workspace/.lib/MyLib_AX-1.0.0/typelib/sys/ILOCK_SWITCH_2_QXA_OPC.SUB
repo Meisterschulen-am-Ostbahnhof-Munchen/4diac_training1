@@ -42,9 +42,9 @@
 		</FB>
 		<FB Name="ILOCK" Type="logiBUS::signalprocessing::interlock::ILOCK_SWITCH_PROTECT_AX" x="-2800" y="-200">
 		</FB>
-		<FB Name="E_TimeOut" Type="iec61499::events::E_TimeOut" x="-1200" y="1400">
+		<FB Name="E_TimeOut" Type="iec61499::events::E_TimeOut" x="-700" y="1500">
 		</FB>
-		<FB Name="SPLIT_UP" Type="adapter::events::unidirectional::AX_SPLIT_3" x="-800" y="-1400">
+		<FB Name="SPLIT_UP" Type="adapter::events::unidirectional::AX_SPLIT_3" x="-800" y="-1300">
 		</FB>
 		<FB Name="SPLIT_DOWN" Type="adapter::events::unidirectional::AX_SPLIT_3" x="-800" y="700">
 		</FB>
@@ -109,11 +109,11 @@
 			<Connection Source="SUBSCRIBE_CMD_DOWN.OUT" Destination="OR_DOWN.IN2" dx1="280"/>
 			<Connection Source="OR_DOWN.OUT" Destination="ILOCK.DOWN_IN" dx1="1150"/>
 			<Connection Source="ILOCK.timeOut" Destination="E_TimeOut.TimeOutSocket" dx1="280"/>
-			<Connection Source="ILOCK.UP_OUT" Destination="SPLIT_UP.IN" dx1="800"/>
+			<Connection Source="ILOCK.UP_OUT" Destination="SPLIT_UP.IN" dx1="560"/>
 			<Connection Source="SPLIT_UP.OUT1" Destination="DigitalOutput_UP.OUT" dx1="600"/>
 			<Connection Source="SPLIT_UP.OUT2" Destination="PUBLISH_TEST_UP.IN" dx1="600"/>
 			<Connection Source="SPLIT_UP.OUT3" Destination="PUBLISH_STATE_UP.IN" dx1="466.67"/>
-			<Connection Source="ILOCK.DOWN_OUT" Destination="SPLIT_DOWN.IN" dx1="800"/>
+			<Connection Source="ILOCK.DOWN_OUT" Destination="SPLIT_DOWN.IN" dx1="560"/>
 			<Connection Source="SPLIT_DOWN.OUT1" Destination="DigitalOutput_DOWN.OUT" dx1="600"/>
 			<Connection Source="SPLIT_DOWN.OUT2" Destination="PUBLISH_TEST_DOWN.IN" dx1="600"/>
 			<Connection Source="SPLIT_DOWN.OUT3" Destination="PUBLISH_STATE_DOWN.IN" dx1="420"/>

@@ -8,8 +8,8 @@
 	</CompilerInfo>
 	<GlobalConstants>
 		<VarDeclaration Name="OPTIONS" Type="USINT" Comment="1: AID_EXRN_OPTIONS - Bitmask: Bit 0 = Enabled (allows external reference by NAME WS)." InitialValue="USINT#1"/>
-		<VarDeclaration Name="NAME_0" Type="USINT" Comment="2: AID_EXRN_NAME_0" InitialValue="USINT#2"/>
-		<VarDeclaration Name="NAME_1" Type="USINT" Comment="3: AID_EXRN_NAME_1" InitialValue="USINT#3"/>
+		<VarDeclaration Name="NAME_0" Type="USINT" Comment="2: AID_EXRN_NAME_0 - Byte 1-4 of the NAME (ISO 11783-6 Table B.68)." InitialValue="USINT#2"/>
+		<VarDeclaration Name="NAME_1" Type="USINT" Comment="3: AID_EXRN_NAME_1 - Byte 5-8 of the NAME (ISO 11783-6 Table B.68)." InitialValue="USINT#3"/>
 	</GlobalConstants>
 	<OriginalSource><![CDATA[PACKAGE isobus::UT::Q::const::AID;
 
@@ -17,8 +17,8 @@
 GLOBALCONSTANTS AID_EXRN
 	VAR_GLOBAL CONSTANT
 		OPTIONS : USINT := USINT#1; // 1: AID_EXRN_OPTIONS - Bitmask: Bit 0 = Enabled (allows external reference by NAME WS).
-		NAME_0 : USINT := USINT#2; // 2: AID_EXRN_NAME_0
-		NAME_1 : USINT := USINT#3; // 3: AID_EXRN_NAME_1
+		NAME_0 : USINT := USINT#2; // 2: AID_EXRN_NAME_0 - Byte 1-4 of the NAME (ISO 11783-6 Table B.68).
+		NAME_1 : USINT := USINT#3; // 3: AID_EXRN_NAME_1 - Byte 5-8 of the NAME (ISO 11783-6 Table B.68).
 	END_VAR
 END_GLOBALCONSTANTS
 ]]></OriginalSource>

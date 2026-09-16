@@ -19,8 +19,8 @@
 		<VarDeclaration Name="MAX_VALUE" Type="USINT" Comment="10: AID_OABG_MAX_VALUE" InitialValue="USINT#10"/>
 		<VarDeclaration Name="VARIABLE_REF" Type="USINT" Comment="11: AID_OABG_VARIABLE_REF - Object ID of a Variable object." InitialValue="USINT#11"/>
 		<VarDeclaration Name="TARGET_VAL_VAR_REF" Type="USINT" Comment="12: AID_OABG_TARGET_VAL_VAR_REF" InitialValue="USINT#12"/>
-		<VarDeclaration Name="TARGET_VALUE" Type="USINT" Comment="13: AID_OABG_TARGET_VALUE" InitialValue="USINT#13"/>
-		<VarDeclaration Name="VALUE" Type="USINT" Comment="14: AID_OABG_VALUE - Current value." InitialValue="USINT#14"/>
+		<VarDeclaration Name="TARGET_VALUE" Type="USINT" Comment="13: AID_OABG_TARGET_VALUE - Target value. Runtime mod via F.22." InitialValue="USINT#13"/>
+		<VarDeclaration Name="VALUE" Type="USINT" Comment="14: AID_OABG_VALUE - [14] Read-only attribute. Current value. Runtime mod via F.22." InitialValue="USINT#14"/>
 	</GlobalConstants>
 	<OriginalSource><![CDATA[PACKAGE isobus::UT::Q::const::AID;
 
@@ -41,8 +41,8 @@ GLOBALCONSTANTS AID_OABG
 		MAX_VALUE : USINT := USINT#10; // 10: AID_OABG_MAX_VALUE
 		VARIABLE_REF : USINT := USINT#11; // 11: AID_OABG_VARIABLE_REF - Object ID of a Variable object.
 		TARGET_VAL_VAR_REF : USINT := USINT#12; // 12: AID_OABG_TARGET_VAL_VAR_REF
-		TARGET_VALUE : USINT := USINT#13; // 13: AID_OABG_TARGET_VALUE
-		VALUE : USINT := USINT#14; // 14: AID_OABG_VALUE - Current value.
+		TARGET_VALUE : USINT := USINT#13; // 13: AID_OABG_TARGET_VALUE - Target value. Runtime mod via F.22.
+		VALUE : USINT := USINT#14; // 14: AID_OABG_VALUE - [14] Read-only attribute. Current value. Runtime mod via F.22.
 	END_VAR
 END_GLOBALCONSTANTS
 ]]></OriginalSource>

@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SubAppType Name="Uebung_089a" Comment="Beispiel für E_RF_TRIG">
+	<Identification Standard="61499-2" Description="Copyright (c) 2026 Meisterschulen am Ostbahnhof  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0">
+	</Identification>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2026-09-10" Remarks="initial API and implementation and/or initial documentation">
+	</VersionInfo>
+	<CompilerInfo packageName="Uebungen">
+		<Import declaration="logiBUS::io::DI::logiBUS_DI::Input_I1"/>
+		<Import declaration="logiBUS::io::DQ::logiBUS_DO::Output_Q1"/>
+		<Import declaration="logiBUS::io::DQ::logiBUS_DO::Output_Q2"/>
+	</CompilerInfo>
+	<SubAppInterfaceList>
+	</SubAppInterfaceList>
+	<SubAppNetwork>
+		<FB Name="DigitalInput_I1" Type="logiBUS::io::DI::logiBUS_IX" x="-4500" y="-200">
+			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="Input" Value="Input_I1"/>
+		</FB>
+		<FB Name="E_RF_TRIG" Type="iec61499::events::E_RF_TRIG" x="-2400" y="-200">
+		</FB>
+		<FB Name="E_T_FF_Q1" Type="iec61499::events::E_T_FF" x="0" y="-800">
+		</FB>
+		<FB Name="E_T_FF_Q2" Type="iec61499::events::E_T_FF" x="0" y="700">
+		</FB>
+		<FB Name="DigitalOutput_Q1" Type="logiBUS::io::DQ::logiBUS_QX" x="1900" y="-800">
+			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="Output" Value="Output_Q1"/>
+		</FB>
+		<FB Name="DigitalOutput_Q2" Type="logiBUS::io::DQ::logiBUS_QX" x="1900" y="700">
+			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="Output" Value="Output_Q2"/>
+		</FB>
+		<Comment Comment="Ein einziger Eingang, EIN Signal - E_RF_TRIG liefert beide Flanken gleichzeitig (ER=steigend, EF=fallend). Q1 togglet bei steigender, Q2 bei fallender Flanke." x="-4500" y="1600" width="2200" height="700"/>
+		<EventConnections>
+			<Connection Source="DigitalInput_I1.IND" Destination="E_RF_TRIG.EI" dx1="273.33"/>
+			<Connection Source="E_RF_TRIG.ER" Destination="E_T_FF_Q1.CLK" dx1="246.67"/>
+			<Connection Source="E_RF_TRIG.EF" Destination="E_T_FF_Q2.CLK" dx1="246.67"/>
+			<Connection Source="E_T_FF_Q1.EO" Destination="DigitalOutput_Q1.REQ"/>
+			<Connection Source="E_T_FF_Q2.EO" Destination="DigitalOutput_Q2.REQ"/>
+		</EventConnections>
+		<DataConnections>
+			<Connection Source="DigitalInput_I1.IN" Destination="E_RF_TRIG.QI" dx1="273.33"/>
+			<Connection Source="E_T_FF_Q1.Q" Destination="DigitalOutput_Q1.OUT"/>
+			<Connection Source="E_T_FF_Q2.Q" Destination="DigitalOutput_Q2.OUT"/>
+		</DataConnections>
+	</SubAppNetwork>
+</SubAppType>

@@ -24,12 +24,12 @@
 			</Event>
 		</EventOutputs>
 		<InputVars>
-			<VarDeclaration Name="D" Type="ANY_NUM" Comment="Value to latch"/>
-			<VarDeclaration Name="HYSTERESIS" Type="ANY_NUM" Comment="Hysteresis band"/>
+			<VarDeclaration Name="D" Type="ANY_NUM" Comment="Value to latch. Must be the same type as Q and HYSTERESIS"/>
+			<VarDeclaration Name="HYSTERESIS" Type="ANY_NUM" Comment="Hysteresis band. Must be the same type as D and Q"/>
 			<VarDeclaration Name="Tmin" Type="TIME" Comment="Minimum inter-arrival time between EI events"/>
 		</InputVars>
 		<OutputVars>
-			<VarDeclaration Name="Q" Type="ANY_NUM" Comment="Latched value"/>
+			<VarDeclaration Name="Q" Type="ANY_NUM" Comment="Latched value. Must be the same type as D and HYSTERESIS"/>
 		</OutputVars>
 	</InterfaceList>
 	<FBNetwork>

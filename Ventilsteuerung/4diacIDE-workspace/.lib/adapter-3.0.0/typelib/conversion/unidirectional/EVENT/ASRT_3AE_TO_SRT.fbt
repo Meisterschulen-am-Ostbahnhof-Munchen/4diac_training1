@@ -8,19 +8,19 @@
 	</CompilerInfo>
 	<InterfaceList>
 		<Plugs>
-			<AdapterDeclaration Name="ASRT_OUT" Type="adapter::types::unidirectional::ASRT" Comment="Adapter Output" x="-3900" y="-500"/>
+			<AdapterDeclaration Name="ASRT_OUT" Type="adapter::types::unidirectional::ASRT" Comment="Adapter Output" x="-2100" y="-400"/>
 		</Plugs>
 		<Sockets>
-			<AdapterDeclaration Name="SET_IN" Type="adapter::types::unidirectional::AE" Comment="Set / Switch on" x="0" y="-900"/>
-			<AdapterDeclaration Name="RESET_IN" Type="adapter::types::unidirectional::AE" Comment="Reset / Switch off" x="0" y="-100"/>
-			<AdapterDeclaration Name="TOGGLE_IN" Type="adapter::types::unidirectional::AE" Comment="Toggle / Switch output" x="0" y="700"/>
+			<AdapterDeclaration Name="SET_IN" Type="adapter::types::unidirectional::AE" Comment="Set / Switch on" x="-3700" y="-700"/>
+			<AdapterDeclaration Name="RESET_IN" Type="adapter::types::unidirectional::AE" Comment="Reset / Switch off" x="-3700" y="-300"/>
+			<AdapterDeclaration Name="TOGGLE_IN" Type="adapter::types::unidirectional::AE" Comment="Toggle / Switch output" x="-3700" y="100"/>
 		</Sockets>
 	</InterfaceList>
 	<FBNetwork>
 		<EventConnections>
-			<Connection Source="SET_IN.E1" Destination="ASRT_OUT.SET" dx1="2813.33"/>
-			<Connection Source="RESET_IN.E1" Destination="ASRT_OUT.RESET" dx1="2413.33"/>
-			<Connection Source="TOGGLE_IN.E1" Destination="ASRT_OUT.TOGGLE" dx1="2413.33"/>
+			<Connection Source="SET_IN.E1" Destination="ASRT_OUT.SET" dx1="606.67"/>
+			<Connection Source="RESET_IN.E1" Destination="ASRT_OUT.RESET" dx1="606.67"/>
+			<Connection Source="TOGGLE_IN.E1" Destination="ASRT_OUT.TOGGLE" dx1="600"/>
 		</EventConnections>
 	</FBNetwork>
 	<Attribute Name="eclipse4diac::core::TypeHash" Value="''"/>

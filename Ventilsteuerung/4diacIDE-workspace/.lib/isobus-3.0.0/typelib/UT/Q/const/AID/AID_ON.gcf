@@ -18,7 +18,7 @@
 		<VarDeclaration Name="NUMB_DECIMALS" Type="USINT" Comment="9: AID_ON_NUMB_DECIMALS - Number of decimals to display after the decimal point." InitialValue="USINT#9"/>
 		<VarDeclaration Name="FORMAT" Type="USINT" Comment="10: AID_ON_FORMAT - 0 = fixed format decimal (####.nn), 1 = exponential format." InitialValue="USINT#10"/>
 		<VarDeclaration Name="JUSTIFICATION" Type="USINT" Comment="11: AID_ON_JUSTIFICATION - Justification: Bits 0-1 (Horizontal: 0=Left, 1=Middle, 2=Right), Bits" InitialValue="USINT#11"/>
-		<VarDeclaration Name="VALUE" Type="USINT" Comment="12: AID_ON_VALUE - Current value before scaling." InitialValue="USINT#12"/>
+		<VarDeclaration Name="VALUE" Type="USINT" Comment="12: AID_ON_VALUE (read-only) - Current value before scaling." InitialValue="USINT#12"/>
 	</GlobalConstants>
 	<OriginalSource><![CDATA[PACKAGE isobus::UT::Q::const::AID;
 
@@ -37,7 +37,7 @@ GLOBALCONSTANTS AID_ON
 		FORMAT : USINT := USINT#10; // 10: AID_ON_FORMAT - 0 = fixed format decimal (####.nn), 1 = exponential format.
 		JUSTIFICATION : USINT := USINT#11; // 11: AID_ON_JUSTIFICATION - Justification: Bits 0-1 (Horizontal: 0=Left, 1=Middle, 2=Right), Bits
 		                                   // 2-3 (Vertical: 0=Top, 1=Middle, 2=Bottom).
-		VALUE : USINT := USINT#12; // 12: AID_ON_VALUE - Current value before scaling.
+		VALUE : USINT := USINT#12; // 12: AID_ON_VALUE (read-only) - Current value before scaling.
 	END_VAR
 END_GLOBALCONSTANTS
 ]]></OriginalSource>

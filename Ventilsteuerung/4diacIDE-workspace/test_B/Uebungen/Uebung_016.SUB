@@ -35,14 +35,14 @@
 			<Parameter Name="u16ObjId" Value="SoftKey_F7"/>
 		</FB>
 		<EventConnections>
-			<Connection Source="SoftKey_UP_F1.IND" Destination="E_SR.S"/>
+			<Connection Source="SoftKey_UP_F1.IND" Destination="E_SR.S" dx1="406.67"/>
 			<Connection Source="SoftKey_UP_F2.IND" Destination="E_SR.R" dx1="473.33"/>
 			<Connection Source="E_SR.EO" Destination="F_SEL.REQ" dx1="726.67"/>
 			<Connection Source="F_SEL.CNF" Destination="Q_BackgroundColour.REQ" dx1="646.67"/>
 		</EventConnections>
 		<DataConnections>
-			<Connection Source="E_SR.Q" Destination="F_SEL.G"/>
-			<Connection Source="F_SEL.OUT" Destination="Q_BackgroundColour.u8Colour"/>
+			<Connection Source="E_SR.Q" Destination="F_SEL.G" dx1="713.33"/>
+			<Connection Source="F_SEL.OUT" Destination="Q_BackgroundColour.u8Colour" dx1="640"/>
 		</DataConnections>
 	</SubAppNetwork>
 </SubAppType>
