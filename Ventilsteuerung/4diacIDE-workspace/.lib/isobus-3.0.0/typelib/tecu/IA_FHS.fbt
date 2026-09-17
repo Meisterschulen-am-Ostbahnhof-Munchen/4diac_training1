@@ -69,4 +69,10 @@
 		</DataConnections>
 	</FBNetwork>
 	<Attribute Name="eclipse4diac::core::TypeHash" Value="''"/>
+	<Attribute Name="Documentation" Type="CDATA"><![CDATA[<p>ISOBUS Adapter for Front Hitch Status (FHS)</p>
+
+<p>&nbsp;</p>
+
+<p><strong>TIMEOUT.E1-Verdrahtung:</strong> I_CORE.TIMEOUT (echter Timeout-Eintritt) UND I_CORE.IND (Normalbetrieb) sind beide auf den Adapter-Plug TIMEOUT.E1 verdrahtet - bewusst so, damit TIMEOUT.D1 (Q_timeout) am Adapter-Plug auch beim Zuruecksetzen auf false aktualisiert wird, nicht nur beim Eintreten des Timeouts. Der zugrundeliegende TIMEOUT/IND-Vertrag von I_CORE selbst ist in dessen eigener .fbt-Datei dokumentiert.</p>
+]]></Attribute>
 </FBType>
