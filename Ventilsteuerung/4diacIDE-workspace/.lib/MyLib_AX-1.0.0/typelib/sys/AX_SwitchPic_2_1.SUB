@@ -9,14 +9,6 @@
 		<Import declaration="isobus::UT::Q::types::s2x1ObjectIDs"/>
 	</CompilerInfo>
 	<SubAppInterfaceList>
-		<SubAppEventInputs>
-			<SubAppEvent Name="INIT" Type="EInit" Comment="Initialization Request">
-			</SubAppEvent>
-		</SubAppEventInputs>
-		<SubAppEventOutputs>
-			<SubAppEvent Name="INITO" Type="EInit" Comment="Initialization Confirm">
-			</SubAppEvent>
-		</SubAppEventOutputs>
 		<InputVars>
 			<VarDeclaration Name="Picture" Type="UINT" Comment="Object ID of the ObjectPointer to write into"/>
 			<VarDeclaration Name="pictures" Type="isobus::UT::Q::types::s2x1ObjectIDs" Comment="die beiden Ziel-Object-IDs" InitialValue="(up := (u16ObjId := ID_NULL), down := (u16ObjId := ID_NULL))"/>
@@ -44,14 +36,14 @@
 		</FB>
 		<FB Name="AX_X_TO_BOOL" Type="adapter::conversion::unidirectional::AX_X_TO_BOOL" x="100" y="800">
 		</FB>
+		<FB Name="INIT" Type="iec61131::booleanOperators::INIT" x="-1300" y="-100">
+		</FB>
 		<EventConnections>
 			<Connection Source="F_MUX_2.CNF" Destination="Q_NumericValue.REQ" dx1="440"/>
-			<Connection Source="INIT" Destination="F_MOVE.REQ" dx1="1246.67">
-				<Attribute Name="Visible" Value="false"/>
-			</Connection>
-			<Connection Source="F_MOVE.CNF" Destination="Q_NumericValue.INIT" dx1="193.33"/>
-			<Connection Source="Q_NumericValue.INITO" Destination="INITO" dx1="500"/>
+			<Connection Source="F_MOVE.CNF" Destination="F_MUX_2.REQ" dx1="193.33"/>
 			<Connection Source="AX_X_TO_BOOL.CNF" Destination="F_MUX_2.REQ" dx1="573.33"/>
+			<Connection Source="INIT.INITO" Destination="INIT.REQ" dx1="80" dx2="80" dy="53.33"/>
+			<Connection Source="INIT.CNF" Destination="F_MOVE.REQ" dx1="320"/>
 		</EventConnections>
 		<DataConnections>
 			<Connection Source="Picture" Destination="Q_NumericValue.u16ObjId" dx1="4133.33"/>
