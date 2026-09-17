@@ -4,6 +4,8 @@
 	</Identification>
 	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2026-09-12" Remarks="Remote-Rohwert-Variante von logiBUS_AI_Calibrate_IDA_OPC - logiBUS_AI_IDA+AD_SPLIT_2+AD_PUBLISH_RAW durch AD_SUBSCRIBE_1 ersetzt, Rest der Kalibrier-/VT-Kette unveraendert. Fuer Schnitthoehen-Winkelsensor B13 (STG3), Kalibrierung+VT auf STG1.">
 	</VersionInfo>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.1" Author="Franz Höpfinger" Date="2026-09-17" Remarks="AR_CALIBRATE_2P_REF.C_LOW/C_HIGH von AX-Sockets auf reine EventInputs umgestellt (Franz-Entscheidung, siehe logiBUS_AI_Calibrate_IDA_OPC v1.3) - AX_BOOL_TO_X_CO/_CS entfallen ersatzlos, E_MERGE_CO_B/E_MERGE_CS_B verbinden jetzt direkt per EventConnection mit CALIBRATE.C_LOW/C_HIGH. Dieser Typ ist ohnehin durch logiBUS_AI_Calibrated_Subscribe_VT_OPC (Analog-Lokal-Verarbeitung, Plan cuddly-bubbling-twilight) auf dem Weg zur Ablösung - Anpassung hier nur, damit die Datei weiterhin kompiliert.">
+	</VersionInfo>
 	<CompilerInfo packageName="MyLib::sys">
 		<Import declaration="isobus::UT::Q::const::IDs::ID_NULL"/>
 		<Import declaration="logiBUS::utils::conversion::phys::NumericObjectPool_S"/>
@@ -53,12 +55,6 @@
 		<FB Name="Button_CS" Type="isobus::UT::io::Button::Button_IE" x="-8600" y="2000">
 			<Parameter Name="QI" Value="TRUE"/>
 			<Parameter Name="InputEvent" Value="BT_PRESSED_LATCHED"/>
-		</FB>
-		<FB Name="AX_BOOL_TO_X_CO" Type="adapter::conversion::unidirectional::AX_BOOL_TO_X" x="-2300" y="900">
-			<Parameter Name="OUT" Value="TRUE"/>
-		</FB>
-		<FB Name="AX_BOOL_TO_X_CS" Type="adapter::conversion::unidirectional::AX_BOOL_TO_X" x="-2400" y="2800">
-			<Parameter Name="OUT" Value="TRUE"/>
 		</FB>
 		<FB Name="AX_SUBSCRIBE_CO" Type="adapter::net::AX_SUBSCRIBE_1" x="-8500" y="1000">
 			<Parameter Name="QI" Value="TRUE"/>
@@ -123,12 +119,12 @@
 			<Connection Source="AX_RF_TRIG_CO.ER" Destination="E_MERGE_CO_A.EI2" dx1="400"/>
 			<Connection Source="E_MERGE_CO_A.EO" Destination="E_MERGE_CO_B.EI1" dx1="400"/>
 			<Connection Source="AX_RF_TRIG_CO.EF" Destination="E_MERGE_CO_B.EI2"/>
-			<Connection Source="E_MERGE_CO_B.EO" Destination="AX_BOOL_TO_X_CO.REQ" dx1="313.33"/>
+			<Connection Source="E_MERGE_CO_B.EO" Destination="CALIBRATE.C_LOW" dx1="313.33"/>
 			<Connection Source="Button_CS.IND" Destination="E_MERGE_CS_A.EI1" dx1="1506.67"/>
 			<Connection Source="AX_RF_TRIG_CS.ER" Destination="E_MERGE_CS_A.EI2" dx1="400"/>
 			<Connection Source="E_MERGE_CS_A.EO" Destination="E_MERGE_CS_B.EI1" dx1="546.67"/>
 			<Connection Source="AX_RF_TRIG_CS.EF" Destination="E_MERGE_CS_B.EI2" dx1="2226.67"/>
-			<Connection Source="E_MERGE_CS_B.EO" Destination="AX_BOOL_TO_X_CS.REQ"/>
+			<Connection Source="E_MERGE_CS_B.EO" Destination="CALIBRATE.C_HIGH"/>
 		</EventConnections>
 		<DataConnections>
 			<Connection Source="u16ObjId_RAWVAR" Destination="Q_NumericValue_RAW.u16ObjId" dx1="1400">
@@ -192,8 +188,6 @@
 			<Connection Source="AUDI_SPLIT_2.OUT1" Destination="Q_NumericValue_RAW.u32NewValue" dx1="300"/>
 			<Connection Source="AUDI_SPLIT_2.OUT2" Destination="AUDI_TO_AR.AUDI_IN" dx1="300"/>
 			<Connection Source="AUDI_TO_AR.AR_OUT" Destination="CALIBRATE.X" dx1="300"/>
-			<Connection Source="AX_BOOL_TO_X_CO.AX_OUT" Destination="CALIBRATE.C_LOW" dx1="566.67"/>
-			<Connection Source="AX_BOOL_TO_X_CS.AX_OUT" Destination="CALIBRATE.C_HIGH" dx1="1013.33"/>
 			<Connection Source="CALIBRATE.X_LOW" Destination="INI_X_LOW.VAL" dx1="580"/>
 			<Connection Source="CALIBRATE.X_HIGH" Destination="INI_X_HIGH.VAL" dx1="340"/>
 			<Connection Source="CALIBRATE.LOW_REF" Destination="INI_LOW_REF.VAL" dx1="253.33"/>

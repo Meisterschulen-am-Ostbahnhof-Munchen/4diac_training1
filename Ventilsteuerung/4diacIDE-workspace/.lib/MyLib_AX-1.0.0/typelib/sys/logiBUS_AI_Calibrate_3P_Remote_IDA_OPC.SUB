@@ -2,6 +2,8 @@
 <SubAppType Name="logiBUS_AI_Calibrate_3P_Remote_IDA_OPC" Comment="3-Punkt-Kalibrierung (AR_CALIBRATE_3P_REF, unabhaengig gespeicherte Rohwerte X_MIN/X_MID/X_MAX + Referenzwerte MIN_REF/MID_REF/MAX_REF alle INI-persistiert) auf VT-Zahlenfelder (Rohwert + kalibrierter Wert, je eigene CNumberVariable) + Bargraph (kalibriert) + 3 VT-Tasten (C_MIN/C_MID/C_MAX) + OPC-UA (Rohwert DWORD + kalibrierter Wert REAL, generisch, ein Kanal). Wie logiBUS_AI_Calibrate_3P_IDA_OPC, aber der Rohwert kommt per Remote-Subscribe (AD_SUBSCRIBE_1) statt von einem lokalen logiBUS_AI_IDA - fuer Sensoren, deren physischer Analog-Eingang auf einer Station OHNE VT-Anschluss sitzt (z.B. Hangausgleich-Winkelsensor B14 auf APIXON STG3, waehrend Kalibrierung+VT auf der Station mit VT-Anschluss laufen). Der Rohwert wird dort per logiBUS_AI_Raw_Publish_OPC publiziert.">
 	<Identification Standard="61499-2" Description="Copyright (c) 2026 Meisterschulen am Ostbahnhof&#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0">
 	</Identification>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.3" Author="Franz Höpfinger" Date="2026-09-18" Remarks="AR_CALIBRATE_3P_REF.C_MIN/C_MID/C_MAX von AX-Sockets auf reine EventInputs umgestellt (Franz-Entscheidung, siehe AR_CALIBRATE_2P_REF) - AX_BOOL_TO_X_MIN/_MID/_MAX entfallen ersatzlos, die Merge-Ketten verbinden jetzt direkt per EventConnection mit CALIBRATE.C_MIN/C_MID/C_MAX.">
+	</VersionInfo>
 	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.2" Author="Franz Höpfinger" Date="2026-09-16" Remarks="Fix (4diac-IDE-Validierungsfehler 'Cannot convert from AR2 to AR'): MID_REF_LIT.VALUEO/MAX_REF_LIT.VALUEO sind bidirektionale AR2-Plugs (Live-VT-Edit + Persistierung), kein einfacher AR-Wert wie CALIBRATE.Y - ein AR_SPLIT_2 direkt dazwischen ist falsch. MIDREF_OUT/MAXREF_OUT werden jetzt stattdessen von den neuen VALUE_OUT-Plugs auf MID_REF_LIT/MAX_REF_LIT gespeist (NumericValue_TO_AR2_OPC Version 1.1, plain-AR-Spiegel des Werts, unabhaengig vom bidirektionalen VALUEO). CAL_OUT (AR_SPLIT_3 auf CALIBRATE.Y, einfacher AR-Wert) war von diesem Fehler nicht betroffen und bleibt unveraendert.">
 	</VersionInfo>
 	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.1" Author="Franz Höpfinger" Date="2026-09-16" Remarks="Neue optionale Ausgangs-Plugs CAL_OUT/MIDREF_OUT/MAXREF_OUT ergaenzt (AR_SPLIT_2 zu AR_SPLIT_3 fuer CAL, je 1 neuer AR_SPLIT_2 fuer MIDREF/MAXREF dazwischengesetzt) - damit externe Consumer (z.B. Fuellband_Oben_Erkennung/Befuellautomatik fuer den Fuellband-Kanal) den bereits kalibrierten Wert per Adapterverbindung lesen koennen statt selbst nochmal denselben OPC-UA-Knoten lokal zu abonnieren (FORTE: 'Cannot add another one'). Unverdrahtet lassen, wenn nicht gebraucht (z.B. Hangausgleich-Kanal). Siehe BERICHT_2026-09-16_STG3_I1_I3_I4_I6_STALE_REMOTE_SUBSCRIBE.md Abschnitt 16-17 Gruppe C.">
@@ -74,15 +76,6 @@
 		<FB Name="Button_C_MAX" Type="isobus::UT::io::Button::Button_IE" x="-11900" y="3300">
 			<Parameter Name="QI" Value="TRUE"/>
 			<Parameter Name="InputEvent" Value="BT_PRESSED_LATCHED"/>
-		</FB>
-		<FB Name="AX_BOOL_TO_X_MIN" Type="adapter::conversion::unidirectional::AX_BOOL_TO_X" x="-2300" y="900">
-			<Parameter Name="OUT" Value="TRUE"/>
-		</FB>
-		<FB Name="AX_BOOL_TO_X_MID" Type="adapter::conversion::unidirectional::AX_BOOL_TO_X" x="-2350" y="1850">
-			<Parameter Name="OUT" Value="TRUE"/>
-		</FB>
-		<FB Name="AX_BOOL_TO_X_MAX" Type="adapter::conversion::unidirectional::AX_BOOL_TO_X" x="-2400" y="2800">
-			<Parameter Name="OUT" Value="TRUE"/>
 		</FB>
 		<FB Name="AX_SUBSCRIBE_MIN" Type="adapter::net::AX_SUBSCRIBE_1" x="-10300" y="900">
 			<Parameter Name="QI" Value="TRUE"/>
@@ -179,19 +172,19 @@
 			<Connection Source="AX_RF_TRIG_MIN.ER" Destination="E_MERGE_MIN_A.EI2" dx1="400"/>
 			<Connection Source="E_MERGE_MIN_A.EO" Destination="E_MERGE_MIN_B.EI1" dx1="400"/>
 			<Connection Source="AX_RF_TRIG_MIN.EF" Destination="E_MERGE_MIN_B.EI2"/>
-			<Connection Source="E_MERGE_MIN_B.EO" Destination="AX_BOOL_TO_X_MIN.REQ" dx1="313.33"/>
+			<Connection Source="E_MERGE_MIN_B.EO" Destination="CALIBRATE.C_MIN" dx1="313.33"/>
 			<Connection Source="Button_C_MID.IND" Destination="E_MERGE_MID_A.EI1" dx1="1780"/>
 			<Connection Source="AX_RF_TRIG_MID.ER" Destination="E_MERGE_MID_A.EI2" dx1="400"/>
 			<Connection Source="E_MERGE_MID_A.EO" Destination="E_MERGE_MID_B.EI1" dx1="470"/>
 			<Connection Source="AX_RF_TRIG_MID.EF" Destination="E_MERGE_MID_B.EI2" dx1="1150"/>
 			<Connection Source="E_MERGE_MID_B.EO" Destination="E_MERGE_MID_C.EI1" dx1="400"/>
 			<Connection Source="SERVER_MID_TRIGGER.IND" Destination="E_MERGE_MID_C.EI2" dx1="400"/>
-			<Connection Source="E_MERGE_MID_C.EO" Destination="AX_BOOL_TO_X_MID.REQ" dx1="400"/>
+			<Connection Source="E_MERGE_MID_C.EO" Destination="CALIBRATE.C_MID" dx1="400"/>
 			<Connection Source="Button_C_MAX.IND" Destination="E_MERGE_MAX_A.EI1" dx1="1506.67"/>
 			<Connection Source="AX_RF_TRIG_MAX.ER" Destination="E_MERGE_MAX_A.EI2" dx1="400"/>
 			<Connection Source="E_MERGE_MAX_A.EO" Destination="E_MERGE_MAX_B.EI1" dx1="546.67"/>
 			<Connection Source="AX_RF_TRIG_MAX.EF" Destination="E_MERGE_MAX_B.EI2" dx1="2226.67"/>
-			<Connection Source="E_MERGE_MAX_B.EO" Destination="AX_BOOL_TO_X_MAX.REQ"/>
+			<Connection Source="E_MERGE_MAX_B.EO" Destination="CALIBRATE.C_MAX"/>
 		</EventConnections>
 		<DataConnections>
 			<Connection Source="u16ObjId_RAWVAR" Destination="Q_NumericValue_RAW.u16ObjId" dx1="1400">
@@ -279,9 +272,6 @@
 			<Connection Source="AUDI_SPLIT_2.OUT1" Destination="Q_NumericValue_RAW.u32NewValue" dx1="300"/>
 			<Connection Source="AUDI_SPLIT_2.OUT2" Destination="AUDI_TO_AR.AUDI_IN" dx1="300"/>
 			<Connection Source="AUDI_TO_AR.AR_OUT" Destination="CALIBRATE.X" dx1="300"/>
-			<Connection Source="AX_BOOL_TO_X_MIN.AX_OUT" Destination="CALIBRATE.C_MIN" dx1="566.67"/>
-			<Connection Source="AX_BOOL_TO_X_MID.AX_OUT" Destination="CALIBRATE.C_MID" dx1="700"/>
-			<Connection Source="AX_BOOL_TO_X_MAX.AX_OUT" Destination="CALIBRATE.C_MAX" dx1="1013.33"/>
 			<Connection Source="CALIBRATE.X_MIN" Destination="INI_X_MIN.VAL" dx1="580"/>
 			<Connection Source="CALIBRATE.X_MID" Destination="INI_X_MID.VAL" dx1="460"/>
 			<Connection Source="CALIBRATE.X_MAX" Destination="INI_X_MAX.VAL" dx1="340"/>

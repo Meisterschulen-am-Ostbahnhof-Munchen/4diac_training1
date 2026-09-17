@@ -4,9 +4,16 @@
 	</Identification>
 	<VersionInfo Version="1.0" Author="Meisterschulen am Ostbahnhof" Date="2026-09-11" Remarks="3-Punkt-Pendant zu AR_CALIBRATE_2P_REF - fuer Sensoren mit definierter Mittelstellung (z.B. Lenkwinkelsensor: links/geradeaus/rechts). Keine ECC-Reihenfolge-Erzwingung: C_MIN/C_MID/C_MAX speichern unabhaengig, wie AR_CALIBRATE_3P.">
 	</VersionInfo>
+	<VersionInfo Version="1.1" Author="Franz Höpfinger" Date="2026-09-18" Remarks="C_MIN/C_MID/C_MAX von AX-Sockets (mit [C_x.D1]-Flankenwaechter) auf reine EventInputs umgestellt - jeder echte Aufrufer liefert ohnehin ein atomares Event, der D1-Wert war immer hartcodiert TRUE (via AX_BOOL_TO_X) und der Guard filterte nie etwas. Aufrufer muessen jetzt direkt ein Event statt eines AX-Adapters anschliessen. Siehe AR_CALIBRATE_2P_REF fuer die identische Aenderung.">
+	</VersionInfo>
 	<CompilerInfo packageName="adapter::Engineering::measurements">
 	</CompilerInfo>
 	<InterfaceList>
+		<EventInputs>
+			<Event Name="C_MIN" Type="Event" Comment="Calibrate Min Point - atomarer Trigger"/>
+			<Event Name="C_MID" Type="Event" Comment="Calibrate Mid Point (Center) - atomarer Trigger"/>
+			<Event Name="C_MAX" Type="Event" Comment="Calibrate Max Point - atomarer Trigger"/>
+		</EventInputs>
 		<Plugs>
 			<AdapterDeclaration Name="Y" Type="adapter::types::unidirectional::AR" Comment="Calibrated Output"/>
 			<AdapterDeclaration Name="X_MIN" Type="adapter::types::bidirectional::AR2" Comment="Persisted raw input value at the Min calibration point"/>
@@ -18,9 +25,6 @@
 		</Plugs>
 		<Sockets>
 			<AdapterDeclaration Name="X" Type="adapter::types::unidirectional::AR" Comment="Raw Input"/>
-			<AdapterDeclaration Name="C_MIN" Type="adapter::types::unidirectional::AX" Comment="Calibrate Min Point"/>
-			<AdapterDeclaration Name="C_MID" Type="adapter::types::unidirectional::AX" Comment="Calibrate Mid Point (Center)"/>
-			<AdapterDeclaration Name="C_MAX" Type="adapter::types::unidirectional::AX" Comment="Calibrate Max Point"/>
 			<AdapterDeclaration Name="Y_MIN" Type="adapter::types::bidirectional::AR2" Comment="Target output Y at the Min calibration point - live edit in via EO1/DO1 (Socket-side swap), persisted/restored value echoed back out via EI1/DI1 for VT/web display"/>
 			<AdapterDeclaration Name="Y_MID" Type="adapter::types::bidirectional::AR2" Comment="Target output Y at the Mid calibration point - live edit in via EO1/DO1 (Socket-side swap), persisted/restored value echoed back out via EI1/DI1 for VT/web display"/>
 			<AdapterDeclaration Name="Y_MAX" Type="adapter::types::bidirectional::AR2" Comment="Target output Y at the Max calibration point - live edit in via EO1/DO1 (Socket-side swap), persisted/restored value echoed back out via EI1/DI1 for VT/web display"/>
@@ -62,11 +66,11 @@
 			</ECState>
 			<ECTransition Source="IDLE" Destination="REQ" Condition="X.E1" x="-253.33" y="-940"/>
 			<ECTransition Source="REQ" Destination="IDLE" Condition="1" x="-526.67" y="-826.67"/>
-			<ECTransition Source="IDLE" Destination="C_MIN" Condition="C_MIN.E1[C_MIN.D1]" x="1540" y="33.33"/>
+			<ECTransition Source="IDLE" Destination="C_MIN" Condition="C_MIN" x="1540" y="33.33"/>
 			<ECTransition Source="C_MIN" Destination="IDLE" Condition="1" x="1900" y="100"/>
-			<ECTransition Source="IDLE" Destination="C_MID" Condition="C_MID.E1[C_MID.D1]" x="2200" y="-160"/>
+			<ECTransition Source="IDLE" Destination="C_MID" Condition="C_MID" x="2200" y="-160"/>
 			<ECTransition Source="C_MID" Destination="IDLE" Condition="1" x="2500" y="-200"/>
-			<ECTransition Source="IDLE" Destination="C_MAX" Condition="C_MAX.E1[C_MAX.D1]" x="2680" y="-300"/>
+			<ECTransition Source="IDLE" Destination="C_MAX" Condition="C_MAX" x="2680" y="-300"/>
 			<ECTransition Source="C_MAX" Destination="IDLE" Condition="1" x="2900" y="-260"/>
 			<ECTransition Source="IDLE" Destination="REQ" Condition="X_MIN.EI1" x="-486.67" y="-566.67"/>
 			<ECTransition Source="IDLE" Destination="REQ" Condition="X_MID.EI1" x="-650" y="-500"/>
