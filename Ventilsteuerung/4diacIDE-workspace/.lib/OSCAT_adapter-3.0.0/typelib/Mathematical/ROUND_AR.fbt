@@ -14,7 +14,7 @@
 			<AdapterDeclaration Name="AR_IN" Type="adapter::types::unidirectional::AR" Comment="Eingangssignal (REAL)" x="-700" y="100"/>
 		</Sockets>
 		<Plugs>
-			<AdapterDeclaration Name="AR_OUT" Type="adapter::types::unidirectional::AR" Comment="Auf N Nachkommastellen abgerundeter Wert (REAL)" x="5300" y="200"/>
+			<AdapterDeclaration Name="AR_OUT" Type="adapter::types::unidirectional::AR" Comment="Auf N Nachkommastellen gerundeter Wert (REAL)" x="5300" y="200"/>
 		</Plugs>
 	</InterfaceList>
 	<FBNetwork>
@@ -39,7 +39,7 @@
 
 <h2>🇩🇪 Deutsch</h2>
 
-<p>AR-Adapter-Wrapper um <code>OSCAT::Basic::POUs::Mathematical::ROUND</code> (rundet <code>in</code> auf <code>N</code> Nachkommastellen ab). <code>N</code> ist ein Klartext-<code>InputVar</code> (Default 2) - kein Adapter noetig, da der Wert pro Aufruf konstant ist und per <code>Parameter</code> von einer aufrufenden Komposition ueberschrieben werden kann.</p>
+<p>AR-Adapter-Wrapper um <code>OSCAT::Basic::POUs::Mathematical::ROUND</code> (rundet <code>in</code> auf <code>N</code> Nachkommastellen, 0 bis 8 Stellen). <code>N</code> ist ein Klartext-<code>InputVar</code> (Default 2) - kein Adapter noetig, da der Wert pro Aufruf konstant ist und per <code>Parameter</code> von einer aufrufenden Komposition ueberschrieben werden kann.</p>
 
 <h3>Reine Adapter-Grenze</h3>
 
@@ -56,7 +56,7 @@
 
 <h2>🇬🇧 English</h2>
 
-<p>AR-adapter wrapper around <code>OSCAT::Basic::POUs::Mathematical::ROUND</code> (rounds <code>in</code> down to <code>N</code> decimal places). <code>N</code> is a plain <code>InputVar</code> (default 2) - no adapter needed since the value is constant per call and can be overridden via <code>Parameter</code>.</p>
+<p>AR-adapter wrapper around <code>OSCAT::Basic::POUs::Mathematical::ROUND</code> (rounds <code>in</code> to <code>N</code> decimal places, 0 to 8 digits). <code>N</code> is a plain <code>InputVar</code> (default 2) - no adapter needed since the value is constant per call and can be overridden via <code>Parameter</code>.</p>
 
 <h3>Pure adapter boundary</h3>
 
