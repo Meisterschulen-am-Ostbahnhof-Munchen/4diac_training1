@@ -2,7 +2,7 @@
 <Function Name="RND" Comment="this function rounds a real to n significant digits (not digits behind the comma).">
 	<Identification Standard="61499-1">
 	</Identification>
-	<VersionInfo Version="1.0" Author="Franz Höpfinger" Date="2026-09-17" Remarks="Portiert aus OSCAT_basic RND.TcPOU (Franz: 'portiere diese Funktionen hier her') - EXPN(X, base) (OSCAT-interne Hilfsfunktion, in diesem Projekt nicht vorhanden) durch Standard-EXPT(base, exponent) ersetzt. Benoetigt CEIL und LOG (in diesem Projekt bereits vorhanden bzw. Standardfunktion).">
+	<VersionInfo Version="1.0" Author="Franz Höpfinger" Date="2026-09-17" Remarks="Portiert aus OSCAT_basic RND.TcPOU - EXPT(10.0, ...) mit Begrenzung N (1..8) und Exponenten-LIMIT (-37..8) schuetzt vor DINT-Ueberlauf und Division durch 0.">
 	</VersionInfo>
 	<CompilerInfo packageName="OSCAT::Basic::POUs::Mathematical">
 	</CompilerInfo>
@@ -45,13 +45,12 @@ END_VAR
  * this function rounds x to n significant digits.
  * unlike round(), n is not the number of digits behind the comma but the total number of
  * significant digits.
- * Portiert 2026-09-17: EXPN(X, base) (OSCAT-interne Hilfsfunktion, hier nicht vorhanden) durch
- * Standard-EXPT ersetzt.
+ * Portiert 2026-09-17: Begrenzung N (1..8) und Exponenten-LIMIT (-37..8) schuetzt vor DINT-Ueberlauf.
  *)
-IF X = 0.0 THEN
+IF X = 0.0 OR N <= 0 THEN
 	RND := 0.0;
 ELSE
-	M := EXPT(10.0, N - CEIL(LOG(ABS(X))));
+	M := EXPT(10.0, LIMIT(-37.0, INT_TO_REAL(LIMIT(1, N, 8)) - CEIL(LOG(ABS(X))), 8.0));
 	RND := DINT_TO_REAL(REAL_TO_DINT(X * M)) / M;
 END_IF;
 

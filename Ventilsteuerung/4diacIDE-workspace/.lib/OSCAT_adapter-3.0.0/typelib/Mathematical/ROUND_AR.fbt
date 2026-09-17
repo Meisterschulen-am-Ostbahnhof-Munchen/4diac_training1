@@ -20,7 +20,7 @@
 	<FBNetwork>
 		<FB Name="ROUND" Type="OSCAT::Basic::POUs::Mathematical::ROUND" x="800" y="0">
 		</FB>
-		<FB Name="E_D_FF_ANY_1" Type="iec61499::events::E_D_FF_ANY_1" x="2400" y="200">
+		<FB Name="E_D_FF_ANY_1" Type="iec61499::events::E_D_FF_ANY" x="2400" y="200">
 		</FB>
 		<EventConnections>
 			<Connection Source="AR_IN.E1" Destination="ROUND.REQ" dx1="626.67"/>
@@ -30,8 +30,8 @@
 		<DataConnections>
 			<Connection Source="AR_IN.D1" Destination="ROUND.in" dx1="540"/>
 			<Connection Source="N" Destination="ROUND.N" dx1="540"/>
-			<Connection Source="ROUND." Destination="E_D_FF_ANY_1.D1" dx1="453.33"/>
-			<Connection Source="E_D_FF_ANY_1.Q1" Destination="AR_OUT.D1" dx1="940"/>
+			<Connection Source="ROUND." Destination="E_D_FF_ANY_1.D" dx1="453.33"/>
+			<Connection Source="E_D_FF_ANY_1.Q" Destination="AR_OUT.D1" dx1="940"/>
 		</DataConnections>
 	</FBNetwork>
 	<Attribute Name="eclipse4diac::core::TypeHash" Value="''"/>
