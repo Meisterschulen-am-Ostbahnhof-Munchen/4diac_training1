@@ -32,7 +32,7 @@
 		<Plugs>
 			<AdapterDeclaration Name="SPEED" Type="adapter::types::unidirectional::AUI" Comment="Rear PTO output shaft speed" x="4900" y="4400"/>
 			<AdapterDeclaration Name="SPEED_SET" Type="adapter::types::unidirectional::AUI" Comment="Rear PTO output shaft speed set point" x="4900" y="5100"/>
-			<AdapterDeclaration Name="TIMEOUT" Type="adapter::types::unidirectional::AX" Comment="Timeout Status" x="4900" y="3600"/>
+			<AdapterDeclaration Name="TIMEOUT" Type="adapter::types::unidirectional::AX" Comment="Timeout Status" x="4900" y="3500"/>
 		</Plugs>
 	</InterfaceList>
 	<FBNetwork>
@@ -42,7 +42,7 @@
 		</FB>
 		<FB Name="E_D_FF_SpeedSet" Type="iec61499::events::E_D_FF_ANY" x="3600" y="5100">
 		</FB>
-		<FB Name="E_D_FF_Timeout" Type="iec61499::events::E_D_FF_ANY" x="0" y="0">
+		<FB Name="E_D_FF_Timeout" Type="iec61499::events::E_D_FF" x="3500" y="3500">
 		</FB>
 		<EventConnections>
 			<Connection Source="INIT" Destination="I_CORE.INIT" dx1="66.67"/>

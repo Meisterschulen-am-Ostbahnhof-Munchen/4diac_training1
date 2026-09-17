@@ -33,13 +33,13 @@
 			<AdapterDeclaration Name="TIME_DELTA" Type="adapter::types::unidirectional::AUI" Comment="Time Delta" x="3600" y="5000"/>
 			<AdapterDeclaration Name="LAT_DELTA" Type="adapter::types::unidirectional::AI" Comment="Latitude Delta" x="3700" y="5700"/>
 			<AdapterDeclaration Name="LON_DELTA" Type="adapter::types::unidirectional::AI" Comment="Longitude Delta" x="3700" y="6500"/>
-			<AdapterDeclaration Name="TIMEOUT" Type="adapter::types::unidirectional::AX" Comment="Timeout Status" x="3700" y="3900"/>
+			<AdapterDeclaration Name="TIMEOUT" Type="adapter::types::unidirectional::AX" Comment="Timeout Status" x="4500" y="3900"/>
 		</Plugs>
 	</InterfaceList>
 	<FBNetwork>
 		<FB Name="I_CORE" Type="isobus::tecu::I_PosDeltaHighPrecRapidUpd" x="680" y="3646.67">
 		</FB>
-		<FB Name="E_D_FF_Timeout" Type="iec61499::events::E_D_FF_ANY" x="0" y="0">
+		<FB Name="E_D_FF_Timeout" Type="iec61499::events::E_D_FF" x="3200" y="3900">
 		</FB>
 		<EventConnections>
 			<Connection Source="INIT" Destination="I_CORE.INIT" dx1="66.67"/>

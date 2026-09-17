@@ -31,7 +31,7 @@
 			<AdapterDeclaration Name="NAV_SPEED" Type="adapter::types::unidirectional::AUI" Comment="Navigation-based vehicle speed" x="4400" y="5800"/>
 			<AdapterDeclaration Name="BEARING" Type="adapter::types::unidirectional::AUI" Comment="Compass bearing" x="4400" y="5000"/>
 			<AdapterDeclaration Name="ALTITUDE" Type="adapter::types::unidirectional::AUI" Comment="Altitude" x="4400" y="6500"/>
-			<AdapterDeclaration Name="TIMEOUT" Type="adapter::types::unidirectional::AX" Comment="Timeout Status" x="3200" y="4000"/>
+			<AdapterDeclaration Name="TIMEOUT" Type="adapter::types::unidirectional::AX" Comment="Timeout Status" x="4500" y="4000"/>
 		</Plugs>
 	</InterfaceList>
 	<FBNetwork>
@@ -43,7 +43,7 @@
 		</FB>
 		<FB Name="E_D_FF_Altitude" Type="iec61499::events::E_D_FF_ANY" x="3280" y="6520">
 		</FB>
-		<FB Name="E_D_FF_Timeout" Type="iec61499::events::E_D_FF_ANY" x="1900" y="4000">
+		<FB Name="E_D_FF_Timeout" Type="iec61499::events::E_D_FF" x="3300" y="4000">
 		</FB>
 		<EventConnections>
 			<Connection Source="INIT" Destination="I_VDS.INIT" dx1="66.67"/>

@@ -36,7 +36,7 @@
 		<Plugs>
 			<AdapterDeclaration Name="SPEED" Type="adapter::types::unidirectional::AUI" Comment="Wheel-based machine speed" x="4600" y="4000"/>
 			<AdapterDeclaration Name="DISTANCE" Type="adapter::types::unidirectional::AUDI" Comment="Wheel-based machine distance" x="4600" y="4500"/>
-			<AdapterDeclaration Name="TIMEOUT" Type="adapter::types::unidirectional::AX" Comment="Timeout Status" x="3800" y="3400"/>
+			<AdapterDeclaration Name="TIMEOUT" Type="adapter::types::unidirectional::AX" Comment="Timeout Status" x="4600" y="3400"/>
 		</Plugs>
 	</InterfaceList>
 	<FBNetwork>
@@ -46,7 +46,7 @@
 		</FB>
 		<FB Name="E_D_FF_Distance" Type="iec61499::events::E_D_FF_ANY" x="3300" y="4500">
 		</FB>
-		<FB Name="E_D_FF_Timeout" Type="iec61499::events::E_D_FF_ANY" x="2100" y="3400">
+		<FB Name="E_D_FF_Timeout" Type="iec61499::events::E_D_FF" x="3300" y="3400">
 		</FB>
 		<EventConnections>
 			<Connection Source="INIT" Destination="I_WBSD.INIT" dx1="2766.67"/>

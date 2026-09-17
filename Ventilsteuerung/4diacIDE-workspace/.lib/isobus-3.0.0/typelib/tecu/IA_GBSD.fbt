@@ -42,7 +42,7 @@
 		</FB>
 		<FB Name="E_D_FF_Distance" Type="iec61499::events::E_D_FF_ANY" x="2660" y="3460">
 		</FB>
-		<FB Name="E_D_FF_Timeout" Type="iec61499::events::E_D_FF_ANY" x="0" y="0">
+		<FB Name="E_D_FF_Timeout" Type="iec61499::events::E_D_FF" x="2300" y="1200">
 		</FB>
 		<EventConnections>
 			<Connection Source="INIT" Destination="I_GBSD.INIT" dx1="66.67"/>
@@ -51,8 +51,8 @@
 			<Connection Source="E_D_FF_Distance.EO" Destination="DISTANCE.E1" dx1="293.33"/>
 			<Connection Source="I_GBSD.IND" Destination="E_D_FF_Speed.CLK" dx1="333.33"/>
 			<Connection Source="E_D_FF_Speed.EO" Destination="SPEED.E1"/>
-			<Connection Source="I_GBSD.TIMEOUT" Destination="E_D_FF_Timeout.CLK" dx1="760"/>
-			<Connection Source="I_GBSD.IND" Destination="E_D_FF_Timeout.CLK" dx1="760"/>
+			<Connection Source="I_GBSD.TIMEOUT" Destination="E_D_FF_Timeout.CLK" dx1="526.67"/>
+			<Connection Source="I_GBSD.IND" Destination="E_D_FF_Timeout.CLK" dx1="526.67"/>
 			<Connection Source="E_D_FF_Timeout.EO" Destination="TIMEOUT.E1"/>
 		</EventConnections>
 		<DataConnections>

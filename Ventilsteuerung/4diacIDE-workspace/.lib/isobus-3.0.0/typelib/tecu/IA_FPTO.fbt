@@ -42,7 +42,7 @@
 		</FB>
 		<FB Name="E_D_FF_SpeedSet" Type="iec61499::events::E_D_FF_ANY" x="4540" y="3360">
 		</FB>
-		<FB Name="E_D_FF_Timeout" Type="iec61499::events::E_D_FF_ANY" x="0" y="0">
+		<FB Name="E_D_FF_Timeout" Type="iec61499::events::E_D_FF" x="3400" y="900">
 		</FB>
 		<EventConnections>
 			<Connection Source="INIT" Destination="I_CORE.INIT" dx1="1506.67"/>
@@ -51,8 +51,8 @@
 			<Connection Source="E_D_FF_Speed.EO" Destination="SPEED.E1"/>
 			<Connection Source="I_CORE.IND" Destination="E_D_FF_SpeedSet.CLK" dx1="266.67"/>
 			<Connection Source="E_D_FF_SpeedSet.EO" Destination="SPEED_SET.E1" dx1="153.33"/>
-			<Connection Source="I_CORE.TIMEOUT" Destination="E_D_FF_Timeout.CLK" dx1="866.67"/>
-			<Connection Source="I_CORE.IND" Destination="E_D_FF_Timeout.CLK" dx1="866.67"/>
+			<Connection Source="I_CORE.TIMEOUT" Destination="E_D_FF_Timeout.CLK" dx1="640"/>
+			<Connection Source="I_CORE.IND" Destination="E_D_FF_Timeout.CLK" dx1="640"/>
 			<Connection Source="E_D_FF_Timeout.EO" Destination="TIMEOUT.E1"/>
 		</EventConnections>
 		<DataConnections>

@@ -33,7 +33,7 @@
 			<AdapterDeclaration Name="POSITION" Type="adapter::types::unidirectional::AUS" Comment="Front Hitch Position" x="4500" y="5000"/>
 			<AdapterDeclaration Name="FORCE" Type="adapter::types::unidirectional::AUS" Comment="Front Nominal Lower Link Force" x="4500" y="5760"/>
 			<AdapterDeclaration Name="DRAFT" Type="adapter::types::unidirectional::AUI" Comment="Front Draft" x="4500" y="6520"/>
-			<AdapterDeclaration Name="TIMEOUT" Type="adapter::types::unidirectional::AX" Comment="Timeout Status" x="4000" y="3900"/>
+			<AdapterDeclaration Name="TIMEOUT" Type="adapter::types::unidirectional::AX" Comment="Timeout Status" x="4500" y="3900"/>
 		</Plugs>
 	</InterfaceList>
 	<FBNetwork>
@@ -45,7 +45,7 @@
 		</FB>
 		<FB Name="E_D_FF_Draft" Type="iec61499::events::E_D_FF_ANY" x="3426.67" y="6520">
 		</FB>
-		<FB Name="E_D_FF_Timeout" Type="iec61499::events::E_D_FF_ANY" x="0" y="0">
+		<FB Name="E_D_FF_Timeout" Type="iec61499::events::E_D_FF" x="3400" y="3900">
 		</FB>
 		<EventConnections>
 			<Connection Source="INIT" Destination="I_CORE.INIT" dx1="66.67"/>

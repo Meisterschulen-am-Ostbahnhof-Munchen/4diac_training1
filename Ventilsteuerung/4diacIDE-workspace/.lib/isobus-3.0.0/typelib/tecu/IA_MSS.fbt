@@ -32,7 +32,7 @@
 		<Plugs>
 			<AdapterDeclaration Name="SPEED" Type="adapter::types::unidirectional::AUI" Comment="Machine selected speed" x="4700" y="5000"/>
 			<AdapterDeclaration Name="DISTANCE" Type="adapter::types::unidirectional::AUDI" Comment="Machine selected distance" x="4800" y="5800"/>
-			<AdapterDeclaration Name="TIMEOUT" Type="adapter::types::unidirectional::AX" Comment="Timeout Status" x="3900" y="3500"/>
+			<AdapterDeclaration Name="TIMEOUT" Type="adapter::types::unidirectional::AX" Comment="Timeout Status" x="4200" y="3500"/>
 		</Plugs>
 	</InterfaceList>
 	<FBNetwork>
@@ -42,7 +42,7 @@
 		</FB>
 		<FB Name="E_D_FF_Distance" Type="iec61499::events::E_D_FF_ANY" x="3513.33" y="5760">
 		</FB>
-		<FB Name="E_D_FF_Timeout" Type="iec61499::events::E_D_FF_ANY" x="0" y="0">
+		<FB Name="E_D_FF_Timeout" Type="iec61499::events::E_D_FF" x="3000" y="3500">
 		</FB>
 		<EventConnections>
 			<Connection Source="INIT" Destination="I_CORE.INIT" dx1="66.67"/>
@@ -51,8 +51,8 @@
 			<Connection Source="E_D_FF_Speed.EO" Destination="SPEED.E1"/>
 			<Connection Source="I_CORE.IND" Destination="E_D_FF_Distance.CLK" dx1="266.67"/>
 			<Connection Source="E_D_FF_Distance.EO" Destination="DISTANCE.E1" dx1="266.67"/>
-			<Connection Source="I_CORE.TIMEOUT" Destination="E_D_FF_Timeout.CLK" dx1="746.67"/>
-			<Connection Source="I_CORE.IND" Destination="E_D_FF_Timeout.CLK" dx1="746.67"/>
+			<Connection Source="I_CORE.TIMEOUT" Destination="E_D_FF_Timeout.CLK" dx1="513.33"/>
+			<Connection Source="I_CORE.IND" Destination="E_D_FF_Timeout.CLK" dx1="513.33"/>
 			<Connection Source="E_D_FF_Timeout.EO" Destination="TIMEOUT.E1"/>
 		</EventConnections>
 		<DataConnections>
