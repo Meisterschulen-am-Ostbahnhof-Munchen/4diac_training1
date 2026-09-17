@@ -2,6 +2,8 @@
 <FBType Name="IA_Lighting" Comment="ISOBUS Adapter for Lighting Data (LD)">
 	<Identification Standard="ISO 11783-7" Classification="PGN 65088" Description="Copyright (c) 2024-2026 HR Agrartechnik GmbH  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0">
 	</Identification>
+	<VersionInfo Organization="HR Agrartechnik GmbH" Version="1.2" Author="Franz Höpfinger" Date="2026-09-17" Remarks="Bugfix (PR #241 Review, qodo-code-review[bot]: 'Normal traffic floods timeout consumers - every IND republishes Q_timeout even when it did not change'): E_D_FF_Timeout (E_D_FF_ANY) vor TIMEOUT eingefuegt, wie schon fuer die anderen Signale dieser Datei - I_CORE.TIMEOUT und I_CORE.IND feuern jetzt beide nur noch E_D_FF_Timeout.CLK, TIMEOUT.E1/D1 werden nur noch bei tatsaechlicher Aenderung von Q_timeout aktualisiert, nicht mehr bei jeder einzelnen Botschaft im gesunden Normalbetrieb.">
+	</VersionInfo>
 	<VersionInfo Organization="HR Agrartechnik GmbH" Version="1.1" Author="Franz Höpfinger" Date="2026-09-17" Remarks="Bugfix (Franz: 'IA_VDS hat einen Bug, moeglicherweise alle anderen auch'): .IND-&gt;TIMEOUT.E1 ergaenzt (analog IA_VDS) - bisher wurde TIMEOUT.E1 NUR von .TIMEOUT gefeuert (Timeout-Beginn), nie beim Eintreffen einer normalen Botschaft (.IND) - TIMEOUT.D1 (Q_timeout=FALSE) wurde also gesetzt, aber nie an den TIMEOUT-Plug propagiert, sobald der Timeout wieder endete.">
 	</VersionInfo>
 	<VersionInfo Organization="HR Agrartechnik GmbH" Version="1.0" Author="Franz Höpfinger" Date="2026-04-24" Remarks="initial API and implementation (Adapter Wrapper for I_Lighting)">
@@ -127,6 +129,8 @@
 		</FB>
 		<FB Name="C_IMPLEMENT_REAR_WORK_LIGHTS" Type="logiBUS::utils::quarter::QUARTER_TO_BOOL" x="4653.33" y="25333.33">
 		</FB>
+		<FB Name="E_D_FF_Timeout" Type="iec61499::events::E_D_FF_ANY" x="0" y="0">
+		</FB>
 		<EventConnections>
 			<Connection Source="INIT" Destination="I_CORE.INIT" dx1="66.67"/>
 			<Connection Source="I_CORE.INITO" Destination="INITO" dx1="66.67"/>
@@ -192,8 +196,9 @@
 			<Connection Source="C_IMPLEMENT_LEFT_FACING_WORK_LIGHTS.CNF" Destination="IMPLEMENT_LEFT_FACING_WORK_LIGHTS.E1"/>
 			<Connection Source="I_CORE.IND" Destination="C_IMPLEMENT_REAR_WORK_LIGHTS.REQ" dx1="1333.33"/>
 			<Connection Source="C_IMPLEMENT_REAR_WORK_LIGHTS.CNF" Destination="IMPLEMENT_REAR_WORK_LIGHTS.E1"/>
-			<Connection Source="I_CORE.TIMEOUT" Destination="TIMEOUT.E1" dx1="266.67"/>
-			<Connection Source="I_CORE.IND" Destination="TIMEOUT.E1" dx1="266.67"/>
+			<Connection Source="I_CORE.TIMEOUT" Destination="E_D_FF_Timeout.CLK" dx1="266.67"/>
+			<Connection Source="I_CORE.IND" Destination="E_D_FF_Timeout.CLK" dx1="266.67"/>
+			<Connection Source="E_D_FF_Timeout.EO" Destination="TIMEOUT.E1"/>
 		</EventConnections>
 		<DataConnections>
 			<Connection Source="QI" Destination="I_CORE.QI" dx1="1540"/>
@@ -261,7 +266,8 @@
 			<Connection Source="C_IMPLEMENT_LEFT_FACING_WORK_LIGHTS.Q" Destination="IMPLEMENT_LEFT_FACING_WORK_LIGHTS.D1"/>
 			<Connection Source="I_CORE.IMPLEMENT_REAR_WORK_LIGHTS" Destination="C_IMPLEMENT_REAR_WORK_LIGHTS.IB" dx1="66.67"/>
 			<Connection Source="C_IMPLEMENT_REAR_WORK_LIGHTS.Q" Destination="IMPLEMENT_REAR_WORK_LIGHTS.D1"/>
-			<Connection Source="I_CORE.Q_timeout" Destination="TIMEOUT.D1" dx1="333.33"/>
+			<Connection Source="I_CORE.Q_timeout" Destination="E_D_FF_Timeout.D" dx1="333.33"/>
+			<Connection Source="E_D_FF_Timeout.Q" Destination="TIMEOUT.D1"/>
 		</DataConnections>
 	</FBNetwork>
 	<Attribute Name="eclipse4diac::core::TypeHash" Value="''"/>
@@ -269,6 +275,6 @@
 
 <p>&nbsp;</p>
 
-<p><strong>TIMEOUT.E1-Verdrahtung:</strong> I_CORE.TIMEOUT (echter Timeout-Eintritt) UND I_CORE.IND (Normalbetrieb) sind beide auf den Adapter-Plug TIMEOUT.E1 verdrahtet - bewusst so, damit TIMEOUT.D1 (Q_timeout) am Adapter-Plug auch beim Zuruecksetzen auf false aktualisiert wird, nicht nur beim Eintreten des Timeouts. Der zugrundeliegende TIMEOUT/IND-Vertrag von I_CORE selbst ist in dessen eigener .fbt-Datei dokumentiert.</p>
+<p><strong>TIMEOUT.E1-Verdrahtung:</strong> I_CORE.TIMEOUT (echter Timeout-Eintritt) UND I_CORE.IND (Normalbetrieb) feuern beide E_D_FF_Timeout.CLK; E_D_FF_Timeout (E_D_FF_ANY, gespeist von I_CORE.Q_timeout) laesst TIMEOUT.E1 nur bei tatsaechlicher Wertaenderung durch - so wird TIMEOUT.D1 (Q_timeout) am Adapter-Plug beim Zuruecksetzen auf false weiterhin zuverlaessig aktualisiert, ohne bei jeder einzelnen Botschaft im gesunden Normalbetrieb erneut zu feuern. Der zugrundeliegende TIMEOUT/IND-Vertrag von I_CORE selbst ist in dessen eigener .fbt-Datei dokumentiert.</p>
 ]]></Attribute>
 </FBType>
