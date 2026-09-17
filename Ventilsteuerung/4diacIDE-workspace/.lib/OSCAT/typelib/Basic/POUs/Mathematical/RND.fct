@@ -47,7 +47,7 @@ END_VAR
  * significant digits.
  * Portiert 2026-09-17: Begrenzung N (1..8), Exponenten-LIMIT (-37..8) und Bereichspruefung schuetzen vor DINT-Ueberlauf.
  *)
-IF X = 0.0 OR N <= 0 THEN
+IF X = 0.0 THEN
 	RND := 0.0;
 ELSE
 	M := EXPT(10.0, LIMIT(-37.0, INT_TO_REAL(LIMIT(1, N, 8)) - CEIL(LOG(ABS(X))), 8.0));
