@@ -2,6 +2,8 @@
 <FBType Name="IA_PosDeltaHighPrecRapidUpd" Comment="ISOBUS Adapter for Position Delta, High Precision Rapid Update">
 	<Identification Standard="NMEA 2000" Classification="PGN 129027" Description="Copyright (c) 2024-2026 HR Agrartechnik GmbH  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0">
 	</Identification>
+	<VersionInfo Organization="HR Agrartechnik GmbH" Version="1.1" Author="Franz Höpfinger" Date="2026-09-17" Remarks="Bugfix (Franz: 'IA_VDS hat einen Bug, moeglicherweise alle anderen auch'): .IND-&gt;TIMEOUT.E1 ergaenzt (analog IA_VDS) - bisher wurde TIMEOUT.E1 NUR von .TIMEOUT gefeuert (Timeout-Beginn), nie beim Eintreffen einer normalen Botschaft (.IND) - TIMEOUT.D1 (Q_timeout=FALSE) wurde also gesetzt, aber nie an den TIMEOUT-Plug propagiert, sobald der Timeout wieder endete.">
+	</VersionInfo>
 	<VersionInfo Organization="HR Agrartechnik GmbH" Version="1.0" Author="Franz Höpfinger" Date="2026-04-19" Remarks="initial API and implementation (Adapter Wrapper for I_PosDeltaHighPrecRapidUpd)">
 	</VersionInfo>
 	<CompilerInfo packageName="isobus::tecu">
@@ -26,9 +28,9 @@
 			<VarDeclaration Name="STATUS" Type="STRING"/>
 		</OutputVars>
 		<Plugs>
-			<AdapterDeclaration Name="TIME_DELTA" Type="adapter::types::unidirectional::AUI" Comment="Time Delta" x="2560" y="4966.67"/>
-			<AdapterDeclaration Name="LAT_DELTA" Type="adapter::types::unidirectional::AI" Comment="Latitude Delta" x="2560" y="5726.67"/>
-			<AdapterDeclaration Name="LON_DELTA" Type="adapter::types::unidirectional::AI" Comment="Longitude Delta" x="2560" y="6486.67"/>
+			<AdapterDeclaration Name="TIME_DELTA" Type="adapter::types::unidirectional::AUI" Comment="Time Delta" x="3600" y="5000"/>
+			<AdapterDeclaration Name="LAT_DELTA" Type="adapter::types::unidirectional::AI" Comment="Latitude Delta" x="3700" y="5700"/>
+			<AdapterDeclaration Name="LON_DELTA" Type="adapter::types::unidirectional::AI" Comment="Longitude Delta" x="3700" y="6500"/>
 			<AdapterDeclaration Name="TIMEOUT" Type="adapter::types::unidirectional::AX" Comment="Timeout Status" x="3700" y="3900"/>
 		</Plugs>
 	</InterfaceList>
@@ -42,6 +44,7 @@
 			<Connection Source="I_CORE.IND" Destination="LAT_DELTA.E1" dx1="266.67"/>
 			<Connection Source="I_CORE.IND" Destination="LON_DELTA.E1" dx1="266.67"/>
 			<Connection Source="I_CORE.TIMEOUT" Destination="TIMEOUT.E1" dx1="760"/>
+			<Connection Source="I_CORE.IND" Destination="TIMEOUT.E1" dx1="760"/>
 		</EventConnections>
 		<DataConnections>
 			<Connection Source="QI" Destination="I_CORE.QI" dx1="66.67"/>
