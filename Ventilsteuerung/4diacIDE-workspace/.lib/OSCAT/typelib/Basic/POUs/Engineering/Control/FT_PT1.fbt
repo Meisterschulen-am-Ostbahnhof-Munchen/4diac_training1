@@ -2,6 +2,8 @@
 <FBType Name="FT_PT1" Comment="Low Pass Filter (PT1)">
 	<Identification Standard="61499-1" Description="FT_PT1 is an low pass filter with a programmable time T and faktor K.">
 	</Identification>
+	<VersionInfo Version="1.1" Author="Franz Höpfinger" Date="2026-09-17" Remarks="Bugfix (Review-Bot auf training1 PR #252, verifiziert): RST setzte init/out zurueck, aber nicht tx/last/delta_t - ein externer RST-Aufruf (jetzt ueber FT_PT1_AR.RST erreichbar) liess die naechste REQ-Ausfuehrung mit einem stehengebliebenen last einen riesigen delta_t berechnen und dadurch einen falschen Ausreisser-Schritt. RST liest jetzt T_PLC_US() neu und setzt last/delta_t entsprechend zurueck.">
+	</VersionInfo>
 	<VersionInfo Version="1.0" Author="Franz Höpfinger" Date="2025-12-21" Remarks="initial API and implementation and/or initial documentation">
 	</VersionInfo>
 	<CompilerInfo packageName="OSCAT::Basic::POUs::Engineering::Control">
@@ -17,7 +19,7 @@
 				<With Var="TM"/>
 				<With Var="K"/>
 			</Event>
-			<Event Name="RST" Type="Event" Comment="Reset">
+			<Event Name="RST" Type="Event" Comment="Reset Filter">
 			</Event>
 		</EventInputs>
 		<EventOutputs>
@@ -42,7 +44,7 @@
 		<InternalVars>
 			<VarDeclaration Name="last" Type="UDINT" Comment="Last execution time"/>
 			<VarDeclaration Name="tx" Type="UDINT" Comment="Current execution time"/>
-			<VarDeclaration Name="init" Type="BOOL" Comment="Initialization flag"/>
+			<VarDeclaration Name="init" Type="BOOL" InitialValue="FALSE" Comment="Initialization flag"/>
 		</InternalVars>
 		<ECState Name="EINIT" Comment="Initialization">
 			<ECAction Algorithm="EINIT" Output="INITO"/>
@@ -65,6 +67,9 @@ last := UDINT#0;
 			<ST><![CDATA[
 init := TRUE;
 out := K * in;
+tx := T_PLC_US();
+last := tx;
+delta_t := UDINT#0;
 ]]></ST>
 		</Algorithm>
 		<Algorithm Name="REQ">
@@ -81,7 +86,7 @@ ELSE
 
 		(* PT1 Formula: out = out + (target - out) * (dt / T) *)
 	IF TIME_TO_REAL(TM) > 0.0 THEN
-		out := out + (in * K - out) * UDINT_TO_REAL(delta_t) / TIME_TO_REAL(TM);
+	out := out + (in * K - out) * UDINT_TO_REAL(delta_t) / TIME_TO_REAL(TM) * 1.0E-3;
 	END_IF;
 
 		(* Avoid denormalized numbers / underrun *)

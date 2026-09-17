@@ -567,9 +567,8 @@ ISO-Designer, selecting such a child shows its position as `-4` (or whatever
 the border is) instead of `0`, even though the file's own stored `Top`/`Left`
 really is `0`. Read that `-4` literally: it means "4px inside the border,
 measured from the content-area origin" — the GUI is telling you the content
-origin, not the raw stored coordinate. The fix is `local = (original_absolute
-
-- button_origin) + border_thickness` for **every** child, not just the ones
+origin, not the raw stored coordinate. The fix is `local = (original_absolute - button_origin) + border_thickness`
+for **every** child, not just the ones
 that happen to sit at the button's own `0,0`. Forgetting this on a button
 whose content already fills the button's Width/Height with zero slack (a
 common case when the button was sized as the exact bounding box of

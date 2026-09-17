@@ -138,9 +138,14 @@ fails 4diac IDE validation with **"Connection source endpoint missing: NumberVar
 
 **Do not copy a standard IEC 61131-3/4diac block from an external source into this project's own `.lib` folder on your own initiative.** Always ask the user first, even if a block looks like an obvious/needed reuse — vendoring is a deliberate per-block decision the user makes, not something to do proactively just because a standard block would fit.
 
-- **`C:\4diac\4diac-ide_...\typelibrary\` is *not* an authoritative source.** It's a local, unversioned nightly-build install on this machine — not a git repo, not necessarily current, not something to treat as "the" upstream. Copying a block from there and calling it vendored is wrong.
+> [!NOTE]
+> **Origin of this rule**: this section exists because of a real past incident where blocks were repeatedly ("penetrant") copied, unprompted, from `C:\4diac\4diac-ide_3.3.0-win32.win32.x86_64_sp11\4diac-ide\typelibrary` (the bundled typelibrary of the locally-installed 4diac IDE) straight into `.lib` — treating whatever happened to ship with the IDE install as if it were an authoritative, ready-to-vendor source. The rule targets *that specific failure mode* (silently sourcing from the local IDE install and vendoring on your own initiative), not external ports in general.
+>
+> **This is NOT violated when the user has explicitly named the source and asked for the port.** If the user gives you a specific external source directory (e.g. `C:\git2\ms\AixOCAT`) and explicitly instructs you to port specific blocks from it into a specific `.lib` location, that instruction itself *is* the required "ask first" — go ahead and do it. Don't second-guess an explicit, already-authorized instruction as if it might be the same problem; it isn't, because the deliberate per-block decision was already made by the user, not by you.
+
+- **`C:\4diac\4diac-ide_...\typelibrary\` is *not* an authoritative source.** It's a local, unversioned nightly-build install on this machine — not a git repo, not necessarily current, not something to treat as "the" upstream. Copying a block from there on your own initiative and calling it vendored is wrong.
 - **`C:\git2\ms\4diac-ide` is the actual canonical upstream** — a real git checkout of the eclipse4diac/4diac-ide source. If a standard block genuinely needs vendoring after discussing it with the user, source it from there, not from the nightly install folder.
-- This applies to every external/standard block (conversion, comparison, bitwiseOperators, signalprocessing, etc.) — not just ones that happened to come up before. Confirm with the user which exact block, from which exact source, before creating any file under `.lib`.
+- This applies to every external/standard block (conversion, comparison, bitwiseOperators, signalprocessing, etc.) — not just ones that happened to come up before. Before creating any file under `.lib` on your own initiative, confirm with the user which exact block, from which exact source. If the user already named the exact source and the exact blocks in their own instruction, that confirmation has already happened — proceed.
 
 
 ### 11. Connection Categorization: `<AdapterConnections>` vs `<DataConnections>`
@@ -162,3 +167,15 @@ In `test_AX` exercises, always check `.lib/adapter-3.0.0/` and `.lib/MyLib_AX-1.
 - **Event Demultiplexers**: Use `adapter::events::unidirectional::AUI_DEMUX_8` (with `AUI` adapter socket `K`) paired with `adapter::conversion::unidirectional::AB_TO_AUI` instead of standard `E_DEMUX_8` + `F_BYTE_TO_UINT`.
 - **SubApplications**: Check if an `_AX` SubApp type exists in `MyLib::sys` (e.g. `T_FF_EVENT_AX`, `T_FF_ILOCK_EVENT_AX`, `AE2_ILOCK_T_FF_TO_AX`) before using non-adapter SubApp types (`T_FF_EVENT`, `T_FF_ILOCK_EVENT`).
 - **Analog/Real Random & Hysteresis**: Use `adapter::utils::FB_AR_RANDOM` (wrapping `FB_RANDOM`), `adapter::events::unidirectional::AR_D_FF_HYS_TMIN`, `adapter::types::unidirectional::AR::initval::initval_AR`, and `adapter::iec61131::comparison::AR_GT` for adapter-native analog/real hysteresis flip-flops.
+
+### 13. No Variable Without an INIT Path: Configuration Constants Belong on an Adapter Socket, Not a Bare `InputVar`
+
+**A plain `InputVar` used as a standalone configuration constant on a `.lib` building block (e.g. a timer's delay time) must not be left as a bare typed variable.** Give it a proper initialization path instead: declare it as a `Socket` of the matching adapter type (e.g. `adapter::types::unidirectional::ATM` for `TIME`, `AR` for `REAL`) and feed it, at the instantiation site, from the project's standard `initval_<TYPE>` block (e.g. `adapter::types::unidirectional::TIME::initval::initval_ATM`). Observe the `INIT`/`INITO` rule from Section 7:
+
+- **In Composite FBs (`.fbt`)**: `INIT` and `INITO` must be exposed on the interface and explicitly wired to `initval.INIT` / `initval.INITO`.
+- **In SubApp networks (`.SUB`)**: Connect the `initval_*` adapter plug to the target adapter socket (e.g. `DT`), but **do not add explicit event connections** to `initval.INIT` or `INITO`, as `EInit` events are automatically distributed in `.SUB` files.
+
+Reference the field via `.D1` in `DataConnections` (e.g. `Source="DT.D1" Destination="E_DELAY.DT"`), exactly like an ordinary Socket's data field.
+
+- **Applied fix (2026-09-17, Franz: "es darf keine Variable OHNE INIT geben")**: `adapter::events::unidirectional::timers::AE_DELAY`, `adapter::events::bidirectional::ASR2_DELAY`, and the newly created `adapter::events::bidirectional::AE2_DELAY` all previously had (or would have had) a bare `DT:TIME` `InputVar`. All three now expose `DT` (or `DT_SET`/`DT_RESET` where more than one independent time is needed) as an `ATM` `Socket` instead.
+- This does **not** forbid every `InputVar` with an `InitialValue` — a scalar tuning parameter meant to be set once per instance via a plain `Parameter` at instantiation (e.g. `K`/`run` on `OSCAT_adapter::Control::FT_DERIV_AR`) is a different, accepted pattern and stays as-is. The distinction: if the value is naturally part of this block's *adapter-based dataflow boundary* (like a delay time feeding a chain of delay blocks) rather than a one-off per-instance tuning knob, route it through the adapter+`initval` convention, not a bare `InputVar`.
