@@ -242,7 +242,7 @@ and issue the mask change). Two pieces wire together:
    namespace, unrelated to the 1000+/6000+/etc. ObjectID blocks above (see
    the block-convention table's `Macro | 0 (own space)` row).
 
-1. **The event that fires it** — an `<Events>` block on the `CSoftKey`/`CKey`
+2. **The event that fires it** — an `<Events>` block on the `CSoftKey`/`CKey`
    object, sibling to its `<PropertySheet>` and `<Objects>` (goes between
    them):
 
@@ -568,7 +568,6 @@ the border is) instead of `0`, even though the file's own stored `Top`/`Left`
 really is `0`. Read that `-4` literally: it means "4px inside the border,
 measured from the content-area origin" — the GUI is telling you the content
 origin, not the raw stored coordinate. The fix is `local = (original_absolute
-
 - button_origin) + border_thickness` for **every** child, not just the ones
 that happen to sit at the button's own `0,0`. Forgetting this on a button
 whose content already fills the button's Width/Height with zero slack (a
