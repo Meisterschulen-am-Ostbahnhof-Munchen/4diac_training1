@@ -33,7 +33,22 @@ const unsigned long ISO_OP_MEMORY_CLASS isoOP_DefaultPool_Offset_Id[] = {
 	  3179,  // NumberVariable_Ground_based_machine_speed_Offset
 	  3186,  // NumberVariable_Wheel_based_machine_distance_Offset
 	  3193,  // NumberVariable_Rear_PTO_output_shaft_speed_Offset
-	  3200,  // FontAttributes_OutputNumber_Offset
-	  3208,  // FontAttributes_OutputString_Offset
-	  3216,  // LineAttributes_Offset
+	  3200,  // NumberVariable_TECU_Speed_WBSD_Offset
+	  3207,  // NumberVariable_TECU_Speed_GBSD_Offset
+	  3214,  // NumberVariable_TECU_Speed_MSS_Offset
+	  3221,  // NumberVariable_TECU_Speed_VDS_Offset
+	  3228,  // NumberVariable_TECU_Speed_COGSOG_Offset
+	  3235,  // NumberVariable_TECU_FHS_Position_Offset
+	  3242,  // NumberVariable_TECU_RHS_Position_Offset
+	  3249,  // NumberVariable_TECU_FHS_Force_Offset
+	  3256,  // NumberVariable_TECU_RHS_Force_Offset
+	  3263,  // NumberVariable_TECU_FHS_Draft_Offset
+	  3270,  // NumberVariable_TECU_RHS_Draft_Offset
+	  3277,  // NumberVariable_TECU_FPTO_Speed_Offset
+	  3284,  // NumberVariable_TECU_RPTO_Speed_Offset
+	  3291,  // NumberVariable_TECU_FPTO_SpeedSet_Offset
+	  3298,  // NumberVariable_TECU_RPTO_SpeedSet_Offset
+	  3305,  // FontAttributes_OutputNumber_Offset
+	  3313,  // FontAttributes_OutputString_Offset
+	  3321,  // LineAttributes_Offset
 };  // isoOP_DefaultPool_Offset_Id
