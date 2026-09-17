@@ -12,6 +12,8 @@
 	</VersionInfo>
 	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.6" Author="Franz Höpfinger" Date="2026-09-18" Remarks="Franz: 'TriggerMIN TriggerMAX bitte TriggerMID genau gleich machen' - Button_C_MID + SERVER_MID_TRIGGER (Button/Methode-Teil) durch eine SubApp TriggerMID (Button_Method_IE) ersetzt, strukturell identisch zu TriggerMIN/TriggerMAX. Der lokale Toggle-Kanal (AX_SUBSCRIBE_MID+AX_RF_TRIG_MID) bleibt bestehen (siehe v1.5-Begruendung), wird aber jetzt sauber getrennt als zusaetzliche Quelle in E_MERGE_MID gemergt (E_MERGE_4 -&gt; E_MERGE_3: TriggerMID.IND + AX_RF_TRIG_MID.ER/EF) statt als 4. Quelle in einem grossen Merge mit SERVER_0 direkt inline verdrahtet zu sein.">
 	</VersionInfo>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.7" Author="Franz Höpfinger" Date="2026-09-18" Remarks="Franz: 'MID, MIN und MAX sind GLEICH' - AX_SUBSCRIBE_MID/AX_RF_TRIG_MID/E_MERGE_MID (der lokale Toggle-Kanal aus v1.5/v1.6) ersatzlos entfernt, ID_MID_READ entfaellt. TriggerMID ist jetzt eine reine Button_Method_IE-Instanz, 1:1 baugleich zu TriggerMIN/TriggerMAX, direkt auf CALIBRATE.C_MID verdrahtet. ACHTUNG: Fahrwerk_Mittelpunkt_Automatik.SUB (Achslenkung/Hangausgleich) toggelt/publiziert weiterhin auf den bisherigen ID_MID_TRIGGER_WRITE-Knoten, den jetzt niemand mehr abonniert - dieser Pfad ist damit funktionslos, bis Fahrwerk_Mittelpunkt_Automatik.SUB auf einen Aufruf von ID_MID_TRIGGER_METHOD umgestellt wird (lokaler CALL_METHOD schlug bisher fehl, siehe v1.5 - noch ungeklaert, wie das dort geloest wird).">
+	</VersionInfo>
 	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.1" Author="Franz Höpfinger" Date="2026-09-11" Remarks="C_MID zusaetzlich per lokalem SERVER_0-Methodenaufruf (ID_MID_TRIGGER_METHOD, ACTION=CREATE_METHOD) ausloesbar - reiner RPC-Trigger fuer lokale Aufrufer (z.B. Achslenkung_Automatik.SUB per CLIENT_0), kein Toggle/PUBLISH/SUBSCRIBE-Umweg noetig wie beim echten Remote-Web-Kanal (ID_MID_READ). Per E_MERGE_MID_C mit dem bestehenden Button/Web-Merge zusammengefuehrt.">
 	</VersionInfo>
 	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2026-09-11" Remarks="3-Punkt-Pendant zu logiBUS_AI_Calibrate_IDA_OPC (AR_CALIBRATE_3P_REF statt AR_CALIBRATE_2P_REF, 3 statt 2 Kalibrierpunkte/Tasten/Referenzwerte) - Sample fuer Sensoren mit Mittelstellung, siehe Workspace_AI_Calibrate_3P.">
@@ -34,8 +36,7 @@
 			<VarDeclaration Name="ID_RAW_WRITE" Type="WSTRING" Comment="Rohwert-Ruckmelde-Adresse (DWORD 0-4095, ACTION=PUBLISH)"/>
 			<VarDeclaration Name="ID_CAL_WRITE" Type="WSTRING" Comment="Kalibrierter-Wert-Ruckmelde-Adresse (REAL, ACTION=PUBLISH)"/>
 			<VarDeclaration Name="ID_MIN_METHOD" Type="WSTRING" Comment="Methodenadresse (ACTION=CREATE_METHOD) fuer den argumentlosen C_MIN-Trigger - gleichberechtigt zur lokalen VT-Taste aufrufbar, sowohl vom OPC-UA-Dashboard als auch per CLIENT_0 von einer anderen Station (siehe OPC_UA_VERNETZUNG.md Punkt 14 - kein Toggle/Subscribe-Umweg mehr)"/>
-			<VarDeclaration Name="ID_MID_READ" Type="WSTRING" Comment="Lokale Self-Subscribe-Adresse fuer C_MID (BOOL, Toggle bei jeder Flanke) - WICHTIG: bleibt AX_SUBSCRIBE_1+AX_RF_TRIG (nicht auf Methode umgestellt wie ID_MIN/ID_MAX), weil lokaler CALL_METHOD auf derselben Station laut 4diac-Doku nicht zulaessig ist (FORTE-Log: 'Cannot perform action CALL_METHOD locally') - siehe Fahrwerk_Mittelpunkt_Automatik.SUB v2.2, dieselbe Station kann C_MID nur ueber diesen Toggle-Kanal ausloesen, nicht per CLIENT_0"/>
-			<VarDeclaration Name="ID_MID_TRIGGER_METHOD" Type="WSTRING" Comment="Zusaetzliche Methodenadresse (ACTION=CREATE_METHOD) fuer C_MID - nur fuer Dashboard/andere Stationen per CLIENT_0 (die ja nicht lokal sind), gleichberechtigt zu Button/ID_MID_READ"/>
+			<VarDeclaration Name="ID_MID_TRIGGER_METHOD" Type="WSTRING" Comment="Methodenadresse (ACTION=CREATE_METHOD) fuer den argumentlosen C_MID-Trigger - siehe ID_MIN_METHOD"/>
 			<VarDeclaration Name="ID_MAX_METHOD" Type="WSTRING" Comment="Methodenadresse (ACTION=CREATE_METHOD) fuer den argumentlosen C_MAX-Trigger - siehe ID_MIN_METHOD"/>
 			<VarDeclaration Name="stObjMinRef" Type="logiBUS::utils::conversion::phys::NumericObjectPool_S" Comment="Object ID + Scale/Offset/Decimals CNumberVariable (MIN_REF-Referenzwert, VT-Eingabefeld + OPC-UA)" InitialValue="(u16ObjId := ID_NULL, r32Scale := 1.0, i32Offset := 0, u8Decimals := 1)"/>
 			<VarDeclaration Name="stObjMidRef" Type="logiBUS::utils::conversion::phys::NumericObjectPool_S" Comment="Object ID + Scale/Offset/Decimals CNumberVariable (MID_REF-Referenzwert, VT-Eingabefeld + OPC-UA)" InitialValue="(u16ObjId := ID_NULL, r32Scale := 1.0, i32Offset := 0, u8Decimals := 1)"/>
@@ -63,13 +64,6 @@
 		</SubApp>
 		<SubApp Name="TriggerMID" Type="MyLib::sys::Button_Method_IE" x="-6600" y="1000">
 		</SubApp>
-		<FB Name="AX_SUBSCRIBE_MID" Type="adapter::net::AX_SUBSCRIBE_1" x="-8550" y="2000">
-			<Parameter Name="QI" Value="TRUE"/>
-		</FB>
-		<FB Name="AX_RF_TRIG_MID" Type="adapter::events::unidirectional::AX_RF_TRIG" x="-6750" y="2150">
-		</FB>
-		<FB Name="E_MERGE_MID" Type="iec61499::events::E_MERGE_3" x="-2900" y="2200">
-		</FB>
 		<SubApp Name="TriggerMAX" Type="MyLib::sys::Button_Method_IE" x="-6600" y="2000">
 		</SubApp>
 		<FB Name="INI_X_MIN" Type="eclipse4diac::storage::INI_AR2" x="3400" y="1300">
@@ -111,14 +105,8 @@
 		<SubApp Name="PublishCal" Type="MyLib::sys::AR_TO_Q_Publish_OPC" x="3400" y="-400">
 		</SubApp>
 		<EventConnections>
-			<Connection Source="PublishCal.INITO" Destination="AX_SUBSCRIBE_MID.INIT" dx1="80" dx2="80" dy="700">
-				<Attribute Name="Visible" Value="false"/>
-			</Connection>
 			<Connection Source="TriggerMIN.IND" Destination="CALIBRATE.C_MIN" dx1="313.33"/>
-			<Connection Source="TriggerMID.IND" Destination="E_MERGE_MID.EI1" dx1="1780"/>
-			<Connection Source="AX_RF_TRIG_MID.ER" Destination="E_MERGE_MID.EI2" dx1="400"/>
-			<Connection Source="AX_RF_TRIG_MID.EF" Destination="E_MERGE_MID.EI3" dx1="1150"/>
-			<Connection Source="E_MERGE_MID.EO" Destination="CALIBRATE.C_MID" dx1="400"/>
+			<Connection Source="TriggerMID.IND" Destination="CALIBRATE.C_MID" dx1="400"/>
 			<Connection Source="TriggerMAX.IND" Destination="CALIBRATE.C_MAX"/>
 		</EventConnections>
 		<DataConnections>
@@ -167,9 +155,6 @@
 			<Connection Source="ID_MIN_METHOD" Destination="TriggerMIN.ID_METHOD" dx1="1400">
 				<Attribute Name="Visible" Value="false"/>
 			</Connection>
-			<Connection Source="ID_MID_READ" Destination="AX_SUBSCRIBE_MID.ID" dx1="1400">
-				<Attribute Name="Visible" Value="false"/>
-			</Connection>
 			<Connection Source="ID_MID_TRIGGER_METHOD" Destination="TriggerMID.ID_METHOD" dx1="1400">
 				<Attribute Name="Visible" Value="false"/>
 			</Connection>
@@ -216,7 +201,6 @@
 			<Connection Source="MID_REF_LIT.VALUEO" Destination="CALIBRATE.Y_MID" dx1="6780"/>
 			<Connection Source="MAX_REF_LIT.VALUEO" Destination="CALIBRATE.Y_MAX" dx1="6760"/>
 			<Connection Source="CALIBRATE.Y" Destination="PublishCal.AR_IN" dx1="300"/>
-			<Connection Source="AX_SUBSCRIBE_MID.OUT" Destination="AX_RF_TRIG_MID.QI" dx1="300"/>
 		</AdapterConnections>
 	</SubAppNetwork>
 </SubAppType>
