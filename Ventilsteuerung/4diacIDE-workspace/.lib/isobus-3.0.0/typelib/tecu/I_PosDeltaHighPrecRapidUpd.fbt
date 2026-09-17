@@ -17,7 +17,7 @@
 				<With Var="QO"/>
 				<With Var="STATUS"/>
 			</Event>
-			<Event Name="IND" Type="Event" Comment="Indication from Resource">
+			<Event Name="IND" Type="Event" Comment="Indication from Resource - feuert bei jedem Zyklus ohne aktiven Timeout und publiziert dabei auch den Reset von Q_timeout auf false.">
 				<With Var="QO"/>
 				<With Var="timestamp_data"/>
 				<With Var="SID"/>
@@ -27,7 +27,7 @@
 				<With Var="Q_timeout"/>
 				<With Var="LongitudeDelta"/>
 			</Event>
-			<Event Name="TIMEOUT" Type="Event">
+			<Event Name="TIMEOUT" Type="Event" Comment="Feuert ausschliesslich beim tatsaechlichen Eintreten eines Timeouts (Entry-Trigger). Das Zuruecksetzen von Q_timeout auf false wird NICHT hier, sondern ueber IND gemeldet.">
 				<With Var="timestamp_timeout"/>
 				<With Var="STATUS"/>
 				<With Var="Q_timeout"/>
@@ -49,4 +49,10 @@
 		</OutputVars>
 	</InterfaceList>
 	<Attribute Name="eclipse4diac::core::TypeHash" Value="''"/>
+	<Attribute Name="Documentation" Type="CDATA"><![CDATA[<p>The &quot;Position Delta, High Precision Rapid Update&quot; Parameter Group is intended for applications where very high precision and very fast update rates are needed for position data. This PGN can provide delta position changes down to 1 millimeter with a delta time period accurate to 5 milliseconds</p>
+
+<p>&nbsp;</p>
+
+<p><strong>TIMEOUT / IND Vertrag:</strong> TIMEOUT feuert ausschliesslich beim tatsaechlichen Eintreten eines Timeouts (Q_timeout wird true). Das Zuruecksetzen von Q_timeout auf false (Timeout vorbei) wird bewusst NICHT nochmal separat ueber TIMEOUT gemeldet, sondern kommt ueber IND - das feuert bei jedem Zyklus ohne aktiven Timeout und publiziert Q_timeout mit. Nachgeschaltete Bausteine, die auf das Ende eines Timeouts reagieren muessen, werten dafuer IND mit Q_timeout==false aus, nicht ein zweites TIMEOUT-Event.</p>
+]]></Attribute>
 </FBType>

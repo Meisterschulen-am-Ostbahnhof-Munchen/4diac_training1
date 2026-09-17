@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SubAppType Name="AX_OR_3_SPLIT" Comment="3 unabhaengige AX-Signale je einzeln durchreichen (OUT1/OUT2/OUT3 = IN1/IN2/IN3) UND zusaetzlich gemeinsam ODER-verknuepfen (OUT_OR = IN1 OR IN2 OR IN3) - Sammelstatus &apos;irgendeiner der 3 ist aktiv&apos;, ohne die Einzelsignale zu verlieren.">
+	<Identification Standard="61499-2">
+	</Identification>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2026-09-17" Remarks="Ausgelagert aus Baender_Individual_Toggle.SUB (Franz: 'AX_SPLIT_2 AX_SPLIT_3 AX_SPLIT_4 AX_OR_3 in eine SUB auslagern') - dort 3x AX_SPLIT_2 (je 1 Zweig einzeln raus, 1 Zweig in ein gemeinsames AX_OR_3) fuer den Sammelstatus AX_Alle ('ist irgendein Band an'). Wiederverwendbarer, generischer Baustein - nicht baenderspezifisch.">
+	</VersionInfo>
+	<CompilerInfo packageName="MyLib::sys">
+	</CompilerInfo>
+	<SubAppInterfaceList>
+		<Plugs>
+			<AdapterDeclaration Name="OUT1" Type="adapter::types::unidirectional::AX" Comment="Durchgereicht von IN1"/>
+			<AdapterDeclaration Name="OUT2" Type="adapter::types::unidirectional::AX" Comment="Durchgereicht von IN2"/>
+			<AdapterDeclaration Name="OUT3" Type="adapter::types::unidirectional::AX" Comment="Durchgereicht von IN3"/>
+			<AdapterDeclaration Name="OUT_OR" Type="adapter::types::unidirectional::AX" Comment="IN1 OR IN2 OR IN3 - Sammelstatus"/>
+			<AdapterDeclaration Name="OUT_OR2" Type="adapter::types::unidirectional::AX"/>
+		</Plugs>
+		<Sockets>
+			<AdapterDeclaration Name="IN1" Type="adapter::types::unidirectional::AX"/>
+			<AdapterDeclaration Name="IN2" Type="adapter::types::unidirectional::AX"/>
+			<AdapterDeclaration Name="IN3" Type="adapter::types::unidirectional::AX"/>
+		</Sockets>
+	</SubAppInterfaceList>
+	<SubAppNetwork>
+		<FB Name="Split1" Type="adapter::events::unidirectional::AX_SPLIT_2" x="666.67" y="33.33">
+		</FB>
+		<FB Name="Split2" Type="adapter::events::unidirectional::AX_SPLIT_2" x="666.67" y="793.33">
+		</FB>
+		<FB Name="Split3" Type="adapter::events::unidirectional::AX_SPLIT_2" x="666.67" y="1553.33">
+		</FB>
+		<FB Name="OR_3" Type="adapter::booleanOperators::AX_OR_3" x="2000" y="2000">
+		</FB>
+		<FB Name="AX_SPLIT_2" Type="adapter::events::unidirectional::AX_SPLIT_2" x="3200" y="2100">
+		</FB>
+		<AdapterConnections>
+			<Connection Source="IN1" Destination="Split1.IN" dx1="3826.67"/>
+			<Connection Source="IN2" Destination="Split2.IN" dx1="2880"/>
+			<Connection Source="IN3" Destination="Split3.IN" dx1="66.67"/>
+			<Connection Source="Split1.OUT1" Destination="OUT1" dx1="333.33"/>
+			<Connection Source="Split2.OUT1" Destination="OUT2" dx1="1073.33"/>
+			<Connection Source="Split3.OUT1" Destination="OUT3" dx1="1333.33"/>
+			<Connection Source="Split1.OUT2" Destination="OR_3.IN1" dx1="266.67"/>
+			<Connection Source="Split2.OUT2" Destination="OR_3.IN2" dx1="133.33"/>
+			<Connection Source="Split3.OUT2" Destination="OR_3.IN3" dx1="66.67"/>
+			<Connection Source="AX_SPLIT_2.OUT1" Destination="OUT_OR" dx1="5846.67"/>
+			<Connection Source="OR_3.OUT" Destination="AX_SPLIT_2.IN" dx1="393.33"/>
+			<Connection Source="AX_SPLIT_2.OUT2" Destination="OUT_OR2" dx1="6180"/>
+		</AdapterConnections>
+	</SubAppNetwork>
+</SubAppType>
