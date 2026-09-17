@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SubAppType Name="Uebung_078_AUI" Comment="FHS Position/Force/Draft auf UT ausgeben mit AR_Timeout_Zero (Adapter Version)">
+	<Identification Standard="61499-2" Description="Copyright (c) 2026 Meisterschulen am Ostbahnhof  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0">
+	</Identification>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2026-09-17" Remarks="ISOBUS TECU Front Hitch Status (FHS): Position/Force/Draft mit AR_Timeout_Zero Fendt-Schaltung auf UT ausgeben (Adapter Version, analog Krauternter TECU_FHS.SUB)">
+	</VersionInfo>
+	<CompilerInfo packageName="Uebungen">
+		<Import declaration="Uebungen::const::UT::TECU::DefaultPool_TECU_Numeric::NumberVariable_Wheel_based_machine_speed_N"/>
+	</CompilerInfo>
+	<SubAppInterfaceList>
+	</SubAppInterfaceList>
+	<SubAppNetwork>
+		<FB Name="FHS_Inst" Type="isobus::tecu::IA_FHS" x="413.33" y="4006.67">
+			<Parameter Name="QI" Value="TRUE"/>
+		</FB>
+		<SubApp Name="Conv_Position" Type="MyLib::sys::AUS_FIELDBUS_USINT_TO_AR" x="1506.67" y="1360">
+		</SubApp>
+		<SubApp Name="TZ_Position" Type="MyLib::sys::AR_Timeout_Zero" x="3873.33" y="2526.67">
+		</SubApp>
+		<FB Name="Q_NumericValue_FHS_Position" Type="isobus::UT::Q::Q_NumericValue_PHYSA" x="6726.67" y="2100">
+			<Parameter Name="stObj" Value="NumberVariable_Wheel_based_machine_speed_N"/>
+		</FB>
+		<SubApp Name="Conv_Force" Type="MyLib::sys::AUS_FIELDBUS_USINT_TO_AR" x="1640" y="3373.33">
+		</SubApp>
+		<SubApp Name="TZ_Force" Type="MyLib::sys::AR_Timeout_Zero" x="3806.67" y="4593.33">
+		</SubApp>
+		<FB Name="Q_NumericValue_FHS_Force" Type="isobus::UT::Q::Q_NumericValue_PHYSA" x="6426.67" y="4166.67">
+			<Parameter Name="stObj" Value="NumberVariable_Wheel_based_machine_speed_N"/>
+		</FB>
+		<SubApp Name="Conv_Draft" Type="MyLib::sys::AUI_FIELDBUS_UINT_TO_AR" x="1753.33" y="6286.67">
+		</SubApp>
+		<SubApp Name="TZ_Draft" Type="MyLib::sys::AR_Timeout_Zero" x="3940" y="6626.67">
+		</SubApp>
+		<FB Name="Q_NumericValue_FHS_Draft" Type="isobus::UT::Q::Q_NumericValue_PHYSA" x="6560" y="6200">
+			<Parameter Name="stObj" Value="NumberVariable_Wheel_based_machine_speed_N"/>
+		</FB>
+		<FB Name="AX_SPLIT_3_Timeout" Type="adapter::events::unidirectional::AX_SPLIT_3" x="1346.67" y="5386.67">
+		</FB>
+		<AdapterConnections>
+			<Connection Source="FHS_Inst.TIMEOUT" Destination="AX_SPLIT_3_Timeout.IN" dx1="66.67"/>
+			<Connection Source="FHS_Inst.POSITION" Destination="Conv_Position.IN" dx1="66.67"/>
+			<Connection Source="Conv_Position.OUT" Destination="TZ_Position.IN0" dx1="66.67"/>
+			<Connection Source="AX_SPLIT_3_Timeout.OUT1" Destination="TZ_Position.G" dx1="1433.33"/>
+			<Connection Source="TZ_Position.OUT" Destination="Q_NumericValue_FHS_Position.rPhys"/>
+			<Connection Source="FHS_Inst.FORCE" Destination="Conv_Force.IN" dx1="133.33"/>
+			<Connection Source="Conv_Force.OUT" Destination="TZ_Force.IN0" dx1="133.33"/>
+			<Connection Source="AX_SPLIT_3_Timeout.OUT2" Destination="TZ_Force.G" dx1="1500"/>
+			<Connection Source="TZ_Force.OUT" Destination="Q_NumericValue_FHS_Force.rPhys"/>
+			<Connection Source="FHS_Inst.DRAFT" Destination="Conv_Draft.IN" dx1="180"/>
+			<Connection Source="Conv_Draft.OUT" Destination="TZ_Draft.IN0" dx1="66.67"/>
+			<Connection Source="AX_SPLIT_3_Timeout.OUT3" Destination="TZ_Draft.G" dx1="1566.67"/>
+			<Connection Source="TZ_Draft.OUT" Destination="Q_NumericValue_FHS_Draft.rPhys"/>
+		</AdapterConnections>
+	</SubAppNetwork>
+</SubAppType>

@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SubAppType Name="Uebung_079a_AUI" Comment="COGSOG Speed Over Ground auf UT ausgeben mit AR_Timeout_Zero (Adapter Version)">
+	<Identification Standard="61499-2" Description="Copyright (c) 2026 Meisterschulen am Ostbahnhof  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0">
+	</Identification>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2026-09-17" Remarks="COGSOG Speed over Ground (Rapid Update) mit PHYS Skalierung (0.036) und AR_Timeout_Zero Fendt-Schaltung (Adapter Version, analog Krauternter TECU_COGSOG.SUB)">
+	</VersionInfo>
+	<CompilerInfo packageName="Uebungen">
+		<Import declaration="Uebungen::const::UT::TECU::DefaultPool_TECU_Numeric::NumberVariable_Ground_based_machine_speed_N"/>
+	</CompilerInfo>
+	<SubAppInterfaceList>
+	</SubAppInterfaceList>
+	<SubAppNetwork>
+		<FB Name="IA_COGSOGRapidUpdate_Inst" Type="isobus::tecu::IA_COGSOGRapidUpdate" x="-1900" y="3800">
+			<Parameter Name="QI" Value="TRUE"/>
+		</FB>
+		<FB Name="Conv_COGSOG" Type="logiBUS::signalprocessing::fieldbus::AUI_FIELDBUS_UINT_TO_SIGNAL_SCALED" x="600" y="4200">
+			<Parameter Name="SCALE" Value="0.036"/>
+			<Parameter Name="OFFSET" Value="0"/>
+		</FB>
+		<SubApp Name="TZ_COGSOG" Type="MyLib::sys::AR_Timeout_Zero" x="2400" y="4200">
+		</SubApp>
+		<FB Name="Q_NumericValue_COGSOG" Type="isobus::UT::Q::Q_NumericValue_PHYSA" x="5200" y="4200">
+			<Parameter Name="stObj" Value="NumberVariable_Ground_based_machine_speed_N"/>
+		</FB>
+		<AdapterConnections>
+			<Connection Source="IA_COGSOGRapidUpdate_Inst.SOG" Destination="Conv_COGSOG.IN" dx1="600"/>
+			<Connection Source="Conv_COGSOG.OUT" Destination="TZ_COGSOG.IN0"/>
+			<Connection Source="IA_COGSOGRapidUpdate_Inst.TIMEOUT" Destination="TZ_COGSOG.G" dx1="600"/>
+			<Connection Source="TZ_COGSOG.OUT" Destination="Q_NumericValue_COGSOG.rPhys" dx1="600"/>
+		</AdapterConnections>
+	</SubAppNetwork>
+</SubAppType>

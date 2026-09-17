@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SubAppType Name="Uebung_070d_AUI" Comment="WBSD auf UT ausgeben mit AR_Timeout_Zero (Adapter Version)">
+	<Identification Standard="61499-2" Description="Copyright (c) 2026 Meisterschulen am Ostbahnhof  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0">
+	</Identification>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2026-09-17" Remarks="WBSD mit PHYS Skalierung und AR_Timeout_Zero Fendt-Schaltung (Adapter Version, analog Krauternter TECU_WBSD.SUB)">
+	</VersionInfo>
+	<CompilerInfo packageName="Uebungen">
+		<Import declaration="Uebungen::const::UT::TECU::DefaultPool_TECU_Numeric::NumberVariable_Wheel_based_machine_speed_N"/>
+	</CompilerInfo>
+	<SubAppInterfaceList>
+	</SubAppInterfaceList>
+	<SubAppNetwork>
+		<FB Name="IA_WBSD" Type="isobus::tecu::IA_WBSD" x="-1200" y="1000">
+			<Parameter Name="QI" Value="TRUE"/>
+		</FB>
+		<FB Name="Conv_WBSD" Type="logiBUS::signalprocessing::fieldbus::AUI_FIELDBUS_UINT_TO_SIGNAL_SCALED" x="900" y="1000">
+			<Parameter Name="SCALE" Value="0.0036"/>
+			<Parameter Name="OFFSET" Value="0"/>
+		</FB>
+		<SubApp Name="TZ_WBSD" Type="MyLib::sys::AR_Timeout_Zero" x="3000" y="1000">
+		</SubApp>
+		<FB Name="Q_NumericValue" Type="isobus::UT::Q::Q_NumericValue_PHYSA" x="5200" y="900">
+			<Parameter Name="stObj" Value="NumberVariable_Wheel_based_machine_speed_N"/>
+		</FB>
+		<AdapterConnections>
+			<Connection Source="IA_WBSD.SPEED" Destination="Conv_WBSD.IN" dx1="600"/>
+			<Connection Source="Conv_WBSD.OUT" Destination="TZ_WBSD.IN0" dx1="300"/>
+			<Connection Source="IA_WBSD.TIMEOUT" Destination="TZ_WBSD.G" dx1="600"/>
+			<Connection Source="TZ_WBSD.OUT" Destination="Q_NumericValue.rPhys" dx1="600"/>
+		</AdapterConnections>
+	</SubAppNetwork>
+</SubAppType>
