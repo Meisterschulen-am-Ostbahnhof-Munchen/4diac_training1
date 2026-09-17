@@ -2,7 +2,7 @@
 <Function Name="ROUND" Comment="this function rounds a real down to n digits behind the comma.">
 	<Identification Standard="61499-1">
 	</Identification>
-	<VersionInfo Version="1.0" Author="Franz Höpfinger" Date="2026-09-17" Remarks="Portiert aus OSCAT_basic ROUND.TcPOU (Franz: 'portiere diese Funktionen hier her') - setup.DECADES[LIMIT(0,N,8)] (globales Array, in diesem Projekt nicht vorhanden) durch direkte Berechnung via EXPT(10.0, N) ersetzt. Damit entfaellt auch die urspruengliche Begrenzung von N auf 0-8 (die nur wegen der Array-Grenzen noetig war).">
+	<VersionInfo Version="1.0" Author="Franz Höpfinger" Date="2026-09-17" Remarks="Portiert aus OSCAT_basic ROUND.TcPOU - setup.DECADES[LIMIT(0,N,8)] durch EXPT(10.0, LIMIT(0, N, 8)) ersetzt. LIMIT(0, N, 8) schuetzt vor DINT-Ueberlauf beim Skalieren.">
 	</VersionInfo>
 	<CompilerInfo packageName="OSCAT::Basic::POUs::Mathematical">
 	</CompilerInfo>
@@ -44,9 +44,9 @@ END_VAR
  * *
  * this function rounds a real down to n digits behind the comma.
  * Portiert 2026-09-17: setup.DECADES[LIMIT(0,N,8)] (Array in diesem Projekt nicht vorhanden) durch
- * direkte Berechnung via EXPT ersetzt - keine Begrenzung von N mehr auf 0-8.
+ * direkte Berechnung via EXPT(10.0, LIMIT(0, N, 8)) ersetzt. LIMIT(0, N, 8) schuetzt vor DINT-Ueberlauf.
  *)
-X := EXPT(10.0, N);
+X := EXPT(10.0, LIMIT(0, N, 8));
 ROUND := DINT_TO_REAL(REAL_TO_DINT(in * X)) / X;
 
 END_FUNCTION
