@@ -17,7 +17,7 @@
 				<With Var="QO"/>
 				<With Var="STATUS"/>
 			</Event>
-			<Event Name="IND" Type="Event" Comment="Indication from Resource">
+			<Event Name="IND" Type="Event" Comment="Indication from Resource - feuert bei jedem Zyklus ohne aktiven Timeout und publiziert dabei auch den Reset von Q_timeout auf false.">
 				<With Var="QO"/>
 				<With Var="timestamp_data"/>
 				<With Var="STATUS"/>
@@ -31,7 +31,7 @@
 				<With Var="LOCAL_MINUTE_OFFSET"/>
 				<With Var="LOCAL_HOUR_OFFSET"/>
 			</Event>
-			<Event Name="TIMEOUT" Type="Event">
+			<Event Name="TIMEOUT" Type="Event" Comment="Feuert ausschliesslich beim tatsaechlichen Eintreten eines Timeouts (Entry-Trigger). Das Zuruecksetzen von Q_timeout auf false wird NICHT hier, sondern ueber IND gemeldet.">
 				<With Var="timestamp_timeout"/>
 				<With Var="STATUS"/>
 				<With Var="Q_timeout"/>
@@ -121,4 +121,10 @@
 		</OutputVars>
 	</InterfaceList>
 	<Attribute Name="eclipse4diac::core::TypeHash" Value="''"/>
+	<Attribute Name="Documentation" Type="CDATA"><![CDATA[<p>Time/Date TD</p>
+
+<p>&nbsp;</p>
+
+<p><strong>TIMEOUT / IND Vertrag:</strong> TIMEOUT feuert ausschliesslich beim tatsaechlichen Eintreten eines Timeouts (Q_timeout wird true). Das Zuruecksetzen von Q_timeout auf false (Timeout vorbei) wird bewusst NICHT nochmal separat ueber TIMEOUT gemeldet, sondern kommt ueber IND - das feuert bei jedem Zyklus ohne aktiven Timeout und publiziert Q_timeout mit. Nachgeschaltete Bausteine, die auf das Ende eines Timeouts reagieren muessen, werten dafuer IND mit Q_timeout==false aus, nicht ein zweites TIMEOUT-Event.</p>
+]]></Attribute>
 </FBType>
