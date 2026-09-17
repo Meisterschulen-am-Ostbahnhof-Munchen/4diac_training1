@@ -50,64 +50,64 @@
 		</InputVars>
 	</SubAppInterfaceList>
 	<SubAppNetwork>
-		<SubApp Name="InputRaw" Type="MyLib::sys::logiBUS_AI_Raw_VT_AR_OPC" x="-9200" y="-1700">
+		<SubApp Name="InputRaw" Type="MyLib::sys::logiBUS_AI_Raw_VT_AR_OPC" x="-3400" y="1000">
 		</SubApp>
 		<FB Name="CALIBRATE" Type="adapter::Engineering::measurements::AR_CALIBRATE_3P_REF" x="-200" y="200">
 		</FB>
-		<SubApp Name="MIN_REF_LIT" Type="MyLib::sys::NumericValue_TO_AR2_OPC" x="-8400" y="4200">
+		<SubApp Name="MIN_REF_LIT" Type="MyLib::sys::NumericValue_TO_AR2_OPC" x="-3400" y="1800">
 		</SubApp>
-		<SubApp Name="MID_REF_LIT" Type="MyLib::sys::NumericValue_TO_AR2_OPC" x="-8400" y="5000">
+		<SubApp Name="MID_REF_LIT" Type="MyLib::sys::NumericValue_TO_AR2_OPC" x="-3400" y="2600">
 		</SubApp>
-		<SubApp Name="MAX_REF_LIT" Type="MyLib::sys::NumericValue_TO_AR2_OPC" x="-8400" y="5800">
+		<SubApp Name="MAX_REF_LIT" Type="MyLib::sys::NumericValue_TO_AR2_OPC" x="-3400" y="3400">
 		</SubApp>
-		<SubApp Name="TriggerMIN" Type="MyLib::sys::Button_Method_IE" x="-6600" y="0">
+		<SubApp Name="TriggerMIN" Type="MyLib::sys::Button_Method_IE" x="-2900" y="-800">
 		</SubApp>
-		<SubApp Name="TriggerMID" Type="MyLib::sys::Button_Method_IE" x="-6600" y="1000">
+		<SubApp Name="TriggerMID" Type="MyLib::sys::Button_Method_IE" x="-3000" y="-200">
 		</SubApp>
-		<SubApp Name="TriggerMAX" Type="MyLib::sys::Button_Method_IE" x="-6600" y="2000">
+		<SubApp Name="TriggerMAX" Type="MyLib::sys::Button_Method_IE" x="-3000" y="400">
 		</SubApp>
-		<FB Name="INI_X_MIN" Type="eclipse4diac::storage::INI_AR2" x="3400" y="1300">
+		<FB Name="INI_X_MIN" Type="eclipse4diac::storage::INI_AR2" x="2600" y="700">
 			<Parameter Name="QI" Value="TRUE"/>
 			<Parameter Name="SETM" Value="TRUE"/>
 			<Parameter Name="KEY" Value="'X_MIN'"/>
 			<Parameter Name="DEFAULT_VALUE" Value="REAL#0.0"/>
 		</FB>
-		<FB Name="INI_X_MID" Type="eclipse4diac::storage::INI_AR2" x="3450" y="1800">
+		<FB Name="INI_X_MID" Type="eclipse4diac::storage::INI_AR2" x="4100" y="800">
 			<Parameter Name="QI" Value="TRUE"/>
 			<Parameter Name="SETM" Value="TRUE"/>
 			<Parameter Name="KEY" Value="'X_MID'"/>
 			<Parameter Name="DEFAULT_VALUE" Value="REAL#0.5"/>
 		</FB>
-		<FB Name="INI_X_MAX" Type="eclipse4diac::storage::INI_AR2" x="3500" y="2300">
+		<FB Name="INI_X_MAX" Type="eclipse4diac::storage::INI_AR2" x="5600" y="900">
 			<Parameter Name="QI" Value="TRUE"/>
 			<Parameter Name="SETM" Value="TRUE"/>
 			<Parameter Name="KEY" Value="'X_MAX'"/>
 			<Parameter Name="DEFAULT_VALUE" Value="REAL#1.0"/>
 		</FB>
-		<FB Name="INI_MIN_REF" Type="eclipse4diac::storage::INI_AR2" x="3400" y="3300">
+		<FB Name="INI_MIN_REF" Type="eclipse4diac::storage::INI_AR2" x="2600" y="1900">
 			<Parameter Name="QI" Value="TRUE"/>
 			<Parameter Name="SETM" Value="TRUE"/>
 			<Parameter Name="KEY" Value="'MIN_REF'"/>
 			<Parameter Name="DEFAULT_VALUE" Value="REAL#-100.0"/>
 		</FB>
-		<FB Name="INI_MID_REF" Type="eclipse4diac::storage::INI_AR2" x="3450" y="3800">
+		<FB Name="INI_MID_REF" Type="eclipse4diac::storage::INI_AR2" x="4100" y="2000">
 			<Parameter Name="QI" Value="TRUE"/>
 			<Parameter Name="SETM" Value="TRUE"/>
 			<Parameter Name="KEY" Value="'MID_REF'"/>
 			<Parameter Name="DEFAULT_VALUE" Value="REAL#50.0"/>
 		</FB>
-		<FB Name="INI_MAX_REF" Type="eclipse4diac::storage::INI_AR2" x="3500" y="4300">
+		<FB Name="INI_MAX_REF" Type="eclipse4diac::storage::INI_AR2" x="5700" y="2100">
 			<Parameter Name="QI" Value="TRUE"/>
 			<Parameter Name="SETM" Value="TRUE"/>
 			<Parameter Name="KEY" Value="'MAX_REF'"/>
 			<Parameter Name="DEFAULT_VALUE" Value="REAL#100.0"/>
 		</FB>
-		<SubApp Name="PublishCal" Type="MyLib::sys::AR_TO_Q_Publish_OPC" x="3400" y="-400">
+		<SubApp Name="PublishCal" Type="MyLib::sys::AR_TO_Q_Publish_OPC" x="2600" y="0">
 		</SubApp>
 		<EventConnections>
-			<Connection Source="TriggerMIN.IND" Destination="CALIBRATE.C_MIN" dx1="313.33"/>
+			<Connection Source="TriggerMIN.IND" Destination="CALIBRATE.C_MIN" dx1="606.67"/>
 			<Connection Source="TriggerMID.IND" Destination="CALIBRATE.C_MID" dx1="400"/>
-			<Connection Source="TriggerMAX.IND" Destination="CALIBRATE.C_MAX"/>
+			<Connection Source="TriggerMAX.IND" Destination="CALIBRATE.C_MAX" dx1="1686.67"/>
 		</EventConnections>
 		<DataConnections>
 			<Connection Source="Input" Destination="InputRaw.Input" dx1="1460">
@@ -197,9 +197,9 @@
 			<Connection Source="CALIBRATE.MIN_REF" Destination="INI_MIN_REF.VAL" dx1="253.33"/>
 			<Connection Source="CALIBRATE.MID_REF" Destination="INI_MID_REF.VAL" dx1="220"/>
 			<Connection Source="CALIBRATE.MAX_REF" Destination="INI_MAX_REF.VAL" dx1="180"/>
-			<Connection Source="MIN_REF_LIT.VALUEO" Destination="CALIBRATE.Y_MIN" dx1="6806.67"/>
-			<Connection Source="MID_REF_LIT.VALUEO" Destination="CALIBRATE.Y_MID" dx1="6780"/>
-			<Connection Source="MAX_REF_LIT.VALUEO" Destination="CALIBRATE.Y_MAX" dx1="6760"/>
+			<Connection Source="MIN_REF_LIT.VALUEO" Destination="CALIBRATE.Y_MIN" dx1="626.67"/>
+			<Connection Source="MID_REF_LIT.VALUEO" Destination="CALIBRATE.Y_MID" dx1="946.67"/>
+			<Connection Source="MAX_REF_LIT.VALUEO" Destination="CALIBRATE.Y_MAX" dx1="1273.33"/>
 			<Connection Source="CALIBRATE.Y" Destination="PublishCal.AR_IN" dx1="300"/>
 		</AdapterConnections>
 	</SubAppNetwork>
