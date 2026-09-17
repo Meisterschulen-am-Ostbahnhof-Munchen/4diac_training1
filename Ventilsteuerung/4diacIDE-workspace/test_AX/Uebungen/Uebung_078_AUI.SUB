@@ -15,43 +15,43 @@
 		<FB Name="FHS_Inst" Type="isobus::tecu::IA_FHS" x="413.33" y="4006.67">
 			<Parameter Name="QI" Value="TRUE"/>
 		</FB>
-		<SubApp Name="Conv_Position" Type="MyLib::sys::AUS_FIELDBUS_USINT_TO_AR" x="1506.67" y="1360">
+		<SubApp Name="Conv_Position" Type="MyLib::sys::AUS_FIELDBUS_USINT_TO_AR" x="1500" y="4000">
 		</SubApp>
-		<SubApp Name="TZ_Position" Type="MyLib::sys::AR_Timeout_Zero" x="3873.33" y="2526.67">
+		<SubApp Name="TZ_Position" Type="MyLib::sys::AR_Timeout_Zero" x="3800" y="3800">
 		</SubApp>
-		<FB Name="Q_NumericValue_FHS_Position" Type="isobus::UT::Q::Q_NumericValue_PHYSA" x="6726.67" y="2100">
+		<FB Name="Q_NumericValue_FHS_Position" Type="isobus::UT::Q::Q_NumericValue_PHYSA" x="6400" y="3200">
 			<Parameter Name="stObj" Value="NumberVariable_TECU_FHS_Position_N"/>
 		</FB>
-		<SubApp Name="Conv_Force" Type="MyLib::sys::AUS_FIELDBUS_USINT_TO_AR" x="1640" y="3373.33">
+		<SubApp Name="Conv_Force" Type="MyLib::sys::AUS_FIELDBUS_USINT_TO_AR" x="1500" y="4400">
 		</SubApp>
-		<SubApp Name="TZ_Force" Type="MyLib::sys::AR_Timeout_Zero" x="3806.67" y="4593.33">
+		<SubApp Name="TZ_Force" Type="MyLib::sys::AR_Timeout_Zero" x="4300" y="4700">
 		</SubApp>
 		<FB Name="Q_NumericValue_FHS_Force" Type="isobus::UT::Q::Q_NumericValue_PHYSA" x="6426.67" y="4166.67">
 			<Parameter Name="stObj" Value="NumberVariable_TECU_FHS_Force_N"/>
 		</FB>
-		<SubApp Name="Conv_Draft" Type="MyLib::sys::AUI_FIELDBUS_UINT_TO_AR" x="1753.33" y="6286.67">
+		<SubApp Name="Conv_Draft" Type="MyLib::sys::AUI_FIELDBUS_UINT_TO_AR" x="1700" y="5600">
 		</SubApp>
 		<SubApp Name="TZ_Draft" Type="MyLib::sys::AR_Timeout_Zero" x="3940" y="6626.67">
 		</SubApp>
-		<FB Name="Q_NumericValue_FHS_Draft" Type="isobus::UT::Q::Q_NumericValue_PHYSA" x="6560" y="6200">
+		<FB Name="Q_NumericValue_FHS_Draft" Type="isobus::UT::Q::Q_NumericValue_PHYSA" x="6400" y="5200">
 			<Parameter Name="stObj" Value="NumberVariable_TECU_FHS_Draft_N"/>
 		</FB>
-		<FB Name="AX_SPLIT_3_Timeout" Type="adapter::events::unidirectional::AX_SPLIT_3" x="1346.67" y="5386.67">
+		<FB Name="AX_SPLIT_3_Timeout" Type="adapter::events::unidirectional::AX_SPLIT_3" x="1700" y="4900">
 		</FB>
 		<AdapterConnections>
 			<Connection Source="FHS_Inst.TIMEOUT" Destination="AX_SPLIT_3_Timeout.IN" dx1="66.67"/>
 			<Connection Source="FHS_Inst.POSITION" Destination="Conv_Position.IN" dx1="66.67"/>
 			<Connection Source="Conv_Position.OUT" Destination="TZ_Position.IN0" dx1="66.67"/>
-			<Connection Source="AX_SPLIT_3_Timeout.OUT1" Destination="TZ_Position.G" dx1="1433.33"/>
-			<Connection Source="TZ_Position.OUT" Destination="Q_NumericValue_FHS_Position.rPhys"/>
+			<Connection Source="AX_SPLIT_3_Timeout.OUT1" Destination="TZ_Position.G" dx1="1220"/>
+			<Connection Source="TZ_Position.OUT" Destination="Q_NumericValue_FHS_Position.rPhys" dx1="980"/>
 			<Connection Source="FHS_Inst.FORCE" Destination="Conv_Force.IN" dx1="133.33"/>
 			<Connection Source="Conv_Force.OUT" Destination="TZ_Force.IN0" dx1="133.33"/>
-			<Connection Source="AX_SPLIT_3_Timeout.OUT2" Destination="TZ_Force.G" dx1="1500"/>
-			<Connection Source="TZ_Force.OUT" Destination="Q_NumericValue_FHS_Force.rPhys"/>
+			<Connection Source="AX_SPLIT_3_Timeout.OUT2" Destination="TZ_Force.G" dx1="1720"/>
+			<Connection Source="TZ_Force.OUT" Destination="Q_NumericValue_FHS_Force.rPhys" dx1="720"/>
 			<Connection Source="FHS_Inst.DRAFT" Destination="Conv_Draft.IN" dx1="180"/>
 			<Connection Source="Conv_Draft.OUT" Destination="TZ_Draft.IN0" dx1="66.67"/>
-			<Connection Source="AX_SPLIT_3_Timeout.OUT3" Destination="TZ_Draft.G" dx1="1566.67"/>
-			<Connection Source="TZ_Draft.OUT" Destination="Q_NumericValue_FHS_Draft.rPhys"/>
+			<Connection Source="AX_SPLIT_3_Timeout.OUT3" Destination="TZ_Draft.G" dx1="1360"/>
+			<Connection Source="TZ_Draft.OUT" Destination="Q_NumericValue_FHS_Draft.rPhys" dx1="733.33"/>
 		</AdapterConnections>
 	</SubAppNetwork>
 </SubAppType>
