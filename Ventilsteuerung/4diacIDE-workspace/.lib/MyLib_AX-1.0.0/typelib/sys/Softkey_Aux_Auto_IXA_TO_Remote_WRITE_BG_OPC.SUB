@@ -2,6 +2,8 @@
 <SubAppType Name="Softkey_Aux_Auto_IXA_TO_Remote_WRITE_BG_OPC" Comment="VT-SoftKey lesen ODER AUX-Zuweisung (Joystick) lesen ODER lokaler Web-Override ODER Automatik-Kommando + Remote-OPC-UA-Write an Zielmodul + VT-Hintergrundfarbe (SoftKey UND AUX) aus Remote-Subscribe (generisch, ein Kanal). Kopie von Softkey_Aux_IXA_TO_Remote_WRITE_BG_OPC mit Softkey_Aux_Auto_IXA_TO_Remote_WRITE statt Softkey_Aux_IXA_TO_Remote_WRITE als Kommando-Haelfte - Status-Haelfte (AX_SUBSCRIBE_BG3_WEB_OPC) unveraendert.">
 	<Identification Standard="61499-2">
 	</Identification>
+	<VersionInfo Version="1.1" Author="Franz Höpfinger" Date="2026-09-16" Remarks="Neuen WEB_STATE-Plug von Command durchgereicht (siehe Softkey_Aux_Auto_IXA_TO_Remote_WRITE Version 1.1) - behebt Doppel-Self-Subscribe, siehe BERICHT_2026-09-16_STG3_I1_I3_I4_I6_STALE_REMOTE_SUBSCRIBE.md Abschnitt 16-17.">
+	</VersionInfo>
 	<VersionInfo Version="1.0" Author="Franz Höpfinger" Date="2026-09-11" Remarks="Kopie von Softkey_Aux_IXA_TO_Remote_WRITE_BG_OPC (Version 1.2, 2026-09-07) mit Softkey_Aux_Auto_IXA_TO_Remote_WRITE als Kommando-Haelfte, fuer Achslenkung-Mittelpunkt-Automatik.">
 	</VersionInfo>
 	<CompilerInfo packageName="MyLib::sys">
@@ -18,6 +20,9 @@
 		<Sockets>
 			<AdapterDeclaration Name="AUTO_IN" Type="adapter::types::unidirectional::AX" Comment="Autonomes Kommando (z.B. Achslenkung-Mittelpunkt-Automatik), ODER-verknuepft mit SoftKey/Aux/Web"/>
 		</Sockets>
+		<Plugs>
+			<AdapterDeclaration Name="WEB_STATE" Type="adapter::types::unidirectional::AX" Comment="= Command.WEB_STATE durchgereicht, damit andere Composite-Instanzen denselben Web-Zustand ohne eigenen lokalen Self-Subscribe nutzen koennen"/>
+		</Plugs>
 	</SubAppInterfaceList>
 	<SubAppNetwork>
 		<SubApp Name="Command" Type="MyLib::sys::Softkey_Aux_Auto_IXA_TO_Remote_WRITE" x="0" y="0">
@@ -52,6 +57,7 @@
 		</DataConnections>
 		<AdapterConnections>
 			<Connection Source="AUTO_IN" Destination="Command.AUTO_IN" dx1="366.67"/>
+			<Connection Source="Command.WEB_STATE" Destination="WEB_STATE" dx1="366.67"/>
 		</AdapterConnections>
 	</SubAppNetwork>
 	<Attribute Name="Documentation" Type="CDATA"><![CDATA[<h1>SoftKey UND Aux UND Automatik → Remote-OPC-UA-Write mit Status-Feedback (ein Kanal)</h1>
@@ -61,7 +67,11 @@ ODER Aux ODER lokaler Web-Override ODER Automatik → Remote-Write) und
 <code>AX_SUBSCRIBE_BG3_WEB_OPC</code> (Status: Remote-Subscribe → Hintergrundfarbe auf SoftKey UND
 Aux + lokaler Web-Republish, unveraendert) nebeneinanderstellt.</p>
 
-<p>Nur fuer Kanaele mit Automatik-Bedarf verwenden (aktuell: Achslenkung Links/Rechts) - fuer alle
-anderen weiterhin <code>Softkey_Aux_IXA_TO_Remote_WRITE_BG_OPC</code>.</p>
+<p>Nur fuer Kanaele mit Automatik-Bedarf verwenden (aktuell: Achslenkung Links/Rechts,
+Hangausgleich Links/Rechts) - fuer alle anderen weiterhin
+<code>Softkey_Aux_IXA_TO_Remote_WRITE_BG_OPC</code>.</p>
+
+<p><code>WEB_STATE</code> (neu, Version 1.1): durchgereichter Fan-out-Plug, siehe
+<code>Softkey_Aux_Auto_IXA_TO_Remote_WRITE</code> Version 1.1.</p>
 ]]></Attribute>
 </SubAppType>

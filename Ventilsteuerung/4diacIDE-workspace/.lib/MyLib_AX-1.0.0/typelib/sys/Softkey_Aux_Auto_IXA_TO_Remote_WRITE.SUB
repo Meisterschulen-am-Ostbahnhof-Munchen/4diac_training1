@@ -2,6 +2,10 @@
 <SubAppType Name="Softkey_Aux_Auto_IXA_TO_Remote_WRITE" Comment="VT-SoftKey lesen ODER AUX-Zuweisung (Joystick) lesen ODER lokaler Web-Override ODER Automatik-Kommando + Remote-OPC-UA-Write an Zielmodul (generisch, ein Kanal, ohne Status-Feedback). Kopie von Softkey_Aux_IXA_TO_Remote_WRITE + 1 zusaetzlicher AUTO_IN-Socket - fuer Funktionen mit autonomer Ansteuerung (z.B. Achslenkung-Mittelpunkt-Automatik).">
 	<Identification Standard="61499-2">
 	</Identification>
+	<VersionInfo Version="1.2" Author="Franz Höpfinger" Date="2026-09-16" Remarks="Fix: SUBSCRIBE_WEB.OUT konnte nicht an 2 Ziele (OR_MERGE.IN3 UND WEB_STATE) gleichzeitig angeschlossen werden - Adapter-Plugs sind strikt 1:1, kein Fan-out wie bei Daten-/Eventverbindungen (FORTE-Bootfehler INVALID_STATE beim 2. CREATE Connection auf demselben Plug). AX_SPLIT_2 (SPLIT_WEB) dazwischengesetzt, analog dem bereits etablierten SPLIT_Y/AR_SPLIT_2-Muster.">
+	</VersionInfo>
+	<VersionInfo Version="1.1" Author="Franz Höpfinger" Date="2026-09-16" Remarks="Neuer Ausgangs-Plug WEB_STATE ergaenzt (reiner Fan-out von SUBSCRIBE_WEB.OUT) - behebt Doppel-Self-Subscribe auf ID_WEB_READ (FORTE: 'Cannot add another one'), da Fahrwerk_Mittelpunkt_Automatik denselben Knoten bisher selbst nochmal abonniert hat. Siehe BERICHT_2026-09-16_STG3_I1_I3_I4_I6_STALE_REMOTE_SUBSCRIBE.md Abschnitt 16-17.">
+	</VersionInfo>
 	<VersionInfo Version="1.0" Author="Franz Höpfinger" Date="2026-09-11" Remarks="Kopie von Softkey_Aux_IXA_TO_Remote_WRITE (Version 1.0, 2026-09-07) + AUTO_IN-Socket (AX_OR_4 statt AX_OR_3) fuer Achslenkung-Mittelpunkt-Automatik. Nur fuer Kanaele mit Automatik-Bedarf verwenden - alle anderen Verwender von Softkey_Aux_IXA_TO_Remote_WRITE(_BG_OPC) bleiben unveraendert auf dem Original-Typ.">
 	</VersionInfo>
 	<CompilerInfo packageName="MyLib::sys">
@@ -17,6 +21,9 @@
 		<Sockets>
 			<AdapterDeclaration Name="AUTO_IN" Type="adapter::types::unidirectional::AX" Comment="Autonomes Kommando (z.B. Achslenkung-Mittelpunkt-Automatik), ODER-verknuepft mit SoftKey/Aux/Web"/>
 		</Sockets>
+		<Plugs>
+			<AdapterDeclaration Name="WEB_STATE" Type="adapter::types::unidirectional::AX" Comment="Web-Zustand (= SUBSCRIBE_WEB.OUT) nach aussen durchgereicht, damit andere Composite-Instanzen denselben Wert per Datenverbindung nutzen koennen statt selbst nochmal lokal zu abonnieren (nur 1 lokaler OPC-UA-Subscriber pro Knoten zulaessig)"/>
+		</Plugs>
 	</SubAppInterfaceList>
 	<SubAppNetwork>
 		<FB Name="Softkey_IXA" Type="isobus::UT::io::Softkey::Softkey_IXA" x="-500" y="-1400">
@@ -29,6 +36,8 @@
 			<Parameter Name="QI" Value="TRUE"/>
 		</FB>
 		<FB Name="OR_MERGE" Type="adapter::booleanOperators::AX_OR_4" x="900" y="300">
+		</FB>
+		<FB Name="SPLIT_WEB" Type="adapter::events::unidirectional::AX_SPLIT_2" x="200" y="700">
 		</FB>
 		<FB Name="AX_CLIENT_1_0" Type="adapter::net::AX_CLIENT_1_0" x="2300" y="-200">
 			<Parameter Name="QI" Value="TRUE"/>
@@ -50,9 +59,11 @@
 		<AdapterConnections>
 			<Connection Source="Softkey_IXA.IN" Destination="OR_MERGE.IN1" dx1="246.67"/>
 			<Connection Source="Aux_IXA.IN" Destination="OR_MERGE.IN2" dx1="100"/>
-			<Connection Source="SUBSCRIBE_WEB.OUT" Destination="OR_MERGE.IN3" dx1="100"/>
+			<Connection Source="SUBSCRIBE_WEB.OUT" Destination="SPLIT_WEB.IN" dx1="100"/>
+			<Connection Source="SPLIT_WEB.OUT1" Destination="OR_MERGE.IN3" dx1="100"/>
 			<Connection Source="AUTO_IN" Destination="OR_MERGE.IN4" dx1="100"/>
 			<Connection Source="OR_MERGE.OUT" Destination="AX_CLIENT_1_0.IN" dx1="400"/>
+			<Connection Source="SPLIT_WEB.OUT2" Destination="WEB_STATE" dx1="100"/>
 		</AdapterConnections>
 	</SubAppNetwork>
 	<Attribute Name="Documentation" Type="CDATA"><![CDATA[<h1>SoftKey UND Aux UND Automatik → Remote-OPC-UA-Write (nur Kommando, kein Status)</h1>
@@ -67,5 +78,13 @@ werden - kein Self-Latch-Risiko.</p>
 danebenstellen (unveraendert, gleiche <code>u16ObjId</code>/<code>u16ObjIdA</code>-Werte
 durchreichen) - siehe <code>Softkey_Aux_Auto_IXA_TO_Remote_WRITE_BG_OPC</code> fuer die
 vorverdrahtete Kombination.</p>
+
+<p><code>WEB_STATE</code> (neu, Version 1.1): Plug von <code>SUBSCRIBE_WEB.OUT</code> ueber
+<code>SPLIT_WEB</code> (<code>AX_SPLIT_2</code>) durchgereicht, damit andere Composite-Instanzen
+(z.B. <code>Fahrwerk_Mittelpunkt_Automatik</code> fuer die Override-Erkennung) denselben
+Web-Zustand per normaler Adapterverbindung lesen koennen, statt selbst nochmal denselben Knoten
+lokal zu abonnieren - FORTE erlaubt nur EINEN lokalen OPC-UA-Subscriber pro Knoten.
+<code>SPLIT_WEB</code> ist noetig, da ein Adapter-Plug (anders als Daten-/Eventverbindungen)
+nicht an 2 Ziele gleichzeitig angeschlossen werden kann (Version 1.2 Fix, siehe VersionInfo).</p>
 ]]></Attribute>
 </SubAppType>
