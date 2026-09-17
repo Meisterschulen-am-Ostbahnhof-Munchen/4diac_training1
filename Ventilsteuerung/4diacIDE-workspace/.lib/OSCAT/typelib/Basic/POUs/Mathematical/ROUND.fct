@@ -2,7 +2,7 @@
 <Function Name="ROUND" Comment="this function rounds a real down to n digits behind the comma.">
 	<Identification Standard="61499-1">
 	</Identification>
-	<VersionInfo Version="1.0" Author="Franz Höpfinger" Date="2026-09-17" Remarks="Portiert aus OSCAT_basic ROUND.TcPOU - setup.DECADES[LIMIT(0,N,8)] durch EXPT(10.0, LIMIT(0, N, 8)) ersetzt. LIMIT(0, N, 8) schuetzt vor DINT-Ueberlauf beim Skalieren.">
+	<VersionInfo Version="1.0" Author="Franz Höpfinger" Date="2026-09-17" Remarks="Portiert aus OSCAT_basic ROUND.TcPOU - EXPT(10.0, LIMIT(0, N, 8)) und Bereichspruefung (ABS(in * X) >= 2.147e9) schuetzen vor DINT-Ueberlauf bei grossen Eingangs- oder Skalierungswerten.">
 	</VersionInfo>
 	<CompilerInfo packageName="OSCAT::Basic::POUs::Mathematical">
 	</CompilerInfo>
@@ -43,11 +43,14 @@ END_VAR
  * version 1.5	25. oct. 2008 programmer 	hugo tested by	tobias
  * *
  * this function rounds a real down to n digits behind the comma.
- * Portiert 2026-09-17: setup.DECADES[LIMIT(0,N,8)] (Array in diesem Projekt nicht vorhanden) durch
- * direkte Berechnung via EXPT(10.0, LIMIT(0, N, 8)) ersetzt. LIMIT(0, N, 8) schuetzt vor DINT-Ueberlauf.
+ * Portiert 2026-09-17: EXPT(10.0, LIMIT(0, N, 8)) und Bereichspruefung (ABS(in * X) >= 2.147e9) schuetzen vor DINT-Ueberlauf.
  *)
 X := EXPT(10.0, LIMIT(0, N, 8));
-ROUND := DINT_TO_REAL(REAL_TO_DINT(in * X)) / X;
+IF ABS(in * X) >= 2147483647.0 THEN
+	ROUND := in;
+ELSE
+	ROUND := DINT_TO_REAL(REAL_TO_DINT(in * X)) / X;
+END_IF;
 
 END_FUNCTION
 
