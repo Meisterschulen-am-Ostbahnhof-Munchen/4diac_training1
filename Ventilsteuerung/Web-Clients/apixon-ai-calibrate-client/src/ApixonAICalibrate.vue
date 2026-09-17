@@ -90,6 +90,8 @@ import {
   WriteValue,
   DataValue,
   Variant,
+  makeBrowsePath,
+  CallMethodRequest,
 } from '@wsopcua/wsopcua'
 
 const endpointUrl = ref(`ws://${window.location.hostname || 'localhost'}:4841`)
@@ -104,14 +106,6 @@ const cal = ref<number[]>(new Array(8).fill(0))
 const outputs = ref<boolean[]>(new Array(12).fill(false))
 const tick = ref<number | string>('–')
 const tickPulse = ref(false)
-
-/* CO/CS sind reine One-Shot-Trigger (kein persistenter Zustand am FB), daher gibt es nichts,
- * das von FORTE zurückgelesen werden könnte - der Web-Client merkt sich nur den zuletzt selbst
- * geschriebenen BOOL-Wert pro Kanal/Taste und schreibt bei jedem Klick dessen Invertierung
- * (Toggle-Write). AX_SUBSCRIBE_1 im FB-Netzwerk erkennt intern nur Wertänderungen (E_D_FF), ein
- * wiederholtes Schreiben desselben Literals würde also kein zweites Mal auslösen. */
-const coState = ref<boolean[]>(new Array(8).fill(false))
-const csState = ref<boolean[]>(new Array(8).fill(false))
 
 interface ScopeSample { t: number; v: number }
 const scopeWindowSec = ref(10)
@@ -234,8 +228,6 @@ function handleLost() {
   raw.value.fill(0)
   cal.value.fill(0)
   outputs.value.fill(false)
-  coState.value.fill(false)
-  csState.value.fill(false)
   tick.value = '–'
   if (scopeRafId !== null) {
     cancelAnimationFrame(scopeRafId)
@@ -352,20 +344,30 @@ async function toggleOutput(n: number) {
   }
 }
 
+/* CO/CS rufen eine argumentlose OPC-UA-Methode auf (ACTION=CREATE_METHOD via SERVER_0,
+ * siehe logiBUS_AI_Calibrate_IDA_OPC.SUB ID_CO_METHOD/ID_CS_METHOD), kein Toggle-Write mehr -
+ * gleiches Muster wie StgDevice.vue callFreigabeToggle. Pfad wird per
+ * TranslateBrowsePathsToNodeIds aufgeloest statt eine feste numerische NodeId anzunehmen, da
+ * FORTE die Zwischenordner (AnalogCalibrated, I{n}) serverseitig mit generierten NodeIds anlegt. */
 async function triggerCalibrate(n: number, which: 'CO' | 'CS') {
   if (!session) return
-  const state = which === 'CO' ? coState : csState
-  const newVal = !state.value[n - 1]
   try {
-    const wv = new WriteValue({
-      nodeId: coerceNodeId(`ns=1;s=AIC_I${n}_${which}`),
-      attributeId: AttributeIds.Value,
-      value: new DataValue({ value: new Variant({ dataType: DataType.Boolean, value: newVal }) }),
-    })
-    await session.writeP([wv])
-    state.value[n - 1] = newVal
+    const path = `/1:AnalogCalibrated/1:I${n}/1:${which}Method`
+    const parentPath = path.replace(/\/[^/]+$/, '')
+    const [methodResult, parentResult] = await Promise.all([
+      session.translateBrowsePathP(makeBrowsePath('ObjectsFolder', path)),
+      session.translateBrowsePathP(makeBrowsePath('ObjectsFolder', parentPath)),
+    ])
+    const methodId = methodResult.targets?.[0]?.targetId
+    const objectId = parentResult.targets?.[0]?.targetId
+    if (!methodId || !objectId) {
+      console.error(`AI${n} ${which}: Methode nicht gefunden (${path})`)
+      return
+    }
+    const request = new CallMethodRequest({ objectId, methodId, inputArguments: [] })
+    await session.callP([request])
   } catch (err) {
-    console.error(`AI${n} ${which} write failed:`, err)
+    console.error(`AI${n} ${which} method call failed:`, err)
   }
 }
 
@@ -380,8 +382,6 @@ async function disconnect() {
   raw.value.fill(0)
   cal.value.fill(0)
   outputs.value.fill(false)
-  coState.value.fill(false)
-  csState.value.fill(false)
   if (scopeRafId !== null) {
     cancelAnimationFrame(scopeRafId)
     scopeRafId = null
