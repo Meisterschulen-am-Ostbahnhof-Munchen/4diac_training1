@@ -17,7 +17,7 @@
 				<With Var="TM"/>
 				<With Var="K"/>
 			</Event>
-			<Event Name="RST" Type="Event" Comment="Reset">
+			<Event Name="RST" Type="Event" Comment="Reset Filter">
 			</Event>
 		</EventInputs>
 		<EventOutputs>
@@ -42,7 +42,7 @@
 		<InternalVars>
 			<VarDeclaration Name="last" Type="UDINT" Comment="Last execution time"/>
 			<VarDeclaration Name="tx" Type="UDINT" Comment="Current execution time"/>
-			<VarDeclaration Name="init" Type="BOOL" Comment="Initialization flag"/>
+			<VarDeclaration Name="init" Type="BOOL" InitialValue="FALSE" Comment="Initialization flag"/>
 		</InternalVars>
 		<ECState Name="EINIT" Comment="Initialization">
 			<ECAction Algorithm="EINIT" Output="INITO"/>
@@ -81,7 +81,7 @@ ELSE
 
 		(* PT1 Formula: out = out + (target - out) * (dt / T) *)
 	IF TIME_TO_REAL(TM) > 0.0 THEN
-		out := out + (in * K - out) * UDINT_TO_REAL(delta_t) / TIME_TO_REAL(TM);
+	out := out + (in * K - out) * UDINT_TO_REAL(delta_t) / TIME_TO_REAL(TM) * 1.0E-3;
 	END_IF;
 
 		(* Avoid denormalized numbers / underrun *)

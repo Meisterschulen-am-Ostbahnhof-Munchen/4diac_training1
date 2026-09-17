@@ -48,16 +48,12 @@
 		</FB>
 		<FB Name="AD_TO_AR_NUM" Type="adapter::conversion::unidirectional::AD_TO_AR_NUM" x="-1900" y="1100">
 		</FB>
-		<FB Name="FT_DERIV_AR" Type="OSCAT_adapter::Control::FT_DERIV_AR" x="-200" y="700">
-			<Parameter Name="K" Value="1.0"/>
-			<Parameter Name="run" Value="TRUE"/>
-		</FB>
-		<FB Name="AR_PUBLISH_FREQ" Type="adapter::net::AR_PUBLISH_1" x="5300" y="300">
+		<FB Name="AR_PUBLISH_FREQ" Type="adapter::net::AR_PUBLISH_1" x="8900" y="100">
 			<Parameter Name="QI" Value="TRUE"/>
 		</FB>
-		<FB Name="Q_NumericValue_FREQ" Type="isobus::UT::Q::Q_NumericValue_PHYSA" x="3500" y="1200">
+		<FB Name="Q_NumericValue_FREQ" Type="isobus::UT::Q::Q_NumericValue_PHYSA" x="7100" y="1000">
 		</FB>
-		<FB Name="AR_SPLIT_2" Type="adapter::events::unidirectional::AR_SPLIT_2" x="1200" y="1100">
+		<FB Name="AR_SPLIT_2" Type="adapter::events::unidirectional::AR_SPLIT_2" x="4800" y="900">
 		</FB>
 		<FB Name="E_T_FF_SR_SWITCH" Type="iec61499::events::E_T_FF_SR_SYM_INIT" x="-7800" y="-2000">
 			<Parameter Name="QI" Value="TRUE"/>
@@ -83,6 +79,17 @@
 		<FB Name="AX_PUBLISH_STATUS" Type="adapter::net::AX_PUBLISH_1" x="-200" y="-2500">
 			<Parameter Name="QI" Value="TRUE"/>
 		</FB>
+		<FB Name="initval_ATM" Type="adapter::types::unidirectional::ATM::initval::initval_ATM" x="1700" y="1500">
+			<Parameter Name="INIT_VAL" Value="T#2s"/>
+		</FB>
+		<FB Name="FT_PT1_AR" Type="OSCAT_adapter::Control::FT_PT1_AR" x="3000" y="800">
+			<Parameter Name="K" Value="1.0"/>
+		</FB>
+		<FB Name="FT_DERIV_10_AR" Type="OSCAT_adapter::Control::FT_DERIV_10_AR" x="0" y="500">
+			<Parameter Name="K" Value="9"/>
+			<Parameter Name="Faktor" Value="1.0"/>
+			<Parameter Name="run" Value="TRUE"/>
+		</FB>
 		<EventConnections>
 			<Connection Source="AD_PUBLISH_COUNT.INITO" Destination="AR_PUBLISH_FREQ.INIT" dx1="1600">
 				<Attribute Name="Visible" Value="false"/>
@@ -107,6 +114,7 @@
 			<Connection Source="AX_RF_TRIG_SWITCH.EF" Destination="E_T_FF_SR_SWITCH.R" dx1="1713.33"/>
 			<Connection Source="Button_SWITCH.IND" Destination="E_T_FF_SR_SWITCH.CLK" dx1="933.33"/>
 			<Connection Source="E_T_FF_SR_SWITCH.EO" Destination="AX_BOOL_TO_X_SWITCH.REQ" dx1="593.33"/>
+			<Connection Source="initval_ATM.INITO" Destination="FT_PT1_AR.INIT" dx1="246.67"/>
 		</EventConnections>
 		<DataConnections>
 			<Connection Source="Input" Destination="logiBUS_PI_IDA.Input" dx1="1460">
@@ -155,13 +163,15 @@
 			<Connection Source="AD_SPLIT_2.OUT1" Destination="AD_PUBLISH_COUNT.IN" dx1="173.33"/>
 			<Connection Source="AD_SPLIT_2.OUT2" Destination="AD_TO_AUDI.AD_IN" dx1="1273.33"/>
 			<Connection Source="AD_TO_AUDI.AUDI_OUT" Destination="Q_NumericValue_COUNT.u32NewValue" dx1="540"/>
-			<Connection Source="AD_TO_AR_NUM.AR_OUT" Destination="FT_DERIV_AR.AR_IN" dx1="426.67"/>
 			<Connection Source="AR_SPLIT_2.OUT1" Destination="AR_PUBLISH_FREQ.IN" dx1="850"/>
 			<Connection Source="AR_SPLIT_2.OUT2" Destination="Q_NumericValue_FREQ.rPhys" dx1="1020"/>
-			<Connection Source="FT_DERIV_AR.AR_OUT" Destination="AR_SPLIT_2.IN" dx1="200"/>
 			<Connection Source="AX_SUBSCRIBE_SWITCH.OUT" Destination="AX_RF_TRIG_SWITCH.QI" dx1="133.33"/>
 			<Connection Source="AX_BOOL_TO_X_SWITCH.AX_OUT" Destination="AX_PUBLISH_SWITCH.IN" dx1="413.33"/>
 			<Connection Source="AX_BOOL_TO_X_STATUS.AX_OUT" Destination="AX_PUBLISH_STATUS.IN" dx1="146.67"/>
+			<Connection Source="initval_ATM.OUT" Destination="FT_PT1_AR.TM" dx1="400"/>
+			<Connection Source="FT_DERIV_10_AR.AR_OUT" Destination="FT_PT1_AR.AR_IN" dx1="420"/>
+			<Connection Source="AD_TO_AR_NUM.AR_OUT" Destination="FT_DERIV_10_AR.AR_IN" dx1="526.67"/>
+			<Connection Source="FT_PT1_AR.AR_OUT" Destination="AR_SPLIT_2.IN" dx1="540"/>
 		</AdapterConnections>
 	</SubAppNetwork>
 </SubAppType>

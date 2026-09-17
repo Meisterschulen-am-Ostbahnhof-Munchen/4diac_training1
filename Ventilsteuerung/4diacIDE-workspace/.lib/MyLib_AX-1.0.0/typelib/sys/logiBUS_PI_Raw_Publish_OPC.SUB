@@ -15,7 +15,7 @@
 		</InputVars>
 	</SubAppInterfaceList>
 	<SubAppNetwork>
-		<FB Name="logiBUS_PI_IDA" Type="logiBUS::io::PI::logiBUS_PI_IDA" x="-9200" y="-1700">
+		<FB Name="logiBUS_PI_IDA" Type="logiBUS::io::PI::logiBUS_PI_IDA" x="-9200" y="-1900">
 			<Parameter Name="QI" Value="TRUE"/>
 			<Parameter Name="PARAMS" Value="">
 				<Attribute Name="Visible" Value="false"/>
@@ -24,15 +24,25 @@
 			<Parameter Name="TimeDelta" Value="DWORD#250"/>
 			<Parameter Name="TimeRateLimit" Value="DWORD#100"/>
 		</FB>
-		<FB Name="AD_TO_AR_NUM" Type="adapter::conversion::unidirectional::AD_TO_AR_NUM" x="-7400" y="-1700">
+		<FB Name="AD_TO_AR_NUM" Type="adapter::conversion::unidirectional::AD_TO_AR_NUM" x="-7400" y="-1300">
 		</FB>
-		<FB Name="FT_DERIV_AR" Type="OSCAT_adapter::Control::FT_DERIV_AR" x="-6000" y="-1700">
-			<Parameter Name="K" Value="1.0"/>
+		<FB Name="FT_DERIV_10_AR" Type="OSCAT_adapter::Control::FT_DERIV_10_AR" x="-5600" y="-1900">
+			<Parameter Name="K" Value="9"/>
+			<Parameter Name="Faktor" Value="1.0"/>
 			<Parameter Name="run" Value="TRUE"/>
 		</FB>
-		<FB Name="AR_PUBLISH_HZ" Type="adapter::net::AR_PUBLISH_1" x="-4200" y="-1700">
+		<FB Name="AR_PUBLISH_HZ" Type="adapter::net::AR_PUBLISH_1" x="-1000" y="-1800">
 			<Parameter Name="QI" Value="TRUE"/>
 		</FB>
+		<FB Name="FT_PT1_AR" Type="OSCAT_adapter::Control::FT_PT1_AR" x="-2600" y="-1600">
+			<Parameter Name="K" Value="1.0"/>
+		</FB>
+		<FB Name="initval_ATM" Type="adapter::types::unidirectional::ATM::initval::initval_ATM" x="-3900" y="-900">
+			<Parameter Name="INIT_VAL" Value="T#2s"/>
+		</FB>
+		<EventConnections>
+			<Connection Source="initval_ATM.INITO" Destination="FT_PT1_AR.INIT" dx1="246.67"/>
+		</EventConnections>
 		<DataConnections>
 			<Connection Source="Input" Destination="logiBUS_PI_IDA.Input" dx1="1460">
 				<Attribute Name="Visible" Value="false"/>
@@ -43,8 +53,10 @@
 		</DataConnections>
 		<AdapterConnections>
 			<Connection Source="logiBUS_PI_IDA.IN" Destination="AD_TO_AR_NUM.AD_IN" dx1="420"/>
-			<Connection Source="AD_TO_AR_NUM.AR_OUT" Destination="FT_DERIV_AR.AR_IN" dx1="420"/>
-			<Connection Source="FT_DERIV_AR.AR_OUT" Destination="AR_PUBLISH_HZ.IN" dx1="420"/>
+			<Connection Source="AD_TO_AR_NUM.AR_OUT" Destination="FT_DERIV_10_AR.AR_IN" dx1="420"/>
+			<Connection Source="FT_DERIV_10_AR.AR_OUT" Destination="FT_PT1_AR.AR_IN" dx1="420"/>
+			<Connection Source="initval_ATM.OUT" Destination="FT_PT1_AR.TM" dx1="400"/>
+			<Connection Source="FT_PT1_AR.AR_OUT" Destination="AR_PUBLISH_HZ.IN" dx1="133.33"/>
 		</AdapterConnections>
 	</SubAppNetwork>
 </SubAppType>
