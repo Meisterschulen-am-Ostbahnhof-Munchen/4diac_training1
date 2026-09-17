@@ -11,6 +11,7 @@
 		<Import declaration="logiBUS::io::DI::logiBUS_DI::Input_I1"/>
 		<Import declaration="logiBUS::io::DI::logiBUS_DI::Input_I2"/>
 		<Import declaration="logiBUS::io::DI::logiBUS_DI::Input_I3"/>
+		<Import declaration="logiBUS::io::DI::logiBUS_DI_Events::BUTTON_SINGLE_CLICK"/>
 		<Import declaration="logiBUS::io::DQ::logiBUS_DO::Output_Q1"/>
 		<Import declaration="logiBUS::io::DQ::logiBUS_DO::Output_Q2"/>
 	</CompilerInfo>
@@ -48,13 +49,15 @@
 			<Parameter Name="KEY" Value="'SCALE'"/>
 			<Parameter Name="DEFAULT_VALUE" Value="1.0"/>
 		</FB>
-		<FB Name="DigitalInput_I2_CO" Type="logiBUS::io::DI::logiBUS_IXA" x="-2000" y="1400">
+		<FB Name="DigitalInput_I2_CO" Type="logiBUS::io::DI::logiBUS_IE" x="-2000" y="1400">
 			<Parameter Name="QI" Value="TRUE"/>
 			<Parameter Name="Input" Value="Input_I2"/>
+			<Parameter Name="InputEvent" Value="BUTTON_SINGLE_CLICK"/>
 		</FB>
-		<FB Name="DigitalInput_I3_CS" Type="logiBUS::io::DI::logiBUS_IXA" x="-2000" y="2500">
+		<FB Name="DigitalInput_I3_CS" Type="logiBUS::io::DI::logiBUS_IE" x="-2000" y="2500">
 			<Parameter Name="QI" Value="TRUE"/>
 			<Parameter Name="Input" Value="Input_I3"/>
+			<Parameter Name="InputEvent" Value="BUTTON_SINGLE_CLICK"/>
 		</FB>
 		<FB Name="AX_SPLIT_2" Type="adapter::events::unidirectional::AX_SPLIT_2" x="-6100" y="1000">
 		</FB>
@@ -78,12 +81,14 @@
 			<Parameter Name="QI" Value="TRUE"/>
 			<Parameter Name="Output" Value="Output_Q2"/>
 		</FB>
+		<EventConnections>
+			<Connection Source="DigitalInput_I2_CO.IND" Destination="CALIBRATE.CO" dx1="1086.67"/>
+			<Connection Source="DigitalInput_I3_CS.IND" Destination="CALIBRATE.CS" dx1="800"/>
+		</EventConnections>
 		<AdapterConnections>
 			<Connection Source="DigitalInput_I1.IN" Destination="AX_SPLIT_2.IN" dx1="306.67"/>
 			<Connection Source="AnalogInput_I4.IN" Destination="AD_TO_AUDI.AD_IN" dx1="240"/>
 			<Connection Source="AUDI_TO_AR.AR_OUT" Destination="CALIBRATE.X" dx1="800"/>
-			<Connection Source="DigitalInput_I2_CO.IN" Destination="CALIBRATE.CO" dx1="1086.67"/>
-			<Connection Source="DigitalInput_I3_CS.IN" Destination="CALIBRATE.CS" dx1="800"/>
 			<Connection Source="AX_SPLIT_2.OUT1" Destination="DigitalOutput_Q1.OUT" dx1="220"/>
 			<Connection Source="AX_SPLIT_2.OUT2" Destination="AnalogInput_I4.SREQ" dx1="220"/>
 			<Connection Source="CALIBRATE.OFFSET" Destination="NVS_OFFSET.VAL" dx1="320"/>
