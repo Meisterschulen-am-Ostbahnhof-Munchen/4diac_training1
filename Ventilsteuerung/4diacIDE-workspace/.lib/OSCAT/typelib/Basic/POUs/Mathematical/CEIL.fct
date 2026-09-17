@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<Function Name="FLOOR" Comment="This is a rounding function which returns the biggest possible integer which is less or equal&#10;to X.">
+<Function Name="CEIL" Comment="This is a rounding function which returns the smallest possible integer which is greater or equal&#10;to X.">
 	<Identification Standard="61499-1">
 	</Identification>
-	<VersionInfo Version="1.0" Author="Franz Höpfinger" Date="2026-09-17" Remarks="Portiert aus OSCAT_basic FLOOR.TcPOU - Bereichspruefung (X >= 32767.0 / X <= -32768.0) schuetzt vor INT-Ueberlauf.">
+	<VersionInfo Version="1.0" Author="Franz Höpfinger" Date="2026-09-17" Remarks="Portiert aus OSCAT_basic CEIL.TcPOU - Bereichspruefung (X >= 32767.0 / X <= -32768.0) schuetzt vor INT-Ueberlauf.">
 	</VersionInfo>
 	<CompilerInfo packageName="OSCAT::Basic::POUs::Mathematical">
 	</CompilerInfo>
@@ -27,8 +27,8 @@
 	<FunctionBody>
 		<ST><![CDATA[PACKAGE OSCAT::Basic::POUs::Mathematical;
 
-(* This is a rounding function which returns the biggest possible integer which is less or equal to X (clamped to INT range -32768..32767). *)
-FUNCTION FLOOR : INT
+(* This is a rounding function which returns the smallest possible integer which is greater or equal to X (clamped to INT range -32768..32767). *)
+FUNCTION CEIL : INT
 VAR_INPUT
 	X : REAL;
 END_VAR
@@ -36,31 +36,26 @@ END_VAR
 (*
  * version 1.1	21. mar. 2008 programmer 	hugo tested by		tobias
  * *
- * This is a rounding function which returns the biggest possible integer which is less or equal to X.
- * floor(3.14) = 3 floor(-3.14) = -4
+ * This is a rounding function which returns the smallest possible integer which is greater or equal to X.
+ * ceil(3.14) = 4 ceil(-3.14) = -3
  * Portiert 2026-09-17: Bereichspruefung schuetzt vor INT-Ueberlauf.
  *)
 IF X >= 32767.0 THEN
-	FLOOR := 32767;
+	CEIL := 32767;
 ELSIF X <= -32768.0 THEN
-	FLOOR := -32768;
+	CEIL := -32768;
 ELSE
-	FLOOR := REAL_TO_INT(X);
-	IF FLOOR > X THEN
-		FLOOR := FLOOR - 1;
+	CEIL := REAL_TO_INT(X);
+	IF CEIL < X THEN
+		CEIL := CEIL + 1;
 	END_IF;
 END_IF;
 
 END_FUNCTION
 
-(*
- * version 1.1	21. mar. 2008 programmer 	hugo tested by		tobias
+(* revision history hm	7. feb. 2007	rev 1.0 original version
  * *
- * This is a rounding function which returns the biggest possible integer which is less or equal to
- * X.
- * floor(3.14) = 3 floor(-3.14) = -4
- *)
-]]></ST>
+ * hm	21. mar. 2008	rev 1.1 use REAL_TO_INT instead of trunc for compatibility reasons *) ]]></ST>
 	</FunctionBody>
 	<Attribute Name="eclipse4diac::core::TypeHash" Value="''"/>
 </Function>
