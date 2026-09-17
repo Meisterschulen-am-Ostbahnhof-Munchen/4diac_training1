@@ -15,15 +15,14 @@
 				<With Var="u8CanIdx"/>
 				<With Var="SA"/>
 			</Event>
-			<Event Name="REQ" Type="Event" Comment="Service Request">
-			</Event>
 		</EventInputs>
 		<EventOutputs>
 			<Event Name="INITO" Type="EInit" Comment="Initialization Confirm">
 				<With Var="QO"/>
 				<With Var="STATUS"/>
 			</Event>
-			<Event Name="CNF" Type="Event" Comment="Confirmation of Requested Service">
+			<Event Name="IND" Type="Event" Comment="Indication from Resource - feuert bei jedem Zyklus ohne aktiven Fehler und publiziert dabei auch den Reset von bCommError/bCRCError auf false.">
+				<With Var="QO"/>
 				<With Var="STATUS"/>
 				<With Var="rAccX"/>
 				<With Var="rAccY"/>
@@ -48,7 +47,8 @@
 				<With Var="uiSysDiag"/>
 				<With Var="uiMessageCounter"/>
 			</Event>
-			<Event Name="ERROR" Type="Event" Comment="Error indication">
+			<Event Name="ERROR" Type="Event" Comment="Feuert ausschliesslich beim tatsaechlichen Eintreten eines Fehlers (Entry-Trigger). Das Zuruecksetzen von bCommError/bCRCError auf false wird NICHT hier, sondern ueber IND gemeldet.">
+				<With Var="QO"/>
 				<With Var="STATUS"/>
 				<With Var="bCommError"/>
 				<With Var="bCRCError"/>
@@ -92,4 +92,10 @@
 		</OutputVars>
 	</InterfaceList>
 	<Attribute Name="eclipse4diac::core::TypeHash" Value="''"/>
+	<Attribute Name="Documentation" Type="CDATA"><![CDATA[<p>Service interface function block for Bosch MM7.10 IMU sensor via CAN/J1939</p>
+
+<p>&nbsp;</p>
+
+<p><strong>ERROR / IND Vertrag:</strong> ERROR feuert ausschliesslich beim tatsaechlichen Eintreten eines Fehlers (bCommError oder bCRCError wird true). Das Zuruecksetzen auf false (Fehler vorbei) wird bewusst NICHT nochmal separat ueber ERROR gemeldet, sondern kommt ueber IND - das feuert bei jedem Zyklus ohne aktiven Fehler und publiziert die Fehler-Flags mit. Nachgeschaltete Bausteine, die auf das Ende eines Fehlers reagieren muessen, werten dafuer IND mit bCommError/bCRCError==false aus, nicht ein zweites ERROR-Event.</p>
+]]></Attribute>
 </FBType>

@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SubAppType Name="Uebung_010f3" Comment="SoftKey_F1 ODER AuxFunction2_X1 auf DigitalOutput_Q1 mit GreenWhiteBackground (SoftKey UND Aux)">
+	<Identification Standard="61499-2" Description="Copyright (c) 2026 Meisterschulen am Ostbahnhof  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0">
+	</Identification>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2026-09-06" Remarks="initial API and implementation and/or initial documentation">
+	</VersionInfo>
+	<CompilerInfo packageName="Uebungen">
+		<Import declaration="Uebungen::const::UT::DefaultPool::SoftKey_F1"/>
+		<Import declaration="Uebungen::const::UT::DefaultPool::AuxFunction2_X1"/>
+		<Import declaration="logiBUS::io::DQ::logiBUS_DO::Output_Q1"/>
+	</CompilerInfo>
+	<SubAppInterfaceList>
+	</SubAppInterfaceList>
+	<SubAppNetwork>
+		<FB Name="DigitalOutput_Q1" Type="logiBUS::io::DQ::logiBUS_QX" x="-2000" y="-2200">
+			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="PARAMS" Value="">
+				<Attribute Name="Visible" Value="false"/>
+			</Parameter>
+			<Parameter Name="Output" Value="Output_Q1"/>
+		</FB>
+		<FB Name="SoftKey_F1" Type="isobus::UT::io::Softkey::Softkey_IX" x="-6200" y="-800">
+			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="u16ObjId" Value="SoftKey_F1"/>
+		</FB>
+		<FB Name="AuxFunction2_X1" Type="isobus::UT::io::Auxiliary::IN::Aux_IX" x="-6000" y="200">
+			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="u16ObjId" Value="AuxFunction2_X1"/>
+		</FB>
+		<FB Name="OR_2" Type="iec61131::booleanOperators::OR_BOOL_2" x="-4500" y="-300">
+		</FB>
+		<SubApp Name="GreenWhiteBackground3" Type="MyLib::sys::GreenWhiteBackground3" x="-1800" y="-300">
+			<Parameter Name="u16ObjId" Value="SoftKey_F1"/>
+			<Parameter Name="u16ObjIdA" Value="AuxFunction2_X1"/>
+		</SubApp>
+		<Comment Comment="SoftKey_F1 (VT) und AuxFunction2_X1 (Joystick) steuern denselben Q1 - ODER-verknuepft ueber OR_2. &#10;GreenWhiteBackground3 (nicht 1/2 einzeln!) bedient beide Hintergruende aus einem Baustein: u16ObjId=SoftKey (VT) und u16ObjIdA=Aux (VT+Aux-Handle)." x="-6000" y="2400" width="4000" height="900"/>
+		<EventConnections>
+			<Connection Source="SoftKey_F1.IND" Destination="OR_2.REQ" dx1="720"/>
+			<Connection Source="AuxFunction2_X1.IND" Destination="OR_2.REQ" dx1="213.33"/>
+			<Connection Source="OR_2.CNF" Destination="DigitalOutput_Q1.REQ" dx1="666.67"/>
+			<Connection Source="OR_2.CNF" Destination="GreenWhiteBackground3.REQ"/>
+		</EventConnections>
+		<DataConnections>
+			<Connection Source="SoftKey_F1.IN" Destination="OR_2.IN1" dx1="720"/>
+			<Connection Source="AuxFunction2_X1.IN" Destination="OR_2.IN2" dx1="626.67"/>
+			<Connection Source="OR_2.OUT" Destination="DigitalOutput_Q1.OUT" dx1="1000"/>
+			<Connection Source="OR_2.OUT" Destination="GreenWhiteBackground3.DI1" dx1="1093.33"/>
+		</DataConnections>
+	</SubAppNetwork>
+	<Attribute Name="Documentation" Type="CDATA"><![CDATA[<h1>SoftKey_F1 ODER AuxFunction2_X1 auf DigitalOutput_Q1 mit GreenWhiteBackground</h1>
+
+<p>Kombiniert Uebung_010c (SoftKey mit Background) und Uebung_010f (Aux mit Background) auf einen gemeinsamen Ausgang: dieselbe Funktion ist sowohl &uuml;ber den VT-SoftKey als auch &uuml;ber den physischen Aux-Taster/Joystick bedienbar.</p>
+
+<h2>Funktionsbeschreibung</h2>
+
+<ul>
+	<li>SoftKey_F1 und AuxFunction2_X1 liefern je ein boolesches Signal, OR_2 verkn&uuml;pft beide per ODER zu einem gemeinsamen Signal f&uuml;r DigitalOutput_Q1.</li>
+	<li>GreenWhiteBackground3 statt zwei einzelner GreenWhiteBackground1/GreenWhiteBackground2: dieser Baustein nimmt genau einen normalen VT-Objekt-Parameter (u16ObjId = SoftKey) UND einen Aux-Objekt-Parameter (u16ObjIdA = Aux) entgegen und setzt beide Hintergr&uuml;nde aus einem einzigen DI1-Eingang.</li>
+</ul>
+
+<h2>Arbeitsauftrag</h2>
+
+<p>Testen Sie: SoftKey_F1 dr&uuml;cken &rarr; Q1 EIN, beide Hintergr&uuml;nde (SoftKey und Aux) werden gr&uuml;n. Aux-Taster dr&uuml;cken &rarr; dasselbe. Werden beide gleichzeitig gehalten, bleibt Q1 EIN, bis <strong>beide</strong> losgelassen sind - Q1 schaltet erst AUS, wenn sowohl SoftKey_F1 als auch AuxFunction2_X1 wieder FALSE sind (reine ODER-Verkn&uuml;pfung, kein Latch).</p>
+]]></Attribute>
+</SubAppType>

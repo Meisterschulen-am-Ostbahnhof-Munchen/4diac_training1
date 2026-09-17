@@ -2,6 +2,8 @@
 <SubAppType Name="NumericValue_TO_AR2_OPC" Comment="VT-Eingabefeld (CInputNumber) UND OPC-UA (Remote) lesen, letzter Schreiber gewinnt (AR_LAST_2), als AR2 (bidirektional) an einen Consumer weiterreichen. Was der Consumer zurueckechot wird auf BEIDE Wege zurueckgemeldet (VT-Anzeige + Publish)">
 	<Identification Standard="61499-2" Description="Copyright (c) 2026 Meisterschulen am Ostbahnhof  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0">
 	</Identification>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.1" Author="Franz Höpfinger" Date="2026-09-16" Remarks="Neuer optionaler Ausgangs-Plug VALUE_OUT ergaenzt (AR_SPLIT_2 zu AR_SPLIT_3, 3. Zweig = plain-AR-Spiegel von AR_TO_AR2.AR_OUT) - damit externe Consumer den aktuellen Wert lesen koennen, ohne selbst denselben OPC-UA-Knoten lokal zu abonnieren (FORTE: 'Cannot add another one'). Unverdrahtet lassen, wenn nicht gebraucht. Siehe BERICHT_2026-09-16_STG3_I1_I3_I4_I6_STALE_REMOTE_SUBSCRIBE.md Abschnitt 16-17 Gruppe C.">
+	</VersionInfo>
 	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2026-08-31" Remarks="VT+OPC-UA sibling of NumericValue_TO_AR2 (VT only) / OPC_TO_AR2 (OPC only) - merges both live sources via AR_LAST_2 (last writer wins), exactly like the VT/Web merge already proven in RampLimitFS_TO_logiBUS_QDA_PWM_OPC.SUB">
 	</VersionInfo>
 	<CompilerInfo packageName="MyLib::sys">
@@ -16,6 +18,7 @@
 		</InputVars>
 		<Plugs>
 			<AdapterDeclaration Name="VALUEO" Type="adapter::types::bidirectional::AR2"/>
+			<AdapterDeclaration Name="VALUE_OUT" Type="adapter::types::unidirectional::AR" Comment="Optional: plain-AR-Spiegel des aktuellen Werts (= AR_TO_AR2.AR_OUT), fuer externe Consumer statt eigenem lokalen OPC-UA-Self-Subscribe. Unverdrahtet lassen, wenn nicht gebraucht."/>
 		</Plugs>
 	</SubAppInterfaceList>
 	<SubAppNetwork>
@@ -32,7 +35,7 @@
 		</FB>
 		<FB Name="AR_TO_AR2" Type="adapter::conversion::bidirectional::AR_TO_AR2" x="-2200" y="-600">
 		</FB>
-		<FB Name="AR_SPLIT_2" Type="adapter::events::unidirectional::AR_SPLIT_2" x="-300" y="-500">
+		<FB Name="AR_SPLIT_2" Type="adapter::events::unidirectional::AR_SPLIT_3" x="-300" y="-500">
 		</FB>
 		<FB Name="AR_LAST_2" Type="adapter::events::unidirectional::AR_LAST_2" x="-3400" y="-600">
 		</FB>
@@ -62,6 +65,7 @@
 			<Connection Source="AR_TO_AR2.AR_OUT" Destination="AR_SPLIT_2.IN" dx1="120"/>
 			<Connection Source="AR_SPLIT_2.OUT1" Destination="Q_NumericValue_PHYSA.rPhys" dx1="920"/>
 			<Connection Source="AR_SPLIT_2.OUT2" Destination="AR_PUBLISH_1.IN" dx1="140"/>
+			<Connection Source="AR_SPLIT_2.OUT3" Destination="VALUE_OUT" dx1="140"/>
 			<Connection Source="AR_LAST_2.OUT" Destination="AR_TO_AR2.AR_IN"/>
 			<Connection Source="NumericValue_PHYSA.rPhys" Destination="AR_LAST_2.IN1" dx1="1893.33"/>
 			<Connection Source="AR_SUBSCRIBE_1.OUT" Destination="AR_LAST_2.IN2" dx1="960"/>

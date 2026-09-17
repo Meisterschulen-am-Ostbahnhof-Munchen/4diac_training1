@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SubAppType Name="Uebung_056_AX" Comment="DigitalInput_I1-_I4 auf DigitalOutput_Q1-_Q4, mit Plug and Socket">
+	<Identification Standard="61499-2" Description="Copyright (c) 2026 Meisterschulen am Ostbahnhof  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0">
+	</Identification>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2026-09-09" Remarks="initial API and implementation and/or initial documentation">
+	</VersionInfo>
+	<CompilerInfo packageName="Uebungen">
+		<Import declaration="logiBUS::io::DI::logiBUS_DI::Input_I1"/>
+		<Import declaration="logiBUS::io::DI::logiBUS_DI::Input_I2"/>
+		<Import declaration="logiBUS::io::DI::logiBUS_DI::Input_I3"/>
+		<Import declaration="logiBUS::io::DI::logiBUS_DI::Input_I4"/>
+		<Import declaration="logiBUS::io::DQ::logiBUS_DO::Output_Q1"/>
+		<Import declaration="logiBUS::io::DQ::logiBUS_DO::Output_Q2"/>
+		<Import declaration="logiBUS::io::DQ::logiBUS_DO::Output_Q3"/>
+		<Import declaration="logiBUS::io::DQ::logiBUS_DO::Output_Q4"/>
+	</CompilerInfo>
+	<SubAppInterfaceList>
+	</SubAppInterfaceList>
+	<SubAppNetwork>
+		<FB Name="DigitalInput_I1" Type="logiBUS::io::DI::logiBUS_IXA" x="-13600" y="0">
+			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="Input" Value="Input_I1"/>
+		</FB>
+		<FB Name="ASSEMBLE_BYTE_FROM_QUARTERS" Type="eclipse4diac::utils::assembling::ASSEMBLE_BYTE_FROM_QUARTERS" x="-5800" y="1300">
+		</FB>
+		<FB Name="DigitalInput_I2" Type="logiBUS::io::DI::logiBUS_IXA" x="-13600" y="1073.33">
+			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="Input" Value="Input_I2"/>
+		</FB>
+		<FB Name="DigitalInput_I3" Type="logiBUS::io::DI::logiBUS_IXA" x="-13600" y="2153.33">
+			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="Input" Value="Input_I3"/>
+		</FB>
+		<FB Name="DigitalInput_I4" Type="logiBUS::io::DI::logiBUS_IXA" x="-13600" y="3333.33">
+			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="Input" Value="Input_I4"/>
+		</FB>
+		<FB Name="DigitalOutput_Q2" Type="logiBUS::io::DQ::logiBUS_QXA" x="4800" y="240">
+			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="Output" Value="Output_Q2"/>
+		</FB>
+		<FB Name="DigitalOutput_Q3" Type="logiBUS::io::DQ::logiBUS_QXA" x="4800" y="1186.67">
+			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="Output" Value="Output_Q3"/>
+		</FB>
+		<FB Name="SPLIT_BYTE_INTO_QUARTERS" Type="eclipse4diac::utils::splitting::SPLIT_BYTE_INTO_QUARTERS" x="-3300" y="1300">
+		</FB>
+		<FB Name="DigitalOutput_Q1" Type="logiBUS::io::DQ::logiBUS_QXA" x="4800" y="-706.67">
+			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="Output" Value="Output_Q1"/>
+		</FB>
+		<FB Name="DigitalOutput_Q4" Type="logiBUS::io::DQ::logiBUS_QXA" x="4800" y="2140">
+			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="Output" Value="Output_Q4"/>
+		</FB>
+		<FB Name="Q_TO_BOOL_Q1" Type="logiBUS::utils::quarter::QUARTER_TO_BOOL" x="-906.67" y="-553.33">
+		</FB>
+		<FB Name="Q_TO_BOOL_Q4" Type="logiBUS::utils::quarter::QUARTER_TO_BOOL" x="-900" y="2300">
+		</FB>
+		<FB Name="Q_TO_BOOL_Q2" Type="logiBUS::utils::quarter::QUARTER_TO_BOOL" x="-906.67" y="386.67">
+		</FB>
+		<FB Name="Q_TO_BOOL_Q3" Type="logiBUS::utils::quarter::QUARTER_TO_BOOL" x="-906.67" y="1333.33">
+		</FB>
+		<FB Name="Q_TO_STR_STATUS_Q3" Type="logiBUS::utils::quarter::QUARTER_TO_STR_STATUS" x="473.33" y="1380">
+		</FB>
+		<FB Name="Q_TO_STR_STATUS_Q1" Type="logiBUS::utils::quarter::QUARTER_TO_STR_STATUS" x="473.33" y="-506.67">
+		</FB>
+		<FB Name="Q_TO_STR_STATUS_I3" Type="logiBUS::utils::quarter::QUARTER_TO_STR_STATUS" x="-7140" y="2720">
+		</FB>
+		<FB Name="Q_TO_STR_STATUS_I1" Type="logiBUS::utils::quarter::QUARTER_TO_STR_STATUS" x="-7386.67" y="173.33">
+		</FB>
+		<FB Name="Q_TO_STR_STATUS_I4" Type="logiBUS::utils::quarter::QUARTER_TO_STR_STATUS" x="-7200" y="3500">
+		</FB>
+		<FB Name="Q_TO_STR_STATUS_Q4" Type="logiBUS::utils::quarter::QUARTER_TO_STR_STATUS" x="473.33" y="2340">
+		</FB>
+		<FB Name="Q_TO_STR_STATUS_Q2" Type="logiBUS::utils::quarter::QUARTER_TO_STR_STATUS" x="473.33" y="433.33">
+		</FB>
+		<FB Name="Q_TO_STR_STATUS_I2" Type="logiBUS::utils::quarter::QUARTER_TO_STR_STATUS" x="-7466.67" y="800">
+		</FB>
+		<FB Name="BOOL_TO_Q_I1" Type="logiBUS::utils::quarter::BOOL_TO_QUARTER" x="-8633.33" y="173.33">
+		</FB>
+		<FB Name="BOOL_TO_Q_I2" Type="logiBUS::utils::quarter::BOOL_TO_QUARTER" x="-8633.33" y="1253.33">
+		</FB>
+		<FB Name="BOOL_TO_Q_I4" Type="logiBUS::utils::quarter::BOOL_TO_QUARTER" x="-8633.33" y="3513.33">
+		</FB>
+		<FB Name="BOOL_TO_Q_I3" Type="logiBUS::utils::quarter::BOOL_TO_QUARTER" x="-8633.33" y="2333.33">
+		</FB>
+		<FB Name="AX_X_TO_BOOL_1" Type="adapter::conversion::unidirectional::AX_X_TO_BOOL" x="-11800" y="0">
+		</FB>
+		<FB Name="AX_X_TO_BOOL_2" Type="adapter::conversion::unidirectional::AX_X_TO_BOOL" x="-11800" y="1073.33">
+		</FB>
+		<FB Name="AX_X_TO_BOOL_3" Type="adapter::conversion::unidirectional::AX_X_TO_BOOL" x="-11800" y="2153.33">
+		</FB>
+		<FB Name="AX_X_TO_BOOL_4" Type="adapter::conversion::unidirectional::AX_X_TO_BOOL" x="-11800" y="3333.33">
+		</FB>
+		<FB Name="AX_BOOL_TO_X_1" Type="adapter::conversion::unidirectional::AX_BOOL_TO_X" x="3600" y="-706.67">
+		</FB>
+		<FB Name="AX_BOOL_TO_X_2" Type="adapter::conversion::unidirectional::AX_BOOL_TO_X" x="3600" y="240">
+		</FB>
+		<FB Name="AX_BOOL_TO_X_3" Type="adapter::conversion::unidirectional::AX_BOOL_TO_X" x="3600" y="1186.67">
+		</FB>
+		<FB Name="AX_BOOL_TO_X_4" Type="adapter::conversion::unidirectional::AX_BOOL_TO_X" x="3600" y="2140">
+		</FB>
+		<EventConnections>
+			<Connection Source="ASSEMBLE_BYTE_FROM_QUARTERS.CNF" Destination="SPLIT_BYTE_INTO_QUARTERS.REQ"/>
+			<Connection Source="SPLIT_BYTE_INTO_QUARTERS.CNF" Destination="Q_TO_BOOL_Q1.REQ" dx1="913.33"/>
+			<Connection Source="Q_TO_BOOL_Q1.CNF" Destination="AX_BOOL_TO_X_1.REQ" dx1="320" dx2="320" dy="-173.33"/>
+			<Connection Source="SPLIT_BYTE_INTO_QUARTERS.CNF" Destination="Q_TO_BOOL_Q4.REQ" dx1="900"/>
+			<Connection Source="Q_TO_BOOL_Q4.CNF" Destination="AX_BOOL_TO_X_4.REQ" dx1="1093.33"/>
+			<Connection Source="SPLIT_BYTE_INTO_QUARTERS.CNF" Destination="Q_TO_BOOL_Q2.REQ" dx1="913.33"/>
+			<Connection Source="Q_TO_BOOL_Q2.CNF" Destination="AX_BOOL_TO_X_2.REQ" dx1="320" dx2="320" dy="-173.33"/>
+			<Connection Source="SPLIT_BYTE_INTO_QUARTERS.CNF" Destination="Q_TO_BOOL_Q3.REQ" dx1="606.67"/>
+			<Connection Source="Q_TO_BOOL_Q3.CNF" Destination="AX_BOOL_TO_X_3.REQ" dx1="320" dx2="320" dy="-173.33"/>
+			<Connection Source="Q_TO_BOOL_Q3.CNF" Destination="Q_TO_STR_STATUS_Q3.REQ" dx1="320"/>
+			<Connection Source="Q_TO_BOOL_Q1.CNF" Destination="Q_TO_STR_STATUS_Q1.REQ" dx1="320"/>
+			<Connection Source="AX_X_TO_BOOL_3.CNF" Destination="Q_TO_STR_STATUS_I3.REQ" dx1="1226.67"/>
+			<Connection Source="Q_TO_BOOL_Q4.CNF" Destination="Q_TO_STR_STATUS_Q4.REQ" dx1="313.33"/>
+			<Connection Source="Q_TO_BOOL_Q2.CNF" Destination="Q_TO_STR_STATUS_Q2.REQ" dx1="320"/>
+			<Connection Source="AX_X_TO_BOOL_2.CNF" Destination="Q_TO_STR_STATUS_I2.REQ" dx1="840"/>
+			<Connection Source="AX_X_TO_BOOL_1.CNF" Destination="BOOL_TO_Q_I1.REQ" dx1="853.33"/>
+			<Connection Source="BOOL_TO_Q_I1.CNF" Destination="ASSEMBLE_BYTE_FROM_QUARTERS.REQ" dx1="126.67"/>
+			<Connection Source="BOOL_TO_Q_I1.CNF" Destination="Q_TO_STR_STATUS_I1.REQ" dx1="80" dx2="80" dy="160"/>
+			<Connection Source="AX_X_TO_BOOL_2.CNF" Destination="BOOL_TO_Q_I2.REQ" dx1="840"/>
+			<Connection Source="BOOL_TO_Q_I2.CNF" Destination="ASSEMBLE_BYTE_FROM_QUARTERS.REQ" dx1="1546.67"/>
+			<Connection Source="AX_X_TO_BOOL_4.CNF" Destination="BOOL_TO_Q_I4.REQ" dx1="853.33"/>
+			<Connection Source="BOOL_TO_Q_I4.CNF" Destination="ASSEMBLE_BYTE_FROM_QUARTERS.REQ" dx1="186.67"/>
+			<Connection Source="BOOL_TO_Q_I4.CNF" Destination="Q_TO_STR_STATUS_I4.REQ" dx1="220"/>
+			<Connection Source="AX_X_TO_BOOL_3.CNF" Destination="BOOL_TO_Q_I3.REQ" dx1="853.33"/>
+			<Connection Source="BOOL_TO_Q_I3.CNF" Destination="ASSEMBLE_BYTE_FROM_QUARTERS.REQ" dx1="186.67"/>
+		</EventConnections>
+		<DataConnections>
+			<Connection Source="Q_TO_BOOL_Q1.Q" Destination="AX_BOOL_TO_X_1.OUT" dx1="320" dx2="320" dy="206.67"/>
+			<Connection Source="Q_TO_BOOL_Q4.Q" Destination="AX_BOOL_TO_X_4.OUT" dx1="1093.33"/>
+			<Connection Source="Q_TO_BOOL_Q2.Q" Destination="AX_BOOL_TO_X_2.OUT" dx1="320" dx2="320" dy="206.67"/>
+			<Connection Source="Q_TO_BOOL_Q3.Q" Destination="AX_BOOL_TO_X_3.OUT" dx1="320" dx2="320" dy="206.67"/>
+			<Connection Source="Q_TO_BOOL_Q3.Q" Destination="Q_TO_STR_STATUS_Q3.IB" dx1="320"/>
+			<Connection Source="Q_TO_BOOL_Q1.Q" Destination="Q_TO_STR_STATUS_Q1.IB" dx1="320"/>
+			<Connection Source="AX_X_TO_BOOL_3.IN" Destination="Q_TO_STR_STATUS_I3.IB" dx1="1786.67"/>
+			<Connection Source="Q_TO_BOOL_Q4.Q" Destination="Q_TO_STR_STATUS_Q4.IB" dx1="313.33"/>
+			<Connection Source="Q_TO_BOOL_Q2.Q" Destination="Q_TO_STR_STATUS_Q2.IB" dx1="320"/>
+			<Connection Source="AX_X_TO_BOOL_2.IN" Destination="Q_TO_STR_STATUS_I2.IB" dx1="873.33"/>
+			<Connection Source="AX_X_TO_BOOL_1.IN" Destination="BOOL_TO_Q_I1.I" dx1="853.33"/>
+			<Connection Source="BOOL_TO_Q_I1." Destination="Q_TO_STR_STATUS_I1.IB" dx1="80" dx2="80" dy="160"/>
+			<Connection Source="AX_X_TO_BOOL_2.IN" Destination="BOOL_TO_Q_I2.I" dx1="873.33"/>
+			<Connection Source="AX_X_TO_BOOL_4.IN" Destination="BOOL_TO_Q_I4.I" dx1="853.33"/>
+			<Connection Source="BOOL_TO_Q_I4." Destination="Q_TO_STR_STATUS_I4.IB" dx1="220"/>
+			<Connection Source="AX_X_TO_BOOL_3.IN" Destination="BOOL_TO_Q_I3.I" dx1="853.33"/>
+			<Connection Source="ASSEMBLE_BYTE_FROM_QUARTERS." Destination="SPLIT_BYTE_INTO_QUARTERS.IN" dx1="473.33"/>
+			<Connection Source="SPLIT_BYTE_INTO_QUARTERS.QUARTER_BYTE_00" Destination="Q_TO_BOOL_Q1.IB" dx1="780"/>
+			<Connection Source="SPLIT_BYTE_INTO_QUARTERS.QUARTER_BYTE_03" Destination="Q_TO_BOOL_Q4.IB" dx1="786.67"/>
+			<Connection Source="SPLIT_BYTE_INTO_QUARTERS.QUARTER_BYTE_01" Destination="Q_TO_BOOL_Q2.IB" dx1="780"/>
+			<Connection Source="SPLIT_BYTE_INTO_QUARTERS.QUARTER_BYTE_02" Destination="Q_TO_BOOL_Q3.IB" dx1="780"/>
+			<Connection Source="BOOL_TO_Q_I1." Destination="ASSEMBLE_BYTE_FROM_QUARTERS.QUARTER_BYTE_00" dx1="80"/>
+			<Connection Source="BOOL_TO_Q_I2." Destination="ASSEMBLE_BYTE_FROM_QUARTERS.QUARTER_BYTE_01" dx1="813.33"/>
+			<Connection Source="BOOL_TO_Q_I4." Destination="ASSEMBLE_BYTE_FROM_QUARTERS.QUARTER_BYTE_03" dx1="80"/>
+			<Connection Source="BOOL_TO_Q_I3." Destination="ASSEMBLE_BYTE_FROM_QUARTERS.QUARTER_BYTE_02" dx1="80"/>
+		</DataConnections>
+		<AdapterConnections>
+			<Connection Source="DigitalInput_I1.IN" Destination="AX_X_TO_BOOL_1.AX_IN"/>
+			<Connection Source="DigitalInput_I2.IN" Destination="AX_X_TO_BOOL_2.AX_IN"/>
+			<Connection Source="DigitalInput_I3.IN" Destination="AX_X_TO_BOOL_3.AX_IN"/>
+			<Connection Source="DigitalInput_I4.IN" Destination="AX_X_TO_BOOL_4.AX_IN"/>
+			<Connection Source="AX_BOOL_TO_X_1.AX_OUT" Destination="DigitalOutput_Q1.OUT"/>
+			<Connection Source="AX_BOOL_TO_X_2.AX_OUT" Destination="DigitalOutput_Q2.OUT"/>
+			<Connection Source="AX_BOOL_TO_X_3.AX_OUT" Destination="DigitalOutput_Q3.OUT"/>
+			<Connection Source="AX_BOOL_TO_X_4.AX_OUT" Destination="DigitalOutput_Q4.OUT"/>
+		</AdapterConnections>
+	</SubAppNetwork>
+</SubAppType>

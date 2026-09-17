@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SubAppType Name="Uebung_152_AX" Comment="Impulszähler &amp; PI Regler, mit Plug and Socket (Adapter-Native)">
+	<Identification Standard="61499-2" Description="Copyright (c) 2026 Meisterschulen am Ostbahnhof  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0">
+	</Identification>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.2" Author="Franz Höpfinger" Date="2026-09-15" Remarks="SET-Eingang an CTRL_PI auf AR-Adapter (initval_AR) umgestellt.">
+	</VersionInfo>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.1" Author="Franz Höpfinger" Date="2026-09-12" Remarks="Vollstaendig auf Adapter-Architektur umgestellt: FT_DERIV_10_AR und CTRL_PI_AR aus OSCAT_adapter, AD_TO_AR_NUM und AR_TO_AD_NUM fuer sauberen Adapterdatenfluss.">
+	</VersionInfo>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2026-09-10" Remarks="initial API and implementation and/or initial documentation">
+	</VersionInfo>
+	<CompilerInfo packageName="Uebungen">
+		<Import declaration="logiBUS::io::DI::logiBUS_DI::Input_I1"/>
+		<Import declaration="logiBUS::io::DI::logiBUS_DI::Input_I2"/>
+		<Import declaration="logiBUS::io::DI::logiBUS_DI::Input_I3"/>
+		<Import declaration="logiBUS::io::DI::logiBUS_DI_Events::BUTTON_SINGLE_CLICK"/>
+		<Import declaration="logiBUS::io::DQ::logiBUS_DO::Output_Q1"/>
+		<Import declaration="logiBUS::io::PI::logiBUS_PI::PulseInput_I8"/>
+	</CompilerInfo>
+	<SubAppInterfaceList>
+	</SubAppInterfaceList>
+	<SubAppNetwork>
+		<FB Name="DigitalInput_I2" Type="logiBUS::io::DI::logiBUS_IE" x="-7000" y="0">
+			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="Input" Value="Input_I2"/>
+			<Parameter Name="InputEvent" Value="BUTTON_SINGLE_CLICK"/>
+		</FB>
+		<FB Name="DigitalInput_I3" Type="logiBUS::io::DI::logiBUS_IE" x="-7000" y="1000">
+			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="Input" Value="Input_I3"/>
+			<Parameter Name="InputEvent" Value="BUTTON_SINGLE_CLICK"/>
+		</FB>
+		<FB Name="E_CYCLE" Type="iec61499::events::E_CYCLE" x="-5500" y="500">
+			<Parameter Name="DT" Value="T#200ms"/>
+		</FB>
+		<FB Name="logiBUS_PI_IDA" Type="logiBUS::io::PI::logiBUS_PI_IDA" x="-4000" y="400">
+			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="Input" Value="PulseInput_I8"/>
+			<Parameter Name="ImpulseDelta" Value="100"/>
+			<Parameter Name="TimeDelta" Value="50000"/>
+			<Parameter Name="TimeRateLimit" Value="10000"/>
+		</FB>
+		<FB Name="AD_TO_AR_NUM" Type="adapter::conversion::unidirectional::AD_TO_AR_NUM" x="-2500" y="400">
+		</FB>
+		<FB Name="FT_DERIV" Type="OSCAT_adapter::Control::FT_DERIV_10_AR" x="-1000" y="400">
+			<Parameter Name="K" Value="9"/>
+			<Parameter Name="Faktor" Value="1.0"/>
+			<Parameter Name="run" Value="TRUE"/>
+		</FB>
+		<FB Name="DigitalInput_I1" Type="logiBUS::io::DI::logiBUS_IE" x="-4000" y="2200">
+			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="Input" Value="Input_I1"/>
+			<Parameter Name="InputEvent" Value="BUTTON_SINGLE_CLICK"/>
+		</FB>
+		<FB Name="AX_T_FF" Type="adapter::events::unidirectional::AX_T_FF" x="-1500" y="2400">
+		</FB>
+		<FB Name="CTRL_PI" Type="OSCAT_adapter::Control::CTRL_PI_AR" x="600" y="400">
+			<Parameter Name="SUP" Value="0.0"/>
+			<Parameter Name="OFS" Value="0.0"/>
+			<Parameter Name="M_I" Value="8184.0"/>
+			<Parameter Name="KP" Value="10.0"/>
+			<Parameter Name="KI" Value="10.0"/>
+			<Parameter Name="LL" Value="0.0"/>
+			<Parameter Name="LH" Value="8184.0"/>
+		</FB>
+		<FB Name="AR_TO_AD_NUM" Type="adapter::conversion::unidirectional::AR_TO_AD_NUM" x="2100" y="400">
+		</FB>
+		<FB Name="PWMOutput_Q1" Type="logiBUS::io::DQ::logiBUS_QDA_PWM" x="3600" y="400">
+			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="Output" Value="Output_Q1"/>
+		</FB>
+		<FB Name="initval_AR" Type="adapter::types::unidirectional::AR::initval::initval_AR" x="-2400" y="1500">
+			<Parameter Name="INIT_VAL" Value="16.0"/>
+		</FB>
+		<EventConnections>
+			<Connection Source="DigitalInput_I2.IND" Destination="E_CYCLE.START" dx1="533.33"/>
+			<Connection Source="DigitalInput_I3.IND" Destination="E_CYCLE.STOP" dx1="360"/>
+			<Connection Source="E_CYCLE.EO" Destination="logiBUS_PI_IDA.REQ" dx1="593.33"/>
+			<Connection Source="DigitalInput_I1.IND" Destination="AX_T_FF.CLK" dx1="806.67"/>
+		</EventConnections>
+		<AdapterConnections>
+			<Connection Source="logiBUS_PI_IDA.IN" Destination="AD_TO_AR_NUM.AD_IN" dx1="293.33"/>
+			<Connection Source="AD_TO_AR_NUM.AR_OUT" Destination="FT_DERIV.AR_IN" dx1="300"/>
+			<Connection Source="FT_DERIV.AR_OUT" Destination="CTRL_PI.AR_ACT" dx1="300"/>
+			<Connection Source="AX_T_FF.Q" Destination="CTRL_PI.AX_MAN" dx1="740"/>
+			<Connection Source="CTRL_PI.AR_Y" Destination="AR_TO_AD_NUM.AR_IN" dx1="300"/>
+			<Connection Source="AR_TO_AD_NUM.AD_OUT" Destination="PWMOutput_Q1.OUT" dx1="300"/>
+			<Connection Source="initval_AR.OUT" Destination="CTRL_PI.SET" dx1="1040"/>
+		</AdapterConnections>
+	</SubAppNetwork>
+</SubAppType>

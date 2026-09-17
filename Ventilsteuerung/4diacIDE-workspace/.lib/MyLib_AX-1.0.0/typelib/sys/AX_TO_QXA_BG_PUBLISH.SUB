@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SubAppType Name="AX_TO_QXA_BG_PUBLISH" Comment="Treibt aus einem bereits fertigen AX-Zustand (z.B. per OR mehrerer Quellen zusammengefuehrt - gestaffeltes Gruppensignal, Einzel-Toggle, IO-Diag-Testbutton) 1 physischen Ausgang + Hintergrundfarbe (SoftKey+AUX) + lokalen State-Publish (Web-Client/OPC-Dashboard). Gegenstueck zu MyLib::sys::AX_SoftkeyToggle_RS_TO_QXA_BG (das den Toggle/Reset noch selbst erzeugt) - hier liegt der AX-Zustand bereits fertig vor und muss nur noch auf Ausgang+Hintergrund+Publish verteilt werden.">
+	<Identification Standard="61499-2" Description="Copyright (c) 2026 Meisterschulen am Ostbahnhof  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0">
+	</Identification>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2026-09-15" Remarks="initial implementation - aus Baender_EinAus.SUB herausgeloest (AX_SPLIT_2_Igel/_Elevator/_Querband + DigitalOutput_Igel/_Elevator/_Querband + GreenWhiteBackground_Igel/_Elevator/_Querband, 3x identisch). ID_STATE_WRITE neu ergaenzt (Franz: Web-Mirror braucht fuer die Einzel-Baender-Softkeys einen eigenen State-Publish, bisher nirgends vorhanden).">
+	</VersionInfo>
+	<CompilerInfo packageName="MyLib::sys">
+		<Import declaration="isobus::UT::Q::const::IDs::ID_NULL"/>
+		<Import declaration="logiBUS::io::DQ::logiBUS_DO"/>
+		<Import declaration="logiBUS::io::DQ::logiBUS_DO_S"/>
+	</CompilerInfo>
+	<SubAppInterfaceList>
+		<InputVars>
+			<VarDeclaration Name="u16ObjId" Type="UINT" Comment="Object ID Softkey - traegt die Hintergrundfarbe" InitialValue="ID_NULL"/>
+			<VarDeclaration Name="u16ObjIdA" Type="UINT" Comment="Object ID AuxFunction2 (Joystick) - zeigt Hintergrundfarbe am Aux-Handle mit" InitialValue="ID_NULL"/>
+			<VarDeclaration Name="Output" Type="logiBUS::io::DQ::logiBUS_DO_S" Comment="Identify the Output Output_Q1..Q12" InitialValue="logiBUS_DO::Invalid"/>
+			<VarDeclaration Name="ID_STATE_WRITE" Type="WSTRING" Comment="Lokale Publish-Adresse (ACTION=WRITE) fuer den tatsaechlichen Zustand - wird von Web-Client/Dashboard remote abonniert"/>
+		</InputVars>
+		<Sockets>
+			<AdapterDeclaration Name="IN" Type="adapter::types::unidirectional::AX" Comment="Fertiger AX-Zustand (bereits zusammengefuehrt) - wird auf Ausgang+Hintergrund+Publish verteilt"/>
+		</Sockets>
+	</SubAppInterfaceList>
+	<SubAppNetwork>
+		<FB Name="AX_SPLIT_3" Type="adapter::events::unidirectional::AX_SPLIT_3" x="0" y="0">
+		</FB>
+		<FB Name="DigitalOutput" Type="logiBUS::io::DQ::logiBUS_QXA" x="1700" y="-1200">
+			<Parameter Name="QI" Value="TRUE"/>
+		</FB>
+		<SubApp Name="GreenWhiteBackground_AX" Type="MyLib::sys::GreenWhiteBackground3_AX" x="1700" y="0">
+		</SubApp>
+		<FB Name="PUBLISH_STATE" Type="adapter::net::AX_PUBLISH_1" x="1700" y="1900">
+			<Parameter Name="QI" Value="TRUE"/>
+		</FB>
+		<DataConnections>
+			<Connection Source="u16ObjId" Destination="GreenWhiteBackground_AX.u16ObjId" dx1="1400">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="u16ObjIdA" Destination="GreenWhiteBackground_AX.u16ObjIdA" dx1="1400">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="Output" Destination="DigitalOutput.Output" dx1="1400">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="ID_STATE_WRITE" Destination="PUBLISH_STATE.ID" dx1="1280">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+		</DataConnections>
+		<AdapterConnections>
+			<Connection Source="IN" Destination="AX_SPLIT_3.IN" dx1="600"/>
+			<Connection Source="AX_SPLIT_3.OUT1" Destination="DigitalOutput.OUT" dx1="600"/>
+			<Connection Source="AX_SPLIT_3.OUT2" Destination="GreenWhiteBackground_AX.DI1" dx1="600"/>
+			<Connection Source="AX_SPLIT_3.OUT3" Destination="PUBLISH_STATE.IN" dx1="200"/>
+		</AdapterConnections>
+	</SubAppNetwork>
+</SubAppType>

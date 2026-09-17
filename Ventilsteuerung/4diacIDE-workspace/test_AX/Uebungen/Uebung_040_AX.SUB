@@ -72,60 +72,49 @@
 		</FB>
 		<FB Name="loop" Type="logiBUS::utils::sequence::event::sequence_E_08_loop_AX" x="-9613.33" y="-600">
 		</FB>
-		<FB Name="E_CTU_0" Type="iec61499::events::E_CTU" x="-14400" y="-3466.67">
-			<Parameter Name="PV" Value="0"/>
+		<FB Name="E_CTU_0" Type="adapter::events::unidirectional::AUI_CTU" x="-15000" y="-3466.67">
 		</FB>
-		<FB Name="E_DEMUX_0" Type="iec61499::events::E_DEMUX" x="-12000" y="-3466.67">
+		<FB Name="F_SUB_0" Type="adapter::iec61131::arithmetic::AUI_SUB_2" x="-13500" y="-3466.67">
+		</FB>
+		<FB Name="E_DEMUX_0" Type="adapter::events::unidirectional::AUI_DEMUX_4" x="-12000" y="-3466.67">
 		</FB>
 		<FB Name="DigitalInput_CLK_I2" Type="logiBUS::io::DI::logiBUS_IE" x="-16600" y="-2373.33">
 			<Parameter Name="QI" Value="TRUE"/>
 			<Parameter Name="Input" Value="Input_I2"/>
 			<Parameter Name="InputEvent" Value="BUTTON_SINGLE_CLICK"/>
 		</FB>
-		<FB Name="E_CTU_1" Type="iec61499::events::E_CTU" x="-14400" y="-1333.33">
-			<Parameter Name="PV" Value="0"/>
+		<FB Name="E_CTU_1" Type="adapter::events::unidirectional::AUI_CTU" x="-15000" y="-1333.33">
 		</FB>
-		<FB Name="E_DEMUX_1" Type="iec61499::events::E_DEMUX" x="-12000" y="-1333.33">
+		<FB Name="F_SUB_1" Type="adapter::iec61131::arithmetic::AUI_SUB_2" x="-13500" y="-1333.33">
+		</FB>
+		<FB Name="E_DEMUX_1" Type="adapter::events::unidirectional::AUI_DEMUX_4" x="-12000" y="-1333.33">
 		</FB>
 		<FB Name="DigitalInput_CLK_I3" Type="logiBUS::io::DI::logiBUS_IE" x="-16600" y="-1300">
 			<Parameter Name="QI" Value="TRUE"/>
 			<Parameter Name="Input" Value="Input_I3"/>
 			<Parameter Name="InputEvent" Value="BUTTON_SINGLE_CLICK"/>
 		</FB>
-		<FB Name="F_SUB_1" Type="iec61131::arithmetic::F_SUB" x="-13066.67" y="-1333.33">
-			<Parameter Name="IN2" Value="UINT#1"/>
-		</FB>
-		<FB Name="F_SUB_0" Type="iec61131::arithmetic::F_SUB" x="-13066.67" y="-3466.67">
-			<Parameter Name="IN2" Value="UINT#1"/>
+		<FB Name="initval_1" Type="adapter::types::unidirectional::AUI::initval::initval_AUI" x="-15000" y="-2500">
+			<Parameter Name="INIT_VAL" Value="1"/>
 		</FB>
 		<EventConnections>
 			<Connection Source="DigitalInput_CLK_I4.IND" Destination="loop.RESET" dx1="3000"/>
 			<Connection Source="DigitalInput_CLK_I1.IND" Destination="loop.START_S1" dx1="5773.33"/>
-			<Connection Source="E_DEMUX_0.EO0" Destination="loop.S1_S2" dx1="986.67"/>
-			<Connection Source="E_DEMUX_0.EO1" Destination="loop.S2_S3" dx1="953.33"/>
-			<Connection Source="E_DEMUX_0.EO2" Destination="loop.S3_S4" dx1="920"/>
-			<Connection Source="E_DEMUX_0.EO3" Destination="loop.S4_S5" dx1="886.67"/>
+			<Connection Source="E_DEMUX_0.EO1" Destination="loop.S1_S2" dx1="986.67"/>
+			<Connection Source="E_DEMUX_0.EO2" Destination="loop.S2_S3" dx1="953.33"/>
+			<Connection Source="E_DEMUX_0.EO3" Destination="loop.S3_S4" dx1="920"/>
+			<Connection Source="E_DEMUX_0.EO4" Destination="loop.S4_S5" dx1="886.67"/>
 			<Connection Source="DigitalInput_CLK_I2.IND" Destination="E_CTU_0.CU" dx1="186.67"/>
 			<Connection Source="DigitalInput_CLK_I3.IND" Destination="E_CTU_1.CU" dx1="253.33"/>
-			<Connection Source="E_DEMUX_1.EO3" Destination="loop.S8_S1" dx1="753.33"/>
-			<Connection Source="E_DEMUX_1.EO2" Destination="loop.S7_S8" dx1="786.67"/>
-			<Connection Source="E_DEMUX_1.EO1" Destination="loop.S6_S7" dx1="820"/>
-			<Connection Source="E_DEMUX_1.EO0" Destination="loop.S5_S6" dx1="853.33"/>
-			<Connection Source="F_SUB_1.CNF" Destination="E_DEMUX_1.EI"/>
-			<Connection Source="F_SUB_0.CNF" Destination="E_DEMUX_0.EI"/>
-			<Connection Source="E_CTU_0.CUO" Destination="F_SUB_0.REQ"/>
-			<Connection Source="E_CTU_1.CUO" Destination="F_SUB_1.REQ"/>
+			<Connection Source="E_DEMUX_1.EO4" Destination="loop.S8_S1" dx1="753.33"/>
+			<Connection Source="E_DEMUX_1.EO3" Destination="loop.S7_S8" dx1="786.67"/>
+			<Connection Source="E_DEMUX_1.EO2" Destination="loop.S6_S7" dx1="820"/>
+			<Connection Source="E_DEMUX_1.EO1" Destination="loop.S5_S6" dx1="853.33"/>
 			<Connection Source="DigitalInput_CLK_I4.IND" Destination="E_CTU_1.R" dx1="1000"/>
 			<Connection Source="DigitalInput_CLK_I4.IND" Destination="E_CTU_0.R" dx1="1306.67"/>
-			<Connection Source="E_DEMUX_0.EO3" Destination="E_CTU_0.R" dx1="66.67" dx2="193.33" dy="406.67"/>
-			<Connection Source="E_DEMUX_1.EO3" Destination="E_CTU_1.R" dx1="66.67" dx2="66.67" dy="266.67"/>
+			<Connection Source="E_DEMUX_0.EO4" Destination="E_CTU_0.R" dx1="66.67" dx2="193.33" dy="406.67"/>
+			<Connection Source="E_DEMUX_1.EO4" Destination="E_CTU_1.R" dx1="66.67" dx2="66.67" dy="266.67"/>
 		</EventConnections>
-		<DataConnections>
-			<Connection Source="F_SUB_1.OUT" Destination="E_DEMUX_1.K" dx1="260"/>
-			<Connection Source="F_SUB_0.OUT" Destination="E_DEMUX_0.K" dx1="260"/>
-			<Connection Source="E_CTU_0.CV" Destination="F_SUB_0.IN1" dx1="253.33"/>
-			<Connection Source="E_CTU_1.CV" Destination="F_SUB_1.IN1" dx1="253.33"/>
-		</DataConnections>
 		<AdapterConnections>
 			<Connection Source="loop.STATE_NR" Destination="AS_TO_AUDI.AS_IN" dx1="340"/>
 			<Connection Source="AS_TO_AUDI.AUDI_OUT" Destination="Q_NumericValue_AUDI.u32NewValue" dx1="893.33"/>
@@ -137,6 +126,12 @@
 			<Connection Source="loop.DO_S6" Destination="DigitalOutput_Q6.OUT" dx1="526.67"/>
 			<Connection Source="loop.DO_S7" Destination="DigitalOutput_Q7.OUT" dx1="460"/>
 			<Connection Source="loop.DO_S8" Destination="DigitalOutput_Q8.OUT" dx1="393.33"/>
+			<Connection Source="E_CTU_0.CV" Destination="F_SUB_0.IN1" dx1="200"/>
+			<Connection Source="initval_1.OUT" Destination="F_SUB_0.IN2" dx1="200"/>
+			<Connection Source="F_SUB_0.OUT" Destination="E_DEMUX_0.K" dx1="200"/>
+			<Connection Source="E_CTU_1.CV" Destination="F_SUB_1.IN1" dx1="200"/>
+			<Connection Source="initval_1.OUT" Destination="F_SUB_1.IN2" dx1="200"/>
+			<Connection Source="F_SUB_1.OUT" Destination="E_DEMUX_1.K" dx1="200"/>
 		</AdapterConnections>
 	</SubAppNetwork>
 </SubAppType>

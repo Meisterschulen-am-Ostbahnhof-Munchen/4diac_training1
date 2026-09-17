@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SubAppType Name="Uebung_032_AX" Comment="LED Strip Blinkende LED, mit Plug and Socket">
+	<Identification Standard="61499-2" Description="Copyright (c) 2026 Meisterschulen am Ostbahnhof  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0">
+	</Identification>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2026-09-09" Remarks="initial API and implementation and/or initial documentation">
+	</VersionInfo>
+	<CompilerInfo packageName="Uebungen">
+		<Import declaration="logiBUS::io::DI::logiBUS_DI::Input_I1"/>
+		<Import declaration="logiBUS::io::DI::logiBUS_DI::Input_I2"/>
+		<Import declaration="logiBUS::io::DI::logiBUS_DI::Input_I3"/>
+		<Import declaration="logiBUS::io::DI::logiBUS_DI::Input_I4"/>
+		<Import declaration="logiBUS::io::DO_LED::LED_COLOURS"/>
+		<Import declaration="logiBUS::io::DO_LED::LED_FREQ"/>
+		<Import declaration="logiBUS::io::DO_LED::LED_strip"/>
+	</CompilerInfo>
+	<SubAppInterfaceList>
+	</SubAppInterfaceList>
+	<SubAppNetwork>
+		<FB Name="LED_GREEN_5HZ" Type="logiBUS::io::DO_LED::logiBUS_LED_strip_QXA" x="1900" y="-1000">
+			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="Output" Value="LED_strip::Output_strip"/>
+			<Parameter Name="Colour" Value="LED_COLOURS::LED_GREEN"/>
+			<Parameter Name="FREQ" Value="LED_FREQ::LED_5HZ"/>
+		</FB>
+		<FB Name="BUTTON_GREEN" Type="logiBUS::io::DI::logiBUS_IXA" x="100" y="-1000">
+			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="Input" Value="Input_I1"/>
+		</FB>
+		<FB Name="BUTTON_YELLOW" Type="logiBUS::io::DI::logiBUS_IXA" x="100" y="200">
+			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="Input" Value="Input_I2"/>
+		</FB>
+		<FB Name="LED_YELLOW_5HZ" Type="logiBUS::io::DO_LED::logiBUS_LED_strip_QXA" x="1900" y="200">
+			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="Output" Value="LED_strip::Output_strip"/>
+			<Parameter Name="Colour" Value="LED_COLOURS::LED_YELLOW"/>
+			<Parameter Name="FREQ" Value="LED_FREQ::LED_5HZ"/>
+		</FB>
+		<FB Name="BUTTON_RED" Type="logiBUS::io::DI::logiBUS_IXA" x="100" y="1400">
+			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="Input" Value="Input_I3"/>
+		</FB>
+		<FB Name="LED_RED_5HZ" Type="logiBUS::io::DO_LED::logiBUS_LED_strip_QXA" x="1900" y="1400">
+			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="Output" Value="LED_strip::Output_strip"/>
+			<Parameter Name="Colour" Value="LED_COLOURS::LED_RED"/>
+			<Parameter Name="FREQ" Value="LED_FREQ::LED_5HZ"/>
+		</FB>
+		<FB Name="BUTTON_BLUE" Type="logiBUS::io::DI::logiBUS_IXA" x="100" y="2600">
+			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="Input" Value="Input_I4"/>
+		</FB>
+		<FB Name="LED_BLUE_5HZ" Type="logiBUS::io::DO_LED::logiBUS_LED_strip_QXA" x="1900" y="2600">
+			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="Output" Value="LED_strip::Output_strip"/>
+			<Parameter Name="Colour" Value="LED_COLOURS::LED_BLUE"/>
+			<Parameter Name="FREQ" Value="LED_FREQ::LED_5HZ"/>
+		</FB>
+		<AdapterConnections>
+			<Connection Source="BUTTON_GREEN.IN" Destination="LED_GREEN_5HZ.OUT" dx1="900"/>
+			<Connection Source="BUTTON_YELLOW.IN" Destination="LED_YELLOW_5HZ.OUT" dx1="900"/>
+			<Connection Source="BUTTON_RED.IN" Destination="LED_RED_5HZ.OUT" dx1="900"/>
+			<Connection Source="BUTTON_BLUE.IN" Destination="LED_BLUE_5HZ.OUT" dx1="900"/>
+		</AdapterConnections>
+	</SubAppNetwork>
+</SubAppType>

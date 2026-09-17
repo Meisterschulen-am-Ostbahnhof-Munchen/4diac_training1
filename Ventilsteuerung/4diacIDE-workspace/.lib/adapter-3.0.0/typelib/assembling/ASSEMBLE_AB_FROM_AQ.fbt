@@ -17,27 +17,5 @@
 			<AdapterDeclaration Name="QUARTER_BYTE_03" Type="adapter::types::unidirectional::AQ" Comment="Quarter 3" x="-1200" y="3000"/>
 		</Sockets>
 	</InterfaceList>
-	<FBNetwork>
-		<FB Name="ASSEMBLE_BYTE_FROM_QUARTERS" Type="eclipse4diac::utils::assembling::ASSEMBLE_BYTE_FROM_QUARTERS" x="100" y="100">
-		</FB>
-		<FB Name="E_D_FF_ANY" Type="iec61499::events::E_D_FF_ANY" x="1900" y="100">
-		</FB>
-		<EventConnections>
-			<Connection Source="QUARTER_BYTE_00.E1" Destination="ASSEMBLE_BYTE_FROM_QUARTERS.REQ" dx1="420"/>
-			<Connection Source="QUARTER_BYTE_01.E1" Destination="ASSEMBLE_BYTE_FROM_QUARTERS.REQ" dx1="420"/>
-			<Connection Source="QUARTER_BYTE_02.E1" Destination="ASSEMBLE_BYTE_FROM_QUARTERS.REQ" dx1="420"/>
-			<Connection Source="QUARTER_BYTE_03.E1" Destination="ASSEMBLE_BYTE_FROM_QUARTERS.REQ" dx1="420"/>
-			<Connection Source="ASSEMBLE_BYTE_FROM_QUARTERS.CNF" Destination="E_D_FF_ANY.CLK"/>
-			<Connection Source="E_D_FF_ANY.EO" Destination="OUT.E1"/>
-		</EventConnections>
-		<DataConnections>
-			<Connection Source="ASSEMBLE_BYTE_FROM_QUARTERS." Destination="E_D_FF_ANY.D" dx1="180"/>
-			<Connection Source="E_D_FF_ANY.Q" Destination="OUT.D1"/>
-			<Connection Source="QUARTER_BYTE_03.D1" Destination="ASSEMBLE_BYTE_FROM_QUARTERS.QUARTER_BYTE_03" dx1="320"/>
-			<Connection Source="QUARTER_BYTE_02.D1" Destination="ASSEMBLE_BYTE_FROM_QUARTERS.QUARTER_BYTE_02" dx1="353.33"/>
-			<Connection Source="QUARTER_BYTE_01.D1" Destination="ASSEMBLE_BYTE_FROM_QUARTERS.QUARTER_BYTE_01" dx1="386.67"/>
-			<Connection Source="QUARTER_BYTE_00.D1" Destination="ASSEMBLE_BYTE_FROM_QUARTERS.QUARTER_BYTE_00" dx1="420"/>
-		</DataConnections>
-	</FBNetwork>
 	<Attribute Name="eclipse4diac::core::TypeHash" Value="''"/>
 </FBType>

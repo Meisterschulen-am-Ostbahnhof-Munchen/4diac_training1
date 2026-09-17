@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SubAppType Name="Uebung_010f4" Comment="SCHLECHTER STIL (Punktabzug!): SoftKey_F1 ODER AuxFunction2_X1 auf DigitalOutput_Q1 mit 2x GreenWhiteBackground statt GreenWhiteBackground3 - siehe Uebung_010f3 fuer die korrekte Loesung">
+	<Identification Standard="61499-2" Description="Copyright (c) 2026 Meisterschulen am Ostbahnhof  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0">
+	</Identification>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2026-09-06" Remarks="initial API and implementation and/or initial documentation">
+	</VersionInfo>
+	<CompilerInfo packageName="Uebungen">
+		<Import declaration="Uebungen::const::UT::DefaultPool::SoftKey_F1"/>
+		<Import declaration="Uebungen::const::UT::DefaultPool::AuxFunction2_X1"/>
+		<Import declaration="logiBUS::io::DQ::logiBUS_DO::Output_Q1"/>
+	</CompilerInfo>
+	<SubAppInterfaceList>
+	</SubAppInterfaceList>
+	<SubAppNetwork>
+		<FB Name="DigitalOutput_Q1" Type="logiBUS::io::DQ::logiBUS_QX" x="-1600" y="-1200">
+			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="PARAMS" Value="">
+				<Attribute Name="Visible" Value="false"/>
+			</Parameter>
+			<Parameter Name="Output" Value="Output_Q1"/>
+		</FB>
+		<FB Name="SoftKey_F1" Type="isobus::UT::io::Softkey::Softkey_IX" x="-6200" y="-1500">
+			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="u16ObjId" Value="SoftKey_F1"/>
+		</FB>
+		<FB Name="AuxFunction2_X1" Type="isobus::UT::io::Auxiliary::IN::Aux_IX" x="-6300" y="-600">
+			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="u16ObjId" Value="AuxFunction2_X1"/>
+		</FB>
+		<FB Name="OR_2" Type="iec61131::booleanOperators::OR_BOOL_2" x="-4500" y="-300">
+		</FB>
+		<SubApp Name="GreenWhiteBackground1" Type="MyLib::sys::GreenWhiteBackground1" x="-1700" y="-300">
+			<Parameter Name="u16ObjId" Value="SoftKey_F1"/>
+		</SubApp>
+		<SubApp Name="GreenWhiteBackground2" Type="MyLib::sys::GreenWhiteBackground2" x="-1800" y="400">
+			<Parameter Name="u16ObjIdA" Value="AuxFunction2_X1"/>
+		</SubApp>
+		<Comment Comment="SCHLECHTER STIL - Punktabzug! &#10;Hier wurden GreenWhiteBackground1 UND GreenWhiteBackground2 einzeln verdrahtet, obwohl es mit GreenWhiteBackground3 (ein Baustein, u16ObjId + u16ObjIdA) genau fuer diesen Fall (1 normales VT-Objekt + 1 Aux-Objekt) schon fertig existiert. Unnoetige Verdopplung der Farbauswahl-Logik. &#10;Korrekte Loesung: Uebung_010f3." x="-6000" y="2400" width="4200" height="1100"/>
+		<EventConnections>
+			<Connection Source="SoftKey_F1.IND" Destination="OR_2.REQ" dx1="720"/>
+			<Connection Source="AuxFunction2_X1.IND" Destination="OR_2.REQ" dx1="480"/>
+			<Connection Source="OR_2.CNF" Destination="DigitalOutput_Q1.REQ" dx1="666.67"/>
+			<Connection Source="OR_2.CNF" Destination="GreenWhiteBackground1.REQ"/>
+			<Connection Source="OR_2.CNF" Destination="GreenWhiteBackground2.REQ" dx1="286.67"/>
+		</EventConnections>
+		<DataConnections>
+			<Connection Source="SoftKey_F1.IN" Destination="OR_2.IN1" dx1="540"/>
+			<Connection Source="AuxFunction2_X1.IN" Destination="OR_2.IN2" dx1="750"/>
+			<Connection Source="OR_2.OUT" Destination="DigitalOutput_Q1.OUT" dx1="1086.67"/>
+			<Connection Source="OR_2.OUT" Destination="GreenWhiteBackground1.DI1"/>
+			<Connection Source="OR_2.OUT" Destination="GreenWhiteBackground2.DI1" dx1="140"/>
+		</DataConnections>
+	</SubAppNetwork>
+	<Attribute Name="Documentation" Type="CDATA"><![CDATA[<h1>SCHLECHTER STIL (Punktabzug!) - siehe Uebung_010f3 f&uuml;r die korrekte L&ouml;sung</h1>
+
+<p>Diese Datei ist absichtlich als <strong>Negativbeispiel</strong> stehen gelassen: sie erreicht funktional dasselbe wie Uebung_010f3, tut es aber mit unn&ouml;tig aufgebl&auml;hter Verdrahtung.</p>
+
+<h2>Was hier falsch gemacht wurde</h2>
+
+<ul>
+	<li>Statt des daf&uuml;r gebauten Bausteins GreenWhiteBackground3 (nimmt u16ObjId UND u16ObjIdA gleichzeitig und braucht nur einen DI1-Eingang) wurden hier GreenWhiteBackground1 und GreenWhiteBackground2 als zwei separate Instanzen verdrahtet.</li>
+	<li>Die Farbauswahl-Logik (Wei&szlig;/Gr&uuml;n) l&auml;uft dadurch doppelt statt einmal - unn&ouml;tiger Ressourcenverbrauch und unn&ouml;tig gro&szlig;e Diagramme, ohne jeden funktionalen Vorteil.</li>
+</ul>
+
+<h2>Lernziel</h2>
+
+<p>Bevor man f&uuml;r einen kombinierten Fall (normales VT-Objekt + Aux-Objekt) mehrere generische Bausteine einzeln zusammenschraubt, erst pr&uuml;fen, ob es daf&uuml;r nicht schon einen passenden, fertigen Baustein in der Bibliothek gibt (hier: GreenWhiteBackground3). Vergleichen Sie diese Datei mit Uebung_010f3, um den Unterschied zu sehen.</p>
+]]></Attribute>
+</SubAppType>

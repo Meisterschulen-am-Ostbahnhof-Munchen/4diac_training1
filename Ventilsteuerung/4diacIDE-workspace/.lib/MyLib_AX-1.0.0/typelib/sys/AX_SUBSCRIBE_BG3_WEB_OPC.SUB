@@ -16,14 +16,14 @@
 		</InputVars>
 	</SubAppInterfaceList>
 	<SubAppNetwork>
-		<FB Name="AX_SUBSCRIBE_1" Type="adapter::net::AX_SUBSCRIBE_1" x="0" y="0">
+		<FB Name="AX_SUBSCRIBE_1" Type="adapter::net::AX_SUBSCRIBE_1" x="-800" y="0">
 			<Parameter Name="QI" Value="TRUE"/>
 		</FB>
-		<SubApp Name="GreenWhiteBackground3_AX" Type="MyLib::sys::GreenWhiteBackground3_AX" x="1600" y="800">
+		<SubApp Name="GreenWhiteBackground3_AX" Type="MyLib::sys::GreenWhiteBackground3_AX" x="1800" y="-1100">
 		</SubApp>
 		<FB Name="AX_SPLIT_2" Type="adapter::events::unidirectional::AX_SPLIT_2" x="500" y="300">
 		</FB>
-		<FB Name="STATUS_WEB_PUBLISH" Type="adapter::net::AX_PUBLISH_1" x="1600" y="1500">
+		<FB Name="STATUS_WEB_PUBLISH" Type="adapter::net::AX_PUBLISH_1" x="1900" y="1000">
 			<Parameter Name="QI" Value="TRUE"/>
 		</FB>
 		<DataConnections>
@@ -41,9 +41,9 @@
 			</Connection>
 		</DataConnections>
 		<AdapterConnections>
-			<Connection Source="AX_SUBSCRIBE_1.OUT" Destination="AX_SPLIT_2.IN" dx1="280"/>
+			<Connection Source="AX_SUBSCRIBE_1.OUT" Destination="AX_SPLIT_2.IN" dx1="180"/>
 			<Connection Source="AX_SPLIT_2.OUT1" Destination="GreenWhiteBackground3_AX.DI1" dx1="266.67"/>
-			<Connection Source="AX_SPLIT_2.OUT2" Destination="STATUS_WEB_PUBLISH.IN" dx1="266.67"/>
+			<Connection Source="AX_SPLIT_2.OUT2" Destination="STATUS_WEB_PUBLISH.IN" dx1="273.33"/>
 		</AdapterConnections>
 	</SubAppNetwork>
 	<Attribute Name="Documentation" Type="CDATA"><![CDATA[<h1>Remote-Subscribe → Hintergrundfarbe (SoftKey+Aux) + lokaler Web-Republish</h1>

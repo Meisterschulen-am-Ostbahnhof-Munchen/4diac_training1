@@ -1,0 +1,176 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<FBType Name="AR_CALIBRATE_3P_REF" Comment="Adapter-based 3-point calibration for joysticks/sensors with a center position (Min, Mid, Max), free order like AR_CALIBRATE_3P - reference targets (Y_MIN/Y_MID/Y_MAX) are live AR sockets, persisted via 3 additional AR2 plugs (MIN_REF/MID_REF/MAX_REF), same live-echo pattern as AR_CALIBRATE_SQ_REF/AR_CALIBRATE_2P_REF">
+	<Identification Standard="61499-1">
+	</Identification>
+	<VersionInfo Version="1.0" Author="Meisterschulen am Ostbahnhof" Date="2026-09-11" Remarks="3-Punkt-Pendant zu AR_CALIBRATE_2P_REF - fuer Sensoren mit definierter Mittelstellung (z.B. Lenkwinkelsensor: links/geradeaus/rechts). Keine ECC-Reihenfolge-Erzwingung: C_MIN/C_MID/C_MAX speichern unabhaengig, wie AR_CALIBRATE_3P.">
+	</VersionInfo>
+	<CompilerInfo packageName="adapter::Engineering::measurements">
+	</CompilerInfo>
+	<InterfaceList>
+		<Plugs>
+			<AdapterDeclaration Name="Y" Type="adapter::types::unidirectional::AR" Comment="Calibrated Output"/>
+			<AdapterDeclaration Name="X_MIN" Type="adapter::types::bidirectional::AR2" Comment="Persisted raw input value at the Min calibration point"/>
+			<AdapterDeclaration Name="X_MID" Type="adapter::types::bidirectional::AR2" Comment="Persisted raw input value at the Mid (center) calibration point"/>
+			<AdapterDeclaration Name="X_MAX" Type="adapter::types::bidirectional::AR2" Comment="Persisted raw input value at the Max calibration point"/>
+			<AdapterDeclaration Name="MIN_REF" Type="adapter::types::bidirectional::AR2" Comment="Persisted Min-point target reference (Y_MIN)"/>
+			<AdapterDeclaration Name="MID_REF" Type="adapter::types::bidirectional::AR2" Comment="Persisted Mid-point target reference (Y_MID)"/>
+			<AdapterDeclaration Name="MAX_REF" Type="adapter::types::bidirectional::AR2" Comment="Persisted Max-point target reference (Y_MAX)"/>
+		</Plugs>
+		<Sockets>
+			<AdapterDeclaration Name="X" Type="adapter::types::unidirectional::AR" Comment="Raw Input"/>
+			<AdapterDeclaration Name="C_MIN" Type="adapter::types::unidirectional::AX" Comment="Calibrate Min Point"/>
+			<AdapterDeclaration Name="C_MID" Type="adapter::types::unidirectional::AX" Comment="Calibrate Mid Point (Center)"/>
+			<AdapterDeclaration Name="C_MAX" Type="adapter::types::unidirectional::AX" Comment="Calibrate Max Point"/>
+			<AdapterDeclaration Name="Y_MIN" Type="adapter::types::bidirectional::AR2" Comment="Target output Y at the Min calibration point - live edit in via EO1/DO1 (Socket-side swap), persisted/restored value echoed back out via EI1/DI1 for VT/web display"/>
+			<AdapterDeclaration Name="Y_MID" Type="adapter::types::bidirectional::AR2" Comment="Target output Y at the Mid calibration point - live edit in via EO1/DO1 (Socket-side swap), persisted/restored value echoed back out via EI1/DI1 for VT/web display"/>
+			<AdapterDeclaration Name="Y_MAX" Type="adapter::types::bidirectional::AR2" Comment="Target output Y at the Max calibration point - live edit in via EO1/DO1 (Socket-side swap), persisted/restored value echoed back out via EI1/DI1 for VT/web display"/>
+		</Sockets>
+	</InterfaceList>
+	<BasicFB>
+		<ECC>
+			<ECState Name="IDLE" x="0" y="0">
+			</ECState>
+			<ECState Name="REQ" x="-1120" y="-1280">
+				<ECAction Algorithm="REQ" Output="Y.E1"/>
+			</ECState>
+			<ECState Name="C_MIN" x="2320" y="160">
+				<ECAction Algorithm="C_MIN" Output="X_MIN.EO1"/>
+			</ECState>
+			<ECState Name="C_MID" x="3000" y="-400">
+				<ECAction Algorithm="C_MID" Output="X_MID.EO1"/>
+			</ECState>
+			<ECState Name="C_MAX" x="3360" y="-240">
+				<ECAction Algorithm="C_MAX" Output="X_MAX.EO1"/>
+			</ECState>
+			<ECState Name="MIN_REF_ECHO" x="2160" y="800">
+				<ECAction Algorithm="MIN_REF_ECHO" Output="MIN_REF.EO1"/>
+			</ECState>
+			<ECState Name="MID_REF_ECHO" x="1760" y="1120">
+				<ECAction Algorithm="MID_REF_ECHO" Output="MID_REF.EO1"/>
+			</ECState>
+			<ECState Name="MAX_REF_ECHO" x="1360" y="1440">
+				<ECAction Algorithm="MAX_REF_ECHO" Output="MAX_REF.EO1"/>
+			</ECState>
+			<ECState Name="Y_MIN_DISP" x="-2080" y="2080">
+				<ECAction Algorithm="Y_MIN_DISP" Output="Y_MIN.EI1"/>
+			</ECState>
+			<ECState Name="Y_MID_DISP" x="-1800" y="1880">
+				<ECAction Algorithm="Y_MID_DISP" Output="Y_MID.EI1"/>
+			</ECState>
+			<ECState Name="Y_MAX_DISP" x="-1520" y="1680">
+				<ECAction Algorithm="Y_MAX_DISP" Output="Y_MAX.EI1"/>
+			</ECState>
+			<ECTransition Source="IDLE" Destination="REQ" Condition="X.E1" x="-253.33" y="-940"/>
+			<ECTransition Source="REQ" Destination="IDLE" Condition="1" x="-526.67" y="-826.67"/>
+			<ECTransition Source="IDLE" Destination="C_MIN" Condition="C_MIN.E1[C_MIN.D1]" x="1540" y="33.33"/>
+			<ECTransition Source="C_MIN" Destination="IDLE" Condition="1" x="1900" y="100"/>
+			<ECTransition Source="IDLE" Destination="C_MID" Condition="C_MID.E1[C_MID.D1]" x="2200" y="-160"/>
+			<ECTransition Source="C_MID" Destination="IDLE" Condition="1" x="2500" y="-200"/>
+			<ECTransition Source="IDLE" Destination="C_MAX" Condition="C_MAX.E1[C_MAX.D1]" x="2680" y="-300"/>
+			<ECTransition Source="C_MAX" Destination="IDLE" Condition="1" x="2900" y="-260"/>
+			<ECTransition Source="IDLE" Destination="REQ" Condition="X_MIN.EI1" x="-486.67" y="-566.67"/>
+			<ECTransition Source="IDLE" Destination="REQ" Condition="X_MID.EI1" x="-650" y="-500"/>
+			<ECTransition Source="IDLE" Destination="REQ" Condition="X_MAX.EI1" x="-806.67" y="-433.33"/>
+			<ECTransition Source="IDLE" Destination="MIN_REF_ECHO" Condition="Y_MIN.EO1" x="1586.67" y="646.67"/>
+			<ECTransition Source="MIN_REF_ECHO" Destination="IDLE" Condition="1" x="1966.67" y="560"/>
+			<ECTransition Source="IDLE" Destination="MID_REF_ECHO" Condition="Y_MID.EO1" x="1200" y="820"/>
+			<ECTransition Source="MID_REF_ECHO" Destination="IDLE" Condition="1" x="1500" y="700"/>
+			<ECTransition Source="IDLE" Destination="MAX_REF_ECHO" Condition="Y_MAX.EO1" x="900" y="1006.67"/>
+			<ECTransition Source="MAX_REF_ECHO" Destination="IDLE" Condition="1" x="1126.67" y="780"/>
+			<ECTransition Source="IDLE" Destination="Y_MIN_DISP" Condition="MIN_REF.EI1" x="-1693.33" y="520"/>
+			<ECTransition Source="Y_MIN_DISP" Destination="IDLE" Condition="1" x="-1473.33" y="766.67"/>
+			<ECTransition Source="IDLE" Destination="Y_MID_DISP" Condition="MID_REF.EI1" x="-1200" y="720"/>
+			<ECTransition Source="Y_MID_DISP" Destination="IDLE" Condition="1" x="-1350" y="790"/>
+			<ECTransition Source="IDLE" Destination="Y_MAX_DISP" Condition="MAX_REF.EI1" x="-753.33" y="933.33"/>
+			<ECTransition Source="Y_MAX_DISP" Destination="IDLE" Condition="1" x="-1046.67" y="840"/>
+		</ECC>
+		<Algorithm Name="REQ" Comment="REQ">
+			<ST><![CDATA[
+(* piecewise-linear interpolation between the three independently stored points, clipped like AR_CALIBRATE_3P *)
+IF X.D1 < X_MID.DI1 THEN
+	IF X_MID.DI1 > X_MIN.DI1 THEN
+		Y.D1 := MIN_REF.DI1 + (X.D1 - X_MIN.DI1) * (MID_REF.DI1 - MIN_REF.DI1) / (X_MID.DI1 - X_MIN.DI1);
+	ELSE
+		Y.D1 := MIN_REF.DI1;
+	END_IF;
+ELSE
+	IF X_MAX.DI1 > X_MID.DI1 THEN
+		Y.D1 := MID_REF.DI1 + (X.D1 - X_MID.DI1) * (MAX_REF.DI1 - MID_REF.DI1) / (X_MAX.DI1 - X_MID.DI1);
+	ELSE
+		Y.D1 := MID_REF.DI1;
+	END_IF;
+END_IF;
+
+(* clipping *)
+IF Y.D1 < MIN_REF.DI1 THEN
+	Y.D1 := MIN_REF.DI1;
+ELSIF Y.D1 > MAX_REF.DI1 THEN
+	Y.D1 := MAX_REF.DI1;
+END_IF;
+]]></ST>
+		</Algorithm>
+		<Algorithm Name="C_MIN" Comment="Store current raw input as the Min calibration point - independent, repeatable any time">
+			<ST><![CDATA[
+X_MIN.DO1 := X.D1;
+]]></ST>
+		</Algorithm>
+		<Algorithm Name="C_MID" Comment="Store current raw input as the Mid (center) calibration point - independent, repeatable any time">
+			<ST><![CDATA[
+X_MID.DO1 := X.D1;
+]]></ST>
+		</Algorithm>
+		<Algorithm Name="C_MAX" Comment="Store current raw input as the Max calibration point - independent, repeatable any time">
+			<ST><![CDATA[
+X_MAX.DO1 := X.D1;
+]]></ST>
+		</Algorithm>
+		<Algorithm Name="MIN_REF_ECHO" Comment="Persist live Y_MIN reference to INI">
+			<ST><![CDATA[
+MIN_REF.DO1 := Y_MIN.DO1;
+]]></ST>
+		</Algorithm>
+		<Algorithm Name="MID_REF_ECHO" Comment="Persist live Y_MID reference to INI">
+			<ST><![CDATA[
+MID_REF.DO1 := Y_MID.DO1;
+]]></ST>
+		</Algorithm>
+		<Algorithm Name="MAX_REF_ECHO" Comment="Persist live Y_MAX reference to INI">
+			<ST><![CDATA[
+MAX_REF.DO1 := Y_MAX.DO1;
+]]></ST>
+		</Algorithm>
+		<Algorithm Name="Y_MIN_DISP" Comment="Echo the persisted/restored MIN_REF value back out through Y_MIN for VT/web display (boot and after every change)">
+			<ST><![CDATA[
+Y_MIN.DI1 := MIN_REF.DI1;
+]]></ST>
+		</Algorithm>
+		<Algorithm Name="Y_MID_DISP" Comment="Echo the persisted/restored MID_REF value back out through Y_MID for VT/web display (boot and after every change)">
+			<ST><![CDATA[
+Y_MID.DI1 := MID_REF.DI1;
+]]></ST>
+		</Algorithm>
+		<Algorithm Name="Y_MAX_DISP" Comment="Echo the persisted/restored MAX_REF value back out through Y_MAX for VT/web display (boot and after every change)">
+			<ST><![CDATA[
+Y_MAX.DI1 := MAX_REF.DI1;
+]]></ST>
+		</Algorithm>
+	</BasicFB>
+	<Attribute Name="Documentation" Type="CDATA"><![CDATA[<h2>Formula</h2>
+<pre>Y = piecewise linear interpolation between (X_MIN,MIN_REF), (X_MID,MID_REF), (X_MAX,MAX_REF), clipped to MIN_REF..MAX_REF</pre>
+
+<h2>Calibration (3-Point, Free Order)</h2>
+<ol>
+<li><strong>Min (C_MIN):</strong> Move to minimum, set Y_MIN, trigger C_MIN &rarr; <code>X_MIN := X</code></li>
+<li><strong>Mid (C_MID):</strong> Move to center, set Y_MID, trigger C_MID &rarr; <code>X_MID := X</code></li>
+<li><strong>Max (C_MAX):</strong> Move to maximum, set Y_MAX, trigger C_MAX &rarr; <code>X_MAX := X</code></li>
+</ol>
+<p>Exactly like <code>AR_CALIBRATE_3P</code>: no ECC-enforced order, each point stores independently and can be re-calibrated on its own (e.g. re-trimming a drifted center without touching Min/Max) - unlike a 2-point offset/scale scheme, there is no data dependency between the calibration actions themselves, so an enforced order would only add friction without preventing any actual error.</p>
+
+<h2>Typical use: steering angle sensor</h2>
+<p>Min = full lock left, Mid = straight ahead (center), Max = full lock right. <code>MIN_REF</code>/<code>MID_REF</code>/<code>MAX_REF</code> hold the desired calibrated angle values (e.g. -30.0 / 0.0 / 30.0 degrees); <code>X_MIN</code>/<code>X_MID</code>/<code>X_MAX</code> hold whatever raw sensor values were actually measured at those three physical positions.</p>
+
+<h2>Reference Targets (Y_MIN/Y_MID/Y_MAX) are live AR Sockets</h2>
+<p>Same live-echo mechanism as <code>AR_CALIBRATE_2P_REF</code>/<code>AR_CALIBRATE_SQ_REF</code>: <code>Y_MIN</code>/<code>Y_MID</code>/<code>Y_MAX</code> are bidirectional AR2 Sockets fed from an external VT/web reader, mirrored out through the AR2 Plugs <code>MIN_REF</code>/<code>MID_REF</code>/<code>MAX_REF</code> for persistence (<code>INI_AR2</code>/<code>NVS_AR2</code>), and echoed back via <code>MIN_REF.EI1</code>/<code>MID_REF.EI1</code>/<code>MAX_REF.EI1</code> so a boot-restored value shows up on screen without the operator re-entering it.</p>
+]]></Attribute>
+	<Attribute Name="eclipse4diac::core::TypeHash" Value="''"/>
+</FBType>
