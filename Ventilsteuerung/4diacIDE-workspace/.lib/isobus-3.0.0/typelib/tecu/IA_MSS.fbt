@@ -2,7 +2,7 @@
 <FBType Name="IA_MSS" Comment="ISOBUS Adapter for Machine Selected Speed (MSS)">
 	<Identification Standard="ISO 11783-7" Classification="PGN 61474" Description="Copyright (c) 2024-2026 HR Agrartechnik GmbH  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0">
 	</Identification>
-<VersionInfo Organization="HR Agrartechnik GmbH" Version="1.4" Author="Franz Höpfinger" Date="2026-09-17" Remarks="Dokumentation (Franz: 'das passt, wir dokumentieren das in den Bausteinen. E_D_FF ist ein IEC 61499 Standardbaustein, wir halten uns STRENG an die Norm. E_D_FF_ANY ist davon abgeleitet, sollte sich gleich verhalten'): E_D_FF_Timeout (E_D_FF, IEC 61499-1 Annex A Standardbaustein) feuert EO NICHT beim allerersten CLK, wenn der erste echte Wert mit dem default-initialisierten Vergleichszustand (FALSE) uebereinstimmt - bleibt I_CORE.Q_timeout von Anfang an FALSE (Normalfall, kein Timeout), feuert TIMEOUT.E1 nie initial. Bewusst kein Bug, sondern standardkonformes Verhalten (analog E_RS/E_SR, wo genau dasselbe Verhalten Anlass fuer die Sonderformen E_RS_SYM/E_SR_SYM war) - hier bewusst KEINE eigene SYM-Variante, da nachgelagerte Verbraucher TIMEOUT.D1 als Datenwert lesen, nicht nur das Event.">
+	<VersionInfo Organization="HR Agrartechnik GmbH" Version="1.4" Author="Franz Höpfinger" Date="2026-09-17" Remarks="Dokumentation (Franz: 'das passt, wir dokumentieren das in den Bausteinen. E_D_FF ist ein IEC 61499 Standardbaustein, wir halten uns STRENG an die Norm. E_D_FF_ANY ist davon abgeleitet, sollte sich gleich verhalten'): E_D_FF_Timeout (E_D_FF, IEC 61499-1 Annex A Standardbaustein) feuert EO NICHT beim allerersten CLK, wenn der erste echte Wert mit dem default-initialisierten Vergleichszustand (FALSE) uebereinstimmt - bleibt I_CORE.Q_timeout von Anfang an FALSE (Normalfall, kein Timeout), feuert TIMEOUT.E1 nie initial. Bewusst kein Bug, sondern standardkonformes Verhalten (analog E_RS/E_SR, wo genau dasselbe Verhalten Anlass fuer die Sonderformen E_RS_SYM/E_SR_SYM war) - hier bewusst KEINE eigene SYM-Variante, da nachgelagerte Verbraucher TIMEOUT.D1 als Datenwert lesen, nicht nur das Event.">
 	</VersionInfo>
 	<VersionInfo Organization="HR Agrartechnik GmbH" Version="1.3" Author="Franz Höpfinger" Date="2026-09-17" Remarks="Bugfix (PR #241 Review, qodo-code-review[bot]: 'Normal traffic floods timeout consumers - every IND republishes Q_timeout even when it did not change'): E_D_FF_Timeout (E_D_FF_ANY) vor TIMEOUT eingefuegt, wie schon fuer die anderen Signale dieser Datei - I_CORE.TIMEOUT und I_CORE.IND feuern jetzt beide nur noch E_D_FF_Timeout.CLK, TIMEOUT.E1/D1 werden nur noch bei tatsaechlicher Aenderung von Q_timeout aktualisiert, nicht mehr bei jeder einzelnen Botschaft im gesunden Normalbetrieb.">
 	</VersionInfo>
@@ -34,7 +34,7 @@
 		<Plugs>
 			<AdapterDeclaration Name="SPEED" Type="adapter::types::unidirectional::AUI" Comment="Machine selected speed" x="4700" y="5000"/>
 			<AdapterDeclaration Name="DISTANCE" Type="adapter::types::unidirectional::AUDI" Comment="Machine selected distance" x="4800" y="5800"/>
-<AdapterDeclaration Name="TIMEOUT" Type="adapter::types::unidirectional::AX" Comment="Timeout Status" x="4200" y="3500"/>
+			<AdapterDeclaration Name="TIMEOUT" Type="adapter::types::unidirectional::AX" Comment="Timeout Status" x="4200" y="3500"/>
 		</Plugs>
 	</InterfaceList>
 	<FBNetwork>
@@ -44,7 +44,7 @@
 		</FB>
 		<FB Name="E_D_FF_Distance" Type="iec61499::events::E_D_FF_ANY" x="3513.33" y="5760">
 		</FB>
-<FB Name="E_D_FF_Timeout" Type="iec61499::events::E_D_FF" x="3000" y="3500">
+		<FB Name="E_D_FF_Timeout" Type="iec61499::events::E_D_FF" x="3000" y="3500">
 		</FB>
 		<EventConnections>
 			<Connection Source="INIT" Destination="I_CORE.INIT" dx1="66.67"/>
@@ -53,7 +53,7 @@
 			<Connection Source="E_D_FF_Speed.EO" Destination="SPEED.E1"/>
 			<Connection Source="I_CORE.IND" Destination="E_D_FF_Distance.CLK" dx1="266.67"/>
 			<Connection Source="E_D_FF_Distance.EO" Destination="DISTANCE.E1" dx1="266.67"/>
-<Connection Source="I_CORE.TIMEOUT" Destination="E_D_FF_Timeout.CLK" dx1="513.33"/>
+			<Connection Source="I_CORE.TIMEOUT" Destination="E_D_FF_Timeout.CLK" dx1="513.33"/>
 			<Connection Source="I_CORE.IND" Destination="E_D_FF_Timeout.CLK" dx1="513.33"/>
 			<Connection Source="E_D_FF_Timeout.EO" Destination="TIMEOUT.E1"/>
 		</EventConnections>
@@ -65,7 +65,7 @@
 			<Connection Source="E_D_FF_Speed.Q" Destination="SPEED.D1"/>
 			<Connection Source="I_CORE.SELECTEDMACHINEDISTANCE" Destination="E_D_FF_Distance.D" dx1="66.67"/>
 			<Connection Source="E_D_FF_Distance.Q" Destination="DISTANCE.D1" dx1="266.67"/>
-<Connection Source="I_CORE.Q_timeout" Destination="E_D_FF_Timeout.D" dx1="200"/>
+			<Connection Source="I_CORE.Q_timeout" Destination="E_D_FF_Timeout.D" dx1="200"/>
 			<Connection Source="E_D_FF_Timeout.Q" Destination="TIMEOUT.D1"/>
 		</DataConnections>
 	</FBNetwork>
