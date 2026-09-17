@@ -5,7 +5,9 @@
 	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2026-09-17" Remarks="ISOBUS TECU Front Hitch Status (FHS): Position/Force/Draft mit AR_Timeout_Zero Fendt-Schaltung auf UT ausgeben (Adapter Version, analog Krauternter TECU_FHS.SUB)">
 	</VersionInfo>
 	<CompilerInfo packageName="Uebungen">
-		<Import declaration="Uebungen::const::UT::TECU::DefaultPool_TECU_Numeric::NumberVariable_Wheel_based_machine_speed_N"/>
+		<Import declaration="Uebungen::const::UT::TECU::DefaultPool_TECU_Numeric::NumberVariable_TECU_FHS_Position_N"/>
+		<Import declaration="Uebungen::const::UT::TECU::DefaultPool_TECU_Numeric::NumberVariable_TECU_FHS_Force_N"/>
+		<Import declaration="Uebungen::const::UT::TECU::DefaultPool_TECU_Numeric::NumberVariable_TECU_FHS_Draft_N"/>
 	</CompilerInfo>
 	<SubAppInterfaceList>
 	</SubAppInterfaceList>
@@ -18,21 +20,21 @@
 		<SubApp Name="TZ_Position" Type="MyLib::sys::AR_Timeout_Zero" x="3873.33" y="2526.67">
 		</SubApp>
 		<FB Name="Q_NumericValue_FHS_Position" Type="isobus::UT::Q::Q_NumericValue_PHYSA" x="6726.67" y="2100">
-			<Parameter Name="stObj" Value="NumberVariable_Wheel_based_machine_speed_N"/>
+			<Parameter Name="stObj" Value="NumberVariable_TECU_FHS_Position_N"/>
 		</FB>
 		<SubApp Name="Conv_Force" Type="MyLib::sys::AUS_FIELDBUS_USINT_TO_AR" x="1640" y="3373.33">
 		</SubApp>
 		<SubApp Name="TZ_Force" Type="MyLib::sys::AR_Timeout_Zero" x="3806.67" y="4593.33">
 		</SubApp>
 		<FB Name="Q_NumericValue_FHS_Force" Type="isobus::UT::Q::Q_NumericValue_PHYSA" x="6426.67" y="4166.67">
-			<Parameter Name="stObj" Value="NumberVariable_Wheel_based_machine_speed_N"/>
+			<Parameter Name="stObj" Value="NumberVariable_TECU_FHS_Force_N"/>
 		</FB>
 		<SubApp Name="Conv_Draft" Type="MyLib::sys::AUI_FIELDBUS_UINT_TO_AR" x="1753.33" y="6286.67">
 		</SubApp>
 		<SubApp Name="TZ_Draft" Type="MyLib::sys::AR_Timeout_Zero" x="3940" y="6626.67">
 		</SubApp>
 		<FB Name="Q_NumericValue_FHS_Draft" Type="isobus::UT::Q::Q_NumericValue_PHYSA" x="6560" y="6200">
-			<Parameter Name="stObj" Value="NumberVariable_Wheel_based_machine_speed_N"/>
+			<Parameter Name="stObj" Value="NumberVariable_TECU_FHS_Draft_N"/>
 		</FB>
 		<FB Name="AX_SPLIT_3_Timeout" Type="adapter::events::unidirectional::AX_SPLIT_3" x="1346.67" y="5386.67">
 		</FB>
