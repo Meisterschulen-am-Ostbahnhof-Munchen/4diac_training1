@@ -14,6 +14,8 @@
 	</VersionInfo>
 	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.5" Author="Franz Höpfinger" Date="2026-09-18" Remarks="Button_CO/Button_CS + METHOD_SERVER_CO/CS + E_MERGE_CO/CS (je 1x pro Taste) durch je eine Instanz des neuen wiederverwendbaren Bausteins Button_Method_IE ersetzt - identisches Muster kam 2x identisch vor, analog zu Softkey_Aux_Method_IE herausgeloest.">
 	</VersionInfo>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.6" Author="Franz Höpfinger" Date="2026-09-18" Remarks="Franz: 'kann eine SUB sein' - logiBUS_AI_IDA+AD_SPLIT_2+AD_PUBLISH_RAW+AD_TO_AUDI+AUDI_SPLIT_2+Q_NumericValue_RAW+AUDI_TO_AR durch neue SubApp logiBUS_AI_Raw_VT_AR_OPC ersetzt, AR_SPLIT_2+AR_PUBLISH_CAL+Q_NumericValue_CAL durch die bereits bestehende SubApp AR_TO_Q_Publish_OPC (dort um optionales INITO ergaenzt) - beide Muster kamen identisch auch in logiBUS_AI_Calibrate_3P_IDA_OPC vor.">
+	</VersionInfo>
 	<CompilerInfo packageName="MyLib::sys">
 		<Import declaration="isobus::UT::Q::const::IDs::ID_NULL"/>
 		<Import declaration="logiBUS::io::AI::logiBUS_AI"/>
@@ -41,28 +43,8 @@
 		</InputVars>
 	</SubAppInterfaceList>
 	<SubAppNetwork>
-		<FB Name="logiBUS_AI_IDA" Type="logiBUS::io::AI::logiBUS_AI_IDA" x="-9200" y="-1700">
-			<Parameter Name="QI" Value="TRUE"/>
-			<Parameter Name="PARAMS" Value="">
-				<Attribute Name="Visible" Value="false"/>
-			</Parameter>
-			<Parameter Name="AnalogInput_hysteresis" Value="DWORD#0"/>
-			<Parameter Name="TimeDelta" Value="DWORD#250"/>
-			<Parameter Name="TimeRateLimit" Value="DWORD#100"/>
-		</FB>
-		<FB Name="AD_SPLIT_2" Type="adapter::events::unidirectional::AD_SPLIT_2" x="-7300" y="-1000">
-		</FB>
-		<FB Name="AD_PUBLISH_RAW" Type="adapter::net::AD_PUBLISH_1" x="-5600" y="-1700">
-			<Parameter Name="QI" Value="TRUE"/>
-		</FB>
-		<FB Name="AD_TO_AUDI" Type="adapter::conversion::unidirectional::AD_TO_AUDI" x="-5600" y="-400">
-		</FB>
-		<FB Name="AUDI_SPLIT_2" Type="adapter::events::unidirectional::AUDI_SPLIT_2" x="-4000" y="-400">
-		</FB>
-		<FB Name="Q_NumericValue_RAW" Type="isobus::UT::Q::Q_NumericValue_AUDI" x="-2300" y="-1000">
-		</FB>
-		<FB Name="AUDI_TO_AR" Type="adapter::conversion::unidirectional::AUDI_TO_AR" x="-2300" y="200">
-		</FB>
+		<SubApp Name="InputRaw" Type="MyLib::sys::logiBUS_AI_Raw_VT_AR_OPC" x="-9200" y="-1700">
+		</SubApp>
 		<FB Name="CALIBRATE" Type="adapter::Engineering::measurements::AR_CALIBRATE_2P_REF" x="-200" y="200">
 		</FB>
 		<SubApp Name="Y_OFFSET_LIT" Type="MyLib::sys::NumericValue_TO_AR2_OPC" x="-8400" y="4200">
@@ -97,28 +79,20 @@
 			<Parameter Name="KEY" Value="'HIGH_REF'"/>
 			<Parameter Name="DEFAULT_VALUE" Value="REAL#100.0"/>
 		</FB>
-		<FB Name="AR_SPLIT_2" Type="adapter::events::unidirectional::AR_SPLIT_2" x="1600" y="200">
-		</FB>
-		<FB Name="AR_PUBLISH_CAL" Type="adapter::net::AR_PUBLISH_1" x="3400" y="-400">
-			<Parameter Name="QI" Value="TRUE"/>
-		</FB>
-		<FB Name="Q_NumericValue_CAL" Type="isobus::UT::Q::Q_NumericValue_PHYSA" x="3300" y="400">
-		</FB>
+		<SubApp Name="PublishCal" Type="MyLib::sys::AR_TO_Q_Publish_OPC" x="3400" y="-400">
+		</SubApp>
 		<EventConnections>
-			<Connection Source="AD_PUBLISH_RAW.INITO" Destination="AR_PUBLISH_CAL.INIT" dx1="600">
-				<Attribute Name="Visible" Value="false"/>
-			</Connection>
 			<Connection Source="TriggerCO.IND" Destination="CALIBRATE.C_LOW" dx1="313.33"/>
 			<Connection Source="TriggerCS.IND" Destination="CALIBRATE.C_HIGH"/>
 		</EventConnections>
 		<DataConnections>
-			<Connection Source="Input" Destination="logiBUS_AI_IDA.Input" dx1="1460">
+			<Connection Source="Input" Destination="InputRaw.Input" dx1="1460">
 				<Attribute Name="Visible" Value="false"/>
 			</Connection>
-			<Connection Source="u16ObjId_RAWVAR" Destination="Q_NumericValue_RAW.u16ObjId" dx1="1400">
+			<Connection Source="u16ObjId_RAWVAR" Destination="InputRaw.u16ObjId_RAWVAR" dx1="1400">
 				<Attribute Name="Visible" Value="false"/>
 			</Connection>
-			<Connection Source="stObjCal" Destination="Q_NumericValue_CAL.stObj" dx1="1400">
+			<Connection Source="stObjCal" Destination="PublishCal.stObj" dx1="1400">
 				<Attribute Name="Visible" Value="false"/>
 			</Connection>
 			<Connection Source="u16ObjId_CO" Destination="TriggerCO.u16ObjId" dx1="1400">
@@ -139,10 +113,10 @@
 			<Connection Source="sSection" Destination="INI_HIGH_REF.SECTION" dx1="1400">
 				<Attribute Name="Visible" Value="false"/>
 			</Connection>
-			<Connection Source="ID_RAW_WRITE" Destination="AD_PUBLISH_RAW.ID" dx1="1400">
+			<Connection Source="ID_RAW_WRITE" Destination="InputRaw.ID_RAW_WRITE" dx1="1400">
 				<Attribute Name="Visible" Value="false"/>
 			</Connection>
-			<Connection Source="ID_CAL_WRITE" Destination="AR_PUBLISH_CAL.ID" dx1="1400">
+			<Connection Source="ID_CAL_WRITE" Destination="PublishCal.ID_WRITE" dx1="1400">
 				<Attribute Name="Visible" Value="false"/>
 			</Connection>
 			<Connection Source="ID_CO_METHOD" Destination="TriggerCO.ID_METHOD" dx1="1400">
@@ -171,22 +145,14 @@
 			</Connection>
 		</DataConnections>
 		<AdapterConnections>
-			<Connection Source="logiBUS_AI_IDA.IN" Destination="AD_SPLIT_2.IN" dx1="420"/>
-			<Connection Source="AD_SPLIT_2.OUT1" Destination="AD_PUBLISH_RAW.IN" dx1="300"/>
-			<Connection Source="AD_SPLIT_2.OUT2" Destination="AD_TO_AUDI.AD_IN" dx1="300"/>
-			<Connection Source="AD_TO_AUDI.AUDI_OUT" Destination="AUDI_SPLIT_2.IN" dx1="300"/>
-			<Connection Source="AUDI_SPLIT_2.OUT1" Destination="Q_NumericValue_RAW.u32NewValue" dx1="300"/>
-			<Connection Source="AUDI_SPLIT_2.OUT2" Destination="AUDI_TO_AR.AUDI_IN" dx1="300"/>
-			<Connection Source="AUDI_TO_AR.AR_OUT" Destination="CALIBRATE.X" dx1="300"/>
+			<Connection Source="InputRaw.AR_OUT" Destination="CALIBRATE.X" dx1="300"/>
 			<Connection Source="CALIBRATE.X_LOW" Destination="INI_X_LOW.VAL" dx1="580"/>
 			<Connection Source="CALIBRATE.X_HIGH" Destination="INI_X_HIGH.VAL" dx1="340"/>
 			<Connection Source="CALIBRATE.LOW_REF" Destination="INI_LOW_REF.VAL" dx1="253.33"/>
 			<Connection Source="CALIBRATE.HIGH_REF" Destination="INI_HIGH_REF.VAL" dx1="180"/>
 			<Connection Source="Y_OFFSET_LIT.VALUEO" Destination="CALIBRATE.Y_LOW" dx1="6806.67"/>
 			<Connection Source="Y_SCALE_LIT.VALUEO" Destination="CALIBRATE.Y_HIGH" dx1="6760"/>
-			<Connection Source="CALIBRATE.Y" Destination="AR_SPLIT_2.IN" dx1="300"/>
-			<Connection Source="AR_SPLIT_2.OUT1" Destination="AR_PUBLISH_CAL.IN" dx1="300"/>
-			<Connection Source="AR_SPLIT_2.OUT2" Destination="Q_NumericValue_CAL.rPhys" dx1="300"/>
+			<Connection Source="CALIBRATE.Y" Destination="PublishCal.AR_IN" dx1="300"/>
 		</AdapterConnections>
 	</SubAppNetwork>
 </SubAppType>
