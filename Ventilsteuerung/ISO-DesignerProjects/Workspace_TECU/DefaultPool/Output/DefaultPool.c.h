@@ -30,16 +30,31 @@
 #define NumberVariable_Ground_based_machine_speed_Offset     3179
 #define NumberVariable_Wheel_based_machine_distance_Offset   3186
 #define NumberVariable_Rear_PTO_output_shaft_speed_Offset    3193
-#define FontAttributes_OutputNumber_Offset                   3200
-#define FontAttributes_OutputString_Offset                   3208
-#define LineAttributes_Offset                                3216
+#define NumberVariable_TECU_Speed_WBSD_Offset                3200
+#define NumberVariable_TECU_Speed_GBSD_Offset                3207
+#define NumberVariable_TECU_Speed_MSS_Offset                 3214
+#define NumberVariable_TECU_Speed_VDS_Offset                 3221
+#define NumberVariable_TECU_Speed_COGSOG_Offset              3228
+#define NumberVariable_TECU_FHS_Position_Offset              3235
+#define NumberVariable_TECU_RHS_Position_Offset              3242
+#define NumberVariable_TECU_FHS_Force_Offset                 3249
+#define NumberVariable_TECU_RHS_Force_Offset                 3256
+#define NumberVariable_TECU_FHS_Draft_Offset                 3263
+#define NumberVariable_TECU_RHS_Draft_Offset                 3270
+#define NumberVariable_TECU_FPTO_Speed_Offset                3277
+#define NumberVariable_TECU_RPTO_Speed_Offset                3284
+#define NumberVariable_TECU_FPTO_SpeedSet_Offset             3291
+#define NumberVariable_TECU_RPTO_SpeedSet_Offset             3298
+#define FontAttributes_OutputNumber_Offset                   3305
+#define FontAttributes_OutputString_Offset                   3313
+#define LineAttributes_Offset                                3321
 
 #define ISO_OP_MEMORY_CLASS
 
-#define ISO_OP_DefaultPool_Size   3224
+#define ISO_OP_DefaultPool_Size   3329
 extern const unsigned char ISO_OP_MEMORY_CLASS isoOP_DefaultPool[];
 
-#define ISO_OP_DefaultPool_ObjectNumber     32
+#define ISO_OP_DefaultPool_ObjectNumber     47
 extern const unsigned long ISO_OP_MEMORY_CLASS isoOP_DefaultPool_Offset[];
 extern const unsigned long ISO_OP_MEMORY_CLASS isoOP_DefaultPool_Offset_Id[];
 #define ISO_OP_DefaultPool_Scale_Offset      1
