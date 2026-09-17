@@ -8,7 +8,8 @@
 	</CompilerInfo>
 	<SubAppInterfaceList>
 		<SubAppEventOutputs>
-			<SubAppEvent Name="IND" Type="Event" Comment="Feuert wenn SoftKey, AUX ODER die lokale Methode aktiviert/aufgerufen wird"/>
+			<SubAppEvent Name="IND" Type="Event" Comment="Feuert wenn SoftKey, AUX ODER die lokale Methode aktiviert/aufgerufen wird">
+			</SubAppEvent>
 		</SubAppEventOutputs>
 		<InputVars>
 			<VarDeclaration Name="u16ObjId" Type="UINT" Comment="Object ID SoftKey"/>
@@ -17,18 +18,18 @@
 		</InputVars>
 	</SubAppInterfaceList>
 	<SubAppNetwork>
-		<SubApp Name="SoftkeyAux" Type="MyLib::sys::Softkey_Aux_IE" x="0" y="0">
+		<SubApp Name="SoftkeyAux" Type="MyLib::sys::Softkey_Aux_IE" x="-200" y="0">
 		</SubApp>
-		<FB Name="METHOD_SERVER" Type="iec61499::net::SERVER_0" x="0" y="900">
+		<FB Name="METHOD_SERVER" Type="iec61499::net::SERVER_0" x="-200" y="700">
 			<Parameter Name="QI" Value="TRUE"/>
 		</FB>
 		<FB Name="MERGE" Type="iec61499::events::E_MERGE_2" x="1600" y="450">
 		</FB>
-		<Comment Comment="RSP MUSS auf IND zurueckverdrahtet werden (argumentloser Trigger, keine Verarbeitung noetig) - sonst blockiert FORTEs onServerMethodCall den OPC-UA-Server-Thread bis zu 4s und haelt dabei open62541s globalen serviceMutex, den JEDER AX_PUBLISH_1 auf einem anderen FORTE-Thread ebenfalls braucht. Siehe Ventilsteuerung/OPC_UA_VERNETZUNG.md Punkt 12." x="0" y="1600" width="2800" height="500"/>
+		<Comment Comment="RSP MUSS auf IND zurueckverdrahtet werden (argumentloser Trigger, keine Verarbeitung noetig) - sonst blockiert FORTEs onServerMethodCall den OPC-UA-Server-Thread bis zu 4s und haelt dabei open62541s globalen serviceMutex, den JEDER AX_PUBLISH_1 auf einem anderen FORTE-Thread ebenfalls braucht. Siehe Ventilsteuerung/OPC_UA_VERNETZUNG.md Punkt 12." x="-1200" y="1400" width="2800" height="500"/>
 		<EventConnections>
-			<Connection Source="SoftkeyAux.IND" Destination="MERGE.EI1" dx1="800"/>
+			<Connection Source="SoftkeyAux.IND" Destination="MERGE.EI1" dx1="780"/>
 			<Connection Source="METHOD_SERVER.IND" Destination="MERGE.EI2" dx1="800"/>
-			<Connection Source="METHOD_SERVER.IND" Destination="METHOD_SERVER.RSP"/>
+			<Connection Source="METHOD_SERVER.IND" Destination="METHOD_SERVER.RSP" dx1="80" dx2="80" dy="160"/>
 			<Connection Source="MERGE.EO" Destination="IND" dx1="800"/>
 		</EventConnections>
 		<DataConnections>
