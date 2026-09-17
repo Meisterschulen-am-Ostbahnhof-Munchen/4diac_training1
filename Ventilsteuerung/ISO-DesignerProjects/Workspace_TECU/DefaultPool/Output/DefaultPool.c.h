@@ -20,41 +20,56 @@
 #define OutputNumber_Wheel_based_machine_distance_km_Offset    429
 #define OutputNumber_Wheel_based_machine_distance_m_Offset    458
 #define OutputNumber_Rear_PTO_output_shaft_speed_Offset       487
-#define Line_Offset                                           516
-#define Tractor_wheel_slip_Offset                             527
-#define Battery_disconnect_Offset                            1056
-#define Work_distance_travelled_Offset                       1585
-#define Tractor_ground_speed_Offset                          2114
-#define PTO_output_shaft_speed_Offset                        2643
-#define NumberVariable_Wheel_based_machine_speed_Offset      3172
-#define NumberVariable_Ground_based_machine_speed_Offset     3179
-#define NumberVariable_Wheel_based_machine_distance_Offset   3186
-#define NumberVariable_Rear_PTO_output_shaft_speed_Offset    3193
-#define NumberVariable_TECU_Speed_WBSD_Offset                3200
-#define NumberVariable_TECU_Speed_GBSD_Offset                3207
-#define NumberVariable_TECU_Speed_MSS_Offset                 3214
-#define NumberVariable_TECU_Speed_VDS_Offset                 3221
-#define NumberVariable_TECU_Speed_COGSOG_Offset              3228
-#define NumberVariable_TECU_FHS_Position_Offset              3235
-#define NumberVariable_TECU_RHS_Position_Offset              3242
-#define NumberVariable_TECU_FHS_Force_Offset                 3249
-#define NumberVariable_TECU_RHS_Force_Offset                 3256
-#define NumberVariable_TECU_FHS_Draft_Offset                 3263
-#define NumberVariable_TECU_RHS_Draft_Offset                 3270
-#define NumberVariable_TECU_FPTO_Speed_Offset                3277
-#define NumberVariable_TECU_RPTO_Speed_Offset                3284
-#define NumberVariable_TECU_FPTO_SpeedSet_Offset             3291
-#define NumberVariable_TECU_RPTO_SpeedSet_Offset             3298
-#define FontAttributes_OutputNumber_Offset                   3305
-#define FontAttributes_OutputString_Offset                   3313
-#define LineAttributes_Offset                                3321
+#define OutputNumber_TECU_Speed_WBSD_Offset                   516
+#define OutputNumber_TECU_Speed_GBSD_Offset                   545
+#define OutputNumber_TECU_Speed_MSS_Offset                    574
+#define OutputNumber_TECU_Speed_VDS_Offset                    603
+#define OutputNumber_TECU_Speed_COGSOG_Offset                 632
+#define OutputNumber_TECU_FHS_Position_Offset                 661
+#define OutputNumber_TECU_RHS_Position_Offset                 690
+#define OutputNumber_TECU_FHS_Force_Offset                    719
+#define OutputNumber_TECU_RHS_Force_Offset                    748
+#define OutputNumber_TECU_FHS_Draft_Offset                    777
+#define OutputNumber_TECU_RHS_Draft_Offset                    806
+#define OutputNumber_TECU_FPTO_Speed_Offset                   835
+#define OutputNumber_TECU_RPTO_Speed_Offset                   864
+#define OutputNumber_TECU_FPTO_SpeedSet_Offset                893
+#define OutputNumber_TECU_RPTO_SpeedSet_Offset                922
+#define Line_Offset                                           951
+#define Tractor_wheel_slip_Offset                             962
+#define Battery_disconnect_Offset                            1491
+#define Work_distance_travelled_Offset                       2020
+#define Tractor_ground_speed_Offset                          2549
+#define PTO_output_shaft_speed_Offset                        3078
+#define NumberVariable_Wheel_based_machine_speed_Offset      3607
+#define NumberVariable_Ground_based_machine_speed_Offset     3614
+#define NumberVariable_Wheel_based_machine_distance_Offset   3621
+#define NumberVariable_Rear_PTO_output_shaft_speed_Offset    3628
+#define NumberVariable_TECU_Speed_WBSD_Offset                3635
+#define NumberVariable_TECU_Speed_GBSD_Offset                3642
+#define NumberVariable_TECU_Speed_MSS_Offset                 3649
+#define NumberVariable_TECU_Speed_VDS_Offset                 3656
+#define NumberVariable_TECU_Speed_COGSOG_Offset              3663
+#define NumberVariable_TECU_FHS_Position_Offset              3670
+#define NumberVariable_TECU_RHS_Position_Offset              3677
+#define NumberVariable_TECU_FHS_Force_Offset                 3684
+#define NumberVariable_TECU_RHS_Force_Offset                 3691
+#define NumberVariable_TECU_FHS_Draft_Offset                 3698
+#define NumberVariable_TECU_RHS_Draft_Offset                 3705
+#define NumberVariable_TECU_FPTO_Speed_Offset                3712
+#define NumberVariable_TECU_RPTO_Speed_Offset                3719
+#define NumberVariable_TECU_FPTO_SpeedSet_Offset             3726
+#define NumberVariable_TECU_RPTO_SpeedSet_Offset             3733
+#define FontAttributes_OutputNumber_Offset                   3740
+#define FontAttributes_OutputString_Offset                   3748
+#define LineAttributes_Offset                                3756
 
 #define ISO_OP_MEMORY_CLASS
 
-#define ISO_OP_DefaultPool_Size   3329
+#define ISO_OP_DefaultPool_Size   3764
 extern const unsigned char ISO_OP_MEMORY_CLASS isoOP_DefaultPool[];
 
-#define ISO_OP_DefaultPool_ObjectNumber     47
+#define ISO_OP_DefaultPool_ObjectNumber     62
 extern const unsigned long ISO_OP_MEMORY_CLASS isoOP_DefaultPool_Offset[];
 extern const unsigned long ISO_OP_MEMORY_CLASS isoOP_DefaultPool_Offset_Id[];
 #define ISO_OP_DefaultPool_Scale_Offset      1
