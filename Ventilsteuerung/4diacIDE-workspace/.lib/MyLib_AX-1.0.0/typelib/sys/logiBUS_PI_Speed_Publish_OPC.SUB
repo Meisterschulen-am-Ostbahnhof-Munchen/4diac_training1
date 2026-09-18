@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SubAppType Name="logiBUS_PI_Speed_Publish_OPC" Comment="logiBUS_PI_IDA (Puls-Eingang) als Frequenz (Hz) UND als bereits umgerechneter physikalischer Wert (km/h bzw. U/min, feste Skalierung) per OPC-UA publizieren, OHNE jegliche VT-Interaktion. Erweiterung von logiBUS_PI_Raw_Publish_OPC um die Hz-&gt;Einheit-Umrechnung (bisher zentral auf STG1 via AR_HZ_TO_Q_Publish_OPC) - jetzt lokal auf der Sensor-Station: der Rohwert (Hz) geht weiterhin nur ans Dashboard/Diagnose, verteilt wird nur noch der fertige physikalische Endwert.">
+	<Identification Standard="61499-2" Description="Copyright (c) 2026 Meisterschulen am Ostbahnhof  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0">
+	</Identification>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2026-09-17" Remarks="initial implementation - Franz: 'die Impulseingaenge will ich auch die Umrechnung auf dem Quellgeraet haben'. Erweitert logiBUS_PI_Raw_Publish_OPC (Rohwert-Kette: logiBUS_PI_IDA -&gt; AD_TO_AR_NUM -&gt; FT_DERIV_10_AR -&gt; FT_PT1_AR, unveraendert) um AR_SPLIT_2 + initval_AR(SCALE) + AR_MUL_2 + zweite AR_PUBLISH_1-Instanz fuer den umgerechneten physikalischen Endwert - analog zum bisherigen AR_HZ_TO_Q_Publish_OPC-Muster (STG1), jetzt aber co-located mit dem Sensor statt zentral.">
+	</VersionInfo>
+	<CompilerInfo packageName="MyLib::sys">
+		<Import declaration="logiBUS::io::PI::logiBUS_PI"/>
+		<Import declaration="logiBUS::io::PI::logiBUS_PI_S"/>
+	</CompilerInfo>
+	<SubAppInterfaceList>
+		<InputVars>
+			<VarDeclaration Name="Input" Type="logiBUS::io::PI::logiBUS_PI_S" Comment="Identify the Input PulseInput_I1..I9" InitialValue="logiBUS_PI::Invalid"/>
+			<VarDeclaration Name="ID_HZ_WRITE" Type="WSTRING" Comment="Frequenz-Publish-Adresse (REAL Hz, ACTION=PUBLISH) - nur fuer Dashboard/Diagnose, kein anderes Modul soll dies remote-abonnieren"/>
+			<VarDeclaration Name="SCALE" Type="REAL" Comment="Skalierungsfaktor Hz -&gt; physikalische Einheit (z.B. 3.6/53 fuer km/h, 60.0 fuer U/min bei 1 Impuls/Umdrehung)"/>
+			<VarDeclaration Name="ID_WRITE" Type="WSTRING" Comment="Publish-Adresse des umgerechneten physikalischen Endwerts (REAL, ACTION=PUBLISH) - das ist die Adresse, die andere Stationen remote abonnieren"/>
+		</InputVars>
+	</SubAppInterfaceList>
+	<SubAppNetwork>
+		<FB Name="logiBUS_PI_IDA" Type="logiBUS::io::PI::logiBUS_PI_IDA" x="-9200" y="-1900">
+			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="PARAMS" Value="">
+				<Attribute Name="Visible" Value="false"/>
+			</Parameter>
+			<Parameter Name="ImpulseDelta" Value="DWORD#0"/>
+			<Parameter Name="TimeDelta" Value="DWORD#250"/>
+			<Parameter Name="TimeRateLimit" Value="DWORD#100"/>
+		</FB>
+		<FB Name="AD_TO_AR_NUM" Type="adapter::conversion::unidirectional::AD_TO_AR_NUM" x="-7400" y="-1300">
+		</FB>
+		<FB Name="FT_DERIV_10_AR" Type="OSCAT_adapter::Control::FT_DERIV_10_AR" x="-5600" y="-1900">
+			<Parameter Name="K" Value="9"/>
+			<Parameter Name="Faktor" Value="1.0"/>
+			<Parameter Name="run" Value="TRUE"/>
+		</FB>
+		<FB Name="FT_PT1_AR" Type="OSCAT_adapter::Control::FT_PT1_AR" x="-2600" y="-1600">
+			<Parameter Name="K" Value="1.0"/>
+		</FB>
+		<FB Name="initval_ATM" Type="adapter::types::unidirectional::ATM::initval::initval_ATM" x="-3900" y="-900">
+			<Parameter Name="INIT_VAL" Value="T#2s"/>
+		</FB>
+		<FB Name="AR_SPLIT_2" Type="adapter::events::unidirectional::AR_SPLIT_2" x="-1000" y="-1700">
+		</FB>
+		<FB Name="AR_PUBLISH_HZ" Type="adapter::net::AR_PUBLISH_1" x="200" y="-2200">
+			<Parameter Name="QI" Value="TRUE"/>
+		</FB>
+		<FB Name="LIT_Scale" Type="adapter::types::unidirectional::AR::initval::initval_AR" x="-800" y="-500">
+		</FB>
+		<FB Name="AR_MUL" Type="adapter::iec61131::arithmetic::AR_MUL_2" x="600" y="-900">
+		</FB>
+		<FB Name="AR_PUBLISH_Speed" Type="adapter::net::AR_PUBLISH_1" x="2200" y="-900">
+			<Parameter Name="QI" Value="TRUE"/>
+		</FB>
+		<EventConnections>
+			<Connection Source="initval_ATM.INITO" Destination="FT_PT1_AR.INIT" dx1="246.67"/>
+		</EventConnections>
+		<DataConnections>
+			<Connection Source="Input" Destination="logiBUS_PI_IDA.Input" dx1="1460">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="ID_HZ_WRITE" Destination="AR_PUBLISH_HZ.ID" dx1="1400">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="SCALE" Destination="LIT_Scale.INIT_VAL" dx1="1400">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="ID_WRITE" Destination="AR_PUBLISH_Speed.ID" dx1="1400">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+		</DataConnections>
+		<AdapterConnections>
+			<Connection Source="logiBUS_PI_IDA.IN" Destination="AD_TO_AR_NUM.AD_IN" dx1="420"/>
+			<Connection Source="AD_TO_AR_NUM.AR_OUT" Destination="FT_DERIV_10_AR.AR_IN" dx1="420"/>
+			<Connection Source="FT_DERIV_10_AR.AR_OUT" Destination="FT_PT1_AR.AR_IN" dx1="420"/>
+			<Connection Source="initval_ATM.OUT" Destination="FT_PT1_AR.TM" dx1="400"/>
+			<Connection Source="FT_PT1_AR.AR_OUT" Destination="AR_SPLIT_2.IN" dx1="400"/>
+			<Connection Source="AR_SPLIT_2.OUT1" Destination="AR_PUBLISH_HZ.IN" dx1="400"/>
+			<Connection Source="AR_SPLIT_2.OUT2" Destination="AR_MUL.IN1" dx1="400"/>
+			<Connection Source="LIT_Scale.OUT" Destination="AR_MUL.IN2" dx1="400"/>
+			<Connection Source="AR_MUL.OUT" Destination="AR_PUBLISH_Speed.IN" dx1="400"/>
+		</AdapterConnections>
+	</SubAppNetwork>
+</SubAppType>
