@@ -2,11 +2,17 @@
 <FBType Name="AR_CALIBRATE_2P_REF" Comment="Adapter-based 2-point calibration (Low/High, independently stored - no CO-before-CS style ordering dependency) - reference targets (Y_LOW/Y_HIGH) are live AR sockets, persisted via 2 additional AR2 plugs (LOW_REF/HIGH_REF), same live-echo pattern as AR_CALIBRATE_SQ_REF">
 	<Identification Standard="61499-1">
 	</Identification>
+	<VersionInfo Version="1.1" Author="Franz Höpfinger" Date="2026-09-17" Remarks="C_LOW/C_HIGH von AX-Sockets (mit [C_LOW.D1]/[C_HIGH.D1]-Flankenwaechter) auf reine EventInputs umgestellt - Franz: jeder echte Aufrufer (VT-Taste, OPC-UA-Methode, Remote-Toggle-Trigger nach Merge) liefert ohnehin ein atomares, einmaliges Event, der D1-Wert war bei jedem tatsaechlichen Caller immer hartcodiert TRUE (via AX_BOOL_TO_X) und der Guard filterte nie etwas - reine akademische Rechtfertigung ohne echten Nutzen. Aufrufer muessen jetzt direkt ein Event statt eines AX-Adapters anschliessen (AX_BOOL_TO_X-Umweg entfaellt).">
+	</VersionInfo>
 	<VersionInfo Version="1.0" Author="Meisterschulen am Ostbahnhof" Date="2026-09-11" Remarks="Ersatz fuer AR_CALIBRATE_SQ_REF: dieselbe Formel/dasselbe Ergebnis, aber ohne die CO-vor-CS-Abhaengigkeit - jeder Punkt speichert unabhaengig seinen Rohwert (wie AR_CALIBRATE_3P), die Interpolation passiert erst live bei X.E1, nicht mehr inkrementell beim Kalibrieren selbst.">
 	</VersionInfo>
 	<CompilerInfo packageName="adapter::Engineering::measurements">
 	</CompilerInfo>
 	<InterfaceList>
+		<EventInputs>
+			<Event Name="C_LOW" Type="Event" Comment="Calibrate Low Point - atomarer Trigger (VT-Taste/OPC-UA-Methode/Remote-Toggle nach Merge)"/>
+			<Event Name="C_HIGH" Type="Event" Comment="Calibrate High Point - atomarer Trigger (VT-Taste/OPC-UA-Methode/Remote-Toggle nach Merge)"/>
+		</EventInputs>
 		<Plugs>
 			<AdapterDeclaration Name="Y" Type="adapter::types::unidirectional::AR" Comment="Calibrated Output"/>
 			<AdapterDeclaration Name="X_LOW" Type="adapter::types::bidirectional::AR2" Comment="Persisted raw input value at the low calibration point"/>
@@ -16,8 +22,6 @@
 		</Plugs>
 		<Sockets>
 			<AdapterDeclaration Name="X" Type="adapter::types::unidirectional::AR" Comment="Raw Input"/>
-			<AdapterDeclaration Name="C_LOW" Type="adapter::types::unidirectional::AX" Comment="Calibrate Low Point"/>
-			<AdapterDeclaration Name="C_HIGH" Type="adapter::types::unidirectional::AX" Comment="Calibrate High Point"/>
 			<AdapterDeclaration Name="Y_LOW" Type="adapter::types::bidirectional::AR2" Comment="Target output Y at the low calibration point - live edit in via EO1/DO1 (Socket-side swap), persisted/restored value echoed back out via EI1/DI1 for VT/web display"/>
 			<AdapterDeclaration Name="Y_HIGH" Type="adapter::types::bidirectional::AR2" Comment="Target output Y at the high calibration point - live edit in via EO1/DO1 (Socket-side swap), persisted/restored value echoed back out via EI1/DI1 for VT/web display"/>
 		</Sockets>
@@ -49,9 +53,9 @@
 			</ECState>
 			<ECTransition Source="IDLE" Destination="REQ" Condition="X.E1" x="-253.33" y="-940"/>
 			<ECTransition Source="REQ" Destination="IDLE" Condition="1" x="-526.67" y="-826.67"/>
-			<ECTransition Source="IDLE" Destination="C_LOW" Condition="C_LOW.E1[C_LOW.D1]" x="1540" y="33.33"/>
+			<ECTransition Source="IDLE" Destination="C_LOW" Condition="C_LOW" x="1540" y="33.33"/>
 			<ECTransition Source="C_LOW" Destination="IDLE" Condition="1" x="1900" y="100"/>
-			<ECTransition Source="IDLE" Destination="C_HIGH" Condition="C_HIGH.E1[C_HIGH.D1]" x="2680" y="-160"/>
+			<ECTransition Source="IDLE" Destination="C_HIGH" Condition="C_HIGH" x="2680" y="-160"/>
 			<ECTransition Source="C_HIGH" Destination="IDLE" Condition="1" x="2900" y="-100"/>
 			<ECTransition Source="IDLE" Destination="REQ" Condition="X_LOW.EI1" x="-486.67" y="-566.67"/>
 			<ECTransition Source="IDLE" Destination="REQ" Condition="X_HIGH.EI1" x="-806.67" y="-433.33"/>

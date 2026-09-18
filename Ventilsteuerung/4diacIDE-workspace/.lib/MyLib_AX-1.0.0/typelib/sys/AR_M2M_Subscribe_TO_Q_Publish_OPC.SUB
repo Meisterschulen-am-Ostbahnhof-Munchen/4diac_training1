@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SubAppType Name="AR_M2M_Subscribe_TO_Q_Publish_OPC" Comment="Remote-Subscribe eines bereits fertigen physikalischen Werts (M2M, von einer anderen Station) -&gt; VT-Anzeige (Q_NumericValue_PHYSA) UND lokaler Re-Publish (fuer weitere lokale Konsumenten/Web-Mirror/Dashboard). Ersetzt AR_HZ_TO_Q_Publish_OPC fuer Sensoren, deren Hz-&gt;Einheit-Umrechnung jetzt lokal auf der Sensor-Station laeuft (logiBUS_PI_Speed_Publish_OPC) statt hier zentral - kein SCALE/AR_MUL_2 mehr noetig, nur noch Subscribe+Anzeige+Re-Publish.">
+	<Identification Standard="61499-2" Description="Copyright (c) 2026 Meisterschulen am Ostbahnhof  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0">
+	</Identification>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2026-09-17" Remarks="initial implementation - schlanke Nachfolge-Variante von AR_HZ_TO_Q_Publish_OPC ohne eigene Skalierung, da die Hz-&gt;Einheit-Umrechnung jetzt auf der Sensor-Station selbst laeuft (logiBUS_PI_Speed_Publish_OPC). Buendelt AR_SUBSCRIBE_1+AR_TO_Q_Publish_OPC - ein Baustein je bereits umgerechnetem Puls-/Analog-Wert, der von einer anderen Station remote abonniert wird.">
+	</VersionInfo>
+	<CompilerInfo packageName="MyLib::sys">
+	</CompilerInfo>
+	<SubAppInterfaceList>
+		<InputVars>
+			<VarDeclaration Name="ID_M2M_READ" Type="WSTRING" Comment="Remote-Subscribe-Adresse des bereits fertigen physikalischen Werts (REAL), z.B. FBs::Ventilsteuerung::Ventilsteuerung_STG1::RemoteSubStrings::AUFNAHME_GESCHWINDIGKEIT_KMH_M2M"/>
+			<VarDeclaration Name="stObj" Type="logiBUS::utils::conversion::phys::NumericObjectPool_S" Comment="Object pool properties der VT-Zahlenvariable (u16ObjId, scale, offset, decimals) - z.B. FBs::const::DefaultPool_Numeric::NumberVariable_X_N"/>
+			<VarDeclaration Name="ID_WRITE" Type="WSTRING" Comment="Lokale Publish-Adresse (REAL, physikalischer Wert) - Web-Mirror/Dashboard/Self-Subscribe weiterer lokaler Konsumenten"/>
+		</InputVars>
+	</SubAppInterfaceList>
+	<SubAppNetwork>
+		<FB Name="AR_SUBSCRIBE_M2M" Type="adapter::net::AR_SUBSCRIBE_1" x="0" y="0">
+			<Parameter Name="QI" Value="TRUE"/>
+		</FB>
+		<SubApp Name="Publish" Type="MyLib::sys::AR_TO_Q_Publish_OPC" x="1600" y="0">
+		</SubApp>
+		<DataConnections>
+			<Connection Source="ID_M2M_READ" Destination="AR_SUBSCRIBE_M2M.ID" dx1="1400">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="stObj" Destination="Publish.stObj" dx1="1400">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="ID_WRITE" Destination="Publish.ID_WRITE" dx1="1400">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+		</DataConnections>
+		<AdapterConnections>
+			<Connection Source="AR_SUBSCRIBE_M2M.OUT" Destination="Publish.AR_IN" dx1="600"/>
+		</AdapterConnections>
+	</SubAppNetwork>
+</SubAppType>
