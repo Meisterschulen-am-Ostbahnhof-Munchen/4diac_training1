@@ -27,8 +27,8 @@
 			<AdapterDeclaration Name="AR_OUT" Type="adapter::types::unidirectional::AR" Comment="Gefilterter Ausgangswert (REAL, durchgereicht von FT_PT2.out)" x="5300" y="200"/>
 		</Plugs>
 		<Sockets>
-			<AdapterDeclaration Name="AR_IN" Type="adapter::types::unidirectional::AR" Comment="Eingangssignal (REAL)" x="-700" y="100"/>
-			<AdapterDeclaration Name="TM" Type="adapter::types::unidirectional::ATM" Comment="Zeitkonstante (durchgereicht an FT_PT2.TM)" x="-700" y="700"/>
+			<AdapterDeclaration Name="AR_IN" Type="adapter::types::unidirectional::AR" Comment="Eingangssignal (REAL)" x="-1900" y="900"/>
+			<AdapterDeclaration Name="TM" Type="adapter::types::unidirectional::ATM" Comment="Zeitkonstante (durchgereicht an FT_PT2.TM)" x="-1900" y="1400"/>
 		</Sockets>
 	</InterfaceList>
 	<FBNetwork>
@@ -40,13 +40,14 @@
 			<Connection Source="INIT" Destination="FT_PT2.EINIT" dx1="2800"/>
 			<Connection Source="FT_PT2.INITO" Destination="INITO" dx1="453.33"/>
 			<Connection Source="RST" Destination="FT_PT2.RST" dx1="2473.33"/>
-			<Connection Source="AR_IN.E1" Destination="FT_PT2.REQ" dx1="626.67"/>
+			<Connection Source="AR_IN.E1" Destination="FT_PT2.REQ" dx1="966.67"/>
 			<Connection Source="FT_PT2.CNF" Destination="E_D_FF_ANY.CLK" dx1="453.33"/>
 			<Connection Source="E_D_FF_ANY.EO" Destination="AR_OUT.E1" dx1="906.67"/>
+			<Connection Source="TM.E1" Destination="FT_PT2.REQ" dx1="1133.33"/>
 		</EventConnections>
 		<DataConnections>
-			<Connection Source="AR_IN.D1" Destination="FT_PT2.in" dx1="540"/>
-			<Connection Source="TM.D1" Destination="FT_PT2.TM" dx1="540"/>
+			<Connection Source="AR_IN.D1" Destination="FT_PT2.in" dx1="1400"/>
+			<Connection Source="TM.D1" Destination="FT_PT2.TM" dx1="1620"/>
 			<Connection Source="D" Destination="FT_PT2.D" dx1="540"/>
 			<Connection Source="K" Destination="FT_PT2.K" dx1="846.67"/>
 			<Connection Source="FT_PT2.out" Destination="E_D_FF_ANY.D" dx1="453.33"/>
