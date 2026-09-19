@@ -54,6 +54,18 @@
             <button class="calib-btn" :disabled="!connected" @click="triggerCalibrate(n, 'CO')">CO</button>
             <button class="calib-btn" :disabled="!connected" @click="triggerCalibrate(n, 'CS')">CS</button>
           </div>
+          <div class="ref-grid">
+            <div class="ref-item">
+              <label>Y_Offset</label>
+              <input v-model="yOffsetInput[n - 1]" class="ref-input" :disabled="!connected" />
+              <button class="ref-btn" :disabled="!connected" @click="writeYRef(n, 'ZERO')">Übernehmen</button>
+            </div>
+            <div class="ref-item">
+              <label>Y_Scale</label>
+              <input v-model="yScaleInput[n - 1]" class="ref-input" :disabled="!connected" />
+              <button class="ref-btn" :disabled="!connected" @click="writeYRef(n, 'SPAN')">Übernehmen</button>
+            </div>
+          </div>
         </div>
       </div>
     </section>
@@ -106,6 +118,14 @@ const cal = ref<number[]>(new Array(8).fill(0))
 const outputs = ref<boolean[]>(new Array(12).fill(false))
 const tick = ref<number | string>('–')
 const tickPulse = ref(false)
+
+/* Y_Offset/Y_Scale (LOW_REF/HIGH_REF-Referenzwerte, intern Y_OFFSET_LIT/
+ * Y_SCALE_LIT in logiBUS_AI_Calibrate_IDA_OPC.SUB) - schreiben auf den
+ * *_EXT-Knoten (AIC_I{n}_ZERO_EXT/_SPAN_EXT), den ID_ZERO_READ/ID_SPAN_READ
+ * seit dem Selbst-Loop-Fix abonnieren (vorher zeigte READ auf denselben
+ * Knoten wie das eigene Echo WRITE - siehe SubStrings.gcf). */
+const yOffsetInput = ref<string[]>(new Array(8).fill(''))
+const yScaleInput = ref<string[]>(new Array(8).fill(''))
 
 interface ScopeSample { t: number; v: number }
 const scopeWindowSec = ref(10)
@@ -368,6 +388,27 @@ async function triggerCalibrate(n: number, which: 'CO' | 'CS') {
     await session.callP([request])
   } catch (err) {
     console.error(`AI${n} ${which} method call failed:`, err)
+  }
+}
+
+/* Schreibt einen neuen Y_Offset/Y_Scale-Referenzwert auf den externen
+ * Override-Knoten (AIC_I{n}_ZERO_EXT/_SPAN_EXT) - AR_LAST_2 im Baustein
+ * mergt das last-writer-wins mit der lokalen VT-Eingabe. */
+async function writeYRef(n: number, which: 'ZERO' | 'SPAN') {
+  if (!session) return
+  const inputArr = which === 'ZERO' ? yOffsetInput.value : yScaleInput.value
+  const raw = inputArr[n - 1].replace(',', '.')
+  const val = Number(raw)
+  if (!Number.isFinite(val)) return
+  try {
+    const wv = new WriteValue({
+      nodeId: coerceNodeId(`ns=1;s=AIC_I${n}_${which}_EXT`),
+      attributeId: AttributeIds.Value,
+      value: new DataValue({ value: new Variant({ dataType: DataType.Float, value: val }) }),
+    })
+    await session.writeP([wv])
+  } catch (err) {
+    console.error(`AI${n} Y_${which === 'ZERO' ? 'Offset' : 'Scale'} write failed:`, err)
   }
 }
 
@@ -655,4 +696,44 @@ span {
 .calib-btn:hover:not(:disabled) { background: #3f51b5; }
 .calib-btn:active:not(:disabled) { transform: scale(0.95); }
 .calib-btn:disabled { opacity: 0.4; cursor: not-allowed; }
+
+.ref-grid {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+  margin-top: 0.3rem;
+}
+
+.ref-item {
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+}
+
+.ref-item label {
+  font-size: 0.65rem;
+  font-weight: 600;
+  color: #aaa;
+  min-width: 3.5rem;
+}
+
+.ref-input {
+  width: 3.5rem;
+  padding: 0.15rem 0.3rem;
+  border-radius: 4px;
+  border: 1px solid #444;
+  background: #0d0d1a;
+  color: #e0e0e0;
+  font-size: 0.75rem;
+}
+
+.ref-btn {
+  padding: 0.15rem 0.4rem;
+  font-size: 0.65rem;
+  background: #2a2a3e;
+  border: 1px solid #444;
+}
+.ref-btn:hover:not(:disabled) { background: #3f51b5; }
+.ref-btn:disabled { opacity: 0.4; cursor: not-allowed; }
 </style>
