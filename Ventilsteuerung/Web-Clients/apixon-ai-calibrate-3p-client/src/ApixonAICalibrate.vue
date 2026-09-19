@@ -56,6 +56,32 @@
             <button class="calib-btn" :disabled="!connected" @click="triggerCalibrate(n, 'MID')">MID</button>
             <button class="calib-btn" :disabled="!connected" @click="triggerCalibrate(n, 'MAX')">MAX</button>
           </div>
+          <div class="ref-grid">
+            <div class="ref-item">
+              <label>MIN_REF</label>
+              <div class="ref-item-row">
+                <input v-model="minRefInput[n - 1]" class="ref-input" :disabled="!connected" />
+                <button class="ref-btn" :disabled="!connected" @click="writeRefValue(n, 'MINREF')">Übernehmen</button>
+              </div>
+              <span class="ref-live">aktuell: {{ minRefLive[n - 1].toFixed(1) }}</span>
+            </div>
+            <div class="ref-item">
+              <label>MID_REF</label>
+              <div class="ref-item-row">
+                <input v-model="midRefInput[n - 1]" class="ref-input" :disabled="!connected" />
+                <button class="ref-btn" :disabled="!connected" @click="writeRefValue(n, 'MIDREF')">Übernehmen</button>
+              </div>
+              <span class="ref-live">aktuell: {{ midRefLive[n - 1].toFixed(1) }}</span>
+            </div>
+            <div class="ref-item">
+              <label>MAX_REF</label>
+              <div class="ref-item-row">
+                <input v-model="maxRefInput[n - 1]" class="ref-input" :disabled="!connected" />
+                <button class="ref-btn" :disabled="!connected" @click="writeRefValue(n, 'MAXREF')">Übernehmen</button>
+              </div>
+              <span class="ref-live">aktuell: {{ maxRefLive[n - 1].toFixed(1) }}</span>
+            </div>
+          </div>
         </div>
       </div>
     </section>
@@ -108,6 +134,21 @@ const cal = ref<number[]>(new Array(8).fill(0))
 const outputs = ref<boolean[]>(new Array(12).fill(false))
 const tick = ref<number | string>('–')
 const tickPulse = ref(false)
+
+/* MIN_REF/MID_REF/MAX_REF (Referenzwerte, intern MIN_REF_LIT/MID_REF_LIT/MAX_REF_LIT
+ * in logiBUS_AI_Calibrate_3P_IDA_OPC.SUB) - schreiben auf den *_EXT-Knoten
+ * (AIC_I{n}_MINREF_EXT/_MIDREF_EXT/_MAXREF_EXT), analog zu Y_Offset/Y_Scale im
+ * 2-Punkt-Client (siehe SubStrings.gcf). */
+const minRefInput = ref<string[]>(new Array(8).fill(''))
+const midRefInput = ref<string[]>(new Array(8).fill(''))
+const maxRefInput = ref<string[]>(new Array(8).fill(''))
+
+/* Live-Anzeige des aktuellen MIN_REF/MID_REF/MAX_REF, den der Baustein gerade
+ * tatsächlich verwendet (WRITE/Echo-Knoten AIC_I{n}_MINREF/_MIDREF/_MAXREF, NICHT
+ * der _EXT-Override-Knoten, den writeRefValue beschreibt). */
+const minRefLive = ref<number[]>(new Array(8).fill(0))
+const midRefLive = ref<number[]>(new Array(8).fill(0))
+const maxRefLive = ref<number[]>(new Array(8).fill(0))
 
 interface ScopeSample { t: number; v: number }
 const scopeWindowSec = ref(10)
@@ -230,6 +271,9 @@ function handleLost() {
   raw.value.fill(0)
   cal.value.fill(0)
   outputs.value.fill(false)
+  minRefLive.value.fill(0)
+  midRefLive.value.fill(0)
+  maxRefLive.value.fill(0)
   tick.value = '–'
   if (scopeRafId !== null) {
     cancelAnimationFrame(scopeRafId)
@@ -294,6 +338,49 @@ async function connect() {
       const v = Number(dataValue.value?.value ?? 0)
       cal.value[index] = v
       pushScopeSample(index, v)
+    })
+
+    /* Monitor the WRITE/Echo-Knoten AIC_I1_MINREF-AIC_I8_MINREF (aktueller MIN_REF,
+     * den der Baustein tatsächlich verwendet - nicht der _EXT-Override-Knoten). */
+    const minRefItems = Array.from({ length: 8 }, (_, i) => ({
+      nodeId: coerceNodeId(`ns=1;s=AIC_I${i + 1}_MINREF`),
+      attributeId: AttributeIds.Value,
+    }))
+    const minRefGroup = await subscription.monitorItemsP(
+      minRefItems,
+      { samplingInterval: 100, discardOldest: true, queueSize: 2 },
+      TimestampsToReturn.Neither
+    )
+    minRefGroup.on('changed', (_item: any, dataValue: any, index: number) => {
+      minRefLive.value[index] = Number(dataValue.value?.value ?? 0)
+    })
+
+    /* Monitor the WRITE/Echo-Knoten AIC_I1_MIDREF-AIC_I8_MIDREF (aktueller MID_REF). */
+    const midRefItems = Array.from({ length: 8 }, (_, i) => ({
+      nodeId: coerceNodeId(`ns=1;s=AIC_I${i + 1}_MIDREF`),
+      attributeId: AttributeIds.Value,
+    }))
+    const midRefGroup = await subscription.monitorItemsP(
+      midRefItems,
+      { samplingInterval: 100, discardOldest: true, queueSize: 2 },
+      TimestampsToReturn.Neither
+    )
+    midRefGroup.on('changed', (_item: any, dataValue: any, index: number) => {
+      midRefLive.value[index] = Number(dataValue.value?.value ?? 0)
+    })
+
+    /* Monitor the WRITE/Echo-Knoten AIC_I1_MAXREF-AIC_I8_MAXREF (aktueller MAX_REF). */
+    const maxRefItems = Array.from({ length: 8 }, (_, i) => ({
+      nodeId: coerceNodeId(`ns=1;s=AIC_I${i + 1}_MAXREF`),
+      attributeId: AttributeIds.Value,
+    }))
+    const maxRefGroup = await subscription.monitorItemsP(
+      maxRefItems,
+      { samplingInterval: 100, discardOldest: true, queueSize: 2 },
+      TimestampsToReturn.Neither
+    )
+    maxRefGroup.on('changed', (_item: any, dataValue: any, index: number) => {
+      maxRefLive.value[index] = Number(dataValue.value?.value ?? 0)
     })
 
     /* Monitor all outputs Q1-Q12 (reflect actual hardware state, unveraendert wie im AI-Beispiel) */
@@ -373,6 +460,28 @@ async function triggerCalibrate(n: number, which: 'MIN' | 'MID' | 'MAX') {
   }
 }
 
+/* Schreibt einen neuen MIN_REF/MID_REF/MAX_REF-Referenzwert auf den externen
+ * Override-Knoten (AIC_I{n}_MINREF_EXT/_MIDREF_EXT/_MAXREF_EXT) - AR_LAST_2 im
+ * Baustein mergt das last-writer-wins mit der lokalen VT-Eingabe. */
+async function writeRefValue(n: number, which: 'MINREF' | 'MIDREF' | 'MAXREF') {
+  if (!session) return
+  const inputArr =
+    which === 'MINREF' ? minRefInput.value : which === 'MIDREF' ? midRefInput.value : maxRefInput.value
+  const raw = inputArr[n - 1].replace(',', '.')
+  const val = Number(raw)
+  if (!Number.isFinite(val)) return
+  try {
+    const wv = new WriteValue({
+      nodeId: coerceNodeId(`ns=1;s=AIC_I${n}_${which}_EXT`),
+      attributeId: AttributeIds.Value,
+      value: new DataValue({ value: new Variant({ dataType: DataType.Float, value: val }) }),
+    })
+    await session.writeP([wv])
+  } catch (err) {
+    console.error(`AI${n} ${which} write failed:`, err)
+  }
+}
+
 async function disconnect() {
   if (client) {
     client.off('connection_lost', handleLost)
@@ -384,6 +493,9 @@ async function disconnect() {
   raw.value.fill(0)
   cal.value.fill(0)
   outputs.value.fill(false)
+  minRefLive.value.fill(0)
+  midRefLive.value.fill(0)
+  maxRefLive.value.fill(0)
   if (scopeRafId !== null) {
     cancelAnimationFrame(scopeRafId)
     scopeRafId = null
@@ -657,4 +769,60 @@ span {
 .calib-btn:hover:not(:disabled) { background: #3f51b5; }
 .calib-btn:active:not(:disabled) { transform: scale(0.95); }
 .calib-btn:disabled { opacity: 0.4; cursor: not-allowed; }
+
+.ref-grid {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+  margin-top: 0.3rem;
+}
+
+.ref-item {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 0.15rem;
+}
+
+.ref-item label {
+  font-size: 0.65rem;
+  font-weight: 600;
+  color: #aaa;
+}
+
+.ref-item-row {
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+}
+
+.ref-input {
+  flex: 1;
+  min-width: 0;
+  width: auto;
+  padding: 0.15rem 0.3rem;
+  border-radius: 4px;
+  border: 1px solid #444;
+  background: #0d0d1a;
+  color: #e0e0e0;
+  font-size: 0.75rem;
+}
+
+.ref-btn {
+  flex-shrink: 0;
+  padding: 0.15rem 0.4rem;
+  font-size: 0.65rem;
+  background: #2a2a3e;
+  border: 1px solid #444;
+  white-space: nowrap;
+}
+.ref-btn:hover:not(:disabled) { background: #3f51b5; }
+.ref-btn:disabled { opacity: 0.4; cursor: not-allowed; }
+
+.ref-live {
+  font-size: 0.65rem;
+  color: #777;
+  font-variant-numeric: tabular-nums;
+}
 </style>
