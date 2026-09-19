@@ -9,10 +9,6 @@
 		<Import declaration="logiBUS::io::AI::logiBUS_AI_S"/>
 	</CompilerInfo>
 	<SubAppInterfaceList>
-		<SubAppEventOutputs>
-			<SubAppEvent Name="INITO" Type="EInit" Comment="Feuert nach Initialisierung von AD_PUBLISH_RAW - Aufrufer kann seine eigene Init-Kette hier anhaengen">
-			</SubAppEvent>
-		</SubAppEventOutputs>
 		<InputVars>
 			<VarDeclaration Name="Input" Type="logiBUS::io::AI::logiBUS_AI_S" Comment="Identify the Input AnalogInput_I1..I8" InitialValue="logiBUS_AI::Invalid"/>
 			<VarDeclaration Name="u16ObjId_RAWVAR" Type="UINT" Comment="Object ID CNumberVariable (Rohwert 0-4095, unkalibriert, reine Diagnose-Anzeige)"/>
@@ -45,9 +41,6 @@
 		</FB>
 		<FB Name="AUDI_TO_AR" Type="adapter::conversion::unidirectional::AUDI_TO_AR" x="-2300" y="200">
 		</FB>
-		<EventConnections>
-			<Connection Source="AD_PUBLISH_RAW.INITO" Destination="INITO" dx1="600"/>
-		</EventConnections>
 		<DataConnections>
 			<Connection Source="Input" Destination="logiBUS_AI_IDA.Input" dx1="1460">
 				<Attribute Name="Visible" Value="false"/>

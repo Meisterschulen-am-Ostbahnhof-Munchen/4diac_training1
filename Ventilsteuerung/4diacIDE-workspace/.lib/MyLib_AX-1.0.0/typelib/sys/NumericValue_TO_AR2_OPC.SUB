@@ -63,12 +63,12 @@
 				<Attribute Name="Visible" Value="false"/>
 			</Connection>
 			<Connection Source="AR_TO_AR2.AR_OUT" Destination="AR_SPLIT_2.IN" dx1="120"/>
-			<Connection Source="AR_SPLIT_2.OUT1" Destination="Q_NumericValue_PHYSA.rPhys" dx1="920"/>
-			<Connection Source="AR_SPLIT_2.OUT2" Destination="AR_PUBLISH_1.IN" dx1="140"/>
-			<Connection Source="AR_SPLIT_2.OUT3" Destination="VALUE_OUT" dx1="140"/>
+			<Connection Source="AR_SPLIT_2.OUT1" Destination="VALUE_OUT" dx1="140"/>
 			<Connection Source="AR_LAST_2.OUT" Destination="AR_TO_AR2.AR_IN"/>
 			<Connection Source="NumericValue_PHYSA.rPhys" Destination="AR_LAST_2.IN1" dx1="1893.33"/>
 			<Connection Source="AR_SUBSCRIBE_1.OUT" Destination="AR_LAST_2.IN2" dx1="960"/>
+			<Connection Source="AR_SPLIT_2.OUT3" Destination="AR_PUBLISH_1.IN" dx1="80"/>
+			<Connection Source="AR_SPLIT_2.OUT2" Destination="Q_NumericValue_PHYSA.rPhys" dx1="573.33"/>
 		</AdapterConnections>
 	</SubAppNetwork>
 </SubAppType>
