@@ -61,6 +61,7 @@
                 <input v-model="yOffsetInput[n - 1]" class="ref-input" :disabled="!connected" />
                 <button class="ref-btn" :disabled="!connected" @click="writeYRef(n, 'ZERO')">Übernehmen</button>
               </div>
+              <span class="ref-live">aktuell: {{ yOffsetLive[n - 1].toFixed(1) }}</span>
             </div>
             <div class="ref-item">
               <label>Y_Scale</label>
@@ -68,6 +69,7 @@
                 <input v-model="yScaleInput[n - 1]" class="ref-input" :disabled="!connected" />
                 <button class="ref-btn" :disabled="!connected" @click="writeYRef(n, 'SPAN')">Übernehmen</button>
               </div>
+              <span class="ref-live">aktuell: {{ yScaleLive[n - 1].toFixed(1) }}</span>
             </div>
           </div>
         </div>
@@ -130,6 +132,12 @@ const tickPulse = ref(false)
  * Knoten wie das eigene Echo WRITE - siehe SubStrings.gcf). */
 const yOffsetInput = ref<string[]>(new Array(8).fill(''))
 const yScaleInput = ref<string[]>(new Array(8).fill(''))
+
+/* Live-Anzeige des aktuellen Y_Offset/Y_Scale, den der Baustein gerade tatsächlich
+ * verwendet (WRITE/Echo-Knoten AIC_I{n}_ZERO/_SPAN, NICHT der _EXT-Override-Knoten,
+ * den writeYRef beschreibt) - betankt die Felder neben den Eingaben. */
+const yOffsetLive = ref<number[]>(new Array(8).fill(0))
+const yScaleLive = ref<number[]>(new Array(8).fill(0))
 
 interface ScopeSample { t: number; v: number }
 const scopeWindowSec = ref(10)
@@ -252,6 +260,8 @@ function handleLost() {
   raw.value.fill(0)
   cal.value.fill(0)
   outputs.value.fill(false)
+  yOffsetLive.value.fill(0)
+  yScaleLive.value.fill(0)
   tick.value = '–'
   if (scopeRafId !== null) {
     cancelAnimationFrame(scopeRafId)
@@ -316,6 +326,35 @@ async function connect() {
       const v = Number(dataValue.value?.value ?? 0)
       cal.value[index] = v
       pushScopeSample(index, v)
+    })
+
+    /* Monitor the WRITE/Echo-Knoten AIC_I1_ZERO-AIC_I8_ZERO (aktueller Y_Offset,
+     * den der Baustein tatsächlich verwendet - nicht der _EXT-Override-Knoten). */
+    const yZeroItems = Array.from({ length: 8 }, (_, i) => ({
+      nodeId: coerceNodeId(`ns=1;s=AIC_I${i + 1}_ZERO`),
+      attributeId: AttributeIds.Value,
+    }))
+    const yZeroGroup = await subscription.monitorItemsP(
+      yZeroItems,
+      { samplingInterval: 100, discardOldest: true, queueSize: 2 },
+      TimestampsToReturn.Neither
+    )
+    yZeroGroup.on('changed', (_item: any, dataValue: any, index: number) => {
+      yOffsetLive.value[index] = Number(dataValue.value?.value ?? 0)
+    })
+
+    /* Monitor the WRITE/Echo-Knoten AIC_I1_SPAN-AIC_I8_SPAN (aktueller Y_Scale). */
+    const ySpanItems = Array.from({ length: 8 }, (_, i) => ({
+      nodeId: coerceNodeId(`ns=1;s=AIC_I${i + 1}_SPAN`),
+      attributeId: AttributeIds.Value,
+    }))
+    const ySpanGroup = await subscription.monitorItemsP(
+      ySpanItems,
+      { samplingInterval: 100, discardOldest: true, queueSize: 2 },
+      TimestampsToReturn.Neither
+    )
+    ySpanGroup.on('changed', (_item: any, dataValue: any, index: number) => {
+      yScaleLive.value[index] = Number(dataValue.value?.value ?? 0)
     })
 
     /* Monitor all outputs Q1-Q12 (reflect actual hardware state, unveraendert wie im AI-Beispiel) */
@@ -427,6 +466,8 @@ async function disconnect() {
   raw.value.fill(0)
   cal.value.fill(0)
   outputs.value.fill(false)
+  yOffsetLive.value.fill(0)
+  yScaleLive.value.fill(0)
   if (scopeRafId !== null) {
     cancelAnimationFrame(scopeRafId)
     scopeRafId = null
@@ -750,4 +791,10 @@ span {
 }
 .ref-btn:hover:not(:disabled) { background: #3f51b5; }
 .ref-btn:disabled { opacity: 0.4; cursor: not-allowed; }
+
+.ref-live {
+  font-size: 0.65rem;
+  color: #777;
+  font-variant-numeric: tabular-nums;
+}
 </style>
