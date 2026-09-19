@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SubAppType Name="logiBUS_AI_Calibrate_3P_Subscribe_VT_OPC" Comment="Remote-Subscribe eines bereits kalibrierten physikalischen Werts (M2M, von der Sensor-Station, 3-Punkt-Kalibrierung) -&gt; VT-Anzeige (Q_NumericValue_PHYSA) + lokaler Re-Publish + optionaler CAL_OUT-Plug fuer lokale Consumer. Die physischen VT-Elemente bleiben hier (dort wo die VT ist): C_MIN/C_MID/C_MAX-Tasten rufen per CLIENT_0 direkt die ID_MIN_METHOD/ID_MID_TRIGGER_METHOD/ID_MAX_METHOD auf der Sensor-Station auf (logiBUS_AI_Calibrate_3P_IDA_OPC) - echter Event-zu-Event-Methodenaufruf, kein Toggle/Publish/Subscribe-Umweg. Die drei Referenzwert-Eingabefelder MIN/MID/MAX_REF (NumericValue_TO_AR2_OPC) werden weiterhin LOKAL publiziert und von der Sensor-Station remote abonniert - MID_REF/MAX_REF zusaetzlich als plain-AR-Plugs MIDREF_OUT/MAXREF_OUT re-exponiert (z.B. fuer Fuellband_Oben_Erkennung/Befuellautomatik). Ersetzt logiBUS_AI_Calibrate_3P_Remote_IDA_OPC: Kalibrierung selbst laeuft jetzt auf der Sensor-Station (logiBUS_AI_Calibrate_3P_IDA_OPC), hier bleibt nur noch Anzeige + VT-Bedienelemente-Weiterleitung.">
+	<Identification Standard="61499-2" Description="Copyright (c) 2026 Meisterschulen am Ostbahnhof  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0">
+	</Identification>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2026-09-18" Remarks="initial implementation - Analog-Lokal-Verarbeitung Phase 6 (Plan cuddly-bubbling-twilight): 3P-Pendant zu logiBUS_AI_Calibrated_Subscribe_VT_OPC (2P), fuer Fuellband Winkel (STG2). Plugs CAL_OUT/MIDREF_OUT/MAXREF_OUT 1:1 aus logiBUS_AI_Calibrate_3P_Remote_IDA_OPC uebernommen, damit bestehende Consumer (Fuellband_Oben_Erkennung, Befuellautomatik) unveraendert bleiben.">
+	</VersionInfo>
+	<CompilerInfo packageName="MyLib::sys">
+		<Import declaration="isobus::UT::Q::const::IDs::ID_NULL"/>
+		<Import declaration="isobus::UT::io::Button::ButtonActivationCode::BT_PRESSED_LATCHED"/>
+		<Import declaration="logiBUS::utils::conversion::phys::NumericObjectPool_S"/>
+	</CompilerInfo>
+	<SubAppInterfaceList>
+		<InputVars>
+			<VarDeclaration Name="ID_CAL_M2M_READ" Type="WSTRING" Comment="Remote-Subscribe-Adresse des bereits kalibrierten physikalischen Werts (REAL) - Gegenstueck zu ID_CAL_WRITE auf der Sensor-Station (logiBUS_AI_Calibrate_3P_IDA_OPC)"/>
+			<VarDeclaration Name="stObjCal" Type="logiBUS::utils::conversion::phys::NumericObjectPool_S" Comment="Object ID + Scale/Offset/Decimals CNumberVariable (kalibrierter Wert)" InitialValue="(u16ObjId := ID_NULL, r32Scale := 1.0, i32Offset := 0, u8Decimals := 1)"/>
+			<VarDeclaration Name="ID_WRITE" Type="WSTRING" Comment="Lokale Re-Publish-Adresse (REAL, ACTION=PUBLISH) fuer weitere lokale Konsumenten auf dieser Station"/>
+			<VarDeclaration Name="u16ObjId_C_MIN" Type="UINT" Comment="Object ID Taste 'C_MIN' - physisch hier auf der VT" InitialValue="ID_NULL"/>
+			<VarDeclaration Name="u16ObjId_C_MID" Type="UINT" Comment="Object ID Taste 'C_MID' - physisch hier auf der VT" InitialValue="ID_NULL"/>
+			<VarDeclaration Name="u16ObjId_C_MAX" Type="UINT" Comment="Object ID Taste 'C_MAX' - physisch hier auf der VT" InitialValue="ID_NULL"/>
+			<VarDeclaration Name="ID_MIN_CALL" Type="WSTRING" Comment="Remote-Methodenadresse (ACTION=CALL_METHOD) fuer den C_MIN-Trigger - ruft ID_MIN_METHOD direkt auf der Sensor-Station auf (logiBUS_AI_Calibrate_3P_IDA_OPC)"/>
+			<VarDeclaration Name="ID_MID_CALL" Type="WSTRING" Comment="Remote-Methodenadresse (ACTION=CALL_METHOD) fuer den C_MID-Trigger - ruft ID_MID_TRIGGER_METHOD direkt auf der Sensor-Station auf"/>
+			<VarDeclaration Name="ID_MAX_CALL" Type="WSTRING" Comment="Remote-Methodenadresse (ACTION=CALL_METHOD) fuer den C_MAX-Trigger - ruft ID_MAX_METHOD direkt auf der Sensor-Station auf"/>
+			<VarDeclaration Name="stObjMinRef" Type="logiBUS::utils::conversion::phys::NumericObjectPool_S" Comment="Object ID + Scale/Offset/Decimals CNumberVariable (MIN_REF-Referenzwert, VT-Eingabefeld hier auf dieser Station)" InitialValue="(u16ObjId := ID_NULL, r32Scale := 1.0, i32Offset := 0, u8Decimals := 1)"/>
+			<VarDeclaration Name="stObjMidRef" Type="logiBUS::utils::conversion::phys::NumericObjectPool_S" Comment="Object ID + Scale/Offset/Decimals CNumberVariable (MID_REF-Referenzwert, VT-Eingabefeld hier auf dieser Station)" InitialValue="(u16ObjId := ID_NULL, r32Scale := 1.0, i32Offset := 0, u8Decimals := 1)"/>
+			<VarDeclaration Name="stObjMaxRef" Type="logiBUS::utils::conversion::phys::NumericObjectPool_S" Comment="Object ID + Scale/Offset/Decimals CNumberVariable (MAX_REF-Referenzwert, VT-Eingabefeld hier auf dieser Station)" InitialValue="(u16ObjId := ID_NULL, r32Scale := 1.0, i32Offset := 0, u8Decimals := 1)"/>
+			<VarDeclaration Name="ID_MINREF_READ" Type="WSTRING" Comment="Optionale Subscribe-Adresse falls MIN_REF extern (Dashboard) ueberschrieben werden soll - unbenutzt zulaessig"/>
+			<VarDeclaration Name="ID_MINREF_WRITE" Type="WSTRING" Comment="Lokale Publish-Adresse (REAL, ACTION=PUBLISH) des MIN_REF-Referenzwerts - wird von der Sensor-Station remote abonniert (deren ID_MINREF_READ)"/>
+			<VarDeclaration Name="ID_MIDREF_READ" Type="WSTRING" Comment="Optionale Subscribe-Adresse falls MID_REF extern (Dashboard) ueberschrieben werden soll - unbenutzt zulaessig"/>
+			<VarDeclaration Name="ID_MIDREF_WRITE" Type="WSTRING" Comment="Lokale Publish-Adresse (REAL, ACTION=PUBLISH) des MID_REF-Referenzwerts - wird von der Sensor-Station remote abonniert (deren ID_MIDREF_READ)"/>
+			<VarDeclaration Name="ID_MAXREF_READ" Type="WSTRING" Comment="Optionale Subscribe-Adresse falls MAX_REF extern (Dashboard) ueberschrieben werden soll - unbenutzt zulaessig"/>
+			<VarDeclaration Name="ID_MAXREF_WRITE" Type="WSTRING" Comment="Lokale Publish-Adresse (REAL, ACTION=PUBLISH) des MAX_REF-Referenzwerts - wird von der Sensor-Station remote abonniert (deren ID_MAXREF_READ)"/>
+		</InputVars>
+		<Plugs>
+			<AdapterDeclaration Name="CAL_OUT" Type="adapter::types::unidirectional::AR" Comment="Optional: kalibrierter Wert (plain-AR-Spiegel des Remote-Subscribe) fuer externe lokale Consumer, statt eigenem lokalen OPC-UA-Self-Subscribe. Unverdrahtet lassen, wenn nicht gebraucht."/>
+			<AdapterDeclaration Name="MIDREF_OUT" Type="adapter::types::unidirectional::AR" Comment="Optional: live MID_REF-Referenzwert (= MID_REF_LIT.VALUE_OUT) fuer externe Consumer. Unverdrahtet lassen, wenn nicht gebraucht."/>
+			<AdapterDeclaration Name="MAXREF_OUT" Type="adapter::types::unidirectional::AR" Comment="Optional: live MAX_REF-Referenzwert (= MAX_REF_LIT.VALUE_OUT) fuer externe Consumer. Unverdrahtet lassen, wenn nicht gebraucht."/>
+		</Plugs>
+	</SubAppInterfaceList>
+	<SubAppNetwork>
+		<FB Name="AR_SUBSCRIBE_CAL" Type="adapter::net::AR_SUBSCRIBE_1" x="0" y="0">
+			<Parameter Name="QI" Value="TRUE"/>
+		</FB>
+		<FB Name="AR_SPLIT_2_Cal" Type="adapter::events::unidirectional::AR_SPLIT_2" x="1400" y="0">
+		</FB>
+		<SubApp Name="ValueDisplay" Type="MyLib::sys::AR_TO_Q_Publish_OPC" x="2800" y="-500">
+		</SubApp>
+		<FB Name="Button_C_MIN" Type="isobus::UT::io::Button::Button_IE" x="0" y="1600">
+			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="InputEvent" Value="BT_PRESSED_LATCHED"/>
+		</FB>
+		<FB Name="Button_C_MID" Type="isobus::UT::io::Button::Button_IE" x="0" y="2800">
+			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="InputEvent" Value="BT_PRESSED_LATCHED"/>
+		</FB>
+		<FB Name="Button_C_MAX" Type="isobus::UT::io::Button::Button_IE" x="0" y="4000">
+			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="InputEvent" Value="BT_PRESSED_LATCHED"/>
+		</FB>
+		<FB Name="CLIENT_MIN" Type="iec61499::net::CLIENT_0" x="1600" y="1600">
+			<Parameter Name="QI" Value="TRUE"/>
+		</FB>
+		<FB Name="CLIENT_MID" Type="iec61499::net::CLIENT_0" x="1600" y="2800">
+			<Parameter Name="QI" Value="TRUE"/>
+		</FB>
+		<FB Name="CLIENT_MAX" Type="iec61499::net::CLIENT_0" x="1600" y="4000">
+			<Parameter Name="QI" Value="TRUE"/>
+		</FB>
+		<SubApp Name="MinRef" Type="MyLib::sys::NumericValue_TO_AR2_OPC" x="0" y="5200">
+		</SubApp>
+		<SubApp Name="MidRef" Type="MyLib::sys::NumericValue_TO_AR2_OPC" x="0" y="6400">
+		</SubApp>
+		<SubApp Name="MaxRef" Type="MyLib::sys::NumericValue_TO_AR2_OPC" x="0" y="7600">
+		</SubApp>
+		<EventConnections>
+			<Connection Source="Button_C_MIN.IND" Destination="CLIENT_MIN.REQ" dx1="800"/>
+			<Connection Source="Button_C_MID.IND" Destination="CLIENT_MID.REQ" dx1="800"/>
+			<Connection Source="Button_C_MAX.IND" Destination="CLIENT_MAX.REQ" dx1="800"/>
+		</EventConnections>
+		<DataConnections>
+			<Connection Source="ID_CAL_M2M_READ" Destination="AR_SUBSCRIBE_CAL.ID" dx1="1400">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="stObjCal" Destination="ValueDisplay.stObj" dx1="1400">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="ID_WRITE" Destination="ValueDisplay.ID_WRITE" dx1="1400">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="u16ObjId_C_MIN" Destination="Button_C_MIN.u16ObjId" dx1="973.33">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="u16ObjId_C_MID" Destination="Button_C_MID.u16ObjId" dx1="973.33">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="u16ObjId_C_MAX" Destination="Button_C_MAX.u16ObjId" dx1="973.33">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="ID_MIN_CALL" Destination="CLIENT_MIN.ID" dx1="1400">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="ID_MID_CALL" Destination="CLIENT_MID.ID" dx1="1400">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="ID_MAX_CALL" Destination="CLIENT_MAX.ID" dx1="1400">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="stObjMinRef" Destination="MinRef.stObj" dx1="1400">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="ID_MINREF_READ" Destination="MinRef.ID_READ" dx1="1400">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="ID_MINREF_WRITE" Destination="MinRef.ID_WRITE" dx1="1400">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="stObjMidRef" Destination="MidRef.stObj" dx1="1400">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="ID_MIDREF_READ" Destination="MidRef.ID_READ" dx1="1400">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="ID_MIDREF_WRITE" Destination="MidRef.ID_WRITE" dx1="1400">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="stObjMaxRef" Destination="MaxRef.stObj" dx1="1400">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="ID_MAXREF_READ" Destination="MaxRef.ID_READ" dx1="1400">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="ID_MAXREF_WRITE" Destination="MaxRef.ID_WRITE" dx1="1400">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+		</DataConnections>
+		<AdapterConnections>
+			<Connection Source="AR_SUBSCRIBE_CAL.OUT" Destination="AR_SPLIT_2_Cal.IN" dx1="400"/>
+			<Connection Source="AR_SPLIT_2_Cal.OUT1" Destination="ValueDisplay.AR_IN" dx1="400"/>
+			<Connection Source="AR_SPLIT_2_Cal.OUT2" Destination="CAL_OUT" dx1="400">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="MidRef.VALUE_OUT" Destination="MIDREF_OUT" dx1="300">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="MaxRef.VALUE_OUT" Destination="MAXREF_OUT" dx1="300">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+		</AdapterConnections>
+	</SubAppNetwork>
+</SubAppType>
