@@ -16,9 +16,9 @@
     <section>
       <div class="scope-header">
         <h2>Puls-Eingänge (Zähler / Frequenz 0-100 Hz)</h2>
-        <label class="scope-window-label">
+        <label class="scope-window-label" for="scope-window-pi">
           Oszi-Zeitfenster:
-          <select v-model.number="scopeWindowSec">
+          <select id="scope-window-pi" v-model.number="scopeWindowSec">
             <option :value="5">5 s</option>
             <option :value="10">10 s</option>
             <option :value="30">30 s</option>
