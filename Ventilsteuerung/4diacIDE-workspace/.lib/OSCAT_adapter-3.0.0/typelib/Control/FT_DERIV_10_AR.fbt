@@ -76,7 +76,7 @@
 
 <h2>🇩🇪 Deutsch</h2>
 
-<p>AR-Adapter-Wrapper um <code>OSCAT::Basic::POUs::Engineering::Control::FT_DERIV_10</code>. <code>K</code> (Window Select, Default 0), <code>Faktor</code> (Multiplikationsfaktor, Default 1.0) und <code>run</code> (Berechnung aktiv, Default TRUE) sind Klartext-<code>InputVars</code> auf diesem Wrapper — kein Adapter noetig, da diese Werte pro Aufruf konstant sind.</p>
+<p>AR-Adapter-Wrapper um <code>OSCAT::Basic::POUs::Engineering::Control::FT_DERIV_10</code>. <code>K</code> (Window Select, Default 0), <code>Faktor</code> (Multiplikationsfaktor, Default 1.0) und <code>run</code> (Berechnung aktiv, Default TRUE) sind Klartext-<code>InputVars</code> auf diesem Wrapper. Ein explizites <code>REQ</code>-EventInput (mit <code>With K</code>, <code>With Faktor</code>, <code>With run</code>) erlaubt den manuellen/periodischen Aufruf zusaetzlich zum automatischen Ausloesen ueber <code>AR_IN.E1</code>.</p>
 
 <h3>Reine Adapter-Grenze</h3>
 
@@ -93,7 +93,7 @@
 
 <h2>🇬🇧 English</h2>
 
-<p>AR-adapter wrapper around <code>OSCAT::Basic::POUs::Engineering::Control::FT_DERIV_10</code>. <code>K</code> (window select, default 0), <code>Faktor</code> (multiplication factor, default 1.0) and <code>run</code> (calculation enabled, default TRUE) are plain <code>InputVars</code> on this wrapper.</p>
+<p>AR-adapter wrapper around <code>OSCAT::Basic::POUs::Engineering::Control::FT_DERIV_10</code>. <code>K</code> (window select, default 0), <code>Faktor</code> (multiplication factor, default 1.0) and <code>run</code> (calculation enabled, default TRUE) are plain <code>InputVars</code> on this wrapper. An explicit <code>REQ</code> event input (with <code>With K</code>, <code>With Faktor</code>, <code>With run</code> bindings) enables manual or periodic execution in addition to automatic triggering via <code>AR_IN.E1</code>.</p>
 
 <h3>Pure Adapter Boundary</h3>
 

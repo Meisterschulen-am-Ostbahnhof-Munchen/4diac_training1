@@ -69,7 +69,7 @@
 
 <h2>🇩🇪 Deutsch</h2>
 
-<p>AR-Adapter-Wrapper um <code>OSCAT::Basic::POUs::Engineering::Control::FT_DERIV</code>. <code>K</code> (Ableitungsfaktor, Default 1.0) und <code>run</code> (Berechnung aktiv, Default TRUE) sind Klartext-<code>InputVars</code> auf diesem Wrapper - kein Adapter noetig, da beide Werte pro Aufruf konstant sind und nicht wie <code>in</code>/<code>out</code> im Datenfluss stehen. Eine aufrufende Komposition kann sie per <code>Parameter</code> bei der Instanziierung setzen, wie bei jedem anderen FB auch.</p>
+<p>AR-Adapter-Wrapper um <code>OSCAT::Basic::POUs::Engineering::Control::FT_DERIV</code>. <code>K</code> (Ableitungsfaktor, Default 1.0) und <code>run</code> (Berechnung aktiv, Default TRUE) sind Klartext-<code>InputVars</code> auf diesem Wrapper. Ein explizites <code>REQ</code>-EventInput (mit <code>With K</code> und <code>With run</code>) erlaubt den manuellen/periodischen Aufruf zusaetzlich zum automatischen Ausloesen ueber <code>AR_IN.E1</code> (IEC 61499 - With-Verknuepfung fuer zuverlaessiges Einlesen der Parameter).</p>
 
 <h3>Reine Adapter-Grenze</h3>
 
@@ -92,7 +92,7 @@
 
 <h2>🇬🇧 English</h2>
 
-<p>AR-adapter wrapper around <code>OSCAT::Basic::POUs::Engineering::Control::FT_DERIV</code>. <code>K</code> (derivation factor, default 1.0) and <code>run</code> (calculation enabled, default TRUE) are plain <code>InputVars</code> on this wrapper - no adapter needed, since both values are constant per call and not part of the data flow like <code>in</code>/<code>out</code>. A calling composition can set them via <code>Parameter</code> at instantiation, like any other FB.</p>
+<p>AR-adapter wrapper around <code>OSCAT::Basic::POUs::Engineering::Control::FT_DERIV</code>. <code>K</code> (derivation factor, default 1.0) and <code>run</code> (calculation enabled, default TRUE) are plain <code>InputVars</code> on this wrapper. An explicit <code>REQ</code> event input (with <code>With K</code> and <code>With run</code> bindings) enables manual or periodic execution in addition to automatic triggering via <code>AR_IN.E1</code> (per IEC 61499, binding input variables via With for reliable reading).</p>
 
 <h3>Pure adapter boundary</h3>
 

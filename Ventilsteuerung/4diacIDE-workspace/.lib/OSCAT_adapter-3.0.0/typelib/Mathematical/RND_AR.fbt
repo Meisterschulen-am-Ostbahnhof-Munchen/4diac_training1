@@ -47,7 +47,7 @@
 
 <h2>🇩🇪 Deutsch</h2>
 
-<p>AR-Adapter-Wrapper um <code>OSCAT::Basic::POUs::Mathematical::RND</code> (rundet <code>X</code> auf <code>N</code> signifikante Stellen, nicht Nachkommastellen). <code>N</code> ist ein Klartext-<code>InputVar</code> (Default 3) - kein Adapter noetig, da der Wert pro Aufruf konstant ist und per <code>Parameter</code> von einer aufrufenden Komposition ueberschrieben werden kann.</p>
+<p>AR-Adapter-Wrapper um <code>OSCAT::Basic::POUs::Mathematical::RND</code> (rundet <code>X</code> auf <code>N</code> signifikante Stellen, nicht Nachkommastellen). <code>N</code> ist als Klartext-<code>InputVar</code> (Default 3) deklariert. Ein explizites <code>REQ</code>-EventInput (mit <code>With N</code>) erlaubt den manuellen/periodischen Aufruf zusaetzlich zum automatischen Ausloesen ueber <code>AR_IN.E1</code> (IEC 61499 - With-Verknuepfung fuer zuverlaessiges Einlesen der Parameter).</p>
 
 <h3>Reine Adapter-Grenze</h3>
 
@@ -64,7 +64,7 @@
 
 <h2>🇬🇧 English</h2>
 
-<p>AR-adapter wrapper around <code>OSCAT::Basic::POUs::Mathematical::RND</code> (rounds <code>X</code> to <code>N</code> significant digits, not decimal places). <code>N</code> is a plain <code>InputVar</code> (default 3) - no adapter needed since the value is constant per call and can be overridden via <code>Parameter</code>.</p>
+<p>AR-adapter wrapper around <code>OSCAT::Basic::POUs::Mathematical::RND</code> (rounds <code>X</code> to <code>N</code> significant digits, not decimal places). <code>N</code> is a plain <code>InputVar</code> (default 3). An explicit <code>REQ</code> event input (with <code>With N</code> binding) enables manual or periodic execution in addition to automatic triggering via <code>AR_IN.E1</code> (per IEC 61499, binding input variables via With for reliable reading).</p>
 
 <h3>Pure adapter boundary</h3>
 
