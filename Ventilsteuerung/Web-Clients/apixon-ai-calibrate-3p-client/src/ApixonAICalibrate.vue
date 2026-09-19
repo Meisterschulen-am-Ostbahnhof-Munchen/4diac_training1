@@ -24,9 +24,9 @@
     <section>
       <div class="scope-header">
         <h2>Analog-Eingänge (Rohwert 0-4095 / kalibrierter Wert)</h2>
-        <label class="scope-window-label">
+        <label class="scope-window-label" for="scope-window-3p">
           Oszi-Zeitfenster:
-          <select v-model.number="scopeWindowSec">
+          <select id="scope-window-3p" v-model.number="scopeWindowSec">
             <option :value="5">5 s</option>
             <option :value="10">10 s</option>
             <option :value="30">30 s</option>
@@ -58,25 +58,25 @@
           </div>
           <div class="ref-grid">
             <div class="ref-item">
-              <label>MIN_REF</label>
+              <label :for="`min-ref-${n}`">MIN_REF</label>
               <div class="ref-item-row">
-                <input v-model="minRefInput[n - 1]" class="ref-input" :disabled="!connected" />
+                <input :id="`min-ref-${n}`" v-model="minRefInput[n - 1]" class="ref-input" :disabled="!connected" />
                 <button class="ref-btn" :disabled="!connected" @click="writeRefValue(n, 'MINREF')">Übernehmen</button>
               </div>
               <span class="ref-live">aktuell: {{ minRefLive[n - 1].toFixed(1) }}</span>
             </div>
             <div class="ref-item">
-              <label>MID_REF</label>
+              <label :for="`mid-ref-${n}`">MID_REF</label>
               <div class="ref-item-row">
-                <input v-model="midRefInput[n - 1]" class="ref-input" :disabled="!connected" />
+                <input :id="`mid-ref-${n}`" v-model="midRefInput[n - 1]" class="ref-input" :disabled="!connected" />
                 <button class="ref-btn" :disabled="!connected" @click="writeRefValue(n, 'MIDREF')">Übernehmen</button>
               </div>
               <span class="ref-live">aktuell: {{ midRefLive[n - 1].toFixed(1) }}</span>
             </div>
             <div class="ref-item">
-              <label>MAX_REF</label>
+              <label :for="`max-ref-${n}`">MAX_REF</label>
               <div class="ref-item-row">
-                <input v-model="maxRefInput[n - 1]" class="ref-input" :disabled="!connected" />
+                <input :id="`max-ref-${n}`" v-model="maxRefInput[n - 1]" class="ref-input" :disabled="!connected" />
                 <button class="ref-btn" :disabled="!connected" @click="writeRefValue(n, 'MAXREF')">Übernehmen</button>
               </div>
               <span class="ref-live">aktuell: {{ maxRefLive[n - 1].toFixed(1) }}</span>

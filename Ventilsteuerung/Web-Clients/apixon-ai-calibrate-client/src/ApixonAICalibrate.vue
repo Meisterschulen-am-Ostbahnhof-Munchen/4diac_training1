@@ -23,9 +23,9 @@
     <section>
       <div class="scope-header">
         <h2>Analog-Eingänge (Rohwert 0-4095 / kalibrierter Wert)</h2>
-        <label class="scope-window-label">
+        <label class="scope-window-label" for="scope-window-2p">
           Oszi-Zeitfenster:
-          <select v-model.number="scopeWindowSec">
+          <select id="scope-window-2p" v-model.number="scopeWindowSec">
             <option :value="5">5 s</option>
             <option :value="10">10 s</option>
             <option :value="30">30 s</option>
@@ -56,17 +56,17 @@
           </div>
           <div class="ref-grid">
             <div class="ref-item">
-              <label>Y_Offset</label>
+              <label :for="`y-offset-${n}`">Y_Offset</label>
               <div class="ref-item-row">
-                <input v-model="yOffsetInput[n - 1]" class="ref-input" :disabled="!connected" />
+                <input :id="`y-offset-${n}`" v-model="yOffsetInput[n - 1]" class="ref-input" :disabled="!connected" />
                 <button class="ref-btn" :disabled="!connected" @click="writeYRef(n, 'ZERO')">Übernehmen</button>
               </div>
               <span class="ref-live">aktuell: {{ yOffsetLive[n - 1].toFixed(1) }}</span>
             </div>
             <div class="ref-item">
-              <label>Y_Scale</label>
+              <label :for="`y-scale-${n}`">Y_Scale</label>
               <div class="ref-item-row">
-                <input v-model="yScaleInput[n - 1]" class="ref-input" :disabled="!connected" />
+                <input :id="`y-scale-${n}`" v-model="yScaleInput[n - 1]" class="ref-input" :disabled="!connected" />
                 <button class="ref-btn" :disabled="!connected" @click="writeYRef(n, 'SPAN')">Übernehmen</button>
               </div>
               <span class="ref-live">aktuell: {{ yScaleLive[n - 1].toFixed(1) }}</span>
