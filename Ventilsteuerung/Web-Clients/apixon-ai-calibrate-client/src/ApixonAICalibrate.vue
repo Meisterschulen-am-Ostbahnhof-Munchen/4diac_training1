@@ -57,13 +57,17 @@
           <div class="ref-grid">
             <div class="ref-item">
               <label>Y_Offset</label>
-              <input v-model="yOffsetInput[n - 1]" class="ref-input" :disabled="!connected" />
-              <button class="ref-btn" :disabled="!connected" @click="writeYRef(n, 'ZERO')">Übernehmen</button>
+              <div class="ref-item-row">
+                <input v-model="yOffsetInput[n - 1]" class="ref-input" :disabled="!connected" />
+                <button class="ref-btn" :disabled="!connected" @click="writeYRef(n, 'ZERO')">Übernehmen</button>
+              </div>
             </div>
             <div class="ref-item">
               <label>Y_Scale</label>
-              <input v-model="yScaleInput[n - 1]" class="ref-input" :disabled="!connected" />
-              <button class="ref-btn" :disabled="!connected" @click="writeYRef(n, 'SPAN')">Übernehmen</button>
+              <div class="ref-item-row">
+                <input v-model="yScaleInput[n - 1]" class="ref-input" :disabled="!connected" />
+                <button class="ref-btn" :disabled="!connected" @click="writeYRef(n, 'SPAN')">Übernehmen</button>
+              </div>
             </div>
           </div>
         </div>
@@ -707,19 +711,27 @@ span {
 
 .ref-item {
   display: flex;
-  align-items: center;
-  gap: 0.3rem;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 0.15rem;
 }
 
 .ref-item label {
   font-size: 0.65rem;
   font-weight: 600;
   color: #aaa;
-  min-width: 3.5rem;
+}
+
+.ref-item-row {
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
 }
 
 .ref-input {
-  width: 3.5rem;
+  flex: 1;
+  min-width: 0;
+  width: auto;
   padding: 0.15rem 0.3rem;
   border-radius: 4px;
   border: 1px solid #444;
@@ -729,10 +741,12 @@ span {
 }
 
 .ref-btn {
+  flex-shrink: 0;
   padding: 0.15rem 0.4rem;
   font-size: 0.65rem;
   background: #2a2a3e;
   border: 1px solid #444;
+  white-space: nowrap;
 }
 .ref-btn:hover:not(:disabled) { background: #3f51b5; }
 .ref-btn:disabled { opacity: 0.4; cursor: not-allowed; }
