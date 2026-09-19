@@ -440,9 +440,13 @@ async function triggerCalibrate(n: number, which: 'CO' | 'CS') {
 async function writeYRef(n: number, which: 'ZERO' | 'SPAN') {
   if (!session) return
   const inputArr = which === 'ZERO' ? yOffsetInput.value : yScaleInput.value
-  const raw = inputArr[n - 1].replace(',', '.')
+  const raw = inputArr[n - 1].trim().replace(',', '.')
+  if (raw === '') return
   const val = Number(raw)
-  if (!Number.isFinite(val)) return
+  if (!Number.isFinite(val) || val < -100 || val > 100) {
+    console.error(`AI${n} Y_${which === 'ZERO' ? 'Offset' : 'Scale'}: Wert ${raw} ausserhalb -100..100 (physikalisch)`)
+    return
+  }
   try {
     const wv = new WriteValue({
       nodeId: coerceNodeId(`ns=1;s=AIC_I${n}_${which}_EXT`),

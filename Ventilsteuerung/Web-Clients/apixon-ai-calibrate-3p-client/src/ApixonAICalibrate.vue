@@ -467,9 +467,13 @@ async function writeRefValue(n: number, which: 'MINREF' | 'MIDREF' | 'MAXREF') {
   if (!session) return
   const inputArr =
     which === 'MINREF' ? minRefInput.value : which === 'MIDREF' ? midRefInput.value : maxRefInput.value
-  const raw = inputArr[n - 1].replace(',', '.')
+  const raw = inputArr[n - 1].trim().replace(',', '.')
+  if (raw === '') return
   const val = Number(raw)
-  if (!Number.isFinite(val)) return
+  if (!Number.isFinite(val) || val < -100 || val > 100) {
+    console.error(`AI${n} ${which}: Wert ${raw} ausserhalb -100..100 (physikalisch)`)
+    return
+  }
   try {
     const wv = new WriteValue({
       nodeId: coerceNodeId(`ns=1;s=AIC_I${n}_${which}_EXT`),
