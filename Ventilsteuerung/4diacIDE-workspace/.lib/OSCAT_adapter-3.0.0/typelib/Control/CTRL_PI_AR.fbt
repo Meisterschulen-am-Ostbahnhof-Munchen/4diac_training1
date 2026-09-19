@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<FBType Name="CTRL_PI_AR" Comment="AR-Adapter-Wrapper um OSCAT CTRL_PI - bruckt zwischen adapter und OSCAT PI-Regler. Istwert (AR_ACT), Sollwert (SET) und Hand-Umschaltung (AX_MAN) als Adapter, Reglerparameter als InputVars">
+<FBType Name="CTRL_PI_AR" Comment="AR-Adapter-Wrapper um OSCAT CTRL_PI - bruckt zwischen adapter und OSCAT PI-Regler. Istwert, Sollwert, Hand-Umschaltung, Handwert und Reglerparameter als Adapter, Rest an REQ">
 	<Identification Standard="61499-2" Description="Copyright (c) 2026 Meisterschulen am Ostbahnhof  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0">
 	</Identification>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.2" Author="Franz Höpfinger" Date="2026-09-19" Remarks="Bugfix: REQ hatte keine With-Verknuepfung zu SUP/OFS/LL/LH (IEC 61499 - ungebundene Vars werden nicht zuverlaessig gelesen), jetzt ergaenzt, gespiegelt vom inneren CTRL_PI. M_I/KP/KI von InputVars auf AR-Adapter-Sockets umgestellt (Konsistenz mit AR_ACT/SET).">
+	</VersionInfo>
 	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.1" Author="Franz Höpfinger" Date="2026-09-15" Remarks="INIT/INITO entfernt (CTRL_PI kennt kein INIT, nur REQ/RST) - stattdessen echtes REQ-EventInput/CNF-EventOutput ergaenzt, direkt auf CTRL_PI.REQ/CNF gemappt. SET von InputVar auf AR-Socket umgestellt (dynamisch berechneter Sollwert, wie AR_ACT) - SET.E1 triggert CTRL_PI.REQ zusaetzlich zu AR_ACT.E1/AX_MAN.E1.">
 	</VersionInfo>
 	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2026-09-12" Remarks="Initial implementation of CTRL_PI_AR wrapper FB">
@@ -11,6 +13,10 @@
 	<InterfaceList>
 		<EventInputs>
 			<Event Name="REQ" Type="Event" Comment="Explizite Ausfuehrungsanforderung (durchgereicht an CTRL_PI.REQ)">
+				<With Var="SUP"/>
+				<With Var="OFS"/>
+				<With Var="LL"/>
+				<With Var="LH"/>
 			</Event>
 			<Event Name="RST" Type="Event" Comment="Reset des Integrators (durchgereicht an CTRL_PI.RST)">
 			</Event>
@@ -22,9 +28,6 @@
 		<InputVars>
 			<VarDeclaration Name="SUP" Type="REAL" Comment="Rauschunterdrueckung (REAL)" InitialValue="0.0"/>
 			<VarDeclaration Name="OFS" Type="REAL" Comment="Offset (REAL)" InitialValue="0.0"/>
-			<VarDeclaration Name="M_I" Type="REAL" Comment="Handwert (REAL)" InitialValue="0.0"/>
-			<VarDeclaration Name="KP" Type="REAL" Comment="Proportionalbeiwert (REAL)" InitialValue="1.0"/>
-			<VarDeclaration Name="KI" Type="REAL" Comment="Integralbeiwert (REAL)" InitialValue="1.0"/>
 			<VarDeclaration Name="LL" Type="REAL" Comment="Unterer Grenzwert (REAL)" InitialValue="-1000.0"/>
 			<VarDeclaration Name="LH" Type="REAL" Comment="Oberer Grenzwert (REAL)" InitialValue="1000.0"/>
 		</InputVars>
@@ -32,6 +35,9 @@
 			<AdapterDeclaration Name="AR_ACT" Type="adapter::types::unidirectional::AR" Comment="Istwert (REAL)" x="-1400" y="-1400"/>
 			<AdapterDeclaration Name="SET" Type="adapter::types::unidirectional::AR" Comment="Sollwert (REAL, dynamisch berechnet)" x="-1400" y="-900"/>
 			<AdapterDeclaration Name="AX_MAN" Type="adapter::types::unidirectional::AX" Comment="Handbetrieb Umschaltung (BOOL/Event, optional)" x="-1400" y="-400"/>
+			<AdapterDeclaration Name="M_I" Type="adapter::types::unidirectional::AR" Comment="Handwert (REAL, dynamisch)" x="-1400" y="100"/>
+			<AdapterDeclaration Name="KP" Type="adapter::types::unidirectional::AR" Comment="Proportionalbeiwert (REAL, dynamisch)" x="-1400" y="600"/>
+			<AdapterDeclaration Name="KI" Type="adapter::types::unidirectional::AR" Comment="Integralbeiwert (REAL, dynamisch)" x="-1400" y="1100"/>
 		</Sockets>
 		<Plugs>
 			<AdapterDeclaration Name="AR_Y" Type="adapter::types::unidirectional::AR" Comment="Stellwert (REAL)" x="5300" y="200"/>
@@ -45,31 +51,34 @@
 		<FB Name="E_D_FF_ANY" Type="iec61499::events::E_D_FF_ANY_3" x="2400" y="200">
 		</FB>
 		<EventConnections>
-			<Connection Source="REQ" Destination="CTRL_PI.REQ" dx1="5626.67"/>
-			<Connection Source="RST" Destination="CTRL_PI.RST" dx1="5593.33"/>
-			<Connection Source="AR_ACT.E1" Destination="CTRL_PI.REQ" dx1="1500"/>
-			<Connection Source="SET.E1" Destination="CTRL_PI.REQ" dx1="1500"/>
-			<Connection Source="AX_MAN.E1" Destination="CTRL_PI.REQ" dx1="1500"/>
-			<Connection Source="CTRL_PI.CNF" Destination="CNF" dx1="453.33"/>
-			<Connection Source="CTRL_PI.CNF" Destination="E_D_FF_ANY.CLK" dx1="453.33"/>
+			<Connection Source="REQ" Destination="CTRL_PI.REQ" dx1="5513.33"/>
+			<Connection Source="RST" Destination="CTRL_PI.RST" dx1="5413.33"/>
+			<Connection Source="AR_ACT.E1" Destination="CTRL_PI.REQ" dx1="1386.67"/>
+			<Connection Source="SET.E1" Destination="CTRL_PI.REQ" dx1="1386.67"/>
+			<Connection Source="AX_MAN.E1" Destination="CTRL_PI.REQ" dx1="1386.67"/>
+			<Connection Source="M_I.E1" Destination="CTRL_PI.REQ" dx1="1320"/>
+			<Connection Source="KP.E1" Destination="CTRL_PI.REQ" dx1="1320"/>
+			<Connection Source="KI.E1" Destination="CTRL_PI.REQ" dx1="1320"/>
+			<Connection Source="CTRL_PI.CNF" Destination="CNF" dx1="473.33"/>
+			<Connection Source="CTRL_PI.CNF" Destination="E_D_FF_ANY.CLK" dx1="473.33"/>
 			<Connection Source="E_D_FF_ANY.EO" Destination="AR_Y.E1"/>
 			<Connection Source="E_D_FF_ANY.EO" Destination="AR_DIFF.E1" dx1="906.67"/>
 			<Connection Source="E_D_FF_ANY.EO" Destination="AB_LIM.E1" dx1="906.67"/>
 		</EventConnections>
 		<DataConnections>
-			<Connection Source="AR_ACT.D1" Destination="CTRL_PI.ACT" dx1="1433.33"/>
-			<Connection Source="SET.D1" Destination="CTRL_PI.SET" dx1="1400"/>
-			<Connection Source="SUP" Destination="CTRL_PI.SUP" dx1="5493.33"/>
-			<Connection Source="OFS" Destination="CTRL_PI.OFS" dx1="5460"/>
-			<Connection Source="M_I" Destination="CTRL_PI.M_I" dx1="5426.67"/>
+			<Connection Source="AR_ACT.D1" Destination="CTRL_PI.ACT" dx1="1253.33"/>
+			<Connection Source="SET.D1" Destination="CTRL_PI.SET" dx1="1220"/>
+			<Connection Source="SUP" Destination="CTRL_PI.SUP" dx1="5313.33"/>
+			<Connection Source="OFS" Destination="CTRL_PI.OFS" dx1="5280"/>
+			<Connection Source="M_I.D1" Destination="CTRL_PI.M_I" dx1="1120"/>
 			<Connection Source="AX_MAN.D1" Destination="CTRL_PI.MAN" dx1="493.33"/>
-			<Connection Source="KP" Destination="CTRL_PI.KP" dx1="5393.33"/>
-			<Connection Source="KI" Destination="CTRL_PI.KI" dx1="5360"/>
-			<Connection Source="LL" Destination="CTRL_PI.LL" dx1="1873.33"/>
-			<Connection Source="LH" Destination="CTRL_PI.LH" dx1="1840"/>
-			<Connection Source="CTRL_PI.Y" Destination="E_D_FF_ANY.D1" dx1="453.33"/>
-			<Connection Source="CTRL_PI.DIFF" Destination="E_D_FF_ANY.D2" dx1="453.33"/>
-			<Connection Source="CTRL_PI.LIM" Destination="E_D_FF_ANY.D3" dx1="453.33"/>
+			<Connection Source="KP.D1" Destination="CTRL_PI.KP" dx1="1120"/>
+			<Connection Source="KI.D1" Destination="CTRL_PI.KI" dx1="1353.33"/>
+			<Connection Source="LL" Destination="CTRL_PI.LL" dx1="5213.33"/>
+			<Connection Source="LH" Destination="CTRL_PI.LH" dx1="5180"/>
+			<Connection Source="CTRL_PI.Y" Destination="E_D_FF_ANY.D1" dx1="473.33"/>
+			<Connection Source="CTRL_PI.DIFF" Destination="E_D_FF_ANY.D2" dx1="473.33"/>
+			<Connection Source="CTRL_PI.LIM" Destination="E_D_FF_ANY.D3" dx1="473.33"/>
 			<Connection Source="E_D_FF_ANY.Q1" Destination="AR_Y.D1"/>
 			<Connection Source="E_D_FF_ANY.Q2" Destination="AR_DIFF.D1" dx1="940"/>
 			<Connection Source="E_D_FF_ANY.Q3" Destination="AB_LIM.D1" dx1="873.33"/>
@@ -80,7 +89,7 @@
 
 <h2>🇩🇪 Deutsch</h2>
 
-<p>AR-Adapter-Wrapper um <code>OSCAT::Basic::POUs::Engineering::Control::CTRL_PI</code>. Istwert (<code>AR_ACT</code>), Sollwert (<code>SET</code>) und die optional umschaltbare Handbetriebssteuerung (<code>AX_MAN</code>) sind als Adapter-Sockets ausgefuehrt - jeder loest bei Ankunft eines neuen Werts <code>CTRL_PI.REQ</code> aus. Zusaetzlich ein explizites <code>REQ</code>-Event fuer periodischen/manuellen Aufruf ohne neuen Adapterwert. Handwert (<code>M_I</code>), Grenzen (<code>LL</code>/<code>LH</code>) und Reglerparameter (<code>KP</code>/<code>KI</code>) werden als Klartext-<code>InputVars</code> konfiguriert.</p>
+<p>AR-Adapter-Wrapper um <code>OSCAT::Basic::POUs::Engineering::Control::CTRL_PI</code>. Istwert (<code>AR_ACT</code>), Sollwert (<code>SET</code>), Handbetrieb-Umschaltung (<code>AX_MAN</code>), Handwert (<code>M_I</code>) und Reglerparameter (<code>KP</code>/<code>KI</code>) sind als Adapter-Sockets ausgefuehrt - jeder loest bei Ankunft eines neuen Werts <code>CTRL_PI.REQ</code> aus. Zusaetzlich ein explizites <code>REQ</code>-Event fuer periodischen/manuellen Aufruf ohne neuen Adapterwert; SUP/OFS/LL/LH sind dafuer als InputVars mit With-Verknuepfung an REQ deklariert (IEC 61499 - eine InputVar ohne With-Verknuepfung zum ausloesenden Event wird nicht zuverlaessig gelesen).</p>
 
 <h3>Reine Adapter-Grenze</h3>
 
@@ -88,6 +97,8 @@
 	<li><strong>AR_ACT</strong> (Socket, <code>AR</code>): Istwert (REAL, z. B. von <code>FT_DERIV_10_AR.AR_OUT</code>)</li>
 	<li><strong>SET</strong> (Socket, <code>AR</code>): Sollwert (REAL, dynamisch berechnet, z. B. Fahrgeschwindigkeit*Voreilung)</li>
 	<li><strong>AX_MAN</strong> (Socket, <code>AX</code>): Handbetrieb-Umschaltung (optional, z. B. von <code>AX_T_FF.Q</code>)</li>
+	<li><strong>M_I</strong> (Socket, <code>AR</code>): Handwert (REAL, dynamisch)</li>
+	<li><strong>KP</strong>/<strong>KI</strong> (Socket, <code>AR</code>): Reglerparameter (REAL, dynamisch)</li>
 	<li><strong>AR_Y</strong> (Plug, <code>AR</code>): Stellwert (REAL, z. B. zur Weitergabe an <code>AR_TO_AD_NUM.AR_IN</code>)</li>
 	<li><strong>AR_DIFF</strong> (Plug, <code>AR</code>): Regelabweichung (<code>DIFF = SET - ACT</code>, REAL)</li>
 	<li><strong>AB_LIM</strong> (Plug, <code>AB</code>): Begrenzung aktiv Flag (<code>LIM</code>, BOOL)</li>
@@ -95,6 +106,6 @@
 
 <h2>🇬🇧 English</h2>
 
-<p>AR-adapter wrapper around <code>OSCAT::Basic::POUs::Engineering::Control::CTRL_PI</code>. Actual value (<code>AR_ACT</code>), set point (<code>SET</code>) and optional manual mode switch (<code>AX_MAN</code>) are adapter sockets, each triggering <code>CTRL_PI.REQ</code> on arrival; an explicit <code>REQ</code> event is also available for periodic/manual invocation. Control output (<code>AR_Y</code>), control error (<code>AR_DIFF</code>) and limit flag (<code>AB_LIM</code>) are adapter plugs.</p>
+<p>AR-adapter wrapper around <code>OSCAT::Basic::POUs::Engineering::Control::CTRL_PI</code>. Actual value (<code>AR_ACT</code>), set point (<code>SET</code>), manual mode switch (<code>AX_MAN</code>), manual value (<code>M_I</code>) and controller gains (<code>KP</code>/<code>KI</code>) are adapter sockets, each triggering <code>CTRL_PI.REQ</code> on arrival; an explicit <code>REQ</code> event is also available for periodic/manual invocation, with SUP/OFS/LL/LH bound to it via With (per IEC 61499, an InputVar not bound via With to its triggering event is not reliably read). Control output (<code>AR_Y</code>), control error (<code>AR_DIFF</code>) and limit flag (<code>AB_LIM</code>) are adapter plugs.</p>
 ]]></Attribute>
 </FBType>
