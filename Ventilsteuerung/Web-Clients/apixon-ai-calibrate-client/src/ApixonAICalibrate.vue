@@ -72,6 +72,10 @@
               <span class="ref-live">aktuell: {{ yScaleLive[n - 1].toFixed(1) }}</span>
             </div>
           </div>
+          <div class="raw-cal-grid">
+            <span class="raw-cal-item">Zero-Raw: {{ zeroRaw[n - 1] }}</span>
+            <span class="raw-cal-item">Span-Raw: {{ spanRaw[n - 1] }}</span>
+          </div>
         </div>
       </div>
     </section>
@@ -138,6 +142,12 @@ const yScaleInput = ref<string[]>(new Array(8).fill(''))
  * den writeYRef beschreibt) - betankt die Felder neben den Eingaben. */
 const yOffsetLive = ref<number[]>(new Array(8).fill(0))
 const yScaleLive = ref<number[]>(new Array(8).fill(0))
+
+/* Rohwert (DWORD 0-4095) am ZERO- bzw. SPAN-Kalibrierpunkt, reine Diagnose-Anzeige -
+ * gespeist von AR2_TAP_TO_AR in logiBUS_AI_Calibrate_IDA_OPC.SUB (AIC_I{n}_ZERO_RAW/
+ * _SPAN_RAW, ACTION=PUBLISH), Persistenz-/Restore-Kette selbst unveraendert. */
+const zeroRaw = ref<number[]>(new Array(8).fill(0))
+const spanRaw = ref<number[]>(new Array(8).fill(0))
 
 interface ScopeSample { t: number; v: number }
 const scopeWindowSec = ref(10)
@@ -262,6 +272,8 @@ function handleLost() {
   outputs.value.fill(false)
   yOffsetLive.value.fill(0)
   yScaleLive.value.fill(0)
+  zeroRaw.value.fill(0)
+  spanRaw.value.fill(0)
   tick.value = '–'
   if (scopeRafId !== null) {
     cancelAnimationFrame(scopeRafId)
@@ -355,6 +367,34 @@ async function connect() {
     )
     ySpanGroup.on('changed', (_item: any, dataValue: any, index: number) => {
       yScaleLive.value[index] = Number(dataValue.value?.value ?? 0)
+    })
+
+    /* Monitor the Rohwert-am-ZERO-Kalibrierpunkt AIC_I1_ZERO_RAW-AIC_I8_ZERO_RAW (DWORD, read-only). */
+    const zeroRawItems = Array.from({ length: 8 }, (_, i) => ({
+      nodeId: coerceNodeId(`ns=1;s=AIC_I${i + 1}_ZERO_RAW`),
+      attributeId: AttributeIds.Value,
+    }))
+    const zeroRawGroup = await subscription.monitorItemsP(
+      zeroRawItems,
+      { samplingInterval: 100, discardOldest: true, queueSize: 2 },
+      TimestampsToReturn.Neither
+    )
+    zeroRawGroup.on('changed', (_item: any, dataValue: any, index: number) => {
+      zeroRaw.value[index] = Number(dataValue.value?.value ?? 0)
+    })
+
+    /* Monitor the Rohwert-am-SPAN-Kalibrierpunkt AIC_I1_SPAN_RAW-AIC_I8_SPAN_RAW (DWORD, read-only). */
+    const spanRawItems = Array.from({ length: 8 }, (_, i) => ({
+      nodeId: coerceNodeId(`ns=1;s=AIC_I${i + 1}_SPAN_RAW`),
+      attributeId: AttributeIds.Value,
+    }))
+    const spanRawGroup = await subscription.monitorItemsP(
+      spanRawItems,
+      { samplingInterval: 100, discardOldest: true, queueSize: 2 },
+      TimestampsToReturn.Neither
+    )
+    spanRawGroup.on('changed', (_item: any, dataValue: any, index: number) => {
+      spanRaw.value[index] = Number(dataValue.value?.value ?? 0)
     })
 
     /* Monitor all outputs Q1-Q12 (reflect actual hardware state, unveraendert wie im AI-Beispiel) */
@@ -472,6 +512,8 @@ async function disconnect() {
   outputs.value.fill(false)
   yOffsetLive.value.fill(0)
   yScaleLive.value.fill(0)
+  zeroRaw.value.fill(0)
+  spanRaw.value.fill(0)
   if (scopeRafId !== null) {
     cancelAnimationFrame(scopeRafId)
     scopeRafId = null
@@ -797,6 +839,20 @@ span {
 .ref-btn:disabled { opacity: 0.4; cursor: not-allowed; }
 
 .ref-live {
+  font-size: 0.65rem;
+  color: #777;
+  font-variant-numeric: tabular-nums;
+}
+
+.raw-cal-grid {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  gap: 0.4rem;
+  margin-top: 0.3rem;
+}
+
+.raw-cal-item {
   font-size: 0.65rem;
   color: #777;
   font-variant-numeric: tabular-nums;

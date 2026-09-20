@@ -16,6 +16,8 @@
 	</VersionInfo>
 	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.6" Author="Franz Höpfinger" Date="2026-09-18" Remarks="Franz: 'kann eine SUB sein' - logiBUS_AI_IDA+AD_SPLIT_2+AD_PUBLISH_RAW+AD_TO_AUDI+AUDI_SPLIT_2+Q_NumericValue_RAW+AUDI_TO_AR durch neue SubApp logiBUS_AI_Raw_VT_AR_OPC ersetzt, AR_SPLIT_2+AR_PUBLISH_CAL+Q_NumericValue_CAL durch die bereits bestehende SubApp AR_TO_Q_Publish_OPC (dort um optionales INITO ergaenzt) - beide Muster kamen identisch auch in logiBUS_AI_Calibrate_3P_IDA_OPC vor.">
 	</VersionInfo>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.7" Author="Franz Höpfinger" Date="2026-09-20" Remarks="Rohwert-Anzeige an den Kalibrierpunkten (Zero-Raw/Span-Raw) ergaenzt, Franz: 'im Web-Panel und im IOP die Roh-Werte mit anzeigen'. CALIBRATE.X_LOW/X_HIGH (AR2, bisher nur an INI_X_LOW/INI_X_HIGH angeschlossen) werden ueber neue TapZeroRaw/TapSpanRaw (MyLib::sys::AR2_TAP_TO_AR) abgezapft, ohne die bestehende Persistenz-/Restore-Kette zu aendern, und ueber neue PublishZeroRaw/PublishSpanRaw (MyLib::sys::AR_TO_Q_Publish_OPC) als reine Nur-Lese-Anzeige (VT CNumberVariable + OPC-UA Publish) exponiert. Neue InputVars stObjZeroRaw/stObjSpanRaw (VT-Objekt) + ID_ZERO_RAW_WRITE/ID_SPAN_RAW_WRITE (OPC-UA-Adresse).">
+	</VersionInfo>
 	<CompilerInfo packageName="MyLib::sys">
 		<Import declaration="isobus::UT::Q::const::IDs::ID_NULL"/>
 		<Import declaration="logiBUS::io::AI::logiBUS_AI"/>
@@ -40,6 +42,10 @@
 			<VarDeclaration Name="ID_ZERO_WRITE" Type="WSTRING" Comment="Remote-Echo-Adresse ZERO-Referenzwert (REAL, ACTION=PUBLISH)"/>
 			<VarDeclaration Name="ID_SPAN_READ" Type="WSTRING" Comment="Remote-Subscribe-Adresse SPAN-Referenzwert (REAL, ACTION=SUBSCRIBE)"/>
 			<VarDeclaration Name="ID_SPAN_WRITE" Type="WSTRING" Comment="Remote-Echo-Adresse SPAN-Referenzwert (REAL, ACTION=PUBLISH)"/>
+			<VarDeclaration Name="stObjZeroRaw" Type="logiBUS::utils::conversion::phys::NumericObjectPool_S" Comment="Object ID + Scale/Offset/Decimals CNumberVariable (Rohwert am ZERO-Kalibrierpunkt, reine Diagnose-Anzeige)" InitialValue="(u16ObjId := ID_NULL, r32Scale := 1.0, i32Offset := 0, u8Decimals := 1)"/>
+			<VarDeclaration Name="stObjSpanRaw" Type="logiBUS::utils::conversion::phys::NumericObjectPool_S" Comment="Object ID + Scale/Offset/Decimals CNumberVariable (Rohwert am SPAN-Kalibrierpunkt, reine Diagnose-Anzeige)" InitialValue="(u16ObjId := ID_NULL, r32Scale := 1.0, i32Offset := 0, u8Decimals := 1)"/>
+			<VarDeclaration Name="ID_ZERO_RAW_WRITE" Type="WSTRING" Comment="Rohwert-am-ZERO-Kalibrierpunkt-Publish-Adresse (REAL, ACTION=PUBLISH)"/>
+			<VarDeclaration Name="ID_SPAN_RAW_WRITE" Type="WSTRING" Comment="Rohwert-am-SPAN-Kalibrierpunkt-Publish-Adresse (REAL, ACTION=PUBLISH)"/>
 		</InputVars>
 	</SubAppInterfaceList>
 	<SubAppNetwork>
@@ -55,31 +61,39 @@
 		</SubApp>
 		<SubApp Name="TriggerCS" Type="MyLib::sys::Button_Method_IE" x="-2500" y="0">
 		</SubApp>
-		<FB Name="INI_X_LOW" Type="eclipse4diac::storage::INI_AR2" x="2200" y="600">
+		<FB Name="INI_X_LOW" Type="eclipse4diac::storage::INI_AR2" x="4500" y="1100">
 			<Parameter Name="QI" Value="TRUE"/>
 			<Parameter Name="SETM" Value="TRUE"/>
 			<Parameter Name="KEY" Value="'X_LOW'"/>
 			<Parameter Name="DEFAULT_VALUE" Value="REAL#0.0"/>
 		</FB>
-		<FB Name="INI_X_HIGH" Type="eclipse4diac::storage::INI_AR2" x="4200" y="700">
+		<FB Name="INI_X_HIGH" Type="eclipse4diac::storage::INI_AR2" x="6500" y="1200">
 			<Parameter Name="QI" Value="TRUE"/>
 			<Parameter Name="SETM" Value="TRUE"/>
 			<Parameter Name="KEY" Value="'X_HIGH'"/>
 			<Parameter Name="DEFAULT_VALUE" Value="REAL#1.0"/>
 		</FB>
-		<FB Name="INI_LOW_REF" Type="eclipse4diac::storage::INI_AR2" x="2200" y="1700">
+		<FB Name="INI_LOW_REF" Type="eclipse4diac::storage::INI_AR2" x="4500" y="2200">
 			<Parameter Name="QI" Value="TRUE"/>
 			<Parameter Name="SETM" Value="TRUE"/>
 			<Parameter Name="KEY" Value="'LOW_REF'"/>
 			<Parameter Name="DEFAULT_VALUE" Value="REAL#0.0"/>
 		</FB>
-		<FB Name="INI_HIGH_REF" Type="eclipse4diac::storage::INI_AR2" x="4200" y="1800">
+		<FB Name="INI_HIGH_REF" Type="eclipse4diac::storage::INI_AR2" x="6500" y="2300">
 			<Parameter Name="QI" Value="TRUE"/>
 			<Parameter Name="SETM" Value="TRUE"/>
 			<Parameter Name="KEY" Value="'HIGH_REF'"/>
 			<Parameter Name="DEFAULT_VALUE" Value="REAL#100.0"/>
 		</FB>
-		<SubApp Name="PublishCal" Type="MyLib::sys::AR_TO_Q_Publish_OPC" x="2200" y="-200">
+		<SubApp Name="PublishCal" Type="MyLib::sys::AR_TO_Q_Publish_OPC" x="3700" y="-1200">
+		</SubApp>
+		<SubApp Name="TapZeroRaw" Type="MyLib::sys::AR2_TAP_TO_AR" x="1800" y="1200">
+		</SubApp>
+		<SubApp Name="TapSpanRaw" Type="MyLib::sys::AR2_TAP_TO_AR" x="1800" y="1700">
+		</SubApp>
+		<SubApp Name="PublishZeroRaw" Type="MyLib::sys::AR_TO_Q_Publish_OPC" x="3700" y="-600">
+		</SubApp>
+		<SubApp Name="PublishSpanRaw" Type="MyLib::sys::AR_TO_Q_Publish_OPC" x="3700" y="0">
 		</SubApp>
 		<EventConnections>
 			<Connection Source="TriggerCO.IND" Destination="CALIBRATE.C_LOW" dx1="313.33"/>
@@ -92,7 +106,7 @@
 			<Connection Source="u16ObjId_RAWVAR" Destination="InputRaw.u16ObjId_RAWVAR" dx1="1400">
 				<Attribute Name="Visible" Value="false"/>
 			</Connection>
-			<Connection Source="stObjCal" Destination="PublishCal.stObj" dx1="1400">
+			<Connection Source="stObjCal" Destination="PublishCal.stObj" dx1="4086.67">
 				<Attribute Name="Visible" Value="false"/>
 			</Connection>
 			<Connection Source="u16ObjId_CO" Destination="TriggerCO.u16ObjId" dx1="1400">
@@ -143,11 +157,27 @@
 			<Connection Source="ID_SPAN_WRITE" Destination="Y_SCALE_LIT.ID_WRITE" dx1="1400">
 				<Attribute Name="Visible" Value="false"/>
 			</Connection>
+			<Connection Source="stObjZeroRaw" Destination="PublishZeroRaw.stObj" dx1="1400">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="ID_ZERO_RAW_WRITE" Destination="PublishZeroRaw.ID_WRITE" dx1="1400">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="stObjSpanRaw" Destination="PublishSpanRaw.stObj" dx1="1400">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="ID_SPAN_RAW_WRITE" Destination="PublishSpanRaw.ID_WRITE" dx1="1400">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
 		</DataConnections>
 		<AdapterConnections>
 			<Connection Source="InputRaw.AR_OUT" Destination="CALIBRATE.X" dx1="300"/>
-			<Connection Source="CALIBRATE.X_LOW" Destination="INI_X_LOW.VAL" dx1="580"/>
-			<Connection Source="CALIBRATE.X_HIGH" Destination="INI_X_HIGH.VAL" dx1="340"/>
+			<Connection Source="CALIBRATE.X_LOW" Destination="TapZeroRaw.AR2_IN" dx1="580"/>
+			<Connection Source="TapZeroRaw.AR2_OUT" Destination="INI_X_LOW.VAL" dx1="200"/>
+			<Connection Source="TapZeroRaw.AR_OUT" Destination="PublishZeroRaw.AR_IN" dx1="200"/>
+			<Connection Source="CALIBRATE.X_HIGH" Destination="TapSpanRaw.AR2_IN" dx1="340"/>
+			<Connection Source="TapSpanRaw.AR2_OUT" Destination="INI_X_HIGH.VAL" dx1="200"/>
+			<Connection Source="TapSpanRaw.AR_OUT" Destination="PublishSpanRaw.AR_IN" dx1="126.67"/>
 			<Connection Source="CALIBRATE.LOW_REF" Destination="INI_LOW_REF.VAL" dx1="253.33"/>
 			<Connection Source="CALIBRATE.HIGH_REF" Destination="INI_HIGH_REF.VAL" dx1="180"/>
 			<Connection Source="Y_OFFSET_LIT.VALUEO" Destination="CALIBRATE.Y_LOW" dx1="793.33"/>

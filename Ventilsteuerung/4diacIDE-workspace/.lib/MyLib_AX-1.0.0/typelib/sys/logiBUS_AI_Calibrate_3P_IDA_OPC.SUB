@@ -18,6 +18,8 @@
 	</VersionInfo>
 	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2026-09-11" Remarks="3-Punkt-Pendant zu logiBUS_AI_Calibrate_IDA_OPC (AR_CALIBRATE_3P_REF statt AR_CALIBRATE_2P_REF, 3 statt 2 Kalibrierpunkte/Tasten/Referenzwerte) - Sample fuer Sensoren mit Mittelstellung, siehe Workspace_AI_Calibrate_3P.">
 	</VersionInfo>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.8" Author="Franz Höpfinger" Date="2026-09-20" Remarks="Rohwert-Anzeige an den 3 Kalibrierpunkten (Min/Mid/Max-Raw) ergaenzt, analog zu logiBUS_AI_Calibrate_IDA_OPC v1.7 (Franz: 'im Web-Panel und im IOP die Roh-Werte mit anzeigen'). CALIBRATE.X_MIN/X_MID/X_MAX (AR2, bisher nur an INI_X_MIN/INI_X_MID/INI_X_MAX angeschlossen) werden ueber neue TapMinRaw/TapMidRaw/TapMaxRaw (MyLib::sys::AR2_TAP_TO_AR) abgezapft, ohne die bestehende Persistenz-/Restore-Kette zu aendern, und ueber neue PublishMinRaw/PublishMidRaw/PublishMaxRaw (MyLib::sys::AR_TO_Q_Publish_OPC) als reine Nur-Lese-Anzeige (VT CNumberVariable + OPC-UA Publish) exponiert. Neue InputVars stObjMinRaw/stObjMidRaw/stObjMaxRaw (VT-Objekt) + ID_MIN_RAW_WRITE/ID_MID_RAW_WRITE/ID_MAX_RAW_WRITE (OPC-UA-Adresse).">
+	</VersionInfo>
 	<CompilerInfo packageName="MyLib::sys">
 		<Import declaration="isobus::UT::Q::const::IDs::ID_NULL"/>
 		<Import declaration="logiBUS::io::AI::logiBUS_AI"/>
@@ -47,6 +49,12 @@
 			<VarDeclaration Name="ID_MIDREF_WRITE" Type="WSTRING" Comment="Remote-Echo-Adresse MID_REF-Referenzwert (REAL, ACTION=PUBLISH)"/>
 			<VarDeclaration Name="ID_MAXREF_READ" Type="WSTRING" Comment="Remote-Subscribe-Adresse MAX_REF-Referenzwert (REAL, ACTION=SUBSCRIBE)"/>
 			<VarDeclaration Name="ID_MAXREF_WRITE" Type="WSTRING" Comment="Remote-Echo-Adresse MAX_REF-Referenzwert (REAL, ACTION=PUBLISH)"/>
+			<VarDeclaration Name="stObjMinRaw" Type="logiBUS::utils::conversion::phys::NumericObjectPool_S" Comment="Object ID + Scale/Offset/Decimals CNumberVariable (Rohwert am MIN-Kalibrierpunkt, reine Diagnose-Anzeige)" InitialValue="(u16ObjId := ID_NULL, r32Scale := 1.0, i32Offset := 0, u8Decimals := 1)"/>
+			<VarDeclaration Name="stObjMidRaw" Type="logiBUS::utils::conversion::phys::NumericObjectPool_S" Comment="Object ID + Scale/Offset/Decimals CNumberVariable (Rohwert am MID-Kalibrierpunkt, reine Diagnose-Anzeige)" InitialValue="(u16ObjId := ID_NULL, r32Scale := 1.0, i32Offset := 0, u8Decimals := 1)"/>
+			<VarDeclaration Name="stObjMaxRaw" Type="logiBUS::utils::conversion::phys::NumericObjectPool_S" Comment="Object ID + Scale/Offset/Decimals CNumberVariable (Rohwert am MAX-Kalibrierpunkt, reine Diagnose-Anzeige)" InitialValue="(u16ObjId := ID_NULL, r32Scale := 1.0, i32Offset := 0, u8Decimals := 1)"/>
+			<VarDeclaration Name="ID_MIN_RAW_WRITE" Type="WSTRING" Comment="Rohwert-am-MIN-Kalibrierpunkt-Publish-Adresse (REAL, ACTION=PUBLISH)"/>
+			<VarDeclaration Name="ID_MID_RAW_WRITE" Type="WSTRING" Comment="Rohwert-am-MID-Kalibrierpunkt-Publish-Adresse (REAL, ACTION=PUBLISH)"/>
+			<VarDeclaration Name="ID_MAX_RAW_WRITE" Type="WSTRING" Comment="Rohwert-am-MAX-Kalibrierpunkt-Publish-Adresse (REAL, ACTION=PUBLISH)"/>
 		</InputVars>
 	</SubAppInterfaceList>
 	<SubAppNetwork>
@@ -66,43 +74,55 @@
 		</SubApp>
 		<SubApp Name="TriggerMAX" Type="MyLib::sys::Button_Method_IE" x="-3000" y="400">
 		</SubApp>
-		<FB Name="INI_X_MIN" Type="eclipse4diac::storage::INI_AR2" x="2600" y="700">
+		<FB Name="INI_X_MIN" Type="eclipse4diac::storage::INI_AR2" x="5600" y="800">
 			<Parameter Name="QI" Value="TRUE"/>
 			<Parameter Name="SETM" Value="TRUE"/>
 			<Parameter Name="KEY" Value="'X_MIN'"/>
 			<Parameter Name="DEFAULT_VALUE" Value="REAL#0.0"/>
 		</FB>
-		<FB Name="INI_X_MID" Type="eclipse4diac::storage::INI_AR2" x="4100" y="800">
+		<FB Name="INI_X_MID" Type="eclipse4diac::storage::INI_AR2" x="7100" y="900">
 			<Parameter Name="QI" Value="TRUE"/>
 			<Parameter Name="SETM" Value="TRUE"/>
 			<Parameter Name="KEY" Value="'X_MID'"/>
 			<Parameter Name="DEFAULT_VALUE" Value="REAL#0.5"/>
 		</FB>
-		<FB Name="INI_X_MAX" Type="eclipse4diac::storage::INI_AR2" x="5600" y="900">
+		<FB Name="INI_X_MAX" Type="eclipse4diac::storage::INI_AR2" x="8600" y="1000">
 			<Parameter Name="QI" Value="TRUE"/>
 			<Parameter Name="SETM" Value="TRUE"/>
 			<Parameter Name="KEY" Value="'X_MAX'"/>
 			<Parameter Name="DEFAULT_VALUE" Value="REAL#1.0"/>
 		</FB>
-		<FB Name="INI_MIN_REF" Type="eclipse4diac::storage::INI_AR2" x="2600" y="1900">
+		<FB Name="INI_MIN_REF" Type="eclipse4diac::storage::INI_AR2" x="5600" y="2000">
 			<Parameter Name="QI" Value="TRUE"/>
 			<Parameter Name="SETM" Value="TRUE"/>
 			<Parameter Name="KEY" Value="'MIN_REF'"/>
 			<Parameter Name="DEFAULT_VALUE" Value="REAL#-100.0"/>
 		</FB>
-		<FB Name="INI_MID_REF" Type="eclipse4diac::storage::INI_AR2" x="4100" y="2000">
+		<FB Name="INI_MID_REF" Type="eclipse4diac::storage::INI_AR2" x="7100" y="2100">
 			<Parameter Name="QI" Value="TRUE"/>
 			<Parameter Name="SETM" Value="TRUE"/>
 			<Parameter Name="KEY" Value="'MID_REF'"/>
 			<Parameter Name="DEFAULT_VALUE" Value="REAL#50.0"/>
 		</FB>
-		<FB Name="INI_MAX_REF" Type="eclipse4diac::storage::INI_AR2" x="5700" y="2100">
+		<FB Name="INI_MAX_REF" Type="eclipse4diac::storage::INI_AR2" x="8700" y="2200">
 			<Parameter Name="QI" Value="TRUE"/>
 			<Parameter Name="SETM" Value="TRUE"/>
 			<Parameter Name="KEY" Value="'MAX_REF'"/>
 			<Parameter Name="DEFAULT_VALUE" Value="REAL#100.0"/>
 		</FB>
-		<SubApp Name="PublishCal" Type="MyLib::sys::AR_TO_Q_Publish_OPC" x="2600" y="0">
+		<SubApp Name="PublishCal" Type="MyLib::sys::AR_TO_Q_Publish_OPC" x="5400" y="-1600">
+		</SubApp>
+		<SubApp Name="TapMinRaw" Type="MyLib::sys::AR2_TAP_TO_AR" x="2000" y="800">
+		</SubApp>
+		<SubApp Name="TapMidRaw" Type="MyLib::sys::AR2_TAP_TO_AR" x="2000" y="1300">
+		</SubApp>
+		<SubApp Name="TapMaxRaw" Type="MyLib::sys::AR2_TAP_TO_AR" x="2000" y="1800">
+		</SubApp>
+		<SubApp Name="PublishMinRaw" Type="MyLib::sys::AR_TO_Q_Publish_OPC" x="5400" y="-1000">
+		</SubApp>
+		<SubApp Name="PublishMidRaw" Type="MyLib::sys::AR_TO_Q_Publish_OPC" x="5400" y="-400">
+		</SubApp>
+		<SubApp Name="PublishMaxRaw" Type="MyLib::sys::AR_TO_Q_Publish_OPC" x="5400" y="200">
 		</SubApp>
 		<EventConnections>
 			<Connection Source="TriggerMIN.IND" Destination="CALIBRATE.C_MIN" dx1="606.67"/>
@@ -188,12 +208,36 @@
 			<Connection Source="ID_MAXREF_WRITE" Destination="MAX_REF_LIT.ID_WRITE" dx1="1400">
 				<Attribute Name="Visible" Value="false"/>
 			</Connection>
+			<Connection Source="stObjMinRaw" Destination="PublishMinRaw.stObj" dx1="1400">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="ID_MIN_RAW_WRITE" Destination="PublishMinRaw.ID_WRITE" dx1="1400">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="stObjMidRaw" Destination="PublishMidRaw.stObj" dx1="1400">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="ID_MID_RAW_WRITE" Destination="PublishMidRaw.ID_WRITE" dx1="1400">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="stObjMaxRaw" Destination="PublishMaxRaw.stObj" dx1="1400">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="ID_MAX_RAW_WRITE" Destination="PublishMaxRaw.ID_WRITE" dx1="1400">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
 		</DataConnections>
 		<AdapterConnections>
 			<Connection Source="InputRaw.AR_OUT" Destination="CALIBRATE.X" dx1="300"/>
-			<Connection Source="CALIBRATE.X_MIN" Destination="INI_X_MIN.VAL" dx1="580"/>
-			<Connection Source="CALIBRATE.X_MID" Destination="INI_X_MID.VAL" dx1="460"/>
-			<Connection Source="CALIBRATE.X_MAX" Destination="INI_X_MAX.VAL" dx1="340"/>
+			<Connection Source="CALIBRATE.X_MIN" Destination="TapMinRaw.AR2_IN" dx1="580"/>
+			<Connection Source="TapMinRaw.AR2_OUT" Destination="INI_X_MIN.VAL" dx1="1353.33"/>
+			<Connection Source="TapMinRaw.AR_OUT" Destination="PublishMinRaw.AR_IN" dx1="313.33"/>
+			<Connection Source="CALIBRATE.X_MID" Destination="TapMidRaw.AR2_IN" dx1="460"/>
+			<Connection Source="TapMidRaw.AR2_OUT" Destination="INI_X_MID.VAL" dx1="200"/>
+			<Connection Source="TapMidRaw.AR_OUT" Destination="PublishMidRaw.AR_IN" dx1="433.33"/>
+			<Connection Source="CALIBRATE.X_MAX" Destination="TapMaxRaw.AR2_IN" dx1="340"/>
+			<Connection Source="TapMaxRaw.AR2_OUT" Destination="INI_X_MAX.VAL" dx1="200"/>
+			<Connection Source="TapMaxRaw.AR_OUT" Destination="PublishMaxRaw.AR_IN" dx1="653.33"/>
 			<Connection Source="CALIBRATE.MIN_REF" Destination="INI_MIN_REF.VAL" dx1="253.33"/>
 			<Connection Source="CALIBRATE.MID_REF" Destination="INI_MID_REF.VAL" dx1="220"/>
 			<Connection Source="CALIBRATE.MAX_REF" Destination="INI_MAX_REF.VAL" dx1="180"/>

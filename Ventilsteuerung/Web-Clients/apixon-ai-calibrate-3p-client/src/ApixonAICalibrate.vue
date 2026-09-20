@@ -82,6 +82,11 @@
               <span class="ref-live">aktuell: {{ maxRefLive[n - 1].toFixed(1) }}</span>
             </div>
           </div>
+          <div class="raw-cal-grid">
+            <span class="raw-cal-item">Min-Raw: {{ minRaw[n - 1] }}</span>
+            <span class="raw-cal-item">Mid-Raw: {{ midRaw[n - 1] }}</span>
+            <span class="raw-cal-item">Max-Raw: {{ maxRaw[n - 1] }}</span>
+          </div>
         </div>
       </div>
     </section>
@@ -149,6 +154,13 @@ const maxRefInput = ref<string[]>(new Array(8).fill(''))
 const minRefLive = ref<number[]>(new Array(8).fill(0))
 const midRefLive = ref<number[]>(new Array(8).fill(0))
 const maxRefLive = ref<number[]>(new Array(8).fill(0))
+
+/* Rohwert (DWORD 0-4095) an den 3 Kalibrierpunkten, reine Diagnose-Anzeige -
+ * gespeist von AR2_TAP_TO_AR in logiBUS_AI_Calibrate_3P_IDA_OPC.SUB (AIC_I{n}_MIN/
+ * MID/MAX_RAW, ACTION=PUBLISH), Persistenz-/Restore-Kette selbst unveraendert. */
+const minRaw = ref<number[]>(new Array(8).fill(0))
+const midRaw = ref<number[]>(new Array(8).fill(0))
+const maxRaw = ref<number[]>(new Array(8).fill(0))
 
 interface ScopeSample { t: number; v: number }
 const scopeWindowSec = ref(10)
@@ -274,6 +286,9 @@ function handleLost() {
   minRefLive.value.fill(0)
   midRefLive.value.fill(0)
   maxRefLive.value.fill(0)
+  minRaw.value.fill(0)
+  midRaw.value.fill(0)
+  maxRaw.value.fill(0)
   tick.value = '–'
   if (scopeRafId !== null) {
     cancelAnimationFrame(scopeRafId)
@@ -381,6 +396,48 @@ async function connect() {
     )
     maxRefGroup.on('changed', (_item: any, dataValue: any, index: number) => {
       maxRefLive.value[index] = Number(dataValue.value?.value ?? 0)
+    })
+
+    /* Monitor the Rohwert-am-MIN-Kalibrierpunkt AIC_I1_MIN_RAW-AIC_I8_MIN_RAW (DWORD, read-only). */
+    const minRawItems = Array.from({ length: 8 }, (_, i) => ({
+      nodeId: coerceNodeId(`ns=1;s=AIC_I${i + 1}_MIN_RAW`),
+      attributeId: AttributeIds.Value,
+    }))
+    const minRawGroup = await subscription.monitorItemsP(
+      minRawItems,
+      { samplingInterval: 100, discardOldest: true, queueSize: 2 },
+      TimestampsToReturn.Neither
+    )
+    minRawGroup.on('changed', (_item: any, dataValue: any, index: number) => {
+      minRaw.value[index] = Number(dataValue.value?.value ?? 0)
+    })
+
+    /* Monitor the Rohwert-am-MID-Kalibrierpunkt AIC_I1_MID_RAW-AIC_I8_MID_RAW (DWORD, read-only). */
+    const midRawItems = Array.from({ length: 8 }, (_, i) => ({
+      nodeId: coerceNodeId(`ns=1;s=AIC_I${i + 1}_MID_RAW`),
+      attributeId: AttributeIds.Value,
+    }))
+    const midRawGroup = await subscription.monitorItemsP(
+      midRawItems,
+      { samplingInterval: 100, discardOldest: true, queueSize: 2 },
+      TimestampsToReturn.Neither
+    )
+    midRawGroup.on('changed', (_item: any, dataValue: any, index: number) => {
+      midRaw.value[index] = Number(dataValue.value?.value ?? 0)
+    })
+
+    /* Monitor the Rohwert-am-MAX-Kalibrierpunkt AIC_I1_MAX_RAW-AIC_I8_MAX_RAW (DWORD, read-only). */
+    const maxRawItems = Array.from({ length: 8 }, (_, i) => ({
+      nodeId: coerceNodeId(`ns=1;s=AIC_I${i + 1}_MAX_RAW`),
+      attributeId: AttributeIds.Value,
+    }))
+    const maxRawGroup = await subscription.monitorItemsP(
+      maxRawItems,
+      { samplingInterval: 100, discardOldest: true, queueSize: 2 },
+      TimestampsToReturn.Neither
+    )
+    maxRawGroup.on('changed', (_item: any, dataValue: any, index: number) => {
+      maxRaw.value[index] = Number(dataValue.value?.value ?? 0)
     })
 
     /* Monitor all outputs Q1-Q12 (reflect actual hardware state, unveraendert wie im AI-Beispiel) */
@@ -500,6 +557,9 @@ async function disconnect() {
   minRefLive.value.fill(0)
   midRefLive.value.fill(0)
   maxRefLive.value.fill(0)
+  minRaw.value.fill(0)
+  midRaw.value.fill(0)
+  maxRaw.value.fill(0)
   if (scopeRafId !== null) {
     cancelAnimationFrame(scopeRafId)
     scopeRafId = null
@@ -826,6 +886,20 @@ span {
 
 .ref-live {
   font-size: 0.65rem;
+  color: #777;
+  font-variant-numeric: tabular-nums;
+}
+
+.raw-cal-grid {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  gap: 0.3rem;
+  margin-top: 0.3rem;
+}
+
+.raw-cal-item {
+  font-size: 0.6rem;
   color: #777;
   font-variant-numeric: tabular-nums;
 }

@@ -4,6 +4,8 @@
 	</Identification>
 	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2026-09-11" Remarks="3-Punkt-Pendant zu InputOutputTesterButton_AI_Calibrate_OPC_UA - logiBUS_AI_Calibrate_3P_IDA_OPC statt logiBUS_AI_Calibrate_IDA_OPC (C_MIN/C_MID/C_MAX statt CO/CS)">
 	</VersionInfo>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.1" Author="Franz Höpfinger" Date="2026-09-20" Remarks="Rohwert-Anzeige an den 3 Kalibrierpunkten (Min/Mid/Max-Raw) fuer alle 8 Kanaele ergaenzt, siehe logiBUS_AI_Calibrate_3P_IDA_OPC v1.8. Neue Parameter stObjMinRaw/stObjMidRaw/stObjMaxRaw + ID_MIN/MID/MAX_RAW_WRITE pro Kanal, neue VT-Objekte NumberVariable_AIC_I0N_MINRAW/_MIDRAW/_MAXRAW_N (DefaultPool_AIC_3P_Numeric, IDs 21040-21063) + OPC-UA-Adressen AIC_I0N_MIN/MID/MAX_RAW_WRITE (SubStrings).">
+	</VersionInfo>
 	<CompilerInfo packageName="Meins::InputOutputTester::Button_AI_Calibrate_3P_OPC_UA">
 		<Import declaration="Meins::InputOutputTester::Button_AI_Calibrate_3P_OPC_UA::SubStrings::AIC_I1_RAW_WRITE"/>
 		<Import declaration="Meins::InputOutputTester::Button_AI_Calibrate_3P_OPC_UA::SubStrings::AIC_I1_CAL_WRITE"/>
@@ -191,6 +193,30 @@
 		<Import declaration="Meins::InputOutputTester::Button_AI_Calibrate_3P_OPC_UA::SubStrings::AIC_I8_MIDREF_WRITE"/>
 		<Import declaration="Meins::InputOutputTester::Button_AI_Calibrate_3P_OPC_UA::SubStrings::AIC_I8_MAXREF_READ"/>
 		<Import declaration="Meins::InputOutputTester::Button_AI_Calibrate_3P_OPC_UA::SubStrings::AIC_I8_MAXREF_WRITE"/>
+		<Import declaration="Meins::InputOutputTester::Button_AI_Calibrate_3P_OPC_UA::SubStrings::AIC_I1_MIN_RAW_WRITE"/>
+		<Import declaration="Meins::InputOutputTester::Button_AI_Calibrate_3P_OPC_UA::SubStrings::AIC_I1_MID_RAW_WRITE"/>
+		<Import declaration="Meins::InputOutputTester::Button_AI_Calibrate_3P_OPC_UA::SubStrings::AIC_I1_MAX_RAW_WRITE"/>
+		<Import declaration="Meins::InputOutputTester::Button_AI_Calibrate_3P_OPC_UA::SubStrings::AIC_I2_MIN_RAW_WRITE"/>
+		<Import declaration="Meins::InputOutputTester::Button_AI_Calibrate_3P_OPC_UA::SubStrings::AIC_I2_MID_RAW_WRITE"/>
+		<Import declaration="Meins::InputOutputTester::Button_AI_Calibrate_3P_OPC_UA::SubStrings::AIC_I2_MAX_RAW_WRITE"/>
+		<Import declaration="Meins::InputOutputTester::Button_AI_Calibrate_3P_OPC_UA::SubStrings::AIC_I3_MIN_RAW_WRITE"/>
+		<Import declaration="Meins::InputOutputTester::Button_AI_Calibrate_3P_OPC_UA::SubStrings::AIC_I3_MID_RAW_WRITE"/>
+		<Import declaration="Meins::InputOutputTester::Button_AI_Calibrate_3P_OPC_UA::SubStrings::AIC_I3_MAX_RAW_WRITE"/>
+		<Import declaration="Meins::InputOutputTester::Button_AI_Calibrate_3P_OPC_UA::SubStrings::AIC_I4_MIN_RAW_WRITE"/>
+		<Import declaration="Meins::InputOutputTester::Button_AI_Calibrate_3P_OPC_UA::SubStrings::AIC_I4_MID_RAW_WRITE"/>
+		<Import declaration="Meins::InputOutputTester::Button_AI_Calibrate_3P_OPC_UA::SubStrings::AIC_I4_MAX_RAW_WRITE"/>
+		<Import declaration="Meins::InputOutputTester::Button_AI_Calibrate_3P_OPC_UA::SubStrings::AIC_I5_MIN_RAW_WRITE"/>
+		<Import declaration="Meins::InputOutputTester::Button_AI_Calibrate_3P_OPC_UA::SubStrings::AIC_I5_MID_RAW_WRITE"/>
+		<Import declaration="Meins::InputOutputTester::Button_AI_Calibrate_3P_OPC_UA::SubStrings::AIC_I5_MAX_RAW_WRITE"/>
+		<Import declaration="Meins::InputOutputTester::Button_AI_Calibrate_3P_OPC_UA::SubStrings::AIC_I6_MIN_RAW_WRITE"/>
+		<Import declaration="Meins::InputOutputTester::Button_AI_Calibrate_3P_OPC_UA::SubStrings::AIC_I6_MID_RAW_WRITE"/>
+		<Import declaration="Meins::InputOutputTester::Button_AI_Calibrate_3P_OPC_UA::SubStrings::AIC_I6_MAX_RAW_WRITE"/>
+		<Import declaration="Meins::InputOutputTester::Button_AI_Calibrate_3P_OPC_UA::SubStrings::AIC_I7_MIN_RAW_WRITE"/>
+		<Import declaration="Meins::InputOutputTester::Button_AI_Calibrate_3P_OPC_UA::SubStrings::AIC_I7_MID_RAW_WRITE"/>
+		<Import declaration="Meins::InputOutputTester::Button_AI_Calibrate_3P_OPC_UA::SubStrings::AIC_I7_MAX_RAW_WRITE"/>
+		<Import declaration="Meins::InputOutputTester::Button_AI_Calibrate_3P_OPC_UA::SubStrings::AIC_I8_MIN_RAW_WRITE"/>
+		<Import declaration="Meins::InputOutputTester::Button_AI_Calibrate_3P_OPC_UA::SubStrings::AIC_I8_MID_RAW_WRITE"/>
+		<Import declaration="Meins::InputOutputTester::Button_AI_Calibrate_3P_OPC_UA::SubStrings::AIC_I8_MAX_RAW_WRITE"/>
 		<Import declaration="Uebungen::const::UT::AIC::DefaultPool_AIC_3P_Numeric::NumberVariable_AIC_I01_ZERO_N"/>
 		<Import declaration="Uebungen::const::UT::AIC::DefaultPool_AIC_3P_Numeric::NumberVariable_AIC_I01_MID_N"/>
 		<Import declaration="Uebungen::const::UT::AIC::DefaultPool_AIC_3P_Numeric::NumberVariable_AIC_I01_SPAN_N"/>
@@ -215,6 +241,30 @@
 		<Import declaration="Uebungen::const::UT::AIC::DefaultPool_AIC_3P_Numeric::NumberVariable_AIC_I08_ZERO_N"/>
 		<Import declaration="Uebungen::const::UT::AIC::DefaultPool_AIC_3P_Numeric::NumberVariable_AIC_I08_MID_N"/>
 		<Import declaration="Uebungen::const::UT::AIC::DefaultPool_AIC_3P_Numeric::NumberVariable_AIC_I08_SPAN_N"/>
+		<Import declaration="Uebungen::const::UT::AIC::DefaultPool_AIC_3P_Numeric::NumberVariable_AIC_I01_MINRAW_N"/>
+		<Import declaration="Uebungen::const::UT::AIC::DefaultPool_AIC_3P_Numeric::NumberVariable_AIC_I01_MIDRAW_N"/>
+		<Import declaration="Uebungen::const::UT::AIC::DefaultPool_AIC_3P_Numeric::NumberVariable_AIC_I01_MAXRAW_N"/>
+		<Import declaration="Uebungen::const::UT::AIC::DefaultPool_AIC_3P_Numeric::NumberVariable_AIC_I02_MINRAW_N"/>
+		<Import declaration="Uebungen::const::UT::AIC::DefaultPool_AIC_3P_Numeric::NumberVariable_AIC_I02_MIDRAW_N"/>
+		<Import declaration="Uebungen::const::UT::AIC::DefaultPool_AIC_3P_Numeric::NumberVariable_AIC_I02_MAXRAW_N"/>
+		<Import declaration="Uebungen::const::UT::AIC::DefaultPool_AIC_3P_Numeric::NumberVariable_AIC_I03_MINRAW_N"/>
+		<Import declaration="Uebungen::const::UT::AIC::DefaultPool_AIC_3P_Numeric::NumberVariable_AIC_I03_MIDRAW_N"/>
+		<Import declaration="Uebungen::const::UT::AIC::DefaultPool_AIC_3P_Numeric::NumberVariable_AIC_I03_MAXRAW_N"/>
+		<Import declaration="Uebungen::const::UT::AIC::DefaultPool_AIC_3P_Numeric::NumberVariable_AIC_I04_MINRAW_N"/>
+		<Import declaration="Uebungen::const::UT::AIC::DefaultPool_AIC_3P_Numeric::NumberVariable_AIC_I04_MIDRAW_N"/>
+		<Import declaration="Uebungen::const::UT::AIC::DefaultPool_AIC_3P_Numeric::NumberVariable_AIC_I04_MAXRAW_N"/>
+		<Import declaration="Uebungen::const::UT::AIC::DefaultPool_AIC_3P_Numeric::NumberVariable_AIC_I05_MINRAW_N"/>
+		<Import declaration="Uebungen::const::UT::AIC::DefaultPool_AIC_3P_Numeric::NumberVariable_AIC_I05_MIDRAW_N"/>
+		<Import declaration="Uebungen::const::UT::AIC::DefaultPool_AIC_3P_Numeric::NumberVariable_AIC_I05_MAXRAW_N"/>
+		<Import declaration="Uebungen::const::UT::AIC::DefaultPool_AIC_3P_Numeric::NumberVariable_AIC_I06_MINRAW_N"/>
+		<Import declaration="Uebungen::const::UT::AIC::DefaultPool_AIC_3P_Numeric::NumberVariable_AIC_I06_MIDRAW_N"/>
+		<Import declaration="Uebungen::const::UT::AIC::DefaultPool_AIC_3P_Numeric::NumberVariable_AIC_I06_MAXRAW_N"/>
+		<Import declaration="Uebungen::const::UT::AIC::DefaultPool_AIC_3P_Numeric::NumberVariable_AIC_I07_MINRAW_N"/>
+		<Import declaration="Uebungen::const::UT::AIC::DefaultPool_AIC_3P_Numeric::NumberVariable_AIC_I07_MIDRAW_N"/>
+		<Import declaration="Uebungen::const::UT::AIC::DefaultPool_AIC_3P_Numeric::NumberVariable_AIC_I07_MAXRAW_N"/>
+		<Import declaration="Uebungen::const::UT::AIC::DefaultPool_AIC_3P_Numeric::NumberVariable_AIC_I08_MINRAW_N"/>
+		<Import declaration="Uebungen::const::UT::AIC::DefaultPool_AIC_3P_Numeric::NumberVariable_AIC_I08_MIDRAW_N"/>
+		<Import declaration="Uebungen::const::UT::AIC::DefaultPool_AIC_3P_Numeric::NumberVariable_AIC_I08_MAXRAW_N"/>
 	</CompilerInfo>
 	<SubAppInterfaceList>
 	</SubAppInterfaceList>
@@ -241,6 +291,12 @@
 			<Parameter Name="ID_MIDREF_WRITE" Value="AIC_I1_MIDREF_WRITE"/>
 			<Parameter Name="ID_MAXREF_READ" Value="AIC_I1_MAXREF_READ"/>
 			<Parameter Name="ID_MAXREF_WRITE" Value="AIC_I1_MAXREF_WRITE"/>
+			<Parameter Name="stObjMinRaw" Value="NumberVariable_AIC_I01_MINRAW_N"/>
+			<Parameter Name="stObjMidRaw" Value="NumberVariable_AIC_I01_MIDRAW_N"/>
+			<Parameter Name="stObjMaxRaw" Value="NumberVariable_AIC_I01_MAXRAW_N"/>
+			<Parameter Name="ID_MIN_RAW_WRITE" Value="AIC_I1_MIN_RAW_WRITE"/>
+			<Parameter Name="ID_MID_RAW_WRITE" Value="AIC_I1_MID_RAW_WRITE"/>
+			<Parameter Name="ID_MAX_RAW_WRITE" Value="AIC_I1_MAX_RAW_WRITE"/>
 		</SubApp>
 		<SubApp Name="AnalogChannel_I2" Type="MyLib::sys::logiBUS_AI_Calibrate_3P_IDA_OPC" x="-1000" y="2800">
 			<Parameter Name="u16ObjId_RAWVAR" Value="NumberVariable_AIC_RAW_I02"/>
@@ -264,6 +320,12 @@
 			<Parameter Name="ID_MIDREF_WRITE" Value="AIC_I2_MIDREF_WRITE"/>
 			<Parameter Name="ID_MAXREF_READ" Value="AIC_I2_MAXREF_READ"/>
 			<Parameter Name="ID_MAXREF_WRITE" Value="AIC_I2_MAXREF_WRITE"/>
+			<Parameter Name="stObjMinRaw" Value="NumberVariable_AIC_I02_MINRAW_N"/>
+			<Parameter Name="stObjMidRaw" Value="NumberVariable_AIC_I02_MIDRAW_N"/>
+			<Parameter Name="stObjMaxRaw" Value="NumberVariable_AIC_I02_MAXRAW_N"/>
+			<Parameter Name="ID_MIN_RAW_WRITE" Value="AIC_I2_MIN_RAW_WRITE"/>
+			<Parameter Name="ID_MID_RAW_WRITE" Value="AIC_I2_MID_RAW_WRITE"/>
+			<Parameter Name="ID_MAX_RAW_WRITE" Value="AIC_I2_MAX_RAW_WRITE"/>
 		</SubApp>
 		<SubApp Name="AnalogChannel_I3" Type="MyLib::sys::logiBUS_AI_Calibrate_3P_IDA_OPC" x="-1000" y="6300">
 			<Parameter Name="u16ObjId_RAWVAR" Value="NumberVariable_AIC_RAW_I03"/>
@@ -287,6 +349,12 @@
 			<Parameter Name="ID_MIDREF_WRITE" Value="AIC_I3_MIDREF_WRITE"/>
 			<Parameter Name="ID_MAXREF_READ" Value="AIC_I3_MAXREF_READ"/>
 			<Parameter Name="ID_MAXREF_WRITE" Value="AIC_I3_MAXREF_WRITE"/>
+			<Parameter Name="stObjMinRaw" Value="NumberVariable_AIC_I03_MINRAW_N"/>
+			<Parameter Name="stObjMidRaw" Value="NumberVariable_AIC_I03_MIDRAW_N"/>
+			<Parameter Name="stObjMaxRaw" Value="NumberVariable_AIC_I03_MAXRAW_N"/>
+			<Parameter Name="ID_MIN_RAW_WRITE" Value="AIC_I3_MIN_RAW_WRITE"/>
+			<Parameter Name="ID_MID_RAW_WRITE" Value="AIC_I3_MID_RAW_WRITE"/>
+			<Parameter Name="ID_MAX_RAW_WRITE" Value="AIC_I3_MAX_RAW_WRITE"/>
 		</SubApp>
 		<SubApp Name="AnalogChannel_I4" Type="MyLib::sys::logiBUS_AI_Calibrate_3P_IDA_OPC" x="-1000" y="9800">
 			<Parameter Name="u16ObjId_RAWVAR" Value="NumberVariable_AIC_RAW_I04"/>
@@ -310,6 +378,12 @@
 			<Parameter Name="ID_MIDREF_WRITE" Value="AIC_I4_MIDREF_WRITE"/>
 			<Parameter Name="ID_MAXREF_READ" Value="AIC_I4_MAXREF_READ"/>
 			<Parameter Name="ID_MAXREF_WRITE" Value="AIC_I4_MAXREF_WRITE"/>
+			<Parameter Name="stObjMinRaw" Value="NumberVariable_AIC_I04_MINRAW_N"/>
+			<Parameter Name="stObjMidRaw" Value="NumberVariable_AIC_I04_MIDRAW_N"/>
+			<Parameter Name="stObjMaxRaw" Value="NumberVariable_AIC_I04_MAXRAW_N"/>
+			<Parameter Name="ID_MIN_RAW_WRITE" Value="AIC_I4_MIN_RAW_WRITE"/>
+			<Parameter Name="ID_MID_RAW_WRITE" Value="AIC_I4_MID_RAW_WRITE"/>
+			<Parameter Name="ID_MAX_RAW_WRITE" Value="AIC_I4_MAX_RAW_WRITE"/>
 		</SubApp>
 		<SubApp Name="AnalogChannel_I5" Type="MyLib::sys::logiBUS_AI_Calibrate_3P_IDA_OPC" x="-1000" y="13300">
 			<Parameter Name="u16ObjId_RAWVAR" Value="NumberVariable_AIC_RAW_I05"/>
@@ -333,6 +407,12 @@
 			<Parameter Name="ID_MIDREF_WRITE" Value="AIC_I5_MIDREF_WRITE"/>
 			<Parameter Name="ID_MAXREF_READ" Value="AIC_I5_MAXREF_READ"/>
 			<Parameter Name="ID_MAXREF_WRITE" Value="AIC_I5_MAXREF_WRITE"/>
+			<Parameter Name="stObjMinRaw" Value="NumberVariable_AIC_I05_MINRAW_N"/>
+			<Parameter Name="stObjMidRaw" Value="NumberVariable_AIC_I05_MIDRAW_N"/>
+			<Parameter Name="stObjMaxRaw" Value="NumberVariable_AIC_I05_MAXRAW_N"/>
+			<Parameter Name="ID_MIN_RAW_WRITE" Value="AIC_I5_MIN_RAW_WRITE"/>
+			<Parameter Name="ID_MID_RAW_WRITE" Value="AIC_I5_MID_RAW_WRITE"/>
+			<Parameter Name="ID_MAX_RAW_WRITE" Value="AIC_I5_MAX_RAW_WRITE"/>
 		</SubApp>
 		<SubApp Name="AnalogChannel_I6" Type="MyLib::sys::logiBUS_AI_Calibrate_3P_IDA_OPC" x="-1000" y="16800">
 			<Parameter Name="u16ObjId_RAWVAR" Value="NumberVariable_AIC_RAW_I06"/>
@@ -356,6 +436,12 @@
 			<Parameter Name="ID_MIDREF_WRITE" Value="AIC_I6_MIDREF_WRITE"/>
 			<Parameter Name="ID_MAXREF_READ" Value="AIC_I6_MAXREF_READ"/>
 			<Parameter Name="ID_MAXREF_WRITE" Value="AIC_I6_MAXREF_WRITE"/>
+			<Parameter Name="stObjMinRaw" Value="NumberVariable_AIC_I06_MINRAW_N"/>
+			<Parameter Name="stObjMidRaw" Value="NumberVariable_AIC_I06_MIDRAW_N"/>
+			<Parameter Name="stObjMaxRaw" Value="NumberVariable_AIC_I06_MAXRAW_N"/>
+			<Parameter Name="ID_MIN_RAW_WRITE" Value="AIC_I6_MIN_RAW_WRITE"/>
+			<Parameter Name="ID_MID_RAW_WRITE" Value="AIC_I6_MID_RAW_WRITE"/>
+			<Parameter Name="ID_MAX_RAW_WRITE" Value="AIC_I6_MAX_RAW_WRITE"/>
 		</SubApp>
 		<SubApp Name="AnalogChannel_I7" Type="MyLib::sys::logiBUS_AI_Calibrate_3P_IDA_OPC" x="-1000" y="20300">
 			<Parameter Name="u16ObjId_RAWVAR" Value="NumberVariable_AIC_RAW_I07"/>
@@ -379,6 +465,12 @@
 			<Parameter Name="ID_MIDREF_WRITE" Value="AIC_I7_MIDREF_WRITE"/>
 			<Parameter Name="ID_MAXREF_READ" Value="AIC_I7_MAXREF_READ"/>
 			<Parameter Name="ID_MAXREF_WRITE" Value="AIC_I7_MAXREF_WRITE"/>
+			<Parameter Name="stObjMinRaw" Value="NumberVariable_AIC_I07_MINRAW_N"/>
+			<Parameter Name="stObjMidRaw" Value="NumberVariable_AIC_I07_MIDRAW_N"/>
+			<Parameter Name="stObjMaxRaw" Value="NumberVariable_AIC_I07_MAXRAW_N"/>
+			<Parameter Name="ID_MIN_RAW_WRITE" Value="AIC_I7_MIN_RAW_WRITE"/>
+			<Parameter Name="ID_MID_RAW_WRITE" Value="AIC_I7_MID_RAW_WRITE"/>
+			<Parameter Name="ID_MAX_RAW_WRITE" Value="AIC_I7_MAX_RAW_WRITE"/>
 		</SubApp>
 		<SubApp Name="AnalogChannel_I8" Type="MyLib::sys::logiBUS_AI_Calibrate_3P_IDA_OPC" x="-1000" y="23800">
 			<Parameter Name="u16ObjId_RAWVAR" Value="NumberVariable_AIC_RAW_I08"/>
@@ -402,6 +494,12 @@
 			<Parameter Name="ID_MIDREF_WRITE" Value="AIC_I8_MIDREF_WRITE"/>
 			<Parameter Name="ID_MAXREF_READ" Value="AIC_I8_MAXREF_READ"/>
 			<Parameter Name="ID_MAXREF_WRITE" Value="AIC_I8_MAXREF_WRITE"/>
+			<Parameter Name="stObjMinRaw" Value="NumberVariable_AIC_I08_MINRAW_N"/>
+			<Parameter Name="stObjMidRaw" Value="NumberVariable_AIC_I08_MIDRAW_N"/>
+			<Parameter Name="stObjMaxRaw" Value="NumberVariable_AIC_I08_MAXRAW_N"/>
+			<Parameter Name="ID_MIN_RAW_WRITE" Value="AIC_I8_MIN_RAW_WRITE"/>
+			<Parameter Name="ID_MID_RAW_WRITE" Value="AIC_I8_MID_RAW_WRITE"/>
+			<Parameter Name="ID_MAX_RAW_WRITE" Value="AIC_I8_MAX_RAW_WRITE"/>
 		</SubApp>
 		<SubApp Name="Output_Q1" Type="MyLib::sys::Button_IXA_TO_logiBUS_QXA_BG_OPC" x="-4600" y="-700">
 			<Parameter Name="u16ObjId" Value="Button_Q01"/>

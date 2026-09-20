@@ -96,6 +96,22 @@
 		<VarDeclaration Name="AIC_I8_ZERO_WRITE" Type="WSTRING" InitialValue="&quot;opc_ua[WRITE;/Objects/AnalogCalibrated/I8/ZERO,1:s=AIC_I8_ZERO]&quot;"/>
 		<VarDeclaration Name="AIC_I8_SPAN_READ" Type="WSTRING" InitialValue="&quot;opc_ua[READ;/Objects/AnalogCalibrated/I8/SPANExt,1:s=AIC_I8_SPAN_EXT]&quot;"/>
 		<VarDeclaration Name="AIC_I8_SPAN_WRITE" Type="WSTRING" InitialValue="&quot;opc_ua[WRITE;/Objects/AnalogCalibrated/I8/SPAN,1:s=AIC_I8_SPAN]&quot;"/>
+		<VarDeclaration Name="AIC_I1_ZERO_RAW_WRITE" Type="WSTRING" InitialValue="&quot;opc_ua[WRITE;/Objects/AnalogCalibrated/I1/ZERORAW,1:s=AIC_I1_ZERO_RAW]&quot;"/>
+		<VarDeclaration Name="AIC_I1_SPAN_RAW_WRITE" Type="WSTRING" InitialValue="&quot;opc_ua[WRITE;/Objects/AnalogCalibrated/I1/SPANRAW,1:s=AIC_I1_SPAN_RAW]&quot;"/>
+		<VarDeclaration Name="AIC_I2_ZERO_RAW_WRITE" Type="WSTRING" InitialValue="&quot;opc_ua[WRITE;/Objects/AnalogCalibrated/I2/ZERORAW,1:s=AIC_I2_ZERO_RAW]&quot;"/>
+		<VarDeclaration Name="AIC_I2_SPAN_RAW_WRITE" Type="WSTRING" InitialValue="&quot;opc_ua[WRITE;/Objects/AnalogCalibrated/I2/SPANRAW,1:s=AIC_I2_SPAN_RAW]&quot;"/>
+		<VarDeclaration Name="AIC_I3_ZERO_RAW_WRITE" Type="WSTRING" InitialValue="&quot;opc_ua[WRITE;/Objects/AnalogCalibrated/I3/ZERORAW,1:s=AIC_I3_ZERO_RAW]&quot;"/>
+		<VarDeclaration Name="AIC_I3_SPAN_RAW_WRITE" Type="WSTRING" InitialValue="&quot;opc_ua[WRITE;/Objects/AnalogCalibrated/I3/SPANRAW,1:s=AIC_I3_SPAN_RAW]&quot;"/>
+		<VarDeclaration Name="AIC_I4_ZERO_RAW_WRITE" Type="WSTRING" InitialValue="&quot;opc_ua[WRITE;/Objects/AnalogCalibrated/I4/ZERORAW,1:s=AIC_I4_ZERO_RAW]&quot;"/>
+		<VarDeclaration Name="AIC_I4_SPAN_RAW_WRITE" Type="WSTRING" InitialValue="&quot;opc_ua[WRITE;/Objects/AnalogCalibrated/I4/SPANRAW,1:s=AIC_I4_SPAN_RAW]&quot;"/>
+		<VarDeclaration Name="AIC_I5_ZERO_RAW_WRITE" Type="WSTRING" InitialValue="&quot;opc_ua[WRITE;/Objects/AnalogCalibrated/I5/ZERORAW,1:s=AIC_I5_ZERO_RAW]&quot;"/>
+		<VarDeclaration Name="AIC_I5_SPAN_RAW_WRITE" Type="WSTRING" InitialValue="&quot;opc_ua[WRITE;/Objects/AnalogCalibrated/I5/SPANRAW,1:s=AIC_I5_SPAN_RAW]&quot;"/>
+		<VarDeclaration Name="AIC_I6_ZERO_RAW_WRITE" Type="WSTRING" InitialValue="&quot;opc_ua[WRITE;/Objects/AnalogCalibrated/I6/ZERORAW,1:s=AIC_I6_ZERO_RAW]&quot;"/>
+		<VarDeclaration Name="AIC_I6_SPAN_RAW_WRITE" Type="WSTRING" InitialValue="&quot;opc_ua[WRITE;/Objects/AnalogCalibrated/I6/SPANRAW,1:s=AIC_I6_SPAN_RAW]&quot;"/>
+		<VarDeclaration Name="AIC_I7_ZERO_RAW_WRITE" Type="WSTRING" InitialValue="&quot;opc_ua[WRITE;/Objects/AnalogCalibrated/I7/ZERORAW,1:s=AIC_I7_ZERO_RAW]&quot;"/>
+		<VarDeclaration Name="AIC_I7_SPAN_RAW_WRITE" Type="WSTRING" InitialValue="&quot;opc_ua[WRITE;/Objects/AnalogCalibrated/I7/SPANRAW,1:s=AIC_I7_SPAN_RAW]&quot;"/>
+		<VarDeclaration Name="AIC_I8_ZERO_RAW_WRITE" Type="WSTRING" InitialValue="&quot;opc_ua[WRITE;/Objects/AnalogCalibrated/I8/ZERORAW,1:s=AIC_I8_ZERO_RAW]&quot;"/>
+		<VarDeclaration Name="AIC_I8_SPAN_RAW_WRITE" Type="WSTRING" InitialValue="&quot;opc_ua[WRITE;/Objects/AnalogCalibrated/I8/SPANRAW,1:s=AIC_I8_SPAN_RAW]&quot;"/>
 	</GlobalConstants>
 	<OriginalSource><![CDATA[PACKAGE Meins::InputOutputTester::Button_AI_Calibrate_OPC_UA;
 
@@ -191,6 +207,22 @@ GLOBALCONSTANTS SubStrings
 		AIC_I8_ZERO_WRITE : WSTRING := "opc_ua[WRITE;/Objects/AnalogCalibrated/I8/ZERO,1:s=AIC_I8_ZERO]";
 		AIC_I8_SPAN_READ : WSTRING := "opc_ua[READ;/Objects/AnalogCalibrated/I8/SPANExt,1:s=AIC_I8_SPAN_EXT]";
 		AIC_I8_SPAN_WRITE : WSTRING := "opc_ua[WRITE;/Objects/AnalogCalibrated/I8/SPAN,1:s=AIC_I8_SPAN]";
+		AIC_I1_ZERO_RAW_WRITE : WSTRING := "opc_ua[WRITE;/Objects/AnalogCalibrated/I1/ZERORAW,1:s=AIC_I1_ZERO_RAW]";
+		AIC_I1_SPAN_RAW_WRITE : WSTRING := "opc_ua[WRITE;/Objects/AnalogCalibrated/I1/SPANRAW,1:s=AIC_I1_SPAN_RAW]";
+		AIC_I2_ZERO_RAW_WRITE : WSTRING := "opc_ua[WRITE;/Objects/AnalogCalibrated/I2/ZERORAW,1:s=AIC_I2_ZERO_RAW]";
+		AIC_I2_SPAN_RAW_WRITE : WSTRING := "opc_ua[WRITE;/Objects/AnalogCalibrated/I2/SPANRAW,1:s=AIC_I2_SPAN_RAW]";
+		AIC_I3_ZERO_RAW_WRITE : WSTRING := "opc_ua[WRITE;/Objects/AnalogCalibrated/I3/ZERORAW,1:s=AIC_I3_ZERO_RAW]";
+		AIC_I3_SPAN_RAW_WRITE : WSTRING := "opc_ua[WRITE;/Objects/AnalogCalibrated/I3/SPANRAW,1:s=AIC_I3_SPAN_RAW]";
+		AIC_I4_ZERO_RAW_WRITE : WSTRING := "opc_ua[WRITE;/Objects/AnalogCalibrated/I4/ZERORAW,1:s=AIC_I4_ZERO_RAW]";
+		AIC_I4_SPAN_RAW_WRITE : WSTRING := "opc_ua[WRITE;/Objects/AnalogCalibrated/I4/SPANRAW,1:s=AIC_I4_SPAN_RAW]";
+		AIC_I5_ZERO_RAW_WRITE : WSTRING := "opc_ua[WRITE;/Objects/AnalogCalibrated/I5/ZERORAW,1:s=AIC_I5_ZERO_RAW]";
+		AIC_I5_SPAN_RAW_WRITE : WSTRING := "opc_ua[WRITE;/Objects/AnalogCalibrated/I5/SPANRAW,1:s=AIC_I5_SPAN_RAW]";
+		AIC_I6_ZERO_RAW_WRITE : WSTRING := "opc_ua[WRITE;/Objects/AnalogCalibrated/I6/ZERORAW,1:s=AIC_I6_ZERO_RAW]";
+		AIC_I6_SPAN_RAW_WRITE : WSTRING := "opc_ua[WRITE;/Objects/AnalogCalibrated/I6/SPANRAW,1:s=AIC_I6_SPAN_RAW]";
+		AIC_I7_ZERO_RAW_WRITE : WSTRING := "opc_ua[WRITE;/Objects/AnalogCalibrated/I7/ZERORAW,1:s=AIC_I7_ZERO_RAW]";
+		AIC_I7_SPAN_RAW_WRITE : WSTRING := "opc_ua[WRITE;/Objects/AnalogCalibrated/I7/SPANRAW,1:s=AIC_I7_SPAN_RAW]";
+		AIC_I8_ZERO_RAW_WRITE : WSTRING := "opc_ua[WRITE;/Objects/AnalogCalibrated/I8/ZERORAW,1:s=AIC_I8_ZERO_RAW]";
+		AIC_I8_SPAN_RAW_WRITE : WSTRING := "opc_ua[WRITE;/Objects/AnalogCalibrated/I8/SPANRAW,1:s=AIC_I8_SPAN_RAW]";
 	END_VAR
 END_GLOBALCONSTANTS
 ]]></OriginalSource>

@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SubAppType Name="AR2_TAP_TO_AR" Comment="Zapft einen zusaetzlichen Nur-Lese-Pfad (AR_OUT, plain AR) aus einer bestehenden AR2-Verbindung ab, ohne deren urspruengliche Persistenz-/Restore-Kette zu unterbrechen. Socket AR2_IN haengt an die Quelle (einen bestehenden AR2-Plug, z.B. AR_CALIBRATE_2P_REF.X_LOW), Plug AR2_OUT fuehrt die AR2-Verbindung unveraendert zum urspruenglichen Ziel weiter (einen bestehenden AR2-Socket, z.B. INI_AR2.VAL). Kombination aus AR2_TO_AR + AR_SPLIT_2 + AR_TO_AR2 (3 bereits vorhandene Standardbausteine) - kein eigener AR2-Split-Baustein existiert im Projekt, AR2 ist wie jeder Adapter strikt 1:1.">
+	<Identification Standard="61499-2" Description="Copyright (c) 2026 Meisterschulen am Ostbahnhof  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0">
+	</Identification>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2026-09-20" Remarks="initial implementation - fuer die Rohwert-Anzeige (Zero/Span bzw. Min/Mid/Max Raw) in logiBUS_AI_Calibrate_IDA_OPC/_3P_IDA_OPC (Button_AI_Calibrate_OPC_UA/_3P_OPC_UA): AR_CALIBRATE_2P_REF/_3P_REF speichern X_LOW/X_HIGH bzw. X_MIN/X_MID/X_MAX bereits als AR2-Plugs, bisher aber nur an die INI-Persistierung angeschlossen, nirgends zur Anzeige.">
+	</VersionInfo>
+	<CompilerInfo packageName="MyLib::sys">
+	</CompilerInfo>
+	<SubAppInterfaceList>
+		<Plugs>
+			<AdapterDeclaration Name="AR_OUT" Type="adapter::types::unidirectional::AR" Comment="Nur-Lese-Spiegel des aktuellen Werts (neu geschriebener Wert sofort, persistierter/restaurierter Wert nach Boot) - fuer VT-Anzeige/OPC-UA-Publish"/>
+			<AdapterDeclaration Name="AR2_OUT" Type="adapter::types::bidirectional::AR2" Comment="Fuehrt die AR2-Verbindung unveraendert weiter zum urspruenglichen Ziel (Socket), z.B. INI_AR2.VAL"/>
+		</Plugs>
+		<Sockets>
+			<AdapterDeclaration Name="AR2_IN" Type="adapter::types::bidirectional::AR2" Comment="Haengt an die AR2-Quelle (Plug), z.B. AR_CALIBRATE_2P_REF.X_LOW"/>
+		</Sockets>
+	</SubAppInterfaceList>
+	<SubAppNetwork>
+		<FB Name="Tap_IN" Type="adapter::conversion::bidirectional::AR2_TO_AR" x="0" y="-200">
+		</FB>
+		<FB Name="Split" Type="adapter::events::unidirectional::AR_SPLIT_2" x="1400" y="-200">
+		</FB>
+		<FB Name="Tap_OUT" Type="adapter::conversion::bidirectional::AR_TO_AR2" x="2700" y="-100">
+		</FB>
+		<AdapterConnections>
+			<Connection Source="AR2_IN" Destination="Tap_IN.AR2_BIDIR" dx1="600"/>
+			<Connection Source="Tap_OUT.AR_OUT" Destination="Tap_IN.AR_IN" dx1="80" dx2="80" dy="146.67"/>
+			<Connection Source="Tap_IN.AR_OUT" Destination="Split.IN"/>
+			<Connection Source="Split.OUT1" Destination="AR_OUT" dx1="80"/>
+			<Connection Source="Split.OUT2" Destination="Tap_OUT.AR_IN" dx1="120"/>
+			<Connection Source="Tap_OUT.AR2_BIDIR" Destination="AR2_OUT" dx1="600"/>
+		</AdapterConnections>
+	</SubAppNetwork>
+	<Attribute Name="Documentation" Type="CDATA"><![CDATA[<h1>AR2_TAP_TO_AR</h1>
+
+<h2>🇩🇪 Deutsch</h2>
+
+<p>Haengt zwischen eine bestehende AR2-Plug/Socket-Verbindung, ohne deren Verhalten zu aendern, und liefert zusaetzlich einen Nur-Lese-Spiegel (<code>AR_OUT</code>, plain <code>AR</code>) des aktuellen Werts.</p>
+
+<h3>Warum nicht einfach splitten?</h3>
+<p>Adapter sind strikt 1:1 - ein Plug wie <code>AR_CALIBRATE_2P_REF.X_LOW</code> kann nur an EINEN Socket angeschlossen werden. Fuer unidirektionale Adapter (<code>AR</code>/<code>AX</code>) gibt es dafuer <code>AR_SPLIT_2</code>/<code>AX_SPLIT_2</code> usw. - fuer bidirektionale <code>AR2</code> existiert kein aequivalenter Split-Baustein im Projekt, da AR2 normalerweise genau 1 Erzeuger und genau 1 Verbraucher hat.</p>
+
+<h3>Wie es funktioniert</h3>
+<p><code>AR2_TO_AR</code> (Socket <code>AR2_BIDIR</code>, haengt an die Quelle) spiegelt die von der Quelle geschriebene Seite nach <code>AR_OUT</code> - dieser Wert wird per <code>AR_SPLIT_2</code> aufgeteilt: einmal nach aussen (<code>AR_OUT</code> dieses Bausteins, fuer die Anzeige), einmal in <code>AR_TO_AR2</code> (Socket <code>AR_IN</code>), das daraus wieder eine vollwertige AR2-Verbindung macht (Plug <code>AR2_BIDIR</code>, geht weiter zum urspruenglichen Ziel, z.B. <code>INI_AR2</code>). Der Rueckweg (persistierter/restaurierter Wert von <code>INI_AR2</code>) laeuft symmetrisch zurueck: <code>AR_TO_AR2.AR_OUT</code> speist <code>AR2_TO_AR.AR_IN</code>, wodurch die Quelle (<code>AR_CALIBRATE_2P_REF.X_LOW</code>) ihren Restore-Wert weiterhin ganz normal ueber <code>EI1</code>/<code>DI1</code> bekommt - nichts an der urspruenglichen Kette aendert sich, es kommt nur ein Abzweig hinzu.</p>
+
+<h2>🇬🇧 English</h2>
+
+<p>Sits between an existing AR2 Plug/Socket connection without changing its behaviour, and additionally provides a read-only plain-<code>AR</code> mirror (<code>AR_OUT</code>) of the current value.</p>
+
+<h3>Why not just split it?</h3>
+<p>Adapters are strictly 1:1 - a Plug like <code>AR_CALIBRATE_2P_REF.X_LOW</code> can only connect to ONE Socket. For unidirectional adapters (<code>AR</code>/<code>AX</code>) there is <code>AR_SPLIT_2</code>/<code>AX_SPLIT_2</code> etc. for this - no equivalent split block exists for bidirectional <code>AR2</code> in this project, since AR2 normally has exactly one producer and one consumer.</p>
+
+<h3>How it works</h3>
+<p><code>AR2_TO_AR</code> (Socket <code>AR2_BIDIR</code>, attaches to the source) mirrors the side written by the source out through <code>AR_OUT</code> - this value is split via <code>AR_SPLIT_2</code>: once outward (this block's own <code>AR_OUT</code>, for display), once into <code>AR_TO_AR2</code> (Socket <code>AR_IN</code>), which turns it back into a full AR2 connection (Plug <code>AR2_BIDIR</code>, continues to the original target, e.g. <code>INI_AR2</code>). The return path (persisted/restored value from <code>INI_AR2</code>) runs symmetrically back: <code>AR_TO_AR2.AR_OUT</code> feeds <code>AR2_TO_AR.AR_IN</code>, so the source (<code>AR_CALIBRATE_2P_REF.X_LOW</code>) still gets its restored value normally via <code>EI1</code>/<code>DI1</code> - nothing about the original chain changes, only a tap is added.</p>
+]]></Attribute>
+</SubAppType>

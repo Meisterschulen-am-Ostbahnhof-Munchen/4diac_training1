@@ -4,6 +4,8 @@
 	</Identification>
 	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2026-08-31" Remarks="initial API and implementation and/or initial documentation">
 	</VersionInfo>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.1" Author="Franz Höpfinger" Date="2026-09-20" Remarks="Rohwert-Anzeige an den Kalibrierpunkten (Zero-Raw/Span-Raw) fuer alle 8 Kanaele ergaenzt, siehe logiBUS_AI_Calibrate_IDA_OPC v1.7. Neue Parameter stObjZeroRaw/stObjSpanRaw + ID_ZERO_RAW_WRITE/ID_SPAN_RAW_WRITE pro Kanal, neue VT-Objekte NumberVariable_AIC_I0N_ZERORAW/_SPANRAW_N (DefaultPool_AIC_Numeric, IDs 21032-21047) + OPC-UA-Adressen AIC_I0N_ZERO/SPAN_RAW_WRITE (SubStrings).">
+	</VersionInfo>
 	<CompilerInfo packageName="Meins::InputOutputTester::Button_AI_Calibrate_OPC_UA">
 		<Import declaration="Meins::InputOutputTester::Button_AI_Calibrate_OPC_UA::SubStrings::AIC_I1_RAW_WRITE"/>
 		<Import declaration="Meins::InputOutputTester::Button_AI_Calibrate_OPC_UA::SubStrings::AIC_I1_CAL_WRITE"/>
@@ -159,6 +161,22 @@
 		<Import declaration="Meins::InputOutputTester::Button_AI_Calibrate_OPC_UA::SubStrings::AIC_I8_ZERO_WRITE"/>
 		<Import declaration="Meins::InputOutputTester::Button_AI_Calibrate_OPC_UA::SubStrings::AIC_I8_SPAN_READ"/>
 		<Import declaration="Meins::InputOutputTester::Button_AI_Calibrate_OPC_UA::SubStrings::AIC_I8_SPAN_WRITE"/>
+		<Import declaration="Meins::InputOutputTester::Button_AI_Calibrate_OPC_UA::SubStrings::AIC_I1_ZERO_RAW_WRITE"/>
+		<Import declaration="Meins::InputOutputTester::Button_AI_Calibrate_OPC_UA::SubStrings::AIC_I1_SPAN_RAW_WRITE"/>
+		<Import declaration="Meins::InputOutputTester::Button_AI_Calibrate_OPC_UA::SubStrings::AIC_I2_ZERO_RAW_WRITE"/>
+		<Import declaration="Meins::InputOutputTester::Button_AI_Calibrate_OPC_UA::SubStrings::AIC_I2_SPAN_RAW_WRITE"/>
+		<Import declaration="Meins::InputOutputTester::Button_AI_Calibrate_OPC_UA::SubStrings::AIC_I3_ZERO_RAW_WRITE"/>
+		<Import declaration="Meins::InputOutputTester::Button_AI_Calibrate_OPC_UA::SubStrings::AIC_I3_SPAN_RAW_WRITE"/>
+		<Import declaration="Meins::InputOutputTester::Button_AI_Calibrate_OPC_UA::SubStrings::AIC_I4_ZERO_RAW_WRITE"/>
+		<Import declaration="Meins::InputOutputTester::Button_AI_Calibrate_OPC_UA::SubStrings::AIC_I4_SPAN_RAW_WRITE"/>
+		<Import declaration="Meins::InputOutputTester::Button_AI_Calibrate_OPC_UA::SubStrings::AIC_I5_ZERO_RAW_WRITE"/>
+		<Import declaration="Meins::InputOutputTester::Button_AI_Calibrate_OPC_UA::SubStrings::AIC_I5_SPAN_RAW_WRITE"/>
+		<Import declaration="Meins::InputOutputTester::Button_AI_Calibrate_OPC_UA::SubStrings::AIC_I6_ZERO_RAW_WRITE"/>
+		<Import declaration="Meins::InputOutputTester::Button_AI_Calibrate_OPC_UA::SubStrings::AIC_I6_SPAN_RAW_WRITE"/>
+		<Import declaration="Meins::InputOutputTester::Button_AI_Calibrate_OPC_UA::SubStrings::AIC_I7_ZERO_RAW_WRITE"/>
+		<Import declaration="Meins::InputOutputTester::Button_AI_Calibrate_OPC_UA::SubStrings::AIC_I7_SPAN_RAW_WRITE"/>
+		<Import declaration="Meins::InputOutputTester::Button_AI_Calibrate_OPC_UA::SubStrings::AIC_I8_ZERO_RAW_WRITE"/>
+		<Import declaration="Meins::InputOutputTester::Button_AI_Calibrate_OPC_UA::SubStrings::AIC_I8_SPAN_RAW_WRITE"/>
 		<Import declaration="Uebungen::const::UT::AIC::DefaultPool_AIC_Numeric::NumberVariable_AIC_I01_ZERO_N"/>
 		<Import declaration="Uebungen::const::UT::AIC::DefaultPool_AIC_Numeric::NumberVariable_AIC_I01_SPAN_N"/>
 		<Import declaration="Uebungen::const::UT::AIC::DefaultPool_AIC_Numeric::NumberVariable_AIC_I02_ZERO_N"/>
@@ -175,11 +193,27 @@
 		<Import declaration="Uebungen::const::UT::AIC::DefaultPool_AIC_Numeric::NumberVariable_AIC_I07_SPAN_N"/>
 		<Import declaration="Uebungen::const::UT::AIC::DefaultPool_AIC_Numeric::NumberVariable_AIC_I08_ZERO_N"/>
 		<Import declaration="Uebungen::const::UT::AIC::DefaultPool_AIC_Numeric::NumberVariable_AIC_I08_SPAN_N"/>
+		<Import declaration="Uebungen::const::UT::AIC::DefaultPool_AIC_Numeric::NumberVariable_AIC_I01_ZERORAW_N"/>
+		<Import declaration="Uebungen::const::UT::AIC::DefaultPool_AIC_Numeric::NumberVariable_AIC_I01_SPANRAW_N"/>
+		<Import declaration="Uebungen::const::UT::AIC::DefaultPool_AIC_Numeric::NumberVariable_AIC_I02_ZERORAW_N"/>
+		<Import declaration="Uebungen::const::UT::AIC::DefaultPool_AIC_Numeric::NumberVariable_AIC_I02_SPANRAW_N"/>
+		<Import declaration="Uebungen::const::UT::AIC::DefaultPool_AIC_Numeric::NumberVariable_AIC_I03_ZERORAW_N"/>
+		<Import declaration="Uebungen::const::UT::AIC::DefaultPool_AIC_Numeric::NumberVariable_AIC_I03_SPANRAW_N"/>
+		<Import declaration="Uebungen::const::UT::AIC::DefaultPool_AIC_Numeric::NumberVariable_AIC_I04_ZERORAW_N"/>
+		<Import declaration="Uebungen::const::UT::AIC::DefaultPool_AIC_Numeric::NumberVariable_AIC_I04_SPANRAW_N"/>
+		<Import declaration="Uebungen::const::UT::AIC::DefaultPool_AIC_Numeric::NumberVariable_AIC_I05_ZERORAW_N"/>
+		<Import declaration="Uebungen::const::UT::AIC::DefaultPool_AIC_Numeric::NumberVariable_AIC_I05_SPANRAW_N"/>
+		<Import declaration="Uebungen::const::UT::AIC::DefaultPool_AIC_Numeric::NumberVariable_AIC_I06_ZERORAW_N"/>
+		<Import declaration="Uebungen::const::UT::AIC::DefaultPool_AIC_Numeric::NumberVariable_AIC_I06_SPANRAW_N"/>
+		<Import declaration="Uebungen::const::UT::AIC::DefaultPool_AIC_Numeric::NumberVariable_AIC_I07_ZERORAW_N"/>
+		<Import declaration="Uebungen::const::UT::AIC::DefaultPool_AIC_Numeric::NumberVariable_AIC_I07_SPANRAW_N"/>
+		<Import declaration="Uebungen::const::UT::AIC::DefaultPool_AIC_Numeric::NumberVariable_AIC_I08_ZERORAW_N"/>
+		<Import declaration="Uebungen::const::UT::AIC::DefaultPool_AIC_Numeric::NumberVariable_AIC_I08_SPANRAW_N"/>
 	</CompilerInfo>
 	<SubAppInterfaceList>
 	</SubAppInterfaceList>
 	<SubAppNetwork>
-		<SubApp Name="AnalogChannel_I1" Type="MyLib::sys::logiBUS_AI_Calibrate_IDA_OPC" x="-1000" y="-1100">
+		<SubApp Name="AnalogChannel_I1" Type="MyLib::sys::logiBUS_AI_Calibrate_IDA_OPC" x="-1000" y="-900">
 			<Parameter Name="u16ObjId_RAWVAR" Value="NumberVariable_AIC_RAW_I01"/>
 			<Parameter Name="stObjCal" Value="NumberVariable_AIC_CAL_I01_N"/>
 			<Parameter Name="u16ObjId_CO" Value="Button_AIC_I01_CO"/>
@@ -196,8 +230,12 @@
 			<Parameter Name="ID_ZERO_WRITE" Value="AIC_I1_ZERO_WRITE"/>
 			<Parameter Name="ID_SPAN_READ" Value="AIC_I1_SPAN_READ"/>
 			<Parameter Name="ID_SPAN_WRITE" Value="AIC_I1_SPAN_WRITE"/>
+			<Parameter Name="stObjZeroRaw" Value="NumberVariable_AIC_I01_ZERORAW_N"/>
+			<Parameter Name="stObjSpanRaw" Value="NumberVariable_AIC_I01_SPANRAW_N"/>
+			<Parameter Name="ID_ZERO_RAW_WRITE" Value="AIC_I1_ZERO_RAW_WRITE"/>
+			<Parameter Name="ID_SPAN_RAW_WRITE" Value="AIC_I1_SPAN_RAW_WRITE"/>
 		</SubApp>
-		<SubApp Name="AnalogChannel_I2" Type="MyLib::sys::logiBUS_AI_Calibrate_IDA_OPC" x="-1000" y="1100">
+		<SubApp Name="AnalogChannel_I2" Type="MyLib::sys::logiBUS_AI_Calibrate_IDA_OPC" x="-1000" y="1500">
 			<Parameter Name="u16ObjId_RAWVAR" Value="NumberVariable_AIC_RAW_I02"/>
 			<Parameter Name="stObjCal" Value="NumberVariable_AIC_CAL_I02_N"/>
 			<Parameter Name="u16ObjId_CO" Value="Button_AIC_I02_CO"/>
@@ -214,8 +252,12 @@
 			<Parameter Name="ID_ZERO_WRITE" Value="AIC_I2_ZERO_WRITE"/>
 			<Parameter Name="ID_SPAN_READ" Value="AIC_I2_SPAN_READ"/>
 			<Parameter Name="ID_SPAN_WRITE" Value="AIC_I2_SPAN_WRITE"/>
+			<Parameter Name="stObjZeroRaw" Value="NumberVariable_AIC_I02_ZERORAW_N"/>
+			<Parameter Name="stObjSpanRaw" Value="NumberVariable_AIC_I02_SPANRAW_N"/>
+			<Parameter Name="ID_ZERO_RAW_WRITE" Value="AIC_I2_ZERO_RAW_WRITE"/>
+			<Parameter Name="ID_SPAN_RAW_WRITE" Value="AIC_I2_SPAN_RAW_WRITE"/>
 		</SubApp>
-		<SubApp Name="AnalogChannel_I3" Type="MyLib::sys::logiBUS_AI_Calibrate_IDA_OPC" x="-1000" y="3300">
+		<SubApp Name="AnalogChannel_I3" Type="MyLib::sys::logiBUS_AI_Calibrate_IDA_OPC" x="-1000" y="3900">
 			<Parameter Name="u16ObjId_RAWVAR" Value="NumberVariable_AIC_RAW_I03"/>
 			<Parameter Name="stObjCal" Value="NumberVariable_AIC_CAL_I03_N"/>
 			<Parameter Name="u16ObjId_CO" Value="Button_AIC_I03_CO"/>
@@ -232,8 +274,12 @@
 			<Parameter Name="ID_ZERO_WRITE" Value="AIC_I3_ZERO_WRITE"/>
 			<Parameter Name="ID_SPAN_READ" Value="AIC_I3_SPAN_READ"/>
 			<Parameter Name="ID_SPAN_WRITE" Value="AIC_I3_SPAN_WRITE"/>
+			<Parameter Name="stObjZeroRaw" Value="NumberVariable_AIC_I03_ZERORAW_N"/>
+			<Parameter Name="stObjSpanRaw" Value="NumberVariable_AIC_I03_SPANRAW_N"/>
+			<Parameter Name="ID_ZERO_RAW_WRITE" Value="AIC_I3_ZERO_RAW_WRITE"/>
+			<Parameter Name="ID_SPAN_RAW_WRITE" Value="AIC_I3_SPAN_RAW_WRITE"/>
 		</SubApp>
-		<SubApp Name="AnalogChannel_I4" Type="MyLib::sys::logiBUS_AI_Calibrate_IDA_OPC" x="-1000" y="5500">
+		<SubApp Name="AnalogChannel_I4" Type="MyLib::sys::logiBUS_AI_Calibrate_IDA_OPC" x="-1000" y="6300">
 			<Parameter Name="u16ObjId_RAWVAR" Value="NumberVariable_AIC_RAW_I04"/>
 			<Parameter Name="stObjCal" Value="NumberVariable_AIC_CAL_I04_N"/>
 			<Parameter Name="u16ObjId_CO" Value="Button_AIC_I04_CO"/>
@@ -250,8 +296,12 @@
 			<Parameter Name="ID_ZERO_WRITE" Value="AIC_I4_ZERO_WRITE"/>
 			<Parameter Name="ID_SPAN_READ" Value="AIC_I4_SPAN_READ"/>
 			<Parameter Name="ID_SPAN_WRITE" Value="AIC_I4_SPAN_WRITE"/>
+			<Parameter Name="stObjZeroRaw" Value="NumberVariable_AIC_I04_ZERORAW_N"/>
+			<Parameter Name="stObjSpanRaw" Value="NumberVariable_AIC_I04_SPANRAW_N"/>
+			<Parameter Name="ID_ZERO_RAW_WRITE" Value="AIC_I4_ZERO_RAW_WRITE"/>
+			<Parameter Name="ID_SPAN_RAW_WRITE" Value="AIC_I4_SPAN_RAW_WRITE"/>
 		</SubApp>
-		<SubApp Name="AnalogChannel_I5" Type="MyLib::sys::logiBUS_AI_Calibrate_IDA_OPC" x="-1000" y="7700">
+		<SubApp Name="AnalogChannel_I5" Type="MyLib::sys::logiBUS_AI_Calibrate_IDA_OPC" x="-1000" y="8700">
 			<Parameter Name="u16ObjId_RAWVAR" Value="NumberVariable_AIC_RAW_I05"/>
 			<Parameter Name="stObjCal" Value="NumberVariable_AIC_CAL_I05_N"/>
 			<Parameter Name="u16ObjId_CO" Value="Button_AIC_I05_CO"/>
@@ -268,8 +318,12 @@
 			<Parameter Name="ID_ZERO_WRITE" Value="AIC_I5_ZERO_WRITE"/>
 			<Parameter Name="ID_SPAN_READ" Value="AIC_I5_SPAN_READ"/>
 			<Parameter Name="ID_SPAN_WRITE" Value="AIC_I5_SPAN_WRITE"/>
+			<Parameter Name="stObjZeroRaw" Value="NumberVariable_AIC_I05_ZERORAW_N"/>
+			<Parameter Name="stObjSpanRaw" Value="NumberVariable_AIC_I05_SPANRAW_N"/>
+			<Parameter Name="ID_ZERO_RAW_WRITE" Value="AIC_I5_ZERO_RAW_WRITE"/>
+			<Parameter Name="ID_SPAN_RAW_WRITE" Value="AIC_I5_SPAN_RAW_WRITE"/>
 		</SubApp>
-		<SubApp Name="AnalogChannel_I6" Type="MyLib::sys::logiBUS_AI_Calibrate_IDA_OPC" x="-1000" y="9900">
+		<SubApp Name="AnalogChannel_I6" Type="MyLib::sys::logiBUS_AI_Calibrate_IDA_OPC" x="-1000" y="11100">
 			<Parameter Name="u16ObjId_RAWVAR" Value="NumberVariable_AIC_RAW_I06"/>
 			<Parameter Name="stObjCal" Value="NumberVariable_AIC_CAL_I06_N"/>
 			<Parameter Name="u16ObjId_CO" Value="Button_AIC_I06_CO"/>
@@ -286,8 +340,12 @@
 			<Parameter Name="ID_ZERO_WRITE" Value="AIC_I6_ZERO_WRITE"/>
 			<Parameter Name="ID_SPAN_READ" Value="AIC_I6_SPAN_READ"/>
 			<Parameter Name="ID_SPAN_WRITE" Value="AIC_I6_SPAN_WRITE"/>
+			<Parameter Name="stObjZeroRaw" Value="NumberVariable_AIC_I06_ZERORAW_N"/>
+			<Parameter Name="stObjSpanRaw" Value="NumberVariable_AIC_I06_SPANRAW_N"/>
+			<Parameter Name="ID_ZERO_RAW_WRITE" Value="AIC_I6_ZERO_RAW_WRITE"/>
+			<Parameter Name="ID_SPAN_RAW_WRITE" Value="AIC_I6_SPAN_RAW_WRITE"/>
 		</SubApp>
-		<SubApp Name="AnalogChannel_I7" Type="MyLib::sys::logiBUS_AI_Calibrate_IDA_OPC" x="-1000" y="12100">
+		<SubApp Name="AnalogChannel_I7" Type="MyLib::sys::logiBUS_AI_Calibrate_IDA_OPC" x="-1000" y="13500">
 			<Parameter Name="u16ObjId_RAWVAR" Value="NumberVariable_AIC_RAW_I07"/>
 			<Parameter Name="stObjCal" Value="NumberVariable_AIC_CAL_I07_N"/>
 			<Parameter Name="u16ObjId_CO" Value="Button_AIC_I07_CO"/>
@@ -304,8 +362,12 @@
 			<Parameter Name="ID_ZERO_WRITE" Value="AIC_I7_ZERO_WRITE"/>
 			<Parameter Name="ID_SPAN_READ" Value="AIC_I7_SPAN_READ"/>
 			<Parameter Name="ID_SPAN_WRITE" Value="AIC_I7_SPAN_WRITE"/>
+			<Parameter Name="stObjZeroRaw" Value="NumberVariable_AIC_I07_ZERORAW_N"/>
+			<Parameter Name="stObjSpanRaw" Value="NumberVariable_AIC_I07_SPANRAW_N"/>
+			<Parameter Name="ID_ZERO_RAW_WRITE" Value="AIC_I7_ZERO_RAW_WRITE"/>
+			<Parameter Name="ID_SPAN_RAW_WRITE" Value="AIC_I7_SPAN_RAW_WRITE"/>
 		</SubApp>
-		<SubApp Name="AnalogChannel_I8" Type="MyLib::sys::logiBUS_AI_Calibrate_IDA_OPC" x="-1000" y="14300">
+		<SubApp Name="AnalogChannel_I8" Type="MyLib::sys::logiBUS_AI_Calibrate_IDA_OPC" x="-1000" y="15900">
 			<Parameter Name="u16ObjId_RAWVAR" Value="NumberVariable_AIC_RAW_I08"/>
 			<Parameter Name="stObjCal" Value="NumberVariable_AIC_CAL_I08_N"/>
 			<Parameter Name="u16ObjId_CO" Value="Button_AIC_I08_CO"/>
@@ -322,6 +384,10 @@
 			<Parameter Name="ID_ZERO_WRITE" Value="AIC_I8_ZERO_WRITE"/>
 			<Parameter Name="ID_SPAN_READ" Value="AIC_I8_SPAN_READ"/>
 			<Parameter Name="ID_SPAN_WRITE" Value="AIC_I8_SPAN_WRITE"/>
+			<Parameter Name="stObjZeroRaw" Value="NumberVariable_AIC_I08_ZERORAW_N"/>
+			<Parameter Name="stObjSpanRaw" Value="NumberVariable_AIC_I08_SPANRAW_N"/>
+			<Parameter Name="ID_ZERO_RAW_WRITE" Value="AIC_I8_ZERO_RAW_WRITE"/>
+			<Parameter Name="ID_SPAN_RAW_WRITE" Value="AIC_I8_SPAN_RAW_WRITE"/>
 		</SubApp>
 		<SubApp Name="Output_Q1" Type="MyLib::sys::Button_IXA_TO_logiBUS_QXA_BG_OPC" x="-4600" y="-700">
 			<Parameter Name="u16ObjId" Value="Button_Q01"/>
