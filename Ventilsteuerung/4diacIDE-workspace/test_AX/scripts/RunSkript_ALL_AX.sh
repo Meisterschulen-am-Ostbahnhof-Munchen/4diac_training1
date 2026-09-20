@@ -15,6 +15,7 @@ echo "Starting GcfScript processing..."
 ./RunSkript_Workspace_Scroll_AX.sh
 ./RunSkript_Workspace_PI_AX.sh
 ./RunSkript_Workspace_AI_Calibrate_2P_AX.sh
+./RunSkript_Workspace_AI_Calibrate_3P_AX.sh
 ./RunSkript_Workspace_AI_AX.sh
 ./RunSkript_Workspace_PWM12_AX.sh
 ./RunSkript_Workspace_Dreieck_AX.sh
