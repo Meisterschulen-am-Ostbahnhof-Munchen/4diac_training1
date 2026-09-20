@@ -1,69 +1,69 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<SubAppType Name="InputOutputTesterButton_AI_Calibrate_OPC_UA" Comment="AI Calibrate Tester (OPC-UA): 8 Analog-Eingaenge mit 2-Punkt-Kalibrierung (Rohwert+kalibrierter Wert+Bargraph+CO/CS) + 12 unveraenderte digitale Ausgaenge">
+<SubAppType Name="InputOutputTesterButton_AI_Calibrate_2P_OPC_UA" Comment="AI Calibrate Tester (OPC-UA): 8 Analog-Eingaenge mit 2-Punkt-Kalibrierung (Rohwert+kalibrierter Wert+Bargraph+CO/CS) + 12 unveraenderte digitale Ausgaenge">
 	<Identification Standard="61499-2" Description="Copyright (c) 2026 Meisterschulen am Ostbahnhof  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0">
 	</Identification>
 	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2026-08-31" Remarks="initial API and implementation and/or initial documentation">
 	</VersionInfo>
 	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.1" Author="Franz Höpfinger" Date="2026-09-20" Remarks="Rohwert-Anzeige an den Kalibrierpunkten (Zero-Raw/Span-Raw) fuer alle 8 Kanaele ergaenzt, siehe logiBUS_AI_Calibrate_IDA_OPC v1.7. Neue Parameter stObjZeroRaw/stObjSpanRaw + ID_ZERO_RAW_WRITE/ID_SPAN_RAW_WRITE pro Kanal, neue VT-Objekte NumberVariable_AIC_I0N_ZERORAW/_SPANRAW_N (DefaultPool_AIC_Numeric, IDs 21032-21047) + OPC-UA-Adressen AIC_I0N_ZERO/SPAN_RAW_WRITE (SubStrings).">
 	</VersionInfo>
-	<CompilerInfo packageName="Meins::InputOutputTester::Button_AI_Calibrate_OPC_UA">
-		<Import declaration="Meins::InputOutputTester::Button_AI_Calibrate_OPC_UA::SubStrings::AIC_I1_RAW_WRITE"/>
-		<Import declaration="Meins::InputOutputTester::Button_AI_Calibrate_OPC_UA::SubStrings::AIC_I1_CAL_WRITE"/>
-		<Import declaration="Meins::InputOutputTester::Button_AI_Calibrate_OPC_UA::SubStrings::AIC_I2_RAW_WRITE"/>
-		<Import declaration="Meins::InputOutputTester::Button_AI_Calibrate_OPC_UA::SubStrings::AIC_I2_CAL_WRITE"/>
-		<Import declaration="Meins::InputOutputTester::Button_AI_Calibrate_OPC_UA::SubStrings::AIC_I3_RAW_WRITE"/>
-		<Import declaration="Meins::InputOutputTester::Button_AI_Calibrate_OPC_UA::SubStrings::AIC_I3_CAL_WRITE"/>
-		<Import declaration="Meins::InputOutputTester::Button_AI_Calibrate_OPC_UA::SubStrings::AIC_I4_RAW_WRITE"/>
-		<Import declaration="Meins::InputOutputTester::Button_AI_Calibrate_OPC_UA::SubStrings::AIC_I4_CAL_WRITE"/>
-		<Import declaration="Meins::InputOutputTester::Button_AI_Calibrate_OPC_UA::SubStrings::AIC_I5_RAW_WRITE"/>
-		<Import declaration="Meins::InputOutputTester::Button_AI_Calibrate_OPC_UA::SubStrings::AIC_I5_CAL_WRITE"/>
-		<Import declaration="Meins::InputOutputTester::Button_AI_Calibrate_OPC_UA::SubStrings::AIC_I6_RAW_WRITE"/>
-		<Import declaration="Meins::InputOutputTester::Button_AI_Calibrate_OPC_UA::SubStrings::AIC_I6_CAL_WRITE"/>
-		<Import declaration="Meins::InputOutputTester::Button_AI_Calibrate_OPC_UA::SubStrings::AIC_I7_RAW_WRITE"/>
-		<Import declaration="Meins::InputOutputTester::Button_AI_Calibrate_OPC_UA::SubStrings::AIC_I7_CAL_WRITE"/>
-		<Import declaration="Meins::InputOutputTester::Button_AI_Calibrate_OPC_UA::SubStrings::AIC_I8_RAW_WRITE"/>
-		<Import declaration="Meins::InputOutputTester::Button_AI_Calibrate_OPC_UA::SubStrings::AIC_I8_CAL_WRITE"/>
-		<Import declaration="Meins::InputOutputTester::Button_AI_Calibrate_OPC_UA::SubStrings::AIC_I1_CO_METHOD"/>
-		<Import declaration="Meins::InputOutputTester::Button_AI_Calibrate_OPC_UA::SubStrings::AIC_I1_CS_METHOD"/>
-		<Import declaration="Meins::InputOutputTester::Button_AI_Calibrate_OPC_UA::SubStrings::AIC_I2_CO_METHOD"/>
-		<Import declaration="Meins::InputOutputTester::Button_AI_Calibrate_OPC_UA::SubStrings::AIC_I2_CS_METHOD"/>
-		<Import declaration="Meins::InputOutputTester::Button_AI_Calibrate_OPC_UA::SubStrings::AIC_I3_CO_METHOD"/>
-		<Import declaration="Meins::InputOutputTester::Button_AI_Calibrate_OPC_UA::SubStrings::AIC_I3_CS_METHOD"/>
-		<Import declaration="Meins::InputOutputTester::Button_AI_Calibrate_OPC_UA::SubStrings::AIC_I4_CO_METHOD"/>
-		<Import declaration="Meins::InputOutputTester::Button_AI_Calibrate_OPC_UA::SubStrings::AIC_I4_CS_METHOD"/>
-		<Import declaration="Meins::InputOutputTester::Button_AI_Calibrate_OPC_UA::SubStrings::AIC_I5_CO_METHOD"/>
-		<Import declaration="Meins::InputOutputTester::Button_AI_Calibrate_OPC_UA::SubStrings::AIC_I5_CS_METHOD"/>
-		<Import declaration="Meins::InputOutputTester::Button_AI_Calibrate_OPC_UA::SubStrings::AIC_I6_CO_METHOD"/>
-		<Import declaration="Meins::InputOutputTester::Button_AI_Calibrate_OPC_UA::SubStrings::AIC_I6_CS_METHOD"/>
-		<Import declaration="Meins::InputOutputTester::Button_AI_Calibrate_OPC_UA::SubStrings::AIC_I7_CO_METHOD"/>
-		<Import declaration="Meins::InputOutputTester::Button_AI_Calibrate_OPC_UA::SubStrings::AIC_I7_CS_METHOD"/>
-		<Import declaration="Meins::InputOutputTester::Button_AI_Calibrate_OPC_UA::SubStrings::AIC_I8_CO_METHOD"/>
-		<Import declaration="Meins::InputOutputTester::Button_AI_Calibrate_OPC_UA::SubStrings::AIC_I8_CS_METHOD"/>
-		<Import declaration="Meins::InputOutputTester::Button_AI_Calibrate_OPC_UA::SubStrings::Q01_READ"/>
-		<Import declaration="Meins::InputOutputTester::Button_AI_Calibrate_OPC_UA::SubStrings::Q01_WRITE"/>
-		<Import declaration="Meins::InputOutputTester::Button_AI_Calibrate_OPC_UA::SubStrings::Q02_READ"/>
-		<Import declaration="Meins::InputOutputTester::Button_AI_Calibrate_OPC_UA::SubStrings::Q02_WRITE"/>
-		<Import declaration="Meins::InputOutputTester::Button_AI_Calibrate_OPC_UA::SubStrings::Q03_READ"/>
-		<Import declaration="Meins::InputOutputTester::Button_AI_Calibrate_OPC_UA::SubStrings::Q03_WRITE"/>
-		<Import declaration="Meins::InputOutputTester::Button_AI_Calibrate_OPC_UA::SubStrings::Q04_READ"/>
-		<Import declaration="Meins::InputOutputTester::Button_AI_Calibrate_OPC_UA::SubStrings::Q04_WRITE"/>
-		<Import declaration="Meins::InputOutputTester::Button_AI_Calibrate_OPC_UA::SubStrings::Q05_READ"/>
-		<Import declaration="Meins::InputOutputTester::Button_AI_Calibrate_OPC_UA::SubStrings::Q05_WRITE"/>
-		<Import declaration="Meins::InputOutputTester::Button_AI_Calibrate_OPC_UA::SubStrings::Q06_READ"/>
-		<Import declaration="Meins::InputOutputTester::Button_AI_Calibrate_OPC_UA::SubStrings::Q06_WRITE"/>
-		<Import declaration="Meins::InputOutputTester::Button_AI_Calibrate_OPC_UA::SubStrings::Q07_READ"/>
-		<Import declaration="Meins::InputOutputTester::Button_AI_Calibrate_OPC_UA::SubStrings::Q07_WRITE"/>
-		<Import declaration="Meins::InputOutputTester::Button_AI_Calibrate_OPC_UA::SubStrings::Q08_READ"/>
-		<Import declaration="Meins::InputOutputTester::Button_AI_Calibrate_OPC_UA::SubStrings::Q08_WRITE"/>
-		<Import declaration="Meins::InputOutputTester::Button_AI_Calibrate_OPC_UA::SubStrings::Q09_READ"/>
-		<Import declaration="Meins::InputOutputTester::Button_AI_Calibrate_OPC_UA::SubStrings::Q09_WRITE"/>
-		<Import declaration="Meins::InputOutputTester::Button_AI_Calibrate_OPC_UA::SubStrings::Q10_READ"/>
-		<Import declaration="Meins::InputOutputTester::Button_AI_Calibrate_OPC_UA::SubStrings::Q10_WRITE"/>
-		<Import declaration="Meins::InputOutputTester::Button_AI_Calibrate_OPC_UA::SubStrings::Q11_READ"/>
-		<Import declaration="Meins::InputOutputTester::Button_AI_Calibrate_OPC_UA::SubStrings::Q11_WRITE"/>
-		<Import declaration="Meins::InputOutputTester::Button_AI_Calibrate_OPC_UA::SubStrings::Q12_READ"/>
-		<Import declaration="Meins::InputOutputTester::Button_AI_Calibrate_OPC_UA::SubStrings::Q12_WRITE"/>
-		<Import declaration="Meins::InputOutputTester::Button_AI_Calibrate_OPC_UA::SubStrings::Tick_WRITE"/>
+	<CompilerInfo packageName="Meins::InputOutputTester::Button_AI_Calibrate_2P_OPC_UA">
+		<Import declaration="Meins::InputOutputTester::Button_AI_Calibrate_2P_OPC_UA::SubStrings::AIC_I1_RAW_WRITE"/>
+		<Import declaration="Meins::InputOutputTester::Button_AI_Calibrate_2P_OPC_UA::SubStrings::AIC_I1_CAL_WRITE"/>
+		<Import declaration="Meins::InputOutputTester::Button_AI_Calibrate_2P_OPC_UA::SubStrings::AIC_I2_RAW_WRITE"/>
+		<Import declaration="Meins::InputOutputTester::Button_AI_Calibrate_2P_OPC_UA::SubStrings::AIC_I2_CAL_WRITE"/>
+		<Import declaration="Meins::InputOutputTester::Button_AI_Calibrate_2P_OPC_UA::SubStrings::AIC_I3_RAW_WRITE"/>
+		<Import declaration="Meins::InputOutputTester::Button_AI_Calibrate_2P_OPC_UA::SubStrings::AIC_I3_CAL_WRITE"/>
+		<Import declaration="Meins::InputOutputTester::Button_AI_Calibrate_2P_OPC_UA::SubStrings::AIC_I4_RAW_WRITE"/>
+		<Import declaration="Meins::InputOutputTester::Button_AI_Calibrate_2P_OPC_UA::SubStrings::AIC_I4_CAL_WRITE"/>
+		<Import declaration="Meins::InputOutputTester::Button_AI_Calibrate_2P_OPC_UA::SubStrings::AIC_I5_RAW_WRITE"/>
+		<Import declaration="Meins::InputOutputTester::Button_AI_Calibrate_2P_OPC_UA::SubStrings::AIC_I5_CAL_WRITE"/>
+		<Import declaration="Meins::InputOutputTester::Button_AI_Calibrate_2P_OPC_UA::SubStrings::AIC_I6_RAW_WRITE"/>
+		<Import declaration="Meins::InputOutputTester::Button_AI_Calibrate_2P_OPC_UA::SubStrings::AIC_I6_CAL_WRITE"/>
+		<Import declaration="Meins::InputOutputTester::Button_AI_Calibrate_2P_OPC_UA::SubStrings::AIC_I7_RAW_WRITE"/>
+		<Import declaration="Meins::InputOutputTester::Button_AI_Calibrate_2P_OPC_UA::SubStrings::AIC_I7_CAL_WRITE"/>
+		<Import declaration="Meins::InputOutputTester::Button_AI_Calibrate_2P_OPC_UA::SubStrings::AIC_I8_RAW_WRITE"/>
+		<Import declaration="Meins::InputOutputTester::Button_AI_Calibrate_2P_OPC_UA::SubStrings::AIC_I8_CAL_WRITE"/>
+		<Import declaration="Meins::InputOutputTester::Button_AI_Calibrate_2P_OPC_UA::SubStrings::AIC_I1_CO_METHOD"/>
+		<Import declaration="Meins::InputOutputTester::Button_AI_Calibrate_2P_OPC_UA::SubStrings::AIC_I1_CS_METHOD"/>
+		<Import declaration="Meins::InputOutputTester::Button_AI_Calibrate_2P_OPC_UA::SubStrings::AIC_I2_CO_METHOD"/>
+		<Import declaration="Meins::InputOutputTester::Button_AI_Calibrate_2P_OPC_UA::SubStrings::AIC_I2_CS_METHOD"/>
+		<Import declaration="Meins::InputOutputTester::Button_AI_Calibrate_2P_OPC_UA::SubStrings::AIC_I3_CO_METHOD"/>
+		<Import declaration="Meins::InputOutputTester::Button_AI_Calibrate_2P_OPC_UA::SubStrings::AIC_I3_CS_METHOD"/>
+		<Import declaration="Meins::InputOutputTester::Button_AI_Calibrate_2P_OPC_UA::SubStrings::AIC_I4_CO_METHOD"/>
+		<Import declaration="Meins::InputOutputTester::Button_AI_Calibrate_2P_OPC_UA::SubStrings::AIC_I4_CS_METHOD"/>
+		<Import declaration="Meins::InputOutputTester::Button_AI_Calibrate_2P_OPC_UA::SubStrings::AIC_I5_CO_METHOD"/>
+		<Import declaration="Meins::InputOutputTester::Button_AI_Calibrate_2P_OPC_UA::SubStrings::AIC_I5_CS_METHOD"/>
+		<Import declaration="Meins::InputOutputTester::Button_AI_Calibrate_2P_OPC_UA::SubStrings::AIC_I6_CO_METHOD"/>
+		<Import declaration="Meins::InputOutputTester::Button_AI_Calibrate_2P_OPC_UA::SubStrings::AIC_I6_CS_METHOD"/>
+		<Import declaration="Meins::InputOutputTester::Button_AI_Calibrate_2P_OPC_UA::SubStrings::AIC_I7_CO_METHOD"/>
+		<Import declaration="Meins::InputOutputTester::Button_AI_Calibrate_2P_OPC_UA::SubStrings::AIC_I7_CS_METHOD"/>
+		<Import declaration="Meins::InputOutputTester::Button_AI_Calibrate_2P_OPC_UA::SubStrings::AIC_I8_CO_METHOD"/>
+		<Import declaration="Meins::InputOutputTester::Button_AI_Calibrate_2P_OPC_UA::SubStrings::AIC_I8_CS_METHOD"/>
+		<Import declaration="Meins::InputOutputTester::Button_AI_Calibrate_2P_OPC_UA::SubStrings::Q01_READ"/>
+		<Import declaration="Meins::InputOutputTester::Button_AI_Calibrate_2P_OPC_UA::SubStrings::Q01_WRITE"/>
+		<Import declaration="Meins::InputOutputTester::Button_AI_Calibrate_2P_OPC_UA::SubStrings::Q02_READ"/>
+		<Import declaration="Meins::InputOutputTester::Button_AI_Calibrate_2P_OPC_UA::SubStrings::Q02_WRITE"/>
+		<Import declaration="Meins::InputOutputTester::Button_AI_Calibrate_2P_OPC_UA::SubStrings::Q03_READ"/>
+		<Import declaration="Meins::InputOutputTester::Button_AI_Calibrate_2P_OPC_UA::SubStrings::Q03_WRITE"/>
+		<Import declaration="Meins::InputOutputTester::Button_AI_Calibrate_2P_OPC_UA::SubStrings::Q04_READ"/>
+		<Import declaration="Meins::InputOutputTester::Button_AI_Calibrate_2P_OPC_UA::SubStrings::Q04_WRITE"/>
+		<Import declaration="Meins::InputOutputTester::Button_AI_Calibrate_2P_OPC_UA::SubStrings::Q05_READ"/>
+		<Import declaration="Meins::InputOutputTester::Button_AI_Calibrate_2P_OPC_UA::SubStrings::Q05_WRITE"/>
+		<Import declaration="Meins::InputOutputTester::Button_AI_Calibrate_2P_OPC_UA::SubStrings::Q06_READ"/>
+		<Import declaration="Meins::InputOutputTester::Button_AI_Calibrate_2P_OPC_UA::SubStrings::Q06_WRITE"/>
+		<Import declaration="Meins::InputOutputTester::Button_AI_Calibrate_2P_OPC_UA::SubStrings::Q07_READ"/>
+		<Import declaration="Meins::InputOutputTester::Button_AI_Calibrate_2P_OPC_UA::SubStrings::Q07_WRITE"/>
+		<Import declaration="Meins::InputOutputTester::Button_AI_Calibrate_2P_OPC_UA::SubStrings::Q08_READ"/>
+		<Import declaration="Meins::InputOutputTester::Button_AI_Calibrate_2P_OPC_UA::SubStrings::Q08_WRITE"/>
+		<Import declaration="Meins::InputOutputTester::Button_AI_Calibrate_2P_OPC_UA::SubStrings::Q09_READ"/>
+		<Import declaration="Meins::InputOutputTester::Button_AI_Calibrate_2P_OPC_UA::SubStrings::Q09_WRITE"/>
+		<Import declaration="Meins::InputOutputTester::Button_AI_Calibrate_2P_OPC_UA::SubStrings::Q10_READ"/>
+		<Import declaration="Meins::InputOutputTester::Button_AI_Calibrate_2P_OPC_UA::SubStrings::Q10_WRITE"/>
+		<Import declaration="Meins::InputOutputTester::Button_AI_Calibrate_2P_OPC_UA::SubStrings::Q11_READ"/>
+		<Import declaration="Meins::InputOutputTester::Button_AI_Calibrate_2P_OPC_UA::SubStrings::Q11_WRITE"/>
+		<Import declaration="Meins::InputOutputTester::Button_AI_Calibrate_2P_OPC_UA::SubStrings::Q12_READ"/>
+		<Import declaration="Meins::InputOutputTester::Button_AI_Calibrate_2P_OPC_UA::SubStrings::Q12_WRITE"/>
+		<Import declaration="Meins::InputOutputTester::Button_AI_Calibrate_2P_OPC_UA::SubStrings::Tick_WRITE"/>
 		<Import declaration="Uebungen::const::UT::AIC::DefaultPool_AIC::NumberVariable_AIC_RAW_I01"/>
 		<Import declaration="Uebungen::const::UT::AIC::DefaultPool_AIC::NumberVariable_AIC_RAW_I02"/>
 		<Import declaration="Uebungen::const::UT::AIC::DefaultPool_AIC::NumberVariable_AIC_RAW_I03"/>
@@ -129,54 +129,54 @@
 		<Import declaration="logiBUS::io::DQ::logiBUS_DO::Output_Q7"/>
 		<Import declaration="logiBUS::io::DQ::logiBUS_DO::Output_Q8"/>
 		<Import declaration="logiBUS::io::DQ::logiBUS_DO::Output_Q9"/>
-		<Import declaration="Meins::InputOutputTester::Button_AI_Calibrate_OPC_UA::SubStrings::AIC_I1_ZERO_READ"/>
-		<Import declaration="Meins::InputOutputTester::Button_AI_Calibrate_OPC_UA::SubStrings::AIC_I1_ZERO_WRITE"/>
-		<Import declaration="Meins::InputOutputTester::Button_AI_Calibrate_OPC_UA::SubStrings::AIC_I1_SPAN_READ"/>
-		<Import declaration="Meins::InputOutputTester::Button_AI_Calibrate_OPC_UA::SubStrings::AIC_I1_SPAN_WRITE"/>
-		<Import declaration="Meins::InputOutputTester::Button_AI_Calibrate_OPC_UA::SubStrings::AIC_I2_ZERO_READ"/>
-		<Import declaration="Meins::InputOutputTester::Button_AI_Calibrate_OPC_UA::SubStrings::AIC_I2_ZERO_WRITE"/>
-		<Import declaration="Meins::InputOutputTester::Button_AI_Calibrate_OPC_UA::SubStrings::AIC_I2_SPAN_READ"/>
-		<Import declaration="Meins::InputOutputTester::Button_AI_Calibrate_OPC_UA::SubStrings::AIC_I2_SPAN_WRITE"/>
-		<Import declaration="Meins::InputOutputTester::Button_AI_Calibrate_OPC_UA::SubStrings::AIC_I3_ZERO_READ"/>
-		<Import declaration="Meins::InputOutputTester::Button_AI_Calibrate_OPC_UA::SubStrings::AIC_I3_ZERO_WRITE"/>
-		<Import declaration="Meins::InputOutputTester::Button_AI_Calibrate_OPC_UA::SubStrings::AIC_I3_SPAN_READ"/>
-		<Import declaration="Meins::InputOutputTester::Button_AI_Calibrate_OPC_UA::SubStrings::AIC_I3_SPAN_WRITE"/>
-		<Import declaration="Meins::InputOutputTester::Button_AI_Calibrate_OPC_UA::SubStrings::AIC_I4_ZERO_READ"/>
-		<Import declaration="Meins::InputOutputTester::Button_AI_Calibrate_OPC_UA::SubStrings::AIC_I4_ZERO_WRITE"/>
-		<Import declaration="Meins::InputOutputTester::Button_AI_Calibrate_OPC_UA::SubStrings::AIC_I4_SPAN_READ"/>
-		<Import declaration="Meins::InputOutputTester::Button_AI_Calibrate_OPC_UA::SubStrings::AIC_I4_SPAN_WRITE"/>
-		<Import declaration="Meins::InputOutputTester::Button_AI_Calibrate_OPC_UA::SubStrings::AIC_I5_ZERO_READ"/>
-		<Import declaration="Meins::InputOutputTester::Button_AI_Calibrate_OPC_UA::SubStrings::AIC_I5_ZERO_WRITE"/>
-		<Import declaration="Meins::InputOutputTester::Button_AI_Calibrate_OPC_UA::SubStrings::AIC_I5_SPAN_READ"/>
-		<Import declaration="Meins::InputOutputTester::Button_AI_Calibrate_OPC_UA::SubStrings::AIC_I5_SPAN_WRITE"/>
-		<Import declaration="Meins::InputOutputTester::Button_AI_Calibrate_OPC_UA::SubStrings::AIC_I6_ZERO_READ"/>
-		<Import declaration="Meins::InputOutputTester::Button_AI_Calibrate_OPC_UA::SubStrings::AIC_I6_ZERO_WRITE"/>
-		<Import declaration="Meins::InputOutputTester::Button_AI_Calibrate_OPC_UA::SubStrings::AIC_I6_SPAN_READ"/>
-		<Import declaration="Meins::InputOutputTester::Button_AI_Calibrate_OPC_UA::SubStrings::AIC_I6_SPAN_WRITE"/>
-		<Import declaration="Meins::InputOutputTester::Button_AI_Calibrate_OPC_UA::SubStrings::AIC_I7_ZERO_READ"/>
-		<Import declaration="Meins::InputOutputTester::Button_AI_Calibrate_OPC_UA::SubStrings::AIC_I7_ZERO_WRITE"/>
-		<Import declaration="Meins::InputOutputTester::Button_AI_Calibrate_OPC_UA::SubStrings::AIC_I7_SPAN_READ"/>
-		<Import declaration="Meins::InputOutputTester::Button_AI_Calibrate_OPC_UA::SubStrings::AIC_I7_SPAN_WRITE"/>
-		<Import declaration="Meins::InputOutputTester::Button_AI_Calibrate_OPC_UA::SubStrings::AIC_I8_ZERO_READ"/>
-		<Import declaration="Meins::InputOutputTester::Button_AI_Calibrate_OPC_UA::SubStrings::AIC_I8_ZERO_WRITE"/>
-		<Import declaration="Meins::InputOutputTester::Button_AI_Calibrate_OPC_UA::SubStrings::AIC_I8_SPAN_READ"/>
-		<Import declaration="Meins::InputOutputTester::Button_AI_Calibrate_OPC_UA::SubStrings::AIC_I8_SPAN_WRITE"/>
-		<Import declaration="Meins::InputOutputTester::Button_AI_Calibrate_OPC_UA::SubStrings::AIC_I1_ZERO_RAW_WRITE"/>
-		<Import declaration="Meins::InputOutputTester::Button_AI_Calibrate_OPC_UA::SubStrings::AIC_I1_SPAN_RAW_WRITE"/>
-		<Import declaration="Meins::InputOutputTester::Button_AI_Calibrate_OPC_UA::SubStrings::AIC_I2_ZERO_RAW_WRITE"/>
-		<Import declaration="Meins::InputOutputTester::Button_AI_Calibrate_OPC_UA::SubStrings::AIC_I2_SPAN_RAW_WRITE"/>
-		<Import declaration="Meins::InputOutputTester::Button_AI_Calibrate_OPC_UA::SubStrings::AIC_I3_ZERO_RAW_WRITE"/>
-		<Import declaration="Meins::InputOutputTester::Button_AI_Calibrate_OPC_UA::SubStrings::AIC_I3_SPAN_RAW_WRITE"/>
-		<Import declaration="Meins::InputOutputTester::Button_AI_Calibrate_OPC_UA::SubStrings::AIC_I4_ZERO_RAW_WRITE"/>
-		<Import declaration="Meins::InputOutputTester::Button_AI_Calibrate_OPC_UA::SubStrings::AIC_I4_SPAN_RAW_WRITE"/>
-		<Import declaration="Meins::InputOutputTester::Button_AI_Calibrate_OPC_UA::SubStrings::AIC_I5_ZERO_RAW_WRITE"/>
-		<Import declaration="Meins::InputOutputTester::Button_AI_Calibrate_OPC_UA::SubStrings::AIC_I5_SPAN_RAW_WRITE"/>
-		<Import declaration="Meins::InputOutputTester::Button_AI_Calibrate_OPC_UA::SubStrings::AIC_I6_ZERO_RAW_WRITE"/>
-		<Import declaration="Meins::InputOutputTester::Button_AI_Calibrate_OPC_UA::SubStrings::AIC_I6_SPAN_RAW_WRITE"/>
-		<Import declaration="Meins::InputOutputTester::Button_AI_Calibrate_OPC_UA::SubStrings::AIC_I7_ZERO_RAW_WRITE"/>
-		<Import declaration="Meins::InputOutputTester::Button_AI_Calibrate_OPC_UA::SubStrings::AIC_I7_SPAN_RAW_WRITE"/>
-		<Import declaration="Meins::InputOutputTester::Button_AI_Calibrate_OPC_UA::SubStrings::AIC_I8_ZERO_RAW_WRITE"/>
-		<Import declaration="Meins::InputOutputTester::Button_AI_Calibrate_OPC_UA::SubStrings::AIC_I8_SPAN_RAW_WRITE"/>
+		<Import declaration="Meins::InputOutputTester::Button_AI_Calibrate_2P_OPC_UA::SubStrings::AIC_I1_ZERO_READ"/>
+		<Import declaration="Meins::InputOutputTester::Button_AI_Calibrate_2P_OPC_UA::SubStrings::AIC_I1_ZERO_WRITE"/>
+		<Import declaration="Meins::InputOutputTester::Button_AI_Calibrate_2P_OPC_UA::SubStrings::AIC_I1_SPAN_READ"/>
+		<Import declaration="Meins::InputOutputTester::Button_AI_Calibrate_2P_OPC_UA::SubStrings::AIC_I1_SPAN_WRITE"/>
+		<Import declaration="Meins::InputOutputTester::Button_AI_Calibrate_2P_OPC_UA::SubStrings::AIC_I2_ZERO_READ"/>
+		<Import declaration="Meins::InputOutputTester::Button_AI_Calibrate_2P_OPC_UA::SubStrings::AIC_I2_ZERO_WRITE"/>
+		<Import declaration="Meins::InputOutputTester::Button_AI_Calibrate_2P_OPC_UA::SubStrings::AIC_I2_SPAN_READ"/>
+		<Import declaration="Meins::InputOutputTester::Button_AI_Calibrate_2P_OPC_UA::SubStrings::AIC_I2_SPAN_WRITE"/>
+		<Import declaration="Meins::InputOutputTester::Button_AI_Calibrate_2P_OPC_UA::SubStrings::AIC_I3_ZERO_READ"/>
+		<Import declaration="Meins::InputOutputTester::Button_AI_Calibrate_2P_OPC_UA::SubStrings::AIC_I3_ZERO_WRITE"/>
+		<Import declaration="Meins::InputOutputTester::Button_AI_Calibrate_2P_OPC_UA::SubStrings::AIC_I3_SPAN_READ"/>
+		<Import declaration="Meins::InputOutputTester::Button_AI_Calibrate_2P_OPC_UA::SubStrings::AIC_I3_SPAN_WRITE"/>
+		<Import declaration="Meins::InputOutputTester::Button_AI_Calibrate_2P_OPC_UA::SubStrings::AIC_I4_ZERO_READ"/>
+		<Import declaration="Meins::InputOutputTester::Button_AI_Calibrate_2P_OPC_UA::SubStrings::AIC_I4_ZERO_WRITE"/>
+		<Import declaration="Meins::InputOutputTester::Button_AI_Calibrate_2P_OPC_UA::SubStrings::AIC_I4_SPAN_READ"/>
+		<Import declaration="Meins::InputOutputTester::Button_AI_Calibrate_2P_OPC_UA::SubStrings::AIC_I4_SPAN_WRITE"/>
+		<Import declaration="Meins::InputOutputTester::Button_AI_Calibrate_2P_OPC_UA::SubStrings::AIC_I5_ZERO_READ"/>
+		<Import declaration="Meins::InputOutputTester::Button_AI_Calibrate_2P_OPC_UA::SubStrings::AIC_I5_ZERO_WRITE"/>
+		<Import declaration="Meins::InputOutputTester::Button_AI_Calibrate_2P_OPC_UA::SubStrings::AIC_I5_SPAN_READ"/>
+		<Import declaration="Meins::InputOutputTester::Button_AI_Calibrate_2P_OPC_UA::SubStrings::AIC_I5_SPAN_WRITE"/>
+		<Import declaration="Meins::InputOutputTester::Button_AI_Calibrate_2P_OPC_UA::SubStrings::AIC_I6_ZERO_READ"/>
+		<Import declaration="Meins::InputOutputTester::Button_AI_Calibrate_2P_OPC_UA::SubStrings::AIC_I6_ZERO_WRITE"/>
+		<Import declaration="Meins::InputOutputTester::Button_AI_Calibrate_2P_OPC_UA::SubStrings::AIC_I6_SPAN_READ"/>
+		<Import declaration="Meins::InputOutputTester::Button_AI_Calibrate_2P_OPC_UA::SubStrings::AIC_I6_SPAN_WRITE"/>
+		<Import declaration="Meins::InputOutputTester::Button_AI_Calibrate_2P_OPC_UA::SubStrings::AIC_I7_ZERO_READ"/>
+		<Import declaration="Meins::InputOutputTester::Button_AI_Calibrate_2P_OPC_UA::SubStrings::AIC_I7_ZERO_WRITE"/>
+		<Import declaration="Meins::InputOutputTester::Button_AI_Calibrate_2P_OPC_UA::SubStrings::AIC_I7_SPAN_READ"/>
+		<Import declaration="Meins::InputOutputTester::Button_AI_Calibrate_2P_OPC_UA::SubStrings::AIC_I7_SPAN_WRITE"/>
+		<Import declaration="Meins::InputOutputTester::Button_AI_Calibrate_2P_OPC_UA::SubStrings::AIC_I8_ZERO_READ"/>
+		<Import declaration="Meins::InputOutputTester::Button_AI_Calibrate_2P_OPC_UA::SubStrings::AIC_I8_ZERO_WRITE"/>
+		<Import declaration="Meins::InputOutputTester::Button_AI_Calibrate_2P_OPC_UA::SubStrings::AIC_I8_SPAN_READ"/>
+		<Import declaration="Meins::InputOutputTester::Button_AI_Calibrate_2P_OPC_UA::SubStrings::AIC_I8_SPAN_WRITE"/>
+		<Import declaration="Meins::InputOutputTester::Button_AI_Calibrate_2P_OPC_UA::SubStrings::AIC_I1_ZERO_RAW_WRITE"/>
+		<Import declaration="Meins::InputOutputTester::Button_AI_Calibrate_2P_OPC_UA::SubStrings::AIC_I1_SPAN_RAW_WRITE"/>
+		<Import declaration="Meins::InputOutputTester::Button_AI_Calibrate_2P_OPC_UA::SubStrings::AIC_I2_ZERO_RAW_WRITE"/>
+		<Import declaration="Meins::InputOutputTester::Button_AI_Calibrate_2P_OPC_UA::SubStrings::AIC_I2_SPAN_RAW_WRITE"/>
+		<Import declaration="Meins::InputOutputTester::Button_AI_Calibrate_2P_OPC_UA::SubStrings::AIC_I3_ZERO_RAW_WRITE"/>
+		<Import declaration="Meins::InputOutputTester::Button_AI_Calibrate_2P_OPC_UA::SubStrings::AIC_I3_SPAN_RAW_WRITE"/>
+		<Import declaration="Meins::InputOutputTester::Button_AI_Calibrate_2P_OPC_UA::SubStrings::AIC_I4_ZERO_RAW_WRITE"/>
+		<Import declaration="Meins::InputOutputTester::Button_AI_Calibrate_2P_OPC_UA::SubStrings::AIC_I4_SPAN_RAW_WRITE"/>
+		<Import declaration="Meins::InputOutputTester::Button_AI_Calibrate_2P_OPC_UA::SubStrings::AIC_I5_ZERO_RAW_WRITE"/>
+		<Import declaration="Meins::InputOutputTester::Button_AI_Calibrate_2P_OPC_UA::SubStrings::AIC_I5_SPAN_RAW_WRITE"/>
+		<Import declaration="Meins::InputOutputTester::Button_AI_Calibrate_2P_OPC_UA::SubStrings::AIC_I6_ZERO_RAW_WRITE"/>
+		<Import declaration="Meins::InputOutputTester::Button_AI_Calibrate_2P_OPC_UA::SubStrings::AIC_I6_SPAN_RAW_WRITE"/>
+		<Import declaration="Meins::InputOutputTester::Button_AI_Calibrate_2P_OPC_UA::SubStrings::AIC_I7_ZERO_RAW_WRITE"/>
+		<Import declaration="Meins::InputOutputTester::Button_AI_Calibrate_2P_OPC_UA::SubStrings::AIC_I7_SPAN_RAW_WRITE"/>
+		<Import declaration="Meins::InputOutputTester::Button_AI_Calibrate_2P_OPC_UA::SubStrings::AIC_I8_ZERO_RAW_WRITE"/>
+		<Import declaration="Meins::InputOutputTester::Button_AI_Calibrate_2P_OPC_UA::SubStrings::AIC_I8_SPAN_RAW_WRITE"/>
 		<Import declaration="Uebungen::const::UT::AIC::DefaultPool_AIC_Numeric::NumberVariable_AIC_I01_ZERO_N"/>
 		<Import declaration="Uebungen::const::UT::AIC::DefaultPool_AIC_Numeric::NumberVariable_AIC_I01_SPAN_N"/>
 		<Import declaration="Uebungen::const::UT::AIC::DefaultPool_AIC_Numeric::NumberVariable_AIC_I02_ZERO_N"/>
@@ -213,7 +213,7 @@
 	<SubAppInterfaceList>
 	</SubAppInterfaceList>
 	<SubAppNetwork>
-		<SubApp Name="AnalogChannel_I1" Type="MyLib::sys::logiBUS_AI_Calibrate_IDA_OPC" x="-1000" y="-900">
+		<SubApp Name="AnalogChannel_I1" Type="MyLib::sys::logiBUS_AI_Calibrate_2P_IDA_OPC" x="-1000" y="-900">
 			<Parameter Name="u16ObjId_RAWVAR" Value="NumberVariable_AIC_RAW_I01"/>
 			<Parameter Name="stObjCal" Value="NumberVariable_AIC_CAL_I01_N"/>
 			<Parameter Name="u16ObjId_CO" Value="Button_AIC_I01_CO"/>
@@ -235,7 +235,7 @@
 			<Parameter Name="ID_ZERO_RAW_WRITE" Value="AIC_I1_ZERO_RAW_WRITE"/>
 			<Parameter Name="ID_SPAN_RAW_WRITE" Value="AIC_I1_SPAN_RAW_WRITE"/>
 		</SubApp>
-		<SubApp Name="AnalogChannel_I2" Type="MyLib::sys::logiBUS_AI_Calibrate_IDA_OPC" x="-1000" y="1500">
+		<SubApp Name="AnalogChannel_I2" Type="MyLib::sys::logiBUS_AI_Calibrate_2P_IDA_OPC" x="-1000" y="1500">
 			<Parameter Name="u16ObjId_RAWVAR" Value="NumberVariable_AIC_RAW_I02"/>
 			<Parameter Name="stObjCal" Value="NumberVariable_AIC_CAL_I02_N"/>
 			<Parameter Name="u16ObjId_CO" Value="Button_AIC_I02_CO"/>
@@ -257,7 +257,7 @@
 			<Parameter Name="ID_ZERO_RAW_WRITE" Value="AIC_I2_ZERO_RAW_WRITE"/>
 			<Parameter Name="ID_SPAN_RAW_WRITE" Value="AIC_I2_SPAN_RAW_WRITE"/>
 		</SubApp>
-		<SubApp Name="AnalogChannel_I3" Type="MyLib::sys::logiBUS_AI_Calibrate_IDA_OPC" x="-1000" y="3900">
+		<SubApp Name="AnalogChannel_I3" Type="MyLib::sys::logiBUS_AI_Calibrate_2P_IDA_OPC" x="-1000" y="3900">
 			<Parameter Name="u16ObjId_RAWVAR" Value="NumberVariable_AIC_RAW_I03"/>
 			<Parameter Name="stObjCal" Value="NumberVariable_AIC_CAL_I03_N"/>
 			<Parameter Name="u16ObjId_CO" Value="Button_AIC_I03_CO"/>
@@ -279,7 +279,7 @@
 			<Parameter Name="ID_ZERO_RAW_WRITE" Value="AIC_I3_ZERO_RAW_WRITE"/>
 			<Parameter Name="ID_SPAN_RAW_WRITE" Value="AIC_I3_SPAN_RAW_WRITE"/>
 		</SubApp>
-		<SubApp Name="AnalogChannel_I4" Type="MyLib::sys::logiBUS_AI_Calibrate_IDA_OPC" x="-1000" y="6300">
+		<SubApp Name="AnalogChannel_I4" Type="MyLib::sys::logiBUS_AI_Calibrate_2P_IDA_OPC" x="-1000" y="6300">
 			<Parameter Name="u16ObjId_RAWVAR" Value="NumberVariable_AIC_RAW_I04"/>
 			<Parameter Name="stObjCal" Value="NumberVariable_AIC_CAL_I04_N"/>
 			<Parameter Name="u16ObjId_CO" Value="Button_AIC_I04_CO"/>
@@ -301,7 +301,7 @@
 			<Parameter Name="ID_ZERO_RAW_WRITE" Value="AIC_I4_ZERO_RAW_WRITE"/>
 			<Parameter Name="ID_SPAN_RAW_WRITE" Value="AIC_I4_SPAN_RAW_WRITE"/>
 		</SubApp>
-		<SubApp Name="AnalogChannel_I5" Type="MyLib::sys::logiBUS_AI_Calibrate_IDA_OPC" x="-1000" y="8700">
+		<SubApp Name="AnalogChannel_I5" Type="MyLib::sys::logiBUS_AI_Calibrate_2P_IDA_OPC" x="-1000" y="8700">
 			<Parameter Name="u16ObjId_RAWVAR" Value="NumberVariable_AIC_RAW_I05"/>
 			<Parameter Name="stObjCal" Value="NumberVariable_AIC_CAL_I05_N"/>
 			<Parameter Name="u16ObjId_CO" Value="Button_AIC_I05_CO"/>
@@ -323,7 +323,7 @@
 			<Parameter Name="ID_ZERO_RAW_WRITE" Value="AIC_I5_ZERO_RAW_WRITE"/>
 			<Parameter Name="ID_SPAN_RAW_WRITE" Value="AIC_I5_SPAN_RAW_WRITE"/>
 		</SubApp>
-		<SubApp Name="AnalogChannel_I6" Type="MyLib::sys::logiBUS_AI_Calibrate_IDA_OPC" x="-1000" y="11100">
+		<SubApp Name="AnalogChannel_I6" Type="MyLib::sys::logiBUS_AI_Calibrate_2P_IDA_OPC" x="-1000" y="11100">
 			<Parameter Name="u16ObjId_RAWVAR" Value="NumberVariable_AIC_RAW_I06"/>
 			<Parameter Name="stObjCal" Value="NumberVariable_AIC_CAL_I06_N"/>
 			<Parameter Name="u16ObjId_CO" Value="Button_AIC_I06_CO"/>
@@ -345,7 +345,7 @@
 			<Parameter Name="ID_ZERO_RAW_WRITE" Value="AIC_I6_ZERO_RAW_WRITE"/>
 			<Parameter Name="ID_SPAN_RAW_WRITE" Value="AIC_I6_SPAN_RAW_WRITE"/>
 		</SubApp>
-		<SubApp Name="AnalogChannel_I7" Type="MyLib::sys::logiBUS_AI_Calibrate_IDA_OPC" x="-1000" y="13500">
+		<SubApp Name="AnalogChannel_I7" Type="MyLib::sys::logiBUS_AI_Calibrate_2P_IDA_OPC" x="-1000" y="13500">
 			<Parameter Name="u16ObjId_RAWVAR" Value="NumberVariable_AIC_RAW_I07"/>
 			<Parameter Name="stObjCal" Value="NumberVariable_AIC_CAL_I07_N"/>
 			<Parameter Name="u16ObjId_CO" Value="Button_AIC_I07_CO"/>
@@ -367,7 +367,7 @@
 			<Parameter Name="ID_ZERO_RAW_WRITE" Value="AIC_I7_ZERO_RAW_WRITE"/>
 			<Parameter Name="ID_SPAN_RAW_WRITE" Value="AIC_I7_SPAN_RAW_WRITE"/>
 		</SubApp>
-		<SubApp Name="AnalogChannel_I8" Type="MyLib::sys::logiBUS_AI_Calibrate_IDA_OPC" x="-1000" y="15900">
+		<SubApp Name="AnalogChannel_I8" Type="MyLib::sys::logiBUS_AI_Calibrate_2P_IDA_OPC" x="-1000" y="15900">
 			<Parameter Name="u16ObjId_RAWVAR" Value="NumberVariable_AIC_RAW_I08"/>
 			<Parameter Name="stObjCal" Value="NumberVariable_AIC_CAL_I08_N"/>
 			<Parameter Name="u16ObjId_CO" Value="Button_AIC_I08_CO"/>
