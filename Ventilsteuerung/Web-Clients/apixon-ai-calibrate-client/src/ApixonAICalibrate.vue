@@ -23,9 +23,9 @@
     <section>
       <div class="scope-header">
         <h2>Analog-Eingänge (Rohwert 0-4095 / kalibrierter Wert)</h2>
-        <label class="scope-window-label">
+        <label class="scope-window-label" for="scope-window-2p">
           Oszi-Zeitfenster:
-          <select v-model.number="scopeWindowSec">
+          <select id="scope-window-2p" v-model.number="scopeWindowSec">
             <option :value="5">5 s</option>
             <option :value="10">10 s</option>
             <option :value="30">30 s</option>
@@ -53,6 +53,24 @@
           <div class="calib-buttons">
             <button class="calib-btn" :disabled="!connected" @click="triggerCalibrate(n, 'CO')">CO</button>
             <button class="calib-btn" :disabled="!connected" @click="triggerCalibrate(n, 'CS')">CS</button>
+          </div>
+          <div class="ref-grid">
+            <div class="ref-item">
+              <label :for="`y-offset-${n}`">Y_Offset</label>
+              <div class="ref-item-row">
+                <input :id="`y-offset-${n}`" v-model="yOffsetInput[n - 1]" class="ref-input" :disabled="!connected" />
+                <button class="ref-btn" :disabled="!connected" @click="writeYRef(n, 'ZERO')">Übernehmen</button>
+              </div>
+              <span class="ref-live">aktuell: {{ yOffsetLive[n - 1].toFixed(1) }}</span>
+            </div>
+            <div class="ref-item">
+              <label :for="`y-scale-${n}`">Y_Scale</label>
+              <div class="ref-item-row">
+                <input :id="`y-scale-${n}`" v-model="yScaleInput[n - 1]" class="ref-input" :disabled="!connected" />
+                <button class="ref-btn" :disabled="!connected" @click="writeYRef(n, 'SPAN')">Übernehmen</button>
+              </div>
+              <span class="ref-live">aktuell: {{ yScaleLive[n - 1].toFixed(1) }}</span>
+            </div>
           </div>
         </div>
       </div>
@@ -106,6 +124,20 @@ const cal = ref<number[]>(new Array(8).fill(0))
 const outputs = ref<boolean[]>(new Array(12).fill(false))
 const tick = ref<number | string>('–')
 const tickPulse = ref(false)
+
+/* Y_Offset/Y_Scale (LOW_REF/HIGH_REF-Referenzwerte, intern Y_OFFSET_LIT/
+ * Y_SCALE_LIT in logiBUS_AI_Calibrate_IDA_OPC.SUB) - schreiben auf den
+ * *_EXT-Knoten (AIC_I{n}_ZERO_EXT/_SPAN_EXT), den ID_ZERO_READ/ID_SPAN_READ
+ * seit dem Selbst-Loop-Fix abonnieren (vorher zeigte READ auf denselben
+ * Knoten wie das eigene Echo WRITE - siehe SubStrings.gcf). */
+const yOffsetInput = ref<string[]>(new Array(8).fill(''))
+const yScaleInput = ref<string[]>(new Array(8).fill(''))
+
+/* Live-Anzeige des aktuellen Y_Offset/Y_Scale, den der Baustein gerade tatsächlich
+ * verwendet (WRITE/Echo-Knoten AIC_I{n}_ZERO/_SPAN, NICHT der _EXT-Override-Knoten,
+ * den writeYRef beschreibt) - betankt die Felder neben den Eingaben. */
+const yOffsetLive = ref<number[]>(new Array(8).fill(0))
+const yScaleLive = ref<number[]>(new Array(8).fill(0))
 
 interface ScopeSample { t: number; v: number }
 const scopeWindowSec = ref(10)
@@ -228,6 +260,8 @@ function handleLost() {
   raw.value.fill(0)
   cal.value.fill(0)
   outputs.value.fill(false)
+  yOffsetLive.value.fill(0)
+  yScaleLive.value.fill(0)
   tick.value = '–'
   if (scopeRafId !== null) {
     cancelAnimationFrame(scopeRafId)
@@ -292,6 +326,35 @@ async function connect() {
       const v = Number(dataValue.value?.value ?? 0)
       cal.value[index] = v
       pushScopeSample(index, v)
+    })
+
+    /* Monitor the WRITE/Echo-Knoten AIC_I1_ZERO-AIC_I8_ZERO (aktueller Y_Offset,
+     * den der Baustein tatsächlich verwendet - nicht der _EXT-Override-Knoten). */
+    const yZeroItems = Array.from({ length: 8 }, (_, i) => ({
+      nodeId: coerceNodeId(`ns=1;s=AIC_I${i + 1}_ZERO`),
+      attributeId: AttributeIds.Value,
+    }))
+    const yZeroGroup = await subscription.monitorItemsP(
+      yZeroItems,
+      { samplingInterval: 100, discardOldest: true, queueSize: 2 },
+      TimestampsToReturn.Neither
+    )
+    yZeroGroup.on('changed', (_item: any, dataValue: any, index: number) => {
+      yOffsetLive.value[index] = Number(dataValue.value?.value ?? 0)
+    })
+
+    /* Monitor the WRITE/Echo-Knoten AIC_I1_SPAN-AIC_I8_SPAN (aktueller Y_Scale). */
+    const ySpanItems = Array.from({ length: 8 }, (_, i) => ({
+      nodeId: coerceNodeId(`ns=1;s=AIC_I${i + 1}_SPAN`),
+      attributeId: AttributeIds.Value,
+    }))
+    const ySpanGroup = await subscription.monitorItemsP(
+      ySpanItems,
+      { samplingInterval: 100, discardOldest: true, queueSize: 2 },
+      TimestampsToReturn.Neither
+    )
+    ySpanGroup.on('changed', (_item: any, dataValue: any, index: number) => {
+      yScaleLive.value[index] = Number(dataValue.value?.value ?? 0)
     })
 
     /* Monitor all outputs Q1-Q12 (reflect actual hardware state, unveraendert wie im AI-Beispiel) */
@@ -371,6 +434,31 @@ async function triggerCalibrate(n: number, which: 'CO' | 'CS') {
   }
 }
 
+/* Schreibt einen neuen Y_Offset/Y_Scale-Referenzwert auf den externen
+ * Override-Knoten (AIC_I{n}_ZERO_EXT/_SPAN_EXT) - AR_LAST_2 im Baustein
+ * mergt das last-writer-wins mit der lokalen VT-Eingabe. */
+async function writeYRef(n: number, which: 'ZERO' | 'SPAN') {
+  if (!session) return
+  const inputArr = which === 'ZERO' ? yOffsetInput.value : yScaleInput.value
+  const raw = inputArr[n - 1].trim().replace(',', '.')
+  if (raw === '') return
+  const val = Number(raw)
+  if (!Number.isFinite(val) || val < -100 || val > 100) {
+    console.error(`AI${n} Y_${which === 'ZERO' ? 'Offset' : 'Scale'}: Wert ${raw} ausserhalb -100..100 (physikalisch)`)
+    return
+  }
+  try {
+    const wv = new WriteValue({
+      nodeId: coerceNodeId(`ns=1;s=AIC_I${n}_${which}_EXT`),
+      attributeId: AttributeIds.Value,
+      value: new DataValue({ value: new Variant({ dataType: DataType.Float, value: val }) }),
+    })
+    await session.writeP([wv])
+  } catch (err) {
+    console.error(`AI${n} Y_${which === 'ZERO' ? 'Offset' : 'Scale'} write failed:`, err)
+  }
+}
+
 async function disconnect() {
   if (client) {
     client.off('connection_lost', handleLost)
@@ -382,6 +470,8 @@ async function disconnect() {
   raw.value.fill(0)
   cal.value.fill(0)
   outputs.value.fill(false)
+  yOffsetLive.value.fill(0)
+  yScaleLive.value.fill(0)
   if (scopeRafId !== null) {
     cancelAnimationFrame(scopeRafId)
     scopeRafId = null
@@ -655,4 +745,60 @@ span {
 .calib-btn:hover:not(:disabled) { background: #3f51b5; }
 .calib-btn:active:not(:disabled) { transform: scale(0.95); }
 .calib-btn:disabled { opacity: 0.4; cursor: not-allowed; }
+
+.ref-grid {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+  margin-top: 0.3rem;
+}
+
+.ref-item {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 0.15rem;
+}
+
+.ref-item label {
+  font-size: 0.65rem;
+  font-weight: 600;
+  color: #aaa;
+}
+
+.ref-item-row {
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+}
+
+.ref-input {
+  flex: 1;
+  min-width: 0;
+  width: auto;
+  padding: 0.15rem 0.3rem;
+  border-radius: 4px;
+  border: 1px solid #444;
+  background: #0d0d1a;
+  color: #e0e0e0;
+  font-size: 0.75rem;
+}
+
+.ref-btn {
+  flex-shrink: 0;
+  padding: 0.15rem 0.4rem;
+  font-size: 0.65rem;
+  background: #2a2a3e;
+  border: 1px solid #444;
+  white-space: nowrap;
+}
+.ref-btn:hover:not(:disabled) { background: #3f51b5; }
+.ref-btn:disabled { opacity: 0.4; cursor: not-allowed; }
+
+.ref-live {
+  font-size: 0.65rem;
+  color: #777;
+  font-variant-numeric: tabular-nums;
+}
 </style>

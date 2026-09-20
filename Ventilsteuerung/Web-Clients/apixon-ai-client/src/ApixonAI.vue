@@ -17,9 +17,9 @@
     <section>
       <div class="scope-header">
         <h2>Analog-Eingänge (Rohwert 0-4095 / 0-100 %)</h2>
-        <label class="scope-window-label">
+        <label class="scope-window-label" for="scope-window-ai">
           Oszi-Zeitfenster:
-          <select v-model.number="scopeWindowSec">
+          <select id="scope-window-ai" v-model.number="scopeWindowSec">
             <option :value="5">5 s</option>
             <option :value="10">10 s</option>
             <option :value="30">30 s</option>
