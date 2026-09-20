@@ -20,7 +20,7 @@ call RunSkript_Workspace_Scroll_AX.bat
 if errorlevel 1 exit /b 1
 call RunSkript_Workspace_PI_AX.bat
 if errorlevel 1 exit /b 1
-call RunSkript_Workspace_AI_Calibrate_AX.bat
+call RunSkript_Workspace_AI_Calibrate_2P_AX.bat
 if errorlevel 1 exit /b 1
 call RunSkript_Workspace_AI_Calibrate_3P_AX.bat
 if errorlevel 1 exit /b 1
