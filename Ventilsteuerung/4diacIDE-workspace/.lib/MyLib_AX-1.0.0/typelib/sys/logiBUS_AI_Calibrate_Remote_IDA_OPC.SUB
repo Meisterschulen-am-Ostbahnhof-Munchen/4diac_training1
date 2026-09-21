@@ -8,6 +8,10 @@
 	</VersionInfo>
 	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.2" Author="Franz Höpfinger" Date="2026-09-18" Remarks="CO/CS-Merge-Ketten (2x E_MERGE_2 in Reihe) durch je einen einzelnen E_MERGE_3 ersetzt - OR-Merge ist assoziativ, funktional identisch. Siehe logiBUS_AI_Calibrate_IDA_OPC v1.4.">
 	</VersionInfo>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.4" Author="Franz Höpfinger" Date="2026-09-21" Remarks="Code-Review-Fund (PR #260): INI_X_HIGH.DEFAULT_VALUE stand auf REAL#1.0 statt 0.0 - AR_CALIBRATE_2P_REF's xHighCal-Kalibriert-Flag latchte dadurch bei JEDEM Boot sofort TRUE, obwohl HIGH nie kalibriert wurde. Default auf REAL#0.0 korrigiert. Betrifft Schnitthoehe/Oeltemperatur/Druck in Krauternter.">
+	</VersionInfo>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.3" Author="Franz Höpfinger" Date="2026-09-21" Remarks="AR_CALIBRATE_2P_REF hat jetzt ein INIT/QI/QO-Enable-Pattern (Bugfix Garbage-Interpolation bei nur einem kalibrierten Punkt + xClipping) - CALIBRATE bekommt Parameter QI=TRUE, sonst bleibt die FB im START-Zustand haengen und REQ laeuft nie.">
+	</VersionInfo>
 	<CompilerInfo packageName="MyLib::sys">
 		<Import declaration="isobus::UT::Q::const::IDs::ID_NULL"/>
 		<Import declaration="logiBUS::utils::conversion::phys::NumericObjectPool_S"/>
@@ -36,15 +40,17 @@
 		<FB Name="AD_SUBSCRIBE_RAW" Type="adapter::net::AD_SUBSCRIBE_1" x="-9200" y="-1700">
 			<Parameter Name="QI" Value="TRUE"/>
 		</FB>
-		<FB Name="AD_TO_AUDI" Type="adapter::conversion::unidirectional::AD_TO_AUDI" x="-5600" y="-400">
+		<FB Name="AD_TO_AUDI" Type="adapter::conversion::unidirectional::AD_TO_AUDI" x="-5400" y="-1000">
 		</FB>
-		<FB Name="AUDI_SPLIT_2" Type="adapter::events::unidirectional::AUDI_SPLIT_2" x="-4000" y="-400">
+		<FB Name="AUDI_SPLIT_2" Type="adapter::events::unidirectional::AUDI_SPLIT_2" x="-3800" y="-1000">
 		</FB>
-		<FB Name="Q_NumericValue_RAW" Type="isobus::UT::Q::Q_NumericValue_AUDI" x="-2300" y="-1000">
+		<FB Name="Q_NumericValue_RAW" Type="isobus::UT::Q::Q_NumericValue_AUDI" x="-2100" y="-1900">
 		</FB>
-		<FB Name="AUDI_TO_AR" Type="adapter::conversion::unidirectional::AUDI_TO_AR" x="-2300" y="200">
+		<FB Name="AUDI_TO_AR" Type="adapter::conversion::unidirectional::AUDI_TO_AR" x="-2100" y="-400">
 		</FB>
 		<FB Name="CALIBRATE" Type="adapter::Engineering::measurements::AR_CALIBRATE_2P_REF" x="-200" y="200">
+			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="xClipping" Value="FALSE"/>
 		</FB>
 		<SubApp Name="Y_OFFSET_LIT" Type="MyLib::sys::NumericValue_TO_AR2_OPC" x="-8400" y="4200">
 		</SubApp>
@@ -82,7 +88,7 @@
 			<Parameter Name="QI" Value="TRUE"/>
 			<Parameter Name="SETM" Value="TRUE"/>
 			<Parameter Name="KEY" Value="'X_HIGH'"/>
-			<Parameter Name="DEFAULT_VALUE" Value="REAL#1.0"/>
+			<Parameter Name="DEFAULT_VALUE" Value="REAL#0.0"/>
 		</FB>
 		<FB Name="INI_LOW_REF" Type="eclipse4diac::storage::INI_AR2" x="3400" y="3300">
 			<Parameter Name="QI" Value="TRUE"/>
@@ -115,12 +121,12 @@
 			</Connection>
 			<Connection Source="Button_CO.IND" Destination="E_MERGE_CO.EI1" dx1="2060"/>
 			<Connection Source="AX_RF_TRIG_CO.ER" Destination="E_MERGE_CO.EI2" dx1="400"/>
-			<Connection Source="AX_RF_TRIG_CO.EF" Destination="E_MERGE_CO.EI3"/>
+			<Connection Source="AX_RF_TRIG_CO.EF" Destination="E_MERGE_CO.EI3" dx1="1220"/>
 			<Connection Source="E_MERGE_CO.EO" Destination="CALIBRATE.C_LOW" dx1="313.33"/>
 			<Connection Source="Button_CS.IND" Destination="E_MERGE_CS.EI1" dx1="1506.67"/>
 			<Connection Source="AX_RF_TRIG_CS.ER" Destination="E_MERGE_CS.EI2" dx1="400"/>
 			<Connection Source="AX_RF_TRIG_CS.EF" Destination="E_MERGE_CS.EI3" dx1="2226.67"/>
-			<Connection Source="E_MERGE_CS.EO" Destination="CALIBRATE.C_HIGH"/>
+			<Connection Source="E_MERGE_CS.EO" Destination="CALIBRATE.C_HIGH" dx1="1346.67"/>
 		</EventConnections>
 		<DataConnections>
 			<Connection Source="u16ObjId_RAWVAR" Destination="Q_NumericValue_RAW.u16ObjId" dx1="1400">
@@ -180,7 +186,7 @@
 		</DataConnections>
 		<AdapterConnections>
 			<Connection Source="AD_SUBSCRIBE_RAW.OUT" Destination="AD_TO_AUDI.AD_IN" dx1="300"/>
-			<Connection Source="AD_TO_AUDI.AUDI_OUT" Destination="AUDI_SPLIT_2.IN" dx1="300"/>
+			<Connection Source="AD_TO_AUDI.AUDI_OUT" Destination="AUDI_SPLIT_2.IN"/>
 			<Connection Source="AUDI_SPLIT_2.OUT1" Destination="Q_NumericValue_RAW.u32NewValue" dx1="300"/>
 			<Connection Source="AUDI_SPLIT_2.OUT2" Destination="AUDI_TO_AR.AUDI_IN" dx1="300"/>
 			<Connection Source="AUDI_TO_AR.AR_OUT" Destination="CALIBRATE.X" dx1="300"/>
@@ -188,7 +194,7 @@
 			<Connection Source="CALIBRATE.X_HIGH" Destination="INI_X_HIGH.VAL" dx1="340"/>
 			<Connection Source="CALIBRATE.LOW_REF" Destination="INI_LOW_REF.VAL" dx1="253.33"/>
 			<Connection Source="CALIBRATE.HIGH_REF" Destination="INI_HIGH_REF.VAL" dx1="180"/>
-			<Connection Source="Y_OFFSET_LIT.VALUEO" Destination="CALIBRATE.Y_LOW" dx1="6806.67"/>
+			<Connection Source="Y_OFFSET_LIT.VALUEO" Destination="CALIBRATE.Y_LOW" dx1="6653.33"/>
 			<Connection Source="Y_SCALE_LIT.VALUEO" Destination="CALIBRATE.Y_HIGH" dx1="6760"/>
 			<Connection Source="CALIBRATE.Y" Destination="AR_SPLIT_2.IN" dx1="300"/>
 			<Connection Source="AR_SPLIT_2.OUT1" Destination="AR_PUBLISH_CAL.IN" dx1="300"/>
