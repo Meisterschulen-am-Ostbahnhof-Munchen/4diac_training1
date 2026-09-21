@@ -98,7 +98,7 @@
 		<FB Name="MoveBar" Type="isobus::UT::Q::Q_ChildPosition" x="6200" y="1500">
 			<Parameter Name="s16Xposition" Value="0"/>
 		</FB>
-		<FB Name="BarY" Type="isobus::UT::Q::helpers::F_ScrollBarY" x="3600" y="1600">
+		<FB Name="BarY" Type="isobus::UT::Q::helpers::F_ScrollBarY" x="3600" y="1700">
 		</FB>
 		<FB Name="ScrollReport" Type="isobus::UT::Q::helpers::ReportScrollOffset" x="6500" y="2900">
 		</FB>
@@ -125,27 +125,13 @@
 				<Attribute Name="Visible" Value="false"/>
 			</Connection>
 			<Connection Source="BarY.CNF" Destination="MoveBar.REQ" dx1="200"/>
-			<Connection Source="Ramp.INITO" Destination="MoveList.INIT">
-				<Attribute Name="Visible" Value="false"/>
-			</Connection>
-			<Connection Source="Ramp.INITO" Destination="MoveBar.INIT" dx1="2646.67">
-				<Attribute Name="Visible" Value="false"/>
-			</Connection>
-			<Connection Source="Ramp.INITO" Destination="ScrollReport.INIT" dx1="2646.67">
-				<Attribute Name="Visible" Value="false"/>
-			</Connection>
+			<Connection Source="Ramp.INITO" Destination="ScrollReport.INIT" dx1="1040"/>
 			<Connection Source="Ramp.CNF" Destination="ScrollReport.REQ" dx1="66.67">
 				<Attribute Name="Visible" Value="false"/>
 			</Connection>
-			<Connection Source="MoveList.INITO" Destination="INITO" dx1="8360">
-				<Attribute Name="Visible" Value="false"/>
-			</Connection>
-			<Connection Source="MoveBar.INITO" Destination="INITO" dx1="8260">
-				<Attribute Name="Visible" Value="false"/>
-			</Connection>
-			<Connection Source="ScrollReport.INITO" Destination="INITO" dx1="7960">
-				<Attribute Name="Visible" Value="false"/>
-			</Connection>
+			<Connection Source="ScrollReport.INITO" Destination="MoveBar.INIT" dx1="80" dx2="3746.67" dy="-353.33"/>
+			<Connection Source="MoveBar.INITO" Destination="MoveList.INIT" dx1="80" dx2="3813.33" dy="-160"/>
+			<Connection Source="MoveList.INITO" Destination="INITO" dx1="1200"/>
 		</EventConnections>
 		<DataConnections>
 			<Connection Source="stObj" Destination="Snap.IN" dx1="386.67"/>
