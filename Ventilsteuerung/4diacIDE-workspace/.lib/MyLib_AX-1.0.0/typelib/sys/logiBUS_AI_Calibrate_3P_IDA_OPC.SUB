@@ -20,6 +20,8 @@
 	</VersionInfo>
 	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.8" Author="Franz Höpfinger" Date="2026-09-20" Remarks="Rohwert-Anzeige an den 3 Kalibrierpunkten (Min/Mid/Max-Raw) ergaenzt, analog zu logiBUS_AI_Calibrate_IDA_OPC v1.7 (Franz: 'im Web-Panel und im IOP die Roh-Werte mit anzeigen'). CALIBRATE.X_MIN/X_MID/X_MAX (AR2, bisher nur an INI_X_MIN/INI_X_MID/INI_X_MAX angeschlossen) werden ueber neue TapMinRaw/TapMidRaw/TapMaxRaw (MyLib::sys::AR2_TAP_TO_AR) abgezapft, ohne die bestehende Persistenz-/Restore-Kette zu aendern, und ueber neue PublishMinRaw/PublishMidRaw/PublishMaxRaw (MyLib::sys::AR_TO_Q_Publish_OPC) als reine Nur-Lese-Anzeige (VT CNumberVariable + OPC-UA Publish) exponiert. Neue InputVars stObjMinRaw/stObjMidRaw/stObjMaxRaw (VT-Objekt) + ID_MIN_RAW_WRITE/ID_MID_RAW_WRITE/ID_MAX_RAW_WRITE (OPC-UA-Adresse).">
 	</VersionInfo>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.10" Author="Franz Höpfinger" Date="2026-09-21" Remarks="Code-Review-Fund (PR #260): INI_X_MID/INI_X_MAX.DEFAULT_VALUE standen auf REAL#0.5/1.0 statt 0.0 - AR_CALIBRATE_3P_REF's neue xMidCal/xMaxCal-Kalibriert-Flags (v1.3, pruefen X_MID.DI1/X_MAX.DI1 &lt;&gt; 0.0) latchten dadurch bei JEDEM Boot sofort TRUE, obwohl MID/MAX nie kalibriert wurden (fabricated references statt Partial-Kalibrierung-Fallback). Defaults auf REAL#0.0 korrigiert, passend zu INI_X_MIN und zum Flag-Vergleich.">
+	</VersionInfo>
 	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.9" Author="Franz Höpfinger" Date="2026-09-21" Remarks="AR_CALIBRATE_3P_REF hat jetzt ein INIT/QI/QO-Enable-Pattern (Bugfix MIN-vor-MID + xClipping) - CALIBRATE bekommt Parameter QI=TRUE (wie die INI_X_MIN/X_MID/X_MAX-Instanzen), sonst bleibt die FB im START-Zustand haengen und REQ laeuft nie.">
 	</VersionInfo>
 	<CompilerInfo packageName="MyLib::sys">
@@ -88,13 +90,13 @@
 			<Parameter Name="QI" Value="TRUE"/>
 			<Parameter Name="SETM" Value="TRUE"/>
 			<Parameter Name="KEY" Value="'X_MID'"/>
-			<Parameter Name="DEFAULT_VALUE" Value="REAL#0.5"/>
+			<Parameter Name="DEFAULT_VALUE" Value="REAL#0.0"/>
 		</FB>
 		<FB Name="INI_X_MAX" Type="eclipse4diac::storage::INI_AR2" x="8600" y="1000">
 			<Parameter Name="QI" Value="TRUE"/>
 			<Parameter Name="SETM" Value="TRUE"/>
 			<Parameter Name="KEY" Value="'X_MAX'"/>
-			<Parameter Name="DEFAULT_VALUE" Value="REAL#1.0"/>
+			<Parameter Name="DEFAULT_VALUE" Value="REAL#0.0"/>
 		</FB>
 		<FB Name="INI_MIN_REF" Type="eclipse4diac::storage::INI_AR2" x="5600" y="2000">
 			<Parameter Name="QI" Value="TRUE"/>

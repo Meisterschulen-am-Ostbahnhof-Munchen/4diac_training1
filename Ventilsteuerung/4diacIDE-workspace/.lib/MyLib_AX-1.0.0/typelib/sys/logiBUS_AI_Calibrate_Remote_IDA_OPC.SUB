@@ -8,6 +8,8 @@
 	</VersionInfo>
 	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.2" Author="Franz Höpfinger" Date="2026-09-18" Remarks="CO/CS-Merge-Ketten (2x E_MERGE_2 in Reihe) durch je einen einzelnen E_MERGE_3 ersetzt - OR-Merge ist assoziativ, funktional identisch. Siehe logiBUS_AI_Calibrate_IDA_OPC v1.4.">
 	</VersionInfo>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.4" Author="Franz Höpfinger" Date="2026-09-21" Remarks="Code-Review-Fund (PR #260): INI_X_HIGH.DEFAULT_VALUE stand auf REAL#1.0 statt 0.0 - AR_CALIBRATE_2P_REF's xHighCal-Kalibriert-Flag latchte dadurch bei JEDEM Boot sofort TRUE, obwohl HIGH nie kalibriert wurde. Default auf REAL#0.0 korrigiert. Betrifft Schnitthoehe/Oeltemperatur/Druck in Krauternter.">
+	</VersionInfo>
 	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.3" Author="Franz Höpfinger" Date="2026-09-21" Remarks="AR_CALIBRATE_2P_REF hat jetzt ein INIT/QI/QO-Enable-Pattern (Bugfix Garbage-Interpolation bei nur einem kalibrierten Punkt + xClipping) - CALIBRATE bekommt Parameter QI=TRUE, sonst bleibt die FB im START-Zustand haengen und REQ laeuft nie.">
 	</VersionInfo>
 	<CompilerInfo packageName="MyLib::sys">
@@ -86,7 +88,7 @@
 			<Parameter Name="QI" Value="TRUE"/>
 			<Parameter Name="SETM" Value="TRUE"/>
 			<Parameter Name="KEY" Value="'X_HIGH'"/>
-			<Parameter Name="DEFAULT_VALUE" Value="REAL#1.0"/>
+			<Parameter Name="DEFAULT_VALUE" Value="REAL#0.0"/>
 		</FB>
 		<FB Name="INI_LOW_REF" Type="eclipse4diac::storage::INI_AR2" x="3400" y="3300">
 			<Parameter Name="QI" Value="TRUE"/>

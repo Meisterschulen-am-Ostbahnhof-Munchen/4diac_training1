@@ -18,6 +18,8 @@
 	</VersionInfo>
 	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.7" Author="Franz Höpfinger" Date="2026-09-20" Remarks="Rohwert-Anzeige an den Kalibrierpunkten (Zero-Raw/Span-Raw) ergaenzt, Franz: 'im Web-Panel und im IOP die Roh-Werte mit anzeigen'. CALIBRATE.X_LOW/X_HIGH (AR2, bisher nur an INI_X_LOW/INI_X_HIGH angeschlossen) werden ueber neue TapZeroRaw/TapSpanRaw (MyLib::sys::AR2_TAP_TO_AR) abgezapft, ohne die bestehende Persistenz-/Restore-Kette zu aendern, und ueber neue PublishZeroRaw/PublishSpanRaw (MyLib::sys::AR_TO_Q_Publish_OPC) als reine Nur-Lese-Anzeige (VT CNumberVariable + OPC-UA Publish) exponiert. Neue InputVars stObjZeroRaw/stObjSpanRaw (VT-Objekt) + ID_ZERO_RAW_WRITE/ID_SPAN_RAW_WRITE (OPC-UA-Adresse).">
 	</VersionInfo>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.9" Author="Franz Höpfinger" Date="2026-09-21" Remarks="Code-Review-Fund (PR #260): INI_X_HIGH.DEFAULT_VALUE stand auf REAL#1.0 statt 0.0 - AR_CALIBRATE_2P_REF's neuer xHighCal-Kalibriert-Flag (v1.3, prueft X_HIGH.DI1 &lt;&gt; 0.0) latchte dadurch bei JEDEM Boot sofort TRUE, obwohl HIGH nie kalibriert wurde (fabricated reference statt Partial-Kalibrierung-Fallback). Default auf REAL#0.0 korrigiert, passend zu INI_X_LOW und zum Flag-Vergleich.">
+	</VersionInfo>
 	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.8" Author="Franz Höpfinger" Date="2026-09-21" Remarks="AR_CALIBRATE_2P_REF hat jetzt ein INIT/QI/QO-Enable-Pattern (genauso wie AR_CALIBRATE_3P_REF: Bugfix Garbage-Interpolation bei nur einem kalibrierten Punkt + xClipping) - CALIBRATE bekommt Parameter QI=TRUE (wie die INI_X_LOW/X_HIGH-Instanzen), sonst bleibt die FB im START-Zustand haengen und REQ laeuft nie.">
 	</VersionInfo>
 	<CompilerInfo packageName="MyLib::sys">
@@ -75,7 +77,7 @@
 			<Parameter Name="QI" Value="TRUE"/>
 			<Parameter Name="SETM" Value="TRUE"/>
 			<Parameter Name="KEY" Value="'X_HIGH'"/>
-			<Parameter Name="DEFAULT_VALUE" Value="REAL#1.0"/>
+			<Parameter Name="DEFAULT_VALUE" Value="REAL#0.0"/>
 		</FB>
 		<FB Name="INI_LOW_REF" Type="eclipse4diac::storage::INI_AR2" x="4500" y="2200">
 			<Parameter Name="QI" Value="TRUE"/>
