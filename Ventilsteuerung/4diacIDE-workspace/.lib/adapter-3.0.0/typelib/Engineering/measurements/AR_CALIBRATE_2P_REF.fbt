@@ -2,6 +2,8 @@
 <FBType Name="AR_CALIBRATE_2P_REF" Comment="Adapter-based 2-point calibration (Low/High, independently stored - no CO-before-CS style ordering dependency) - reference targets (Y_LOW/Y_HIGH) are live AR sockets, persisted via 2 additional AR2 plugs (LOW_REF/HIGH_REF), same live-echo pattern as AR_CALIBRATE_SQ_REF">
 	<Identification Standard="61499-1">
 	</Identification>
+	<VersionInfo Version="1.3" Author="Franz Höpfinger" Date="2026-09-21" Remarks="Code-Review-Fund (PR #260): xClipping clippte bisher unconditional auf [LOW_REF,HIGH_REF], auch wenn nur EIN Punkt kalibriert war - der jeweils andere, noch unkalibrierte Referenzwert stand dann noch auf seinem INI_AR2-Default 0.0, wodurch der frisch eingefuehrte Partial-Kalibrierung-Fallback (Y.D1 := LOW_REF.DI1 bzw. HIGH_REF.DI1) sofort wieder auf 0.0 zurueckgeklemmt wurde - der Wert griff also weiterhin nicht sofort. Clipping jetzt zusaetzlich an xLowCal AND xHighCal gegated.">
+	</VersionInfo>
 	<VersionInfo Version="1.2" Author="Franz Höpfinger" Date="2026-09-21" Remarks="Genauso geaendert wie AR_CALIBRATE_3P_REF: INIT/QI/QO/INITO-Pattern (Enable/Disable) ergaenzt. Neuer Input xClipping (Default TRUE) - bisher clippte dieser Typ ueberhaupt nicht, jetzt optional auf LOW_REF..HIGH_REF klemmbar (FALSE = altes Verhalten, keine Klemmung). Neue interne Kalibriert-Flags xLowCal/xHighCal (latchen TRUE, sobald der jeweilige Rohwert vom INI_AR2-Default 0.0 abweicht): solange nur EIN Punkt kalibriert ist, wurde bisher trotzdem interpoliert - gegen einen Rohwert-Default von 0.0 fuer den jeweils anderen, noch unkalibrierten Punkt, was ein Garbage-Ergebnis lieferte. Jetzt liefert REQ in diesem Fall stattdessen direkt den REF-Wert des einen kalibrierten Punkts.">
 	</VersionInfo>
 	<VersionInfo Version="1.1" Author="Franz Höpfinger" Date="2026-09-17" Remarks="C_LOW/C_HIGH von AX-Sockets (mit [C_LOW.D1]/[C_HIGH.D1]-Flankenwaechter) auf reine EventInputs umgestellt - Franz: jeder echte Aufrufer (VT-Taste, OPC-UA-Methode, Remote-Toggle-Trigger nach Merge) liefert ohnehin ein atomares, einmaliges Event, der D1-Wert war bei jedem tatsaechlichen Caller immer hartcodiert TRUE (via AX_BOOL_TO_X) und der Guard filterte nie etwas - reine akademische Rechtfertigung ohne echten Nutzen. Aufrufer muessen jetzt direkt ein Event statt eines AX-Adapters anschliessen (AX_BOOL_TO_X-Umweg entfaellt).">
@@ -144,7 +146,10 @@ IF TRUE = QI THEN
 		Y.D1 := LOW_REF.DI1;
 	END_IF;
 
-	IF xClipping THEN
+	(* only clip once both bounding points are calibrated - otherwise the
+	 * still-uncalibrated bound sits at its INI_AR2 default (0.0) and would
+	 * clamp the partial-calibration fallback above right back to garbage *)
+	IF xClipping AND xLowCal AND xHighCal THEN
 		IF Y.D1 < LOW_REF.DI1 THEN
 			Y.D1 := LOW_REF.DI1;
 		ELSIF Y.D1 > HIGH_REF.DI1 THEN
