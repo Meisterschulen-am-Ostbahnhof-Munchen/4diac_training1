@@ -16,8 +16,10 @@
 				<With Var="QI"/>
 				<With Var="xClipping"/>
 			</Event>
-			<Event Name="C_LOW" Type="Event" Comment="Calibrate Low Point - atomarer Trigger (VT-Taste/OPC-UA-Methode/Remote-Toggle nach Merge)"/>
-			<Event Name="C_HIGH" Type="Event" Comment="Calibrate High Point - atomarer Trigger (VT-Taste/OPC-UA-Methode/Remote-Toggle nach Merge)"/>
+			<Event Name="C_LOW" Type="Event" Comment="Calibrate Low Point - atomarer Trigger (VT-Taste/OPC-UA-Methode/Remote-Toggle nach Merge)">
+			</Event>
+			<Event Name="C_HIGH" Type="Event" Comment="Calibrate High Point - atomarer Trigger (VT-Taste/OPC-UA-Methode/Remote-Toggle nach Merge)">
+			</Event>
 		</EventInputs>
 		<EventOutputs>
 			<Event Name="INITO" Type="EInit" Comment="Initialization Confirm">
@@ -46,8 +48,8 @@
 	</InterfaceList>
 	<BasicFB>
 		<InternalVars>
-			<VarDeclaration Name="xLowCal" Type="BOOL" InitialValue="FALSE" Comment="Latched TRUE sobald X_LOW.DI1 vom INI-Default 0.0 abweicht - LOW wurde mindestens einmal kalibriert (diese Session oder ueber Boot-Restore)"/>
-			<VarDeclaration Name="xHighCal" Type="BOOL" InitialValue="FALSE" Comment="Latched TRUE sobald X_HIGH.DI1 vom INI-Default 0.0 abweicht - HIGH wurde mindestens einmal kalibriert (diese Session oder ueber Boot-Restore)"/>
+			<VarDeclaration Name="xLowCal" Type="BOOL" Comment="Latched TRUE sobald X_LOW.DI1 vom INI-Default 0.0 abweicht - LOW wurde mindestens einmal kalibriert (diese Session oder ueber Boot-Restore)" InitialValue="FALSE"/>
+			<VarDeclaration Name="xHighCal" Type="BOOL" Comment="Latched TRUE sobald X_HIGH.DI1 vom INI-Default 0.0 abweicht - HIGH wurde mindestens einmal kalibriert (diese Session oder ueber Boot-Restore)" InitialValue="FALSE"/>
 		</InternalVars>
 		<ECC>
 			<ECState Name="START" Comment="Initial State" x="-2400" y="-1600">
@@ -60,7 +62,7 @@
 			</ECState>
 			<ECState Name="IDLE" x="0" y="0">
 			</ECState>
-			<ECState Name="REQ" x="-1120" y="-1280">
+			<ECState Name="REQ" x="720" y="-1360">
 				<ECAction Algorithm="REQ" Output="Y.E1"/>
 			</ECState>
 			<ECState Name="C_LOW" x="2320" y="160">
@@ -81,14 +83,14 @@
 			<ECState Name="Y_HIGH_DISP" x="-1520" y="1680">
 				<ECAction Algorithm="Y_HIGH_DISP" Output="Y_HIGH.EI1"/>
 			</ECState>
-			<ECTransition Source="IDLE" Destination="REQ" Condition="X.E1" x="-253.33" y="-940"/>
-			<ECTransition Source="REQ" Destination="IDLE" Condition="1" x="-526.67" y="-826.67"/>
+			<ECTransition Source="IDLE" Destination="REQ" Condition="X.E1" x="833.33" y="-800"/>
+			<ECTransition Source="REQ" Destination="IDLE" Condition="1" x="1040" y="-826.67"/>
 			<ECTransition Source="IDLE" Destination="C_LOW" Condition="C_LOW" x="1540" y="33.33"/>
 			<ECTransition Source="C_LOW" Destination="IDLE" Condition="1" x="1900" y="100"/>
 			<ECTransition Source="IDLE" Destination="C_HIGH" Condition="C_HIGH" x="2680" y="-160"/>
 			<ECTransition Source="C_HIGH" Destination="IDLE" Condition="1" x="2900" y="-100"/>
-			<ECTransition Source="IDLE" Destination="REQ" Condition="X_LOW.EI1" x="-486.67" y="-566.67"/>
-			<ECTransition Source="IDLE" Destination="REQ" Condition="X_HIGH.EI1" x="-806.67" y="-433.33"/>
+			<ECTransition Source="IDLE" Destination="REQ" Condition="X_LOW.EI1" x="440" y="-606.67"/>
+			<ECTransition Source="IDLE" Destination="REQ" Condition="X_HIGH.EI1" x="-20" y="-706.67"/>
 			<ECTransition Source="IDLE" Destination="LOW_REF_ECHO" Condition="Y_LOW.EO1" x="1586.67" y="646.67"/>
 			<ECTransition Source="LOW_REF_ECHO" Destination="IDLE" Condition="1" x="1966.67" y="560"/>
 			<ECTransition Source="IDLE" Destination="HIGH_REF_ECHO" Condition="Y_HIGH.EO1" x="900" y="1006.67"/>
