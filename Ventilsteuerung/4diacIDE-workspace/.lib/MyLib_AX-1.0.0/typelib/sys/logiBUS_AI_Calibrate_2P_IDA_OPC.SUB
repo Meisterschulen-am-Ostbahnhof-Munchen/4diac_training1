@@ -91,13 +91,13 @@
 		</FB>
 		<SubApp Name="PublishCal" Type="MyLib::sys::AR_TO_Q_Publish_OPC" x="3700" y="-1200">
 		</SubApp>
-		<SubApp Name="TapZeroRaw" Type="MyLib::sys::AR2_TAP_TO_AR" x="1800" y="1200">
+		<FB Name="TapZeroRaw" Type="adapter::events::bidirectional::AR2_SPLIT_FWD_REV" x="1800" y="1100">
+		</FB>
+		<FB Name="TapSpanRaw" Type="adapter::events::bidirectional::AR2_SPLIT_FWD_REV" x="1800" y="1700">
+		</FB>
+		<SubApp Name="PublishZeroRaw" Type="MyLib::sys::AR_TO_Q_Publish_OPC" x="4000" y="-600">
 		</SubApp>
-		<SubApp Name="TapSpanRaw" Type="MyLib::sys::AR2_TAP_TO_AR" x="1800" y="1700">
-		</SubApp>
-		<SubApp Name="PublishZeroRaw" Type="MyLib::sys::AR_TO_Q_Publish_OPC" x="3700" y="-600">
-		</SubApp>
-		<SubApp Name="PublishSpanRaw" Type="MyLib::sys::AR_TO_Q_Publish_OPC" x="3700" y="0">
+		<SubApp Name="PublishSpanRaw" Type="MyLib::sys::AR_TO_Q_Publish_OPC" x="4100" y="0">
 		</SubApp>
 		<EventConnections>
 			<Connection Source="TriggerCO.IND" Destination="CALIBRATE.C_LOW" dx1="313.33"/>
@@ -176,12 +176,12 @@
 		</DataConnections>
 		<AdapterConnections>
 			<Connection Source="InputRaw.AR_OUT" Destination="CALIBRATE.X" dx1="300"/>
-			<Connection Source="CALIBRATE.X_LOW" Destination="TapZeroRaw.AR2_IN" dx1="580"/>
-			<Connection Source="TapZeroRaw.AR2_OUT" Destination="INI_X_LOW.VAL" dx1="200"/>
-			<Connection Source="TapZeroRaw.AR_OUT" Destination="PublishZeroRaw.AR_IN" dx1="200"/>
-			<Connection Source="CALIBRATE.X_HIGH" Destination="TapSpanRaw.AR2_IN" dx1="340"/>
-			<Connection Source="TapSpanRaw.AR2_OUT" Destination="INI_X_HIGH.VAL" dx1="200"/>
-			<Connection Source="TapSpanRaw.AR_OUT" Destination="PublishSpanRaw.AR_IN" dx1="126.67"/>
+			<Connection Source="CALIBRATE.X_LOW" Destination="TapZeroRaw.IN" dx1="580"/>
+			<Connection Source="TapZeroRaw.OUT" Destination="INI_X_LOW.VAL" dx1="1026.67"/>
+			<Connection Source="TapZeroRaw.FWD_OUT" Destination="PublishZeroRaw.AR_IN" dx1="200"/>
+			<Connection Source="CALIBRATE.X_HIGH" Destination="TapSpanRaw.IN" dx1="340"/>
+			<Connection Source="TapSpanRaw.OUT" Destination="INI_X_HIGH.VAL" dx1="846.67"/>
+			<Connection Source="TapSpanRaw.FWD_OUT" Destination="PublishSpanRaw.AR_IN" dx1="306.67"/>
 			<Connection Source="CALIBRATE.LOW_REF" Destination="INI_LOW_REF.VAL" dx1="253.33"/>
 			<Connection Source="CALIBRATE.HIGH_REF" Destination="INI_HIGH_REF.VAL" dx1="180"/>
 			<Connection Source="Y_OFFSET_LIT.VALUEO" Destination="CALIBRATE.Y_LOW" dx1="793.33"/>

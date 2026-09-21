@@ -116,12 +116,12 @@
 		</FB>
 		<SubApp Name="PublishCal" Type="MyLib::sys::AR_TO_Q_Publish_OPC" x="5400" y="-1600">
 		</SubApp>
-		<SubApp Name="TapMinRaw" Type="MyLib::sys::AR2_TAP_TO_AR" x="2000" y="800">
-		</SubApp>
-		<SubApp Name="TapMidRaw" Type="MyLib::sys::AR2_TAP_TO_AR" x="2000" y="1300">
-		</SubApp>
-		<SubApp Name="TapMaxRaw" Type="MyLib::sys::AR2_TAP_TO_AR" x="2000" y="1800">
-		</SubApp>
+		<FB Name="TapMinRaw" Type="adapter::events::bidirectional::AR2_SPLIT_FWD_REV" x="2000" y="700">
+		</FB>
+		<FB Name="TapMidRaw" Type="adapter::events::bidirectional::AR2_SPLIT_FWD_REV" x="2000" y="1300">
+		</FB>
+		<FB Name="TapMaxRaw" Type="adapter::events::bidirectional::AR2_SPLIT_FWD_REV" x="2000" y="1900">
+		</FB>
 		<SubApp Name="PublishMinRaw" Type="MyLib::sys::AR_TO_Q_Publish_OPC" x="5400" y="-1000">
 		</SubApp>
 		<SubApp Name="PublishMidRaw" Type="MyLib::sys::AR_TO_Q_Publish_OPC" x="5400" y="-400">
@@ -233,15 +233,15 @@
 		</DataConnections>
 		<AdapterConnections>
 			<Connection Source="InputRaw.AR_OUT" Destination="CALIBRATE.X" dx1="300"/>
-			<Connection Source="CALIBRATE.X_MIN" Destination="TapMinRaw.AR2_IN" dx1="580"/>
-			<Connection Source="TapMinRaw.AR2_OUT" Destination="INI_X_MIN.VAL" dx1="1353.33"/>
-			<Connection Source="TapMinRaw.AR_OUT" Destination="PublishMinRaw.AR_IN" dx1="313.33"/>
-			<Connection Source="CALIBRATE.X_MID" Destination="TapMidRaw.AR2_IN" dx1="460"/>
-			<Connection Source="TapMidRaw.AR2_OUT" Destination="INI_X_MID.VAL" dx1="200"/>
-			<Connection Source="TapMidRaw.AR_OUT" Destination="PublishMidRaw.AR_IN" dx1="433.33"/>
-			<Connection Source="CALIBRATE.X_MAX" Destination="TapMaxRaw.AR2_IN" dx1="340"/>
-			<Connection Source="TapMaxRaw.AR2_OUT" Destination="INI_X_MAX.VAL" dx1="2240"/>
-			<Connection Source="TapMaxRaw.AR_OUT" Destination="PublishMaxRaw.AR_IN" dx1="653.33"/>
+			<Connection Source="CALIBRATE.X_MIN" Destination="TapMinRaw.IN" dx1="580"/>
+			<Connection Source="TapMinRaw.OUT" Destination="INI_X_MIN.VAL" dx1="1353.33"/>
+			<Connection Source="TapMinRaw.FWD_OUT" Destination="PublishMinRaw.AR_IN" dx1="313.33"/>
+			<Connection Source="CALIBRATE.X_MID" Destination="TapMidRaw.IN" dx1="460"/>
+			<Connection Source="TapMidRaw.OUT" Destination="INI_X_MID.VAL" dx1="200"/>
+			<Connection Source="TapMidRaw.FWD_OUT" Destination="PublishMidRaw.AR_IN" dx1="433.33"/>
+			<Connection Source="CALIBRATE.X_MAX" Destination="TapMaxRaw.IN" dx1="340"/>
+			<Connection Source="TapMaxRaw.OUT" Destination="INI_X_MAX.VAL" dx1="2240"/>
+			<Connection Source="TapMaxRaw.FWD_OUT" Destination="PublishMaxRaw.AR_IN" dx1="653.33"/>
 			<Connection Source="CALIBRATE.MIN_REF" Destination="INI_MIN_REF.VAL" dx1="253.33"/>
 			<Connection Source="CALIBRATE.MID_REF" Destination="INI_MID_REF.VAL" dx1="220"/>
 			<Connection Source="CALIBRATE.MAX_REF" Destination="INI_MAX_REF.VAL" dx1="180"/>
