@@ -98,6 +98,8 @@
 		</FB>
 		<FB Name="BarY" Type="isobus::UT::Q::helpers::F_ScrollBarY" x="3600" y="1600">
 		</FB>
+		<FB Name="ScrollReport" Type="isobus::UT::Q::helpers::ReportScrollOffset" x="6500" y="2900">
+		</FB>
 		<EventConnections>
 			<Connection Source="INIT" Destination="Snap.REQ" dx1="420"/>
 			<Connection Source="Snap.CNF" Destination="Ramp.INIT" dx1="1946.67">
@@ -127,6 +129,12 @@
 			<Connection Source="Ramp.INITO" Destination="MoveBar.INIT" dx1="2646.67">
 				<Attribute Name="Visible" Value="false"/>
 			</Connection>
+			<Connection Source="Ramp.INITO" Destination="ScrollReport.INIT" dx1="2646.67">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="Ramp.CNF" Destination="ScrollReport.REQ" dx1="66.67">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
 		</EventConnections>
 		<DataConnections>
 			<Connection Source="stObj" Destination="Snap.IN" dx1="386.67"/>
@@ -136,10 +144,10 @@
 			<Connection Source="Ramp.OUT" Destination="OUT" dx1="5940">
 				<Attribute Name="Visible" Value="false"/>
 			</Connection>
-			<Connection Source="Ramp.qAtZero" Destination="qAtFirst">
+			<Connection Source="Ramp.qAtZero" Destination="qAtFirst" dx1="7293.33">
 				<Attribute Name="Visible" Value="false"/>
 			</Connection>
-			<Connection Source="Ramp.qAtFull" Destination="qAtLast">
+			<Connection Source="Ramp.qAtFull" Destination="qAtLast" dx1="7293.33">
 				<Attribute Name="Visible" Value="false"/>
 			</Connection>
 			<Connection Source="Snap.OUT.u16ListContentId" Destination="MoveList.u16ObjId" dx1="3146.67">
@@ -180,6 +188,15 @@
 				<Attribute Name="Visible" Value="false"/>
 			</Connection>
 			<Connection Source="BarY." Destination="MoveBar.s16Yposition" dx1="200"/>
+			<Connection Source="Snap.OUT.u16ListContentId" Destination="ScrollReport.u16ContainerId" dx1="3146.67">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="Ramp.OUT" Destination="ScrollReport.i32Pos" dx1="133.33">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="Snap.OUT.i32RowHeight" Destination="ScrollReport.i32RowHeight" dx1="1520">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
 		</DataConnections>
 	</FBNetwork>
 	<Attribute Name="eclipse4diac::core::TypeHash" Value="''"/>
