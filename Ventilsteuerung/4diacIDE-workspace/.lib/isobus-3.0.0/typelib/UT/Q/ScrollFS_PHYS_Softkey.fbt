@@ -27,6 +27,8 @@
 			</Event>
 		</EventInputs>
 		<EventOutputs>
+			<Event Name="INITO" Type="EInit" Comment="Initialization Confirm">
+			</Event>
 			<Event Name="CNF" Type="Event" Comment="Confirmation of a position change">
 				<With Var="OUT"/>
 			</Event>
@@ -153,6 +155,7 @@
 			<Connection Source="PtrUp.INITO" Destination="PtrDown.INIT" dx1="80" dx2="80" dy="633.33"/>
 			<Connection Source="PtrDown.INITO" Destination="PtrPageDown.INIT" dx1="80" dx2="80" dy="626.67"/>
 			<Connection Source="PtrPageDown.INITO" Destination="Inner.INIT" dx1="520" dx2="80" dy="-3106.67"/>
+			<Connection Source="Inner.INITO" Destination="INITO" dx1="460"/>
 			<Connection Source="Inner.CNF" Destination="PageUpSel.REQ" dx1="80" dx2="80" dy="3446.67">
 				<Attribute Name="Visible" Value="false"/>
 			</Connection>

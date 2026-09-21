@@ -36,6 +36,8 @@
 			</Event>
 		</EventInputs>
 		<EventOutputs>
+			<Event Name="INITO" Type="EInit" Comment="Initialization Confirm">
+			</Event>
 			<Event Name="CNF" Type="Event" Comment="Confirmation of a position change">
 				<With Var="OUT"/>
 				<With Var="qAtFirst"/>
@@ -133,6 +135,15 @@
 				<Attribute Name="Visible" Value="false"/>
 			</Connection>
 			<Connection Source="Ramp.CNF" Destination="ScrollReport.REQ" dx1="66.67">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="MoveList.INITO" Destination="INITO" dx1="8360">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="MoveBar.INITO" Destination="INITO" dx1="8260">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="ScrollReport.INITO" Destination="INITO" dx1="7960">
 				<Attribute Name="Visible" Value="false"/>
 			</Connection>
 		</EventConnections>
