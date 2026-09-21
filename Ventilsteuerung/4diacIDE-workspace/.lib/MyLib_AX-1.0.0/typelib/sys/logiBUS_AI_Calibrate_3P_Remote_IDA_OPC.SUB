@@ -53,16 +53,17 @@
 		<FB Name="AD_SUBSCRIBE_RAW" Type="adapter::net::AD_SUBSCRIBE_1" x="-9200" y="-1700">
 			<Parameter Name="QI" Value="TRUE"/>
 		</FB>
-		<FB Name="AD_TO_AUDI" Type="adapter::conversion::unidirectional::AD_TO_AUDI" x="-5600" y="-400">
+		<FB Name="AD_TO_AUDI" Type="adapter::conversion::unidirectional::AD_TO_AUDI" x="-5500" y="-1100">
 		</FB>
-		<FB Name="AUDI_SPLIT_2" Type="adapter::events::unidirectional::AUDI_SPLIT_2" x="-4000" y="-400">
+		<FB Name="AUDI_SPLIT_2" Type="adapter::events::unidirectional::AUDI_SPLIT_2" x="-3900" y="-1100">
 		</FB>
-		<FB Name="Q_NumericValue_RAW" Type="isobus::UT::Q::Q_NumericValue_AUDI" x="-2300" y="-1000">
+		<FB Name="Q_NumericValue_RAW" Type="isobus::UT::Q::Q_NumericValue_AUDI" x="-2200" y="-1700">
 		</FB>
-		<FB Name="AUDI_TO_AR" Type="adapter::conversion::unidirectional::AUDI_TO_AR" x="-2300" y="200">
+		<FB Name="AUDI_TO_AR" Type="adapter::conversion::unidirectional::AUDI_TO_AR" x="-2200" y="-500">
 		</FB>
 		<FB Name="CALIBRATE" Type="adapter::Engineering::measurements::AR_CALIBRATE_3P_REF" x="-200" y="200">
 			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="xClipping" Value="FALSE"/>
 		</FB>
 		<SubApp Name="MIN_REF_LIT" Type="MyLib::sys::NumericValue_TO_AR2_OPC" x="-8400" y="4200">
 		</SubApp>
@@ -167,7 +168,7 @@
 			</Connection>
 			<Connection Source="Button_C_MIN.IND" Destination="E_MERGE_MIN.EI1" dx1="2060"/>
 			<Connection Source="AX_RF_TRIG_MIN.ER" Destination="E_MERGE_MIN.EI2" dx1="400"/>
-			<Connection Source="AX_RF_TRIG_MIN.EF" Destination="E_MERGE_MIN.EI3"/>
+			<Connection Source="AX_RF_TRIG_MIN.EF" Destination="E_MERGE_MIN.EI3" dx1="1220"/>
 			<Connection Source="E_MERGE_MIN.EO" Destination="CALIBRATE.C_MIN" dx1="313.33"/>
 			<Connection Source="Button_C_MID.IND" Destination="E_MERGE_MID.EI1" dx1="1780"/>
 			<Connection Source="AX_RF_TRIG_MID.ER" Destination="E_MERGE_MID.EI2" dx1="400"/>
@@ -177,7 +178,7 @@
 			<Connection Source="Button_C_MAX.IND" Destination="E_MERGE_MAX.EI1" dx1="1506.67"/>
 			<Connection Source="AX_RF_TRIG_MAX.ER" Destination="E_MERGE_MAX.EI2" dx1="400"/>
 			<Connection Source="AX_RF_TRIG_MAX.EF" Destination="E_MERGE_MAX.EI3" dx1="2226.67"/>
-			<Connection Source="E_MERGE_MAX.EO" Destination="CALIBRATE.C_MAX"/>
+			<Connection Source="E_MERGE_MAX.EO" Destination="CALIBRATE.C_MAX" dx1="1346.67"/>
 		</EventConnections>
 		<DataConnections>
 			<Connection Source="u16ObjId_RAWVAR" Destination="Q_NumericValue_RAW.u16ObjId" dx1="1400">
@@ -261,7 +262,7 @@
 		</DataConnections>
 		<AdapterConnections>
 			<Connection Source="AD_SUBSCRIBE_RAW.OUT" Destination="AD_TO_AUDI.AD_IN" dx1="300"/>
-			<Connection Source="AD_TO_AUDI.AUDI_OUT" Destination="AUDI_SPLIT_2.IN" dx1="300"/>
+			<Connection Source="AD_TO_AUDI.AUDI_OUT" Destination="AUDI_SPLIT_2.IN"/>
 			<Connection Source="AUDI_SPLIT_2.OUT1" Destination="Q_NumericValue_RAW.u32NewValue" dx1="300"/>
 			<Connection Source="AUDI_SPLIT_2.OUT2" Destination="AUDI_TO_AR.AUDI_IN" dx1="300"/>
 			<Connection Source="AUDI_TO_AR.AR_OUT" Destination="CALIBRATE.X" dx1="300"/>

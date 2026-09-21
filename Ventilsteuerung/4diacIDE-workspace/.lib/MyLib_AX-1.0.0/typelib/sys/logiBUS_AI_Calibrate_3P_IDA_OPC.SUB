@@ -64,6 +64,7 @@
 		</SubApp>
 		<FB Name="CALIBRATE" Type="adapter::Engineering::measurements::AR_CALIBRATE_3P_REF" x="-200" y="200">
 			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="xClipping" Value="TRUE"/>
 		</FB>
 		<SubApp Name="MIN_REF_LIT" Type="MyLib::sys::NumericValue_TO_AR2_OPC" x="-3400" y="1800">
 		</SubApp>
@@ -130,7 +131,7 @@
 		<EventConnections>
 			<Connection Source="TriggerMIN.IND" Destination="CALIBRATE.C_MIN" dx1="606.67"/>
 			<Connection Source="TriggerMID.IND" Destination="CALIBRATE.C_MID" dx1="400"/>
-			<Connection Source="TriggerMAX.IND" Destination="CALIBRATE.C_MAX" dx1="1686.67"/>
+			<Connection Source="TriggerMAX.IND" Destination="CALIBRATE.C_MAX" dx1="173.33"/>
 		</EventConnections>
 		<DataConnections>
 			<Connection Source="Input" Destination="InputRaw.Input" dx1="1460">
@@ -239,7 +240,7 @@
 			<Connection Source="TapMidRaw.AR2_OUT" Destination="INI_X_MID.VAL" dx1="200"/>
 			<Connection Source="TapMidRaw.AR_OUT" Destination="PublishMidRaw.AR_IN" dx1="433.33"/>
 			<Connection Source="CALIBRATE.X_MAX" Destination="TapMaxRaw.AR2_IN" dx1="340"/>
-			<Connection Source="TapMaxRaw.AR2_OUT" Destination="INI_X_MAX.VAL" dx1="200"/>
+			<Connection Source="TapMaxRaw.AR2_OUT" Destination="INI_X_MAX.VAL" dx1="2240"/>
 			<Connection Source="TapMaxRaw.AR_OUT" Destination="PublishMaxRaw.AR_IN" dx1="653.33"/>
 			<Connection Source="CALIBRATE.MIN_REF" Destination="INI_MIN_REF.VAL" dx1="253.33"/>
 			<Connection Source="CALIBRATE.MID_REF" Destination="INI_MID_REF.VAL" dx1="220"/>
