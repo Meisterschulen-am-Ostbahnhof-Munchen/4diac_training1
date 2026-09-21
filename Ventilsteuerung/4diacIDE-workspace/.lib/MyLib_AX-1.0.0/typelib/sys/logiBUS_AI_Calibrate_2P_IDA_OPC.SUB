@@ -18,6 +18,8 @@
 	</VersionInfo>
 	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.7" Author="Franz Höpfinger" Date="2026-09-20" Remarks="Rohwert-Anzeige an den Kalibrierpunkten (Zero-Raw/Span-Raw) ergaenzt, Franz: 'im Web-Panel und im IOP die Roh-Werte mit anzeigen'. CALIBRATE.X_LOW/X_HIGH (AR2, bisher nur an INI_X_LOW/INI_X_HIGH angeschlossen) werden ueber neue TapZeroRaw/TapSpanRaw (MyLib::sys::AR2_TAP_TO_AR) abgezapft, ohne die bestehende Persistenz-/Restore-Kette zu aendern, und ueber neue PublishZeroRaw/PublishSpanRaw (MyLib::sys::AR_TO_Q_Publish_OPC) als reine Nur-Lese-Anzeige (VT CNumberVariable + OPC-UA Publish) exponiert. Neue InputVars stObjZeroRaw/stObjSpanRaw (VT-Objekt) + ID_ZERO_RAW_WRITE/ID_SPAN_RAW_WRITE (OPC-UA-Adresse).">
 	</VersionInfo>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.8" Author="Franz Höpfinger" Date="2026-09-21" Remarks="AR_CALIBRATE_2P_REF hat jetzt ein INIT/QI/QO-Enable-Pattern (genauso wie AR_CALIBRATE_3P_REF: Bugfix Garbage-Interpolation bei nur einem kalibrierten Punkt + xClipping) - CALIBRATE bekommt Parameter QI=TRUE (wie die INI_X_LOW/X_HIGH-Instanzen), sonst bleibt die FB im START-Zustand haengen und REQ laeuft nie.">
+	</VersionInfo>
 	<CompilerInfo packageName="MyLib::sys">
 		<Import declaration="isobus::UT::Q::const::IDs::ID_NULL"/>
 		<Import declaration="logiBUS::io::AI::logiBUS_AI"/>
@@ -52,6 +54,7 @@
 		<SubApp Name="InputRaw" Type="MyLib::sys::logiBUS_AI_Raw_VT_AR_OPC" x="-2800" y="600">
 		</SubApp>
 		<FB Name="CALIBRATE" Type="adapter::Engineering::measurements::AR_CALIBRATE_2P_REF" x="-200" y="200">
+			<Parameter Name="QI" Value="TRUE"/>
 		</FB>
 		<SubApp Name="Y_OFFSET_LIT" Type="MyLib::sys::NumericValue_TO_AR2_OPC" x="-2800" y="1400">
 		</SubApp>

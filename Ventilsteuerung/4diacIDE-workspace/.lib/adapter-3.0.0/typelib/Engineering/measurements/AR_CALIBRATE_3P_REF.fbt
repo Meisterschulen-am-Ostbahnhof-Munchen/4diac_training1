@@ -4,6 +4,8 @@
 	</Identification>
 	<VersionInfo Version="1.0" Author="Meisterschulen am Ostbahnhof" Date="2026-09-11" Remarks="3-Punkt-Pendant zu AR_CALIBRATE_2P_REF - fuer Sensoren mit definierter Mittelstellung (z.B. Lenkwinkelsensor: links/geradeaus/rechts). Keine ECC-Reihenfolge-Erzwingung: C_MIN/C_MID/C_MAX speichern unabhaengig, wie AR_CALIBRATE_3P.">
 	</VersionInfo>
+	<VersionInfo Version="1.2" Author="Franz Höpfinger" Date="2026-09-21" Remarks="Bugfix (Franz live am Geraet: 'wenn ich MIN druecke aendert sich der Ausgangswert nicht, erst wenn ich dann auch MID druecke uebernimmt er den MIN wert'): REQ pivotierte bisher immer auf X_MID.DI1, das vor der ersten MID-Kalibrierung beim INI_AR2-Default 0.0 steht - da reale Rohwerte praktisch nie 0.0 sind, war die Bedingung X.D1 &lt; X_MID.DI1 bis zur ersten MID-Kalibrierung permanent falsch und ignorierte MIN/MIN_REF komplett. Neue interne Kalibriert-Flags xMinCal/xMidCal/xMaxCal (latchen TRUE, sobald der jeweilige Rohwert vom INI-Default abweicht - ueberlebt Neustart, da ein echt kalibrierter Punkt nach dem Boot-Restore ebenfalls sofort wieder &lt;&gt; 0.0 ist) lassen REQ bei unvollstaendiger Kalibrierung sauber auf die 1-2-Punkt-Teilloesung bzw. den einzelnen REF-Wert ausweichen, statt mit einem Rohwert-Default von 0.0 zu rechnen. Zusaetzlich: neuer Input xClipping (Default TRUE) macht das bisher fest eingebaute Clipping auf MIN_REF..MAX_REF abschaltbar (FALSE = Extrapolation erlaubt).">
+	</VersionInfo>
 	<VersionInfo Version="1.1" Author="Franz Höpfinger" Date="2026-09-18" Remarks="C_MIN/C_MID/C_MAX von AX-Sockets (mit [C_x.D1]-Flankenwaechter) auf reine EventInputs umgestellt - jeder echte Aufrufer liefert ohnehin ein atomares Event, der D1-Wert war immer hartcodiert TRUE (via AX_BOOL_TO_X) und der Guard filterte nie etwas. Aufrufer muessen jetzt direkt ein Event statt eines AX-Adapters anschliessen. Siehe AR_CALIBRATE_2P_REF fuer die identische Aenderung.">
 	</VersionInfo>
 	<CompilerInfo packageName="adapter::Engineering::measurements">
@@ -28,7 +30,7 @@
 		</EventOutputs>
 		<InputVars>
 			<VarDeclaration Name="QI" Type="BOOL" Comment="Input event qualifier"/>
-			<VarDeclaration Name="xClipping" Type="BOOL"/>
+			<VarDeclaration Name="xClipping" Type="BOOL" Comment="TRUE (Default) = Ausgang wird auf MIN_REF..MAX_REF geklemmt; FALSE = kein Clipping, Extrapolation ueber die Kalibrierpunkte hinaus erlaubt" InitialValue="TRUE"/>
 		</InputVars>
 		<OutputVars>
 			<VarDeclaration Name="QO" Type="BOOL" Comment="Output event qualifier"/>
@@ -50,6 +52,11 @@
 		</Sockets>
 	</InterfaceList>
 	<BasicFB>
+		<InternalVars>
+			<VarDeclaration Name="xMinCal" Type="BOOL" InitialValue="FALSE" Comment="Latched TRUE sobald X_MIN.DI1 vom INI-Default 0.0 abweicht - MIN wurde mindestens einmal kalibriert (diese Session oder ueber Boot-Restore)"/>
+			<VarDeclaration Name="xMidCal" Type="BOOL" InitialValue="FALSE" Comment="Latched TRUE sobald X_MID.DI1 vom INI-Default 0.0 abweicht - MID wurde mindestens einmal kalibriert (diese Session oder ueber Boot-Restore)"/>
+			<VarDeclaration Name="xMaxCal" Type="BOOL" InitialValue="FALSE" Comment="Latched TRUE sobald X_MAX.DI1 vom INI-Default 0.0 abweicht - MAX wurde mindestens einmal kalibriert (diese Session oder ueber Boot-Restore)"/>
+		</InternalVars>
 		<ECC>
 			<ECState Name="START" Comment="Initial State" x="-3240" y="-2100">
 			</ECState>
@@ -134,28 +141,69 @@ QO := FALSE;
 QO := QI;
 
 IF TRUE = QI THEN
-	(* only perform normal operation of QI is true *)
-	(* piecewise-linear interpolation between the three independently stored points, clipped like
-	 * AR_CALIBRATE_3P *)
-	IF X.D1 < X_MID.DI1 THEN
-		IF X_MID.DI1 > X_MIN.DI1 THEN
+	(* only perform normal operation if QI is true *)
+
+	(* latch "has been calibrated at least once" per point - a never-calibrated point stays
+	 * exactly at the INI_AR2 DEFAULT_VALUE (0.0) forever, a real raw sensor value practically
+	 * never is; a re-boot restores an already-calibrated point straight back to its non-0.0
+	 * persisted value, so the latch stays correctly set across restarts *)
+	IF X_MIN.DI1 <> 0.0 THEN xMinCal := TRUE; END_IF;
+	IF X_MID.DI1 <> 0.0 THEN xMidCal := TRUE; END_IF;
+	IF X_MAX.DI1 <> 0.0 THEN xMaxCal := TRUE; END_IF;
+
+	IF xMinCal AND xMidCal AND xMaxCal THEN
+		(* full 3-point piecewise-linear interpolation, exactly as before *)
+		IF X.D1 < X_MID.DI1 THEN
+			IF X_MID.DI1 > X_MIN.DI1 THEN
+				Y.D1 := MIN_REF.DI1 + (X.D1 - X_MIN.DI1) * (MID_REF.DI1 - MIN_REF.DI1) / (X_MID.DI1 - X_MIN.DI1);
+			ELSE
+				Y.D1 := MIN_REF.DI1;
+			END_IF;
+		ELSE
+			IF X_MAX.DI1 > X_MID.DI1 THEN
+				Y.D1 := MID_REF.DI1 + (X.D1 - X_MID.DI1) * (MAX_REF.DI1 - MID_REF.DI1) / (X_MAX.DI1 - X_MID.DI1);
+			ELSE
+				Y.D1 := MID_REF.DI1;
+			END_IF;
+		END_IF;
+	ELSIF xMinCal AND xMidCal THEN
+		(* only MIN+MID calibrated so far - 2-point line between them, MAX not usable yet *)
+		IF X_MID.DI1 <> X_MIN.DI1 THEN
 			Y.D1 := MIN_REF.DI1 + (X.D1 - X_MIN.DI1) * (MID_REF.DI1 - MIN_REF.DI1) / (X_MID.DI1 - X_MIN.DI1);
 		ELSE
 			Y.D1 := MIN_REF.DI1;
 		END_IF;
-	ELSE
-		IF X_MAX.DI1 > X_MID.DI1 THEN
+	ELSIF xMidCal AND xMaxCal THEN
+		(* only MID+MAX calibrated so far - 2-point line between them, MIN not usable yet *)
+		IF X_MAX.DI1 <> X_MID.DI1 THEN
 			Y.D1 := MID_REF.DI1 + (X.D1 - X_MID.DI1) * (MAX_REF.DI1 - MID_REF.DI1) / (X_MAX.DI1 - X_MID.DI1);
 		ELSE
 			Y.D1 := MID_REF.DI1;
 		END_IF;
+	ELSIF xMinCal AND xMaxCal THEN
+		(* only MIN+MAX calibrated so far (MID skipped) - direct 2-point line, ignores MID entirely *)
+		IF X_MAX.DI1 <> X_MIN.DI1 THEN
+			Y.D1 := MIN_REF.DI1 + (X.D1 - X_MIN.DI1) * (MAX_REF.DI1 - MIN_REF.DI1) / (X_MAX.DI1 - X_MIN.DI1);
+		ELSE
+			Y.D1 := MIN_REF.DI1;
+		END_IF;
+	ELSIF xMinCal THEN
+		Y.D1 := MIN_REF.DI1;
+	ELSIF xMidCal THEN
+		Y.D1 := MID_REF.DI1;
+	ELSIF xMaxCal THEN
+		Y.D1 := MAX_REF.DI1;
+	ELSE
+		(* nothing calibrated yet *)
+		Y.D1 := MID_REF.DI1;
 	END_IF;
 
-	(* clipping *)
-	IF Y.D1 < MIN_REF.DI1 THEN
-		Y.D1 := MIN_REF.DI1;
-	ELSIF Y.D1 > MAX_REF.DI1 THEN
-		Y.D1 := MAX_REF.DI1;
+	IF xClipping THEN
+		IF Y.D1 < MIN_REF.DI1 THEN
+			Y.D1 := MIN_REF.DI1;
+		ELSIF Y.D1 > MAX_REF.DI1 THEN
+			Y.D1 := MAX_REF.DI1;
+		END_IF;
 	END_IF;
 END_IF;
 ]]></ST>
@@ -207,7 +255,16 @@ Y_MAX.DI1 := MAX_REF.DI1;
 		</Algorithm>
 	</BasicFB>
 	<Attribute Name="Documentation" Type="CDATA"><![CDATA[<h2>Formula</h2>
-<pre>Y = piecewise linear interpolation between (X_MIN,MIN_REF), (X_MID,MID_REF), (X_MAX,MAX_REF), clipped to MIN_REF..MAX_REF</pre>
+<pre>Y = piecewise linear interpolation between (X_MIN,MIN_REF), (X_MID,MID_REF), (X_MAX,MAX_REF), clipped to MIN_REF..MAX_REF unless xClipping = FALSE</pre>
+
+<h2>Partial Calibration (before all 3 points are set)</h2>
+<p>Each point is tracked internally (<code>xMinCal</code>/<code>xMidCal</code>/<code>xMaxCal</code>, latched TRUE once its raw value differs from the INI_AR2 default 0.0). Until all three are calibrated, <code>REQ</code> falls back cleanly instead of pivoting on a still-uncalibrated <code>X_MID.DI1</code> (which would otherwise sit at 0.0 and make the MIN branch permanently unreachable):</p>
+<ul>
+<li>Only one point calibrated: <code>Y</code> = that point's own REF value (no interpolation possible)</li>
+<li>Two points calibrated: 2-point line between exactly those two, ignoring the uncalibrated third</li>
+<li>All three calibrated: full piecewise interpolation as above</li>
+<li>None calibrated: <code>Y := MID_REF</code></li>
+</ul>
 
 <h2>Calibration (3-Point, Free Order)</h2>
 <ol>
