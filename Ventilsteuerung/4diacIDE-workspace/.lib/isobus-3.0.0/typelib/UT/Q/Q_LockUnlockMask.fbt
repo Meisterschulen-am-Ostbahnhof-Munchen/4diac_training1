@@ -10,10 +10,10 @@
 	<InterfaceList>
 		<EventInputs>
 			<Event Name="INIT" Type="EInit" Comment="Service Initialization">
+				<With Var="u16MaskId"/>
 			</Event>
 			<Event Name="REQ" Type="Event" Comment="Service Request">
 				<With Var="u8LockCmd"/>
-				<With Var="u16MaskId"/>
 				<With Var="u16LockTimeoutMs"/>
 			</Event>
 		</EventInputs>
@@ -24,19 +24,17 @@
 				<With Var="STATUS"/>
 				<With Var="s16result"/>
 				<With Var="u8OldLockCmd"/>
-				<With Var="u16OldMaskId"/>
 				<With Var="u16OldLockTimeoutMs"/>
 			</Event>
 		</EventOutputs>
 		<InputVars>
-			<VarDeclaration Name="u8LockCmd" Type="USINT" Comment="0 = Unlock, 1 = Lock data mask or user-layout data mask"/>
 			<VarDeclaration Name="u16MaskId" Type="UINT" Comment="Object ID of data mask or user layout data mask to lock or unlock " InitialValue="ID_NULL"/>
+			<VarDeclaration Name="u8LockCmd" Type="USINT" Comment="0 = Unlock, 1 = Lock data mask or user-layout data mask"/>
 			<VarDeclaration Name="u16LockTimeoutMs" Type="UINT" Comment="Lock timeout in ms or zero for no timeout "/>
 		</InputVars>
 		<OutputVars>
 			<VarDeclaration Name="STATUS" Type="STRING" Comment="Service Status"/>
 			<VarDeclaration Name="u8OldLockCmd" Type="USINT" Comment="Old 0 = Unlock, 1 = Lock data mask or user-layout data mask"/>
-			<VarDeclaration Name="u16OldMaskId" Type="UINT" Comment="Old object ID of data mask or user layout data mask to lock or unlock "/>
 			<VarDeclaration Name="u16OldLockTimeoutMs" Type="UINT" Comment="Old lock timeout in ms or zero for no timeout "/>
 			<VarDeclaration Name="s16result" Type="INT" Comment="retval see description"/>
 		</OutputVars>

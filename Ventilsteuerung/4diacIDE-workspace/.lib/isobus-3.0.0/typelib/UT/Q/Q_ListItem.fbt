@@ -11,9 +11,9 @@
 		<EventInputs>
 			<Event Name="INIT" Type="EInit" Comment="Service Initialization">
 				<With Var="u16ObjId"/>
+				<With Var="u8ListIndex"/>
 			</Event>
 			<Event Name="REQ" Type="Event" Comment="Service Request">
-				<With Var="u8ListIndex"/>
 				<With Var="u16NewObjId"/>
 			</Event>
 		</EventInputs>
@@ -23,7 +23,6 @@
 			<Event Name="CNF" Type="Event" Comment="Confirmation of Requested Service">
 				<With Var="STATUS"/>
 				<With Var="s16result"/>
-				<With Var="u8OldListIndex"/>
 				<With Var="u16OldObjId"/>
 			</Event>
 		</EventOutputs>
@@ -34,7 +33,6 @@
 		</InputVars>
 		<OutputVars>
 			<VarDeclaration Name="STATUS" Type="STRING" Comment="Service Status"/>
-			<VarDeclaration Name="u8OldListIndex" Type="USINT" Comment="Old list index (-&gt; see list) "/>
 			<VarDeclaration Name="u16OldObjId" Type="UINT" Comment="Old object ID or 0xFFFF to set empty "/>
 			<VarDeclaration Name="s16result" Type="INT" Comment="retval see description"/>
 		</OutputVars>
