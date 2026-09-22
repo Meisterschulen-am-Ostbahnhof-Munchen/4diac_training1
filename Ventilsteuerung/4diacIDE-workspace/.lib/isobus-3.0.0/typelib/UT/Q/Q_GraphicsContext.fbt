@@ -113,6 +113,9 @@
 <ul>
 	<li>Function uses string buffer ( Parameterlist has to be smaller than ISO_VTC_CMD_STR_MAX_LENGTH )</li>
 </ul>
+<h2>Instanz-Eindeutigkeit (Instance Uniqueness)</h2>
+
+<p>Dieser Baustein erfordert Instanz-Eindeutigkeit bezüglich <strong>u16ObjId</strong>. Es darf im gesamten Programm nur eine Instanz von <code>Q_GraphicsContext</code> für dieselbe Ziel-Objekt-ID existieren. Eine zweite Instanz auf dieselbe Objekt-ID wird bei <code>INIT</code> deaktiviert (STATUS = "This objID is already in use").</p>
 ]]></Attribute>
 	<Attribute Name="eclipse4diac::core::TypeHash" Value="''"/>
 </FBType>

@@ -104,6 +104,9 @@
 	<li><span style="color:#2980b9">VT_OK_BUFFERED (18)</span> - value buffered, waiting for VT to be ready</li>
 	<li><span style="color:#2980b9">VT_OK_OLDISNEW (17)</span> - this Number was not sent, because it was already set</li>
 </ul>
+<h2>Instanz-Eindeutigkeit (Instance Uniqueness)</h2>
+
+<p>Dieser Baustein erfordert Instanz-Eindeutigkeit bezüglich <strong>u16ObjId</strong>. Es darf im gesamten Programm nur eine Instanz von <code>Q_NumericValueAux</code> für dieselbe Ziel-Objekt-ID existieren (kann dieselbe ID mit EINER <code>Q_NumericValue</code>-Instanz teilen, da unterschiedliche FB-Klassen, aber niemals zwei <code>Q_NumericValueAux</code>-Instanzen auf dieselbe ID).</p>
 ]]></Attribute>
 	<Attribute Name="eclipse4diac::core::TypeHash" Value="''"/>
 </FBType>
