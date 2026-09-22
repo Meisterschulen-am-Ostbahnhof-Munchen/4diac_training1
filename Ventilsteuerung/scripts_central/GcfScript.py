@@ -632,7 +632,17 @@ def _find_min_row_spacing(container_obj, by_id):
     Returns the smallest positive spacing among all such uniform groups found anywhere
     in the subtree (i.e. the finest real row, even if an outer level also happens to be
     uniformly spaced - see the module's row-height detection call site), or None if no
-    qualifying group was found anywhere."""
+    qualifying group was found anywhere.
+
+    Two-row fallback: the >=3-siblings rule above would otherwise reject a perfectly
+    valid list that only has two rows (no coincidental-decoration risk to guard against
+    there - two IS the whole list, not a suspicious subset of it), regressing support
+    that the previous single-level implementation had (confirmed review finding on the
+    PR that introduced the >=3 rule). If the recursive uniform-group search above found
+    nothing anywhere in the subtree, fall back to container_obj's own DIRECT children
+    only (not recursively, so this doesn't reopen the original decoration-Top trap at
+    every nested level): if exactly 2 distinct Tops are positioned there, use their
+    difference."""
     best = None
 
     def visit(obj):
@@ -672,6 +682,27 @@ def _find_min_row_spacing(container_obj, by_id):
             visit(target)
 
     visit(container_obj)
+
+    if best is None:
+        top_level_tops = set()
+        objs_el = container_obj.find("Objects")
+        if objs_el is not None:
+            for ref in objs_el.findall("Object"):
+                proxy = by_id.get(ref.get("JVS-ID"))
+                if proxy is None:
+                    continue
+                top_val = _get_prop(proxy, "Top")
+                if top_val:
+                    try:
+                        top_level_tops.add(int(top_val))
+                    except ValueError:
+                        pass
+        if len(top_level_tops) == 2:
+            lowest_two = sorted(top_level_tops)
+            spacing = lowest_two[1] - lowest_two[0]
+            if spacing > 0:
+                best = spacing
+
     return best
 
 
