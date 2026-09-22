@@ -606,6 +606,158 @@ def _find_scroll_button_controls(jop_dir, jop_root, by_id, list_parent_id):
     return roles, pointer_roles, warnings
 
 
+def _find_min_row_spacing(container_obj, by_id):
+    """Recursively find the smallest UNIFORMLY repeating vertical Top-spacing anywhere
+    in container_obj's subtree, resolving CProxy indirection at each level.
+
+    Why recursive, not just container_obj's direct children: a ListContent's direct
+    children may themselves be grouped composites (e.g. one "Container_Ausgaenge_STG1"
+    per station, bundling a header + that station's individual channel rows) rather
+    than the real atomic per-row containers - grouping rows under a shared header
+    container must NOT change what counts as "one row" for scroll purposes (Franz,
+    2026-09-22). The real atomic row is the smallest repeating spacing found anywhere
+    in the subtree, wherever it actually sits in the nesting.
+
+    Why "uniformly repeating", not just "any 2 siblings with a Top": a single row's own
+    decorative content (background rectangle at Top=0, a label/value pair both at
+    Top=2, an icon or button also near Top=2) produces small, IRREGULAR Top spacings
+    (e.g. tops {0, 2, 18} -> deltas [2, 16], not equal to each other) that are not a
+    "row" at all - confirmed real trap, Ausgang_STG1_Q01's own children spuriously gave
+    a "row height" of 2px via a naive smallest-any-two-Tops search. A genuine row list
+    instead has >=3 siblings spaced by one CONSTANT delta (every consecutive gap
+    between sorted, deduplicated Tops is identical) - requiring >=3 (not 2) rules out a
+    coincidental single small gap, and requiring every gap equal (not just the smallest
+    two) rules out a level that mixes a few real rows with unrelated decoration.
+
+    Returns the smallest positive spacing among all such uniform groups found anywhere
+    in the subtree (i.e. the finest real row, even if an outer level also happens to be
+    uniformly spaced - see the module's row-height detection call site), or None if no
+    qualifying group was found anywhere.
+
+    Two-row fallback: the >=3-siblings rule above would otherwise reject a perfectly
+    valid list that only has two rows (no coincidental-decoration risk to guard against
+    there - two IS the whole list, not a suspicious subset of it), regressing support
+    that the previous single-level implementation had (confirmed review finding on the
+    PR that introduced the >=3 rule). If the recursive uniform-group search above found
+    nothing anywhere in the subtree, fall back to container_obj's own DIRECT children
+    only (not recursively, so this doesn't reopen the original decoration-Top trap at
+    every nested level): if exactly 2 distinct Tops are positioned there, use their
+    difference.
+
+    Height plausibility guard: the >=3-uniform rule alone doesn't rule out >=3
+    decorative siblings that happen to be evenly spaced too (confirmed review finding,
+    reproduced with a synthetic 3-label row at Top 2/8/14 - delta 6 - each Height 20:
+    without this guard, the recursion keeps descending into every row's own subtree and
+    would report row_height=6 instead of the real row spacing, since 6 < the genuine
+    row spacing and "smallest wins"). A real row's own Height should not exceed the
+    spacing to its neighbour (rows tile without overlapping); overlapping same-line
+    decoration (a label next to a value, both roughly centered) routinely has a Height
+    larger than its small Top offset from a sibling. So a uniform group is only
+    accepted as a row-spacing candidate if none of its members' own Height (where
+    known - not every object exposes one) exceeds the detected spacing. Deliberately
+    NOT implemented as "stop recursing once a uniform group is found at this level"
+    (the fix Krauternter/training1's own review bot suggested) - that reintroduces the
+    original bug this function was written to fix: ListContent's own direct children
+    (e.g. 5 per-station groups, itself a uniform >=3 group at spacing 546) would then
+    win immediately and the walk would never reach the real 42px row underneath,
+    verified by literally running that suggested change against the real pool.
+
+    Cycle guard: a CProxy chain that loops back to one of its own ancestors (a
+    malformed/hand-corrupted .jop, not something ISO-Designer itself is expected to
+    produce, but this function processes external file data and should not trust it)
+    would otherwise recurse forever and crash with RecursionError - confirmed by
+    reproducing a 2-node synthetic cycle against this function before this guard
+    existed. `active` tracks the JVS-IDs on the current DFS path (passed as a new
+    frozenset per call, not mutated, so sibling branches don't see each other's
+    ancestors); a node already on that path is skipped instead of revisited. This is
+    deliberately NOT a global visited-set - the same real object legitimately gets
+    reached via CProxy from multiple different parents in this pool (shared background
+    rectangles/icons, see the iso-designer-jop skill), and each such reachable path
+    must still be walked for its own Top/spacing context. Depth itself isn't separately
+    bounded: VT pools are inherently shallow (mask -> container -> row -> widget, a
+    handful of levels), so the only realistic unbounded-recursion risk is a cycle,
+    which this guard removes."""
+    best = None
+
+    def visit(obj, active):
+        nonlocal best
+        obj_id = obj.get("JVS-ID")
+        if obj_id is not None and obj_id in active:
+            return
+        active = active | {obj_id}
+        objs_el = obj.find("Objects")
+        if objs_el is None:
+            return
+        tops = []
+        top_to_targets = {}
+        child_targets = []
+        for ref in objs_el.findall("Object"):
+            proxy = by_id.get(ref.get("JVS-ID"))
+            if proxy is None:
+                continue
+            top_val = _get_prop(proxy, "Top")
+            target = _resolve_proxy_target(proxy, by_id)
+            if target is None and proxy.get("Class") != "CProxy":
+                # Not every direct child list uses CProxy indirection - fall back to
+                # the reference itself if it's already a real object.
+                target = proxy
+            if top_val:
+                try:
+                    t = int(top_val)
+                    tops.append(t)
+                    if target is not None:
+                        top_to_targets.setdefault(t, []).append(target)
+                except ValueError:
+                    pass
+            if target is not None:
+                child_targets.append(target)
+
+        tops = sorted(set(tops))
+        if len(tops) >= 3:
+            deltas = [b - a for a, b in zip(tops, tops[1:])]
+            if len(set(deltas)) == 1 and deltas[0] > 0:
+                spacing = deltas[0]
+                plausible = True
+                for t in tops:
+                    for target in top_to_targets.get(t, []):
+                        h = _get_prop(target, "Height")
+                        if h:
+                            try:
+                                if int(h) > spacing:
+                                    plausible = False
+                            except ValueError:
+                                pass
+                if plausible and (best is None or spacing < best):
+                    best = spacing
+
+        for target in child_targets:
+            visit(target, active)
+
+    visit(container_obj, frozenset())
+
+    if best is None:
+        top_level_tops = set()
+        objs_el = container_obj.find("Objects")
+        if objs_el is not None:
+            for ref in objs_el.findall("Object"):
+                proxy = by_id.get(ref.get("JVS-ID"))
+                if proxy is None:
+                    continue
+                top_val = _get_prop(proxy, "Top")
+                if top_val:
+                    try:
+                        top_level_tops.add(int(top_val))
+                    except ValueError:
+                        pass
+        if len(top_level_tops) == 2:
+            lowest_two = sorted(top_level_tops)
+            spacing = lowest_two[1] - lowest_two[0]
+            if spacing > 0:
+                best = spacing
+
+    return best
+
+
 def _pair_scroll_lists_by_prefix(by_name):
     """Group *_Scrolling_Parent/_Scrolling_Content/_Scrollbar_Parent/_Scrollbar_Content
     ObjectNames by their common prefix (the part before the suffix).
@@ -665,33 +817,24 @@ def _read_one_scroll_list(jop_dir, root, by_id, by_name, roles):
     list_content_height = int(_get_prop(list_content_obj, "Height") or 0)
     bar_parent_height    = int(_get_prop(bar_parent_obj, "Height") or 0)
 
-    # Row height = vertical spacing between rows (Top of the second-lowest row minus Top
-    # of the lowest, as positioned inside ListContent), NOT a row container's own Height
-    # property - rows are typically drawn shorter than their spacing to leave a visible
-    # gap between them. Determined from the two smallest Top values among ListContent's
-    # children rather than name matching (e.g. '*_Row_01'/'*_Row_02') - row containers may
-    # carry descriptive names (e.g. 'Ausgang_STG1_Q01') instead, and header rows share the
-    # same uniform slot spacing as data rows, so any two adjacent rows give the same answer.
-    tops = set()
-    lc_children = list_content_obj.find("Objects")
-    if lc_children is not None:
-        for child_ref in lc_children.findall("Object"):
-            proxy_obj = by_id.get(child_ref.get("JVS-ID"))
-            if proxy_obj is None:
-                continue
-            top_val = _get_prop(proxy_obj, "Top")
-            if top_val:
-                tops.add(int(top_val))
-
-    row_height = None
-    if len(tops) >= 2:
-        lowest_two = sorted(tops)[:2]
-        row_height = lowest_two[1] - lowest_two[0]
+    # Row height = vertical spacing between the smallest repeating group of siblings
+    # found ANYWHERE in ListContent's subtree (see _find_min_row_spacing), NOT a row
+    # container's own Height property - rows are typically drawn shorter than their
+    # spacing to leave a visible gap between them. Recursive, not just ListContent's
+    # direct children: ListContent's direct children may themselves be grouped
+    # composites (e.g. one "Container_Ausgaenge_STG1" per station, bundling a header +
+    # that station's individual channel rows like "Ausgang_STG1_Q01") rather than the
+    # real atomic rows - that grouping must not change what counts as "one row" for
+    # PAGE_UP/PAGE_DOWN's i32Step, otherwise a page-scroll degenerates to the same
+    # single "whole group" step as a line-scroll (confirmed real case, Franz 2026-09-22:
+    # Ausgaenge/Eingaenge_Scroll's direct ListContent children are per-station groups
+    # spaced 546px apart, while the real per-channel row is 42px).
+    row_height = _find_min_row_spacing(list_content_obj, by_id)
 
     if not row_height:
         print("  Warning: could not determine row height (need at least two row "
-              "containers positioned inside the list content) - skipping scroll struct "
-              "generation.")
+              "containers positioned somewhere inside the list content) - skipping "
+              "scroll struct generation.")
         return None
 
     pos_max = max(0, (list_content_height - list_parent_height) // row_height)
