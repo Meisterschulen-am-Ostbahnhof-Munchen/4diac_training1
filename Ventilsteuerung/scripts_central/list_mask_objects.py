@@ -421,7 +421,7 @@ def resolve_tree(root_ids, obj_children, seen):
     return order
 
 
-def compute_visibility_rows(pool_dir, obj_class, obj_name, obj_children, obj_path,
+def compute_visibility_rows(pool_dir, jop_path, obj_class, obj_name, obj_children, obj_path,
                              obj_top, obj_height):
     """Shared computation for --emit-visibility / --emit-visibility-json: one row per
     (object_id, mask_id) reachability pair, sorted. scroll_container_id/row_top_px/
@@ -551,7 +551,7 @@ def compute_visibility_rows(pool_dir, obj_class, obj_name, obj_children, obj_pat
     import hashlib
     jop_hash = "unknown"
     try:
-        jop_bytes = open(os.path.join(pool_dir, "DefaultPool.jop"), "rb").read()
+        jop_bytes = open(jop_path, "rb").read()
         jop_hash = hashlib.sha1(jop_bytes).hexdigest()[:12]
     except OSError:
         pass
@@ -559,7 +559,7 @@ def compute_visibility_rows(pool_dir, obj_class, obj_name, obj_children, obj_pat
     return rows, jop_hash, masks_with_jvi, scroll_viewports
 
 
-def write_visibility_csv(rows, jop_hash, scroll_viewports, out_path):
+def write_visibility_csv(rows, jop_hash, scroll_viewports, out_path, jop_filename):
     """Format spec: see BERICHT_2026-09-18_VT_SICHTBARKEITS_KONZEPT.md, Abschnitt 2.1.
     ~2.2x smaller on the wire/in flash than the JSON variant for this purely
     numeric, flat table - its only real advantage now that cJSON (ESP-IDF's
@@ -574,7 +574,7 @@ def write_visibility_csv(rows, jop_hash, scroll_viewports, out_path):
     with open(out_path, "w", encoding="ascii", newline="\n") as f:
         f.write("# DefaultPool.vis.csv - VT object -> mask/scroll visibility table\n")
         f.write(f"# Generated: {datetime.now(timezone.utc).isoformat(timespec='seconds')} "
-                f"from DefaultPool.jop (source hash: {jop_hash})\n")
+                f"from {jop_filename} (source hash: {jop_hash})\n")
         f.write("# Format version: 1\n")
         f.write("# Columns: object_id,mask_id,scroll_container_id,row_top_px,row_height_px\n")
         f.write("# Scroll viewport columns: scroll_container_id,viewport_height_px\n")
@@ -619,9 +619,10 @@ def main():
 
     if emit_visibility or emit_visibility_json:
         rows, jop_hash, masks_with_jvi, scroll_viewports = compute_visibility_rows(
-            pool_dir, obj_class, obj_name, obj_children, obj_path, obj_top, obj_height)
+            pool_dir, jop_path, obj_class, obj_name, obj_children, obj_path, obj_top, obj_height)
         if emit_visibility:
-            write_visibility_csv(rows, jop_hash, scroll_viewports, emit_visibility)
+            write_visibility_csv(rows, jop_hash, scroll_viewports, emit_visibility,
+                                  os.path.basename(jop_path))
             print(f"Wrote {len(rows)} rows ({masks_with_jvi} masks with a resolvable "
                   f".jvi, {len(scroll_viewports)} scroll viewports) to {emit_visibility}")
         if emit_visibility_json:
