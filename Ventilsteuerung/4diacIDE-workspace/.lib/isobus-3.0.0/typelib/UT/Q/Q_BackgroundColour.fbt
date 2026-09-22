@@ -107,7 +107,7 @@
 </ul>
 <h2>Instanz-Eindeutigkeit (Instance Uniqueness)</h2>
 
-<p>Dieser Baustein erfordert Instanz-Eindeutigkeit bezüglich <strong>u16ObjId</strong>. Es darf im gesamten Programm nur eine Instanz von <code>Q_BackgroundColour</code> für dieselbe Ziel-Objekt-ID existieren. Eine zweite Instanz auf dieselbe Objekt-ID wird bei <code>INIT</code> deaktiviert (STATUS = "This objID is already in use").</p>
+<p>Dieser Baustein erfordert Instanz-Eindeutigkeit bezüglich <strong>u16ObjId</strong>. Es darf im gesamten Programm nur eine Instanz von <code>Q_BackgroundColour</code> für dieselbe Ziel-Objekt-ID existieren (kann dieselbe ID mit EINER <code>Q_BackgroundColourAux</code>-Instanz teilen, da unterschiedliche FB-Klassen, aber niemals zwei <code>Q_BackgroundColour</code>-Instanzen auf dieselbe ID).</p>
 ]]></Attribute>
 	<Attribute Name="eclipse4diac::core::TypeHash" Value="''"/>
 </FBType>
