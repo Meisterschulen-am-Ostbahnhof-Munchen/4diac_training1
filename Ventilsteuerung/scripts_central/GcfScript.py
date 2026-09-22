@@ -660,11 +660,31 @@ def _find_min_row_spacing(container_obj, by_id):
     original bug this function was written to fix: ListContent's own direct children
     (e.g. 5 per-station groups, itself a uniform >=3 group at spacing 546) would then
     win immediately and the walk would never reach the real 42px row underneath,
-    verified by literally running that suggested change against the real pool."""
+    verified by literally running that suggested change against the real pool.
+
+    Cycle guard: a CProxy chain that loops back to one of its own ancestors (a
+    malformed/hand-corrupted .jop, not something ISO-Designer itself is expected to
+    produce, but this function processes external file data and should not trust it)
+    would otherwise recurse forever and crash with RecursionError - confirmed by
+    reproducing a 2-node synthetic cycle against this function before this guard
+    existed. `active` tracks the JVS-IDs on the current DFS path (passed as a new
+    frozenset per call, not mutated, so sibling branches don't see each other's
+    ancestors); a node already on that path is skipped instead of revisited. This is
+    deliberately NOT a global visited-set - the same real object legitimately gets
+    reached via CProxy from multiple different parents in this pool (shared background
+    rectangles/icons, see the iso-designer-jop skill), and each such reachable path
+    must still be walked for its own Top/spacing context. Depth itself isn't separately
+    bounded: VT pools are inherently shallow (mask -> container -> row -> widget, a
+    handful of levels), so the only realistic unbounded-recursion risk is a cycle,
+    which this guard removes."""
     best = None
 
-    def visit(obj):
+    def visit(obj, active):
         nonlocal best
+        obj_id = obj.get("JVS-ID")
+        if obj_id is not None and obj_id in active:
+            return
+        active = active | {obj_id}
         objs_el = obj.find("Objects")
         if objs_el is None:
             return
@@ -711,9 +731,9 @@ def _find_min_row_spacing(container_obj, by_id):
                     best = spacing
 
         for target in child_targets:
-            visit(target)
+            visit(target, active)
 
-    visit(container_obj)
+    visit(container_obj, frozenset())
 
     if best is None:
         top_level_tops = set()
