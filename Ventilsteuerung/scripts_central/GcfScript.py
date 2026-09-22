@@ -642,7 +642,25 @@ def _find_min_row_spacing(container_obj, by_id):
     nothing anywhere in the subtree, fall back to container_obj's own DIRECT children
     only (not recursively, so this doesn't reopen the original decoration-Top trap at
     every nested level): if exactly 2 distinct Tops are positioned there, use their
-    difference."""
+    difference.
+
+    Height plausibility guard: the >=3-uniform rule alone doesn't rule out >=3
+    decorative siblings that happen to be evenly spaced too (confirmed review finding,
+    reproduced with a synthetic 3-label row at Top 2/8/14 - delta 6 - each Height 20:
+    without this guard, the recursion keeps descending into every row's own subtree and
+    would report row_height=6 instead of the real row spacing, since 6 < the genuine
+    row spacing and "smallest wins"). A real row's own Height should not exceed the
+    spacing to its neighbour (rows tile without overlapping); overlapping same-line
+    decoration (a label next to a value, both roughly centered) routinely has a Height
+    larger than its small Top offset from a sibling. So a uniform group is only
+    accepted as a row-spacing candidate if none of its members' own Height (where
+    known - not every object exposes one) exceeds the detected spacing. Deliberately
+    NOT implemented as "stop recursing once a uniform group is found at this level"
+    (the fix Krauternter/training1's own review bot suggested) - that reintroduces the
+    original bug this function was written to fix: ListContent's own direct children
+    (e.g. 5 per-station groups, itself a uniform >=3 group at spacing 546) would then
+    win immediately and the walk would never reach the real 42px row underneath,
+    verified by literally running that suggested change against the real pool."""
     best = None
 
     def visit(obj):
@@ -651,31 +669,45 @@ def _find_min_row_spacing(container_obj, by_id):
         if objs_el is None:
             return
         tops = []
+        top_to_targets = {}
         child_targets = []
         for ref in objs_el.findall("Object"):
             proxy = by_id.get(ref.get("JVS-ID"))
             if proxy is None:
                 continue
             top_val = _get_prop(proxy, "Top")
-            if top_val:
-                try:
-                    tops.append(int(top_val))
-                except ValueError:
-                    pass
             target = _resolve_proxy_target(proxy, by_id)
-            if target is not None:
-                child_targets.append(target)
-            elif proxy.get("Class") != "CProxy":
+            if target is None and proxy.get("Class") != "CProxy":
                 # Not every direct child list uses CProxy indirection - fall back to
                 # the reference itself if it's already a real object.
-                child_targets.append(proxy)
+                target = proxy
+            if top_val:
+                try:
+                    t = int(top_val)
+                    tops.append(t)
+                    if target is not None:
+                        top_to_targets.setdefault(t, []).append(target)
+                except ValueError:
+                    pass
+            if target is not None:
+                child_targets.append(target)
 
         tops = sorted(set(tops))
         if len(tops) >= 3:
             deltas = [b - a for a, b in zip(tops, tops[1:])]
             if len(set(deltas)) == 1 and deltas[0] > 0:
                 spacing = deltas[0]
-                if best is None or spacing < best:
+                plausible = True
+                for t in tops:
+                    for target in top_to_targets.get(t, []):
+                        h = _get_prop(target, "Height")
+                        if h:
+                            try:
+                                if int(h) > spacing:
+                                    plausible = False
+                            except ValueError:
+                                pass
+                if plausible and (best is None or spacing < best):
                     best = spacing
 
         for target in child_targets:
