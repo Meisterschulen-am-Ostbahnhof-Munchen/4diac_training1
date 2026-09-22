@@ -30,3 +30,5 @@ call RunSkript_Workspace_PWM12_AX.bat
 if errorlevel 1 exit /b 1
 call RunSkript_Workspace_Dreieck_AX.bat
 if errorlevel 1 exit /b 1
+call RunSkript_EmitVtVisibility_AX.bat
+if errorlevel 1 exit /b 1
