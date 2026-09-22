@@ -12,7 +12,7 @@
 	</VersionInfo>
 	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2026-09-11" Remarks="Remote-Rohwert-Variante von logiBUS_AI_Calibrate_3P_IDA_OPC - logiBUS_AI_IDA+AD_SPLIT_2+AD_PUBLISH_RAW durch AD_SUBSCRIBE_1 ersetzt, Rest der Kalibrier-/VT-Kette unveraendert. Fuer Hangausgleich-Winkelsensor B14 (STG3), Kalibrierung+VT auf STG1.">
 	</VersionInfo>
-	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.6" Author="Franz Höpfinger" Date="2026-09-21" Remarks="Code-Review-Fund (PR #260): INI_X_MID/INI_X_MAX.DEFAULT_VALUE standen auf REAL#0.5/1.0 statt 0.0 - AR_CALIBRATE_3P_REF's xMidCal/xMaxCal-Kalibriert-Flags latchten dadurch bei JEDEM Boot sofort TRUE, obwohl MID/MAX nie kalibriert wurden. Defaults auf REAL#0.0 korrigiert. Betrifft Hangausgleich in Krauternter.">
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.6" Author="Franz Höpfinger" Date="2026-09-21" Remarks="Code-Review-Fund (PR #260): INI_X_MID/INI_X_MAX.DEFAULT_VALUE standen auf REAL#0.5/1.0 statt 0.0 - AR_CALIBRATE_3P_REF's xMidCal/xMaxCal-Kalibriert-Flags latchten dadurch bei JEDEM Boot sofort TRUE, obwohl MID/MAX nie kalibriert wurden. Defaults auf REAL#0.0 korrigiert. Betrifft Hangausgleich.">
 	</VersionInfo>
 	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.5" Author="Franz Höpfinger" Date="2026-09-21" Remarks="AR_CALIBRATE_3P_REF hat jetzt ein INIT/QI/QO-Enable-Pattern (Bugfix MIN-vor-MID + xClipping) - CALIBRATE bekommt Parameter QI=TRUE, sonst bleibt die FB im START-Zustand haengen und REQ laeuft nie.">
 	</VersionInfo>

@@ -4,6 +4,8 @@
 	</Identification>
 	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2026-09-17" Remarks="initial implementation - schlanke Nachfolge-Variante von AR_HZ_TO_Q_Publish_OPC ohne eigene Skalierung, da die Hz-&gt;Einheit-Umrechnung jetzt auf der Sensor-Station selbst laeuft (logiBUS_PI_Speed_Publish_OPC). Buendelt AR_SUBSCRIBE_1+AR_TO_Q_Publish_OPC - ein Baustein je bereits umgerechnetem Puls-/Analog-Wert, der von einer anderen Station remote abonniert wird.">
 	</VersionInfo>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.1" Author="Franz Höpfinger" Date="2026-09-21" Remarks="Neuer Plug VALUE_OUT (AR) ergaenzt - Fuellband-Winkel-Migration (Kalibrierung zieht auf die Sensor-Station um) braucht den remote abonnierten Wert nicht nur fuer die VT-Anzeige/den eigenen Re-Publish, sondern auch als direkten AR-Plug fuer weitere lokale Konsumenten (Befuellautomatik/Fuellband_Oben) - analog zum bereits etablierten VALUE_OUT-Muster in NumericValue_TO_AR2_OPC v1.1. AR_SPLIT_2 vor Publish.AR_IN eingefuegt, statt AR_SUBSCRIBE_M2M.OUT direkt dorthin zu verdrahten.">
+	</VersionInfo>
 	<CompilerInfo packageName="MyLib::sys">
 	</CompilerInfo>
 	<SubAppInterfaceList>
@@ -12,12 +14,17 @@
 			<VarDeclaration Name="stObj" Type="logiBUS::utils::conversion::phys::NumericObjectPool_S" Comment="Object pool properties der VT-Zahlenvariable (u16ObjId, scale, offset, decimals) - z.B. FBs::const::DefaultPool_Numeric::NumberVariable_X_N"/>
 			<VarDeclaration Name="ID_WRITE" Type="WSTRING" Comment="Lokale Publish-Adresse (REAL, physikalischer Wert) - Web-Mirror/Dashboard/Self-Subscribe weiterer lokaler Konsumenten"/>
 		</InputVars>
+		<Plugs>
+			<AdapterDeclaration Name="VALUE_OUT" Type="adapter::types::unidirectional::AR" Comment="Nur-Lese-Spiegel des remote abonnierten Werts, fuer weitere lokale Konsumenten (SubApp-Sockets statt eigenem OPC-UA-Self-Subscribe) - vermeidet Doppel-Self-Subscribe desselben Remote-Knotens auf dieser Station"/>
+		</Plugs>
 	</SubAppInterfaceList>
 	<SubAppNetwork>
-		<FB Name="AR_SUBSCRIBE_M2M" Type="adapter::net::AR_SUBSCRIBE_1" x="0" y="0">
+		<FB Name="AR_SUBSCRIBE_M2M" Type="adapter::net::AR_SUBSCRIBE_1" x="-900" y="0">
 			<Parameter Name="QI" Value="TRUE"/>
 		</FB>
-		<SubApp Name="Publish" Type="MyLib::sys::AR_TO_Q_Publish_OPC" x="1600" y="0">
+		<FB Name="AR_SPLIT_2_Value" Type="adapter::events::unidirectional::AR_SPLIT_2" x="900" y="0">
+		</FB>
+		<SubApp Name="Publish" Type="MyLib::sys::AR_TO_Q_Publish_OPC" x="2700" y="-400">
 		</SubApp>
 		<DataConnections>
 			<Connection Source="ID_M2M_READ" Destination="AR_SUBSCRIBE_M2M.ID" dx1="1400">
@@ -31,7 +38,9 @@
 			</Connection>
 		</DataConnections>
 		<AdapterConnections>
-			<Connection Source="AR_SUBSCRIBE_M2M.OUT" Destination="Publish.AR_IN" dx1="600"/>
+			<Connection Source="AR_SUBSCRIBE_M2M.OUT" Destination="AR_SPLIT_2_Value.IN" dx1="300"/>
+			<Connection Source="AR_SPLIT_2_Value.OUT1" Destination="Publish.AR_IN" dx1="300"/>
+			<Connection Source="AR_SPLIT_2_Value.OUT2" Destination="VALUE_OUT" dx1="2960"/>
 		</AdapterConnections>
 	</SubAppNetwork>
 </SubAppType>
