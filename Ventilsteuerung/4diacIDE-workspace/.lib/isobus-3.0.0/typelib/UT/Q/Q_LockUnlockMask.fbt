@@ -82,7 +82,7 @@ This command is used by a Working Set to disallow or allow screen refreshes at t
 </ul>
 <h2>Instanz-Eindeutigkeit (Instance Uniqueness)</h2>
 
-<p>Dieser Baustein erfordert Instanz-Eindeutigkeit bezüglich <strong>u16ObjId</strong> (bzw. Masken-ID). Es darf im gesamten Programm nur eine Instanz von <code>Q_LockUnlockMask</code> für dieselbe Ziel-Objekt-ID existieren.</p>
+<p>Dieser Baustein erfordert Instanz-Eindeutigkeit bezüglich <strong>u16MaskId</strong>. Es darf im gesamten Programm nur eine Instanz von <code>Q_LockUnlockMask</code> für dieselbe Masken-ID existieren. <code>u16MaskId</code> wird bei <code>INIT</code> eingelesen — eine zweite Instanz auf dieselbe Masken-ID wird bei <code>INIT</code> deaktiviert (STATUS = "This objID is already in use").</p>
 ]]></Attribute>
 	<Attribute Name="eclipse4diac::core::TypeHash" Value="''"/>
 </FBType>
