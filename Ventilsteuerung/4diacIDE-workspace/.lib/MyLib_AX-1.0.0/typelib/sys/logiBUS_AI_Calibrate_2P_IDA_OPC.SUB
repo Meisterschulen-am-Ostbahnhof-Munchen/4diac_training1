@@ -22,6 +22,8 @@
 	</VersionInfo>
 	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.8" Author="Franz Höpfinger" Date="2026-09-21" Remarks="AR_CALIBRATE_2P_REF hat jetzt ein INIT/QI/QO-Enable-Pattern (genauso wie AR_CALIBRATE_3P_REF: Bugfix Garbage-Interpolation bei nur einem kalibrierten Punkt + xClipping) - CALIBRATE bekommt Parameter QI=TRUE (wie die INI_X_LOW/X_HIGH-Instanzen), sonst bleibt die FB im START-Zustand haengen und REQ laeuft nie.">
 	</VersionInfo>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.10" Author="Franz Hoepfinger" Date="2026-09-23" Remarks="INI_LOW_REF.DEFAULT_VALUE/INI_HIGH_REF.DEFAULT_VALUE waren fest verdrahtet (0.0/100.0) - neue InputVars rLowRefDefault/rHighRefDefault machen die Erstinbetriebnahme-Referenzwerte pro Instanz konfigurierbar (Druck braucht 250.0 statt Fuellbands 100.0), bestehende Instanzen unveraendert per Default.">
+	</VersionInfo>
 	<CompilerInfo packageName="MyLib::sys">
 		<Import declaration="isobus::UT::Q::const::IDs::ID_NULL"/>
 		<Import declaration="logiBUS::io::AI::logiBUS_AI"/>
@@ -50,6 +52,8 @@
 			<VarDeclaration Name="stObjSpanRaw" Type="logiBUS::utils::conversion::phys::NumericObjectPool_S" Comment="Object ID + Scale/Offset/Decimals CNumberVariable (Rohwert am SPAN-Kalibrierpunkt, reine Diagnose-Anzeige)" InitialValue="(u16ObjId := ID_NULL, r32Scale := 1.0, i32Offset := 0, u8Decimals := 1)"/>
 			<VarDeclaration Name="ID_ZERO_RAW_WRITE" Type="WSTRING" Comment="Rohwert-am-ZERO-Kalibrierpunkt-Publish-Adresse (REAL, ACTION=PUBLISH)"/>
 			<VarDeclaration Name="ID_SPAN_RAW_WRITE" Type="WSTRING" Comment="Rohwert-am-SPAN-Kalibrierpunkt-Publish-Adresse (REAL, ACTION=PUBLISH)"/>
+			<VarDeclaration Name="rLowRefDefault" Type="REAL" Comment="Erstinbetriebnahme-Standardwert LOW_REF (INI_LOW_REF.DEFAULT_VALUE), bevor der Bediener selbst kalibriert - Fuellband/die meisten Sensoren: 0.0" InitialValue="REAL#0.0"/>
+			<VarDeclaration Name="rHighRefDefault" Type="REAL" Comment="Erstinbetriebnahme-Standardwert HIGH_REF (INI_HIGH_REF.DEFAULT_VALUE), bevor der Bediener selbst kalibriert - z.B. 250.0 fuer Druck (0-250bar), 100.0 fuer Fuellband-Winkel (Prozent)" InitialValue="REAL#100.0"/>
 		</InputVars>
 	</SubAppInterfaceList>
 	<SubAppNetwork>
@@ -83,13 +87,11 @@
 			<Parameter Name="QI" Value="TRUE"/>
 			<Parameter Name="SETM" Value="TRUE"/>
 			<Parameter Name="KEY" Value="'LOW_REF'"/>
-			<Parameter Name="DEFAULT_VALUE" Value="REAL#0.0"/>
 		</FB>
 		<FB Name="INI_HIGH_REF" Type="eclipse4diac::storage::INI_AR2" x="6500" y="2300">
 			<Parameter Name="QI" Value="TRUE"/>
 			<Parameter Name="SETM" Value="TRUE"/>
 			<Parameter Name="KEY" Value="'HIGH_REF'"/>
-			<Parameter Name="DEFAULT_VALUE" Value="REAL#100.0"/>
 		</FB>
 		<SubApp Name="PublishCal" Type="MyLib::sys::AR_TO_Q_Publish_OPC" x="3700" y="-1200">
 		</SubApp>
@@ -131,6 +133,12 @@
 				<Attribute Name="Visible" Value="false"/>
 			</Connection>
 			<Connection Source="sSection" Destination="INI_HIGH_REF.SECTION" dx1="1400">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="rLowRefDefault" Destination="INI_LOW_REF.DEFAULT_VALUE" dx1="1400">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="rHighRefDefault" Destination="INI_HIGH_REF.DEFAULT_VALUE" dx1="1400">
 				<Attribute Name="Visible" Value="false"/>
 			</Connection>
 			<Connection Source="ID_RAW_WRITE" Destination="InputRaw.ID_RAW_WRITE" dx1="1400">

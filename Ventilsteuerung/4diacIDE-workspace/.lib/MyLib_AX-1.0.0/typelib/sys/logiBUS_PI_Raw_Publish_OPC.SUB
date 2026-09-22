@@ -4,14 +4,22 @@
 	</Identification>
 	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2026-09-12" Remarks="initial implementation - schlanke Frequenz-Rohwert-Haelfte von logiBUS_PI_IDA_OPC (ohne Kanal-Enable/VT-Status/Zaehler-Publish), fuer Sensoren auf einer Station ohne VT-Anschluss (B03/B10/B11).">
 	</VersionInfo>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.1" Author="Franz Höpfinger" Date="2026-09-22" Remarks="PT1-Filterzeit einstellbar + INI-persistiert statt hartcodiertem T#2s-Literal (initval_ATM entfernt) - Franz: 'Kunde will die Filter Zeit ohnehin Einstellbar haben (die 2S), Abspeichern in INI, 2S als Standardwert'. Neue FilterTimeS (NumericValue_TO_AR2_OPC, Sekunden REAL, VT+Web mergebar) + INI_FilterTimeS (INI_AR2, Section/Key='FilterTimeS', Default REAL#2.0) + neuer Baustein AR_S_TO_ATM (Sekunden-REAL -&gt; TIME, x1000 + numerische Konvertierung) speisen FT_PT1_AR.TM. FT_PT1_AR.INIT wird jetzt von INI_FilterTimeS.INITO ausgeloest (statt initval_ATM.INITO) - ein Wert, der zur Laufzeit per VT/Web geaendert wird, greift damit erst nach einem Neustart der Station (bewusste Vereinfachung, kein Live-Re-Init um Filter-Transienten waehrend des Betriebs zu vermeiden). Neue InputVars stObjFilterTimeS/ID_FILTER_TIME_READ/ID_FILTER_TIME_WRITE/sSection - bestehende Aufrufer muessen diese nachziehen (siehe Inputs_STG2/STG3.SUB), sonst laufen AR_SUBSCRIBE_1/AR_PUBLISH_1/INI_AR2 mit leeren IDs.">
+	</VersionInfo>
 	<CompilerInfo packageName="MyLib::sys">
 		<Import declaration="logiBUS::io::PI::logiBUS_PI"/>
 		<Import declaration="logiBUS::io::PI::logiBUS_PI_S"/>
+		<Import declaration="isobus::UT::Q::const::IDs::ID_NULL"/>
+		<Import declaration="logiBUS::utils::conversion::phys::NumericObjectPool_S"/>
 	</CompilerInfo>
 	<SubAppInterfaceList>
 		<InputVars>
 			<VarDeclaration Name="Input" Type="logiBUS::io::PI::logiBUS_PI_S" Comment="Identify the Input PulseInput_I1..I9" InitialValue="logiBUS_PI::Invalid"/>
 			<VarDeclaration Name="ID_HZ_WRITE" Type="WSTRING" Comment="Frequenz-Publish-Adresse (REAL Hz, ACTION=PUBLISH), lokal auf dieser Station"/>
+			<VarDeclaration Name="stObjFilterTimeS" Type="logiBUS::utils::conversion::phys::NumericObjectPool_S" Comment="Object ID + Scale/Offset/Decimals CNumberVariable (PT1-Filterzeit in Sekunden, VT-Eingabefeld)" InitialValue="(u16ObjId := ID_NULL, r32Scale := 1.0, i32Offset := 0, u8Decimals := 1)"/>
+			<VarDeclaration Name="ID_FILTER_TIME_READ" Type="WSTRING" Comment="Remote-Subscribe-Adresse (REAL Sekunden, ACTION=SUBSCRIBE) fuer Web-Override der Filterzeit"/>
+			<VarDeclaration Name="ID_FILTER_TIME_WRITE" Type="WSTRING" Comment="Lokale Echo/Re-Publish-Adresse (REAL Sekunden, ACTION=PUBLISH) der aktuellen Filterzeit"/>
+			<VarDeclaration Name="sSection" Type="STRING" Comment="INI settings.ini Section fuer die persistierte Filterzeit (eindeutig pro Sensor-Instanz)"/>
 		</InputVars>
 	</SubAppInterfaceList>
 	<SubAppNetwork>
@@ -37,11 +45,18 @@
 		<FB Name="FT_PT1_AR" Type="OSCAT_adapter::Control::FT_PT1_AR" x="-2600" y="-1600">
 			<Parameter Name="K" Value="1.0"/>
 		</FB>
-		<FB Name="initval_ATM" Type="adapter::types::unidirectional::ATM::initval::initval_ATM" x="-3900" y="-900">
-			<Parameter Name="INIT_VAL" Value="T#2s"/>
+		<SubApp Name="FilterTimeS" Type="MyLib::sys::NumericValue_TO_AR2_OPC" x="-3900" y="-200">
+		</SubApp>
+		<FB Name="INI_FilterTimeS" Type="eclipse4diac::storage::INI_AR2" x="-2600" y="600">
+			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="SETM" Value="TRUE"/>
+			<Parameter Name="KEY" Value="'FilterTimeS'"/>
+			<Parameter Name="DEFAULT_VALUE" Value="REAL#2.0"/>
 		</FB>
+		<SubApp Name="ToATM" Type="MyLib::sys::AR_S_TO_ATM" x="-1200" y="-900">
+		</SubApp>
 		<EventConnections>
-			<Connection Source="initval_ATM.INITO" Destination="FT_PT1_AR.INIT" dx1="246.67"/>
+			<Connection Source="INI_FilterTimeS.INITO" Destination="FT_PT1_AR.INIT" dx1="246.67"/>
 		</EventConnections>
 		<DataConnections>
 			<Connection Source="Input" Destination="logiBUS_PI_IDA.Input" dx1="1460">
@@ -50,12 +65,26 @@
 			<Connection Source="ID_HZ_WRITE" Destination="AR_PUBLISH_HZ.ID" dx1="1400">
 				<Attribute Name="Visible" Value="false"/>
 			</Connection>
+			<Connection Source="stObjFilterTimeS" Destination="FilterTimeS.stObj" dx1="1400">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="ID_FILTER_TIME_READ" Destination="FilterTimeS.ID_READ" dx1="1400">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="ID_FILTER_TIME_WRITE" Destination="FilterTimeS.ID_WRITE" dx1="1400">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="sSection" Destination="INI_FilterTimeS.SECTION" dx1="1400">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
 		</DataConnections>
 		<AdapterConnections>
 			<Connection Source="logiBUS_PI_IDA.IN" Destination="AD_TO_AR_NUM.AD_IN" dx1="420"/>
 			<Connection Source="AD_TO_AR_NUM.AR_OUT" Destination="FT_DERIV_10_AR.AR_IN" dx1="420"/>
 			<Connection Source="FT_DERIV_10_AR.AR_OUT" Destination="FT_PT1_AR.AR_IN" dx1="420"/>
-			<Connection Source="initval_ATM.OUT" Destination="FT_PT1_AR.TM" dx1="400"/>
+			<Connection Source="FilterTimeS.VALUEO" Destination="INI_FilterTimeS.VAL" dx1="400"/>
+			<Connection Source="FilterTimeS.VALUE_OUT" Destination="ToATM.IN1" dx1="400"/>
+			<Connection Source="ToATM.OUT" Destination="FT_PT1_AR.TM" dx1="400"/>
 			<Connection Source="FT_PT1_AR.AR_OUT" Destination="AR_PUBLISH_HZ.IN" dx1="133.33"/>
 		</AdapterConnections>
 	</SubAppNetwork>
