@@ -106,7 +106,7 @@
 </ul>
 <h2>Instanz-Eindeutigkeit (Instance Uniqueness)</h2>
 
-<p>Dieser Baustein erfordert Instanz-Eindeutigkeit bezüglich <strong>u16ObjId</strong> (bzw. Masken-ID). Es darf im gesamten Programm nur eine Instanz von <code>Q_NumericValueAux</code> für dieselbe Ziel-Objekt-ID existieren.</p>
+<p>Dieser Baustein erfordert Instanz-Eindeutigkeit bezüglich <strong>u16ObjId</strong>. Es darf im gesamten Programm nur eine Instanz von <code>Q_NumericValueAux</code> für dieselbe Ziel-Objekt-ID existieren (kann dieselbe ID mit EINER <code>Q_NumericValue</code>-Instanz teilen, da unterschiedliche FB-Klassen, aber niemals zwei <code>Q_NumericValueAux</code>-Instanzen auf dieselbe ID).</p>
 ]]></Attribute>
 	<Attribute Name="eclipse4diac::core::TypeHash" Value="''"/>
 </FBType>
