@@ -606,6 +606,75 @@ def _find_scroll_button_controls(jop_dir, jop_root, by_id, list_parent_id):
     return roles, pointer_roles, warnings
 
 
+def _find_min_row_spacing(container_obj, by_id):
+    """Recursively find the smallest UNIFORMLY repeating vertical Top-spacing anywhere
+    in container_obj's subtree, resolving CProxy indirection at each level.
+
+    Why recursive, not just container_obj's direct children: a ListContent's direct
+    children may themselves be grouped composites (e.g. one "Container_Ausgaenge_STG1"
+    per station, bundling a header + that station's individual channel rows) rather
+    than the real atomic per-row containers - grouping rows under a shared header
+    container must NOT change what counts as "one row" for scroll purposes (Franz,
+    2026-09-22). The real atomic row is the smallest repeating spacing found anywhere
+    in the subtree, wherever it actually sits in the nesting.
+
+    Why "uniformly repeating", not just "any 2 siblings with a Top": a single row's own
+    decorative content (background rectangle at Top=0, a label/value pair both at
+    Top=2, an icon or button also near Top=2) produces small, IRREGULAR Top spacings
+    (e.g. tops {0, 2, 18} -> deltas [2, 16], not equal to each other) that are not a
+    "row" at all - confirmed real trap, Ausgang_STG1_Q01's own children spuriously gave
+    a "row height" of 2px via a naive smallest-any-two-Tops search. A genuine row list
+    instead has >=3 siblings spaced by one CONSTANT delta (every consecutive gap
+    between sorted, deduplicated Tops is identical) - requiring >=3 (not 2) rules out a
+    coincidental single small gap, and requiring every gap equal (not just the smallest
+    two) rules out a level that mixes a few real rows with unrelated decoration.
+
+    Returns the smallest positive spacing among all such uniform groups found anywhere
+    in the subtree (i.e. the finest real row, even if an outer level also happens to be
+    uniformly spaced - see the module's row-height detection call site), or None if no
+    qualifying group was found anywhere."""
+    best = None
+
+    def visit(obj):
+        nonlocal best
+        objs_el = obj.find("Objects")
+        if objs_el is None:
+            return
+        tops = []
+        child_targets = []
+        for ref in objs_el.findall("Object"):
+            proxy = by_id.get(ref.get("JVS-ID"))
+            if proxy is None:
+                continue
+            top_val = _get_prop(proxy, "Top")
+            if top_val:
+                try:
+                    tops.append(int(top_val))
+                except ValueError:
+                    pass
+            target = _resolve_proxy_target(proxy, by_id)
+            if target is not None:
+                child_targets.append(target)
+            elif proxy.get("Class") != "CProxy":
+                # Not every direct child list uses CProxy indirection - fall back to
+                # the reference itself if it's already a real object.
+                child_targets.append(proxy)
+
+        tops = sorted(set(tops))
+        if len(tops) >= 3:
+            deltas = [b - a for a, b in zip(tops, tops[1:])]
+            if len(set(deltas)) == 1 and deltas[0] > 0:
+                spacing = deltas[0]
+                if best is None or spacing < best:
+                    best = spacing
+
+        for target in child_targets:
+            visit(target)
+
+    visit(container_obj)
+    return best
+
+
 def _pair_scroll_lists_by_prefix(by_name):
     """Group *_Scrolling_Parent/_Scrolling_Content/_Scrollbar_Parent/_Scrollbar_Content
     ObjectNames by their common prefix (the part before the suffix).
@@ -665,33 +734,24 @@ def _read_one_scroll_list(jop_dir, root, by_id, by_name, roles):
     list_content_height = int(_get_prop(list_content_obj, "Height") or 0)
     bar_parent_height    = int(_get_prop(bar_parent_obj, "Height") or 0)
 
-    # Row height = vertical spacing between rows (Top of the second-lowest row minus Top
-    # of the lowest, as positioned inside ListContent), NOT a row container's own Height
-    # property - rows are typically drawn shorter than their spacing to leave a visible
-    # gap between them. Determined from the two smallest Top values among ListContent's
-    # children rather than name matching (e.g. '*_Row_01'/'*_Row_02') - row containers may
-    # carry descriptive names (e.g. 'Ausgang_STG1_Q01') instead, and header rows share the
-    # same uniform slot spacing as data rows, so any two adjacent rows give the same answer.
-    tops = set()
-    lc_children = list_content_obj.find("Objects")
-    if lc_children is not None:
-        for child_ref in lc_children.findall("Object"):
-            proxy_obj = by_id.get(child_ref.get("JVS-ID"))
-            if proxy_obj is None:
-                continue
-            top_val = _get_prop(proxy_obj, "Top")
-            if top_val:
-                tops.add(int(top_val))
-
-    row_height = None
-    if len(tops) >= 2:
-        lowest_two = sorted(tops)[:2]
-        row_height = lowest_two[1] - lowest_two[0]
+    # Row height = vertical spacing between the smallest repeating group of siblings
+    # found ANYWHERE in ListContent's subtree (see _find_min_row_spacing), NOT a row
+    # container's own Height property - rows are typically drawn shorter than their
+    # spacing to leave a visible gap between them. Recursive, not just ListContent's
+    # direct children: ListContent's direct children may themselves be grouped
+    # composites (e.g. one "Container_Ausgaenge_STG1" per station, bundling a header +
+    # that station's individual channel rows like "Ausgang_STG1_Q01") rather than the
+    # real atomic rows - that grouping must not change what counts as "one row" for
+    # PAGE_UP/PAGE_DOWN's i32Step, otherwise a page-scroll degenerates to the same
+    # single "whole group" step as a line-scroll (confirmed real case, Franz 2026-09-22:
+    # Ausgaenge/Eingaenge_Scroll's direct ListContent children are per-station groups
+    # spaced 546px apart, while the real per-channel row is 42px).
+    row_height = _find_min_row_spacing(list_content_obj, by_id)
 
     if not row_height:
         print("  Warning: could not determine row height (need at least two row "
-              "containers positioned inside the list content) - skipping scroll struct "
-              "generation.")
+              "containers positioned somewhere inside the list content) - skipping "
+              "scroll struct generation.")
         return None
 
     pos_max = max(0, (list_content_height - list_parent_height) // row_height)
