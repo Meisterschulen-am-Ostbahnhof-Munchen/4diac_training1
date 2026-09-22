@@ -15,6 +15,16 @@ def getPaths():
     parser.add_argument("-p", "--newfolder", dest="new_folder", required=True)
     parser.add_argument("-k", "--package", dest="package", required=True)
     parser.add_argument("-j", "--jopfile", dest="jop_file", required=False, default=None)
+    parser.add_argument(
+        "--variables-only", dest="variables_only", action="store_true", default=False,
+        help="For InputNumber/OutputNumber widgets that have a bound CNumberVariable, "
+             "emit ONLY the NumberVariable-named _N constant, not the widget-named one. "
+             "Franz's rule: 'wenn eine InputNumber eine NumberVariable hat, MUSS die "
+             "NumberVariable fuer alle Operationen verwendet werden.' Makes an accidental "
+             "reference to the widget's own _N constant a compile-time 'does not exist' "
+             "error in 4diac instead of a silently-wrong-object bug (see Krauternter "
+             "Outputs_STG1.SUB stObjVentiloeffnungManuell incident, fixed in commit 365fb1a)."
+    )
     args = parser.parse_args()
 
     # Create the absolute paths using os.path.join
@@ -22,7 +32,7 @@ def getPaths():
     old_path = os.path.join(os.path.dirname(script_path), args.old_file)
     jop_path = os.path.join(os.path.dirname(script_path), args.jop_file) if args.jop_file else None
 
-    filepaths = [old_path, new_path, args.new_file, args.package, jop_path]
+    filepaths = [old_path, new_path, args.new_file, args.package, jop_path, args.variables_only]
     return filepaths
 
 def printPaths(filepaths):
@@ -126,11 +136,21 @@ def create_numeric_info(obj_id, scale, offset, decimals):
         "decimals": decimals,
     }
 
-def readJOP(jop_filepath):
+def readJOP(jop_filepath, variables_only=False):
     """Parse a JetViewSoft .jop XML file and extract InputNumber and OutputNumber objects.
 
     Returns a dict keyed by ObjectName:
         { "InputNumber_I1": {"id": 9000, "scale": 1.0, "offset": 0, "decimals": 0}, ... }
+
+    If variables_only is True: for a widget that has a bound CNumberVariable, do NOT
+    emit an entry under the widget's own name at all - only the NumberVariable-named
+    alias. This enforces Franz's rule ("wenn eine InputNumber eine NumberVariable hat,
+    MUSS die NumberVariable fuer alle Operationen verwendet werden") at compile time:
+    a .SUB file that still references the widget's own _N constant gets a 4diac
+    "does not exist" import error instead of silently writing to the wrong object
+    (see Krauternter Outputs_STG1.SUB stObjVentiloeffnungManuell incident, commit
+    365fb1a - InputNumber_..._N pointed at the widget's own JVS-ID instead of the
+    bound NumberVariable's JVS-ID, both existed so nothing caught it at compile time).
     """
     tree = ET.parse(jop_filepath)
     root = tree.getroot()
@@ -181,39 +201,57 @@ def readJOP(jop_filepath):
         # The alias uses the parent object's scale/offset/decimals, since
         # CNumberVariable itself carries no scaling properties.
         info = create_numeric_info(obj_id, scale, offset, decimals)
-        result[name] = info
 
-        # Alias logic: if this object references a NumberVariable, create an alias.
-        # This allows writing to the variable name directly in the application.
+        # Find a bound NumberVariable child, if any (a widget binds at most one -
+        # if the pool somehow references several, the first one found wins, same
+        # as before this refactor).
+        bound_var_id = None
         objs_elem = obj.find("Objects")
         if objs_elem is not None:
             for child_obj in objs_elem.findall("Object"):
                 child_id = child_obj.get("JVS-ID")
-                if not child_id:
-                    continue
-                if child_id in var_names:
-                    alias_name = var_names[child_id]
-                    # Protect primary object names from being overwritten by aliases.
-                    if alias_name in primary_names:
-                        print(f"  Skip alias '{alias_name}': conflicts with primary object name")
-                        continue
-                    
-                    # Guard against physically meaningless zero scales.
-                    if scale == 0.0:
-                        continue
-                    
-                    # If multiple objects point to the same variable, prefer the one with the smaller
-                    # absolute scale factor (usually the base SI unit or the highest precision).
-                    # The alias should use the ID of the NumberVariable itself (child_id).
-                    alias_id = int(child_id)
-                    if alias_name not in result:
+                if child_id and child_id in var_names:
+                    bound_var_id = child_id
+                    break
+
+        # Emit the widget's own constant unless variables_only is requested AND
+        # this widget has a bound NumberVariable (Franz's rule: a widget with a
+        # bound variable must be addressed through the variable, never through
+        # the widget itself - see readJOP docstring for the incident this fixes).
+        if bound_var_id is None or not variables_only:
+            result[name] = info
+
+        # Alias logic: if this object references a NumberVariable, create an alias.
+        # This allows writing to the variable name directly in the application.
+        if bound_var_id is not None:
+            alias_name = var_names[bound_var_id]
+            # Protect primary object names from being overwritten by aliases.
+            if alias_name in primary_names:
+                print(f"  Skip alias '{alias_name}': conflicts with primary object name")
+            elif scale == 0.0:
+                # Guard against physically meaningless zero scales.
+                pass
+            else:
+                # The alias uses the ID of the NumberVariable itself.
+                alias_id = int(bound_var_id)
+                if alias_name not in result:
+                    result[alias_name] = create_numeric_info(alias_id, scale, offset, decimals)
+                else:
+                    current = result[alias_name]
+                    if (current["scale"], current["offset"], current["decimals"]) != (scale, offset, decimals):
+                        print(
+                            f"  WARNUNG: '{alias_name}' wird von mehreren Widgets mit "
+                            f"unterschiedlicher Skalierung gebunden - bisher "
+                            f"scale={current['scale']} offset={current['offset']} "
+                            f"decimals={current['decimals']}, jetzt von '{name}' "
+                            f"scale={scale} offset={offset} decimals={decimals}. Alle "
+                            f"Widgets, die dieselbe NumberVariable binden, muessen "
+                            f"dieselbe Skalierung haben."
+                        )
+                    # Compare absolute values to correctly handle negative scales.
+                    if abs(scale) < abs(current["scale"]):
+                        print(f"  Update alias '{alias_name}': scale {current['scale']} -> {scale}")
                         result[alias_name] = create_numeric_info(alias_id, scale, offset, decimals)
-                    else:
-                        # Compare absolute values to correctly handle negative scales.
-                        current_scale = result[alias_name]["scale"]
-                        if abs(scale) < abs(current_scale):
-                            print(f"  Update alias '{alias_name}': scale {current_scale} -> {scale}")
-                            result[alias_name] = create_numeric_info(alias_id, scale, offset, decimals)
 
     return result
 
@@ -1155,7 +1193,7 @@ if __name__ == "__main__":
     if filepaths[4]:
         checkPath(filepaths[4])
         update_jop_objectnames(filepaths[4], rename_map)
-        numeric_data = readJOP(filepaths[4])
+        numeric_data = readJOP(filepaths[4], variables_only=filepaths[5])
         writeNumericGCFfile(numeric_data, filepaths)
 
         scroll_data = readScrollJOP(filepaths[4])

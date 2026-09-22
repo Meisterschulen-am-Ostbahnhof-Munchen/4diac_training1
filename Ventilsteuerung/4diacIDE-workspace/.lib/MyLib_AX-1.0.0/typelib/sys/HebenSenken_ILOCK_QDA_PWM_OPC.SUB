@@ -2,6 +2,8 @@
 <SubAppType Name="HebenSenken_ILOCK_QDA_PWM_OPC" Comment="2 Remote-Kommandos (Heben/Senken, je Subscribe+State-Publish, ODER-verknuepft mit IO-Test wie bei ILOCK_SWITCH_2_QXA_OPC) auf 1 ratiometrisches PWM-Signal (Danfoss PVEA: 25%=Senken, 50%=Neutral, 75%=Heben, Lastteiler-korrigiert). ILOCK_SWITCH_PROTECT_AX (Last-Wins mit Schutzzeit) sorgt dafuer, dass Heben und Senken nie gleichzeitig aktiv sind. Generisch fuer jeden PVEA-Aktor mit ratiometrischem 3-Stufen-PWM-Kanal.">
 	<Identification Standard="61499-2">
 	</Identification>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.1" Author="Franz Höpfinger" Date="2026-09-20" Remarks="PWM_POW von intern fest verdrahtetem initval_AR (1.0) auf einen eigenen Socket umgestellt - ein generischer, wiederverwendbarer Typ darf keinen Fixwert fuer eine Groesse verdrahten, die pro Instanz unterschiedlich sein soll (z.B. Aufnahme_Rechts_KVE16_Reserve.SUB braucht ggf. eine andere Verdrahtung als Aufnahme_Links).">
+	</VersionInfo>
 	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2026-09-08" Remarks="Ausgelagert aus Heben_Senken_TO_QDA_PWM_OPC (PWM/ILOCK/Mux-Teilnetz, ohne die Freigabe-DO) zur Wiederverwendung.">
 	</VersionInfo>
 	<CompilerInfo packageName="MyLib::sys">
@@ -21,6 +23,9 @@
 			<VarDeclaration Name="ID_TEST_READ_SENKEN" Type="WSTRING" Comment="Bestehende IO-Test-Subscribe-Adresse Senken, ODER-verknuepft mit ID_SENKEN_READ vor dem ILOCK"/>
 			<VarDeclaration Name="ID_TEST_WRITE_SENKEN" Type="WSTRING" Comment="Bestehende IO-Test-Publish-Adresse Senken, HINTER dem ILOCK"/>
 		</InputVars>
+		<Sockets>
+			<AdapterDeclaration Name="PWM_POW" Type="adapter::types::unidirectional::AR" Comment="PWM Power 1.0 = Maximale Power, 0.0 = Aus, 0.5 = Halb - durchgereicht an values_50_75_25.PWM_POW"/>
+		</Sockets>
 	</SubAppInterfaceList>
 	<SubAppNetwork>
 		<FB Name="SUBSCRIBE_HEBEN" Type="adapter::net::AX_SUBSCRIBE_1" x="-12500" y="-2600">
@@ -63,22 +68,22 @@
 		</FB>
 		<FB Name="AB_TO_AUI" Type="adapter::conversion::unidirectional::AB_TO_AUI" x="-3900" y="-1200">
 		</FB>
-		<SubApp Name="values_50_75_25" Type="MyLib::sys::values_50_75_25" x="-4000" y="-800">
+		<SubApp Name="values_50_75_25" Type="MyLib::sys::values_50_75_25" x="-4300" y="1400">
 		</SubApp>
-		<FB Name="AR_AUI_MUX_3" Type="adapter::selection::unidirectional::AR_AUI_MUX_3" x="-2600" y="-1000">
+		<FB Name="AR_AUI_MUX_3" Type="adapter::selection::unidirectional::AR_AUI_MUX_3" x="-100" y="-1000">
 		</FB>
-		<SubApp Name="AR_R_MUL_Korrektur" Type="MyLib::sys::AR_R_MUL" x="-2000" y="-100">
-			<Parameter Name="FACTOR" Value="REAL#1.17619"/>
+		<SubApp Name="AR_R_MUL_Korrektur" Type="MyLib::sys::AR_R_MUL" x="500" y="-100">
+			<Parameter Name="FACTOR" Value="REAL#0.715"/>
 		</SubApp>
-		<SubApp Name="AR_R_MUL_PWM13BIT" Type="MyLib::sys::AR_R_MUL" x="-2000" y="600">
+		<SubApp Name="AR_R_MUL_PWM13BIT" Type="MyLib::sys::AR_R_MUL" x="500" y="600">
 			<Parameter Name="FACTOR" Value="REAL#81.91"/>
 		</SubApp>
-		<FB Name="AR_TO_AD_NUM" Type="adapter::conversion::unidirectional::AR_TO_AD_NUM" x="-2100" y="1200">
+		<FB Name="AR_TO_AD_NUM" Type="adapter::conversion::unidirectional::AR_TO_AD_NUM" x="400" y="1200">
 		</FB>
-		<FB Name="DigitalOutput_PWM" Type="logiBUS::io::DQ::logiBUS_QDA_PWM" x="-2100" y="1700">
+		<FB Name="DigitalOutput_PWM" Type="logiBUS::io::DQ::logiBUS_QDA_PWM" x="400" y="1700">
 			<Parameter Name="QI" Value="TRUE"/>
 		</FB>
-		<Comment Comment="Korrekturfaktor 1,17619 = 1/0,8502 und Skalierung x81,91 = 8191/100: siehe 4diac_training1 Uebung_245/247_AX (PWM-auf-PVEA-Kompensationsrechnung als Lehrbeispiel). ILOCK_SWITCH_PROTECT_AX (Last-Wins mit Schutzzeit DT_PROTECT, gleiches Muster wie ILOCK_SWITCH_2_QXA_OPC) sorgt dafuer, dass Heben und Senken NIE gleichzeitig aktiv sind - K=3 (beide Bits gesetzt) kann dadurch nicht auftreten, deshalb genuegt ein 3-Wege- statt 4-Wege-Mux." x="-9800" y="2200" width="6400" height="900"/>
+		<Comment Comment="Korrekturfaktor 1,17619 = 1/0,8502 und Skalierung x81,91 = 8191/100: siehe 4diac_training1 Uebung_245/247_AX (PWM-auf-PVEA-Kompensationsrechnung als Lehrbeispiel). ILOCK_SWITCH_PROTECT_AX (Last-Wins mit Schutzzeit DT_PROTECT, gleiches Muster wie ILOCK_SWITCH_2_QXA_OPC) sorgt dafuer, dass Heben und Senken NIE gleichzeitig aktiv sind - K=3 (beide Bits gesetzt) kann dadurch nicht auftreten, deshalb genuegt ein 3-Wege- statt 4-Wege-Mux." x="-9800" y="2900" width="6400" height="900"/>
 		<DataConnections>
 			<Connection Source="ID_HEBEN_READ" Destination="SUBSCRIBE_HEBEN.ID" dx1="280">
 				<Attribute Name="Visible" Value="false"/>
@@ -133,9 +138,10 @@
 			<Connection Source="AB_TO_AUI.AUI_OUT" Destination="AR_AUI_MUX_3.K" dx1="453.33"/>
 			<Connection Source="ASSEMBLE_AB_FROM_AX.OUT" Destination="AB_TO_AUI.AB_IN"/>
 			<Connection Source="values_50_75_25.OUT_50" Destination="AR_AUI_MUX_3.IN1" dx1="333.33"/>
-			<Connection Source="values_50_75_25.OUT_75" Destination="AR_AUI_MUX_3.IN2" dx1="333.33"/>
-			<Connection Source="values_50_75_25.OUT_25" Destination="AR_AUI_MUX_3.IN3" dx1="333.33"/>
 			<Connection Source="SPLIT_HEBEN_OUT.OUT1" Destination="PUBLISH_STATE_HEBEN.IN" dx1="580"/>
+			<Connection Source="values_50_75_25.OUT_75" Destination="AR_AUI_MUX_3.IN2" dx1="886.67"/>
+			<Connection Source="values_50_75_25.OUT_25" Destination="AR_AUI_MUX_3.IN3" dx1="1553.33"/>
+			<Connection Source="PWM_POW" Destination="values_50_75_25.PWM_POW" dx1="320"/>
 		</AdapterConnections>
 	</SubAppNetwork>
 </SubAppType>

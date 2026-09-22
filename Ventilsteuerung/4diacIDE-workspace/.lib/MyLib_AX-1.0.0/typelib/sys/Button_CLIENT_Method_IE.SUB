@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SubAppType Name="Button_CLIENT_Method_IE" Comment="VT-Button (Button_IE) loest per CLIENT_0 einen entfernten argument- und rueckgabewertlosen OPC-UA-Methodenaufruf (ACTION=CALL_METHOD) aus - allgemeines Muster fuer 'VT-Taste ruft eine Methode auf einer anderen Station auf', herausgeloest aus logiBUS_AI_Calibrated_Subscribe_VT_OPC (CO/CS kamen dort 2x identisch vor, siehe OPC_UA_VERNETZUNG.md Punkt 14). Analog zu Button_Method_IE (dort: Button ODER lokale Methode -&gt; gemeinsames IND), hier aber der umgekehrte 'Caller'-Fall: Button -&gt; entfernte Methode.">
+	<Identification Standard="61499-2" Description="Copyright (c) 2026 Meisterschulen am Ostbahnhof  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0">
+	</Identification>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2026-09-22" Remarks="initial implementation - herausgeloest aus logiBUS_AI_Calibrated_Subscribe_VT_OPC (Button_IE + CLIENT_0 kam dort 2x identisch vor, fuer CO und CS). Franz: 'Button_IE CLIENT_0 kann eine Subapp werden, das ist ein generelles Muster zum Rufen einer Methode vom VT aus' - InputEvent ist Parameter (nicht hartcodiert auf BT_PRESSED_LATCHED), damit auch andere Aktivierungsarten (z.B. Loslassen) wiederverwendbar sind.">
+	</VersionInfo>
+	<CompilerInfo packageName="MyLib::sys">
+		<Import declaration="isobus::UT::io::Button::ButtonActivationCode_S"/>
+	</CompilerInfo>
+	<SubAppInterfaceList>
+		<InputVars>
+			<VarDeclaration Name="u16ObjId" Type="UINT" Comment="Object ID Button"/>
+			<VarDeclaration Name="InputEvent" Type="isobus::UT::io::Button::ButtonActivationCode_S" Comment="Welche Button-Aktivierung den Methodenaufruf ausloest (z.B. BT_PRESSED_LATCHED, BT_RELEASED_UNLATCHED)"/>
+			<VarDeclaration Name="ID_CALL" Type="WSTRING" Comment="Remote-Methodenadresse (ACTION=CALL_METHOD) - ruft die entsprechende ID_..._METHOD-Adresse (ACTION=CREATE_METHOD) auf der Zielstation auf"/>
+		</InputVars>
+	</SubAppInterfaceList>
+	<SubAppNetwork>
+		<FB Name="Button" Type="isobus::UT::io::Button::Button_IE" x="-200" y="0">
+			<Parameter Name="QI" Value="TRUE"/>
+		</FB>
+		<FB Name="CLIENT" Type="iec61499::net::CLIENT_0" x="1600" y="0">
+			<Parameter Name="QI" Value="TRUE"/>
+		</FB>
+		<EventConnections>
+			<Connection Source="Button.IND" Destination="CLIENT.REQ" dx1="780"/>
+		</EventConnections>
+		<DataConnections>
+			<Connection Source="u16ObjId" Destination="Button.u16ObjId" dx1="1400">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="InputEvent" Destination="Button.InputEvent" dx1="1400">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="ID_CALL" Destination="CLIENT.ID" dx1="1400">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+		</DataConnections>
+	</SubAppNetwork>
+</SubAppType>

@@ -2,6 +2,8 @@
 <SubAppType Name="Heben_Senken_TO_QDA_PWM_OPC" Comment="2 Remote-Kommandos (Heben/Senken, je Subscribe+State-Publish, ODER-verknuepft mit IO-Test wie bei ILOCK_SWITCH_2_QXA_OPC) auf 1 ratiometrisches PWM-Signal (Danfoss PVEA: 25%=Senken, 50%=Neutral, 75%=Heben, Lastteiler-korrigiert) + 1 Freigabe-DO als Klick-Toggle (AX_T_FF_INIT, Default AN, per RPC-Methode aus VT und Dashboard aus-/einschaltbar - Not-Bedienung, z.B. Strassenmodus). Generisch fuer jeden PVEA-Aktor mit 2 physischen Kanaelen (links=PWM, rechts=Freigabe), Bedienung von einem Modul ohne eigenes VT.">
 	<Identification Standard="61499-2">
 	</Identification>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.4" Author="Franz Höpfinger" Date="2026-09-20" Remarks="PWM_POW-Socket ergaenzt (reiner Passthrough an PWM_Mux.PWM_POW), da HebenSenken_ILOCK_QDA_PWM_OPC v1.1 PWM_POW jetzt als eigenen Socket statt intern fest 1.0 hat - jeder Aufrufer muss ihn jetzt verbinden.">
+	</VersionInfo>
 	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.3" Author="Franz Höpfinger" Date="2026-09-08" Remarks="V1.1: IO-Test fuer Heben/Senken ergaenzt (SUBSCRIBE_TEST_HEBEN/SENKEN, ODER vor dem ILOCK), Publish-Punkte (State+Test) hinter den ILOCK verlegt (wie ILOCK_SWITCH_2_QXA_OPC), Freigabe-DO von starrem initval_AX auf AX_T_FF_INIT-Klick-Toggle per RPC-Methode umgestellt - KEIN OR nach dem Flipflop, AX_T_FF_INIT.Q ist alleinige Source of Truth fuer den Ausgang. V1.2: Freigabe-DO-Teilnetz nach MyLib::sys::DO_TOGGLE_RPC_QXA_OPC ausgelagert. V1.3: PWM/ILOCK/Mux-Teilnetz nach MyLib::sys::HebenSenken_ILOCK_QDA_PWM_OPC ausgelagert - diese SubApp ist jetzt nur noch die Zusammensetzung beider Bausteine, Schnittstelle unveraendert.">
 	</VersionInfo>
 	<CompilerInfo packageName="MyLib::sys">
@@ -24,6 +26,9 @@
 			<VarDeclaration Name="ID_DO_TOGGLE_METHOD" Type="WSTRING" Comment="Lokale Methodenadresse (ACTION=CREATE_METHOD) fuer den argumentlosen Freigabe-Toggle-Trigger - wird von STG1 (SoftKey-Relay) UND direkt vom OPC-Dashboard (CALL_METHOD) aufgerufen, beide Aufrufer teilen sich denselben Flipflop-Takt"/>
 			<VarDeclaration Name="ID_DO_STATE_WRITE" Type="WSTRING" Comment="Lokale Publish-Adresse (ACTION=WRITE) fuer den tatsaechlichen Freigabe-Zustand (AX_T_FF_INIT.Q) - wird von VT und Dashboard remote abonniert"/>
 		</InputVars>
+		<Sockets>
+			<AdapterDeclaration Name="PWM_POW" Type="adapter::types::unidirectional::AR" Comment="PWM Power 1.0 = Maximale Power, 0.0 = Aus, 0.5 = Halb - durchgereicht an PWM_Mux.PWM_POW"/>
+		</Sockets>
 	</SubAppInterfaceList>
 	<SubAppNetwork>
 		<SubApp Name="PWM_Mux" Type="MyLib::sys::HebenSenken_ILOCK_QDA_PWM_OPC" x="0" y="0">
@@ -71,5 +76,8 @@
 				<Attribute Name="Visible" Value="false"/>
 			</Connection>
 		</DataConnections>
+		<AdapterConnections>
+			<Connection Source="PWM_POW" Destination="PWM_Mux.PWM_POW" dx1="600"/>
+		</AdapterConnections>
 	</SubAppNetwork>
 </SubAppType>

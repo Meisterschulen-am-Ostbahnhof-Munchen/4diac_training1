@@ -24,9 +24,9 @@
     <section>
       <div class="scope-header">
         <h2>Analog-Eingänge (Rohwert 0-4095 / kalibrierter Wert)</h2>
-        <label class="scope-window-label">
+        <label class="scope-window-label" for="scope-window-3p">
           Oszi-Zeitfenster:
-          <select v-model.number="scopeWindowSec">
+          <select id="scope-window-3p" v-model.number="scopeWindowSec">
             <option :value="5">5 s</option>
             <option :value="10">10 s</option>
             <option :value="30">30 s</option>
@@ -55,6 +55,37 @@
             <button class="calib-btn" :disabled="!connected" @click="triggerCalibrate(n, 'MIN')">MIN</button>
             <button class="calib-btn" :disabled="!connected" @click="triggerCalibrate(n, 'MID')">MID</button>
             <button class="calib-btn" :disabled="!connected" @click="triggerCalibrate(n, 'MAX')">MAX</button>
+          </div>
+          <div class="ref-grid">
+            <div class="ref-item">
+              <label :for="`min-ref-${n}`">MIN_REF</label>
+              <div class="ref-item-row">
+                <input :id="`min-ref-${n}`" v-model="minRefInput[n - 1]" class="ref-input" :disabled="!connected" />
+                <button class="ref-btn" :disabled="!connected" @click="writeRefValue(n, 'MINREF')">Übernehmen</button>
+              </div>
+              <span class="ref-live">aktuell: {{ minRefLive[n - 1].toFixed(1) }}</span>
+            </div>
+            <div class="ref-item">
+              <label :for="`mid-ref-${n}`">MID_REF</label>
+              <div class="ref-item-row">
+                <input :id="`mid-ref-${n}`" v-model="midRefInput[n - 1]" class="ref-input" :disabled="!connected" />
+                <button class="ref-btn" :disabled="!connected" @click="writeRefValue(n, 'MIDREF')">Übernehmen</button>
+              </div>
+              <span class="ref-live">aktuell: {{ midRefLive[n - 1].toFixed(1) }}</span>
+            </div>
+            <div class="ref-item">
+              <label :for="`max-ref-${n}`">MAX_REF</label>
+              <div class="ref-item-row">
+                <input :id="`max-ref-${n}`" v-model="maxRefInput[n - 1]" class="ref-input" :disabled="!connected" />
+                <button class="ref-btn" :disabled="!connected" @click="writeRefValue(n, 'MAXREF')">Übernehmen</button>
+              </div>
+              <span class="ref-live">aktuell: {{ maxRefLive[n - 1].toFixed(1) }}</span>
+            </div>
+          </div>
+          <div class="raw-cal-grid">
+            <span class="raw-cal-item">Min-Raw: {{ minRaw[n - 1] }}</span>
+            <span class="raw-cal-item">Mid-Raw: {{ midRaw[n - 1] }}</span>
+            <span class="raw-cal-item">Max-Raw: {{ maxRaw[n - 1] }}</span>
           </div>
         </div>
       </div>
@@ -92,6 +123,8 @@ import {
   WriteValue,
   DataValue,
   Variant,
+  makeBrowsePath,
+  CallMethodRequest,
 } from '@wsopcua/wsopcua'
 
 const endpointUrl = ref(`ws://${window.location.hostname || 'localhost'}:4841`)
@@ -107,14 +140,27 @@ const outputs = ref<boolean[]>(new Array(12).fill(false))
 const tick = ref<number | string>('–')
 const tickPulse = ref(false)
 
-/* MIN/MID/MAX sind reine One-Shot-Trigger (kein persistenter Zustand am FB), daher gibt es nichts,
- * das von FORTE zurückgelesen werden könnte - der Web-Client merkt sich nur den zuletzt selbst
- * geschriebenen BOOL-Wert pro Kanal/Taste und schreibt bei jedem Klick dessen Invertierung
- * (Toggle-Write). AX_SUBSCRIBE_1 im FB-Netzwerk erkennt intern nur Wertänderungen (E_D_FF), ein
- * wiederholtes Schreiben desselben Literals würde also kein zweites Mal auslösen. */
-const minState = ref<boolean[]>(new Array(8).fill(false))
-const midState = ref<boolean[]>(new Array(8).fill(false))
-const maxState = ref<boolean[]>(new Array(8).fill(false))
+/* MIN_REF/MID_REF/MAX_REF (Referenzwerte, intern MIN_REF_LIT/MID_REF_LIT/MAX_REF_LIT
+ * in logiBUS_AI_Calibrate_3P_IDA_OPC.SUB) - schreiben auf den *_EXT-Knoten
+ * (AIC_I{n}_MINREF_EXT/_MIDREF_EXT/_MAXREF_EXT), analog zu Y_Offset/Y_Scale im
+ * 2-Punkt-Client (siehe SubStrings.gcf). */
+const minRefInput = ref<string[]>(new Array(8).fill(''))
+const midRefInput = ref<string[]>(new Array(8).fill(''))
+const maxRefInput = ref<string[]>(new Array(8).fill(''))
+
+/* Live-Anzeige des aktuellen MIN_REF/MID_REF/MAX_REF, den der Baustein gerade
+ * tatsächlich verwendet (WRITE/Echo-Knoten AIC_I{n}_MINREF/_MIDREF/_MAXREF, NICHT
+ * der _EXT-Override-Knoten, den writeRefValue beschreibt). */
+const minRefLive = ref<number[]>(new Array(8).fill(0))
+const midRefLive = ref<number[]>(new Array(8).fill(0))
+const maxRefLive = ref<number[]>(new Array(8).fill(0))
+
+/* Rohwert (DWORD 0-4095) an den 3 Kalibrierpunkten, reine Diagnose-Anzeige -
+ * gespeist von AR2_TAP_TO_AR in logiBUS_AI_Calibrate_3P_IDA_OPC.SUB (AIC_I{n}_MIN/
+ * MID/MAX_RAW, ACTION=PUBLISH), Persistenz-/Restore-Kette selbst unveraendert. */
+const minRaw = ref<number[]>(new Array(8).fill(0))
+const midRaw = ref<number[]>(new Array(8).fill(0))
+const maxRaw = ref<number[]>(new Array(8).fill(0))
 
 interface ScopeSample { t: number; v: number }
 const scopeWindowSec = ref(10)
@@ -237,9 +283,12 @@ function handleLost() {
   raw.value.fill(0)
   cal.value.fill(0)
   outputs.value.fill(false)
-  minState.value.fill(false)
-  midState.value.fill(false)
-  maxState.value.fill(false)
+  minRefLive.value.fill(0)
+  midRefLive.value.fill(0)
+  maxRefLive.value.fill(0)
+  minRaw.value.fill(0)
+  midRaw.value.fill(0)
+  maxRaw.value.fill(0)
   tick.value = '–'
   if (scopeRafId !== null) {
     cancelAnimationFrame(scopeRafId)
@@ -306,6 +355,91 @@ async function connect() {
       pushScopeSample(index, v)
     })
 
+    /* Monitor the WRITE/Echo-Knoten AIC_I1_MINREF-AIC_I8_MINREF (aktueller MIN_REF,
+     * den der Baustein tatsächlich verwendet - nicht der _EXT-Override-Knoten). */
+    const minRefItems = Array.from({ length: 8 }, (_, i) => ({
+      nodeId: coerceNodeId(`ns=1;s=AIC_I${i + 1}_MINREF`),
+      attributeId: AttributeIds.Value,
+    }))
+    const minRefGroup = await subscription.monitorItemsP(
+      minRefItems,
+      { samplingInterval: 100, discardOldest: true, queueSize: 2 },
+      TimestampsToReturn.Neither
+    )
+    minRefGroup.on('changed', (_item: any, dataValue: any, index: number) => {
+      minRefLive.value[index] = Number(dataValue.value?.value ?? 0)
+    })
+
+    /* Monitor the WRITE/Echo-Knoten AIC_I1_MIDREF-AIC_I8_MIDREF (aktueller MID_REF). */
+    const midRefItems = Array.from({ length: 8 }, (_, i) => ({
+      nodeId: coerceNodeId(`ns=1;s=AIC_I${i + 1}_MIDREF`),
+      attributeId: AttributeIds.Value,
+    }))
+    const midRefGroup = await subscription.monitorItemsP(
+      midRefItems,
+      { samplingInterval: 100, discardOldest: true, queueSize: 2 },
+      TimestampsToReturn.Neither
+    )
+    midRefGroup.on('changed', (_item: any, dataValue: any, index: number) => {
+      midRefLive.value[index] = Number(dataValue.value?.value ?? 0)
+    })
+
+    /* Monitor the WRITE/Echo-Knoten AIC_I1_MAXREF-AIC_I8_MAXREF (aktueller MAX_REF). */
+    const maxRefItems = Array.from({ length: 8 }, (_, i) => ({
+      nodeId: coerceNodeId(`ns=1;s=AIC_I${i + 1}_MAXREF`),
+      attributeId: AttributeIds.Value,
+    }))
+    const maxRefGroup = await subscription.monitorItemsP(
+      maxRefItems,
+      { samplingInterval: 100, discardOldest: true, queueSize: 2 },
+      TimestampsToReturn.Neither
+    )
+    maxRefGroup.on('changed', (_item: any, dataValue: any, index: number) => {
+      maxRefLive.value[index] = Number(dataValue.value?.value ?? 0)
+    })
+
+    /* Monitor the Rohwert-am-MIN-Kalibrierpunkt AIC_I1_MIN_RAW-AIC_I8_MIN_RAW (DWORD, read-only). */
+    const minRawItems = Array.from({ length: 8 }, (_, i) => ({
+      nodeId: coerceNodeId(`ns=1;s=AIC_I${i + 1}_MIN_RAW`),
+      attributeId: AttributeIds.Value,
+    }))
+    const minRawGroup = await subscription.monitorItemsP(
+      minRawItems,
+      { samplingInterval: 100, discardOldest: true, queueSize: 2 },
+      TimestampsToReturn.Neither
+    )
+    minRawGroup.on('changed', (_item: any, dataValue: any, index: number) => {
+      minRaw.value[index] = Number(dataValue.value?.value ?? 0)
+    })
+
+    /* Monitor the Rohwert-am-MID-Kalibrierpunkt AIC_I1_MID_RAW-AIC_I8_MID_RAW (DWORD, read-only). */
+    const midRawItems = Array.from({ length: 8 }, (_, i) => ({
+      nodeId: coerceNodeId(`ns=1;s=AIC_I${i + 1}_MID_RAW`),
+      attributeId: AttributeIds.Value,
+    }))
+    const midRawGroup = await subscription.monitorItemsP(
+      midRawItems,
+      { samplingInterval: 100, discardOldest: true, queueSize: 2 },
+      TimestampsToReturn.Neither
+    )
+    midRawGroup.on('changed', (_item: any, dataValue: any, index: number) => {
+      midRaw.value[index] = Number(dataValue.value?.value ?? 0)
+    })
+
+    /* Monitor the Rohwert-am-MAX-Kalibrierpunkt AIC_I1_MAX_RAW-AIC_I8_MAX_RAW (DWORD, read-only). */
+    const maxRawItems = Array.from({ length: 8 }, (_, i) => ({
+      nodeId: coerceNodeId(`ns=1;s=AIC_I${i + 1}_MAX_RAW`),
+      attributeId: AttributeIds.Value,
+    }))
+    const maxRawGroup = await subscription.monitorItemsP(
+      maxRawItems,
+      { samplingInterval: 100, discardOldest: true, queueSize: 2 },
+      TimestampsToReturn.Neither
+    )
+    maxRawGroup.on('changed', (_item: any, dataValue: any, index: number) => {
+      maxRaw.value[index] = Number(dataValue.value?.value ?? 0)
+    })
+
     /* Monitor all outputs Q1-Q12 (reflect actual hardware state, unveraendert wie im AI-Beispiel) */
     const outputItems = Array.from({ length: 12 }, (_, i) => ({
       nodeId: coerceNodeId(`ns=1;s=Q${String(i + 1).padStart(2, '0')}`),
@@ -356,18 +490,54 @@ async function toggleOutput(n: number) {
   }
 }
 
+/* MIN/MID/MAX rufen eine argumentlose OPC-UA-Methode auf (ACTION=CREATE_METHOD via SERVER_0,
+ * siehe logiBUS_AI_Calibrate_3P_IDA_OPC.SUB ID_MIN_METHOD/ID_MID_TRIGGER_METHOD/ID_MAX_METHOD),
+ * kein Toggle-Write mehr - gleiches Muster wie StgDevice.vue callFreigabeToggle. Pfad wird per
+ * TranslateBrowsePathsToNodeIds aufgeloest statt eine feste numerische NodeId anzunehmen, da
+ * FORTE die Zwischenordner (AnalogCalibrated3P, I{n}) serverseitig mit generierten NodeIds anlegt. */
 async function triggerCalibrate(n: number, which: 'MIN' | 'MID' | 'MAX') {
   if (!session) return
-  const state = which === 'MIN' ? minState : which === 'MID' ? midState : maxState
-  const newVal = !state.value[n - 1]
+  try {
+    const path = `/1:AnalogCalibrated3P/1:I${n}/1:${which}Method`
+    const parentPath = path.replace(/\/[^/]+$/, '')
+    const [methodResult, parentResult] = await Promise.all([
+      session.translateBrowsePathP(makeBrowsePath('ObjectsFolder', path)),
+      session.translateBrowsePathP(makeBrowsePath('ObjectsFolder', parentPath)),
+    ])
+    const methodId = methodResult.targets?.[0]?.targetId
+    const objectId = parentResult.targets?.[0]?.targetId
+    if (!methodId || !objectId) {
+      console.error(`AI${n} ${which}: Methode nicht gefunden (${path})`)
+      return
+    }
+    const request = new CallMethodRequest({ objectId, methodId, inputArguments: [] })
+    await session.callP([request])
+  } catch (err) {
+    console.error(`AI${n} ${which} method call failed:`, err)
+  }
+}
+
+/* Schreibt einen neuen MIN_REF/MID_REF/MAX_REF-Referenzwert auf den externen
+ * Override-Knoten (AIC_I{n}_MINREF_EXT/_MIDREF_EXT/_MAXREF_EXT) - AR_LAST_2 im
+ * Baustein mergt das last-writer-wins mit der lokalen VT-Eingabe. */
+async function writeRefValue(n: number, which: 'MINREF' | 'MIDREF' | 'MAXREF') {
+  if (!session) return
+  const inputArr =
+    which === 'MINREF' ? minRefInput.value : which === 'MIDREF' ? midRefInput.value : maxRefInput.value
+  const raw = inputArr[n - 1].trim().replace(',', '.')
+  if (raw === '') return
+  const val = Number(raw)
+  if (!Number.isFinite(val) || val < -100 || val > 100) {
+    console.error(`AI${n} ${which}: Wert ${raw} ausserhalb -100..100 (physikalisch)`)
+    return
+  }
   try {
     const wv = new WriteValue({
-      nodeId: coerceNodeId(`ns=1;s=AIC_I${n}_${which}`),
+      nodeId: coerceNodeId(`ns=1;s=AIC_I${n}_${which}_EXT`),
       attributeId: AttributeIds.Value,
-      value: new DataValue({ value: new Variant({ dataType: DataType.Boolean, value: newVal }) }),
+      value: new DataValue({ value: new Variant({ dataType: DataType.Float, value: val }) }),
     })
     await session.writeP([wv])
-    state.value[n - 1] = newVal
   } catch (err) {
     console.error(`AI${n} ${which} write failed:`, err)
   }
@@ -384,9 +554,12 @@ async function disconnect() {
   raw.value.fill(0)
   cal.value.fill(0)
   outputs.value.fill(false)
-  minState.value.fill(false)
-  midState.value.fill(false)
-  maxState.value.fill(false)
+  minRefLive.value.fill(0)
+  midRefLive.value.fill(0)
+  maxRefLive.value.fill(0)
+  minRaw.value.fill(0)
+  midRaw.value.fill(0)
+  maxRaw.value.fill(0)
   if (scopeRafId !== null) {
     cancelAnimationFrame(scopeRafId)
     scopeRafId = null
@@ -660,4 +833,74 @@ span {
 .calib-btn:hover:not(:disabled) { background: #3f51b5; }
 .calib-btn:active:not(:disabled) { transform: scale(0.95); }
 .calib-btn:disabled { opacity: 0.4; cursor: not-allowed; }
+
+.ref-grid {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+  margin-top: 0.3rem;
+}
+
+.ref-item {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 0.15rem;
+}
+
+.ref-item label {
+  font-size: 0.65rem;
+  font-weight: 600;
+  color: #aaa;
+}
+
+.ref-item-row {
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+}
+
+.ref-input {
+  flex: 1;
+  min-width: 0;
+  width: auto;
+  padding: 0.15rem 0.3rem;
+  border-radius: 4px;
+  border: 1px solid #444;
+  background: #0d0d1a;
+  color: #e0e0e0;
+  font-size: 0.75rem;
+}
+
+.ref-btn {
+  flex-shrink: 0;
+  padding: 0.15rem 0.4rem;
+  font-size: 0.65rem;
+  background: #2a2a3e;
+  border: 1px solid #444;
+  white-space: nowrap;
+}
+.ref-btn:hover:not(:disabled) { background: #3f51b5; }
+.ref-btn:disabled { opacity: 0.4; cursor: not-allowed; }
+
+.ref-live {
+  font-size: 0.65rem;
+  color: #777;
+  font-variant-numeric: tabular-nums;
+}
+
+.raw-cal-grid {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  gap: 0.3rem;
+  margin-top: 0.3rem;
+}
+
+.raw-cal-item {
+  font-size: 0.6rem;
+  color: #777;
+  font-variant-numeric: tabular-nums;
+}
 </style>

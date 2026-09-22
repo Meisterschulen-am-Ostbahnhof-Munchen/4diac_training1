@@ -2,20 +2,27 @@
 <FBType Name="RND_AR" Comment="AR-Adapter-Wrapper um OSCAT RND - bruckt zwischen adapter und OSCAT, ohne dass eine der beiden Basisbibliotheken von der anderen abhaengt. N (signifikante Stellen) als Klartext-InputVar durchgereicht (Default 3)">
 	<Identification Standard="61499-2" Description="Copyright (c) 2026 Meisterschulen am Ostbahnhof  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0">
 	</Identification>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.1" Author="Franz Höpfinger" Date="2026-09-20" Remarks="Bugfix: N wurde nur per plain DataConnection an RND durchgereicht, ausgeloest einzig ueber AR_IN.E1 - dieser Wrapper hatte ueberhaupt kein EventInput und damit keine Moeglichkeit fuer eine With-Verknuepfung (IEC 61499 - ungebundene Vars werden nicht zuverlaessig gelesen). Neues explizites REQ-EventInput ergaenzt (parallel zu AR_IN.E1, beide -&gt; RND.REQ) mit With N.">
+	</VersionInfo>
 	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2026-09-17" Remarks="Initial implementation of RND_AR wrapper FB - E_D_FF_ANY_1 als Aenderungsfilter (EO/AR_OUT.E1 nur bei tatsaechlicher Wertaenderung), analog CTRL_PI_AR/FT_DERIV_AR in diesem Projekt">
 	</VersionInfo>
 	<CompilerInfo packageName="OSCAT_adapter::Mathematical">
 	</CompilerInfo>
 	<InterfaceList>
+		<EventInputs>
+			<Event Name="REQ" Type="Event" Comment="Explizite Ausfuehrungsanforderung (durchgereicht an RND.REQ, zusaetzlich zu AR_IN.E1)">
+				<With Var="N"/>
+			</Event>
+		</EventInputs>
 		<InputVars>
 			<VarDeclaration Name="N" Type="INT" Comment="Signifikante Stellen gesamt, nicht Nachkommastellen (durchgereicht an RND.N) - Platzhalter-Default 3, keine funktionale Vorgabe, per Parameter ueberschreibbar" InitialValue="3"/>
 		</InputVars>
-		<Sockets>
-			<AdapterDeclaration Name="AR_IN" Type="adapter::types::unidirectional::AR" Comment="Eingangssignal (REAL)" x="-700" y="100"/>
-		</Sockets>
 		<Plugs>
 			<AdapterDeclaration Name="AR_OUT" Type="adapter::types::unidirectional::AR" Comment="Auf N signifikante Stellen gerundeter Wert (REAL)" x="5300" y="200"/>
 		</Plugs>
+		<Sockets>
+			<AdapterDeclaration Name="AR_IN" Type="adapter::types::unidirectional::AR" Comment="Eingangssignal (REAL)" x="-600" y="-600"/>
+		</Sockets>
 	</InterfaceList>
 	<FBNetwork>
 		<FB Name="RND" Type="OSCAT::Basic::POUs::Mathematical::RND" x="800" y="0">
@@ -24,6 +31,7 @@
 		</FB>
 		<EventConnections>
 			<Connection Source="AR_IN.E1" Destination="RND.REQ" dx1="626.67"/>
+			<Connection Source="REQ" Destination="RND.REQ" dx1="626.67"/>
 			<Connection Source="RND.CNF" Destination="E_D_FF_ANY_1.CLK" dx1="453.33"/>
 			<Connection Source="E_D_FF_ANY_1.EO" Destination="AR_OUT.E1" dx1="906.67"/>
 		</EventConnections>
@@ -39,7 +47,7 @@
 
 <h2>🇩🇪 Deutsch</h2>
 
-<p>AR-Adapter-Wrapper um <code>OSCAT::Basic::POUs::Mathematical::RND</code> (rundet <code>X</code> auf <code>N</code> signifikante Stellen, nicht Nachkommastellen). <code>N</code> ist ein Klartext-<code>InputVar</code> (Default 3) - kein Adapter noetig, da der Wert pro Aufruf konstant ist und per <code>Parameter</code> von einer aufrufenden Komposition ueberschrieben werden kann.</p>
+<p>AR-Adapter-Wrapper um <code>OSCAT::Basic::POUs::Mathematical::RND</code> (rundet <code>X</code> auf <code>N</code> signifikante Stellen, nicht Nachkommastellen). <code>N</code> ist als Klartext-<code>InputVar</code> (Default 3) deklariert. Ein explizites <code>REQ</code>-EventInput (mit <code>With N</code>) erlaubt den manuellen/periodischen Aufruf zusaetzlich zum automatischen Ausloesen ueber <code>AR_IN.E1</code> (IEC 61499 - With-Verknuepfung fuer zuverlaessiges Einlesen der Parameter).</p>
 
 <h3>Reine Adapter-Grenze</h3>
 
@@ -56,7 +64,7 @@
 
 <h2>🇬🇧 English</h2>
 
-<p>AR-adapter wrapper around <code>OSCAT::Basic::POUs::Mathematical::RND</code> (rounds <code>X</code> to <code>N</code> significant digits, not decimal places). <code>N</code> is a plain <code>InputVar</code> (default 3) - no adapter needed since the value is constant per call and can be overridden via <code>Parameter</code>.</p>
+<p>AR-adapter wrapper around <code>OSCAT::Basic::POUs::Mathematical::RND</code> (rounds <code>X</code> to <code>N</code> significant digits, not decimal places). <code>N</code> is a plain <code>InputVar</code> (default 3). An explicit <code>REQ</code> event input (with <code>With N</code> binding) enables manual or periodic execution in addition to automatic triggering via <code>AR_IN.E1</code> (per IEC 61499, binding input variables via With for reliable reading).</p>
 
 <h3>Pure adapter boundary</h3>
 

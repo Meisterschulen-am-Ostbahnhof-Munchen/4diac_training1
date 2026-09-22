@@ -2,6 +2,8 @@
 <FBType Name="AR_CALIBRATE" Comment="Adapter-based two-point calibration (offset &amp; scale) of an analog input">
 	<Identification Standard="61499-1">
 	</Identification>
+	<VersionInfo Version="2.1" Author="Franz Höpfinger" Date="2026-09-18" Remarks="CO/CS von AX-Sockets (mit [CO.D1]/[CS.D1]-Flankenwaechter) auf reine EventInputs umgestellt - jeder echte Aufrufer liefert ohnehin ein atomares Event, der D1-Wert war immer hartcodiert TRUE (via AX_BOOL_TO_X) und der Guard filterte nie etwas. Aufrufer muessen jetzt direkt ein Event statt eines AX-Adapters anschliessen (AX_BOOL_TO_X-Umweg entfaellt). Siehe AR_CALIBRATE_2P_REF fuer die identische Aenderung.">
+	</VersionInfo>
 	<VersionInfo Version="2.0" Author="Meisterschulen am Ostbahnhof" Date="2026-06-01">
 	</VersionInfo>
 	<CompilerInfo packageName="adapter::Engineering::measurements">
@@ -12,6 +14,8 @@
 				<With Var="Y_Offset"/>
 				<With Var="Y_Scale"/>
 			</Event>
+			<Event Name="CO" Type="Event" Comment="Calibrate Offset - atomarer Trigger"/>
+			<Event Name="CS" Type="Event" Comment="Calibrate Scale - atomarer Trigger"/>
 		</EventInputs>
 		<InputVars>
 			<VarDeclaration Name="Y_Offset" Type="REAL" Comment="Reference for offset calibration"/>
@@ -24,8 +28,6 @@
 		</Plugs>
 		<Sockets>
 			<AdapterDeclaration Name="X" Type="adapter::types::unidirectional::AR" Comment="Input"/>
-			<AdapterDeclaration Name="CO" Type="adapter::types::unidirectional::AX" Comment="Calibrate Offset"/>
-			<AdapterDeclaration Name="CS" Type="adapter::types::unidirectional::AX" Comment="Calibrate Scale"/>
 		</Sockets>
 	</InterfaceList>
 	<BasicFB>
@@ -46,8 +48,8 @@
 			<ECTransition Source="REQ" Destination="REQ" Condition="SCALE.EI1" x="-100" y="1533.33"/>
 			<ECTransition Source="CO" Destination="REQ" Condition="1" x="1080" y="160"/>
 			<ECTransition Source="CS" Destination="REQ" Condition="1" x="1160" y="1000"/>
-			<ECTransition Source="REQ" Destination="CO" Condition="CO.E1[CO.D1]" x="846.67" y="-200"/>
-			<ECTransition Source="REQ" Destination="CS" Condition="CS.E1[CS.D1]" x="1006.67" y="1193.33"/>
+			<ECTransition Source="REQ" Destination="CO" Condition="CO" x="846.67" y="-200"/>
+			<ECTransition Source="REQ" Destination="CS" Condition="CS" x="1006.67" y="1193.33"/>
 		</ECC>
 		<Algorithm Name="REQ" Comment="REQ">
 			<ST><![CDATA[

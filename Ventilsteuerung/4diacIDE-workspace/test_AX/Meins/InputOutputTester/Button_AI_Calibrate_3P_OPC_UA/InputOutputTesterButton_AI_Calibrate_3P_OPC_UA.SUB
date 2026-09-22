@@ -4,6 +4,8 @@
 	</Identification>
 	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2026-09-11" Remarks="3-Punkt-Pendant zu InputOutputTesterButton_AI_Calibrate_OPC_UA - logiBUS_AI_Calibrate_3P_IDA_OPC statt logiBUS_AI_Calibrate_IDA_OPC (C_MIN/C_MID/C_MAX statt CO/CS)">
 	</VersionInfo>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.1" Author="Franz Höpfinger" Date="2026-09-20" Remarks="Rohwert-Anzeige an den 3 Kalibrierpunkten (Min/Mid/Max-Raw) fuer alle 8 Kanaele ergaenzt, siehe logiBUS_AI_Calibrate_3P_IDA_OPC v1.8. Neue Parameter stObjMinRaw/stObjMidRaw/stObjMaxRaw + ID_MIN/MID/MAX_RAW_WRITE pro Kanal, neue VT-Objekte NumberVariable_AIC_I0N_MINRAW/_MIDRAW/_MAXRAW_N (DefaultPool_AIC_3P_Numeric, IDs 21040-21063) + OPC-UA-Adressen AIC_I0N_MIN/MID/MAX_RAW_WRITE (SubStrings).">
+	</VersionInfo>
 	<CompilerInfo packageName="Meins::InputOutputTester::Button_AI_Calibrate_3P_OPC_UA">
 		<Import declaration="Meins::InputOutputTester::Button_AI_Calibrate_3P_OPC_UA::SubStrings::AIC_I1_RAW_WRITE"/>
 		<Import declaration="Meins::InputOutputTester::Button_AI_Calibrate_3P_OPC_UA::SubStrings::AIC_I1_CAL_WRITE"/>
@@ -21,30 +23,30 @@
 		<Import declaration="Meins::InputOutputTester::Button_AI_Calibrate_3P_OPC_UA::SubStrings::AIC_I7_CAL_WRITE"/>
 		<Import declaration="Meins::InputOutputTester::Button_AI_Calibrate_3P_OPC_UA::SubStrings::AIC_I8_RAW_WRITE"/>
 		<Import declaration="Meins::InputOutputTester::Button_AI_Calibrate_3P_OPC_UA::SubStrings::AIC_I8_CAL_WRITE"/>
-		<Import declaration="Meins::InputOutputTester::Button_AI_Calibrate_3P_OPC_UA::SubStrings::AIC_I1_MIN_READ"/>
-		<Import declaration="Meins::InputOutputTester::Button_AI_Calibrate_3P_OPC_UA::SubStrings::AIC_I1_MID_READ"/>
-		<Import declaration="Meins::InputOutputTester::Button_AI_Calibrate_3P_OPC_UA::SubStrings::AIC_I1_MAX_READ"/>
-		<Import declaration="Meins::InputOutputTester::Button_AI_Calibrate_3P_OPC_UA::SubStrings::AIC_I2_MIN_READ"/>
-		<Import declaration="Meins::InputOutputTester::Button_AI_Calibrate_3P_OPC_UA::SubStrings::AIC_I2_MID_READ"/>
-		<Import declaration="Meins::InputOutputTester::Button_AI_Calibrate_3P_OPC_UA::SubStrings::AIC_I2_MAX_READ"/>
-		<Import declaration="Meins::InputOutputTester::Button_AI_Calibrate_3P_OPC_UA::SubStrings::AIC_I3_MIN_READ"/>
-		<Import declaration="Meins::InputOutputTester::Button_AI_Calibrate_3P_OPC_UA::SubStrings::AIC_I3_MID_READ"/>
-		<Import declaration="Meins::InputOutputTester::Button_AI_Calibrate_3P_OPC_UA::SubStrings::AIC_I3_MAX_READ"/>
-		<Import declaration="Meins::InputOutputTester::Button_AI_Calibrate_3P_OPC_UA::SubStrings::AIC_I4_MIN_READ"/>
-		<Import declaration="Meins::InputOutputTester::Button_AI_Calibrate_3P_OPC_UA::SubStrings::AIC_I4_MID_READ"/>
-		<Import declaration="Meins::InputOutputTester::Button_AI_Calibrate_3P_OPC_UA::SubStrings::AIC_I4_MAX_READ"/>
-		<Import declaration="Meins::InputOutputTester::Button_AI_Calibrate_3P_OPC_UA::SubStrings::AIC_I5_MIN_READ"/>
-		<Import declaration="Meins::InputOutputTester::Button_AI_Calibrate_3P_OPC_UA::SubStrings::AIC_I5_MID_READ"/>
-		<Import declaration="Meins::InputOutputTester::Button_AI_Calibrate_3P_OPC_UA::SubStrings::AIC_I5_MAX_READ"/>
-		<Import declaration="Meins::InputOutputTester::Button_AI_Calibrate_3P_OPC_UA::SubStrings::AIC_I6_MIN_READ"/>
-		<Import declaration="Meins::InputOutputTester::Button_AI_Calibrate_3P_OPC_UA::SubStrings::AIC_I6_MID_READ"/>
-		<Import declaration="Meins::InputOutputTester::Button_AI_Calibrate_3P_OPC_UA::SubStrings::AIC_I6_MAX_READ"/>
-		<Import declaration="Meins::InputOutputTester::Button_AI_Calibrate_3P_OPC_UA::SubStrings::AIC_I7_MIN_READ"/>
-		<Import declaration="Meins::InputOutputTester::Button_AI_Calibrate_3P_OPC_UA::SubStrings::AIC_I7_MID_READ"/>
-		<Import declaration="Meins::InputOutputTester::Button_AI_Calibrate_3P_OPC_UA::SubStrings::AIC_I7_MAX_READ"/>
-		<Import declaration="Meins::InputOutputTester::Button_AI_Calibrate_3P_OPC_UA::SubStrings::AIC_I8_MIN_READ"/>
-		<Import declaration="Meins::InputOutputTester::Button_AI_Calibrate_3P_OPC_UA::SubStrings::AIC_I8_MID_READ"/>
-		<Import declaration="Meins::InputOutputTester::Button_AI_Calibrate_3P_OPC_UA::SubStrings::AIC_I8_MAX_READ"/>
+		<Import declaration="Meins::InputOutputTester::Button_AI_Calibrate_3P_OPC_UA::SubStrings::AIC_I1_MIN_METHOD"/>
+		<Import declaration="Meins::InputOutputTester::Button_AI_Calibrate_3P_OPC_UA::SubStrings::AIC_I1_MID_METHOD"/>
+		<Import declaration="Meins::InputOutputTester::Button_AI_Calibrate_3P_OPC_UA::SubStrings::AIC_I1_MAX_METHOD"/>
+		<Import declaration="Meins::InputOutputTester::Button_AI_Calibrate_3P_OPC_UA::SubStrings::AIC_I2_MIN_METHOD"/>
+		<Import declaration="Meins::InputOutputTester::Button_AI_Calibrate_3P_OPC_UA::SubStrings::AIC_I2_MID_METHOD"/>
+		<Import declaration="Meins::InputOutputTester::Button_AI_Calibrate_3P_OPC_UA::SubStrings::AIC_I2_MAX_METHOD"/>
+		<Import declaration="Meins::InputOutputTester::Button_AI_Calibrate_3P_OPC_UA::SubStrings::AIC_I3_MIN_METHOD"/>
+		<Import declaration="Meins::InputOutputTester::Button_AI_Calibrate_3P_OPC_UA::SubStrings::AIC_I3_MID_METHOD"/>
+		<Import declaration="Meins::InputOutputTester::Button_AI_Calibrate_3P_OPC_UA::SubStrings::AIC_I3_MAX_METHOD"/>
+		<Import declaration="Meins::InputOutputTester::Button_AI_Calibrate_3P_OPC_UA::SubStrings::AIC_I4_MIN_METHOD"/>
+		<Import declaration="Meins::InputOutputTester::Button_AI_Calibrate_3P_OPC_UA::SubStrings::AIC_I4_MID_METHOD"/>
+		<Import declaration="Meins::InputOutputTester::Button_AI_Calibrate_3P_OPC_UA::SubStrings::AIC_I4_MAX_METHOD"/>
+		<Import declaration="Meins::InputOutputTester::Button_AI_Calibrate_3P_OPC_UA::SubStrings::AIC_I5_MIN_METHOD"/>
+		<Import declaration="Meins::InputOutputTester::Button_AI_Calibrate_3P_OPC_UA::SubStrings::AIC_I5_MID_METHOD"/>
+		<Import declaration="Meins::InputOutputTester::Button_AI_Calibrate_3P_OPC_UA::SubStrings::AIC_I5_MAX_METHOD"/>
+		<Import declaration="Meins::InputOutputTester::Button_AI_Calibrate_3P_OPC_UA::SubStrings::AIC_I6_MIN_METHOD"/>
+		<Import declaration="Meins::InputOutputTester::Button_AI_Calibrate_3P_OPC_UA::SubStrings::AIC_I6_MID_METHOD"/>
+		<Import declaration="Meins::InputOutputTester::Button_AI_Calibrate_3P_OPC_UA::SubStrings::AIC_I6_MAX_METHOD"/>
+		<Import declaration="Meins::InputOutputTester::Button_AI_Calibrate_3P_OPC_UA::SubStrings::AIC_I7_MIN_METHOD"/>
+		<Import declaration="Meins::InputOutputTester::Button_AI_Calibrate_3P_OPC_UA::SubStrings::AIC_I7_MID_METHOD"/>
+		<Import declaration="Meins::InputOutputTester::Button_AI_Calibrate_3P_OPC_UA::SubStrings::AIC_I7_MAX_METHOD"/>
+		<Import declaration="Meins::InputOutputTester::Button_AI_Calibrate_3P_OPC_UA::SubStrings::AIC_I8_MIN_METHOD"/>
+		<Import declaration="Meins::InputOutputTester::Button_AI_Calibrate_3P_OPC_UA::SubStrings::AIC_I8_MID_METHOD"/>
+		<Import declaration="Meins::InputOutputTester::Button_AI_Calibrate_3P_OPC_UA::SubStrings::AIC_I8_MAX_METHOD"/>
 		<Import declaration="Meins::InputOutputTester::Button_AI_Calibrate_3P_OPC_UA::SubStrings::Q01_READ"/>
 		<Import declaration="Meins::InputOutputTester::Button_AI_Calibrate_3P_OPC_UA::SubStrings::Q01_WRITE"/>
 		<Import declaration="Meins::InputOutputTester::Button_AI_Calibrate_3P_OPC_UA::SubStrings::Q02_READ"/>
@@ -70,59 +72,59 @@
 		<Import declaration="Meins::InputOutputTester::Button_AI_Calibrate_3P_OPC_UA::SubStrings::Q12_READ"/>
 		<Import declaration="Meins::InputOutputTester::Button_AI_Calibrate_3P_OPC_UA::SubStrings::Q12_WRITE"/>
 		<Import declaration="Meins::InputOutputTester::Button_AI_Calibrate_3P_OPC_UA::SubStrings::Tick_WRITE"/>
-		<Import declaration="Uebungen::const::UT::AIC::DefaultPool_AIC::NumberVariable_AIC_RAW_I01"/>
-		<Import declaration="Uebungen::const::UT::AIC::DefaultPool_AIC::NumberVariable_AIC_RAW_I02"/>
-		<Import declaration="Uebungen::const::UT::AIC::DefaultPool_AIC::NumberVariable_AIC_RAW_I03"/>
-		<Import declaration="Uebungen::const::UT::AIC::DefaultPool_AIC::NumberVariable_AIC_RAW_I04"/>
-		<Import declaration="Uebungen::const::UT::AIC::DefaultPool_AIC::NumberVariable_AIC_RAW_I05"/>
-		<Import declaration="Uebungen::const::UT::AIC::DefaultPool_AIC::NumberVariable_AIC_RAW_I06"/>
-		<Import declaration="Uebungen::const::UT::AIC::DefaultPool_AIC::NumberVariable_AIC_RAW_I07"/>
-		<Import declaration="Uebungen::const::UT::AIC::DefaultPool_AIC::NumberVariable_AIC_RAW_I08"/>
-		<Import declaration="Uebungen::const::UT::AIC::DefaultPool_AIC_Numeric::NumberVariable_AIC_CAL_I01_N"/>
-		<Import declaration="Uebungen::const::UT::AIC::DefaultPool_AIC_Numeric::NumberVariable_AIC_CAL_I02_N"/>
-		<Import declaration="Uebungen::const::UT::AIC::DefaultPool_AIC_Numeric::NumberVariable_AIC_CAL_I03_N"/>
-		<Import declaration="Uebungen::const::UT::AIC::DefaultPool_AIC_Numeric::NumberVariable_AIC_CAL_I04_N"/>
-		<Import declaration="Uebungen::const::UT::AIC::DefaultPool_AIC_Numeric::NumberVariable_AIC_CAL_I05_N"/>
-		<Import declaration="Uebungen::const::UT::AIC::DefaultPool_AIC_Numeric::NumberVariable_AIC_CAL_I06_N"/>
-		<Import declaration="Uebungen::const::UT::AIC::DefaultPool_AIC_Numeric::NumberVariable_AIC_CAL_I07_N"/>
-		<Import declaration="Uebungen::const::UT::AIC::DefaultPool_AIC_Numeric::NumberVariable_AIC_CAL_I08_N"/>
-		<Import declaration="Uebungen::const::UT::AIC::DefaultPool_AIC_3P::Button_AIC_I01_MIN"/>
+		<Import declaration="Uebungen::const::UT::AIC::DefaultPool_AIC_2P::NumberVariable_AIC_RAW_I01"/>
+		<Import declaration="Uebungen::const::UT::AIC::DefaultPool_AIC_2P::NumberVariable_AIC_RAW_I02"/>
+		<Import declaration="Uebungen::const::UT::AIC::DefaultPool_AIC_2P::NumberVariable_AIC_RAW_I03"/>
+		<Import declaration="Uebungen::const::UT::AIC::DefaultPool_AIC_2P::NumberVariable_AIC_RAW_I04"/>
+		<Import declaration="Uebungen::const::UT::AIC::DefaultPool_AIC_2P::NumberVariable_AIC_RAW_I05"/>
+		<Import declaration="Uebungen::const::UT::AIC::DefaultPool_AIC_2P::NumberVariable_AIC_RAW_I06"/>
+		<Import declaration="Uebungen::const::UT::AIC::DefaultPool_AIC_2P::NumberVariable_AIC_RAW_I07"/>
+		<Import declaration="Uebungen::const::UT::AIC::DefaultPool_AIC_2P::NumberVariable_AIC_RAW_I08"/>
+		<Import declaration="Uebungen::const::UT::AIC::DefaultPool_AIC_3P_Numeric::NumberVariable_AIC_CAL_I01_N"/>
+		<Import declaration="Uebungen::const::UT::AIC::DefaultPool_AIC_3P_Numeric::NumberVariable_AIC_CAL_I02_N"/>
+		<Import declaration="Uebungen::const::UT::AIC::DefaultPool_AIC_3P_Numeric::NumberVariable_AIC_CAL_I03_N"/>
+		<Import declaration="Uebungen::const::UT::AIC::DefaultPool_AIC_3P_Numeric::NumberVariable_AIC_CAL_I04_N"/>
+		<Import declaration="Uebungen::const::UT::AIC::DefaultPool_AIC_3P_Numeric::NumberVariable_AIC_CAL_I05_N"/>
+		<Import declaration="Uebungen::const::UT::AIC::DefaultPool_AIC_3P_Numeric::NumberVariable_AIC_CAL_I06_N"/>
+		<Import declaration="Uebungen::const::UT::AIC::DefaultPool_AIC_3P_Numeric::NumberVariable_AIC_CAL_I07_N"/>
+		<Import declaration="Uebungen::const::UT::AIC::DefaultPool_AIC_3P_Numeric::NumberVariable_AIC_CAL_I08_N"/>
+		<Import declaration="Uebungen::const::UT::AIC::DefaultPool_AIC_3P::Button_AIC_I01_CO"/>
 		<Import declaration="Uebungen::const::UT::AIC::DefaultPool_AIC_3P::Button_AIC_I01_MID"/>
-		<Import declaration="Uebungen::const::UT::AIC::DefaultPool_AIC_3P::Button_AIC_I01_MAX"/>
-		<Import declaration="Uebungen::const::UT::AIC::DefaultPool_AIC_3P::Button_AIC_I02_MIN"/>
+		<Import declaration="Uebungen::const::UT::AIC::DefaultPool_AIC_3P::Button_AIC_I01_CS"/>
+		<Import declaration="Uebungen::const::UT::AIC::DefaultPool_AIC_3P::Button_AIC_I02_CO"/>
 		<Import declaration="Uebungen::const::UT::AIC::DefaultPool_AIC_3P::Button_AIC_I02_MID"/>
-		<Import declaration="Uebungen::const::UT::AIC::DefaultPool_AIC_3P::Button_AIC_I02_MAX"/>
-		<Import declaration="Uebungen::const::UT::AIC::DefaultPool_AIC_3P::Button_AIC_I03_MIN"/>
+		<Import declaration="Uebungen::const::UT::AIC::DefaultPool_AIC_3P::Button_AIC_I02_CS"/>
+		<Import declaration="Uebungen::const::UT::AIC::DefaultPool_AIC_3P::Button_AIC_I03_CO"/>
 		<Import declaration="Uebungen::const::UT::AIC::DefaultPool_AIC_3P::Button_AIC_I03_MID"/>
-		<Import declaration="Uebungen::const::UT::AIC::DefaultPool_AIC_3P::Button_AIC_I03_MAX"/>
-		<Import declaration="Uebungen::const::UT::AIC::DefaultPool_AIC_3P::Button_AIC_I04_MIN"/>
+		<Import declaration="Uebungen::const::UT::AIC::DefaultPool_AIC_3P::Button_AIC_I03_CS"/>
+		<Import declaration="Uebungen::const::UT::AIC::DefaultPool_AIC_3P::Button_AIC_I04_CO"/>
 		<Import declaration="Uebungen::const::UT::AIC::DefaultPool_AIC_3P::Button_AIC_I04_MID"/>
-		<Import declaration="Uebungen::const::UT::AIC::DefaultPool_AIC_3P::Button_AIC_I04_MAX"/>
-		<Import declaration="Uebungen::const::UT::AIC::DefaultPool_AIC_3P::Button_AIC_I05_MIN"/>
+		<Import declaration="Uebungen::const::UT::AIC::DefaultPool_AIC_3P::Button_AIC_I04_CS"/>
+		<Import declaration="Uebungen::const::UT::AIC::DefaultPool_AIC_3P::Button_AIC_I05_CO"/>
 		<Import declaration="Uebungen::const::UT::AIC::DefaultPool_AIC_3P::Button_AIC_I05_MID"/>
-		<Import declaration="Uebungen::const::UT::AIC::DefaultPool_AIC_3P::Button_AIC_I05_MAX"/>
-		<Import declaration="Uebungen::const::UT::AIC::DefaultPool_AIC_3P::Button_AIC_I06_MIN"/>
+		<Import declaration="Uebungen::const::UT::AIC::DefaultPool_AIC_3P::Button_AIC_I05_CS"/>
+		<Import declaration="Uebungen::const::UT::AIC::DefaultPool_AIC_3P::Button_AIC_I06_CO"/>
 		<Import declaration="Uebungen::const::UT::AIC::DefaultPool_AIC_3P::Button_AIC_I06_MID"/>
-		<Import declaration="Uebungen::const::UT::AIC::DefaultPool_AIC_3P::Button_AIC_I06_MAX"/>
-		<Import declaration="Uebungen::const::UT::AIC::DefaultPool_AIC_3P::Button_AIC_I07_MIN"/>
+		<Import declaration="Uebungen::const::UT::AIC::DefaultPool_AIC_3P::Button_AIC_I06_CS"/>
+		<Import declaration="Uebungen::const::UT::AIC::DefaultPool_AIC_3P::Button_AIC_I07_CO"/>
 		<Import declaration="Uebungen::const::UT::AIC::DefaultPool_AIC_3P::Button_AIC_I07_MID"/>
-		<Import declaration="Uebungen::const::UT::AIC::DefaultPool_AIC_3P::Button_AIC_I07_MAX"/>
-		<Import declaration="Uebungen::const::UT::AIC::DefaultPool_AIC_3P::Button_AIC_I08_MIN"/>
+		<Import declaration="Uebungen::const::UT::AIC::DefaultPool_AIC_3P::Button_AIC_I07_CS"/>
+		<Import declaration="Uebungen::const::UT::AIC::DefaultPool_AIC_3P::Button_AIC_I08_CO"/>
 		<Import declaration="Uebungen::const::UT::AIC::DefaultPool_AIC_3P::Button_AIC_I08_MID"/>
-		<Import declaration="Uebungen::const::UT::AIC::DefaultPool_AIC_3P::Button_AIC_I08_MAX"/>
-		<Import declaration="Uebungen::const::UT::AIC::DefaultPool_AIC::Button_Q01"/>
-		<Import declaration="Uebungen::const::UT::AIC::DefaultPool_AIC::Button_Q02"/>
-		<Import declaration="Uebungen::const::UT::AIC::DefaultPool_AIC::Button_Q03"/>
-		<Import declaration="Uebungen::const::UT::AIC::DefaultPool_AIC::Button_Q04"/>
-		<Import declaration="Uebungen::const::UT::AIC::DefaultPool_AIC::Button_Q05"/>
-		<Import declaration="Uebungen::const::UT::AIC::DefaultPool_AIC::Button_Q06"/>
-		<Import declaration="Uebungen::const::UT::AIC::DefaultPool_AIC::Button_Q07"/>
-		<Import declaration="Uebungen::const::UT::AIC::DefaultPool_AIC::Button_Q08"/>
-		<Import declaration="Uebungen::const::UT::AIC::DefaultPool_AIC::Button_Q09"/>
-		<Import declaration="Uebungen::const::UT::AIC::DefaultPool_AIC::Button_Q10"/>
-		<Import declaration="Uebungen::const::UT::AIC::DefaultPool_AIC::Button_Q11"/>
-		<Import declaration="Uebungen::const::UT::AIC::DefaultPool_AIC::Button_Q12"/>
-		<Import declaration="Uebungen::const::UT::AIC::DefaultPool_AIC::OutputNumber_Tick"/>
+		<Import declaration="Uebungen::const::UT::AIC::DefaultPool_AIC_3P::Button_AIC_I08_CS"/>
+		<Import declaration="Uebungen::const::UT::AIC::DefaultPool_AIC_2P::Button_Q01"/>
+		<Import declaration="Uebungen::const::UT::AIC::DefaultPool_AIC_2P::Button_Q02"/>
+		<Import declaration="Uebungen::const::UT::AIC::DefaultPool_AIC_2P::Button_Q03"/>
+		<Import declaration="Uebungen::const::UT::AIC::DefaultPool_AIC_2P::Button_Q04"/>
+		<Import declaration="Uebungen::const::UT::AIC::DefaultPool_AIC_2P::Button_Q05"/>
+		<Import declaration="Uebungen::const::UT::AIC::DefaultPool_AIC_2P::Button_Q06"/>
+		<Import declaration="Uebungen::const::UT::AIC::DefaultPool_AIC_2P::Button_Q07"/>
+		<Import declaration="Uebungen::const::UT::AIC::DefaultPool_AIC_2P::Button_Q08"/>
+		<Import declaration="Uebungen::const::UT::AIC::DefaultPool_AIC_2P::Button_Q09"/>
+		<Import declaration="Uebungen::const::UT::AIC::DefaultPool_AIC_2P::Button_Q10"/>
+		<Import declaration="Uebungen::const::UT::AIC::DefaultPool_AIC_2P::Button_Q11"/>
+		<Import declaration="Uebungen::const::UT::AIC::DefaultPool_AIC_2P::Button_Q12"/>
+		<Import declaration="Uebungen::const::UT::AIC::DefaultPool_AIC_2P::OutputNumber_Tick"/>
 		<Import declaration="logiBUS::io::AI::logiBUS_AI::AnalogInput_I1"/>
 		<Import declaration="logiBUS::io::AI::logiBUS_AI::AnalogInput_I2"/>
 		<Import declaration="logiBUS::io::AI::logiBUS_AI::AnalogInput_I3"/>
@@ -191,30 +193,78 @@
 		<Import declaration="Meins::InputOutputTester::Button_AI_Calibrate_3P_OPC_UA::SubStrings::AIC_I8_MIDREF_WRITE"/>
 		<Import declaration="Meins::InputOutputTester::Button_AI_Calibrate_3P_OPC_UA::SubStrings::AIC_I8_MAXREF_READ"/>
 		<Import declaration="Meins::InputOutputTester::Button_AI_Calibrate_3P_OPC_UA::SubStrings::AIC_I8_MAXREF_WRITE"/>
-		<Import declaration="Uebungen::const::UT::AIC::DefaultPool_AIC_3P_Numeric::NumberVariable_AIC_I01_MINREF_N"/>
-		<Import declaration="Uebungen::const::UT::AIC::DefaultPool_AIC_3P_Numeric::NumberVariable_AIC_I01_MIDREF_N"/>
-		<Import declaration="Uebungen::const::UT::AIC::DefaultPool_AIC_3P_Numeric::NumberVariable_AIC_I01_MAXREF_N"/>
-		<Import declaration="Uebungen::const::UT::AIC::DefaultPool_AIC_3P_Numeric::NumberVariable_AIC_I02_MINREF_N"/>
-		<Import declaration="Uebungen::const::UT::AIC::DefaultPool_AIC_3P_Numeric::NumberVariable_AIC_I02_MIDREF_N"/>
-		<Import declaration="Uebungen::const::UT::AIC::DefaultPool_AIC_3P_Numeric::NumberVariable_AIC_I02_MAXREF_N"/>
-		<Import declaration="Uebungen::const::UT::AIC::DefaultPool_AIC_3P_Numeric::NumberVariable_AIC_I03_MINREF_N"/>
-		<Import declaration="Uebungen::const::UT::AIC::DefaultPool_AIC_3P_Numeric::NumberVariable_AIC_I03_MIDREF_N"/>
-		<Import declaration="Uebungen::const::UT::AIC::DefaultPool_AIC_3P_Numeric::NumberVariable_AIC_I03_MAXREF_N"/>
-		<Import declaration="Uebungen::const::UT::AIC::DefaultPool_AIC_3P_Numeric::NumberVariable_AIC_I04_MINREF_N"/>
-		<Import declaration="Uebungen::const::UT::AIC::DefaultPool_AIC_3P_Numeric::NumberVariable_AIC_I04_MIDREF_N"/>
-		<Import declaration="Uebungen::const::UT::AIC::DefaultPool_AIC_3P_Numeric::NumberVariable_AIC_I04_MAXREF_N"/>
-		<Import declaration="Uebungen::const::UT::AIC::DefaultPool_AIC_3P_Numeric::NumberVariable_AIC_I05_MINREF_N"/>
-		<Import declaration="Uebungen::const::UT::AIC::DefaultPool_AIC_3P_Numeric::NumberVariable_AIC_I05_MIDREF_N"/>
-		<Import declaration="Uebungen::const::UT::AIC::DefaultPool_AIC_3P_Numeric::NumberVariable_AIC_I05_MAXREF_N"/>
-		<Import declaration="Uebungen::const::UT::AIC::DefaultPool_AIC_3P_Numeric::NumberVariable_AIC_I06_MINREF_N"/>
-		<Import declaration="Uebungen::const::UT::AIC::DefaultPool_AIC_3P_Numeric::NumberVariable_AIC_I06_MIDREF_N"/>
-		<Import declaration="Uebungen::const::UT::AIC::DefaultPool_AIC_3P_Numeric::NumberVariable_AIC_I06_MAXREF_N"/>
-		<Import declaration="Uebungen::const::UT::AIC::DefaultPool_AIC_3P_Numeric::NumberVariable_AIC_I07_MINREF_N"/>
-		<Import declaration="Uebungen::const::UT::AIC::DefaultPool_AIC_3P_Numeric::NumberVariable_AIC_I07_MIDREF_N"/>
-		<Import declaration="Uebungen::const::UT::AIC::DefaultPool_AIC_3P_Numeric::NumberVariable_AIC_I07_MAXREF_N"/>
-		<Import declaration="Uebungen::const::UT::AIC::DefaultPool_AIC_3P_Numeric::NumberVariable_AIC_I08_MINREF_N"/>
-		<Import declaration="Uebungen::const::UT::AIC::DefaultPool_AIC_3P_Numeric::NumberVariable_AIC_I08_MIDREF_N"/>
-		<Import declaration="Uebungen::const::UT::AIC::DefaultPool_AIC_3P_Numeric::NumberVariable_AIC_I08_MAXREF_N"/>
+		<Import declaration="Meins::InputOutputTester::Button_AI_Calibrate_3P_OPC_UA::SubStrings::AIC_I1_MIN_RAW_WRITE"/>
+		<Import declaration="Meins::InputOutputTester::Button_AI_Calibrate_3P_OPC_UA::SubStrings::AIC_I1_MID_RAW_WRITE"/>
+		<Import declaration="Meins::InputOutputTester::Button_AI_Calibrate_3P_OPC_UA::SubStrings::AIC_I1_MAX_RAW_WRITE"/>
+		<Import declaration="Meins::InputOutputTester::Button_AI_Calibrate_3P_OPC_UA::SubStrings::AIC_I2_MIN_RAW_WRITE"/>
+		<Import declaration="Meins::InputOutputTester::Button_AI_Calibrate_3P_OPC_UA::SubStrings::AIC_I2_MID_RAW_WRITE"/>
+		<Import declaration="Meins::InputOutputTester::Button_AI_Calibrate_3P_OPC_UA::SubStrings::AIC_I2_MAX_RAW_WRITE"/>
+		<Import declaration="Meins::InputOutputTester::Button_AI_Calibrate_3P_OPC_UA::SubStrings::AIC_I3_MIN_RAW_WRITE"/>
+		<Import declaration="Meins::InputOutputTester::Button_AI_Calibrate_3P_OPC_UA::SubStrings::AIC_I3_MID_RAW_WRITE"/>
+		<Import declaration="Meins::InputOutputTester::Button_AI_Calibrate_3P_OPC_UA::SubStrings::AIC_I3_MAX_RAW_WRITE"/>
+		<Import declaration="Meins::InputOutputTester::Button_AI_Calibrate_3P_OPC_UA::SubStrings::AIC_I4_MIN_RAW_WRITE"/>
+		<Import declaration="Meins::InputOutputTester::Button_AI_Calibrate_3P_OPC_UA::SubStrings::AIC_I4_MID_RAW_WRITE"/>
+		<Import declaration="Meins::InputOutputTester::Button_AI_Calibrate_3P_OPC_UA::SubStrings::AIC_I4_MAX_RAW_WRITE"/>
+		<Import declaration="Meins::InputOutputTester::Button_AI_Calibrate_3P_OPC_UA::SubStrings::AIC_I5_MIN_RAW_WRITE"/>
+		<Import declaration="Meins::InputOutputTester::Button_AI_Calibrate_3P_OPC_UA::SubStrings::AIC_I5_MID_RAW_WRITE"/>
+		<Import declaration="Meins::InputOutputTester::Button_AI_Calibrate_3P_OPC_UA::SubStrings::AIC_I5_MAX_RAW_WRITE"/>
+		<Import declaration="Meins::InputOutputTester::Button_AI_Calibrate_3P_OPC_UA::SubStrings::AIC_I6_MIN_RAW_WRITE"/>
+		<Import declaration="Meins::InputOutputTester::Button_AI_Calibrate_3P_OPC_UA::SubStrings::AIC_I6_MID_RAW_WRITE"/>
+		<Import declaration="Meins::InputOutputTester::Button_AI_Calibrate_3P_OPC_UA::SubStrings::AIC_I6_MAX_RAW_WRITE"/>
+		<Import declaration="Meins::InputOutputTester::Button_AI_Calibrate_3P_OPC_UA::SubStrings::AIC_I7_MIN_RAW_WRITE"/>
+		<Import declaration="Meins::InputOutputTester::Button_AI_Calibrate_3P_OPC_UA::SubStrings::AIC_I7_MID_RAW_WRITE"/>
+		<Import declaration="Meins::InputOutputTester::Button_AI_Calibrate_3P_OPC_UA::SubStrings::AIC_I7_MAX_RAW_WRITE"/>
+		<Import declaration="Meins::InputOutputTester::Button_AI_Calibrate_3P_OPC_UA::SubStrings::AIC_I8_MIN_RAW_WRITE"/>
+		<Import declaration="Meins::InputOutputTester::Button_AI_Calibrate_3P_OPC_UA::SubStrings::AIC_I8_MID_RAW_WRITE"/>
+		<Import declaration="Meins::InputOutputTester::Button_AI_Calibrate_3P_OPC_UA::SubStrings::AIC_I8_MAX_RAW_WRITE"/>
+		<Import declaration="Uebungen::const::UT::AIC::DefaultPool_AIC_3P_Numeric::NumberVariable_AIC_I01_ZERO_N"/>
+		<Import declaration="Uebungen::const::UT::AIC::DefaultPool_AIC_3P_Numeric::NumberVariable_AIC_I01_MID_N"/>
+		<Import declaration="Uebungen::const::UT::AIC::DefaultPool_AIC_3P_Numeric::NumberVariable_AIC_I01_SPAN_N"/>
+		<Import declaration="Uebungen::const::UT::AIC::DefaultPool_AIC_3P_Numeric::NumberVariable_AIC_I02_ZERO_N"/>
+		<Import declaration="Uebungen::const::UT::AIC::DefaultPool_AIC_3P_Numeric::NumberVariable_AIC_I02_MID_N"/>
+		<Import declaration="Uebungen::const::UT::AIC::DefaultPool_AIC_3P_Numeric::NumberVariable_AIC_I02_SPAN_N"/>
+		<Import declaration="Uebungen::const::UT::AIC::DefaultPool_AIC_3P_Numeric::NumberVariable_AIC_I03_ZERO_N"/>
+		<Import declaration="Uebungen::const::UT::AIC::DefaultPool_AIC_3P_Numeric::NumberVariable_AIC_I03_MID_N"/>
+		<Import declaration="Uebungen::const::UT::AIC::DefaultPool_AIC_3P_Numeric::NumberVariable_AIC_I03_SPAN_N"/>
+		<Import declaration="Uebungen::const::UT::AIC::DefaultPool_AIC_3P_Numeric::NumberVariable_AIC_I04_ZERO_N"/>
+		<Import declaration="Uebungen::const::UT::AIC::DefaultPool_AIC_3P_Numeric::NumberVariable_AIC_I04_MID_N"/>
+		<Import declaration="Uebungen::const::UT::AIC::DefaultPool_AIC_3P_Numeric::NumberVariable_AIC_I04_SPAN_N"/>
+		<Import declaration="Uebungen::const::UT::AIC::DefaultPool_AIC_3P_Numeric::NumberVariable_AIC_I05_ZERO_N"/>
+		<Import declaration="Uebungen::const::UT::AIC::DefaultPool_AIC_3P_Numeric::NumberVariable_AIC_I05_MID_N"/>
+		<Import declaration="Uebungen::const::UT::AIC::DefaultPool_AIC_3P_Numeric::NumberVariable_AIC_I05_SPAN_N"/>
+		<Import declaration="Uebungen::const::UT::AIC::DefaultPool_AIC_3P_Numeric::NumberVariable_AIC_I06_ZERO_N"/>
+		<Import declaration="Uebungen::const::UT::AIC::DefaultPool_AIC_3P_Numeric::NumberVariable_AIC_I06_MID_N"/>
+		<Import declaration="Uebungen::const::UT::AIC::DefaultPool_AIC_3P_Numeric::NumberVariable_AIC_I06_SPAN_N"/>
+		<Import declaration="Uebungen::const::UT::AIC::DefaultPool_AIC_3P_Numeric::NumberVariable_AIC_I07_ZERO_N"/>
+		<Import declaration="Uebungen::const::UT::AIC::DefaultPool_AIC_3P_Numeric::NumberVariable_AIC_I07_MID_N"/>
+		<Import declaration="Uebungen::const::UT::AIC::DefaultPool_AIC_3P_Numeric::NumberVariable_AIC_I07_SPAN_N"/>
+		<Import declaration="Uebungen::const::UT::AIC::DefaultPool_AIC_3P_Numeric::NumberVariable_AIC_I08_ZERO_N"/>
+		<Import declaration="Uebungen::const::UT::AIC::DefaultPool_AIC_3P_Numeric::NumberVariable_AIC_I08_MID_N"/>
+		<Import declaration="Uebungen::const::UT::AIC::DefaultPool_AIC_3P_Numeric::NumberVariable_AIC_I08_SPAN_N"/>
+		<Import declaration="Uebungen::const::UT::AIC::DefaultPool_AIC_3P_Numeric::NumberVariable_AIC_I01_MINRAW_N"/>
+		<Import declaration="Uebungen::const::UT::AIC::DefaultPool_AIC_3P_Numeric::NumberVariable_AIC_I01_MIDRAW_N"/>
+		<Import declaration="Uebungen::const::UT::AIC::DefaultPool_AIC_3P_Numeric::NumberVariable_AIC_I01_MAXRAW_N"/>
+		<Import declaration="Uebungen::const::UT::AIC::DefaultPool_AIC_3P_Numeric::NumberVariable_AIC_I02_MINRAW_N"/>
+		<Import declaration="Uebungen::const::UT::AIC::DefaultPool_AIC_3P_Numeric::NumberVariable_AIC_I02_MIDRAW_N"/>
+		<Import declaration="Uebungen::const::UT::AIC::DefaultPool_AIC_3P_Numeric::NumberVariable_AIC_I02_MAXRAW_N"/>
+		<Import declaration="Uebungen::const::UT::AIC::DefaultPool_AIC_3P_Numeric::NumberVariable_AIC_I03_MINRAW_N"/>
+		<Import declaration="Uebungen::const::UT::AIC::DefaultPool_AIC_3P_Numeric::NumberVariable_AIC_I03_MIDRAW_N"/>
+		<Import declaration="Uebungen::const::UT::AIC::DefaultPool_AIC_3P_Numeric::NumberVariable_AIC_I03_MAXRAW_N"/>
+		<Import declaration="Uebungen::const::UT::AIC::DefaultPool_AIC_3P_Numeric::NumberVariable_AIC_I04_MINRAW_N"/>
+		<Import declaration="Uebungen::const::UT::AIC::DefaultPool_AIC_3P_Numeric::NumberVariable_AIC_I04_MIDRAW_N"/>
+		<Import declaration="Uebungen::const::UT::AIC::DefaultPool_AIC_3P_Numeric::NumberVariable_AIC_I04_MAXRAW_N"/>
+		<Import declaration="Uebungen::const::UT::AIC::DefaultPool_AIC_3P_Numeric::NumberVariable_AIC_I05_MINRAW_N"/>
+		<Import declaration="Uebungen::const::UT::AIC::DefaultPool_AIC_3P_Numeric::NumberVariable_AIC_I05_MIDRAW_N"/>
+		<Import declaration="Uebungen::const::UT::AIC::DefaultPool_AIC_3P_Numeric::NumberVariable_AIC_I05_MAXRAW_N"/>
+		<Import declaration="Uebungen::const::UT::AIC::DefaultPool_AIC_3P_Numeric::NumberVariable_AIC_I06_MINRAW_N"/>
+		<Import declaration="Uebungen::const::UT::AIC::DefaultPool_AIC_3P_Numeric::NumberVariable_AIC_I06_MIDRAW_N"/>
+		<Import declaration="Uebungen::const::UT::AIC::DefaultPool_AIC_3P_Numeric::NumberVariable_AIC_I06_MAXRAW_N"/>
+		<Import declaration="Uebungen::const::UT::AIC::DefaultPool_AIC_3P_Numeric::NumberVariable_AIC_I07_MINRAW_N"/>
+		<Import declaration="Uebungen::const::UT::AIC::DefaultPool_AIC_3P_Numeric::NumberVariable_AIC_I07_MIDRAW_N"/>
+		<Import declaration="Uebungen::const::UT::AIC::DefaultPool_AIC_3P_Numeric::NumberVariable_AIC_I07_MAXRAW_N"/>
+		<Import declaration="Uebungen::const::UT::AIC::DefaultPool_AIC_3P_Numeric::NumberVariable_AIC_I08_MINRAW_N"/>
+		<Import declaration="Uebungen::const::UT::AIC::DefaultPool_AIC_3P_Numeric::NumberVariable_AIC_I08_MIDRAW_N"/>
+		<Import declaration="Uebungen::const::UT::AIC::DefaultPool_AIC_3P_Numeric::NumberVariable_AIC_I08_MAXRAW_N"/>
 	</CompilerInfo>
 	<SubAppInterfaceList>
 	</SubAppInterfaceList>
@@ -222,186 +272,234 @@
 		<SubApp Name="AnalogChannel_I1" Type="MyLib::sys::logiBUS_AI_Calibrate_3P_IDA_OPC" x="-1000" y="-700">
 			<Parameter Name="u16ObjId_RAWVAR" Value="NumberVariable_AIC_RAW_I01"/>
 			<Parameter Name="stObjCal" Value="NumberVariable_AIC_CAL_I01_N"/>
-			<Parameter Name="u16ObjId_C_MIN" Value="Button_AIC_I01_MIN"/>
+			<Parameter Name="u16ObjId_C_MIN" Value="Button_AIC_I01_CO"/>
 			<Parameter Name="u16ObjId_C_MID" Value="Button_AIC_I01_MID"/>
-			<Parameter Name="u16ObjId_C_MAX" Value="Button_AIC_I01_MAX"/>
+			<Parameter Name="u16ObjId_C_MAX" Value="Button_AIC_I01_CS"/>
 			<Parameter Name="Input" Value="AnalogInput_I1"/>
 			<Parameter Name="sSection" Value="'AI_Calibrate_3P_I1'"/>
 			<Parameter Name="ID_RAW_WRITE" Value="AIC_I1_RAW_WRITE"/>
 			<Parameter Name="ID_CAL_WRITE" Value="AIC_I1_CAL_WRITE"/>
-			<Parameter Name="ID_MIN_READ" Value="AIC_I1_MIN_READ"/>
-			<Parameter Name="ID_MID_READ" Value="AIC_I1_MID_READ"/>
-			<Parameter Name="ID_MAX_READ" Value="AIC_I1_MAX_READ"/>
-			<Parameter Name="stObjMinRef" Value="NumberVariable_AIC_I01_MINREF_N"/>
-			<Parameter Name="stObjMidRef" Value="NumberVariable_AIC_I01_MIDREF_N"/>
-			<Parameter Name="stObjMaxRef" Value="NumberVariable_AIC_I01_MAXREF_N"/>
+			<Parameter Name="ID_MIN_METHOD" Value="AIC_I1_MIN_METHOD"/>
+			<Parameter Name="ID_MID_TRIGGER_METHOD" Value="AIC_I1_MID_METHOD"/>
+			<Parameter Name="ID_MAX_METHOD" Value="AIC_I1_MAX_METHOD"/>
+			<Parameter Name="stObjMinRef" Value="NumberVariable_AIC_I01_ZERO_N"/>
+			<Parameter Name="stObjMidRef" Value="NumberVariable_AIC_I01_MID_N"/>
+			<Parameter Name="stObjMaxRef" Value="NumberVariable_AIC_I01_SPAN_N"/>
 			<Parameter Name="ID_MINREF_READ" Value="AIC_I1_MINREF_READ"/>
 			<Parameter Name="ID_MINREF_WRITE" Value="AIC_I1_MINREF_WRITE"/>
 			<Parameter Name="ID_MIDREF_READ" Value="AIC_I1_MIDREF_READ"/>
 			<Parameter Name="ID_MIDREF_WRITE" Value="AIC_I1_MIDREF_WRITE"/>
 			<Parameter Name="ID_MAXREF_READ" Value="AIC_I1_MAXREF_READ"/>
 			<Parameter Name="ID_MAXREF_WRITE" Value="AIC_I1_MAXREF_WRITE"/>
+			<Parameter Name="stObjMinRaw" Value="NumberVariable_AIC_I01_MINRAW_N"/>
+			<Parameter Name="stObjMidRaw" Value="NumberVariable_AIC_I01_MIDRAW_N"/>
+			<Parameter Name="stObjMaxRaw" Value="NumberVariable_AIC_I01_MAXRAW_N"/>
+			<Parameter Name="ID_MIN_RAW_WRITE" Value="AIC_I1_MIN_RAW_WRITE"/>
+			<Parameter Name="ID_MID_RAW_WRITE" Value="AIC_I1_MID_RAW_WRITE"/>
+			<Parameter Name="ID_MAX_RAW_WRITE" Value="AIC_I1_MAX_RAW_WRITE"/>
 		</SubApp>
 		<SubApp Name="AnalogChannel_I2" Type="MyLib::sys::logiBUS_AI_Calibrate_3P_IDA_OPC" x="-1000" y="2800">
 			<Parameter Name="u16ObjId_RAWVAR" Value="NumberVariable_AIC_RAW_I02"/>
 			<Parameter Name="stObjCal" Value="NumberVariable_AIC_CAL_I02_N"/>
-			<Parameter Name="u16ObjId_C_MIN" Value="Button_AIC_I02_MIN"/>
+			<Parameter Name="u16ObjId_C_MIN" Value="Button_AIC_I02_CO"/>
 			<Parameter Name="u16ObjId_C_MID" Value="Button_AIC_I02_MID"/>
-			<Parameter Name="u16ObjId_C_MAX" Value="Button_AIC_I02_MAX"/>
+			<Parameter Name="u16ObjId_C_MAX" Value="Button_AIC_I02_CS"/>
 			<Parameter Name="Input" Value="AnalogInput_I2"/>
 			<Parameter Name="sSection" Value="'AI_Calibrate_3P_I2'"/>
 			<Parameter Name="ID_RAW_WRITE" Value="AIC_I2_RAW_WRITE"/>
 			<Parameter Name="ID_CAL_WRITE" Value="AIC_I2_CAL_WRITE"/>
-			<Parameter Name="ID_MIN_READ" Value="AIC_I2_MIN_READ"/>
-			<Parameter Name="ID_MID_READ" Value="AIC_I2_MID_READ"/>
-			<Parameter Name="ID_MAX_READ" Value="AIC_I2_MAX_READ"/>
-			<Parameter Name="stObjMinRef" Value="NumberVariable_AIC_I02_MINREF_N"/>
-			<Parameter Name="stObjMidRef" Value="NumberVariable_AIC_I02_MIDREF_N"/>
-			<Parameter Name="stObjMaxRef" Value="NumberVariable_AIC_I02_MAXREF_N"/>
+			<Parameter Name="ID_MIN_METHOD" Value="AIC_I2_MIN_METHOD"/>
+			<Parameter Name="ID_MID_TRIGGER_METHOD" Value="AIC_I2_MID_METHOD"/>
+			<Parameter Name="ID_MAX_METHOD" Value="AIC_I2_MAX_METHOD"/>
+			<Parameter Name="stObjMinRef" Value="NumberVariable_AIC_I02_ZERO_N"/>
+			<Parameter Name="stObjMidRef" Value="NumberVariable_AIC_I02_MID_N"/>
+			<Parameter Name="stObjMaxRef" Value="NumberVariable_AIC_I02_SPAN_N"/>
 			<Parameter Name="ID_MINREF_READ" Value="AIC_I2_MINREF_READ"/>
 			<Parameter Name="ID_MINREF_WRITE" Value="AIC_I2_MINREF_WRITE"/>
 			<Parameter Name="ID_MIDREF_READ" Value="AIC_I2_MIDREF_READ"/>
 			<Parameter Name="ID_MIDREF_WRITE" Value="AIC_I2_MIDREF_WRITE"/>
 			<Parameter Name="ID_MAXREF_READ" Value="AIC_I2_MAXREF_READ"/>
 			<Parameter Name="ID_MAXREF_WRITE" Value="AIC_I2_MAXREF_WRITE"/>
+			<Parameter Name="stObjMinRaw" Value="NumberVariable_AIC_I02_MINRAW_N"/>
+			<Parameter Name="stObjMidRaw" Value="NumberVariable_AIC_I02_MIDRAW_N"/>
+			<Parameter Name="stObjMaxRaw" Value="NumberVariable_AIC_I02_MAXRAW_N"/>
+			<Parameter Name="ID_MIN_RAW_WRITE" Value="AIC_I2_MIN_RAW_WRITE"/>
+			<Parameter Name="ID_MID_RAW_WRITE" Value="AIC_I2_MID_RAW_WRITE"/>
+			<Parameter Name="ID_MAX_RAW_WRITE" Value="AIC_I2_MAX_RAW_WRITE"/>
 		</SubApp>
 		<SubApp Name="AnalogChannel_I3" Type="MyLib::sys::logiBUS_AI_Calibrate_3P_IDA_OPC" x="-1000" y="6300">
 			<Parameter Name="u16ObjId_RAWVAR" Value="NumberVariable_AIC_RAW_I03"/>
 			<Parameter Name="stObjCal" Value="NumberVariable_AIC_CAL_I03_N"/>
-			<Parameter Name="u16ObjId_C_MIN" Value="Button_AIC_I03_MIN"/>
+			<Parameter Name="u16ObjId_C_MIN" Value="Button_AIC_I03_CO"/>
 			<Parameter Name="u16ObjId_C_MID" Value="Button_AIC_I03_MID"/>
-			<Parameter Name="u16ObjId_C_MAX" Value="Button_AIC_I03_MAX"/>
+			<Parameter Name="u16ObjId_C_MAX" Value="Button_AIC_I03_CS"/>
 			<Parameter Name="Input" Value="AnalogInput_I3"/>
 			<Parameter Name="sSection" Value="'AI_Calibrate_3P_I3'"/>
 			<Parameter Name="ID_RAW_WRITE" Value="AIC_I3_RAW_WRITE"/>
 			<Parameter Name="ID_CAL_WRITE" Value="AIC_I3_CAL_WRITE"/>
-			<Parameter Name="ID_MIN_READ" Value="AIC_I3_MIN_READ"/>
-			<Parameter Name="ID_MID_READ" Value="AIC_I3_MID_READ"/>
-			<Parameter Name="ID_MAX_READ" Value="AIC_I3_MAX_READ"/>
-			<Parameter Name="stObjMinRef" Value="NumberVariable_AIC_I03_MINREF_N"/>
-			<Parameter Name="stObjMidRef" Value="NumberVariable_AIC_I03_MIDREF_N"/>
-			<Parameter Name="stObjMaxRef" Value="NumberVariable_AIC_I03_MAXREF_N"/>
+			<Parameter Name="ID_MIN_METHOD" Value="AIC_I3_MIN_METHOD"/>
+			<Parameter Name="ID_MID_TRIGGER_METHOD" Value="AIC_I3_MID_METHOD"/>
+			<Parameter Name="ID_MAX_METHOD" Value="AIC_I3_MAX_METHOD"/>
+			<Parameter Name="stObjMinRef" Value="NumberVariable_AIC_I03_ZERO_N"/>
+			<Parameter Name="stObjMidRef" Value="NumberVariable_AIC_I03_MID_N"/>
+			<Parameter Name="stObjMaxRef" Value="NumberVariable_AIC_I03_SPAN_N"/>
 			<Parameter Name="ID_MINREF_READ" Value="AIC_I3_MINREF_READ"/>
 			<Parameter Name="ID_MINREF_WRITE" Value="AIC_I3_MINREF_WRITE"/>
 			<Parameter Name="ID_MIDREF_READ" Value="AIC_I3_MIDREF_READ"/>
 			<Parameter Name="ID_MIDREF_WRITE" Value="AIC_I3_MIDREF_WRITE"/>
 			<Parameter Name="ID_MAXREF_READ" Value="AIC_I3_MAXREF_READ"/>
 			<Parameter Name="ID_MAXREF_WRITE" Value="AIC_I3_MAXREF_WRITE"/>
+			<Parameter Name="stObjMinRaw" Value="NumberVariable_AIC_I03_MINRAW_N"/>
+			<Parameter Name="stObjMidRaw" Value="NumberVariable_AIC_I03_MIDRAW_N"/>
+			<Parameter Name="stObjMaxRaw" Value="NumberVariable_AIC_I03_MAXRAW_N"/>
+			<Parameter Name="ID_MIN_RAW_WRITE" Value="AIC_I3_MIN_RAW_WRITE"/>
+			<Parameter Name="ID_MID_RAW_WRITE" Value="AIC_I3_MID_RAW_WRITE"/>
+			<Parameter Name="ID_MAX_RAW_WRITE" Value="AIC_I3_MAX_RAW_WRITE"/>
 		</SubApp>
 		<SubApp Name="AnalogChannel_I4" Type="MyLib::sys::logiBUS_AI_Calibrate_3P_IDA_OPC" x="-1000" y="9800">
 			<Parameter Name="u16ObjId_RAWVAR" Value="NumberVariable_AIC_RAW_I04"/>
 			<Parameter Name="stObjCal" Value="NumberVariable_AIC_CAL_I04_N"/>
-			<Parameter Name="u16ObjId_C_MIN" Value="Button_AIC_I04_MIN"/>
+			<Parameter Name="u16ObjId_C_MIN" Value="Button_AIC_I04_CO"/>
 			<Parameter Name="u16ObjId_C_MID" Value="Button_AIC_I04_MID"/>
-			<Parameter Name="u16ObjId_C_MAX" Value="Button_AIC_I04_MAX"/>
+			<Parameter Name="u16ObjId_C_MAX" Value="Button_AIC_I04_CS"/>
 			<Parameter Name="Input" Value="AnalogInput_I4"/>
 			<Parameter Name="sSection" Value="'AI_Calibrate_3P_I4'"/>
 			<Parameter Name="ID_RAW_WRITE" Value="AIC_I4_RAW_WRITE"/>
 			<Parameter Name="ID_CAL_WRITE" Value="AIC_I4_CAL_WRITE"/>
-			<Parameter Name="ID_MIN_READ" Value="AIC_I4_MIN_READ"/>
-			<Parameter Name="ID_MID_READ" Value="AIC_I4_MID_READ"/>
-			<Parameter Name="ID_MAX_READ" Value="AIC_I4_MAX_READ"/>
-			<Parameter Name="stObjMinRef" Value="NumberVariable_AIC_I04_MINREF_N"/>
-			<Parameter Name="stObjMidRef" Value="NumberVariable_AIC_I04_MIDREF_N"/>
-			<Parameter Name="stObjMaxRef" Value="NumberVariable_AIC_I04_MAXREF_N"/>
+			<Parameter Name="ID_MIN_METHOD" Value="AIC_I4_MIN_METHOD"/>
+			<Parameter Name="ID_MID_TRIGGER_METHOD" Value="AIC_I4_MID_METHOD"/>
+			<Parameter Name="ID_MAX_METHOD" Value="AIC_I4_MAX_METHOD"/>
+			<Parameter Name="stObjMinRef" Value="NumberVariable_AIC_I04_ZERO_N"/>
+			<Parameter Name="stObjMidRef" Value="NumberVariable_AIC_I04_MID_N"/>
+			<Parameter Name="stObjMaxRef" Value="NumberVariable_AIC_I04_SPAN_N"/>
 			<Parameter Name="ID_MINREF_READ" Value="AIC_I4_MINREF_READ"/>
 			<Parameter Name="ID_MINREF_WRITE" Value="AIC_I4_MINREF_WRITE"/>
 			<Parameter Name="ID_MIDREF_READ" Value="AIC_I4_MIDREF_READ"/>
 			<Parameter Name="ID_MIDREF_WRITE" Value="AIC_I4_MIDREF_WRITE"/>
 			<Parameter Name="ID_MAXREF_READ" Value="AIC_I4_MAXREF_READ"/>
 			<Parameter Name="ID_MAXREF_WRITE" Value="AIC_I4_MAXREF_WRITE"/>
+			<Parameter Name="stObjMinRaw" Value="NumberVariable_AIC_I04_MINRAW_N"/>
+			<Parameter Name="stObjMidRaw" Value="NumberVariable_AIC_I04_MIDRAW_N"/>
+			<Parameter Name="stObjMaxRaw" Value="NumberVariable_AIC_I04_MAXRAW_N"/>
+			<Parameter Name="ID_MIN_RAW_WRITE" Value="AIC_I4_MIN_RAW_WRITE"/>
+			<Parameter Name="ID_MID_RAW_WRITE" Value="AIC_I4_MID_RAW_WRITE"/>
+			<Parameter Name="ID_MAX_RAW_WRITE" Value="AIC_I4_MAX_RAW_WRITE"/>
 		</SubApp>
 		<SubApp Name="AnalogChannel_I5" Type="MyLib::sys::logiBUS_AI_Calibrate_3P_IDA_OPC" x="-1000" y="13300">
 			<Parameter Name="u16ObjId_RAWVAR" Value="NumberVariable_AIC_RAW_I05"/>
 			<Parameter Name="stObjCal" Value="NumberVariable_AIC_CAL_I05_N"/>
-			<Parameter Name="u16ObjId_C_MIN" Value="Button_AIC_I05_MIN"/>
+			<Parameter Name="u16ObjId_C_MIN" Value="Button_AIC_I05_CO"/>
 			<Parameter Name="u16ObjId_C_MID" Value="Button_AIC_I05_MID"/>
-			<Parameter Name="u16ObjId_C_MAX" Value="Button_AIC_I05_MAX"/>
+			<Parameter Name="u16ObjId_C_MAX" Value="Button_AIC_I05_CS"/>
 			<Parameter Name="Input" Value="AnalogInput_I5"/>
 			<Parameter Name="sSection" Value="'AI_Calibrate_3P_I5'"/>
 			<Parameter Name="ID_RAW_WRITE" Value="AIC_I5_RAW_WRITE"/>
 			<Parameter Name="ID_CAL_WRITE" Value="AIC_I5_CAL_WRITE"/>
-			<Parameter Name="ID_MIN_READ" Value="AIC_I5_MIN_READ"/>
-			<Parameter Name="ID_MID_READ" Value="AIC_I5_MID_READ"/>
-			<Parameter Name="ID_MAX_READ" Value="AIC_I5_MAX_READ"/>
-			<Parameter Name="stObjMinRef" Value="NumberVariable_AIC_I05_MINREF_N"/>
-			<Parameter Name="stObjMidRef" Value="NumberVariable_AIC_I05_MIDREF_N"/>
-			<Parameter Name="stObjMaxRef" Value="NumberVariable_AIC_I05_MAXREF_N"/>
+			<Parameter Name="ID_MIN_METHOD" Value="AIC_I5_MIN_METHOD"/>
+			<Parameter Name="ID_MID_TRIGGER_METHOD" Value="AIC_I5_MID_METHOD"/>
+			<Parameter Name="ID_MAX_METHOD" Value="AIC_I5_MAX_METHOD"/>
+			<Parameter Name="stObjMinRef" Value="NumberVariable_AIC_I05_ZERO_N"/>
+			<Parameter Name="stObjMidRef" Value="NumberVariable_AIC_I05_MID_N"/>
+			<Parameter Name="stObjMaxRef" Value="NumberVariable_AIC_I05_SPAN_N"/>
 			<Parameter Name="ID_MINREF_READ" Value="AIC_I5_MINREF_READ"/>
 			<Parameter Name="ID_MINREF_WRITE" Value="AIC_I5_MINREF_WRITE"/>
 			<Parameter Name="ID_MIDREF_READ" Value="AIC_I5_MIDREF_READ"/>
 			<Parameter Name="ID_MIDREF_WRITE" Value="AIC_I5_MIDREF_WRITE"/>
 			<Parameter Name="ID_MAXREF_READ" Value="AIC_I5_MAXREF_READ"/>
 			<Parameter Name="ID_MAXREF_WRITE" Value="AIC_I5_MAXREF_WRITE"/>
+			<Parameter Name="stObjMinRaw" Value="NumberVariable_AIC_I05_MINRAW_N"/>
+			<Parameter Name="stObjMidRaw" Value="NumberVariable_AIC_I05_MIDRAW_N"/>
+			<Parameter Name="stObjMaxRaw" Value="NumberVariable_AIC_I05_MAXRAW_N"/>
+			<Parameter Name="ID_MIN_RAW_WRITE" Value="AIC_I5_MIN_RAW_WRITE"/>
+			<Parameter Name="ID_MID_RAW_WRITE" Value="AIC_I5_MID_RAW_WRITE"/>
+			<Parameter Name="ID_MAX_RAW_WRITE" Value="AIC_I5_MAX_RAW_WRITE"/>
 		</SubApp>
 		<SubApp Name="AnalogChannel_I6" Type="MyLib::sys::logiBUS_AI_Calibrate_3P_IDA_OPC" x="-1000" y="16800">
 			<Parameter Name="u16ObjId_RAWVAR" Value="NumberVariable_AIC_RAW_I06"/>
 			<Parameter Name="stObjCal" Value="NumberVariable_AIC_CAL_I06_N"/>
-			<Parameter Name="u16ObjId_C_MIN" Value="Button_AIC_I06_MIN"/>
+			<Parameter Name="u16ObjId_C_MIN" Value="Button_AIC_I06_CO"/>
 			<Parameter Name="u16ObjId_C_MID" Value="Button_AIC_I06_MID"/>
-			<Parameter Name="u16ObjId_C_MAX" Value="Button_AIC_I06_MAX"/>
+			<Parameter Name="u16ObjId_C_MAX" Value="Button_AIC_I06_CS"/>
 			<Parameter Name="Input" Value="AnalogInput_I6"/>
 			<Parameter Name="sSection" Value="'AI_Calibrate_3P_I6'"/>
 			<Parameter Name="ID_RAW_WRITE" Value="AIC_I6_RAW_WRITE"/>
 			<Parameter Name="ID_CAL_WRITE" Value="AIC_I6_CAL_WRITE"/>
-			<Parameter Name="ID_MIN_READ" Value="AIC_I6_MIN_READ"/>
-			<Parameter Name="ID_MID_READ" Value="AIC_I6_MID_READ"/>
-			<Parameter Name="ID_MAX_READ" Value="AIC_I6_MAX_READ"/>
-			<Parameter Name="stObjMinRef" Value="NumberVariable_AIC_I06_MINREF_N"/>
-			<Parameter Name="stObjMidRef" Value="NumberVariable_AIC_I06_MIDREF_N"/>
-			<Parameter Name="stObjMaxRef" Value="NumberVariable_AIC_I06_MAXREF_N"/>
+			<Parameter Name="ID_MIN_METHOD" Value="AIC_I6_MIN_METHOD"/>
+			<Parameter Name="ID_MID_TRIGGER_METHOD" Value="AIC_I6_MID_METHOD"/>
+			<Parameter Name="ID_MAX_METHOD" Value="AIC_I6_MAX_METHOD"/>
+			<Parameter Name="stObjMinRef" Value="NumberVariable_AIC_I06_ZERO_N"/>
+			<Parameter Name="stObjMidRef" Value="NumberVariable_AIC_I06_MID_N"/>
+			<Parameter Name="stObjMaxRef" Value="NumberVariable_AIC_I06_SPAN_N"/>
 			<Parameter Name="ID_MINREF_READ" Value="AIC_I6_MINREF_READ"/>
 			<Parameter Name="ID_MINREF_WRITE" Value="AIC_I6_MINREF_WRITE"/>
 			<Parameter Name="ID_MIDREF_READ" Value="AIC_I6_MIDREF_READ"/>
 			<Parameter Name="ID_MIDREF_WRITE" Value="AIC_I6_MIDREF_WRITE"/>
 			<Parameter Name="ID_MAXREF_READ" Value="AIC_I6_MAXREF_READ"/>
 			<Parameter Name="ID_MAXREF_WRITE" Value="AIC_I6_MAXREF_WRITE"/>
+			<Parameter Name="stObjMinRaw" Value="NumberVariable_AIC_I06_MINRAW_N"/>
+			<Parameter Name="stObjMidRaw" Value="NumberVariable_AIC_I06_MIDRAW_N"/>
+			<Parameter Name="stObjMaxRaw" Value="NumberVariable_AIC_I06_MAXRAW_N"/>
+			<Parameter Name="ID_MIN_RAW_WRITE" Value="AIC_I6_MIN_RAW_WRITE"/>
+			<Parameter Name="ID_MID_RAW_WRITE" Value="AIC_I6_MID_RAW_WRITE"/>
+			<Parameter Name="ID_MAX_RAW_WRITE" Value="AIC_I6_MAX_RAW_WRITE"/>
 		</SubApp>
 		<SubApp Name="AnalogChannel_I7" Type="MyLib::sys::logiBUS_AI_Calibrate_3P_IDA_OPC" x="-1000" y="20300">
 			<Parameter Name="u16ObjId_RAWVAR" Value="NumberVariable_AIC_RAW_I07"/>
 			<Parameter Name="stObjCal" Value="NumberVariable_AIC_CAL_I07_N"/>
-			<Parameter Name="u16ObjId_C_MIN" Value="Button_AIC_I07_MIN"/>
+			<Parameter Name="u16ObjId_C_MIN" Value="Button_AIC_I07_CO"/>
 			<Parameter Name="u16ObjId_C_MID" Value="Button_AIC_I07_MID"/>
-			<Parameter Name="u16ObjId_C_MAX" Value="Button_AIC_I07_MAX"/>
+			<Parameter Name="u16ObjId_C_MAX" Value="Button_AIC_I07_CS"/>
 			<Parameter Name="Input" Value="AnalogInput_I7"/>
 			<Parameter Name="sSection" Value="'AI_Calibrate_3P_I7'"/>
 			<Parameter Name="ID_RAW_WRITE" Value="AIC_I7_RAW_WRITE"/>
 			<Parameter Name="ID_CAL_WRITE" Value="AIC_I7_CAL_WRITE"/>
-			<Parameter Name="ID_MIN_READ" Value="AIC_I7_MIN_READ"/>
-			<Parameter Name="ID_MID_READ" Value="AIC_I7_MID_READ"/>
-			<Parameter Name="ID_MAX_READ" Value="AIC_I7_MAX_READ"/>
-			<Parameter Name="stObjMinRef" Value="NumberVariable_AIC_I07_MINREF_N"/>
-			<Parameter Name="stObjMidRef" Value="NumberVariable_AIC_I07_MIDREF_N"/>
-			<Parameter Name="stObjMaxRef" Value="NumberVariable_AIC_I07_MAXREF_N"/>
+			<Parameter Name="ID_MIN_METHOD" Value="AIC_I7_MIN_METHOD"/>
+			<Parameter Name="ID_MID_TRIGGER_METHOD" Value="AIC_I7_MID_METHOD"/>
+			<Parameter Name="ID_MAX_METHOD" Value="AIC_I7_MAX_METHOD"/>
+			<Parameter Name="stObjMinRef" Value="NumberVariable_AIC_I07_ZERO_N"/>
+			<Parameter Name="stObjMidRef" Value="NumberVariable_AIC_I07_MID_N"/>
+			<Parameter Name="stObjMaxRef" Value="NumberVariable_AIC_I07_SPAN_N"/>
 			<Parameter Name="ID_MINREF_READ" Value="AIC_I7_MINREF_READ"/>
 			<Parameter Name="ID_MINREF_WRITE" Value="AIC_I7_MINREF_WRITE"/>
 			<Parameter Name="ID_MIDREF_READ" Value="AIC_I7_MIDREF_READ"/>
 			<Parameter Name="ID_MIDREF_WRITE" Value="AIC_I7_MIDREF_WRITE"/>
 			<Parameter Name="ID_MAXREF_READ" Value="AIC_I7_MAXREF_READ"/>
 			<Parameter Name="ID_MAXREF_WRITE" Value="AIC_I7_MAXREF_WRITE"/>
+			<Parameter Name="stObjMinRaw" Value="NumberVariable_AIC_I07_MINRAW_N"/>
+			<Parameter Name="stObjMidRaw" Value="NumberVariable_AIC_I07_MIDRAW_N"/>
+			<Parameter Name="stObjMaxRaw" Value="NumberVariable_AIC_I07_MAXRAW_N"/>
+			<Parameter Name="ID_MIN_RAW_WRITE" Value="AIC_I7_MIN_RAW_WRITE"/>
+			<Parameter Name="ID_MID_RAW_WRITE" Value="AIC_I7_MID_RAW_WRITE"/>
+			<Parameter Name="ID_MAX_RAW_WRITE" Value="AIC_I7_MAX_RAW_WRITE"/>
 		</SubApp>
 		<SubApp Name="AnalogChannel_I8" Type="MyLib::sys::logiBUS_AI_Calibrate_3P_IDA_OPC" x="-1000" y="23800">
 			<Parameter Name="u16ObjId_RAWVAR" Value="NumberVariable_AIC_RAW_I08"/>
 			<Parameter Name="stObjCal" Value="NumberVariable_AIC_CAL_I08_N"/>
-			<Parameter Name="u16ObjId_C_MIN" Value="Button_AIC_I08_MIN"/>
+			<Parameter Name="u16ObjId_C_MIN" Value="Button_AIC_I08_CO"/>
 			<Parameter Name="u16ObjId_C_MID" Value="Button_AIC_I08_MID"/>
-			<Parameter Name="u16ObjId_C_MAX" Value="Button_AIC_I08_MAX"/>
+			<Parameter Name="u16ObjId_C_MAX" Value="Button_AIC_I08_CS"/>
 			<Parameter Name="Input" Value="AnalogInput_I8"/>
 			<Parameter Name="sSection" Value="'AI_Calibrate_3P_I8'"/>
 			<Parameter Name="ID_RAW_WRITE" Value="AIC_I8_RAW_WRITE"/>
 			<Parameter Name="ID_CAL_WRITE" Value="AIC_I8_CAL_WRITE"/>
-			<Parameter Name="ID_MIN_READ" Value="AIC_I8_MIN_READ"/>
-			<Parameter Name="ID_MID_READ" Value="AIC_I8_MID_READ"/>
-			<Parameter Name="ID_MAX_READ" Value="AIC_I8_MAX_READ"/>
-			<Parameter Name="stObjMinRef" Value="NumberVariable_AIC_I08_MINREF_N"/>
-			<Parameter Name="stObjMidRef" Value="NumberVariable_AIC_I08_MIDREF_N"/>
-			<Parameter Name="stObjMaxRef" Value="NumberVariable_AIC_I08_MAXREF_N"/>
+			<Parameter Name="ID_MIN_METHOD" Value="AIC_I8_MIN_METHOD"/>
+			<Parameter Name="ID_MID_TRIGGER_METHOD" Value="AIC_I8_MID_METHOD"/>
+			<Parameter Name="ID_MAX_METHOD" Value="AIC_I8_MAX_METHOD"/>
+			<Parameter Name="stObjMinRef" Value="NumberVariable_AIC_I08_ZERO_N"/>
+			<Parameter Name="stObjMidRef" Value="NumberVariable_AIC_I08_MID_N"/>
+			<Parameter Name="stObjMaxRef" Value="NumberVariable_AIC_I08_SPAN_N"/>
 			<Parameter Name="ID_MINREF_READ" Value="AIC_I8_MINREF_READ"/>
 			<Parameter Name="ID_MINREF_WRITE" Value="AIC_I8_MINREF_WRITE"/>
 			<Parameter Name="ID_MIDREF_READ" Value="AIC_I8_MIDREF_READ"/>
 			<Parameter Name="ID_MIDREF_WRITE" Value="AIC_I8_MIDREF_WRITE"/>
 			<Parameter Name="ID_MAXREF_READ" Value="AIC_I8_MAXREF_READ"/>
 			<Parameter Name="ID_MAXREF_WRITE" Value="AIC_I8_MAXREF_WRITE"/>
+			<Parameter Name="stObjMinRaw" Value="NumberVariable_AIC_I08_MINRAW_N"/>
+			<Parameter Name="stObjMidRaw" Value="NumberVariable_AIC_I08_MIDRAW_N"/>
+			<Parameter Name="stObjMaxRaw" Value="NumberVariable_AIC_I08_MAXRAW_N"/>
+			<Parameter Name="ID_MIN_RAW_WRITE" Value="AIC_I8_MIN_RAW_WRITE"/>
+			<Parameter Name="ID_MID_RAW_WRITE" Value="AIC_I8_MID_RAW_WRITE"/>
+			<Parameter Name="ID_MAX_RAW_WRITE" Value="AIC_I8_MAX_RAW_WRITE"/>
 		</SubApp>
 		<SubApp Name="Output_Q1" Type="MyLib::sys::Button_IXA_TO_logiBUS_QXA_BG_OPC" x="-4600" y="-700">
 			<Parameter Name="u16ObjId" Value="Button_Q01"/>

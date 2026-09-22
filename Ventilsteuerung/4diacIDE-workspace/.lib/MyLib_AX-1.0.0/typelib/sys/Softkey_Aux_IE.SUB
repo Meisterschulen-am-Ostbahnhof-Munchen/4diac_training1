@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<SubAppType Name="Softkey_Aux_IE" Comment="SoftKey ODER AUX-Zuweisung (Joystick) aktiviert -&gt; 1 gemeinsames IND-Event (SK_PRESSED bzw. AuxEnabled fest verdrahtet - die einzig sinnvolle 'aktiviert'-Bedeutung fuer eine Merge-Anwendung). Analog zu Softkey_Aux_IXA_TO_Remote_WRITE (Dauerzustand-ODER), aber fuer den diskreten Event-Kanal - kollidiert daher nicht mit einer bereits bestehenden Softkey_IXA/Aux_IXA-Dauerzustand-Abonnierung auf demselben Objekt (2 verschiedene Subscription-Typen).">
+<SubAppType Name="Softkey_Aux_IE" Comment="SoftKey ODER AUX-Zuweisung (Joystick) aktiviert -&gt; 1 gemeinsames IND-Event (SK_PRESSED bzw. AuxEnabled fest verdrahtet - die einzig sinnvolle &apos;aktiviert&apos;-Bedeutung fuer eine Merge-Anwendung). Analog zu Softkey_Aux_IXA_TO_Remote_WRITE (Dauerzustand-ODER), aber fuer den diskreten Event-Kanal - kollidiert daher nicht mit einer bereits bestehenden Softkey_IXA/Aux_IXA-Dauerzustand-Abonnierung auf demselben Objekt (2 verschiedene Subscription-Typen).">
 	<Identification Standard="61499-2">
 	</Identification>
 	<VersionInfo Version="1.0" Author="Franz Höpfinger" Date="2026-09-11" Remarks="initial implementation">
@@ -10,7 +10,8 @@
 	</CompilerInfo>
 	<SubAppInterfaceList>
 		<SubAppEventOutputs>
-			<SubAppEvent Name="IND" Type="Event" Comment="Feuert wenn SoftKey (SK_PRESSED) ODER Aux (AuxEnabled) aktiviert wird"/>
+			<SubAppEvent Name="IND" Type="Event" Comment="Feuert wenn SoftKey (SK_PRESSED) ODER Aux (AuxEnabled) aktiviert wird">
+			</SubAppEvent>
 		</SubAppEventOutputs>
 		<InputVars>
 			<VarDeclaration Name="u16ObjId" Type="UINT" Comment="Object ID SoftKey"/>
@@ -24,10 +25,10 @@
 		<SubApp Name="Aux" Type="MyLib::sys::Aux_IE_1" x="0" y="900">
 			<Parameter Name="InputEvent" Value="AuxEnabled"/>
 		</SubApp>
-		<FB Name="MERGE" Type="iec61499::events::E_MERGE_2" x="1600" y="450">
+		<FB Name="MERGE" Type="iec61499::events::E_MERGE_2" x="1700" y="400">
 		</FB>
 		<EventConnections>
-			<Connection Source="Softkey.IND" Destination="MERGE.EI1" dx1="800"/>
+			<Connection Source="Softkey.IND" Destination="MERGE.EI1" dx1="773.33"/>
 			<Connection Source="Aux.IND" Destination="MERGE.EI2" dx1="800"/>
 			<Connection Source="MERGE.EO" Destination="IND" dx1="800"/>
 		</EventConnections>

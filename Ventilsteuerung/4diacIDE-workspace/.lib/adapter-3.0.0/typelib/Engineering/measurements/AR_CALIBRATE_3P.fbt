@@ -2,6 +2,8 @@
 <FBType Name="AR_CALIBRATE_3P" Comment="Adapter-based 3-point calibration for joysticks (Min, Mid, Max)">
 	<Identification Standard="61499-1">
 	</Identification>
+	<VersionInfo Version="1.1" Author="Franz Höpfinger" Date="2026-09-18" Remarks="C_MIN/C_MID/C_MAX von AX-Sockets (mit [C_x.D1]-Flankenwaechter) auf reine EventInputs umgestellt - jeder echte Aufrufer liefert ohnehin ein atomares Event, der D1-Wert war immer hartcodiert TRUE (via AX_BOOL_TO_X) und der Guard filterte nie etwas. Aufrufer muessen jetzt direkt ein Event statt eines AX-Adapters anschliessen. Siehe AR_CALIBRATE_2P_REF fuer die identische Aenderung.">
+	</VersionInfo>
 	<VersionInfo Version="1.0" Author="Meisterschulen am Ostbahnhof" Date="2026-06-01">
 	</VersionInfo>
 	<CompilerInfo packageName="adapter::Engineering::measurements">
@@ -13,6 +15,9 @@
 				<With Var="MID_REF"/>
 				<With Var="MAX_REF"/>
 			</Event>
+			<Event Name="C_MIN" Type="Event" Comment="Calibrate Min Point - atomarer Trigger"/>
+			<Event Name="C_MID" Type="Event" Comment="Calibrate Mid Point - atomarer Trigger"/>
+			<Event Name="C_MAX" Type="Event" Comment="Calibrate Max Point - atomarer Trigger"/>
 		</EventInputs>
 		<InputVars>
 			<VarDeclaration Name="MIN_REF" Type="REAL" Comment="Target value for Min" InitialValue="0.0"/>
@@ -27,9 +32,6 @@
 		</Plugs>
 		<Sockets>
 			<AdapterDeclaration Name="X" Type="adapter::types::unidirectional::AR" Comment="Raw Input"/>
-			<AdapterDeclaration Name="C_MIN" Type="adapter::types::unidirectional::AX" Comment="Calibrate Min Point"/>
-			<AdapterDeclaration Name="C_MID" Type="adapter::types::unidirectional::AX" Comment="Calibrate Mid Point"/>
-			<AdapterDeclaration Name="C_MAX" Type="adapter::types::unidirectional::AX" Comment="Calibrate Max Point"/>
 		</Sockets>
 	</InterfaceList>
 	<BasicFB>
@@ -54,11 +56,11 @@
 			<ECTransition Source="IDLE" Destination="REQ" Condition="X_MIN.EI1" x="200" y="300"/>
 			<ECTransition Source="IDLE" Destination="REQ" Condition="X_MID.EI1" x="200" y="400"/>
 			<ECTransition Source="IDLE" Destination="REQ" Condition="X_MAX.EI1" x="200" y="500"/>
-			<ECTransition Source="IDLE" Destination="CAL_MIN" Condition="C_MIN.E1[C_MIN.D1]" x="800" y="200"/>
+			<ECTransition Source="IDLE" Destination="CAL_MIN" Condition="C_MIN" x="800" y="200"/>
 			<ECTransition Source="CAL_MIN" Destination="IDLE" Condition="1" x="800" y="100"/>
-			<ECTransition Source="IDLE" Destination="CAL_MID" Condition="C_MID.E1[C_MID.D1]" x="800" y="600"/>
+			<ECTransition Source="IDLE" Destination="CAL_MID" Condition="C_MID" x="800" y="600"/>
 			<ECTransition Source="CAL_MID" Destination="IDLE" Condition="1" x="800" y="700"/>
-			<ECTransition Source="IDLE" Destination="CAL_MAX" Condition="C_MAX.E1[C_MAX.D1]" x="800" y="1000"/>
+			<ECTransition Source="IDLE" Destination="CAL_MAX" Condition="C_MAX" x="800" y="1000"/>
 			<ECTransition Source="CAL_MAX" Destination="IDLE" Condition="1" x="800" y="1100"/>
 		</ECC>
 		<Algorithm Name="REQ">
