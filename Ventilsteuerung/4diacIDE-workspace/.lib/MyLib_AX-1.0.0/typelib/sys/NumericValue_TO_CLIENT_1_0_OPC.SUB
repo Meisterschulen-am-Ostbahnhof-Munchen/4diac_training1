@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SubAppType Name="NumericValue_TO_CLIENT_1_0_OPC" Comment="VT-Eingabefeld (CInputNumber) - NUR bei echter Eingabe (NumericValue_PHYSA feuert on-commit) - ruft eine entfernte OPC-UA-Methode MIT dem eingegebenen REAL-Wert als Argument auf (CALL_METHOD, AR_CLIENT_1_0). Rueckweg (Anzeige des tatsaechlich wirksamen/bestaetigten Werts auf demselben VT-Feld) laeuft separat und unkritisch ueber einen normalen Subscribe (Q_NumericValue_PHYSA) - kein Zirkelbezug, kein Merge/Last-Writer-Wins noetig (nur EIN Aufrufer pro Methode auf der Empfaengerseite, serialisiert durch den Methodenaufruf selbst).">
+	<Identification Standard="61499-2" Description="Copyright (c) 2026 Meisterschulen am Ostbahnhof  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0">
+	</Identification>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2026-09-23" Remarks="initial implementation - Franz: 'man macht auf STG4 2 METHODEN, die werden aufgerufen: vom Web-Dashboard oder von VT1, und zwar nur wenn jemand was eingibt... der rueckweg laeuft ueber einen Subscribe und ist unkritisch'. Fuer Druck (B20) ZERO/SPAN-Referenzwerte fern der Sensor-Station eingebbar, ohne AR2/Web-Override-Merge-Komplexitaet und ohne 2-Quellen-Schreiben-Problem.">
+	</VersionInfo>
+	<CompilerInfo packageName="MyLib::sys">
+		<Import declaration="isobus::UT::Q::const::IDs::ID_NULL"/>
+		<Import declaration="logiBUS::utils::conversion::phys::NumericObjectPool_S"/>
+	</CompilerInfo>
+	<SubAppInterfaceList>
+		<InputVars>
+			<VarDeclaration Name="stObj" Type="logiBUS::utils::conversion::phys::NumericObjectPool_S" Comment="Object ID + Scale/Offset/Decimals des VT-Eingabefelds (Ein- UND Ausgabe: bestaetigter Wert wird hier zurueckgeschrieben)" InitialValue="(u16ObjId := ID_NULL, r32Scale := 1.0, i32Offset := 0, u8Decimals := 1)"/>
+			<VarDeclaration Name="ID_CALL" Type="WSTRING" Comment="Remote-Methodenadresse (ACTION=CALL_METHOD) - wird NUR bei einer echten VT-Eingabe (NumericValue_PHYSA-Commit) mit dem eingegebenen Wert als Argument aufgerufen"/>
+			<VarDeclaration Name="ID_M2M_READ" Type="WSTRING" Comment="Remote-Subscribe-Adresse (REAL, ACTION=SUBSCRIBE) - liefert den tatsaechlich wirksamen/bestaetigten Wert zur Anzeige auf demselben VT-Feld zurueck (unkritischer Rueckweg, reines Lesen)"/>
+		</InputVars>
+	</SubAppInterfaceList>
+	<SubAppNetwork>
+		<FB Name="Input" Type="isobus::UT::io::NumericValue::NumericValue_PHYSA" x="-4500" y="0">
+			<Parameter Name="QI" Value="TRUE"/>
+		</FB>
+		<FB Name="Call" Type="adapter::net::AR_CLIENT_1_0" x="-2000" y="0">
+			<Parameter Name="QI" Value="TRUE"/>
+		</FB>
+		<FB Name="Subscribe" Type="adapter::net::AR_SUBSCRIBE_1" x="-4500" y="1200">
+			<Parameter Name="QI" Value="TRUE"/>
+		</FB>
+		<FB Name="Display" Type="isobus::UT::Q::Q_NumericValue_PHYSA" x="-2000" y="1200">
+		</FB>
+		<EventConnections>
+			<Connection Source="Subscribe.INITO" Destination="Call.INIT" dx1="1250">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+		</EventConnections>
+		<DataConnections>
+			<Connection Source="stObj" Destination="Input.stObj" dx1="1100">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="stObj" Destination="Display.stObj" dx1="1100">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="ID_CALL" Destination="Call.ID" dx1="1100">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="ID_M2M_READ" Destination="Subscribe.ID" dx1="1100">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+		</DataConnections>
+		<AdapterConnections>
+			<Connection Source="Input.rPhys" Destination="Call.IN" dx1="1250"/>
+			<Connection Source="Subscribe.OUT" Destination="Display.rPhys" dx1="1250"/>
+		</AdapterConnections>
+	</SubAppNetwork>
+</SubAppType>
