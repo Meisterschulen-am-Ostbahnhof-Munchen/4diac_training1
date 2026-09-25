@@ -5,7 +5,7 @@
 
 const unsigned long ISO_OP_MEMORY_CLASS isoOP_DefaultPool_Offset_Id[] = {
 	     1,  // WorkingSet_Offset
-	    21,  // Macro_PWM_1_Offset
+	    21,  // Macro_PWM_Offset
 	    34,  // Macro_M1_Offset
 	    47,  // Macro_PWM_2_Offset
 	    60,  // Macro_PWM_3_Offset
