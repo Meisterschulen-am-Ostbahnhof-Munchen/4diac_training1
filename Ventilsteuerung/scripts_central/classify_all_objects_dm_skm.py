@@ -24,7 +24,6 @@ gets just one sub-category, not an empty second one).
 import argparse
 import io
 import os
-import re
 import xml.etree.ElementTree as ET
 from collections import defaultdict
 

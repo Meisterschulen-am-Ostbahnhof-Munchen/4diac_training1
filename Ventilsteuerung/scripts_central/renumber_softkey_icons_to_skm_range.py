@@ -15,7 +15,6 @@ Applied via a temporary ID range (+90000) so no two objects ever collide
 mid-rename, same approach as renumber_fonts.py.
 """
 import io
-import re
 
 JOP_PATH = r"C:\git\fh\Krauternter\Ventilsteuerung\ISO-DesignerProjects\Workspace\DefaultPool\DefaultPool.jop"
 
