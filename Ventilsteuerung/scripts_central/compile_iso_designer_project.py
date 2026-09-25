@@ -1,4 +1,4 @@
-"""Compile an ISO-Designer project via the CLI /Compile flag instead of
+r"""Compile an ISO-Designer project via the CLI /Compile flag instead of
 building manually in the IDE.
 
 Undocumented flag confirmed by Bucher Automation Support (2026-09-23):
