@@ -708,7 +708,7 @@ def _find_min_row_spacing(container_obj, by_id):
                     if target is not None:
                         top_to_targets.setdefault(t, []).append(target)
                 except ValueError:
-                    pass
+                    pass  # non-numeric Top (e.g. unset/placeholder) - skip this row, don't fail the whole scan
             if target is not None:
                 child_targets.append(target)
 
@@ -726,7 +726,7 @@ def _find_min_row_spacing(container_obj, by_id):
                                 if int(h) > spacing:
                                     plausible = False
                             except ValueError:
-                                pass
+                                pass  # non-numeric Height - can't check for overlap, so don't disqualify the spacing on it
                 if plausible and (best is None or spacing < best):
                     best = spacing
 
@@ -748,7 +748,7 @@ def _find_min_row_spacing(container_obj, by_id):
                     try:
                         top_level_tops.add(int(top_val))
                     except ValueError:
-                        pass
+                        pass  # non-numeric Top - skip this row in the 2-row fallback too
         if len(top_level_tops) == 2:
             lowest_two = sorted(top_level_tops)
             spacing = lowest_two[1] - lowest_two[0]
