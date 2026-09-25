@@ -2,6 +2,8 @@
 <FBType Name="FT_PT1" Comment="Low Pass Filter (PT1)">
 	<Identification Standard="61499-1" Description="FT_PT1 is an low pass filter with a programmable time T and faktor K.">
 	</Identification>
+	<VersionInfo Version="1.2" Author="Franz Höpfinger" Date="2026-09-25" Remarks="Bugfix (Franz live am Geraet: 'ich hatte von 2s auf 0.1s geaendert, und schwupps spinnt er' - Zapfwelle-Filterzeit auf STG4 manuell auf 100ms gesenkt): die explizite Euler-Diskretisierung wird numerisch instabil, sobald TM kleiner als das tatsaechliche REQ-Aufrufintervall (delta_t) ist - Faktor delta_t/TM > 1 laesst den Fehler pro Zyklus exponentiell wachsen statt sich dem Zielwert anzunaehern, bis out ueberlaeuft (Inf) und danach dauerhaft NaN bleibt (Inf-Inf), da kein automatisches Re-Init/RST mehr verdrahtet war. TM wird in der REQ-Berechnung jetzt adaptiv auf mindestens delta_t hochgeklemmt (Franz' Vorschlag, F1/F2-Notation) - Faktor bleibt so immer &lt;= 1, unabhaengig von der tatsaechlichen Aufrufrate, kein fixer Magic-Number-Mindestwert noetig.">
+	</VersionInfo>
 	<VersionInfo Version="1.1" Author="Franz Höpfinger" Date="2026-09-17" Remarks="Bugfix (Review-Bot auf training1 PR #252, verifiziert): RST setzte init/out zurueck, aber nicht tx/last/delta_t - ein externer RST-Aufruf (jetzt ueber FT_PT1_AR.RST erreichbar) liess die naechste REQ-Ausfuehrung mit einem stehengebliebenen last einen riesigen delta_t berechnen und dadurch einen falschen Ausreisser-Schritt. RST liest jetzt T_PLC_US() neu und setzt last/delta_t entsprechend zurueck.">
 	</VersionInfo>
 	<VersionInfo Version="1.0" Author="Franz Höpfinger" Date="2025-12-21" Remarks="initial API and implementation and/or initial documentation">
@@ -44,7 +46,9 @@
 		<InternalVars>
 			<VarDeclaration Name="last" Type="UDINT" Comment="Last execution time"/>
 			<VarDeclaration Name="tx" Type="UDINT" Comment="Current execution time"/>
-			<VarDeclaration Name="init" Type="BOOL" InitialValue="FALSE" Comment="Initialization flag"/>
+			<VarDeclaration Name="init" Type="BOOL" Comment="Initialization flag" InitialValue="FALSE"/>
+			<VarDeclaration Name="F1" Type="REAL"/>
+			<VarDeclaration Name="F2" Type="REAL"/>
 		</InternalVars>
 		<ECState Name="EINIT" Comment="Initialization">
 			<ECAction Algorithm="EINIT" Output="INITO"/>
@@ -86,7 +90,12 @@ ELSE
 
 		(* PT1 Formula: out = out + (target - out) * (dt / T) *)
 	IF TIME_TO_REAL(TM) > 0.0 THEN
-	out := out + (in * K - out) * UDINT_TO_REAL(delta_t) / TIME_TO_REAL(TM) * 1.0E-3;
+		F1 := UDINT_TO_REAL(delta_t) * 1.0E-3; (* delta_t in ms *)
+		F2 := TIME_TO_REAL(TM); (* TM in ms *)
+		IF F2 < F1 THEN
+			F2 := F1;
+		END_IF;
+		out := out + (in * K - out) * F1 / F2;
 	END_IF;
 
 		(* Avoid denormalized numbers / underrun *)

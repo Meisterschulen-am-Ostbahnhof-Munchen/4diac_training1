@@ -39,14 +39,15 @@
 		<EventConnections>
 			<Connection Source="INIT" Destination="FT_PT1.EINIT" dx1="2800"/>
 			<Connection Source="FT_PT1.INITO" Destination="INITO" dx1="453.33"/>
-			<Connection Source="RST" Destination="FT_PT1.RST" dx1="2800"/>
+			<Connection Source="RST" Destination="FT_PT1.RST" dx1="2473.33"/>
 			<Connection Source="AR_IN.E1" Destination="FT_PT1.REQ" dx1="626.67"/>
 			<Connection Source="FT_PT1.CNF" Destination="E_D_FF_ANY.CLK" dx1="453.33"/>
 			<Connection Source="E_D_FF_ANY.EO" Destination="AR_OUT.E1" dx1="906.67"/>
+			<Connection Source="TM.E1" Destination="FT_PT1.RST" dx1="780"/>
 		</EventConnections>
 		<DataConnections>
 			<Connection Source="AR_IN.D1" Destination="FT_PT1.in" dx1="540"/>
-			<Connection Source="TM.D1" Destination="FT_PT1.TM" dx1="540"/>
+			<Connection Source="TM.D1" Destination="FT_PT1.TM" dx1="946.67"/>
 			<Connection Source="K" Destination="FT_PT1.K" dx1="846.67"/>
 			<Connection Source="FT_PT1.out" Destination="E_D_FF_ANY.D" dx1="453.33"/>
 			<Connection Source="E_D_FF_ANY.Q" Destination="AR_OUT.D1" dx1="940"/>
