@@ -55,8 +55,11 @@
 		</FB>
 		<SubApp Name="ToATM" Type="MyLib::sys::AR_S_TO_ATM" x="-1200" y="-900">
 		</SubApp>
+		<FB Name="LatchFilterTime" Type="adapter::types::unidirectional::ATM::initval::initval_ATM" x="0" y="-900">
+		</FB>
 		<EventConnections>
-			<Connection Source="INI_FilterTimeS.INITO" Destination="FT_PT1_AR.INIT" dx1="246.67"/>
+			<Connection Source="INI_FilterTimeS.INITO" Destination="LatchFilterTime.INIT" dx1="246.67"/>
+			<Connection Source="LatchFilterTime.INITO" Destination="FT_PT1_AR.INIT" dx1="246.67"/>
 		</EventConnections>
 		<DataConnections>
 			<Connection Source="Input" Destination="logiBUS_PI_IDA.Input" dx1="1460">
@@ -77,6 +80,7 @@
 			<Connection Source="sSection" Destination="INI_FilterTimeS.SECTION" dx1="1400">
 				<Attribute Name="Visible" Value="false"/>
 			</Connection>
+			<Connection Source="ToATM.OUT.D1" Destination="LatchFilterTime.INIT_VAL" dx1="400"/>
 		</DataConnections>
 		<AdapterConnections>
 			<Connection Source="logiBUS_PI_IDA.IN" Destination="AD_TO_AR_NUM.AD_IN" dx1="420"/>
@@ -84,7 +88,7 @@
 			<Connection Source="FT_DERIV_10_AR.AR_OUT" Destination="FT_PT1_AR.AR_IN" dx1="420"/>
 			<Connection Source="FilterTimeS.VALUEO" Destination="INI_FilterTimeS.VAL" dx1="400"/>
 			<Connection Source="FilterTimeS.VALUE_OUT" Destination="ToATM.IN1" dx1="400"/>
-			<Connection Source="ToATM.OUT" Destination="FT_PT1_AR.TM" dx1="400"/>
+			<Connection Source="LatchFilterTime.OUT" Destination="FT_PT1_AR.TM" dx1="400"/>
 			<Connection Source="FT_PT1_AR.AR_OUT" Destination="AR_PUBLISH_HZ.IN" dx1="133.33"/>
 		</AdapterConnections>
 	</SubAppNetwork>
