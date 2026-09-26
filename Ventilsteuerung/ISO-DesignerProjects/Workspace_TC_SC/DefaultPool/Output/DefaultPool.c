@@ -17,11 +17,11 @@
 
 const unsigned char ISO_OP_MEMORY_CLASS isoOP_DefaultPool[] = {
 	17,
-	ID(WorkingSet_0), TYPEID_WORKSET, COLOR_SILVER, 1, ID(DataMask_1000), 1, 0, 2,
+	ID(WorkingSet), TYPEID_WORKSET, COLOR_SILVER, 1, ID(DataMask), 1, 0, 2,
 		XYREF(OutputString_TC_SC, 0, 0),
 		'e', 'n',
 		'd', 'e',
-	ID(DataMask_1000), TYPEID_DATAMASK, COLOR_SILVER, ID(ID_NULL), 0, 0, 
+	ID(DataMask), TYPEID_DATAMASK, COLOR_SILVER, ID(ID_NULL), 0, 0, 
 	ID(OutputString_TC_SC), TYPEID_OUTSTR, WORD(72), WORD(72), COLOR_WHITE, ID(FontAttributes_SKM), 1,
 		ID(ID_NULL), 0, WORD(5), 'T', 'C', '-', 'S', 'C', 0,
 	ID(FontAttributes_SKM), TYPEID_FONTATTR, COLOR_BLACK, 3, 0, 0, 0, 

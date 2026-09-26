@@ -6,7 +6,7 @@
 #define ISO_VERSION_LABEL             "       "
 #define MASK_WIDTH                          480
 #define MASK_HEIGHT                         480
-#define WorkingSet_0                          0
-#define DataMask_1000                      1000
+#define WorkingSet                            0
+#define DataMask                           1000
 #define OutputString_TC_SC                11500
 #define FontAttributes_SKM                23500
