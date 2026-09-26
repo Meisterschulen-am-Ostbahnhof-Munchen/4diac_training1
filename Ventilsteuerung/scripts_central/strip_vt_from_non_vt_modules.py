@@ -19,7 +19,6 @@ line removed, and the now-unused Button_* imports dropped.
 
 Usage: python3 strip_vt_from_non_vt_modules.py
 """
-import re
 
 BASE = "4diacIDE-workspace/test/FBs/Ventilsteuerung"
 NUM_I = 8

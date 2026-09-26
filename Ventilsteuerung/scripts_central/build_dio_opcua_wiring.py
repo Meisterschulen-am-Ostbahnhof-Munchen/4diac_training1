@@ -22,11 +22,9 @@ instances in Ventilsteuerung_STG1.sub (likewise no event wiring at this level).
 
 Usage: python3 build_dio_opcua_wiring.py [--dry-run]
 """
-import re
 import sys
 
 import argparse
-import os
 
 _parser = argparse.ArgumentParser(description=__doc__)
 _parser.add_argument(

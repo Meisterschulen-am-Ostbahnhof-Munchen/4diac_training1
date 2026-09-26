@@ -28,7 +28,6 @@ Usage: python3 wire_remote_status_colors.py
 import re
 
 import argparse
-import os
 
 _parser = argparse.ArgumentParser(description=__doc__)
 _parser.add_argument(

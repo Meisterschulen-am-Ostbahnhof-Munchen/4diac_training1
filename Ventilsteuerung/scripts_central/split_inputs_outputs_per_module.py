@@ -20,7 +20,6 @@ Usage: python3 split_inputs_outputs_per_module.py
 import re
 
 import argparse
-import os
 
 _parser = argparse.ArgumentParser(description=__doc__)
 _parser.add_argument(

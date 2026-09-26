@@ -23,7 +23,6 @@ Usage: python3 add_opcua_substring_constants.py
 import re
 
 import argparse
-import os
 
 _parser = argparse.ArgumentParser(description=__doc__)
 _parser.add_argument(
