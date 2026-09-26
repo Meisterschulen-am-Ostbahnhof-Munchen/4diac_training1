@@ -3,28 +3,35 @@
 
 #define WorkingSet_Offset                                       1
 #define DataMask_M1_Offset                                     21
-#define Container_Schwellwerte_Offset                          41
-#define OutputString_WorkingSet_0_Offset                       81
-#define Polygon_MID_Offset                                    110
-#define Polygon_MID_PLUS_DEAD_Offset                          136
-#define Polygon_MID_MINUS_DEAD_Offset                         162
-#define Polygon_MID_PLUS_DEAD_HYST_Offset                     188
-#define Polygon_MID_MINUS_DEAD_HYST_Offset                    214
-#define Bargraph_Hysterese_Offset                             240
-#define FontAttributes_6x8_Offset                             264
-#define LineStyle_Hysterese_MID_Gruen_Offset                  272
-#define LineStyle_Hysterese_DEAD_Orange_Offset                280
-#define LineStyle_Hysterese_HYST_Rot_Offset                   288
-#define FillStyle_Hysterese_MID_Gruen_Offset                  296
-#define FillStyle_Hysterese_DEAD_Orange_Offset                304
-#define FillStyle_Hysterese_HYST_Rot_Offset                   312
+#define Container_Schwellwerte_Offset                          59
+#define InputNumber_MID_Offset                                 99
+#define InputNumber_DEAD_Offset                               137
+#define InputNumber_HYSTERESIS_Offset                         175
+#define OutputString_WorkingSet_0_Offset                      213
+#define Polygon_MID_Offset                                    242
+#define Polygon_MID_PLUS_DEAD_Offset                          268
+#define Polygon_MID_MINUS_DEAD_Offset                         294
+#define Polygon_MID_PLUS_DEAD_HYST_Offset                     320
+#define Polygon_MID_MINUS_DEAD_HYST_Offset                    346
+#define Bargraph_Hysterese_Offset                             372
+#define NumberVariable_MID_Offset                             396
+#define NumberVariable_DEAD_Offset                            403
+#define NumberVariable_HYSTERESIS_Offset                      410
+#define FontAttributes_6x8_Offset                             417
+#define FontAttributes_Werte_Offset                           425
+#define LineStyle_Hysterese_MID_Gruen_Offset                  433
+#define LineStyle_Hysterese_DEAD_Orange_Offset                441
+#define LineStyle_Hysterese_HYST_Rot_Offset                   449
+#define FillStyle_Hysterese_MID_Gruen_Offset                  457
+#define FillStyle_Hysterese_DEAD_Orange_Offset                465
+#define FillStyle_Hysterese_HYST_Rot_Offset                   473
 
 #define ISO_OP_MEMORY_CLASS
 
-#define ISO_OP_DefaultPool_Size    320
+#define ISO_OP_DefaultPool_Size    481
 extern const unsigned char ISO_OP_MEMORY_CLASS isoOP_DefaultPool[];
 
-#define ISO_OP_DefaultPool_ObjectNumber     17
+#define ISO_OP_DefaultPool_ObjectNumber     24
 extern const unsigned long ISO_OP_MEMORY_CLASS isoOP_DefaultPool_Offset[];
 extern const unsigned long ISO_OP_MEMORY_CLASS isoOP_DefaultPool_Offset_Id[];
 #define ISO_OP_DefaultPool_Scale_Offset      1
