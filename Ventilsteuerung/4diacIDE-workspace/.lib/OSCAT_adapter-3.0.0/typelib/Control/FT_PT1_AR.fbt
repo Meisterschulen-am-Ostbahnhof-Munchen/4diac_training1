@@ -2,6 +2,8 @@
 <FBType Name="FT_PT1_AR" Comment="AR-Adapter-Wrapper um OSCAT FT_PT1 (PT1-Tiefpassfilter) - bruckt zwischen adapter und OSCAT, ohne dass eine der beiden Basisbibliotheken von der anderen abhaengt. TM (Zeitkonstante) als ATM-Socket (kein Klartext-InputVar, sauber initialisierbar ueber initval_ATM), K als Klartext-InputVar durchgereicht (Default 1.0)">
 	<Identification Standard="61499-2" Description="Copyright (c) 2026 Meisterschulen am Ostbahnhof  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0">
 	</Identification>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.3" Author="Franz Höpfinger" Date="2026-09-26" Remarks="Schema-Fix: Sockets/Plugs-Reihenfolge im InterfaceList vertauscht (IDE-Resave hatte Plugs vor Sockets geschrieben) - block-common.xsd verlangt strikt Sockets vor Plugs, sonst schlaegt validate.py mit 'Element Sockets: This element is not expected' fehl. Beim Gegenchecken des Review-Bot-Funds zu FT_PT1 v1.2 (fehlendes Organization-Attribut) entdeckt, unabhaengiges Problem.">
+	</VersionInfo>
 	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.2" Author="Franz Höpfinger" Date="2026-09-26" Remarks="Franz: 'Sind alle WITH dafuer noch passend?' - Kommentare/Doku zu RST korrigiert, beschrieben bisher noch das alte Verhalten (out := K * in direkt in RST). Seit FT_PT1 v1.3 (Review-Bot-Fund auf training1 PR #269) setzt RST nur noch init:=FALSE, das Seeding passiert im naechsten REQ mit frisch abgetastetem in. With-Var-Deklarationen selbst unveraendert/weiterhin korrekt (REQ braucht in/TM/K, RST brauchte und braucht keine - referenziert weder in noch TM noch K); CNF (delta_t/out) bleibt syntaktisch gueltig, traegt beim RST-Fall aber jetzt bewusst die unveraenderten alten Werte (kein Bug, siehe Doku unten).">
 	</VersionInfo>
 	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.1" Author="Franz Höpfinger" Date="2026-09-17" Remarks="Franz: 'RST muss raus gefuehrt werden' - neues EventInput RST, 1:1 durchgereicht an FT_PT1.RST (analog INIT/EINIT), seit FT_PT1.fbt v1.1 das RST-Event wieder hat. Kein zusaetzlicher CNF-Pfad noetig: FT_PT1.CNF (RST und REQ feuern beide denselben CNF-Ausgang) ist bereits an E_D_FF_ANY.CLK angeschlossen. Franz: 'K muss ein WITH Konstrukt haben, z.B. mit INIT' - K jetzt als With-Var am INIT-Event deklariert (analog QI/PARAMS bei den IXA/IX-Bausteinen), statt nur ueber eine formlose durchgehende DataConnection - K ist ein statischer Konfigurationswert, kein pro-Zyklus-Datum wie in/out.">
@@ -25,13 +27,13 @@
 		<InputVars>
 			<VarDeclaration Name="K" Type="REAL" Comment="Faktor (durchgereicht an FT_PT1.K)" InitialValue="1.0"/>
 		</InputVars>
-		<Plugs>
-			<AdapterDeclaration Name="AR_OUT" Type="adapter::types::unidirectional::AR" Comment="Gefilterter Ausgangswert (REAL, durchgereicht von FT_PT1.out)" x="5300" y="200"/>
-		</Plugs>
 		<Sockets>
 			<AdapterDeclaration Name="AR_IN" Type="adapter::types::unidirectional::AR" Comment="Eingangssignal (REAL)" x="-800" y="800"/>
 			<AdapterDeclaration Name="TM" Type="adapter::types::unidirectional::ATM" Comment="Zeitkonstante (durchgereicht an FT_PT1.TM)" x="-800" y="1300"/>
 		</Sockets>
+		<Plugs>
+			<AdapterDeclaration Name="AR_OUT" Type="adapter::types::unidirectional::AR" Comment="Gefilterter Ausgangswert (REAL, durchgereicht von FT_PT1.out)" x="5300" y="200"/>
+		</Plugs>
 	</InterfaceList>
 	<FBNetwork>
 		<FB Name="FT_PT1" Type="OSCAT::Basic::POUs::Engineering::Control::FT_PT1" x="800" y="0">
