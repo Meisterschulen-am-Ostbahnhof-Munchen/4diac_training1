@@ -1,8 +1,8 @@
 // ISO-Designer ISO 11783   Version 5.7.2.6664 Bucher Automation AG
 // Do not change!
 
-#define WorkingSet_0_Offset                                     1
-#define DataMask_1000_Offset                                   21
+#define WorkingSet_Offset                                       1
+#define DataMask_Offset                                        21
 #define OutputString_TC_SC_Offset                              29
 #define FontAttributes_SKM_Offset                              51
 
