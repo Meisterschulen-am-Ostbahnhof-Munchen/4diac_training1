@@ -24,6 +24,8 @@
 	</VersionInfo>
 	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.9" Author="Franz Höpfinger" Date="2026-09-21" Remarks="AR_CALIBRATE_3P_REF hat jetzt ein INIT/QI/QO-Enable-Pattern (Bugfix MIN-vor-MID + xClipping) - CALIBRATE bekommt Parameter QI=TRUE (wie die INI_X_MIN/X_MID/X_MAX-Instanzen), sonst bleibt die FB im START-Zustand haengen und REQ laeuft nie.">
 	</VersionInfo>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.11" Author="Franz Höpfinger" Date="2026-09-26" Remarks="INI_MID_REF.DEFAULT_VALUE stand auf REAL#50.0 statt 0.0 - passte nicht zur dokumentierten Kalibrierwert-Konvention (-100&#61;Links-Anschlag/0&#61;Mitte/&#43;100&#61;Rechts-Anschlag, siehe ACHSLENKUNG_WINKEL_CAL_LOC_WRITE-Kommentar in SubStrings_STG1.gcf). Bei Achslenkung Winkel B02 entdeckt/bestaetigt (Franz), korrigiert auf REAL#0.0, passend zu INI_MIN_REF/INI_MAX_REF's Vorzeichen-Konvention.">
+	</VersionInfo>
 	<CompilerInfo packageName="MyLib::sys">
 		<Import declaration="isobus::UT::Q::const::IDs::ID_NULL"/>
 		<Import declaration="logiBUS::io::AI::logiBUS_AI"/>
@@ -108,7 +110,7 @@
 			<Parameter Name="QI" Value="TRUE"/>
 			<Parameter Name="SETM" Value="TRUE"/>
 			<Parameter Name="KEY" Value="'MID_REF'"/>
-			<Parameter Name="DEFAULT_VALUE" Value="REAL#50.0"/>
+			<Parameter Name="DEFAULT_VALUE" Value="REAL#0.0"/>
 		</FB>
 		<FB Name="INI_MAX_REF" Type="eclipse4diac::storage::INI_AR2" x="8700" y="2200">
 			<Parameter Name="QI" Value="TRUE"/>
