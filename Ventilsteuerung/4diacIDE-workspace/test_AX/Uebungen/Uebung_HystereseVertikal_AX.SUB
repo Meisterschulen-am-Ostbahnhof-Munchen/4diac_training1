@@ -14,6 +14,10 @@
 		<Import declaration="Uebungen::const::UT::HystereseVertikal::DefaultPool::Polygon_MID_PLUS_DEAD_HYST"/>
 		<Import declaration="Uebungen::const::UT::HystereseVertikal::DefaultPool::Polygon_MID_MINUS_DEAD_HYST"/>
 		<Import declaration="Uebungen::const::UT::HystereseVertikal::DefaultPool::Container_Schwellwerte"/>
+		<Import declaration="Uebungen::const::UT::HystereseVertikal::DefaultPool::NumberVariable_Istwert"/>
+		<Import declaration="logiBUS::io::AI::logiBUS_AI::AnalogInput_I4"/>
+		<Import declaration="logiBUS::io::DQ::logiBUS_DO::Output_Q1"/>
+		<Import declaration="logiBUS::io::DQ::logiBUS_DO::Output_Q2"/>
 	</CompilerInfo>
 	<SubAppInterfaceList>
 	</SubAppInterfaceList>
@@ -30,11 +34,11 @@
 			<Parameter Name="QI" Value="TRUE"/>
 			<Parameter Name="stObj" Value="InputNumber_HYSTERESIS_N"/>
 		</FB>
-		<FB Name="Split_MID" Type="adapter::events::unidirectional::AR_SPLIT_3" x="-10500" y="0">
+		<FB Name="Split_MID" Type="adapter::events::unidirectional::AR_SPLIT_4" x="-10500" y="0">
 		</FB>
-		<FB Name="Split_DEAD" Type="adapter::events::unidirectional::AR_SPLIT_2" x="-10500" y="1200">
+		<FB Name="Split_DEAD" Type="adapter::events::unidirectional::AR_SPLIT_3" x="-10500" y="1200">
 		</FB>
-		<FB Name="Split_HYST" Type="adapter::events::unidirectional::AR_SPLIT_2" x="-10500" y="2400">
+		<FB Name="Split_HYST" Type="adapter::events::unidirectional::AR_SPLIT_3" x="-10500" y="2400">
 		</FB>
 		<FB Name="Add_MidDead" Type="adapter::iec61131::arithmetic::AR_ADD_2" x="-9000" y="300">
 		</FB>
@@ -47,6 +51,38 @@
 		<FB Name="Add_MidDeadHyst" Type="adapter::iec61131::arithmetic::AR_ADD_2" x="-6000" y="600">
 		</FB>
 		<FB Name="Sub_MidDeadHyst" Type="adapter::iec61131::arithmetic::AR_SUB_2" x="-6000" y="1500">
+		</FB>
+		<FB Name="AnalogInput_I4" Type="logiBUS::io::AI::logiBUS_AI_IDA" x="-12000" y="3800">
+			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="Input" Value="AnalogInput_I4"/>
+			<Parameter Name="AnalogInput_hysteresis" Value="DWORD#0"/>
+			<Parameter Name="TimeDelta" Value="DWORD#250"/>
+			<Parameter Name="TimeRateLimit" Value="DWORD#100"/>
+		</FB>
+		<FB Name="AD_TO_AUDI" Type="adapter::conversion::unidirectional::AD_TO_AUDI" x="-10500" y="3800">
+		</FB>
+		<FB Name="AUDI_TO_AR" Type="adapter::conversion::unidirectional::AUDI_TO_AR" x="-9000" y="3800">
+		</FB>
+		<FB Name="ScaleADC_0_100" Type="adapter::types::unidirectional::AR::initval::initval_AR" x="-9000" y="4500">
+			<Parameter Name="INIT_VAL" Value="REAL#0.024420024420024420"/>
+		</FB>
+		<FB Name="Mul_Istwert" Type="adapter::iec61131::arithmetic::AR_MUL_2" x="-7500" y="3800">
+		</FB>
+		<FB Name="Split_Istwert" Type="adapter::events::unidirectional::AR_SPLIT_2" x="-6000" y="3800">
+		</FB>
+		<FB Name="Q_Istwert" Type="isobus::UT::Q::Q_NumericValue_PHYSA" x="-4500" y="3500">
+			<Parameter Name="stObj" Value="(u16ObjId := NumberVariable_Istwert, r32Scale := 1.0, i32Offset := 0, u8Decimals := 0)"/>
+		</FB>
+		<FB Name="DualHysteresis" Type="logiBUS::signalprocessing::hysteresis::DualHysteresis_AR_AX" x="-4500" y="4600">
+			<Parameter Name="QI" Value="TRUE"/>
+		</FB>
+		<FB Name="Output_Hoch" Type="logiBUS::io::DQ::logiBUS_QXA" x="-2500" y="4300">
+			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="Output" Value="Output_Q1"/>
+		</FB>
+		<FB Name="Output_Runter" Type="logiBUS::io::DQ::logiBUS_QXA" x="-2500" y="5000">
+			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="Output" Value="Output_Q2"/>
 		</FB>
 		<FB Name="ScalePx_MID" Type="adapter::types::unidirectional::AR::initval::initval_AR" x="-4000" y="0">
 			<Parameter Name="INIT_VAL" Value="REAL#1.86"/>
@@ -162,6 +198,18 @@
 			<Connection Source="Split_HYST.OUT1" Destination="Add_MidDeadHyst.IN2"/>
 			<Connection Source="Split_SubResult.OUT2" Destination="Sub_MidDeadHyst.IN1"/>
 			<Connection Source="Split_HYST.OUT2" Destination="Sub_MidDeadHyst.IN2"/>
+			<Connection Source="AnalogInput_I4.IN" Destination="AD_TO_AUDI.AD_IN"/>
+			<Connection Source="AD_TO_AUDI.AUDI_OUT" Destination="AUDI_TO_AR.AUDI_IN"/>
+			<Connection Source="AUDI_TO_AR.AR_OUT" Destination="Mul_Istwert.IN1"/>
+			<Connection Source="ScaleADC_0_100.OUT" Destination="Mul_Istwert.IN2"/>
+			<Connection Source="Mul_Istwert.OUT" Destination="Split_Istwert.IN"/>
+			<Connection Source="Split_Istwert.OUT1" Destination="Q_Istwert.rPhys"/>
+			<Connection Source="Split_Istwert.OUT2" Destination="DualHysteresis.INPUT"/>
+			<Connection Source="Split_MID.OUT4" Destination="DualHysteresis.MI"/>
+			<Connection Source="Split_DEAD.OUT3" Destination="DualHysteresis.DEAD"/>
+			<Connection Source="Split_HYST.OUT3" Destination="DualHysteresis.HYSTERESIS"/>
+			<Connection Source="DualHysteresis.DO_UP" Destination="Output_Hoch.OUT"/>
+			<Connection Source="DualHysteresis.DO_DOWN" Destination="Output_Runter.OUT"/>
 			<Connection Source="Split_MID.OUT1" Destination="Mul_MID.IN1"/>
 			<Connection Source="ScalePx_MID.OUT" Destination="Mul_MID.IN2"/>
 			<Connection Source="BgLen_MID.OUT" Destination="SubFlip_MID.IN1"/>

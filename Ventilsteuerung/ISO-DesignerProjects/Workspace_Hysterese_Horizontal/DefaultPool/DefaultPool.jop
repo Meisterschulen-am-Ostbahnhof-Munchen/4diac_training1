@@ -737,6 +737,21 @@
 				</Property>
 			</PropertySheet>
 		</Object>
+		<Object Class="CNumberVariable" JVS-ID="21003" ObjectName="NumberVariable_Istwert" Pinned="FALSE">
+			<Property Name="Group">
+				<Value/>
+			</Property>
+			<Property Name="Comment">
+				<Value>
+					<![CDATA[AAA=]]>
+				</Value>
+			</Property>
+			<PropertySheet Name="NumberVariable" ID="68736">
+				<Property Name="Value">
+					<Value>50</Value>
+				</Property>
+			</PropertySheet>
+		</Object>
 		<Object Class="CInputNumber" Name="Edit" ObjectName="InputNumber_MID" Pinned="FALSE" JVS-ID="9000">
 			<PropertySheet Name="EditBox">
 				<Property Name="Text">
@@ -1224,7 +1239,7 @@
 					<Value>1</Value>
 				</Property>
 				<Property Name="ShowTargetLine">
-					<Value>0</Value>
+					<Value>1</Value>
 				</Property>
 				<Property Name="TargetVal">
 					<Value>
@@ -1249,10 +1264,10 @@
 					<Value>210</Value>
 				</Property>
 				<Property Name="PosValVariableObjectID">
-					<Value>-1</Value>
+					<Value>21003</Value>
 				</Property>
 				<Property Name="TargetValVariableObjectID">
-					<Value>-1</Value>
+					<Value>21000</Value>
 				</Property>
 				<Property Name="MinValVarObjectID">
 					<Value>-1</Value>
@@ -1264,6 +1279,10 @@
 					<Value>0</Value>
 				</Property>
 			</PropertySheet>
+			<Objects>
+				<Object JVS-ID="21003"/>
+				<Object JVS-ID="21000"/>
+			</Objects>
 		</Object>
 		<Object Class="CProxy" Name="Polygon" ObjectName="" Pinned="FALSE" JVS-ID="4194304">
 			<PropertySheet Name="Proxy">
