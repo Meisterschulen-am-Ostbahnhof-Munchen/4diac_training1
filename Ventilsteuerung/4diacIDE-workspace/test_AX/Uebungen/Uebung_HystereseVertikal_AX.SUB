@@ -1,0 +1,250 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SubAppType Name="Uebung_HystereseVertikal_AX" Comment="MID/DEAD/HYSTERESIS-Eingabefelder bewegen live die 5 Schwellwert-Dreiecke im vertikalen Bargraph (Type=1 BottomToTop, Pixelposition gespiegelt: hoher Wert = kleiner Top)">
+	<Identification Standard="61499-2" Description="Copyright (c) 2026 Meisterschulen am Ostbahnhof  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0">
+	</Identification>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2026-09-26" Remarks="Franz: 3 Eingabefelder MID/DEAD/HYSTERESIS bewegen die 5 Schwellwert-Dreiecke live - Vorbild Uebung_225_AX (Dreieck-Sollwertmarker): NumericValue_PHYSA -&gt; AR-Arithmetik -&gt; AR_TO_AI -&gt; Q_ChildPosition_AI.">
+	</VersionInfo>
+	<CompilerInfo packageName="Uebungen">
+		<Import declaration="Uebungen::const::UT::HystereseVertikal::DefaultPool_Numeric::InputNumber_MID_N"/>
+		<Import declaration="Uebungen::const::UT::HystereseVertikal::DefaultPool_Numeric::InputNumber_DEAD_N"/>
+		<Import declaration="Uebungen::const::UT::HystereseVertikal::DefaultPool_Numeric::InputNumber_HYSTERESIS_N"/>
+		<Import declaration="Uebungen::const::UT::HystereseVertikal::DefaultPool::Polygon_MID"/>
+		<Import declaration="Uebungen::const::UT::HystereseVertikal::DefaultPool::Polygon_MID_PLUS_DEAD"/>
+		<Import declaration="Uebungen::const::UT::HystereseVertikal::DefaultPool::Polygon_MID_MINUS_DEAD"/>
+		<Import declaration="Uebungen::const::UT::HystereseVertikal::DefaultPool::Polygon_MID_PLUS_DEAD_HYST"/>
+		<Import declaration="Uebungen::const::UT::HystereseVertikal::DefaultPool::Polygon_MID_MINUS_DEAD_HYST"/>
+		<Import declaration="Uebungen::const::UT::HystereseVertikal::DefaultPool::Container_Schwellwerte"/>
+		<Import declaration="Uebungen::const::UT::HystereseVertikal::DefaultPool::NumberVariable_Istwert"/>
+		<Import declaration="logiBUS::io::AI::logiBUS_AI::AnalogInput_I4"/>
+		<Import declaration="logiBUS::io::DQ::logiBUS_DO::Output_Q1"/>
+		<Import declaration="logiBUS::io::DQ::logiBUS_DO::Output_Q2"/>
+	</CompilerInfo>
+	<SubAppInterfaceList>
+	</SubAppInterfaceList>
+	<SubAppNetwork>
+		<FB Name="MID_N" Type="isobus::UT::io::NumericValue::NumericValue_PHYSA" x="-12000" y="0">
+			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="stObj" Value="InputNumber_MID_N"/>
+		</FB>
+		<FB Name="DEAD_N" Type="isobus::UT::io::NumericValue::NumericValue_PHYSA" x="-12000" y="1200">
+			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="stObj" Value="InputNumber_DEAD_N"/>
+		</FB>
+		<FB Name="HYST_N" Type="isobus::UT::io::NumericValue::NumericValue_PHYSA" x="-12000" y="2400">
+			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="stObj" Value="InputNumber_HYSTERESIS_N"/>
+		</FB>
+		<FB Name="Split_MID" Type="adapter::events::unidirectional::AR_SPLIT_4" x="-10500" y="0">
+		</FB>
+		<FB Name="Split_DEAD" Type="adapter::events::unidirectional::AR_SPLIT_3" x="-10500" y="1200">
+		</FB>
+		<FB Name="Split_HYST" Type="adapter::events::unidirectional::AR_SPLIT_3" x="-10500" y="2400">
+		</FB>
+		<FB Name="Add_MidDead" Type="adapter::iec61131::arithmetic::AR_ADD_2" x="-9000" y="300">
+		</FB>
+		<FB Name="Sub_MidDead" Type="adapter::iec61131::arithmetic::AR_SUB_2" x="-9000" y="900">
+		</FB>
+		<FB Name="Split_AddResult" Type="adapter::events::unidirectional::AR_SPLIT_2" x="-7500" y="300">
+		</FB>
+		<FB Name="Split_SubResult" Type="adapter::events::unidirectional::AR_SPLIT_2" x="-7500" y="900">
+		</FB>
+		<FB Name="Add_MidDeadHyst" Type="adapter::iec61131::arithmetic::AR_ADD_2" x="-6000" y="600">
+		</FB>
+		<FB Name="Sub_MidDeadHyst" Type="adapter::iec61131::arithmetic::AR_SUB_2" x="-6000" y="1500">
+		</FB>
+		<FB Name="AnalogInput_I4" Type="logiBUS::io::AI::logiBUS_AI_IDA" x="-12000" y="3800">
+			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="Input" Value="AnalogInput_I4"/>
+			<Parameter Name="AnalogInput_hysteresis" Value="DWORD#0"/>
+			<Parameter Name="TimeDelta" Value="DWORD#250"/>
+			<Parameter Name="TimeRateLimit" Value="DWORD#100"/>
+		</FB>
+		<FB Name="AD_TO_AUDI" Type="adapter::conversion::unidirectional::AD_TO_AUDI" x="-10500" y="3800">
+		</FB>
+		<FB Name="AUDI_TO_AR" Type="adapter::conversion::unidirectional::AUDI_TO_AR" x="-9000" y="3800">
+		</FB>
+		<FB Name="ScaleADC_0_100" Type="adapter::types::unidirectional::AR::initval::initval_AR" x="-9000" y="4500">
+			<Parameter Name="INIT_VAL" Value="REAL#0.024420024420024420"/>
+		</FB>
+		<FB Name="Mul_Istwert" Type="adapter::iec61131::arithmetic::AR_MUL_2" x="-7500" y="3800">
+		</FB>
+		<FB Name="Split_Istwert" Type="adapter::events::unidirectional::AR_SPLIT_2" x="-6000" y="3800">
+		</FB>
+		<FB Name="Q_Istwert" Type="isobus::UT::Q::Q_NumericValue_PHYSA" x="-4500" y="3500">
+			<Parameter Name="stObj" Value="(u16ObjId := NumberVariable_Istwert, r32Scale := 1.0, i32Offset := 0, u8Decimals := 0)"/>
+		</FB>
+		<FB Name="DualHysteresis" Type="logiBUS::signalprocessing::hysteresis::DualHysteresis_AR_AX" x="-4500" y="4600">
+			<Parameter Name="QI" Value="TRUE"/>
+		</FB>
+		<FB Name="Output_Hoch" Type="logiBUS::io::DQ::logiBUS_QXA" x="-2500" y="4300">
+			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="Output" Value="Output_Q1"/>
+		</FB>
+		<FB Name="Output_Runter" Type="logiBUS::io::DQ::logiBUS_QXA" x="-2500" y="5000">
+			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="Output" Value="Output_Q2"/>
+		</FB>
+		<FB Name="ScalePx_MID" Type="adapter::types::unidirectional::AR::initval::initval_AR" x="-4000" y="0">
+			<Parameter Name="INIT_VAL" Value="REAL#1.86"/>
+		</FB>
+		<FB Name="Mul_MID" Type="adapter::iec61131::arithmetic::AR_MUL_2" x="-2500" y="0">
+		</FB>
+		<FB Name="BgLen_MID" Type="adapter::types::unidirectional::AR::initval::initval_AR" x="-1000" y="0">
+			<Parameter Name="INIT_VAL" Value="REAL#186.0"/>
+		</FB>
+		<FB Name="SubFlip_MID" Type="adapter::iec61131::arithmetic::AR_SUB_2" x="500" y="0">
+		</FB>
+		<FB Name="ToAI_MID" Type="adapter::conversion::unidirectional::AR_TO_AI" x="2000" y="0">
+		</FB>
+		<FB Name="Zero_MID" Type="adapter::types::unidirectional::AI::initval::initval_AI" x="2000" y="700">
+			<Parameter Name="INIT_VAL" Value="0"/>
+		</FB>
+		<FB Name="QPos_MID" Type="isobus::UT::Q::Q_ChildPosition_AI" x="3500" y="0">
+			<Parameter Name="u16ObjId" Value="Polygon_MID"/>
+			<Parameter Name="u16ObjIdParent" Value="Container_Schwellwerte"/>
+			<Parameter Name="xScale" Value="TRUE"/>
+		</FB>
+		<FB Name="ScalePx_MID_PLUS_DEAD" Type="adapter::types::unidirectional::AR::initval::initval_AR" x="-4000" y="2200">
+			<Parameter Name="INIT_VAL" Value="REAL#1.86"/>
+		</FB>
+		<FB Name="Mul_MID_PLUS_DEAD" Type="adapter::iec61131::arithmetic::AR_MUL_2" x="-2500" y="2200">
+		</FB>
+		<FB Name="BgLen_MID_PLUS_DEAD" Type="adapter::types::unidirectional::AR::initval::initval_AR" x="-1000" y="2200">
+			<Parameter Name="INIT_VAL" Value="REAL#186.0"/>
+		</FB>
+		<FB Name="SubFlip_MID_PLUS_DEAD" Type="adapter::iec61131::arithmetic::AR_SUB_2" x="500" y="2200">
+		</FB>
+		<FB Name="ToAI_MID_PLUS_DEAD" Type="adapter::conversion::unidirectional::AR_TO_AI" x="2000" y="2200">
+		</FB>
+		<FB Name="Zero_MID_PLUS_DEAD" Type="adapter::types::unidirectional::AI::initval::initval_AI" x="2000" y="2900">
+			<Parameter Name="INIT_VAL" Value="0"/>
+		</FB>
+		<FB Name="QPos_MID_PLUS_DEAD" Type="isobus::UT::Q::Q_ChildPosition_AI" x="3500" y="2200">
+			<Parameter Name="u16ObjId" Value="Polygon_MID_PLUS_DEAD"/>
+			<Parameter Name="u16ObjIdParent" Value="Container_Schwellwerte"/>
+			<Parameter Name="xScale" Value="TRUE"/>
+		</FB>
+		<FB Name="ScalePx_MID_MINUS_DEAD" Type="adapter::types::unidirectional::AR::initval::initval_AR" x="-4000" y="4400">
+			<Parameter Name="INIT_VAL" Value="REAL#1.86"/>
+		</FB>
+		<FB Name="Mul_MID_MINUS_DEAD" Type="adapter::iec61131::arithmetic::AR_MUL_2" x="-2500" y="4400">
+		</FB>
+		<FB Name="BgLen_MID_MINUS_DEAD" Type="adapter::types::unidirectional::AR::initval::initval_AR" x="-1000" y="4400">
+			<Parameter Name="INIT_VAL" Value="REAL#186.0"/>
+		</FB>
+		<FB Name="SubFlip_MID_MINUS_DEAD" Type="adapter::iec61131::arithmetic::AR_SUB_2" x="500" y="4400">
+		</FB>
+		<FB Name="ToAI_MID_MINUS_DEAD" Type="adapter::conversion::unidirectional::AR_TO_AI" x="2000" y="4400">
+		</FB>
+		<FB Name="Zero_MID_MINUS_DEAD" Type="adapter::types::unidirectional::AI::initval::initval_AI" x="2000" y="5100">
+			<Parameter Name="INIT_VAL" Value="0"/>
+		</FB>
+		<FB Name="QPos_MID_MINUS_DEAD" Type="isobus::UT::Q::Q_ChildPosition_AI" x="3500" y="4400">
+			<Parameter Name="u16ObjId" Value="Polygon_MID_MINUS_DEAD"/>
+			<Parameter Name="u16ObjIdParent" Value="Container_Schwellwerte"/>
+			<Parameter Name="xScale" Value="TRUE"/>
+		</FB>
+		<FB Name="ScalePx_MID_PLUS_DEAD_HYST" Type="adapter::types::unidirectional::AR::initval::initval_AR" x="-4000" y="6600">
+			<Parameter Name="INIT_VAL" Value="REAL#1.86"/>
+		</FB>
+		<FB Name="Mul_MID_PLUS_DEAD_HYST" Type="adapter::iec61131::arithmetic::AR_MUL_2" x="-2500" y="6600">
+		</FB>
+		<FB Name="BgLen_MID_PLUS_DEAD_HYST" Type="adapter::types::unidirectional::AR::initval::initval_AR" x="-1000" y="6600">
+			<Parameter Name="INIT_VAL" Value="REAL#186.0"/>
+		</FB>
+		<FB Name="SubFlip_MID_PLUS_DEAD_HYST" Type="adapter::iec61131::arithmetic::AR_SUB_2" x="500" y="6600">
+		</FB>
+		<FB Name="ToAI_MID_PLUS_DEAD_HYST" Type="adapter::conversion::unidirectional::AR_TO_AI" x="2000" y="6600">
+		</FB>
+		<FB Name="Zero_MID_PLUS_DEAD_HYST" Type="adapter::types::unidirectional::AI::initval::initval_AI" x="2000" y="7300">
+			<Parameter Name="INIT_VAL" Value="0"/>
+		</FB>
+		<FB Name="QPos_MID_PLUS_DEAD_HYST" Type="isobus::UT::Q::Q_ChildPosition_AI" x="3500" y="6600">
+			<Parameter Name="u16ObjId" Value="Polygon_MID_PLUS_DEAD_HYST"/>
+			<Parameter Name="u16ObjIdParent" Value="Container_Schwellwerte"/>
+			<Parameter Name="xScale" Value="TRUE"/>
+		</FB>
+		<FB Name="ScalePx_MID_MINUS_DEAD_HYST" Type="adapter::types::unidirectional::AR::initval::initval_AR" x="-4000" y="8800">
+			<Parameter Name="INIT_VAL" Value="REAL#1.86"/>
+		</FB>
+		<FB Name="Mul_MID_MINUS_DEAD_HYST" Type="adapter::iec61131::arithmetic::AR_MUL_2" x="-2500" y="8800">
+		</FB>
+		<FB Name="BgLen_MID_MINUS_DEAD_HYST" Type="adapter::types::unidirectional::AR::initval::initval_AR" x="-1000" y="8800">
+			<Parameter Name="INIT_VAL" Value="REAL#186.0"/>
+		</FB>
+		<FB Name="SubFlip_MID_MINUS_DEAD_HYST" Type="adapter::iec61131::arithmetic::AR_SUB_2" x="500" y="8800">
+		</FB>
+		<FB Name="ToAI_MID_MINUS_DEAD_HYST" Type="adapter::conversion::unidirectional::AR_TO_AI" x="2000" y="8800">
+		</FB>
+		<FB Name="Zero_MID_MINUS_DEAD_HYST" Type="adapter::types::unidirectional::AI::initval::initval_AI" x="2000" y="9500">
+			<Parameter Name="INIT_VAL" Value="0"/>
+		</FB>
+		<FB Name="QPos_MID_MINUS_DEAD_HYST" Type="isobus::UT::Q::Q_ChildPosition_AI" x="3500" y="8800">
+			<Parameter Name="u16ObjId" Value="Polygon_MID_MINUS_DEAD_HYST"/>
+			<Parameter Name="u16ObjIdParent" Value="Container_Schwellwerte"/>
+			<Parameter Name="xScale" Value="TRUE"/>
+		</FB>
+		<AdapterConnections>
+			<Connection Source="MID_N.rPhys" Destination="Split_MID.IN"/>
+			<Connection Source="DEAD_N.rPhys" Destination="Split_DEAD.IN"/>
+			<Connection Source="HYST_N.rPhys" Destination="Split_HYST.IN"/>
+			<Connection Source="Split_MID.OUT2" Destination="Add_MidDead.IN1"/>
+			<Connection Source="Split_DEAD.OUT1" Destination="Add_MidDead.IN2"/>
+			<Connection Source="Split_MID.OUT3" Destination="Sub_MidDead.IN1"/>
+			<Connection Source="Split_DEAD.OUT2" Destination="Sub_MidDead.IN2"/>
+			<Connection Source="Add_MidDead.OUT" Destination="Split_AddResult.IN"/>
+			<Connection Source="Sub_MidDead.OUT" Destination="Split_SubResult.IN"/>
+			<Connection Source="Split_AddResult.OUT2" Destination="Add_MidDeadHyst.IN1"/>
+			<Connection Source="Split_HYST.OUT1" Destination="Add_MidDeadHyst.IN2"/>
+			<Connection Source="Split_SubResult.OUT2" Destination="Sub_MidDeadHyst.IN1"/>
+			<Connection Source="Split_HYST.OUT2" Destination="Sub_MidDeadHyst.IN2"/>
+			<Connection Source="AnalogInput_I4.IN" Destination="AD_TO_AUDI.AD_IN"/>
+			<Connection Source="AD_TO_AUDI.AUDI_OUT" Destination="AUDI_TO_AR.AUDI_IN"/>
+			<Connection Source="AUDI_TO_AR.AR_OUT" Destination="Mul_Istwert.IN1"/>
+			<Connection Source="ScaleADC_0_100.OUT" Destination="Mul_Istwert.IN2"/>
+			<Connection Source="Mul_Istwert.OUT" Destination="Split_Istwert.IN"/>
+			<Connection Source="Split_Istwert.OUT1" Destination="Q_Istwert.rPhys"/>
+			<Connection Source="Split_Istwert.OUT2" Destination="DualHysteresis.INPUT"/>
+			<Connection Source="Split_MID.OUT4" Destination="DualHysteresis.MI"/>
+			<Connection Source="Split_DEAD.OUT3" Destination="DualHysteresis.DEAD"/>
+			<Connection Source="Split_HYST.OUT3" Destination="DualHysteresis.HYSTERESIS"/>
+			<Connection Source="DualHysteresis.DO_UP" Destination="Output_Hoch.OUT"/>
+			<Connection Source="DualHysteresis.DO_DOWN" Destination="Output_Runter.OUT"/>
+			<Connection Source="Split_MID.OUT1" Destination="Mul_MID.IN1"/>
+			<Connection Source="ScalePx_MID.OUT" Destination="Mul_MID.IN2"/>
+			<Connection Source="BgLen_MID.OUT" Destination="SubFlip_MID.IN1"/>
+			<Connection Source="Mul_MID.OUT" Destination="SubFlip_MID.IN2"/>
+			<Connection Source="SubFlip_MID.OUT" Destination="ToAI_MID.AR_IN"/>
+			<Connection Source="Zero_MID.OUT" Destination="QPos_MID.s16Xposition"/>
+			<Connection Source="ToAI_MID.AI_OUT" Destination="QPos_MID.s16Yposition"/>
+			<Connection Source="Split_AddResult.OUT1" Destination="Mul_MID_PLUS_DEAD.IN1"/>
+			<Connection Source="ScalePx_MID_PLUS_DEAD.OUT" Destination="Mul_MID_PLUS_DEAD.IN2"/>
+			<Connection Source="BgLen_MID_PLUS_DEAD.OUT" Destination="SubFlip_MID_PLUS_DEAD.IN1"/>
+			<Connection Source="Mul_MID_PLUS_DEAD.OUT" Destination="SubFlip_MID_PLUS_DEAD.IN2"/>
+			<Connection Source="SubFlip_MID_PLUS_DEAD.OUT" Destination="ToAI_MID_PLUS_DEAD.AR_IN"/>
+			<Connection Source="Zero_MID_PLUS_DEAD.OUT" Destination="QPos_MID_PLUS_DEAD.s16Xposition"/>
+			<Connection Source="ToAI_MID_PLUS_DEAD.AI_OUT" Destination="QPos_MID_PLUS_DEAD.s16Yposition"/>
+			<Connection Source="Split_SubResult.OUT1" Destination="Mul_MID_MINUS_DEAD.IN1"/>
+			<Connection Source="ScalePx_MID_MINUS_DEAD.OUT" Destination="Mul_MID_MINUS_DEAD.IN2"/>
+			<Connection Source="BgLen_MID_MINUS_DEAD.OUT" Destination="SubFlip_MID_MINUS_DEAD.IN1"/>
+			<Connection Source="Mul_MID_MINUS_DEAD.OUT" Destination="SubFlip_MID_MINUS_DEAD.IN2"/>
+			<Connection Source="SubFlip_MID_MINUS_DEAD.OUT" Destination="ToAI_MID_MINUS_DEAD.AR_IN"/>
+			<Connection Source="Zero_MID_MINUS_DEAD.OUT" Destination="QPos_MID_MINUS_DEAD.s16Xposition"/>
+			<Connection Source="ToAI_MID_MINUS_DEAD.AI_OUT" Destination="QPos_MID_MINUS_DEAD.s16Yposition"/>
+			<Connection Source="Add_MidDeadHyst.OUT" Destination="Mul_MID_PLUS_DEAD_HYST.IN1"/>
+			<Connection Source="ScalePx_MID_PLUS_DEAD_HYST.OUT" Destination="Mul_MID_PLUS_DEAD_HYST.IN2"/>
+			<Connection Source="BgLen_MID_PLUS_DEAD_HYST.OUT" Destination="SubFlip_MID_PLUS_DEAD_HYST.IN1"/>
+			<Connection Source="Mul_MID_PLUS_DEAD_HYST.OUT" Destination="SubFlip_MID_PLUS_DEAD_HYST.IN2"/>
+			<Connection Source="SubFlip_MID_PLUS_DEAD_HYST.OUT" Destination="ToAI_MID_PLUS_DEAD_HYST.AR_IN"/>
+			<Connection Source="Zero_MID_PLUS_DEAD_HYST.OUT" Destination="QPos_MID_PLUS_DEAD_HYST.s16Xposition"/>
+			<Connection Source="ToAI_MID_PLUS_DEAD_HYST.AI_OUT" Destination="QPos_MID_PLUS_DEAD_HYST.s16Yposition"/>
+			<Connection Source="Sub_MidDeadHyst.OUT" Destination="Mul_MID_MINUS_DEAD_HYST.IN1"/>
+			<Connection Source="ScalePx_MID_MINUS_DEAD_HYST.OUT" Destination="Mul_MID_MINUS_DEAD_HYST.IN2"/>
+			<Connection Source="BgLen_MID_MINUS_DEAD_HYST.OUT" Destination="SubFlip_MID_MINUS_DEAD_HYST.IN1"/>
+			<Connection Source="Mul_MID_MINUS_DEAD_HYST.OUT" Destination="SubFlip_MID_MINUS_DEAD_HYST.IN2"/>
+			<Connection Source="SubFlip_MID_MINUS_DEAD_HYST.OUT" Destination="ToAI_MID_MINUS_DEAD_HYST.AR_IN"/>
+			<Connection Source="Zero_MID_MINUS_DEAD_HYST.OUT" Destination="QPos_MID_MINUS_DEAD_HYST.s16Xposition"/>
+			<Connection Source="ToAI_MID_MINUS_DEAD_HYST.AI_OUT" Destination="QPos_MID_MINUS_DEAD_HYST.s16Yposition"/>
+		</AdapterConnections>
+	</SubAppNetwork>
+</SubAppType>
