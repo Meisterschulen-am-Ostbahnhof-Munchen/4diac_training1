@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SubAppType Name="Uebung_HystereseVertikal_AX_simple" Comment="MID/DEAD/HYSTERESIS-Eingabefelder bewegen live die 5 Schwellwert-Dreiecke im vertikalen Bargraph (Type=1 BottomToTop, Pixelposition gespiegelt: hoher Wert = kleiner Top)">
+	<Identification Standard="61499-2" Description="Copyright (c) 2026 Meisterschulen am Ostbahnhof  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0">
+	</Identification>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.2" Author="Franz Höpfinger" Date="2026-09-27" Remarks="Schwellwert-Berechnung zu MyLib::sys::DualHysteresis_Thresholds_AR ausgelagert">
+	</VersionInfo>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.1" Author="Franz Höpfinger" Date="2026-09-27" Remarks="AR_TO_AI, Zero, QPos zu MyLib::sys::Q_ChildPosition_AR_Vertikal SubApp ausgelagert">
+	</VersionInfo>
+	<CompilerInfo packageName="Uebungen">
+		<Import declaration="Uebungen::const::UT::HystereseVertikal::DefaultPool_Numeric::InputNumber_MID_N"/>
+		<Import declaration="Uebungen::const::UT::HystereseVertikal::DefaultPool_Numeric::InputNumber_DEAD_N"/>
+		<Import declaration="Uebungen::const::UT::HystereseVertikal::DefaultPool_Numeric::InputNumber_HYSTERESIS_N"/>
+		<Import declaration="Uebungen::const::UT::HystereseVertikal::DefaultPool::Polygon_MID"/>
+		<Import declaration="Uebungen::const::UT::HystereseVertikal::DefaultPool::Polygon_MID_PLUS_DEAD"/>
+		<Import declaration="Uebungen::const::UT::HystereseVertikal::DefaultPool::Polygon_MID_MINUS_DEAD"/>
+		<Import declaration="Uebungen::const::UT::HystereseVertikal::DefaultPool::Polygon_MID_PLUS_DEAD_HYST"/>
+		<Import declaration="Uebungen::const::UT::HystereseVertikal::DefaultPool::Polygon_MID_MINUS_DEAD_HYST"/>
+		<Import declaration="Uebungen::const::UT::HystereseVertikal::DefaultPool::Container_Schwellwerte"/>
+		<Import declaration="Uebungen::const::UT::HystereseVertikal::DefaultPool_Bargraph::Bargraph_Hysterese_ScalePx"/>
+		<Import declaration="Uebungen::const::UT::HystereseVertikal::DefaultPool_Bargraph::Bargraph_Hysterese_LengthPx"/>
+	</CompilerInfo>
+	<SubAppInterfaceList>
+	</SubAppInterfaceList>
+	<SubAppNetwork>
+		<FB Name="MID_N" Type="isobus::UT::io::NumericValue::NumericValue_PHYSA" x="-12100" y="-600">
+			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="stObj" Value="InputNumber_MID_N"/>
+		</FB>
+		<FB Name="DEAD_N" Type="isobus::UT::io::NumericValue::NumericValue_PHYSA" x="-12100" y="400">
+			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="stObj" Value="InputNumber_DEAD_N"/>
+		</FB>
+		<FB Name="HYST_N" Type="isobus::UT::io::NumericValue::NumericValue_PHYSA" x="-12100" y="1300">
+			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="stObj" Value="InputNumber_HYSTERESIS_N"/>
+		</FB>
+		<SubApp Name="Thresholds" Type="MyLib::sys::DualHysteresis_Thresholds_AR" x="-8600" y="800">
+		</SubApp>
+		<SubApp Name="QPos_MID" Type="MyLib::sys::Q_ChildPosition_AR_Bargraph_BottomToTop" x="-5000" y="1200">
+			<Parameter Name="u16ObjId" Value="Polygon_MID"/>
+			<Parameter Name="u16ObjIdParent" Value="Container_Schwellwerte"/>
+			<Parameter Name="xScale" Value="TRUE"/>
+			<Parameter Name="ScalePx" Value="Bargraph_Hysterese_ScalePx"/>
+			<Parameter Name="LengthPx" Value="Bargraph_Hysterese_LengthPx"/>
+		</SubApp>
+		<SubApp Name="QPos_MID_PLUS_DEAD" Type="MyLib::sys::Q_ChildPosition_AR_Bargraph_BottomToTop" x="-5000" y="2300">
+			<Parameter Name="u16ObjId" Value="Polygon_MID_PLUS_DEAD"/>
+			<Parameter Name="u16ObjIdParent" Value="Container_Schwellwerte"/>
+			<Parameter Name="xScale" Value="TRUE"/>
+			<Parameter Name="ScalePx" Value="Bargraph_Hysterese_ScalePx"/>
+			<Parameter Name="LengthPx" Value="Bargraph_Hysterese_LengthPx"/>
+		</SubApp>
+		<SubApp Name="QPos_MID_MINUS_DEAD" Type="MyLib::sys::Q_ChildPosition_AR_Bargraph_BottomToTop" x="-4900" y="0">
+			<Parameter Name="u16ObjId" Value="Polygon_MID_MINUS_DEAD"/>
+			<Parameter Name="u16ObjIdParent" Value="Container_Schwellwerte"/>
+			<Parameter Name="xScale" Value="TRUE"/>
+			<Parameter Name="ScalePx" Value="Bargraph_Hysterese_ScalePx"/>
+			<Parameter Name="LengthPx" Value="Bargraph_Hysterese_LengthPx"/>
+		</SubApp>
+		<SubApp Name="QPos_MID_PLUS_DEAD_HYST" Type="MyLib::sys::Q_ChildPosition_AR_Bargraph_BottomToTop" x="-5000" y="3400">
+			<Parameter Name="u16ObjId" Value="Polygon_MID_PLUS_DEAD_HYST"/>
+			<Parameter Name="u16ObjIdParent" Value="Container_Schwellwerte"/>
+			<Parameter Name="xScale" Value="TRUE"/>
+			<Parameter Name="ScalePx" Value="Bargraph_Hysterese_ScalePx"/>
+			<Parameter Name="LengthPx" Value="Bargraph_Hysterese_LengthPx"/>
+		</SubApp>
+		<SubApp Name="QPos_MID_MINUS_DEAD_HYST" Type="MyLib::sys::Q_ChildPosition_AR_Bargraph_BottomToTop" x="-4900" y="-1100">
+			<Parameter Name="u16ObjId" Value="Polygon_MID_MINUS_DEAD_HYST"/>
+			<Parameter Name="u16ObjIdParent" Value="Container_Schwellwerte"/>
+			<Parameter Name="xScale" Value="TRUE"/>
+			<Parameter Name="ScalePx" Value="Bargraph_Hysterese_ScalePx"/>
+			<Parameter Name="LengthPx" Value="Bargraph_Hysterese_LengthPx"/>
+		</SubApp>
+		<AdapterConnections>
+			<Connection Source="MID_N.rPhys" Destination="Thresholds.MI" dx1="2293.33"/>
+			<Connection Source="DEAD_N.rPhys" Destination="Thresholds.DEAD" dx1="1086.67"/>
+			<Connection Source="HYST_N.rPhys" Destination="Thresholds.HYST" dx1="2293.33"/>
+			<Connection Source="Thresholds.MID_OUT" Destination="QPos_MID.rPhys" dx1="500"/>
+			<Connection Source="Thresholds.MID_PLUS_DEAD" Destination="QPos_MID_PLUS_DEAD.rPhys" dx1="313.33"/>
+			<Connection Source="Thresholds.MID_MINUS_DEAD" Destination="QPos_MID_MINUS_DEAD.rPhys" dx1="500"/>
+			<Connection Source="Thresholds.MID_PLUS_DEAD_HYST" Destination="QPos_MID_PLUS_DEAD_HYST.rPhys" dx1="180"/>
+			<Connection Source="Thresholds.MID_MINUS_DEAD_HYST" Destination="QPos_MID_MINUS_DEAD_HYST.rPhys" dx1="80"/>
+		</AdapterConnections>
+	</SubAppNetwork>
+</SubAppType>
