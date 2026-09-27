@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<SubAppType Name="DualHysteresis_Thresholds_AR" Comment="Berechnet die 5 Hysterese-Schwellwerte (MID, MID+/-DEAD, MID+/-DEAD+/-HYST) aus MI, DEAD und HYST ueber AR-Adapter; inklusive Durchreich-Plugs DEAD_OUT und HYST_OUT">
+<SubAppType Name="DualHysteresis_Thresholds_AR" Comment="Berechnet die 5 Hysterese-Schwellwerte (MID, MID+/-DEAD, MID+/-DEAD+/-HYST) aus MI, DEAD und HYST ueber AR-Adapter; inklusive Durchreich-Plugs MI_OUT, DEAD_OUT und HYST_OUT">
 	<Identification Standard="61499-2" Description="Copyright (c) 2026 Meisterschulen am Ostbahnhof  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0">
 	</Identification>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.1" Author="Franz Höpfinger" Date="2026-09-27" Remarks="MI_OUT Durchreich-Plug ergaenzt (Split_MI zu AR_SPLIT_4), damit MI_OUT und MID_OUT getrennt sind und Adapter nie ohne Split verzweigt werden">
+	</VersionInfo>
 	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2026-09-27" Remarks="initial API and implementation">
 	</VersionInfo>
 	<CompilerInfo packageName="MyLib::sys">
@@ -15,15 +17,16 @@
 		<Plugs>
 			<AdapterDeclaration Name="MID_MINUS_DEAD_HYST" Type="adapter::types::unidirectional::AR" Comment="Schwelle 1: MI - (DEAD + HYST) [Min / Heben Ein / Senken Start]"/>
 			<AdapterDeclaration Name="MID_MINUS_DEAD" Type="adapter::types::unidirectional::AR" Comment="Schwelle 2: MI - DEAD [Senken Stopp]"/>
-			<AdapterDeclaration Name="MID_OUT" Type="adapter::types::unidirectional::AR" Comment="Schwelle 3: MI (Mitte / Sollwert)"/>
+			<AdapterDeclaration Name="MID_OUT" Type="adapter::types::unidirectional::AR" Comment="Schwelle 3: MI (Mitte / Sollwert) fuer Schwellwert-Marker"/>
 			<AdapterDeclaration Name="MID_PLUS_DEAD" Type="adapter::types::unidirectional::AR" Comment="Schwelle 4: MI + DEAD [Heben Stopp]"/>
 			<AdapterDeclaration Name="MID_PLUS_DEAD_HYST" Type="adapter::types::unidirectional::AR" Comment="Schwelle 5: MI + (DEAD + HYST) [Max / Heben Start]"/>
+			<AdapterDeclaration Name="MI_OUT" Type="adapter::types::unidirectional::AR" Comment="Durchreich-Plug fuer MI (z.B. fuer DualHysteresis_AR_AX)"/>
 			<AdapterDeclaration Name="DEAD_OUT" Type="adapter::types::unidirectional::AR" Comment="Durchreich-Plug fuer DEAD (z.B. fuer DualHysteresis_AR_AX)"/>
 			<AdapterDeclaration Name="HYST_OUT" Type="adapter::types::unidirectional::AR" Comment="Durchreich-Plug fuer HYST (z.B. fuer DualHysteresis_AR_AX)"/>
 		</Plugs>
 	</SubAppInterfaceList>
 	<SubAppNetwork>
-		<FB Name="Split_MI" Type="adapter::events::unidirectional::AR_SPLIT_3" x="0" y="0">
+		<FB Name="Split_MI" Type="adapter::events::unidirectional::AR_SPLIT_4" x="0" y="0">
 		</FB>
 		<FB Name="Split_DEAD" Type="adapter::events::unidirectional::AR_SPLIT_3" x="0" y="1000">
 		</FB>
@@ -60,6 +63,7 @@
 			<Connection Source="Split_SubResult.OUT1" Destination="MID_MINUS_DEAD" dx1="2500"/>
 			<Connection Source="Add_MidDeadHyst.OUT" Destination="MID_PLUS_DEAD_HYST" dx1="1000"/>
 			<Connection Source="Sub_MidDeadHyst.OUT" Destination="MID_MINUS_DEAD_HYST" dx1="1000"/>
+			<Connection Source="Split_MI.OUT4" Destination="MI_OUT" dx1="5000"/>
 			<Connection Source="Split_DEAD.OUT3" Destination="DEAD_OUT" dx1="5000"/>
 			<Connection Source="Split_HYST.OUT3" Destination="HYST_OUT" dx1="5000"/>
 		</AdapterConnections>

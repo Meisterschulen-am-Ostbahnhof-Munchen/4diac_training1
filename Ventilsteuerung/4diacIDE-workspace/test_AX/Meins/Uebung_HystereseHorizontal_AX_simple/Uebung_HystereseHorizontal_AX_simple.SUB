@@ -21,45 +21,45 @@
 	<SubAppInterfaceList>
 	</SubAppInterfaceList>
 	<SubAppNetwork>
-		<FB Name="MID_N" Type="isobus::UT::io::NumericValue::NumericValue_PHYSA" x="-12000" y="0">
+		<FB Name="MID_N" Type="isobus::UT::io::NumericValue::NumericValue_PHYSA" x="-12000" y="100">
 			<Parameter Name="QI" Value="TRUE"/>
 			<Parameter Name="stObj" Value="InputNumber_MID_N"/>
 		</FB>
-		<FB Name="DEAD_N" Type="isobus::UT::io::NumericValue::NumericValue_PHYSA" x="-12000" y="1200">
+		<FB Name="DEAD_N" Type="isobus::UT::io::NumericValue::NumericValue_PHYSA" x="-12000" y="1000">
 			<Parameter Name="QI" Value="TRUE"/>
 			<Parameter Name="stObj" Value="InputNumber_DEAD_N"/>
 		</FB>
-		<FB Name="HYST_N" Type="isobus::UT::io::NumericValue::NumericValue_PHYSA" x="-12000" y="2400">
+		<FB Name="HYST_N" Type="isobus::UT::io::NumericValue::NumericValue_PHYSA" x="-12000" y="1900">
 			<Parameter Name="QI" Value="TRUE"/>
 			<Parameter Name="stObj" Value="InputNumber_HYSTERESIS_N"/>
 		</FB>
-		<SubApp Name="Thresholds" Type="MyLib::sys::DualHysteresis_Thresholds_AR" x="-6000" y="1000">
+		<SubApp Name="Thresholds" Type="MyLib::sys::DualHysteresis_Thresholds_AR" x="-9000" y="1400">
 		</SubApp>
-		<SubApp Name="QPos_MID" Type="MyLib::sys::Q_ChildPosition_AR_Bargraph_LeftToRight" x="2000" y="0">
+		<SubApp Name="QPos_MID" Type="MyLib::sys::Q_ChildPosition_AR_Bargraph_LeftToRight" x="-4900" y="1600">
 			<Parameter Name="u16ObjId" Value="Polygon_MID"/>
 			<Parameter Name="u16ObjIdParent" Value="Container_Schwellwerte"/>
 			<Parameter Name="xScale" Value="TRUE"/>
 			<Parameter Name="ScalePx" Value="Bargraph_Hysterese_ScalePx"/>
 		</SubApp>
-		<SubApp Name="QPos_MID_PLUS_DEAD" Type="MyLib::sys::Q_ChildPosition_AR_Bargraph_LeftToRight" x="2000" y="1000">
+		<SubApp Name="QPos_MID_PLUS_DEAD" Type="MyLib::sys::Q_ChildPosition_AR_Bargraph_LeftToRight" x="-4900" y="2600">
 			<Parameter Name="u16ObjId" Value="Polygon_MID_PLUS_DEAD"/>
 			<Parameter Name="u16ObjIdParent" Value="Container_Schwellwerte"/>
 			<Parameter Name="xScale" Value="TRUE"/>
 			<Parameter Name="ScalePx" Value="Bargraph_Hysterese_ScalePx"/>
 		</SubApp>
-		<SubApp Name="QPos_MID_MINUS_DEAD" Type="MyLib::sys::Q_ChildPosition_AR_Bargraph_LeftToRight" x="2000" y="2000">
+		<SubApp Name="QPos_MID_MINUS_DEAD" Type="MyLib::sys::Q_ChildPosition_AR_Bargraph_LeftToRight" x="-4900" y="600">
 			<Parameter Name="u16ObjId" Value="Polygon_MID_MINUS_DEAD"/>
 			<Parameter Name="u16ObjIdParent" Value="Container_Schwellwerte"/>
 			<Parameter Name="xScale" Value="TRUE"/>
 			<Parameter Name="ScalePx" Value="Bargraph_Hysterese_ScalePx"/>
 		</SubApp>
-		<SubApp Name="QPos_MID_PLUS_DEAD_HYST" Type="MyLib::sys::Q_ChildPosition_AR_Bargraph_LeftToRight" x="2000" y="3000">
+		<SubApp Name="QPos_MID_PLUS_DEAD_HYST" Type="MyLib::sys::Q_ChildPosition_AR_Bargraph_LeftToRight" x="-4900" y="3600">
 			<Parameter Name="u16ObjId" Value="Polygon_MID_PLUS_DEAD_HYST"/>
 			<Parameter Name="u16ObjIdParent" Value="Container_Schwellwerte"/>
 			<Parameter Name="xScale" Value="TRUE"/>
 			<Parameter Name="ScalePx" Value="Bargraph_Hysterese_ScalePx"/>
 		</SubApp>
-		<SubApp Name="QPos_MID_MINUS_DEAD_HYST" Type="MyLib::sys::Q_ChildPosition_AR_Bargraph_LeftToRight" x="2000" y="4000">
+		<SubApp Name="QPos_MID_MINUS_DEAD_HYST" Type="MyLib::sys::Q_ChildPosition_AR_Bargraph_LeftToRight" x="-4900" y="-400">
 			<Parameter Name="u16ObjId" Value="Polygon_MID_MINUS_DEAD_HYST"/>
 			<Parameter Name="u16ObjIdParent" Value="Container_Schwellwerte"/>
 			<Parameter Name="xScale" Value="TRUE"/>
@@ -70,10 +70,10 @@
 			<Connection Source="DEAD_N.rPhys" Destination="Thresholds.DEAD" dx1="500"/>
 			<Connection Source="HYST_N.rPhys" Destination="Thresholds.HYST" dx1="500"/>
 			<Connection Source="Thresholds.MID_OUT" Destination="QPos_MID.rPhys" dx1="500"/>
-			<Connection Source="Thresholds.MID_PLUS_DEAD" Destination="QPos_MID_PLUS_DEAD.rPhys" dx1="500"/>
+			<Connection Source="Thresholds.MID_PLUS_DEAD" Destination="QPos_MID_PLUS_DEAD.rPhys" dx1="240"/>
 			<Connection Source="Thresholds.MID_MINUS_DEAD" Destination="QPos_MID_MINUS_DEAD.rPhys" dx1="500"/>
-			<Connection Source="Thresholds.MID_PLUS_DEAD_HYST" Destination="QPos_MID_PLUS_DEAD_HYST.rPhys" dx1="500"/>
-			<Connection Source="Thresholds.MID_MINUS_DEAD_HYST" Destination="QPos_MID_MINUS_DEAD_HYST.rPhys" dx1="500"/>
+			<Connection Source="Thresholds.MID_PLUS_DEAD_HYST" Destination="QPos_MID_PLUS_DEAD_HYST.rPhys" dx1="80"/>
+			<Connection Source="Thresholds.MID_MINUS_DEAD_HYST" Destination="QPos_MID_MINUS_DEAD_HYST.rPhys" dx1="80"/>
 		</AdapterConnections>
 	</SubAppNetwork>
 </SubAppType>

@@ -36,35 +36,35 @@
 		</FB>
 		<SubApp Name="Thresholds" Type="MyLib::sys::DualHysteresis_Thresholds_AR" x="-8600" y="800">
 		</SubApp>
-		<SubApp Name="QPos_MID" Type="MyLib::sys::Q_ChildPosition_AR_Bargraph_BottomToTop" x="-700" y="-200">
+		<SubApp Name="QPos_MID" Type="MyLib::sys::Q_ChildPosition_AR_Bargraph_BottomToTop" x="-5000" y="1200">
 			<Parameter Name="u16ObjId" Value="Polygon_MID"/>
 			<Parameter Name="u16ObjIdParent" Value="Container_Schwellwerte"/>
 			<Parameter Name="xScale" Value="TRUE"/>
 			<Parameter Name="ScalePx" Value="Bargraph_Hysterese_ScalePx"/>
 			<Parameter Name="LengthPx" Value="Bargraph_Hysterese_LengthPx"/>
 		</SubApp>
-		<SubApp Name="QPos_MID_PLUS_DEAD" Type="MyLib::sys::Q_ChildPosition_AR_Bargraph_BottomToTop" x="-700" y="900">
+		<SubApp Name="QPos_MID_PLUS_DEAD" Type="MyLib::sys::Q_ChildPosition_AR_Bargraph_BottomToTop" x="-5000" y="2300">
 			<Parameter Name="u16ObjId" Value="Polygon_MID_PLUS_DEAD"/>
 			<Parameter Name="u16ObjIdParent" Value="Container_Schwellwerte"/>
 			<Parameter Name="xScale" Value="TRUE"/>
 			<Parameter Name="ScalePx" Value="Bargraph_Hysterese_ScalePx"/>
 			<Parameter Name="LengthPx" Value="Bargraph_Hysterese_LengthPx"/>
 		</SubApp>
-		<SubApp Name="QPos_MID_MINUS_DEAD" Type="MyLib::sys::Q_ChildPosition_AR_Bargraph_BottomToTop" x="-700" y="2000">
+		<SubApp Name="QPos_MID_MINUS_DEAD" Type="MyLib::sys::Q_ChildPosition_AR_Bargraph_BottomToTop" x="-4900" y="0">
 			<Parameter Name="u16ObjId" Value="Polygon_MID_MINUS_DEAD"/>
 			<Parameter Name="u16ObjIdParent" Value="Container_Schwellwerte"/>
 			<Parameter Name="xScale" Value="TRUE"/>
 			<Parameter Name="ScalePx" Value="Bargraph_Hysterese_ScalePx"/>
 			<Parameter Name="LengthPx" Value="Bargraph_Hysterese_LengthPx"/>
 		</SubApp>
-		<SubApp Name="QPos_MID_PLUS_DEAD_HYST" Type="MyLib::sys::Q_ChildPosition_AR_Bargraph_BottomToTop" x="-700" y="3100">
+		<SubApp Name="QPos_MID_PLUS_DEAD_HYST" Type="MyLib::sys::Q_ChildPosition_AR_Bargraph_BottomToTop" x="-5000" y="3400">
 			<Parameter Name="u16ObjId" Value="Polygon_MID_PLUS_DEAD_HYST"/>
 			<Parameter Name="u16ObjIdParent" Value="Container_Schwellwerte"/>
 			<Parameter Name="xScale" Value="TRUE"/>
 			<Parameter Name="ScalePx" Value="Bargraph_Hysterese_ScalePx"/>
 			<Parameter Name="LengthPx" Value="Bargraph_Hysterese_LengthPx"/>
 		</SubApp>
-		<SubApp Name="QPos_MID_MINUS_DEAD_HYST" Type="MyLib::sys::Q_ChildPosition_AR_Bargraph_BottomToTop" x="-700" y="4200">
+		<SubApp Name="QPos_MID_MINUS_DEAD_HYST" Type="MyLib::sys::Q_ChildPosition_AR_Bargraph_BottomToTop" x="-4900" y="-1100">
 			<Parameter Name="u16ObjId" Value="Polygon_MID_MINUS_DEAD_HYST"/>
 			<Parameter Name="u16ObjIdParent" Value="Container_Schwellwerte"/>
 			<Parameter Name="xScale" Value="TRUE"/>
@@ -76,10 +76,10 @@
 			<Connection Source="DEAD_N.rPhys" Destination="Thresholds.DEAD" dx1="1086.67"/>
 			<Connection Source="HYST_N.rPhys" Destination="Thresholds.HYST" dx1="2293.33"/>
 			<Connection Source="Thresholds.MID_OUT" Destination="QPos_MID.rPhys" dx1="500"/>
-			<Connection Source="Thresholds.MID_PLUS_DEAD" Destination="QPos_MID_PLUS_DEAD.rPhys" dx1="500"/>
+			<Connection Source="Thresholds.MID_PLUS_DEAD" Destination="QPos_MID_PLUS_DEAD.rPhys" dx1="313.33"/>
 			<Connection Source="Thresholds.MID_MINUS_DEAD" Destination="QPos_MID_MINUS_DEAD.rPhys" dx1="500"/>
-			<Connection Source="Thresholds.MID_PLUS_DEAD_HYST" Destination="QPos_MID_PLUS_DEAD_HYST.rPhys" dx1="500"/>
-			<Connection Source="Thresholds.MID_MINUS_DEAD_HYST" Destination="QPos_MID_MINUS_DEAD_HYST.rPhys" dx1="500"/>
+			<Connection Source="Thresholds.MID_PLUS_DEAD_HYST" Destination="QPos_MID_PLUS_DEAD_HYST.rPhys" dx1="180"/>
+			<Connection Source="Thresholds.MID_MINUS_DEAD_HYST" Destination="QPos_MID_MINUS_DEAD_HYST.rPhys" dx1="80"/>
 		</AdapterConnections>
 	</SubAppNetwork>
 </SubAppType>
