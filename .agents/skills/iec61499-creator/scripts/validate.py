@@ -1,5 +1,6 @@
 import sys
 import os
+import re
 from lxml import etree
 
 ROOT_TO_SCHEMA = {
@@ -29,10 +30,12 @@ class ValidationError(Exception):
         super().__init__("\n".join(errors))
 
 _WORKSPACE_TYPE_CACHE = {}
+_NAME_RE = re.compile(rb'<\w+Type\s+Name="([^"]+)"')
+_PKG_RE = re.compile(rb'<CompilerInfo\s+packageName="([^"]+)"')
 
 def get_workspace_type_index(xml_path):
     if not xml_path:
-        return {}, {}
+        return {}
     
     cur = os.path.dirname(os.path.abspath(xml_path))
     search_root = None
@@ -43,24 +46,32 @@ def get_workspace_type_index(xml_path):
         cur = os.path.dirname(cur)
         
     if not search_root:
-        return {}, {}
+        return {}
         
     if search_root in _WORKSPACE_TYPE_CACHE:
         return _WORKSPACE_TYPE_CACHE[search_root]
         
-    type_by_pair = {}
-    type_by_name = {}
+    workspace_types = {}
     for r, d, fs in os.walk(search_root):
         for f in fs:
             ext = os.path.splitext(f)[1].lower()
             if ext in ('.fbt', '.sub', '.adp'):
-                base = os.path.splitext(f)[0].lower()
-                parent = os.path.basename(r).lower()
-                type_by_pair[(parent, base)] = (f, ext)
-                type_by_name[base] = (f, ext)
+                path = os.path.join(r, f)
+                try:
+                    with open(path, 'rb') as fp:
+                        header = fp.read(1500)
+                        m_name = _NAME_RE.search(header)
+                        m_pkg = _PKG_RE.search(header)
+                        if m_name:
+                            t_name = m_name.group(1).decode('utf-8', errors='ignore')
+                            t_pkg = m_pkg.group(1).decode('utf-8', errors='ignore') if m_pkg else ''
+                            fqn = f"{t_pkg}::{t_name}" if t_pkg else t_name
+                            workspace_types[fqn.lower()] = (fqn, f, ext, path)
+                except Exception:
+                    pass
                 
-    _WORKSPACE_TYPE_CACHE[search_root] = (type_by_pair, type_by_name)
-    return type_by_pair, type_by_name
+    _WORKSPACE_TYPE_CACHE[search_root] = workspace_types
+    return workspace_types
 
 def check_compiler_info_imports(xml_doc, xml_path):
     """
@@ -89,9 +100,19 @@ def check_compiler_info_imports(xml_doc, xml_path):
                 
     if not imports:
         return violations
+
+    # Determine current file's package name if present
+    current_pkg = ""
+    for elem in xml_doc.iter():
+        if not isinstance(elem.tag, str):
+            continue
+        tag = elem.tag.split('}', 1)[1] if '}' in elem.tag else elem.tag
+        if tag == "CompilerInfo":
+            current_pkg = elem.get("packageName", "").strip()
+            break
         
     instantiated_types = set()
-    instantiated_type_names = {}
+    instantiated_type_kinds = {}
     for elem in xml_doc.iter():
         if not isinstance(elem.tag, str):
             continue
@@ -100,23 +121,18 @@ def check_compiler_info_imports(xml_doc, xml_path):
             t = elem.get("Type")
             if t:
                 instantiated_types.add(t)
-                name = t.split("::")[-1]
-                instantiated_type_names[name] = tag
+                instantiated_type_kinds[t] = tag
+                if "::" not in t and current_pkg:
+                    fqn = f"{current_pkg}::{t}"
+                    instantiated_types.add(fqn)
+                    instantiated_type_kinds[fqn] = tag
 
-    type_by_pair, type_by_name = get_workspace_type_index(xml_path)
+    workspace_types = get_workspace_type_index(xml_path)
     
     for line, decl in imports:
-        if "::const::" in decl:
-            continue
-            
-        segs = [s.strip() for s in decl.split("::") if s.strip()]
-        if not segs:
-            continue
-        last_seg = segs[-1]
-        
-        # Check against instantiated elements in the same file
-        if decl in instantiated_types or last_seg in instantiated_type_names:
-            kind = instantiated_type_names.get(last_seg, "network element")
+        # Check against fully qualified instantiated elements in the same file
+        if decl in instantiated_types:
+            kind = instantiated_type_kinds.get(decl, "network element")
             violations.append({
                 "line": line,
                 "message": (
@@ -126,30 +142,36 @@ def check_compiler_info_imports(xml_doc, xml_path):
                 )
             })
             continue
-            
-        # Check against workspace type files (.fbt, .sub/.SUB, .adp)
-        matched_file = None
-        matched_ext = None
-        if len(segs) >= 2:
-            pair = (segs[-2].lower(), segs[-1].lower())
-            if pair in type_by_pair:
-                matched_file, matched_ext = type_by_pair[pair]
-                
-        if not matched_file and len(segs) >= 1:
-            base_lower = last_seg.lower()
-            if base_lower in type_by_name:
-                matched_file, matched_ext = type_by_name[base_lower]
-                
-        if matched_file:
+
+        # Check against fully qualified workspace type files (.fbt, .sub/.SUB, .adp)
+        decl_lower = decl.lower()
+        if decl_lower in workspace_types:
+            fqn, matched_file, matched_ext, _ = workspace_types[decl_lower]
             kind = "Function Block" if matched_ext == ".fbt" else ("SubApplication" if matched_ext == ".sub" else "Adapter")
             violations.append({
                 "line": line,
                 "message": (
-                    f"Invalid import '{decl}'. Found matching {kind} file '{matched_file}'. "
+                    f"Invalid import '{decl}'. Matches {kind} type '{fqn}' in '{matched_file}'. "
                     f"{kind} types must NOT be imported in <CompilerInfo>. "
                     f"In 4diac IDE, <CompilerInfo><Import> is ONLY for Global Constants (.gcf), DataTypes (.dtp), and Functions (.fct)."
                 )
             })
+            continue
+
+        # Also check unqualified import if current_pkg is defined
+        if "::" not in decl and current_pkg:
+            unqual_fqn = f"{current_pkg}::{decl}".lower()
+            if unqual_fqn in workspace_types:
+                fqn, matched_file, matched_ext, _ = workspace_types[unqual_fqn]
+                kind = "Function Block" if matched_ext == ".fbt" else ("SubApplication" if matched_ext == ".sub" else "Adapter")
+                violations.append({
+                    "line": line,
+                    "message": (
+                        f"Invalid import '{decl}'. Matches {kind} type '{fqn}' in '{matched_file}'. "
+                        f"{kind} types must NOT be imported in <CompilerInfo>. "
+                        f"In 4diac IDE, <CompilerInfo><Import> is ONLY for Global Constants (.gcf), DataTypes (.dtp), and Functions (.fct)."
+                    )
+                })
 
     return violations
 
