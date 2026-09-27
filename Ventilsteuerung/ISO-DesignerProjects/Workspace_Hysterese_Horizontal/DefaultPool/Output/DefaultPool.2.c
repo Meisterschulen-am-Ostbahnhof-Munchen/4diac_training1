@@ -20,12 +20,13 @@ const unsigned long ISO_OP_MEMORY_CLASS isoOP_DefaultPool_Offset[] = {
 	   396,  // NumberVariable_MID_Offset
 	   403,  // NumberVariable_DEAD_Offset
 	   410,  // NumberVariable_HYSTERESIS_Offset
-	   417,  // FontAttributes_6x8_Offset
-	   425,  // FontAttributes_Werte_Offset
-	   433,  // LineStyle_Hysterese_MID_Gruen_Offset
-	   441,  // LineStyle_Hysterese_DEAD_Orange_Offset
-	   449,  // LineStyle_Hysterese_HYST_Rot_Offset
-	   457,  // FillStyle_Hysterese_MID_Gruen_Offset
-	   465,  // FillStyle_Hysterese_DEAD_Orange_Offset
-	   473,  // FillStyle_Hysterese_HYST_Rot_Offset
+	   417,  // NumberVariable_Istwert_Offset
+	   424,  // FontAttributes_6x8_Offset
+	   432,  // FontAttributes_Werte_Offset
+	   440,  // LineStyle_Hysterese_MID_Gruen_Offset
+	   448,  // LineStyle_Hysterese_DEAD_Orange_Offset
+	   456,  // LineStyle_Hysterese_HYST_Rot_Offset
+	   464,  // FillStyle_Hysterese_MID_Gruen_Offset
+	   472,  // FillStyle_Hysterese_DEAD_Orange_Offset
+	   480,  // FillStyle_Hysterese_HYST_Rot_Offset
 };  // isoOP_DefaultPool_Offset

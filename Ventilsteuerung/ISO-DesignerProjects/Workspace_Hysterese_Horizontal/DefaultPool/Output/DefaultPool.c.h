@@ -17,21 +17,22 @@
 #define NumberVariable_MID_Offset                             396
 #define NumberVariable_DEAD_Offset                            403
 #define NumberVariable_HYSTERESIS_Offset                      410
-#define FontAttributes_6x8_Offset                             417
-#define FontAttributes_Werte_Offset                           425
-#define LineStyle_Hysterese_MID_Gruen_Offset                  433
-#define LineStyle_Hysterese_DEAD_Orange_Offset                441
-#define LineStyle_Hysterese_HYST_Rot_Offset                   449
-#define FillStyle_Hysterese_MID_Gruen_Offset                  457
-#define FillStyle_Hysterese_DEAD_Orange_Offset                465
-#define FillStyle_Hysterese_HYST_Rot_Offset                   473
+#define NumberVariable_Istwert_Offset                         417
+#define FontAttributes_6x8_Offset                             424
+#define FontAttributes_Werte_Offset                           432
+#define LineStyle_Hysterese_MID_Gruen_Offset                  440
+#define LineStyle_Hysterese_DEAD_Orange_Offset                448
+#define LineStyle_Hysterese_HYST_Rot_Offset                   456
+#define FillStyle_Hysterese_MID_Gruen_Offset                  464
+#define FillStyle_Hysterese_DEAD_Orange_Offset                472
+#define FillStyle_Hysterese_HYST_Rot_Offset                   480
 
 #define ISO_OP_MEMORY_CLASS
 
-#define ISO_OP_DefaultPool_Size    481
+#define ISO_OP_DefaultPool_Size    488
 extern const unsigned char ISO_OP_MEMORY_CLASS isoOP_DefaultPool[];
 
-#define ISO_OP_DefaultPool_ObjectNumber     24
+#define ISO_OP_DefaultPool_ObjectNumber     25
 extern const unsigned long ISO_OP_MEMORY_CLASS isoOP_DefaultPool_Offset[];
 extern const unsigned long ISO_OP_MEMORY_CLASS isoOP_DefaultPool_Offset_Id[];
 #define ISO_OP_DefaultPool_Scale_Offset      1

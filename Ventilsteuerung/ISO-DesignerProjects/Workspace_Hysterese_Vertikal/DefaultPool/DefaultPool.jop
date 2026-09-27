@@ -262,7 +262,7 @@
 		<Object Class="CLineStyle" JVS-ID="24002" ObjectName="LineStyle_Hysterese_HYST_Rot" Pinned="FALSE">
 			<PropertySheet Name="LineStyle" ID="68696">
 				<Property Name="Color">
-					<Value>16711680</Value>
+					<Value>255</Value>
 				</Property>
 				<Property Name="Style">
 					<Value>7</Value>
@@ -298,10 +298,10 @@
 					<Value>0</Value>
 				</Property>
 				<Property Name="BackColor">
-					<Value>16711680</Value>
+					<Value>255</Value>
 				</Property>
 				<Property Name="ForeColor">
-					<Value>16711680</Value>
+					<Value>255</Value>
 				</Property>
 				<Property Name="TransparentBackground">
 					<Value>1</Value>
@@ -734,6 +734,21 @@
 			<PropertySheet Name="NumberVariable" ID="68736">
 				<Property Name="Value">
 					<Value>20</Value>
+				</Property>
+			</PropertySheet>
+		</Object>
+		<Object Class="CNumberVariable" JVS-ID="21003" ObjectName="NumberVariable_Istwert" Pinned="FALSE">
+			<Property Name="Group">
+				<Value/>
+			</Property>
+			<Property Name="Comment">
+				<Value>
+					<![CDATA[AAA=]]>
+				</Value>
+			</Property>
+			<PropertySheet Name="NumberVariable" ID="68736">
+				<Property Name="Value">
+					<Value>50</Value>
 				</Property>
 			</PropertySheet>
 		</Object>
@@ -1224,7 +1239,7 @@
 					<Value>1</Value>
 				</Property>
 				<Property Name="ShowTargetLine">
-					<Value>0</Value>
+					<Value>1</Value>
 				</Property>
 				<Property Name="TargetVal">
 					<Value>
@@ -1249,10 +1264,10 @@
 					<Value>210</Value>
 				</Property>
 				<Property Name="PosValVariableObjectID">
-					<Value>-1</Value>
+					<Value>21003</Value>
 				</Property>
 				<Property Name="TargetValVariableObjectID">
-					<Value>-1</Value>
+					<Value>21000</Value>
 				</Property>
 				<Property Name="MinValVarObjectID">
 					<Value>-1</Value>
@@ -1264,6 +1279,10 @@
 					<Value>0</Value>
 				</Property>
 			</PropertySheet>
+			<Objects>
+				<Object JVS-ID="21003"/>
+				<Object JVS-ID="21000"/>
+			</Objects>
 		</Object>
 		<Object Class="CProxy" Name="Polygon" ObjectName="" Pinned="FALSE" JVS-ID="4194304">
 			<PropertySheet Name="Proxy">

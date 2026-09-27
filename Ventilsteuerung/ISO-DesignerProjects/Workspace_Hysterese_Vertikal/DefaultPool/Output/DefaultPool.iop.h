@@ -22,6 +22,7 @@
 #define NumberVariable_MID                21000
 #define NumberVariable_DEAD               21001
 #define NumberVariable_HYSTERESIS         21002
+#define NumberVariable_Istwert            21003
 #define FontAttributes_6x8                23000
 #define FontAttributes_Werte              23001
 #define LineStyle_Hysterese_MID_Gruen     24000
