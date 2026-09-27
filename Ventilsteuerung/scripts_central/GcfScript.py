@@ -1317,6 +1317,174 @@ def writeBargraphSplitGCFfile(data, filepaths):
     print(f"Written: {newfilepath}")
 
 
+def _parse_pixel_dimension(val_str):
+    """Parse a pixel dimension string as float, snapping to nearest integer if within 0.01."""
+    val = float(val_str)
+    if abs(val - round(val)) < 0.01:
+        return float(round(val))
+    return val
+
+
+def readBargraphJOP(jop_filepath):
+    """Parse a .jop file and extract linear bargraph geometry and scale info.
+
+    Detects each non-split Bargraph by a CRectangle object with a PropertySheet Name="Bargraph".
+    Halves of split bargraphs (ending in BARGRAPHSPLIT_NAME_SUFFIXES like "_links", "_rechts")
+    are skipped here as they are handled by readBargraphSplitJOP.
+
+    Orientation (Type property in PropertySheet Bargraph):
+      - 1 (Bottom to Top) / 2 (Top to Bottom): pixel length = Height
+      - 3 (Left to Right) / 4 (Right to Left): pixel length = Width
+
+    ScalePx = pixel length / (Max - Min).
+
+    Returns a dict keyed by ObjectName:
+        { "Bargraph_Hysterese": {
+            "scale_px": 1.86,
+            "length_px": 186.0,
+            "min": 0.0,
+            "max": 100.0,
+            "type": 3
+        }, ... }
+    """
+    tree = ET.parse(jop_filepath)
+    root = tree.getroot()
+    objects_container = root.find("Objects")
+    if objects_container is None:
+        return {}
+
+    result = {}
+    for obj in objects_container.findall("Object"):
+        name = obj.get("ObjectName")
+        if not name or not _is_bargraph_rectangle(obj):
+            continue
+
+        # Skip split-bargraph parts
+        if any(name.endswith(suffix) for suffix in BARGRAPHSPLIT_NAME_SUFFIXES):
+            continue
+
+        width_str = _get_prop(obj, "Width")
+        height_str = _get_prop(obj, "Height")
+        if width_str is None or height_str is None:
+            print(f"  Warning: '{name}' Bargraph missing Width/Height - skipping.")
+            continue
+
+        min_str = _get_prop(obj, "Min")
+        max_str = _get_prop(obj, "Max")
+        if min_str is None or max_str is None:
+            print(f"  Warning: '{name}' Bargraph missing Min/Max - skipping.")
+            continue
+
+        type_str = _get_prop(obj, "Type") or "1"
+        try:
+            bargraph_type = int(type_str)
+        except ValueError:
+            print(f"  Warning: '{name}' Bargraph has invalid Type '{type_str}' - skipping.")
+            continue
+
+        try:
+            width = _parse_pixel_dimension(width_str)
+            height = _parse_pixel_dimension(height_str)
+            min_val = float(min_str)
+            max_val = float(max_str)
+        except ValueError as e:
+            print(f"  Warning: '{name}' Bargraph has invalid numeric property ({e}) - skipping.")
+            continue
+
+        if bargraph_type in (1, 2):
+            pixel_length = height
+        elif bargraph_type in (3, 4):
+            pixel_length = width
+        else:
+            print(f"  Warning: '{name}' Bargraph has unrecognized Type {bargraph_type} - skipping.")
+            continue
+
+        val_range = max_val - min_val
+        if val_range == 0.0:
+            print(f"  Warning: '{name}' Bargraph Min == Max ({min_val}) - skipping.")
+            continue
+
+        scale_px = pixel_length / val_range
+
+        result[name] = {
+            "scale_px": scale_px,
+            "length_px": pixel_length,
+            "min": min_val,
+            "max": max_val,
+            "type": bargraph_type,
+        }
+
+    return result
+
+
+def writeBargraphGCFfile(data, filepaths):
+    """Write a <name>_Bargraph.gcf with constants for each detected linear bargraph.
+
+    For each Bargraph (CRectangle with PropertySheet Name="Bargraph"), emits:
+      - <name>_ScalePx: pixel length / (Max - Min) as REAL
+      - <name>_LengthPx: pixel length as REAL
+      - <name>_Min: Min as REAL
+      - <name>_Max: Max as REAL
+      - <name>_Type: orientation Type (1=B-to-T, 2=T-to-B, 3=L-to-R, 4=R-to-L) as USINT
+    """
+    newfilepath = safe_output_path(filepaths[1], filepaths[2] + '_Bargraph.gcf')
+    gcf_name    = filepaths[2] + '_Bargraph'
+    package     = filepaths[3]
+
+    root = ET.Element("GlobalConstants", Name=gcf_name, Comment="Bargraph geometry and scale constants (Length, ScalePx, Min, Max, Type)")
+
+    compiler_info = ET.SubElement(root, "CompilerInfo")
+    compiler_info.set("packageName", package)
+
+    global_constants = ET.SubElement(root, "GlobalConstants")
+
+    for name, info in sorted(data.items()):
+        ET.SubElement(
+            global_constants,
+            "VarDeclaration",
+            Name=name + "_ScalePx",
+            Type="REAL",
+            InitialValue=_format_real(info["scale_px"]),
+        )
+        ET.SubElement(
+            global_constants,
+            "VarDeclaration",
+            Name=name + "_LengthPx",
+            Type="REAL",
+            InitialValue=_format_real(info["length_px"]),
+        )
+        ET.SubElement(
+            global_constants,
+            "VarDeclaration",
+            Name=name + "_Min",
+            Type="REAL",
+            InitialValue=_format_real(info["min"]),
+        )
+        ET.SubElement(
+            global_constants,
+            "VarDeclaration",
+            Name=name + "_Max",
+            Type="REAL",
+            InitialValue=_format_real(info["max"]),
+        )
+        ET.SubElement(
+            global_constants,
+            "VarDeclaration",
+            Name=name + "_Type",
+            Type="USINT",
+            InitialValue=str(info["type"]),
+        )
+
+    xml_str = ET.tostring(root, encoding='utf-8').decode()
+    xml_str = minidom.parseString(xml_str).toprettyxml(indent="\t")
+    xml_str = xml_str[:19] + ' ' + 'encoding="UTF-8"' + xml_str[20:]
+
+    with open(newfilepath, "w") as file:
+        file.write(xml_str)
+
+    print(f"Written: {newfilepath}")
+
+
 if __name__ == "__main__":
 
     # Gets filepaths and saves it in a variable
@@ -1348,7 +1516,11 @@ if __name__ == "__main__":
         if bargraph_split_data:
             writeBargraphSplitGCFfile(bargraph_split_data, filepaths)
 
+        bargraph_data = readBargraphJOP(filepaths[4])
+        if bargraph_data:
+            writeBargraphGCFfile(bargraph_data, filepaths)
+
 
 __author__ = "Lorenz Bauer / Franz Höpfinger"
-__version__ = "0.3"
-__description__ = "Converts .iop.h to .gcf; optionally converts .jop to NumericObjectPool_S .gcf; strips _<ID> suffix from unique object names"
+__version__ = "0.4"
+__description__ = "Converts .iop.h to .gcf; optionally converts .jop to NumericObjectPool_S, Scroll, PositionMarker, BargraphSplit, and Bargraph .gcf; strips _<ID> suffix from unique object names"
