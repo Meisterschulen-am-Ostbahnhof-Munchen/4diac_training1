@@ -57,6 +57,7 @@ python .agents/skills/iec61499-creator/scripts/validate.py <path_to_xml_file>
 - **PascalCase Attributes**: All attributes (like `Name`, `Comment`, `Type`, `Var`, `Value`) use PascalCase. Note that `Var` is capitalized (e.g. `<With Var="QI"/>`).
 - **Empty Collections**: Elements like `EventInputs`, `EventOutputs`, `InputVars`, and `OutputVars` can be empty (e.g., `<InputVars/>`).
 - **Self-Closing Tags**: Empty elements (e.g., `SubAppEvent`, `Identification`, `VersionInfo` with no nested tags) should be written as self-closing tags (e.g. `<Identification />`) to prevent validation failures caused by whitespace character content.
+- **CompilerInfo Imports**: `<CompilerInfo><Import declaration="..."/></CompilerInfo>` is strictly and solely for Global Constants (`.gcf`), DataTypes (`.dtp`), and Functions (`.fct`). **NEVER** import SubApplications (`.SUB`/`.sub`), Function Blocks (`.fbt`), or Adapters (`.adp`) — they are resolved via the `Type` attribute on their instance/interface tags (see Section 14).
 
 ### 4. ST Code, Datatypes & Conversions Guidelines
 
@@ -179,3 +180,34 @@ Reference the field via `.D1` in `DataConnections` (e.g. `Source="DT.D1" Destina
 
 - **Applied fix (2026-09-17, Franz: "es darf keine Variable OHNE INIT geben")**: `adapter::events::unidirectional::timers::AE_DELAY`, `adapter::events::bidirectional::ASR2_DELAY`, and the newly created `adapter::events::bidirectional::AE2_DELAY` all previously had (or would have had) a bare `DT:TIME` `InputVar`. All three now expose `DT` (or `DT_SET`/`DT_RESET` where more than one independent time is needed) as an `ATM` `Socket` instead.
 - This does **not** forbid every `InputVar` with an `InitialValue` — a scalar tuning parameter meant to be set once per instance via a plain `Parameter` at instantiation (e.g. `K`/`run` on `OSCAT_adapter::Control::FT_DERIV_AR`) is a different, accepted pattern and stays as-is. The distinction: if the value is naturally part of this block's *adapter-based dataflow boundary* (like a delay time feeding a chain of delay blocks) rather than a one-off per-instance tuning knob, route it through the adapter+`initval` convention, not a bare `InputVar`.
+
+### 14. `<CompilerInfo><Import>` is ONLY for Constants, DataTypes, and Functions — NEVER for SubApp, FB, or Adapter Types!
+
+In IEC 61499 and Eclipse 4diac IDE, `<CompilerInfo><Import declaration="..."/></CompilerInfo>` has a very specific and limited scope. It is **NOT** a general-purpose import like in Java, C#, or Python.
+
+#### Allowed Imports:
+- **Global Constants (`.gcf`)**: e.g. `isobus::UT::Q::const::IDs::ID_NULL`, `logiBUS::io::AI::logiBUS_AI::AnalogInput_I4`, `Uebungen::const::UT::...`
+- **Data Types (`.dtp`)**: Structured (`STRUCT`) or enumerated (`ENUM`) data types used in variable declarations or algorithms
+- **Functions (`.fct`)**: Standard or user-defined functions called in ST code
+
+#### STRICTLY FORBIDDEN Imports:
+- **SubApplication Types (`.SUB`, `.sub`)**: e.g. `MyLib::sys::Q_ChildPosition_AR_Horizontal`
+- **Function Block Types (`.fbt`)**: e.g. `isobus::UT::Q::Q_ChildPosition_AI`, `adapter::conversion::unidirectional::AR_TO_AI`
+- **Adapter Types (`.adp`)**
+
+#### Why?
+In 4diac IDE, SubApplication, Function Block, and Adapter types are resolved **automatically** via the `Type` attribute on their respective instance or interface elements:
+- `<SubApp Name="QPos_MID" Type="MyLib::sys::Q_ChildPosition_AR_Horizontal" .../>`
+- `<FB Name="ToAI_MID" Type="adapter::conversion::unidirectional::AR_TO_AI" .../>`
+- `<Socket Name="rPhys" Type="adapter::types::unidirectional::AR" .../>`
+
+The 4diac IDE compiler/scoping index treats every entry under `<CompilerInfo><Import declaration="..."/></CompilerInfo>` as a DataType, Constant, or Function. If a SubApp, FB, or Adapter type is placed there, 4diac IDE fails to find a matching DataType/Constant/Function and generates a compile error:
+```text
+The import <Package>::<TypeName> does not exist (4diac IDE Import Problem)
+```
+
+#### Rules for Agents and Developers:
+1. **NEVER** add an `<Import declaration="..."/>` for a SubApp, FB, or Adapter type you are instantiating in the network.
+2. Only add `<Import declaration="..."/>` for global constants (`.gcf`) that are passed into parameters (see Section 9), data types (`.dtp`), or functions (`.fct`).
+3. If refactoring a network (e.g. replacing a group of FBs with a new SubApp type), remove any obsolete imports from `<CompilerInfo>` and **do NOT** import the new SubApp type!
+

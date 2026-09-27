@@ -28,6 +28,131 @@ class ValidationError(Exception):
         self.errors = errors
         super().__init__("\n".join(errors))
 
+_WORKSPACE_TYPE_CACHE = {}
+
+def get_workspace_type_index(xml_path):
+    if not xml_path:
+        return {}, {}
+    
+    cur = os.path.dirname(os.path.abspath(xml_path))
+    search_root = None
+    while cur and cur != os.path.dirname(cur):
+        if os.path.exists(os.path.join(cur, ".git")) or os.path.exists(os.path.join(cur, "4diacIDE-workspace")):
+            search_root = cur
+            break
+        cur = os.path.dirname(cur)
+        
+    if not search_root:
+        return {}, {}
+        
+    if search_root in _WORKSPACE_TYPE_CACHE:
+        return _WORKSPACE_TYPE_CACHE[search_root]
+        
+    type_by_pair = {}
+    type_by_name = {}
+    for r, d, fs in os.walk(search_root):
+        for f in fs:
+            ext = os.path.splitext(f)[1].lower()
+            if ext in ('.fbt', '.sub', '.adp'):
+                base = os.path.splitext(f)[0].lower()
+                parent = os.path.basename(r).lower()
+                type_by_pair[(parent, base)] = (f, ext)
+                type_by_name[base] = (f, ext)
+                
+    _WORKSPACE_TYPE_CACHE[search_root] = (type_by_pair, type_by_name)
+    return type_by_pair, type_by_name
+
+def check_compiler_info_imports(xml_doc, xml_path):
+    """
+    Checks that <CompilerInfo><Import declaration="..."/></CompilerInfo> does NOT
+    import Function Block Types (.fbt), SubApplication Types (.SUB/.sub), or
+    Adapter Types (.adp).
+    In 4diac IDE, <CompilerInfo><Import> is ONLY for:
+      - Global Constants (.gcf)
+      - Data Types (.dtp)
+      - Functions (.fct)
+    FB, SubApp, and Adapter types are resolved via the Type="..." attribute of
+    <FB>, <SubApp>, <Adapter>, <Socket>, or <Plug> elements. Importing them causes
+    the 4diac IDE error: "The import <declaration> does not exist (4diac IDE Import Problem)".
+    """
+    violations = []
+    
+    imports = []
+    for elem in xml_doc.iter():
+        if not isinstance(elem.tag, str):
+            continue
+        tag = elem.tag.split('}', 1)[1] if '}' in elem.tag else elem.tag
+        if tag == "Import":
+            decl = elem.get("declaration", "").strip()
+            if decl:
+                imports.append((elem.sourceline, decl))
+                
+    if not imports:
+        return violations
+        
+    instantiated_types = set()
+    instantiated_type_names = {}
+    for elem in xml_doc.iter():
+        if not isinstance(elem.tag, str):
+            continue
+        tag = elem.tag.split('}', 1)[1] if '}' in elem.tag else elem.tag
+        if tag in ("FB", "SubApp", "Adapter", "Socket", "Plug"):
+            t = elem.get("Type")
+            if t:
+                instantiated_types.add(t)
+                name = t.split("::")[-1]
+                instantiated_type_names[name] = tag
+
+    type_by_pair, type_by_name = get_workspace_type_index(xml_path)
+    
+    for line, decl in imports:
+        if "::const::" in decl:
+            continue
+            
+        segs = [s.strip() for s in decl.split("::") if s.strip()]
+        if not segs:
+            continue
+        last_seg = segs[-1]
+        
+        # Check against instantiated elements in the same file
+        if decl in instantiated_types or last_seg in instantiated_type_names:
+            kind = instantiated_type_names.get(last_seg, "network element")
+            violations.append({
+                "line": line,
+                "message": (
+                    f"Invalid import '{decl}'. {kind} types must NOT be imported in <CompilerInfo>. "
+                    f"They are resolved automatically via the Type attribute on <{kind} ...> instances. "
+                    f"In 4diac IDE, <CompilerInfo><Import> is ONLY for Global Constants (.gcf), DataTypes (.dtp), and Functions (.fct)."
+                )
+            })
+            continue
+            
+        # Check against workspace type files (.fbt, .sub/.SUB, .adp)
+        matched_file = None
+        matched_ext = None
+        if len(segs) >= 2:
+            pair = (segs[-2].lower(), segs[-1].lower())
+            if pair in type_by_pair:
+                matched_file, matched_ext = type_by_pair[pair]
+                
+        if not matched_file and len(segs) >= 1:
+            base_lower = last_seg.lower()
+            if base_lower in type_by_name:
+                matched_file, matched_ext = type_by_name[base_lower]
+                
+        if matched_file:
+            kind = "Function Block" if matched_ext == ".fbt" else ("SubApplication" if matched_ext == ".sub" else "Adapter")
+            violations.append({
+                "line": line,
+                "message": (
+                    f"Invalid import '{decl}'. Found matching {kind} file '{matched_file}'. "
+                    f"{kind} types must NOT be imported in <CompilerInfo>. "
+                    f"In 4diac IDE, <CompilerInfo><Import> is ONLY for Global Constants (.gcf), DataTypes (.dtp), and Functions (.fct)."
+                )
+            })
+
+    return violations
+
 def validate_xml(xml_path, schemas_dir):
     """
     Validates an XML file against its corresponding XSD schema and runs custom semantic checks.
@@ -123,6 +248,16 @@ def validate_xml(xml_path, schemas_dir):
     except Exception as e:
         semantic_errors.append(f"Keyword validation loader failed: {e}")
 
+    # 2.3. CompilerInfo Import validation (SubApp, FB, and Adapter types must not be imported)
+    try:
+        import_violations = check_compiler_info_imports(xml_doc, xml_path)
+        if import_violations:
+            semantic_errors.append("CompilerInfo Import Validation FAILED:")
+            for v in import_violations:
+                semantic_errors.append(f"  Line {v['line']}: {v['message']}")
+    except Exception as e:
+        semantic_errors.append(f"CompilerInfo import validation failed: {e}")
+
     if semantic_errors:
         raise ValidationError(semantic_errors)
         
@@ -143,6 +278,7 @@ def main():
         print("XSD Validation SUCCESS: File is valid against the schema.")
         print("OutputVars VarDeclaration Name Validation SUCCESS.")
         print("Keyword Validation SUCCESS: No reserved keyword violations found.")
+        print("CompilerInfo Import Validation SUCCESS: No SubApp/FB/Adapter type imports found.")
         sys.exit(0)
     except ValidationError as ve:
         for err in ve.errors:
