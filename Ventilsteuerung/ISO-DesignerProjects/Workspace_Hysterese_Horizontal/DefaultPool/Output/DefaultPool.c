@@ -76,8 +76,8 @@ const unsigned char ISO_OP_MEMORY_CLASS isoOP_DefaultPool[] = {
 	ID(FontAttributes_Werte), TYPEID_FONTATTR, COLOR_BLACK, 3, 0, 0, 0, 
 	ID(LineStyle_Hysterese_MID_Gruen), TYPEID_LINEATTR, COLOR(112), 1, WORD(65535), 0, 
 	ID(LineStyle_Hysterese_DEAD_Orange), TYPEID_LINEATTR, COLOR(39), 1, WORD(65535), 0, 
-	ID(LineStyle_Hysterese_HYST_Rot), TYPEID_LINEATTR, COLOR_BLUE, 1, WORD(65535), 0, 
+	ID(LineStyle_Hysterese_HYST_Rot), TYPEID_LINEATTR, COLOR_RED, 1, WORD(65535), 0, 
 	ID(FillStyle_Hysterese_MID_Gruen), TYPEID_FILLATTR, 2, COLOR(112), ID(ID_NULL), 0, 
 	ID(FillStyle_Hysterese_DEAD_Orange), TYPEID_FILLATTR, 2, COLOR(39), ID(ID_NULL), 0, 
-	ID(FillStyle_Hysterese_HYST_Rot), TYPEID_FILLATTR, 2, COLOR_BLUE, ID(ID_NULL), 0, 
+	ID(FillStyle_Hysterese_HYST_Rot), TYPEID_FILLATTR, 2, COLOR_RED, ID(ID_NULL), 0, 
 }; // isoOP_DefaultPool
