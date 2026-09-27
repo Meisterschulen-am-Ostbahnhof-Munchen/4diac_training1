@@ -49,45 +49,35 @@
 		</FB>
 		<FB Name="Sub_MidDeadHyst" Type="adapter::iec61131::arithmetic::AR_SUB_2" x="-6000" y="1500">
 		</FB>
-		<SubApp Name="Mul_MID" Type="MyLib::sys::AR_R_MUL" x="-400" y="500">
-			<Parameter Name="FACTOR" Value="Bargraph_Hysterese_ScalePx"/>
-		</SubApp>
-		<SubApp Name="QPos_MID" Type="MyLib::sys::Q_ChildPosition_AR_Horizontal" x="2000" y="0">
+		<SubApp Name="QPos_MID" Type="MyLib::sys::Q_ChildPosition_AR_Bargraph_LeftToRight" x="2000" y="0">
 			<Parameter Name="u16ObjId" Value="Polygon_MID"/>
 			<Parameter Name="u16ObjIdParent" Value="Container_Schwellwerte"/>
 			<Parameter Name="xScale" Value="TRUE"/>
+			<Parameter Name="ScalePx" Value="Bargraph_Hysterese_ScalePx"/>
 		</SubApp>
-		<SubApp Name="Mul_MID_PLUS_DEAD" Type="MyLib::sys::AR_R_MUL" x="-400" y="1600">
-			<Parameter Name="FACTOR" Value="Bargraph_Hysterese_ScalePx"/>
-		</SubApp>
-		<SubApp Name="QPos_MID_PLUS_DEAD" Type="MyLib::sys::Q_ChildPosition_AR_Horizontal" x="2000" y="1000">
+		<SubApp Name="QPos_MID_PLUS_DEAD" Type="MyLib::sys::Q_ChildPosition_AR_Bargraph_LeftToRight" x="2000" y="1000">
 			<Parameter Name="u16ObjId" Value="Polygon_MID_PLUS_DEAD"/>
 			<Parameter Name="u16ObjIdParent" Value="Container_Schwellwerte"/>
 			<Parameter Name="xScale" Value="TRUE"/>
+			<Parameter Name="ScalePx" Value="Bargraph_Hysterese_ScalePx"/>
 		</SubApp>
-		<SubApp Name="Mul_MID_MINUS_DEAD" Type="MyLib::sys::AR_R_MUL" x="-400" y="2600">
-			<Parameter Name="FACTOR" Value="Bargraph_Hysterese_ScalePx"/>
-		</SubApp>
-		<SubApp Name="QPos_MID_MINUS_DEAD" Type="MyLib::sys::Q_ChildPosition_AR_Horizontal" x="2000" y="2000">
+		<SubApp Name="QPos_MID_MINUS_DEAD" Type="MyLib::sys::Q_ChildPosition_AR_Bargraph_LeftToRight" x="2000" y="2000">
 			<Parameter Name="u16ObjId" Value="Polygon_MID_MINUS_DEAD"/>
 			<Parameter Name="u16ObjIdParent" Value="Container_Schwellwerte"/>
 			<Parameter Name="xScale" Value="TRUE"/>
+			<Parameter Name="ScalePx" Value="Bargraph_Hysterese_ScalePx"/>
 		</SubApp>
-		<SubApp Name="Mul_MID_PLUS_DEAD_HYST" Type="MyLib::sys::AR_R_MUL" x="-500" y="3500">
-			<Parameter Name="FACTOR" Value="Bargraph_Hysterese_ScalePx"/>
-		</SubApp>
-		<SubApp Name="QPos_MID_PLUS_DEAD_HYST" Type="MyLib::sys::Q_ChildPosition_AR_Horizontal" x="2000" y="3000">
+		<SubApp Name="QPos_MID_PLUS_DEAD_HYST" Type="MyLib::sys::Q_ChildPosition_AR_Bargraph_LeftToRight" x="2000" y="3000">
 			<Parameter Name="u16ObjId" Value="Polygon_MID_PLUS_DEAD_HYST"/>
 			<Parameter Name="u16ObjIdParent" Value="Container_Schwellwerte"/>
 			<Parameter Name="xScale" Value="TRUE"/>
+			<Parameter Name="ScalePx" Value="Bargraph_Hysterese_ScalePx"/>
 		</SubApp>
-		<SubApp Name="Mul_MID_MINUS_DEAD_HYST" Type="MyLib::sys::AR_R_MUL" x="-400" y="4500">
-			<Parameter Name="FACTOR" Value="Bargraph_Hysterese_ScalePx"/>
-		</SubApp>
-		<SubApp Name="QPos_MID_MINUS_DEAD_HYST" Type="MyLib::sys::Q_ChildPosition_AR_Horizontal" x="2000" y="4000">
+		<SubApp Name="QPos_MID_MINUS_DEAD_HYST" Type="MyLib::sys::Q_ChildPosition_AR_Bargraph_LeftToRight" x="2000" y="4000">
 			<Parameter Name="u16ObjId" Value="Polygon_MID_MINUS_DEAD_HYST"/>
 			<Parameter Name="u16ObjIdParent" Value="Container_Schwellwerte"/>
 			<Parameter Name="xScale" Value="TRUE"/>
+			<Parameter Name="ScalePx" Value="Bargraph_Hysterese_ScalePx"/>
 		</SubApp>
 		<AdapterConnections>
 			<Connection Source="MID_N.rPhys" Destination="Split_MID.IN" dx1="186.67"/>
@@ -103,16 +93,11 @@
 			<Connection Source="Split_HYST.OUT1" Destination="Add_MidDeadHyst.IN2" dx1="1880"/>
 			<Connection Source="Split_SubResult.OUT2" Destination="Sub_MidDeadHyst.IN1" dx1="380"/>
 			<Connection Source="Split_HYST.OUT2" Destination="Sub_MidDeadHyst.IN2" dx1="1880"/>
-			<Connection Source="Split_MID.OUT1" Destination="Mul_MID.IN1" dx1="3620"/>
-			<Connection Source="Mul_MID.OUT" Destination="QPos_MID.rPhys" dx1="1360"/>
-			<Connection Source="Split_AddResult.OUT1" Destination="Mul_MID_PLUS_DEAD.IN1" dx1="2153.33"/>
-			<Connection Source="Mul_MID_PLUS_DEAD.OUT" Destination="QPos_MID_PLUS_DEAD.rPhys" dx1="1293.33"/>
-			<Connection Source="Split_SubResult.OUT1" Destination="Mul_MID_MINUS_DEAD.IN1" dx1="2166.67"/>
-			<Connection Source="Mul_MID_MINUS_DEAD.OUT" Destination="QPos_MID_MINUS_DEAD.rPhys" dx1="1166.67"/>
-			<Connection Source="Add_MidDeadHyst.OUT" Destination="Mul_MID_PLUS_DEAD_HYST.IN1" dx1="1500"/>
-			<Connection Source="Mul_MID_PLUS_DEAD_HYST.OUT" Destination="QPos_MID_PLUS_DEAD_HYST.rPhys" dx1="1373.33"/>
-			<Connection Source="Sub_MidDeadHyst.OUT" Destination="Mul_MID_MINUS_DEAD_HYST.IN1" dx1="1513.33"/>
-			<Connection Source="Mul_MID_MINUS_DEAD_HYST.OUT" Destination="QPos_MID_MINUS_DEAD_HYST.rPhys" dx1="1253.33"/>
+			<Connection Source="Split_MID.OUT1" Destination="QPos_MID.rPhys" dx1="3620"/>
+			<Connection Source="Split_AddResult.OUT1" Destination="QPos_MID_PLUS_DEAD.rPhys" dx1="2153.33"/>
+			<Connection Source="Split_SubResult.OUT1" Destination="QPos_MID_MINUS_DEAD.rPhys" dx1="2166.67"/>
+			<Connection Source="Add_MidDeadHyst.OUT" Destination="QPos_MID_PLUS_DEAD_HYST.rPhys" dx1="1500"/>
+			<Connection Source="Sub_MidDeadHyst.OUT" Destination="QPos_MID_MINUS_DEAD_HYST.rPhys" dx1="1513.33"/>
 		</AdapterConnections>
 	</SubAppNetwork>
 </SubAppType>
