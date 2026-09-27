@@ -2,6 +2,8 @@
 <SubAppType Name="Uebung_HystereseVertikal_AX_withAnalog" Comment="MID/DEAD/HYSTERESIS-Eingabefelder bewegen live die 5 Schwellwert-Dreiecke im vertikalen Bargraph (Type=1 BottomToTop, Pixelposition gespiegelt: hoher Wert = kleiner Top)">
 	<Identification Standard="61499-2" Description="Copyright (c) 2026 Meisterschulen am Ostbahnhof  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0">
 	</Identification>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.2" Author="Franz Höpfinger" Date="2026-09-27" Remarks="Schwellwert-Berechnung zu MyLib::sys::DualHysteresis_Thresholds_AR ausgelagert">
+	</VersionInfo>
 	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.1" Author="Franz Höpfinger" Date="2026-09-27" Remarks="AR_TO_AI, Zero, QPos zu MyLib::sys::Q_ChildPosition_AR_Vertikal SubApp ausgelagert">
 	</VersionInfo>
 	<CompilerInfo packageName="Uebungen">
@@ -36,24 +38,8 @@
 			<Parameter Name="QI" Value="TRUE"/>
 			<Parameter Name="stObj" Value="InputNumber_HYSTERESIS_N"/>
 		</FB>
-		<FB Name="Split_MID" Type="adapter::events::unidirectional::AR_SPLIT_4" x="-10500" y="0">
-		</FB>
-		<FB Name="Split_DEAD" Type="adapter::events::unidirectional::AR_SPLIT_3" x="-10500" y="1200">
-		</FB>
-		<FB Name="Split_HYST" Type="adapter::events::unidirectional::AR_SPLIT_3" x="-10500" y="2400">
-		</FB>
-		<FB Name="Add_MidDead" Type="adapter::iec61131::arithmetic::AR_ADD_2" x="-9000" y="300">
-		</FB>
-		<FB Name="Sub_MidDead" Type="adapter::iec61131::arithmetic::AR_SUB_2" x="-9000" y="900">
-		</FB>
-		<FB Name="Split_AddResult" Type="adapter::events::unidirectional::AR_SPLIT_2" x="-7500" y="300">
-		</FB>
-		<FB Name="Split_SubResult" Type="adapter::events::unidirectional::AR_SPLIT_2" x="-7500" y="900">
-		</FB>
-		<FB Name="Add_MidDeadHyst" Type="adapter::iec61131::arithmetic::AR_ADD_2" x="-6000" y="600">
-		</FB>
-		<FB Name="Sub_MidDeadHyst" Type="adapter::iec61131::arithmetic::AR_SUB_2" x="-6000" y="1500">
-		</FB>
+		<SubApp Name="Thresholds" Type="MyLib::sys::DualHysteresis_Thresholds_AR" x="-7500" y="1000">
+		</SubApp>
 		<FB Name="AnalogInput_I4" Type="logiBUS::io::AI::logiBUS_AI_IDA" x="-12000" y="3800">
 			<Parameter Name="QI" Value="TRUE"/>
 			<Parameter Name="Input" Value="AnalogInput_I4"/>
@@ -120,35 +106,25 @@
 			<Parameter Name="LengthPx" Value="Bargraph_Hysterese_LengthPx"/>
 		</SubApp>
 		<AdapterConnections>
-			<Connection Source="MID_N.rPhys" Destination="Split_MID.IN" dx1="186.67"/>
-			<Connection Source="DEAD_N.rPhys" Destination="Split_DEAD.IN" dx1="186.67"/>
-			<Connection Source="HYST_N.rPhys" Destination="Split_HYST.IN" dx1="186.67"/>
-			<Connection Source="Split_MID.OUT2" Destination="Add_MidDead.IN1" dx1="373.33"/>
-			<Connection Source="Split_DEAD.OUT1" Destination="Add_MidDead.IN2" dx1="373.33"/>
-			<Connection Source="Split_MID.OUT3" Destination="Sub_MidDead.IN1" dx1="373.33"/>
-			<Connection Source="Split_DEAD.OUT2" Destination="Sub_MidDead.IN2" dx1="373.33"/>
-			<Connection Source="Add_MidDead.OUT" Destination="Split_AddResult.IN"/>
-			<Connection Source="Sub_MidDead.OUT" Destination="Split_SubResult.IN"/>
-			<Connection Source="Split_AddResult.OUT2" Destination="Add_MidDeadHyst.IN1" dx1="380"/>
-			<Connection Source="Split_HYST.OUT1" Destination="Add_MidDeadHyst.IN2" dx1="1880"/>
-			<Connection Source="Split_SubResult.OUT2" Destination="Sub_MidDeadHyst.IN1" dx1="380"/>
-			<Connection Source="Split_HYST.OUT2" Destination="Sub_MidDeadHyst.IN2" dx1="1880"/>
+			<Connection Source="MID_N.rPhys" Destination="Thresholds.MI" dx1="500"/>
+			<Connection Source="DEAD_N.rPhys" Destination="Thresholds.DEAD" dx1="500"/>
+			<Connection Source="HYST_N.rPhys" Destination="Thresholds.HYST" dx1="500"/>
 			<Connection Source="AnalogInput_I4.IN" Destination="AD_TO_AUDI.AD_IN" dx1="80" dx2="80" dy="-426.67"/>
 			<Connection Source="AD_TO_AUDI.AUDI_OUT" Destination="AUDI_TO_AR.AUDI_IN" dx1="293.33"/>
 			<Connection Source="AUDI_TO_AR.AR_OUT" Destination="Mul_Istwert.IN1" dx1="340"/>
 			<Connection Source="Mul_Istwert.OUT" Destination="Split_Istwert.IN" dx1="420"/>
 			<Connection Source="Split_Istwert.OUT1" Destination="Q_Istwert.rPhys" dx1="373.33"/>
 			<Connection Source="Split_Istwert.OUT2" Destination="DualHysteresis.INPUT" dx1="373.33"/>
-			<Connection Source="Split_MID.OUT4" Destination="DualHysteresis.MI" dx1="2620"/>
-			<Connection Source="Split_DEAD.OUT3" Destination="DualHysteresis.DEAD" dx1="2620"/>
-			<Connection Source="Split_HYST.OUT3" Destination="DualHysteresis.HYSTERESIS" dx1="2620"/>
+			<Connection Source="Thresholds.MID_OUT" Destination="DualHysteresis.MI" dx1="500"/>
+			<Connection Source="Thresholds.DEAD_OUT" Destination="DualHysteresis.DEAD" dx1="500"/>
+			<Connection Source="Thresholds.HYST_OUT" Destination="DualHysteresis.HYSTERESIS" dx1="500"/>
 			<Connection Source="DualHysteresis.DO_UP" Destination="Output_Hoch.OUT" dx1="386.67"/>
 			<Connection Source="DualHysteresis.DO_DOWN" Destination="Output_Runter.OUT" dx1="386.67"/>
-			<Connection Source="Split_MID.OUT1" Destination="QPos_MID.rPhys"/>
-			<Connection Source="Split_AddResult.OUT1" Destination="QPos_MID_PLUS_DEAD.rPhys" dx1="2153.33"/>
-			<Connection Source="Split_SubResult.OUT1" Destination="QPos_MID_MINUS_DEAD.rPhys" dx1="2166.67"/>
-			<Connection Source="Add_MidDeadHyst.OUT" Destination="QPos_MID_PLUS_DEAD_HYST.rPhys" dx1="1500"/>
-			<Connection Source="Sub_MidDeadHyst.OUT" Destination="QPos_MID_MINUS_DEAD_HYST.rPhys" dx1="1513.33"/>
+			<Connection Source="Thresholds.MID_OUT" Destination="QPos_MID.rPhys" dx1="500"/>
+			<Connection Source="Thresholds.MID_PLUS_DEAD" Destination="QPos_MID_PLUS_DEAD.rPhys" dx1="500"/>
+			<Connection Source="Thresholds.MID_MINUS_DEAD" Destination="QPos_MID_MINUS_DEAD.rPhys" dx1="500"/>
+			<Connection Source="Thresholds.MID_PLUS_DEAD_HYST" Destination="QPos_MID_PLUS_DEAD_HYST.rPhys" dx1="500"/>
+			<Connection Source="Thresholds.MID_MINUS_DEAD_HYST" Destination="QPos_MID_MINUS_DEAD_HYST.rPhys" dx1="500"/>
 		</AdapterConnections>
 	</SubAppNetwork>
 </SubAppType>
