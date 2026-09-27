@@ -1,5 +1,6 @@
 from argparse import ArgumentParser
 import glob
+import math
 import os
 import re
 import xml.etree.ElementTree as ET
@@ -1325,6 +1326,69 @@ def _parse_pixel_dimension(val_str):
     return val
 
 
+def _extract_one_bargraph(obj, name):
+    """Extract and validate geometry and scale properties for a single Bargraph object.
+
+    Returns an info dict or None if invalid/incomplete.
+    """
+    width_str = _get_prop(obj, "Width")
+    height_str = _get_prop(obj, "Height")
+    if width_str is None or height_str is None:
+        print(f"  Warning: '{name}' Bargraph missing Width/Height - skipping.")
+        return None
+
+    min_str = _get_prop(obj, "Min")
+    max_str = _get_prop(obj, "Max")
+    if min_str is None or max_str is None:
+        print(f"  Warning: '{name}' Bargraph missing Min/Max - skipping.")
+        return None
+
+    type_str = _get_prop(obj, "Type")
+    if type_str is None:
+        print(f"  Warning: '{name}' Bargraph missing Type - skipping.")
+        return None
+
+    try:
+        bargraph_type = int(type_str)
+    except ValueError:
+        print(f"  Warning: '{name}' Bargraph has invalid Type '{type_str}' - skipping.")
+        return None
+
+    try:
+        if not all(math.isfinite(float(v)) for v in (width_str, height_str, min_str, max_str)):
+            raise ValueError("numeric properties must be finite")
+        width = _parse_pixel_dimension(width_str)
+        height = _parse_pixel_dimension(height_str)
+        min_val = float(min_str)
+        max_val = float(max_str)
+    except ValueError as e:
+        print(f"  Warning: '{name}' Bargraph has invalid numeric property ({e}) - skipping.")
+        return None
+
+    if bargraph_type in (1, 2):
+        pixel_length = height
+    elif bargraph_type in (3, 4):
+        pixel_length = width
+    else:
+        print(f"  Warning: '{name}' Bargraph has unrecognized Type {bargraph_type} - skipping.")
+        return None
+
+    val_range = max_val - min_val
+    if math.isclose(min_val, max_val):
+        print(f"  Warning: '{name}' Bargraph Min == Max ({min_val}) - skipping.")
+        return None
+
+    scale_px = pixel_length / val_range
+
+    return {
+        "scale_px": scale_px,
+        "length_px": pixel_length,
+        "min": min_val,
+        "max": max_val,
+        "type": bargraph_type,
+    }
+
+
 def readBargraphJOP(jop_filepath):
     """Parse a .jop file and extract linear bargraph geometry and scale info.
 
@@ -1363,56 +1427,9 @@ def readBargraphJOP(jop_filepath):
         if any(name.endswith(suffix) for suffix in BARGRAPHSPLIT_NAME_SUFFIXES):
             continue
 
-        width_str = _get_prop(obj, "Width")
-        height_str = _get_prop(obj, "Height")
-        if width_str is None or height_str is None:
-            print(f"  Warning: '{name}' Bargraph missing Width/Height - skipping.")
-            continue
-
-        min_str = _get_prop(obj, "Min")
-        max_str = _get_prop(obj, "Max")
-        if min_str is None or max_str is None:
-            print(f"  Warning: '{name}' Bargraph missing Min/Max - skipping.")
-            continue
-
-        type_str = _get_prop(obj, "Type") or "1"
-        try:
-            bargraph_type = int(type_str)
-        except ValueError:
-            print(f"  Warning: '{name}' Bargraph has invalid Type '{type_str}' - skipping.")
-            continue
-
-        try:
-            width = _parse_pixel_dimension(width_str)
-            height = _parse_pixel_dimension(height_str)
-            min_val = float(min_str)
-            max_val = float(max_str)
-        except ValueError as e:
-            print(f"  Warning: '{name}' Bargraph has invalid numeric property ({e}) - skipping.")
-            continue
-
-        if bargraph_type in (1, 2):
-            pixel_length = height
-        elif bargraph_type in (3, 4):
-            pixel_length = width
-        else:
-            print(f"  Warning: '{name}' Bargraph has unrecognized Type {bargraph_type} - skipping.")
-            continue
-
-        val_range = max_val - min_val
-        if val_range == 0.0:
-            print(f"  Warning: '{name}' Bargraph Min == Max ({min_val}) - skipping.")
-            continue
-
-        scale_px = pixel_length / val_range
-
-        result[name] = {
-            "scale_px": scale_px,
-            "length_px": pixel_length,
-            "min": min_val,
-            "max": max_val,
-            "type": bargraph_type,
-        }
+        info = _extract_one_bargraph(obj, name)
+        if info is not None:
+            result[name] = info
 
     return result
 
