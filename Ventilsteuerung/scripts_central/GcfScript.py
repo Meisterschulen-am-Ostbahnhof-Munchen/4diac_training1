@@ -6,6 +6,12 @@ import re
 import xml.etree.ElementTree as ET
 from xml.dom import minidom
 
+# Prefer defusedxml (guards against XXE) when available, falling back to stdlib
+try:
+    import defusedxml.ElementTree as defused_ET
+except ImportError:
+    defused_ET = ET
+
 # Security Audit.
 
 def getPaths():
@@ -1411,7 +1417,7 @@ def readBargraphJOP(jop_filepath):
             "type": 3
         }, ... }
     """
-    tree = ET.parse(jop_filepath)
+    tree = defused_ET.parse(jop_filepath)
     root = tree.getroot()
     objects_container = root.find("Objects")
     if objects_container is None:
