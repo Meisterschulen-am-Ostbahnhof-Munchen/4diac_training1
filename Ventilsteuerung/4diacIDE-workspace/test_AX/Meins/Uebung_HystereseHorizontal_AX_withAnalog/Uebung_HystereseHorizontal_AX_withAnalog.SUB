@@ -39,61 +39,63 @@
 		</FB>
 		<SubApp Name="Thresholds" Type="MyLib::sys::DualHysteresis_Thresholds_AR" x="-10800" y="1200">
 		</SubApp>
-		<FB Name="AnalogInput_I4" Type="logiBUS::io::AI::logiBUS_AI_IDA" x="-12000" y="3800">
+		<FB Name="Split_MID_OUT" Type="adapter::events::unidirectional::AR_SPLIT_2" x="-6900" y="1100">
+		</FB>
+		<FB Name="AnalogInput_I4" Type="logiBUS::io::AI::logiBUS_AI_IDA" x="-13100" y="2600">
 			<Parameter Name="QI" Value="TRUE"/>
 			<Parameter Name="Input" Value="AnalogInput_I4"/>
 			<Parameter Name="AnalogInput_hysteresis" Value="DWORD#0"/>
 			<Parameter Name="TimeDelta" Value="DWORD#250"/>
 			<Parameter Name="TimeRateLimit" Value="DWORD#100"/>
 		</FB>
-		<FB Name="AD_TO_AUDI" Type="adapter::conversion::unidirectional::AD_TO_AUDI" x="-10500" y="3800">
+		<FB Name="AD_TO_AUDI" Type="adapter::conversion::unidirectional::AD_TO_AUDI" x="-12400" y="4100">
 		</FB>
-		<FB Name="AUDI_TO_AR" Type="adapter::conversion::unidirectional::AUDI_TO_AR" x="-9000" y="3800">
+		<FB Name="AUDI_TO_AR" Type="adapter::conversion::unidirectional::AUDI_TO_AR" x="-12400" y="4500">
 		</FB>
-		<SubApp Name="Mul_Istwert" Type="MyLib::sys::AR_R_MUL" x="-7500" y="3800">
+		<SubApp Name="Mul_Istwert" Type="MyLib::sys::AR_R_MUL" x="-12400" y="5100">
 			<Parameter Name="FACTOR" Value="REAL#0.024420024420024420"/>
 		</SubApp>
-		<FB Name="Split_Istwert" Type="adapter::events::unidirectional::AR_SPLIT_2" x="-6000" y="3800">
+		<FB Name="Split_Istwert" Type="adapter::events::unidirectional::AR_SPLIT_2" x="-7100" y="4400">
 		</FB>
-		<FB Name="Q_Istwert" Type="isobus::UT::Q::Q_NumericValue_PHYSA" x="-4500" y="3500">
+		<FB Name="Q_Istwert" Type="isobus::UT::Q::Q_NumericValue_PHYSA" x="-4200" y="3800">
 			<Parameter Name="stObj" Value="(u16ObjId := NumberVariable_Istwert, r32Scale := 1.0, i32Offset := 0, u8Decimals := 0)"/>
 		</FB>
-		<FB Name="DualHysteresis" Type="logiBUS::signalprocessing::hysteresis::DualHysteresis_AR_AX" x="-4500" y="4600">
+		<FB Name="DualHysteresis" Type="logiBUS::signalprocessing::hysteresis::DualHysteresis_AR_AX" x="-2300" y="4600">
 			<Parameter Name="QI" Value="TRUE"/>
 		</FB>
-		<FB Name="Output_Hoch" Type="logiBUS::io::DQ::logiBUS_QXA" x="-2500" y="4300">
+		<FB Name="Output_Hoch" Type="logiBUS::io::DQ::logiBUS_QXA" x="-300" y="3900">
 			<Parameter Name="QI" Value="TRUE"/>
 			<Parameter Name="Output" Value="Output_Q1"/>
 		</FB>
-		<FB Name="Output_Runter" Type="logiBUS::io::DQ::logiBUS_QXA" x="-2500" y="5000">
+		<FB Name="Output_Runter" Type="logiBUS::io::DQ::logiBUS_QXA" x="-300" y="5000">
 			<Parameter Name="QI" Value="TRUE"/>
 			<Parameter Name="Output" Value="Output_Q2"/>
 		</FB>
-		<SubApp Name="QPos_MID" Type="MyLib::sys::Q_ChildPosition_AR_Bargraph_LeftToRight" x="-3500" y="1500">
+		<SubApp Name="QPos_MID" Type="MyLib::sys::Q_ChildPosition_AR_Bargraph_LeftToRight" x="-3200" y="200">
 			<Parameter Name="u16ObjId" Value="Polygon_MID"/>
 			<Parameter Name="u16ObjIdParent" Value="Container_Schwellwerte"/>
 			<Parameter Name="xScale" Value="TRUE"/>
 			<Parameter Name="ScalePx" Value="Bargraph_Hysterese_ScalePx"/>
 		</SubApp>
-		<SubApp Name="QPos_MID_PLUS_DEAD" Type="MyLib::sys::Q_ChildPosition_AR_Bargraph_LeftToRight" x="2000" y="2200">
+		<SubApp Name="QPos_MID_PLUS_DEAD" Type="MyLib::sys::Q_ChildPosition_AR_Bargraph_LeftToRight" x="-7000" y="1700">
 			<Parameter Name="u16ObjId" Value="Polygon_MID_PLUS_DEAD"/>
 			<Parameter Name="u16ObjIdParent" Value="Container_Schwellwerte"/>
 			<Parameter Name="xScale" Value="TRUE"/>
 			<Parameter Name="ScalePx" Value="Bargraph_Hysterese_ScalePx"/>
 		</SubApp>
-		<SubApp Name="QPos_MID_MINUS_DEAD" Type="MyLib::sys::Q_ChildPosition_AR_Bargraph_LeftToRight" x="-6900" y="700">
+		<SubApp Name="QPos_MID_MINUS_DEAD" Type="MyLib::sys::Q_ChildPosition_AR_Bargraph_LeftToRight" x="-6900" y="0">
 			<Parameter Name="u16ObjId" Value="Polygon_MID_MINUS_DEAD"/>
 			<Parameter Name="u16ObjIdParent" Value="Container_Schwellwerte"/>
 			<Parameter Name="xScale" Value="TRUE"/>
 			<Parameter Name="ScalePx" Value="Bargraph_Hysterese_ScalePx"/>
 		</SubApp>
-		<SubApp Name="QPos_MID_PLUS_DEAD_HYST" Type="MyLib::sys::Q_ChildPosition_AR_Bargraph_LeftToRight" x="2000" y="6600">
+		<SubApp Name="QPos_MID_PLUS_DEAD_HYST" Type="MyLib::sys::Q_ChildPosition_AR_Bargraph_LeftToRight" x="-7100" y="2800">
 			<Parameter Name="u16ObjId" Value="Polygon_MID_PLUS_DEAD_HYST"/>
 			<Parameter Name="u16ObjIdParent" Value="Container_Schwellwerte"/>
 			<Parameter Name="xScale" Value="TRUE"/>
 			<Parameter Name="ScalePx" Value="Bargraph_Hysterese_ScalePx"/>
 		</SubApp>
-		<SubApp Name="QPos_MID_MINUS_DEAD_HYST" Type="MyLib::sys::Q_ChildPosition_AR_Bargraph_LeftToRight" x="-6900" y="-300">
+		<SubApp Name="QPos_MID_MINUS_DEAD_HYST" Type="MyLib::sys::Q_ChildPosition_AR_Bargraph_LeftToRight" x="-6900" y="-1000">
 			<Parameter Name="u16ObjId" Value="Polygon_MID_MINUS_DEAD_HYST"/>
 			<Parameter Name="u16ObjIdParent" Value="Container_Schwellwerte"/>
 			<Parameter Name="xScale" Value="TRUE"/>
@@ -103,22 +105,23 @@
 			<Connection Source="MID_N.rPhys" Destination="Thresholds.MI" dx1="500"/>
 			<Connection Source="DEAD_N.rPhys" Destination="Thresholds.DEAD" dx1="500"/>
 			<Connection Source="HYST_N.rPhys" Destination="Thresholds.HYST" dx1="500"/>
-			<Connection Source="AnalogInput_I4.IN" Destination="AD_TO_AUDI.AD_IN" dx1="80" dx2="80" dy="-426.67"/>
-			<Connection Source="AD_TO_AUDI.AUDI_OUT" Destination="AUDI_TO_AR.AUDI_IN"/>
-			<Connection Source="AUDI_TO_AR.AR_OUT" Destination="Mul_Istwert.IN1" dx1="340"/>
-			<Connection Source="Mul_Istwert.OUT" Destination="Split_Istwert.IN" dx1="420"/>
+			<Connection Source="AnalogInput_I4.IN" Destination="AD_TO_AUDI.AD_IN" dx1="80" dx2="80" dy="220"/>
+			<Connection Source="AD_TO_AUDI.AUDI_OUT" Destination="AUDI_TO_AR.AUDI_IN" dx1="80" dx2="80" dy="100"/>
+			<Connection Source="AUDI_TO_AR.AR_OUT" Destination="Mul_Istwert.IN1" dx1="80" dx2="80" dy="253.33"/>
+			<Connection Source="Mul_Istwert.OUT" Destination="Split_Istwert.IN" dx1="2373.33"/>
 			<Connection Source="Split_Istwert.OUT1" Destination="Q_Istwert.rPhys" dx1="373.33"/>
 			<Connection Source="Split_Istwert.OUT2" Destination="DualHysteresis.INPUT" dx1="373.33"/>
-			<Connection Source="Thresholds.MID_OUT" Destination="DualHysteresis.MI" dx1="500"/>
-			<Connection Source="Thresholds.DEAD_OUT" Destination="DualHysteresis.DEAD" dx1="500"/>
-			<Connection Source="Thresholds.HYST_OUT" Destination="DualHysteresis.HYSTERESIS" dx1="500"/>
+			<Connection Source="Split_MID_OUT.OUT2" Destination="DualHysteresis.MI" dx1="3480"/>
+			<Connection Source="Thresholds.DEAD_OUT" Destination="DualHysteresis.DEAD" dx1="273.33"/>
+			<Connection Source="Thresholds.HYST_OUT" Destination="DualHysteresis.HYSTERESIS" dx1="140"/>
 			<Connection Source="DualHysteresis.DO_UP" Destination="Output_Hoch.OUT" dx1="386.67"/>
 			<Connection Source="DualHysteresis.DO_DOWN" Destination="Output_Runter.OUT" dx1="386.67"/>
-			<Connection Source="Thresholds.MID_OUT" Destination="QPos_MID.rPhys" dx1="500"/>
 			<Connection Source="Thresholds.MID_PLUS_DEAD" Destination="QPos_MID_PLUS_DEAD.rPhys" dx1="500"/>
 			<Connection Source="Thresholds.MID_MINUS_DEAD" Destination="QPos_MID_MINUS_DEAD.rPhys" dx1="500"/>
-			<Connection Source="Thresholds.MID_PLUS_DEAD_HYST" Destination="QPos_MID_PLUS_DEAD_HYST.rPhys" dx1="500"/>
+			<Connection Source="Thresholds.MID_PLUS_DEAD_HYST" Destination="QPos_MID_PLUS_DEAD_HYST.rPhys" dx1="426.67"/>
 			<Connection Source="Thresholds.MID_MINUS_DEAD_HYST" Destination="QPos_MID_MINUS_DEAD_HYST.rPhys" dx1="80"/>
+			<Connection Source="Thresholds.MID_OUT" Destination="Split_MID_OUT.IN" dx1="1153.33"/>
+			<Connection Source="Split_MID_OUT.OUT1" Destination="QPos_MID.rPhys" dx1="1473.33"/>
 		</AdapterConnections>
 	</SubAppNetwork>
 </SubAppType>
