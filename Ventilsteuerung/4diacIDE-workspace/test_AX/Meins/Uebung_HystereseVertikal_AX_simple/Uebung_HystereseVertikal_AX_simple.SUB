@@ -14,7 +14,6 @@
 		<Import declaration="Uebungen::const::UT::HystereseVertikal::DefaultPool::Polygon_MID_PLUS_DEAD_HYST"/>
 		<Import declaration="Uebungen::const::UT::HystereseVertikal::DefaultPool::Polygon_MID_MINUS_DEAD_HYST"/>
 		<Import declaration="Uebungen::const::UT::HystereseVertikal::DefaultPool::Container_Schwellwerte"/>
-		<Import declaration="MyLib::sys::Q_ChildPosition_AR_Vertikal"/>
 	</CompilerInfo>
 	<SubAppInterfaceList>
 	</SubAppInterfaceList>
@@ -125,44 +124,44 @@
 			<Parameter Name="xScale" Value="TRUE"/>
 		</SubApp>
 		<AdapterConnections>
-			<Connection Source="MID_N.rPhys" Destination="Split_MID.IN"/>
-			<Connection Source="DEAD_N.rPhys" Destination="Split_DEAD.IN"/>
-			<Connection Source="HYST_N.rPhys" Destination="Split_HYST.IN"/>
-			<Connection Source="Split_MID.OUT2" Destination="Add_MidDead.IN1"/>
-			<Connection Source="Split_DEAD.OUT1" Destination="Add_MidDead.IN2"/>
-			<Connection Source="Split_MID.OUT3" Destination="Sub_MidDead.IN1"/>
-			<Connection Source="Split_DEAD.OUT2" Destination="Sub_MidDead.IN2"/>
+			<Connection Source="MID_N.rPhys" Destination="Split_MID.IN" dx1="186.67"/>
+			<Connection Source="DEAD_N.rPhys" Destination="Split_DEAD.IN" dx1="186.67"/>
+			<Connection Source="HYST_N.rPhys" Destination="Split_HYST.IN" dx1="186.67"/>
+			<Connection Source="Split_MID.OUT2" Destination="Add_MidDead.IN1" dx1="373.33"/>
+			<Connection Source="Split_DEAD.OUT1" Destination="Add_MidDead.IN2" dx1="373.33"/>
+			<Connection Source="Split_MID.OUT3" Destination="Sub_MidDead.IN1" dx1="373.33"/>
+			<Connection Source="Split_DEAD.OUT2" Destination="Sub_MidDead.IN2" dx1="373.33"/>
 			<Connection Source="Add_MidDead.OUT" Destination="Split_AddResult.IN"/>
 			<Connection Source="Sub_MidDead.OUT" Destination="Split_SubResult.IN"/>
-			<Connection Source="Split_AddResult.OUT2" Destination="Add_MidDeadHyst.IN1"/>
-			<Connection Source="Split_HYST.OUT1" Destination="Add_MidDeadHyst.IN2"/>
-			<Connection Source="Split_SubResult.OUT2" Destination="Sub_MidDeadHyst.IN1"/>
-			<Connection Source="Split_HYST.OUT2" Destination="Sub_MidDeadHyst.IN2"/>
+			<Connection Source="Split_AddResult.OUT2" Destination="Add_MidDeadHyst.IN1" dx1="380"/>
+			<Connection Source="Split_HYST.OUT1" Destination="Add_MidDeadHyst.IN2" dx1="1880"/>
+			<Connection Source="Split_SubResult.OUT2" Destination="Sub_MidDeadHyst.IN1" dx1="380"/>
+			<Connection Source="Split_HYST.OUT2" Destination="Sub_MidDeadHyst.IN2" dx1="1880"/>
 			<Connection Source="Split_MID.OUT1" Destination="Mul_MID.IN1"/>
-			<Connection Source="ScalePx_MID.OUT" Destination="Mul_MID.IN2"/>
-			<Connection Source="BgLen_MID.OUT" Destination="SubFlip_MID.IN1"/>
-			<Connection Source="Mul_MID.OUT" Destination="SubFlip_MID.IN2"/>
-			<Connection Source="SubFlip_MID.OUT" Destination="QPos_MID.rPhys"/>
-			<Connection Source="Split_AddResult.OUT1" Destination="Mul_MID_PLUS_DEAD.IN1"/>
-			<Connection Source="ScalePx_MID_PLUS_DEAD.OUT" Destination="Mul_MID_PLUS_DEAD.IN2"/>
-			<Connection Source="BgLen_MID_PLUS_DEAD.OUT" Destination="SubFlip_MID_PLUS_DEAD.IN1"/>
-			<Connection Source="Mul_MID_PLUS_DEAD.OUT" Destination="SubFlip_MID_PLUS_DEAD.IN2"/>
-			<Connection Source="SubFlip_MID_PLUS_DEAD.OUT" Destination="QPos_MID_PLUS_DEAD.rPhys"/>
-			<Connection Source="Split_SubResult.OUT1" Destination="Mul_MID_MINUS_DEAD.IN1"/>
-			<Connection Source="ScalePx_MID_MINUS_DEAD.OUT" Destination="Mul_MID_MINUS_DEAD.IN2"/>
-			<Connection Source="BgLen_MID_MINUS_DEAD.OUT" Destination="SubFlip_MID_MINUS_DEAD.IN1"/>
-			<Connection Source="Mul_MID_MINUS_DEAD.OUT" Destination="SubFlip_MID_MINUS_DEAD.IN2"/>
-			<Connection Source="SubFlip_MID_MINUS_DEAD.OUT" Destination="QPos_MID_MINUS_DEAD.rPhys"/>
-			<Connection Source="Add_MidDeadHyst.OUT" Destination="Mul_MID_PLUS_DEAD_HYST.IN1"/>
-			<Connection Source="ScalePx_MID_PLUS_DEAD_HYST.OUT" Destination="Mul_MID_PLUS_DEAD_HYST.IN2"/>
-			<Connection Source="BgLen_MID_PLUS_DEAD_HYST.OUT" Destination="SubFlip_MID_PLUS_DEAD_HYST.IN1"/>
-			<Connection Source="Mul_MID_PLUS_DEAD_HYST.OUT" Destination="SubFlip_MID_PLUS_DEAD_HYST.IN2"/>
-			<Connection Source="SubFlip_MID_PLUS_DEAD_HYST.OUT" Destination="QPos_MID_PLUS_DEAD_HYST.rPhys"/>
-			<Connection Source="Sub_MidDeadHyst.OUT" Destination="Mul_MID_MINUS_DEAD_HYST.IN1"/>
-			<Connection Source="ScalePx_MID_MINUS_DEAD_HYST.OUT" Destination="Mul_MID_MINUS_DEAD_HYST.IN2"/>
-			<Connection Source="BgLen_MID_MINUS_DEAD_HYST.OUT" Destination="SubFlip_MID_MINUS_DEAD_HYST.IN1"/>
-			<Connection Source="Mul_MID_MINUS_DEAD_HYST.OUT" Destination="SubFlip_MID_MINUS_DEAD_HYST.IN2"/>
-			<Connection Source="SubFlip_MID_MINUS_DEAD_HYST.OUT" Destination="QPos_MID_MINUS_DEAD_HYST.rPhys"/>
+			<Connection Source="ScalePx_MID.OUT" Destination="Mul_MID.IN2" dx1="373.33"/>
+			<Connection Source="BgLen_MID.OUT" Destination="SubFlip_MID.IN1" dx1="373.33"/>
+			<Connection Source="Mul_MID.OUT" Destination="SubFlip_MID.IN2" dx1="1166.67"/>
+			<Connection Source="SubFlip_MID.OUT" Destination="QPos_MID.rPhys" dx1="420"/>
+			<Connection Source="Split_AddResult.OUT1" Destination="Mul_MID_PLUS_DEAD.IN1" dx1="2153.33"/>
+			<Connection Source="ScalePx_MID_PLUS_DEAD.OUT" Destination="Mul_MID_PLUS_DEAD.IN2" dx1="346.67"/>
+			<Connection Source="BgLen_MID_PLUS_DEAD.OUT" Destination="SubFlip_MID_PLUS_DEAD.IN1" dx1="420"/>
+			<Connection Source="Mul_MID_PLUS_DEAD.OUT" Destination="SubFlip_MID_PLUS_DEAD.IN2" dx1="1213.33"/>
+			<Connection Source="SubFlip_MID_PLUS_DEAD.OUT" Destination="QPos_MID_PLUS_DEAD.rPhys" dx1="340"/>
+			<Connection Source="Split_SubResult.OUT1" Destination="Mul_MID_MINUS_DEAD.IN1" dx1="2166.67"/>
+			<Connection Source="ScalePx_MID_MINUS_DEAD.OUT" Destination="Mul_MID_MINUS_DEAD.IN2" dx1="346.67"/>
+			<Connection Source="BgLen_MID_MINUS_DEAD.OUT" Destination="SubFlip_MID_MINUS_DEAD.IN1" dx1="420"/>
+			<Connection Source="Mul_MID_MINUS_DEAD.OUT" Destination="SubFlip_MID_MINUS_DEAD.IN2" dx1="1213.33"/>
+			<Connection Source="SubFlip_MID_MINUS_DEAD.OUT" Destination="QPos_MID_MINUS_DEAD.rPhys" dx1="326.67"/>
+			<Connection Source="Add_MidDeadHyst.OUT" Destination="Mul_MID_PLUS_DEAD_HYST.IN1" dx1="1500"/>
+			<Connection Source="ScalePx_MID_PLUS_DEAD_HYST.OUT" Destination="Mul_MID_PLUS_DEAD_HYST.IN2" dx1="346.67"/>
+			<Connection Source="BgLen_MID_PLUS_DEAD_HYST.OUT" Destination="SubFlip_MID_PLUS_DEAD_HYST.IN1" dx1="420"/>
+			<Connection Source="Mul_MID_PLUS_DEAD_HYST.OUT" Destination="SubFlip_MID_PLUS_DEAD_HYST.IN2" dx1="1213.33"/>
+			<Connection Source="SubFlip_MID_PLUS_DEAD_HYST.OUT" Destination="QPos_MID_PLUS_DEAD_HYST.rPhys" dx1="280"/>
+			<Connection Source="Sub_MidDeadHyst.OUT" Destination="Mul_MID_MINUS_DEAD_HYST.IN1" dx1="1513.33"/>
+			<Connection Source="ScalePx_MID_MINUS_DEAD_HYST.OUT" Destination="Mul_MID_MINUS_DEAD_HYST.IN2" dx1="346.67"/>
+			<Connection Source="BgLen_MID_MINUS_DEAD_HYST.OUT" Destination="SubFlip_MID_MINUS_DEAD_HYST.IN1" dx1="420"/>
+			<Connection Source="Mul_MID_MINUS_DEAD_HYST.OUT" Destination="SubFlip_MID_MINUS_DEAD_HYST.IN2" dx1="1213.33"/>
+			<Connection Source="SubFlip_MID_MINUS_DEAD_HYST.OUT" Destination="QPos_MID_MINUS_DEAD_HYST.rPhys" dx1="266.67"/>
 		</AdapterConnections>
 	</SubAppNetwork>
 </SubAppType>
