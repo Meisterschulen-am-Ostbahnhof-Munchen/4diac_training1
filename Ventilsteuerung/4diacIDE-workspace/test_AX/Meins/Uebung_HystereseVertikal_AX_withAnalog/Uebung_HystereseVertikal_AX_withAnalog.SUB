@@ -15,6 +15,8 @@
 		<Import declaration="Uebungen::const::UT::HystereseVertikal::DefaultPool::Polygon_MID_MINUS_DEAD_HYST"/>
 		<Import declaration="Uebungen::const::UT::HystereseVertikal::DefaultPool::Container_Schwellwerte"/>
 		<Import declaration="Uebungen::const::UT::HystereseVertikal::DefaultPool::NumberVariable_Istwert"/>
+		<Import declaration="Uebungen::const::UT::HystereseVertikal::DefaultPool_Bargraph::Bargraph_Hysterese_ScalePx"/>
+		<Import declaration="Uebungen::const::UT::HystereseVertikal::DefaultPool_Bargraph::Bargraph_Hysterese_LengthPx"/>
 		<Import declaration="logiBUS::io::AI::logiBUS_AI::AnalogInput_I4"/>
 		<Import declaration="logiBUS::io::DQ::logiBUS_DO::Output_Q1"/>
 		<Import declaration="logiBUS::io::DQ::logiBUS_DO::Output_Q2"/>
@@ -85,12 +87,12 @@
 			<Parameter Name="Output" Value="Output_Q2"/>
 		</FB>
 		<FB Name="ScalePx_MID" Type="adapter::types::unidirectional::AR::initval::initval_AR" x="-4000" y="0">
-			<Parameter Name="INIT_VAL" Value="REAL#1.86"/>
+			<Parameter Name="INIT_VAL" Value="Bargraph_Hysterese_ScalePx"/>
 		</FB>
 		<FB Name="Mul_MID" Type="adapter::iec61131::arithmetic::AR_MUL_2" x="-2500" y="0">
 		</FB>
 		<FB Name="BgLen_MID" Type="adapter::types::unidirectional::AR::initval::initval_AR" x="-1000" y="0">
-			<Parameter Name="INIT_VAL" Value="REAL#186.0"/>
+			<Parameter Name="INIT_VAL" Value="Bargraph_Hysterese_LengthPx"/>
 		</FB>
 		<FB Name="SubFlip_MID" Type="adapter::iec61131::arithmetic::AR_SUB_2" x="500" y="0">
 		</FB>
@@ -100,12 +102,12 @@
 			<Parameter Name="xScale" Value="TRUE"/>
 		</SubApp>
 		<FB Name="ScalePx_MID_PLUS_DEAD" Type="adapter::types::unidirectional::AR::initval::initval_AR" x="-4000" y="2200">
-			<Parameter Name="INIT_VAL" Value="REAL#1.86"/>
+			<Parameter Name="INIT_VAL" Value="Bargraph_Hysterese_ScalePx"/>
 		</FB>
 		<FB Name="Mul_MID_PLUS_DEAD" Type="adapter::iec61131::arithmetic::AR_MUL_2" x="-2500" y="2200">
 		</FB>
 		<FB Name="BgLen_MID_PLUS_DEAD" Type="adapter::types::unidirectional::AR::initval::initval_AR" x="-1000" y="2200">
-			<Parameter Name="INIT_VAL" Value="REAL#186.0"/>
+			<Parameter Name="INIT_VAL" Value="Bargraph_Hysterese_LengthPx"/>
 		</FB>
 		<FB Name="SubFlip_MID_PLUS_DEAD" Type="adapter::iec61131::arithmetic::AR_SUB_2" x="500" y="2200">
 		</FB>
@@ -115,12 +117,12 @@
 			<Parameter Name="xScale" Value="TRUE"/>
 		</SubApp>
 		<FB Name="ScalePx_MID_MINUS_DEAD" Type="adapter::types::unidirectional::AR::initval::initval_AR" x="-4000" y="4400">
-			<Parameter Name="INIT_VAL" Value="REAL#1.86"/>
+			<Parameter Name="INIT_VAL" Value="Bargraph_Hysterese_ScalePx"/>
 		</FB>
 		<FB Name="Mul_MID_MINUS_DEAD" Type="adapter::iec61131::arithmetic::AR_MUL_2" x="-2500" y="4400">
 		</FB>
 		<FB Name="BgLen_MID_MINUS_DEAD" Type="adapter::types::unidirectional::AR::initval::initval_AR" x="-1000" y="4400">
-			<Parameter Name="INIT_VAL" Value="REAL#186.0"/>
+			<Parameter Name="INIT_VAL" Value="Bargraph_Hysterese_LengthPx"/>
 		</FB>
 		<FB Name="SubFlip_MID_MINUS_DEAD" Type="adapter::iec61131::arithmetic::AR_SUB_2" x="500" y="4400">
 		</FB>
@@ -130,12 +132,12 @@
 			<Parameter Name="xScale" Value="TRUE"/>
 		</SubApp>
 		<FB Name="ScalePx_MID_PLUS_DEAD_HYST" Type="adapter::types::unidirectional::AR::initval::initval_AR" x="-4000" y="6600">
-			<Parameter Name="INIT_VAL" Value="REAL#1.86"/>
+			<Parameter Name="INIT_VAL" Value="Bargraph_Hysterese_ScalePx"/>
 		</FB>
 		<FB Name="Mul_MID_PLUS_DEAD_HYST" Type="adapter::iec61131::arithmetic::AR_MUL_2" x="-2500" y="6600">
 		</FB>
 		<FB Name="BgLen_MID_PLUS_DEAD_HYST" Type="adapter::types::unidirectional::AR::initval::initval_AR" x="-1000" y="6600">
-			<Parameter Name="INIT_VAL" Value="REAL#186.0"/>
+			<Parameter Name="INIT_VAL" Value="Bargraph_Hysterese_LengthPx"/>
 		</FB>
 		<FB Name="SubFlip_MID_PLUS_DEAD_HYST" Type="adapter::iec61131::arithmetic::AR_SUB_2" x="500" y="6600">
 		</FB>
@@ -145,12 +147,12 @@
 			<Parameter Name="xScale" Value="TRUE"/>
 		</SubApp>
 		<FB Name="ScalePx_MID_MINUS_DEAD_HYST" Type="adapter::types::unidirectional::AR::initval::initval_AR" x="-4000" y="8800">
-			<Parameter Name="INIT_VAL" Value="REAL#1.86"/>
+			<Parameter Name="INIT_VAL" Value="Bargraph_Hysterese_ScalePx"/>
 		</FB>
 		<FB Name="Mul_MID_MINUS_DEAD_HYST" Type="adapter::iec61131::arithmetic::AR_MUL_2" x="-2500" y="8800">
 		</FB>
 		<FB Name="BgLen_MID_MINUS_DEAD_HYST" Type="adapter::types::unidirectional::AR::initval::initval_AR" x="-1000" y="8800">
-			<Parameter Name="INIT_VAL" Value="REAL#186.0"/>
+			<Parameter Name="INIT_VAL" Value="Bargraph_Hysterese_LengthPx"/>
 		</FB>
 		<FB Name="SubFlip_MID_MINUS_DEAD_HYST" Type="adapter::iec61131::arithmetic::AR_SUB_2" x="500" y="8800">
 		</FB>
