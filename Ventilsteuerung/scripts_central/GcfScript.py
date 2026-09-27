@@ -3,6 +3,7 @@ import glob
 import math
 import os
 import re
+import sys
 import xml.etree.ElementTree as ET
 from xml.dom import minidom
 
@@ -181,6 +182,13 @@ def readJOP(jop_filepath, variables_only=False):
                 primary_names.add(name)
 
     result = {}
+    # Name of the widget currently backing each alias entry in `result`, and any
+    # later widgets that bound the same NumberVariable with a different scale/
+    # offset/decimals - surfaced as a "// ACHTUNG" comment in the generated .gcf
+    # (console WARNUNG prints are too easy to miss, see Krauternter conversation
+    # 2026-09-27: "die Warnung muesste DEUTLIcher zu sehen sein").
+    alias_source_widget = {}
+    alias_conflicts = {}
 
     for obj in objects_container.findall("Object"):
         cls = obj.get("Class")
@@ -243,9 +251,14 @@ def readJOP(jop_filepath, variables_only=False):
                 alias_id = int(bound_var_id)
                 if alias_name not in result:
                     result[alias_name] = create_numeric_info(alias_id, scale, offset, decimals)
+                    alias_source_widget[alias_name] = name
                 else:
                     current = result[alias_name]
                     if (current["scale"], current["offset"], current["decimals"]) != (scale, offset, decimals):
+                        kept_widget = alias_source_widget.get(alias_name, "?")
+                        # stderr, not stdout: Eclipse's Console view renders stderr
+                        # lines in red, so this doesn't get lost in the rest of the
+                        # (long, mostly informational) build output.
                         print(
                             f"  WARNUNG: '{alias_name}' wird von mehreren Widgets mit "
                             f"unterschiedlicher Skalierung gebunden - bisher "
@@ -253,14 +266,21 @@ def readJOP(jop_filepath, variables_only=False):
                             f"decimals={current['decimals']}, jetzt von '{name}' "
                             f"scale={scale} offset={offset} decimals={decimals}. Alle "
                             f"Widgets, die dieselbe NumberVariable binden, muessen "
-                            f"dieselbe Skalierung haben."
+                            f"dieselbe Skalierung haben.",
+                            file=sys.stderr,
+                        )
+                        alias_conflicts.setdefault(alias_name, []).append(
+                            f"'{kept_widget}' (scale={current['scale']} offset={current['offset']} "
+                            f"decimals={current['decimals']}) vs. '{name}' (scale={scale} "
+                            f"offset={offset} decimals={decimals})"
                         )
                     # Compare absolute values to correctly handle negative scales.
                     if abs(scale) < abs(current["scale"]):
                         print(f"  Update alias '{alias_name}': scale {current['scale']} -> {scale}")
                         result[alias_name] = create_numeric_info(alias_id, scale, offset, decimals)
+                        alias_source_widget[alias_name] = name
 
-    return result
+    return result, alias_conflicts
 
 def update_jop_objectnames(jop_path, rename_map):
     """Replace ObjectName="old" with ObjectName="new" in the .jop XML file (in-place, idempotent)."""
@@ -326,17 +346,22 @@ def _format_real(value):
 
 NUMERIC_NAME_SUFFIX = "_N"
 
-def writeNumericGCFfile(data, filepaths):
+def writeNumericGCFfile(data, filepaths, conflicts=None):
     """Write a <name>_Numeric.gcf with NumericObjectPool_S constants for each InputNumber/OutputNumber.
 
     Each constant name gets NUMERIC_NAME_SUFFIX appended, since the plain name is
     already used by the UINT constant of the same name in the non-numeric .gcf
     (same package) - without the suffix, 4diac's name resolution collides.
+
+    `conflicts`: optional {alias_name: [conflict description, ...]} from readJOP.
+    For each entry, a "// ACHTUNG" XML comment is written directly above that
+    VarDeclaration - a console WARNUNG is too easy to miss, this is not.
     """
     newfilepath = safe_output_path(filepaths[1], filepaths[2] + '_Numeric.gcf')
     gcf_name    = filepaths[2] + '_Numeric'
     package     = filepaths[3]
     struct_type = "logiBUS::utils::conversion::phys::NumericObjectPool_S"
+    conflicts   = conflicts or {}
 
     root = ET.Element("GlobalConstants", Name=gcf_name, Comment="Numeric object pool constants (ID, Scale, Offset, Decimals)")
 
@@ -357,6 +382,15 @@ def writeNumericGCFfile(data, filepaths):
             f"i32Offset := {offset_str}, "
             f"u8Decimals := {decimals_str})"
         )
+
+        if name in conflicts:
+            comment_text = (
+                f" ACHTUNG: '{name}' wird von mehreren Widgets mit unterschiedlicher "
+                f"Skalierung gebunden - " + "; ".join(conflicts[name]) +
+                f". Es gilt die Skalierung mit dem kleinsten |Scale|, alle Widgets "
+                f"muessen dieselbe Skalierung haben. "
+            )
+            global_constants.append(ET.Comment(comment_text))
 
         ET.SubElement(
             global_constants,
@@ -1524,8 +1558,8 @@ if __name__ == "__main__":
     if filepaths[4]:
         checkPath(filepaths[4])
         update_jop_objectnames(filepaths[4], rename_map)
-        numeric_data = readJOP(filepaths[4], variables_only=filepaths[5])
-        writeNumericGCFfile(numeric_data, filepaths)
+        numeric_data, numeric_conflicts = readJOP(filepaths[4], variables_only=filepaths[5])
+        writeNumericGCFfile(numeric_data, filepaths, conflicts=numeric_conflicts)
 
         scroll_data = readScrollJOP(filepaths[4])
         if scroll_data:

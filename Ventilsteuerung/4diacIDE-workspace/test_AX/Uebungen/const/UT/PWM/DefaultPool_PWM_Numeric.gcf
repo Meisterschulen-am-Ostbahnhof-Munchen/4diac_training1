@@ -15,6 +15,7 @@
 		<VarDeclaration Name="OutputNumber_000_N" Type="logiBUS::utils::conversion::phys::NumericObjectPool_S" InitialValue="(u16ObjId := 12004, r32Scale := 1.0, i32Offset := 0, u8Decimals := 0)"/>
 		<VarDeclaration Name="OutputNumber_025_N" Type="logiBUS::utils::conversion::phys::NumericObjectPool_S" InitialValue="(u16ObjId := 12005, r32Scale := 1.0, i32Offset := 0, u8Decimals := 0)"/>
 		<VarDeclaration Name="NumberVariable_PWM_DUTY_NegScale_N" Type="logiBUS::utils::conversion::phys::NumericObjectPool_S" InitialValue="(u16ObjId := 21000, r32Scale := -0.0122085, i32Offset := -8191, u8Decimals := 3)"/>
+		<!-- ACHTUNG: 'NumberVariable_PWM_Value' wird von mehreren Widgets mit unterschiedlicher Skalierung gebunden - 'InputNumber_PWM_DUTY' (scale=0.0122085215480405 offset=0 decimals=3) vs. 'InputNumber_PWM_Value' (scale=1.0 offset=0 decimals=0). Es gilt die Skalierung mit dem kleinsten |Scale|, alle Widgets muessen dieselbe Skalierung haben. -->
 		<VarDeclaration Name="NumberVariable_PWM_Value_N" Type="logiBUS::utils::conversion::phys::NumericObjectPool_S" InitialValue="(u16ObjId := 21001, r32Scale := 0.0122085215, i32Offset := 0, u8Decimals := 3)"/>
 	</GlobalConstants>
 </GlobalConstants>
