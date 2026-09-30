@@ -2,6 +2,8 @@
 <SubAppType Name="Softkey_Aux_Switch_Auto_TO_Remote_WRITE_BG_OPC" Comment="VT-SoftKey lesen ODER AUX-Zuweisung (Joystick) lesen ODER lokaler Web-Override ODER physischer Remote-Taster auf einem dritten Modul ODER Automatik-Kommando + Remote-OPC-UA-Write an Zielmodul + VT-Hintergrundfarbe (SoftKey UND AUX) aus Remote-Subscribe (5-Quellen-Variante von Softkey_Aux_Switch_TO_Remote_WRITE_BG_OPC um einen zusaetzlichen AUTO_IN-Socket, z.B. Fuellband Heben: SoftKey/AUX/Web/physischer Taster S08 UND Befuellautomatik-Hysterese)">
 	<Identification Standard="61499-2" Description="Copyright (c) 2026 Meisterschulen am Ostbahnhof  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0">
 	</Identification>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.2" Author="Franz Höpfinger" Date="2026-09-27" Remarks="Neuer optionaler Plug MANUAL_OUT, durchgereicht von Command.MANUAL_OUT (siehe Softkey_Aux_Switch_Auto_TO_Remote_WRITE.SUB v1.2) - rein additiv, bestehende Instanzen unveraendert nutzbar.">
+	</VersionInfo>
 	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.1" Author="Franz Höpfinger" Date="2026-09-26" Remarks="Neuer optionaler Plug CMD_OUT, durchgereicht von Command.CMD_OUT (siehe Softkey_Aux_Switch_Auto_TO_Remote_WRITE.SUB v1.1) - rein additiv, bestehende Instanzen unveraendert nutzbar.">
 	</VersionInfo>
 	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2026-09-13" Remarks="initial implementation - 5-Quellen-Variante fuer Fuellband Heben (Befuellautomatik, KVE14 Funktionen und Bedingungen Zeile 22).">
@@ -18,12 +20,13 @@
 			<VarDeclaration Name="ID_SWITCH_REMOTE" Type="WSTRING" Comment="Remote-Subscribe-Adresse eines zusaetzlichen physischen Tasters auf einem ANDEREN Modul, ODER-verknuepft mit SoftKey/AUX/Web/Automatik"/>
 			<VarDeclaration Name="ID_STATUS_WEB" Type="WSTRING" Comment="Lokale Publish-Adresse (auf diesem Modul) fuer den vom Zielmodul zurueckgemeldeten Zustand - damit ein Web-Client (z.B. vt-ui-mirror) dieselbe Hintergrundfarbe wie das echte VT zeigen kann"/>
 		</InputVars>
+		<Plugs>
+			<AdapterDeclaration Name="AUTOMATIC_OUT" Type="adapter::types::unidirectional::AX" Comment="Optional: lokal gemergter Rohbefehl, durchgereicht von Command.CMD_OUT - unverdrahtet lassen, wenn nicht gebraucht"/>
+			<AdapterDeclaration Name="MANUAL_OUT" Type="adapter::types::unidirectional::AX" Comment="Optional: NUR die manuellen Quellen (SoftKey/AUX/Web/Switch), OHNE Automatik-Anteil, durchgereicht von Command.MANUAL_OUT - unverdrahtet lassen, wenn nicht gebraucht"/>
+		</Plugs>
 		<Sockets>
 			<AdapterDeclaration Name="AUTO_IN" Type="adapter::types::unidirectional::AX" Comment="Autonomes Kommando (z.B. Befuellautomatik-Hysterese), ODER-verknuepft mit SoftKey/Aux/Web/physischem Taster"/>
 		</Sockets>
-		<Plugs>
-			<AdapterDeclaration Name="CMD_OUT" Type="adapter::types::unidirectional::AX" Comment="Optional: lokal gemergter Rohbefehl, durchgereicht von Command.CMD_OUT - unverdrahtet lassen, wenn nicht gebraucht"/>
-		</Plugs>
 	</SubAppInterfaceList>
 	<SubAppNetwork>
 		<SubApp Name="Command" Type="MyLib::sys::Softkey_Aux_Switch_Auto_TO_Remote_WRITE" x="0" y="0">
@@ -61,7 +64,8 @@
 		</DataConnections>
 		<AdapterConnections>
 			<Connection Source="AUTO_IN" Destination="Command.AUTO_IN" dx1="366.67"/>
-			<Connection Source="Command.CMD_OUT" Destination="CMD_OUT" dx1="366.67"/>
+			<Connection Source="Command.AUTOMATIC_OUT" Destination="AUTOMATIC_OUT" dx1="366.67"/>
+			<Connection Source="Command.MANUAL_OUT" Destination="MANUAL_OUT" dx1="800"/>
 		</AdapterConnections>
 	</SubAppNetwork>
 </SubAppType>
