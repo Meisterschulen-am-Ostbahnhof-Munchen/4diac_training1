@@ -6,7 +6,7 @@
 	</VersionInfo>
 	<CompilerInfo packageName="MyLib::sys">
 		<Import declaration="isobus::UT::io::Button::ButtonActivationCode::BT_RELEASED_UNLATCHED"/>
-		<Import declaration="isobus::UT::io::Auxiliary::IN::AuxiliaryState::AuxEnabled"/>
+		<Import declaration="isobus::UT::io::Auxiliary::IN::AuxiliaryState::AuxDisabled_START"/>
 	</CompilerInfo>
 	<SubAppInterfaceList>
 		<SubAppEventOutputs>
@@ -19,12 +19,11 @@
 		</InputVars>
 	</SubAppInterfaceList>
 	<SubAppNetwork>
-		<FB Name="Button" Type="isobus::UT::io::Button::Button_IE" x="0" y="-300">
-			<Parameter Name="QI" Value="TRUE"/>
+		<SubApp Name="Button" Type="MyLib::sys::Button_IE_1" x="-100" y="100">
 			<Parameter Name="InputEvent" Value="BT_RELEASED_UNLATCHED"/>
-		</FB>
-		<SubApp Name="Aux" Type="MyLib::sys::Aux_IE_1" x="0" y="900">
-			<Parameter Name="InputEvent" Value="AuxEnabled"/>
+		</SubApp>
+		<SubApp Name="Aux" Type="MyLib::sys::Aux_IE_1" x="0" y="800">
+			<Parameter Name="InputEvent" Value="AuxDisabled_START"/>
 		</SubApp>
 		<FB Name="MERGE" Type="iec61499::events::E_MERGE_2" x="1700" y="400">
 		</FB>
