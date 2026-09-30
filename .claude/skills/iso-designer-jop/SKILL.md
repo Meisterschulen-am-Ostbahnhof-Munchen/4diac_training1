@@ -697,6 +697,19 @@ mis-scopes a removal span. Always anchor with a word boundary: `<Object\b`
 (not `<Object`) for opens, and match `</Object>` literally (already safe,
 since `</Objects>` has an extra character before its `>`) for closes.
 
+## Creating a whole new DataMask + SoftKeyMask by hand
+
+Adding a brand-new navigable page (not just editing objects on an
+existing one) is a different job - new file pair, new navigation, and a
+sharp distinction between which project files are structural (`.jop`,
+`.jvi`) and which are pure IDE UI-state caches that the build regenerates
+for you (`.jod`/`.jops`/`.jtl`/`.jvd`/`.jvp` - don't hand-edit any of
+these, even though some of them show huge diffs afterward). Read
+`references/new-datamask-recipe.md` before starting one of these - it
+walks the whole thing end-to-end (ID allocation, the SoftKeyMask
+free-slot navigation pattern, the Macro/OnKeyRelease wiring, CProxy icon
+reuse) against a real worked example.
+
 ## Workflow notes
 
 - These files are typically large (10k–20k+ lines after edits) — extract
