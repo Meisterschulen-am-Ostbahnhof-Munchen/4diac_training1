@@ -20,16 +20,16 @@
 		<FB Name="ASR2_DELAY" Type="adapter::events::bidirectional::ASR2_DELAY" x="-100" y="200">
 		</FB>
 		<FB Name="initval_PT_SET_FWD" Type="adapter::types::unidirectional::ATM::initval::initval_ATM" x="-2100" y="600">
-			<Parameter Name="INIT_VAL" Value="T#2s"/>
+			<Parameter Name="INIT_VAL" Value="T#500ms"/>
 		</FB>
 		<FB Name="initval_PT_SET_BWD" Type="adapter::types::unidirectional::ATM::initval::initval_ATM" x="-2100" y="1200">
-			<Parameter Name="INIT_VAL" Value="T#2s"/>
+			<Parameter Name="INIT_VAL" Value="T#500ms"/>
 		</FB>
 		<FB Name="initval_PT_RESET_FWD" Type="adapter::types::unidirectional::ATM::initval::initval_ATM" x="-1900" y="2000">
-			<Parameter Name="INIT_VAL" Value="T#2s"/>
+			<Parameter Name="INIT_VAL" Value="T#500ms"/>
 		</FB>
 		<FB Name="initval_PT_RESET_BWD" Type="adapter::types::unidirectional::ATM::initval::initval_ATM" x="-1600" y="2600">
-			<Parameter Name="INIT_VAL" Value="T#2s"/>
+			<Parameter Name="INIT_VAL" Value="T#500ms"/>
 		</FB>
 		<AdapterConnections>
 			<Connection Source="CHAIN_OUT" Destination="ASR2_DELAY.IN" dx1="4386.67"/>

@@ -20,16 +20,16 @@
 		</Plugs>
 	</SubAppInterfaceList>
 	<SubAppNetwork>
-		<FB Name="AR_SUBSCRIBE_Hz" Type="adapter::net::AR_SUBSCRIBE_1" x="0" y="0">
+		<FB Name="AR_SUBSCRIBE_Hz" Type="adapter::net::AR_SUBSCRIBE_1" x="-1200" y="-100">
 			<Parameter Name="QI" Value="TRUE"/>
 		</FB>
-		<FB Name="LIT_Scale" Type="adapter::types::unidirectional::AR::initval::initval_AR" x="100" y="1200">
+		<FB Name="LIT_Scale" Type="adapter::types::unidirectional::AR::initval::initval_AR" x="-1200" y="700">
 		</FB>
-		<FB Name="AR_SPLIT_2_HzRaw" Type="adapter::events::unidirectional::AR_SPLIT_2" x="900" y="0">
+		<FB Name="AR_SPLIT_2_HzRaw" Type="adapter::events::unidirectional::AR_SPLIT_2" x="200" y="300">
 		</FB>
-		<FB Name="AR_MUL" Type="adapter::iec61131::arithmetic::AR_MUL_2" x="1800" y="600">
+		<FB Name="AR_MUL" Type="adapter::iec61131::arithmetic::AR_MUL_2" x="1800" y="800">
 		</FB>
-		<SubApp Name="Publish" Type="MyLib::sys::AR_TO_Q_Publish_OPC" x="3400" y="600">
+		<SubApp Name="Publish" Type="MyLib::sys::AR_TO_Q_Publish_OPC" x="3500" y="600">
 		</SubApp>
 		<DataConnections>
 			<Connection Source="ID_HZ_REMOTE" Destination="AR_SUBSCRIBE_Hz.ID" dx1="1400">
@@ -46,11 +46,11 @@
 			</Connection>
 		</DataConnections>
 		<AdapterConnections>
-			<Connection Source="AR_SUBSCRIBE_Hz.OUT" Destination="AR_SPLIT_2_HzRaw.IN" dx1="600"/>
-			<Connection Source="AR_SPLIT_2_HzRaw.OUT1" Destination="AR_MUL.IN1" dx1="600"/>
-			<Connection Source="AR_SPLIT_2_HzRaw.OUT2" Destination="HZ_RAW_OUT" dx1="600"/>
+			<Connection Source="AR_SUBSCRIBE_Hz.OUT" Destination="AR_SPLIT_2_HzRaw.IN" dx1="380"/>
+			<Connection Source="AR_SPLIT_2_HzRaw.OUT1" Destination="HZ_RAW_OUT" dx1="600"/>
 			<Connection Source="LIT_Scale.OUT" Destination="AR_MUL.IN2" dx1="600"/>
 			<Connection Source="AR_MUL.OUT" Destination="Publish.AR_IN" dx1="600"/>
+			<Connection Source="AR_SPLIT_2_HzRaw.OUT2" Destination="AR_MUL.IN1" dx1="273.33"/>
 		</AdapterConnections>
 	</SubAppNetwork>
 </SubAppType>

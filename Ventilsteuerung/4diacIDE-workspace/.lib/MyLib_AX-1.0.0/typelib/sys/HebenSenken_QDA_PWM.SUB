@@ -23,9 +23,9 @@
 		</Sockets>
 	</SubAppInterfaceList>
 	<SubAppNetwork>
-		<FB Name="ASSEMBLE_AB_FROM_AX" Type="adapter::assembling::ASSEMBLE_AB_FROM_AX" x="-3500" y="0">
+		<FB Name="ASSEMBLE_AB_FROM_AX" Type="adapter::assembling::ASSEMBLE_AB_FROM_AX" x="-3700" y="100">
 		</FB>
-		<FB Name="AB_TO_AUI" Type="adapter::conversion::unidirectional::AB_TO_AUI" x="-1900" y="0">
+		<FB Name="AB_TO_AUI" Type="adapter::conversion::unidirectional::AB_TO_AUI" x="-2100" y="-1000">
 		</FB>
 		<SubApp Name="values_50_75_25" Type="MyLib::sys::values_50_75_25" x="-3500" y="1400">
 		</SubApp>
@@ -54,9 +54,9 @@
 			</Connection>
 		</DataConnections>
 		<AdapterConnections>
-			<Connection Source="HEBEN" Destination="ASSEMBLE_AB_FROM_AX.BIT_00" dx1="600"/>
+			<Connection Source="HEBEN" Destination="ASSEMBLE_AB_FROM_AX.BIT_00" dx1="920"/>
 			<Connection Source="SENKEN" Destination="ASSEMBLE_AB_FROM_AX.BIT_01" dx1="600"/>
-			<Connection Source="ASSEMBLE_AB_FROM_AX.OUT" Destination="AB_TO_AUI.AB_IN" dx1="600"/>
+			<Connection Source="ASSEMBLE_AB_FROM_AX.OUT" Destination="AB_TO_AUI.AB_IN" dx1="173.33"/>
 			<Connection Source="AB_TO_AUI.AUI_OUT" Destination="AR_AUI_MUX_3.K" dx1="453.33"/>
 			<Connection Source="PWM_POW" Destination="values_50_75_25.PWM_POW" dx1="320"/>
 			<Connection Source="values_50_75_25.OUT_50" Destination="AR_AUI_MUX_3.IN1" dx1="333.33"/>
