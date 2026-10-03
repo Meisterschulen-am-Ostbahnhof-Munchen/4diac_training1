@@ -2,6 +2,8 @@
 <SubAppType Name="logiBUS_PI_IDA_OPC" Comment="logiBUS_PI_IDA (Puls-Eingang) auf VT-Zahlenfelder (Zaehler roh + Frequenz Hz, je&#10;eigene CNumberVariable) + Bargraph (Frequenz) + OPC-UA (Zaehler DWORD + Frequenz&#10;REAL, generisch, ein Kanal)">
 	<Identification Standard="61499-2" Description="Copyright (c) 2026 Meisterschulen am Ostbahnhof  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0">
 	</Identification>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.1" Author="Franz Höpfinger" Date="2026-10-03" Remarks="Folgefix zu FT_DERIV_10_AR v1.2 (K jetzt AUI-Adapter-Socket statt Parameter): bisheriges Parameter Name='K' Value='9' auf FT_DERIV_10_AR entfernt (waere jetzt ein IDE-Fehler, da K kein plain InputVar mehr ist), ersetzt durch LIT_DerivK (initval_AUI, INIT_VAL=9) + AdapterConnection auf FT_DERIV_10_AR.K - gleicher Wert wie bisher, nur adapter-konform verdrahtet.">
+	</VersionInfo>
 	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2026-08-30" Remarks="initial API and implementation and/or initial documentation">
 	</VersionInfo>
 	<CompilerInfo packageName="MyLib::sys">
@@ -86,9 +88,11 @@
 			<Parameter Name="K" Value="1.0"/>
 		</FB>
 		<FB Name="FT_DERIV_10_AR" Type="OSCAT_adapter::Control::FT_DERIV_10_AR" x="0" y="500">
-			<Parameter Name="K" Value="9"/>
 			<Parameter Name="Faktor" Value="1.0"/>
 			<Parameter Name="run" Value="TRUE"/>
+		</FB>
+		<FB Name="LIT_DerivK" Type="adapter::types::unidirectional::AUI::initval::initval_AUI" x="-1800" y="1500">
+			<Parameter Name="INIT_VAL" Value="9"/>
 		</FB>
 		<EventConnections>
 			<Connection Source="AD_PUBLISH_COUNT.INITO" Destination="AR_PUBLISH_FREQ.INIT" dx1="1600">
@@ -171,6 +175,7 @@
 			<Connection Source="initval_ATM.OUT" Destination="FT_PT1_AR.TM" dx1="400"/>
 			<Connection Source="FT_DERIV_10_AR.AR_OUT" Destination="FT_PT1_AR.AR_IN" dx1="420"/>
 			<Connection Source="AD_TO_AR_NUM.AR_OUT" Destination="FT_DERIV_10_AR.AR_IN" dx1="526.67"/>
+			<Connection Source="LIT_DerivK.OUT" Destination="FT_DERIV_10_AR.K" dx1="400"/>
 			<Connection Source="FT_PT1_AR.AR_OUT" Destination="AR_SPLIT_2.IN" dx1="540"/>
 		</AdapterConnections>
 	</SubAppNetwork>

@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<FBType Name="FT_DERIV_10_AR" Comment="AR-Adapter-Wrapper um OSCAT FT_DERIV_10 - bruckt zwischen adapter und OSCAT,&#10;ohne dass eine der beiden Basisbibliotheken von der anderen abhaengt. K, Faktor&#10;und run als Klartext-InputVars durchgereicht (Default K=0, Faktor=1.0, run=TRUE)">
+<FBType Name="FT_DERIV_10_AR" Comment="AR-Adapter-Wrapper um OSCAT FT_DERIV_10 - bruckt zwischen adapter und OSCAT,&#10;ohne dass eine der beiden Basisbibliotheken von der anderen abhaengt. K als&#10;AUI-Adapter-Socket (dynamisch), Faktor/run als Klartext-InputVars durchgereicht&#10;(Default Faktor=1.0, run=TRUE)">
 	<Identification Standard="61499-2" Description="Copyright (c) 2026 Meisterschulen am Ostbahnhof  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0">
 	</Identification>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.2" Author="Franz Höpfinger" Date="2026-10-03" Remarks="Franz: 'K auch auf Adapter umstellen' - K von InputVar (UINT, With-gebunden an REQ) auf AUI-Adapter-Socket umgestellt (gleiches Muster wie AR_IN: K.E1 loest FT_DERIV_10.REQ zusaetzlich aus, K.D1 liefert den Wert). With-Bindung von K am expliziten REQ-Event entfernt (K triggert jetzt selbst), Faktor/run bleiben unveraendert als Klartext-InputVars mit With-Bindung an REQ.">
+	</VersionInfo>
 	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.1" Author="Franz Höpfinger" Date="2026-09-20" Remarks="Bugfix: K/Faktor/run wurden nur per plain DataConnection an FT_DERIV_10 durchgereicht, ausgeloest einzig ueber AR_IN.E1 - kein Event auf diesem Wrapper hatte je eine With-Verknuepfung fuer diese Vars (IEC 61499 - ungebundene Vars werden nicht zuverlaessig gelesen). Neues explizites REQ-EventInput ergaenzt (parallel zu AR_IN.E1, beide -&gt; FT_DERIV_10.REQ) mit With K/Faktor/run, gespiegelt vom inneren FT_DERIV_10.REQ.">
 	</VersionInfo>
 	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2026-09-12" Remarks="Initial implementation of FT_DERIV_10_AR wrapper FB">
@@ -12,8 +14,7 @@
 		<EventInputs>
 			<Event Name="INIT" Type="EInit" Comment="Service Initialization (durchgereicht an FT_DERIV_10.EINIT)">
 			</Event>
-			<Event Name="REQ" Type="Event" Comment="Explizite Ausfuehrungsanforderung (durchgereicht an FT_DERIV_10.REQ, zusaetzlich zu AR_IN.E1)">
-				<With Var="K"/>
+			<Event Name="REQ" Type="Event" Comment="Explizite Ausfuehrungsanforderung (durchgereicht an FT_DERIV_10.REQ, zusaetzlich zu AR_IN.E1/K.E1)">
 				<With Var="Faktor"/>
 				<With Var="run"/>
 			</Event>
@@ -25,7 +26,6 @@
 			</Event>
 		</EventOutputs>
 		<InputVars>
-			<VarDeclaration Name="K" Type="UINT" Comment="Window Select: 0=1 Period, 9=10 Periods (durchgereicht an FT_DERIV_10.K)" InitialValue="0"/>
 			<VarDeclaration Name="Faktor" Type="REAL" Comment="Multiplikationsfaktor (durchgereicht an FT_DERIV_10.Faktor)" InitialValue="1.0"/>
 			<VarDeclaration Name="run" Type="BOOL" Comment="Berechnung aktiv (durchgereicht an FT_DERIV_10.run)" InitialValue="TRUE"/>
 		</InputVars>
@@ -37,6 +37,7 @@
 		</Plugs>
 		<Sockets>
 			<AdapterDeclaration Name="AR_IN" Type="adapter::types::unidirectional::AR" Comment="Eingangssignal (REAL)" x="-1500" y="1500"/>
+			<AdapterDeclaration Name="K" Type="adapter::types::unidirectional::AUI" Comment="Window Select (UINT, dynamisch): 0=1 Period, 9=10 Periods" x="-1500" y="2000"/>
 		</Sockets>
 	</InterfaceList>
 	<FBNetwork>
@@ -49,6 +50,7 @@
 			<Connection Source="FT_DERIV_10.INITO" Destination="INITO" dx1="453.33"/>
 			<Connection Source="RST" Destination="FT_DERIV_10.RST" dx1="2473.33"/>
 			<Connection Source="AR_IN.E1" Destination="FT_DERIV_10.REQ" dx1="626.67"/>
+			<Connection Source="K.E1" Destination="FT_DERIV_10.REQ" dx1="626.67"/>
 			<Connection Source="REQ" Destination="FT_DERIV_10.REQ" dx1="626.67"/>
 			<Connection Source="FT_DERIV_10.CNF" Destination="E_D_FF_ANY.CLK" dx1="453.33"/>
 			<Connection Source="E_D_FF_ANY.EO" Destination="AR_OUT.E1"/>
@@ -57,7 +59,7 @@
 			<Connection Source="E_D_FF_ANY.EO" Destination="AB_VALID.E1" dx1="906.67"/>
 		</EventConnections>
 		<DataConnections>
-			<Connection Source="K" Destination="FT_DERIV_10.K" dx1="846.67"/>
+			<Connection Source="K.D1" Destination="FT_DERIV_10.K" dx1="846.67"/>
 			<Connection Source="Faktor" Destination="FT_DERIV_10.Faktor" dx1="540"/>
 			<Connection Source="run" Destination="FT_DERIV_10.run" dx1="540"/>
 			<Connection Source="AR_IN.D1" Destination="FT_DERIV_10.in" dx1="846.67"/>
@@ -76,13 +78,14 @@
 
 <h2>🇩🇪 Deutsch</h2>
 
-<p>AR-Adapter-Wrapper um <code>OSCAT::Basic::POUs::Engineering::Control::FT_DERIV_10</code>. <code>K</code> (Window Select, Default 0), <code>Faktor</code> (Multiplikationsfaktor, Default 1.0) und <code>run</code> (Berechnung aktiv, Default TRUE) sind Klartext-<code>InputVars</code> auf diesem Wrapper. Ein explizites <code>REQ</code>-EventInput (mit <code>With K</code>, <code>With Faktor</code>, <code>With run</code>) erlaubt den manuellen/periodischen Aufruf zusaetzlich zum automatischen Ausloesen ueber <code>AR_IN.E1</code>.</p>
+<p>AR-Adapter-Wrapper um <code>OSCAT::Basic::POUs::Engineering::Control::FT_DERIV_10</code>. <code>K</code> (Window Select, dynamisch) ist ein AUI-Adapter-Socket - loest bei Ankunft eines neuen Werts <code>FT_DERIV_10.REQ</code> aus, wie <code>AR_IN</code>. <code>Faktor</code> (Multiplikationsfaktor, Default 1.0) und <code>run</code> (Berechnung aktiv, Default TRUE) bleiben Klartext-<code>InputVars</code> auf diesem Wrapper. Ein explizites <code>REQ</code>-EventInput (mit <code>With Faktor</code>, <code>With run</code>) erlaubt den manuellen/periodischen Aufruf zusaetzlich zum automatischen Ausloesen ueber <code>AR_IN.E1</code>/<code>K.E1</code>.</p>
 
 <h3>Reine Adapter-Grenze</h3>
 
 <p>Alle Hauptausgaenge von <code>FT_DERIV_10</code> werden als eigene Adapter exponiert — kein Klartext-Event/-Datum verlaesst diesen Baustein:</p>
 <ul>
 	<li><strong>AR_IN</strong> (Socket, <code>AR</code>): Eingangssignal (REAL, z. B. Impulszaehler-Rohwert von <code>AD_TO_AR_NUM.AR_OUT</code>)</li>
+	<li><strong>K</strong> (Socket, <code>AUI</code>): Window Select (UINT, dynamisch, 0=1 Period, 9=10 Periods)</li>
 	<li><strong>AR_OUT</strong> (Plug, <code>AR</code>): die berechnete Ableitung (<code>out</code>, REAL, z. B. zur Weitergabe an <code>CTRL_PID_AR.AR_ACT</code>)</li>
 	<li><strong>AUDI_DELTA_T</strong> (Plug, <code>AUDI</code>): Zeitdifferenz in Mikrosekunden (<code>DT_0</code>, UDINT)</li>
 	<li><strong>AR_DELTA_IN</strong> (Plug, <code>AR</code>): Differenz des Eingangssignals (<code>DI_0</code>, REAL)</li>
@@ -93,13 +96,14 @@
 
 <h2>🇬🇧 English</h2>
 
-<p>AR-adapter wrapper around <code>OSCAT::Basic::POUs::Engineering::Control::FT_DERIV_10</code>. <code>K</code> (window select, default 0), <code>Faktor</code> (multiplication factor, default 1.0) and <code>run</code> (calculation enabled, default TRUE) are plain <code>InputVars</code> on this wrapper. An explicit <code>REQ</code> event input (with <code>With K</code>, <code>With Faktor</code>, <code>With run</code> bindings) enables manual or periodic execution in addition to automatic triggering via <code>AR_IN.E1</code>.</p>
+<p>AR-adapter wrapper around <code>OSCAT::Basic::POUs::Engineering::Control::FT_DERIV_10</code>. <code>K</code> (window select, dynamic) is an AUI adapter socket - triggers <code>FT_DERIV_10.REQ</code> on arrival, like <code>AR_IN</code>. <code>Faktor</code> (multiplication factor, default 1.0) and <code>run</code> (calculation enabled, default TRUE) remain plain <code>InputVars</code> on this wrapper. An explicit <code>REQ</code> event input (with <code>With Faktor</code>, <code>With run</code> bindings) enables manual or periodic execution in addition to automatic triggering via <code>AR_IN.E1</code>/<code>K.E1</code>.</p>
 
 <h3>Pure Adapter Boundary</h3>
 
 <p>All main outputs of <code>FT_DERIV_10</code> are exposed as dedicated adapters:</p>
 <ul>
 	<li><strong>AR_IN</strong> (Socket, <code>AR</code>): input signal (REAL)</li>
+	<li><strong>K</strong> (Socket, <code>AUI</code>): window select (UINT, dynamic, 0=1 period, 9=10 periods)</li>
 	<li><strong>AR_OUT</strong> (Plug, <code>AR</code>): calculated derivative (<code>out</code>, REAL)</li>
 	<li><strong>AUDI_DELTA_T</strong> (Plug, <code>AUDI</code>): time difference in microseconds (<code>DT_0</code>, UDINT)</li>
 	<li><strong>AR_DELTA_IN</strong> (Plug, <code>AR</code>): input signal difference (<code>DI_0</code>, REAL)</li>
