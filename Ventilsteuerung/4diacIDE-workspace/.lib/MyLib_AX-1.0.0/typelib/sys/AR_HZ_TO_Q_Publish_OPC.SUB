@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<SubAppType Name="AR_HZ_TO_Q_Publish_OPC" Comment="Remote-Hz-Subscribe -&gt; feste Skalierung -&gt; VT-Anzeige (Q_NumericValue_PHYSA) UND per OPC-UA publiziert (AR_PUBLISH_1). Buendelt AR_SUBSCRIBE_1+initval_AR+AR_MUL_2+AR_TO_Q_Publish_OPC - ein Baustein je Puls-Geschwindigkeits-/Drehzahlsensor (Aufnahme B03, Igelband1/2 B10/B11, Saegeblatt B08), nur Parameter unterscheiden sich.">
+<SubAppType Name="AR_HZ_TO_Q_Publish_OPC" Comment="Remote-Hz-Subscribe -&gt; feste Skalierung -&gt; VT-Anzeige (Q_NumericValue_PHYSA) UND&#10;per OPC-UA publiziert (AR_PUBLISH_1). Buendelt&#10;AR_SUBSCRIBE_1+initval_AR+AR_MUL_2+AR_TO_Q_Publish_OPC - ein Baustein je&#10;Puls-Geschwindigkeits-/Drehzahlsensor (Aufnahme B03, Igelband1/2 B10/B11,&#10;Saegeblatt B08), nur Parameter unterscheiden sich.">
 	<Identification Standard="61499-2" Description="Copyright (c) 2026 Meisterschulen am Ostbahnhof  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0">
 	</Identification>
 	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2026-09-13" Remarks="initial implementation - herausgeloest aus Inputs_STG1.SUB (Aufnahme/Igelband1/Igelband2/Saegeblatt waren 4x nahezu identische AR_SUBSCRIBE_1+initval_AR+AR_MUL_2+AR_TO_Q_Publish_OPC-Ketten, nur Parameter unterschiedlich).">
@@ -20,16 +20,16 @@
 		</Plugs>
 	</SubAppInterfaceList>
 	<SubAppNetwork>
-		<FB Name="AR_SUBSCRIBE_Hz" Type="adapter::net::AR_SUBSCRIBE_1" x="0" y="0">
+		<FB Name="AR_SUBSCRIBE_Hz" Type="adapter::net::AR_SUBSCRIBE_1" x="-1200" y="-100">
 			<Parameter Name="QI" Value="TRUE"/>
 		</FB>
-		<FB Name="LIT_Scale" Type="adapter::types::unidirectional::AR::initval::initval_AR" x="100" y="1200">
+		<FB Name="LIT_Scale" Type="adapter::types::unidirectional::AR::initval::initval_AR" x="-1200" y="700">
 		</FB>
-		<FB Name="AR_SPLIT_2_HzRaw" Type="adapter::events::unidirectional::AR_SPLIT_2" x="900" y="0">
+		<FB Name="AR_SPLIT_2_HzRaw" Type="adapter::events::unidirectional::AR_SPLIT_2" x="200" y="300">
 		</FB>
-		<FB Name="AR_MUL" Type="adapter::iec61131::arithmetic::AR_MUL_2" x="1800" y="600">
+		<FB Name="AR_MUL" Type="adapter::iec61131::arithmetic::AR_MUL_2" x="1800" y="800">
 		</FB>
-		<SubApp Name="Publish" Type="MyLib::sys::AR_TO_Q_Publish_OPC" x="3400" y="600">
+		<SubApp Name="Publish" Type="MyLib::sys::AR_TO_Q_Publish_OPC" x="3500" y="600">
 		</SubApp>
 		<DataConnections>
 			<Connection Source="ID_HZ_REMOTE" Destination="AR_SUBSCRIBE_Hz.ID" dx1="1400">
@@ -46,11 +46,11 @@
 			</Connection>
 		</DataConnections>
 		<AdapterConnections>
-			<Connection Source="AR_SUBSCRIBE_Hz.OUT" Destination="AR_SPLIT_2_HzRaw.IN" dx1="600"/>
-			<Connection Source="AR_SPLIT_2_HzRaw.OUT1" Destination="AR_MUL.IN1" dx1="600"/>
-			<Connection Source="AR_SPLIT_2_HzRaw.OUT2" Destination="HZ_RAW_OUT" dx1="600"/>
+			<Connection Source="AR_SUBSCRIBE_Hz.OUT" Destination="AR_SPLIT_2_HzRaw.IN" dx1="380"/>
+			<Connection Source="AR_SPLIT_2_HzRaw.OUT1" Destination="HZ_RAW_OUT" dx1="600"/>
 			<Connection Source="LIT_Scale.OUT" Destination="AR_MUL.IN2" dx1="600"/>
 			<Connection Source="AR_MUL.OUT" Destination="Publish.AR_IN" dx1="600"/>
+			<Connection Source="AR_SPLIT_2_HzRaw.OUT2" Destination="AR_MUL.IN1" dx1="273.33"/>
 		</AdapterConnections>
 	</SubAppNetwork>
 </SubAppType>

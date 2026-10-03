@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<SubAppType Name="Uebung_074a_AUI" Comment="RPTO auf UT ausgeben (Adapter Version) mit Fendt-Schaltung + NOT_AVAILABLE-Filter, FIX">
+<SubAppType Name="Uebung_074a_AUI" Comment="RPTO auf UT ausgeben (Adapter Version) mit Fendt-Schaltung +&#10;NOT_AVAILABLE-Filter, FIX">
 	<Identification Standard="61499-2" Description="Copyright (c) 2023 Meisterschulen am Ostbahnhof  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0">
 	</Identification>
 	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.1" Author="Franz Höpfinger" Date="2026-09-16" Remarks="NOT_AVAILABLE-Filter ergaenzt (Franz: 'fixe die Uebung auch gleich, dass die bei FFFF keinen Quatsch anzeigt') - IA_RPTO.SPEED lief bisher ungefiltert direkt in die Fendt-Schaltung, ein Fehlwert INNERHALB einer Botschaft (0xFFFF) wurde also weiterhin 1:1 angezeigt. logiBUS::signalprocessing::fieldbus::AUI_FIELDBUS_UINT_TO_SIGNAL (IN&lt;=VALID_SIGNAL_W -&gt; OUT=IN, sonst OUT=0) davor geschaltet - ergaenzt die bestehende TIMEOUT-Schaltung (kompletter Kommunikationsausfall), reagiert aber schon bei jeder einzelnen Botschaft.">
