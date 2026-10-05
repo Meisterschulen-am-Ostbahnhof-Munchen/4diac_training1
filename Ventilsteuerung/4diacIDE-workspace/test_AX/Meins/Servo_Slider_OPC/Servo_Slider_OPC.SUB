@@ -12,59 +12,55 @@
 	<SubAppInterfaceList>
 	</SubAppInterfaceList>
 	<SubAppNetwork>
-		<FB Name="AngleSubscribe" Type="adapter::net::AR_SUBSCRIBE_1" x="0" y="400">
+		<FB Name="AngleSubscribe" Type="adapter::net::AR_SUBSCRIBE_1" x="-800" y="100">
 			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="ID" Value="SERVO_Q2_ANGLE_SET"/>
 		</FB>
-		<FB Name="AngleToReal" Type="adapter::conversion::unidirectional::AR_R_TO_REAL" x="1600" y="400">
+		<FB Name="AngleToReal" Type="adapter::conversion::unidirectional::AR_R_TO_REAL" x="1000" y="400">
 		</FB>
-		<FB Name="Clamp" Type="logiBUS::signalprocessing::clamp::F_ClampReal" x="3200" y="400">
+		<FB Name="Clamp" Type="logiBUS::signalprocessing::clamp::F_ClampReal" x="2600" y="400">
 			<Parameter Name="rMin" Value="0.0"/>
 			<Parameter Name="rMax" Value="180.0"/>
 		</FB>
-		<FB Name="ToFraction" Type="iec61131::arithmetic::F_DIV" x="4800" y="400">
-			<Parameter Name="IN2" Value="180.0"/>
+		<FB Name="ToFraction" Type="iec61131::arithmetic::F_DIV" x="4200" y="400">
+			<Parameter Name="IN2" Value="REAL#180.0"/>
 		</FB>
-		<FB Name="ToWord" Type="eclipse4diac::signalprocessing::FIELDBUS_PERCENT_TO_WORD" x="6400" y="400">
+		<FB Name="ToWord" Type="eclipse4diac::signalprocessing::FIELDBUS_PERCENT_TO_WORD" x="5700" y="400">
 		</FB>
 		<FB Name="AngleToAW" Type="adapter::conversion::unidirectional::AW_WORD_TO_W" x="8000" y="400">
 		</FB>
-		<FB Name="ServoQ2" Type="logiBUS::io::DO_SERVO::logiBUS_QWA_SERVO" x="9600" y="400">
+		<FB Name="ServoQ2" Type="logiBUS::io::DO_SERVO::logiBUS_QWA_SERVO" x="10000" y="200">
 			<Parameter Name="QI" Value="TRUE"/>
 			<Parameter Name="PARAMS" Value="">
 				<Attribute Name="Visible" Value="false"/>
 			</Parameter>
 			<Parameter Name="Output" Value="Output_Q2"/>
 		</FB>
-		<FB Name="AngleEchoToAR" Type="adapter::conversion::unidirectional::AR_REAL_TO_R" x="4800" y="1600">
+		<FB Name="AngleEchoToAR" Type="adapter::conversion::unidirectional::AR_REAL_TO_R" x="4200" y="1600">
 		</FB>
-		<FB Name="AngleEcho" Type="adapter::net::AR_PUBLISH_1" x="6400" y="1600">
+		<FB Name="AngleEcho" Type="adapter::net::AR_PUBLISH_1" x="7400" y="1500">
 			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="ID" Value="SERVO_Q2_ANGLE"/>
 		</FB>
 		<EventConnections>
-			<Connection Source="AngleToReal.CNF" Destination="Clamp.REQ" dx1="373.33"/>
-			<Connection Source="Clamp.CNF" Destination="ToFraction.REQ" dx1="373.33"/>
-			<Connection Source="Clamp.CNF" Destination="AngleEchoToAR.REQ" dx1="80" dx2="80" dy="1200"/>
-			<Connection Source="ToFraction.CNF" Destination="ToWord.REQ" dx1="373.33"/>
-			<Connection Source="ToWord.CNF" Destination="AngleToAW.REQ" dx1="373.33"/>
-			<Connection Source="AngleSubscribe.INITO" Destination="AngleEcho.INIT" dx1="80" dx2="80" dy="1200">
+			<Connection Source="AngleToReal.CNF" Destination="Clamp.REQ"/>
+			<Connection Source="Clamp.CNF" Destination="ToFraction.REQ"/>
+			<Connection Source="Clamp.CNF" Destination="AngleEchoToAR.REQ" dx1="400"/>
+			<Connection Source="ToFraction.CNF" Destination="ToWord.REQ"/>
+			<Connection Source="ToWord.CNF" Destination="AngleToAW.REQ"/>
+			<Connection Source="AngleSubscribe.INITO" Destination="AngleEcho.INIT" dx1="3226.67">
 				<Attribute Name="Visible" Value="false"/>
 			</Connection>
-			<Connection Source="AngleEcho.INITO" Destination="ServoQ2.INIT" dx1="80" dx2="80" dy="-1200">
+			<Connection Source="AngleEcho.INITO" Destination="ServoQ2.INIT" dx1="673.33">
 				<Attribute Name="Visible" Value="false"/>
 			</Connection>
 		</EventConnections>
 		<DataConnections>
-			<Connection Source="SERVO_Q2_ANGLE_SET" Destination="AngleSubscribe.ID" dx1="-200">
-				<Attribute Name="Visible" Value="false"/>
-			</Connection>
-			<Connection Source="SERVO_Q2_ANGLE" Destination="AngleEcho.ID" dx1="80" dx2="80" dy="1200">
-				<Attribute Name="Visible" Value="false"/>
-			</Connection>
-			<Connection Source="AngleToReal.IN" Destination="Clamp.rIn" dx1="373.33"/>
+			<Connection Source="AngleToReal.IN" Destination="Clamp.rIn"/>
 			<Connection Source="Clamp." Destination="ToFraction.IN1" dx1="373.33"/>
-			<Connection Source="ToFraction.OUT" Destination="ToWord.RI" dx1="373.33"/>
+			<Connection Source="ToFraction.OUT" Destination="ToWord.RI"/>
 			<Connection Source="ToWord." Destination="AngleToAW.OUT" dx1="373.33"/>
-			<Connection Source="Clamp." Destination="AngleEchoToAR.OUT" dx1="80" dx2="80" dy="1200"/>
+			<Connection Source="Clamp." Destination="AngleEchoToAR.OUT" dx1="400"/>
 		</DataConnections>
 		<AdapterConnections>
 			<Connection Source="AngleSubscribe.OUT" Destination="AngleToReal.AR_IN" dx1="373.33"/>
