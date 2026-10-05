@@ -93,18 +93,39 @@ const statusClass = computed(() => {
 let client: any = null
 let session: any = null
 
+/* Trennt einen Client bestmoeglich (Fire-and-forget, Fehler werden verschluckt) -
+ * genutzt sowohl beim regulaeren Verbindungsabbau als auch beim Aufraeumen nach
+ * Verbindungsverlust/fehlgeschlagenem Setup, damit keine OPC-UA-Session/-Kanal
+ * auf dem Server haengen bleibt. */
+function disconnectQuietly(c: any) {
+  if (!c) return
+  try {
+    c.off('connection_lost', handleLost)
+    c.off('close', handleLost)
+  } catch {
+    /* ignore */
+  }
+  c.disconnectP().catch(() => {})
+}
+
 function handleLost() {
   if (!connected.value) return
   connected.value = false
   status.value = 'Fehler: Verbindung verloren'
   liveAngle.value = 0
+  const lostClient = client
   session = null
   client = null
+  disconnectQuietly(lostClient)
 }
 
 async function connect() {
   status.value = 'Verbinde…'
-  client = new OPCUAClient({
+  /* Erst in einer lokalen Variable aufbauen, nicht in den Modul-Refs schreiben,
+   * solange Session/Subscription noch fehlschlagen koennen - sonst wuerde ein
+   * fehlgeschlagener Verbindungsversuch den Client ueberschreiben/verwaisen
+   * lassen, statt ihn sauber zu trennen (Sourcery-Finding r4181913425/r4181913434). */
+  const newClient = new OPCUAClient({
     securityMode: MessageSecurityMode.None,
     securityPolicy: SecurityPolicy.None,
     endpoint_must_exist: false,
@@ -112,14 +133,10 @@ async function connect() {
   })
 
   try {
-    await client.connectP(endpointUrl.value)
-    client.on('connection_lost', handleLost)
-    client.on('close', handleLost)
-    session = await client.createSessionP({})
-    connected.value = true
-    status.value = 'Verbunden'
+    await newClient.connectP(endpointUrl.value)
+    const newSession = await newClient.createSessionP({})
 
-    const subscription = new ClientSubscription(session, {
+    const subscription = new ClientSubscription(newSession, {
       requestedPublishingInterval: 100,
       requestedLifetimeCount: 100,
       requestedMaxKeepAliveCount: 2,
@@ -137,9 +154,18 @@ async function connect() {
     angleGroup.on('changed', (_item: any, dataValue: any) => {
       liveAngle.value = Number(dataValue.value?.value ?? 0)
     })
+
+    /* Erst jetzt, da alles erfolgreich war, committen und die Lost-Handler scharf schalten. */
+    client = newClient
+    session = newSession
+    client.on('connection_lost', handleLost)
+    client.on('close', handleLost)
+    connected.value = true
+    status.value = 'Verbunden'
   } catch (err) {
     status.value = 'Fehler: ' + (err as Error).message
     connected.value = false
+    disconnectQuietly(newClient)
   }
 }
 
