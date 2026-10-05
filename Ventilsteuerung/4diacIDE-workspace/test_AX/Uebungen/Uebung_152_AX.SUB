@@ -50,43 +50,43 @@
 		<FB Name="LIT_K" Type="adapter::types::unidirectional::AUI::initval::initval_AUI" x="-2500" y="800">
 			<Parameter Name="INIT_VAL" Value="9"/>
 		</FB>
-		<FB Name="DigitalInput_I1" Type="logiBUS::io::DI::logiBUS_IE" x="-4000" y="2200">
+		<FB Name="DigitalInput_I1" Type="logiBUS::io::DI::logiBUS_IE" x="-2500" y="2300">
 			<Parameter Name="QI" Value="TRUE"/>
 			<Parameter Name="Input" Value="Input_I1"/>
 			<Parameter Name="InputEvent" Value="BUTTON_SINGLE_CLICK"/>
 		</FB>
-		<FB Name="AX_T_FF" Type="adapter::events::unidirectional::AX_T_FF" x="-1500" y="2400">
+		<FB Name="AX_T_FF" Type="adapter::events::unidirectional::AX_T_FF" x="0" y="2500">
 		</FB>
-		<FB Name="CTRL_PI" Type="OSCAT_adapter::Control::CTRL_PI_AR" x="600" y="400">
+		<FB Name="CTRL_PI" Type="OSCAT_adapter::Control::CTRL_PI_AR" x="3500" y="900">
 		</FB>
-		<FB Name="LIT_SUP" Type="adapter::types::unidirectional::AR::initval::initval_AR" x="600" y="1800">
+		<FB Name="LIT_SUP" Type="adapter::types::unidirectional::AR::initval::initval_AR" x="1300" y="2300">
 			<Parameter Name="INIT_VAL" Value="0.0"/>
 		</FB>
-		<FB Name="LIT_OFS" Type="adapter::types::unidirectional::AR::initval::initval_AR" x="600" y="2300">
+		<FB Name="LIT_OFS" Type="adapter::types::unidirectional::AR::initval::initval_AR" x="1300" y="2900">
 			<Parameter Name="INIT_VAL" Value="0.0"/>
 		</FB>
-		<FB Name="LIT_M_I" Type="adapter::types::unidirectional::AR::initval::initval_AR" x="600" y="2800">
+		<FB Name="LIT_M_I" Type="adapter::types::unidirectional::AR::initval::initval_AR" x="1400" y="3500">
 			<Parameter Name="INIT_VAL" Value="8184.0"/>
 		</FB>
-		<FB Name="LIT_KP" Type="adapter::types::unidirectional::AR::initval::initval_AR" x="600" y="3300">
+		<FB Name="LIT_KP" Type="adapter::types::unidirectional::AR::initval::initval_AR" x="1500" y="4100">
 			<Parameter Name="INIT_VAL" Value="10.0"/>
 		</FB>
-		<FB Name="LIT_KI" Type="adapter::types::unidirectional::AR::initval::initval_AR" x="600" y="3800">
+		<FB Name="LIT_KI" Type="adapter::types::unidirectional::AR::initval::initval_AR" x="1600" y="4700">
 			<Parameter Name="INIT_VAL" Value="10.0"/>
 		</FB>
-		<FB Name="LIT_LL" Type="adapter::types::unidirectional::AR::initval::initval_AR" x="600" y="4300">
+		<FB Name="LIT_LL" Type="adapter::types::unidirectional::AR::initval::initval_AR" x="1700" y="5300">
 			<Parameter Name="INIT_VAL" Value="0.0"/>
 		</FB>
-		<FB Name="LIT_LH" Type="adapter::types::unidirectional::AR::initval::initval_AR" x="600" y="4800">
+		<FB Name="LIT_LH" Type="adapter::types::unidirectional::AR::initval::initval_AR" x="1800" y="5900">
 			<Parameter Name="INIT_VAL" Value="8184.0"/>
 		</FB>
-		<FB Name="AR_TO_AD_NUM" Type="adapter::conversion::unidirectional::AR_TO_AD_NUM" x="2100" y="400">
+		<FB Name="AR_TO_AD_NUM" Type="adapter::conversion::unidirectional::AR_TO_AD_NUM" x="5100" y="1000">
 		</FB>
-		<FB Name="PWMOutput_Q1" Type="logiBUS::io::DQ::logiBUS_QDA_PWM" x="3600" y="400">
+		<FB Name="PWMOutput_Q1" Type="logiBUS::io::DQ::logiBUS_QDA_PWM" x="7100" y="500">
 			<Parameter Name="QI" Value="TRUE"/>
 			<Parameter Name="Output" Value="Output_Q1"/>
 		</FB>
-		<FB Name="initval_AR" Type="adapter::types::unidirectional::AR::initval::initval_AR" x="-2400" y="1500">
+		<FB Name="initval_AR" Type="adapter::types::unidirectional::AR::initval::initval_AR" x="-1000" y="1700">
 			<Parameter Name="INIT_VAL" Value="16.0"/>
 		</FB>
 		<EventConnections>
@@ -100,11 +100,11 @@
 			<Connection Source="AD_TO_AR_NUM.AR_OUT" Destination="FT_DERIV.AR_IN" dx1="300"/>
 			<Connection Source="LIT_K.OUT" Destination="FT_DERIV.K" dx1="300"/>
 			<Connection Source="FT_DERIV.AR_OUT" Destination="CTRL_PI.AR_ACT" dx1="300"/>
-			<Connection Source="AX_T_FF.Q" Destination="CTRL_PI.AX_MAN" dx1="740"/>
+			<Connection Source="AX_T_FF.Q" Destination="CTRL_PI.AX_MAN" dx1="320"/>
 			<Connection Source="CTRL_PI.AR_Y" Destination="AR_TO_AD_NUM.AR_IN" dx1="300"/>
 			<Connection Source="AR_TO_AD_NUM.AD_OUT" Destination="PWMOutput_Q1.OUT" dx1="300"/>
 			<Connection Source="initval_AR.OUT" Destination="CTRL_PI.SET" dx1="1040"/>
-			<Connection Source="LIT_SUP.OUT" Destination="CTRL_PI.SUP" dx1="300"/>
+			<Connection Source="LIT_SUP.OUT" Destination="CTRL_PI.SUP" dx1="186.67"/>
 			<Connection Source="LIT_OFS.OUT" Destination="CTRL_PI.OFS" dx1="300"/>
 			<Connection Source="LIT_M_I.OUT" Destination="CTRL_PI.M_I" dx1="300"/>
 			<Connection Source="LIT_KP.OUT" Destination="CTRL_PI.KP" dx1="300"/>
