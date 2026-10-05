@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SubAppType Name="Servo_Slider_OPC" Comment="Demo: Servo an Output_Q2, Winkel 0-180 Grad per Web-Slider (OPC-UA),&#10;aktueller Winkel wird als Echo zurueckpubliziert">
+	<Identification Standard="61499-2" Description="Copyright (c) 2026 Meisterschulen am Ostbahnhof  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0">
+	</Identification>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2026-10-05" Remarks="initial API and implementation and/or initial documentation">
+	</VersionInfo>
+	<CompilerInfo packageName="Meins::Servo_Slider_OPC">
+		<Import declaration="Meins::Servo_Slider_OPC::SubStrings::SERVO_Q2_ANGLE_SET"/>
+		<Import declaration="Meins::Servo_Slider_OPC::SubStrings::SERVO_Q2_ANGLE"/>
+		<Import declaration="logiBUS::io::DQ::logiBUS_DO::Output_Q2"/>
+	</CompilerInfo>
+	<SubAppInterfaceList>
+	</SubAppInterfaceList>
+	<SubAppNetwork>
+		<FB Name="AngleSubscribe" Type="adapter::net::AR_SUBSCRIBE_1" x="0" y="400">
+			<Parameter Name="QI" Value="TRUE"/>
+		</FB>
+		<FB Name="AngleToReal" Type="adapter::conversion::unidirectional::AR_R_TO_REAL" x="1600" y="400">
+		</FB>
+		<FB Name="Clamp" Type="logiBUS::signalprocessing::clamp::F_ClampReal" x="3200" y="400">
+			<Parameter Name="rMin" Value="0.0"/>
+			<Parameter Name="rMax" Value="180.0"/>
+		</FB>
+		<FB Name="ToFraction" Type="iec61131::arithmetic::F_DIV" x="4800" y="400">
+			<Parameter Name="IN2" Value="180.0"/>
+		</FB>
+		<FB Name="ToWord" Type="eclipse4diac::signalprocessing::FIELDBUS_PERCENT_TO_WORD" x="6400" y="400">
+		</FB>
+		<FB Name="AngleToAW" Type="adapter::conversion::unidirectional::AW_WORD_TO_W" x="8000" y="400">
+		</FB>
+		<FB Name="ServoQ2" Type="logiBUS::io::DO_SERVO::logiBUS_QWA_SERVO" x="9600" y="400">
+			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="PARAMS" Value="">
+				<Attribute Name="Visible" Value="false"/>
+			</Parameter>
+			<Parameter Name="Output" Value="Output_Q2"/>
+		</FB>
+		<FB Name="AngleEchoToAR" Type="adapter::conversion::unidirectional::AR_REAL_TO_R" x="4800" y="1600">
+		</FB>
+		<FB Name="AngleEcho" Type="adapter::net::AR_PUBLISH_1" x="6400" y="1600">
+			<Parameter Name="QI" Value="TRUE"/>
+		</FB>
+		<EventConnections>
+			<Connection Source="AngleToReal.CNF" Destination="Clamp.REQ" dx1="373.33"/>
+			<Connection Source="Clamp.CNF" Destination="ToFraction.REQ" dx1="373.33"/>
+			<Connection Source="Clamp.CNF" Destination="AngleEchoToAR.REQ" dx1="80" dx2="80" dy="1200"/>
+			<Connection Source="ToFraction.CNF" Destination="ToWord.REQ" dx1="373.33"/>
+			<Connection Source="ToWord.CNF" Destination="AngleToAW.REQ" dx1="373.33"/>
+			<Connection Source="AngleSubscribe.INITO" Destination="AngleEcho.INIT" dx1="80" dx2="80" dy="1200">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="AngleEcho.INITO" Destination="ServoQ2.INIT" dx1="80" dx2="80" dy="-1200">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+		</EventConnections>
+		<DataConnections>
+			<Connection Source="SERVO_Q2_ANGLE_SET" Destination="AngleSubscribe.ID" dx1="-200">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="SERVO_Q2_ANGLE" Destination="AngleEcho.ID" dx1="80" dx2="80" dy="1200">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="AngleToReal.IN" Destination="Clamp.rIn" dx1="373.33"/>
+			<Connection Source="Clamp." Destination="ToFraction.IN1" dx1="373.33"/>
+			<Connection Source="ToFraction.OUT" Destination="ToWord.RI" dx1="373.33"/>
+			<Connection Source="ToWord." Destination="AngleToAW.OUT" dx1="373.33"/>
+			<Connection Source="Clamp." Destination="AngleEchoToAR.OUT" dx1="80" dx2="80" dy="1200"/>
+		</DataConnections>
+		<AdapterConnections>
+			<Connection Source="AngleSubscribe.OUT" Destination="AngleToReal.AR_IN" dx1="373.33"/>
+			<Connection Source="AngleToAW.AW_OUT" Destination="ServoQ2.OUT" dx1="373.33"/>
+			<Connection Source="AngleEchoToAR.AR_OUT" Destination="AngleEcho.IN" dx1="373.33"/>
+		</AdapterConnections>
+	</SubAppNetwork>
+</SubAppType>
