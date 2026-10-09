@@ -128,11 +128,13 @@
 			<ECTransition Source="sMinElapsed" Destination="sWaitFTrig" Condition="1" x="800" y="-1200"/>
 
 			<ECTransition Source="sErrorMin" Destination="sIdle" Condition="REQ[NOT ResetRequested]" x="-1600" y="-2000"/>
-			<ECTransition Source="sErrorMin" Destination="sArmTimers" Condition="REQ[ResetRequested AND ResetIn AND NOT xPrevResetIn]" x="0" y="-800"/>
+			<ECTransition Source="sErrorMin" Destination="sParamError" Condition="REQ[ResetRequested AND ResetIn AND NOT xPrevResetIn AND NOT xParamOk]" x="-800" y="-1200"/>
+			<ECTransition Source="sErrorMin" Destination="sArmTimers" Condition="REQ[ResetRequested AND xParamOk AND ResetIn AND NOT xPrevResetIn]" x="0" y="-800"/>
 			<ECTransition Source="sErrorMin" Destination="sErrorMin" Condition="REQ[ResetRequested AND NOT (ResetIn AND NOT xPrevResetIn)]" x="2400" y="-2000"/>
 
 			<ECTransition Source="sErrorMax" Destination="sIdle" Condition="REQ[NOT ResetRequested]" x="-1600" y="2000"/>
-			<ECTransition Source="sErrorMax" Destination="sArmTimers" Condition="REQ[ResetRequested AND ResetIn AND NOT xPrevResetIn]" x="0" y="800"/>
+			<ECTransition Source="sErrorMax" Destination="sParamError" Condition="REQ[ResetRequested AND ResetIn AND NOT xPrevResetIn AND NOT xParamOk]" x="-800" y="1200"/>
+			<ECTransition Source="sErrorMax" Destination="sArmTimers" Condition="REQ[ResetRequested AND xParamOk AND ResetIn AND NOT xPrevResetIn]" x="0" y="800"/>
 			<ECTransition Source="sErrorMax" Destination="sErrorMax" Condition="REQ[ResetRequested AND NOT (ResetIn AND NOT xPrevResetIn)]" x="2400" y="2000"/>
 
 			<ECTransition Source="sResetDetected" Destination="sWaitRTrig" Condition="1" x="-800" y="-160"/>
@@ -159,6 +161,7 @@ xPrevResetIn := ResetIn;
 		</Algorithm>
 		<Algorithm Name="ResetError_C">
 			<ST><![CDATA[ // C001 Reset Error - ResetIn was already TRUE when ResetRequested became TRUE
+xParamOk := (TrailingMinimum <= TrailingMaximum) AND (TrailingMinimum >= T#100ms);
 Ready := BOOL#TRUE;
 ResetOut := BOOL#FALSE;
 Error := BOOL#TRUE;
@@ -168,6 +171,7 @@ xPrevResetIn := ResetIn;
 		</Algorithm>
 		<Algorithm Name="WaitRTrig_C">
 			<ST><![CDATA[ // 83E2 Wait for R_TRIG - enabled, waiting for the operator to press the button
+xParamOk := (TrailingMinimum <= TrailingMaximum) AND (TrailingMinimum >= T#100ms);
 Ready := BOOL#TRUE;
 ResetOut := BOOL#FALSE;
 Error := BOOL#FALSE;
@@ -207,6 +211,7 @@ DiagCode := ResetButtonDiagCodes::WAIT_F_TRIG;
 		</Algorithm>
 		<Algorithm Name="ErrorMin_C">
 			<ST><![CDATA[ // C3F0 Error Trailing Minimum - F_TRIG before TrailingMinimum elapsed. Waiting for R_TRIG
+xParamOk := (TrailingMinimum <= TrailingMaximum) AND (TrailingMinimum >= T#100ms);
 Ready := BOOL#TRUE;
 ResetOut := BOOL#FALSE;
 Error := BOOL#TRUE;
@@ -216,6 +221,7 @@ xPrevResetIn := ResetIn;
 		</Algorithm>
 		<Algorithm Name="ErrorMax_C">
 			<ST><![CDATA[ // C3E0 Error Trailing Maximum - TrailingMaximum elapsed before F_TRIG. Waiting for R_TRIG
+xParamOk := (TrailingMinimum <= TrailingMaximum) AND (TrailingMinimum >= T#100ms);
 Ready := BOOL#TRUE;
 ResetOut := BOOL#FALSE;
 Error := BOOL#TRUE;
