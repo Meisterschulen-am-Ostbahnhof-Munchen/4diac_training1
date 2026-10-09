@@ -19,15 +19,15 @@
 		</Plugs>
 	</SubAppInterfaceList>
 	<SubAppNetwork>
-		<FB Name="AX_SUBSCRIBE_1" Type="adapter::net::AX_SUBSCRIBE_1" x="0" y="0">
+		<FB Name="AX_SUBSCRIBE_1" Type="adapter::net::AX_SUBSCRIBE_1" x="-800" y="-100">
 			<Parameter Name="QI" Value="TRUE"/>
 		</FB>
-		<SubApp Name="GreenWhiteBackground1_AX" Type="MyLib::sys::GreenWhiteBackground1_AX" x="1500" y="0">
+		<SubApp Name="GreenWhiteBackground1_AX" Type="MyLib::sys::GreenWhiteBackground1_AX" x="2500" y="0">
 		</SubApp>
-		<FB Name="AX_SPLIT_2_Out" Type="adapter::events::unidirectional::AX_SPLIT_2" x="700" y="0">
+		<FB Name="AX_SPLIT_2_Out" Type="adapter::events::unidirectional::AX_SPLIT_2" x="700" y="300">
 		</FB>
 		<DataConnections>
-			<Connection Source="ID" Destination="AX_SUBSCRIBE_1.ID" dx1="80" dx2="80" dy="40">
+			<Connection Source="ID" Destination="AX_SUBSCRIBE_1.ID" dx1="713.33">
 				<Attribute Name="Visible" Value="false"/>
 			</Connection>
 			<Connection Source="u16ObjId" Destination="GreenWhiteBackground1_AX.u16ObjId" dx1="526.67">
@@ -36,8 +36,8 @@
 		</DataConnections>
 		<AdapterConnections>
 			<Connection Source="AX_SUBSCRIBE_1.OUT" Destination="AX_SPLIT_2_Out.IN" dx1="280"/>
-			<Connection Source="AX_SPLIT_2_Out.OUT1" Destination="GreenWhiteBackground1_AX.DI1" dx1="280"/>
-			<Connection Source="AX_SPLIT_2_Out.OUT2" Destination="OUT" dx1="280"/>
+			<Connection Source="AX_SPLIT_2_Out.OUT1" Destination="OUT" dx1="280"/>
+			<Connection Source="AX_SPLIT_2_Out.OUT2" Destination="GreenWhiteBackground1_AX.DI1" dx1="373.33"/>
 		</AdapterConnections>
 	</SubAppNetwork>
 </SubAppType>
