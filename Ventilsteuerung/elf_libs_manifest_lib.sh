@@ -35,7 +35,9 @@ FORTE_ABI=3
 # net_adapter, waehrend "adapter" selbst fest in der Firmware bleibt - siehe
 # resolve_required_libs()).
 declare -A PREFIX_TO_LIB=(
-    ["OSCAT"]="OSCAT"
+    ["OSCAT::Basic"]="OSCAT_Basic"
+    ["OSCAT::Building"]="OSCAT_Building"
+    ["OSCAT::Network"]="OSCAT_Network"
     ["OSCAT_adapter"]="OSCAT_adapter"
     ["adapter::net"]="net_adapter"
 )
@@ -49,7 +51,7 @@ declare -A PREFIX_TO_LIB=(
 # LOGIBUS_integration_datapanel. Bis dahin ueberspringt build_libs_manifest()
 # automatisch jeden Knoten, der adapter::net::-Typen nutzt (praktisch alle).
 declare -A LIB_VERSIONS=(
-    ["OSCAT"]="0.1.0"
+    ["OSCAT_Basic"]="0.1.0"
     ["OSCAT_adapter"]="3.0.0"
 )
 
@@ -60,12 +62,12 @@ declare -A LIB_VERSIONS=(
 # bleibt bewusst fest in die Firmware gelinkt, daher kein eigener Eintrag
 # dafuer.
 declare -A LIB_REQUIRES=(
-    ["OSCAT_adapter"]="OSCAT:^0.1"
+    ["OSCAT_adapter"]="OSCAT_Basic:^0.1"
 )
 
 # Lib-Ordnername unter 4diacIDE-workspace/.lib/ (nicht einheitlich).
 declare -A LIB_DIR_NAME=(
-    ["OSCAT"]="OSCAT"
+    ["OSCAT_Basic"]="OSCAT_Basic-0.1.0"
     ["OSCAT_adapter"]="OSCAT_adapter-3.0.0"
     ["net_adapter"]="net_adapter-3.0.0"
 )
