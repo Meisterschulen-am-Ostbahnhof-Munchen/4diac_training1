@@ -2,10 +2,13 @@
 <FBType Name="SF_ResetButton" Comment="PLCopen Safety SF_ResetButton (Part 1 v2.10, Ch. 6.1) - Trailing-Edge Reset">
 	<Identification Standard="61499-2" Function="Adds Trailing-Edge functionality (LOW-HIGH-LOW) to Reset inputs, per EN ISO 13849-1:2015 5.2.2. ResetOut pulses TRUE for 1 cycle after a valid press-and-release within [TrailingMinimum, TrailingMaximum]." Description="Copyright (c) 2026 Meisterschulen am Ostbahnhof  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0">
 	</Identification>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.1" Author="Franz Höpfinger" Date="2026-10-09" Remarks="Added EResetOut event output (fires once alongside ResetOut=TRUE). Non-literal 61499 extension of the PLCopen interface (REQ/CNF-only is a 61131-3-scan idiom; a dedicated event lets consumers wire the reset pulse directly instead of re-deriving it from CNF+ResetOut via an external gate).">
+	</VersionInfo>
 	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2026-10-09" Remarks="Modeled after logiBUS::utils::sequence::timed::sequence_T_05 (ECC + ATimeOut Plug pattern). Source: PLCopen TC5 Safety Part 1 - Concepts and Function Blocks, Version 2.10, Nov. 7 2023, Chapter 6.1 Reset Button.">
 	</VersionInfo>
 	<CompilerInfo packageName="logiBUS::safety::PLCopen">
 		<Import declaration="logiBUS::safety::PLCopen::const::DiagCodes"/>
+		<Import declaration="logiBUS::safety::PLCopen::const::ResetButtonDiagCodes"/>
 	</CompilerInfo>
 	<InterfaceList>
 		<EventInputs>
@@ -23,6 +26,7 @@
 				<With Var="Error"/>
 				<With Var="DiagCode"/>
 			</Event>
+			<Event Name="EResetOut" Type="Event" Comment="Dedicated event, fires once in the exact cycle a valid trailing-edge reset is detected (same cycle as ResetOut=TRUE)"/>
 		</EventOutputs>
 		<InputVars>
 			<VarDeclaration Name="ResetRequested" Type="BOOL" Comment="From the paired FB's ResetRequest output. TRUE=monitor ResetIn, FALSE=inactive" InitialValue="TRUE"/>
@@ -87,6 +91,7 @@
 			</ECState>
 			<ECState Name="sResetDetected" x="2400" y="0">
 				<ECAction Algorithm="ResetDetected_C" Output="CNF"/>
+				<ECAction Output="EResetOut"/>
 				<ECAction Output="minTimeOut.STOP"/>
 				<ECAction Output="maxTimeOut.STOP"/>
 			</ECState>
@@ -148,7 +153,7 @@ xParamOk := (TrailingMinimum <= TrailingMaximum) AND (TrailingMinimum >= T#100ms
 Ready := BOOL#TRUE;
 ResetOut := BOOL#FALSE;
 Error := BOOL#TRUE;
-DiagCode := DiagCodes::PARAMETER_ERROR;
+DiagCode := ResetButtonDiagCodes::PARAMETER_ERROR;
 xPrevResetIn := ResetIn;
 ]]></ST>
 		</Algorithm>
@@ -157,7 +162,7 @@ xPrevResetIn := ResetIn;
 Ready := BOOL#TRUE;
 ResetOut := BOOL#FALSE;
 Error := BOOL#TRUE;
-DiagCode := DiagCodes::RESET_ERROR;
+DiagCode := ResetButtonDiagCodes::RESET_ERROR;
 xPrevResetIn := ResetIn;
 ]]></ST>
 		</Algorithm>
@@ -166,7 +171,7 @@ xPrevResetIn := ResetIn;
 Ready := BOOL#TRUE;
 ResetOut := BOOL#FALSE;
 Error := BOOL#FALSE;
-DiagCode := DiagCodes::WAIT_R_TRIG;
+DiagCode := ResetButtonDiagCodes::WAIT_R_TRIG;
 xPrevResetIn := ResetIn;
 ]]></ST>
 		</Algorithm>
@@ -178,7 +183,7 @@ xMinOk := BOOL#FALSE;
 Ready := BOOL#TRUE;
 ResetOut := BOOL#FALSE;
 Error := BOOL#FALSE;
-DiagCode := DiagCodes::WAIT_F_TRIG;
+DiagCode := ResetButtonDiagCodes::WAIT_F_TRIG;
 xPrevResetIn := ResetIn;
 ]]></ST>
 		</Algorithm>
@@ -187,7 +192,7 @@ xPrevResetIn := ResetIn;
 Ready := BOOL#TRUE;
 ResetOut := BOOL#FALSE;
 Error := BOOL#FALSE;
-DiagCode := DiagCodes::WAIT_F_TRIG;
+DiagCode := ResetButtonDiagCodes::WAIT_F_TRIG;
 xPrevResetIn := ResetIn;
 ]]></ST>
 		</Algorithm>
@@ -197,7 +202,7 @@ xMinOk := BOOL#TRUE;
 Ready := BOOL#TRUE;
 ResetOut := BOOL#FALSE;
 Error := BOOL#FALSE;
-DiagCode := DiagCodes::WAIT_F_TRIG;
+DiagCode := ResetButtonDiagCodes::WAIT_F_TRIG;
 ]]></ST>
 		</Algorithm>
 		<Algorithm Name="ErrorMin_C">
@@ -205,7 +210,7 @@ DiagCode := DiagCodes::WAIT_F_TRIG;
 Ready := BOOL#TRUE;
 ResetOut := BOOL#FALSE;
 Error := BOOL#TRUE;
-DiagCode := DiagCodes::ERROR_TRAILING_MINIMUM;
+DiagCode := ResetButtonDiagCodes::ERROR_TRAILING_MINIMUM;
 xPrevResetIn := ResetIn;
 ]]></ST>
 		</Algorithm>
@@ -214,7 +219,7 @@ xPrevResetIn := ResetIn;
 Ready := BOOL#TRUE;
 ResetOut := BOOL#FALSE;
 Error := BOOL#TRUE;
-DiagCode := DiagCodes::ERROR_TRAILING_MAXIMUM;
+DiagCode := ResetButtonDiagCodes::ERROR_TRAILING_MAXIMUM;
 xPrevResetIn := ResetIn;
 ]]></ST>
 		</Algorithm>
@@ -223,7 +228,7 @@ xPrevResetIn := ResetIn;
 Ready := BOOL#TRUE;
 ResetOut := BOOL#TRUE;
 Error := BOOL#FALSE;
-DiagCode := DiagCodes::RESET_DETECTED;
+DiagCode := ResetButtonDiagCodes::RESET_DETECTED;
 xPrevResetIn := ResetIn;
 ]]></ST>
 		</Algorithm>

@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SubAppType Name="Uebung_006_SAFE_AX" Comment="SAFE-Variante: Wiederanlaufsperre fuer Uebung_006_AX (SF_ResetButton, I7/I8)">
+	<Identification Standard="61499-2" Description="Copyright (c) 2026 Meisterschulen am Ostbahnhof  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0">
+	</Identification>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2026-10-09" Remarks="SAFE-Variante von Uebung_006_AX. STOP (I2) und Meldeeingang I8 (HW-Not-Halt-Rueckmeldung) schalten den Ausgang SW-seitig sofort ab und sperren START per StartPermit-Latch (E_SR) + StartGate (E_PERMIT), bis RESET (I7) ueber SF_ResetButton (PLCopen Safety Part 1 Ch. 6.1) eine gueltige Tasten-Flanke erkennt. RESET alleine schaltet den Ausgang nicht wieder ein, dafuer muss START erneut gedrueckt werden.">
+	</VersionInfo>
+	<CompilerInfo packageName="Uebungen">
+		<Import declaration="logiBUS::io::DI::logiBUS_DI::Input_I1"/>
+		<Import declaration="logiBUS::io::DI::logiBUS_DI::Input_I2"/>
+		<Import declaration="logiBUS::io::DI::logiBUS_DI::Input_I7"/>
+		<Import declaration="logiBUS::io::DI::logiBUS_DI::Input_I8"/>
+		<Import declaration="logiBUS::io::DI::logiBUS_DI_Events::BUTTON_SINGLE_CLICK"/>
+		<Import declaration="logiBUS::io::DI::logiBUS_DI_Events::BUTTON_PRESS_DOWN"/>
+		<Import declaration="logiBUS::io::DQ::logiBUS_DO::Output_Q1"/>
+	</CompilerInfo>
+	<SubAppInterfaceList>
+	</SubAppInterfaceList>
+	<SubAppNetwork>
+		<FB Name="START" Type="logiBUS::io::DI::logiBUS_IE" Comment="Taster START" x="-6400" y="200">
+			<Parameter Name="QI" Value="TRUE">
+				<Attribute Name="Visible" Value="false"/>
+			</Parameter>
+			<Parameter Name="PARAMS" Value="">
+				<Attribute Name="Visible" Value="false"/>
+			</Parameter>
+			<Parameter Name="Input" Value="Input_I1"/>
+			<Parameter Name="InputEvent" Value="BUTTON_SINGLE_CLICK"/>
+			<Parameter Name="QO" Value="">
+				<Attribute Name="Visible" Value="false"/>
+			</Parameter>
+		</FB>
+		<FB Name="STOP" Type="logiBUS::io::DI::logiBUS_IE" Comment="Hand-Stopp (nicht HW-Not-Halt)" x="-6400" y="1100">
+			<Parameter Name="QI" Value="TRUE">
+				<Attribute Name="Visible" Value="false"/>
+			</Parameter>
+			<Parameter Name="PARAMS" Value="">
+				<Attribute Name="Visible" Value="false"/>
+			</Parameter>
+			<Parameter Name="Input" Value="Input_I2"/>
+			<Parameter Name="InputEvent" Value="BUTTON_SINGLE_CLICK"/>
+			<Parameter Name="QO" Value="">
+				<Attribute Name="Visible" Value="false"/>
+			</Parameter>
+		</FB>
+		<FB Name="StopFeedback" Type="logiBUS::io::DI::logiBUS_IE" Comment="Meldeeingang HW-Not-Halt" x="-6400" y="2000">
+			<Parameter Name="QI" Value="TRUE">
+				<Attribute Name="Visible" Value="false"/>
+			</Parameter>
+			<Parameter Name="PARAMS" Value="">
+				<Attribute Name="Visible" Value="false"/>
+			</Parameter>
+			<Parameter Name="Input" Value="Input_I8"/>
+			<Parameter Name="InputEvent" Value="BUTTON_PRESS_DOWN"/>
+			<Parameter Name="QO" Value="">
+				<Attribute Name="Visible" Value="false"/>
+			</Parameter>
+		</FB>
+		<FB Name="ResetInput" Type="logiBUS::io::DI::logiBUS_IX" Comment="Pegel+Event fuer SF_ResetButton" x="-6400" y="2900">
+			<Parameter Name="QI" Value="TRUE">
+				<Attribute Name="Visible" Value="false"/>
+			</Parameter>
+			<Parameter Name="PARAMS" Value="">
+				<Attribute Name="Visible" Value="false"/>
+			</Parameter>
+			<Parameter Name="Input" Value="Input_I7"/>
+			<Parameter Name="QO" Value="">
+				<Attribute Name="Visible" Value="false"/>
+			</Parameter>
+		</FB>
+		<FB Name="ResetButton" Type="logiBUS::safety::PLCopen::SF_ResetButton" x="-4400" y="3100">
+			<Parameter Name="ResetRequested" Value="TRUE"/>
+			<Parameter Name="TrailingMinimum" Value="T#350ms"/>
+			<Parameter Name="TrailingMaximum" Value="T#2s"/>
+		</FB>
+		<FB Name="StartPermit" Type="iec61499::events::E_RS" x="-1200" y="1900">
+		</FB>
+		<FB Name="StartGate" Type="iec61499::events::E_PERMIT" Comment="Laesst START nur bei Freigabe durch" x="300" y="400">
+		</FB>
+		<FB Name="MainSR" Type="adapter::events::unidirectional::AX_SR" x="1700" y="900">
+		</FB>
+		<FB Name="DigitalOutput_Q1" Type="logiBUS::io::DQ::logiBUS_QXA" x="3500" y="900">
+			<Parameter Name="QI" Value="TRUE">
+				<Attribute Name="Visible" Value="false"/>
+			</Parameter>
+			<Parameter Name="PARAMS" Value="">
+				<Attribute Name="Visible" Value="false"/>
+			</Parameter>
+			<Parameter Name="Output" Value="Output_Q1"/>
+			<Parameter Name="QO" Value="">
+				<Attribute Name="Visible" Value="false"/>
+			</Parameter>
+		</FB>
+		<FB Name="minTimeOut" Type="iec61499::events::E_TimeOut" x="-2300" y="3700">
+		</FB>
+		<FB Name="maxTimeOut" Type="iec61499::events::E_TimeOut" x="-2300" y="4100">
+		</FB>
+		<EventConnections>
+			<Connection Source="START.IND" Destination="StartGate.EI" dx1="200"/>
+			<Connection Source="StartGate.EO" Destination="MainSR.S" dx1="200"/>
+			<Connection Source="STOP.IND" Destination="MainSR.R" dx1="1600"/>
+			<Connection Source="StopFeedback.IND" Destination="MainSR.R" dx1="1960"/>
+			<Connection Source="StopFeedback.IND" Destination="StartPermit.R" dx1="2486.67"/>
+			<Connection Source="ResetInput.IND" Destination="ResetButton.REQ" dx1="200"/>
+			<Connection Source="ResetButton.EResetOut" Destination="StartPermit.S" dx1="200"/>
+		</EventConnections>
+		<DataConnections>
+			<Connection Source="ResetInput.IN" Destination="ResetButton.ResetIn" dx1="200"/>
+			<Connection Source="StartPermit.Q" Destination="StartGate.PERMIT" dx1="486.67"/>
+		</DataConnections>
+		<AdapterConnections>
+			<Connection Source="MainSR.Q" Destination="DigitalOutput_Q1.OUT" dx1="700"/>
+			<Connection Source="ResetButton.minTimeOut" Destination="minTimeOut.TimeOutSocket" dx1="380"/>
+			<Connection Source="ResetButton.maxTimeOut" Destination="maxTimeOut.TimeOutSocket" dx1="380"/>
+		</AdapterConnections>
+	</SubAppNetwork>
+</SubAppType>
