@@ -9,7 +9,7 @@
 	<InterfaceList>
 		<Plugs>
 			<AdapterDeclaration Name="OUT" Type="adapter::types::bidirectional::ASRT_AX" Comment="Output (Set/Reset/Toggle out, Zustand in)" x="2900" y="800"/>
-			<AdapterDeclaration Name="AX_OUT" Type="adapter::types::unidirectional::AX" Comment="mirrors the ASRT_AX backward (state) channel" x="2900" y="1400"/>
+			<AdapterDeclaration Name="AX_OUT" Type="adapter::types::unidirectional::AX" Comment="mirrors the ASRT_AX backward (state) channel" x="4200" y="900"/>
 		</Plugs>
 		<Sockets>
 			<AdapterDeclaration Name="IN" Type="adapter::types::unidirectional::ASRT" Comment="Input (Set/Reset/Toggle, unidirectional)" x="200" y="800"/>
@@ -20,10 +20,10 @@
 			<Connection Source="IN.SET" Destination="OUT.SET"/>
 			<Connection Source="IN.RESET" Destination="OUT.RESET"/>
 			<Connection Source="IN.TOGGLE" Destination="OUT.TOGGLE"/>
-			<Connection Source="OUT.EI1" Destination="AX_OUT.E1"/>
+			<Connection Source="OUT.EI1" Destination="AX_OUT.E1" dx1="440"/>
 		</EventConnections>
 		<DataConnections>
-			<Connection Source="OUT.DI1" Destination="AX_OUT.D1"/>
+			<Connection Source="OUT.DI1" Destination="AX_OUT.D1" dx1="440"/>
 		</DataConnections>
 	</FBNetwork>
 	<Attribute Name="eclipse4diac::core::TypeHash" Value="''"/>

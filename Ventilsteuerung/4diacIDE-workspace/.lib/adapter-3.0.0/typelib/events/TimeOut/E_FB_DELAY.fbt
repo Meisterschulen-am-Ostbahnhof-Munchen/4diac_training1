@@ -27,7 +27,6 @@
 			<Event Name="STARTO" Type="Event">
 				<With Var="Q"/>
 				<With Var="ET"/>
-				<With Var="PT"/>
 			</Event>
 			<Event Name="STOPO" Type="Event">
 				<With Var="Q"/>
@@ -43,7 +42,6 @@
 		</InputVars>
 		<OutputVars>
 			<VarDeclaration Name="Q" Type="BOOL" Comment="Output is started = TRUE"/>
-			<VarDeclaration Name="PT" Type="TIME" Comment="Process time"/>
 			<VarDeclaration Name="ET" Type="TIME" Comment="Elapsed time"/>
 		</OutputVars>
 	</InterfaceList>
@@ -66,15 +64,15 @@
 			<ECState Name="EO" x="3360" y="160">
 				<ECAction Algorithm="EO" Output="EO"/>
 			</ECState>
-			<ECTransition Source="Initial_State" Destination="REQ" Condition="REQ" Comment="" x="-173.33" y="-466.67"/>
-			<ECTransition Source="Initial_State" Destination="START" Condition="START" Comment="" x="-100" y="80"/>
-			<ECTransition Source="Initial_State" Destination="STOP" Condition="STOP" Comment="" x="-533.33" y="680"/>
-			<ECTransition Source="REQ" Destination="EO" Condition="[ET &gt;= DT]" Comment="" x="1886.67" y="-573.33"/>
-			<ECTransition Source="REQ" Destination="Initial_State" Condition="1" Comment="" x="-220" y="-253.33"/>
-			<ECTransition Source="STOP" Destination="Initial_State" Condition="1" Comment="" x="-600" y="846.67"/>
-			<ECTransition Source="START" Destination="EO" Condition="[ET &gt;= DT]" Comment="" x="1953.33" y="66.67"/>
-			<ECTransition Source="START" Destination="Initial_State" Condition="1" Comment="" x="-226.67" y="253.33"/>
-			<ECTransition Source="EO" Destination="Initial_State" Condition="1" Comment="" x="533.33" y="2113.33"/>
+			<ECTransition Source="Initial_State" Destination="REQ" Condition="REQ" x="-173.33" y="-466.67"/>
+			<ECTransition Source="Initial_State" Destination="START" Condition="START" x="-100" y="80"/>
+			<ECTransition Source="Initial_State" Destination="STOP" Condition="STOP" x="-533.33" y="680"/>
+			<ECTransition Source="REQ" Destination="EO" Condition="[ET &gt;= DT]" x="1886.67" y="-573.33"/>
+			<ECTransition Source="REQ" Destination="Initial_State" Condition="1" x="-220" y="-253.33"/>
+			<ECTransition Source="STOP" Destination="Initial_State" Condition="1" x="-600" y="846.67"/>
+			<ECTransition Source="START" Destination="EO" Condition="[ET &gt;= DT]" x="1953.33" y="66.67"/>
+			<ECTransition Source="START" Destination="Initial_State" Condition="1" x="-226.67" y="253.33"/>
+			<ECTransition Source="EO" Destination="Initial_State" Condition="1" x="533.33" y="2113.33"/>
 		</ECC>
 		<Algorithm Name="REQ" Comment="Poll elapsed time while armed (Q=TRUE); no-op otherwise. Meant to be driven cyclically (e.g. by an external E_CYCLE) so ET stays live while the delay is running.">
 			<ST><![CDATA[

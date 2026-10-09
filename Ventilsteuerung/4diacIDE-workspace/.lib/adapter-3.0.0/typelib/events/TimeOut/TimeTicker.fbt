@@ -20,7 +20,6 @@
 				<With Var="ET"/>
 			</Event>
 			<Event Name="STARTO" Type="Event">
-				<With Var="PT"/>
 			</Event>
 			<Event Name="STOPO" Type="Event">
 			</Event>
@@ -30,7 +29,6 @@
 		</InputVars>
 		<OutputVars>
 			<VarDeclaration Name="Q" Type="BOOL" Comment="Output"/>
-			<VarDeclaration Name="PT" Type="TIME" Comment="Process time"/>
 			<VarDeclaration Name="ET" Type="TIME" Comment="Elapsed time"/>
 		</OutputVars>
 		<Plugs>
@@ -53,7 +51,6 @@
 			<Connection Source="TC" Destination="E_CYCLE.DT" dx1="653.33"/>
 			<Connection Source="TimeTickSocket.Q" Destination="Q" dx1="3060"/>
 			<Connection Source="TimeTickSocket.ET" Destination="ET" dx1="3340"/>
-			<Connection Source="TimeTickSocket.PT" Destination="PT" dx1="3206.67"/>
 		</DataConnections>
 	</FBNetwork>
 </FBType>

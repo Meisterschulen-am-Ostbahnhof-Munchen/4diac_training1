@@ -19,7 +19,7 @@
 	<InterfaceList>
 		<Plugs>
 			<AdapterDeclaration Name="NEG_MAG" Type="adapter::types::unidirectional::ALI" Comment="MAX(0, -Y) - Betrag der negativen Auslenkung, bei Y=LINT#-9223372036854775808 gesaettigt auf LINT#9223372036854775807, Event nur bei Aenderung" x="5000" y="600"/>
-			<AdapterDeclaration Name="POS_MAG" Type="adapter::types::unidirectional::ALI" Comment="MAX(0, Y) - Betrag der positiven Auslenkung, Event nur bei Aenderung" x="5000" y="1000"/>
+			<AdapterDeclaration Name="POS_MAG" Type="adapter::types::unidirectional::ALI" Comment="MAX(0, Y) - Betrag der positiven Auslenkung, Event nur bei Aenderung" x="5000" y="1100"/>
 		</Plugs>
 		<Sockets>
 			<AdapterDeclaration Name="Y" Type="adapter::types::unidirectional::ALI" Comment="Eingangswert" x="300" y="700"/>
@@ -30,7 +30,7 @@
 		</FB>
 		<FB Name="DEDUP_NEG" Type="iec61499::events::E_D_FF_ANY" x="3700" y="600">
 		</FB>
-		<FB Name="DEDUP_POS" Type="iec61499::events::E_D_FF_ANY" x="3700" y="1000">
+		<FB Name="DEDUP_POS" Type="iec61499::events::E_D_FF_ANY" x="3700" y="1100">
 		</FB>
 		<EventConnections>
 			<Connection Source="Y.E1" Destination="SPLIT.REQ"/>
