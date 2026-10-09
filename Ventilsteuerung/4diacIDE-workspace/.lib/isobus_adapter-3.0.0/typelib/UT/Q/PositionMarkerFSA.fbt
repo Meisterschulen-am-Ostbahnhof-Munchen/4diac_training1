@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <FBType Name="PositionMarkerFSA" Comment="AR adapter wrapper around PositionMarkerFS — accepts the Sollwert REAL value via&#10;AR adapter socket instead of a plain REQ/rValue pair">
-	<Identification Standard="ISO 11783-6" Description="Copyright (c) 2026 Meisterschulen am Ostbahnhof  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0&#10;&#10;Same wrapper shape as Q_NumericValue_PHYSA around Q_NumericValue_PHYS: the AR adapter socket's rPhys value drives the internally-owned PositionMarkerFS instance's REQ/rValue directly. xOver/xUnder are re-exposed as AX adapter plugs, exactly like Q_NumericValue_PHYSA does.">
+	<Identification Standard="ISO 11783-6" Description="Copyright (c) 2026 Meisterschulen am Ostbahnhof  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0&#10;&#10;Same wrapper shape as Q_NumericValue_PHYSA around Q_NumericValue_PHYS: the AR adapter socket&apos;s rPhys value drives the internally-owned PositionMarkerFS instance&apos;s REQ/rValue directly. xOver/xUnder are re-exposed as AX adapter plugs, exactly like Q_NumericValue_PHYSA does.">
 	</Identification>
 	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.1" Author="Franz Höpfinger" Date="2026-09-05" Remarks="Add xScale flag, passed through to the internal PositionMarkerFS">
 	</VersionInfo>
@@ -8,7 +8,6 @@
 	</VersionInfo>
 	<CompilerInfo packageName="isobus::UT::Q">
 		<Import declaration="isobus::utils::childposition::PositionMarker_S"/>
-		<Import declaration="isobus::UT::Q::PositionMarkerFS"/>
 	</CompilerInfo>
 	<InterfaceList>
 		<EventInputs>

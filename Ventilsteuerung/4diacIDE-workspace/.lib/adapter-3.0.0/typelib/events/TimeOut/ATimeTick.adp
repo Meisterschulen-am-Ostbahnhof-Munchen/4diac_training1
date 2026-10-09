@@ -15,6 +15,7 @@
 			<Event Name="CNF" Type="Event" Comment="Execution Confirmation">
 				<With Var="Q"/>
 				<With Var="ET"/>
+				<With Var="PT"/>
 			</Event>
 			<Event Name="STARTO_IN" Type="Event">
 			</Event>
@@ -27,6 +28,7 @@
 		</EventOutputs>
 		<InputVars>
 			<VarDeclaration Name="Q" Type="BOOL" Comment="is started = TRUE"/>
+			<VarDeclaration Name="PT" Type="TIME" Comment="Process time"/>
 			<VarDeclaration Name="ET" Type="TIME" Comment="Elapsed time"/>
 		</InputVars>
 	</InterfaceList>

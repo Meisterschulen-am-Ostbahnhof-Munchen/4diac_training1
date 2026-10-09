@@ -31,34 +31,5 @@
 			<VarDeclaration Name="VAL" Type="REAL" Comment="Function output" />
 		</OutputVars>
 	</InterfaceList>
-	<BasicFB>
-		<ECC>
-			<ECState Name="START" Comment="Initial State"  x="855" y="285">
-			</ECState>
-			<ECState Name="REQ" Comment="Normal execution"  x="215" y="755">
-				<ECAction Algorithm="REQ" Output="CNF"/>
-			</ECState>
-			<ECState Name="State" x="2015" y="430">
-				<ECAction Algorithm="INIT" Output="INITO"/>
-			</ECState>
-			<ECTransition Source="START" Destination="REQ" Condition="REQ" Comment="" x="555" y="600"/>
-			<ECTransition Source="REQ" Destination="START" Condition="1" Comment="" x="215" y="425"/>
-			<ECTransition Source="START" Destination="State" Condition="INIT" Comment="" x="1705" y="320"/>
-			<ECTransition Source="State" Destination="START" Condition="1" Comment="" x="1585" y="680"/>
-		</ECC>
-		<Algorithm Name="INIT" Comment="ALG">
-			<Other Language="AnyText"><![CDATA[// WARNING - Don't forget to add #include <time.h>
-
-if (SEED() == 0) {
-  srand( (unsigned int) time(NULL) );
-} else {
-  srand( SEED() );
-}]]></Other>
-		</Algorithm>
-		<Algorithm Name="REQ" Comment="Normally executed algorithm">
-			<Other Language="AnyText"><![CDATA[VAL() = (TForteFloat) ((rand() % 32767) / 100000.0); // RAND_MAX is a constant defined in <cstdlib>. Its default value may vary between implementations but it is granted to be at least 32767.
-]]></Other>
-		</Algorithm>
-	</BasicFB>
 	<Attribute Name="eclipse4diac::core::TypeHash" Value="''"/>
 </FBType>

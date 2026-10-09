@@ -6,10 +6,6 @@
 	</VersionInfo>
 	<CompilerInfo packageName="isobus::UT::Q">
 		<Import declaration="isobus::utils::bargraph::BargraphSplit_S"/>
-		<Import declaration="isobus::UT::Q::Q_NumericValue_PHYS"/>
-		<Import declaration="iec61131::selection::F_MOVE"/>
-		<Import declaration="iec61131::arithmetic::F_MUL"/>
-		<Import declaration="logiBUS::signalprocessing::clamp::F_ClampReal"/>
 	</CompilerInfo>
 	<InterfaceList>
 		<EventInputs>
@@ -46,7 +42,7 @@
 		</OutputVars>
 	</InterfaceList>
 	<FBNetwork>
-		<FB Name="Snap" Type="iec61131::selection::F_MOVE" x="-7400" y="1600">
+		<FB Name="Snap" Type="iec61131::selection::F_MOVE" x="-7600" y="500">
 			<Attribute Name="DataType" Value="isobus::utils::bargraph::BargraphSplit_S"/>
 			<Parameter Name="OUT.stLeft" Value="">
 				<Attribute Name="Visible" Value="true"/>

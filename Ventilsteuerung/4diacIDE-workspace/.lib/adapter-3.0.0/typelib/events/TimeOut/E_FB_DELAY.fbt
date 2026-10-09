@@ -23,10 +23,13 @@
 		<EventOutputs>
 			<Event Name="CNF" Type="Event" Comment="Execution Confirmation">
 				<With Var="ET"/>
+				<With Var="REST"/>
 			</Event>
 			<Event Name="STARTO" Type="Event">
 				<With Var="Q"/>
 				<With Var="ET"/>
+				<With Var="PT"/>
+				<With Var="REST"/>
 			</Event>
 			<Event Name="STOPO" Type="Event">
 				<With Var="Q"/>
@@ -42,7 +45,9 @@
 		</InputVars>
 		<OutputVars>
 			<VarDeclaration Name="Q" Type="BOOL" Comment="Output is started = TRUE"/>
+			<VarDeclaration Name="PT" Type="TIME" Comment="Preset time (SOLL), = DT at START"/>
 			<VarDeclaration Name="ET" Type="TIME" Comment="Elapsed time"/>
+			<VarDeclaration Name="REST" Type="TIME" Comment="Remaining time = PT - ET"/>
 		</OutputVars>
 	</InterfaceList>
 	<BasicFB>
@@ -82,27 +87,32 @@ END_VAR
 IF Q THEN
 	SysTime := NOW_MONOTONIC();
 	ET := SysTime - StartTime;
+	REST := PT - ET;
 END_IF;
 
 ]]></ST>
 		</Algorithm>
-		<Algorithm Name="START" Comment="Arm the timer: record the start time, reset ET to 0 and set Q=TRUE so REQ begins advancing ET.">
+		<Algorithm Name="START" Comment="Arm the timer: record the start time, reset ET to 0, set PT=DT (SOLL) and REST=PT, Q=TRUE so REQ begins advancing ET/REST.">
 			<ST><![CDATA[
 StartTime := NOW_MONOTONIC();
 Q := BOOL#TRUE;
 ET := T#0s;
+PT := DT;
+REST := PT;
 ]]></ST>
 		</Algorithm>
-		<Algorithm Name="STOP" Comment="Cancel the timer without firing EO: clear Q and reset ET to 0.">
+		<Algorithm Name="STOP" Comment="Cancel the timer without firing EO: clear Q and reset ET/REST to 0.">
 			<ST><![CDATA[
 Q := BOOL#FALSE;
 ET := T#0s;
+REST := T#0s;
 ]]></ST>
 		</Algorithm>
-		<Algorithm Name="EO" Comment="Runs once when ET reaches DT (via the REQ/START -&gt; EO transition). Clears Q and resets ET to 0, so ET stays below DT until the next START - a later REQ can no longer re-satisfy [ET&gt;=DT] and re-fire EO.">
+		<Algorithm Name="EO" Comment="Runs once when ET reaches DT (via the REQ/START -&gt; EO transition). Clears Q and resets ET/REST to 0, so ET stays below DT until the next START - a later REQ can no longer re-satisfy [ET&gt;=DT] and re-fire EO.">
 			<ST><![CDATA[
 Q := BOOL#FALSE;
 ET := T#0s;
+REST := T#0s;
 ]]></ST>
 		</Algorithm>
 	</BasicFB>

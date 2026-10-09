@@ -1,12 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <FBType Name="BargraphSplitFS_AR" Comment="AR adapter wrapper around BargraphSplitFS — accepts the signed value via AR&#10;adapter socket instead of a plain REQ/rValue pair">
-	<Identification Standard="ISO 11783-6" Description="Copyright (c) 2026 Meisterschulen am Ostbahnhof  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0&#10;&#10;Same wrapper shape as PositionMarkerFSA around PositionMarkerFS: the AR adapter socket's value drives the internally-owned BargraphSplitFS instance's REQ/rValue directly. xOverRight/xOverLeft are re-exposed as AX adapter plugs, exactly like PositionMarkerFSA does for xOver/xUnder.">
+	<Identification Standard="ISO 11783-6" Description="Copyright (c) 2026 Meisterschulen am Ostbahnhof  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0&#10;&#10;Same wrapper shape as PositionMarkerFSA around PositionMarkerFS: the AR adapter socket&apos;s value drives the internally-owned BargraphSplitFS instance&apos;s REQ/rValue directly. xOverRight/xOverLeft are re-exposed as AX adapter plugs, exactly like PositionMarkerFSA does for xOver/xUnder.">
 	</Identification>
 	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2026-09-05" Remarks="initial API and implementation and/or initial documentation">
 	</VersionInfo>
 	<CompilerInfo packageName="isobus::UT::Q">
 		<Import declaration="isobus::utils::bargraph::BargraphSplit_S"/>
-		<Import declaration="isobus::UT::Q::BargraphSplitFS"/>
 	</CompilerInfo>
 	<InterfaceList>
 		<EventInputs>
