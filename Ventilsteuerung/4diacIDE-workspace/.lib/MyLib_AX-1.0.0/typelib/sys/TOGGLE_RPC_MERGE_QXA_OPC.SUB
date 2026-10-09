@@ -30,20 +30,20 @@
 		</FB>
 		<FB Name="OR_MERGE" Type="adapter::booleanOperators::AX_OR_2" x="-3600" y="-600">
 		</FB>
-		<FB Name="DigitalOutput" Type="logiBUS::io::DQ::logiBUS_QXA" x="-800" y="-1400">
+		<FB Name="DigitalOutput" Type="logiBUS::io::DQ::logiBUS_QXA" x="-500" y="-1700">
 			<Parameter Name="QI" Value="TRUE"/>
 		</FB>
 		<FB Name="SPLIT" Type="adapter::events::unidirectional::AX_SPLIT_3" x="-2000" y="-600">
 		</FB>
-		<FB Name="PUBLISH_TEST" Type="adapter::net::AX_PUBLISH_1" x="-800" y="-600">
+		<FB Name="PUBLISH_TEST" Type="adapter::net::AX_PUBLISH_1" x="-400" y="-700">
 			<Parameter Name="QI" Value="TRUE"/>
 		</FB>
-		<FB Name="PUBLISH_STATE" Type="adapter::net::AX_PUBLISH_1" x="-800" y="200">
+		<FB Name="PUBLISH_STATE" Type="adapter::net::AX_PUBLISH_1" x="-400" y="200">
 			<Parameter Name="QI" Value="TRUE"/>
 		</FB>
 		<EventConnections>
 			<Connection Source="TRIGGER_SERVER.IND" Destination="AX_T_FF.CLK" dx1="373.33"/>
-			<Connection Source="TRIGGER_SERVER.IND" Destination="TRIGGER_SERVER.RSP"/>
+			<Connection Source="TRIGGER_SERVER.IND" Destination="TRIGGER_SERVER.RSP" dx1="80" dx2="80" dy="160"/>
 		</EventConnections>
 		<DataConnections>
 			<Connection Source="Output" Destination="DigitalOutput.Output" dx1="2913.33">
