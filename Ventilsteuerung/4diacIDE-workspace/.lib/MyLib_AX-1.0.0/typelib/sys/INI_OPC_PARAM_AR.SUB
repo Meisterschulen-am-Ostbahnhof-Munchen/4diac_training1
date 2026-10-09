@@ -26,12 +26,14 @@
 		<FB Name="AX_SUBSCRIBE_1" Type="adapter::net::AR_SUBSCRIBE_1" x="-7300" y="-1400">
 			<Parameter Name="QI" Value="TRUE"/>
 		</FB>
-		<FB Name="AX_PUBLISH_1" Type="adapter::net::AR_PUBLISH_1" x="-2700" y="-1500">
+		<FB Name="AX_PUBLISH_1" Type="adapter::net::AR_PUBLISH_1" x="-800" y="-1400">
 			<Parameter Name="QI" Value="TRUE"/>
 		</FB>
 		<FB Name="INI_AR" Type="eclipse4diac::storage::INI_AR" x="-4800" y="-1600">
 			<Parameter Name="QI" Value="TRUE"/>
 			<Parameter Name="SETM" Value="FALSE"/>
+		</FB>
+		<FB Name="AR_SPLIT_2" Type="adapter::events::unidirectional::AR_SPLIT_2" x="-2800" y="-600">
 		</FB>
 		<EventConnections>
 			<Connection Source="AX_SUBSCRIBE_1.INITO" Destination="INI_AR.INIT" dx1="780"/>
@@ -56,8 +58,9 @@
 		</DataConnections>
 		<AdapterConnections>
 			<Connection Source="AX_SUBSCRIBE_1.OUT" Destination="INI_AR.AR_IN" dx1="780"/>
-			<Connection Source="INI_AR.AR_OUT" Destination="AX_PUBLISH_1.IN" dx1="493.33"/>
-			<Connection Source="INI_AR.AR_OUT" Destination="OUT" dx1="493.33"/>
+			<Connection Source="AR_SPLIT_2.OUT2" Destination="OUT" dx1="3753.33"/>
+			<Connection Source="AR_SPLIT_2.OUT1" Destination="AX_PUBLISH_1.IN" dx1="973.33"/>
+			<Connection Source="INI_AR.AR_OUT" Destination="AR_SPLIT_2.IN" dx1="120"/>
 		</AdapterConnections>
 	</SubAppNetwork>
 </SubAppType>

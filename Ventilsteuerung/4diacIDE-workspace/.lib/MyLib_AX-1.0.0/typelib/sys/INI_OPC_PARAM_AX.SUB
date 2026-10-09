@@ -19,15 +19,17 @@
 		</Plugs>
 	</SubAppInterfaceList>
 	<SubAppNetwork>
-		<FB Name="AX_SUBSCRIBE_1" Type="adapter::net::AX_SUBSCRIBE_1" x="-7300" y="-1400">
+		<FB Name="AX_SUBSCRIBE_1" Type="adapter::net::AX_SUBSCRIBE_1" x="-8300" y="-1500">
 			<Parameter Name="QI" Value="TRUE"/>
 		</FB>
-		<FB Name="AX_PUBLISH_1" Type="adapter::net::AX_PUBLISH_1" x="-2700" y="-1500">
+		<FB Name="AX_PUBLISH_1" Type="adapter::net::AX_PUBLISH_1" x="-800" y="-1300">
 			<Parameter Name="QI" Value="TRUE"/>
 		</FB>
-		<FB Name="INI_AX" Type="eclipse4diac::storage::INI_AX" x="-4800" y="-1600">
+		<FB Name="INI_AX" Type="eclipse4diac::storage::INI_AX" x="-5800" y="-1700">
 			<Parameter Name="QI" Value="TRUE"/>
 			<Parameter Name="SETM" Value="FALSE"/>
+		</FB>
+		<FB Name="AX_SPLIT_2" Type="adapter::events::unidirectional::AX_SPLIT_2" x="-3300" y="-500">
 		</FB>
 		<EventConnections>
 			<Connection Source="AX_SUBSCRIBE_1.INITO" Destination="INI_AX.INIT" dx1="780"/>
@@ -52,8 +54,9 @@
 		</DataConnections>
 		<AdapterConnections>
 			<Connection Source="AX_SUBSCRIBE_1.OUT" Destination="INI_AX.AX_IN" dx1="780"/>
-			<Connection Source="INI_AX.AX_OUT" Destination="AX_PUBLISH_1.IN" dx1="493.33"/>
-			<Connection Source="INI_AX.AX_OUT" Destination="OUT" dx1="493.33"/>
+			<Connection Source="AX_SPLIT_2.OUT1" Destination="AX_PUBLISH_1.IN" dx1="493.33"/>
+			<Connection Source="AX_SPLIT_2.OUT2" Destination="OUT" dx1="3166.67"/>
+			<Connection Source="INI_AX.AX_OUT" Destination="AX_SPLIT_2.IN" dx1="620"/>
 		</AdapterConnections>
 	</SubAppNetwork>
 </SubAppType>
