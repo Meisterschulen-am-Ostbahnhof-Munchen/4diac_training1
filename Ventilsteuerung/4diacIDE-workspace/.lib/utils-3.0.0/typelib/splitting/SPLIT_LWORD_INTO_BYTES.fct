@@ -8,12 +8,12 @@
 	</CompilerInfo>
 	<InterfaceList>
 		<EventInputs>
-			<Event Name="REQ" Type="Event" Comment="Normal Execution Request">
+			<Event Name="REQ" Type="Event">
 				<With Var="IN"/>
 			</Event>
 		</EventInputs>
 		<EventOutputs>
-			<Event Name="CNF" Type="Event" Comment="Execution Confirmation">
+			<Event Name="CNF" Type="Event">
 				<With Var="BYTE_00"/>
 				<With Var="BYTE_01"/>
 				<With Var="BYTE_02"/>
@@ -25,21 +25,23 @@
 			</Event>
 		</EventOutputs>
 		<InputVars>
-			<VarDeclaration Name="IN" Type="LWORD" Comment=""/>
+			<VarDeclaration Name="IN" Type="LWORD"/>
 		</InputVars>
 		<OutputVars>
-			<VarDeclaration Name="BYTE_00" Type="BYTE" Comment=""/>
-			<VarDeclaration Name="BYTE_01" Type="BYTE" Comment=""/>
-			<VarDeclaration Name="BYTE_02" Type="BYTE" Comment=""/>
-			<VarDeclaration Name="BYTE_03" Type="BYTE" Comment=""/>
-			<VarDeclaration Name="BYTE_04" Type="BYTE" Comment=""/>
-			<VarDeclaration Name="BYTE_05" Type="BYTE" Comment=""/>
-			<VarDeclaration Name="BYTE_06" Type="BYTE" Comment=""/>
-			<VarDeclaration Name="BYTE_07" Type="BYTE" Comment=""/>
+			<VarDeclaration Name="BYTE_00" Type="BYTE"/>
+			<VarDeclaration Name="BYTE_01" Type="BYTE"/>
+			<VarDeclaration Name="BYTE_02" Type="BYTE"/>
+			<VarDeclaration Name="BYTE_03" Type="BYTE"/>
+			<VarDeclaration Name="BYTE_04" Type="BYTE"/>
+			<VarDeclaration Name="BYTE_05" Type="BYTE"/>
+			<VarDeclaration Name="BYTE_06" Type="BYTE"/>
+			<VarDeclaration Name="BYTE_07" Type="BYTE"/>
 		</OutputVars>
 	</InterfaceList>
 	<FunctionBody>
-		<ST><![CDATA[(* this Function extracts the 8 BYTES from a lword *)
+		<ST><![CDATA[PACKAGE eclipse4diac::utils::splitting;
+
+(* this Function extracts the 8 BYTES from a lword *)
 FUNCTION SPLIT_LWORD_INTO_BYTES
 
 VAR_INPUT

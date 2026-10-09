@@ -8,7 +8,7 @@
 	</CompilerInfo>
 	<InterfaceList>
 		<EventInputs>
-			<Event Name="REQ" Type="Event" Comment="">
+			<Event Name="REQ" Type="Event">
 				<With Var="BYTE_00"/>
 				<With Var="BYTE_01"/>
 				<With Var="BYTE_02"/>
@@ -20,26 +20,28 @@
 			</Event>
 		</EventInputs>
 		<EventOutputs>
-			<Event Name="CNF" Type="Event" Comment="">
+			<Event Name="CNF" Type="Event">
 				<With Var=""/>
 			</Event>
 		</EventOutputs>
 		<InputVars>
-			<VarDeclaration Name="BYTE_00" Type="BYTE" Comment=""/>
-			<VarDeclaration Name="BYTE_01" Type="BYTE" Comment=""/>
-			<VarDeclaration Name="BYTE_02" Type="BYTE" Comment=""/>
-			<VarDeclaration Name="BYTE_03" Type="BYTE" Comment=""/>
-			<VarDeclaration Name="BYTE_04" Type="BYTE" Comment=""/>
-			<VarDeclaration Name="BYTE_05" Type="BYTE" Comment=""/>
-			<VarDeclaration Name="BYTE_06" Type="BYTE" Comment=""/>
-			<VarDeclaration Name="BYTE_07" Type="BYTE" Comment=""/>
+			<VarDeclaration Name="BYTE_00" Type="BYTE"/>
+			<VarDeclaration Name="BYTE_01" Type="BYTE"/>
+			<VarDeclaration Name="BYTE_02" Type="BYTE"/>
+			<VarDeclaration Name="BYTE_03" Type="BYTE"/>
+			<VarDeclaration Name="BYTE_04" Type="BYTE"/>
+			<VarDeclaration Name="BYTE_05" Type="BYTE"/>
+			<VarDeclaration Name="BYTE_06" Type="BYTE"/>
+			<VarDeclaration Name="BYTE_07" Type="BYTE"/>
 		</InputVars>
 		<OutputVars>
-			<VarDeclaration Name="" Type="LWORD" Comment=""/>
+			<VarDeclaration Name="" Type="LWORD"/>
 		</OutputVars>
 	</InterfaceList>
 	<FunctionBody>
-		<ST><![CDATA[(* this Function combines the 8 BYTES to a LWORD *)
+		<ST><![CDATA[PACKAGE eclipse4diac::utils::assembling;
+
+(* this Function combines the 8 BYTES to a LWORD *)
 FUNCTION ASSEMBLE_LWORD_FROM_BYTES : LWORD
 
 VAR_INPUT

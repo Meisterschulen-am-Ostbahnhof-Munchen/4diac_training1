@@ -8,12 +8,12 @@
 	</CompilerInfo>
 	<InterfaceList>
 		<EventInputs>
-			<Event Name="REQ" Type="Event" Comment="Normal Execution Request">
+			<Event Name="REQ" Type="Event">
 				<With Var="IN"/>
 			</Event>
 		</EventInputs>
 		<EventOutputs>
-			<Event Name="CNF" Type="Event" Comment="Execution Confirmation">
+			<Event Name="CNF" Type="Event">
 				<With Var="WORD_00"/>
 				<With Var="WORD_01"/>
 				<With Var="WORD_02"/>
@@ -21,17 +21,19 @@
 			</Event>
 		</EventOutputs>
 		<InputVars>
-			<VarDeclaration Name="IN" Type="LWORD" Comment=""/>
+			<VarDeclaration Name="IN" Type="LWORD"/>
 		</InputVars>
 		<OutputVars>
-			<VarDeclaration Name="WORD_00" Type="WORD" Comment=""/>
-			<VarDeclaration Name="WORD_01" Type="WORD" Comment=""/>
-			<VarDeclaration Name="WORD_02" Type="WORD" Comment=""/>
-			<VarDeclaration Name="WORD_03" Type="WORD" Comment=""/>
+			<VarDeclaration Name="WORD_00" Type="WORD"/>
+			<VarDeclaration Name="WORD_01" Type="WORD"/>
+			<VarDeclaration Name="WORD_02" Type="WORD"/>
+			<VarDeclaration Name="WORD_03" Type="WORD"/>
 		</OutputVars>
 	</InterfaceList>
 	<FunctionBody>
-		<ST><![CDATA[(* this Function extracts the 4 WORDS from a lword *)
+		<ST><![CDATA[PACKAGE eclipse4diac::utils::splitting;
+
+(* this Function extracts the 4 WORDS from a lword *)
 FUNCTION SPLIT_LWORD_INTO_WORDS
 
 VAR_INPUT

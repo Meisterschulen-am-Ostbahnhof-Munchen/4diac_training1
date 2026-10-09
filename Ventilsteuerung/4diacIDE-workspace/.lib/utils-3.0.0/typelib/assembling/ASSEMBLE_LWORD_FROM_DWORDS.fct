@@ -8,26 +8,28 @@
 	</CompilerInfo>
 	<InterfaceList>
 		<EventInputs>
-			<Event Name="REQ" Type="Event" Comment="">
+			<Event Name="REQ" Type="Event">
 				<With Var="DWORD_00"/>
 				<With Var="DWORD_01"/>
 			</Event>
 		</EventInputs>
 		<EventOutputs>
-			<Event Name="CNF" Type="Event" Comment="">
+			<Event Name="CNF" Type="Event">
 				<With Var=""/>
 			</Event>
 		</EventOutputs>
 		<InputVars>
-			<VarDeclaration Name="DWORD_00" Type="DWORD" Comment=""/>
-			<VarDeclaration Name="DWORD_01" Type="DWORD" Comment=""/>
+			<VarDeclaration Name="DWORD_00" Type="DWORD"/>
+			<VarDeclaration Name="DWORD_01" Type="DWORD"/>
 		</InputVars>
 		<OutputVars>
-			<VarDeclaration Name="" Type="LWORD" Comment=""/>
+			<VarDeclaration Name="" Type="LWORD"/>
 		</OutputVars>
 	</InterfaceList>
 	<FunctionBody>
-		<ST><![CDATA[(* this Function combines the 2 DWORDS to a LWORD *)
+		<ST><![CDATA[PACKAGE eclipse4diac::utils::assembling;
+
+(* this Function combines the 2 DWORDS to a LWORD *)
 FUNCTION ASSEMBLE_LWORD_FROM_DWORDS : LWORD
 
 VAR_INPUT
