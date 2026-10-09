@@ -7,9 +7,20 @@
 # Genutzt von make_libs_manifest.sh (rein lokal, kein Netzwerk) und
 # make_4diac_training1_deploy.sh (laedt bei ENABLE_ELF_LIBS=1 zusaetzlich ELFs
 # + Manifest hoch).
+#
+# Firmware-Verhalten (SO IMPLEMENTIERT in main.c, von Franz NICHT ausdruecklich
+# bestaetigt): existiert eine *.libs.json und ist sie nicht ladbar, startet
+# FORTE NICHT, Netzwerk/Dateiserver bleiben aktiv. 192.168.178.55 (AX) wurde
+# 2026-10-09 live erfolgreich mit riscv32-ELFs + Manifest getestet - das ist
+# also bestaetigt ein S31 mit dieser Firmware. Fuer jeden weiteren Knoten (z.B.
+# B) erst SoC + Firmware-Branch mit Franz klaeren, bevor ENABLE_ELF_LIBS dafuer
+# eingeschaltet wird - auf S3 fehlt noch die Host-Symboltabelle
+# (elf_libs/host/elf_host_symbols_xtensa.cpp), auf P4 sind die riscv32-ELFs
+# ungetestet.
 
-# Architektur je Knoten - UNBESTAETIGTER PLATZHALTER, muss vor dem ersten
-# echten Einsatz mit Franz gegen die reale Hardware abgeglichen werden.
+# Architektur je Knoten - UNBESTAETIGTER PLATZHALTER (ausser 192.168.178.55,
+# siehe oben), muss vor dem ersten echten Einsatz mit Franz gegen die reale
+# Hardware abgeglichen werden.
 declare -A NODE_ARCH=(
     ["192.168.178.55"]="riscv32"
 )
@@ -101,6 +112,18 @@ resolve_required_libs() {
     fi
 }
 
+# Liest die in der echten MANIFEST.MF deklarierte Lib-Version
+# (Product/VersionInfo/@Version unter 4diacIDE-workspace/.lib/<LibVerzeichnis>/
+# MANIFEST.MF). Leer, wenn die Datei fehlt oder nicht geparst werden kann -
+# dann wird NICHT geprueft (siehe Aufrufer), statt faelschlich abzubrechen.
+mf_version_of() {
+    local lib="$1" dir mf
+    dir="${LIB_DIR_NAME[$lib]:-$lib}"
+    mf="4diacIDE-workspace/.lib/${dir}/MANIFEST.MF"
+    [ -f "$mf" ] || { echo ""; return; }
+    grep -A1 '<Product ' "$mf" | grep -oE 'Version="[^"]+"' | tail -1 | sed -E 's/Version="([^"]+)"/\1/'
+}
+
 # Findet den lokalen Pfad eines Lib-ELFs: ELF_DIR flach, sonst Repo-Pfad
 # 4diacIDE-workspace/.lib/<LibVerzeichnis>/elf/<arch>/<Name>-<Version>-<arch>.elf.
 resolve_elf_path() {
@@ -140,10 +163,16 @@ build_libs_manifest() {
         return 1
     fi
 
+    local mf_ver
     for lib in "${_libs[@]}"; do
         version="${LIB_VERSIONS[$lib]:-}"
         if [ -z "$version" ]; then
             echo "  WARNUNG: Keine Version fuer Lib '${lib}' in LIB_VERSIONS hinterlegt - uebersprungen."
+            return 1
+        fi
+        mf_ver="$(mf_version_of "$lib")"
+        if [ -n "$mf_ver" ] && [ "$mf_ver" != "$version" ]; then
+            echo "  WARNUNG: LIB_VERSIONS[${lib}]=${version} stimmt nicht mit MANIFEST.MF (${mf_ver}) ueberein - LIB_VERSIONS aktualisieren. Uebersprungen."
             return 1
         fi
         elf_path="$(resolve_elf_path "$lib" "$version" "$arch")"
@@ -198,8 +227,11 @@ build_libs_manifest() {
         return 1
     fi
 
+    # -t: -k1,1: nach dem Dateiname-Feld sortieren (vor dem ersten ":"), nicht
+    # nach der ganzen Zeile - muss exakt der Sortierung in cmp_hashed()
+    # (elf_libs_loader.c, sortiert nur ueber .name) entsprechen.
     local manifest_sha
-    manifest_sha="$(printf '%s\n' "${canon_lines[@]}" | LC_ALL=C sort | awk '{printf "%s\n", $0}' | sha256_stdin)"
+    manifest_sha="$(printf '%s\n' "${canon_lines[@]}" | LC_ALL=C sort -t: -k1,1 | sha256_stdin)"
 
     {
         printf '{\n'
