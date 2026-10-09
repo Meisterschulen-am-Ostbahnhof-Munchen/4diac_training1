@@ -3,10 +3,8 @@
   <Dependencies>
     <Required SymbolicName="adapter_types" Version="3.0.0"/>
     <Required SymbolicName="isobus_UT" Version="3.0.0"/>
-    <Required SymbolicName="isobus_UT_io" Version="3.0.0"/>
-    <Required SymbolicName="isobus_signalprocessing" Version="3.0.0"/>
   </Dependencies>
-  <Product Comment="AR/AX/AD-Adapter-Wrapper um isobus_UT (UT/Q, UT/io), herausgeloest aus isobus_adapter-3.0.0 - getrennt von isobus_tecu_adapter, da UT und tecu keine gegenseitigen Referenzen haben" Name="isobus_UT_adapter" SymbolicName="isobus_UT_adapter">
-    <VersionInfo Author="HR Agrartechnik GmbH" Date="2026-10-09" Version="3.0.0"/>
+  <Product Comment="AR/AX/AD-Adapter-Wrapper um isobus_UT (nur UT/Q), herausgeloest aus isobus_adapter-3.0.0 - getrennt von isobus_tecu_adapter, da UT und tecu keine gegenseitigen Referenzen haben. UT/io am 2026-10-10 nach isobus_UT_io_adapter ausgelagert, um 1:1 mit der Trennung isobus_UT/isobus_UT_io mitzuziehen (Franz: Namensraum-Mehrdeutigkeit im ELF-Lib-Zuordnungsskript vermeiden)" Name="isobus_UT_adapter" SymbolicName="isobus_UT_adapter">
+    <VersionInfo Author="HR Agrartechnik GmbH" Date="2026-10-10" Version="3.0.0"/>
   </Product>
 </Manifest>
