@@ -29,14 +29,25 @@ declare -A NODE_ARCH=(
 # Quelle: Datei elf_libs/FORTE_ABI im Repo LOGIBUS_integration_datapanel.
 FORTE_ABI=3
 
-# Namensraum-Praefix (erstes Segment vor "::" in einem Type="...") -> Lib-Name.
+# Namensraum-Praefix -> Lib-Name. Key ist entweder ein Einzelsegment (z.B.
+# "OSCAT", "OSCAT_adapter") oder "Segment1::Segment2" fuer Libs, die aus einem
+# gemeinsamen Namensraum herausgeloest wurden (z.B. "adapter::net" ->
+# net_adapter, waehrend "adapter" selbst fest in der Firmware bleibt - siehe
+# resolve_required_libs()).
 declare -A PREFIX_TO_LIB=(
     ["OSCAT"]="OSCAT"
     ["OSCAT_adapter"]="OSCAT_adapter"
+    ["adapter::net"]="net_adapter"
 )
 
 # Lib-Version, die aktuell als ELF gebaut/erwartet wird. Quelle: die echten
 # MANIFEST.MF unter 4diacIDE-workspace/.lib/<Lib>*/MANIFEST.MF.
+#
+# net_adapter ABSICHTLICH NICHT eingetragen (2026-10-09): aus
+# adapter-3.0.0/typelib/net herausgeloest (.lib/net_adapter-3.0.0), aber noch
+# kein gebautes ELF - der Forte-Loader-Teil entsteht erst im Repo
+# LOGIBUS_integration_datapanel. Bis dahin ueberspringt build_libs_manifest()
+# automatisch jeden Knoten, der adapter::net::-Typen nutzt (praktisch alle).
 declare -A LIB_VERSIONS=(
     ["OSCAT"]="0.1.0"
     ["OSCAT_adapter"]="3.0.0"
@@ -45,8 +56,9 @@ declare -A LIB_VERSIONS=(
 # Abhaengigkeiten je Lib ("Name:Range", Leerzeichen-getrennt). Range-Format
 # seit 2026-10-09 durch die Firmware festgelegt: "^MAJOR.MINOR[.PATCH]" (gleiche
 # Major, bei Major 0 zusaetzlich gleiche Minor), ">=X.Y.Z" oder exakt "X.Y.Z".
-# "adapter" bleibt bewusst fest in die Firmware gelinkt (noch nicht
-# ausgelagert, wie bei Krauternter), daher kein eigener Eintrag dafuer.
+# "adapter" (das Top-Level-Segment, ausser dem herausgeloesten net_adapter)
+# bleibt bewusst fest in die Firmware gelinkt, daher kein eigener Eintrag
+# dafuer.
 declare -A LIB_REQUIRES=(
     ["OSCAT_adapter"]="OSCAT:^0.1"
 )
@@ -55,6 +67,7 @@ declare -A LIB_REQUIRES=(
 declare -A LIB_DIR_NAME=(
     ["OSCAT"]="OSCAT"
     ["OSCAT_adapter"]="OSCAT_adapter-3.0.0"
+    ["net_adapter"]="net_adapter-3.0.0"
 )
 
 ELF_DIR="elf-libs"
@@ -76,20 +89,26 @@ sha256_stdin() {
     fi
 }
 
-# Liest die benoetigten Lib-Namen aus einem .fboot: Type="PRAEFIX::..."
-# sammeln, ueber PREFIX_TO_LIB mappen, transitiv per LIB_REQUIRES erweitern.
+# Liest die benoetigten Lib-Namen aus einem .fboot: zu jedem Type="..." die
+# ersten ein oder zwei Namensraum-Segmente extrahieren, erst den
+# Zwei-Segment-Key gegen PREFIX_TO_LIB pruefen (z.B. "adapter::net"), dann als
+# Fallback den Einzelsegment-Key (z.B. "OSCAT"), dann transitiv per
+# LIB_REQUIRES erweitern.
 resolve_required_libs() {
-    local fboot_file="$1" prefix lib req name
+    local fboot_file="$1" ns lib req name
     declare -A seen=()
     local -a queue=()
 
-    while IFS= read -r prefix; do
-        lib="${PREFIX_TO_LIB[$prefix]:-}"
+    while IFS= read -r ns; do
+        lib="${PREFIX_TO_LIB[$ns]:-}"
+        if [ -z "$lib" ]; then
+            lib="${PREFIX_TO_LIB[${ns%%::*}]:-}"
+        fi
         if [ -n "$lib" ] && [ -z "${seen[$lib]:-}" ]; then
             seen[$lib]=1
             queue+=("$lib")
         fi
-    done < <(grep -oE 'Type="[A-Za-z0-9_]+::' "$fboot_file" | sed -E 's/Type="([A-Za-z0-9_]+)::/\1/' | sort -u)
+    done < <(grep -oE 'Type="[A-Za-z0-9_]+(::[A-Za-z0-9_]+)?::' "$fboot_file" | sed -E 's/Type="(.*)::$/\1/' | sort -u)
 
     local i=0
     while [ "$i" -lt "${#queue[@]}" ]; do
