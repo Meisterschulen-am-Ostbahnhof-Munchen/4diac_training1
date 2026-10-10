@@ -134,7 +134,9 @@ declare -A PREFIX_TO_LIB=(
 # Warnung) - isobus_UT_adapter/isobus_UT_io_adapter fehlten dadurch komplett
 # im generierten Manifest. Franz hat (2026-10-10) bestaetigt, dass alle Libs
 # mit gebautem ELF echte ladbare Module sind, siehe LIB_VERSIONS - beide sind
-# jetzt vollstaendig eingetragen (LIB_VERSIONS/LIB_REQUIRES/LIB_DIR_NAME).
+# jetzt vollstaendig eingetragen (LIB_VERSIONS/LIB_DIR_NAME; die requires
+# kommen seit 2026-10-10 ohnehin direkt aus MANIFEST.MF, siehe
+# lib_requires_of()).
 declare -A TYPE_NAME_TO_LIB=(
     # adapter::conversion: Default adapter_conversion, Ausnahme logiBUS_utils_adapter
     ["AQ_TO_AX"]="logiBUS_utils_adapter"
@@ -371,47 +373,22 @@ declare -A LIB_VERSIONS=(
     ["utils_adapter"]="3.0.0"
 )
 
-# Abhaengigkeiten je Lib ("Name:Range", Leerzeichen-getrennt). Range-Format
-# seit 2026-10-09 durch die Firmware festgelegt: "^MAJOR.MINOR[.PATCH]" (gleiche
-# Major, bei Major 0 zusaetzlich gleiche Minor), ">=X.Y.Z" oder exakt "X.Y.Z".
-# Nur Abhaengigkeiten auf andere Libs MIT eigenem LIB_VERSIONS-Eintrag stehen
-# hier (aus den echten <Required>-Listen der MANIFEST.MF gefiltert) - eine
-# Abhaengigkeit auf eine noch fest in die Firmware gelinkte/nicht gebaute Lib
-# (core, events, net, system) wird bewusst NICHT aufgefuehrt, dafuer ist
-# nichts zu laden.
-declare -A LIB_REQUIRES=(
-    ["BlinkMarine"]="adapter_types:^3.0"
-    ["DataPanel"]="adapter_types:^3.0"
-    ["Funk"]="adapter_types:^3.0"
-    ["OSCAT_adapter"]="OSCAT_Basic:^0.1 adapter:^3.0 adapter_conversion:^3.0 adapter_events:^3.0 adapter_iec61131-3:^3.0 adapter_types:^3.0"
-    ["adapter"]="adapter_types:^3.0 iec61131-3:^3.0"
-    ["iec61131-3-bool"]="iec61131-3:^3.0"
-    ["adapter_conversion"]="adapter_types:^3.0 iec61131-3:^3.0"
-    ["adapter_events"]="adapter:^3.0 adapter_types:^3.0 iec61131-3:^3.0"
-    ["adapter_iec61131-3"]="adapter_conversion:^3.0 adapter_events:^3.0 adapter_types:^3.0 iec61131-3:^3.0"
-    ["adapter_selection"]="adapter_types:^3.0"
-    ["isobus_UT"]="iec61131-3:^3.0"
-    ["isobus_UT_adapter"]="adapter_types:^3.0 isobus_UT:^3.0"
-    ["isobus_UT_io"]="iec61131-3:^3.0 isobus_UT:^3.0"
-    ["isobus_UT_io_adapter"]="adapter_types:^3.0 isobus_UT:^3.0 isobus_UT_io:^3.0"
-    ["isobus_signalprocessing"]="iec61131-3:^3.0 isobus_UT:^3.0 isobus_UT_io:^3.0 logiBUS_signalprocessing:^3.0 signalprocessing:^3.0"
-    ["isobus_signalprocessing_adapter"]="adapter_types:^3.0 isobus_UT:^3.0 isobus_signalprocessing:^3.0"
-    ["isobus_tecu"]="iec61131-3:^3.0"
-    ["isobus_tecu_adapter"]="adapter_types:^3.0 isobus_tecu:^3.0"
-    ["logiBUS_DI_CAN"]="adapter_types:^3.0"
-    ["logiBUS_bosch"]="isobus_pgn:^3.0"
-    ["logiBUS_io"]="adapter_types:^3.0"
-    ["logiBUS_safety"]="logiBUS_utils:^3.0"
-    ["logiBUS_schieber"]="isobus_UT:^3.0"
-    ["logiBUS_signalprocessing"]="signalprocessing:^3.0"
-    ["logiBUS_signalprocessing_adapter"]="adapter:^3.0 adapter_events:^3.0 adapter_types:^3.0 iec61131-3:^3.0 logiBUS_signalprocessing:^3.0 signalprocessing:^3.0"
-    ["logiBUS_storage"]="adapter_types:^3.0"
-    ["logiBUS_storage_esp32"]="adapter_types:^3.0"
-    ["logiBUS_utils_adapter"]="adapter:^3.0 adapter_events:^3.0 adapter_types:^3.0 logiBUS_utils:^3.0"
-    ["net_adapter"]="adapter_types:^3.0 iec61131-3:^3.0"
-    ["utils"]="iec61131-3:^3.0"
-    ["utils_adapter"]="adapter_types:^3.0 utils:^3.0"
-)
+# Abhaengigkeiten je Lib werden NICHT mehr aus einer von Hand gepflegten
+# Tabelle genommen, sondern direkt aus der echten MANIFEST.MF gelesen (siehe
+# lib_requires_of() unten) - Range-Format seit 2026-10-09 durch die Firmware
+# festgelegt: "^MAJOR.MINOR" (gleiche Major, bei Major 0 zusaetzlich gleiche
+# Minor).
+#
+# 2026-10-10 (Franz, nach echtem Geraete-Fehler auf 192.168.178.55): adapter-
+# 3.0.0 scheiterte zur Laufzeit mit "Can't find common
+# _ZTVN5forte8iec6113116booleanOperators16FORTE_F_NOT_BOOLE" (die Vtable
+# liegt in iec61131-3-bool), weil die bisherige LIB_REQUIRES-Tabelle diese
+# Abhaengigkeit fuer "adapter" nicht enthielt - sie war schlicht nicht
+# mitgepflegt worden, obwohl adapter-3.0.0/MANIFEST.MF sie schon lange
+# deklariert. Eine Tabelle gegen die MANIFEST.MF manuell synchron zu halten
+# ist fehleranfaellig, siehe auch 10 WEITERE Libs mit dem gleichen
+# Synchronisationsfehler, die dieselbe Pruefung aufdeckte. MANIFEST.MF ist
+# jetzt die einzige Quelle.
 
 # Lib-Ordnername unter 4diacIDE-workspace/.lib/ (nicht einheitlich).
 declare -A LIB_DIR_NAME=(
@@ -488,7 +465,7 @@ sha256_stdin() {
 # Namensraum-Mehrdeutigkeiten ab), erst wenn das nichts liefert den
 # Zwei-Segment-Namensraum-Key gegen PREFIX_TO_LIB pruefen (z.B. "adapter::net"),
 # dann als Fallback den Einzelsegment-Key (z.B. "OSCAT"), dann transitiv per
-# LIB_REQUIRES erweitern.
+# lib_requires_of() (liest MANIFEST.MF) erweitern.
 resolve_required_libs() {
     local fboot_file="$1" full name seg1 rest seg2 ns lib req
     declare -A seen=()
@@ -518,7 +495,7 @@ resolve_required_libs() {
     while [ "$i" -lt "${#queue[@]}" ]; do
         lib="${queue[$i]}"
         i=$((i + 1))
-        for req in ${LIB_REQUIRES[$lib]:-}; do
+        for req in $(lib_requires_of "$lib"); do
             name="${req%%:*}"
             if [ -z "${seen[$name]:-}" ]; then
                 seen[$name]=1
@@ -545,6 +522,49 @@ mf_version_of() {
     mf="4diacIDE-workspace/.lib/${dir}/MANIFEST.MF"
     [ -f "$mf" ] || { echo ""; return; }
     grep -A1 '<Product ' "$mf" | grep -oE 'Version="[^"]+"' | tail -1 | sed -E 's/Version="([^"]+)"/\1/'
+}
+
+# Liest die "requires"-Liste einer Lib ("Name:Range", Leerzeichen-getrennt)
+# direkt aus deren MANIFEST.MF statt aus einer von Hand gepflegten Tabelle
+# (siehe Begruendung oben bei der alten LIB_REQUIRES-Deklaration). Nur
+# <Required SymbolicName="X" Version="V"/>-Eintraege, zu denen es ein
+# LIB_VERSIONS-Element (= gebautes ELF) gibt, werden uebernommen -
+# Abhaengigkeiten auf Firmware-Basis-Libs (core, events, net, system) ohne
+# eigenes ELF gibt es dafuer naturgemaess nichts zu laden. Range ist
+# "^Major.Minor" der in MANIFEST.MF fuer diese Abhaengigkeit deklarierten
+# Version. Ergebnis wird pro Lib gecacht (gleiche MANIFEST.MF wird sonst bei
+# jedem .fboot/jeder transitiven Erweiterung erneut geparst).
+declare -A _LIB_REQUIRES_CACHE=()
+lib_requires_of() {
+    local lib="$1" dir mf line name ver major minor
+    local -a result=()
+    if [ -n "${_LIB_REQUIRES_CACHE[$lib]+x}" ]; then
+        printf '%s\n' "${_LIB_REQUIRES_CACHE[$lib]}"
+        return
+    fi
+    dir="${LIB_DIR_NAME[$lib]:-$lib}"
+    mf="4diacIDE-workspace/.lib/${dir}/MANIFEST.MF"
+    if [ -f "$mf" ]; then
+        while IFS= read -r line; do
+            name="$(sed -E 's/.*SymbolicName="([^"]+)".*/\1/' <<<"$line")"
+            ver="$(sed -E 's/.*Version="([^"]+)".*/\1/' <<<"$line")"
+            [ -n "${LIB_VERSIONS[$name]:-}" ] || continue
+            major="${ver%%.*}"
+            minor="${ver#*.}"
+            minor="${minor%%.*}"
+            result+=("${name}:^${major}.${minor}")
+        done < <(grep -oE '<Required SymbolicName="[^"]+" Version="[^"]+"' "$mf")
+    fi
+    # Firmware-Limit MAX_REQ=8 pro Lib (frueher 4, siehe historischer Fehler
+    # "invalid requires of OSCAT_adapter" - OSCAT_adapter hat bereits 6
+    # requires). Nur eine Warnung hier (build_libs_manifest() macht daraus
+    # einen harten Abbruch, siehe dort) - lib_requires_of() wird auch aus der
+    # reinen Namensaufloesung heraus aufgerufen, wo ein Abbruch zu frueh waere.
+    if [ "${#result[@]}" -gt 8 ]; then
+        echo "  WARNUNG: Lib '${lib}' hat ${#result[@]} requires, Firmware erlaubt max. 8 (MAX_REQ)." >&2
+    fi
+    _LIB_REQUIRES_CACHE[$lib]="${result[*]}"
+    printf '%s\n' "${result[*]}"
 }
 
 # Findet den lokalen Pfad eines Lib-ELFs: ELF_DIR flach, sonst Repo-Pfad
@@ -586,6 +606,15 @@ build_libs_manifest() {
         return 1
     fi
 
+    local req_count
+    for lib in "${_libs[@]}"; do
+        req_count=$(lib_requires_of "$lib" | wc -w)
+        if [ "$req_count" -gt 8 ]; then
+            echo "  WARNUNG: Lib '${lib}' hat ${req_count} requires, Firmware erlaubt max. 8 (MAX_REQ) - uebersprungen."
+            return 1
+        fi
+    done
+
     local mf_ver
     for lib in "${_libs[@]}"; do
         version="${LIB_VERSIONS[$lib]:-}"
@@ -622,7 +651,7 @@ build_libs_manifest() {
         canon_lines+=("${fname}:${sha}")
 
         requires_json="["
-        for req in ${LIB_REQUIRES[$lib]:-}; do
+        for req in $(lib_requires_of "$lib"); do
             name="${req%%:*}"
             range="${req#*:}"
             if [ "$first" = 1 ]; then first=0; else requires_json+=","; fi
@@ -656,17 +685,32 @@ build_libs_manifest() {
     local manifest_sha
     manifest_sha="$(printf '%s\n' "${canon_lines[@]}" | LC_ALL=C sort -t: -k1,1 | sha256_stdin)"
 
-    {
-        printf '{\n'
-        printf '  "format": 1,\n'
-        printf '  "forte_abi": %s,\n' "$FORTE_ABI"
-        printf '  "arch": "%s",\n' "$arch"
-        printf '  "libs": [%s],\n' "$(IFS=,; echo "${lib_json_entries[*]}")"
-        printf '  "files": [%s],\n' "$(IFS=,; echo "${file_json_entries[*]}")"
-        printf '  "manifest_sha256": "%s",\n' "$manifest_sha"
-        printf '  "signature": null\n'
-        printf '}\n'
-    } > "$out_path"
+    # manifest_sha256 haengt nur von den canon_lines (Dateiname:sha256 je
+    # Lib/Datei) ab, nicht vom Text dieser JSON-Datei selbst - Pretty-Print
+    # (Einrueckung/Zeilenumbrueche) aendert daran nichts und ist fuer jeden
+    # konformen JSON-Parser (auch den der Firmware) bedeutungslos, macht die
+    # Datei fuer Menschen aber lesbar. python3 ist ueber die restliche
+    # Pipeline (GcfScript.py etc.) ohnehin Voraussetzung.
+    local compact_json
+    compact_json="$(
+        printf '{'
+        printf '"format":1,'
+        printf '"forte_abi":%s,' "$FORTE_ABI"
+        printf '"arch":"%s",' "$arch"
+        printf '"libs":[%s],' "$(IFS=,; echo "${lib_json_entries[*]}")"
+        printf '"files":[%s],' "$(IFS=,; echo "${file_json_entries[*]}")"
+        printf '"manifest_sha256":"%s",' "$manifest_sha"
+        printf '"signature":null'
+        printf '}'
+    )"
+    # stdout.buffer statt print()/json.dump(): auf Windows uebersetzt
+    # Text-Mode-stdout "\n" sonst automatisch zu "\r\n" (CRLF), das Repo
+    # erwartet aber LF-Zeilenenden wie bei allen anderen generierten Dateien.
+    if ! python3 -c 'import json, sys; sys.stdout.buffer.write((json.dumps(json.load(sys.stdin), indent=2) + "\n").encode())' <<<"$compact_json" > "$out_path"; then
+        echo "  WARNUNG: Pretty-Print des Manifests fehlgeschlagen (python3) - uebersprungen."
+        rm -f "$out_path"
+        return 1
+    fi
 
     local manifest_size
     manifest_size="$(wc -c < "$out_path" | tr -d ' ')"
