@@ -127,30 +127,40 @@ def http_reachable(ip: str) -> bool:
         return False
 
 
-def http_listing(ip: str, path: str = "/", timeout: float = 5) -> Optional[str]:
+def http_listing(ip: str, path: str = "/", timeout: float = 5, missing_ok: bool = False) -> Optional[str]:
     """GET <path> (Default "/") als Text fuer die href-Listing-Regexe. None
-    bei Verbindungsfehler - ANDERS als fruehere Versionen (leerer String):
-    ein leeres Verzeichnis und ein fehlgeschlagener Request waren sonst nicht
-    zu unterscheiden, wodurch eine Alt-Datei-Bereinigung bei einem
-    Listing-Fehler faelschlich als "nichts zu tun" durchlief (Sourcery-
-    Finding, PR #288). path kann ein Unterverzeichnis sein (z.B.
-    "/elf-libs/")."""
+    bei Verbindungsfehler ODER einem nicht-200-Status - ANDERS als fruehere
+    Versionen (leerer String bzw. der rohe Body jedes Status): ein leeres
+    Verzeichnis, eine Fehlerseite und ein fehlgeschlagener Request waren
+    sonst nicht zu unterscheiden, eine 404-Fehlerseite waere sogar versucht
+    worden als Listing zu parsen (CodeRabbit-Finding, PR #288).
+
+    missing_ok=True: ein HTTP 404 gilt als "Verzeichnis existiert (noch)
+    nicht" und liefert "" (keine hrefs) statt None - Normalfall fuer
+    /elf-libs/ auf einem Knoten vor dem allerersten ELF-Upload (z.B. nach
+    "Format File System"), kein Fehler. path kann ein Unterverzeichnis sein
+    (z.B. "/elf-libs/")."""
     try:
-        _status, data = _http(ip, "GET", path, timeout)
+        status, data = _http(ip, "GET", path, timeout)
+        if status == 404 and missing_ok:
+            return ""
+        if status != 200:
+            return None
         return data.decode("utf-8", errors="replace")
     except OSError:
         return None
 
 
 def http_delete(ip: str, name: str, timeout: float = 10) -> bool:
-    """POST /delete/<name>. Gibt True zurueck, wenn der Request ueberhaupt
-    durchkam (unabhaengig vom HTTP-Status, wie im Original mit
-    -o /dev/null), False bei einem Verbindungsfehler - damit der Aufrufer
-    einen echten Loesch-Fehlschlag von einem einfachen 404 (Datei war schon
-    weg) unterscheiden und entsprechend reagieren kann."""
+    """POST /delete/<name>. Gibt True nur bei HTTP 303 (dokumentierter
+    Erfolgsstatus, wie bei POST /upload/<name>) oder 404 (Datei war schon
+    weg - ebenfalls ein Erfolg aus Aufrufersicht) zurueck, sonst False -
+    sowohl bei einem Verbindungsfehler als auch bei jedem anderen HTTP-
+    Status (z.B. 500), den die fruehere Version faelschlich als Erfolg
+    gewertet haette (CodeRabbit-Finding, PR #288)."""
     try:
-        _http(ip, "POST", f"/delete/{name}", timeout)
-        return True
+        status, _body = _http(ip, "POST", f"/delete/{name}", timeout)
+        return status in (303, 404)
     except OSError:
         return False
 
@@ -393,7 +403,7 @@ def main() -> int:
                                         node_ok = False
 
                         keep_names = {p.name for p in result.elf_paths}
-                        elf_listing = http_listing(ip, "/elf-libs/")
+                        elf_listing = http_listing(ip, "/elf-libs/", missing_ok=True)
                         if elf_listing is None:
                             print("  WARNUNG: elf-libs/-Listing fehlgeschlagen - alte ELF-Kandidaten NICHT geprueft/entfernt.")
                             node_ok = False
