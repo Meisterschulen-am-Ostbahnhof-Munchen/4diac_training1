@@ -27,7 +27,7 @@ erzeugen, dann deployen).
 
 Die eigentliche Namensraum-/Abhaengigkeits-Logik (welcher 4diac-Typ gehoert
 zu welcher Lib, requires aus MANIFEST.MF, Firmware-Limits wie MAX_REQ=8 und
-max. 16 Libs) steht in `scripts_central/elf_libs_manifest_lib.py`.
+max. 64 Libs) steht in `scripts_central/elf_libs_manifest_lib.py`.
 
 **Vorsicht bei echten Deploys:** `make_4diac_training1_deploy.py` laedt
 wirklich auf den Knoten hoch (kein Trockenlauf-Modus). Vor wiederholten

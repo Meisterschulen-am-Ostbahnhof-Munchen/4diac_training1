@@ -62,7 +62,15 @@ def main() -> int:
         print(f"{fboot_base} ({ip}, {arch}): benoetigt {' '.join(required_libs)}")
         result = build_libs_manifest(arch, node_files, out_path, required_libs)
         if result.ok:
-            print(f"  Geschrieben: {out_path.relative_to(VENTILSTEUERUNG_DIR)}")
+            try:
+                shown_path = out_path.relative_to(VENTILSTEUERUNG_DIR)
+            except ValueError:
+                # --out kann ausserhalb von VENTILSTEUERUNG_DIR liegen (z.B.
+                # fuer einen Testlauf) - relative_to() wuerde das mit einem
+                # Traceback quittieren, obwohl das Manifest laengst korrekt
+                # geschrieben wurde.
+                shown_path = out_path
+            print(f"  Geschrieben: {shown_path}")
             written.append(str(out_path))
         else:
             skipped.append(fboot_base)
@@ -74,7 +82,11 @@ def main() -> int:
     for b in skipped:
         print(f"  UEBERSPRUNGEN: {b} (siehe Warnung/Hinweis oben)")
 
-    return 0
+    # Nicht blind 0 zurueckgeben: ein uebersprungenes Manifest (fehlendes
+    # .fboot, fehlende Architektur, build_libs_manifest() nicht ok) ist ein
+    # echter Fehler, den aufrufende Shells/IDE-External-Tools/CI sonst nicht
+    # von einem erfolgreichen Lauf unterscheiden koennten.
+    return 1 if skipped else 0
 
 
 if __name__ == "__main__":
