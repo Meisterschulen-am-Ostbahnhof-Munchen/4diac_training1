@@ -25,6 +25,7 @@ import http.client
 import re
 import sys
 import tempfile
+import time
 from pathlib import Path
 from typing import Optional
 
@@ -63,19 +64,36 @@ def http_remote_sha256_listing(ip: str, timeout: float = 10) -> Optional[dict[st
     Request. None wenn die neue Firmware (noch) nicht vorhanden ist (Status
     != 200, Verbindungsfehler) - dann ist der Knoten NICHT sha256-faehig,
     auch wenn er zufaellig gar keine Dateien hat (leeres dict waere sonst
-    nicht von "Firmware unterstuetzt es nicht" zu unterscheiden)."""
+    nicht von "Firmware unterstuetzt es nicht" zu unterscheiden).
+
+    Live beobachtet (2026-10-10): das Listing liefert die Pfade mit
+    "/data/"-Praefix (z.B. "/data/adapter-3.0.0-riscv32.elf",
+    "/data/elf-libs/adapter-3.0.0-riscv32.elf"). Nur dieses Praefix wird
+    entfernt - NICHT auf den nackten Dateinamen kuerzen! Ein ELF liegt seit
+    der elf-libs/-Umstellung unter "elf-libs/<name>", eine gleichnamige
+    Datei direkt in /data/ (von einem aelteren Deploy) ist etwas ANDERES -
+    beim Kuerzen auf den nackten Namen wuerden beide auf denselben
+    Schluessel fallen und ein Upload faelschlich uebersprungen (genau das
+    ist am 2026-10-10 passiert: alle ELFs wurden als "schon in elf-libs/
+    vorhanden" erkannt, obwohl sie nur noch am alten Ort lagen - keiner
+    wurde tatsaechlich nach elf-libs/ hochgeladen)."""
     try:
         status, body = _http(ip, "GET", "/sha256/", timeout)
         if status != 200:
             return None
         text = body.decode("ascii", errors="ignore")
-        return {path: h.lower() for h, path in _SHA256_LISTING_RE.findall(text)}
+        result = {}
+        for h, path in _SHA256_LISTING_RE.findall(text):
+            name = path[len("/data/"):] if path.startswith("/data/") else path
+            result[name] = h.lower()
+        return result
     except OSError:
         return None
 
 
 _FBOOT_HREF_RE = re.compile(r'href="/([^"]*\.fboot)"')
-_ELF_OR_MANIFEST_HREF_RE = re.compile(r'href="/([^"]*\.(?:elf|libs\.json))"')
+_MANIFEST_HREF_RE = re.compile(r'href="/([^"]*\.libs\.json)"')
+_ELF_LIBS_HREF_RE = re.compile(r'href="/elf-libs/([^"]*\.elf)"')
 
 
 def _http(ip: str, method: str, path: str, timeout: float, body: Optional[bytes] = None) -> tuple[int, bytes]:
@@ -109,11 +127,12 @@ def http_reachable(ip: str) -> bool:
         return False
 
 
-def http_listing(ip: str, timeout: float = 5) -> str:
-    """GET "/" als Text fuer die href-Listing-Regexe, leer bei
-    Verbindungsfehler (wie curl -s: leere stdout statt Absturz)."""
+def http_listing(ip: str, path: str = "/", timeout: float = 5) -> str:
+    """GET <path> (Default "/") als Text fuer die href-Listing-Regexe, leer
+    bei Verbindungsfehler (wie curl -s: leere stdout statt Absturz). path
+    kann ein Unterverzeichnis sein (z.B. "/elf-libs/")."""
     try:
-        _status, data = _http(ip, "GET", "/", timeout)
+        _status, data = _http(ip, "GET", path, timeout)
         return data.decode("utf-8", errors="replace")
     except OSError:
         return ""
@@ -124,6 +143,22 @@ def http_delete(ip: str, name: str, timeout: float = 10) -> None:
     Original mit -o /dev/null)."""
     try:
         _http(ip, "POST", f"/delete/{name}", timeout)
+    except OSError:
+        pass
+
+
+def http_reset_current_directory(ip: str, timeout: float = 5) -> None:
+    """GET / - die alte Firmware merkt sich serverseitig das zuletzt per GET
+    angezeigte Verzeichnis und legt dort JEDEN nachfolgenden pfadlosen Upload
+    ab (live bestaetigt 2026-10-10 mit ELFLOADER: ein Manifest-Upload nach
+    der ELF-Upload-Runde landete dadurch in /data/elf-libs/ statt /data/ -
+    der Loader sucht *.libs.json aber nur direkt in /data/ und findet dort
+    dann keins, FORTE startet ohne Libs). Vor jedem pfadlosen Upload, der auf
+    eine Unterverzeichnis-Listung (z.B. /elf-libs/) folgen koennte, wird das
+    Verzeichnis hierueber wieder auf /data/ zurueckgesetzt. Ergebnis bewusst
+    ignoriert (best effort, wie http_delete)."""
+    try:
+        _http(ip, "GET", "/", timeout)
     except OSError:
         pass
 
@@ -162,7 +197,8 @@ def http_upload_file(
     OHNE Redirects zu folgen (http.client folgt nie automatisch, wie curl
     ohne -L). Gibt zurueck:
     - "SKIP": remote_hashes[remote_name] == local_sha256 (aus einem vorher
-      per http_remote_sha256_listing() geholten Listing) - Datei liegt
+      per http_remote_sha256_listing() geholten Listing) UND eine zusaetzliche
+      Einzelpruefung per http_remote_sha256() bestaetigt das - Datei liegt
       bereits unveraendert vor, kein Upload noetig.
     - "VERIFY_FAILED": Upload wurde mit HTTP 303 quittiert, aber
       verify_after_upload ist gesetzt und die anschliessende
@@ -172,16 +208,44 @@ def http_upload_file(
     - den HTTP-Status als String sonst ("303" = echter, verifizierter
       Erfolg), "000" bei jedem Verbindungsfehler/nicht lesbarer Datei.
     Alle neuen Parameter sind optional, damit alte Aufrufer unveraendert
-    funktionieren (kein lokaler Hash -> kein Skip, keine Verifikation)."""
+    funktionieren (kein lokaler Hash -> kein Skip, keine Verifikation).
+    remote_name darf einen Unterordner enthalten (z.B. "elf-libs/x.elf") -
+    der SKIP-Vergleich nutzt den VOLLEN remote_name als Schluessel (nicht
+    nur den Dateinamen!), weil remote_hashes (siehe
+    http_remote_sha256_listing()) ebenfalls volle, nur um das "/data/"-
+    Praefix gekuerzte Pfade als Schluessel hat - "elf-libs/x.elf" und ein
+    gleichnamiges "x.elf" direkt in /data/ sind unterschiedliche Dateien,
+    ein Vergleich nur ueber den nackten Namen haette hier beide
+    faelschlich gleichgesetzt (siehe Kommentar in
+    http_remote_sha256_listing(), 2026-10-10)."""
     if remote_hashes is not None and local_sha256 is not None and remote_hashes.get(remote_name) == local_sha256:
-        return "SKIP"
+        # Die Batch-Liste (http_remote_sha256_listing()) kommt laut
+        # ELFLOADER (2026-10-10) aus einem RAM-Cache, der ein "Format File
+        # System" nicht leert und nicht prueft, ob die Datei noch existiert -
+        # nach einem Format kann sie also den Hash einer laengst geloeschten
+        # Datei zeigen (live beobachtet: ein .fboot wurde so faelschlich
+        # uebersprungen). Der Einzel-Endpunkt macht vorher einen stat() und
+        # liefert bei fehlender Datei zuverlaessig 404/None, deshalb hier vor
+        # jedem SKIP nochmal einzeln gegenpruefen.
+        if http_remote_sha256(ip, remote_name) == local_sha256:
+            return "SKIP"
     try:
         data = local_path.read_bytes()
         status, _body = _http(ip, "POST", f"/upload/{remote_name}", timeout, body=data)
     except OSError:
         return "000"
     if status == 303 and verify_after_upload and local_sha256 is not None:
+        # Live gegen die erste echte sha256-faehige Firmware beobachtet
+        # (2026-10-10): der Hash wird laut ELFLOADER "nach jedem Upload neu"
+        # im Hintergrund berechnet - eine Verifikation UNMITTELBAR nach dem
+        # Upload kann dadurch kurz einen veralteten/fehlenden Hash sehen,
+        # obwohl die Datei korrekt gespeichert wurde (manuelle Nachpruefung
+        # Sekunden spaeter zeigte den richtigen Hash). Deshalb kurz erneut
+        # versuchen, bevor ein echter Fehler gemeldet wird.
         verified = http_remote_sha256(ip, remote_name)
+        if verified != local_sha256:
+            time.sleep(1)
+            verified = http_remote_sha256(ip, remote_name)
         if verified != local_sha256:
             return "VERIFY_FAILED"
     return str(status)
@@ -276,26 +340,39 @@ def main() -> int:
                         if result.ok:
                             manifest_name = f"{node_fboot_file.stem}.libs.json"
 
-                            keep_names = {p.name for p in result.elf_paths}
-                            for existing in _ELF_OR_MANIFEST_HREF_RE.findall(http_listing(ip)):
-                                if existing != manifest_name and existing not in keep_names:
+                            # Manifest-Kandidaten liegen in /data/ (root),
+                            # ELFs seit der elf-libs/-Umstellung in
+                            # /data/elf-libs/ - getrennte Listings/Cleanups.
+                            # Lose ELFs direkt in /data/ von AELTEREN Deploys
+                            # (vor dieser Umstellung) werden bewusst NICHT
+                            # automatisch entfernt (Franz raeumt das einmalig
+                            # per "Format File System" auf).
+                            for existing in _MANIFEST_HREF_RE.findall(http_listing(ip)):
+                                if existing != manifest_name:
                                     print(f"  Entferne alten Lib-Kandidaten: {existing}")
                                     http_delete(ip, existing)
+
+                            keep_names = {p.name for p in result.elf_paths}
+                            for existing in _ELF_LIBS_HREF_RE.findall(http_listing(ip, "/elf-libs/")):
+                                if existing not in keep_names:
+                                    print(f"  Entferne alten Lib-Kandidaten: elf-libs/{existing}")
+                                    http_delete(ip, f"elf-libs/{existing}")
 
                             elf_ok = True
                             for elf_path in result.elf_paths:
                                 elf_name = elf_path.name
+                                elf_remote_path = f"elf-libs/{elf_name}"
                                 http_code = http_upload_file(
-                                    ip, elf_path, elf_name, 60,
+                                    ip, elf_path, elf_remote_path, 60,
                                     sha256_of(elf_path), remote_hashes, sha256_capable,
                                 )
                                 if http_code == "SKIP":
-                                    print(f"  {elf_path} -> {elf_name}: unveraendert (Hash stimmt), Upload uebersprungen")
+                                    print(f"  {elf_path} -> {elf_remote_path}: unveraendert (Hash stimmt), Upload uebersprungen")
                                 elif http_code == "VERIFY_FAILED":
-                                    print(f"  FEHLER: {elf_path} -> {elf_name}: Upload mit HTTP 303 quittiert, Datei laut Geraet aber nicht/falsch gespeichert!")
+                                    print(f"  FEHLER: {elf_path} -> {elf_remote_path}: Upload mit HTTP 303 quittiert, Datei laut Geraet aber nicht/falsch gespeichert!")
                                     elf_ok = False
                                 else:
-                                    print(f"  Lade {elf_path} -> http://{ip}/upload/{elf_name}")
+                                    print(f"  Lade {elf_path} -> http://{ip}/upload/{elf_remote_path}")
                                     if http_code == "303":
                                         print(f"  OK (HTTP {http_code})")
                                     else:
@@ -306,6 +383,12 @@ def main() -> int:
                             # laedt die Firmware keine Lib - ein
                             # abgebrochener Upload ist so erkennbar.
                             if elf_ok:
+                                # Zurueck auf /data/ - siehe
+                                # http_reset_current_directory(): ohne das
+                                # wuerde dieser pfadlose Upload nach der
+                                # /elf-libs/-Listung oben dort landen statt
+                                # in /data/.
+                                http_reset_current_directory(ip)
                                 print(f"  Lade {manifest_tmp} -> http://{ip}/upload/{manifest_name}")
                                 http_code = http_upload_file(
                                     ip, manifest_tmp, manifest_name, 30,
@@ -355,6 +438,16 @@ def main() -> int:
 
 
 if __name__ == "__main__":
+    # Ohne stdout zeilengepuffert zu erzwingen, sammelt Python die Ausgabe
+    # blockweise, sobald stdout kein echtes Terminal ist (z.B. External Tool
+    # in der 4diac IDE, .bat-Aufruf) - die Fortschrittsmeldungen erscheinen
+    # dann erst in grossen Schueben oder gar erst am Ende, obwohl der Upload
+    # laengst laeuft (sieht aus wie Haengenbleiben, ist nur Pufferung).
+    try:
+        sys.stdout.reconfigure(line_buffering=True)
+    except (AttributeError, ValueError):
+        pass
+
     # Skript wird meist per Doppelklick gestartet (Windows-Konsolenfenster) -
     # ohne diese Pause schliesst sich das Fenster sofort und Warnungen/
     # Fehlermeldungen sind nie zu sehen. Greift bei JEDEM Ausstiegspunkt
@@ -363,5 +456,12 @@ if __name__ == "__main__":
     try:
         exit_code = main()
     finally:
-        input("\nFertig - Enter druecken zum Schliessen...")
+        # Ohne Eingabe (stdin < NUL im External-Tool-Aufruf) wirft input()
+        # sofort EOFError statt einfach durchzulaufen - das sah wie ein
+        # Absturz nach einem erfolgreichen Deploy aus, war aber nur diese
+        # Pause, die fuer den interaktiven Doppelklick-Start gedacht ist.
+        try:
+            input("\nFertig - Enter druecken zum Schliessen...")
+        except EOFError:
+            pass
     sys.exit(exit_code)
