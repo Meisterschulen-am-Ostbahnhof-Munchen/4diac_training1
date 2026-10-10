@@ -1,13 +1,12 @@
 #!/usr/bin/env python3
-"""Python-Portierung von make_libs_manifest.sh, als PARALLELE Implementierung
-zum Bash-Original zum Vergleich (Franz: Ergebnisse abwechselnd laufen lassen
-und auf Gleichheit pruefen). Erzeugt <programm>.libs.json rein lokal, kein
-Netzwerkzugriff.
+"""Erzeugt <programm>.libs.json rein lokal, kein Netzwerkzugriff -
+make_4diac_training1_deploy.py ist das Upload-Skript (braucht erreichbare
+Knoten). Ersetzt das fruehere make_libs_manifest.sh (Bash-Original entfernt,
+siehe Git-Historie Branch feature/elf-loader).
 
-Schreibt standardmaessig NICHT nach boot-files/test_AX_FORTE_PC_AX.libs.json
-(das wuerde die von der Bash-Version erzeugte Datei ueberschreiben), sondern
-nach boot-files/test_AX_FORTE_PC_AX.libs.python.json - mit --out <Pfad>
-konfigurierbar.
+Schreibt standardmaessig nach boot-files/<fboot-name>.libs.json - mit --out
+<Pfad> konfigurierbar (z.B. fuer einen Testlauf ohne die echte Datei zu
+ueberschreiben).
 """
 
 from __future__ import annotations
@@ -15,40 +14,8 @@ from __future__ import annotations
 import argparse
 from pathlib import Path
 
+from deploy_common import NODE_BASES, NODE_ORDER, VENTILSTEUERUNG_DIR, resolve_local_path
 from elf_libs_manifest_lib import NODE_ARCH, build_libs_manifest, resolve_required_libs
-
-VENTILSTEUERUNG_DIR = Path(__file__).resolve().parent
-
-# 1:1 aus deploy_common.sh uebernommen (nur die Daten, nicht das Bash-
-# resolve_local_path()-Stempel-Verhalten - fuer den Side-by-Side-Vergleich
-# reicht der einfache Repo-Pfad, da im Testbetrieb keine gestempelten
-# Varianten im Wurzelverzeichnis liegen).
-NODE_BASES = {
-    "192.168.178.55": ["test_AX_FORTE_PC_AX.fboot"],
-    # "<B-IP-noch-unbekannt>": ["test_B_FORTE_PC_B.fboot"],
-}
-REPO_PATHS = {
-    "test_AX_FORTE_PC_AX.fboot": "boot-files/test_AX_FORTE_PC_AX.fboot",
-    "test_B_FORTE_PC_B.fboot": "boot-files/test_B_FORTE_PC_B.fboot",
-}
-NODE_ORDER = ["192.168.178.55"]
-
-
-def resolve_local_path(base: str) -> Path | None:
-    """Analog zu resolve_local_path() in deploy_common.sh: zuerst gestempelte
-    Variante im Ventilsteuerung-Wurzelverzeichnis, dann unbestempelte
-    Variante dort, dann Repo-Fallback-Pfad."""
-    name, _, ext = base.rpartition(".")
-    stamped = sorted(VENTILSTEUERUNG_DIR.glob(f"{name}_*.{ext}"))
-    if stamped:
-        return stamped[0]
-    plain = VENTILSTEUERUNG_DIR / base
-    if plain.is_file():
-        return plain
-    repo = VENTILSTEUERUNG_DIR / REPO_PATHS.get(base, "")
-    if REPO_PATHS.get(base) and repo.is_file():
-        return repo
-    return None
 
 
 def main() -> int:
@@ -56,10 +23,7 @@ def main() -> int:
     parser.add_argument(
         "--out",
         default=None,
-        help=(
-            "Zielpfad fuer das Manifest (Default: boot-files/<fboot-name>.libs.python.json, "
-            "um die von der Bash-Version erzeugte Datei nicht zu ueberschreiben)."
-        ),
+        help="Zielpfad fuer das Manifest (Default: boot-files/<fboot-name>.libs.json).",
     )
     args = parser.parse_args()
 
@@ -93,7 +57,7 @@ def main() -> int:
         if args.out:
             out_path = Path(args.out)
         else:
-            out_path = VENTILSTEUERUNG_DIR / "boot-files" / f"{fboot_path.stem}.libs.python.json"
+            out_path = VENTILSTEUERUNG_DIR / "boot-files" / f"{fboot_path.stem}.libs.json"
 
         print(f"{fboot_base} ({ip}, {arch}): benoetigt {' '.join(required_libs)}")
         result = build_libs_manifest(arch, node_files, out_path, required_libs)

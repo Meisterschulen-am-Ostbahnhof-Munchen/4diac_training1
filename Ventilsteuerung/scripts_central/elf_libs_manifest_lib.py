@@ -1,13 +1,13 @@
 #!/usr/bin/env python3
-"""ELF-Libs-Manifest-Logik - Python-Portierung von elf_libs_manifest_lib.sh
-(Commit 10b540e53, Branch feature/elf-loader) als PARALLELE Implementierung
-zum Vergleich. Das Bash-Original bleibt die massgebliche Quelle - diese
-Datei wird nicht automatisch genutzt von make_libs_manifest.sh oder
-make_4diac_training1_deploy.sh.
+"""ELF-Libs-Manifest-Logik - urspruenglich als Python-Portierung von
+elf_libs_manifest_lib.sh (Commit 10b540e53, Branch feature/elf-loader) zum
+Vergleich entstanden, inzwischen die massgebliche Implementierung: genutzt
+von make_libs_manifest.py und make_4diac_training1_deploy.py.
 
 Format/Kanonisierung sind seit 2026-10-09 durch den Firmware-Code
 (elf_libs_loader, LOGIBUS_integration_datapanel feature/elf-loader)
-festgelegt. Siehe elf_libs_manifest_lib.sh fuer die ausfuehrliche
+festgelegt. Siehe die Git-Historie von elf_libs_manifest_lib.sh (Bash-
+Vorgaenger, Branch feature/elf-loader) fuer die ausfuehrliche
 Begruendung/Historie jeder einzelnen Tabelle unten - hier nur 1:1
 uebernommen, nicht neu hergeleitet.
 """
@@ -21,7 +21,7 @@ import xml.etree.ElementTree as ET
 from pathlib import Path
 from typing import Optional
 
-VENTILSTEUERUNG_DIR = Path(__file__).resolve().parent
+VENTILSTEUERUNG_DIR = Path(__file__).resolve().parent.parent
 
 # Architektur je Knoten - UNBESTAETIGTER PLATZHALTER (ausser 192.168.178.55).
 NODE_ARCH = {
