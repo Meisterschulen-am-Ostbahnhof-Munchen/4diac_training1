@@ -49,11 +49,13 @@ FORTE_ABI=3
 # 2026-10-10 (Franz, Bestandsaufnahme der 82 gebauten riscv32-ELFs): ALLE 39
 # Libs unten in LIB_VERSIONS sind bestaetigt echte ladbare Module, inkl.
 # "adapter" selbst und net_adapter - die fruehere Annahme "adapter bleibt fest
-# in die Firmware gelinkt" gilt NICHT mehr. Noch nicht fertig/kein ELF (laut
-# Franz u.a. sicherheitsbezogene Libs): SafeArithmetic, logiBUS_safety,
-# logiBUS_schieber, logiBUS_stations, core, events, net, system,
-# iec61131-3-bool, quarter - fuer deren Namensraeume bewusst KEIN
-# PREFIX_TO_LIB-Eintrag, bis auch dafuer ein ELF existiert.
+# in die Firmware gelinkt" gilt NICHT mehr. Noch nicht fertig, ELF folgt noch
+# (laut Franz u.a. sicherheitsbezogene Libs): SafeArithmetic, logiBUS_safety,
+# logiBUS_schieber. logiBUS_stations braucht dagegen GRUNDSAETZLICH KEIN ELF
+# (reine GlobalConstants, kein FORTE-Typecode) - das ist kein offener Punkt.
+# core, events, net, system, iec61131-3-bool, quarter bleiben Firmware-Basis
+# ohne eigenes ELF. Fuer alle diese Namensraeume bewusst KEIN
+# PREFIX_TO_LIB-Eintrag.
 declare -A PREFIX_TO_LIB=(
     ["OSCAT::Basic"]="OSCAT_Basic"
     ["OSCAT::Building"]="OSCAT_Building"
@@ -299,11 +301,14 @@ declare -A TYPE_NAME_TO_LIB=(
 # 2026-10-10 (Franz): alle 39 Libs unten haben ein gebautes riscv32-ELF unter
 # .lib/<Lib>*/elf/riscv32/ und sind bestaetigt echte ladbare Module (82 ELF-
 # Dateien insgesamt, manche Libs mehrfach ueber Git-Historie). Bewusst NICHT
-# eingetragen, weil noch kein ELF existiert: SafeArithmetic, logiBUS_safety,
-# logiBUS_schieber, logiBUS_stations (sowie die Firmware-Basis core, events,
-# net, system, iec61131-3-bool, quarter) - build_libs_manifest() ueberspringt
-# jeden Knoten, der einen dieser Namensraeume nutzt, bis auch dafuer ein ELF
-# gebaut ist.
+# eingetragen, weil noch kein ELF existiert (ELF folgt noch): SafeArithmetic,
+# logiBUS_safety, logiBUS_schieber. logiBUS_stations braucht dagegen
+# GRUNDSAETZLICH KEIN ELF (reine GlobalConstants, kein FORTE-Typecode) und
+# wird deshalb absichtlich nie eingetragen. Ebenfalls ohne eigenes ELF bleibt
+# die Firmware-Basis core, events, net, system, iec61131-3-bool, quarter.
+# build_libs_manifest() ueberspringt jeden Knoten, der einen dieser
+# Namensraeume nutzt, bis auch dafuer ein ELF gebaut ist (bzw. dauerhaft bei
+# logiBUS_stations/Firmware-Basis, da dort kein ELF vorgesehen ist).
 declare -A LIB_VERSIONS=(
     ["BlinkMarine"]="3.0.0"
     ["DataPanel"]="3.0.0"
