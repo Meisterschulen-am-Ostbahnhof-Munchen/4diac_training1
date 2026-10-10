@@ -32,6 +32,8 @@ max. 64 Libs) steht in `scripts_central/elf_libs_manifest_lib.py`.
 **Vorsicht bei echten Deploys:** `make_4diac_training1_deploy.py` laedt
 wirklich auf den Knoten hoch (kein Trockenlauf-Modus). Vor wiederholten
 Testlaeufen gegen den echten Knoten den freien Speicher im Blick behalten
-(`http://<ip>/` zeigt die Belegung) - ein fast volles LittleFS-Dateisystem
+(`http://<ip>/space/` zeigt die Belegung - seit Firmware-Commit b1cd09e7
+nicht mehr auf der Hauptseite, da die Berechnung die Dateiliste spuerbar
+verlangsamt hat) - ein fast volles LittleFS-Dateisystem
 kann bei weiteren Uploads korrumpieren und wird beim naechsten Boot
 automatisch neu formatiert (alle Dateien weg).
