@@ -46,17 +46,23 @@ FORTE_ABI=3
 # TYPE_NAME_TO_LIB (hat in resolve_required_libs() IMMER Vorrang vor dem
 # Praefix-Fallback hier).
 #
-# 2026-10-10 (Franz, Bestandsaufnahme der 82 gebauten riscv32-ELFs): ALLE 39
-# Libs unten in LIB_VERSIONS sind bestaetigt echte ladbare Module, inkl.
+# 2026-10-10 (Franz, Bestandsaufnahme der 82, dann 46 gebauten riscv32-ELFs):
+# ALLE Libs unten in LIB_VERSIONS sind bestaetigt echte ladbare Module, inkl.
 # "adapter" selbst und net_adapter - die fruehere Annahme "adapter bleibt fest
-# in die Firmware gelinkt" gilt NICHT mehr. Noch nicht fertig, ELF folgt noch
-# (laut Franz u.a. sicherheitsbezogene Libs): SafeArithmetic, logiBUS_safety,
-# logiBUS_schieber. logiBUS_stations braucht dagegen GRUNDSAETZLICH KEIN ELF
-# (reine GlobalConstants, kein FORTE-Typecode) - das ist kein offener Punkt.
-# core, events, net, system, iec61131-3-bool, quarter bleiben Firmware-Basis
-# ohne eigenes ELF. Fuer alle diese Namensraeume bewusst KEIN
+# in die Firmware gelinkt" gilt NICHT mehr. Nachtrag selben Tags: SafeArithmetic,
+# logiBUS_safety, logiBUS_schieber sind nachgezogen (ELF jetzt vorhanden,
+# urspruenglich als "kommt noch" angekuendigt), ebenso iec61131-3-bool und
+# quarter (vorher Firmware-Basis ohne ELF, jetzt auch gebaut).
+# logiBUS_stations braucht dagegen GRUNDSAETZLICH KEIN ELF (reine
+# GlobalConstants, kein FORTE-Typecode) - das ist kein offener Punkt, bleibt
+# dauerhaft aussen vor. core, events, net, system bleiben Firmware-Basis ohne
+# eigenes ELF. Fuer logiBUS_stations/core/events/net/system bewusst KEIN
 # PREFIX_TO_LIB-Eintrag.
 declare -A PREFIX_TO_LIB=(
+    ["BlinkMarine::io"]="BlinkMarine"
+    ["DataPanel::Status"]="DataPanel"
+    ["DataPanel::io"]="DataPanel"
+    ["Funk::io"]="Funk"
     ["OSCAT::Basic"]="OSCAT_Basic"
     ["OSCAT::Building"]="OSCAT_Building"
     ["OSCAT::Network"]="OSCAT_Network"
@@ -83,11 +89,14 @@ declare -A PREFIX_TO_LIB=(
     ["eclipse4diac::signalprocessing"]="signalprocessing"
     ["eclipse4diac::storage"]="logiBUS_storage"
     ["eclipse4diac::utils"]="utils"
+    ["SafeArithmetic::arithmetic"]="SafeArithmetic"
     ["iec61131::arithmetic"]="iec61131-3"
     ["iec61131::arrays"]="iec61131-3"
     ["iec61131::bistableElements"]="iec61131-3"
     ["iec61131::bitwiseOperators"]="iec61131-3"
+    ["iec61131::booleanOperators"]="iec61131-3-bool"
     ["iec61131::charString"]="iec61131-3"
+    ["iec61131::comparison"]="iec61131-3"
     ["iec61131::conversion"]="iec61131-3"
     ["iec61131::counters"]="iec61131-3"
     ["iec61131::edgeDetection"]="iec61131-3"
@@ -103,9 +112,11 @@ declare -A PREFIX_TO_LIB=(
     ["logiBUS::drives"]="logiBUS_utils"
     ["logiBUS::esp32"]="logiBUS_esp32"
     ["logiBUS::io"]="logiBUS_io"
+    ["logiBUS::safety"]="logiBUS_safety"
     ["logiBUS::signalprocessing"]="logiBUS_signalprocessing_adapter"
     ["logiBUS::storage"]="logiBUS_storage_esp32"
     ["logiBUS::utils"]="logiBUS_utils"
+    ["logiBUS::version"]="logiBUS_version"
 )
 
 # Exakter FBType-Name -> Lib-Name. Hat in resolve_required_libs() IMMER Vorrang
@@ -285,6 +296,7 @@ declare -A TYPE_NAME_TO_LIB=(
     ["sequence_T_08_AX"]="logiBUS_utils_adapter"
     ["sequence_T_08_loop_AX"]="logiBUS_utils_adapter"
     ["BOOLS_TO_QUARTERS"]="quarter"
+    ["BOOL_TO_QUARTER"]="quarter"
     ["E_SREN"]="quarter"
     ["QUARTERS_TO_BOOLS"]="quarter"
     ["QUARTER_TO_BOOL"]="quarter"
@@ -298,17 +310,18 @@ declare -A TYPE_NAME_TO_LIB=(
 # Lib-Version, die aktuell als ELF gebaut/erwartet wird. Quelle: die echten
 # MANIFEST.MF unter 4diacIDE-workspace/.lib/<Lib>*/MANIFEST.MF.
 #
-# 2026-10-10 (Franz): alle 39 Libs unten haben ein gebautes riscv32-ELF unter
-# .lib/<Lib>*/elf/riscv32/ und sind bestaetigt echte ladbare Module (82 ELF-
-# Dateien insgesamt, manche Libs mehrfach ueber Git-Historie). Bewusst NICHT
-# eingetragen, weil noch kein ELF existiert (ELF folgt noch): SafeArithmetic,
-# logiBUS_safety, logiBUS_schieber. logiBUS_stations braucht dagegen
-# GRUNDSAETZLICH KEIN ELF (reine GlobalConstants, kein FORTE-Typecode) und
-# wird deshalb absichtlich nie eingetragen. Ebenfalls ohne eigenes ELF bleibt
-# die Firmware-Basis core, events, net, system, iec61131-3-bool, quarter.
-# build_libs_manifest() ueberspringt jeden Knoten, der einen dieser
-# Namensraeume nutzt, bis auch dafuer ein ELF gebaut ist (bzw. dauerhaft bei
-# logiBUS_stations/Firmware-Basis, da dort kein ELF vorgesehen ist).
+# 2026-10-10 (Franz): alle Libs unten haben ein gebautes riscv32-ELF unter
+# .lib/<Lib>*/elf/riscv32/ und sind bestaetigt echte ladbare Module.
+# SafeArithmetic, logiBUS_safety, logiBUS_schieber (urspruenglich "kommt noch")
+# sowie iec61131-3-bool und quarter (urspruenglich Firmware-Basis ohne ELF)
+# sind noch am selben Tag nachgezogen worden, sobald ihr ELF vorlag.
+# logiBUS_stations braucht dagegen GRUNDSAETZLICH KEIN ELF (reine
+# GlobalConstants, kein FORTE-Typecode) und wird deshalb absichtlich nie
+# eingetragen. Ebenfalls ohne eigenes ELF bleibt die Firmware-Basis core,
+# events, net, system. build_libs_manifest() ueberspringt jeden Knoten, der
+# einen dieser Namensraeume nutzt, bis auch dafuer ein ELF gebaut ist (bzw.
+# dauerhaft bei logiBUS_stations/Firmware-Basis, da dort kein ELF vorgesehen
+# ist).
 declare -A LIB_VERSIONS=(
     ["BlinkMarine"]="3.0.0"
     ["DataPanel"]="3.0.0"
@@ -317,6 +330,7 @@ declare -A LIB_VERSIONS=(
     ["OSCAT_Building"]="0.1.0"
     ["OSCAT_Network"]="0.1.0"
     ["OSCAT_adapter"]="3.0.0"
+    ["SafeArithmetic"]="3.0.0"
     ["adapter"]="3.0.0"
     ["adapter_conversion"]="3.0.0"
     ["adapter_events"]="3.0.0"
@@ -325,6 +339,7 @@ declare -A LIB_VERSIONS=(
     ["adapter_types"]="3.0.0"
     ["convert"]="3.0.0"
     ["iec61131-3"]="3.0.0"
+    ["iec61131-3-bool"]="3.0.0"
     ["isobus_TC"]="3.0.0"
     ["isobus_UT"]="3.0.0"
     ["isobus_UT_adapter"]="3.0.0"
@@ -339,6 +354,8 @@ declare -A LIB_VERSIONS=(
     ["logiBUS_bosch"]="3.0.0"
     ["logiBUS_esp32"]="3.0.0"
     ["logiBUS_io"]="3.0.0"
+    ["logiBUS_safety"]="3.0.0"
+    ["logiBUS_schieber"]="3.0.0"
     ["logiBUS_signalprocessing"]="3.0.0"
     ["logiBUS_signalprocessing_adapter"]="3.0.0"
     ["logiBUS_storage"]="3.0.0"
@@ -347,6 +364,7 @@ declare -A LIB_VERSIONS=(
     ["logiBUS_utils_adapter"]="3.0.0"
     ["logiBUS_version"]="3.0.0"
     ["net_adapter"]="3.0.0"
+    ["quarter"]="3.0.0"
     ["rtevents"]="3.0.0"
     ["signalprocessing"]="3.0.0"
     ["utils"]="3.0.0"
@@ -359,14 +377,15 @@ declare -A LIB_VERSIONS=(
 # Nur Abhaengigkeiten auf andere Libs MIT eigenem LIB_VERSIONS-Eintrag stehen
 # hier (aus den echten <Required>-Listen der MANIFEST.MF gefiltert) - eine
 # Abhaengigkeit auf eine noch fest in die Firmware gelinkte/nicht gebaute Lib
-# (core, events, net, iec61131-3-bool, quarter, logiBUS_schieber) wird bewusst
-# NICHT aufgefuehrt, dafuer ist nichts zu laden.
+# (core, events, net, system) wird bewusst NICHT aufgefuehrt, dafuer ist
+# nichts zu laden.
 declare -A LIB_REQUIRES=(
     ["BlinkMarine"]="adapter_types:^3.0"
     ["DataPanel"]="adapter_types:^3.0"
     ["Funk"]="adapter_types:^3.0"
     ["OSCAT_adapter"]="OSCAT_Basic:^0.1 adapter:^3.0 adapter_conversion:^3.0 adapter_events:^3.0 adapter_iec61131-3:^3.0 adapter_types:^3.0"
     ["adapter"]="adapter_types:^3.0 iec61131-3:^3.0"
+    ["iec61131-3-bool"]="iec61131-3:^3.0"
     ["adapter_conversion"]="adapter_types:^3.0 iec61131-3:^3.0"
     ["adapter_events"]="adapter:^3.0 adapter_types:^3.0 iec61131-3:^3.0"
     ["adapter_iec61131-3"]="adapter_conversion:^3.0 adapter_events:^3.0 adapter_types:^3.0 iec61131-3:^3.0"
@@ -382,6 +401,8 @@ declare -A LIB_REQUIRES=(
     ["logiBUS_DI_CAN"]="adapter_types:^3.0"
     ["logiBUS_bosch"]="isobus_pgn:^3.0"
     ["logiBUS_io"]="adapter_types:^3.0"
+    ["logiBUS_safety"]="logiBUS_utils:^3.0"
+    ["logiBUS_schieber"]="isobus_UT:^3.0"
     ["logiBUS_signalprocessing"]="signalprocessing:^3.0"
     ["logiBUS_signalprocessing_adapter"]="adapter:^3.0 adapter_events:^3.0 adapter_types:^3.0 iec61131-3:^3.0 logiBUS_signalprocessing:^3.0 signalprocessing:^3.0"
     ["logiBUS_storage"]="adapter_types:^3.0"
@@ -401,6 +422,7 @@ declare -A LIB_DIR_NAME=(
     ["OSCAT_Building"]="OSCAT_Building-0.1.0"
     ["OSCAT_Network"]="OSCAT_Network-0.1.0"
     ["OSCAT_adapter"]="OSCAT_adapter-3.0.0"
+    ["SafeArithmetic"]="SafeArithmetic-3.0.0"
     ["adapter"]="adapter-3.0.0"
     ["adapter_conversion"]="adapter_conversion-3.0.0"
     ["adapter_events"]="adapter_events-3.0.0"
@@ -409,6 +431,7 @@ declare -A LIB_DIR_NAME=(
     ["adapter_types"]="adapter_types-3.0.0"
     ["convert"]="convert-3.0.0"
     ["iec61131-3"]="iec61131-3-3.0.0"
+    ["iec61131-3-bool"]="iec61131-3-bool-3.0.0"
     ["isobus_TC"]="isobus_TC-3.0.0"
     ["isobus_UT"]="isobus_UT-3.0.0"
     ["isobus_UT_adapter"]="isobus_UT_adapter-3.0.0"
@@ -423,6 +446,8 @@ declare -A LIB_DIR_NAME=(
     ["logiBUS_bosch"]="logiBUS_bosch-3.0.0"
     ["logiBUS_esp32"]="logiBUS_esp32-3.0.0"
     ["logiBUS_io"]="logiBUS_io-3.0.0"
+    ["logiBUS_safety"]="logiBUS_safety-3.0.0"
+    ["logiBUS_schieber"]="logiBUS_schieber-3.0.0"
     ["logiBUS_signalprocessing"]="logiBUS_signalprocessing-3.0.0"
     ["logiBUS_signalprocessing_adapter"]="logiBUS_signalprocessing_adapter-3.0.0"
     ["logiBUS_storage"]="logiBUS_storage-3.0.0"
@@ -431,6 +456,7 @@ declare -A LIB_DIR_NAME=(
     ["logiBUS_utils_adapter"]="logiBUS_utils_adapter-3.0.0"
     ["logiBUS_version"]="logiBUS_version-3.0.0"
     ["net_adapter"]="net_adapter-3.0.0"
+    ["quarter"]="quarter-3.0.0"
     ["rtevents"]="rtevents-3.0.0"
     ["signalprocessing"]="signalprocessing-3.0.0"
     ["utils"]="utils-3.0.0"
