@@ -374,8 +374,13 @@ LIB_DIR_NAME = {
 
 ELF_DIR = "elf-libs"
 
-# Firmware-Limits (siehe elf_libs_manifest_lib.sh fuer Historie/Begruendung).
-MAX_LIBS = 16
+# Firmware-Limits. Quelle: Application/components/elf_libs_loader/elf_libs_loader.c
+# (Repo LOGIBUS_integration_datapanel, Commit 554f77b75 "elf_libs loader: up to
+# 8 requires per library and 64 libraries, library table in PSRAM", 2026-10-10)
+# + docs/elf_libs_manifest.md dort, von ELFLOADER-Session per Cross-Session-
+# Nachricht bestaetigt und von Franz hier direkt im Code gegengeprueft - MAX_LIBS
+# war hier noch faelschlich 16 (laut Quelle veralteter Wert, vor Commit 554f77b75).
+MAX_LIBS = 64
 MAX_LIBS_PLUS_FILES = 64
 MAX_REQ = 8
 MAX_MANIFEST_BYTES = 65536
