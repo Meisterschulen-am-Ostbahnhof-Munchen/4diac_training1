@@ -23,22 +23,24 @@
 		</Plugs>
 	</SubAppInterfaceList>
 	<SubAppNetwork>
-		<FB Name="AX_SUBSCRIBE_1" Type="adapter::net::AR_SUBSCRIBE_1" x="-7300" y="-1400">
+		<FB Name="AX_SUBSCRIBE_1" Type="adapter::net::AR_SUBSCRIBE_1" x="-8600" y="-1400">
 			<Parameter Name="QI" Value="TRUE"/>
 		</FB>
-		<FB Name="AX_PUBLISH_1" Type="adapter::net::AR_PUBLISH_1" x="-2700" y="-1500">
+		<FB Name="AX_PUBLISH_1" Type="adapter::net::AR_PUBLISH_1" x="-1800" y="-1600">
 			<Parameter Name="QI" Value="TRUE"/>
 		</FB>
-		<FB Name="INI_AR" Type="eclipse4diac::storage::INI_AR" x="-4800" y="-1600">
+		<FB Name="INI_AR" Type="eclipse4diac::storage::INI_AR" x="-6100" y="-1600">
 			<Parameter Name="QI" Value="TRUE"/>
 			<Parameter Name="SETM" Value="FALSE"/>
 		</FB>
-		<FB Name="Sec_To_Time" Type="adapter::iec61131::arithmetic::AR_MULTIME" x="-4800" y="-600">
+		<FB Name="Sec_To_Time" Type="adapter::iec61131::arithmetic::AR_MULTIME" x="-1800" y="-300">
 			<Parameter Name="IN1" Value="T#1s"/>
+		</FB>
+		<FB Name="AR_SPLIT_2" Type="adapter::events::unidirectional::AR_SPLIT_2" x="-4300" y="-300">
 		</FB>
 		<EventConnections>
 			<Connection Source="AX_SUBSCRIBE_1.INITO" Destination="INI_AR.INIT" dx1="780"/>
-			<Connection Source="INI_AR.INITO" Destination="AX_PUBLISH_1.INIT" dx1="493.33"/>
+			<Connection Source="INI_AR.INITO" Destination="AX_PUBLISH_1.INIT"/>
 		</EventConnections>
 		<DataConnections>
 			<Connection Source="SECTION" Destination="INI_AR.SECTION" dx1="760">
@@ -59,9 +61,10 @@
 		</DataConnections>
 		<AdapterConnections>
 			<Connection Source="AX_SUBSCRIBE_1.OUT" Destination="INI_AR.AR_IN" dx1="780"/>
-			<Connection Source="INI_AR.AR_OUT" Destination="AX_PUBLISH_1.IN" dx1="493.33"/>
-			<Connection Source="INI_AR.AR_OUT" Destination="Sec_To_Time.IN2" dx1="493.33"/>
+			<Connection Source="AR_SPLIT_2.OUT2" Destination="Sec_To_Time.IN2" dx1="493.33"/>
 			<Connection Source="Sec_To_Time.OUT" Destination="OUT" dx1="493.33"/>
+			<Connection Source="AR_SPLIT_2.OUT1" Destination="AX_PUBLISH_1.IN" dx1="873.33"/>
+			<Connection Source="INI_AR.AR_OUT" Destination="AR_SPLIT_2.IN" dx1="366.67"/>
 		</AdapterConnections>
 	</SubAppNetwork>
 </SubAppType>
