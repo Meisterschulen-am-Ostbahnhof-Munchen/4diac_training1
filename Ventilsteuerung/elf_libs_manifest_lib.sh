@@ -443,20 +443,23 @@ declare -A LIB_DIR_NAME=(
 ELF_DIR="elf-libs"
 
 sha256_of() {
-    local f="$1"
+    local f="$1" out
     if command -v sha256sum >/dev/null 2>&1; then
-        sha256sum "$f" | awk '{print $1}'
+        out="$(sha256sum "$f")"
     else
-        shasum -a 256 "$f" | awk '{print $1}'
+        out="$(shasum -a 256 "$f")"
     fi
+    echo "${out%% *}"
 }
 
 sha256_stdin() {
+    local out
     if command -v sha256sum >/dev/null 2>&1; then
-        sha256sum | awk '{print $1}'
+        out="$(sha256sum)"
     else
-        shasum -a 256 | awk '{print $1}'
+        out="$(shasum -a 256)"
     fi
+    echo "${out%% *}"
 }
 
 # Liest die benoetigten Lib-Namen aus einem .fboot: zu jedem Type="..."
@@ -517,11 +520,24 @@ resolve_required_libs() {
 # MANIFEST.MF). Leer, wenn die Datei fehlt oder nicht geparst werden kann -
 # dann wird NICHT geprueft (siehe Aufrufer), statt faelschlich abzubrechen.
 mf_version_of() {
-    local lib="$1" dir mf
+    local lib="$1" dir mf line in_product=0 ver=""
     dir="${LIB_DIR_NAME[$lib]:-$lib}"
     mf="4diacIDE-workspace/.lib/${dir}/MANIFEST.MF"
     [ -f "$mf" ] || { echo ""; return; }
-    grep -A1 '<Product ' "$mf" | grep -oE 'Version="[^"]+"' | tail -1 | sed -E 's/Version="([^"]+)"/\1/'
+    # Reine Bash-read-Schleife statt grep|grep|tail|sed-Pipeline (4 Prozesse
+    # pro Aufruf) - gleicher Performance-Grund wie bei lib_requires_of() oben.
+    while IFS= read -r line; do
+        if [ "$in_product" = 0 ]; then
+            [[ "$line" == *"<Product "* ]] && in_product=1
+            continue
+        fi
+        if [[ "$line" == *"Version=\""* ]]; then
+            ver="${line#*Version=\"}"
+            ver="${ver%%\"*}"
+        fi
+        break
+    done < "$mf"
+    echo "$ver"
 }
 
 # Liest die "requires"-Liste einer Lib ("Name:Range", Leerzeichen-getrennt)
@@ -532,39 +548,52 @@ mf_version_of() {
 # Abhaengigkeiten auf Firmware-Basis-Libs (core, events, net, system) ohne
 # eigenes ELF gibt es dafuer naturgemaess nichts zu laden. Range ist
 # "^Major.Minor" der in MANIFEST.MF fuer diese Abhaengigkeit deklarierten
-# Version. Ergebnis wird pro Lib gecacht (gleiche MANIFEST.MF wird sonst bei
-# jedem .fboot/jeder transitiven Erweiterung erneut geparst).
+# Version.
+#
+# Alle Libs werden EINMAL beim Sourcen dieser Datei in _LIB_REQUIRES_CACHE
+# vorberechnet (_fill_lib_requires_cache(), direkter Aufruf, KEINE
+# Command-Substitution) - lib_requires_of() liest danach nur noch daraus.
+# Grund: jeder Aufrufer von lib_requires_of() nutzt zwangslaeufig $(...), um
+# an den Rueckgabewert zu kommen, und $(...) laeuft IMMER in einer Subshell -
+# ein Cache-Schreibzugriff innerhalb der Funktion selbst waere also nach
+# jedem einzelnen Aufruf sofort wieder verloren (genau das war der Bug: die
+# MANIFEST.MF wurde trotz "Cache" bei jedem Aufruf neu geparst, dutzende
+# grep-Prozesse pro Lauf, mitverantwortlich fuer die anfangs 41s statt <2s).
 declare -A _LIB_REQUIRES_CACHE=()
+_fill_lib_requires_cache() {
+    local lib dir mf line name ver major minor
+    local -a result
+    for lib in "${!LIB_VERSIONS[@]}"; do
+        result=()
+        dir="${LIB_DIR_NAME[$lib]:-$lib}"
+        mf="4diacIDE-workspace/.lib/${dir}/MANIFEST.MF"
+        if [ -f "$mf" ]; then
+            # Reine Bash-Parameterexpansion statt sed-Subshells pro Zeile:
+            # auf Windows/Git Bash kostet jeder Prozess-Start spuerbar Zeit.
+            while IFS= read -r line; do
+                name="${line#*SymbolicName=\"}"; name="${name%%\"*}"
+                ver="${line#*Version=\"}"; ver="${ver%%\"*}"
+                [ -n "${LIB_VERSIONS[$name]:-}" ] || continue
+                major="${ver%%.*}"
+                minor="${ver#*.}"
+                minor="${minor%%.*}"
+                result+=("${name}:^${major}.${minor}")
+            done < <(grep -oE '<Required SymbolicName="[^"]+" Version="[^"]+"' "$mf")
+        fi
+        # Firmware-Limit MAX_REQ=8 pro Lib (frueher 4, siehe historischer
+        # Fehler "invalid requires of OSCAT_adapter" - OSCAT_adapter hat
+        # bereits 6 requires). Nur eine Warnung hier (build_libs_manifest()
+        # macht daraus einen harten Abbruch, siehe dort).
+        if [ "${#result[@]}" -gt 8 ]; then
+            echo "  WARNUNG: Lib '${lib}' hat ${#result[@]} requires, Firmware erlaubt max. 8 (MAX_REQ)." >&2
+        fi
+        _LIB_REQUIRES_CACHE[$lib]="${result[*]}"
+    done
+}
+_fill_lib_requires_cache
+
 lib_requires_of() {
-    local lib="$1" dir mf line name ver major minor
-    local -a result=()
-    if [ -n "${_LIB_REQUIRES_CACHE[$lib]+x}" ]; then
-        printf '%s\n' "${_LIB_REQUIRES_CACHE[$lib]}"
-        return
-    fi
-    dir="${LIB_DIR_NAME[$lib]:-$lib}"
-    mf="4diacIDE-workspace/.lib/${dir}/MANIFEST.MF"
-    if [ -f "$mf" ]; then
-        while IFS= read -r line; do
-            name="$(sed -E 's/.*SymbolicName="([^"]+)".*/\1/' <<<"$line")"
-            ver="$(sed -E 's/.*Version="([^"]+)".*/\1/' <<<"$line")"
-            [ -n "${LIB_VERSIONS[$name]:-}" ] || continue
-            major="${ver%%.*}"
-            minor="${ver#*.}"
-            minor="${minor%%.*}"
-            result+=("${name}:^${major}.${minor}")
-        done < <(grep -oE '<Required SymbolicName="[^"]+" Version="[^"]+"' "$mf")
-    fi
-    # Firmware-Limit MAX_REQ=8 pro Lib (frueher 4, siehe historischer Fehler
-    # "invalid requires of OSCAT_adapter" - OSCAT_adapter hat bereits 6
-    # requires). Nur eine Warnung hier (build_libs_manifest() macht daraus
-    # einen harten Abbruch, siehe dort) - lib_requires_of() wird auch aus der
-    # reinen Namensaufloesung heraus aufgerufen, wo ein Abbruch zu frueh waere.
-    if [ "${#result[@]}" -gt 8 ]; then
-        echo "  WARNUNG: Lib '${lib}' hat ${#result[@]} requires, Firmware erlaubt max. 8 (MAX_REQ)." >&2
-    fi
-    _LIB_REQUIRES_CACHE[$lib]="${result[*]}"
-    printf '%s\n' "${result[*]}"
+    printf '%s\n' "${_LIB_REQUIRES_CACHE[$1]:-}"
 }
 
 # Findet den lokalen Pfad eines Lib-ELFs: ELF_DIR flach, sonst Repo-Pfad
@@ -645,8 +674,8 @@ build_libs_manifest() {
         elf_path="${elf_path_of[$lib]}"
         version="${LIB_VERSIONS[$lib]}"
         local fname size sha requires_json="[]" req name range first=1
-        fname="$(basename "$elf_path")"
-        size="$(wc -c < "$elf_path" | tr -d ' ')"
+        fname="${elf_path##*/}"
+        size="$(wc -c < "$elf_path")"
         sha="$(sha256_of "$elf_path")"
         canon_lines+=("${fname}:${sha}")
 
@@ -665,8 +694,8 @@ build_libs_manifest() {
     local -a file_json_entries=()
     local f fname size sha
     for f in "${_files[@]}"; do
-        fname="$(basename "$f")"
-        size="$(wc -c < "$f" | tr -d ' ')"
+        fname="${f##*/}"
+        size="$(wc -c < "$f")"
         sha="$(sha256_of "$f")"
         canon_lines+=("${fname}:${sha}")
         file_json_entries+=("{\"file\":\"${fname}\",\"size\":${size},\"sha256\":\"${sha}\"}")
@@ -713,7 +742,7 @@ build_libs_manifest() {
     fi
 
     local manifest_size
-    manifest_size="$(wc -c < "$out_path" | tr -d ' ')"
+    manifest_size="$(wc -c < "$out_path")"
     if [ "$manifest_size" -gt 65536 ]; then
         echo "  WARNUNG: Manifest ${manifest_size} Bytes > 64 KB (Firmware-Limit) - uebersprungen."
         rm -f "$out_path"
