@@ -29,13 +29,50 @@ from pathlib import Path
 from typing import Optional
 
 from deploy_common import NODE_BASES, NODE_ORDER, REPO_PATHS, resolve_local_path
-from elf_libs_manifest_lib import NODE_ARCH, build_libs_manifest, resolve_required_libs
+from elf_libs_manifest_lib import NODE_ARCH, build_libs_manifest, resolve_required_libs, sha256_of
 
 # Generell eingeschaltet - siehe elf_libs_manifest_lib.py/.sh fuer das
 # Firmware-Verhalten bei fehlendem/ungueltigem Manifest (existiert eine
 # *.libs.json und ist sie nicht ladbar, startet FORTE NICHT, Netzwerk/
 # Dateiserver bleiben aktiv).
 ENABLE_ELF_LIBS = True
+
+# 2026-10-10: Ein fehlendes logiBUS_utils auf Krauternter-STG1 nach einem
+# echten ENABLE_ELF_LIBS=True-Deploy stammte NICHT von einem zusaetzlichen
+# Vorab-Check, sondern von einem Firmware-Bug im ALTEN Upload-Handler
+# (Zielverzeichnis kam aus dem zuletzt in der Weboberflaeche angezeigten
+# Ordner, nach einem Boot ohne Browser-Zugriff leer -> "Failed to create
+# file", aber trotzdem HTTP 303 "Erfolg" zurueckgemeldet) - siehe
+# Cross-Session-Austausch mit ELFLOADER. Mit ELFLOADER abgestimmtes neues
+# Protokoll (Firmware-seitig noch nicht gebaut/geflasht):
+#   - GET /sha256/ (ohne Pfad) liefert ALLE bekannten Hashes in einem
+#     Request ("<hash>  <pfad>" je Zeile) - wird EINMAL pro Knoten geholt,
+#     nicht pro Datei.
+#   - GET /sha256/<pfad> verifiziert NACH einem Upload, ob die Datei
+#     wirklich angekommen ist - deckt genau den 303-aber-nicht-gespeichert-
+#     Fall auf.
+# Auto-Erkennung: antwortet GET /sha256/ mit 200, gilt der Knoten als
+# "sha256-faehig" (neue Firmware) und bekommt den vollen Skip+Verify-Ablauf;
+# jede andere Antwort (404 = alte Firmware, Verbindungsfehler) schaltet
+# BEIDES komplett ab - laeuft dann exakt wie vor dieser Erweiterung.
+_SHA256_LISTING_RE = re.compile(r'^([0-9a-f]{64})\s+(\S+)$', re.MULTILINE)
+
+
+def http_remote_sha256_listing(ip: str, timeout: float = 10) -> Optional[dict[str, str]]:
+    """GET /sha256/ - liefert alle bekannten (Pfad -> Hash)-Paare in einem
+    Request. None wenn die neue Firmware (noch) nicht vorhanden ist (Status
+    != 200, Verbindungsfehler) - dann ist der Knoten NICHT sha256-faehig,
+    auch wenn er zufaellig gar keine Dateien hat (leeres dict waere sonst
+    nicht von "Firmware unterstuetzt es nicht" zu unterscheiden)."""
+    try:
+        status, body = _http(ip, "GET", "/sha256/", timeout)
+        if status != 200:
+            return None
+        text = body.decode("ascii", errors="ignore")
+        return {path: h.lower() for h, path in _SHA256_LISTING_RE.findall(text)}
+    except OSError:
+        return None
+
 
 _FBOOT_HREF_RE = re.compile(r'href="/([^"]*\.fboot)"')
 _ELF_OR_MANIFEST_HREF_RE = re.compile(r'href="/([^"]*\.(?:elf|libs\.json))"')
@@ -91,19 +128,63 @@ def http_delete(ip: str, name: str, timeout: float = 10) -> None:
         pass
 
 
-def http_upload_file(ip: str, local_path: Path, remote_name: str, timeout: float) -> str:
+_SHA256_RE = re.compile(r'^[0-9a-f]{64}$')
+
+
+def http_remote_sha256(ip: str, remote_name: str, timeout: float = 5) -> Optional[str]:
+    """GET /sha256/<remote_name> - optionale Firmware-Erweiterung (Stand
+    2026-10-10: noch nicht gebaut, mit ELFLOADER-Session abgestimmt), die die
+    SHA256 einer bereits vorhandenen Datei zurueckgibt, um unveraenderte
+    ELF-Uploads einzusparen. None bei JEDEM Fehler (Endpunkt existiert noch
+    nicht -> 404, Datei fehlt, falsche Firmware, Verbindungsfehler) - der
+    Aufrufer laedt dann einfach wie bisher hoch, keine Fehlerbehandlung
+    noetig, kein Verhaltensunterschied zu vorher."""
+    try:
+        status, body = _http(ip, "GET", f"/sha256/{remote_name}", timeout)
+        if status != 200:
+            return None
+        text = body.decode("ascii", errors="ignore").strip().lower()
+        return text if _SHA256_RE.match(text) else None
+    except OSError:
+        return None
+
+
+def http_upload_file(
+    ip: str,
+    local_path: Path,
+    remote_name: str,
+    timeout: float,
+    local_sha256: Optional[str] = None,
+    remote_hashes: Optional[dict[str, str]] = None,
+    verify_after_upload: bool = False,
+) -> str:
     """POST /upload/<remote_name> mit dem rohen Binaerinhalt von local_path,
     OHNE Redirects zu folgen (http.client folgt nie automatisch, wie curl
-    ohne -L). Gibt den HTTP-Status als String zurueck ("303" = Erfolg, der
-    Upload-Handler antwortet damit statt mit "200"), "000" bei jedem Fehler
-    (Datei nicht lesbar, Verbindungsfehler, Timeout - wie curl ... || echo
-    "000" im Original)."""
+    ohne -L). Gibt zurueck:
+    - "SKIP": remote_hashes[remote_name] == local_sha256 (aus einem vorher
+      per http_remote_sha256_listing() geholten Listing) - Datei liegt
+      bereits unveraendert vor, kein Upload noetig.
+    - "VERIFY_FAILED": Upload wurde mit HTTP 303 quittiert, aber
+      verify_after_upload ist gesetzt und die anschliessende
+      http_remote_sha256()-Pruefung zeigt einen abweichenden/fehlenden Hash -
+      die Firmware hat "Erfolg" gemeldet, obwohl die Datei nicht (korrekt)
+      gespeichert wurde.
+    - den HTTP-Status als String sonst ("303" = echter, verifizierter
+      Erfolg), "000" bei jedem Verbindungsfehler/nicht lesbarer Datei.
+    Alle neuen Parameter sind optional, damit alte Aufrufer unveraendert
+    funktionieren (kein lokaler Hash -> kein Skip, keine Verifikation)."""
+    if remote_hashes is not None and local_sha256 is not None and remote_hashes.get(remote_name) == local_sha256:
+        return "SKIP"
     try:
         data = local_path.read_bytes()
         status, _body = _http(ip, "POST", f"/upload/{remote_name}", timeout, body=data)
-        return str(status)
     except OSError:
         return "000"
+    if status == 303 and verify_after_upload and local_sha256 is not None:
+        verified = http_remote_sha256(ip, remote_name)
+        if verified != local_sha256:
+            return "VERIFY_FAILED"
+    return str(status)
 
 
 def main() -> int:
@@ -136,6 +217,11 @@ def main() -> int:
         node_local_files: list[Path] = []
         node_fboot_file: Optional[Path] = None
 
+        remote_hashes = http_remote_sha256_listing(ip)
+        sha256_capable = remote_hashes is not None
+        if remote_hashes is None:
+            remote_hashes = {}
+
         for base in NODE_BASES.get(ip, []):
             local_file = resolve_local_path(base)
             assert local_file is not None  # durch die MISSING-Pruefung oben ausgeschlossen
@@ -154,13 +240,22 @@ def main() -> int:
                         print(f"  Entferne alten Bootfile-Kandidaten: {existing}")
                         http_delete(ip, existing)
 
-            print(f"  Lade {local_file} -> http://{ip}/upload/{remote_name}")
-            http_code = http_upload_file(ip, local_file, remote_name, 30)
-            if http_code == "303":
-                print(f"  OK (HTTP {http_code})")
-            else:
-                print(f"  WARNUNG: Upload fehlgeschlagen (HTTP {http_code})")
+            http_code = http_upload_file(
+                ip, local_file, remote_name, 30,
+                sha256_of(local_file), remote_hashes, sha256_capable,
+            )
+            if http_code == "SKIP":
+                print(f"  {local_file} -> {remote_name}: unveraendert (Hash stimmt), Upload uebersprungen")
+            elif http_code == "VERIFY_FAILED":
+                print(f"  FEHLER: {local_file} -> {remote_name}: Upload mit HTTP 303 quittiert, Datei laut Geraet aber nicht/falsch gespeichert!")
                 node_ok = False
+            else:
+                print(f"  Lade {local_file} -> http://{ip}/upload/{remote_name}")
+                if http_code == "303":
+                    print(f"  OK (HTTP {http_code})")
+                else:
+                    print(f"  WARNUNG: Upload fehlgeschlagen (HTTP {http_code})")
+                    node_ok = False
 
         # ENTWURF/EXPERIMENTAL (Standard AN): ELFs + Libs-Manifest zusaetzlich
         # zum fboot hochladen. Fehlt lokal auch nur ein benoetigtes ELF, wird
@@ -190,25 +285,38 @@ def main() -> int:
                             elf_ok = True
                             for elf_path in result.elf_paths:
                                 elf_name = elf_path.name
-                                print(f"  Lade {elf_path} -> http://{ip}/upload/{elf_name}")
-                                http_code = http_upload_file(ip, elf_path, elf_name, 60)
-                                if http_code == "303":
-                                    print(f"  OK (HTTP {http_code})")
-                                else:
-                                    print(f"  WARNUNG: ELF-Upload fehlgeschlagen (HTTP {http_code})")
+                                http_code = http_upload_file(
+                                    ip, elf_path, elf_name, 60,
+                                    sha256_of(elf_path), remote_hashes, sha256_capable,
+                                )
+                                if http_code == "SKIP":
+                                    print(f"  {elf_path} -> {elf_name}: unveraendert (Hash stimmt), Upload uebersprungen")
+                                elif http_code == "VERIFY_FAILED":
+                                    print(f"  FEHLER: {elf_path} -> {elf_name}: Upload mit HTTP 303 quittiert, Datei laut Geraet aber nicht/falsch gespeichert!")
                                     elf_ok = False
+                                else:
+                                    print(f"  Lade {elf_path} -> http://{ip}/upload/{elf_name}")
+                                    if http_code == "303":
+                                        print(f"  OK (HTTP {http_code})")
+                                    else:
+                                        print(f"  WARNUNG: ELF-Upload fehlgeschlagen (HTTP {http_code})")
+                                        elf_ok = False
 
                             # Manifest bewusst ZULETZT hochladen: fehlt es,
                             # laedt die Firmware keine Lib - ein
                             # abgebrochener Upload ist so erkennbar.
                             if elf_ok:
                                 print(f"  Lade {manifest_tmp} -> http://{ip}/upload/{manifest_name}")
-                                http_code = http_upload_file(ip, manifest_tmp, manifest_name, 30)
+                                http_code = http_upload_file(
+                                    ip, manifest_tmp, manifest_name, 30,
+                                    sha256_of(manifest_tmp), None, sha256_capable,
+                                )
                                 if http_code == "303":
                                     print(f"  OK (HTTP {http_code})")
                                 else:
+                                    reason = "Datei laut Geraet nicht/falsch gespeichert" if http_code == "VERIFY_FAILED" else f"HTTP {http_code}"
                                     print(
-                                        f"  WARNUNG: Manifest-Upload fehlgeschlagen (HTTP {http_code}) - "
+                                        f"  WARNUNG: Manifest-Upload fehlgeschlagen ({reason}) - "
                                         "Libs auf dem Knoten sind damit unvollstaendig/inkonsistent.",
                                     )
                                     node_ok = False

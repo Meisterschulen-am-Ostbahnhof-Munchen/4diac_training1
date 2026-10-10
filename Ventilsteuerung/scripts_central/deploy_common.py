@@ -14,7 +14,16 @@ from __future__ import annotations
 from pathlib import Path
 from typing import Optional
 
-VENTILSTEUERUNG_DIR = Path(__file__).resolve().parent.parent
+# Im Repo liegt dieses Modul unter Ventilsteuerung/scripts_central/ (2 Ebenen
+# runter von Ventilsteuerung). training1 hat (anders als Krauternter) keinen
+# flachen Release-Ordner, die Erkennung ist hier also nie wirklich gefordert -
+# wird trotzdem 1:1 mitgefuehrt, damit beide Repos dieselbe Logik behalten
+# (siehe elf_libs_manifest_lib.py fuer die Begruendung).
+_SCRIPT_DIR = Path(__file__).resolve().parent
+if (_SCRIPT_DIR.parent / "4diacIDE-workspace").is_dir():
+    VENTILSTEUERUNG_DIR = _SCRIPT_DIR.parent
+else:
+    VENTILSTEUERUNG_DIR = _SCRIPT_DIR
 
 NODE_BASES: dict[str, list[str]] = {
     "192.168.178.55": ["test_AX_FORTE_PC_AX.fboot"],
