@@ -34,12 +34,223 @@ FORTE_ABI=3
 # gemeinsamen Namensraum herausgeloest wurden (z.B. "adapter::net" ->
 # net_adapter, waehrend "adapter" selbst fest in der Firmware bleibt - siehe
 # resolve_required_libs()).
+#
+# WICHTIG (2026-10-10, Bestandsaufnahme ueber alle 53 .lib/*/MANIFEST.MF +
+# CompilerInfo/packageName der echten .fbt-Dateien, nach den isobus_UT_io_adapter/
+# isobus_signalprocessing_adapter-Splits): mehrere 2-Segment-Praefixe werden von
+# MEHR ALS EINER Lib gleichzeitig benutzt, der Praefix allein genuegt dort NICHT
+# zur Zuordnung - am kritischsten "isobus::UT": isobus_UT, isobus_UT_adapter,
+# isobus_UT_io, isobus_UT_io_adapter, isobus_signalprocessing UND
+# isobus_signalprocessing_adapter liegen ALLE unter packageName="isobus::UT::...".
+# PREFIX_TO_LIB traegt fuer diese Faelle nur die mengenmaessig groesste/
+# "Default"-Lib ein, die echten Ausnahmen stehen exakt per Typname in
+# TYPE_NAME_TO_LIB (hat in resolve_required_libs() IMMER Vorrang vor dem
+# Praefix-Fallback hier).
 declare -A PREFIX_TO_LIB=(
     ["OSCAT::Basic"]="OSCAT_Basic"
     ["OSCAT::Building"]="OSCAT_Building"
     ["OSCAT::Network"]="OSCAT_Network"
     ["OSCAT_adapter"]="OSCAT_adapter"
     ["adapter::net"]="net_adapter"
+    ["adapter::conversion"]="adapter_conversion"
+    ["adapter::events"]="adapter_events"
+    ["iec61131::selection"]="iec61131-3"
+    ["isobus::UT"]="isobus_UT"
+    ["isobus::tecu"]="isobus_tecu"
+    ["logiBUS::io"]="logiBUS_io"
+    ["logiBUS::signalprocessing"]="logiBUS_signalprocessing_adapter"
+    ["logiBUS::utils"]="logiBUS_utils"
+)
+
+# Exakter FBType-Name -> Lib-Name. Hat in resolve_required_libs() IMMER Vorrang
+# vor PREFIX_TO_LIB. Noetig fuer jeden der oben genannten mehrdeutigen
+# Praefixe: jeder Typ, der NICHT in der jeweiligen PREFIX_TO_LIB-Default-Lib
+# liegt, muss hier namentlich stehen. FBType-Namen sind projektweit eindeutig
+# (einzige bekannte Ausnahme: der ungenutzte Platzhalter-Typ "dummy" in
+# OSCAT_Building/OSCAT_Network).
+#
+# isobus::UT::Q ist der dringendste Fall: Q_NumericValue_PHYSA (->
+# isobus_UT_adapter) UND NumericValue_PHYSA (-> isobus_UT_io_adapter, Praefix
+# isobus::UT::io) werden beide vom bereits live auf 192.168.178.55 laufenden
+# boot-files/test_AX_FORTE_PC_AX.fboot benutzt. Vor diesem Eintrag war das ueber
+# PREFIX_TO_LIB GAR NICHT aufloesbar (stilles Fallenlassen, kein Fehler/keine
+# Warnung). Da isobus_UT_adapter/isobus_UT_io_adapter noch keinen
+# LIB_VERSIONS-Eintrag haben, meldet build_libs_manifest() das jetzt korrekt
+# als WARNUNG+Abbruch fuer diesen Knoten, statt ein Manifest zu erzeugen, dem
+# diese beiden Libs fehlen. Vor ENABLE_ELF_LIBS=1 fuer diesen Knoten mit Franz
+# klaeren, ob isobus_UT_adapter/isobus_UT_io_adapter inzwischen echte ladbare
+# Module sind (dann LIB_VERSIONS/LIB_REQUIRES/LIB_DIR_NAME ergaenzen) oder
+# weiterhin wie "adapter" fest in die Firmware gelinkt bleiben (dann hier aus
+# TYPE_NAME_TO_LIB UND aus dem betroffenen .fboot-Required wieder entfernen).
+declare -A TYPE_NAME_TO_LIB=(
+    # adapter::conversion: Default adapter_conversion, Ausnahme logiBUS_utils_adapter
+    ["AQ_TO_AX"]="logiBUS_utils_adapter"
+    ["AX_TO_AQ"]="logiBUS_utils_adapter"
+    # adapter::events: Default adapter_events, Ausnahme logiBUS_signalprocessing_adapter (*_D_FF_HYS-Familie)
+    ["ADI_D_FF_HYS"]="logiBUS_signalprocessing_adapter"
+    ["ADI_D_FF_HYS_TMIN"]="logiBUS_signalprocessing_adapter"
+    ["AI_D_FF_HYS"]="logiBUS_signalprocessing_adapter"
+    ["AI_D_FF_HYS_TMIN"]="logiBUS_signalprocessing_adapter"
+    ["ALI_D_FF_HYS"]="logiBUS_signalprocessing_adapter"
+    ["ALI_D_FF_HYS_TMIN"]="logiBUS_signalprocessing_adapter"
+    ["ALR_D_FF_HYS"]="logiBUS_signalprocessing_adapter"
+    ["ALR_D_FF_HYS_TMIN"]="logiBUS_signalprocessing_adapter"
+    ["AR_D_FF_HYS"]="logiBUS_signalprocessing_adapter"
+    ["AR_D_FF_HYS_TMIN"]="logiBUS_signalprocessing_adapter"
+    ["AS_D_FF_HYS"]="logiBUS_signalprocessing_adapter"
+    ["AS_D_FF_HYS_TMIN"]="logiBUS_signalprocessing_adapter"
+    ["AUDI_D_FF_HYS"]="logiBUS_signalprocessing_adapter"
+    ["AUDI_D_FF_HYS_TMIN"]="logiBUS_signalprocessing_adapter"
+    ["AUI_D_FF_HYS"]="logiBUS_signalprocessing_adapter"
+    ["AUI_D_FF_HYS_TMIN"]="logiBUS_signalprocessing_adapter"
+    ["AULI_D_FF_HYS"]="logiBUS_signalprocessing_adapter"
+    ["AULI_D_FF_HYS_TMIN"]="logiBUS_signalprocessing_adapter"
+    ["AUS_D_FF_HYS"]="logiBUS_signalprocessing_adapter"
+    ["AUS_D_FF_HYS_TMIN"]="logiBUS_signalprocessing_adapter"
+    # iec61131::selection: Default iec61131-3, Ausnahme iec61131-3-bool
+    ["F_MUX_32"]="iec61131-3-bool"
+    # isobus::UT: Default isobus_UT, Ausnahmen isobus_UT_adapter/isobus_UT_io/
+    # isobus_UT_io_adapter/isobus_signalprocessing/isobus_signalprocessing_adapter
+    ["Q_ActiveMask_AUI"]="isobus_UT_adapter"
+    ["Q_Attribute_AUDI"]="isobus_UT_adapter"
+    ["Q_BackgroundColourAux_AUS"]="isobus_UT_adapter"
+    ["Q_BackgroundColour_AUS"]="isobus_UT_adapter"
+    ["Q_ChildPosition_AI"]="isobus_UT_adapter"
+    ["Q_ExecuteExtendedMacro_AUI"]="isobus_UT_adapter"
+    ["Q_ExecuteMacro_AUI"]="isobus_UT_adapter"
+    ["Q_NumericValueAux_AUDI"]="isobus_UT_adapter"
+    ["Q_NumericValue_AUDI"]="isobus_UT_adapter"
+    ["Q_NumericValue_PHYSA"]="isobus_UT_adapter"
+    ["Q_NumericValue_PHYSA_LREAL"]="isobus_UT_adapter"
+    ["Q_ObjEnableDisable_AB"]="isobus_UT_adapter"
+    ["Q_ObjEnableDisable_AX"]="isobus_UT_adapter"
+    ["Q_ObjHideShow_AB"]="isobus_UT_adapter"
+    ["Q_ObjHideShow_AX"]="isobus_UT_adapter"
+    ["Q_Priority_AUS"]="isobus_UT_adapter"
+    ["Q_SelectColourMap_AUI"]="isobus_UT_adapter"
+    ["Q_SetAudioVolume_AUS"]="isobus_UT_adapter"
+    ["Q_SoftKeyMask_AUI"]="isobus_UT_adapter"
+    ["Q_StringValue_AIS"]="isobus_UT_adapter"
+    ["Attribute_ID"]="isobus_UT_io"
+    ["Aux_IE"]="isobus_UT_io"
+    ["Aux_IX"]="isobus_UT_io"
+    ["Aux_QD"]="isobus_UT_io"
+    ["Aux_QX"]="isobus_UT_io"
+    ["Aux_Val1_IW"]="isobus_UT_io"
+    ["Aux_Val1_QW"]="isobus_UT_io"
+    ["Aux_Val2_IW"]="isobus_UT_io"
+    ["Button_IE"]="isobus_UT_io"
+    ["Button_IX"]="isobus_UT_io"
+    ["NumericValue_ID"]="isobus_UT_io"
+    ["NumericValue_PHYS"]="isobus_UT_io"
+    ["Softkey_IE"]="isobus_UT_io"
+    ["Softkey_IX"]="isobus_UT_io"
+    ["StringValue_IS"]="isobus_UT_io"
+    ["StringValue_IWS"]="isobus_UT_io"
+    ["Attribute_IDA"]="isobus_UT_io_adapter"
+    ["Aux_IXA"]="isobus_UT_io_adapter"
+    ["Aux_QXA"]="isobus_UT_io_adapter"
+    ["Button_IXA"]="isobus_UT_io_adapter"
+    ["NumericValue_IDA"]="isobus_UT_io_adapter"
+    ["NumericValue_PHYSA"]="isobus_UT_io_adapter"
+    ["Softkey_IXA"]="isobus_UT_io_adapter"
+    ["StringValue_AIS"]="isobus_UT_io_adapter"
+    ["StringValue_AIWS"]="isobus_UT_io_adapter"
+    ["BargraphSplitFS"]="isobus_signalprocessing"
+    ["PositionMarkerFS"]="isobus_signalprocessing"
+    ["ReportScrollOffset"]="isobus_signalprocessing"
+    ["ScrollFS"]="isobus_signalprocessing"
+    ["ScrollFS_PHYS_Button"]="isobus_signalprocessing"
+    ["ScrollFS_PHYS_Softkey"]="isobus_signalprocessing"
+    ["BargraphSplitFS_AR"]="isobus_signalprocessing_adapter"
+    ["PositionMarkerFSA"]="isobus_signalprocessing_adapter"
+    # isobus::tecu: Default isobus_tecu, Ausnahme isobus_tecu_adapter (IA_*)
+    ["IA_COGSOGRapidUpdate"]="isobus_tecu_adapter"
+    ["IA_FHS"]="isobus_tecu_adapter"
+    ["IA_FPTO"]="isobus_tecu_adapter"
+    ["IA_GBSD"]="isobus_tecu_adapter"
+    ["IA_Lighting"]="isobus_tecu_adapter"
+    ["IA_MSS"]="isobus_tecu_adapter"
+    ["IA_PosDeltaHighPrecRapidUpd"]="isobus_tecu_adapter"
+    ["IA_RHS"]="isobus_tecu_adapter"
+    ["IA_RPTO"]="isobus_tecu_adapter"
+    ["IA_VDS"]="isobus_tecu_adapter"
+    ["IA_VP1"]="isobus_tecu_adapter"
+    ["IA_WBSD"]="isobus_tecu_adapter"
+    # logiBUS::io: Default logiBUS_io, Ausnahme logiBUS_DI_CAN
+    ["logiBUS_2_CAN_IX"]="logiBUS_DI_CAN"
+    ["logiBUS_2_CAN_IXA"]="logiBUS_DI_CAN"
+    # logiBUS::signalprocessing: Default logiBUS_signalprocessing_adapter, Ausnahme logiBUS_signalprocessing (reine Nicht-Adapter-Bausteine)
+    ["FIELDBUS_BYTE_TO_SIGNAL"]="logiBUS_signalprocessing"
+    ["FIELDBUS_BYTE_TO_SIGNAL_SCALED"]="logiBUS_signalprocessing"
+    ["FIELDBUS_DWORD_TO_SIGNAL"]="logiBUS_signalprocessing"
+    ["FIELDBUS_DWORD_TO_SIGNAL_SCALED"]="logiBUS_signalprocessing"
+    ["FIELDBUS_LWORD_TO_SIGNAL"]="logiBUS_signalprocessing"
+    ["FIELDBUS_LWORD_TO_SIGNAL_SCALED"]="logiBUS_signalprocessing"
+    ["FIELDBUS_QUARTER_TO_SIGNAL"]="logiBUS_signalprocessing"
+    ["FIELDBUS_UDINT_TO_SIGNAL"]="logiBUS_signalprocessing"
+    ["FIELDBUS_UDINT_TO_SIGNAL_SCALED"]="logiBUS_signalprocessing"
+    ["FIELDBUS_UINT_TO_SIGNAL"]="logiBUS_signalprocessing"
+    ["FIELDBUS_UINT_TO_SIGNAL_COMPOUND_SCALE"]="logiBUS_signalprocessing"
+    ["FIELDBUS_UINT_TO_SIGNAL_SCALED"]="logiBUS_signalprocessing"
+    ["FIELDBUS_ULINT_TO_SIGNAL"]="logiBUS_signalprocessing"
+    ["FIELDBUS_ULINT_TO_SIGNAL_SCALED"]="logiBUS_signalprocessing"
+    ["FIELDBUS_USINT_TO_SIGNAL"]="logiBUS_signalprocessing"
+    ["FIELDBUS_USINT_TO_SIGNAL_SCALED"]="logiBUS_signalprocessing"
+    ["FIELDBUS_WORD_TO_SIGNAL"]="logiBUS_signalprocessing"
+    ["FIELDBUS_WORD_TO_SIGNAL_COMPOUND_SCALE"]="logiBUS_signalprocessing"
+    ["FIELDBUS_WORD_TO_SIGNAL_SCALED"]="logiBUS_signalprocessing"
+    ["F_FRACTION_TO_PERCENT"]="logiBUS_signalprocessing"
+    ["F_PERCENT_TO_FRACTION"]="logiBUS_signalprocessing"
+    ["ILOCK_2_E"]="logiBUS_signalprocessing"
+    ["ILOCK_BLOCK"]="logiBUS_signalprocessing"
+    ["ILOCK_BLOCK_PROTECT"]="logiBUS_signalprocessing"
+    ["ILOCK_CONFLICT_TRIP"]="logiBUS_signalprocessing"
+    ["ILOCK_CONFLICT_TRIP_PROTECT"]="logiBUS_signalprocessing"
+    ["ILOCK_SWITCH"]="logiBUS_signalprocessing"
+    ["ILOCK_SWITCH_PROTECT"]="logiBUS_signalprocessing"
+    ["SYS_ONTIME"]="logiBUS_signalprocessing"
+    # logiBUS::utils: Default logiBUS_utils, Ausnahmen logiBUS_utils_adapter/quarter/logiBUS_schieber
+    ["AnlagenSequenz_06_ADAPTER"]="logiBUS_utils_adapter"
+    ["BasicOne_AX"]="logiBUS_utils_adapter"
+    ["LinksRechts_AX"]="logiBUS_utils_adapter"
+    ["SchieberControl_AX"]="logiBUS_utils_adapter"
+    ["SchieberVerriegelungComposite"]="logiBUS_utils_adapter"
+    ["sequence_B_08_AX_AX"]="logiBUS_utils_adapter"
+    ["sequence_ET_04_04_AX"]="logiBUS_utils_adapter"
+    ["sequence_ET_04_AX"]="logiBUS_utils_adapter"
+    ["sequence_ET_04_loop_AX"]="logiBUS_utils_adapter"
+    ["sequence_ET_05_AX"]="logiBUS_utils_adapter"
+    ["sequence_ET_05_loop_AX"]="logiBUS_utils_adapter"
+    ["sequence_ET_08_AX"]="logiBUS_utils_adapter"
+    ["sequence_ET_08_loop_AX"]="logiBUS_utils_adapter"
+    ["sequence_E_04_AX"]="logiBUS_utils_adapter"
+    ["sequence_E_04_AX_SR"]="logiBUS_utils_adapter"
+    ["sequence_E_04_loop_AX"]="logiBUS_utils_adapter"
+    ["sequence_E_05_AX"]="logiBUS_utils_adapter"
+    ["sequence_E_05_loop_AX"]="logiBUS_utils_adapter"
+    ["sequence_E_08_AX"]="logiBUS_utils_adapter"
+    ["sequence_E_08_AX_AX"]="logiBUS_utils_adapter"
+    ["sequence_E_08_AX_DM"]="logiBUS_utils_adapter"
+    ["sequence_E_08_loop_AX"]="logiBUS_utils_adapter"
+    ["sequence_Pattern_04_04_loop_AX"]="logiBUS_utils_adapter"
+    ["sequence_Pattern_08_08_loop_AX"]="logiBUS_utils_adapter"
+    ["sequence_T_04_AX"]="logiBUS_utils_adapter"
+    ["sequence_T_04_loop_AX"]="logiBUS_utils_adapter"
+    ["sequence_T_05_AX"]="logiBUS_utils_adapter"
+    ["sequence_T_05_loop_AX"]="logiBUS_utils_adapter"
+    ["sequence_T_08_ADAPTER"]="logiBUS_utils_adapter"
+    ["sequence_T_08_AX"]="logiBUS_utils_adapter"
+    ["sequence_T_08_loop_AX"]="logiBUS_utils_adapter"
+    ["BOOLS_TO_QUARTERS"]="quarter"
+    ["E_SREN"]="quarter"
+    ["QUARTERS_TO_BOOLS"]="quarter"
+    ["QUARTER_TO_BOOL"]="quarter"
+    ["QUARTER_TO_E"]="quarter"
+    ["QUARTER_TO_STR_MEASURED"]="quarter"
+    ["QUARTER_TO_STR_STATUS"]="quarter"
+    ["SchieberControl"]="logiBUS_schieber"
+    ["SchieberVerriegelung"]="logiBUS_schieber"
 )
 
 # Lib-Version, die aktuell als ELF gebaut/erwartet wird. Quelle: die echten
@@ -91,26 +302,37 @@ sha256_stdin() {
     fi
 }
 
-# Liest die benoetigten Lib-Namen aus einem .fboot: zu jedem Type="..." die
-# ersten ein oder zwei Namensraum-Segmente extrahieren, erst den
-# Zwei-Segment-Key gegen PREFIX_TO_LIB pruefen (z.B. "adapter::net"), dann als
-# Fallback den Einzelsegment-Key (z.B. "OSCAT"), dann transitiv per
+# Liest die benoetigten Lib-Namen aus einem .fboot: zu jedem Type="..."
+# zuerst den letzten Segment (den eigentlichen FBType-Namen) exakt gegen
+# TYPE_NAME_TO_LIB pruefen (deckt die unter PREFIX_TO_LIB dokumentierten
+# Namensraum-Mehrdeutigkeiten ab), erst wenn das nichts liefert den
+# Zwei-Segment-Namensraum-Key gegen PREFIX_TO_LIB pruefen (z.B. "adapter::net"),
+# dann als Fallback den Einzelsegment-Key (z.B. "OSCAT"), dann transitiv per
 # LIB_REQUIRES erweitern.
 resolve_required_libs() {
-    local fboot_file="$1" ns lib req name
+    local fboot_file="$1" full name seg1 rest seg2 ns lib req
     declare -A seen=()
     local -a queue=()
 
-    while IFS= read -r ns; do
-        lib="${PREFIX_TO_LIB[$ns]:-}"
+    while IFS= read -r full; do
+        name="${full##*::}"
+        lib="${TYPE_NAME_TO_LIB[$name]:-}"
         if [ -z "$lib" ]; then
-            lib="${PREFIX_TO_LIB[${ns%%::*}]:-}"
+            seg1="${full%%::*}"
+            rest="${full#*::}"
+            if [ "$rest" != "$full" ] && [ "$rest" != "$name" ]; then
+                seg2="${rest%%::*}"
+                lib="${PREFIX_TO_LIB[${seg1}::${seg2}]:-}"
+            fi
+            if [ -z "$lib" ]; then
+                lib="${PREFIX_TO_LIB[$seg1]:-}"
+            fi
         fi
         if [ -n "$lib" ] && [ -z "${seen[$lib]:-}" ]; then
             seen[$lib]=1
             queue+=("$lib")
         fi
-    done < <(grep -oE 'Type="[A-Za-z0-9_]+(::[A-Za-z0-9_]+)?::' "$fboot_file" | sed -E 's/Type="(.*)::$/\1/' | sort -u)
+    done < <(grep -oE 'Type="[A-Za-z0-9_]+(::[A-Za-z0-9_]+)+"' "$fboot_file" | sed -E 's/^Type="(.*)"$/\1/' | sort -u)
 
     local i=0
     while [ "$i" -lt "${#queue[@]}" ]; do
