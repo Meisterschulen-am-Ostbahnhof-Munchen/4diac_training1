@@ -151,8 +151,8 @@ CProxy layer, never by two objects pointing at the same CProxy).
 
 If you're using a free `SoftKeyMask` slot (the low-risk path from step 1),
 the existing Component there is a `CPointer` referencing the shared
-`ObjectPointer_NULL` (`27140`). Change exactly two things and nothing else
-- keep its `Top`/`Left`/`SoftkeymaskDesignatorNo` exactly as found, that's
+`ObjectPointer_NULL` (`27140`). Change exactly two things and nothing else —
+keep its `Top`/`Left`/`SoftkeymaskDesignatorNo` exactly as found, that's
 what puts it in the right physical grid cell:
 
 ```diff
