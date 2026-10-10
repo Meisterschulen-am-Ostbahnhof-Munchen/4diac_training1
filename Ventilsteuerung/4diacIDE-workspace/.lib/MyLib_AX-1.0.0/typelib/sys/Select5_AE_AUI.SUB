@@ -21,30 +21,30 @@
 	<SubAppNetwork>
 		<FB Name="AUI_MUX_5" Type="adapter::events::unidirectional::AUI_MUX_5" x="3200" y="0">
 		</FB>
-		<FB Name="AE_E_TO_EVENT_1" Type="adapter::conversion::unidirectional::AE_E_TO_EVENT" x="0" y="0">
+		<FB Name="AE_E_TO_EVENT_1" Type="adapter::conversion::unidirectional::AE_E_TO_EVENT" x="0" y="-300">
 		</FB>
-		<FB Name="AE_E_TO_EVENT_2" Type="adapter::conversion::unidirectional::AE_E_TO_EVENT" x="0" y="400">
+		<FB Name="AE_E_TO_EVENT_2" Type="adapter::conversion::unidirectional::AE_E_TO_EVENT" x="0" y="200">
 		</FB>
 		<FB Name="AE_E_TO_EVENT_3" Type="adapter::conversion::unidirectional::AE_E_TO_EVENT" x="0" y="800">
 		</FB>
-		<FB Name="AE_E_TO_EVENT_4" Type="adapter::conversion::unidirectional::AE_E_TO_EVENT" x="0" y="1200">
+		<FB Name="AE_E_TO_EVENT_4" Type="adapter::conversion::unidirectional::AE_E_TO_EVENT" x="0" y="1300">
 		</FB>
-		<FB Name="AE_E_TO_EVENT_5" Type="adapter::conversion::unidirectional::AE_E_TO_EVENT" x="0" y="1600">
+		<FB Name="AE_E_TO_EVENT_5" Type="adapter::conversion::unidirectional::AE_E_TO_EVENT" x="0" y="1900">
 		</FB>
 		<EventConnections>
-			<Connection Source="AE_E_TO_EVENT_1.CNF" Destination="AUI_MUX_5.EI1" dx1="600"/>
-			<Connection Source="AE_E_TO_EVENT_2.CNF" Destination="AUI_MUX_5.EI2" dx1="600"/>
-			<Connection Source="AE_E_TO_EVENT_3.CNF" Destination="AUI_MUX_5.EI3" dx1="600"/>
-			<Connection Source="AE_E_TO_EVENT_4.CNF" Destination="AUI_MUX_5.EI4" dx1="600"/>
-			<Connection Source="AE_E_TO_EVENT_5.CNF" Destination="AUI_MUX_5.EI5" dx1="600"/>
+			<Connection Source="AE_E_TO_EVENT_1.CNF" Destination="AUI_MUX_5.EI1" dx1="1133.33"/>
+			<Connection Source="AE_E_TO_EVENT_2.CNF" Destination="AUI_MUX_5.EI2" dx1="1133.33"/>
+			<Connection Source="AE_E_TO_EVENT_3.CNF" Destination="AUI_MUX_5.EI3" dx1="1100"/>
+			<Connection Source="AE_E_TO_EVENT_4.CNF" Destination="AUI_MUX_5.EI4" dx1="1133.33"/>
+			<Connection Source="AE_E_TO_EVENT_5.CNF" Destination="AUI_MUX_5.EI5" dx1="1166.67"/>
 		</EventConnections>
 		<AdapterConnections>
-			<Connection Source="EI1" Destination="AE_E_TO_EVENT_1.AE_IN" dx1="600"/>
-			<Connection Source="EI2" Destination="AE_E_TO_EVENT_2.AE_IN" dx1="600"/>
-			<Connection Source="EI3" Destination="AE_E_TO_EVENT_3.AE_IN" dx1="600"/>
-			<Connection Source="EI4" Destination="AE_E_TO_EVENT_4.AE_IN" dx1="600"/>
-			<Connection Source="EI5" Destination="AE_E_TO_EVENT_5.AE_IN" dx1="600"/>
-			<Connection Source="AUI_MUX_5.K" Destination="K" dx1="600"/>
+			<Connection Source="EI1" Destination="AE_E_TO_EVENT_1.AE_IN" dx1="1273.33"/>
+			<Connection Source="EI2" Destination="AE_E_TO_EVENT_2.AE_IN" dx1="1240"/>
+			<Connection Source="EI3" Destination="AE_E_TO_EVENT_3.AE_IN" dx1="1206.67"/>
+			<Connection Source="EI4" Destination="AE_E_TO_EVENT_4.AE_IN" dx1="1173.33"/>
+			<Connection Source="EI5" Destination="AE_E_TO_EVENT_5.AE_IN" dx1="1140"/>
+			<Connection Source="AUI_MUX_5.K" Destination="K" dx1="613.33"/>
 		</AdapterConnections>
 	</SubAppNetwork>
 </SubAppType>

@@ -8,10 +8,14 @@
 	</CompilerInfo>
 	<SubAppInterfaceList>
 		<SubAppEventInputs>
-			<SubAppEvent Name="EI1" Type="Event" Comment="Event zur Auswahl von val1"/>
-			<SubAppEvent Name="EI2" Type="Event" Comment="Event zur Auswahl von val2"/>
-			<SubAppEvent Name="EI3" Type="Event" Comment="Event zur Auswahl von val3"/>
-			<SubAppEvent Name="EI4" Type="Event" Comment="Event zur Auswahl von val4"/>
+			<SubAppEvent Name="EI1" Type="Event" Comment="Event zur Auswahl von val1">
+			</SubAppEvent>
+			<SubAppEvent Name="EI2" Type="Event" Comment="Event zur Auswahl von val2">
+			</SubAppEvent>
+			<SubAppEvent Name="EI3" Type="Event" Comment="Event zur Auswahl von val3">
+			</SubAppEvent>
+			<SubAppEvent Name="EI4" Type="Event" Comment="Event zur Auswahl von val4">
+			</SubAppEvent>
 		</SubAppEventInputs>
 		<InputVars>
 			<VarDeclaration Name="val1" Type="UINT" Comment="Initialer Ausgabewert bei EI1"/>
@@ -24,7 +28,7 @@
 		</Plugs>
 	</SubAppInterfaceList>
 	<SubAppNetwork>
-		<FB Name="AUI_MUX_4" Type="adapter::events::unidirectional::AUI_MUX_4" x="-2200" y="-1100">
+		<FB Name="AUI_MUX_4" Type="adapter::events::unidirectional::AUI_MUX_4" x="-2300" y="-1700">
 		</FB>
 		<FB Name="AUI_AUI_MUX_4" Type="adapter::selection::unidirectional::AUI_AUI_MUX_4" x="100" y="-800">
 		</FB>
@@ -37,24 +41,24 @@
 		<FB Name="initval_AUI_4" Type="adapter::types::unidirectional::AUI::initval::initval_AUI" x="-2300" y="1400">
 		</FB>
 		<EventConnections>
-			<Connection Source="EI1" Destination="AUI_MUX_4.EI1" dx1="1000"/>
-			<Connection Source="EI2" Destination="AUI_MUX_4.EI2" dx1="1000"/>
-			<Connection Source="EI3" Destination="AUI_MUX_4.EI3" dx1="1000"/>
-			<Connection Source="EI4" Destination="AUI_MUX_4.EI4" dx1="1000"/>
+			<Connection Source="EI1" Destination="AUI_MUX_4.EI1" dx1="1500"/>
+			<Connection Source="EI2" Destination="AUI_MUX_4.EI2" dx1="1466.67"/>
+			<Connection Source="EI3" Destination="AUI_MUX_4.EI3" dx1="1433.33"/>
+			<Connection Source="EI4" Destination="AUI_MUX_4.EI4" dx1="1400"/>
 		</EventConnections>
 		<DataConnections>
-			<Connection Source="val1" Destination="initval_AUI_1.INIT_VAL" dx1="1000"/>
-			<Connection Source="val2" Destination="initval_AUI_2.INIT_VAL" dx1="1000"/>
-			<Connection Source="val3" Destination="initval_AUI_3.INIT_VAL" dx1="1000"/>
-			<Connection Source="val4" Destination="initval_AUI_4.INIT_VAL" dx1="1000"/>
+			<Connection Source="val1" Destination="initval_AUI_1.INIT_VAL" dx1="1366.67"/>
+			<Connection Source="val2" Destination="initval_AUI_2.INIT_VAL" dx1="1333.33"/>
+			<Connection Source="val3" Destination="initval_AUI_3.INIT_VAL" dx1="1300"/>
+			<Connection Source="val4" Destination="initval_AUI_4.INIT_VAL" dx1="1266.67"/>
 		</DataConnections>
 		<AdapterConnections>
-			<Connection Source="AUI_MUX_4.K" Destination="AUI_AUI_MUX_4.K" dx1="946.67"/>
-			<Connection Source="initval_AUI_1.OUT" Destination="AUI_AUI_MUX_4.IN1" dx1="320"/>
-			<Connection Source="initval_AUI_2.OUT" Destination="AUI_AUI_MUX_4.IN2" dx1="420"/>
-			<Connection Source="initval_AUI_3.OUT" Destination="AUI_AUI_MUX_4.IN3" dx1="573.33"/>
-			<Connection Source="initval_AUI_4.OUT" Destination="AUI_AUI_MUX_4.IN4" dx1="700"/>
-			<Connection Source="AUI_AUI_MUX_4.OUT" Destination="OUT" dx1="700"/>
+			<Connection Source="AUI_MUX_4.K" Destination="AUI_AUI_MUX_4.K" dx1="880"/>
+			<Connection Source="initval_AUI_1.OUT" Destination="AUI_AUI_MUX_4.IN1" dx1="700"/>
+			<Connection Source="initval_AUI_2.OUT" Destination="AUI_AUI_MUX_4.IN2" dx1="733.33"/>
+			<Connection Source="initval_AUI_3.OUT" Destination="AUI_AUI_MUX_4.IN3" dx1="766.67"/>
+			<Connection Source="initval_AUI_4.OUT" Destination="AUI_AUI_MUX_4.IN4" dx1="800"/>
+			<Connection Source="AUI_AUI_MUX_4.OUT" Destination="OUT" dx1="693.33"/>
 		</AdapterConnections>
 	</SubAppNetwork>
 </SubAppType>

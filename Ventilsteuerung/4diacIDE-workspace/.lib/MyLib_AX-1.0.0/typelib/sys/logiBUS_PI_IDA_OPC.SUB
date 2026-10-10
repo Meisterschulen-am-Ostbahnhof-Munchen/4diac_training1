@@ -2,7 +2,7 @@
 <SubAppType Name="logiBUS_PI_IDA_OPC" Comment="logiBUS_PI_IDA (Puls-Eingang) auf VT-Zahlenfelder (Zaehler roh + Frequenz Hz, je&#10;eigene CNumberVariable) + Bargraph (Frequenz) + OPC-UA (Zaehler DWORD + Frequenz&#10;REAL, generisch, ein Kanal)">
 	<Identification Standard="61499-2" Description="Copyright (c) 2026 Meisterschulen am Ostbahnhof  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0">
 	</Identification>
-	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.1" Author="Franz Höpfinger" Date="2026-10-03" Remarks="Folgefix zu FT_DERIV_10_AR v1.2 (K jetzt AUI-Adapter-Socket statt Parameter): bisheriges Parameter Name='K' Value='9' auf FT_DERIV_10_AR entfernt (waere jetzt ein IDE-Fehler, da K kein plain InputVar mehr ist), ersetzt durch LIT_DerivK (initval_AUI, INIT_VAL=9) + AdapterConnection auf FT_DERIV_10_AR.K - gleicher Wert wie bisher, nur adapter-konform verdrahtet.">
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.1" Author="Franz Höpfinger" Date="2026-10-03" Remarks="Folgefix zu FT_DERIV_10_AR v1.2 (K jetzt AUI-Adapter-Socket statt Parameter): bisheriges Parameter Name='K' Value='9' auf FT_DERIV_10_AR entfernt (waere jetzt ein IDE-Fehler, da K kein plain InputVar mehr ist), ersetzt durch LIT_DerivK (initval_AUI, INIT_VAL=9) + AdapterConnection auf FT_DERIV_10_AR.K - gleicher Wert wie bisher, nur adapter-konform verdrahtet. Dieser Baustein hat aktuell keine aktiven Aufrufer im Projekt.">
 	</VersionInfo>
 	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2026-08-30" Remarks="initial API and implementation and/or initial documentation">
 	</VersionInfo>
@@ -74,7 +74,7 @@
 		<FB Name="AX_PUBLISH_SWITCH" Type="adapter::net::AX_PUBLISH_1" x="-4000" y="400">
 			<Parameter Name="QI" Value="TRUE"/>
 		</FB>
-		<SubApp Name="Q_BackgroundColour_EnableOk_STATUS" Type="MyLib::sys::Q_BackgroundColour_EnableOk" x="-1500" y="-3400">
+		<SubApp Name="Q_BackgroundColour_EnableOk_STATUS" Type="MyLib::sys::Q_BackgroundColour_EnableOk_A" x="-1500" y="-3400">
 		</SubApp>
 		<FB Name="AX_BOOL_TO_X_STATUS" Type="adapter::conversion::unidirectional::AX_BOOL_TO_X" x="-2200" y="-2300">
 		</FB>
