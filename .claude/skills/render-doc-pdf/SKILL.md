@@ -24,6 +24,7 @@ read its module docstring for the details if a new doc hits a fourth case.
 
 1. Make sure a scratch venv with `markdown` installed exists. If you don't already
    have one from earlier in this session, create one in the scratchpad directory:
+
    ```bash
    python3 -m venv /tmp/.../scratchpad/mdvenv   # use the actual scratchpad path
    /tmp/.../scratchpad/mdvenv/bin/pip install markdown
@@ -31,20 +32,24 @@ read its module docstring for the details if a new doc hits a fourth case.
 
 2. Preprocess the source Markdown (always do this - skipping it is what causes
    the rendering bugs described above):
+
    ```bash
    mdvenv/bin/python scripts/preprocess_md.py <doc>.md /tmp/.../scratchpad/<doc>.pre.md
    ```
 
 3. Render to styled HTML:
+
    ```bash
    mdvenv/bin/python scripts/render_html.py /tmp/.../scratchpad/<doc>.pre.md /tmp/.../scratchpad/<doc>.html
    ```
+
    The title shown in the PDF's `<title>` tag is taken from the document's first
    `# H1` heading automatically.
 
 4. Print to PDF with headless Chrome (the flags matter - without
    `--no-pdf-header-footer` Chrome adds a URL/date/page-number header and footer
    that does not belong in a delivered document):
+
    ```bash
    google-chrome --headless --no-sandbox --disable-gpu \
      --print-to-pdf=<doc-dir>/<doc>.pdf --no-pdf-header-footer \
