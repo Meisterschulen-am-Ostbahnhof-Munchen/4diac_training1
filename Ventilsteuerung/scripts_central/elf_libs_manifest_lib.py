@@ -16,6 +16,7 @@ from __future__ import annotations
 
 import hashlib
 import json
+import os
 import re
 import xml.etree.ElementTree as ET
 from pathlib import Path
@@ -438,6 +439,17 @@ def mf_version_of(lib: str) -> str:
 
 _lib_requires_cache: dict[str, list[tuple[str, str]]] = {}
 
+# Libs, deren MANIFEST.MF beim letzten lib_requires_of()-Aufruf fehlte oder
+# kein gueltiges XML war - lib_requires_of() gibt in diesem Fall bewusst eine
+# LEERE requires-Liste zurueck (damit eine Lib ohne <Dependencies>-Tag, der
+# haeufige Normalfall, weiter funktioniert), aber diese leere Liste ist dann
+# NICHT vertrauenswuerdig: eine tatsaechlich vorhandene Abhaengigkeit wuerde
+# so unbemerkt aus dem Manifest fallen (Sourcery-Finding, PR #288). Von
+# build_libs_manifest() nach jedem Aufruf geprueft, fuehrt zu
+# ManifestResult(False) statt einem Manifest mit stillschweigend
+# unvollstaendigen Requires.
+_lib_requires_unreliable: set[str] = set()
+
 
 def lib_requires_of(lib: str) -> list[tuple[str, str]]:
     """Liest die requires-Liste einer Lib ("Name", "Range") direkt aus deren
@@ -447,16 +459,23 @@ def lib_requires_of(lib: str) -> list[tuple[str, str]]:
     Bash-Tabelle LIB_REQUIRES["adapter"] nicht synchron gehalten wurde).
     Nur Required-Eintraege, zu denen es ein LIB_VERSIONS-Element (= gebautes
     ELF) gibt. Range ist "^Major.Minor" der in MANIFEST.MF deklarierten
-    Version. Ergebnis wird pro Lib gecacht."""
+    Version. Ergebnis wird pro Lib gecacht. Fehlt die MANIFEST.MF oder ist sie
+    kein gueltiges XML, landet `lib` zusaetzlich in
+    _lib_requires_unreliable - siehe dort."""
     if lib in _lib_requires_cache:
         return _lib_requires_cache[lib]
 
     result: list[tuple[str, str]] = []
     mf = _manifest_mf_path(lib)
-    if mf.is_file():
+    if not mf.is_file():
+        print(f"  WARNUNG: {mf} fehlt - Abhaengigkeiten von '{lib}' nicht bestimmbar.")
+        _lib_requires_unreliable.add(lib)
+    else:
         try:
             root = ET.parse(mf).getroot()
         except ET.ParseError:
+            print(f"  WARNUNG: {mf} ist kein gueltiges XML - Abhaengigkeiten von '{lib}' nicht bestimmbar.")
+            _lib_requires_unreliable.add(lib)
             root = None
         if root is not None:
             deps = root.find("Dependencies")
@@ -563,6 +582,9 @@ def build_libs_manifest(arch: str, files: list[Path], out_path: Path, libs: list
 
     for lib in libs:
         req_count = len(lib_requires_of(lib))
+        if lib in _lib_requires_unreliable:
+            print(f"  WARNUNG: Abhaengigkeiten von '{lib}' nicht bestimmbar (siehe Warnung oben) - uebersprungen.")
+            return ManifestResult(False)
         if req_count > MAX_REQ:
             print(
                 f"  WARNUNG: Lib '{lib}' hat {req_count} requires, Firmware erlaubt "
@@ -646,15 +668,23 @@ def build_libs_manifest(arch: str, files: list[Path], out_path: Path, libs: list
     }
 
     text = json.dumps(manifest, indent=2) + "\n"
-    # LF-Zeilenenden erzwingen (newline="") statt der Windows-Textmode-
-    # Standarduebersetzung zu CRLF - gleicher Grund wie beim Bash-Original.
-    with open(out_path, "w", encoding="utf-8", newline="\n") as fh:
-        fh.write(text)
-
-    manifest_size = out_path.stat().st_size
-    if manifest_size > MAX_MANIFEST_BYTES:
-        print(f"  WARNUNG: Manifest {manifest_size} Bytes > 64 KB (Firmware-Limit) - uebersprungen.")
-        out_path.unlink(missing_ok=True)
+    text_bytes = text.encode("utf-8")
+    if len(text_bytes) > MAX_MANIFEST_BYTES:
+        print(f"  WARNUNG: Manifest {len(text_bytes)} Bytes > 64 KB (Firmware-Limit) - uebersprungen.")
         return ManifestResult(False)
+
+    # Atomar schreiben: erst in eine temporaere Datei im selben Verzeichnis,
+    # dann per os.replace() an die Zielstelle verschieben. out_path ist bei
+    # make_libs_manifest.py oft die echte, bereits committete Manifest-Datei
+    # (kein Tempfile) - vorher wurde direkt hineingeschrieben und bei
+    # Ueberschreiten des Groessenlimits wieder geloescht, wodurch ein
+    # vorhandenes gutes Manifest verloren ging, obwohl die neue Erzeugung
+    # fehlschlug (Sourcery-Finding, PR #288). LF-Zeilenenden erzwingen
+    # (newline="") statt der Windows-Textmode-Standarduebersetzung zu CRLF -
+    # gleicher Grund wie beim Bash-Original.
+    tmp_path = out_path.with_name(out_path.name + ".tmp")
+    with open(tmp_path, "w", encoding="utf-8", newline="\n") as fh:
+        fh.write(text)
+    os.replace(tmp_path, out_path)
 
     return ManifestResult(True, [elf_path_of[lib] for lib in libs])

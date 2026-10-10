@@ -42,11 +42,18 @@ def resolve_local_path(base: str) -> Optional[Path]:
     """Liefert den tatsaechlichen lokalen Pfad zu einer Basisdatei: zuerst
     gestempelte Variante im Ventilsteuerung-Wurzelverzeichnis, dann
     unbestempelte Variante dort, dann Repo-Fallback-Pfad. None, wenn nichts
-    gefunden (entspricht resolve_local_path() in deploy_common.sh)."""
+    gefunden (entspricht resolve_local_path() in deploy_common.sh).
+
+    Bei mehreren gestempelten Treffern (Stempel ist "<ISO-Datum>_<Git-Kurz-
+    Hash>", siehe make_krauternter_release.py) den zuletzt geschriebenen
+    nehmen (st_mtime), NICHT den alphabetisch ersten: der Hash-Teil ist
+    innerhalb desselben Tages nicht chronologisch sortierbar, ein reiner
+    Namens-Sort koennte also faelschlich einen aelteren Export waehlen
+    (Sourcery-Finding, PR #288)."""
     name, _, ext = base.rpartition(".")
-    stamped = sorted(VENTILSTEUERUNG_DIR.glob(f"{name}_*.{ext}"))
+    stamped = list(VENTILSTEUERUNG_DIR.glob(f"{name}_*.{ext}"))
     if stamped:
-        return stamped[0]
+        return max(stamped, key=lambda p: p.stat().st_mtime)
     plain = VENTILSTEUERUNG_DIR / base
     if plain.is_file():
         return plain

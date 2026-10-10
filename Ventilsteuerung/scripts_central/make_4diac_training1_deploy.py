@@ -30,7 +30,7 @@ from pathlib import Path
 from typing import Optional
 
 from deploy_common import NODE_BASES, NODE_ORDER, REPO_PATHS, resolve_local_path
-from elf_libs_manifest_lib import NODE_ARCH, build_libs_manifest, resolve_required_libs, sha256_of
+from elf_libs_manifest_lib import NODE_ARCH, ManifestResult, build_libs_manifest, resolve_required_libs, sha256_of
 
 # Generell eingeschaltet - siehe elf_libs_manifest_lib.py/.sh fuer das
 # Firmware-Verhalten bei fehlendem/ungueltigem Manifest (existiert eine
@@ -127,27 +127,35 @@ def http_reachable(ip: str) -> bool:
         return False
 
 
-def http_listing(ip: str, path: str = "/", timeout: float = 5) -> str:
-    """GET <path> (Default "/") als Text fuer die href-Listing-Regexe, leer
-    bei Verbindungsfehler (wie curl -s: leere stdout statt Absturz). path
-    kann ein Unterverzeichnis sein (z.B. "/elf-libs/")."""
+def http_listing(ip: str, path: str = "/", timeout: float = 5) -> Optional[str]:
+    """GET <path> (Default "/") als Text fuer die href-Listing-Regexe. None
+    bei Verbindungsfehler - ANDERS als fruehere Versionen (leerer String):
+    ein leeres Verzeichnis und ein fehlgeschlagener Request waren sonst nicht
+    zu unterscheiden, wodurch eine Alt-Datei-Bereinigung bei einem
+    Listing-Fehler faelschlich als "nichts zu tun" durchlief (Sourcery-
+    Finding, PR #288). path kann ein Unterverzeichnis sein (z.B.
+    "/elf-libs/")."""
     try:
         _status, data = _http(ip, "GET", path, timeout)
         return data.decode("utf-8", errors="replace")
     except OSError:
-        return ""
+        return None
 
 
-def http_delete(ip: str, name: str, timeout: float = 10) -> None:
-    """POST /delete/<name>, Ergebnis bewusst ignoriert (best effort, wie im
-    Original mit -o /dev/null)."""
+def http_delete(ip: str, name: str, timeout: float = 10) -> bool:
+    """POST /delete/<name>. Gibt True zurueck, wenn der Request ueberhaupt
+    durchkam (unabhaengig vom HTTP-Status, wie im Original mit
+    -o /dev/null), False bei einem Verbindungsfehler - damit der Aufrufer
+    einen echten Loesch-Fehlschlag von einem einfachen 404 (Datei war schon
+    weg) unterscheiden und entsprechend reagieren kann."""
     try:
         _http(ip, "POST", f"/delete/{name}", timeout)
+        return True
     except OSError:
-        pass
+        return False
 
 
-def http_reset_current_directory(ip: str, timeout: float = 5) -> None:
+def http_reset_current_directory(ip: str, timeout: float = 5) -> bool:
     """GET / - die alte Firmware merkt sich serverseitig das zuletzt per GET
     angezeigte Verzeichnis und legt dort JEDEN nachfolgenden pfadlosen Upload
     ab (live bestaetigt 2026-10-10 mit ELFLOADER: ein Manifest-Upload nach
@@ -155,12 +163,16 @@ def http_reset_current_directory(ip: str, timeout: float = 5) -> None:
     der Loader sucht *.libs.json aber nur direkt in /data/ und findet dort
     dann keins, FORTE startet ohne Libs). Vor jedem pfadlosen Upload, der auf
     eine Unterverzeichnis-Listung (z.B. /elf-libs/) folgen koennte, wird das
-    Verzeichnis hierueber wieder auf /data/ zurueckgesetzt. Ergebnis bewusst
-    ignoriert (best effort, wie http_delete)."""
+    Verzeichnis hierueber wieder auf /data/ zurueckgesetzt. Gibt True nur bei
+    HTTP 200 zurueck - der Aufrufer kann einen Fehlschlag so wenigstens
+    melden (keine echte Serialisierung gegen einen GLEICHZEITIGEN Zugriff
+    eines anderen Clients auf denselben Knoten, das bleibt ein bekanntes,
+    akzeptiertes Restrisiko bei diesem unauthentifizierten Protokoll)."""
     try:
-        _http(ip, "GET", "/", timeout)
+        status, _body = _http(ip, "GET", "/", timeout)
+        return status == 200
     except OSError:
-        pass
+        return False
 
 
 _SHA256_RE = re.compile(r'^[0-9a-f]{64}$')
@@ -295,15 +307,6 @@ def main() -> int:
 
             remote_name = local_file.name
 
-            # Bei .fboot-Dateien anders benannte alte Bootfiles vorher
-            # entfernen, sonst entscheidet FORTE beim Booten per
-            # alphabetischer Sortierung ueber mehrere *.fboot-Kandidaten.
-            if remote_name.endswith(".fboot"):
-                for existing in _FBOOT_HREF_RE.findall(http_listing(ip)):
-                    if existing != remote_name:
-                        print(f"  Entferne alten Bootfile-Kandidaten: {existing}")
-                        http_delete(ip, existing)
-
             http_code = http_upload_file(
                 ip, local_file, remote_name, 30,
                 sha256_of(local_file), remote_hashes, sha256_capable,
@@ -321,6 +324,26 @@ def main() -> int:
                     print(f"  WARNUNG: Upload fehlgeschlagen (HTTP {http_code})")
                     node_ok = False
 
+            # Bei .fboot-Dateien anders benannte alte Bootfiles entfernen,
+            # sonst entscheidet FORTE beim Booten per alphabetischer
+            # Sortierung ueber mehrere *.fboot-Kandidaten. ERST NACHDEM der
+            # neue Bootfile nachweislich auf dem Knoten liegt (SKIP oder
+            # echter 303-Erfolg oben) - sonst wuerde ein fehlgeschlagener
+            # Upload den Knoten komplett ohne funktionierenden Bootfile
+            # zuruecklassen (Sourcery-Finding, PR #288).
+            if remote_name.endswith(".fboot") and http_code in ("SKIP", "303"):
+                listing = http_listing(ip)
+                if listing is None:
+                    print("  WARNUNG: Verzeichnis-Listing fehlgeschlagen - alte Bootfile-Kandidaten NICHT geprueft/entfernt.")
+                    node_ok = False
+                else:
+                    for existing in _FBOOT_HREF_RE.findall(listing):
+                        if existing != remote_name:
+                            print(f"  Entferne alten Bootfile-Kandidaten: {existing}")
+                            if not http_delete(ip, existing):
+                                print(f"  WARNUNG: Loeschen von {existing} fehlgeschlagen.")
+                                node_ok = False
+
         # ENTWURF/EXPERIMENTAL (Standard AN): ELFs + Libs-Manifest zusaetzlich
         # zum fboot hochladen. Fehlt lokal auch nur ein benoetigtes ELF, wird
         # dieser Teil fuer den Knoten uebersprungen - der normale fboot-
@@ -331,33 +354,58 @@ def main() -> int:
                 print(f"  WARNUNG: Keine Architektur fuer {ip} in NODE_ARCH hinterlegt - ELF-Manifest uebersprungen.")
             else:
                 required_libs = resolve_required_libs(node_fboot_file)
-                if not required_libs:
-                    print("  Keine bekannten ausgelagerten Libs in diesem .fboot referenziert - kein Libs-Manifest noetig.")
-                else:
-                    with tempfile.TemporaryDirectory() as tmp_dir:
-                        manifest_tmp = Path(tmp_dir) / "manifest.json"
+                manifest_name = f"{node_fboot_file.stem}.libs.json"
+
+                with tempfile.TemporaryDirectory() as tmp_dir:
+                    manifest_tmp = Path(tmp_dir) / "manifest.json"
+                    if required_libs:
                         result = build_libs_manifest(arch, node_local_files, manifest_tmp, required_libs)
-                        if result.ok:
-                            manifest_name = f"{node_fboot_file.stem}.libs.json"
+                    else:
+                        print("  Keine bekannten ausgelagerten Libs in diesem .fboot referenziert - kein Libs-Manifest noetig.")
+                        result = ManifestResult(True)
 
-                            # Manifest-Kandidaten liegen in /data/ (root),
-                            # ELFs seit der elf-libs/-Umstellung in
-                            # /data/elf-libs/ - getrennte Listings/Cleanups.
-                            # Lose ELFs direkt in /data/ von AELTEREN Deploys
-                            # (vor dieser Umstellung) werden bewusst NICHT
-                            # automatisch entfernt (Franz raeumt das einmalig
-                            # per "Format File System" auf).
-                            for existing in _MANIFEST_HREF_RE.findall(http_listing(ip)):
-                                if existing != manifest_name:
+                    if not result.ok:
+                        print("  WARNUNG: Manifest-Erzeugung fehlgeschlagen (siehe Warnung oben) - Deploy fuer diesen Knoten fehlgeschlagen.")
+                        node_ok = False
+                    else:
+                        # Manifest-Kandidaten liegen in /data/ (root), ELFs
+                        # seit der elf-libs/-Umstellung in /data/elf-libs/ -
+                        # getrennte Listings/Cleanups. IMMER aufraeumen, auch
+                        # wenn dieses Boot-Image gar keine Libs mehr braucht
+                        # (required_libs leer, keep_names dann leer) - sonst
+                        # bliebe ein Manifest/ELFs eines frueheren Programms
+                        # stehen, die der Loader gegen das neue Boot-Image
+                        # prueft und beim Start ablehnt (Sourcery-Finding,
+                        # PR #288). Lose ELFs direkt in /data/ von AELTEREN
+                        # Deploys (vor der elf-libs/-Umstellung) werden
+                        # bewusst NICHT automatisch entfernt (Franz raeumt
+                        # das einmalig per "Format File System" auf).
+                        listing = http_listing(ip)
+                        if listing is None:
+                            print("  WARNUNG: Verzeichnis-Listing fehlgeschlagen - alte Manifest-Kandidaten NICHT geprueft/entfernt.")
+                            node_ok = False
+                        else:
+                            for existing in _MANIFEST_HREF_RE.findall(listing):
+                                if existing != manifest_name or not required_libs:
                                     print(f"  Entferne alten Lib-Kandidaten: {existing}")
-                                    http_delete(ip, existing)
+                                    if not http_delete(ip, existing):
+                                        print(f"  WARNUNG: Loeschen von {existing} fehlgeschlagen.")
+                                        node_ok = False
 
-                            keep_names = {p.name for p in result.elf_paths}
-                            for existing in _ELF_LIBS_HREF_RE.findall(http_listing(ip, "/elf-libs/")):
+                        keep_names = {p.name for p in result.elf_paths}
+                        elf_listing = http_listing(ip, "/elf-libs/")
+                        if elf_listing is None:
+                            print("  WARNUNG: elf-libs/-Listing fehlgeschlagen - alte ELF-Kandidaten NICHT geprueft/entfernt.")
+                            node_ok = False
+                        else:
+                            for existing in _ELF_LIBS_HREF_RE.findall(elf_listing):
                                 if existing not in keep_names:
                                     print(f"  Entferne alten Lib-Kandidaten: elf-libs/{existing}")
-                                    http_delete(ip, f"elf-libs/{existing}")
+                                    if not http_delete(ip, f"elf-libs/{existing}"):
+                                        print(f"  WARNUNG: Loeschen von elf-libs/{existing} fehlgeschlagen.")
+                                        node_ok = False
 
+                        if required_libs and node_ok:
                             elf_ok = True
                             for elf_path in result.elf_paths:
                                 elf_name = elf_path.name
@@ -382,13 +430,10 @@ def main() -> int:
                             # Manifest bewusst ZULETZT hochladen: fehlt es,
                             # laedt die Firmware keine Lib - ein
                             # abgebrochener Upload ist so erkennbar.
-                            if elf_ok:
-                                # Zurueck auf /data/ - siehe
-                                # http_reset_current_directory(): ohne das
-                                # wuerde dieser pfadlose Upload nach der
-                                # /elf-libs/-Listung oben dort landen statt
-                                # in /data/.
-                                http_reset_current_directory(ip)
+                            if elf_ok and not http_reset_current_directory(ip):
+                                print("  WARNUNG: Verzeichnis-Reset vor dem Manifest-Upload fehlgeschlagen - Manifest-Upload uebersprungen.")
+                                node_ok = False
+                            elif elf_ok:
                                 print(f"  Lade {manifest_tmp} -> http://{ip}/upload/{manifest_name}")
                                 http_code = http_upload_file(
                                     ip, manifest_tmp, manifest_name, 30,
