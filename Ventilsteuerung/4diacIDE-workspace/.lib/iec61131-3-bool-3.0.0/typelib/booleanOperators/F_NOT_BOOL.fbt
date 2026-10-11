@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<FBType Name="F_NOT_BOOL" Comment="standard boolean NOT function - realisiert ueber NOOP mit negierter Datenverbindung (kein externes F_NOT noetig)">
+<FBType Name="F_NOT_BOOL" Comment="standard boolean NOT function - Simple FB mit nativer ST-Negation (kein externes F_NOT, kein Composite-Netzwerk mehr noetig)">
 	<Identification Standard="61131-3" Classification="standard boolean function" Description="Copyright (c) 2011 TU Wien ACIN, HR Agrartechnik GmbH&#10; &#10;This program and the accompanying materials are made&#10;available under the terms of the Eclipse Public License 2.0&#10;which is available at https://www.eclipse.org/legal/epl-2.0/&#10;&#10;SPDX-License-Identifier: EPL-2.0">
 	</Identification>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="3.2" Author="Franz Höpfinger" Date="2026-10-11" Remarks="Von Composite FB (FBNetwork mit NOOP + Negated-Datenverbindung) auf Simple FB umgestellt: OUT := NOT IN; direkt als ST-Algorithmus. Kein internes FB mehr, keine iec61131-3-Abhaengigkeit.">
+	</VersionInfo>
 	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="3.1" Author="Franz Höpfinger" Date="2026-10-11" Remarks="Interne Umsetzung wrapt jetzt NOOP (+ Negated-Attribut auf der IN-Datenverbindung) statt iec61131::bitwiseOperators::F_NOT - damit entfaellt die letzte iec61131-3-Abhaengigkeit dieses Pakets. Instanzname F_NOT auf Negate umbenannt (Type ist jetzt NOOP, Name war sonst irrefuehrend). Organization-Attribut ergaenzt (XSD-Pflichtfeld).">
 	</VersionInfo>
 	<VersionInfo Organization="TU Wien ACIN" Version="1.0" Author="Monika Wenger" Date="2011-06-21" Remarks="initial API and implementation and/or initial documentation">
@@ -28,19 +30,14 @@
 			<VarDeclaration Name="OUT" Type="BOOL" Comment="Output"/>
 		</OutputVars>
 	</InterfaceList>
-	<FBNetwork>
-		<FB Name="Negate" Type="iec61131::booleanOperators::NOOP" Comment="Reiner Durchreicher, die eigentliche Negation passiert auf der IN-Datenverbindung (Negated=true)" x="3800" y="300">
-		</FB>
-		<EventConnections>
-			<Connection Source="REQ" Destination="Negate.REQ" dx1="1880"/>
-			<Connection Source="Negate.CNF" Destination="CNF" dx1="2973.33"/>
-		</EventConnections>
-		<DataConnections>
-			<Connection Source="IN" Destination="Negate.IN" dx1="1100">
-				<Attribute Name="Negated" Value="true"/>
-			</Connection>
-			<Connection Source="Negate.OUT" Destination="OUT" dx1="3360"/>
-		</DataConnections>
-	</FBNetwork>
+	<SimpleFB>
+		<ECState Name="REQ">
+			<ECAction Algorithm="REQ" Output="CNF"/>
+		</ECState>
+		<Algorithm Name="REQ" Comment="Executed algorithm">
+			<ST><![CDATA[OUT := NOT IN;
+]]></ST>
+		</Algorithm>
+	</SimpleFB>
 	<Attribute Name="eclipse4diac::core::TypeHash" Value="''"/>
 </FBType>
