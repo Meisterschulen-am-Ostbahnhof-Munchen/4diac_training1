@@ -387,8 +387,8 @@ def writeNumericGCFfile(data, filepaths, conflicts=None):
             comment_text = (
                 f" ACHTUNG: '{name}' wird von mehreren Widgets mit unterschiedlicher "
                 f"Skalierung gebunden - " + "; ".join(conflicts[name]) +
-                f". Es gilt die Skalierung mit dem kleinsten |Scale|, alle Widgets "
-                f"muessen dieselbe Skalierung haben. "
+                ". Es gilt die Skalierung mit dem kleinsten |Scale|, alle Widgets "
+                "muessen dieselbe Skalierung haben. "
             )
             global_constants.append(ET.Comment(comment_text))
 
