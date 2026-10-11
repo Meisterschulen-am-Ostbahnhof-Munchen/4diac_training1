@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<FBType Name="AR_CALIBRATE_2P_REF" Comment="Adapter-based 2-point calibration (Low/High, independently stored - no CO-before-CS style ordering dependency) - reference targets (Y_LOW/Y_HIGH) are live AR sockets, persisted via 2 additional AR2 plugs (LOW_REF/HIGH_REF), same live-echo pattern as AR_CALIBRATE_SQ_REF">
+<FBType Name="AR_CALIBRATE_2P_REF" Comment="Adapter-based 2-point calibration (Low/High, independently stored - no&#10;CO-before-CS style ordering dependency) - reference targets (Y_LOW/Y_HIGH) are&#10;live AR sockets, persisted via 2 additional AR2 plugs (LOW_REF/HIGH_REF), same&#10;live-echo pattern as AR_CALIBRATE_SQ_REF">
 	<Identification Standard="61499-1">
 	</Identification>
 	<VersionInfo Version="1.3" Author="Franz Höpfinger" Date="2026-09-21" Remarks="Code-Review-Fund (PR #260): xClipping clippte bisher unconditional auf [LOW_REF,HIGH_REF], auch wenn nur EIN Punkt kalibriert war - der jeweils andere, noch unkalibrierte Referenzwert stand dann noch auf seinem INI_AR2-Default 0.0, wodurch der frisch eingefuehrte Partial-Kalibrierung-Fallback (Y.D1 := LOW_REF.DI1 bzw. HIGH_REF.DI1) sofort wieder auf 0.0 zurueckgeklemmt wurde - der Wert griff also weiterhin nicht sofort. Clipping jetzt zusaetzlich an xLowCal AND xHighCal gegated.">

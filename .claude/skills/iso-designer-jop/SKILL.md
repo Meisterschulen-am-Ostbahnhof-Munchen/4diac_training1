@@ -26,6 +26,25 @@ you found this in.
   only exist as children of other containers (e.g. a nested scroll-content
   container) usually don't, only the ones placed directly on a mask do. Grep
   all `.jvi` files for the old ID/name before assuming no sync is needed.
+- **Never conclude an object is "not placed on this mask" from a `.jvi` grep
+  alone.** A `.jvi` only lists the mask's *top-level* Components — a value
+  widget can be buried several `CProxy` levels deep inside one of those
+  top-level objects (e.g. a big composite `CButton` "tile" that itself
+  contains a whole panel of `COutputNumber`/`COutputText` children via its
+  own `<Objects>` list) and never needs its own `.jvi` entry at all. Confirmed
+  mistake, not hypothetical: `NumberVariable_Ernte_Aufnahme_Geschwindigkeit_Aktuell`
+  (21010) and the two Igelband speed variables (21019/21020) were declared
+  "not placed anywhere on the Ernteseite" after grepping
+  `DataMask_Ernte.jvi` for their IDs and finding nothing — they were sitting
+  right there the whole time, three `CProxy` hops inside `Button_Ernte_Aufnahme`
+  /`Button_Ernte_Baender` (two large composite tile buttons the `.jvi` *does*
+  place). The user had to correct this twice, increasingly loudly, before it
+  was actually checked. Before ever asserting an object is missing/unplaced:
+  resolve every top-level `.jvi` Component's target JVS-ID in the `.jop`,
+  then recursively walk that object's own `<Objects>` → `CProxy` → target
+  chain (their target can itself be a `CGroup`/`CButton` with more `CProxy`
+  children, arbitrarily deep) and check the ID/name against that *entire*
+  resolved tree — not just the flat `.jvi` file text.
 - The compiled binary `.iop` and any generated `.iop.h` / `.gcf` are
   downstream artifacts — don't hand-edit those; regenerate via ISO-Designer
   or the project's own build script instead.
@@ -210,6 +229,31 @@ types above if the identical content must appear in both mask kinds (e.g. a
 `CRectangle`/Bargraph or `COutputText` reused across a DataMask and a
 SoftKeyMask) — though in practice `CImage` icons are what most commonly get
 reused this way across a project.
+
+## Bargraph orientation/direction (`CRectangle` + `PropertySheet Name="Bargraph"`)
+
+A Bargraph is a `CRectangle` object with an extra `PropertySheet
+Name="Bargraph"` (see the ObjectID block convention section — it lives in
+the LinearBargraph 18000+ ID block despite the `CRectangle` class). Its
+`Type` property is ISO-Designer's own compact enum for fill direction —
+confirmed from the ISO-Designer GUI's own property-panel dropdown (Franz,
+screenshot, 2026-09-26), **not** decomposable from the raw ISO 11783-6
+Options bitmask (Bit 4 Orientation/Bit 5 Direction) by simple arithmetic:
+
+| `Type` value | Meaning |
+|---|---|
+| 1 | BottomToTop (vertical, growing upward) |
+| 2 | TopToBottom (vertical, growing downward) |
+| 3 | LeftToRight (horizontal, growing rightward) |
+| 4 | RightToLeft (horizontal, growing leftward) |
+
+Every horizontal Bargraph found across this user's projects (Krauternter +
+4diac_training1) uses `Type=3` (main/ascending bar) or `Type=4` (a
+"grows-backward" half, e.g. a split-in-the-middle bargraph's left half) —
+before this was confirmed, guessing the vertical equivalents (1/2) from the
+horizontal ones (3/4) by pattern alone was not reliable; don't assume a
+numeric offset/pattern for an unconfirmed enum like this again — ask, or
+find a live GUI example, rather than extrapolate.
 
 ## Softkey/Key-driven page navigation via Macros
 
@@ -652,6 +696,19 @@ pattern) — every subsequent balance check then fails or, worse, silently
 mis-scopes a removal span. Always anchor with a word boundary: `<Object\b`
 (not `<Object`) for opens, and match `</Object>` literally (already safe,
 since `</Objects>` has an extra character before its `>`) for closes.
+
+## Creating a whole new DataMask + SoftKeyMask by hand
+
+Adding a brand-new navigable page (not just editing objects on an
+existing one) is a different job - new file pair, new navigation, and a
+sharp distinction between which project files are structural (`.jop`,
+`.jvi`) and which are pure IDE UI-state caches that the build regenerates
+for you (`.jod`/`.jops`/`.jtl`/`.jvd`/`.jvp` - don't hand-edit any of
+these, even though some of them show huge diffs afterward). Read
+`references/new-datamask-recipe.md` before starting one of these - it
+walks the whole thing end-to-end (ID allocation, the SoftKeyMask
+free-slot navigation pattern, the Macro/OnKeyRelease wiring, CProxy icon
+reuse) against a real worked example.
 
 ## Workflow notes
 

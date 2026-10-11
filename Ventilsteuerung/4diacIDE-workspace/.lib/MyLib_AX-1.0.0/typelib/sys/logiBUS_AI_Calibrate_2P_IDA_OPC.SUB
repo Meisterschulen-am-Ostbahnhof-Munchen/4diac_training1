@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<SubAppType Name="logiBUS_AI_Calibrate_2P_IDA_OPC" Comment="logiBUS_AI_IDA (Analog-Eingang) mit 2-Punkt-Kalibrierung (AR_CALIBRATE_2P_REF, unabhaengig gespeicherte Rohwerte X_LOW/X_HIGH + Referenzwerte LOW_REF/HIGH_REF alle INI-persistiert) auf VT-Zahlenfelder (Rohwert + kalibrierter Wert, je eigene CNumberVariable) + Bargraph (kalibriert) + 2 VT-Tasten (CO/CS) + OPC-UA (Rohwert DWORD + kalibrierter Wert REAL, generisch, ein Kanal)">
+<SubAppType Name="logiBUS_AI_Calibrate_2P_IDA_OPC" Comment="logiBUS_AI_IDA (Analog-Eingang) mit 2-Punkt-Kalibrierung (AR_CALIBRATE_2P_REF,&#10;unabhaengig gespeicherte Rohwerte X_LOW/X_HIGH + Referenzwerte LOW_REF/HIGH_REF&#10;alle INI-persistiert) auf VT-Zahlenfelder (Rohwert + kalibrierter Wert, je&#10;eigene CNumberVariable) + Bargraph (kalibriert) + 2 VT-Tasten (CO/CS) + OPC-UA&#10;(Rohwert DWORD + kalibrierter Wert REAL, generisch, ein Kanal)">
 	<Identification Standard="61499-2" Description="Copyright (c) 2026 Meisterschulen am Ostbahnhof  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0">
 	</Identification>
 	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2026-08-31" Remarks="initial API and implementation and/or initial documentation - Kalibrierlogik nach Vorbild Uebung_028c3_AR.SUB, aber AR_CALIBRATE_SQ (korrigierte Offset-Formel, ECC-erzwungene CO-vor-CS-Reihenfolge) statt AR_CALIBRATE">
@@ -24,6 +24,8 @@
 	</VersionInfo>
 	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.10" Author="Franz Hoepfinger" Date="2026-09-23" Remarks="INI_LOW_REF.DEFAULT_VALUE/INI_HIGH_REF.DEFAULT_VALUE waren fest verdrahtet (0.0/100.0) - neue InputVars rLowRefDefault/rHighRefDefault machen die Erstinbetriebnahme-Referenzwerte pro Instanz konfigurierbar (Druck braucht 250.0 statt Fuellbands 100.0), bestehende Instanzen unveraendert per Default.">
 	</VersionInfo>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.11" Author="Franz Höpfinger" Date="2026-09-27" Remarks="Neuer Plug CAL_OUT (kalibrierter Wert, lokal AR) - bisher verliess der kalibrierte Wert diesen Typ nur per OPC-UA-Publish, was fuer lokale Weiterverarbeitung auf einer VT-losen Station (z.B. Fuellband-oben-Schwellwert) einen unnoetigen Remote-Roundtrip erzwang. CALIBRATE.Y jetzt per neuem AR_SPLIT_2 auf PublishCal UND CAL_OUT verzweigt (Fan-out-Regel: nie direkt).">
+	</VersionInfo>
 	<CompilerInfo packageName="MyLib::sys">
 		<Import declaration="isobus::UT::Q::const::IDs::ID_NULL"/>
 		<Import declaration="logiBUS::io::AI::logiBUS_AI"/>
@@ -31,6 +33,9 @@
 		<Import declaration="logiBUS::utils::conversion::phys::NumericObjectPool_S"/>
 	</CompilerInfo>
 	<SubAppInterfaceList>
+		<Plugs>
+			<AdapterDeclaration Name="CAL_OUT" Type="adapter::types::unidirectional::AR" Comment="Kalibrierter Wert, lokal (= CALIBRATE.Y) - fuer Weiterverarbeitung auf derselben Station ohne OPC-UA-Roundtrip"/>
+		</Plugs>
 		<InputVars>
 			<VarDeclaration Name="u16ObjId_RAWVAR" Type="UINT" Comment="Object ID CNumberVariable (Rohwert 0-4095, unkalibriert, reine Diagnose-Anzeige)" InitialValue="ID_NULL"/>
 			<VarDeclaration Name="stObjCal" Type="logiBUS::utils::conversion::phys::NumericObjectPool_S" Comment="Object ID + Scale/Offset/Decimals CNumberVariable (kalibrierter Wert, eigene, unabhaengige CNumberVariable)" InitialValue="(u16ObjId := ID_NULL, r32Scale := 1.0, i32Offset := 0, u8Decimals := 1)"/>
@@ -103,6 +108,8 @@
 		</SubApp>
 		<SubApp Name="PublishSpanRaw" Type="MyLib::sys::AR_TO_Q_Publish_OPC" x="4100" y="0">
 		</SubApp>
+		<FB Name="AR_SPLIT_2_Cal" Type="adapter::events::unidirectional::AR_SPLIT_2" x="1800" y="-1200">
+		</FB>
 		<EventConnections>
 			<Connection Source="TriggerCO.IND" Destination="CALIBRATE.C_LOW" dx1="313.33"/>
 			<Connection Source="TriggerCS.IND" Destination="CALIBRATE.C_HIGH" dx1="173.33"/>
@@ -196,7 +203,9 @@
 			<Connection Source="CALIBRATE.HIGH_REF" Destination="INI_HIGH_REF.VAL" dx1="180"/>
 			<Connection Source="Y_OFFSET_LIT.VALUEO" Destination="CALIBRATE.Y_LOW" dx1="793.33"/>
 			<Connection Source="Y_SCALE_LIT.VALUEO" Destination="CALIBRATE.Y_HIGH" dx1="1160"/>
-			<Connection Source="CALIBRATE.Y" Destination="PublishCal.AR_IN" dx1="300"/>
+			<Connection Source="CALIBRATE.Y" Destination="AR_SPLIT_2_Cal.IN" dx1="300"/>
+			<Connection Source="AR_SPLIT_2_Cal.OUT1" Destination="PublishCal.AR_IN" dx1="300"/>
+			<Connection Source="AR_SPLIT_2_Cal.OUT2" Destination="CAL_OUT" dx1="300"/>
 		</AdapterConnections>
 	</SubAppNetwork>
 </SubAppType>

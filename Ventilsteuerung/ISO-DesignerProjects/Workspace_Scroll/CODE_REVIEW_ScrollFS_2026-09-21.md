@@ -92,6 +92,7 @@ bleibt), wird die INIT-Kette nie abgeschlossen — `MoveBar`/`MoveList` werden n
 und `ScrollFS.INITO` wird nie gesendet.
 
 **Empfehlung.**
+
 - Vor dem Ausrollen verifizieren, dass die C++-Implementierung inkl. Registrierung
   (`ReportScrollOffset`/`ScrollReport`) und `VtMaskVisibility_OnScroll()` existiert.
 - Sicherstellen, dass `INIT` unter allen Umständen (auch `ID_NULL`) `INITO` liefert.
@@ -120,6 +121,7 @@ verwendeten Bibliothek `signalprocessing-3.0.0`) klemmt aber ausdrücklich **nic
 
 **Auswirkung.** Da die Zielposition über ein freies Eingabefeld (`NumericValue_ID`) kommt, kann
 `OUT > i32PosMax` (oder negativ) werden. Folgen:
+
 - `F_ScrollListY` liefert eine zu große negative Y-Position → die Liste scrollt über das Ende
   hinaus (leere Zeilen).
 - `F_ScrollBarY` liefert `i32BarBaseOffset + pos*i32BarTravel/i32PosMax > i32BarBaseOffset +
@@ -148,6 +150,7 @@ negativ. In beiden Fällen teilt die Funktion bei **jedem** `Ramp.CNF` (also auc
 unsinnige Position.
 
 **Empfehlung.**
+
 - In `F_ScrollBarY` für `i32PosMax <= 0` einen definierten Ersatzwert liefern
   (z. B. `i32BarBaseOffset`).
 - `GcfScript.py` so anpassen, dass `i32PosMax` mindestens 1 ist (Schein-Scrollbalken für
@@ -175,6 +178,7 @@ nicht mit dem korrekten Anfangszustand.
 ### Befund 5 (Mittel): `INT`-Abschneiden ohne Clamp in beiden Helper-Funktionen
 
 **Beobachtung.**
+
 - `F_ScrollListY.fct:41`: `F_ScrollListY := DINT_TO_INT(-(i32Pos * i32RowHeight));`
 - `F_ScrollBarY.fct:47`: `... := DINT_TO_INT(...)` (siehe Befund 3)
 
@@ -208,6 +212,7 @@ Parameter-String identisch. Zusätzlich ist die komplette Hide-Logik (4× `F_SEL
 `Q_NumericValue` + Verkabelung von `qAtFirst`/`qAtLast`) in jedem Wrapper erneut enthalten.
 
 **Empfehlung.**
+
 - Die Anschlag-Ausblendung in `ScrollFS` selbst ziehen, damit alle Aufrufer sie erben.
 - Die beiden Wrapper aus einer gemeinsamen Vorlage generieren oder den Eingabe-Quelltyp über
   einen Adapter/Subapp entkoppeln.

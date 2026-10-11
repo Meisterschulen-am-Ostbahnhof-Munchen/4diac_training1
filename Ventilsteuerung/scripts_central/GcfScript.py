@@ -1,9 +1,17 @@
 from argparse import ArgumentParser
 import glob
+import math
 import os
 import re
+import sys
 import xml.etree.ElementTree as ET
 from xml.dom import minidom
+
+# Prefer defusedxml (guards against XXE) when available, falling back to stdlib
+try:
+    import defusedxml.ElementTree as defused_ET
+except ImportError:
+    defused_ET = ET
 
 # Security Audit.
 
@@ -174,6 +182,13 @@ def readJOP(jop_filepath, variables_only=False):
                 primary_names.add(name)
 
     result = {}
+    # Name of the widget currently backing each alias entry in `result`, and any
+    # later widgets that bound the same NumberVariable with a different scale/
+    # offset/decimals - surfaced as a "// ACHTUNG" comment in the generated .gcf
+    # (console WARNUNG prints are too easy to miss, see Krauternter conversation
+    # 2026-09-27: "die Warnung muesste DEUTLIcher zu sehen sein").
+    alias_source_widget = {}
+    alias_conflicts = {}
 
     for obj in objects_container.findall("Object"):
         cls = obj.get("Class")
@@ -236,9 +251,14 @@ def readJOP(jop_filepath, variables_only=False):
                 alias_id = int(bound_var_id)
                 if alias_name not in result:
                     result[alias_name] = create_numeric_info(alias_id, scale, offset, decimals)
+                    alias_source_widget[alias_name] = name
                 else:
                     current = result[alias_name]
                     if (current["scale"], current["offset"], current["decimals"]) != (scale, offset, decimals):
+                        kept_widget = alias_source_widget.get(alias_name, "?")
+                        # stderr, not stdout: Eclipse's Console view renders stderr
+                        # lines in red, so this doesn't get lost in the rest of the
+                        # (long, mostly informational) build output.
                         print(
                             f"  WARNUNG: '{alias_name}' wird von mehreren Widgets mit "
                             f"unterschiedlicher Skalierung gebunden - bisher "
@@ -246,14 +266,21 @@ def readJOP(jop_filepath, variables_only=False):
                             f"decimals={current['decimals']}, jetzt von '{name}' "
                             f"scale={scale} offset={offset} decimals={decimals}. Alle "
                             f"Widgets, die dieselbe NumberVariable binden, muessen "
-                            f"dieselbe Skalierung haben."
+                            f"dieselbe Skalierung haben.",
+                            file=sys.stderr,
+                        )
+                        alias_conflicts.setdefault(alias_name, []).append(
+                            f"'{kept_widget}' (scale={current['scale']} offset={current['offset']} "
+                            f"decimals={current['decimals']}) vs. '{name}' (scale={scale} "
+                            f"offset={offset} decimals={decimals})"
                         )
                     # Compare absolute values to correctly handle negative scales.
                     if abs(scale) < abs(current["scale"]):
                         print(f"  Update alias '{alias_name}': scale {current['scale']} -> {scale}")
                         result[alias_name] = create_numeric_info(alias_id, scale, offset, decimals)
+                        alias_source_widget[alias_name] = name
 
-    return result
+    return result, alias_conflicts
 
 def update_jop_objectnames(jop_path, rename_map):
     """Replace ObjectName="old" with ObjectName="new" in the .jop XML file (in-place, idempotent)."""
@@ -319,17 +346,22 @@ def _format_real(value):
 
 NUMERIC_NAME_SUFFIX = "_N"
 
-def writeNumericGCFfile(data, filepaths):
+def writeNumericGCFfile(data, filepaths, conflicts=None):
     """Write a <name>_Numeric.gcf with NumericObjectPool_S constants for each InputNumber/OutputNumber.
 
     Each constant name gets NUMERIC_NAME_SUFFIX appended, since the plain name is
     already used by the UINT constant of the same name in the non-numeric .gcf
     (same package) - without the suffix, 4diac's name resolution collides.
+
+    `conflicts`: optional {alias_name: [conflict description, ...]} from readJOP.
+    For each entry, a "// ACHTUNG" XML comment is written directly above that
+    VarDeclaration - a console WARNUNG is too easy to miss, this is not.
     """
     newfilepath = safe_output_path(filepaths[1], filepaths[2] + '_Numeric.gcf')
     gcf_name    = filepaths[2] + '_Numeric'
     package     = filepaths[3]
     struct_type = "logiBUS::utils::conversion::phys::NumericObjectPool_S"
+    conflicts   = conflicts or {}
 
     root = ET.Element("GlobalConstants", Name=gcf_name, Comment="Numeric object pool constants (ID, Scale, Offset, Decimals)")
 
@@ -350,6 +382,15 @@ def writeNumericGCFfile(data, filepaths):
             f"i32Offset := {offset_str}, "
             f"u8Decimals := {decimals_str})"
         )
+
+        if name in conflicts:
+            comment_text = (
+                f" ACHTUNG: '{name}' wird von mehreren Widgets mit unterschiedlicher "
+                f"Skalierung gebunden - " + "; ".join(conflicts[name]) +
+                f". Es gilt die Skalierung mit dem kleinsten |Scale|, alle Widgets "
+                f"muessen dieselbe Skalierung haben. "
+            )
+            global_constants.append(ET.Comment(comment_text))
 
         ET.SubElement(
             global_constants,
@@ -1317,6 +1358,190 @@ def writeBargraphSplitGCFfile(data, filepaths):
     print(f"Written: {newfilepath}")
 
 
+def _parse_pixel_dimension(val_str):
+    """Parse a pixel dimension string as float, snapping to nearest integer if within 0.01."""
+    val = float(val_str)
+    if abs(val - round(val)) < 0.01:
+        return float(round(val))
+    return val
+
+
+def _extract_one_bargraph(obj, name):
+    """Extract and validate geometry and scale properties for a single Bargraph object.
+
+    Returns an info dict or None if invalid/incomplete.
+    """
+    width_str = _get_prop(obj, "Width")
+    height_str = _get_prop(obj, "Height")
+    if width_str is None or height_str is None:
+        print(f"  Warning: '{name}' Bargraph missing Width/Height - skipping.")
+        return None
+
+    min_str = _get_prop(obj, "Min")
+    max_str = _get_prop(obj, "Max")
+    if min_str is None or max_str is None:
+        print(f"  Warning: '{name}' Bargraph missing Min/Max - skipping.")
+        return None
+
+    type_str = _get_prop(obj, "Type")
+    if type_str is None:
+        print(f"  Warning: '{name}' Bargraph missing Type - skipping.")
+        return None
+
+    try:
+        bargraph_type = int(type_str)
+    except ValueError:
+        print(f"  Warning: '{name}' Bargraph has invalid Type '{type_str}' - skipping.")
+        return None
+
+    try:
+        if not all(math.isfinite(float(v)) for v in (width_str, height_str, min_str, max_str)):
+            raise ValueError("numeric properties must be finite")
+        width = _parse_pixel_dimension(width_str)
+        height = _parse_pixel_dimension(height_str)
+        min_val = float(min_str)
+        max_val = float(max_str)
+    except ValueError as e:
+        print(f"  Warning: '{name}' Bargraph has invalid numeric property ({e}) - skipping.")
+        return None
+
+    if bargraph_type in (1, 2):
+        pixel_length = height
+    elif bargraph_type in (3, 4):
+        pixel_length = width
+    else:
+        print(f"  Warning: '{name}' Bargraph has unrecognized Type {bargraph_type} - skipping.")
+        return None
+
+    val_range = max_val - min_val
+    if math.isclose(min_val, max_val):
+        print(f"  Warning: '{name}' Bargraph Min == Max ({min_val}) - skipping.")
+        return None
+
+    scale_px = pixel_length / val_range
+
+    return {
+        "scale_px": scale_px,
+        "length_px": pixel_length,
+        "min": min_val,
+        "max": max_val,
+        "type": bargraph_type,
+    }
+
+
+def readBargraphJOP(jop_filepath):
+    """Parse a .jop file and extract linear bargraph geometry and scale info.
+
+    Detects each non-split Bargraph by a CRectangle object with a PropertySheet Name="Bargraph".
+    Halves of split bargraphs (ending in BARGRAPHSPLIT_NAME_SUFFIXES like "_links", "_rechts")
+    are skipped here as they are handled by readBargraphSplitJOP.
+
+    Orientation (Type property in PropertySheet Bargraph):
+      - 1 (Bottom to Top) / 2 (Top to Bottom): pixel length = Height
+      - 3 (Left to Right) / 4 (Right to Left): pixel length = Width
+
+    ScalePx = pixel length / (Max - Min).
+
+    Returns a dict keyed by ObjectName:
+        { "Bargraph_Hysterese": {
+            "scale_px": 1.86,
+            "length_px": 186.0,
+            "min": 0.0,
+            "max": 100.0,
+            "type": 3
+        }, ... }
+    """
+    tree = defused_ET.parse(jop_filepath)
+    root = tree.getroot()
+    objects_container = root.find("Objects")
+    if objects_container is None:
+        return {}
+
+    result = {}
+    for obj in objects_container.findall("Object"):
+        name = obj.get("ObjectName")
+        if not name or not _is_bargraph_rectangle(obj):
+            continue
+
+        # Skip split-bargraph parts
+        if any(name.endswith(suffix) for suffix in BARGRAPHSPLIT_NAME_SUFFIXES):
+            continue
+
+        info = _extract_one_bargraph(obj, name)
+        if info is not None:
+            result[name] = info
+
+    return result
+
+
+def writeBargraphGCFfile(data, filepaths):
+    """Write a <name>_Bargraph.gcf with constants for each detected linear bargraph.
+
+    For each Bargraph (CRectangle with PropertySheet Name="Bargraph"), emits:
+      - <name>_ScalePx: pixel length / (Max - Min) as REAL
+      - <name>_LengthPx: pixel length as REAL
+      - <name>_Min: Min as REAL
+      - <name>_Max: Max as REAL
+      - <name>_Type: orientation Type (1=B-to-T, 2=T-to-B, 3=L-to-R, 4=R-to-L) as USINT
+    """
+    newfilepath = safe_output_path(filepaths[1], filepaths[2] + '_Bargraph.gcf')
+    gcf_name    = filepaths[2] + '_Bargraph'
+    package     = filepaths[3]
+
+    root = ET.Element("GlobalConstants", Name=gcf_name, Comment="Bargraph geometry and scale constants (Length, ScalePx, Min, Max, Type)")
+
+    compiler_info = ET.SubElement(root, "CompilerInfo")
+    compiler_info.set("packageName", package)
+
+    global_constants = ET.SubElement(root, "GlobalConstants")
+
+    for name, info in sorted(data.items()):
+        ET.SubElement(
+            global_constants,
+            "VarDeclaration",
+            Name=name + "_ScalePx",
+            Type="REAL",
+            InitialValue=_format_real(info["scale_px"]),
+        )
+        ET.SubElement(
+            global_constants,
+            "VarDeclaration",
+            Name=name + "_LengthPx",
+            Type="REAL",
+            InitialValue=_format_real(info["length_px"]),
+        )
+        ET.SubElement(
+            global_constants,
+            "VarDeclaration",
+            Name=name + "_Min",
+            Type="REAL",
+            InitialValue=_format_real(info["min"]),
+        )
+        ET.SubElement(
+            global_constants,
+            "VarDeclaration",
+            Name=name + "_Max",
+            Type="REAL",
+            InitialValue=_format_real(info["max"]),
+        )
+        ET.SubElement(
+            global_constants,
+            "VarDeclaration",
+            Name=name + "_Type",
+            Type="USINT",
+            InitialValue=str(info["type"]),
+        )
+
+    xml_str = ET.tostring(root, encoding='utf-8').decode()
+    xml_str = minidom.parseString(xml_str).toprettyxml(indent="\t")
+    xml_str = xml_str[:19] + ' ' + 'encoding="UTF-8"' + xml_str[20:]
+
+    with open(newfilepath, "w") as file:
+        file.write(xml_str)
+
+    print(f"Written: {newfilepath}")
+
+
 if __name__ == "__main__":
 
     # Gets filepaths and saves it in a variable
@@ -1333,8 +1558,8 @@ if __name__ == "__main__":
     if filepaths[4]:
         checkPath(filepaths[4])
         update_jop_objectnames(filepaths[4], rename_map)
-        numeric_data = readJOP(filepaths[4], variables_only=filepaths[5])
-        writeNumericGCFfile(numeric_data, filepaths)
+        numeric_data, numeric_conflicts = readJOP(filepaths[4], variables_only=filepaths[5])
+        writeNumericGCFfile(numeric_data, filepaths, conflicts=numeric_conflicts)
 
         scroll_data = readScrollJOP(filepaths[4])
         if scroll_data:
@@ -1348,7 +1573,11 @@ if __name__ == "__main__":
         if bargraph_split_data:
             writeBargraphSplitGCFfile(bargraph_split_data, filepaths)
 
+        bargraph_data = readBargraphJOP(filepaths[4])
+        if bargraph_data:
+            writeBargraphGCFfile(bargraph_data, filepaths)
+
 
 __author__ = "Lorenz Bauer / Franz Höpfinger"
-__version__ = "0.3"
-__description__ = "Converts .iop.h to .gcf; optionally converts .jop to NumericObjectPool_S .gcf; strips _<ID> suffix from unique object names"
+__version__ = "0.4"
+__description__ = "Converts .iop.h to .gcf; optionally converts .jop to NumericObjectPool_S, Scroll, PositionMarker, BargraphSplit, and Bargraph .gcf; strips _<ID> suffix from unique object names"

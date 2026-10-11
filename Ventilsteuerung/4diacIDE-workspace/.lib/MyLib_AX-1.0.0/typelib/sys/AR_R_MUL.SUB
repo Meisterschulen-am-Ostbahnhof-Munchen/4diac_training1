@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<SubAppType Name="AR_R_MUL" Comment="Multipliziert einen AR-Wert mit einem festen REAL-Faktor (kein zweiter AR-Socket noetig - der Faktor wird per Parameter bei der Instanziierung eingebacken)">
+<SubAppType Name="AR_R_MUL" Comment="Multipliziert einen AR-Wert mit einem festen REAL-Faktor (kein zweiter AR-Socket&#10;noetig - der Faktor wird per Parameter bei der Instanziierung eingebacken)">
 	<Identification Standard="61499-2">
 	</Identification>
 	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2026-09-08">
@@ -10,12 +10,12 @@
 		<InputVars>
 			<VarDeclaration Name="FACTOR" Type="REAL" Comment="Fester Multiplikator, ueber Parameter bei der Instanziierung gesetzt" InitialValue="REAL#1.0"/>
 		</InputVars>
-		<Plugs>
-			<AdapterDeclaration Name="OUT" Type="adapter::types::unidirectional::AR" Comment="IN1 x FACTOR"/>
-		</Plugs>
 		<Sockets>
 			<AdapterDeclaration Name="IN1" Type="adapter::types::unidirectional::AR" Comment="Zu skalierender Wert"/>
 		</Sockets>
+		<Plugs>
+			<AdapterDeclaration Name="OUT" Type="adapter::types::unidirectional::AR" Comment="IN1 x FACTOR"/>
+		</Plugs>
 	</SubAppInterfaceList>
 	<SubAppNetwork>
 		<FB Name="initval_AR_FACTOR" Type="adapter::types::unidirectional::AR::initval::initval_AR" x="0" y="0">

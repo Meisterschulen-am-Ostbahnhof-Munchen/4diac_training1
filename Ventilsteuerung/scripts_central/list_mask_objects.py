@@ -1,18 +1,25 @@
 """Read-only: for every ISO 11783-6 VT root/visibility-defining object actually
-present in this pool - DataMask, AlarmMask (+ each one's paired SoftKeyMask),
-WorkingSet, AuxFunction, and any SoftKeyMask NOT paired to a Data/AlarmMask -
-recursively resolve every object reachable from that root down through CProxy
-/ CGroup / CButton nesting to the leaves, and list them.
+present in this pool - DataMask, AlarmMask, SoftKeyMask (every one its OWN
+root, no fold-in onto a paired Data/AlarmMask - see
+BERICHT_2026-09-27_SICHTBARE_WURZELN_AUFTRAG.md), WorkingSet, AuxFunction, and
+(code path anticipated, 0 instances today) WindowMask/KeyGroup - recursively
+resolve every object reachable from that root down through CProxy / CGroup /
+CButton nesting to the leaves, and list them.
 
 These root types are NOT all governed by the same visibility rule - see
-BERICHT_2026-09-18_VT_SICHTBARKEITS_KONZEPT.md before wiring firmware logic
-against --emit-visibility's output: DataMask/AlarmMask mask_id is an
-ActiveMask comparison target, an unpaired SoftKeyMask's mask_id is an
-active_softkey_mask comparison target, but WorkingSet and AuxFunction are NOT
+BERICHT_2026-09-18_VT_SICHTBARKEITS_KONZEPT.md (esp. Abschnitt 5.1/5.3) before
+wiring firmware logic against --emit-visibility's output: DataMask/AlarmMask
+mask_id is an ActiveMask comparison target, a SoftKeyMask's mask_id is an
+active_softkey_mask comparison target (regardless of any default pairing -
+see "roots"/default_skm_id below), but WorkingSet and AuxFunction are NOT
 ActiveMask-gated at all (WorkingSet's own descriptor is always potentially
 visible; AuxFunction is assigned via a VT-independent AUX-assignment list).
-CWindowMask/CKeyGroup exist in the norm but have 0 instances in this pool
-(verified against DefaultPool.jop) and are deliberately not handled below.
+The VT has several simultaneously visible roots at runtime (one active Data/
+Alarm Mask, one active SoftKeyMask, any number of shown Window Masks/Key
+Groups) - which SoftKeyMask is active is a VT runtime state (macro-
+switchable), not a pool property, so the .jvi default pairing is carried only
+as a fallback value (roots.default_skm_id), never used to fold a SoftKeyMask's
+own objects into its paired mask's row set.
 
 Why: don't conclude an object is "not placed on mask X" from a shallow grep of
 that mask's .jvi alone - a value widget can be buried many CProxy hops deep
@@ -163,12 +170,21 @@ def load_pool(jop_path):
                     kids.append(int(cjid))
         obj_children[jid] = kids
 
-        if cls in ("CDataMask", "CAlarmMask", "CSoftKeyMask", "CWorkingSet"):
+        if cls in ("CDataMask", "CAlarmMask", "CSoftKeyMask", "CWorkingSet",
+                   "CWindowMask", "CKeyGroup"):
             # All four classes store their own .jvi reference at this same
             # PropertySheet/Property location (verified against a real
             # CAlarmMask and the real CWorkingSet in this pool, not assumed
             # by analogy to CDataMask) - CAlarmMask was previously missing
             # from this tuple, silently dropping every Alarm Mask's .jvi.
+            # CWindowMask/CKeyGroup added per BERICHT_2026-09-27 point 5 -
+            # UNVERIFIED (0 instances in this pool): assumed by analogy to
+            # the four verified classes above, not confirmed against a real
+            # CWindowMask/CKeyGroup object. If they turn out not to carry a
+            # "Model"/"Path" property the same way, this is a safe no-op
+            # (obj_path simply stays unset for that root, same as a mask
+            # with no resolvable .jvi today) - never a wrong/missing row for
+            # something that actually exists.
             path_val = obj.find("./PropertySheet[@Name='Model']/Property[@Name='Path']/Value")
             if path_val is not None and path_val.text:
                 # The .jop stores this Path property with the separator of whatever OS the
@@ -247,18 +263,20 @@ VR_CAPABLE_CLASSES = {
 # one's mask_id in the emitted rows actually means - verified against the
 # real DefaultPool.jop, not assumed from the norm text alone (grep confirmed
 # 0 CWindowMask/CKeyGroup instances; see module docstring). Full writeup:
-# BERICHT_2026-09-18_VT_SICHTBARKEITS_KONZEPT.md.
+# BERICHT_2026-09-18_VT_SICHTBARKEITS_KONZEPT.md (esp. 5.1/5.3),
+# BERICHT_2026-09-27_SICHTBARE_WURZELN_AUFTRAG.md (multi-root rework below).
 #
 # - CDataMask / CAlarmMask: classic "ActiveMask" semantics (norm 4.6.8 /
 #   4.6.14) - exactly one is the Working Set's ActiveMask at a time. mask_id
 #   is directly comparable against the VT status message's ActiveMask field.
-# - CSoftKeyMask: normally paired 1:1 with a CDataMask/CAlarmMask via that
-#   mask's own .jvi "SoftKeyMask" property (jvi_softkeymask_id() below) - its
-#   objects get mask_id = the PAIRED mask's own JVS-ID (the two activate
-#   together). A SoftKeyMask NOT referenced by any Data/AlarmMask (0 in the
-#   current pool - all 17 are paired - but ISO-Designer permits it) is
-#   instead its own root below, mask_id = its own JVS-ID, matching the
-#   report's separate active_softkey_mask comparison target.
+# - CSoftKeyMask: its OWN root, mask_id = its own JVS-ID - NOT folded into a
+#   paired Data/AlarmMask's row set (removed 2026-09-27: which SoftKeyMask is
+#   active is VT runtime state, macro-switchable independently of the
+#   currently active Data/Alarm Mask, and a SoftKeyMask can be shared by
+#   several masks - the .jvi default pairing is not a statement about what is
+#   actually visible). The default pairing (jvi_softkeymask_id() below) is
+#   carried only as a fallback value in "roots".default_skm_id (see
+#   ROOT_COLUMNS/write_visibility_json) - never used to merge rows here.
 # - CWorkingSet: NOT ActiveMask-gated. Its own .jvi holds the Working Set
 #   descriptor content (norm 4.6.8: "can be used by the VT any time the
 #   Working Set needs to be represented to the operator") - potentially
@@ -275,6 +293,28 @@ VR_CAPABLE_CLASSES = {
 #   ChangeBackgroundColour command actually targets - confirmed real case:
 #   AuxFunction2_Lenkdeichsel_Links/Rechts, 31000/31001). NOT an
 #   ActiveMask/active_softkey_mask comparison target either.
+# - CWindowMask / CKeyGroup: norm 4.7.3-4.7.12 - operator-placed at runtime
+#   into a User-Layout DataMask's grid, can be shown/hidden independently and
+#   several can be visible at once (H.20). 0 instances in this pool today -
+#   code path anlegen anyway (own root, mask_id = own JVS-ID, iso_object_type
+#   34/35), UNVERIFIED class names/Path-property behavior, see load_pool().
+
+# ISO 11783-6:2018 Annex numeric object type codes, for the "roots" table's
+# iso_object_type column (IsoVtcApi.h enum, so the ECU can compare against the
+# exact same values the stack itself uses - not a class-name string).
+ISO_OBJECT_TYPE = {
+    "CWorkingSet": 0,
+    "CDataMask": 1,
+    "CAlarmMask": 2,
+    "CSoftKeyMask": 4,
+    "CAuxFunction": 31,  # AuxiliaryFunction2 - see comment block above
+    "CWindowMask": 34,   # unverified class name, 0 instances - see above
+    "CKeyGroup": 35,     # unverified class name, 0 instances - see above
+}
+
+ID_NULL = 65535  # ISO 11783-6 NULL ObjectID (16-bit field, 0xFFFF)
+
+ROOT_COLUMNS = ["root_id", "iso_object_type", "default_skm_id"]
 
 
 def _resolve_own_jvi_geometry(root_jid, obj_path, pool_dir, obj_children, obj_class,
@@ -426,19 +466,30 @@ def compute_visibility_rows(pool_dir, jop_path, obj_class, obj_name, obj_childre
     """Shared computation for --emit-visibility / --emit-visibility-json: one row per
     (object_id, mask_id) reachability pair, sorted. scroll_container_id/row_top_px/
     row_height_px are 0 when the object sits directly on a static (non-scrolling)
-    mask. Returns (rows, jop_hash, masks_with_jvi, scroll_viewports) - the last being
-    {scroll_container_id: viewport_height_px}, see compute_scroll_viewports().
+    mask. Returns (rows, jop_hash, masks_with_jvi, scroll_viewports, roots) -
+    scroll_viewports is {scroll_container_id: viewport_height_px}, see
+    compute_scroll_viewports(); roots is the list of (root_id, iso_object_type,
+    default_skm_id) tuples described by ROOT_COLUMNS above.
 
-    Covers every ISO 11783-6 VT root/visibility-defining object type actually
-    present in this pool - see the comment block above _resolve_own_jvi_geometry
-    for what each root's mask_id means (NOT always an ActiveMask comparison -
-    see BERICHT_2026-09-18_VT_SICHTBARKEITS_KONZEPT.md). masks_with_jvi only
-    counts the classic CDataMask/CAlarmMask bucket (kept for the existing
-    --emit-visibility console summary line / regression baseline), not the
-    WorkingSet/AuxFunction/orphan-SoftKeyMask additions below.
+    Every ISO 11783-6 VT root/visibility-defining object type actually present
+    in this pool gets its OWN root here - no fold-in of a SoftKeyMask's rows
+    into its paired Data/AlarmMask (removed 2026-09-27, see
+    BERICHT_2026-09-27_SICHTBARE_WURZELN_AUFTRAG.md and the comment block
+    above ISO_OBJECT_TYPE for why). Each root below builds its own fresh
+    `seen` set, so an object reachable from two different roots correctly
+    gets its own row under EACH of them - only a root's own recursive walk
+    (e.g. one CDataMask's own .jvi tree) still dedupes internally. masks_with_jvi
+    only counts the classic CDataMask/CAlarmMask bucket (kept for the existing
+    --emit-visibility console summary line / regression baseline).
     """
     activemask_roots = sorted(
         jid for jid, cls in obj_class.items() if cls in ("CDataMask", "CAlarmMask"))
+    softkeymask_roots = sorted(jid for jid, cls in obj_class.items() if cls == "CSoftKeyMask")
+    workingsets = sorted(jid for jid, cls in obj_class.items() if cls == "CWorkingSet")
+    auxfunctions = sorted(jid for jid, cls in obj_class.items() if cls == "CAuxFunction")
+    windowmasks = sorted(jid for jid, cls in obj_class.items() if cls == "CWindowMask")
+    keygroups = sorted(jid for jid, cls in obj_class.items() if cls == "CKeyGroup")
+
     # Excludes CProxy: the CProxy wrapping a "*_Scrolling_Content" CGroup carries the
     # same string in its own Name attribute (obj_name falls back to Name when
     # ObjectName is empty, which it always is for a CProxy) - verified real case
@@ -452,69 +503,53 @@ def compute_visibility_rows(pool_dir, jop_path, obj_class, obj_name, obj_childre
     }
 
     rows = []  # (object_id, mask_id, scroll_container_id, row_top_px, row_height_px)
+    roots = []  # (root_id, iso_object_type, default_skm_id)
     masks_with_jvi = 0
-    paired_softkeymasks = set()
+
+    # CDataMask / CAlarmMask - classic ActiveMask roots. default_skm_id records
+    # the .jvi's default SoftKeyMask pairing as a FALLBACK value only (see
+    # ROOT_COLUMNS comment) - it no longer pulls that SoftKeyMask's objects
+    # into this root's own rows.
     for root_jid in activemask_roots:
+        default_skm = ID_NULL
         root_path_rel = obj_path.get(root_jid)
-        if not root_path_rel:
-            continue
-        root_jvi = os.path.normpath(os.path.join(pool_dir, root_path_rel))
-        if not os.path.exists(root_jvi):
-            continue
-        masks_with_jvi += 1
+        if root_path_rel:
+            root_jvi = os.path.normpath(os.path.join(pool_dir, root_path_rel))
+            if os.path.exists(root_jvi):
+                masks_with_jvi += 1
+                seen = set()
+                jvi_roots = jvi_component_roots(root_jvi)
+                geometry = resolve_tree_with_geometry(
+                    jvi_roots, obj_children, obj_class, obj_top, obj_height,
+                    scroll_root_ids, seen)
+                for leaf_jid, (scroll_container, row_top, row_height) in geometry.items():
+                    rows.append((leaf_jid, root_jid, scroll_container or 0, row_top, row_height))
 
-        seen = set()
-        roots = jvi_component_roots(root_jvi)
-        geometry = resolve_tree_with_geometry(
-            roots, obj_children, obj_class, obj_top, obj_height, scroll_root_ids, seen)
+                skm_jid = jvi_softkeymask_id(root_jvi)
+                if skm_jid is not None:
+                    default_skm = skm_jid
+        roots.append((root_jid, ISO_OBJECT_TYPE[obj_class[root_jid]], default_skm))
 
-        # Fold-in: a paired SoftKeyMask's own objects (SoftKey/Image/Pointer etc. that
-        # are NOT reachable from the DataMask/AlarmMask's own .jvi at all - verified
-        # empirically for DataMask 1000 / SoftKeyMask 4000: 9 disjoint objects) get the
-        # PAIRED mask's mask_id here, not their own SoftKeyMask's JVS-ID. That's correct
-        # ONLY as long as this pool never switches a Working Set's SoftKeyMask at
-        # runtime independently of its .jvi default pairing - true today because
-        # isobus-3.0.0's Q_SoftKeyMask/cmd_change_softkey_mask FB type is never
-        # instantiated anywhere in the FBT network (grep confirmed, 2026-09-19). If that
-        # ever changes, this fold-in becomes wrong for the affected mask: the SoftKeyMask
-        # would need its own mask_id bucket here (like the orphan-CSoftKeyMask branch
-        # below) plus a second "active_softkey_mask" ECU-side comparison independent of
-        # the paired DataMask's ActiveMask - see BERICHT_2026-09-18_VT_SICHTBARKEITS_KONZEPT.md
-        # Abschnitt 6.
-        skm_jid = jvi_softkeymask_id(root_jvi)
-        if skm_jid is not None and skm_jid in obj_path:
-            paired_softkeymasks.add(skm_jid)
-            skm_jvi = os.path.normpath(os.path.join(pool_dir, obj_path[skm_jid]))
-            if os.path.exists(skm_jvi):
-                skm_roots = jvi_component_roots(skm_jvi)
-                geometry.update(resolve_tree_with_geometry(
-                    skm_roots, obj_children, obj_class, obj_top, obj_height,
-                    scroll_root_ids, seen))
-
-        for leaf_jid, (scroll_container, row_top, row_height) in geometry.items():
-            rows.append((leaf_jid, root_jid, scroll_container or 0, row_top, row_height))
-
-    # Orphan CSoftKeyMask (not paired to any Data/AlarmMask above) - own root,
-    # mask_id = its own JVS-ID. 0 in the current pool (all 17 are paired).
-    orphan_softkeymasks = sorted(
-        jid for jid, cls in obj_class.items()
-        if cls == "CSoftKeyMask" and jid not in paired_softkeymasks)
-    for skm_jid in orphan_softkeymasks:
+    # CSoftKeyMask - every one its own root, mask_id = own JVS-ID, whether or
+    # not any Data/AlarmMask names it as a default pairing (17/17 do today,
+    # all still walked identically - see comment block above ISO_OBJECT_TYPE).
+    for skm_jid in softkeymask_roots:
         geometry = _resolve_own_jvi_geometry(
             skm_jid, obj_path, pool_dir, obj_children, obj_class, obj_top, obj_height,
             scroll_root_ids)
         for leaf_jid, (scroll_container, row_top, row_height) in geometry.items():
             rows.append((leaf_jid, skm_jid, scroll_container or 0, row_top, row_height))
+        roots.append((skm_jid, ISO_OBJECT_TYPE["CSoftKeyMask"], ID_NULL))
 
     # CWorkingSet - NOT ActiveMask-gated, see comment block above. 1 instance
     # in the current pool (JVS-ID 0).
-    workingsets = sorted(jid for jid, cls in obj_class.items() if cls == "CWorkingSet")
     for ws_jid in workingsets:
         geometry = _resolve_own_jvi_geometry(
             ws_jid, obj_path, pool_dir, obj_children, obj_class, obj_top, obj_height,
             scroll_root_ids)
         for leaf_jid, (scroll_container, row_top, row_height) in geometry.items():
             rows.append((leaf_jid, ws_jid, scroll_container or 0, row_top, row_height))
+        roots.append((ws_jid, ISO_OBJECT_TYPE["CWorkingSet"], ID_NULL))
 
     # CAuxFunction - mask-independent, see comment block above. No .jvi Path
     # (native pool object, children already in obj_children) - walk directly
@@ -526,25 +561,43 @@ def compute_visibility_rows(pool_dir, jop_path, obj_class, obj_name, obj_childre
     # own row here with mask_id = that CAuxFunction's JVS-ID - exactly the
     # (object_id, owning_auxfunction2_id) pair the ECU-side GAux gate needs,
     # since resolve_tree_with_geometry() is class-agnostic (Franz: "schreib
-    # ALLE Objekte auf"), not curated per root type. No script change was
-    # needed for that request - verified 2026-09-20 against the real pool:
-    # CAuxFunction = ISO "Auxiliary Function Type 2" here (confirmed no
-    # "Type 1" objects exist - the 29000-29999 ID block per the ObjectID
-    # convention is empty), and it is currently the ONLY class in
+    # ALLE Objekte auf"), not curated per root type. Verified 2026-09-20
+    # against the real pool: CAuxFunction = ISO "Auxiliary Function Type 2"
+    # here (confirmed no "Type 1" objects exist - the 29000-29999 ID block per
+    # the ObjectID convention is empty), and it is currently the ONLY class in
     # DefaultPool.jop occupying 31000-31999. Currently 0 of the pool's 44
     # CPointer objects sit under any CAuxFunction (the GAux icon-swap pool
     # this task describes isn't built yet) - same "0 real instances, but the
     # generic code path is already correct by construction" situation as
-    # CWindowMask/CKeyGroup above, not a gap to fix once that pool exists.
-    auxfunctions = sorted(jid for jid, cls in obj_class.items() if cls == "CAuxFunction")
+    # CWindowMask/CKeyGroup below, not a gap to fix once that pool exists.
     for af_jid in auxfunctions:
         seen = set()
         geometry = resolve_tree_with_geometry(
             [af_jid], obj_children, obj_class, obj_top, obj_height, scroll_root_ids, seen)
         for leaf_jid, (scroll_container, row_top, row_height) in geometry.items():
             rows.append((leaf_jid, af_jid, scroll_container or 0, row_top, row_height))
+        roots.append((af_jid, ISO_OBJECT_TYPE["CAuxFunction"], ID_NULL))
+
+    # CWindowMask / CKeyGroup - anticipated code path, 0 instances in this
+    # pool today (see comment block above ISO_OBJECT_TYPE) - own root each,
+    # mask_id = own JVS-ID, exactly like CSoftKeyMask/CWorkingSet above.
+    for wm_jid in windowmasks:
+        geometry = _resolve_own_jvi_geometry(
+            wm_jid, obj_path, pool_dir, obj_children, obj_class, obj_top, obj_height,
+            scroll_root_ids)
+        for leaf_jid, (scroll_container, row_top, row_height) in geometry.items():
+            rows.append((leaf_jid, wm_jid, scroll_container or 0, row_top, row_height))
+        roots.append((wm_jid, ISO_OBJECT_TYPE["CWindowMask"], ID_NULL))
+    for kg_jid in keygroups:
+        geometry = _resolve_own_jvi_geometry(
+            kg_jid, obj_path, pool_dir, obj_children, obj_class, obj_top, obj_height,
+            scroll_root_ids)
+        for leaf_jid, (scroll_container, row_top, row_height) in geometry.items():
+            rows.append((leaf_jid, kg_jid, scroll_container or 0, row_top, row_height))
+        roots.append((kg_jid, ISO_OBJECT_TYPE["CKeyGroup"], ID_NULL))
 
     rows.sort()
+    roots.sort()
 
     scroll_viewports = compute_scroll_viewports(obj_class, obj_children, obj_height, scroll_root_ids)
 
@@ -556,35 +609,40 @@ def compute_visibility_rows(pool_dir, jop_path, obj_class, obj_name, obj_childre
     except OSError:
         pass
 
-    return rows, jop_hash, masks_with_jvi, scroll_viewports
+    return rows, jop_hash, masks_with_jvi, scroll_viewports, roots
 
 
-def write_visibility_csv(rows, jop_hash, scroll_viewports, out_path, jop_filename):
-    """Format spec: see BERICHT_2026-09-18_VT_SICHTBARKEITS_KONZEPT.md, Abschnitt 2.1.
+def write_visibility_csv(rows, jop_hash, scroll_viewports, roots, out_path, jop_filename):
+    """Format spec: see BERICHT_2026-09-18_VT_SICHTBARKEITS_KONZEPT.md, Abschnitt 2.1,
+    and BERICHT_2026-09-27_SICHTBARE_WURZELN_AUFTRAG.md point 4 for "roots".
     ~2.2x smaller on the wire/in flash than the JSON variant for this purely
     numeric, flat table - its only real advantage now that cJSON (ESP-IDF's
     standard JSON library) makes the "no library" argument moot on the ESP32.
 
     scroll_viewports ({scroll_container_id: viewport_height_px}, see
-    compute_scroll_viewports()) is written as extra comment lines, not data rows -
-    the ECU only reads the JSON variant for this (see
-    BERICHT_2026-09-20_SCROLL_VIEWPORT_AUFTRAG.md), so the exact comment format here
-    is secondary."""
+    compute_scroll_viewports()) and roots (see ROOT_COLUMNS) are both written
+    as extra comment lines, not data rows - the ECU only reads the JSON
+    variant for this (see BERICHT_2026-09-20_SCROLL_VIEWPORT_AUFTRAG.md,
+    BERICHT_2026-09-27_SICHTBARE_WURZELN_AUFTRAG.md), so the exact comment
+    format here is secondary."""
     from datetime import datetime, timezone
     with open(out_path, "w", encoding="ascii", newline="\n") as f:
         f.write("# DefaultPool.vis.csv - VT object -> mask/scroll visibility table\n")
         f.write(f"# Generated: {datetime.now(timezone.utc).isoformat(timespec='seconds')} "
                 f"from {jop_filename} (source hash: {jop_hash})\n")
-        f.write("# Format version: 1\n")
+        f.write("# Format version: 2\n")
         f.write("# Columns: object_id,mask_id,scroll_container_id,row_top_px,row_height_px\n")
         f.write("# Scroll viewport columns: scroll_container_id,viewport_height_px\n")
         for container_id, height in sorted(scroll_viewports.items()):
             f.write(f"# ScrollViewport: {container_id},{height}\n")
+        f.write(f"# Root columns: {','.join(ROOT_COLUMNS)}\n")
+        for root_id, iso_object_type, default_skm_id in roots:
+            f.write(f"# Root: {root_id},{iso_object_type},{default_skm_id}\n")
         for r in rows:
             f.write(",".join(str(v) for v in r) + "\n")
 
 
-def write_visibility_json(rows, jop_hash, scroll_viewports, out_path):
+def write_visibility_json(rows, jop_hash, scroll_viewports, roots, out_path):
     """Same data as write_visibility_csv, as JSON - offered as an alternative for
     whichever firmware/tooling ends up consuming this, in case a JSON library is
     already in use elsewhere in that codebase. Same schema, one object per row
@@ -594,17 +652,27 @@ def write_visibility_json(rows, jop_hash, scroll_viewports, out_path):
     scroll_viewports ({scroll_container_id: viewport_height_px}, see
     compute_scroll_viewports()) is emitted as its own top-level "scroll_viewports"
     array, same array-of-arrays shape as "rows" so the ECU-side parser can reuse
-    the same row-reading code - see BERICHT_2026-09-20_SCROLL_VIEWPORT_AUFTRAG.md."""
+    the same row-reading code - see BERICHT_2026-09-20_SCROLL_VIEWPORT_AUFTRAG.md.
+
+    roots (see ROOT_COLUMNS) is the new top-level field from
+    BERICHT_2026-09-27_SICHTBARE_WURZELN_AUFTRAG.md point 4 - every root
+    object in the pool, including ones with 0 rows of their own (e.g. an
+    unpaired SoftKeyMask). format_version bumped 1->2: rows mean something
+    different now (a SoftKeyMask's objects are no longer folded into its
+    paired Data/AlarmMask's rows), and "roots" is new - the ECU can use this
+    to detect it has loaded a table in the new model."""
     import json
     from datetime import datetime, timezone
     doc = {
-        "format_version": 1,
+        "format_version": 2,
         "generated": datetime.now(timezone.utc).isoformat(timespec="seconds"),
         "source_jop_hash": jop_hash,
         "columns": ["object_id", "mask_id", "scroll_container_id", "row_top_px", "row_height_px"],
         "rows": [list(r) for r in rows],
         "scroll_viewport_columns": ["scroll_container_id", "viewport_height_px"],
         "scroll_viewports": [list(item) for item in sorted(scroll_viewports.items())],
+        "root_columns": ROOT_COLUMNS,
+        "roots": [list(r) for r in roots],
     }
     with open(out_path, "w", encoding="ascii", newline="\n") as f:
         json.dump(doc, f, indent=1)
@@ -618,17 +686,17 @@ def main():
     obj_class, obj_name, obj_children, obj_path, obj_top, obj_height = load_pool(jop_path)
 
     if emit_visibility or emit_visibility_json:
-        rows, jop_hash, masks_with_jvi, scroll_viewports = compute_visibility_rows(
+        rows, jop_hash, masks_with_jvi, scroll_viewports, roots = compute_visibility_rows(
             pool_dir, jop_path, obj_class, obj_name, obj_children, obj_path, obj_top, obj_height)
         if emit_visibility:
-            write_visibility_csv(rows, jop_hash, scroll_viewports, emit_visibility,
+            write_visibility_csv(rows, jop_hash, scroll_viewports, roots, emit_visibility,
                                   os.path.basename(jop_path))
-            print(f"Wrote {len(rows)} rows ({masks_with_jvi} masks with a resolvable "
-                  f".jvi, {len(scroll_viewports)} scroll viewports) to {emit_visibility}")
+            print(f"Wrote {len(rows)} rows, {len(roots)} roots ({masks_with_jvi} masks with a "
+                  f"resolvable .jvi, {len(scroll_viewports)} scroll viewports) to {emit_visibility}")
         if emit_visibility_json:
-            write_visibility_json(rows, jop_hash, scroll_viewports, emit_visibility_json)
-            print(f"Wrote {len(rows)} rows ({masks_with_jvi} masks with a resolvable "
-                  f".jvi, {len(scroll_viewports)} scroll viewports) to {emit_visibility_json}")
+            write_visibility_json(rows, jop_hash, scroll_viewports, roots, emit_visibility_json)
+            print(f"Wrote {len(rows)} rows, {len(roots)} roots ({masks_with_jvi} masks with a "
+                  f"resolvable .jvi, {len(scroll_viewports)} scroll viewports) to {emit_visibility_json}")
         return
 
     mask_roots = sorted(

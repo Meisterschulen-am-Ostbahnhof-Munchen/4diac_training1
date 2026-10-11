@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<GlobalConstants Name="SubStrings" Comment="Global constants">
+	<Identification Standard="61499-1">
+	</Identification>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2026-10-05">
+	</VersionInfo>
+	<CompilerInfo packageName="Meins::Servo_Slider_OPC">
+	</CompilerInfo>
+	<GlobalConstants>
+		<VarDeclaration Name="SERVO_Q2_ANGLE_SET" Type="WSTRING" InitialValue="&quot;opc_ua[READ;/Objects/Servo/Q02/ANGLE_SET,1:s=SERVO_Q2_ANGLE_SET]&quot;"/>
+		<VarDeclaration Name="SERVO_Q2_ANGLE" Type="WSTRING" InitialValue="&quot;opc_ua[WRITE;/Objects/Servo/Q02/ANGLE,1:s=SERVO_Q2_ANGLE]&quot;"/>
+	</GlobalConstants>
+	<OriginalSource><![CDATA[PACKAGE Meins::Servo_Slider_OPC;
+
+// OPC-UA Strings
+GLOBALCONSTANTS SubStrings
+	VAR_GLOBAL CONSTANT
+		SERVO_Q2_ANGLE_SET : WSTRING := "opc_ua[READ;/Objects/Servo/Q02/ANGLE_SET,1:s=SERVO_Q2_ANGLE_SET]";
+		SERVO_Q2_ANGLE : WSTRING := "opc_ua[WRITE;/Objects/Servo/Q02/ANGLE,1:s=SERVO_Q2_ANGLE]";
+	END_VAR
+END_GLOBALCONSTANTS
+]]></OriginalSource>
+</GlobalConstants>
