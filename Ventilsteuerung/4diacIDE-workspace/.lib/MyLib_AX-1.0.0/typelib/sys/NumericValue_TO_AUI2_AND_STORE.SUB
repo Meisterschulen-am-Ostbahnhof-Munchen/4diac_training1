@@ -33,7 +33,7 @@
 		</FB>
 		<FB Name="AUI_TO_AUDI" Type="adapter::conversion::unidirectional::AUI_TO_AUDI" x="-1800" y="900">
 		</FB>
-		<FB Name="Q_NumericValue_AUDI" Type="isobus::UT::Q::Q_NumericValue_AUDI" x="-400" y="500">
+		<FB Name="Q_NumericValue_AUDI" Type="isobus::UT::Q::Q_NumericValue_AUDI" x="-400" y="300">
 		</FB>
 		<FB Name="AUI_LAST_2" Type="adapter::events::unidirectional::AUI_LAST_2" Comment="Last-Writer-Wins: beim Boot gewinnt der INI_AUI2-Wert (IN2), danach jede Live-VT-Aenderung (IN1)" x="-6000" y="1100">
 		</FB>
@@ -58,8 +58,8 @@
 			<Connection Source="u16ObjId" Destination="Q_NumericValue_AUDI.u16ObjId" dx1="8246.67">
 				<Attribute Name="Visible" Value="false"/>
 			</Connection>
-			<Connection Source="QI" Destination="Q_NumericValue_AUDI.QI"/>
-			<Connection Source="Q_NumericValue_AUDI.QO" Destination="QO"/>
+			<Connection Source="QI" Destination="Q_NumericValue_AUDI.QI" dx1="6246.67"/>
+			<Connection Source="Q_NumericValue_AUDI.QO" Destination="QO" dx1="1346.67"/>
 		</DataConnections>
 		<AdapterConnections>
 			<Connection Source="NumericValue_IDA.IN" Destination="AD_TO_AUI.AD_IN" dx1="180"/>
