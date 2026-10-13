@@ -8,15 +8,23 @@
 		<Import declaration="isobus::UT::Q::const::IDs::ID_NULL"/>
 	</CompilerInfo>
 	<SubAppInterfaceList>
+		<SubAppEventInputs>
+			<SubAppEvent Name="INIT" Type="EInit" Comment="Initialization Request">
+			</SubAppEvent>
+		</SubAppEventInputs>
 		<SubAppEventOutputs>
+			<SubAppEvent Name="INITO" Type="EInit" Comment="Initialization Confirm">
+			</SubAppEvent>
 			<SubAppEvent Name="CNF" Type="Event" Comment="Execution Confirmation">
 			</SubAppEvent>
 		</SubAppEventOutputs>
 		<InputVars>
+			<VarDeclaration Name="QI" Type="BOOL" Comment="Quality Input - TRUE to enable service" InitialValue="TRUE"/>
 			<VarDeclaration Name="u16ObjId_Pointer" Type="UINT" Comment="Object ID des ObjectPointer (CPointer), dessen Ziel geschaltet wird" InitialValue="ID_NULL"/>
 			<VarDeclaration Name="u16ObjId_Show" Type="UINT" Comment="Object ID, die bei DI1=TRUE unter dem Pointer angezeigt wird" InitialValue="ID_NULL"/>
 		</InputVars>
 		<OutputVars>
+			<VarDeclaration Name="QO" Type="BOOL" Comment="Quality Output - TRUE if service executed successfully"/>
 			<VarDeclaration Name="STATUS_1" Type="STRING" Comment="Service Status"/>
 			<VarDeclaration Name="u32OldValue_1" Type="UDINT" Comment="Old value of ID"/>
 			<VarDeclaration Name="result_1" Type="INT" Comment="retval see description"/>
@@ -34,6 +42,8 @@
 		<EventConnections>
 			<Connection Source="Q_NumericValue.CNF" Destination="CNF" dx1="960"/>
 			<Connection Source="AX_SEL.CNF" Destination="Q_NumericValue.REQ" dx1="213.33"/>
+			<Connection Source="INIT" Destination="Q_NumericValue.INIT"/>
+			<Connection Source="Q_NumericValue.INITO" Destination="INITO"/>
 		</EventConnections>
 		<DataConnections>
 			<Connection Source="u16ObjId_Pointer" Destination="Q_NumericValue.u16ObjId" dx1="3953.33"/>
@@ -42,6 +52,8 @@
 			<Connection Source="Q_NumericValue.STATUS" Destination="STATUS_1" dx1="946.67"/>
 			<Connection Source="Q_NumericValue.s16result" Destination="result_1" dx1="926.67"/>
 			<Connection Source="AX_SEL.OUT" Destination="Q_NumericValue.u32NewValue" dx1="406.67"/>
+			<Connection Source="QI" Destination="Q_NumericValue.QI"/>
+			<Connection Source="Q_NumericValue.QO" Destination="QO"/>
 		</DataConnections>
 		<AdapterConnections>
 			<Connection Source="DI1" Destination="AX_SEL.G" dx1="660"/>

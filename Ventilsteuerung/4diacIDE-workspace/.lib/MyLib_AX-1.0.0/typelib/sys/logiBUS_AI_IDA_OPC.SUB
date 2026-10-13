@@ -11,11 +11,15 @@
 	</CompilerInfo>
 	<SubAppInterfaceList>
 		<InputVars>
+			<VarDeclaration Name="QI" Type="BOOL" Comment="Quality Input - TRUE to enable service" InitialValue="TRUE"/>
 			<VarDeclaration Name="u16ObjId_VALUEVAR" Type="UINT" Comment="Object ID CNumberVariable (Rohwert 0-4095, gemeinsam gebunden an Rohwert-Zahlenfeld, Prozent-Zahlenfeld und Bargraph - Prozent/Bargraph nutzen ihre eigene VT-Scale auf denselben Rohwert)" InitialValue="ID_NULL"/>
 			<VarDeclaration Name="Input" Type="logiBUS::io::AI::logiBUS_AI_S" Comment="Identify the Input AnalogInput_I1..I8" InitialValue="logiBUS_AI::Invalid"/>
 			<VarDeclaration Name="ID_RAW_WRITE" Type="WSTRING" Comment="Rohwert-Ruckmelde-Adresse (DWORD 0-4095, ACTION=PUBLISH)"/>
 			<VarDeclaration Name="ID_PERCENT_WRITE" Type="WSTRING" Comment="Prozent-Ruckmelde-Adresse (REAL 0.0-100.0, ACTION=PUBLISH, linear ohne physikalische Kalibrierung)"/>
 		</InputVars>
+		<OutputVars>
+			<VarDeclaration Name="QO" Type="BOOL" Comment="Quality Output - TRUE if service executed successfully"/>
+		</OutputVars>
 	</SubAppInterfaceList>
 	<SubAppNetwork>
 		<FB Name="logiBUS_AI_IDA" Type="logiBUS::io::AI::logiBUS_AI_IDA" x="-5600" y="-1700">
@@ -54,6 +58,8 @@
 			<Connection Source="ID_PERCENT_WRITE" Destination="AR_PUBLISH_PERCENT.ID" dx1="4280">
 				<Attribute Name="Visible" Value="false"/>
 			</Connection>
+			<Connection Source="QI" Destination="Q_NumericValue.QI"/>
+			<Connection Source="Q_NumericValue.QO" Destination="QO"/>
 		</DataConnections>
 		<AdapterConnections>
 			<Connection Source="logiBUS_AI_IDA.IN" Destination="AD_SPLIT_2.IN" dx1="420"/>

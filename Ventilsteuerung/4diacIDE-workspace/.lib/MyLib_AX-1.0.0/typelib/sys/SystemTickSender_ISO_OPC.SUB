@@ -8,10 +8,22 @@
 		<Import declaration="isobus::UT::Q::const::IDs::ID_NULL"/>
 	</CompilerInfo>
 	<SubAppInterfaceList>
+		<SubAppEventInputs>
+			<SubAppEvent Name="INIT" Type="EInit" Comment="Initialization Request">
+			</SubAppEvent>
+		</SubAppEventInputs>
+		<SubAppEventOutputs>
+			<SubAppEvent Name="INITO" Type="EInit" Comment="Initialization Confirm">
+			</SubAppEvent>
+		</SubAppEventOutputs>
 		<InputVars>
+			<VarDeclaration Name="QI" Type="BOOL" Comment="Quality Input - TRUE to enable service" InitialValue="TRUE"/>
 			<VarDeclaration Name="u16ObjId" Type="UINT" Comment="Object ID VT-Zahlenausgabefeld (OutputNumberField), zeigt den Tick-Zaehlerstand an" InitialValue="ID_NULL"/>
 			<VarDeclaration Name="ID_WRITE" Type="WSTRING" Comment="OPC-UA Publish-Key fuer den Tick-Zaehlerstand (fuer Remote-Subscribe durch andere Module)"/>
 		</InputVars>
+		<OutputVars>
+			<VarDeclaration Name="QO" Type="BOOL" Comment="Quality Output - TRUE if service executed successfully"/>
+		</OutputVars>
 	</SubAppInterfaceList>
 	<SubAppNetwork>
 		<SubApp Name="System_Tick" Type="MyLib::sys::SystemTick" x="0" y="0">
@@ -25,6 +37,10 @@
 		<FB Name="ADI_PUBLISH_1" Type="adapter::net::ADI_PUBLISH_1" x="4600" y="200">
 			<Parameter Name="QI" Value="TRUE"/>
 		</FB>
+		<EventConnections>
+			<Connection Source="INIT" Destination="Q_NumericValue_AUDI.INIT"/>
+			<Connection Source="Q_NumericValue_AUDI.INITO" Destination="INITO"/>
+		</EventConnections>
 		<DataConnections>
 			<Connection Source="u16ObjId" Destination="Q_NumericValue_AUDI.u16ObjId" dx1="2513.33">
 				<Attribute Name="Visible" Value="false"/>
@@ -32,6 +48,8 @@
 			<Connection Source="ID_WRITE" Destination="ADI_PUBLISH_1.ID" dx1="2513.33">
 				<Attribute Name="Visible" Value="false"/>
 			</Connection>
+			<Connection Source="QI" Destination="Q_NumericValue_AUDI.QI"/>
+			<Connection Source="Q_NumericValue_AUDI.QO" Destination="QO"/>
 		</DataConnections>
 		<AdapterConnections>
 			<Connection Source="System_Tick.ADI_OUT" Destination="ADI_SPLIT_2.IN"/>

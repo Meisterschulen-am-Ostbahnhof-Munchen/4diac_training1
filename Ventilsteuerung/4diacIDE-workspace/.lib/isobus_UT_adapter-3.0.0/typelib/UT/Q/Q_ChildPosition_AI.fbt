@@ -12,6 +12,7 @@
 	<InterfaceList>
 		<EventInputs>
 			<Event Name="INIT" Type="EInit" Comment="Service Initialization">
+				<With Var="QI"/>
 				<With Var="u16ObjId"/>
 				<With Var="u16ObjIdParent"/>
 				<With Var="xScale"/>
@@ -19,8 +20,10 @@
 		</EventInputs>
 		<EventOutputs>
 			<Event Name="INITO" Type="EInit" Comment="Initialization Confirm">
+				<With Var="QO"/>
 			</Event>
 			<Event Name="CNF" Type="Event" Comment="Confirmation of Requested Service">
+				<With Var="QO"/>
 				<With Var="STATUS"/>
 				<With Var="s16OldXposition"/>
 				<With Var="s16OldYposition"/>
@@ -28,11 +31,13 @@
 			</Event>
 		</EventOutputs>
 		<InputVars>
+			<VarDeclaration Name="QI" Type="BOOL" Comment="Quality Input - TRUE to enable service" InitialValue="TRUE"/>
 			<VarDeclaration Name="u16ObjId" Type="UINT" Comment="Object ID" InitialValue="ID_NULL"/>
 			<VarDeclaration Name="u16ObjIdParent" Type="UINT" Comment="Parent object ID" InitialValue="ID_NULL"/>
 			<VarDeclaration Name="xScale" Type="BOOL" Comment="FALSE (default) = bypass, send s16Xposition/s16Yposition through unchanged. TRUE = scale them by the DM/SKM factor for u16ObjIdParent." InitialValue="FALSE"/>
 		</InputVars>
 		<OutputVars>
+			<VarDeclaration Name="QO" Type="BOOL" Comment="Quality Output - TRUE if service executed successfully"/>
 			<VarDeclaration Name="STATUS" Type="STRING" Comment="Service Status - passthrough from the internal Q_ChildPosition"/>
 			<VarDeclaration Name="s16OldXposition" Type="INT" Comment="Old X position - passthrough from the internal Q_ChildPosition"/>
 			<VarDeclaration Name="s16OldYposition" Type="INT" Comment="Old Y position - passthrough from the internal Q_ChildPosition"/>
@@ -63,6 +68,8 @@
 			<Connection Source="Inner.s16OldXposition" Destination="s16OldXposition" dx1="2000"/>
 			<Connection Source="Inner.s16OldYposition" Destination="s16OldYposition" dx1="2000"/>
 			<Connection Source="Inner.s16result" Destination="s16result" dx1="2573.33"/>
+			<Connection Source="QI" Destination="Inner.QI"/>
+			<Connection Source="Inner.QO" Destination="QO"/>
 		</DataConnections>
 	</FBNetwork>
 	<Attribute Name="eclipse4diac::core::TypeHash" Value="''"/>

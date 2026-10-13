@@ -9,15 +9,23 @@
 		<Import declaration="logiBUS::utils::conversion::phys::NumericObjectPool_S"/>
 	</CompilerInfo>
 	<SubAppInterfaceList>
+		<SubAppEventInputs>
+			<SubAppEvent Name="INIT" Type="EInit" Comment="Initialization Request">
+			</SubAppEvent>
+		</SubAppEventInputs>
 		<SubAppEventOutputs>
+			<SubAppEvent Name="INITO" Type="EInit" Comment="Initialization Confirm">
+			</SubAppEvent>
 			<SubAppEvent Name="IND" Type="Event">
 			</SubAppEvent>
 		</SubAppEventOutputs>
 		<InputVars>
+			<VarDeclaration Name="QI" Type="BOOL" Comment="Quality Input - TRUE to enable service" InitialValue="TRUE"/>
 			<VarDeclaration Name="KEY" Type="STRING" Comment="Key name."/>
 			<VarDeclaration Name="stObj" Type="logiBUS::utils::conversion::phys::NumericObjectPool_S" InitialValue="(u16ObjId := ID_NULL, r32Scale := 1.0, i32Offset := 0, u8Decimals := 0)"/>
 		</InputVars>
 		<OutputVars>
+			<VarDeclaration Name="QO" Type="BOOL" Comment="Quality Output - TRUE if service executed successfully"/>
 			<VarDeclaration Name="VALUEO" Type="REAL"/>
 		</OutputVars>
 	</SubAppInterfaceList>
@@ -41,6 +49,8 @@
 				<Attribute Name="Visible" Value="false"/>
 			</Connection>
 			<Connection Source="NVS.INITO" Destination="NVS.GET" dx1="80" dx2="80" dy="-580"/>
+			<Connection Source="INIT" Destination="Q_NumericValue_PHYS.INIT"/>
+			<Connection Source="Q_NumericValue_PHYS.INITO" Destination="INITO"/>
 		</EventConnections>
 		<DataConnections>
 			<Connection Source="NumericValue_PHYS.rPhys" Destination="NVS.VALUE" dx1="186.67"/>
@@ -57,6 +67,8 @@
 			<Connection Source="stObj" Destination="NumericValue_PHYS.stObj" dx1="1793.33">
 				<Attribute Name="Visible" Value="false"/>
 			</Connection>
+			<Connection Source="QI" Destination="Q_NumericValue_PHYS.QI"/>
+			<Connection Source="Q_NumericValue_PHYS.QO" Destination="QO"/>
 		</DataConnections>
 	</SubAppNetwork>
 </SubAppType>

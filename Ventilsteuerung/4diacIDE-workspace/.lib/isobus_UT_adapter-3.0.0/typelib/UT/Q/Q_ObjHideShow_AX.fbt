@@ -9,16 +9,22 @@
 	<InterfaceList>
 		<EventInputs>
 			<Event Name="INIT" Type="EInit" Comment="Service Initialization">
+				<With Var="QI"/>
 				<With Var="u16ObjId"/>
 			</Event>
 		</EventInputs>
 		<EventOutputs>
 			<Event Name="INITO" Type="EInit" Comment="Initialization Confirm">
+				<With Var="QO"/>
 			</Event>
 		</EventOutputs>
 		<InputVars>
+			<VarDeclaration Name="QI" Type="BOOL" Comment="Quality Input - TRUE to enable service" InitialValue="TRUE"/>
 			<VarDeclaration Name="u16ObjId" Type="UINT" Comment="Object ID"/>
 		</InputVars>
+		<OutputVars>
+			<VarDeclaration Name="QO" Type="BOOL" Comment="Quality Output - TRUE if service executed successfully"/>
+		</OutputVars>
 		<Plugs>
 			<AdapterDeclaration Name="qOldVisible" Type="adapter::types::unidirectional::AB" Comment="Old value of Visible 0 == hidden, 1 == shown, 0xFF == undefined" x="2900" y="-300"/>
 		</Plugs>
@@ -39,6 +45,8 @@
 			<Connection Source="u16ObjId" Destination="Q_ObjHideShow.u16ObjId" dx1="200"/>
 			<Connection Source="qVisible.D1" Destination="Q_ObjHideShow.qVisible" dx1="1000"/>
 			<Connection Source="Q_ObjHideShow.qOldVisible" Destination="qOldVisible.D1" dx1="533.33"/>
+			<Connection Source="QI" Destination="Q_ObjHideShow.QI"/>
+			<Connection Source="Q_ObjHideShow.QO" Destination="QO"/>
 		</DataConnections>
 	</FBNetwork>
 	<Attribute Name="eclipse4diac::core::TypeHash" Value="''"/>

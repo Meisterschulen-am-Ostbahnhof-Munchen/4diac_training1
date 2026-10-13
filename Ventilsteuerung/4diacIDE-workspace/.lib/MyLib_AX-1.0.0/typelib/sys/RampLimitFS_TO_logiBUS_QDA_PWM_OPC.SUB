@@ -11,6 +11,7 @@
 	</CompilerInfo>
 	<SubAppInterfaceList>
 		<InputVars>
+			<VarDeclaration Name="QI" Type="BOOL" Comment="Quality Input - TRUE to enable service" InitialValue="TRUE"/>
 			<VarDeclaration Name="u16ObjId_VALUEVAR" Type="UINT" Comment="Object ID CNumberVariable (Prozent 0-100, gemeinsam gebunden an Balkengrafik und CInputNumber-Anzeige)" InitialValue="ID_NULL"/>
 			<VarDeclaration Name="u16ObjId_SWITCH" Type="UINT" Comment="Object ID Kanal-Ein/Aus-Taste (Klick togglet Enable)" InitialValue="ID_NULL"/>
 			<VarDeclaration Name="u16ObjId_STATUS" Type="UINT" Comment="Object ID Status-Anzeige (Hintergrundfarbe Weiss=Kanal deaktiviert / Gruen=aktiv+logiBUS_QD_PWM.QO TRUE / Rot=aktiv+QO FALSE, Stoerung)" InitialValue="ID_NULL"/>
@@ -28,6 +29,9 @@
 			<VarDeclaration Name="ID_SWITCH_WRITE" Type="WSTRING" Comment="Echo-Ruckmelde-Adresse (BOOL, ACTION=PUBLISH, aktueller Kanal-Enable-Zustand)"/>
 			<VarDeclaration Name="ID_STATUS_WRITE" Type="WSTRING" Comment="Status-Ruckmelde-Adresse (BOOL, ACTION=PUBLISH, nur lesend, logiBUS_QD_PWM.QO)"/>
 		</InputVars>
+		<OutputVars>
+			<VarDeclaration Name="QO" Type="BOOL" Comment="Quality Output - TRUE if service executed successfully"/>
+		</OutputVars>
 	</SubAppInterfaceList>
 	<SubAppNetwork>
 		<FB Name="NumericValue_Duty" Type="isobus::UT::io::NumericValue::NumericValue_ID" x="-14800" y="-3100">
@@ -246,6 +250,8 @@
 			<Connection Source="bDefaultEnabled" Destination="E_T_FF_SR_SWITCH.Q_INIT" dx1="4926.67">
 				<Attribute Name="Visible" Value="false"/>
 			</Connection>
+			<Connection Source="QI" Destination="Q_NumericValue.QI"/>
+			<Connection Source="Q_NumericValue.QO" Destination="QO"/>
 		</DataConnections>
 		<AdapterConnections>
 			<Connection Source="AR_SUBSCRIBE_1.OUT" Destination="AR_R_TO_REAL_SUB.AR_IN" dx1="513.33"/>

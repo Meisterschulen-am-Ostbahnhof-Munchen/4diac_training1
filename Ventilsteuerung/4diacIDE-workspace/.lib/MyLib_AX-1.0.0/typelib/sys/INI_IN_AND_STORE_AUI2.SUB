@@ -9,10 +9,14 @@
 	</CompilerInfo>
 	<SubAppInterfaceList>
 		<InputVars>
+			<VarDeclaration Name="QI" Type="BOOL" Comment="Quality Input - TRUE to enable service" InitialValue="TRUE"/>
 			<VarDeclaration Name="KEY" Type="STRING" Comment="Key name."/>
 			<VarDeclaration Name="SECTION" Type="STRING" Comment="Section name."/>
 			<VarDeclaration Name="u16ObjId" Type="UINT" InitialValue="ID_NULL"/>
 		</InputVars>
+		<OutputVars>
+			<VarDeclaration Name="QO" Type="BOOL" Comment="Quality Output - TRUE if service executed successfully"/>
+		</OutputVars>
 		<Plugs>
 			<AdapterDeclaration Name="VALUEO" Type="adapter::types::unidirectional::AUI"/>
 		</Plugs>
@@ -50,6 +54,8 @@
 			<Connection Source="u16ObjId" Destination="Q_NumericValue_AUDI.u16ObjId" dx1="8246.67">
 				<Attribute Name="Visible" Value="false"/>
 			</Connection>
+			<Connection Source="QI" Destination="Q_NumericValue_AUDI.QI"/>
+			<Connection Source="Q_NumericValue_AUDI.QO" Destination="QO"/>
 		</DataConnections>
 		<AdapterConnections>
 			<Connection Source="ID.IN" Destination="AD_TO_AUI.AD_IN" dx1="180"/>

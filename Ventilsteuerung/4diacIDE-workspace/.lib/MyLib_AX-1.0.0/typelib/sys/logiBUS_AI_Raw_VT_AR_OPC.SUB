@@ -12,10 +12,14 @@
 	</CompilerInfo>
 	<SubAppInterfaceList>
 		<InputVars>
+			<VarDeclaration Name="QI" Type="BOOL" Comment="Quality Input - TRUE to enable service" InitialValue="TRUE"/>
 			<VarDeclaration Name="Input" Type="logiBUS::io::AI::logiBUS_AI_S" Comment="Identify the Input AnalogInput_I1..I8" InitialValue="logiBUS_AI::Invalid"/>
 			<VarDeclaration Name="u16ObjId_RAWVAR" Type="UINT" Comment="Object ID CNumberVariable (Rohwert 0-4095, unkalibriert, reine Diagnose-Anzeige)"/>
 			<VarDeclaration Name="ID_RAW_WRITE" Type="WSTRING" Comment="Rohwert-Ruckmelde-Adresse (REAL 0-4095, ACTION=PUBLISH)"/>
 		</InputVars>
+		<OutputVars>
+			<VarDeclaration Name="QO" Type="BOOL" Comment="Quality Output - TRUE if service executed successfully"/>
+		</OutputVars>
 		<Plugs>
 			<AdapterDeclaration Name="AR_OUT" Type="adapter::types::unidirectional::AR" Comment="Rohwert als AR, fertig fuer CALIBRATE.X"/>
 		</Plugs>
@@ -53,6 +57,8 @@
 			<Connection Source="ID_RAW_WRITE" Destination="AR_PUBLISH_RAW.ID" dx1="1400">
 				<Attribute Name="Visible" Value="false"/>
 			</Connection>
+			<Connection Source="QI" Destination="Q_NumericValue_RAW.QI"/>
+			<Connection Source="Q_NumericValue_RAW.QO" Destination="QO"/>
 		</DataConnections>
 		<AdapterConnections>
 			<Connection Source="logiBUS_AI_IDA.IN" Destination="AD_TO_AUDI.AD_IN" dx1="420"/>

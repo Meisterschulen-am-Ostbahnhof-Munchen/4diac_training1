@@ -13,16 +13,20 @@
 	<InterfaceList>
 		<EventInputs>
 			<Event Name="INIT" Type="EInit" Comment="Service Initialization">
+				<With Var="QI"/>
 				<With Var="stObj"/>
 			</Event>
 			<Event Name="REQ" Type="Event" Comment="Service Request">
+				<With Var="QI"/>
 				<With Var="lrPhys"/>
 			</Event>
 		</EventInputs>
 		<EventOutputs>
 			<Event Name="INITO" Type="EInit" Comment="Initialization Confirm">
+				<With Var="QO"/>
 			</Event>
 			<Event Name="CNF" Type="Event" Comment="Confirmation of Requested Service">
+				<With Var="QO"/>
 				<With Var="STATUS"/>
 				<With Var="u32OldValue"/>
 				<With Var="s16result"/>
@@ -31,10 +35,12 @@
 			</Event>
 		</EventOutputs>
 		<InputVars>
+			<VarDeclaration Name="QI" Type="BOOL" Comment="Quality Input - TRUE to enable service" InitialValue="TRUE"/>
 			<VarDeclaration Name="stObj" Type="logiBUS::utils::conversion::phys::NumericObjectPool_S" Comment="Object pool properties (u16ObjId, scale, offset, decimals)" InitialValue="(u16ObjId := ID_NULL, r32Scale := 1.0, i32Offset := 0, u8Decimals := 0)"/>
 			<VarDeclaration Name="lrPhys" Type="LREAL" Comment="New raw value — use F_PHYS_LREAL_TO_RAW to convert from physical value"/>
 		</InputVars>
 		<OutputVars>
+			<VarDeclaration Name="QO" Type="BOOL" Comment="Quality Output - TRUE if service executed successfully"/>
 			<VarDeclaration Name="STATUS" Type="STRING" Comment="Service Status"/>
 			<VarDeclaration Name="u32OldValue" Type="UDINT" Comment="Old raw value of ID"/>
 			<VarDeclaration Name="s16result" Type="INT" Comment="retval see Q_NumericValue"/>
@@ -66,6 +72,8 @@
 			<Connection Source="lrPhys" Destination="F_PHYS_LREAL_TO_RAW.lrPhys" dx1="593.33"/>
 			<Connection Source="stObj" Destination="F_MOVE.stObj" dx1="1100"/>
 			<Connection Source="F_MOVE." Destination="Q_NumericValue.u16ObjId" dx1="533.33"/>
+			<Connection Source="QI" Destination="Q_NumericValue.QI" dx1="533.33"/>
+			<Connection Source="Q_NumericValue.QO" Destination="QO" dx1="2000"/>
 			<Connection Source="F_PHYS_LREAL_TO_RAW.xOver" Destination="xOver" dx1="4460"/>
 			<Connection Source="F_PHYS_LREAL_TO_RAW.xUnder" Destination="xUnder" dx1="4573.33"/>
 		</DataConnections>

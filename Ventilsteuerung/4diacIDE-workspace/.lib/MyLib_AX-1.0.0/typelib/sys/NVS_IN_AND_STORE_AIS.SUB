@@ -8,10 +8,22 @@
 		<Import declaration="isobus::UT::Q::const::IDs::ID_NULL"/>
 	</CompilerInfo>
 	<SubAppInterfaceList>
+		<SubAppEventInputs>
+			<SubAppEvent Name="INIT" Type="EInit" Comment="Initialization Request">
+			</SubAppEvent>
+		</SubAppEventInputs>
+		<SubAppEventOutputs>
+			<SubAppEvent Name="INITO" Type="EInit" Comment="Initialization Confirm">
+			</SubAppEvent>
+		</SubAppEventOutputs>
 		<InputVars>
+			<VarDeclaration Name="QI" Type="BOOL" Comment="Quality Input - TRUE to enable service" InitialValue="TRUE"/>
 			<VarDeclaration Name="KEY" Type="STRING" Comment="Key name."/>
 			<VarDeclaration Name="u16ObjId" Type="UINT" InitialValue="ID_NULL"/>
 		</InputVars>
+		<OutputVars>
+			<VarDeclaration Name="QO" Type="BOOL" Comment="Quality Output - TRUE if service executed successfully"/>
+		</OutputVars>
 		<Plugs>
 			<AdapterDeclaration Name="VALUEO" Type="adapter::types::unidirectional::AIS"/>
 		</Plugs>
@@ -29,6 +41,10 @@
 		</FB>
 		<FB Name="AIS_SPLIT_2" Type="adapter::events::unidirectional::AIS_SPLIT_2" x="3100" y="226.67">
 		</FB>
+		<EventConnections>
+			<Connection Source="INIT" Destination="Q_StringValue_AIS.INIT"/>
+			<Connection Source="Q_StringValue_AIS.INITO" Destination="INITO"/>
+		</EventConnections>
 		<DataConnections>
 			<Connection Source="u16ObjId" Destination="Q_StringValue_AIS.u16ObjId" dx1="8246.67">
 				<Attribute Name="Visible" Value="false"/>
@@ -39,6 +55,8 @@
 			<Connection Source="u16ObjId" Destination="StringValue_AIS.u16ObjId" dx1="1046.67">
 				<Attribute Name="Visible" Value="false"/>
 			</Connection>
+			<Connection Source="QI" Destination="Q_StringValue_AIS.QI"/>
+			<Connection Source="Q_StringValue_AIS.QO" Destination="QO"/>
 		</DataConnections>
 		<AdapterConnections>
 			<Connection Source="NVS_AIS.AIS_OUT" Destination="AIS_SPLIT_2.IN" dx1="106.67"/>

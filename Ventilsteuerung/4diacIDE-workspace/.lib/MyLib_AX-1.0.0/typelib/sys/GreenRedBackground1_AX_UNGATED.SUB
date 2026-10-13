@@ -10,14 +10,22 @@
 		<Import declaration="isobus::UT::Q::const::colours::COLOR_RED"/>
 	</CompilerInfo>
 	<SubAppInterfaceList>
+		<SubAppEventInputs>
+			<SubAppEvent Name="INIT" Type="EInit" Comment="Initialization Request">
+			</SubAppEvent>
+		</SubAppEventInputs>
 		<SubAppEventOutputs>
+			<SubAppEvent Name="INITO" Type="EInit" Comment="Initialization Confirm">
+			</SubAppEvent>
 			<SubAppEvent Name="CNF" Type="Event" Comment="Execution Confirmation">
 			</SubAppEvent>
 		</SubAppEventOutputs>
 		<InputVars>
+			<VarDeclaration Name="QI" Type="BOOL" Comment="Quality Input - TRUE to enable service" InitialValue="TRUE"/>
 			<VarDeclaration Name="u16ObjId" Type="UINT" Comment="Object ID Softkey/Button" InitialValue="ID_NULL"/>
 		</InputVars>
 		<OutputVars>
+			<VarDeclaration Name="QO" Type="BOOL" Comment="Quality Output - TRUE if service executed successfully"/>
 			<VarDeclaration Name="STATUS_1" Type="STRING" Comment="Service Status"/>
 			<VarDeclaration Name="u8OldColour_1" Type="USINT" Comment="Old value of ID"/>
 			<VarDeclaration Name="result_1" Type="INT" Comment="retval see description"/>
@@ -39,6 +47,8 @@
 			<Connection Source="Q_BackgroundColour.CNF" Destination="CNF" dx1="960"/>
 			<Connection Source="AX_SEL.CNF" Destination="Q_BackgroundColour.REQ" dx1="213.33"/>
 			<Connection Source="AX_X_TO_BOOL.CNF" Destination="AX_SEL.REQ" dx1="473.33"/>
+			<Connection Source="INIT" Destination="Q_BackgroundColour.INIT"/>
+			<Connection Source="Q_BackgroundColour.INITO" Destination="INITO"/>
 		</EventConnections>
 		<DataConnections>
 			<Connection Source="u16ObjId" Destination="Q_BackgroundColour.u16ObjId" dx1="1126.67"/>
@@ -47,6 +57,8 @@
 			<Connection Source="Q_BackgroundColour.STATUS" Destination="STATUS_1" dx1="946.67"/>
 			<Connection Source="AX_SEL.OUT" Destination="Q_BackgroundColour.u8Colour" dx1="406.67"/>
 			<Connection Source="AX_X_TO_BOOL.IN" Destination="AX_SEL.G" dx1="473.33"/>
+			<Connection Source="QI" Destination="Q_BackgroundColour.QI"/>
+			<Connection Source="Q_BackgroundColour.QO" Destination="QO"/>
 		</DataConnections>
 		<AdapterConnections>
 			<Connection Source="DI1" Destination="AX_X_TO_BOOL.AX_IN" dx1="660"/>

@@ -21,10 +21,14 @@
 			</SubAppEvent>
 		</SubAppEventOutputs>
 		<InputVars>
+			<VarDeclaration Name="QI" Type="BOOL" Comment="Quality Input - TRUE to enable service" InitialValue="TRUE"/>
 			<VarDeclaration Name="Picture" Type="UINT" Comment="Object ID of the ObjectPointer to the Picture"/>
 			<VarDeclaration Name="pictures" Type="logiBUS::utils::sequence::schieber::SchieberStruct" Comment="the single Pictures" InitialValue="(Unknown := ID_NULL, Closed := ID_NULL, Opening := ID_NULL, Opened := ID_NULL, Closing := ID_NULL)"/>
 			<VarDeclaration Name="iSTATE" Type="USINT" InitialValue="Unknown"/>
 		</InputVars>
+		<OutputVars>
+			<VarDeclaration Name="QO" Type="BOOL" Comment="Quality Output - TRUE if service executed successfully"/>
+		</OutputVars>
 	</SubAppInterfaceList>
 	<SubAppNetwork>
 		<FB Name="Q_NumericValue" Type="isobus::UT::Q::Q_NumericValue" x="5500" y="-700">
@@ -71,6 +75,8 @@
 			<Connection Source="F_MOVE.OUT.Opened" Destination="F_MUX_5.IN4" dx1="673.33"/>
 			<Connection Source="F_MOVE.OUT.Closing" Destination="F_MUX_5.IN5" dx1="673.33"/>
 			<Connection Source="F_MUX_5.OUT" Destination="Q_NumericValue.u32NewValue" dx1="706.67"/>
+			<Connection Source="QI" Destination="Q_NumericValue.QI"/>
+			<Connection Source="Q_NumericValue.QO" Destination="QO"/>
 		</DataConnections>
 	</SubAppNetwork>
 </SubAppType>

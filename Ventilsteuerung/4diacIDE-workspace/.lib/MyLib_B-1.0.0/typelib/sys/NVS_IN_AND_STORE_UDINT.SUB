@@ -19,10 +19,12 @@
 			</SubAppEvent>
 		</SubAppEventOutputs>
 		<InputVars>
+			<VarDeclaration Name="QI" Type="BOOL" Comment="Quality Input - TRUE to enable service" InitialValue="TRUE"/>
 			<VarDeclaration Name="KEY" Type="STRING" Comment="Key name."/>
 			<VarDeclaration Name="u16ObjId" Type="UINT" InitialValue="ID_NULL"/>
 		</InputVars>
 		<OutputVars>
+			<VarDeclaration Name="QO" Type="BOOL" Comment="Quality Output - TRUE if service executed successfully"/>
 			<VarDeclaration Name="VALUEO" Type="UDINT"/>
 		</OutputVars>
 	</SubAppInterfaceList>
@@ -70,6 +72,8 @@
 			<Connection Source="u16ObjId" Destination="InputNumber_I1.u16ObjId" dx1="1793.33">
 				<Attribute Name="Visible" Value="false"/>
 			</Connection>
+			<Connection Source="QI" Destination="Q_NumericValue.QI"/>
+			<Connection Source="Q_NumericValue.QO" Destination="QO"/>
 		</DataConnections>
 	</SubAppNetwork>
 </SubAppType>
