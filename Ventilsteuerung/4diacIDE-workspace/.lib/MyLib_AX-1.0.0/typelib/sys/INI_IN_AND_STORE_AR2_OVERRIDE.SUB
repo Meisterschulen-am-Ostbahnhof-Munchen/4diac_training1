@@ -22,17 +22,17 @@
 		</Sockets>
 	</SubAppInterfaceList>
 	<SubAppNetwork>
-		<FB Name="NumericValue_PHYSA" Type="isobus::UT::io::NumericValue::NumericValue_PHYSA" x="-2800" y="-200">
+		<FB Name="NumericValue_PHYSA" Type="isobus::UT::io::NumericValue::NumericValue_PHYSA" x="-3000" y="-900">
 			<Parameter Name="QI" Value="TRUE"/>
 		</FB>
 		<FB Name="LIT_Override" Type="adapter::types::unidirectional::AR::initval::initval_AR" Comment="Override-Wert, per Parameter konfigurierbar" x="-2800" y="100">
 			<Parameter Name="INIT_VAL" Value="REAL#0.0"/>
 		</FB>
-		<FB Name="SEL_Override" Type="adapter::iec61131::selection::AR_AX_SEL_AR" Comment="IN0=Live-VT-Wert (unveraendert), IN1=Override-Wert, G=OVERRIDE_ACTIVE" x="-200" y="400">
+		<FB Name="SEL_Override" Type="adapter::iec61131::selection::AR_AX_SEL_AR" Comment="IN0=Live-VT-Wert (unveraendert), IN1=Override-Wert, G=OVERRIDE_ACTIVE" x="-500" y="400">
 		</FB>
-		<FB Name="AR_TO_AR2" Type="adapter::conversion::bidirectional::AR_TO_AR2" x="400" y="600">
+		<FB Name="AR_TO_AR2" Type="adapter::conversion::bidirectional::AR_TO_AR2" x="1000" y="300">
 		</FB>
-		<FB Name="INI_AR2" Type="eclipse4diac::storage::INI_AR2" x="2400" y="-93.33">
+		<FB Name="INI_AR2" Type="eclipse4diac::storage::INI_AR2" x="4900" y="-400">
 			<Parameter Name="QI" Value="TRUE"/>
 			<Parameter Name="SETM" Value="TRUE"/>
 			<Parameter Name="DEFAULT_VALUE" Value="REAL#0.0"/>
@@ -57,11 +57,11 @@
 			</Connection>
 		</DataConnections>
 		<AdapterConnections>
-			<Connection Source="NumericValue_PHYSA.rPhys" Destination="SEL_Override.IN0" dx1="1233.33"/>
+			<Connection Source="NumericValue_PHYSA.rPhys" Destination="SEL_Override.IN0" dx1="986.67"/>
 			<Connection Source="LIT_Override.OUT" Destination="SEL_Override.IN1" dx1="440"/>
 			<Connection Source="OVERRIDE_ACTIVE" Destination="SEL_Override.G" dx1="440"/>
-			<Connection Source="SEL_Override.OUT" Destination="AR_TO_AR2.AR_IN" dx1="180"/>
-			<Connection Source="AR_TO_AR2.AR2_BIDIR" Destination="INI_AR2.VAL" dx1="880"/>
+			<Connection Source="SEL_Override.OUT" Destination="AR_TO_AR2.AR_IN" dx1="326.67"/>
+			<Connection Source="AR_TO_AR2.AR2_BIDIR" Destination="INI_AR2.VAL" dx1="460"/>
 			<Connection Source="AR_TO_AR2.AR_OUT" Destination="AR_SPLIT_2.IN" dx1="1106.67"/>
 			<Connection Source="AR_SPLIT_2.OUT1" Destination="VALUEO" dx1="2220"/>
 			<Connection Source="AR_SPLIT_2.OUT2" Destination="Q_NumericValue_PHYSA.rPhys" dx1="873.33"/>

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<SubAppType Name="Uebung_094b2_AX" Comment="Wie Uebung_094b_AX, aber mit explizitem 'nichts ausgewaehlt'-Zustand: AOption_AUI_DEMUX_3 statt _2 - K=1 geht auf DummyGroup (neutraler, wirkungsloser Slot), K=2/3 auf die echten OptionalGroup_001/002. Vermeidet das Problem, welcher Zahlenwert 'Aus' bedeuten soll.">
+<SubAppType Name="Uebung_094b2_AX" Comment="Wie Uebung_094b_AX, aber mit explizitem &apos;nichts ausgewaehlt&apos;-Zustand: AOption_AUI_DEMUX_3 statt _2 - K=1 geht auf DummyGroup (neutraler, wirkungsloser Slot), K=2/3 auf die echten OptionalGroup_001/002. Vermeidet das Problem, welcher Zahlenwert &apos;Aus&apos; bedeuten soll.">
 	<Identification Standard="61499-2" Description="Copyright (c) 2026 Meisterschulen am Ostbahnhof  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0">
 	</Identification>
 	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2026-10-13" Remarks="Antwort auf die Rueckfrage, welche Zahlenkonvention (0/1 vs. 1/2) fuer die Dropdown-Werte gelten soll: gar keine Override-Zahlenkonvention noetig, einfach einen eigenen Dummy-Slot im DEMUX reservieren.">
@@ -10,26 +10,36 @@
 	<SubAppInterfaceList>
 	</SubAppInterfaceList>
 	<SubAppNetwork>
-		<FB Name="AOption_AUI_DEMUX_3" Type="Option::selection::AOption_AUI_DEMUX_3" x="-4000" y="400">
+		<FB Name="AOption_AUI_DEMUX_3" Type="Option::selection::AOption_AUI_DEMUX_3" x="-1500" y="600">
 		</FB>
-		<FB Name="NumericValue_IDA" Type="isobus::UT::io::NumericValue::NumericValue_IDA" x="-6900" y="0">
+		<SubApp Name="OptionalGroup_001" Type="MyLib_AX_Option::sys::OptionalGroup_001" x="1500" y="800">
+		</SubApp>
+		<SubApp Name="OptionalGroup_002" Type="MyLib_AX_Option::sys::OptionalGroup_002" x="1500" y="1200">
+		</SubApp>
+		<SubApp Name="DummyGroup" Type="MyLib_AX_Option::sys::DummyGroup" x="1600" y="300">
+		</SubApp>
+		<FB Name="NumericValue_IDA_1" Type="isobus::UT::io::NumericValue::NumericValue_IDA" x="-7400" y="1100">
 			<Parameter Name="QI" Value="TRUE"/>
 			<Parameter Name="u16ObjId" Value="InputNumber_I1"/>
 		</FB>
-		<FB Name="AD_TO_AUI" Type="adapter::conversion::unidirectional::AD_TO_AUI" x="-5400" y="500">
+		<FB Name="AD_TO_AUI_1" Type="adapter::conversion::unidirectional::AD_TO_AUI" x="-5900" y="1600">
 		</FB>
-		<SubApp Name="OptionalGroup_001" Type="MyLib_AX_Option::sys::OptionalGroup_001" x="-1000" y="600">
-		</SubApp>
-		<SubApp Name="OptionalGroup_002" Type="MyLib_AX_Option::sys::OptionalGroup_002" x="-1000" y="1000">
-		</SubApp>
-		<SubApp Name="DummyGroup" Type="MyLib_AX_Option::sys::DummyGroup" x="-1500" y="200">
-		</SubApp>
+		<FB Name="AUI_TO_AUI2" Type="adapter::conversion::bidirectional::AUI_TO_AUI2" x="-4400" y="1600">
+		</FB>
+		<FB Name="AUI_TO_AUDI_1" Type="adapter::conversion::unidirectional::AUI_TO_AUDI" x="-1200" y="2500">
+		</FB>
+		<FB Name="Q_NumericValue_1" Type="isobus::UT::Q::Q_NumericValue_AUDI" x="1200" y="2200">
+			<Parameter Name="u16ObjId" Value="InputNumber_I1"/>
+		</FB>
 		<AdapterConnections>
-			<Connection Source="NumericValue_IDA.IN" Destination="AD_TO_AUI.AD_IN" dx1="133.33"/>
-			<Connection Source="AD_TO_AUI.AUI_OUT" Destination="AOption_AUI_DEMUX_3.K" dx1="153.33"/>
 			<Connection Source="AOption_AUI_DEMUX_3.OUT2" Destination="OptionalGroup_001.OPTION" dx1="866.67"/>
 			<Connection Source="AOption_AUI_DEMUX_3.OUT3" Destination="OptionalGroup_002.OPTION" dx1="866.67"/>
-			<Connection Source="AOption_AUI_DEMUX_3.OUT1" Destination="DummyGroup.OPTION" dx1="660"/>
+			<Connection Source="AOption_AUI_DEMUX_3.OUT1" Destination="DummyGroup.OPTION" dx1="960"/>
+			<Connection Source="NumericValue_IDA_1.IN" Destination="AD_TO_AUI_1.AD_IN" dx1="133.33"/>
+			<Connection Source="AUI_TO_AUI2.AUI_OUT" Destination="AUI_TO_AUDI_1.AUI_IN" dx1="973.33"/>
+			<Connection Source="AD_TO_AUI_1.AUI_OUT" Destination="AUI_TO_AUI2.AUI_IN"/>
+			<Connection Source="AUI_TO_AUDI_1.AUDI_OUT" Destination="Q_NumericValue_1.u32NewValue" dx1="520"/>
+			<Connection Source="AUI_TO_AUI2.AUI2_BIDIR" Destination="AOption_AUI_DEMUX_3.K" dx1="973.33"/>
 		</AdapterConnections>
 	</SubAppNetwork>
 </SubAppType>
