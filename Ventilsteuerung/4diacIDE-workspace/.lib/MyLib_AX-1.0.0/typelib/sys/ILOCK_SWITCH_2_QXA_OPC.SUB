@@ -2,6 +2,8 @@
 <SubAppType Name="ILOCK_SWITCH_2_QXA_OPC" Comment="2-Richtungs-Doppelwirkungs-Ausgang (Last-Wins mit Schutzzeit): je Richtung wird&#10;das echte Funktions-Kommando (Remote-Subscribe) mit dem bestehenden&#10;IO-Test-Kommando (Remote-Subscribe) per AX_OR_2 zusammengefuehrt, bevor es in&#10;den Interlock geht - IO-Test bleibt nutzbar, kann aber die beiden Richtungen&#10;nicht mehr dauerhaft gleichzeitig schalten. Interlocked Ausgang treibt den&#10;physischen logiBUS-Kanal UND meldet seinen tatsaechlichen Zustand sowohl an die&#10;bestehende IO-Test-Ueberwachung als auch an die echte Funktions-Rueckmeldung&#10;(z.B. GreenWhiteBackground am SoftKey) zurueck. Generisch fuer jeden 'digital&#10;DW'-Aktor (siehe IO-Liste_Vereinheitlicht.md) mit Bedienung von einem Modul ohne&#10;eigenes VT.">
 	<Identification Standard="61499-2">
 	</Identification>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.2" Author="Franz Höpfinger" Date="2026-10-11" Remarks="Neuer SubAppEventInput INIT (Type EInit), durchgereicht an DigitalOutput_UP/DOWN.INIT statt Auto-Verteilung beim FORTE-Start - noetig, damit QI (Maschinenvariante, z.B. AufnahmeRechts) feststeht BEVOR die physische Kanalbindung passiert. Aufrufer muss INIT jetzt selbst triggern (z.B. iec61131::booleanOperators::INIT ohne Verzoegerung fuer unveraendertes Sofort-Verhalten, oder verzoegert fuer Instanzen die auf einen INI-Wert warten muessen) - 'Init wie bei Tecu' (Franz).">
+	</VersionInfo>
 	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.1" Author="Franz Höpfinger" Date="2026-10-11" Remarks="Neuer QI-InputVar (Default TRUE, rueckwaertskompatibel) durchgereicht an DigitalOutput_UP/DOWN.QI statt fest verdrahtetem TRUE - erlaubt es, diese Instanz komplett inaktiv zu lassen (keine Hardware-Bindung), wenn derselbe physische Kanal je nach Maschinenvariante von einer anderen FB-Instanz genutzt wird (Franz: 'die IO Bausteine haben alle ein QI und INIT, wenn QI bei INIT FALSE ist bleibt der Baustein tot' - Aufnahme_Entlastung Rechts/Bunker_Klappen teilen sich STG2 Q07/Q08).">
 	</VersionInfo>
 	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="franz" Date="2026-09-05">
@@ -25,6 +27,9 @@
 			<VarDeclaration Name="ID_WRITE_DOWN" Type="WSTRING" Comment="Echte Funktions-Rueckmeldung DOWN (Publish)"/>
 			<VarDeclaration Name="QI" Type="BOOL" Comment="Qualifier fuer die physischen Ausgaenge - FALSE haelt diese Instanz komplett inaktiv (keine Hardware-Bindung), fuer den Fall dass derselbe physische Kanal je nach Maschinenvariante anderweitig genutzt wird" InitialValue="TRUE"/>
 		</InputVars>
+		<SubAppEventInputs>
+			<SubAppEvent Name="INIT" Type="EInit" Comment="Initialisierung - vom Aufrufer sequenziert statt per Auto-Verteilung, damit QI vor der physischen Kanalbindung feststeht"/>
+		</SubAppEventInputs>
 	</SubAppInterfaceList>
 	<SubAppNetwork>
 		<FB Name="SUBSCRIBE_TEST_UP" Type="adapter::net::AX_SUBSCRIBE_1" x="-6600" y="-1900">
@@ -67,6 +72,10 @@
 		<FB Name="PUBLISH_STATE_DOWN" Type="adapter::net::AX_PUBLISH_1" x="1500" y="1900">
 			<Parameter Name="QI" Value="TRUE"/>
 		</FB>
+		<EventConnections>
+			<Connection Source="INIT" Destination="DigitalOutput_UP.INIT"/>
+			<Connection Source="INIT" Destination="DigitalOutput_DOWN.INIT"/>
+		</EventConnections>
 		<DataConnections>
 			<Connection Source="ID_TEST_READ_UP" Destination="SUBSCRIBE_TEST_UP.ID" dx1="280">
 				<Attribute Name="Visible" Value="false"/>
