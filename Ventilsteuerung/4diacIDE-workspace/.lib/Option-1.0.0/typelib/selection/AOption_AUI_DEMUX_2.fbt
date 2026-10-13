@@ -12,7 +12,7 @@
 			<AdapterDeclaration Name="OUT2" Type="Option::AOption" Comment="Option 2 (ausgewaehlt wenn K = 2)"/>
 		</Plugs>
 		<Sockets>
-			<AdapterDeclaration Name="K" Type="adapter::types::bidirectional::AUI2" Comment="index (bidirektional: EO1/DO1 = neuer K-Wunsch rein, EI1/DI1 = Quittung mit dem tatsaechlich umgesetzten Wert zurueck)"/>
+			<AdapterDeclaration Name="K" Type="adapter::types::bidirectional::AUI2" Comment="index (bidirektional: EO1/DO1 = neuer K-Wunsch rein, EI1/DI1 = Quittung mit dem uebernommenen Wert zurueck)"/>
 		</Sockets>
 	</InterfaceList>
 	<Attribute Name="eclipse4diac::core::GenericClassName" Value="'GEN_AOption_AUI_DEMUX'"/>
@@ -27,6 +27,6 @@
 </ul>
 <p><b>Umschaltverhalten (Break-before-Make):</b> wechselt <code>K</code> z.B. von 1 auf 2, wird zuerst der bisher aktive Ausgang (<code>OUT1</code>) deaktiviert (<code>INIT_REQ</code> mit <code>QI=FALSE</code>). Erst wenn von diesem Ausgang die Bestaetigung <code>INIT_CNF</code> eingetroffen ist, wird der neu ausgewaehlte Ausgang (<code>OUT2</code>) aktiviert (<code>INIT_REQ</code> mit <code>QI=TRUE</code>). Es ist also niemals mehr als eine Option gleichzeitig aktiv.</p>
 <p>Pro eintreffendem <code>K</code>-Wert wird jeder Ausgang maximal 1x getriggert (der zuvor aktive einmal zum Abschalten, der neu ausgewaehlte einmal zum Einschalten) - nicht betroffene Ausgaenge werden nicht angefasst.</p>
-<p><b>Busy-Gating ueber den bidirektionalen K-Adapter:</b> Waehrend ein Umschaltvorgang laeuft (also solange auf <code>INIT_CNF</code> vom bisherigen und/oder neuen Ausgang gewartet wird), wird jeder weitere ueber <code>K</code> (Richtung Plug -&gt; Socket, <code>EO1</code>/<code>DO1</code>) eintreffende Indexwunsch ignoriert - er wird weder gepuffert noch nachgeholt. Erst wenn der Umschaltvorgang abgeschlossen ist, meldet der DEMUX dies rueckwaerts ueber <code>K</code> (Richtung Socket -&gt; Plug, <code>EI1</code>/<code>DI1</code>) mit dem jetzt tatsaechlich aktiven Wert zurueck; erst danach werden wieder neue Indexwuensche angenommen. Damit sind sowohl langsame Umschaltvorgaenge (lange Reaktionszeit der Ausgaenge) als auch mehrfache, einander widersprechende K-Werte in kurzer Folge sauber abgedeckt: es zaehlt immer nur der Stand nach Abschluss des letzten tatsaechlich bearbeiteten Wechsels.</p>
+<p><b>Busy-Gating ueber den bidirektionalen K-Adapter:</b> Waehrend ein Umschaltvorgang laeuft (also solange auf <code>INIT_CNF</code> vom bisherigen und/oder neuen Ausgang gewartet wird), wird jeder weitere ueber <code>K</code> (Richtung Plug -&gt; Socket, <code>EO1</code>/<code>DO1</code>) eintreffende Indexwunsch ignoriert - er wird weder gepuffert noch nachgeholt. Erst wenn der Umschaltvorgang abgeschlossen ist, meldet der DEMUX dies rueckwaerts ueber <code>K</code> (Richtung Socket -&gt; Plug, <code>EI1</code>/<code>DI1</code>) mit dem uebernommenen K-Wert zurueck (nicht mit dem Zustand der Ausgaenge: auch ein ungueltiger Wert wird unveraendert quittiert); erst danach werden wieder neue Indexwuensche angenommen. Damit sind sowohl langsame Umschaltvorgaenge (lange Reaktionszeit der Ausgaenge) als auch mehrfache, einander widersprechende K-Werte in kurzer Folge sauber abgedeckt: es zaehlt immer nur der Stand nach Abschluss des letzten tatsaechlich bearbeiteten Wechsels.</p>
 ]]></Attribute>
 </FBType>
