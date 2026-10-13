@@ -2,6 +2,8 @@
 <SubAppType Name="AX_TO_QXA_BG_PUBLISH" Comment="Treibt aus einem bereits fertigen AX-Zustand (z.B. per OR mehrerer Quellen&#10;zusammengefuehrt - gestaffeltes Gruppensignal, Einzel-Toggle,&#10;IO-Diag-Testbutton) 1 physischen Ausgang + Hintergrundfarbe (SoftKey+AUX) +&#10;lokalen State-Publish (Web-Client/OPC-Dashboard). Gegenstueck zu&#10;MyLib::sys::AX_SoftkeyToggle_RS_TO_QXA_BG (das den Toggle/Reset noch selbst&#10;erzeugt) - hier liegt der AX-Zustand bereits fertig vor und muss nur noch auf&#10;Ausgang+Hintergrund+Publish verteilt werden.">
 	<Identification Standard="61499-2" Description="Copyright (c) 2026 Meisterschulen am Ostbahnhof  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0">
 	</Identification>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.2" Author="Franz Höpfinger" Date="2026-10-13" Remarks="Neuer SubAppEventOutput INITO (Type EInit), durchgereicht von DigitalOutput.INITO - analog ILOCK_SWITCH_2_QXA_OPC v1.3, fuer die Option-Lib-Migration Igel/Elevator Klassisch (echtes INIT_CNF statt T#15s-Delay-Raten).">
+	</VersionInfo>
 	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.1" Author="Franz Höpfinger" Date="2026-10-12" Remarks="Neuer InputVar QI (BOOL) + SubAppEventInput INIT (Type EInit), durchgereicht an DigitalOutput.QI/.INIT statt hartem TRUE/Auto-Verteilung - QI-Gate Igel/Elevator Klassisch-vs-PVEA (gemeinsame Q5/Q7-Pins), 'Init wie bei Tecu'. Blast radius: 3 Instanzen, alle in Baender_EinAus.SUB (ueber AX_TO_QXA_BG_PUBLISH_SWITCHPIC) - bekommen alle ein explizites INIT statt Auto-Verteilung, unveraendertes Boot-Verhalten fuer Querband (sofort), neue Delay-Option fuer Igel/Elevator.">
 	</VersionInfo>
 	<CompilerInfo packageName="MyLib::sys">
@@ -13,6 +15,9 @@
 		<SubAppEventInputs>
 			<SubAppEvent Name="INIT" Type="EInit" Comment="Initialisierung - durchgereicht an DigitalOutput.INIT statt Auto-Verteilung"/>
 		</SubAppEventInputs>
+		<SubAppEventOutputs>
+			<SubAppEvent Name="INITO" Type="EInit" Comment="Initialisierung abgeschlossen - echtes Confirm von DigitalOutput.INITO"/>
+		</SubAppEventOutputs>
 		<InputVars>
 			<VarDeclaration Name="u16ObjId" Type="UINT" Comment="Object ID Softkey - traegt die Hintergrundfarbe" InitialValue="ID_NULL"/>
 			<VarDeclaration Name="u16ObjIdA" Type="UINT" Comment="Object ID AuxFunction2 (Joystick) - zeigt Hintergrundfarbe am Aux-Handle mit" InitialValue="ID_NULL"/>
@@ -53,6 +58,7 @@
 		</DataConnections>
 		<EventConnections>
 			<Connection Source="INIT" Destination="DigitalOutput.INIT" dx1="600"/>
+			<Connection Source="DigitalOutput.INITO" Destination="INITO" dx2="80" dy="-420"/>
 		</EventConnections>
 		<AdapterConnections>
 			<Connection Source="IN" Destination="AX_SPLIT_3.IN" dx1="600"/>

@@ -2,6 +2,8 @@
 <SubAppType Name="AX_TO_QXA_BG_PUBLISH_SWITCHPIC" Comment="AX_TO_QXA_BG_PUBLISH (Ausgang+Hintergrund+Publish) UND AX_SwitchPic_2_1&#10;(ObjectPointer-Statusanzeige) aus demselben fertigen AX-Zustand gespeist -&#10;AX_SPLIT_2 davor, da beide Sub-Bausteine den Zustand brauchen&#10;(Adapter-Fanout-Regel).">
 	<Identification Standard="61499-2" Description="Copyright (c) 2026 Meisterschulen am Ostbahnhof  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0">
 	</Identification>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.2" Author="Franz Höpfinger" Date="2026-10-13" Remarks="Neuer SubAppEventOutput INITO (Type EInit), durchgereicht von Publish.INITO (AX_TO_QXA_BG_PUBLISH v1.2) - fuer die Option-Lib-Migration Igel/Elevator Klassisch.">
+	</VersionInfo>
 	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.1" Author="Franz Höpfinger" Date="2026-10-12" Remarks="Neuer InputVar QI (BOOL) + SubAppEventInput INIT (Type EInit), durchgereicht an Publish.QI/.INIT (AX_TO_QXA_BG_PUBLISH v1.1) statt hartem TRUE/Auto-Verteilung - QI-Gate Igel/Elevator Klassisch-vs-PVEA. Blast radius: 3 Instanzen, alle in Baender_EinAus.SUB.">
 	</VersionInfo>
 	<CompilerInfo packageName="MyLib::sys">
@@ -14,6 +16,9 @@
 		<SubAppEventInputs>
 			<SubAppEvent Name="INIT" Type="EInit" Comment="Initialisierung - durchgereicht an Publish.INIT statt Auto-Verteilung"/>
 		</SubAppEventInputs>
+		<SubAppEventOutputs>
+			<SubAppEvent Name="INITO" Type="EInit" Comment="Initialisierung abgeschlossen - echtes Confirm von Publish.INITO"/>
+		</SubAppEventOutputs>
 		<InputVars>
 			<VarDeclaration Name="u16ObjId" Type="UINT" Comment="Object ID Softkey - traegt die Hintergrundfarbe" InitialValue="ID_NULL"/>
 			<VarDeclaration Name="u16ObjIdA" Type="UINT" Comment="Object ID AuxFunction2 (Joystick) - zeigt Hintergrundfarbe am Aux-Handle mit" InitialValue="ID_NULL"/>
@@ -59,6 +64,7 @@
 		</DataConnections>
 		<EventConnections>
 			<Connection Source="INIT" Destination="Publish.INIT" dx1="600"/>
+			<Connection Source="Publish.INITO" Destination="INITO" dx2="80" dy="-420"/>
 		</EventConnections>
 		<AdapterConnections>
 			<Connection Source="IN" Destination="AX_SPLIT_2.IN" dx1="600"/>

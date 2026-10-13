@@ -2,6 +2,8 @@
 <SubAppType Name="HebenSenken_ILOCK_QDA_PWM_OPC" Comment="2 Remote-Kommandos (Heben/Senken, je Subscribe+State-Publish, ODER-verknuepft&#10;mit IO-Test wie bei ILOCK_SWITCH_2_QXA_OPC) auf 1 ratiometrisches PWM-Signal&#10;(Danfoss PVEA: 25%=Senken, 50%=Neutral, 75%=Heben, Lastteiler-korrigiert).&#10;ILOCK_SWITCH_PROTECT_AX (Last-Wins mit Schutzzeit) sorgt dafuer, dass Heben und&#10;Senken nie gleichzeitig aktiv sind. Generisch fuer jeden PVEA-Aktor mit&#10;ratiometrischem 3-Stufen-PWM-Kanal.">
 	<Identification Standard="61499-2">
 	</Identification>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.6" Author="Franz Höpfinger" Date="2026-10-13" Remarks="Neuer SubAppEventOutput INITO (Type EInit), durchgereicht von PWM_Mux.INITO (HebenSenken_QDA_PWM v1.3) - analog ILOCK_SWITCH_2_QXA_OPC v1.3, fuer Aufnahme_Option.SUB.">
+	</VersionInfo>
 	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.5" Author="Franz Höpfinger" Date="2026-10-11" Remarks="Neuer SubAppEventInput INIT (Type EInit), durchgereicht an PWM_Mux.INIT (HebenSenken_QDA_PWM v1.2) statt Auto-Verteilung - analog ILOCK_SWITCH_2_QXA_OPC v1.2, 'Init wie bei Tecu' (Franz).">
 	</VersionInfo>
 	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.4" Author="Franz Höpfinger" Date="2026-10-11" Remarks="Neuer QI-InputVar (Default TRUE, rueckwaertskompatibel) durchgereicht an PWM_Mux.QI (HebenSenken_QDA_PWM v1.1) - analog ILOCK_SWITCH_2_QXA_OPC v1.1.">
@@ -37,6 +39,9 @@
 		<SubAppEventInputs>
 			<SubAppEvent Name="INIT" Type="EInit" Comment="Initialisierung - vom Aufrufer sequenziert statt per Auto-Verteilung, damit QI vor der physischen Kanalbindung feststeht"/>
 		</SubAppEventInputs>
+		<SubAppEventOutputs>
+			<SubAppEvent Name="INITO" Type="EInit" Comment="Initialisierung abgeschlossen - echtes Confirm von PWM_Mux.INITO"/>
+		</SubAppEventOutputs>
 		<Sockets>
 			<AdapterDeclaration Name="PWM_POW" Type="adapter::types::unidirectional::AR" Comment="PWM Power 1.0 = Maximale Power, 0.0 = Aus, 0.5 = Halb - durchgereicht an values_50_75_25.PWM_POW"/>
 		</Sockets>
@@ -84,6 +89,7 @@
 		</SubApp>
 		<EventConnections>
 			<Connection Source="INIT" Destination="PWM_Mux.INIT"/>
+			<Connection Source="PWM_Mux.INITO" Destination="INITO" dx2="80" dy="-420"/>
 		</EventConnections>
 		<DataConnections>
 			<Connection Source="ID_HEBEN_READ" Destination="SUBSCRIBE_HEBEN.ID" dx1="280">

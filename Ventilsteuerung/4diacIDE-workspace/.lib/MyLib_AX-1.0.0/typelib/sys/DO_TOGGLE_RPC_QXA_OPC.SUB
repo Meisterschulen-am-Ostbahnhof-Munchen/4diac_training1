@@ -2,6 +2,8 @@
 <SubAppType Name="DO_TOGGLE_RPC_QXA_OPC" Comment="Digitaler Freigabe-Ausgang als Klick-Toggle (AX_T_FF_INIT, Default AN):&#10;CREATE_METHOD-Server nimmt einen argumentlosen RPC-Trigger von mehreren&#10;gleichberechtigten Aufrufern entgegen (z.B. STG1-SoftKey-Relay UND&#10;OPC-Dashboard), alle takten denselben CLK - KEIN OR nach dem Flipflop,&#10;AX_T_FF_INIT.Q ist alleinige Source of Truth fuer den physischen Ausgang UND den&#10;remote publizierten Zustand. Generisch fuer jeden&#10;Not-Bedienung-/Strassenmodus-artigen Digital-Toggle-Ausgang mit&#10;Mehrfach-Bedienung.">
 	<Identification Standard="61499-2">
 	</Identification>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.3" Author="Franz Höpfinger" Date="2026-10-13" Remarks="Neuer SubAppEventOutput INITO (Type EInit), durchgereicht von DigitalOutput_DO.INITO - analog ILOCK_SWITCH_2_QXA_OPC v1.3, fuer Aufnahme_Option.SUB.">
+	</VersionInfo>
 	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.2" Author="Franz Höpfinger" Date="2026-10-11" Remarks="Neuer SubAppEventInput INIT (Type EInit), durchgereicht an DigitalOutput_DO.INIT statt Auto-Verteilung - analog ILOCK_SWITCH_2_QXA_OPC v1.2, 'Init wie bei Tecu' (Franz).">
 	</VersionInfo>
 	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.1" Author="Franz Höpfinger" Date="2026-10-11" Remarks="Neuer QI-InputVar (Default TRUE, rueckwaertskompatibel) durchgereicht an DigitalOutput_DO.QI statt fest verdrahtetem TRUE - analog ILOCK_SWITCH_2_QXA_OPC v1.1.">
@@ -22,6 +24,9 @@
 		<SubAppEventInputs>
 			<SubAppEvent Name="INIT" Type="EInit" Comment="Initialisierung - vom Aufrufer sequenziert statt per Auto-Verteilung, damit QI vor der physischen Kanalbindung feststeht"/>
 		</SubAppEventInputs>
+		<SubAppEventOutputs>
+			<SubAppEvent Name="INITO" Type="EInit" Comment="Initialisierung abgeschlossen - echtes Confirm von DigitalOutput_DO.INITO"/>
+		</SubAppEventOutputs>
 	</SubAppInterfaceList>
 	<SubAppNetwork>
 		<FB Name="DO_TOGGLE_SERVER" Type="iec61499::net::SERVER_0" x="1800" y="500">
@@ -44,6 +49,7 @@
 			<Connection Source="DO_TOGGLE_SERVER.IND" Destination="AX_T_FF_INIT_DO.CLK"/>
 			<Connection Source="DO_TOGGLE_SERVER.IND" Destination="DO_TOGGLE_SERVER.RSP" dx1="80" dx2="80" dy="160"/>
 			<Connection Source="INIT" Destination="DigitalOutput_DO.INIT"/>
+			<Connection Source="DigitalOutput_DO.INITO" Destination="INITO" dx2="80" dy="-420"/>
 		</EventConnections>
 		<DataConnections>
 			<Connection Source="Output_DO" Destination="DigitalOutput_DO.Output" dx1="6913.33">
