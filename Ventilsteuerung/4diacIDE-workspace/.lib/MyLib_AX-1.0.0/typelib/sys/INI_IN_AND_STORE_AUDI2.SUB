@@ -4,6 +4,8 @@
 	</Identification>
 	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2026-10-11" Remarks="AUDI2 adapter variant of INI_IN_AND_STORE_AUDI - NumericValue_IDA + AD_TO_AUDI + AUDI_TO_AUDI2 + INI_AUDI2 (bidirektionaler Adapter statt AUDI+Split-Paar), AUDI_TO_AUDI2.AUDI_OUT gesplittet auf Q_NumericValue_AUDI (VT-Anzeige) und VALUEO (weiterer Consumer). Fuer reine Enum/Ganzzahl-Werte (z.B. Optionsseite Dropdowns 0-3), keine Dezimalstellen.">
 	</VersionInfo>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.1" Author="Franz Höpfinger" Date="2026-10-13" Remarks="Neuer Socket OVERRIDE_ACTIVE (AX, Default unbenutzt/FALSE) - erzwingt bei TRUE kontinuierlich VAL=1 (Deaktiviert) statt des Live-VT-Werts, ueber SEL_Override (AUDI_AX_SEL_AUDI) vor AUDI_TO_AUDI2 eingefuegt. Laeuft ueber denselben bestehenden INI_AUDI2/Q_NumericValue_AUDI-Pfad - Q_NumericValue erlaubt laut eigener Doku nur eine Instanz je ObjId, daher keine zweite Schreib-Instanz moeglich. Fuer gegenseitigen Options-Ausschluss (BunkerKlappen/AufnahmeRechts), unveraendertes Verhalten wenn unbenutzt.">
+	</VersionInfo>
 	<CompilerInfo packageName="MyLib::sys">
 		<Import declaration="isobus::UT::Q::const::IDs::ID_NULL"/>
 	</CompilerInfo>
@@ -16,12 +18,20 @@
 		<Plugs>
 			<AdapterDeclaration Name="VALUEO" Type="adapter::types::unidirectional::AUDI"/>
 		</Plugs>
+		<Sockets>
+			<AdapterDeclaration Name="OVERRIDE_ACTIVE" Type="adapter::types::unidirectional::AX" Comment="Kontinuierlich TRUE erzwingt VAL=1 (Deaktiviert), unabhaengig vom Live-VT-Wert - fuer gegenseitigen Options-Ausschluss. FALSE (unbenutzt, Default bei den meisten Aufrufern) = unveraendertes Verhalten."/>
+		</Sockets>
 	</SubAppInterfaceList>
 	<SubAppNetwork>
 		<FB Name="ID" Type="isobus::UT::io::NumericValue::NumericValue_IDA" x="-2800" y="-200">
 			<Parameter Name="QI" Value="TRUE"/>
 		</FB>
 		<FB Name="AD_TO_AUDI" Type="adapter::conversion::unidirectional::AD_TO_AUDI" x="-900" y="333.33">
+		</FB>
+		<FB Name="LIT_Deaktiviert" Type="adapter::types::unidirectional::AUDI::initval::initval_AUDI" Comment="Override-Wert: 1=Deaktiviert" x="-900" y="1000">
+			<Parameter Name="INIT_VAL" Value="UDINT#1"/>
+		</FB>
+		<FB Name="SEL_Override" Type="adapter::iec61131::selection::AUDI_AX_SEL_AUDI" Comment="IN0=Live-VT-Wert (unveraendert), IN1=Deaktiviert-Override, G=OVERRIDE_ACTIVE" x="-200" y="400">
 		</FB>
 		<FB Name="AUDI_TO_AUDI2" Type="adapter::conversion::bidirectional::AUDI_TO_AUDI2" x="400" y="600">
 		</FB>
@@ -51,7 +61,10 @@
 		</DataConnections>
 		<AdapterConnections>
 			<Connection Source="ID.IN" Destination="AD_TO_AUDI.AD_IN"/>
-			<Connection Source="AD_TO_AUDI.AUDI_OUT" Destination="AUDI_TO_AUDI2.AUDI_IN" dx1="440"/>
+			<Connection Source="AD_TO_AUDI.AUDI_OUT" Destination="SEL_Override.IN0" dx1="440"/>
+			<Connection Source="LIT_Deaktiviert.OUT" Destination="SEL_Override.IN1" dx1="440"/>
+			<Connection Source="OVERRIDE_ACTIVE" Destination="SEL_Override.G" dx1="440"/>
+			<Connection Source="SEL_Override.OUT" Destination="AUDI_TO_AUDI2.AUDI_IN" dx1="440"/>
 			<Connection Source="AUDI_TO_AUDI2.AUDI2_BIDIR" Destination="INI_AUDI2.VAL" dx1="880"/>
 			<Connection Source="AUDI_TO_AUDI2.AUDI_OUT" Destination="AUDI_SPLIT_2.IN" dx1="1106.67"/>
 			<Connection Source="AUDI_SPLIT_2.OUT1" Destination="VALUEO" dx1="2220"/>
