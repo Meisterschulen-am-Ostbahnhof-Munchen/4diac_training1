@@ -15,23 +15,23 @@
 	<SubAppInterfaceList>
 	</SubAppInterfaceList>
 	<SubAppNetwork>
-		<SubApp Name="NumericValue_TO_AUI2_AND_STORE_1" Type="MyLib::sys::NumericValue_TO_AUI2_AND_STORE" x="-6300" y="400">
+		<SubApp Name="NumericValue_TO_AUI2_AND_STORE_1" Type="MyLib::sys::NumericValue_TO_AUI2_AND_STORE" x="-5500" y="300">
 			<Parameter Name="KEY" Value="KEY_I1_STORE"/>
 			<Parameter Name="SECTION" Value="SECTION_I1_STORE"/>
 			<Parameter Name="u16ObjId" Value="InputNumber_I1"/>
 		</SubApp>
-		<SubApp Name="NumericValue_TO_AUI2_AND_STORE_2" Type="MyLib::sys::NumericValue_TO_AUI2_AND_STORE" x="-6300" y="1100">
+		<SubApp Name="NumericValue_TO_AUI2_AND_STORE_2" Type="MyLib::sys::NumericValue_TO_AUI2_AND_STORE" x="-5500" y="800">
 			<Parameter Name="KEY" Value="KEY_I2_STORE"/>
 			<Parameter Name="SECTION" Value="SECTION_I2_STORE"/>
 			<Parameter Name="u16ObjId" Value="InputNumber_I2"/>
 		</SubApp>
-		<FB Name="AOption_AUI_DEMUX_OptionalGroup_001" Type="Option::selection::AOption_AUI_DEMUX_1" x="-4000" y="700">
+		<FB Name="AOption_AUI_DEMUX_OptionalGroup_001" Type="Option::selection::AOption_AUI_DEMUX_1" x="-4000" y="400">
 		</FB>
-		<FB Name="AOption_AUI_DEMUX_OptionalGroup_002" Type="Option::selection::AOption_AUI_DEMUX_1" x="-3900" y="1400">
+		<FB Name="AOption_AUI_DEMUX_OptionalGroup_002" Type="Option::selection::AOption_AUI_DEMUX_1" x="-4000" y="900">
 		</FB>
-		<SubApp Name="OptionalGroup_001" Type="MyLib_AX_Option::sys::OptionalGroup_001" x="-900" y="700">
+		<SubApp Name="OptionalGroup_001" Type="MyLib_AX_Option::sys::OptionalGroup_001" x="-1000" y="400">
 		</SubApp>
-		<SubApp Name="OptionalGroup_002" Type="MyLib_AX_Option::sys::OptionalGroup_002" x="-1000" y="1400">
+		<SubApp Name="OptionalGroup_002" Type="MyLib_AX_Option::sys::OptionalGroup_002" x="-1000" y="900">
 		</SubApp>
 		<AdapterConnections>
 			<Connection Source="NumericValue_TO_AUI2_AND_STORE_1.VALUEO" Destination="AOption_AUI_DEMUX_OptionalGroup_001.K" dx1="433.33"/>
