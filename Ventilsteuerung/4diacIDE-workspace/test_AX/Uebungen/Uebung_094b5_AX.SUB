@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SubAppType Name="Uebung_094b5_AX" Comment="Wie Uebung_094b_AX, aber mit AOption_AD_DEMUX_2 (Bitmaske, Multi-Select) statt AOption_AUI_DEMUX_2 (Index, Single-Select): Bit0 schaltet OptionalGroup_001, Bit1 schaltet OptionalGroup_002 - beide koennen hier gleichzeitig aktiv sein.">
+	<Identification Standard="61499-2" Description="Copyright (c) 2026 Meisterschulen am Ostbahnhof  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0">
+	</Identification>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2026-10-13" Remarks="Kopie von Uebung_094b_AX, AD_TO_AUI+AUI_TO_AUI2 durch AD_TO_AD2 ersetzt (kein Zwischenschritt noetig, da NumericValue_IDA.IN bereits DWORD/AD ist) und AOption_AUI_DEMUX_2 durch AOption_AD_DEMUX_2 ersetzt.">
+	</VersionInfo>
+	<CompilerInfo packageName="Uebungen">
+	</CompilerInfo>
+	<SubAppInterfaceList>
+	</SubAppInterfaceList>
+	<SubAppNetwork>
+		<FB Name="AOption_AD_DEMUX_2" Type="Option::selection::AOption_AD_DEMUX_2" x="-4100" y="700">
+		</FB>
+		<SubApp Name="OptionalGroup_001" Type="MyLib_AX_Option::sys::OptionalGroup_001" x="-1100" y="400">
+		</SubApp>
+		<SubApp Name="OptionalGroup_002" Type="MyLib_AX_Option::sys::OptionalGroup_002" x="-1100" y="1100">
+		</SubApp>
+		<FB Name="AD_TO_AD2" Type="adapter::conversion::bidirectional::AD_TO_AD2" x="-6400" y="1100">
+		</FB>
+		<FB Name="SPLIT_AD_INTO_AX" Type="adapter::splitting::SPLIT_AD_INTO_AX" x="-4200" y="1800">
+		</FB>
+		<FB Name="ASSEMBLE_AD_FROM_AX" Type="adapter::assembling::ASSEMBLE_AD_FROM_AX" x="-9000" y="1600">
+		</FB>
+		<SubApp Name="Checkbox_IDA_TO_AX" Type="MyLib::sys::Checkbox_IDA_TO_AX" x="-11200" y="1400">
+		</SubApp>
+		<SubApp Name="Checkbox_IDA_TO_AX_1" Type="MyLib::sys::Checkbox_IDA_TO_AX" x="-11200" y="1900">
+		</SubApp>
+		<SubApp Name="AX_TO_Checkbox" Type="MyLib::sys::AX_TO_Checkbox" x="-2500" y="1600">
+		</SubApp>
+		<SubApp Name="AX_TO_Checkbox_1" Type="MyLib::sys::AX_TO_Checkbox" x="-2500" y="2100">
+		</SubApp>
+		<AdapterConnections>
+			<Connection Source="AOption_AD_DEMUX_2.OUT1" Destination="OptionalGroup_001.OPTION" dx1="866.67"/>
+			<Connection Source="AOption_AD_DEMUX_2.OUT2" Destination="OptionalGroup_002.OPTION" dx1="866.67"/>
+			<Connection Source="ASSEMBLE_AD_FROM_AX.OUT" Destination="AD_TO_AD2.AD_IN" dx1="133.33"/>
+			<Connection Source="AD_TO_AD2.AD_OUT" Destination="SPLIT_AD_INTO_AX.IN" dx1="973.33"/>
+			<Connection Source="AD_TO_AD2.AD2_BIDIR" Destination="AOption_AD_DEMUX_2.K" dx1="720"/>
+			<Connection Source="Checkbox_IDA_TO_AX.PERMIT_OUT" Destination="ASSEMBLE_AD_FROM_AX.BIT_00" dx1="586.67"/>
+			<Connection Source="Checkbox_IDA_TO_AX_1.PERMIT_OUT" Destination="ASSEMBLE_AD_FROM_AX.BIT_01" dx1="586.67"/>
+			<Connection Source="SPLIT_AD_INTO_AX.BIT_00" Destination="AX_TO_Checkbox.AX_IN" dx1="333.33"/>
+			<Connection Source="SPLIT_AD_INTO_AX.BIT_01" Destination="AX_TO_Checkbox_1.AX_IN" dx1="333.33"/>
+		</AdapterConnections>
+	</SubAppNetwork>
+</SubAppType>
