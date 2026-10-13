@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SubAppType Name="Uebung_094b5b_AX" Comment="Wie Uebung_094b5_AX, aber mit MyLib::sys::Checkbox_TO_AD2_2 als wiederverwendbarem Baustein statt der einzeln verdrahteten Checkbox_IDA_TO_AX/ASSEMBLE_AD_FROM_AX/AD_TO_AD2/SPLIT_AD_INTO_AX/AX_TO_Checkbox-Kette.">
+	<Identification Standard="61499-2" Description="Copyright (c) 2026 Meisterschulen am Ostbahnhof  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0">
+	</Identification>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2026-10-13" Remarks="2. Version von Uebung_094b5_AX: alles ausser AOption_AD_DEMUX_2/OptionalGroup_001/OptionalGroup_002 wurde nach MyLib::sys::Checkbox_TO_AD2_2 ausgelagert.">
+	</VersionInfo>
+	<CompilerInfo packageName="Uebungen">
+	</CompilerInfo>
+	<SubAppInterfaceList>
+	</SubAppInterfaceList>
+	<SubAppNetwork>
+		<SubApp Name="Checkbox_TO_AD2_2" Type="MyLib::sys::Checkbox_TO_AD2_2" x="-2800" y="500">
+		</SubApp>
+		<FB Name="AOption_AD_DEMUX_2" Type="Option::selection::AOption_AD_DEMUX_2" x="-1300" y="700">
+		</FB>
+		<SubApp Name="OptionalGroup_001" Type="MyLib_AX_Option::sys::OptionalGroup_001" x="1000" y="400">
+		</SubApp>
+		<SubApp Name="OptionalGroup_002" Type="MyLib_AX_Option::sys::OptionalGroup_002" x="1000" y="900">
+		</SubApp>
+		<AdapterConnections>
+			<Connection Source="Checkbox_TO_AD2_2.K" Destination="AOption_AD_DEMUX_2.K" dx1="340"/>
+			<Connection Source="AOption_AD_DEMUX_2.OUT1" Destination="OptionalGroup_001.OPTION" dx1="866.67"/>
+			<Connection Source="AOption_AD_DEMUX_2.OUT2" Destination="OptionalGroup_002.OPTION" dx1="866.67"/>
+		</AdapterConnections>
+	</SubAppNetwork>
+</SubAppType>

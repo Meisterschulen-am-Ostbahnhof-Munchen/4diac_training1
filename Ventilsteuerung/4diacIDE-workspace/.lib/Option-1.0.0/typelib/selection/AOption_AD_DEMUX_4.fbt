@@ -14,12 +14,12 @@
 			<AdapterDeclaration Name="OUT4" Type="Option::AOption" Comment="Option 4 (aktiv wenn Bit 3 von K gesetzt ist, Wert 8)"/>
 		</Plugs>
 		<Sockets>
-			<AdapterDeclaration Name="K" Type="adapter::types::unidirectional::AD" Comment="Bitmaske (Bit0=OUT1, Bit1=OUT2, ...)"/>
+			<AdapterDeclaration Name="K" Type="adapter::types::bidirectional::AD2" Comment="Bitmaske (Bit0=OUT1, Bit1=OUT2, ...), bidirektional: EO1/DO1 = neuer Bitmasken-Wunsch rein, EI1/DI1 = Quittung mit der tatsaechlich umgesetzten Bitmaske zurueck"/>
 		</Sockets>
 	</InterfaceList>
 	<Attribute Name="eclipse4diac::core::GenericClassName" Value="'GEN_AOption_AD_DEMUX'"/>
 	<Attribute Name="eclipse4diac::core::TypeHash" Value="''"/>
-	<Attribute Name="Documentation" Type="CDATA"><![CDATA[<p>Demultiplexer (natives Generic-FB, kein ECC/Algorithmus in diesem Typ) fuer <code>N=4</code> Options-Ausgaenge vom Typ <code>Option::AOption</code>, ausgewaehlt ueber den Bitmasken-Adapter <code>K</code> (<code>adapter::types::unidirectional::AD</code>, DWORD).</p>
+	<Attribute Name="Documentation" Type="CDATA"><![CDATA[<p>Demultiplexer (natives Generic-FB, kein ECC/Algorithmus in diesem Typ) fuer <code>N=4</code> Options-Ausgaenge vom Typ <code>Option::AOption</code>, ausgewaehlt ueber den bidirektionalen Bitmasken-Adapter <code>K</code> (<code>adapter::types::bidirectional::AD2</code>, DWORD).</p>
 <p><b>Bitzuordnung (Multi-Select, im Gegensatz zum Single-Select von <code>AOption_AUI_DEMUX_4</code>):</b></p>
 <ul>
 <li><code>Bit 0</code> (Wert <code>1</code>) &ndash; <code>OUT1</code></li>
@@ -29,5 +29,6 @@
 </ul>
 <p>Beispiel: <code>K = 3</code> (Bit 0 + Bit 1 gesetzt) &ndash; <code>OUT1</code> UND <code>OUT2</code> an, alle anderen aus. Es koennen beliebig viele bzw. alle Ausgaenge gleichzeitig aktiv sein.</p>
 <p><b>Umschaltverhalten:</b> nur Bits, die sich gegenueber dem vorherigen <code>K</code>-Wert aendern, loesen an dem zugehoerigen Ausgang ein <code>INIT_REQ</code> aus (0&rarr;1: <code>QI=TRUE</code> aktivieren, 1&rarr;0: <code>QI=FALSE</code> deaktivieren). Unveraenderte Bits werden nicht erneut getriggert - jeder Ausgang wird also pro eintreffendem <code>K</code>-Wert maximal 1x getriggert.</p>
+<p><b>Busy-Gating ueber den bidirektionalen K-Adapter:</b> Waehrend noch auf <code>INIT_CNF</code> von mindestens einem durch den letzten K-Wechsel betroffenen Ausgang gewartet wird, wird jeder weitere ueber <code>K</code> (Richtung Plug -&gt; Socket, <code>EO1</code>/<code>DO1</code>) eintreffende Bitmasken-Wunsch ignoriert - er wird weder gepuffert noch nachgeholt. Erst wenn alle durch den letzten Wechsel ausgeloesten <code>INIT_CNF</code> eingetroffen sind, meldet der DEMUX dies rueckwaerts ueber <code>K</code> (Richtung Socket -&gt; Plug, <code>EI1</code>/<code>DI1</code>) mit der jetzt tatsaechlich aktiven Bitmaske zurueck; erst danach werden wieder neue K-Wuensche angenommen. Damit sind sowohl langsame Umschaltvorgaenge als auch mehrfache, einander widersprechende K-Werte in kurzer Folge sauber abgedeckt.</p>
 ]]></Attribute>
 </FBType>

@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SubAppType Name="Uebung_094b3_AX" Comment="Wie Uebung_094b2_AX, aber mit MyLib::sys::NumericValue_TO_AUI2 als wiederverwendbarem Baustein statt der inline verdrahteten Kette (NumericValue_IDA+AD_TO_AUI+AUI_TO_AUI2+AUI_TO_AUDI+Q_NumericValue_AUDI).">
+	<Identification Standard="61499-2" Description="Copyright (c) 2026 Meisterschulen am Ostbahnhof  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0">
+	</Identification>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2026-10-13" Remarks="2. Version von Uebung_094b2_AX: die Lese/Echo-Kette wurde nach MyLib::sys::NumericValue_TO_AUI2 ausgelagert (u16ObjId als SubApp-Parameter statt fest verdrahtet), analog Uebung_094c2_AX.">
+	</VersionInfo>
+	<CompilerInfo packageName="Uebungen">
+		<Import declaration="Uebungen::const::UT::DefaultPool::InputNumber_I1"/>
+	</CompilerInfo>
+	<SubAppInterfaceList>
+	</SubAppInterfaceList>
+	<SubAppNetwork>
+		<SubApp Name="NumericValue_TO_AUI2_1" Type="MyLib::sys::NumericValue_TO_AUI2" x="-3500" y="500">
+			<Parameter Name="u16ObjId" Value="InputNumber_I1"/>
+		</SubApp>
+		<FB Name="AOption_AUI_DEMUX_3" Type="Option::selection::AOption_AUI_DEMUX_3" x="-1500" y="600">
+		</FB>
+		<SubApp Name="OptionalGroup_001" Type="MyLib_AX_Option::sys::OptionalGroup_001" x="1500" y="800">
+		</SubApp>
+		<SubApp Name="OptionalGroup_002" Type="MyLib_AX_Option::sys::OptionalGroup_002" x="1500" y="1200">
+		</SubApp>
+		<SubApp Name="DummyGroup" Type="MyLib_AX_Option::sys::DummyGroup" x="1600" y="300">
+		</SubApp>
+		<AdapterConnections>
+			<Connection Source="NumericValue_TO_AUI2_1.VALUEO" Destination="AOption_AUI_DEMUX_3.K" dx1="700"/>
+			<Connection Source="AOption_AUI_DEMUX_3.OUT2" Destination="OptionalGroup_001.OPTION" dx1="866.67"/>
+			<Connection Source="AOption_AUI_DEMUX_3.OUT3" Destination="OptionalGroup_002.OPTION" dx1="866.67"/>
+			<Connection Source="AOption_AUI_DEMUX_3.OUT1" Destination="DummyGroup.OPTION" dx1="960"/>
+		</AdapterConnections>
+	</SubAppNetwork>
+</SubAppType>

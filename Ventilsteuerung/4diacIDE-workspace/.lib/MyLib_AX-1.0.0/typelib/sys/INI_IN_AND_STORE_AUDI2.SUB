@@ -1,10 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<SubAppType Name="INI_IN_AND_STORE_AUDI2" Comment="INI Laden und Speichern von AUDI2-Daten (reine Ganzzahl 0-N, kein Scale/Decimals) mit&#10;zusaetzlichem VALUEO (AUDI, plain) fuer einen weiteren Consumer - analog&#10;INI_IN_AND_STORE_AR2, aber ueber den bidirektionalen AUDI2-Adapter statt AR2">
+<SubAppType Name="INI_IN_AND_STORE_AUDI2" Comment="INI Laden und Speichern von AUDI2-Daten (reine Ganzzahl 0-N, kein Scale/Decimals) mit&#10;zusaetzlichem VALUEO (AUDI, plain) fuer einen weiteren Consumer - analog&#10;INI_IN_AND_STORE_AR2, aber ueber den bidirektionalen AUDI2-Adapter statt AR2.&#10;Schlanke Variante ohne Override-Socket - siehe INI_IN_AND_STORE_AUDI2_OVERRIDE&#10;fuer die Variante mit OVERRIDE_ACTIVE.">
 	<Identification Standard="61499-2" Description="Copyright (c) 2026 Meisterschulen am Ostbahnhof  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0">
 	</Identification>
-	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2026-10-11" Remarks="AUDI2 adapter variant of INI_IN_AND_STORE_AUDI - NumericValue_IDA + AD_TO_AUDI + AUDI_TO_AUDI2 + INI_AUDI2 (bidirektionaler Adapter statt AUDI+Split-Paar), AUDI_TO_AUDI2.AUDI_OUT gesplittet auf Q_NumericValue_AUDI (VT-Anzeige) und VALUEO (weiterer Consumer). Fuer reine Enum/Ganzzahl-Werte (z.B. Optionsseite Dropdowns 0-3), keine Dezimalstellen.">
-	</VersionInfo>
-	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.1" Author="Franz Höpfinger" Date="2026-10-13" Remarks="Neuer Socket OVERRIDE_ACTIVE (AX, Default unbenutzt/FALSE) - erzwingt bei TRUE kontinuierlich VAL=1 (Deaktiviert) statt des Live-VT-Werts, ueber SEL_Override (AUDI_AX_SEL_AUDI) vor AUDI_TO_AUDI2 eingefuegt. Laeuft ueber denselben bestehenden INI_AUDI2/Q_NumericValue_AUDI-Pfad - Q_NumericValue erlaubt laut eigener Doku nur eine Instanz je ObjId, daher keine zweite Schreib-Instanz moeglich. Fuer gegenseitigen Options-Ausschluss (BunkerKlappen/AufnahmeRechts), unveraendertes Verhalten wenn unbenutzt.">
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2026-10-13" Remarks="AUDI2 adapter variant of INI_IN_AND_STORE_AUDI - NumericValue_IDA + AD_TO_AUDI + AUDI_TO_AUDI2 + INI_AUDI2 (bidirektionaler Adapter statt AUDI+Split-Paar), AUDI_TO_AUDI2.AUDI_OUT gesplittet auf Q_NumericValue_AUDI (VT-Anzeige) und VALUEO (weiterer Consumer). Fuer reine Enum/Ganzzahl-Werte (z.B. Optionsseite Dropdowns 0-3), keine Dezimalstellen. Strukturell identisch zu INI_IN_AND_STORE_AR2, nur mit AUDI2 statt AR2.">
 	</VersionInfo>
 	<CompilerInfo packageName="MyLib::sys">
 		<Import declaration="isobus::UT::Q::const::IDs::ID_NULL"/>
@@ -18,20 +16,12 @@
 		<Plugs>
 			<AdapterDeclaration Name="VALUEO" Type="adapter::types::unidirectional::AUDI"/>
 		</Plugs>
-		<Sockets>
-			<AdapterDeclaration Name="OVERRIDE_ACTIVE" Type="adapter::types::unidirectional::AX" Comment="Kontinuierlich TRUE erzwingt VAL=1 (Deaktiviert), unabhaengig vom Live-VT-Wert - fuer gegenseitigen Options-Ausschluss. FALSE (unbenutzt, Default bei den meisten Aufrufern) = unveraendertes Verhalten."/>
-		</Sockets>
 	</SubAppInterfaceList>
 	<SubAppNetwork>
 		<FB Name="ID" Type="isobus::UT::io::NumericValue::NumericValue_IDA" x="-2800" y="-1000">
 			<Parameter Name="QI" Value="TRUE"/>
 		</FB>
 		<FB Name="AD_TO_AUDI" Type="adapter::conversion::unidirectional::AD_TO_AUDI" x="-1400" y="0">
-		</FB>
-		<FB Name="LIT_Deaktiviert" Type="adapter::types::unidirectional::AUDI::initval::initval_AUDI" Comment="Override-Wert: 1=Deaktiviert" x="-2800" y="100">
-			<Parameter Name="INIT_VAL" Value="UDINT#1"/>
-		</FB>
-		<FB Name="SEL_Override" Type="adapter::iec61131::selection::AUDI_AX_SEL_AUDI" Comment="IN0=Live-VT-Wert (unveraendert), IN1=Deaktiviert-Override, G=OVERRIDE_ACTIVE" x="-200" y="400">
 		</FB>
 		<FB Name="AUDI_TO_AUDI2" Type="adapter::conversion::bidirectional::AUDI_TO_AUDI2" x="1400" y="500">
 		</FB>
@@ -61,10 +51,7 @@
 		</DataConnections>
 		<AdapterConnections>
 			<Connection Source="ID.IN" Destination="AD_TO_AUDI.AD_IN" dx1="180"/>
-			<Connection Source="AD_TO_AUDI.AUDI_OUT" Destination="SEL_Override.IN0" dx1="306.67"/>
-			<Connection Source="LIT_Deaktiviert.OUT" Destination="SEL_Override.IN1" dx1="440"/>
-			<Connection Source="OVERRIDE_ACTIVE" Destination="SEL_Override.G" dx1="440"/>
-			<Connection Source="SEL_Override.OUT" Destination="AUDI_TO_AUDI2.AUDI_IN" dx1="180"/>
+			<Connection Source="AD_TO_AUDI.AUDI_OUT" Destination="AUDI_TO_AUDI2.AUDI_IN" dx1="586.67"/>
 			<Connection Source="AUDI_TO_AUDI2.AUDI2_BIDIR" Destination="INI_AUDI2.VAL" dx1="673.33"/>
 			<Connection Source="AUDI_TO_AUDI2.AUDI_OUT" Destination="AUDI_SPLIT_2.IN" dx1="1106.67"/>
 			<Connection Source="AUDI_SPLIT_2.OUT1" Destination="VALUEO" dx1="2220"/>
