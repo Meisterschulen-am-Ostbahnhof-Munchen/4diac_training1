@@ -9,16 +9,16 @@
 	<SubAppInterfaceList>
 	</SubAppInterfaceList>
 	<SubAppNetwork>
-		<SubApp Name="Checkbox_TO_AD2_2" Type="MyLib::sys::Checkbox_TO_AD2_2" x="-4100" y="1600">
+		<SubApp Name="Checkbox_TO_AD2_2" Type="MyLib::sys::Checkbox_TO_AD2_2" x="-2800" y="500">
 		</SubApp>
 		<FB Name="AOption_AD_DEMUX_2" Type="Option::selection::AOption_AD_DEMUX_2" x="-1300" y="700">
 		</FB>
-		<SubApp Name="OptionalGroup_001" Type="MyLib_AX_Option::sys::OptionalGroup_001" x="1700" y="400">
+		<SubApp Name="OptionalGroup_001" Type="MyLib_AX_Option::sys::OptionalGroup_001" x="1000" y="400">
 		</SubApp>
-		<SubApp Name="OptionalGroup_002" Type="MyLib_AX_Option::sys::OptionalGroup_002" x="1700" y="1100">
+		<SubApp Name="OptionalGroup_002" Type="MyLib_AX_Option::sys::OptionalGroup_002" x="1000" y="900">
 		</SubApp>
 		<AdapterConnections>
-			<Connection Source="Checkbox_TO_AD2_2.K" Destination="AOption_AD_DEMUX_2.K" dx1="720"/>
+			<Connection Source="Checkbox_TO_AD2_2.K" Destination="AOption_AD_DEMUX_2.K" dx1="340"/>
 			<Connection Source="AOption_AD_DEMUX_2.OUT1" Destination="OptionalGroup_001.OPTION" dx1="866.67"/>
 			<Connection Source="AOption_AD_DEMUX_2.OUT2" Destination="OptionalGroup_002.OPTION" dx1="866.67"/>
 		</AdapterConnections>
