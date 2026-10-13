@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SubAppType Name="Uebung_094c_AX" Comment="Zwei unabhaengige VT-Dropdowns (InputNumber_I1/I2) schalten je eine eigene Optionsgruppe frei: AD_TO_AUI -&gt; AOption_AUI_DEMUX_1 -&gt; OptionalGroup_001/002 per AOption-Adapter und QI. Noch OHNE gegenseitigen Ausschluss zwischen den beiden Gruppen - das braeuchte einen vorgeschalteten Arbiter, der aus den zwei unabhaengigen Dropdown-Events einen gemeinsamen K-Wert ableitet (offene Rueckfrage aus Krauternter: Bunker_Klappen/Aufnahme_Rechts, &apos;letzter Aktiviert gewinnt&apos; + Boot-Tiebreak).">
+	<Identification Standard="61499-2" Description="Copyright (c) 2026 Meisterschulen am Ostbahnhof  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0">
+	</Identification>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2026-10-13" Remarks="initial API and implementation and/or initial documentation">
+	</VersionInfo>
+	<CompilerInfo packageName="Uebungen">
+		<Import declaration="Uebungen::const::UT::DefaultPool::InputNumber_I1"/>
+		<Import declaration="Uebungen::const::UT::DefaultPool::InputNumber_I2"/>
+	</CompilerInfo>
+	<SubAppInterfaceList>
+	</SubAppInterfaceList>
+	<SubAppNetwork>
+		<FB Name="AOption_AUI_DEMUX_OptionalGroup_001" Type="Option::selection::AOption_AUI_DEMUX_1" x="-4000" y="400">
+		</FB>
+		<FB Name="NumericValue_IDA" Type="isobus::UT::io::NumericValue::NumericValue_IDA" x="-6900" y="0">
+			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="u16ObjId" Value="InputNumber_I1"/>
+		</FB>
+		<FB Name="AD_TO_AUI" Type="adapter::conversion::unidirectional::AD_TO_AUI" x="-5400" y="500">
+		</FB>
+		<SubApp Name="OptionalGroup_001" Type="MyLib_AX_Option::sys::OptionalGroup_001" x="-1000" y="400">
+		</SubApp>
+		<SubApp Name="OptionalGroup_002" Type="MyLib_AX_Option::sys::OptionalGroup_002" x="-1000" y="1400">
+		</SubApp>
+		<FB Name="NumericValue_IDA_1" Type="isobus::UT::io::NumericValue::NumericValue_IDA" x="-6900" y="1000">
+			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="u16ObjId" Value="InputNumber_I2"/>
+		</FB>
+		<FB Name="AOption_AUI_DEMUX_OptionalGroup_002" Type="Option::selection::AOption_AUI_DEMUX_1" x="-4000" y="1400">
+		</FB>
+		<FB Name="AD_TO_AUI_1" Type="adapter::conversion::unidirectional::AD_TO_AUI" x="-5400" y="1500">
+		</FB>
+		<AdapterConnections>
+			<Connection Source="NumericValue_IDA.IN" Destination="AD_TO_AUI.AD_IN" dx1="133.33"/>
+			<Connection Source="AD_TO_AUI.AUI_OUT" Destination="AOption_AUI_DEMUX_OptionalGroup_001.K" dx1="153.33"/>
+			<Connection Source="AOption_AUI_DEMUX_OptionalGroup_001.OUT1" Destination="OptionalGroup_001.SOCKET1"/>
+			<Connection Source="NumericValue_IDA_1.IN" Destination="AD_TO_AUI_1.AD_IN" dx1="133.33"/>
+			<Connection Source="AD_TO_AUI_1.AUI_OUT" Destination="AOption_AUI_DEMUX_OptionalGroup_002.K" dx1="153.33"/>
+			<Connection Source="AOption_AUI_DEMUX_OptionalGroup_002.OUT1" Destination="OptionalGroup_002.SOCKET1"/>
+		</AdapterConnections>
+	</SubAppNetwork>
+</SubAppType>
