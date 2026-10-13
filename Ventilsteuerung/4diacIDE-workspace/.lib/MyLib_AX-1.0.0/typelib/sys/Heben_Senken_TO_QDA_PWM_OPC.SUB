@@ -2,6 +2,10 @@
 <SubAppType Name="Heben_Senken_TO_QDA_PWM_OPC" Comment="2 Remote-Kommandos (Heben/Senken, je Subscribe+State-Publish, ODER-verknuepft&#10;mit IO-Test wie bei ILOCK_SWITCH_2_QXA_OPC) auf 1 ratiometrisches PWM-Signal&#10;(Danfoss PVEA: 25%=Senken, 50%=Neutral, 75%=Heben, Lastteiler-korrigiert) + 1&#10;Freigabe-DO als Klick-Toggle (AX_T_FF_INIT, Default AN, per RPC-Methode aus VT&#10;und Dashboard aus-/einschaltbar - Not-Bedienung, z.B. Strassenmodus). Generisch&#10;fuer jeden PVEA-Aktor mit 2 physischen Kanaelen (links=PWM, rechts=Freigabe),&#10;Bedienung von einem Modul ohne eigenes VT.">
 	<Identification Standard="61499-2">
 	</Identification>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.6" Author="Franz Höpfinger" Date="2026-10-11" Remarks="Neuer SubAppEventInput INIT (Type EInit), durchgereicht an PWM_Mux.INIT (HebenSenken_ILOCK_QDA_PWM_OPC v1.5) UND DO_Toggle.INIT (DO_TOGGLE_RPC_QXA_OPC v1.2) statt Auto-Verteilung - analog ILOCK_SWITCH_2_QXA_OPC v1.2, 'Init wie bei Tecu' (Franz).">
+	</VersionInfo>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.5" Author="Franz Höpfinger" Date="2026-10-11" Remarks="Neuer QI-InputVar (Default TRUE, rueckwaertskompatibel) durchgereicht an PWM_Mux.QI (HebenSenken_ILOCK_QDA_PWM_OPC v1.4) UND DO_Toggle.QI (DO_TOGGLE_RPC_QXA_OPC v1.1) - analog ILOCK_SWITCH_2_QXA_OPC v1.1, haelt beide physischen Kanaele dieser Instanz gemeinsam inaktiv.">
+	</VersionInfo>
 	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.4" Author="Franz Höpfinger" Date="2026-09-20" Remarks="PWM_POW-Socket ergaenzt (reiner Passthrough an PWM_Mux.PWM_POW), da HebenSenken_ILOCK_QDA_PWM_OPC v1.1 PWM_POW jetzt als eigenen Socket statt intern fest 1.0 hat - jeder Aufrufer muss ihn jetzt verbinden.">
 	</VersionInfo>
 	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.3" Author="Franz Höpfinger" Date="2026-09-08" Remarks="V1.1: IO-Test fuer Heben/Senken ergaenzt (SUBSCRIBE_TEST_HEBEN/SENKEN, ODER vor dem ILOCK), Publish-Punkte (State+Test) hinter den ILOCK verlegt (wie ILOCK_SWITCH_2_QXA_OPC), Freigabe-DO von starrem initval_AX auf AX_T_FF_INIT-Klick-Toggle per RPC-Methode umgestellt - KEIN OR nach dem Flipflop, AX_T_FF_INIT.Q ist alleinige Source of Truth fuer den Ausgang. V1.2: Freigabe-DO-Teilnetz nach MyLib::sys::DO_TOGGLE_RPC_QXA_OPC ausgelagert. V1.3: PWM/ILOCK/Mux-Teilnetz nach MyLib::sys::HebenSenken_ILOCK_QDA_PWM_OPC ausgelagert - diese SubApp ist jetzt nur noch die Zusammensetzung beider Bausteine, Schnittstelle unveraendert.">
@@ -25,16 +29,24 @@
 			<VarDeclaration Name="ID_TEST_WRITE_SENKEN" Type="WSTRING" Comment="Bestehende IO-Test-Publish-Adresse Senken, HINTER dem ILOCK"/>
 			<VarDeclaration Name="ID_DO_TOGGLE_METHOD" Type="WSTRING" Comment="Lokale Methodenadresse (ACTION=CREATE_METHOD) fuer den argumentlosen Freigabe-Toggle-Trigger - wird von STG1 (SoftKey-Relay) UND direkt vom OPC-Dashboard (CALL_METHOD) aufgerufen, beide Aufrufer teilen sich denselben Flipflop-Takt"/>
 			<VarDeclaration Name="ID_DO_STATE_WRITE" Type="WSTRING" Comment="Lokale Publish-Adresse (ACTION=WRITE) fuer den tatsaechlichen Freigabe-Zustand (AX_T_FF_INIT.Q) - wird von VT und Dashboard remote abonniert"/>
+			<VarDeclaration Name="QI" Type="BOOL" Comment="Qualifier fuer beide physischen Ausgaenge (PWM+Freigabe-DO) - FALSE haelt diese Instanz komplett inaktiv (keine Hardware-Bindung), fuer den Fall dass derselbe physische Kanal je nach Maschinenvariante anderweitig genutzt wird" InitialValue="TRUE"/>
 		</InputVars>
+		<SubAppEventInputs>
+			<SubAppEvent Name="INIT" Type="EInit" Comment="Initialisierung - vom Aufrufer sequenziert statt per Auto-Verteilung, damit QI vor der physischen Kanalbindung feststeht"/>
+		</SubAppEventInputs>
 		<Sockets>
 			<AdapterDeclaration Name="PWM_POW" Type="adapter::types::unidirectional::AR" Comment="PWM Power 1.0 = Maximale Power, 0.0 = Aus, 0.5 = Halb - durchgereicht an PWM_Mux.PWM_POW"/>
 		</Sockets>
 	</SubAppInterfaceList>
 	<SubAppNetwork>
-		<SubApp Name="PWM_Mux" Type="MyLib::sys::HebenSenken_ILOCK_QDA_PWM_OPC" x="0" y="0">
+		<SubApp Name="PWM_Mux" Type="MyLib::sys::HebenSenken_ILOCK_QDA_PWM_OPC" x="2000" y="1500">
 		</SubApp>
-		<SubApp Name="DO_Toggle" Type="MyLib::sys::DO_TOGGLE_RPC_QXA_OPC" x="0" y="1500">
+		<SubApp Name="DO_Toggle" Type="MyLib::sys::DO_TOGGLE_RPC_QXA_OPC" x="2100" y="600">
 		</SubApp>
+		<EventConnections>
+			<Connection Source="INIT" Destination="PWM_Mux.INIT" dx1="1833.33"/>
+			<Connection Source="INIT" Destination="DO_Toggle.INIT" dx1="3686.67"/>
+		</EventConnections>
 		<DataConnections>
 			<Connection Source="ID_HEBEN_READ" Destination="PWM_Mux.ID_HEBEN_READ" dx1="280">
 				<Attribute Name="Visible" Value="false"/>
@@ -60,19 +72,25 @@
 			<Connection Source="ID_SENKEN_WRITE" Destination="PWM_Mux.ID_SENKEN_WRITE" dx1="1280">
 				<Attribute Name="Visible" Value="false"/>
 			</Connection>
-			<Connection Source="Output_PWM" Destination="PWM_Mux.Output_PWM" dx1="6913.33">
+			<Connection Source="Output_PWM" Destination="PWM_Mux.Output_PWM" dx1="3586.67">
 				<Attribute Name="Visible" Value="false"/>
 			</Connection>
 			<Connection Source="DT_PROTECT" Destination="PWM_Mux.DT_PROTECT" dx1="1200">
 				<Attribute Name="Visible" Value="false"/>
 			</Connection>
-			<Connection Source="Output_DO" Destination="DO_Toggle.Output_DO" dx1="6913.33">
+			<Connection Source="Output_DO" Destination="DO_Toggle.Output_DO" dx1="1786.67">
 				<Attribute Name="Visible" Value="false"/>
 			</Connection>
 			<Connection Source="ID_DO_TOGGLE_METHOD" Destination="DO_Toggle.ID_DO_TOGGLE_METHOD" dx1="1400">
 				<Attribute Name="Visible" Value="false"/>
 			</Connection>
 			<Connection Source="ID_DO_STATE_WRITE" Destination="DO_Toggle.ID_DO_STATE_WRITE" dx1="1280">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="QI" Destination="PWM_Mux.QI" dx1="3586.67">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="QI" Destination="DO_Toggle.QI" dx1="1786.67">
 				<Attribute Name="Visible" Value="false"/>
 			</Connection>
 		</DataConnections>
