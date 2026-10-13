@@ -11,33 +11,53 @@
 	<SubAppInterfaceList>
 	</SubAppInterfaceList>
 	<SubAppNetwork>
-		<FB Name="AOption_AUI_DEMUX_OptionalGroup_001" Type="Option::selection::AOption_AUI_DEMUX_1" x="-4000" y="400">
+		<FB Name="AOption_AUI_DEMUX_OptionalGroup_001" Type="Option::selection::AOption_AUI_DEMUX_1" x="-3700" y="300">
 		</FB>
-		<FB Name="NumericValue_IDA" Type="isobus::UT::io::NumericValue::NumericValue_IDA" x="-6900" y="0">
+		<FB Name="NumericValue_IDA" Type="isobus::UT::io::NumericValue::NumericValue_IDA" x="-8800" y="-200">
 			<Parameter Name="QI" Value="TRUE"/>
 			<Parameter Name="u16ObjId" Value="InputNumber_I1"/>
 		</FB>
-		<FB Name="AD_TO_AUI" Type="adapter::conversion::unidirectional::AD_TO_AUI" x="-5400" y="500">
+		<FB Name="AD_TO_AUI" Type="adapter::conversion::unidirectional::AD_TO_AUI" x="-7300" y="300">
 		</FB>
 		<SubApp Name="OptionalGroup_001" Type="MyLib_AX_Option::sys::OptionalGroup_001" x="-1000" y="400">
 		</SubApp>
-		<SubApp Name="OptionalGroup_002" Type="MyLib_AX_Option::sys::OptionalGroup_002" x="-1000" y="1400">
+		<SubApp Name="OptionalGroup_002" Type="MyLib_AX_Option::sys::OptionalGroup_002" x="-900" y="2200">
 		</SubApp>
-		<FB Name="NumericValue_IDA_1" Type="isobus::UT::io::NumericValue::NumericValue_IDA" x="-6900" y="1000">
+		<FB Name="NumericValue_IDA_1" Type="isobus::UT::io::NumericValue::NumericValue_IDA" x="-8700" y="1800">
 			<Parameter Name="QI" Value="TRUE"/>
 			<Parameter Name="u16ObjId" Value="InputNumber_I2"/>
 		</FB>
-		<FB Name="AOption_AUI_DEMUX_OptionalGroup_002" Type="Option::selection::AOption_AUI_DEMUX_1" x="-4000" y="1400">
+		<FB Name="AOption_AUI_DEMUX_OptionalGroup_002" Type="Option::selection::AOption_AUI_DEMUX_1" x="-3900" y="2200">
 		</FB>
-		<FB Name="AD_TO_AUI_1" Type="adapter::conversion::unidirectional::AD_TO_AUI" x="-5400" y="1500">
+		<FB Name="AD_TO_AUI_1" Type="adapter::conversion::unidirectional::AD_TO_AUI" x="-7200" y="2300">
+		</FB>
+		<FB Name="AUI_TO_AUI2" Type="adapter::conversion::bidirectional::AUI_TO_AUI2" x="-5800" y="300">
+		</FB>
+		<FB Name="AUI_TO_AUI3" Type="adapter::conversion::bidirectional::AUI_TO_AUI2" x="-5800" y="2300">
+		</FB>
+		<FB Name="Q_NumericValue" Type="isobus::UT::Q::Q_NumericValue_AUDI" x="-1400" y="2700">
+			<Parameter Name="u16ObjId" Value="InputNumber_I2"/>
+		</FB>
+		<FB Name="AUI_TO_AUDI" Type="adapter::conversion::unidirectional::AUI_TO_AUDI" x="-3300" y="3100">
+		</FB>
+		<FB Name="AUI_TO_AUDI_1" Type="adapter::conversion::unidirectional::AUI_TO_AUDI" x="-2900" y="1300">
+		</FB>
+		<FB Name="Q_NumericValue_1" Type="isobus::UT::Q::Q_NumericValue_AUDI" x="-1000" y="900">
+			<Parameter Name="u16ObjId" Value="InputNumber_I1"/>
 		</FB>
 		<AdapterConnections>
 			<Connection Source="NumericValue_IDA.IN" Destination="AD_TO_AUI.AD_IN" dx1="133.33"/>
-			<Connection Source="AD_TO_AUI.AUI_OUT" Destination="AOption_AUI_DEMUX_OptionalGroup_001.K" dx1="153.33"/>
-			<Connection Source="AOption_AUI_DEMUX_OptionalGroup_001.OUT1" Destination="OptionalGroup_001.SOCKET1"/>
+			<Connection Source="AD_TO_AUI.AUI_OUT" Destination="AUI_TO_AUI2.AUI_IN"/>
+			<Connection Source="AOption_AUI_DEMUX_OptionalGroup_001.OUT1" Destination="OptionalGroup_001.OPTION" dx1="646.67"/>
 			<Connection Source="NumericValue_IDA_1.IN" Destination="AD_TO_AUI_1.AD_IN" dx1="133.33"/>
-			<Connection Source="AD_TO_AUI_1.AUI_OUT" Destination="AOption_AUI_DEMUX_OptionalGroup_002.K" dx1="153.33"/>
-			<Connection Source="AOption_AUI_DEMUX_OptionalGroup_002.OUT1" Destination="OptionalGroup_002.SOCKET1"/>
+			<Connection Source="AOption_AUI_DEMUX_OptionalGroup_002.OUT1" Destination="OptionalGroup_002.OPTION"/>
+			<Connection Source="AUI_TO_AUI2.AUI2_BIDIR" Destination="AOption_AUI_DEMUX_OptionalGroup_001.K"/>
+			<Connection Source="AD_TO_AUI_1.AUI_OUT" Destination="AUI_TO_AUI3.AUI_IN"/>
+			<Connection Source="AUI_TO_AUI3.AUI2_BIDIR" Destination="AOption_AUI_DEMUX_OptionalGroup_002.K" dx1="586.67"/>
+			<Connection Source="AUI_TO_AUDI.AUDI_OUT" Destination="Q_NumericValue.u32NewValue" dx1="520"/>
+			<Connection Source="AUI_TO_AUI3.AUI_OUT" Destination="AUI_TO_AUDI.AUI_IN" dx1="773.33"/>
+			<Connection Source="AUI_TO_AUDI_1.AUDI_OUT" Destination="Q_NumericValue_1.u32NewValue" dx1="520"/>
+			<Connection Source="AUI_TO_AUI2.AUI_OUT" Destination="AUI_TO_AUDI_1.AUI_IN" dx1="973.33"/>
 		</AdapterConnections>
 	</SubAppNetwork>
 </SubAppType>

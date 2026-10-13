@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SubAppType Name="Checkbox_TO_AD2_2" Comment="2 VT-Checkboxes zu einer Bitmaske zusammenfassen und als AD2 (bidirektional)&#10;an einen Consumer weiterreichen (z.B. AOption_AD_DEMUX_2.K). Checkbox 1 -&gt;&#10;Bit0, Checkbox 2 -&gt; Bit1. Das vom Consumer zurueckgemeldete Echo (die&#10;tatsaechlich aktive Bitmaske) wird wieder auf die beiden Checkboxen&#10;zurueckgeschrieben.">
+	<Identification Standard="61499-2" Description="Copyright (c) 2026 Meisterschulen am Ostbahnhof  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0">
+	</Identification>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2026-10-13" Remarks="Ausgelagert aus Uebung_094b5_AX zur Wiederverwendung: Checkbox_IDA_TO_AX x2 + ASSEMBLE_AD_FROM_AX + AD_TO_AD2 + SPLIT_AD_INTO_AX + AX_TO_Checkbox x2. Fuer N=2 Bits/Checkboxes, analog zu AOption_AD_DEMUX_2.">
+	</VersionInfo>
+	<CompilerInfo packageName="MyLib::sys">
+		<Import declaration="isobus::UT::Q::const::IDs::ID_NULL"/>
+	</CompilerInfo>
+	<SubAppInterfaceList>
+		<InputVars>
+			<VarDeclaration Name="u16ObjId_1" Type="UINT" Comment="Object ID Checkbox 1 (Bit0)" InitialValue="ID_NULL"/>
+			<VarDeclaration Name="u16ObjId_2" Type="UINT" Comment="Object ID Checkbox 2 (Bit1)" InitialValue="ID_NULL"/>
+		</InputVars>
+		<Plugs>
+			<AdapterDeclaration Name="K" Type="adapter::types::bidirectional::AD2"/>
+		</Plugs>
+	</SubAppInterfaceList>
+	<SubAppNetwork>
+		<SubApp Name="Checkbox_IDA_TO_AX" Type="MyLib::sys::Checkbox_IDA_TO_AX" x="-9400" y="200">
+		</SubApp>
+		<SubApp Name="Checkbox_IDA_TO_AX_1" Type="MyLib::sys::Checkbox_IDA_TO_AX" x="-9400" y="700">
+		</SubApp>
+		<FB Name="ASSEMBLE_AD_FROM_AX" Type="adapter::assembling::ASSEMBLE_AD_FROM_AX" x="-7300" y="500">
+		</FB>
+		<FB Name="AD_TO_AD2" Type="adapter::conversion::bidirectional::AD_TO_AD2" x="-5600" y="500">
+		</FB>
+		<FB Name="SPLIT_AD_INTO_AX" Type="adapter::splitting::SPLIT_AD_INTO_AX" x="-4300" y="600">
+		</FB>
+		<SubApp Name="AX_TO_Checkbox" Type="MyLib::sys::AX_TO_Checkbox" x="-2400" y="400">
+		</SubApp>
+		<SubApp Name="AX_TO_Checkbox_1" Type="MyLib::sys::AX_TO_Checkbox" x="-2400" y="900">
+		</SubApp>
+		<DataConnections>
+			<Connection Source="u16ObjId_1" Destination="Checkbox_IDA_TO_AX.u16ObjId" dx1="520">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="u16ObjId_1" Destination="AX_TO_Checkbox.u16ObjId" dx1="4620">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="u16ObjId_2" Destination="Checkbox_IDA_TO_AX_1.u16ObjId" dx1="520">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="u16ObjId_2" Destination="AX_TO_Checkbox_1.u16ObjId" dx1="4620">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+		</DataConnections>
+		<AdapterConnections>
+			<Connection Source="Checkbox_IDA_TO_AX.PERMIT_OUT" Destination="ASSEMBLE_AD_FROM_AX.BIT_00" dx1="586.67"/>
+			<Connection Source="Checkbox_IDA_TO_AX_1.PERMIT_OUT" Destination="ASSEMBLE_AD_FROM_AX.BIT_01" dx1="586.67"/>
+			<Connection Source="ASSEMBLE_AD_FROM_AX.OUT" Destination="AD_TO_AD2.AD_IN"/>
+			<Connection Source="AD_TO_AD2.AD2_BIDIR" Destination="K" dx1="720">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="AD_TO_AD2.AD_OUT" Destination="SPLIT_AD_INTO_AX.IN" dx1="360"/>
+			<Connection Source="SPLIT_AD_INTO_AX.BIT_00" Destination="AX_TO_Checkbox.AX_IN" dx1="333.33"/>
+			<Connection Source="SPLIT_AD_INTO_AX.BIT_01" Destination="AX_TO_Checkbox_1.AX_IN" dx1="333.33"/>
+		</AdapterConnections>
+	</SubAppNetwork>
+</SubAppType>
