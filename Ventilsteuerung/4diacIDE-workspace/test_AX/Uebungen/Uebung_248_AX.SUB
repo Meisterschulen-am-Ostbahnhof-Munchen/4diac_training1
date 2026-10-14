@@ -13,13 +13,13 @@
 	<SubAppInterfaceList>
 	</SubAppInterfaceList>
 	<SubAppNetwork>
-		<FB Name="DigitalInput_I1" Type="logiBUS::io::DI::logiBUS_IXA" x="-5800" y="1700">
-			<Parameter Name="QI" Value="TRUE"/>
-			<Parameter Name="Input" Value="Input_I1"/>
-		</FB>
-		<FB Name="DigitalInput_I2" Type="logiBUS::io::DI::logiBUS_IXA" x="-9600" y="1400">
+		<FB Name="DigitalInput_I2" Type="logiBUS::io::DI::logiBUS_IXA" x="-9600" y="2300">
 			<Parameter Name="QI" Value="TRUE"/>
 			<Parameter Name="Input" Value="Input_I2"/>
+		</FB>
+		<FB Name="DigitalInput_I1" Type="logiBUS::io::DI::logiBUS_IXA" x="-9600" y="1400">
+			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="Input" Value="Input_I1"/>
 		</FB>
 		<FB Name="initval_AR_50_Neutral" Type="adapter::types::unidirectional::AR::initval::initval_AR" x="-8000" y="600">
 			<Parameter Name="INIT_VAL" Value="REAL#50.0"/>
@@ -48,16 +48,16 @@
 			<Parameter Name="QI" Value="TRUE"/>
 			<Parameter Name="Output" Value="Output_Q1"/>
 		</FB>
-		<Comment Comment="0-100% Tastgrad = 0-8191 (13-Bit LEDC, siehe RampLimitFS_TO_logiBUS_QDA_PWM_OPC.SUB in MyLib_AX-1.0.0): Faktor 81,91 = 8191/100. Mit Multimeter/Oszilloskop an Q1 gegen GND: Mittelwert = Tastgrad% x Versorgungsspannung - bei 25/50/75% Tastgrad direkt vergleichbar mit den PVEA-Sollspannungen 0,25/0,50/0,75 x U_DC." x="-10100" y="2800" width="9000" height="900"/>
+		<Comment Comment="0-100% Tastgrad = 0-8191 (13-Bit LEDC, siehe RampLimitFS_TO_logiBUS_QDA_PWM_OPC.SUB in MyLib_AX-1.0.0): Faktor 81,91 = 8191/100. Mit Multimeter/Oszilloskop an Q1 gegen GND: Mittelwert = Tastgrad% x Versorgungsspannung - bei 25/50/75% Tastgrad direkt vergleichbar mit den PVEA-Sollspannungen 0,25/0,50/0,75 x U_DC." x="-10200" y="3700" width="9000" height="900"/>
 		<FB Name="AR_TO_AD_NUM" Type="adapter::conversion::unidirectional::AR_TO_AD_NUM" x="3500" y="1100">
 		</FB>
 		<AdapterConnections>
 			<Connection Source="initval_AR_50_Neutral.OUT" Destination="AR_AX_SEL_AR_Runter.IN0" dx1="533.33"/>
 			<Connection Source="initval_AR_25_Runter.OUT" Destination="AR_AX_SEL_AR_Runter.IN1" dx1="533.33"/>
-			<Connection Source="DigitalInput_I2.IN" Destination="AR_AX_SEL_AR_Runter.G" dx1="2340"/>
+			<Connection Source="DigitalInput_I1.IN" Destination="AR_AX_SEL_AR_Runter.G" dx1="2340"/>
 			<Connection Source="AR_AX_SEL_AR_Runter.OUT" Destination="AR_AX_SEL_AR_Hoch.IN0" dx1="80"/>
 			<Connection Source="initval_AR_75_Hoch.OUT" Destination="AR_AX_SEL_AR_Hoch.IN1" dx1="520"/>
-			<Connection Source="DigitalInput_I1.IN" Destination="AR_AX_SEL_AR_Hoch.G" dx1="1520"/>
+			<Connection Source="DigitalInput_I2.IN" Destination="AR_AX_SEL_AR_Hoch.G" dx1="5320"/>
 			<Connection Source="AR_AX_SEL_AR_Hoch.OUT" Destination="AR_SPLIT_2_Anzeige_PWM.IN" dx1="700"/>
 			<Connection Source="AR_SPLIT_2_Anzeige_PWM.OUT1" Destination="Q_NumericValue_PHYSA.rPhys" dx1="900"/>
 			<Connection Source="AR_SPLIT_2_Anzeige_PWM.OUT2" Destination="AR_MUL_2_PWM13BIT.IN1" dx1="900"/>
