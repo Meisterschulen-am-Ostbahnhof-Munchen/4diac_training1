@@ -21,7 +21,7 @@
 	<SubAppInterfaceList>
 	</SubAppInterfaceList>
 	<SubAppNetwork>
-		<FB Name="DigitalInput_I2" Type="logiBUS::io::DI::logiBUS_IE" x="-7000" y="0">
+		<FB Name="DigitalInput_I2" Type="logiBUS::io::DI::logiBUS_IE" x="-7000" y="400">
 			<Parameter Name="QI" Value="TRUE"/>
 			<Parameter Name="Input" Value="Input_I2"/>
 			<Parameter Name="InputEvent" Value="BUTTON_SINGLE_CLICK"/>
@@ -34,7 +34,7 @@
 		<FB Name="E_CYCLE" Type="iec61499::events::E_CYCLE" x="-5500" y="500">
 			<Parameter Name="DT" Value="T#200ms"/>
 		</FB>
-		<FB Name="logiBUS_PI_IDA" Type="logiBUS::io::PI::logiBUS_PI_IDA" x="-4000" y="400">
+		<FB Name="logiBUS_PI_IDA" Type="logiBUS::io::PI::logiBUS_PI_IDA" x="-4000" y="2300">
 			<Parameter Name="QI" Value="TRUE"/>
 			<Parameter Name="Input" Value="PulseInput_I8"/>
 			<Parameter Name="ImpulseDelta" Value="100"/>
@@ -50,7 +50,7 @@
 		<FB Name="LIT_K" Type="adapter::types::unidirectional::AUI::initval::initval_AUI" x="-2500" y="800">
 			<Parameter Name="INIT_VAL" Value="9"/>
 		</FB>
-		<FB Name="DigitalInput_I1" Type="logiBUS::io::DI::logiBUS_IE" x="-2500" y="2300">
+		<FB Name="DigitalInput_I1" Type="logiBUS::io::DI::logiBUS_IE" x="-2500" y="0">
 			<Parameter Name="QI" Value="TRUE"/>
 			<Parameter Name="Input" Value="Input_I1"/>
 			<Parameter Name="InputEvent" Value="BUTTON_SINGLE_CLICK"/>
