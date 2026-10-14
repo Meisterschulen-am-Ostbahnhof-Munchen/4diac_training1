@@ -26,7 +26,16 @@
 		<Import declaration="logiBUS::utils::conversion::phys::NumericObjectPool_S"/>
 	</CompilerInfo>
 	<SubAppInterfaceList>
+		<SubAppEventInputs>
+			<SubAppEvent Name="INIT" Type="EInit" Comment="Initialization Request">
+			</SubAppEvent>
+		</SubAppEventInputs>
+		<SubAppEventOutputs>
+			<SubAppEvent Name="INITO" Type="EInit" Comment="Initialization Confirm">
+			</SubAppEvent>
+		</SubAppEventOutputs>
 		<InputVars>
+			<VarDeclaration Name="QI" Type="BOOL" Comment="Quality Input - TRUE to enable service" InitialValue="TRUE"/>
 			<VarDeclaration Name="ID_CAL_M2M_READ" Type="WSTRING" Comment="Remote-Subscribe-Adresse des bereits kalibrierten physikalischen Werts (REAL) - Gegenstueck zu ID_CAL_WRITE auf der Sensor-Station (logiBUS_AI_Calibrate_IDA_OPC)"/>
 			<VarDeclaration Name="stObjCal" Type="logiBUS::utils::conversion::phys::NumericObjectPool_S" Comment="Object ID + Scale/Offset/Decimals CNumberVariable (kalibrierter Wert)" InitialValue="(u16ObjId := ID_NULL, r32Scale := 1.0, i32Offset := 0, u8Decimals := 1)"/>
 			<VarDeclaration Name="ID_WRITE" Type="WSTRING" Comment="Lokale Re-Publish-Adresse (REAL, ACTION=PUBLISH) fuer weitere lokale Konsumenten auf dieser Station"/>
@@ -50,29 +59,46 @@
 			<VarDeclaration Name="ID_SPAN_READ" Type="WSTRING" Comment="Remote-Subscribe-Adresse SPAN-Referenzwert (REAL, ACTION=SUBSCRIBE) - optionaler Web-Override des VT-Eingabefelds, letzter Schreiber gewinnt"/>
 			<VarDeclaration Name="ID_SPAN_WRITE" Type="WSTRING" Comment="Publish-Adresse SPAN-Referenzwert (REAL, ACTION=PUBLISH) - wird von der Sensor-Station remote abonniert (Gegenstueck zu deren ID_SPAN_READ)"/>
 		</InputVars>
+		<OutputVars>
+			<VarDeclaration Name="QO" Type="BOOL" Comment="Quality Output - TRUE if service executed successfully"/>
+		</OutputVars>
 		<Plugs>
 			<AdapterDeclaration Name="CAL_OUT" Type="adapter::types::unidirectional::AR" Comment="Nur-Lese-Spiegel des kalibrierten Werts (= ValueDisplay.VALUE_OUT) fuer weitere lokale Konsumenten auf dieser Station, statt eigenem OPC-UA-Self-Subscribe"/>
 		</Plugs>
 	</SubAppInterfaceList>
 	<SubAppNetwork>
-		<SubApp Name="ValueDisplay" Type="MyLib::sys::AR_M2M_Subscribe_TO_Q_Publish_OPC" x="0" y="0">
+		<SubApp Name="ValueDisplay" Type="MyLib::sys::AR_M2M_Subscribe_TO_Q_Publish_OPC" x="700" y="-600">
 		</SubApp>
-		<SubApp Name="TriggerCO" Type="MyLib::sys::Button_CLIENT_Method_IE" x="400" y="700">
+		<SubApp Name="TriggerCO" Type="MyLib::sys::Button_CLIENT_Method_IE" x="800" y="300">
 			<Parameter Name="InputEvent" Value="BT_PRESSED_LATCHED"/>
 		</SubApp>
-		<SubApp Name="TriggerCS" Type="MyLib::sys::Button_CLIENT_Method_IE" x="400" y="1300">
+		<SubApp Name="TriggerCS" Type="MyLib::sys::Button_CLIENT_Method_IE" x="900" y="1100">
 			<Parameter Name="InputEvent" Value="BT_PRESSED_LATCHED"/>
 		</SubApp>
-		<SubApp Name="RawDisplay" Type="MyLib::sys::AR_M2M_Subscribe_TO_Q_Publish_OPC" x="0" y="2000">
+		<SubApp Name="RawDisplay" Type="MyLib::sys::AR_M2M_Subscribe_TO_Q_Publish_OPC" x="900" y="1900">
 		</SubApp>
-		<SubApp Name="MinRawDisplay" Type="MyLib::sys::AR_M2M_Subscribe_TO_Q_Publish_OPC" x="0" y="2700">
+		<SubApp Name="MinRawDisplay" Type="MyLib::sys::AR_M2M_Subscribe_TO_Q_Publish_OPC" x="900" y="2800">
 		</SubApp>
-		<SubApp Name="MaxRawDisplay" Type="MyLib::sys::AR_M2M_Subscribe_TO_Q_Publish_OPC" x="0" y="3400">
+		<SubApp Name="MaxRawDisplay" Type="MyLib::sys::AR_M2M_Subscribe_TO_Q_Publish_OPC" x="900" y="4000">
 		</SubApp>
-		<SubApp Name="ZeroRef" Type="MyLib::sys::NumericValue_TO_AR2_OPC" x="0" y="4100">
+		<SubApp Name="ZeroRef" Type="MyLib::sys::NumericValue_TO_AR2_OPC" x="900" y="4900">
 		</SubApp>
-		<SubApp Name="SpanRef" Type="MyLib::sys::NumericValue_TO_AR2_OPC" x="0" y="5100">
+		<SubApp Name="SpanRef" Type="MyLib::sys::NumericValue_TO_AR2_OPC" x="900" y="5900">
 		</SubApp>
+		<FB Name="AND_QO" Type="iec61131::booleanOperators::AND_BOOL_8" x="4600" y="1100">
+		</FB>
+		<EventConnections>
+			<Connection Source="INIT" Destination="ValueDisplay.INIT" dx1="1080"/>
+			<Connection Source="ValueDisplay.INITO" Destination="TriggerCO.INIT" dx1="80" dx2="80" dy="346.67"/>
+			<Connection Source="TriggerCO.INITO" Destination="TriggerCS.INIT" dx1="80" dx2="80" dy="300"/>
+			<Connection Source="TriggerCS.INITO" Destination="RawDisplay.INIT" dx1="80" dx2="80" dy="346.67"/>
+			<Connection Source="RawDisplay.INITO" Destination="MinRawDisplay.INIT" dx1="80" dx2="80" dy="346.67"/>
+			<Connection Source="MinRawDisplay.INITO" Destination="MaxRawDisplay.INIT" dx1="80" dx2="80" dy="346.67"/>
+			<Connection Source="MaxRawDisplay.INITO" Destination="ZeroRef.INIT" dx1="80" dx2="80" dy="346.67"/>
+			<Connection Source="ZeroRef.INITO" Destination="SpanRef.INIT" dx1="80" dx2="80" dy="500"/>
+			<Connection Source="SpanRef.INITO" Destination="INITO" dx1="3093.33"/>
+			<Connection Source="SpanRef.INITO" Destination="AND_QO.REQ" dx1="1320"/>
+		</EventConnections>
 		<DataConnections>
 			<Connection Source="ID_CAL_M2M_READ" Destination="ValueDisplay.ID_M2M_READ" dx1="1400">
 				<Attribute Name="Visible" Value="false"/>
@@ -140,6 +166,23 @@
 			<Connection Source="ID_SPAN_WRITE" Destination="SpanRef.ID_WRITE" dx1="1400">
 				<Attribute Name="Visible" Value="false"/>
 			</Connection>
+			<Connection Source="QI" Destination="ValueDisplay.QI" dx1="1080"/>
+			<Connection Source="QI" Destination="TriggerCO.QI" dx1="1280"/>
+			<Connection Source="QI" Destination="TriggerCS.QI" dx1="1326.67"/>
+			<Connection Source="QI" Destination="RawDisplay.QI" dx1="1326.67"/>
+			<Connection Source="QI" Destination="MinRawDisplay.QI" dx1="880"/>
+			<Connection Source="QI" Destination="MaxRawDisplay.QI" dx1="880"/>
+			<Connection Source="QI" Destination="ZeroRef.QI" dx1="880"/>
+			<Connection Source="QI" Destination="SpanRef.QI" dx1="880"/>
+			<Connection Source="ValueDisplay.QO" Destination="AND_QO.IN1" dx1="1086.67"/>
+			<Connection Source="TriggerCO.QO" Destination="AND_QO.IN2" dx1="1120"/>
+			<Connection Source="TriggerCS.QO" Destination="AND_QO.IN3" dx1="1120"/>
+			<Connection Source="RawDisplay.QO" Destination="AND_QO.IN4" dx1="1086.67"/>
+			<Connection Source="MinRawDisplay.QO" Destination="AND_QO.IN5" dx1="1086.67"/>
+			<Connection Source="MaxRawDisplay.QO" Destination="AND_QO.IN6" dx1="1086.67"/>
+			<Connection Source="ZeroRef.QO" Destination="AND_QO.IN7" dx1="1320"/>
+			<Connection Source="SpanRef.QO" Destination="AND_QO.IN8" dx1="1320"/>
+			<Connection Source="AND_QO.OUT" Destination="QO" dx1="2113.33"/>
 		</DataConnections>
 		<AdapterConnections>
 			<Connection Source="ValueDisplay.VALUE_OUT" Destination="CAL_OUT" dx1="300"/>

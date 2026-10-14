@@ -11,6 +11,14 @@
 	<CompilerInfo packageName="MyLib::sys">
 	</CompilerInfo>
 	<SubAppInterfaceList>
+		<SubAppEventInputs>
+			<SubAppEvent Name="INIT" Type="EInit" Comment="Initialization Request">
+			</SubAppEvent>
+		</SubAppEventInputs>
+		<SubAppEventOutputs>
+			<SubAppEvent Name="INITO" Type="EInit" Comment="Initialization Confirm">
+			</SubAppEvent>
+		</SubAppEventOutputs>
 		<InputVars>
 			<VarDeclaration Name="QI" Type="BOOL" Comment="Quality Input - TRUE to enable service" InitialValue="TRUE"/>
 			<VarDeclaration Name="stObj" Type="logiBUS::utils::conversion::phys::NumericObjectPool_S" Comment="Object pool properties der VT-Zahlenvariable (u16ObjId, scale, offset, decimals) - z.B. FBs::const::DefaultPool_Numeric::NumberVariable_X_N"/>
@@ -29,11 +37,20 @@
 		<FB Name="RateLimit_Anzeige" Type="adapter::events::unidirectional::AR_D_FF_TMIN" Comment="Drosselt vor dem Split BEIDE Zweige (VT-Anzeige UND AR_PUBLISH/Self-Subscribe, z.B. CTRL_PID_AR.AR_ACT) auf max. 1 Update/500ms - Absicht (Franz)." x="300" y="-200">
 			<Parameter Name="Tmin" Value="T#500ms"/>
 		</FB>
-		<FB Name="Q_NumericValue" Type="isobus::UT::Q::Q_NumericValue_PHYSA" x="4100" y="-900">
+		<FB Name="Q_NumericValue" Type="isobus::UT::Q::Q_NumericValue_PHYSA" x="4200" y="-800">
 		</FB>
-		<FB Name="AR_PUBLISH" Type="adapter::net::AR_PUBLISH_1" x="4200" y="100">
-			<Parameter Name="QI" Value="TRUE"/>
+		<FB Name="AR_PUBLISH" Type="adapter::net::AR_PUBLISH_1" x="4200" y="300">
 		</FB>
+		<FB Name="AND_QO" Type="iec61131::booleanOperators::AND_BOOL_2" x="6700" y="-500">
+		</FB>
+		<EventConnections>
+			<Connection Source="INIT" Destination="Q_NumericValue.INIT" dx1="1826.67"/>
+			<Connection Source="Q_NumericValue.INITO" Destination="AR_PUBLISH.INIT" dx1="513.33" dx2="386.67" dy="500"/>
+			<Connection Source="AR_PUBLISH.INITO" Destination="INITO" dx1="2646.67"/>
+			<Connection Source="AR_PUBLISH.INITO" Destination="AND_QO.REQ" dx1="626.67">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+		</EventConnections>
 		<DataConnections>
 			<Connection Source="stObj" Destination="Q_NumericValue.stObj" dx1="1400">
 				<Attribute Name="Visible" Value="false"/>
@@ -41,8 +58,19 @@
 			<Connection Source="ID_WRITE" Destination="AR_PUBLISH.ID" dx1="1400">
 				<Attribute Name="Visible" Value="false"/>
 			</Connection>
-			<Connection Source="QI" Destination="Q_NumericValue.QI"/>
-			<Connection Source="Q_NumericValue.QO" Destination="QO"/>
+			<Connection Source="QI" Destination="Q_NumericValue.QI" dx1="1826.67">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="QI" Destination="AR_PUBLISH.QI" dx1="1880">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="Q_NumericValue.QO" Destination="AND_QO.IN1" dx1="580">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="AR_PUBLISH.QO" Destination="AND_QO.IN2" dx1="626.67">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="AND_QO.OUT" Destination="QO" dx1="2806.67"/>
 		</DataConnections>
 		<AdapterConnections>
 			<Connection Source="AR_IN" Destination="RateLimit_Anzeige.I" dx1="600"/>

@@ -22,11 +22,15 @@
 			</SubAppEvent>
 		</SubAppEventOutputs>
 		<InputVars>
+			<VarDeclaration Name="QI" Type="BOOL" Comment="Quality Input - TRUE to enable service" InitialValue="TRUE"/>
 			<VarDeclaration Name="Picture" Type="UINT" Comment="Object ID of the ObjectPointer to the Picture"/>
 			<VarDeclaration Name="Color" Type="UINT" Comment="Object ID of the AuxFunction"/>
 			<VarDeclaration Name="Sets" Type="logiBUS::utils::sequence::schieber::SchieberAuxInStruct"/>
 			<VarDeclaration Name="iSTATE" Type="USINT" InitialValue="Unknown"/>
 		</InputVars>
+		<OutputVars>
+			<VarDeclaration Name="QO" Type="BOOL" Comment="Quality Output - TRUE if service executed successfully (AND aller 4 Instanzen)"/>
+		</OutputVars>
 	</SubAppInterfaceList>
 	<SubAppNetwork>
 		<FB Name="PictureVT" Type="isobus::UT::Q::Q_NumericValue" x="3900" y="500">
@@ -77,6 +81,12 @@
 		</FB>
 		<FB Name="F_MUX_5_Colour" Type="iec61131::selection::F_MUX_5" x="1900" y="1500">
 		</FB>
+		<FB Name="E_MERGE_QO_A" Type="iec61499::events::E_MERGE_4" x="5700" y="100">
+		</FB>
+		<FB Name="E_MERGE_QO" Type="iec61499::events::E_MERGE_2" x="5800" y="1900">
+		</FB>
+		<FB Name="AND_QO" Type="iec61131::booleanOperators::AND_BOOL_4" x="5700" y="1000">
+		</FB>
 		<EventConnections>
 			<Connection Source="F_MUX_5_Picture.CNF" Destination="PictureAux.REQ" dx1="693.33"/>
 			<Connection Source="F_MUX_5_Picture.CNF" Destination="PictureVT.REQ" dx1="693.33"/>
@@ -104,6 +114,13 @@
 			<Connection Source="ColorVT.INITO" Destination="INITO" dx1="1373.33">
 				<Attribute Name="Visible" Value="false"/>
 			</Connection>
+			<Connection Source="PictureAux.CNF" Destination="E_MERGE_QO_A.EI1" dx1="313.33"/>
+			<Connection Source="PictureVT.CNF" Destination="E_MERGE_QO_A.EI2" dx1="313.33"/>
+			<Connection Source="ColorAux.CNF" Destination="E_MERGE_QO_A.EI3" dx1="480"/>
+			<Connection Source="ColorVT.CNF" Destination="E_MERGE_QO_A.EI4" dx1="433.33"/>
+			<Connection Source="E_MERGE_QO_A.EO" Destination="E_MERGE_QO.EI1" dx1="80" dx2="80" dy="900"/>
+			<Connection Source="ColorVT.INITO" Destination="E_MERGE_QO.EI2" dx1="480"/>
+			<Connection Source="E_MERGE_QO.EO" Destination="AND_QO.REQ" dx1="80" dx2="80" dy="-446.67"/>
 		</EventConnections>
 		<DataConnections>
 			<Connection Source="Color" Destination="ColorAux.u16ObjId" dx1="3200">
@@ -139,6 +156,15 @@
 			<Connection Source="iSTATE" Destination="F_MUX_5_Colour.K" dx1="3406.67">
 				<Attribute Name="Visible" Value="false"/>
 			</Connection>
+			<Connection Source="QI" Destination="PictureAux.QI" dx1="1753.33"/>
+			<Connection Source="QI" Destination="PictureVT.QI" dx1="1753.33"/>
+			<Connection Source="QI" Destination="ColorAux.QI" dx1="1653.33"/>
+			<Connection Source="QI" Destination="ColorVT.QI" dx1="1700"/>
+			<Connection Source="PictureAux.QO" Destination="AND_QO.IN1" dx1="313.33"/>
+			<Connection Source="PictureVT.QO" Destination="AND_QO.IN2" dx1="313.33"/>
+			<Connection Source="ColorAux.QO" Destination="AND_QO.IN3" dx1="480"/>
+			<Connection Source="ColorVT.QO" Destination="AND_QO.IN4" dx1="433.33"/>
+			<Connection Source="AND_QO.OUT" Destination="QO" dx1="1140"/>
 		</DataConnections>
 	</SubAppNetwork>
 </SubAppType>

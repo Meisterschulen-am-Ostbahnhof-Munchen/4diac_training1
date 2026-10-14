@@ -11,6 +11,14 @@
 		<Import declaration="logiBUS::utils::conversion::phys::NumericObjectPool_S"/>
 	</CompilerInfo>
 	<SubAppInterfaceList>
+		<SubAppEventInputs>
+			<SubAppEvent Name="INIT" Type="EInit" Comment="Initialization Request">
+			</SubAppEvent>
+		</SubAppEventInputs>
+		<SubAppEventOutputs>
+			<SubAppEvent Name="INITO" Type="EInit" Comment="Initialization Confirm">
+			</SubAppEvent>
+		</SubAppEventOutputs>
 		<InputVars>
 			<VarDeclaration Name="QI" Type="BOOL" Comment="Quality Input - TRUE to enable service" InitialValue="TRUE"/>
 			<VarDeclaration Name="stObj" Type="logiBUS::utils::conversion::phys::NumericObjectPool_S" Comment="Object ID + Scale/Offset/Decimals des VT-Eingabefelds (Ein- UND Ausgabe: bestaetigter Wert wird hier zurueckgeschrieben)" InitialValue="(u16ObjId := ID_NULL, r32Scale := 1.0, i32Offset := 0, u8Decimals := 1)"/>
@@ -23,20 +31,24 @@
 	</SubAppInterfaceList>
 	<SubAppNetwork>
 		<FB Name="Input" Type="isobus::UT::io::NumericValue::NumericValue_PHYSA" x="-4500" y="0">
-			<Parameter Name="QI" Value="TRUE"/>
 		</FB>
 		<FB Name="Call" Type="adapter::net::AR_CLIENT_1_0_UNGATED" x="-2000" y="0">
-			<Parameter Name="QI" Value="TRUE"/>
 		</FB>
 		<FB Name="Subscribe" Type="adapter::net::AR_SUBSCRIBE_1" x="-4500" y="1200">
-			<Parameter Name="QI" Value="TRUE"/>
 		</FB>
 		<FB Name="Display" Type="isobus::UT::Q::Q_NumericValue_PHYSA" x="-2000" y="1200">
 		</FB>
+		<FB Name="AND_QO" Type="iec61131::booleanOperators::AND_BOOL_4">
+		</FB>
 		<EventConnections>
+			<Connection Source="INIT" Destination="Input.INIT"/>
+			<Connection Source="Input.INITO" Destination="Subscribe.INIT"/>
 			<Connection Source="Subscribe.INITO" Destination="Call.INIT" dx1="1250">
 				<Attribute Name="Visible" Value="false"/>
 			</Connection>
+			<Connection Source="Call.INITO" Destination="Display.INIT"/>
+			<Connection Source="Display.INITO" Destination="INITO"/>
+			<Connection Source="Display.INITO" Destination="AND_QO.REQ"/>
 		</EventConnections>
 		<DataConnections>
 			<Connection Source="stObj" Destination="Input.stObj" dx1="1100">
@@ -52,7 +64,14 @@
 				<Attribute Name="Visible" Value="false"/>
 			</Connection>
 			<Connection Source="QI" Destination="Display.QI"/>
-			<Connection Source="Display.QO" Destination="QO"/>
+			<Connection Source="QI" Destination="Input.QI"/>
+			<Connection Source="QI" Destination="Call.QI"/>
+			<Connection Source="QI" Destination="Subscribe.QI"/>
+			<Connection Source="Display.QO" Destination="AND_QO.IN1"/>
+			<Connection Source="Input.QO" Destination="AND_QO.IN2"/>
+			<Connection Source="Call.QO" Destination="AND_QO.IN3"/>
+			<Connection Source="Subscribe.QO" Destination="AND_QO.IN4"/>
+			<Connection Source="AND_QO.OUT" Destination="QO"/>
 		</DataConnections>
 		<AdapterConnections>
 			<Connection Source="Input.rPhys" Destination="Call.IN" dx1="1250"/>

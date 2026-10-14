@@ -8,7 +8,13 @@
 		<Import declaration="isobus::UT::Q::const::IDs::ID_NULL"/>
 	</CompilerInfo>
 	<SubAppInterfaceList>
+		<SubAppEventInputs>
+			<SubAppEvent Name="INIT" Type="EInit" Comment="Initialization Request">
+			</SubAppEvent>
+		</SubAppEventInputs>
 		<SubAppEventOutputs>
+			<SubAppEvent Name="INITO" Type="EInit" Comment="Initialization Confirm">
+			</SubAppEvent>
 			<SubAppEvent Name="IND" Type="Event">
 			</SubAppEvent>
 		</SubAppEventOutputs>
@@ -25,13 +31,13 @@
 	</SubAppInterfaceList>
 	<SubAppNetwork>
 		<FB Name="StringValue_IS" Type="isobus::UT::io::StringValue::StringValue_IS" x="-1100" y="200">
-			<Parameter Name="QI" Value="TRUE"/>
 		</FB>
 		<FB Name="INI" Type="eclipse4diac::storage::INI" x="2100" y="100">
-			<Parameter Name="QI" Value="TRUE"/>
 			<Parameter Name="DEFAULT_VALUE" Value="STRING#''"/>
 		</FB>
 		<FB Name="Q_StringValue" Type="isobus::UT::Q::Q_StringValue" x="4500" y="100">
+		</FB>
+		<FB Name="AND_QO" Type="iec61131::booleanOperators::AND_BOOL_3">
 		</FB>
 		<EventConnections>
 			<Connection Source="StringValue_IS.IND" Destination="INI.SET" dx1="380"/>
@@ -43,6 +49,11 @@
 				<Attribute Name="Visible" Value="false"/>
 			</Connection>
 			<Connection Source="INI.INITO" Destination="INI.GET" dx1="80" dx2="80" dy="-580"/>
+			<Connection Source="INIT" Destination="StringValue_IS.INIT"/>
+			<Connection Source="StringValue_IS.INITO" Destination="INI.INIT"/>
+			<Connection Source="INI.INITO" Destination="Q_StringValue.INIT"/>
+			<Connection Source="Q_StringValue.INITO" Destination="INITO"/>
+			<Connection Source="Q_StringValue.INITO" Destination="AND_QO.REQ"/>
 		</EventConnections>
 		<DataConnections>
 			<Connection Source="StringValue_IS.IN" Destination="INI.VALUE" dx1="186.67"/>
@@ -63,7 +74,12 @@
 				<Attribute Name="Visible" Value="false"/>
 			</Connection>
 			<Connection Source="QI" Destination="Q_StringValue.QI"/>
-			<Connection Source="Q_StringValue.QO" Destination="QO"/>
+			<Connection Source="QI" Destination="StringValue_IS.QI"/>
+			<Connection Source="QI" Destination="INI.QI"/>
+			<Connection Source="Q_StringValue.QO" Destination="AND_QO.IN1"/>
+			<Connection Source="StringValue_IS.QO" Destination="AND_QO.IN2"/>
+			<Connection Source="INI.QO" Destination="AND_QO.IN3"/>
+			<Connection Source="AND_QO.OUT" Destination="QO"/>
 		</DataConnections>
 	</SubAppNetwork>
 </SubAppType>

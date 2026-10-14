@@ -9,13 +9,23 @@
 	<CompilerInfo packageName="MyLib::sys">
 	</CompilerInfo>
 	<SubAppInterfaceList>
+		<SubAppEventInputs>
+			<SubAppEvent Name="INIT" Type="EInit" Comment="Initialization Request">
+			</SubAppEvent>
+		</SubAppEventInputs>
 		<SubAppEventOutputs>
+			<SubAppEvent Name="INITO" Type="EInit" Comment="Initialization Confirm">
+			</SubAppEvent>
 			<SubAppEvent Name="IND" Type="Event" Comment="Feuert wenn SoftKey ODER Aux ODER Web-Remote aktiviert wird"/>
 		</SubAppEventOutputs>
 		<InputVars>
+			<VarDeclaration Name="QI" Type="BOOL" Comment="Quality Input - TRUE to enable service" InitialValue="TRUE"/>
 			<VarDeclaration Name="u16ObjId" Type="UINT" Comment="Object ID SoftKey"/>
 			<VarDeclaration Name="u16ObjIdA" Type="UINT" Comment="Object ID AuxFunction2"/>
 		</InputVars>
+		<OutputVars>
+			<VarDeclaration Name="QO" Type="BOOL" Comment="Quality Output - TRUE if service executed successfully"/>
+		</OutputVars>
 		<Sockets>
 			<AdapterDeclaration Name="WEB_IN" Type="adapter::types::unidirectional::AX" Comment="Web-Remote-Pegel von aussen (z.B. Softkey_Aux_Auto_IXA_TO_Remote_WRITE.WEB_STATE), statt eigenem lokalen OPC-UA-Self-Subscribe"/>
 		</Sockets>
@@ -31,6 +41,8 @@
 			<Connection Source="SoftkeyAux.IND" Destination="MERGE.EI1" dx1="800"/>
 			<Connection Source="WEB_R_TRIG.EO" Destination="MERGE.EI2" dx1="800"/>
 			<Connection Source="MERGE.EO" Destination="IND" dx1="800"/>
+			<Connection Source="INIT" Destination="SoftkeyAux.INIT"/>
+			<Connection Source="SoftkeyAux.INITO" Destination="INITO"/>
 		</EventConnections>
 		<DataConnections>
 			<Connection Source="u16ObjId" Destination="SoftkeyAux.u16ObjId" dx1="1400">
@@ -39,6 +51,8 @@
 			<Connection Source="u16ObjIdA" Destination="SoftkeyAux.u16ObjIdA" dx1="1400">
 				<Attribute Name="Visible" Value="false"/>
 			</Connection>
+			<Connection Source="QI" Destination="SoftkeyAux.QI"/>
+			<Connection Source="SoftkeyAux.QO" Destination="QO"/>
 		</DataConnections>
 		<AdapterConnections>
 			<Connection Source="WEB_IN" Destination="WEB_R_TRIG.QI" dx1="1400"/>

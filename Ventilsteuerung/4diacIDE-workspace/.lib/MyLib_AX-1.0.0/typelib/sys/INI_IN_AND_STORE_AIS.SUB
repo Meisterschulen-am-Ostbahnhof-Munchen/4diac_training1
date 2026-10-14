@@ -8,6 +8,14 @@
 		<Import declaration="isobus::UT::Q::const::IDs::ID_NULL"/>
 	</CompilerInfo>
 	<SubAppInterfaceList>
+		<SubAppEventInputs>
+			<SubAppEvent Name="INIT" Type="EInit" Comment="Initialization Request">
+			</SubAppEvent>
+		</SubAppEventInputs>
+		<SubAppEventOutputs>
+			<SubAppEvent Name="INITO" Type="EInit" Comment="Initialization Confirm">
+			</SubAppEvent>
+		</SubAppEventOutputs>
 		<InputVars>
 			<VarDeclaration Name="QI" Type="BOOL" Comment="Quality Input - TRUE to enable service" InitialValue="TRUE"/>
 			<VarDeclaration Name="KEY" Type="STRING" Comment="Key name."/>
@@ -23,17 +31,24 @@
 	</SubAppInterfaceList>
 	<SubAppNetwork>
 		<FB Name="INI_AIS" Type="eclipse4diac::storage::INI_AIS" x="800" y="-93.33">
-			<Parameter Name="QI" Value="TRUE"/>
 			<Parameter Name="SETM" Value="TRUE"/>
 			<Parameter Name="DEFAULT_VALUE" Value="STRING#''"/>
 		</FB>
 		<FB Name="StringValue_AIS" Type="isobus::UT::io::StringValue::StringValue_AIS" x="-2800" y="-200">
-			<Parameter Name="QI" Value="TRUE"/>
 		</FB>
 		<FB Name="Q_StringValue_AIS" Type="isobus::UT::Q::Q_StringValue_AIS" x="5600" y="-93.33">
 		</FB>
 		<FB Name="AIS_SPLIT_2" Type="adapter::events::unidirectional::AIS_SPLIT_2" x="3100" y="226.67">
 		</FB>
+		<FB Name="AND_QO" Type="iec61131::booleanOperators::AND_BOOL_3">
+		</FB>
+		<EventConnections>
+			<Connection Source="INIT" Destination="StringValue_AIS.INIT"/>
+			<Connection Source="StringValue_AIS.INITO" Destination="INI_AIS.INIT"/>
+			<Connection Source="INI_AIS.INITO" Destination="Q_StringValue_AIS.INIT"/>
+			<Connection Source="Q_StringValue_AIS.INITO" Destination="INITO"/>
+			<Connection Source="Q_StringValue_AIS.INITO" Destination="AND_QO.REQ"/>
+		</EventConnections>
 		<DataConnections>
 			<Connection Source="u16ObjId" Destination="Q_StringValue_AIS.u16ObjId" dx1="8246.67">
 				<Attribute Name="Visible" Value="false"/>
@@ -48,7 +63,12 @@
 				<Attribute Name="Visible" Value="false"/>
 			</Connection>
 			<Connection Source="QI" Destination="Q_StringValue_AIS.QI"/>
-			<Connection Source="Q_StringValue_AIS.QO" Destination="QO"/>
+			<Connection Source="QI" Destination="INI_AIS.QI"/>
+			<Connection Source="QI" Destination="StringValue_AIS.QI"/>
+			<Connection Source="Q_StringValue_AIS.QO" Destination="AND_QO.IN1"/>
+			<Connection Source="INI_AIS.QO" Destination="AND_QO.IN2"/>
+			<Connection Source="StringValue_AIS.QO" Destination="AND_QO.IN3"/>
+			<Connection Source="AND_QO.OUT" Destination="QO"/>
 		</DataConnections>
 		<AdapterConnections>
 			<Connection Source="INI_AIS.AIS_OUT" Destination="AIS_SPLIT_2.IN" dx1="106.67"/>

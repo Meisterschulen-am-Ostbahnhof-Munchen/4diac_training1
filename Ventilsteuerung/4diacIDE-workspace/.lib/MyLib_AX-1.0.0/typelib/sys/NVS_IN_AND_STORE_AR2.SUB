@@ -31,12 +31,10 @@
 	</SubAppInterfaceList>
 	<SubAppNetwork>
 		<FB Name="NumericValue_PHYSA" Type="isobus::UT::io::NumericValue::NumericValue_PHYSA" x="-2800" y="-200">
-			<Parameter Name="QI" Value="TRUE"/>
 		</FB>
 		<FB Name="AR_TO_AR2" Type="adapter::conversion::bidirectional::AR_TO_AR2" x="300" y="600">
 		</FB>
 		<FB Name="NVS_AR2" Type="logiBUS::storage::esp32_nvs::NVS_AR2" x="2400" y="-93.33">
-			<Parameter Name="QI" Value="TRUE"/>
 			<Parameter Name="SETM" Value="TRUE"/>
 			<Parameter Name="DEFAULT_VALUE" Value="REAL#0.0"/>
 		</FB>
@@ -45,9 +43,14 @@
 		<FB Name="Q_NumericValue_PHYSA" Type="isobus::UT::Q::Q_NumericValue_PHYSA" x="6800" y="1600">
 		</FB>
 		<Comment Comment="SETM=TRUE - der Boot-Wert laedt so oder so automatisch (INIT -&gt; INITO -&gt; GET -&gt; GETO, unabhaengig von SETM). SETM=TRUE sorgt dafuer, dass auch eine LIVE-Aenderung waehrend des laufenden Betriebs sofort bestaetigt/zurueckgemeldet wird - wichtig, falls der frische Wert noch im selben Lauf weiterverwendet werden soll (z.B. hier ueber VALUEO)." x="2400" y="-700" width="2400" height="500"/>
+		<FB Name="AND_QO" Type="iec61131::booleanOperators::AND_BOOL_3" x="5500" y="100">
+		</FB>
 		<EventConnections>
-			<Connection Source="INIT" Destination="Q_NumericValue_PHYSA.INIT"/>
-			<Connection Source="Q_NumericValue_PHYSA.INITO" Destination="INITO"/>
+			<Connection Source="INIT" Destination="Q_NumericValue_PHYSA.INIT" dx1="3246.67"/>
+			<Connection Source="Q_NumericValue_PHYSA.INITO" Destination="NumericValue_PHYSA.INIT" dx1="80" dx2="80" dy="-900"/>
+			<Connection Source="NumericValue_PHYSA.INITO" Destination="NVS_AR2.INIT" dx1="2080"/>
+			<Connection Source="NVS_AR2.INITO" Destination="INITO" dx1="6106.67"/>
+			<Connection Source="NVS_AR2.INITO" Destination="AND_QO.REQ" dx1="1060"/>
 		</EventConnections>
 		<DataConnections>
 			<Connection Source="stObj" Destination="Q_NumericValue_PHYSA.stObj" dx1="8246.67">
@@ -59,8 +62,13 @@
 			<Connection Source="stObj" Destination="NumericValue_PHYSA.stObj" dx1="1046.67">
 				<Attribute Name="Visible" Value="false"/>
 			</Connection>
-			<Connection Source="QI" Destination="Q_NumericValue_PHYSA.QI"/>
-			<Connection Source="Q_NumericValue_PHYSA.QO" Destination="QO"/>
+			<Connection Source="QI" Destination="Q_NumericValue_PHYSA.QI" dx1="3246.67"/>
+			<Connection Source="QI" Destination="NumericValue_PHYSA.QI" dx1="80" dx2="80" dy="-206.67"/>
+			<Connection Source="QI" Destination="NVS_AR2.QI" dx1="1046.67"/>
+			<Connection Source="Q_NumericValue_PHYSA.QO" Destination="AND_QO.IN1" dx1="80" dx2="80" dy="-853.33"/>
+			<Connection Source="NumericValue_PHYSA.QO" Destination="AND_QO.IN2" dx1="880"/>
+			<Connection Source="NVS_AR2.QO" Destination="AND_QO.IN3" dx1="1060"/>
+			<Connection Source="AND_QO.OUT" Destination="QO" dx1="3926.67"/>
 		</DataConnections>
 		<AdapterConnections>
 			<Connection Source="NumericValue_PHYSA.rPhys" Destination="AR_TO_AR2.AR_IN" dx1="1233.33"/>

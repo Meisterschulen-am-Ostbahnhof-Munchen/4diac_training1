@@ -8,12 +8,24 @@
 		<Import declaration="isobus::UT::Q::const::IDs::ID_NULL"/>
 	</CompilerInfo>
 	<SubAppInterfaceList>
+		<SubAppEventInputs>
+			<SubAppEvent Name="INIT" Type="EInit" Comment="Initialization Request">
+			</SubAppEvent>
+		</SubAppEventInputs>
+		<SubAppEventOutputs>
+			<SubAppEvent Name="INITO" Type="EInit" Comment="Initialization Confirm">
+			</SubAppEvent>
+		</SubAppEventOutputs>
 		<InputVars>
+			<VarDeclaration Name="QI" Type="BOOL" Comment="Quality Input - TRUE to enable service" InitialValue="TRUE"/>
 			<VarDeclaration Name="u16ObjId" Type="UINT" Comment="Object ID SoftKey/Hintergrund (VT)" InitialValue="ID_NULL"/>
 			<VarDeclaration Name="u16ObjIdA" Type="UINT" Comment="Object ID AuxFunction2/Hintergrund (VT)" InitialValue="ID_NULL"/>
 			<VarDeclaration Name="ID_SUBSCRIBE" Type="WSTRING" Comment="Remote-Subscribe-Adresse (Status/Farbe, ACTION=SUBSCRIBE)"/>
 			<VarDeclaration Name="ID_STATUS_WEB" Type="WSTRING" Comment="Lokale Publish-Adresse (auf diesem Modul) fuer den vom Zielmodul zurueckgemeldeten Zustand - damit ein Web-Client (z.B. vt-ui-mirror) dieselbe Hintergrundfarbe wie das echte VT zeigen kann"/>
 		</InputVars>
+		<OutputVars>
+			<VarDeclaration Name="QO" Type="BOOL" Comment="Quality Output - TRUE if service executed successfully"/>
+		</OutputVars>
 		<Plugs>
 			<AdapterDeclaration Name="PLUG1" Type="Option::AOption" Comment="Reicht die Aktivierung an eine nachgeschaltete Gruppe weiter (Daisy-Chain) - unbenutzt lassen, wenn nichts weiter folgt"/>
 		</Plugs>
@@ -39,6 +51,8 @@
 			<Connection Source="AX_SUBSCRIBE_1.INITO" Destination="STATUS_WEB_PUBLISH.INIT" dx1="80" dx2="80" dy="-420"/>
 			<Connection Source="STATUS_WEB_PUBLISH.INITO" Destination="AOption_EVENT_TO_X.INIT_REQ" dx1="80" dx2="80" dy="-420"/>
 			<Connection Source="AOption_EVENT_TO_X.INIT_CNF" Destination="AOption_X_TO_EVENT.INIT_CNF" dx1="80" dx2="80" dy="-420"/>
+			<Connection Source="INIT" Destination="GreenWhiteBackground3_AX.INIT"/>
+			<Connection Source="GreenWhiteBackground3_AX.INITO" Destination="INITO"/>
 		</EventConnections>
 		<DataConnections>
 			<Connection Source="u16ObjId" Destination="GreenWhiteBackground3_AX.u16ObjId" dx1="366.67">
@@ -62,6 +76,8 @@
 			<Connection Source="AOption_X_TO_EVENT.QI_OUT" Destination="AOption_EVENT_TO_X.QI_OUT" dx1="600">
 				<Attribute Name="Visible" Value="false"/>
 			</Connection>
+			<Connection Source="QI" Destination="GreenWhiteBackground3_AX.QI"/>
+			<Connection Source="GreenWhiteBackground3_AX.QO" Destination="QO"/>
 		</DataConnections>
 		<AdapterConnections>
 			<Connection Source="AX_SUBSCRIBE_1.OUT" Destination="AX_SPLIT_2.IN" dx1="180"/>

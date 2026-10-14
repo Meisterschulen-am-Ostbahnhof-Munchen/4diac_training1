@@ -11,6 +11,14 @@
 		<Import declaration="logiBUS::utils::conversion::phys::NumericObjectPool_S"/>
 	</CompilerInfo>
 	<SubAppInterfaceList>
+		<SubAppEventInputs>
+			<SubAppEvent Name="INIT" Type="EInit" Comment="Initialization Request">
+			</SubAppEvent>
+		</SubAppEventInputs>
+		<SubAppEventOutputs>
+			<SubAppEvent Name="INITO" Type="EInit" Comment="Initialization Confirm">
+			</SubAppEvent>
+		</SubAppEventOutputs>
 		<InputVars>
 			<VarDeclaration Name="QI" Type="BOOL" Comment="Quality Input - TRUE to enable service" InitialValue="TRUE"/>
 			<VarDeclaration Name="KEY" Type="STRING" Comment="Key name."/>
@@ -26,12 +34,10 @@
 	</SubAppInterfaceList>
 	<SubAppNetwork>
 		<FB Name="NumericValue_PHYSA" Type="isobus::UT::io::NumericValue::NumericValue_PHYSA" x="-2800" y="-200">
-			<Parameter Name="QI" Value="TRUE"/>
 		</FB>
 		<FB Name="AR_TO_AR2" Type="adapter::conversion::bidirectional::AR_TO_AR2" x="400" y="600">
 		</FB>
 		<FB Name="INI_AR2" Type="eclipse4diac::storage::INI_AR2" x="2400" y="-93.33">
-			<Parameter Name="QI" Value="TRUE"/>
 			<Parameter Name="SETM" Value="TRUE"/>
 			<Parameter Name="DEFAULT_VALUE" Value="REAL#0.0"/>
 		</FB>
@@ -40,6 +46,15 @@
 		<FB Name="Q_NumericValue_PHYSA" Type="isobus::UT::Q::Q_NumericValue_PHYSA" x="6500" y="1300">
 		</FB>
 		<Comment Comment="SETM=TRUE - der Boot-Wert laedt so oder so automatisch (INIT -&gt; INITO -&gt; GET -&gt; GETO, unabhaengig von SETM). SETM=TRUE sorgt dafuer, dass auch eine LIVE-Aenderung waehrend des laufenden Betriebs sofort bestaetigt/zurueckgemeldet wird - wichtig, falls der frische Wert noch im selben Lauf weiterverwendet werden soll (z.B. hier ueber VALUEO)." x="2400" y="-700" width="2400" height="500"/>
+		<FB Name="AND_QO" Type="iec61131::booleanOperators::AND_BOOL_3" x="8800" y="200">
+		</FB>
+		<EventConnections>
+			<Connection Source="INIT" Destination="NumericValue_PHYSA.INIT" dx1="80" dx2="80" dy="-313.33"/>
+			<Connection Source="NumericValue_PHYSA.INITO" Destination="INI_AR2.INIT" dx1="2080"/>
+			<Connection Source="INI_AR2.INITO" Destination="Q_NumericValue_PHYSA.INIT" dx1="1560"/>
+			<Connection Source="Q_NumericValue_PHYSA.INITO" Destination="INITO" dx1="4026.67"/>
+			<Connection Source="Q_NumericValue_PHYSA.INITO" Destination="AND_QO.REQ" dx1="633.33"/>
+		</EventConnections>
 		<DataConnections>
 			<Connection Source="stObj" Destination="Q_NumericValue_PHYSA.stObj" dx1="8246.67">
 				<Attribute Name="Visible" Value="false"/>
@@ -53,8 +68,13 @@
 			<Connection Source="stObj" Destination="NumericValue_PHYSA.stObj" dx1="1046.67">
 				<Attribute Name="Visible" Value="false"/>
 			</Connection>
-			<Connection Source="QI" Destination="Q_NumericValue_PHYSA.QI"/>
-			<Connection Source="Q_NumericValue_PHYSA.QO" Destination="QO"/>
+			<Connection Source="QI" Destination="Q_NumericValue_PHYSA.QI" dx1="3053.33"/>
+			<Connection Source="QI" Destination="NumericValue_PHYSA.QI" dx1="80" dx2="80" dy="-206.67"/>
+			<Connection Source="QI" Destination="INI_AR2.QI" dx1="1000"/>
+			<Connection Source="Q_NumericValue_PHYSA.QO" Destination="AND_QO.IN1" dx1="633.33"/>
+			<Connection Source="NumericValue_PHYSA.QO" Destination="AND_QO.IN2" dx1="880"/>
+			<Connection Source="INI_AR2.QO" Destination="AND_QO.IN3" dx1="1260"/>
+			<Connection Source="AND_QO.OUT" Destination="QO" dx1="3293.33"/>
 		</DataConnections>
 		<AdapterConnections>
 			<Connection Source="NumericValue_PHYSA.rPhys" Destination="AR_TO_AR2.AR_IN" dx1="1233.33"/>

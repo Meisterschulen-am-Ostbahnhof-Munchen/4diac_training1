@@ -11,10 +11,14 @@
 	</CompilerInfo>
 	<SubAppInterfaceList>
 		<SubAppEventInputs>
+			<SubAppEvent Name="INIT" Type="EInit" Comment="Initialization Request">
+			</SubAppEvent>
 			<SubAppEvent Name="REQ" Type="Event" Comment="Normal Execution Request">
 			</SubAppEvent>
 		</SubAppEventInputs>
 		<SubAppEventOutputs>
+			<SubAppEvent Name="INITO" Type="EInit" Comment="Initialization Confirm">
+			</SubAppEvent>
 			<SubAppEvent Name="CNF_1" Type="Event">
 			</SubAppEvent>
 			<SubAppEvent Name="CNF_2" Type="Event">
@@ -23,10 +27,12 @@
 			</SubAppEvent>
 		</SubAppEventOutputs>
 		<InputVars>
+			<VarDeclaration Name="QI" Type="BOOL" Comment="Quality Input - TRUE to enable service" InitialValue="TRUE"/>
 			<VarDeclaration Name="DI1" Type="BOOL" Comment="Selector"/>
 			<VarDeclaration Name="u16ObjIds" Type="isobus::UT::Q::types::s2ObjectIDs" Comment="Object IDs" InitialValue="(u16ObjId := ID_NULL, u16ObjIdA := ID_NULL)"/>
 		</InputVars>
 		<OutputVars>
+			<VarDeclaration Name="QO" Type="BOOL" Comment="Quality Output - TRUE if service executed successfully (AND aller Instanzen)"/>
 			<VarDeclaration Name="STATUS_1" Type="STRING" Comment="Service Status"/>
 			<VarDeclaration Name="u8OldColour_1" Type="USINT" Comment="Old value of ID"/>
 			<VarDeclaration Name="result_1" Type="INT" Comment="retval see description"/>
@@ -58,6 +64,10 @@
 				<Attribute Name="Visible" Value="true"/>
 			</Parameter>
 		</FB>
+		<FB Name="E_MERGE_QO" Type="iec61499::events::E_MERGE_4" x="3900" y="1500">
+		</FB>
+		<FB Name="AND_QO" Type="iec61131::booleanOperators::AND_BOOL_3" x="3900" y="800">
+		</FB>
 		<EventConnections>
 			<Connection Source="REQ" Destination="F_SEL_I.REQ" dx1="473.33"/>
 			<Connection Source="Q_BackgroundColour_1.CNF" Destination="CNF_1" dx1="1080"/>
@@ -67,6 +77,15 @@
 			<Connection Source="F_SEL_I.CNF" Destination="F_MOVE.REQ" dx1="153.33"/>
 			<Connection Source="F_MOVE.CNF" Destination="Q_BackgroundColour_2.REQ" dx1="1333.33"/>
 			<Connection Source="F_MOVE.CNF" Destination="Q_BackgroundColour_3.REQ" dx1="1333.33"/>
+			<Connection Source="INIT" Destination="Q_BackgroundColour_1.INIT" dx1="253.33"/>
+			<Connection Source="Q_BackgroundColour_1.INITO" Destination="Q_BackgroundColour_2.INIT" dx1="80" dx2="80" dy="446.67"/>
+			<Connection Source="Q_BackgroundColour_2.INITO" Destination="Q_BackgroundColour_3.INIT" dx1="80" dx2="80" dy="446.67"/>
+			<Connection Source="Q_BackgroundColour_3.INITO" Destination="INITO" dx1="3966.67"/>
+			<Connection Source="Q_BackgroundColour_3.INITO" Destination="E_MERGE_QO.EI1" dx1="933.33"/>
+			<Connection Source="Q_BackgroundColour_1.CNF" Destination="E_MERGE_QO.EI2" dx1="933.33"/>
+			<Connection Source="Q_BackgroundColour_2.CNF" Destination="E_MERGE_QO.EI3" dx1="933.33"/>
+			<Connection Source="Q_BackgroundColour_3.CNF" Destination="E_MERGE_QO.EI4" dx1="933.33"/>
+			<Connection Source="E_MERGE_QO.EO" Destination="AND_QO.REQ" dx1="80" dx2="80" dy="-346.67"/>
 		</EventConnections>
 		<DataConnections>
 			<Connection Source="DI1" Destination="F_SEL_I.G" dx1="720"/>
@@ -86,6 +105,13 @@
 			<Connection Source="Q_BackgroundColour_3.STATUS" Destination="STATUS_3" dx1="1240"/>
 			<Connection Source="F_SEL_I.OUT" Destination="Q_BackgroundColour_3.u8Colour" dx1="1900"/>
 			<Connection Source="u16ObjIds" Destination="F_MOVE.IN" dx1="1166.67"/>
+			<Connection Source="QI" Destination="Q_BackgroundColour_1.QI" dx1="253.33"/>
+			<Connection Source="QI" Destination="Q_BackgroundColour_2.QI" dx1="253.33"/>
+			<Connection Source="QI" Destination="Q_BackgroundColour_3.QI" dx1="253.33"/>
+			<Connection Source="Q_BackgroundColour_1.QO" Destination="AND_QO.IN1" dx1="933.33"/>
+			<Connection Source="Q_BackgroundColour_2.QO" Destination="AND_QO.IN2" dx1="933.33"/>
+			<Connection Source="Q_BackgroundColour_3.QO" Destination="AND_QO.IN3" dx1="933.33"/>
+			<Connection Source="AND_QO.OUT" Destination="QO" dx1="2566.67"/>
 		</DataConnections>
 	</SubAppNetwork>
 </SubAppType>

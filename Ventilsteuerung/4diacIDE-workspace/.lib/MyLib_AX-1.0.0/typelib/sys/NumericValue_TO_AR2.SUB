@@ -30,15 +30,18 @@
 	</SubAppInterfaceList>
 	<SubAppNetwork>
 		<FB Name="NumericValue_PHYSA" Type="isobus::UT::io::NumericValue::NumericValue_PHYSA" x="-2300" y="-300">
-			<Parameter Name="QI" Value="TRUE"/>
 		</FB>
 		<FB Name="AR_TO_AR2" Type="adapter::conversion::bidirectional::AR_TO_AR2" x="700" y="200">
 		</FB>
 		<FB Name="Q_NumericValue_PHYSA" Type="isobus::UT::Q::Q_NumericValue_PHYSA" x="3000" y="-100">
 		</FB>
+		<FB Name="AND_QO" Type="iec61131::booleanOperators::AND_BOOL_2">
+		</FB>
 		<EventConnections>
 			<Connection Source="INIT" Destination="Q_NumericValue_PHYSA.INIT"/>
-			<Connection Source="Q_NumericValue_PHYSA.INITO" Destination="INITO"/>
+			<Connection Source="Q_NumericValue_PHYSA.INITO" Destination="NumericValue_PHYSA.INIT"/>
+			<Connection Source="NumericValue_PHYSA.INITO" Destination="INITO"/>
+			<Connection Source="NumericValue_PHYSA.INITO" Destination="AND_QO.REQ"/>
 		</EventConnections>
 		<DataConnections>
 			<Connection Source="stObj" Destination="Q_NumericValue_PHYSA.stObj" dx1="6046.67">
@@ -48,7 +51,10 @@
 				<Attribute Name="Visible" Value="false"/>
 			</Connection>
 			<Connection Source="QI" Destination="Q_NumericValue_PHYSA.QI"/>
-			<Connection Source="Q_NumericValue_PHYSA.QO" Destination="QO"/>
+			<Connection Source="QI" Destination="NumericValue_PHYSA.QI"/>
+			<Connection Source="Q_NumericValue_PHYSA.QO" Destination="AND_QO.IN1"/>
+			<Connection Source="NumericValue_PHYSA.QO" Destination="AND_QO.IN2"/>
+			<Connection Source="AND_QO.OUT" Destination="QO"/>
 		</DataConnections>
 		<AdapterConnections>
 			<Connection Source="NumericValue_PHYSA.rPhys" Destination="AR_TO_AR2.AR_IN" dx1="1233.33"/>

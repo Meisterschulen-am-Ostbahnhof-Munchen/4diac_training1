@@ -35,11 +35,14 @@
 		<FB Name="ADI_TO_AUDI" Type="adapter::conversion::unidirectional::ADI_TO_AUDI" x="3000" y="-400">
 		</FB>
 		<FB Name="ADI_PUBLISH_1" Type="adapter::net::ADI_PUBLISH_1" x="4600" y="200">
-			<Parameter Name="QI" Value="TRUE"/>
+		</FB>
+		<FB Name="AND_QO" Type="iec61131::booleanOperators::AND_BOOL_2" x="6600" y="0">
 		</FB>
 		<EventConnections>
-			<Connection Source="INIT" Destination="Q_NumericValue_AUDI.INIT"/>
-			<Connection Source="Q_NumericValue_AUDI.INITO" Destination="INITO"/>
+			<Connection Source="INIT" Destination="Q_NumericValue_AUDI.INIT" dx1="2026.67"/>
+			<Connection Source="Q_NumericValue_AUDI.INITO" Destination="ADI_PUBLISH_1.INIT" dx1="80" dx2="80" dy="500"/>
+			<Connection Source="ADI_PUBLISH_1.INITO" Destination="INITO" dx1="2420"/>
+			<Connection Source="ADI_PUBLISH_1.INITO" Destination="AND_QO.REQ" dx1="553.33"/>
 		</EventConnections>
 		<DataConnections>
 			<Connection Source="u16ObjId" Destination="Q_NumericValue_AUDI.u16ObjId" dx1="2513.33">
@@ -48,8 +51,11 @@
 			<Connection Source="ID_WRITE" Destination="ADI_PUBLISH_1.ID" dx1="2513.33">
 				<Attribute Name="Visible" Value="false"/>
 			</Connection>
-			<Connection Source="QI" Destination="Q_NumericValue_AUDI.QI"/>
-			<Connection Source="Q_NumericValue_AUDI.QO" Destination="QO"/>
+			<Connection Source="QI" Destination="Q_NumericValue_AUDI.QI" dx1="2026.67"/>
+			<Connection Source="QI" Destination="ADI_PUBLISH_1.QI" dx1="2080"/>
+			<Connection Source="Q_NumericValue_AUDI.QO" Destination="AND_QO.IN1" dx1="433.33"/>
+			<Connection Source="ADI_PUBLISH_1.QO" Destination="AND_QO.IN2" dx1="553.33"/>
+			<Connection Source="AND_QO.OUT" Destination="QO" dx1="2906.67"/>
 		</DataConnections>
 		<AdapterConnections>
 			<Connection Source="System_Tick.ADI_OUT" Destination="ADI_SPLIT_2.IN"/>

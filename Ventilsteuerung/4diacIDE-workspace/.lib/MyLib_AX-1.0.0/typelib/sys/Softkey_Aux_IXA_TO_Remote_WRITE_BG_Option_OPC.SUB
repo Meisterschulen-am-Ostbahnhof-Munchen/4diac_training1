@@ -9,7 +9,16 @@
 	<CompilerInfo packageName="MyLib::sys">
 	</CompilerInfo>
 	<SubAppInterfaceList>
+		<SubAppEventInputs>
+			<SubAppEvent Name="INIT" Type="EInit" Comment="Initialization Request">
+			</SubAppEvent>
+		</SubAppEventInputs>
+		<SubAppEventOutputs>
+			<SubAppEvent Name="INITO" Type="EInit" Comment="Initialization Confirm">
+			</SubAppEvent>
+		</SubAppEventOutputs>
 		<InputVars>
+			<VarDeclaration Name="QI" Type="BOOL" Comment="Quality Input - TRUE to enable service" InitialValue="TRUE"/>
 			<VarDeclaration Name="u16ObjId" Type="UINT" Comment="Object ID SoftKey/Hintergrund (VT)"/>
 			<VarDeclaration Name="u16ObjIdA" Type="UINT" Comment="Object ID AuxFunction2/Hintergrund (VT)"/>
 			<VarDeclaration Name="ID_SUBSCRIBE" Type="WSTRING" Comment="Remote-Subscribe-Adresse (Status/Farbe, ACTION=SUBSCRIBE)"/>
@@ -17,6 +26,9 @@
 			<VarDeclaration Name="ID_WEB_READ" Type="WSTRING" Comment="Lokale Subscribe-Adresse fuer einen Web-Client (z.B. vt-ui-mirror) auf demselben Modul, ODER-verknuepft mit SoftKey und AUX"/>
 			<VarDeclaration Name="ID_STATUS_WEB" Type="WSTRING" Comment="Lokale Publish-Adresse (auf diesem Modul) fuer den vom Zielmodul zurueckgemeldeten Zustand - damit ein Web-Client (z.B. vt-ui-mirror) dieselbe Hintergrundfarbe wie das echte VT zeigen kann"/>
 		</InputVars>
+		<OutputVars>
+			<VarDeclaration Name="QO" Type="BOOL" Comment="Quality Output - TRUE if service executed successfully"/>
+		</OutputVars>
 		<Plugs>
 			<AdapterDeclaration Name="PLUG1" Type="Option::AOption" Comment="Reicht die Aktivierung an eine nachgeschaltete Instanz weiter (Daisy-Chain, z.B. eine 2. SoftKey_Aux_IXA_TO_Remote_WRITE_BG_Option_OPC-Instanz, die dieselbe Option teilt) - unbenutzt lassen, wenn nichts weiter folgt"/>
 		</Plugs>
@@ -29,6 +41,10 @@
 		</SubApp>
 		<SubApp Name="Status" Type="MyLib::sys::AX_SUBSCRIBE_BG3_WEB_Option_OPC" x="3200" y="0">
 		</SubApp>
+		<EventConnections>
+			<Connection Source="INIT" Destination="Status.INIT"/>
+			<Connection Source="Status.INITO" Destination="INITO"/>
+		</EventConnections>
 		<DataConnections>
 			<Connection Source="u16ObjId" Destination="Command.u16ObjId" dx1="366.67">
 				<Attribute Name="Visible" Value="false"/>
@@ -54,6 +70,8 @@
 			<Connection Source="ID_STATUS_WEB" Destination="Status.ID_STATUS_WEB" dx1="366.67">
 				<Attribute Name="Visible" Value="false"/>
 			</Connection>
+			<Connection Source="QI" Destination="Status.QI"/>
+			<Connection Source="Status.QO" Destination="QO"/>
 		</DataConnections>
 		<AdapterConnections>
 			<Connection Source="OPTION" Destination="Command.OPTION" dx1="366.67"/>

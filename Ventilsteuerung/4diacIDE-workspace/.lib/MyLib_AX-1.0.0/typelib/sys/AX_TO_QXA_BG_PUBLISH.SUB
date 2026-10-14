@@ -25,6 +25,9 @@
 			<VarDeclaration Name="ID_STATE_WRITE" Type="WSTRING" Comment="Lokale Publish-Adresse (ACTION=WRITE) fuer den tatsaechlichen Zustand - wird von Web-Client/Dashboard remote abonniert"/>
 			<VarDeclaration Name="QI" Type="BOOL" Comment="Qualifier fuer den physischen Ausgang - FALSE haelt diese Instanz komplett inaktiv" InitialValue="TRUE"/>
 		</InputVars>
+		<OutputVars>
+			<VarDeclaration Name="QO" Type="BOOL" Comment="Quality Output - TRUE if service executed successfully (AND aus DigitalOutput/GreenWhiteBackground_AX/PUBLISH_STATE)"/>
+		</OutputVars>
 		<Sockets>
 			<AdapterDeclaration Name="IN" Type="adapter::types::unidirectional::AX" Comment="Fertiger AX-Zustand (bereits zusammengefuehrt) - wird auf Ausgang+Hintergrund+Publish verteilt"/>
 		</Sockets>
@@ -37,7 +40,8 @@
 		<SubApp Name="GreenWhiteBackground_AX" Type="MyLib::sys::GreenWhiteBackground3_AX" x="1700" y="0">
 		</SubApp>
 		<FB Name="PUBLISH_STATE" Type="adapter::net::AX_PUBLISH_1" x="1700" y="1900">
-			<Parameter Name="QI" Value="TRUE"/>
+		</FB>
+		<FB Name="AND_QO" Type="iec61131::booleanOperators::AND_BOOL_3" x="1700" y="2700">
 		</FB>
 		<DataConnections>
 			<Connection Source="u16ObjId" Destination="GreenWhiteBackground_AX.u16ObjId" dx1="1400">
@@ -55,10 +59,19 @@
 			<Connection Source="QI" Destination="DigitalOutput.QI" dx1="1280">
 				<Attribute Name="Visible" Value="false"/>
 			</Connection>
+			<Connection Source="QI" Destination="PUBLISH_STATE.QI"/>
+			<Connection Source="QI" Destination="GreenWhiteBackground_AX.QI"/>
+			<Connection Source="DigitalOutput.QO" Destination="AND_QO.IN1"/>
+			<Connection Source="GreenWhiteBackground_AX.QO" Destination="AND_QO.IN2"/>
+			<Connection Source="PUBLISH_STATE.QO" Destination="AND_QO.IN3"/>
+			<Connection Source="AND_QO.OUT" Destination="QO"/>
 		</DataConnections>
 		<EventConnections>
 			<Connection Source="INIT" Destination="DigitalOutput.INIT" dx1="600"/>
-			<Connection Source="DigitalOutput.INITO" Destination="INITO" dx2="80" dy="-420"/>
+			<Connection Source="DigitalOutput.INITO" Destination="GreenWhiteBackground_AX.INIT"/>
+			<Connection Source="GreenWhiteBackground_AX.INITO" Destination="PUBLISH_STATE.INIT"/>
+			<Connection Source="PUBLISH_STATE.INITO" Destination="INITO" dx2="80" dy="-420"/>
+			<Connection Source="PUBLISH_STATE.INITO" Destination="AND_QO.REQ"/>
 		</EventConnections>
 		<AdapterConnections>
 			<Connection Source="IN" Destination="AX_SPLIT_3.IN" dx1="600"/>

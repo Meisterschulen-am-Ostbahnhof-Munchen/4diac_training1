@@ -29,6 +29,9 @@
 			<VarDeclaration Name="ID_WRITE_DOWN" Type="WSTRING" Comment="Echte Funktions-Rueckmeldung DOWN (Publish)"/>
 			<VarDeclaration Name="QI" Type="BOOL" Comment="Qualifier fuer die physischen Ausgaenge - FALSE haelt diese Instanz komplett inaktiv (keine Hardware-Bindung), fuer den Fall dass derselbe physische Kanal je nach Maschinenvariante anderweitig genutzt wird" InitialValue="TRUE"/>
 		</InputVars>
+		<OutputVars>
+			<VarDeclaration Name="QO" Type="BOOL" Comment="Quality Output - TRUE if service executed successfully (AND aller Subscribe/Publish/DigitalOutput-Instanzen)"/>
+		</OutputVars>
 		<SubAppEventInputs>
 			<SubAppEvent Name="INIT" Type="EInit" Comment="Initialisierung - vom Aufrufer sequenziert statt per Auto-Verteilung, damit QI vor der physischen Kanalbindung feststeht"/>
 		</SubAppEventInputs>
@@ -38,18 +41,14 @@
 	</SubAppInterfaceList>
 	<SubAppNetwork>
 		<FB Name="SUBSCRIBE_TEST_UP" Type="adapter::net::AX_SUBSCRIBE_1" x="-6600" y="-1900">
-			<Parameter Name="QI" Value="TRUE"/>
 		</FB>
 		<FB Name="SUBSCRIBE_CMD_UP" Type="adapter::net::AX_SUBSCRIBE_1" x="-6600" y="-1000">
-			<Parameter Name="QI" Value="TRUE"/>
 		</FB>
 		<FB Name="OR_UP" Type="adapter::booleanOperators::AX_OR_2" x="-4800" y="-1100">
 		</FB>
 		<FB Name="SUBSCRIBE_TEST_DOWN" Type="adapter::net::AX_SUBSCRIBE_1" x="-6600" y="0">
-			<Parameter Name="QI" Value="TRUE"/>
 		</FB>
 		<FB Name="SUBSCRIBE_CMD_DOWN" Type="adapter::net::AX_SUBSCRIBE_1" x="-6500" y="1000">
-			<Parameter Name="QI" Value="TRUE"/>
 		</FB>
 		<FB Name="OR_DOWN" Type="adapter::booleanOperators::AX_OR_2" x="-4800" y="700">
 		</FB>
@@ -66,21 +65,28 @@
 		<FB Name="DigitalOutput_DOWN" Type="logiBUS::io::DQ::logiBUS_QXA" x="1500" y="200">
 		</FB>
 		<FB Name="PUBLISH_TEST_UP" Type="adapter::net::AX_PUBLISH_1" x="1500" y="-1400">
-			<Parameter Name="QI" Value="TRUE"/>
 		</FB>
 		<FB Name="PUBLISH_STATE_UP" Type="adapter::net::AX_PUBLISH_1" x="1500" y="-600">
-			<Parameter Name="QI" Value="TRUE"/>
 		</FB>
 		<FB Name="PUBLISH_TEST_DOWN" Type="adapter::net::AX_PUBLISH_1" x="1500" y="1100">
-			<Parameter Name="QI" Value="TRUE"/>
 		</FB>
 		<FB Name="PUBLISH_STATE_DOWN" Type="adapter::net::AX_PUBLISH_1" x="1500" y="1900">
-			<Parameter Name="QI" Value="TRUE"/>
+		</FB>
+		<FB Name="AND_QO" Type="iec61131::booleanOperators::AND_BOOL_10" x="1500" y="2700">
 		</FB>
 		<EventConnections>
-			<Connection Source="INIT" Destination="DigitalOutput_UP.INIT"/>
-			<Connection Source="INIT" Destination="DigitalOutput_DOWN.INIT"/>
-			<Connection Source="DigitalOutput_UP.INITO" Destination="INITO"/>
+			<Connection Source="INIT" Destination="SUBSCRIBE_TEST_UP.INIT"/>
+			<Connection Source="SUBSCRIBE_TEST_UP.INITO" Destination="SUBSCRIBE_CMD_UP.INIT"/>
+			<Connection Source="SUBSCRIBE_CMD_UP.INITO" Destination="SUBSCRIBE_TEST_DOWN.INIT"/>
+			<Connection Source="SUBSCRIBE_TEST_DOWN.INITO" Destination="SUBSCRIBE_CMD_DOWN.INIT"/>
+			<Connection Source="SUBSCRIBE_CMD_DOWN.INITO" Destination="PUBLISH_TEST_UP.INIT"/>
+			<Connection Source="PUBLISH_TEST_UP.INITO" Destination="PUBLISH_STATE_UP.INIT"/>
+			<Connection Source="PUBLISH_STATE_UP.INITO" Destination="PUBLISH_TEST_DOWN.INIT"/>
+			<Connection Source="PUBLISH_TEST_DOWN.INITO" Destination="PUBLISH_STATE_DOWN.INIT"/>
+			<Connection Source="PUBLISH_STATE_DOWN.INITO" Destination="DigitalOutput_UP.INIT"/>
+			<Connection Source="DigitalOutput_UP.INITO" Destination="DigitalOutput_DOWN.INIT"/>
+			<Connection Source="DigitalOutput_DOWN.INITO" Destination="INITO"/>
+			<Connection Source="DigitalOutput_DOWN.INITO" Destination="AND_QO.REQ"/>
 		</EventConnections>
 		<DataConnections>
 			<Connection Source="ID_TEST_READ_UP" Destination="SUBSCRIBE_TEST_UP.ID" dx1="280">
@@ -122,6 +128,25 @@
 			<Connection Source="ID_WRITE_DOWN" Destination="PUBLISH_STATE_DOWN.ID" dx1="1280">
 				<Attribute Name="Visible" Value="false"/>
 			</Connection>
+			<Connection Source="QI" Destination="SUBSCRIBE_TEST_UP.QI"/>
+			<Connection Source="QI" Destination="SUBSCRIBE_CMD_UP.QI"/>
+			<Connection Source="QI" Destination="SUBSCRIBE_TEST_DOWN.QI"/>
+			<Connection Source="QI" Destination="SUBSCRIBE_CMD_DOWN.QI"/>
+			<Connection Source="QI" Destination="PUBLISH_TEST_UP.QI"/>
+			<Connection Source="QI" Destination="PUBLISH_STATE_UP.QI"/>
+			<Connection Source="QI" Destination="PUBLISH_TEST_DOWN.QI"/>
+			<Connection Source="QI" Destination="PUBLISH_STATE_DOWN.QI"/>
+			<Connection Source="SUBSCRIBE_TEST_UP.QO" Destination="AND_QO.IN1"/>
+			<Connection Source="SUBSCRIBE_CMD_UP.QO" Destination="AND_QO.IN2"/>
+			<Connection Source="SUBSCRIBE_TEST_DOWN.QO" Destination="AND_QO.IN3"/>
+			<Connection Source="SUBSCRIBE_CMD_DOWN.QO" Destination="AND_QO.IN4"/>
+			<Connection Source="PUBLISH_TEST_UP.QO" Destination="AND_QO.IN5"/>
+			<Connection Source="PUBLISH_STATE_UP.QO" Destination="AND_QO.IN6"/>
+			<Connection Source="PUBLISH_TEST_DOWN.QO" Destination="AND_QO.IN7"/>
+			<Connection Source="PUBLISH_STATE_DOWN.QO" Destination="AND_QO.IN8"/>
+			<Connection Source="DigitalOutput_UP.QO" Destination="AND_QO.IN9"/>
+			<Connection Source="DigitalOutput_DOWN.QO" Destination="AND_QO.IN10"/>
+			<Connection Source="AND_QO.OUT" Destination="QO"/>
 		</DataConnections>
 		<AdapterConnections>
 			<Connection Source="SUBSCRIBE_TEST_UP.OUT" Destination="OR_UP.IN1" dx1="280"/>

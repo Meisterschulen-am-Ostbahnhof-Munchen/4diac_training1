@@ -23,6 +23,9 @@
 			<VarDeclaration Name="FACTOR_25" Type="REAL" Comment="Multimeter-kalibrierter Korrekturfaktor auf die nominelle OUT_25-Spanne (25.0), durchgereicht an values_50_75_25.FACTOR_25 - siehe MyLib::sys::const::PWM_Konstanten::VALUES_50_75_25_FACTOR_25" InitialValue="REAL#1.0"/>
 			<VarDeclaration Name="QI" Type="BOOL" Comment="Qualifier fuer den physischen PWM-Ausgang - FALSE haelt diese Instanz komplett inaktiv (keine Hardware-Bindung), fuer den Fall dass derselbe physische Kanal je nach Maschinenvariante anderweitig genutzt wird" InitialValue="TRUE"/>
 		</InputVars>
+		<OutputVars>
+			<VarDeclaration Name="QO" Type="BOOL" Comment="Quality Output - TRUE if service executed successfully"/>
+		</OutputVars>
 		<SubAppEventInputs>
 			<SubAppEvent Name="INIT" Type="EInit" Comment="Initialisierung - vom Aufrufer sequenziert statt per Auto-Verteilung, damit QI vor der physischen Kanalbindung feststeht"/>
 		</SubAppEventInputs>
@@ -65,6 +68,7 @@
 			<Connection Source="QI" Destination="DigitalOutput_PWM.QI" dx1="6913.33">
 				<Attribute Name="Visible" Value="false"/>
 			</Connection>
+			<Connection Source="DigitalOutput_PWM.QO" Destination="QO"/>
 			<Connection Source="FACTOR_75" Destination="values_50_75_25.FACTOR_75" dx1="1980">
 				<Attribute Name="Visible" Value="false"/>
 			</Connection>

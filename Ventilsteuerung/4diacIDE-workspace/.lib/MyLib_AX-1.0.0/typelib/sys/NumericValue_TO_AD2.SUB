@@ -8,6 +8,14 @@
 		<Import declaration="isobus::UT::Q::const::IDs::ID_NULL"/>
 	</CompilerInfo>
 	<SubAppInterfaceList>
+		<SubAppEventInputs>
+			<SubAppEvent Name="INIT" Type="EInit" Comment="Initialization Request">
+			</SubAppEvent>
+		</SubAppEventInputs>
+		<SubAppEventOutputs>
+			<SubAppEvent Name="INITO" Type="EInit" Comment="Initialization Confirm">
+			</SubAppEvent>
+		</SubAppEventOutputs>
 		<InputVars>
 			<VarDeclaration Name="QI" Type="BOOL" Comment="Quality Input - TRUE to enable service" InitialValue="TRUE"/>
 			<VarDeclaration Name="u16ObjId" Type="UINT" Comment="Object ID" InitialValue="ID_NULL"/>
@@ -21,7 +29,6 @@
 	</SubAppInterfaceList>
 	<SubAppNetwork>
 		<FB Name="NumericValue_IDA" Type="isobus::UT::io::NumericValue::NumericValue_IDA" x="-2800" y="-300">
-			<Parameter Name="QI" Value="TRUE"/>
 		</FB>
 		<FB Name="AD_TO_AD2" Type="adapter::conversion::bidirectional::AD_TO_AD2" x="700" y="200">
 		</FB>
@@ -29,6 +36,14 @@
 		</FB>
 		<FB Name="Q_NumericValue_AUDI" Type="isobus::UT::Q::Q_NumericValue_AUDI" x="3000" y="-100">
 		</FB>
+		<FB Name="AND_QO" Type="iec61131::booleanOperators::AND_BOOL_2">
+		</FB>
+		<EventConnections>
+			<Connection Source="INIT" Destination="NumericValue_IDA.INIT"/>
+			<Connection Source="NumericValue_IDA.INITO" Destination="Q_NumericValue_AUDI.INIT"/>
+			<Connection Source="Q_NumericValue_AUDI.INITO" Destination="INITO"/>
+			<Connection Source="Q_NumericValue_AUDI.INITO" Destination="AND_QO.REQ"/>
+		</EventConnections>
 		<DataConnections>
 			<Connection Source="u16ObjId" Destination="NumericValue_IDA.u16ObjId" dx1="1046.67">
 				<Attribute Name="Visible" Value="false"/>
@@ -37,7 +52,10 @@
 				<Attribute Name="Visible" Value="false"/>
 			</Connection>
 			<Connection Source="QI" Destination="Q_NumericValue_AUDI.QI"/>
-			<Connection Source="Q_NumericValue_AUDI.QO" Destination="QO"/>
+			<Connection Source="QI" Destination="NumericValue_IDA.QI"/>
+			<Connection Source="Q_NumericValue_AUDI.QO" Destination="AND_QO.IN1"/>
+			<Connection Source="NumericValue_IDA.QO" Destination="AND_QO.IN2"/>
+			<Connection Source="AND_QO.OUT" Destination="QO"/>
 		</DataConnections>
 		<AdapterConnections>
 			<Connection Source="NumericValue_IDA.IN" Destination="AD_TO_AD2.AD_IN" dx1="586.67"/>

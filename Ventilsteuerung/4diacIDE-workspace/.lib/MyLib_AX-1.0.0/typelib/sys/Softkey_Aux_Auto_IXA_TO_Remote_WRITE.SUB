@@ -12,36 +12,54 @@
 		<Import declaration="isobus::UT::Q::const::IDs::ID_NULL"/>
 	</CompilerInfo>
 	<SubAppInterfaceList>
+		<SubAppEventInputs>
+			<SubAppEvent Name="INIT" Type="EInit" Comment="Initialization Request">
+			</SubAppEvent>
+		</SubAppEventInputs>
+		<SubAppEventOutputs>
+			<SubAppEvent Name="INITO" Type="EInit" Comment="Initialization Confirm">
+			</SubAppEvent>
+		</SubAppEventOutputs>
 		<InputVars>
+			<VarDeclaration Name="QI" Type="BOOL" Comment="Quality Input - TRUE to enable service" InitialValue="TRUE"/>
 			<VarDeclaration Name="u16ObjId" Type="UINT" Comment="Object ID SoftKey (VT)" InitialValue="ID_NULL"/>
 			<VarDeclaration Name="u16ObjIdA" Type="UINT" Comment="Object ID AuxFunction2 (VT)" InitialValue="ID_NULL"/>
 			<VarDeclaration Name="ID_WRITE_REMOTE" Type="WSTRING" Comment="Remote-Write-Adresse zum Zielmodul (Befehl, ACTION=WRITE, CLIENT)"/>
 			<VarDeclaration Name="ID_WEB_READ" Type="WSTRING" Comment="Lokale Subscribe-Adresse fuer einen Web-Client (z.B. vt-ui-mirror) auf demselben Modul, ODER-verknuepft mit SoftKey und AUX"/>
 		</InputVars>
-		<Sockets>
-			<AdapterDeclaration Name="AUTO_IN" Type="adapter::types::unidirectional::AX" Comment="Autonomes Kommando (z.B. Achslenkung-Mittelpunkt-Automatik), ODER-verknuepft mit SoftKey/Aux/Web"/>
-		</Sockets>
+		<OutputVars>
+			<VarDeclaration Name="QO" Type="BOOL" Comment="Quality Output - TRUE if service executed successfully"/>
+		</OutputVars>
 		<Plugs>
 			<AdapterDeclaration Name="WEB_STATE" Type="adapter::types::unidirectional::AX" Comment="Web-Zustand (= SUBSCRIBE_WEB.OUT) nach aussen durchgereicht, damit andere Composite-Instanzen denselben Wert per Datenverbindung nutzen koennen statt selbst nochmal lokal zu abonnieren (nur 1 lokaler OPC-UA-Subscriber pro Knoten zulaessig)"/>
 		</Plugs>
+		<Sockets>
+			<AdapterDeclaration Name="AUTO_IN" Type="adapter::types::unidirectional::AX" Comment="Autonomes Kommando (z.B. Achslenkung-Mittelpunkt-Automatik), ODER-verknuepft mit SoftKey/Aux/Web"/>
+		</Sockets>
 	</SubAppInterfaceList>
 	<SubAppNetwork>
-		<FB Name="Softkey_IXA" Type="isobus::UT::io::Softkey::Softkey_IXA" x="-500" y="-1400">
-			<Parameter Name="QI" Value="TRUE"/>
+		<FB Name="Softkey_IXA" Type="isobus::UT::io::Softkey::Softkey_IXA" x="-1400" y="-1600">
 		</FB>
-		<FB Name="Aux_IXA" Type="isobus::UT::io::Auxiliary::IN::Aux_IXA" x="-500" y="-400">
-			<Parameter Name="QI" Value="TRUE"/>
+		<FB Name="Aux_IXA" Type="isobus::UT::io::Auxiliary::IN::Aux_IXA" x="-1400" y="-600">
 		</FB>
-		<FB Name="SUBSCRIBE_WEB" Type="adapter::net::AX_SUBSCRIBE_1" x="-700" y="700">
-			<Parameter Name="QI" Value="TRUE"/>
+		<FB Name="SUBSCRIBE_WEB" Type="adapter::net::AX_SUBSCRIBE_1" x="-1500" y="900">
 		</FB>
-		<FB Name="OR_MERGE" Type="adapter::booleanOperators::AX_OR_4" x="900" y="300">
+		<FB Name="OR_MERGE" Type="adapter::booleanOperators::AX_OR_4" x="1200" y="300">
 		</FB>
-		<FB Name="SPLIT_WEB" Type="adapter::events::unidirectional::AX_SPLIT_2" x="200" y="700">
+		<FB Name="SPLIT_WEB" Type="adapter::events::unidirectional::AX_SPLIT_2" x="-100" y="1100">
 		</FB>
 		<FB Name="AX_CLIENT_1_0" Type="adapter::net::AX_CLIENT_1_0" x="2300" y="-200">
-			<Parameter Name="QI" Value="TRUE"/>
 		</FB>
+		<FB Name="AND_QO" Type="iec61131::booleanOperators::AND_BOOL_4" x="4300" y="800">
+		</FB>
+		<EventConnections>
+			<Connection Source="INIT" Destination="Softkey_IXA.INIT" dx1="1580"/>
+			<Connection Source="Softkey_IXA.INITO" Destination="Aux_IXA.INIT" dx1="80" dx2="80" dy="500"/>
+			<Connection Source="Aux_IXA.INITO" Destination="SUBSCRIBE_WEB.INIT" dx1="80" dx2="80" dy="546.67"/>
+			<Connection Source="SUBSCRIBE_WEB.INITO" Destination="AX_CLIENT_1_0.INIT" dx1="1026.67"/>
+			<Connection Source="AX_CLIENT_1_0.INITO" Destination="INITO" dx1="2126.67"/>
+			<Connection Source="AX_CLIENT_1_0.INITO" Destination="AND_QO.REQ" dx1="553.33"/>
+		</EventConnections>
 		<DataConnections>
 			<Connection Source="u16ObjId" Destination="Softkey_IXA.u16ObjId" dx1="846.67">
 				<Attribute Name="Visible" Value="false"/>
@@ -55,12 +73,21 @@
 			<Connection Source="ID_WRITE_REMOTE" Destination="AX_CLIENT_1_0.ID" dx1="613.33">
 				<Attribute Name="Visible" Value="false"/>
 			</Connection>
+			<Connection Source="QI" Destination="Softkey_IXA.QI" dx1="1580"/>
+			<Connection Source="QI" Destination="Aux_IXA.QI" dx1="1580"/>
+			<Connection Source="QI" Destination="SUBSCRIBE_WEB.QI" dx1="1833.33"/>
+			<Connection Source="QI" Destination="AX_CLIENT_1_0.QI" dx1="766.67"/>
+			<Connection Source="Softkey_IXA.QO" Destination="AND_QO.IN1" dx1="2000"/>
+			<Connection Source="Aux_IXA.QO" Destination="AND_QO.IN2" dx1="2000"/>
+			<Connection Source="SUBSCRIBE_WEB.QO" Destination="AND_QO.IN3" dx1="2026.67"/>
+			<Connection Source="AX_CLIENT_1_0.QO" Destination="AND_QO.IN4" dx1="553.33"/>
+			<Connection Source="AND_QO.OUT" Destination="QO" dx1="2320"/>
 		</DataConnections>
 		<AdapterConnections>
 			<Connection Source="Softkey_IXA.IN" Destination="OR_MERGE.IN1" dx1="246.67"/>
 			<Connection Source="Aux_IXA.IN" Destination="OR_MERGE.IN2" dx1="100"/>
-			<Connection Source="SUBSCRIBE_WEB.OUT" Destination="SPLIT_WEB.IN" dx1="100"/>
-			<Connection Source="SPLIT_WEB.OUT1" Destination="OR_MERGE.IN3" dx1="100"/>
+			<Connection Source="SUBSCRIBE_WEB.OUT" Destination="SPLIT_WEB.IN" dx1="280"/>
+			<Connection Source="SPLIT_WEB.OUT1" Destination="OR_MERGE.IN3" dx1="173.33"/>
 			<Connection Source="AUTO_IN" Destination="OR_MERGE.IN4" dx1="100"/>
 			<Connection Source="OR_MERGE.OUT" Destination="AX_CLIENT_1_0.IN" dx1="400"/>
 			<Connection Source="SPLIT_WEB.OUT2" Destination="WEB_STATE" dx1="100"/>
