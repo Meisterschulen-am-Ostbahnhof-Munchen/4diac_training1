@@ -2,6 +2,8 @@
 <SubAppType Name="logiBUS_AI_Calibrate_3P_Remote_IDA_OPC" Comment="3-Punkt-Kalibrierung (AR_CALIBRATE_3P_REF, unabhaengig gespeicherte Rohwerte&#10;X_MIN/X_MID/X_MAX + Referenzwerte MIN_REF/MID_REF/MAX_REF alle INI-persistiert)&#10;auf VT-Zahlenfelder (Rohwert + kalibrierter Wert, je eigene CNumberVariable) +&#10;Bargraph (kalibriert) + 3 VT-Tasten (C_MIN/C_MID/C_MAX) + OPC-UA (Rohwert DWORD&#10;+ kalibrierter Wert REAL, generisch, ein Kanal). Wie&#10;logiBUS_AI_Calibrate_3P_IDA_OPC, aber der Rohwert kommt per Remote-Subscribe&#10;(AD_SUBSCRIBE_1) statt von einem lokalen logiBUS_AI_IDA - fuer Sensoren, deren&#10;physischer Analog-Eingang auf einer Station OHNE VT-Anschluss sitzt (z.B.&#10;Hangausgleich-Winkelsensor B14 auf APIXON STG3, waehrend Kalibrierung+VT auf der&#10;Station mit VT-Anschluss laufen). Der Rohwert wird dort per&#10;logiBUS_AI_Raw_Publish_OPC publiziert.">
 	<Identification Standard="61499-2" Description="Copyright (c) 2026 Meisterschulen am Ostbahnhof&#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0">
 	</Identification>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.7" Author="Franz Höpfinger" Date="2026-10-15" Remarks="Bugfix: E_MERGE_QO.EO war nirgends angeschlossen (totes Wiring) - QO wurde dadurch nur einmal beim Boot berechnet (Button_C_MAX.INITO-Trigger) und nie wieder aktualisiert. Neue Connection E_MERGE_QO.EO -&gt; AND_QO.REQ: QO wird jetzt bei jedem neuen Q_NumericValue_RAW/_CAL-Wert (CNF) neu ausgewertet.">
+	</VersionInfo>
 	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.5" Author="Franz Höpfinger" Date="2026-10-14" Remarks="AND_QO_A (AND_BOOL_5) + AND_QO_B (AND_BOOL_10) + AND_QO (AND_BOOL_8) Kaskade (21 QO-Quellen) durch einen einzelnen AND_QO (AND_BOOL_21) ersetzt - AND_BOOL_11-21 jetzt verfuegbar, Kaskadierung nicht mehr noetig.">
 	</VersionInfo>
 	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.3" Author="Franz Höpfinger" Date="2026-09-18" Remarks="AR_CALIBRATE_3P_REF.C_MIN/C_MID/C_MAX von AX-Sockets auf reine EventInputs umgestellt (Franz-Entscheidung, siehe AR_CALIBRATE_2P_REF) - AX_BOOL_TO_X_MIN/_MID/_MAX entfallen ersatzlos, die Merge-Ketten verbinden jetzt direkt per EventConnection mit CALIBRATE.C_MIN/C_MID/C_MAX.">
@@ -191,6 +193,7 @@
 			<Connection Source="Button_C_MID.INITO" Destination="Button_C_MAX.INIT" dx1="80" dx2="80" dy="900"/>
 			<Connection Source="Button_C_MAX.INITO" Destination="INITO" dx1="19873.33"/>
 			<Connection Source="Button_C_MAX.INITO" Destination="AND_QO.REQ" dx1="11453.33"/>
+			<Connection Source="E_MERGE_QO.EO" Destination="AND_QO.REQ" dx1="1700"/>
 			<Connection Source="Button_C_MIN.IND" Destination="E_MERGE_MIN.EI1" dx1="2060"/>
 			<Connection Source="AX_RF_TRIG_MIN.ER" Destination="E_MERGE_MIN.EI2" dx1="400"/>
 			<Connection Source="AX_RF_TRIG_MIN.EF" Destination="E_MERGE_MIN.EI3" dx1="1220"/>
