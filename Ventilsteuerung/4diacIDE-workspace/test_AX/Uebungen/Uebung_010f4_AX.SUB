@@ -34,7 +34,7 @@
 		<SubApp Name="GreenWhiteBackground1_AX" Type="MyLib::sys::GreenWhiteBackground1_AX" x="-1700" y="-100">
 			<Parameter Name="u16ObjId" Value="SoftKey_F1"/>
 		</SubApp>
-		<SubApp Name="GreenWhiteBackground2_AX" Type="MyLib::sys::GreenWhiteBackground2_AX" x="-1800" y="800">
+		<SubApp Name="GreenWhiteBackground2_AX" Type="MyLib::sys::GreenWhiteBackground2_AX" x="-1800" y="900">
 			<Parameter Name="u16ObjIdA" Value="AuxFunction2_X1"/>
 		</SubApp>
 		<Comment Comment="SCHLECHTER STIL - Punktabzug! &#10;Hier wurden GreenWhiteBackground1_AX UND GreenWhiteBackground2_AX einzeln verdrahtet (+ AX_SPLIT_3 fuer 3 Ziele), obwohl es mit GreenWhiteBackground3_AX (ein Baustein, u16ObjId + u16ObjIdA, nur AX_SPLIT_2 noetig) genau fuer diesen Fall (1 normales VT-Objekt + 1 Aux-Objekt) schon fertig existiert. Unnoetige Verdopplung der Farbauswahl-Logik (2x AX_SEL statt 1x). &#10;Korrekte Loesung: Uebung_010f3_AX." x="-6000" y="2400" width="4200" height="1100"/>

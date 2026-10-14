@@ -11,18 +11,29 @@
 		<Import declaration="logiBUS::io::AI::logiBUS_AI_S"/>
 	</CompilerInfo>
 	<SubAppInterfaceList>
+		<SubAppEventInputs>
+			<SubAppEvent Name="INIT" Type="EInit" Comment="Initialization Request">
+			</SubAppEvent>
+		</SubAppEventInputs>
+		<SubAppEventOutputs>
+			<SubAppEvent Name="INITO" Type="EInit" Comment="Initialization Confirm">
+			</SubAppEvent>
+		</SubAppEventOutputs>
 		<InputVars>
+			<VarDeclaration Name="QI" Type="BOOL" Comment="Quality Input - TRUE to enable service" InitialValue="TRUE"/>
 			<VarDeclaration Name="Input" Type="logiBUS::io::AI::logiBUS_AI_S" Comment="Identify the Input AnalogInput_I1..I8" InitialValue="logiBUS_AI::Invalid"/>
 			<VarDeclaration Name="u16ObjId_RAWVAR" Type="UINT" Comment="Object ID CNumberVariable (Rohwert 0-4095, unkalibriert, reine Diagnose-Anzeige)"/>
 			<VarDeclaration Name="ID_RAW_WRITE" Type="WSTRING" Comment="Rohwert-Ruckmelde-Adresse (REAL 0-4095, ACTION=PUBLISH)"/>
 		</InputVars>
+		<OutputVars>
+			<VarDeclaration Name="QO" Type="BOOL" Comment="Quality Output - TRUE if service executed successfully"/>
+		</OutputVars>
 		<Plugs>
 			<AdapterDeclaration Name="AR_OUT" Type="adapter::types::unidirectional::AR" Comment="Rohwert als AR, fertig fuer CALIBRATE.X"/>
 		</Plugs>
 	</SubAppInterfaceList>
 	<SubAppNetwork>
 		<FB Name="logiBUS_AI_IDA" Type="logiBUS::io::AI::logiBUS_AI_IDA" x="-9200" y="-1700">
-			<Parameter Name="QI" Value="TRUE"/>
 			<Parameter Name="PARAMS" Value="">
 				<Attribute Name="Visible" Value="false"/>
 			</Parameter>
@@ -41,8 +52,16 @@
 		<FB Name="AR_SPLIT_2_Raw" Type="adapter::events::unidirectional::AR_SPLIT_2" x="-900" y="200">
 		</FB>
 		<FB Name="AR_PUBLISH_RAW" Type="adapter::net::AR_PUBLISH_1" x="600" y="-600">
-			<Parameter Name="QI" Value="TRUE"/>
 		</FB>
+		<FB Name="AND_QO" Type="iec61131::booleanOperators::AND_BOOL_3" x="2900" y="0">
+		</FB>
+		<EventConnections>
+			<Connection Source="INIT" Destination="logiBUS_AI_IDA.INIT" dx1="80" dx2="80" dy="-1266.67"/>
+			<Connection Source="logiBUS_AI_IDA.INITO" Destination="AR_PUBLISH_RAW.INIT" dx1="4406.67"/>
+			<Connection Source="AR_PUBLISH_RAW.INITO" Destination="Q_NumericValue_RAW.INIT" dx1="80" dx2="80" dy="-200"/>
+			<Connection Source="Q_NumericValue_RAW.INITO" Destination="INITO" dx1="8326.67"/>
+			<Connection Source="Q_NumericValue_RAW.INITO" Destination="AND_QO.REQ" dx1="533.33"/>
+		</EventConnections>
 		<DataConnections>
 			<Connection Source="Input" Destination="logiBUS_AI_IDA.Input" dx1="1460">
 				<Attribute Name="Visible" Value="false"/>
@@ -53,6 +72,13 @@
 			<Connection Source="ID_RAW_WRITE" Destination="AR_PUBLISH_RAW.ID" dx1="1400">
 				<Attribute Name="Visible" Value="false"/>
 			</Connection>
+			<Connection Source="QI" Destination="Q_NumericValue_RAW.QI" dx1="80" dx2="80" dy="-806.67"/>
+			<Connection Source="QI" Destination="logiBUS_AI_IDA.QI" dx1="80" dx2="80" dy="-1160"/>
+			<Connection Source="QI" Destination="AR_PUBLISH_RAW.QI" dx1="80" dx2="80" dy="-606.67"/>
+			<Connection Source="Q_NumericValue_RAW.QO" Destination="AND_QO.IN1" dx1="533.33"/>
+			<Connection Source="logiBUS_AI_IDA.QO" Destination="AND_QO.IN2" dx1="4106.67"/>
+			<Connection Source="AR_PUBLISH_RAW.QO" Destination="AND_QO.IN3" dx1="726.67"/>
+			<Connection Source="AND_QO.OUT" Destination="QO" dx1="1193.33"/>
 		</DataConnections>
 		<AdapterConnections>
 			<Connection Source="logiBUS_AI_IDA.IN" Destination="AD_TO_AUDI.AD_IN" dx1="420"/>
@@ -60,7 +86,7 @@
 			<Connection Source="AUDI_SPLIT_2.OUT1" Destination="Q_NumericValue_RAW.u32NewValue" dx1="300"/>
 			<Connection Source="AUDI_SPLIT_2.OUT2" Destination="AUDI_TO_AR.AUDI_IN" dx1="300"/>
 			<Connection Source="AUDI_TO_AR.AR_OUT" Destination="AR_SPLIT_2_Raw.IN" dx1="300"/>
-			<Connection Source="AR_SPLIT_2_Raw.OUT1" Destination="AR_OUT" dx1="300"/>
+			<Connection Source="AR_SPLIT_2_Raw.OUT1" Destination="AR_OUT" dx1="173.33"/>
 			<Connection Source="AR_SPLIT_2_Raw.OUT2" Destination="AR_PUBLISH_RAW.IN" dx1="300"/>
 		</AdapterConnections>
 	</SubAppNetwork>

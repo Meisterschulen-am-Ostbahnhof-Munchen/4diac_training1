@@ -9,25 +9,43 @@
 		<Import declaration="logiBUS::io::DQ::logiBUS_DO_S"/>
 	</CompilerInfo>
 	<SubAppInterfaceList>
+		<SubAppEventInputs>
+			<SubAppEvent Name="INIT" Type="EInit" Comment="Initialization Request">
+			</SubAppEvent>
+		</SubAppEventInputs>
+		<SubAppEventOutputs>
+			<SubAppEvent Name="INITO" Type="EInit" Comment="Initialization Confirm">
+			</SubAppEvent>
+		</SubAppEventOutputs>
 		<InputVars>
+			<VarDeclaration Name="QI" Type="BOOL" Comment="Quality Input - TRUE to enable service" InitialValue="TRUE"/>
 			<VarDeclaration Name="Output" Type="logiBUS::io::DQ::logiBUS_DO_S" Comment="Identify the Output Output_Q1..Q8" InitialValue="logiBUS_DO::Invalid"/>
 			<VarDeclaration Name="ID_SET_METHOD" Type="WSTRING" Comment="Lokale Methodenadresse (ACTION=CREATE_METHOD) fuer den Set-Methodenaufruf, wird von Geraet A per CALL_METHOD aufgerufen"/>
 			<VarDeclaration Name="ID_RESET_METHOD" Type="WSTRING" Comment="Lokale Methodenadresse (ACTION=CREATE_METHOD) fuer den Reset-Methodenaufruf, wird von Geraet A per CALL_METHOD aufgerufen"/>
 			<VarDeclaration Name="ID_TOGGLE_METHOD" Type="WSTRING" Comment="Lokale Methodenadresse (ACTION=CREATE_METHOD) fuer den Toggle-Methodenaufruf, wird von Geraet A per CALL_METHOD aufgerufen"/>
 			<VarDeclaration Name="ID_STATE_WRITE" Type="WSTRING" Comment="Remote-Ziel-Adresse (BOOL, ACTION=WRITE) fuer den Flipflop-Zustand auf Geraet A"/>
 		</InputVars>
+		<OutputVars>
+			<VarDeclaration Name="QO" Type="BOOL" Comment="Quality Output - TRUE if service executed successfully"/>
+		</OutputVars>
 	</SubAppInterfaceList>
 	<SubAppNetwork>
 		<FB Name="TRIGGER" Type="adapter::net::ASRT_AX_SERVER_0_CLIENT_1_0" x="-6600" y="-500">
-			<Parameter Name="QI" Value="TRUE"/>
 		</FB>
 		<FB Name="SPLIT" Type="adapter::events::bidirectional::ASRT_AX_AX_SPLIT" x="-3900" y="200">
 		</FB>
 		<FB Name="FLIPFLOP" Type="adapter::events::bidirectional::ASRT_AX_T_FF_SR_2" x="-1800" y="-100">
 		</FB>
 		<FB Name="DigitalOutput_Q1" Type="logiBUS::io::DQ::logiBUS_QXA" x="-1600" y="300">
-			<Parameter Name="QI" Value="TRUE"/>
 		</FB>
+		<FB Name="AND_QO" Type="iec61131::booleanOperators::AND_BOOL_2">
+		</FB>
+		<EventConnections>
+			<Connection Source="INIT" Destination="TRIGGER.INIT"/>
+			<Connection Source="TRIGGER.INITO" Destination="DigitalOutput_Q1.INIT"/>
+			<Connection Source="DigitalOutput_Q1.INITO" Destination="INITO"/>
+			<Connection Source="DigitalOutput_Q1.INITO" Destination="AND_QO.REQ"/>
+		</EventConnections>
 		<DataConnections>
 			<Connection Source="Output" Destination="DigitalOutput_Q1.Output" dx1="4046.67">
 				<Attribute Name="Visible" Value="false"/>
@@ -44,6 +62,11 @@
 			<Connection Source="ID_STATE_WRITE" Destination="TRIGGER.ID_STATE" dx1="1400">
 				<Attribute Name="Visible" Value="false"/>
 			</Connection>
+			<Connection Source="QI" Destination="TRIGGER.QI"/>
+			<Connection Source="QI" Destination="DigitalOutput_Q1.QI"/>
+			<Connection Source="TRIGGER.QO" Destination="AND_QO.IN1"/>
+			<Connection Source="DigitalOutput_Q1.QO" Destination="AND_QO.IN2"/>
+			<Connection Source="AND_QO.OUT" Destination="QO"/>
 		</DataConnections>
 		<AdapterConnections>
 			<Connection Source="TRIGGER.S_R_T" Destination="SPLIT.IN" dx1="900"/>

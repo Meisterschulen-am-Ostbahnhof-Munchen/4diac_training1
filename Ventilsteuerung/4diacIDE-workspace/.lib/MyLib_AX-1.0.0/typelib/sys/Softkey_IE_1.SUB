@@ -9,20 +9,31 @@
 		<Import declaration="isobus::UT::io::Softkey::SoftKeyActivationCode::Invalid"/>
 	</CompilerInfo>
 	<SubAppInterfaceList>
+		<SubAppEventInputs>
+			<SubAppEvent Name="INIT" Type="EInit" Comment="Initialization Request">
+			</SubAppEvent>
+		</SubAppEventInputs>
 		<SubAppEventOutputs>
+			<SubAppEvent Name="INITO" Type="EInit" Comment="Initialization Confirm">
+			</SubAppEvent>
 			<SubAppEvent Name="IND" Type="Event" Comment="Feuert wenn das konfigurierte InputEvent auftritt"/>
 		</SubAppEventOutputs>
 		<InputVars>
+			<VarDeclaration Name="QI" Type="BOOL" Comment="Quality Input - TRUE to enable service" InitialValue="TRUE"/>
 			<VarDeclaration Name="u16ObjId" Type="UINT" Comment="Object ID SoftKey" InitialValue="ID_NULL"/>
 			<VarDeclaration Name="InputEvent" Type="isobus::UT::io::Softkey::SoftKeyActivationCode_S" Comment="z.B. SK_PRESSED, SK_RELEASED" InitialValue="Invalid"/>
 		</InputVars>
+		<OutputVars>
+			<VarDeclaration Name="QO" Type="BOOL" Comment="Quality Output - TRUE if service executed successfully"/>
+		</OutputVars>
 	</SubAppInterfaceList>
 	<SubAppNetwork>
 		<FB Name="SoftKey" Type="isobus::UT::io::Softkey::Softkey_IE" x="0" y="0">
-			<Parameter Name="QI" Value="TRUE"/>
 		</FB>
 		<EventConnections>
 			<Connection Source="SoftKey.IND" Destination="IND" dx1="600"/>
+			<Connection Source="INIT" Destination="SoftKey.INIT"/>
+			<Connection Source="SoftKey.INITO" Destination="INITO"/>
 		</EventConnections>
 		<DataConnections>
 			<Connection Source="u16ObjId" Destination="SoftKey.u16ObjId" dx1="600">
@@ -31,6 +42,8 @@
 			<Connection Source="InputEvent" Destination="SoftKey.InputEvent" dx1="600">
 				<Attribute Name="Visible" Value="false"/>
 			</Connection>
+			<Connection Source="QI" Destination="SoftKey.QI"/>
+			<Connection Source="SoftKey.QO" Destination="QO"/>
 		</DataConnections>
 	</SubAppNetwork>
 </SubAppType>

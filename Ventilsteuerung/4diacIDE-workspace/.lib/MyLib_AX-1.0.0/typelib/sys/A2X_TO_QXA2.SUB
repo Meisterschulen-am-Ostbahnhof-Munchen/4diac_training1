@@ -8,10 +8,22 @@
 		<Import declaration="logiBUS::io::DQ::logiBUS_DO::Invalid"/>
 	</CompilerInfo>
 	<SubAppInterfaceList>
+		<SubAppEventInputs>
+			<SubAppEvent Name="INIT" Type="EInit" Comment="Initialization Request">
+			</SubAppEvent>
+		</SubAppEventInputs>
+		<SubAppEventOutputs>
+			<SubAppEvent Name="INITO" Type="EInit" Comment="Initialization Confirm">
+			</SubAppEvent>
+		</SubAppEventOutputs>
 		<InputVars>
+			<VarDeclaration Name="QI" Type="BOOL" Comment="Quality Input - TRUE to enable service" InitialValue="TRUE"/>
 			<VarDeclaration Name="Output_UP" Type="logiBUS::io::DQ::logiBUS_DO_S" Comment="Physischer Ausgang fuer forward/up" InitialValue="Invalid"/>
 			<VarDeclaration Name="Output_DOWN" Type="logiBUS::io::DQ::logiBUS_DO_S" Comment="Physischer Ausgang fuer backward/down" InitialValue="Invalid"/>
 		</InputVars>
+		<OutputVars>
+			<VarDeclaration Name="QO" Type="BOOL" Comment="Quality Output - TRUE if service executed successfully"/>
+		</OutputVars>
 		<Sockets>
 			<AdapterDeclaration Name="IN" Type="adapter::types::unidirectional::A2X" Comment="Gebuendeltes UP/DOWN Eingangssignal"/>
 		</Sockets>
@@ -20,11 +32,17 @@
 		<FB Name="UNBUNDLE" Type="adapter::conversion::unidirectional::A2X_2X_TO_2AX" x="-2400" y="-100">
 		</FB>
 		<FB Name="DigitalOutput_UP" Type="logiBUS::io::DQ::logiBUS_QXA" x="700" y="-1200">
-			<Parameter Name="QI" Value="TRUE"/>
 		</FB>
 		<FB Name="DigitalOutput_DOWN" Type="logiBUS::io::DQ::logiBUS_QXA" x="700" y="0">
-			<Parameter Name="QI" Value="TRUE"/>
 		</FB>
+		<FB Name="AND_QO" Type="iec61131::booleanOperators::AND_BOOL_2">
+		</FB>
+		<EventConnections>
+			<Connection Source="INIT" Destination="DigitalOutput_UP.INIT"/>
+			<Connection Source="DigitalOutput_UP.INITO" Destination="DigitalOutput_DOWN.INIT"/>
+			<Connection Source="DigitalOutput_DOWN.INITO" Destination="INITO"/>
+			<Connection Source="DigitalOutput_DOWN.INITO" Destination="AND_QO.REQ"/>
+		</EventConnections>
 		<DataConnections>
 			<Connection Source="Output_UP" Destination="DigitalOutput_UP.Output" dx1="2446.67">
 				<Attribute Name="Visible" Value="false"/>
@@ -32,6 +50,11 @@
 			<Connection Source="Output_DOWN" Destination="DigitalOutput_DOWN.Output" dx1="2446.67">
 				<Attribute Name="Visible" Value="false"/>
 			</Connection>
+			<Connection Source="QI" Destination="DigitalOutput_UP.QI"/>
+			<Connection Source="QI" Destination="DigitalOutput_DOWN.QI"/>
+			<Connection Source="DigitalOutput_UP.QO" Destination="AND_QO.IN1"/>
+			<Connection Source="DigitalOutput_DOWN.QO" Destination="AND_QO.IN2"/>
+			<Connection Source="AND_QO.OUT" Destination="QO"/>
 		</DataConnections>
 		<AdapterConnections>
 			<Connection Source="IN" Destination="UNBUNDLE.A2X_IN" dx1="560"/>

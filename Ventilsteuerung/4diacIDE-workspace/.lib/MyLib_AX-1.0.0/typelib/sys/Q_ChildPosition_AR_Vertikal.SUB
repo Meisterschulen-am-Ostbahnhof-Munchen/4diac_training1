@@ -16,11 +16,13 @@
 			<SubAppEvent Name="CNF" Type="Event" Comment="Confirmation of Requested Service"/>
 		</SubAppEventOutputs>
 		<InputVars>
+			<VarDeclaration Name="QI" Type="BOOL" Comment="Quality Input - TRUE to enable service" InitialValue="TRUE"/>
 			<VarDeclaration Name="u16ObjId" Type="UINT" Comment="Object ID" InitialValue="ID_NULL"/>
 			<VarDeclaration Name="u16ObjIdParent" Type="UINT" Comment="Parent object ID" InitialValue="ID_NULL"/>
 			<VarDeclaration Name="xScale" Type="BOOL" Comment="FALSE (default) = bypass, send s16Xposition/s16Yposition through unchanged. TRUE = scale them by the DM/SKM factor for u16ObjIdParent." InitialValue="FALSE"/>
 		</InputVars>
 		<OutputVars>
+			<VarDeclaration Name="QO" Type="BOOL" Comment="Quality Output - TRUE if service executed successfully"/>
 			<VarDeclaration Name="STATUS" Type="STRING" Comment="Service Status - passthrough from the internal Q_ChildPosition"/>
 			<VarDeclaration Name="s16OldXposition" Type="INT" Comment="Old X position - passthrough from the internal Q_ChildPosition"/>
 			<VarDeclaration Name="s16OldYposition" Type="INT" Comment="Old Y position - passthrough from the internal Q_ChildPosition"/>
@@ -52,6 +54,8 @@
 			<Connection Source="Q_ChildPosition_AI.s16OldXposition" Destination="s16OldXposition" dx1="500"/>
 			<Connection Source="Q_ChildPosition_AI.s16OldYposition" Destination="s16OldYposition" dx1="500"/>
 			<Connection Source="Q_ChildPosition_AI.s16result" Destination="s16result" dx1="500"/>
+			<Connection Source="QI" Destination="Q_ChildPosition_AI.QI"/>
+			<Connection Source="Q_ChildPosition_AI.QO" Destination="QO"/>
 		</DataConnections>
 		<AdapterConnections>
 			<Connection Source="rPhys" Destination="AR_TO_AI.AR_IN" dx1="500"/>

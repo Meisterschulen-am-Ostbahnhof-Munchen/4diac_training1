@@ -10,18 +10,29 @@
 		<Import declaration="isobus::UT::Q::const::IDs::ID_NULL"/>
 	</CompilerInfo>
 	<SubAppInterfaceList>
+		<SubAppEventInputs>
+			<SubAppEvent Name="INIT" Type="EInit" Comment="Initialization Request">
+			</SubAppEvent>
+		</SubAppEventInputs>
+		<SubAppEventOutputs>
+			<SubAppEvent Name="INITO" Type="EInit" Comment="Initialization Confirm">
+			</SubAppEvent>
+		</SubAppEventOutputs>
 		<InputVars>
+			<VarDeclaration Name="QI" Type="BOOL" Comment="Quality Input - TRUE to enable service" InitialValue="TRUE"/>
 			<VarDeclaration Name="KEY" Type="STRING" Comment="Key name."/>
 			<VarDeclaration Name="SECTION" Type="STRING" Comment="Section name."/>
 			<VarDeclaration Name="u16ObjId" Type="UINT" Comment="Object ID" InitialValue="ID_NULL"/>
 		</InputVars>
+		<OutputVars>
+			<VarDeclaration Name="QO" Type="BOOL" Comment="Quality Output - TRUE if service executed successfully"/>
+		</OutputVars>
 		<Plugs>
 			<AdapterDeclaration Name="VALUEO" Type="adapter::types::bidirectional::AUI2"/>
 		</Plugs>
 	</SubAppInterfaceList>
 	<SubAppNetwork>
-		<FB Name="NumericValue_IDA" Type="isobus::UT::io::NumericValue::NumericValue_IDA" x="-9000" y="500">
-			<Parameter Name="QI" Value="TRUE"/>
+		<FB Name="NumericValue_IDA" Type="isobus::UT::io::NumericValue::NumericValue_IDA" x="-8900" y="500">
 		</FB>
 		<FB Name="AD_TO_AUI" Type="adapter::conversion::unidirectional::AD_TO_AUI" x="-7400" y="1100">
 		</FB>
@@ -29,7 +40,7 @@
 		</FB>
 		<FB Name="AUI_TO_AUDI" Type="adapter::conversion::unidirectional::AUI_TO_AUDI" x="-1800" y="900">
 		</FB>
-		<FB Name="Q_NumericValue_AUDI" Type="isobus::UT::Q::Q_NumericValue_AUDI" x="-400" y="500">
+		<FB Name="Q_NumericValue_AUDI" Type="isobus::UT::Q::Q_NumericValue_AUDI" x="-400" y="300">
 		</FB>
 		<FB Name="AUI_LAST_2" Type="adapter::events::unidirectional::AUI_LAST_2" Comment="Last-Writer-Wins: beim Boot gewinnt der INI_AUI2-Wert (IN2), danach jede Live-VT-Aenderung (IN1)" x="-6000" y="1100">
 		</FB>
@@ -37,10 +48,20 @@
 		<FB Name="AUI_SPLIT_2" Type="adapter::events::unidirectional::AUI_SPLIT_2" x="-3000" y="1200">
 		</FB>
 		<FB Name="INI_AUI" Type="eclipse4diac::storage::INI_AUI" x="-400" y="1300">
-			<Parameter Name="QI" Value="TRUE"/>
 			<Parameter Name="SETM" Value="FALSE"/>
 			<Parameter Name="DEFAULT_VALUE" Value="UINT#0"/>
 		</FB>
+		<FB Name="AND_QO" Type="iec61131::booleanOperators::AND_BOOL_3" x="2900" y="900">
+		</FB>
+		<EventConnections>
+			<Connection Source="INIT" Destination="NumericValue_IDA.INIT" dx1="1246.67"/>
+			<Connection Source="NumericValue_IDA.INITO" Destination="INI_AUI.INIT" dx1="3780"/>
+			<Connection Source="INI_AUI.INITO" Destination="Q_NumericValue_AUDI.INIT" dx1="80" dx2="80" dy="-500"/>
+			<Connection Source="Q_NumericValue_AUDI.INITO" Destination="INITO" dx1="7380"/>
+			<Connection Source="Q_NumericValue_AUDI.INITO" Destination="AND_QO.REQ" dx1="233.33">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+		</EventConnections>
 		<DataConnections>
 			<Connection Source="KEY" Destination="INI_AUI.KEY" dx1="846.67">
 				<Attribute Name="Visible" Value="false"/>
@@ -54,6 +75,25 @@
 			<Connection Source="u16ObjId" Destination="Q_NumericValue_AUDI.u16ObjId" dx1="8246.67">
 				<Attribute Name="Visible" Value="false"/>
 			</Connection>
+			<Connection Source="QI" Destination="Q_NumericValue_AUDI.QI" dx1="6246.67">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="QI" Destination="NumericValue_IDA.QI" dx1="1246.67">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="QI" Destination="INI_AUI.QI" dx1="80" dx2="80" dy="233.33">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="Q_NumericValue_AUDI.QO" Destination="AND_QO.IN1" dx1="233.33">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="NumericValue_IDA.QO" Destination="AND_QO.IN2" dx1="3980">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="INI_AUI.QO" Destination="AND_QO.IN3" dx1="320">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="AND_QO.OUT" Destination="QO" dx1="1193.33"/>
 		</DataConnections>
 		<AdapterConnections>
 			<Connection Source="NumericValue_IDA.IN" Destination="AD_TO_AUI.AD_IN" dx1="180"/>

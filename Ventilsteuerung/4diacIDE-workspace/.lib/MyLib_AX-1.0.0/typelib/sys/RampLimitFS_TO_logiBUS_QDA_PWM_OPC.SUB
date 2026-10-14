@@ -10,7 +10,16 @@
 		<Import declaration="logiBUS::io::DQ::logiBUS_DO_S"/>
 	</CompilerInfo>
 	<SubAppInterfaceList>
+		<SubAppEventInputs>
+			<SubAppEvent Name="INIT" Type="EInit" Comment="Initialization Request">
+			</SubAppEvent>
+		</SubAppEventInputs>
+		<SubAppEventOutputs>
+			<SubAppEvent Name="INITO" Type="EInit" Comment="Initialization Confirm">
+			</SubAppEvent>
+		</SubAppEventOutputs>
 		<InputVars>
+			<VarDeclaration Name="QI" Type="BOOL" Comment="Quality Input - TRUE to enable service" InitialValue="TRUE"/>
 			<VarDeclaration Name="u16ObjId_VALUEVAR" Type="UINT" Comment="Object ID CNumberVariable (Prozent 0-100, gemeinsam gebunden an Balkengrafik und CInputNumber-Anzeige)" InitialValue="ID_NULL"/>
 			<VarDeclaration Name="u16ObjId_SWITCH" Type="UINT" Comment="Object ID Kanal-Ein/Aus-Taste (Klick togglet Enable)" InitialValue="ID_NULL"/>
 			<VarDeclaration Name="u16ObjId_STATUS" Type="UINT" Comment="Object ID Status-Anzeige (Hintergrundfarbe Weiss=Kanal deaktiviert / Gruen=aktiv+logiBUS_QD_PWM.QO TRUE / Rot=aktiv+QO FALSE, Stoerung)" InitialValue="ID_NULL"/>
@@ -28,17 +37,18 @@
 			<VarDeclaration Name="ID_SWITCH_WRITE" Type="WSTRING" Comment="Echo-Ruckmelde-Adresse (BOOL, ACTION=PUBLISH, aktueller Kanal-Enable-Zustand)"/>
 			<VarDeclaration Name="ID_STATUS_WRITE" Type="WSTRING" Comment="Status-Ruckmelde-Adresse (BOOL, ACTION=PUBLISH, nur lesend, logiBUS_QD_PWM.QO)"/>
 		</InputVars>
+		<OutputVars>
+			<VarDeclaration Name="QO" Type="BOOL" Comment="Quality Output - TRUE if service executed successfully"/>
+		</OutputVars>
 	</SubAppInterfaceList>
 	<SubAppNetwork>
 		<FB Name="NumericValue_Duty" Type="isobus::UT::io::NumericValue::NumericValue_ID" x="-14800" y="-3100">
-			<Parameter Name="QI" Value="TRUE"/>
 		</FB>
 		<FB Name="F_DWORD_TO_UDINT_VT" Type="iec61131::conversion::F_DWORD_TO_UDINT" x="-13200" y="-2700">
 		</FB>
 		<FB Name="F_UDINT_TO_DINT_VT" Type="iec61131::conversion::F_UDINT_TO_DINT" x="-11400" y="-2700">
 		</FB>
 		<FB Name="AR_SUBSCRIBE_1" Type="adapter::net::AR_SUBSCRIBE_1" x="-15400" y="-1000">
-			<Parameter Name="QI" Value="TRUE"/>
 		</FB>
 		<FB Name="AR_R_TO_REAL_SUB" Type="adapter::conversion::unidirectional::AR_R_TO_REAL" x="-13700" y="-900">
 		</FB>
@@ -76,7 +86,6 @@
 		<FB Name="AR_REAL_TO_R_PUB" Type="adapter::conversion::unidirectional::AR_REAL_TO_R" x="1600" y="600">
 		</FB>
 		<FB Name="AR_PUBLISH_1" Type="adapter::net::AR_PUBLISH_1" x="3700" y="700">
-			<Parameter Name="QI" Value="TRUE"/>
 		</FB>
 		<FB Name="E_RS_PV" Type="iec61499::events::E_RS" x="-7000" y="-4600">
 		</FB>
@@ -92,34 +101,33 @@
 		<FB Name="E_MERGE_SEL" Type="iec61499::events::E_MERGE_2" x="-7400" y="-1100">
 		</FB>
 		<FB Name="E_T_FF_SR_SWITCH" Type="iec61499::events::E_T_FF_SR_SYM_INIT" x="-7900" y="-2300">
-			<Parameter Name="QI" Value="TRUE"/>
 		</FB>
 		<SubApp Name="Q_BackgroundColour_EnableOk_STATUS" Type="MyLib::sys::Q_BackgroundColour_EnableOk_A" x="6400" y="-4000">
 		</SubApp>
 		<FB Name="AX_SUBSCRIBE_SWITCH" Type="adapter::net::AX_SUBSCRIBE_1" x="-15400" y="-1900">
-			<Parameter Name="QI" Value="TRUE"/>
 		</FB>
 		<FB Name="AX_RF_TRIG_SWITCH" Type="adapter::events::unidirectional::AX_RF_TRIG" x="-13700" y="-1900">
 		</FB>
 		<FB Name="AX_BOOL_TO_X_SWITCH" Type="adapter::conversion::unidirectional::AX_BOOL_TO_X" x="8500" y="-1200">
 		</FB>
 		<FB Name="AX_PUBLISH_SWITCH" Type="adapter::net::AX_PUBLISH_1" x="10200" y="-1200">
-			<Parameter Name="QI" Value="TRUE"/>
 		</FB>
 		<FB Name="AX_BOOL_TO_X_STATUS" Type="adapter::conversion::unidirectional::AX_BOOL_TO_X" x="8500" y="-2600">
 		</FB>
 		<FB Name="AX_PUBLISH_STATUS" Type="adapter::net::AX_PUBLISH_1" x="10200" y="-2600">
-			<Parameter Name="QI" Value="TRUE"/>
 		</FB>
 		<Comment Comment="Ja, gerechnet: 64255 × 8191 = 526.406.305. DINT (32-bit signed) geht bis 2.147.483.647 — der Zwischenwert nutzt nur ~25% des Wertebereichs, keine Überlauf-Gefahr." x="-1900" y="-3300" width="2000" height="600"/>
 		<SubApp Name="Ramp6Buttons" Type="MyLib::sys::Ramp6Buttons" x="-4500" y="-1500">
 		</SubApp>
+		<FB Name="AND_QO" Type="iec61131::booleanOperators::AND_BOOL_10" x="9200" y="100">
+		</FB>
 		<EventConnections>
 			<Connection Source="NumericValue_Duty.IND" Destination="F_DWORD_TO_UDINT_VT.REQ" dx1="493.33"/>
 			<Connection Source="F_DWORD_TO_UDINT_VT.CNF" Destination="F_UDINT_TO_DINT_VT.REQ"/>
 			<Connection Source="F_UDINT_TO_DINT_VT.CNF" Destination="E_SPLIT_VT.EI" dx1="533.33"/>
 			<Connection Source="E_SPLIT_VT.EO1" Destination="E_RS_PV.R" dx1="693.33"/>
 			<Connection Source="E_SPLIT_VT.EO2" Destination="E_MERGE_SEL.EI1" dx1="513.33"/>
+			<Connection Source="INIT" Destination="AR_SUBSCRIBE_1.INIT" dx1="80" dx2="80" dy="-666.67"/>
 			<Connection Source="AR_SUBSCRIBE_1.INITO" Destination="AR_PUBLISH_1.INIT" dx1="7266.67">
 				<Attribute Name="Visible" Value="false"/>
 			</Connection>
@@ -159,17 +167,23 @@
 			<Connection Source="Ramp6Buttons.IND_SWITCH" Destination="E_T_FF_SR_SWITCH.CLK" dx1="80" dx2="80" dy="-46.67">
 				<Attribute Name="Visible" Value="false"/>
 			</Connection>
-			<Connection Source="Ramp6Buttons.IND_ZERO" Destination="RampLimitFS.ZERO"/>
-			<Connection Source="Ramp6Buttons.IND_UP_SLOW" Destination="RampLimitFS.UP_SLOW"/>
-			<Connection Source="Ramp6Buttons.IND_UP_FAST" Destination="RampLimitFS.UP_FAST"/>
-			<Connection Source="Ramp6Buttons.IND_DOWN_SLOW" Destination="RampLimitFS.DOWN_SLOW"/>
-			<Connection Source="Ramp6Buttons.IND_DOWN_FAST" Destination="RampLimitFS.DOWN_FAST"/>
-			<Connection Source="Ramp6Buttons.IND_FULL" Destination="RampLimitFS.FULL"/>
+			<Connection Source="Ramp6Buttons.IND_ZERO" Destination="RampLimitFS.ZERO" dx1="406.67"/>
+			<Connection Source="Ramp6Buttons.IND_UP_SLOW" Destination="RampLimitFS.UP_SLOW" dx1="406.67"/>
+			<Connection Source="Ramp6Buttons.IND_UP_FAST" Destination="RampLimitFS.UP_FAST" dx1="406.67"/>
+			<Connection Source="Ramp6Buttons.IND_DOWN_SLOW" Destination="RampLimitFS.DOWN_SLOW" dx1="406.67"/>
+			<Connection Source="Ramp6Buttons.IND_DOWN_FAST" Destination="RampLimitFS.DOWN_FAST" dx1="406.67"/>
+			<Connection Source="Ramp6Buttons.IND_FULL" Destination="RampLimitFS.FULL" dx1="406.67"/>
 			<Connection Source="AX_RF_TRIG_SWITCH.ER" Destination="E_T_FF_SR_SWITCH.S" dx1="2240"/>
 			<Connection Source="AX_RF_TRIG_SWITCH.EF" Destination="E_T_FF_SR_SWITCH.R" dx1="2513.33"/>
 			<Connection Source="AX_PUBLISH_STATUS.INITO" Destination="E_T_FF_SR_SWITCH.INIT" dx1="80" dx2="80" dy="146.67">
 				<Attribute Name="Visible" Value="false"/>
 			</Connection>
+			<Connection Source="AX_PUBLISH_STATUS.INITO" Destination="Q_NumericValue.INIT" dx1="80" dx2="80" dy="900"/>
+			<Connection Source="Q_NumericValue.INITO" Destination="Q_BackgroundColour_EnableOk_STATUS.INIT" dx1="2513.33"/>
+			<Connection Source="Q_BackgroundColour_EnableOk_STATUS.INITO" Destination="Ramp6Buttons.INIT" dx1="80" dx2="80" dy="1246.67"/>
+			<Connection Source="Ramp6Buttons.INITO" Destination="NumericValue_Duty.INIT" dx1="80" dx2="80" dy="-800"/>
+			<Connection Source="NumericValue_Duty.INITO" Destination="INITO" dx1="22740"/>
+			<Connection Source="NumericValue_Duty.INITO" Destination="AND_QO.REQ" dx1="9006.67"/>
 		</EventConnections>
 		<DataConnections>
 			<Connection Source="u16ObjId_VALUEVAR" Destination="NumericValue_Duty.u16ObjId" dx1="513.33">
@@ -246,6 +260,27 @@
 			<Connection Source="bDefaultEnabled" Destination="E_T_FF_SR_SWITCH.Q_INIT" dx1="4926.67">
 				<Attribute Name="Visible" Value="false"/>
 			</Connection>
+			<Connection Source="QI" Destination="Q_NumericValue.QI" dx1="80" dx2="80" dy="-460"/>
+			<Connection Source="QI" Destination="NumericValue_Duty.QI" dx1="80" dx2="80" dy="-1553.33"/>
+			<Connection Source="QI" Destination="AR_SUBSCRIBE_1.QI" dx1="80" dx2="80" dy="-560"/>
+			<Connection Source="QI" Destination="AR_PUBLISH_1.QI" dx1="1393.33"/>
+			<Connection Source="QI" Destination="E_T_FF_SR_SWITCH.QI" dx1="80" dx2="80" dy="-1100"/>
+			<Connection Source="QI" Destination="AX_SUBSCRIBE_SWITCH.QI" dx1="80" dx2="80" dy="-1006.67"/>
+			<Connection Source="QI" Destination="AX_PUBLISH_SWITCH.QI" dx1="4646.67"/>
+			<Connection Source="QI" Destination="AX_PUBLISH_STATUS.QI" dx1="4646.67"/>
+			<Connection Source="QI" Destination="Q_BackgroundColour_EnableOk_STATUS.QI" dx1="2746.67"/>
+			<Connection Source="QI" Destination="Ramp6Buttons.QI" dx1="80" dx2="80" dy="-486.67"/>
+			<Connection Source="Q_NumericValue.QO" Destination="AND_QO.IN1" dx1="1413.33"/>
+			<Connection Source="Q_BackgroundColour_EnableOk_STATUS.QO" Destination="AND_QO.IN2" dx1="580"/>
+			<Connection Source="Ramp6Buttons.QO" Destination="AND_QO.IN3" dx1="1806.67"/>
+			<Connection Source="AND_QO.OUT" Destination="QO" dx1="2926.67"/>
+			<Connection Source="NumericValue_Duty.QO" Destination="AND_QO.IN4" dx1="9006.67"/>
+			<Connection Source="AR_SUBSCRIBE_1.QO" Destination="AND_QO.IN5" dx1="9326.67"/>
+			<Connection Source="AR_PUBLISH_1.QO" Destination="AND_QO.IN6" dx1="2326.67"/>
+			<Connection Source="E_T_FF_SR_SWITCH.QO" Destination="AND_QO.IN7" dx1="5533.33"/>
+			<Connection Source="AX_SUBSCRIBE_SWITCH.QO" Destination="AND_QO.IN8" dx1="9326.67"/>
+			<Connection Source="AX_PUBLISH_SWITCH.QO" Destination="AND_QO.IN9" dx1="80" dx2="80" dy="773.33"/>
+			<Connection Source="AX_PUBLISH_STATUS.QO" Destination="AND_QO.IN10" dx1="80" dx2="80" dy="1526.67"/>
 		</DataConnections>
 		<AdapterConnections>
 			<Connection Source="AR_SUBSCRIBE_1.OUT" Destination="AR_R_TO_REAL_SUB.AR_IN" dx1="513.33"/>

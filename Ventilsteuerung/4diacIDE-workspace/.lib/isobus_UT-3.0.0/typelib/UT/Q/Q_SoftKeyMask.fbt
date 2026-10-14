@@ -10,8 +10,10 @@
 	<InterfaceList>
 		<EventInputs>
 			<Event Name="INIT" Type="EInit" Comment="Service Initialization">
+				<With Var="QI"/>
 			</Event>
 			<Event Name="REQ" Type="Event" Comment="Service Request">
+				<With Var="QI"/>
 				<With Var="u16DataMaskId"/>
 				<With Var="u16SoftKeyMaskId"/>
 				<With Var="u8MaskType"/>
@@ -19,8 +21,10 @@
 		</EventInputs>
 		<EventOutputs>
 			<Event Name="INITO" Type="EInit" Comment="Initialization Confirm">
+				<With Var="QO"/>
 			</Event>
 			<Event Name="CNF" Type="Event" Comment="Confirmation of Requested Service">
+				<With Var="QO"/>
 				<With Var="STATUS"/>
 				<With Var="s16result"/>
 				<With Var="u16OldDataMaskId"/>
@@ -29,11 +33,13 @@
 			</Event>
 		</EventOutputs>
 		<InputVars>
+			<VarDeclaration Name="QI" Type="BOOL" Comment="Quality Input - TRUE to enable service" InitialValue="TRUE"/>
 			<VarDeclaration Name="u8MaskType" Type="USINT" Comment="1 == Data, 2 == Alarm "/>
 			<VarDeclaration Name="u16DataMaskId" Type="UINT" Comment="Object ID of active Mask " InitialValue="ID_NULL"/>
 			<VarDeclaration Name="u16SoftKeyMaskId" Type="UINT" Comment="Object ID of (new) soft key mask " InitialValue="ID_NULL"/>
 		</InputVars>
 		<OutputVars>
+			<VarDeclaration Name="QO" Type="BOOL" Comment="Quality Output - TRUE if service executed successfully"/>
 			<VarDeclaration Name="STATUS" Type="STRING" Comment="Service Status"/>
 			<VarDeclaration Name="u8OldMaskType" Type="USINT"/>
 			<VarDeclaration Name="u16OldDataMaskId" Type="UINT" Comment="Old object ID of active Mask "/>

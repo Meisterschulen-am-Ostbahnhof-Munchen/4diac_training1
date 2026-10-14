@@ -32,7 +32,7 @@
 		<SubApp Name="GreenWhiteBackground1" Type="MyLib::sys::GreenWhiteBackground1" x="-1700" y="-300">
 			<Parameter Name="u16ObjId" Value="SoftKey_F1"/>
 		</SubApp>
-		<SubApp Name="GreenWhiteBackground2" Type="MyLib::sys::GreenWhiteBackground2" x="-1800" y="400">
+		<SubApp Name="GreenWhiteBackground2" Type="MyLib::sys::GreenWhiteBackground2" x="-1700" y="600">
 			<Parameter Name="u16ObjIdA" Value="AuxFunction2_X1"/>
 		</SubApp>
 		<Comment Comment="SCHLECHTER STIL - Punktabzug! &#10;Hier wurden GreenWhiteBackground1 UND GreenWhiteBackground2 einzeln verdrahtet, obwohl es mit GreenWhiteBackground3 (ein Baustein, u16ObjId + u16ObjIdA) genau fuer diesen Fall (1 normales VT-Objekt + 1 Aux-Objekt) schon fertig existiert. Unnoetige Verdopplung der Farbauswahl-Logik. &#10;Korrekte Loesung: Uebung_010f3." x="-6000" y="2400" width="4200" height="1100"/>
@@ -40,14 +40,14 @@
 			<Connection Source="SoftKey_F1.IND" Destination="OR_2.REQ" dx1="720"/>
 			<Connection Source="AuxFunction2_X1.IND" Destination="OR_2.REQ" dx1="480"/>
 			<Connection Source="OR_2.CNF" Destination="DigitalOutput_Q1.REQ" dx1="666.67"/>
-			<Connection Source="OR_2.CNF" Destination="GreenWhiteBackground1.REQ"/>
+			<Connection Source="OR_2.CNF" Destination="GreenWhiteBackground1.REQ" dx1="1046.67"/>
 			<Connection Source="OR_2.CNF" Destination="GreenWhiteBackground2.REQ" dx1="286.67"/>
 		</EventConnections>
 		<DataConnections>
 			<Connection Source="SoftKey_F1.IN" Destination="OR_2.IN1" dx1="540"/>
 			<Connection Source="AuxFunction2_X1.IN" Destination="OR_2.IN2" dx1="750"/>
 			<Connection Source="OR_2.OUT" Destination="DigitalOutput_Q1.OUT" dx1="1086.67"/>
-			<Connection Source="OR_2.OUT" Destination="GreenWhiteBackground1.DI1"/>
+			<Connection Source="OR_2.OUT" Destination="GreenWhiteBackground1.DI1" dx1="1046.67"/>
 			<Connection Source="OR_2.OUT" Destination="GreenWhiteBackground2.DI1" dx1="140"/>
 		</DataConnections>
 	</SubAppNetwork>

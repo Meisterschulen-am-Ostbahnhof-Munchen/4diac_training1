@@ -2,6 +2,8 @@
 <SubAppType Name="Heben_Senken_TO_QDA_PWM_OPC" Comment="2 Remote-Kommandos (Heben/Senken, je Subscribe+State-Publish, ODER-verknuepft&#10;mit IO-Test wie bei ILOCK_SWITCH_2_QXA_OPC) auf 1 ratiometrisches PWM-Signal&#10;(Danfoss PVEA: 25%=Senken, 50%=Neutral, 75%=Heben, Lastteiler-korrigiert) + 1&#10;Freigabe-DO als Klick-Toggle (AX_T_FF_INIT, Default AN, per RPC-Methode aus VT&#10;und Dashboard aus-/einschaltbar - Not-Bedienung, z.B. Strassenmodus). Generisch&#10;fuer jeden PVEA-Aktor mit 2 physischen Kanaelen (links=PWM, rechts=Freigabe),&#10;Bedienung von einem Modul ohne eigenes VT.">
 	<Identification Standard="61499-2">
 	</Identification>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.7" Author="Franz Höpfinger" Date="2026-10-13" Remarks="Neuer SubAppEventOutput INITO (Type EInit) fuer Aufnahme_Option.SUB (Option::AOption-Socket-Wrapper, analog Bunker_Klappen_Option.SUB) - PWM_Mux.INITO (HebenSenken_ILOCK_QDA_PWM_OPC v1.6) UND DO_Toggle.INITO (DO_TOGGLE_RPC_QXA_OPC v1.3) sind 2 echte, unabhaengige physische Kanal-Confirms (PWM-Kanal + Freigabe-DO-Kanal). E_REND_2 (Rendezvous/AND, nicht E_MERGE_2/OR) wartet auf BEIDE bevor INITO genau 1x feuert - ein nachgelagerter AOption-Socket (DEMUX Break-before-Make) erwartet pro Umschaltvorgang genau 1 INIT_CNF, ein doppeltes Feuern waere dort undefiniert. INIT selbst resettet E_REND_2 (R), damit jeder neue INIT-Zyklus wieder auf beide wartet.">
+	</VersionInfo>
 	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.6" Author="Franz Höpfinger" Date="2026-10-11" Remarks="Neuer SubAppEventInput INIT (Type EInit), durchgereicht an PWM_Mux.INIT (HebenSenken_ILOCK_QDA_PWM_OPC v1.5) UND DO_Toggle.INIT (DO_TOGGLE_RPC_QXA_OPC v1.2) statt Auto-Verteilung - analog ILOCK_SWITCH_2_QXA_OPC v1.2, 'Init wie bei Tecu' (Franz).">
 	</VersionInfo>
 	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.5" Author="Franz Höpfinger" Date="2026-10-11" Remarks="Neuer QI-InputVar (Default TRUE, rueckwaertskompatibel) durchgereicht an PWM_Mux.QI (HebenSenken_ILOCK_QDA_PWM_OPC v1.4) UND DO_Toggle.QI (DO_TOGGLE_RPC_QXA_OPC v1.1) - analog ILOCK_SWITCH_2_QXA_OPC v1.1, haelt beide physischen Kanaele dieser Instanz gemeinsam inaktiv.">
@@ -31,9 +33,15 @@
 			<VarDeclaration Name="ID_DO_STATE_WRITE" Type="WSTRING" Comment="Lokale Publish-Adresse (ACTION=WRITE) fuer den tatsaechlichen Freigabe-Zustand (AX_T_FF_INIT.Q) - wird von VT und Dashboard remote abonniert"/>
 			<VarDeclaration Name="QI" Type="BOOL" Comment="Qualifier fuer beide physischen Ausgaenge (PWM+Freigabe-DO) - FALSE haelt diese Instanz komplett inaktiv (keine Hardware-Bindung), fuer den Fall dass derselbe physische Kanal je nach Maschinenvariante anderweitig genutzt wird" InitialValue="TRUE"/>
 		</InputVars>
+		<OutputVars>
+			<VarDeclaration Name="QO" Type="BOOL" Comment="Quality Output - TRUE if service executed successfully (AND aus PWM_Mux/DO_Toggle)"/>
+		</OutputVars>
 		<SubAppEventInputs>
 			<SubAppEvent Name="INIT" Type="EInit" Comment="Initialisierung - vom Aufrufer sequenziert statt per Auto-Verteilung, damit QI vor der physischen Kanalbindung feststeht"/>
 		</SubAppEventInputs>
+		<SubAppEventOutputs>
+			<SubAppEvent Name="INITO" Type="EInit" Comment="Initialisierung abgeschlossen - echtes Rendezvous-Confirm (E_REND_2) aus PWM_Mux.INITO UND DO_Toggle.INITO"/>
+		</SubAppEventOutputs>
 		<Sockets>
 			<AdapterDeclaration Name="PWM_POW" Type="adapter::types::unidirectional::AR" Comment="PWM Power 1.0 = Maximale Power, 0.0 = Aus, 0.5 = Halb - durchgereicht an PWM_Mux.PWM_POW"/>
 		</Sockets>
@@ -43,9 +51,18 @@
 		</SubApp>
 		<SubApp Name="DO_Toggle" Type="MyLib::sys::DO_TOGGLE_RPC_QXA_OPC" x="2100" y="600">
 		</SubApp>
+		<FB Name="E_REND_2_INITO" Type="iec61499::events::E_REND_2" Comment="Wartet auf PWM_Mux.INITO UND DO_Toggle.INITO (2 unabhaengige physische Kanaele), bevor INITO genau 1x feuert - von INIT fuer jeden neuen Init-Zyklus zurueckgesetzt" x="4800" y="1200">
+		</FB>
+		<FB Name="AND_QO" Type="iec61131::booleanOperators::AND_BOOL_2" x="4800" y="2000">
+		</FB>
 		<EventConnections>
 			<Connection Source="INIT" Destination="PWM_Mux.INIT" dx1="1833.33"/>
 			<Connection Source="INIT" Destination="DO_Toggle.INIT" dx1="3686.67"/>
+			<Connection Source="INIT" Destination="E_REND_2_INITO.R" dx1="1833.33"/>
+			<Connection Source="PWM_Mux.INITO" Destination="E_REND_2_INITO.EI1" dx1="80" dx2="80" dy="-420"/>
+			<Connection Source="DO_Toggle.INITO" Destination="E_REND_2_INITO.EI2" dx1="80" dx2="80" dy="-420"/>
+			<Connection Source="E_REND_2_INITO.EO" Destination="INITO" dx1="600"/>
+			<Connection Source="E_REND_2_INITO.EO" Destination="AND_QO.REQ"/>
 		</EventConnections>
 		<DataConnections>
 			<Connection Source="ID_HEBEN_READ" Destination="PWM_Mux.ID_HEBEN_READ" dx1="280">
@@ -93,6 +110,9 @@
 			<Connection Source="QI" Destination="DO_Toggle.QI" dx1="1786.67">
 				<Attribute Name="Visible" Value="false"/>
 			</Connection>
+			<Connection Source="PWM_Mux.QO" Destination="AND_QO.IN1"/>
+			<Connection Source="DO_Toggle.QO" Destination="AND_QO.IN2"/>
+			<Connection Source="AND_QO.OUT" Destination="QO"/>
 		</DataConnections>
 		<AdapterConnections>
 			<Connection Source="PWM_POW" Destination="PWM_Mux.PWM_POW" dx1="600"/>
