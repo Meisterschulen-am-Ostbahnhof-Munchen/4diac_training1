@@ -35,11 +35,11 @@
 		</Plugs>
 	</SubAppInterfaceList>
 	<SubAppNetwork>
-		<FB Name="AX_SUBSCRIBE_1" Type="adapter::net::AR_SUBSCRIBE_1" x="-8600" y="-1400">
+		<FB Name="AX_SUBSCRIBE_1" Type="adapter::net::AR_SUBSCRIBE_1" x="-8400" y="-1400">
 		</FB>
-		<FB Name="AX_PUBLISH_1" Type="adapter::net::AR_PUBLISH_1" x="-1800" y="-1600">
+		<FB Name="AX_PUBLISH_1" Type="adapter::net::AR_PUBLISH_1" x="-1800" y="-1500">
 		</FB>
-		<FB Name="INI_AR" Type="eclipse4diac::storage::INI_AR" x="-6100" y="-1600">
+		<FB Name="INI_AR" Type="eclipse4diac::storage::INI_AR" x="-6000" y="-1600">
 			<Parameter Name="SETM" Value="FALSE"/>
 		</FB>
 		<FB Name="Sec_To_Time" Type="adapter::iec61131::arithmetic::AR_MULTIME" x="-1800" y="-300">
@@ -47,16 +47,14 @@
 		</FB>
 		<FB Name="AR_SPLIT_2" Type="adapter::events::unidirectional::AR_SPLIT_2" x="-4300" y="-300">
 		</FB>
-		<FB Name="AND_QO" Type="iec61131::booleanOperators::AND_BOOL_3">
+		<FB Name="AND_QO" Type="iec61131::booleanOperators::AND_BOOL_3" x="100" y="0">
 		</FB>
 		<EventConnections>
-			<Connection Source="AX_SUBSCRIBE_1.INITO" Destination="INI_AR.INIT" dx1="780"/>
-			<Connection Source="INI_AR.INITO" Destination="AX_PUBLISH_1.INIT"/>
-			<Connection Source="INIT" Destination="AX_SUBSCRIBE_1.INIT"/>
-			<Connection Source="AX_SUBSCRIBE_1.INITO" Destination="AX_PUBLISH_1.INIT"/>
-			<Connection Source="AX_PUBLISH_1.INITO" Destination="INI_AR.INIT"/>
-			<Connection Source="INI_AR.INITO" Destination="INITO"/>
-			<Connection Source="INI_AR.INITO" Destination="AND_QO.REQ"/>
+			<Connection Source="INIT" Destination="AX_SUBSCRIBE_1.INIT" dx1="793.33"/>
+			<Connection Source="AX_SUBSCRIBE_1.INITO" Destination="INI_AR.INIT" dx1="726.67"/>
+			<Connection Source="INI_AR.INITO" Destination="AX_PUBLISH_1.INIT" dx1="1566.67"/>
+			<Connection Source="AX_PUBLISH_1.INITO" Destination="AND_QO.REQ" dx1="873.33"/>
+			<Connection Source="AX_PUBLISH_1.INITO" Destination="INITO" dx1="1646.67"/>
 		</EventConnections>
 		<DataConnections>
 			<Connection Source="SECTION" Destination="INI_AR.SECTION" dx1="760">
@@ -74,13 +72,25 @@
 			<Connection Source="ID_WRITE" Destination="AX_PUBLISH_1.ID" dx1="5026.67">
 				<Attribute Name="Visible" Value="false"/>
 			</Connection>
-			<Connection Source="QI" Destination="AX_SUBSCRIBE_1.QI"/>
-			<Connection Source="QI" Destination="AX_PUBLISH_1.QI"/>
-			<Connection Source="QI" Destination="INI_AR.QI"/>
-			<Connection Source="AX_SUBSCRIBE_1.QO" Destination="AND_QO.IN1"/>
-			<Connection Source="AX_PUBLISH_1.QO" Destination="AND_QO.IN2"/>
-			<Connection Source="INI_AR.QO" Destination="AND_QO.IN3"/>
-			<Connection Source="AND_QO.OUT" Destination="QO"/>
+			<Connection Source="QI" Destination="AX_SUBSCRIBE_1.QI" dx1="593.33">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="QI" Destination="AX_PUBLISH_1.QI" dx1="4093.33">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="QI" Destination="INI_AR.QI" dx1="1993.33">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="AX_SUBSCRIBE_1.QO" Destination="AND_QO.IN1" dx1="3826.67">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="AX_PUBLISH_1.QO" Destination="AND_QO.IN2" dx1="473.33">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="INI_AR.QO" Destination="AND_QO.IN3" dx1="2520">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="AND_QO.OUT" Destination="QO" dx1="1406.67"/>
 		</DataConnections>
 		<AdapterConnections>
 			<Connection Source="AX_SUBSCRIBE_1.OUT" Destination="INI_AR.AR_IN" dx1="780"/>

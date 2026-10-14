@@ -66,17 +66,17 @@
 		</Plugs>
 	</SubAppInterfaceList>
 	<SubAppNetwork>
-		<FB Name="AD_SUBSCRIBE_RAW" Type="adapter::net::AD_SUBSCRIBE_1" x="-9200" y="-1700">
+		<FB Name="AD_SUBSCRIBE_RAW" Type="adapter::net::AD_SUBSCRIBE_1" x="-9100" y="-1700">
 		</FB>
 		<FB Name="AD_TO_AUDI" Type="adapter::conversion::unidirectional::AD_TO_AUDI" x="-5500" y="-1100">
 		</FB>
 		<FB Name="AUDI_SPLIT_2" Type="adapter::events::unidirectional::AUDI_SPLIT_2" x="-3900" y="-1100">
 		</FB>
-		<FB Name="Q_NumericValue_RAW" Type="isobus::UT::Q::Q_NumericValue_AUDI" x="-2200" y="-1700">
+		<FB Name="Q_NumericValue_RAW" Type="isobus::UT::Q::Q_NumericValue_AUDI" x="-2100" y="-1700">
 		</FB>
 		<FB Name="AUDI_TO_AR" Type="adapter::conversion::unidirectional::AUDI_TO_AR" x="-2200" y="-500">
 		</FB>
-		<FB Name="CALIBRATE" Type="adapter::Engineering::measurements::AR_CALIBRATE_3P_REF" x="-200" y="200">
+		<FB Name="CALIBRATE" Type="adapter::Engineering::measurements::AR_CALIBRATE_3P_REF" x="-100" y="200">
 			<Parameter Name="xClipping" Value="FALSE"/>
 		</FB>
 		<SubApp Name="MIN_REF_LIT" Type="MyLib::sys::NumericValue_TO_AR2_OPC" x="-8400" y="4200">
@@ -85,16 +85,16 @@
 		</SubApp>
 		<SubApp Name="MAX_REF_LIT" Type="MyLib::sys::NumericValue_TO_AR2_OPC" x="-8400" y="6300">
 		</SubApp>
-		<FB Name="Button_C_MIN" Type="isobus::UT::io::Button::Button_IE" x="-8500" y="0">
+		<FB Name="Button_C_MIN" Type="isobus::UT::io::Button::Button_IE" x="-8400" y="0">
 			<Parameter Name="InputEvent" Value="BT_PRESSED_LATCHED"/>
 		</FB>
-		<FB Name="Button_C_MID" Type="isobus::UT::io::Button::Button_IE" x="-11900" y="1500">
+		<FB Name="Button_C_MID" Type="isobus::UT::io::Button::Button_IE" x="-11800" y="1500">
 			<Parameter Name="InputEvent" Value="BT_PRESSED_LATCHED"/>
 		</FB>
 		<FB Name="Button_C_MAX" Type="isobus::UT::io::Button::Button_IE" x="-11900" y="3300">
 			<Parameter Name="InputEvent" Value="BT_PRESSED_LATCHED"/>
 		</FB>
-		<FB Name="AX_SUBSCRIBE_MIN" Type="adapter::net::AX_SUBSCRIBE_1" x="-10300" y="900">
+		<FB Name="AX_SUBSCRIBE_MIN" Type="adapter::net::AX_SUBSCRIBE_1" x="-10200" y="900">
 		</FB>
 		<FB Name="AX_RF_TRIG_MIN" Type="adapter::events::unidirectional::AX_RF_TRIG" x="-6600" y="1000">
 		</FB>
@@ -155,7 +155,7 @@
 		<FB Name="AND_QO" Type="iec61131::booleanOperators::AND_BOOL_21" x="8700" y="1700">
 		</FB>
 		<EventConnections>
-			<Connection Source="INIT" Destination="Q_NumericValue_RAW.INIT" dx1="80" dx2="80" dy="-1466.67"/>
+			<Connection Source="INIT" Destination="Q_NumericValue_RAW.INIT" dx1="6426.67"/>
 			<Connection Source="Q_NumericValue_RAW.INITO" Destination="Q_NumericValue_CAL.INIT" dx1="3633.33"/>
 			<Connection Source="Q_NumericValue_CAL.INITO" Destination="MIN_REF_LIT.INIT" dx1="80" dx2="80" dy="2300"/>
 			<Connection Source="MIN_REF_LIT.INITO" Destination="MID_REF_LIT.INIT" dx1="80" dx2="80" dy="446.67"/>
@@ -284,29 +284,71 @@
 			<Connection Source="ID_MAXREF_WRITE" Destination="MAX_REF_LIT.ID_WRITE" dx1="1400">
 				<Attribute Name="Visible" Value="false"/>
 			</Connection>
-			<Connection Source="QI" Destination="Q_NumericValue_RAW.QI" dx1="80" dx2="80" dy="-1360"/>
-			<Connection Source="QI" Destination="Q_NumericValue_CAL.QI" dx1="2626.67"/>
+			<Connection Source="QI" Destination="Q_NumericValue_RAW.QI" dx1="6426.67">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="QI" Destination="Q_NumericValue_CAL.QI" dx1="2626.67">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
 			<Connection Source="Q_NumericValue_RAW.QO" Destination="AND_QO.IN1" dx1="480"/>
 			<Connection Source="Q_NumericValue_CAL.QO" Destination="AND_QO.IN2" dx1="280"/>
-			<Connection Source="QI" Destination="AD_SUBSCRIBE_RAW.QI" dx1="80" dx2="80" dy="-1360"/>
-			<Connection Source="QI" Destination="CALIBRATE.QI" dx1="80" dx2="80" dy="-300"/>
-			<Connection Source="QI" Destination="Button_C_MIN.QI" dx1="80" dx2="80" dy="-453.33"/>
-			<Connection Source="QI" Destination="Button_C_MID.QI" dx1="80" dx2="80" dy="293.33"/>
-			<Connection Source="QI" Destination="Button_C_MAX.QI" dx1="80" dx2="80" dy="1193.33"/>
-			<Connection Source="QI" Destination="AX_SUBSCRIBE_MIN.QI" dx1="80" dx2="80" dy="-60"/>
-			<Connection Source="QI" Destination="AX_SUBSCRIBE_MID.QI" dx1="80" dx2="80" dy="740"/>
-			<Connection Source="QI" Destination="SERVER_MID_TRIGGER.QI" dx1="80" dx2="80" dy="886.67"/>
-			<Connection Source="QI" Destination="AX_SUBSCRIBE_MAX.QI" dx1="80" dx2="80" dy="1686.67"/>
-			<Connection Source="QI" Destination="INI_X_MIN.QI" dx1="1173.33"/>
-			<Connection Source="QI" Destination="INI_X_MID.QI" dx1="2073.33"/>
-			<Connection Source="QI" Destination="INI_X_MAX.QI" dx1="1173.33"/>
-			<Connection Source="QI" Destination="INI_MIN_REF.QI" dx1="2073.33"/>
-			<Connection Source="QI" Destination="INI_MID_REF.QI" dx1="1173.33"/>
-			<Connection Source="QI" Destination="INI_MAX_REF.QI" dx1="2073.33"/>
-			<Connection Source="QI" Destination="AR_PUBLISH_CAL.QI" dx1="1873.33"/>
-			<Connection Source="QI" Destination="MIN_REF_LIT.QI" dx1="80" dx2="80" dy="1533.33"/>
-			<Connection Source="QI" Destination="MID_REF_LIT.QI" dx1="3273.33"/>
-			<Connection Source="QI" Destination="MAX_REF_LIT.QI" dx1="3273.33"/>
+			<Connection Source="QI" Destination="AD_SUBSCRIBE_RAW.QI" dx1="2926.67">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="QI" Destination="CALIBRATE.QI" dx1="7426.67">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="QI" Destination="Button_C_MIN.QI" dx1="3273.33">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="QI" Destination="Button_C_MID.QI" dx1="1573.33">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="QI" Destination="Button_C_MAX.QI" dx1="1526.67">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="QI" Destination="AX_SUBSCRIBE_MIN.QI" dx1="2373.33">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="QI" Destination="AX_SUBSCRIBE_MID.QI" dx1="80" dx2="80" dy="740">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="QI" Destination="SERVER_MID_TRIGGER.QI" dx1="80" dx2="80" dy="886.67">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="QI" Destination="AX_SUBSCRIBE_MAX.QI" dx1="1526.67">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="QI" Destination="INI_X_MIN.QI" dx1="1173.33">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="QI" Destination="INI_X_MID.QI" dx1="2073.33">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="QI" Destination="INI_X_MAX.QI" dx1="1173.33">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="QI" Destination="INI_MIN_REF.QI" dx1="2073.33">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="QI" Destination="INI_MID_REF.QI" dx1="1173.33">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="QI" Destination="INI_MAX_REF.QI" dx1="2073.33">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="QI" Destination="AR_PUBLISH_CAL.QI" dx1="1873.33">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="QI" Destination="MIN_REF_LIT.QI" dx1="80" dx2="80" dy="1533.33">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="QI" Destination="MID_REF_LIT.QI" dx1="3273.33">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="QI" Destination="MAX_REF_LIT.QI" dx1="3273.33">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
 			<Connection Source="MIN_REF_LIT.QO" Destination="AND_QO.IN3" dx1="7466.67"/>
 			<Connection Source="MID_REF_LIT.QO" Destination="AND_QO.IN4" dx1="7466.67"/>
 			<Connection Source="MAX_REF_LIT.QO" Destination="AND_QO.IN5" dx1="7466.67"/>
