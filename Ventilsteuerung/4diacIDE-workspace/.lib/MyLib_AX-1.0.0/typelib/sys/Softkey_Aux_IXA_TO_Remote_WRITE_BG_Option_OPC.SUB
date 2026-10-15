@@ -27,7 +27,7 @@
 	<SubAppNetwork>
 		<SubApp Name="Command" Type="MyLib::sys::Softkey_Aux_IXA_TO_Remote_WRITE_Option" x="0" y="700">
 		</SubApp>
-		<SubApp Name="Status" Type="MyLib::sys::AX_SUBSCRIBE_BG3_WEB_Option_OPC" x="3300" y="200">
+		<SubApp Name="Status" Type="MyLib::sys::AX_SUBSCRIBE_BG3_WEB_Option_OPC" x="3200" y="700">
 		</SubApp>
 		<DataConnections>
 			<Connection Source="u16ObjId" Destination="Command.u16ObjId" dx1="366.67">
@@ -56,9 +56,9 @@
 			</Connection>
 		</DataConnections>
 		<AdapterConnections>
-			<Connection Source="AOption_IN" Destination="Command.AOption_IN" dx1="366.67"/>
-			<Connection Source="Command.AOption_OUT" Destination="Status.AOption_IN" dx1="566.67"/>
+			<Connection Source="Command.AOption_OUT" Destination="Status.AOption_IN"/>
 			<Connection Source="Status.AOption_OUT" Destination="AOption_OUT" dx1="600"/>
+			<Connection Source="AOption_IN" Destination="Command.AOption_IN" dx1="2280"/>
 		</AdapterConnections>
 	</SubAppNetwork>
 </SubAppType>
