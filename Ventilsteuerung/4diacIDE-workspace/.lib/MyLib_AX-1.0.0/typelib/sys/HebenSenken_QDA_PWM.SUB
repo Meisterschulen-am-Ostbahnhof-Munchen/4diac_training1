@@ -17,6 +17,14 @@
 		<Import declaration="MyLib::sys::const::PWM_Konstanten::PWM_13BIT_SKALIERUNG"/>
 	</CompilerInfo>
 	<SubAppInterfaceList>
+		<SubAppEventInputs>
+			<SubAppEvent Name="INIT" Type="EInit" Comment="Initialisierung - vom Aufrufer sequenziert statt per Auto-Verteilung, damit QI vor der physischen Kanalbindung feststeht">
+			</SubAppEvent>
+		</SubAppEventInputs>
+		<SubAppEventOutputs>
+			<SubAppEvent Name="INITO" Type="EInit" Comment="Initialisierung abgeschlossen - echtes Confirm von DigitalOutput_PWM.INITO">
+			</SubAppEvent>
+		</SubAppEventOutputs>
 		<InputVars>
 			<VarDeclaration Name="Output_PWM" Type="logiBUS::io::DQ::logiBUS_DO_S" Comment="Physischer PWM-Ausgang: 25/50/75% Tastgrad, ratiometrisch" InitialValue="logiBUS_DO::Invalid"/>
 			<VarDeclaration Name="FACTOR_75" Type="REAL" Comment="Multimeter-kalibrierter Korrekturfaktor auf die nominelle OUT_75-Spanne (25.0), durchgereicht an values_50_75_25.FACTOR_75 - siehe MyLib::sys::const::PWM_Konstanten::VALUES_50_75_25_FACTOR_75" InitialValue="REAL#1.0"/>
@@ -26,12 +34,6 @@
 		<OutputVars>
 			<VarDeclaration Name="QO" Type="BOOL" Comment="Quality Output - TRUE if service executed successfully"/>
 		</OutputVars>
-		<SubAppEventInputs>
-			<SubAppEvent Name="INIT" Type="EInit" Comment="Initialisierung - vom Aufrufer sequenziert statt per Auto-Verteilung, damit QI vor der physischen Kanalbindung feststeht"/>
-		</SubAppEventInputs>
-		<SubAppEventOutputs>
-			<SubAppEvent Name="INITO" Type="EInit" Comment="Initialisierung abgeschlossen - echtes Confirm von DigitalOutput_PWM.INITO"/>
-		</SubAppEventOutputs>
 		<Sockets>
 			<AdapterDeclaration Name="HEBEN" Type="adapter::types::unidirectional::AX" Comment="TRUE waehlt OUT_75 (Heben) - dauerhaft FALSE verdrahten, wenn nicht gebraucht"/>
 			<AdapterDeclaration Name="SENKEN" Type="adapter::types::unidirectional::AX" Comment="TRUE waehlt OUT_25 (Senken) - dauerhaft FALSE verdrahten, wenn nicht gebraucht"/>
@@ -58,8 +60,10 @@
 		<FB Name="DigitalOutput_PWM" Type="logiBUS::io::DQ::logiBUS_QDA_PWM" x="600" y="1700">
 		</FB>
 		<EventConnections>
-			<Connection Source="INIT" Destination="DigitalOutput_PWM.INIT"/>
-			<Connection Source="DigitalOutput_PWM.INITO" Destination="INITO" dx2="80" dy="-420"/>
+			<Connection Source="INIT" Destination="DigitalOutput_PWM.INIT" dx1="4080">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="DigitalOutput_PWM.INITO" Destination="INITO" dx1="2906.67"/>
 		</EventConnections>
 		<DataConnections>
 			<Connection Source="Output_PWM" Destination="DigitalOutput_PWM.Output" dx1="6913.33">
@@ -68,7 +72,7 @@
 			<Connection Source="QI" Destination="DigitalOutput_PWM.QI" dx1="6913.33">
 				<Attribute Name="Visible" Value="false"/>
 			</Connection>
-			<Connection Source="DigitalOutput_PWM.QO" Destination="QO"/>
+			<Connection Source="DigitalOutput_PWM.QO" Destination="QO" dx1="3240"/>
 			<Connection Source="FACTOR_75" Destination="values_50_75_25.FACTOR_75" dx1="1980">
 				<Attribute Name="Visible" Value="false"/>
 			</Connection>

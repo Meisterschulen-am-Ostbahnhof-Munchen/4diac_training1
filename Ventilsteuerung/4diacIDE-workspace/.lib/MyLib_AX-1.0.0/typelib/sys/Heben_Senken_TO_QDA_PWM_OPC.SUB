@@ -17,6 +17,14 @@
 		<Import declaration="logiBUS::io::DQ::logiBUS_DO_S"/>
 	</CompilerInfo>
 	<SubAppInterfaceList>
+		<SubAppEventInputs>
+			<SubAppEvent Name="INIT" Type="EInit" Comment="Initialisierung - vom Aufrufer sequenziert statt per Auto-Verteilung, damit QI vor der physischen Kanalbindung feststeht">
+			</SubAppEvent>
+		</SubAppEventInputs>
+		<SubAppEventOutputs>
+			<SubAppEvent Name="INITO" Type="EInit" Comment="Initialisierung abgeschlossen - echtes Rendezvous-Confirm (E_REND_2) aus PWM_Mux.INITO UND DO_Toggle.INITO">
+			</SubAppEvent>
+		</SubAppEventOutputs>
 		<InputVars>
 			<VarDeclaration Name="Output_PWM" Type="logiBUS::io::DQ::logiBUS_DO_S" Comment="Physischer PWM-Ausgang (linker Kanal): 25/50/75% Tastgrad, ratiometrisch" InitialValue="logiBUS_DO::Invalid"/>
 			<VarDeclaration Name="Output_DO" Type="logiBUS::io::DQ::logiBUS_DO_S" Comment="Physischer Freigabe-Ausgang (rechter Kanal): Klick-Toggle, Default AN" InitialValue="logiBUS_DO::Invalid"/>
@@ -36,12 +44,6 @@
 		<OutputVars>
 			<VarDeclaration Name="QO" Type="BOOL" Comment="Quality Output - TRUE if service executed successfully (AND aus PWM_Mux/DO_Toggle)"/>
 		</OutputVars>
-		<SubAppEventInputs>
-			<SubAppEvent Name="INIT" Type="EInit" Comment="Initialisierung - vom Aufrufer sequenziert statt per Auto-Verteilung, damit QI vor der physischen Kanalbindung feststeht"/>
-		</SubAppEventInputs>
-		<SubAppEventOutputs>
-			<SubAppEvent Name="INITO" Type="EInit" Comment="Initialisierung abgeschlossen - echtes Rendezvous-Confirm (E_REND_2) aus PWM_Mux.INITO UND DO_Toggle.INITO"/>
-		</SubAppEventOutputs>
 		<Sockets>
 			<AdapterDeclaration Name="PWM_POW" Type="adapter::types::unidirectional::AR" Comment="PWM Power 1.0 = Maximale Power, 0.0 = Aus, 0.5 = Halb - durchgereicht an PWM_Mux.PWM_POW"/>
 		</Sockets>
@@ -51,18 +53,15 @@
 		</SubApp>
 		<SubApp Name="DO_Toggle" Type="MyLib::sys::DO_TOGGLE_RPC_QXA_OPC" x="2100" y="600">
 		</SubApp>
-		<FB Name="E_REND_2_INITO" Type="iec61499::events::E_REND_2" Comment="Wartet auf PWM_Mux.INITO UND DO_Toggle.INITO (2 unabhaengige physische Kanaele), bevor INITO genau 1x feuert - von INIT fuer jeden neuen Init-Zyklus zurueckgesetzt" x="4800" y="1200">
-		</FB>
-		<FB Name="AND_QO" Type="iec61131::booleanOperators::AND_BOOL_2" x="4800" y="2000">
+		<FB Name="AND_QO" Type="iec61131::booleanOperators::AND_BOOL_2" x="8200" y="1400">
 		</FB>
 		<EventConnections>
-			<Connection Source="INIT" Destination="PWM_Mux.INIT" dx1="1833.33"/>
 			<Connection Source="INIT" Destination="DO_Toggle.INIT" dx1="3686.67"/>
-			<Connection Source="INIT" Destination="E_REND_2_INITO.R" dx1="1833.33"/>
-			<Connection Source="PWM_Mux.INITO" Destination="E_REND_2_INITO.EI1" dx1="80" dx2="80" dy="-420"/>
-			<Connection Source="DO_Toggle.INITO" Destination="E_REND_2_INITO.EI2" dx1="80" dx2="80" dy="-420"/>
-			<Connection Source="E_REND_2_INITO.EO" Destination="INITO" dx1="600"/>
-			<Connection Source="E_REND_2_INITO.EO" Destination="AND_QO.REQ"/>
+			<Connection Source="PWM_Mux.INITO" Destination="INITO" dx1="600"/>
+			<Connection Source="PWM_Mux.INITO" Destination="AND_QO.REQ" dx1="1366.67">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="DO_Toggle.INITO" Destination="PWM_Mux.INIT" dx1="520" dx2="80" dy="706.67"/>
 		</EventConnections>
 		<DataConnections>
 			<Connection Source="ID_HEBEN_READ" Destination="PWM_Mux.ID_HEBEN_READ" dx1="280">
@@ -110,9 +109,13 @@
 			<Connection Source="QI" Destination="DO_Toggle.QI" dx1="1786.67">
 				<Attribute Name="Visible" Value="false"/>
 			</Connection>
-			<Connection Source="PWM_Mux.QO" Destination="AND_QO.IN1"/>
-			<Connection Source="DO_Toggle.QO" Destination="AND_QO.IN2"/>
-			<Connection Source="AND_QO.OUT" Destination="QO"/>
+			<Connection Source="PWM_Mux.QO" Destination="AND_QO.IN1" dx1="580">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="DO_Toggle.QO" Destination="AND_QO.IN2" dx1="713.33">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="AND_QO.OUT" Destination="QO" dx1="5060"/>
 		</DataConnections>
 		<AdapterConnections>
 			<Connection Source="PWM_POW" Destination="PWM_Mux.PWM_POW" dx1="600"/>

@@ -23,6 +23,14 @@
 		<Import declaration="MyLib::sys::const::PWM_Konstanten::VALUES_50_75_25_FACTOR_25"/>
 	</CompilerInfo>
 	<SubAppInterfaceList>
+		<SubAppEventInputs>
+			<SubAppEvent Name="INIT" Type="EInit" Comment="Initialisierung - vom Aufrufer sequenziert statt per Auto-Verteilung, damit QI vor der physischen Kanalbindung feststeht">
+			</SubAppEvent>
+		</SubAppEventInputs>
+		<SubAppEventOutputs>
+			<SubAppEvent Name="INITO" Type="EInit" Comment="Initialisierung abgeschlossen - echtes Confirm von PWM_Mux.INITO">
+			</SubAppEvent>
+		</SubAppEventOutputs>
 		<InputVars>
 			<VarDeclaration Name="Output_PWM" Type="logiBUS::io::DQ::logiBUS_DO_S" Comment="Physischer PWM-Ausgang: 25/50/75% Tastgrad, ratiometrisch" InitialValue="logiBUS_DO::Invalid"/>
 			<VarDeclaration Name="DT_PROTECT" Type="TIME" Comment="Schutz-Totzeit vor Richtungswechsel" InitialValue="T#300ms"/>
@@ -39,12 +47,6 @@
 		<OutputVars>
 			<VarDeclaration Name="QO" Type="BOOL" Comment="Quality Output - TRUE if service executed successfully (AND aller Subscribe/Publish/PWM_Mux-Instanzen)"/>
 		</OutputVars>
-		<SubAppEventInputs>
-			<SubAppEvent Name="INIT" Type="EInit" Comment="Initialisierung - vom Aufrufer sequenziert statt per Auto-Verteilung, damit QI vor der physischen Kanalbindung feststeht"/>
-		</SubAppEventInputs>
-		<SubAppEventOutputs>
-			<SubAppEvent Name="INITO" Type="EInit" Comment="Initialisierung abgeschlossen - echtes Confirm von PWM_Mux.INITO"/>
-		</SubAppEventOutputs>
 		<Sockets>
 			<AdapterDeclaration Name="PWM_POW" Type="adapter::types::unidirectional::AR" Comment="PWM Power 1.0 = Maximale Power, 0.0 = Aus, 0.5 = Halb - durchgereicht an values_50_75_25.PWM_POW"/>
 		</Sockets>
@@ -78,24 +80,26 @@
 		</FB>
 		<FB Name="PUBLISH_STATE_SENKEN" Type="adapter::net::AX_PUBLISH_1" x="-5500" y="700">
 		</FB>
-		<SubApp Name="PWM_Mux" Type="MyLib::sys::HebenSenken_QDA_PWM" Comment="Mux/Skalierungs/Ausgabe-Teil (ASSEMBLE_AB_FROM_AX/AB_TO_AUI/values_50_75_25/AR_AUI_MUX_3/AR_R_MUL_Korrektur/AR_R_MUL_PWM13BIT/AR_TO_AD_NUM/DigitalOutput_PWM) ausgelagert - ILOCK_SWITCH_PROTECT_AX (Last-Wins mit Schutzzeit DT_PROTECT) sorgt weiterhin dafuer, dass HEBEN/SENKEN nie gleichzeitig aktiv sind." x="-4600" y="-1100">
+		<SubApp Name="PWM_Mux" Type="MyLib::sys::HebenSenken_QDA_PWM" Comment="Mux/Skalierungs/Ausgabe-Teil (ASSEMBLE_AB_FROM_AX/AB_TO_AUI/values_50_75_25/AR_AUI_MUX_3/AR_R_MUL_Korrektur/AR_R_MUL_PWM13BIT/AR_TO_AD_NUM/DigitalOutput_PWM) ausgelagert - ILOCK_SWITCH_PROTECT_AX (Last-Wins mit Schutzzeit DT_PROTECT) sorgt weiterhin dafuer, dass HEBEN/SENKEN nie gleichzeitig aktiv sind." x="-3900" y="-1400">
 			<Parameter Name="FACTOR_75" Value="VALUES_50_75_25_FACTOR_75"/>
 			<Parameter Name="FACTOR_25" Value="VALUES_50_75_25_FACTOR_25"/>
 		</SubApp>
-		<FB Name="AND_QO" Type="iec61131::booleanOperators::AND_BOOL_9" x="-4600" y="2000">
+		<FB Name="AND_QO" Type="iec61131::booleanOperators::AND_BOOL_9" x="1400" y="-900">
 		</FB>
 		<EventConnections>
-			<Connection Source="INIT" Destination="SUBSCRIBE_HEBEN.INIT"/>
-			<Connection Source="SUBSCRIBE_HEBEN.INITO" Destination="SUBSCRIBE_TEST_HEBEN.INIT"/>
-			<Connection Source="SUBSCRIBE_TEST_HEBEN.INITO" Destination="SUBSCRIBE_SENKEN.INIT"/>
-			<Connection Source="SUBSCRIBE_SENKEN.INITO" Destination="SUBSCRIBE_TEST_SENKEN.INIT"/>
-			<Connection Source="SUBSCRIBE_TEST_SENKEN.INITO" Destination="PUBLISH_TEST_HEBEN.INIT"/>
-			<Connection Source="PUBLISH_TEST_HEBEN.INITO" Destination="PUBLISH_STATE_HEBEN.INIT"/>
-			<Connection Source="PUBLISH_STATE_HEBEN.INITO" Destination="PUBLISH_TEST_SENKEN.INIT"/>
-			<Connection Source="PUBLISH_TEST_SENKEN.INITO" Destination="PUBLISH_STATE_SENKEN.INIT"/>
-			<Connection Source="PUBLISH_STATE_SENKEN.INITO" Destination="PWM_Mux.INIT"/>
-			<Connection Source="PWM_Mux.INITO" Destination="INITO" dx2="80" dy="-420"/>
-			<Connection Source="PWM_Mux.INITO" Destination="AND_QO.REQ"/>
+			<Connection Source="INIT" Destination="SUBSCRIBE_HEBEN.INIT" dx1="2526.67"/>
+			<Connection Source="SUBSCRIBE_HEBEN.INITO" Destination="SUBSCRIBE_TEST_HEBEN.INIT" dx1="80" dx2="80" dy="640"/>
+			<Connection Source="SUBSCRIBE_TEST_HEBEN.INITO" Destination="SUBSCRIBE_SENKEN.INIT" dx1="80" dx2="80" dy="666.67"/>
+			<Connection Source="SUBSCRIBE_SENKEN.INITO" Destination="SUBSCRIBE_TEST_SENKEN.INIT" dx1="80" dx2="80" dy="606.67"/>
+			<Connection Source="SUBSCRIBE_TEST_SENKEN.INITO" Destination="PUBLISH_STATE_HEBEN.INIT" dx1="3520"/>
+			<Connection Source="PUBLISH_TEST_HEBEN.INITO" Destination="PUBLISH_TEST_SENKEN.INIT" dx1="80" dx2="80" dy="1346.67"/>
+			<Connection Source="PUBLISH_TEST_SENKEN.INITO" Destination="PUBLISH_STATE_SENKEN.INIT" dx1="80" dx2="80" dy="620"/>
+			<Connection Source="PUBLISH_STATE_SENKEN.INITO" Destination="PWM_Mux.INIT" dx1="300"/>
+			<Connection Source="PWM_Mux.INITO" Destination="INITO" dx1="7646.67"/>
+			<Connection Source="PWM_Mux.INITO" Destination="AND_QO.REQ" dx1="1060">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="PUBLISH_STATE_HEBEN.INITO" Destination="PUBLISH_TEST_HEBEN.INIT" dx1="80" dx2="80" dy="620"/>
 		</EventConnections>
 		<DataConnections>
 			<Connection Source="ID_HEBEN_READ" Destination="SUBSCRIBE_HEBEN.ID" dx1="280">
@@ -131,24 +135,58 @@
 			<Connection Source="QI" Destination="PWM_Mux.QI" dx1="6913.33">
 				<Attribute Name="Visible" Value="false"/>
 			</Connection>
-			<Connection Source="QI" Destination="SUBSCRIBE_HEBEN.QI"/>
-			<Connection Source="QI" Destination="SUBSCRIBE_TEST_HEBEN.QI"/>
-			<Connection Source="QI" Destination="SUBSCRIBE_SENKEN.QI"/>
-			<Connection Source="QI" Destination="SUBSCRIBE_TEST_SENKEN.QI"/>
-			<Connection Source="QI" Destination="PUBLISH_TEST_HEBEN.QI"/>
-			<Connection Source="QI" Destination="PUBLISH_STATE_HEBEN.QI"/>
-			<Connection Source="QI" Destination="PUBLISH_TEST_SENKEN.QI"/>
-			<Connection Source="QI" Destination="PUBLISH_STATE_SENKEN.QI"/>
-			<Connection Source="SUBSCRIBE_HEBEN.QO" Destination="AND_QO.IN1"/>
-			<Connection Source="SUBSCRIBE_TEST_HEBEN.QO" Destination="AND_QO.IN2"/>
-			<Connection Source="SUBSCRIBE_SENKEN.QO" Destination="AND_QO.IN3"/>
-			<Connection Source="SUBSCRIBE_TEST_SENKEN.QO" Destination="AND_QO.IN4"/>
-			<Connection Source="PUBLISH_TEST_HEBEN.QO" Destination="AND_QO.IN5"/>
-			<Connection Source="PUBLISH_STATE_HEBEN.QO" Destination="AND_QO.IN6"/>
-			<Connection Source="PUBLISH_TEST_SENKEN.QO" Destination="AND_QO.IN7"/>
-			<Connection Source="PUBLISH_STATE_SENKEN.QO" Destination="AND_QO.IN8"/>
-			<Connection Source="PWM_Mux.QO" Destination="AND_QO.IN9"/>
-			<Connection Source="AND_QO.OUT" Destination="QO"/>
+			<Connection Source="QI" Destination="SUBSCRIBE_HEBEN.QI" dx1="2526.67">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="QI" Destination="SUBSCRIBE_TEST_HEBEN.QI" dx1="2526.67">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="QI" Destination="SUBSCRIBE_SENKEN.QI" dx1="2526.67">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="QI" Destination="SUBSCRIBE_TEST_SENKEN.QI" dx1="2540">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="QI" Destination="PUBLISH_TEST_HEBEN.QI" dx1="6180">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="QI" Destination="PUBLISH_STATE_HEBEN.QI" dx1="6186.67">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="QI" Destination="PUBLISH_TEST_SENKEN.QI" dx1="6140">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="QI" Destination="PUBLISH_STATE_SENKEN.QI" dx1="6153.33">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="SUBSCRIBE_HEBEN.QO" Destination="AND_QO.IN1" dx1="3480">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="SUBSCRIBE_TEST_HEBEN.QO" Destination="AND_QO.IN2" dx1="3480">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="SUBSCRIBE_SENKEN.QO" Destination="AND_QO.IN3" dx1="3480">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="SUBSCRIBE_TEST_SENKEN.QO" Destination="AND_QO.IN4" dx1="3466.67">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="PUBLISH_TEST_HEBEN.QO" Destination="AND_QO.IN5" dx1="1966.67">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="PUBLISH_STATE_HEBEN.QO" Destination="AND_QO.IN6" dx1="1960">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="PUBLISH_TEST_SENKEN.QO" Destination="AND_QO.IN7" dx1="2013.33">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="PUBLISH_STATE_SENKEN.QO" Destination="AND_QO.IN8" dx1="2000">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="PWM_Mux.QO" Destination="AND_QO.IN9" dx1="1060">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="AND_QO.OUT" Destination="QO" dx1="4766.67"/>
 		</DataConnections>
 		<AdapterConnections>
 			<Connection Source="SUBSCRIBE_HEBEN.OUT" Destination="OR_HEBEN.IN1" dx1="280"/>
