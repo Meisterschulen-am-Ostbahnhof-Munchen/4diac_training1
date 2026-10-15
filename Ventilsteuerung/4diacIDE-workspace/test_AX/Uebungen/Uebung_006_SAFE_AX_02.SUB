@@ -48,7 +48,7 @@
 			<Parameter Name="PARAMS" Value="">
 				<Attribute Name="Visible" Value="false"/>
 			</Parameter>
-			<Parameter Name="Input" Value="Input_I8"/>
+			<Parameter Name="Input" Value="Input_I7"/>
 			<Parameter Name="QO" Value="">
 				<Attribute Name="Visible" Value="false"/>
 			</Parameter>
@@ -60,7 +60,7 @@
 			<Parameter Name="PARAMS" Value="">
 				<Attribute Name="Visible" Value="false"/>
 			</Parameter>
-			<Parameter Name="Input" Value="Input_I7"/>
+			<Parameter Name="Input" Value="Input_I8"/>
 			<Parameter Name="QO" Value="">
 				<Attribute Name="Visible" Value="false"/>
 			</Parameter>
@@ -90,9 +90,9 @@
 				<Attribute Name="Visible" Value="false"/>
 			</Parameter>
 		</FB>
-		<FB Name="INIT" Type="iec61131::booleanOperators::INIT" x="-8400" y="3000">
+		<FB Name="INIT" Type="iec61131::booleanOperators::INIT" x="-6500" y="-600">
 		</FB>
-		<FB Name="Cycle" Type="iec61499::events::E_CYCLE" Comment="Zyklische Auswertung von SF_EmergencyStop und SF_ResetButton" x="-7300" y="3000">
+		<FB Name="Cycle" Type="iec61499::events::E_CYCLE" Comment="Zyklische Auswertung von SF_EmergencyStop und SF_ResetButton" x="-5400" y="-600">
 			<Parameter Name="DT" Value="T#20ms"/>
 		</FB>
 		<FB Name="minTimeOut" Type="iec61499::events::E_TimeOut" x="-2000" y="4100">
@@ -106,8 +106,12 @@
 			<Connection Source="EStopFeedback.IND" Destination="MainSR.R" dx1="1960"/>
 			<Connection Source="INIT.INITO" Destination="INIT.REQ" dx1="80" dx2="80" dy="53.33"/>
 			<Connection Source="INIT.CNF" Destination="Cycle.START" dx1="220"/>
-			<Connection Source="Cycle.EO" Destination="EmergencyStop.REQ" dx1="200"/>
-			<Connection Source="Cycle.EO" Destination="ResetButton.REQ" dx1="200"/>
+			<Connection Source="Cycle.EO" Destination="EmergencyStop.REQ" dx1="200">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="Cycle.EO" Destination="ResetButton.REQ" dx1="340">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
 			<Connection Source="ResetButton.EResetOut" Destination="EmergencyStop.EReset" dx1="200"/>
 		</EventConnections>
 		<DataConnections>

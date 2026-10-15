@@ -37,13 +37,13 @@
 		</Sockets>
 	</SubAppInterfaceList>
 	<SubAppNetwork>
-		<SubApp Name="Command" Type="MyLib::sys::Softkey_Aux_IXA_TO_Remote_WRITE_Option" x="0" y="0">
+		<SubApp Name="Command" Type="MyLib::sys::Softkey_Aux_IXA_TO_Remote_WRITE_Option" x="0" y="700">
 		</SubApp>
-		<SubApp Name="Status" Type="MyLib::sys::AX_SUBSCRIBE_BG3_WEB_Option_OPC" x="3200" y="0">
+		<SubApp Name="Status" Type="MyLib::sys::AX_SUBSCRIBE_BG3_WEB_Option_OPC" x="3300" y="200">
 		</SubApp>
 		<EventConnections>
-			<Connection Source="INIT" Destination="Status.INIT"/>
-			<Connection Source="Status.INITO" Destination="INITO"/>
+			<Connection Source="INIT" Destination="Status.INIT" dx1="1213.33"/>
+			<Connection Source="Status.INITO" Destination="INITO" dx1="5193.33"/>
 		</EventConnections>
 		<DataConnections>
 			<Connection Source="u16ObjId" Destination="Command.u16ObjId" dx1="366.67">
@@ -70,12 +70,12 @@
 			<Connection Source="ID_STATUS_WEB" Destination="Status.ID_STATUS_WEB" dx1="366.67">
 				<Attribute Name="Visible" Value="false"/>
 			</Connection>
-			<Connection Source="QI" Destination="Status.QI"/>
-			<Connection Source="Status.QO" Destination="QO"/>
+			<Connection Source="QI" Destination="Status.QI" dx1="1213.33"/>
+			<Connection Source="Status.QO" Destination="QO" dx1="5193.33"/>
 		</DataConnections>
 		<AdapterConnections>
 			<Connection Source="OPTION" Destination="Command.OPTION" dx1="366.67"/>
-			<Connection Source="Command.PLUG1" Destination="Status.OPTION"/>
+			<Connection Source="Command.PLUG1" Destination="Status.OPTION" dx1="566.67"/>
 			<Connection Source="Status.PLUG1" Destination="PLUG1" dx1="600"/>
 		</AdapterConnections>
 	</SubAppNetwork>
