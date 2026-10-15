@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SubAppType Name="Uebung_094d_AX" Comment="OptionalGroup_001 OHNE DEMUX: die Gruppe ist immer aktiv, kein K/Index noetig - E_RESTART (COLD/WARM) loest einmalig INIT_REQ mit konstantem QI_OUT=TRUE aus, statt dass ein AOption_AUI_DEMUX_N je nach K einen von mehreren OUTx-Anschluessen waehlt.">
+	<Identification Standard="61499-2" Description="Copyright (c) 2026 Meisterschulen am Ostbahnhof  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0">
+	</Identification>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2026-10-15" Remarks="initial API and implementation and/or initial documentation">
+	</VersionInfo>
+	<CompilerInfo packageName="Uebungen">
+	</CompilerInfo>
+	<SubAppInterfaceList>
+	</SubAppInterfaceList>
+	<SubAppNetwork>
+		<FB Name="AOption_EVENT_TO_X" Type="Option::conversion::AOption_EVENT_TO_X" x="-3200" y="0">
+			<Parameter Name="QI_OUT" Value="TRUE"/>
+		</FB>
+		<SubApp Name="OptionalGroup_001" Type="MyLib_AX_Option::sys::OptionalGroup_001" x="-700" y="200">
+		</SubApp>
+		<AdapterConnections>
+			<Connection Source="AOption_EVENT_TO_X.AOption_OUT" Destination="OptionalGroup_001.OPTION" dx1="866.67"/>
+		</AdapterConnections>
+	</SubAppNetwork>
+</SubAppType>
