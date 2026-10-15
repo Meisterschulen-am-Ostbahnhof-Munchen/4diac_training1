@@ -15,9 +15,7 @@
 		</Plugs>
 	</SubAppInterfaceList>
 	<SubAppNetwork>
-		<FB Name="AD_TO_AUDI" Type="adapter::conversion::unidirectional::AD_TO_AUDI" x="0" y="0">
-		</FB>
-		<FB Name="AUDI_TO_AR" Type="adapter::conversion::unidirectional::AUDI_TO_AR" x="1200" y="0">
+		<FB Name="AD_TO_AR_NUM" Type="adapter::conversion::unidirectional::AD_TO_AR_NUM" x="1200" y="0">
 		</FB>
 		<FB Name="INITVAL_SCALE" Type="adapter::types::unidirectional::AR::initval::initval_AR" x="1200" y="900">
 			<Parameter Name="INIT_VAL" Value="REAL#0.0244200244"/>
@@ -25,9 +23,8 @@
 		<FB Name="AR_MUL_PERCENT" Type="adapter::iec61131::arithmetic::AR_MUL_2" x="2400" y="0">
 		</FB>
 		<AdapterConnections>
-			<Connection Source="RAW_IN" Destination="AD_TO_AUDI.AD_IN" dx1="420"/>
-			<Connection Source="AD_TO_AUDI.AUDI_OUT" Destination="AUDI_TO_AR.AUDI_IN" dx1="420"/>
-			<Connection Source="AUDI_TO_AR.AR_OUT" Destination="AR_MUL_PERCENT.IN1" dx1="420"/>
+			<Connection Source="RAW_IN" Destination="AD_TO_AR_NUM.AD_IN" dx1="420"/>
+			<Connection Source="AD_TO_AR_NUM.AR_OUT" Destination="AR_MUL_PERCENT.IN1" dx1="420"/>
 			<Connection Source="INITVAL_SCALE.OUT" Destination="AR_MUL_PERCENT.IN2" dx1="420"/>
 			<Connection Source="AR_MUL_PERCENT.OUT" Destination="PERCENT_OUT" dx1="420"/>
 		</AdapterConnections>
