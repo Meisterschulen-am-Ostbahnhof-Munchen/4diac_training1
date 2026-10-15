@@ -2,6 +2,8 @@
 <SubAppType Name="Heben_Senken_TO_QDA_PWM_OPC" Comment="2 Remote-Kommandos (Heben/Senken, je Subscribe+State-Publish, ODER-verknuepft&#10;mit IO-Test wie bei ILOCK_SWITCH_2_QXA_OPC) auf 1 ratiometrisches PWM-Signal&#10;(Danfoss PVEA: 25%=Senken, 50%=Neutral, 75%=Heben, Lastteiler-korrigiert) + 1&#10;Freigabe-DO als Klick-Toggle (AX_T_FF_INIT, Default AN, per RPC-Methode aus VT&#10;und Dashboard aus-/einschaltbar - Not-Bedienung, z.B. Strassenmodus). Generisch&#10;fuer jeden PVEA-Aktor mit 2 physischen Kanaelen (links=PWM, rechts=Freigabe),&#10;Bedienung von einem Modul ohne eigenes VT.">
 	<Identification Standard="61499-2">
 	</Identification>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.8" Author="Franz Höpfinger" Date="2026-10-15" Remarks="Kommentar-Korrektur (Franz: 'INIT Kette ueberall so machen, ein REND ist NICHT NOETIG'): FB-Netzwerk war bereits sequenziell (DO_Toggle.INITO -&gt; PWM_Mux.INIT, kein E_REND_2-FB vorhanden), aber der INITO-Comment beschrieb noch faelschlich ein Rendezvous aus der v1.7-Planung. Nur Dokumentation angepasst, keine funktionale Aenderung.">
+	</VersionInfo>
 	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.7" Author="Franz Höpfinger" Date="2026-10-13" Remarks="Neuer SubAppEventOutput INITO (Type EInit) fuer Aufnahme_Option.SUB (Option::AOption-Socket-Wrapper, analog Bunker_Klappen_Option.SUB) - PWM_Mux.INITO (HebenSenken_ILOCK_QDA_PWM_OPC v1.6) UND DO_Toggle.INITO (DO_TOGGLE_RPC_QXA_OPC v1.3) sind 2 echte, unabhaengige physische Kanal-Confirms (PWM-Kanal + Freigabe-DO-Kanal). E_REND_2 (Rendezvous/AND, nicht E_MERGE_2/OR) wartet auf BEIDE bevor INITO genau 1x feuert - ein nachgelagerter AOption-Socket (DEMUX Break-before-Make) erwartet pro Umschaltvorgang genau 1 INIT_CNF, ein doppeltes Feuern waere dort undefiniert. INIT selbst resettet E_REND_2 (R), damit jeder neue INIT-Zyklus wieder auf beide wartet.">
 	</VersionInfo>
 	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.6" Author="Franz Höpfinger" Date="2026-10-11" Remarks="Neuer SubAppEventInput INIT (Type EInit), durchgereicht an PWM_Mux.INIT (HebenSenken_ILOCK_QDA_PWM_OPC v1.5) UND DO_Toggle.INIT (DO_TOGGLE_RPC_QXA_OPC v1.2) statt Auto-Verteilung - analog ILOCK_SWITCH_2_QXA_OPC v1.2, 'Init wie bei Tecu' (Franz).">
@@ -22,7 +24,7 @@
 			</SubAppEvent>
 		</SubAppEventInputs>
 		<SubAppEventOutputs>
-			<SubAppEvent Name="INITO" Type="EInit" Comment="Initialisierung abgeschlossen - echtes Rendezvous-Confirm (E_REND_2) aus PWM_Mux.INITO UND DO_Toggle.INITO">
+			<SubAppEvent Name="INITO" Type="EInit" Comment="Initialisierung abgeschlossen - sequenzielles Confirm: DO_Toggle zuerst, dann PWM_Mux (kein Rendezvous noetig, beide sind reine physische Ausgangskanaele)">
 			</SubAppEvent>
 		</SubAppEventOutputs>
 		<InputVars>
