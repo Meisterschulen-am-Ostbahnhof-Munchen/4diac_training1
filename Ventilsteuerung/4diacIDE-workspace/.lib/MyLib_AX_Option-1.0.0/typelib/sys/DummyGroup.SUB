@@ -8,7 +8,7 @@
 	</CompilerInfo>
 	<SubAppInterfaceList>
 		<Sockets>
-			<AdapterDeclaration Name="OPTION" Type="Option::AOption"/>
+			<AdapterDeclaration Name="AOption_IN" Type="Option::AOption"/>
 		</Sockets>
 	</SubAppInterfaceList>
 	<SubAppNetwork>
@@ -18,7 +18,7 @@
 			<Connection Source="AOption_X_TO_EVENT.INIT_REQ" Destination="AOption_X_TO_EVENT.INIT_CNF" dx1="80" dx2="80" dy="-273.33"/>
 		</EventConnections>
 		<AdapterConnections>
-			<Connection Source="OPTION" Destination="AOption_X_TO_EVENT.AOption_IN" dx1="346.67"/>
+			<Connection Source="AOption_IN" Destination="AOption_X_TO_EVENT.AOption_IN" dx1="346.67"/>
 		</AdapterConnections>
 	</SubAppNetwork>
 </SubAppType>

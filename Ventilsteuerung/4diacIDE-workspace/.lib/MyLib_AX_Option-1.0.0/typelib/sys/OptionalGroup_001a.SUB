@@ -10,10 +10,10 @@
 	</CompilerInfo>
 	<SubAppInterfaceList>
 		<Plugs>
-			<AdapterDeclaration Name="PLUG1" Type="Option::AOption"/>
+			<AdapterDeclaration Name="AOption_OUT" Type="Option::AOption"/>
 		</Plugs>
 		<Sockets>
-			<AdapterDeclaration Name="OPTION" Type="Option::AOption"/>
+			<AdapterDeclaration Name="AOption_IN" Type="Option::AOption"/>
 		</Sockets>
 	</SubAppInterfaceList>
 	<SubAppNetwork>
@@ -44,8 +44,8 @@
 		</DataConnections>
 		<AdapterConnections>
 			<Connection Source="DigitalInput_I1.IN" Destination="DigitalOutput_Q1.OUT"/>
-			<Connection Source="OPTION" Destination="AOption_X_TO_EVENT.AOption_IN" dx1="346.67"/>
-			<Connection Source="AOption_EVENT_TO_X.AOption_OUT" Destination="PLUG1" dx1="900"/>
+			<Connection Source="AOption_IN" Destination="AOption_X_TO_EVENT.AOption_IN" dx1="346.67"/>
+			<Connection Source="AOption_EVENT_TO_X.AOption_OUT" Destination="AOption_OUT" dx1="900"/>
 		</AdapterConnections>
 	</SubAppNetwork>
 </SubAppType>

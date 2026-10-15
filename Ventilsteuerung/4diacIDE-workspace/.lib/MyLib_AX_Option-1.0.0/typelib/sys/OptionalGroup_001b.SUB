@@ -10,7 +10,7 @@
 	</CompilerInfo>
 	<SubAppInterfaceList>
 		<Sockets>
-			<AdapterDeclaration Name="OPTION" Type="Option::AOption"/>
+			<AdapterDeclaration Name="AOption_IN" Type="Option::AOption"/>
 		</Sockets>
 	</SubAppInterfaceList>
 	<SubAppNetwork>
@@ -37,7 +37,7 @@
 		</DataConnections>
 		<AdapterConnections>
 			<Connection Source="DigitalInput_I1.IN" Destination="DigitalOutput_Q1.OUT"/>
-			<Connection Source="OPTION" Destination="AOption_X_TO_EVENT.AOption_IN" dx1="346.67"/>
+			<Connection Source="AOption_IN" Destination="AOption_X_TO_EVENT.AOption_IN" dx1="346.67"/>
 		</AdapterConnections>
 	</SubAppNetwork>
 </SubAppType>

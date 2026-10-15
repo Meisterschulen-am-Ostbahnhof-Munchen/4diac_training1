@@ -15,11 +15,11 @@
 		</SubApp>
 		<FB Name="AOption_AUI_DEMUX_3" Type="Option::selection::AOption_AUI_DEMUX_3" x="-1500" y="600">
 		</FB>
-		<FB Name="AOption_T_2" Type="Option::splitting::AOption_T_2" x="400" y="800">
+		<FB Name="AOption_T_2" Type="Option::splitting::AOption_T_2" x="800" y="700">
 		</FB>
-		<SubApp Name="OptionalGroup_001" Type="MyLib_AX_Option::sys::OptionalGroup_001" x="2300" y="500">
+		<SubApp Name="OptionalGroup_001" Type="MyLib_AX_Option::sys::OptionalGroup_001" x="2600" y="700">
 		</SubApp>
-		<SubApp Name="OptionalGroup_001b" Type="MyLib_AX_Option::sys::OptionalGroup_001b" x="2300" y="1100">
+		<SubApp Name="OptionalGroup_001b" Type="MyLib_AX_Option::sys::OptionalGroup_001b" x="2600" y="1100">
 		</SubApp>
 		<SubApp Name="OptionalGroup_002" Type="MyLib_AX_Option::sys::OptionalGroup_002" x="1500" y="1800">
 		</SubApp>
@@ -28,10 +28,10 @@
 		<AdapterConnections>
 			<Connection Source="NumericValue_TO_AUI2_1.VALUEO" Destination="AOption_AUI_DEMUX_3.K" dx1="700"/>
 			<Connection Source="AOption_AUI_DEMUX_3.OUT2" Destination="AOption_T_2.IN" dx1="700"/>
-			<Connection Source="AOption_T_2.OUT2" Destination="OptionalGroup_001.OPTION" dx1="700"/>
-			<Connection Source="AOption_T_2.OUT1" Destination="OptionalGroup_001b.OPTION" dx1="700"/>
-			<Connection Source="AOption_AUI_DEMUX_3.OUT3" Destination="OptionalGroup_002.OPTION" dx1="866.67"/>
-			<Connection Source="AOption_AUI_DEMUX_3.OUT1" Destination="DummyGroup.OPTION" dx1="960"/>
+			<Connection Source="AOption_T_2.OUT2" Destination="OptionalGroup_001b.AOption_IN" dx1="620"/>
+			<Connection Source="AOption_AUI_DEMUX_3.OUT3" Destination="OptionalGroup_002.AOption_IN" dx1="866.67"/>
+			<Connection Source="AOption_AUI_DEMUX_3.OUT1" Destination="DummyGroup.AOption_IN" dx1="960"/>
+			<Connection Source="AOption_T_2.OUT1" Destination="OptionalGroup_001.AOption_IN"/>
 		</AdapterConnections>
 	</SubAppNetwork>
 </SubAppType>

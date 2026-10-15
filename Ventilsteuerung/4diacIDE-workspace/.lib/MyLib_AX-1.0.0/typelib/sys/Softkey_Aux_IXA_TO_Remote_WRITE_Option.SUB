@@ -17,10 +17,10 @@
 			<VarDeclaration Name="ID_WEB_READ" Type="WSTRING" Comment="Lokale Subscribe-Adresse fuer einen Web-Client (z.B. vt-ui-mirror) auf demselben Modul, ODER-verknuepft mit SoftKey und AUX"/>
 		</InputVars>
 		<Plugs>
-			<AdapterDeclaration Name="PLUG1" Type="Option::AOption" Comment="Reicht die Aktivierung an eine nachgeschaltete Gruppe weiter (Daisy-Chain) - unbenutzt lassen, wenn nichts weiter folgt"/>
+			<AdapterDeclaration Name="AOption_OUT" Type="Option::AOption" Comment="Reicht die Aktivierung an eine nachgeschaltete Gruppe weiter (Daisy-Chain) - unbenutzt lassen, wenn nichts weiter folgt"/>
 		</Plugs>
 		<Sockets>
-			<AdapterDeclaration Name="OPTION" Type="Option::AOption" Comment="Treibt INIT/QI von Softkey_IXA/Aux_IXA/SUBSCRIBE_WEB/AX_CLIENT_1_0 - anschliessen an z.B. AOption_AUI_DEMUX_N.OUTx"/>
+			<AdapterDeclaration Name="AOption_IN" Type="Option::AOption" Comment="Treibt INIT/QI von Softkey_IXA/Aux_IXA/SUBSCRIBE_WEB/AX_CLIENT_1_0 - anschliessen an z.B. AOption_AUI_DEMUX_N.OUTx"/>
 		</Sockets>
 	</SubAppInterfaceList>
 	<SubAppNetwork>
@@ -80,8 +80,8 @@
 			<Connection Source="Aux_IXA.IN" Destination="OR_MERGE.IN2" dx1="100"/>
 			<Connection Source="SUBSCRIBE_WEB.OUT" Destination="OR_MERGE.IN3" dx1="100"/>
 			<Connection Source="OR_MERGE.OUT" Destination="AX_CLIENT_1_0.IN" dx1="400"/>
-			<Connection Source="OPTION" Destination="AOption_X_TO_EVENT.AOption_IN" dx1="600"/>
-			<Connection Source="AOption_EVENT_TO_X.AOption_OUT" Destination="PLUG1" dx1="900"/>
+			<Connection Source="AOption_IN" Destination="AOption_X_TO_EVENT.AOption_IN" dx1="600"/>
+			<Connection Source="AOption_EVENT_TO_X.AOption_OUT" Destination="AOption_OUT" dx1="900"/>
 		</AdapterConnections>
 	</SubAppNetwork>
 </SubAppType>

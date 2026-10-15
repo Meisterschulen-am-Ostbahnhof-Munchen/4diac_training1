@@ -9,16 +9,7 @@
 	<CompilerInfo packageName="MyLib::sys">
 	</CompilerInfo>
 	<SubAppInterfaceList>
-		<SubAppEventInputs>
-			<SubAppEvent Name="INIT" Type="EInit" Comment="Initialization Request">
-			</SubAppEvent>
-		</SubAppEventInputs>
-		<SubAppEventOutputs>
-			<SubAppEvent Name="INITO" Type="EInit" Comment="Initialization Confirm">
-			</SubAppEvent>
-		</SubAppEventOutputs>
 		<InputVars>
-			<VarDeclaration Name="QI" Type="BOOL" Comment="Quality Input - TRUE to enable service" InitialValue="TRUE"/>
 			<VarDeclaration Name="u16ObjId" Type="UINT" Comment="Object ID SoftKey/Hintergrund (VT)"/>
 			<VarDeclaration Name="u16ObjIdA" Type="UINT" Comment="Object ID AuxFunction2/Hintergrund (VT)"/>
 			<VarDeclaration Name="ID_SUBSCRIBE" Type="WSTRING" Comment="Remote-Subscribe-Adresse (Status/Farbe, ACTION=SUBSCRIBE)"/>
@@ -26,14 +17,11 @@
 			<VarDeclaration Name="ID_WEB_READ" Type="WSTRING" Comment="Lokale Subscribe-Adresse fuer einen Web-Client (z.B. vt-ui-mirror) auf demselben Modul, ODER-verknuepft mit SoftKey und AUX"/>
 			<VarDeclaration Name="ID_STATUS_WEB" Type="WSTRING" Comment="Lokale Publish-Adresse (auf diesem Modul) fuer den vom Zielmodul zurueckgemeldeten Zustand - damit ein Web-Client (z.B. vt-ui-mirror) dieselbe Hintergrundfarbe wie das echte VT zeigen kann"/>
 		</InputVars>
-		<OutputVars>
-			<VarDeclaration Name="QO" Type="BOOL" Comment="Quality Output - TRUE if service executed successfully"/>
-		</OutputVars>
 		<Plugs>
-			<AdapterDeclaration Name="PLUG1" Type="Option::AOption" Comment="Reicht die Aktivierung an eine nachgeschaltete Instanz weiter (Daisy-Chain, z.B. eine 2. SoftKey_Aux_IXA_TO_Remote_WRITE_BG_Option_OPC-Instanz, die dieselbe Option teilt) - unbenutzt lassen, wenn nichts weiter folgt"/>
+			<AdapterDeclaration Name="AOption_OUT" Type="Option::AOption" Comment="Reicht die Aktivierung an eine nachgeschaltete Instanz weiter (Daisy-Chain, z.B. eine 2. SoftKey_Aux_IXA_TO_Remote_WRITE_BG_Option_OPC-Instanz, die dieselbe Option teilt) - unbenutzt lassen, wenn nichts weiter folgt"/>
 		</Plugs>
 		<Sockets>
-			<AdapterDeclaration Name="OPTION" Type="Option::AOption" Comment="Treibt INIT/QI von Command UND Status sequenziell - anschliessen an z.B. AOption_AUI_DEMUX_N.OUTx oder das PLUG1 einer vorgeschalteten Instanz"/>
+			<AdapterDeclaration Name="AOption_IN" Type="Option::AOption" Comment="Treibt INIT/QI von Command UND Status sequenziell - anschliessen an z.B. AOption_AUI_DEMUX_N.OUTx oder das PLUG1 einer vorgeschalteten Instanz"/>
 		</Sockets>
 	</SubAppInterfaceList>
 	<SubAppNetwork>
@@ -41,10 +29,6 @@
 		</SubApp>
 		<SubApp Name="Status" Type="MyLib::sys::AX_SUBSCRIBE_BG3_WEB_Option_OPC" x="3300" y="200">
 		</SubApp>
-		<EventConnections>
-			<Connection Source="INIT" Destination="Status.INIT" dx1="1213.33"/>
-			<Connection Source="Status.INITO" Destination="INITO" dx1="5193.33"/>
-		</EventConnections>
 		<DataConnections>
 			<Connection Source="u16ObjId" Destination="Command.u16ObjId" dx1="366.67">
 				<Attribute Name="Visible" Value="false"/>
@@ -70,13 +54,11 @@
 			<Connection Source="ID_STATUS_WEB" Destination="Status.ID_STATUS_WEB" dx1="366.67">
 				<Attribute Name="Visible" Value="false"/>
 			</Connection>
-			<Connection Source="QI" Destination="Status.QI" dx1="1213.33"/>
-			<Connection Source="Status.QO" Destination="QO" dx1="5193.33"/>
 		</DataConnections>
 		<AdapterConnections>
-			<Connection Source="OPTION" Destination="Command.OPTION" dx1="366.67"/>
-			<Connection Source="Command.PLUG1" Destination="Status.OPTION" dx1="566.67"/>
-			<Connection Source="Status.PLUG1" Destination="PLUG1" dx1="600"/>
+			<Connection Source="AOption_IN" Destination="Command.AOption_IN" dx1="366.67"/>
+			<Connection Source="Command.AOption_OUT" Destination="Status.AOption_IN" dx1="566.67"/>
+			<Connection Source="Status.AOption_OUT" Destination="AOption_OUT" dx1="600"/>
 		</AdapterConnections>
 	</SubAppNetwork>
 </SubAppType>
