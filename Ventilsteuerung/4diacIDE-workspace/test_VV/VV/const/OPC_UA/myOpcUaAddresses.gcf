@@ -7,75 +7,115 @@
 	<CompilerInfo packageName="VV::const::OPC_UA">
 	</CompilerInfo>
 	<GlobalConstants>
-		<VarDeclaration Name="Q1_LOCAL_READ" Type="WSTRING" Comment="Geraet B (Station 12): lokal ueberwachter Knoten fuer Output_Q1 (ACTION=READ, passend zu AX_SUBSCRIBE_1 - siehe 4diac-Doku opcua.adoc Tabelle: Local/READ/SUBSCRIBE), von Geraet A per CLIENT_1_0 remote beschrieben" InitialValue="&quot;opc_ua[READ;/Objects/DigitalOutput/Q1,1:s=Output_Q1]&quot;"/>
-		<VarDeclaration Name="Q1_REMOTE_WRITE" Type="WSTRING" Comment="Geraet A (Station 11): aktiver Remote-Write ueber CLIENT_1_0 auf denselben Knoten wie Q1_LOCAL_READ auf Geraet B (ACTION=WRITE, passend zu CLIENT - Remote/WRITE/CLIENT) - Pfad/Name-Suffix muss identisch bleiben, IP muss als Literal dupliziert werden (kein Verweis auf Computers.gcf moeglich)" InitialValue="&quot;opc_ua[WRITE;opc.tcp://192.168.1.12:4840#;/Objects/DigitalOutput/Q1,1:s=Output_Q1]&quot;"/>
-		<VarDeclaration Name="FF1_TRIGGER_LOCAL_METHOD" Type="WSTRING" Comment="Geraet B (Station 12): lokal erzeugte OPC-UA-Methode (ACTION=CREATE_METHOD, passend zu SERVER_0 - Local/CREATE_METHOD/SERVER), von Geraet A per CLIENT_0 remote aufgerufen, um SoftKey_F1-Tastendruecke ueber die Geraetegrenze zu takten - reiner RPC-Trigger ohne Argumente/Rueckgabewert, kein Wertwechsel-Trick noetig" InitialValue="&quot;opc_ua[CREATE_METHOD;/Objects/ToggleFF/FF1_Trigger]&quot;"/>
-		<VarDeclaration Name="FF1_TRIGGER_REMOTE_CALL" Type="WSTRING" Comment="Geraet A (Station 11): aktiver Remote-Methodenaufruf ueber CLIENT_0 auf dieselbe Methode wie FF1_TRIGGER_LOCAL_METHOD auf Geraet B (ACTION=CALL_METHOD, passend zu CLIENT - Remote/CALL_METHOD/CLIENT) - Pfad/Name-Suffix muss identisch bleiben, IP muss als Literal dupliziert werden" InitialValue="&quot;opc_ua[CALL_METHOD;opc.tcp://192.168.1.12:4840#;/Objects/ToggleFF/FF1_Trigger]&quot;"/>
-		<VarDeclaration Name="FF1_STATE_LOCAL_READ" Type="WSTRING" Comment="Geraet A (Station 11): lokal ueberwachter Flipflop-Zustandsknoten (ACTION=READ, passend zu AX_SUBSCRIBE_1 - Local/READ/SUBSCRIBE), von Geraet B per CLIENT_1_0 remote beschrieben, speist GreenWhiteBackground" InitialValue="&quot;opc_ua[READ;/Objects/ToggleFF/FF1_State,1:s=FF1_State]&quot;"/>
-		<VarDeclaration Name="FF1_STATE_REMOTE_WRITE" Type="WSTRING" Comment="Geraet B (Station 12): aktiver Remote-Write ueber CLIENT_1_0 auf denselben Knoten wie FF1_STATE_LOCAL_READ auf Geraet A (ACTION=WRITE, passend zu CLIENT - Remote/WRITE/CLIENT) - Pfad/Name-Suffix muss identisch bleiben, IP muss als Literal dupliziert werden" InitialValue="&quot;opc_ua[WRITE;opc.tcp://192.168.1.11:4840#;/Objects/ToggleFF/FF1_State,1:s=FF1_State]&quot;"/>
-		<VarDeclaration Name="SR1_SET_LOCAL_METHOD" Type="WSTRING" Comment="Geraet B (Station 12): lokal erzeugte Set-Methode (ACTION=CREATE_METHOD) fuer AX_T_FF_SR.S, von Geraet A per CLIENT_0 remote aufgerufen (Option A: eigene Methode statt String-Parameter)" InitialValue="&quot;opc_ua[CREATE_METHOD;/Objects/SRFlipflop/SR1_Set]&quot;"/>
-		<VarDeclaration Name="SR1_SET_REMOTE_CALL" Type="WSTRING" Comment="Geraet A (Station 11): aktiver Remote-Methodenaufruf ueber CLIENT_0 auf dieselbe Methode wie SR1_SET_LOCAL_METHOD auf Geraet B (ACTION=CALL_METHOD) - Pfad/Name-Suffix muss identisch bleiben, IP muss als Literal dupliziert werden" InitialValue="&quot;opc_ua[CALL_METHOD;opc.tcp://192.168.1.12:4840#;/Objects/SRFlipflop/SR1_Set]&quot;"/>
-		<VarDeclaration Name="SR1_RESET_LOCAL_METHOD" Type="WSTRING" Comment="Geraet B (Station 12): lokal erzeugte Reset-Methode (ACTION=CREATE_METHOD) fuer AX_T_FF_SR.R, von Geraet A per CLIENT_0 remote aufgerufen" InitialValue="&quot;opc_ua[CREATE_METHOD;/Objects/SRFlipflop/SR1_Reset]&quot;"/>
-		<VarDeclaration Name="SR1_RESET_REMOTE_CALL" Type="WSTRING" Comment="Geraet A (Station 11): aktiver Remote-Methodenaufruf ueber CLIENT_0 auf dieselbe Methode wie SR1_RESET_LOCAL_METHOD auf Geraet B (ACTION=CALL_METHOD) - Pfad/Name-Suffix muss identisch bleiben, IP muss als Literal dupliziert werden" InitialValue="&quot;opc_ua[CALL_METHOD;opc.tcp://192.168.1.12:4840#;/Objects/SRFlipflop/SR1_Reset]&quot;"/>
-		<VarDeclaration Name="SR1_TOGGLE_LOCAL_METHOD" Type="WSTRING" Comment="Geraet B (Station 12): lokal erzeugte Toggle-Methode (ACTION=CREATE_METHOD) fuer AX_T_FF_SR.CLK, von Geraet A per CLIENT_0 remote aufgerufen" InitialValue="&quot;opc_ua[CREATE_METHOD;/Objects/SRFlipflop/SR1_Toggle]&quot;"/>
-		<VarDeclaration Name="SR1_TOGGLE_REMOTE_CALL" Type="WSTRING" Comment="Geraet A (Station 11): aktiver Remote-Methodenaufruf ueber CLIENT_0 auf dieselbe Methode wie SR1_TOGGLE_LOCAL_METHOD auf Geraet B (ACTION=CALL_METHOD) - Pfad/Name-Suffix muss identisch bleiben, IP muss als Literal dupliziert werden" InitialValue="&quot;opc_ua[CALL_METHOD;opc.tcp://192.168.1.12:4840#;/Objects/SRFlipflop/SR1_Toggle]&quot;"/>
-		<VarDeclaration Name="SR1_STATE_LOCAL_READ" Type="WSTRING" Comment="Geraet A (Station 11): lokal ueberwachter Flipflop-Zustandsknoten (ACTION=READ, passend zu AX_SUBSCRIBE_1 - Local/READ/SUBSCRIBE), von Geraet B per CLIENT_1_0 remote beschrieben, speist GreenWhiteBackground am Toggle-SoftKey" InitialValue="&quot;opc_ua[READ;/Objects/SRFlipflop/SR1_State,1:s=SR1_State]&quot;"/>
-		<VarDeclaration Name="SR1_STATE_REMOTE_WRITE" Type="WSTRING" Comment="Geraet B (Station 12): aktiver Remote-Write ueber CLIENT_1_0 auf denselben Knoten wie SR1_STATE_LOCAL_READ auf Geraet A (ACTION=WRITE, passend zu CLIENT - Remote/WRITE/CLIENT) - Pfad/Name-Suffix muss identisch bleiben, IP muss als Literal dupliziert werden" InitialValue="&quot;opc_ua[WRITE;opc.tcp://192.168.1.11:4840#;/Objects/SRFlipflop/SR1_State,1:s=SR1_State]&quot;"/>
-		<VarDeclaration Name="SR2_SET_LOCAL_METHOD" Type="WSTRING" Comment="Geraet B (Station 12): lokal erzeugte Set-Methode (ACTION=CREATE_METHOD) fuer AX_SR.S, von Geraet A per CLIENT_0 remote aufgerufen (reines SR-Flipflop ohne Toggle)" InitialValue="&quot;opc_ua[CREATE_METHOD;/Objects/SRFlipflop/SR2_Set]&quot;"/>
-		<VarDeclaration Name="SR2_SET_REMOTE_CALL" Type="WSTRING" Comment="Geraet A (Station 11): aktiver Remote-Methodenaufruf ueber CLIENT_0 auf dieselbe Methode wie SR2_SET_LOCAL_METHOD auf Geraet B (ACTION=CALL_METHOD) - Pfad/Name-Suffix muss identisch bleiben, IP muss als Literal dupliziert werden" InitialValue="&quot;opc_ua[CALL_METHOD;opc.tcp://192.168.1.12:4840#;/Objects/SRFlipflop/SR2_Set]&quot;"/>
-		<VarDeclaration Name="SR2_RESET_LOCAL_METHOD" Type="WSTRING" Comment="Geraet B (Station 12): lokal erzeugte Reset-Methode (ACTION=CREATE_METHOD) fuer AX_SR.R, von Geraet A per CLIENT_0 remote aufgerufen" InitialValue="&quot;opc_ua[CREATE_METHOD;/Objects/SRFlipflop/SR2_Reset]&quot;"/>
-		<VarDeclaration Name="SR2_RESET_REMOTE_CALL" Type="WSTRING" Comment="Geraet A (Station 11): aktiver Remote-Methodenaufruf ueber CLIENT_0 auf dieselbe Methode wie SR2_RESET_LOCAL_METHOD auf Geraet B (ACTION=CALL_METHOD) - Pfad/Name-Suffix muss identisch bleiben, IP muss als Literal dupliziert werden" InitialValue="&quot;opc_ua[CALL_METHOD;opc.tcp://192.168.1.12:4840#;/Objects/SRFlipflop/SR2_Reset]&quot;"/>
-		<VarDeclaration Name="SR2_STATE_LOCAL_READ" Type="WSTRING" Comment="Geraet A (Station 11): lokal ueberwachter Flipflop-Zustandsknoten (ACTION=READ, passend zu AX_SUBSCRIBE_1 - Local/READ/SUBSCRIBE), von Geraet B per CLIENT_1_0 remote beschrieben, speist GreenWhiteBackground am Set-SoftKey" InitialValue="&quot;opc_ua[READ;/Objects/SRFlipflop/SR2_State,1:s=SR2_State]&quot;"/>
-		<VarDeclaration Name="SR2_STATE_REMOTE_WRITE" Type="WSTRING" Comment="Geraet B (Station 12): aktiver Remote-Write ueber CLIENT_1_0 auf denselben Knoten wie SR2_STATE_LOCAL_READ auf Geraet A (ACTION=WRITE, passend zu CLIENT - Remote/WRITE/CLIENT) - Pfad/Name-Suffix muss identisch bleiben, IP muss als Literal dupliziert werden" InitialValue="&quot;opc_ua[WRITE;opc.tcp://192.168.1.11:4840#;/Objects/SRFlipflop/SR2_State,1:s=SR2_State]&quot;"/>
-		<VarDeclaration Name="SW1_UP_LOCAL_READ" Type="WSTRING" Comment="Geraet B (Station 12): lokal ueberwachter Hoch-Taster-Zustand (ACTION=READ, passend zu AX_SUBSCRIBE_1 - Local/READ/SUBSCRIBE), von Geraet A per CLIENT_1_0 remote beschrieben, speist ILOCK_SWITCH_PROTECT_AX.UP_IN" InitialValue="&quot;opc_ua[READ;/Objects/Switch1/Up,1:s=Switch1_Up]&quot;"/>
-		<VarDeclaration Name="SW1_UP_REMOTE_WRITE" Type="WSTRING" Comment="Geraet A (Station 11): aktiver Remote-Write ueber CLIENT_1_0 auf denselben Knoten wie SW1_UP_LOCAL_READ auf Geraet B (ACTION=WRITE, passend zu CLIENT - Remote/WRITE/CLIENT) - Pfad/Name-Suffix muss identisch bleiben, IP muss als Literal dupliziert werden" InitialValue="&quot;opc_ua[WRITE;opc.tcp://192.168.1.12:4840#;/Objects/Switch1/Up,1:s=Switch1_Up]&quot;"/>
-		<VarDeclaration Name="SW1_DOWN_LOCAL_READ" Type="WSTRING" Comment="Geraet B (Station 12): lokal ueberwachter Runter-Taster-Zustand (ACTION=READ, passend zu AX_SUBSCRIBE_1 - Local/READ/SUBSCRIBE), von Geraet A per CLIENT_1_0 remote beschrieben, speist ILOCK_SWITCH_PROTECT_AX.DOWN_IN" InitialValue="&quot;opc_ua[READ;/Objects/Switch1/Down,1:s=Switch1_Down]&quot;"/>
-		<VarDeclaration Name="SW1_DOWN_REMOTE_WRITE" Type="WSTRING" Comment="Geraet A (Station 11): aktiver Remote-Write ueber CLIENT_1_0 auf denselben Knoten wie SW1_DOWN_LOCAL_READ auf Geraet B (ACTION=WRITE, passend zu CLIENT - Remote/WRITE/CLIENT) - Pfad/Name-Suffix muss identisch bleiben, IP muss als Literal dupliziert werden" InitialValue="&quot;opc_ua[WRITE;opc.tcp://192.168.1.12:4840#;/Objects/Switch1/Down,1:s=Switch1_Down]&quot;"/>
-		<VarDeclaration Name="SW1_UP_STATE_LOCAL_READ" Type="WSTRING" Comment="Geraet A (Station 11): lokal ueberwachter, TATSAECHLICH erreichter Zustand von Ausgang Q7 (nach ILOCK-Arbitrierung/Schutzzeit auf Geraet B) (ACTION=READ, passend zu AX_SUBSCRIBE_1 - Local/READ/SUBSCRIBE), von Geraet B per CLIENT_1_0 remote beschrieben, speist GreenWhiteBackground am Hoch-SoftKey" InitialValue="&quot;opc_ua[READ;/Objects/Switch1/UpState,1:s=Switch1_UpState]&quot;"/>
-		<VarDeclaration Name="SW1_UP_STATE_REMOTE_WRITE" Type="WSTRING" Comment="Geraet B (Station 12): aktiver Remote-Write ueber CLIENT_1_0 auf denselben Knoten wie SW1_UP_STATE_LOCAL_READ auf Geraet A (ACTION=WRITE, passend zu CLIENT - Remote/WRITE/CLIENT) - Pfad/Name-Suffix muss identisch bleiben, IP muss als Literal dupliziert werden" InitialValue="&quot;opc_ua[WRITE;opc.tcp://192.168.1.11:4840#;/Objects/Switch1/UpState,1:s=Switch1_UpState]&quot;"/>
-		<VarDeclaration Name="SW1_DOWN_STATE_LOCAL_READ" Type="WSTRING" Comment="Geraet A (Station 11): lokal ueberwachter, TATSAECHLICH erreichter Zustand von Ausgang Q8 (nach ILOCK-Arbitrierung/Schutzzeit auf Geraet B) (ACTION=READ, passend zu AX_SUBSCRIBE_1 - Local/READ/SUBSCRIBE), von Geraet B per CLIENT_1_0 remote beschrieben, speist GreenWhiteBackground am Runter-SoftKey" InitialValue="&quot;opc_ua[READ;/Objects/Switch1/DownState,1:s=Switch1_DownState]&quot;"/>
-		<VarDeclaration Name="SW1_DOWN_STATE_REMOTE_WRITE" Type="WSTRING" Comment="Geraet B (Station 12): aktiver Remote-Write ueber CLIENT_1_0 auf denselben Knoten wie SW1_DOWN_STATE_LOCAL_READ auf Geraet A (ACTION=WRITE, passend zu CLIENT - Remote/WRITE/CLIENT) - Pfad/Name-Suffix muss identisch bleiben, IP muss als Literal dupliziert werden" InitialValue="&quot;opc_ua[WRITE;opc.tcp://192.168.1.11:4840#;/Objects/Switch1/DownState,1:s=Switch1_DownState]&quot;"/>
-		<VarDeclaration Name="SW2_PRESS_LOCAL_READ" Type="WSTRING" Comment="Geraet B (Station 12): lokal ueberwachte Taster-Zustaende UP+DOWN gebuendelt in einem einzigen Knoten-Paar (ACTION=READ, 2 Werte fuer SUBSCRIBE_2 - passend zu A2X2_CLIENT_2_0_SUBSCRIBE_2_PLUG.ID_READ), von Geraet A per CLIENT_2_0 remote beschrieben" InitialValue="&quot;opc_ua[READ;/Objects/Switch2/Up,1:s=Switch2_Up;/Objects/Switch2/Down,1:s=Switch2_Down]&quot;"/>
-		<VarDeclaration Name="SW2_PRESS_REMOTE_WRITE" Type="WSTRING" Comment="Geraet A (Station 11): aktiver Remote-Write ueber CLIENT_2_0 auf dieselben 2 Knoten wie SW2_PRESS_LOCAL_READ auf Geraet B (ACTION=WRITE, 2 Werte - passend zu A2X2_CLIENT_2_0_SUBSCRIBE_2.ID_WRITE) - Pfad/Name-Suffixe muessen identisch bleiben, IP muss als Literal dupliziert werden" InitialValue="&quot;opc_ua[WRITE;opc.tcp://192.168.1.12:4840#;/Objects/Switch2/Up,1:s=Switch2_Up;/Objects/Switch2/Down,1:s=Switch2_Down]&quot;"/>
-		<VarDeclaration Name="SW2_STATE_LOCAL_READ" Type="WSTRING" Comment="Geraet A (Station 11): lokal ueberwachter, TATSAECHLICH erreichter Zustand UP+DOWN gebuendelt (nach ILOCK-Arbitrierung/Schutzzeit auf Geraet B) (ACTION=READ, 2 Werte - passend zu A2X2_CLIENT_2_0_SUBSCRIBE_2.ID_READ), von Geraet B per CLIENT_2_0 remote beschrieben, speist GreenWhiteBackground je SoftKey" InitialValue="&quot;opc_ua[READ;/Objects/Switch2/UpState,1:s=Switch2_UpState;/Objects/Switch2/DownState,1:s=Switch2_DownState]&quot;"/>
-		<VarDeclaration Name="SW2_STATE_REMOTE_WRITE" Type="WSTRING" Comment="Geraet B (Station 12): aktiver Remote-Write ueber CLIENT_2_0 auf dieselben 2 Knoten wie SW2_STATE_LOCAL_READ auf Geraet A (ACTION=WRITE, 2 Werte - passend zu A2X2_CLIENT_2_0_SUBSCRIBE_2_PLUG.ID_WRITE) - Pfad/Name-Suffixe muessen identisch bleiben, IP muss als Literal dupliziert werden" InitialValue="&quot;opc_ua[WRITE;opc.tcp://192.168.1.11:4840#;/Objects/Switch2/UpState,1:s=Switch2_UpState;/Objects/Switch2/DownState,1:s=Switch2_DownState]&quot;"/>
+		<VarDeclaration Name="PC_A" Type="WSTRING" Comment="Station A (MGR_ID) - einzige Stelle" InitialValue="logiBUS::stations::Computers::C_11"/>
+		<VarDeclaration Name="PC_B" Type="WSTRING" Comment="Station B (MGR_ID) - einzige Stelle" InitialValue="logiBUS::stations::Computers::C_12"/>
+		<VarDeclaration Name="PC_A_OPC" Type="WSTRING" Comment="OPC-UA-Endpunkt Station A" InitialValue="MyLib_OPC::F_MGR_TO_OPC(PC_A)"/>
+		<VarDeclaration Name="PC_B_OPC" Type="WSTRING" Comment="OPC-UA-Endpunkt Station B" InitialValue="MyLib_OPC::F_MGR_TO_OPC(PC_B)"/>
+		<VarDeclaration Name="Q1_NODE" Type="WSTRING" Comment="Knoten auf Station B" InitialValue="&quot;/Objects/DigitalOutput/Q1,1:s=Output_Q1&quot;"/>
+		<VarDeclaration Name="Q1_LOCAL_READ" Type="WSTRING" Comment="Station B: lokal (READ)" InitialValue="MyLib_OPC::F_OPC_LOCAL(&quot;READ&quot;, Q1_NODE)"/>
+		<VarDeclaration Name="Q1_REMOTE_WRITE" Type="WSTRING" Comment="Station A: WRITE auf Station B" InitialValue="MyLib_OPC::F_OPC_REMOTE(&quot;WRITE&quot;, PC_B_OPC, Q1_NODE)"/>
+		<VarDeclaration Name="FF1_TRIGGER_NODE" Type="WSTRING" Comment="Methode auf Station B" InitialValue="&quot;/Objects/ToggleFF/FF1_Trigger&quot;"/>
+		<VarDeclaration Name="FF1_TRIGGER_LOCAL_METHOD" Type="WSTRING" Comment="Station B: lokal (CREATE_METHOD)" InitialValue="MyLib_OPC::F_OPC_LOCAL(&quot;CREATE_METHOD&quot;, FF1_TRIGGER_NODE)"/>
+		<VarDeclaration Name="FF1_TRIGGER_REMOTE_CALL" Type="WSTRING" Comment="Station A: CALL_METHOD auf Station B" InitialValue="MyLib_OPC::F_OPC_REMOTE(&quot;CALL_METHOD&quot;, PC_B_OPC, FF1_TRIGGER_NODE)"/>
+		<VarDeclaration Name="FF1_STATE_NODE" Type="WSTRING" Comment="Knoten auf Station A" InitialValue="&quot;/Objects/ToggleFF/FF1_State,1:s=FF1_State&quot;"/>
+		<VarDeclaration Name="FF1_STATE_LOCAL_READ" Type="WSTRING" Comment="Station A: lokal (READ)" InitialValue="MyLib_OPC::F_OPC_LOCAL(&quot;READ&quot;, FF1_STATE_NODE)"/>
+		<VarDeclaration Name="FF1_STATE_REMOTE_WRITE" Type="WSTRING" Comment="Station B: WRITE auf Station A" InitialValue="MyLib_OPC::F_OPC_REMOTE(&quot;WRITE&quot;, PC_A_OPC, FF1_STATE_NODE)"/>
+		<VarDeclaration Name="SR1_SET_NODE" Type="WSTRING" Comment="Methode auf Station B" InitialValue="&quot;/Objects/SRFlipflop/SR1_Set&quot;"/>
+		<VarDeclaration Name="SR1_SET_LOCAL_METHOD" Type="WSTRING" Comment="Station B: lokal (CREATE_METHOD)" InitialValue="MyLib_OPC::F_OPC_LOCAL(&quot;CREATE_METHOD&quot;, SR1_SET_NODE)"/>
+		<VarDeclaration Name="SR1_SET_REMOTE_CALL" Type="WSTRING" Comment="Station A: CALL_METHOD auf Station B" InitialValue="MyLib_OPC::F_OPC_REMOTE(&quot;CALL_METHOD&quot;, PC_B_OPC, SR1_SET_NODE)"/>
+		<VarDeclaration Name="SR1_RESET_NODE" Type="WSTRING" Comment="Methode auf Station B" InitialValue="&quot;/Objects/SRFlipflop/SR1_Reset&quot;"/>
+		<VarDeclaration Name="SR1_RESET_LOCAL_METHOD" Type="WSTRING" Comment="Station B: lokal (CREATE_METHOD)" InitialValue="MyLib_OPC::F_OPC_LOCAL(&quot;CREATE_METHOD&quot;, SR1_RESET_NODE)"/>
+		<VarDeclaration Name="SR1_RESET_REMOTE_CALL" Type="WSTRING" Comment="Station A: CALL_METHOD auf Station B" InitialValue="MyLib_OPC::F_OPC_REMOTE(&quot;CALL_METHOD&quot;, PC_B_OPC, SR1_RESET_NODE)"/>
+		<VarDeclaration Name="SR1_TOGGLE_NODE" Type="WSTRING" Comment="Methode auf Station B" InitialValue="&quot;/Objects/SRFlipflop/SR1_Toggle&quot;"/>
+		<VarDeclaration Name="SR1_TOGGLE_LOCAL_METHOD" Type="WSTRING" Comment="Station B: lokal (CREATE_METHOD)" InitialValue="MyLib_OPC::F_OPC_LOCAL(&quot;CREATE_METHOD&quot;, SR1_TOGGLE_NODE)"/>
+		<VarDeclaration Name="SR1_TOGGLE_REMOTE_CALL" Type="WSTRING" Comment="Station A: CALL_METHOD auf Station B" InitialValue="MyLib_OPC::F_OPC_REMOTE(&quot;CALL_METHOD&quot;, PC_B_OPC, SR1_TOGGLE_NODE)"/>
+		<VarDeclaration Name="SR1_STATE_NODE" Type="WSTRING" Comment="Knoten auf Station A" InitialValue="&quot;/Objects/SRFlipflop/SR1_State,1:s=SR1_State&quot;"/>
+		<VarDeclaration Name="SR1_STATE_LOCAL_READ" Type="WSTRING" Comment="Station A: lokal (READ)" InitialValue="MyLib_OPC::F_OPC_LOCAL(&quot;READ&quot;, SR1_STATE_NODE)"/>
+		<VarDeclaration Name="SR1_STATE_REMOTE_WRITE" Type="WSTRING" Comment="Station B: WRITE auf Station A" InitialValue="MyLib_OPC::F_OPC_REMOTE(&quot;WRITE&quot;, PC_A_OPC, SR1_STATE_NODE)"/>
+		<VarDeclaration Name="SR2_SET_NODE" Type="WSTRING" Comment="Methode auf Station B" InitialValue="&quot;/Objects/SRFlipflop/SR2_Set&quot;"/>
+		<VarDeclaration Name="SR2_SET_LOCAL_METHOD" Type="WSTRING" Comment="Station B: lokal (CREATE_METHOD)" InitialValue="MyLib_OPC::F_OPC_LOCAL(&quot;CREATE_METHOD&quot;, SR2_SET_NODE)"/>
+		<VarDeclaration Name="SR2_SET_REMOTE_CALL" Type="WSTRING" Comment="Station A: CALL_METHOD auf Station B" InitialValue="MyLib_OPC::F_OPC_REMOTE(&quot;CALL_METHOD&quot;, PC_B_OPC, SR2_SET_NODE)"/>
+		<VarDeclaration Name="SR2_RESET_NODE" Type="WSTRING" Comment="Methode auf Station B" InitialValue="&quot;/Objects/SRFlipflop/SR2_Reset&quot;"/>
+		<VarDeclaration Name="SR2_RESET_LOCAL_METHOD" Type="WSTRING" Comment="Station B: lokal (CREATE_METHOD)" InitialValue="MyLib_OPC::F_OPC_LOCAL(&quot;CREATE_METHOD&quot;, SR2_RESET_NODE)"/>
+		<VarDeclaration Name="SR2_RESET_REMOTE_CALL" Type="WSTRING" Comment="Station A: CALL_METHOD auf Station B" InitialValue="MyLib_OPC::F_OPC_REMOTE(&quot;CALL_METHOD&quot;, PC_B_OPC, SR2_RESET_NODE)"/>
+		<VarDeclaration Name="SR2_STATE_NODE" Type="WSTRING" Comment="Knoten auf Station A" InitialValue="&quot;/Objects/SRFlipflop/SR2_State,1:s=SR2_State&quot;"/>
+		<VarDeclaration Name="SR2_STATE_LOCAL_READ" Type="WSTRING" Comment="Station A: lokal (READ)" InitialValue="MyLib_OPC::F_OPC_LOCAL(&quot;READ&quot;, SR2_STATE_NODE)"/>
+		<VarDeclaration Name="SR2_STATE_REMOTE_WRITE" Type="WSTRING" Comment="Station B: WRITE auf Station A" InitialValue="MyLib_OPC::F_OPC_REMOTE(&quot;WRITE&quot;, PC_A_OPC, SR2_STATE_NODE)"/>
+		<VarDeclaration Name="SW1_UP_NODE" Type="WSTRING" Comment="Knoten auf Station B" InitialValue="&quot;/Objects/Switch1/Up,1:s=Switch1_Up&quot;"/>
+		<VarDeclaration Name="SW1_UP_LOCAL_READ" Type="WSTRING" Comment="Station B: lokal (READ)" InitialValue="MyLib_OPC::F_OPC_LOCAL(&quot;READ&quot;, SW1_UP_NODE)"/>
+		<VarDeclaration Name="SW1_UP_REMOTE_WRITE" Type="WSTRING" Comment="Station A: WRITE auf Station B" InitialValue="MyLib_OPC::F_OPC_REMOTE(&quot;WRITE&quot;, PC_B_OPC, SW1_UP_NODE)"/>
+		<VarDeclaration Name="SW1_DOWN_NODE" Type="WSTRING" Comment="Knoten auf Station B" InitialValue="&quot;/Objects/Switch1/Down,1:s=Switch1_Down&quot;"/>
+		<VarDeclaration Name="SW1_DOWN_LOCAL_READ" Type="WSTRING" Comment="Station B: lokal (READ)" InitialValue="MyLib_OPC::F_OPC_LOCAL(&quot;READ&quot;, SW1_DOWN_NODE)"/>
+		<VarDeclaration Name="SW1_DOWN_REMOTE_WRITE" Type="WSTRING" Comment="Station A: WRITE auf Station B" InitialValue="MyLib_OPC::F_OPC_REMOTE(&quot;WRITE&quot;, PC_B_OPC, SW1_DOWN_NODE)"/>
+		<VarDeclaration Name="SW1_UP_STATE_NODE" Type="WSTRING" Comment="Knoten auf Station A" InitialValue="&quot;/Objects/Switch1/UpState,1:s=Switch1_UpState&quot;"/>
+		<VarDeclaration Name="SW1_UP_STATE_LOCAL_READ" Type="WSTRING" Comment="Station A: lokal (READ)" InitialValue="MyLib_OPC::F_OPC_LOCAL(&quot;READ&quot;, SW1_UP_STATE_NODE)"/>
+		<VarDeclaration Name="SW1_UP_STATE_REMOTE_WRITE" Type="WSTRING" Comment="Station B: WRITE auf Station A" InitialValue="MyLib_OPC::F_OPC_REMOTE(&quot;WRITE&quot;, PC_A_OPC, SW1_UP_STATE_NODE)"/>
+		<VarDeclaration Name="SW1_DOWN_STATE_NODE" Type="WSTRING" Comment="Knoten auf Station A" InitialValue="&quot;/Objects/Switch1/DownState,1:s=Switch1_DownState&quot;"/>
+		<VarDeclaration Name="SW1_DOWN_STATE_LOCAL_READ" Type="WSTRING" Comment="Station A: lokal (READ)" InitialValue="MyLib_OPC::F_OPC_LOCAL(&quot;READ&quot;, SW1_DOWN_STATE_NODE)"/>
+		<VarDeclaration Name="SW1_DOWN_STATE_REMOTE_WRITE" Type="WSTRING" Comment="Station B: WRITE auf Station A" InitialValue="MyLib_OPC::F_OPC_REMOTE(&quot;WRITE&quot;, PC_A_OPC, SW1_DOWN_STATE_NODE)"/>
+		<VarDeclaration Name="SW2_PRESS_NODE" Type="WSTRING" Comment="Knoten auf Station B" InitialValue="&quot;/Objects/Switch2/Up,1:s=Switch2_Up;/Objects/Switch2/Down,1:s=Switch2_Down&quot;"/>
+		<VarDeclaration Name="SW2_PRESS_LOCAL_READ" Type="WSTRING" Comment="Station B: lokal (READ)" InitialValue="MyLib_OPC::F_OPC_LOCAL(&quot;READ&quot;, SW2_PRESS_NODE)"/>
+		<VarDeclaration Name="SW2_PRESS_REMOTE_WRITE" Type="WSTRING" Comment="Station A: WRITE auf Station B" InitialValue="MyLib_OPC::F_OPC_REMOTE(&quot;WRITE&quot;, PC_B_OPC, SW2_PRESS_NODE)"/>
+		<VarDeclaration Name="SW2_STATE_NODE" Type="WSTRING" Comment="Knoten auf Station A" InitialValue="&quot;/Objects/Switch2/UpState,1:s=Switch2_UpState;/Objects/Switch2/DownState,1:s=Switch2_DownState&quot;"/>
+		<VarDeclaration Name="SW2_STATE_LOCAL_READ" Type="WSTRING" Comment="Station A: lokal (READ)" InitialValue="MyLib_OPC::F_OPC_LOCAL(&quot;READ&quot;, SW2_STATE_NODE)"/>
+		<VarDeclaration Name="SW2_STATE_REMOTE_WRITE" Type="WSTRING" Comment="Station B: WRITE auf Station A" InitialValue="MyLib_OPC::F_OPC_REMOTE(&quot;WRITE&quot;, PC_A_OPC, SW2_STATE_NODE)"/>
 	</GlobalConstants>
 	<OriginalSource><![CDATA[PACKAGE VV::const::OPC_UA;
 
 GLOBALCONSTANTS myOpcUaAddresses
 	VAR_GLOBAL CONSTANT
-		Q1_LOCAL_READ : WSTRING := "opc_ua[READ;/Objects/DigitalOutput/Q1,1:s=Output_Q1]";
-		Q1_REMOTE_WRITE : WSTRING := "opc_ua[WRITE;opc.tcp://192.168.1.12:4840#;/Objects/DigitalOutput/Q1,1:s=Output_Q1]";
-		FF1_TRIGGER_LOCAL_METHOD : WSTRING := "opc_ua[CREATE_METHOD;/Objects/ToggleFF/FF1_Trigger]";
-		FF1_TRIGGER_REMOTE_CALL : WSTRING := "opc_ua[CALL_METHOD;opc.tcp://192.168.1.12:4840#;/Objects/ToggleFF/FF1_Trigger]";
-		FF1_STATE_LOCAL_READ : WSTRING := "opc_ua[READ;/Objects/ToggleFF/FF1_State,1:s=FF1_State]";
-		FF1_STATE_REMOTE_WRITE : WSTRING := "opc_ua[WRITE;opc.tcp://192.168.1.11:4840#;/Objects/ToggleFF/FF1_State,1:s=FF1_State]";
-		SR1_SET_LOCAL_METHOD : WSTRING := "opc_ua[CREATE_METHOD;/Objects/SRFlipflop/SR1_Set]";
-		SR1_SET_REMOTE_CALL : WSTRING := "opc_ua[CALL_METHOD;opc.tcp://192.168.1.12:4840#;/Objects/SRFlipflop/SR1_Set]";
-		SR1_RESET_LOCAL_METHOD : WSTRING := "opc_ua[CREATE_METHOD;/Objects/SRFlipflop/SR1_Reset]";
-		SR1_RESET_REMOTE_CALL : WSTRING := "opc_ua[CALL_METHOD;opc.tcp://192.168.1.12:4840#;/Objects/SRFlipflop/SR1_Reset]";
-		SR1_TOGGLE_LOCAL_METHOD : WSTRING := "opc_ua[CREATE_METHOD;/Objects/SRFlipflop/SR1_Toggle]";
-		SR1_TOGGLE_REMOTE_CALL : WSTRING := "opc_ua[CALL_METHOD;opc.tcp://192.168.1.12:4840#;/Objects/SRFlipflop/SR1_Toggle]";
-		SR1_STATE_LOCAL_READ : WSTRING := "opc_ua[READ;/Objects/SRFlipflop/SR1_State,1:s=SR1_State]";
-		SR1_STATE_REMOTE_WRITE : WSTRING := "opc_ua[WRITE;opc.tcp://192.168.1.11:4840#;/Objects/SRFlipflop/SR1_State,1:s=SR1_State]";
-		SR2_SET_LOCAL_METHOD : WSTRING := "opc_ua[CREATE_METHOD;/Objects/SRFlipflop/SR2_Set]";
-		SR2_SET_REMOTE_CALL : WSTRING := "opc_ua[CALL_METHOD;opc.tcp://192.168.1.12:4840#;/Objects/SRFlipflop/SR2_Set]";
-		SR2_RESET_LOCAL_METHOD : WSTRING := "opc_ua[CREATE_METHOD;/Objects/SRFlipflop/SR2_Reset]";
-		SR2_RESET_REMOTE_CALL : WSTRING := "opc_ua[CALL_METHOD;opc.tcp://192.168.1.12:4840#;/Objects/SRFlipflop/SR2_Reset]";
-		SR2_STATE_LOCAL_READ : WSTRING := "opc_ua[READ;/Objects/SRFlipflop/SR2_State,1:s=SR2_State]";
-		SR2_STATE_REMOTE_WRITE : WSTRING := "opc_ua[WRITE;opc.tcp://192.168.1.11:4840#;/Objects/SRFlipflop/SR2_State,1:s=SR2_State]";
-		SW1_UP_LOCAL_READ : WSTRING := "opc_ua[READ;/Objects/Switch1/Up,1:s=Switch1_Up]";
-		SW1_UP_REMOTE_WRITE : WSTRING := "opc_ua[WRITE;opc.tcp://192.168.1.12:4840#;/Objects/Switch1/Up,1:s=Switch1_Up]";
-		SW1_DOWN_LOCAL_READ : WSTRING := "opc_ua[READ;/Objects/Switch1/Down,1:s=Switch1_Down]";
-		SW1_DOWN_REMOTE_WRITE : WSTRING := "opc_ua[WRITE;opc.tcp://192.168.1.12:4840#;/Objects/Switch1/Down,1:s=Switch1_Down]";
-		SW1_UP_STATE_LOCAL_READ : WSTRING := "opc_ua[READ;/Objects/Switch1/UpState,1:s=Switch1_UpState]";
-		SW1_UP_STATE_REMOTE_WRITE : WSTRING := "opc_ua[WRITE;opc.tcp://192.168.1.11:4840#;/Objects/Switch1/UpState,1:s=Switch1_UpState]";
-		SW1_DOWN_STATE_LOCAL_READ : WSTRING := "opc_ua[READ;/Objects/Switch1/DownState,1:s=Switch1_DownState]";
-		SW1_DOWN_STATE_REMOTE_WRITE : WSTRING := "opc_ua[WRITE;opc.tcp://192.168.1.11:4840#;/Objects/Switch1/DownState,1:s=Switch1_DownState]";
-		SW2_PRESS_LOCAL_READ : WSTRING := "opc_ua[READ;/Objects/Switch2/Up,1:s=Switch2_Up;/Objects/Switch2/Down,1:s=Switch2_Down]";
-		SW2_PRESS_REMOTE_WRITE : WSTRING := "opc_ua[WRITE;opc.tcp://192.168.1.12:4840#;/Objects/Switch2/Up,1:s=Switch2_Up;/Objects/Switch2/Down,1:s=Switch2_Down]";
-		SW2_STATE_LOCAL_READ : WSTRING := "opc_ua[READ;/Objects/Switch2/UpState,1:s=Switch2_UpState;/Objects/Switch2/DownState,1:s=Switch2_DownState]";
-		SW2_STATE_REMOTE_WRITE : WSTRING := "opc_ua[WRITE;opc.tcp://192.168.1.11:4840#;/Objects/Switch2/UpState,1:s=Switch2_UpState;/Objects/Switch2/DownState,1:s=Switch2_DownState]";
+		PC_A : WSTRING := logiBUS::stations::Computers::C_11;
+		PC_B : WSTRING := logiBUS::stations::Computers::C_12;
+		PC_A_OPC : WSTRING := MyLib_OPC::F_MGR_TO_OPC(PC_A);
+		PC_B_OPC : WSTRING := MyLib_OPC::F_MGR_TO_OPC(PC_B);
+		Q1_NODE : WSTRING := "/Objects/DigitalOutput/Q1,1:s=Output_Q1";
+		Q1_LOCAL_READ : WSTRING := MyLib_OPC::F_OPC_LOCAL("READ", Q1_NODE);
+		Q1_REMOTE_WRITE : WSTRING := MyLib_OPC::F_OPC_REMOTE("WRITE", PC_B_OPC, Q1_NODE);
+		FF1_TRIGGER_NODE : WSTRING := "/Objects/ToggleFF/FF1_Trigger";
+		FF1_TRIGGER_LOCAL_METHOD : WSTRING := MyLib_OPC::F_OPC_LOCAL("CREATE_METHOD", FF1_TRIGGER_NODE);
+		FF1_TRIGGER_REMOTE_CALL : WSTRING := MyLib_OPC::F_OPC_REMOTE("CALL_METHOD", PC_B_OPC, FF1_TRIGGER_NODE);
+		FF1_STATE_NODE : WSTRING := "/Objects/ToggleFF/FF1_State,1:s=FF1_State";
+		FF1_STATE_LOCAL_READ : WSTRING := MyLib_OPC::F_OPC_LOCAL("READ", FF1_STATE_NODE);
+		FF1_STATE_REMOTE_WRITE : WSTRING := MyLib_OPC::F_OPC_REMOTE("WRITE", PC_A_OPC, FF1_STATE_NODE);
+		SR1_SET_NODE : WSTRING := "/Objects/SRFlipflop/SR1_Set";
+		SR1_SET_LOCAL_METHOD : WSTRING := MyLib_OPC::F_OPC_LOCAL("CREATE_METHOD", SR1_SET_NODE);
+		SR1_SET_REMOTE_CALL : WSTRING := MyLib_OPC::F_OPC_REMOTE("CALL_METHOD", PC_B_OPC, SR1_SET_NODE);
+		SR1_RESET_NODE : WSTRING := "/Objects/SRFlipflop/SR1_Reset";
+		SR1_RESET_LOCAL_METHOD : WSTRING := MyLib_OPC::F_OPC_LOCAL("CREATE_METHOD", SR1_RESET_NODE);
+		SR1_RESET_REMOTE_CALL : WSTRING := MyLib_OPC::F_OPC_REMOTE("CALL_METHOD", PC_B_OPC, SR1_RESET_NODE);
+		SR1_TOGGLE_NODE : WSTRING := "/Objects/SRFlipflop/SR1_Toggle";
+		SR1_TOGGLE_LOCAL_METHOD : WSTRING := MyLib_OPC::F_OPC_LOCAL("CREATE_METHOD", SR1_TOGGLE_NODE);
+		SR1_TOGGLE_REMOTE_CALL : WSTRING := MyLib_OPC::F_OPC_REMOTE("CALL_METHOD", PC_B_OPC, SR1_TOGGLE_NODE);
+		SR1_STATE_NODE : WSTRING := "/Objects/SRFlipflop/SR1_State,1:s=SR1_State";
+		SR1_STATE_LOCAL_READ : WSTRING := MyLib_OPC::F_OPC_LOCAL("READ", SR1_STATE_NODE);
+		SR1_STATE_REMOTE_WRITE : WSTRING := MyLib_OPC::F_OPC_REMOTE("WRITE", PC_A_OPC, SR1_STATE_NODE);
+		SR2_SET_NODE : WSTRING := "/Objects/SRFlipflop/SR2_Set";
+		SR2_SET_LOCAL_METHOD : WSTRING := MyLib_OPC::F_OPC_LOCAL("CREATE_METHOD", SR2_SET_NODE);
+		SR2_SET_REMOTE_CALL : WSTRING := MyLib_OPC::F_OPC_REMOTE("CALL_METHOD", PC_B_OPC, SR2_SET_NODE);
+		SR2_RESET_NODE : WSTRING := "/Objects/SRFlipflop/SR2_Reset";
+		SR2_RESET_LOCAL_METHOD : WSTRING := MyLib_OPC::F_OPC_LOCAL("CREATE_METHOD", SR2_RESET_NODE);
+		SR2_RESET_REMOTE_CALL : WSTRING := MyLib_OPC::F_OPC_REMOTE("CALL_METHOD", PC_B_OPC, SR2_RESET_NODE);
+		SR2_STATE_NODE : WSTRING := "/Objects/SRFlipflop/SR2_State,1:s=SR2_State";
+		SR2_STATE_LOCAL_READ : WSTRING := MyLib_OPC::F_OPC_LOCAL("READ", SR2_STATE_NODE);
+		SR2_STATE_REMOTE_WRITE : WSTRING := MyLib_OPC::F_OPC_REMOTE("WRITE", PC_A_OPC, SR2_STATE_NODE);
+		SW1_UP_NODE : WSTRING := "/Objects/Switch1/Up,1:s=Switch1_Up";
+		SW1_UP_LOCAL_READ : WSTRING := MyLib_OPC::F_OPC_LOCAL("READ", SW1_UP_NODE);
+		SW1_UP_REMOTE_WRITE : WSTRING := MyLib_OPC::F_OPC_REMOTE("WRITE", PC_B_OPC, SW1_UP_NODE);
+		SW1_DOWN_NODE : WSTRING := "/Objects/Switch1/Down,1:s=Switch1_Down";
+		SW1_DOWN_LOCAL_READ : WSTRING := MyLib_OPC::F_OPC_LOCAL("READ", SW1_DOWN_NODE);
+		SW1_DOWN_REMOTE_WRITE : WSTRING := MyLib_OPC::F_OPC_REMOTE("WRITE", PC_B_OPC, SW1_DOWN_NODE);
+		SW1_UP_STATE_NODE : WSTRING := "/Objects/Switch1/UpState,1:s=Switch1_UpState";
+		SW1_UP_STATE_LOCAL_READ : WSTRING := MyLib_OPC::F_OPC_LOCAL("READ", SW1_UP_STATE_NODE);
+		SW1_UP_STATE_REMOTE_WRITE : WSTRING := MyLib_OPC::F_OPC_REMOTE("WRITE", PC_A_OPC, SW1_UP_STATE_NODE);
+		SW1_DOWN_STATE_NODE : WSTRING := "/Objects/Switch1/DownState,1:s=Switch1_DownState";
+		SW1_DOWN_STATE_LOCAL_READ : WSTRING := MyLib_OPC::F_OPC_LOCAL("READ", SW1_DOWN_STATE_NODE);
+		SW1_DOWN_STATE_REMOTE_WRITE : WSTRING := MyLib_OPC::F_OPC_REMOTE("WRITE", PC_A_OPC, SW1_DOWN_STATE_NODE);
+		SW2_PRESS_NODE : WSTRING := "/Objects/Switch2/Up,1:s=Switch2_Up;/Objects/Switch2/Down,1:s=Switch2_Down";
+		SW2_PRESS_LOCAL_READ : WSTRING := MyLib_OPC::F_OPC_LOCAL("READ", SW2_PRESS_NODE);
+		SW2_PRESS_REMOTE_WRITE : WSTRING := MyLib_OPC::F_OPC_REMOTE("WRITE", PC_B_OPC, SW2_PRESS_NODE);
+		SW2_STATE_NODE : WSTRING := "/Objects/Switch2/UpState,1:s=Switch2_UpState;/Objects/Switch2/DownState,1:s=Switch2_DownState";
+		SW2_STATE_LOCAL_READ : WSTRING := MyLib_OPC::F_OPC_LOCAL("READ", SW2_STATE_NODE);
+		SW2_STATE_REMOTE_WRITE : WSTRING := MyLib_OPC::F_OPC_REMOTE("WRITE", PC_A_OPC, SW2_STATE_NODE);
 	END_VAR
 END_GLOBALCONSTANTS
 ]]></OriginalSource>
