@@ -34,7 +34,7 @@ VAR_INPUT
 	sMgr : WSTRING; // MGR_ID der Station, z.B. logiBUS::stations::Computers::C_12
 END_VAR
 
-F_MGR_TO_OPC := CONCAT("opc.tcp://", LEFT(sMgr, FIND(sMgr, ":") - 1), ":4840");
+F_MGR_TO_OPC := CONCAT("opc.tcp://", LEFT(sMgr, FIND(sMgr, ":")), "4840");
 
 END_FUNCTION
 ]]></ST>
