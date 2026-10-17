@@ -13,6 +13,7 @@ freigeschaltet. Der Adapter fuehrt einen INIT-Request/Confirm-Handshake mit
 | `conversion/AOption_EVENT_TO_X` | Event -> AOption (z.B. konstantes `QI_OUT=TRUE`, ohne DEMUX) |
 | `splitting/AOption_T_2` | T-Stueck: `IN` -> `OUT1`, `OUT2` (OUT2 zuerst aktiv, OUT1 danach) |
 | `merging/AOption_OR_2` | Fan-In: `IN1`, `IN2` -> `OUT`, `QI_OUT = IN1 OR IN2`; `OUT.INIT_CNF` geht an den anfragenden Socket zurueck |
+| `merging/AOption_OR_3`, `AOption_OR_4` | wie `AOption_OR_2` mit 3 bzw. 4 Eingaengen (`E_MUX_4`/`E_DEMUX_4`, `OR_BOOL_3`/`_4`) |
 
 Ein DEMUX-Ausgang darf nur an **einen** Socket. Soll ein Ausgang eine Gruppe
 und zusaetzlich einen weiteren Baustein speisen, muss ein `AOption_T_2`
