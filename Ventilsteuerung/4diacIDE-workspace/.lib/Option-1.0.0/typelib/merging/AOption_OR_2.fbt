@@ -29,7 +29,9 @@
 			<Connection Source="OUT.INIT_CNF" Destination="E_DEMUX_2.EI" dx1="80" dx2="80" dy="-933.33"/>
 			<Connection Source="IN1.INIT_REQ" Destination="E_MUX_2.EI1" dx1="80" dx2="80" dy="-266.67"/>
 			<Connection Source="IN2.INIT_REQ" Destination="E_MUX_2.EI2" dx1="80" dx2="80" dy="386.67"/>
-			<Connection Source="E_MUX_2.EO" Destination="OR_QI.REQ"/>
+			<Connection Source="E_MUX_2.EO" Destination="OR_QI.REQ">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
 		</EventConnections>
 		<DataConnections>
 			<Connection Source="IN1.QI_OUT" Destination="OR_QI.IN1" dx1="606.67"/>
