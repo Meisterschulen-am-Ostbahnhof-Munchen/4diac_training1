@@ -1,21 +1,7 @@
-;<Request ID="8" Action="CREATE"><FB Name="EMB_RES_AX" Type="iec61499::system::EMB_RES" /></Request>
-EMB_RES_AX;<Request ID="9" Action="CREATE"><FB Name="E_TRIG" Type="iec61499::events::E_TRIG" /></Request>
-EMB_RES_AX;<Request ID="10" Action="CREATE"><FB Name="App_AX.Control.DigitalOutput_Q1" Type="logiBUS::io::DQ::logiBUS_QXA" /></Request>
-EMB_RES_AX;<Request ID="11" Action="CREATE"><FB Name="App_AX.Control.SoftKey_F1" Type="isobus::UT::io::Softkey::Softkey_IXA" /></Request>
-EMB_RES_AX;<Request ID="12" Action="CREATE"><FB Name="App_AX.Control.GreenWhiteBackground_AX.Q_BackgroundColour" Type="isobus::UT::Q::Q_BackgroundColour" /></Request>
-EMB_RES_AX;<Request ID="13" Action="CREATE"><FB Name="App_AX.Control.GreenWhiteBackground_AX.AX_SEL" Type="adapter::iec61131::selection::AX_SEL" /></Request>
-EMB_RES_AX;<Request ID="14" Action="CREATE"><FB Name="App_AX.Control.AX_SPLIT_2" Type="adapter::events::unidirectional::AX_SPLIT_2" /></Request>
-EMB_RES_AX;<Request ID="15" Action="WRITE"><Connection Source="TRUE" Destination="App_AX.Control.DigitalOutput_Q1.QI" /></Request>
-EMB_RES_AX;<Request ID="16" Action="WRITE"><Connection Source="(Pin:=1)" Destination="App_AX.Control.DigitalOutput_Q1.Output" /></Request>
-EMB_RES_AX;<Request ID="17" Action="WRITE"><Connection Source="TRUE" Destination="App_AX.Control.SoftKey_F1.QI" /></Request>
-EMB_RES_AX;<Request ID="18" Action="WRITE"><Connection Source="5000" Destination="App_AX.Control.SoftKey_F1.u16ObjId" /></Request>
-EMB_RES_AX;<Request ID="19" Action="WRITE"><Connection Source="5000" Destination="App_AX.Control.GreenWhiteBackground_AX.Q_BackgroundColour.u16ObjId" /></Request>
-EMB_RES_AX;<Request ID="20" Action="WRITE"><Connection Source="USINT#1" Destination="App_AX.Control.GreenWhiteBackground_AX.AX_SEL.IN0" /></Request>
-EMB_RES_AX;<Request ID="21" Action="WRITE"><Connection Source="USINT#2" Destination="App_AX.Control.GreenWhiteBackground_AX.AX_SEL.IN1" /></Request>
-EMB_RES_AX;<Request ID="22" Action="CREATE"><Connection Source="START.COLD" Destination="E_TRIG.REQ" /></Request>
-EMB_RES_AX;<Request ID="23" Action="CREATE"><Connection Source="App_AX.Control.AX_SPLIT_2.OUT1" Destination="App_AX.Control.DigitalOutput_Q1.OUT" /></Request>
-EMB_RES_AX;<Request ID="24" Action="CREATE"><Connection Source="App_AX.Control.GreenWhiteBackground_AX.AX_SEL.CNF" Destination="App_AX.Control.GreenWhiteBackground_AX.Q_BackgroundColour.REQ" /></Request>
-EMB_RES_AX;<Request ID="25" Action="CREATE"><Connection Source="App_AX.Control.GreenWhiteBackground_AX.AX_SEL.OUT" Destination="App_AX.Control.GreenWhiteBackground_AX.Q_BackgroundColour.u8Colour" /></Request>
-EMB_RES_AX;<Request ID="26" Action="CREATE"><Connection Source="App_AX.Control.AX_SPLIT_2.OUT2" Destination="App_AX.Control.GreenWhiteBackground_AX.AX_SEL.G" /></Request>
-EMB_RES_AX;<Request ID="27" Action="CREATE"><Connection Source="App_AX.Control.SoftKey_F1.IN" Destination="App_AX.Control.AX_SPLIT_2.IN" /></Request>
-EMB_RES_AX;<Request ID="28" Action="START"/>
+;<Request ID="4" Action="CREATE"><FB Name="EMB_RES_AX" Type="iec61499::system::EMB_RES" /></Request>
+EMB_RES_AX;<Request ID="5" Action="CREATE"><FB Name="E_TRIG" Type="iec61499::events::E_TRIG" /></Request>
+EMB_RES_AX;<Request ID="6" Action="CREATE"><FB Name="App_AX.Control.Q_NumericValue" Type="isobus::UT::Q::Q_NumericValue_PHYS" /></Request>
+EMB_RES_AX;<Request ID="7" Action="WRITE"><Connection Source="(u16ObjId:=12002,r32Scale:=0.01,i32Offset:=-100000,u8Decimals:=2)" Destination="App_AX.Control.Q_NumericValue.stObj" /></Request>
+EMB_RES_AX;<Request ID="8" Action="WRITE"><Connection Source="14.0" Destination="App_AX.Control.Q_NumericValue.rPhys" /></Request>
+EMB_RES_AX;<Request ID="9" Action="CREATE"><Connection Source="START.COLD" Destination="E_TRIG.REQ" /></Request>
+EMB_RES_AX;<Request ID="10" Action="START"/>
