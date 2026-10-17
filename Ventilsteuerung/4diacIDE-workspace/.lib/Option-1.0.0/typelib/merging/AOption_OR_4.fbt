@@ -14,7 +14,7 @@
 			<AdapterDeclaration Name="IN1" Type="Option::AOption" Comment="Erster AOption-Eingang" x="300" y="-400"/>
 			<AdapterDeclaration Name="IN2" Type="Option::AOption" Comment="Zweiter AOption-Eingang" x="300" y="600"/>
 			<AdapterDeclaration Name="IN3" Type="Option::AOption" Comment="Dritter AOption-Eingang" x="300" y="1600"/>
-			<AdapterDeclaration Name="IN4" Type="Option::AOption" Comment="Vierter AOption-Eingang" x="300" y="2600"/>
+			<AdapterDeclaration Name="IN4" Type="Option::AOption" Comment="Vierter AOption-Eingang" x="300" y="2300"/>
 		</Sockets>
 	</InterfaceList>
 	<FBNetwork>
@@ -26,24 +26,24 @@
 		</FB>
 		<EventConnections>
 			<Connection Source="OR_QI.CNF" Destination="OUT.INIT_REQ"/>
-			<Connection Source="OUT.INIT_CNF" Destination="E_DEMUX_4.EI"/>
-			<Connection Source="E_DEMUX_4.EO1" Destination="IN1.INIT_CNF"/>
-			<Connection Source="E_DEMUX_4.EO2" Destination="IN2.INIT_CNF"/>
-			<Connection Source="E_DEMUX_4.EO3" Destination="IN3.INIT_CNF"/>
-			<Connection Source="E_DEMUX_4.EO4" Destination="IN4.INIT_CNF"/>
-			<Connection Source="IN1.INIT_REQ" Destination="E_MUX_4.EI1"/>
-			<Connection Source="IN2.INIT_REQ" Destination="E_MUX_4.EI2"/>
-			<Connection Source="IN3.INIT_REQ" Destination="E_MUX_4.EI3"/>
-			<Connection Source="IN4.INIT_REQ" Destination="E_MUX_4.EI4"/>
+			<Connection Source="OUT.INIT_CNF" Destination="E_DEMUX_4.EI" dx1="80" dx2="80" dy="-586.67"/>
+			<Connection Source="E_DEMUX_4.EO1" Destination="IN1.INIT_CNF" dx1="393.33"/>
+			<Connection Source="E_DEMUX_4.EO2" Destination="IN2.INIT_CNF" dx1="393.33"/>
+			<Connection Source="E_DEMUX_4.EO3" Destination="IN3.INIT_CNF" dx1="260"/>
+			<Connection Source="E_DEMUX_4.EO4" Destination="IN4.INIT_CNF" dx1="146.67"/>
+			<Connection Source="IN1.INIT_REQ" Destination="E_MUX_4.EI1" dx1="80" dx2="553.33" dy="-326.67"/>
+			<Connection Source="IN2.INIT_REQ" Destination="E_MUX_4.EI2" dx1="80" dx2="560" dy="460"/>
+			<Connection Source="IN3.INIT_REQ" Destination="E_MUX_4.EI3" dx1="80" dx2="420" dy="420"/>
+			<Connection Source="IN4.INIT_REQ" Destination="E_MUX_4.EI4" dx1="80" dx2="280" dy="420"/>
 			<Connection Source="E_MUX_4.EO" Destination="OR_QI.REQ">
 				<Attribute Name="Visible" Value="false"/>
 			</Connection>
 		</EventConnections>
 		<DataConnections>
-			<Connection Source="IN1.QI_OUT" Destination="OR_QI.IN1"/>
-			<Connection Source="IN2.QI_OUT" Destination="OR_QI.IN2"/>
-			<Connection Source="IN3.QI_OUT" Destination="OR_QI.IN3"/>
-			<Connection Source="IN4.QI_OUT" Destination="OR_QI.IN4"/>
+			<Connection Source="IN1.QI_OUT" Destination="OR_QI.IN1" dx1="606.67"/>
+			<Connection Source="IN2.QI_OUT" Destination="OR_QI.IN2" dx1="606.67"/>
+			<Connection Source="IN3.QI_OUT" Destination="OR_QI.IN3" dx1="700"/>
+			<Connection Source="IN4.QI_OUT" Destination="OR_QI.IN4" dx1="820"/>
 			<Connection Source="OR_QI.OUT" Destination="OUT.QI_OUT"/>
 			<Connection Source="E_MUX_4.K" Destination="E_DEMUX_4.K"/>
 		</DataConnections>
