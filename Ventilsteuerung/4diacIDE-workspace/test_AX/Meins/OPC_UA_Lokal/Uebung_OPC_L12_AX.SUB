@@ -17,20 +17,20 @@
 	<SubAppInterfaceList>
 	</SubAppInterfaceList>
 	<SubAppNetwork>
-		<SubApp Name="Keys" Type="MyLib::sys::Softkey2_TO_A2X2_BG" x="-3400" y="-200">
+		<SubApp Name="Keys" Type="MyLib::sys::Softkey2_TO_A2X2_BG" x="-3800" y="-1000">
 			<Parameter Name="u16ObjId_UP" Value="SoftKey_F1"/>
 			<Parameter Name="u16ObjId_DOWN" Value="SoftKey_F2"/>
 		</SubApp>
-		<FB Name="NET" Type="MyLib::net::A2X2_PUBLISH_2_SUBSCRIBE_2" x="-800" y="-700">
+		<SubApp Name="NET" Type="MyLib::net::A2X2_PUBLISH_2_SUBSCRIBE_2" x="-800" y="-1200">
 			<Parameter Name="QI" Value="TRUE"/>
 			<Parameter Name="ID_WRITE" Value="SW2_PRESS_WRITE"/>
 			<Parameter Name="ID_READ" Value="SW2_STATE_READ"/>
-		</FB>
-		<FB Name="B_NET" Type="MyLib::net::A2X2_PUBLISH_2_SUBSCRIBE_2_PLUG" x="-1900" y="200">
+		</SubApp>
+		<SubApp Name="B_NET" Type="MyLib::net::A2X2_PUBLISH_2_SUBSCRIBE_2_PLUG" x="-1900" y="200">
 			<Parameter Name="QI" Value="TRUE"/>
 			<Parameter Name="ID_WRITE" Value="SW2_STATE_WRITE"/>
 			<Parameter Name="ID_READ" Value="SW2_PRESS_READ"/>
-		</FB>
+		</SubApp>
 		<SubApp Name="ILOCK" Type="MyLib::sys::A2X2_ILOCK_SWITCH_PROTECT" x="700" y="600">
 			<Parameter Name="DT_PROTECT" Value="T#1s"/>
 		</SubApp>

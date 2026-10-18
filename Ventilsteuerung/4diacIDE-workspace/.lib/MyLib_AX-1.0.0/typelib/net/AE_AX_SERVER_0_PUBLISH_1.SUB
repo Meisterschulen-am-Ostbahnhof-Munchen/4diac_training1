@@ -30,43 +30,46 @@
 			<VarDeclaration Name="STATUS_STATE" Type="WSTRING" Comment="STATUS von STATE_CLIENT"/>
 		</OutputVars>
 		<Plugs>
-			<AdapterDeclaration Name="TRIGGER" Type="adapter::types::bidirectional::AE_AX" Comment="Trigger (in), Zustand (out)" x="500" y="1300"/>
+			<AdapterDeclaration Name="TRIGGER" Type="adapter::types::bidirectional::AE_AX" Comment="Trigger (in), Zustand (out)"/>
 		</Plugs>
 	</SubAppInterfaceList>
 	<SubAppNetwork>
-		<FB Name="SERVER_0_1" Type="iec61499::net::SERVER_0" x="-500" y="400">
+		<FB Name="SERVER_0_1" Type="iec61499::net::SERVER_0" x="-6000" y="0">
 		</FB>
-		<FB Name="E_D_FF" Type="iec61499::events::E_D_FF" x="1300" y="1400">
+		<FB Name="EVENTS" Type="adapter::conversion::unidirectional::AE_EVENT_TO_E" x="-3600" y="0">
 		</FB>
-		<FB Name="STATE_CLIENT" Type="iec61499::net::PUBLISH_1" x="2700" y="1700">
+		<FB Name="SPLIT" Type="adapter::events::bidirectional::AE_TO_AE_AX_SPLIT" x="-1600" y="200">
 		</FB>
-		<FB Name="AND_QO" Type="iec61131::booleanOperators::AND_BOOL_2" x="4300" y="1200">
+		<FB Name="STATE_PUBLISH" Type="adapter::net::AX_PUBLISH_1" x="600" y="900">
+		</FB>
+		<FB Name="AND_QO" Type="iec61131::booleanOperators::AND_BOOL_2" x="2600" y="0">
 		</FB>
 		<EventConnections>
-			<Connection Source="INIT" Destination="SERVER_0_1.INIT" dx1="886.67"/>
-			<Connection Source="STATE_CLIENT.INITO" Destination="INITO" dx1="2640"/>
-			<Connection Source="STATE_CLIENT.INITO" Destination="AND_QO.REQ" dx1="393.33"/>
-			<Connection Source="SERVER_0_1.IND" Destination="TRIGGER.E1" dx1="153.33"/>
-			<Connection Source="TRIGGER.EI1" Destination="E_D_FF.CLK" dx1="120"/>
-			<Connection Source="E_D_FF.EO" Destination="STATE_CLIENT.REQ" dx1="400"/>
-			<Connection Source="SERVER_0_1.INITO" Destination="STATE_CLIENT.INIT" dx1="2140"/>
-			<Connection Source="SERVER_0_1.IND" Destination="AND_QO.REQ" dx1="2920"/>
-			<Connection Source="STATE_CLIENT.CNF" Destination="AND_QO.REQ" dx1="393.33"/>
-			<Connection Source="AND_QO.CNF" Destination="CNF" dx1="1073.33"/>
+			<Connection Source="INIT" Destination="SERVER_0_1.INIT"/>
+			<Connection Source="SERVER_0_1.INITO" Destination="STATE_PUBLISH.INIT"/>
+			<Connection Source="STATE_PUBLISH.INITO" Destination="INITO"/>
+			<Connection Source="STATE_PUBLISH.INITO" Destination="AND_QO.REQ"/>
+			<Connection Source="SERVER_0_1.IND" Destination="EVENTS.REQ"/>
+			<Connection Source="SERVER_0_1.IND" Destination="AND_QO.REQ"/>
+			<Connection Source="STATE_PUBLISH.CNF" Destination="AND_QO.REQ"/>
+			<Connection Source="AND_QO.CNF" Destination="CNF"/>
 		</EventConnections>
 		<DataConnections>
-			<Connection Source="QI" Destination="SERVER_0_1.QI" dx1="853.33"/>
-			<Connection Source="QI" Destination="STATE_CLIENT.QI" dx1="853.33"/>
-			<Connection Source="ID" Destination="SERVER_0_1.ID" dx1="886.67"/>
-			<Connection Source="ID_STATE" Destination="STATE_CLIENT.ID" dx1="820"/>
-			<Connection Source="TRIGGER.DI1" Destination="E_D_FF.D" dx1="120"/>
-			<Connection Source="E_D_FF.Q" Destination="STATE_CLIENT.SD_1" dx1="366.67"/>
-			<Connection Source="SERVER_0_1.QO" Destination="AND_QO.IN1" dx1="2886.67"/>
-			<Connection Source="STATE_CLIENT.QO" Destination="AND_QO.IN2" dx1="426.67"/>
-			<Connection Source="AND_QO.OUT" Destination="QO" dx1="1106.67"/>
-			<Connection Source="SERVER_0_1.STATUS" Destination="STATUS_TRIGGER" dx1="3533.33"/>
-			<Connection Source="STATE_CLIENT.STATUS" Destination="STATUS_STATE" dx1="2740"/>
+			<Connection Source="QI" Destination="SERVER_0_1.QI"/>
+			<Connection Source="ID" Destination="SERVER_0_1.ID"/>
+			<Connection Source="SERVER_0_1.QO" Destination="AND_QO.IN1"/>
+			<Connection Source="SERVER_0_1.STATUS" Destination="STATUS_TRIGGER"/>
+			<Connection Source="QI" Destination="STATE_PUBLISH.QI"/>
+			<Connection Source="ID_STATE" Destination="STATE_PUBLISH.ID"/>
+			<Connection Source="STATE_PUBLISH.QO" Destination="AND_QO.IN2"/>
+			<Connection Source="AND_QO.OUT" Destination="QO"/>
+			<Connection Source="STATE_PUBLISH.STATUS" Destination="STATUS_STATE"/>
 		</DataConnections>
+		<AdapterConnections>
+			<Connection Source="EVENTS.AE_OUT" Destination="SPLIT.IN"/>
+			<Connection Source="SPLIT.OUT" Destination="TRIGGER"/>
+			<Connection Source="SPLIT.AX_OUT" Destination="STATE_PUBLISH.IN"/>
+		</AdapterConnections>
 	</SubAppNetwork>
 	<Attribute Name="eclipse4diac::core::TypeHash" Value="''"/>
 </SubAppType>

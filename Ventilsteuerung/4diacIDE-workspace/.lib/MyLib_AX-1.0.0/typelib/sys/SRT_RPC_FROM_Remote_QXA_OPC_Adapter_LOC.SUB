@@ -32,21 +32,23 @@
 		</OutputVars>
 	</SubAppInterfaceList>
 	<SubAppNetwork>
-		<FB Name="TRIGGER" Type="MyLib::net::ASRT_AX_SERVER_0_PUBLISH_1" x="-6600" y="-500">
+		<SubApp Name="TRIGGER" Type="MyLib::net::ASRT_AX_SERVER_0_PUBLISH_1" x="-6400" y="-500">
+		</SubApp>
+		<FB Name="SPLIT" Type="adapter::events::bidirectional::ASRT_AX_AX_SPLIT" x="-3800" y="400">
 		</FB>
-		<FB Name="SPLIT" Type="adapter::events::bidirectional::ASRT_AX_AX_SPLIT" x="-3900" y="200">
+		<FB Name="FLIPFLOP" Type="adapter::events::bidirectional::ASRT_AX_T_FF_SR_2" x="-1900" y="300">
 		</FB>
-		<FB Name="FLIPFLOP" Type="adapter::events::bidirectional::ASRT_AX_T_FF_SR_2" x="-1800" y="-100">
+		<FB Name="DigitalOutput_Q1" Type="logiBUS::io::DQ::logiBUS_QXA" x="-500" y="0">
 		</FB>
-		<FB Name="DigitalOutput_Q1" Type="logiBUS::io::DQ::logiBUS_QXA" x="-1600" y="300">
-		</FB>
-		<FB Name="AND_QO" Type="iec61131::booleanOperators::AND_BOOL_2">
+		<FB Name="AND_QO" Type="iec61131::booleanOperators::AND_BOOL_2" x="1500" y="600">
 		</FB>
 		<EventConnections>
-			<Connection Source="INIT" Destination="TRIGGER.INIT"/>
-			<Connection Source="TRIGGER.INITO" Destination="DigitalOutput_Q1.INIT"/>
-			<Connection Source="DigitalOutput_Q1.INITO" Destination="INITO"/>
-			<Connection Source="DigitalOutput_Q1.INITO" Destination="AND_QO.REQ"/>
+			<Connection Source="INIT" Destination="TRIGGER.INIT" dx1="1726.67"/>
+			<Connection Source="TRIGGER.INITO" Destination="DigitalOutput_Q1.INIT" dx1="2040"/>
+			<Connection Source="DigitalOutput_Q1.INITO" Destination="INITO" dx1="2960"/>
+			<Connection Source="DigitalOutput_Q1.INITO" Destination="AND_QO.REQ" dx1="400">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
 		</EventConnections>
 		<DataConnections>
 			<Connection Source="Output" Destination="DigitalOutput_Q1.Output" dx1="4046.67">
@@ -64,11 +66,19 @@
 			<Connection Source="ID_STATE_WRITE" Destination="TRIGGER.ID_STATE" dx1="1400">
 				<Attribute Name="Visible" Value="false"/>
 			</Connection>
-			<Connection Source="QI" Destination="TRIGGER.QI"/>
-			<Connection Source="QI" Destination="DigitalOutput_Q1.QI"/>
-			<Connection Source="TRIGGER.QO" Destination="AND_QO.IN1"/>
-			<Connection Source="DigitalOutput_Q1.QO" Destination="AND_QO.IN2"/>
-			<Connection Source="AND_QO.OUT" Destination="QO"/>
+			<Connection Source="QI" Destination="TRIGGER.QI" dx1="1726.67">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="QI" Destination="DigitalOutput_Q1.QI" dx1="4173.33">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="TRIGGER.QO" Destination="AND_QO.IN1" dx1="2840">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="DigitalOutput_Q1.QO" Destination="AND_QO.IN2" dx1="400">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="AND_QO.OUT" Destination="QO" dx1="2673.33"/>
 		</DataConnections>
 		<AdapterConnections>
 			<Connection Source="TRIGGER.S_R_T" Destination="SPLIT.IN" dx1="900"/>

@@ -32,52 +32,55 @@
 			<VarDeclaration Name="STATUS_STATE" Type="WSTRING" Comment="STATUS von STATE_CLIENT"/>
 		</OutputVars>
 		<Plugs>
-			<AdapterDeclaration Name="S_R" Type="adapter::types::bidirectional::ASR_AX" Comment="Set/Reset (in), Zustand (out)" x="1100" y="-1000"/>
+			<AdapterDeclaration Name="S_R" Type="adapter::types::bidirectional::ASR_AX" Comment="Set/Reset (in), Zustand (out)"/>
 		</Plugs>
 	</SubAppInterfaceList>
 	<SubAppNetwork>
-		<FB Name="SET_SERVER" Type="iec61499::net::SERVER_0" x="-300" y="-1800">
+		<FB Name="SET_SERVER" Type="iec61499::net::SERVER_0" x="-6000" y="0">
 		</FB>
-		<FB Name="RESET_SERVER" Type="iec61499::net::SERVER_0" x="-300" y="-1000">
+		<FB Name="RESET_SERVER" Type="iec61499::net::SERVER_0" x="-6000" y="700">
 		</FB>
-		<FB Name="E_D_FF" Type="iec61499::events::E_D_FF" x="2400" y="-1100">
+		<FB Name="EVENTS" Type="adapter::conversion::unidirectional::ASR_2EVENTS_TO_SR" x="-3600" y="0">
 		</FB>
-		<FB Name="STATE_CLIENT" Type="iec61499::net::PUBLISH_1" x="3800" y="-1000">
+		<FB Name="SPLIT" Type="adapter::events::bidirectional::ASR_TO_ASR_AX_SPLIT" x="-1600" y="200">
 		</FB>
-		<FB Name="AND_QO" Type="iec61131::booleanOperators::AND_BOOL_3" x="5900" y="-1100">
+		<FB Name="STATE_PUBLISH" Type="adapter::net::AX_PUBLISH_1" x="600" y="900">
+		</FB>
+		<FB Name="AND_QO" Type="iec61131::booleanOperators::AND_BOOL_3" x="2600" y="0">
 		</FB>
 		<EventConnections>
-			<Connection Source="INIT" Destination="SET_SERVER.INIT" dx1="1000"/>
-			<Connection Source="SET_SERVER.INITO" Destination="RESET_SERVER.INIT" dx1="66.67" dx2="66.67" dy="-226.67"/>
-			<Connection Source="RESET_SERVER.INITO" Destination="STATE_CLIENT.INIT"/>
-			<Connection Source="STATE_CLIENT.INITO" Destination="INITO" dx1="66.67"/>
-			<Connection Source="STATE_CLIENT.INITO" Destination="AND_QO.REQ" dx1="66.67"/>
-			<Connection Source="SET_SERVER.IND" Destination="S_R.SET" dx1="340"/>
-			<Connection Source="RESET_SERVER.IND" Destination="S_R.RESET"/>
-			<Connection Source="S_R.EI1" Destination="E_D_FF.CLK" dx1="366.67"/>
-			<Connection Source="E_D_FF.EO" Destination="STATE_CLIENT.REQ" dx1="653.33"/>
-			<Connection Source="SET_SERVER.IND" Destination="AND_QO.REQ" dx1="3473.33"/>
-			<Connection Source="RESET_SERVER.IND" Destination="AND_QO.REQ" dx1="340"/>
-			<Connection Source="STATE_CLIENT.CNF" Destination="AND_QO.REQ" dx1="66.67"/>
-			<Connection Source="AND_QO.CNF" Destination="CNF" dx1="66.67"/>
+			<Connection Source="INIT" Destination="SET_SERVER.INIT"/>
+			<Connection Source="SET_SERVER.INITO" Destination="RESET_SERVER.INIT"/>
+			<Connection Source="RESET_SERVER.INITO" Destination="STATE_PUBLISH.INIT"/>
+			<Connection Source="STATE_PUBLISH.INITO" Destination="INITO"/>
+			<Connection Source="STATE_PUBLISH.INITO" Destination="AND_QO.REQ"/>
+			<Connection Source="SET_SERVER.IND" Destination="EVENTS.SET"/>
+			<Connection Source="SET_SERVER.IND" Destination="AND_QO.REQ"/>
+			<Connection Source="RESET_SERVER.IND" Destination="EVENTS.RESET"/>
+			<Connection Source="RESET_SERVER.IND" Destination="AND_QO.REQ"/>
+			<Connection Source="STATE_PUBLISH.CNF" Destination="AND_QO.REQ"/>
+			<Connection Source="AND_QO.CNF" Destination="CNF"/>
 		</EventConnections>
 		<DataConnections>
-			<Connection Source="QI" Destination="SET_SERVER.QI" dx1="933.33"/>
-			<Connection Source="QI" Destination="RESET_SERVER.QI" dx1="933.33"/>
-			<Connection Source="QI" Destination="STATE_CLIENT.QI" dx1="5846.67"/>
-			<Connection Source="ID_SET" Destination="SET_SERVER.ID" dx1="966.67"/>
-			<Connection Source="ID_RESET" Destination="RESET_SERVER.ID" dx1="900"/>
-			<Connection Source="ID_STATE" Destination="STATE_CLIENT.ID" dx1="2960"/>
-			<Connection Source="S_R.DI1" Destination="E_D_FF.D" dx1="500"/>
-			<Connection Source="E_D_FF.Q" Destination="STATE_CLIENT.SD_1" dx1="653.33"/>
-			<Connection Source="SET_SERVER.QO" Destination="AND_QO.IN1" dx1="4260"/>
-			<Connection Source="RESET_SERVER.QO" Destination="AND_QO.IN2" dx1="2766.67"/>
-			<Connection Source="STATE_CLIENT.QO" Destination="AND_QO.IN3" dx1="66.67"/>
-			<Connection Source="AND_QO.OUT" Destination="QO" dx1="66.67"/>
-			<Connection Source="SET_SERVER.STATUS" Destination="STATUS_SET" dx1="340"/>
-			<Connection Source="RESET_SERVER.STATUS" Destination="STATUS_RESET" dx1="3340"/>
-			<Connection Source="STATE_CLIENT.STATUS" Destination="STATUS_STATE" dx1="2166.67"/>
+			<Connection Source="QI" Destination="SET_SERVER.QI"/>
+			<Connection Source="ID_SET" Destination="SET_SERVER.ID"/>
+			<Connection Source="SET_SERVER.QO" Destination="AND_QO.IN1"/>
+			<Connection Source="SET_SERVER.STATUS" Destination="STATUS_SET"/>
+			<Connection Source="QI" Destination="RESET_SERVER.QI"/>
+			<Connection Source="ID_RESET" Destination="RESET_SERVER.ID"/>
+			<Connection Source="RESET_SERVER.QO" Destination="AND_QO.IN2"/>
+			<Connection Source="RESET_SERVER.STATUS" Destination="STATUS_RESET"/>
+			<Connection Source="QI" Destination="STATE_PUBLISH.QI"/>
+			<Connection Source="ID_STATE" Destination="STATE_PUBLISH.ID"/>
+			<Connection Source="STATE_PUBLISH.QO" Destination="AND_QO.IN3"/>
+			<Connection Source="AND_QO.OUT" Destination="QO"/>
+			<Connection Source="STATE_PUBLISH.STATUS" Destination="STATUS_STATE"/>
 		</DataConnections>
+		<AdapterConnections>
+			<Connection Source="EVENTS.ASR_OUT" Destination="SPLIT.IN"/>
+			<Connection Source="SPLIT.OUT" Destination="S_R"/>
+			<Connection Source="SPLIT.AX_OUT" Destination="STATE_PUBLISH.IN"/>
+		</AdapterConnections>
 	</SubAppNetwork>
 	<Attribute Name="eclipse4diac::core::TypeHash" Value="''"/>
 </SubAppType>
