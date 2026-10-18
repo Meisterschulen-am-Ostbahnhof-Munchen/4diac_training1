@@ -4,6 +4,23 @@
   "arch": "riscv32",
   "libs": [
     {
+      "name": "adapter_conversion",
+      "version": "3.0.0",
+      "file": "adapter_conversion-3.0.0-riscv32.elf",
+      "size": 800124,
+      "sha256": "03fb375d0c0a7f2ea91c5045f082fbc3dafa355bc2e28c62c4adf943e2d35b6a",
+      "requires": [
+        {
+          "name": "adapter_types",
+          "range": "^3.0"
+        },
+        {
+          "name": "iec61131-3",
+          "range": "^3.0"
+        }
+      ]
+    },
+    {
       "name": "adapter_events",
       "version": "3.0.0",
       "file": "adapter_events-3.0.0-riscv32.elf",
@@ -137,6 +154,22 @@
       ]
     },
     {
+      "name": "adapter_types",
+      "version": "3.0.0",
+      "file": "adapter_types-3.0.0-riscv32.elf",
+      "size": 238344,
+      "sha256": "d64aa345d23e74511b5c619985a19a467099d6a3821d66c278698d23c8cf4674",
+      "requires": []
+    },
+    {
+      "name": "iec61131-3",
+      "version": "3.0.1",
+      "file": "iec61131-3-3.0.1-riscv32.elf",
+      "size": 996916,
+      "sha256": "af6d06fe9c86f498c258060440adf5f2359ccb4f89c016bf808c51d0c363e2cf",
+      "requires": []
+    },
+    {
       "name": "adapter",
       "version": "3.0.0",
       "file": "adapter-3.0.0-riscv32.elf",
@@ -160,48 +193,15 @@
           "range": "^3.0"
         }
       ]
-    },
-    {
-      "name": "adapter_types",
-      "version": "3.0.0",
-      "file": "adapter_types-3.0.0-riscv32.elf",
-      "size": 238344,
-      "sha256": "d64aa345d23e74511b5c619985a19a467099d6a3821d66c278698d23c8cf4674",
-      "requires": []
-    },
-    {
-      "name": "iec61131-3",
-      "version": "3.0.1",
-      "file": "iec61131-3-3.0.1-riscv32.elf",
-      "size": 996916,
-      "sha256": "af6d06fe9c86f498c258060440adf5f2359ccb4f89c016bf808c51d0c363e2cf",
-      "requires": []
-    },
-    {
-      "name": "adapter_conversion",
-      "version": "3.0.0",
-      "file": "adapter_conversion-3.0.0-riscv32.elf",
-      "size": 800124,
-      "sha256": "03fb375d0c0a7f2ea91c5045f082fbc3dafa355bc2e28c62c4adf943e2d35b6a",
-      "requires": [
-        {
-          "name": "adapter_types",
-          "range": "^3.0"
-        },
-        {
-          "name": "iec61131-3",
-          "range": "^3.0"
-        }
-      ]
     }
   ],
   "files": [
     {
       "file": "test_AX_FORTE_PC_AX.fboot",
-      "size": 10926,
-      "sha256": "a38ec163484049d7cab88c25ac7e47ead85267eaa02c988eb0bbaddb04253622"
+      "size": 10124,
+      "sha256": "e6e12da266c5b2d5640aa292b1dab63de0c22d054aa4dd48ccd7ced6e624586f"
     }
   ],
-  "manifest_sha256": "6a25ce765000abe853faf40eecaa413892ced35db380c2e4b8daa0825717a250",
+  "manifest_sha256": "124394c8651dc6c7d4bec670cabd1164b0fa74cea6589cf2119b85417fa0e6fe",
   "signature": null
 }
