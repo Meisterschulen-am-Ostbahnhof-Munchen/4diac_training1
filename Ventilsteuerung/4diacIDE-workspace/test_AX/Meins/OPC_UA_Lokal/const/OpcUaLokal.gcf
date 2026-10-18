@@ -42,9 +42,9 @@ GLOBALCONSTANTS OpcUaLokal
 		L01_Q1_READ : WSTRING := MyLib_OPC::F_OPC_LOCAL("READ", L01_Q1_NODE); // L01: Output_Q1 liest lokal (SUBSCRIBE)
 
 		(*
-		 * L03 - wie Training_03: SoftKey_F1 ruft die Trigger-Methode per CALL_METHOD an localhost
-		 * auf (SERVER_0 legt sie lokal an), der Flipflop-Zustand kommt lokal per PUBLISH/SUBSCRIBE
-		 * zurueck.
+		 * L03 - wie Training_03, ohne VT: Input_I1 (Tastendruck) ruft die Trigger-Methode per
+		 * CALL_METHOD an localhost auf (SERVER_0 legt sie lokal an). Der Flipflop schaltet Output_Q1,
+		 * der Zustand kommt lokal per PUBLISH/SUBSCRIBE zurueck und wird auf Output_Q2 gezeigt.
 		 *)
 		L03_FF1_TRIGGER_NODE : WSTRING := "/Objects/Lokal/L03/FF1_Trigger"; // L03: Methode Toggle-Trigger
 		L03_FF1_TRIGGER_METHOD : WSTRING := MyLib_OPC::F_OPC_LOCAL("CREATE_METHOD", L03_FF1_TRIGGER_NODE); // L03: Methode lokal anlegen (SERVER_0)
