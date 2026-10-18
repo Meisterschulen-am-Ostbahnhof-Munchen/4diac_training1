@@ -56,6 +56,13 @@ PRELOAD_LIBS: list[str] = [
     "isobus_UT_io",
     "adapter_conversion",
     "isobus_UT_adapter",
+    # Franz, 2026-10-18: gehoert ebenfalls dazu (unter der 15-%-Schwelle).
+    "isobus_UT_io_adapter",
+    # Franz/Online-Deploy-Test 2026-10-18: AX_SEL (adapter_iec61131-3) und die
+    # OPC-UA-Adapter (net_adapter) fehlten - stecken meist in MyLib-SUBs unter
+    # .lib/, die der Nutzungs-Scan nicht mitgezaehlt hat.
+    "net_adapter",
+    "adapter_iec61131-3",
 ]
 
 # Nie vorab laden: das Board "Trainer" hat keinen CAN2 (Funk, DataPanel,

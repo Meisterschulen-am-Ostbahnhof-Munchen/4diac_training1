@@ -1,7 +1,8 @@
 ::Script
-:: Spielt die ELF-Grundausstattung (deploy_common.PRELOAD_LIBS) ohne Bootfile
-:: und ohne Manifest auf die Trainings-Knoten - siehe
-:: scripts_central/make_4diac_training1_elf_preload.py.
+:: Macht die Trainings-Knoten bereit fuer Online-Deploy aus der IDE: ELF-
+:: Grundausstattung (deploy_common.PRELOAD_LIBS) + eigenes Manifest ohne
+:: Bootfile, loescht vorhandene Bootfiles/Manifeste - siehe
+:: scripts_central/make_4diac_training1_elf_preload.py. Danach neu starten.
 
 @echo off & setlocal
 
