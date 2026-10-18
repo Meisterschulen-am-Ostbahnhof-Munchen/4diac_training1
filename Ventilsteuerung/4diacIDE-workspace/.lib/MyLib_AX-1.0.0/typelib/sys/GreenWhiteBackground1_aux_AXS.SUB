@@ -11,14 +11,22 @@
 		<Import declaration="isobus::UT::Q::types::s1ObjectID"/>
 	</CompilerInfo>
 	<SubAppInterfaceList>
+		<SubAppEventInputs>
+			<SubAppEvent Name="INIT" Type="EInit" Comment="Initialization Request">
+			</SubAppEvent>
+		</SubAppEventInputs>
 		<SubAppEventOutputs>
+			<SubAppEvent Name="INITO" Type="EInit" Comment="Initialization Confirm">
+			</SubAppEvent>
 			<SubAppEvent Name="CNF" Type="Event" Comment="Execution Confirmation">
 			</SubAppEvent>
 		</SubAppEventOutputs>
 		<InputVars>
+			<VarDeclaration Name="QI" Type="BOOL" Comment="Quality Input - TRUE to enable service" InitialValue="TRUE"/>
 			<VarDeclaration Name="u16ObjIds" Type="isobus::UT::Q::types::s1ObjectID" Comment="Object ID" InitialValue="(u16ObjId := ID_NULL)"/>
 		</InputVars>
 		<OutputVars>
+			<VarDeclaration Name="QO" Type="BOOL" Comment="Quality Output - TRUE if service executed successfully"/>
 			<VarDeclaration Name="STATUS_1" Type="STRING" Comment="Service Status"/>
 			<VarDeclaration Name="u8OldColour_1" Type="USINT" Comment="Old value of ID"/>
 			<VarDeclaration Name="result_1" Type="INT" Comment="retval see description"/>
@@ -44,6 +52,8 @@
 			<Connection Source="Q_BackgroundColourAux.CNF" Destination="CNF" dx1="1840"/>
 			<Connection Source="F_MOVE.CNF" Destination="Q_BackgroundColourAux.REQ" dx1="786.67"/>
 			<Connection Source="AX_SEL.CNF" Destination="F_MOVE.REQ" dx1="100"/>
+			<Connection Source="INIT" Destination="Q_BackgroundColourAux.INIT"/>
+			<Connection Source="Q_BackgroundColourAux.INITO" Destination="INITO"/>
 		</EventConnections>
 		<DataConnections>
 			<Connection Source="Q_BackgroundColourAux.s16result" Destination="result_1" dx1="1940"/>
@@ -52,6 +62,8 @@
 			<Connection Source="AX_SEL.OUT" Destination="Q_BackgroundColourAux.u8Colour" dx1="1813.33"/>
 			<Connection Source="u16ObjIds" Destination="F_MOVE.IN" dx1="2333.33"/>
 			<Connection Source="F_MOVE.OUT.u16ObjId" Destination="Q_BackgroundColourAux.u16ObjId" dx1="786.67"/>
+			<Connection Source="QI" Destination="Q_BackgroundColourAux.QI"/>
+			<Connection Source="Q_BackgroundColourAux.QO" Destination="QO"/>
 		</DataConnections>
 		<AdapterConnections>
 			<Connection Source="DI1" Destination="AX_SEL.G" dx1="1933.33"/>

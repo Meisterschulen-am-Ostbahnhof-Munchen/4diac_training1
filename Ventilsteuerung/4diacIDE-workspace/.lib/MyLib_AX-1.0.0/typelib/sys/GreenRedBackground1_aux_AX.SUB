@@ -10,15 +10,23 @@
 		<Import declaration="isobus::UT::Q::const::colours::COLOR_RED"/>
 	</CompilerInfo>
 	<SubAppInterfaceList>
+		<SubAppEventInputs>
+			<SubAppEvent Name="INIT" Type="EInit" Comment="Initialization Request">
+			</SubAppEvent>
+		</SubAppEventInputs>
 		<SubAppEventOutputs>
+			<SubAppEvent Name="INITO" Type="EInit" Comment="Initialization Confirm">
+			</SubAppEvent>
 			<SubAppEvent Name="CNF" Type="Event" Comment="Execution Confirmation">
 			</SubAppEvent>
 		</SubAppEventOutputs>
 		<InputVars>
+			<VarDeclaration Name="QI" Type="BOOL" Comment="Quality Input - TRUE to enable service" InitialValue="TRUE"/>
 			<VarDeclaration Name="u16ObjId" Type="UINT" Comment="Object ID Softkey/Button" InitialValue="ID_NULL">
 			</VarDeclaration>
 		</InputVars>
 		<OutputVars>
+			<VarDeclaration Name="QO" Type="BOOL" Comment="Quality Output - TRUE if service executed successfully"/>
 			<VarDeclaration Name="STATUS_1" Type="STRING" Comment="Service Status">
 			</VarDeclaration>
 			<VarDeclaration Name="u8OldColour_1" Type="USINT" Comment="Old value of ID">
@@ -40,6 +48,8 @@
 		<EventConnections>
 			<Connection Source="Q_BackgroundColourAux.CNF" Destination="CNF" dx1="960"/>
 			<Connection Source="AX_SEL.CNF" Destination="Q_BackgroundColourAux.REQ" dx1="213.33"/>
+			<Connection Source="INIT" Destination="Q_BackgroundColourAux.INIT"/>
+			<Connection Source="Q_BackgroundColourAux.INITO" Destination="INITO"/>
 		</EventConnections>
 		<DataConnections>
 			<Connection Source="u16ObjId" Destination="Q_BackgroundColourAux.u16ObjId" dx1="1126.67"/>
@@ -47,6 +57,8 @@
 			<Connection Source="Q_BackgroundColourAux.u8OldColour" Destination="u8OldColour_1" dx1="960"/>
 			<Connection Source="Q_BackgroundColourAux.STATUS" Destination="STATUS_1" dx1="946.67"/>
 			<Connection Source="AX_SEL.OUT" Destination="Q_BackgroundColourAux.u8Colour" dx1="406.67"/>
+			<Connection Source="QI" Destination="Q_BackgroundColourAux.QI"/>
+			<Connection Source="Q_BackgroundColourAux.QO" Destination="QO"/>
 		</DataConnections>
 		<AdapterConnections>
 			<Connection Source="DI1" Destination="AX_SEL.G" dx1="660"/>

@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SubAppType Name="Uebung_006g_AX" Comment="SR-Flip-Flop via INIT_ON_OFF, ausgeloest von 2x E_TRIG (EInitOn/EInitOff Broadcast auf unverbundene Events)">
+	<Identification Standard="61499-2" Description="Copyright (c) 2026 Meisterschulen am Ostbahnhof  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0">
+	</Identification>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2026-10-11" Remarks="initial API and implementation and/or initial documentation">
+	</VersionInfo>
+	<CompilerInfo packageName="Uebungen">
+		<Import declaration="logiBUS::io::DI::logiBUS_DI::Input_I1"/>
+		<Import declaration="logiBUS::io::DI::logiBUS_DI::Input_I2"/>
+		<Import declaration="logiBUS::io::DI::logiBUS_DI_Events::BUTTON_SINGLE_CLICK"/>
+		<Import declaration="logiBUS::io::DQ::logiBUS_DO::Output_Q1"/>
+	</CompilerInfo>
+	<SubAppInterfaceList>
+	</SubAppInterfaceList>
+	<SubAppNetwork>
+		<FB Name="DigitalOutput_Q1" Type="logiBUS::io::DQ::logiBUS_QXA" x="5800" y="1600">
+			<Parameter Name="QI" Value="TRUE">
+				<Attribute Name="Visible" Value="false"/>
+			</Parameter>
+			<Parameter Name="PARAMS" Value="">
+				<Attribute Name="Visible" Value="false"/>
+			</Parameter>
+			<Parameter Name="Output" Value="Output_Q1"/>
+			<Parameter Name="QO" Value="">
+				<Attribute Name="Visible" Value="false"/>
+			</Parameter>
+		</FB>
+		<FB Name="START" Type="logiBUS::io::DI::logiBUS_IE" x="-3200" y="200">
+			<Parameter Name="QI" Value="TRUE">
+				<Attribute Name="Visible" Value="false"/>
+			</Parameter>
+			<Parameter Name="PARAMS" Value="">
+				<Attribute Name="Visible" Value="false"/>
+			</Parameter>
+			<Parameter Name="Input" Value="Input_I1"/>
+			<Parameter Name="InputEvent" Value="BUTTON_SINGLE_CLICK"/>
+			<Parameter Name="QO" Value="">
+				<Attribute Name="Visible" Value="false"/>
+			</Parameter>
+		</FB>
+		<FB Name="STOP" Type="logiBUS::io::DI::logiBUS_IE" x="-3200" y="1200">
+			<Parameter Name="QI" Value="TRUE">
+				<Attribute Name="Visible" Value="false"/>
+			</Parameter>
+			<Parameter Name="PARAMS" Value="">
+				<Attribute Name="Visible" Value="false"/>
+			</Parameter>
+			<Parameter Name="Input" Value="Input_I2"/>
+			<Parameter Name="InputEvent" Value="BUTTON_SINGLE_CLICK"/>
+			<Parameter Name="QO" Value="">
+				<Attribute Name="Visible" Value="false"/>
+			</Parameter>
+		</FB>
+		<FB Name="E_TRIG_ON" Type="iec61499::events::E_TRIG" x="-1500" y="333.33">
+			<Parameter Name="EVENTTYPE" Value="'EInitOn'"/>
+		</FB>
+		<FB Name="E_TRIG_OFF" Type="iec61499::events::E_TRIG" x="-1500" y="1553.33">
+			<Parameter Name="EVENTTYPE" Value="'EInitOff'"/>
+		</FB>
+		<FB Name="INIT_ON_OFF" Type="iec61131::booleanOperators::INIT_ON_OFF" x="1900" y="1600">
+		</FB>
+		<FB Name="AX_SR" Type="adapter::events::unidirectional::AX_SR" x="4300" y="1700">
+		</FB>
+		<Comment Comment="INIT_ON und INIT_OFF bleiben unverbunden: E_TRIG broadcastet sein EVENTTYPE auf ALLE unverbundenen Events dieses Typs im Netzwerk - daher reagiert hier nur der passende Kanal (EInitOn bzw. EInitOff).&#10;" x="2200" y="2400" width="2700" height="500"/>
+		<EventConnections>
+			<Connection Source="START.IND" Destination="E_TRIG_ON.REQ" dx1="466.67"/>
+			<Connection Source="STOP.IND" Destination="E_TRIG_OFF.REQ" dx1="466.67"/>
+			<Connection Source="INIT_ON_OFF.INITO_ON" Destination="AX_SR.S" dx1="920"/>
+			<Connection Source="INIT_ON_OFF.INITO_OFF" Destination="AX_SR.R" dx1="920"/>
+		</EventConnections>
+		<AdapterConnections>
+			<Connection Source="AX_SR.Q" Destination="DigitalOutput_Q1.OUT" dx1="440"/>
+		</AdapterConnections>
+	</SubAppNetwork>
+</SubAppType>

@@ -8,23 +8,40 @@
 		<Import declaration="isobus::UT::Q::const::IDs::ID_NULL"/>
 	</CompilerInfo>
 	<SubAppInterfaceList>
+		<SubAppEventInputs>
+			<SubAppEvent Name="INIT" Type="EInit" Comment="Initialization Request">
+			</SubAppEvent>
+		</SubAppEventInputs>
+		<SubAppEventOutputs>
+			<SubAppEvent Name="INITO" Type="EInit" Comment="Initialization Confirm">
+			</SubAppEvent>
+		</SubAppEventOutputs>
 		<InputVars>
+			<VarDeclaration Name="QI" Type="BOOL" Comment="Quality Input - TRUE to enable service" InitialValue="TRUE"/>
 			<VarDeclaration Name="u16ObjId" Type="UINT" Comment="Object ID der VT-Checkbox (InputBoolean)" InitialValue="ID_NULL"/>
 		</InputVars>
+		<OutputVars>
+			<VarDeclaration Name="QO" Type="BOOL" Comment="Quality Output - TRUE if service executed successfully"/>
+		</OutputVars>
 		<Plugs>
 			<AdapterDeclaration Name="PERMIT_OUT" Type="adapter::types::unidirectional::AX" Comment="Roher Checkbox-Zustand (0/1) als Pegel"/>
 		</Plugs>
 	</SubAppInterfaceList>
 	<SubAppNetwork>
 		<FB Name="NumericValue_IDA" Type="isobus::UT::io::NumericValue::NumericValue_IDA" x="0" y="0">
-			<Parameter Name="QI" Value="TRUE"/>
 		</FB>
 		<FB Name="AD_TO_AX" Type="adapter::conversion::unidirectional::AD_TO_AX" x="2000" y="0">
 		</FB>
+		<EventConnections>
+			<Connection Source="INIT" Destination="NumericValue_IDA.INIT"/>
+			<Connection Source="NumericValue_IDA.INITO" Destination="INITO"/>
+		</EventConnections>
 		<DataConnections>
 			<Connection Source="u16ObjId" Destination="NumericValue_IDA.u16ObjId" dx1="600">
 				<Attribute Name="Visible" Value="false"/>
 			</Connection>
+			<Connection Source="QI" Destination="NumericValue_IDA.QI"/>
+			<Connection Source="NumericValue_IDA.QO" Destination="QO"/>
 		</DataConnections>
 		<AdapterConnections>
 			<Connection Source="NumericValue_IDA.IN" Destination="AD_TO_AX.AD_IN" dx1="600"/>

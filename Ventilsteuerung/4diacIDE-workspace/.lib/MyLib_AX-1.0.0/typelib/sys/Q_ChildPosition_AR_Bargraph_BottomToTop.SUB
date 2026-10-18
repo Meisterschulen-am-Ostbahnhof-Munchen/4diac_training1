@@ -16,6 +16,7 @@
 			<SubAppEvent Name="CNF" Type="Event" Comment="Confirmation of Requested Service"/>
 		</SubAppEventOutputs>
 		<InputVars>
+			<VarDeclaration Name="QI" Type="BOOL" Comment="Quality Input - TRUE to enable service" InitialValue="TRUE"/>
 			<VarDeclaration Name="u16ObjId" Type="UINT" Comment="Object ID" InitialValue="ID_NULL"/>
 			<VarDeclaration Name="u16ObjIdParent" Type="UINT" Comment="Parent object ID" InitialValue="ID_NULL"/>
 			<VarDeclaration Name="xScale" Type="BOOL" Comment="FALSE = bypass. TRUE (default) = scale by DM/SKM factor for u16ObjIdParent." InitialValue="TRUE"/>
@@ -23,6 +24,7 @@
 			<VarDeclaration Name="LengthPx" Type="REAL" Comment="Gesamtlaenge des Bargraphs in Pixeln (zur Spiegelung)" InitialValue="REAL#100.0"/>
 		</InputVars>
 		<OutputVars>
+			<VarDeclaration Name="QO" Type="BOOL" Comment="Quality Output - TRUE if service executed successfully"/>
 			<VarDeclaration Name="STATUS" Type="STRING" Comment="Service Status - passthrough from the internal Q_ChildPosition"/>
 			<VarDeclaration Name="s16OldXposition" Type="INT" Comment="Old X position - passthrough from the internal Q_ChildPosition"/>
 			<VarDeclaration Name="s16OldYposition" Type="INT" Comment="Old Y position - passthrough from the internal Q_ChildPosition"/>
@@ -54,6 +56,8 @@
 			<Connection Source="QPos.s16OldXposition" Destination="s16OldXposition" dx1="500"/>
 			<Connection Source="QPos.s16OldYposition" Destination="s16OldYposition" dx1="500"/>
 			<Connection Source="QPos.s16result" Destination="s16result" dx1="500"/>
+			<Connection Source="QI" Destination="QPos.QI"/>
+			<Connection Source="QPos.QO" Destination="QO"/>
 		</DataConnections>
 		<AdapterConnections>
 			<Connection Source="rPhys" Destination="AR_R_MUL.IN1" dx1="500"/>

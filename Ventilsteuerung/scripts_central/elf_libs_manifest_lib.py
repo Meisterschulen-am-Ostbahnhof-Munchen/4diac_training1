@@ -53,6 +53,9 @@ PREFIX_TO_LIB = {
     "OSCAT::Building": "OSCAT_Building",
     "OSCAT::Network": "OSCAT_Network",
     "OSCAT_adapter": "OSCAT_adapter",
+    "Option": "Option",
+    "Option::conversion": "Option",
+    "Option::selection": "Option",
     "adapter::net": "net_adapter",
     "adapter::conversion": "adapter_conversion",
     "adapter::events": "adapter_events",
@@ -75,6 +78,7 @@ PREFIX_TO_LIB = {
     "eclipse4diac::signalprocessing": "signalprocessing",
     "eclipse4diac::storage": "logiBUS_storage",
     "eclipse4diac::utils": "utils",
+    "iec61499::events": "events",
     "SafeArithmetic::arithmetic": "SafeArithmetic",
     "iec61131::arithmetic": "iec61131-3",
     "iec61131::arrays": "iec61131-3",
@@ -108,6 +112,10 @@ PREFIX_TO_LIB = {
 # Exakter FBType-Name -> Lib-Name. Hat in resolve_required_libs() IMMER
 # Vorrang vor PREFIX_TO_LIB. 1:1 aus elf_libs_manifest_lib.sh uebernommen.
 TYPE_NAME_TO_LIB = {
+    # iec61499::events: Default events-ELF, Ausnahme E_RESTART bleibt in der
+    # Firmware (Modul system) - "" = kein ELF, wird in resolve_required_libs()
+    # uebersprungen.
+    "E_RESTART": "",
     # adapter::conversion: Default adapter_conversion, Ausnahme logiBUS_utils_adapter
     "AQ_TO_AX": "logiBUS_utils_adapter",
     "AX_TO_AQ": "logiBUS_utils_adapter",
@@ -280,8 +288,10 @@ TYPE_NAME_TO_LIB = {
 }
 
 # Lib-Version, die aktuell als ELF gebaut/erwartet wird. 1:1 aus
-# elf_libs_manifest_lib.sh uebernommen. logiBUS_stations/core/events/net/
-# system bewusst NICHT eingetragen (kein eigenes ELF, siehe Bash-Original).
+# elf_libs_manifest_lib.sh uebernommen. logiBUS_stations/core/net/system
+# bewusst NICHT eingetragen (kein eigenes ELF, siehe Bash-Original). events
+# ist seit 2026-10-17 ELF (Firmware linkt events nicht mehr, nur E_RESTART
+# und der interne SR fuer Resourcen bleiben im Modul system).
 LIB_VERSIONS = {
     "BlinkMarine": "3.0.0",
     "DataPanel": "3.0.0",
@@ -290,6 +300,7 @@ LIB_VERSIONS = {
     "OSCAT_Building": "0.1.0",
     "OSCAT_Network": "0.1.0",
     "OSCAT_adapter": "3.0.0",
+    "Option": "1.0.0",
     "SafeArithmetic": "3.0.0",
     "adapter": "3.0.0",
     "adapter_conversion": "3.0.0",
@@ -298,12 +309,13 @@ LIB_VERSIONS = {
     "adapter_selection": "3.0.0",
     "adapter_types": "3.0.0",
     "convert": "3.0.0",
-    "iec61131-3": "3.0.0",
-    "iec61131-3-bool": "3.0.0",
+    "events": "3.0.0",
+    "iec61131-3": "3.0.1",
+    "iec61131-3-bool": "3.0.1",
     "isobus_TC": "3.0.0",
-    "isobus_UT": "3.0.0",
-    "isobus_UT_adapter": "3.0.0",
-    "isobus_UT_io": "3.0.0",
+    "isobus_UT": "3.1.1",
+    "isobus_UT_adapter": "3.1.1",
+    "isobus_UT_io": "3.0.1",
     "isobus_UT_io_adapter": "3.0.0",
     "isobus_pgn": "3.0.0",
     "isobus_signalprocessing": "3.0.0",
@@ -341,6 +353,7 @@ LIB_DIR_NAME = {
     "OSCAT_Building": "OSCAT_Building-0.1.0",
     "OSCAT_Network": "OSCAT_Network-0.1.0",
     "OSCAT_adapter": "OSCAT_adapter-3.0.0",
+    "Option": "Option-1.0.0",
     "SafeArithmetic": "SafeArithmetic-3.0.0",
     "adapter": "adapter-3.0.0",
     "adapter_conversion": "adapter_conversion-3.0.0",
@@ -349,6 +362,7 @@ LIB_DIR_NAME = {
     "adapter_selection": "adapter_selection-3.0.0",
     "adapter_types": "adapter_types-3.0.0",
     "convert": "convert-3.0.0",
+    "events": "events-3.0.0",
     "iec61131-3": "iec61131-3-3.0.0",
     "iec61131-3-bool": "iec61131-3-bool-3.0.0",
     "isobus_TC": "isobus_TC-3.0.0",

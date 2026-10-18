@@ -9,28 +9,41 @@
 	<CompilerInfo packageName="MyLib::sys">
 	</CompilerInfo>
 	<SubAppInterfaceList>
+		<SubAppEventInputs>
+			<SubAppEvent Name="INIT" Type="EInit" Comment="Initialization Request">
+			</SubAppEvent>
+		</SubAppEventInputs>
 		<SubAppEventOutputs>
+			<SubAppEvent Name="INITO" Type="EInit" Comment="Initialization Confirm">
+			</SubAppEvent>
 			<SubAppEvent Name="EO" Type="Event" Comment="Feuert bei steigender Flanke des subscribed AX-Werts"/>
 		</SubAppEventOutputs>
 		<InputVars>
+			<VarDeclaration Name="QI" Type="BOOL" Comment="Quality Input - TRUE to enable service" InitialValue="TRUE"/>
 			<VarDeclaration Name="ID" Type="WSTRING" Comment="OPC-UA-Endpoint-Konstante (READ), z. B. Anlage_EIN_READ"/>
 		</InputVars>
+		<OutputVars>
+			<VarDeclaration Name="QO" Type="BOOL" Comment="Quality Output - TRUE if service executed successfully"/>
+		</OutputVars>
 	</SubAppInterfaceList>
 	<SubAppNetwork>
 		<FB Name="SUBSCRIBE" Type="iec61499::net::SUBSCRIBE_1" x="0" y="0">
-			<Parameter Name="QI" Value="TRUE"/>
 		</FB>
 		<FB Name="E_R_TRIG" Type="iec61499::events::E_R_TRIG" x="1200" y="400">
 		</FB>
 		<EventConnections>
 			<Connection Source="SUBSCRIBE.IND" Destination="E_R_TRIG.EI" dx1="600"/>
 			<Connection Source="E_R_TRIG.EO" Destination="EO" dx1="693.33"/>
+			<Connection Source="INIT" Destination="SUBSCRIBE.INIT"/>
+			<Connection Source="SUBSCRIBE.INITO" Destination="INITO"/>
 		</EventConnections>
 		<DataConnections>
 			<Connection Source="ID" Destination="SUBSCRIBE.ID" dx1="800">
 				<Attribute Name="Visible" Value="false"/>
 			</Connection>
 			<Connection Source="SUBSCRIBE.RD_1" Destination="E_R_TRIG.QI" dx1="600"/>
+			<Connection Source="QI" Destination="SUBSCRIBE.QI"/>
+			<Connection Source="SUBSCRIBE.QO" Destination="QO"/>
 		</DataConnections>
 	</SubAppNetwork>
 </SubAppType>

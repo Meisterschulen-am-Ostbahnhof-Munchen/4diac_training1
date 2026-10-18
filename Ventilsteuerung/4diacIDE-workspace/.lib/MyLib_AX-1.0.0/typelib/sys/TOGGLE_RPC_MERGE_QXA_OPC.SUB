@@ -11,39 +11,55 @@
 		<Import declaration="logiBUS::io::DQ::logiBUS_DO_S"/>
 	</CompilerInfo>
 	<SubAppInterfaceList>
+		<SubAppEventInputs>
+			<SubAppEvent Name="INIT" Type="EInit" Comment="Initialization Request">
+			</SubAppEvent>
+		</SubAppEventInputs>
+		<SubAppEventOutputs>
+			<SubAppEvent Name="INITO" Type="EInit" Comment="Initialization Confirm">
+			</SubAppEvent>
+		</SubAppEventOutputs>
 		<InputVars>
+			<VarDeclaration Name="QI" Type="BOOL" Comment="Quality Input - TRUE to enable service" InitialValue="TRUE"/>
 			<VarDeclaration Name="Output" Type="logiBUS::io::DQ::logiBUS_DO_S" Comment="Physischer Ausgang" InitialValue="logiBUS_DO::Invalid"/>
 			<VarDeclaration Name="ID_TEST_READ" Type="WSTRING" Comment="Bestehende IO-Test-Subscribe-Adresse (z.B. STG5_Q0x_READ)"/>
 			<VarDeclaration Name="ID_TEST_WRITE" Type="WSTRING" Comment="Bestehende IO-Test-Publish-Adresse (z.B. STG5_Q0x_WRITE) - EIGENER Knoten, NICHT ID_TEST_READs Knoten (sonst Selbstrueckkopplung/Latch, siehe OPC_UA_VERNETZUNG.md Punkt 10+11)"/>
 			<VarDeclaration Name="ID_TRIGGER_METHOD" Type="WSTRING" Comment="Lokale Methodenadresse (ACTION=CREATE_METHOD) fuer den argumentlosen Toggle-Trigger, wird vom Bedienmodul per CALL_METHOD aufgerufen"/>
 			<VarDeclaration Name="ID_STATE_WRITE" Type="WSTRING" Comment="Lokale Publish-Adresse (ACTION=WRITE) fuer den tatsaechlichen Toggle-Zustand - wird vom Bedienmodul remote abonniert (z.B. fuer GreenWhiteBackground)"/>
 		</InputVars>
+		<OutputVars>
+			<VarDeclaration Name="QO" Type="BOOL" Comment="Quality Output - TRUE if service executed successfully"/>
+		</OutputVars>
 	</SubAppInterfaceList>
 	<SubAppNetwork>
-		<FB Name="TRIGGER_SERVER" Type="iec61499::net::SERVER_0" x="-6600" y="-1200">
-			<Parameter Name="QI" Value="TRUE"/>
+		<FB Name="TRIGGER_SERVER" Type="iec61499::net::SERVER_0" x="-6500" y="-1200">
 		</FB>
 		<FB Name="AX_T_FF" Type="adapter::events::unidirectional::AX_T_FF" x="-5000" y="-1100">
 		</FB>
-		<FB Name="SUBSCRIBE_TEST" Type="adapter::net::AX_SUBSCRIBE_1" x="-6600" y="-200">
-			<Parameter Name="QI" Value="TRUE"/>
+		<FB Name="SUBSCRIBE_TEST" Type="adapter::net::AX_SUBSCRIBE_1" x="-6500" y="-200">
 		</FB>
 		<FB Name="OR_MERGE" Type="adapter::booleanOperators::AX_OR_2" x="-3600" y="-600">
 		</FB>
-		<FB Name="DigitalOutput" Type="logiBUS::io::DQ::logiBUS_QXA" x="-500" y="-1700">
-			<Parameter Name="QI" Value="TRUE"/>
+		<FB Name="DigitalOutput" Type="logiBUS::io::DQ::logiBUS_QXA" x="-400" y="-1700">
 		</FB>
 		<FB Name="SPLIT" Type="adapter::events::unidirectional::AX_SPLIT_3" x="-2000" y="-600">
 		</FB>
-		<FB Name="PUBLISH_TEST" Type="adapter::net::AX_PUBLISH_1" x="-400" y="-700">
-			<Parameter Name="QI" Value="TRUE"/>
+		<FB Name="PUBLISH_TEST" Type="adapter::net::AX_PUBLISH_1" x="-300" y="-700">
 		</FB>
-		<FB Name="PUBLISH_STATE" Type="adapter::net::AX_PUBLISH_1" x="-400" y="200">
-			<Parameter Name="QI" Value="TRUE"/>
+		<FB Name="PUBLISH_STATE" Type="adapter::net::AX_PUBLISH_1" x="-300" y="200">
+		</FB>
+		<FB Name="AND_QO" Type="iec61131::booleanOperators::AND_BOOL_5" x="1800" y="-1400">
 		</FB>
 		<EventConnections>
 			<Connection Source="TRIGGER_SERVER.IND" Destination="AX_T_FF.CLK" dx1="373.33"/>
 			<Connection Source="TRIGGER_SERVER.IND" Destination="TRIGGER_SERVER.RSP" dx1="80" dx2="80" dy="160"/>
+			<Connection Source="INIT" Destination="TRIGGER_SERVER.INIT" dx1="1653.33"/>
+			<Connection Source="TRIGGER_SERVER.INITO" Destination="SUBSCRIBE_TEST.INIT" dx1="80" dx2="80" dy="500"/>
+			<Connection Source="SUBSCRIBE_TEST.INITO" Destination="DigitalOutput.INIT" dx1="2580"/>
+			<Connection Source="DigitalOutput.INITO" Destination="PUBLISH_TEST.INIT" dx1="80" dx2="80" dy="500"/>
+			<Connection Source="PUBLISH_TEST.INITO" Destination="PUBLISH_STATE.INIT" dx1="80" dx2="80" dy="446.67"/>
+			<Connection Source="PUBLISH_STATE.INITO" Destination="INITO" dx1="4380"/>
+			<Connection Source="PUBLISH_STATE.INITO" Destination="AND_QO.REQ" dx1="673.33"/>
 		</EventConnections>
 		<DataConnections>
 			<Connection Source="Output" Destination="DigitalOutput.Output" dx1="2913.33">
@@ -61,6 +77,17 @@
 			<Connection Source="ID_STATE_WRITE" Destination="PUBLISH_STATE.ID" dx1="1280">
 				<Attribute Name="Visible" Value="false"/>
 			</Connection>
+			<Connection Source="QI" Destination="TRIGGER_SERVER.QI" dx1="1653.33"/>
+			<Connection Source="QI" Destination="SUBSCRIBE_TEST.QI" dx1="1653.33"/>
+			<Connection Source="QI" Destination="DigitalOutput.QI" dx1="4700"/>
+			<Connection Source="QI" Destination="PUBLISH_TEST.QI" dx1="4753.33"/>
+			<Connection Source="QI" Destination="PUBLISH_STATE.QI" dx1="4753.33"/>
+			<Connection Source="TRIGGER_SERVER.QO" Destination="AND_QO.IN1" dx1="2966.67"/>
+			<Connection Source="SUBSCRIBE_TEST.QO" Destination="AND_QO.IN2" dx1="2826.67"/>
+			<Connection Source="DigitalOutput.QO" Destination="AND_QO.IN3" dx1="746.67"/>
+			<Connection Source="PUBLISH_TEST.QO" Destination="AND_QO.IN4" dx1="673.33"/>
+			<Connection Source="PUBLISH_STATE.QO" Destination="AND_QO.IN5" dx1="673.33"/>
+			<Connection Source="AND_QO.OUT" Destination="QO" dx1="2373.33"/>
 		</DataConnections>
 		<AdapterConnections>
 			<Connection Source="AX_T_FF.Q" Destination="OR_MERGE.IN1" dx1="280"/>

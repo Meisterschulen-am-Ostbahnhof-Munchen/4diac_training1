@@ -20,10 +20,14 @@
 			</SubAppEvent>
 		</SubAppEventOutputs>
 		<InputVars>
+			<VarDeclaration Name="QI" Type="BOOL" Comment="Quality Input - TRUE to enable service" InitialValue="TRUE"/>
 			<VarDeclaration Name="Picture" Type="UINT" Comment="Object ID of the ObjectPointer to the Picture"/>
 			<VarDeclaration Name="pictures" Type="isobus::UT::Q::types::s2x1ObjectIDs" Comment="the single Pictures" InitialValue="(up := (u16ObjId := ID_NULL), down := (u16ObjId := ID_NULL))"/>
 			<VarDeclaration Name="DI1" Type="BOOL" Comment="Selector" InitialValue="FALSE"/>
 		</InputVars>
+		<OutputVars>
+			<VarDeclaration Name="QO" Type="BOOL" Comment="Quality Output - TRUE if service executed successfully"/>
+		</OutputVars>
 	</SubAppInterfaceList>
 	<SubAppNetwork>
 		<FB Name="F_MOVE" Type="iec61131::selection::F_MOVE" x="-100" y="100">
@@ -58,6 +62,8 @@
 			<Connection Source="F_MOVE.OUT.down.u16ObjId" Destination="F_MUX_2.IN1" dx1="586.67"/>
 			<Connection Source="F_MUX_2.OUT" Destination="Q_NumericValueAux.u32NewValue" dx1="706.67"/>
 			<Connection Source="Picture" Destination="Q_NumericValueAux.u16ObjId" dx1="7313.33"/>
+			<Connection Source="QI" Destination="Q_NumericValueAux.QI"/>
+			<Connection Source="Q_NumericValueAux.QO" Destination="QO"/>
 		</DataConnections>
 	</SubAppNetwork>
 </SubAppType>

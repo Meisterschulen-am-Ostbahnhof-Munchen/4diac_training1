@@ -9,27 +9,35 @@
 		<Import declaration="logiBUS::utils::conversion::phys::NumericObjectPool_S"/>
 	</CompilerInfo>
 	<SubAppInterfaceList>
+		<SubAppEventInputs>
+			<SubAppEvent Name="INIT" Type="EInit" Comment="Initialization Request">
+			</SubAppEvent>
+		</SubAppEventInputs>
 		<SubAppEventOutputs>
+			<SubAppEvent Name="INITO" Type="EInit" Comment="Initialization Confirm">
+			</SubAppEvent>
 			<SubAppEvent Name="IND" Type="Event">
 			</SubAppEvent>
 		</SubAppEventOutputs>
 		<InputVars>
+			<VarDeclaration Name="QI" Type="BOOL" Comment="Quality Input - TRUE to enable service" InitialValue="TRUE"/>
 			<VarDeclaration Name="KEY" Type="STRING" Comment="Key name."/>
 			<VarDeclaration Name="stObj" Type="logiBUS::utils::conversion::phys::NumericObjectPool_S" InitialValue="(u16ObjId := ID_NULL, r32Scale := 1.0, i32Offset := 0, u8Decimals := 0)"/>
 		</InputVars>
 		<OutputVars>
+			<VarDeclaration Name="QO" Type="BOOL" Comment="Quality Output - TRUE if service executed successfully"/>
 			<VarDeclaration Name="VALUEO" Type="REAL"/>
 		</OutputVars>
 	</SubAppInterfaceList>
 	<SubAppNetwork>
 		<FB Name="NumericValue_PHYS" Type="isobus::UT::io::NumericValue::NumericValue_PHYS" x="-1300" y="300">
-			<Parameter Name="QI" Value="TRUE"/>
 		</FB>
 		<FB Name="NVS" Type="logiBUS::storage::esp32_nvs::NVS" x="2100" y="100">
-			<Parameter Name="QI" Value="TRUE"/>
 			<Parameter Name="DEFAULT_VALUE" Value="REAL#0.0"/>
 		</FB>
 		<FB Name="Q_NumericValue_PHYS" Type="isobus::UT::Q::Q_NumericValue_PHYS" x="4100" y="300">
+		</FB>
+		<FB Name="AND_QO" Type="iec61131::booleanOperators::AND_BOOL_3">
 		</FB>
 		<EventConnections>
 			<Connection Source="NumericValue_PHYS.IND" Destination="NVS.SET" dx1="380"/>
@@ -41,6 +49,11 @@
 				<Attribute Name="Visible" Value="false"/>
 			</Connection>
 			<Connection Source="NVS.INITO" Destination="NVS.GET" dx1="80" dx2="80" dy="-580"/>
+			<Connection Source="INIT" Destination="Q_NumericValue_PHYS.INIT"/>
+			<Connection Source="Q_NumericValue_PHYS.INITO" Destination="NumericValue_PHYS.INIT"/>
+			<Connection Source="NumericValue_PHYS.INITO" Destination="NVS.INIT"/>
+			<Connection Source="NVS.INITO" Destination="INITO"/>
+			<Connection Source="NVS.INITO" Destination="AND_QO.REQ"/>
 		</EventConnections>
 		<DataConnections>
 			<Connection Source="NumericValue_PHYS.rPhys" Destination="NVS.VALUE" dx1="186.67"/>
@@ -57,6 +70,13 @@
 			<Connection Source="stObj" Destination="NumericValue_PHYS.stObj" dx1="1793.33">
 				<Attribute Name="Visible" Value="false"/>
 			</Connection>
+			<Connection Source="QI" Destination="Q_NumericValue_PHYS.QI"/>
+			<Connection Source="QI" Destination="NumericValue_PHYS.QI"/>
+			<Connection Source="QI" Destination="NVS.QI"/>
+			<Connection Source="Q_NumericValue_PHYS.QO" Destination="AND_QO.IN1"/>
+			<Connection Source="NumericValue_PHYS.QO" Destination="AND_QO.IN2"/>
+			<Connection Source="NVS.QO" Destination="AND_QO.IN3"/>
+			<Connection Source="AND_QO.OUT" Destination="QO"/>
 		</DataConnections>
 	</SubAppNetwork>
 </SubAppType>

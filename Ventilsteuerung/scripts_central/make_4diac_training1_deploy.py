@@ -29,8 +29,16 @@ import time
 from pathlib import Path
 from typing import Optional
 
-from deploy_common import NODE_BASES, NODE_ORDER, REPO_PATHS, resolve_local_path
-from elf_libs_manifest_lib import NODE_ARCH, ManifestResult, build_libs_manifest, resolve_required_libs, sha256_of
+from deploy_common import NODE_BASES, NODE_ORDER, REPO_PATHS, preload_libs_with_requires, resolve_local_path
+from elf_libs_manifest_lib import (
+    LIB_VERSIONS,
+    NODE_ARCH,
+    ManifestResult,
+    build_libs_manifest,
+    resolve_elf_path,
+    resolve_required_libs,
+    sha256_of,
+)
 
 # Generell eingeschaltet - siehe elf_libs_manifest_lib.py/.sh fuer das
 # Firmware-Verhalten bei fehlendem/ungueltigem Manifest (existiert eine
@@ -227,8 +235,13 @@ def http_upload_file(
       http_remote_sha256()-Pruefung zeigt einen abweichenden/fehlenden Hash -
       die Firmware hat "Erfolg" gemeldet, obwohl die Datei nicht (korrekt)
       gespeichert wurde.
+    - "RECOVERED": der Upload-Request selbst ist mit einem Verbindungsfehler/
+      Timeout abgebrochen (frueher "000"), die Datei liegt laut
+      http_remote_sha256() aber vollstaendig mit dem erwarteten Hash auf dem
+      Knoten - wird vom Aufrufer wie "303" als Erfolg gewertet.
     - den HTTP-Status als String sonst ("303" = echter, verifizierter
-      Erfolg), "000" bei jedem Verbindungsfehler/nicht lesbarer Datei.
+      Erfolg), "000" bei jedem Verbindungsfehler/nicht lesbarer Datei, der
+      sich auch per Hash-Abfrage nicht als angekommen bestaetigen laesst.
     Alle neuen Parameter sind optional, damit alte Aufrufer unveraendert
     funktionieren (kein lokaler Hash -> kein Skip, keine Verifikation).
     remote_name darf einen Unterordner enthalten (z.B. "elf-libs/x.elf") -
@@ -253,8 +266,25 @@ def http_upload_file(
             return "SKIP"
     try:
         data = local_path.read_bytes()
+    except OSError:
+        return "000"
+    # Die Firmware (file_server.cpp, upload_post_handler) berechnet nach dem
+    # letzten Byte noch den SHA-256 der ganzen Datei, BEVOR sie antwortet -
+    # bei grossen Dateien und laufendem FORTE reichten 30 s nicht (Krauternter
+    # STG1, 2,4 MB, 2026-10-18: HTTP 000, Datei war aber vollstaendig da,
+    # Analyse ELFMASTER). Zeitlimit daher mit der Dateigroesse wachsen lassen.
+    timeout = max(timeout, 30 + 20 * len(data) / 1_000_000)
+    try:
         status, _body = _http(ip, "POST", f"/upload/{remote_name}", timeout, body=data)
     except OSError:
+        # Antwort verloren (Timeout/Verbindungsabriss) heisst nicht, dass die
+        # Datei fehlt: per Hash nachsehen, ob sie vollstaendig angekommen ist
+        # (der Hash kann kurz noch in Berechnung sein, daher mehrfach).
+        if verify_after_upload and local_sha256 is not None:
+            for _ in range(10):
+                if http_remote_sha256(ip, remote_name) == local_sha256:
+                    return "RECOVERED"
+                time.sleep(3)
         return "000"
     if status == 303 and verify_after_upload and local_sha256 is not None:
         # Live gegen die erste echte sha256-faehige Firmware beobachtet
@@ -330,6 +360,8 @@ def main() -> int:
                 print(f"  Lade {local_file} -> http://{ip}/upload/{remote_name}")
                 if http_code == "303":
                     print(f"  OK (HTTP {http_code})")
+                elif http_code == "RECOVERED":
+                    print("  OK (Antwort verloren, Datei laut Hash aber vollstaendig angekommen)")
                 else:
                     print(f"  WARNUNG: Upload fehlgeschlagen (HTTP {http_code})")
                     node_ok = False
@@ -341,7 +373,7 @@ def main() -> int:
             # echter 303-Erfolg oben) - sonst wuerde ein fehlgeschlagener
             # Upload den Knoten komplett ohne funktionierenden Bootfile
             # zuruecklassen (Sourcery-Finding, PR #288).
-            if remote_name.endswith(".fboot") and http_code in ("SKIP", "303"):
+            if remote_name.endswith(".fboot") and http_code in ("SKIP", "303", "RECOVERED"):
                 listing = http_listing(ip)
                 if listing is None:
                     print("  WARNUNG: Verzeichnis-Listing fehlgeschlagen - alte Bootfile-Kandidaten NICHT geprueft/entfernt.")
@@ -403,6 +435,15 @@ def main() -> int:
                                         node_ok = False
 
                         keep_names = {p.name for p in result.elf_paths}
+                        # Grundausstattung (make_4diac_training1_elf_preload.py)
+                        # nie loeschen, auch wenn dieses Manifest sie nicht
+                        # braucht - sonst laedt der naechste Uebungswechsel sie
+                        # wieder komplett hoch. Alte Versionen derselben Lib
+                        # fallen weiterhin raus (nur die aktuelle Datei bleibt).
+                        for lib in preload_libs_with_requires():
+                            preload_path = resolve_elf_path(lib, LIB_VERSIONS[lib], arch)
+                            if preload_path is not None:
+                                keep_names.add(preload_path.name)
                         elf_listing = http_listing(ip, "/elf-libs/", missing_ok=True)
                         if elf_listing is None:
                             print("  WARNUNG: elf-libs/-Listing fehlgeschlagen - alte ELF-Kandidaten NICHT geprueft/entfernt.")
@@ -433,6 +474,8 @@ def main() -> int:
                                     print(f"  Lade {elf_path} -> http://{ip}/upload/{elf_remote_path}")
                                     if http_code == "303":
                                         print(f"  OK (HTTP {http_code})")
+                                    elif http_code == "RECOVERED":
+                                        print("  OK (Antwort verloren, Datei laut Hash aber vollstaendig angekommen)")
                                     else:
                                         print(f"  WARNUNG: ELF-Upload fehlgeschlagen (HTTP {http_code})")
                                         elf_ok = False
@@ -451,6 +494,8 @@ def main() -> int:
                                 )
                                 if http_code == "303":
                                     print(f"  OK (HTTP {http_code})")
+                                elif http_code == "RECOVERED":
+                                    print("  OK (Antwort verloren, Datei laut Hash aber vollstaendig angekommen)")
                                 else:
                                     reason = "Datei laut Geraet nicht/falsch gespeichert" if http_code == "VERIFY_FAILED" else f"HTTP {http_code}"
                                     print(
@@ -482,6 +527,17 @@ def main() -> int:
             elif ip in unreachable:
                 print(f"  - {ip}: NICHT ERREICHBAR (uebersprungen)")
 
+    if upload_failed:
+        print()
+        print("ACHTUNG: Diese Knoten jetzt NICHT neu starten, sondern das Deploy einfach wiederholen:")
+        for ip in upload_failed:
+            print(f"  - {ip}")
+        print(
+            "  (Nach einem abgebrochenen Upload liegen dort neue und alte Dateien gemischt, z.B. ein neues\n"
+            "   Bootfile mit dem alten Libs-Manifest - ein Neustart in diesem Zustand kann FORTE am Start hindern.\n"
+            "   Bereits angekommene Dateien werden beim zweiten Lauf per Hash erkannt und uebersprungen.)",
+        )
+
     if reboot_needed:
         print()
         print("Neue Dateien werden erst nach einem Neustart aktiv.")
@@ -503,20 +559,6 @@ if __name__ == "__main__":
     except (AttributeError, ValueError):
         pass
 
-    # Skript wird meist per Doppelklick gestartet (Windows-Konsolenfenster) -
-    # ohne diese Pause schliesst sich das Fenster sofort und Warnungen/
-    # Fehlermeldungen sind nie zu sehen. Greift bei JEDEM Ausstiegspunkt
-    # (auch bei frueher Abbruch/Exception), analog zum Bash-"trap ... EXIT".
-    exit_code = 1
-    try:
-        exit_code = main()
-    finally:
-        # Ohne Eingabe (stdin < NUL im External-Tool-Aufruf) wirft input()
-        # sofort EOFError statt einfach durchzulaufen - das sah wie ein
-        # Absturz nach einem erfolgreichen Deploy aus, war aber nur diese
-        # Pause, die fuer den interaktiven Doppelklick-Start gedacht ist.
-        try:
-            input("\nFertig - Enter druecken zum Schliessen...")
-        except EOFError:
-            pass
-    sys.exit(exit_code)
+    # Keine "Enter druecken"-Pause am Ende: das Skript laeuft ueber die
+    # Launches in der 4diac IDE, dort stoert die Abfrage (Franz, 2026-10-18).
+    sys.exit(main())

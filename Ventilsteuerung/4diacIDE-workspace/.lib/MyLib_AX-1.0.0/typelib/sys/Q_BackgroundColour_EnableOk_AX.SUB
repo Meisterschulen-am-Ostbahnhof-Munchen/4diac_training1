@@ -11,14 +11,22 @@
 		<Import declaration="isobus::UT::Q::const::colours::COLOR_WHITE"/>
 	</CompilerInfo>
 	<SubAppInterfaceList>
+		<SubAppEventInputs>
+			<SubAppEvent Name="INIT" Type="EInit" Comment="Initialization Request">
+			</SubAppEvent>
+		</SubAppEventInputs>
 		<SubAppEventOutputs>
+			<SubAppEvent Name="INITO" Type="EInit" Comment="Initialization Confirm">
+			</SubAppEvent>
 			<SubAppEvent Name="CNF" Type="Event" Comment="Execution Confirmation">
 			</SubAppEvent>
 		</SubAppEventOutputs>
 		<InputVars>
+			<VarDeclaration Name="QI" Type="BOOL" Comment="Quality Input - TRUE to enable service" InitialValue="TRUE"/>
 			<VarDeclaration Name="u16ObjId" Type="UINT" Comment="Object ID Status-Anzeige (CButton, nur Hintergrundfarbe, kein Text)" InitialValue="ID_NULL"/>
 		</InputVars>
 		<OutputVars>
+			<VarDeclaration Name="QO" Type="BOOL" Comment="Quality Output - TRUE if service executed successfully"/>
 			<VarDeclaration Name="STATUS_1" Type="STRING" Comment="Service Status"/>
 			<VarDeclaration Name="result_1" Type="INT" Comment="retval see description"/>
 		</OutputVars>
@@ -40,11 +48,15 @@
 		</FB>
 		<EventConnections>
 			<Connection Source="Q_BackgroundColour.CNF" Destination="CNF" dx1="960"/>
+			<Connection Source="INIT" Destination="Q_BackgroundColour.INIT"/>
+			<Connection Source="Q_BackgroundColour.INITO" Destination="INITO"/>
 		</EventConnections>
 		<DataConnections>
 			<Connection Source="u16ObjId" Destination="Q_BackgroundColour.u16ObjId" dx1="4120"/>
 			<Connection Source="Q_BackgroundColour.s16result" Destination="result_1" dx1="1273.33"/>
 			<Connection Source="Q_BackgroundColour.STATUS" Destination="STATUS_1" dx1="1080"/>
+			<Connection Source="QI" Destination="Q_BackgroundColour.QI"/>
+			<Connection Source="Q_BackgroundColour.QO" Destination="QO"/>
 		</DataConnections>
 		<AdapterConnections>
 			<Connection Source="bEnable" Destination="Select_EnableOk_Colour.bEnable" dx1="906.67"/>

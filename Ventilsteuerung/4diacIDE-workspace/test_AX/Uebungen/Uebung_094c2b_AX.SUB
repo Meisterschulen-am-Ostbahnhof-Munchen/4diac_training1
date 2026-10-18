@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SubAppType Name="Uebung_094c2b_AX" Comment="Wie Uebung_094c2_AX, aber mit MyLib::sys::NumericValue_TO_AUI2_AND_STORE statt NumericValue_TO_AUI2: beide Indizes (K) werden zusaetzlich unabhaengig in INI_AUI persistiert.">
+	<Identification Standard="61499-2" Description="Copyright (c) 2026 Meisterschulen am Ostbahnhof  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0">
+	</Identification>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2026-10-13" Remarks="NumericValue_TO_AUI2 ersetzt durch NumericValue_TO_AUI2_AND_STORE - gleicher bidirektionaler VALUEO-Plug, zusaetzlich je Dropdown unabhaengig INI-persistiert (KEY_I1_STORE/SECTION_I1_STORE bzw. KEY_I2_STORE/SECTION_I2_STORE), analog Uebung_094b3b_AX/Uebung_094b4b_AX.">
+	</VersionInfo>
+	<CompilerInfo packageName="Uebungen">
+		<Import declaration="Uebungen::const::NVS::NVS_Keys::KEY_I1_STORE"/>
+		<Import declaration="Uebungen::const::NVS::NVS_Keys::SECTION_I1_STORE"/>
+		<Import declaration="Uebungen::const::NVS::NVS_Keys::KEY_I2_STORE"/>
+		<Import declaration="Uebungen::const::NVS::NVS_Keys::SECTION_I2_STORE"/>
+		<Import declaration="Uebungen::const::UT::DefaultPool::InputNumber_I1"/>
+		<Import declaration="Uebungen::const::UT::DefaultPool::InputNumber_I2"/>
+	</CompilerInfo>
+	<SubAppInterfaceList>
+	</SubAppInterfaceList>
+	<SubAppNetwork>
+		<SubApp Name="NumericValue_TO_AUI2_AND_STORE_1" Type="MyLib::sys::NumericValue_TO_AUI2_AND_STORE" x="-5500" y="300">
+			<Parameter Name="KEY" Value="KEY_I1_STORE"/>
+			<Parameter Name="SECTION" Value="SECTION_I1_STORE"/>
+			<Parameter Name="u16ObjId" Value="InputNumber_I1"/>
+		</SubApp>
+		<SubApp Name="NumericValue_TO_AUI2_AND_STORE_2" Type="MyLib::sys::NumericValue_TO_AUI2_AND_STORE" x="-5500" y="1500">
+			<Parameter Name="KEY" Value="KEY_I2_STORE"/>
+			<Parameter Name="SECTION" Value="SECTION_I2_STORE"/>
+			<Parameter Name="u16ObjId" Value="InputNumber_I2"/>
+		</SubApp>
+		<FB Name="AOption_AUI_DEMUX_OptionalGroup_001" Type="Option::selection::AOption_AUI_DEMUX_1" x="-3300" y="800">
+		</FB>
+		<FB Name="AOption_AUI_DEMUX_OptionalGroup_002" Type="Option::selection::AOption_AUI_DEMUX_1" x="-3200" y="2100">
+		</FB>
+		<SubApp Name="OptionalGroup_001" Type="MyLib_AX_Option::sys::OptionalGroup_001" x="-700" y="800">
+		</SubApp>
+		<SubApp Name="OptionalGroup_002" Type="MyLib_AX_Option::sys::OptionalGroup_002" x="-700" y="2100">
+		</SubApp>
+		<AdapterConnections>
+			<Connection Source="NumericValue_TO_AUI2_AND_STORE_1.VALUEO" Destination="AOption_AUI_DEMUX_OptionalGroup_001.K" dx1="433.33"/>
+			<Connection Source="NumericValue_TO_AUI2_AND_STORE_2.VALUEO" Destination="AOption_AUI_DEMUX_OptionalGroup_002.K" dx1="273.33"/>
+			<Connection Source="AOption_AUI_DEMUX_OptionalGroup_001.OUT1" Destination="OptionalGroup_001.AOption_IN"/>
+			<Connection Source="AOption_AUI_DEMUX_OptionalGroup_002.OUT1" Destination="OptionalGroup_002.AOption_IN"/>
+		</AdapterConnections>
+	</SubAppNetwork>
+</SubAppType>

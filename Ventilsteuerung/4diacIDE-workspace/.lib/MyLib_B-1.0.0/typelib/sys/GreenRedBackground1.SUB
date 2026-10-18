@@ -10,18 +10,24 @@
 	</CompilerInfo>
 	<SubAppInterfaceList>
 		<SubAppEventInputs>
+			<SubAppEvent Name="INIT" Type="EInit" Comment="Initialization Request">
+			</SubAppEvent>
 			<SubAppEvent Name="REQ" Type="Event" Comment="Normal Execution Request">
 			</SubAppEvent>
 		</SubAppEventInputs>
 		<SubAppEventOutputs>
+			<SubAppEvent Name="INITO" Type="EInit" Comment="Initialization Confirm">
+			</SubAppEvent>
 			<SubAppEvent Name="CNF_1" Type="Event" Comment="Execution Confirmation">
 			</SubAppEvent>
 		</SubAppEventOutputs>
 		<InputVars>
+			<VarDeclaration Name="QI" Type="BOOL" Comment="Quality Input - TRUE to enable service" InitialValue="TRUE"/>
 			<VarDeclaration Name="DI1" Type="BOOL" Comment="Selector"/>
 			<VarDeclaration Name="u16ObjId" Type="UINT" Comment="Object ID Softkey" InitialValue="ID_NULL"/>
 		</InputVars>
 		<OutputVars>
+			<VarDeclaration Name="QO" Type="BOOL" Comment="Quality Output - TRUE if service executed successfully"/>
 			<VarDeclaration Name="STATUS_1" Type="STRING" Comment="Service Status"/>
 			<VarDeclaration Name="u8OldColour_1" Type="USINT" Comment="Old value of ID"/>
 			<VarDeclaration Name="result_1" Type="INT" Comment="retval see description"/>
@@ -38,6 +44,8 @@
 			<Connection Source="Q_BackgroundColour.CNF" Destination="CNF_1" dx1="960"/>
 			<Connection Source="F_SEL_I.CNF" Destination="Q_BackgroundColour.REQ" dx1="373.33"/>
 			<Connection Source="REQ" Destination="F_SEL_I.REQ" dx1="473.33"/>
+			<Connection Source="INIT" Destination="Q_BackgroundColour.INIT"/>
+			<Connection Source="Q_BackgroundColour.INITO" Destination="INITO"/>
 		</EventConnections>
 		<DataConnections>
 			<Connection Source="u16ObjId" Destination="Q_BackgroundColour.u16ObjId" dx1="1126.67"/>
@@ -46,6 +54,8 @@
 			<Connection Source="Q_BackgroundColour.STATUS" Destination="STATUS_1" dx1="946.67"/>
 			<Connection Source="F_SEL_I.OUT" Destination="Q_BackgroundColour.u8Colour" dx1="533.33"/>
 			<Connection Source="DI1" Destination="F_SEL_I.G" dx1="440"/>
+			<Connection Source="QI" Destination="Q_BackgroundColour.QI"/>
+			<Connection Source="Q_BackgroundColour.QO" Destination="QO"/>
 		</DataConnections>
 	</SubAppNetwork>
 </SubAppType>
