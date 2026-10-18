@@ -542,20 +542,6 @@ if __name__ == "__main__":
     except (AttributeError, ValueError):
         pass
 
-    # Skript wird meist per Doppelklick gestartet (Windows-Konsolenfenster) -
-    # ohne diese Pause schliesst sich das Fenster sofort und Warnungen/
-    # Fehlermeldungen sind nie zu sehen. Greift bei JEDEM Ausstiegspunkt
-    # (auch bei frueher Abbruch/Exception), analog zum Bash-"trap ... EXIT".
-    exit_code = 1
-    try:
-        exit_code = main()
-    finally:
-        # Ohne Eingabe (stdin < NUL im External-Tool-Aufruf) wirft input()
-        # sofort EOFError statt einfach durchzulaufen - das sah wie ein
-        # Absturz nach einem erfolgreichen Deploy aus, war aber nur diese
-        # Pause, die fuer den interaktiven Doppelklick-Start gedacht ist.
-        try:
-            input("\nFertig - Enter druecken zum Schliessen...")
-        except EOFError:
-            pass
-    sys.exit(exit_code)
+    # Keine "Enter druecken"-Pause am Ende: das Skript laeuft ueber die
+    # Launches in der 4diac IDE, dort stoert die Abfrage (Franz, 2026-10-18).
+    sys.exit(main())
