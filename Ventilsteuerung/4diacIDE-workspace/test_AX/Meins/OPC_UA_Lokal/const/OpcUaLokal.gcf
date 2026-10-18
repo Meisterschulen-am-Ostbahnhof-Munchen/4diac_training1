@@ -17,6 +17,57 @@
 		<VarDeclaration Name="L03_FF1_STATE_NODE" Type="WSTRING" Comment="L03: Knoten Flipflop-Zustand" InitialValue="&quot;/Objects/Lokal/L03/FF1_State,1:s=L03_FF1_State&quot;"/>
 		<VarDeclaration Name="L03_FF1_STATE_WRITE" Type="WSTRING" Comment="L03: Zustand lokal schreiben (PUBLISH)" InitialValue="MyLib_OPC::F_OPC_LOCAL(&quot;WRITE&quot;, L03_FF1_STATE_NODE)"/>
 		<VarDeclaration Name="L03_FF1_STATE_READ" Type="WSTRING" Comment="L03: Zustand lokal lesen (SUBSCRIBE)" InitialValue="MyLib_OPC::F_OPC_LOCAL(&quot;READ&quot;, L03_FF1_STATE_NODE)"/>
+		<VarDeclaration Name="Q1_NODE" Type="WSTRING" Comment="Knoten Output_Q1" InitialValue="&quot;/Objects/DigitalOutput/Q1,1:s=Output_Q1&quot;"/>
+		<VarDeclaration Name="Q1_READ" Type="WSTRING" Comment="Output_Q1: lokal lesen (SUBSCRIBE)" InitialValue="MyLib_OPC::F_OPC_LOCAL(&quot;READ&quot;, Q1_NODE)"/>
+		<VarDeclaration Name="Q1_WRITE" Type="WSTRING" Comment="Output_Q1: lokal schreiben (PUBLISH)" InitialValue="MyLib_OPC::F_OPC_LOCAL(&quot;WRITE&quot;, Q1_NODE)"/>
+		<VarDeclaration Name="FF1_TRIGGER_NODE" Type="WSTRING" Comment="Knoten Toggle-Trigger" InitialValue="&quot;/Objects/ToggleFF/FF1_Trigger&quot;"/>
+		<VarDeclaration Name="FF1_TRIGGER_METHOD" Type="WSTRING" Comment="Toggle-Trigger: Methode lokal anlegen (SERVER)" InitialValue="MyLib_OPC::F_OPC_LOCAL(&quot;CREATE_METHOD&quot;, FF1_TRIGGER_NODE)"/>
+		<VarDeclaration Name="FF1_TRIGGER_CALL" Type="WSTRING" Comment="Toggle-Trigger: Methode per localhost aufrufen" InitialValue="MyLib_OPC::F_OPC_REMOTE(&quot;CALL_METHOD&quot;, LOCAL_OPC, FF1_TRIGGER_NODE)"/>
+		<VarDeclaration Name="FF1_STATE_NODE" Type="WSTRING" Comment="Knoten Toggle-Zustand" InitialValue="&quot;/Objects/ToggleFF/FF1_State,1:s=FF1_State&quot;"/>
+		<VarDeclaration Name="FF1_STATE_READ" Type="WSTRING" Comment="Toggle-Zustand: lokal lesen (SUBSCRIBE)" InitialValue="MyLib_OPC::F_OPC_LOCAL(&quot;READ&quot;, FF1_STATE_NODE)"/>
+		<VarDeclaration Name="FF1_STATE_WRITE" Type="WSTRING" Comment="Toggle-Zustand: lokal schreiben (PUBLISH)" InitialValue="MyLib_OPC::F_OPC_LOCAL(&quot;WRITE&quot;, FF1_STATE_NODE)"/>
+		<VarDeclaration Name="SR1_SET_NODE" Type="WSTRING" Comment="Knoten SR1 Set" InitialValue="&quot;/Objects/SRFlipflop/SR1_Set&quot;"/>
+		<VarDeclaration Name="SR1_SET_METHOD" Type="WSTRING" Comment="SR1 Set: Methode lokal anlegen (SERVER)" InitialValue="MyLib_OPC::F_OPC_LOCAL(&quot;CREATE_METHOD&quot;, SR1_SET_NODE)"/>
+		<VarDeclaration Name="SR1_SET_CALL" Type="WSTRING" Comment="SR1 Set: Methode per localhost aufrufen" InitialValue="MyLib_OPC::F_OPC_REMOTE(&quot;CALL_METHOD&quot;, LOCAL_OPC, SR1_SET_NODE)"/>
+		<VarDeclaration Name="SR1_RESET_NODE" Type="WSTRING" Comment="Knoten SR1 Reset" InitialValue="&quot;/Objects/SRFlipflop/SR1_Reset&quot;"/>
+		<VarDeclaration Name="SR1_RESET_METHOD" Type="WSTRING" Comment="SR1 Reset: Methode lokal anlegen (SERVER)" InitialValue="MyLib_OPC::F_OPC_LOCAL(&quot;CREATE_METHOD&quot;, SR1_RESET_NODE)"/>
+		<VarDeclaration Name="SR1_RESET_CALL" Type="WSTRING" Comment="SR1 Reset: Methode per localhost aufrufen" InitialValue="MyLib_OPC::F_OPC_REMOTE(&quot;CALL_METHOD&quot;, LOCAL_OPC, SR1_RESET_NODE)"/>
+		<VarDeclaration Name="SR1_TOGGLE_NODE" Type="WSTRING" Comment="Knoten SR1 Toggle" InitialValue="&quot;/Objects/SRFlipflop/SR1_Toggle&quot;"/>
+		<VarDeclaration Name="SR1_TOGGLE_METHOD" Type="WSTRING" Comment="SR1 Toggle: Methode lokal anlegen (SERVER)" InitialValue="MyLib_OPC::F_OPC_LOCAL(&quot;CREATE_METHOD&quot;, SR1_TOGGLE_NODE)"/>
+		<VarDeclaration Name="SR1_TOGGLE_CALL" Type="WSTRING" Comment="SR1 Toggle: Methode per localhost aufrufen" InitialValue="MyLib_OPC::F_OPC_REMOTE(&quot;CALL_METHOD&quot;, LOCAL_OPC, SR1_TOGGLE_NODE)"/>
+		<VarDeclaration Name="SR1_STATE_NODE" Type="WSTRING" Comment="Knoten SR1 Zustand" InitialValue="&quot;/Objects/SRFlipflop/SR1_State,1:s=SR1_State&quot;"/>
+		<VarDeclaration Name="SR1_STATE_READ" Type="WSTRING" Comment="SR1 Zustand: lokal lesen (SUBSCRIBE)" InitialValue="MyLib_OPC::F_OPC_LOCAL(&quot;READ&quot;, SR1_STATE_NODE)"/>
+		<VarDeclaration Name="SR1_STATE_WRITE" Type="WSTRING" Comment="SR1 Zustand: lokal schreiben (PUBLISH)" InitialValue="MyLib_OPC::F_OPC_LOCAL(&quot;WRITE&quot;, SR1_STATE_NODE)"/>
+		<VarDeclaration Name="SR2_SET_NODE" Type="WSTRING" Comment="Knoten SR2 Set" InitialValue="&quot;/Objects/SRFlipflop/SR2_Set&quot;"/>
+		<VarDeclaration Name="SR2_SET_METHOD" Type="WSTRING" Comment="SR2 Set: Methode lokal anlegen (SERVER)" InitialValue="MyLib_OPC::F_OPC_LOCAL(&quot;CREATE_METHOD&quot;, SR2_SET_NODE)"/>
+		<VarDeclaration Name="SR2_SET_CALL" Type="WSTRING" Comment="SR2 Set: Methode per localhost aufrufen" InitialValue="MyLib_OPC::F_OPC_REMOTE(&quot;CALL_METHOD&quot;, LOCAL_OPC, SR2_SET_NODE)"/>
+		<VarDeclaration Name="SR2_RESET_NODE" Type="WSTRING" Comment="Knoten SR2 Reset" InitialValue="&quot;/Objects/SRFlipflop/SR2_Reset&quot;"/>
+		<VarDeclaration Name="SR2_RESET_METHOD" Type="WSTRING" Comment="SR2 Reset: Methode lokal anlegen (SERVER)" InitialValue="MyLib_OPC::F_OPC_LOCAL(&quot;CREATE_METHOD&quot;, SR2_RESET_NODE)"/>
+		<VarDeclaration Name="SR2_RESET_CALL" Type="WSTRING" Comment="SR2 Reset: Methode per localhost aufrufen" InitialValue="MyLib_OPC::F_OPC_REMOTE(&quot;CALL_METHOD&quot;, LOCAL_OPC, SR2_RESET_NODE)"/>
+		<VarDeclaration Name="SR2_STATE_NODE" Type="WSTRING" Comment="Knoten SR2 Zustand" InitialValue="&quot;/Objects/SRFlipflop/SR2_State,1:s=SR2_State&quot;"/>
+		<VarDeclaration Name="SR2_STATE_READ" Type="WSTRING" Comment="SR2 Zustand: lokal lesen (SUBSCRIBE)" InitialValue="MyLib_OPC::F_OPC_LOCAL(&quot;READ&quot;, SR2_STATE_NODE)"/>
+		<VarDeclaration Name="SR2_STATE_WRITE" Type="WSTRING" Comment="SR2 Zustand: lokal schreiben (PUBLISH)" InitialValue="MyLib_OPC::F_OPC_LOCAL(&quot;WRITE&quot;, SR2_STATE_NODE)"/>
+		<VarDeclaration Name="SW1_UP_NODE" Type="WSTRING" Comment="Knoten SW1 Hoch-Taster" InitialValue="&quot;/Objects/Switch1/Up,1:s=Switch1_Up&quot;"/>
+		<VarDeclaration Name="SW1_UP_READ" Type="WSTRING" Comment="SW1 Hoch-Taster: lokal lesen (SUBSCRIBE)" InitialValue="MyLib_OPC::F_OPC_LOCAL(&quot;READ&quot;, SW1_UP_NODE)"/>
+		<VarDeclaration Name="SW1_UP_WRITE" Type="WSTRING" Comment="SW1 Hoch-Taster: lokal schreiben (PUBLISH)" InitialValue="MyLib_OPC::F_OPC_LOCAL(&quot;WRITE&quot;, SW1_UP_NODE)"/>
+		<VarDeclaration Name="SW1_DOWN_NODE" Type="WSTRING" Comment="Knoten SW1 Runter-Taster" InitialValue="&quot;/Objects/Switch1/Down,1:s=Switch1_Down&quot;"/>
+		<VarDeclaration Name="SW1_DOWN_READ" Type="WSTRING" Comment="SW1 Runter-Taster: lokal lesen (SUBSCRIBE)" InitialValue="MyLib_OPC::F_OPC_LOCAL(&quot;READ&quot;, SW1_DOWN_NODE)"/>
+		<VarDeclaration Name="SW1_DOWN_WRITE" Type="WSTRING" Comment="SW1 Runter-Taster: lokal schreiben (PUBLISH)" InitialValue="MyLib_OPC::F_OPC_LOCAL(&quot;WRITE&quot;, SW1_DOWN_NODE)"/>
+		<VarDeclaration Name="SW1_UP_STATE_NODE" Type="WSTRING" Comment="Knoten SW1 Hoch erreicht" InitialValue="&quot;/Objects/Switch1/UpState,1:s=Switch1_UpState&quot;"/>
+		<VarDeclaration Name="SW1_UP_STATE_READ" Type="WSTRING" Comment="SW1 Hoch erreicht: lokal lesen (SUBSCRIBE)" InitialValue="MyLib_OPC::F_OPC_LOCAL(&quot;READ&quot;, SW1_UP_STATE_NODE)"/>
+		<VarDeclaration Name="SW1_UP_STATE_WRITE" Type="WSTRING" Comment="SW1 Hoch erreicht: lokal schreiben (PUBLISH)" InitialValue="MyLib_OPC::F_OPC_LOCAL(&quot;WRITE&quot;, SW1_UP_STATE_NODE)"/>
+		<VarDeclaration Name="SW1_DOWN_STATE_NODE" Type="WSTRING" Comment="Knoten SW1 Runter erreicht" InitialValue="&quot;/Objects/Switch1/DownState,1:s=Switch1_DownState&quot;"/>
+		<VarDeclaration Name="SW1_DOWN_STATE_READ" Type="WSTRING" Comment="SW1 Runter erreicht: lokal lesen (SUBSCRIBE)" InitialValue="MyLib_OPC::F_OPC_LOCAL(&quot;READ&quot;, SW1_DOWN_STATE_NODE)"/>
+		<VarDeclaration Name="SW1_DOWN_STATE_WRITE" Type="WSTRING" Comment="SW1 Runter erreicht: lokal schreiben (PUBLISH)" InitialValue="MyLib_OPC::F_OPC_LOCAL(&quot;WRITE&quot;, SW1_DOWN_STATE_NODE)"/>
+		<VarDeclaration Name="SW2_PRESS_NODE" Type="WSTRING" Comment="Knoten SW2 Taster (2 Knoten)" InitialValue="&quot;/Objects/Switch2/Up,1:s=Switch2_Up;/Objects/Switch2/Down,1:s=Switch2_Down&quot;"/>
+		<VarDeclaration Name="SW2_PRESS_READ" Type="WSTRING" Comment="SW2 Taster (2 Knoten): lokal lesen (SUBSCRIBE)" InitialValue="MyLib_OPC::F_OPC_LOCAL(&quot;READ&quot;, SW2_PRESS_NODE)"/>
+		<VarDeclaration Name="SW2_PRESS_WRITE" Type="WSTRING" Comment="SW2 Taster (2 Knoten): lokal schreiben (PUBLISH)" InitialValue="MyLib_OPC::F_OPC_LOCAL(&quot;WRITE&quot;, SW2_PRESS_NODE)"/>
+		<VarDeclaration Name="SW2_STATE_NODE" Type="WSTRING" Comment="Knoten SW2 erreicht (2 Knoten)" InitialValue="&quot;/Objects/Switch2/UpState,1:s=Switch2_UpState;/Objects/Switch2/DownState,1:s=Switch2_DownState&quot;"/>
+		<VarDeclaration Name="SW2_STATE_READ" Type="WSTRING" Comment="SW2 erreicht (2 Knoten): lokal lesen (SUBSCRIBE)" InitialValue="MyLib_OPC::F_OPC_LOCAL(&quot;READ&quot;, SW2_STATE_NODE)"/>
+		<VarDeclaration Name="SW2_STATE_WRITE" Type="WSTRING" Comment="SW2 erreicht (2 Knoten): lokal schreiben (PUBLISH)" InitialValue="MyLib_OPC::F_OPC_LOCAL(&quot;WRITE&quot;, SW2_STATE_NODE)"/>
+		<VarDeclaration Name="L19_Q_NODE" Type="WSTRING" Comment="L19: Knoten" InitialValue="&quot;/Objects/Lokal/L19/Q,1:s=L19_Q&quot;"/>
+		<VarDeclaration Name="L19_Q_WRITE" Type="WSTRING" Comment="L19: Input_I1 schreibt lokal (PUBLISH)" InitialValue="MyLib_OPC::F_OPC_LOCAL(&quot;WRITE&quot;, L19_Q_NODE)"/>
+		<VarDeclaration Name="L19_Q_READ" Type="WSTRING" Comment="L19: Output_Q1 und Output_Q2 lesen beide" InitialValue="MyLib_OPC::F_OPC_LOCAL(&quot;READ&quot;, L19_Q_NODE)"/>
 	</GlobalConstants>
 	<OriginalSource><![CDATA[(*
  * OPC-UA-IDs fuer die lokalen Uebungen in Meins/OPC_UA_Lokal: alles auf einem Geraet.
@@ -52,6 +103,67 @@ GLOBALCONSTANTS OpcUaLokal
 		L03_FF1_STATE_NODE : WSTRING := "/Objects/Lokal/L03/FF1_State,1:s=L03_FF1_State"; // L03: Knoten Flipflop-Zustand
 		L03_FF1_STATE_WRITE : WSTRING := MyLib_OPC::F_OPC_LOCAL("WRITE", L03_FF1_STATE_NODE); // L03: Zustand lokal schreiben (PUBLISH)
 		L03_FF1_STATE_READ : WSTRING := MyLib_OPC::F_OPC_LOCAL("READ", L03_FF1_STATE_NODE); // L03: Zustand lokal lesen (SUBSCRIBE)
+
+		(*
+		 * L02, L04-L12 - wie Training_02/04-12: dieselben Knoten wie in test_VV, nur ohne Endpunkt.
+		 * Remote-WRITE wird lokales PUBLISH, CALL_METHOD laeuft per localhost.
+		 *)
+		Q1_NODE : WSTRING := "/Objects/DigitalOutput/Q1,1:s=Output_Q1"; // Knoten Output_Q1
+		Q1_READ : WSTRING := MyLib_OPC::F_OPC_LOCAL("READ", Q1_NODE); // Output_Q1: lokal lesen (SUBSCRIBE)
+		Q1_WRITE : WSTRING := MyLib_OPC::F_OPC_LOCAL("WRITE", Q1_NODE); // Output_Q1: lokal schreiben (PUBLISH)
+		FF1_TRIGGER_NODE : WSTRING := "/Objects/ToggleFF/FF1_Trigger"; // Knoten Toggle-Trigger
+		FF1_TRIGGER_METHOD : WSTRING := MyLib_OPC::F_OPC_LOCAL("CREATE_METHOD", FF1_TRIGGER_NODE); // Toggle-Trigger: Methode lokal anlegen (SERVER)
+		FF1_TRIGGER_CALL : WSTRING := MyLib_OPC::F_OPC_REMOTE("CALL_METHOD", LOCAL_OPC, FF1_TRIGGER_NODE); // Toggle-Trigger: Methode per localhost aufrufen
+		FF1_STATE_NODE : WSTRING := "/Objects/ToggleFF/FF1_State,1:s=FF1_State"; // Knoten Toggle-Zustand
+		FF1_STATE_READ : WSTRING := MyLib_OPC::F_OPC_LOCAL("READ", FF1_STATE_NODE); // Toggle-Zustand: lokal lesen (SUBSCRIBE)
+		FF1_STATE_WRITE : WSTRING := MyLib_OPC::F_OPC_LOCAL("WRITE", FF1_STATE_NODE); // Toggle-Zustand: lokal schreiben (PUBLISH)
+		SR1_SET_NODE : WSTRING := "/Objects/SRFlipflop/SR1_Set"; // Knoten SR1 Set
+		SR1_SET_METHOD : WSTRING := MyLib_OPC::F_OPC_LOCAL("CREATE_METHOD", SR1_SET_NODE); // SR1 Set: Methode lokal anlegen (SERVER)
+		SR1_SET_CALL : WSTRING := MyLib_OPC::F_OPC_REMOTE("CALL_METHOD", LOCAL_OPC, SR1_SET_NODE); // SR1 Set: Methode per localhost aufrufen
+		SR1_RESET_NODE : WSTRING := "/Objects/SRFlipflop/SR1_Reset"; // Knoten SR1 Reset
+		SR1_RESET_METHOD : WSTRING := MyLib_OPC::F_OPC_LOCAL("CREATE_METHOD", SR1_RESET_NODE); // SR1 Reset: Methode lokal anlegen (SERVER)
+		SR1_RESET_CALL : WSTRING := MyLib_OPC::F_OPC_REMOTE("CALL_METHOD", LOCAL_OPC, SR1_RESET_NODE); // SR1 Reset: Methode per localhost aufrufen
+		SR1_TOGGLE_NODE : WSTRING := "/Objects/SRFlipflop/SR1_Toggle"; // Knoten SR1 Toggle
+		SR1_TOGGLE_METHOD : WSTRING := MyLib_OPC::F_OPC_LOCAL("CREATE_METHOD", SR1_TOGGLE_NODE); // SR1 Toggle: Methode lokal anlegen (SERVER)
+		SR1_TOGGLE_CALL : WSTRING := MyLib_OPC::F_OPC_REMOTE("CALL_METHOD", LOCAL_OPC, SR1_TOGGLE_NODE); // SR1 Toggle: Methode per localhost aufrufen
+		SR1_STATE_NODE : WSTRING := "/Objects/SRFlipflop/SR1_State,1:s=SR1_State"; // Knoten SR1 Zustand
+		SR1_STATE_READ : WSTRING := MyLib_OPC::F_OPC_LOCAL("READ", SR1_STATE_NODE); // SR1 Zustand: lokal lesen (SUBSCRIBE)
+		SR1_STATE_WRITE : WSTRING := MyLib_OPC::F_OPC_LOCAL("WRITE", SR1_STATE_NODE); // SR1 Zustand: lokal schreiben (PUBLISH)
+		SR2_SET_NODE : WSTRING := "/Objects/SRFlipflop/SR2_Set"; // Knoten SR2 Set
+		SR2_SET_METHOD : WSTRING := MyLib_OPC::F_OPC_LOCAL("CREATE_METHOD", SR2_SET_NODE); // SR2 Set: Methode lokal anlegen (SERVER)
+		SR2_SET_CALL : WSTRING := MyLib_OPC::F_OPC_REMOTE("CALL_METHOD", LOCAL_OPC, SR2_SET_NODE); // SR2 Set: Methode per localhost aufrufen
+		SR2_RESET_NODE : WSTRING := "/Objects/SRFlipflop/SR2_Reset"; // Knoten SR2 Reset
+		SR2_RESET_METHOD : WSTRING := MyLib_OPC::F_OPC_LOCAL("CREATE_METHOD", SR2_RESET_NODE); // SR2 Reset: Methode lokal anlegen (SERVER)
+		SR2_RESET_CALL : WSTRING := MyLib_OPC::F_OPC_REMOTE("CALL_METHOD", LOCAL_OPC, SR2_RESET_NODE); // SR2 Reset: Methode per localhost aufrufen
+		SR2_STATE_NODE : WSTRING := "/Objects/SRFlipflop/SR2_State,1:s=SR2_State"; // Knoten SR2 Zustand
+		SR2_STATE_READ : WSTRING := MyLib_OPC::F_OPC_LOCAL("READ", SR2_STATE_NODE); // SR2 Zustand: lokal lesen (SUBSCRIBE)
+		SR2_STATE_WRITE : WSTRING := MyLib_OPC::F_OPC_LOCAL("WRITE", SR2_STATE_NODE); // SR2 Zustand: lokal schreiben (PUBLISH)
+		SW1_UP_NODE : WSTRING := "/Objects/Switch1/Up,1:s=Switch1_Up"; // Knoten SW1 Hoch-Taster
+		SW1_UP_READ : WSTRING := MyLib_OPC::F_OPC_LOCAL("READ", SW1_UP_NODE); // SW1 Hoch-Taster: lokal lesen (SUBSCRIBE)
+		SW1_UP_WRITE : WSTRING := MyLib_OPC::F_OPC_LOCAL("WRITE", SW1_UP_NODE); // SW1 Hoch-Taster: lokal schreiben (PUBLISH)
+		SW1_DOWN_NODE : WSTRING := "/Objects/Switch1/Down,1:s=Switch1_Down"; // Knoten SW1 Runter-Taster
+		SW1_DOWN_READ : WSTRING := MyLib_OPC::F_OPC_LOCAL("READ", SW1_DOWN_NODE); // SW1 Runter-Taster: lokal lesen (SUBSCRIBE)
+		SW1_DOWN_WRITE : WSTRING := MyLib_OPC::F_OPC_LOCAL("WRITE", SW1_DOWN_NODE); // SW1 Runter-Taster: lokal schreiben (PUBLISH)
+		SW1_UP_STATE_NODE : WSTRING := "/Objects/Switch1/UpState,1:s=Switch1_UpState"; // Knoten SW1 Hoch erreicht
+		SW1_UP_STATE_READ : WSTRING := MyLib_OPC::F_OPC_LOCAL("READ", SW1_UP_STATE_NODE); // SW1 Hoch erreicht: lokal lesen (SUBSCRIBE)
+		SW1_UP_STATE_WRITE : WSTRING := MyLib_OPC::F_OPC_LOCAL("WRITE", SW1_UP_STATE_NODE); // SW1 Hoch erreicht: lokal schreiben (PUBLISH)
+		SW1_DOWN_STATE_NODE : WSTRING := "/Objects/Switch1/DownState,1:s=Switch1_DownState"; // Knoten SW1 Runter erreicht
+		SW1_DOWN_STATE_READ : WSTRING := MyLib_OPC::F_OPC_LOCAL("READ", SW1_DOWN_STATE_NODE); // SW1 Runter erreicht: lokal lesen (SUBSCRIBE)
+		SW1_DOWN_STATE_WRITE : WSTRING := MyLib_OPC::F_OPC_LOCAL("WRITE", SW1_DOWN_STATE_NODE); // SW1 Runter erreicht: lokal schreiben (PUBLISH)
+		SW2_PRESS_NODE : WSTRING := "/Objects/Switch2/Up,1:s=Switch2_Up;/Objects/Switch2/Down,1:s=Switch2_Down"; // Knoten SW2 Taster (2 Knoten)
+		SW2_PRESS_READ : WSTRING := MyLib_OPC::F_OPC_LOCAL("READ", SW2_PRESS_NODE); // SW2 Taster (2 Knoten): lokal lesen (SUBSCRIBE)
+		SW2_PRESS_WRITE : WSTRING := MyLib_OPC::F_OPC_LOCAL("WRITE", SW2_PRESS_NODE); // SW2 Taster (2 Knoten): lokal schreiben (PUBLISH)
+		SW2_STATE_NODE : WSTRING := "/Objects/Switch2/UpState,1:s=Switch2_UpState;/Objects/Switch2/DownState,1:s=Switch2_DownState"; // Knoten SW2 erreicht (2 Knoten)
+		SW2_STATE_READ : WSTRING := MyLib_OPC::F_OPC_LOCAL("READ", SW2_STATE_NODE); // SW2 erreicht (2 Knoten): lokal lesen (SUBSCRIBE)
+		SW2_STATE_WRITE : WSTRING := MyLib_OPC::F_OPC_LOCAL("WRITE", SW2_STATE_NODE); // SW2 erreicht (2 Knoten): lokal schreiben (PUBLISH)
+
+		(*
+		 * L19 - lokal 2x lesen: ein PUBLISH, zwei SUBSCRIBE auf denselben Knoten. Braucht eine FORTE
+		 * mit eclipse-4diac/4diac-forte#1082, sonst 'Cannot add another one' (4diac-documentation#123).
+		 *)
+		L19_Q_NODE : WSTRING := "/Objects/Lokal/L19/Q,1:s=L19_Q"; // L19: Knoten
+		L19_Q_WRITE : WSTRING := MyLib_OPC::F_OPC_LOCAL("WRITE", L19_Q_NODE); // L19: Input_I1 schreibt lokal (PUBLISH)
+		L19_Q_READ : WSTRING := MyLib_OPC::F_OPC_LOCAL("READ", L19_Q_NODE); // L19: Output_Q1 und Output_Q2 lesen beide
 	END_VAR
 END_GLOBALCONSTANTS
 ]]></OriginalSource>
