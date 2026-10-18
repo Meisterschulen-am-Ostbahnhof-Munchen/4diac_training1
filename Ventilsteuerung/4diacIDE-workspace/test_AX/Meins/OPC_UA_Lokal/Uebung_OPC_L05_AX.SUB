@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SubAppType Name="Uebung_OPC_L05_AX" Comment="Wie Training_05, lokal: SoftKeys F1/F2 rufen Set/Reset per localhost auf, SR-Flipflop schaltet Output_Q1">
+	<Identification Standard="61499-2" Description="Copyright (c) 2026 Meisterschulen am Ostbahnhof  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0">
+	</Identification>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2026-10-18" Remarks="Aus SubApp_PC_A + SubApp_PC_B von test_VV zusammengefuehrt, lokale Varianten der Bausteine">
+	</VersionInfo>
+	<CompilerInfo packageName="Meins::OPC_UA_Lokal">
+		<Import declaration="Uebungen::const::UT::DefaultPool::SoftKey_F1"/>
+		<Import declaration="Uebungen::const::UT::DefaultPool::SoftKey_F2"/>
+		<Import declaration="Meins::OPC_UA_Lokal::const::OpcUaLokal::SR2_SET_CALL"/>
+		<Import declaration="Meins::OPC_UA_Lokal::const::OpcUaLokal::SR2_RESET_CALL"/>
+		<Import declaration="Meins::OPC_UA_Lokal::const::OpcUaLokal::SR2_STATE_READ"/>
+		<Import declaration="logiBUS::io::DQ::logiBUS_DO::Output_Q1"/>
+		<Import declaration="Meins::OPC_UA_Lokal::const::OpcUaLokal::SR2_SET_METHOD"/>
+		<Import declaration="Meins::OPC_UA_Lokal::const::OpcUaLokal::SR2_RESET_METHOD"/>
+		<Import declaration="Meins::OPC_UA_Lokal::const::OpcUaLokal::SR2_STATE_WRITE"/>
+	</CompilerInfo>
+	<SubAppInterfaceList>
+	</SubAppInterfaceList>
+	<SubAppNetwork>
+		<SubApp Name="SoftKeySR_PC_A_OPC" Type="MyLib::sys::SoftKeySR_PC_A_OPC" x="0" y="0">
+			<Parameter Name="u16ObjId_SET" Value="SoftKey_F1"/>
+			<Parameter Name="u16ObjId_RESET" Value="SoftKey_F2"/>
+			<Parameter Name="ID_SET_CALL" Value="SR2_SET_CALL"/>
+			<Parameter Name="ID_RESET_CALL" Value="SR2_RESET_CALL"/>
+			<Parameter Name="ID_STATE_READ" Value="SR2_STATE_READ"/>
+		</SubApp>
+		<SubApp Name="SoftKeySR_PC_B_OPC" Type="MyLib::sys::SoftKeySR_PC_B_OPC_LOC" x="6000" y="0">
+			<Parameter Name="Output" Value="Output_Q1"/>
+			<Parameter Name="ID_SET_METHOD" Value="SR2_SET_METHOD"/>
+			<Parameter Name="ID_RESET_METHOD" Value="SR2_RESET_METHOD"/>
+			<Parameter Name="ID_STATE_WRITE" Value="SR2_STATE_WRITE"/>
+		</SubApp>
+	</SubAppNetwork>
+</SubAppType>

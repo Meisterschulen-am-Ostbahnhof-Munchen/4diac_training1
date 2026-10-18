@@ -59,6 +59,40 @@
 		<VarDeclaration Name="SW2_STATE_NODE" Type="WSTRING" Comment="Knoten auf Station A" InitialValue="&quot;/Objects/Switch2/UpState,1:s=Switch2_UpState;/Objects/Switch2/DownState,1:s=Switch2_DownState&quot;"/>
 		<VarDeclaration Name="SW2_STATE_LOCAL_READ" Type="WSTRING" Comment="Station A: lokal (READ)" InitialValue="MyLib_OPC::F_OPC_LOCAL(&quot;READ&quot;, SW2_STATE_NODE)"/>
 		<VarDeclaration Name="SW2_STATE_REMOTE_WRITE" Type="WSTRING" Comment="Station B: WRITE auf Station A" InitialValue="MyLib_OPC::F_OPC_REMOTE(&quot;WRITE&quot;, PC_A_OPC, SW2_STATE_NODE)"/>
+		<VarDeclaration Name="T13_FLIP_NODE" Type="WSTRING" Comment="T13: Knoten Flip" InitialValue="&quot;/Objects/T13/Flip,1:s=T13_Flip&quot;"/>
+		<VarDeclaration Name="T13_FLOP_NODE" Type="WSTRING" Comment="T13: Knoten Flop" InitialValue="&quot;/Objects/T13/Flop,1:s=T13_Flop&quot;"/>
+		<VarDeclaration Name="T13_FLIP_READ" Type="WSTRING" Comment="T13: Flip lokal lesen (SUBSCRIBE)" InitialValue="MyLib_OPC::F_OPC_LOCAL(&quot;READ&quot;, T13_FLIP_NODE)"/>
+		<VarDeclaration Name="T13_FLOP_WRITE" Type="WSTRING" Comment="T13: Flop lokal schreiben (PUBLISH)" InitialValue="MyLib_OPC::F_OPC_LOCAL(&quot;WRITE&quot;, T13_FLOP_NODE)"/>
+		<VarDeclaration Name="T13_FLIP_REMOTE_WRITE" Type="WSTRING" Comment="T13: PC_A schreibt Flip auf PC_B" InitialValue="MyLib_OPC::F_OPC_REMOTE(&quot;WRITE&quot;, PC_B_OPC, T13_FLIP_NODE)"/>
+		<VarDeclaration Name="T13_FLOP_REMOTE_SUBSCRIBE" Type="WSTRING" Comment="T13: PC_A abonniert Flop auf PC_B" InitialValue="MyLib_OPC::F_OPC_REMOTE(&quot;SUBSCRIBE&quot;, PC_B_OPC, T13_FLOP_NODE)"/>
+		<VarDeclaration Name="T14_NUM1_NODE" Type="WSTRING" Comment="T14: Knoten Num1" InitialValue="&quot;/Objects/T14/Num1,1:s=T14_Num1&quot;"/>
+		<VarDeclaration Name="T14_NUM2_NODE" Type="WSTRING" Comment="T14: Knoten Num2" InitialValue="&quot;/Objects/T14/Num2,1:s=T14_Num2&quot;"/>
+		<VarDeclaration Name="T14_RESULT_NODE" Type="WSTRING" Comment="T14: Knoten Result" InitialValue="&quot;/Objects/T14/Result,1:s=T14_Result&quot;"/>
+		<VarDeclaration Name="T14_NUM1_READ" Type="WSTRING" Comment="T14: Num1 lokal lesen" InitialValue="MyLib_OPC::F_OPC_LOCAL(&quot;READ&quot;, T14_NUM1_NODE)"/>
+		<VarDeclaration Name="T14_NUM2_READ" Type="WSTRING" Comment="T14: Num2 lokal lesen" InitialValue="MyLib_OPC::F_OPC_LOCAL(&quot;READ&quot;, T14_NUM2_NODE)"/>
+		<VarDeclaration Name="T14_RESULT_WRITE" Type="WSTRING" Comment="T14: Result lokal schreiben" InitialValue="MyLib_OPC::F_OPC_LOCAL(&quot;WRITE&quot;, T14_RESULT_NODE)"/>
+		<VarDeclaration Name="T15_ADD_NODE" Type="WSTRING" Comment="T15: Knoten AddValues" InitialValue="&quot;/Objects/T15/AddValues&quot;"/>
+		<VarDeclaration Name="T15_ADD_METHOD" Type="WSTRING" Comment="T15: Methode AddValues anlegen (SERVER_1_2)" InitialValue="MyLib_OPC::F_OPC_LOCAL(&quot;CREATE_METHOD&quot;, T15_ADD_NODE)"/>
+		<VarDeclaration Name="T15_ADD_CALL" Type="WSTRING" Comment="T15: AddValues aufrufen (CLIENT_2_1)" InitialValue="MyLib_OPC::F_OPC_REMOTE(&quot;CALL_METHOD&quot;, PC_B_OPC, T15_ADD_NODE)"/>
+		<VarDeclaration Name="T16_INC_NODE" Type="WSTRING" Comment="T16: Knoten Increment" InitialValue="&quot;/Objects/T16/Increment,1:s=T16_Increment&quot;"/>
+		<VarDeclaration Name="T16_INCD_NODE" Type="WSTRING" Comment="T16: Knoten Incremented" InitialValue="&quot;/Objects/T16/Incremented,1:s=T16_Incremented&quot;"/>
+		<VarDeclaration Name="T16_INC_READ" Type="WSTRING" Comment="T16: Increment lokal lesen" InitialValue="MyLib_OPC::F_OPC_LOCAL(&quot;READ&quot;, T16_INC_NODE)"/>
+		<VarDeclaration Name="T16_INCD_WRITE" Type="WSTRING" Comment="T16: Incremented lokal schreiben" InitialValue="MyLib_OPC::F_OPC_LOCAL(&quot;WRITE&quot;, T16_INCD_NODE)"/>
+		<VarDeclaration Name="T16_INC_CLIENT_WRITE" Type="WSTRING" Comment="T16: Increment per CLIENT schreiben" InitialValue="MyLib_OPC::F_OPC_REMOTE(&quot;WRITE&quot;, PC_B_OPC, T16_INC_NODE)"/>
+		<VarDeclaration Name="T16_INCD_CLIENT_READ" Type="WSTRING" Comment="T16: Incremented per CLIENT lesen" InitialValue="MyLib_OPC::F_OPC_REMOTE(&quot;READ&quot;, PC_B_OPC, T16_INCD_NODE)"/>
+		<VarDeclaration Name="T17_INC_NODE" Type="WSTRING" Comment="T17: Knoten Increment" InitialValue="&quot;/Objects/T17/Increment,1:s=T17_Increment&quot;"/>
+		<VarDeclaration Name="T17_INCD_NODE" Type="WSTRING" Comment="T17: Knoten Incremented" InitialValue="&quot;/Objects/T17/Incremented,1:s=T17_Incremented&quot;"/>
+		<VarDeclaration Name="T17_INC_READ" Type="WSTRING" Comment="T17: Increment lokal lesen" InitialValue="MyLib_OPC::F_OPC_LOCAL(&quot;READ&quot;, T17_INC_NODE)"/>
+		<VarDeclaration Name="T17_INCD_WRITE" Type="WSTRING" Comment="T17: Incremented lokal schreiben" InitialValue="MyLib_OPC::F_OPC_LOCAL(&quot;WRITE&quot;, T17_INCD_NODE)"/>
+		<VarDeclaration Name="T17_INC_CLIENT_WRITE" Type="WSTRING" Comment="T17: Increment per CLIENT schreiben" InitialValue="MyLib_OPC::F_OPC_REMOTE(&quot;WRITE&quot;, PC_B_OPC, T17_INC_NODE)"/>
+		<VarDeclaration Name="T17_INCD_CLIENT_READ" Type="WSTRING" Comment="T17: Incremented per CLIENT lesen" InitialValue="MyLib_OPC::F_OPC_REMOTE(&quot;READ&quot;, PC_B_OPC, T17_INCD_NODE)"/>
+		<VarDeclaration Name="T17_INCD_SUBSCRIBE" Type="WSTRING" Comment="T17: Incremented abonnieren (SUBSCRIBE mit Endpunkt)" InitialValue="MyLib_OPC::F_OPC_REMOTE(&quot;SUBSCRIBE&quot;, PC_B_OPC, T17_INCD_NODE)"/>
+		<VarDeclaration Name="T18_OBJ_CREATE" Type="WSTRING" Comment="T18: Objekt anlegen (Typ BaseObjectType i=58)" InitialValue="&quot;opc_ua[CREATE_OBJECT;,i=58;/Objects/1:T18_MyObject]&quot;"/>
+		<VarDeclaration Name="T18_VAR_CREATE" Type="WSTRING" Comment="T18: Variable anlegen (BaseDataVariableType, Int32)" InitialValue="&quot;opc_ua[CREATE_VARIABLE;,i=63;,i=6;/Objects/1:T18_MyVariable]&quot;"/>
+		<VarDeclaration Name="T18_VAR_DELETE" Type="WSTRING" Comment="T18: Variable loeschen" InitialValue="&quot;opc_ua[DELETE_VARIABLE;/Objects/1:T18_MyVariable]&quot;"/>
+		<VarDeclaration Name="T18_OBJ_DELETE" Type="WSTRING" Comment="T18: Objekt loeschen" InitialValue="&quot;opc_ua[DELETE_OBJECT;/Objects/1:T18_MyObject]&quot;"/>
+		<VarDeclaration Name="T18_VAR_NODE" Type="WSTRING" Comment="T18: Knoten der angelegten Variable" InitialValue="&quot;/Objects/1:T18_MyVariable&quot;"/>
+		<VarDeclaration Name="T18_VAR_CLIENT_READ" Type="WSTRING" Comment="T18: PC_A liest die Variable per CLIENT" InitialValue="MyLib_OPC::F_OPC_REMOTE(&quot;READ&quot;, PC_B_OPC, T18_VAR_NODE)"/>
 	</GlobalConstants>
 	<OriginalSource><![CDATA[PACKAGE VV::const::OPC_UA;
 
@@ -116,6 +150,64 @@ GLOBALCONSTANTS myOpcUaAddresses
 		SW2_STATE_NODE : WSTRING := "/Objects/Switch2/UpState,1:s=Switch2_UpState;/Objects/Switch2/DownState,1:s=Switch2_DownState";
 		SW2_STATE_LOCAL_READ : WSTRING := MyLib_OPC::F_OPC_LOCAL("READ", SW2_STATE_NODE);
 		SW2_STATE_REMOTE_WRITE : WSTRING := MyLib_OPC::F_OPC_REMOTE("WRITE", PC_A_OPC, SW2_STATE_NODE);
+
+		(*
+		 * T13 - Training_13 - Flip-Flop: Flip per SUBSCRIBE, negiert ueber E_SWITCH/E_SR als Flop per PUBLISH.
+		 *)
+		T13_FLIP_NODE : WSTRING := "/Objects/T13/Flip,1:s=T13_Flip"; // T13: Knoten Flip
+		T13_FLOP_NODE : WSTRING := "/Objects/T13/Flop,1:s=T13_Flop"; // T13: Knoten Flop
+		T13_FLIP_READ : WSTRING := MyLib_OPC::F_OPC_LOCAL("READ", T13_FLIP_NODE); // T13: Flip lokal lesen (SUBSCRIBE)
+		T13_FLOP_WRITE : WSTRING := MyLib_OPC::F_OPC_LOCAL("WRITE", T13_FLOP_NODE); // T13: Flop lokal schreiben (PUBLISH)
+		T13_FLIP_REMOTE_WRITE : WSTRING := MyLib_OPC::F_OPC_REMOTE("WRITE", PC_B_OPC, T13_FLIP_NODE); // T13: PC_A schreibt Flip auf PC_B
+		T13_FLOP_REMOTE_SUBSCRIBE : WSTRING := MyLib_OPC::F_OPC_REMOTE("SUBSCRIBE", PC_B_OPC, T13_FLOP_NODE); // T13: PC_A abonniert Flop auf PC_B
+
+		(*
+		 * T14 - Training_14 - Adder: Num1 + Num2 = Result, Werte von aussen (UaExpert).
+		 *)
+		T14_NUM1_NODE : WSTRING := "/Objects/T14/Num1,1:s=T14_Num1"; // T14: Knoten Num1
+		T14_NUM2_NODE : WSTRING := "/Objects/T14/Num2,1:s=T14_Num2"; // T14: Knoten Num2
+		T14_RESULT_NODE : WSTRING := "/Objects/T14/Result,1:s=T14_Result"; // T14: Knoten Result
+		T14_NUM1_READ : WSTRING := MyLib_OPC::F_OPC_LOCAL("READ", T14_NUM1_NODE); // T14: Num1 lokal lesen
+		T14_NUM2_READ : WSTRING := MyLib_OPC::F_OPC_LOCAL("READ", T14_NUM2_NODE); // T14: Num2 lokal lesen
+		T14_RESULT_WRITE : WSTRING := MyLib_OPC::F_OPC_LOCAL("WRITE", T14_RESULT_NODE); // T14: Result lokal schreiben
+
+		(*
+		 * T15 - Training_15 - Methode AddValues: SERVER_1_2 rechnet RD_1 + RD_2, CLIENT_2_1 ruft mit Endpunkt auf.
+		 *)
+		T15_ADD_NODE : WSTRING := "/Objects/T15/AddValues"; // T15: Knoten AddValues
+		T15_ADD_METHOD : WSTRING := MyLib_OPC::F_OPC_LOCAL("CREATE_METHOD", T15_ADD_NODE); // T15: Methode AddValues anlegen (SERVER_1_2)
+		T15_ADD_CALL : WSTRING := MyLib_OPC::F_OPC_REMOTE("CALL_METHOD", PC_B_OPC, T15_ADD_NODE); // T15: AddValues aufrufen (CLIENT_2_1)
+
+		(*
+		 * T16 - Training_16 - Variablen per CLIENT: WRITE auf Increment, READ von Incremented (Increment + 1).
+		 *)
+		T16_INC_NODE : WSTRING := "/Objects/T16/Increment,1:s=T16_Increment"; // T16: Knoten Increment
+		T16_INCD_NODE : WSTRING := "/Objects/T16/Incremented,1:s=T16_Incremented"; // T16: Knoten Incremented
+		T16_INC_READ : WSTRING := MyLib_OPC::F_OPC_LOCAL("READ", T16_INC_NODE); // T16: Increment lokal lesen
+		T16_INCD_WRITE : WSTRING := MyLib_OPC::F_OPC_LOCAL("WRITE", T16_INCD_NODE); // T16: Incremented lokal schreiben
+		T16_INC_CLIENT_WRITE : WSTRING := MyLib_OPC::F_OPC_REMOTE("WRITE", PC_B_OPC, T16_INC_NODE); // T16: Increment per CLIENT schreiben
+		T16_INCD_CLIENT_READ : WSTRING := MyLib_OPC::F_OPC_REMOTE("READ", PC_B_OPC, T16_INCD_NODE); // T16: Incremented per CLIENT lesen
+
+		(*
+		 * T17 - Training_17 - Client-Subscription: wie 16, zusaetzlich SUBSCRIBE mit Endpunkt auf Incremented.
+		 *)
+		T17_INC_NODE : WSTRING := "/Objects/T17/Increment,1:s=T17_Increment"; // T17: Knoten Increment
+		T17_INCD_NODE : WSTRING := "/Objects/T17/Incremented,1:s=T17_Incremented"; // T17: Knoten Incremented
+		T17_INC_READ : WSTRING := MyLib_OPC::F_OPC_LOCAL("READ", T17_INC_NODE); // T17: Increment lokal lesen
+		T17_INCD_WRITE : WSTRING := MyLib_OPC::F_OPC_LOCAL("WRITE", T17_INCD_NODE); // T17: Incremented lokal schreiben
+		T17_INC_CLIENT_WRITE : WSTRING := MyLib_OPC::F_OPC_REMOTE("WRITE", PC_B_OPC, T17_INC_NODE); // T17: Increment per CLIENT schreiben
+		T17_INCD_CLIENT_READ : WSTRING := MyLib_OPC::F_OPC_REMOTE("READ", PC_B_OPC, T17_INCD_NODE); // T17: Incremented per CLIENT lesen
+		T17_INCD_SUBSCRIBE : WSTRING := MyLib_OPC::F_OPC_REMOTE("SUBSCRIBE", PC_B_OPC, T17_INCD_NODE); // T17: Incremented abonnieren (SUBSCRIBE mit Endpunkt)
+
+		(*
+		 * T18 - Training_18 - PUBLISH_0: Objekt und Variable anlegen und loeschen (lokal, remote nicht erlaubt).
+		 *)
+		T18_OBJ_CREATE : WSTRING := "opc_ua[CREATE_OBJECT;,i=58;/Objects/1:T18_MyObject]"; // T18: Objekt anlegen (Typ BaseObjectType i=58)
+		T18_VAR_CREATE : WSTRING := "opc_ua[CREATE_VARIABLE;,i=63;,i=6;/Objects/1:T18_MyVariable]"; // T18: Variable anlegen (BaseDataVariableType, Int32)
+		T18_VAR_DELETE : WSTRING := "opc_ua[DELETE_VARIABLE;/Objects/1:T18_MyVariable]"; // T18: Variable loeschen
+		T18_OBJ_DELETE : WSTRING := "opc_ua[DELETE_OBJECT;/Objects/1:T18_MyObject]"; // T18: Objekt loeschen
+		T18_VAR_NODE : WSTRING := "/Objects/1:T18_MyVariable"; // T18: Knoten der angelegten Variable
+		T18_VAR_CLIENT_READ : WSTRING := MyLib_OPC::F_OPC_REMOTE("READ", PC_B_OPC, T18_VAR_NODE); // T18: PC_A liest die Variable per CLIENT
 	END_VAR
 END_GLOBALCONSTANTS
 ]]></OriginalSource>

@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SubAppType Name="Uebung_OPC_L16_AX" Comment="Variablen per CLIENT (opcua.adoc): Input_I1 schreibt 42 auf Increment (CLIENT_1_0), liest danach Incremented = 43 (CLIENT_0_1) - lokal auf einem Geraet">
+	<Identification Standard="61499-2" Description="Copyright (c) 2026 Meisterschulen am Ostbahnhof  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0">
+	</Identification>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2026-10-18" Remarks="opcua.adoc-Beispiel lokal (Meins/OPC_UA_Lokal)">
+	</VersionInfo>
+	<CompilerInfo packageName="Meins::OPC_UA_Lokal">
+		<Import declaration="Meins::OPC_UA_Lokal::const::OpcUaLokal::L16_INC_READ"/>
+		<Import declaration="Meins::OPC_UA_Lokal::const::OpcUaLokal::L16_INCD_WRITE"/>
+		<Import declaration="Meins::OPC_UA_Lokal::const::OpcUaLokal::L16_INC_CLIENT_WRITE"/>
+		<Import declaration="Meins::OPC_UA_Lokal::const::OpcUaLokal::L16_INCD_CLIENT_READ"/>
+		<Import declaration="logiBUS::io::DI::logiBUS_DI::Input_I1"/>
+		<Import declaration="logiBUS::io::DI::logiBUS_DI_Events::BUTTON_PRESS_DOWN"/>
+	</CompilerInfo>
+	<SubAppInterfaceList>
+	</SubAppInterfaceList>
+	<SubAppNetwork>
+		<FB Name="TASTER_I1" Type="logiBUS::io::DI::logiBUS_IE" x="0" y="0">
+			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="Input" Value="Input_I1"/>
+			<Parameter Name="InputEvent" Value="BUTTON_PRESS_DOWN"/>
+		</FB>
+		<FB Name="WRITE_INC" Type="iec61499::net::CLIENT_1_0" x="2200" y="0">
+			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="ID" Value="L16_INC_CLIENT_WRITE"/>
+			<Parameter Name="SD_1" Value="INT#42"/>
+		</FB>
+		<FB Name="READ_INCD" Type="iec61499::net::CLIENT_0_1" x="4400" y="0">
+			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="ID" Value="L16_INCD_CLIENT_READ"/>
+		</FB>
+		<FB Name="RESULT_TO_DINT" Type="iec61131::conversion::F_INT_TO_DINT" x="6600" y="0">
+		</FB>
+		<FB Name="INCREMENT" Type="iec61499::net::SUBSCRIBE_1" x="9000" y="0">
+			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="ID" Value="L16_INC_READ"/>
+		</FB>
+		<FB Name="TO_DINT" Type="iec61131::conversion::F_INT_TO_DINT" x="11000" y="0">
+		</FB>
+		<FB Name="F_ADD" Type="iec61131::arithmetic::F_ADD" x="12600" y="0">
+			<Parameter Name="IN2" Value="DINT#1"/>
+		</FB>
+		<FB Name="TO_INT" Type="iec61131::conversion::F_DINT_TO_INT" x="14200" y="0">
+		</FB>
+		<FB Name="INCREMENTED" Type="iec61499::net::PUBLISH_1" x="15800" y="0">
+			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="ID" Value="L16_INCD_WRITE"/>
+		</FB>
+		<EventConnections>
+			<Connection Source="TASTER_I1.IND" Destination="WRITE_INC.REQ"/>
+			<Connection Source="WRITE_INC.CNF" Destination="READ_INCD.REQ"/>
+			<Connection Source="TASTER_I1.INITO" Destination="WRITE_INC.INIT"/>
+			<Connection Source="WRITE_INC.INITO" Destination="READ_INCD.INIT"/>
+			<Connection Source="READ_INCD.CNF" Destination="RESULT_TO_DINT.REQ"/>
+			<Connection Source="INCREMENT.IND" Destination="TO_DINT.REQ"/>
+			<Connection Source="TO_DINT.CNF" Destination="F_ADD.REQ"/>
+			<Connection Source="F_ADD.CNF" Destination="TO_INT.REQ"/>
+			<Connection Source="TO_INT.CNF" Destination="INCREMENTED.REQ"/>
+			<Connection Source="INCREMENT.INITO" Destination="INCREMENTED.INIT"/>
+		</EventConnections>
+		<DataConnections>
+			<Connection Source="READ_INCD.RD_1" Destination="RESULT_TO_DINT.IN"/>
+			<Connection Source="INCREMENT.RD_1" Destination="TO_DINT.IN"/>
+			<Connection Source="TO_DINT.OUT" Destination="F_ADD.IN1"/>
+			<Connection Source="F_ADD.OUT" Destination="TO_INT.IN"/>
+			<Connection Source="TO_INT.OUT" Destination="INCREMENTED.SD_1"/>
+		</DataConnections>
+	</SubAppNetwork>
+</SubAppType>

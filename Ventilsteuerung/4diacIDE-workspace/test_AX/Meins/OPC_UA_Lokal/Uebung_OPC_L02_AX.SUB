@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SubAppType Name="Uebung_OPC_L02_AX" Comment="Wie Training_02 (Protokoll-FBs direkt statt im Composite), lokal: logiBUS_IXA -&gt; AX_PUBLISH_1, AX_SUBSCRIBE_1 -&gt; logiBUS_QXA">
+	<Identification Standard="61499-2" Description="Copyright (c) 2026 Meisterschulen am Ostbahnhof  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0">
+	</Identification>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2026-10-18" Remarks="OPC-UA lokal auf einem Geraet (Meins/OPC_UA_Lokal)">
+	</VersionInfo>
+	<CompilerInfo packageName="Meins::OPC_UA_Lokal">
+		<Import declaration="Meins::OPC_UA_Lokal::const::OpcUaLokal::Q1_WRITE"/>
+		<Import declaration="Meins::OPC_UA_Lokal::const::OpcUaLokal::Q1_READ"/>
+		<Import declaration="logiBUS::io::DI::logiBUS_DI::Input_I1"/>
+		<Import declaration="logiBUS::io::DQ::logiBUS_DO::Output_Q1"/>
+	</CompilerInfo>
+	<SubAppInterfaceList>
+	</SubAppInterfaceList>
+	<SubAppNetwork>
+		<FB Name="INPUT_I1" Type="logiBUS::io::DI::logiBUS_IXA" x="0" y="0">
+			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="Input" Value="Input_I1"/>
+		</FB>
+		<FB Name="PUBLISH_Q1" Type="adapter::net::AX_PUBLISH_1" x="2000" y="0">
+			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="ID" Value="Q1_WRITE"/>
+		</FB>
+		<FB Name="SUBSCRIBE_Q1" Type="adapter::net::AX_SUBSCRIBE_1" x="4500" y="0">
+			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="ID" Value="Q1_READ"/>
+		</FB>
+		<FB Name="OUTPUT_Q1" Type="logiBUS::io::DQ::logiBUS_QXA" x="6500" y="0">
+			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="Output" Value="Output_Q1"/>
+		</FB>
+		<EventConnections>
+			<Connection Source="INPUT_I1.INITO" Destination="PUBLISH_Q1.INIT"/>
+			<Connection Source="SUBSCRIBE_Q1.INITO" Destination="OUTPUT_Q1.INIT"/>
+		</EventConnections>
+		<AdapterConnections>
+			<Connection Source="INPUT_I1.IN" Destination="PUBLISH_Q1.IN"/>
+			<Connection Source="SUBSCRIBE_Q1.OUT" Destination="OUTPUT_Q1.OUT"/>
+		</AdapterConnections>
+	</SubAppNetwork>
+</SubAppType>
