@@ -37,6 +37,48 @@ REPO_PATHS: dict[str, str] = {
 
 NODE_ORDER: list[str] = ["192.168.178.55"]
 
+# Grundausstattung an ELF-Libs, die make_4diac_training1_elf_preload.py OHNE
+# Bootfile/Manifest vorab nach /data/elf-libs/ spielt und die das normale
+# Deploy beim Aufraeumen NICHT loescht (Franz, 2026-10-18) - so muss pro
+# Uebung nur noch Bootfile + Manifest hoch. Auswahl: Libs, die in >= ~15 %
+# der Uebungs-.SUB/.sys direkt genutzt werden (Scan 2026-10-18, 957 Dateien);
+# deren requires (MANIFEST.MF) kommen automatisch dazu, siehe
+# preload_libs_with_requires().
+PRELOAD_LIBS: list[str] = [
+    "events",
+    "adapter_types",
+    "logiBUS_io",
+    "iec61131-3",
+    "iec61131-3-bool",
+    "isobus_UT",
+    "adapter",
+    "adapter_events",
+    "isobus_UT_io",
+    "adapter_conversion",
+    "isobus_UT_adapter",
+]
+
+# Nie vorab laden: das Board "Trainer" hat keinen CAN2 (Funk, DataPanel,
+# BlinkMarine haengen daran), Bosch ebenfalls nicht noetig (Franz).
+PRELOAD_EXCLUDE: set[str] = {"Funk", "DataPanel", "BlinkMarine", "logiBUS_bosch"}
+
+
+def preload_libs_with_requires() -> list[str]:
+    """PRELOAD_LIBS plus alle (transitiven) requires laut MANIFEST.MF, ohne
+    PRELOAD_EXCLUDE. Reihenfolge: erst PRELOAD_LIBS, dann neu hinzugekommene
+    Abhaengigkeiten in Fundreihenfolge."""
+    from elf_libs_manifest_lib import lib_requires_of
+
+    result: list[str] = []
+    todo = list(PRELOAD_LIBS)
+    while todo:
+        lib = todo.pop(0)
+        if lib in result or lib in PRELOAD_EXCLUDE:
+            continue
+        result.append(lib)
+        todo.extend(name for name, _range in lib_requires_of(lib))
+    return result
+
 
 def resolve_local_path(base: str) -> Optional[Path]:
     """Liefert den tatsaechlichen lokalen Pfad zu einer Basisdatei: zuerst

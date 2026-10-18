@@ -29,8 +29,16 @@ import time
 from pathlib import Path
 from typing import Optional
 
-from deploy_common import NODE_BASES, NODE_ORDER, REPO_PATHS, resolve_local_path
-from elf_libs_manifest_lib import NODE_ARCH, ManifestResult, build_libs_manifest, resolve_required_libs, sha256_of
+from deploy_common import NODE_BASES, NODE_ORDER, REPO_PATHS, preload_libs_with_requires, resolve_local_path
+from elf_libs_manifest_lib import (
+    LIB_VERSIONS,
+    NODE_ARCH,
+    ManifestResult,
+    build_libs_manifest,
+    resolve_elf_path,
+    resolve_required_libs,
+    sha256_of,
+)
 
 # Generell eingeschaltet - siehe elf_libs_manifest_lib.py/.sh fuer das
 # Firmware-Verhalten bei fehlendem/ungueltigem Manifest (existiert eine
@@ -427,6 +435,15 @@ def main() -> int:
                                         node_ok = False
 
                         keep_names = {p.name for p in result.elf_paths}
+                        # Grundausstattung (make_4diac_training1_elf_preload.py)
+                        # nie loeschen, auch wenn dieses Manifest sie nicht
+                        # braucht - sonst laedt der naechste Uebungswechsel sie
+                        # wieder komplett hoch. Alte Versionen derselben Lib
+                        # fallen weiterhin raus (nur die aktuelle Datei bleibt).
+                        for lib in preload_libs_with_requires():
+                            preload_path = resolve_elf_path(lib, LIB_VERSIONS[lib], arch)
+                            if preload_path is not None:
+                                keep_names.add(preload_path.name)
                         elf_listing = http_listing(ip, "/elf-libs/", missing_ok=True)
                         if elf_listing is None:
                             print("  WARNUNG: elf-libs/-Listing fehlgeschlagen - alte ELF-Kandidaten NICHT geprueft/entfernt.")
