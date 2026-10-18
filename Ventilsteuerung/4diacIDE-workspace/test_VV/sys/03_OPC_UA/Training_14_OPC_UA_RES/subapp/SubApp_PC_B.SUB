@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SubAppType Name="SubApp_PC_B" Comment="Geraet B: Adder (opcua.adoc): SUBSCRIBE Num1/Num2 -&gt; F_ADD -&gt; PUBLISH Result, Werte z.B. per UaExpert">
+	<Identification Standard="61499-2" Description="Copyright (c) 2026 Meisterschulen am Ostbahnhof  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0">
+	</Identification>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2026-10-18" Remarks="opcua.adoc-Beispiel auf zwei Geraeten">
+	</VersionInfo>
+	<CompilerInfo packageName="subapp::Training_14_OPC_UA_RES">
+		<Import declaration="VV::const::OPC_UA::myOpcUaAddresses::T14_NUM1_READ"/>
+		<Import declaration="VV::const::OPC_UA::myOpcUaAddresses::T14_NUM2_READ"/>
+		<Import declaration="VV::const::OPC_UA::myOpcUaAddresses::T14_RESULT_WRITE"/>
+	</CompilerInfo>
+	<SubAppInterfaceList>
+	</SubAppInterfaceList>
+	<SubAppNetwork>
+		<FB Name="NUM1" Type="iec61499::net::SUBSCRIBE_1" x="0" y="0">
+			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="ID" Value="T14_NUM1_READ"/>
+		</FB>
+		<FB Name="NUM2" Type="iec61499::net::SUBSCRIBE_1" x="0" y="1200">
+			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="ID" Value="T14_NUM2_READ"/>
+		</FB>
+		<FB Name="TO_DINT_1" Type="iec61131::conversion::F_INT_TO_DINT" x="2000" y="0">
+		</FB>
+		<FB Name="TO_DINT_2" Type="iec61131::conversion::F_INT_TO_DINT" x="2000" y="1200">
+		</FB>
+		<FB Name="F_ADD" Type="iec61131::arithmetic::F_ADD" x="3800" y="400">
+		</FB>
+		<FB Name="TO_INT" Type="iec61131::conversion::F_DINT_TO_INT" x="5400" y="400">
+		</FB>
+		<FB Name="RESULT" Type="iec61499::net::PUBLISH_1" x="7000" y="400">
+			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="ID" Value="T14_RESULT_WRITE"/>
+		</FB>
+		<EventConnections>
+			<Connection Source="NUM1.IND" Destination="TO_DINT_1.REQ"/>
+			<Connection Source="NUM2.IND" Destination="TO_DINT_2.REQ"/>
+			<Connection Source="TO_DINT_1.CNF" Destination="F_ADD.REQ"/>
+			<Connection Source="TO_DINT_2.CNF" Destination="F_ADD.REQ"/>
+			<Connection Source="F_ADD.CNF" Destination="TO_INT.REQ"/>
+			<Connection Source="TO_INT.CNF" Destination="RESULT.REQ"/>
+			<Connection Source="NUM1.INITO" Destination="NUM2.INIT"/>
+			<Connection Source="NUM2.INITO" Destination="RESULT.INIT"/>
+		</EventConnections>
+		<DataConnections>
+			<Connection Source="NUM1.RD_1" Destination="TO_DINT_1.IN"/>
+			<Connection Source="NUM2.RD_1" Destination="TO_DINT_2.IN"/>
+			<Connection Source="TO_DINT_1.OUT" Destination="F_ADD.IN1"/>
+			<Connection Source="TO_DINT_2.OUT" Destination="F_ADD.IN2"/>
+			<Connection Source="F_ADD.OUT" Destination="TO_INT.IN"/>
+			<Connection Source="TO_INT.OUT" Destination="RESULT.SD_1"/>
+		</DataConnections>
+	</SubAppNetwork>
+</SubAppType>
