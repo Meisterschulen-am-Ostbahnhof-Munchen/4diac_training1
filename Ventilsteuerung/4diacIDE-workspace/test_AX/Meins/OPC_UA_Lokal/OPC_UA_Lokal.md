@@ -45,6 +45,19 @@ die zweite SUBSCRIBE „Cannot add another one“ (siehe 4diac-documentation#123
 Die Doku-Beispiele L13–L18 gibt es auch auf zwei Geräten als
 `test_VV/sys/03_OPC_UA/Training_13` bis `_18`.
 
+## Regel: jeder SERVER braucht IND → RSP
+
+Jeder `SERVER_0` (allgemein jeder SERVER-FB, der eine Methode anlegt) braucht eine
+Verbindung `IND` → `RSP` direkt am eigenen Baustein. Ohne `RSP` wartet FORTE in
+`onServerMethodCall` bis zu 4 Sekunden auf die Antwort und hält dabei die globale
+Service-Sperre von open62541. In dieser Zeit stocken **alle** OPC-UA-Publishes der
+Station, nicht nur die eine Methode.
+
+Die eigentliche Reaktion auf den Aufruf hängt als zweite, unabhängige Verbindung am
+selben `IND`. `RSP` wird dadurch nie verzögert. Bei Methoden mit Rückgabewert (L15:
+`SERVER_1_2`) wird `RSP` erst nach der Berechnung ausgelöst. Die Berechnung muss deshalb
+sofort fertig sein und darf nicht auf ein weiteres Ereignis warten.
+
 ## Bausteine
 
 - Lokale Varianten (`_LOC`, PUBLISH statt Remote-WRITE) in `MyLib_AX/typelib/sys`, z. B.
