@@ -7,16 +7,16 @@
 	<CompilerInfo packageName="Meins::OPC_UA_Lokal::const">
 	</CompilerInfo>
 	<GlobalConstants>
-		<VarDeclaration Name="LOCAL_OPC" Type="WSTRING" Comment="Eigener OPC-UA-Server (Trick fuer CALL_METHOD)" InitialValue="&quot;opc.tcp://localhost:4840&quot;"/>
-		<VarDeclaration Name="L01_Q1_NODE" Type="WSTRING" Comment="L01: Knoten Q1" InitialValue="&quot;/Objects/Lokal/L01/Q1,1:s=L01_Q1&quot;"/>
-		<VarDeclaration Name="L01_Q1_WRITE" Type="WSTRING" Comment="L01: Input_I1 schreibt lokal" InitialValue="MyLib_OPC::F_OPC_LOCAL(&quot;WRITE&quot;, L01_Q1_NODE)"/>
-		<VarDeclaration Name="L01_Q1_READ" Type="WSTRING" Comment="L01: Output_Q1 liest lokal" InitialValue="MyLib_OPC::F_OPC_LOCAL(&quot;READ&quot;, L01_Q1_NODE)"/>
-		<VarDeclaration Name="L03_FF1_TRIGGER_NODE" Type="WSTRING" Comment="L03: Methode Toggle-Trigger" InitialValue="&quot;/Objects/Lokal/L03/FF1_Trigger&quot;"/>
-		<VarDeclaration Name="L03_FF1_TRIGGER_METHOD" Type="WSTRING" Comment="L03: Methode anlegen (SERVER_0)" InitialValue="MyLib_OPC::F_OPC_LOCAL(&quot;CREATE_METHOD&quot;, L03_FF1_TRIGGER_NODE)"/>
-		<VarDeclaration Name="L03_FF1_TRIGGER_CALL" Type="WSTRING" Comment="L03: Methode per localhost aufrufen" InitialValue="MyLib_OPC::F_OPC_REMOTE(&quot;CALL_METHOD&quot;, LOCAL_OPC, L03_FF1_TRIGGER_NODE)"/>
-		<VarDeclaration Name="L03_FF1_STATE_NODE" Type="WSTRING" Comment="L03: Knoten Flipflop-Zustand" InitialValue="&quot;/Objects/Lokal/L03/FF1_State,1:s=L03_FF1_State&quot;"/>
-		<VarDeclaration Name="L03_FF1_STATE_WRITE" Type="WSTRING" Comment="L03: Zustand lokal schreiben" InitialValue="MyLib_OPC::F_OPC_LOCAL(&quot;WRITE&quot;, L03_FF1_STATE_NODE)"/>
-		<VarDeclaration Name="L03_FF1_STATE_READ" Type="WSTRING" Comment="L03: Zustand lokal lesen" InitialValue="MyLib_OPC::F_OPC_LOCAL(&quot;READ&quot;, L03_FF1_STATE_NODE)"/>
+		<VarDeclaration Name="LOCAL_OPC" Type="WSTRING" InitialValue="&quot;opc.tcp://localhost:4840&quot;"/>
+		<VarDeclaration Name="L01_Q1_NODE" Type="WSTRING" InitialValue="&quot;/Objects/Lokal/L01/Q1,1:s=L01_Q1&quot;"/>
+		<VarDeclaration Name="L01_Q1_WRITE" Type="WSTRING" InitialValue="MyLib_OPC::F_OPC_LOCAL(&quot;WRITE&quot;, L01_Q1_NODE)"/>
+		<VarDeclaration Name="L01_Q1_READ" Type="WSTRING" InitialValue="MyLib_OPC::F_OPC_LOCAL(&quot;READ&quot;, L01_Q1_NODE)"/>
+		<VarDeclaration Name="L03_FF1_TRIGGER_NODE" Type="WSTRING" InitialValue="&quot;/Objects/Lokal/L03/FF1_Trigger&quot;"/>
+		<VarDeclaration Name="L03_FF1_TRIGGER_METHOD" Type="WSTRING" InitialValue="MyLib_OPC::F_OPC_LOCAL(&quot;CREATE_METHOD&quot;, L03_FF1_TRIGGER_NODE)"/>
+		<VarDeclaration Name="L03_FF1_TRIGGER_CALL" Type="WSTRING" InitialValue="MyLib_OPC::F_OPC_REMOTE(&quot;CALL_METHOD&quot;, LOCAL_OPC, L03_FF1_TRIGGER_NODE)"/>
+		<VarDeclaration Name="L03_FF1_STATE_NODE" Type="WSTRING" InitialValue="&quot;/Objects/Lokal/L03/FF1_State,1:s=L03_FF1_State&quot;"/>
+		<VarDeclaration Name="L03_FF1_STATE_WRITE" Type="WSTRING" InitialValue="MyLib_OPC::F_OPC_LOCAL(&quot;WRITE&quot;, L03_FF1_STATE_NODE)"/>
+		<VarDeclaration Name="L03_FF1_STATE_READ" Type="WSTRING" InitialValue="MyLib_OPC::F_OPC_LOCAL(&quot;READ&quot;, L03_FF1_STATE_NODE)"/>
 	</GlobalConstants>
 	<OriginalSource><![CDATA[PACKAGE Meins::OPC_UA_Lokal::const;
 
