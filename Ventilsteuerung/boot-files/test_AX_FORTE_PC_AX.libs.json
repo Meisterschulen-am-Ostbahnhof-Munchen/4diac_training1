@@ -4,102 +4,18 @@
   "arch": "riscv32",
   "libs": [
     {
-      "name": "adapter_events",
+      "name": "net_adapter",
       "version": "3.0.0",
-      "file": "adapter_events-3.0.0-riscv32.elf",
-      "size": 520352,
-      "sha256": "c2b1073863a27c9dddb03de29308b4ca180e4fafc91913d2f6b947f440c04b1b",
-      "requires": [
-        {
-          "name": "adapter",
-          "range": "^3.0"
-        },
-        {
-          "name": "adapter_types",
-          "range": "^3.0"
-        },
-        {
-          "name": "iec61131-3",
-          "range": "^3.0"
-        }
-      ]
-    },
-    {
-      "name": "adapter_iec61131-3",
-      "version": "3.0.0",
-      "file": "adapter_iec61131-3-3.0.0-riscv32.elf",
-      "size": 588456,
-      "sha256": "82efa2427e91825dd9fae19d05df3b13bbfda63d64d6c35c8ebf06fac72bf4d2",
-      "requires": [
-        {
-          "name": "adapter_conversion",
-          "range": "^3.0"
-        },
-        {
-          "name": "adapter_events",
-          "range": "^3.0"
-        },
-        {
-          "name": "adapter_types",
-          "range": "^3.0"
-        },
-        {
-          "name": "iec61131-3",
-          "range": "^3.0"
-        }
-      ]
-    },
-    {
-      "name": "isobus_UT",
-      "version": "3.0.1",
-      "file": "isobus_UT-3.0.1-riscv32.elf",
-      "size": 239716,
-      "sha256": "825583272446e2f3d77e742c1177b74543efa482b1fa88416fe8e159b873bae5",
-      "requires": []
-    },
-    {
-      "name": "isobus_UT_io_adapter",
-      "version": "3.0.0",
-      "file": "isobus_UT_io_adapter-3.0.0-riscv32.elf",
-      "size": 67772,
-      "sha256": "eeac4c7dfbba575f9c4a6912d7a9abede5d7aeb1820b36c7ab840ae3be531184",
+      "file": "net_adapter-3.0.0-riscv32.elf",
+      "size": 315648,
+      "sha256": "1d35080d1b1bc96b6ea49f417fa9355b14c2bde336fac20af037da888beee32d",
       "requires": [
         {
           "name": "adapter_types",
           "range": "^3.0"
         },
         {
-          "name": "isobus_UT",
-          "range": "^3.0"
-        },
-        {
-          "name": "isobus_UT_io",
-          "range": "^3.0"
-        }
-      ]
-    },
-    {
-      "name": "logiBUS_io",
-      "version": "3.0.0",
-      "file": "logiBUS_io-3.0.0-riscv32.elf",
-      "size": 195020,
-      "sha256": "ba929c497db9fbcefc88a2ec35deb3be1ebff5574415cac783a63b9c33450a7c",
-      "requires": [
-        {
-          "name": "adapter_types",
-          "range": "^3.0"
-        }
-      ]
-    },
-    {
-      "name": "adapter",
-      "version": "3.0.0",
-      "file": "adapter-3.0.0-riscv32.elf",
-      "size": 236508,
-      "sha256": "d886e07e0cf1957e3691a7b0ce96f128dc0c29ed6f7f90202b87ad15f7dd5c26",
-      "requires": [
-        {
-          "name": "adapter_types",
+          "name": "events",
           "range": "^3.0"
         },
         {
@@ -108,6 +24,39 @@
         },
         {
           "name": "iec61131-3-bool",
+          "range": "^3.0"
+        }
+      ]
+    },
+    {
+      "name": "iec61131-3-bool",
+      "version": "3.0.1",
+      "file": "iec61131-3-bool-3.0.1-riscv32.elf",
+      "size": 37376,
+      "sha256": "edcfef16e492a41ece677a4498b4cffce7dbf735793dc71fa9a8cfad6c71adb7",
+      "requires": []
+    },
+    {
+      "name": "events",
+      "version": "3.0.0",
+      "file": "events-3.0.0-riscv32.elf",
+      "size": 185496,
+      "sha256": "4c8f827d218df5e7e76fc3c1232355613fbcded47bd4b4c65586c89dce97d501",
+      "requires": []
+    },
+    {
+      "name": "logiBUS_io",
+      "version": "3.0.0",
+      "file": "logiBUS_io-3.0.0-riscv32.elf",
+      "size": 195020,
+      "sha256": "e8b053842e4ac3d21bec7bfe2701fbe6bcb45dde6fd8c695891fba7ca240117f",
+      "requires": [
+        {
+          "name": "adapter_types",
+          "range": "^3.0"
+        },
+        {
+          "name": "events",
           "range": "^3.0"
         }
       ]
@@ -127,53 +76,15 @@
       "size": 996916,
       "sha256": "af6d06fe9c86f498c258060440adf5f2359ccb4f89c016bf808c51d0c363e2cf",
       "requires": []
-    },
-    {
-      "name": "adapter_conversion",
-      "version": "3.0.0",
-      "file": "adapter_conversion-3.0.0-riscv32.elf",
-      "size": 800124,
-      "sha256": "03fb375d0c0a7f2ea91c5045f082fbc3dafa355bc2e28c62c4adf943e2d35b6a",
-      "requires": [
-        {
-          "name": "adapter_types",
-          "range": "^3.0"
-        },
-        {
-          "name": "iec61131-3",
-          "range": "^3.0"
-        }
-      ]
-    },
-    {
-      "name": "isobus_UT_io",
-      "version": "3.0.1",
-      "file": "isobus_UT_io-3.0.1-riscv32.elf",
-      "size": 116660,
-      "sha256": "3415152db0c9fb3fd0c108b2584ddbd7f12a272ae19a5df2ffb1aed3d3df73d0",
-      "requires": [
-        {
-          "name": "isobus_UT",
-          "range": "^3.0"
-        }
-      ]
-    },
-    {
-      "name": "iec61131-3-bool",
-      "version": "3.0.1",
-      "file": "iec61131-3-bool-3.0.1-riscv32.elf",
-      "size": 37376,
-      "sha256": "edcfef16e492a41ece677a4498b4cffce7dbf735793dc71fa9a8cfad6c71adb7",
-      "requires": []
     }
   ],
   "files": [
     {
       "file": "test_AX_FORTE_PC_AX.fboot",
-      "size": 2990,
-      "sha256": "db08fe25b4882cb005f1edd5d2f4fa216119700da5f4b8f82d77c54744622036"
+      "size": 4326,
+      "sha256": "aaaaf4408fddde76eadbdd894acba658da42cbd1a010c570dc34ef0aa313ebe5"
     }
   ],
-  "manifest_sha256": "bd5d30d3715b5c3890bb4f3841b4fd4e50843502304a0dc660b518608541c7a0",
+  "manifest_sha256": "b0ff28b2b75f76281f6e370729856455ae820b2db676ee6ec60be154343e3c85",
   "signature": null
 }
