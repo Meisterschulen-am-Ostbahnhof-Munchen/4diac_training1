@@ -32,43 +32,61 @@
 		</OutputVars>
 	</SubAppInterfaceList>
 	<SubAppNetwork>
-		<FB Name="TRIGGER_INPUT" Type="logiBUS::io::DI::logiBUS_IE" x="-7400" y="-400">
+		<FB Name="TRIGGER_INPUT" Type="logiBUS::io::DI::logiBUS_IE" x="-7400" y="-300">
 			<Parameter Name="InputEvent" Value="BUTTON_PRESS_DOWN"/>
 		</FB>
-		<FB Name="TRIGGER_CLIENT" Type="iec61499::net::CLIENT_0" x="-4000" y="100">
+		<FB Name="TRIGGER_CLIENT" Type="iec61499::net::CLIENT_0" x="-5500" y="200">
 		</FB>
-		<FB Name="STATE_SUBSCRIBE" Type="adapter::net::AX_SUBSCRIBE_1" x="-5600" y="900">
+		<FB Name="STATE_SUBSCRIBE" Type="adapter::net::AX_SUBSCRIBE_1" x="-4200" y="600">
 		</FB>
-		<FB Name="STATE_OUTPUT" Type="logiBUS::io::DQ::logiBUS_QXA" x="-3000" y="900">
+		<FB Name="STATE_OUTPUT" Type="logiBUS::io::DQ::logiBUS_QXA" x="-2000" y="1600">
 		</FB>
-		<FB Name="AND_QO" Type="iec61131::booleanOperators::AND_BOOL_4" x="-1000" y="0">
+		<FB Name="AND_QO" Type="iec61131::booleanOperators::AND_BOOL_4" x="500" y="100">
 		</FB>
 		<EventConnections>
-			<Connection Source="TRIGGER_INPUT.IND" Destination="TRIGGER_CLIENT.REQ"/>
-			<Connection Source="INIT" Destination="TRIGGER_INPUT.INIT"/>
-			<Connection Source="TRIGGER_INPUT.INITO" Destination="TRIGGER_CLIENT.INIT"/>
-			<Connection Source="TRIGGER_CLIENT.INITO" Destination="STATE_SUBSCRIBE.INIT"/>
-			<Connection Source="STATE_SUBSCRIBE.INITO" Destination="STATE_OUTPUT.INIT"/>
-			<Connection Source="STATE_OUTPUT.INITO" Destination="INITO"/>
-			<Connection Source="STATE_OUTPUT.INITO" Destination="AND_QO.REQ"/>
+			<Connection Source="TRIGGER_INPUT.IND" Destination="TRIGGER_CLIENT.REQ" dx1="600"/>
+			<Connection Source="INIT" Destination="TRIGGER_INPUT.INIT" dx1="680"/>
+			<Connection Source="TRIGGER_INPUT.INITO" Destination="TRIGGER_CLIENT.INIT" dx1="933.33"/>
+			<Connection Source="TRIGGER_CLIENT.INITO" Destination="STATE_SUBSCRIBE.INIT" dx1="560"/>
+			<Connection Source="STATE_SUBSCRIBE.INITO" Destination="STATE_OUTPUT.INIT" dx1="680"/>
+			<Connection Source="STATE_OUTPUT.INITO" Destination="INITO" dx1="660"/>
+			<Connection Source="STATE_OUTPUT.INITO" Destination="AND_QO.REQ" dx1="420">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
 		</EventConnections>
 		<DataConnections>
-			<Connection Source="Input" Destination="TRIGGER_INPUT.Input"/>
-			<Connection Source="Output" Destination="STATE_OUTPUT.Output"/>
-			<Connection Source="ID_TRIGGER_CALL" Destination="TRIGGER_CLIENT.ID"/>
-			<Connection Source="ID_STATE_READ" Destination="STATE_SUBSCRIBE.ID"/>
-			<Connection Source="QI" Destination="TRIGGER_INPUT.QI"/>
-			<Connection Source="QI" Destination="TRIGGER_CLIENT.QI"/>
-			<Connection Source="QI" Destination="STATE_SUBSCRIBE.QI"/>
-			<Connection Source="QI" Destination="STATE_OUTPUT.QI"/>
-			<Connection Source="TRIGGER_INPUT.QO" Destination="AND_QO.IN1"/>
-			<Connection Source="TRIGGER_CLIENT.QO" Destination="AND_QO.IN2"/>
-			<Connection Source="STATE_SUBSCRIBE.QO" Destination="AND_QO.IN3"/>
-			<Connection Source="STATE_OUTPUT.QO" Destination="AND_QO.IN4"/>
-			<Connection Source="AND_QO.OUT" Destination="QO"/>
+			<Connection Source="Input" Destination="TRIGGER_INPUT.Input" dx1="473.33"/>
+			<Connection Source="Output" Destination="STATE_OUTPUT.Output" dx1="193.33"/>
+			<Connection Source="ID_TRIGGER_CALL" Destination="TRIGGER_CLIENT.ID" dx1="373.33"/>
+			<Connection Source="ID_STATE_READ" Destination="STATE_SUBSCRIBE.ID" dx1="326.67"/>
+			<Connection Source="QI" Destination="TRIGGER_INPUT.QI" dx1="580">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="QI" Destination="TRIGGER_CLIENT.QI" dx1="2700">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="QI" Destination="STATE_SUBSCRIBE.QI" dx1="2200">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="QI" Destination="STATE_OUTPUT.QI" dx1="3500">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="TRIGGER_INPUT.QO" Destination="AND_QO.IN1" dx1="2753.33">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="TRIGGER_CLIENT.QO" Destination="AND_QO.IN2" dx1="2166.67">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="STATE_SUBSCRIBE.QO" Destination="AND_QO.IN3" dx1="1826.67">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="STATE_OUTPUT.QO" Destination="AND_QO.IN4" dx1="420">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="AND_QO.OUT" Destination="QO" dx1="1006.67"/>
 		</DataConnections>
 		<AdapterConnections>
-			<Connection Source="STATE_SUBSCRIBE.OUT" Destination="STATE_OUTPUT.OUT"/>
+			<Connection Source="STATE_SUBSCRIBE.OUT" Destination="STATE_OUTPUT.OUT" dx1="166.67"/>
 		</AdapterConnections>
 	</SubAppNetwork>
 </SubAppType>

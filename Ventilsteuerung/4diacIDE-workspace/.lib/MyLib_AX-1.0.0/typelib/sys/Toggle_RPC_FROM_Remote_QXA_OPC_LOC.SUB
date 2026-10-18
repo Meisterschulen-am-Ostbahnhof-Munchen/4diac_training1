@@ -32,26 +32,28 @@
 		</OutputVars>
 	</SubAppInterfaceList>
 	<SubAppNetwork>
-		<FB Name="TRIGGER_SERVER" Type="iec61499::net::SERVER_0" x="-5600" y="-200">
+		<FB Name="TRIGGER_SERVER" Type="iec61499::net::SERVER_0" x="-5500" y="-200">
 		</FB>
-		<FB Name="AX_T_FF" Type="adapter::events::unidirectional::AX_T_FF" x="-4000" y="-100">
+		<FB Name="AX_T_FF" Type="adapter::events::unidirectional::AX_T_FF" x="-3900" y="-100">
 		</FB>
-		<FB Name="AX_SPLIT_2" Type="adapter::events::unidirectional::AX_SPLIT_2" x="-2600" y="0">
+		<FB Name="AX_SPLIT_2" Type="adapter::events::unidirectional::AX_SPLIT_2" x="-2500" y="0">
 		</FB>
-		<FB Name="DigitalOutput_Q1" Type="logiBUS::io::DQ::logiBUS_QXA" x="-800" y="-1000">
+		<FB Name="DigitalOutput_Q1" Type="logiBUS::io::DQ::logiBUS_QXA" x="-700" y="-1000">
 		</FB>
-		<FB Name="STATE_PUBLISH" Type="adapter::net::AX_PUBLISH_1" x="-900" y="400">
+		<FB Name="STATE_PUBLISH" Type="adapter::net::AX_PUBLISH_1" x="-800" y="400">
 		</FB>
-		<FB Name="AND_QO" Type="iec61131::booleanOperators::AND_BOOL_3">
+		<FB Name="AND_QO" Type="iec61131::booleanOperators::AND_BOOL_3" x="1500" y="900">
 		</FB>
 		<EventConnections>
 			<Connection Source="TRIGGER_SERVER.IND" Destination="AX_T_FF.CLK" dx1="373.33"/>
-			<Connection Source="TRIGGER_SERVER.IND" Destination="TRIGGER_SERVER.RSP"/>
-			<Connection Source="INIT" Destination="TRIGGER_SERVER.INIT"/>
-			<Connection Source="TRIGGER_SERVER.INITO" Destination="DigitalOutput_Q1.INIT"/>
-			<Connection Source="DigitalOutput_Q1.INITO" Destination="STATE_PUBLISH.INIT"/>
-			<Connection Source="STATE_PUBLISH.INITO" Destination="INITO"/>
-			<Connection Source="STATE_PUBLISH.INITO" Destination="AND_QO.REQ"/>
+			<Connection Source="TRIGGER_SERVER.IND" Destination="TRIGGER_SERVER.RSP" dx1="80" dx2="80" dy="160"/>
+			<Connection Source="INIT" Destination="TRIGGER_SERVER.INIT" dx1="820"/>
+			<Connection Source="TRIGGER_SERVER.INITO" Destination="DigitalOutput_Q1.INIT" dx1="113.33"/>
+			<Connection Source="DigitalOutput_Q1.INITO" Destination="STATE_PUBLISH.INIT" dx1="700" dx2="80" dy="1060"/>
+			<Connection Source="STATE_PUBLISH.INITO" Destination="INITO" dx1="4506.67"/>
+			<Connection Source="STATE_PUBLISH.INITO" Destination="AND_QO.REQ" dx1="526.67">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
 		</EventConnections>
 		<DataConnections>
 			<Connection Source="Output" Destination="DigitalOutput_Q1.Output" dx1="4046.67">
@@ -63,13 +65,25 @@
 			<Connection Source="ID_STATE_WRITE" Destination="STATE_PUBLISH.ID" dx1="1400">
 				<Attribute Name="Visible" Value="false"/>
 			</Connection>
-			<Connection Source="QI" Destination="TRIGGER_SERVER.QI"/>
-			<Connection Source="QI" Destination="DigitalOutput_Q1.QI"/>
-			<Connection Source="QI" Destination="STATE_PUBLISH.QI"/>
-			<Connection Source="TRIGGER_SERVER.QO" Destination="AND_QO.IN1"/>
-			<Connection Source="DigitalOutput_Q1.QO" Destination="AND_QO.IN2"/>
-			<Connection Source="STATE_PUBLISH.QO" Destination="AND_QO.IN3"/>
-			<Connection Source="AND_QO.OUT" Destination="QO"/>
+			<Connection Source="QI" Destination="TRIGGER_SERVER.QI" dx1="566.67">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="QI" Destination="DigitalOutput_Q1.QI" dx1="3220">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="QI" Destination="STATE_PUBLISH.QI" dx1="3166.67">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="TRIGGER_SERVER.QO" Destination="AND_QO.IN1" dx1="2466.67">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="DigitalOutput_Q1.QO" Destination="AND_QO.IN2" dx1="500">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="STATE_PUBLISH.QO" Destination="AND_QO.IN3" dx1="526.67">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="AND_QO.OUT" Destination="QO" dx1="2673.33"/>
 		</DataConnections>
 		<AdapterConnections>
 			<Connection Source="AX_T_FF.Q" Destination="AX_SPLIT_2.IN" dx1="580"/>
