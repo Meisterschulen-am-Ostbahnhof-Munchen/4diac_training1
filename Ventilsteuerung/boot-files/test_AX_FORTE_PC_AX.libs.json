@@ -4,6 +4,60 @@
   "arch": "riscv32",
   "libs": [
     {
+      "name": "adapter_events",
+      "version": "3.0.0",
+      "file": "adapter_events-3.0.0-riscv32.elf",
+      "size": 520352,
+      "sha256": "c2b1073863a27c9dddb03de29308b4ca180e4fafc91913d2f6b947f440c04b1b",
+      "requires": [
+        {
+          "name": "adapter",
+          "range": "^3.0"
+        },
+        {
+          "name": "adapter_types",
+          "range": "^3.0"
+        },
+        {
+          "name": "events",
+          "range": "^3.0"
+        },
+        {
+          "name": "iec61131-3",
+          "range": "^3.0"
+        }
+      ]
+    },
+    {
+      "name": "adapter_iec61131-3",
+      "version": "3.0.0",
+      "file": "adapter_iec61131-3-3.0.0-riscv32.elf",
+      "size": 588456,
+      "sha256": "82efa2427e91825dd9fae19d05df3b13bbfda63d64d6c35c8ebf06fac72bf4d2",
+      "requires": [
+        {
+          "name": "adapter_conversion",
+          "range": "^3.0"
+        },
+        {
+          "name": "adapter_events",
+          "range": "^3.0"
+        },
+        {
+          "name": "adapter_types",
+          "range": "^3.0"
+        },
+        {
+          "name": "events",
+          "range": "^3.0"
+        },
+        {
+          "name": "iec61131-3",
+          "range": "^3.0"
+        }
+      ]
+    },
+    {
       "name": "net_adapter",
       "version": "3.0.0",
       "file": "net_adapter-3.0.0-riscv32.elf",
@@ -45,6 +99,27 @@
       "requires": []
     },
     {
+      "name": "isobus_UT",
+      "version": "3.1.1",
+      "file": "isobus_UT-3.1.1-riscv32.elf",
+      "size": 260328,
+      "sha256": "2136211cc249cc1931c049052e1022d4174f840c6f1411cf8676c6cbd832956e",
+      "requires": []
+    },
+    {
+      "name": "isobus_UT_io",
+      "version": "3.0.1",
+      "file": "isobus_UT_io-3.0.1-riscv32.elf",
+      "size": 116660,
+      "sha256": "3415152db0c9fb3fd0c108b2584ddbd7f12a272ae19a5df2ffb1aed3d3df73d0",
+      "requires": [
+        {
+          "name": "isobus_UT",
+          "range": "^3.1"
+        }
+      ]
+    },
+    {
       "name": "logiBUS_io",
       "version": "3.0.0",
       "file": "logiBUS_io-3.0.0-riscv32.elf",
@@ -57,6 +132,31 @@
         },
         {
           "name": "events",
+          "range": "^3.0"
+        }
+      ]
+    },
+    {
+      "name": "adapter",
+      "version": "3.0.0",
+      "file": "adapter-3.0.0-riscv32.elf",
+      "size": 236508,
+      "sha256": "d886e07e0cf1957e3691a7b0ce96f128dc0c29ed6f7f90202b87ad15f7dd5c26",
+      "requires": [
+        {
+          "name": "adapter_types",
+          "range": "^3.0"
+        },
+        {
+          "name": "events",
+          "range": "^3.0"
+        },
+        {
+          "name": "iec61131-3",
+          "range": "^3.0"
+        },
+        {
+          "name": "iec61131-3-bool",
           "range": "^3.0"
         }
       ]
@@ -76,15 +176,32 @@
       "size": 996916,
       "sha256": "af6d06fe9c86f498c258060440adf5f2359ccb4f89c016bf808c51d0c363e2cf",
       "requires": []
+    },
+    {
+      "name": "adapter_conversion",
+      "version": "3.0.0",
+      "file": "adapter_conversion-3.0.0-riscv32.elf",
+      "size": 800124,
+      "sha256": "03fb375d0c0a7f2ea91c5045f082fbc3dafa355bc2e28c62c4adf943e2d35b6a",
+      "requires": [
+        {
+          "name": "adapter_types",
+          "range": "^3.0"
+        },
+        {
+          "name": "iec61131-3",
+          "range": "^3.0"
+        }
+      ]
     }
   ],
   "files": [
     {
       "file": "test_AX_FORTE_PC_AX.fboot",
-      "size": 4326,
-      "sha256": "aaaaf4408fddde76eadbdd894acba658da42cbd1a010c570dc34ef0aa313ebe5"
+      "size": 10926,
+      "sha256": "a38ec163484049d7cab88c25ac7e47ead85267eaa02c988eb0bbaddb04253622"
     }
   ],
-  "manifest_sha256": "b0ff28b2b75f76281f6e370729856455ae820b2db676ee6ec60be154343e3c85",
+  "manifest_sha256": "6a25ce765000abe853faf40eecaa413892ced35db380c2e4b8daa0825717a250",
   "signature": null
 }
