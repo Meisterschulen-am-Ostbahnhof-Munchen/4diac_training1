@@ -1,32 +1,28 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<FBType Name="AE_AX_SERVER_0_PUBLISH_1" Comment="Wie adapter::net::AE_AX_SERVER_0_CLIENT_1_0, aber lokales PUBLISH_1 statt Remote-CLIENT_1_0 (ein Geraet)">
+<SubAppType Name="AE_AX_SERVER_0_PUBLISH_1" Comment="Wie adapter::net::AE_AX_SERVER_0_CLIENT_1_0, aber lokales PUBLISH_1 statt Remote-CLIENT_1_0 (ein Geraet)">
 	<Identification Standard="61499-2" Description="Copyright (c) 2026 HR Agrartechnik GmbH &#10; &#10;This program and the accompanying materials are made &#10;available under the terms of the Eclipse Public License 2.0 &#10;which is available at https://www.eclipse.org/legal/epl-2.0/ &#10; &#10;SPDX-License-Identifier: EPL-2.0">
 	</Identification>
-	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2026-10-18" Remarks="Kopie von AE_AX_SERVER_0_CLIENT_1_0, CLIENT_1_0 durch PUBLISH_1 ersetzt">
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2026-10-18" Remarks="Kopie von AE_AX_SERVER_0_CLIENT_1_0, CLIENT_1_0 durch PUBLISH_1 ersetzt - als SubAppType, damit FORTE den Typ nicht kennen muss (kein ELF fuer MyLib_AX)">
 	</VersionInfo>
 	<VersionInfo Organization="HR Agrartechnik GmbH" Version="1.0" Author="Franz Höpfinger" Date="2026-09-03" Remarks="initial API and implementation and/or initial documentation">
 	</VersionInfo>
 	<CompilerInfo packageName="MyLib::net">
 	</CompilerInfo>
-	<InterfaceList>
-		<EventInputs>
-			<Event Name="INIT" Type="EInit" Comment="Initialization">
-				<With Var="QI"/>
-			</Event>
-		</EventInputs>
-		<EventOutputs>
-			<Event Name="INITO" Type="EInit" Comment="Initialization Confirm">
-			</Event>
-			<Event Name="CNF" Type="Event" Comment="QO/STATUS updated">
-				<With Var="QO"/>
-				<With Var="STATUS_TRIGGER"/>
-				<With Var="STATUS_STATE"/>
-			</Event>
-		</EventOutputs>
+	<SubAppInterfaceList>
+		<SubAppEventInputs>
+			<SubAppEvent Name="INIT" Type="EInit" Comment="Initialization">
+			</SubAppEvent>
+		</SubAppEventInputs>
+		<SubAppEventOutputs>
+			<SubAppEvent Name="INITO" Type="EInit" Comment="Initialization Confirm">
+			</SubAppEvent>
+			<SubAppEvent Name="CNF" Type="Event" Comment="QO/STATUS updated">
+			</SubAppEvent>
+		</SubAppEventOutputs>
 		<InputVars>
 			<VarDeclaration Name="QI" Type="BOOL"/>
 			<VarDeclaration Name="ID" Type="WSTRING" Comment="Lokale Methodenadresse (ACTION=CREATE_METHOD) fuer den Trigger-Methodenaufruf"/>
-			<VarDeclaration Name="ID_STATE" Type="WSTRING" Comment="Remote-Ziel-Adresse (ACTION=WRITE) fuer den Zustand"/>
+			<VarDeclaration Name="ID_STATE" Type="WSTRING" Comment="Lokale Adresse (ACTION=WRITE) fuer den Zustand"/>
 		</InputVars>
 		<OutputVars>
 			<VarDeclaration Name="QO" Type="BOOL" Comment="TRUE nur wenn SERVER_0_1 und STATE_CLIENT aktuell beide QO=TRUE melden"/>
@@ -36,8 +32,8 @@
 		<Plugs>
 			<AdapterDeclaration Name="TRIGGER" Type="adapter::types::bidirectional::AE_AX" Comment="Trigger (in), Zustand (out)" x="500" y="1300"/>
 		</Plugs>
-	</InterfaceList>
-	<FBNetwork>
+	</SubAppInterfaceList>
+	<SubAppNetwork>
 		<FB Name="SERVER_0_1" Type="iec61499::net::SERVER_0" x="-500" y="400">
 		</FB>
 		<FB Name="E_D_FF" Type="iec61499::events::E_D_FF" x="1300" y="1400">
@@ -71,6 +67,6 @@
 			<Connection Source="SERVER_0_1.STATUS" Destination="STATUS_TRIGGER" dx1="3533.33"/>
 			<Connection Source="STATE_CLIENT.STATUS" Destination="STATUS_STATE" dx1="2740"/>
 		</DataConnections>
-	</FBNetwork>
+	</SubAppNetwork>
 	<Attribute Name="eclipse4diac::core::TypeHash" Value="''"/>
-</FBType>
+</SubAppType>
