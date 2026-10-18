@@ -7,31 +7,51 @@
 	<CompilerInfo packageName="Meins::OPC_UA_Lokal::const">
 	</CompilerInfo>
 	<GlobalConstants>
-		<VarDeclaration Name="LOCAL_OPC" Type="WSTRING" InitialValue="&quot;opc.tcp://localhost:4840&quot;"/>
-		<VarDeclaration Name="L01_Q1_NODE" Type="WSTRING" InitialValue="&quot;/Objects/Lokal/L01/Q1,1:s=L01_Q1&quot;"/>
-		<VarDeclaration Name="L01_Q1_WRITE" Type="WSTRING" InitialValue="MyLib_OPC::F_OPC_LOCAL(&quot;WRITE&quot;, L01_Q1_NODE)"/>
-		<VarDeclaration Name="L01_Q1_READ" Type="WSTRING" InitialValue="MyLib_OPC::F_OPC_LOCAL(&quot;READ&quot;, L01_Q1_NODE)"/>
-		<VarDeclaration Name="L03_FF1_TRIGGER_NODE" Type="WSTRING" InitialValue="&quot;/Objects/Lokal/L03/FF1_Trigger&quot;"/>
-		<VarDeclaration Name="L03_FF1_TRIGGER_METHOD" Type="WSTRING" InitialValue="MyLib_OPC::F_OPC_LOCAL(&quot;CREATE_METHOD&quot;, L03_FF1_TRIGGER_NODE)"/>
-		<VarDeclaration Name="L03_FF1_TRIGGER_CALL" Type="WSTRING" InitialValue="MyLib_OPC::F_OPC_REMOTE(&quot;CALL_METHOD&quot;, LOCAL_OPC, L03_FF1_TRIGGER_NODE)"/>
-		<VarDeclaration Name="L03_FF1_STATE_NODE" Type="WSTRING" InitialValue="&quot;/Objects/Lokal/L03/FF1_State,1:s=L03_FF1_State&quot;"/>
-		<VarDeclaration Name="L03_FF1_STATE_WRITE" Type="WSTRING" InitialValue="MyLib_OPC::F_OPC_LOCAL(&quot;WRITE&quot;, L03_FF1_STATE_NODE)"/>
-		<VarDeclaration Name="L03_FF1_STATE_READ" Type="WSTRING" InitialValue="MyLib_OPC::F_OPC_LOCAL(&quot;READ&quot;, L03_FF1_STATE_NODE)"/>
+		<VarDeclaration Name="LOCAL_OPC" Type="WSTRING" Comment="Eigener Server (localhost), nur fuer CALL_METHOD" InitialValue="&quot;opc.tcp://localhost:4840&quot;"/>
+		<VarDeclaration Name="L01_Q1_NODE" Type="WSTRING" Comment="L01: Knoten Q1" InitialValue="&quot;/Objects/Lokal/L01/Q1,1:s=L01_Q1&quot;"/>
+		<VarDeclaration Name="L01_Q1_WRITE" Type="WSTRING" Comment="L01: Input_I1 schreibt lokal (PUBLISH)" InitialValue="MyLib_OPC::F_OPC_LOCAL(&quot;WRITE&quot;, L01_Q1_NODE)"/>
+		<VarDeclaration Name="L01_Q1_READ" Type="WSTRING" Comment="L01: Output_Q1 liest lokal (SUBSCRIBE)" InitialValue="MyLib_OPC::F_OPC_LOCAL(&quot;READ&quot;, L01_Q1_NODE)"/>
+		<VarDeclaration Name="L03_FF1_TRIGGER_NODE" Type="WSTRING" Comment="L03: Methode Toggle-Trigger" InitialValue="&quot;/Objects/Lokal/L03/FF1_Trigger&quot;"/>
+		<VarDeclaration Name="L03_FF1_TRIGGER_METHOD" Type="WSTRING" Comment="L03: Methode lokal anlegen (SERVER_0)" InitialValue="MyLib_OPC::F_OPC_LOCAL(&quot;CREATE_METHOD&quot;, L03_FF1_TRIGGER_NODE)"/>
+		<VarDeclaration Name="L03_FF1_TRIGGER_CALL" Type="WSTRING" Comment="L03: Methode per localhost aufrufen (CLIENT_0)" InitialValue="MyLib_OPC::F_OPC_REMOTE(&quot;CALL_METHOD&quot;, LOCAL_OPC, L03_FF1_TRIGGER_NODE)"/>
+		<VarDeclaration Name="L03_FF1_STATE_NODE" Type="WSTRING" Comment="L03: Knoten Flipflop-Zustand" InitialValue="&quot;/Objects/Lokal/L03/FF1_State,1:s=L03_FF1_State&quot;"/>
+		<VarDeclaration Name="L03_FF1_STATE_WRITE" Type="WSTRING" Comment="L03: Zustand lokal schreiben (PUBLISH)" InitialValue="MyLib_OPC::F_OPC_LOCAL(&quot;WRITE&quot;, L03_FF1_STATE_NODE)"/>
+		<VarDeclaration Name="L03_FF1_STATE_READ" Type="WSTRING" Comment="L03: Zustand lokal lesen (SUBSCRIBE)" InitialValue="MyLib_OPC::F_OPC_LOCAL(&quot;READ&quot;, L03_FF1_STATE_NODE)"/>
 	</GlobalConstants>
-	<OriginalSource><![CDATA[PACKAGE Meins::OPC_UA_Lokal::const;
+	<OriginalSource><![CDATA[(*
+ * OPC-UA-IDs fuer die lokalen Uebungen in Meins/OPC_UA_Lokal: alles auf einem Geraet.
+ * READ, WRITE und CREATE_METHOD lokal ohne Endpunkt, CALL_METHOD per localhost.
+ * Aufbau der IDs: *_NODE einmal, dazu MyLib_OPC::F_OPC_LOCAL / F_OPC_REMOTE.
+ *)
+PACKAGE Meins::OPC_UA_Lokal::const;
 
 GLOBALCONSTANTS OpcUaLokal
 	VAR_GLOBAL CONSTANT
-		LOCAL_OPC : WSTRING := "opc.tcp://localhost:4840";
-		L01_Q1_NODE : WSTRING := "/Objects/Lokal/L01/Q1,1:s=L01_Q1";
-		L01_Q1_WRITE : WSTRING := MyLib_OPC::F_OPC_LOCAL("WRITE", L01_Q1_NODE);
-		L01_Q1_READ : WSTRING := MyLib_OPC::F_OPC_LOCAL("READ", L01_Q1_NODE);
-		L03_FF1_TRIGGER_NODE : WSTRING := "/Objects/Lokal/L03/FF1_Trigger";
-		L03_FF1_TRIGGER_METHOD : WSTRING := MyLib_OPC::F_OPC_LOCAL("CREATE_METHOD", L03_FF1_TRIGGER_NODE);
-		L03_FF1_TRIGGER_CALL : WSTRING := MyLib_OPC::F_OPC_REMOTE("CALL_METHOD", LOCAL_OPC, L03_FF1_TRIGGER_NODE);
-		L03_FF1_STATE_NODE : WSTRING := "/Objects/Lokal/L03/FF1_State,1:s=L03_FF1_State";
-		L03_FF1_STATE_WRITE : WSTRING := MyLib_OPC::F_OPC_LOCAL("WRITE", L03_FF1_STATE_NODE);
-		L03_FF1_STATE_READ : WSTRING := MyLib_OPC::F_OPC_LOCAL("READ", L03_FF1_STATE_NODE);
+		(*
+		 * CALL_METHOD ist lokal nicht erlaubt (opcua.adoc). Trick: als Remote-Aufruf an den
+		 * eigenen Server opc.tcp://localhost:4840.
+		 *)
+		LOCAL_OPC : WSTRING := "opc.tcp://localhost:4840"; // Eigener Server (localhost), nur fuer CALL_METHOD
+
+		(*
+		 * L01 - wie Training_01: Input_I1 schreibt per lokalem PUBLISH (WRITE), Output_Q1 liest
+		 * denselben Knoten per lokalem SUBSCRIBE (READ).
+		 *)
+		L01_Q1_NODE : WSTRING := "/Objects/Lokal/L01/Q1,1:s=L01_Q1"; // L01: Knoten Q1
+		L01_Q1_WRITE : WSTRING := MyLib_OPC::F_OPC_LOCAL("WRITE", L01_Q1_NODE); // L01: Input_I1 schreibt lokal (PUBLISH)
+		L01_Q1_READ : WSTRING := MyLib_OPC::F_OPC_LOCAL("READ", L01_Q1_NODE); // L01: Output_Q1 liest lokal (SUBSCRIBE)
+
+		(*
+		 * L03 - wie Training_03: SoftKey_F1 ruft die Trigger-Methode per CALL_METHOD an localhost
+		 * auf (SERVER_0 legt sie lokal an), der Flipflop-Zustand kommt lokal per PUBLISH/SUBSCRIBE
+		 * zurueck.
+		 *)
+		L03_FF1_TRIGGER_NODE : WSTRING := "/Objects/Lokal/L03/FF1_Trigger"; // L03: Methode Toggle-Trigger
+		L03_FF1_TRIGGER_METHOD : WSTRING := MyLib_OPC::F_OPC_LOCAL("CREATE_METHOD", L03_FF1_TRIGGER_NODE); // L03: Methode lokal anlegen (SERVER_0)
+		L03_FF1_TRIGGER_CALL : WSTRING := MyLib_OPC::F_OPC_REMOTE("CALL_METHOD", LOCAL_OPC, L03_FF1_TRIGGER_NODE); // L03: Methode per localhost aufrufen (CLIENT_0)
+		L03_FF1_STATE_NODE : WSTRING := "/Objects/Lokal/L03/FF1_State,1:s=L03_FF1_State"; // L03: Knoten Flipflop-Zustand
+		L03_FF1_STATE_WRITE : WSTRING := MyLib_OPC::F_OPC_LOCAL("WRITE", L03_FF1_STATE_NODE); // L03: Zustand lokal schreiben (PUBLISH)
+		L03_FF1_STATE_READ : WSTRING := MyLib_OPC::F_OPC_LOCAL("READ", L03_FF1_STATE_NODE); // L03: Zustand lokal lesen (SUBSCRIBE)
 	END_VAR
 END_GLOBALCONSTANTS
 ]]></OriginalSource>
