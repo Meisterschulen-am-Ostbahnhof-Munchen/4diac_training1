@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<GlobalConstants Name="OpcUaLokal" Comment="OPC-UA-IDs fuer die lokalen Uebungen (ein Geraet)">
+	<Identification Standard="61499-1" Description="Copyright (c) 2026 Meisterschulen am Ostbahnhof  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0">
+	</Identification>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2026-10-18" Remarks="Lokal: READ/WRITE/CREATE_METHOD ohne Endpunkt, CALL_METHOD per localhost">
+	</VersionInfo>
+	<CompilerInfo packageName="Meins::OPC_UA_Lokal::const">
+	</CompilerInfo>
+	<GlobalConstants>
+		<VarDeclaration Name="LOCAL_OPC" Type="WSTRING" Comment="Eigener OPC-UA-Server (Trick fuer CALL_METHOD)" InitialValue="&quot;opc.tcp://localhost:4840&quot;"/>
+		<VarDeclaration Name="L01_Q1_NODE" Type="WSTRING" Comment="L01: Knoten Q1" InitialValue="&quot;/Objects/Lokal/L01/Q1,1:s=L01_Q1&quot;"/>
+		<VarDeclaration Name="L01_Q1_WRITE" Type="WSTRING" Comment="L01: Input_I1 schreibt lokal" InitialValue="MyLib_OPC::F_OPC_LOCAL(&quot;WRITE&quot;, L01_Q1_NODE)"/>
+		<VarDeclaration Name="L01_Q1_READ" Type="WSTRING" Comment="L01: Output_Q1 liest lokal" InitialValue="MyLib_OPC::F_OPC_LOCAL(&quot;READ&quot;, L01_Q1_NODE)"/>
+		<VarDeclaration Name="L03_FF1_TRIGGER_NODE" Type="WSTRING" Comment="L03: Methode Toggle-Trigger" InitialValue="&quot;/Objects/Lokal/L03/FF1_Trigger&quot;"/>
+		<VarDeclaration Name="L03_FF1_TRIGGER_METHOD" Type="WSTRING" Comment="L03: Methode anlegen (SERVER_0)" InitialValue="MyLib_OPC::F_OPC_LOCAL(&quot;CREATE_METHOD&quot;, L03_FF1_TRIGGER_NODE)"/>
+		<VarDeclaration Name="L03_FF1_TRIGGER_CALL" Type="WSTRING" Comment="L03: Methode per localhost aufrufen" InitialValue="MyLib_OPC::F_OPC_REMOTE(&quot;CALL_METHOD&quot;, LOCAL_OPC, L03_FF1_TRIGGER_NODE)"/>
+		<VarDeclaration Name="L03_FF1_STATE_NODE" Type="WSTRING" Comment="L03: Knoten Flipflop-Zustand" InitialValue="&quot;/Objects/Lokal/L03/FF1_State,1:s=L03_FF1_State&quot;"/>
+		<VarDeclaration Name="L03_FF1_STATE_WRITE" Type="WSTRING" Comment="L03: Zustand lokal schreiben" InitialValue="MyLib_OPC::F_OPC_LOCAL(&quot;WRITE&quot;, L03_FF1_STATE_NODE)"/>
+		<VarDeclaration Name="L03_FF1_STATE_READ" Type="WSTRING" Comment="L03: Zustand lokal lesen" InitialValue="MyLib_OPC::F_OPC_LOCAL(&quot;READ&quot;, L03_FF1_STATE_NODE)"/>
+	</GlobalConstants>
+	<OriginalSource><![CDATA[PACKAGE Meins::OPC_UA_Lokal::const;
+
+GLOBALCONSTANTS OpcUaLokal
+	VAR_GLOBAL CONSTANT
+		LOCAL_OPC : WSTRING := "opc.tcp://localhost:4840";
+		L01_Q1_NODE : WSTRING := "/Objects/Lokal/L01/Q1,1:s=L01_Q1";
+		L01_Q1_WRITE : WSTRING := MyLib_OPC::F_OPC_LOCAL("WRITE", L01_Q1_NODE);
+		L01_Q1_READ : WSTRING := MyLib_OPC::F_OPC_LOCAL("READ", L01_Q1_NODE);
+		L03_FF1_TRIGGER_NODE : WSTRING := "/Objects/Lokal/L03/FF1_Trigger";
+		L03_FF1_TRIGGER_METHOD : WSTRING := MyLib_OPC::F_OPC_LOCAL("CREATE_METHOD", L03_FF1_TRIGGER_NODE);
+		L03_FF1_TRIGGER_CALL : WSTRING := MyLib_OPC::F_OPC_REMOTE("CALL_METHOD", LOCAL_OPC, L03_FF1_TRIGGER_NODE);
+		L03_FF1_STATE_NODE : WSTRING := "/Objects/Lokal/L03/FF1_State,1:s=L03_FF1_State";
+		L03_FF1_STATE_WRITE : WSTRING := MyLib_OPC::F_OPC_LOCAL("WRITE", L03_FF1_STATE_NODE);
+		L03_FF1_STATE_READ : WSTRING := MyLib_OPC::F_OPC_LOCAL("READ", L03_FF1_STATE_NODE);
+	END_VAR
+END_GLOBALCONSTANTS
+]]></OriginalSource>
+	<Attribute Name="eclipse4diac::core::TypeHash" Value="''"/>
+</GlobalConstants>
