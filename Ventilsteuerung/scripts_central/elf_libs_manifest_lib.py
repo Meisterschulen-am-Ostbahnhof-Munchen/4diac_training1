@@ -39,7 +39,7 @@ NODE_ARCH = {
 }
 
 # forte_abi: von Hand erhoehte Nummer, wenn sich FORTE-Basisklassen aendern.
-FORTE_ABI = 3
+FORTE_ABI = 4
 
 # Namensraum-Praefix -> Lib-Name. 1:1 aus elf_libs_manifest_lib.sh
 # uebernommen (siehe dort fuer die ausfuehrliche Begruendung der
