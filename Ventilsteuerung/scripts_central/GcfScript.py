@@ -145,7 +145,8 @@ def create_numeric_info(obj_id, scale, offset, decimals):
     }
 
 def readJOP(jop_filepath, variables_only=False):
-    """Parse a JetViewSoft .jop XML file and extract InputNumber and OutputNumber objects.
+    """Parse a JetViewSoft .jop XML file and extract InputNumber, OutputNumber and
+    InputList (drop-down) objects.
 
     Returns a dict keyed by ObjectName:
         { "InputNumber_I1": {"id": 9000, "scale": 1.0, "offset": 0, "decimals": 0}, ... }
@@ -176,7 +177,7 @@ def readJOP(jop_filepath, variables_only=False):
             v_name = obj.get("ObjectName")
             if v_id and v_name:
                 var_names[v_id] = v_name
-        elif cls in ("CInputNumber", "COutputNumber"):
+        elif cls in ("CInputNumber", "COutputNumber", "CInputList"):
             name = obj.get("ObjectName")
             if name:
                 primary_names.add(name)
@@ -192,7 +193,7 @@ def readJOP(jop_filepath, variables_only=False):
 
     for obj in objects_container.findall("Object"):
         cls = obj.get("Class")
-        if cls not in ("CInputNumber", "COutputNumber"):
+        if cls not in ("CInputNumber", "COutputNumber", "CInputList"):
             continue
 
         name = obj.get("ObjectName")
@@ -387,8 +388,8 @@ def writeNumericGCFfile(data, filepaths, conflicts=None):
             comment_text = (
                 f" ACHTUNG: '{name}' wird von mehreren Widgets mit unterschiedlicher "
                 f"Skalierung gebunden - " + "; ".join(conflicts[name]) +
-                f". Es gilt die Skalierung mit dem kleinsten |Scale|, alle Widgets "
-                f"muessen dieselbe Skalierung haben. "
+                ". Es gilt die Skalierung mit dem kleinsten |Scale|, alle Widgets "
+                "muessen dieselbe Skalierung haben. "
             )
             global_constants.append(ET.Comment(comment_text))
 
