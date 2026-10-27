@@ -10,9 +10,11 @@
 	<InterfaceList>
 		<EventInputs>
 			<Event Name="INIT" Type="EInit" Comment="Service Initialization">
+				<With Var="QI"/>
 				<With Var="u16ObjId"/>
 			</Event>
 			<Event Name="REQ" Type="Event" Comment="Service Request">
+				<With Var="QI"/>
 				<With Var="u8SubCommandID"/>
 				<With Var="u8ParaList"/>
 				<With Var="u16LenBytes"/>
@@ -20,8 +22,10 @@
 		</EventInputs>
 		<EventOutputs>
 			<Event Name="INITO" Type="EInit" Comment="Initialization Confirm">
+				<With Var="QO"/>
 			</Event>
 			<Event Name="CNF" Type="Event" Comment="Confirmation of Requested Service">
+				<With Var="QO"/>
 				<With Var="STATUS"/>
 				<With Var="s16result"/>
 				<With Var="u8OldSubCommandID"/>
@@ -30,12 +34,14 @@
 			</Event>
 		</EventOutputs>
 		<InputVars>
+			<VarDeclaration Name="QI" Type="BOOL" Comment="Quality Input - TRUE to enable service" InitialValue="TRUE"/>
 			<VarDeclaration Name="u16ObjId" Type="UINT" Comment="Object ID" InitialValue="ID_NULL"/>
 			<VarDeclaration Name="u8SubCommandID" Type="USINT" Comment="Sub-Command ID "/>
 			<VarDeclaration Name="u8ParaList" Type="USINT" Comment="Parameters based on sub-command ID byte " ArraySize="5"/>
 			<VarDeclaration Name="u16LenBytes" Type="UINT" Comment="Length in bytes of parameter list "/>
 		</InputVars>
 		<OutputVars>
+			<VarDeclaration Name="QO" Type="BOOL" Comment="Quality Output - TRUE if service executed successfully"/>
 			<VarDeclaration Name="STATUS" Type="STRING" Comment="Service Status"/>
 			<VarDeclaration Name="u8OldSubCommandID" Type="USINT" Comment="Old Sub-Command ID "/>
 			<VarDeclaration Name="u8OldParaList" Type="USINT" Comment="Old parameters based on sub-command ID byte " ArraySize="5"/>

@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SubAppType Name="Uebung_094b3d_AX" Comment="Wie Uebung_094b3c_AX (K=2 aktiviert zwei Optionsgruppen NACHEINANDER), aber mit dem neuen generischen T-Stueck Option::splitting::AOption_T_2 statt eines speziellen Weiterleitungs-Plugs auf der Optionsgruppe selbst: OptionalGroup_001 und OptionalGroup_001b sind beide die einfache, unveraenderte Variante (nur ein OPTION-Socket) - das T-Stueck sitzt extern zwischen DEMUX und den beiden Gruppen und kann genauso an eine dritte Gruppe (oder ein weiteres T-Stueck) weitergereicht werden.">
+	<Identification Standard="61499-2" Description="Copyright (c) 2026 Meisterschulen am Ostbahnhof  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0">
+	</Identification>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2026-10-14" Remarks="initial implementation - zeigt das neue, kaskadierbare T-Stueck AOption_T_2 (Option::splitting) als generische Alternative zum Ad-hoc-PLUG1-Muster aus OptionalGroup_001a/Uebung_094b3c_AX: AOption_AUI_DEMUX_3.OUT2 -&gt; AOption_T_2.IN -&gt; zuerst OUT2 (OptionalGroup_001), danach erst OUT1 (OptionalGroup_001b) - sequenziell nacheinander, nicht gleichzeitig.">
+	</VersionInfo>
+	<CompilerInfo packageName="Uebungen">
+		<Import declaration="Uebungen::const::UT::DefaultPool::InputNumber_I1"/>
+	</CompilerInfo>
+	<SubAppInterfaceList>
+	</SubAppInterfaceList>
+	<SubAppNetwork>
+		<SubApp Name="NumericValue_TO_AUI2_1" Type="MyLib::sys::NumericValue_TO_AUI2" x="-3500" y="500">
+			<Parameter Name="u16ObjId" Value="InputNumber_I1"/>
+		</SubApp>
+		<FB Name="AOption_AUI_DEMUX_3" Type="Option::selection::AOption_AUI_DEMUX_3" x="-1500" y="600">
+		</FB>
+		<FB Name="AOption_T_2" Type="Option::splitting::AOption_T_2" x="800" y="700">
+		</FB>
+		<SubApp Name="OptionalGroup_001" Type="MyLib_AX_Option::sys::OptionalGroup_001" x="2600" y="700">
+		</SubApp>
+		<SubApp Name="OptionalGroup_001b" Type="MyLib_AX_Option::sys::OptionalGroup_001b" x="2600" y="1100">
+		</SubApp>
+		<SubApp Name="OptionalGroup_002" Type="MyLib_AX_Option::sys::OptionalGroup_002" x="1500" y="1800">
+		</SubApp>
+		<SubApp Name="DummyGroup" Type="MyLib_AX_Option::sys::DummyGroup" x="1600" y="300">
+		</SubApp>
+		<AdapterConnections>
+			<Connection Source="NumericValue_TO_AUI2_1.VALUEO" Destination="AOption_AUI_DEMUX_3.K" dx1="700"/>
+			<Connection Source="AOption_AUI_DEMUX_3.OUT2" Destination="AOption_T_2.IN" dx1="700"/>
+			<Connection Source="AOption_T_2.OUT2" Destination="OptionalGroup_001b.AOption_IN" dx1="620"/>
+			<Connection Source="AOption_AUI_DEMUX_3.OUT3" Destination="OptionalGroup_002.AOption_IN" dx1="866.67"/>
+			<Connection Source="AOption_AUI_DEMUX_3.OUT1" Destination="DummyGroup.AOption_IN" dx1="960"/>
+			<Connection Source="AOption_T_2.OUT1" Destination="OptionalGroup_001.AOption_IN"/>
+		</AdapterConnections>
+	</SubAppNetwork>
+</SubAppType>

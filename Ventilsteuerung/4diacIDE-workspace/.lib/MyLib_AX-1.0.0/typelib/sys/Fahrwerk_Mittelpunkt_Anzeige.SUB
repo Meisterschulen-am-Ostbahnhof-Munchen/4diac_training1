@@ -7,12 +7,24 @@
 	<CompilerInfo packageName="MyLib::sys">
 	</CompilerInfo>
 	<SubAppInterfaceList>
+		<SubAppEventInputs>
+			<SubAppEvent Name="INIT" Type="EInit" Comment="Initialization Request">
+			</SubAppEvent>
+		</SubAppEventInputs>
+		<SubAppEventOutputs>
+			<SubAppEvent Name="INITO" Type="EInit" Comment="Initialization Confirm">
+			</SubAppEvent>
+		</SubAppEventOutputs>
 		<InputVars>
+			<VarDeclaration Name="QI" Type="BOOL" Comment="Quality Input - TRUE to enable service" InitialValue="TRUE"/>
 			<VarDeclaration Name="WINDOW_MIN" Type="REAL" Comment="Untere Fenstergrenze (%), ab wann &apos;links ausgelenkt&apos; gilt - muss zum WINDOW_MIN der zugehoerigen Fahrwerk_Mittelpunkt_Automatik-Instanz passen" InitialValue="-2.0"/>
 			<VarDeclaration Name="WINDOW_MAX" Type="REAL" Comment="Obere Fenstergrenze (%), ab wann &apos;rechts ausgelenkt&apos; gilt - siehe WINDOW_MIN" InitialValue="2.0"/>
 			<VarDeclaration Name="u16ObjId_Status_Center" Type="UINT" Comment="Object ID Status_Center-Button (Achslenkung_Status_Center bzw. Hangausgleich_Status_Center, &apos;&gt;&lt;&apos;-Indikator)"/>
 			<VarDeclaration Name="stObjBargraphSplit" Type="isobus::utils::bargraph::BargraphSplit_S" Comment="Object IDs der 2 Bargraphen + gemeinsame Betrags-Grenzen, siehe FBs::const::DefaultPool_BargraphSplit::Bargraph_Achslenkung_BargraphSplit bzw. _Hangausgleich_BargraphSplit"/>
 		</InputVars>
+		<OutputVars>
+			<VarDeclaration Name="QO" Type="BOOL" Comment="Quality Output - TRUE if service executed successfully"/>
+		</OutputVars>
 		<Sockets>
 			<AdapterDeclaration Name="CAL_IN" Type="adapter::types::unidirectional::AR" Comment="Kalibrierter Winkel von aussen (z.B. AnalogChannel_Hangausgleich_Winkel.CAL_OUT), statt eigenem lokalen OPC-UA-Self-Subscribe"/>
 		</Sockets>
@@ -30,6 +42,10 @@
 		</FB>
 		<SubApp Name="STATUS_CENTER_BG" Type="MyLib::sys::GreenWhiteBackground1_AX" x="-4800" y="-4400">
 		</SubApp>
+		<EventConnections>
+			<Connection Source="INIT" Destination="STATUS_CENTER_BG.INIT"/>
+			<Connection Source="STATUS_CENTER_BG.INITO" Destination="INITO"/>
+		</EventConnections>
 		<DataConnections>
 			<Connection Source="WINDOW_MIN" Destination="LIT_WINDOW_MIN.INIT_VAL" dx1="1400">
 				<Attribute Name="Visible" Value="false"/>
@@ -43,6 +59,8 @@
 			<Connection Source="stObjBargraphSplit" Destination="SplitBar.stObj" dx1="1400">
 				<Attribute Name="Visible" Value="false"/>
 			</Connection>
+			<Connection Source="QI" Destination="STATUS_CENTER_BG.QI"/>
+			<Connection Source="STATUS_CENTER_BG.QO" Destination="QO"/>
 		</DataConnections>
 		<AdapterConnections>
 			<Connection Source="CAL_IN" Destination="SPLIT_Y.IN" dx1="600"/>

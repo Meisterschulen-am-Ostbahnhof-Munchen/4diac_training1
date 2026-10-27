@@ -36,7 +36,7 @@
 			<Parameter Name="QI" Value="TRUE"/>
 			<Parameter Name="Output" Value="Output_Q7"/>
 		</FB>
-		<FB Name="DigitalOutput_Q8" Type="logiBUS::io::DQ::logiBUS_QXA" x="4500" y="1200">
+		<FB Name="DigitalOutput_Q8" Type="logiBUS::io::DQ::logiBUS_QXA" x="4400" y="300">
 			<Parameter Name="QI" Value="TRUE"/>
 			<Parameter Name="Output" Value="Output_Q8"/>
 		</FB>
@@ -44,7 +44,7 @@
 			<Parameter Name="QI" Value="TRUE"/>
 			<Parameter Name="ID" Value="SW1_UP_STATE_REMOTE_WRITE"/>
 		</FB>
-		<FB Name="StateDownClient" Type="adapter::net::AX_CLIENT_1_0" x="4500" y="300">
+		<FB Name="StateDownClient" Type="adapter::net::AX_CLIENT_1_0" x="4400" y="1300">
 			<Parameter Name="QI" Value="TRUE"/>
 			<Parameter Name="ID" Value="SW1_DOWN_STATE_REMOTE_WRITE"/>
 		</FB>
@@ -54,10 +54,10 @@
 			<Connection Source="ILOCK_AX.timeOut" Destination="E_TimeOut.TimeOutSocket" dx1="193.33"/>
 			<Connection Source="ILOCK_AX.UP_OUT" Destination="SPLIT_UP.IN" dx1="800"/>
 			<Connection Source="SPLIT_UP.OUT1" Destination="DigitalOutput_Q7.OUT" dx1="600"/>
-			<Connection Source="SPLIT_UP.OUT2" Destination="StateUpClient.IN" dx1="600"/>
+			<Connection Source="SPLIT_UP.OUT2" Destination="StateUpClient.IN" dx1="80"/>
 			<Connection Source="ILOCK_AX.DOWN_OUT" Destination="SPLIT_DOWN.IN" dx1="800"/>
-			<Connection Source="SPLIT_DOWN.OUT2" Destination="DigitalOutput_Q8.OUT" dx1="600"/>
-			<Connection Source="SPLIT_DOWN.OUT1" Destination="StateDownClient.IN" dx1="920"/>
+			<Connection Source="SPLIT_DOWN.OUT1" Destination="DigitalOutput_Q8.OUT" dx1="600"/>
+			<Connection Source="SPLIT_DOWN.OUT2" Destination="StateDownClient.IN" dx1="80"/>
 		</AdapterConnections>
 	</SubAppNetwork>
 </SubAppType>

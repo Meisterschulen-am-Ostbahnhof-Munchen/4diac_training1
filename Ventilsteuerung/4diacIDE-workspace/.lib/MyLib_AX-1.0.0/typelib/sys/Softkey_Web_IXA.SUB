@@ -7,23 +7,41 @@
 	<CompilerInfo packageName="MyLib::sys">
 	</CompilerInfo>
 	<SubAppInterfaceList>
+		<SubAppEventInputs>
+			<SubAppEvent Name="INIT" Type="EInit" Comment="Initialization Request">
+			</SubAppEvent>
+		</SubAppEventInputs>
+		<SubAppEventOutputs>
+			<SubAppEvent Name="INITO" Type="EInit" Comment="Initialization Confirm">
+			</SubAppEvent>
+		</SubAppEventOutputs>
 		<InputVars>
+			<VarDeclaration Name="QI" Type="BOOL" Comment="Quality Input - TRUE to enable service" InitialValue="TRUE"/>
 			<VarDeclaration Name="u16ObjId" Type="UINT" Comment="Object ID SoftKey"/>
 			<VarDeclaration Name="ID_WEB_READ" Type="WSTRING" Comment="Lokale Subscribe-Adresse fuer den Web-Client (vt-ui-mirror): down/up wie ein gehaltener physischer Taster"/>
 		</InputVars>
+		<OutputVars>
+			<VarDeclaration Name="QO" Type="BOOL" Comment="Quality Output - TRUE if service executed successfully"/>
+		</OutputVars>
 		<Plugs>
 			<AdapterDeclaration Name="OUT" Type="adapter::types::unidirectional::AX" Comment="SoftKey ODER Web-Override, 1 gemeinsamer kontinuierlicher Zustand"/>
 		</Plugs>
 	</SubAppInterfaceList>
 	<SubAppNetwork>
 		<FB Name="Softkey" Type="isobus::UT::io::Softkey::Softkey_IXA" x="0" y="0">
-			<Parameter Name="QI" Value="TRUE"/>
 		</FB>
 		<FB Name="WebSub" Type="adapter::net::AX_SUBSCRIBE_1" x="0" y="900">
-			<Parameter Name="QI" Value="TRUE"/>
 		</FB>
 		<FB Name="OR_MERGE" Type="adapter::booleanOperators::AX_OR_2" x="1600" y="450">
 		</FB>
+		<FB Name="AND_QO" Type="iec61131::booleanOperators::AND_BOOL_2" x="4500" y="900">
+		</FB>
+		<EventConnections>
+			<Connection Source="INIT" Destination="Softkey.INIT" dx1="80" dx2="80" dy="-413.33"/>
+			<Connection Source="Softkey.INITO" Destination="WebSub.INIT" dx1="80" dx2="80" dy="446.67"/>
+			<Connection Source="WebSub.INITO" Destination="INITO" dx1="3366.67"/>
+			<Connection Source="WebSub.INITO" Destination="AND_QO.REQ"/>
+		</EventConnections>
 		<DataConnections>
 			<Connection Source="u16ObjId" Destination="Softkey.u16ObjId" dx1="1400">
 				<Attribute Name="Visible" Value="false"/>
@@ -31,6 +49,11 @@
 			<Connection Source="ID_WEB_READ" Destination="WebSub.ID" dx1="1400">
 				<Attribute Name="Visible" Value="false"/>
 			</Connection>
+			<Connection Source="QI" Destination="Softkey.QI" dx1="80" dx2="80" dy="-306.67"/>
+			<Connection Source="QI" Destination="WebSub.QI" dx1="80" dx2="80" dy="140"/>
+			<Connection Source="Softkey.QO" Destination="AND_QO.IN1" dx1="1846.67"/>
+			<Connection Source="WebSub.QO" Destination="AND_QO.IN2"/>
+			<Connection Source="AND_QO.OUT" Destination="QO" dx1="2340"/>
 		</DataConnections>
 		<AdapterConnections>
 			<Connection Source="Softkey.IN" Destination="OR_MERGE.IN1" dx1="800"/>

@@ -7,20 +7,37 @@
 	<CompilerInfo packageName="MyLib::sys">
 	</CompilerInfo>
 	<SubAppInterfaceList>
+		<SubAppEventInputs>
+			<SubAppEvent Name="INIT" Type="EInit" Comment="Initialization Request">
+			</SubAppEvent>
+		</SubAppEventInputs>
+		<SubAppEventOutputs>
+			<SubAppEvent Name="INITO" Type="EInit" Comment="Initialization Confirm">
+			</SubAppEvent>
+		</SubAppEventOutputs>
 		<InputVars>
+			<VarDeclaration Name="QI" Type="BOOL" Comment="Quality Input - TRUE to enable service" InitialValue="TRUE"/>
 			<VarDeclaration Name="ID_WRITE" Type="WSTRING" Comment="OPC-UA Publish-Key fuer den Tick-Zaehlerstand (fuer Remote-Subscribe durch andere Module)"/>
 		</InputVars>
+		<OutputVars>
+			<VarDeclaration Name="QO" Type="BOOL" Comment="Quality Output - TRUE if service executed successfully"/>
+		</OutputVars>
 	</SubAppInterfaceList>
 	<SubAppNetwork>
 		<SubApp Name="System_Tick" Type="MyLib::sys::SystemTick" x="0" y="0">
 		</SubApp>
 		<FB Name="ADI_PUBLISH_1" Type="adapter::net::ADI_PUBLISH_1" x="4100" y="-400">
-			<Parameter Name="QI" Value="TRUE"/>
 		</FB>
+		<EventConnections>
+			<Connection Source="INIT" Destination="ADI_PUBLISH_1.INIT"/>
+			<Connection Source="ADI_PUBLISH_1.INITO" Destination="INITO"/>
+		</EventConnections>
 		<DataConnections>
 			<Connection Source="ID_WRITE" Destination="ADI_PUBLISH_1.ID" dx1="2513.33">
 				<Attribute Name="Visible" Value="false"/>
 			</Connection>
+			<Connection Source="QI" Destination="ADI_PUBLISH_1.QI"/>
+			<Connection Source="ADI_PUBLISH_1.QO" Destination="QO"/>
 		</DataConnections>
 		<AdapterConnections>
 			<Connection Source="System_Tick.ADI_OUT" Destination="ADI_PUBLISH_1.IN" dx1="1920"/>

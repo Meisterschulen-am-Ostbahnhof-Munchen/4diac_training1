@@ -9,28 +9,36 @@
 		<Import declaration="logiBUS::utils::conversion::phys::NumericObjectPool_S"/>
 	</CompilerInfo>
 	<SubAppInterfaceList>
+		<SubAppEventInputs>
+			<SubAppEvent Name="INIT" Type="EInit" Comment="Initialization Request">
+			</SubAppEvent>
+		</SubAppEventInputs>
 		<SubAppEventOutputs>
+			<SubAppEvent Name="INITO" Type="EInit" Comment="Initialization Confirm">
+			</SubAppEvent>
 			<SubAppEvent Name="IND" Type="Event">
 			</SubAppEvent>
 		</SubAppEventOutputs>
 		<InputVars>
+			<VarDeclaration Name="QI" Type="BOOL" Comment="Quality Input - TRUE to enable service" InitialValue="TRUE"/>
 			<VarDeclaration Name="KEY" Type="STRING" Comment="Key name."/>
 			<VarDeclaration Name="SECTION" Type="STRING" Comment="Section name."/>
 			<VarDeclaration Name="stObj" Type="logiBUS::utils::conversion::phys::NumericObjectPool_S" InitialValue="(u16ObjId := ID_NULL, r32Scale := 1.0, i32Offset := 0, u8Decimals := 0)"/>
 		</InputVars>
 		<OutputVars>
+			<VarDeclaration Name="QO" Type="BOOL" Comment="Quality Output - TRUE if service executed successfully"/>
 			<VarDeclaration Name="VALUEO" Type="REAL"/>
 		</OutputVars>
 	</SubAppInterfaceList>
 	<SubAppNetwork>
 		<FB Name="NumericValue_PHYS" Type="isobus::UT::io::NumericValue::NumericValue_PHYS" x="-1300" y="300">
-			<Parameter Name="QI" Value="TRUE"/>
 		</FB>
 		<FB Name="INI" Type="eclipse4diac::storage::INI" x="2100" y="100">
-			<Parameter Name="QI" Value="TRUE"/>
 			<Parameter Name="DEFAULT_VALUE" Value="REAL#0.0"/>
 		</FB>
 		<FB Name="Q_NumericValue_PHYS" Type="isobus::UT::Q::Q_NumericValue_PHYS" x="5000" y="200">
+		</FB>
+		<FB Name="AND_QO" Type="iec61131::booleanOperators::AND_BOOL_3">
 		</FB>
 		<EventConnections>
 			<Connection Source="NumericValue_PHYS.IND" Destination="INI.SET" dx1="380"/>
@@ -42,6 +50,11 @@
 				<Attribute Name="Visible" Value="false"/>
 			</Connection>
 			<Connection Source="INI.INITO" Destination="INI.GET" dx1="80" dx2="80" dy="-580"/>
+			<Connection Source="INIT" Destination="NumericValue_PHYS.INIT"/>
+			<Connection Source="NumericValue_PHYS.INITO" Destination="INI.INIT"/>
+			<Connection Source="INI.INITO" Destination="Q_NumericValue_PHYS.INIT"/>
+			<Connection Source="Q_NumericValue_PHYS.INITO" Destination="INITO"/>
+			<Connection Source="Q_NumericValue_PHYS.INITO" Destination="AND_QO.REQ"/>
 		</EventConnections>
 		<DataConnections>
 			<Connection Source="NumericValue_PHYS.rPhys" Destination="INI.VALUE" dx1="186.67"/>
@@ -61,6 +74,13 @@
 			<Connection Source="SECTION" Destination="INI.SECTION" dx1="3493.33">
 				<Attribute Name="Visible" Value="false"/>
 			</Connection>
+			<Connection Source="QI" Destination="Q_NumericValue_PHYS.QI"/>
+			<Connection Source="QI" Destination="NumericValue_PHYS.QI"/>
+			<Connection Source="QI" Destination="INI.QI"/>
+			<Connection Source="Q_NumericValue_PHYS.QO" Destination="AND_QO.IN1"/>
+			<Connection Source="NumericValue_PHYS.QO" Destination="AND_QO.IN2"/>
+			<Connection Source="INI.QO" Destination="AND_QO.IN3"/>
+			<Connection Source="AND_QO.OUT" Destination="QO"/>
 		</DataConnections>
 	</SubAppNetwork>
 </SubAppType>

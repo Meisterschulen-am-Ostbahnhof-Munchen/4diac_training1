@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SubAppType Name="Uebung_OPC_L15_AX" Comment="Methode AddValues (opcua.adoc): SERVER_1_2 + F_ADD; Input_I1 ruft sie per CLIENT_2_1 mit 43 und 10 auf (Ergebnis 53) - lokal auf einem Geraet">
+	<Identification Standard="61499-2" Description="Copyright (c) 2026 Meisterschulen am Ostbahnhof  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0">
+	</Identification>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2026-10-18" Remarks="opcua.adoc-Beispiel lokal (Meins/OPC_UA_Lokal)">
+	</VersionInfo>
+	<CompilerInfo packageName="Meins::OPC_UA_Lokal">
+		<Import declaration="Meins::OPC_UA_Lokal::const::OpcUaLokal::L15_ADD_METHOD"/>
+		<Import declaration="Meins::OPC_UA_Lokal::const::OpcUaLokal::L15_ADD_CALL"/>
+		<Import declaration="logiBUS::io::DI::logiBUS_DI::Input_I1"/>
+		<Import declaration="logiBUS::io::DI::logiBUS_DI_Events::BUTTON_PRESS_DOWN"/>
+	</CompilerInfo>
+	<SubAppInterfaceList>
+	</SubAppInterfaceList>
+	<SubAppNetwork>
+		<FB Name="TASTER_I1" Type="logiBUS::io::DI::logiBUS_IE" x="0" y="0">
+			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="Input" Value="Input_I1"/>
+			<Parameter Name="InputEvent" Value="BUTTON_PRESS_DOWN"/>
+		</FB>
+		<FB Name="ADD_CALL" Type="iec61499::net::CLIENT_2_1" x="2200" y="0">
+			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="ID" Value="L15_ADD_CALL"/>
+			<Parameter Name="SD_1" Value="INT#43"/>
+			<Parameter Name="SD_2" Value="INT#10"/>
+		</FB>
+		<FB Name="RESULT_TO_DINT" Type="iec61131::conversion::F_INT_TO_DINT" x="4400" y="0">
+		</FB>
+		<FB Name="ADD_VALUES" Type="iec61499::net::SERVER_1_2" x="9000" y="0">
+			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="ID" Value="L15_ADD_METHOD"/>
+		</FB>
+		<FB Name="TO_DINT_1" Type="iec61131::conversion::F_INT_TO_DINT" x="11000" y="-400">
+		</FB>
+		<FB Name="TO_DINT_2" Type="iec61131::conversion::F_INT_TO_DINT" x="11000" y="600">
+		</FB>
+		<FB Name="F_ADD" Type="iec61131::arithmetic::F_ADD" x="12800" y="0">
+		</FB>
+		<FB Name="TO_INT" Type="iec61131::conversion::F_DINT_TO_INT" x="14400" y="0">
+		</FB>
+		<EventConnections>
+			<Connection Source="TASTER_I1.IND" Destination="ADD_CALL.REQ"/>
+			<Connection Source="TASTER_I1.INITO" Destination="ADD_CALL.INIT"/>
+			<Connection Source="ADD_CALL.CNF" Destination="RESULT_TO_DINT.REQ"/>
+			<Connection Source="ADD_VALUES.IND" Destination="TO_DINT_1.REQ"/>
+			<Connection Source="TO_DINT_1.CNF" Destination="TO_DINT_2.REQ"/>
+			<Connection Source="TO_DINT_2.CNF" Destination="F_ADD.REQ"/>
+			<Connection Source="F_ADD.CNF" Destination="TO_INT.REQ"/>
+			<Connection Source="TO_INT.CNF" Destination="ADD_VALUES.RSP"/>
+		</EventConnections>
+		<DataConnections>
+			<Connection Source="ADD_CALL.RD_1" Destination="RESULT_TO_DINT.IN"/>
+			<Connection Source="ADD_VALUES.RD_1" Destination="TO_DINT_1.IN"/>
+			<Connection Source="ADD_VALUES.RD_2" Destination="TO_DINT_2.IN"/>
+			<Connection Source="TO_DINT_1.OUT" Destination="F_ADD.IN1"/>
+			<Connection Source="TO_DINT_2.OUT" Destination="F_ADD.IN2"/>
+			<Connection Source="F_ADD.OUT" Destination="TO_INT.IN"/>
+			<Connection Source="TO_INT.OUT" Destination="ADD_VALUES.SD_1"/>
+		</DataConnections>
+	</SubAppNetwork>
+</SubAppType>

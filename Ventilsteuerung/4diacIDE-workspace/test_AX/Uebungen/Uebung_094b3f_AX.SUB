@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SubAppType Name="Uebung_094b3f_AX" Comment="Wie Uebung_094b3e_AX, aber ohne T-Stuecke: die Gruppen 1 und 2 sind OptionalGroup_001a bzw. OptionalGroup_002a (Muster mit AOption_IN und AOption_OUT), ihre AOption_OUT speisen AOption_OR_2, dessen OUT die dritte Gruppe OptionalGroup_001b aktiviert. Bei K=1 (DummyGroup) bleibt sie aus.">
+	<Identification Standard="61499-2" Description="Copyright (c) 2026 Meisterschulen am Ostbahnhof  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0">
+	</Identification>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2026-10-17" Remarks="Kopie von Uebung_094b3_AX, Gruppen 1/2 als OptionalGroup_001a/002a, OR am AOption_OUT, dritte Gruppe 001b.">
+	</VersionInfo>
+	<CompilerInfo packageName="Uebungen">
+		<Import declaration="Uebungen::const::UT::DefaultPool::InputNumber_I1"/>
+	</CompilerInfo>
+	<SubAppInterfaceList>
+	</SubAppInterfaceList>
+	<SubAppNetwork>
+		<SubApp Name="NumericValue_TO_AUI2_1" Type="MyLib::sys::NumericValue_TO_AUI2" x="-3500" y="500">
+			<Parameter Name="u16ObjId" Value="InputNumber_I1"/>
+		</SubApp>
+		<FB Name="AOption_AUI_DEMUX_3" Type="Option::selection::AOption_AUI_DEMUX_3" x="-1500" y="600">
+		</FB>
+		<SubApp Name="OptionalGroup_001a" Type="MyLib_AX_Option::sys::OptionalGroup_001a" x="1500" y="800">
+		</SubApp>
+		<SubApp Name="OptionalGroup_002a" Type="MyLib_AX_Option::sys::OptionalGroup_002a" x="1500" y="1200">
+		</SubApp>
+		<SubApp Name="OptionalGroup_001b" Type="MyLib_AX_Option::sys::OptionalGroup_001b" x="5100" y="900">
+		</SubApp>
+		<FB Name="AOption_OR_2_1" Type="Option::merging::AOption_OR_2" x="3400" y="900">
+		</FB>
+		<SubApp Name="DummyGroup" Type="MyLib_AX_Option::sys::DummyGroup" x="1600" y="300">
+		</SubApp>
+		<AdapterConnections>
+			<Connection Source="NumericValue_TO_AUI2_1.VALUEO" Destination="AOption_AUI_DEMUX_3.K" dx1="700"/>
+			<Connection Source="AOption_AUI_DEMUX_3.OUT2" Destination="OptionalGroup_001a.AOption_IN" dx1="866.67"/>
+			<Connection Source="AOption_AUI_DEMUX_3.OUT3" Destination="OptionalGroup_002a.AOption_IN" dx1="866.67"/>
+			<Connection Source="OptionalGroup_001a.AOption_OUT" Destination="AOption_OR_2_1.IN1" dx1="400"/>
+			<Connection Source="OptionalGroup_002a.AOption_OUT" Destination="AOption_OR_2_1.IN2" dx1="400"/>
+			<Connection Source="AOption_OR_2_1.OUT" Destination="OptionalGroup_001b.AOption_IN"/>
+			<Connection Source="AOption_AUI_DEMUX_3.OUT1" Destination="DummyGroup.AOption_IN" dx1="960"/>
+		</AdapterConnections>
+	</SubAppNetwork>
+</SubAppType>

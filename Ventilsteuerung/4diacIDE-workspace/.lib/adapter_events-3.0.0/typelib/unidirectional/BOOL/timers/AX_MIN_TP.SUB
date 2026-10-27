@@ -28,18 +28,18 @@
 	<SubAppNetwork>
 		<FB Name="AX_SPLIT_2_In" Type="adapter::events::unidirectional::AX_SPLIT_2" Comment="AX_IN wird fuer AX_TP_MinZeit.IN UND direkt fuer AX_OR_Halten gebraucht" x="-1400" y="-500">
 		</FB>
-		<FB Name="AX_TP_MinZeit" Type="adapter::events::unidirectional::timers::AX_TP" Comment="Non-retriggerable - laeuft nach der steigenden Flanke von AX_IN immer exakt PT durch, unabhaengig davon ob AX_IN vorher schon wieder abfaellt" x="0" y="-900">
+		<FB Name="AX_TP_MinZeit" Type="adapter::events::unidirectional::timers::AX_TP" Comment="Non-retriggerable - laeuft nach der steigenden Flanke von AX_IN immer exakt PT durch, unabhaengig davon ob AX_IN vorher schon wieder abfaellt" x="200" y="-900">
 		</FB>
-		<FB Name="AX_OR_Halten" Type="adapter::booleanOperators::AX_OR_2" Comment="AX_IN OR AX_TP_MinZeit.Q - haelt den Ausgang, solange entweder der rohe Puls noch da ist (laengere Pulse) oder die Mindestzeit noch laeuft (kuerzere Pulse)" x="1100" y="-500">
+		<FB Name="AX_OR_Halten" Type="adapter::booleanOperators::AX_OR_2" Comment="AX_IN OR AX_TP_MinZeit.Q - haelt den Ausgang, solange entweder der rohe Puls noch da ist (laengere Pulse) oder die Mindestzeit noch laeuft (kuerzere Pulse)" x="1500" y="-500">
 		</FB>
 		<EventConnections>
-			<Connection Source="R" Destination="AX_TP_MinZeit.R" dx1="3040"/>
+			<Connection Source="R" Destination="AX_TP_MinZeit.R" dx1="2400"/>
 		</EventConnections>
 		<DataConnections>
-			<Connection Source="PT" Destination="AX_TP_MinZeit.PT" dx1="2600"/>
+			<Connection Source="PT" Destination="AX_TP_MinZeit.PT" dx1="2053.33"/>
 		</DataConnections>
 		<AdapterConnections>
-			<Connection Source="AX_IN" Destination="AX_SPLIT_2_In.IN" dx1="2500"/>
+			<Connection Source="AX_IN" Destination="AX_SPLIT_2_In.IN" dx1="853.33"/>
 			<Connection Source="AX_SPLIT_2_In.OUT1" Destination="AX_TP_MinZeit.IN" dx1="173.33"/>
 			<Connection Source="AX_SPLIT_2_In.OUT2" Destination="AX_OR_Halten.IN2"/>
 			<Connection Source="AX_TP_MinZeit.Q" Destination="AX_OR_Halten.IN1" dx1="300"/>

@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SubAppType Name="Uebung_094b3b_AX" Comment="Wie Uebung_094b3_AX, aber mit MyLib::sys::NumericValue_TO_AUI2_AND_STORE statt NumericValue_TO_AUI2: der Index (K) wird zusaetzlich in INI_AUI persistiert, Boot-Wert gewinnt beim Start per AUI_LAST_2 gegen die Live-VT-Lesung.">
+	<Identification Standard="61499-2" Description="Copyright (c) 2026 Meisterschulen am Ostbahnhof  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0">
+	</Identification>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2026-10-13" Remarks="NumericValue_TO_AUI2 ersetzt durch NumericValue_TO_AUI2_AND_STORE - gleicher bidirektionaler VALUEO-Plug, zusaetzlich INI-persistiert (KEY_I1_STORE/SECTION_I1_STORE, bereits aus Uebung_012c_AUDI/Uebung_094b4b_AX bekannt).">
+	</VersionInfo>
+	<CompilerInfo packageName="Uebungen">
+		<Import declaration="Uebungen::const::NVS::NVS_Keys::KEY_I1_STORE"/>
+		<Import declaration="Uebungen::const::NVS::NVS_Keys::SECTION_I1_STORE"/>
+		<Import declaration="Uebungen::const::UT::DefaultPool::InputNumber_I1"/>
+	</CompilerInfo>
+	<SubAppInterfaceList>
+	</SubAppInterfaceList>
+	<SubAppNetwork>
+		<SubApp Name="NumericValue_TO_AUI2_AND_STORE_1" Type="MyLib::sys::NumericValue_TO_AUI2_AND_STORE" x="-3700" y="300">
+			<Parameter Name="KEY" Value="KEY_I1_STORE"/>
+			<Parameter Name="SECTION" Value="SECTION_I1_STORE"/>
+			<Parameter Name="u16ObjId" Value="InputNumber_I1"/>
+		</SubApp>
+		<FB Name="AOption_AUI_DEMUX_3" Type="Option::selection::AOption_AUI_DEMUX_3" x="-1500" y="600">
+		</FB>
+		<SubApp Name="OptionalGroup_001" Type="MyLib_AX_Option::sys::OptionalGroup_001" x="1500" y="800">
+		</SubApp>
+		<SubApp Name="OptionalGroup_002" Type="MyLib_AX_Option::sys::OptionalGroup_002" x="1500" y="1200">
+		</SubApp>
+		<SubApp Name="DummyGroup" Type="MyLib_AX_Option::sys::DummyGroup" x="1600" y="300">
+		</SubApp>
+		<AdapterConnections>
+			<Connection Source="NumericValue_TO_AUI2_AND_STORE_1.VALUEO" Destination="AOption_AUI_DEMUX_3.K" dx1="433.33"/>
+			<Connection Source="AOption_AUI_DEMUX_3.OUT2" Destination="OptionalGroup_001.AOption_IN" dx1="866.67"/>
+			<Connection Source="AOption_AUI_DEMUX_3.OUT3" Destination="OptionalGroup_002.AOption_IN" dx1="866.67"/>
+			<Connection Source="AOption_AUI_DEMUX_3.OUT1" Destination="DummyGroup.AOption_IN" dx1="960"/>
+		</AdapterConnections>
+	</SubAppNetwork>
+</SubAppType>
