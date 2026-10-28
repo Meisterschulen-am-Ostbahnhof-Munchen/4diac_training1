@@ -87,7 +87,7 @@
 		<OutputVars>
 			<VarDeclaration Name="out" Type="REAL" Comment="out value (depends on integType)" InitialValue="0.0"/>
 			<VarDeclaration Name="total" Type="REAL" Comment="integrated summation of all pv" InitialValue="0.0"/>
-			<VarDeclaration Name="aTotal" Type="REAL" Comment="signed integrated summation of pv1/tBase1+pv2/tBase2, without inv1/inv2 correction (despite the name, calcTotal never applies ABS() - an inconsistency already present in the original nxtControl source, preserved as-is here)" InitialValue="0.0"/>
+			<VarDeclaration Name="aTotal" Type="REAL" Comment="signed integrated summation of pv1/tBase1+pv2/tBase2, without inv1/inv2&#10; correction (despite the name, calcTotal never applies ABS() - an inconsistency&#10; already present in the original nxtControl source, preserved as-is here)" InitialValue="0.0"/>
 			<VarDeclaration Name="error" Type="BOOL" Comment="error detected" InitialValue="FALSE"/>
 		</OutputVars>
 	</InterfaceList>
@@ -104,10 +104,10 @@
 			<ECState Name="execIntegration" Comment="Normal execution: one integration step" x="1600" y="700">
 				<ECAction Algorithm="calcTotal" Output="CNF"/>
 			</ECState>
-			<ECState Name="raiseTrip" Comment="total reached the setpoint - KNOWN LIMITATION: unreachable while error=FALSE, see Documentation" x="900" y="1300">
+			<ECState Name="raiseTrip" Comment="total reached the setpoint - KNOWN LIMITATION: unreachable while error=FALSE,&#10; see Documentation" x="900" y="1300">
 				<ECAction Output="TRIP"/>
 			</ECState>
-			<ECState Name="raisePTrip" Comment="total is within preTrip of the setpoint - KNOWN LIMITATION: unreachable while error=FALSE, see Documentation" x="900" y="1000">
+			<ECState Name="raisePTrip" Comment="total is within preTrip of the setpoint - KNOWN LIMITATION: unreachable while&#10; error=FALSE, see Documentation" x="900" y="1000">
 				<ECAction Output="P_TRIP"/>
 			</ECState>
 			<ECState Name="RESET_ST" Comment="Reset the integrator" x="1600" y="200">

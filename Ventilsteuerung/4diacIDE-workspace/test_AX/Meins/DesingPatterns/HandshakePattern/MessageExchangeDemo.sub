@@ -102,9 +102,9 @@
 			</Connection>
 		</DataConnections>
 		<AdapterConnections>
-			<Connection Source="WorkpieceSensor.ACTIVATE" Destination="Orchestrator.SRSP" Comment="WorkpieceSensor requests the round trip (REQ_TRIP); Orchestrator answers once the whole trip is confirmed complete" dx1="1006.67"/>
-			<Connection Source="Orchestrator.SREQ1" Destination="Cylinder.SRSP" Comment="Orchestrator forwards the trip request; reacts to the mid-trip IND (end position reached) and the closing CNF (trip complete)" dx1="886.67"/>
-			<Connection Source="Orchestrator.SREQ2" Destination="Sink.SRSP" Comment="Orchestrator requests the drop once the cylinder reports reaching the end position" dx1="886.67"/>
+			<Connection Source="WorkpieceSensor.ACTIVATE" Destination="Orchestrator.SRSP" Comment="WorkpieceSensor requests the round trip (REQ_TRIP); Orchestrator answers once&#10; the whole trip is confirmed complete" dx1="1006.67"/>
+			<Connection Source="Orchestrator.SREQ1" Destination="Cylinder.SRSP" Comment="Orchestrator forwards the trip request; reacts to the mid-trip IND (end position&#10; reached) and the closing CNF (trip complete)" dx1="886.67"/>
+			<Connection Source="Orchestrator.SREQ2" Destination="Sink.SRSP" Comment="Orchestrator requests the drop once the cylinder reports reaching the end&#10; position" dx1="886.67"/>
 		</AdapterConnections>
 	</SubAppNetwork>
 </SubAppType>

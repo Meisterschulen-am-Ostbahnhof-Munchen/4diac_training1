@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<SubAppType Name="Uebung_006g_AX" Comment="SR-Flip-Flop via INIT_ON_OFF, ausgeloest von 2x E_TRIG (EInitOn/EInitOff Broadcast auf unverbundene Events)">
+<SubAppType Name="Uebung_006g_AX" Comment="SR-Flip-Flop via INIT_ON_OFF, ausgeloest von 2x E_TRIG (EInitOn/EInitOff&#10; Broadcast auf unverbundene Events)">
 	<Identification Standard="61499-2" Description="Copyright (c) 2026 Meisterschulen am Ostbahnhof  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0">
 	</Identification>
 	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2026-10-11" Remarks="initial API and implementation and/or initial documentation">
@@ -61,7 +61,7 @@
 		</FB>
 		<FB Name="AX_SR" Type="adapter::events::unidirectional::AX_SR" x="4300" y="1700">
 		</FB>
-		<Comment Comment="INIT_ON und INIT_OFF bleiben unverbunden: E_TRIG broadcastet sein EVENTTYPE auf ALLE unverbundenen Events dieses Typs im Netzwerk - daher reagiert hier nur der passende Kanal (EInitOn bzw. EInitOff).&#10;" x="2200" y="2400" width="2700" height="500"/>
+		<Comment Comment="INIT_ON und INIT_OFF bleiben unverbunden: E_TRIG broadcastet sein EVENTTYPE auf&#10; ALLE unverbundenen Events dieses Typs im Netzwerk - daher reagiert hier nur der&#10; passende Kanal (EInitOn bzw. EInitOff).&#10;" x="2200" y="2400" width="2700" height="500"/>
 		<EventConnections>
 			<Connection Source="START.IND" Destination="E_TRIG_ON.REQ" dx1="466.67"/>
 			<Connection Source="STOP.IND" Destination="E_TRIG_OFF.REQ" dx1="466.67"/>
