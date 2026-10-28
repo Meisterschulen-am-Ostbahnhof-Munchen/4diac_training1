@@ -36,7 +36,7 @@
 		<FB Name="Q_NumericValue_PHYSA" Type="isobus::UT::Q::Q_NumericValue_PHYSA" x="1500" y="100">
 			<Parameter Name="stObj" Value="OutputNumber_N3_N"/>
 		</FB>
-		<Comment Comment="Zwei verkettete Binaer-Selektoren statt eines 3-Wege-Selektors (den es fuer AR nicht gibt): innen waehlt I2 (Runter) zwischen Neutral(50) und Runter(25), aussen waehlt I1 (Hoch) zwischen diesem Ergebnis und Hoch(75). Werden I1 und I2 gleichzeitig gehalten, gewinnt I1 (Hoch), weil sein Selektor der aeussere ist - bewusste Prioritaet, siehe Beschreibung." x="-7100" y="3500" width="7600" height="900"/>
+		<Comment Comment="Zwei verkettete Binaer-Selektoren statt eines 3-Wege-Selektors (den es fuer AR&#10; nicht gibt): innen waehlt I2 (Runter) zwischen Neutral(50) und Runter(25),&#10; aussen waehlt I1 (Hoch) zwischen diesem Ergebnis und Hoch(75). Werden I1 und I2&#10; gleichzeitig gehalten, gewinnt I1 (Hoch), weil sein Selektor der aeussere ist -&#10; bewusste Prioritaet, siehe Beschreibung." x="-7100" y="3500" width="7600" height="900"/>
 		<AdapterConnections>
 			<Connection Source="initval_AR_50_Neutral.OUT" Destination="AR_AX_SEL_AR_Runter.IN0" dx1="533.33"/>
 			<Connection Source="initval_AR_25_Runter.OUT" Destination="AR_AX_SEL_AR_Runter.IN1" dx1="533.33"/>

@@ -48,7 +48,7 @@
 			<Parameter Name="QI" Value="TRUE"/>
 			<Parameter Name="Output" Value="Output_Q2"/>
 		</FB>
-		<Comment Comment="Wie Uebung_206_AX (ILOCK_T_FF_AX), aber ILOCK_T_FF_SR_AX statt ILOCK_T_FF_AX: zusaetzlich zum CLK-Toggle gibt es je Instanz direkte S/R-Eingaenge. Hier nur an FF1 gezeigt (I3=Set, I4=Reset) - Set/Reset auf FF1 loest ueber die Adapter-Kette (ILOCK_OUT-&gt;ILOCK_IN) dieselbe gegenseitige Verriegelung aus wie ein CLK-Toggle: wird FF1 gesetzt, wird FF2 automatisch zurueckgesetzt und umgekehrt." x="-6100" y="1900" width="3100" height="1600"/>
+		<Comment Comment="Wie Uebung_206_AX (ILOCK_T_FF_AX), aber ILOCK_T_FF_SR_AX statt ILOCK_T_FF_AX:&#10; zusaetzlich zum CLK-Toggle gibt es je Instanz direkte S/R-Eingaenge. Hier nur&#10; an FF1 gezeigt (I3=Set, I4=Reset) - Set/Reset auf FF1 loest ueber die&#10; Adapter-Kette (ILOCK_OUT-&gt;ILOCK_IN) dieselbe gegenseitige Verriegelung aus wie&#10; ein CLK-Toggle: wird FF1 gesetzt, wird FF2 automatisch zurueckgesetzt und&#10; umgekehrt." x="-6100" y="1900" width="3100" height="1600"/>
 		<EventConnections>
 			<Connection Source="DigitalInput_CLK_I1.IND" Destination="ILOCK_T_FF_SR_1.CLK" dx1="440"/>
 			<Connection Source="DigitalInput_Set_I3.IND" Destination="ILOCK_T_FF_SR_1.S" dx1="553.33"/>

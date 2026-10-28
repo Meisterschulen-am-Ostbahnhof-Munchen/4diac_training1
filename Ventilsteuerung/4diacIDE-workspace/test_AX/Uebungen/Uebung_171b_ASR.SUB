@@ -35,7 +35,7 @@
 			<Parameter Name="Input" Value="Input_I2"/>
 			<Parameter Name="InputEvent" Value="BUTTON_SINGLE_CLICK"/>
 		</FB>
-		<Comment Comment="Vergleich zu Uebung_171_ASR: dort ASR_2EVENTS_TO_SR mit rohen EventInputs (jede beliebige Quelle passt, ohne Typ). &#10;Hier ASR_2AE_TO_SR mit AE-Adapter-Sockets: die Quelle muss selbst einen AE-Plug liefern - AE_EVENT_TO_E baut die Bruecke vom rohen Klick-Event zum typisierten AE. &#10;Vorteil: AE-Plugs lassen sich wie jeder Adapter mit AE_SPLIT_2/AE_MERGE_2 weiterverarbeiten, ein rohes Event nicht." x="-5800" y="3600" width="4200" height="900"/>
+		<Comment Comment="Vergleich zu Uebung_171_ASR: dort ASR_2EVENTS_TO_SR mit rohen EventInputs (jede&#10; beliebige Quelle passt, ohne Typ). &#10;Hier ASR_2AE_TO_SR mit AE-Adapter-Sockets: die Quelle muss selbst einen AE-Plug&#10; liefern - AE_EVENT_TO_E baut die Bruecke vom rohen Klick-Event zum typisierten&#10; AE. &#10;Vorteil: AE-Plugs lassen sich wie jeder Adapter mit AE_SPLIT_2/AE_MERGE_2&#10; weiterverarbeiten, ein rohes Event nicht." x="-5800" y="3600" width="4200" height="900"/>
 		<EventConnections>
 			<Connection Source="DigitalInput_CLK_I1.IND" Destination="AE_EVENT_TO_E_SET.REQ" dx1="153.33"/>
 			<Connection Source="DigitalInput_CLK_I2.IND" Destination="AE_EVENT_TO_E_RESET.REQ" dx1="153.33"/>

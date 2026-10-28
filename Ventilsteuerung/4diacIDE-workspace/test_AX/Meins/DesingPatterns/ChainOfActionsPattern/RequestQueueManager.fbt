@@ -14,7 +14,7 @@
 	</CompilerInfo>
 	<InterfaceList>
 		<EventInputs>
-			<Event Name="INIT" Type="EInit" Comment="Initialization Request - carries the initial request snapshot, not the repo&apos;s usual QI qualifier">
+			<Event Name="INIT" Type="EInit" Comment="Initialization Request - carries the initial request snapshot, not the repo&apos;s&#10; usual QI qualifier">
 				<With Var="Floor_Req_0"/>
 				<With Var="Floor_Req_1"/>
 				<With Var="Floor_Req_2"/>
@@ -45,7 +45,7 @@
 				<With Var="DoOpen1"/>
 				<With Var="DoOpen2"/>
 			</Event>
-			<Event Name="CNF" Type="Event" Comment="Execution Confirmation - fired twice per serviced request: once on arrival (door opens), once on completion (door closes)">
+			<Event Name="CNF" Type="Event" Comment="Execution Confirmation - fired twice per serviced request: once on arrival (door&#10; opens), once on completion (door closes)">
 				<With Var="Req_Is_Done_0"/>
 				<With Var="Req_Is_Done_1"/>
 				<With Var="Req_Is_Done_2"/>
@@ -125,7 +125,7 @@
 			<ECTransition Source="DONE_FLOOR" Destination="WAITING" Condition="1" x="2000" y="650"/>
 			<ECTransition Source="WAITING" Destination="READ_REQS" Condition="[pending_reqs]" x="1250" y="900"/>
 		</ECC>
-		<Algorithm Name="INIT" Comment="Reset all outputs and internal state, latching any request already present at deployment">
+		<Algorithm Name="INIT" Comment="Reset all outputs and internal state, latching any request already present at&#10; deployment">
 			<ST><![CDATA[Req_Is_Done_0 := FALSE;
 Req_Is_Done_1 := FALSE;
 Req_Is_Done_2 := FALSE;

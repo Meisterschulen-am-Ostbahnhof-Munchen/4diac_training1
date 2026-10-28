@@ -33,7 +33,7 @@
 			<Parameter Name="Output_UP" Value="Output_Q1"/>
 			<Parameter Name="Output_DOWN" Value="Output_Q2"/>
 		</SubApp>
-		<Comment Comment="Zweipunktregelung mit Totzone + Hysterese um einen Mittelwert MI: &#10;- ueber MI+DEAD+HYSTERESIS schaltet UP ein (z.B. Heizen/Befuellen), unter MI-DEAD-HYSTERESIS schaltet DOWN ein (z.B. Kuehlen/Entleeren). &#10;- Ausschalten erst innerhalb der reinen Totzone (MI +/- DEAD) - die Hysterese verhindert Flattern nahe der Schaltschwelle. &#10;- MI/DEAD/HYSTERESIS hier als feste Beispielwerte (initval_AR) - in echten Anlagen typischerweise per INI/OPC-UA parametrierbar." x="-6500" y="4000" width="4500" height="1000"/>
+		<Comment Comment="Zweipunktregelung mit Totzone + Hysterese um einen Mittelwert MI: &#10;- ueber MI+DEAD+HYSTERESIS schaltet UP ein (z.B. Heizen/Befuellen), unter&#10; MI-DEAD-HYSTERESIS schaltet DOWN ein (z.B. Kuehlen/Entleeren). &#10;- Ausschalten erst innerhalb der reinen Totzone (MI +/- DEAD) - die Hysterese&#10; verhindert Flattern nahe der Schaltschwelle. &#10;- MI/DEAD/HYSTERESIS hier als feste Beispielwerte (initval_AR) - in echten&#10; Anlagen typischerweise per INI/OPC-UA parametrierbar." x="-6500" y="4000" width="4500" height="1000"/>
 		<AdapterConnections>
 			<Connection Source="AnalogInput_I4.IN" Destination="AD_TO_AR_NUM.AD_IN" dx1="500"/>
 			<Connection Source="AD_TO_AR_NUM.AR_OUT" Destination="DualHysteresis.INPUT" dx1="500"/>

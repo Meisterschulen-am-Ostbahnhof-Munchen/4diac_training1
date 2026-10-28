@@ -47,10 +47,10 @@
 			<ECState Name="EXTENDING" Comment="Trip started, push valve extending, waiting for AT_END" x="2400" y="200">
 				<ECAction Algorithm="OnReq" Output="SRSP.IND"/>
 			</ECState>
-			<ECState Name="WAIT_DROP" Comment="Reached end position, reported it, waiting for the orchestrator's RSP before retracting" x="3100" y="200">
+			<ECState Name="WAIT_DROP" Comment="Reached end position, reported it, waiting for the orchestrator's RSP before&#10; retracting" x="3100" y="200">
 				<ECAction Algorithm="OnAtEnd" Output="SRSP.IND"/>
 			</ECState>
-			<ECState Name="RETRACTING" Comment="Drop acknowledged, push valve retracting / pop valve extending, waiting for AT_START" x="2400" y="1000">
+			<ECState Name="RETRACTING" Comment="Drop acknowledged, push valve retracting / pop valve extending, waiting for&#10; AT_START" x="2400" y="1000">
 			</ECState>
 			<ECState Name="COMPLETE" Comment="Start position reached: close the transaction with CNF" x="3100" y="1000">
 				<ECAction Algorithm="OnAtStart" Output="SRSP.CNF"/>

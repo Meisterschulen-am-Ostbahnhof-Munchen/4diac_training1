@@ -25,7 +25,7 @@
 		<SubApp Name="GreenWhiteBackground" Type="MyLib::sys::GreenWhiteBackground2" x="-1700" y="800">
 			<Parameter Name="u16ObjIdA" Value="AuxFunction2_X1"/>
 		</SubApp>
-		<Comment Comment="Nachteil: &#10;AuxFunction2_X1 &#10;muss 2x angegeben werden (Aux_IX.u16ObjId und GreenWhiteBackground.u16ObjIdA). &#10;Wichtig: hier MUSS GreenWhiteBackground2 (nicht GreenWhiteBackground1) verwendet werden, weil AuxFunction2_X1 ein Auxiliary-Function-Type-2-Objekt ist - seine Farbe muss sowohl an den VT-Bildschirm als auch an das Aux-Handle (Joystick) selbst gesendet werden." x="-4600" y="2100" width="3400" height="800"/>
+		<Comment Comment="Nachteil: &#10;AuxFunction2_X1 &#10;muss 2x angegeben werden (Aux_IX.u16ObjId und GreenWhiteBackground.u16ObjIdA). &#10;Wichtig: hier MUSS GreenWhiteBackground2 (nicht GreenWhiteBackground1) verwendet&#10; werden, weil AuxFunction2_X1 ein Auxiliary-Function-Type-2-Objekt ist - seine&#10; Farbe muss sowohl an den VT-Bildschirm als auch an das Aux-Handle (Joystick)&#10; selbst gesendet werden." x="-4600" y="2100" width="3400" height="800"/>
 		<EventConnections>
 			<Connection Source="AuxFunction2_X1.IND" Destination="DigitalOutput_Q1.REQ" dx1="1080"/>
 			<Connection Source="AuxFunction2_X1.IND" Destination="GreenWhiteBackground.REQ" dx1="1080"/>
