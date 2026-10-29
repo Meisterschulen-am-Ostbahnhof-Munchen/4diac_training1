@@ -8,10 +8,12 @@
 	</CompilerInfo>
 	<SubAppInterfaceList>
 		<SubAppEventInputs>
-			<SubAppEvent Name="EI" Type="Event" Comment="Event input (wird durchgelassen wenn PERMIT FALSE ist)"/>
+			<SubAppEvent Name="EI" Type="Event" Comment="Event input (wird durchgelassen wenn PERMIT FALSE ist)">
+			</SubAppEvent>
 		</SubAppEventInputs>
 		<SubAppEventOutputs>
-			<SubAppEvent Name="EO" Type="Event" Comment="Event output (feuert wenn EI eintrifft und PERMIT FALSE ist)"/>
+			<SubAppEvent Name="EO" Type="Event" Comment="Event output (feuert wenn EI eintrifft und PERMIT FALSE ist)">
+			</SubAppEvent>
 		</SubAppEventOutputs>
 		<Sockets>
 			<AdapterDeclaration Name="PERMIT" Type="adapter::types::unidirectional::AX" Comment="Invertiertes Freigabesignal"/>
@@ -23,7 +25,7 @@
 		<FB Name="AX_E_PERMIT_1" Type="adapter::events::unidirectional::AX_E_PERMIT_1" x="-1400" y="0">
 		</FB>
 		<EventConnections>
-			<Connection Source="EI" Destination="AX_E_PERMIT_1.EI1" dx1="500"/>
+			<Connection Source="EI" Destination="AX_E_PERMIT_1.EI1" dx1="5980"/>
 			<Connection Source="AX_E_PERMIT_1.EO1" Destination="EO" dx1="500"/>
 		</EventConnections>
 		<AdapterConnections>
