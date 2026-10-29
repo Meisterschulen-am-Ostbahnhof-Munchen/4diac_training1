@@ -80,6 +80,13 @@
 		<VarDeclaration Name="T16_INCD_WRITE" Type="WSTRING" Comment="T16: Incremented lokal schreiben" InitialValue="MyLib_OPC::F_OPC_LOCAL(&quot;WRITE&quot;, T16_INCD_NODE)"/>
 		<VarDeclaration Name="T16_INC_CLIENT_WRITE" Type="WSTRING" Comment="T16: Increment per CLIENT schreiben" InitialValue="MyLib_OPC::F_OPC_REMOTE(&quot;WRITE&quot;, PC_B_OPC, T16_INC_NODE)"/>
 		<VarDeclaration Name="T16_INCD_CLIENT_READ" Type="WSTRING" Comment="T16: Incremented per CLIENT lesen" InitialValue="MyLib_OPC::F_OPC_REMOTE(&quot;READ&quot;, PC_B_OPC, T16_INCD_NODE)"/>
+		<VarDeclaration Name="T16B_INC_NODE" Type="WSTRING" Comment="T16B: Knoten Increment" InitialValue="&quot;/Objects/T16B/Increment,1:s=T16B_Increment&quot;"/>
+		<VarDeclaration Name="T16B_INCD_NODE" Type="WSTRING" Comment="T16B: Knoten Incremented" InitialValue="&quot;/Objects/T16B/Incremented,1:s=T16B_Incremented&quot;"/>
+		<VarDeclaration Name="T16B_INC_READ" Type="WSTRING" Comment="T16B: Increment lokal lesen" InitialValue="MyLib_OPC::F_OPC_LOCAL(&quot;READ&quot;, T16B_INC_NODE)"/>
+		<VarDeclaration Name="T16B_INCD_WRITE" Type="WSTRING" Comment="T16B: Incremented lokal schreiben" InitialValue="MyLib_OPC::F_OPC_LOCAL(&quot;WRITE&quot;, T16B_INCD_NODE)"/>
+		<VarDeclaration Name="T16B_INC_CLIENT_WRITE" Type="WSTRING" Comment="T16B: Increment per CLIENT schreiben" InitialValue="MyLib_OPC::F_OPC_REMOTE(&quot;WRITE&quot;, PC_B_OPC, T16B_INC_NODE)"/>
+		<VarDeclaration Name="T16B_INCD_CLIENT_READ" Type="WSTRING" Comment="T16B: Incremented per CLIENT lesen" InitialValue="MyLib_OPC::F_OPC_REMOTE(&quot;READ&quot;, PC_B_OPC, T16B_INCD_NODE)"/>
+		<VarDeclaration Name="T16B_INCD_SUBSCRIBE" Type="WSTRING" Comment="T16B: Incremented abonnieren (Ausloeser fuer Lesen)" InitialValue="MyLib_OPC::F_OPC_REMOTE(&quot;SUBSCRIBE&quot;, PC_B_OPC, T16B_INCD_NODE)"/>
 		<VarDeclaration Name="T17_INC_NODE" Type="WSTRING" Comment="T17: Knoten Increment" InitialValue="&quot;/Objects/T17/Increment,1:s=T17_Increment&quot;"/>
 		<VarDeclaration Name="T17_INCD_NODE" Type="WSTRING" Comment="T17: Knoten Incremented" InitialValue="&quot;/Objects/T17/Incremented,1:s=T17_Incremented&quot;"/>
 		<VarDeclaration Name="T17_INC_READ" Type="WSTRING" Comment="T17: Increment lokal lesen" InitialValue="MyLib_OPC::F_OPC_LOCAL(&quot;READ&quot;, T17_INC_NODE)"/>
@@ -87,6 +94,13 @@
 		<VarDeclaration Name="T17_INC_CLIENT_WRITE" Type="WSTRING" Comment="T17: Increment per CLIENT schreiben" InitialValue="MyLib_OPC::F_OPC_REMOTE(&quot;WRITE&quot;, PC_B_OPC, T17_INC_NODE)"/>
 		<VarDeclaration Name="T17_INCD_CLIENT_READ" Type="WSTRING" Comment="T17: Incremented per CLIENT lesen" InitialValue="MyLib_OPC::F_OPC_REMOTE(&quot;READ&quot;, PC_B_OPC, T17_INCD_NODE)"/>
 		<VarDeclaration Name="T17_INCD_SUBSCRIBE" Type="WSTRING" Comment="T17: Incremented abonnieren (SUBSCRIBE mit Endpunkt)" InitialValue="MyLib_OPC::F_OPC_REMOTE(&quot;SUBSCRIBE&quot;, PC_B_OPC, T17_INCD_NODE)"/>
+		<VarDeclaration Name="T17B_INC_NODE" Type="WSTRING" Comment="T17B: Knoten Increment" InitialValue="&quot;/Objects/T17B/Increment,1:s=T17B_Increment&quot;"/>
+		<VarDeclaration Name="T17B_INCD_NODE" Type="WSTRING" Comment="T17B: Knoten Incremented" InitialValue="&quot;/Objects/T17B/Incremented,1:s=T17B_Incremented&quot;"/>
+		<VarDeclaration Name="T17B_INC_READ" Type="WSTRING" Comment="T17B: Increment lokal lesen" InitialValue="MyLib_OPC::F_OPC_LOCAL(&quot;READ&quot;, T17B_INC_NODE)"/>
+		<VarDeclaration Name="T17B_INCD_WRITE" Type="WSTRING" Comment="T17B: Incremented lokal schreiben" InitialValue="MyLib_OPC::F_OPC_LOCAL(&quot;WRITE&quot;, T17B_INCD_NODE)"/>
+		<VarDeclaration Name="T17B_INC_CLIENT_WRITE" Type="WSTRING" Comment="T17B: Increment per CLIENT schreiben" InitialValue="MyLib_OPC::F_OPC_REMOTE(&quot;WRITE&quot;, PC_B_OPC, T17B_INC_NODE)"/>
+		<VarDeclaration Name="T17B_INCD_CLIENT_READ" Type="WSTRING" Comment="T17B: Incremented per CLIENT lesen" InitialValue="MyLib_OPC::F_OPC_REMOTE(&quot;READ&quot;, PC_B_OPC, T17B_INCD_NODE)"/>
+		<VarDeclaration Name="T17B_INCD_SUBSCRIBE" Type="WSTRING" Comment="T17B: Incremented abonnieren (SUBSCRIBE mit Endpunkt)" InitialValue="MyLib_OPC::F_OPC_REMOTE(&quot;SUBSCRIBE&quot;, PC_B_OPC, T17B_INCD_NODE)"/>
 		<VarDeclaration Name="T18_OBJ_CREATE" Type="WSTRING" Comment="T18: Objekt anlegen (Typ BaseObjectType i=58)" InitialValue="&quot;opc_ua[CREATE_OBJECT;,i=58;/Objects/1:T18_MyObject]&quot;"/>
 		<VarDeclaration Name="T18_VAR_CREATE" Type="WSTRING" Comment="T18: Variable anlegen (BaseDataVariableType, Int32)" InitialValue="&quot;opc_ua[CREATE_VARIABLE;,i=63;,i=6;/Objects/1:T18_MyVariable]&quot;"/>
 		<VarDeclaration Name="T18_VAR_DELETE" Type="WSTRING" Comment="T18: Variable loeschen" InitialValue="&quot;opc_ua[DELETE_VARIABLE;/Objects/1:T18_MyVariable]&quot;"/>
@@ -187,6 +201,13 @@ GLOBALCONSTANTS myOpcUaAddresses
 		T16_INCD_WRITE : WSTRING := MyLib_OPC::F_OPC_LOCAL("WRITE", T16_INCD_NODE); // T16: Incremented lokal schreiben
 		T16_INC_CLIENT_WRITE : WSTRING := MyLib_OPC::F_OPC_REMOTE("WRITE", PC_B_OPC, T16_INC_NODE); // T16: Increment per CLIENT schreiben
 		T16_INCD_CLIENT_READ : WSTRING := MyLib_OPC::F_OPC_REMOTE("READ", PC_B_OPC, T16_INCD_NODE); // T16: Incremented per CLIENT lesen
+		T16B_INC_NODE : WSTRING := "/Objects/T16B/Increment,1:s=T16B_Increment"; // T16B: Knoten Increment
+		T16B_INCD_NODE : WSTRING := "/Objects/T16B/Incremented,1:s=T16B_Incremented"; // T16B: Knoten Incremented
+		T16B_INC_READ : WSTRING := MyLib_OPC::F_OPC_LOCAL("READ", T16B_INC_NODE); // T16B: Increment lokal lesen
+		T16B_INCD_WRITE : WSTRING := MyLib_OPC::F_OPC_LOCAL("WRITE", T16B_INCD_NODE); // T16B: Incremented lokal schreiben
+		T16B_INC_CLIENT_WRITE : WSTRING := MyLib_OPC::F_OPC_REMOTE("WRITE", PC_B_OPC, T16B_INC_NODE); // T16B: Increment per CLIENT schreiben
+		T16B_INCD_CLIENT_READ : WSTRING := MyLib_OPC::F_OPC_REMOTE("READ", PC_B_OPC, T16B_INCD_NODE); // T16B: Incremented per CLIENT lesen
+		T16B_INCD_SUBSCRIBE : WSTRING := MyLib_OPC::F_OPC_REMOTE("SUBSCRIBE", PC_B_OPC, T16B_INCD_NODE); // T16B: Incremented abonnieren (Ausloeser fuer Lesen)
 
 		(*
 		 * T17 - Training_17 - Client-Subscription: wie 16, zusaetzlich SUBSCRIBE mit Endpunkt auf Incremented.
@@ -198,6 +219,13 @@ GLOBALCONSTANTS myOpcUaAddresses
 		T17_INC_CLIENT_WRITE : WSTRING := MyLib_OPC::F_OPC_REMOTE("WRITE", PC_B_OPC, T17_INC_NODE); // T17: Increment per CLIENT schreiben
 		T17_INCD_CLIENT_READ : WSTRING := MyLib_OPC::F_OPC_REMOTE("READ", PC_B_OPC, T17_INCD_NODE); // T17: Incremented per CLIENT lesen
 		T17_INCD_SUBSCRIBE : WSTRING := MyLib_OPC::F_OPC_REMOTE("SUBSCRIBE", PC_B_OPC, T17_INCD_NODE); // T17: Incremented abonnieren (SUBSCRIBE mit Endpunkt)
+		T17B_INC_NODE : WSTRING := "/Objects/T17B/Increment,1:s=T17B_Increment"; // T17B: Knoten Increment
+		T17B_INCD_NODE : WSTRING := "/Objects/T17B/Incremented,1:s=T17B_Incremented"; // T17B: Knoten Incremented
+		T17B_INC_READ : WSTRING := MyLib_OPC::F_OPC_LOCAL("READ", T17B_INC_NODE); // T17B: Increment lokal lesen
+		T17B_INCD_WRITE : WSTRING := MyLib_OPC::F_OPC_LOCAL("WRITE", T17B_INCD_NODE); // T17B: Incremented lokal schreiben
+		T17B_INC_CLIENT_WRITE : WSTRING := MyLib_OPC::F_OPC_REMOTE("WRITE", PC_B_OPC, T17B_INC_NODE); // T17B: Increment per CLIENT schreiben
+		T17B_INCD_CLIENT_READ : WSTRING := MyLib_OPC::F_OPC_REMOTE("READ", PC_B_OPC, T17B_INCD_NODE); // T17B: Incremented per CLIENT lesen
+		T17B_INCD_SUBSCRIBE : WSTRING := MyLib_OPC::F_OPC_REMOTE("SUBSCRIBE", PC_B_OPC, T17B_INCD_NODE); // T17B: Incremented abonnieren (SUBSCRIBE mit Endpunkt)
 
 		(*
 		 * T18 - Training_18 - PUBLISH_0: Objekt und Variable anlegen und loeschen (lokal, remote nicht erlaubt).

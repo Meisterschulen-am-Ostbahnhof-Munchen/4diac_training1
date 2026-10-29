@@ -89,6 +89,12 @@
 		<VarDeclaration Name="L16_INCD_WRITE" Type="WSTRING" Comment="L16: Incremented lokal schreiben" InitialValue="MyLib_OPC::F_OPC_LOCAL(&quot;WRITE&quot;, L16_INCD_NODE)"/>
 		<VarDeclaration Name="L16_INC_CLIENT_WRITE" Type="WSTRING" Comment="L16: Increment per CLIENT schreiben" InitialValue="MyLib_OPC::F_OPC_REMOTE(&quot;WRITE&quot;, LOCAL_OPC, L16_INC_NODE)"/>
 		<VarDeclaration Name="L16_INCD_CLIENT_READ" Type="WSTRING" Comment="L16: Incremented per CLIENT lesen" InitialValue="MyLib_OPC::F_OPC_REMOTE(&quot;READ&quot;, LOCAL_OPC, L16_INCD_NODE)"/>
+		<VarDeclaration Name="L16B_INC_NODE" Type="WSTRING" Comment="L16B: Knoten Increment" InitialValue="&quot;/Objects/Lokal/L16B/Increment,1:s=L16B_Increment&quot;"/>
+		<VarDeclaration Name="L16B_INCD_NODE" Type="WSTRING" Comment="L16B: Knoten Incremented" InitialValue="&quot;/Objects/Lokal/L16B/Incremented,1:s=L16B_Incremented&quot;"/>
+		<VarDeclaration Name="L16B_INC_READ" Type="WSTRING" Comment="L16B: Increment lokal lesen" InitialValue="MyLib_OPC::F_OPC_LOCAL(&quot;READ&quot;, L16B_INC_NODE)"/>
+		<VarDeclaration Name="L16B_INCD_WRITE" Type="WSTRING" Comment="L16B: Incremented lokal schreiben" InitialValue="MyLib_OPC::F_OPC_LOCAL(&quot;WRITE&quot;, L16B_INCD_NODE)"/>
+		<VarDeclaration Name="L16B_INC_CLIENT_WRITE" Type="WSTRING" Comment="L16B: Increment per CLIENT schreiben" InitialValue="MyLib_OPC::F_OPC_REMOTE(&quot;WRITE&quot;, LOCAL_OPC, L16B_INC_NODE)"/>
+		<VarDeclaration Name="L16B_INCD_CLIENT_READ" Type="WSTRING" Comment="L16B: Incremented per CLIENT lesen" InitialValue="MyLib_OPC::F_OPC_REMOTE(&quot;READ&quot;, LOCAL_OPC, L16B_INCD_NODE)"/>
 		<VarDeclaration Name="L17_INC_NODE" Type="WSTRING" Comment="L17: Knoten Increment" InitialValue="&quot;/Objects/Lokal/L17/Increment,1:s=L17_Increment&quot;"/>
 		<VarDeclaration Name="L17_INCD_NODE" Type="WSTRING" Comment="L17: Knoten Incremented" InitialValue="&quot;/Objects/Lokal/L17/Incremented,1:s=L17_Incremented&quot;"/>
 		<VarDeclaration Name="L17_INC_READ" Type="WSTRING" Comment="L17: Increment lokal lesen" InitialValue="MyLib_OPC::F_OPC_LOCAL(&quot;READ&quot;, L17_INC_NODE)"/>
@@ -233,6 +239,12 @@ GLOBALCONSTANTS OpcUaLokal
 		L16_INCD_WRITE : WSTRING := MyLib_OPC::F_OPC_LOCAL("WRITE", L16_INCD_NODE); // L16: Incremented lokal schreiben
 		L16_INC_CLIENT_WRITE : WSTRING := MyLib_OPC::F_OPC_REMOTE("WRITE", LOCAL_OPC, L16_INC_NODE); // L16: Increment per CLIENT schreiben
 		L16_INCD_CLIENT_READ : WSTRING := MyLib_OPC::F_OPC_REMOTE("READ", LOCAL_OPC, L16_INCD_NODE); // L16: Incremented per CLIENT lesen
+		L16B_INC_NODE : WSTRING := "/Objects/Lokal/L16B/Increment,1:s=L16B_Increment"; // L16B: Knoten Increment
+		L16B_INCD_NODE : WSTRING := "/Objects/Lokal/L16B/Incremented,1:s=L16B_Incremented"; // L16B: Knoten Incremented
+		L16B_INC_READ : WSTRING := MyLib_OPC::F_OPC_LOCAL("READ", L16B_INC_NODE); // L16B: Increment lokal lesen
+		L16B_INCD_WRITE : WSTRING := MyLib_OPC::F_OPC_LOCAL("WRITE", L16B_INCD_NODE); // L16B: Incremented lokal schreiben
+		L16B_INC_CLIENT_WRITE : WSTRING := MyLib_OPC::F_OPC_REMOTE("WRITE", LOCAL_OPC, L16B_INC_NODE); // L16B: Increment per CLIENT schreiben
+		L16B_INCD_CLIENT_READ : WSTRING := MyLib_OPC::F_OPC_REMOTE("READ", LOCAL_OPC, L16B_INCD_NODE); // L16B: Incremented per CLIENT lesen
 
 		(*
 		 * L17 - Client-Subscription: wie 16, zusaetzlich SUBSCRIBE mit Endpunkt auf Incremented.
