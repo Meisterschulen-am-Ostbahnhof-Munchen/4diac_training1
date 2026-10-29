@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SubAppType Name="SubApp_PC_A" Comment="Geraet A (B-Version von 17): liest Incremented erst nach Meldung von B per SUBSCRIBE">
+	<Identification Standard="61499-2" Description="Copyright (c) 2026 Meisterschulen am Ostbahnhof  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0">
+	</Identification>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2026-10-18" Remarks="opcua.adoc-Beispiel auf zwei Geraeten">
+	</VersionInfo>
+	<CompilerInfo packageName="subapp::Training_17b_OPC_UA_RES">
+		<Import declaration="VV::const::OPC_UA::myOpcUaAddresses::T17B_INC_CLIENT_WRITE"/>
+		<Import declaration="VV::const::OPC_UA::myOpcUaAddresses::T17B_INCD_CLIENT_READ"/>
+		<Import declaration="VV::const::OPC_UA::myOpcUaAddresses::T17B_INCD_SUBSCRIBE"/>
+		<Import declaration="logiBUS::io::DI::logiBUS_DI::Input_I1"/>
+		<Import declaration="logiBUS::io::DI::logiBUS_DI_Events::BUTTON_PRESS_DOWN"/>
+	</CompilerInfo>
+	<SubAppInterfaceList>
+	</SubAppInterfaceList>
+	<SubAppNetwork>
+		<FB Name="TASTER_I1" Type="logiBUS::io::DI::logiBUS_IE" x="0" y="0">
+			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="Input" Value="Input_I1"/>
+			<Parameter Name="InputEvent" Value="BUTTON_PRESS_DOWN"/>
+		</FB>
+		<FB Name="WRITE_INC" Type="iec61499::net::CLIENT_1_0" x="2200" y="0">
+			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="ID" Value="T17B_INC_CLIENT_WRITE"/>
+			<Parameter Name="SD_1" Value="INT#42"/>
+		</FB>
+		<FB Name="READ_INCD" Type="iec61499::net::CLIENT_0_1" x="4400" y="0">
+			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="ID" Value="T17B_INCD_CLIENT_READ"/>
+		</FB>
+		<FB Name="RESULT_TO_DINT" Type="iec61131::conversion::F_INT_TO_DINT" x="6600" y="0">
+		</FB>
+		<FB Name="SUBSCRIPTION" Type="iec61499::net::SUBSCRIBE_1" x="4400" y="1400">
+			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="ID" Value="T17B_INCD_SUBSCRIBE"/>
+		</FB>
+		<FB Name="SUB_TO_DINT" Type="iec61131::conversion::F_INT_TO_DINT" x="6600" y="1400">
+		</FB>
+		<EventConnections>
+			<Connection Source="TASTER_I1.IND" Destination="WRITE_INC.REQ"/>
+			<Connection Source="SUBSCRIPTION.IND" Destination="READ_INCD.REQ"/>
+			<Connection Source="TASTER_I1.INITO" Destination="WRITE_INC.INIT"/>
+			<Connection Source="WRITE_INC.INITO" Destination="READ_INCD.INIT"/>
+			<Connection Source="READ_INCD.CNF" Destination="RESULT_TO_DINT.REQ"/>
+			<Connection Source="SUBSCRIPTION.IND" Destination="SUB_TO_DINT.REQ"/>
+		</EventConnections>
+		<DataConnections>
+			<Connection Source="READ_INCD.RD_1" Destination="RESULT_TO_DINT.IN"/>
+			<Connection Source="SUBSCRIPTION.RD_1" Destination="SUB_TO_DINT.IN"/>
+		</DataConnections>
+		<Comment Comment="B-Version von Training_17: READ_INCD.REQ kommt von SUBSCRIPTION.IND (B hat&#10;Incremented veroeffentlicht), nicht von WRITE_INC.CNF. Das Lesen haengt so&#10;nicht mehr von der Reihenfolge ab." x="0" y="-1800" width="9000" height="900"/>
+	</SubAppNetwork>
+</SubAppType>
