@@ -20,15 +20,15 @@
 		</FB>
 		<FB Name="AD_SPLIT_2" Type="adapter::events::unidirectional::AD_SPLIT_2" x="-7000" y="0">
 		</FB>
-		<FB Name="AD_TO_AR_NUM" Type="adapter::conversion::unidirectional::AD_TO_AR_NUM" x="-5400" y="-600">
+		<FB Name="AD_TO_AR_NUM" Type="adapter::conversion::unidirectional::AD_TO_AR_NUM" x="-5500" y="-1900">
 		</FB>
-		<FB Name="LIT_THRESHOLD" Type="adapter::types::unidirectional::AR::initval::initval_AR" x="-5400" y="-1600">
+		<FB Name="LIT_THRESHOLD" Type="adapter::types::unidirectional::AR::initval::initval_AR" x="-5500" y="-1400">
 			<Parameter Name="INIT_VAL" Value="2048.0"/>
 		</FB>
-		<FB Name="LIT_HYSTERESIS" Type="adapter::types::unidirectional::AR::initval::initval_AR" x="-5400" y="-2400">
+		<FB Name="LIT_HYSTERESIS" Type="adapter::types::unidirectional::AR::initval::initval_AR" x="-5500" y="-800">
 			<Parameter Name="INIT_VAL" Value="2048.0"/>
 		</FB>
-		<FB Name="SCHMITT" Type="logiBUS::signalprocessing::hysteresis::Hysteresis_AR_AX" Comment="Ein ab 3072 (75 %), aus unter 1024 (25 %)" x="-3600" y="-1200">
+		<FB Name="SCHMITT" Type="logiBUS::signalprocessing::hysteresis::Hysteresis_AR_AX" Comment="Ein ab 3072 (75 %), aus unter 1024 (25 %)" x="-3500" y="-2100">
 			<Parameter Name="QI" Value="TRUE"/>
 		</FB>
 		<FB Name="R_TRIG_AI" Type="adapter::events::unidirectional::AX_R_TRIG" x="-1800" y="-1200">
@@ -41,104 +41,106 @@
 		<FB Name="AI_SAMPLES" Type="iec61499::events::E_CTU" Comment="AI-Werte je Torzeit (effektive Abtastrate)" x="0" y="800">
 			<Parameter Name="PV" Value="65535"/>
 		</FB>
-		<FB Name="GATE" Type="iec61499::events::E_CYCLE" Comment="Torzeit 1 s: Zaehlerstand = Frequenz in Hz" x="-1800" y="2400">
+		<FB Name="GATE" Type="iec61499::events::E_CYCLE" Comment="Torzeit 1 s: Zaehlerstand = Frequenz in Hz" x="1000" y="-1700">
 			<Parameter Name="DT" Value="T#1s"/>
 		</FB>
 		<FB Name="F_AI" Type="iec61131::conversion::F_UINT_TO_REAL" Comment="Frequenz aus AI [Hz]" x="2000" y="-1200">
 		</FB>
 		<FB Name="SAMPLES_S" Type="iec61131::conversion::F_UINT_TO_REAL" Comment="AI-Werte pro Sekunde" x="2000" y="800">
 		</FB>
-		<FB Name="PI" Type="logiBUS::io::PI::logiBUS_PI_ID" Comment="Pulseingang I2 als Referenz (Hardware-Zaehler)" x="4000" y="2400">
+		<FB Name="PI" Type="logiBUS::io::PI::logiBUS_PI_ID" Comment="Pulseingang I2 als Referenz (Hardware-Zaehler)" x="-8900" y="5100">
 			<Parameter Name="QI" Value="TRUE"/>
 			<Parameter Name="Input" Value="PulseInput_I2"/>
 			<Parameter Name="ImpulseDelta" Value="0"/>
 			<Parameter Name="TimeDelta" Value="250"/>
 			<Parameter Name="TimeRateLimit" Value="100"/>
 		</FB>
-		<FB Name="PI_UDINT" Type="iec61131::conversion::F_DWORD_TO_UDINT" x="6000" y="2400">
+		<FB Name="PI_UDINT" Type="iec61131::conversion::F_DWORD_TO_UDINT" x="-6900" y="5100">
 		</FB>
-		<FB Name="PI_NOW" Type="iec61131::conversion::F_UDINT_TO_REAL" x="7800" y="2400">
+		<FB Name="PI_NOW" Type="iec61131::conversion::F_UDINT_TO_REAL" x="-5100" y="5100">
 		</FB>
-		<FB Name="F_PI_SUB" Type="iec61131::arithmetic::F_SUB" x="9600" y="2400">
+		<FB Name="F_PI_SUB" Type="iec61131::arithmetic::F_SUB" x="-3300" y="5100">
 		</FB>
-		<FB Name="F_PI" Type="iec61131::selection::F_MOVE" Comment="Frequenz aus PI [Hz]" x="11400" y="2400">
+		<FB Name="F_PI" Type="iec61131::selection::F_MOVE" Comment="Frequenz aus PI [Hz]" x="-1500" y="5100">
 			<Attribute Name="DataType" Value="REAL"/>
 		</FB>
-		<FB Name="PI_PREV" Type="iec61131::conversion::F_UDINT_TO_REAL" Comment="Zaehlerstand der vorigen Torzeit" x="7800" y="3800">
+		<FB Name="PI_PREV" Type="iec61131::conversion::F_UDINT_TO_REAL" Comment="Zaehlerstand der vorigen Torzeit" x="-5000" y="6400">
 		</FB>
-		<FB Name="DIFF_SUB" Type="iec61131::arithmetic::F_SUB" x="13200" y="0">
+		<FB Name="DIFF_SUB" Type="iec61131::arithmetic::F_SUB" x="300" y="2700">
 		</FB>
-		<FB Name="DIFF" Type="iec61131::selection::F_MOVE" Comment="f_AI - f_PI [Hz]" x="15000" y="0">
+		<FB Name="DIFF" Type="iec61131::selection::F_MOVE" Comment="f_AI - f_PI [Hz]" x="2100" y="2700">
 			<Attribute Name="DataType" Value="REAL"/>
 		</FB>
-		<FB Name="DIFF_ABS" Type="iec61131::numerical::F_ABS" x="16800" y="0">
+		<FB Name="DIFF_ABS" Type="iec61131::numerical::F_ABS" x="300" y="3900">
 		</FB>
-		<FB Name="ABW" Type="iec61131::selection::F_MOVE" Comment="Abweichung |f_AI - f_PI| [Hz]" x="18600" y="0">
+		<FB Name="ABW" Type="iec61131::selection::F_MOVE" Comment="Abweichung |f_AI - f_PI| [Hz]" x="2100" y="3900">
 			<Attribute Name="DataType" Value="REAL"/>
 		</FB>
-		<FB Name="OK" Type="iec61131::comparison::F_LE" Comment="TRUE: AI folgt dem Signal noch (Abweichung &lt;= 2 Hz)" x="20400" y="0">
+		<FB Name="OK" Type="iec61131::comparison::F_LE" Comment="TRUE: AI folgt dem Signal noch (Abweichung &lt;= 2 Hz)" x="200" y="5100">
 			<Parameter Name="IN2" Value="REAL#2.0"/>
 		</FB>
-		<FB Name="PERMIT_OK" Type="iec61499::events::E_PERMIT" x="22200" y="0">
+		<FB Name="PERMIT_OK" Type="iec61499::events::E_PERMIT" x="2000" y="5100">
 		</FB>
-		<FB Name="GRENZ_MAX" Type="iec61131::selection::F_MAX" x="24000" y="0">
+		<FB Name="GRENZ_MAX" Type="iec61131::selection::F_MAX" x="1300" y="6100">
 		</FB>
-		<FB Name="F_GRENZ" Type="iec61131::selection::F_MOVE" Comment="Grenzfrequenz: hoechste f_PI, bei der OK=TRUE war [Hz]" x="25800" y="0">
+		<FB Name="F_GRENZ" Type="iec61131::selection::F_MOVE" Comment="Grenzfrequenz: hoechste f_PI, bei der OK=TRUE war [Hz]" x="2100" y="6100">
 			<Attribute Name="DataType" Value="REAL"/>
 		</FB>
+		<Comment Comment="Watch: F_AI.OUT, F_PI.OUT, SAMPLES_S.OUT, ABW.OUT, OK.OUT, F_GRENZ.OUT&#10;Frequenz am Generator langsam steigern. F_GRENZ.OUT = Grenzfrequenz." x="-9000" y="-4000" width="6000" height="900"/>
 		<EventConnections>
-			<Connection Source="AI.INITO" Destination="GATE.START"/>
+			<Connection Source="AI.INITO" Destination="GATE.START" dx1="2873.33">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
 			<Connection Source="R_TRIG_AI.EO" Destination="AI_EDGES.CU"/>
 			<Connection Source="AD_D_TO_DWORD.CNF" Destination="AI_SAMPLES.CU"/>
-			<Connection Source="GATE.EO" Destination="F_AI.REQ"/>
-			<Connection Source="F_AI.CNF" Destination="SAMPLES_S.REQ"/>
-			<Connection Source="SAMPLES_S.CNF" Destination="AI_EDGES.R"/>
-			<Connection Source="SAMPLES_S.CNF" Destination="AI_SAMPLES.R"/>
-			<Connection Source="SAMPLES_S.CNF" Destination="PI.REQ"/>
-			<Connection Source="PI.CNF" Destination="PI_UDINT.REQ"/>
+			<Connection Source="GATE.EO" Destination="F_AI.REQ" dx1="306.67"/>
+			<Connection Source="F_AI.CNF" Destination="SAMPLES_S.REQ" dx1="80" dx2="80" dy="1000"/>
+			<Connection Source="SAMPLES_S.CNF" Destination="AI_EDGES.R" dx1="80" dx2="80" dy="-433.33"/>
+			<Connection Source="SAMPLES_S.CNF" Destination="AI_SAMPLES.R" dx1="266.67" dx2="593.33" dy="746.67"/>
+			<Connection Source="PI.CNF" Destination="PI_UDINT.REQ" dx1="486.67"/>
 			<Connection Source="PI_UDINT.CNF" Destination="PI_NOW.REQ"/>
 			<Connection Source="PI_NOW.CNF" Destination="F_PI_SUB.REQ"/>
 			<Connection Source="F_PI_SUB.CNF" Destination="F_PI.REQ"/>
-			<Connection Source="F_PI.CNF" Destination="PI_PREV.REQ"/>
-			<Connection Source="PI_PREV.CNF" Destination="DIFF_SUB.REQ"/>
+			<Connection Source="F_PI.CNF" Destination="PI_PREV.REQ" dx1="200" dx2="80" dy="700"/>
+			<Connection Source="PI_PREV.CNF" Destination="DIFF_SUB.REQ" dx1="2206.67"/>
 			<Connection Source="DIFF_SUB.CNF" Destination="DIFF.REQ"/>
-			<Connection Source="DIFF.CNF" Destination="DIFF_ABS.REQ"/>
+			<Connection Source="DIFF.CNF" Destination="DIFF_ABS.REQ" dx1="320" dx2="80" dy="600"/>
 			<Connection Source="DIFF_ABS.CNF" Destination="ABW.REQ"/>
-			<Connection Source="ABW.CNF" Destination="OK.REQ"/>
+			<Connection Source="ABW.CNF" Destination="OK.REQ" dx1="226.67" dx2="80" dy="600"/>
 			<Connection Source="OK.CNF" Destination="PERMIT_OK.EI"/>
-			<Connection Source="PERMIT_OK.EO" Destination="GRENZ_MAX.REQ"/>
+			<Connection Source="PERMIT_OK.EO" Destination="GRENZ_MAX.REQ" dx1="80" dx2="80" dy="500"/>
 			<Connection Source="GRENZ_MAX.CNF" Destination="F_GRENZ.REQ"/>
+			<Connection Source="SAMPLES_S.CNF" Destination="PI.REQ" dx1="446.67" dx2="80" dy="866.67"/>
 		</EventConnections>
 		<DataConnections>
-			<Connection Source="AI_EDGES.CV" Destination="F_AI.IN"/>
-			<Connection Source="AI_SAMPLES.CV" Destination="SAMPLES_S.IN"/>
-			<Connection Source="PI.IN" Destination="PI_UDINT.IN"/>
+			<Connection Source="AI_EDGES.CV" Destination="F_AI.IN" dx1="740"/>
+			<Connection Source="AI_SAMPLES.CV" Destination="SAMPLES_S.IN" dx1="740"/>
+			<Connection Source="PI.IN" Destination="PI_UDINT.IN" dx1="486.67"/>
 			<Connection Source="PI_UDINT.OUT" Destination="PI_NOW.IN"/>
-			<Connection Source="PI_UDINT.OUT" Destination="PI_PREV.IN"/>
+			<Connection Source="PI_UDINT.OUT" Destination="PI_PREV.IN" dx1="380"/>
 			<Connection Source="PI_NOW.OUT" Destination="F_PI_SUB.IN1"/>
-			<Connection Source="PI_PREV.OUT" Destination="F_PI_SUB.IN2"/>
+			<Connection Source="PI_PREV.OUT" Destination="F_PI_SUB.IN2" dx1="406.67"/>
 			<Connection Source="F_PI_SUB.OUT" Destination="F_PI.IN"/>
-			<Connection Source="F_AI.OUT" Destination="DIFF_SUB.IN1"/>
-			<Connection Source="F_PI.OUT" Destination="DIFF_SUB.IN2"/>
+			<Connection Source="F_AI.OUT" Destination="DIFF_SUB.IN1" dx1="680" dx2="80" dy="3060"/>
+			<Connection Source="F_PI.OUT" Destination="DIFF_SUB.IN2" dx1="613.33"/>
 			<Connection Source="DIFF_SUB.OUT" Destination="DIFF.IN"/>
-			<Connection Source="DIFF.OUT" Destination="DIFF_ABS.IN"/>
+			<Connection Source="DIFF.OUT" Destination="DIFF_ABS.IN" dx1="80" dx2="233.33" dy="273.33"/>
 			<Connection Source="DIFF_ABS.OUT" Destination="ABW.IN"/>
-			<Connection Source="ABW.OUT" Destination="OK.IN1"/>
+			<Connection Source="ABW.OUT" Destination="OK.IN1" dx1="80" dx2="240" dy="280"/>
 			<Connection Source="OK.OUT" Destination="PERMIT_OK.PERMIT"/>
-			<Connection Source="F_PI.OUT" Destination="GRENZ_MAX.IN1"/>
-			<Connection Source="F_GRENZ.OUT" Destination="GRENZ_MAX.IN2"/>
+			<Connection Source="F_PI.OUT" Destination="GRENZ_MAX.IN1" dx1="606.67"/>
+			<Connection Source="F_GRENZ.OUT" Destination="GRENZ_MAX.IN2" dx1="80" dx2="80" dy="300"/>
 			<Connection Source="GRENZ_MAX.OUT" Destination="F_GRENZ.IN"/>
 		</DataConnections>
 		<AdapterConnections>
-			<Connection Source="AI.IN" Destination="AD_SPLIT_2.IN"/>
-			<Connection Source="AD_SPLIT_2.OUT1" Destination="AD_TO_AR_NUM.AD_IN"/>
-			<Connection Source="AD_SPLIT_2.OUT2" Destination="AD_D_TO_DWORD.AD_IN"/>
-			<Connection Source="AD_TO_AR_NUM.AR_OUT" Destination="SCHMITT.INPUT"/>
-			<Connection Source="LIT_THRESHOLD.OUT" Destination="SCHMITT.THRESHOLD"/>
-			<Connection Source="LIT_HYSTERESIS.OUT" Destination="SCHMITT.HYSTERESIS"/>
-			<Connection Source="SCHMITT.OUTPUT" Destination="R_TRIG_AI.QI"/>
+			<Connection Source="AI.IN" Destination="AD_SPLIT_2.IN" dx1="273.33"/>
+			<Connection Source="AD_SPLIT_2.OUT1" Destination="AD_TO_AR_NUM.AD_IN" dx1="373.33"/>
+			<Connection Source="AD_SPLIT_2.OUT2" Destination="AD_D_TO_DWORD.AD_IN" dx1="420"/>
+			<Connection Source="AD_TO_AR_NUM.AR_OUT" Destination="SCHMITT.INPUT" dx1="473.33"/>
+			<Connection Source="LIT_THRESHOLD.OUT" Destination="SCHMITT.THRESHOLD" dx1="520"/>
+			<Connection Source="LIT_HYSTERESIS.OUT" Destination="SCHMITT.HYSTERESIS" dx1="620"/>
+			<Connection Source="SCHMITT.OUTPUT" Destination="R_TRIG_AI.QI" dx1="380"/>
 		</AdapterConnections>
-		<Comment Comment="Watch: F_AI.OUT, F_PI.OUT, SAMPLES_S.OUT, ABW.OUT, OK.OUT, F_GRENZ.OUT&#10;Frequenz am Generator langsam steigern. F_GRENZ.OUT = Grenzfrequenz." x="-9000" y="-4000" width="6000" height="900"/>
 	</SubAppNetwork>
 	<Attribute Name="Documentation" Type="CDATA"><![CDATA[<h1>Grenzfrequenz des Analogeingangs</h1>
 
