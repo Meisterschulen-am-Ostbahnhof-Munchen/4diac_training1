@@ -41,40 +41,40 @@
 		</Plugs>
 	</SubAppInterfaceList>
 	<SubAppNetwork>
-		<FB Name="logiBUS_AI_IDA" Type="logiBUS::io::AI::logiBUS_AI_IDA" x="-9200" y="-1700">
+		<FB Name="logiBUS_AI_IDA" Type="logiBUS::io::AI::logiBUS_AI_IDA" x="-8900" y="-1700">
 			<Parameter Name="PARAMS" Value="">
 				<Attribute Name="Visible" Value="false"/>
 			</Parameter>
 		</FB>
-		<FB Name="INI_Hyst" Type="eclipse4diac::storage::INI_AR2" x="-16000" y="-4000">
+		<FB Name="INI_Hyst" Type="eclipse4diac::storage::INI_AR2" x="-15900" y="-3600">
 			<Parameter Name="SETM" Value="TRUE"/>
 			<Parameter Name="KEY" Value="'AI_Hysterese'"/>
 		</FB>
-		<SubApp Name="Par_Hyst" Type="MyLib::sys::OPC_TO_AR2_OUT" x="-18200" y="-4000">
+		<SubApp Name="Par_Hyst" Type="MyLib::sys::OPC_TO_AR2_OUT" x="-18100" y="-3400">
 		</SubApp>
-		<FB Name="ToAD_Hyst" Type="adapter::conversion::unidirectional::AR_TO_AD_NUM" x="-14000" y="-4000">
+		<FB Name="ToAD_Hyst" Type="adapter::conversion::unidirectional::AR_TO_AD_NUM" x="-14000" y="-2900">
 		</FB>
-		<FB Name="ToDWORD_Hyst" Type="adapter::conversion::unidirectional::AD_D_TO_DWORD" x="-12000" y="-4000">
+		<FB Name="ToDWORD_Hyst" Type="adapter::conversion::unidirectional::AD_D_TO_DWORD" x="-11900" y="-3200">
 		</FB>
-		<FB Name="INI_TDelta" Type="eclipse4diac::storage::INI_AR2" x="-16000" y="-4900">
+		<FB Name="INI_TDelta" Type="eclipse4diac::storage::INI_AR2" x="-15900" y="-4700">
 			<Parameter Name="SETM" Value="TRUE"/>
 			<Parameter Name="KEY" Value="'AI_TimeDelta'"/>
 		</FB>
-		<SubApp Name="Par_TDelta" Type="MyLib::sys::OPC_TO_AR2_OUT" x="-18200" y="-4900">
+		<SubApp Name="Par_TDelta" Type="MyLib::sys::OPC_TO_AR2_OUT" x="-18100" y="-4500">
 		</SubApp>
-		<FB Name="ToAD_TDelta" Type="adapter::conversion::unidirectional::AR_TO_AD_NUM" x="-14000" y="-4900">
+		<FB Name="ToAD_TDelta" Type="adapter::conversion::unidirectional::AR_TO_AD_NUM" x="-14000" y="-4100">
 		</FB>
-		<FB Name="ToDWORD_TDelta" Type="adapter::conversion::unidirectional::AD_D_TO_DWORD" x="-12000" y="-4900">
+		<FB Name="ToDWORD_TDelta" Type="adapter::conversion::unidirectional::AD_D_TO_DWORD" x="-12000" y="-4400">
 		</FB>
-		<FB Name="INI_TRate" Type="eclipse4diac::storage::INI_AR2" x="-16000" y="-5800">
+		<FB Name="INI_TRate" Type="eclipse4diac::storage::INI_AR2" x="-15900" y="-5800">
 			<Parameter Name="SETM" Value="TRUE"/>
 			<Parameter Name="KEY" Value="'AI_TimeRateLimit'"/>
 		</FB>
-		<SubApp Name="Par_TRate" Type="MyLib::sys::OPC_TO_AR2_OUT" x="-18200" y="-5800">
+		<SubApp Name="Par_TRate" Type="MyLib::sys::OPC_TO_AR2_OUT" x="-18100" y="-5600">
 		</SubApp>
-		<FB Name="ToAD_TRate" Type="adapter::conversion::unidirectional::AR_TO_AD_NUM" x="-14000" y="-5800">
+		<FB Name="ToAD_TRate" Type="adapter::conversion::unidirectional::AR_TO_AD_NUM" x="-14000" y="-5400">
 		</FB>
-		<FB Name="ToDWORD_TRate" Type="adapter::conversion::unidirectional::AD_D_TO_DWORD" x="-12000" y="-5800">
+		<FB Name="ToDWORD_TRate" Type="adapter::conversion::unidirectional::AD_D_TO_DWORD" x="-12000" y="-5700">
 		</FB>
 		<FB Name="AD_TO_AUDI" Type="adapter::conversion::unidirectional::AD_TO_AUDI" x="-5600" y="-400">
 		</FB>
@@ -83,28 +83,30 @@
 		<FB Name="RateLimit_Anzeige" Type="adapter::events::unidirectional::AUDI_D_FF_TMIN" Comment="Nur VT-Anzeige gedrosselt, AR_OUT (Regelung) ungedrosselt" x="-3300" y="-1400">
 			<Parameter Name="Tmin" Value="T#500ms"/>
 		</FB>
-		<FB Name="Q_NumericValue_RAW" Type="isobus::UT::Q::Q_NumericValue_AUDI" x="-2300" y="-1000">
+		<FB Name="Q_NumericValue_RAW" Type="isobus::UT::Q::Q_NumericValue_AUDI" x="-1800" y="-1000">
 		</FB>
 		<FB Name="AUDI_TO_AR" Type="adapter::conversion::unidirectional::AUDI_TO_AR" x="-2300" y="200">
 		</FB>
 		<FB Name="AR_SPLIT_2_Raw" Type="adapter::events::unidirectional::AR_SPLIT_2" x="-900" y="200">
 		</FB>
-		<FB Name="AR_PUBLISH_RAW" Type="adapter::net::AR_PUBLISH_1" x="600" y="-600">
+		<FB Name="AR_PUBLISH_RAW" Type="adapter::net::AR_PUBLISH_1" x="700" y="-600">
 		</FB>
 		<FB Name="AND_QO" Type="iec61131::booleanOperators::AND_BOOL_3" x="2900" y="0">
 		</FB>
 		<EventConnections>
-			<Connection Source="INIT" Destination="INI_Hyst.INIT"/>
-			<Connection Source="INI_Hyst.INITO" Destination="INI_TDelta.INIT"/>
-			<Connection Source="INI_TDelta.INITO" Destination="INI_TRate.INIT"/>
-			<Connection Source="INI_TRate.INITO" Destination="Par_Hyst.INIT"/>
-			<Connection Source="Par_Hyst.INITO" Destination="Par_TDelta.INIT"/>
-			<Connection Source="Par_TDelta.INITO" Destination="Par_TRate.INIT"/>
-			<Connection Source="Par_TRate.INITO" Destination="logiBUS_AI_IDA.INIT"/>
-			<Connection Source="logiBUS_AI_IDA.INITO" Destination="Q_NumericValue_RAW.INIT"/>
-			<Connection Source="Q_NumericValue_RAW.INITO" Destination="AR_PUBLISH_RAW.INIT"/>
-			<Connection Source="AR_PUBLISH_RAW.INITO" Destination="INITO"/>
-			<Connection Source="AR_PUBLISH_RAW.INITO" Destination="AND_QO.REQ"/>
+			<Connection Source="logiBUS_AI_IDA.INITO" Destination="Q_NumericValue_RAW.INIT" dx1="2960"/>
+			<Connection Source="Q_NumericValue_RAW.INITO" Destination="AR_PUBLISH_RAW.INIT" dx1="833.33"/>
+			<Connection Source="AR_PUBLISH_RAW.INITO" Destination="INITO" dx1="3300"/>
+			<Connection Source="AR_PUBLISH_RAW.INITO" Destination="AND_QO.REQ" dx1="726.67">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="INIT" Destination="Par_TRate.INIT" dx1="1040"/>
+			<Connection Source="Par_TRate.INITO" Destination="INI_TRate.INIT" dx1="613.33"/>
+			<Connection Source="INI_TRate.INITO" Destination="Par_TDelta.INIT" dx1="80" dx2="80" dy="960"/>
+			<Connection Source="Par_TDelta.INITO" Destination="INI_TDelta.INIT" dx1="613.33"/>
+			<Connection Source="INI_TDelta.INITO" Destination="Par_Hyst.INIT" dx1="80" dx2="80" dy="926.67"/>
+			<Connection Source="Par_Hyst.INITO" Destination="INI_Hyst.INIT" dx1="613.33"/>
+			<Connection Source="INI_Hyst.INITO" Destination="logiBUS_AI_IDA.INIT" dx1="2906.67"/>
 		</EventConnections>
 		<DataConnections>
 			<Connection Source="Input" Destination="logiBUS_AI_IDA.Input" dx1="1460">
@@ -116,53 +118,89 @@
 			<Connection Source="ID_RAW_WRITE" Destination="AR_PUBLISH_RAW.ID" dx1="1400">
 				<Attribute Name="Visible" Value="false"/>
 			</Connection>
-			<Connection Source="QI" Destination="Q_NumericValue_RAW.QI" dx1="80" dx2="80" dy="-806.67"/>
-			<Connection Source="QI" Destination="logiBUS_AI_IDA.QI" dx1="80" dx2="80" dy="-1160"/>
-			<Connection Source="QI" Destination="AR_PUBLISH_RAW.QI" dx1="80" dx2="80" dy="-606.67"/>
-			<Connection Source="Q_NumericValue_RAW.QO" Destination="AND_QO.IN1" dx1="533.33"/>
-			<Connection Source="logiBUS_AI_IDA.QO" Destination="AND_QO.IN2" dx1="4106.67"/>
-			<Connection Source="AR_PUBLISH_RAW.QO" Destination="AND_QO.IN3" dx1="726.67"/>
+			<Connection Source="QI" Destination="Q_NumericValue_RAW.QI" dx1="9240">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="QI" Destination="logiBUS_AI_IDA.QI" dx1="5693.33">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="QI" Destination="AR_PUBLISH_RAW.QI" dx1="10493.33">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="Q_NumericValue_RAW.QO" Destination="AND_QO.IN1" dx1="533.33">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="logiBUS_AI_IDA.QO" Destination="AND_QO.IN2" dx1="4106.67">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="AR_PUBLISH_RAW.QO" Destination="AND_QO.IN3" dx1="726.67">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
 			<Connection Source="AND_QO.OUT" Destination="QO" dx1="1193.33"/>
-			<Connection Source="rHystDefault" Destination="INI_Hyst.DEFAULT_VALUE"/>
-			<Connection Source="sSection" Destination="INI_Hyst.SECTION"/>
-			<Connection Source="QI" Destination="INI_Hyst.QI"/>
-			<Connection Source="QI" Destination="Par_Hyst.QI"/>
-			<Connection Source="ID_HYST_READ" Destination="Par_Hyst.ID_READ"/>
-			<Connection Source="ID_HYST_WRITE" Destination="Par_Hyst.ID_WRITE"/>
-			<Connection Source="ToDWORD_Hyst.IN" Destination="logiBUS_AI_IDA.AnalogInput_hysteresis"/>
-			<Connection Source="rTimeDeltaDefault" Destination="INI_TDelta.DEFAULT_VALUE"/>
-			<Connection Source="sSection" Destination="INI_TDelta.SECTION"/>
-			<Connection Source="QI" Destination="INI_TDelta.QI"/>
-			<Connection Source="QI" Destination="Par_TDelta.QI"/>
-			<Connection Source="ID_TDELTA_READ" Destination="Par_TDelta.ID_READ"/>
-			<Connection Source="ID_TDELTA_WRITE" Destination="Par_TDelta.ID_WRITE"/>
-			<Connection Source="ToDWORD_TDelta.IN" Destination="logiBUS_AI_IDA.TimeDelta"/>
-			<Connection Source="rTimeRateLimitDefault" Destination="INI_TRate.DEFAULT_VALUE"/>
-			<Connection Source="sSection" Destination="INI_TRate.SECTION"/>
-			<Connection Source="QI" Destination="INI_TRate.QI"/>
-			<Connection Source="QI" Destination="Par_TRate.QI"/>
-			<Connection Source="ID_TRATE_READ" Destination="Par_TRate.ID_READ"/>
-			<Connection Source="ID_TRATE_WRITE" Destination="Par_TRate.ID_WRITE"/>
-			<Connection Source="ToDWORD_TRate.IN" Destination="logiBUS_AI_IDA.TimeRateLimit"/>
+			<Connection Source="rHystDefault" Destination="INI_Hyst.DEFAULT_VALUE" dx1="2140">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="sSection" Destination="INI_Hyst.SECTION" dx1="2140">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="QI" Destination="INI_Hyst.QI" dx1="2140">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="QI" Destination="Par_Hyst.QI" dx1="793.33">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="ID_HYST_READ" Destination="Par_Hyst.ID_READ" dx1="640"/>
+			<Connection Source="ID_HYST_WRITE" Destination="Par_Hyst.ID_WRITE" dx1="566.67"/>
+			<Connection Source="ToDWORD_Hyst.IN" Destination="logiBUS_AI_IDA.AnalogInput_hysteresis" dx1="633.33"/>
+			<Connection Source="rTimeDeltaDefault" Destination="INI_TDelta.DEFAULT_VALUE" dx1="2140">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="sSection" Destination="INI_TDelta.SECTION" dx1="2140">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="QI" Destination="INI_TDelta.QI" dx1="2140">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="QI" Destination="Par_TDelta.QI" dx1="1040">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="ID_TDELTA_READ" Destination="Par_TDelta.ID_READ" dx1="793.33"/>
+			<Connection Source="ID_TDELTA_WRITE" Destination="Par_TDelta.ID_WRITE" dx1="720"/>
+			<Connection Source="ToDWORD_TDelta.IN" Destination="logiBUS_AI_IDA.TimeDelta" dx1="826.67"/>
+			<Connection Source="rTimeRateLimitDefault" Destination="INI_TRate.DEFAULT_VALUE" dx1="2193.33">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="sSection" Destination="INI_TRate.SECTION" dx1="2193.33">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="QI" Destination="INI_TRate.QI" dx1="2193.33">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="QI" Destination="Par_TRate.QI" dx1="1040">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="ID_TRATE_READ" Destination="Par_TRate.ID_READ" dx1="1040"/>
+			<Connection Source="ID_TRATE_WRITE" Destination="Par_TRate.ID_WRITE" dx1="1040"/>
+			<Connection Source="ToDWORD_TRate.IN" Destination="logiBUS_AI_IDA.TimeRateLimit" dx1="953.33"/>
 		</DataConnections>
 		<AdapterConnections>
 			<Connection Source="logiBUS_AI_IDA.IN" Destination="AD_TO_AUDI.AD_IN" dx1="420"/>
 			<Connection Source="AD_TO_AUDI.AUDI_OUT" Destination="AUDI_SPLIT_2.IN" dx1="300"/>
-			<Connection Source="AUDI_SPLIT_2.OUT1" Destination="RateLimit_Anzeige.I"/>
-			<Connection Source="RateLimit_Anzeige.Q" Destination="Q_NumericValue_RAW.u32NewValue"/>
+			<Connection Source="AUDI_SPLIT_2.OUT1" Destination="RateLimit_Anzeige.I" dx1="80" dx2="80" dy="-393.33"/>
+			<Connection Source="RateLimit_Anzeige.Q" Destination="Q_NumericValue_RAW.u32NewValue" dx1="280"/>
 			<Connection Source="AUDI_SPLIT_2.OUT2" Destination="AUDI_TO_AR.AUDI_IN" dx1="300"/>
 			<Connection Source="AUDI_TO_AR.AR_OUT" Destination="AR_SPLIT_2_Raw.IN" dx1="300"/>
 			<Connection Source="AR_SPLIT_2_Raw.OUT1" Destination="AR_OUT" dx1="173.33"/>
 			<Connection Source="AR_SPLIT_2_Raw.OUT2" Destination="AR_PUBLISH_RAW.IN" dx1="300"/>
-			<Connection Source="Par_Hyst.VALUEO" Destination="INI_Hyst.VAL"/>
-			<Connection Source="Par_Hyst.VALUE_OUT" Destination="ToAD_Hyst.AR_IN"/>
-			<Connection Source="ToAD_Hyst.AD_OUT" Destination="ToDWORD_Hyst.AD_IN"/>
-			<Connection Source="Par_TDelta.VALUEO" Destination="INI_TDelta.VAL"/>
-			<Connection Source="Par_TDelta.VALUE_OUT" Destination="ToAD_TDelta.AR_IN"/>
-			<Connection Source="ToAD_TDelta.AD_OUT" Destination="ToDWORD_TDelta.AD_IN"/>
-			<Connection Source="Par_TRate.VALUEO" Destination="INI_TRate.VAL"/>
-			<Connection Source="Par_TRate.VALUE_OUT" Destination="ToAD_TRate.AR_IN"/>
-			<Connection Source="ToAD_TRate.AD_OUT" Destination="ToDWORD_TRate.AD_IN"/>
+			<Connection Source="Par_Hyst.VALUEO" Destination="INI_Hyst.VAL" dx1="613.33"/>
+			<Connection Source="Par_Hyst.VALUE_OUT" Destination="ToAD_Hyst.AR_IN" dx1="2953.33"/>
+			<Connection Source="ToAD_Hyst.AD_OUT" Destination="ToDWORD_Hyst.AD_IN" dx1="573.33"/>
+			<Connection Source="Par_TDelta.VALUEO" Destination="INI_TDelta.VAL" dx1="613.33"/>
+			<Connection Source="Par_TDelta.VALUE_OUT" Destination="ToAD_TDelta.AR_IN" dx1="3053.33"/>
+			<Connection Source="ToAD_TDelta.AD_OUT" Destination="ToDWORD_TDelta.AD_IN" dx1="573.33"/>
+			<Connection Source="Par_TRate.VALUEO" Destination="INI_TRate.VAL" dx1="613.33"/>
+			<Connection Source="Par_TRate.VALUE_OUT" Destination="ToAD_TRate.AR_IN" dx1="3053.33"/>
+			<Connection Source="ToAD_TRate.AD_OUT" Destination="ToDWORD_TRate.AD_IN" dx1="573.33"/>
 		</AdapterConnections>
 	</SubAppNetwork>
 </SubAppType>

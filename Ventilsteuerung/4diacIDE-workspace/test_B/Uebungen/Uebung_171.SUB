@@ -16,7 +16,7 @@
 			<Attribute Name="DataType" Value="DINT"/>
 		</FB>
 		<Comment Comment="E_D_FF_ANY ist eine &quot;Event Bremse&quot; die nur weiterleitet wenn sich D geändert&#10; hat. &#10;" x="-2800" y="400" width="3700" height="300"/>
-		<FB Name="INIT" Type="init_stages::events::init::INIT" x="-3700" y="-400">
+		<FB Name="INIT" Type="events::init::INIT" x="-3700" y="-400">
 		</FB>
 		<EventConnections>
 			<Connection Source="E_D_FF_ANY.EO" Destination="F_MOVE.REQ"/>
