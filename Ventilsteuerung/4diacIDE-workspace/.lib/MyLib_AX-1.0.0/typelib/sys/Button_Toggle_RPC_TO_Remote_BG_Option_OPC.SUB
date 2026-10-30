@@ -37,28 +37,28 @@
 		</FB>
 		<FB Name="AOption_EVENT_TO_X" Type="Option::conversion::AOption_EVENT_TO_X" x="-1000" y="900">
 		</FB>
-		<SubApp Name="Retry_TRIGGER_CLIENT" Type="MyLib::sys::Remote_Init_Retry" x="-3000" y="-3500">
+		<SubApp Name="Retry_TRIGGER_CLIENT" Type="MyLib::sys::Remote_Init_Retry" x="-4400" y="-800">
 		</SubApp>
-		<SubApp Name="Retry_STATE_SUBSCRIBE" Type="MyLib::sys::Remote_Init_Retry" x="-3000" y="-3500">
+		<SubApp Name="Retry_STATE_SUBSCRIBE" Type="MyLib::sys::Remote_Init_Retry" x="-5900" y="1900">
 		</SubApp>
 		<EventConnections>
-			<Connection Source="Retry_TRIGGER_CLIENT.INITO" Destination="Retry_STATE_SUBSCRIBE.INIT"/>
-			<Connection Source="Retry_STATE_SUBSCRIBE.CLIENT_INIT" Destination="STATE_SUBSCRIBE.INIT"/>
-			<Connection Source="STATE_SUBSCRIBE.INITO" Destination="Retry_STATE_SUBSCRIBE.CLIENT_INITO"/>
-			<Connection Source="Retry_STATE_SUBSCRIBE.INITO" Destination="GreenWhiteBackground_AX.INIT"/>
-			<Connection Source="Button_Toggle.INITO" Destination="Retry_TRIGGER_CLIENT.INIT"/>
-			<Connection Source="Retry_TRIGGER_CLIENT.CLIENT_INIT" Destination="TRIGGER_CLIENT.INIT"/>
-			<Connection Source="TRIGGER_CLIENT.INITO" Destination="Retry_TRIGGER_CLIENT.CLIENT_INITO"/>
+			<Connection Source="Retry_TRIGGER_CLIENT.INITO" Destination="Retry_STATE_SUBSCRIBE.INIT" dx1="80" dx2="80" dy="160"/>
+			<Connection Source="Retry_STATE_SUBSCRIBE.CLIENT_INIT" Destination="STATE_SUBSCRIBE.INIT" dx1="80" dx2="80" dy="2146.67"/>
+			<Connection Source="STATE_SUBSCRIBE.INITO" Destination="Retry_STATE_SUBSCRIBE.CLIENT_INITO" dx1="80" dx2="80" dy="553.33"/>
+			<Connection Source="Retry_STATE_SUBSCRIBE.INITO" Destination="GreenWhiteBackground_AX.INIT" dx1="840"/>
+			<Connection Source="Button_Toggle.INITO" Destination="Retry_TRIGGER_CLIENT.INIT" dx1="1753.33"/>
+			<Connection Source="Retry_TRIGGER_CLIENT.CLIENT_INIT" Destination="TRIGGER_CLIENT.INIT" dx1="80" dx2="80" dy="1746.67"/>
+			<Connection Source="TRIGGER_CLIENT.INITO" Destination="Retry_TRIGGER_CLIENT.CLIENT_INITO" dx1="80" dx2="80" dy="-1246.67"/>
 			<Connection Source="Button_Toggle.IND" Destination="TRIGGER_CLIENT.REQ" dx1="373.33"/>
 			<Connection Source="AOption_X_TO_EVENT.INIT_REQ" Destination="Button_Toggle.INIT"/>
 			<Connection Source="GreenWhiteBackground_AX.INITO" Destination="AOption_EVENT_TO_X.INIT_REQ"/>
 			<Connection Source="AOption_EVENT_TO_X.INIT_CNF" Destination="AOption_X_TO_EVENT.INIT_CNF" dx1="80" dx2="80" dy="-500"/>
 		</EventConnections>
 		<DataConnections>
-			<Connection Source="AOption_X_TO_EVENT.QI_OUT" Destination="Retry_STATE_SUBSCRIBE.QI"/>
-			<Connection Source="STATE_SUBSCRIBE.QO" Destination="Retry_STATE_SUBSCRIBE.CLIENT_QO"/>
-			<Connection Source="AOption_X_TO_EVENT.QI_OUT" Destination="Retry_TRIGGER_CLIENT.QI"/>
-			<Connection Source="TRIGGER_CLIENT.QO" Destination="Retry_TRIGGER_CLIENT.CLIENT_QO"/>
+			<Connection Source="AOption_X_TO_EVENT.QI_OUT" Destination="Retry_STATE_SUBSCRIBE.QI" dx1="2386.67"/>
+			<Connection Source="STATE_SUBSCRIBE.QO" Destination="Retry_STATE_SUBSCRIBE.CLIENT_QO" dx1="80" dx2="80" dy="553.33"/>
+			<Connection Source="AOption_X_TO_EVENT.QI_OUT" Destination="Retry_TRIGGER_CLIENT.QI" dx1="2680"/>
+			<Connection Source="TRIGGER_CLIENT.QO" Destination="Retry_TRIGGER_CLIENT.CLIENT_QO" dx1="80" dx2="80" dy="-1246.67"/>
 			<Connection Source="u16ObjId" Destination="Button_Toggle.u16ObjId" dx1="2373.33">
 				<Attribute Name="Visible" Value="false"/>
 			</Connection>
@@ -71,16 +71,16 @@
 			<Connection Source="ID_STATE_READ" Destination="STATE_SUBSCRIBE.ID" dx1="1400">
 				<Attribute Name="Visible" Value="false"/>
 			</Connection>
-			<Connection Source="AOption_X_TO_EVENT.QI_OUT" Destination="Button_Toggle.QI"/>
-			<Connection Source="AOption_X_TO_EVENT.QI_OUT" Destination="TRIGGER_CLIENT.QI"/>
-			<Connection Source="AOption_X_TO_EVENT.QI_OUT" Destination="STATE_SUBSCRIBE.QI"/>
-			<Connection Source="AOption_X_TO_EVENT.QI_OUT" Destination="GreenWhiteBackground_AX.QI"/>
-			<Connection Source="AOption_X_TO_EVENT.QI_OUT" Destination="AOption_EVENT_TO_X.QI_OUT"/>
+			<Connection Source="AOption_X_TO_EVENT.QI_OUT" Destination="Button_Toggle.QI" dx1="480"/>
+			<Connection Source="AOption_X_TO_EVENT.QI_OUT" Destination="TRIGGER_CLIENT.QI" dx1="2180"/>
+			<Connection Source="AOption_X_TO_EVENT.QI_OUT" Destination="STATE_SUBSCRIBE.QI" dx1="1380"/>
+			<Connection Source="AOption_X_TO_EVENT.QI_OUT" Destination="GreenWhiteBackground_AX.QI" dx1="2680"/>
+			<Connection Source="AOption_X_TO_EVENT.QI_OUT" Destination="AOption_EVENT_TO_X.QI_OUT" dx1="3680"/>
 		</DataConnections>
 		<AdapterConnections>
-			<Connection Source="AOption_IN" Destination="AOption_X_TO_EVENT.AOption_IN"/>
+			<Connection Source="AOption_IN" Destination="AOption_X_TO_EVENT.AOption_IN" dx1="80" dx2="80" dy="-466.67"/>
 			<Connection Source="AOption_EVENT_TO_X.AOption_OUT" Destination="AOption_OUT" dx1="600"/>
-			<Connection Source="STATE_SUBSCRIBE.OUT" Destination="GreenWhiteBackground_AX.DI1"/>
+			<Connection Source="STATE_SUBSCRIBE.OUT" Destination="GreenWhiteBackground_AX.DI1" dx1="826.67"/>
 		</AdapterConnections>
 	</SubAppNetwork>
 </SubAppType>

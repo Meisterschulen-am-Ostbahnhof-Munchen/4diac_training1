@@ -38,20 +38,20 @@
 		</FB>
 		<FB Name="AOption_EVENT_TO_X" Type="Option::conversion::AOption_EVENT_TO_X" x="3400" y="2200">
 		</FB>
-		<SubApp Name="Retry_AX_SUBSCRIBE_1" Type="MyLib::sys::Remote_Init_Retry" x="-3000" y="-3500">
+		<SubApp Name="Retry_AX_SUBSCRIBE_1" Type="MyLib::sys::Remote_Init_Retry" x="-1000" y="1600">
 		</SubApp>
 		<EventConnections>
-			<Connection Source="AOption_X_TO_EVENT.INIT_REQ" Destination="Retry_AX_SUBSCRIBE_1.INIT"/>
-			<Connection Source="Retry_AX_SUBSCRIBE_1.CLIENT_INIT" Destination="AX_SUBSCRIBE_1.INIT"/>
-			<Connection Source="AX_SUBSCRIBE_1.INITO" Destination="Retry_AX_SUBSCRIBE_1.CLIENT_INITO"/>
-			<Connection Source="Retry_AX_SUBSCRIBE_1.INITO" Destination="GreenWhiteBackground3_AX.INIT"/>
+			<Connection Source="AOption_X_TO_EVENT.INIT_REQ" Destination="Retry_AX_SUBSCRIBE_1.INIT" dx1="220"/>
+			<Connection Source="Retry_AX_SUBSCRIBE_1.CLIENT_INIT" Destination="AX_SUBSCRIBE_1.INIT" dx1="80" dx2="80" dy="-853.33"/>
+			<Connection Source="AX_SUBSCRIBE_1.INITO" Destination="Retry_AX_SUBSCRIBE_1.CLIENT_INITO" dx1="186.67" dx2="80" dy="1260"/>
+			<Connection Source="Retry_AX_SUBSCRIBE_1.INITO" Destination="GreenWhiteBackground3_AX.INIT" dx1="1506.67"/>
 			<Connection Source="GreenWhiteBackground3_AX.INITO" Destination="STATUS_WEB_PUBLISH.INIT" dx1="80" dx2="80" dy="2053.33"/>
 			<Connection Source="STATUS_WEB_PUBLISH.INITO" Destination="AOption_EVENT_TO_X.INIT_REQ" dx1="326.67"/>
 			<Connection Source="AOption_EVENT_TO_X.INIT_CNF" Destination="AOption_X_TO_EVENT.INIT_CNF" dx1="80" dx2="80" dy="660"/>
 		</EventConnections>
 		<DataConnections>
-			<Connection Source="AOption_X_TO_EVENT.QI_OUT" Destination="Retry_AX_SUBSCRIBE_1.QI"/>
-			<Connection Source="AX_SUBSCRIBE_1.QO" Destination="Retry_AX_SUBSCRIBE_1.CLIENT_QO"/>
+			<Connection Source="AOption_X_TO_EVENT.QI_OUT" Destination="Retry_AX_SUBSCRIBE_1.QI" dx1="486.67"/>
+			<Connection Source="AX_SUBSCRIBE_1.QO" Destination="Retry_AX_SUBSCRIBE_1.CLIENT_QO" dx1="80" dx2="246.67" dy="706.67"/>
 			<Connection Source="u16ObjId" Destination="GreenWhiteBackground3_AX.u16ObjId" dx1="366.67">
 				<Attribute Name="Visible" Value="false"/>
 			</Connection>

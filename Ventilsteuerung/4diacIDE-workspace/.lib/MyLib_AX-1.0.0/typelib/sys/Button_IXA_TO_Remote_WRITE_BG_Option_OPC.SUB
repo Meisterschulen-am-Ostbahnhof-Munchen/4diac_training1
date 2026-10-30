@@ -35,27 +35,27 @@
 		</SubApp>
 		<FB Name="AOption_EVENT_TO_X" Type="Option::conversion::AOption_EVENT_TO_X" x="4200" y="500">
 		</FB>
-		<SubApp Name="Retry_AX_CLIENT_1_0" Type="MyLib::sys::Remote_Init_Retry" x="-3000" y="-3500">
+		<SubApp Name="Retry_AX_CLIENT_1_0" Type="MyLib::sys::Remote_Init_Retry" x="1500" y="-800">
 		</SubApp>
-		<SubApp Name="Retry_AX_SUBSCRIBE_1" Type="MyLib::sys::Remote_Init_Retry" x="-3000" y="-3500">
+		<SubApp Name="Retry_AX_SUBSCRIBE_1" Type="MyLib::sys::Remote_Init_Retry" x="-200" y="1900">
 		</SubApp>
 		<EventConnections>
-			<Connection Source="Retry_AX_CLIENT_1_0.INITO" Destination="Retry_AX_SUBSCRIBE_1.INIT"/>
-			<Connection Source="Retry_AX_SUBSCRIBE_1.CLIENT_INIT" Destination="AX_SUBSCRIBE_1.INIT"/>
-			<Connection Source="AX_SUBSCRIBE_1.INITO" Destination="Retry_AX_SUBSCRIBE_1.CLIENT_INITO"/>
-			<Connection Source="Retry_AX_SUBSCRIBE_1.INITO" Destination="GreenWhiteBackground1_AX.INIT"/>
-			<Connection Source="Button_IXA.INITO" Destination="Retry_AX_CLIENT_1_0.INIT"/>
-			<Connection Source="Retry_AX_CLIENT_1_0.CLIENT_INIT" Destination="AX_CLIENT_1_0.INIT"/>
-			<Connection Source="AX_CLIENT_1_0.INITO" Destination="Retry_AX_CLIENT_1_0.CLIENT_INITO"/>
+			<Connection Source="Retry_AX_CLIENT_1_0.INITO" Destination="Retry_AX_SUBSCRIBE_1.INIT" dx1="80" dx2="80" dy="1646.67"/>
+			<Connection Source="Retry_AX_SUBSCRIBE_1.CLIENT_INIT" Destination="AX_SUBSCRIBE_1.INIT" dx1="80" dx2="80" dy="-313.33"/>
+			<Connection Source="AX_SUBSCRIBE_1.INITO" Destination="Retry_AX_SUBSCRIBE_1.CLIENT_INITO" dx1="80" dx2="80" dy="500"/>
+			<Connection Source="Retry_AX_SUBSCRIBE_1.INITO" Destination="GreenWhiteBackground1_AX.INIT" dx1="240"/>
+			<Connection Source="Button_IXA.INITO" Destination="Retry_AX_CLIENT_1_0.INIT" dx1="353.33"/>
+			<Connection Source="Retry_AX_CLIENT_1_0.CLIENT_INIT" Destination="AX_CLIENT_1_0.INIT" dx1="80" dx2="80" dy="520"/>
+			<Connection Source="AX_CLIENT_1_0.INITO" Destination="Retry_AX_CLIENT_1_0.CLIENT_INITO" dx1="80" dx2="80" dy="-206.67"/>
 			<Connection Source="AOption_X_TO_EVENT.INIT_REQ" Destination="Button_IXA.INIT"/>
-			<Connection Source="GreenWhiteBackground1_AX.INITO" Destination="AOption_EVENT_TO_X.INIT_REQ"/>
+			<Connection Source="GreenWhiteBackground1_AX.INITO" Destination="AOption_EVENT_TO_X.INIT_REQ" dx1="646.67"/>
 			<Connection Source="AOption_EVENT_TO_X.INIT_CNF" Destination="AOption_X_TO_EVENT.INIT_CNF" dx1="80" dx2="80" dy="-500"/>
 		</EventConnections>
 		<DataConnections>
-			<Connection Source="AOption_X_TO_EVENT.QI_OUT" Destination="Retry_AX_SUBSCRIBE_1.QI"/>
-			<Connection Source="AX_SUBSCRIBE_1.QO" Destination="Retry_AX_SUBSCRIBE_1.CLIENT_QO"/>
-			<Connection Source="AOption_X_TO_EVENT.QI_OUT" Destination="Retry_AX_CLIENT_1_0.QI"/>
-			<Connection Source="AX_CLIENT_1_0.QO" Destination="Retry_AX_CLIENT_1_0.CLIENT_QO"/>
+			<Connection Source="AOption_X_TO_EVENT.QI_OUT" Destination="Retry_AX_SUBSCRIBE_1.QI" dx1="686.67"/>
+			<Connection Source="AX_SUBSCRIBE_1.QO" Destination="Retry_AX_SUBSCRIBE_1.CLIENT_QO" dx1="80" dx2="80" dy="500"/>
+			<Connection Source="AOption_X_TO_EVENT.QI_OUT" Destination="Retry_AX_CLIENT_1_0.QI" dx1="1233.33"/>
+			<Connection Source="AX_CLIENT_1_0.QO" Destination="Retry_AX_CLIENT_1_0.CLIENT_QO" dx1="80" dx2="80" dy="-513.33"/>
 			<Connection Source="u16ObjId" Destination="Button_IXA.u16ObjId" dx1="80" dx2="80" dy="146.67">
 				<Attribute Name="Visible" Value="false"/>
 			</Connection>
@@ -68,14 +68,14 @@
 			<Connection Source="ID_WRITE_REMOTE" Destination="AX_CLIENT_1_0.ID" dx1="613.33">
 				<Attribute Name="Visible" Value="false"/>
 			</Connection>
-			<Connection Source="AOption_X_TO_EVENT.QI_OUT" Destination="Button_IXA.QI"/>
-			<Connection Source="AOption_X_TO_EVENT.QI_OUT" Destination="AX_CLIENT_1_0.QI"/>
-			<Connection Source="AOption_X_TO_EVENT.QI_OUT" Destination="AX_SUBSCRIBE_1.QI"/>
-			<Connection Source="AOption_X_TO_EVENT.QI_OUT" Destination="GreenWhiteBackground1_AX.QI"/>
-			<Connection Source="AOption_X_TO_EVENT.QI_OUT" Destination="AOption_EVENT_TO_X.QI_OUT"/>
+			<Connection Source="AOption_X_TO_EVENT.QI_OUT" Destination="Button_IXA.QI" dx1="480"/>
+			<Connection Source="AOption_X_TO_EVENT.QI_OUT" Destination="AX_CLIENT_1_0.QI" dx1="1333.33"/>
+			<Connection Source="AOption_X_TO_EVENT.QI_OUT" Destination="AX_SUBSCRIBE_1.QI" dx1="480"/>
+			<Connection Source="AOption_X_TO_EVENT.QI_OUT" Destination="GreenWhiteBackground1_AX.QI" dx1="1233.33"/>
+			<Connection Source="AOption_X_TO_EVENT.QI_OUT" Destination="AOption_EVENT_TO_X.QI_OUT" dx1="2580"/>
 		</DataConnections>
 		<AdapterConnections>
-			<Connection Source="AOption_IN" Destination="AOption_X_TO_EVENT.AOption_IN"/>
+			<Connection Source="AOption_IN" Destination="AOption_X_TO_EVENT.AOption_IN" dx1="80" dx2="80" dy="-213.33"/>
 			<Connection Source="AOption_EVENT_TO_X.AOption_OUT" Destination="AOption_OUT" dx1="600"/>
 			<Connection Source="Button_IXA.IN" Destination="AX_CLIENT_1_0.IN" dx1="100"/>
 			<Connection Source="AX_SUBSCRIBE_1.OUT" Destination="GreenWhiteBackground1_AX.DI1" dx1="280"/>
