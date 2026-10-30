@@ -2,7 +2,7 @@
 <SubAppType Name="logiBUS_AI_Raw_VT_AR_Param_OPC" Comment="Wie logiBUS_AI_Raw_VT_AR_OPC, aber Hysterese, TimeDelta und TimeRateLimit des AI einstellbar (INI + Web), Wirkung nach Neustart">
 	<Identification Standard="61499-2" Description="Copyright (c) 2026 Meisterschulen am Ostbahnhof  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0">
 	</Identification>
-	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2026-10-30" Remarks="Kopie von logiBUS_AI_Raw_VT_AR_OPC. Franz: Achslenkung pendelt beim Zentrieren - Hysterese 50 Digits (~9 %) groesser als das Null-Fenster +-2 % (~21 Digits). AnalogInput_hysteresis/TimeDelta/TimeRateLimit jetzt je OPC_TO_AR2_OUT (Web) + INI_AR2 (Keys AI_Hysterese/AI_TimeDelta/AI_TimeRateLimit in sSection), Defaults per Parameter. Werden vor logiBUS_AI_IDA.INIT geladen, eine Aenderung wirkt erst nach Neustart (wie FilterTimeS). Siehe KALIBRIERUNG_Achslenkung_Winkel.md.">
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2026-10-30" Remarks="Kopie von logiBUS_AI_Raw_VT_AR_OPC. Franz: Achslenkung pendelt beim Zentrieren - Hysterese 50 Digits (~9 %) groesser als das Null-Fenster +-2 % (~21 Digits). AnalogInput_hysteresis/TimeDelta/TimeRateLimit jetzt je OPC_TO_AR2_OUT (Web) + INI_AR2 (Keys AI_Hysterese/AI_TimeDelta/AI_TimeRateLimit in sSection), Defaults per Parameter. Werden vor logiBUS_AI_IDA.INIT geladen, eine Aenderung wirkt erst nach Neustart (wie FilterTimeS). VT-Rohwertanzeige per AUDI_D_FF_TMIN (500 ms) gedrosselt, AR_OUT/Publish ungedrosselt (Franz: Regelung schnell, Anzeige darf hinterherhinken). Siehe KALIBRIERUNG_Achslenkung_Winkel.md.">
 	</VersionInfo>
 	<CompilerInfo packageName="MyLib::sys">
 		<Import declaration="logiBUS::io::AI::logiBUS_AI"/>
@@ -80,6 +80,9 @@
 		</FB>
 		<FB Name="AUDI_SPLIT_2" Type="adapter::events::unidirectional::AUDI_SPLIT_2" x="-4000" y="-400">
 		</FB>
+		<FB Name="RateLimit_Anzeige" Type="adapter::events::unidirectional::AUDI_D_FF_TMIN" Comment="Nur VT-Anzeige gedrosselt, AR_OUT (Regelung) ungedrosselt" x="-3300" y="-1400">
+			<Parameter Name="Tmin" Value="T#500ms"/>
+		</FB>
 		<FB Name="Q_NumericValue_RAW" Type="isobus::UT::Q::Q_NumericValue_AUDI" x="-2300" y="-1000">
 		</FB>
 		<FB Name="AUDI_TO_AR" Type="adapter::conversion::unidirectional::AUDI_TO_AR" x="-2300" y="200">
@@ -145,7 +148,8 @@
 		<AdapterConnections>
 			<Connection Source="logiBUS_AI_IDA.IN" Destination="AD_TO_AUDI.AD_IN" dx1="420"/>
 			<Connection Source="AD_TO_AUDI.AUDI_OUT" Destination="AUDI_SPLIT_2.IN" dx1="300"/>
-			<Connection Source="AUDI_SPLIT_2.OUT1" Destination="Q_NumericValue_RAW.u32NewValue" dx1="300"/>
+			<Connection Source="AUDI_SPLIT_2.OUT1" Destination="RateLimit_Anzeige.I"/>
+			<Connection Source="RateLimit_Anzeige.Q" Destination="Q_NumericValue_RAW.u32NewValue"/>
 			<Connection Source="AUDI_SPLIT_2.OUT2" Destination="AUDI_TO_AR.AUDI_IN" dx1="300"/>
 			<Connection Source="AUDI_TO_AR.AR_OUT" Destination="AR_SPLIT_2_Raw.IN" dx1="300"/>
 			<Connection Source="AR_SPLIT_2_Raw.OUT1" Destination="AR_OUT" dx1="173.33"/>
