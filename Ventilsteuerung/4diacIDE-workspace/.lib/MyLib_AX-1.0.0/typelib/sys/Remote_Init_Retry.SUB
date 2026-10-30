@@ -2,6 +2,8 @@
 <SubAppType Name="Remote_Init_Retry" Comment="INIT fuer einen Remote-OPC-UA-Client: INITO sofort an die Kette, bei INITO- neuer Versuch nach DT">
 	<Identification Standard="61499-2" Description="Copyright (c) 2026 Meisterschulen am Ostbahnhof  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0">
 	</Identification>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.1" Author="Franz Höpfinger" Date="2026-10-30" Remarks="INIT-FB (events::init::INIT) direkt hinter dem Eingang INIT: SubApp wird im fboot aufgeloest, ohne ihn bliebe bei unverbundenem INIT nur E_MERGE_2.EI1 (Event, kein EInit) und E_TRIG loeste nie aus. Jetzt bleibt ein EInit-Eingang, unverbunden wird er automatisch ausgeloest.">
+	</VersionInfo>
 	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2026-10-30" Remarks="Neu. forte (#1092): Remote-Client meldet INITO+ erst wenn der Node existiert, sonst nach Timeout INITO- und Stopp, neuer Versuch nur durch neues INIT+. Abgestimmt mit ELFMASTER: E_DELAY vor erneutem INIT+, bei INIT mit QI=FALSE E_DELAY.STOP, reagiert auf jedes INITO-.">
 	</VersionInfo>
 	<CompilerInfo packageName="MyLib::sys">
@@ -26,6 +28,8 @@
 		</InputVars>
 	</SubAppInterfaceList>
 	<SubAppNetwork>
+		<FB Name="Init" Type="events::init::INIT" Comment="Haelt den EInit-Eingang im fboot (E_TRIG)" x="-3600" y="0">
+		</FB>
 		<FB Name="QI_Pruefen" Type="iec61499::events::E_SWITCH" Comment="INIT mit QI=FALSE stoppt eine laufende Pause" x="-1600" y="1300">
 		</FB>
 		<FB Name="Ergebnis" Type="iec61499::events::E_SWITCH" Comment="EO0: INITO- (QO=FALSE)" x="-1600" y="700">
@@ -37,13 +41,15 @@
 		<FB Name="Zum_Client" Type="iec61499::events::E_MERGE_2" Comment="erster Versuch + Neuversuche" x="4300" y="0">
 		</FB>
 		<EventConnections>
-			<Connection Source="INIT" Destination="Zum_Client.EI1" dx1="1886.67">
+			<Connection Source="INIT" Destination="Init.INIT"/>
+			<Connection Source="Init.INITO" Destination="Init.REQ"/>
+			<Connection Source="Init.CNF" Destination="Zum_Client.EI1" dx1="1886.67">
 				<Attribute Name="Visible" Value="false"/>
 			</Connection>
-			<Connection Source="INIT" Destination="INITO">
+			<Connection Source="Init.CNF" Destination="INITO">
 				<Attribute Name="Visible" Value="false"/>
 			</Connection>
-			<Connection Source="INIT" Destination="QI_Pruefen.EI" dx1="2886.67">
+			<Connection Source="Init.CNF" Destination="QI_Pruefen.EI" dx1="2886.67">
 				<Attribute Name="Visible" Value="false"/>
 			</Connection>
 			<Connection Source="QI_Pruefen.EO0" Destination="Pause.STOP" dx1="2920"/>
@@ -80,6 +86,7 @@ die Kette wartet nicht auf die Gegenstation.</li>
 <li>Kommt vom Client INITO mit QO=FALSE und ist QI=TRUE, wird nach <code>DT</code> (Standard 2 s) erneut
 INIT gesendet - bei jedem INITO-, nicht nur beim ersten.</li>
 <li>INIT mit QI=FALSE stoppt eine laufende Pause.</li>
+<li>INIT darf unverbunden bleiben: der innere <code>events::init::INIT</code> haelt im fboot einen EInit-Eingang, E_TRIG loest ihn aus.</li>
 </ul>
 <p>Verdrahtung: <code>CLIENT_INIT</code> an <code>Client.INIT</code>, <code>Client.INITO</code> an
 <code>CLIENT_INITO</code>, <code>Client.QO</code> an <code>CLIENT_QO</code>, QI gemeinsam.
