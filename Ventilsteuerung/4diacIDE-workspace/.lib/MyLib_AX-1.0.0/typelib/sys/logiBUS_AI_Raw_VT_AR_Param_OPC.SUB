@@ -2,7 +2,7 @@
 <SubAppType Name="logiBUS_AI_Raw_VT_AR_Param_OPC" Comment="Wie logiBUS_AI_Raw_VT_AR_OPC, aber Hysterese, TimeDelta und TimeRateLimit des AI einstellbar (INI + Web), Wirkung nach Neustart">
 	<Identification Standard="61499-2" Description="Copyright (c) 2026 Meisterschulen am Ostbahnhof  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0">
 	</Identification>
-	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2026-10-30" Remarks="Kopie von logiBUS_AI_Raw_VT_AR_OPC. Franz: Achslenkung pendelt beim Zentrieren - Hysterese 50 Digits (~9 %) groesser als das Null-Fenster +-2 % (~21 Digits). AnalogInput_hysteresis/TimeDelta/TimeRateLimit jetzt je OPC_TO_AR2_OUT (Web) + INI_AR2 (Keys AI_Hysterese/AI_TimeDelta/AI_TimeRateLimit in sSection), Defaults per Parameter. Werden vor logiBUS_AI_IDA.INIT geladen, eine Aenderung wirkt erst nach Neustart (wie FilterTimeS). VT-Rohwertanzeige per AUDI_D_FF_TMIN (500 ms) gedrosselt, AR_OUT/Publish ungedrosselt (Franz: Regelung schnell, Anzeige darf hinterherhinken). Siehe KALIBRIERUNG_Achslenkung_Winkel.md.">
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2026-10-30" Remarks="Kopie von logiBUS_AI_Raw_VT_AR_OPC. Franz: Achslenkung pendelt beim Zentrieren - Hysterese 50 Digits (~9 %) groesser als das Null-Fenster +-2 % (~21 Digits). AnalogInput_hysteresis/TimeDelta/TimeRateLimit jetzt je OPC_TO_AR2_OUT (Web) + INI_AR2 (Keys AI_Hysterese/AI_TimeDelta/AI_TimeRateLimit in sSection), Defaults per Parameter. Werden vor logiBUS_AI_IDA.INIT geladen, eine Aenderung wirkt erst nach Neustart (wie FilterTimeS). INIT-Kette AI -&gt; Q_NumericValue_RAW -&gt; AR_PUBLISH_RAW wie im Original (Franz, 2026-10-30). VT-Rohwertanzeige per AUDI_D_FF_TMIN (500 ms) gedrosselt, AR_OUT/Publish ungedrosselt (Franz: Regelung schnell, Anzeige darf hinterherhinken). Siehe KALIBRIERUNG_Achslenkung_Winkel.md.">
 	</VersionInfo>
 	<CompilerInfo packageName="MyLib::sys">
 		<Import declaration="logiBUS::io::AI::logiBUS_AI"/>
@@ -101,10 +101,10 @@
 			<Connection Source="Par_Hyst.INITO" Destination="Par_TDelta.INIT"/>
 			<Connection Source="Par_TDelta.INITO" Destination="Par_TRate.INIT"/>
 			<Connection Source="Par_TRate.INITO" Destination="logiBUS_AI_IDA.INIT"/>
-			<Connection Source="logiBUS_AI_IDA.INITO" Destination="AR_PUBLISH_RAW.INIT" dx1="4406.67"/>
-			<Connection Source="AR_PUBLISH_RAW.INITO" Destination="Q_NumericValue_RAW.INIT" dx1="80" dx2="80" dy="-200"/>
-			<Connection Source="Q_NumericValue_RAW.INITO" Destination="INITO" dx1="8326.67"/>
-			<Connection Source="Q_NumericValue_RAW.INITO" Destination="AND_QO.REQ" dx1="533.33"/>
+			<Connection Source="logiBUS_AI_IDA.INITO" Destination="Q_NumericValue_RAW.INIT"/>
+			<Connection Source="Q_NumericValue_RAW.INITO" Destination="AR_PUBLISH_RAW.INIT"/>
+			<Connection Source="AR_PUBLISH_RAW.INITO" Destination="INITO"/>
+			<Connection Source="AR_PUBLISH_RAW.INITO" Destination="AND_QO.REQ"/>
 		</EventConnections>
 		<DataConnections>
 			<Connection Source="Input" Destination="logiBUS_AI_IDA.Input" dx1="1460">
