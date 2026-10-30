@@ -22,7 +22,7 @@
 		<FB Name="E_TMIN" Type="iec61499::events::E_TMIN" x="-2700" y="-700">
 			<Parameter Name="Tmin" Value="T#10s"/>
 		</FB>
-		<FB Name="INIT" Type="iec61131::booleanOperators::INIT" x="-5000" y="-900">
+		<FB Name="INIT" Type="init_stages::events::init::INIT" x="-5000" y="-900">
 		</FB>
 		<EventConnections>
 			<Connection Source="E_CYCLE.EO" Destination="E_TMIN.EI" dx1="706.67"/>

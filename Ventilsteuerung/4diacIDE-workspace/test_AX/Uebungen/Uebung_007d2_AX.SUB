@@ -28,7 +28,7 @@
 		<FB Name="AX_D_FF_TMIN" Type="adapter::events::unidirectional::AX_D_FF_TMIN" x="-1300" y="400">
 			<Parameter Name="Tmin" Value="T#3s"/>
 		</FB>
-		<FB Name="INIT" Type="iec61131::booleanOperators::INIT" x="-6600" y="300">
+		<FB Name="INIT" Type="init_stages::events::init::INIT" x="-6600" y="300">
 		</FB>
 		<EventConnections>
 			<Connection Source="INIT.INITO" Destination="INIT.REQ" dx1="80" dx2="80" dy="53.33"/>
