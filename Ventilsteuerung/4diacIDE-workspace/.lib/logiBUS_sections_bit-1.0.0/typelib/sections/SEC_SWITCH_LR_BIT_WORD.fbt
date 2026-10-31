@@ -1,8 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<FBType Name="SEC_SWITCH_LR_DWORD" Comment="Section-Switcher: Teilbreiten von links und von rechts abschalten, bis 32 Sections, Maske als DWORD (ohne ISOBUS-Bezug)">
-	<Identification Standard="61499-2" Description="Copyright (c) 2026 Meisterschulen am Ostbahnhof  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0"/>
-	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2026-10-31" Remarks="initial implementation"/>
-	<CompilerInfo packageName="logiBUS::sections"/>
+<FBType Name="SEC_SWITCH_LR_BIT_WORD" Comment="Section-Switcher: Teilbreiten von links und von rechts abschalten, bis 16 Sections, Maske als WORD (ohne ISOBUS-Bezug)">
+	<Identification Standard="61499-2" Description="Copyright (c) 2026 Meisterschulen am Ostbahnhof  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0">
+	</Identification>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2026-10-31" Remarks="initial implementation">
+	</VersionInfo>
+	<CompilerInfo packageName="logiBUS::sections">
+	</CompilerInfo>
 	<InterfaceList>
 		<EventInputs>
 			<Event Name="INIT" Type="EInit" Comment="Initialisierung, Zaehler auf 0">
@@ -43,14 +46,14 @@
 		</EventOutputs>
 		<InputVars>
 			<VarDeclaration Name="QI" Type="BOOL" Comment="Nur an INIT und REQ: INIT+ aktiv, INIT- deaktiviert (Maske alle frei), REQ- ohne Wirkung" InitialValue="TRUE"/>
-			<VarDeclaration Name="N" Type="UINT" Comment="Anzahl Sections (1..32, groesser wird auf 32 begrenzt)"/>
+			<VarDeclaration Name="N" Type="UINT" Comment="Anzahl Sections (1..16, groesser wird auf 16 begrenzt)"/>
 		</InputVars>
 		<OutputVars>
 			<VarDeclaration Name="QO" Type="BOOL" Comment="TRUE = aktiv und Ereignis ausgefuehrt"/>
 			<VarDeclaration Name="LEFT_OFF" Type="UINT" Comment="Anzahl von links abgeschalteter Sections"/>
 			<VarDeclaration Name="RIGHT_OFF" Type="UINT" Comment="Anzahl von rechts abgeschalteter Sections"/>
 			<VarDeclaration Name="ACTIVE" Type="UINT" Comment="Anzahl freier Sections"/>
-			<VarDeclaration Name="MASK" Type="DWORD" Comment="Maske, ein Bit je Section (1 = frei), Bit 0 = Section 1 (links)"/>
+			<VarDeclaration Name="MASK" Type="WORD" Comment="Maske, ein Bit je Section (1 = frei), Bit 0 = Section 1 (links)"/>
 		</OutputVars>
 	</InterfaceList>
 	<BasicFB>
@@ -116,11 +119,11 @@
 			<ECTransition Source="ST_REQ" Destination="ST_READY" Condition="1" x="3500" y="-1800"/>
 			<ECTransition Source="ST_READY" Destination="ST_REQ_INHIBITED" Condition="REQ[FALSE = QI]" x="3500" y="-1500"/>
 			<ECTransition Source="ST_REQ_INHIBITED" Destination="ST_READY" Condition="1" x="3500" y="-1300"/>
-			<ECTransition Source="ST_READY" Destination="ST_LEFT_INC" Condition="LEFT_OFF_INC[LEFT_OFF + RIGHT_OFF &lt; MIN(N, UINT#32)]" x="3500" y="-1000"/>
+			<ECTransition Source="ST_READY" Destination="ST_LEFT_INC" Condition="LEFT_OFF_INC[LEFT_OFF + RIGHT_OFF &lt; MIN(N, UINT#16)]" x="3500" y="-1000"/>
 			<ECTransition Source="ST_LEFT_INC" Destination="ST_READY" Condition="1" x="3500" y="-800"/>
 			<ECTransition Source="ST_READY" Destination="ST_LEFT_DEC" Condition="LEFT_OFF_DEC[LEFT_OFF &gt; 0]" x="3500" y="-500"/>
 			<ECTransition Source="ST_LEFT_DEC" Destination="ST_READY" Condition="1" x="3500" y="-300"/>
-			<ECTransition Source="ST_READY" Destination="ST_RIGHT_INC" Condition="RIGHT_OFF_INC[LEFT_OFF + RIGHT_OFF &lt; MIN(N, UINT#32)]" x="3500" y="0"/>
+			<ECTransition Source="ST_READY" Destination="ST_RIGHT_INC" Condition="RIGHT_OFF_INC[LEFT_OFF + RIGHT_OFF &lt; MIN(N, UINT#16)]" x="3500" y="0"/>
 			<ECTransition Source="ST_RIGHT_INC" Destination="ST_READY" Condition="1" x="3500" y="200"/>
 			<ECTransition Source="ST_READY" Destination="ST_RIGHT_DEC" Condition="RIGHT_OFF_DEC[RIGHT_OFF &gt; 0]" x="3500" y="500"/>
 			<ECTransition Source="ST_RIGHT_DEC" Destination="ST_READY" Condition="1" x="3500" y="700"/>
@@ -130,70 +133,70 @@
 			<ECTransition Source="ST_ALL_OFF" Destination="ST_READY" Condition="1" x="3500" y="1700"/>
 		</ECC>
 		<Algorithm Name="RESET_ALL">
-			<ST><![CDATA[ALGORITHM RESET_ALL
+			<ST><![CDATA[
 LEFT_OFF := 0;
 RIGHT_OFF := 0;
-END_ALGORITHM]]></ST>
+]]></ST>
 		</Algorithm>
 		<Algorithm Name="LEFT_INC">
-			<ST><![CDATA[ALGORITHM LEFT_INC
+			<ST><![CDATA[
 LEFT_OFF := LEFT_OFF + 1;
-END_ALGORITHM]]></ST>
+]]></ST>
 		</Algorithm>
 		<Algorithm Name="LEFT_DEC">
-			<ST><![CDATA[ALGORITHM LEFT_DEC
+			<ST><![CDATA[
 (* Schutz gegen UINT-Unterlauf, zusaetzlich zur ECC-Bedingung *)
 IF LEFT_OFF > 0 THEN
 	LEFT_OFF := LEFT_OFF - 1;
 END_IF;
-END_ALGORITHM]]></ST>
+]]></ST>
 		</Algorithm>
 		<Algorithm Name="RIGHT_INC">
-			<ST><![CDATA[ALGORITHM RIGHT_INC
+			<ST><![CDATA[
 RIGHT_OFF := RIGHT_OFF + 1;
-END_ALGORITHM]]></ST>
+]]></ST>
 		</Algorithm>
 		<Algorithm Name="RIGHT_DEC">
-			<ST><![CDATA[ALGORITHM RIGHT_DEC
+			<ST><![CDATA[
 (* Schutz gegen UINT-Unterlauf, zusaetzlich zur ECC-Bedingung *)
 IF RIGHT_OFF > 0 THEN
 	RIGHT_OFF := RIGHT_OFF - 1;
 END_IF;
-END_ALGORITHM]]></ST>
+]]></ST>
 		</Algorithm>
 		<Algorithm Name="SET_ALL_OFF">
-			<ST><![CDATA[ALGORITHM SET_ALL_OFF
-LEFT_OFF := MIN(N, UINT#32);
+			<ST><![CDATA[
+LEFT_OFF := MIN(N, UINT#16);
 RIGHT_OFF := 0;
-END_ALGORITHM]]></ST>
+]]></ST>
 		</Algorithm>
 		<Algorithm Name="QO_ON">
-			<ST><![CDATA[ALGORITHM QO_ON
+			<ST><![CDATA[
 QO := TRUE;
-END_ALGORITHM]]></ST>
+]]></ST>
 		</Algorithm>
 		<Algorithm Name="QO_OFF">
-			<ST><![CDATA[ALGORITHM QO_OFF
+			<ST><![CDATA[
 QO := FALSE;
-END_ALGORITHM]]></ST>
+]]></ST>
 		</Algorithm>
 		<Algorithm Name="CALC">
-			<ST><![CDATA[ALGORITHM CALC
+			<ST><![CDATA[
 VAR_TEMP
-	nEff : UINT; // N begrenzt auf 32
+	nEff : UINT; // N begrenzt auf 16
 	lastOn : UINT; // letzte freie Section
 END_VAR
-(* 1. Begrenzung auf gueltigen Bereich 0..32 *)
-nEff := MIN(N, UINT#32);
+(* 1. Begrenzung auf gueltigen Bereich 0..16 *)
+nEff := MIN(N, UINT#16);
 LEFT_OFF := MIN(LEFT_OFF, nEff);
 RIGHT_OFF := MIN(RIGHT_OFF, nEff - LEFT_OFF);
 (* 2. Aktive Sections berechnen *)
 lastOn := nEff - RIGHT_OFF;
 ACTIVE := lastOn - LEFT_OFF;
-(* 3. Bitmaske ohne Schleife: ACTIVE Einsen (Zwischenwert LWORD, damit auch
-   Schieben um 32 definiert ist), um LEFT_OFF nach links geschoben *)
-MASK := LWORD_TO_DWORD(SHL(NOT SHL(LWORD#16#FFFFFFFFFFFFFFFF, ACTIVE), LEFT_OFF));
-END_ALGORITHM]]></ST>
+(* 3. Bitmaske ohne Schleife: ACTIVE Einsen (Zwischenwert DWORD, damit auch
+   Schieben um 16 definiert ist), um LEFT_OFF nach links geschoben *)
+MASK := DWORD_TO_WORD(SHL(NOT SHL(DWORD#16#FFFFFFFF, ACTIVE), LEFT_OFF));
+]]></ST>
 		</Algorithm>
 	</BasicFB>
 	<Service RightInterface="SWITCHER" LeftInterface="APPLICATION" Comment="QI wirkt nur an INIT und REQ (INIT+/INIT-, REQ+/REQ-). Tasten, ALL_ON und ALL_OFF wirken im aktiven Zustand ohne QI.">

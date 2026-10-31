@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<FBType Name="SEC_SWITCH_LR_LWORD" Comment="Section-Switcher: Teilbreiten von links und von rechts abschalten, bis 64 Sections, Maske als LWORD (ohne ISOBUS-Bezug)">
+<FBType Name="SEC_SWITCH_LR_BIT_DWORD" Comment="Section-Switcher: Teilbreiten von links und von rechts abschalten, bis 32 Sections, Maske als DWORD (ohne ISOBUS-Bezug)">
 	<Identification Standard="61499-2" Description="Copyright (c) 2026 Meisterschulen am Ostbahnhof  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0"/>
 	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2026-10-31" Remarks="initial implementation"/>
 	<CompilerInfo packageName="logiBUS::sections"/>
@@ -43,14 +43,14 @@
 		</EventOutputs>
 		<InputVars>
 			<VarDeclaration Name="QI" Type="BOOL" Comment="Nur an INIT und REQ: INIT+ aktiv, INIT- deaktiviert (Maske alle frei), REQ- ohne Wirkung" InitialValue="TRUE"/>
-			<VarDeclaration Name="N" Type="UINT" Comment="Anzahl Sections (1..64, groesser wird auf 64 begrenzt)"/>
+			<VarDeclaration Name="N" Type="UINT" Comment="Anzahl Sections (1..32, groesser wird auf 32 begrenzt)"/>
 		</InputVars>
 		<OutputVars>
 			<VarDeclaration Name="QO" Type="BOOL" Comment="TRUE = aktiv und Ereignis ausgefuehrt"/>
 			<VarDeclaration Name="LEFT_OFF" Type="UINT" Comment="Anzahl von links abgeschalteter Sections"/>
 			<VarDeclaration Name="RIGHT_OFF" Type="UINT" Comment="Anzahl von rechts abgeschalteter Sections"/>
 			<VarDeclaration Name="ACTIVE" Type="UINT" Comment="Anzahl freier Sections"/>
-			<VarDeclaration Name="MASK" Type="LWORD" Comment="Maske, ein Bit je Section (1 = frei), Bit 0 = Section 1 (links)"/>
+			<VarDeclaration Name="MASK" Type="DWORD" Comment="Maske, ein Bit je Section (1 = frei), Bit 0 = Section 1 (links)"/>
 		</OutputVars>
 	</InterfaceList>
 	<BasicFB>
@@ -116,11 +116,11 @@
 			<ECTransition Source="ST_REQ" Destination="ST_READY" Condition="1" x="3500" y="-1800"/>
 			<ECTransition Source="ST_READY" Destination="ST_REQ_INHIBITED" Condition="REQ[FALSE = QI]" x="3500" y="-1500"/>
 			<ECTransition Source="ST_REQ_INHIBITED" Destination="ST_READY" Condition="1" x="3500" y="-1300"/>
-			<ECTransition Source="ST_READY" Destination="ST_LEFT_INC" Condition="LEFT_OFF_INC[LEFT_OFF + RIGHT_OFF &lt; MIN(N, UINT#64)]" x="3500" y="-1000"/>
+			<ECTransition Source="ST_READY" Destination="ST_LEFT_INC" Condition="LEFT_OFF_INC[LEFT_OFF + RIGHT_OFF &lt; MIN(N, UINT#32)]" x="3500" y="-1000"/>
 			<ECTransition Source="ST_LEFT_INC" Destination="ST_READY" Condition="1" x="3500" y="-800"/>
 			<ECTransition Source="ST_READY" Destination="ST_LEFT_DEC" Condition="LEFT_OFF_DEC[LEFT_OFF &gt; 0]" x="3500" y="-500"/>
 			<ECTransition Source="ST_LEFT_DEC" Destination="ST_READY" Condition="1" x="3500" y="-300"/>
-			<ECTransition Source="ST_READY" Destination="ST_RIGHT_INC" Condition="RIGHT_OFF_INC[LEFT_OFF + RIGHT_OFF &lt; MIN(N, UINT#64)]" x="3500" y="0"/>
+			<ECTransition Source="ST_READY" Destination="ST_RIGHT_INC" Condition="RIGHT_OFF_INC[LEFT_OFF + RIGHT_OFF &lt; MIN(N, UINT#32)]" x="3500" y="0"/>
 			<ECTransition Source="ST_RIGHT_INC" Destination="ST_READY" Condition="1" x="3500" y="200"/>
 			<ECTransition Source="ST_READY" Destination="ST_RIGHT_DEC" Condition="RIGHT_OFF_DEC[RIGHT_OFF &gt; 0]" x="3500" y="500"/>
 			<ECTransition Source="ST_RIGHT_DEC" Destination="ST_READY" Condition="1" x="3500" y="700"/>
@@ -163,7 +163,7 @@ END_ALGORITHM]]></ST>
 		</Algorithm>
 		<Algorithm Name="SET_ALL_OFF">
 			<ST><![CDATA[ALGORITHM SET_ALL_OFF
-LEFT_OFF := MIN(N, UINT#64);
+LEFT_OFF := MIN(N, UINT#32);
 RIGHT_OFF := 0;
 END_ALGORITHM]]></ST>
 		</Algorithm>
@@ -180,23 +180,19 @@ END_ALGORITHM]]></ST>
 		<Algorithm Name="CALC">
 			<ST><![CDATA[ALGORITHM CALC
 VAR_TEMP
-	nEff : UINT; // N begrenzt auf 64
+	nEff : UINT; // N begrenzt auf 32
 	lastOn : UINT; // letzte freie Section
 END_VAR
-(* 1. Begrenzung auf gueltigen Bereich 0..64 *)
-nEff := MIN(N, UINT#64);
+(* 1. Begrenzung auf gueltigen Bereich 0..32 *)
+nEff := MIN(N, UINT#32);
 LEFT_OFF := MIN(LEFT_OFF, nEff);
 RIGHT_OFF := MIN(RIGHT_OFF, nEff - LEFT_OFF);
 (* 2. Aktive Sections berechnen *)
 lastOn := nEff - RIGHT_OFF;
 ACTIVE := lastOn - LEFT_OFF;
-(* 3. Bitmaske ohne Schleife: ACTIVE Einsen, um LEFT_OFF nach links geschoben.
-   Schieben um 64 ist nicht definiert, deshalb Sonderfall alle an *)
-IF ACTIVE >= UINT#64 THEN
-	MASK := LWORD#16#FFFFFFFFFFFFFFFF;
-ELSE
-	MASK := SHL(NOT SHL(LWORD#16#FFFFFFFFFFFFFFFF, ACTIVE), LEFT_OFF);
-END_IF;
+(* 3. Bitmaske ohne Schleife: ACTIVE Einsen (Zwischenwert LWORD, damit auch
+   Schieben um 32 definiert ist), um LEFT_OFF nach links geschoben *)
+MASK := LWORD_TO_DWORD(SHL(NOT SHL(LWORD#16#FFFFFFFFFFFFFFFF, ACTIVE), LEFT_OFF));
 END_ALGORITHM]]></ST>
 		</Algorithm>
 	</BasicFB>
