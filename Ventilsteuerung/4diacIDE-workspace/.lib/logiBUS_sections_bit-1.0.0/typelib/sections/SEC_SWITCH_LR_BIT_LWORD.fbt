@@ -2,6 +2,7 @@
 <FBType Name="SEC_SWITCH_LR_BIT_LWORD" Comment="Section-Switcher: Teilbreiten von links und von rechts abschalten, bis 64 Sections, Maske als LWORD (ohne ISOBUS-Bezug)">
 	<Identification Standard="61499-2" Description="Copyright (c) 2026 Meisterschulen am Ostbahnhof  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0"/>
 	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2026-10-31" Remarks="initial implementation"/>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.1" Author="Franz Höpfinger" Date="2026-11-01" Remarks="Alle aus und eigener Zaehler 0: LEFT/RIGHT_OFF_DEC uebernimmt zuerst alle abgeschalteten Sections (nach ALL_OFF schaltet Links_Ein von rechts, Rechts_Ein von links zu)"/>
 	<CompilerInfo packageName="logiBUS::sections"/>
 	<InterfaceList>
 		<EventInputs>
@@ -118,11 +119,11 @@
 			<ECTransition Source="ST_REQ_INHIBITED" Destination="ST_READY" Condition="1" x="3500" y="-1300"/>
 			<ECTransition Source="ST_READY" Destination="ST_LEFT_INC" Condition="LEFT_OFF_INC[LEFT_OFF + RIGHT_OFF &lt; MIN(N, UINT#64)]" x="3500" y="-1000"/>
 			<ECTransition Source="ST_LEFT_INC" Destination="ST_READY" Condition="1" x="3500" y="-800"/>
-			<ECTransition Source="ST_READY" Destination="ST_LEFT_DEC" Condition="LEFT_OFF_DEC[LEFT_OFF &gt; 0]" x="3500" y="-500"/>
+			<ECTransition Source="ST_READY" Destination="ST_LEFT_DEC" Condition="LEFT_OFF_DEC[(LEFT_OFF &gt; 0) OR ((RIGHT_OFF &gt; 0) AND (LEFT_OFF + RIGHT_OFF &gt;= MIN(N, UINT#64)))]" x="3500" y="-500"/>
 			<ECTransition Source="ST_LEFT_DEC" Destination="ST_READY" Condition="1" x="3500" y="-300"/>
 			<ECTransition Source="ST_READY" Destination="ST_RIGHT_INC" Condition="RIGHT_OFF_INC[LEFT_OFF + RIGHT_OFF &lt; MIN(N, UINT#64)]" x="3500" y="0"/>
 			<ECTransition Source="ST_RIGHT_INC" Destination="ST_READY" Condition="1" x="3500" y="200"/>
-			<ECTransition Source="ST_READY" Destination="ST_RIGHT_DEC" Condition="RIGHT_OFF_DEC[RIGHT_OFF &gt; 0]" x="3500" y="500"/>
+			<ECTransition Source="ST_READY" Destination="ST_RIGHT_DEC" Condition="RIGHT_OFF_DEC[(RIGHT_OFF &gt; 0) OR ((LEFT_OFF &gt; 0) AND (RIGHT_OFF + LEFT_OFF &gt;= MIN(N, UINT#64)))]" x="3500" y="500"/>
 			<ECTransition Source="ST_RIGHT_DEC" Destination="ST_READY" Condition="1" x="3500" y="700"/>
 			<ECTransition Source="ST_READY" Destination="ST_ALL_ON" Condition="ALL_ON" x="3500" y="1000"/>
 			<ECTransition Source="ST_ALL_ON" Destination="ST_READY" Condition="1" x="3500" y="1200"/>
@@ -142,6 +143,12 @@ END_ALGORITHM]]></ST>
 		</Algorithm>
 		<Algorithm Name="LEFT_DEC">
 			<ST><![CDATA[ALGORITHM LEFT_DEC
+(* Alle aus und eigener Zaehler 0: diese Seite uebernimmt zuerst alle
+   abgeschalteten Sections, damit beide Seiten nach ALL_OFF zuschalten *)
+IF (LEFT_OFF = 0) AND (RIGHT_OFF > 0) AND (LEFT_OFF + RIGHT_OFF >= MIN(N, UINT#64)) THEN
+	LEFT_OFF := RIGHT_OFF;
+	RIGHT_OFF := 0;
+END_IF;
 (* Schutz gegen UINT-Unterlauf, zusaetzlich zur ECC-Bedingung *)
 IF LEFT_OFF > 0 THEN
 	LEFT_OFF := LEFT_OFF - 1;
@@ -155,6 +162,12 @@ END_ALGORITHM]]></ST>
 		</Algorithm>
 		<Algorithm Name="RIGHT_DEC">
 			<ST><![CDATA[ALGORITHM RIGHT_DEC
+(* Alle aus und eigener Zaehler 0: diese Seite uebernimmt zuerst alle
+   abgeschalteten Sections, damit beide Seiten nach ALL_OFF zuschalten *)
+IF (RIGHT_OFF = 0) AND (LEFT_OFF > 0) AND (RIGHT_OFF + LEFT_OFF >= MIN(N, UINT#64)) THEN
+	RIGHT_OFF := LEFT_OFF;
+	LEFT_OFF := 0;
+END_IF;
 (* Schutz gegen UINT-Unterlauf, zusaetzlich zur ECC-Bedingung *)
 IF RIGHT_OFF > 0 THEN
 	RIGHT_OFF := RIGHT_OFF - 1;
@@ -286,6 +299,18 @@ END_ALGORITHM]]></ST>
 		<ServiceSequence Name="event_before_initialization" Comment="REQ, Tasten, ALL_ON/ALL_OFF vor INIT+ bzw. nach INIT-: keine Reaktion">
 			<ServiceTransaction>
 				<InputPrimitive Interface="APPLICATION" Event="REQ"/>
+			</ServiceTransaction>
+		</ServiceSequence>
+		<ServiceSequence Name="left_on_after_all_off" Comment="Nach ALL_OFF: LEFT_OFF_DEC schaltet die rechte Section N zu, dann N-1 ...">
+			<ServiceTransaction>
+				<InputPrimitive Interface="APPLICATION" Event="LEFT_OFF_DEC"/>
+				<OutputPrimitive Interface="APPLICATION" Event="CNF+" Parameters="LEFT_OFF,RIGHT_OFF,ACTIVE,MASK"/>
+			</ServiceTransaction>
+		</ServiceSequence>
+		<ServiceSequence Name="right_on_after_all_off" Comment="Nach ALL_OFF: RIGHT_OFF_DEC schaltet die linke Section 1 zu, dann 2 ...">
+			<ServiceTransaction>
+				<InputPrimitive Interface="APPLICATION" Event="RIGHT_OFF_DEC"/>
+				<OutputPrimitive Interface="APPLICATION" Event="CNF+" Parameters="LEFT_OFF,RIGHT_OFF,ACTIVE,MASK"/>
 			</ServiceTransaction>
 		</ServiceSequence>
 	</Service>
