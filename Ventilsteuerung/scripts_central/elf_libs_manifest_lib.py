@@ -286,6 +286,17 @@ TYPE_NAME_TO_LIB = {
     "QUARTER_TO_STR_STATUS": "quarter",
     "SchieberControl": "logiBUS_schieber",
     "SchieberVerriegelung": "logiBUS_schieber",
+    # logiBUS::sections: beide Libs teilen sich das Package, Zuordnung je Typ
+    "SEC_SWITCH_LR_BIT": "logiBUS_sections_bit",
+    "SEC_SWITCH_LR_BIT_WORD": "logiBUS_sections_bit",
+    "SEC_SWITCH_LR_BIT_DWORD": "logiBUS_sections_bit",
+    "SEC_SWITCH_LR_BIT_LWORD": "logiBUS_sections_bit",
+    "SEC_SWITCH_LR_QUARTER": "logiBUS_sections_quarter",
+    "SEC_SWITCH_LR_QUARTER_WORD": "logiBUS_sections_quarter",
+    "SEC_SWITCH_LR_QUARTER_DWORD": "logiBUS_sections_quarter",
+    "SEC_SWITCH_LR_QUARTER_LWORD": "logiBUS_sections_quarter",
+    "SEC_MASK_QUARTER_CMD": "logiBUS_sections_quarter",
+    "SEC_MASK_QUARTER_ACT": "logiBUS_sections_quarter",
 }
 
 # Lib-Version, die aktuell als ELF gebaut/erwartet wird. 1:1 aus
@@ -330,6 +341,8 @@ LIB_VERSIONS = {
     "logiBUS_io": "3.0.0",
     "logiBUS_safety": "3.0.0",
     "logiBUS_schieber": "3.0.0",
+    "logiBUS_sections_bit": "1.0.0",
+    "logiBUS_sections_quarter": "1.0.0",
     "logiBUS_signalprocessing": "3.0.0",
     "logiBUS_signalprocessing_adapter": "3.0.0",
     "logiBUS_storage": "3.0.0",
@@ -384,6 +397,8 @@ LIB_DIR_NAME = {
     "logiBUS_io": "logiBUS_io-3.0.0",
     "logiBUS_safety": "logiBUS_safety-3.0.0",
     "logiBUS_schieber": "logiBUS_schieber-3.0.0",
+    "logiBUS_sections_bit": "logiBUS_sections_bit-1.0.0",
+    "logiBUS_sections_quarter": "logiBUS_sections_quarter-1.0.0",
     "logiBUS_signalprocessing": "logiBUS_signalprocessing-3.0.0",
     "logiBUS_signalprocessing_adapter": "logiBUS_signalprocessing_adapter-3.0.0",
     "logiBUS_storage": "logiBUS_storage-3.0.0",
