@@ -67,6 +67,9 @@ PRELOAD_LIBS: list[str] = [
     # und FIELDBUS_PERCENT_TO_WORD (signalprocessing) -> UNSUPPORTED_TYPE.
     "logiBUS_signalprocessing",
     "signalprocessing",
+    # Online-Deploy Button_AI_OPC_UA 2026-11-04: events::init::INIT (init_stages)
+    # -> UNSUPPORTED_TYPE; steckt in MyLib_AX SystemTick und Remote_Init_Retry.
+    "init_stages",
 ]
 
 # Nie vorab laden: das Board "Trainer" hat keinen CAN2 (Funk, DataPanel,
