@@ -63,6 +63,10 @@ PRELOAD_LIBS: list[str] = [
     # .lib/, die der Nutzungs-Scan nicht mitgezaehlt hat.
     "net_adapter",
     "adapter_iec61131-3",
+    # Online-Deploy Servo_Slider_OPC 2026-11-04: F_ClampReal (logiBUS_signalprocessing)
+    # und FIELDBUS_PERCENT_TO_WORD (signalprocessing) -> UNSUPPORTED_TYPE.
+    "logiBUS_signalprocessing",
+    "signalprocessing",
 ]
 
 # Nie vorab laden: das Board "Trainer" hat keinen CAN2 (Funk, DataPanel,
