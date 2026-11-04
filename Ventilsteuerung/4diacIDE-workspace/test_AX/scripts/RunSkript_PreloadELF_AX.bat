@@ -9,5 +9,5 @@
 cd /d "%~dp0"
 
 echo === Spiele ELF-Grundausstattung auf Trainings-Knoten auf (make_4diac_training1_elf_preload.py) ===
-python ../../../scripts_central/make_4diac_training1_elf_preload.py < NUL
+python ../../../scripts_central/make_4diac_training1_elf_preload.py %* < NUL
 if errorlevel 1 exit /b 1
