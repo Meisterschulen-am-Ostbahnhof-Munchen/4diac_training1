@@ -108,7 +108,7 @@ const points: { key: Point; idx: number }[] = [
   { key: 'MAX', idx: 2 },
 ]
 
-const endpointUrl = ref(`ws://${window.location.hostname || 'localhost'}:4841`)
+const endpointUrl = ref(`ws://${window.location.hostname || 'logibus.local'}:4841`)
 const status = ref('Getrennt')
 const connected = ref(false)
 
