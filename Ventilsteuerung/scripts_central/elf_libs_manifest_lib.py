@@ -33,9 +33,12 @@ if (_SCRIPT_DIR.parent / "4diacIDE-workspace").is_dir():
 else:
     VENTILSTEUERUNG_DIR = _SCRIPT_DIR
 
-# Architektur je Knoten - UNBESTAETIGTER PLATZHALTER (ausser 192.168.178.55).
+# Architektur je Knoten (von Franz bestaetigt). Unbekannte IPs: siehe
+# DEFAULT_ARCH im Preload-Skript; das Bootfile-Deploy ueberspringt sie.
 NODE_ARCH = {
     "192.168.178.55": "riscv32",
+    "192.168.1.11": "riscv32",
+    "192.168.4.1": "xtensa",
 }
 
 # forte_abi: von Hand erhoehte Nummer, wenn sich FORTE-Basisklassen aendern.
