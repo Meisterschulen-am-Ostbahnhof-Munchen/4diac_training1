@@ -71,6 +71,9 @@ PRELOAD_LIBS: list[str] = [
     # Online-Deploy Button_AI_OPC_UA 2026-11-04: events::init::INIT (init_stages)
     # -> UNSUPPORTED_TYPE; steckt in MyLib_AX SystemTick und Remote_Init_Retry.
     "init_stages",
+    # Servo_AI4_Calibrate_OPC 2026-11-04: INI_AR2 (logiBUS_storage) in
+    # MyLib_AX logiBUS_AI_Calibrate_3P_OPC (INI-Persistenz der Kalibrierpunkte).
+    "logiBUS_storage",
 ]
 
 # Nie vorab laden: das Board "Trainer" hat keinen CAN2 (Funk, DataPanel,
