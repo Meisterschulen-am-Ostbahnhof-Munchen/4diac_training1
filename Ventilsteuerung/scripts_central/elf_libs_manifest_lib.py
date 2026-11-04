@@ -37,6 +37,7 @@ else:
 # DEFAULT_ARCH im Preload-Skript; das Bootfile-Deploy ueberspringt sie.
 NODE_ARCH = {
     "192.168.178.55": "riscv32",
+    "192.168.178.54": "riscv32",
     "192.168.1.11": "riscv32",
     "192.168.4.1": "xtensa",
 }
