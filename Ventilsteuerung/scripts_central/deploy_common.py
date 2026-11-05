@@ -74,6 +74,10 @@ PRELOAD_LIBS: list[str] = [
     # Servo_AI4_Calibrate_OPC 2026-11-04: INI_AR2 (logiBUS_storage) in
     # MyLib_AX logiBUS_AI_Calibrate_3P_OPC (INI-Persistenz der Kalibrierpunkte).
     "logiBUS_storage",
+    # Online-Deploy Uebung_251 2026-11-05: SEC_SWITCH_LR_BIT_WORD -> UNSUPPORTED_TYPE;
+    # Uebung_253 nutzt SEC_SWITCH_LR_QUARTER_WORD.
+    "logiBUS_sections_bit",
+    "logiBUS_sections_quarter",
 ]
 
 # Nie vorab laden: das Board "Trainer" hat keinen CAN2 (Funk, DataPanel,
