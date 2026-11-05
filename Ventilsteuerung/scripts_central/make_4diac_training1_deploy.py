@@ -32,10 +32,10 @@ from typing import Optional
 from deploy_common import NODE_BASES, NODE_ORDER, REPO_PATHS, preload_libs_with_requires, resolve_local_path
 from elf_libs_manifest_lib import (
     LIB_VERSIONS,
-    NODE_ARCH,
     ManifestResult,
     build_libs_manifest,
     resolve_elf_path,
+    resolve_node_arch,
     resolve_required_libs,
     sha256_of,
 )
@@ -391,9 +391,10 @@ def main() -> int:
         # dieser Teil fuer den Knoten uebersprungen - der normale fboot-
         # Upload oben ist davon unberuehrt.
         if node_ok and ENABLE_ELF_LIBS and node_fboot_file is not None:
-            arch = NODE_ARCH.get(ip)
+            arch = resolve_node_arch(ip)
             if not arch:
-                print(f"  WARNUNG: Keine Architektur fuer {ip} in NODE_ARCH hinterlegt - ELF-Manifest uebersprungen.")
+                print(f"  FEHLER: Architektur/FORTE_ABI fuer {ip} nicht passend oder unbekannt - ELF-Manifest NICHT angelegt.")
+                node_ok = False
             else:
                 required_libs = resolve_required_libs(node_fboot_file)
                 manifest_name = f"{node_fboot_file.stem}.libs.json"

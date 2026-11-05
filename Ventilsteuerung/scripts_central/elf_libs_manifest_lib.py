@@ -15,6 +15,7 @@ uebernommen, nicht neu hergeleitet.
 from __future__ import annotations
 
 import hashlib
+import http.client
 import json
 import os
 import re
@@ -33,8 +34,10 @@ if (_SCRIPT_DIR.parent / "4diacIDE-workspace").is_dir():
 else:
     VENTILSTEUERUNG_DIR = _SCRIPT_DIR
 
-# Architektur je Knoten (von Franz bestaetigt). Unbekannte IPs: siehe
-# DEFAULT_ARCH im Preload-Skript; das Bootfile-Deploy ueberspringt sie.
+# Architektur je Knoten (von Franz bestaetigt). Nur noch Rueckfall fuer
+# Firmware ohne GET /deviceinfo/ (siehe resolve_node_arch) und fuer das rein
+# lokale make_libs_manifest.py. Unbekannte IPs: siehe DEFAULT_ARCH im
+# Preload-Skript; das Bootfile-Deploy ueberspringt sie.
 NODE_ARCH = {
     "192.168.178.55": "riscv32",
     "192.168.178.45": "riscv32",
@@ -45,6 +48,68 @@ NODE_ARCH = {
 
 # forte_abi: von Hand erhoehte Nummer, wenn sich FORTE-Basisklassen aendern.
 FORTE_ABI = 6
+
+
+def query_device_info(ip: str, timeout: float = 5) -> Optional[dict]:
+    """GET /deviceinfo/ (Firmware LOGIBUS_integration_datapanel, JSON mit app,
+    bootloader, chip, flash, psram, heap, elf_libs, ...). None, wenn der
+    Knoten nicht antwortet, die Firmware den Endpunkt noch nicht hat (404)
+    oder die Antwort kein JSON-Objekt ist."""
+    conn = http.client.HTTPConnection(ip, timeout=timeout)
+    try:
+        conn.request("GET", "/deviceinfo/")
+        resp = conn.getresponse()
+        body = resp.read()
+        if resp.status != 200:
+            return None
+        info = json.loads(body.decode("utf-8"))
+        return info if isinstance(info, dict) else None
+    except (OSError, ValueError):
+        return None
+    finally:
+        conn.close()
+
+
+def resolve_node_arch(ip: str, fallback: Optional[str] = None) -> Optional[str]:
+    """Architektur der ELF-Libs fuer einen Knoten, vom Geraet selbst
+    (GET /deviceinfo/, elf_libs.arch). Meldet das Geraet eine andere
+    FORTE_ABI als FORTE_ABI oben, keine Host-Symboltabelle oder keine
+    Architektur, ist das ein Fehler: None, die ELFs wuerden dort nicht laden.
+
+    Ohne /deviceinfo/ (aeltere Firmware, Knoten nicht erreichbar) gilt
+    NODE_ARCH, sonst fallback - mit Warnung, weil das nur geraten ist."""
+    info = query_device_info(ip)
+    if info is None:
+        arch = NODE_ARCH.get(ip, fallback)
+        if arch:
+            print(f"  WARNUNG: {ip} liefert kein /deviceinfo/ (aeltere Firmware?) - Architektur {arch} aus NODE_ARCH/Default angenommen.")
+        else:
+            print(f"  FEHLER: {ip} liefert kein /deviceinfo/ und steht nicht in NODE_ARCH - Architektur unbekannt.")
+        return arch
+
+    elf = info.get("elf_libs")
+    if not isinstance(elf, dict) or not elf.get("supported"):
+        print(f"  FEHLER: Firmware auf {ip} hat keinen ELF-Loader.")
+        return None
+    arch = elf.get("arch")
+    abi = elf.get("forte_abi")
+    if not arch or arch == "none":
+        print(f"  FEHLER: Firmware auf {ip} meldet keine ELF-Architektur.")
+        return None
+    if not elf.get("host_table"):
+        print(f"  FEHLER: Firmware auf {ip} hat keine Host-Symboltabelle fuer {arch} - ELFs koennen dort nicht laden.")
+        return None
+    if abi != FORTE_ABI:
+        print(f"  FEHLER: Firmware auf {ip} hat FORTE_ABI {abi}, die ELFs sind fuer FORTE_ABI {FORTE_ABI} gebaut - Firmware oder ELFs passen nicht zusammen.")
+        return None
+
+    app = info.get("app") if isinstance(info.get("app"), dict) else {}
+    chip = info.get("chip") if isinstance(info.get("chip"), dict) else {}
+    print(f"  Geraet: {chip.get('model', '?')} ({chip.get('target', '?')}), Firmware {app.get('version', '?')}, {arch}, FORTE_ABI {abi}")
+    known = NODE_ARCH.get(ip)
+    if known and known != arch:
+        print(f"  HINWEIS: NODE_ARCH nennt fuer {ip} {known}, das Geraet meldet {arch} - es gilt das Geraet.")
+    return arch
 
 # Namensraum-Praefix -> Lib-Name. 1:1 aus elf_libs_manifest_lib.sh
 # uebernommen (siehe dort fuer die ausfuehrliche Begruendung der
