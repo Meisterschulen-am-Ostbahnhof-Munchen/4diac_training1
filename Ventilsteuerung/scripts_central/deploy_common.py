@@ -4,7 +4,7 @@
 make_4diac_training1_deploy.py (Upload) UND make_libs_manifest.py (lokale
 Manifest-Erzeugung, kein Upload). Python-Portierung von deploy_common.sh.
 
-IP-Zuordnung: NUR AX ist aktuell bekannt (192.168.178.55, von Franz genannt
+IP-Zuordnung: NUR AX ist aktuell bekannt (192.168.178.45, seit 2026-11-04; vorher .55, von Franz genannt
 2026-10-09). B-Station-IP ist noch nicht bekannt - sobald Franz sie nennt,
 hier ergaenzen.
 """
@@ -26,7 +26,8 @@ else:
     VENTILSTEUERUNG_DIR = _SCRIPT_DIR
 
 NODE_BASES: dict[str, list[str]] = {
-    "192.168.178.55": ["test_AX_FORTE_PC_AX.fboot"],
+    # Franz, 2026-11-04: neuer AX-Knoten 192.168.178.45 (C_45), ersetzt .55
+    "192.168.178.45": ["test_AX_FORTE_PC_AX.fboot"],
     # "<B-IP-noch-unbekannt>": ["test_B_FORTE_PC_B.fboot"],
 }
 
@@ -35,7 +36,7 @@ REPO_PATHS: dict[str, str] = {
     "test_B_FORTE_PC_B.fboot": "boot-files/test_B_FORTE_PC_B.fboot",
 }
 
-NODE_ORDER: list[str] = ["192.168.178.55"]
+NODE_ORDER: list[str] = ["192.168.178.45"]
 
 # Grundausstattung an ELF-Libs, die make_4diac_training1_elf_preload.py OHNE
 # Bootfile/Manifest vorab nach /data/elf-libs/ spielt und die das normale
@@ -63,6 +64,16 @@ PRELOAD_LIBS: list[str] = [
     # .lib/, die der Nutzungs-Scan nicht mitgezaehlt hat.
     "net_adapter",
     "adapter_iec61131-3",
+    # Online-Deploy Servo_Slider_OPC 2026-11-04: F_ClampReal (logiBUS_signalprocessing)
+    # und FIELDBUS_PERCENT_TO_WORD (signalprocessing) -> UNSUPPORTED_TYPE.
+    "logiBUS_signalprocessing",
+    "signalprocessing",
+    # Online-Deploy Button_AI_OPC_UA 2026-11-04: events::init::INIT (init_stages)
+    # -> UNSUPPORTED_TYPE; steckt in MyLib_AX SystemTick und Remote_Init_Retry.
+    "init_stages",
+    # Servo_AI4_Calibrate_OPC 2026-11-04: INI_AR2 (logiBUS_storage) in
+    # MyLib_AX logiBUS_AI_Calibrate_3P_OPC (INI-Persistenz der Kalibrierpunkte).
+    "logiBUS_storage",
 ]
 
 # Nie vorab laden: das Board "Trainer" hat keinen CAN2 (Funk, DataPanel,

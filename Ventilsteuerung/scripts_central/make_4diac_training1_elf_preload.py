@@ -14,7 +14,7 @@ ersetzt das Grundausstattungs-Manifest durch sein eigenes; die ELFs der
 Grundausstattung bleiben dabei liegen und werden per Hash uebersprungen.
 
 Aufruf:
-    python make_4diac_training1_elf_preload.py            (alle Knoten aus NODE_ORDER)
+    python make_4diac_training1_elf_preload.py            (DEFAULT_NODES: logibus.local per mDNS)
     python make_4diac_training1_elf_preload.py 192.168.178.55 192.168.178.56
 
 Alte Versionen derselben Lib in elf-libs/ bleiben liegen (harmlos, das
@@ -27,7 +27,7 @@ import sys
 import tempfile
 from pathlib import Path
 
-from deploy_common import NODE_ORDER, preload_libs_with_requires
+from deploy_common import preload_libs_with_requires
 from elf_libs_manifest_lib import LIB_VERSIONS, NODE_ARCH, build_libs_manifest, resolve_elf_path, sha256_of
 from make_4diac_training1_deploy import (
     _FBOOT_HREF_RE,
@@ -46,6 +46,12 @@ from make_4diac_training1_deploy import (
 DEFAULT_ARCH = "riscv32"
 
 PRELOAD_MANIFEST_NAME = "elf_grundausstattung.libs.json"
+
+# Ohne Argument (Franz, 2026-11-04): Trainings-Platinen haengen per Link-Local
+# (169.254.x.x, je Platine aus der MAC abgeleitet, also wechselnd) am PC und
+# melden sich per mDNS als logibus.local - so passt der Default fuer jede
+# Platine. Nur eine Platine gleichzeitig anschliessen (gleicher Hostname).
+DEFAULT_NODES: list[str] = ["logibus.local"]
 
 
 def preload_node(ip: str, libs: list[str]) -> bool:
@@ -126,7 +132,7 @@ def preload_node(ip: str, libs: list[str]) -> bool:
 
 
 def main(argv: list[str]) -> int:
-    ips = argv or NODE_ORDER
+    ips = argv or DEFAULT_NODES
     libs = preload_libs_with_requires()
     print(f"Grundausstattung ({len(libs)} Libs): {' '.join(libs)}")
 

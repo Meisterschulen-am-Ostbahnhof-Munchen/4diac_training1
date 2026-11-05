@@ -122,6 +122,7 @@ showed by example which comment forms the IDE keeps:
 |---|---|
 | `// text` at the end of a constant's line | that constant's XML `Comment="text"` |
 | `(* ... *)` block above a constant | kept in `<OriginalSource>` only — room for longer explanations |
+| `(* ... *)` at the END of a constant's line | becomes the `Comment=` of the NEXT constant — every comment shifts by one (confirmed 2026-11-04, `logiBUS_stations/Computers.gcf`); use `// ...` instead |
 | `(* ... *)` / `// ...` before `PACKAGE`, before `GLOBALCONSTANTS`, at the end | kept in `<OriginalSource>` only (file header) |
 
 Rules that follow from this:
