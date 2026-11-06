@@ -208,7 +208,7 @@ Default-Werte, Übungen bleiben gültig):
 | Eingang | Typ | Default | Wann gelesen | Bedeutung |
 |---|---|---|---|---|
 | `FREQ` | UDINT | 400 | INIT | PWM-Frequenz in Hz. Ausgänge mit gleicher Frequenz teilen einen Timer. |
-| `RAMP` | TIME | T#0ms | INIT und REQ | Übergangszeit zum neuen Wert, T#0ms = Sprung |
+| `RAMP` | TIME | T#0ms | INIT und REQ (`QDA`: nur INIT) | Übergangszeit zum neuen Wert, T#0ms = Sprung. Beim `QDA` kommt der Wert über den Adapter, die Eingänge des Composite werden nur bei INIT übernommen. |
 | `OUT` | DWORD / Adapter AD | – | REQ | Tastgrad 0..8191 wie bisher |
 
 **Frequenzausgang** – neu `logiBUS_QD_FREQ` / `logiBUS_QDA_FREQ`, Tastgrad fest 50 %:
@@ -470,6 +470,21 @@ Sperre über die Board-Tabelle. Wo das Signal abgegriffen wird, verantwortet der
 3. Frequenzausgang `logiBUS_QD_FREQ`/`QDA_FREQ` (Typ + Handle).
 4. `logiBUS_QD_DIMMER` / `_G` (Typ + Handle: Rampe starten, `ledc_fade_stop()`, Ist-Wert lesen; braucht Schritt 1).
 5. Übungen.
+
+**Umsetzung Schritt 2 (Stand 2026-11-06, gebaut und getestet noch nicht):**
+- Typen: `logiBUS_QD_PWM`/`QDA_PWM` mit `FREQ`, `RAMP`, `RAMPO`; neu `logiBUS_QD_PWM_G`/`QDA_PWM_G` mit `GAMMA`.
+- forte: Die SIFBs `QD_PWM`/`QD_PWM_G` sind handgeschrieben, die Logik steckt in `handler/logiBUSPWMOutputFB`. Der
+  IDE-Export überschreibt SIFBs (`overwrite=true`) – nach `./export_lib.sh logiBUS_io` die beiden SIFB-Dateien mit
+  `git checkout` zurückholen. Die Composites `QDA_PWM`/`QDA_PWM_G` sind im Stil des Generators geschrieben.
+- Handle `IOHandleESP32PWMO`: Timer aus dem Pool mit `FREQ`, `RAMP` je Wert, Gamma mit `powf()`; P4/S31 Gamma-Fade in
+  Hardware, S3 bis zu 16 lineare Stücke (je mindestens 20 ms) nacheinander aus dem Task.
+- `RAMPO`: Der LEDC-Fade-Callback läuft im Interrupt und muss im IRAM liegen. Er ist deshalb in der Firmware
+  (`elf_isr_ledc_fade_end()` in `elf_isr.c`, wie bei PCNT und ADC) und schreibt nur in eine Queue. Ein Task
+  (`LEDCFadeNotifier`) ruft den Handle auf, der startet das nächste Stück oder meldet `RAMPO` (`onChange()`). Ein Ende
+  zählt nur, wenn der Tastgrad dem Ziel der laufenden Rampe entspricht (`ledc_fade_stop()` löst den Callback auch aus).
+  Kein `RAMPO` nach dem ersten Wert (INIT).
+- Folge: Firmware und logiBUS_io-ELF zusammen neu bauen (neue Host-Symbole, u. a. `elf_isr_ledc_fade_end`,
+  `ledc_cb_register`, `ledc_get_duty`, `powf`).
 
 `FORTE_ABI` bleibt (nur logiBUS_io-Bausteine und -Handles ändern sich, keine forte-Basisklassen).
 
