@@ -38,7 +38,7 @@
 		<FB Name="Wert_8000" Type="adapter::conversion::unidirectional::AD_DWORD_TO_D" x="-10200" y="4400">
 			<Parameter Name="OUT" Value="DWORD#8000"/>
 		</FB>
-		<FB Name="AD_LAST_2_b" Type="adapter::events::unidirectional::AD_LAST_3" x="-8500" y="3500">
+		<FB Name="AD_LAST_3" Type="adapter::events::unidirectional::AD_LAST_3" x="-8500" y="3500">
 		</FB>
 		<FB Name="PWMOutput_Q1" Type="logiBUS::io::DQ::logiBUS_QDA_PWM" x="-7000" y="2600">
 			<Parameter Name="QI" Value="TRUE"/>
@@ -51,10 +51,10 @@
 			<Connection Source="Voll_I8.IND" Destination="Wert_8000.REQ" dx1="453.33"/>
 		</EventConnections>
 		<AdapterConnections>
-			<Connection Source="Wert_0.AD_OUT" Destination="AD_LAST_2_b.IN1" dx1="566.67"/>
-			<Connection Source="Wert_4000.AD_OUT" Destination="AD_LAST_2_b.IN2" dx1="353.33"/>
-			<Connection Source="Wert_8000.AD_OUT" Destination="AD_LAST_2_b.IN3" dx1="726.67"/>
-			<Connection Source="AD_LAST_2_b.OUT" Destination="PWMOutput_Q1.OUT" dx1="593.33"/>
+			<Connection Source="Wert_0.AD_OUT" Destination="AD_LAST_3.IN1" dx1="566.67"/>
+			<Connection Source="Wert_4000.AD_OUT" Destination="AD_LAST_3.IN2" dx1="353.33"/>
+			<Connection Source="Wert_8000.AD_OUT" Destination="AD_LAST_3.IN3" dx1="726.67"/>
+			<Connection Source="AD_LAST_3.OUT" Destination="PWMOutput_Q1.OUT" dx1="593.33"/>
 		</AdapterConnections>
 	</SubAppNetwork>
 </SubAppType>
