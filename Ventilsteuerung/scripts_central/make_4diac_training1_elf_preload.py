@@ -28,7 +28,14 @@ import tempfile
 from pathlib import Path
 
 from deploy_common import preload_libs_with_requires
-from elf_libs_manifest_lib import LIB_VERSIONS, NODE_ARCH, build_libs_manifest, resolve_elf_path, sha256_of
+from elf_libs_manifest_lib import (
+    LIB_VERSIONS,
+    build_libs_manifest,
+    is_internal_host,
+    resolve_elf_path,
+    resolve_node_arch,
+    sha256_of,
+)
 from make_4diac_training1_deploy import (
     _FBOOT_HREF_RE,
     _MANIFEST_HREF_RE,
@@ -41,8 +48,9 @@ from make_4diac_training1_deploy import (
     http_warmup,
 )
 
-# Ohne bekannte Architektur (NODE_ARCH) fuer eine frei angegebene IP wird
-# diese angenommen - das Board "Trainer" ist riscv32.
+# Nur fuer Firmware ohne GET /deviceinfo/: ohne bekannte Architektur
+# (NODE_ARCH) fuer eine frei angegebene IP wird diese angenommen - das Board
+# "Trainer" ist riscv32.
 DEFAULT_ARCH = "riscv32"
 
 PRELOAD_MANIFEST_NAME = "elf_grundausstattung.libs.json"
@@ -55,10 +63,16 @@ DEFAULT_NODES: list[str] = ["logibus.local"]
 
 
 def preload_node(ip: str, libs: list[str]) -> bool:
-    arch = NODE_ARCH.get(ip, DEFAULT_ARCH)
+    if not is_internal_host(ip):
+        print(f"FEHLER: {ip} ist kein Knoten im internen Netz (erlaubt: 10.x, 172.16-31.x, 192.168.x, 169.254.x, *.local) - uebersprungen.")
+        return False
     http_warmup(ip)
     if not http_reachable(ip):
         print(f"WARNUNG: {ip} nicht erreichbar - uebersprungen.")
+        return False
+    arch = resolve_node_arch(ip, DEFAULT_ARCH)
+    if not arch:
+        print(f"  FEHLER: {ip}: Architektur/FORTE_ABI passt nicht - nichts hochgeladen.")
         return False
 
     remote_hashes = http_remote_sha256_listing(ip)

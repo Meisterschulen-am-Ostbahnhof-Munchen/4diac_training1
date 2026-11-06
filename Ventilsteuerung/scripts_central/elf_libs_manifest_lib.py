@@ -15,6 +15,8 @@ uebernommen, nicht neu hergeleitet.
 from __future__ import annotations
 
 import hashlib
+import http.client
+import ipaddress
 import json
 import os
 import re
@@ -33,8 +35,10 @@ if (_SCRIPT_DIR.parent / "4diacIDE-workspace").is_dir():
 else:
     VENTILSTEUERUNG_DIR = _SCRIPT_DIR
 
-# Architektur je Knoten (von Franz bestaetigt). Unbekannte IPs: siehe
-# DEFAULT_ARCH im Preload-Skript; das Bootfile-Deploy ueberspringt sie.
+# Architektur je Knoten (von Franz bestaetigt). Nur noch Rueckfall fuer
+# Firmware ohne GET /deviceinfo/ (siehe resolve_node_arch) und fuer das rein
+# lokale make_libs_manifest.py. Unbekannte IPs: siehe DEFAULT_ARCH im
+# Preload-Skript; das Bootfile-Deploy ueberspringt sie.
 NODE_ARCH = {
     "192.168.178.55": "riscv32",
     "192.168.178.45": "riscv32",
@@ -45,6 +49,131 @@ NODE_ARCH = {
 
 # forte_abi: von Hand erhoehte Nummer, wenn sich FORTE-Basisklassen aendern.
 FORTE_ABI = 6
+
+
+# Architekturen, fuer die ELFs gebaut werden (Unterordner elf/<arch>/ der Libs).
+SUPPORTED_ARCHS = ("riscv32", "xtensa")
+
+
+class NonInternalHostError(OSError):
+    """Ziel ist kein Knoten im internen Netz (siehe is_internal_host)."""
+
+
+def is_internal_host(host: str) -> bool:
+    """Nur Knoten im internen Netz werden angesprochen: private Adressen
+    (10.x, 172.16-31.x, 192.168.x, IPv6 ULA), link-local (169.254.x, fe80::),
+    loopback sowie mDNS-Namen (*.local) und localhost. Alles andere, z. B.
+    oeffentliche Adressen oder Internet-Namen, wird abgelehnt."""
+    name = host.strip().rstrip(".").lower()
+    if name == "localhost" or name.endswith(".local"):
+        return True
+    try:
+        addr = ipaddress.ip_address(name.strip("[]"))
+    except ValueError:
+        return False
+    return addr.is_private or addr.is_link_local or addr.is_loopback
+
+
+def internal_host(host: str) -> str:
+    """host unveraendert zurueck, wenn er intern ist, sonst NonInternalHostError."""
+    if not is_internal_host(host):
+        raise NonInternalHostError(f"{host} ist kein Knoten im internen Netz (erlaubt: 10.x, 172.16-31.x, 192.168.x, 169.254.x, *.local)")
+    return host
+
+
+def query_device_info(ip: str, timeout: float = 5) -> tuple[str, Optional[dict]]:
+    """GET /deviceinfo/ (Firmware LOGIBUS_integration_datapanel, JSON mit app,
+    bootloader, chip, flash, psram, heap, elf_libs, ...).
+
+    Ergebnis (Zustand, Info):
+    - ("ok", dict): gueltige Antwort
+    - ("legacy", None): HTTP 404 - Firmware ohne den Endpunkt (dort laeuft
+      GET /deviceinfo/ in die Verzeichnisanzeige und liefert 404 "Directory
+      does not exist")
+    - ("error", None): anderer Status, kaputte HTTP-Antwort, kein JSON-Objekt
+      oder Verbindungsfehler oder kein Knoten im internen Netz
+      (is_internal_host) - dann ist nichts ueber das Geraet bekannt."""
+    if not is_internal_host(ip):
+        print(f"  FEHLER: {ip} ist kein Knoten im internen Netz - /deviceinfo/ nicht abgefragt.")
+        return "error", None
+    conn = http.client.HTTPConnection(internal_host(ip), timeout=timeout)
+    try:
+        conn.request("GET", "/deviceinfo/")
+        resp = conn.getresponse()
+        body = resp.read()
+        if resp.status == 404:
+            return "legacy", None
+        if resp.status != 200:
+            print(f"  FEHLER: {ip} /deviceinfo/ antwortet mit HTTP {resp.status}.")
+            return "error", None
+        info = json.loads(body.decode("utf-8"))
+        if not isinstance(info, dict):
+            print(f"  FEHLER: {ip} /deviceinfo/ liefert kein JSON-Objekt.")
+            return "error", None
+        return "ok", info
+    except (OSError, ValueError, http.client.HTTPException) as exc:
+        print(f"  FEHLER: {ip} /deviceinfo/ nicht lesbar ({type(exc).__name__}: {exc}).")
+        return "error", None
+    finally:
+        conn.close()
+
+
+def _elf_arch_from_device_info(ip: str, info: dict) -> Optional[str]:
+    """Prueft elf_libs aus /deviceinfo/: ELF-Loader vorhanden, unterstuetzte
+    Architektur, Host-Symboltabelle, FORTE_ABI wie FORTE_ABI oben. Liefert die
+    Architektur oder None (mit Fehlermeldung)."""
+    elf = info.get("elf_libs")
+    if not isinstance(elf, dict) or not elf.get("supported"):
+        print(f"  FEHLER: Firmware auf {ip} hat keinen ELF-Loader.")
+        return None
+    arch = elf.get("arch")
+    abi = elf.get("forte_abi")
+    if not isinstance(arch, str) or arch not in SUPPORTED_ARCHS:
+        print(f"  FEHLER: Firmware auf {ip} meldet keine unterstuetzte ELF-Architektur ({arch!r}, erwartet: {', '.join(SUPPORTED_ARCHS)}).")
+        return None
+    if not elf.get("host_table"):
+        print(f"  FEHLER: Firmware auf {ip} hat keine Host-Symboltabelle fuer {arch} - ELFs koennen dort nicht laden.")
+        return None
+    if abi != FORTE_ABI:
+        print(f"  FEHLER: Firmware auf {ip} hat FORTE_ABI {abi}, die ELFs sind fuer FORTE_ABI {FORTE_ABI} gebaut - Firmware oder ELFs passen nicht zusammen.")
+        return None
+
+    return arch
+
+
+def resolve_node_arch(ip: str, fallback: Optional[str] = None) -> Optional[str]:
+    """Architektur der ELF-Libs fuer einen Knoten, vom Geraet selbst
+    (GET /deviceinfo/, elf_libs.arch). Meldet das Geraet eine andere
+    FORTE_ABI als FORTE_ABI oben, keine Host-Symboltabelle oder keine
+    unterstuetzte Architektur, ist das ein Fehler: None, die ELFs wuerden dort
+    nicht laden. Ebenso, wenn /deviceinfo/ anders als mit 404 scheitert
+    (fail closed).
+
+    Nur bei 404 (aeltere Firmware ohne /deviceinfo/) gilt NODE_ARCH, sonst
+    fallback - mit Warnung, weil das nur geraten ist."""
+    state, info = query_device_info(ip)
+    if state == "error":
+        print(f"  FEHLER: Geraet {ip} nicht pruefbar - keine ELFs/Manifest.")
+        return None
+    if state == "legacy" or info is None:
+        arch = NODE_ARCH.get(ip, fallback)
+        if arch:
+            print(f"  WARNUNG: {ip} liefert kein /deviceinfo/ (aeltere Firmware?) - Architektur {arch} aus NODE_ARCH/Default angenommen.")
+        else:
+            print(f"  FEHLER: {ip} liefert kein /deviceinfo/ und steht nicht in NODE_ARCH - Architektur unbekannt.")
+        return arch
+
+    arch = _elf_arch_from_device_info(ip, info)
+    if arch is None:
+        return None
+
+    app = info.get("app") if isinstance(info.get("app"), dict) else {}
+    chip = info.get("chip") if isinstance(info.get("chip"), dict) else {}
+    print(f"  Geraet: {chip.get('model', '?')} ({chip.get('target', '?')}), Firmware {app.get('version', '?')}, {arch}, FORTE_ABI {FORTE_ABI}")
+    known = NODE_ARCH.get(ip)
+    if known and known != arch:
+        print(f"  HINWEIS: NODE_ARCH nennt fuer {ip} {known}, das Geraet meldet {arch} - es gilt das Geraet.")
+    return arch
 
 # Namensraum-Praefix -> Lib-Name. 1:1 aus elf_libs_manifest_lib.sh
 # uebernommen (siehe dort fuer die ausfuehrliche Begruendung der
