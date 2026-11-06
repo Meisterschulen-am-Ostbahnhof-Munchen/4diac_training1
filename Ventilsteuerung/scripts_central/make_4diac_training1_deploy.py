@@ -333,6 +333,24 @@ def main() -> int:
         node_local_files: list[Path] = []
         node_fboot_file: Optional[Path] = None
 
+        # Geraet VOR jedem Upload pruefen, aber nur wenn das .fboot ELF-Libs
+        # braucht (rein lokal aus dem .fboot). Passt das Geraet nicht, wird fuer
+        # diesen Knoten nichts hochgeladen - sonst laege das neue Bootfile neben
+        # dem alten Manifest, der Loader lehnt das beim Start ab und FORTE
+        # startet nicht (Sourcery-Finding, PR #351).
+        fboot_bases = [b for b in NODE_BASES.get(ip, []) if b.endswith(".fboot")]
+        planned_fboot = resolve_local_path(fboot_bases[0]) if fboot_bases else None
+        required_libs: list[str] = (
+            resolve_required_libs(planned_fboot) if ENABLE_ELF_LIBS and planned_fboot is not None else []
+        )
+        arch: Optional[str] = None
+        if required_libs:
+            arch = resolve_node_arch(ip)
+            if not arch:
+                print(f"  FEHLER: Architektur/FORTE_ABI fuer {ip} nicht passend oder unbekannt - fuer diesen Knoten nichts hochgeladen.")
+                upload_failed.append(ip)
+                continue
+
         remote_hashes = http_remote_sha256_listing(ip)
         sha256_capable = remote_hashes is not None
         if remote_hashes is None:
@@ -391,122 +409,118 @@ def main() -> int:
         # dieser Teil fuer den Knoten uebersprungen - der normale fboot-
         # Upload oben ist davon unberuehrt.
         if node_ok and ENABLE_ELF_LIBS and node_fboot_file is not None:
-            arch = resolve_node_arch(ip)
-            if not arch:
-                print(f"  FEHLER: Architektur/FORTE_ABI fuer {ip} nicht passend oder unbekannt - ELF-Manifest NICHT angelegt.")
-                node_ok = False
-            else:
-                required_libs = resolve_required_libs(node_fboot_file)
-                manifest_name = f"{node_fboot_file.stem}.libs.json"
+            # arch und required_libs stehen seit der Pruefung vor dem Upload fest
+            # (arch nur gesetzt, wenn required_libs nicht leer ist)
+            manifest_name = f"{node_fboot_file.stem}.libs.json"
 
-                with tempfile.TemporaryDirectory() as tmp_dir:
-                    manifest_tmp = Path(tmp_dir) / "manifest.json"
-                    if required_libs:
-                        result = build_libs_manifest(arch, node_local_files, manifest_tmp, required_libs)
-                    else:
-                        print("  Keine bekannten ausgelagerten Libs in diesem .fboot referenziert - kein Libs-Manifest noetig.")
-                        result = ManifestResult(True)
+            with tempfile.TemporaryDirectory() as tmp_dir:
+                manifest_tmp = Path(tmp_dir) / "manifest.json"
+                if required_libs and arch:
+                    result = build_libs_manifest(arch, node_local_files, manifest_tmp, required_libs)
+                else:
+                    print("  Keine bekannten ausgelagerten Libs in diesem .fboot referenziert - kein Libs-Manifest noetig.")
+                    result = ManifestResult(True)
 
-                    if not result.ok:
-                        print("  WARNUNG: Manifest-Erzeugung fehlgeschlagen (siehe Warnung oben) - Deploy fuer diesen Knoten fehlgeschlagen.")
+                if not result.ok:
+                    print("  WARNUNG: Manifest-Erzeugung fehlgeschlagen (siehe Warnung oben) - Deploy fuer diesen Knoten fehlgeschlagen.")
+                    node_ok = False
+                else:
+                    # Manifest-Kandidaten liegen in /data/ (root), ELFs
+                    # seit der elf-libs/-Umstellung in /data/elf-libs/ -
+                    # getrennte Listings/Cleanups. IMMER aufraeumen, auch
+                    # wenn dieses Boot-Image gar keine Libs mehr braucht
+                    # (required_libs leer, keep_names dann leer) - sonst
+                    # bliebe ein Manifest/ELFs eines frueheren Programms
+                    # stehen, die der Loader gegen das neue Boot-Image
+                    # prueft und beim Start ablehnt (Sourcery-Finding,
+                    # PR #288). Lose ELFs direkt in /data/ von AELTEREN
+                    # Deploys (vor der elf-libs/-Umstellung) werden
+                    # bewusst NICHT automatisch entfernt (Franz raeumt
+                    # das einmalig per "Format File System" auf).
+                    listing = http_listing(ip)
+                    if listing is None:
+                        print("  WARNUNG: Verzeichnis-Listing fehlgeschlagen - alte Manifest-Kandidaten NICHT geprueft/entfernt.")
                         node_ok = False
                     else:
-                        # Manifest-Kandidaten liegen in /data/ (root), ELFs
-                        # seit der elf-libs/-Umstellung in /data/elf-libs/ -
-                        # getrennte Listings/Cleanups. IMMER aufraeumen, auch
-                        # wenn dieses Boot-Image gar keine Libs mehr braucht
-                        # (required_libs leer, keep_names dann leer) - sonst
-                        # bliebe ein Manifest/ELFs eines frueheren Programms
-                        # stehen, die der Loader gegen das neue Boot-Image
-                        # prueft und beim Start ablehnt (Sourcery-Finding,
-                        # PR #288). Lose ELFs direkt in /data/ von AELTEREN
-                        # Deploys (vor der elf-libs/-Umstellung) werden
-                        # bewusst NICHT automatisch entfernt (Franz raeumt
-                        # das einmalig per "Format File System" auf).
-                        listing = http_listing(ip)
-                        if listing is None:
-                            print("  WARNUNG: Verzeichnis-Listing fehlgeschlagen - alte Manifest-Kandidaten NICHT geprueft/entfernt.")
-                            node_ok = False
-                        else:
-                            for existing in _MANIFEST_HREF_RE.findall(listing):
-                                if existing != manifest_name or not required_libs:
-                                    print(f"  Entferne alten Lib-Kandidaten: {existing}")
-                                    if not http_delete(ip, existing):
-                                        print(f"  WARNUNG: Loeschen von {existing} fehlgeschlagen.")
-                                        node_ok = False
+                        for existing in _MANIFEST_HREF_RE.findall(listing):
+                            if existing != manifest_name or not required_libs:
+                                print(f"  Entferne alten Lib-Kandidaten: {existing}")
+                                if not http_delete(ip, existing):
+                                    print(f"  WARNUNG: Loeschen von {existing} fehlgeschlagen.")
+                                    node_ok = False
 
-                        keep_names = {p.name for p in result.elf_paths}
-                        # Grundausstattung (make_4diac_training1_elf_preload.py)
-                        # nie loeschen, auch wenn dieses Manifest sie nicht
-                        # braucht - sonst laedt der naechste Uebungswechsel sie
-                        # wieder komplett hoch. Alte Versionen derselben Lib
-                        # fallen weiterhin raus (nur die aktuelle Datei bleibt).
-                        for lib in preload_libs_with_requires():
-                            preload_path = resolve_elf_path(lib, LIB_VERSIONS[lib], arch)
-                            if preload_path is not None:
-                                keep_names.add(preload_path.name)
-                        elf_listing = http_listing(ip, "/elf-libs/", missing_ok=True)
-                        if elf_listing is None:
-                            print("  WARNUNG: elf-libs/-Listing fehlgeschlagen - alte ELF-Kandidaten NICHT geprueft/entfernt.")
-                            node_ok = False
-                        else:
-                            for existing in _ELF_LIBS_HREF_RE.findall(elf_listing):
-                                if existing not in keep_names:
-                                    print(f"  Entferne alten Lib-Kandidaten: elf-libs/{existing}")
-                                    if not http_delete(ip, f"elf-libs/{existing}"):
-                                        print(f"  WARNUNG: Loeschen von elf-libs/{existing} fehlgeschlagen.")
-                                        node_ok = False
+                    keep_names = {p.name for p in result.elf_paths}
+                    # Grundausstattung (make_4diac_training1_elf_preload.py)
+                    # nie loeschen, auch wenn dieses Manifest sie nicht
+                    # braucht - sonst laedt der naechste Uebungswechsel sie
+                    # wieder komplett hoch. Alte Versionen derselben Lib
+                    # fallen weiterhin raus (nur die aktuelle Datei bleibt).
+                    for lib in preload_libs_with_requires():
+                        preload_path = resolve_elf_path(lib, LIB_VERSIONS[lib], arch)
+                        if preload_path is not None:
+                            keep_names.add(preload_path.name)
+                    elf_listing = http_listing(ip, "/elf-libs/", missing_ok=True)
+                    if elf_listing is None:
+                        print("  WARNUNG: elf-libs/-Listing fehlgeschlagen - alte ELF-Kandidaten NICHT geprueft/entfernt.")
+                        node_ok = False
+                    else:
+                        for existing in _ELF_LIBS_HREF_RE.findall(elf_listing):
+                            if existing not in keep_names:
+                                print(f"  Entferne alten Lib-Kandidaten: elf-libs/{existing}")
+                                if not http_delete(ip, f"elf-libs/{existing}"):
+                                    print(f"  WARNUNG: Loeschen von elf-libs/{existing} fehlgeschlagen.")
+                                    node_ok = False
 
-                        if required_libs and node_ok:
-                            elf_ok = True
-                            for elf_path in result.elf_paths:
-                                elf_name = elf_path.name
-                                elf_remote_path = f"elf-libs/{elf_name}"
-                                http_code = http_upload_file(
-                                    ip, elf_path, elf_remote_path, 60,
-                                    sha256_of(elf_path), remote_hashes, sha256_capable,
-                                )
-                                if http_code == "SKIP":
-                                    print(f"  {elf_path} -> {elf_remote_path}: unveraendert (Hash stimmt), Upload uebersprungen")
-                                elif http_code == "VERIFY_FAILED":
-                                    print(f"  FEHLER: {elf_path} -> {elf_remote_path}: Upload mit HTTP 303 quittiert, Datei laut Geraet aber nicht/falsch gespeichert!")
-                                    elf_ok = False
-                                else:
-                                    print(f"  Lade {elf_path} -> http://{ip}/upload/{elf_remote_path}")
-                                    if http_code == "303":
-                                        print(f"  OK (HTTP {http_code})")
-                                    elif http_code == "RECOVERED":
-                                        print("  OK (Antwort verloren, Datei laut Hash aber vollstaendig angekommen)")
-                                    else:
-                                        print(f"  WARNUNG: ELF-Upload fehlgeschlagen (HTTP {http_code})")
-                                        elf_ok = False
-
-                            # Manifest bewusst ZULETZT hochladen: fehlt es,
-                            # laedt die Firmware keine Lib - ein
-                            # abgebrochener Upload ist so erkennbar.
-                            if elf_ok and not http_reset_current_directory(ip):
-                                print("  WARNUNG: Verzeichnis-Reset vor dem Manifest-Upload fehlgeschlagen - Manifest-Upload uebersprungen.")
-                                node_ok = False
-                            elif elf_ok:
-                                print(f"  Lade {manifest_tmp} -> http://{ip}/upload/{manifest_name}")
-                                http_code = http_upload_file(
-                                    ip, manifest_tmp, manifest_name, 30,
-                                    sha256_of(manifest_tmp), None, sha256_capable,
-                                )
+                    if required_libs and node_ok:
+                        elf_ok = True
+                        for elf_path in result.elf_paths:
+                            elf_name = elf_path.name
+                            elf_remote_path = f"elf-libs/{elf_name}"
+                            http_code = http_upload_file(
+                                ip, elf_path, elf_remote_path, 60,
+                                sha256_of(elf_path), remote_hashes, sha256_capable,
+                            )
+                            if http_code == "SKIP":
+                                print(f"  {elf_path} -> {elf_remote_path}: unveraendert (Hash stimmt), Upload uebersprungen")
+                            elif http_code == "VERIFY_FAILED":
+                                print(f"  FEHLER: {elf_path} -> {elf_remote_path}: Upload mit HTTP 303 quittiert, Datei laut Geraet aber nicht/falsch gespeichert!")
+                                elf_ok = False
+                            else:
+                                print(f"  Lade {elf_path} -> http://{ip}/upload/{elf_remote_path}")
                                 if http_code == "303":
                                     print(f"  OK (HTTP {http_code})")
                                 elif http_code == "RECOVERED":
                                     print("  OK (Antwort verloren, Datei laut Hash aber vollstaendig angekommen)")
                                 else:
-                                    reason = "Datei laut Geraet nicht/falsch gespeichert" if http_code == "VERIFY_FAILED" else f"HTTP {http_code}"
-                                    print(
-                                        f"  WARNUNG: Manifest-Upload fehlgeschlagen ({reason}) - "
-                                        "Libs auf dem Knoten sind damit unvollstaendig/inkonsistent.",
-                                    )
-                                    node_ok = False
+                                    print(f"  WARNUNG: ELF-Upload fehlgeschlagen (HTTP {http_code})")
+                                    elf_ok = False
+
+                        # Manifest bewusst ZULETZT hochladen: fehlt es,
+                        # laedt die Firmware keine Lib - ein
+                        # abgebrochener Upload ist so erkennbar.
+                        if elf_ok and not http_reset_current_directory(ip):
+                            print("  WARNUNG: Verzeichnis-Reset vor dem Manifest-Upload fehlgeschlagen - Manifest-Upload uebersprungen.")
+                            node_ok = False
+                        elif elf_ok:
+                            print(f"  Lade {manifest_tmp} -> http://{ip}/upload/{manifest_name}")
+                            http_code = http_upload_file(
+                                ip, manifest_tmp, manifest_name, 30,
+                                sha256_of(manifest_tmp), None, sha256_capable,
+                            )
+                            if http_code == "303":
+                                print(f"  OK (HTTP {http_code})")
+                            elif http_code == "RECOVERED":
+                                print("  OK (Antwort verloren, Datei laut Hash aber vollstaendig angekommen)")
                             else:
-                                print("  WARNUNG: Mindestens ein ELF-Upload fehlgeschlagen - Manifest wird bewusst NICHT hochgeladen.")
+                                reason = "Datei laut Geraet nicht/falsch gespeichert" if http_code == "VERIFY_FAILED" else f"HTTP {http_code}"
+                                print(
+                                    f"  WARNUNG: Manifest-Upload fehlgeschlagen ({reason}) - "
+                                    "Libs auf dem Knoten sind damit unvollstaendig/inkonsistent.",
+                                )
                                 node_ok = False
+                        else:
+                            print("  WARNUNG: Mindestens ein ELF-Upload fehlgeschlagen - Manifest wird bewusst NICHT hochgeladen.")
+                            node_ok = False
 
         if node_ok:
             reboot_needed.append(ip)

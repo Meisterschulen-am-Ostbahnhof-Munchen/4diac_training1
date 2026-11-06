@@ -50,22 +50,39 @@ NODE_ARCH = {
 FORTE_ABI = 6
 
 
-def query_device_info(ip: str, timeout: float = 5) -> Optional[dict]:
+# Architekturen, fuer die ELFs gebaut werden (Unterordner elf/<arch>/ der Libs).
+SUPPORTED_ARCHS = ("riscv32", "xtensa")
+
+
+def query_device_info(ip: str, timeout: float = 5) -> tuple[str, Optional[dict]]:
     """GET /deviceinfo/ (Firmware LOGIBUS_integration_datapanel, JSON mit app,
-    bootloader, chip, flash, psram, heap, elf_libs, ...). None, wenn der
-    Knoten nicht antwortet, die Firmware den Endpunkt noch nicht hat (404)
-    oder die Antwort kein JSON-Objekt ist."""
+    bootloader, chip, flash, psram, heap, elf_libs, ...).
+
+    Ergebnis (Zustand, Info):
+    - ("ok", dict): gueltige Antwort
+    - ("legacy", None): HTTP 404 - Firmware ohne den Endpunkt (dort laeuft
+      GET /deviceinfo/ in die Verzeichnisanzeige und liefert 404 "Directory
+      does not exist")
+    - ("error", None): anderer Status, kaputte HTTP-Antwort, kein JSON-Objekt
+      oder Verbindungsfehler - dann ist nichts ueber das Geraet bekannt."""
     conn = http.client.HTTPConnection(ip, timeout=timeout)
     try:
         conn.request("GET", "/deviceinfo/")
         resp = conn.getresponse()
         body = resp.read()
+        if resp.status == 404:
+            return "legacy", None
         if resp.status != 200:
-            return None
+            print(f"  FEHLER: {ip} /deviceinfo/ antwortet mit HTTP {resp.status}.")
+            return "error", None
         info = json.loads(body.decode("utf-8"))
-        return info if isinstance(info, dict) else None
-    except (OSError, ValueError):
-        return None
+        if not isinstance(info, dict):
+            print(f"  FEHLER: {ip} /deviceinfo/ liefert kein JSON-Objekt.")
+            return "error", None
+        return "ok", info
+    except (OSError, ValueError, http.client.HTTPException) as exc:
+        print(f"  FEHLER: {ip} /deviceinfo/ nicht lesbar ({type(exc).__name__}: {exc}).")
+        return "error", None
     finally:
         conn.close()
 
@@ -74,12 +91,17 @@ def resolve_node_arch(ip: str, fallback: Optional[str] = None) -> Optional[str]:
     """Architektur der ELF-Libs fuer einen Knoten, vom Geraet selbst
     (GET /deviceinfo/, elf_libs.arch). Meldet das Geraet eine andere
     FORTE_ABI als FORTE_ABI oben, keine Host-Symboltabelle oder keine
-    Architektur, ist das ein Fehler: None, die ELFs wuerden dort nicht laden.
+    unterstuetzte Architektur, ist das ein Fehler: None, die ELFs wuerden dort
+    nicht laden. Ebenso, wenn /deviceinfo/ anders als mit 404 scheitert
+    (fail closed).
 
-    Ohne /deviceinfo/ (aeltere Firmware, Knoten nicht erreichbar) gilt
-    NODE_ARCH, sonst fallback - mit Warnung, weil das nur geraten ist."""
-    info = query_device_info(ip)
-    if info is None:
+    Nur bei 404 (aeltere Firmware ohne /deviceinfo/) gilt NODE_ARCH, sonst
+    fallback - mit Warnung, weil das nur geraten ist."""
+    state, info = query_device_info(ip)
+    if state == "error":
+        print(f"  FEHLER: Geraet {ip} nicht pruefbar - keine ELFs/Manifest.")
+        return None
+    if state == "legacy" or info is None:
         arch = NODE_ARCH.get(ip, fallback)
         if arch:
             print(f"  WARNUNG: {ip} liefert kein /deviceinfo/ (aeltere Firmware?) - Architektur {arch} aus NODE_ARCH/Default angenommen.")
@@ -93,8 +115,8 @@ def resolve_node_arch(ip: str, fallback: Optional[str] = None) -> Optional[str]:
         return None
     arch = elf.get("arch")
     abi = elf.get("forte_abi")
-    if not arch or arch == "none":
-        print(f"  FEHLER: Firmware auf {ip} meldet keine ELF-Architektur.")
+    if not isinstance(arch, str) or arch not in SUPPORTED_ARCHS:
+        print(f"  FEHLER: Firmware auf {ip} meldet keine unterstuetzte ELF-Architektur ({arch!r}, erwartet: {', '.join(SUPPORTED_ARCHS)}).")
         return None
     if not elf.get("host_table"):
         print(f"  FEHLER: Firmware auf {ip} hat keine Host-Symboltabelle fuer {arch} - ELFs koennen dort nicht laden.")
