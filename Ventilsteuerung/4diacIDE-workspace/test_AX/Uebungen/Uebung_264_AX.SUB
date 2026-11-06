@@ -16,91 +16,91 @@
 	<SubAppInterfaceList>
 	</SubAppInterfaceList>
 	<SubAppNetwork>
-		<FB Name="Voll_I1" Type="logiBUS::io::DI::logiBUS_IE" x="-7000" y="0">
+		<FB Name="Voll_I1" Type="logiBUS::io::DI::logiBUS_IE" x="-1400" y="-1600">
 			<Parameter Name="QI" Value="TRUE"/>
 			<Parameter Name="Input" Value="Input_I1"/>
 			<Parameter Name="InputEvent" Value="BUTTON_PRESS_DOWN"/>
 		</FB>
-		<FB Name="Wert_8191" Type="adapter::conversion::unidirectional::AD_DWORD_TO_D" x="-5000" y="0">
+		<FB Name="Wert_8191" Type="adapter::conversion::unidirectional::AD_DWORD_TO_D" x="-1400" y="-400">
 			<Parameter Name="OUT" Value="DWORD#8191"/>
 		</FB>
-		<FB Name="Null_I2" Type="logiBUS::io::DI::logiBUS_IE" x="-7000" y="1400">
+		<FB Name="Null_I2" Type="logiBUS::io::DI::logiBUS_IE" x="-1200" y="2000">
 			<Parameter Name="QI" Value="TRUE"/>
 			<Parameter Name="Input" Value="Input_I2"/>
 			<Parameter Name="InputEvent" Value="BUTTON_PRESS_DOWN"/>
 		</FB>
-		<FB Name="Wert_0" Type="adapter::conversion::unidirectional::AD_DWORD_TO_D" x="-5000" y="1400">
+		<FB Name="Wert_0" Type="adapter::conversion::unidirectional::AD_DWORD_TO_D" x="-1300" y="1200">
 			<Parameter Name="OUT" Value="DWORD#0"/>
 		</FB>
-		<FB Name="AD_LAST_2" Type="adapter::events::unidirectional::AD_LAST_2" x="-3000" y="500">
+		<FB Name="AD_LAST_2" Type="adapter::events::unidirectional::AD_LAST_2" x="-1300" y="500">
 		</FB>
-		<FB Name="AD_SPLIT_4" Type="adapter::events::unidirectional::AD_SPLIT_4" x="-1500" y="500">
+		<FB Name="AD_SPLIT_4" Type="adapter::events::unidirectional::AD_SPLIT_4" x="-100" y="500">
 		</FB>
-		<FB Name="PWMOutput_Q1_0ms" Type="logiBUS::io::DQ::logiBUS_QDA_PWM" x="1500" y="-2000">
+		<FB Name="PWMOutput_Q1_0ms" Type="logiBUS::io::DQ::logiBUS_QDA_PWM" x="1400" y="-1600">
 			<Parameter Name="QI" Value="TRUE"/>
 			<Parameter Name="Output" Value="Output_Q1"/>
 			<Parameter Name="RAMP" Value="T#0ms"/>
 		</FB>
-		<FB Name="CNF_Count_Q1" Type="iec61499::events::E_CTU" x="4500" y="-2000">
+		<FB Name="CNF_Count_Q1" Type="iec61499::events::E_CTU" x="3000" y="-1700">
 			<Parameter Name="PV" Value="65535"/>
 		</FB>
-		<FB Name="RAMPO_Count_Q1" Type="iec61499::events::E_CTU" x="4500" y="-1300">
+		<FB Name="RAMPO_Count_Q1" Type="iec61499::events::E_CTU" x="3000" y="-1000">
 			<Parameter Name="PV" Value="65535"/>
 		</FB>
-		<FB Name="PWMOutput_Q2_500ms" Type="logiBUS::io::DQ::logiBUS_QDA_PWM" x="1500" y="-400">
+		<FB Name="PWMOutput_Q2_500ms" Type="logiBUS::io::DQ::logiBUS_QDA_PWM" x="1400" y="-400">
 			<Parameter Name="QI" Value="TRUE"/>
 			<Parameter Name="Output" Value="Output_Q2"/>
 			<Parameter Name="RAMP" Value="T#500ms"/>
 		</FB>
-		<FB Name="CNF_Count_Q2" Type="iec61499::events::E_CTU" x="4500" y="-400">
+		<FB Name="CNF_Count_Q2" Type="iec61499::events::E_CTU" x="4200" y="-400">
 			<Parameter Name="PV" Value="65535"/>
 		</FB>
-		<FB Name="RAMPO_Count_Q2" Type="iec61499::events::E_CTU" x="4500" y="300">
+		<FB Name="RAMPO_Count_Q2" Type="iec61499::events::E_CTU" x="4200" y="300">
 			<Parameter Name="PV" Value="65535"/>
 		</FB>
-		<FB Name="PWMOutput_Q3_2s" Type="logiBUS::io::DQ::logiBUS_QDA_PWM" x="1500" y="1200">
+		<FB Name="PWMOutput_Q3_2s" Type="logiBUS::io::DQ::logiBUS_QDA_PWM" x="1400" y="800">
 			<Parameter Name="QI" Value="TRUE"/>
 			<Parameter Name="Output" Value="Output_Q3"/>
 			<Parameter Name="RAMP" Value="T#2s"/>
 		</FB>
-		<FB Name="CNF_Count_Q3" Type="iec61499::events::E_CTU" x="4500" y="1200">
+		<FB Name="CNF_Count_Q3" Type="iec61499::events::E_CTU" x="3400" y="700">
 			<Parameter Name="PV" Value="65535"/>
 		</FB>
-		<FB Name="RAMPO_Count_Q3" Type="iec61499::events::E_CTU" x="4500" y="1900">
+		<FB Name="RAMPO_Count_Q3" Type="iec61499::events::E_CTU" x="3400" y="1400">
 			<Parameter Name="PV" Value="65535"/>
 		</FB>
-		<FB Name="PWMOutput_Q4_2s_gamma" Type="logiBUS::io::DQ::logiBUS_QDA_PWM_G" x="1500" y="2800">
+		<FB Name="PWMOutput_Q4_2s_gamma" Type="logiBUS::io::DQ::logiBUS_QDA_PWM_G" x="1400" y="2000">
 			<Parameter Name="QI" Value="TRUE"/>
 			<Parameter Name="Output" Value="Output_Q4"/>
 			<Parameter Name="RAMP" Value="T#2s"/>
 			<Parameter Name="GAMMA" Value="2.2"/>
 		</FB>
-		<FB Name="CNF_Count_Q4" Type="iec61499::events::E_CTU" x="4500" y="2800">
+		<FB Name="CNF_Count_Q4" Type="iec61499::events::E_CTU" x="4200" y="2000">
 			<Parameter Name="PV" Value="65535"/>
 		</FB>
-		<FB Name="RAMPO_Count_Q4" Type="iec61499::events::E_CTU" x="4500" y="3500">
+		<FB Name="RAMPO_Count_Q4" Type="iec61499::events::E_CTU" x="4200" y="2700">
 			<Parameter Name="PV" Value="65535"/>
 		</FB>
 		<EventConnections>
-			<Connection Source="Voll_I1.IND" Destination="Wert_8191.REQ"/>
-			<Connection Source="Null_I2.IND" Destination="Wert_0.REQ"/>
-			<Connection Source="PWMOutput_Q1_0ms.CNF" Destination="CNF_Count_Q1.CU"/>
-			<Connection Source="PWMOutput_Q1_0ms.RAMPO" Destination="RAMPO_Count_Q1.CU"/>
-			<Connection Source="PWMOutput_Q2_500ms.CNF" Destination="CNF_Count_Q2.CU"/>
-			<Connection Source="PWMOutput_Q2_500ms.RAMPO" Destination="RAMPO_Count_Q2.CU"/>
-			<Connection Source="PWMOutput_Q3_2s.CNF" Destination="CNF_Count_Q3.CU"/>
-			<Connection Source="PWMOutput_Q3_2s.RAMPO" Destination="RAMPO_Count_Q3.CU"/>
-			<Connection Source="PWMOutput_Q4_2s_gamma.CNF" Destination="CNF_Count_Q4.CU"/>
-			<Connection Source="PWMOutput_Q4_2s_gamma.RAMPO" Destination="RAMPO_Count_Q4.CU"/>
+			<Connection Source="Voll_I1.IND" Destination="Wert_8191.REQ" dx1="80" dx2="80" dy="766.67"/>
+			<Connection Source="Null_I2.IND" Destination="Wert_0.REQ" dx1="80" dx2="80" dy="-506.67"/>
+			<Connection Source="PWMOutput_Q1_0ms.CNF" Destination="CNF_Count_Q1.CU" dx1="546.67"/>
+			<Connection Source="PWMOutput_Q1_0ms.RAMPO" Destination="RAMPO_Count_Q1.CU" dx1="593.33"/>
+			<Connection Source="PWMOutput_Q2_500ms.CNF" Destination="CNF_Count_Q2.CU" dx1="1013.33"/>
+			<Connection Source="PWMOutput_Q2_500ms.RAMPO" Destination="RAMPO_Count_Q2.CU" dx1="1040"/>
+			<Connection Source="PWMOutput_Q3_2s.CNF" Destination="CNF_Count_Q3.CU" dx1="546.67"/>
+			<Connection Source="PWMOutput_Q3_2s.RAMPO" Destination="RAMPO_Count_Q3.CU" dx1="593.33"/>
+			<Connection Source="PWMOutput_Q4_2s_gamma.CNF" Destination="CNF_Count_Q4.CU" dx1="966.67"/>
+			<Connection Source="PWMOutput_Q4_2s_gamma.RAMPO" Destination="RAMPO_Count_Q4.CU" dx1="993.33"/>
 		</EventConnections>
 		<AdapterConnections>
-			<Connection Source="Wert_8191.AD_OUT" Destination="AD_LAST_2.IN1"/>
-			<Connection Source="Wert_0.AD_OUT" Destination="AD_LAST_2.IN2"/>
+			<Connection Source="Wert_8191.AD_OUT" Destination="AD_LAST_2.IN1" dx1="80" dx2="80" dy="340"/>
+			<Connection Source="Wert_0.AD_OUT" Destination="AD_LAST_2.IN2" dx1="80" dx2="80" dy="-580"/>
 			<Connection Source="AD_LAST_2.OUT" Destination="AD_SPLIT_4.IN"/>
-			<Connection Source="AD_SPLIT_4.OUT1" Destination="PWMOutput_Q1_0ms.OUT"/>
-			<Connection Source="AD_SPLIT_4.OUT2" Destination="PWMOutput_Q2_500ms.OUT"/>
-			<Connection Source="AD_SPLIT_4.OUT3" Destination="PWMOutput_Q3_2s.OUT"/>
-			<Connection Source="AD_SPLIT_4.OUT4" Destination="PWMOutput_Q4_2s_gamma.OUT"/>
+			<Connection Source="AD_SPLIT_4.OUT1" Destination="PWMOutput_Q1_0ms.OUT" dx1="80"/>
+			<Connection Source="AD_SPLIT_4.OUT2" Destination="PWMOutput_Q2_500ms.OUT" dx1="233.33"/>
+			<Connection Source="AD_SPLIT_4.OUT3" Destination="PWMOutput_Q3_2s.OUT" dx1="246.67"/>
+			<Connection Source="AD_SPLIT_4.OUT4" Destination="PWMOutput_Q4_2s_gamma.OUT" dx1="80"/>
 		</AdapterConnections>
 	</SubAppNetwork>
 	<Attribute Name="Documentation" Type="CDATA"><![CDATA[<h1>RAMPO-Test</h1>
