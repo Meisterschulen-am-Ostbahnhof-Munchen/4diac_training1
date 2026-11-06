@@ -5,20 +5,54 @@
 	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2026-11-06" Remarks="initial API and implementation and/or initial documentation">
 	</VersionInfo>
 	<CompilerInfo packageName="Uebungen">
-		<Import declaration="logiBUS::io::AI::logiBUS_AI"/>
+		<Import declaration="logiBUS::io::AI::logiBUS_AI::AnalogInput_I1"/>
+		<Import declaration="Meins::InputOutputTester::Button_AI_Calibrate_2P_OPC_UA::SubStrings::AIC_I1_RAW_WRITE"/>
+		<Import declaration="Meins::InputOutputTester::Button_AI_Calibrate_2P_OPC_UA::SubStrings::AIC_I1_CAL_WRITE"/>
+		<Import declaration="Meins::InputOutputTester::Button_AI_Calibrate_2P_OPC_UA::SubStrings::AIC_I1_CO_METHOD"/>
+		<Import declaration="Meins::InputOutputTester::Button_AI_Calibrate_2P_OPC_UA::SubStrings::AIC_I1_CS_METHOD"/>
+		<Import declaration="Meins::InputOutputTester::Button_AI_Calibrate_2P_OPC_UA::SubStrings::AIC_I1_ZERO_READ"/>
+		<Import declaration="Meins::InputOutputTester::Button_AI_Calibrate_2P_OPC_UA::SubStrings::AIC_I1_ZERO_WRITE"/>
+		<Import declaration="Meins::InputOutputTester::Button_AI_Calibrate_2P_OPC_UA::SubStrings::AIC_I1_SPAN_READ"/>
+		<Import declaration="Meins::InputOutputTester::Button_AI_Calibrate_2P_OPC_UA::SubStrings::AIC_I1_SPAN_WRITE"/>
+		<Import declaration="Meins::InputOutputTester::Button_AI_Calibrate_2P_OPC_UA::SubStrings::AIC_I1_ZERO_RAW_WRITE"/>
+		<Import declaration="Meins::InputOutputTester::Button_AI_Calibrate_2P_OPC_UA::SubStrings::AIC_I1_SPAN_RAW_WRITE"/>
 		<Import declaration="logiBUS::io::DQ::logiBUS_DO::Output_Q1"/>
 		<Import declaration="logiBUS::io::DQ::logiBUS_DO::Output_Q2"/>
 	</CompilerInfo>
 	<SubAppInterfaceList>
 	</SubAppInterfaceList>
 	<SubAppNetwork>
-		<FB Name="AnalogInput_I7" Type="logiBUS::io::AI::logiBUS_AI_IDA" x="-4000" y="0">
+		<SubApp Name="AnalogInput_I1_Cal" Type="MyLib::sys::logiBUS_AI_Calibrate_2P_OPC" x="-9000" y="0">
 			<Parameter Name="QI" Value="TRUE"/>
-			<Parameter Name="Input" Value="logiBUS_AI::AnalogInput_I7"/>
-			<Parameter Name="AnalogInput_hysteresis" Value="50"/>
+			<Parameter Name="Input" Value="AnalogInput_I1"/>
+			<Parameter Name="sSection" Value="'AI_Calibrate_I1'"/>
+			<Parameter Name="ID_RAW_WRITE" Value="AIC_I1_RAW_WRITE"/>
+			<Parameter Name="ID_CAL_WRITE" Value="AIC_I1_CAL_WRITE"/>
+			<Parameter Name="ID_CO_METHOD" Value="AIC_I1_CO_METHOD"/>
+			<Parameter Name="ID_CS_METHOD" Value="AIC_I1_CS_METHOD"/>
+			<Parameter Name="ID_ZERO_READ" Value="AIC_I1_ZERO_READ"/>
+			<Parameter Name="ID_ZERO_WRITE" Value="AIC_I1_ZERO_WRITE"/>
+			<Parameter Name="ID_SPAN_READ" Value="AIC_I1_SPAN_READ"/>
+			<Parameter Name="ID_SPAN_WRITE" Value="AIC_I1_SPAN_WRITE"/>
+			<Parameter Name="ID_ZERO_RAW_WRITE" Value="AIC_I1_ZERO_RAW_WRITE"/>
+			<Parameter Name="ID_SPAN_RAW_WRITE" Value="AIC_I1_SPAN_RAW_WRITE"/>
+		</SubApp>
+		<FB Name="AR_MUL_Scale" Type="adapter::iec61131::arithmetic::AR_MUL_2" x="-6000" y="300">
 		</FB>
-		<FB Name="AD_SHL" Type="adapter::iec61131::bitwise::AD_SHL" x="-2000" y="300">
-			<Parameter Name="N" Value="UINT#1"/>
+		<FB Name="initval_Scale" Type="adapter::types::unidirectional::AR::initval::initval_AR" x="-7500" y="1200">
+			<Parameter Name="INIT_VAL" Value="REAL#81.91"/>
+		</FB>
+		<FB Name="AR_MIN_Max" Type="adapter::iec61131::selection::AR_MIN" x="-4500" y="300">
+		</FB>
+		<FB Name="initval_Max" Type="adapter::types::unidirectional::AR::initval::initval_AR" x="-6000" y="1500">
+			<Parameter Name="INIT_VAL" Value="REAL#8191.0"/>
+		</FB>
+		<FB Name="AR_MAX_Null" Type="adapter::iec61131::selection::AR_MAX" x="-3000" y="300">
+		</FB>
+		<FB Name="initval_Null" Type="adapter::types::unidirectional::AR::initval::initval_AR" x="-4500" y="1800">
+			<Parameter Name="INIT_VAL" Value="REAL#0.0"/>
+		</FB>
+		<FB Name="AR_TO_AD_NUM" Type="adapter::conversion::unidirectional::AR_TO_AD_NUM" x="-1500" y="300">
 		</FB>
 		<FB Name="AD_SPLIT" Type="adapter::events::unidirectional::AD_SPLIT_2" x="0" y="300">
 		</FB>
@@ -33,13 +67,20 @@
 			<Parameter Name="RAMP" Value="T#2s"/>
 			<Parameter Name="GAMMA" Value="2.2"/>
 		</FB>
+		<Comment Comment="Vorher AI1 kalibrieren:&#10;1. Meins/InputOutputTester/Button_AI_Calibrate_2P_OPC_UA als Control in test_AX.sys, Bootfile exportieren, aufspielen.&#10;2. Mit Web-Clients/apixon-ai-calibrate-2p-client/dist/apixon-ai-calibrate-2p.html AI1 kalibrieren (0 %: CO, 100 %: CS).&#10;3. INI-Datei auf der Platine liegen lassen (Sektion AI_Calibrate_I1).&#10;Danach laeuft diese Uebung ohne VT und ohne Dashboard." x="-9000" y="-3000" width="8000" height="1300"/>
 		<EventConnections>
-			<Connection Source="AnalogInput_I7.INITO" Destination="PWMOutput_Q1_linear.INIT"/>
-			<Connection Source="AnalogInput_I7.INITO" Destination="PWMOutput_Q2_gamma.INIT"/>
+			<Connection Source="AnalogInput_I1_Cal.INITO" Destination="PWMOutput_Q1_linear.INIT"/>
+			<Connection Source="AnalogInput_I1_Cal.INITO" Destination="PWMOutput_Q2_gamma.INIT"/>
 		</EventConnections>
 		<AdapterConnections>
-			<Connection Source="AnalogInput_I7.IN" Destination="AD_SHL.IN"/>
-			<Connection Source="AD_SHL.OUT" Destination="AD_SPLIT.IN"/>
+			<Connection Source="AnalogInput_I1_Cal.CAL_OUT" Destination="AR_MUL_Scale.IN1"/>
+			<Connection Source="initval_Scale.OUT" Destination="AR_MUL_Scale.IN2"/>
+			<Connection Source="AR_MUL_Scale.OUT" Destination="AR_MIN_Max.IN1"/>
+			<Connection Source="initval_Max.OUT" Destination="AR_MIN_Max.IN2"/>
+			<Connection Source="AR_MIN_Max.OUT" Destination="AR_MAX_Null.IN1"/>
+			<Connection Source="initval_Null.OUT" Destination="AR_MAX_Null.IN2"/>
+			<Connection Source="AR_MAX_Null.OUT" Destination="AR_TO_AD_NUM.AR_IN"/>
+			<Connection Source="AR_TO_AD_NUM.AD_OUT" Destination="AD_SPLIT.IN"/>
 			<Connection Source="AD_SPLIT.OUT1" Destination="PWMOutput_Q1_linear.OUT"/>
 			<Connection Source="AD_SPLIT.OUT2" Destination="PWMOutput_Q2_gamma.OUT"/>
 		</AdapterConnections>
