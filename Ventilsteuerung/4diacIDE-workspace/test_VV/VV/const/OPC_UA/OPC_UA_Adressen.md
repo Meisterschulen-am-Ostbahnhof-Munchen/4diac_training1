@@ -47,3 +47,14 @@ Zusammengehörige Aktionen (siehe 4diac-Doku `opcua.adoc`):
 - `Comment=` in der GCF kurz halten, sonst schneidet der Resave der IDE lange
   Kommentare ab. Ausführliches gehört in diese Datei.
 - Geprüft: Die Bootfiles von Training_01 (PC_A und PC_B) sind vor und nach der Umstellung byte-identisch.
+
+## Offener Punkt: Adressierung der Knoten (2026-11-05)
+
+Die Endpunkte hängen an festen IPs aus `logiBUS_stations/Computers.gcf`. Das passt nicht,
+wenn eine Platine per Link-Local am PC hängt (169.254.x.x, aus der MAC abgeleitet, wechselnd).
+Ein gemeinsamer Hostname hilft auch nicht: `logibus.local` melden mehrere Platinen, aufgelöst
+wird zufällig eine davon. Dasselbe Problem hat der ELF-Preload.
+
+Mögliche Lösung: ein eindeutiger Name je Platine (z. B. `logibus-<MAC-Ende>.local`), genutzt
+von Preload, Deploy und als `MGR_ID`/OPC-Endpunkt. Das muss die Firmware liefern (ELFMASTER).
+Lokale Übungen mit `localhost` (`test_AX/Meins/OPC_UA_Lokal`) sind nicht betroffen.

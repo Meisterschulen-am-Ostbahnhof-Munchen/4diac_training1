@@ -18,6 +18,8 @@ in `test_AX.sys` per „Change Type“ am SubApp `Control` aus.
 „Lokal“ heißt: ohne Endpunkt. Was lokal nicht erlaubt ist, läuft als Remote-Aufruf mit
 Endpunkt an die eigene Station, hier `opc.tcp://localhost:4840#` (`LOCAL_OPC`). Die
 eigene IP funktioniert genauso. Getestet am 2026-10-18 auf FORTE_PC (L03).
+`localhost` ist dabei die robustere Wahl: Die IP einer Platine ist nicht stabil
+(Link-Local), offener Punkt siehe `test_VV/VV/const/OPC_UA/OPC_UA_Adressen.md`.
 
 Die IDs stehen in `const/OpcUaLokal.gcf`, gebaut mit `MyLib_OPC::F_OPC_LOCAL` /
 `F_OPC_REMOTE` und je einem `*_NODE`.
