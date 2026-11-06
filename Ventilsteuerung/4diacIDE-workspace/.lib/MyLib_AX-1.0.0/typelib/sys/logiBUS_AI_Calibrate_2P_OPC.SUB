@@ -87,6 +87,7 @@
 		</FB>
 		<FB Name="AND_QO" Type="iec61131::booleanOperators::AND_BOOL_13" x="10000" y="2700">
 		</FB>
+		<Comment Comment="INIT-Reihenfolge: INI-Werte (X_LOW/LOW_REF/X_HIGH/HIGH_REF) VOR CALIBRATE, sonst rechnet CALIBRATE beim Start kurz mit 0-Kalibrierpunkten." x="-200" y="-900" width="2800" height="400"/>
 		<EventConnections>
 			<Connection Source="TriggerCO.IND" Destination="CALIBRATE.C_LOW" dx1="806.67"/>
 			<Connection Source="TriggerCS.IND" Destination="CALIBRATE.C_HIGH" dx1="340"/>
@@ -100,15 +101,15 @@
 			<Connection Source="PublishZeroRaw.INITO" Destination="PublishSpanRaw.INIT" dx1="66.67" dx2="66.67" dy="566.67"/>
 			<Connection Source="INIT" Destination="TriggerCO.INIT" dx1="980"/>
 			<Connection Source="TriggerCS.INITO" Destination="InputRaw.INIT" dx1="373.33" dx2="66.67" dy="826.67"/>
-			<Connection Source="Y_SCALE_LIT.INITO" Destination="CALIBRATE.INIT" dx1="660"/>
-			<Connection Source="PublishSpanRaw.INITO" Destination="INI_X_LOW.INIT" dx1="100" dx2="66.67" dy="726.67"/>
+			<Connection Source="Y_SCALE_LIT.INITO" Destination="INI_X_LOW.INIT" dx1="660"/>
+			<Connection Source="INI_HIGH_REF.INITO" Destination="CALIBRATE.INIT" dx1="100" dx2="66.67" dy="726.67"/>
 			<Connection Source="INI_X_LOW.INITO" Destination="INI_LOW_REF.INIT" dx1="66.67" dx2="100" dy="886.67"/>
 			<Connection Source="INI_LOW_REF.INITO" Destination="INI_X_HIGH.INIT" dx1="453.33"/>
 			<Connection Source="INI_X_HIGH.INITO" Destination="INI_HIGH_REF.INIT" dx1="66.67" dx2="66.67" dy="886.67"/>
-			<Connection Source="INI_HIGH_REF.INITO" Destination="AND_QO.REQ" dx1="886.67">
+			<Connection Source="PublishSpanRaw.INITO" Destination="AND_QO.REQ" dx1="886.67">
 				<Attribute Name="Visible" Value="false"/>
 			</Connection>
-			<Connection Source="INI_HIGH_REF.INITO" Destination="INITO" dx1="2666.67"/>
+			<Connection Source="PublishSpanRaw.INITO" Destination="INITO" dx1="2666.67"/>
 		</EventConnections>
 		<DataConnections>
 			<Connection Source="Input" Destination="InputRaw.Input" dx1="1460">
