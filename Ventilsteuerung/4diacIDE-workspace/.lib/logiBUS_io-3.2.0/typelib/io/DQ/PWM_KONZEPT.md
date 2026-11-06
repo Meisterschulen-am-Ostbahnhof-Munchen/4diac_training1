@@ -216,7 +216,7 @@ Default-Werte, Übungen bleiben gültig):
 | Eingang | Typ | Default | Wann gelesen | Bedeutung |
 |---|---|---|---|---|
 | `FREQ` | DWORD / Adapter AD | 0 | REQ | Frequenz in mHz (1000 = 1 Hz), 0 = Ausgang aus (low). Wie ISOBUS-DDI 583 „Setpoint Frequency“ (Auflösung 0,001 Hz, Bereich 0..2147483647). Größere Werte: begrenzen und `STATUS` melden. |
-| `FMIN`, `FMAX` | DWORD (mHz) | Chip-Grenzen | INIT | Bereich, legt die Auflösung des Timers fest. Was der Chip nicht erzeugen kann: begrenzen und `STATUS` melden. Grenzen der Leistungsstufe: nur Doku. |
+| `FMIN`, `FMAX` | DWORD (mHz) | 10000 / 10000000 (10 Hz / 10 kHz) | INIT | Bereich, `FMIN` legt die Auflösung des Timers fest. `FREQ` außerhalb wird begrenzt, `STATUS` meldet es. Was der Chip nicht erzeugen kann: ebenso. Grenzen der Leistungsstufe: nur Doku. |
 
 Obergrenze laut DDI 583: 2147483647 mHz ≈ 2,15 MHz. Hohe Frequenzen braucht keiner (Franz, 2026-11-06); die Firmware
 nimmt den nächsten Wert, den MCPWM erzeugen kann (160 MHz / n, oben grob gestuft), ohne weitere Optimierung. Praktische
@@ -486,6 +486,24 @@ Sperre über die Board-Tabelle. Wo das Signal abgegriffen wird, verantwortet der
 - Folge: Firmware und logiBUS_io-ELF zusammen neu bauen (neue Host-Symbole, u. a. `elf_isr_ledc_fade_end`,
   `ledc_cb_register`, `ledc_get_duty`, `powf`).
 
+**Umsetzung Schritt 3 (Stand 2026-11-06, gebaut und getestet noch nicht):**
+- Typen `logiBUS_QD_FREQ` (Eingang `FREQ`, DWORD in mHz) und `logiBUS_QDA_FREQ` (Socket `FREQ`, Adapter AD), `FMIN`/`FMAX`
+  bei INIT, Default 10 Hz / 10 kHz. Keine Rampe: MCPWM (und LEDC für die Frequenz) hat keine Hardware-Rampe; eine
+  Rampe ginge nur in Schritten aus einem Task, später nachrüstbar.
+- Handle `IOHandleESP32FreqO`: je Ausgang ein eigener MCPWM-Timer, Operator, Comparator und Generator, Tastgrad 50 %
+  (high am Periodenanfang, low beim Vergleichswert = Periode / 2). Neue Frequenz am Ende der laufenden Periode
+  (`update_period_on_empty`, `update_cmp_on_tez`), kein Störimpuls. `FREQ = 0`: Generator fest low.
+- Auflösung: 160 MHz / N, N der kleinste Teiler von 160 MHz, mit dem `FMIN` noch in 65535 Takte passt und den Gruppen-
+  und Timer-Prescaler (je 1..256) exakt machen. Default `FMIN` 10 Hz → 640 kHz (Stufe 1,6 Hz bei 1 kHz, 156 Hz bei
+  10 kHz). Höchstens Auflösung / 2.
+- Der Gruppen-Prescaler gilt für alle Timer einer Gruppe. Der Handle nimmt die erste Gruppe mit freiem Timer und
+  Operator, deren Prescaler passt. `FMIN` ab etwa 9,6 Hz bleibt bei Gruppen-Prescaler 1 und verträgt sich mit allem
+  (auch Servo 1 MHz); kleinere `FMIN` ändern den Gruppen-Prescaler.
+- `STATUS` nach REQ: `OK` oder z. B. „FREQ 5000 mHz below FMIN 10000 mHz, limited“.
+- forte: MCPWM-Include-Pfade in den Toolchain-Dateien (S3, P4, S31); Firmware: `esp_driver_mcpwm` in
+  `elf_libs_loader` (Host-Symbole `mcpwm_*`). Firmware und logiBUS_io-ELF zusammen neu bauen.
+- logiBUS_io 3.2.0 (neue Typen, neue Host-Symbole).
+
 `FORTE_ABI` bleibt (nur logiBUS_io-Bausteine und -Handles ändern sich, keine forte-Basisklassen).
 
 ## Entscheidungen (Franz)
@@ -530,3 +548,7 @@ Stand 2026-11-06.
     Frequency“ (Auflösung 0,001 Hz, Bereich 0..2147483647). Passt zu `QD_FREQ` und zum Adapter AD. `FREQ` der
     PWM-Bausteine bleibt UDINT in Hz (LEDC kennt nur ganze Hz, `freq_hz`).
 18. **Belegung INA/INB/PWM am XL26** mit dem Schaltplan abgleichen – später.
+19. ~~Frequenzausgang, Defaults~~ – entschieden: `FMIN` 10 Hz, `FMAX` 10 kHz (in mHz: 10000 / 10000000).
+20. ~~Frequenzausgang, Rampe~~ – entschieden: keine (keine Hardware-Rampe für Frequenzen), nur Sprung am Periodenende.
+21. ~~Frequenzausgang, Namen und Bereich~~ – entschieden: Eingang und Socket heißen `FREQ`; `FREQ` außerhalb
+    `FMIN`..`FMAX` wird begrenzt und in `STATUS` gemeldet, `FREQ = 0` ist aus.
