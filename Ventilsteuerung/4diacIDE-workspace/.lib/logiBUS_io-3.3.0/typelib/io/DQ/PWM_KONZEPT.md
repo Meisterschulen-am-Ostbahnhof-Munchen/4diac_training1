@@ -504,6 +504,21 @@ Sperre über die Board-Tabelle. Wo das Signal abgegriffen wird, verantwortet der
   `elf_libs_loader` (Host-Symbole `mcpwm_*`). Firmware und logiBUS_io-ELF zusammen neu bauen.
 - logiBUS_io 3.2.0 (neue Typen, neue Host-Symbole).
 
+**Umsetzung Servo, SDM und Analogausgang (Stand 2026-11-06, gebaut und getestet noch nicht), logiBUS_io 3.3.0:**
+- Servo `logiBUS_QW_SERVO`/`QWA_SERVO` auf MCPWM: `FREQ` (UDINT, Default 50 Hz), `PULSE_MIN`/`PULSE_MAX` (TIME,
+  Default `T#1000us`/`T#2000us`), alle bei INIT. Timer 1 MHz, Vergleichswert = Pulsbreite in µs, neuer Wert am
+  Periodenende. `MCPWMServoPool`: Servos mit gleicher `FREQ` in einer Gruppe teilen einen Timer, je zwei einen
+  Operator (6 je Gruppe). Werte über 0xFAFF lassen den letzten Puls stehen. Der Servo belegt kein LEDC mehr.
+  **Verhaltensänderung:** bisher fest 250 Hz und 800..2180 µs. Für das Conrad-Servo (Blue Bird BMS-L530MG)
+  `FREQ = 250`, `PULSE_MIN = T#1100us`, `PULSE_MAX = T#1900us` setzen.
+- Sigma-Delta `logiBUS_QD_SDM`/`QDA_SDM` und `_G` (mit `GAMMA`): Wert 0..8191 → Pulsdichte 8 bit, 1 MHz, ohne Rampe.
+  Nur für Logik-Ausgänge (LEDs, LED-Treiber), nicht für die Leistungsausgänge. 8 Kanäle, unabhängig von LEDC/MCPWM.
+- Analogausgang `logiBUS_QW_AO`/`QWA_AO` (Paket `logiBUS::io::AO`): `OUT` in mV als WORD (QW-Baustein, Adapter AW),
+  0..3287 mV in 256 Stufen nach RC-Tiefpass (VDD_IO als 3300 mV angenommen), 10 MHz. Höhere Werte werden begrenzt,
+  `STATUS` meldet es. Teilt sich die 8 SDM-Kanäle mit `QD_SDM`.
+- forte: Handle `IOHandleESP32SdmO` (beide Arten), `logiBUSSdmOutputFB`; Toolchains, ELF-Build (`fb_lib`) und Firmware
+  (`elf_libs_loader`) mit `esp_driver_sdm`. Firmware und logiBUS_io-ELF zusammen neu bauen (Host-Symbole `sdm_*`).
+
 `FORTE_ABI` bleibt (nur logiBUS_io-Bausteine und -Handles ändern sich, keine forte-Basisklassen).
 
 ## Entscheidungen (Franz)
@@ -552,3 +567,8 @@ Stand 2026-11-06.
 20. ~~Frequenzausgang, Rampe~~ – entschieden: keine (keine Hardware-Rampe für Frequenzen), nur Sprung am Periodenende.
 21. ~~Frequenzausgang, Namen und Bereich~~ – entschieden: Eingang und Socket heißen `FREQ`; `FREQ` außerhalb
     `FMIN`..`FMAX` wird begrenzt und in `STATUS` gemeldet, `FREQ = 0` ist aus.
+22. ~~Servo, Typ der Pulsbreite~~ – entschieden: `PULSE_MIN`/`PULSE_MAX` als TIME.
+23. ~~Servo, Defaults~~ – entschieden: 50 Hz, 1000..2000 µs (Standard-Servos); das Conrad-Servo braucht 250 Hz,
+    1100..1900 µs.
+24. ~~SDM, Rampe~~ – entschieden: erst ohne Rampe (nur Sprung), `RAMP`/`RAMPO` später nachrüstbar.
+25. ~~Analogausgang, Einheit~~ – entschieden: mV. Als WORD, weil der Baustein `QW_AO` heißt und am Adapter AW hängt.
