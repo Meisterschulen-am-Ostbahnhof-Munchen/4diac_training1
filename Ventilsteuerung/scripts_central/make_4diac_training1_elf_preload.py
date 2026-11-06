@@ -28,7 +28,14 @@ import tempfile
 from pathlib import Path
 
 from deploy_common import preload_libs_with_requires
-from elf_libs_manifest_lib import LIB_VERSIONS, build_libs_manifest, resolve_elf_path, resolve_node_arch, sha256_of
+from elf_libs_manifest_lib import (
+    LIB_VERSIONS,
+    build_libs_manifest,
+    is_internal_host,
+    resolve_elf_path,
+    resolve_node_arch,
+    sha256_of,
+)
 from make_4diac_training1_deploy import (
     _FBOOT_HREF_RE,
     _MANIFEST_HREF_RE,
@@ -56,6 +63,9 @@ DEFAULT_NODES: list[str] = ["logibus.local"]
 
 
 def preload_node(ip: str, libs: list[str]) -> bool:
+    if not is_internal_host(ip):
+        print(f"FEHLER: {ip} ist kein Knoten im internen Netz (erlaubt: 10.x, 172.16-31.x, 192.168.x, 169.254.x, *.local) - uebersprungen.")
+        return False
     http_warmup(ip)
     if not http_reachable(ip):
         print(f"WARNUNG: {ip} nicht erreichbar - uebersprungen.")

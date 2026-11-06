@@ -34,6 +34,8 @@ from elf_libs_manifest_lib import (
     LIB_VERSIONS,
     SUPPORTED_ARCHS,
     ManifestResult,
+    internal_host,
+    is_internal_host,
     build_libs_manifest,
     resolve_node_arch,
     resolve_required_libs,
@@ -99,13 +101,16 @@ def http_remote_sha256_listing(ip: str, timeout: float = 10) -> Optional[dict[st
         return None
 
 
+FBOOT_SUFFIX = ".fboot"
 _FBOOT_HREF_RE = re.compile(r'href="/([^"]*\.fboot)"')
 _MANIFEST_HREF_RE = re.compile(r'href="/([^"]*\.libs\.json)"')
 _ELF_LIBS_HREF_RE = re.compile(r'href="/elf-libs/([^"]*\.elf)"')
 
 
 def _http(ip: str, method: str, path: str, timeout: float, body: Optional[bytes] = None) -> tuple[int, bytes]:
-    conn = http.client.HTTPConnection(ip, timeout=timeout)
+    # nur Knoten im internen Netz; sonst NonInternalHostError (ein OSError,
+    # die Aufrufer behandeln ihn wie einen nicht erreichbaren Knoten)
+    conn = http.client.HTTPConnection(internal_host(ip), timeout=timeout)
     try:
         conn.request(method, path, body=body)
         resp = conn.getresponse()
@@ -322,6 +327,11 @@ def main() -> int:
         print("-" * 78)
         print(f"Knoten {ip}")
 
+        if not is_internal_host(ip):
+            print(f"FEHLER: {ip} ist kein Knoten im internen Netz (erlaubt: 10.x, 172.16-31.x, 192.168.x, 169.254.x, *.local) - uebersprungen.")
+            unreachable.append(ip)
+            continue
+
         http_warmup(ip)
 
         if not http_reachable(ip):
@@ -338,7 +348,7 @@ def main() -> int:
         # diesen Knoten nichts hochgeladen - sonst laege das neue Bootfile neben
         # dem alten Manifest, der Loader lehnt das beim Start ab und FORTE
         # startet nicht (Sourcery-Finding, PR #351).
-        fboot_bases = [b for b in NODE_BASES.get(ip, []) if b.endswith(".fboot")]
+        fboot_bases = [b for b in NODE_BASES.get(ip, []) if b.endswith(FBOOT_SUFFIX)]
         planned_fboot = resolve_local_path(fboot_bases[0]) if fboot_bases else None
         required_libs: list[str] = (
             resolve_required_libs(planned_fboot) if ENABLE_ELF_LIBS and planned_fboot is not None else []
@@ -360,7 +370,7 @@ def main() -> int:
             local_file = resolve_local_path(base)
             assert local_file is not None  # durch die MISSING-Pruefung oben ausgeschlossen
             node_local_files.append(local_file)
-            if base.endswith(".fboot"):
+            if base.endswith(FBOOT_SUFFIX):
                 node_fboot_file = local_file
 
             remote_name = local_file.name
@@ -391,7 +401,7 @@ def main() -> int:
             # echter 303-Erfolg oben) - sonst wuerde ein fehlgeschlagener
             # Upload den Knoten komplett ohne funktionierenden Bootfile
             # zuruecklassen (Sourcery-Finding, PR #288).
-            if remote_name.endswith(".fboot") and http_code in ("SKIP", "303", "RECOVERED"):
+            if remote_name.endswith(FBOOT_SUFFIX) and http_code in ("SKIP", "303", "RECOVERED"):
                 listing = http_listing(ip)
                 if listing is None:
                     print("  WARNUNG: Verzeichnis-Listing fehlgeschlagen - alte Bootfile-Kandidaten NICHT geprueft/entfernt.")

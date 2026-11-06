@@ -16,6 +16,7 @@ from __future__ import annotations
 
 import hashlib
 import http.client
+import ipaddress
 import json
 import os
 import re
@@ -54,6 +55,32 @@ FORTE_ABI = 6
 SUPPORTED_ARCHS = ("riscv32", "xtensa")
 
 
+class NonInternalHostError(OSError):
+    """Ziel ist kein Knoten im internen Netz (siehe is_internal_host)."""
+
+
+def is_internal_host(host: str) -> bool:
+    """Nur Knoten im internen Netz werden angesprochen: private Adressen
+    (10.x, 172.16-31.x, 192.168.x, IPv6 ULA), link-local (169.254.x, fe80::),
+    loopback sowie mDNS-Namen (*.local) und localhost. Alles andere, z. B.
+    oeffentliche Adressen oder Internet-Namen, wird abgelehnt."""
+    name = host.strip().rstrip(".").lower()
+    if name == "localhost" or name.endswith(".local"):
+        return True
+    try:
+        addr = ipaddress.ip_address(name.strip("[]"))
+    except ValueError:
+        return False
+    return addr.is_private or addr.is_link_local or addr.is_loopback
+
+
+def internal_host(host: str) -> str:
+    """host unveraendert zurueck, wenn er intern ist, sonst NonInternalHostError."""
+    if not is_internal_host(host):
+        raise NonInternalHostError(f"{host} ist kein Knoten im internen Netz (erlaubt: 10.x, 172.16-31.x, 192.168.x, 169.254.x, *.local)")
+    return host
+
+
 def query_device_info(ip: str, timeout: float = 5) -> tuple[str, Optional[dict]]:
     """GET /deviceinfo/ (Firmware LOGIBUS_integration_datapanel, JSON mit app,
     bootloader, chip, flash, psram, heap, elf_libs, ...).
@@ -64,8 +91,12 @@ def query_device_info(ip: str, timeout: float = 5) -> tuple[str, Optional[dict]]
       GET /deviceinfo/ in die Verzeichnisanzeige und liefert 404 "Directory
       does not exist")
     - ("error", None): anderer Status, kaputte HTTP-Antwort, kein JSON-Objekt
-      oder Verbindungsfehler - dann ist nichts ueber das Geraet bekannt."""
-    conn = http.client.HTTPConnection(ip, timeout=timeout)
+      oder Verbindungsfehler oder kein Knoten im internen Netz
+      (is_internal_host) - dann ist nichts ueber das Geraet bekannt."""
+    if not is_internal_host(ip):
+        print(f"  FEHLER: {ip} ist kein Knoten im internen Netz - /deviceinfo/ nicht abgefragt.")
+        return "error", None
+    conn = http.client.HTTPConnection(internal_host(ip), timeout=timeout)
     try:
         conn.request("GET", "/deviceinfo/")
         resp = conn.getresponse()
