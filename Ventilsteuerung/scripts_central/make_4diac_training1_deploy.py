@@ -37,6 +37,7 @@ from elf_libs_manifest_lib import (
     internal_host,
     is_internal_host,
     build_libs_manifest,
+    resolve_host,
     resolve_node_arch,
     resolve_required_libs,
     sha256_of,
@@ -323,20 +324,28 @@ def main() -> int:
     unreachable: list[str] = []
     upload_failed: list[str] = []
 
-    for ip in NODE_ORDER:
+    for node in NODE_ORDER:
         print("-" * 78)
-        print(f"Knoten {ip}")
+        # Name einmal aufloesen, danach nur noch die IP (siehe resolve_host);
+        # NODE_BASES und die Ergebnislisten bleiben beim Namen aus NODE_ORDER
+        ip = resolve_host(node)
+        if ip is None:
+            print(f"Knoten {node}")
+            print(f"WARNUNG: {node} nicht aufloesbar - uebersprungen.")
+            unreachable.append(node)
+            continue
+        print(f"Knoten {node}" if ip == node else f"Knoten {node} ({ip})")
 
         if not is_internal_host(ip):
             print(f"FEHLER: {ip} ist kein Knoten im internen Netz (erlaubt: 10.x, 172.16-31.x, 192.168.x, 169.254.x, *.local) - uebersprungen.")
-            unreachable.append(ip)
+            unreachable.append(node)
             continue
 
         http_warmup(ip)
 
         if not http_reachable(ip):
             print(f"WARNUNG: {ip} nicht erreichbar - uebersprungen.")
-            unreachable.append(ip)
+            unreachable.append(node)
             continue
 
         node_ok = True
@@ -348,7 +357,7 @@ def main() -> int:
         # diesen Knoten nichts hochgeladen - sonst laege das neue Bootfile neben
         # dem alten Manifest, der Loader lehnt das beim Start ab und FORTE
         # startet nicht (Sourcery-Finding, PR #351).
-        fboot_bases = [b for b in NODE_BASES.get(ip, []) if b.endswith(FBOOT_SUFFIX)]
+        fboot_bases = [b for b in NODE_BASES.get(node, []) if b.endswith(FBOOT_SUFFIX)]
         planned_fboot = resolve_local_path(fboot_bases[0]) if fboot_bases else None
         required_libs: list[str] = (
             resolve_required_libs(planned_fboot) if ENABLE_ELF_LIBS and planned_fboot is not None else []
@@ -358,7 +367,7 @@ def main() -> int:
             arch = resolve_node_arch(ip)
             if not arch:
                 print(f"  FEHLER: Architektur/FORTE_ABI fuer {ip} nicht passend oder unbekannt - fuer diesen Knoten nichts hochgeladen.")
-                upload_failed.append(ip)
+                upload_failed.append(node)
                 continue
 
         remote_hashes = http_remote_sha256_listing(ip)
@@ -366,7 +375,7 @@ def main() -> int:
         if remote_hashes is None:
             remote_hashes = {}
 
-        for base in NODE_BASES.get(ip, []):
+        for base in NODE_BASES.get(node, []):
             local_file = resolve_local_path(base)
             assert local_file is not None  # durch die MISSING-Pruefung oben ausgeschlossen
             node_local_files.append(local_file)
@@ -535,9 +544,9 @@ def main() -> int:
                             node_ok = False
 
         if node_ok:
-            reboot_needed.append(ip)
+            reboot_needed.append(node)
         else:
-            upload_failed.append(ip)
+            upload_failed.append(node)
 
     print("-" * 78)
     print(f"ZUSAMMENFASSUNG ({len(reboot_needed)}/{len(NODE_ORDER)} Knoten erfolgreich):")
