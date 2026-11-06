@@ -35,6 +35,9 @@ DIDO_FILES: dict[str, str] = {
 
 def main(argv: list[str]) -> int:
     host = argv[0] if argv else DEFAULT_HOST
+    # Haengt an den Modul-Globals von make_4diac_training1_deploy: main() liest
+    # NODE_BASES/NODE_ORDER zur Laufzeit aus dem Modul. Bekommt main() einmal
+    # Parameter (node_bases), hier stattdessen uebergeben (ELFMASTER-Review).
     # REPO_PATHS ist dasselbe dict-Objekt in deploy_common und im Deploy-Modul
     # (resolve_local_path liest es aus deploy_common) - in place ergaenzen.
     deploy_common.REPO_PATHS.update(DIDO_FILES)
