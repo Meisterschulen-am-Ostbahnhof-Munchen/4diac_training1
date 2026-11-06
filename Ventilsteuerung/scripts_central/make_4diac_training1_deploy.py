@@ -32,9 +32,9 @@ from typing import Optional
 from deploy_common import NODE_BASES, NODE_ORDER, REPO_PATHS, preload_libs_with_requires, resolve_local_path
 from elf_libs_manifest_lib import (
     LIB_VERSIONS,
+    SUPPORTED_ARCHS,
     ManifestResult,
     build_libs_manifest,
-    resolve_elf_path,
     resolve_node_arch,
     resolve_required_libs,
     sha256_of,
@@ -455,10 +455,12 @@ def main() -> int:
                     # braucht - sonst laedt der naechste Uebungswechsel sie
                     # wieder komplett hoch. Alte Versionen derselben Lib
                     # fallen weiterhin raus (nur die aktuelle Datei bleibt).
+                    # Ohne benoetigte Libs ist arch nicht bekannt (das Geraet
+                    # wird dann nicht geprueft), daher die Namen fuer alle
+                    # Architekturen - auf dem Geraet liegt ohnehin nur seine.
                     for lib in preload_libs_with_requires():
-                        preload_path = resolve_elf_path(lib, LIB_VERSIONS[lib], arch)
-                        if preload_path is not None:
-                            keep_names.add(preload_path.name)
+                        for elf_arch in SUPPORTED_ARCHS:
+                            keep_names.add(f"{lib}-{LIB_VERSIONS[lib]}-{elf_arch}.elf")
                     elf_listing = http_listing(ip, "/elf-libs/", missing_ok=True)
                     if elf_listing is None:
                         print("  WARNUNG: elf-libs/-Listing fehlgeschlagen - alte ELF-Kandidaten NICHT geprueft/entfernt.")
