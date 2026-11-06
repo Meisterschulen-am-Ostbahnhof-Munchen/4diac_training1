@@ -42,7 +42,7 @@
 			<VarDeclaration Name="Output" Type="logiBUS::io::DQ::logiBUS_DO_S" Comment="Identify the Output Output_Q1..Q8" InitialValue="logiBUS_DO::Invalid"/>
 			<VarDeclaration Name="FREQ" Type="UDINT" Comment="PWM frequency in Hz, read at INIT. Outputs with the same frequency share an LEDC timer (4 timers, LED blinking uses one). Power stage limits, not checked: APIXON 15 PWR Q1 (BTH50030) max. 100 Hz; BTS7030/BTT6030/BTH6070 for valves 100..200 Hz; Trainer20 without power stage" InitialValue="400"/>
 			<VarDeclaration Name="RAMP" Type="TIME" Comment="Transition time to the new OUT value (hardware ramp), read at INIT and REQ. T#0ms = jump" InitialValue="T#0ms"/>
-			<VarDeclaration Name="GAMMA" Type="REAL" Comment="Gamma of the brightness curve, read at INIT: duty = 8191 * (OUT / 8191)^GAMMA. 1.0 = linear (like logiBUS_QD_PWM), 2.2 = sRGB (default), 2.6 / 2.8 = Espressif examples, often more even on LEDs" InitialValue="2.2"/>
+			<VarDeclaration Name="GAMMA" Type="REAL" Comment="Gamma of the brightness curve, read at INIT: duty = 8191 * (OUT / 8191)^GAMMA. 1.0 = linear (like logiBUS_QD_PWM), 2.2 = sRGB (default), 2.6 / 2.8 = Espressif examples, often more even on LEDs. Invalid values (&lt;= 0, not finite) run linear like 1.0" InitialValue="2.2"/>
 		</InputVars>
 		<OutputVars>
 			<VarDeclaration Name="QO" Type="BOOL" Comment="Event Output Qualifier"/>
