@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<SubAppType Name="Uebung_259b_AX" Comment="Gamma mit Rampe, Taster: I1 = 0, I2 = 4000, I3 = 8000 auf LED Q1 linear und LED Q2 Gamma 2.2, beide RAMP 2s">
+<SubAppType Name="Uebung_259b_AX" Comment="Gamma mit Rampe, Taster: I1 = 0, I2 = 4000, I3 = 8000, I4 = 2000 auf LED Q1 linear und LED Q2 Gamma 2.2, beide RAMP 2s">
 	<Identification Standard="61499-2" Description="Copyright (c) 2026 Meisterschulen am Ostbahnhof  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0">
 	</Identification>
 	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2026-11-06" Remarks="initial API and implementation and/or initial documentation">
@@ -8,6 +8,7 @@
 		<Import declaration="logiBUS::io::DI::logiBUS_DI::Input_I1"/>
 		<Import declaration="logiBUS::io::DI::logiBUS_DI::Input_I2"/>
 		<Import declaration="logiBUS::io::DI::logiBUS_DI::Input_I3"/>
+		<Import declaration="logiBUS::io::DI::logiBUS_DI::Input_I4"/>
 		<Import declaration="logiBUS::io::DI::logiBUS_DI_Events::BUTTON_PRESS_DOWN"/>
 		<Import declaration="logiBUS::io::DQ::logiBUS_DO::Output_Q1"/>
 		<Import declaration="logiBUS::io::DQ::logiBUS_DO::Output_Q2"/>
@@ -39,9 +40,17 @@
 		<FB Name="Wert_8000" Type="adapter::conversion::unidirectional::AD_DWORD_TO_D" x="-5000" y="1000">
 			<Parameter Name="OUT" Value="DWORD#8000"/>
 		</FB>
-		<FB Name="AD_LAST_3" Type="adapter::events::unidirectional::AD_LAST_3" x="-3600" y="-300">
+		<FB Name="Viertel_I4" Type="logiBUS::io::DI::logiBUS_IE" x="-6500" y="2200">
+			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="Input" Value="Input_I4"/>
+			<Parameter Name="InputEvent" Value="BUTTON_PRESS_DOWN"/>
 		</FB>
-		<FB Name="AD_SPLIT_2" Type="adapter::events::unidirectional::AD_SPLIT_2_UNGATED" x="-3900" y="2200">
+		<FB Name="Wert_2000" Type="adapter::conversion::unidirectional::AD_DWORD_TO_D" x="-5000" y="2400">
+			<Parameter Name="OUT" Value="DWORD#2000"/>
+		</FB>
+		<FB Name="AD_LAST_4" Type="adapter::events::unidirectional::AD_LAST_4" x="-3600" y="-300">
+		</FB>
+		<FB Name="AD_SPLIT_2" Type="adapter::events::unidirectional::AD_SPLIT_2_UNGATED" x="-3500" y="2200">
 		</FB>
 		<FB Name="PWMOutput_Q1_linear" Type="logiBUS::io::DQ::logiBUS_QDA_PWM" x="-2000" y="900">
 			<Parameter Name="QI" Value="TRUE"/>
@@ -55,15 +64,17 @@
 			<Parameter Name="GAMMA" Value="2.2"/>
 		</FB>
 		<EventConnections>
+			<Connection Source="Viertel_I4.IND" Destination="Wert_2000.REQ" dx1="306.67"/>
 			<Connection Source="Null_I1.IND" Destination="Wert_0.REQ" dx1="326.67"/>
 			<Connection Source="Halb_I2.IND" Destination="Wert_4000.REQ" dx1="226.67"/>
 			<Connection Source="Voll_I3.IND" Destination="Wert_8000.REQ" dx1="533.33"/>
 		</EventConnections>
 		<AdapterConnections>
-			<Connection Source="Wert_0.AD_OUT" Destination="AD_LAST_3.IN1" dx1="553.33"/>
-			<Connection Source="Wert_4000.AD_OUT" Destination="AD_LAST_3.IN2" dx1="420"/>
-			<Connection Source="Wert_8000.AD_OUT" Destination="AD_LAST_3.IN3" dx1="420"/>
-			<Connection Source="AD_LAST_3.OUT" Destination="AD_SPLIT_2.IN" dx1="80" dx2="80" dy="2133.33"/>
+			<Connection Source="Wert_2000.AD_OUT" Destination="AD_LAST_4.IN4" dx1="253.33"/>
+			<Connection Source="Wert_0.AD_OUT" Destination="AD_LAST_4.IN1" dx1="553.33"/>
+			<Connection Source="Wert_4000.AD_OUT" Destination="AD_LAST_4.IN2" dx1="420"/>
+			<Connection Source="Wert_8000.AD_OUT" Destination="AD_LAST_4.IN3" dx1="80"/>
+			<Connection Source="AD_LAST_4.OUT" Destination="AD_SPLIT_2.IN" dx1="80" dx2="80" dy="2133.33"/>
 			<Connection Source="AD_SPLIT_2.OUT1" Destination="PWMOutput_Q1_linear.OUT" dx1="286.67"/>
 			<Connection Source="AD_SPLIT_2.OUT2" Destination="PWMOutput_Q2_gamma.OUT" dx1="233.33"/>
 		</AdapterConnections>
