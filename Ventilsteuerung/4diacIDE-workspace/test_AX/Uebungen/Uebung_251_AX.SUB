@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<SubAppType Name="Uebung_251_AX" Comment="Section-Switcher BIT: 8 Sections auf Q1-Q8, I1/I2 links ab/zu, I7/I8 rechts zu/ab">
+<SubAppType Name="Uebung_251_AX" Comment="Section-Switcher BIT, Q1-Q8, I1/I2 links ab/zu, I7/I8 rechts zu/ab, Start alle aus">
 	<Identification Standard="61499-2" Description="Copyright (c) 2026 Meisterschulen am Ostbahnhof  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0">
 	</Identification>
 	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2026-11-05" Remarks="initial API and implementation and/or initial documentation">
@@ -42,7 +42,7 @@
 			<Parameter Name="Input" Value="Input_I8"/>
 			<Parameter Name="InputEvent" Value="BUTTON_SINGLE_CLICK"/>
 		</FB>
-		<FB Name="Section_Switch" Type="logiBUS::sections::SEC_SWITCH_LR_BIT_WORD" x="-4600" y="-200">
+		<FB Name="Section_Switch" Type="logiBUS::sections::SEC_SWITCH_LR_BIT_WORD" Comment="Startet sicher: INITO auf ALL_OFF, alle Sections aus" x="-4600" y="-200">
 			<Parameter Name="QI" Value="TRUE"/>
 			<Parameter Name="N" Value="8"/>
 		</FB>
@@ -87,7 +87,7 @@
 			<Connection Source="Links_Zu_I2.IND" Destination="Section_Switch.LEFT_OFF_DEC" dx1="753.33"/>
 			<Connection Source="Rechts_Zu_I7.IND" Destination="Section_Switch.RIGHT_OFF_DEC" dx1="873.33"/>
 			<Connection Source="Rechts_Ab_I8.IND" Destination="Section_Switch.RIGHT_OFF_INC" dx1="753.33"/>
-			<Connection Source="Section_Switch.INITO" Destination="MASK_TO_AW.REQ"/>
+			<Connection Source="Section_Switch.INITO" Destination="Section_Switch.ALL_OFF"/>
 			<Connection Source="Section_Switch.CNF" Destination="MASK_TO_AW.REQ" dx1="740"/>
 		</EventConnections>
 		<DataConnections>
