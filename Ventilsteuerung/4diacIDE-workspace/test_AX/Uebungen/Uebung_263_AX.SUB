@@ -16,52 +16,52 @@
 			<Parameter Name="Output" Value="Output_Q1"/>
 			<Parameter Name="RAMP" Value="T#500ms"/>
 		</FB>
-		<FB Name="Fast_10ms" Type="iec61499::events::E_CYCLE" x="-6000" y="0">
+		<FB Name="Fast_10ms" Type="iec61499::events::E_CYCLE" x="-900" y="-800">
 			<Parameter Name="DT" Value="T#10ms"/>
 		</FB>
-		<FB Name="Fast_FF" Type="iec61499::events::E_T_FF" x="-4500" y="0">
+		<FB Name="Fast_FF" Type="iec61499::events::E_T_FF" x="0" y="-800">
 		</FB>
-		<FB Name="Fast_X" Type="adapter::conversion::unidirectional::AX_BOOL_TO_X" x="-3000" y="0">
+		<FB Name="Fast_X" Type="adapter::conversion::unidirectional::AX_BOOL_TO_X" x="800" y="-800">
 		</FB>
-		<FB Name="Fast_AD" Type="adapter::conversion::unidirectional::AX_TO_AD" x="-1500" y="0">
+		<FB Name="Fast_AD" Type="adapter::conversion::unidirectional::AX_TO_AD" x="2000" y="-600">
 		</FB>
-		<FB Name="AD_SHL" Type="adapter::iec61131::bitwise::AD_SHL" x="0" y="0">
+		<FB Name="AD_SHL" Type="adapter::iec61131::bitwise::AD_SHL" x="3300" y="-800">
 			<Parameter Name="N" Value="UINT#12"/>
 		</FB>
-		<FB Name="RAMPO_Count_Q1" Type="iec61499::events::E_CTU" x="6000" y="0">
+		<FB Name="RAMPO_Count_Q1" Type="iec61499::events::E_CTU" x="4400" y="300">
 			<Parameter Name="PV" Value="65535"/>
 		</FB>
-		<FB Name="Life_100ms" Type="iec61499::events::E_CYCLE" x="-6000" y="2500">
+		<FB Name="Life_100ms" Type="iec61499::events::E_CYCLE" x="3300" y="2400">
 			<Parameter Name="DT" Value="T#100ms"/>
 		</FB>
-		<FB Name="Life_FF" Type="iec61499::events::E_T_FF" x="-4500" y="2500">
+		<FB Name="Life_FF" Type="iec61499::events::E_T_FF" x="2100" y="2400">
 		</FB>
-		<FB Name="Life_Q2" Type="logiBUS::io::DQ::logiBUS_QX" x="3000" y="2500">
+		<FB Name="Life_Q2" Type="logiBUS::io::DQ::logiBUS_QX" x="3200" y="1300">
 			<Parameter Name="QI" Value="TRUE"/>
 			<Parameter Name="Output" Value="Output_Q2"/>
 		</FB>
-		<FB Name="Life_Count" Type="iec61499::events::E_CTU" x="-3000" y="4000">
+		<FB Name="Life_Count" Type="iec61499::events::E_CTU" x="4600" y="2400">
 			<Parameter Name="PV" Value="65535"/>
 		</FB>
 		<EventConnections>
-			<Connection Source="PWMOutput_Q1.INITO" Destination="Fast_10ms.START"/>
+			<Connection Source="PWMOutput_Q1.INITO" Destination="Fast_10ms.START" dx1="80" dx2="80" dy="-1113.33"/>
 			<Connection Source="Fast_10ms.EO" Destination="Fast_FF.CLK"/>
 			<Connection Source="Fast_FF.EO" Destination="Fast_X.REQ"/>
-			<Connection Source="PWMOutput_Q1.RAMPO" Destination="RAMPO_Count_Q1.CU"/>
-			<Connection Source="PWMOutput_Q1.INITO" Destination="Life_Q2.INIT"/>
-			<Connection Source="Life_Q2.INITO" Destination="Life_100ms.START"/>
-			<Connection Source="Life_100ms.EO" Destination="Life_FF.CLK"/>
-			<Connection Source="Life_FF.EO" Destination="Life_Q2.REQ"/>
+			<Connection Source="PWMOutput_Q1.RAMPO" Destination="RAMPO_Count_Q1.CU" dx1="386.67"/>
+			<Connection Source="PWMOutput_Q1.INITO" Destination="Life_Q2.INIT" dx1="80" dx2="80" dy="1113.33"/>
+			<Connection Source="Life_Q2.INITO" Destination="Life_100ms.START" dx1="80" dx2="80" dy="866.67"/>
+			<Connection Source="Life_100ms.EO" Destination="Life_FF.CLK" dx1="80" dx2="80" dy="586.67"/>
+			<Connection Source="Life_FF.EO" Destination="Life_Q2.REQ" dx1="146.67"/>
 			<Connection Source="Life_100ms.EO" Destination="Life_Count.CU"/>
 		</EventConnections>
 		<DataConnections>
 			<Connection Source="Fast_FF.Q" Destination="Fast_X.OUT"/>
-			<Connection Source="Life_FF.Q" Destination="Life_Q2.OUT"/>
+			<Connection Source="Life_FF.Q" Destination="Life_Q2.OUT" dx1="246.67"/>
 		</DataConnections>
 		<AdapterConnections>
-			<Connection Source="Fast_X.AX_OUT" Destination="Fast_AD.AX_IN"/>
-			<Connection Source="Fast_AD.AD_OUT" Destination="AD_SHL.IN"/>
-			<Connection Source="AD_SHL.OUT" Destination="PWMOutput_Q1.OUT"/>
+			<Connection Source="Fast_X.AX_OUT" Destination="Fast_AD.AX_IN" dx1="266.67"/>
+			<Connection Source="Fast_AD.AD_OUT" Destination="AD_SHL.IN" dx1="386.67"/>
+			<Connection Source="AD_SHL.OUT" Destination="PWMOutput_Q1.OUT" dx1="80" dx2="686.67" dy="193.33"/>
 		</AdapterConnections>
 	</SubAppNetwork>
 	<Attribute Name="Documentation" Type="CDATA"><![CDATA[<h1>Kein Blockieren beim PWM-Wertwechsel</h1>
