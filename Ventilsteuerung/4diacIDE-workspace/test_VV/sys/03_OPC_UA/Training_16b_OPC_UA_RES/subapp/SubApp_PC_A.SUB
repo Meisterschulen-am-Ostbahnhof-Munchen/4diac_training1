@@ -34,6 +34,7 @@
 			<Parameter Name="QI" Value="TRUE"/>
 			<Parameter Name="ID" Value="T16B_INCD_SUBSCRIBE"/>
 		</FB>
+		<Comment Comment="B-Version von Training_16: READ_INCD.REQ kommt von SUBSCRIPTION.IND (B hat&#10;Incremented veroeffentlicht), nicht von WRITE_INC.CNF. Das Lesen haengt so&#10;nicht mehr von der Reihenfolge ab." x="0" y="-1800" width="9000" height="900"/>
 		<EventConnections>
 			<Connection Source="TASTER_I1.IND" Destination="WRITE_INC.REQ"/>
 			<Connection Source="SUBSCRIPTION.IND" Destination="READ_INCD.REQ"/>
@@ -44,6 +45,5 @@
 		<DataConnections>
 			<Connection Source="READ_INCD.RD_1" Destination="RESULT_TO_DINT.IN"/>
 		</DataConnections>
-		<Comment Comment="B-Version von Training_16: READ_INCD.REQ kommt von SUBSCRIPTION.IND (B hat&#10;Incremented veroeffentlicht), nicht von WRITE_INC.CNF. Das Lesen haengt so&#10;nicht mehr von der Reihenfolge ab." x="0" y="-1800" width="9000" height="900"/>
 	</SubAppNetwork>
 </SubAppType>

@@ -6,6 +6,7 @@ on:
       - '**/*.fbt'
       - '**/*.adp'
       - '**/*.sub'
+      - '**/*.SUB'
       - '**/*.dtp'
       - '**/*.atp'
       - '.agents/skills/iec61499-creator/**'
@@ -16,6 +17,7 @@ on:
       - '**/*.fbt'
       - '**/*.adp'
       - '**/*.sub'
+      - '**/*.SUB'
       - '**/*.dtp'
       - '**/*.atp'
       - '.agents/skills/iec61499-creator/**'
@@ -48,5 +50,5 @@ jobs:
               status=1
             fi
             echo "::endgroup::"
-          done < <(git ls-files -z -- '*.fbt' '*.adp' '*.sub' '*.dtp' '*.atp' | grep -zv '/\.lib/')
+          done < <(git ls-files -z -- '*.fbt' '*.adp' '*.sub' '*.SUB' '*.dtp' '*.atp' | grep -zv '/\.lib/')
           exit $status
