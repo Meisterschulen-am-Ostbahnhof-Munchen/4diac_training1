@@ -2,13 +2,13 @@
 <FBType Name="integEC" Comment="Ground-truth reference: generic time-based integrator (physical cylinder&#10;position model)">
 	<Identification Standard="61499-2" Description="Educational reference, ported for the Meisterschulen am Ostbahnhof IEC 61499 training repository. Original design (c) nxtControl GmbH, from the UniversalAutomation.org 'IEC 61499: primer course' curriculum exercise Final.sln (also present in the LiftingLuggage_*.sln/Starter.sln exercises), IEC61499/integEC.fbt - included here under the same educational-use terms as the rest of that curriculum. This port: Copyright (c) 2026 Meisterschulen am Ostbahnhof, EPL-2.0, https://www.eclipse.org/legal/epl-2.0/">
 	</Identification>
-	<VersionInfo Organization="nxtControl GmbH" Version="0.0" Author="milos" Date="2007-06-14" Remarks="Original EAE/nxtControl design (Template), source: Final.sln (identical copies in LiftingLuggage_*.sln, Starter.sln)">
-	</VersionInfo>
-	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2026-09-03" Remarks="Ported from EAE/nxtControl format (LibraryElement.dtd, ST as an attribute with &#xD;&#xA; escapes) to 4diac's FBType XSD (ST as CDATA). Interface, ECC, and both algorithms otherwise unchanged. Part of the CylinderH continuous-simulation reference - see ContinuousCylinderSimulation.md">
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.2" Author="Franz Höpfinger" Date="2026-09-03" Remarks="PR #160 review feedback (coderabbitai): documented that TRIP/P_TRIP are practically unreachable due to ECC transition declaration order (execIntegration's C_CYCLE[NOT error] always wins first), inherited unchanged from the original nxtControl source. Not fixed - no effect on CylinderHCore.fbt, which never wires these outputs; would need a real ECC restructuring">
 	</VersionInfo>
 	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.1" Author="Franz Höpfinger" Date="2026-09-03" Remarks="PR #160 review feedback: INIT/INITO must be Type=EInit (were Type=Event) - fixed, With-Var lists unchanged">
 	</VersionInfo>
-	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.2" Author="Franz Höpfinger" Date="2026-09-03" Remarks="PR #160 review feedback (coderabbitai): documented that TRIP/P_TRIP are practically unreachable due to ECC transition declaration order (execIntegration's C_CYCLE[NOT error] always wins first), inherited unchanged from the original nxtControl source. Not fixed - no effect on CylinderHCore.fbt, which never wires these outputs; would need a real ECC restructuring">
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2026-09-03" Remarks="Ported from EAE/nxtControl format (LibraryElement.dtd, ST as an attribute with &#xD;&#xA; escapes) to 4diac's FBType XSD (ST as CDATA). Interface, ECC, and both algorithms otherwise unchanged. Part of the CylinderH continuous-simulation reference - see ContinuousCylinderSimulation.md">
+	</VersionInfo>
+	<VersionInfo Organization="nxtControl GmbH" Version="0.0" Author="milos" Date="2007-06-14" Remarks="Original EAE/nxtControl design (Template), source: Final.sln (identical copies in LiftingLuggage_*.sln, Starter.sln)">
 	</VersionInfo>
 	<CompilerInfo packageName="Meins::DesingPatterns::ContinuousCylinderSimulation">
 	</CompilerInfo>
