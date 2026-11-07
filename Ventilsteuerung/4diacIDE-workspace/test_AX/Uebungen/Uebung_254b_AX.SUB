@@ -40,7 +40,7 @@
 		</FB>
 		<FB Name="AD_LAST_3" Type="adapter::events::unidirectional::AD_LAST_3" x="-8500" y="3500">
 		</FB>
-		<FB Name="PWMOutput_Q1" Type="logiBUS::io::DQ::logiBUS_QDA_PWM" x="-7000" y="2600">
+		<FB Name="PWMOutput_Q1" Type="logiBUS::io::DQ::logiBUS_QDA_PWM" x="-8000" y="4300">
 			<Parameter Name="QI" Value="TRUE"/>
 			<Parameter Name="Output" Value="Output_Q1"/>
 			<Parameter Name="RAMP" Value="T#0ms"/>
@@ -54,7 +54,7 @@
 			<Connection Source="Wert_0.AD_OUT" Destination="AD_LAST_3.IN1" dx1="566.67"/>
 			<Connection Source="Wert_4000.AD_OUT" Destination="AD_LAST_3.IN2" dx1="353.33"/>
 			<Connection Source="Wert_8000.AD_OUT" Destination="AD_LAST_3.IN3" dx1="726.67"/>
-			<Connection Source="AD_LAST_3.OUT" Destination="PWMOutput_Q1.OUT" dx1="593.33"/>
+			<Connection Source="AD_LAST_3.OUT" Destination="PWMOutput_Q1.OUT" dx1="80" dx2="433.33" dy="433.33"/>
 		</AdapterConnections>
 	</SubAppNetwork>
 </SubAppType>
