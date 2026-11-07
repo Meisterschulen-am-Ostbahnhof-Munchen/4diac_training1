@@ -1,0 +1,46 @@
+name: VersionInfo Check
+
+on:
+  pull_request:
+    paths:
+      - '**/*.fbt'
+      - '**/*.FBT'
+      - '**/*.adp'
+      - '**/*.sub'
+      - '**/*.SUB'
+      - '**/*.dtp'
+      - '**/*.atp'
+      - '.github/scripts/check_versioninfo.py'
+      - '.github/workflows/versioninfo-check.yml'
+  push:
+    branches:
+      - main
+      - develop
+    paths:
+      - '**/*.fbt'
+      - '**/*.FBT'
+      - '**/*.adp'
+      - '**/*.sub'
+      - '**/*.SUB'
+      - '**/*.dtp'
+      - '**/*.atp'
+      - '.github/scripts/check_versioninfo.py'
+      - '.github/workflows/versioninfo-check.yml'
+
+permissions:
+  contents: read
+
+jobs:
+  check:
+    runs-on: ubuntu-24.04
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v6
+
+      - name: Set up Python
+        uses: actions/setup-python@v6
+        with:
+          python-version: '3.12'
+
+      - name: Check VersionInfo order and duplicates
+        run: python .github/scripts/check_versioninfo.py
