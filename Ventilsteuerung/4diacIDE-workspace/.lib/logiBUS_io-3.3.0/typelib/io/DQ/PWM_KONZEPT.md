@@ -521,6 +521,20 @@ Sperre über die Board-Tabelle. Wo das Signal abgegriffen wird, verantwortet der
 
 `FORTE_ABI` bleibt (nur logiBUS_io-Bausteine und -Handles ändern sich, keine forte-Basisklassen).
 
+**Umsetzung Schritt 4 Dimmer (Stand 2026-11-07, kompiliert für S3/P4/S31, gebaut und getestet noch nicht):**
+- Typen `logiBUS_QD_DIMMER` / `logiBUS_QD_DIMMER_G` wie in Abschnitt 2, Ereignis-Eingänge lesen `QI`, `DIM_TIME`, `MIN`,
+  `MAX`, `START`, `SOFT` (also auch während des Betriebs änderbar), `FREQ` und `GAMMA` nur bei INIT. `CNF` nach jedem
+  Ereignis-Eingang mit `ON_STATE` und `LEVEL`.
+- forte: `handler/logiBUSDimmerFB` (Zustand: an/aus, Richtung, gespeicherte Helligkeit), die beiden SIFBs sind
+  handgeschrieben wie `QD_PWM`. Handle ist `IOHandleESP32PWMO`, neu `stop()` (Rampe anhalten, kein `RAMPO`),
+  `getBrightness()` (Ist-Wert, Gamma herausgerechnet) und `isRamping()`.
+- Ergänzung: Steht die Helligkeit bei einem langen Druck schon am Ende in der fälligen Richtung (z. B. `MAX` und
+  „hoch“), dimmt er in die andere Richtung, statt nichts zu tun.
+- Langer Druck bei aus: Rampe ab 0 (nicht ab `MIN`), Zeit nach demselben Maßstab. Wird vor `MIN` losgelassen, geht
+  der Ausgang mit `SOFT` auf `MIN` (dann kommt ausnahmsweise ein `RAMPO`).
+- Kein `STOP` am normalen `QD_PWM` (Franz, 2026-11-07): Ein neuer Wert unterbricht die Rampe schon, „anhalten, wo sie
+  steht“ braucht bisher nur der Dimmer.
+
 ## Entscheidungen (Franz)
 
 Stand 2026-11-06.
