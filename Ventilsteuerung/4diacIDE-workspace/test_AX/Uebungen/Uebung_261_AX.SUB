@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SubAppType Name="Uebung_261_AX" Comment="RAMPO zaehlen: Poti I1 auf Q1 RAMP 500ms und Q2 RAMP 2s, jedes RAMPO zaehlt E_CTU hoch (CV per Watch)">
+	<Identification Standard="61499-2" Description="Copyright (c) 2026 Meisterschulen am Ostbahnhof  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0">
+	</Identification>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2026-11-06" Remarks="initial API and implementation and/or initial documentation">
+	</VersionInfo>
+	<CompilerInfo packageName="Uebungen">
+		<Import declaration="logiBUS::io::AI::logiBUS_AI::AnalogInput_I1"/>
+		<Import declaration="Meins::InputOutputTester::Button_AI_Calibrate_2P_OPC_UA::SubStrings::AIC_I1_RAW_WRITE"/>
+		<Import declaration="Meins::InputOutputTester::Button_AI_Calibrate_2P_OPC_UA::SubStrings::AIC_I1_CAL_WRITE"/>
+		<Import declaration="Meins::InputOutputTester::Button_AI_Calibrate_2P_OPC_UA::SubStrings::AIC_I1_CO_METHOD"/>
+		<Import declaration="Meins::InputOutputTester::Button_AI_Calibrate_2P_OPC_UA::SubStrings::AIC_I1_CS_METHOD"/>
+		<Import declaration="Meins::InputOutputTester::Button_AI_Calibrate_2P_OPC_UA::SubStrings::AIC_I1_ZERO_READ"/>
+		<Import declaration="Meins::InputOutputTester::Button_AI_Calibrate_2P_OPC_UA::SubStrings::AIC_I1_ZERO_WRITE"/>
+		<Import declaration="Meins::InputOutputTester::Button_AI_Calibrate_2P_OPC_UA::SubStrings::AIC_I1_SPAN_READ"/>
+		<Import declaration="Meins::InputOutputTester::Button_AI_Calibrate_2P_OPC_UA::SubStrings::AIC_I1_SPAN_WRITE"/>
+		<Import declaration="Meins::InputOutputTester::Button_AI_Calibrate_2P_OPC_UA::SubStrings::AIC_I1_ZERO_RAW_WRITE"/>
+		<Import declaration="Meins::InputOutputTester::Button_AI_Calibrate_2P_OPC_UA::SubStrings::AIC_I1_SPAN_RAW_WRITE"/>
+		<Import declaration="logiBUS::io::DQ::logiBUS_DO::Output_Q1"/>
+		<Import declaration="logiBUS::io::DQ::logiBUS_DO::Output_Q2"/>
+	</CompilerInfo>
+	<SubAppInterfaceList>
+	</SubAppInterfaceList>
+	<SubAppNetwork>
+		<SubApp Name="AnalogInput_I1_Cal" Type="MyLib::sys::logiBUS_AI_Calibrate_2P_OPC" x="-9000" y="0">
+			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="Input" Value="AnalogInput_I1"/>
+			<Parameter Name="sSection" Value="'AI_Calibrate_I1'"/>
+			<Parameter Name="ID_RAW_WRITE" Value="AIC_I1_RAW_WRITE"/>
+			<Parameter Name="ID_CAL_WRITE" Value="AIC_I1_CAL_WRITE"/>
+			<Parameter Name="ID_CO_METHOD" Value="AIC_I1_CO_METHOD"/>
+			<Parameter Name="ID_CS_METHOD" Value="AIC_I1_CS_METHOD"/>
+			<Parameter Name="ID_ZERO_READ" Value="AIC_I1_ZERO_READ"/>
+			<Parameter Name="ID_ZERO_WRITE" Value="AIC_I1_ZERO_WRITE"/>
+			<Parameter Name="ID_SPAN_READ" Value="AIC_I1_SPAN_READ"/>
+			<Parameter Name="ID_SPAN_WRITE" Value="AIC_I1_SPAN_WRITE"/>
+			<Parameter Name="ID_ZERO_RAW_WRITE" Value="AIC_I1_ZERO_RAW_WRITE"/>
+			<Parameter Name="ID_SPAN_RAW_WRITE" Value="AIC_I1_SPAN_RAW_WRITE"/>
+		</SubApp>
+		<FB Name="AR_MUL_Scale" Type="adapter::iec61131::arithmetic::AR_MUL_2" x="-6600" y="2200">
+		</FB>
+		<FB Name="initval_Scale" Type="adapter::types::unidirectional::AR::initval::initval_AR" x="-8200" y="2100">
+			<Parameter Name="INIT_VAL" Value="REAL#81.91"/>
+		</FB>
+		<FB Name="AR_MIN_Max" Type="adapter::iec61131::selection::AR_MIN" x="-6600" y="2800">
+		</FB>
+		<FB Name="initval_Max" Type="adapter::types::unidirectional::AR::initval::initval_AR" x="-8200" y="2700">
+			<Parameter Name="INIT_VAL" Value="REAL#8191.0"/>
+		</FB>
+		<FB Name="AR_MAX_Null" Type="adapter::iec61131::selection::AR_MAX" x="-6700" y="3600">
+		</FB>
+		<FB Name="initval_Null" Type="adapter::types::unidirectional::AR::initval::initval_AR" x="-8200" y="3500">
+			<Parameter Name="INIT_VAL" Value="REAL#0.0"/>
+		</FB>
+		<FB Name="AR_TO_AD_NUM" Type="adapter::conversion::unidirectional::AR_TO_AD_NUM" x="-6800" y="4200">
+		</FB>
+		<FB Name="AD_SPLIT" Type="adapter::events::unidirectional::AD_SPLIT_2" x="-4300" y="4200">
+		</FB>
+		<FB Name="PWMOutput_Q1_500ms" Type="logiBUS::io::DQ::logiBUS_QDA_PWM" x="-2300" y="3100">
+			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="Output" Value="Output_Q1"/>
+			<Parameter Name="RAMP" Value="T#500ms"/>
+		</FB>
+		<FB Name="PWMOutput_Q2_2s" Type="logiBUS::io::DQ::logiBUS_QDA_PWM" x="-2300" y="4500">
+			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="Output" Value="Output_Q2"/>
+			<Parameter Name="RAMP" Value="T#2s"/>
+		</FB>
+		<FB Name="RAMPO_Count_Q1" Type="iec61499::events::E_CTU" x="-700" y="3300">
+			<Parameter Name="PV" Value="65535"/>
+		</FB>
+		<FB Name="RAMPO_Count_Q2" Type="iec61499::events::E_CTU" x="-600" y="4700">
+			<Parameter Name="PV" Value="65535"/>
+		</FB>
+		<Comment Comment="Vorher AI1 kalibrieren:&#10;1. Meins/InputOutputTester/Button_AI_Calibrate_2P_OPC_UA als Control in test_AX.sys, Bootfile exportieren, aufspielen.&#10;2. Mit Web-Clients/apixon-ai-calibrate-2p-client/dist/apixon-ai-calibrate-2p.html AI1 kalibrieren (0 %: CO, 100 %: CS).&#10;3. INI-Datei auf der Platine liegen lassen (Sektion AI_Calibrate_I1).&#10;Danach laeuft diese Uebung ohne VT und ohne Dashboard." x="-9000" y="-3000" width="8000" height="1300"/>
+		<EventConnections>
+			<Connection Source="AnalogInput_I1_Cal.INITO" Destination="PWMOutput_Q1_500ms.INIT" dx1="4973.33">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="AnalogInput_I1_Cal.INITO" Destination="PWMOutput_Q2_2s.INIT" dx1="4973.33">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="PWMOutput_Q1_500ms.RAMPO" Destination="RAMPO_Count_Q1.CU" dx1="600"/>
+			<Connection Source="PWMOutput_Q2_2s.RAMPO" Destination="RAMPO_Count_Q2.CU" dx1="700"/>
+		</EventConnections>
+		<AdapterConnections>
+			<Connection Source="AnalogInput_I1_Cal.CAL_OUT" Destination="AR_MUL_Scale.IN1" dx1="726.67"/>
+			<Connection Source="initval_Scale.OUT" Destination="AR_MUL_Scale.IN2" dx1="373.33"/>
+			<Connection Source="AR_MUL_Scale.OUT" Destination="AR_MIN_Max.IN1" dx1="80" dx2="80" dy="300"/>
+			<Connection Source="initval_Max.OUT" Destination="AR_MIN_Max.IN2" dx1="373.33"/>
+			<Connection Source="AR_MIN_Max.OUT" Destination="AR_MAX_Null.IN1" dx1="80" dx2="80" dy="346.67"/>
+			<Connection Source="initval_Null.OUT" Destination="AR_MAX_Null.IN2" dx1="373.33"/>
+			<Connection Source="AR_MAX_Null.OUT" Destination="AR_TO_AD_NUM.AR_IN" dx1="80" dx2="80" dy="300"/>
+			<Connection Source="AR_TO_AD_NUM.AD_OUT" Destination="AD_SPLIT.IN"/>
+			<Connection Source="AD_SPLIT.OUT1" Destination="PWMOutput_Q1_500ms.OUT" dx1="873.33"/>
+			<Connection Source="AD_SPLIT.OUT2" Destination="PWMOutput_Q2_2s.OUT" dx1="873.33"/>
+		</AdapterConnections>
+	</SubAppNetwork>
+</SubAppType>

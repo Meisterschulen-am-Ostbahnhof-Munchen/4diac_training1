@@ -63,7 +63,10 @@
 				<Attribute Name="Visible" Value="false"/>
 			</Parameter>
 			<Parameter Name="Output" Value="Output_Q2"/>
+			<Parameter Name="PULSE_MIN" Value="T#500us"/>
+			<Parameter Name="PULSE_MAX" Value="T#2500us"/>
 		</FB>
+		<Comment Comment="ServoQ2: PULSE_MIN = T#500us, PULSE_MAX = T#2500us, FREQ 50 Hz (Mitte 1,5 ms).&#10;Passt fuer: 5 Stueck 9G Servo Motor, Mikro-Servomotoren mit Kabel, 180 Grad (Amazon B0H3BC3PSS).&#10;Herstellerangabe: 20 ms Zyklus, 0,5..2,5 ms Impulsbreite fuer 0..180 Grad, 3..7,2 V.&#10;Damit faehrt der Servo exakt 90 Grad in jede Richtung (getestet 2026-11-06).&#10;Standardwerte 1000..2000 us ergeben bei diesem Servo nur ca. 35 Grad." x="5100" y="-1100" width="6000" height="1200"/>
 		<FB Name="AngleEchoToAR" Type="adapter::conversion::unidirectional::AR_REAL_TO_R" x="4200" y="1600">
 		</FB>
 		<FB Name="AngleEcho" Type="adapter::net::AR_PUBLISH_1" x="7400" y="1500">

@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SubAppType Name="Uebung_263_AX" Comment="Kein Blockieren: alle 10ms neuer PWM-Wert (0/4096) auf Q1 mit RAMP 500ms, Lebenszeichen Q2 blinkt 5 Hz gleichmaessig">
+	<Identification Standard="61499-2" Description="Copyright (c) 2026 Meisterschulen am Ostbahnhof  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0">
+	</Identification>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2026-11-06" Remarks="initial API and implementation and/or initial documentation">
+	</VersionInfo>
+	<CompilerInfo packageName="Uebungen">
+		<Import declaration="logiBUS::io::DQ::logiBUS_DO::Output_Q1"/>
+		<Import declaration="logiBUS::io::DQ::logiBUS_DO::Output_Q2"/>
+	</CompilerInfo>
+	<SubAppInterfaceList>
+	</SubAppInterfaceList>
+	<SubAppNetwork>
+		<FB Name="PWMOutput_Q1" Type="logiBUS::io::DQ::logiBUS_QDA_PWM" x="3000" y="0">
+			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="Output" Value="Output_Q1"/>
+			<Parameter Name="RAMP" Value="T#500ms"/>
+		</FB>
+		<FB Name="Fast_10ms" Type="iec61499::events::E_CYCLE" x="-900" y="-800">
+			<Parameter Name="DT" Value="T#10ms"/>
+		</FB>
+		<FB Name="Fast_FF" Type="iec61499::events::E_T_FF" x="0" y="-800">
+		</FB>
+		<FB Name="Fast_X" Type="adapter::conversion::unidirectional::AX_BOOL_TO_X" x="800" y="-800">
+		</FB>
+		<FB Name="Fast_AD" Type="adapter::conversion::unidirectional::AX_TO_AD" x="2000" y="-600">
+		</FB>
+		<FB Name="AD_SHL" Type="adapter::iec61131::bitwise::AD_SHL" x="3300" y="-800">
+			<Parameter Name="N" Value="UINT#12"/>
+		</FB>
+		<FB Name="RAMPO_Count_Q1" Type="iec61499::events::E_CTU" x="4400" y="300">
+			<Parameter Name="PV" Value="65535"/>
+		</FB>
+		<FB Name="Life_100ms" Type="iec61499::events::E_CYCLE" x="3300" y="2400">
+			<Parameter Name="DT" Value="T#100ms"/>
+		</FB>
+		<FB Name="Life_FF" Type="iec61499::events::E_T_FF" x="2100" y="2400">
+		</FB>
+		<FB Name="Life_Q2" Type="logiBUS::io::DQ::logiBUS_QX" x="3200" y="1300">
+			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="Output" Value="Output_Q2"/>
+		</FB>
+		<FB Name="Life_Count" Type="iec61499::events::E_CTU" x="4600" y="2400">
+			<Parameter Name="PV" Value="65535"/>
+		</FB>
+		<EventConnections>
+			<Connection Source="PWMOutput_Q1.INITO" Destination="Fast_10ms.START" dx1="80" dx2="80" dy="-1113.33"/>
+			<Connection Source="Fast_10ms.EO" Destination="Fast_FF.CLK"/>
+			<Connection Source="Fast_FF.EO" Destination="Fast_X.REQ"/>
+			<Connection Source="PWMOutput_Q1.RAMPO" Destination="RAMPO_Count_Q1.CU" dx1="386.67"/>
+			<Connection Source="PWMOutput_Q1.INITO" Destination="Life_Q2.INIT" dx1="80" dx2="80" dy="1113.33"/>
+			<Connection Source="Life_Q2.INITO" Destination="Life_100ms.START" dx1="80" dx2="80" dy="866.67"/>
+			<Connection Source="Life_100ms.EO" Destination="Life_FF.CLK" dx1="80" dx2="80" dy="586.67"/>
+			<Connection Source="Life_FF.EO" Destination="Life_Q2.REQ" dx1="146.67"/>
+			<Connection Source="Life_100ms.EO" Destination="Life_Count.CU"/>
+		</EventConnections>
+		<DataConnections>
+			<Connection Source="Fast_FF.Q" Destination="Fast_X.OUT"/>
+			<Connection Source="Life_FF.Q" Destination="Life_Q2.OUT" dx1="246.67"/>
+		</DataConnections>
+		<AdapterConnections>
+			<Connection Source="Fast_X.AX_OUT" Destination="Fast_AD.AX_IN" dx1="266.67"/>
+			<Connection Source="Fast_AD.AD_OUT" Destination="AD_SHL.IN" dx1="386.67"/>
+			<Connection Source="AD_SHL.OUT" Destination="PWMOutput_Q1.OUT" dx1="80" dx2="686.67" dy="193.33"/>
+		</AdapterConnections>
+	</SubAppNetwork>
+	<Attribute Name="Documentation" Type="CDATA"><![CDATA[<h1>Kein Blockieren beim PWM-Wertwechsel</h1>
+
+<p>Alle 10 ms bekommt Q1 einen neuen Wert (0 / 4096) bei RAMP = T#500ms. Jede Rampe wird nach
+10 ms abgebrochen, die neue startet sofort am Ist-Wert.</p>
+
+<p>Erwartung:</p>
+<ul>
+<li>Q2 blinkt gleichmäßig mit 5 Hz, <code>Life_Count</code> zählt gleichmäßig. Das ist der eigentliche Test.</li>
+<li>Q1 bewegt sich kaum: Er pendelt nur wenige Prozent um den Startwert. Das ist erwartet.</li>
+<li><code>RAMPO_Count_Q1</code> bleibt (fast) bei 0, weil abgebrochene Rampen kein RAMPO melden.</li>
+</ul>
+
+<p>Stockt Q2 oder <code>Life_Count</code>, blockiert der Wertwechsel den Event-Thread (alte Firmware oder altes ELF).</p>
+]]></Attribute>
+</SubAppType>
