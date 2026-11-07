@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SubAppType Name="Uebung_266_AX" Comment="Dimmer am Terminal: wie 265, zusaetzlich Softkey F1 als zweite Bedienstelle (tippen = ein/aus, halten = dimmen) und Helligkeit in % auf OutputNumber_N1">
+	<Identification Standard="61499-2" Description="Copyright (c) 2026 Meisterschulen am Ostbahnhof  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0">
+	</Identification>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2026-11-07" Remarks="initial API and implementation and/or initial documentation">
+	</VersionInfo>
+	<CompilerInfo packageName="Uebungen">
+		<Import declaration="logiBUS::io::DI::logiBUS_DI::Input_I1"/>
+		<Import declaration="logiBUS::io::DI::logiBUS_DI::Input_I2"/>
+		<Import declaration="logiBUS::io::DI::logiBUS_DI::Input_I3"/>
+		<Import declaration="logiBUS::io::DI::logiBUS_DI_Events::BUTTON_LONG_PRESS_START"/>
+		<Import declaration="logiBUS::io::DI::logiBUS_DI_Events::BUTTON_LONG_PRESS_UP"/>
+		<Import declaration="logiBUS::io::DI::logiBUS_DI_Events::BUTTON_SINGLE_CLICK"/>
+		<Import declaration="logiBUS::io::DQ::logiBUS_DO::Output_Q1"/>
+		<Import declaration="Uebungen::const::UT::DefaultPool::OutputNumber_N1"/>
+		<Import declaration="Uebungen::const::UT::DefaultPool::SoftKey_F1"/>
+		<Import declaration="isobus::UT::io::Softkey::SoftKeyActivationCode::SK_RELEASED"/>
+		<Import declaration="isobus::UT::io::Softkey::SoftKeyActivationCode::SK_STILL_HELD_START"/>
+	</CompilerInfo>
+	<SubAppInterfaceList>
+	</SubAppInterfaceList>
+	<SubAppNetwork>
+		<FB Name="Tippen_I1" Type="logiBUS::io::DI::logiBUS_IE" x="-4000" y="-1200">
+			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="Input" Value="Input_I1"/>
+			<Parameter Name="InputEvent" Value="BUTTON_SINGLE_CLICK"/>
+		</FB>
+		<FB Name="Lang_Start_I1" Type="logiBUS::io::DI::logiBUS_IE" x="-4000" y="0">
+			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="Input" Value="Input_I1"/>
+			<Parameter Name="InputEvent" Value="BUTTON_LONG_PRESS_START"/>
+		</FB>
+		<FB Name="Lang_Ende_I1" Type="logiBUS::io::DI::logiBUS_IE" x="-4000" y="1200">
+			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="Input" Value="Input_I1"/>
+			<Parameter Name="InputEvent" Value="BUTTON_LONG_PRESS_UP"/>
+		</FB>
+		<FB Name="Ein_I2" Type="logiBUS::io::DI::logiBUS_IE" x="-4000" y="2400">
+			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="Input" Value="Input_I2"/>
+			<Parameter Name="InputEvent" Value="BUTTON_SINGLE_CLICK"/>
+		</FB>
+		<FB Name="Aus_I3" Type="logiBUS::io::DI::logiBUS_IE" x="-4000" y="3600">
+			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="Input" Value="Input_I3"/>
+			<Parameter Name="InputEvent" Value="BUTTON_SINGLE_CLICK"/>
+		</FB>
+		<FB Name="Halten_F1" Type="isobus::UT::io::Softkey::Softkey_IE" x="-6800" y="5000">
+			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="u16ObjId" Value="SoftKey_F1"/>
+			<Parameter Name="InputEvent" Value="SK_STILL_HELD_START"/>
+		</FB>
+		<FB Name="Loslassen_F1" Type="isobus::UT::io::Softkey::Softkey_IE" x="-6800" y="6200">
+			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="u16ObjId" Value="SoftKey_F1"/>
+			<Parameter Name="InputEvent" Value="SK_RELEASED"/>
+		</FB>
+		<FB Name="Gehalten" Type="iec61499::events::E_SR" x="-5000" y="5000">
+		</FB>
+		<FB Name="Tippen_oder_Halten" Type="iec61499::events::E_SWITCH" x="-3000" y="6200">
+		</FB>
+		<FB Name="Dimmer_Q1" Type="logiBUS::io::DQ::logiBUS_QD_DIMMER_G" x="-1500" y="800">
+			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="Output" Value="Output_Q1"/>
+			<Parameter Name="DIM_TIME" Value="T#4s"/>
+			<Parameter Name="MIN" Value="10.0"/>
+			<Parameter Name="MAX" Value="100.0"/>
+			<Parameter Name="START" Value="100.0"/>
+			<Parameter Name="SOFT" Value="T#300ms"/>
+			<Parameter Name="GAMMA" Value="2.2"/>
+		</FB>
+		<FB Name="LEVEL_TO_UDINT" Type="iec61131::conversion::F_REAL_TO_UDINT" x="1200" y="1800">
+		</FB>
+		<FB Name="Helligkeit_N1" Type="isobus::UT::Q::Q_NumericValue" x="3000" y="1800">
+			<Parameter Name="u16ObjId" Value="OutputNumber_N1"/>
+		</FB>
+		<EventConnections>
+			<Connection Source="Tippen_I1.IND" Destination="Dimmer_Q1.TOGGLE"/>
+			<Connection Source="Lang_Start_I1.IND" Destination="Dimmer_Q1.DIM_START"/>
+			<Connection Source="Lang_Ende_I1.IND" Destination="Dimmer_Q1.DIM_STOP"/>
+			<Connection Source="Ein_I2.IND" Destination="Dimmer_Q1.ON"/>
+			<Connection Source="Aus_I3.IND" Destination="Dimmer_Q1.OFF"/>
+			<Connection Source="Halten_F1.IND" Destination="Gehalten.S"/>
+			<Connection Source="Halten_F1.IND" Destination="Dimmer_Q1.DIM_START"/>
+			<Connection Source="Loslassen_F1.IND" Destination="Tippen_oder_Halten.EI"/>
+			<Connection Source="Tippen_oder_Halten.EO0" Destination="Dimmer_Q1.TOGGLE"/>
+			<Connection Source="Tippen_oder_Halten.EO1" Destination="Dimmer_Q1.DIM_STOP"/>
+			<Connection Source="Tippen_oder_Halten.EO1" Destination="Gehalten.R"/>
+			<Connection Source="Dimmer_Q1.CNF" Destination="LEVEL_TO_UDINT.REQ"/>
+			<Connection Source="Dimmer_Q1.RAMPO" Destination="LEVEL_TO_UDINT.REQ"/>
+			<Connection Source="LEVEL_TO_UDINT.CNF" Destination="Helligkeit_N1.REQ"/>
+		</EventConnections>
+		<DataConnections>
+			<Connection Source="Gehalten.Q" Destination="Tippen_oder_Halten.G"/>
+			<Connection Source="Dimmer_Q1.LEVEL" Destination="LEVEL_TO_UDINT.IN"/>
+			<Connection Source="LEVEL_TO_UDINT.OUT" Destination="Helligkeit_N1.u32NewValue"/>
+		</DataConnections>
+	</SubAppNetwork>
+</SubAppType>
