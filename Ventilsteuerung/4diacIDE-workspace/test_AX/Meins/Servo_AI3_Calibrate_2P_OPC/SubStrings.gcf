@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<GlobalConstants Name="SubStrings" Comment="Global constants">
+	<Identification Standard="61499-1">
+	</Identification>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2026-11-06">
+	</VersionInfo>
+	<CompilerInfo packageName="Meins::Servo_AI3_Calibrate_2P_OPC">
+	</CompilerInfo>
+	<GlobalConstants>
+		<VarDeclaration Name="SAI3_RAW_WRITE" Type="WSTRING" Comment="Rohwert AI3 0-4095" InitialValue="&quot;opc_ua[WRITE;/Objects/ServoAI3/RAW,1:s=SAI3_RAW]&quot;"/>
+		<VarDeclaration Name="SAI3_CAL_WRITE" Type="WSTRING" Comment="kalibrierter Wert AI3 = Sollwinkel" InitialValue="&quot;opc_ua[WRITE;/Objects/ServoAI3/CAL,1:s=SAI3_CAL]&quot;"/>
+		<VarDeclaration Name="SAI3_CO_METHOD" Type="WSTRING" Comment="Trigger CO (Nullpunkt)" InitialValue="&quot;opc_ua[CREATE_METHOD;/Objects/ServoAI3/COMethod,1:s=SAI3_CO_METHOD]&quot;"/>
+		<VarDeclaration Name="SAI3_CS_METHOD" Type="WSTRING" Comment="Trigger CS (Spanne)" InitialValue="&quot;opc_ua[CREATE_METHOD;/Objects/ServoAI3/CSMethod,1:s=SAI3_CS_METHOD]&quot;"/>
+		<VarDeclaration Name="SAI3_ZERO_READ" Type="WSTRING" Comment="ZERO_REF vom Dashboard" InitialValue="&quot;opc_ua[READ;/Objects/ServoAI3/ZEROREFExt,1:s=SAI3_ZEROREF_EXT]&quot;"/>
+		<VarDeclaration Name="SAI3_ZERO_WRITE" Type="WSTRING" Comment="ZERO_REF Echo" InitialValue="&quot;opc_ua[WRITE;/Objects/ServoAI3/ZEROREF,1:s=SAI3_ZEROREF]&quot;"/>
+		<VarDeclaration Name="SAI3_SPAN_READ" Type="WSTRING" Comment="SPAN_REF vom Dashboard" InitialValue="&quot;opc_ua[READ;/Objects/ServoAI3/SPANREFExt,1:s=SAI3_SPANREF_EXT]&quot;"/>
+		<VarDeclaration Name="SAI3_SPAN_WRITE" Type="WSTRING" Comment="SPAN_REF Echo" InitialValue="&quot;opc_ua[WRITE;/Objects/ServoAI3/SPANREF,1:s=SAI3_SPANREF]&quot;"/>
+		<VarDeclaration Name="SAI3_ZERO_RAW_WRITE" Type="WSTRING" Comment="Rohwert am ZERO-Punkt" InitialValue="&quot;opc_ua[WRITE;/Objects/ServoAI3/ZERORAW,1:s=SAI3_ZERO_RAW]&quot;"/>
+		<VarDeclaration Name="SAI3_SPAN_RAW_WRITE" Type="WSTRING" Comment="Rohwert am SPAN-Punkt" InitialValue="&quot;opc_ua[WRITE;/Objects/ServoAI3/SPANRAW,1:s=SAI3_SPAN_RAW]&quot;"/>
+		<VarDeclaration Name="SAI3_ANGLE" Type="WSTRING" Comment="angewendeter Winkel Q2 (Echo)" InitialValue="&quot;opc_ua[WRITE;/Objects/ServoAI3/ANGLE,1:s=SAI3_ANGLE]&quot;"/>
+	</GlobalConstants>
+	<OriginalSource><![CDATA[PACKAGE Meins::Servo_AI3_Calibrate_2P_OPC;
+
+// OPC-UA Strings
+GLOBALCONSTANTS SubStrings
+	VAR_GLOBAL CONSTANT
+		SAI3_RAW_WRITE : WSTRING := "opc_ua[WRITE;/Objects/ServoAI3/RAW,1:s=SAI3_RAW]"; // Rohwert AI3 0-4095
+		SAI3_CAL_WRITE : WSTRING := "opc_ua[WRITE;/Objects/ServoAI3/CAL,1:s=SAI3_CAL]"; // kalibrierter Wert AI3 = Sollwinkel
+		SAI3_CO_METHOD : WSTRING := "opc_ua[CREATE_METHOD;/Objects/ServoAI3/COMethod,1:s=SAI3_CO_METHOD]"; // Trigger CO (Nullpunkt)
+		SAI3_CS_METHOD : WSTRING := "opc_ua[CREATE_METHOD;/Objects/ServoAI3/CSMethod,1:s=SAI3_CS_METHOD]"; // Trigger CS (Spanne)
+		SAI3_ZERO_READ : WSTRING := "opc_ua[READ;/Objects/ServoAI3/ZEROREFExt,1:s=SAI3_ZEROREF_EXT]"; // ZERO_REF vom Dashboard
+		SAI3_ZERO_WRITE : WSTRING := "opc_ua[WRITE;/Objects/ServoAI3/ZEROREF,1:s=SAI3_ZEROREF]"; // ZERO_REF Echo
+		SAI3_SPAN_READ : WSTRING := "opc_ua[READ;/Objects/ServoAI3/SPANREFExt,1:s=SAI3_SPANREF_EXT]"; // SPAN_REF vom Dashboard
+		SAI3_SPAN_WRITE : WSTRING := "opc_ua[WRITE;/Objects/ServoAI3/SPANREF,1:s=SAI3_SPANREF]"; // SPAN_REF Echo
+		SAI3_ZERO_RAW_WRITE : WSTRING := "opc_ua[WRITE;/Objects/ServoAI3/ZERORAW,1:s=SAI3_ZERO_RAW]"; // Rohwert am ZERO-Punkt
+		SAI3_SPAN_RAW_WRITE : WSTRING := "opc_ua[WRITE;/Objects/ServoAI3/SPANRAW,1:s=SAI3_SPAN_RAW]"; // Rohwert am SPAN-Punkt
+		SAI3_ANGLE : WSTRING := "opc_ua[WRITE;/Objects/ServoAI3/ANGLE,1:s=SAI3_ANGLE]"; // angewendeter Winkel Q2 (Echo)
+	END_VAR
+END_GLOBALCONSTANTS
+]]></OriginalSource>
+</GlobalConstants>
