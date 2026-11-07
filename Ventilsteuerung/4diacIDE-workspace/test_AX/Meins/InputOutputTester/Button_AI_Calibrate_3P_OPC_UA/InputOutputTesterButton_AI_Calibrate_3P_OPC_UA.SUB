@@ -2,9 +2,9 @@
 <SubAppType Name="InputOutputTesterButton_AI_Calibrate_3P_OPC_UA" Comment="AI Calibrate 3P Tester (OPC-UA): 8 Analog-Eingaenge mit 3-Punkt-Kalibrierung&#10;(Rohwert+kalibrierter Wert+Bargraph+C_MIN/C_MID/C_MAX, fuer Sensoren mit&#10;Mittelstellung) + 12 unveraenderte digitale Ausgaenge">
 	<Identification Standard="61499-2" Description="Copyright (c) 2026 Meisterschulen am Ostbahnhof  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0">
 	</Identification>
-	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2026-09-11" Remarks="3-Punkt-Pendant zu InputOutputTesterButton_AI_Calibrate_OPC_UA - logiBUS_AI_Calibrate_3P_IDA_OPC statt logiBUS_AI_Calibrate_IDA_OPC (C_MIN/C_MID/C_MAX statt CO/CS)">
-	</VersionInfo>
 	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.1" Author="Franz Höpfinger" Date="2026-09-20" Remarks="Rohwert-Anzeige an den 3 Kalibrierpunkten (Min/Mid/Max-Raw) fuer alle 8 Kanaele ergaenzt, siehe logiBUS_AI_Calibrate_3P_IDA_OPC v1.8. Neue Parameter stObjMinRaw/stObjMidRaw/stObjMaxRaw + ID_MIN/MID/MAX_RAW_WRITE pro Kanal, neue VT-Objekte NumberVariable_AIC_I0N_MINRAW/_MIDRAW/_MAXRAW_N (DefaultPool_AIC_3P_Numeric, IDs 21040-21063) + OPC-UA-Adressen AIC_I0N_MIN/MID/MAX_RAW_WRITE (SubStrings).">
+	</VersionInfo>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2026-09-11" Remarks="3-Punkt-Pendant zu InputOutputTesterButton_AI_Calibrate_OPC_UA - logiBUS_AI_Calibrate_3P_IDA_OPC statt logiBUS_AI_Calibrate_IDA_OPC (C_MIN/C_MID/C_MAX statt CO/CS)">
 	</VersionInfo>
 	<CompilerInfo packageName="Meins::InputOutputTester::Button_AI_Calibrate_3P_OPC_UA">
 		<Import declaration="Meins::InputOutputTester::Button_AI_Calibrate_3P_OPC_UA::SubStrings::AIC_I1_RAW_WRITE"/>
