@@ -33,6 +33,7 @@ from elf_libs_manifest_lib import (
     build_libs_manifest,
     is_internal_host,
     resolve_elf_path,
+    resolve_host,
     resolve_node_arch,
     sha256_of,
 )
@@ -62,7 +63,14 @@ PRELOAD_MANIFEST_NAME = "elf_grundausstattung.libs.json"
 DEFAULT_NODES: list[str] = ["logibus.local"]
 
 
-def preload_node(ip: str, libs: list[str]) -> bool:
+def preload_node(node: str, libs: list[str]) -> bool:
+    # Name einmal aufloesen, danach nur noch die IP (siehe resolve_host)
+    ip = resolve_host(node)
+    if ip is None:
+        print(f"Knoten {node}")
+        print(f"WARNUNG: {node} nicht aufloesbar - uebersprungen.")
+        return False
+    print(f"Knoten {node}" if ip == node else f"Knoten {node} ({ip})")
     if not is_internal_host(ip):
         print(f"FEHLER: {ip} ist kein Knoten im internen Netz (erlaubt: 10.x, 172.16-31.x, 192.168.x, 169.254.x, *.local) - uebersprungen.")
         return False
@@ -153,7 +161,6 @@ def main(argv: list[str]) -> int:
     failed: list[str] = []
     for ip in ips:
         print("-" * 78)
-        print(f"Knoten {ip}")
         if not preload_node(ip, libs):
             failed.append(ip)
 

@@ -20,6 +20,7 @@ import ipaddress
 import json
 import os
 import re
+import socket
 import xml.etree.ElementTree as ET
 from pathlib import Path
 from typing import Optional
@@ -79,6 +80,33 @@ def internal_host(host: str) -> str:
     if not is_internal_host(host):
         raise NonInternalHostError(f"{host} ist kein Knoten im internen Netz (erlaubt: 10.x, 172.16-31.x, 192.168.x, 169.254.x, *.local)")
     return host
+
+
+def resolve_host(host: str) -> Optional[str]:
+    """Hostnamen (z. B. logibus.local) EINMAL in eine IP aufloesen; eine IP
+    kommt unveraendert zurueck, None wenn der Name nicht aufloesbar ist.
+    Die Skripte bauen pro Datei mehrere Verbindungen auf und http.client
+    loest den Namen jedes Mal neu auf - per mDNS kostete das am S3 als
+    Access Point je 12,4 s statt 0,09 s ueber die IP (Franz, 2026-11-06).
+    Die eine Aufloesung bleibt dort langsam (auch nur IPv4 dauerte 12 s),
+    entscheidend ist, dass sie nur einmal pro Knoten passiert. IPv4 zuerst,
+    IPv6 nur, wenn es keine IPv4-Adresse gibt."""
+    name = host.strip().strip("[]")
+    try:
+        ipaddress.ip_address(name)
+        return host.strip()
+    except ValueError:
+        pass
+    for family in (socket.AF_INET, socket.AF_UNSPEC):
+        try:
+            infos = socket.getaddrinfo(name, 80, family, socket.SOCK_STREAM)
+        except OSError:
+            continue
+        if infos:
+            addr = str(infos[0][4][0])
+            # http.client braucht IPv6 in Klammern, sonst gilt der letzte Teil als Port
+            return f"[{addr}]" if ":" in addr else addr
+    return None
 
 
 def query_device_info(ip: str, timeout: float = 5) -> tuple[str, Optional[dict]]:
