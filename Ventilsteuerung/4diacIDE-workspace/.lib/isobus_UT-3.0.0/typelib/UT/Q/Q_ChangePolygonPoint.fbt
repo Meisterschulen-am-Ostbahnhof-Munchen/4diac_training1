@@ -14,10 +14,12 @@
 	<InterfaceList>
 		<EventInputs>
 			<Event Name="INIT" Type="EInit" Comment="Service Initialization">
+				<With Var="QI"/>
 				<With Var="u16ObjId"/>
 				<With Var="xScale"/>
 			</Event>
 			<Event Name="REQ" Type="Event" Comment="Service Request">
+				<With Var="QI"/>
 				<With Var="u8PointIndex"/>
 				<With Var="u16NewXValue"/>
 				<With Var="u16NewYValue"/>
@@ -25,8 +27,10 @@
 		</EventInputs>
 		<EventOutputs>
 			<Event Name="INITO" Type="EInit" Comment="Initialization Confirm">
+				<With Var="QO"/>
 			</Event>
 			<Event Name="CNF" Type="Event" Comment="Confirmation of Requested Service">
+				<With Var="QO"/>
 				<With Var="STATUS"/>
 				<With Var="s16result"/>
 				<With Var="u8OldPointIndex"/>
@@ -35,6 +39,7 @@
 			</Event>
 		</EventOutputs>
 		<InputVars>
+			<VarDeclaration Name="QI" Type="BOOL" Comment="Quality Input - TRUE to enable service" InitialValue="TRUE"/>
 			<VarDeclaration Name="u16ObjId" Type="UINT" Comment="Object ID of the Output Polygon object to change " InitialValue="ID_NULL"/>
 			<VarDeclaration Name="xScale" Type="BOOL" Comment="FALSE (default) = bypass, send u16NewXValue/u16NewYValue through unchanged. TRUE = scale them by the DM/SKM factor for u16ObjId." InitialValue="FALSE"/>
 			<VarDeclaration Name="u8PointIndex" Type="USINT" Comment="Point index of the point to replace."/>
@@ -42,6 +47,7 @@
 			<VarDeclaration Name="u16NewYValue" Type="UINT" Comment="New Y value of a point relative to the top left corner of the polygon "/>
 		</InputVars>
 		<OutputVars>
+			<VarDeclaration Name="QO" Type="BOOL" Comment="Quality Output - TRUE if service executed successfully"/>
 			<VarDeclaration Name="STATUS" Type="STRING" Comment="Service Status"/>
 			<VarDeclaration Name="u8OldPointIndex" Type="USINT" Comment="Old point index of the point to replace."/>
 			<VarDeclaration Name="u16OldXValue" Type="UINT" Comment="Old X value of a point relative to the top left corner of the polygon "/>

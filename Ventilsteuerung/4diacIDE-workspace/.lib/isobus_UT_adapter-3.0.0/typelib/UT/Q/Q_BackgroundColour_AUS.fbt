@@ -10,21 +10,26 @@
 	<InterfaceList>
 		<EventInputs>
 			<Event Name="INIT" Type="EInit" Comment="Service Initialization">
+				<With Var="QI"/>
 				<With Var="u16ObjId"/>
 			</Event>
 		</EventInputs>
 		<EventOutputs>
 			<Event Name="INITO" Type="EInit" Comment="Initialization Confirm">
+				<With Var="QO"/>
 			</Event>
 			<Event Name="CNF" Type="Event" Comment="Confirmation of Requested Service">
+				<With Var="QO"/>
 				<With Var="STATUS"/>
 				<With Var="s16result"/>
 			</Event>
 		</EventOutputs>
 		<InputVars>
+			<VarDeclaration Name="QI" Type="BOOL" Comment="Quality Input - TRUE to enable service" InitialValue="TRUE"/>
 			<VarDeclaration Name="u16ObjId" Type="UINT" Comment="Object ID" InitialValue="ID_NULL"/>
 		</InputVars>
 		<OutputVars>
+			<VarDeclaration Name="QO" Type="BOOL" Comment="Quality Output - TRUE if service executed successfully"/>
 			<VarDeclaration Name="STATUS" Type="STRING" Comment="Service Status"/>
 			<VarDeclaration Name="s16result" Type="INT" Comment="retval see description"/>
 		</OutputVars>
@@ -51,6 +56,8 @@
 			<Connection Source="u8Colour.D1" Destination="Q_BackgroundColour.u8Colour" dx1="486.67"/>
 			<Connection Source="Q_BackgroundColour.u8OldColour" Destination="u8OldColour.D1" dx1="606.67"/>
 			<Connection Source="Q_BackgroundColour.s16result" Destination="s16result" dx1="2573.33"/>
+			<Connection Source="QI" Destination="Q_BackgroundColour.QI"/>
+			<Connection Source="Q_BackgroundColour.QO" Destination="QO"/>
 		</DataConnections>
 	</FBNetwork>
 	<Attribute Name="Documentation" Type="CDATA"><![CDATA[<h1>Command change background colour ( Part 6 - F.20 )</h1>

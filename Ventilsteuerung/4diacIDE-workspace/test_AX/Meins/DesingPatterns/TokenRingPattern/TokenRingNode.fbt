@@ -13,14 +13,14 @@
 			</Event>
 			<Event Name="REQUEST" Type="Event" Comment="Demo: request the critical section for the next time this node holds the token">
 			</Event>
-			<Event Name="SEED" Type="Event" Comment="Demo: bootstrap the ring by injecting the token here once, on exactly one node, after INIT">
+			<Event Name="SEED" Type="Event" Comment="Demo: bootstrap the ring by injecting the token here once, on exactly one node,&#10; after INIT">
 			</Event>
 		</EventInputs>
 		<EventOutputs>
 			<Event Name="INITO" Type="EInit" Comment="Initialization Confirm">
 				<With Var="QO"/>
 			</Event>
-			<Event Name="ENTERED" Type="Event" Comment="This node entered its critical section (demo: instantaneous, no real work modelled)">
+			<Event Name="ENTERED" Type="Event" Comment="This node entered its critical section (demo: instantaneous, no real work&#10; modelled)">
 			</Event>
 			<Event Name="EXITED" Type="Event" Comment="This node left its critical section and is passing the token on">
 			</Event>

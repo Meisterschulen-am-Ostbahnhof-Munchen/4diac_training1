@@ -7,6 +7,20 @@
 	<CompilerInfo packageName="MyLib::sys">
 	</CompilerInfo>
 	<SubAppInterfaceList>
+		<SubAppEventInputs>
+			<SubAppEvent Name="INIT" Type="EInit" Comment="Initialization Request">
+			</SubAppEvent>
+		</SubAppEventInputs>
+		<SubAppEventOutputs>
+			<SubAppEvent Name="INITO" Type="EInit" Comment="Initialization Confirm">
+			</SubAppEvent>
+		</SubAppEventOutputs>
+		<InputVars>
+			<VarDeclaration Name="QI" Type="BOOL" Comment="Quality Input - TRUE to enable service" InitialValue="TRUE"/>
+		</InputVars>
+		<OutputVars>
+			<VarDeclaration Name="QO" Type="BOOL" Comment="Quality Output - TRUE if service executed successfully"/>
+		</OutputVars>
 		<Sockets>
 			<AdapterDeclaration Name="IN" Type="adapter::types::unidirectional::AX"/>
 		</Sockets>
@@ -17,7 +31,6 @@
 	</SubAppInterfaceList>
 	<SubAppNetwork>
 		<FB Name="AX_T_FF_INIT" Type="adapter::events::unidirectional::AX_T_FF_INIT" x="100" y="-500">
-			<Parameter Name="QI" Value="TRUE"/>
 			<Parameter Name="Q_INIT" Value="FALSE"/>
 		</FB>
 		<FB Name="AX_R_TRIG" Type="adapter::events::unidirectional::AX_R_TRIG" x="-1200" y="-400">
@@ -29,7 +42,13 @@
 		<Comment Comment="der AX_T_FF_INIT schaltet den Ausgang Aktiv auf FALSE, somit ist LINKS dann TRUE. " x="0" y="500" width="1600" height="400"/>
 		<EventConnections>
 			<Connection Source="AX_R_TRIG.EO" Destination="AX_T_FF_INIT.CLK" dx1="293.33"/>
+			<Connection Source="INIT" Destination="AX_T_FF_INIT.INIT"/>
+			<Connection Source="AX_T_FF_INIT.INITO" Destination="INITO"/>
 		</EventConnections>
+		<DataConnections>
+			<Connection Source="QI" Destination="AX_T_FF_INIT.QI"/>
+			<Connection Source="AX_T_FF_INIT.QO" Destination="QO"/>
+		</DataConnections>
 		<AdapterConnections>
 			<Connection Source="IN" Destination="AX_R_TRIG.QI" dx1="664.71"/>
 			<Connection Source="AX_NOT.OUT" Destination="Links" dx1="711.76"/>

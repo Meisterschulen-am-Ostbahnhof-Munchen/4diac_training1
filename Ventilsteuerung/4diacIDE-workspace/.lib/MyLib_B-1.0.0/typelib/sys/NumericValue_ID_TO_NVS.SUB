@@ -8,29 +8,37 @@
 		<Import declaration="isobus::UT::Q::const::IDs::ID_NULL"/>
 	</CompilerInfo>
 	<SubAppInterfaceList>
+		<SubAppEventInputs>
+			<SubAppEvent Name="INIT" Type="EInit" Comment="Initialization Request">
+			</SubAppEvent>
+		</SubAppEventInputs>
 		<SubAppEventOutputs>
+			<SubAppEvent Name="INITO" Type="EInit" Comment="Initialization Confirm">
+			</SubAppEvent>
 			<SubAppEvent Name="IND" Type="Event">
 			</SubAppEvent>
 		</SubAppEventOutputs>
 		<InputVars>
+			<VarDeclaration Name="QI" Type="BOOL" Comment="Quality Input - TRUE to enable service" InitialValue="TRUE"/>
 			<VarDeclaration Name="KEY" Type="STRING" Comment="Key name."/>
 			<VarDeclaration Name="u16ObjId" Type="UINT" InitialValue="ID_NULL"/>
 		</InputVars>
 		<OutputVars>
+			<VarDeclaration Name="QO" Type="BOOL" Comment="Quality Output - TRUE if service executed successfully"/>
 			<VarDeclaration Name="VALUEO" Type="UDINT"/>
 		</OutputVars>
 	</SubAppInterfaceList>
 	<SubAppNetwork>
 		<FB Name="ID" Type="isobus::UT::io::NumericValue::NumericValue_ID" x="-1300" y="300">
-			<Parameter Name="QI" Value="TRUE"/>
 		</FB>
 		<FB Name="F_DWORD_TO_UDINT" Type="iec61131::conversion::F_DWORD_TO_UDINT" x="400" y="500">
 		</FB>
 		<FB Name="NVS" Type="logiBUS::storage::esp32_nvs::NVS" x="2100" y="100">
-			<Parameter Name="QI" Value="TRUE"/>
 			<Parameter Name="DEFAULT_VALUE" Value="UDINT#0"/>
 		</FB>
 		<FB Name="Q_NumericValue" Type="isobus::UT::Q::Q_NumericValue" x="4100" y="300">
+		</FB>
+		<FB Name="AND_QO" Type="iec61131::booleanOperators::AND_BOOL_3" x="7400" y="600">
 		</FB>
 		<EventConnections>
 			<Connection Source="ID.IND" Destination="F_DWORD_TO_UDINT.REQ" dx1="353.33"/>
@@ -43,6 +51,13 @@
 				<Attribute Name="Visible" Value="false"/>
 			</Connection>
 			<Connection Source="NVS.INITO" Destination="NVS.GET" dx1="80" dx2="80" dy="-580"/>
+			<Connection Source="INIT" Destination="ID.INIT" dx1="1846.67"/>
+			<Connection Source="ID.INITO" Destination="NVS.INIT" dx1="1206.67"/>
+			<Connection Source="NVS.INITO" Destination="Q_NumericValue.INIT" dx1="506.67"/>
+			<Connection Source="Q_NumericValue.INITO" Destination="INITO" dx1="2513.33"/>
+			<Connection Source="Q_NumericValue.INITO" Destination="AND_QO.REQ" dx1="413.33">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
 		</EventConnections>
 		<DataConnections>
 			<Connection Source="ID.IN" Destination="F_DWORD_TO_UDINT.IN" dx1="186.67"/>
@@ -60,6 +75,25 @@
 			<Connection Source="u16ObjId" Destination="ID.u16ObjId" dx1="1793.33">
 				<Attribute Name="Visible" Value="false"/>
 			</Connection>
+			<Connection Source="QI" Destination="Q_NumericValue.QI" dx1="1826.67">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="QI" Destination="ID.QI" dx1="1846.67">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="QI" Destination="NVS.QI" dx1="826.67">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="Q_NumericValue.QO" Destination="AND_QO.IN1" dx1="413.33">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="ID.QO" Destination="AND_QO.IN2" dx1="153.33">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="NVS.QO" Destination="AND_QO.IN3" dx1="1006.67">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="AND_QO.OUT" Destination="QO" dx1="1693.33"/>
 		</DataConnections>
 	</SubAppNetwork>
 </SubAppType>

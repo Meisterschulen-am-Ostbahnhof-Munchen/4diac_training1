@@ -16,22 +16,22 @@
 	<SubAppInterfaceList>
 	</SubAppInterfaceList>
 	<SubAppNetwork>
-		<FB Name="DigitalInput_CLK_I1" Type="logiBUS::io::DI::logiBUS_IE" x="-6000" y="-500">
+		<FB Name="DigitalInput_CLK_I1" Type="logiBUS::io::DI::logiBUS_IE" x="-6000" y="-2700">
 			<Parameter Name="QI" Value="TRUE"/>
 			<Parameter Name="Input" Value="Input_I1"/>
 			<Parameter Name="InputEvent" Value="BUTTON_SINGLE_CLICK"/>
 		</FB>
-		<FB Name="DigitalInput_Set_I3" Type="logiBUS::io::DI::logiBUS_IE" x="-6000" y="-2700">
+		<FB Name="DigitalInput_Set_I3" Type="logiBUS::io::DI::logiBUS_IE" x="-6000" y="-500">
 			<Parameter Name="QI" Value="TRUE"/>
 			<Parameter Name="Input" Value="Input_I3"/>
 			<Parameter Name="InputEvent" Value="BUTTON_SINGLE_CLICK"/>
 		</FB>
-		<FB Name="DigitalInput_Reset_I4" Type="logiBUS::io::DI::logiBUS_IE" x="-6000" y="-1600">
+		<FB Name="DigitalInput_Reset_I4" Type="logiBUS::io::DI::logiBUS_IE" x="-6000" y="600">
 			<Parameter Name="QI" Value="TRUE"/>
 			<Parameter Name="Input" Value="Input_I4"/>
 			<Parameter Name="InputEvent" Value="BUTTON_SINGLE_CLICK"/>
 		</FB>
-		<FB Name="DigitalInput_CLK_I2" Type="logiBUS::io::DI::logiBUS_IE" x="-6000" y="600">
+		<FB Name="DigitalInput_CLK_I2" Type="logiBUS::io::DI::logiBUS_IE" x="-6000" y="-1600">
 			<Parameter Name="QI" Value="TRUE"/>
 			<Parameter Name="Input" Value="Input_I2"/>
 			<Parameter Name="InputEvent" Value="BUTTON_SINGLE_CLICK"/>
@@ -40,15 +40,15 @@
 		</FB>
 		<FB Name="ILOCK_T_FF_SR_2" Type="logiBUS::signalprocessing::interlock::ILOCK_T_FF_SR_AX" x="-1800" y="500">
 		</FB>
-		<FB Name="DigitalOutput_Q1" Type="logiBUS::io::DQ::logiBUS_QXA" x="0" y="1300">
+		<FB Name="DigitalOutput_Q1" Type="logiBUS::io::DQ::logiBUS_QXA" x="0" y="300">
 			<Parameter Name="QI" Value="TRUE"/>
 			<Parameter Name="Output" Value="Output_Q1"/>
 		</FB>
-		<FB Name="DigitalOutput_Q2" Type="logiBUS::io::DQ::logiBUS_QXA" x="-100" y="300">
+		<FB Name="DigitalOutput_Q2" Type="logiBUS::io::DQ::logiBUS_QXA" x="-100" y="1300">
 			<Parameter Name="QI" Value="TRUE"/>
 			<Parameter Name="Output" Value="Output_Q2"/>
 		</FB>
-		<Comment Comment="Wie Uebung_206_AX (ILOCK_T_FF_AX), aber ILOCK_T_FF_SR_AX statt ILOCK_T_FF_AX: zusaetzlich zum CLK-Toggle gibt es je Instanz direkte S/R-Eingaenge. Hier nur an FF1 gezeigt (I3=Set, I4=Reset) - Set/Reset auf FF1 loest ueber die Adapter-Kette (ILOCK_OUT-&gt;ILOCK_IN) dieselbe gegenseitige Verriegelung aus wie ein CLK-Toggle: wird FF1 gesetzt, wird FF2 automatisch zurueckgesetzt und umgekehrt." x="-6100" y="1900" width="3100" height="1600"/>
+		<Comment Comment="Wie Uebung_206_AX (ILOCK_T_FF_AX), aber ILOCK_T_FF_SR_AX statt ILOCK_T_FF_AX:&#10; zusaetzlich zum CLK-Toggle gibt es je Instanz direkte S/R-Eingaenge. Hier nur&#10; an FF1 gezeigt (I3=Set, I4=Reset) - Set/Reset auf FF1 loest ueber die&#10; Adapter-Kette (ILOCK_OUT-&gt;ILOCK_IN) dieselbe gegenseitige Verriegelung aus wie&#10; ein CLK-Toggle: wird FF1 gesetzt, wird FF2 automatisch zurueckgesetzt und&#10; umgekehrt." x="-6100" y="1900" width="3100" height="1600"/>
 		<EventConnections>
 			<Connection Source="DigitalInput_CLK_I1.IND" Destination="ILOCK_T_FF_SR_1.CLK" dx1="440"/>
 			<Connection Source="DigitalInput_Set_I3.IND" Destination="ILOCK_T_FF_SR_1.S" dx1="553.33"/>

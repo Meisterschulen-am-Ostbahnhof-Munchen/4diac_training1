@@ -32,7 +32,7 @@
 			<Parameter Name="QI" Value="TRUE"/>
 			<Parameter Name="Output" Value="Output_Q2"/>
 		</FB>
-		<Comment Comment="Spiegelbild zu Uebung_230_AX: dort fuehrte ASR_MERGE_2 2 Quellen auf 1 Latch zusammen (N-&gt;1), weil ein Adapter-Socket nur eine Quelle annimmt. &#10;Hier ist es umgekehrt: AX_ASR_RF_TRIG_1.Q ist auch nur EIN Socket-Ausgang und kann nicht direkt an 2 ASR_AX_SR.S_R gleichzeitig angeschlossen werden - ASR_SPLIT_2 dupliziert den EINEN ASR-Stream auf 2 Ziele (1-&gt;N)." x="-6000" y="1200" width="4000" height="800"/>
+		<Comment Comment="Spiegelbild zu Uebung_230_AX: dort fuehrte ASR_MERGE_2 2 Quellen auf 1 Latch&#10; zusammen (N-&gt;1), weil ein Adapter-Socket nur eine Quelle annimmt. &#10;Hier ist es umgekehrt: AX_ASR_RF_TRIG_1.Q ist auch nur EIN Socket-Ausgang und&#10; kann nicht direkt an 2 ASR_AX_SR.S_R gleichzeitig angeschlossen werden -&#10; ASR_SPLIT_2 dupliziert den EINEN ASR-Stream auf 2 Ziele (1-&gt;N)." x="-6000" y="1200" width="4000" height="800"/>
 		<AdapterConnections>
 			<Connection Source="DigitalInput_I1.IN" Destination="AX_ASR_RF_TRIG_1.QI" dx1="333.33"/>
 			<Connection Source="AX_ASR_RF_TRIG_1.Q" Destination="ASR_SPLIT_2.IN" dx1="500"/>

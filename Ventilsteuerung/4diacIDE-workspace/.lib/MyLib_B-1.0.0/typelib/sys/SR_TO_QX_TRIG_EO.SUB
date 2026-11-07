@@ -10,24 +10,31 @@
 	</CompilerInfo>
 	<SubAppInterfaceList>
 		<SubAppEventInputs>
+			<SubAppEvent Name="INIT" Type="EInit" Comment="Initialization Request">
+			</SubAppEvent>
 			<SubAppEvent Name="SET" Type="Event">
 			</SubAppEvent>
 			<SubAppEvent Name="RESET" Type="Event">
 			</SubAppEvent>
 		</SubAppEventInputs>
 		<SubAppEventOutputs>
+			<SubAppEvent Name="INITO" Type="EInit" Comment="Initialization Confirm">
+			</SubAppEvent>
 			<SubAppEvent Name="EO1" Type="Event">
 			</SubAppEvent>
 		</SubAppEventOutputs>
 		<InputVars>
+			<VarDeclaration Name="QI" Type="BOOL" Comment="Quality Input - TRUE to enable service" InitialValue="TRUE"/>
 			<VarDeclaration Name="Output" Type="logiBUS::io::DQ::logiBUS_DO_S" Comment="Identify the Output Output_Q1..Q8" InitialValue="logiBUS_DO::Invalid"/>
 		</InputVars>
+		<OutputVars>
+			<VarDeclaration Name="QO" Type="BOOL" Comment="Quality Output - TRUE if service executed successfully"/>
+		</OutputVars>
 	</SubAppInterfaceList>
 	<SubAppNetwork>
 		<FB Name="E_SR" Type="iec61499::events::E_SR" x="133.33" y="-800">
 		</FB>
 		<FB Name="QX" Type="logiBUS::io::DQ::logiBUS_QX" x="2100" y="-900">
-			<Parameter Name="QI" Value="TRUE"/>
 		</FB>
 		<FB Name="E_SWITCH" Type="iec61499::events::E_R_TRIG" x="1333.33" y="33.33">
 		</FB>
@@ -41,6 +48,8 @@
 				<Attribute Name="Visible" Value="false"/>
 			</Connection>
 			<Connection Source="E_SWITCH.EO" Destination="EO1" dx1="1453.33"/>
+			<Connection Source="INIT" Destination="QX.INIT"/>
+			<Connection Source="QX.INITO" Destination="INITO"/>
 		</EventConnections>
 		<DataConnections>
 			<Connection Source="E_SR.Q" Destination="QX.OUT" dx1="753.33"/>
@@ -48,6 +57,8 @@
 			<Connection Source="Output" Destination="QX.Output" dx1="3540">
 				<Attribute Name="Visible" Value="false"/>
 			</Connection>
+			<Connection Source="QI" Destination="QX.QI"/>
+			<Connection Source="QX.QO" Destination="QO"/>
 		</DataConnections>
 	</SubAppNetwork>
 </SubAppType>

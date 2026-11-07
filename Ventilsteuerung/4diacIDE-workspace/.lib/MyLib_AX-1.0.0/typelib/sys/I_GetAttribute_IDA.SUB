@@ -9,13 +9,23 @@
 	</CompilerInfo>
 	<SubAppInterfaceList>
 		<SubAppEventInputs>
+			<SubAppEvent Name="INIT" Type="EInit" Comment="Initialization Request">
+			</SubAppEvent>
 			<SubAppEvent Name="REQ" Type="Event" Comment="Service Request">
 			</SubAppEvent>
 		</SubAppEventInputs>
+		<SubAppEventOutputs>
+			<SubAppEvent Name="INITO" Type="EInit" Comment="Initialization Confirm">
+			</SubAppEvent>
+		</SubAppEventOutputs>
 		<InputVars>
+			<VarDeclaration Name="QI" Type="BOOL" Comment="Quality Input - TRUE to enable service" InitialValue="TRUE"/>
 			<VarDeclaration Name="u16ObjId" Type="UINT" Comment="Object ID" InitialValue="ID_NULL"/>
 			<VarDeclaration Name="u8AID" Type="USINT" Comment="Attribute ID of the object"/>
 		</InputVars>
+		<OutputVars>
+			<VarDeclaration Name="QO" Type="BOOL" Comment="Quality Output - TRUE if service executed successfully"/>
+		</OutputVars>
 		<Plugs>
 			<AdapterDeclaration Name="IN" Type="adapter::types::unidirectional::AD" Comment="Input data from resource"/>
 		</Plugs>
@@ -24,17 +34,20 @@
 		<FB Name="GetAttribute" Type="isobus::UT::I::I_GetAttribute" x="-2000" y="-800">
 		</FB>
 		<FB Name="Attribute_IDA" Type="isobus::UT::io::Attribute::Attribute_IDA" x="-2000" y="0">
-			<Parameter Name="QI" Value="TRUE"/>
 			<Parameter Name="PARAMS" Value="''"/>
 		</FB>
 		<EventConnections>
 			<Connection Source="REQ" Destination="GetAttribute.REQ" dx1="1480"/>
+			<Connection Source="INIT" Destination="Attribute_IDA.INIT"/>
+			<Connection Source="Attribute_IDA.INITO" Destination="INITO"/>
 		</EventConnections>
 		<DataConnections>
 			<Connection Source="u16ObjId" Destination="GetAttribute.u16ObjId" dx1="1446.67"/>
 			<Connection Source="u16ObjId" Destination="Attribute_IDA.u16ObjId" dx1="1446.67"/>
 			<Connection Source="u8AID" Destination="GetAttribute.u8AID" dx1="1413.33"/>
 			<Connection Source="u8AID" Destination="Attribute_IDA.u8AID" dx1="1413.33"/>
+			<Connection Source="QI" Destination="Attribute_IDA.QI"/>
+			<Connection Source="Attribute_IDA.QO" Destination="QO"/>
 		</DataConnections>
 		<AdapterConnections>
 			<Connection Source="Attribute_IDA.IN" Destination="IN" dx1="3633.33"/>

@@ -19,17 +19,7 @@
 			<Parameter Name="QI" Value="TRUE"/>
 			<Parameter Name="Output" Value="Output_Q1"/>
 		</FB>
-		<FB Name="DigitalInput_CLK_I1" Type="logiBUS::io::DI::logiBUS_IE" x="-4600" y="-900">
-			<Parameter Name="QI" Value="TRUE">
-				<Attribute Name="Visible" Value="false"/>
-			</Parameter>
-			<Parameter Name="PARAMS" Value="">
-				<Attribute Name="Visible" Value="false"/>
-			</Parameter>
-			<Parameter Name="Input" Value="Input_I1"/>
-			<Parameter Name="InputEvent" Value="BUTTON_SINGLE_CLICK"/>
-		</FB>
-		<FB Name="DigitalInput_CLK_I2" Type="logiBUS::io::DI::logiBUS_IE" x="-4600" y="100">
+		<FB Name="DigitalInput_CLK_I2" Type="logiBUS::io::DI::logiBUS_IE" x="-4600" y="-900">
 			<Parameter Name="QI" Value="TRUE">
 				<Attribute Name="Visible" Value="false"/>
 			</Parameter>
@@ -39,9 +29,7 @@
 			<Parameter Name="Input" Value="Input_I2"/>
 			<Parameter Name="InputEvent" Value="BUTTON_SINGLE_CLICK"/>
 		</FB>
-		<FB Name="AX_T_FF_SR_Q1" Type="adapter::events::unidirectional::AX_T_FF_SR" x="-2800" y="-900">
-		</FB>
-		<FB Name="DigitalInput_CLK_I3" Type="logiBUS::io::DI::logiBUS_IE" x="-4600" y="-2100">
+		<FB Name="DigitalInput_CLK_I3" Type="logiBUS::io::DI::logiBUS_IE" x="-4600" y="100">
 			<Parameter Name="QI" Value="TRUE">
 				<Attribute Name="Visible" Value="false"/>
 			</Parameter>
@@ -49,6 +37,18 @@
 				<Attribute Name="Visible" Value="false"/>
 			</Parameter>
 			<Parameter Name="Input" Value="Input_I3"/>
+			<Parameter Name="InputEvent" Value="BUTTON_SINGLE_CLICK"/>
+		</FB>
+		<FB Name="AX_T_FF_SR_Q1" Type="adapter::events::unidirectional::AX_T_FF_SR" x="-2800" y="-900">
+		</FB>
+		<FB Name="DigitalInput_CLK_I1" Type="logiBUS::io::DI::logiBUS_IE" x="-4600" y="-2100">
+			<Parameter Name="QI" Value="TRUE">
+				<Attribute Name="Visible" Value="false"/>
+			</Parameter>
+			<Parameter Name="PARAMS" Value="">
+				<Attribute Name="Visible" Value="false"/>
+			</Parameter>
+			<Parameter Name="Input" Value="Input_I1"/>
 			<Parameter Name="InputEvent" Value="BUTTON_SINGLE_CLICK"/>
 		</FB>
 		<FB Name="AX_T_FF_SR_Q2" Type="adapter::events::unidirectional::AX_T_FF_SR" x="-2900" y="100">
@@ -59,10 +59,10 @@
 		</FB>
 		<Comment Comment="Hausmeister-Aus (alles Aus mit einem Druck)" x="-5700" y="-2100" width="1000" height="400"/>
 		<EventConnections>
-			<Connection Source="DigitalInput_CLK_I1.IND" Destination="AX_T_FF_SR_Q1.CLK"/>
-			<Connection Source="DigitalInput_CLK_I2.IND" Destination="AX_T_FF_SR_Q2.CLK"/>
-			<Connection Source="DigitalInput_CLK_I3.IND" Destination="AX_T_FF_SR_Q2.R" dx1="320"/>
-			<Connection Source="DigitalInput_CLK_I3.IND" Destination="AX_T_FF_SR_Q1.R" dx1="320"/>
+			<Connection Source="DigitalInput_CLK_I2.IND" Destination="AX_T_FF_SR_Q1.CLK"/>
+			<Connection Source="DigitalInput_CLK_I3.IND" Destination="AX_T_FF_SR_Q2.CLK"/>
+			<Connection Source="DigitalInput_CLK_I1.IND" Destination="AX_T_FF_SR_Q2.R" dx1="320"/>
+			<Connection Source="DigitalInput_CLK_I1.IND" Destination="AX_T_FF_SR_Q1.R" dx1="320"/>
 		</EventConnections>
 		<AdapterConnections>
 			<Connection Source="AX_T_FF_SR_Q1.Q" Destination="DigitalOutput_Q1.OUT" dx1="673.33"/>

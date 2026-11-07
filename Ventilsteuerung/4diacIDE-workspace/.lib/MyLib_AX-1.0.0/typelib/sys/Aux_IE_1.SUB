@@ -9,20 +9,31 @@
 		<Import declaration="isobus::UT::io::Auxiliary::IN::AuxiliaryState::Invalid"/>
 	</CompilerInfo>
 	<SubAppInterfaceList>
+		<SubAppEventInputs>
+			<SubAppEvent Name="INIT" Type="EInit" Comment="Initialization Request">
+			</SubAppEvent>
+		</SubAppEventInputs>
 		<SubAppEventOutputs>
+			<SubAppEvent Name="INITO" Type="EInit" Comment="Initialization Confirm">
+			</SubAppEvent>
 			<SubAppEvent Name="IND" Type="Event" Comment="Feuert wenn das konfigurierte InputEvent auftritt"/>
 		</SubAppEventOutputs>
 		<InputVars>
+			<VarDeclaration Name="QI" Type="BOOL" Comment="Quality Input - TRUE to enable service" InitialValue="TRUE"/>
 			<VarDeclaration Name="u16ObjId" Type="UINT" Comment="Object ID AuxFunction2" InitialValue="ID_NULL"/>
 			<VarDeclaration Name="InputEvent" Type="isobus::UT::io::Auxiliary::IN::AuxiliaryState_S" Comment="z.B. AuxEnabled, AuxDisabled" InitialValue="Invalid"/>
 		</InputVars>
+		<OutputVars>
+			<VarDeclaration Name="QO" Type="BOOL" Comment="Quality Output - TRUE if service executed successfully"/>
+		</OutputVars>
 	</SubAppInterfaceList>
 	<SubAppNetwork>
 		<FB Name="Aux" Type="isobus::UT::io::Auxiliary::IN::Aux_IE" x="0" y="0">
-			<Parameter Name="QI" Value="TRUE"/>
 		</FB>
 		<EventConnections>
 			<Connection Source="Aux.IND" Destination="IND" dx1="600"/>
+			<Connection Source="INIT" Destination="Aux.INIT"/>
+			<Connection Source="Aux.INITO" Destination="INITO"/>
 		</EventConnections>
 		<DataConnections>
 			<Connection Source="u16ObjId" Destination="Aux.u16ObjId" dx1="600">
@@ -31,6 +42,8 @@
 			<Connection Source="InputEvent" Destination="Aux.InputEvent" dx1="600">
 				<Attribute Name="Visible" Value="false"/>
 			</Connection>
+			<Connection Source="QI" Destination="Aux.QI"/>
+			<Connection Source="Aux.QO" Destination="QO"/>
 		</DataConnections>
 	</SubAppNetwork>
 </SubAppType>

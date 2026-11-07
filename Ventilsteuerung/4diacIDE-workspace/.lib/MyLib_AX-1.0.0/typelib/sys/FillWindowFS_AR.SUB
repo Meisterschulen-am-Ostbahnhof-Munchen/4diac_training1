@@ -12,16 +12,24 @@
 		<Import declaration="isobus::UT::Q::const::colours::COLOR_RED"/>
 	</CompilerInfo>
 	<SubAppInterfaceList>
+		<SubAppEventInputs>
+			<SubAppEvent Name="INIT" Type="EInit" Comment="Initialization Request">
+			</SubAppEvent>
+		</SubAppEventInputs>
 		<SubAppEventOutputs>
+			<SubAppEvent Name="INITO" Type="EInit" Comment="Initialization Confirm">
+			</SubAppEvent>
 			<SubAppEvent Name="CNF" Type="Event" Comment="Confirmation of Requested Service">
 			</SubAppEvent>
 		</SubAppEventOutputs>
 		<InputVars>
+			<VarDeclaration Name="QI" Type="BOOL" Comment="Quality Input - TRUE to enable service" InitialValue="TRUE"/>
 			<VarDeclaration Name="u16ObjId" Type="UINT" Comment="FillAttributes object ID to command" InitialValue="ID_NULL"/>
 			<VarDeclaration Name="rWindowMin" Type="REAL" Comment="Lower bound of the window that shows green"/>
 			<VarDeclaration Name="rWindowMax" Type="REAL" Comment="Upper bound of the window that shows green"/>
 		</InputVars>
 		<OutputVars>
+			<VarDeclaration Name="QO" Type="BOOL" Comment="Quality Output - TRUE if service executed successfully"/>
 			<VarDeclaration Name="STATUS" Type="STRING" Comment="Service Status - passthrough from the internal Q_FillAttributes"/>
 			<VarDeclaration Name="s16result" Type="INT" Comment="retval - passthrough from the internal Q_FillAttributes"/>
 		</OutputVars>
@@ -47,6 +55,8 @@
 		<EventConnections>
 			<Connection Source="ColorSel.CNF" Destination="Inner.REQ" dx1="666.67"/>
 			<Connection Source="Inner.CNF" Destination="CNF" dx1="1086.67"/>
+			<Connection Source="INIT" Destination="Inner.INIT"/>
+			<Connection Source="Inner.INITO" Destination="INITO"/>
 		</EventConnections>
 		<DataConnections>
 			<Connection Source="rWindowMin" Destination="WindowMinConst.INIT_VAL" dx1="1080"/>
@@ -55,6 +65,8 @@
 			<Connection Source="ColorSel.OUT" Destination="Inner.u8FillColour" dx1="646.67"/>
 			<Connection Source="Inner.STATUS" Destination="STATUS" dx1="1120"/>
 			<Connection Source="Inner.s16result" Destination="s16result" dx1="1153.33"/>
+			<Connection Source="QI" Destination="Inner.QI"/>
+			<Connection Source="Inner.QO" Destination="QO"/>
 		</DataConnections>
 		<AdapterConnections>
 			<Connection Source="rPhys" Destination="CENTER_CMP.Y" dx1="1113.33"/>

@@ -8,10 +8,17 @@
 	</CompilerInfo>
 	<SubAppInterfaceList>
 		<SubAppEventInputs>
+			<SubAppEvent Name="INIT" Type="EInit" Comment="Initialization Request">
+			</SubAppEvent>
 			<SubAppEvent Name="REQ" Type="Event" Comment="Normal Execution Request">
 			</SubAppEvent>
 		</SubAppEventInputs>
+		<SubAppEventOutputs>
+			<SubAppEvent Name="INITO" Type="EInit" Comment="Initialization Confirm">
+			</SubAppEvent>
+		</SubAppEventOutputs>
 		<InputVars>
+			<VarDeclaration Name="QI" Type="BOOL" Comment="Quality Input - TRUE to enable service" InitialValue="TRUE"/>
 			<VarDeclaration Name="DI1" Type="BOOL" Comment="Selector">
 			</VarDeclaration>
 			<VarDeclaration Name="u16ObjId" Type="UINT" Comment="Object ID Softkey">
@@ -20,18 +27,25 @@
 			</VarDeclaration>
 			<VarDeclaration Name="u16ObjIdB" Type="UINT"/>
 		</InputVars>
+		<OutputVars>
+			<VarDeclaration Name="QO" Type="BOOL" Comment="Quality Output - TRUE if service executed successfully"/>
+		</OutputVars>
 	</SubAppInterfaceList>
 	<SubAppNetwork>
 		<SubApp Name="RedGreenBackground4" Type="MyLib::sys::RedGreenBackground4" x="2600" y="1500">
 		</SubApp>
 		<EventConnections>
 			<Connection Source="REQ" Destination="RedGreenBackground4.REQ" dx1="1733.33"/>
+			<Connection Source="INIT" Destination="RedGreenBackground4.INIT"/>
+			<Connection Source="RedGreenBackground4.INITO" Destination="INITO"/>
 		</EventConnections>
 		<DataConnections>
 			<Connection Source="DI1" Destination="RedGreenBackground4.DI1" dx1="1733.33"/>
 			<Connection Source="u16ObjId" Destination="RedGreenBackground4.u16ObjId" dx1="1733.33"/>
 			<Connection Source="u16ObjIdA" Destination="RedGreenBackground4.u16ObjIdA" dx1="1733.33"/>
 			<Connection Source="u16ObjIdB" Destination="RedGreenBackground4.u16ObjIdB" dx1="1886.67"/>
+			<Connection Source="QI" Destination="RedGreenBackground4.QI"/>
+			<Connection Source="RedGreenBackground4.QO" Destination="QO"/>
 		</DataConnections>
 	</SubAppNetwork>
 </SubAppType>

@@ -18,19 +18,19 @@
 	<SubAppInterfaceList>
 	</SubAppInterfaceList>
 	<SubAppNetwork>
-		<FB Name="DigitalInput_CLK_I1" Type="logiBUS::io::DI::logiBUS_IE" x="-8100" y="-600">
+		<FB Name="DigitalInput_CLK_I3" Type="logiBUS::io::DI::logiBUS_IE" x="-8100" y="3500">
+			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="Input" Value="Input_I3"/>
+			<Parameter Name="InputEvent" Value="BUTTON_SINGLE_CLICK"/>
+		</FB>
+		<FB Name="DigitalInput_CLK_I1" Type="logiBUS::io::DI::logiBUS_IE" x="-8100" y="400">
 			<Parameter Name="QI" Value="TRUE"/>
 			<Parameter Name="Input" Value="Input_I1"/>
 			<Parameter Name="InputEvent" Value="BUTTON_SINGLE_CLICK"/>
 		</FB>
-		<FB Name="DigitalInput_CLK_I2" Type="logiBUS::io::DI::logiBUS_IE" x="-8100" y="400">
+		<FB Name="DigitalInput_CLK_I2" Type="logiBUS::io::DI::logiBUS_IE" x="-8100" y="1400">
 			<Parameter Name="QI" Value="TRUE"/>
 			<Parameter Name="Input" Value="Input_I2"/>
-			<Parameter Name="InputEvent" Value="BUTTON_SINGLE_CLICK"/>
-		</FB>
-		<FB Name="DigitalInput_CLK_I3" Type="logiBUS::io::DI::logiBUS_IE" x="-8100" y="1400">
-			<Parameter Name="QI" Value="TRUE"/>
-			<Parameter Name="Input" Value="Input_I3"/>
 			<Parameter Name="InputEvent" Value="BUTTON_SINGLE_CLICK"/>
 		</FB>
 		<FB Name="ACK" Type="isobus::UT::io::Softkey::Softkey_IE" x="-8100" y="2500">
@@ -44,12 +44,12 @@
 			<Parameter Name="val3" Value="AlarmMask_A2_medium"/>
 			<Parameter Name="val4" Value="DataMask_M1"/>
 		</SubApp>
-		<FB Name="Q_ActiveMask" Type="isobus::UT::Q::Q_ActiveMask_AUI" x="-2100" y="-300">
+		<FB Name="Q_ActiveMask" Type="isobus::UT::Q::Q_ActiveMask_AUI" x="-2600" y="100">
 		</FB>
 		<EventConnections>
-			<Connection Source="DigitalInput_CLK_I1.IND" Destination="Select_4_AUI.EI4" dx1="1206.67"/>
-			<Connection Source="DigitalInput_CLK_I2.IND" Destination="Select_4_AUI.EI1" dx1="313.33"/>
-			<Connection Source="DigitalInput_CLK_I3.IND" Destination="Select_4_AUI.EI2" dx1="473.33"/>
+			<Connection Source="DigitalInput_CLK_I3.IND" Destination="Select_4_AUI.EI4" dx1="1206.67"/>
+			<Connection Source="DigitalInput_CLK_I1.IND" Destination="Select_4_AUI.EI1" dx1="313.33"/>
+			<Connection Source="DigitalInput_CLK_I2.IND" Destination="Select_4_AUI.EI2" dx1="473.33"/>
 			<Connection Source="ACK.IND" Destination="Select_4_AUI.EI3" dx1="840"/>
 		</EventConnections>
 		<AdapterConnections>

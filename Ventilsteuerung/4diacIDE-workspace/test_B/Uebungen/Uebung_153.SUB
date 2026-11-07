@@ -15,7 +15,7 @@
 	<SubAppInterfaceList>
 	</SubAppInterfaceList>
 	<SubAppNetwork>
-		<FB Name="logiBUS_PI_ID" Type="logiBUS::io::PI::logiBUS_PI_ID" x="-4700" y="400">
+		<FB Name="logiBUS_PI_ID" Type="logiBUS::io::PI::logiBUS_PI_ID" x="-4700" y="1800">
 			<Parameter Name="QI" Value="TRUE"/>
 			<Parameter Name="Input" Value="PulseInput_I8"/>
 			<Parameter Name="ImpulseDelta" Value="100"/>
@@ -46,7 +46,7 @@
 			<Parameter Name="LL" Value="0.0"/>
 			<Parameter Name="LH" Value="8184.0"/>
 		</FB>
-		<FB Name="DigitalInput_I1" Type="logiBUS::io::DI::logiBUS_IE" x="-4800" y="1800">
+		<FB Name="DigitalInput_I1" Type="logiBUS::io::DI::logiBUS_IE" x="-4800" y="0">
 			<Parameter Name="QI" Value="TRUE"/>
 			<Parameter Name="Input" Value="Input_I1"/>
 			<Parameter Name="InputEvent" Value="BUTTON_SINGLE_CLICK"/>
@@ -60,12 +60,12 @@
 		<FB Name="E_CYCLE" Type="iec61499::events::E_CYCLE" x="-6500" y="500">
 			<Parameter Name="DT" Value="T#200ms"/>
 		</FB>
-		<FB Name="DigitalInput_I2" Type="logiBUS::io::DI::logiBUS_IE" x="-8400" y="0">
+		<FB Name="DigitalInput_I2" Type="logiBUS::io::DI::logiBUS_IE" x="-8400" y="100">
 			<Parameter Name="QI" Value="TRUE"/>
 			<Parameter Name="Input" Value="Input_I2"/>
 			<Parameter Name="InputEvent" Value="BUTTON_SINGLE_CLICK"/>
 		</FB>
-		<FB Name="DigitalInput_I3" Type="logiBUS::io::DI::logiBUS_IE" x="-8400" y="1000">
+		<FB Name="DigitalInput_I3" Type="logiBUS::io::DI::logiBUS_IE" x="-8400" y="1100">
 			<Parameter Name="QI" Value="TRUE"/>
 			<Parameter Name="Input" Value="Input_I3"/>
 			<Parameter Name="InputEvent" Value="BUTTON_SINGLE_CLICK"/>
@@ -86,7 +86,7 @@
 			<Connection Source="E_CYCLE.EO" Destination="logiBUS_PI_ID.REQ" dx1="593.33"/>
 		</EventConnections>
 		<DataConnections>
-			<Connection Source="logiBUS_PI_ID.IN" Destination="F_DWORD_TO_UDINT.IN" dx1="406.67"/>
+			<Connection Source="logiBUS_PI_ID.IN" Destination="F_DWORD_TO_UDINT.IN" dx1="513.33"/>
 			<Connection Source="F_DWORD_TO_UDINT.OUT" Destination="F_UDINT_TO_REAL.IN"/>
 			<Connection Source="F_UDINT_TO_REAL.OUT" Destination="FT_DERIV.in" dx1="353.33"/>
 			<Connection Source="FT_DERIV.out" Destination="CTRL_PID.ACT" dx1="766.67"/>

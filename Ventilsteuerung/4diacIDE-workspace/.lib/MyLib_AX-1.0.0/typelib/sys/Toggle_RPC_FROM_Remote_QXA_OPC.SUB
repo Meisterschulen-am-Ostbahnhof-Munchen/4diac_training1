@@ -11,29 +11,45 @@
 		<Import declaration="logiBUS::io::DQ::logiBUS_DO_S"/>
 	</CompilerInfo>
 	<SubAppInterfaceList>
+		<SubAppEventInputs>
+			<SubAppEvent Name="INIT" Type="EInit" Comment="Initialization Request">
+			</SubAppEvent>
+		</SubAppEventInputs>
+		<SubAppEventOutputs>
+			<SubAppEvent Name="INITO" Type="EInit" Comment="Initialization Confirm">
+			</SubAppEvent>
+		</SubAppEventOutputs>
 		<InputVars>
+			<VarDeclaration Name="QI" Type="BOOL" Comment="Quality Input - TRUE to enable service" InitialValue="TRUE"/>
 			<VarDeclaration Name="Output" Type="logiBUS::io::DQ::logiBUS_DO_S" Comment="Identify the Output Output_Q1..Q8" InitialValue="logiBUS_DO::Invalid"/>
 			<VarDeclaration Name="ID_TRIGGER_METHOD" Type="WSTRING" Comment="Lokale Methodenadresse (ACTION=CREATE_METHOD) fuer den argumentlosen Trigger-Methodenaufruf, wird von Geraet A per CALL_METHOD aufgerufen"/>
 			<VarDeclaration Name="ID_STATE_WRITE" Type="WSTRING" Comment="Remote-Ziel-Adresse (BOOL, ACTION=WRITE) fuer den Flipflop-Zustand auf Geraet A"/>
 		</InputVars>
+		<OutputVars>
+			<VarDeclaration Name="QO" Type="BOOL" Comment="Quality Output - TRUE if service executed successfully"/>
+		</OutputVars>
 	</SubAppInterfaceList>
 	<SubAppNetwork>
 		<FB Name="TRIGGER_SERVER" Type="iec61499::net::SERVER_0" x="-5600" y="-200">
-			<Parameter Name="QI" Value="TRUE"/>
 		</FB>
 		<FB Name="AX_T_FF" Type="adapter::events::unidirectional::AX_T_FF" x="-4000" y="-100">
 		</FB>
 		<FB Name="AX_SPLIT_2" Type="adapter::events::unidirectional::AX_SPLIT_2" x="-2600" y="0">
 		</FB>
 		<FB Name="DigitalOutput_Q1" Type="logiBUS::io::DQ::logiBUS_QXA" x="-800" y="-1000">
-			<Parameter Name="QI" Value="TRUE"/>
 		</FB>
 		<FB Name="STATE_CLIENT" Type="adapter::net::AX_CLIENT_1_0" x="-900" y="400">
-			<Parameter Name="QI" Value="TRUE"/>
+		</FB>
+		<FB Name="AND_QO" Type="iec61131::booleanOperators::AND_BOOL_3">
 		</FB>
 		<EventConnections>
 			<Connection Source="TRIGGER_SERVER.IND" Destination="AX_T_FF.CLK" dx1="373.33"/>
 			<Connection Source="TRIGGER_SERVER.IND" Destination="TRIGGER_SERVER.RSP"/>
+			<Connection Source="INIT" Destination="TRIGGER_SERVER.INIT"/>
+			<Connection Source="TRIGGER_SERVER.INITO" Destination="DigitalOutput_Q1.INIT"/>
+			<Connection Source="DigitalOutput_Q1.INITO" Destination="STATE_CLIENT.INIT"/>
+			<Connection Source="STATE_CLIENT.INITO" Destination="INITO"/>
+			<Connection Source="STATE_CLIENT.INITO" Destination="AND_QO.REQ"/>
 		</EventConnections>
 		<DataConnections>
 			<Connection Source="Output" Destination="DigitalOutput_Q1.Output" dx1="4046.67">
@@ -45,6 +61,13 @@
 			<Connection Source="ID_STATE_WRITE" Destination="STATE_CLIENT.ID" dx1="1400">
 				<Attribute Name="Visible" Value="false"/>
 			</Connection>
+			<Connection Source="QI" Destination="TRIGGER_SERVER.QI"/>
+			<Connection Source="QI" Destination="DigitalOutput_Q1.QI"/>
+			<Connection Source="QI" Destination="STATE_CLIENT.QI"/>
+			<Connection Source="TRIGGER_SERVER.QO" Destination="AND_QO.IN1"/>
+			<Connection Source="DigitalOutput_Q1.QO" Destination="AND_QO.IN2"/>
+			<Connection Source="STATE_CLIENT.QO" Destination="AND_QO.IN3"/>
+			<Connection Source="AND_QO.OUT" Destination="QO"/>
 		</DataConnections>
 		<AdapterConnections>
 			<Connection Source="AX_T_FF.Q" Destination="AX_SPLIT_2.IN" dx1="580"/>

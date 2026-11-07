@@ -29,8 +29,19 @@ import time
 from pathlib import Path
 from typing import Optional
 
-from deploy_common import NODE_BASES, NODE_ORDER, REPO_PATHS, resolve_local_path
-from elf_libs_manifest_lib import NODE_ARCH, ManifestResult, build_libs_manifest, resolve_required_libs, sha256_of
+from deploy_common import NODE_BASES, NODE_ORDER, REPO_PATHS, preload_libs_with_requires, resolve_local_path
+from elf_libs_manifest_lib import (
+    LIB_VERSIONS,
+    SUPPORTED_ARCHS,
+    ManifestResult,
+    internal_host,
+    is_internal_host,
+    build_libs_manifest,
+    resolve_host,
+    resolve_node_arch,
+    resolve_required_libs,
+    sha256_of,
+)
 
 # Generell eingeschaltet - siehe elf_libs_manifest_lib.py/.sh fuer das
 # Firmware-Verhalten bei fehlendem/ungueltigem Manifest (existiert eine
@@ -91,13 +102,16 @@ def http_remote_sha256_listing(ip: str, timeout: float = 10) -> Optional[dict[st
         return None
 
 
+FBOOT_SUFFIX = ".fboot"
 _FBOOT_HREF_RE = re.compile(r'href="/([^"]*\.fboot)"')
 _MANIFEST_HREF_RE = re.compile(r'href="/([^"]*\.libs\.json)"')
 _ELF_LIBS_HREF_RE = re.compile(r'href="/elf-libs/([^"]*\.elf)"')
 
 
 def _http(ip: str, method: str, path: str, timeout: float, body: Optional[bytes] = None) -> tuple[int, bytes]:
-    conn = http.client.HTTPConnection(ip, timeout=timeout)
+    # nur Knoten im internen Netz; sonst NonInternalHostError (ein OSError,
+    # die Aufrufer behandeln ihn wie einen nicht erreichbaren Knoten)
+    conn = http.client.HTTPConnection(internal_host(ip), timeout=timeout)
     try:
         conn.request(method, path, body=body)
         resp = conn.getresponse()
@@ -227,8 +241,13 @@ def http_upload_file(
       http_remote_sha256()-Pruefung zeigt einen abweichenden/fehlenden Hash -
       die Firmware hat "Erfolg" gemeldet, obwohl die Datei nicht (korrekt)
       gespeichert wurde.
+    - "RECOVERED": der Upload-Request selbst ist mit einem Verbindungsfehler/
+      Timeout abgebrochen (frueher "000"), die Datei liegt laut
+      http_remote_sha256() aber vollstaendig mit dem erwarteten Hash auf dem
+      Knoten - wird vom Aufrufer wie "303" als Erfolg gewertet.
     - den HTTP-Status als String sonst ("303" = echter, verifizierter
-      Erfolg), "000" bei jedem Verbindungsfehler/nicht lesbarer Datei.
+      Erfolg), "000" bei jedem Verbindungsfehler/nicht lesbarer Datei, der
+      sich auch per Hash-Abfrage nicht als angekommen bestaetigen laesst.
     Alle neuen Parameter sind optional, damit alte Aufrufer unveraendert
     funktionieren (kein lokaler Hash -> kein Skip, keine Verifikation).
     remote_name darf einen Unterordner enthalten (z.B. "elf-libs/x.elf") -
@@ -253,8 +272,25 @@ def http_upload_file(
             return "SKIP"
     try:
         data = local_path.read_bytes()
+    except OSError:
+        return "000"
+    # Die Firmware (file_server.cpp, upload_post_handler) berechnet nach dem
+    # letzten Byte noch den SHA-256 der ganzen Datei, BEVOR sie antwortet -
+    # bei grossen Dateien und laufendem FORTE reichten 30 s nicht (Krauternter
+    # STG1, 2,4 MB, 2026-10-18: HTTP 000, Datei war aber vollstaendig da,
+    # Analyse ELFMASTER). Zeitlimit daher mit der Dateigroesse wachsen lassen.
+    timeout = max(timeout, 30 + 20 * len(data) / 1_000_000)
+    try:
         status, _body = _http(ip, "POST", f"/upload/{remote_name}", timeout, body=data)
     except OSError:
+        # Antwort verloren (Timeout/Verbindungsabriss) heisst nicht, dass die
+        # Datei fehlt: per Hash nachsehen, ob sie vollstaendig angekommen ist
+        # (der Hash kann kurz noch in Berechnung sein, daher mehrfach).
+        if verify_after_upload and local_sha256 is not None:
+            for _ in range(10):
+                if http_remote_sha256(ip, remote_name) == local_sha256:
+                    return "RECOVERED"
+                time.sleep(3)
         return "000"
     if status == 303 and verify_after_upload and local_sha256 is not None:
         # Live gegen die erste echte sha256-faehige Firmware beobachtet
@@ -288,31 +324,62 @@ def main() -> int:
     unreachable: list[str] = []
     upload_failed: list[str] = []
 
-    for ip in NODE_ORDER:
+    for node in NODE_ORDER:
         print("-" * 78)
-        print(f"Knoten {ip}")
+        # Name einmal aufloesen, danach nur noch die IP (siehe resolve_host);
+        # NODE_BASES und die Ergebnislisten bleiben beim Namen aus NODE_ORDER
+        ip = resolve_host(node)
+        if ip is None:
+            print(f"Knoten {node}")
+            print(f"WARNUNG: {node} nicht aufloesbar - uebersprungen.")
+            unreachable.append(node)
+            continue
+        print(f"Knoten {node}" if ip == node else f"Knoten {node} ({ip})")
+
+        if not is_internal_host(ip):
+            print(f"FEHLER: {ip} ist kein Knoten im internen Netz (erlaubt: 10.x, 172.16-31.x, 192.168.x, 169.254.x, *.local) - uebersprungen.")
+            unreachable.append(node)
+            continue
 
         http_warmup(ip)
 
         if not http_reachable(ip):
             print(f"WARNUNG: {ip} nicht erreichbar - uebersprungen.")
-            unreachable.append(ip)
+            unreachable.append(node)
             continue
 
         node_ok = True
         node_local_files: list[Path] = []
         node_fboot_file: Optional[Path] = None
 
+        # Geraet VOR jedem Upload pruefen, aber nur wenn das .fboot ELF-Libs
+        # braucht (rein lokal aus dem .fboot). Passt das Geraet nicht, wird fuer
+        # diesen Knoten nichts hochgeladen - sonst laege das neue Bootfile neben
+        # dem alten Manifest, der Loader lehnt das beim Start ab und FORTE
+        # startet nicht (Sourcery-Finding, PR #351).
+        fboot_bases = [b for b in NODE_BASES.get(node, []) if b.endswith(FBOOT_SUFFIX)]
+        planned_fboot = resolve_local_path(fboot_bases[0]) if fboot_bases else None
+        required_libs: list[str] = (
+            resolve_required_libs(planned_fboot) if ENABLE_ELF_LIBS and planned_fboot is not None else []
+        )
+        arch: Optional[str] = None
+        if required_libs:
+            arch = resolve_node_arch(ip)
+            if not arch:
+                print(f"  FEHLER: Architektur/FORTE_ABI fuer {ip} nicht passend oder unbekannt - fuer diesen Knoten nichts hochgeladen.")
+                upload_failed.append(node)
+                continue
+
         remote_hashes = http_remote_sha256_listing(ip)
         sha256_capable = remote_hashes is not None
         if remote_hashes is None:
             remote_hashes = {}
 
-        for base in NODE_BASES.get(ip, []):
+        for base in NODE_BASES.get(node, []):
             local_file = resolve_local_path(base)
             assert local_file is not None  # durch die MISSING-Pruefung oben ausgeschlossen
             node_local_files.append(local_file)
-            if base.endswith(".fboot"):
+            if base.endswith(FBOOT_SUFFIX):
                 node_fboot_file = local_file
 
             remote_name = local_file.name
@@ -330,6 +397,8 @@ def main() -> int:
                 print(f"  Lade {local_file} -> http://{ip}/upload/{remote_name}")
                 if http_code == "303":
                     print(f"  OK (HTTP {http_code})")
+                elif http_code == "RECOVERED":
+                    print("  OK (Antwort verloren, Datei laut Hash aber vollstaendig angekommen)")
                 else:
                     print(f"  WARNUNG: Upload fehlgeschlagen (HTTP {http_code})")
                     node_ok = False
@@ -341,7 +410,7 @@ def main() -> int:
             # echter 303-Erfolg oben) - sonst wuerde ein fehlgeschlagener
             # Upload den Knoten komplett ohne funktionierenden Bootfile
             # zuruecklassen (Sourcery-Finding, PR #288).
-            if remote_name.endswith(".fboot") and http_code in ("SKIP", "303"):
+            if remote_name.endswith(FBOOT_SUFFIX) and http_code in ("SKIP", "303", "RECOVERED"):
                 listing = http_listing(ip)
                 if listing is None:
                     print("  WARNUNG: Verzeichnis-Listing fehlgeschlagen - alte Bootfile-Kandidaten NICHT geprueft/entfernt.")
@@ -359,113 +428,125 @@ def main() -> int:
         # dieser Teil fuer den Knoten uebersprungen - der normale fboot-
         # Upload oben ist davon unberuehrt.
         if node_ok and ENABLE_ELF_LIBS and node_fboot_file is not None:
-            arch = NODE_ARCH.get(ip)
-            if not arch:
-                print(f"  WARNUNG: Keine Architektur fuer {ip} in NODE_ARCH hinterlegt - ELF-Manifest uebersprungen.")
-            else:
-                required_libs = resolve_required_libs(node_fboot_file)
-                manifest_name = f"{node_fboot_file.stem}.libs.json"
+            # arch und required_libs stehen seit der Pruefung vor dem Upload fest
+            # (arch nur gesetzt, wenn required_libs nicht leer ist)
+            manifest_name = f"{node_fboot_file.stem}.libs.json"
 
-                with tempfile.TemporaryDirectory() as tmp_dir:
-                    manifest_tmp = Path(tmp_dir) / "manifest.json"
-                    if required_libs:
-                        result = build_libs_manifest(arch, node_local_files, manifest_tmp, required_libs)
-                    else:
-                        print("  Keine bekannten ausgelagerten Libs in diesem .fboot referenziert - kein Libs-Manifest noetig.")
-                        result = ManifestResult(True)
+            with tempfile.TemporaryDirectory() as tmp_dir:
+                manifest_tmp = Path(tmp_dir) / "manifest.json"
+                if required_libs and arch:
+                    result = build_libs_manifest(arch, node_local_files, manifest_tmp, required_libs)
+                else:
+                    print("  Keine bekannten ausgelagerten Libs in diesem .fboot referenziert - kein Libs-Manifest noetig.")
+                    result = ManifestResult(True)
 
-                    if not result.ok:
-                        print("  WARNUNG: Manifest-Erzeugung fehlgeschlagen (siehe Warnung oben) - Deploy fuer diesen Knoten fehlgeschlagen.")
+                if not result.ok:
+                    print("  WARNUNG: Manifest-Erzeugung fehlgeschlagen (siehe Warnung oben) - Deploy fuer diesen Knoten fehlgeschlagen.")
+                    node_ok = False
+                else:
+                    # Manifest-Kandidaten liegen in /data/ (root), ELFs
+                    # seit der elf-libs/-Umstellung in /data/elf-libs/ -
+                    # getrennte Listings/Cleanups. IMMER aufraeumen, auch
+                    # wenn dieses Boot-Image gar keine Libs mehr braucht
+                    # (required_libs leer, keep_names dann leer) - sonst
+                    # bliebe ein Manifest/ELFs eines frueheren Programms
+                    # stehen, die der Loader gegen das neue Boot-Image
+                    # prueft und beim Start ablehnt (Sourcery-Finding,
+                    # PR #288). Lose ELFs direkt in /data/ von AELTEREN
+                    # Deploys (vor der elf-libs/-Umstellung) werden
+                    # bewusst NICHT automatisch entfernt (Franz raeumt
+                    # das einmalig per "Format File System" auf).
+                    listing = http_listing(ip)
+                    if listing is None:
+                        print("  WARNUNG: Verzeichnis-Listing fehlgeschlagen - alte Manifest-Kandidaten NICHT geprueft/entfernt.")
                         node_ok = False
                     else:
-                        # Manifest-Kandidaten liegen in /data/ (root), ELFs
-                        # seit der elf-libs/-Umstellung in /data/elf-libs/ -
-                        # getrennte Listings/Cleanups. IMMER aufraeumen, auch
-                        # wenn dieses Boot-Image gar keine Libs mehr braucht
-                        # (required_libs leer, keep_names dann leer) - sonst
-                        # bliebe ein Manifest/ELFs eines frueheren Programms
-                        # stehen, die der Loader gegen das neue Boot-Image
-                        # prueft und beim Start ablehnt (Sourcery-Finding,
-                        # PR #288). Lose ELFs direkt in /data/ von AELTEREN
-                        # Deploys (vor der elf-libs/-Umstellung) werden
-                        # bewusst NICHT automatisch entfernt (Franz raeumt
-                        # das einmalig per "Format File System" auf).
-                        listing = http_listing(ip)
-                        if listing is None:
-                            print("  WARNUNG: Verzeichnis-Listing fehlgeschlagen - alte Manifest-Kandidaten NICHT geprueft/entfernt.")
-                            node_ok = False
-                        else:
-                            for existing in _MANIFEST_HREF_RE.findall(listing):
-                                if existing != manifest_name or not required_libs:
-                                    print(f"  Entferne alten Lib-Kandidaten: {existing}")
-                                    if not http_delete(ip, existing):
-                                        print(f"  WARNUNG: Loeschen von {existing} fehlgeschlagen.")
-                                        node_ok = False
+                        for existing in _MANIFEST_HREF_RE.findall(listing):
+                            if existing != manifest_name or not required_libs:
+                                print(f"  Entferne alten Lib-Kandidaten: {existing}")
+                                if not http_delete(ip, existing):
+                                    print(f"  WARNUNG: Loeschen von {existing} fehlgeschlagen.")
+                                    node_ok = False
 
-                        keep_names = {p.name for p in result.elf_paths}
-                        elf_listing = http_listing(ip, "/elf-libs/", missing_ok=True)
-                        if elf_listing is None:
-                            print("  WARNUNG: elf-libs/-Listing fehlgeschlagen - alte ELF-Kandidaten NICHT geprueft/entfernt.")
-                            node_ok = False
-                        else:
-                            for existing in _ELF_LIBS_HREF_RE.findall(elf_listing):
-                                if existing not in keep_names:
-                                    print(f"  Entferne alten Lib-Kandidaten: elf-libs/{existing}")
-                                    if not http_delete(ip, f"elf-libs/{existing}"):
-                                        print(f"  WARNUNG: Loeschen von elf-libs/{existing} fehlgeschlagen.")
-                                        node_ok = False
+                    keep_names = {p.name for p in result.elf_paths}
+                    # Grundausstattung (make_4diac_training1_elf_preload.py)
+                    # nie loeschen, auch wenn dieses Manifest sie nicht
+                    # braucht - sonst laedt der naechste Uebungswechsel sie
+                    # wieder komplett hoch. Alte Versionen derselben Lib
+                    # fallen weiterhin raus (nur die aktuelle Datei bleibt).
+                    # Ohne benoetigte Libs ist arch nicht bekannt (das Geraet
+                    # wird dann nicht geprueft), daher die Namen fuer alle
+                    # Architekturen - auf dem Geraet liegt ohnehin nur seine.
+                    for lib in preload_libs_with_requires():
+                        for elf_arch in SUPPORTED_ARCHS:
+                            keep_names.add(f"{lib}-{LIB_VERSIONS[lib]}-{elf_arch}.elf")
+                    elf_listing = http_listing(ip, "/elf-libs/", missing_ok=True)
+                    if elf_listing is None:
+                        print("  WARNUNG: elf-libs/-Listing fehlgeschlagen - alte ELF-Kandidaten NICHT geprueft/entfernt.")
+                        node_ok = False
+                    else:
+                        for existing in _ELF_LIBS_HREF_RE.findall(elf_listing):
+                            if existing not in keep_names:
+                                print(f"  Entferne alten Lib-Kandidaten: elf-libs/{existing}")
+                                if not http_delete(ip, f"elf-libs/{existing}"):
+                                    print(f"  WARNUNG: Loeschen von elf-libs/{existing} fehlgeschlagen.")
+                                    node_ok = False
 
-                        if required_libs and node_ok:
-                            elf_ok = True
-                            for elf_path in result.elf_paths:
-                                elf_name = elf_path.name
-                                elf_remote_path = f"elf-libs/{elf_name}"
-                                http_code = http_upload_file(
-                                    ip, elf_path, elf_remote_path, 60,
-                                    sha256_of(elf_path), remote_hashes, sha256_capable,
-                                )
-                                if http_code == "SKIP":
-                                    print(f"  {elf_path} -> {elf_remote_path}: unveraendert (Hash stimmt), Upload uebersprungen")
-                                elif http_code == "VERIFY_FAILED":
-                                    print(f"  FEHLER: {elf_path} -> {elf_remote_path}: Upload mit HTTP 303 quittiert, Datei laut Geraet aber nicht/falsch gespeichert!")
-                                    elf_ok = False
-                                else:
-                                    print(f"  Lade {elf_path} -> http://{ip}/upload/{elf_remote_path}")
-                                    if http_code == "303":
-                                        print(f"  OK (HTTP {http_code})")
-                                    else:
-                                        print(f"  WARNUNG: ELF-Upload fehlgeschlagen (HTTP {http_code})")
-                                        elf_ok = False
-
-                            # Manifest bewusst ZULETZT hochladen: fehlt es,
-                            # laedt die Firmware keine Lib - ein
-                            # abgebrochener Upload ist so erkennbar.
-                            if elf_ok and not http_reset_current_directory(ip):
-                                print("  WARNUNG: Verzeichnis-Reset vor dem Manifest-Upload fehlgeschlagen - Manifest-Upload uebersprungen.")
-                                node_ok = False
-                            elif elf_ok:
-                                print(f"  Lade {manifest_tmp} -> http://{ip}/upload/{manifest_name}")
-                                http_code = http_upload_file(
-                                    ip, manifest_tmp, manifest_name, 30,
-                                    sha256_of(manifest_tmp), None, sha256_capable,
-                                )
+                    if required_libs and node_ok:
+                        elf_ok = True
+                        for elf_path in result.elf_paths:
+                            elf_name = elf_path.name
+                            elf_remote_path = f"elf-libs/{elf_name}"
+                            http_code = http_upload_file(
+                                ip, elf_path, elf_remote_path, 60,
+                                sha256_of(elf_path), remote_hashes, sha256_capable,
+                            )
+                            if http_code == "SKIP":
+                                print(f"  {elf_path} -> {elf_remote_path}: unveraendert (Hash stimmt), Upload uebersprungen")
+                            elif http_code == "VERIFY_FAILED":
+                                print(f"  FEHLER: {elf_path} -> {elf_remote_path}: Upload mit HTTP 303 quittiert, Datei laut Geraet aber nicht/falsch gespeichert!")
+                                elf_ok = False
+                            else:
+                                print(f"  Lade {elf_path} -> http://{ip}/upload/{elf_remote_path}")
                                 if http_code == "303":
                                     print(f"  OK (HTTP {http_code})")
+                                elif http_code == "RECOVERED":
+                                    print("  OK (Antwort verloren, Datei laut Hash aber vollstaendig angekommen)")
                                 else:
-                                    reason = "Datei laut Geraet nicht/falsch gespeichert" if http_code == "VERIFY_FAILED" else f"HTTP {http_code}"
-                                    print(
-                                        f"  WARNUNG: Manifest-Upload fehlgeschlagen ({reason}) - "
-                                        "Libs auf dem Knoten sind damit unvollstaendig/inkonsistent.",
-                                    )
-                                    node_ok = False
+                                    print(f"  WARNUNG: ELF-Upload fehlgeschlagen (HTTP {http_code})")
+                                    elf_ok = False
+
+                        # Manifest bewusst ZULETZT hochladen: fehlt es,
+                        # laedt die Firmware keine Lib - ein
+                        # abgebrochener Upload ist so erkennbar.
+                        if elf_ok and not http_reset_current_directory(ip):
+                            print("  WARNUNG: Verzeichnis-Reset vor dem Manifest-Upload fehlgeschlagen - Manifest-Upload uebersprungen.")
+                            node_ok = False
+                        elif elf_ok:
+                            print(f"  Lade {manifest_tmp} -> http://{ip}/upload/{manifest_name}")
+                            http_code = http_upload_file(
+                                ip, manifest_tmp, manifest_name, 30,
+                                sha256_of(manifest_tmp), None, sha256_capable,
+                            )
+                            if http_code == "303":
+                                print(f"  OK (HTTP {http_code})")
+                            elif http_code == "RECOVERED":
+                                print("  OK (Antwort verloren, Datei laut Hash aber vollstaendig angekommen)")
                             else:
-                                print("  WARNUNG: Mindestens ein ELF-Upload fehlgeschlagen - Manifest wird bewusst NICHT hochgeladen.")
+                                reason = "Datei laut Geraet nicht/falsch gespeichert" if http_code == "VERIFY_FAILED" else f"HTTP {http_code}"
+                                print(
+                                    f"  WARNUNG: Manifest-Upload fehlgeschlagen ({reason}) - "
+                                    "Libs auf dem Knoten sind damit unvollstaendig/inkonsistent.",
+                                )
                                 node_ok = False
+                        else:
+                            print("  WARNUNG: Mindestens ein ELF-Upload fehlgeschlagen - Manifest wird bewusst NICHT hochgeladen.")
+                            node_ok = False
 
         if node_ok:
-            reboot_needed.append(ip)
+            reboot_needed.append(node)
         else:
-            upload_failed.append(ip)
+            upload_failed.append(node)
 
     print("-" * 78)
     print(f"ZUSAMMENFASSUNG ({len(reboot_needed)}/{len(NODE_ORDER)} Knoten erfolgreich):")
@@ -481,6 +562,17 @@ def main() -> int:
                 print(f"  - {ip}: FEHLER (Upload fehlgeschlagen, siehe Warnungen oben)")
             elif ip in unreachable:
                 print(f"  - {ip}: NICHT ERREICHBAR (uebersprungen)")
+
+    if upload_failed:
+        print()
+        print("ACHTUNG: Diese Knoten jetzt NICHT neu starten, sondern das Deploy einfach wiederholen:")
+        for ip in upload_failed:
+            print(f"  - {ip}")
+        print(
+            "  (Nach einem abgebrochenen Upload liegen dort neue und alte Dateien gemischt, z.B. ein neues\n"
+            "   Bootfile mit dem alten Libs-Manifest - ein Neustart in diesem Zustand kann FORTE am Start hindern.\n"
+            "   Bereits angekommene Dateien werden beim zweiten Lauf per Hash erkannt und uebersprungen.)",
+        )
 
     if reboot_needed:
         print()
@@ -503,20 +595,6 @@ if __name__ == "__main__":
     except (AttributeError, ValueError):
         pass
 
-    # Skript wird meist per Doppelklick gestartet (Windows-Konsolenfenster) -
-    # ohne diese Pause schliesst sich das Fenster sofort und Warnungen/
-    # Fehlermeldungen sind nie zu sehen. Greift bei JEDEM Ausstiegspunkt
-    # (auch bei frueher Abbruch/Exception), analog zum Bash-"trap ... EXIT".
-    exit_code = 1
-    try:
-        exit_code = main()
-    finally:
-        # Ohne Eingabe (stdin < NUL im External-Tool-Aufruf) wirft input()
-        # sofort EOFError statt einfach durchzulaufen - das sah wie ein
-        # Absturz nach einem erfolgreichen Deploy aus, war aber nur diese
-        # Pause, die fuer den interaktiven Doppelklick-Start gedacht ist.
-        try:
-            input("\nFertig - Enter druecken zum Schliessen...")
-        except EOFError:
-            pass
-    sys.exit(exit_code)
+    # Keine "Enter druecken"-Pause am Ende: das Skript laeuft ueber die
+    # Launches in der 4diac IDE, dort stoert die Abfrage (Franz, 2026-10-18).
+    sys.exit(main())

@@ -66,7 +66,7 @@ import {
 /* Ermittelt automatisch die IP/Domain, über die die Seite aufgerufen wurde,
  * damit beim Aufruf direkt vom Controller keine manuelle Eingabe nötig ist. */
 const wsProtocol = window.location.protocol === 'https:' ? 'wss:' : 'ws:'
-const endpointUrl = ref(`${wsProtocol}//${window.location.hostname || 'localhost'}:4841`)
+const endpointUrl = ref(`${wsProtocol}//${window.location.hostname || 'logibus.local'}:4841`)
 const status = ref('Getrennt')
 const connected = ref(false)
 const connecting = ref(false)

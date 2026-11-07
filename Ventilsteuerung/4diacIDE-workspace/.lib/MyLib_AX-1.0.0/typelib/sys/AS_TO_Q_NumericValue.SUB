@@ -8,9 +8,21 @@
 		<Import declaration="isobus::UT::Q::const::IDs::ID_NULL"/>
 	</CompilerInfo>
 	<SubAppInterfaceList>
+		<SubAppEventInputs>
+			<SubAppEvent Name="INIT" Type="EInit" Comment="Initialization Request">
+			</SubAppEvent>
+		</SubAppEventInputs>
+		<SubAppEventOutputs>
+			<SubAppEvent Name="INITO" Type="EInit" Comment="Initialization Confirm">
+			</SubAppEvent>
+		</SubAppEventOutputs>
 		<InputVars>
+			<VarDeclaration Name="QI" Type="BOOL" Comment="Quality Input - TRUE to enable service" InitialValue="TRUE"/>
 			<VarDeclaration Name="u16ObjId" Type="UINT" Comment="Object ID" InitialValue="ID_NULL"/>
 		</InputVars>
+		<OutputVars>
+			<VarDeclaration Name="QO" Type="BOOL" Comment="Quality Output - TRUE if service executed successfully"/>
+		</OutputVars>
 		<Sockets>
 			<AdapterDeclaration Name="STATE_NR" Type="adapter::types::unidirectional::AS"/>
 		</Sockets>
@@ -20,10 +32,16 @@
 		</FB>
 		<FB Name="AS_TO_AUDI" Type="adapter::conversion::unidirectional::AS_TO_AUDI" x="-1100" y="0">
 		</FB>
+		<EventConnections>
+			<Connection Source="INIT" Destination="Q_NumericValue_AUDI.INIT"/>
+			<Connection Source="Q_NumericValue_AUDI.INITO" Destination="INITO"/>
+		</EventConnections>
 		<DataConnections>
 			<Connection Source="u16ObjId" Destination="Q_NumericValue_AUDI.u16ObjId" dx1="1880">
 				<Attribute Name="Visible" Value="false"/>
 			</Connection>
+			<Connection Source="QI" Destination="Q_NumericValue_AUDI.QI"/>
+			<Connection Source="Q_NumericValue_AUDI.QO" Destination="QO"/>
 		</DataConnections>
 		<AdapterConnections>
 			<Connection Source="AS_TO_AUDI.AUDI_OUT" Destination="Q_NumericValue_AUDI.u32NewValue" dx1="893.33"/>

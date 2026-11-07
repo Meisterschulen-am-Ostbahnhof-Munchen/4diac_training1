@@ -15,10 +15,17 @@
 	</CompilerInfo>
 	<SubAppInterfaceList>
 		<SubAppEventInputs>
+			<SubAppEvent Name="INIT" Type="EInit" Comment="Initialization Request">
+			</SubAppEvent>
 			<SubAppEvent Name="AUS" Type="Event" Comment="Reset hart auf AUS, von aussen als Event (z.B. 1 zentral gelesener gemeinsamer SoftKey) - Durchreiche an ToggleState.AUS. Unverdrahtet lassen, wenn nicht gebraucht.">
 			</SubAppEvent>
 		</SubAppEventInputs>
+		<SubAppEventOutputs>
+			<SubAppEvent Name="INITO" Type="EInit" Comment="Initialization Confirm">
+			</SubAppEvent>
+		</SubAppEventOutputs>
 		<InputVars>
+			<VarDeclaration Name="QI" Type="BOOL" Comment="Quality Input - TRUE to enable service" InitialValue="TRUE"/>
 			<VarDeclaration Name="u16ObjId" Type="UINT" Comment="Object ID Softkey Ein/Aus (Toggle), traegt auch die Hintergrundfarbe" InitialValue="ID_NULL"/>
 			<VarDeclaration Name="u16ObjIdA" Type="UINT" Comment="Object ID AuxFunction2 (Joystick) fuer den Toggle - gleichberechtigt zum SoftKey, zeigt Hintergrundfarbe am Aux-Handle mit" InitialValue="ID_NULL"/>
 			<VarDeclaration Name="u16ObjIdB" Type="UINT" Comment="Object ID IO-Diag-Testbutton (Ausgaenge-Diagnoseseite) - toggelt gleichberechtigt mit (keine eigene Hintergrundfarbe, GreenWhiteBackground3_AX kennt nur SoftKey+AUX)" InitialValue="ID_NULL"/>
@@ -28,6 +35,9 @@
 			<VarDeclaration Name="ID_RESET_METHOD" Type="WSTRING" Comment="Lokale Methodenadresse (ACTION=CREATE_METHOD) fuer den argumentlosen Reset-Trigger (hart auf AUS) - wird von Web-Client UND OPC-Dashboard aufgerufen"/>
 			<VarDeclaration Name="ID_STATE_WRITE" Type="WSTRING" Comment="Lokale Publish-Adresse (ACTION=WRITE) fuer den tatsaechlichen Toggle-Zustand (AX_T_FF_SR.Q) - wird von Web-Client/Dashboard remote abonniert"/>
 		</InputVars>
+		<OutputVars>
+			<VarDeclaration Name="QO" Type="BOOL" Comment="Quality Output - TRUE if service executed successfully"/>
+		</OutputVars>
 		<Plugs>
 			<AdapterDeclaration Name="OUT" Type="adapter::types::unidirectional::AX" Comment="Toggle-Zustand (AX_T_FF_SR.Q) - fuer Weiterverarbeitung beim Aufrufer (z.B. AX_TON/AX_TOF-Staffelung), Hintergrund+Publish sind hier bereits erledigt"/>
 		</Plugs>
@@ -43,10 +53,16 @@
 		<SubApp Name="GreenWhiteBackground_AX" Type="MyLib::sys::GreenWhiteBackground3_AX" x="3400" y="-2200">
 		</SubApp>
 		<FB Name="PUBLISH_STATE" Type="adapter::net::AX_PUBLISH_1" x="3500" y="-100">
-			<Parameter Name="QI" Value="TRUE"/>
+		</FB>
+		<FB Name="AND_QO" Type="iec61131::booleanOperators::AND_BOOL_3">
 		</FB>
 		<EventConnections>
 			<Connection Source="AUS" Destination="ToggleState.AUS" dx1="600"/>
+			<Connection Source="INIT" Destination="PUBLISH_STATE.INIT"/>
+			<Connection Source="PUBLISH_STATE.INITO" Destination="GreenWhiteBackground_AX.INIT"/>
+			<Connection Source="GreenWhiteBackground_AX.INITO" Destination="ToggleState.INIT"/>
+			<Connection Source="ToggleState.INITO" Destination="INITO"/>
+			<Connection Source="ToggleState.INITO" Destination="AND_QO.REQ"/>
 		</EventConnections>
 		<DataConnections>
 			<Connection Source="u16ObjId" Destination="ToggleState.u16ObjId" dx1="1846.67">
@@ -79,6 +95,13 @@
 			<Connection Source="ID_STATE_WRITE" Destination="PUBLISH_STATE.ID" dx1="1280">
 				<Attribute Name="Visible" Value="false"/>
 			</Connection>
+			<Connection Source="QI" Destination="PUBLISH_STATE.QI"/>
+			<Connection Source="QI" Destination="GreenWhiteBackground_AX.QI"/>
+			<Connection Source="PUBLISH_STATE.QO" Destination="AND_QO.IN1"/>
+			<Connection Source="GreenWhiteBackground_AX.QO" Destination="AND_QO.IN2"/>
+			<Connection Source="AND_QO.OUT" Destination="QO"/>
+			<Connection Source="QI" Destination="ToggleState.QI"/>
+			<Connection Source="ToggleState.QO" Destination="AND_QO.IN3"/>
 		</DataConnections>
 		<AdapterConnections>
 			<Connection Source="ToggleState.OUT" Destination="AX_SPLIT_3.IN" dx1="290"/>

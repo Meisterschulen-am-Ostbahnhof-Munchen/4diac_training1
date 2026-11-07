@@ -27,10 +27,10 @@
 			<VarDeclaration Name="QO" Type="BOOL" Comment="Output event qualifier"/>
 		</OutputVars>
 		<Sockets>
-			<AdapterDeclaration Name="SRSP" Type="adapter::types::bidirectional::Handshake::EVENT_HS_ACK_WSTRING" Comment="Service socket towards WorkpieceSensor: receives the trip REQ (+REQD), answers with CNF (+CNFD) once the whole trip is done"/>
+			<AdapterDeclaration Name="SRSP" Type="adapter::types::bidirectional::Handshake::EVENT_HS_ACK_WSTRING" Comment="Service socket towards WorkpieceSensor: receives the trip REQ (+REQD), answers&#10; with CNF (+CNFD) once the whole trip is done"/>
 		</Sockets>
 		<Plugs>
-			<AdapterDeclaration Name="SREQ1" Type="adapter::types::bidirectional::Handshake::EVENT_HS_WSTRING" Comment="Service plug towards CylinderService: full REQ/CNF/IND/RSP - reacts to the mid-trip IND (reached end position)"/>
+			<AdapterDeclaration Name="SREQ1" Type="adapter::types::bidirectional::Handshake::EVENT_HS_WSTRING" Comment="Service plug towards CylinderService: full REQ/CNF/IND/RSP - reacts to the&#10; mid-trip IND (reached end position)"/>
 			<AdapterDeclaration Name="SREQ2" Type="adapter::types::bidirectional::Handshake::EVENT_HS_ACK_WSTRING" Comment="Service plug towards DropSinkService: REQ/CNF only"/>
 		</Plugs>
 	</InterfaceList>
