@@ -46,6 +46,7 @@
 			<Parameter Name="QI" Value="TRUE"/>
 			<Parameter Name="ID" Value="L16B_INCD_WRITE"/>
 		</FB>
+		<Comment Comment="B-Version von Uebung_OPC_L16_AX: READ_INCD.REQ kommt von INCREMENTED.CNF&#10;(Ergebnis ist veroeffentlicht), nicht von WRITE_INC.CNF. Das Lesen haengt so&#10;nicht mehr von der Reihenfolge ab." x="0" y="-1800" width="9000" height="900"/>
 		<EventConnections>
 			<Connection Source="TASTER_I1.IND" Destination="WRITE_INC.REQ"/>
 			<Connection Source="INCREMENTED.CNF" Destination="READ_INCD.REQ"/>
@@ -65,6 +66,5 @@
 			<Connection Source="F_ADD.OUT" Destination="TO_INT.IN"/>
 			<Connection Source="TO_INT.OUT" Destination="INCREMENTED.SD_1"/>
 		</DataConnections>
-		<Comment Comment="B-Version von Uebung_OPC_L16_AX: READ_INCD.REQ kommt von INCREMENTED.CNF&#10;(Ergebnis ist veroeffentlicht), nicht von WRITE_INC.CNF. Das Lesen haengt so&#10;nicht mehr von der Reihenfolge ab." x="0" y="-1800" width="9000" height="900"/>
 	</SubAppNetwork>
 </SubAppType>
