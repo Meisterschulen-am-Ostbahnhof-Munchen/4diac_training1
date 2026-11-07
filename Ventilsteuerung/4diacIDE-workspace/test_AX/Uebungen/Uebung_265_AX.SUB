@@ -45,8 +45,8 @@
 			<Parameter Name="QI" Value="TRUE"/>
 			<Parameter Name="Output" Value="Output_Q1"/>
 			<Parameter Name="DIM_TIME" Value="T#4s"/>
-			<Parameter Name="MIN" Value="10.0"/>
-			<Parameter Name="MAX" Value="100.0"/>
+			<Parameter Name="LEVEL_MIN" Value="10.0"/>
+			<Parameter Name="LEVEL_MAX" Value="100.0"/>
 			<Parameter Name="START" Value="100.0"/>
 			<Parameter Name="SOFT" Value="T#300ms"/>
 			<Parameter Name="GAMMA" Value="2.2"/>
@@ -55,8 +55,8 @@
 			<Connection Source="Tippen_I1.IND" Destination="Dimmer_Q1.TOGGLE"/>
 			<Connection Source="Lang_Start_I1.IND" Destination="Dimmer_Q1.DIM_START"/>
 			<Connection Source="Lang_Ende_I1.IND" Destination="Dimmer_Q1.DIM_STOP"/>
-			<Connection Source="Ein_I2.IND" Destination="Dimmer_Q1.ON"/>
-			<Connection Source="Aus_I3.IND" Destination="Dimmer_Q1.OFF"/>
+			<Connection Source="Ein_I2.IND" Destination="Dimmer_Q1.SWITCH_ON"/>
+			<Connection Source="Aus_I3.IND" Destination="Dimmer_Q1.SWITCH_OFF"/>
 		</EventConnections>
 	</SubAppNetwork>
 </SubAppType>

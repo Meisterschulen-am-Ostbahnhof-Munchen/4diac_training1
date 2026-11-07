@@ -268,32 +268,32 @@ Ob eine Lampe Gamma bekommt, entscheidet die Wahl des Bausteins (`_G` oder nicht
 
 **Dimmer (Schaltung wie im Wohnzimmer)** – neu `logiBUS_QD_DIMMER` / `logiBUS_QD_DIMMER_G` (entschieden 2026-11-06):
 ein eigener Ausgangsbaustein mit eigenem `Output`, Bibliothek `logiBUS_io`. Für Lampen ist meist `_G` richtig.
-Eingänge `TOGGLE`, `DIM_START`, `DIM_STOP`, `ON`, `OFF`, `DIM_TIME`, `MIN`, `MAX`, `START`, `SOFT`, `FREQ`, beim `_G`
+Eingänge `TOGGLE`, `DIM_START`, `DIM_STOP`, `SWITCH_ON`, `SWITCH_OFF`, `DIM_TIME`, `LEVEL_MIN`, `LEVEL_MAX`, `START`, `SOFT`, `FREQ`, beim `_G`
 auch `GAMMA`; Ausgänge `ON_STATE`, `LEVEL`, `RAMPO`:
 
 - **Tippen bei aus:** an, mit der zuletzt eingestellten Helligkeit (Speicher, beim ersten Mal `START`).
 - **Tippen bei an:** aus. Die Helligkeit bleibt gespeichert.
 - **Lange drücken:** dimmen, solange gedrückt. Die Richtung wechselt mit jedem langen Druck. Der erste lange Druck nach
-  dem Einschalten dimmt herunter. Bei `MIN`/`MAX` bleibt der Wert stehen.
-- **Lange drücken bei aus:** an mit `MIN` und hochdimmen.
+  dem Einschalten dimmt herunter. Bei `LEVEL_MIN`/`LEVEL_MAX` bleibt der Wert stehen.
+- **Lange drücken bei aus:** an mit `LEVEL_MIN` und hochdimmen.
 
 | Anschluss | Typ | Default | Bedeutung |
 |---|---|---|---|
 | Ereignis `TOGGLE` | Event | – | Tippen (`BUTTON_SINGLE_CLICK` von `logiBUS_IE`) |
 | Ereignis `DIM_START` / `DIM_STOP` | Event | – | langer Druck Beginn / Ende (`BUTTON_LONG_PRESS_START` / `BUTTON_LONG_PRESS_UP`) |
-| Ereignis `ON` / `OFF` | Event | – | direkt ein/aus, z. B. Zentral-Aus |
-| `DIM_TIME` | TIME | T#4s | Zeit für den ganzen Bereich `MIN`→`MAX` beim Dimmen |
-| `MIN`, `MAX`, `START` | REAL (%) | 10 / 100 / 100 | Grenzen und erste Helligkeit |
+| Ereignis `SWITCH_ON` / `SWITCH_OFF` | Event | – | direkt ein/aus, z. B. Zentral-Aus |
+| `DIM_TIME` | TIME | T#4s | Zeit für den ganzen Bereich `LEVEL_MIN`→`LEVEL_MAX` beim Dimmen |
+| `LEVEL_MIN`, `LEVEL_MAX`, `START` | REAL (%) | 10 / 100 / 100 | Grenzen und erste Helligkeit |
 | `SOFT` | TIME | T#300ms | Rampenzeit beim Ein-/Ausschalten durch Tippen |
 | `Output` | logiBUS_DO_S | Invalid | Ausgang Q1..Qn, wie bei den PWM-Bausteinen |
 | `FREQ` | UDINT | 400 | PWM-Frequenz in Hz, gelesen bei INIT (teilt den Timer-Pool mit den PWM-Bausteinen) |
 | `GAMMA` | REAL | 2.2 | nur `_G`, gelesen bei INIT |
-| Ereignis `RAMPO` | Event | – | Rampe fertig (Ziel `MIN`/`MAX` erreicht oder Ein-/Ausschalten beendet) |
+| Ereignis `RAMPO` | Event | – | Rampe fertig (Ziel `LEVEL_MIN`/`LEVEL_MAX` erreicht oder Ein-/Ausschalten beendet) |
 | `ON_STATE`, `LEVEL` | BOOL, REAL (%) | – | Zustand und Helligkeit für die VT-Anzeige |
 
 **Stufenlos über die Hardware-Rampe (entschieden 2026-11-06).** Kein Takt mit `E_CYCLE`, keine Einzelschritte: Das
 wäre stufig, das will keiner.
-- Langer Druck beginnt: Rampe zum Ziel starten, hoch auf `MAX`, runter auf `MIN` (kleiner Wert, nie 0). Rampenzeit
+- Langer Druck beginnt: Rampe zum Ziel starten, hoch auf `LEVEL_MAX`, runter auf `LEVEL_MIN` (kleiner Wert, nie 0). Rampenzeit
   nach Reststück, damit die Geschwindigkeit immer gleich ist: `t = DIM_TIME · |Ziel − Ist| / (MAX − MIN)`.
 - Loslassen: `ledc_fade_stop()` (S3, P4, S31: `SOC_LEDC_SUPPORT_FADE_STOP`; Tastgrad steht spätestens eine PWM-Periode
   danach fest, nur bei Start mit `LEDC_FADE_NO_WAIT`), dann `ledc_get_duty()` lesen und als Helligkeit speichern.
@@ -522,18 +522,20 @@ Sperre über die Board-Tabelle. Wo das Signal abgegriffen wird, verantwortet der
 `FORTE_ABI` bleibt (nur logiBUS_io-Bausteine und -Handles ändern sich, keine forte-Basisklassen).
 
 **Umsetzung Schritt 4 Dimmer (Stand 2026-11-07, kompiliert für S3/P4/S31, gebaut und getestet noch nicht):**
-- Typen `logiBUS_QD_DIMMER` / `logiBUS_QD_DIMMER_G` wie in Abschnitt 2, Ereignis-Eingänge lesen `QI`, `DIM_TIME`, `MIN`,
-  `MAX`, `START`, `SOFT` (also auch während des Betriebs änderbar), `FREQ` und `GAMMA` nur bei INIT. `CNF` nach jedem
+- Typen `logiBUS_QD_DIMMER` / `logiBUS_QD_DIMMER_G` wie in Abschnitt 2, Ereignis-Eingänge lesen `QI`, `DIM_TIME`, `LEVEL_MIN`,
+  `LEVEL_MAX`, `START`, `SOFT` (also auch während des Betriebs änderbar), `FREQ` und `GAMMA` nur bei INIT. `CNF` nach jedem
   Ereignis-Eingang mit `ON_STATE` und `LEVEL`.
 - forte: `handler/logiBUSDimmerFB` (Zustand: an/aus, Richtung, gespeicherte Helligkeit), die beiden SIFBs sind
   handgeschrieben wie `QD_PWM`. Handle ist `IOHandleESP32PWMO`, neu `stop()` (Rampe anhalten, kein `RAMPO`),
   `getBrightness()` (Ist-Wert, Gamma herausgerechnet) und `isRamping()`.
-- Ergänzung: Steht die Helligkeit bei einem langen Druck schon am Ende in der fälligen Richtung (z. B. `MAX` und
+- Ergänzung: Steht die Helligkeit bei einem langen Druck schon am Ende in der fälligen Richtung (z. B. `LEVEL_MAX` und
   „hoch“), dimmt er in die andere Richtung, statt nichts zu tun.
-- Langer Druck bei aus: Rampe ab 0 (nicht ab `MIN`), Zeit nach demselben Maßstab. Wird vor `MIN` losgelassen, geht
-  der Ausgang mit `SOFT` auf `MIN` (dann kommt ausnahmsweise ein `RAMPO`).
+- Langer Druck bei aus: Rampe ab 0 (nicht ab `LEVEL_MIN`), Zeit nach demselben Maßstab. Wird vor `LEVEL_MIN` losgelassen, geht
+  der Ausgang mit `SOFT` auf `LEVEL_MIN` (dann kommt ausnahmsweise ein `RAMPO`).
 - Kein `STOP` am normalen `QD_PWM` (Franz, 2026-11-07): Ein neuer Wert unterbricht die Rampe schon, „anhalten, wo sie
   steht“ braucht bisher nur der Dimmer.
+- Namen (Franz, 2026-11-07): `ON`, `OFF`, `MIN` und `MAX` sind in der 4diac IDE reservierte Schlüsselwörter, die
+  Anschlüsse heißen deshalb `SWITCH_ON`, `SWITCH_OFF`, `LEVEL_MIN` und `LEVEL_MAX`.
 
 ## Entscheidungen (Franz)
 
