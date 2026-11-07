@@ -14,6 +14,7 @@ permissions:
 
 jobs:
   code-review:
+    if: !github.event.pull_request.head.repo.fork
     uses: Meisterschulen-am-Ostbahnhof-Munchen/.github/.github/workflows/reusable-agy-review.yml@main
     secrets:
       GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
