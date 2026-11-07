@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<GlobalConstants Name="SubStrings" Comment="Global constants">
+	<Identification Standard="61499-1">
+	</Identification>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2026-11-04">
+	</VersionInfo>
+	<CompilerInfo packageName="Meins::Servo_AI4_Calibrate_OPC">
+	</CompilerInfo>
+	<GlobalConstants>
+		<VarDeclaration Name="SAI4_RAW_WRITE" Type="WSTRING" Comment="Rohwert AI4 0-4095" InitialValue="&quot;opc_ua[WRITE;/Objects/ServoAI4/RAW,1:s=SAI4_RAW]&quot;"/>
+		<VarDeclaration Name="SAI4_CAL_WRITE" Type="WSTRING" Comment="kalibrierter Wert AI4 = Sollwinkel" InitialValue="&quot;opc_ua[WRITE;/Objects/ServoAI4/CAL,1:s=SAI4_CAL]&quot;"/>
+		<VarDeclaration Name="SAI4_MIN_METHOD" Type="WSTRING" Comment="Trigger C_MIN" InitialValue="&quot;opc_ua[CREATE_METHOD;/Objects/ServoAI4/MINMethod,1:s=SAI4_MIN_METHOD]&quot;"/>
+		<VarDeclaration Name="SAI4_MID_METHOD" Type="WSTRING" Comment="Trigger C_MID" InitialValue="&quot;opc_ua[CREATE_METHOD;/Objects/ServoAI4/MIDMethod,1:s=SAI4_MID_METHOD]&quot;"/>
+		<VarDeclaration Name="SAI4_MAX_METHOD" Type="WSTRING" Comment="Trigger C_MAX" InitialValue="&quot;opc_ua[CREATE_METHOD;/Objects/ServoAI4/MAXMethod,1:s=SAI4_MAX_METHOD]&quot;"/>
+		<VarDeclaration Name="SAI4_MINREF_READ" Type="WSTRING" Comment="MIN_REF vom Dashboard" InitialValue="&quot;opc_ua[READ;/Objects/ServoAI4/MINREFExt,1:s=SAI4_MINREF_EXT]&quot;"/>
+		<VarDeclaration Name="SAI4_MINREF_WRITE" Type="WSTRING" Comment="MIN_REF Echo" InitialValue="&quot;opc_ua[WRITE;/Objects/ServoAI4/MINREF,1:s=SAI4_MINREF]&quot;"/>
+		<VarDeclaration Name="SAI4_MIDREF_READ" Type="WSTRING" Comment="MID_REF vom Dashboard" InitialValue="&quot;opc_ua[READ;/Objects/ServoAI4/MIDREFExt,1:s=SAI4_MIDREF_EXT]&quot;"/>
+		<VarDeclaration Name="SAI4_MIDREF_WRITE" Type="WSTRING" Comment="MID_REF Echo" InitialValue="&quot;opc_ua[WRITE;/Objects/ServoAI4/MIDREF,1:s=SAI4_MIDREF]&quot;"/>
+		<VarDeclaration Name="SAI4_MAXREF_READ" Type="WSTRING" Comment="MAX_REF vom Dashboard" InitialValue="&quot;opc_ua[READ;/Objects/ServoAI4/MAXREFExt,1:s=SAI4_MAXREF_EXT]&quot;"/>
+		<VarDeclaration Name="SAI4_MAXREF_WRITE" Type="WSTRING" Comment="MAX_REF Echo" InitialValue="&quot;opc_ua[WRITE;/Objects/ServoAI4/MAXREF,1:s=SAI4_MAXREF]&quot;"/>
+		<VarDeclaration Name="SAI4_MIN_RAW_WRITE" Type="WSTRING" Comment="Rohwert am MIN-Punkt" InitialValue="&quot;opc_ua[WRITE;/Objects/ServoAI4/MINRAW,1:s=SAI4_MIN_RAW]&quot;"/>
+		<VarDeclaration Name="SAI4_MID_RAW_WRITE" Type="WSTRING" Comment="Rohwert am MID-Punkt" InitialValue="&quot;opc_ua[WRITE;/Objects/ServoAI4/MIDRAW,1:s=SAI4_MID_RAW]&quot;"/>
+		<VarDeclaration Name="SAI4_MAX_RAW_WRITE" Type="WSTRING" Comment="Rohwert am MAX-Punkt" InitialValue="&quot;opc_ua[WRITE;/Objects/ServoAI4/MAXRAW,1:s=SAI4_MAX_RAW]&quot;"/>
+		<VarDeclaration Name="SAI4_ANGLE" Type="WSTRING" Comment="angewendeter Winkel Q2 (Echo)" InitialValue="&quot;opc_ua[WRITE;/Objects/ServoAI4/ANGLE,1:s=SAI4_ANGLE]&quot;"/>
+	</GlobalConstants>
+	<OriginalSource><![CDATA[PACKAGE Meins::Servo_AI4_Calibrate_OPC;
+
+// OPC-UA Strings
+GLOBALCONSTANTS SubStrings
+	VAR_GLOBAL CONSTANT
+		SAI4_RAW_WRITE : WSTRING := "opc_ua[WRITE;/Objects/ServoAI4/RAW,1:s=SAI4_RAW]"; // Rohwert AI4 0-4095
+		SAI4_CAL_WRITE : WSTRING := "opc_ua[WRITE;/Objects/ServoAI4/CAL,1:s=SAI4_CAL]"; // kalibrierter Wert AI4 = Sollwinkel
+		SAI4_MIN_METHOD : WSTRING := "opc_ua[CREATE_METHOD;/Objects/ServoAI4/MINMethod,1:s=SAI4_MIN_METHOD]"; // Trigger C_MIN
+		SAI4_MID_METHOD : WSTRING := "opc_ua[CREATE_METHOD;/Objects/ServoAI4/MIDMethod,1:s=SAI4_MID_METHOD]"; // Trigger C_MID
+		SAI4_MAX_METHOD : WSTRING := "opc_ua[CREATE_METHOD;/Objects/ServoAI4/MAXMethod,1:s=SAI4_MAX_METHOD]"; // Trigger C_MAX
+		SAI4_MINREF_READ : WSTRING := "opc_ua[READ;/Objects/ServoAI4/MINREFExt,1:s=SAI4_MINREF_EXT]"; // MIN_REF vom Dashboard
+		SAI4_MINREF_WRITE : WSTRING := "opc_ua[WRITE;/Objects/ServoAI4/MINREF,1:s=SAI4_MINREF]"; // MIN_REF Echo
+		SAI4_MIDREF_READ : WSTRING := "opc_ua[READ;/Objects/ServoAI4/MIDREFExt,1:s=SAI4_MIDREF_EXT]"; // MID_REF vom Dashboard
+		SAI4_MIDREF_WRITE : WSTRING := "opc_ua[WRITE;/Objects/ServoAI4/MIDREF,1:s=SAI4_MIDREF]"; // MID_REF Echo
+		SAI4_MAXREF_READ : WSTRING := "opc_ua[READ;/Objects/ServoAI4/MAXREFExt,1:s=SAI4_MAXREF_EXT]"; // MAX_REF vom Dashboard
+		SAI4_MAXREF_WRITE : WSTRING := "opc_ua[WRITE;/Objects/ServoAI4/MAXREF,1:s=SAI4_MAXREF]"; // MAX_REF Echo
+		SAI4_MIN_RAW_WRITE : WSTRING := "opc_ua[WRITE;/Objects/ServoAI4/MINRAW,1:s=SAI4_MIN_RAW]"; // Rohwert am MIN-Punkt
+		SAI4_MID_RAW_WRITE : WSTRING := "opc_ua[WRITE;/Objects/ServoAI4/MIDRAW,1:s=SAI4_MID_RAW]"; // Rohwert am MID-Punkt
+		SAI4_MAX_RAW_WRITE : WSTRING := "opc_ua[WRITE;/Objects/ServoAI4/MAXRAW,1:s=SAI4_MAX_RAW]"; // Rohwert am MAX-Punkt
+		SAI4_ANGLE : WSTRING := "opc_ua[WRITE;/Objects/ServoAI4/ANGLE,1:s=SAI4_ANGLE]"; // angewendeter Winkel Q2 (Echo)
+	END_VAR
+END_GLOBALCONSTANTS
+]]></OriginalSource>
+</GlobalConstants>

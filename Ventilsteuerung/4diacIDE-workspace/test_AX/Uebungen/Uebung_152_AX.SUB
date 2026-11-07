@@ -11,32 +11,32 @@
 	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2026-09-10" Remarks="initial API and implementation and/or initial documentation">
 	</VersionInfo>
 	<CompilerInfo packageName="Uebungen">
-		<Import declaration="logiBUS::io::DI::logiBUS_DI::Input_I1"/>
 		<Import declaration="logiBUS::io::DI::logiBUS_DI::Input_I2"/>
 		<Import declaration="logiBUS::io::DI::logiBUS_DI::Input_I3"/>
+		<Import declaration="logiBUS::io::DI::logiBUS_DI::Input_I4"/>
 		<Import declaration="logiBUS::io::DI::logiBUS_DI_Events::BUTTON_SINGLE_CLICK"/>
 		<Import declaration="logiBUS::io::DQ::logiBUS_DO::Output_Q1"/>
-		<Import declaration="logiBUS::io::PI::logiBUS_PI::PulseInput_I8"/>
+		<Import declaration="logiBUS::io::PI::logiBUS_PI::PulseInput_I1"/>
 	</CompilerInfo>
 	<SubAppInterfaceList>
 	</SubAppInterfaceList>
 	<SubAppNetwork>
-		<FB Name="DigitalInput_I2" Type="logiBUS::io::DI::logiBUS_IE" x="-7000" y="0">
+		<FB Name="Input_I2" Type="logiBUS::io::DI::logiBUS_IE" x="-7000" y="1200">
 			<Parameter Name="QI" Value="TRUE"/>
 			<Parameter Name="Input" Value="Input_I2"/>
 			<Parameter Name="InputEvent" Value="BUTTON_SINGLE_CLICK"/>
 		</FB>
-		<FB Name="DigitalInput_I3" Type="logiBUS::io::DI::logiBUS_IE" x="-7000" y="1000">
+		<FB Name="Input_I3" Type="logiBUS::io::DI::logiBUS_IE" x="-7000" y="2300">
 			<Parameter Name="QI" Value="TRUE"/>
 			<Parameter Name="Input" Value="Input_I3"/>
 			<Parameter Name="InputEvent" Value="BUTTON_SINGLE_CLICK"/>
 		</FB>
-		<FB Name="E_CYCLE" Type="iec61499::events::E_CYCLE" x="-5500" y="500">
+		<FB Name="E_CYCLE" Type="iec61499::events::E_CYCLE" x="-5600" y="1500">
 			<Parameter Name="DT" Value="T#200ms"/>
 		</FB>
-		<FB Name="logiBUS_PI_IDA" Type="logiBUS::io::PI::logiBUS_PI_IDA" x="-4000" y="400">
+		<FB Name="Input_I1" Type="logiBUS::io::PI::logiBUS_PI_IDA" x="-4200" y="-400">
 			<Parameter Name="QI" Value="TRUE"/>
-			<Parameter Name="Input" Value="PulseInput_I8"/>
+			<Parameter Name="Input" Value="PulseInput_I1"/>
 			<Parameter Name="ImpulseDelta" Value="100"/>
 			<Parameter Name="TimeDelta" Value="50000"/>
 			<Parameter Name="TimeRateLimit" Value="10000"/>
@@ -50,9 +50,9 @@
 		<FB Name="LIT_K" Type="adapter::types::unidirectional::AUI::initval::initval_AUI" x="-2500" y="800">
 			<Parameter Name="INIT_VAL" Value="9"/>
 		</FB>
-		<FB Name="DigitalInput_I1" Type="logiBUS::io::DI::logiBUS_IE" x="-2500" y="2300">
+		<FB Name="Input_I4" Type="logiBUS::io::DI::logiBUS_IE" x="-7000" y="3300">
 			<Parameter Name="QI" Value="TRUE"/>
-			<Parameter Name="Input" Value="Input_I1"/>
+			<Parameter Name="Input" Value="Input_I4"/>
 			<Parameter Name="InputEvent" Value="BUTTON_SINGLE_CLICK"/>
 		</FB>
 		<FB Name="AX_T_FF" Type="adapter::events::unidirectional::AX_T_FF" x="0" y="2500">
@@ -90,13 +90,13 @@
 			<Parameter Name="INIT_VAL" Value="16.0"/>
 		</FB>
 		<EventConnections>
-			<Connection Source="DigitalInput_I2.IND" Destination="E_CYCLE.START" dx1="533.33"/>
-			<Connection Source="DigitalInput_I3.IND" Destination="E_CYCLE.STOP" dx1="360"/>
-			<Connection Source="E_CYCLE.EO" Destination="logiBUS_PI_IDA.REQ" dx1="593.33"/>
-			<Connection Source="DigitalInput_I1.IND" Destination="AX_T_FF.CLK" dx1="806.67"/>
+			<Connection Source="Input_I2.IND" Destination="E_CYCLE.START" dx1="433.33"/>
+			<Connection Source="Input_I3.IND" Destination="E_CYCLE.STOP" dx1="333.33"/>
+			<Connection Source="E_CYCLE.EO" Destination="Input_I1.REQ" dx1="393.33"/>
+			<Connection Source="Input_I4.IND" Destination="AX_T_FF.CLK" dx1="806.67"/>
 		</EventConnections>
 		<AdapterConnections>
-			<Connection Source="logiBUS_PI_IDA.IN" Destination="AD_TO_AR_NUM.AD_IN" dx1="293.33"/>
+			<Connection Source="Input_I1.IN" Destination="AD_TO_AR_NUM.AD_IN" dx1="293.33"/>
 			<Connection Source="AD_TO_AR_NUM.AR_OUT" Destination="FT_DERIV.AR_IN" dx1="300"/>
 			<Connection Source="LIT_K.OUT" Destination="FT_DERIV.K" dx1="300"/>
 			<Connection Source="FT_DERIV.AR_OUT" Destination="CTRL_PI.AR_ACT" dx1="300"/>

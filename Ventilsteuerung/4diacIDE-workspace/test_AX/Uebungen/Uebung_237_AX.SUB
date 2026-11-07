@@ -23,7 +23,7 @@
 		</FB>
 		<FB Name="AD_TO_AR_NUM_CORRECT" Type="adapter::conversion::unidirectional::AD_TO_AR_NUM" x="-2400" y="800">
 		</FB>
-		<Comment Comment="FALSCH: AD_TO_AR ist eine reine IEEE754-Bit-Reinterpretation (F_DWORD_TO_REAL), kein numerischer Cast. &#10;Derselbe Analog-Rohwert, der ueber AD_TO_AR_NUM_CORRECT (unten) den richtigen Zahlenwert liefert, ergibt hier eine bedeutungslose Zahl nahe Null. &#10;AR_OUT.D1 beider Bausteine im 4diac-Monitor beobachten (rechte Maustaste auf den Pin -&gt; Watch) und vergleichen." x="-6200" y="-2400" width="4600" height="1300"/>
+		<Comment Comment="FALSCH: AD_TO_AR ist eine reine IEEE754-Bit-Reinterpretation (F_DWORD_TO_REAL),&#10; kein numerischer Cast. &#10;Derselbe Analog-Rohwert, der ueber AD_TO_AR_NUM_CORRECT (unten) den richtigen&#10; Zahlenwert liefert, ergibt hier eine bedeutungslose Zahl nahe Null. &#10;AR_OUT.D1 beider Bausteine im 4diac-Monitor beobachten (rechte Maustaste auf den&#10; Pin -&gt; Watch) und vergleichen." x="-6200" y="-2400" width="4600" height="1300"/>
 		<AdapterConnections>
 			<Connection Source="AnalogInput_I4.IN" Destination="AD_SPLIT_2.IN" dx1="500"/>
 			<Connection Source="AD_SPLIT_2.OUT1" Destination="AD_TO_AR_WRONG.AD_IN" dx1="600"/>

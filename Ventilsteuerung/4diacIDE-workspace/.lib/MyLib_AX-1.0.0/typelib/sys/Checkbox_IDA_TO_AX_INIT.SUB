@@ -8,33 +8,54 @@
 		<Import declaration="isobus::UT::Q::const::IDs::ID_NULL"/>
 	</CompilerInfo>
 	<SubAppInterfaceList>
+		<SubAppEventInputs>
+			<SubAppEvent Name="INIT" Type="EInit" Comment="Initialization Request">
+			</SubAppEvent>
+		</SubAppEventInputs>
+		<SubAppEventOutputs>
+			<SubAppEvent Name="INITO" Type="EInit" Comment="Initialization Confirm">
+			</SubAppEvent>
+		</SubAppEventOutputs>
 		<InputVars>
+			<VarDeclaration Name="QI" Type="BOOL" Comment="Quality Input - TRUE to enable service" InitialValue="TRUE"/>
 			<VarDeclaration Name="u16ObjId" Type="UINT" Comment="Object ID der VT-Checkbox (InputBoolean)" InitialValue="ID_NULL"/>
 		</InputVars>
+		<OutputVars>
+			<VarDeclaration Name="QO" Type="BOOL" Comment="Quality Output - TRUE if service executed successfully"/>
+		</OutputVars>
 		<Plugs>
 			<AdapterDeclaration Name="PERMIT_OUT" Type="adapter::types::unidirectional::AX" Comment="Roher Checkbox-Zustand (0/1) als Pegel"/>
 		</Plugs>
 	</SubAppInterfaceList>
 	<SubAppNetwork>
 		<FB Name="NumericValue_IDA" Type="isobus::UT::io::NumericValue::NumericValue_IDA" x="0" y="-100">
-			<Parameter Name="QI" Value="TRUE"/>
 		</FB>
 		<FB Name="AD_TO_AX" Type="adapter::conversion::unidirectional::AD_TO_AX" x="2300" y="400">
 		</FB>
 		<FB Name="AX_RF_TRIG" Type="adapter::events::unidirectional::AX_RF_TRIG" x="4300" y="200">
 		</FB>
 		<FB Name="AX_SR_SYM_INIT" Type="adapter::events::unidirectional::AX_SR_SYM_INIT" x="5800" y="100">
-			<Parameter Name="QI" Value="TRUE"/>
 			<Parameter Name="Q_INIT" Value="TRUE"/>
+		</FB>
+		<FB Name="AND_QO" Type="iec61131::booleanOperators::AND_BOOL_2" x="7700" y="700">
 		</FB>
 		<EventConnections>
 			<Connection Source="AX_RF_TRIG.ER" Destination="AX_SR_SYM_INIT.S" dx1="373.33"/>
 			<Connection Source="AX_RF_TRIG.EF" Destination="AX_SR_SYM_INIT.R" dx1="373.33"/>
+			<Connection Source="INIT" Destination="NumericValue_IDA.INIT" dx1="80" dx2="80" dy="-513.33"/>
+			<Connection Source="NumericValue_IDA.INITO" Destination="AX_SR_SYM_INIT.INIT" dx1="2380"/>
+			<Connection Source="AX_SR_SYM_INIT.INITO" Destination="INITO" dx1="3000"/>
+			<Connection Source="AX_SR_SYM_INIT.INITO" Destination="AND_QO.REQ" dx1="480"/>
 		</EventConnections>
 		<DataConnections>
 			<Connection Source="u16ObjId" Destination="NumericValue_IDA.u16ObjId" dx1="600">
 				<Attribute Name="Visible" Value="false"/>
 			</Connection>
+			<Connection Source="QI" Destination="NumericValue_IDA.QI" dx1="80" dx2="80" dy="-406.67"/>
+			<Connection Source="QI" Destination="AX_SR_SYM_INIT.QI" dx1="2680"/>
+			<Connection Source="NumericValue_IDA.QO" Destination="AND_QO.IN1" dx1="3333.33"/>
+			<Connection Source="AX_SR_SYM_INIT.QO" Destination="AND_QO.IN2" dx1="480"/>
+			<Connection Source="AND_QO.OUT" Destination="QO" dx1="1540"/>
 		</DataConnections>
 		<AdapterConnections>
 			<Connection Source="NumericValue_IDA.IN" Destination="AD_TO_AX.AD_IN" dx1="600"/>

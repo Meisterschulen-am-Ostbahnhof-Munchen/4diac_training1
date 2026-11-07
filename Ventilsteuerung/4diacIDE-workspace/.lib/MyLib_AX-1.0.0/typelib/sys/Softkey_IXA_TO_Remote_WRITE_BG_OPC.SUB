@@ -8,30 +8,49 @@
 		<Import declaration="isobus::UT::Q::const::IDs::ID_NULL"/>
 	</CompilerInfo>
 	<SubAppInterfaceList>
+		<SubAppEventInputs>
+			<SubAppEvent Name="INIT" Type="EInit" Comment="Initialization Request">
+			</SubAppEvent>
+		</SubAppEventInputs>
+		<SubAppEventOutputs>
+			<SubAppEvent Name="INITO" Type="EInit" Comment="Initialization Confirm">
+			</SubAppEvent>
+		</SubAppEventOutputs>
 		<InputVars>
+			<VarDeclaration Name="QI" Type="BOOL" Comment="Quality Input - TRUE to enable service" InitialValue="TRUE"/>
 			<VarDeclaration Name="u16ObjId" Type="UINT" Comment="Object ID SoftKey/Hintergrund (VT)" InitialValue="ID_NULL"/>
 			<VarDeclaration Name="ID_SUBSCRIBE" Type="WSTRING" Comment="Remote-Subscribe-Adresse (Status/Farbe, ACTION=SUBSCRIBE)"/>
 			<VarDeclaration Name="ID_WRITE_REMOTE" Type="WSTRING" Comment="Remote-Write-Adresse zum Zielmodul (Befehl, ACTION=WRITE, CLIENT)"/>
 			<VarDeclaration Name="ID_WEB_READ" Type="WSTRING" Comment="Lokale Subscribe-Adresse fuer einen Web-Client (z.B. vt-ui-mirror) auf demselben Modul, ODER-verknuepft mit dem echten SoftKey"/>
 		</InputVars>
+		<OutputVars>
+			<VarDeclaration Name="QO" Type="BOOL" Comment="Quality Output - TRUE if service executed successfully"/>
+		</OutputVars>
 	</SubAppInterfaceList>
 	<SubAppNetwork>
 		<FB Name="Softkey_IXA" Type="isobus::UT::io::Softkey::Softkey_IXA" x="-200" y="-500">
-			<Parameter Name="QI" Value="TRUE"/>
 		</FB>
 		<FB Name="SUBSCRIBE_WEB" Type="adapter::net::AX_SUBSCRIBE_1" x="-400" y="700">
-			<Parameter Name="QI" Value="TRUE"/>
 		</FB>
 		<FB Name="OR_MERGE" Type="adapter::booleanOperators::AX_OR_2" x="900" y="300">
 		</FB>
 		<FB Name="AX_CLIENT_1_0" Type="adapter::net::AX_CLIENT_1_0" x="2200" y="0">
-			<Parameter Name="QI" Value="TRUE"/>
 		</FB>
 		<FB Name="AX_SUBSCRIBE_1" Type="adapter::net::AX_SUBSCRIBE_1" x="0" y="1600">
-			<Parameter Name="QI" Value="TRUE"/>
 		</FB>
 		<SubApp Name="GreenWhiteBackground1_AX" Type="MyLib::sys::GreenWhiteBackground1_AX" x="1500" y="1600">
 		</SubApp>
+		<FB Name="AND_QO" Type="iec61131::booleanOperators::AND_BOOL_5" x="4100" y="500">
+		</FB>
+		<EventConnections>
+			<Connection Source="INIT" Destination="Softkey_IXA.INIT" dx1="80" dx2="80" dy="-566.67"/>
+			<Connection Source="Softkey_IXA.INITO" Destination="SUBSCRIBE_WEB.INIT" dx1="80" dx2="80" dy="600"/>
+			<Connection Source="SUBSCRIBE_WEB.INITO" Destination="AX_CLIENT_1_0.INIT" dx1="826.67"/>
+			<Connection Source="AX_CLIENT_1_0.INITO" Destination="AX_SUBSCRIBE_1.INIT" dx1="80" dx2="80" dy="800"/>
+			<Connection Source="AX_SUBSCRIBE_1.INITO" Destination="GreenWhiteBackground1_AX.INIT"/>
+			<Connection Source="GreenWhiteBackground1_AX.INITO" Destination="INITO" dx1="2380"/>
+			<Connection Source="GreenWhiteBackground1_AX.INITO" Destination="AND_QO.REQ" dx1="593.33"/>
+		</EventConnections>
 		<DataConnections>
 			<Connection Source="u16ObjId" Destination="Softkey_IXA.u16ObjId" dx1="846.67">
 				<Attribute Name="Visible" Value="false"/>
@@ -48,6 +67,17 @@
 			<Connection Source="ID_WRITE_REMOTE" Destination="AX_CLIENT_1_0.ID" dx1="613.33">
 				<Attribute Name="Visible" Value="false"/>
 			</Connection>
+			<Connection Source="QI" Destination="Softkey_IXA.QI" dx1="80" dx2="80" dy="-460"/>
+			<Connection Source="QI" Destination="SUBSCRIBE_WEB.QI" dx1="80" dx2="80" dy="140"/>
+			<Connection Source="QI" Destination="AX_CLIENT_1_0.QI" dx1="713.33"/>
+			<Connection Source="QI" Destination="AX_SUBSCRIBE_1.QI" dx1="80" dx2="80" dy="586.67"/>
+			<Connection Source="Softkey_IXA.QO" Destination="AND_QO.IN1" dx1="1746.67"/>
+			<Connection Source="SUBSCRIBE_WEB.QO" Destination="AND_QO.IN2" dx1="1780"/>
+			<Connection Source="AX_CLIENT_1_0.QO" Destination="AND_QO.IN3" dx1="500"/>
+			<Connection Source="AX_SUBSCRIBE_1.QO" Destination="AND_QO.IN4" dx1="1580"/>
+			<Connection Source="AND_QO.OUT" Destination="QO" dx1="2740"/>
+			<Connection Source="QI" Destination="GreenWhiteBackground1_AX.QI" dx1="366.67"/>
+			<Connection Source="GreenWhiteBackground1_AX.QO" Destination="AND_QO.IN5" dx1="593.33"/>
 		</DataConnections>
 		<AdapterConnections>
 			<Connection Source="Softkey_IXA.IN" Destination="OR_MERGE.IN1" dx1="100"/>

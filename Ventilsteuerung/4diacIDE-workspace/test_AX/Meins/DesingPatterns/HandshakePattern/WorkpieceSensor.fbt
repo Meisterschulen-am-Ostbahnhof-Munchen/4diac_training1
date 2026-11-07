@@ -28,11 +28,11 @@
 		</InputVars>
 		<OutputVars>
 			<VarDeclaration Name="QO" Type="BOOL" Comment="Output event qualifier"/>
-			<VarDeclaration Name="TripResult" Type="WSTRING" Comment="Payload of the last received CNF (expected: MessageExchangeConst::RSP_CYL_TRIP_COMPLETE)"/>
+			<VarDeclaration Name="TripResult" Type="WSTRING" Comment="Payload of the last received CNF (expected:&#10; MessageExchangeConst::RSP_CYL_TRIP_COMPLETE)"/>
 			<VarDeclaration Name="TripCount" Type="UINT" Comment="Number of completed round trips (demo counter)"/>
 		</OutputVars>
 		<Plugs>
-			<AdapterDeclaration Name="ACTIVATE" Type="adapter::types::bidirectional::Handshake::EVENT_HS_ACK_WSTRING" Comment="Service plug: sends REQ (+REQD) requesting the round trip, receives CNF (+CNFD) when it completes"/>
+			<AdapterDeclaration Name="ACTIVATE" Type="adapter::types::bidirectional::Handshake::EVENT_HS_ACK_WSTRING" Comment="Service plug: sends REQ (+REQD) requesting the round trip, receives CNF (+CNFD)&#10; when it completes"/>
 		</Plugs>
 	</InterfaceList>
 	<BasicFB>

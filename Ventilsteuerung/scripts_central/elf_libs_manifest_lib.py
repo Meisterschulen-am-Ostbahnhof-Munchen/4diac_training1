@@ -15,9 +15,12 @@ uebernommen, nicht neu hergeleitet.
 from __future__ import annotations
 
 import hashlib
+import http.client
+import ipaddress
 import json
 import os
 import re
+import socket
 import xml.etree.ElementTree as ET
 from pathlib import Path
 from typing import Optional
@@ -33,13 +36,172 @@ if (_SCRIPT_DIR.parent / "4diacIDE-workspace").is_dir():
 else:
     VENTILSTEUERUNG_DIR = _SCRIPT_DIR
 
-# Architektur je Knoten - UNBESTAETIGTER PLATZHALTER (ausser 192.168.178.55).
+# Architektur je Knoten (von Franz bestaetigt). Nur noch Rueckfall fuer
+# Firmware ohne GET /deviceinfo/ (siehe resolve_node_arch) und fuer das rein
+# lokale make_libs_manifest.py. Unbekannte IPs: siehe DEFAULT_ARCH im
+# Preload-Skript; das Bootfile-Deploy ueberspringt sie.
 NODE_ARCH = {
     "192.168.178.55": "riscv32",
+    "192.168.178.45": "riscv32",
+    "192.168.178.54": "riscv32",
+    "192.168.1.11": "riscv32",
+    "192.168.4.1": "xtensa",
 }
 
 # forte_abi: von Hand erhoehte Nummer, wenn sich FORTE-Basisklassen aendern.
-FORTE_ABI = 3
+FORTE_ABI = 6
+
+
+# Architekturen, fuer die ELFs gebaut werden (Unterordner elf/<arch>/ der Libs).
+SUPPORTED_ARCHS = ("riscv32", "xtensa")
+
+
+class NonInternalHostError(OSError):
+    """Ziel ist kein Knoten im internen Netz (siehe is_internal_host)."""
+
+
+def is_internal_host(host: str) -> bool:
+    """Nur Knoten im internen Netz werden angesprochen: private Adressen
+    (10.x, 172.16-31.x, 192.168.x, IPv6 ULA), link-local (169.254.x, fe80::),
+    loopback sowie mDNS-Namen (*.local) und localhost. Alles andere, z. B.
+    oeffentliche Adressen oder Internet-Namen, wird abgelehnt."""
+    name = host.strip().rstrip(".").lower()
+    if name == "localhost" or name.endswith(".local"):
+        return True
+    try:
+        addr = ipaddress.ip_address(name.strip("[]"))
+    except ValueError:
+        return False
+    return addr.is_private or addr.is_link_local or addr.is_loopback
+
+
+def internal_host(host: str) -> str:
+    """host unveraendert zurueck, wenn er intern ist, sonst NonInternalHostError."""
+    if not is_internal_host(host):
+        raise NonInternalHostError(f"{host} ist kein Knoten im internen Netz (erlaubt: 10.x, 172.16-31.x, 192.168.x, 169.254.x, *.local)")
+    return host
+
+
+def resolve_host(host: str) -> Optional[str]:
+    """Hostnamen (z. B. logibus.local) EINMAL in eine IP aufloesen; eine IP
+    kommt unveraendert zurueck, None wenn der Name nicht aufloesbar ist.
+    Die Skripte bauen pro Datei mehrere Verbindungen auf und http.client
+    loest den Namen jedes Mal neu auf - per mDNS kostete das am S3 als
+    Access Point je 12,4 s statt 0,09 s ueber die IP (Franz, 2026-11-06).
+    Die eine Aufloesung bleibt dort langsam (auch nur IPv4 dauerte 12 s),
+    entscheidend ist, dass sie nur einmal pro Knoten passiert. IPv4 zuerst,
+    IPv6 nur, wenn es keine IPv4-Adresse gibt."""
+    name = host.strip().strip("[]")
+    try:
+        ipaddress.ip_address(name)
+        return host.strip()
+    except ValueError:
+        pass
+    for family in (socket.AF_INET, socket.AF_UNSPEC):
+        try:
+            infos = socket.getaddrinfo(name, 80, family, socket.SOCK_STREAM)
+        except OSError:
+            continue
+        if infos:
+            addr = str(infos[0][4][0])
+            # http.client braucht IPv6 in Klammern, sonst gilt der letzte Teil als Port
+            return f"[{addr}]" if ":" in addr else addr
+    return None
+
+
+def query_device_info(ip: str, timeout: float = 5) -> tuple[str, Optional[dict]]:
+    """GET /deviceinfo/ (Firmware LOGIBUS_integration_datapanel, JSON mit app,
+    bootloader, chip, flash, psram, heap, elf_libs, ...).
+
+    Ergebnis (Zustand, Info):
+    - ("ok", dict): gueltige Antwort
+    - ("legacy", None): HTTP 404 - Firmware ohne den Endpunkt (dort laeuft
+      GET /deviceinfo/ in die Verzeichnisanzeige und liefert 404 "Directory
+      does not exist")
+    - ("error", None): anderer Status, kaputte HTTP-Antwort, kein JSON-Objekt
+      oder Verbindungsfehler oder kein Knoten im internen Netz
+      (is_internal_host) - dann ist nichts ueber das Geraet bekannt."""
+    if not is_internal_host(ip):
+        print(f"  FEHLER: {ip} ist kein Knoten im internen Netz - /deviceinfo/ nicht abgefragt.")
+        return "error", None
+    conn = http.client.HTTPConnection(internal_host(ip), timeout=timeout)
+    try:
+        conn.request("GET", "/deviceinfo/")
+        resp = conn.getresponse()
+        body = resp.read()
+        if resp.status == 404:
+            return "legacy", None
+        if resp.status != 200:
+            print(f"  FEHLER: {ip} /deviceinfo/ antwortet mit HTTP {resp.status}.")
+            return "error", None
+        info = json.loads(body.decode("utf-8"))
+        if not isinstance(info, dict):
+            print(f"  FEHLER: {ip} /deviceinfo/ liefert kein JSON-Objekt.")
+            return "error", None
+        return "ok", info
+    except (OSError, ValueError, http.client.HTTPException) as exc:
+        print(f"  FEHLER: {ip} /deviceinfo/ nicht lesbar ({type(exc).__name__}: {exc}).")
+        return "error", None
+    finally:
+        conn.close()
+
+
+def _elf_arch_from_device_info(ip: str, info: dict) -> Optional[str]:
+    """Prueft elf_libs aus /deviceinfo/: ELF-Loader vorhanden, unterstuetzte
+    Architektur, Host-Symboltabelle, FORTE_ABI wie FORTE_ABI oben. Liefert die
+    Architektur oder None (mit Fehlermeldung)."""
+    elf = info.get("elf_libs")
+    if not isinstance(elf, dict) or not elf.get("supported"):
+        print(f"  FEHLER: Firmware auf {ip} hat keinen ELF-Loader.")
+        return None
+    arch = elf.get("arch")
+    abi = elf.get("forte_abi")
+    if not isinstance(arch, str) or arch not in SUPPORTED_ARCHS:
+        print(f"  FEHLER: Firmware auf {ip} meldet keine unterstuetzte ELF-Architektur ({arch!r}, erwartet: {', '.join(SUPPORTED_ARCHS)}).")
+        return None
+    if not elf.get("host_table"):
+        print(f"  FEHLER: Firmware auf {ip} hat keine Host-Symboltabelle fuer {arch} - ELFs koennen dort nicht laden.")
+        return None
+    if abi != FORTE_ABI:
+        print(f"  FEHLER: Firmware auf {ip} hat FORTE_ABI {abi}, die ELFs sind fuer FORTE_ABI {FORTE_ABI} gebaut - Firmware oder ELFs passen nicht zusammen.")
+        return None
+
+    return arch
+
+
+def resolve_node_arch(ip: str, fallback: Optional[str] = None) -> Optional[str]:
+    """Architektur der ELF-Libs fuer einen Knoten, vom Geraet selbst
+    (GET /deviceinfo/, elf_libs.arch). Meldet das Geraet eine andere
+    FORTE_ABI als FORTE_ABI oben, keine Host-Symboltabelle oder keine
+    unterstuetzte Architektur, ist das ein Fehler: None, die ELFs wuerden dort
+    nicht laden. Ebenso, wenn /deviceinfo/ anders als mit 404 scheitert
+    (fail closed).
+
+    Nur bei 404 (aeltere Firmware ohne /deviceinfo/) gilt NODE_ARCH, sonst
+    fallback - mit Warnung, weil das nur geraten ist."""
+    state, info = query_device_info(ip)
+    if state == "error":
+        print(f"  FEHLER: Geraet {ip} nicht pruefbar - keine ELFs/Manifest.")
+        return None
+    if state == "legacy" or info is None:
+        arch = NODE_ARCH.get(ip, fallback)
+        if arch:
+            print(f"  WARNUNG: {ip} liefert kein /deviceinfo/ (aeltere Firmware?) - Architektur {arch} aus NODE_ARCH/Default angenommen.")
+        else:
+            print(f"  FEHLER: {ip} liefert kein /deviceinfo/ und steht nicht in NODE_ARCH - Architektur unbekannt.")
+        return arch
+
+    arch = _elf_arch_from_device_info(ip, info)
+    if arch is None:
+        return None
+
+    app = info.get("app") if isinstance(info.get("app"), dict) else {}
+    chip = info.get("chip") if isinstance(info.get("chip"), dict) else {}
+    print(f"  Geraet: {chip.get('model', '?')} ({chip.get('target', '?')}), Firmware {app.get('version', '?')}, {arch}, FORTE_ABI {FORTE_ABI}")
+    known = NODE_ARCH.get(ip)
+    if known and known != arch:
+        print(f"  HINWEIS: NODE_ARCH nennt fuer {ip} {known}, das Geraet meldet {arch} - es gilt das Geraet.")
+    return arch
 
 # Namensraum-Praefix -> Lib-Name. 1:1 aus elf_libs_manifest_lib.sh
 # uebernommen (siehe dort fuer die ausfuehrliche Begruendung der
@@ -53,6 +215,9 @@ PREFIX_TO_LIB = {
     "OSCAT::Building": "OSCAT_Building",
     "OSCAT::Network": "OSCAT_Network",
     "OSCAT_adapter": "OSCAT_adapter",
+    "Option": "Option",
+    "Option::conversion": "Option",
+    "Option::selection": "Option",
     "adapter::net": "net_adapter",
     "adapter::conversion": "adapter_conversion",
     "adapter::events": "adapter_events",
@@ -75,6 +240,8 @@ PREFIX_TO_LIB = {
     "eclipse4diac::signalprocessing": "signalprocessing",
     "eclipse4diac::storage": "logiBUS_storage",
     "eclipse4diac::utils": "utils",
+    "iec61499::events": "events",
+    "events::init": "init_stages",
     "SafeArithmetic::arithmetic": "SafeArithmetic",
     "iec61131::arithmetic": "iec61131-3",
     "iec61131::arrays": "iec61131-3",
@@ -108,6 +275,10 @@ PREFIX_TO_LIB = {
 # Exakter FBType-Name -> Lib-Name. Hat in resolve_required_libs() IMMER
 # Vorrang vor PREFIX_TO_LIB. 1:1 aus elf_libs_manifest_lib.sh uebernommen.
 TYPE_NAME_TO_LIB = {
+    # iec61499::events: Default events-ELF, Ausnahme E_RESTART bleibt in der
+    # Firmware (Modul system) - "" = kein ELF, wird in resolve_required_libs()
+    # uebersprungen.
+    "E_RESTART": "",
     # adapter::conversion: Default adapter_conversion, Ausnahme logiBUS_utils_adapter
     "AQ_TO_AX": "logiBUS_utils_adapter",
     "AX_TO_AQ": "logiBUS_utils_adapter",
@@ -277,11 +448,24 @@ TYPE_NAME_TO_LIB = {
     "QUARTER_TO_STR_STATUS": "quarter",
     "SchieberControl": "logiBUS_schieber",
     "SchieberVerriegelung": "logiBUS_schieber",
+    # logiBUS::sections: beide Libs teilen sich das Package, Zuordnung je Typ
+    "SEC_SWITCH_LR_BIT": "logiBUS_sections_bit",
+    "SEC_SWITCH_LR_BIT_WORD": "logiBUS_sections_bit",
+    "SEC_SWITCH_LR_BIT_DWORD": "logiBUS_sections_bit",
+    "SEC_SWITCH_LR_BIT_LWORD": "logiBUS_sections_bit",
+    "SEC_SWITCH_LR_QUARTER": "logiBUS_sections_quarter",
+    "SEC_SWITCH_LR_QUARTER_WORD": "logiBUS_sections_quarter",
+    "SEC_SWITCH_LR_QUARTER_DWORD": "logiBUS_sections_quarter",
+    "SEC_SWITCH_LR_QUARTER_LWORD": "logiBUS_sections_quarter",
+    "SEC_MASK_QUARTER_CMD": "logiBUS_sections_quarter",
+    "SEC_MASK_QUARTER_ACT": "logiBUS_sections_quarter",
 }
 
 # Lib-Version, die aktuell als ELF gebaut/erwartet wird. 1:1 aus
-# elf_libs_manifest_lib.sh uebernommen. logiBUS_stations/core/events/net/
-# system bewusst NICHT eingetragen (kein eigenes ELF, siehe Bash-Original).
+# elf_libs_manifest_lib.sh uebernommen. logiBUS_stations/core/net/system
+# bewusst NICHT eingetragen (kein eigenes ELF, siehe Bash-Original). events
+# ist seit 2026-10-17 ELF (Firmware linkt events nicht mehr, nur E_RESTART
+# und der interne SR fuer Resourcen bleiben im Modul system).
 LIB_VERSIONS = {
     "BlinkMarine": "3.0.0",
     "DataPanel": "3.0.0",
@@ -290,6 +474,7 @@ LIB_VERSIONS = {
     "OSCAT_Building": "0.1.0",
     "OSCAT_Network": "0.1.0",
     "OSCAT_adapter": "3.0.0",
+    "Option": "1.0.0",
     "SafeArithmetic": "3.0.0",
     "adapter": "3.0.0",
     "adapter_conversion": "3.0.0",
@@ -298,11 +483,13 @@ LIB_VERSIONS = {
     "adapter_selection": "3.0.0",
     "adapter_types": "3.0.0",
     "convert": "3.0.0",
+    "events": "3.0.0",
+    "init_stages": "1.0.0",
     "iec61131-3": "3.0.1",
     "iec61131-3-bool": "3.0.1",
     "isobus_TC": "3.0.0",
-    "isobus_UT": "3.0.1",
-    "isobus_UT_adapter": "3.0.0",
+    "isobus_UT": "3.1.1",
+    "isobus_UT_adapter": "3.1.1",
     "isobus_UT_io": "3.0.1",
     "isobus_UT_io_adapter": "3.0.0",
     "isobus_pgn": "3.0.0",
@@ -313,9 +500,11 @@ LIB_VERSIONS = {
     "logiBUS_DI_CAN": "3.0.0",
     "logiBUS_bosch": "3.0.0",
     "logiBUS_esp32": "3.0.0",
-    "logiBUS_io": "3.0.0",
+    "logiBUS_io": "3.3.0",
     "logiBUS_safety": "3.0.0",
     "logiBUS_schieber": "3.0.0",
+    "logiBUS_sections_bit": "1.0.0",
+    "logiBUS_sections_quarter": "1.0.0",
     "logiBUS_signalprocessing": "3.0.0",
     "logiBUS_signalprocessing_adapter": "3.0.0",
     "logiBUS_storage": "3.0.0",
@@ -341,6 +530,7 @@ LIB_DIR_NAME = {
     "OSCAT_Building": "OSCAT_Building-0.1.0",
     "OSCAT_Network": "OSCAT_Network-0.1.0",
     "OSCAT_adapter": "OSCAT_adapter-3.0.0",
+    "Option": "Option-1.0.0",
     "SafeArithmetic": "SafeArithmetic-3.0.0",
     "adapter": "adapter-3.0.0",
     "adapter_conversion": "adapter_conversion-3.0.0",
@@ -349,6 +539,8 @@ LIB_DIR_NAME = {
     "adapter_selection": "adapter_selection-3.0.0",
     "adapter_types": "adapter_types-3.0.0",
     "convert": "convert-3.0.0",
+    "events": "events-3.0.0",
+    "init_stages": "init_stages-1.0.0",
     "iec61131-3": "iec61131-3-3.0.0",
     "iec61131-3-bool": "iec61131-3-bool-3.0.0",
     "isobus_TC": "isobus_TC-3.0.0",
@@ -364,9 +556,11 @@ LIB_DIR_NAME = {
     "logiBUS_DI_CAN": "logiBUS_DI_CAN-3.0.0",
     "logiBUS_bosch": "logiBUS_bosch-3.0.0",
     "logiBUS_esp32": "logiBUS_esp32-3.0.0",
-    "logiBUS_io": "logiBUS_io-3.0.0",
+    "logiBUS_io": "logiBUS_io-3.3.0",
     "logiBUS_safety": "logiBUS_safety-3.0.0",
     "logiBUS_schieber": "logiBUS_schieber-3.0.0",
+    "logiBUS_sections_bit": "logiBUS_sections_bit-1.0.0",
+    "logiBUS_sections_quarter": "logiBUS_sections_quarter-1.0.0",
     "logiBUS_signalprocessing": "logiBUS_signalprocessing-3.0.0",
     "logiBUS_signalprocessing_adapter": "logiBUS_signalprocessing_adapter-3.0.0",
     "logiBUS_storage": "logiBUS_storage-3.0.0",

@@ -82,7 +82,7 @@ import {
   Variant,
 } from '@wsopcua/wsopcua'
 
-const endpointUrl = ref(`ws://${window.location.hostname || 'localhost'}:4841`)
+const endpointUrl = ref(`ws://${window.location.hostname || 'logibus.local'}:4841`)
 const status = ref('Getrennt')
 const connected = ref(false)
 /* Rohwert 0-4095 (DWORD, logiBUS_AI_IDA.IN unskaliert) */

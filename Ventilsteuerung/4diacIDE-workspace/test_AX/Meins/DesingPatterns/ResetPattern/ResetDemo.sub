@@ -14,7 +14,7 @@
 			</SubAppEvent>
 			<SubAppEvent Name="TRIGGER" Type="Event" Comment="Ask the normal step to run - only reaches it while the plant is started">
 			</SubAppEvent>
-			<SubAppEvent Name="RESET" Type="Event" Comment="Ask the reset step to run - bypasses the start/stop gate entirely, works even while stopped">
+			<SubAppEvent Name="RESET" Type="Event" Comment="Ask the reset step to run - bypasses the start/stop gate entirely, works even&#10; while stopped">
 			</SubAppEvent>
 		</SubAppEventInputs>
 		<SubAppEventOutputs>
@@ -28,7 +28,7 @@
 			<VarDeclaration Name="AtHome" Type="BOOL" Comment="Demo: simulate the reset step&apos;s actuator reaching the home position"/>
 		</InputVars>
 		<OutputVars>
-			<VarDeclaration Name="Running" Type="BOOL" Comment="Current start/stop state (E_SR.Q): TRUE while the plant is started - RESET ignores this"/>
+			<VarDeclaration Name="Running" Type="BOOL" Comment="Current start/stop state (E_SR.Q): TRUE while the plant is started - RESET&#10; ignores this"/>
 		</OutputVars>
 	</SubAppInterfaceList>
 	<SubAppNetwork>

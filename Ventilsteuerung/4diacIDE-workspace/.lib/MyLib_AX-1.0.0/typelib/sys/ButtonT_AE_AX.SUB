@@ -9,16 +9,27 @@
 		<Import declaration="isobus::UT::io::Button::ButtonActivationCode::BT_PRESSED_LATCHED"/>
 	</CompilerInfo>
 	<SubAppInterfaceList>
+		<SubAppEventInputs>
+			<SubAppEvent Name="INIT" Type="EInit" Comment="Initialization Request">
+			</SubAppEvent>
+		</SubAppEventInputs>
+		<SubAppEventOutputs>
+			<SubAppEvent Name="INITO" Type="EInit" Comment="Initialization Confirm">
+			</SubAppEvent>
+		</SubAppEventOutputs>
 		<InputVars>
+			<VarDeclaration Name="QI" Type="BOOL" Comment="Quality Input - TRUE to enable service" InitialValue="TRUE"/>
 			<VarDeclaration Name="u16ObjId" Type="UINT" Comment="Object ID Button/Background" InitialValue="ID_NULL"/>
 		</InputVars>
+		<OutputVars>
+			<VarDeclaration Name="QO" Type="BOOL" Comment="Quality Output - TRUE if service executed successfully"/>
+		</OutputVars>
 		<Plugs>
 			<AdapterDeclaration Name="OUT" Type="adapter::types::bidirectional::AE_AX" Comment="Trigger (out), Zustand (in)"/>
 		</Plugs>
 	</SubAppInterfaceList>
 	<SubAppNetwork>
 		<FB Name="Button_UP_F1" Type="isobus::UT::io::Button::Button_IE" x="-7600" y="-400">
-			<Parameter Name="QI" Value="TRUE"/>
 			<Parameter Name="InputEvent" Value="BT_PRESSED_LATCHED"/>
 		</FB>
 		<FB Name="AE_EVENT_TO_E" Type="adapter::conversion::unidirectional::AE_EVENT_TO_E" x="-6100" y="-100">
@@ -27,8 +38,14 @@
 		</FB>
 		<SubApp Name="GreenWhiteBackground_AX" Type="MyLib::sys::GreenWhiteBackground1_AX" x="-2200" y="700">
 		</SubApp>
+		<FB Name="AND_QO" Type="iec61131::booleanOperators::AND_BOOL_2">
+		</FB>
 		<EventConnections>
 			<Connection Source="Button_UP_F1.IND" Destination="AE_EVENT_TO_E.REQ" dx1="373.33"/>
+			<Connection Source="INIT" Destination="Button_UP_F1.INIT"/>
+			<Connection Source="Button_UP_F1.INITO" Destination="GreenWhiteBackground_AX.INIT"/>
+			<Connection Source="GreenWhiteBackground_AX.INITO" Destination="INITO"/>
+			<Connection Source="GreenWhiteBackground_AX.INITO" Destination="AND_QO.REQ"/>
 		</EventConnections>
 		<DataConnections>
 			<Connection Source="u16ObjId" Destination="Button_UP_F1.u16ObjId" dx1="2373.33">
@@ -37,6 +54,11 @@
 			<Connection Source="u16ObjId" Destination="GreenWhiteBackground_AX.u16ObjId" dx1="3893.33">
 				<Attribute Name="Visible" Value="false"/>
 			</Connection>
+			<Connection Source="QI" Destination="Button_UP_F1.QI"/>
+			<Connection Source="QI" Destination="GreenWhiteBackground_AX.QI"/>
+			<Connection Source="Button_UP_F1.QO" Destination="AND_QO.IN1"/>
+			<Connection Source="GreenWhiteBackground_AX.QO" Destination="AND_QO.IN2"/>
+			<Connection Source="AND_QO.OUT" Destination="QO"/>
 		</DataConnections>
 		<AdapterConnections>
 			<Connection Source="AE_EVENT_TO_E.AE_OUT" Destination="SPLIT.IN" dx1="626.67"/>

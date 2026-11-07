@@ -8,20 +8,39 @@
 		<Import declaration="isobus::UT::Q::const::IDs::ID_NULL"/>
 	</CompilerInfo>
 	<SubAppInterfaceList>
+		<SubAppEventInputs>
+			<SubAppEvent Name="INIT" Type="EInit" Comment="Initialization Request">
+			</SubAppEvent>
+		</SubAppEventInputs>
+		<SubAppEventOutputs>
+			<SubAppEvent Name="INITO" Type="EInit" Comment="Initialization Confirm">
+			</SubAppEvent>
+		</SubAppEventOutputs>
 		<InputVars>
+			<VarDeclaration Name="QI" Type="BOOL" Comment="Quality Input - TRUE to enable service" InitialValue="TRUE"/>
 			<VarDeclaration Name="u16ObjId_SET" Type="UINT" Comment="Object ID SoftKey Set (traegt auch das GreenWhiteBackground)" InitialValue="ID_NULL"/>
 			<VarDeclaration Name="u16ObjId_RESET" Type="UINT" Comment="Object ID SoftKey Reset" InitialValue="ID_NULL"/>
 			<VarDeclaration Name="ID_SET_CALL" Type="WSTRING" Comment="Remote-Methodenadresse (ACTION=CALL_METHOD) fuer den Set-Methodenaufruf auf Geraet B"/>
 			<VarDeclaration Name="ID_RESET_CALL" Type="WSTRING" Comment="Remote-Methodenadresse (ACTION=CALL_METHOD) fuer den Reset-Methodenaufruf auf Geraet B"/>
 			<VarDeclaration Name="ID_STATE_READ" Type="WSTRING" Comment="Lokal ueberwachte Adresse (BOOL, ACTION=READ) fuer den Flipflop-Zustand, wird von Geraet B remote beschrieben"/>
 		</InputVars>
+		<OutputVars>
+			<VarDeclaration Name="QO" Type="BOOL" Comment="Quality Output - TRUE if service executed successfully"/>
+		</OutputVars>
 	</SubAppInterfaceList>
 	<SubAppNetwork>
 		<SubApp Name="SoftKeySR_ASR_AX" Type="MyLib::sys::SoftKeySR_ASR_AX" x="-6300" y="1100">
 		</SubApp>
 		<FB Name="TRIGGER" Type="adapter::net::ASR_AX_CLIENT_0_SUBSCRIBE_1" x="-4000" y="100">
-			<Parameter Name="QI" Value="TRUE"/>
 		</FB>
+		<FB Name="AND_QO" Type="iec61131::booleanOperators::AND_BOOL_2">
+		</FB>
+		<EventConnections>
+			<Connection Source="INIT" Destination="TRIGGER.INIT"/>
+			<Connection Source="TRIGGER.INITO" Destination="SoftKeySR_ASR_AX.INIT"/>
+			<Connection Source="SoftKeySR_ASR_AX.INITO" Destination="INITO"/>
+			<Connection Source="SoftKeySR_ASR_AX.INITO" Destination="AND_QO.REQ"/>
+		</EventConnections>
 		<DataConnections>
 			<Connection Source="ID_SET_CALL" Destination="TRIGGER.ID_SET" dx1="1400">
 				<Attribute Name="Visible" Value="false"/>
@@ -38,6 +57,11 @@
 			<Connection Source="u16ObjId_RESET" Destination="SoftKeySR_ASR_AX.u16ObjId_RESET" dx1="1373.33">
 				<Attribute Name="Visible" Value="false"/>
 			</Connection>
+			<Connection Source="QI" Destination="TRIGGER.QI"/>
+			<Connection Source="QI" Destination="SoftKeySR_ASR_AX.QI"/>
+			<Connection Source="TRIGGER.QO" Destination="AND_QO.IN1"/>
+			<Connection Source="SoftKeySR_ASR_AX.QO" Destination="AND_QO.IN2"/>
+			<Connection Source="AND_QO.OUT" Destination="QO"/>
 		</DataConnections>
 		<AdapterConnections>
 			<Connection Source="SoftKeySR_ASR_AX.OUT" Destination="TRIGGER.S_R" dx1="900"/>

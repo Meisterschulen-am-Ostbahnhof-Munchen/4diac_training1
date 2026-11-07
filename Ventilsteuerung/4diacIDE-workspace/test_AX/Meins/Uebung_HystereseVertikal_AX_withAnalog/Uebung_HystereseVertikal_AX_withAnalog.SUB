@@ -49,9 +49,7 @@
 			<Parameter Name="TimeDelta" Value="DWORD#250"/>
 			<Parameter Name="TimeRateLimit" Value="DWORD#100"/>
 		</FB>
-		<FB Name="AD_TO_AUDI" Type="adapter::conversion::unidirectional::AD_TO_AUDI" x="-10500" y="3800">
-		</FB>
-		<FB Name="AUDI_TO_AR" Type="adapter::conversion::unidirectional::AUDI_TO_AR" x="-10500" y="4400">
+		<FB Name="AD_TO_AR_NUM" Type="adapter::conversion::unidirectional::AD_TO_AR_NUM" x="-10500" y="4400">
 		</FB>
 		<SubApp Name="Mul_Istwert" Type="MyLib::sys::AR_R_MUL" x="-10400" y="4900">
 			<Parameter Name="FACTOR" Value="REAL#0.024420024420024420"/>
@@ -93,14 +91,14 @@
 			<Parameter Name="ScalePx" Value="Bargraph_Hysterese_ScalePx"/>
 			<Parameter Name="LengthPx" Value="Bargraph_Hysterese_LengthPx"/>
 		</SubApp>
-		<SubApp Name="QPos_MID_PLUS_DEAD_HYST" Type="MyLib::sys::Q_ChildPosition_AR_Bargraph_BottomToTop" x="-4900" y="2100">
+		<SubApp Name="QPos_MID_PLUS_DEAD_HYST" Type="MyLib::sys::Q_ChildPosition_AR_Bargraph_BottomToTop" x="-4700" y="2200">
 			<Parameter Name="u16ObjId" Value="Polygon_MID_PLUS_DEAD_HYST"/>
 			<Parameter Name="u16ObjIdParent" Value="Container_Schwellwerte"/>
 			<Parameter Name="xScale" Value="TRUE"/>
 			<Parameter Name="ScalePx" Value="Bargraph_Hysterese_ScalePx"/>
 			<Parameter Name="LengthPx" Value="Bargraph_Hysterese_LengthPx"/>
 		</SubApp>
-		<SubApp Name="QPos_MID_MINUS_DEAD_HYST" Type="MyLib::sys::Q_ChildPosition_AR_Bargraph_BottomToTop" x="-4500" y="-2200">
+		<SubApp Name="QPos_MID_MINUS_DEAD_HYST" Type="MyLib::sys::Q_ChildPosition_AR_Bargraph_BottomToTop" x="-4500" y="-2400">
 			<Parameter Name="u16ObjId" Value="Polygon_MID_MINUS_DEAD_HYST"/>
 			<Parameter Name="u16ObjIdParent" Value="Container_Schwellwerte"/>
 			<Parameter Name="xScale" Value="TRUE"/>
@@ -111,9 +109,8 @@
 			<Connection Source="MID_N.rPhys" Destination="Thresholds.MI" dx1="500"/>
 			<Connection Source="DEAD_N.rPhys" Destination="Thresholds.DEAD" dx1="500"/>
 			<Connection Source="HYST_N.rPhys" Destination="Thresholds.HYST" dx1="866.67"/>
-			<Connection Source="AnalogInput_I4.IN" Destination="AD_TO_AUDI.AD_IN" dx1="80" dx2="80" dy="220"/>
-			<Connection Source="AD_TO_AUDI.AUDI_OUT" Destination="AUDI_TO_AR.AUDI_IN" dx1="80" dx2="80" dy="300"/>
-			<Connection Source="AUDI_TO_AR.AR_OUT" Destination="Mul_Istwert.IN1" dx1="80" dx2="80" dy="146.67"/>
+			<Connection Source="AnalogInput_I4.IN" Destination="AD_TO_AR_NUM.AD_IN" dx1="80" dx2="80" dy="220"/>
+			<Connection Source="AD_TO_AR_NUM.AR_OUT" Destination="Mul_Istwert.IN1" dx1="80" dx2="80" dy="146.67"/>
 			<Connection Source="Mul_Istwert.OUT" Destination="Split_Istwert.IN" dx1="420"/>
 			<Connection Source="Split_Istwert.OUT1" Destination="Q_Istwert.rPhys" dx1="373.33"/>
 			<Connection Source="Split_Istwert.OUT2" Destination="DualHysteresis.INPUT" dx1="373.33"/>

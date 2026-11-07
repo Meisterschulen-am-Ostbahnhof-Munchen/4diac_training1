@@ -8,39 +8,58 @@
 	</CompilerInfo>
 	<SubAppInterfaceList>
 		<SubAppEventInputs>
-			<SubAppEvent Name="EI1" Type="Event" Comment="Event input channel 1"/>
-			<SubAppEvent Name="EI2" Type="Event" Comment="Event input channel 2"/>
-			<SubAppEvent Name="EI3" Type="Event" Comment="Event input channel 3"/>
-			<SubAppEvent Name="EI4" Type="Event" Comment="Event input channel 4"/>
+			<SubAppEvent Name="EI1" Type="Event" Comment="Event input channel 1">
+			</SubAppEvent>
+			<SubAppEvent Name="EI2" Type="Event" Comment="Event input channel 2">
+			</SubAppEvent>
+			<SubAppEvent Name="EI3" Type="Event" Comment="Event input channel 3">
+			</SubAppEvent>
+			<SubAppEvent Name="EI4" Type="Event" Comment="Event input channel 4">
+			</SubAppEvent>
 		</SubAppEventInputs>
 		<SubAppEventOutputs>
-			<SubAppEvent Name="EO1" Type="Event" Comment="Event output channel 1"/>
-			<SubAppEvent Name="EO2" Type="Event" Comment="Event output channel 2"/>
-			<SubAppEvent Name="EO3" Type="Event" Comment="Event output channel 3"/>
-			<SubAppEvent Name="EO4" Type="Event" Comment="Event output channel 4"/>
+			<SubAppEvent Name="EO1" Type="Event" Comment="Event output channel 1">
+			</SubAppEvent>
+			<SubAppEvent Name="EO2" Type="Event" Comment="Event output channel 2">
+			</SubAppEvent>
+			<SubAppEvent Name="EO3" Type="Event" Comment="Event output channel 3">
+			</SubAppEvent>
+			<SubAppEvent Name="EO4" Type="Event" Comment="Event output channel 4">
+			</SubAppEvent>
 		</SubAppEventOutputs>
 		<InputVars>
 			<VarDeclaration Name="PERMIT" Type="BOOL" Comment="Invertierte Freigabebedingung"/>
 		</InputVars>
 	</SubAppInterfaceList>
 	<SubAppNetwork>
-		<FB Name="F_NOT_BOOL_INIT" Type="iec61131::booleanOperators::F_NOT_BOOL_INIT" x="-3000" y="0">
+		<FB Name="E_MUX_4" Type="iec61499::events::E_MUX_4" x="773.33" y="33.33">
 		</FB>
-		<FB Name="E_PERMIT_4" Type="iec61499::events::E_PERMIT_4" x="-1400" y="0">
+		<FB Name="F_NOT_BOOL_INIT" Type="iec61131::booleanOperators::F_NOT_BOOL_INIT" x="1700" y="586.67">
+		</FB>
+		<FB Name="E_DEMUX_4" Type="iec61499::events::E_DEMUX_4" x="3000" y="33.33">
+		</FB>
+		<FB Name="E_PERMIT_4" Type="iec61499::events::E_PERMIT_4" x="4020" y="306.67">
 		</FB>
 		<EventConnections>
-			<Connection Source="EI1" Destination="E_PERMIT_4.EI1" dx1="500"/>
-			<Connection Source="E_PERMIT_4.EO1" Destination="EO1" dx1="500"/>
-			<Connection Source="EI2" Destination="E_PERMIT_4.EI2" dx1="500"/>
-			<Connection Source="E_PERMIT_4.EO2" Destination="EO2" dx1="500"/>
-			<Connection Source="EI3" Destination="E_PERMIT_4.EI3" dx1="500"/>
-			<Connection Source="E_PERMIT_4.EO3" Destination="EO3" dx1="500"/>
-			<Connection Source="EI4" Destination="E_PERMIT_4.EI4" dx1="500"/>
-			<Connection Source="E_PERMIT_4.EO4" Destination="EO4" dx1="500"/>
+			<Connection Source="EI1" Destination="E_MUX_4.EI1"/>
+			<Connection Source="EI2" Destination="E_MUX_4.EI2"/>
+			<Connection Source="EI3" Destination="E_MUX_4.EI3"/>
+			<Connection Source="EI4" Destination="E_MUX_4.EI4"/>
+			<Connection Source="E_MUX_4.EO" Destination="F_NOT_BOOL_INIT.REQ"/>
+			<Connection Source="F_NOT_BOOL_INIT.CNF" Destination="E_DEMUX_4.EI"/>
+			<Connection Source="E_DEMUX_4.EO1" Destination="E_PERMIT_4.EI1"/>
+			<Connection Source="E_DEMUX_4.EO2" Destination="E_PERMIT_4.EI2"/>
+			<Connection Source="E_DEMUX_4.EO3" Destination="E_PERMIT_4.EI3"/>
+			<Connection Source="E_DEMUX_4.EO4" Destination="E_PERMIT_4.EI4"/>
+			<Connection Source="E_PERMIT_4.EO1" Destination="EO1"/>
+			<Connection Source="E_PERMIT_4.EO2" Destination="EO2"/>
+			<Connection Source="E_PERMIT_4.EO3" Destination="EO3"/>
+			<Connection Source="E_PERMIT_4.EO4" Destination="EO4"/>
 		</EventConnections>
 		<DataConnections>
-			<Connection Source="PERMIT" Destination="F_NOT_BOOL_INIT.IN" dx1="500"/>
-			<Connection Source="F_NOT_BOOL_INIT.OUT" Destination="E_PERMIT_4.PERMIT" dx1="500"/>
+			<Connection Source="PERMIT" Destination="F_NOT_BOOL_INIT.IN"/>
+			<Connection Source="F_NOT_BOOL_INIT.OUT" Destination="E_PERMIT_4.PERMIT"/>
+			<Connection Source="E_MUX_4.K" Destination="E_DEMUX_4.K"/>
 		</DataConnections>
 	</SubAppNetwork>
 </SubAppType>

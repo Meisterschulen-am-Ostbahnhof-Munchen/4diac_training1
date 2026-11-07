@@ -11,10 +11,22 @@
 	<CompilerInfo packageName="MyLib::sys">
 	</CompilerInfo>
 	<SubAppInterfaceList>
+		<SubAppEventInputs>
+			<SubAppEvent Name="INIT" Type="EInit" Comment="Initialization Request">
+			</SubAppEvent>
+		</SubAppEventInputs>
+		<SubAppEventOutputs>
+			<SubAppEvent Name="INITO" Type="EInit" Comment="Initialization Confirm">
+			</SubAppEvent>
+		</SubAppEventOutputs>
 		<InputVars>
+			<VarDeclaration Name="QI" Type="BOOL" Comment="Quality Input - TRUE to enable service" InitialValue="TRUE"/>
 			<VarDeclaration Name="ID_TRIGGER_METHOD" Type="WSTRING" Comment="Lokale Methodenadresse (ACTION=CREATE_METHOD) fuer den argumentlosen Toggle-Trigger, wird vom Bedienmodul per CALL_METHOD aufgerufen"/>
 			<VarDeclaration Name="ID_STATE_WRITE" Type="WSTRING" Comment="Lokale Publish-Adresse (ACTION=WRITE) fuer den tatsaechlichen Toggle-Zustand - wird vom Bedienmodul remote abonniert (z.B. fuer GreenWhiteBackground)"/>
 		</InputVars>
+		<OutputVars>
+			<VarDeclaration Name="QO" Type="BOOL" Comment="Quality Output - TRUE if service executed successfully"/>
+		</OutputVars>
 		<Plugs>
 			<AdapterDeclaration Name="OUT1" Type="adapter::types::unidirectional::AX" Comment="Toggle-Zustand fuer Kanal 1 (z.B. AX_TON_MERGE_QXA_OPC.MASTER)"/>
 			<AdapterDeclaration Name="OUT2" Type="adapter::types::unidirectional::AX" Comment="Toggle-Zustand fuer Kanal 2"/>
@@ -26,18 +38,22 @@
 	</SubAppInterfaceList>
 	<SubAppNetwork>
 		<FB Name="TRIGGER_SERVER" Type="iec61499::net::SERVER_0" x="-6600" y="-1200">
-			<Parameter Name="QI" Value="TRUE"/>
 		</FB>
 		<FB Name="AX_T_FF" Type="adapter::events::unidirectional::AX_T_FF" x="-5000" y="-1100">
 		</FB>
 		<FB Name="SPLIT" Type="adapter::events::unidirectional::AX_SPLIT_7" x="-3200" y="-1100">
 		</FB>
 		<FB Name="PUBLISH_STATE" Type="adapter::net::AX_PUBLISH_1" x="-1600" y="1600">
-			<Parameter Name="QI" Value="TRUE"/>
+		</FB>
+		<FB Name="AND_QO" Type="iec61131::booleanOperators::AND_BOOL_2">
 		</FB>
 		<EventConnections>
 			<Connection Source="TRIGGER_SERVER.IND" Destination="AX_T_FF.CLK" dx1="373.33"/>
 			<Connection Source="TRIGGER_SERVER.IND" Destination="TRIGGER_SERVER.RSP"/>
+			<Connection Source="INIT" Destination="TRIGGER_SERVER.INIT"/>
+			<Connection Source="TRIGGER_SERVER.INITO" Destination="PUBLISH_STATE.INIT"/>
+			<Connection Source="PUBLISH_STATE.INITO" Destination="INITO"/>
+			<Connection Source="PUBLISH_STATE.INITO" Destination="AND_QO.REQ"/>
 		</EventConnections>
 		<DataConnections>
 			<Connection Source="ID_TRIGGER_METHOD" Destination="TRIGGER_SERVER.ID" dx1="1400">
@@ -46,6 +62,11 @@
 			<Connection Source="ID_STATE_WRITE" Destination="PUBLISH_STATE.ID" dx1="1280">
 				<Attribute Name="Visible" Value="false"/>
 			</Connection>
+			<Connection Source="QI" Destination="TRIGGER_SERVER.QI"/>
+			<Connection Source="QI" Destination="PUBLISH_STATE.QI"/>
+			<Connection Source="TRIGGER_SERVER.QO" Destination="AND_QO.IN1"/>
+			<Connection Source="PUBLISH_STATE.QO" Destination="AND_QO.IN2"/>
+			<Connection Source="AND_QO.OUT" Destination="QO"/>
 		</DataConnections>
 		<AdapterConnections>
 			<Connection Source="AX_T_FF.Q" Destination="SPLIT.IN" dx1="280"/>

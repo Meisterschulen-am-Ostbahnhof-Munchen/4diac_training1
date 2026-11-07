@@ -14,19 +14,23 @@
 	<InterfaceList>
 		<EventInputs>
 			<Event Name="INIT" Type="EInit" Comment="Service Initialization">
+				<With Var="QI"/>
 				<With Var="u16ObjId"/>
 				<With Var="u16ObjIdParent"/>
 				<With Var="xScale"/>
 			</Event>
 			<Event Name="REQ" Type="Event" Comment="Service Request">
+				<With Var="QI"/>
 				<With Var="u8Xchange"/>
 				<With Var="u8Ychange"/>
 			</Event>
 		</EventInputs>
 		<EventOutputs>
 			<Event Name="INITO" Type="EInit" Comment="Initialization Confirm">
+				<With Var="QO"/>
 			</Event>
 			<Event Name="CNF" Type="Event" Comment="Confirmation of Requested Service">
+				<With Var="QO"/>
 				<With Var="STATUS"/>
 				<With Var="u8OldYchange"/>
 				<With Var="u8OldXchange"/>
@@ -34,6 +38,7 @@
 			</Event>
 		</EventOutputs>
 		<InputVars>
+			<VarDeclaration Name="QI" Type="BOOL" Comment="Quality Input - TRUE to enable service" InitialValue="TRUE"/>
 			<VarDeclaration Name="u16ObjId" Type="UINT" Comment="Object ID" InitialValue="ID_NULL"/>
 			<VarDeclaration Name="u16ObjIdParent" Type="UINT" Comment="Parent object ID " InitialValue="ID_NULL"/>
 			<VarDeclaration Name="xScale" Type="BOOL" Comment="FALSE (default) = bypass, send u8Xchange/u8Ychange through unchanged. TRUE = scale them by the DM/SKM factor for u16ObjIdParent." InitialValue="FALSE"/>
@@ -41,6 +46,7 @@
 			<VarDeclaration Name="u8Ychange" Type="USINT" Comment="Relative change in y position (interpreted as signed!)"/>
 		</InputVars>
 		<OutputVars>
+			<VarDeclaration Name="QO" Type="BOOL" Comment="Quality Output - TRUE if service executed successfully"/>
 			<VarDeclaration Name="STATUS" Type="STRING" Comment="Service Status"/>
 			<VarDeclaration Name="u8OldXchange" Type="USINT" Comment="Old relative change in x position (interpreted as signed!)"/>
 			<VarDeclaration Name="u8OldYchange" Type="USINT" Comment="Old relative change in y position (interpreted as signed!)"/>

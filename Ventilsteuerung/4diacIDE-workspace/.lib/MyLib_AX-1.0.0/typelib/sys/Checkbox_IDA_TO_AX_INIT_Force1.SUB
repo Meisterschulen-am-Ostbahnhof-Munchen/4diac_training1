@@ -8,9 +8,21 @@
 		<Import declaration="isobus::UT::Q::const::IDs::ID_NULL"/>
 	</CompilerInfo>
 	<SubAppInterfaceList>
+		<SubAppEventInputs>
+			<SubAppEvent Name="INIT" Type="EInit" Comment="Initialization Request">
+			</SubAppEvent>
+		</SubAppEventInputs>
+		<SubAppEventOutputs>
+			<SubAppEvent Name="INITO" Type="EInit" Comment="Initialization Confirm">
+			</SubAppEvent>
+		</SubAppEventOutputs>
 		<InputVars>
+			<VarDeclaration Name="QI" Type="BOOL" Comment="Quality Input - TRUE to enable service" InitialValue="TRUE"/>
 			<VarDeclaration Name="u16ObjId" Type="UINT" Comment="Object ID der VT-Checkbox-NumberVariable (gleiches Objekt fuer Lesen und Force1-Schreiben)" InitialValue="ID_NULL"/>
 		</InputVars>
+		<OutputVars>
+			<VarDeclaration Name="QO" Type="BOOL" Comment="Quality Output - TRUE if service executed successfully"/>
+		</OutputVars>
 		<Plugs>
 			<AdapterDeclaration Name="PERMIT_OUT" Type="adapter::types::unidirectional::AX" Comment="Boot-stabiler Checkbox-Zustand (startet TRUE, folgt danach der echten VT-Checkbox)"/>
 		</Plugs>
@@ -23,10 +35,14 @@
 		</FB>
 		<EventConnections>
 			<Connection Source="Writer.INITO" Destination="Writer.REQ" dx1="80" dx2="80" dy="53.33"/>
+			<Connection Source="INIT" Destination="Writer.INIT"/>
+			<Connection Source="Writer.INITO" Destination="INITO"/>
 		</EventConnections>
 		<DataConnections>
 			<Connection Source="u16ObjId" Destination="Reader.u16ObjId" dx1="600"/>
 			<Connection Source="u16ObjId" Destination="Writer.u16ObjId" dx1="600"/>
+			<Connection Source="QI" Destination="Writer.QI"/>
+			<Connection Source="Writer.QO" Destination="QO"/>
 		</DataConnections>
 		<AdapterConnections>
 			<Connection Source="Reader.PERMIT_OUT" Destination="PERMIT_OUT" dx1="600"/>

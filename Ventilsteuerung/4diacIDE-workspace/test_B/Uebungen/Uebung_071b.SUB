@@ -15,7 +15,7 @@
 		<FB Name="I_WBSD" Type="isobus::tecu::I_WBSD" x="-5200" y="500">
 			<Parameter Name="QI" Value="TRUE"/>
 		</FB>
-		<FB Name="Q_NumberVariable_Wheel_based_machine_speed" Type="isobus::UT::Q::Q_NumericValue" x="1100" y="500">
+		<FB Name="Q_NumberVariable_Wheel_based_machine_speed" Type="isobus::UT::Q::Q_NumericValue" x="1100" y="300">
 			<Parameter Name="u16ObjId" Value="NumberVariable_Wheel_based_machine_speed"/>
 		</FB>
 		<FB Name="DigitalOutput_Q1" Type="logiBUS::io::DQ::logiBUS_QX" x="1900" y="2300">
@@ -32,8 +32,8 @@
 			<Parameter Name="u16ObjId" Value="NumberVariable_Wheel_based_machine_distance"/>
 		</FB>
 		<EventConnections>
-			<Connection Source="I_WBSD.IND" Destination="Q_NumberVariable_Wheel_based_machine_speed.REQ"/>
-			<Connection Source="E_D_FF.EO" Destination="DigitalOutput_Q1.REQ"/>
+			<Connection Source="I_WBSD.IND" Destination="Q_NumberVariable_Wheel_based_machine_speed.REQ" dx1="2626.67"/>
+			<Connection Source="E_D_FF.EO" Destination="DigitalOutput_Q1.REQ" dx1="513.33"/>
 			<Connection Source="I_WBSD.IND" Destination="Q_NumberVariable_Wheel_based_machine_distance.REQ" dx1="1346.67"/>
 			<Connection Source="I_WBSD.IND" Destination="RangeBasedPulse.REQ" dx1="1240"/>
 			<Connection Source="RangeBasedPulse.CNF" Destination="E_D_FF.CLK" dx1="260"/>

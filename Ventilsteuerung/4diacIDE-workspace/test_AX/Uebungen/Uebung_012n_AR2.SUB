@@ -24,7 +24,7 @@
 			<Parameter Name="KEY" Value="KEY_I1_STORE"/>
 			<Parameter Name="DEFAULT_VALUE" Value="REAL#0.0"/>
 		</FB>
-		<Comment Comment="SETM=TRUE ist hier ESSENTIELL (anders als bei den reinen VT- oder OPC-Uebungen): es gibt ZWEI Quellen (VT + Remote). Aendert der Operator den Wert am VT-Feld, muss die Remote-Seite das sofort mitbekommen (Publish-Echo) - und umgekehrt. Ohne SETM=TRUE wuerde die jeweils andere Seite von einer Live-Aenderung nichts erfahren, erst der naechste Neustart wuerde sie synchronisieren." x="-1400" y="0" width="3200" height="700"/>
+		<Comment Comment="SETM=TRUE ist hier ESSENTIELL (anders als bei den reinen VT- oder OPC-Uebungen):&#10; es gibt ZWEI Quellen (VT + Remote). Aendert der Operator den Wert am VT-Feld,&#10; muss die Remote-Seite das sofort mitbekommen (Publish-Echo) - und umgekehrt.&#10; Ohne SETM=TRUE wuerde die jeweils andere Seite von einer Live-Aenderung nichts&#10; erfahren, erst der naechste Neustart wuerde sie synchronisieren." x="-1400" y="0" width="3200" height="700"/>
 		<AdapterConnections>
 			<Connection Source="InputNumber_I3_N.VALUEO" Destination="NVS_AR2.VAL" dx1="1313.33"/>
 		</AdapterConnections>

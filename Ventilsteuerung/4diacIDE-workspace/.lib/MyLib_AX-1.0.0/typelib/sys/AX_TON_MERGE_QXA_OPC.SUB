@@ -9,12 +9,24 @@
 		<Import declaration="logiBUS::io::DQ::logiBUS_DO_S"/>
 	</CompilerInfo>
 	<SubAppInterfaceList>
+		<SubAppEventInputs>
+			<SubAppEvent Name="INIT" Type="EInit" Comment="Initialization Request">
+			</SubAppEvent>
+		</SubAppEventInputs>
+		<SubAppEventOutputs>
+			<SubAppEvent Name="INITO" Type="EInit" Comment="Initialization Confirm">
+			</SubAppEvent>
+		</SubAppEventOutputs>
 		<InputVars>
+			<VarDeclaration Name="QI" Type="BOOL" Comment="Quality Input - TRUE to enable service" InitialValue="TRUE"/>
 			<VarDeclaration Name="Output" Type="logiBUS::io::DQ::logiBUS_DO_S" Comment="Physischer Ausgang dieses Kanals" InitialValue="logiBUS_DO::Invalid"/>
 			<VarDeclaration Name="PT" Type="TIME" Comment="Einschaltverzoegerung dieses Kanals gegenueber dem Master-Toggle (je Instanz unterschiedlich setzen, z.B. T#0ms/T#800ms/T#1600ms/...) - Ausschalten ist immer sofort" InitialValue="T#0ms"/>
 			<VarDeclaration Name="ID_TEST_READ" Type="WSTRING" Comment="Bestehende IO-Test-Subscribe-Adresse dieses Kanals (z.B. STG5_Q0x_READ)"/>
 			<VarDeclaration Name="ID_TEST_WRITE" Type="WSTRING" Comment="Bestehende IO-Test-Publish-Adresse dieses Kanals (z.B. STG5_Q0x_WRITE) - EIGENER Knoten, NICHT ID_TEST_READs Knoten (sonst Selbstrueckkopplung/Latch, siehe OPC_UA_VERNETZUNG.md Punkt 10+11)"/>
 		</InputVars>
+		<OutputVars>
+			<VarDeclaration Name="QO" Type="BOOL" Comment="Quality Output - TRUE if service executed successfully"/>
+		</OutputVars>
 		<Sockets>
 			<AdapterDeclaration Name="MASTER" Type="adapter::types::unidirectional::AX" Comment="Toggle-Zustand vom gemeinsamen TOGGLE_RPC_MASTER_QXA_OPC.OUT"/>
 		</Sockets>
@@ -23,18 +35,24 @@
 		<FB Name="AX_TON" Type="adapter::events::unidirectional::timers::AX_TON" x="-5600" y="-800">
 		</FB>
 		<FB Name="SUBSCRIBE_TEST" Type="adapter::net::AX_SUBSCRIBE_1" x="-5600" y="200">
-			<Parameter Name="QI" Value="TRUE"/>
 		</FB>
 		<FB Name="OR_MERGE" Type="adapter::booleanOperators::AX_OR_2" x="-3600" y="-300">
 		</FB>
 		<FB Name="DigitalOutput" Type="logiBUS::io::DQ::logiBUS_QXA" x="-800" y="-1200">
-			<Parameter Name="QI" Value="TRUE"/>
 		</FB>
 		<FB Name="SPLIT" Type="adapter::events::unidirectional::AX_SPLIT_2" x="-2000" y="-300">
 		</FB>
 		<FB Name="PUBLISH_TEST" Type="adapter::net::AX_PUBLISH_1" x="-800" y="200">
-			<Parameter Name="QI" Value="TRUE"/>
 		</FB>
+		<FB Name="AND_QO" Type="iec61131::booleanOperators::AND_BOOL_3">
+		</FB>
+		<EventConnections>
+			<Connection Source="INIT" Destination="SUBSCRIBE_TEST.INIT"/>
+			<Connection Source="SUBSCRIBE_TEST.INITO" Destination="DigitalOutput.INIT"/>
+			<Connection Source="DigitalOutput.INITO" Destination="PUBLISH_TEST.INIT"/>
+			<Connection Source="PUBLISH_TEST.INITO" Destination="INITO"/>
+			<Connection Source="PUBLISH_TEST.INITO" Destination="AND_QO.REQ"/>
+		</EventConnections>
 		<DataConnections>
 			<Connection Source="Output" Destination="DigitalOutput.Output" dx1="2913.33">
 				<Attribute Name="Visible" Value="false"/>
@@ -48,6 +66,13 @@
 			<Connection Source="ID_TEST_WRITE" Destination="PUBLISH_TEST.ID" dx1="1280">
 				<Attribute Name="Visible" Value="false"/>
 			</Connection>
+			<Connection Source="QI" Destination="SUBSCRIBE_TEST.QI"/>
+			<Connection Source="QI" Destination="DigitalOutput.QI"/>
+			<Connection Source="QI" Destination="PUBLISH_TEST.QI"/>
+			<Connection Source="SUBSCRIBE_TEST.QO" Destination="AND_QO.IN1"/>
+			<Connection Source="DigitalOutput.QO" Destination="AND_QO.IN2"/>
+			<Connection Source="PUBLISH_TEST.QO" Destination="AND_QO.IN3"/>
+			<Connection Source="AND_QO.OUT" Destination="QO"/>
 		</DataConnections>
 		<AdapterConnections>
 			<Connection Source="MASTER" Destination="AX_TON.IN" dx1="800"/>

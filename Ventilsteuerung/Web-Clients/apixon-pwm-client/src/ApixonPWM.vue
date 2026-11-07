@@ -91,7 +91,7 @@ import {
   Variant,
 } from '@wsopcua/wsopcua'
 
-const endpointUrl = ref(`ws://${window.location.hostname || 'localhost'}:4841`)
+const endpointUrl = ref(`ws://${window.location.hostname || 'logibus.local'}:4841`)
 const status = ref('Getrennt')
 const connected = ref(false)
 const inputs = ref<boolean[]>(new Array(8).fill(false))
