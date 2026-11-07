@@ -83,11 +83,11 @@
 		</SubApp>
 		<SubApp Name="PublishSpanRaw" Type="MyLib::sys::AR_TO_Publish_OPC" x="4100" y="0">
 		</SubApp>
-		<FB Name="AR_SPLIT_2_Cal" Type="adapter::events::unidirectional::AR_SPLIT_2" x="1800" y="-1200">
+		<FB Name="AR_SPLIT_2_Cal" Type="adapter::events::unidirectional::AR_SPLIT_2" x="1700" y="-1200">
 		</FB>
 		<FB Name="AND_QO" Type="iec61131::booleanOperators::AND_BOOL_13" x="10000" y="2700">
 		</FB>
-		<Comment Comment="INIT-Reihenfolge: INI-Werte (X_LOW/LOW_REF/X_HIGH/HIGH_REF) VOR CALIBRATE, sonst rechnet CALIBRATE beim Start kurz mit 0-Kalibrierpunkten." x="-1500" y="-1800" width="2800" height="400"/>
+		<Comment Comment="INIT-Reihenfolge: INI-Werte (X_LOW/LOW_REF/X_HIGH/HIGH_REF) VOR CALIBRATE, sonst rechnet CALIBRATE beim Start kurz mit 0-Kalibrierpunkten." x="-1500" y="-1800" width="2500" height="700"/>
 		<EventConnections>
 			<Connection Source="TriggerCO.IND" Destination="CALIBRATE.C_LOW" dx1="806.67"/>
 			<Connection Source="TriggerCS.IND" Destination="CALIBRATE.C_HIGH" dx1="340"/>
@@ -255,7 +255,7 @@
 			<Connection Source="CALIBRATE.HIGH_REF" Destination="INI_HIGH_REF.VAL" dx1="346.67" dx2="473.33" dy="1833.33"/>
 			<Connection Source="Y_OFFSET_LIT.VALUEO" Destination="CALIBRATE.Y_LOW" dx1="1040"/>
 			<Connection Source="Y_SCALE_LIT.VALUEO" Destination="CALIBRATE.Y_HIGH" dx1="1073.33"/>
-			<Connection Source="CALIBRATE.Y" Destination="AR_SPLIT_2_Cal.IN" dx1="393.33"/>
+			<Connection Source="CALIBRATE.Y" Destination="AR_SPLIT_2_Cal.IN" dx1="286.67"/>
 			<Connection Source="AR_SPLIT_2_Cal.OUT1" Destination="CAL_OUT" dx1="720"/>
 			<Connection Source="AR_SPLIT_2_Cal.OUT2" Destination="PublishCal.AR_IN" dx1="786.67"/>
 		</AdapterConnections>

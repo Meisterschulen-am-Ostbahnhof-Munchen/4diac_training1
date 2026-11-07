@@ -75,25 +75,25 @@
 			<Parameter Name="u16ObjId" Value="OutputNumber_N1"/>
 		</FB>
 		<EventConnections>
-			<Connection Source="Tippen_I1.IND" Destination="Dimmer_Q1.TOGGLE"/>
-			<Connection Source="Lang_Start_I1.IND" Destination="Dimmer_Q1.DIM_START"/>
-			<Connection Source="Lang_Ende_I1.IND" Destination="Dimmer_Q1.DIM_STOP"/>
-			<Connection Source="Ein_I2.IND" Destination="Dimmer_Q1.SWITCH_ON"/>
-			<Connection Source="Aus_I3.IND" Destination="Dimmer_Q1.SWITCH_OFF"/>
-			<Connection Source="Halten_F1.IND" Destination="Gehalten.S"/>
-			<Connection Source="Halten_F1.IND" Destination="Dimmer_Q1.DIM_START"/>
-			<Connection Source="Loslassen_F1.IND" Destination="Tippen_oder_Halten.EI"/>
-			<Connection Source="Tippen_oder_Halten.EO0" Destination="Dimmer_Q1.TOGGLE"/>
-			<Connection Source="Tippen_oder_Halten.EO1" Destination="Dimmer_Q1.DIM_STOP"/>
-			<Connection Source="Tippen_oder_Halten.EO1" Destination="Gehalten.R"/>
-			<Connection Source="Dimmer_Q1.CNF" Destination="LEVEL_TO_UDINT.REQ"/>
-			<Connection Source="Dimmer_Q1.RAMPO" Destination="LEVEL_TO_UDINT.REQ"/>
-			<Connection Source="LEVEL_TO_UDINT.CNF" Destination="Helligkeit_N1.REQ"/>
+			<Connection Source="Tippen_I1.IND" Destination="Dimmer_Q1.TOGGLE" dx1="806.67"/>
+			<Connection Source="Lang_Start_I1.IND" Destination="Dimmer_Q1.DIM_START" dx1="773.33"/>
+			<Connection Source="Lang_Ende_I1.IND" Destination="Dimmer_Q1.DIM_STOP" dx1="1060"/>
+			<Connection Source="Ein_I2.IND" Destination="Dimmer_Q1.SWITCH_ON" dx1="1093.33"/>
+			<Connection Source="Aus_I3.IND" Destination="Dimmer_Q1.SWITCH_OFF" dx1="1126.67"/>
+			<Connection Source="Halten_F1.IND" Destination="Gehalten.S" dx1="440"/>
+			<Connection Source="Halten_F1.IND" Destination="Dimmer_Q1.DIM_START" dx1="440" dx2="786.67" dy="-3080"/>
+			<Connection Source="Loslassen_F1.IND" Destination="Tippen_oder_Halten.EI" dx1="1440"/>
+			<Connection Source="Tippen_oder_Halten.EO0" Destination="Dimmer_Q1.TOGGLE" dx1="66.67"/>
+			<Connection Source="Tippen_oder_Halten.EO1" Destination="Dimmer_Q1.DIM_STOP" dx1="100"/>
+			<Connection Source="Tippen_oder_Halten.EO1" Destination="Gehalten.R" dx1="100" dx2="66.67" dy="-586.67"/>
+			<Connection Source="Dimmer_Q1.CNF" Destination="LEVEL_TO_UDINT.REQ" dx1="746.67"/>
+			<Connection Source="Dimmer_Q1.RAMPO" Destination="LEVEL_TO_UDINT.REQ" dx1="746.67"/>
+			<Connection Source="LEVEL_TO_UDINT.CNF" Destination="Helligkeit_N1.REQ" dx1="386.67"/>
 		</EventConnections>
 		<DataConnections>
-			<Connection Source="Gehalten.Q" Destination="Tippen_oder_Halten.G"/>
-			<Connection Source="Dimmer_Q1.LEVEL" Destination="LEVEL_TO_UDINT.IN"/>
-			<Connection Source="LEVEL_TO_UDINT.OUT" Destination="Helligkeit_N1.u32NewValue"/>
+			<Connection Source="Gehalten.Q" Destination="Tippen_oder_Halten.G" dx1="746.67"/>
+			<Connection Source="Dimmer_Q1.LEVEL" Destination="LEVEL_TO_UDINT.IN" dx1="746.67"/>
+			<Connection Source="LEVEL_TO_UDINT.OUT" Destination="Helligkeit_N1.u32NewValue" dx1="386.67"/>
 		</DataConnections>
 	</SubAppNetwork>
 </SubAppType>
