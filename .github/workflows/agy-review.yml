@@ -1,0 +1,10 @@
+name: AI PR Review
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened]
+
+jobs:
+  code-review:
+    uses: Meisterschulen-am-Ostbahnhof-Munchen/.github/.github/workflows/reusable-agy-review.yml@main
+    secrets: inherit
