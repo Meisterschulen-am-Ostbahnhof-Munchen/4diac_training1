@@ -299,6 +299,11 @@ def main():
         root = Path(a.target)
         for p in deleted:
             (root / p).unlink(missing_ok=True)
+        # leer gewordene Ordner entfernen (Git kennt keine Ordner, die IDE schon)
+        for d in sorted({(root / p).parent for p in deleted}, key=lambda x: -len(x.parts)):
+            while d != root and d.is_dir() and not any(d.iterdir()):
+                d.rmdir()
+                d = d.parent
         for p in added + changed:
             f = root / p
             f.parent.mkdir(parents=True, exist_ok=True)
