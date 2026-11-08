@@ -90,6 +90,21 @@ globs = ["**/scripts/*.bat", "**/scripts/*.sh", "**/Launches/*.launch"]
 pairs = [['ISO-DesignerProjects\Workspace\', 'ISO-DesignerProjects\Workspace_Empty\'],
          ["ISO-DesignerProjects/Workspace/", "ISO-DesignerProjects/Workspace_Empty/"]]
 
+# 3d2: Hinweis im README: leeres Projekt, Aufgaben stehen in der Doku
+[[transform.replace]]
+globs = ["README.md"]
+required = true
+pairs = [['Dieses Repository bietet', '''> **Leeres Übungsprojekt (ohne Lösungen):** Dieses Repository ist der Stand von [4diac_training1](https://github.com/Meisterschulen-am-Ostbahnhof-Munchen/4diac_training1) ohne Musterlösungen. Als Beispiel ist nur `Uebung_001` bzw. `Uebung_001_AX` enthalten. Die Aufgabenbeschreibungen stehen in der Dokumentation: [Übungen AX](https://docs.ms-muc-docs.de/projects/4diac-exercises-docs/de/latest/Uebungen/test_AX/Uebungen_doc/), [Übungen B](https://docs.ms-muc-docs.de/projects/4diac-exercises-docs/de/latest/Uebungen/test_B/Uebungen_doc/), [Übungen VV](https://docs.ms-muc-docs.de/projects/4diac-exercises-docs/de/latest/Uebungen/test_VV/Uebungen_doc/Uebungen/).
+
+Dieses Repository bietet''']]
+
+[[transform.replace]]
+globs = ["README.en.md"]
+required = true
+pairs = [['This repository provides', '''> **Empty exercise project (without solutions):** This repository is the state of [4diac_training1](https://github.com/Meisterschulen-am-Ostbahnhof-Munchen/4diac_training1) without the sample solutions. Only `Uebung_001` and `Uebung_001_AX` are included as an example. The exercise descriptions are in the documentation: [Exercises AX](https://docs.ms-muc-docs.de/projects/4diac-exercises-docs/de/latest/Uebungen/test_AX/Uebungen_doc/), [Exercises B](https://docs.ms-muc-docs.de/projects/4diac-exercises-docs/de/latest/Uebungen/test_B/Uebungen_doc/), [Exercises VV](https://docs.ms-muc-docs.de/projects/4diac-exercises-docs/de/latest/Uebungen/test_VV/Uebungen_doc/Uebungen/).
+
+This repository provides''']]
+
 # 3e: Release-Workflow fuer das empty-Repo (legt nach Merge eines sync/<tag>-PR das Release an)
 [[transform.copy]]
 from = "internal-scripts/sync_empty/empty-repo/release-on-sync.yml"

@@ -115,6 +115,7 @@ def t_replace(files, rules, log):
     """Text ersetzen, z. B. Pool-Pfade in Build-Skripten."""
     for rule in rules:
         m = Matcher(rule["globs"])
+        hits = 0
         for p in list(files):
             if not m.hit(p):
                 continue
@@ -124,7 +125,10 @@ def t_replace(files, rules, log):
                 new = new.replace(old, repl)
             if new != txt:
                 log.append(f"replace: {p}")
+                hits += 1
                 files[p] = new.encode("utf-8", errors="surrogateescape")
+        if rule.get("required") and not hits:
+            raise SystemExit(f"replace: Anker nicht gefunden in {rule['globs']} (README geaendert?)")
 
 
 def t_gcf(files, src, rules, log):
