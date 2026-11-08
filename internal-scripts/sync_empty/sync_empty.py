@@ -1,8 +1,13 @@
 #!/usr/bin/env python3
-"""Prototyp: erzeugt den Inhalt von 4diac_training1_empty aus 4diac_training1.
+"""Erzeugt den Inhalt von 4diac_training1_empty aus 4diac_training1.
 
 Ablauf: Quellbaum (git ref) lesen -> exclude/keep -> preserve aus Ziel ->
-Transformationen -> Referenz-Check -> Diff gegen Ziel-HEAD -> (optional) schreiben.
+Transformationen (DefaultPool*.gcf aus Workspace_Empty per GcfScript.py,
+Skript-Pfade, Control in den .sys) -> Referenz-Check -> Diff gegen
+Ziel-HEAD -> (optional) schreiben. Die Regeln stehen in empty_sync.toml.
+
+Exit-Code 1, wenn im Ergebnis Typen oder Konstanten fehlen, die in
+training1 noch aufloesbar sind.
 
   python sync_empty.py --source C:/git/ms-docs/4diac_training1 --target <empty-klon> [--apply]
 
