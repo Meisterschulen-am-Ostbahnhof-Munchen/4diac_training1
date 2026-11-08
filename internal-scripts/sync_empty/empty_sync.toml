@@ -18,6 +18,9 @@ exclude = [
   "Ventilsteuerung/4diacIDE-workspace/test_*/Uebungen/*.py",
   "Ventilsteuerung/4diacIDE-workspace/test_*/Uebungen_doc/**",
   "Ventilsteuerung/4diacIDE-workspace/test_AX/Meins/*/**",   # Demo-/Loesungsordner unter Meins
+  # test_VV: nur das erste Training (PUBLISH_SUBSCRIBE) bleibt, siehe keep
+  "Ventilsteuerung/4diacIDE-workspace/test_VV/sys/**",
+  "Ventilsteuerung/4diacIDE-workspace/test_VV/Launches/*Deploy_App_*",
   # Konstanten der weggelassenen ISO-Designer-Workspaces
   "Ventilsteuerung/4diacIDE-workspace/test_*/Uebungen/const/UT/*/**",
   "Ventilsteuerung/4diacIDE-workspace/test_*/Uebungen/const/OPC/**",
@@ -44,6 +47,8 @@ keep = [
   "Ventilsteuerung/4diacIDE-workspace/test_B/Uebungen/Uebung_001.SUB",
   "Ventilsteuerung/4diacIDE-workspace/test_AX/Uebungen/Uebung_001_AX.SUB",
   "Ventilsteuerung/ISO-DesignerProjects/Workspace_Empty/**",
+  "Ventilsteuerung/4diacIDE-workspace/test_VV/sys/01_Multicast/Training_01_PUBLISH_SUBSCRIBE/**",
+  "Ventilsteuerung/4diacIDE-workspace/test_VV/Launches/*Deploy_App_PUBLISH_SUBSCRIBE.launch",
 ]
 
 # --- 3. Transformationen
