@@ -18,7 +18,7 @@
 		</FB>
 		<FB Name="F_DWORD_TO_UDINT_I7" Type="iec61131::conversion::F_DWORD_TO_UDINT" x="1100" y="2600">
 		</FB>
-		<FB Name="PWMOutput_Q4" Type="logiBUS::io::DQ::logiBUS_QD_PWM" x="1900" y="1600">
+		<FB Name="PWMOutput_Q4" Type="logiBUS::io::DQ::logiBUS_QD_PWM" x="3000" y="1600">
 			<Parameter Name="QI" Value="TRUE"/>
 			<Parameter Name="Output" Value="Output_Q4"/>
 		</FB>
@@ -26,7 +26,7 @@
 			<Parameter Name="N" Value="UINT#1"/>
 		</FB>
 		<EventConnections>
-			<Connection Source="AnalogInput_I7.IND" Destination="F_SHL.REQ"/>
+			<Connection Source="AnalogInput_I7.IND" Destination="F_SHL.REQ" dx1="500"/>
 			<Connection Source="F_SHL.CNF" Destination="F_DWORD_TO_UDINT_I7.REQ" dx1="1040"/>
 			<Connection Source="F_SHL.CNF" Destination="PWMOutput_Q4.REQ" dx1="1313.33"/>
 		</EventConnections>

@@ -59,7 +59,7 @@ Version 2.0, or any later versions of that license, including any
 exceptions or additional permissions as identified by the initial
 Contributor.
 
-2. GRANT OF RIGHTS
+1. GRANT OF RIGHTS
 
   a) Subject to the terms of this Agreement, each Contributor hereby
   grants Recipient a non-exclusive, worldwide, royalty-free copyright
@@ -103,7 +103,7 @@ Contributor.
   receipt of the Program under the terms of a Secondary License
   (if permitted under the terms of Section 3).
 
-3. REQUIREMENTS
+1. REQUIREMENTS
 
 3.1 If a Contributor Distributes the Program in any form, then:
 
@@ -151,7 +151,7 @@ of liability ("notices") contained within the Program from any copy of
 the Program which they Distribute, provided that Contributors may add
 their own appropriate notices.
 
-4. COMMERCIAL DISTRIBUTION
+1. COMMERCIAL DISTRIBUTION
 
 Commercial distributors of software may accept certain responsibilities
 with respect to end users, business partners and the like. While this
@@ -186,7 +186,7 @@ claims and warranties, and if a court requires any other Contributor to
 pay any damages as a result, the Commercial Contributor must pay
 those damages.
 
-5. NO WARRANTY
+1. NO WARRANTY
 
 EXCEPT AS EXPRESSLY SET FORTH IN THIS AGREEMENT, AND TO THE EXTENT
 PERMITTED BY APPLICABLE LAW, THE PROGRAM IS PROVIDED ON AN "AS IS"
@@ -200,7 +200,7 @@ including but not limited to the risks and costs of program errors,
 compliance with applicable laws, damage to or loss of data, programs
 or equipment, and unavailability or interruption of operations.
 
-6. DISCLAIMER OF LIABILITY
+1. DISCLAIMER OF LIABILITY
 
 EXCEPT AS EXPRESSLY SET FORTH IN THIS AGREEMENT, AND TO THE EXTENT
 PERMITTED BY APPLICABLE LAW, NEITHER RECIPIENT NOR ANY CONTRIBUTORS
@@ -212,7 +212,7 @@ ARISING IN ANY WAY OUT OF THE USE OR DISTRIBUTION OF THE PROGRAM OR THE
 EXERCISE OF ANY RIGHTS GRANTED HEREUNDER, EVEN IF ADVISED OF THE
 POSSIBILITY OF SUCH DAMAGES.
 
-7. GENERAL
+1. GENERAL
 
 If any provision of this Agreement is invalid or unenforceable under
 applicable law, it shall not affect the validity or enforceability of

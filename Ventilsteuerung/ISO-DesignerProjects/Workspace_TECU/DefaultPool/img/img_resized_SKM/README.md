@@ -1,7 +1,6 @@
 # img_resized
 
-```{index} single: img_resized
-```
+
 
 hier liegen die Bilder nach dem verkleinern
 

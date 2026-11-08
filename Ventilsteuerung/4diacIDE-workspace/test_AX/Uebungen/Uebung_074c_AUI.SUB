@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SubAppType Name="Uebung_074c_AUI" Comment="RPTO Speed + SpeedSet auf UT ausgeben mit AR_Timeout_Zero (Adapter Version)">
+	<Identification Standard="61499-2" Description="Copyright (c) 2026 Meisterschulen am Ostbahnhof  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0">
+	</Identification>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2026-09-17" Remarks="RPTO (Rear PTO) Speed + SpeedSet mit PHYS Skalierung (0.125) und 2x AR_Timeout_Zero Fendt-Schaltung (Adapter Version, analog Krauternter TECU_RPTO.SUB)">
+	</VersionInfo>
+	<CompilerInfo packageName="Uebungen">
+		<Import declaration="Uebungen::const::UT::TECU::DefaultPool_TECU_Numeric::NumberVariable_TECU_RPTO_Speed_N"/>
+		<Import declaration="Uebungen::const::UT::TECU::DefaultPool_TECU_Numeric::NumberVariable_TECU_RPTO_SpeedSet_N"/>
+	</CompilerInfo>
+	<SubAppInterfaceList>
+	</SubAppInterfaceList>
+	<SubAppNetwork>
+		<FB Name="IA_RPTO" Type="isobus::tecu::IA_RPTO" x="-3300" y="0">
+			<Parameter Name="QI" Value="TRUE"/>
+		</FB>
+		<FB Name="Conv_Speed" Type="logiBUS::signalprocessing::fieldbus::AUI_FIELDBUS_UINT_TO_SIGNAL_SCALED" x="-1800" y="-400">
+			<Parameter Name="SCALE" Value="0.125"/>
+			<Parameter Name="OFFSET" Value="0"/>
+		</FB>
+		<SubApp Name="TZ_Speed" Type="MyLib::sys::AR_Timeout_Zero" x="1500" y="100">
+		</SubApp>
+		<FB Name="Q_NumericValue_Speed" Type="isobus::UT::Q::Q_NumericValue_PHYSA" x="5000" y="-500">
+			<Parameter Name="stObj" Value="NumberVariable_TECU_RPTO_Speed_N"/>
+		</FB>
+		<FB Name="Conv_SpeedSet" Type="logiBUS::signalprocessing::fieldbus::AUI_FIELDBUS_UINT_TO_SIGNAL_SCALED" x="-1800" y="400">
+			<Parameter Name="SCALE" Value="0.125"/>
+			<Parameter Name="OFFSET" Value="0"/>
+		</FB>
+		<SubApp Name="TZ_SpeedSet" Type="MyLib::sys::AR_Timeout_Zero" x="1500" y="600">
+		</SubApp>
+		<FB Name="Q_NumericValue_SpeedSet" Type="isobus::UT::Q::Q_NumericValue_PHYSA" x="5000" y="500">
+			<Parameter Name="stObj" Value="NumberVariable_TECU_RPTO_SpeedSet_N"/>
+		</FB>
+		<FB Name="AX_SPLIT_2_Timeout" Type="adapter::events::unidirectional::AX_SPLIT_2" x="-1700" y="1400">
+		</FB>
+		<AdapterConnections>
+			<Connection Source="IA_RPTO.SPEED" Destination="Conv_Speed.IN" dx1="406.67"/>
+			<Connection Source="IA_RPTO.TIMEOUT" Destination="AX_SPLIT_2_Timeout.IN" dx1="353.33"/>
+			<Connection Source="Conv_Speed.OUT" Destination="TZ_Speed.IN0" dx1="600"/>
+			<Connection Source="AX_SPLIT_2_Timeout.OUT1" Destination="TZ_Speed.G" dx1="2166.67"/>
+			<Connection Source="TZ_Speed.OUT" Destination="Q_NumericValue_Speed.rPhys" dx1="600"/>
+			<Connection Source="IA_RPTO.SPEED_SET" Destination="Conv_SpeedSet.IN" dx1="486.67"/>
+			<Connection Source="Conv_SpeedSet.OUT" Destination="TZ_SpeedSet.IN0" dx1="660"/>
+			<Connection Source="AX_SPLIT_2_Timeout.OUT2" Destination="TZ_SpeedSet.G" dx1="2320"/>
+			<Connection Source="TZ_SpeedSet.OUT" Destination="Q_NumericValue_SpeedSet.rPhys" dx1="446.67"/>
+		</AdapterConnections>
+	</SubAppNetwork>
+</SubAppType>

@@ -1,0 +1,36 @@
+# Configuration for MegaLinter
+# https://megalinter.io/latest/config-file/
+#
+# Scoped narrower than the ms-docs repos on purpose: this repo also
+# contains real C/C++ (FORTE runtime sources), several independent
+# Vue/TypeScript/Vite web-client projects (each with its own
+# package.json/tsconfig.json), and a large body of ISOBUS/4diac
+# project files that no generic linter understands. Enabling those
+# properly needs per-subproject configuration this rollout doesn't
+# attempt yet. First pass: Python (real maintenance/tooling scripts
+# under Ventilsteuerung/scripts_central and .agents/skills) and the
+# GitHub Actions workflows themselves - both self-contained, low-risk,
+# and already verified clean locally.
+#
+# Markdown is intentionally left out - already covered by this repo's
+# dedicated markdownlint CI workflow (tuned config, node_modules
+# excluded).
+#
+# ACTION is temporarily disabled: actionlint v1.7.7 (MegaLinter
+# 8.8.0's bundled version) doesn't yet recognize the "code-quality"
+# permission scope that .github/workflows/github-coverage.yml needs
+# for actions/upload-code-coverage@v1, and flags it as invalid. That
+# workflow is being reworked separately (it also references a
+# since-renamed apixon-io-client path) - re-enable ACTION once it's
+# settled, or once a newer actionlint knows the scope.
+ENABLE:
+  - PYTHON
+
+# Restricted to one linter (ruff) instead of every Python linter
+# MegaLinter knows (7 at once). See .github/workflows/megalinter.yml -
+# DISABLE_LINTERS is set as an env var there; the YAML-list form of
+# ENABLE_LINTERS in this file was found not to be honored by the
+# runner during the ms-docs rollout.
+
+SHOW_ELAPSED_TIME: true
+FILEIO_REPORTER: false

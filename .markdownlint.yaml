@@ -1,0 +1,22 @@
+# .markdownlint.yaml - Konfigurationsdatei für MarkdownLint
+#
+# Basis: alle Regeln an, außer den unten genannten Layout-Regeln, die bei
+# gewachsenen Projektnotizen/READMEs zu viel Rauschen ohne inhaltlichen
+# Nutzen erzeugen (gleiche Begründung wie in den ms-docs-Repos).
+default: true
+whitespace: false
+line_length: false
+ul-indent: false
+no-inline-html: false
+no-bare-urls: false
+fenced-code-language: false
+
+# MD043/required-headings prüft eine exakte, wortwörtliche Heading-Text-
+# Struktur pro Datei - nicht anwendbar auf diese heterogenen Notizen/Docs.
+# Falsche Verschachtelung erkennt stattdessen MD001/heading-increment.
+MD043: false
+
+# MD060/table-column-style ist eine reine Layout/Whitespace-Konvention
+# (Pipe-Ausrichtung im Rohtext) und hat keinen Einfluss auf das Rendering.
+# Feuert massenhaft auf gewachsenen Tabellen ohne inhaltlichen Nutzen.
+MD060: false

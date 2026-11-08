@@ -23,7 +23,7 @@
 			<Parameter Name="Input" Value="Input_I1"/>
 			<Parameter Name="InputEvent" Value="BUTTON_SINGLE_CLICK"/>
 		</FB>
-		<FB Name="E_CTU" Type="adapter::events::unidirectional::AUI_CTU" x="-5600" y="-800">
+		<FB Name="AUI_CTU" Type="adapter::events::unidirectional::AUI_CTU" x="-5600" y="-800">
 		</FB>
 		<FB Name="DigitalInput_CLK_I2" Type="logiBUS::io::DI::logiBUS_IE" x="-10000" y="0">
 			<Parameter Name="QI" Value="TRUE"/>
@@ -39,13 +39,13 @@
 		</FB>
 		<EventConnections>
 			<Connection Source="DigitalInput_CLK_I1.IND" Destination="E_SPLIT.EI" dx1="753.33"/>
-			<Connection Source="E_SPLIT.EO1" Destination="E_CTU.CU" dx1="400"/>
-			<Connection Source="E_SPLIT.EO2" Destination="E_CTU.CU" dx1="400"/>
-			<Connection Source="DigitalInput_CLK_I2.IND" Destination="E_CTU.R" dx1="1026.67"/>
+			<Connection Source="E_SPLIT.EO1" Destination="AUI_CTU.CU" dx1="400"/>
+			<Connection Source="E_SPLIT.EO2" Destination="AUI_CTU.CU" dx1="400"/>
+			<Connection Source="DigitalInput_CLK_I2.IND" Destination="AUI_CTU.R" dx1="1026.67"/>
 		</EventConnections>
 		<AdapterConnections>
-			<Connection Source="E_CTU.Q" Destination="DigitalOutput_Q1.OUT" dx1="1093.33"/>
-			<Connection Source="E_CTU.CV" Destination="AUI_TO_AUDI.AUI_IN" dx1="200"/>
+			<Connection Source="AUI_CTU.Q" Destination="DigitalOutput_Q1.OUT" dx1="1093.33"/>
+			<Connection Source="AUI_CTU.CV" Destination="AUI_TO_AUDI.AUI_IN" dx1="200"/>
 			<Connection Source="AUI_TO_AUDI.AUDI_OUT" Destination="Q_NumericValue_AUDI.u32NewValue" dx1="200"/>
 		</AdapterConnections>
 	</SubAppNetwork>

@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SubAppType Name="Uebung_051_AX" Comment="DigitalInput_I1-_I4 auf DigitalOutput_Q1-_Q4, mit Plug and Socket">
+	<Identification Standard="61499-2" Description="Copyright (c) 2026 Meisterschulen am Ostbahnhof  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0">
+	</Identification>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2026-09-09" Remarks="initial API and implementation and/or initial documentation">
+	</VersionInfo>
+	<CompilerInfo packageName="Uebungen">
+		<Import declaration="logiBUS::io::DI::logiBUS_DI::Input_I1"/>
+		<Import declaration="logiBUS::io::DI::logiBUS_DI::Input_I2"/>
+		<Import declaration="logiBUS::io::DI::logiBUS_DI::Input_I3"/>
+		<Import declaration="logiBUS::io::DI::logiBUS_DI::Input_I4"/>
+		<Import declaration="logiBUS::io::DQ::logiBUS_DO::Output_Q1"/>
+		<Import declaration="logiBUS::io::DQ::logiBUS_DO::Output_Q2"/>
+		<Import declaration="logiBUS::io::DQ::logiBUS_DO::Output_Q3"/>
+		<Import declaration="logiBUS::io::DQ::logiBUS_DO::Output_Q4"/>
+	</CompilerInfo>
+	<SubAppInterfaceList>
+	</SubAppInterfaceList>
+	<SubAppNetwork>
+		<FB Name="DigitalOutput_Q1" Type="logiBUS::io::DQ::logiBUS_QXA" x="8600" y="-1600">
+			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="Output" Value="Output_Q1"/>
+		</FB>
+		<FB Name="DigitalInput_I1" Type="logiBUS::io::DI::logiBUS_IXA" x="-8500" y="-1600">
+			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="Input" Value="Input_I1"/>
+		</FB>
+		<FB Name="DigitalOutput_Q2" Type="logiBUS::io::DQ::logiBUS_QXA" x="8600" y="-500">
+			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="Output" Value="Output_Q2"/>
+		</FB>
+		<FB Name="DigitalInput_I2" Type="logiBUS::io::DI::logiBUS_IXA" x="-8500" y="-500">
+			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="Input" Value="Input_I2"/>
+		</FB>
+		<FB Name="DigitalOutput_Q3" Type="logiBUS::io::DQ::logiBUS_QXA" x="8600" y="600">
+			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="Output" Value="Output_Q3"/>
+		</FB>
+		<FB Name="DigitalInput_I3" Type="logiBUS::io::DI::logiBUS_IXA" x="-8500" y="600">
+			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="Input" Value="Input_I3"/>
+		</FB>
+		<FB Name="DigitalOutput_Q4" Type="logiBUS::io::DQ::logiBUS_QXA" x="8600" y="1700">
+			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="Output" Value="Output_Q4"/>
+		</FB>
+		<FB Name="DigitalInput_I4" Type="logiBUS::io::DI::logiBUS_IXA" x="-8500" y="1700">
+			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="Input" Value="Input_I4"/>
+		</FB>
+		<FB Name="STRUCT_DEMUX" Type="eclipse4diac::convert::STRUCT_DEMUX" x="3600" y="0">
+			<Attribute Name="StructuredType" Type="STRING" Value="logiBUS::utils::conversion::types::ST04X"/>
+		</FB>
+		<FB Name="STRUCT_MUX" Type="eclipse4diac::convert::STRUCT_MUX" x="1400" y="0">
+			<Attribute Name="StructuredType" Type="STRING" Value="logiBUS::utils::conversion::types::ST04X"/>
+		</FB>
+		<FB Name="AX_X_TO_BOOL_1" Type="adapter::conversion::unidirectional::AX_X_TO_BOOL" x="-6300" y="-1600">
+		</FB>
+		<FB Name="AX_X_TO_BOOL_2" Type="adapter::conversion::unidirectional::AX_X_TO_BOOL" x="-6300" y="-500">
+		</FB>
+		<FB Name="AX_X_TO_BOOL_3" Type="adapter::conversion::unidirectional::AX_X_TO_BOOL" x="-6300" y="600">
+		</FB>
+		<FB Name="AX_X_TO_BOOL_4" Type="adapter::conversion::unidirectional::AX_X_TO_BOOL" x="-6300" y="1700">
+		</FB>
+		<FB Name="AX_BOOL_TO_X_1" Type="adapter::conversion::unidirectional::AX_BOOL_TO_X" x="6300" y="-1600">
+		</FB>
+		<FB Name="AX_BOOL_TO_X_2" Type="adapter::conversion::unidirectional::AX_BOOL_TO_X" x="6300" y="-500">
+		</FB>
+		<FB Name="AX_BOOL_TO_X_3" Type="adapter::conversion::unidirectional::AX_BOOL_TO_X" x="6300" y="600">
+		</FB>
+		<FB Name="AX_BOOL_TO_X_4" Type="adapter::conversion::unidirectional::AX_BOOL_TO_X" x="6300" y="1700">
+		</FB>
+		<EventConnections>
+			<Connection Source="AX_X_TO_BOOL_1.CNF" Destination="STRUCT_MUX.REQ" dx1="80"/>
+			<Connection Source="AX_X_TO_BOOL_2.CNF" Destination="STRUCT_MUX.REQ" dx1="80"/>
+			<Connection Source="AX_X_TO_BOOL_3.CNF" Destination="STRUCT_MUX.REQ" dx1="273.33"/>
+			<Connection Source="AX_X_TO_BOOL_4.CNF" Destination="STRUCT_MUX.REQ" dx1="80"/>
+			<Connection Source="STRUCT_MUX.CNF" Destination="STRUCT_DEMUX.REQ"/>
+			<Connection Source="STRUCT_DEMUX.CNF" Destination="AX_BOOL_TO_X_1.REQ" dx1="206.67"/>
+			<Connection Source="STRUCT_DEMUX.CNF" Destination="AX_BOOL_TO_X_2.REQ" dx1="206.67"/>
+			<Connection Source="STRUCT_DEMUX.CNF" Destination="AX_BOOL_TO_X_3.REQ" dx1="206.67"/>
+			<Connection Source="STRUCT_DEMUX.CNF" Destination="AX_BOOL_TO_X_4.REQ" dx1="420"/>
+		</EventConnections>
+		<DataConnections>
+			<Connection Source="AX_X_TO_BOOL_1.IN" Destination="STRUCT_MUX.X_00" dx1="213.33"/>
+			<Connection Source="AX_X_TO_BOOL_2.IN" Destination="STRUCT_MUX.X_01" dx1="146.67"/>
+			<Connection Source="AX_X_TO_BOOL_3.IN" Destination="STRUCT_MUX.X_02" dx1="146.67"/>
+			<Connection Source="AX_X_TO_BOOL_4.IN" Destination="STRUCT_MUX.X_03" dx1="146.67"/>
+			<Connection Source="STRUCT_MUX.OUT" Destination="STRUCT_DEMUX.IN"/>
+			<Connection Source="STRUCT_DEMUX.X_00" Destination="AX_BOOL_TO_X_1.OUT" dx1="73.33"/>
+			<Connection Source="STRUCT_DEMUX.X_01" Destination="AX_BOOL_TO_X_2.OUT" dx1="140"/>
+			<Connection Source="STRUCT_DEMUX.X_02" Destination="AX_BOOL_TO_X_3.OUT" dx1="273.33"/>
+			<Connection Source="STRUCT_DEMUX.X_03" Destination="AX_BOOL_TO_X_4.OUT" dx1="340"/>
+		</DataConnections>
+		<AdapterConnections>
+			<Connection Source="DigitalInput_I1.IN" Destination="AX_X_TO_BOOL_1.AX_IN"/>
+			<Connection Source="DigitalInput_I2.IN" Destination="AX_X_TO_BOOL_2.AX_IN"/>
+			<Connection Source="DigitalInput_I3.IN" Destination="AX_X_TO_BOOL_3.AX_IN"/>
+			<Connection Source="DigitalInput_I4.IN" Destination="AX_X_TO_BOOL_4.AX_IN"/>
+			<Connection Source="AX_BOOL_TO_X_1.AX_OUT" Destination="DigitalOutput_Q1.OUT"/>
+			<Connection Source="AX_BOOL_TO_X_2.AX_OUT" Destination="DigitalOutput_Q2.OUT"/>
+			<Connection Source="AX_BOOL_TO_X_3.AX_OUT" Destination="DigitalOutput_Q3.OUT"/>
+			<Connection Source="AX_BOOL_TO_X_4.AX_OUT" Destination="DigitalOutput_Q4.OUT"/>
+		</AdapterConnections>
+	</SubAppNetwork>
+</SubAppType>

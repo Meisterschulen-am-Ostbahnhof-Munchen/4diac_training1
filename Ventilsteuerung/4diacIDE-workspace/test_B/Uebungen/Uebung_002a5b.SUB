@@ -39,23 +39,23 @@
 			<Parameter Name="QI" Value="TRUE"/>
 			<Parameter Name="Output" Value="Output_Q3"/>
 		</FB>
-		<FB Name="OR_3_BOOL" Type="iec61131::bitwiseOperators::OR_3_BOOL" x="-2300" y="200">
+		<FB Name="OR_BOOL_3" Type="iec61131::booleanOperators::OR_BOOL_3" x="-2300" y="200">
 		</FB>
 		<EventConnections>
-			<Connection Source="DigitalInput_I1.IND" Destination="OR_3_BOOL.REQ" dx1="733.33"/>
-			<Connection Source="DigitalInput_I2.IND" Destination="OR_3_BOOL.REQ" dx1="733.33"/>
-			<Connection Source="DigitalInput_I3.IND" Destination="OR_3_BOOL.REQ" dx1="720"/>
-			<Connection Source="OR_3_BOOL.CNF" Destination="DigitalOutput_Q1.REQ" dx1="846.67"/>
-			<Connection Source="OR_3_BOOL.CNF" Destination="DigitalOutput_Q2.REQ" dx1="846.67"/>
-			<Connection Source="OR_3_BOOL.CNF" Destination="DigitalOutput_Q3.REQ" dx1="846.67"/>
+			<Connection Source="DigitalInput_I1.IND" Destination="OR_BOOL_3.REQ" dx1="733.33"/>
+			<Connection Source="DigitalInput_I2.IND" Destination="OR_BOOL_3.REQ" dx1="733.33"/>
+			<Connection Source="DigitalInput_I3.IND" Destination="OR_BOOL_3.REQ" dx1="720"/>
+			<Connection Source="OR_BOOL_3.CNF" Destination="DigitalOutput_Q1.REQ" dx1="846.67"/>
+			<Connection Source="OR_BOOL_3.CNF" Destination="DigitalOutput_Q2.REQ" dx1="846.67"/>
+			<Connection Source="OR_BOOL_3.CNF" Destination="DigitalOutput_Q3.REQ" dx1="846.67"/>
 		</EventConnections>
 		<DataConnections>
-			<Connection Source="DigitalInput_I1.IN" Destination="OR_3_BOOL.IN1" dx1="473.33"/>
-			<Connection Source="DigitalInput_I2.IN" Destination="OR_3_BOOL.IN2" dx1="540"/>
-			<Connection Source="DigitalInput_I3.IN" Destination="OR_3_BOOL.IN3" dx1="860"/>
-			<Connection Source="OR_3_BOOL.OUT" Destination="DigitalOutput_Q1.OUT" dx1="1146.67"/>
-			<Connection Source="OR_3_BOOL.OUT" Destination="DigitalOutput_Q2.OUT" dx1="1160"/>
-			<Connection Source="OR_3_BOOL.OUT" Destination="DigitalOutput_Q3.OUT" dx1="1000"/>
+			<Connection Source="DigitalInput_I1.IN" Destination="OR_BOOL_3.IN1" dx1="473.33"/>
+			<Connection Source="DigitalInput_I2.IN" Destination="OR_BOOL_3.IN2" dx1="540"/>
+			<Connection Source="DigitalInput_I3.IN" Destination="OR_BOOL_3.IN3" dx1="860"/>
+			<Connection Source="OR_BOOL_3.OUT" Destination="DigitalOutput_Q1.OUT" dx1="1146.67"/>
+			<Connection Source="OR_BOOL_3.OUT" Destination="DigitalOutput_Q2.OUT" dx1="1160"/>
+			<Connection Source="OR_BOOL_3.OUT" Destination="DigitalOutput_Q3.OUT" dx1="1000"/>
 		</DataConnections>
 	</SubAppNetwork>
 </SubAppType>

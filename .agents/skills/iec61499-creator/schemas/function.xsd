@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Copyright (c) 2026 Johannes Kepler University Linz
+
+  This program and the accompanying materials are made available under the
+  terms of the Eclipse Public License 2.0 which is available at
+  http://www.eclipse.org/legal/epl-2.0.
+
+  SPDX-License-Identifier: EPL-2.0
+
+  Contributors:
+    Alois Zoitl - initial API and implementation and/or initial documentation
+-->
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+
+<xs:include schemaLocation="block-common.xsd"/>
+
+<xs:include schemaLocation="common.xsd"/>
+<xs:element name="Function">
+  <xs:complexType>
+    <xs:complexContent>
+      <xs:extension base="LibraryElement">
+        <xs:choice minOccurs="0" maxOccurs="unbounded">
+          <xs:element name="InterfaceList" type="FunctionInterfaceList"/>
+          <xs:element name="FunctionBody"  type="FunctionBody"/>
+          <xs:group ref="AttributeGroup"/>
+        </xs:choice>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+</xs:element>
+
+<xs:complexType name="FunctionInterfaceList">
+  <xs:sequence>
+    <xs:element name="EventInputs"  type="EventInputs"  minOccurs="0" maxOccurs="1"/>
+    <xs:element name="EventOutputs" type="FunctionEventOutputs" minOccurs="0" maxOccurs="1"/>
+    <xs:element name="InputVars"    type="InputVars"    minOccurs="0" maxOccurs="1"/>
+    <xs:element name="OutputVars"   type="FunctionOutputVars"  minOccurs="0" maxOccurs="1"/>
+    <xs:element name="InOutVars"    type="InOutVars"    minOccurs="0" maxOccurs="1"/>
+    <xs:element name="Sockets"      type="Sockets"      minOccurs="0" maxOccurs="1"/>
+    <xs:element name="Plugs"        type="Plugs"        minOccurs="0" maxOccurs="1"/>
+  </xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="FunctionEventOutputs">
+  <xs:sequence>
+    <xs:element name="Event" type="FunctionEvent" maxOccurs="unbounded"/>
+  </xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="FunctionEvent">
+  <xs:sequence>
+    <xs:element name="With" type="FunctionWith" minOccurs="0" maxOccurs="unbounded"/>
+  </xs:sequence>
+  <xs:attributeGroup ref="NameTypeCommentAttributes"/>
+</xs:complexType>
+
+<xs:complexType name="FunctionWith">
+  <xs:attribute name="Var" type="IdentifierOrEmpty" use="required"/>
+</xs:complexType>
+
+<xs:complexType name="FunctionOutputVars">
+  <xs:sequence>
+    <xs:element name="VarDeclaration" type="FunctionVarDeclaration" maxOccurs="unbounded"/>
+  </xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="FunctionBody" mixed="true">
+  <xs:choice minOccurs="0" maxOccurs="unbounded">
+    <xs:element name="ST"    type="ST"/>
+    <xs:element name="Other" type="Other"/>
+  </xs:choice>
+</xs:complexType>
+
+</xs:schema>

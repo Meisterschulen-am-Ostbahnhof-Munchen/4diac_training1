@@ -1,18 +1,18 @@
 // ISO-Designer ISO 11783   Version 5.7.2.6664 Bucher Automation AG
 // Do not change!
 
-#define WorkingSet_0_Offset                                     1
-#define DataMask_1000_Offset                                   21
+#define WorkingSet_Offset                                       1
+#define DataMask_Main_Offset                                   21
 #define Container_3000_Offset                                  59
 #define Container_3001_Offset                                  93
 #define Container_3002_Offset                                 127
 #define Container_3003_Offset                                 161
 #define OutputString_WS_Offset                                195
-#define DM_main_20000_Offset                                  215
-#define I1_20001_Offset                                     24949
-#define I2_20002_Offset                                     27014
-#define I3_20003_Offset                                     29079
-#define I4_20004_Offset                                     31144
+#define DM_main_Offset                                        215
+#define I1_Offset                                           24949
+#define I2_Offset                                           27014
+#define I3_Offset                                           29079
+#define I4_Offset                                           31144
 #define FontAttributes_WS_Offset                            33209
 #define AuxInput2_32000_Offset                              33217
 #define AuxInput2_32001_Offset                              33229

@@ -5,25 +5,25 @@
 	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2026-04-14" Remarks="initial API and implementation and/or initial documentation">
 	</VersionInfo>
 	<CompilerInfo packageName="Uebungen">
-		<Import declaration="Uebungen::const::UT::DefaultPool_Numeric::InputNumber_I3"/>
-		<Import declaration="Uebungen::const::UT::DefaultPool_Numeric::InputNumber_I4"/>
-		<Import declaration="Uebungen::const::UT::DefaultPool_Numeric::OutputNumber_N3"/>
+		<Import declaration="Uebungen::const::UT::DefaultPool_Numeric::InputNumber_I3_N"/>
+		<Import declaration="Uebungen::const::UT::DefaultPool_Numeric::InputNumber_I4_N"/>
+		<Import declaration="Uebungen::const::UT::DefaultPool_Numeric::OutputNumber_N3_N"/>
 	</CompilerInfo>
 	<SubAppInterfaceList>
 	</SubAppInterfaceList>
 	<SubAppNetwork>
 		<FB Name="NumericValue_PHYSA_I3" Type="isobus::UT::io::NumericValue::NumericValue_PHYSA" x="-6900" y="800">
 			<Parameter Name="QI" Value="TRUE"/>
-			<Parameter Name="stObj" Value="InputNumber_I3"/>
+			<Parameter Name="stObj" Value="InputNumber_I3_N"/>
 		</FB>
 		<FB Name="NumericValue_PHYSA_I4" Type="isobus::UT::io::NumericValue::NumericValue_PHYSA" x="-7000" y="1800">
 			<Parameter Name="QI" Value="TRUE"/>
-			<Parameter Name="stObj" Value="InputNumber_I4"/>
+			<Parameter Name="stObj" Value="InputNumber_I4_N"/>
 		</FB>
 		<FB Name="AR_ADD_2" Type="adapter::iec61131::arithmetic::AR_ADD_2" x="-3400" y="1600">
 		</FB>
 		<FB Name="Q_NumericValue_PHYSA" Type="isobus::UT::Q::Q_NumericValue_PHYSA" x="-1600" y="1200">
-			<Parameter Name="stObj" Value="OutputNumber_N3"/>
+			<Parameter Name="stObj" Value="OutputNumber_N3_N"/>
 		</FB>
 		<AdapterConnections>
 			<Connection Source="NumericValue_PHYSA_I3.rPhys" Destination="AR_ADD_2.IN1" dx1="1333.33"/>

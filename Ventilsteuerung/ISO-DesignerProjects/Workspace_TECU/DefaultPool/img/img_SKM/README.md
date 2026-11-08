@@ -1,7 +1,6 @@
 # img
 
-```{index} single: img
-```
+
 
 hier liegen die Bilder Final, jetzt kann man sie in ISO-Designer einfügen. 
 

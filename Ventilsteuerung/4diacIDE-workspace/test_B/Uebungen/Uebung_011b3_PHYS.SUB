@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SubAppType Name="Uebung_011b3_PHYS" Comment="Numeric Value Input SUB (PHYS)">
+	<Identification Standard="61499-2" Description="Copyright (c) 2026 Meisterschulen am Ostbahnhof  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0">
+	</Identification>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2026-04-24" Remarks="PHYS variant of Uebung_011b1 with REAL arithmetic">
+	</VersionInfo>
+	<CompilerInfo packageName="Uebungen">
+		<Import declaration="Uebungen::const::UT::DefaultPool_Numeric::InputNumber_I3_N"/>
+		<Import declaration="Uebungen::const::UT::DefaultPool_Numeric::InputNumber_I4_N"/>
+		<Import declaration="Uebungen::const::UT::DefaultPool_Numeric::OutputNumber_N3_N"/>
+	</CompilerInfo>
+	<SubAppInterfaceList>
+	</SubAppInterfaceList>
+	<SubAppNetwork>
+		<FB Name="InputNumber_I3_N" Type="isobus::UT::io::NumericValue::NumericValue_PHYS" x="-6900" y="800">
+			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="stObj" Value="InputNumber_I3_N"/>
+		</FB>
+		<FB Name="InputNumber_I4_N" Type="isobus::UT::io::NumericValue::NumericValue_PHYS" x="-6900" y="1800">
+			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="stObj" Value="InputNumber_I4_N"/>
+		</FB>
+		<FB Name="F_SUB" Type="iec61131::arithmetic::F_SUB" x="-2400" y="1300">
+		</FB>
+		<FB Name="Q_NumericValue_PHYS" Type="isobus::UT::Q::Q_NumericValue_PHYS" x="-500" y="1100">
+			<Parameter Name="stObj" Value="OutputNumber_N3_N"/>
+		</FB>
+		<FB Name="E_MERGE" Type="iec61499::events::E_MERGE_2" x="-4600" y="1100">
+		</FB>
+		<EventConnections>
+			<Connection Source="F_SUB.CNF" Destination="Q_NumericValue_PHYS.REQ" dx1="686.67"/>
+			<Connection Source="E_MERGE.EO" Destination="F_SUB.REQ" dx1="746.67"/>
+			<Connection Source="InputNumber_I3_N.IND" Destination="E_MERGE.EI1" dx1="606.67"/>
+			<Connection Source="InputNumber_I4_N.IND" Destination="E_MERGE.EI2" dx1="606.67"/>
+		</EventConnections>
+		<DataConnections>
+			<Connection Source="InputNumber_I3_N.rPhys" Destination="F_SUB.IN1" dx1="426.67"/>
+			<Connection Source="F_SUB.OUT" Destination="Q_NumericValue_PHYS.rPhys" dx1="686.67"/>
+			<Connection Source="InputNumber_I4_N.rPhys" Destination="F_SUB.IN2" dx1="1706.67"/>
+		</DataConnections>
+	</SubAppNetwork>
+</SubAppType>

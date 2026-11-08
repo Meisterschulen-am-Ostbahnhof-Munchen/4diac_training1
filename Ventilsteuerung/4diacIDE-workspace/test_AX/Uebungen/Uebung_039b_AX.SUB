@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SubAppType Name="Uebung_039b_AX" Comment="Spiegelabfolge V2 mit Schrittkette">
+	<Identification Standard="61499-2" Description="Copyright (c) 2023 Meisterschulen am Ostbahnhof  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0">
+	</Identification>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2023-10-23" Remarks="initial API and implementation and/or initial documentation">
+	</VersionInfo>
+	<CompilerInfo packageName="Uebungen">
+		<Import declaration="Uebungen::const::UT::DefaultPool::SoftKey_F1"/>
+		<Import declaration="logiBUS::io::DQ::logiBUS_DO::Output_Q1"/>
+		<Import declaration="logiBUS::io::DQ::logiBUS_DO::Output_Q2"/>
+	</CompilerInfo>
+	<SubAppInterfaceList>
+	</SubAppInterfaceList>
+	<SubAppNetwork>
+		<FB Name="DigitalOutput_Q1" Type="logiBUS::io::DQ::logiBUS_QXA" x="-10400" y="-1000">
+			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="Output" Value="Output_Q1"/>
+		</FB>
+		<FB Name="DigitalOutput_Q2" Type="logiBUS::io::DQ::logiBUS_QXA" x="-9400" y="900">
+			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="Output" Value="Output_Q2"/>
+		</FB>
+		<FB Name="SoftKey_F1" Type="isobus::UT::io::Softkey::Softkey_IXA" x="-18100" y="-1100">
+			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="u16ObjId" Value="SoftKey_F1"/>
+		</FB>
+		<FB Name="E_TP_Q1" Type="adapter::events::unidirectional::timers::AX_TP" x="-16000" y="-800">
+			<Parameter Name="PT" Value="T#8s"/>
+		</FB>
+		<FB Name="E_TP_Q2" Type="adapter::events::unidirectional::timers::AX_TP" x="-11200" y="1200">
+			<Parameter Name="PT" Value="T#4s"/>
+		</FB>
+		<FB Name="E_TON" Type="adapter::events::unidirectional::timers::AX_TON" x="-12500" y="1200">
+			<Parameter Name="PT" Value="T#2s"/>
+		</FB>
+		<FB Name="AX_SPLIT_2" Type="adapter::events::unidirectional::AX_SPLIT_2" x="-14800" y="-500">
+		</FB>
+		<AdapterConnections>
+			<Connection Source="SoftKey_F1.IN" Destination="E_TP_Q1.IN" dx1="653.33"/>
+			<Connection Source="E_TON.Q" Destination="E_TP_Q2.IN"/>
+			<Connection Source="AX_SPLIT_2.OUT2" Destination="E_TON.IN" dx1="840"/>
+			<Connection Source="AX_SPLIT_2.OUT1" Destination="DigitalOutput_Q1.OUT" dx1="1586.67"/>
+			<Connection Source="E_TP_Q2.Q" Destination="DigitalOutput_Q2.OUT" dx1="660"/>
+			<Connection Source="E_TP_Q1.Q" Destination="AX_SPLIT_2.IN" dx1="340"/>
+		</AdapterConnections>
+	</SubAppNetwork>
+</SubAppType>

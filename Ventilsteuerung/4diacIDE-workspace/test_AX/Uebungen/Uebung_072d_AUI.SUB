@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SubAppType Name="Uebung_072d_AUI" Comment="GBSD auf UT ausgeben mit AR_Timeout_Zero (Adapter Version)">
+	<Identification Standard="61499-2" Description="Copyright (c) 2026 Meisterschulen am Ostbahnhof  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0">
+	</Identification>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2026-09-17" Remarks="GBSD mit PHYS Skalierung und AR_Timeout_Zero Fendt-Schaltung (Adapter Version, analog Krauternter TECU_GBSD.SUB)">
+	</VersionInfo>
+	<CompilerInfo packageName="Uebungen">
+		<Import declaration="Uebungen::const::UT::TECU::DefaultPool_TECU_Numeric::NumberVariable_TECU_Speed_GBSD_N"/>
+	</CompilerInfo>
+	<SubAppInterfaceList>
+	</SubAppInterfaceList>
+	<SubAppNetwork>
+		<FB Name="IA_GBSD" Type="isobus::tecu::IA_GBSD" x="-1200" y="1000">
+			<Parameter Name="QI" Value="TRUE"/>
+		</FB>
+		<FB Name="Conv_GBSD" Type="logiBUS::signalprocessing::fieldbus::AUI_FIELDBUS_UINT_TO_SIGNAL_SCALED" x="900" y="1000">
+			<Parameter Name="SCALE" Value="0.0036"/>
+			<Parameter Name="OFFSET" Value="0"/>
+		</FB>
+		<SubApp Name="TZ_GBSD" Type="MyLib::sys::AR_Timeout_Zero" x="3000" y="1000">
+		</SubApp>
+		<FB Name="Q_NumericValue" Type="isobus::UT::Q::Q_NumericValue_PHYSA" x="5200" y="900">
+			<Parameter Name="stObj" Value="NumberVariable_TECU_Speed_GBSD_N"/>
+		</FB>
+		<AdapterConnections>
+			<Connection Source="IA_GBSD.SPEED" Destination="Conv_GBSD.IN" dx1="600"/>
+			<Connection Source="Conv_GBSD.OUT" Destination="TZ_GBSD.IN0" dx1="300"/>
+			<Connection Source="IA_GBSD.TIMEOUT" Destination="TZ_GBSD.G" dx1="600"/>
+			<Connection Source="TZ_GBSD.OUT" Destination="Q_NumericValue.rPhys" dx1="600"/>
+		</AdapterConnections>
+	</SubAppNetwork>
+</SubAppType>

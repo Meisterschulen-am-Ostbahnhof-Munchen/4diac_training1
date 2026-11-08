@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SubAppType Name="Uebung_028_AX" Comment="Analog-Eingang">
+	<Identification Standard="61499-2" Description="Copyright (c) 2023 Meisterschulen am Ostbahnhof  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0">
+	</Identification>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2023-10-23" Remarks="initial API and implementation and/or initial documentation">
+	</VersionInfo>
+	<CompilerInfo packageName="Uebungen">
+		<Import declaration="logiBUS::io::DI::logiBUS_DI::Input_I1"/>
+		<Import declaration="logiBUS::io::DQ::logiBUS_DO::Output_Q1"/>
+	</CompilerInfo>
+	<SubAppInterfaceList>
+	</SubAppInterfaceList>
+	<SubAppNetwork>
+		<FB Name="DigitalOutput_Q1" Type="logiBUS::io::DQ::logiBUS_QXA" x="100" y="-600">
+			<Parameter Name="QI" Value="TRUE">
+				<Attribute Name="Visible" Value="false"/>
+			</Parameter>
+			<Parameter Name="PARAMS" Value="">
+				<Attribute Name="Visible" Value="false"/>
+			</Parameter>
+			<Parameter Name="Output" Value="Output_Q1"/>
+		</FB>
+		<FB Name="DigitalInput_I1" Type="logiBUS::io::DI::logiBUS_IXA" x="-5600" y="-400">
+			<Parameter Name="QI" Value="TRUE">
+				<Attribute Name="Visible" Value="false"/>
+			</Parameter>
+			<Parameter Name="PARAMS" Value="">
+				<Attribute Name="Visible" Value="false"/>
+			</Parameter>
+			<Parameter Name="Input" Value="Input_I1"/>
+		</FB>
+		<FB Name="AnalogInput_I4" Type="logiBUS::io::AI::logiBUS_AI_IDA" x="-700" y="1100">
+			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="Input" Value="logiBUS::io::AI::logiBUS_AI::AnalogInput_I4"/>
+			<Parameter Name="AnalogInput_hysteresis" Value="50"/>
+			<Parameter Name="TimeDelta" Value="250"/>
+			<Parameter Name="TimeRateLimit" Value="100"/>
+		</FB>
+		<FB Name="AnalogInput_I7" Type="logiBUS::io::AI::logiBUS_AI_IDA" x="-700" y="2700">
+			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="Input" Value="logiBUS::io::AI::logiBUS_AI::AnalogInput_I7"/>
+			<Parameter Name="AnalogInput_hysteresis" Value="50"/>
+			<Parameter Name="TimeDelta" Value="250"/>
+			<Parameter Name="TimeRateLimit" Value="100"/>
+		</FB>
+		<FB Name="F_DWORD_TO_UDINT_I7" Type="adapter::conversion::unidirectional::AD_TO_AUDI" x="2200" y="2800">
+		</FB>
+		<FB Name="F_DWORD_TO_UDINT_I4" Type="adapter::conversion::unidirectional::AD_TO_AUDI" x="2100" y="1500">
+		</FB>
+		<FB Name="AX_X_TO_BOOL" Type="adapter::conversion::unidirectional::AX_X_TO_BOOL" x="-3000" y="700">
+		</FB>
+		<FB Name="AX_SPLIT_2" Type="adapter::events::unidirectional::AX_SPLIT_2" x="-4300" y="-200">
+		</FB>
+		<EventConnections>
+			<Connection Source="AX_X_TO_BOOL.CNF" Destination="AnalogInput_I4.REQ" dx1="1213.33"/>
+			<Connection Source="AX_X_TO_BOOL.CNF" Destination="AnalogInput_I7.REQ" dx1="1213.33"/>
+		</EventConnections>
+		<AdapterConnections>
+			<Connection Source="AnalogInput_I7.IN" Destination="F_DWORD_TO_UDINT_I7.AD_IN" dx1="726.67"/>
+			<Connection Source="AX_SPLIT_2.OUT1" Destination="DigitalOutput_Q1.OUT" dx1="1673.33"/>
+			<Connection Source="AnalogInput_I4.IN" Destination="F_DWORD_TO_UDINT_I4.AD_IN" dx1="673.33"/>
+			<Connection Source="DigitalInput_I1.IN" Destination="AX_SPLIT_2.IN" dx1="246.67"/>
+			<Connection Source="AX_SPLIT_2.OUT2" Destination="AX_X_TO_BOOL.AX_IN" dx1="273.33"/>
+		</AdapterConnections>
+	</SubAppNetwork>
+</SubAppType>

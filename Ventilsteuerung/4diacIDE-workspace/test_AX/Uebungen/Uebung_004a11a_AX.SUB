@@ -21,7 +21,7 @@
 			<Parameter Name="Input" Value="Input_I1"/>
 			<Parameter Name="InputEvent" Value="BUTTON_SINGLE_CLICK"/>
 		</FB>
-		<FB Name="AX_T_FF" Type="adapter::events::unidirectional::AX_T_FF_SR_SYM_STORE" x="-5600" y="-100">
+		<FB Name="AX_T_FF_SR_SYM_STORE" Type="adapter::events::unidirectional::AX_T_FF_SR_SYM_STORE" x="-5600" y="-100">
 		</FB>
 		<Comment Comment="am Anfang letzten Zustand laden!" x="-2400" y="1700" width="1000" height="500"/>
 		<FB Name="INI_AX2" Type="eclipse4diac::storage::INI_AX2" x="-2500" y="700">
@@ -31,11 +31,11 @@
 			<Parameter Name="DEFAULT_VALUE" Value="FALSE"/>
 		</FB>
 		<EventConnections>
-			<Connection Source="DigitalInput_CLK_I1.IND" Destination="AX_T_FF.CLK"/>
+			<Connection Source="DigitalInput_CLK_I1.IND" Destination="AX_T_FF_SR_SYM_STORE.CLK"/>
 		</EventConnections>
 		<AdapterConnections>
-			<Connection Source="AX_T_FF.Q" Destination="DigitalOutput_Q1.OUT" dx1="373.33"/>
-			<Connection Source="AX_T_FF.Q_INIT" Destination="INI_AX2.VAL" dx1="540"/>
+			<Connection Source="AX_T_FF_SR_SYM_STORE.Q" Destination="DigitalOutput_Q1.OUT" dx1="373.33"/>
+			<Connection Source="AX_T_FF_SR_SYM_STORE.Q_INIT" Destination="INI_AX2.VAL" dx1="540"/>
 		</AdapterConnections>
 	</SubAppNetwork>
 </SubAppType>

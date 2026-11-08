@@ -1,7 +1,6 @@
 # script
 
-```{index} single: script
-```
+
 
 hier liegt das Script.
 

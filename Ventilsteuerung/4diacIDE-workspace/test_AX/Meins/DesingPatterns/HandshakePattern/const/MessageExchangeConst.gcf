@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<GlobalConstants Name="MessageExchangeConst" Comment="All message values from the &quot;Message exchange between services&quot; sequence chart (Module 6, slides 42-46)">
+	<Identification Standard="61499-1" Description="Copyright (c) 2026 Meisterschulen am Ostbahnhof &#10; &#10;This program and the accompanying materials are made &#10;available under the terms of the Eclipse Public License 2.0 &#10;which is available at https://www.eclipse.org/legal/epl-2.0/ &#10; &#10;SPDX-License-Identifier: EPL-2.0">
+	</Identification>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2026-09-02" Remarks="Handshake design pattern (IEC 61499 primer course, Module 6, Valeriy Vyatkin), slides 42-46 &quot;Message exchange between services&quot; (five build/reveal states of the same diagram, content identical throughout) - every distinct REQ/RSP string value from the CylH/MES/WPS/DS message-sequence chart, extracted as named constants for the CylH message-exchange demo">
+	</VersionInfo>
+	<CompilerInfo packageName="Meins::DesingPatterns::HandshakePattern::const">
+	</CompilerInfo>
+	<GlobalConstants>
+		<VarDeclaration Name="REQ_TRIP" Type="WSTRING" Comment="MES to CYL: perform the round trip" InitialValue="&quot;trip&quot;"/>
+		<VarDeclaration Name="REQ_EXTEND" Type="WSTRING" Comment="CYL to CYL.push/CYL.pop: extend to 100" InitialValue="&quot;100&quot;"/>
+		<VarDeclaration Name="REQ_RETRACT" Type="WSTRING" Comment="CYL to CYL.push/CYL.pop: retract to 0" InitialValue="&quot;0&quot;"/>
+		<VarDeclaration Name="REQ_DROP" Type="WSTRING" Comment="CYL to DS: drop the workpiece" InitialValue="&quot;drop&quot;"/>
+		<VarDeclaration Name="RSP_WPS_ABSENT" Type="WSTRING" Comment="WPS: no workpiece present" InitialValue="&quot;WPS,0&quot;"/>
+		<VarDeclaration Name="RSP_WPS_ARRIVED" Type="WSTRING" Comment="WPS: workpiece arrived" InitialValue="&quot;WPS,1&quot;"/>
+		<VarDeclaration Name="RSP_START_TRIGGERED" Type="WSTRING" Comment="CYL.start: start-position sensor triggered" InitialValue="&quot;start,1&quot;"/>
+		<VarDeclaration Name="RSP_END_IDLE" Type="WSTRING" Comment="CYL.end: end-position sensor idle (not triggered)" InitialValue="&quot;end,0&quot;"/>
+		<VarDeclaration Name="RSP_END_TRIGGERED" Type="WSTRING" Comment="CYL.end: end-position sensor triggered" InitialValue="&quot;end,1&quot;"/>
+		<VarDeclaration Name="RSP_PUSH_EXTENDED" Type="WSTRING" Comment="CYL.push: push valve extended (100)" InitialValue="&quot;push,100&quot;"/>
+		<VarDeclaration Name="RSP_PUSH_RETRACTED" Type="WSTRING" Comment="CYL.push: push valve retracted (0)" InitialValue="&quot;push,0&quot;"/>
+		<VarDeclaration Name="RSP_POP_EXTENDED" Type="WSTRING" Comment="CYL.pop: pop valve extended (100)" InitialValue="&quot;pop,100&quot;"/>
+		<VarDeclaration Name="RSP_POP_RETRACTED" Type="WSTRING" Comment="CYL.pop: pop valve retracted (0)" InitialValue="&quot;pop,0&quot;"/>
+		<VarDeclaration Name="RSP_CYL_STARTED" Type="WSTRING" Comment="CYL to MES: round trip started" InitialValue="&quot;CYL,STARTED&quot;"/>
+		<VarDeclaration Name="RSP_CYL_END_POS" Type="WSTRING" Comment="CYL to MES: pusher reached end position" InitialValue="&quot;CYL, END POS&quot;"/>
+		<VarDeclaration Name="RSP_CYL_START_POS" Type="WSTRING" Comment="CYL to MES: pusher reached start position" InitialValue="&quot;CYL, START POS&quot;"/>
+		<VarDeclaration Name="RSP_CYL_TRIP_COMPLETE" Type="WSTRING" Comment="CYL to MES: round trip service completed" InitialValue="&quot;CYL, Trip Complete&quot;"/>
+		<VarDeclaration Name="RSP_ACK" Type="WSTRING" Comment="DS to CYL: drop acknowledged" InitialValue="&quot;ack&quot;"/>
+	</GlobalConstants>
+	<OriginalSource><![CDATA[PACKAGE Meins::DesingPatterns::HandshakePattern::const;
+
+GLOBALCONSTANTS MessageExchangeConst
+	VAR_GLOBAL CONSTANT
+		REQ_TRIP : WSTRING := "trip"; // MES to CYL: perform the round trip
+		REQ_EXTEND : WSTRING := "100"; // CYL to CYL.push/CYL.pop: extend to 100
+		REQ_RETRACT : WSTRING := "0"; // CYL to CYL.push/CYL.pop: retract to 0
+		REQ_DROP : WSTRING := "drop"; // CYL to DS: drop the workpiece
+		RSP_WPS_ABSENT : WSTRING := "WPS,0"; // WPS: no workpiece present
+		RSP_WPS_ARRIVED : WSTRING := "WPS,1"; // WPS: workpiece arrived
+		RSP_START_TRIGGERED : WSTRING := "start,1"; // CYL.start: start-position sensor triggered
+		RSP_END_IDLE : WSTRING := "end,0"; // CYL.end: end-position sensor idle (not triggered)
+		RSP_END_TRIGGERED : WSTRING := "end,1"; // CYL.end: end-position sensor triggered
+		RSP_PUSH_EXTENDED : WSTRING := "push,100"; // CYL.push: push valve extended (100)
+		RSP_PUSH_RETRACTED : WSTRING := "push,0"; // CYL.push: push valve retracted (0)
+		RSP_POP_EXTENDED : WSTRING := "pop,100"; // CYL.pop: pop valve extended (100)
+		RSP_POP_RETRACTED : WSTRING := "pop,0"; // CYL.pop: pop valve retracted (0)
+		RSP_CYL_STARTED : WSTRING := "CYL,STARTED"; // CYL to MES: round trip started
+		RSP_CYL_END_POS : WSTRING := "CYL, END POS"; // CYL to MES: pusher reached end position
+		RSP_CYL_START_POS : WSTRING := "CYL, START POS"; // CYL to MES: pusher reached start position
+		RSP_CYL_TRIP_COMPLETE : WSTRING := "CYL, Trip Complete"; // CYL to MES: round trip service completed
+		RSP_ACK : WSTRING := "ack"; // DS to CYL: drop acknowledged
+	END_VAR
+END_GLOBALCONSTANTS
+]]></OriginalSource>
+	<Attribute Name="eclipse4diac::core::TypeHash" Value="''"/>
+</GlobalConstants>

@@ -27,15 +27,15 @@
 		</FB>
 		<EventConnections>
 			<Connection Source="Q_TO_BOOL.CNF" Destination="DigitalOutput_Q1.REQ" dx1="286.67"/>
-			<Connection Source="DigitalInput_I1.IND" Destination="BOOL_TO_Q.REQ"/>
+			<Connection Source="DigitalInput_I1.IND" Destination="BOOL_TO_Q.REQ" dx1="273.33"/>
 			<Connection Source="BOOL_TO_Q.CNF" Destination="Q_TO_STR_STATUS.REQ" dx1="186.67"/>
 			<Connection Source="BOOL_TO_Q.CNF" Destination="Q_TO_BOOL.REQ"/>
 		</EventConnections>
 		<DataConnections>
 			<Connection Source="Q_TO_BOOL.Q" Destination="DigitalOutput_Q1.OUT" dx1="73.33"/>
 			<Connection Source="DigitalInput_I1.IN" Destination="BOOL_TO_Q.I" dx1="73.33"/>
-			<Connection Source="BOOL_TO_Q.QB" Destination="Q_TO_STR_STATUS.IB" dx1="100"/>
-			<Connection Source="BOOL_TO_Q.QB" Destination="Q_TO_BOOL.IB"/>
+			<Connection Source="BOOL_TO_Q." Destination="Q_TO_STR_STATUS.IB" dx1="100"/>
+			<Connection Source="BOOL_TO_Q." Destination="Q_TO_BOOL.IB" dx1="206.67"/>
 		</DataConnections>
 	</SubAppNetwork>
 </SubAppType>

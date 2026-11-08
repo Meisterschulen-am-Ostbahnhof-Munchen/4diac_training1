@@ -4,18 +4,18 @@
 #include "DefaultPool.c.h"
 
 const unsigned long ISO_OP_MEMORY_CLASS isoOP_DefaultPool_Offset_Id[] = {
-	     1,  // WorkingSet_0_Offset
-	    21,  // DataMask_1000_Offset
+	     1,  // WorkingSet_Offset
+	    21,  // DataMask_Main_Offset
 	    59,  // Container_3000_Offset
 	    93,  // Container_3001_Offset
 	   127,  // Container_3002_Offset
 	   161,  // Container_3003_Offset
 	   195,  // OutputString_WS_Offset
-	   215,  // DM_main_20000_Offset
-	 24949,  // I1_20001_Offset
-	 27014,  // I2_20002_Offset
-	 29079,  // I3_20003_Offset
-	 31144,  // I4_20004_Offset
+	   215,  // DM_main_Offset
+	 24949,  // I1_Offset
+	 27014,  // I2_Offset
+	 29079,  // I3_Offset
+	 31144,  // I4_Offset
 	 33209,  // FontAttributes_WS_Offset
 	 33217,  // AuxInput2_32000_Offset
 	 33229,  // AuxInput2_32001_Offset

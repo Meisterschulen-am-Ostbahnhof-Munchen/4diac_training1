@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SubAppType Name="Uebung_152_AX" Comment="Impulszähler &amp; PI Regler, mit Plug and Socket (Adapter-Native)">
+	<Identification Standard="61499-2" Description="Copyright (c) 2026 Meisterschulen am Ostbahnhof  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0">
+	</Identification>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.3" Author="Franz Höpfinger" Date="2026-10-03" Remarks="Folgefix zu CTRL_PI_AR v1.3 (SUP/OFS/LL/LH jetzt AR-Adapter-Sockets) und FT_DERIV_10_AR v1.2 (K jetzt AUI-Adapter-Socket): bisherige Parameter SUP/OFS/M_I/KP/KI/LL/LH auf CTRL_PI und K auf FT_DERIV entfernt (waeren jetzt IDE-Fehler, da keine plain InputVars mehr) - durch initval_AR/initval_AUI-Literale + AdapterConnections ersetzt, gleiche Werte wie bisher. M_I/KP/KI waren schon seit v1.1 (CTRL_PI_AR-Umstellung auf Adapter) als Parameter falsch verdrahtet (nie korrigiert), jetzt mitgefixt.">
+	</VersionInfo>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.2" Author="Franz Höpfinger" Date="2026-09-15" Remarks="SET-Eingang an CTRL_PI auf AR-Adapter (initval_AR) umgestellt.">
+	</VersionInfo>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.1" Author="Franz Höpfinger" Date="2026-09-12" Remarks="Vollstaendig auf Adapter-Architektur umgestellt: FT_DERIV_10_AR und CTRL_PI_AR aus OSCAT_adapter, AD_TO_AR_NUM und AR_TO_AD_NUM fuer sauberen Adapterdatenfluss.">
+	</VersionInfo>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2026-09-10" Remarks="initial API and implementation and/or initial documentation">
+	</VersionInfo>
+	<CompilerInfo packageName="Uebungen">
+		<Import declaration="logiBUS::io::DI::logiBUS_DI::Input_I2"/>
+		<Import declaration="logiBUS::io::DI::logiBUS_DI::Input_I3"/>
+		<Import declaration="logiBUS::io::DI::logiBUS_DI::Input_I4"/>
+		<Import declaration="logiBUS::io::DI::logiBUS_DI_Events::BUTTON_SINGLE_CLICK"/>
+		<Import declaration="logiBUS::io::DQ::logiBUS_DO::Output_Q1"/>
+		<Import declaration="logiBUS::io::PI::logiBUS_PI::PulseInput_I1"/>
+	</CompilerInfo>
+	<SubAppInterfaceList>
+	</SubAppInterfaceList>
+	<SubAppNetwork>
+		<FB Name="Input_I2" Type="logiBUS::io::DI::logiBUS_IE" x="-7000" y="1200">
+			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="Input" Value="Input_I2"/>
+			<Parameter Name="InputEvent" Value="BUTTON_SINGLE_CLICK"/>
+		</FB>
+		<FB Name="Input_I3" Type="logiBUS::io::DI::logiBUS_IE" x="-7000" y="2300">
+			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="Input" Value="Input_I3"/>
+			<Parameter Name="InputEvent" Value="BUTTON_SINGLE_CLICK"/>
+		</FB>
+		<FB Name="E_CYCLE" Type="iec61499::events::E_CYCLE" x="-5600" y="1500">
+			<Parameter Name="DT" Value="T#200ms"/>
+		</FB>
+		<FB Name="Input_I1" Type="logiBUS::io::PI::logiBUS_PI_IDA" x="-4200" y="-400">
+			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="Input" Value="PulseInput_I1"/>
+			<Parameter Name="ImpulseDelta" Value="100"/>
+			<Parameter Name="TimeDelta" Value="50000"/>
+			<Parameter Name="TimeRateLimit" Value="10000"/>
+		</FB>
+		<FB Name="AD_TO_AR_NUM" Type="adapter::conversion::unidirectional::AD_TO_AR_NUM" x="-2500" y="400">
+		</FB>
+		<FB Name="FT_DERIV" Type="OSCAT_adapter::Control::FT_DERIV_10_AR" x="-1000" y="400">
+			<Parameter Name="Faktor" Value="1.0"/>
+			<Parameter Name="run" Value="TRUE"/>
+		</FB>
+		<FB Name="LIT_K" Type="adapter::types::unidirectional::AUI::initval::initval_AUI" x="-2500" y="800">
+			<Parameter Name="INIT_VAL" Value="9"/>
+		</FB>
+		<FB Name="Input_I4" Type="logiBUS::io::DI::logiBUS_IE" x="-7000" y="3300">
+			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="Input" Value="Input_I4"/>
+			<Parameter Name="InputEvent" Value="BUTTON_SINGLE_CLICK"/>
+		</FB>
+		<FB Name="AX_T_FF" Type="adapter::events::unidirectional::AX_T_FF" x="0" y="2500">
+		</FB>
+		<FB Name="CTRL_PI" Type="OSCAT_adapter::Control::CTRL_PI_AR" x="3500" y="900">
+		</FB>
+		<FB Name="LIT_SUP" Type="adapter::types::unidirectional::AR::initval::initval_AR" x="1300" y="2300">
+			<Parameter Name="INIT_VAL" Value="0.0"/>
+		</FB>
+		<FB Name="LIT_OFS" Type="adapter::types::unidirectional::AR::initval::initval_AR" x="1300" y="2900">
+			<Parameter Name="INIT_VAL" Value="0.0"/>
+		</FB>
+		<FB Name="LIT_M_I" Type="adapter::types::unidirectional::AR::initval::initval_AR" x="1400" y="3500">
+			<Parameter Name="INIT_VAL" Value="8184.0"/>
+		</FB>
+		<FB Name="LIT_KP" Type="adapter::types::unidirectional::AR::initval::initval_AR" x="1500" y="4100">
+			<Parameter Name="INIT_VAL" Value="10.0"/>
+		</FB>
+		<FB Name="LIT_KI" Type="adapter::types::unidirectional::AR::initval::initval_AR" x="1600" y="4700">
+			<Parameter Name="INIT_VAL" Value="10.0"/>
+		</FB>
+		<FB Name="LIT_LL" Type="adapter::types::unidirectional::AR::initval::initval_AR" x="1700" y="5300">
+			<Parameter Name="INIT_VAL" Value="0.0"/>
+		</FB>
+		<FB Name="LIT_LH" Type="adapter::types::unidirectional::AR::initval::initval_AR" x="1800" y="5900">
+			<Parameter Name="INIT_VAL" Value="8184.0"/>
+		</FB>
+		<FB Name="AR_TO_AD_NUM" Type="adapter::conversion::unidirectional::AR_TO_AD_NUM" x="5100" y="1000">
+		</FB>
+		<FB Name="PWMOutput_Q1" Type="logiBUS::io::DQ::logiBUS_QDA_PWM" x="7100" y="500">
+			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="Output" Value="Output_Q1"/>
+		</FB>
+		<FB Name="initval_AR" Type="adapter::types::unidirectional::AR::initval::initval_AR" x="-1000" y="1700">
+			<Parameter Name="INIT_VAL" Value="16.0"/>
+		</FB>
+		<EventConnections>
+			<Connection Source="Input_I2.IND" Destination="E_CYCLE.START" dx1="433.33"/>
+			<Connection Source="Input_I3.IND" Destination="E_CYCLE.STOP" dx1="333.33"/>
+			<Connection Source="E_CYCLE.EO" Destination="Input_I1.REQ" dx1="393.33"/>
+			<Connection Source="Input_I4.IND" Destination="AX_T_FF.CLK" dx1="806.67"/>
+		</EventConnections>
+		<AdapterConnections>
+			<Connection Source="Input_I1.IN" Destination="AD_TO_AR_NUM.AD_IN" dx1="293.33"/>
+			<Connection Source="AD_TO_AR_NUM.AR_OUT" Destination="FT_DERIV.AR_IN" dx1="300"/>
+			<Connection Source="LIT_K.OUT" Destination="FT_DERIV.K" dx1="300"/>
+			<Connection Source="FT_DERIV.AR_OUT" Destination="CTRL_PI.AR_ACT" dx1="300"/>
+			<Connection Source="AX_T_FF.Q" Destination="CTRL_PI.AX_MAN" dx1="320"/>
+			<Connection Source="CTRL_PI.AR_Y" Destination="AR_TO_AD_NUM.AR_IN" dx1="300"/>
+			<Connection Source="AR_TO_AD_NUM.AD_OUT" Destination="PWMOutput_Q1.OUT" dx1="300"/>
+			<Connection Source="initval_AR.OUT" Destination="CTRL_PI.SET" dx1="1040"/>
+			<Connection Source="LIT_SUP.OUT" Destination="CTRL_PI.SUP" dx1="186.67"/>
+			<Connection Source="LIT_OFS.OUT" Destination="CTRL_PI.OFS" dx1="300"/>
+			<Connection Source="LIT_M_I.OUT" Destination="CTRL_PI.M_I" dx1="300"/>
+			<Connection Source="LIT_KP.OUT" Destination="CTRL_PI.KP" dx1="300"/>
+			<Connection Source="LIT_KI.OUT" Destination="CTRL_PI.KI" dx1="300"/>
+			<Connection Source="LIT_LL.OUT" Destination="CTRL_PI.LL" dx1="300"/>
+			<Connection Source="LIT_LH.OUT" Destination="CTRL_PI.LH" dx1="300"/>
+		</AdapterConnections>
+	</SubAppNetwork>
+</SubAppType>

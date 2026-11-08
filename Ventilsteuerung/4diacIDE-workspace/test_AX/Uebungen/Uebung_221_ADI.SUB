@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<SubAppType Name="Uebung_221_ADI" Comment="Standard IEC 61131-3 ADI_FB_CTUD (Adapter Version, Vorwärts-/Rückwärtszähler, DINT) mit Terminal-Ausgabe">
+<SubAppType Name="Uebung_221_ADI" Comment="Standard IEC 61131-3 ADI_FB_CTUD (Adapter Version, Vorwärts-/Rückwärtszähler,&#10;DINT) mit Terminal-Ausgabe">
 	<Identification Standard="61131-3" Description="Copyright (c) 2026 Meisterschulen am Ostbahnhof  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0">
 	</Identification>
 	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.2" Author="Franz Höpfinger" Date="2026-05-13" Remarks="Added ADI_DINT_TO_DI init block connected to PV">
@@ -55,7 +55,7 @@
 			<Parameter Name="u16ObjId" Value="OutputNumber_N1"/>
 		</FB>
 		<Comment Comment="ADI_TO_AUDI ist großer Quatsch ... keine Negativen Zahlen möglich" x="200" y="2100" width="2200" height="500"/>
-		<Comment Comment="hier gegebenenfalls je einen AX_D_FF einbauen, damit die Events reduziert werden. " x="1300" y="-100" width="1000" height="500"/>
+		<Comment Comment="hier gegebenenfalls je einen AX_D_FF einbauen, damit die Events reduziert&#10; werden. " x="1300" y="-100" width="1000" height="500"/>
 		<EventConnections>
 			<Connection Source="Input_LD.INITO" Destination="ADI_DINT_TO_DI.REQ"/>
 		</EventConnections>

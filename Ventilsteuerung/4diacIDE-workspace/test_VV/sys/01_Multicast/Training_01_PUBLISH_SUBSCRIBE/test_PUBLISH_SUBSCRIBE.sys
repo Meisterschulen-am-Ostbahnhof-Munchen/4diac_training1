@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<System Name="test_PUBLISH_SUBSCRIBE">
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2023-10-23">
+	</VersionInfo>
+	<CompilerInfo packageName="Training_PUBLISH_SUBSCRIBE">
+		<Import declaration="logiBUS::io::DI::logiBUS_DI::Input_I1"/>
+		<Import declaration="logiBUS::io::DI::logiBUS_DI::Input_I2"/>
+		<Import declaration="logiBUS::io::DI::logiBUS_DI::Input_I3"/>
+		<Import declaration="logiBUS::io::DI::logiBUS_DI::Input_I4"/>
+		<Import declaration="logiBUS::io::DO_LED::LED_COLOURS::LED_BLUE"/>
+		<Import declaration="logiBUS::io::DO_LED::LED_COLOURS::LED_GREEN"/>
+		<Import declaration="logiBUS::io::DO_LED::LED_COLOURS::LED_RED"/>
+		<Import declaration="logiBUS::io::DO_LED::LED_COLOURS::LED_YELLOW"/>
+		<Import declaration="logiBUS::io::DO_LED::LED_FREQ::LED_5HZ"/>
+		<Import declaration="logiBUS::io::DO_LED::LED_strip::Output_strip"/>
+	</CompilerInfo>
+	<Application Name="App_PUBLISH_SUBSCRIBE">
+		<SubAppNetwork>
+			<FB Name="BUTTON_RED" Type="logiBUS::io::DI::logiBUS_IX" x="2946.67" y="3613.33">
+				<Parameter Name="QI" Value="TRUE"/>
+				<Parameter Name="Input" Value="Input_I3"/>
+			</FB>
+			<FB Name="BUTTON_YELLOW" Type="logiBUS::io::DI::logiBUS_IX" x="2953.33" y="2340">
+				<Parameter Name="QI" Value="TRUE"/>
+				<Parameter Name="Input" Value="Input_I2"/>
+			</FB>
+			<FB Name="BUTTON_BLUE" Type="logiBUS::io::DI::logiBUS_IX" x="2920" y="4786.67">
+				<Parameter Name="QI" Value="TRUE"/>
+				<Parameter Name="Input" Value="Input_I4"/>
+			</FB>
+			<FB Name="LED_YELLOW_5HZ" Type="logiBUS::io::DO_LED::logiBUS_LED_strip_QX" x="6020" y="2453.33">
+				<Parameter Name="QI" Value="TRUE"/>
+				<Parameter Name="Output" Value="Output_strip"/>
+				<Parameter Name="Colour" Value="LED_YELLOW"/>
+				<Parameter Name="FREQ" Value="LED_5HZ"/>
+			</FB>
+			<FB Name="LED_BLUE_5HZ" Type="logiBUS::io::DO_LED::logiBUS_LED_strip_QX" x="5986.67" y="4900">
+				<Parameter Name="QI" Value="TRUE"/>
+				<Parameter Name="Output" Value="Output_strip"/>
+				<Parameter Name="Colour" Value="LED_BLUE"/>
+				<Parameter Name="FREQ" Value="LED_5HZ"/>
+			</FB>
+			<FB Name="LED_RED_5HZ" Type="logiBUS::io::DO_LED::logiBUS_LED_strip_QX" x="6013.33" y="3726.67">
+				<Parameter Name="QI" Value="TRUE"/>
+				<Parameter Name="Output" Value="Output_strip"/>
+				<Parameter Name="Colour" Value="LED_RED"/>
+				<Parameter Name="FREQ" Value="LED_5HZ"/>
+			</FB>
+			<FB Name="BUTTON_GREEN" Type="logiBUS::io::DI::logiBUS_IX" x="2920" y="1173.33">
+				<Parameter Name="QI" Value="TRUE"/>
+				<Parameter Name="Input" Value="Input_I1"/>
+			</FB>
+			<FB Name="LED_GREEN_5HZ" Type="logiBUS::io::DO_LED::logiBUS_LED_strip_QX" x="5986.67" y="1286.67">
+				<Parameter Name="QI" Value="TRUE"/>
+				<Parameter Name="Output" Value="Output_strip"/>
+				<Parameter Name="Colour" Value="LED_GREEN"/>
+				<Parameter Name="FREQ" Value="LED_5HZ"/>
+			</FB>
+			<EventConnections>
+				<Connection Source="BUTTON_RED.IND" Destination="LED_RED_5HZ.REQ" dx1="1186.67"/>
+				<Connection Source="BUTTON_YELLOW.IND" Destination="LED_YELLOW_5HZ.REQ" dx1="1193.33"/>
+				<Connection Source="BUTTON_BLUE.IND" Destination="LED_BLUE_5HZ.REQ" dx1="1186.67"/>
+				<Connection Source="BUTTON_GREEN.IND" Destination="LED_GREEN_5HZ.REQ" dx1="1186.67"/>
+			</EventConnections>
+			<DataConnections>
+				<Connection Source="BUTTON_RED.IN" Destination="LED_RED_5HZ.OUT" dx1="1186.67"/>
+				<Connection Source="BUTTON_YELLOW.IN" Destination="LED_YELLOW_5HZ.OUT" dx1="1193.33"/>
+				<Connection Source="BUTTON_BLUE.IN" Destination="LED_BLUE_5HZ.OUT" dx1="1186.67"/>
+				<Connection Source="BUTTON_GREEN.IN" Destination="LED_GREEN_5HZ.OUT" dx1="1186.67"/>
+			</DataConnections>
+		</SubAppNetwork>
+	</Application>
+	<Device Name="FORTE_PC_PUBLISH" Type="iec61499::system::FORTE_PC" x="1760" y="1840">
+		<Parameter Name="MGR_ID" Value="VV::const::Computers::myComputers::C_PC_PUBLISH" Comment="Device manager socket ID"/>
+		<Attribute Name="Profile" Type="STRING" Value="HOLOBLOC"/>
+		<Attribute Name="Color" Type="STRING" Value="255,190,111"/>
+		<Resource Name="EMB_RES_PUBLISH" Type="iec61499::system::EMB_RES" x="0" y="0">
+			<FBNetwork>
+				<FB Name="PUBLISH_BUTTON_GREEN" Type="iec61499::net::PUBLISH_1" x="4400" y="700">
+					<Parameter Name="QI" Value="TRUE"/>
+					<Parameter Name="ID" Value="VV::const::ports::myPorts::PORT_0"/>
+				</FB>
+				<FB Name="PUBLISH_BUTTON_YELLOW" Type="iec61499::net::PUBLISH_1" x="4300" y="1800">
+					<Parameter Name="QI" Value="TRUE"/>
+					<Parameter Name="ID" Value="VV::const::ports::myPorts::PORT_1"/>
+				</FB>
+				<FB Name="PUBLISH_BUTTON_RED" Type="iec61499::net::PUBLISH_1" x="4400" y="3000">
+					<Parameter Name="QI" Value="TRUE"/>
+					<Parameter Name="ID" Value="VV::const::ports::myPorts::PORT_2"/>
+				</FB>
+				<FB Name="PUBLISH_BUTTON_BLUE" Type="iec61499::net::PUBLISH_1" x="4400" y="4100">
+					<Parameter Name="QI" Value="TRUE"/>
+					<Parameter Name="ID" Value="VV::const::ports::myPorts::PORT_3"/>
+				</FB>
+				<FB Name="E_TRIG" Type="iec61499::events::E_TRIG" x="2700" y="-1000">
+					<Parameter Name="EVENTTYPE" Value="'EInit'"/>
+				</FB>
+				<EventConnections>
+					<Connection Source="START.COLD" Destination="E_TRIG.REQ" dx1="946.67"/>
+					<Connection Source="App_PUBLISH_SUBSCRIBE.BUTTON_GREEN.IND" Destination="PUBLISH_BUTTON_GREEN.REQ" dx1="420"/>
+					<Connection Source="App_PUBLISH_SUBSCRIBE.BUTTON_YELLOW.IND" Destination="PUBLISH_BUTTON_YELLOW.REQ" dx1="366.67"/>
+					<Connection Source="App_PUBLISH_SUBSCRIBE.BUTTON_RED.IND" Destination="PUBLISH_BUTTON_RED.REQ" dx1="380"/>
+					<Connection Source="App_PUBLISH_SUBSCRIBE.BUTTON_BLUE.IND" Destination="PUBLISH_BUTTON_BLUE.REQ" dx1="406.67"/>
+				</EventConnections>
+				<DataConnections>
+					<Connection Source="App_PUBLISH_SUBSCRIBE.BUTTON_GREEN.IN" Destination="PUBLISH_BUTTON_GREEN.SD_1" dx1="420"/>
+					<Connection Source="App_PUBLISH_SUBSCRIBE.BUTTON_YELLOW.IN" Destination="PUBLISH_BUTTON_YELLOW.SD_1" dx1="366.67"/>
+					<Connection Source="App_PUBLISH_SUBSCRIBE.BUTTON_RED.IN" Destination="PUBLISH_BUTTON_RED.SD_1" dx1="380"/>
+					<Connection Source="App_PUBLISH_SUBSCRIBE.BUTTON_BLUE.IN" Destination="PUBLISH_BUTTON_BLUE.SD_1" dx1="406.67"/>
+				</DataConnections>
+			</FBNetwork>
+		</Resource>
+	</Device>
+	<Device Name="FORTE_PC_SUBSCRIBE" Type="iec61499::system::FORTE_PC" x="2400" y="2560">
+		<Parameter Name="MGR_ID" Value="VV::const::Computers::myComputers::C_PC_SUBSCRIBE" Comment="Device manager socket ID"/>
+		<Attribute Name="Profile" Type="STRING" Value="HOLOBLOC"/>
+		<Attribute Name="Color" Type="STRING" Value="59,215,47"/>
+		<Resource Name="EMB_RES_SUBSCRIBE" Type="iec61499::system::EMB_RES" x="0" y="0">
+			<FBNetwork>
+				<FB Name="SUBSCRIBE_BUTTON_GREEN" Type="iec61499::net::SUBSCRIBE_1" x="2800" y="700">
+					<Parameter Name="QI" Value="TRUE"/>
+					<Parameter Name="ID" Value="VV::const::ports::myPorts::PORT_0"/>
+				</FB>
+				<FB Name="SUBSCRIBE_BUTTON_YELLOW" Type="iec61499::net::SUBSCRIBE_1" x="2800" y="2000">
+					<Parameter Name="QI" Value="TRUE"/>
+					<Parameter Name="ID" Value="VV::const::ports::myPorts::PORT_1"/>
+				</FB>
+				<FB Name="SUBSCRIBE_BUTTON_RED" Type="iec61499::net::SUBSCRIBE_1" x="2800" y="3200">
+					<Parameter Name="QI" Value="TRUE"/>
+					<Parameter Name="ID" Value="VV::const::ports::myPorts::PORT_2"/>
+				</FB>
+				<FB Name="SUBSCRIBE_BUTTON_BLUE" Type="iec61499::net::SUBSCRIBE_1" x="2800" y="4400">
+					<Parameter Name="QI" Value="TRUE"/>
+					<Parameter Name="ID" Value="VV::const::ports::myPorts::PORT_3"/>
+				</FB>
+				<FB Name="E_TRIG" Type="iec61499::events::E_TRIG" x="2400" y="100">
+					<Parameter Name="EVENTTYPE" Value="'EInit'"/>
+				</FB>
+				<EventConnections>
+					<Connection Source="START.COLD" Destination="E_TRIG.REQ" dx1="746.67"/>
+					<Connection Source="SUBSCRIBE_BUTTON_GREEN.IND" Destination="App_PUBLISH_SUBSCRIBE.LED_GREEN_5HZ.REQ"/>
+					<Connection Source="SUBSCRIBE_BUTTON_YELLOW.IND" Destination="App_PUBLISH_SUBSCRIBE.LED_YELLOW_5HZ.REQ"/>
+					<Connection Source="SUBSCRIBE_BUTTON_RED.IND" Destination="App_PUBLISH_SUBSCRIBE.LED_RED_5HZ.REQ"/>
+					<Connection Source="SUBSCRIBE_BUTTON_BLUE.IND" Destination="App_PUBLISH_SUBSCRIBE.LED_BLUE_5HZ.REQ"/>
+				</EventConnections>
+				<DataConnections>
+					<Connection Source="SUBSCRIBE_BUTTON_GREEN.RD_1" Destination="App_PUBLISH_SUBSCRIBE.LED_GREEN_5HZ.OUT"/>
+					<Connection Source="SUBSCRIBE_BUTTON_YELLOW.RD_1" Destination="App_PUBLISH_SUBSCRIBE.LED_YELLOW_5HZ.OUT"/>
+					<Connection Source="SUBSCRIBE_BUTTON_RED.RD_1" Destination="App_PUBLISH_SUBSCRIBE.LED_RED_5HZ.OUT"/>
+					<Connection Source="SUBSCRIBE_BUTTON_BLUE.RD_1" Destination="App_PUBLISH_SUBSCRIBE.LED_BLUE_5HZ.OUT"/>
+				</DataConnections>
+			</FBNetwork>
+		</Resource>
+	</Device>
+	<Segment Name="Ethernet" Type="iec61499::system::Ethernet" x="2640" y="1440" dx1="2000">
+		<Attribute Name="Color" Type="STRING" Value="56,90,235"/>
+	</Segment>
+	<Mapping From="App_PUBLISH_SUBSCRIBE.BUTTON_BLUE" To="FORTE_PC_PUBLISH.EMB_RES_PUBLISH"/>
+	<Mapping From="App_PUBLISH_SUBSCRIBE.BUTTON_RED" To="FORTE_PC_PUBLISH.EMB_RES_PUBLISH"/>
+	<Mapping From="App_PUBLISH_SUBSCRIBE.BUTTON_YELLOW" To="FORTE_PC_PUBLISH.EMB_RES_PUBLISH"/>
+	<Mapping From="App_PUBLISH_SUBSCRIBE.LED_RED_5HZ" To="FORTE_PC_SUBSCRIBE.EMB_RES_SUBSCRIBE"/>
+	<Mapping From="App_PUBLISH_SUBSCRIBE.LED_YELLOW_5HZ" To="FORTE_PC_SUBSCRIBE.EMB_RES_SUBSCRIBE"/>
+	<Mapping From="App_PUBLISH_SUBSCRIBE.LED_BLUE_5HZ" To="FORTE_PC_SUBSCRIBE.EMB_RES_SUBSCRIBE"/>
+	<Mapping From="App_PUBLISH_SUBSCRIBE.LED_GREEN_5HZ" To="FORTE_PC_SUBSCRIBE.EMB_RES_SUBSCRIBE"/>
+	<Mapping From="App_PUBLISH_SUBSCRIBE.BUTTON_GREEN" To="FORTE_PC_PUBLISH.EMB_RES_PUBLISH"/>
+	<Link SegmentName="Ethernet" CommResource="FORTE_PC_PUBLISH" Comment="">
+	</Link>
+	<Link SegmentName="Ethernet" CommResource="FORTE_PC_SUBSCRIBE" Comment="">
+	</Link>
+</System>

@@ -36,8 +36,7 @@ def process_file(file_path):
         return False
     
     last_match = matches[-1]
-    holder = last_match.group(2).rstrip()
-    
+
     # We want to insert ", HR Agrartechnik GmbH" after the holder.
     # The holder ends at last_match.end(2).
     

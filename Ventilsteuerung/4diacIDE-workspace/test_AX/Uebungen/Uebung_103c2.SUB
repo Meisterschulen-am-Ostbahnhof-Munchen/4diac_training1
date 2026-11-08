@@ -19,9 +19,9 @@
 			<Parameter Name="QI" Value="TRUE"/>
 			<Parameter Name="Output" Value="Output_Q1"/>
 		</FB>
-		<FB Name="AX_DEMUX_3" Type="adapter::selection::unidirectional::AX_DEMUX_3" x="1600" y="0">
+		<FB Name="AX_DEMUX_3" Type="adapter::selection::unidirectional::AX_AUI_DEMUX_3" x="1600" y="0">
 		</FB>
-		<FB Name="AX_MUX_3" Type="adapter::selection::unidirectional::AX_MUX_3" x="5000" y="0">
+		<FB Name="AX_MUX_3" Type="adapter::selection::unidirectional::AX_AUI_MUX_3" x="5000" y="0">
 		</FB>
 		<SubApp Name="rastend" Type="MyLib::sys::rastend" x="3200" y="300">
 		</SubApp>
@@ -29,6 +29,8 @@
 		</SubApp>
 		<SubApp Name="tastend2" Type="MyLib::sys::tastend" x="3200" y="700">
 		</SubApp>
+		<FB Name="AUI_SPLIT_2" Type="adapter::events::unidirectional::AUI_SPLIT_2" x="200" y="-900">
+		</FB>
 		<AdapterConnections>
 			<Connection Source="AX_MUX_3.OUT" Destination="DigitalOutput_Q1.OUT" dx1="500"/>
 			<Connection Source="DigitalInput_I1.IN" Destination="AX_DEMUX_3.IN" dx1="500"/>
@@ -38,6 +40,8 @@
 			<Connection Source="tastend2.OUT" Destination="AX_MUX_3.IN3" dx1="400"/>
 			<Connection Source="rastend.OUT" Destination="AX_MUX_3.IN2" dx1="360"/>
 			<Connection Source="AX_DEMUX_3.OUT2" Destination="rastend.IN" dx1="420"/>
+			<Connection Source="AUI_SPLIT_2.OUT2" Destination="AX_DEMUX_3.K" dx1="300"/>
+			<Connection Source="AUI_SPLIT_2.OUT1" Destination="AX_MUX_3.K" dx1="3920"/>
 		</AdapterConnections>
 	</SubAppNetwork>
 </SubAppType>

@@ -11,22 +11,22 @@
 	<SubAppInterfaceList>
 	</SubAppInterfaceList>
 	<SubAppNetwork>
-		<FB Name="InputNumber_I3" Type="isobus::UT::io::NumericValue::NumericValue_ID" x="-5000" y="600">
+		<FB Name="InputNumber_I3_N" Type="isobus::UT::io::NumericValue::NumericValue_ID" x="-5000" y="600">
 			<Parameter Name="QI" Value="TRUE"/>
 			<Parameter Name="u16ObjId" Value="InputNumber_I3"/>
 		</FB>
 		<FB Name="F_DWORD_TO_UDINT" Type="iec61131::conversion::F_DWORD_TO_UDINT" x="-3200" y="1000">
 		</FB>
-		<FB Name="Q_NumericValue" Type="isobus::UT::Q::Q_NumericValue" x="-1000" y="600">
+		<FB Name="Q_NumericValue" Type="isobus::UT::Q::Q_NumericValue" x="-1000" y="800">
 			<Parameter Name="u16ObjId" Value="OutputNumber_N3"/>
 		</FB>
 		<EventConnections>
-			<Connection Source="InputNumber_I3.IND" Destination="F_DWORD_TO_UDINT.REQ" dx1="486.67"/>
 			<Connection Source="F_DWORD_TO_UDINT.CNF" Destination="Q_NumericValue.REQ" dx1="486.67"/>
+			<Connection Source="InputNumber_I3_N.IND" Destination="F_DWORD_TO_UDINT.REQ" dx1="406.67"/>
 		</EventConnections>
 		<DataConnections>
-			<Connection Source="InputNumber_I3.IN" Destination="F_DWORD_TO_UDINT.IN" dx1="486.67"/>
 			<Connection Source="F_DWORD_TO_UDINT.OUT" Destination="Q_NumericValue.u32NewValue" dx1="486.67"/>
+			<Connection Source="InputNumber_I3_N.IN" Destination="F_DWORD_TO_UDINT.IN" dx1="406.67"/>
 		</DataConnections>
 	</SubAppNetwork>
 </SubAppType>

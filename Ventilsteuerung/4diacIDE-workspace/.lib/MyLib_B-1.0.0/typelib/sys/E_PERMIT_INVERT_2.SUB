@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SubAppType Name="E_PERMIT_INVERT_2" Comment="2-Kanal Invertiertes Event-Freigabe-Gate (F_NOT_BOOL_INIT + E_PERMIT_2)">
+	<Identification Standard="61499-2" Description="Copyright (c) 2026 Meisterschulen am Ostbahnhof  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0">
+	</Identification>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2026-09-10" Remarks="initial implementation">
+	</VersionInfo>
+	<CompilerInfo packageName="MyLib::sys">
+	</CompilerInfo>
+	<SubAppInterfaceList>
+		<SubAppEventInputs>
+			<SubAppEvent Name="EI1" Type="Event" Comment="Event input channel 1">
+			</SubAppEvent>
+			<SubAppEvent Name="EI2" Type="Event" Comment="Event input channel 2">
+			</SubAppEvent>
+		</SubAppEventInputs>
+		<SubAppEventOutputs>
+			<SubAppEvent Name="EO1" Type="Event" Comment="Event output channel 1">
+			</SubAppEvent>
+			<SubAppEvent Name="EO2" Type="Event" Comment="Event output channel 2">
+			</SubAppEvent>
+		</SubAppEventOutputs>
+		<InputVars>
+			<VarDeclaration Name="PERMIT" Type="BOOL" Comment="Invertierte Freigabebedingung"/>
+		</InputVars>
+	</SubAppInterfaceList>
+	<SubAppNetwork>
+		<FB Name="F_NOT_BOOL_INIT" Type="iec61131::booleanOperators::F_NOT_BOOL_INIT" x="1700" y="586.67">
+		</FB>
+		<FB Name="E_PERMIT_2" Type="iec61499::events::E_PERMIT_2" x="4020" y="306.67">
+		</FB>
+		<FB Name="E_MUX_2" Type="iec61499::events::E_MUX_2" x="773.33" y="33.33">
+		</FB>
+		<FB Name="E_DEMUX_2" Type="iec61499::events::E_DEMUX_2" x="3000" y="33.33">
+		</FB>
+		<EventConnections>
+			<Connection Source="EI1" Destination="E_MUX_2.EI1" dx1="2706.67"/>
+			<Connection Source="E_PERMIT_2.EO1" Destination="EO1" dx1="1466.67"/>
+			<Connection Source="EI2" Destination="E_MUX_2.EI2" dx1="2673.33"/>
+			<Connection Source="E_PERMIT_2.EO2" Destination="EO2" dx1="1500"/>
+			<Connection Source="F_NOT_BOOL_INIT.CNF" Destination="E_DEMUX_2.EI" dx1="140"/>
+			<Connection Source="E_DEMUX_2.EO2" Destination="E_PERMIT_2.EI2" dx1="120"/>
+			<Connection Source="E_DEMUX_2.EO1" Destination="E_PERMIT_2.EI1" dx1="153.33"/>
+			<Connection Source="E_MUX_2.EO" Destination="F_NOT_BOOL_INIT.REQ" dx1="153.33"/>
+		</EventConnections>
+		<DataConnections>
+			<Connection Source="PERMIT" Destination="F_NOT_BOOL_INIT.IN" dx1="3846.67"/>
+			<Connection Source="F_NOT_BOOL_INIT.OUT" Destination="E_PERMIT_2.PERMIT" dx1="646.67"/>
+			<Connection Source="E_MUX_2.K" Destination="E_DEMUX_2.K"/>
+		</DataConnections>
+	</SubAppNetwork>
+</SubAppType>

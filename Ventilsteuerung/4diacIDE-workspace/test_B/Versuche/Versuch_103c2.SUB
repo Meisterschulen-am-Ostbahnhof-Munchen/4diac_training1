@@ -11,20 +11,16 @@
 	<SubAppInterfaceList>
 	</SubAppInterfaceList>
 	<SubAppNetwork>
-		<FB Name="DigitalInput_I1" Type="logiBUS::io::DI::logiBUS_IXA" x="2800" y="0">
+		<FB Name="DigitalInput_I1" Type="logiBUS::io::DI::logiBUS_IXA" x="2800" y="-300">
 			<Parameter Name="QI" Value="TRUE"/>
 			<Parameter Name="Input" Value="Input_I1"/>
 		</FB>
-		<FB Name="DigitalOutput_Q1" Type="logiBUS::io::DQ::logiBUS_QXA" x="7000" y="-300">
+		<FB Name="DigitalOutput_Q1" Type="logiBUS::io::DQ::logiBUS_QXA" x="7000" y="-500">
 			<Parameter Name="QI" Value="TRUE"/>
 			<Parameter Name="Output" Value="Output_Q1"/>
 		</FB>
-		<FB Name="AX_MUX_3" Type="adapter::selection::unidirectional::AX_MUX_3" x="5000" y="0">
-			<Parameter Name="K" Value="0"/>
+		<FB Name="AX_MUX_3" Type="adapter::selection::unidirectional::AX_AUI_MUX_3" x="5000" y="0">
 		</FB>
-		<EventConnections>
-			<Connection Source="DigitalInput_I1.INITO" Destination="AX_MUX_3.REQ"/>
-		</EventConnections>
 		<AdapterConnections>
 			<Connection Source="AX_MUX_3.OUT" Destination="DigitalOutput_Q1.OUT" dx1="500"/>
 			<Connection Source="DigitalInput_I1.IN" Destination="AX_MUX_3.IN1" dx1="700"/>

@@ -65,10 +65,10 @@
 			<Parameter Name="QI" Value="TRUE"/>
 			<Parameter Name="Output" Value="Output_Q8"/>
 		</FB>
-		<FB Name="Q_NumericValue" Type="isobus::UT::Q::Q_NumericValue" x="-2900" y="-2900">
+		<FB Name="Q_NumericValue_AUDI" Type="isobus::UT::Q::Q_NumericValue_AUDI" x="-4800" y="-3600">
 			<Parameter Name="u16ObjId" Value="OutputNumber_N1"/>
 		</FB>
-		<FB Name="F_SINT_TO_UINT" Type="iec61131::conversion::F_SINT_TO_UINT" x="-5200" y="-2800">
+		<FB Name="AS_TO_AUDI" Type="adapter::conversion::unidirectional::AS_TO_AUDI" x="-6300" y="-3000">
 		</FB>
 		<FB Name="loop" Type="logiBUS::utils::sequence::timed::sequence_T_08_loop_AX" x="-9613.33" y="-600">
 			<Parameter Name="DT_S1_S2" Value="T#200ms"/>
@@ -81,16 +81,12 @@
 			<Parameter Name="DT_S8_S1" Value="T#100ms"/>
 		</FB>
 		<EventConnections>
-			<Connection Source="F_SINT_TO_UINT.CNF" Destination="Q_NumericValue.REQ" dx1="633.33"/>
 			<Connection Source="DigitalInput_CLK_I1.IND" Destination="loop.START_S1" dx1="486.67"/>
 			<Connection Source="DigitalInput_CLK_I4.IND" Destination="loop.RESET" dx1="420"/>
-			<Connection Source="loop.CNF" Destination="F_SINT_TO_UINT.REQ" dx1="873.33"/>
 		</EventConnections>
-		<DataConnections>
-			<Connection Source="F_SINT_TO_UINT.OUT" Destination="Q_NumericValue.u32NewValue" dx1="286.67"/>
-			<Connection Source="loop.STATE_NR" Destination="F_SINT_TO_UINT.IN" dx1="953.33"/>
-		</DataConnections>
 		<AdapterConnections>
+			<Connection Source="loop.STATE_NR" Destination="AS_TO_AUDI.AS_IN" dx1="340"/>
+			<Connection Source="AS_TO_AUDI.AUDI_OUT" Destination="Q_NumericValue_AUDI.u32NewValue" dx1="606.67"/>
 			<Connection Source="loop.timeOut" Destination="E_TimeOut.TimeOutSocket" dx1="80" dx2="80" dy="226.67"/>
 			<Connection Source="loop.DO_S1" Destination="DigitalOutput_Q1.OUT" dx1="1020"/>
 			<Connection Source="loop.DO_S2" Destination="DigitalOutput_Q2.OUT" dx1="1126.67"/>
