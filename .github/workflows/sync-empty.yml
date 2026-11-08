@@ -1,12 +1,14 @@
 name: Sync 4diac_training1_empty
 
 # Bei jedem veroeffentlichten Release von training1 wird der Stand ohne
-# Loesungen erzeugt (internal-scripts/sync_empty), nach empty/main
-# committet und dort als Release mit demselben Tag veroeffentlicht.
+# Loesungen erzeugt (internal-scripts/sync_empty) und als PR vom Branch
+# sync/<tag> nach empty/main gestellt. Nach dem Review und Merge legt der
+# Workflow release-on-sync.yml im empty-Repo das Release <tag> an.
 # Manuell (workflow_dispatch) laeuft standardmaessig nur ein Trockenlauf.
 #
 # Benoetigt das Secret EMPTY_REPO_TOKEN: fine-grained PAT oder App-Token
-# mit "Contents: Read and write" auf 4diac_training1_empty.
+# mit "Contents" und "Pull requests" (Read and write) auf
+# 4diac_training1_empty.
 
 on:
   release:
@@ -88,27 +90,36 @@ jobs:
           path: report.md
           if-no-files-found: ignore
 
-      - name: Commit, Tag und Release in empty
+      - name: PR ins empty-Repo stellen
         if: steps.tag.outputs.apply == 'true'
         working-directory: empty
         env:
           TAG: ${{ steps.tag.outputs.tag }}
           GH_TOKEN: ${{ secrets.EMPTY_REPO_TOKEN }}
         run: |
+          BRANCH="sync/$TAG"
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git switch -c "$BRANCH"
           git add -A
           if git diff --cached --quiet; then
-            echo "Keine Aenderungen fuer $TAG"
-          else
-            git commit -q -m "Stand von 4diac_training1 $TAG (ohne Loesungen)"
-            git push origin HEAD:main
-          fi
-          if git rev-parse -q --verify "refs/tags/$TAG" >/dev/null; then
-            echo "Tag $TAG existiert in empty bereits, kein neues Release"
+            echo "Keine Aenderungen fuer $TAG, kein PR"
             exit 0
           fi
-          git tag "$TAG"
-          git push origin "$TAG"
-          gh release create "$TAG" -R "$EMPTY_REPO" --title "4diac Training: Release $TAG" \
-            --notes "Übungsprojekt 1 ohne Lösungen, erzeugt aus 4diac_training1 $TAG."
+          git commit -q -m "Stand von 4diac_training1 $TAG (ohne Loesungen)"
+          git push --force origin "$BRANCH"
+          {
+            echo "Stand von 4diac_training1 **$TAG** ohne Lösungen, erzeugt von \`internal-scripts/sync_empty\`."
+            echo
+            echo "**Bitte vor dem Merge prüfen, ob keine Lösungen mitgekommen sind** (neue Ordner/Projekte)."
+            echo "Nach dem Merge legt \`release-on-sync.yml\` das Release $TAG an."
+            echo
+            echo '```'
+            head -60 ../summary.txt
+            echo '```'
+          } > ../pr_body.md
+          if gh pr view "$BRANCH" -R "$EMPTY_REPO" >/dev/null 2>&1; then
+            gh pr edit "$BRANCH" -R "$EMPTY_REPO" --body-file ../pr_body.md
+          else
+            gh pr create -R "$EMPTY_REPO" --base main --head "$BRANCH" --title "Sync aus 4diac_training1 $TAG" --body-file ../pr_body.md
+          fi

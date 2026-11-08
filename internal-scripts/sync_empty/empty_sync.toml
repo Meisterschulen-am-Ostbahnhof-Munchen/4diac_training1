@@ -53,6 +53,10 @@ keep = [
   "Ventilsteuerung/4diacIDE-workspace/test_VV/Launches/*Deploy_App_PUBLISH_SUBSCRIBE.launch",
 ]
 
+# --- 2. Dateien, die dem empty-Repo gehoeren (nie aus training1 ueberschreiben/loeschen)
+[preserve]
+owned = [".github/**"]
+
 # --- 3. Transformationen
 # 3a: Applikation in .sys auf das leere Start-Geruest umstellen
 [[transform.sys_control]]
@@ -85,3 +89,8 @@ to = ["Ventilsteuerung/4diacIDE-workspace/test_B/Uebungen/const/UT",
 globs = ["**/scripts/*.bat", "**/scripts/*.sh", "**/Launches/*.launch"]
 pairs = [['ISO-DesignerProjects\Workspace\', 'ISO-DesignerProjects\Workspace_Empty\'],
          ["ISO-DesignerProjects/Workspace/", "ISO-DesignerProjects/Workspace_Empty/"]]
+
+# 3e: Release-Workflow fuer das empty-Repo (legt nach Merge eines sync/<tag>-PR das Release an)
+[[transform.copy]]
+from = "internal-scripts/sync_empty/empty-repo/release-on-sync.yml"
+to = [".github/workflows/release-on-sync.yml"]

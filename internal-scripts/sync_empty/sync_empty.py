@@ -253,11 +253,13 @@ def main():
             res[p] = c
             log.append(f"preserve-fallback (aus training1, im empty noch nicht vorhanden): {p}")
     for rule in cfg.get("transform", {}).get("copy", []):
-        if rule["from"] in res:
-            for to in rule["to"]:
-                if res.get(to) != res[rule["from"]]:
-                    log.append(f"copy: {rule['from']} -> {to}")
-                res[to] = res[rule["from"]]
+        content = res.get(rule["from"], src.get(rule["from"]))   # auch aus ausgeschlossenen Quellen
+        if content is None:
+            raise SystemExit(f"copy: {rule['from']} fehlt in der Quelle")
+        for to in rule["to"]:
+            if res.get(to) != content:
+                log.append(f"copy: {rule['from']} -> {to}")
+            res[to] = content
 
     t_gcf(res, src, cfg.get("transform", {}).get("gcf", []), log)
     t_replace(res, cfg.get("transform", {}).get("replace", []), log)
