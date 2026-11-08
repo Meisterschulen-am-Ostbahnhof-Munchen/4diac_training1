@@ -1,0 +1,114 @@
+name: Sync 4diac_training1_empty
+
+# Bei jedem veroeffentlichten Release von training1 wird der Stand ohne
+# Loesungen erzeugt (internal-scripts/sync_empty), nach empty/main
+# committet und dort als Release mit demselben Tag veroeffentlicht.
+# Manuell (workflow_dispatch) laeuft standardmaessig nur ein Trockenlauf.
+#
+# Benoetigt das Secret EMPTY_REPO_TOKEN: fine-grained PAT oder App-Token
+# mit "Contents: Read and write" auf 4diac_training1_empty.
+
+on:
+  release:
+    types: [published]
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: 'Tag in training1 (leer = neuester Tag)'
+        required: false
+        default: ''
+      apply:
+        description: 'Ergebnis nach empty schreiben und Release anlegen'
+        type: boolean
+        default: false
+
+permissions:
+  contents: read
+
+concurrency:
+  group: sync-empty
+  cancel-in-progress: false
+
+jobs:
+  sync:
+    runs-on: ubuntu-24.04
+    env:
+      EMPTY_REPO: Meisterschulen-am-Ostbahnhof-Munchen/4diac_training1_empty
+    steps:
+      - name: Checkout training1
+        uses: actions/checkout@v6
+        with:
+          fetch-depth: 0
+          path: training1
+
+      - name: Tag bestimmen
+        id: tag
+        working-directory: training1
+        env:
+          RELEASE_TAG: ${{ github.event.release.tag_name }}
+          INPUT_TAG: ${{ inputs.tag }}
+        run: |
+          TAG="${RELEASE_TAG:-$INPUT_TAG}"
+          if [ -z "$TAG" ]; then TAG=$(git tag --sort=-creatordate | head -1); fi
+          git rev-parse --verify "refs/tags/$TAG" >/dev/null
+          echo "tag=$TAG" >> "$GITHUB_OUTPUT"
+          if [ "${{ github.event_name }}" = "release" ] || [ "${{ inputs.apply }}" = "true" ]; then
+            echo "apply=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "apply=false" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Checkout empty
+        uses: actions/checkout@v6
+        with:
+          repository: ${{ env.EMPTY_REPO }}
+          token: ${{ secrets.EMPTY_REPO_TOKEN }}
+          fetch-depth: 0
+          path: empty
+
+      - uses: actions/setup-python@v6
+        with:
+          python-version: '3.12'
+
+      - name: Sync erzeugen
+        env:
+          TAG: ${{ steps.tag.outputs.tag }}
+          APPLY: ${{ steps.tag.outputs.apply }}
+        run: |
+          ARGS="--source training1 --target empty --ref refs/tags/$TAG --report report.md"
+          if [ "$APPLY" = "true" ]; then ARGS="$ARGS --apply"; fi
+          python training1/internal-scripts/sync_empty/sync_empty.py $ARGS | tee summary.txt
+          head -40 summary.txt >> "$GITHUB_STEP_SUMMARY"
+
+      - name: Report hochladen
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: sync-empty-report-${{ steps.tag.outputs.tag }}
+          path: report.md
+          if-no-files-found: ignore
+
+      - name: Commit, Tag und Release in empty
+        if: steps.tag.outputs.apply == 'true'
+        working-directory: empty
+        env:
+          TAG: ${{ steps.tag.outputs.tag }}
+          GH_TOKEN: ${{ secrets.EMPTY_REPO_TOKEN }}
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A
+          if git diff --cached --quiet; then
+            echo "Keine Aenderungen fuer $TAG"
+          else
+            git commit -q -m "Stand von 4diac_training1 $TAG (ohne Loesungen)"
+            git push origin HEAD:main
+          fi
+          if git rev-parse -q --verify "refs/tags/$TAG" >/dev/null; then
+            echo "Tag $TAG existiert in empty bereits, kein neues Release"
+            exit 0
+          fi
+          git tag "$TAG"
+          git push origin "$TAG"
+          gh release create "$TAG" -R "$EMPTY_REPO" --title "4diac Training: Release $TAG" \
+            --notes "Übungsprojekt 1 ohne Lösungen, erzeugt aus 4diac_training1 $TAG."

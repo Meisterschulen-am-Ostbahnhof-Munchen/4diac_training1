@@ -133,6 +133,8 @@ def t_gcf(files, src, rules, log):
         with tempfile.TemporaryDirectory() as tmp:
             tmp = Path(tmp)
             pool_pre = rule["pool"].rstrip("/") + "/"
+            if not any(p.startswith(pool_pre) for p in src):
+                raise SystemExit(f"Pool {rule['pool']} fehlt in der Quelle (Tag zu alt?)")
             for p, c in src.items():
                 if p.startswith(pool_pre) or p.startswith(rule["scripts"].rstrip("/") + "/"):
                     f = tmp / "src" / p
@@ -222,6 +224,9 @@ def main():
     a = ap.parse_args()
     cfg = tomllib.loads(Path(a.config).read_text(encoding="utf-8"))
     ref = a.ref or cfg["source"]["ref"]
+    if ref == "latest-tag":   # neuester Release-Tag von training1
+        ref = git(a.source, "tag", "--sort=-creatordate").split()[0]
+        print(f"Quelle: neuester Tag {ref}")
     tgt_ref = cfg["target"]["branch"]
 
     src = read_tree(a.source, ref)
