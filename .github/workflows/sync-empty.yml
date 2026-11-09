@@ -79,8 +79,11 @@ jobs:
         run: |
           ARGS="--source training1 --target empty --ref refs/tags/$TAG --report report.md"
           if [ "$APPLY" = "true" ]; then ARGS="$ARGS --apply"; fi
+          set +e
           python training1/internal-scripts/sync_empty/sync_empty.py $ARGS | tee summary.txt
+          RC=${PIPESTATUS[0]}
           head -40 summary.txt >> "$GITHUB_STEP_SUMMARY"
+          exit $RC
 
       - name: Report hochladen
         if: always()
@@ -118,8 +121,10 @@ jobs:
             head -60 ../summary.txt
             echo '```'
           } > ../pr_body.md
-          if gh pr view "$BRANCH" -R "$EMPTY_REPO" >/dev/null 2>&1; then
-            gh pr edit "$BRANCH" -R "$EMPTY_REPO" --body-file ../pr_body.md
+          # nur ein noch offener PR wird aktualisiert, sonst neuer PR
+          OPEN_PR=$(gh pr list -R "$EMPTY_REPO" --head "$BRANCH" --state open --json number -q '.[0].number')
+          if [ -n "$OPEN_PR" ]; then
+            gh pr edit "$OPEN_PR" -R "$EMPTY_REPO" --body-file ../pr_body.md
           else
             gh pr create -R "$EMPTY_REPO" --base main --head "$BRANCH" --title "Sync aus 4diac_training1 $TAG" --body-file ../pr_body.md
           fi
