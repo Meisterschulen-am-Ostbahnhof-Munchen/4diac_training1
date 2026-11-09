@@ -24,9 +24,27 @@ def git(repo, *args, binary=False):
     return out if binary else out.decode("utf-8")
 
 
+REF_RE = re.compile(r"[A-Za-z0-9][A-Za-z0-9._/@^~-]*")
+
+
+def check_ref(ref):
+    """Nur Tag-/Branch-/Commit-Namen zulassen, keine git-Optionen."""
+    if not REF_RE.fullmatch(ref) or ".." in ref:
+        raise SystemExit(f"Ungueltige Ref: {ref!r}")
+    return ref
+
+
+def inside(root, rel):
+    """root/rel, aber nur wenn es innerhalb von root bleibt."""
+    f = (root / rel).resolve()
+    if f != root and root not in f.parents:
+        raise SystemExit(f"Pfad ausserhalb des Ziels: {rel!r}")
+    return f
+
+
 def read_tree(repo, ref):
     """{path: bytes} fuer alle Dateien von repo@ref (via git archive)."""
-    data = git(repo, "archive", "--format=tar", ref, binary=True)
+    data = git(repo, "archive", "--format=tar", check_ref(ref), binary=True)
     files = {}
     with tarfile.open(fileobj=io.BytesIO(data)) as tf:
         for m in tf:
@@ -36,13 +54,14 @@ def read_tree(repo, ref):
 
 
 def blob_ids(repo, ref):
-    out = git(repo, "-c", "core.quotepath=off", "ls-tree", "-r", "-z", "--format=%(objectname) %(path)", ref)
+    out = git(repo, "-c", "core.quotepath=off", "ls-tree", "-r", "-z", "--format=%(objectname) %(path)", check_ref(ref))
     return {l.split(" ", 1)[1]: l.split(" ", 1)[0] for l in out.split("\0") if l}
 
 
 def hash_blob(content):
     import hashlib
-    return hashlib.sha1(b"blob %d\0" % len(content) + content).hexdigest()
+    # Git-Blob-ID (zum Vergleich mit ls-tree), keine Sicherheitsfunktion
+    return hashlib.sha1(b"blob %d\0" % len(content) + content, usedforsecurity=False).hexdigest()
 
 
 # ---------------------------------------------------------------- globbing
@@ -302,16 +321,16 @@ def main():
                                   + "\n\n## Alle geaenderten\n" + "\n".join(changed), encoding="utf-8")
 
     if a.apply:
-        root = Path(a.target)
+        root = Path(a.target).resolve()
         for p in deleted:
-            (root / p).unlink(missing_ok=True)
+            inside(root, p).unlink(missing_ok=True)
         # leer gewordene Ordner entfernen (Git kennt keine Ordner, die IDE schon)
-        for d in sorted({(root / p).parent for p in deleted}, key=lambda x: -len(x.parts)):
+        for d in sorted({inside(root, p).parent for p in deleted}, key=lambda x: -len(x.parts)):
             while d != root and d.is_dir() and not any(d.iterdir()):
                 d.rmdir()
                 d = d.parent
         for p in added + changed:
-            f = root / p
+            f = inside(root, p)
             f.parent.mkdir(parents=True, exist_ok=True)
             f.write_bytes(res[p])
         print(f"\n{len(added) + len(changed)} geschrieben, {len(deleted)} geloescht in {root}")
