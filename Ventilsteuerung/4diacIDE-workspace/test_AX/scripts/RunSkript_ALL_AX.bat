@@ -6,6 +6,8 @@ cd /d "%~dp0"
 
 call RunSkript_BuildAX.bat
 if errorlevel 1 exit /b 1
+call RunSkript_BuildEmpty_AX.bat
+if errorlevel 1 exit /b 1
 call RunSkript_BuildPWM_AX.bat
 if errorlevel 1 exit /b 1
 call RunSkript_BuildTECU_AX.bat

@@ -1,0 +1,34 @@
+name: Release nach Sync
+
+# Liegt im Repo 4diac_training1_empty (wird vom Sync aus
+# training1/internal-scripts/sync_empty/empty-repo/ dorthin kopiert).
+# Wird ein PR vom Branch sync/<tag> nach main gemergt, legt dieser
+# Workflow das Release <tag> an - mit demselben Namen wie in training1.
+
+on:
+  pull_request:
+    types: [closed]
+    branches: [main]
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    if: github.event.pull_request.merged == true && startsWith(github.event.pull_request.head.ref, 'sync/')
+    runs-on: ubuntu-24.04
+    steps:
+      - name: Release anlegen
+        env:
+          GH_TOKEN: ${{ github.token }}
+          HEAD_REF: ${{ github.event.pull_request.head.ref }}
+          MERGE_SHA: ${{ github.event.pull_request.merge_commit_sha }}
+        run: |
+          TAG="${HEAD_REF#sync/}"
+          if gh release view "$TAG" -R "$GITHUB_REPOSITORY" >/dev/null 2>&1; then
+            echo "Release $TAG existiert bereits"
+            exit 0
+          fi
+          gh release create "$TAG" -R "$GITHUB_REPOSITORY" --target "$MERGE_SHA" \
+            --title "4diac Training: Release $TAG" \
+            --notes "Übungsprojekt 1 ohne Lösungen, erzeugt aus 4diac_training1 $TAG."
