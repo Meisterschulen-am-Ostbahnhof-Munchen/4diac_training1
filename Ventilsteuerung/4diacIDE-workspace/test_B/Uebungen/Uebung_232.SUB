@@ -1,0 +1,206 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SubAppType Name="Uebung_232" Comment="Race Condition mit E_SPLIT: zwei falsche und zwei richtige Varianten">
+	<Identification Standard="61499-2" Description="Copyright (c) 2026 Meisterschulen am Ostbahnhof  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0">
+	</Identification>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2026-11-11" Remarks="initial API and implementation and/or initial documentation">
+	</VersionInfo>
+	<CompilerInfo packageName="Uebungen">
+		<Import declaration="logiBUS::io::DI::logiBUS_DI::Input_I1"/>
+		<Import declaration="logiBUS::io::DI::logiBUS_DI::Input_I2"/>
+		<Import declaration="logiBUS::io::DI::logiBUS_DI::Input_I3"/>
+		<Import declaration="logiBUS::io::DI::logiBUS_DI::Input_I4"/>
+		<Import declaration="logiBUS::io::DI::logiBUS_DI_Events::BUTTON_SINGLE_CLICK"/>
+		<Import declaration="logiBUS::io::DQ::logiBUS_DO::Output_Q1"/>
+		<Import declaration="logiBUS::io::DQ::logiBUS_DO::Output_Q2"/>
+		<Import declaration="logiBUS::io::DQ::logiBUS_DO::Output_Q3"/>
+		<Import declaration="logiBUS::io::DQ::logiBUS_DO::Output_Q4"/>
+		<Import declaration="logiBUS::io::DQ::logiBUS_DO::Output_Q5"/>
+		<Import declaration="logiBUS::io::DQ::logiBUS_DO::Output_Q6"/>
+		<Import declaration="logiBUS::io::DQ::logiBUS_DO::Output_Q7"/>
+		<Import declaration="logiBUS::io::DQ::logiBUS_DO::Output_Q8"/>
+	</CompilerInfo>
+	<SubAppInterfaceList>
+	</SubAppInterfaceList>
+	<SubAppNetwork>
+		<FB Name="DigitalInput_CLK_I1" Type="logiBUS::io::DI::logiBUS_IE" x="-8000" y="0">
+			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="Input" Value="Input_I1"/>
+			<Parameter Name="InputEvent" Value="BUTTON_SINGLE_CLICK"/>
+		</FB>
+		<FB Name="SPLIT_A" Type="iec61499::events::E_SPLIT" x="-6000" y="0">
+		</FB>
+		<FB Name="MUX_A" Type="iec61499::events::E_MUX_2" x="-4000" y="0">
+		</FB>
+		<FB Name="VERARB_A" Type="iec61499::events::E_PERMIT" x="-1000" y="0">
+			<Parameter Name="PERMIT" Value="TRUE"/>
+		</FB>
+		<FB Name="DEMUX_A" Type="iec61499::events::E_DEMUX_2" x="2000" y="0">
+		</FB>
+		<FB Name="TFF_A1" Type="iec61499::events::E_T_FF" x="5000" y="0">
+		</FB>
+		<FB Name="DigitalOutput_Q1" Type="logiBUS::io::DQ::logiBUS_QX" x="7000" y="0">
+			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="Output" Value="Output_Q1"/>
+		</FB>
+		<FB Name="TFF_A2" Type="iec61499::events::E_T_FF" x="5000" y="500">
+		</FB>
+		<FB Name="DigitalOutput_Q2" Type="logiBUS::io::DQ::logiBUS_QX" x="7000" y="500">
+			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="Output" Value="Output_Q2"/>
+		</FB>
+		<FB Name="DigitalInput_CLK_I2" Type="logiBUS::io::DI::logiBUS_IE" x="-8000" y="3000">
+			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="Input" Value="Input_I2"/>
+			<Parameter Name="InputEvent" Value="BUTTON_SINGLE_CLICK"/>
+		</FB>
+		<FB Name="SPLIT_B" Type="iec61499::events::E_SPLIT" x="-6000" y="3000">
+		</FB>
+		<FB Name="BUF_B" Type="eclipse4diac::convert::providers::PROVIDE_ARR_0004_UINT" x="-6000" y="2100">
+		</FB>
+		<FB Name="CAP_B" Type="eclipse4diac::utils::arrays::F_LEN_ARRAY" x="-4000" y="2100">
+		</FB>
+		<FB Name="MUX_B" Type="iec61499::events::E_MUX_2" x="-4000" y="3000">
+		</FB>
+		<FB Name="FIFO_B" Type="FIFO::FIFO_UINT" x="-2000" y="3000">
+			<Parameter Name="QI" Value="TRUE"/>
+		</FB>
+		<FB Name="VERARB_B" Type="iec61499::events::E_PERMIT" x="0" y="3000">
+			<Parameter Name="PERMIT" Value="TRUE"/>
+		</FB>
+		<FB Name="DEMUX_B" Type="iec61499::events::E_DEMUX_2" x="2500" y="3000">
+		</FB>
+		<FB Name="TFF_B1" Type="iec61499::events::E_T_FF" x="5000" y="3000">
+		</FB>
+		<FB Name="DigitalOutput_Q3" Type="logiBUS::io::DQ::logiBUS_QX" x="7000" y="3000">
+			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="Output" Value="Output_Q3"/>
+		</FB>
+		<FB Name="TFF_B2" Type="iec61499::events::E_T_FF" x="5000" y="3500">
+		</FB>
+		<FB Name="DigitalOutput_Q4" Type="logiBUS::io::DQ::logiBUS_QX" x="7000" y="3500">
+			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="Output" Value="Output_Q4"/>
+		</FB>
+		<FB Name="DigitalInput_CLK_I3" Type="logiBUS::io::DI::logiBUS_IE" x="-8000" y="6000">
+			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="Input" Value="Input_I3"/>
+			<Parameter Name="InputEvent" Value="BUTTON_SINGLE_CLICK"/>
+		</FB>
+		<FB Name="SPLIT_C" Type="iec61499::events::E_SPLIT" x="-6000" y="6000">
+		</FB>
+		<FB Name="VERARB_C1" Type="iec61499::events::E_PERMIT" x="0" y="6000">
+			<Parameter Name="PERMIT" Value="TRUE"/>
+		</FB>
+		<FB Name="VERARB_C2" Type="iec61499::events::E_PERMIT" x="0" y="6500">
+			<Parameter Name="PERMIT" Value="TRUE"/>
+		</FB>
+		<FB Name="TFF_C1" Type="iec61499::events::E_T_FF" x="5000" y="6000">
+		</FB>
+		<FB Name="DigitalOutput_Q5" Type="logiBUS::io::DQ::logiBUS_QX" x="7000" y="6000">
+			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="Output" Value="Output_Q5"/>
+		</FB>
+		<FB Name="TFF_C2" Type="iec61499::events::E_T_FF" x="5000" y="6500">
+		</FB>
+		<FB Name="DigitalOutput_Q6" Type="logiBUS::io::DQ::logiBUS_QX" x="7000" y="6500">
+			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="Output" Value="Output_Q6"/>
+		</FB>
+		<FB Name="DigitalInput_CLK_I4" Type="logiBUS::io::DI::logiBUS_IE" x="-8000" y="9000">
+			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="Input" Value="Input_I4"/>
+			<Parameter Name="InputEvent" Value="BUTTON_SINGLE_CLICK"/>
+		</FB>
+		<FB Name="SPLIT_D" Type="iec61499::events::E_SPLIT" x="-6000" y="9000">
+		</FB>
+		<FB Name="BUF_D" Type="eclipse4diac::convert::providers::PROVIDE_ARR_0004_UINT" x="-6000" y="8100">
+		</FB>
+		<FB Name="CAP_D" Type="eclipse4diac::utils::arrays::F_LEN_ARRAY" x="-4000" y="8100">
+		</FB>
+		<FB Name="EMF_D" Type="FIFO::E_MUX_FIFO_2" x="-2000" y="9000">
+			<Parameter Name="QI" Value="TRUE"/>
+		</FB>
+		<FB Name="VERARB_D" Type="iec61499::events::E_PERMIT" x="0" y="9000">
+			<Parameter Name="PERMIT" Value="TRUE"/>
+		</FB>
+		<FB Name="DEMUX_D" Type="iec61499::events::E_DEMUX_2" x="2500" y="9000">
+		</FB>
+		<FB Name="TFF_D1" Type="iec61499::events::E_T_FF" x="5000" y="9000">
+		</FB>
+		<FB Name="DigitalOutput_Q7" Type="logiBUS::io::DQ::logiBUS_QX" x="7000" y="9000">
+			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="Output" Value="Output_Q7"/>
+		</FB>
+		<FB Name="TFF_D2" Type="iec61499::events::E_T_FF" x="5000" y="9500">
+		</FB>
+		<FB Name="DigitalOutput_Q8" Type="logiBUS::io::DQ::logiBUS_QX" x="7000" y="9500">
+			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="Output" Value="Output_Q8"/>
+		</FB>
+		<EventConnections>
+			<Connection Source="DigitalInput_CLK_I1.IND" Destination="SPLIT_A.EI"/>
+			<Connection Source="SPLIT_A.EO1" Destination="MUX_A.EI1"/>
+			<Connection Source="SPLIT_A.EO2" Destination="MUX_A.EI2"/>
+			<Connection Source="MUX_A.EO" Destination="VERARB_A.EI"/>
+			<Connection Source="VERARB_A.EO" Destination="DEMUX_A.EI"/>
+			<Connection Source="DEMUX_A.EO1" Destination="TFF_A1.CLK"/>
+			<Connection Source="TFF_A1.EO" Destination="DigitalOutput_Q1.REQ"/>
+			<Connection Source="DEMUX_A.EO2" Destination="TFF_A2.CLK"/>
+			<Connection Source="TFF_A2.EO" Destination="DigitalOutput_Q2.REQ"/>
+			<Connection Source="DigitalInput_CLK_I2.IND" Destination="SPLIT_B.EI"/>
+			<Connection Source="BUF_B.INITO" Destination="CAP_B.REQ"/>
+			<Connection Source="CAP_B.CNF" Destination="FIFO_B.INIT"/>
+			<Connection Source="SPLIT_B.EO1" Destination="MUX_B.EI1"/>
+			<Connection Source="SPLIT_B.EO2" Destination="MUX_B.EI2"/>
+			<Connection Source="MUX_B.EO" Destination="FIFO_B.PUSH"/>
+			<Connection Source="FIFO_B.DATA" Destination="VERARB_B.EI"/>
+			<Connection Source="VERARB_B.EO" Destination="DEMUX_B.EI"/>
+			<Connection Source="DEMUX_B.EO1" Destination="FIFO_B.PROCESSED"/>
+			<Connection Source="DEMUX_B.EO2" Destination="FIFO_B.PROCESSED"/>
+			<Connection Source="DEMUX_B.EO1" Destination="TFF_B1.CLK"/>
+			<Connection Source="TFF_B1.EO" Destination="DigitalOutput_Q3.REQ"/>
+			<Connection Source="DEMUX_B.EO2" Destination="TFF_B2.CLK"/>
+			<Connection Source="TFF_B2.EO" Destination="DigitalOutput_Q4.REQ"/>
+			<Connection Source="DigitalInput_CLK_I3.IND" Destination="SPLIT_C.EI"/>
+			<Connection Source="SPLIT_C.EO1" Destination="VERARB_C1.EI"/>
+			<Connection Source="SPLIT_C.EO2" Destination="VERARB_C2.EI"/>
+			<Connection Source="VERARB_C1.EO" Destination="TFF_C1.CLK"/>
+			<Connection Source="TFF_C1.EO" Destination="DigitalOutput_Q5.REQ"/>
+			<Connection Source="VERARB_C2.EO" Destination="TFF_C2.CLK"/>
+			<Connection Source="TFF_C2.EO" Destination="DigitalOutput_Q6.REQ"/>
+			<Connection Source="DigitalInput_CLK_I4.IND" Destination="SPLIT_D.EI"/>
+			<Connection Source="BUF_D.INITO" Destination="CAP_D.REQ"/>
+			<Connection Source="CAP_D.CNF" Destination="EMF_D.INIT"/>
+			<Connection Source="SPLIT_D.EO1" Destination="EMF_D.EI1"/>
+			<Connection Source="SPLIT_D.EO2" Destination="EMF_D.EI2"/>
+			<Connection Source="EMF_D.DATA" Destination="VERARB_D.EI"/>
+			<Connection Source="VERARB_D.EO" Destination="DEMUX_D.EI"/>
+			<Connection Source="DEMUX_D.EO1" Destination="EMF_D.PROCESSED"/>
+			<Connection Source="DEMUX_D.EO2" Destination="EMF_D.PROCESSED"/>
+			<Connection Source="DEMUX_D.EO1" Destination="TFF_D1.CLK"/>
+			<Connection Source="TFF_D1.EO" Destination="DigitalOutput_Q7.REQ"/>
+			<Connection Source="DEMUX_D.EO2" Destination="TFF_D2.CLK"/>
+			<Connection Source="TFF_D2.EO" Destination="DigitalOutput_Q8.REQ"/>
+		</EventConnections>
+		<DataConnections>
+			<Connection Source="MUX_A.K" Destination="DEMUX_A.K"/>
+			<Connection Source="TFF_A1.Q" Destination="DigitalOutput_Q1.OUT"/>
+			<Connection Source="TFF_A2.Q" Destination="DigitalOutput_Q2.OUT"/>
+			<Connection Source="BUF_B.D1" Destination="CAP_B.ARR"/>
+			<Connection Source="BUF_B.D1" Destination="FIFO_B.BUF"/>
+			<Connection Source="CAP_B.OUT" Destination="FIFO_B.CAPACITY"/>
+			<Connection Source="MUX_B.K" Destination="FIFO_B.IN"/>
+			<Connection Source="FIFO_B.OUT" Destination="DEMUX_B.K"/>
+			<Connection Source="TFF_B1.Q" Destination="DigitalOutput_Q3.OUT"/>
+			<Connection Source="TFF_B2.Q" Destination="DigitalOutput_Q4.OUT"/>
+			<Connection Source="TFF_C1.Q" Destination="DigitalOutput_Q5.OUT"/>
+			<Connection Source="TFF_C2.Q" Destination="DigitalOutput_Q6.OUT"/>
+			<Connection Source="BUF_D.D1" Destination="CAP_D.ARR"/>
+			<Connection Source="BUF_D.D1" Destination="EMF_D.BUF"/>
+			<Connection Source="CAP_D.OUT" Destination="EMF_D.CAPACITY"/>
+			<Connection Source="EMF_D.K" Destination="DEMUX_D.K"/>
+			<Connection Source="TFF_D1.Q" Destination="DigitalOutput_Q7.OUT"/>
+			<Connection Source="TFF_D2.Q" Destination="DigitalOutput_Q8.OUT"/>
+		</DataConnections>
+	</SubAppNetwork>
+</SubAppType>
