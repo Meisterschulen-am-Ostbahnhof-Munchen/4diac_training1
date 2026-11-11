@@ -1,0 +1,112 @@
+# Regeln: 4diac_training1 (mit Loesungen)  ->  4diac_training1_empty (ohne Loesungen)
+# Pfade relativ zur Repo-Wurzel, '/' als Trenner.
+# Glob: '*' = innerhalb eines Ordners, '**' = beliebig tief, '?' = ein Zeichen.
+
+[source]
+ref = "latest-tag"   # neuester Release-Tag; sonst Tag/Branch, z. B. --ref v0.28d oder origin/develop
+
+[target]
+branch = "main"
+sync_branch = "sync/training1"   # Ergebnis-Branch im empty-Repo (PR -> main)
+
+# --- 1. Ausschliessen (Loesungen, interne Werkzeuge, nicht benoetigte Workspaces)
+[filter]
+exclude = [
+  # Uebungs-Loesungen: alle Uebungs-SubApps ausser dem Start-Geruest Uebung_001
+  "Ventilsteuerung/4diacIDE-workspace/test_*/Uebungen/*.SUB",
+  "Ventilsteuerung/4diacIDE-workspace/test_*/Uebungen/*.sub",
+  "Ventilsteuerung/4diacIDE-workspace/test_*/Uebungen/*.py",
+  "Ventilsteuerung/4diacIDE-workspace/test_*/Uebungen_doc/**",
+  "Ventilsteuerung/4diacIDE-workspace/test_AX/Meins/*/**",   # Demo-/Loesungsordner unter Meins
+  "Ventilsteuerung/4diacIDE-workspace/test_B/Versuche/**",   # Versuchs-SubApps (Loesungen)
+  # test_VV: nur das erste Training (PUBLISH_SUBSCRIBE) bleibt, siehe keep
+  "Ventilsteuerung/4diacIDE-workspace/test_VV/sys/**",
+  "Ventilsteuerung/4diacIDE-workspace/test_VV/Launches/*Deploy_App_*",
+  # Konstanten der weggelassenen ISO-Designer-Workspaces
+  "Ventilsteuerung/4diacIDE-workspace/test_*/Uebungen/const/UT/*/**",
+  "Ventilsteuerung/4diacIDE-workspace/test_*/Uebungen/const/OPC/**",
+  # ISO-Designer: nur der reduzierte Pool 'Workspace_Empty' bleibt
+  "Ventilsteuerung/ISO-DesignerProjects/Workspace/**",
+  "Ventilsteuerung/ISO-DesignerProjects/Workspace_*/**",
+  "Ventilsteuerung/Web-Clients/**",
+  # Build-/Deploy-Skripte + Launches der weggelassenen Workspaces
+  "Ventilsteuerung/4diacIDE-workspace/test_*/scripts/RunSkript_*{AI,AI_Calibrate_2P,AI_Calibrate_3P,DIDO,Empty,Dreieck,Horse,HystereseHorizontal,HystereseVertikal,Joystick,PI,PWM,PWM12,Scroll,TC_SC,TECU}_*",
+  "Ventilsteuerung/4diacIDE-workspace/test_*/scripts/RunSkript_Deploy_DIDO_*",
+  "Ventilsteuerung/4diacIDE-workspace/test_*/Launches/RunSkript_*{AI,AI_Calibrate_2P,AI_Calibrate_3P,DIDO,Empty,Dreieck,Horse,HystereseHorizontal,HystereseVertikal,Joystick,PI,PWM,PWM12,Scroll,TC_SC,TECU}_*",
+  # erzeugte Boot-Dateien (spiegeln die Musterloesung)
+  "Ventilsteuerung/boot-files/*.fboot",
+  "Ventilsteuerung/boot-files/*.libs.json",
+  # interne Werkzeuge / KI-Agenten / Planungsnotizen
+  "AGENTS.md", ".agents/**", ".claude/**", "**/.claude/**",
+  ".github/**", ".mega-linter.yml", ".ruff.toml",
+  "internal-scripts/**", "**/scratch/**",
+  "plan_*.md", "**/TRAINING_GAPS.md", "**/NOTIZ_*.md",
+  "Unidirectional_Adapters.md", "Kundenauftrag_*.txt",
+  # IDE-Arbeitsdaten gehoeren nie ins Repo
+  "**/.metadata/**",
+]
+# Ausnahmen vom exclude (werden trotzdem uebernommen)
+keep = [
+  "Ventilsteuerung/4diacIDE-workspace/test_B/Uebungen/Uebung_001.SUB",
+  "Ventilsteuerung/4diacIDE-workspace/test_AX/Uebungen/Uebung_001_AX.SUB",
+  "Ventilsteuerung/ISO-DesignerProjects/Workspace_Empty/**",
+  "Ventilsteuerung/4diacIDE-workspace/test_VV/sys/01_Multicast/Training_01_PUBLISH_SUBSCRIBE/**",
+  "Ventilsteuerung/4diacIDE-workspace/test_VV/Launches/*Deploy_App_PUBLISH_SUBSCRIBE.launch",
+]
+
+# --- 2. Dateien, die dem empty-Repo gehoeren (nie aus training1 ueberschreiben/loeschen)
+[preserve]
+owned = [".github/**"]
+
+# --- 3. Transformationen
+# 3a: Applikation in .sys auf das leere Start-Geruest umstellen
+[[transform.sys_control]]
+glob = "Ventilsteuerung/4diacIDE-workspace/test_B/**/*.sys"
+subapp = "Control"
+type = "Uebungen::Uebung_001"
+
+[[transform.sys_control]]
+glob = "Ventilsteuerung/4diacIDE-workspace/test_AX/**/*.sys"
+subapp = "Control"
+type = "Uebungen::Uebung_001_AX"
+
+# 3b: Sammel-Skripte: Zeilen entfernen, die ein weggelassenes Skript aufrufen
+#     (+ direkt folgende 'if errorlevel'-Zeile)
+[transform.script_prune]
+globs = ["**/scripts/*.bat", "**/scripts/*.sh"]
+
+# 3c: DefaultPool*.gcf aus Workspace_Empty neu erzeugen (GcfScript.py der Quelle)
+[[transform.gcf]]
+pool = "Ventilsteuerung/ISO-DesignerProjects/Workspace_Empty/DefaultPool"
+scripts = "Ventilsteuerung/scripts_central"
+newfile = "DefaultPool"
+package = "Uebungen::const::UT"
+to = ["Ventilsteuerung/4diacIDE-workspace/test_B/Uebungen/const/UT",
+      "Ventilsteuerung/4diacIDE-workspace/test_AX/Uebungen/const/UT",
+      "Ventilsteuerung/4diacIDE-workspace/test_VV/Uebungen/const/UT"]
+
+# 3d: Build-Skripte auf Workspace_Empty umstellen
+[[transform.replace]]
+globs = ["**/scripts/*.bat", "**/scripts/*.sh", "**/Launches/*.launch"]
+pairs = [['ISO-DesignerProjects\Workspace\', 'ISO-DesignerProjects\Workspace_Empty\'],
+         ["ISO-DesignerProjects/Workspace/", "ISO-DesignerProjects/Workspace_Empty/"]]
+
+# 3d2: Hinweis im README: leeres Projekt, Aufgaben stehen in der Doku
+[[transform.replace]]
+globs = ["README.md"]
+required = true
+pairs = [['Dieses Repository bietet', '''> **Leeres Übungsprojekt (ohne Lösungen):** Dieses Repository ist der Stand von [4diac_training1](https://github.com/Meisterschulen-am-Ostbahnhof-Munchen/4diac_training1) ohne Musterlösungen. Als Beispiel ist nur `Uebung_001` bzw. `Uebung_001_AX` enthalten. Die Aufgabenbeschreibungen stehen in der Dokumentation: [Übungen AX](https://docs.ms-muc-docs.de/projects/4diac-exercises-docs/de/latest/Uebungen/test_AX/Uebungen_doc/), [Übungen B](https://docs.ms-muc-docs.de/projects/4diac-exercises-docs/de/latest/Uebungen/test_B/Uebungen_doc/), [Übungen VV](https://docs.ms-muc-docs.de/projects/4diac-exercises-docs/de/latest/Uebungen/test_VV/Uebungen_doc/Uebungen/).
+
+Dieses Repository bietet''']]
+
+[[transform.replace]]
+globs = ["README.en.md"]
+required = true
+pairs = [['This repository provides', '''> **Empty exercise project (without solutions):** This repository is the state of [4diac_training1](https://github.com/Meisterschulen-am-Ostbahnhof-Munchen/4diac_training1) without the sample solutions. Only `Uebung_001` and `Uebung_001_AX` are included as an example. The exercise descriptions are in the documentation: [Exercises AX](https://docs.ms-muc-docs.de/projects/4diac-exercises-docs/de/latest/Uebungen/test_AX/Uebungen_doc/), [Exercises B](https://docs.ms-muc-docs.de/projects/4diac-exercises-docs/de/latest/Uebungen/test_B/Uebungen_doc/), [Exercises VV](https://docs.ms-muc-docs.de/projects/4diac-exercises-docs/de/latest/Uebungen/test_VV/Uebungen_doc/Uebungen/).
+
+This repository provides''']]
+
+# 3e: Release-Workflow fuer das empty-Repo (legt nach Merge eines sync/<tag>-PR das Release an)
+[[transform.copy]]
+from = "internal-scripts/sync_empty/empty-repo/release-on-sync.yml"
+to = [".github/workflows/release-on-sync.yml"]
