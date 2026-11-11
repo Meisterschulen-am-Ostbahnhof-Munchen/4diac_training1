@@ -83,7 +83,7 @@
 			<ECTransition Source="START" Destination="S_RST" Condition="RST" x="1500" y="-200"/>
 			<ECTransition Source="START" Destination="S_EI1" Condition="EI1" x="1500" y="150"/>
 			<ECTransition Source="START" Destination="S_EI2" Condition="EI2" x="1500" y="450"/>
-			<ECTransition Source="START" Destination="S_PROCESSED" Condition="OUT_DATA.PROCESSED AND DELIVERING" x="1500" y="800"/>
+			<ECTransition Source="START" Destination="S_PROCESSED" Condition="OUT_DATA.PROCESSED[DELIVERING]" x="1500" y="800"/>
 			<ECTransition Source="S_INIT" Destination="START" Condition="1" x="1500" y="-950"/>
 			<ECTransition Source="S_RST" Destination="START" Condition="1" x="1500" y="-450"/>
 			<ECTransition Source="S_EI1" Destination="S_DELIVER" Condition="OK AND NOT DELIVERING AND N&gt;0" x="2900" y="300"/>
