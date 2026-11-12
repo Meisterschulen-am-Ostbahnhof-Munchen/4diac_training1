@@ -7,8 +7,10 @@ name: Sync 4diac_training1_empty
 # Manuell (workflow_dispatch) laeuft standardmaessig nur ein Trockenlauf.
 #
 # Benoetigt das Secret EMPTY_REPO_TOKEN: fine-grained PAT oder App-Token
-# mit "Contents" und "Pull requests" (Read and write) auf
-# 4diac_training1_empty.
+# mit "Contents", "Pull requests" und "Workflows" (Read and write) auf
+# 4diac_training1_empty. "Workflows" ist noetig, weil der Sync
+# .github/workflows/release-on-sync.yml ins empty-Repo schreibt; ohne
+# dieses Recht lehnt GitHub den Push ab ("without workflow scope").
 
 on:
   release:
