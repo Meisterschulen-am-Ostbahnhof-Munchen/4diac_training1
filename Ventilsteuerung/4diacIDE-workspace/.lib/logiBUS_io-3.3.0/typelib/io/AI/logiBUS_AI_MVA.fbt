@@ -80,6 +80,16 @@
 
 <p>Composite-Baustein um <code>logiBUS_AI_MV</code> mit Adapter-Ausgang: <code>IN</code> (Adapter <code>AD</code>) liefert die kalibrierte Spannung am Pin in Millivolt.</p>
 
+<h3>Schnittstelle</h3>
+
+<ul>
+	<li><strong>INIT</strong> (mit QI, PARAMS, Input, AnalogInput_hysteresis, TimeDelta, TimeRateLimit): wie <code>logiBUS_AI_MV</code>, wird direkt durchgereicht.</li>
+	<li><strong>REQ</strong> (mit QI): sofortige Abfrage; kann zusätzlich über den Socket <code>SREQ</code> extern ausgelöst werden.</li>
+	<li><strong>INITO</strong> (mit QO, STATUS): Bestätigung der Initialisierung.</li>
+	<li><strong>Plug IN</strong> (<code>adapter::types::unidirectional::AD</code>): liefert die Spannung in mV als Adapter-Ereignis/-Daten (<code>E1</code>/<code>D1</code>) statt der einzelnen <code>CNF</code>/<code>IND</code>-Events des inneren Bausteins.</li>
+	<li><strong>Socket SREQ</strong> (<code>adapter::types::unidirectional::AX</code>): externe Service-Anforderung, über <code>E_R_TRIG</code> flankengetriggert auf <code>AI.REQ</code>.</li>
+</ul>
+
 <h3>Wert von IN</h3>
 
 <p><code>IN</code> ist die Spannung am Pin des Chips in <strong>Millivolt</strong> (<code>DWORD</code>). Die Firmware rechnet den gemittelten Rohwert mit der Kalibrierung des Chips um (ESP-IDF <code>adc_cali</code>, Werte aus dem eFuse). Die Dämpfung ist dieselbe wie bei <code>logiBUS_AI_ID</code>: ESP32-S3 etwa 0-2900 mV (±50 mV), ESP32-P4 etwa 0-3300 mV (±15 mV), laut Datenblatt.</p>
@@ -95,6 +105,16 @@
 <h2>🇬🇧 English</h2>
 
 <p>Composite block around <code>logiBUS_AI_MV</code> with adapter output: <code>IN</code> (adapter <code>AD</code>) delivers the calibrated voltage at the pin in millivolts.</p>
+
+<h3>Interface</h3>
+
+<ul>
+	<li><strong>INIT</strong> (with QI, PARAMS, Input, AnalogInput_hysteresis, TimeDelta, TimeRateLimit): same as <code>logiBUS_AI_MV</code>, passed straight through.</li>
+	<li><strong>REQ</strong> (with QI): immediate read; can also be triggered externally via the <code>SREQ</code> socket.</li>
+	<li><strong>INITO</strong> (with QO, STATUS): initialization confirmation.</li>
+	<li><strong>Plug IN</strong> (<code>adapter::types::unidirectional::AD</code>): delivers the voltage in mV as an adapter event/data pair (<code>E1</code>/<code>D1</code>) instead of the internal block's individual <code>CNF</code>/<code>IND</code> events.</li>
+	<li><strong>Socket SREQ</strong> (<code>adapter::types::unidirectional::AX</code>): external service request, edge-triggered onto <code>AI.REQ</code> via <code>E_R_TRIG</code>.</li>
+</ul>
 
 <h3>Value of IN</h3>
 
