@@ -34,44 +34,44 @@
 		</InputVars>
 	</SubAppInterfaceList>
 	<SubAppNetwork>
-		<FB Name="F_NOT_1" Type="iec61131::booleanOperators::F_NOT_BOOL_INIT" x="1000" y="0">
+		<FB Name="F_NOT_1" Type="iec61131::booleanOperators::F_NOT_BOOL_INIT" x="773.33" y="33.33">
 		</FB>
-		<FB Name="E_PERMIT_1" Type="iec61499::events::E_PERMIT" x="2600" y="0">
+		<FB Name="E_PERMIT_1" Type="iec61499::events::E_PERMIT" x="2073.33" y="140">
 		</FB>
-		<FB Name="F_NOT_2" Type="iec61131::booleanOperators::F_NOT_BOOL_INIT" x="1000" y="400">
+		<FB Name="F_NOT_2" Type="iec61131::booleanOperators::F_NOT_BOOL_INIT" x="773.33" y="933.33">
 		</FB>
-		<FB Name="E_PERMIT_2" Type="iec61499::events::E_PERMIT" x="2600" y="400">
+		<FB Name="E_PERMIT_2" Type="iec61499::events::E_PERMIT" x="2073.33" y="1040">
 		</FB>
-		<FB Name="F_NOT_3" Type="iec61131::booleanOperators::F_NOT_BOOL_INIT" x="1000" y="800">
+		<FB Name="F_NOT_3" Type="iec61131::booleanOperators::F_NOT_BOOL_INIT" x="840" y="1833.33">
 		</FB>
-		<FB Name="E_PERMIT_3" Type="iec61499::events::E_PERMIT" x="2600" y="800">
+		<FB Name="E_PERMIT_3" Type="iec61499::events::E_PERMIT" x="2140" y="1940">
 		</FB>
-		<FB Name="F_NOT_4" Type="iec61131::booleanOperators::F_NOT_BOOL_INIT" x="1000" y="1200">
+		<FB Name="F_NOT_4" Type="iec61131::booleanOperators::F_NOT_BOOL_INIT" x="773.33" y="2733.33">
 		</FB>
-		<FB Name="E_PERMIT_4" Type="iec61499::events::E_PERMIT" x="2600" y="1200">
+		<FB Name="E_PERMIT_4" Type="iec61499::events::E_PERMIT" x="2073.33" y="2840">
 		</FB>
 		<EventConnections>
-			<Connection Source="EI1" Destination="F_NOT_1.REQ"/>
+			<Connection Source="EI1" Destination="F_NOT_1.REQ" dx1="66.67"/>
 			<Connection Source="F_NOT_1.CNF" Destination="E_PERMIT_1.EI"/>
-			<Connection Source="E_PERMIT_1.EO" Destination="EO1"/>
-			<Connection Source="EI2" Destination="F_NOT_2.REQ"/>
+			<Connection Source="E_PERMIT_1.EO" Destination="EO1" dx1="133.33"/>
+			<Connection Source="EI2" Destination="F_NOT_2.REQ" dx1="133.33"/>
 			<Connection Source="F_NOT_2.CNF" Destination="E_PERMIT_2.EI"/>
-			<Connection Source="E_PERMIT_2.EO" Destination="EO2"/>
-			<Connection Source="EI3" Destination="F_NOT_3.REQ"/>
+			<Connection Source="E_PERMIT_2.EO" Destination="EO2" dx1="66.67"/>
+			<Connection Source="EI3" Destination="F_NOT_3.REQ" dx1="266.67"/>
 			<Connection Source="F_NOT_3.CNF" Destination="E_PERMIT_3.EI"/>
-			<Connection Source="E_PERMIT_3.EO" Destination="EO3"/>
-			<Connection Source="EI4" Destination="F_NOT_4.REQ"/>
+			<Connection Source="E_PERMIT_3.EO" Destination="EO3" dx1="66.67"/>
+			<Connection Source="EI4" Destination="F_NOT_4.REQ" dx1="66.67"/>
 			<Connection Source="F_NOT_4.CNF" Destination="E_PERMIT_4.EI"/>
-			<Connection Source="E_PERMIT_4.EO" Destination="EO4"/>
+			<Connection Source="E_PERMIT_4.EO" Destination="EO4" dx1="200"/>
 		</EventConnections>
 		<DataConnections>
-			<Connection Source="PERMIT" Destination="F_NOT_1.IN"/>
+			<Connection Source="PERMIT" Destination="F_NOT_1.IN" dx1="200"/>
 			<Connection Source="F_NOT_1.OUT" Destination="E_PERMIT_1.PERMIT"/>
-			<Connection Source="PERMIT" Destination="F_NOT_2.IN"/>
+			<Connection Source="PERMIT" Destination="F_NOT_2.IN" dx1="200"/>
 			<Connection Source="F_NOT_2.OUT" Destination="E_PERMIT_2.PERMIT"/>
-			<Connection Source="PERMIT" Destination="F_NOT_3.IN"/>
+			<Connection Source="PERMIT" Destination="F_NOT_3.IN" dx1="200"/>
 			<Connection Source="F_NOT_3.OUT" Destination="E_PERMIT_3.PERMIT"/>
-			<Connection Source="PERMIT" Destination="F_NOT_4.IN"/>
+			<Connection Source="PERMIT" Destination="F_NOT_4.IN" dx1="200"/>
 			<Connection Source="F_NOT_4.OUT" Destination="E_PERMIT_4.PERMIT"/>
 		</DataConnections>
 	</SubAppNetwork>
