@@ -28,25 +28,25 @@
 	<SubAppNetwork>
 		<FB Name="F_NOT_1" Type="iec61131::booleanOperators::F_NOT_BOOL_INIT" x="1000" y="0">
 		</FB>
-		<FB Name="E_PERMIT_1" Type="iec61499::events::E_PERMIT" x="2600" y="0">
+		<FB Name="E_PERMIT_1" Type="iec61499::events::E_PERMIT" x="2600" y="100">
 		</FB>
-		<FB Name="F_NOT_2" Type="iec61131::booleanOperators::F_NOT_BOOL_INIT" x="1000" y="400">
+		<FB Name="F_NOT_2" Type="iec61131::booleanOperators::F_NOT_BOOL_INIT" x="1000" y="600">
 		</FB>
-		<FB Name="E_PERMIT_2" Type="iec61499::events::E_PERMIT" x="2600" y="400">
+		<FB Name="E_PERMIT_2" Type="iec61499::events::E_PERMIT" x="2600" y="700">
 		</FB>
 		<EventConnections>
-			<Connection Source="EI1" Destination="F_NOT_1.REQ"/>
-			<Connection Source="F_NOT_1.CNF" Destination="E_PERMIT_1.EI"/>
-			<Connection Source="E_PERMIT_1.EO" Destination="EO1"/>
-			<Connection Source="EI2" Destination="F_NOT_2.REQ"/>
-			<Connection Source="F_NOT_2.CNF" Destination="E_PERMIT_2.EI"/>
-			<Connection Source="E_PERMIT_2.EO" Destination="EO2"/>
+			<Connection Source="EI1" Destination="F_NOT_1.REQ" dx1="2846.67"/>
+			<Connection Source="F_NOT_1.CNF" Destination="E_PERMIT_1.EI" dx1="286.67"/>
+			<Connection Source="E_PERMIT_1.EO" Destination="EO1" dx1="893.33"/>
+			<Connection Source="EI2" Destination="F_NOT_2.REQ" dx1="2813.33"/>
+			<Connection Source="F_NOT_2.CNF" Destination="E_PERMIT_2.EI" dx1="286.67"/>
+			<Connection Source="E_PERMIT_2.EO" Destination="EO2" dx1="926.67"/>
 		</EventConnections>
 		<DataConnections>
-			<Connection Source="PERMIT" Destination="F_NOT_1.IN"/>
-			<Connection Source="F_NOT_1.OUT" Destination="E_PERMIT_1.PERMIT"/>
-			<Connection Source="PERMIT" Destination="F_NOT_2.IN"/>
-			<Connection Source="F_NOT_2.OUT" Destination="E_PERMIT_2.PERMIT"/>
+			<Connection Source="PERMIT" Destination="F_NOT_1.IN" dx1="2780"/>
+			<Connection Source="F_NOT_1.OUT" Destination="E_PERMIT_1.PERMIT" dx1="286.67"/>
+			<Connection Source="PERMIT" Destination="F_NOT_2.IN" dx1="2780"/>
+			<Connection Source="F_NOT_2.OUT" Destination="E_PERMIT_2.PERMIT" dx1="286.67"/>
 		</DataConnections>
 	</SubAppNetwork>
 </SubAppType>
