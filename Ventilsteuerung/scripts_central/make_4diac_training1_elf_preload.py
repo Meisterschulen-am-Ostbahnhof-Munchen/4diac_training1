@@ -15,7 +15,7 @@ Grundausstattung bleiben dabei liegen und werden per Hash uebersprungen.
 
 Aufruf:
     python make_4diac_training1_elf_preload.py            (DEFAULT_NODES: logibus.local per mDNS)
-    python make_4diac_training1_elf_preload.py 192.168.178.55 192.168.178.56
+    python make_4diac_training1_elf_preload.py 192.168.178.45
 
 Alte Versionen derselben Lib in elf-libs/ bleiben liegen (harmlos, das
 Aufraeumen macht das naechste normale Deploy). Wirksam erst nach Neustart.
