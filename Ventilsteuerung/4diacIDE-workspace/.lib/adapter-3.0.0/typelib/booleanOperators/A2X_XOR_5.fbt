@@ -1,60 +1,24 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<FBType Name="A2X_XOR_5" Comment="Composite FB: boolean XOR zwischen 5 A2X-Adaptern, UP und DOWN getrennt, Ausgang nur bei Wertaenderung (AX_XOR_5)">
-	<Identification Standard="61499-2" Function="OUT.UP = XOR(INi.UP), OUT.DOWN = XOR(INi.DOWN), je Kanal ueber AX_XOR_5" Description="Copyright (c) 2026 HR Agrartechnik GmbH  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0">
+<FBType Name="A2X_XOR_5" Comment="FB to calculate boolean XOR for A2X, UP und DOWN getrennt (generic FB) Adapter-Ausgang wird nur bei&#10;Wertänderung aktualisiert (Event nur bei tatsächlicher Änderung).">
+	<Identification Standard="61499-2" Description="Copyright (c) 2026 HR Agrartechnik GmbH &#10; &#10;This program and the accompanying materials are made &#10;available under the terms of the Eclipse Public License 2.0 &#10;which is available at https://www.eclipse.org/legal/epl-2.0/ &#10; &#10;SPDX-License-Identifier: EPL-2.0">
 	</Identification>
-	<VersionInfo Organization="HR Agrartechnik GmbH" Version="1.0" Author="Franz Höpfinger" Date="2026-11-13" Remarks="Initial Version - Luecke in der Adapter-Familie geschlossen">
+	<VersionInfo Organization="HR Agrartechnik GmbH" Version="1.0" Author="Franz Höpfinger" Date="2026-11-13" Remarks="Initial Version - generisch analog zu AX_XOR_5">
 	</VersionInfo>
 	<CompilerInfo packageName="adapter::booleanOperators">
+		<Import declaration="eclipse4diac::core::GenericClassName"/>
 	</CompilerInfo>
 	<InterfaceList>
 		<Plugs>
-			<AdapterDeclaration Name="OUT" Type="adapter::types::unidirectional::A2X" Comment="XOR result" x="4200" y="700"/>
+			<AdapterDeclaration Name="OUT" Type="adapter::types::unidirectional::A2X" Comment="XOR result"/>
 		</Plugs>
 		<Sockets>
-			<AdapterDeclaration Name="IN1" Type="adapter::types::unidirectional::A2X" Comment="XOR input 1" x="200" y="0"/>
-			<AdapterDeclaration Name="IN2" Type="adapter::types::unidirectional::A2X" Comment="XOR input 2" x="200" y="700"/>
-			<AdapterDeclaration Name="IN3" Type="adapter::types::unidirectional::A2X" Comment="XOR input 3" x="200" y="1400"/>
-			<AdapterDeclaration Name="IN4" Type="adapter::types::unidirectional::A2X" Comment="XOR input 4" x="200" y="2100"/>
-			<AdapterDeclaration Name="IN5" Type="adapter::types::unidirectional::A2X" Comment="XOR input 5" x="200" y="2800"/>
+			<AdapterDeclaration Name="IN1" Type="adapter::types::unidirectional::A2X" Comment="XOR input 1"/>
+			<AdapterDeclaration Name="IN2" Type="adapter::types::unidirectional::A2X" Comment="XOR input 2"/>
+			<AdapterDeclaration Name="IN3" Type="adapter::types::unidirectional::A2X" Comment="XOR input 3"/>
+			<AdapterDeclaration Name="IN4" Type="adapter::types::unidirectional::A2X" Comment="XOR input 4"/>
+			<AdapterDeclaration Name="IN5" Type="adapter::types::unidirectional::A2X" Comment="XOR input 5"/>
 		</Sockets>
 	</InterfaceList>
-	<FBNetwork>
-		<FB Name="SPLIT1" Type="adapter::conversion::unidirectional::A2X_2X_TO_2AX" x="1000" y="0">
-		</FB>
-		<FB Name="SPLIT2" Type="adapter::conversion::unidirectional::A2X_2X_TO_2AX" x="1000" y="700">
-		</FB>
-		<FB Name="SPLIT3" Type="adapter::conversion::unidirectional::A2X_2X_TO_2AX" x="1000" y="1400">
-		</FB>
-		<FB Name="SPLIT4" Type="adapter::conversion::unidirectional::A2X_2X_TO_2AX" x="1000" y="2100">
-		</FB>
-		<FB Name="SPLIT5" Type="adapter::conversion::unidirectional::A2X_2X_TO_2AX" x="1000" y="2800">
-		</FB>
-		<FB Name="XOR_UP" Type="adapter::booleanOperators::AX_XOR_5" x="2200" y="0">
-		</FB>
-		<FB Name="XOR_DOWN" Type="adapter::booleanOperators::AX_XOR_5" x="2200" y="2450">
-		</FB>
-		<FB Name="JOIN" Type="adapter::conversion::unidirectional::A2X_2AX_TO_2X" x="3300" y="700">
-		</FB>
-		<AdapterConnections>
-			<Connection Source="IN1" Destination="SPLIT1.A2X_IN"/>
-			<Connection Source="IN2" Destination="SPLIT2.A2X_IN"/>
-			<Connection Source="IN3" Destination="SPLIT3.A2X_IN"/>
-			<Connection Source="IN4" Destination="SPLIT4.A2X_IN"/>
-			<Connection Source="IN5" Destination="SPLIT5.A2X_IN"/>
-			<Connection Source="SPLIT1.UP" Destination="XOR_UP.IN1"/>
-			<Connection Source="SPLIT2.UP" Destination="XOR_UP.IN2"/>
-			<Connection Source="SPLIT3.UP" Destination="XOR_UP.IN3"/>
-			<Connection Source="SPLIT4.UP" Destination="XOR_UP.IN4"/>
-			<Connection Source="SPLIT5.UP" Destination="XOR_UP.IN5"/>
-			<Connection Source="SPLIT1.DOWN" Destination="XOR_DOWN.IN1"/>
-			<Connection Source="SPLIT2.DOWN" Destination="XOR_DOWN.IN2"/>
-			<Connection Source="SPLIT3.DOWN" Destination="XOR_DOWN.IN3"/>
-			<Connection Source="SPLIT4.DOWN" Destination="XOR_DOWN.IN4"/>
-			<Connection Source="SPLIT5.DOWN" Destination="XOR_DOWN.IN5"/>
-			<Connection Source="XOR_UP.OUT" Destination="JOIN.UP"/>
-			<Connection Source="XOR_DOWN.OUT" Destination="JOIN.DOWN"/>
-			<Connection Source="JOIN.A2X_OUT" Destination="OUT"/>
-		</AdapterConnections>
-	</FBNetwork>
+	<Attribute Name="eclipse4diac::core::GenericClassName" Value="'GEN_A2X_XOR'"/>
 	<Attribute Name="eclipse4diac::core::TypeHash" Value="''"/>
 </FBType>
