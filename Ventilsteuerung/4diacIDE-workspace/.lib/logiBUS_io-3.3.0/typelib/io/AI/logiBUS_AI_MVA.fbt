@@ -39,12 +39,12 @@
 			<VarDeclaration Name="QO" Type="BOOL" Comment="Event Output Qualifier"/>
 			<VarDeclaration Name="STATUS" Type="STRING" Comment="Service Status"/>
 		</OutputVars>
-		<Plugs>
-			<AdapterDeclaration Name="IN" Type="adapter::types::unidirectional::AD" Comment="Input data from resource, calibrated voltage at the pin in mV" x="3200" y="1200"/>
-		</Plugs>
 		<Sockets>
 			<AdapterDeclaration Name="SREQ" Type="adapter::types::unidirectional::AX" Comment="Service Request" x="-1300" y="1800"/>
 		</Sockets>
+		<Plugs>
+			<AdapterDeclaration Name="IN" Type="adapter::types::unidirectional::AD" Comment="Input data from resource, calibrated voltage at the pin in mV" x="3200" y="1200"/>
+		</Plugs>
 	</InterfaceList>
 	<FBNetwork>
 		<FB Name="AI" Type="logiBUS::io::AI::logiBUS_AI_MV" x="1240" y="460">
