@@ -58,6 +58,9 @@ END_VAR
 lo := LOWER_BOUND(DATA, 1);
 cap := UPPER_BOUND(DATA, 1) - lo + 1;
 n := UINT_TO_DINT(LEN);
+IF n < 0 THEN
+	n := 0;
+END_IF;
 IF n > cap THEN
 	n := cap;
 END_IF;
