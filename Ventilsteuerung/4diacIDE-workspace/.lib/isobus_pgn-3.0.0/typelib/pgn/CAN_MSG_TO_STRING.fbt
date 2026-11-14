@@ -38,7 +38,7 @@ VAR_TEMP
 	b : BYTE; // aktuelles Byte
 END_VAR
 OUT := '';
-n := UINT_TO_DINT(MSG.u16DaSize);
+n := MSG.u16DaSize;
 IF n > 8 THEN
 	n := 8;
 END_IF;
@@ -47,7 +47,7 @@ FOR i := 1 TO n DO
 	IF STOP_AT_NUL AND (b = BYTE#0) THEN
 		EXIT;
 	END_IF;
-	OUT := CONCAT(OUT, CHAR_TO_STRING(BYTE_TO_CHAR(b)));
+	OUT := CONCAT(OUT, BYTE_TO_CHAR(b));
 END_FOR;
 END_ALGORITHM]]></ST>
 		</Algorithm>

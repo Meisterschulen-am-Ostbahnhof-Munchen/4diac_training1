@@ -2,7 +2,7 @@
 <FBType Name="STRING_TO_CAN_MSG" Comment="STRING (bis 8 Zeichen) in eine CAN_MSG fuer AlPgnTxNew8B packen">
 	<Identification Standard="61499-2" Description="Copyright (c) 2026 HR Agrartechnik GmbH  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0">
 	</Identification>
-	<VersionInfo Organization="HR Agrartechnik GmbH" Version="1.1" Author="Franz Höpfinger" Date="2026-11-14" Remarks="Fuellung Text + 16#00 + 16#FF, u16DaSize immer 8, PRIO auf 0..7 begrenzt">
+	<VersionInfo Organization="HR Agrartechnik GmbH" Version="1.1" Author="Franz Höpfinger" Date="2026-11-14" Remarks="Fuellung Text + 16#00 + 16#FF, u16DaSize immer 8, PRIO auf 0..7 begrenzt, Ausgang TRUNC in TRUNCATED umbenannt (TRUNC ist reserviert)">
 	</VersionInfo>
 	<VersionInfo Organization="HR Agrartechnik GmbH" Version="1.0" Author="Franz Höpfinger" Date="2026-11-13" Remarks="Initial Version - STRING ueber CAN (0-8 Byte)">
 	</VersionInfo>
@@ -18,7 +18,7 @@
 		<EventOutputs>
 			<Event Name="CNF" Type="Event" Comment="MSG ist gefuellt">
 				<With Var="MSG"/>
-				<With Var="TRUNC"/>
+				<With Var="TRUNCATED"/>
 			</Event>
 		</EventOutputs>
 		<InputVars>
@@ -27,7 +27,7 @@
 		</InputVars>
 		<OutputVars>
 			<VarDeclaration Name="MSG" Type="isobus::pgn::CAN_MSG" Comment="data = Zeichen, dann 16#00 (falls Platz), Rest 16#FF; u16DaSize = 8"/>
-			<VarDeclaration Name="TRUNC" Type="BOOL" Comment="TRUE, wenn IN laenger als 8 Zeichen war (abgeschnitten)"/>
+			<VarDeclaration Name="TRUNCATED" Type="BOOL" Comment="TRUE, wenn IN laenger als 8 Zeichen war (abgeschnitten)"/>
 		</OutputVars>
 	</InterfaceList>
 	<SimpleFB>
@@ -44,7 +44,7 @@ n := LEN(IN);
 IF n < 0 THEN
 	n := 0;
 END_IF;
-TRUNC := n > 8;
+TRUNCATED := n > 8;
 IF n > 8 THEN
 	n := 8;
 END_IF;

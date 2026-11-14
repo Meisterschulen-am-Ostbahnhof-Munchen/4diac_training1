@@ -59,7 +59,7 @@ END_VAR
 
 lo := LOWER_BOUND(DATA, 1);
 cap := UPPER_BOUND(DATA, 1) - lo + 1;
-n := UINT_TO_DINT(SIZE);
+n := SIZE;
 IF n < 0 THEN
 	n := 0;
 END_IF;
@@ -72,7 +72,7 @@ FOR i := 1 TO n DO
 	IF STOP_AT_NUL AND (b = BYTE#0) THEN
 		EXIT;
 	END_IF;
-	s := CONCAT(s, CHAR_TO_STRING(BYTE_TO_CHAR(b)));
+	s := CONCAT(s, BYTE_TO_CHAR(b));
 END_FOR;
 F_BYTES_TO_STRING := s;
 
