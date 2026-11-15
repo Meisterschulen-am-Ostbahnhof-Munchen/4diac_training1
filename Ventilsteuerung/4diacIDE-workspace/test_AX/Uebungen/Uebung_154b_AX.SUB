@@ -45,11 +45,11 @@
 		<FB Name="LIT_LH" Type="adapter::types::unidirectional::AR::initval::initval_AR" x="1000" y="4500">
 			<Parameter Name="INIT_VAL" Value="8184.0"/>
 		</FB>
-		<FB Name="E_RESTART" Type="iec61499::events::E_RESTART" x="-8000" y="-3000">
+		<FB Name="E_RESTART" Type="events::init::INIT" x="-6800" y="4300">
 		</FB>
 		<FB Name="SPERRE" Type="iec61499::events::E_T_FF" x="-5500" y="-300">
 		</FB>
-		<FB Name="MAN" Type="adapter::events::unidirectional::AX_T_FF" x="-5500" y="2400">
+		<FB Name="MAN" Type="adapter::events::unidirectional::AX_T_FF" x="-5300" y="2400">
 		</FB>
 		<FB Name="Y" Type="adapter::conversion::unidirectional::AR_R_TO_REAL" x="6600" y="0">
 		</FB>
@@ -138,57 +138,57 @@
 			<Parameter Name="QI" Value="TRUE"/>
 			<Parameter Name="Output" Value="Output_Q1"/>
 		</FB>
+		<Comment Comment="Test stoßfreie Hand/Auto-Umschaltung (CTRL_PID_AR, OSCAT-Fix #385)&#10;Aufbau wie Übung 153: Durchflussmesser an I3, Pumpe an Q1. I1 = Takt starten, I2 = Takt stoppen.&#10;I4 = Hand/Auto (Start: Auto), I5 = RST Integrator, I6 = Pumpe sperren (PWM 0, Regler läuft weiter).&#10;Handwert M_I: Stufe 4 = 3273.6 (40 %); I7 +10 %, I8 -10 %. Watch: Y.IN, ACT_ANZEIGE.IN (Istwert), DIFF.IN, LIM.IN.&#10;1) I4 Hand: Y = M_I. I4 Auto: Y springt nicht, regelt von M_I aus weiter.&#10;2) Start in Auto: Y beginnt bei KP*DIFF (KP*DIFF), läuft nicht erst bis LH hoch.&#10;3) Gegenprobe: in Auto I5 drücken -&gt; Integrator 0, Y springt auf KP*DIFF.&#10;4) Windup: I6 sperren -&gt; Istwert fällt, Y läuft bis LH (8184), LIM = TRUE. Lösung im Projekt: RST bei steigender Freigabe." x="-8000" y="-6000" width="11000" height="2200"/>
 		<EventConnections>
-			<Connection Source="DigitalInput_START_I1.IND" Destination="E_CYCLE.START"/>
-			<Connection Source="DigitalInput_STOP_I2.IND" Destination="E_CYCLE.STOP"/>
-			<Connection Source="E_CYCLE.EO" Destination="logiBUS_PI_IDA.REQ"/>
-			<Connection Source="DigitalInput_MAN_I4.IND" Destination="MAN.CLK"/>
-			<Connection Source="DigitalInput_RST_I5.IND" Destination="CTRL_PID.RST"/>
-			<Connection Source="DigitalInput_SPERRE_I6.IND" Destination="SPERRE.CLK"/>
-			<Connection Source="E_RESTART.COLD" Destination="M_I_STUFE.LD"/>
-			<Connection Source="E_RESTART.WARM" Destination="M_I_STUFE.LD"/>
-			<Connection Source="DigitalInput_MI_PLUS_I7.IND" Destination="M_I_STUFE.CU"/>
-			<Connection Source="DigitalInput_MI_MINUS_I8.IND" Destination="M_I_STUFE.CD"/>
+			<Connection Source="DigitalInput_START_I1.IND" Destination="E_CYCLE.START" dx1="673.33"/>
+			<Connection Source="DigitalInput_STOP_I2.IND" Destination="E_CYCLE.STOP" dx1="753.33"/>
+			<Connection Source="E_CYCLE.EO" Destination="logiBUS_PI_IDA.REQ" dx1="426.67"/>
+			<Connection Source="DigitalInput_MAN_I4.IND" Destination="MAN.CLK" dx1="900"/>
+			<Connection Source="DigitalInput_RST_I5.IND" Destination="CTRL_PID.RST" dx1="866.67" dx2="806.67" dy="-3840"/>
+			<Connection Source="DigitalInput_SPERRE_I6.IND" Destination="SPERRE.CLK" dx1="693.33"/>
+			<Connection Source="E_RESTART.CNF" Destination="M_I_STUFE.LD" dx1="106.67"/>
+			<Connection Source="DigitalInput_MI_PLUS_I7.IND" Destination="M_I_STUFE.CU" dx1="820"/>
+			<Connection Source="DigitalInput_MI_MINUS_I8.IND" Destination="M_I_STUFE.CD" dx1="806.67"/>
 			<Connection Source="M_I_STUFE.CO" Destination="M_I_TO_REAL.REQ"/>
-			<Connection Source="M_I_STUFE.LDO" Destination="M_I_TO_REAL.REQ"/>
+			<Connection Source="M_I_STUFE.LDO" Destination="M_I_TO_REAL.REQ" dx1="700"/>
 			<Connection Source="M_I_TO_REAL.CNF" Destination="M_I_MUL.REQ"/>
 			<Connection Source="M_I_MUL.CNF" Destination="M_I_TO_AR.REQ"/>
 			<Connection Source="Y.CNF" Destination="PWM_SPERRE.REQ"/>
-			<Connection Source="SPERRE.EO" Destination="PWM_SPERRE.REQ"/>
+			<Connection Source="SPERRE.EO" Destination="PWM_SPERRE.REQ" dx1="12873.33"/>
 			<Connection Source="PWM_SPERRE.CNF" Destination="Y_TO_AR.REQ"/>
+			<Connection Source="E_RESTART.INITO" Destination="E_RESTART.REQ" dx1="66.67" dx2="66.67" dy="-226.67"/>
 		</EventConnections>
 		<DataConnections>
-			<Connection Source="M_I_STUFE.CV" Destination="M_I_TO_REAL.IN"/>
+			<Connection Source="M_I_STUFE.CV" Destination="M_I_TO_REAL.IN" dx1="700"/>
 			<Connection Source="M_I_TO_REAL.OUT" Destination="M_I_MUL.IN1"/>
 			<Connection Source="M_I_MUL.OUT" Destination="M_I_TO_AR.OUT"/>
-			<Connection Source="SPERRE.Q" Destination="PWM_SPERRE.G"/>
-			<Connection Source="Y.IN" Destination="PWM_SPERRE.IN0"/>
-			<Connection Source="PWM_SPERRE.OUT" Destination="Y_TO_AR.OUT"/>
+			<Connection Source="SPERRE.Q" Destination="PWM_SPERRE.G" dx1="2453.33" dx2="460" dy="-140"/>
+			<Connection Source="Y.IN" Destination="PWM_SPERRE.IN0" dx1="426.67"/>
+			<Connection Source="PWM_SPERRE.OUT" Destination="Y_TO_AR.OUT" dx1="620"/>
 		</DataConnections>
 		<AdapterConnections>
 			<Connection Source="LIT_SET.OUT" Destination="CTRL_PID.SET"/>
-			<Connection Source="LIT_SUP.OUT" Destination="CTRL_PID.SUP"/>
-			<Connection Source="LIT_OFS.OUT" Destination="CTRL_PID.OFS"/>
-			<Connection Source="LIT_KP.OUT" Destination="CTRL_PID.KP"/>
-			<Connection Source="LIT_TN.OUT" Destination="CTRL_PID.TN"/>
-			<Connection Source="LIT_TV.OUT" Destination="CTRL_PID.TV"/>
-			<Connection Source="LIT_LL.OUT" Destination="CTRL_PID.LL"/>
-			<Connection Source="LIT_LH.OUT" Destination="CTRL_PID.LH"/>
-			<Connection Source="MAN.Q" Destination="CTRL_PID.AX_MAN"/>
-			<Connection Source="CTRL_PID.AR_Y" Destination="Y.AR_IN"/>
-			<Connection Source="CTRL_PID.AR_DIFF" Destination="DIFF.AR_IN"/>
-			<Connection Source="CTRL_PID.AB_LIM" Destination="LIM_TO_AX.AB_IN"/>
-			<Connection Source="LIM_TO_AX.AX_OUT" Destination="LIM.AX_IN"/>
-			<Connection Source="logiBUS_PI_IDA.IN" Destination="AD_TO_AR_NUM.AD_IN"/>
-			<Connection Source="AD_TO_AR_NUM.AR_OUT" Destination="FT_DERIV.AR_IN"/>
-			<Connection Source="LIT_K.OUT" Destination="FT_DERIV.K"/>
-			<Connection Source="FT_DERIV.AR_OUT" Destination="ACT.IN"/>
-			<Connection Source="ACT.OUT1" Destination="CTRL_PID.AR_ACT"/>
-			<Connection Source="ACT.OUT2" Destination="ACT_ANZEIGE.AR_IN"/>
-			<Connection Source="M_I_TO_AR.AR_OUT" Destination="CTRL_PID.M_I"/>
-			<Connection Source="Y_TO_AR.AR_OUT" Destination="AR_TO_AD_NUM.AR_IN"/>
-			<Connection Source="AR_TO_AD_NUM.AD_OUT" Destination="PWMOutput_Q1.OUT"/>
+			<Connection Source="LIT_SUP.OUT" Destination="CTRL_PID.SUP" dx1="673.33"/>
+			<Connection Source="LIT_OFS.OUT" Destination="CTRL_PID.OFS" dx1="706.67"/>
+			<Connection Source="LIT_KP.OUT" Destination="CTRL_PID.KP" dx1="806.67"/>
+			<Connection Source="LIT_TN.OUT" Destination="CTRL_PID.TN" dx1="840"/>
+			<Connection Source="LIT_TV.OUT" Destination="CTRL_PID.TV" dx1="873.33"/>
+			<Connection Source="LIT_LL.OUT" Destination="CTRL_PID.LL" dx1="906.67"/>
+			<Connection Source="LIT_LH.OUT" Destination="CTRL_PID.LH" dx1="940"/>
+			<Connection Source="MAN.Q" Destination="CTRL_PID.AX_MAN" dx1="4040"/>
+			<Connection Source="CTRL_PID.AR_Y" Destination="Y.AR_IN" dx1="1173.33"/>
+			<Connection Source="CTRL_PID.AR_DIFF" Destination="DIFF.AR_IN" dx1="1193.33"/>
+			<Connection Source="CTRL_PID.AB_LIM" Destination="LIM_TO_AX.AB_IN" dx1="1160"/>
+			<Connection Source="LIM_TO_AX.AX_OUT" Destination="LIM.AX_IN" dx1="520"/>
+			<Connection Source="logiBUS_PI_IDA.IN" Destination="AD_TO_AR_NUM.AD_IN" dx1="373.33"/>
+			<Connection Source="AD_TO_AR_NUM.AR_OUT" Destination="FT_DERIV.AR_IN" dx1="460"/>
+			<Connection Source="LIT_K.OUT" Destination="FT_DERIV.K" dx1="486.67"/>
+			<Connection Source="FT_DERIV.AR_OUT" Destination="ACT.IN" dx1="473.33"/>
+			<Connection Source="ACT.OUT1" Destination="CTRL_PID.AR_ACT" dx1="300"/>
+			<Connection Source="ACT.OUT2" Destination="ACT_ANZEIGE.AR_IN" dx1="333.33"/>
+			<Connection Source="M_I_TO_AR.AR_OUT" Destination="CTRL_PID.M_I" dx1="1680"/>
+			<Connection Source="Y_TO_AR.AR_OUT" Destination="AR_TO_AD_NUM.AR_IN" dx1="460"/>
+			<Connection Source="AR_TO_AD_NUM.AD_OUT" Destination="PWMOutput_Q1.OUT" dx1="460"/>
 		</AdapterConnections>
-		<Comment Comment="Test stoßfreie Hand/Auto-Umschaltung (CTRL_PID_AR, OSCAT-Fix #385)&#10;Aufbau wie Übung 153: Durchflussmesser an I3, Pumpe an Q1. I1 = Takt starten, I2 = Takt stoppen.&#10;I4 = Hand/Auto (Start: Auto), I5 = RST Integrator, I6 = Pumpe sperren (PWM 0, Regler läuft weiter).&#10;Handwert M_I: Stufe 4 = 3273.6 (40 %); I7 +10 %, I8 -10 %. Watch: Y.IN, ACT_ANZEIGE.IN (Istwert), DIFF.IN, LIM.IN.&#10;1) I4 Hand: Y = M_I. I4 Auto: Y springt nicht, regelt von M_I aus weiter.&#10;2) Start in Auto: Y beginnt bei KP*DIFF (KP*DIFF), läuft nicht erst bis LH hoch.&#10;3) Gegenprobe: in Auto I5 drücken -&gt; Integrator 0, Y springt auf KP*DIFF.&#10;4) Windup: I6 sperren -&gt; Istwert fällt, Y läuft bis LH (8184), LIM = TRUE. Lösung im Projekt: RST bei steigender Freigabe." x="-8000" y="-6000" width="11000" height="2200"/>
 	</SubAppNetwork>
 </SubAppType>
