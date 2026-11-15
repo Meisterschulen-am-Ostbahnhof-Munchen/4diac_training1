@@ -29,7 +29,7 @@
 		</OutputVars>
 	</SubAppInterfaceList>
 	<SubAppNetwork>
-		<FB Name="logiBUS_AI_MVA" Type="logiBUS::io::AI::logiBUS_AI_MVA" x="-5600" y="-1700">
+		<FB Name="logiBUS_AI_MVA" Type="logiBUS::io::AI::logiBUS_AI_MVA" x="-5500" y="-1700">
 			<Parameter Name="PARAMS" Value="">
 				<Attribute Name="Visible" Value="false"/>
 			</Parameter>
@@ -43,40 +43,52 @@
 		</FB>
 		<FB Name="AD_TO_AUDI" Type="adapter::conversion::unidirectional::AD_TO_AUDI" x="0" y="-400">
 		</FB>
-		<FB Name="Q_NumericValue" Type="isobus::UT::Q::Q_NumericValue_AUDI" x="1900" y="-800">
+		<FB Name="Q_NumericValue" Type="isobus::UT::Q::Q_NumericValue_AUDI" x="2000" y="-800">
 		</FB>
-		<FB Name="AND_QO" Type="iec61131::booleanOperators::AND_BOOL_3" x="4100" y="-500">
+		<FB Name="AND_QO" Type="iec61131::booleanOperators::AND_BOOL_3" x="5200" y="-500">
 		</FB>
 		<EventConnections>
-			<Connection Source="INIT" Destination="logiBUS_AI_MVA.INIT"/>
+			<Connection Source="INIT" Destination="logiBUS_AI_MVA.INIT" dx1="820"/>
 			<Connection Source="logiBUS_AI_MVA.INITO" Destination="AD_PUBLISH_MV.INIT"/>
-			<Connection Source="AD_PUBLISH_MV.INITO" Destination="Q_NumericValue.INIT"/>
-			<Connection Source="Q_NumericValue.INITO" Destination="INITO"/>
-			<Connection Source="Q_NumericValue.INITO" Destination="AND_QO.REQ"/>
+			<Connection Source="AD_PUBLISH_MV.INITO" Destination="Q_NumericValue.INIT" dx1="80" dx2="80" dy="700"/>
+			<Connection Source="Q_NumericValue.INITO" Destination="INITO" dx1="4360"/>
+			<Connection Source="Q_NumericValue.INITO" Destination="AND_QO.REQ" dx1="480"/>
 		</EventConnections>
 		<DataConnections>
-			<Connection Source="Input" Destination="logiBUS_AI_MVA.Input">
+			<Connection Source="Input" Destination="logiBUS_AI_MVA.Input" dx1="820">
 				<Attribute Name="Visible" Value="false"/>
 			</Connection>
-			<Connection Source="u16ObjId_VALUEVAR" Destination="Q_NumericValue.u16ObjId">
+			<Connection Source="u16ObjId_VALUEVAR" Destination="Q_NumericValue.u16ObjId" dx1="520">
 				<Attribute Name="Visible" Value="false"/>
 			</Connection>
-			<Connection Source="ID_MV_WRITE" Destination="AD_PUBLISH_MV.ID">
+			<Connection Source="ID_MV_WRITE" Destination="AD_PUBLISH_MV.ID" dx1="566.67">
 				<Attribute Name="Visible" Value="false"/>
 			</Connection>
-			<Connection Source="QI" Destination="logiBUS_AI_MVA.QI"/>
-			<Connection Source="QI" Destination="AD_PUBLISH_MV.QI"/>
-			<Connection Source="QI" Destination="Q_NumericValue.QI"/>
-			<Connection Source="logiBUS_AI_MVA.QO" Destination="AND_QO.IN1"/>
-			<Connection Source="AD_PUBLISH_MV.QO" Destination="AND_QO.IN2"/>
-			<Connection Source="Q_NumericValue.QO" Destination="AND_QO.IN3"/>
-			<Connection Source="AND_QO.OUT" Destination="QO"/>
+			<Connection Source="QI" Destination="logiBUS_AI_MVA.QI" dx1="820">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="QI" Destination="AD_PUBLISH_MV.QI" dx1="566.67">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="QI" Destination="Q_NumericValue.QI" dx1="520">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="logiBUS_AI_MVA.QO" Destination="AND_QO.IN1" dx1="4126.67">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="AD_PUBLISH_MV.QO" Destination="AND_QO.IN2" dx1="626.67">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="Q_NumericValue.QO" Destination="AND_QO.IN3" dx1="480">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="AND_QO.OUT" Destination="QO" dx1="1640"/>
 		</DataConnections>
 		<AdapterConnections>
-			<Connection Source="logiBUS_AI_MVA.IN" Destination="AD_SPLIT_2.IN"/>
-			<Connection Source="AD_SPLIT_2.OUT1" Destination="AD_PUBLISH_MV.IN"/>
-			<Connection Source="AD_SPLIT_2.OUT2" Destination="AD_TO_AUDI.AD_IN"/>
-			<Connection Source="AD_TO_AUDI.AUDI_OUT" Destination="Q_NumericValue.u32NewValue"/>
+			<Connection Source="logiBUS_AI_MVA.IN" Destination="AD_SPLIT_2.IN" dx1="426.67"/>
+			<Connection Source="AD_SPLIT_2.OUT1" Destination="AD_PUBLISH_MV.IN" dx1="2273.33"/>
+			<Connection Source="AD_SPLIT_2.OUT2" Destination="AD_TO_AUDI.AD_IN" dx1="1273.33"/>
+			<Connection Source="AD_TO_AUDI.AUDI_OUT" Destination="Q_NumericValue.u32NewValue" dx1="540"/>
 		</AdapterConnections>
 	</SubAppNetwork>
 </SubAppType>
