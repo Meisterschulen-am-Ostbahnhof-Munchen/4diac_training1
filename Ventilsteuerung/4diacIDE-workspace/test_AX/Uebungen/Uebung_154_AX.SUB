@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SubAppType Name="Uebung_154_AX" Comment="Stoßfreie Hand/Auto-Umschaltung CTRL_PID_AR, simulierte PT1-Strecke">
+	<Identification Standard="61499-2" Description="Copyright (c) 2026 Meisterschulen am Ostbahnhof  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0">
+	</Identification>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2026-11-15" Remarks="initial API and implementation and/or initial documentation">
+	</VersionInfo>
+	<CompilerInfo packageName="Uebungen">
+		<Import declaration="logiBUS::io::DI::logiBUS_DI::Input_I1"/>
+		<Import declaration="logiBUS::io::DI::logiBUS_DI::Input_I2"/>
+		<Import declaration="logiBUS::io::DI::logiBUS_DI::Input_I3"/>
+		<Import declaration="logiBUS::io::DI::logiBUS_DI_Events::BUTTON_SINGLE_CLICK"/>
+	</CompilerInfo>
+	<SubAppInterfaceList>
+	</SubAppInterfaceList>
+	<SubAppNetwork>
+		<FB Name="CTRL_PID" Type="OSCAT_adapter::Control::CTRL_PID_AR" x="3400" y="300">
+		</FB>
+		<FB Name="LIT_SET" Type="adapter::types::unidirectional::AR::initval::initval_AR" x="1000" y="300">
+			<Parameter Name="INIT_VAL" Value="50.0"/>
+		</FB>
+		<FB Name="LIT_SUP" Type="adapter::types::unidirectional::AR::initval::initval_AR" x="1000" y="900">
+			<Parameter Name="INIT_VAL" Value="0.0"/>
+		</FB>
+		<FB Name="LIT_OFS" Type="adapter::types::unidirectional::AR::initval::initval_AR" x="1000" y="1500">
+			<Parameter Name="INIT_VAL" Value="0.0"/>
+		</FB>
+		<FB Name="LIT_KP" Type="adapter::types::unidirectional::AR::initval::initval_AR" x="1000" y="2100">
+			<Parameter Name="INIT_VAL" Value="1.0"/>
+		</FB>
+		<FB Name="LIT_TN" Type="adapter::types::unidirectional::AR::initval::initval_AR" x="1000" y="2700">
+			<Parameter Name="INIT_VAL" Value="2.0"/>
+		</FB>
+		<FB Name="LIT_TV" Type="adapter::types::unidirectional::AR::initval::initval_AR" x="1000" y="3300">
+			<Parameter Name="INIT_VAL" Value="0.0"/>
+		</FB>
+		<FB Name="LIT_LL" Type="adapter::types::unidirectional::AR::initval::initval_AR" x="1000" y="3900">
+			<Parameter Name="INIT_VAL" Value="0.0"/>
+		</FB>
+		<FB Name="LIT_LH" Type="adapter::types::unidirectional::AR::initval::initval_AR" x="1000" y="4500">
+			<Parameter Name="INIT_VAL" Value="100.0"/>
+		</FB>
+		<FB Name="E_RESTART" Type="iec61499::events::E_RESTART" x="-8000" y="-3000">
+		</FB>
+		<FB Name="SPERRE" Type="iec61499::events::E_T_FF" x="-5500" y="-300">
+		</FB>
+		<FB Name="MAN" Type="adapter::events::unidirectional::AX_T_FF" x="-5500" y="2400">
+		</FB>
+		<FB Name="Y" Type="adapter::conversion::unidirectional::AR_R_TO_REAL" x="6600" y="0">
+		</FB>
+		<FB Name="DIFF" Type="adapter::conversion::unidirectional::AR_R_TO_REAL" x="6600" y="900">
+		</FB>
+		<FB Name="LIM_TO_AX" Type="adapter::conversion::unidirectional::AB_TO_AX" x="6600" y="1800">
+		</FB>
+		<FB Name="LIM" Type="adapter::conversion::unidirectional::AX_X_TO_BOOL" x="8400" y="1800">
+		</FB>
+		<FB Name="DigitalInput_MAN_I1" Type="logiBUS::io::DI::logiBUS_IE" x="-8000" y="2400">
+			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="Input" Value="Input_I1"/>
+			<Parameter Name="InputEvent" Value="BUTTON_SINGLE_CLICK"/>
+		</FB>
+		<FB Name="DigitalInput_RST_I2" Type="logiBUS::io::DI::logiBUS_IE" x="-8000" y="3700">
+			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="Input" Value="Input_I2"/>
+			<Parameter Name="InputEvent" Value="BUTTON_SINGLE_CLICK"/>
+		</FB>
+		<FB Name="DigitalInput_SPERRE_I3" Type="logiBUS::io::DI::logiBUS_IE" x="-8000" y="-300">
+			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="Input" Value="Input_I3"/>
+			<Parameter Name="InputEvent" Value="BUTTON_SINGLE_CLICK"/>
+		</FB>
+		<FB Name="E_CYCLE" Type="iec61499::events::E_CYCLE" x="-5500" y="-1600">
+			<Parameter Name="DT" Value="T#100ms"/>
+		</FB>
+		<FB Name="STRECKE_SPERRE" Type="iec61131::selection::F_SEL" x="-2000" y="-1600">
+			<Parameter Name="IN1" Value="REAL#0.0"/>
+		</FB>
+		<FB Name="STRECKE_PT1" Type="OSCAT::Basic::POUs::Engineering::Control::FT_PT1" x="-200" y="-1600">
+			<Parameter Name="TM" Value="T#5s"/>
+			<Parameter Name="K" Value="1.0"/>
+		</FB>
+		<FB Name="ACT_TO_AR" Type="adapter::conversion::unidirectional::AR_REAL_TO_R" x="1600" y="-1600">
+		</FB>
+		<FB Name="LIT_M_I" Type="adapter::types::unidirectional::AR::initval::initval_AR" x="1000" y="5100">
+			<Parameter Name="INIT_VAL" Value="40.0"/>
+		</FB>
+		<EventConnections>
+			<Connection Source="E_RESTART.COLD" Destination="E_CYCLE.START"/>
+			<Connection Source="E_RESTART.WARM" Destination="E_CYCLE.START"/>
+			<Connection Source="E_CYCLE.EO" Destination="STRECKE_SPERRE.REQ"/>
+			<Connection Source="STRECKE_SPERRE.CNF" Destination="STRECKE_PT1.REQ"/>
+			<Connection Source="STRECKE_PT1.CNF" Destination="ACT_TO_AR.REQ"/>
+			<Connection Source="DigitalInput_SPERRE_I3.IND" Destination="SPERRE.CLK"/>
+			<Connection Source="DigitalInput_MAN_I1.IND" Destination="MAN.CLK"/>
+			<Connection Source="DigitalInput_RST_I2.IND" Destination="CTRL_PID.RST"/>
+		</EventConnections>
+		<DataConnections>
+			<Connection Source="SPERRE.Q" Destination="STRECKE_SPERRE.G"/>
+			<Connection Source="Y.IN" Destination="STRECKE_SPERRE.IN0"/>
+			<Connection Source="STRECKE_SPERRE.OUT" Destination="STRECKE_PT1.in"/>
+			<Connection Source="STRECKE_PT1.out" Destination="ACT_TO_AR.OUT"/>
+		</DataConnections>
+		<AdapterConnections>
+			<Connection Source="LIT_SET.OUT" Destination="CTRL_PID.SET"/>
+			<Connection Source="LIT_SUP.OUT" Destination="CTRL_PID.SUP"/>
+			<Connection Source="LIT_OFS.OUT" Destination="CTRL_PID.OFS"/>
+			<Connection Source="LIT_KP.OUT" Destination="CTRL_PID.KP"/>
+			<Connection Source="LIT_TN.OUT" Destination="CTRL_PID.TN"/>
+			<Connection Source="LIT_TV.OUT" Destination="CTRL_PID.TV"/>
+			<Connection Source="LIT_LL.OUT" Destination="CTRL_PID.LL"/>
+			<Connection Source="LIT_LH.OUT" Destination="CTRL_PID.LH"/>
+			<Connection Source="MAN.Q" Destination="CTRL_PID.AX_MAN"/>
+			<Connection Source="CTRL_PID.AR_Y" Destination="Y.AR_IN"/>
+			<Connection Source="CTRL_PID.AR_DIFF" Destination="DIFF.AR_IN"/>
+			<Connection Source="CTRL_PID.AB_LIM" Destination="LIM_TO_AX.AB_IN"/>
+			<Connection Source="LIM_TO_AX.AX_OUT" Destination="LIM.AX_IN"/>
+			<Connection Source="ACT_TO_AR.AR_OUT" Destination="CTRL_PID.AR_ACT"/>
+			<Connection Source="LIT_M_I.OUT" Destination="CTRL_PID.M_I"/>
+		</AdapterConnections>
+		<Comment Comment="Test stoßfreie Hand/Auto-Umschaltung (CTRL_PID_AR, OSCAT-Fix #385)&#10;Strecke simuliert: PT1 (5 s) aus Y, Takt 100 ms, startet von selbst.&#10;I1 = Hand/Auto (Start: Auto), I2 = RST Integrator, I3 = Ausgang sperren (Strecke bekommt 0).&#10;Handwert M_I: 40 (fest, LIT_M_I). Watch: Y.IN, STRECKE_PT1.out (Istwert), DIFF.IN, LIM.IN.&#10;1) I1 Hand: Y = M_I. I1 Auto: Y springt nicht, regelt von M_I aus weiter.&#10;2) Start in Auto: Y beginnt bei 50 (KP*DIFF), läuft nicht erst bis LH hoch.&#10;3) Gegenprobe: in Auto I2 drücken -&gt; Integrator 0, Y springt auf KP*DIFF.&#10;4) Windup: I3 sperren -&gt; Istwert fällt, Y läuft bis LH (100), LIM = TRUE. Lösung im Projekt: RST bei steigender Freigabe." x="-8000" y="-6000" width="11000" height="2200"/>
+	</SubAppNetwork>
+</SubAppType>

@@ -1,0 +1,194 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SubAppType Name="Uebung_154b" Comment="Stoßfreie Hand/Auto-Umschaltung CTRL_PID_AR, realer Aufbau Pumpe + Durchflussmesser">
+	<Identification Standard="61499-2" Description="Copyright (c) 2026 Meisterschulen am Ostbahnhof  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0">
+	</Identification>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2026-11-15" Remarks="initial API and implementation and/or initial documentation">
+	</VersionInfo>
+	<CompilerInfo packageName="Uebungen">
+		<Import declaration="logiBUS::io::DI::logiBUS_DI::Input_I1"/>
+		<Import declaration="logiBUS::io::DI::logiBUS_DI::Input_I2"/>
+		<Import declaration="logiBUS::io::DI::logiBUS_DI::Input_I4"/>
+		<Import declaration="logiBUS::io::DI::logiBUS_DI::Input_I5"/>
+		<Import declaration="logiBUS::io::DI::logiBUS_DI::Input_I6"/>
+		<Import declaration="logiBUS::io::DI::logiBUS_DI::Input_I7"/>
+		<Import declaration="logiBUS::io::DI::logiBUS_DI::Input_I8"/>
+		<Import declaration="logiBUS::io::DI::logiBUS_DI_Events::BUTTON_SINGLE_CLICK"/>
+		<Import declaration="logiBUS::io::DQ::logiBUS_DO::Output_Q1"/>
+		<Import declaration="logiBUS::io::PI::logiBUS_PI::PulseInput_I3"/>
+	</CompilerInfo>
+	<SubAppInterfaceList>
+	</SubAppInterfaceList>
+	<SubAppNetwork>
+		<FB Name="CTRL_PID" Type="OSCAT_adapter::Control::CTRL_PID_AR" x="3400" y="300">
+		</FB>
+		<FB Name="LIT_SET" Type="adapter::types::unidirectional::AR::initval::initval_AR" x="1000" y="300">
+			<Parameter Name="INIT_VAL" Value="16.0"/>
+		</FB>
+		<FB Name="LIT_SUP" Type="adapter::types::unidirectional::AR::initval::initval_AR" x="1000" y="900">
+			<Parameter Name="INIT_VAL" Value="0.0"/>
+		</FB>
+		<FB Name="LIT_OFS" Type="adapter::types::unidirectional::AR::initval::initval_AR" x="1000" y="1500">
+			<Parameter Name="INIT_VAL" Value="0.0"/>
+		</FB>
+		<FB Name="LIT_KP" Type="adapter::types::unidirectional::AR::initval::initval_AR" x="1000" y="2100">
+			<Parameter Name="INIT_VAL" Value="10.0"/>
+		</FB>
+		<FB Name="LIT_TN" Type="adapter::types::unidirectional::AR::initval::initval_AR" x="1000" y="2700">
+			<Parameter Name="INIT_VAL" Value="1.0"/>
+		</FB>
+		<FB Name="LIT_TV" Type="adapter::types::unidirectional::AR::initval::initval_AR" x="1000" y="3300">
+			<Parameter Name="INIT_VAL" Value="1.0"/>
+		</FB>
+		<FB Name="LIT_LL" Type="adapter::types::unidirectional::AR::initval::initval_AR" x="1000" y="3900">
+			<Parameter Name="INIT_VAL" Value="0.0"/>
+		</FB>
+		<FB Name="LIT_LH" Type="adapter::types::unidirectional::AR::initval::initval_AR" x="1000" y="4500">
+			<Parameter Name="INIT_VAL" Value="8184.0"/>
+		</FB>
+		<FB Name="E_RESTART" Type="iec61499::events::E_RESTART" x="-8000" y="-3000">
+		</FB>
+		<FB Name="SPERRE" Type="iec61499::events::E_T_FF" x="-5500" y="-300">
+		</FB>
+		<FB Name="MAN" Type="adapter::events::unidirectional::AX_T_FF" x="-5500" y="2400">
+		</FB>
+		<FB Name="Y" Type="adapter::conversion::unidirectional::AR_R_TO_REAL" x="6600" y="0">
+		</FB>
+		<FB Name="DIFF" Type="adapter::conversion::unidirectional::AR_R_TO_REAL" x="6600" y="900">
+		</FB>
+		<FB Name="LIM_TO_AX" Type="adapter::conversion::unidirectional::AB_TO_AX" x="6600" y="1800">
+		</FB>
+		<FB Name="LIM" Type="adapter::conversion::unidirectional::AX_X_TO_BOOL" x="8400" y="1800">
+		</FB>
+		<FB Name="DigitalInput_START_I1" Type="logiBUS::io::DI::logiBUS_IE" x="-8000" y="-1600">
+			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="Input" Value="Input_I1"/>
+			<Parameter Name="InputEvent" Value="BUTTON_SINGLE_CLICK"/>
+		</FB>
+		<FB Name="DigitalInput_STOP_I2" Type="logiBUS::io::DI::logiBUS_IE" x="-8000" y="-300">
+			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="Input" Value="Input_I2"/>
+			<Parameter Name="InputEvent" Value="BUTTON_SINGLE_CLICK"/>
+		</FB>
+		<FB Name="E_CYCLE" Type="iec61499::events::E_CYCLE" x="-5500" y="-1600">
+			<Parameter Name="DT" Value="T#200ms"/>
+		</FB>
+		<FB Name="logiBUS_PI_IDA" Type="logiBUS::io::PI::logiBUS_PI_IDA" x="-4000" y="-3000">
+			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="Input" Value="PulseInput_I3"/>
+			<Parameter Name="ImpulseDelta" Value="100"/>
+			<Parameter Name="TimeDelta" Value="50000"/>
+			<Parameter Name="TimeRateLimit" Value="10000"/>
+		</FB>
+		<FB Name="AD_TO_AR_NUM" Type="adapter::conversion::unidirectional::AD_TO_AR_NUM" x="-2200" y="-3000">
+		</FB>
+		<FB Name="FT_DERIV" Type="OSCAT_adapter::Control::FT_DERIV_10_AR" x="-400" y="-3000">
+			<Parameter Name="Faktor" Value="1.0"/>
+			<Parameter Name="run" Value="TRUE"/>
+		</FB>
+		<FB Name="LIT_K" Type="adapter::types::unidirectional::AUI::initval::initval_AUI" x="-2200" y="-2400">
+			<Parameter Name="INIT_VAL" Value="9"/>
+		</FB>
+		<FB Name="ACT" Type="adapter::events::unidirectional::AR_SPLIT_2_UNGATED" x="1600" y="-3000">
+		</FB>
+		<FB Name="ACT_ANZEIGE" Type="adapter::conversion::unidirectional::AR_R_TO_REAL" x="3400" y="-3600">
+		</FB>
+		<FB Name="DigitalInput_MAN_I4" Type="logiBUS::io::DI::logiBUS_IE" x="-8000" y="2400">
+			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="Input" Value="Input_I4"/>
+			<Parameter Name="InputEvent" Value="BUTTON_SINGLE_CLICK"/>
+		</FB>
+		<FB Name="DigitalInput_RST_I5" Type="logiBUS::io::DI::logiBUS_IE" x="-8000" y="3700">
+			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="Input" Value="Input_I5"/>
+			<Parameter Name="InputEvent" Value="BUTTON_SINGLE_CLICK"/>
+		</FB>
+		<FB Name="DigitalInput_SPERRE_I6" Type="logiBUS::io::DI::logiBUS_IE" x="-8000" y="1000">
+			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="Input" Value="Input_I6"/>
+			<Parameter Name="InputEvent" Value="BUTTON_SINGLE_CLICK"/>
+		</FB>
+		<FB Name="DigitalInput_MI_PLUS_I7" Type="logiBUS::io::DI::logiBUS_IE" x="-8000" y="5000">
+			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="Input" Value="Input_I7"/>
+			<Parameter Name="InputEvent" Value="BUTTON_SINGLE_CLICK"/>
+		</FB>
+		<FB Name="DigitalInput_MI_MINUS_I8" Type="logiBUS::io::DI::logiBUS_IE" x="-8000" y="6300">
+			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="Input" Value="Input_I8"/>
+			<Parameter Name="InputEvent" Value="BUTTON_SINGLE_CLICK"/>
+		</FB>
+		<FB Name="M_I_STUFE" Type="iec61499::events::E_CTUD" x="-5500" y="5000">
+			<Parameter Name="PV" Value="4"/>
+		</FB>
+		<FB Name="M_I_TO_REAL" Type="iec61131::conversion::F_UINT_TO_REAL" x="-3500" y="5000">
+		</FB>
+		<FB Name="M_I_MUL" Type="iec61131::arithmetic::F_MUL" x="-1700" y="5000">
+			<Parameter Name="IN2" Value="REAL#818.4"/>
+		</FB>
+		<FB Name="M_I_TO_AR" Type="adapter::conversion::unidirectional::AR_REAL_TO_R" x="0" y="5000">
+		</FB>
+		<FB Name="PWM_SPERRE" Type="iec61131::selection::F_SEL" x="8400" y="0">
+			<Parameter Name="IN1" Value="REAL#0.0"/>
+		</FB>
+		<FB Name="Y_TO_AR" Type="adapter::conversion::unidirectional::AR_REAL_TO_R" x="10200" y="0">
+		</FB>
+		<FB Name="AR_TO_AD_NUM" Type="adapter::conversion::unidirectional::AR_TO_AD_NUM" x="12000" y="0">
+		</FB>
+		<FB Name="PWMOutput_Q1" Type="logiBUS::io::DQ::logiBUS_QDA_PWM" x="13800" y="-500">
+			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="Output" Value="Output_Q1"/>
+		</FB>
+		<EventConnections>
+			<Connection Source="DigitalInput_START_I1.IND" Destination="E_CYCLE.START"/>
+			<Connection Source="DigitalInput_STOP_I2.IND" Destination="E_CYCLE.STOP"/>
+			<Connection Source="E_CYCLE.EO" Destination="logiBUS_PI_IDA.REQ"/>
+			<Connection Source="DigitalInput_MAN_I4.IND" Destination="MAN.CLK"/>
+			<Connection Source="DigitalInput_RST_I5.IND" Destination="CTRL_PID.RST"/>
+			<Connection Source="DigitalInput_SPERRE_I6.IND" Destination="SPERRE.CLK"/>
+			<Connection Source="E_RESTART.COLD" Destination="M_I_STUFE.LD"/>
+			<Connection Source="E_RESTART.WARM" Destination="M_I_STUFE.LD"/>
+			<Connection Source="DigitalInput_MI_PLUS_I7.IND" Destination="M_I_STUFE.CU"/>
+			<Connection Source="DigitalInput_MI_MINUS_I8.IND" Destination="M_I_STUFE.CD"/>
+			<Connection Source="M_I_STUFE.CO" Destination="M_I_TO_REAL.REQ"/>
+			<Connection Source="M_I_STUFE.LDO" Destination="M_I_TO_REAL.REQ"/>
+			<Connection Source="M_I_TO_REAL.CNF" Destination="M_I_MUL.REQ"/>
+			<Connection Source="M_I_MUL.CNF" Destination="M_I_TO_AR.REQ"/>
+			<Connection Source="Y.CNF" Destination="PWM_SPERRE.REQ"/>
+			<Connection Source="SPERRE.EO" Destination="PWM_SPERRE.REQ"/>
+			<Connection Source="PWM_SPERRE.CNF" Destination="Y_TO_AR.REQ"/>
+		</EventConnections>
+		<DataConnections>
+			<Connection Source="M_I_STUFE.CV" Destination="M_I_TO_REAL.IN"/>
+			<Connection Source="M_I_TO_REAL.OUT" Destination="M_I_MUL.IN1"/>
+			<Connection Source="M_I_MUL.OUT" Destination="M_I_TO_AR.OUT"/>
+			<Connection Source="SPERRE.Q" Destination="PWM_SPERRE.G"/>
+			<Connection Source="Y.IN" Destination="PWM_SPERRE.IN0"/>
+			<Connection Source="PWM_SPERRE.OUT" Destination="Y_TO_AR.OUT"/>
+		</DataConnections>
+		<AdapterConnections>
+			<Connection Source="LIT_SET.OUT" Destination="CTRL_PID.SET"/>
+			<Connection Source="LIT_SUP.OUT" Destination="CTRL_PID.SUP"/>
+			<Connection Source="LIT_OFS.OUT" Destination="CTRL_PID.OFS"/>
+			<Connection Source="LIT_KP.OUT" Destination="CTRL_PID.KP"/>
+			<Connection Source="LIT_TN.OUT" Destination="CTRL_PID.TN"/>
+			<Connection Source="LIT_TV.OUT" Destination="CTRL_PID.TV"/>
+			<Connection Source="LIT_LL.OUT" Destination="CTRL_PID.LL"/>
+			<Connection Source="LIT_LH.OUT" Destination="CTRL_PID.LH"/>
+			<Connection Source="MAN.Q" Destination="CTRL_PID.AX_MAN"/>
+			<Connection Source="CTRL_PID.AR_Y" Destination="Y.AR_IN"/>
+			<Connection Source="CTRL_PID.AR_DIFF" Destination="DIFF.AR_IN"/>
+			<Connection Source="CTRL_PID.AB_LIM" Destination="LIM_TO_AX.AB_IN"/>
+			<Connection Source="LIM_TO_AX.AX_OUT" Destination="LIM.AX_IN"/>
+			<Connection Source="logiBUS_PI_IDA.IN" Destination="AD_TO_AR_NUM.AD_IN"/>
+			<Connection Source="AD_TO_AR_NUM.AR_OUT" Destination="FT_DERIV.AR_IN"/>
+			<Connection Source="LIT_K.OUT" Destination="FT_DERIV.K"/>
+			<Connection Source="FT_DERIV.AR_OUT" Destination="ACT.IN"/>
+			<Connection Source="ACT.OUT1" Destination="CTRL_PID.AR_ACT"/>
+			<Connection Source="ACT.OUT2" Destination="ACT_ANZEIGE.AR_IN"/>
+			<Connection Source="M_I_TO_AR.AR_OUT" Destination="CTRL_PID.M_I"/>
+			<Connection Source="Y_TO_AR.AR_OUT" Destination="AR_TO_AD_NUM.AR_IN"/>
+			<Connection Source="AR_TO_AD_NUM.AD_OUT" Destination="PWMOutput_Q1.OUT"/>
+		</AdapterConnections>
+		<Comment Comment="Test stoßfreie Hand/Auto-Umschaltung (CTRL_PID_AR, OSCAT-Fix #385)&#10;Aufbau wie Übung 153: Durchflussmesser an I3, Pumpe an Q1. I1 = Takt starten, I2 = Takt stoppen.&#10;I4 = Hand/Auto (Start: Auto), I5 = RST Integrator, I6 = Pumpe sperren (PWM 0, Regler läuft weiter).&#10;Handwert M_I: Stufe 4 = 3273.6 (40 %); I7 +10 %, I8 -10 %. Watch: Y.IN, ACT_ANZEIGE.IN (Istwert), DIFF.IN, LIM.IN.&#10;1) I4 Hand: Y = M_I. I4 Auto: Y springt nicht, regelt von M_I aus weiter.&#10;2) Start in Auto: Y beginnt bei KP*DIFF (KP*DIFF), läuft nicht erst bis LH hoch.&#10;3) Gegenprobe: in Auto I5 drücken -&gt; Integrator 0, Y springt auf KP*DIFF.&#10;4) Windup: I6 sperren -&gt; Istwert fällt, Y läuft bis LH (8184), LIM = TRUE. Lösung im Projekt: RST bei steigender Freigabe." x="-8000" y="-6000" width="11000" height="2200"/>
+	</SubAppNetwork>
+</SubAppType>
