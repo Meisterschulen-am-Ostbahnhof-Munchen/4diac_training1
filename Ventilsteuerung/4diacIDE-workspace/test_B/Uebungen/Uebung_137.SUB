@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SubAppType Name="Uebung_137" Comment="Übung zu STRING über CAN empfangen (bis 8 Zeichen), Anzeige im Watch">
+	<Identification Standard="61499-2" Description="Copyright (c) 2026 Meisterschulen am Ostbahnhof  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0">
+	</Identification>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2026-11-14" Remarks="initial API and implementation and/or initial documentation">
+	</VersionInfo>
+	<CompilerInfo packageName="Uebungen">
+		<Import declaration="Uebungen::const::Uebung_120_129::Filter::ADD_ALL_PASS"/>
+		<Import declaration="Uebungen::const::Uebung_120_129::Filter::FLT_ALL_PASS"/>
+		<Import declaration="isobus::pgn::ADDRESS::GLOBAL_A"/>
+		<Import declaration="isobus::pgn::ISOUSERHOME_e::thisMember"/>
+		<Import declaration="isobus::pgn::ISO_CAN_NODE::NODE1"/>
+		<Import declaration="isobus::pgn::const::PgnDef::PGN_PDU1_PropA"/>
+	</CompilerInfo>
+	<SubAppInterfaceList>
+	</SubAppInterfaceList>
+	<SubAppNetwork>
+		<FB Name="STRUCT_DEMUX_3" Type="eclipse4diac::convert::STRUCT_DEMUX" x="-7800" y="7400">
+			<Attribute Name="StructuredType" Type="STRING" Value="isobus::pgn::NAMEFIELD_T"/>
+		</FB>
+		<FB Name="NmGetCfInfo_1" Type="isobus::pgn::NmGetCfInfo" x="-10100" y="3900">
+			<Parameter Name="u8CanIdx" Value="NODE1"/>
+			<Parameter Name="member" Value="thisMember"/>
+			<Parameter Name="address" Value="ADD_ALL_PASS"/>
+			<Parameter Name="mask" Value="FLT_ALL_PASS"/>
+		</FB>
+		<FB Name="STRUCT_DEMUX_4" Type="eclipse4diac::convert::STRUCT_DEMUX" x="-7900" y="6100">
+			<Attribute Name="StructuredType" Type="STRING" Value="isobus::pgn::CF_INFO_T"/>
+		</FB>
+		<FB Name="STRUCT_DEMUX_5" Type="eclipse4diac::convert::STRUCT_DEMUX" x="-7900" y="4900">
+			<Attribute Name="StructuredType" Type="STRING" Value="isobus::pgn::ISONETEVENT_T"/>
+		</FB>
+		<FB Name="NetEv2NetEv" Type="isobus::pgn::NetEv2NetEv" x="-4900" y="4100">
+			<Parameter Name="s16Handle" Value="GLOBAL_A"/>
+		</FB>
+		<FB Name="AlPgnRxNew8B" Type="isobus::pgn::rx::AlPgnRxNew8B" x="-2400" y="3600">
+			<Parameter Name="u32Pgn" Value="PGN_PDU1_PropA"/>
+			<Parameter Name="u16DaSize" Value="8"/>
+			<Parameter Name="u8Priority" Value="3"/>
+		</FB>
+		<FB Name="CAN_MSG_TO_STRING" Type="isobus::pgn::CAN_MSG_TO_STRING" x="0" y="3700">
+		</FB>
+		<EventConnections>
+			<Connection Source="NmGetCfInfo_1.IND" Destination="STRUCT_DEMUX_3.REQ"/>
+			<Connection Source="NmGetCfInfo_1.IND" Destination="STRUCT_DEMUX_4.REQ"/>
+			<Connection Source="NmGetCfInfo_1.IND" Destination="STRUCT_DEMUX_5.REQ"/>
+			<Connection Source="NmGetCfInfo_1.IND" Destination="NetEv2NetEv.REQ"/>
+			<Connection Source="NetEv2NetEv.CNF" Destination="AlPgnRxNew8B.install"/>
+			<Connection Source="AlPgnRxNew8B.IND" Destination="CAN_MSG_TO_STRING.REQ"/>
+		</EventConnections>
+		<DataConnections>
+			<Connection Source="NmGetCfInfo_1.sNameField" Destination="STRUCT_DEMUX_3.IN"/>
+			<Connection Source="NmGetCfInfo_1.sNetEv" Destination="STRUCT_DEMUX_5.IN"/>
+			<Connection Source="NmGetCfInfo_1.sCfInfo" Destination="STRUCT_DEMUX_4.IN"/>
+			<Connection Source="NmGetCfInfo_1.sNetEv" Destination="NetEv2NetEv.IN"/>
+			<Connection Source="NetEv2NetEv." Destination="AlPgnRxNew8B.NmSource"/>
+			<Connection Source="AlPgnRxNew8B.Data" Destination="CAN_MSG_TO_STRING.MSG"/>
+		</DataConnections>
+	</SubAppNetwork>
+</SubAppType>
