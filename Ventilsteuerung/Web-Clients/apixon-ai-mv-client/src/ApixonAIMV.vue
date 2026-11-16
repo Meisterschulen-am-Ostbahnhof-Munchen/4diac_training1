@@ -55,7 +55,11 @@
           :key="'Q' + n"
           class="io-item output"
           :class="{ active: outputs[n - 1] }"
+          role="button"
+          tabindex="0"
           @click="toggleOutput(n)"
+          @keydown.enter.prevent="toggleOutput(n)"
+          @keydown.space.prevent="toggleOutput(n)"
         >
           <div class="led" :class="{ on: outputs[n - 1] }"></div>
           <span>Q{{ n }}</span>
@@ -105,8 +109,8 @@ const tickPulse = ref(false)
 interface ScopeSample { t: number; v: number }
 const scopeWindowSec = ref(10)
 const scopeBuffers: ScopeSample[][] = Array.from({ length: 8 }, () => [])
-const scopeCanvases: (HTMLCanvasElement | null)[] = Array(8).fill(null)
-const sampleIntervalMs = ref<(number | null)[]>(Array(8).fill(null))
+const scopeCanvases: (HTMLCanvasElement | null)[] = new Array(8).fill(null)
+const sampleIntervalMs = ref<(number | null)[]>(new Array(8).fill(null))
 let scopeRafId: number | null = null
 /* Puffer laenger als das aktuell gewaehlte Fenster behalten, damit ein
  * groesseres Zeitfenster rueckwirkend mehr Historie zeigt, ohne neu zu
@@ -270,7 +274,7 @@ async function connect() {
     })
 
     resetScopes()
-    if (scopeRafId === null) scopeRafId = requestAnimationFrame(drawScopes)
+    scopeRafId ??= requestAnimationFrame(drawScopes)
   } catch (err) {
     status.value = 'Fehler: ' + (err as Error).message
     connected.value = false
