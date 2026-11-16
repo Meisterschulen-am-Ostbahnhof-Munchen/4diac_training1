@@ -138,6 +138,7 @@
 			<Parameter Name="QI" Value="TRUE"/>
 			<Parameter Name="Output" Value="Output_Q1"/>
 		</FB>
+		<Comment Comment="Test stoßfreie Hand/Auto-Umschaltung (CTRL_PID_AR, OSCAT-Fix #385)&#10;Aufbau wie Übung 153: Durchflussmesser an I3, Pumpe an Q1. I1 = Takt starten, I2 = Takt stoppen.&#10;I4 = Hand/Auto (Start: Auto), I5 = RST Integrator, I6 = Pumpe sperren (PWM 0, Regler läuft weiter).&#10;Handwert M_I: Stufe 4 = 3273.6 (40 %); I7 +10 %, I8 -10 %. Watch: Y.IN, ACT_ANZEIGE.IN (Istwert), DIFF.IN, LIM.IN.&#10;1) I4 Hand: Y = M_I. I4 Auto: Y springt nicht, regelt von M_I aus weiter.&#10;2) Start in Auto: Y beginnt bei KP*DIFF (KP*DIFF), läuft nicht erst bis LH hoch.&#10;3) Gegenprobe: in Auto I5 drücken -&gt; Integrator 0, Y springt auf KP*DIFF.&#10;4) Windup: I6 sperren -&gt; Istwert fällt, Y läuft bis LH (8184), LIM = TRUE. Lösung im Projekt: RST bei steigender Freigabe." x="-8000" y="-6000" width="11000" height="2200"/>
 		<EventConnections>
 			<Connection Source="DigitalInput_START_I1.IND" Destination="E_CYCLE.START"/>
 			<Connection Source="DigitalInput_STOP_I2.IND" Destination="E_CYCLE.STOP"/>
@@ -189,6 +190,5 @@
 			<Connection Source="Y_TO_AR.AR_OUT" Destination="AR_TO_AD_NUM.AR_IN"/>
 			<Connection Source="AR_TO_AD_NUM.AD_OUT" Destination="PWMOutput_Q1.OUT"/>
 		</AdapterConnections>
-		<Comment Comment="Test stoßfreie Hand/Auto-Umschaltung (CTRL_PID_AR, OSCAT-Fix #385)&#10;Aufbau wie Übung 153: Durchflussmesser an I3, Pumpe an Q1. I1 = Takt starten, I2 = Takt stoppen.&#10;I4 = Hand/Auto (Start: Auto), I5 = RST Integrator, I6 = Pumpe sperren (PWM 0, Regler läuft weiter).&#10;Handwert M_I: Stufe 4 = 3273.6 (40 %); I7 +10 %, I8 -10 %. Watch: Y.IN, ACT_ANZEIGE.IN (Istwert), DIFF.IN, LIM.IN.&#10;1) I4 Hand: Y = M_I. I4 Auto: Y springt nicht, regelt von M_I aus weiter.&#10;2) Start in Auto: Y beginnt bei KP*DIFF (KP*DIFF), läuft nicht erst bis LH hoch.&#10;3) Gegenprobe: in Auto I5 drücken -&gt; Integrator 0, Y springt auf KP*DIFF.&#10;4) Windup: I6 sperren -&gt; Istwert fällt, Y läuft bis LH (8184), LIM = TRUE. Lösung im Projekt: RST bei steigender Freigabe." x="-8000" y="-6000" width="11000" height="2200"/>
 	</SubAppNetwork>
 </SubAppType>

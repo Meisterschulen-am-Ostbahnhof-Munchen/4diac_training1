@@ -80,6 +80,7 @@
 		<FB Name="LIT_M_I" Type="adapter::types::unidirectional::AR::initval::initval_AR" x="1000" y="4500">
 			<Parameter Name="INIT_VAL" Value="40.0"/>
 		</FB>
+		<Comment Comment="Test stoßfreie Hand/Auto-Umschaltung (CTRL_PI_AR, OSCAT-Fix #385)&#10;Strecke simuliert: PT1 (5 s) aus Y, Takt 100 ms, startet von selbst.&#10;I1 = Hand/Auto (Start: Auto), I2 = RST Integrator, I3 = Ausgang sperren (Strecke bekommt 0).&#10;Handwert M_I: 40 (fest, LIT_M_I). Watch: Y.IN, STRECKE_PT1.out (Istwert), DIFF.IN, LIM.IN.&#10;1) I1 Hand: Y = M_I. I1 Auto: Y springt nicht, regelt von M_I aus weiter.&#10;2) Start in Auto: Y beginnt bei 50 (KP*DIFF), läuft nicht erst bis LH hoch.&#10;3) Gegenprobe: in Auto I2 drücken -&gt; Integrator 0, Y springt auf KP*DIFF.&#10;4) Windup: I3 sperren -&gt; Istwert fällt, Y läuft bis LH (100), LIM = TRUE. Lösung im Projekt: RST bei steigender Freigabe." x="-8000" y="-6000" width="11000" height="2200"/>
 		<EventConnections>
 			<Connection Source="E_RESTART.COLD" Destination="E_CYCLE.START"/>
 			<Connection Source="E_RESTART.WARM" Destination="E_CYCLE.START"/>
@@ -112,6 +113,5 @@
 			<Connection Source="ACT_TO_AR.AR_OUT" Destination="CTRL_PI.AR_ACT"/>
 			<Connection Source="LIT_M_I.OUT" Destination="CTRL_PI.M_I"/>
 		</AdapterConnections>
-		<Comment Comment="Test stoßfreie Hand/Auto-Umschaltung (CTRL_PI_AR, OSCAT-Fix #385)&#10;Strecke simuliert: PT1 (5 s) aus Y, Takt 100 ms, startet von selbst.&#10;I1 = Hand/Auto (Start: Auto), I2 = RST Integrator, I3 = Ausgang sperren (Strecke bekommt 0).&#10;Handwert M_I: 40 (fest, LIT_M_I). Watch: Y.IN, STRECKE_PT1.out (Istwert), DIFF.IN, LIM.IN.&#10;1) I1 Hand: Y = M_I. I1 Auto: Y springt nicht, regelt von M_I aus weiter.&#10;2) Start in Auto: Y beginnt bei 50 (KP*DIFF), läuft nicht erst bis LH hoch.&#10;3) Gegenprobe: in Auto I2 drücken -&gt; Integrator 0, Y springt auf KP*DIFF.&#10;4) Windup: I3 sperren -&gt; Istwert fällt, Y läuft bis LH (100), LIM = TRUE. Lösung im Projekt: RST bei steigender Freigabe." x="-8000" y="-6000" width="11000" height="2200"/>
 	</SubAppNetwork>
 </SubAppType>
