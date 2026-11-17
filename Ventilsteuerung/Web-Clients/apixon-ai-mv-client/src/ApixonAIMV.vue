@@ -16,7 +16,7 @@
 
     <section>
       <div class="scope-header">
-        <h2>Analog-Eingänge (Spannung am Pin in mV)</h2>
+        <h2>Analog-Eingänge (Spannung am Pin in mV, Wert falls umgerechnet)</h2>
         <label class="scope-window-label" for="scope-window-ai">
           Oszi-Zeitfenster:
           <select id="scope-window-ai" v-model.number="scopeWindowSec">
@@ -30,7 +30,8 @@
       <div class="ai-grid">
         <div v-for="n in 8" :key="'AI' + n" class="ai-item">
           <span class="ai-label">AI{{ n }}</span>
-          <span class="ai-mv">{{ mv[n - 1] }} mV</span>
+          <span class="ai-mv">{{ Math.round(mv[n - 1]) }} mV</span>
+          <span class="ai-cal">Wert: {{ cal[n - 1] !== null ? cal[n - 1]!.toFixed(1) : '–' }}</span>
           <div class="ai-bar-track">
             <div class="ai-bar-fill" :style="{ width: barPercent(mv[n - 1]) + '%' }"></div>
           </div>
@@ -91,6 +92,9 @@ const connected = ref(false)
 /* Spannung am Pin in mV (DWORD, logiBUS_AI_MVA.IN, kalibriert).
  * Bereich laut Datenblatt: ESP32-S3 etwa 0-2900 mV, ESP32-P4 etwa 0-3300 mV. */
 const mv = ref<number[]>(new Array(8).fill(0))
+/* Umgerechneter Wert (REAL, AI_In_CAL von logiBUS_AI_MVA_Scaled_OPC: mV * SCALE + OFFSET).
+ * null = Knoten fehlt (reiner mV-Tester) oder noch kein gueltiger Wert. */
+const cal = ref<(number | null)[]>(new Array(8).fill(null))
 /* Vollausschlag fuer Bargraph und Oszi */
 const MV_MAX = 3300
 
@@ -197,6 +201,7 @@ function handleLost() {
   connected.value = false
   status.value = 'Fehler: Verbindung verloren'
   mv.value.fill(0)
+  cal.value.fill(null)
   outputs.value.fill(false)
   tick.value = '–'
   if (scopeRafId !== null) {
@@ -246,6 +251,28 @@ async function connect() {
       mv.value[index] = v
       pushScopeSample(index, v)
     })
+
+    /* Optional: umgerechnete Werte AI_I1_CAL-AI_I8_CAL (REAL, nur beim Tester mit Umrechnung).
+     * Fehlt der Knoten, kommt ein schlechter StatusCode, dann bleibt die Anzeige '–'.
+     * Lehnt der Server das Ueberwachen ganz ab, bleibt die Verbindung trotzdem bestehen. */
+    try {
+      const calItems = Array.from({ length: 8 }, (_, i) => ({
+        nodeId: coerceNodeId(`ns=1;s=AI_I${i + 1}_CAL`),
+        attributeId: AttributeIds.Value,
+      }))
+      const calGroup = await subscription.monitorItemsP(
+        calItems,
+        { samplingInterval: 100, discardOldest: true, queueSize: 2 },
+        TimestampsToReturn.Neither
+      )
+      calGroup.on('changed', (_item: any, dataValue: any, index: number) => {
+        const good = (dataValue?.statusCode?.value ?? 0) === 0
+        const v = Number(dataValue?.value?.value)
+        cal.value[index] = good && dataValue?.value?.value != null && Number.isFinite(v) ? v : null
+      })
+    } catch (err) {
+      console.warn('CAL-Knoten nicht verfuegbar:', err)
+    }
 
     /* Monitor all outputs Q1-Q12 (reflect actual hardware state, unveraendert wie im DIDO-Beispiel) */
     const outputItems = Array.from({ length: 12 }, (_, i) => ({
@@ -306,7 +333,9 @@ async function disconnect() {
   }
   connected.value = false
   status.value = 'Getrennt'
+  tick.value = '–'
   mv.value.fill(0)
+  cal.value.fill(null)
   outputs.value.fill(false)
   if (scopeRafId !== null) {
     cancelAnimationFrame(scopeRafId)
@@ -494,6 +523,12 @@ span {
   font-weight: 600;
   font-variant-numeric: tabular-nums;
   color: #fff;
+}
+
+.ai-cal {
+  font-size: 0.85rem;
+  font-variant-numeric: tabular-nums;
+  color: #4caf50;
 }
 
 .ai-bar-track {
