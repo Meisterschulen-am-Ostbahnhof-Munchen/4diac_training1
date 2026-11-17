@@ -63,7 +63,7 @@
 		</FB>
 		<SubApp Name="NetEv_Install" Type="MyLib::sys::NetEv_Install_Filter" x="-6200" y="4900">
 		</SubApp>
-		<Comment Comment="SIZE: zwischen ETP (4000 Byte) und TP (1000 Byte) umschalten, PGN PropA2 0x1EF00&#10;install mit 4000 Byte. I2 Klick schaltet um: 1000 Byte (TP), dann wieder 4000 Byte (ETP).&#10;I1 Klick sendet. Der Stack wählt TP oder ETP selbst nach der Länge.&#10;Partner wie Übung 149 (Filter LOGIBUS_ADD/LOGIBUS_FLT). Empfänger: Übung 149b, Watch u16DaSize (1000 bzw. 4000).&#10;Firmware ab LOGIBUS 24534469 auf BEIDEN Geräten." x="-10100" y="-1500" width="9000" height="2000"/>
+		<Comment Comment="SIZE: zwischen ETP (4000 Byte) und TP (1000 Byte) umschalten, PGN PropA2 0x1EF00&#10;install mit 4000 Byte. I2 Klick schaltet um: 1000 Byte (TP), dann wieder 4000 Byte (ETP).&#10;I1 Klick sendet. Der Stack wählt TP oder ETP selbst nach der Länge.&#10;Partner wie Übung 149 (Filter LOGIBUS_ADD/LOGIBUS_FLT). Empfänger: Übung 149b, Watch u16DaSize (1000 bzw. 4000).&#10;Firmware ab LOGIBUS 24534469 auf BEIDEN Geräten." x="-10100" y="-1500" width="9000" height="1100"/>
 		<EventConnections>
 			<Connection Source="NmGetCfInfo_1.IND" Destination="STRUCT_DEMUX_3.REQ" dx1="493.33"/>
 			<Connection Source="NmGetCfInfo_1.IND" Destination="STRUCT_DEMUX_4.REQ" dx1="493.33"/>
@@ -88,7 +88,7 @@
 			<Connection Source="Umschalten.EO" Destination="Laenge.REQ" dx1="673.33"/>
 			<Connection Source="Laenge.CNF" Destination="Nur_nach_Taste.EI" dx1="866.67"/>
 			<Connection Source="Nur_nach_Taste.EO" Destination="AlPgnTxNew_TP.SIZE" dx1="306.67"/>
-			<Connection Source="NetEv_Install.INSTALL" Destination="AlPgnTxNew_TP.install"/>
+			<Connection Source="NetEv_Install.INSTALL" Destination="AlPgnTxNew_TP.install" dx1="1940"/>
 		</EventConnections>
 		<DataConnections>
 			<Connection Source="NmGetCfInfo_1.sNameField" Destination="STRUCT_DEMUX_3.IN" dx1="460"/>
@@ -100,7 +100,7 @@
 			<Connection Source="Gedrueckt.Q" Destination="Nur_nach_Taste.PERMIT" dx1="913.33"/>
 			<Connection Source="Umschalten.Q" Destination="Laenge.G" dx1="1026.67"/>
 			<Connection Source="Laenge.OUT" Destination="AlPgnTxNew_TP.u16DaSize" dx1="833.33"/>
-			<Connection Source="NmGetCfInfo_1.sNetEv" Destination="AlPgnTxNew_TP.NmDestin"/>
+			<Connection Source="NmGetCfInfo_1.sNetEv" Destination="AlPgnTxNew_TP.NmDestin" dx1="3913.33"/>
 		</DataConnections>
 	</SubAppNetwork>
 </SubAppType>
