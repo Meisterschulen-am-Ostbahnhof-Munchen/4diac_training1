@@ -39,12 +39,25 @@
 		<FB Name="STRUCT_DEMUX" Type="eclipse4diac::convert::STRUCT_DEMUX" x="-1900" y="5300">
 			<Attribute Name="StructuredType" Type="STRING" Value="isobus::pgn::CAN_MSG"/>
 		</FB>
+		<SubApp Name="NetEv_Install" Type="MyLib::sys::NetEv_Install_Filter" x="-6300" y="9000">
+		</SubApp>
 		<EventConnections>
 			<Connection Source="NmGetCfInfo_1.IND" Destination="STRUCT_DEMUX_3.REQ" dx1="593.33"/>
 			<Connection Source="NmGetCfInfo_1.IND" Destination="STRUCT_DEMUX_4.REQ" dx1="593.33"/>
 			<Connection Source="NmGetCfInfo_1.IND" Destination="STRUCT_DEMUX_5.REQ" dx1="593.33"/>
-			<Connection Source="NmGetCfInfo_1.IND" Destination="AlPgnRxNew8Bcylc_REQ.install" dx1="2366.67"/>
 			<Connection Source="AlPgnRxNew8Bcylc_REQ.IND" Destination="STRUCT_DEMUX.REQ" dx1="366.67"/>
+			<Connection Source="AlPgnRxNew8Bcylc_REQ.installO" Destination="NmGetCfInfo_1.RSP">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="AlPgnRxNew8Bcylc_REQ.pgnERR" Destination="NmGetCfInfo_1.RSP">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="STRUCT_DEMUX_5.CNF" Destination="NetEv_Install.REQ"/>
+			<Connection Source="NetEv_Install.INSTALL" Destination="AlPgnRxNew8Bcylc_REQ.install"/>
+			<Connection Source="NetEv_Install.RSP" Destination="NmGetCfInfo_1.RSP">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="AlPgnRxNew8Bcylc_REQ.installO" Destination="NetEv_Install.SET"/>
 		</EventConnections>
 		<DataConnections>
 			<Connection Source="NmGetCfInfo_1.sNameField" Destination="STRUCT_DEMUX_3.IN" dx1="253.33"/>
@@ -52,6 +65,7 @@
 			<Connection Source="NmGetCfInfo_1.sCfInfo" Destination="STRUCT_DEMUX_4.IN" dx1="346.67"/>
 			<Connection Source="NmGetCfInfo_1.sNetEv" Destination="AlPgnRxNew8Bcylc_REQ.NmSource" dx1="2313.33"/>
 			<Connection Source="AlPgnRxNew8Bcylc_REQ.Data" Destination="STRUCT_DEMUX.IN" dx1="166.67"/>
+			<Connection Source="STRUCT_DEMUX_5.eNetEvent" Destination="NetEv_Install.eNetEvent"/>
 		</DataConnections>
 	</SubAppNetwork>
 </SubAppType>

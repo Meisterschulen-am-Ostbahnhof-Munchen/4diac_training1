@@ -49,15 +49,28 @@
 		</FB>
 		<FB Name="F_LEN_ARRAY" Type="eclipse4diac::utils::arrays::F_LEN_ARRAY" x="-4300" y="2000">
 		</FB>
+		<SubApp Name="NetEv_Install" Type="MyLib::sys::NetEv_Install_Filter" x="-6300" y="9000">
+		</SubApp>
 		<EventConnections>
 			<Connection Source="NmGetCfInfo_1.IND" Destination="STRUCT_DEMUX_3.REQ" dx1="593.33"/>
 			<Connection Source="NmGetCfInfo_1.IND" Destination="STRUCT_DEMUX_4.REQ" dx1="593.33"/>
 			<Connection Source="NmGetCfInfo_1.IND" Destination="STRUCT_DEMUX_5.REQ" dx1="593.33"/>
-			<Connection Source="NmGetCfInfo_1.IND" Destination="NetEv2NetEv.REQ" dx1="2020"/>
 			<Connection Source="DigitalInput_CLK_I1.IND" Destination="AlPgnTxNew_TP.REQ" dx1="1160"/>
 			<Connection Source="NetEv2NetEv.CNF" Destination="AlPgnTxNew_TP.install" dx1="853.33"/>
 			<Connection Source="INIT_ARR_0032_BYTE.INITO" Destination="F_LEN_ARRAY.REQ"/>
 			<Connection Source="F_LEN_ARRAY.CNF" Destination="AlPgnTxNew_TP.INIT" dx1="546.67"/>
+			<Connection Source="AlPgnTxNew_TP.installO" Destination="NmGetCfInfo_1.RSP">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="AlPgnTxNew_TP.pgnERR" Destination="NmGetCfInfo_1.RSP">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="STRUCT_DEMUX_5.CNF" Destination="NetEv_Install.REQ"/>
+			<Connection Source="NetEv_Install.INSTALL" Destination="NetEv2NetEv.REQ"/>
+			<Connection Source="NetEv_Install.RSP" Destination="NmGetCfInfo_1.RSP">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="AlPgnTxNew_TP.installO" Destination="NetEv_Install.SET"/>
 		</EventConnections>
 		<DataConnections>
 			<Connection Source="NmGetCfInfo_1.sNameField" Destination="STRUCT_DEMUX_3.IN" dx1="560"/>
@@ -68,6 +81,7 @@
 			<Connection Source="INIT_ARR_0032_BYTE.D1" Destination="AlPgnTxNew_TP.Data" dx1="80"/>
 			<Connection Source="INIT_ARR_0032_BYTE.D1" Destination="F_LEN_ARRAY.ARR"/>
 			<Connection Source="F_LEN_ARRAY.OUT" Destination="AlPgnTxNew_TP.u16DaSize" dx1="220"/>
+			<Connection Source="STRUCT_DEMUX_5.eNetEvent" Destination="NetEv_Install.eNetEvent"/>
 		</DataConnections>
 	</SubAppNetwork>
 </SubAppType>

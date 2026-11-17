@@ -37,17 +37,31 @@
 		</FB>
 		<SubApp Name="DataSupply" Type="MyLib::sys::CTU_TO_PCAN_Callback" x="-6200" y="5100">
 		</SubApp>
+		<SubApp Name="NetEv_Install" Type="MyLib::sys::NetEv_Install_Filter" x="-6300" y="9000">
+		</SubApp>
 		<EventConnections>
 			<Connection Source="NmGetCfInfo_1.IND" Destination="STRUCT_DEMUX_3.REQ" dx1="593.33"/>
 			<Connection Source="NmGetCfInfo_1.IND" Destination="STRUCT_DEMUX_4.REQ" dx1="593.33"/>
 			<Connection Source="NmGetCfInfo_1.IND" Destination="STRUCT_DEMUX_5.REQ" dx1="593.33"/>
-			<Connection Source="NmGetCfInfo_1.IND" Destination="AlPgnTxNew8Bcycl_REQ.install" dx1="2366.67"/>
+			<Connection Source="AlPgnTxNew8Bcycl_REQ.installO" Destination="NmGetCfInfo_1.RSP">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="AlPgnTxNew8Bcycl_REQ.pgnERR" Destination="NmGetCfInfo_1.RSP">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="STRUCT_DEMUX_5.CNF" Destination="NetEv_Install.REQ"/>
+			<Connection Source="NetEv_Install.INSTALL" Destination="AlPgnTxNew8Bcycl_REQ.install"/>
+			<Connection Source="NetEv_Install.RSP" Destination="NmGetCfInfo_1.RSP">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="AlPgnTxNew8Bcycl_REQ.installO" Destination="NetEv_Install.SET"/>
 		</EventConnections>
 		<DataConnections>
 			<Connection Source="NmGetCfInfo_1.sNameField" Destination="STRUCT_DEMUX_3.IN" dx1="560"/>
 			<Connection Source="NmGetCfInfo_1.sNetEv" Destination="STRUCT_DEMUX_5.IN" dx1="660"/>
 			<Connection Source="NmGetCfInfo_1.sCfInfo" Destination="STRUCT_DEMUX_4.IN" dx1="626.67"/>
 			<Connection Source="NmGetCfInfo_1.sNetEv" Destination="AlPgnTxNew8Bcycl_REQ.NmDestin" dx1="2273.33"/>
+			<Connection Source="STRUCT_DEMUX_5.eNetEvent" Destination="NetEv_Install.eNetEvent"/>
 		</DataConnections>
 		<AdapterConnections>
 			<Connection Source="DataSupply.PLUG1" Destination="AlPgnTxNew8Bcycl_REQ.CB" dx1="386.67"/>

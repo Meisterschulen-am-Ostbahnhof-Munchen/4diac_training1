@@ -43,6 +43,9 @@
 			<Connection Source="STRUCT_DEMUX_2.CNF" Destination="NmSetNameField_1.REQ" dx1="586.67"/>
 			<Connection Source="NmSetNameField.CNF" Destination="STRUCT_DEMUX.REQ"/>
 			<Connection Source="NmSetNameField_1.CNF" Destination="STRUCT_DEMUX_1.REQ"/>
+			<Connection Source="STRUCT_DEMUX.CNF" Destination="NmGetCfInfo.RSP" dx1="80" dx2="80" dy="953.33">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
 		</EventConnections>
 		<DataConnections>
 			<Connection Source="NmGetCfInfo.sNetEv" Destination="STRUCT_DEMUX_3.IN" dx1="733.33"/>

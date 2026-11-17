@@ -33,17 +33,36 @@
 		<FB Name="STRUCT_DEMUX" Type="eclipse4diac::convert::STRUCT_DEMUX" x="-2400" y="4700">
 			<Attribute Name="StructuredType" Type="STRING" Value="isobus::pgn::CAN_MSG"/>
 		</FB>
+		<FB Name="NetEv_DEMUX" Type="eclipse4diac::convert::STRUCT_DEMUX" x="-10600" y="6300">
+			<Attribute Name="StructuredType" Type="STRING" Value="isobus::pgn::ISONETEVENT_T"/>
+		</FB>
+		<SubApp Name="NetEv_Install" Type="MyLib::sys::NetEv_Install_Filter" x="-6800" y="6300">
+		</SubApp>
 		<EventConnections>
 			<Connection Source="BaseMemberExternAdd.CNF" Destination="NetEv2NetEv.REQ" dx1="1000"/>
 			<Connection Source="NetEv2NetEv.CNF" Destination="AlPgnRxNew8B.install" dx1="1000"/>
-			<Connection Source="NmGetCfInfo.IND" Destination="BaseMemberExternAdd.REQ" dx1="80"/>
 			<Connection Source="AlPgnRxNew8B.IND" Destination="STRUCT_DEMUX.REQ" dx1="333.33"/>
+			<Connection Source="NmGetCfInfo.IND" Destination="NetEv_DEMUX.REQ"/>
+			<Connection Source="AlPgnRxNew8B.installO" Destination="NmGetCfInfo.RSP">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="AlPgnRxNew8B.pgnERR" Destination="NmGetCfInfo.RSP">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="NetEv_DEMUX.CNF" Destination="NetEv_Install.REQ"/>
+			<Connection Source="NetEv_Install.INSTALL" Destination="BaseMemberExternAdd.REQ"/>
+			<Connection Source="NetEv_Install.RSP" Destination="NmGetCfInfo.RSP">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="AlPgnRxNew8B.installO" Destination="NetEv_Install.SET"/>
 		</EventConnections>
 		<DataConnections>
 			<Connection Source="BaseMemberExternAdd.s16Handle" Destination="NetEv2NetEv.s16Handle" dx1="566.67"/>
 			<Connection Source="NmGetCfInfo.sNetEv" Destination="NetEv2NetEv.IN" dx1="1000"/>
 			<Connection Source="NetEv2NetEv." Destination="AlPgnRxNew8B.NmSource" dx1="1000"/>
 			<Connection Source="AlPgnRxNew8B.Data" Destination="STRUCT_DEMUX.IN" dx1="213.33"/>
+			<Connection Source="NmGetCfInfo.sNetEv" Destination="NetEv_DEMUX.IN"/>
+			<Connection Source="NetEv_DEMUX.eNetEvent" Destination="NetEv_Install.eNetEvent"/>
 		</DataConnections>
 	</SubAppNetwork>
 </SubAppType>
