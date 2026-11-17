@@ -53,6 +53,12 @@
 			<Connection Source="NmGetCfInfo_1.IND" Destination="STRUCT_DEMUX_3.REQ" dx1="593.33"/>
 			<Connection Source="NmGetCfInfo_1.IND" Destination="STRUCT_DEMUX_4.REQ" dx1="593.33"/>
 			<Connection Source="NmGetCfInfo_1.IND" Destination="STRUCT_DEMUX_5.REQ" dx1="593.33"/>
+			<Connection Source="STRUCT_DEMUX.CNF" Destination="NmGetCfInfo.RSP">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="STRUCT_DEMUX_5.CNF" Destination="NmGetCfInfo_1.RSP">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
 		</EventConnections>
 		<DataConnections>
 			<Connection Source="NmGetCfInfo.sNetEv" Destination="STRUCT_DEMUX.IN" dx1="660"/>

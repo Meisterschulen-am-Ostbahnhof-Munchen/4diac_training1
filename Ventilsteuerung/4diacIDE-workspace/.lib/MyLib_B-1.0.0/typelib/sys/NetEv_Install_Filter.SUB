@@ -26,7 +26,10 @@
 		</InputVars>
 	</SubAppInterfaceList>
 	<SubAppNetwork>
-		<FB Name="NetEv_Art" Type="iec61131::conversion::F_USINT_TO_UINT" x="-3300" y="-1000">
+		<FB Name="NetEv_Art" Type="iec61131::conversion::F_USINT_TO_UINT" x="-5300" y="-1000">
+		</FB>
+		<FB Name="NetEv_Begrenzen" Type="iec61131::selection::F_MIN" Comment="ab 7 alles auf EO8, sonst kein RSP" x="-3300" y="-1000">
+			<Parameter Name="IN2" Value="UINT#7"/>
 		</FB>
 		<FB Name="NetEv_Verteiler" Type="iec61499::events::E_DEMUX_8" x="-1100" y="-1100">
 			<Parameter Name="EO1" Value="" Comment="Active "/>
@@ -36,15 +39,16 @@
 			<Parameter Name="EO5" Value="" Comment="AddressViolation"/>
 			<Parameter Name="EO6" Value="" Comment="MemberAdd"/>
 			<Parameter Name="EO7" Value="" Comment="MemberRemove"/>
-			<Parameter Name="EO8" Value="" Comment="Isonet_Last"/>
+			<Parameter Name="EO8" Value="" Comment="7 und mehr (Isonet_Last, HSI)"/>
 		</FB>
 		<SubApp Name="Nur_einmal" Type="MyLib::sys::NetEv_Einmal" x="1700" y="100">
 			<Parameter Name="EO0" Value="" Comment="erstes Mal "/>
 			<Parameter Name="EO1" Value="" Comment="schon erledigt "/>
 		</SubApp>
 		<EventConnections>
-			<Connection Source="REQ" Destination="NetEv_Art.REQ" dx1="1120"/>
-			<Connection Source="NetEv_Art.CNF" Destination="NetEv_Verteiler.EI" dx1="406.67"/>
+			<Connection Source="REQ" Destination="NetEv_Art.REQ"/>
+			<Connection Source="NetEv_Art.CNF" Destination="NetEv_Begrenzen.REQ"/>
+			<Connection Source="NetEv_Begrenzen.CNF" Destination="NetEv_Verteiler.EI"/>
 			<Connection Source="NetEv_Verteiler.EO1" Destination="Nur_einmal.EI" dx1="1926.67"/>
 			<Connection Source="NetEv_Verteiler.EO4" Destination="Nur_einmal.EI" dx1="1926.67"/>
 			<Connection Source="SET" Destination="Nur_einmal.S" dx1="346.67"/>
@@ -71,8 +75,9 @@
 			</Connection>
 		</EventConnections>
 		<DataConnections>
-			<Connection Source="eNetEvent" Destination="NetEv_Art.IN" dx1="1120"/>
-			<Connection Source="NetEv_Art.OUT" Destination="NetEv_Verteiler.K" dx1="506.67"/>
+			<Connection Source="eNetEvent" Destination="NetEv_Art.IN"/>
+			<Connection Source="NetEv_Art.OUT" Destination="NetEv_Begrenzen.IN1"/>
+			<Connection Source="NetEv_Begrenzen.OUT" Destination="NetEv_Verteiler.K"/>
 		</DataConnections>
 	</SubAppNetwork>
 </SubAppType>
