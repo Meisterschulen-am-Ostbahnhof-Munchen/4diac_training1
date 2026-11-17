@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SubAppType Name="Uebung_141_AX" Comment="Übung zu DiagSetDTC: Drahtbruch 4-20 mA als DTC über DM1">
+	<Identification Standard="61499-2" Description="Copyright (c) 2026 Meisterschulen am Ostbahnhof  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0">
+	</Identification>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2026-11-17" Remarks="initial API and implementation and/or initial documentation">
+	</VersionInfo>
+	<CompilerInfo packageName="Uebungen">
+		<Import declaration="Uebungen::const::Uebung_120_129::Filter::ADD_ALL_PASS"/>
+		<Import declaration="Uebungen::const::Uebung_120_129::Filter::FLT_ALL_PASS"/>
+		<Import declaration="Uebungen::const::Uebung_140_149::Diag::MV_DRAHTBRUCH"/>
+		<Import declaration="Uebungen::const::Uebung_140_149::Diag::MV_OK"/>
+		<Import declaration="Uebungen::const::Uebung_140_149::Diag::SPN_DRAHTBRUCH_AI6"/>
+		<Import declaration="isobus::pgn::ISOUSERHOME_e::thisMember"/>
+		<Import declaration="isobus::pgn::ISO_CAN_NODE::NODE1"/>
+		<Import declaration="isobus::pgn::diag::FMI::CURRENT_LOW_OPEN_CIRCUIT"/>
+		<Import declaration="logiBUS::io::AI::logiBUS_AI::AnalogInput_I6"/>
+	</CompilerInfo>
+	<SubAppInterfaceList>
+	</SubAppInterfaceList>
+	<SubAppNetwork>
+		<FB Name="NmGetCfInfo" Type="isobus::pgn::NmGetCfInfo" x="-9000" y="0">
+			<Parameter Name="u8CanIdx" Value="NODE1"/>
+			<Parameter Name="member" Value="thisMember"/>
+			<Parameter Name="address" Value="ADD_ALL_PASS"/>
+			<Parameter Name="mask" Value="FLT_ALL_PASS"/>
+		</FB>
+		<FB Name="NetEv_DEMUX" Type="eclipse4diac::convert::STRUCT_DEMUX" x="-6000" y="0">
+			<Attribute Name="StructuredType" Type="STRING" Value="isobus::pgn::ISONETEVENT_T"/>
+		</FB>
+		<FB Name="Handle_merken" Type="iec61131::selection::F_MOVE" Comment="eigener CF-Handle (s16Handle)" x="-500" y="0">
+		</FB>
+		<FB Name="Handle_da" Type="iec61499::events::E_SR" x="2000" y="-200">
+		</FB>
+		<FB Name="Nachholen" Type="iec61499::events::E_SWITCH" Comment="Drahtbruch schon vor dem Handle da: jetzt melden" x="4000" y="0">
+		</FB>
+		<FB Name="AI6" Type="logiBUS::io::AI::logiBUS_AI_MV" Comment="mV am Pin, 4-20 mA über 491,2 Ohm" x="-9000" y="3000">
+			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="Input" Value="AnalogInput_I6"/>
+			<Parameter Name="AnalogInput_hysteresis" Value="DWORD#10"/>
+		</FB>
+		<FB Name="mV" Type="iec61131::conversion::F_DWORD_TO_UDINT" x="-6500" y="3000">
+		</FB>
+		<FB Name="Unter_3_6mA" Type="iec61131::comparison::F_LT" x="-4500" y="3000">
+			<Parameter Name="IN2" Value="MV_DRAHTBRUCH"/>
+		</FB>
+		<FB Name="Ab_4mA" Type="iec61131::comparison::F_GE" x="-4500" y="4200">
+			<Parameter Name="IN2" Value="MV_OK"/>
+		</FB>
+		<FB Name="Pruef_Bruch" Type="iec61499::events::E_SWITCH" x="-2500" y="3000">
+		</FB>
+		<FB Name="Pruef_OK" Type="iec61499::events::E_SWITCH" x="-2500" y="4200">
+		</FB>
+		<FB Name="Drahtbruch" Type="iec61499::events::E_SR" Comment="EO nur bei Zustandswechsel" x="-500" y="3000">
+		</FB>
+		<FB Name="Nur_mit_Handle" Type="iec61499::events::E_PERMIT" x="1500" y="3000">
+		</FB>
+		<FB Name="DTC" Type="isobus::pgn::diag::DiagSetDTC" Comment="DM1: SPN 520192, FMI 5" x="4000" y="3000">
+			<Parameter Name="u32SPN" Value="SPN_DRAHTBRUCH_AI6"/>
+			<Parameter Name="u8FMI" Value="CURRENT_LOW_OPEN_CIRCUIT"/>
+			<Parameter Name="u8NumberOfDM1Messages" Value="0"/>
+		</FB>
+		<SubApp Name="NetEv_Install" Type="MyLib::sys::NetEv_Install_Filter" x="-3500" y="0">
+		</SubApp>
+		<Comment Comment="Drahtbruch 4-20 mA an AI6 als DTC über DM1 (DiagSetDTC)&#10;Pin-mV unter 564 (3,6 mA) = Drahtbruch, wieder OK ab 626 (4 mA).&#10;Eigener CF-Handle aus NmGetCfInfo (thisMember, Active/NewAddress), RSP immer.&#10;DTC nur bei Zustandswechsel: SPN 520192, FMI 5, aktiv bis gelöscht.&#10;Test: Kabel ab = DM1 mit SPN 520192/FMI 5, jede Sekunde. Kabel dran = DTC inaktiv, in DM2, mit DM3 löschbar.&#10;Braucht Firmware ab LOGIBUS 96f591f2 (DM1) und isobus_pgn-ELF mit DiagSetDTC." x="-9000" y="-2600" width="9000" height="2000"/>
+		<EventConnections>
+			<Connection Source="NmGetCfInfo.IND" Destination="NetEv_DEMUX.REQ"/>
+			<Connection Source="NetEv_DEMUX.CNF" Destination="NetEv_Install.REQ"/>
+			<Connection Source="NetEv_Install.INSTALL" Destination="Handle_merken.REQ"/>
+			<Connection Source="NetEv_Install.RSP" Destination="NmGetCfInfo.RSP">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="Handle_merken.CNF" Destination="NetEv_Install.SET"/>
+			<Connection Source="Handle_merken.CNF" Destination="Handle_da.S"/>
+			<Connection Source="Handle_merken.CNF" Destination="NmGetCfInfo.RSP">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="Handle_da.EO" Destination="Nachholen.EI"/>
+			<Connection Source="Nachholen.EO1" Destination="DTC.REQ"/>
+			<Connection Source="AI6.IND" Destination="mV.REQ"/>
+			<Connection Source="mV.CNF" Destination="Unter_3_6mA.REQ"/>
+			<Connection Source="Unter_3_6mA.CNF" Destination="Ab_4mA.REQ"/>
+			<Connection Source="Ab_4mA.CNF" Destination="Pruef_Bruch.EI"/>
+			<Connection Source="Pruef_Bruch.EO1" Destination="Drahtbruch.S"/>
+			<Connection Source="Pruef_Bruch.EO0" Destination="Pruef_OK.EI"/>
+			<Connection Source="Pruef_OK.EO1" Destination="Drahtbruch.R"/>
+			<Connection Source="Drahtbruch.EO" Destination="Nur_mit_Handle.EI"/>
+			<Connection Source="Nur_mit_Handle.EO" Destination="DTC.REQ"/>
+		</EventConnections>
+		<DataConnections>
+			<Connection Source="NmGetCfInfo.sNetEv" Destination="NetEv_DEMUX.IN"/>
+			<Connection Source="NetEv_DEMUX.eNetEvent" Destination="NetEv_Install.eNetEvent"/>
+			<Connection Source="NetEv_DEMUX.s16Handle" Destination="Handle_merken.IN"/>
+			<Connection Source="Handle_merken.OUT" Destination="DTC.s16CfHandle"/>
+			<Connection Source="Handle_da.Q" Destination="Nur_mit_Handle.PERMIT"/>
+			<Connection Source="Drahtbruch.Q" Destination="Nachholen.G"/>
+			<Connection Source="Drahtbruch.Q" Destination="DTC.bActive"/>
+			<Connection Source="AI6.IN" Destination="mV.IN"/>
+			<Connection Source="mV.OUT" Destination="Unter_3_6mA.IN1"/>
+			<Connection Source="mV.OUT" Destination="Ab_4mA.IN1"/>
+			<Connection Source="Unter_3_6mA.OUT" Destination="Pruef_Bruch.G"/>
+			<Connection Source="Ab_4mA.OUT" Destination="Pruef_OK.G"/>
+		</DataConnections>
+	</SubAppNetwork>
+</SubAppType>
