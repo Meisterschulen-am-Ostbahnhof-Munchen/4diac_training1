@@ -32,7 +32,7 @@
 		<FB Name="STRUCT_DEMUX_5" Type="eclipse4diac::convert::STRUCT_DEMUX" x="-7900" y="4900">
 			<Attribute Name="StructuredType" Type="STRING" Value="isobus::pgn::ISONETEVENT_T"/>
 		</FB>
-		<FB Name="NetEv2NetEv" Type="isobus::pgn::NetEv2NetEv" x="-4900" y="4100">
+		<FB Name="NetEv2NetEv" Type="isobus::pgn::NetEv2NetEv" x="-4600" y="4100">
 			<Parameter Name="s16Handle" Value="GLOBAL_A"/>
 		</FB>
 		<FB Name="INIT_ARR_0032_BYTE" Type="eclipse4diac::convert::providers::PROVIDE_ARR_0032_BYTE" x="-7000" y="2000">
@@ -51,42 +51,42 @@
 			<Parameter Name="Input" Value="Input_I1"/>
 			<Parameter Name="InputEvent" Value="BUTTON_SINGLE_CLICK"/>
 		</FB>
-		<SubApp Name="NetEv_Install" Type="MyLib::sys::NetEv_Install_Filter" x="-6300" y="9000">
+		<SubApp Name="NetEv_Install" Type="MyLib::sys::NetEv_Install_Filter" x="-6100" y="4900">
 		</SubApp>
 		<Comment Comment="NMEA 2000 Fast Packet senden: PGN 0x1FF00 (proprietär, PDU2), 32 Byte, global&#10;I1 Klick: Text A-Z 0-4 + 16#00 geht per Fast Packet (nicht ISO-TP), kein RTS/CTS.&#10;Auf dem Bus (alle mit ID 0x1FF00): Rahmen 0 = Byte0 Sequenz/Rahmenzähler, Byte1 Länge 32 (0x20), dann ABCDEF.&#10;Rahmen 1-4 = Byte0 Zähler + je 7 Daten: GHIJKLM, NOPQRST, UVWXYZ0, 1234 00 FF FF.&#10;Gegenstück: Übung 143. Firmware ab LOGIBUS 6dd74ef4 auf BEIDEN Geräten (ISO_NMEA_FPT)." x="-10100" y="-1200" width="9000" height="1800"/>
 		<EventConnections>
-			<Connection Source="NmGetCfInfo_1.IND" Destination="STRUCT_DEMUX_3.REQ"/>
-			<Connection Source="NmGetCfInfo_1.IND" Destination="STRUCT_DEMUX_4.REQ"/>
-			<Connection Source="NmGetCfInfo_1.IND" Destination="STRUCT_DEMUX_5.REQ"/>
-			<Connection Source="DigitalInput_CLK_I1.IND" Destination="F_STRING_TO_BYTES.REQ"/>
+			<Connection Source="NmGetCfInfo_1.IND" Destination="STRUCT_DEMUX_3.REQ" dx1="566.67"/>
+			<Connection Source="NmGetCfInfo_1.IND" Destination="STRUCT_DEMUX_4.REQ" dx1="513.33"/>
+			<Connection Source="NmGetCfInfo_1.IND" Destination="STRUCT_DEMUX_5.REQ" dx1="513.33"/>
+			<Connection Source="DigitalInput_CLK_I1.IND" Destination="F_STRING_TO_BYTES.REQ" dx1="2153.33"/>
 			<Connection Source="INIT_ARR_0032_BYTE.INITO" Destination="F_LEN_ARRAY.REQ"/>
-			<Connection Source="F_LEN_ARRAY.CNF" Destination="AlPgnTxNew_TP.INIT"/>
-			<Connection Source="NetEv2NetEv.CNF" Destination="AlPgnTxNew_TP.install"/>
-			<Connection Source="F_STRING_TO_BYTES.CNF" Destination="AlPgnTxNew_TP.REQ"/>
-			<Connection Source="AlPgnTxNew_TP.installO" Destination="NmGetCfInfo_1.RSP">
+			<Connection Source="F_LEN_ARRAY.CNF" Destination="AlPgnTxNew_TP.INIT" dx1="546.67"/>
+			<Connection Source="NetEv2NetEv.CNF" Destination="AlPgnTxNew_TP.install" dx1="846.67"/>
+			<Connection Source="F_STRING_TO_BYTES.CNF" Destination="AlPgnTxNew_TP.REQ" dx1="706.67"/>
+			<Connection Source="AlPgnTxNew_TP.installO" Destination="NmGetCfInfo_1.RSP" dx1="80" dx2="80" dy="146.67">
 				<Attribute Name="Visible" Value="false"/>
 			</Connection>
-			<Connection Source="AlPgnTxNew_TP.pgnERR" Destination="NmGetCfInfo_1.RSP">
+			<Connection Source="AlPgnTxNew_TP.pgnERR" Destination="NmGetCfInfo_1.RSP" dx1="80" dx2="80" dy="-6.67">
 				<Attribute Name="Visible" Value="false"/>
 			</Connection>
 			<Connection Source="STRUCT_DEMUX_5.CNF" Destination="NetEv_Install.REQ"/>
-			<Connection Source="NetEv_Install.INSTALL" Destination="NetEv2NetEv.REQ"/>
-			<Connection Source="NetEv_Install.RSP" Destination="NmGetCfInfo_1.RSP">
+			<Connection Source="NetEv_Install.INSTALL" Destination="NetEv2NetEv.REQ" dx1="140"/>
+			<Connection Source="NetEv_Install.RSP" Destination="NmGetCfInfo_1.RSP" dx1="80" dx2="80" dy="-2546.67">
 				<Attribute Name="Visible" Value="false"/>
 			</Connection>
-			<Connection Source="AlPgnTxNew_TP.installO" Destination="NetEv_Install.SET"/>
+			<Connection Source="AlPgnTxNew_TP.installO" Destination="NetEv_Install.SET" dx1="80" dx2="80" dy="2700"/>
 		</EventConnections>
 		<DataConnections>
-			<Connection Source="NmGetCfInfo_1.sNameField" Destination="STRUCT_DEMUX_3.IN"/>
-			<Connection Source="NmGetCfInfo_1.sNetEv" Destination="STRUCT_DEMUX_5.IN"/>
-			<Connection Source="NmGetCfInfo_1.sCfInfo" Destination="STRUCT_DEMUX_4.IN"/>
-			<Connection Source="NmGetCfInfo_1.sNetEv" Destination="NetEv2NetEv.IN"/>
-			<Connection Source="NetEv2NetEv." Destination="AlPgnTxNew_TP.NmDestin"/>
+			<Connection Source="NmGetCfInfo_1.sNameField" Destination="STRUCT_DEMUX_3.IN" dx1="566.67"/>
+			<Connection Source="NmGetCfInfo_1.sNetEv" Destination="STRUCT_DEMUX_5.IN" dx1="513.33"/>
+			<Connection Source="NmGetCfInfo_1.sCfInfo" Destination="STRUCT_DEMUX_4.IN" dx1="513.33"/>
+			<Connection Source="NmGetCfInfo_1.sNetEv" Destination="NetEv2NetEv.IN" dx1="2013.33"/>
+			<Connection Source="NetEv2NetEv." Destination="AlPgnTxNew_TP.NmDestin" dx1="846.67"/>
 			<Connection Source="INIT_ARR_0032_BYTE.D1" Destination="F_LEN_ARRAY.ARR"/>
-			<Connection Source="INIT_ARR_0032_BYTE.D1" Destination="F_STRING_TO_BYTES.DATA"/>
-			<Connection Source="F_STRING_TO_BYTES.DATA" Destination="AlPgnTxNew_TP.Data"/>
-			<Connection Source="F_LEN_ARRAY.OUT" Destination="AlPgnTxNew_TP.u16DaSize"/>
-			<Connection Source="STRUCT_DEMUX_5.eNetEvent" Destination="NetEv_Install.eNetEvent"/>
+			<Connection Source="INIT_ARR_0032_BYTE.D1" Destination="F_STRING_TO_BYTES.DATA" dx1="413.33"/>
+			<Connection Source="F_STRING_TO_BYTES.DATA" Destination="AlPgnTxNew_TP.Data" dx1="706.67"/>
+			<Connection Source="F_LEN_ARRAY.OUT" Destination="AlPgnTxNew_TP.u16DaSize" dx1="546.67"/>
+			<Connection Source="STRUCT_DEMUX_5.eNetEvent" Destination="NetEv_Install.eNetEvent" dx1="346.67"/>
 		</DataConnections>
 	</SubAppNetwork>
 </SubAppType>
