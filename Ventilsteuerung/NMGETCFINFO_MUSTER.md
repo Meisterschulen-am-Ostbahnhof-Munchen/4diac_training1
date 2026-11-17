@@ -31,7 +31,7 @@ Alle Verbindungen auf `RSP` sind ausgeblendet (`Visible = false`).
 
 Inhalt von `MyLib_B/sys/NetEv_Install_Filter.SUB`:
 
-- `F_USINT_TO_UINT` → `E_DEMUX_8 NetEv_Verteiler`. Die Ausgänge sind beschriftet: **EO1 = K 0 Active**, **EO4 = K 3 NewAddress**. Alle anderen EO gehen auf `RSP`.
+- `F_USINT_TO_UINT` → `F_MIN(…, 7)` → `E_DEMUX_8 NetEv_Verteiler`. Die Ausgänge sind beschriftet: **EO1 = K 0 Active**, **EO4 = K 3 NewAddress**. Alle anderen EO gehen auf `RSP`.
 - EO1 und EO4 gehen auf die SubApp `Nur_einmal` (Typ `NetEv_Einmal`, darin `E_SWITCH` + `E_SR Installiert`):
   - beim ersten Mal → `INSTALL`
   - danach → `RSP`
@@ -50,8 +50,7 @@ Inhalt von `MyLib_B/sys/NetEv_Install_Filter.SUB`:
    - **Test:** Partner anstecken, dann deployen. Wird die PGN installiert?
 3. **Eigene CF schon vor dem Deploy aktiv** (`thisMember`: 121, 128, 128b, 129, 134, 136–139c).
    - **Test:** Wird in diesen Übungen installiert? Gleiche Ursache wie Punkt 2, also das automatische `INIT`.
-4. **`E_DEMUX_8` kennt nur K 0–7.**
-   - Die Werte 8 und 9 (HSI) gibt es nur mit `CCI_HSI`. Kämen sie doch, käme kein RSP und der FB bliebe hängen.
+4. **`E_DEMUX_8` kennt nur K 0–7.** Behoben: `F_MIN(eNetEvent, 7)` steht vor dem Verteiler. Alles ab 7 (auch HSI 8/9) geht auf EO8 und damit auf `RSP`.
 5. **IDE-Check und Headless-Export** der umgebauten Übungen fehlen noch.
    - Geprüft sind bisher nur XSD, reservierte Wörter und ob alle verbundenen Pins existieren.
    - Die neuen Bausteine liegen unterhalb des bestehenden Netzes. Das Layout muss in der IDE noch zurechtgeschoben werden.
