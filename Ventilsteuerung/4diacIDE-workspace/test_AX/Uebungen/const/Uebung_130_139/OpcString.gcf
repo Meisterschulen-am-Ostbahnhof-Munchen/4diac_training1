@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<GlobalConstants Name="OpcString" Comment="OPC-UA-IDs fuer STRING ueber CAN (Uebungen 137c, 139c)">
+	<Identification Standard="61499-1" Description="Copyright (c) 2026 Meisterschulen am Ostbahnhof  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0">
+	</Identification>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2026-11-14" Remarks="Empfangener Text lokal per PUBLISH (WRITE)">
+	</VersionInfo>
+	<CompilerInfo packageName="Uebungen::const::Uebung_130_139">
+	</CompilerInfo>
+	<GlobalConstants>
+		<VarDeclaration Name="U137_TEXT_NODE" Type="WSTRING" Comment="137c: Knoten Text" InitialValue="&quot;/Objects/Uebungen/U137/Text,1:s=U137_Text&quot;"/>
+		<VarDeclaration Name="U137_TEXT_WRITE" Type="WSTRING" Comment="137c: Text lokal schreiben" InitialValue="MyLib_OPC::F_OPC_LOCAL(&quot;WRITE&quot;, U137_TEXT_NODE)"/>
+		<VarDeclaration Name="U139_TEXT_NODE" Type="WSTRING" Comment="139c: Knoten Text" InitialValue="&quot;/Objects/Uebungen/U139/Text,1:s=U139_Text&quot;"/>
+		<VarDeclaration Name="U139_TEXT_WRITE" Type="WSTRING" Comment="139c: Text lokal schreiben" InitialValue="MyLib_OPC::F_OPC_LOCAL(&quot;WRITE&quot;, U139_TEXT_NODE)"/>
+	</GlobalConstants>
+	<OriginalSource><![CDATA[(*
+ * OPC-UA-IDs fuer STRING ueber CAN: der empfangene Text wird lokal per PUBLISH (WRITE)
+ * auf einen Knoten geschrieben und kann z. B. mit UaExpert angesehen werden.
+ * Aufbau der IDs: *_NODE einmal, dazu MyLib_OPC::F_OPC_LOCAL.
+ *)
+PACKAGE Uebungen::const::Uebung_130_139;
+
+GLOBALCONSTANTS OpcString
+	VAR_GLOBAL CONSTANT
+		U137_TEXT_NODE : WSTRING := "/Objects/Uebungen/U137/Text,1:s=U137_Text"; // 137c: Knoten Text
+		U137_TEXT_WRITE : WSTRING := MyLib_OPC::F_OPC_LOCAL("WRITE", U137_TEXT_NODE); // 137c: Text lokal schreiben
+
+		U139_TEXT_NODE : WSTRING := "/Objects/Uebungen/U139/Text,1:s=U139_Text"; // 139c: Knoten Text
+		U139_TEXT_WRITE : WSTRING := MyLib_OPC::F_OPC_LOCAL("WRITE", U139_TEXT_NODE); // 139c: Text lokal schreiben
+	END_VAR
+END_GLOBALCONSTANTS
+]]></OriginalSource>
+	<Attribute Name="eclipse4diac::core::TypeHash" Value="''"/>
+</GlobalConstants>
