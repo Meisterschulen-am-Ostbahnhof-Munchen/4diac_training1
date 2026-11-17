@@ -31,22 +31,22 @@
 		<FB Name="STRUCT_DEMUX_5" Type="eclipse4diac::convert::STRUCT_DEMUX" x="-7900" y="4900">
 			<Attribute Name="StructuredType" Type="STRING" Value="isobus::pgn::ISONETEVENT_T"/>
 		</FB>
-		<FB Name="AlPgnTxNew8Bcycl_REQ" Type="isobus::pgn::tx::AlPgnTxNew8Bcycl_REQ" x="-4400" y="3700">
-			<Parameter Name="u16RepRateMax" Value="2000"/>
-			<Parameter Name="u16RepRateMin" Value="50"/>
+		<FB Name="AlPgnTxNew8Bcycl_REQ" Type="isobus::pgn::tx::AlPgnTxNew8Bcycl_REQ" x="-3700" y="3600">
 			<Parameter Name="u32Pgn" Value="PGN_PDU1_PropA"/>
 			<Parameter Name="u16DaSize" Value="8"/>
 			<Parameter Name="u8Priority" Value="3"/>
 			<Parameter Name="u16DefRepRate" Value="1000"/>
+			<Parameter Name="u16RepRateMin" Value="50"/>
+			<Parameter Name="u16RepRateMax" Value="2000"/>
 		</FB>
-		<FB Name="Taste_I2" Type="logiBUS::io::DI::logiBUS_IE" x="-10100" y="1000">
+		<FB Name="Taste_I2" Type="logiBUS::io::DI::logiBUS_IE" x="-10100" y="2700">
 			<Parameter Name="QI" Value="TRUE"/>
 			<Parameter Name="Input" Value="Input_I2"/>
 			<Parameter Name="InputEvent" Value="BUTTON_SINGLE_CLICK"/>
 		</FB>
-		<FB Name="Umschalten" Type="iec61499::events::E_T_FF" x="-7000" y="900">
+		<FB Name="Umschalten" Type="iec61499::events::E_T_FF" x="-7700" y="2900">
 		</FB>
-		<FB Name="Rate" Type="iec61131::selection::F_SEL" Comment="Q=FALSE: 1000 ms, Q=TRUE: 100 ms" x="-4400" y="900">
+		<FB Name="Rate" Type="iec61131::selection::F_SEL" Comment="Q=FALSE: 1000 ms, Q=TRUE: 100 ms" x="-6400" y="3000">
 			<Parameter Name="IN0" Value="UINT#1000"/>
 			<Parameter Name="IN1" Value="UINT#100"/>
 		</FB>
@@ -71,9 +71,9 @@
 				<Attribute Name="Visible" Value="false"/>
 			</Connection>
 			<Connection Source="AlPgnTxNew8Bcycl_REQ.installO" Destination="NetEv_Install.SET" dx1="80" dx2="80" dy="2646.67"/>
-			<Connection Source="Taste_I2.IND" Destination="Umschalten.CLK"/>
-			<Connection Source="Umschalten.EO" Destination="Rate.REQ"/>
-			<Connection Source="Rate.CNF" Destination="AlPgnTxNew8Bcycl_REQ.RATE"/>
+			<Connection Source="Taste_I2.IND" Destination="Umschalten.CLK" dx1="1106.67"/>
+			<Connection Source="Umschalten.EO" Destination="Rate.REQ" dx1="366.67"/>
+			<Connection Source="Rate.CNF" Destination="AlPgnTxNew8Bcycl_REQ.RATE" dx1="1573.33"/>
 		</EventConnections>
 		<DataConnections>
 			<Connection Source="NmGetCfInfo_1.sNameField" Destination="STRUCT_DEMUX_3.IN" dx1="560"/>
@@ -81,8 +81,8 @@
 			<Connection Source="NmGetCfInfo_1.sCfInfo" Destination="STRUCT_DEMUX_4.IN" dx1="626.67"/>
 			<Connection Source="NmGetCfInfo_1.sNetEv" Destination="AlPgnTxNew8Bcycl_REQ.NmDestin" dx1="2273.33"/>
 			<Connection Source="STRUCT_DEMUX_5.eNetEvent" Destination="NetEv_Install.eNetEvent" dx1="346.67"/>
-			<Connection Source="Umschalten.Q" Destination="Rate.G"/>
-			<Connection Source="Rate.OUT" Destination="AlPgnTxNew8Bcycl_REQ.u16RepRateMs"/>
+			<Connection Source="Umschalten.Q" Destination="Rate.G" dx1="366.67"/>
+			<Connection Source="Rate.OUT" Destination="AlPgnTxNew8Bcycl_REQ.u16RepRateMs" dx1="1386.67"/>
 		</DataConnections>
 		<AdapterConnections>
 			<Connection Source="DataSupply.PLUG1" Destination="AlPgnTxNew8Bcycl_REQ.CB" dx1="386.67"/>

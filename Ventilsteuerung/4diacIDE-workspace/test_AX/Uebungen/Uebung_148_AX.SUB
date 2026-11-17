@@ -31,7 +31,7 @@
 		<FB Name="STRUCT_DEMUX_5" Type="eclipse4diac::convert::STRUCT_DEMUX" x="-7900" y="4900">
 			<Attribute Name="StructuredType" Type="STRING" Value="isobus::pgn::ISONETEVENT_T"/>
 		</FB>
-		<FB Name="INIT_ARR_0256_BYTE" Type="eclipse4diac::convert::providers::PROVIDE_ARR_0256_BYTE" x="-7000" y="2000">
+		<FB Name="INIT_ARR_0256_BYTE" Type="eclipse4diac::convert::providers::PROVIDE_ARR_0256_BYTE" x="-6000" y="3600">
 		</FB>
 		<FB Name="AlPgnRxNew_TP" Type="isobus::pgn::rx::AlPgnRxNew_TP" x="-2400" y="3600">
 			<Parameter Name="u32Pgn" Value="PGN_SOFTWARE_IDENTIFICATION"/>
@@ -39,47 +39,47 @@
 		</FB>
 		<FB Name="F_BYTES_TO_STRING" Type="logiBUS::utils::dyn_arr::F_BYTES_TO_STRING" x="0" y="3700">
 		</FB>
-		<FB Name="Taste_I1" Type="logiBUS::io::DI::logiBUS_IE" x="-10100" y="1000">
+		<FB Name="Taste_I1" Type="logiBUS::io::DI::logiBUS_IE" x="-10100" y="2200">
 			<Parameter Name="QI" Value="TRUE"/>
 			<Parameter Name="Input" Value="Input_I1"/>
 			<Parameter Name="InputEvent" Value="BUTTON_SINGLE_CLICK"/>
 		</FB>
-		<FB Name="Anfrage" Type="isobus::pgn::tx::DlPgnRequest" Comment="Request (PGN 0xEA00) an den VT" x="-4400" y="900">
+		<FB Name="Anfrage" Type="isobus::pgn::tx::DlPgnRequest" Comment="Request (PGN 0xEA00) an den VT" x="-5300" y="2300">
 			<Parameter Name="u32Pgn" Value="PGN_SOFTWARE_IDENTIFICATION"/>
 		</FB>
-		<SubApp Name="NetEv_Install" Type="MyLib::sys::NetEv_Install_Filter" x="-6300" y="9000">
+		<SubApp Name="NetEv_Install" Type="MyLib::sys::NetEv_Install_Filter" x="-6300" y="4900">
 		</SubApp>
 		<Comment Comment="DlPgnRequest: Software Identification (PGN 0xFEDA) vom VT anfordern&#10;NmGetCfInfo (network, VT-Filter) meldet den VT, AlPgnRxNew_TP wird auf 0xFEDA von ihm installiert.&#10;I1 Klick: Anfrage.REQ schickt den Request an den VT (NmDestin = sNetEv), s16Status 0 = OK.&#10;Antwort (meist TP, Felder mit * getrennt) im Watch: u16DaSize und F_BYTES_TO_STRING." x="-10100" y="-1400" width="9500" height="2000"/>
 		<EventConnections>
-			<Connection Source="NmGetCfInfo_1.IND" Destination="STRUCT_DEMUX_3.REQ"/>
-			<Connection Source="NmGetCfInfo_1.IND" Destination="STRUCT_DEMUX_4.REQ"/>
-			<Connection Source="NmGetCfInfo_1.IND" Destination="STRUCT_DEMUX_5.REQ"/>
+			<Connection Source="NmGetCfInfo_1.IND" Destination="STRUCT_DEMUX_3.REQ" dx1="566.67"/>
+			<Connection Source="NmGetCfInfo_1.IND" Destination="STRUCT_DEMUX_4.REQ" dx1="513.33"/>
+			<Connection Source="NmGetCfInfo_1.IND" Destination="STRUCT_DEMUX_5.REQ" dx1="513.33"/>
 			<Connection Source="INIT_ARR_0256_BYTE.INITO" Destination="AlPgnRxNew_TP.INIT"/>
-			<Connection Source="AlPgnRxNew_TP.IND" Destination="F_BYTES_TO_STRING.REQ"/>
-			<Connection Source="AlPgnRxNew_TP.installO" Destination="NmGetCfInfo_1.RSP">
+			<Connection Source="AlPgnRxNew_TP.IND" Destination="F_BYTES_TO_STRING.REQ" dx1="613.33"/>
+			<Connection Source="AlPgnRxNew_TP.installO" Destination="NmGetCfInfo_1.RSP" dx1="80" dx2="80" dy="146.67">
 				<Attribute Name="Visible" Value="false"/>
 			</Connection>
-			<Connection Source="AlPgnRxNew_TP.pgnERR" Destination="NmGetCfInfo_1.RSP">
+			<Connection Source="AlPgnRxNew_TP.pgnERR" Destination="NmGetCfInfo_1.RSP" dx1="80" dx2="80" dy="-6.67">
 				<Attribute Name="Visible" Value="false"/>
 			</Connection>
 			<Connection Source="STRUCT_DEMUX_5.CNF" Destination="NetEv_Install.REQ"/>
-			<Connection Source="NetEv_Install.RSP" Destination="NmGetCfInfo_1.RSP">
+			<Connection Source="NetEv_Install.RSP" Destination="NmGetCfInfo_1.RSP" dx1="80" dx2="80" dy="-2600">
 				<Attribute Name="Visible" Value="false"/>
 			</Connection>
-			<Connection Source="AlPgnRxNew_TP.installO" Destination="NetEv_Install.SET"/>
-			<Connection Source="NetEv_Install.INSTALL" Destination="AlPgnRxNew_TP.install"/>
-			<Connection Source="Taste_I1.IND" Destination="Anfrage.REQ"/>
+			<Connection Source="AlPgnRxNew_TP.installO" Destination="NetEv_Install.SET" dx1="80" dx2="80" dy="2700"/>
+			<Connection Source="NetEv_Install.INSTALL" Destination="AlPgnRxNew_TP.install" dx1="1340"/>
+			<Connection Source="Taste_I1.IND" Destination="Anfrage.REQ" dx1="2406.67"/>
 		</EventConnections>
 		<DataConnections>
-			<Connection Source="NmGetCfInfo_1.sNameField" Destination="STRUCT_DEMUX_3.IN"/>
-			<Connection Source="NmGetCfInfo_1.sNetEv" Destination="STRUCT_DEMUX_5.IN"/>
-			<Connection Source="NmGetCfInfo_1.sCfInfo" Destination="STRUCT_DEMUX_4.IN"/>
-			<Connection Source="INIT_ARR_0256_BYTE.D1" Destination="AlPgnRxNew_TP.Data"/>
-			<Connection Source="AlPgnRxNew_TP.u16DaSize" Destination="F_BYTES_TO_STRING.SIZE"/>
-			<Connection Source="AlPgnRxNew_TP.Data" Destination="F_BYTES_TO_STRING.DATA"/>
-			<Connection Source="STRUCT_DEMUX_5.eNetEvent" Destination="NetEv_Install.eNetEvent"/>
-			<Connection Source="NmGetCfInfo_1.sNetEv" Destination="AlPgnRxNew_TP.NmSource"/>
-			<Connection Source="NmGetCfInfo_1.sNetEv" Destination="Anfrage.NmDestin"/>
+			<Connection Source="NmGetCfInfo_1.sNameField" Destination="STRUCT_DEMUX_3.IN" dx1="566.67"/>
+			<Connection Source="NmGetCfInfo_1.sNetEv" Destination="STRUCT_DEMUX_5.IN" dx1="513.33"/>
+			<Connection Source="NmGetCfInfo_1.sCfInfo" Destination="STRUCT_DEMUX_4.IN" dx1="513.33"/>
+			<Connection Source="INIT_ARR_0256_BYTE.D1" Destination="AlPgnRxNew_TP.Data" dx1="1666.67"/>
+			<Connection Source="AlPgnRxNew_TP.u16DaSize" Destination="F_BYTES_TO_STRING.SIZE" dx1="613.33"/>
+			<Connection Source="AlPgnRxNew_TP.Data" Destination="F_BYTES_TO_STRING.DATA" dx1="613.33"/>
+			<Connection Source="STRUCT_DEMUX_5.eNetEvent" Destination="NetEv_Install.eNetEvent" dx1="346.67"/>
+			<Connection Source="NmGetCfInfo_1.sNetEv" Destination="AlPgnRxNew_TP.NmSource" dx1="3266.67"/>
+			<Connection Source="NmGetCfInfo_1.sNetEv" Destination="Anfrage.NmDestin" dx1="2266.67"/>
 		</DataConnections>
 	</SubAppNetwork>
 </SubAppType>
