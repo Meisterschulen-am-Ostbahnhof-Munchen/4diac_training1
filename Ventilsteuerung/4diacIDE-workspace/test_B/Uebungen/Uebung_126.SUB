@@ -35,8 +35,6 @@
 			<Parameter Name="u8Priority" Value="3"/>
 			<Parameter Name="u16DefRepRate" Value="500"/>
 		</FB>
-		<FB Name="E_RESTART" Type="iec61499::events::E_RESTART" Comment="INIT: Replay der schon aktiven Teilnehmer" x="-12300" y="3900">
-		</FB>
 		<SubApp Name="DataSupply" Type="MyLib::sys::CTU_TO_PCAN_Callback" x="-6200" y="5100">
 		</SubApp>
 		<SubApp Name="NetEv_Install" Type="MyLib::sys::NetEv_Install_Filter" x="-6300" y="9000">
@@ -51,8 +49,6 @@
 			<Connection Source="AlPgnTxNew8Bcycl_REQ.pgnERR" Destination="NmGetCfInfo_1.RSP">
 				<Attribute Name="Visible" Value="false"/>
 			</Connection>
-			<Connection Source="E_RESTART.COLD" Destination="NmGetCfInfo_1.INIT"/>
-			<Connection Source="E_RESTART.WARM" Destination="NmGetCfInfo_1.INIT"/>
 			<Connection Source="STRUCT_DEMUX_5.CNF" Destination="NetEv_Install.REQ"/>
 			<Connection Source="NetEv_Install.INSTALL" Destination="AlPgnTxNew8Bcycl_REQ.install"/>
 			<Connection Source="NetEv_Install.RSP" Destination="NmGetCfInfo_1.RSP">

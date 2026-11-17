@@ -29,8 +29,6 @@
 		<FB Name="NetEv_DEMUX" Type="eclipse4diac::convert::STRUCT_DEMUX" x="-10100" y="6400">
 			<Attribute Name="StructuredType" Type="STRING" Value="isobus::pgn::ISONETEVENT_T"/>
 		</FB>
-		<FB Name="E_RESTART" Type="iec61499::events::E_RESTART" Comment="INIT: Replay der schon aktiven Teilnehmer" x="-12300" y="2900">
-		</FB>
 		<SubApp Name="DataSupply" Type="MyLib::sys::SIN_TO_PCAN_Callback_DWord" x="-7400" y="4800">
 		</SubApp>
 		<SubApp Name="NetEv_Install" Type="MyLib::sys::NetEv_Install_Filter" x="-6300" y="6400">
@@ -43,8 +41,6 @@
 			<Connection Source="AlPgnTxNew8Bcycl_REQ.pgnERR" Destination="NmGetCfInfo_1.RSP">
 				<Attribute Name="Visible" Value="false"/>
 			</Connection>
-			<Connection Source="E_RESTART.COLD" Destination="NmGetCfInfo_1.INIT"/>
-			<Connection Source="E_RESTART.WARM" Destination="NmGetCfInfo_1.INIT"/>
 			<Connection Source="NetEv_DEMUX.CNF" Destination="NetEv_Install.REQ"/>
 			<Connection Source="NetEv_Install.INSTALL" Destination="AlPgnTxNew8Bcycl_REQ.install"/>
 			<Connection Source="NetEv_Install.RSP" Destination="NmGetCfInfo_1.RSP">

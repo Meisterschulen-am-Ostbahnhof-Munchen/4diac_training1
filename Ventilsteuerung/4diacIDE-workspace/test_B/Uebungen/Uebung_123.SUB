@@ -46,8 +46,6 @@
 		<FB Name="STRUCT_DEMUX_5" Type="eclipse4diac::convert::STRUCT_DEMUX" x="-7900" y="4900">
 			<Attribute Name="StructuredType" Type="STRING" Value="isobus::pgn::ISONETEVENT_T"/>
 		</FB>
-		<FB Name="E_RESTART" Type="iec61499::events::E_RESTART" Comment="INIT: Replay der schon aktiven Teilnehmer" x="-12300" y="3900">
-		</FB>
 		<EventConnections>
 			<Connection Source="NmGetCfInfo.IND" Destination="STRUCT_DEMUX.REQ" dx1="593.33"/>
 			<Connection Source="NmGetCfInfo.IND" Destination="STRUCT_DEMUX_1.REQ" dx1="593.33"/>
@@ -61,8 +59,6 @@
 			<Connection Source="STRUCT_DEMUX_5.CNF" Destination="NmGetCfInfo_1.RSP">
 				<Attribute Name="Visible" Value="false"/>
 			</Connection>
-			<Connection Source="E_RESTART.COLD" Destination="NmGetCfInfo_1.INIT"/>
-			<Connection Source="E_RESTART.WARM" Destination="NmGetCfInfo_1.INIT"/>
 		</EventConnections>
 		<DataConnections>
 			<Connection Source="NmGetCfInfo.sNetEv" Destination="STRUCT_DEMUX.IN" dx1="660"/>

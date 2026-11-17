@@ -25,7 +25,7 @@ Reine Anzeige (120, 121, 123):
 | `eNetEvent` holen | `IND` → `STRUCT_DEMUX(sNetEv)`. Danach `CNF` → `NetEv_Install.REQ` und `eNetEvent` → `NetEv_Install.eNetEvent` |
 | Filtern | SubApp `NetEv_Install` (Typ `MyLib::sys::NetEv_Install_Filter`): `INSTALL` → install, `RSP` → `NmGetCfInfo.RSP` |
 | Install quittieren | `installO` → `NetEv_Install.SET` und `RSP`, `pgnERR` → `RSP` |
-| Replay beim Start | bei `member = network`: `E_RESTART.COLD/WARM` → `INIT` |
+| Replay beim Start | `INIT` bleibt unverbunden. Es ist ein `EInit` und wird beim Start ausgelöst (Franz) |
 
 Alle Verbindungen auf `RSP` sind ausgeblendet (`Visible = false`).
 
@@ -46,11 +46,10 @@ Inhalt von `MyLib_B/sys/NetEv_Install_Filter.SUB`:
    - **Test:** Übung deployen, Nachrichten prüfen. Partner abstecken, wieder anstecken. Kommen die Nachrichten noch an?
    - Wenn nicht: Bei Inactive die PGN entfernen und `NetEv_Install.RESET` auslösen.
 2. **Partner schon vor dem Deploy am Netz.**
-   - Erst mit `INIT` kommt der Replay.
+   - Der Replay kommt nur mit `INIT`. `INIT` ist unverbunden und soll als `EInit` beim Start automatisch kommen.
    - **Test:** Partner anstecken, dann deployen. Wird die PGN installiert?
-3. **`thisMember`-Übungen ohne INIT** (121, 128, 128b, 129, 134, 136–139c).
-   - Ist die eigene CF beim Deploy schon aktiv, kommt kein IND.
-   - **Test:** Wird in diesen Übungen installiert? Wenn nicht, auch dort `E_RESTART` → `INIT` setzen. Wegen `Nur_einmal` schadet das nicht.
+3. **Eigene CF schon vor dem Deploy aktiv** (`thisMember`: 121, 128, 128b, 129, 134, 136–139c).
+   - **Test:** Wird in diesen Übungen installiert? Gleiche Ursache wie Punkt 2, also das automatische `INIT`.
 4. **`E_DEMUX_8` kennt nur K 0–7.**
    - Die Werte 8 und 9 (HSI) gibt es nur mit `CCI_HSI`. Kämen sie doch, käme kein RSP und der FB bliebe hängen.
 5. **IDE-Check und Headless-Export** der umgebauten Übungen fehlen noch.
