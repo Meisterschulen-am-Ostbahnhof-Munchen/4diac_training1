@@ -253,20 +253,26 @@ async function connect() {
     })
 
     /* Optional: umgerechnete Werte AI_I1_CAL-AI_I8_CAL (REAL, nur beim Tester mit Umrechnung).
-     * Fehlt der Knoten, kommt ein schlechter StatusCode, dann bleibt die Anzeige '–'. */
-    const calItems = Array.from({ length: 8 }, (_, i) => ({
-      nodeId: coerceNodeId(`ns=1;s=AI_I${i + 1}_CAL`),
-      attributeId: AttributeIds.Value,
-    }))
-    const calGroup = await subscription.monitorItemsP(
-      calItems,
-      { samplingInterval: 100, discardOldest: true, queueSize: 2 },
-      TimestampsToReturn.Neither
-    )
-    calGroup.on('changed', (_item: any, dataValue: any, index: number) => {
-      const good = (dataValue.statusCode?.value ?? 0) === 0
-      cal.value[index] = good && dataValue.value?.value != null ? Number(dataValue.value.value) : null
-    })
+     * Fehlt der Knoten, kommt ein schlechter StatusCode, dann bleibt die Anzeige '–'.
+     * Lehnt der Server das Ueberwachen ganz ab, bleibt die Verbindung trotzdem bestehen. */
+    try {
+      const calItems = Array.from({ length: 8 }, (_, i) => ({
+        nodeId: coerceNodeId(`ns=1;s=AI_I${i + 1}_CAL`),
+        attributeId: AttributeIds.Value,
+      }))
+      const calGroup = await subscription.monitorItemsP(
+        calItems,
+        { samplingInterval: 100, discardOldest: true, queueSize: 2 },
+        TimestampsToReturn.Neither
+      )
+      calGroup.on('changed', (_item: any, dataValue: any, index: number) => {
+        const good = (dataValue?.statusCode?.value ?? 0) === 0
+        const v = Number(dataValue?.value?.value)
+        cal.value[index] = good && dataValue?.value?.value != null && Number.isFinite(v) ? v : null
+      })
+    } catch (err) {
+      console.warn('CAL-Knoten nicht verfuegbar:', err)
+    }
 
     /* Monitor all outputs Q1-Q12 (reflect actual hardware state, unveraendert wie im DIDO-Beispiel) */
     const outputItems = Array.from({ length: 12 }, (_, i) => ({
@@ -327,6 +333,7 @@ async function disconnect() {
   }
   connected.value = false
   status.value = 'Getrennt'
+  tick.value = '–'
   mv.value.fill(0)
   cal.value.fill(null)
   outputs.value.fill(false)
