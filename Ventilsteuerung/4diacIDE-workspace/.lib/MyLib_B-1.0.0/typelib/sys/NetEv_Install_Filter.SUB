@@ -18,6 +18,8 @@
 		<SubAppEventOutputs>
 			<SubAppEvent Name="INSTALL" Type="Event" Comment="jetzt installieren">
 			</SubAppEvent>
+			<SubAppEvent Name="CHG" Type="Event" Comment="schon installiert, Partner neu gemeldet (für CHG)">
+			</SubAppEvent>
 			<SubAppEvent Name="RSP" Type="Event" Comment="nur quittieren (an NmGetCfInfo.RSP)">
 			</SubAppEvent>
 		</SubAppEventOutputs>
@@ -54,6 +56,7 @@
 			<Connection Source="SET" Destination="Nur_einmal.S" dx1="346.67"/>
 			<Connection Source="RESET" Destination="Nur_einmal.R" dx1="186.67"/>
 			<Connection Source="Nur_einmal.EO0" Destination="INSTALL" dx1="1640"/>
+			<Connection Source="Nur_einmal.EO1" Destination="CHG"/>
 			<Connection Source="Nur_einmal.EO1" Destination="RSP" dx1="1886.67"/>
 			<Connection Source="NetEv_Verteiler.EO2" Destination="RSP">
 				<Attribute Name="Visible" Value="false"/>

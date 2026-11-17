@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SubAppType Name="Uebung_147" Comment="Übung zu DlPgnSend: PropA einmal mit 20 Byte global senden, ohne install">
+	<Identification Standard="61499-2" Description="Copyright (c) 2026 Meisterschulen am Ostbahnhof  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0">
+	</Identification>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2026-11-17" Remarks="initial API and implementation and/or initial documentation">
+	</VersionInfo>
+	<CompilerInfo packageName="Uebungen">
+		<Import declaration="Uebungen::const::Uebung_120_129::Filter::ADD_ALL_PASS"/>
+		<Import declaration="Uebungen::const::Uebung_120_129::Filter::FLT_ALL_PASS"/>
+		<Import declaration="isobus::pgn::ISOUSERHOME_e::thisMember"/>
+		<Import declaration="isobus::pgn::ISO_CAN_NODE::NODE1"/>
+		<Import declaration="isobus::pgn::const::PgnDef::PGN_PDU1_PropA"/>
+		<Import declaration="logiBUS::io::DI::logiBUS_DI::Input_I1"/>
+		<Import declaration="logiBUS::io::DI::logiBUS_DI_Events::BUTTON_SINGLE_CLICK"/>
+		<Import declaration="isobus::pgn::HANDLE::GLOBAL"/>
+	</CompilerInfo>
+	<SubAppInterfaceList>
+	</SubAppInterfaceList>
+	<SubAppNetwork>
+		<FB Name="STRUCT_DEMUX_3" Type="eclipse4diac::convert::STRUCT_DEMUX" x="-7800" y="7400">
+			<Attribute Name="StructuredType" Type="STRING" Value="isobus::pgn::NAMEFIELD_T"/>
+		</FB>
+		<FB Name="NmGetCfInfo_1" Type="isobus::pgn::NmGetCfInfo" x="-10100" y="3900">
+			<Parameter Name="u8CanIdx" Value="NODE1"/>
+			<Parameter Name="member" Value="thisMember"/>
+			<Parameter Name="address" Value="ADD_ALL_PASS"/>
+			<Parameter Name="mask" Value="FLT_ALL_PASS"/>
+		</FB>
+		<FB Name="STRUCT_DEMUX_4" Type="eclipse4diac::convert::STRUCT_DEMUX" x="-7900" y="6100">
+			<Attribute Name="StructuredType" Type="STRING" Value="isobus::pgn::CF_INFO_T"/>
+		</FB>
+		<FB Name="STRUCT_DEMUX_5" Type="eclipse4diac::convert::STRUCT_DEMUX" x="-7900" y="4900">
+			<Attribute Name="StructuredType" Type="STRING" Value="isobus::pgn::ISONETEVENT_T"/>
+		</FB>
+		<FB Name="NetEv2NetEv" Type="isobus::pgn::NetEv2NetEv" x="-4900" y="4100">
+			<Parameter Name="s16Handle" Value="GLOBAL"/>
+		</FB>
+		<FB Name="INIT_ARR_0032_BYTE" Type="eclipse4diac::convert::providers::PROVIDE_ARR_0032_BYTE" x="-7000" y="2000">
+		</FB>
+		<FB Name="F_STRING_TO_BYTES" Type="logiBUS::utils::dyn_arr::F_STRING_TO_BYTES" x="-4900" y="900">
+			<Parameter Name="IN" Value="STRING#'ABCDEFGHIJKLMNOPQRS'"/>
+		</FB>
+		<FB Name="DigitalInput_CLK_I1" Type="logiBUS::io::DI::logiBUS_IE" x="-10100" y="2700">
+			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="Input" Value="Input_I1"/>
+			<Parameter Name="InputEvent" Value="BUTTON_SINGLE_CLICK"/>
+		</FB>
+		<FB Name="DlPgnSend" Type="isobus::pgn::tx::DlPgnSend" Comment="einmal senden, ohne install" x="-2400" y="3600">
+			<Parameter Name="u32Pgn" Value="PGN_PDU1_PropA"/>
+			<Parameter Name="u8Priority" Value="3"/>
+			<Parameter Name="u16DaSize" Value="20"/>
+		</FB>
+		<SubApp Name="NetEv_Install" Type="MyLib::sys::NetEv_Install_Filter" x="-6300" y="9000">
+		</SubApp>
+		<Comment Comment="DlPgnSend: eine PGN einmal senden, ohne install&#10;NmDestin aus der eigenen CF (thisMember, Active): s16OwnCfHnd = Sender, s16Handle = HANDLE::GLOBAL.&#10;I1 Klick: PropA (0xEF00) mit 20 Byte (A-S + 16#00) global, mehr als 8 Byte = TP BAM. s16Status 0 = OK.&#10;Empfänger: Übung 139 zeigt den Text." x="-10100" y="-1400" width="9500" height="2000"/>
+		<EventConnections>
+			<Connection Source="NmGetCfInfo_1.IND" Destination="STRUCT_DEMUX_3.REQ"/>
+			<Connection Source="NmGetCfInfo_1.IND" Destination="STRUCT_DEMUX_4.REQ"/>
+			<Connection Source="NmGetCfInfo_1.IND" Destination="STRUCT_DEMUX_5.REQ"/>
+			<Connection Source="DigitalInput_CLK_I1.IND" Destination="F_STRING_TO_BYTES.REQ"/>
+			<Connection Source="STRUCT_DEMUX_5.CNF" Destination="NetEv_Install.REQ"/>
+			<Connection Source="NetEv_Install.INSTALL" Destination="NetEv2NetEv.REQ"/>
+			<Connection Source="NetEv_Install.RSP" Destination="NmGetCfInfo_1.RSP">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="NetEv2NetEv.CNF" Destination="NetEv_Install.SET"/>
+			<Connection Source="NetEv2NetEv.CNF" Destination="NmGetCfInfo_1.RSP">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="F_STRING_TO_BYTES.CNF" Destination="DlPgnSend.REQ"/>
+		</EventConnections>
+		<DataConnections>
+			<Connection Source="NmGetCfInfo_1.sNameField" Destination="STRUCT_DEMUX_3.IN"/>
+			<Connection Source="NmGetCfInfo_1.sNetEv" Destination="STRUCT_DEMUX_5.IN"/>
+			<Connection Source="NmGetCfInfo_1.sCfInfo" Destination="STRUCT_DEMUX_4.IN"/>
+			<Connection Source="NmGetCfInfo_1.sNetEv" Destination="NetEv2NetEv.IN"/>
+			<Connection Source="INIT_ARR_0032_BYTE.D1" Destination="F_STRING_TO_BYTES.DATA"/>
+			<Connection Source="STRUCT_DEMUX_5.eNetEvent" Destination="NetEv_Install.eNetEvent"/>
+			<Connection Source="NetEv2NetEv." Destination="DlPgnSend.NmDestin"/>
+			<Connection Source="F_STRING_TO_BYTES.DATA" Destination="DlPgnSend.Data"/>
+		</DataConnections>
+	</SubAppNetwork>
+</SubAppType>
