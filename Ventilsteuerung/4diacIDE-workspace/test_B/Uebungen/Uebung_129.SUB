@@ -39,13 +39,35 @@
 			<Parameter Name="u32Pgn" Value="PGN_PDU1_PropA"/>
 			<Parameter Name="u8Priority" Value="3"/>
 		</FB>
+		<FB Name="NetEv_Art" Type="iec61131::conversion::F_USINT_TO_UINT" x="-8100" y="9000">
+		</FB>
+		<FB Name="NetEv_Verteiler" Type="iec61499::events::E_DEMUX_8" Comment="EO1 Active, EO4 NewAddress, Rest nur RSP" x="-6300" y="9000">
+		</FB>
+		<FB Name="Nur_einmal" Type="iec61499::events::E_SWITCH" Comment="EO0: erstes Mal install, EO1: schon installiert" x="-4300" y="9000">
+		</FB>
+		<FB Name="Installiert" Type="iec61499::events::E_SR" x="-4300" y="9900">
+		</FB>
 		<EventConnections>
 			<Connection Source="NmGetCfInfo_1.IND" Destination="STRUCT_DEMUX_3.REQ"/>
 			<Connection Source="NmGetCfInfo_1.IND" Destination="STRUCT_DEMUX_4.REQ"/>
 			<Connection Source="NmGetCfInfo_1.IND" Destination="STRUCT_DEMUX_5.REQ"/>
-			<Connection Source="NmGetCfInfo_1.IND" Destination="NetEv2NetEv.REQ"/>
 			<Connection Source="INIT_ARR_1785_BYTE.INITO" Destination="AlPgnRxNew_TP.INIT"/>
 			<Connection Source="NetEv2NetEv.CNF" Destination="AlPgnRxNew_TP.install"/>
+			<Connection Source="STRUCT_DEMUX_5.CNF" Destination="NetEv_Art.REQ"/>
+			<Connection Source="NetEv_Art.CNF" Destination="NetEv_Verteiler.EI"/>
+			<Connection Source="NetEv_Verteiler.EO1" Destination="Nur_einmal.EI"/>
+			<Connection Source="NetEv_Verteiler.EO4" Destination="Nur_einmal.EI"/>
+			<Connection Source="NetEv_Verteiler.EO2" Destination="NmGetCfInfo_1.RSP"/>
+			<Connection Source="NetEv_Verteiler.EO3" Destination="NmGetCfInfo_1.RSP"/>
+			<Connection Source="NetEv_Verteiler.EO5" Destination="NmGetCfInfo_1.RSP"/>
+			<Connection Source="NetEv_Verteiler.EO6" Destination="NmGetCfInfo_1.RSP"/>
+			<Connection Source="NetEv_Verteiler.EO7" Destination="NmGetCfInfo_1.RSP"/>
+			<Connection Source="NetEv_Verteiler.EO8" Destination="NmGetCfInfo_1.RSP"/>
+			<Connection Source="Nur_einmal.EO0" Destination="NetEv2NetEv.REQ"/>
+			<Connection Source="Nur_einmal.EO1" Destination="NmGetCfInfo_1.RSP"/>
+			<Connection Source="AlPgnRxNew_TP.installO" Destination="Installiert.S"/>
+			<Connection Source="AlPgnRxNew_TP.installO" Destination="NmGetCfInfo_1.RSP"/>
+			<Connection Source="AlPgnRxNew_TP.pgnERR" Destination="NmGetCfInfo_1.RSP"/>
 		</EventConnections>
 		<DataConnections>
 			<Connection Source="NmGetCfInfo_1.sNameField" Destination="STRUCT_DEMUX_3.IN"/>
@@ -54,6 +76,9 @@
 			<Connection Source="NmGetCfInfo_1.sNetEv" Destination="NetEv2NetEv.IN"/>
 			<Connection Source="NetEv2NetEv." Destination="AlPgnRxNew_TP.NmSource"/>
 			<Connection Source="INIT_ARR_1785_BYTE.D1" Destination="AlPgnRxNew_TP.Data"/>
+			<Connection Source="STRUCT_DEMUX_5.eNetEvent" Destination="NetEv_Art.IN"/>
+			<Connection Source="NetEv_Art.OUT" Destination="NetEv_Verteiler.K"/>
+			<Connection Source="Installiert.Q" Destination="Nur_einmal.G"/>
 		</DataConnections>
 	</SubAppNetwork>
 </SubAppType>
