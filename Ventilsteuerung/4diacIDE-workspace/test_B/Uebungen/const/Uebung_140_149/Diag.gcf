@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<GlobalConstants Name="Diag" Comment="Konstanten für Übung 141 (DiagSetDTC, Drahtbruch AI6)">
+	<Identification Standard="61499-1" Description="Copyright (c) 2026 Meisterschulen am Ostbahnhof  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0">
+	</Identification>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2026-11-17" Remarks="Drahtbruch 4-20 mA als DTC">
+	</VersionInfo>
+	<CompilerInfo packageName="Uebungen::const::Uebung_140_149">
+	</CompilerInfo>
+	<GlobalConstants>
+		<VarDeclaration Name="SPN_DRAHTBRUCH_AI6" Type="UDINT" Comment="141: erster proprietärer SPN (J1939DA)" InitialValue="520192"/>
+		<VarDeclaration Name="MV_DRAHTBRUCH" Type="UDINT" Comment="141: unter 564 mV (3,6 mA) = Drahtbruch" InitialValue="564"/>
+		<VarDeclaration Name="MV_OK" Type="UDINT" Comment="141: ab 626 mV (4 mA) wieder OK" InitialValue="626"/>
+	</GlobalConstants>
+	<OriginalSource><![CDATA[(*
+ * Übung 141: Drahtbruch an einem 4-20-mA-Eingang als DTC über DM1.
+ * Bürde wirksam 491,2 Ohm: 4 mA = 626,4 mV, 3,6 mA = 563,8 mV am Pin.
+ * Zwischen 564 und 626 mV bleibt der Zustand (Hysterese).
+ * SPN 520192 ist der erste proprietäre SPN nach SAE J1939DA.
+ *)
+PACKAGE Uebungen::const::Uebung_140_149;
+
+GLOBALCONSTANTS Diag
+	VAR_GLOBAL CONSTANT
+		SPN_DRAHTBRUCH_AI6 : UDINT := 520192; // 141: erster proprietärer SPN (J1939DA)
+		MV_DRAHTBRUCH : UDINT := 564; // 141: unter 564 mV (3,6 mA) = Drahtbruch
+		MV_OK : UDINT := 626; // 141: ab 626 mV (4 mA) wieder OK
+	END_VAR
+END_GLOBALCONSTANTS
+]]></OriginalSource>
+</GlobalConstants>
