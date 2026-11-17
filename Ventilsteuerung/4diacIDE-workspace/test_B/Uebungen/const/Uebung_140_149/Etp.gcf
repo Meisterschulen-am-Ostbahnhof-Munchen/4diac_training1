@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<GlobalConstants Name="Etp" Comment="Konstanten für Übungen 149-149d (ETP zwischen zwei logiBUS)">
+	<Identification Standard="61499-1" Description="Copyright (c) 2026 Meisterschulen am Ostbahnhof  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0">
+	</Identification>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2026-11-17" Remarks="ETP Partner-Filter">
+	</VersionInfo>
+	<CompilerInfo packageName="Uebungen::const::Uebung_140_149">
+		<Import declaration="isobus::pgn::NAMEFIELD_T"/>
+	</CompilerInfo>
+	<GlobalConstants>
+		<VarDeclaration Name="LOGIBUS_ADD" Type="isobus::pgn::NAMEFIELD_T" Comment="logiBUS CAN1: Hersteller 1116, Funktion 128" InitialValue="(bSelfConf := TRUE, bIndGroup := 2, bDevClassInst := 0, bDevClass := 0, bReserved := FALSE, bFunction := 128, bFunctionInst := 0, bEcuInstance := 0, wManufCode := 1116, dwIdentNumb := 0)"/>
+		<VarDeclaration Name="LOGIBUS_FLT" Type="isobus::pgn::NAMEFIELD_T" Comment="prüft nur wManufCode und bFunction" InitialValue="(bSelfConf := FALSE, bIndGroup := 0, bDevClassInst := 0, bDevClass := 0, bReserved := FALSE, bFunction := 16#FF, bFunctionInst := 0, bEcuInstance := 0, wManufCode := 16#7FF, dwIdentNumb := 0)"/>
+	</GlobalConstants>
+	<OriginalSource><![CDATA[(*
+ * Übungen 149-149d: ETP zwischen zwei logiBUS.
+ * NAME eines logiBUS an CAN1 (Defaults aus isobus_name_ini.def, änderbar in device.ini):
+ * Hersteller 1116 (HR Agrartechnik), Funktion 128. dwIdentNumb kommt aus der MAC
+ * und ist pro Gerät anders, taugt also nicht als Filter.
+ * Mit member = network kommt das eigene Gerät nicht durch den Filter.
+ *)
+PACKAGE Uebungen::const::Uebung_140_149;
+
+IMPORT isobus::pgn::NAMEFIELD_T;
+
+GLOBALCONSTANTS Etp
+	VAR_GLOBAL CONSTANT
+		LOGIBUS_ADD : NAMEFIELD_T := (bSelfConf := TRUE, bIndGroup := 2, bDevClassInst := 0, bDevClass := 0, bReserved := FALSE, bFunction := 128, bFunctionInst := 0, bEcuInstance := 0, wManufCode := 1116, dwIdentNumb := 0); // logiBUS CAN1: Hersteller 1116, Funktion 128
+		LOGIBUS_FLT : NAMEFIELD_T := (bSelfConf := FALSE, bIndGroup := 0, bDevClassInst := 0, bDevClass := 0, bReserved := FALSE, bFunction := 16#FF, bFunctionInst := 0, bEcuInstance := 0, wManufCode := 16#7FF, dwIdentNumb := 0); // prüft nur wManufCode und bFunction
+	END_VAR
+END_GLOBALCONSTANTS
+]]></OriginalSource>
+</GlobalConstants>
