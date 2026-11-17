@@ -56,6 +56,9 @@
 			<Connection Source="INIT.CNF" Destination="STRUCT_MUX_1.REQ" dx1="520"/>
 			<Connection Source="INIT_1.INITO" Destination="INIT_1.REQ" dx1="80" dx2="80" dy="53.33"/>
 			<Connection Source="INIT_1.CNF" Destination="STRUCT_MUX.REQ" dx1="520"/>
+			<Connection Source="STRUCT_DEMUX_3.CNF" Destination="NmGetCfInfo.RSP">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
 		</EventConnections>
 		<DataConnections>
 			<Connection Source="STRUCT_MUX.OUT" Destination="STRUCT_DEMUX.IN" dx1="673.33"/>

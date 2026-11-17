@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SubAppType Name="Uebung_139b_AX" Comment="Übung zu STRING über CAN empfangen (TP, mehr als 8 Zeichen), Anzeige am VT">
+	<Identification Standard="61499-2" Description="Copyright (c) 2026 Meisterschulen am Ostbahnhof  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0">
+	</Identification>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2026-11-14" Remarks="initial API and implementation and/or initial documentation">
+	</VersionInfo>
+	<CompilerInfo packageName="Uebungen">
+		<Import declaration="Uebungen::const::UT::DefaultPool::OutputString"/>
+		<Import declaration="Uebungen::const::Uebung_120_129::Filter::ADD_ALL_PASS"/>
+		<Import declaration="Uebungen::const::Uebung_120_129::Filter::FLT_ALL_PASS"/>
+		<Import declaration="isobus::pgn::ADDRESS::GLOBAL_A"/>
+		<Import declaration="isobus::pgn::ISOUSERHOME_e::thisMember"/>
+		<Import declaration="isobus::pgn::ISO_CAN_NODE::NODE1"/>
+		<Import declaration="isobus::pgn::const::PgnDef::PGN_PDU1_PropA"/>
+	</CompilerInfo>
+	<SubAppInterfaceList>
+	</SubAppInterfaceList>
+	<SubAppNetwork>
+		<FB Name="STRUCT_DEMUX_3" Type="eclipse4diac::convert::STRUCT_DEMUX" x="-7800" y="7400">
+			<Attribute Name="StructuredType" Type="STRING" Value="isobus::pgn::NAMEFIELD_T"/>
+		</FB>
+		<FB Name="NmGetCfInfo_1" Type="isobus::pgn::NmGetCfInfo" x="-10100" y="3900">
+			<Parameter Name="u8CanIdx" Value="NODE1"/>
+			<Parameter Name="member" Value="thisMember"/>
+			<Parameter Name="address" Value="ADD_ALL_PASS"/>
+			<Parameter Name="mask" Value="FLT_ALL_PASS"/>
+		</FB>
+		<FB Name="STRUCT_DEMUX_4" Type="eclipse4diac::convert::STRUCT_DEMUX" x="-7900" y="6100">
+			<Attribute Name="StructuredType" Type="STRING" Value="isobus::pgn::CF_INFO_T"/>
+		</FB>
+		<FB Name="STRUCT_DEMUX_5" Type="eclipse4diac::convert::STRUCT_DEMUX" x="-7900" y="4900">
+			<Attribute Name="StructuredType" Type="STRING" Value="isobus::pgn::ISONETEVENT_T"/>
+		</FB>
+		<FB Name="NetEv2NetEv" Type="isobus::pgn::NetEv2NetEv" x="-4900" y="4100">
+			<Parameter Name="s16Handle" Value="GLOBAL_A"/>
+		</FB>
+		<FB Name="INIT_ARR_0256_BYTE" Type="eclipse4diac::convert::providers::PROVIDE_ARR_0256_BYTE" x="-7000" y="2000">
+		</FB>
+		<FB Name="AlPgnRxNew_TP" Type="isobus::pgn::rx::AlPgnRxNew_TP" x="-2400" y="3600">
+			<Parameter Name="u32Pgn" Value="PGN_PDU1_PropA"/>
+			<Parameter Name="u8Priority" Value="3"/>
+		</FB>
+		<FB Name="F_BYTES_TO_STRING" Type="logiBUS::utils::dyn_arr::F_BYTES_TO_STRING" x="0" y="3700">
+		</FB>
+		<FB Name="Q_StringValue" Type="isobus::UT::Q::Q_StringValue" x="2300" y="3700">
+			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="u16ObjId" Value="OutputString"/>
+		</FB>
+		<SubApp Name="NetEv_Install" Type="MyLib::sys::NetEv_Install_Filter" x="-6300" y="9000">
+		</SubApp>
+		<EventConnections>
+			<Connection Source="NmGetCfInfo_1.IND" Destination="STRUCT_DEMUX_3.REQ"/>
+			<Connection Source="NmGetCfInfo_1.IND" Destination="STRUCT_DEMUX_4.REQ"/>
+			<Connection Source="NmGetCfInfo_1.IND" Destination="STRUCT_DEMUX_5.REQ"/>
+			<Connection Source="INIT_ARR_0256_BYTE.INITO" Destination="AlPgnRxNew_TP.INIT"/>
+			<Connection Source="NetEv2NetEv.CNF" Destination="AlPgnRxNew_TP.install"/>
+			<Connection Source="AlPgnRxNew_TP.IND" Destination="F_BYTES_TO_STRING.REQ"/>
+			<Connection Source="F_BYTES_TO_STRING.CNF" Destination="Q_StringValue.REQ"/>
+			<Connection Source="AlPgnRxNew_TP.installO" Destination="NmGetCfInfo_1.RSP">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="AlPgnRxNew_TP.pgnERR" Destination="NmGetCfInfo_1.RSP">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="STRUCT_DEMUX_5.CNF" Destination="NetEv_Install.REQ"/>
+			<Connection Source="NetEv_Install.INSTALL" Destination="NetEv2NetEv.REQ"/>
+			<Connection Source="NetEv_Install.RSP" Destination="NmGetCfInfo_1.RSP">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="AlPgnRxNew_TP.installO" Destination="NetEv_Install.SET"/>
+		</EventConnections>
+		<DataConnections>
+			<Connection Source="NmGetCfInfo_1.sNameField" Destination="STRUCT_DEMUX_3.IN"/>
+			<Connection Source="NmGetCfInfo_1.sNetEv" Destination="STRUCT_DEMUX_5.IN"/>
+			<Connection Source="NmGetCfInfo_1.sCfInfo" Destination="STRUCT_DEMUX_4.IN"/>
+			<Connection Source="NmGetCfInfo_1.sNetEv" Destination="NetEv2NetEv.IN"/>
+			<Connection Source="NetEv2NetEv." Destination="AlPgnRxNew_TP.NmSource"/>
+			<Connection Source="INIT_ARR_0256_BYTE.D1" Destination="AlPgnRxNew_TP.Data"/>
+			<Connection Source="AlPgnRxNew_TP.u16DaSize" Destination="F_BYTES_TO_STRING.SIZE"/>
+			<Connection Source="AlPgnRxNew_TP.Data" Destination="F_BYTES_TO_STRING.DATA"/>
+			<Connection Source="F_BYTES_TO_STRING." Destination="Q_StringValue.pau8String"/>
+			<Connection Source="STRUCT_DEMUX_5.eNetEvent" Destination="NetEv_Install.eNetEvent"/>
+		</DataConnections>
+	</SubAppNetwork>
+</SubAppType>

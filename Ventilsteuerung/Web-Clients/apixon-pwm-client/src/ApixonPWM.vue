@@ -8,8 +8,8 @@
         <span>{{ status }}</span>
         <label for="endpoint-url" class="sr-only">OPC-UA Endpoint-URL</label>
         <input id="endpoint-url" v-model="endpointUrl" class="url-input" :disabled="connected" />
-        <button @click="connected ? disconnect() : connect()">
-          {{ connected ? 'Trennen' : 'Verbinden' }}
+        <button :disabled="connecting" @click="connected ? disconnect() : connect()">
+          {{ connecting ? 'Verbinde…' : connected ? 'Trennen' : 'Verbinden' }}
         </button>
       </div>
     </header>
@@ -94,6 +94,7 @@ import {
 const endpointUrl = ref(`ws://${window.location.hostname || 'logibus.local'}:4841`)
 const status = ref('Getrennt')
 const connected = ref(false)
+const connecting = ref(false)
 const inputs = ref<boolean[]>(new Array(8).fill(false))
 /* Prozent 0.0-100.0 (REAL), nicht Bool wie beim DIDO-Beispiel */
 const outputs = ref<number[]>(new Array(12).fill(0))
@@ -128,9 +129,25 @@ function channelStatusTitle(n: number): string {
 let client: any = null
 let session: any = null
 
+/* Client still und ohne Fehler schliessen (Listener vorher abhaengen). */
+function disconnectQuietly(c: any) {
+  if (!c) return
+  try {
+    c.off('connection_lost', handleLost)
+    c.off('close', handleLost)
+  } catch {
+    /* ignore */
+  }
+  c.disconnectP().catch(() => {})
+}
+
 function handleLost() {
   if (!connected.value) return
   connected.value = false
+  const lostClient = client
+  session = null
+  client = null
+  disconnectQuietly(lostClient)
   status.value = 'Fehler: Verbindung verloren'
   inputs.value.fill(false)
   outputs.value.fill(0)
@@ -140,6 +157,8 @@ function handleLost() {
 }
 
 async function connect() {
+  if (connecting.value || connected.value) return
+  connecting.value = true
   status.value = 'Verbinde…'
   client = new OPCUAClient({
     securityMode: MessageSecurityMode.None,
@@ -235,6 +254,12 @@ async function connect() {
   } catch (err) {
     status.value = 'Fehler: ' + (err as Error).message
     connected.value = false
+    const failed = client
+    session = null
+    client = null
+    disconnectQuietly(failed)
+  } finally {
+    connecting.value = false
   }
 }
 
@@ -294,8 +319,10 @@ async function disconnect() {
   if (client) {
     client.off('connection_lost', handleLost)
     client.off('close', handleLost)
-    await client.disconnectP()
+    await client.disconnectP().catch(() => {})
   }
+  client = null
+  session = null
   connected.value = false
   status.value = 'Getrennt'
   inputs.value.fill(false)
