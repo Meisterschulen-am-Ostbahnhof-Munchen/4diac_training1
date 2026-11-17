@@ -7,8 +7,8 @@
         <span>{{ status }}</span>
         <label for="endpoint-url" class="sr-only">OPC-UA Endpoint-URL</label>
         <input id="endpoint-url" v-model="endpointUrl" class="url-input" :disabled="connected" />
-        <button @click="connected ? disconnect() : connect()">
-          {{ connected ? 'Trennen' : 'Verbinden' }}
+        <button :disabled="connecting" @click="connected ? disconnect() : connect()">
+          {{ connecting ? 'Verbinde…' : connected ? 'Trennen' : 'Verbinden' }}
         </button>
       </div>
     </header>
@@ -72,6 +72,7 @@ import {
 const endpointUrl = ref(`ws://${window.location.hostname || 'logibus.local'}:4841`)
 const status = ref('Getrennt')
 const connected = ref(false)
+const connecting = ref(false)
 
 /* Sollwinkel (0-180°), per Slider gesetzt - geschrieben auf SERVO_Q2_ANGLE_SET,
  * den der Controller abonniert (siehe Servo_Slider_OPC.SUB, AngleSubscribe). */
@@ -120,6 +121,8 @@ function handleLost() {
 }
 
 async function connect() {
+  if (connecting.value || connected.value) return
+  connecting.value = true
   status.value = 'Verbinde…'
   /* Erst in einer lokalen Variable aufbauen, nicht in den Modul-Refs schreiben,
    * solange Session/Subscription noch fehlschlagen koennen - sonst wuerde ein
@@ -166,6 +169,8 @@ async function connect() {
     status.value = 'Fehler: ' + (err as Error).message
     connected.value = false
     disconnectQuietly(newClient)
+  } finally {
+    connecting.value = false
   }
 }
 
