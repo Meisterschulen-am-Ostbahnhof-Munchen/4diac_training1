@@ -35,6 +35,8 @@
 		<FB Name="STRUCT_DEMUX_1" Type="eclipse4diac::convert::STRUCT_DEMUX" x="6400" y="9300">
 			<Attribute Name="StructuredType" Type="STRING" Value="isobus::pgn::NAMEFIELD_T"/>
 		</FB>
+		<FB Name="E_RESTART" Type="iec61499::events::E_RESTART" Comment="INIT: Replay der schon aktiven Teilnehmer" x="-3500" y="6400">
+		</FB>
 		<Comment Comment="mit einem Event an RSP wird der nächste ACL abgefragt." x="-2500" y="6000" width="1700" height="300"/>
 		<EventConnections>
 			<Connection Source="NmGetCfInfo.IND" Destination="STRUCT_DEMUX_3.REQ" dx1="513.33"/>
@@ -43,6 +45,11 @@
 			<Connection Source="STRUCT_DEMUX_2.CNF" Destination="NmSetNameField_1.REQ" dx1="586.67"/>
 			<Connection Source="NmSetNameField.CNF" Destination="STRUCT_DEMUX.REQ"/>
 			<Connection Source="NmSetNameField_1.CNF" Destination="STRUCT_DEMUX_1.REQ"/>
+			<Connection Source="STRUCT_DEMUX_3.CNF" Destination="NmGetCfInfo.RSP">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="E_RESTART.COLD" Destination="NmGetCfInfo.INIT"/>
+			<Connection Source="E_RESTART.WARM" Destination="NmGetCfInfo.INIT"/>
 		</EventConnections>
 		<DataConnections>
 			<Connection Source="NmGetCfInfo.sNetEv" Destination="STRUCT_DEMUX_3.IN" dx1="733.33"/>

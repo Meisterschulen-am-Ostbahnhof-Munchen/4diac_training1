@@ -42,14 +42,31 @@
 		</FB>
 		<FB Name="SPLIT_BYTE_INTO_BOOLS" Type="eclipse4diac::utils::splitting::SPLIT_BYTE_INTO_BOOLS" x="1700" y="5900">
 		</FB>
+		<FB Name="E_RESTART" Type="iec61499::events::E_RESTART" Comment="INIT: Replay der schon aktiven Teilnehmer" x="-12300" y="3900">
+		</FB>
+		<SubApp Name="NetEv_Install" Type="MyLib::sys::NetEv_Install_Filter" x="-6300" y="9000">
+		</SubApp>
 		<EventConnections>
 			<Connection Source="NmGetCfInfo_1.IND" Destination="STRUCT_DEMUX_3.REQ" dx1="593.33"/>
 			<Connection Source="NmGetCfInfo_1.IND" Destination="STRUCT_DEMUX_4.REQ" dx1="593.33"/>
 			<Connection Source="NmGetCfInfo_1.IND" Destination="STRUCT_DEMUX_5.REQ" dx1="593.33"/>
-			<Connection Source="NmGetCfInfo_1.IND" Destination="AlPgnRxNew8Bcylc.install" dx1="2366.67"/>
 			<Connection Source="AlPgnRxNew8Bcylc.IND" Destination="STRUCT_DEMUX.REQ" dx1="366.67"/>
 			<Connection Source="STRUCT_DEMUX.CNF" Destination="ARR08B_TO_BYTES.REQ" dx1="473.33"/>
 			<Connection Source="ARR08B_TO_BYTES.CNF" Destination="SPLIT_BYTE_INTO_BOOLS.REQ" dx1="406.67"/>
+			<Connection Source="AlPgnRxNew8Bcylc.installO" Destination="NmGetCfInfo_1.RSP">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="AlPgnRxNew8Bcylc.pgnERR" Destination="NmGetCfInfo_1.RSP">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="E_RESTART.COLD" Destination="NmGetCfInfo_1.INIT"/>
+			<Connection Source="E_RESTART.WARM" Destination="NmGetCfInfo_1.INIT"/>
+			<Connection Source="STRUCT_DEMUX_5.CNF" Destination="NetEv_Install.REQ"/>
+			<Connection Source="NetEv_Install.INSTALL" Destination="AlPgnRxNew8Bcylc.install"/>
+			<Connection Source="NetEv_Install.RSP" Destination="NmGetCfInfo_1.RSP">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="AlPgnRxNew8Bcylc.installO" Destination="NetEv_Install.SET"/>
 		</EventConnections>
 		<DataConnections>
 			<Connection Source="NmGetCfInfo_1.sNameField" Destination="STRUCT_DEMUX_3.IN" dx1="560"/>
@@ -59,6 +76,7 @@
 			<Connection Source="AlPgnRxNew8Bcylc.Data" Destination="STRUCT_DEMUX.IN" dx1="166.67"/>
 			<Connection Source="STRUCT_DEMUX.data" Destination="ARR08B_TO_BYTES.IN" dx1="473.33"/>
 			<Connection Source="ARR08B_TO_BYTES.OUT_00" Destination="SPLIT_BYTE_INTO_BOOLS.IN" dx1="406.67"/>
+			<Connection Source="STRUCT_DEMUX_5.eNetEvent" Destination="NetEv_Install.eNetEvent"/>
 		</DataConnections>
 	</SubAppNetwork>
 </SubAppType>
