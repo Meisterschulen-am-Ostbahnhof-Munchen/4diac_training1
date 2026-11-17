@@ -7,8 +7,8 @@
         <span>{{ status }}</span>
         <label for="endpoint-url" class="sr-only">OPC-UA Endpoint-URL</label>
         <input id="endpoint-url" v-model="endpointUrl" class="url-input" :disabled="connected" />
-        <button @click="connected ? disconnect() : connect()">
-          {{ connected ? 'Trennen' : 'Verbinden' }}
+        <button :disabled="connecting" @click="connected ? disconnect() : connect()">
+          {{ connecting ? 'Verbinde…' : connected ? 'Trennen' : 'Verbinden' }}
         </button>
       </div>
     </header>
@@ -111,6 +111,7 @@ const points: { key: Point; idx: number }[] = [
 const endpointUrl = ref(`ws://${window.location.hostname || 'logibus.local'}:4841`)
 const status = ref('Getrennt')
 const connected = ref(false)
+const connecting = ref(false)
 
 const liveAngle = ref(0)
 const raw = ref(0)
@@ -171,6 +172,8 @@ async function monitor(subscription: any, nodeIds: string[], onChange: (index: n
 }
 
 async function connect() {
+  if (connecting.value || connected.value) return
+  connecting.value = true
   status.value = 'Verbinde…'
   /* Erst lokal aufbauen, erst nach Erfolg in die Modul-Refs committen (wie apixon-servo-client). */
   const newClient = new OPCUAClient({
@@ -213,6 +216,8 @@ async function connect() {
     status.value = 'Fehler: ' + (err as Error).message
     connected.value = false
     disconnectQuietly(newClient)
+  } finally {
+    connecting.value = false
   }
 }
 
