@@ -32,14 +32,14 @@
 		<FB Name="STRUCT_DEMUX_5" Type="eclipse4diac::convert::STRUCT_DEMUX" x="-7900" y="4900">
 			<Attribute Name="StructuredType" Type="STRING" Value="isobus::pgn::ISONETEVENT_T"/>
 		</FB>
-		<FB Name="NetEv2NetEv" Type="isobus::pgn::NetEv2NetEv" x="-4900" y="4100">
+		<FB Name="NetEv2NetEv" Type="isobus::pgn::NetEv2NetEv" x="-3700" y="4400">
 			<Parameter Name="s16Handle" Value="GLOBAL_A"/>
 		</FB>
 		<FB Name="STRING_TO_CAN_MSG" Type="isobus::pgn::STRING_TO_CAN_MSG" x="-4900" y="2400">
 			<Parameter Name="IN" Value="STRING#'Hallo'"/>
 			<Parameter Name="PRIO" Value="3"/>
 		</FB>
-		<FB Name="AlPgnTxNew8B" Type="isobus::pgn::tx::AlPgnTxNew8B" x="-2400" y="3600">
+		<FB Name="AlPgnTxNew8B" Type="isobus::pgn::tx::AlPgnTxNew8B" x="-1200" y="3900">
 			<Parameter Name="u32Pgn" Value="PGN_PDU1_PropA"/>
 			<Parameter Name="u16DaSize" Value="8"/>
 			<Parameter Name="u8Priority" Value="3"/>
@@ -49,47 +49,36 @@
 			<Parameter Name="Input" Value="Input_I1"/>
 			<Parameter Name="InputEvent" Value="BUTTON_SINGLE_CLICK"/>
 		</FB>
-		<FB Name="NetEv_Art" Type="iec61131::conversion::F_USINT_TO_UINT" x="-8100" y="9000">
-		</FB>
-		<FB Name="NetEv_Verteiler" Type="iec61499::events::E_DEMUX_8" Comment="EO1 Active, EO4 NewAddress, Rest nur RSP" x="-6300" y="9000">
-		</FB>
-		<FB Name="Nur_einmal" Type="iec61499::events::E_SWITCH" Comment="EO0: erstes Mal install, EO1: schon installiert" x="-4300" y="9000">
-		</FB>
-		<FB Name="Installiert" Type="iec61499::events::E_SR" x="-4300" y="9900">
-		</FB>
+		<SubApp Name="NetEv_Install" Type="MyLib::sys::NetEv_Install_Filter" x="-6000" y="4900">
+		</SubApp>
 		<EventConnections>
-			<Connection Source="NmGetCfInfo_1.IND" Destination="STRUCT_DEMUX_3.REQ"/>
-			<Connection Source="NmGetCfInfo_1.IND" Destination="STRUCT_DEMUX_4.REQ"/>
-			<Connection Source="NmGetCfInfo_1.IND" Destination="STRUCT_DEMUX_5.REQ"/>
-			<Connection Source="DigitalInput_CLK_I1.IND" Destination="STRING_TO_CAN_MSG.REQ"/>
-			<Connection Source="STRING_TO_CAN_MSG.CNF" Destination="AlPgnTxNew8B.REQ"/>
-			<Connection Source="NetEv2NetEv.CNF" Destination="AlPgnTxNew8B.install"/>
-			<Connection Source="STRUCT_DEMUX_5.CNF" Destination="NetEv_Art.REQ"/>
-			<Connection Source="NetEv_Art.CNF" Destination="NetEv_Verteiler.EI"/>
-			<Connection Source="NetEv_Verteiler.EO1" Destination="Nur_einmal.EI"/>
-			<Connection Source="NetEv_Verteiler.EO4" Destination="Nur_einmal.EI"/>
-			<Connection Source="NetEv_Verteiler.EO2" Destination="NmGetCfInfo_1.RSP"/>
-			<Connection Source="NetEv_Verteiler.EO3" Destination="NmGetCfInfo_1.RSP"/>
-			<Connection Source="NetEv_Verteiler.EO5" Destination="NmGetCfInfo_1.RSP"/>
-			<Connection Source="NetEv_Verteiler.EO6" Destination="NmGetCfInfo_1.RSP"/>
-			<Connection Source="NetEv_Verteiler.EO7" Destination="NmGetCfInfo_1.RSP"/>
-			<Connection Source="NetEv_Verteiler.EO8" Destination="NmGetCfInfo_1.RSP"/>
-			<Connection Source="Nur_einmal.EO0" Destination="NetEv2NetEv.REQ"/>
-			<Connection Source="Nur_einmal.EO1" Destination="NmGetCfInfo_1.RSP"/>
-			<Connection Source="AlPgnTxNew8B.installO" Destination="Installiert.S"/>
-			<Connection Source="AlPgnTxNew8B.installO" Destination="NmGetCfInfo_1.RSP"/>
-			<Connection Source="AlPgnTxNew8B.pgnERR" Destination="NmGetCfInfo_1.RSP"/>
+			<Connection Source="NmGetCfInfo_1.IND" Destination="STRUCT_DEMUX_3.REQ" dx1="566.67"/>
+			<Connection Source="NmGetCfInfo_1.IND" Destination="STRUCT_DEMUX_4.REQ" dx1="513.33"/>
+			<Connection Source="NmGetCfInfo_1.IND" Destination="STRUCT_DEMUX_5.REQ" dx1="513.33"/>
+			<Connection Source="DigitalInput_CLK_I1.IND" Destination="STRING_TO_CAN_MSG.REQ" dx1="2153.33"/>
+			<Connection Source="STRING_TO_CAN_MSG.CNF" Destination="AlPgnTxNew8B.REQ" dx1="1973.33"/>
+			<Connection Source="NetEv2NetEv.CNF" Destination="AlPgnTxNew8B.install" dx1="846.67"/>
+			<Connection Source="AlPgnTxNew8B.installO" Destination="NmGetCfInfo_1.RSP" dx1="80" dx2="80" dy="146.67">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="AlPgnTxNew8B.pgnERR" Destination="NmGetCfInfo_1.RSP" dx1="80" dx2="80" dy="-6.67">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="STRUCT_DEMUX_5.CNF" Destination="NetEv_Install.REQ"/>
+			<Connection Source="NetEv_Install.INSTALL" Destination="NetEv2NetEv.REQ" dx1="486.67"/>
+			<Connection Source="NetEv_Install.RSP" Destination="NmGetCfInfo_1.RSP" dx1="80" dx2="80" dy="-2546.67">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="AlPgnTxNew8B.installO" Destination="NetEv_Install.SET" dx1="80" dx2="80" dy="2700"/>
 		</EventConnections>
 		<DataConnections>
-			<Connection Source="NmGetCfInfo_1.sNameField" Destination="STRUCT_DEMUX_3.IN"/>
-			<Connection Source="NmGetCfInfo_1.sNetEv" Destination="STRUCT_DEMUX_5.IN"/>
-			<Connection Source="NmGetCfInfo_1.sCfInfo" Destination="STRUCT_DEMUX_4.IN"/>
-			<Connection Source="NmGetCfInfo_1.sNetEv" Destination="NetEv2NetEv.IN"/>
-			<Connection Source="NetEv2NetEv." Destination="AlPgnTxNew8B.NmDestin"/>
-			<Connection Source="STRING_TO_CAN_MSG.MSG" Destination="AlPgnTxNew8B.Data"/>
-			<Connection Source="STRUCT_DEMUX_5.eNetEvent" Destination="NetEv_Art.IN"/>
-			<Connection Source="NetEv_Art.OUT" Destination="NetEv_Verteiler.K"/>
-			<Connection Source="Installiert.Q" Destination="Nur_einmal.G"/>
+			<Connection Source="NmGetCfInfo_1.sNameField" Destination="STRUCT_DEMUX_3.IN" dx1="566.67"/>
+			<Connection Source="NmGetCfInfo_1.sNetEv" Destination="STRUCT_DEMUX_5.IN" dx1="513.33"/>
+			<Connection Source="NmGetCfInfo_1.sCfInfo" Destination="STRUCT_DEMUX_4.IN" dx1="513.33"/>
+			<Connection Source="NmGetCfInfo_1.sNetEv" Destination="NetEv2NetEv.IN" dx1="2013.33"/>
+			<Connection Source="NetEv2NetEv." Destination="AlPgnTxNew8B.NmDestin" dx1="846.67"/>
+			<Connection Source="STRING_TO_CAN_MSG.MSG" Destination="AlPgnTxNew8B.Data" dx1="1580"/>
+			<Connection Source="STRUCT_DEMUX_5.eNetEvent" Destination="NetEv_Install.eNetEvent" dx1="346.67"/>
 		</DataConnections>
 	</SubAppNetwork>
 </SubAppType>
