@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SubAppType Name="DLG_Toast" Comment="Hinweis ohne Tasten, verschwindet nach TIMEOUT">
+	<Identification Standard="61499-2" Description="Copyright (c) 2026 Meisterschulen am Ostbahnhof  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0">
+	</Identification>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2026-11-17" Remarks="initial API and implementation and/or initial documentation">
+	</VersionInfo>
+	<CompilerInfo packageName="isobus::UT::dialog">
+		<Import declaration="isobus::UT::Q::const::IDs::ID_NULL"/>
+	</CompilerInfo>
+	<SubAppInterfaceList>
+		<SubAppEventInputs>
+				<SubAppEvent Name="INIT" Type="EInit" Comment="Initialisierung">
+				</SubAppEvent>
+				<SubAppEvent Name="SHOW" Type="Event" Comment="Hinweis zeigen">
+				</SubAppEvent>
+				<SubAppEvent Name="CLOSE" Type="Event" Comment="Hinweis schliessen">
+				</SubAppEvent>
+		</SubAppEventInputs>
+		<SubAppEventOutputs>
+				<SubAppEvent Name="INITO" Type="EInit" Comment="Initialisierung fertig">
+				</SubAppEvent>
+				<SubAppEvent Name="CNF" Type="Event" Comment="Hinweis beendet">
+				</SubAppEvent>
+		</SubAppEventOutputs>
+		<InputVars>
+			<VarDeclaration Name="QI" Type="BOOL" Comment="Freigabe" InitialValue="TRUE"/>
+			<VarDeclaration Name="TEXT_ID" Type="UINT" Comment="OutputString Meldungstext" InitialValue="ID_NULL"/>
+			<VarDeclaration Name="TITLE_ID" Type="UINT" Comment="OutputString Titel, NULL = Standard" InitialValue="ID_NULL"/>
+			<VarDeclaration Name="ICON" Type="USINT" Comment="DLG_ICON_*" InitialValue="USINT#1"/>
+			<VarDeclaration Name="TIMEOUT" Type="TIME" Comment="Anzeigedauer" InitialValue="T#3s"/>
+		</InputVars>
+		<OutputVars>
+			<VarDeclaration Name="QO" Type="BOOL" Comment="Qualitaet"/>
+		</OutputVars>
+	</SubAppInterfaceList>
+	<SubAppNetwork>
+		<FB Name="MSG" Type="isobus::UT::dialog::DLG_MessageBox" x="0" y="0">
+			<Parameter Name="BUTTONS" Value="USINT#0"/>
+			<Parameter Name="DEFAULT_BUTTON" Value="USINT#1"/>
+			<Parameter Name="MODAL" Value="FALSE"/>
+			<Parameter Name="AUDIO" Value="FALSE"/>
+		</FB>
+		<EventConnections>
+			<Connection Source="INIT" Destination="MSG.INIT"/>
+			<Connection Source="MSG.INITO" Destination="INITO"/>
+			<Connection Source="SHOW" Destination="MSG.SHOW"/>
+			<Connection Source="CLOSE" Destination="MSG.CLOSE"/>
+			<Connection Source="MSG.CNF" Destination="CNF"/>
+		</EventConnections>
+		<DataConnections>
+			<Connection Source="QI" Destination="MSG.QI"/>
+			<Connection Source="TEXT_ID" Destination="MSG.TEXT_ID"/>
+			<Connection Source="TITLE_ID" Destination="MSG.TITLE_ID"/>
+			<Connection Source="ICON" Destination="MSG.ICON"/>
+			<Connection Source="TIMEOUT" Destination="MSG.TIMEOUT"/>
+			<Connection Source="MSG.QO" Destination="QO"/>
+		</DataConnections>
+	</SubAppNetwork>
+</SubAppType>
