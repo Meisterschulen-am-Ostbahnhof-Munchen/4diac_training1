@@ -22,6 +22,8 @@ call RunSkript_BuildTC_SC_AX.bat
 if errorlevel 1 exit /b 1
 call RunSkript_BuildScroll_AX.bat
 if errorlevel 1 exit /b 1
+call RunSkript_BuildDialog_AX.bat
+if errorlevel 1 exit /b 1
 call RunSkript_BuildPI_AX.bat
 if errorlevel 1 exit /b 1
 call RunSkript_BuildAI_Calibrate_2P_AX.bat
