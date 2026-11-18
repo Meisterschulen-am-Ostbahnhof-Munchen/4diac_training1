@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SubAppType Name="Uebung_269_AX" Comment="Dialog: Toast (Hinweis ohne Tasten, verschwindet nach 3 s), Pool Dialog">
+	<Identification Standard="61499-2" Description="Copyright (c) 2026 Meisterschulen am Ostbahnhof  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0">
+	</Identification>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2026-11-17" Remarks="initial API and implementation and/or initial documentation">
+	</VersionInfo>
+	<CompilerInfo packageName="Uebungen">
+		<Import declaration="Uebungen::const::UT::Dialog::DefaultPool::OutputString_Text_Toast"/>
+		<Import declaration="Uebungen::const::UT::Dialog::DefaultPool::SoftKey_F1"/>
+		<Import declaration="isobus::UT::dialog::DialogConst::DLG_ICON_INFO"/>
+		<Import declaration="isobus::UT::io::Softkey::SoftKeyActivationCode::SK_RELEASED"/>
+	</CompilerInfo>
+	<SubAppInterfaceList>
+	</SubAppInterfaceList>
+	<SubAppNetwork>
+		<FB Name="INIT" Type="events::init::INIT" x="-6000" y="-2500">
+		</FB>
+		<FB Name="SoftKey_Toast" Type="isobus::UT::io::Softkey::Softkey_IE" x="-6000" y="-1000">
+			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="u16ObjId" Value="SoftKey_F1"/>
+			<Parameter Name="InputEvent" Value="SK_RELEASED"/>
+		</FB>
+		<FB Name="Toast" Type="isobus::UT::dialog::DLG_Toast" x="-2500" y="-1000">
+			<Parameter Name="TEXT_ID" Value="OutputString_Text_Toast"/>
+			<Parameter Name="ICON" Value="DLG_ICON_INFO"/>
+			<Parameter Name="TIMEOUT" Value="T#3s"/>
+		</FB>
+		<EventConnections>
+			<Connection Source="INIT.INITO" Destination="Toast.INIT"/>
+			<Connection Source="SoftKey_Toast.IND" Destination="Toast.SHOW"/>
+		</EventConnections>
+		<DataConnections>
+		</DataConnections>
+	</SubAppNetwork>
+</SubAppType>

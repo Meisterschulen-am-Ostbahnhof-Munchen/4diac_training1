@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SubAppType Name="Uebung_271_AX" Comment="Dialog: MessageBox OK, modal: Test-Buttons gesperrt, RESULT im Zahlenfeld">
+	<Identification Standard="61499-2" Description="Copyright (c) 2026 Meisterschulen am Ostbahnhof  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0">
+	</Identification>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2026-11-17" Remarks="initial API and implementation and/or initial documentation">
+	</VersionInfo>
+	<CompilerInfo packageName="Uebungen">
+		<Import declaration="Uebungen::const::UT::Dialog::DefaultPool::Button_Test1"/>
+		<Import declaration="Uebungen::const::UT::Dialog::DefaultPool::Button_Test2"/>
+		<Import declaration="Uebungen::const::UT::Dialog::DefaultPool::OutputNumber_Result"/>
+		<Import declaration="Uebungen::const::UT::Dialog::DefaultPool::OutputString_Text_OK"/>
+		<Import declaration="Uebungen::const::UT::Dialog::DefaultPool::SoftKey_F3"/>
+		<Import declaration="isobus::UT::dialog::DialogConst::DLG_BTN_OK"/>
+		<Import declaration="isobus::UT::dialog::DialogConst::DLG_ICON_WARNING"/>
+		<Import declaration="isobus::UT::io::Button::ButtonActivationCode::BT_RELEASED_UNLATCHED"/>
+		<Import declaration="isobus::UT::io::Softkey::SoftKeyActivationCode::SK_RELEASED"/>
+	</CompilerInfo>
+	<SubAppInterfaceList>
+	</SubAppInterfaceList>
+	<SubAppNetwork>
+		<FB Name="INIT" Type="events::init::INIT" x="-6000" y="-2500">
+		</FB>
+		<FB Name="SoftKey_Show" Type="isobus::UT::io::Softkey::Softkey_IE" x="-6000" y="-1000">
+			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="u16ObjId" Value="SoftKey_F3"/>
+			<Parameter Name="InputEvent" Value="SK_RELEASED"/>
+		</FB>
+		<FB Name="MsgBox" Type="isobus::UT::dialog::DLG_MessageBox" x="-2500" y="-1000">
+			<Parameter Name="TEXT_ID" Value="OutputString_Text_OK"/>
+			<Parameter Name="ICON" Value="DLG_ICON_WARNING"/>
+			<Parameter Name="BUTTONS" Value="DLG_BTN_OK"/>
+			<Parameter Name="MODAL" Value="TRUE"/>
+		</FB>
+		<FB Name="RESULT_TO_UDINT" Type="iec61131::conversion::F_USINT_TO_UDINT" x="1500" y="0">
+		</FB>
+		<FB Name="Q_Result" Type="isobus::UT::Q::Q_NumericValue" x="3500" y="0">
+			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="u16ObjId" Value="OutputNumber_Result"/>
+		</FB>
+		<FB Name="Button_Test1" Type="isobus::UT::io::Button::Button_IE" x="-6000" y="3200">
+			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="u16ObjId" Value="Button_Test1"/>
+			<Parameter Name="InputEvent" Value="BT_RELEASED_UNLATCHED"/>
+		</FB>
+		<FB Name="Q_Test1" Type="isobus::UT::Q::Q_NumericValue" x="-2500" y="3200">
+			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="u16ObjId" Value="OutputNumber_Result"/>
+			<Parameter Name="u32NewValue" Value="UDINT#101"/>
+		</FB>
+		<FB Name="Button_Test2" Type="isobus::UT::io::Button::Button_IE" x="-6000" y="4400">
+			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="u16ObjId" Value="Button_Test2"/>
+			<Parameter Name="InputEvent" Value="BT_RELEASED_UNLATCHED"/>
+		</FB>
+		<FB Name="Q_Test2" Type="isobus::UT::Q::Q_NumericValue" x="-2500" y="4400">
+			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="u16ObjId" Value="OutputNumber_Result"/>
+			<Parameter Name="u32NewValue" Value="UDINT#102"/>
+		</FB>
+		<EventConnections>
+			<Connection Source="INIT.INITO" Destination="MsgBox.INIT"/>
+			<Connection Source="SoftKey_Show.IND" Destination="MsgBox.SHOW"/>
+			<Connection Source="MsgBox.CNF" Destination="RESULT_TO_UDINT.REQ"/>
+			<Connection Source="RESULT_TO_UDINT.CNF" Destination="Q_Result.REQ"/>
+			<Connection Source="Button_Test1.IND" Destination="Q_Test1.REQ"/>
+			<Connection Source="Button_Test2.IND" Destination="Q_Test2.REQ"/>
+		</EventConnections>
+		<DataConnections>
+			<Connection Source="MsgBox.RESULT" Destination="RESULT_TO_UDINT.IN"/>
+			<Connection Source="RESULT_TO_UDINT.OUT" Destination="Q_Result.u32NewValue"/>
+		</DataConnections>
+	</SubAppNetwork>
+</SubAppType>
