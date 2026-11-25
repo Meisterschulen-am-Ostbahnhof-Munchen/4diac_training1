@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<SubAppType Name="DLG_MessageBox" Comment="VT-Dialog wie Windows-MessageBox (eine Instanz je Anwendung)">
+<FBType Name="DLG_MessageBox" Comment="VT-Dialog wie Windows-MessageBox (eine Instanz je Anwendung)">
 	<Identification Standard="61499-2" Description="Copyright (c) 2026 Meisterschulen am Ostbahnhof  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0">
 	</Identification>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.1" Author="Franz Höpfinger" Date="2026-11-25" Remarks="SubApp -&gt; Composite FB (Lib wird wegen DLG_CTRL ohnehin gebaut, im fboot nur eine Instanz).">
+	</VersionInfo>
 	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2026-11-17" Remarks="initial API and implementation and/or initial documentation">
 	</VersionInfo>
 	<CompilerInfo packageName="isobus::UT::dialog">
@@ -22,21 +24,34 @@
 		<Import declaration="isobus::UT::dialog::DialogIDs::ObjectPointer_Dlg_Title"/>
 		<Import declaration="isobus::UT::io::Button::ButtonActivationCode::BT_RELEASED_UNLATCHED"/>
 	</CompilerInfo>
-	<SubAppInterfaceList>
-		<SubAppEventInputs>
-				<SubAppEvent Name="INIT" Type="EInit" Comment="Initialisierung">
-				</SubAppEvent>
-				<SubAppEvent Name="SHOW" Type="Event" Comment="Dialog zeigen">
-				</SubAppEvent>
-				<SubAppEvent Name="CLOSE" Type="Event" Comment="Dialog schliessen">
-				</SubAppEvent>
-		</SubAppEventInputs>
-		<SubAppEventOutputs>
-				<SubAppEvent Name="INITO" Type="EInit" Comment="Initialisierung fertig">
-				</SubAppEvent>
-				<SubAppEvent Name="CNF" Type="Event" Comment="Dialog beendet, RESULT gueltig">
-				</SubAppEvent>
-		</SubAppEventOutputs>
+	<InterfaceList>
+		<EventInputs>
+			<Event Name="INIT" Type="EInit" Comment="Initialisierung">
+				<With Var="QI"/>
+			</Event>
+			<Event Name="SHOW" Type="Event" Comment="Dialog zeigen">
+				<With Var="QI"/>
+				<With Var="TEXT_ID"/>
+				<With Var="TITLE_ID"/>
+				<With Var="ICON"/>
+				<With Var="BUTTONS"/>
+				<With Var="DEFAULT_BUTTON"/>
+				<With Var="MODAL"/>
+				<With Var="TIMEOUT"/>
+				<With Var="AUDIO"/>
+			</Event>
+			<Event Name="CLOSE" Type="Event" Comment="Dialog schliessen">
+			</Event>
+		</EventInputs>
+		<EventOutputs>
+			<Event Name="INITO" Type="EInit" Comment="Initialisierung fertig">
+				<With Var="QO"/>
+			</Event>
+			<Event Name="CNF" Type="Event" Comment="Dialog beendet, RESULT gueltig">
+				<With Var="QO"/>
+				<With Var="RESULT"/>
+			</Event>
+		</EventOutputs>
 		<InputVars>
 			<VarDeclaration Name="QI" Type="BOOL" Comment="Freigabe" InitialValue="TRUE"/>
 			<VarDeclaration Name="TEXT_ID" Type="UINT" Comment="OutputString Meldungstext" InitialValue="ID_NULL"/>
@@ -52,8 +67,8 @@
 			<VarDeclaration Name="QO" Type="BOOL" Comment="Qualitaet"/>
 			<VarDeclaration Name="RESULT" Type="USINT" Comment="DLG_RES_*"/>
 		</OutputVars>
-	</SubAppInterfaceList>
-	<SubAppNetwork>
+	</InterfaceList>
+	<FBNetwork>
 		<FB Name="CTRL" Type="isobus::UT::dialog::DLG_CTRL" x="0" y="0">
 		</FB>
 		<FB Name="QN_COVER" Type="isobus::UT::Q::Q_NumericValue" x="3000" y="-4000">
@@ -271,5 +286,5 @@
 			<Connection Source="CTRL.QO" Destination="QO"/>
 			<Connection Source="CTRL.RESULT" Destination="RESULT"/>
 		</DataConnections>
-	</SubAppNetwork>
-</SubAppType>
+	</FBNetwork>
+</FBType>

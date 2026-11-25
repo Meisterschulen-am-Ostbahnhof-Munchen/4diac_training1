@@ -12,9 +12,10 @@ VT-Dialoge nach dem Vorbild der Windows-`MessageBox`: Titelzeile, Icon, Text, Ta
 
 Bausteine:
 
-- `DLG_MessageBox`: Dialog mit Tasten. Ereignisse `SHOW`/`CLOSE` führen zu `CNF` mit `RESULT`.
-- `DLG_Toast`: Hinweis ohne Tasten, verschwindet nach `TIMEOUT` (Standard 3 s).
-- `DLG_CTRL`: Ablaufsteuerung (Basic FB, braucht ELF).
+- `DLG_MessageBox` (Composite FB): Dialog mit Tasten. Ereignisse `SHOW`/`CLOSE` führen zu `CNF` mit `RESULT`.
+- `DLG_Toast` (Composite FB): Hinweis ohne Tasten, verschwindet nach `TIMEOUT` (Standard 3 s).
+- `DLG_CTRL`: Ablaufsteuerung (Basic FB).
+- Alle drei sind FBs (Instanz mit `<FB>`, nicht `<SubApp>`) und kommen mit dem ELF-Build der Lib.
 - `DialogConst.gcf`: `DLG_BTN_*`, `DLG_ICON_*`, `DLG_RES_*`.
 - `DialogIDs.gcf`: feste Objekt-IDs der Vorlage.
 
