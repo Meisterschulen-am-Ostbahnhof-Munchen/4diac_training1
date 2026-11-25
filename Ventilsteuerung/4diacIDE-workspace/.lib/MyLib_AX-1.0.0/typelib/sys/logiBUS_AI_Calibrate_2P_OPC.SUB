@@ -2,6 +2,8 @@
 <SubAppType Name="logiBUS_AI_Calibrate_2P_OPC" Comment="logiBUS_AI 2-Punkt-Kalibrierung, INI-persistiert, CO/CS per Methode, alles per OPC-UA (ohne VT)">
 	<Identification Standard="61499-2" Description="Copyright (c) 2026 Meisterschulen am Ostbahnhof  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0">
 	</Identification>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.1" Author="Franz Höpfinger" Date="2026-11-25" Remarks="SERVER_0 -&gt; MyLib::net::SERVER_0_QO (IND nur bei QO=TRUE, RSP intern). Ein gescheitertes RSP meldet IND mit QO=FALSE, direkt IND-&gt;RSP ergab eine Endlosschleife.">
+	</VersionInfo>
 	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2026-10-28" Remarks="Kopie von MyLib::sys::logiBUS_AI_Calibrate_2P_IDA_OPC v1.12 ohne VT, fuer Stationen ohne VT (keine isobus_UT-Libs). InputRaw -&gt; MyLib::sys::logiBUS_AI_Raw_AR_OPC, Y_OFFSET_LIT/Y_SCALE_LIT -&gt; MyLib::sys::OPC_TO_AR2, TriggerCO/CS -&gt; SERVER_0 (IND-&gt;RSP), Publish* -&gt; MyLib::sys::AR_TO_Publish_OPC. VT-Objekt-Parameter entfallen, Kalibrierlogik und INI-Keys unveraendert.">
 	</VersionInfo>
 	<CompilerInfo packageName="MyLib::sys">
@@ -51,10 +53,10 @@
 		</SubApp>
 		<SubApp Name="Y_SCALE_LIT" Type="MyLib::sys::OPC_TO_AR2" x="-2800" y="3200">
 		</SubApp>
-		<FB Name="TriggerCO" Type="iec61499::net::SERVER_0" Comment="RSP direkt auf IND (sonst 4s Server-Lock)" x="-2500" y="-800">
-		</FB>
-		<FB Name="TriggerCS" Type="iec61499::net::SERVER_0" Comment="RSP direkt auf IND (sonst 4s Server-Lock)" x="-2500" y="0">
-		</FB>
+		<SubApp Name="TriggerCO" Type="MyLib::net::SERVER_0_QO" Comment="RSP direkt auf IND (sonst 4s Server-Lock)" x="-2500" y="-800">
+		</SubApp>
+		<SubApp Name="TriggerCS" Type="MyLib::net::SERVER_0_QO" Comment="RSP direkt auf IND (sonst 4s Server-Lock)" x="-2500" y="0">
+		</SubApp>
 		<FB Name="INI_X_LOW" Type="eclipse4diac::storage::INI_AR2" x="4500" y="1100">
 			<Parameter Name="SETM" Value="TRUE"/>
 			<Parameter Name="KEY" Value="'X_LOW'"/>
@@ -91,8 +93,6 @@
 		<EventConnections>
 			<Connection Source="TriggerCO.IND" Destination="CALIBRATE.C_LOW" dx1="806.67"/>
 			<Connection Source="TriggerCS.IND" Destination="CALIBRATE.C_HIGH" dx1="340"/>
-			<Connection Source="TriggerCO.IND" Destination="TriggerCO.RSP" dx1="66.67" dx2="66.67" dy="100"/>
-			<Connection Source="TriggerCS.IND" Destination="TriggerCS.RSP" dx1="93.33" dx2="66.67" dy="106.67"/>
 			<Connection Source="CALIBRATE.INITO" Destination="PublishCal.INIT" dx1="1726.67"/>
 			<Connection Source="InputRaw.INITO" Destination="Y_OFFSET_LIT.INIT" dx1="66.67" dx2="200" dy="686.67"/>
 			<Connection Source="Y_OFFSET_LIT.INITO" Destination="Y_SCALE_LIT.INIT" dx1="66.67" dx2="66.67" dy="726.67"/>
