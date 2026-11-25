@@ -23,7 +23,7 @@
 			<Parameter Name="u16ObjId" Value="SoftKey_F3"/>
 			<Parameter Name="InputEvent" Value="SK_RELEASED"/>
 		</FB>
-		<FB Name="MsgBox" Type="isobus::UT::dialog::DLG_MessageBox" x="-2500" y="-1000">
+		<FB Name="MsgBox" Type="isobus::UT::dialog::DLG_MessageBox" x="-2500" y="-800">
 			<Parameter Name="TEXT_ID" Value="OutputString_Text_OK"/>
 			<Parameter Name="ICON" Value="DLG_ICON_WARNING"/>
 			<Parameter Name="BUTTONS" Value="DLG_BTN_OK"/>
@@ -31,7 +31,7 @@
 		</FB>
 		<FB Name="RESULT_TO_UDINT" Type="iec61131::conversion::F_USINT_TO_UDINT" x="1500" y="0">
 		</FB>
-		<FB Name="Q_Result" Type="isobus::UT::Q::Q_NumericValue" x="3500" y="0">
+		<FB Name="Q_Result" Type="isobus::UT::Q::Q_NumericValue" x="3600" y="-300">
 			<Parameter Name="QI" Value="TRUE"/>
 			<Parameter Name="u16ObjId" Value="OutputNumber_Result"/>
 		</FB>
@@ -63,7 +63,7 @@
 			<Connection Source="Button_Test2.IND" Destination="Q_Test2.REQ" dx1="1306.67"/>
 		</EventConnections>
 		<DataConnections>
-			<Connection Source="MsgBox.RESULT" Destination="RESULT_TO_UDINT.IN" dx1="1586.67"/>
+			<Connection Source="MsgBox.RESULT" Destination="RESULT_TO_UDINT.IN" dx1="693.33"/>
 			<Connection Source="RESULT_TO_UDINT.OUT" Destination="Q_Result.u32NewValue" dx1="480"/>
 		</DataConnections>
 	</SubAppNetwork>

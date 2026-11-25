@@ -44,26 +44,26 @@
 		</OutputVars>
 	</InterfaceList>
 	<FBNetwork>
-		<FB Name="MSG" Type="isobus::UT::dialog::DLG_MessageBox" x="0" y="0">
+		<FB Name="MSG" Type="isobus::UT::dialog::DLG_MessageBox" x="500" y="0">
 			<Parameter Name="BUTTONS" Value="USINT#0"/>
 			<Parameter Name="DEFAULT_BUTTON" Value="USINT#1"/>
 			<Parameter Name="MODAL" Value="FALSE"/>
 			<Parameter Name="AUDIO" Value="FALSE"/>
 		</FB>
 		<EventConnections>
-			<Connection Source="INIT" Destination="MSG.INIT"/>
-			<Connection Source="MSG.INITO" Destination="INITO"/>
-			<Connection Source="SHOW" Destination="MSG.SHOW"/>
-			<Connection Source="CLOSE" Destination="MSG.CLOSE"/>
-			<Connection Source="MSG.CNF" Destination="CNF"/>
+			<Connection Source="INIT" Destination="MSG.INIT" dx1="2580"/>
+			<Connection Source="MSG.INITO" Destination="INITO" dx1="1720"/>
+			<Connection Source="SHOW" Destination="MSG.SHOW" dx1="2546.67"/>
+			<Connection Source="CLOSE" Destination="MSG.CLOSE" dx1="2513.33"/>
+			<Connection Source="MSG.CNF" Destination="CNF" dx1="1753.33"/>
 		</EventConnections>
 		<DataConnections>
-			<Connection Source="QI" Destination="MSG.QI"/>
-			<Connection Source="TEXT_ID" Destination="MSG.TEXT_ID"/>
-			<Connection Source="TITLE_ID" Destination="MSG.TITLE_ID"/>
-			<Connection Source="ICON" Destination="MSG.ICON"/>
-			<Connection Source="TIMEOUT" Destination="MSG.TIMEOUT"/>
-			<Connection Source="MSG.QO" Destination="QO"/>
+			<Connection Source="QI" Destination="MSG.QI" dx1="2480"/>
+			<Connection Source="TEXT_ID" Destination="MSG.TEXT_ID" dx1="2446.67"/>
+			<Connection Source="TITLE_ID" Destination="MSG.TITLE_ID" dx1="2413.33"/>
+			<Connection Source="ICON" Destination="MSG.ICON" dx1="2380"/>
+			<Connection Source="TIMEOUT" Destination="MSG.TIMEOUT" dx1="2346.67"/>
+			<Connection Source="MSG.QO" Destination="QO" dx1="1786.67"/>
 		</DataConnections>
 	</FBNetwork>
 </FBType>

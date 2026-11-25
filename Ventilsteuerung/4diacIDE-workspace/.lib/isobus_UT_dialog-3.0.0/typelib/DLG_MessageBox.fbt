@@ -195,96 +195,96 @@
 			<Parameter Name="InputEvent" Value="BT_RELEASED_UNLATCHED"/>
 		</FB>
 		<EventConnections>
-			<Connection Source="BTN_OK.IND" Destination="CTRL.B_OK"/>
-			<Connection Source="BTN_CANCEL.IND" Destination="CTRL.B_CANCEL"/>
-			<Connection Source="BTN_ABORT.IND" Destination="CTRL.B_ABORT"/>
-			<Connection Source="BTN_RETRY.IND" Destination="CTRL.B_RETRY"/>
-			<Connection Source="BTN_IGNORE.IND" Destination="CTRL.B_IGNORE"/>
-			<Connection Source="BTN_YES.IND" Destination="CTRL.B_YES"/>
-			<Connection Source="BTN_NO.IND" Destination="CTRL.B_NO"/>
-			<Connection Source="CTRL.SHOWO" Destination="QN_COVER.REQ"/>
-			<Connection Source="QN_COVER.CNF" Destination="QN_ICON.REQ"/>
-			<Connection Source="QN_ICON.CNF" Destination="QN_TITLE.REQ"/>
-			<Connection Source="QN_TITLE.CNF" Destination="QN_TEXT.REQ"/>
-			<Connection Source="QN_TEXT.CNF" Destination="QN_BUTTONS.REQ"/>
-			<Connection Source="QN_BUTTONS.CNF" Destination="QF_TITLE.REQ"/>
-			<Connection Source="QF_TITLE.CNF" Destination="QH_SHOW.REQ"/>
-			<Connection Source="QH_SHOW.CNF" Destination="FOCUS.EI"/>
-			<Connection Source="FOCUS.EO1" Destination="QS_OK.REQ"/>
-			<Connection Source="QS_OK.CNF" Destination="FOCUS_DONE.EI1"/>
-			<Connection Source="FOCUS.EO2" Destination="QS_CANCEL.REQ"/>
-			<Connection Source="QS_CANCEL.CNF" Destination="FOCUS_DONE.EI2"/>
-			<Connection Source="FOCUS.EO3" Destination="QS_ABORT.REQ"/>
-			<Connection Source="QS_ABORT.CNF" Destination="FOCUS_DONE.EI3"/>
-			<Connection Source="FOCUS.EO4" Destination="QS_RETRY.REQ"/>
-			<Connection Source="QS_RETRY.CNF" Destination="FOCUS_DONE.EI4"/>
-			<Connection Source="FOCUS.EO5" Destination="QS_IGNORE.REQ"/>
-			<Connection Source="QS_IGNORE.CNF" Destination="FOCUS_DONE.EI5"/>
-			<Connection Source="FOCUS.EO6" Destination="QS_YES.REQ"/>
-			<Connection Source="QS_YES.CNF" Destination="FOCUS_DONE.EI6"/>
-			<Connection Source="FOCUS.EO7" Destination="QS_NO.REQ"/>
-			<Connection Source="QS_NO.CNF" Destination="FOCUS_DONE.EI7"/>
-			<Connection Source="FOCUS.EO8" Destination="FOCUS_DONE.EI8"/>
+			<Connection Source="BTN_OK.IND" Destination="CTRL.B_OK" dx1="1640"/>
+			<Connection Source="BTN_CANCEL.IND" Destination="CTRL.B_CANCEL" dx1="1606.67"/>
+			<Connection Source="BTN_ABORT.IND" Destination="CTRL.B_ABORT" dx1="1573.33"/>
+			<Connection Source="BTN_RETRY.IND" Destination="CTRL.B_RETRY" dx1="1573.33"/>
+			<Connection Source="BTN_IGNORE.IND" Destination="CTRL.B_IGNORE" dx1="1573.33"/>
+			<Connection Source="BTN_YES.IND" Destination="CTRL.B_YES" dx1="1606.67"/>
+			<Connection Source="BTN_NO.IND" Destination="CTRL.B_NO" dx1="1640"/>
+			<Connection Source="CTRL.SHOWO" Destination="QN_COVER.REQ" dx1="840"/>
+			<Connection Source="QN_COVER.CNF" Destination="QN_ICON.REQ" dx1="66.67" dx2="100" dy="960"/>
+			<Connection Source="QN_ICON.CNF" Destination="QN_TITLE.REQ" dx1="66.67" dx2="100" dy="960"/>
+			<Connection Source="QN_TITLE.CNF" Destination="QN_TEXT.REQ" dx1="66.67" dx2="100" dy="1246.67"/>
+			<Connection Source="QN_TEXT.CNF" Destination="QN_BUTTONS.REQ" dx1="66.67" dx2="100" dy="973.33"/>
+			<Connection Source="QN_BUTTONS.CNF" Destination="QF_TITLE.REQ" dx1="66.67" dx2="100" dy="1073.33"/>
+			<Connection Source="QF_TITLE.CNF" Destination="QH_SHOW.REQ" dx1="1486.67"/>
+			<Connection Source="QH_SHOW.CNF" Destination="FOCUS.EI" dx1="66.67" dx2="66.67" dy="1180"/>
+			<Connection Source="FOCUS.EO1" Destination="QS_OK.REQ" dx1="1340"/>
+			<Connection Source="QS_OK.CNF" Destination="FOCUS_DONE.EI1" dx1="980"/>
+			<Connection Source="FOCUS.EO2" Destination="QS_CANCEL.REQ" dx1="406.67"/>
+			<Connection Source="QS_CANCEL.CNF" Destination="FOCUS_DONE.EI2" dx1="946.67"/>
+			<Connection Source="FOCUS.EO3" Destination="QS_ABORT.REQ" dx1="373.33"/>
+			<Connection Source="QS_ABORT.CNF" Destination="FOCUS_DONE.EI3" dx1="913.33"/>
+			<Connection Source="FOCUS.EO4" Destination="QS_RETRY.REQ" dx1="340"/>
+			<Connection Source="QS_RETRY.CNF" Destination="FOCUS_DONE.EI4" dx1="946.67"/>
+			<Connection Source="FOCUS.EO5" Destination="QS_IGNORE.REQ" dx1="306.67"/>
+			<Connection Source="QS_IGNORE.CNF" Destination="FOCUS_DONE.EI5" dx1="980"/>
+			<Connection Source="FOCUS.EO6" Destination="QS_YES.REQ" dx1="273.33"/>
+			<Connection Source="QS_YES.CNF" Destination="FOCUS_DONE.EI6" dx1="1013.33"/>
+			<Connection Source="FOCUS.EO7" Destination="QS_NO.REQ" dx1="240"/>
+			<Connection Source="QS_NO.CNF" Destination="FOCUS_DONE.EI7" dx1="1046.67"/>
+			<Connection Source="FOCUS.EO8" Destination="FOCUS_DONE.EI8" dx1="406.67" dx2="1053.33" dy="-173.33"/>
 			<Connection Source="FOCUS_DONE.EO" Destination="AUDIO_SW.EI"/>
 			<Connection Source="AUDIO_SW.EO0" Destination="AUDIO_DONE.EI1"/>
-			<Connection Source="AUDIO_SW.EO1" Destination="Q_AUDIO.REQ"/>
-			<Connection Source="Q_AUDIO.CNF" Destination="AUDIO_DONE.EI2"/>
-			<Connection Source="AUDIO_DONE.EO" Destination="CTRL.SHOWN"/>
-			<Connection Source="CTRL.HIDEO" Destination="QH_HIDE.REQ"/>
-			<Connection Source="QH_HIDE.CNF" Destination="CTRL.HIDDEN"/>
-			<Connection Source="CTRL.START_T" Destination="TIMER.START"/>
-			<Connection Source="CTRL.STOP_T" Destination="TIMER.STOP"/>
-			<Connection Source="TIMER.EO" Destination="CTRL.TMO"/>
-			<Connection Source="INIT" Destination="CTRL.INIT"/>
-			<Connection Source="CTRL.INITO" Destination="QN_COVER.INIT"/>
-			<Connection Source="QN_COVER.INITO" Destination="QN_ICON.INIT"/>
-			<Connection Source="QN_ICON.INITO" Destination="QN_TITLE.INIT"/>
-			<Connection Source="QN_TITLE.INITO" Destination="QN_TEXT.INIT"/>
-			<Connection Source="QN_TEXT.INITO" Destination="QN_BUTTONS.INIT"/>
-			<Connection Source="QN_BUTTONS.INITO" Destination="QF_TITLE.INIT"/>
-			<Connection Source="QF_TITLE.INITO" Destination="QH_SHOW.INIT"/>
-			<Connection Source="QH_SHOW.INITO" Destination="QH_HIDE.INIT"/>
-			<Connection Source="QH_HIDE.INITO" Destination="QS_OK.INIT"/>
-			<Connection Source="QS_OK.INITO" Destination="QS_CANCEL.INIT"/>
-			<Connection Source="QS_CANCEL.INITO" Destination="QS_ABORT.INIT"/>
-			<Connection Source="QS_ABORT.INITO" Destination="QS_RETRY.INIT"/>
-			<Connection Source="QS_RETRY.INITO" Destination="QS_IGNORE.INIT"/>
-			<Connection Source="QS_IGNORE.INITO" Destination="QS_YES.INIT"/>
-			<Connection Source="QS_YES.INITO" Destination="QS_NO.INIT"/>
-			<Connection Source="QS_NO.INITO" Destination="Q_AUDIO.INIT"/>
-			<Connection Source="Q_AUDIO.INITO" Destination="BTN_OK.INIT"/>
-			<Connection Source="BTN_OK.INITO" Destination="BTN_CANCEL.INIT"/>
-			<Connection Source="BTN_CANCEL.INITO" Destination="BTN_ABORT.INIT"/>
-			<Connection Source="BTN_ABORT.INITO" Destination="BTN_RETRY.INIT"/>
-			<Connection Source="BTN_RETRY.INITO" Destination="BTN_IGNORE.INIT"/>
-			<Connection Source="BTN_IGNORE.INITO" Destination="BTN_YES.INIT"/>
-			<Connection Source="BTN_YES.INITO" Destination="BTN_NO.INIT"/>
-			<Connection Source="BTN_NO.INITO" Destination="INITO"/>
-			<Connection Source="SHOW" Destination="CTRL.SHOW"/>
-			<Connection Source="CLOSE" Destination="CTRL.CLOSE"/>
-			<Connection Source="CTRL.CNF" Destination="CNF"/>
+			<Connection Source="AUDIO_SW.EO1" Destination="Q_AUDIO.REQ" dx1="920"/>
+			<Connection Source="Q_AUDIO.CNF" Destination="AUDIO_DONE.EI2" dx1="853.33"/>
+			<Connection Source="AUDIO_DONE.EO" Destination="CTRL.SHOWN" dx1="66.67" dx2="66.67" dy="573.33"/>
+			<Connection Source="CTRL.HIDEO" Destination="QH_HIDE.REQ" dx1="4420"/>
+			<Connection Source="QH_HIDE.CNF" Destination="CTRL.HIDDEN" dx1="66.67" dx2="100" dy="-2560"/>
+			<Connection Source="CTRL.START_T" Destination="TIMER.START" dx1="740"/>
+			<Connection Source="CTRL.STOP_T" Destination="TIMER.STOP" dx1="706.67"/>
+			<Connection Source="TIMER.EO" Destination="CTRL.TMO" dx1="66.67" dx2="66.67" dy="-1433.33"/>
+			<Connection Source="INIT" Destination="BTN_OK.INIT" dx1="2400"/>
+			<Connection Source="CTRL.INITO" Destination="QN_COVER.INIT" dx1="806.67"/>
+			<Connection Source="QN_COVER.INITO" Destination="QN_ICON.INIT" dx1="100" dx2="66.67" dy="1100"/>
+			<Connection Source="QN_ICON.INITO" Destination="QN_TITLE.INIT" dx1="100" dx2="66.67" dy="1100"/>
+			<Connection Source="QN_TITLE.INITO" Destination="QN_TEXT.INIT" dx1="100" dx2="66.67" dy="1373.33"/>
+			<Connection Source="QN_TEXT.INITO" Destination="QN_BUTTONS.INIT" dx1="100" dx2="66.67" dy="1113.33"/>
+			<Connection Source="QN_BUTTONS.INITO" Destination="QF_TITLE.INIT" dx1="100" dx2="66.67" dy="1213.33"/>
+			<Connection Source="QF_TITLE.INITO" Destination="QH_SHOW.INIT" dx1="1453.33"/>
+			<Connection Source="QH_SHOW.INITO" Destination="QH_HIDE.INIT" dx1="120" dx2="66.67" dy="6440"/>
+			<Connection Source="QH_HIDE.INITO" Destination="QS_OK.INIT" dx1="986.67"/>
+			<Connection Source="QS_OK.INITO" Destination="QS_CANCEL.INIT" dx1="66.67" dx2="66.67" dy="1026.67"/>
+			<Connection Source="QS_CANCEL.INITO" Destination="QS_ABORT.INIT" dx1="66.67" dx2="66.67" dy="986.67"/>
+			<Connection Source="QS_ABORT.INITO" Destination="QS_RETRY.INIT" dx1="66.67" dx2="66.67" dy="1000"/>
+			<Connection Source="QS_RETRY.INITO" Destination="QS_IGNORE.INIT" dx1="66.67" dx2="66.67" dy="1000"/>
+			<Connection Source="QS_IGNORE.INITO" Destination="QS_YES.INIT" dx1="66.67" dx2="66.67" dy="980"/>
+			<Connection Source="QS_YES.INITO" Destination="QS_NO.INIT" dx1="66.67" dx2="66.67" dy="980"/>
+			<Connection Source="QS_NO.INITO" Destination="Q_AUDIO.INIT" dx1="4753.33"/>
+			<Connection Source="BTN_OK.INITO" Destination="BTN_CANCEL.INIT" dx1="66.67" dx2="66.67" dy="1140"/>
+			<Connection Source="BTN_CANCEL.INITO" Destination="BTN_ABORT.INIT" dx1="66.67" dx2="66.67" dy="1140"/>
+			<Connection Source="BTN_ABORT.INITO" Destination="BTN_RETRY.INIT" dx1="66.67" dx2="66.67" dy="1133.33"/>
+			<Connection Source="BTN_RETRY.INITO" Destination="BTN_IGNORE.INIT" dx1="66.67" dx2="66.67" dy="1166.67"/>
+			<Connection Source="BTN_IGNORE.INITO" Destination="BTN_YES.INIT" dx1="66.67" dx2="66.67" dy="1133.33"/>
+			<Connection Source="BTN_YES.INITO" Destination="BTN_NO.INIT" dx1="66.67" dx2="66.67" dy="1133.33"/>
+			<Connection Source="SHOW" Destination="CTRL.SHOW" dx1="5893.33"/>
+			<Connection Source="CLOSE" Destination="CTRL.CLOSE" dx1="5860"/>
+			<Connection Source="CTRL.CNF" Destination="CNF" dx1="6686.67"/>
+			<Connection Source="BTN_NO.INITO" Destination="CTRL.INIT" dx1="1553.33"/>
+			<Connection Source="Q_AUDIO.INITO" Destination="INITO" dx1="2680"/>
 		</EventConnections>
 		<DataConnections>
-			<Connection Source="CTRL.COVER_ID" Destination="QN_COVER.u32NewValue"/>
-			<Connection Source="CTRL.ICON_ID" Destination="QN_ICON.u32NewValue"/>
-			<Connection Source="CTRL.TITLE_ID_O" Destination="QN_TITLE.u32NewValue"/>
-			<Connection Source="CTRL.TEXT_ID_O" Destination="QN_TEXT.u32NewValue"/>
-			<Connection Source="CTRL.BUTTONS_ID" Destination="QN_BUTTONS.u32NewValue"/>
-			<Connection Source="CTRL.TITLE_COLOUR" Destination="QF_TITLE.u8FillColour"/>
-			<Connection Source="CTRL.FOCUS_K" Destination="FOCUS.K"/>
-			<Connection Source="CTRL.AUDIO_O" Destination="AUDIO_SW.G"/>
-			<Connection Source="CTRL.TIMEOUT_O" Destination="TIMER.DT"/>
-			<Connection Source="QI" Destination="CTRL.QI"/>
-			<Connection Source="TEXT_ID" Destination="CTRL.TEXT_ID"/>
-			<Connection Source="TITLE_ID" Destination="CTRL.TITLE_ID"/>
-			<Connection Source="ICON" Destination="CTRL.ICON"/>
-			<Connection Source="BUTTONS" Destination="CTRL.BUTTONS"/>
-			<Connection Source="DEFAULT_BUTTON" Destination="CTRL.DEFAULT_BUTTON"/>
-			<Connection Source="MODAL" Destination="CTRL.MODAL"/>
-			<Connection Source="TIMEOUT" Destination="CTRL.TIMEOUT"/>
-			<Connection Source="AUDIO" Destination="CTRL.AUDIO"/>
-			<Connection Source="CTRL.QO" Destination="QO"/>
-			<Connection Source="CTRL.RESULT" Destination="RESULT"/>
+			<Connection Source="CTRL.COVER_ID" Destination="QN_COVER.u32NewValue" dx1="873.33"/>
+			<Connection Source="CTRL.ICON_ID" Destination="QN_ICON.u32NewValue" dx1="906.67"/>
+			<Connection Source="CTRL.TITLE_ID_O" Destination="QN_TITLE.u32NewValue" dx1="973.33"/>
+			<Connection Source="CTRL.TEXT_ID_O" Destination="QN_TEXT.u32NewValue" dx1="1006.67"/>
+			<Connection Source="CTRL.BUTTONS_ID" Destination="QN_BUTTONS.u32NewValue" dx1="866.67"/>
+			<Connection Source="CTRL.TITLE_COLOUR" Destination="QF_TITLE.u8FillColour" dx1="833.33"/>
+			<Connection Source="CTRL.FOCUS_K" Destination="FOCUS.K" dx1="940"/>
+			<Connection Source="CTRL.AUDIO_O" Destination="AUDIO_SW.G" dx1="1040" dx2="926.67" dy="-606.67"/>
+			<Connection Source="CTRL.TIMEOUT_O" Destination="TIMER.DT" dx1="673.33"/>
+			<Connection Source="QI" Destination="CTRL.QI" dx1="5726.67"/>
+			<Connection Source="TEXT_ID" Destination="CTRL.TEXT_ID" dx1="5693.33"/>
+			<Connection Source="TITLE_ID" Destination="CTRL.TITLE_ID" dx1="5660"/>
+			<Connection Source="ICON" Destination="CTRL.ICON" dx1="5626.67"/>
+			<Connection Source="BUTTONS" Destination="CTRL.BUTTONS" dx1="5593.33"/>
+			<Connection Source="DEFAULT_BUTTON" Destination="CTRL.DEFAULT_BUTTON" dx1="5560"/>
+			<Connection Source="MODAL" Destination="CTRL.MODAL" dx1="1600"/>
+			<Connection Source="TIMEOUT" Destination="CTRL.TIMEOUT" dx1="1666.67" dx2="1740" dy="5933.33"/>
+			<Connection Source="AUDIO" Destination="CTRL.AUDIO" dx1="1633.33" dx2="1773.33" dy="5860"/>
+			<Connection Source="CTRL.QO" Destination="QO" dx1="773.33"/>
+			<Connection Source="CTRL.RESULT" Destination="RESULT" dx1="6720"/>
 		</DataConnections>
 	</FBNetwork>
 </FBType>
