@@ -47,7 +47,7 @@ NODE_ARCH = {
 }
 
 # forte_abi: von Hand erhoehte Nummer, wenn sich FORTE-Basisklassen aendern.
-FORTE_ABI = 6
+FORTE_ABI = 7
 
 
 # Architekturen, fuer die ELFs gebaut werden (Unterordner elf/<arch>/ der Libs).
