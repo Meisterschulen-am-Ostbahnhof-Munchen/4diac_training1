@@ -19,6 +19,8 @@ import tomllib
 from pathlib import Path
 
 HERE = Path(__file__).resolve().parent
+CONFIG = HERE / "lib_sync.toml"
+REPORT = Path("report.md")   # fest, im Arbeitsverzeichnis
 sys.path.insert(0, str(HERE.parent))
 sys.path.insert(0, str(HERE.parent / "sync_empty"))
 from refcheck import refs, resolves, type_index  # noqa: E402
@@ -78,7 +80,7 @@ def report(name, ref, tids, res, checks):
            f"neu: {len(added)}  geändert: {len(changed)}  gelöscht: {len(deleted)}", ""]
     for title, items in checks.items():
         rep.append(f"## {title} ({len(items)})")
-        rep += [f"  {r}  <- {len(ps)}x, z. B. {sorted(ps)[0]}" for r, ps in items.items()]
+        rep += [f"  {r}  <- {len(ps)}x, z. B. {min(ps)}" for r, ps in items.items()]
         rep.append("")
     if checks["neu kaputt"] or checks["doppelt (Projekt und .lib)"]:
         rep.append("**Hinweis:** Die Stellen oben bitte von Hand in der IDE prüfen. Der Sync repariert nichts im Projekt.")
@@ -106,11 +108,10 @@ def main():
     ap.add_argument("--target", required=True, help="Klon des Ziel-Repos")
     ap.add_argument("--repo", required=True, help="Name wie in lib_sync.toml")
     ap.add_argument("--ref", required=True, help="Tag in training1, z. B. v0.28m")
-    ap.add_argument("--config", default=str(HERE / "lib_sync.toml"))
     ap.add_argument("--apply", action="store_true", help="Ergebnis in den Ziel-Worktree schreiben")
-    ap.add_argument("--report", help="Report-Datei (Markdown)")
+    ap.add_argument("--report", action="store_true", help=f"Report zusätzlich nach {REPORT} schreiben")
     a = ap.parse_args()
-    cfg = tomllib.loads(Path(a.config).read_text(encoding="utf-8"))
+    cfg = tomllib.loads(CONFIG.read_text(encoding="utf-8"))
     rc = repo_cfg(cfg, a.repo)
     ref = check_ref(a.ref)
     base = check_ref(rc.get("base", "main"))
@@ -122,7 +123,7 @@ def main():
     text, added, changed, deleted = report(a.repo, ref, blob_ids(a.target, base), res, checks)
     print(text)
     if a.report:
-        Path(a.report).write_text(text + "\n", encoding="utf-8")
+        REPORT.write_text(text + "\n", encoding="utf-8")
     if a.apply:
         write(a.target, res, added, changed, deleted)
     return 0

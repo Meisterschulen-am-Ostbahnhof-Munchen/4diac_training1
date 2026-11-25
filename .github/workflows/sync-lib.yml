@@ -99,7 +99,7 @@ jobs:
 
       - name: Sync erzeugen
         run: |
-          ARGS="--source training1 --target target --repo $REPO --ref refs/tags/$TAG --report report.md"
+          ARGS="--source training1 --target target --repo $REPO --ref refs/tags/$TAG --report"
           if [ "$APPLY" = "true" ]; then ARGS="$ARGS --apply"; fi
           set +e
           python training1/internal-scripts/sync_lib/sync_lib.py $ARGS | tee summary.txt
