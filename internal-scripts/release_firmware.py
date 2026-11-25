@@ -16,6 +16,7 @@ Aufruf:
         --build v0.27-alpha-b-179-g24534469 --forte-abi 6            (nur prüfen;
                                                        --forte-abi nur ohne build.json)
     ... --upload                                                      (hochladen, --clobber)
+    ... --notes                                (Runtime-Kopf der Notes auf die Assets umstellen)
 
 Der Build-Ordner liegt auf dem Team-Drive (gdrive_team:Public/Visuelle-Programmierung/
 Flash_Controller/logiBUS/<Build>), lokal z. B. unter G:\\Geteilte Ablagen\\Classroom\\...
@@ -56,9 +57,9 @@ TARGETS = {
 # Erlaubte Eingaben: keine Pfadtrenner, kein führendes "-"
 RE_TAG = re.compile(r'v\d+\.\d+[a-z]?')
 RE_BUILD = re.compile(r'v\d[\w.]*-alpha-b-\d+-g[0-9a-f]{7,40}')
-RE_TARGET = re.compile(r'[A-Za-z0-9_]+')
+RE_TARGET = re.compile(r'\w+', re.ASCII)
 RE_ARCH = re.compile(r'riscv32|xtensa')
-RE_BIN = re.compile(r'(Application|merged-flash)_[A-Za-z0-9_]+\.bin')
+RE_BIN = re.compile(r'(Application|merged-flash)_\w+\.bin', re.ASCII)
 RE_SHA = re.compile(r'[0-9a-f]{64}')
 RE_COMMIT = re.compile(r'[0-9a-f]{7,40}')
 ELFLIB = re.compile(rb'ELFLIB:([\w.-]+):([\w.-]+):(\d+):(\w+)')
@@ -74,11 +75,16 @@ def check(rx: re.Pattern, value, what: str) -> str:
     return value
 
 
-def inside(base: Path, name: str) -> Path:
-    """base/name, aber nur wenn das Ergebnis direkt in base liegt."""
-    p = (base / name).resolve()
-    if p.parent != base:
-        fail(f'Pfad außerhalb von {base}: {name}')
+def entries(base: Path) -> dict[str, Path]:
+    """Einträge eines Ordners nach Name. Die Pfade kommen so aus dem Dateisystem
+    und werden nie aus Eingaben zusammengesetzt (kein Path Traversal)."""
+    return {e.name: e for e in base.iterdir()}
+
+
+def pick(found: dict[str, Path], name: str, what: str) -> Path:
+    p = found.get(name)
+    if p is None:
+        fail(f'{what} fehlt: {name}')
     return p
 
 
@@ -180,11 +186,11 @@ def read_sums(path: Path) -> dict[str, str]:
     return sums
 
 
-def check_file(src: Path, name: str, sums: dict[str, str]) -> tuple[Path, dict]:
+def check_file(found: dict[str, Path], name: str, sums: dict[str, str]) -> tuple[Path, dict]:
     """Datei muss im Build-Ordner liegen und zur SHA256SUMS des Builds passen."""
-    p = inside(src, check(RE_BIN, name, 'Dateiname'))
+    p = pick(found, check(RE_BIN, name, 'Dateiname'), 'Datei im Build-Ordner')
     if not p.is_file():
-        fail(f'Datei fehlt: {p}')
+        fail(f'Keine Datei: {p}')
     h = sha256(p)
     if sums.get(name) != h:
         fail(f'SHA256 passt nicht zum Build: {name} (Drive {h}, Build {sums.get(name)})')
@@ -192,14 +198,52 @@ def check_file(src: Path, name: str, sums: dict[str, str]) -> tuple[Path, dict]:
 
 
 def check_targets(src: Path, targets: dict[str, str], sums: dict[str, str]) -> tuple[dict, list[Path]]:
+    found = entries(src)
     out, files = {}, []
     for t, arch in targets.items():
-        pa, app = check_file(src, f'Application_{t}.bin', sums)
-        pm, merged = check_file(src, f'merged-flash_{t}.bin', sums)
+        pa, app = check_file(found, f'Application_{t}.bin', sums)
+        pm, merged = check_file(found, f'merged-flash_{t}.bin', sums)
         out[t] = {'arch': arch, 'application': app, 'merged_flash': merged}
         files += [pa, pm]
         print(f'  {t:26} {arch:8} ok')
     return out, files
+
+
+RUNTIME_HEAD = re.compile(r'^## Runtime:[^\n]*\n.*?(?=^Neu in der Runtime:|^## )', re.M | re.S)
+RE_PREV = re.compile(r'\(neu, vorher ([^)\s]+)\)')
+DRIVE_REMOTE = 'gdrive_team:Public/Visuelle-Programmierung/Flash_Controller/logiBUS'
+
+
+def runtime_block(build: str, prev: str | None) -> str:
+    """Kopf des Abschnitts "## Runtime:" (Verweis auf die Assets); "Neu in der Runtime" bleibt."""
+    vorher = f' (neu, vorher {prev})' if prev else ''
+    return (f'## Runtime:\n{build}{vorher}\n\n'
+            'Download: unten unter **Assets**\n'
+            '- Update im Browser (OTA): `Application_<Board>.bin`\n'
+            '- Erst-Flashen per USB (esptool, ab 0x0): `merged-flash_<Board>.bin`\n'
+            '- Prüfsummen: `SHA256SUMS`, für den Installer: `firmware.json`\n\n'
+            f'Google Drive (Trainer): `{DRIVE_REMOTE}/{build}`\n\n')
+
+
+def update_notes(tag: str, build: str, prev: str | None) -> None:
+    """Runtime-Kopf der Release-Notes ersetzen (alte Notes werden vorher gesichert)."""
+    body = subprocess.run(['gh', 'release', 'view', tag, '--json', 'body', '-q', '.body'],
+                          capture_output=True, check=True, encoding='utf-8').stdout.rstrip('\n')
+    m = RUNTIME_HEAD.search(body)
+    if not m:
+        fail(f'Kein Abschnitt "## Runtime:" in den Notes von {tag}')
+    if prev is None:
+        pm = RE_PREV.search(m.group(0))
+        prev = pm.group(1) if pm else None
+    new = body[:m.start()] + runtime_block(build, prev) + body[m.end():]
+    tmp = Path(tempfile.mkdtemp(prefix='notes_'))
+    (tmp / 'notes_alt.md').write_text(body, encoding='utf-8', newline='\n')
+    (tmp / 'notes_neu.md').write_text(new, encoding='utf-8', newline='\n')
+    if new == body:
+        print('Release-Notes schon aktuell')
+        return
+    subprocess.run(['gh', 'release', 'edit', tag, '--notes-file', str(tmp / 'notes_neu.md')], check=True)
+    print(f'Release-Notes: Runtime-Kopf ersetzt (alt/neu in {tmp})')
 
 
 def upload(tag: str, files: list[Path]) -> None:
@@ -216,25 +260,25 @@ def parse_args() -> argparse.Namespace:
     ap.add_argument('--build', required=True, help='LOGIBUS-Build, z. B. v0.27-alpha-b-179-g24534469')
     ap.add_argument('--forte-abi', type=int, help='nur nötig, wenn der Build keine build.json hat')
     ap.add_argument('--forte-commit', help='forte-Commit, nur ohne build.json')
-    ap.add_argument('--drive', default=DRIVE_DEFAULT, help='Ordner mit den Build-Ordnern')
     ap.add_argument('--upload', action='store_true', help='per gh release upload --clobber hochladen')
+    ap.add_argument('--notes', action='store_true', help='Runtime-Kopf der Release-Notes auf die Assets umstellen')
+    ap.add_argument('--prev-build', help='Vorgänger-Build für "(neu, vorher …)"; sonst aus den Notes')
     a = ap.parse_args()
     check(RE_TAG, a.tag, '--tag')
     check(RE_BUILD, a.build, '--build')
     if a.forte_commit is not None:
         check(RE_COMMIT, a.forte_commit, '--forte-commit')
+    if a.prev_build is not None:
+        check(re.compile(r'[\w.-]+'), a.prev_build, '--prev-build')
     return a
 
 
 def main() -> None:
     a = parse_args()
-    drive = Path(a.drive).resolve()
-    src = inside(drive, a.build)
+    src = pick(entries(Path(DRIVE_DEFAULT)), a.build, 'Build-Ordner im Drive')
     if not src.is_dir():
-        fail(f'Build-Ordner fehlt: {src}')
-    sums_path = inside(src, 'SHA256SUMS')
-    if not sums_path.is_file():
-        fail(f'SHA256SUMS vom Build fehlt: {sums_path} (wird beim Compilieren erzeugt)')
+        fail(f'Kein Ordner: {src}')
+    sums_path = pick(entries(src), 'SHA256SUMS', 'SHA256SUMS vom Build (entsteht beim Compilieren)')
 
     info = load_build_info(src, a.build, a.forte_abi, a.forte_commit)
     sums = read_sums(sums_path)
@@ -247,15 +291,19 @@ def main() -> None:
                 'forte_abi': info['forte_abi'], 'targets': targets}
     tmp = Path(tempfile.mkdtemp(prefix='fw_'))
     out = tmp / 'firmware.json'
-    out.write_text(json.dumps(manifest, indent=2, ensure_ascii=False) + '\n', encoding='utf-8')
+    out.write_text(json.dumps(manifest, indent=2, ensure_ascii=False) + '\n', encoding='utf-8', newline='\n')
+    # SHA256SUMS fürs Release aus den geprüften Werten neu schreiben, nicht die Drive-Datei kopieren
     sums_out = tmp / 'SHA256SUMS'
-    sums_out.write_bytes(sums_path.read_bytes())
+    lines = [f'{f["sha256"]}  {f["file"]}' for t in targets.values() for f in (t['application'], t['merged_flash'])]
+    sums_out.write_text('\n'.join(lines) + '\n', encoding='utf-8', newline='\n')
     print(f'firmware.json: {out}')
 
-    if not a.upload:
-        print('Nur geprüft. Zum Hochladen --upload angeben.')
-        return
-    upload(a.tag, [*files, out, sums_out])
+    if a.upload:
+        upload(a.tag, [*files, out, sums_out])
+    if a.notes:
+        update_notes(a.tag, a.build, a.prev_build)
+    if not (a.upload or a.notes):
+        print('Nur geprüft. Zum Hochladen --upload, für die Notes --notes angeben.')
 
 
 if __name__ == '__main__':
