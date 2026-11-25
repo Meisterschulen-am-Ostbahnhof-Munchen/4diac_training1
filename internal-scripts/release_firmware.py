@@ -81,6 +81,15 @@ def entries(base: Path) -> dict[str, Path]:
     return {e.name: e for e in base.iterdir()}
 
 
+def pick_tag(name: str) -> str:
+    """Tag aus "git tag --list" nehmen (nicht die Eingabe selbst)."""
+    tags = {t: t for t in git('tag', '--list').split()}
+    tag = tags.get(name)
+    if tag is None:
+        fail(f'Tag fehlt im Repo: {name} (vorher git fetch --tags)')
+    return tag
+
+
 def pick(found: dict[str, Path], name: str, what: str) -> Path:
     p = found.get(name)
     if p is None:
@@ -209,7 +218,16 @@ def check_targets(src: Path, targets: dict[str, str], sums: dict[str, str]) -> t
     return out, files
 
 
-RUNTIME_HEAD = re.compile(r'^## Runtime:[^\n]*\n.*?(?=^Neu in der Runtime:|^## )', re.M | re.S)
+def runtime_head(lines: list[str]) -> tuple[int | None, int]:
+    """Zeilenbereich [start, end) des Runtime-Kopfs: ab "## Runtime:" bis vor
+    "Neu in der Runtime:" oder die nächste "## "-Überschrift."""
+    start = next((i for i, line in enumerate(lines) if line.startswith('## Runtime:')), None)
+    if start is None:
+        return None, 0
+    end = next((i for i in range(start + 1, len(lines))
+                if lines[i].startswith(('Neu in der Runtime:', '## '))), len(lines))
+    return start, end
+
 RE_PREV = re.compile(r'\(neu, vorher ([^)\s]+)\)')
 DRIVE_REMOTE = 'gdrive_team:Public/Visuelle-Programmierung/Flash_Controller/logiBUS'
 
@@ -229,13 +247,14 @@ def update_notes(tag: str, build: str, prev: str | None) -> None:
     """Runtime-Kopf der Release-Notes ersetzen (alte Notes werden vorher gesichert)."""
     body = subprocess.run(['gh', 'release', 'view', tag, '--json', 'body', '-q', '.body'],
                           capture_output=True, check=True, encoding='utf-8').stdout.rstrip('\n')
-    m = RUNTIME_HEAD.search(body)
-    if not m:
+    lines = body.split('\n')
+    start, end = runtime_head(lines)
+    if start is None:
         fail(f'Kein Abschnitt "## Runtime:" in den Notes von {tag}')
     if prev is None:
-        pm = RE_PREV.search(m.group(0))
+        pm = RE_PREV.search('\n'.join(lines[start:end]))
         prev = pm.group(1) if pm else None
-    new = body[:m.start()] + runtime_block(build, prev) + body[m.end():]
+    new = '\n'.join(lines[:start]) + ('\n' if start else '') + runtime_block(build, prev) + '\n'.join(lines[end:])
     tmp = Path(tempfile.mkdtemp(prefix='notes_'))
     (tmp / 'notes_alt.md').write_text(body, encoding='utf-8', newline='\n')
     (tmp / 'notes_neu.md').write_text(new, encoding='utf-8', newline='\n')
@@ -278,16 +297,19 @@ def main() -> None:
     src = pick(entries(Path(DRIVE_DEFAULT)), a.build, 'Build-Ordner im Drive')
     if not src.is_dir():
         fail(f'Kein Ordner: {src}')
+    # Ab hier nur noch Werte aus Dateisystem bzw. git, nicht die Eingaben selbst
+    build = src.name
+    tag = pick_tag(a.tag)
     sums_path = pick(entries(src), 'SHA256SUMS', 'SHA256SUMS vom Build (entsteht beim Compilieren)')
 
-    info = load_build_info(src, a.build, a.forte_abi, a.forte_commit)
+    info = load_build_info(src, build, a.forte_abi, a.forte_commit)
     sums = read_sums(sums_path)
-    n = check_elf_abi(a.tag, info['forte_abi'])
-    print(f'Genutzte ELFs im Tag {a.tag}: {n}, alle forte_abi {info["forte_abi"]}')
+    n = check_elf_abi(tag, info['forte_abi'])
+    print(f'Genutzte ELFs im Tag {tag}: {n}, alle forte_abi {info["forte_abi"]}')
     targets, files = check_targets(src, info['targets'], sums)
 
-    manifest = {'build': a.build, 'logibus_commit': info['logibus_commit'],
-                'forte_commit': info['forte_commit'], 'training1': a.tag,
+    manifest = {'build': build, 'logibus_commit': info['logibus_commit'],
+                'forte_commit': info['forte_commit'], 'training1': tag,
                 'forte_abi': info['forte_abi'], 'targets': targets}
     tmp = Path(tempfile.mkdtemp(prefix='fw_'))
     out = tmp / 'firmware.json'
@@ -299,9 +321,9 @@ def main() -> None:
     print(f'firmware.json: {out}')
 
     if a.upload:
-        upload(a.tag, [*files, out, sums_out])
+        upload(tag, [*files, out, sums_out])
     if a.notes:
-        update_notes(a.tag, a.build, a.prev_build)
+        update_notes(tag, build, a.prev_build)
     if not (a.upload or a.notes):
         print('Nur geprüft. Zum Hochladen --upload, für die Notes --notes angeben.')
 
