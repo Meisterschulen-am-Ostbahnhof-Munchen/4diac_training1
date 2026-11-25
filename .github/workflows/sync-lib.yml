@@ -1,0 +1,153 @@
+name: Sync .lib in andere 4diac-Projekte
+
+# Überträgt bei jedem Release von 4diac_training1 den .lib-Stand (samt elf/)
+# in die Repos aus internal-scripts/sync_lib/lib_sync.toml. Je Repo ein PR
+# vom Branch sync-lib/<tag>; nach dem Merge legt release-on-sync-lib.yml im
+# Ziel-Repo das Release <tag> an.
+#
+# Manuell (workflow_dispatch) läuft standardmäßig nur ein Trockenlauf.
+# Token: secrets.EMPTY_REPO_TOKEN braucht auf allen Ziel-Repos
+# Contents, Pull requests und Workflows (write).
+
+on:
+  release:
+    types: [published]
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: 'Tag in training1 (leer = neuester Tag)'
+        required: false
+        default: ''
+      apply:
+        description: 'Ergebnis in die Ziel-Repos schreiben und PRs anlegen'
+        type: boolean
+        default: false
+
+permissions:
+  contents: read
+
+concurrency:
+  group: sync-lib
+  cancel-in-progress: false
+
+jobs:
+  plan:
+    runs-on: ubuntu-24.04
+    outputs:
+      repos: ${{ steps.plan.outputs.repos }}
+      tag: ${{ steps.plan.outputs.tag }}
+      apply: ${{ steps.plan.outputs.apply }}
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          fetch-depth: 0
+
+      - uses: actions/setup-python@v6
+        with:
+          python-version: '3.12'
+
+      - name: Repos und Tag bestimmen
+        id: plan
+        env:
+          RELEASE_TAG: ${{ github.event.release.tag_name }}
+          INPUT_TAG: ${{ inputs.tag }}
+          EVENT: ${{ github.event_name }}
+          INPUT_APPLY: ${{ inputs.apply }}
+        run: |
+          TAG="${RELEASE_TAG:-$INPUT_TAG}"
+          if [ -z "$TAG" ]; then TAG=$(git tag --sort=-creatordate | head -1); fi
+          if ! [[ "$TAG" =~ ^v[0-9]+\.[0-9]+[a-z]?$ ]]; then echo "Ungültiger Tag: $TAG"; exit 1; fi
+          git rev-parse --verify "refs/tags/$TAG" >/dev/null
+          echo "tag=$TAG" >> "$GITHUB_OUTPUT"
+          if [ "$EVENT" = "release" ] || [ "$INPUT_APPLY" = "true" ]; then
+            echo "apply=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "apply=false" >> "$GITHUB_OUTPUT"
+          fi
+          python -c "import json,tomllib;c=tomllib.load(open('internal-scripts/sync_lib/lib_sync.toml','rb'));print('repos='+json.dumps([r['name'] for r in c['repo']]))" >> "$GITHUB_OUTPUT"
+
+  sync:
+    needs: plan
+    runs-on: ubuntu-24.04
+    strategy:
+      fail-fast: false
+      matrix:
+        repo: ${{ fromJSON(needs.plan.outputs.repos) }}
+    env:
+      ORG: Meisterschulen-am-Ostbahnhof-Munchen
+      TAG: ${{ needs.plan.outputs.tag }}
+      APPLY: ${{ needs.plan.outputs.apply }}
+      REPO: ${{ matrix.repo }}
+    steps:
+      - name: Checkout training1
+        uses: actions/checkout@v6
+        with:
+          fetch-depth: 0
+          path: training1
+
+      - name: Checkout Ziel-Repo
+        uses: actions/checkout@v6
+        with:
+          repository: ${{ env.ORG }}/${{ matrix.repo }}
+          token: ${{ secrets.EMPTY_REPO_TOKEN }}
+          fetch-depth: 0
+          path: target
+
+      - uses: actions/setup-python@v6
+        with:
+          python-version: '3.12'
+
+      - name: Sync erzeugen
+        run: |
+          ARGS="--source training1 --target target --repo $REPO --ref refs/tags/$TAG --report report.md"
+          if [ "$APPLY" = "true" ]; then ARGS="$ARGS --apply"; fi
+          set +e
+          python training1/internal-scripts/sync_lib/sync_lib.py $ARGS | tee summary.txt
+          RC=${PIPESTATUS[0]}
+          head -60 summary.txt >> "$GITHUB_STEP_SUMMARY"
+          exit $RC
+
+      - name: Report hochladen
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: sync-lib-report-${{ matrix.repo }}-${{ needs.plan.outputs.tag }}
+          path: report.md
+          if-no-files-found: ignore
+
+      - name: PR ins Ziel-Repo stellen
+        if: needs.plan.outputs.apply == 'true'
+        working-directory: target
+        env:
+          GH_TOKEN: ${{ secrets.EMPTY_REPO_TOKEN }}
+        run: |
+          BRANCH="sync-lib/$TAG"
+          BASE=$(python -c "import tomllib,sys;c=tomllib.load(open('../training1/internal-scripts/sync_lib/lib_sync.toml','rb'));print([r for r in c['repo'] if r['name']==sys.argv[1]][0].get('base','main'))" "$REPO")
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git switch -c "$BRANCH"
+          git add -A
+          if git diff --cached --quiet; then
+            echo "Keine Änderungen für $TAG, kein PR"
+            exit 0
+          fi
+          git commit -q -m "Bibliotheken (.lib samt ELFs) aus 4diac_training1 $TAG"
+          git push --force origin "$BRANCH"
+          {
+            echo "Stand der Bibliotheken (\`.lib\` samt ELFs) aus 4diac_training1 **$TAG**, erzeugt von \`internal-scripts/sync_lib\`."
+            echo
+            echo "Projektinhalte (.SUB, .sys, ...) sind nicht verändert. Dazu kommen die Preload-/Deploy-Skripte aus \`scripts_central\` und \`release-on-sync-lib.yml\`."
+            echo "Nach dem Merge legt \`release-on-sync-lib.yml\` das Release $TAG an (gleicher Tag wie training1, passende Firmware dort)."
+            echo
+            echo "**Bitte vor dem Merge die Hinweise unten in der IDE prüfen** (\"neu kaputt\", \"doppelt\")."
+            echo
+            echo '```'
+            cat ../summary.txt | head -80
+            echo '```'
+          } > ../pr_body.md
+          OPEN_PR=$(gh pr list -R "$ORG/$REPO" --head "$BRANCH" --state open --json number -q '.[0].number')
+          if [ -n "$OPEN_PR" ]; then
+            gh pr edit "$OPEN_PR" -R "$ORG/$REPO" --body-file ../pr_body.md
+          else
+            gh pr create -R "$ORG/$REPO" --base "$BASE" --head "$BRANCH" --title "Bibliotheken aus 4diac_training1 $TAG" --body-file ../pr_body.md
+          fi
