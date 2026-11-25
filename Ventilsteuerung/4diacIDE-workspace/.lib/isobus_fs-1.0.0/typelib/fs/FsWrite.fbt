@@ -23,10 +23,12 @@
 			<Event Name="INITO" Type="EInit" Comment="Initialization Confirm">
 			</Event>
 			<Event Name="CNF" Type="Event" Comment="File written">
+				<With Var="Data"/>
 			</Event>
 			<Event Name="ERR" Type="Event" Comment="Job failed">
 				<With Var="s16Status"/>
 				<With Var="u16FsError"/>
+				<With Var="Data"/>
 			</Event>
 		</EventOutputs>
 		<InputVars>
