@@ -313,7 +313,9 @@ def main() -> None:
                 'forte_abi': info['forte_abi'], 'targets': targets}
     tmp = Path(tempfile.mkdtemp(prefix='fw_'))
     out = tmp / 'firmware.json'
-    out.write_text(json.dumps(manifest, indent=2, ensure_ascii=False) + '\n', encoding='utf-8', newline='\n')
+    # Pfad ist fest (eigener Temp-Ordner + fester Name); alle Werte im Inhalt sind per
+    # Regex geprüft oder kommen aus Dateisystem/git. Kein Path Traversal möglich.
+    out.write_text(json.dumps(manifest, indent=2, ensure_ascii=False) + '\n', encoding='utf-8', newline='\n')  # NOSONAR
     # SHA256SUMS fürs Release aus den geprüften Werten neu schreiben, nicht die Drive-Datei kopieren
     sums_out = tmp / 'SHA256SUMS'
     lines = [f'{f["sha256"]}  {f["file"]}' for t in targets.values() for f in (t['application'], t['merged_flash'])]
