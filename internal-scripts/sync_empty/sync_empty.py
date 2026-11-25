@@ -186,53 +186,8 @@ def t_gcf(files, src, rules, log):
 
 
 # ---------------------------------------------------------------- reference check
-TYPE_EXT = re.compile(r"\.(fbt|sub|adp|dtp|fct|gcf|atp)$", re.I)
-RE_PKG = re.compile(rb'<CompilerInfo[^>]*packageName="([^"]*)"')
-RE_NAME = re.compile(rb'<(?:FBType|SubAppType|AdapterType|DataType|GlobalConstants|FunctionType|AttributeDeclaration)\b[^>]*\bName="([^"]+)"')
-RE_REF = re.compile(rb'\bType="([A-Za-z_][\w]*(?:::[\w]+)+)"')
-RE_IMP = re.compile(rb'<Import declaration="([^"]+)"')
-RE_CONST = re.compile(rb'<VarDeclaration\b[^>]*\bName="([^"]+)"')
-
-
-def type_index(files):
-    types, consts = {}, {}
-    for p, c in files.items():
-        if not TYPE_EXT.search(p):
-            continue
-        n = RE_NAME.search(c)
-        if not n:
-            continue
-        pk = RE_PKG.search(c)
-        fq = ((pk.group(1) + b"::") if pk and pk.group(1) else b"") + n.group(1)
-        types[fq.decode()] = p
-        if p.lower().endswith(".gcf"):
-            consts[fq.decode()] = {x.decode() for x in RE_CONST.findall(c)}
-    return types, consts
-
-
-def resolves(ref, types, consts):
-    if ref in types:
-        return True
-    if ref.endswith("::*"):
-        pre = ref[:-1]
-        return any(t.startswith(pre) for t in types)
-    head, _, last = ref.rpartition("::")
-    return head in consts and last in consts[head]
-
-
-def check_refs(src, res):
-    """Referenzen, die im Quellbaum aufloesbar sind, im Ergebnis aber nicht mehr."""
-    st, sc = type_index(src)
-    rt, rc = type_index(res)
-    broken = collections.defaultdict(set)
-    for p, c in res.items():
-        if not re.search(r"\.(fbt|sub|sys|adp|fct)$", p, re.I):
-            continue
-        for r in set(RE_REF.findall(c)) | set(RE_IMP.findall(c)):
-            r = r.decode()
-            if not resolves(r, rt, rc) and resolves(r, st, sc):
-                broken[r].add(p)
-    return broken
+sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
+from refcheck import check_refs  # noqa: E402  (gemeinsam mit sync_lib)
 
 
 # ---------------------------------------------------------------- main

@@ -1,0 +1,48 @@
+# .lib-Sync: 4diac_training1 (.lib samt elf/)  ->  andere 4diac-Projekte der Org
+# Läuft bei jedem training1-Release (.github/workflows/sync-lib.yml).
+# Je Ziel-Repo ein PR vom Branch sync-lib/<tag>; nach dem Merge legt
+# release-on-sync.yml im Ziel-Repo das Release <tag> an (gleicher Tag wie training1).
+#
+# Projektinhalte (.SUB, .sys, ...) werden nie angefasst. Referenzen, die mit
+# der neuen .lib nicht mehr auflösbar sind, und Typen, die es im Projekt und
+# in der .lib gibt, stehen nur als Hinweis im PR.
+
+[source]
+workspace = "Ventilsteuerung/4diacIDE-workspace"
+
+# Minimum aus scripts_central für Preload/Deploy der ELFs (nur bei scripts = true).
+# Die Skripte finden den Workspace über ../4diacIDE-workspace, das Ziel braucht
+# also dieselbe Ablage Ventilsteuerung/{scripts_central,4diacIDE-workspace}.
+[scripts]
+dir = "Ventilsteuerung/scripts_central"
+files = [
+  "deploy_common.py",
+  "elf_libs_manifest_lib.py",
+  "make_4diac_training1_deploy.py",
+  "make_4diac_training1_elf_preload.py",
+]
+
+# Workflow, der ins Ziel-Repo kommt (legt nach dem Merge das Release an)
+[target_workflow]
+from = "internal-scripts/sync_lib/target-repo/release-on-sync-lib.yml"
+to = ".github/workflows/release-on-sync-lib.yml"
+
+# Erste Runde (Franz, 2026-11-25). Repos im alten Stil (ohne Paketnamen)
+# kommen erst nach ihrer Migration auf IDE 3.x dazu.
+[[repo]]
+name = "4diac_modbus_tcp_sample"
+workspace = "Ventilsteuerung/4diacIDE-workspace"
+base = "main"
+scripts = true
+
+[[repo]]
+name = "4diac_EasyExampleCounter"
+workspace = "Ventilsteuerung/4diacIDE-workspace"
+base = "main"
+scripts = true
+
+[[repo]]
+name = "4diac_empty1"
+workspace = "Ventilsteuerung/4diacIDE-workspace"
+base = "main"
+scripts = true

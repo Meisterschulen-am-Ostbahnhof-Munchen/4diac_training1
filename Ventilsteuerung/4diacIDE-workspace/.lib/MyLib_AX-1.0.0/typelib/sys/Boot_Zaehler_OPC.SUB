@@ -2,6 +2,8 @@
 <SubAppType Name="Boot_Zaehler_OPC" Comment="STG1: meldet READY=TRUE und nimmt Boot-Meldungen der Stationen per Methode entgegen (Argument = STG-Nummer)">
 	<Identification Standard="61499-2" Description="Copyright (c) 2026 Meisterschulen am Ostbahnhof  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0">
 	</Identification>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.1" Author="Franz Höpfinger" Date="2026-11-25" Remarks="IND nur bei QO=TRUE an RSP und Verteiler (E_PERMIT). Ein gescheitertes RSP meldet IND mit QO=FALSE, direkt IND-&gt;RSP ergab eine Endlosschleife (Zaehler STG4 lief hoch, STG3 rot).">
+	</VersionInfo>
 	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2026-10-29" Remarks="Neu (Franz: STG1 verwaltet alle Boot-Zaehler, ohne INI). READY wird bei INIT einmal TRUE publiziert, die Stationen rufen bei steigender Flanke die Methode mit ihrer Nummer auf (Boot_Melden_OPC). E_DEMUX_6 verteilt K=2..5 auf BOOT_STG2..5.">
 	</VersionInfo>
 	<CompilerInfo packageName="MyLib::sys">
@@ -35,17 +37,20 @@
 		<FB Name="Ready_TRUE" Type="adapter::types::unidirectional::AX::initval::initval_AX" x="-4200" y="600">
 			<Parameter Name="INIT_VAL" Value="TRUE"/>
 		</FB>
-		<FB Name="Boot_Methode" Type="iec61499::net::SERVER_0_1" Comment="IND-&gt;RSP sofort" x="0" y="1400">
+		<FB Name="Boot_Methode" Type="iec61499::net::SERVER_0_1" Comment="IND-&gt;RSP nur bei QO" x="0" y="1400">
 		</FB>
-		<FB Name="Boot_Verteiler" Type="iec61499::events::E_DEMUX_6" Comment="K = STG-Nummer" x="2400" y="1400">
+		<FB Name="Nur_Echter_Call" Type="iec61499::events::E_PERMIT" Comment="nur echter Call (QO=TRUE)" x="1200" y="1400">
+		</FB>
+		<FB Name="Boot_Verteiler" Type="iec61499::events::E_DEMUX_6" Comment="K = STG-Nummer" x="3000" y="1400">
 		</FB>
 		<EventConnections>
 			<Connection Source="INIT" Destination="Ready.INIT"/>
 			<Connection Source="Ready.INITO" Destination="Ready_TRUE.INIT"/>
 			<Connection Source="Ready_TRUE.INITO" Destination="Boot_Methode.INIT"/>
 			<Connection Source="Boot_Methode.INITO" Destination="INITO"/>
-			<Connection Source="Boot_Methode.IND" Destination="Boot_Methode.RSP"/>
-			<Connection Source="Boot_Methode.IND" Destination="Boot_Verteiler.EI"/>
+			<Connection Source="Boot_Methode.IND" Destination="Nur_Echter_Call.EI"/>
+			<Connection Source="Nur_Echter_Call.EO" Destination="Boot_Methode.RSP"/>
+			<Connection Source="Nur_Echter_Call.EO" Destination="Boot_Verteiler.EI"/>
 			<Connection Source="Boot_Verteiler.EO3" Destination="BOOT_STG2"/>
 			<Connection Source="Boot_Verteiler.EO4" Destination="BOOT_STG3"/>
 			<Connection Source="Boot_Verteiler.EO5" Destination="BOOT_STG4"/>
@@ -56,6 +61,7 @@
 			<Connection Source="ID_READY_WRITE" Destination="Ready.ID"/>
 			<Connection Source="QI" Destination="Boot_Methode.QI"/>
 			<Connection Source="ID_METHOD" Destination="Boot_Methode.ID"/>
+			<Connection Source="Boot_Methode.QO" Destination="Nur_Echter_Call.PERMIT"/>
 			<Connection Source="Boot_Methode.RD_1" Destination="Boot_Verteiler.K"/>
 		</DataConnections>
 		<AdapterConnections>
@@ -68,5 +74,9 @@
 ruft sie die Methode <code>BOOT_MELDUNG</code> mit ihrer STG-Nummer auf. Ein reiner Verbindungsabbruch
 löst keine Flanke aus, nur ein Neustart der Station.</p>
 <p>Gezählt wird in <code>Station_Alive_VT_OPC</code> (Eingang <code>BOOT</code>), nur im RAM, ohne INI.</p>
+<p><code>IND</code> geht nur bei <code>QO = TRUE</code> an <code>RSP</code> und den Verteiler (<code>E_PERMIT</code>).
+Findet FORTE zu einem <code>RSP</code> keinen offenen Aufruf (z. B. nach dem 4-s-Timeout), meldet der
+<code>SERVER</code> <code>IND</code> mit <code>QO = FALSE</code> und altem <code>RD_1</code>. Direkt
+<code>IND→RSP</code> verdrahtet ergibt das eine Endlosschleife.</p>
 ]]></Attribute>
 </SubAppType>
