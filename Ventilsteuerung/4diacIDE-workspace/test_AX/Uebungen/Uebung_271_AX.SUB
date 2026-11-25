@@ -18,8 +18,6 @@
 	<SubAppInterfaceList>
 	</SubAppInterfaceList>
 	<SubAppNetwork>
-		<FB Name="INIT" Type="events::init::INIT" x="-6000" y="-2500">
-		</FB>
 		<FB Name="SoftKey_Show" Type="isobus::UT::io::Softkey::Softkey_IE" x="-6000" y="-1000">
 			<Parameter Name="QI" Value="TRUE"/>
 			<Parameter Name="u16ObjId" Value="SoftKey_F3"/>
@@ -58,7 +56,6 @@
 			<Parameter Name="u32NewValue" Value="UDINT#102"/>
 		</FB>
 		<EventConnections>
-			<Connection Source="INIT.INITO" Destination="MsgBox.INIT" dx1="1466.67"/>
 			<Connection Source="SoftKey_Show.IND" Destination="MsgBox.SHOW" dx1="1306.67"/>
 			<Connection Source="MsgBox.CNF" Destination="RESULT_TO_UDINT.REQ" dx1="1586.67"/>
 			<Connection Source="RESULT_TO_UDINT.CNF" Destination="Q_Result.REQ" dx1="480"/>

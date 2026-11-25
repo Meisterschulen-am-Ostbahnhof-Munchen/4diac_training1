@@ -13,8 +13,6 @@
 	<SubAppInterfaceList>
 	</SubAppInterfaceList>
 	<SubAppNetwork>
-		<FB Name="INIT" Type="events::init::INIT" x="-6000" y="-2500">
-		</FB>
 		<FB Name="SoftKey_Toast" Type="isobus::UT::io::Softkey::Softkey_IE" x="-6000" y="-1000">
 			<Parameter Name="QI" Value="TRUE"/>
 			<Parameter Name="u16ObjId" Value="SoftKey_F1"/>
@@ -26,10 +24,7 @@
 			<Parameter Name="TIMEOUT" Value="T#3s"/>
 		</FB>
 		<EventConnections>
-			<Connection Source="INIT.INITO" Destination="Toast.INIT"/>
-			<Connection Source="SoftKey_Toast.IND" Destination="Toast.SHOW"/>
+			<Connection Source="SoftKey_Toast.IND" Destination="Toast.SHOW" dx1="1306.67"/>
 		</EventConnections>
-		<DataConnections>
-		</DataConnections>
 	</SubAppNetwork>
 </SubAppType>
