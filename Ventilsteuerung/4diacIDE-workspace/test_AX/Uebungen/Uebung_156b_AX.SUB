@@ -32,14 +32,14 @@
 		</SubApp>
 		<FB Name="Server_merken" Type="iec61131::selection::F_MOVE" Comment="eigener CF und File-Server-CF (NmDestin)" x="-3500" y="0">
 		</FB>
-		<FB Name="Server_da" Type="iec61499::events::E_SR" x="-1000" y="0">
+		<FB Name="Server_da" Type="adapter::events::unidirectional::AX_SR" x="-1000" y="0">
 		</FB>
 		<FB Name="DigitalInput_CLK_I1" Type="logiBUS::io::DI::logiBUS_IE" x="-12000" y="3000">
 			<Parameter Name="QI" Value="TRUE"/>
 			<Parameter Name="Input" Value="Input_I1"/>
 			<Parameter Name="InputEvent" Value="BUTTON_SINGLE_CLICK"/>
 		</FB>
-		<FB Name="Nur_mit_Server" Type="iec61499::events::E_PERMIT" x="-9000" y="3000">
+		<FB Name="Nur_mit_Server" Type="adapter::events::unidirectional::AX_E_PERMIT" x="-9000" y="3000">
 		</FB>
 		<FB Name="Holen" Type="isobus::fs::FsGet" Comment="FS_DATEI nach FS_LOKAL (/data/fs/...)" x="-6000" y="3000">
 			<Parameter Name="sRemotePath" Value="FS_DATEI"/>
@@ -50,9 +50,9 @@
 			<Parameter Name="sRemotePath" Value="FS_DATEI_2"/>
 			<Parameter Name="bAppend" Value="FALSE"/>
 		</FB>
-		<FB Name="Ergebnis" Type="iec61499::events::E_SR" Comment="Q1 an = beide Kopien fertig" x="3000" y="3000">
+		<FB Name="Ergebnis" Type="adapter::events::unidirectional::AX_SR" Comment="Q1 an = beide Kopien fertig" x="3000" y="3000">
 		</FB>
-		<FB Name="DigitalOutput_Q1" Type="logiBUS::io::DQ::logiBUS_QX" x="5500" y="3000">
+		<FB Name="DigitalOutput_Q1" Type="logiBUS::io::DQ::logiBUS_QXA" x="5500" y="3000">
 			<Parameter Name="QI" Value="TRUE"/>
 			<Parameter Name="Output" Value="Output_Q1"/>
 		</FB>
@@ -75,7 +75,6 @@
 			<Connection Source="Zurueck.CNF" Destination="Ergebnis.S"/>
 			<Connection Source="Holen.ERR" Destination="Ergebnis.R"/>
 			<Connection Source="Zurueck.ERR" Destination="Ergebnis.R"/>
-			<Connection Source="Ergebnis.EO" Destination="DigitalOutput_Q1.REQ"/>
 		</EventConnections>
 		<DataConnections>
 			<Connection Source="NmGetCfInfo.sNetEv" Destination="NetEv_DEMUX.IN"/>
@@ -83,8 +82,10 @@
 			<Connection Source="NmGetCfInfo.sNetEv" Destination="Server_merken.IN"/>
 			<Connection Source="Server_merken.OUT" Destination="Holen.NmDestin"/>
 			<Connection Source="Server_merken.OUT" Destination="Zurueck.NmDestin"/>
+		</DataConnections>
+		<AdapterConnections>
 			<Connection Source="Server_da.Q" Destination="Nur_mit_Server.PERMIT"/>
 			<Connection Source="Ergebnis.Q" Destination="DigitalOutput_Q1.OUT"/>
-		</DataConnections>
+		</AdapterConnections>
 	</SubAppNetwork>
 </SubAppType>
