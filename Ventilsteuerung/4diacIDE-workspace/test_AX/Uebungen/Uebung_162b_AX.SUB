@@ -39,7 +39,7 @@
 			<Parameter Name="QI" Value="TRUE"/>
 			<Parameter Name="Output" Value="Output_Q2"/>
 		</FB>
-		<Comment Comment="Zwei Temperatursensoren DS18B20 am selben 1-Wire-Bus (Trainer20: GPIO3, bis zu 8 Sensoren).&#10;Sensor_1 nimmt den ersten Sensor der Suche (Index 0), Sensor_2 den zweiten (Index 1). Q1/Q2 an = wärmer als 25 °C.&#10;Die Suchreihenfolge hängt am ROM-Code. Kommt ein Sensor dazu, kann sich die Zuordnung ändern.&#10;Festhalten: Sensor_2.ROMO im Watch ablesen und als ROM (LWORD#16#...) bei Sensor_2 eintragen. Dann zählt Index nicht mehr.&#10;Watch: T, QO, STATUS, ROMO je Sensor." x="-9000" y="-2600" width="10000" height="2000"/>
+		<Comment Comment="Zwei Temperatursensoren DS18B20 am selben 1-Wire-Bus (Trainer20: GPIO3, bis zu 8 Sensoren).&#10;Sensor_1 nimmt den ersten Sensor der Suche (Index 0), Sensor_2 den zweiten (Index 1). Q1/Q2 an = wärmer als 25 °C.&#10;Die Suchreihenfolge hängt am ROM-Code. Kommt ein Sensor dazu, kann sich die Zuordnung ändern.&#10;Festhalten: Sensor_2.ROMO im Watch ablesen und als ROM (LWORD#16#...) bei Sensor_2 eintragen. Dann zählt Index nicht mehr.&#10;Watch: Temp, QO, STATUS, ROMO je Sensor." x="-9000" y="-2600" width="10000" height="2000"/>
 		<EventConnections>
 			<Connection Source="Sensor_1.IND" Destination="Warm_1.REQ"/>
 			<Connection Source="Warm_1.CNF" Destination="Warm_1_AX.REQ"/>
@@ -47,9 +47,9 @@
 			<Connection Source="Warm_2.CNF" Destination="Warm_2_AX.REQ"/>
 		</EventConnections>
 		<DataConnections>
-			<Connection Source="Sensor_1.T" Destination="Warm_1.IN1"/>
+			<Connection Source="Sensor_1.Temp" Destination="Warm_1.IN1"/>
 			<Connection Source="Warm_1.OUT" Destination="Warm_1_AX.OUT"/>
-			<Connection Source="Sensor_2.T" Destination="Warm_2.IN1"/>
+			<Connection Source="Sensor_2.Temp" Destination="Warm_2.IN1"/>
 			<Connection Source="Warm_2.OUT" Destination="Warm_2_AX.OUT"/>
 		</DataConnections>
 		<AdapterConnections>

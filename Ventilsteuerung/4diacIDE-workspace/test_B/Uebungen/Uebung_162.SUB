@@ -15,20 +15,20 @@
 			<Parameter Name="ROM" Value="LWORD#0"/>
 			<Parameter Name="Index" Value="0"/>
 		</FB>
-		<FB Name="Warm" Type="iec61131::comparison::F_GT" Comment="T über 25 °C?" x="-5000" y="0">
+		<FB Name="Warm" Type="iec61131::comparison::F_GT" Comment="Temp über 25 °C?" x="-5000" y="0">
 			<Parameter Name="IN2" Value="REAL#25.0"/>
 		</FB>
 		<FB Name="DigitalOutput_Q1" Type="logiBUS::io::DQ::logiBUS_QX" Comment="an = wärmer als 25 °C" x="-2000" y="0">
 			<Parameter Name="QI" Value="TRUE"/>
 			<Parameter Name="Output" Value="Output_Q1"/>
 		</FB>
-		<Comment Comment="Temperatursensor DS18B20 (logiBUS_onewire) am Trainer20: Datenleitung GPIO3, externer Pull-up 4,7 kOhm empfohlen.&#10;IND nach jeder Messrunde (ca. 1 s, 12 Bit). Q1 an = wärmer als 25 °C (Sensor in der Hand anwärmen).&#10;Watch: T (°C), QO (TRUE = T gültig), STATUS, ROMO (ROM-Code des Sensors, für Übung 162b notieren).&#10;STATUS z. B. 'sensor not found', 'power-on value 85 C' (erste Messung noch nicht fertig), 'no 1-Wire bus on this board'.&#10;Weiter: Übung 162b (zwei Sensoren, einer per ROM-Code festgehalten)." x="-9000" y="-2600" width="10000" height="2000"/>
+		<Comment Comment="Temperatursensor DS18B20 (logiBUS_onewire) am Trainer20: Datenleitung GPIO3, externer Pull-up 4,7 kOhm empfohlen.&#10;IND nach jeder Messrunde (ca. 1 s, 12 Bit). Q1 an = wärmer als 25 °C (Sensor in der Hand anwärmen).&#10;Watch: Temp (°C), QO (TRUE = Temp gültig), STATUS, ROMO (ROM-Code des Sensors, für Übung 162b notieren).&#10;STATUS z. B. 'sensor not found', 'power-on value 85 C' (erste Messung noch nicht fertig), 'no 1-Wire bus on this board'.&#10;Weiter: Übung 162b (zwei Sensoren, einer per ROM-Code festgehalten)." x="-9000" y="-2600" width="10000" height="2000"/>
 		<EventConnections>
 			<Connection Source="Sensor_1.IND" Destination="Warm.REQ"/>
 			<Connection Source="Warm.CNF" Destination="DigitalOutput_Q1.REQ"/>
 		</EventConnections>
 		<DataConnections>
-			<Connection Source="Sensor_1.T" Destination="Warm.IN1"/>
+			<Connection Source="Sensor_1.Temp" Destination="Warm.IN1"/>
 			<Connection Source="Warm.OUT" Destination="DigitalOutput_Q1.OUT"/>
 		</DataConnections>
 	</SubAppNetwork>
