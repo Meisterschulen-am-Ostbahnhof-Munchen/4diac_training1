@@ -65,8 +65,8 @@ def with_requires(libs: list[str]) -> list[str]:
     return result
 
 
-def read_node(host: str) -> dict:
-    """Knoten abfragen: IP, Architektur, Status je Lib, Libs im aktiven Manifest."""
+def _connect(host: str) -> tuple[str, str]:
+    """Host aufloesen und pruefen; liefert (IP, Architektur)."""
     ip = resolve_host(host)
     if ip is None:
         raise RuntimeError(f"{host} nicht aufloesbar")
@@ -78,35 +78,44 @@ def read_node(host: str) -> dict:
     arch = resolve_node_arch(ip, DEFAULT_ARCH)
     if not arch:
         raise RuntimeError(f"{ip}: Architektur/FORTE_ABI passt nicht (Firmware zu alt oder zu neu?)")
+    return ip, arch
+
+
+def _lib_status(lib: str, ver: str, arch: str, hashes: dict) -> str:
+    """Stand einer Lib am Knoten gegen die ELF im Repo."""
+    local = resolve_elf_path(lib, ver, arch)
+    if local is None:
+        return "keine ELF im Repo"
+    remote = hashes.get(f"elf-libs/{local.name}")
+    if remote == sha256_of(local):
+        return "aktuell"
+    if remote:
+        return "anderer Stand"
+    other = re.compile(rf"elf-libs/{re.escape(lib)}-\d+\.\d+\.\d+-{arch}\.elf$")
+    return "alte Version" if any(other.match(k) for k in hashes) else "fehlt"
+
+
+def _active_manifest(ip: str) -> tuple[str, set[str]]:
+    """Aktives Manifest (alphabetisch erstes) und die darin geladenen Libs."""
+    names = sorted(_MANIFEST_HREF_RE.findall(http_listing(ip) or ""))
+    if not names:
+        return "", set()
+    manifest = names[0]   # der Loader nimmt das alphabetisch erste
+    try:
+        code, body = _http(ip, "GET", "/" + manifest, 10)
+        if code == 200:
+            return manifest, {e.get("name", "") for e in json.loads(body).get("libs", [])}
+    except (OSError, ValueError):
+        pass
+    return manifest, set()
+
+
+def read_node(host: str) -> dict:
+    """Knoten abfragen: IP, Architektur, Status je Lib, Libs im aktiven Manifest."""
+    ip, arch = _connect(host)
     hashes = http_remote_sha256_listing(ip) or {}
-
-    status = {}
-    for lib, ver in LIB_VERSIONS.items():
-        local = resolve_elf_path(lib, ver, arch)
-        if local is None:
-            status[lib] = "keine ELF im Repo"
-            continue
-        remote = hashes.get(f"elf-libs/{local.name}")
-        if remote == sha256_of(local):
-            status[lib] = "aktuell"
-        elif remote:
-            status[lib] = "anderer Stand"
-        else:
-            other = re.compile(rf"elf-libs/{re.escape(lib)}-\d+\.\d+\.\d+-{arch}\.elf$")
-            status[lib] = "alte Version" if any(other.match(k) for k in hashes) else "fehlt"
-
-    active: set[str] = set()
-    manifest = ""
-    listing = http_listing(ip) or ""
-    names = sorted(_MANIFEST_HREF_RE.findall(listing))
-    if names:
-        manifest = names[0]   # der Loader nimmt das alphabetisch erste
-        try:
-            code, body = _http(ip, "GET", "/" + manifest, 10)
-            if code == 200:
-                active = {e.get("name", "") for e in json.loads(body).get("libs", [])}
-        except (OSError, ValueError):
-            pass
+    status = {lib: _lib_status(lib, ver, arch, hashes) for lib, ver in LIB_VERSIONS.items()}
+    manifest, active = _active_manifest(ip)
     return {"ip": ip, "arch": arch, "status": status, "active": active, "manifest": manifest}
 
 
@@ -119,6 +128,7 @@ class QueueWriter:
         return len(s)
 
     def flush(self) -> None:
+        # nichts zu tun: jede Ausgabe geht sofort in die Queue
         pass
 
 
