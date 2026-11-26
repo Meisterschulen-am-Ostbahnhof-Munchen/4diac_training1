@@ -18,9 +18,18 @@ dir = "Ventilsteuerung/scripts_central"
 files = [
   "deploy_common.py",
   "elf_libs_manifest_lib.py",
+  "elf_manager_gui.py",
   "make_4diac_training1_deploy.py",
   "make_4diac_training1_elf_preload.py",
 ]
+
+# Skripte und Launches für die IDE (nur bei scripts = true). Aus dem Projekt
+# test_AX in training1; im Ziel ohne "_AX" im Namen, abgelegt im Projekt
+# <project> (Default "test") unter scripts/ und Launches/. Die .bat rufen
+# ../../../scripts_central auf, das passt bei gleicher Ablage.
+[launches]
+project = "test_AX"
+names = ["PreloadELF", "ElfManager"]
 
 # Workflow, der ins Ziel-Repo kommt (legt nach dem Merge das Release an)
 [target_workflow]
@@ -43,6 +52,44 @@ scripts = true
 
 [[repo]]
 name = "4diac_empty1"
+workspace = "Ventilsteuerung/4diacIDE-workspace"
+base = "main"
+scripts = true
+
+# Franz, 2026-11-26: Repo ist auf dem Stand, läuft ab dem nächsten Sync mit.
+[[repo]]
+name = "4diac-SlurryTanker_AX-sample"
+workspace = "Ventilsteuerung/4diacIDE-workspace"
+base = "main"
+scripts = true
+
+[[repo]]
+name = "4diac-SlurryTanker-sample"
+workspace = "Ventilsteuerung/4diacIDE-workspace"
+base = "main"
+scripts = true
+
+[[repo]]
+name = "4diac_modbus_rtu_sample"
+workspace = "Ventilsteuerung/4diacIDE-workspace"
+base = "main"
+scripts = true
+
+[[repo]]
+name = "4diac-frequency-converter-sample-APIXON"
+project = "FU_Demo"
+workspace = "Ventilsteuerung/4diacIDE-workspace"
+base = "main"
+scripts = true
+
+[[repo]]
+name = "4diac-SlurryTanker-sample-Hutschienenmoped"
+workspace = "Ventilsteuerung/4diacIDE-workspace"
+base = "main"
+scripts = true
+
+[[repo]]
+name = "4diac_template"
 workspace = "Ventilsteuerung/4diacIDE-workspace"
 base = "main"
 scripts = true

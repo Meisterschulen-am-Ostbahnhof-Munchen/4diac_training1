@@ -55,7 +55,7 @@
 				<Attribute Name="Visible" Value="false"/>
 			</Parameter>
 		</FB>
-		<FB Name="ResetInput" Type="logiBUS::io::DI::logiBUS_IX" Comment="Pegel+Event fuer SF_ResetButton" x="-6400" y="2900">
+		<FB Name="ResetInput" Type="logiBUS::io::DI::logiBUS_IX" x="-6400" y="2900">
 			<Parameter Name="QI" Value="TRUE">
 				<Attribute Name="Visible" Value="false"/>
 			</Parameter>
@@ -72,9 +72,9 @@
 			<Parameter Name="TrailingMinimum" Value="T#350ms"/>
 			<Parameter Name="TrailingMaximum" Value="T#2s"/>
 		</FB>
-		<FB Name="StartPermit" Type="iec61499::events::E_RS" Comment="Freigabe-Latch (E_RS statt E_SR nur wegen kreuzungsfreier Verdrahtung)" x="-2100" y="2600">
+		<FB Name="StartPermit" Type="adapter::events::unidirectional::AX_RS" x="-2100" y="2600">
 		</FB>
-		<FB Name="StartGate" Type="iec61499::events::E_PERMIT" Comment="Laesst START nur bei Freigabe durch" x="300" y="400">
+		<FB Name="StartGate" Type="adapter::events::unidirectional::AX_E_PERMIT" x="300" y="400">
 		</FB>
 		<FB Name="MainSR" Type="adapter::events::unidirectional::AX_SR" x="1700" y="900">
 		</FB>
@@ -105,10 +105,10 @@
 		</EventConnections>
 		<DataConnections>
 			<Connection Source="ResetInput.IN" Destination="ResetButton.ResetIn" dx1="200"/>
-			<Connection Source="StartPermit.Q" Destination="StartGate.PERMIT" dx1="486.67"/>
 		</DataConnections>
 		<AdapterConnections>
 			<Connection Source="MainSR.Q" Destination="DigitalOutput_Q1.OUT" dx1="700"/>
+			<Connection Source="StartPermit.Q" Destination="StartGate.PERMIT" dx1="486.67"/>
 			<Connection Source="ResetButton.minTimeOut" Destination="minTimeOut.TimeOutSocket" dx1="380"/>
 			<Connection Source="ResetButton.maxTimeOut" Destination="maxTimeOut.TimeOutSocket" dx1="380"/>
 		</AdapterConnections>

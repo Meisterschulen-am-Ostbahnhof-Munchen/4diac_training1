@@ -48,9 +48,33 @@ def build_result(src, tgt, cfg, rc):
             if d + f not in src:
                 raise SystemExit(f"Skript fehlt in training1: {d + f}")
             res[d + f] = src[d + f]
+        res.update(launch_files(src, cfg, rc))
     wf = cfg["target_workflow"]   # gehört zum Werkzeug, nicht zum Tag: aus diesem Checkout
     res[wf["to"]] = (HERE.parent.parent / wf["from"]).read_bytes()
     return res, t_lib
+
+
+def launch_files(src, cfg, rc):
+    """IDE-Skripte (.bat) und Launches aus training1, umbenannt aufs Zielprojekt."""
+    lc = cfg.get("launches")
+    if not lc:
+        return {}
+    s_ws = cfg["source"]["workspace"].rstrip("/") + "/"
+    t_ws = rc["workspace"].rstrip("/") + "/"
+    sp, tp = lc["project"], rc.get("project", "test")
+    out = {}
+    for n in lc["names"]:
+        s_bat, t_bat = f"RunSkript_{n}_AX.bat", f"RunSkript_{n}.bat"
+        bat = f"{s_ws}{sp}/scripts/{s_bat}"
+        launch = f"{s_ws}{sp}/Launches/{s_bat}.launch"
+        for f in (bat, launch):
+            if f not in src:
+                raise SystemExit(f"Skript/Launch fehlt in training1: {f}")
+        out[f"{t_ws}{tp}/scripts/{t_bat}"] = src[bat]
+        text = src[launch].decode("utf-8").replace(f"/{sp}/scripts/{s_bat}", f"/{tp}/scripts/{t_bat}")
+        text = text.replace(f"/{sp}/scripts}}", f"/{tp}/scripts}}")
+        out[f"{t_ws}{tp}/Launches/{t_bat}.launch"] = text.encode("utf-8")
+    return out
 
 
 def project_check(tgt, res, t_lib):

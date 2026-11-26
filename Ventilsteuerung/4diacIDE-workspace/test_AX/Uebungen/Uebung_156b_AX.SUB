@@ -32,16 +32,16 @@
 		</SubApp>
 		<FB Name="Server_merken" Type="iec61131::selection::F_MOVE" Comment="eigener CF und File-Server-CF (NmDestin)" x="-3500" y="0">
 		</FB>
-		<FB Name="Server_da" Type="iec61499::events::E_SR" x="-1000" y="0">
+		<FB Name="Server_da" Type="adapter::events::unidirectional::AX_SR" x="-1000" y="0">
 		</FB>
-		<FB Name="DigitalInput_CLK_I1" Type="logiBUS::io::DI::logiBUS_IE" x="-12000" y="3000">
+		<FB Name="DigitalInput_CLK_I1" Type="logiBUS::io::DI::logiBUS_IE" x="-12000" y="3600">
 			<Parameter Name="QI" Value="TRUE"/>
 			<Parameter Name="Input" Value="Input_I1"/>
 			<Parameter Name="InputEvent" Value="BUTTON_SINGLE_CLICK"/>
 		</FB>
-		<FB Name="Nur_mit_Server" Type="iec61499::events::E_PERMIT" x="-9000" y="3000">
+		<FB Name="Nur_mit_Server" Type="adapter::events::unidirectional::AX_E_PERMIT" x="-9100" y="3800">
 		</FB>
-		<FB Name="Holen" Type="isobus::fs::FsGet" Comment="FS_DATEI nach FS_LOKAL (/data/fs/...)" x="-6000" y="3000">
+		<FB Name="Holen" Type="isobus::fs::FsGet" Comment="FS_DATEI nach FS_LOKAL (/data/fs/...)" x="-6000" y="3700">
 			<Parameter Name="sRemotePath" Value="FS_DATEI"/>
 			<Parameter Name="sLocalPath" Value="FS_LOKAL"/>
 		</FB>
@@ -50,41 +50,42 @@
 			<Parameter Name="sRemotePath" Value="FS_DATEI_2"/>
 			<Parameter Name="bAppend" Value="FALSE"/>
 		</FB>
-		<FB Name="Ergebnis" Type="iec61499::events::E_SR" Comment="Q1 an = beide Kopien fertig" x="3000" y="3000">
+		<FB Name="Ergebnis" Type="adapter::events::unidirectional::AX_SR" Comment="Q1 an = beide Kopien fertig" x="3000" y="3300">
 		</FB>
-		<FB Name="DigitalOutput_Q1" Type="logiBUS::io::DQ::logiBUS_QX" x="5500" y="3000">
+		<FB Name="DigitalOutput_Q1" Type="logiBUS::io::DQ::logiBUS_QXA" x="5500" y="3000">
 			<Parameter Name="QI" Value="TRUE"/>
 			<Parameter Name="Output" Value="Output_Q1"/>
 		</FB>
 		<Comment Comment="File Server: Datei holen und als Kopie zurückschreiben (FsGet, FsPut)&#10;NmGetCfInfo (network, Filter FS_ADD/FS_FLT = NAME-Funktion 61) meldet den File Server, z. B. CCI 1200 mit USB-Stick.&#10;I1 Klick (nur mit Server): FS_DATEI nach FS_LOKAL (/data/fs/) holen, dann als FS_DATEI_2 zurückschreiben. Q1 an = fertig, Q1 aus = Fehler.&#10;Watch: u32Bytes (PROG beim Holen), bei ERR s16Status und u16FsError. FS_DATEI muss es geben, z. B. aus Übung 156.&#10;Voraussetzungen: Firmware ab LOGIBUS f6afe1e4 (File Server Client), isobus_fs-ELF, PART_13_FSC = 1 in /data/functionalities.ini.&#10;Lokale Pfade nur unter /data/fs/ (bei einem logiBUS als Server: /data/)." x="-12000" y="-2600" width="10000" height="2000"/>
 		<EventConnections>
-			<Connection Source="NmGetCfInfo.IND" Destination="NetEv_DEMUX.REQ"/>
+			<Connection Source="NmGetCfInfo.IND" Destination="NetEv_DEMUX.REQ" dx1="913.33"/>
 			<Connection Source="NetEv_DEMUX.CNF" Destination="NetEv_Install.REQ"/>
 			<Connection Source="NetEv_Install.INSTALL" Destination="Server_merken.REQ"/>
-			<Connection Source="NetEv_Install.RSP" Destination="NmGetCfInfo.RSP">
+			<Connection Source="NetEv_Install.RSP" Destination="NmGetCfInfo.RSP" dx1="80" dx2="80" dy="-53.33">
 				<Attribute Name="Visible" Value="false"/>
 			</Connection>
-			<Connection Source="Server_merken.CNF" Destination="NetEv_Install.SET"/>
+			<Connection Source="Server_merken.CNF" Destination="NetEv_Install.SET" dx1="80" dx2="80" dy="53.33"/>
 			<Connection Source="Server_merken.CNF" Destination="Server_da.S"/>
-			<Connection Source="Server_merken.CNF" Destination="NmGetCfInfo.RSP">
+			<Connection Source="Server_merken.CNF" Destination="NmGetCfInfo.RSP" dx1="80" dx2="80" dy="53.33">
 				<Attribute Name="Visible" Value="false"/>
 			</Connection>
-			<Connection Source="DigitalInput_CLK_I1.IND" Destination="Nur_mit_Server.EI"/>
-			<Connection Source="Nur_mit_Server.EO" Destination="Holen.REQ"/>
-			<Connection Source="Holen.CNF" Destination="Zurueck.REQ"/>
-			<Connection Source="Zurueck.CNF" Destination="Ergebnis.S"/>
-			<Connection Source="Holen.ERR" Destination="Ergebnis.R"/>
-			<Connection Source="Zurueck.ERR" Destination="Ergebnis.R"/>
-			<Connection Source="Ergebnis.EO" Destination="DigitalOutput_Q1.REQ"/>
+			<Connection Source="DigitalInput_CLK_I1.IND" Destination="Nur_mit_Server.EI" dx1="1053.33"/>
+			<Connection Source="Nur_mit_Server.EO" Destination="Holen.REQ" dx1="1100"/>
+			<Connection Source="Holen.CNF" Destination="Zurueck.REQ" dx1="1686.67"/>
+			<Connection Source="Zurueck.CNF" Destination="Ergebnis.S" dx1="1686.67"/>
+			<Connection Source="Holen.ERR" Destination="Ergebnis.R" dx1="7800"/>
+			<Connection Source="Zurueck.ERR" Destination="Ergebnis.R" dx1="1686.67"/>
 		</EventConnections>
 		<DataConnections>
-			<Connection Source="NmGetCfInfo.sNetEv" Destination="NetEv_DEMUX.IN"/>
-			<Connection Source="NetEv_DEMUX.eNetEvent" Destination="NetEv_Install.eNetEvent"/>
-			<Connection Source="NmGetCfInfo.sNetEv" Destination="Server_merken.IN"/>
-			<Connection Source="Server_merken.OUT" Destination="Holen.NmDestin"/>
-			<Connection Source="Server_merken.OUT" Destination="Zurueck.NmDestin"/>
-			<Connection Source="Server_da.Q" Destination="Nur_mit_Server.PERMIT"/>
-			<Connection Source="Ergebnis.Q" Destination="DigitalOutput_Q1.OUT"/>
+			<Connection Source="NmGetCfInfo.sNetEv" Destination="NetEv_DEMUX.IN" dx1="913.33"/>
+			<Connection Source="NetEv_DEMUX.eNetEvent" Destination="NetEv_Install.eNetEvent" dx1="800"/>
+			<Connection Source="NmGetCfInfo.sNetEv" Destination="Server_merken.IN" dx1="3673.33"/>
+			<Connection Source="Server_merken.OUT" Destination="Holen.NmDestin" dx1="80" dx2="80" dy="1660"/>
+			<Connection Source="Server_merken.OUT" Destination="Zurueck.NmDestin" dx1="706.67"/>
 		</DataConnections>
+		<AdapterConnections>
+			<Connection Source="Server_da.Q" Destination="Nur_mit_Server.PERMIT" dx1="80" dx2="80" dy="1446.67"/>
+			<Connection Source="Ergebnis.Q" Destination="DigitalOutput_Q1.OUT" dx1="986.67"/>
+		</AdapterConnections>
 	</SubAppNetwork>
 </SubAppType>

@@ -37,7 +37,7 @@
 		</FB>
 		<FB Name="INIT_ARR_0032_BYTE" Type="eclipse4diac::convert::providers::PROVIDE_ARR_0032_BYTE" x="-7000" y="2000">
 		</FB>
-		<FB Name="F_STRING_TO_BYTES" Type="logiBUS::utils::dyn_arr::F_STRING_TO_BYTES" x="-4900" y="900">
+		<FB Name="F_STRING_TO_BYTES_TERM" Type="logiBUS::utils::dyn_arr::F_STRING_TO_BYTES_TERM" x="-4900" y="900">
 			<Parameter Name="IN" Value="STRING#'ABCDEFGHIJKLMNOPQRS'"/>
 		</FB>
 		<FB Name="DigitalInput_CLK_I1" Type="logiBUS::io::DI::logiBUS_IE" x="-10100" y="2700">
@@ -57,7 +57,7 @@
 			<Connection Source="NmGetCfInfo_1.IND" Destination="STRUCT_DEMUX_3.REQ"/>
 			<Connection Source="NmGetCfInfo_1.IND" Destination="STRUCT_DEMUX_4.REQ"/>
 			<Connection Source="NmGetCfInfo_1.IND" Destination="STRUCT_DEMUX_5.REQ"/>
-			<Connection Source="DigitalInput_CLK_I1.IND" Destination="F_STRING_TO_BYTES.REQ"/>
+			<Connection Source="DigitalInput_CLK_I1.IND" Destination="F_STRING_TO_BYTES_TERM.REQ"/>
 			<Connection Source="STRUCT_DEMUX_5.CNF" Destination="NetEv_Install.REQ"/>
 			<Connection Source="NetEv_Install.INSTALL" Destination="NetEv2NetEv.REQ"/>
 			<Connection Source="NetEv_Install.RSP" Destination="NmGetCfInfo_1.RSP">
@@ -67,17 +67,17 @@
 			<Connection Source="NetEv2NetEv.CNF" Destination="NmGetCfInfo_1.RSP">
 				<Attribute Name="Visible" Value="false"/>
 			</Connection>
-			<Connection Source="F_STRING_TO_BYTES.CNF" Destination="DlPgnSend.REQ"/>
+			<Connection Source="F_STRING_TO_BYTES_TERM.CNF" Destination="DlPgnSend.REQ"/>
 		</EventConnections>
 		<DataConnections>
 			<Connection Source="NmGetCfInfo_1.sNameField" Destination="STRUCT_DEMUX_3.IN"/>
 			<Connection Source="NmGetCfInfo_1.sNetEv" Destination="STRUCT_DEMUX_5.IN"/>
 			<Connection Source="NmGetCfInfo_1.sCfInfo" Destination="STRUCT_DEMUX_4.IN"/>
 			<Connection Source="NmGetCfInfo_1.sNetEv" Destination="NetEv2NetEv.IN"/>
-			<Connection Source="INIT_ARR_0032_BYTE.D1" Destination="F_STRING_TO_BYTES.DATA"/>
+			<Connection Source="INIT_ARR_0032_BYTE.D1" Destination="F_STRING_TO_BYTES_TERM.DATA"/>
 			<Connection Source="STRUCT_DEMUX_5.eNetEvent" Destination="NetEv_Install.eNetEvent"/>
 			<Connection Source="NetEv2NetEv." Destination="DlPgnSend.NmDestin"/>
-			<Connection Source="F_STRING_TO_BYTES.DATA" Destination="DlPgnSend.Data"/>
+			<Connection Source="F_STRING_TO_BYTES_TERM.DATA" Destination="DlPgnSend.Data"/>
 		</DataConnections>
 	</SubAppNetwork>
 </SubAppType>

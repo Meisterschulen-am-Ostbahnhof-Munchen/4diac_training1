@@ -22,7 +22,7 @@
 			<Parameter Name="QI" Value="TRUE"/>
 			<Parameter Name="Output" Value="Output_Q1"/>
 		</FB>
-		<FB Name="logiBUS_PI_ID" Type="logiBUS::io::PI::logiBUS_PI_ID" x="-4700" y="400">
+		<FB Name="logiBUS_PI_IDA" Type="logiBUS::io::PI::logiBUS_PI_IDA" x="-4700" y="400">
 			<Parameter Name="QI" Value="TRUE"/>
 			<Parameter Name="Input" Value="PulseInput_I8"/>
 			<Parameter Name="ImpulseDelta" Value="100"/>
@@ -30,27 +30,19 @@
 		</FB>
 		<FB Name="AX_T_FF" Type="adapter::events::unidirectional::AX_T_FF" x="-1500" y="-500">
 		</FB>
-		<FB Name="FT_DERIV" Type="OSCAT::Basic::POUs::Engineering::Control::FT_DERIV" x="400" y="600">
+		<FB Name="FT_DERIV_AR" Type="OSCAT_adapter::Control::FT_DERIV_AR" x="400" y="600">
 			<Parameter Name="K" Value="1.0"/>
 			<Parameter Name="run" Value="TRUE"/>
 		</FB>
-		<FB Name="F_DWORD_TO_UDINT" Type="iec61131::conversion::F_DWORD_TO_UDINT" x="-2900" y="700">
-		</FB>
-		<FB Name="F_UDINT_TO_REAL" Type="iec61131::conversion::F_UDINT_TO_REAL" x="-1300" y="700">
+		<FB Name="AD_TO_AR_NUM" Type="adapter::conversion::unidirectional::AD_TO_AR_NUM" x="-2100" y="700">
 		</FB>
 		<EventConnections>
 			<Connection Source="DigitalInput_I1.IND" Destination="AX_T_FF.CLK" dx1="306.67"/>
-			<Connection Source="logiBUS_PI_ID.IND" Destination="F_DWORD_TO_UDINT.REQ" dx1="406.67"/>
-			<Connection Source="F_DWORD_TO_UDINT.CNF" Destination="F_UDINT_TO_REAL.REQ"/>
-			<Connection Source="F_UDINT_TO_REAL.CNF" Destination="FT_DERIV.REQ" dx1="353.33"/>
 		</EventConnections>
-		<DataConnections>
-			<Connection Source="logiBUS_PI_ID.IN" Destination="F_DWORD_TO_UDINT.IN" dx1="406.67"/>
-			<Connection Source="F_DWORD_TO_UDINT.OUT" Destination="F_UDINT_TO_REAL.IN"/>
-			<Connection Source="F_UDINT_TO_REAL.OUT" Destination="FT_DERIV.in" dx1="353.33"/>
-		</DataConnections>
 		<AdapterConnections>
 			<Connection Source="AX_T_FF.Q" Destination="DigitalOutput_Q1.OUT" dx1="493.33"/>
+			<Connection Source="logiBUS_PI_IDA.IN" Destination="AD_TO_AR_NUM.AD_IN"/>
+			<Connection Source="AD_TO_AR_NUM.AR_OUT" Destination="FT_DERIV_AR.AR_IN"/>
 		</AdapterConnections>
 	</SubAppNetwork>
 </SubAppType>
