@@ -10,7 +10,7 @@ import re
 TYPE_EXT = re.compile(r"\.(fbt|sub|adp|dtp|fct|gcf|atp)$", re.I)
 REF_EXT = re.compile(r"\.(fbt|sub|sys|adp|fct)$", re.I)
 RE_PKG = re.compile(rb'<CompilerInfo[^>]*packageName="([^"]*)"')
-RE_NAME = re.compile(rb'<(?:FBType|SubAppType|AdapterType|DataType|GlobalConstants|FunctionType|AttributeDeclaration)\b[^>]*\bName="([^"]+)"')
+RE_NAME = re.compile(rb'<(?:FBType|SubAppType|AdapterType|DataType|GlobalConstants|FunctionType|Function|AttributeDeclaration)\b[^>]*\bName="([^"]+)"')
 RE_REF = re.compile(rb'\bType="([A-Za-z_]\w*(?:::\w+)+)"')
 RE_IMP = re.compile(rb'<Import declaration="([^"]+)"')
 RE_CONST = re.compile(rb'<VarDeclaration\b[^>]*\bName="([^"]+)"')
