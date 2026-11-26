@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SubAppType Name="Uebung_156b" Comment="Übung zu FsGet/FsPut: Datei vom File Server holen und als Kopie zurückschreiben">
+	<Identification Standard="61499-2" Description="Copyright (c) 2026 Meisterschulen am Ostbahnhof  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0">
+	</Identification>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2026-11-25" Remarks="initial API and implementation and/or initial documentation">
+	</VersionInfo>
+	<CompilerInfo packageName="Uebungen">
+		<Import declaration="Uebungen::const::Uebung_150_159::FileServer::FS_ADD"/>
+		<Import declaration="Uebungen::const::Uebung_150_159::FileServer::FS_DATEI"/>
+		<Import declaration="Uebungen::const::Uebung_150_159::FileServer::FS_DATEI_2"/>
+		<Import declaration="Uebungen::const::Uebung_150_159::FileServer::FS_FLT"/>
+		<Import declaration="Uebungen::const::Uebung_150_159::FileServer::FS_LOKAL"/>
+		<Import declaration="isobus::pgn::ISOUSERHOME_e::network"/>
+		<Import declaration="isobus::pgn::ISO_CAN_NODE::NODE1"/>
+		<Import declaration="logiBUS::io::DI::logiBUS_DI::Input_I1"/>
+		<Import declaration="logiBUS::io::DI::logiBUS_DI_Events::BUTTON_SINGLE_CLICK"/>
+		<Import declaration="logiBUS::io::DQ::logiBUS_DO::Output_Q1"/>
+	</CompilerInfo>
+	<SubAppInterfaceList>
+	</SubAppInterfaceList>
+	<SubAppNetwork>
+		<FB Name="NmGetCfInfo" Type="isobus::pgn::NmGetCfInfo" Comment="meldet den File Server (Funktion 61)" x="-12000" y="0">
+			<Parameter Name="u8CanIdx" Value="NODE1"/>
+			<Parameter Name="member" Value="network"/>
+			<Parameter Name="address" Value="FS_ADD"/>
+			<Parameter Name="mask" Value="FS_FLT"/>
+		</FB>
+		<FB Name="NetEv_DEMUX" Type="eclipse4diac::convert::STRUCT_DEMUX" x="-9000" y="0">
+			<Attribute Name="StructuredType" Type="STRING" Value="isobus::pgn::ISONETEVENT_T"/>
+		</FB>
+		<SubApp Name="NetEv_Install" Type="MyLib::sys::NetEv_Install_Filter" x="-6500" y="0">
+		</SubApp>
+		<FB Name="Server_merken" Type="iec61131::selection::F_MOVE" Comment="eigener CF und File-Server-CF (NmDestin)" x="-3500" y="0">
+		</FB>
+		<FB Name="Server_da" Type="iec61499::events::E_SR" x="-1000" y="0">
+		</FB>
+		<FB Name="DigitalInput_CLK_I1" Type="logiBUS::io::DI::logiBUS_IE" x="-12000" y="3000">
+			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="Input" Value="Input_I1"/>
+			<Parameter Name="InputEvent" Value="BUTTON_SINGLE_CLICK"/>
+		</FB>
+		<FB Name="Nur_mit_Server" Type="iec61499::events::E_PERMIT" x="-9000" y="3000">
+		</FB>
+		<FB Name="Holen" Type="isobus::fs::FsGet" Comment="FS_DATEI nach FS_LOKAL (/data/fs/...)" x="-6000" y="3000">
+			<Parameter Name="sRemotePath" Value="FS_DATEI"/>
+			<Parameter Name="sLocalPath" Value="FS_LOKAL"/>
+		</FB>
+		<FB Name="Zurueck" Type="isobus::fs::FsPut" Comment="FS_LOKAL als FS_DATEI_2 zurück" x="-1500" y="3000">
+			<Parameter Name="sLocalPath" Value="FS_LOKAL"/>
+			<Parameter Name="sRemotePath" Value="FS_DATEI_2"/>
+			<Parameter Name="bAppend" Value="FALSE"/>
+		</FB>
+		<FB Name="Ergebnis" Type="iec61499::events::E_SR" Comment="Q1 an = beide Kopien fertig" x="3000" y="3000">
+		</FB>
+		<FB Name="DigitalOutput_Q1" Type="logiBUS::io::DQ::logiBUS_QX" x="5500" y="3000">
+			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="Output" Value="Output_Q1"/>
+		</FB>
+		<Comment Comment="File Server: Datei holen und als Kopie zurückschreiben (FsGet, FsPut)&#10;NmGetCfInfo (network, Filter FS_ADD/FS_FLT = NAME-Funktion 61) meldet den File Server, z. B. CCI 1200 mit USB-Stick.&#10;I1 Klick (nur mit Server): FS_DATEI nach FS_LOKAL (/data/fs/) holen, dann als FS_DATEI_2 zurückschreiben. Q1 an = fertig, Q1 aus = Fehler.&#10;Watch: u32Bytes (PROG beim Holen), bei ERR s16Status und u16FsError. FS_DATEI muss es geben, z. B. aus Übung 156.&#10;Voraussetzungen: Firmware ab LOGIBUS f6afe1e4 (File Server Client), isobus_fs-ELF, PART_13_FSC = 1 in /data/functionalities.ini.&#10;Lokale Pfade nur unter /data/fs/ (bei einem logiBUS als Server: /data/)." x="-12000" y="-2600" width="10000" height="2000"/>
+		<EventConnections>
+			<Connection Source="NmGetCfInfo.IND" Destination="NetEv_DEMUX.REQ"/>
+			<Connection Source="NetEv_DEMUX.CNF" Destination="NetEv_Install.REQ"/>
+			<Connection Source="NetEv_Install.INSTALL" Destination="Server_merken.REQ"/>
+			<Connection Source="NetEv_Install.RSP" Destination="NmGetCfInfo.RSP">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="Server_merken.CNF" Destination="NetEv_Install.SET"/>
+			<Connection Source="Server_merken.CNF" Destination="Server_da.S"/>
+			<Connection Source="Server_merken.CNF" Destination="NmGetCfInfo.RSP">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="DigitalInput_CLK_I1.IND" Destination="Nur_mit_Server.EI"/>
+			<Connection Source="Nur_mit_Server.EO" Destination="Holen.REQ"/>
+			<Connection Source="Holen.CNF" Destination="Zurueck.REQ"/>
+			<Connection Source="Zurueck.CNF" Destination="Ergebnis.S"/>
+			<Connection Source="Holen.ERR" Destination="Ergebnis.R"/>
+			<Connection Source="Zurueck.ERR" Destination="Ergebnis.R"/>
+			<Connection Source="Ergebnis.EO" Destination="DigitalOutput_Q1.REQ"/>
+		</EventConnections>
+		<DataConnections>
+			<Connection Source="NmGetCfInfo.sNetEv" Destination="NetEv_DEMUX.IN"/>
+			<Connection Source="NetEv_DEMUX.eNetEvent" Destination="NetEv_Install.eNetEvent"/>
+			<Connection Source="NmGetCfInfo.sNetEv" Destination="Server_merken.IN"/>
+			<Connection Source="Server_merken.OUT" Destination="Holen.NmDestin"/>
+			<Connection Source="Server_merken.OUT" Destination="Zurueck.NmDestin"/>
+			<Connection Source="Server_da.Q" Destination="Nur_mit_Server.PERMIT"/>
+			<Connection Source="Ergebnis.Q" Destination="DigitalOutput_Q1.OUT"/>
+		</DataConnections>
+	</SubAppNetwork>
+</SubAppType>

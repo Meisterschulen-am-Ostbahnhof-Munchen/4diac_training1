@@ -7,7 +7,8 @@ Die SHA256 kommen vom Build selbst (SHA256SUMS im Build-Ordner, erzeugt beim
 Compilieren); das Skript prüft die Dateien auf dem Drive dagegen. Liegt eine
 build.json daneben, kommen forte_abi, Commits und Targets daraus.
 Vorher wird geprüft, ob alle genutzten ELFs im Tag (laut LIB_VERSIONS) dieselbe
-forte_abi haben (ELFLIB-String "ELFLIB:<lib>:<version>:<abi>:<arch>").
+forte_abi haben (ELFLIB-String "ELFLIB:<lib>:<version>:<abi>:<arch>") und ob
+FORTE_ABI in elf_libs_manifest_lib.py dazu passt.
 
 Schritt im Release-Ablauf: nach "gh release create" aufrufen.
 
@@ -116,6 +117,17 @@ def lib_versions(tag: str) -> dict[str, str]:
     block = src[src.index('LIB_VERSIONS = {'):]
     block = block[:block.index('}')]
     return dict(re.findall(r'"(\w+)":\s*"([\d.]+)"', block))
+
+
+def check_script_abi(tag: str, abi: int) -> None:
+    """FORTE_ABI in elf_libs_manifest_lib.py (Preload/Deploy prüfen die Firmware dagegen)
+    muss zur forte_abi des Builds passen."""
+    m = re.search(r'^FORTE_ABI\s*=\s*(\d+)\s*$', git('show', f'{tag}:{LIBVER_FILE}'), re.MULTILINE)
+    if not m:
+        fail(f'FORTE_ABI nicht gefunden in {LIBVER_FILE} ({tag})')
+    if int(m.group(1)) != abi:
+        fail(f'FORTE_ABI = {m.group(1)} in {LIBVER_FILE} ({tag}), Build hat forte_abi {abi}. '
+             'Preload/Deploy würden die Firmware ablehnen.')
 
 
 def elf_name(path: str) -> tuple[str, str]:
@@ -304,6 +316,7 @@ def main() -> None:
 
     info = load_build_info(src, build, a.forte_abi, a.forte_commit)
     sums = read_sums(sums_path)
+    check_script_abi(tag, info['forte_abi'])
     n = check_elf_abi(tag, info['forte_abi'])
     print(f'Genutzte ELFs im Tag {tag}: {n}, alle forte_abi {info["forte_abi"]}')
     targets, files = check_targets(src, info['targets'], sums)

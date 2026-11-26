@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SubAppType Name="Uebung_156_AX" Comment="Übung zu FsWrite/FsRead: kleine Datei auf den File Server schreiben und zurücklesen">
+	<Identification Standard="61499-2" Description="Copyright (c) 2026 Meisterschulen am Ostbahnhof  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0">
+	</Identification>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2026-11-25" Remarks="initial API and implementation and/or initial documentation">
+	</VersionInfo>
+	<CompilerInfo packageName="Uebungen">
+		<Import declaration="Uebungen::const::Uebung_150_159::FileServer::FS_ADD"/>
+		<Import declaration="Uebungen::const::Uebung_150_159::FileServer::FS_DATEI"/>
+		<Import declaration="Uebungen::const::Uebung_150_159::FileServer::FS_FLT"/>
+		<Import declaration="Uebungen::const::Uebung_150_159::FileServer::FS_TEXT"/>
+		<Import declaration="isobus::pgn::ISOUSERHOME_e::network"/>
+		<Import declaration="isobus::pgn::ISO_CAN_NODE::NODE1"/>
+		<Import declaration="logiBUS::io::DI::logiBUS_DI::Input_I1"/>
+		<Import declaration="logiBUS::io::DI::logiBUS_DI_Events::BUTTON_SINGLE_CLICK"/>
+		<Import declaration="logiBUS::io::DQ::logiBUS_DO::Output_Q1"/>
+	</CompilerInfo>
+	<SubAppInterfaceList>
+	</SubAppInterfaceList>
+	<SubAppNetwork>
+		<FB Name="NmGetCfInfo" Type="isobus::pgn::NmGetCfInfo" Comment="meldet den File Server (Funktion 61)" x="-12000" y="0">
+			<Parameter Name="u8CanIdx" Value="NODE1"/>
+			<Parameter Name="member" Value="network"/>
+			<Parameter Name="address" Value="FS_ADD"/>
+			<Parameter Name="mask" Value="FS_FLT"/>
+		</FB>
+		<FB Name="NetEv_DEMUX" Type="eclipse4diac::convert::STRUCT_DEMUX" x="-9000" y="0">
+			<Attribute Name="StructuredType" Type="STRING" Value="isobus::pgn::ISONETEVENT_T"/>
+		</FB>
+		<SubApp Name="NetEv_Install" Type="MyLib::sys::NetEv_Install_Filter" x="-6500" y="0">
+		</SubApp>
+		<FB Name="Server_merken" Type="iec61131::selection::F_MOVE" Comment="eigener CF und File-Server-CF (NmDestin)" x="-3500" y="0">
+		</FB>
+		<FB Name="Server_da" Type="iec61499::events::E_SR" x="-1000" y="0">
+		</FB>
+		<FB Name="DigitalInput_CLK_I1" Type="logiBUS::io::DI::logiBUS_IE" x="-12000" y="3000">
+			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="Input" Value="Input_I1"/>
+			<Parameter Name="InputEvent" Value="BUTTON_SINGLE_CLICK"/>
+		</FB>
+		<FB Name="Nur_mit_Server" Type="iec61499::events::E_PERMIT" x="-9000" y="3000">
+		</FB>
+		<FB Name="Puffer_Schreiben" Type="eclipse4diac::convert::providers::PROVIDE_ARR_0064_BYTE" x="-9000" y="4500">
+		</FB>
+		<FB Name="Text_zu_Bytes" Type="logiBUS::utils::dyn_arr::F_STRING_TO_BYTES" x="-6500" y="3000">
+			<Parameter Name="IN" Value="FS_TEXT"/>
+		</FB>
+		<FB Name="Laenge" Type="iec61131::conversion::F_UINT_TO_UDINT" x="-4000" y="3000">
+		</FB>
+		<FB Name="Schreiben" Type="isobus::fs::FsWrite" Comment="schreibt FS_TEXT nach FS_DATEI" x="-1500" y="3000">
+			<Parameter Name="sRemotePath" Value="FS_DATEI"/>
+			<Parameter Name="bAppend" Value="FALSE"/>
+		</FB>
+		<FB Name="Puffer_Lesen" Type="eclipse4diac::convert::providers::PROVIDE_ARR_0064_BYTE" x="-1500" y="6000">
+		</FB>
+		<FB Name="Lesen" Type="isobus::fs::FsRead" Comment="liest FS_DATEI zurück" x="1500" y="3000">
+			<Parameter Name="sRemotePath" Value="FS_DATEI"/>
+		</FB>
+		<FB Name="Laenge_Lesen" Type="iec61131::conversion::F_UDINT_TO_UINT" x="4500" y="3000">
+		</FB>
+		<FB Name="Bytes_zu_Text" Type="logiBUS::utils::dyn_arr::F_BYTES_TO_STRING" x="7000" y="3000">
+		</FB>
+		<FB Name="Vergleich" Type="iec61131::comparison::F_EQ" x="9500" y="3000">
+			<Parameter Name="IN1" Value="FS_TEXT"/>
+		</FB>
+		<FB Name="Gleich" Type="iec61499::events::E_SWITCH" x="12000" y="3000">
+		</FB>
+		<FB Name="Ergebnis" Type="iec61499::events::E_SR" Comment="Q1 an = Datei gleich zurückgelesen" x="14500" y="3000">
+		</FB>
+		<FB Name="DigitalOutput_Q1" Type="logiBUS::io::DQ::logiBUS_QX" x="17000" y="3000">
+			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="Output" Value="Output_Q1"/>
+		</FB>
+		<Comment Comment="File Server: Datei schreiben und zurücklesen (FsWrite, FsRead)&#10;NmGetCfInfo (network, Filter FS_ADD/FS_FLT = NAME-Funktion 61) meldet den File Server, z. B. CCI 1200 mit USB-Stick.&#10;I1 Klick (nur mit Server): FS_TEXT nach FS_DATEI schreiben, danach zurücklesen und vergleichen. Q1 an = gleich, Q1 aus = Fehler.&#10;Watch bei ERR: Schreiben/Lesen.s16Status und .u16FsError (ISO 11783-13 B.9, ab 6400 Client). FS_DATEI an den Volume-Namen des Terminals anpassen.&#10;Voraussetzungen: Firmware ab LOGIBUS f6afe1e4 (File Server Client), isobus_fs-ELF, PART_13_FSC = 1 in /data/functionalities.ini.&#10;Weiter: Übung 156b (FsGet/FsPut über eine lokale Datei)." x="-12000" y="-2600" width="10000" height="2000"/>
+		<EventConnections>
+			<Connection Source="NmGetCfInfo.IND" Destination="NetEv_DEMUX.REQ"/>
+			<Connection Source="NetEv_DEMUX.CNF" Destination="NetEv_Install.REQ"/>
+			<Connection Source="NetEv_Install.INSTALL" Destination="Server_merken.REQ"/>
+			<Connection Source="NetEv_Install.RSP" Destination="NmGetCfInfo.RSP">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="Server_merken.CNF" Destination="NetEv_Install.SET"/>
+			<Connection Source="Server_merken.CNF" Destination="Server_da.S"/>
+			<Connection Source="Server_merken.CNF" Destination="NmGetCfInfo.RSP">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="DigitalInput_CLK_I1.IND" Destination="Nur_mit_Server.EI"/>
+			<Connection Source="Nur_mit_Server.EO" Destination="Text_zu_Bytes.REQ"/>
+			<Connection Source="Text_zu_Bytes.CNF" Destination="Laenge.REQ"/>
+			<Connection Source="Laenge.CNF" Destination="Schreiben.REQ"/>
+			<Connection Source="Schreiben.CNF" Destination="Lesen.REQ"/>
+			<Connection Source="Lesen.CNF" Destination="Laenge_Lesen.REQ"/>
+			<Connection Source="Laenge_Lesen.CNF" Destination="Bytes_zu_Text.REQ"/>
+			<Connection Source="Bytes_zu_Text.CNF" Destination="Vergleich.REQ"/>
+			<Connection Source="Vergleich.CNF" Destination="Gleich.EI"/>
+			<Connection Source="Gleich.EO1" Destination="Ergebnis.S"/>
+			<Connection Source="Gleich.EO0" Destination="Ergebnis.R"/>
+			<Connection Source="Schreiben.ERR" Destination="Ergebnis.R"/>
+			<Connection Source="Lesen.ERR" Destination="Ergebnis.R"/>
+			<Connection Source="Ergebnis.EO" Destination="DigitalOutput_Q1.REQ"/>
+		</EventConnections>
+		<DataConnections>
+			<Connection Source="NmGetCfInfo.sNetEv" Destination="NetEv_DEMUX.IN"/>
+			<Connection Source="NetEv_DEMUX.eNetEvent" Destination="NetEv_Install.eNetEvent"/>
+			<Connection Source="NmGetCfInfo.sNetEv" Destination="Server_merken.IN"/>
+			<Connection Source="Server_merken.OUT" Destination="Schreiben.NmDestin"/>
+			<Connection Source="Server_merken.OUT" Destination="Lesen.NmDestin"/>
+			<Connection Source="Server_da.Q" Destination="Nur_mit_Server.PERMIT"/>
+			<Connection Source="Puffer_Schreiben.D1" Destination="Text_zu_Bytes.DATA"/>
+			<Connection Source="Text_zu_Bytes." Destination="Laenge.IN"/>
+			<Connection Source="Text_zu_Bytes.DATA" Destination="Schreiben.Data"/>
+			<Connection Source="Laenge.OUT" Destination="Schreiben.u32Length"/>
+			<Connection Source="Puffer_Lesen.D1" Destination="Lesen.Data"/>
+			<Connection Source="Lesen.u32Length" Destination="Laenge_Lesen.IN"/>
+			<Connection Source="Laenge_Lesen.OUT" Destination="Bytes_zu_Text.SIZE"/>
+			<Connection Source="Lesen.Data" Destination="Bytes_zu_Text.DATA"/>
+			<Connection Source="Bytes_zu_Text." Destination="Vergleich.IN2"/>
+			<Connection Source="Vergleich.OUT" Destination="Gleich.G"/>
+			<Connection Source="Ergebnis.Q" Destination="DigitalOutput_Q1.OUT"/>
+		</DataConnections>
+	</SubAppNetwork>
+</SubAppType>

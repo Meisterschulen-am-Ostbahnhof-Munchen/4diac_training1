@@ -47,7 +47,7 @@ NODE_ARCH = {
 }
 
 # forte_abi: von Hand erhoehte Nummer, wenn sich FORTE-Basisklassen aendern.
-FORTE_ABI = 6
+FORTE_ABI = 7
 
 
 # Architekturen, fuer die ELFs gebaut werden (Unterordner elf/<arch>/ der Libs).
@@ -212,6 +212,8 @@ PREFIX_TO_LIB = {
     "OSCAT::Basic": "OSCAT_Basic",
     "OSCAT::Building": "OSCAT_Building",
     "OSCAT::Network": "OSCAT_Network",
+    "FIFO": "FIFO",
+    "FIFO_adapter": "FIFO_adapter",
     "OSCAT_adapter": "OSCAT_adapter",
     "Option": "Option",
     "Option::conversion": "Option",
@@ -256,6 +258,7 @@ PREFIX_TO_LIB = {
     "iec61131::timers": "iec61131-3",
     "isobus::TC": "isobus_TC",
     "isobus::UT": "isobus_UT",
+    "isobus::fs": "isobus_fs",
     "isobus::pgn": "isobus_pgn",
     "isobus::tecu": "isobus_tecu",
     "logiBUS::bistableElements": "logiBUS_utils",
@@ -277,6 +280,11 @@ TYPE_NAME_TO_LIB = {
     # Firmware (Modul system) - "" = kein ELF, wird in resolve_required_libs()
     # uebersprungen.
     "E_RESTART": "",
+    # isobus::UT::dialog: Drei-Segment-Paket, der Zwei-Segment-Key isobus::UT
+    # wuerde isobus_UT liefern.
+    "DLG_CTRL": "isobus_UT_dialog",
+    "DLG_MessageBox": "isobus_UT_dialog",
+    "DLG_Toast": "isobus_UT_dialog",
     # adapter::conversion: Default adapter_conversion, Ausnahme logiBUS_utils_adapter
     "AQ_TO_AX": "logiBUS_utils_adapter",
     "AX_TO_AQ": "logiBUS_utils_adapter",
@@ -471,6 +479,8 @@ LIB_VERSIONS = {
     "OSCAT_Basic": "0.1.0",
     "OSCAT_Building": "0.1.0",
     "OSCAT_Network": "0.1.0",
+    "FIFO": "1.0.0",
+    "FIFO_adapter": "1.0.0",
     "OSCAT_adapter": "3.0.0",
     "Option": "1.0.0",
     "SafeArithmetic": "3.0.0",
@@ -486,8 +496,10 @@ LIB_VERSIONS = {
     "iec61131-3": "3.0.1",
     "iec61131-3-bool": "3.0.1",
     "isobus_TC": "3.0.0",
+    "isobus_fs": "1.0.0",
     "isobus_UT": "3.1.1",
     "isobus_UT_adapter": "3.1.1",
+    "isobus_UT_dialog": "3.0.0",
     "isobus_UT_io": "3.0.1",
     "isobus_UT_io_adapter": "3.0.0",
     "isobus_pgn": "3.0.0",
@@ -527,6 +539,8 @@ LIB_DIR_NAME = {
     "OSCAT_Basic": "OSCAT_Basic-0.1.0",
     "OSCAT_Building": "OSCAT_Building-0.1.0",
     "OSCAT_Network": "OSCAT_Network-0.1.0",
+    "FIFO": "FIFO-1.0.0",
+    "FIFO_adapter": "FIFO_adapter-1.0.0",
     "OSCAT_adapter": "OSCAT_adapter-3.0.0",
     "Option": "Option-1.0.0",
     "SafeArithmetic": "SafeArithmetic-3.0.0",
@@ -542,8 +556,10 @@ LIB_DIR_NAME = {
     "iec61131-3": "iec61131-3-3.0.0",
     "iec61131-3-bool": "iec61131-3-bool-3.0.0",
     "isobus_TC": "isobus_TC-3.0.0",
+    "isobus_fs": "isobus_fs-1.0.0",
     "isobus_UT": "isobus_UT-3.0.0",
     "isobus_UT_adapter": "isobus_UT_adapter-3.0.0",
+    "isobus_UT_dialog": "isobus_UT_dialog-3.0.0",
     "isobus_UT_io": "isobus_UT_io-3.0.0",
     "isobus_UT_io_adapter": "isobus_UT_io_adapter-3.0.0",
     "isobus_pgn": "isobus_pgn-3.0.0",
