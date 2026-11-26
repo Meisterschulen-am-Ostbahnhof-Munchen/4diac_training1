@@ -12,20 +12,17 @@
 	<SubAppInterfaceList>
 	</SubAppInterfaceList>
 	<SubAppNetwork>
-		<FB Name="Input_Power_Port_5" Type="DataPanel::io::MI::DQ::DataPanel_MI_QX" x="-1400" y="-300">
+		<FB Name="Input_Power_Port_5" Type="DataPanel::io::MI::DQ::DataPanel_MI_QXA" x="-1400" y="-300">
 			<Parameter Name="QI" Value="TRUE"/>
 			<Parameter Name="u8SAMember" Value="MI_00"/>
 			<Parameter Name="Output" Value="Input_Power_Port_5"/>
 		</FB>
-		<FB Name="SoftKey_F1" Type="isobus::UT::io::Softkey::Softkey_IX" x="-4600" y="-500">
+		<FB Name="SoftKey_F1" Type="isobus::UT::io::Softkey::Softkey_IXA" x="-4600" y="-500">
 			<Parameter Name="QI" Value="TRUE"/>
 			<Parameter Name="u16ObjId" Value="SoftKey_F1"/>
 		</FB>
-		<EventConnections>
-			<Connection Source="SoftKey_F1.IND" Destination="Input_Power_Port_5.REQ" dx1="1206.67"/>
-		</EventConnections>
-		<DataConnections>
+		<AdapterConnections>
 			<Connection Source="SoftKey_F1.IN" Destination="Input_Power_Port_5.OUT" dx1="1206.67"/>
-		</DataConnections>
+		</AdapterConnections>
 	</SubAppNetwork>
 </SubAppType>
