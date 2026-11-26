@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SubAppType Name="Uebung_162_AX" Comment="Übung zu DS18B20: Temperatur messen, Q1 über 25 °C">
+	<Identification Standard="61499-2" Description="Copyright (c) 2026 Meisterschulen am Ostbahnhof  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0">
+	</Identification>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2026-11-26" Remarks="initial API and implementation and/or initial documentation">
+	</VersionInfo>
+	<CompilerInfo packageName="Uebungen">
+		<Import declaration="logiBUS::io::DQ::logiBUS_DO::Output_Q1"/>
+	</CompilerInfo>
+	<SubAppInterfaceList>
+	</SubAppInterfaceList>
+	<SubAppNetwork>
+		<FB Name="Sensor_1" Type="logiBUS::onewire::DS18B20" Comment="erster Sensor am Bus (Index 0)" x="-9000" y="0">
+			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="ROM" Value="LWORD#0"/>
+			<Parameter Name="Index" Value="0"/>
+		</FB>
+		<FB Name="Warm" Type="iec61131::comparison::F_GT" Comment="T über 25 °C?" x="-5000" y="0">
+			<Parameter Name="IN2" Value="REAL#25.0"/>
+		</FB>
+		<FB Name="Warm_AX" Type="adapter::conversion::unidirectional::AX_BOOL_TO_X" x="-2000" y="0">
+		</FB>
+		<FB Name="DigitalOutput_Q1" Type="logiBUS::io::DQ::logiBUS_QXA" Comment="an = wärmer als 25 °C" x="500" y="0">
+			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="Output" Value="Output_Q1"/>
+		</FB>
+		<Comment Comment="Temperatursensor DS18B20 (logiBUS_onewire) am Trainer20: Datenleitung GPIO3, externer Pull-up 4,7 kOhm empfohlen.&#10;IND nach jeder Messrunde (ca. 1 s, 12 Bit). Q1 an = wärmer als 25 °C (Sensor in der Hand anwärmen).&#10;Watch: T (°C), QO (TRUE = T gültig), STATUS, ROMO (ROM-Code des Sensors, für Übung 162b notieren).&#10;STATUS z. B. 'sensor not found', 'power-on value 85 C' (erste Messung noch nicht fertig), 'no 1-Wire bus on this board'.&#10;Weiter: Übung 162b (zwei Sensoren, einer per ROM-Code festgehalten)." x="-9000" y="-2600" width="10000" height="2000"/>
+		<EventConnections>
+			<Connection Source="Sensor_1.IND" Destination="Warm.REQ"/>
+			<Connection Source="Warm.CNF" Destination="Warm_AX.REQ"/>
+		</EventConnections>
+		<DataConnections>
+			<Connection Source="Sensor_1.T" Destination="Warm.IN1"/>
+			<Connection Source="Warm.OUT" Destination="Warm_AX.OUT"/>
+		</DataConnections>
+		<AdapterConnections>
+			<Connection Source="Warm_AX.AX_OUT" Destination="DigitalOutput_Q1.OUT"/>
+		</AdapterConnections>
+	</SubAppNetwork>
+</SubAppType>

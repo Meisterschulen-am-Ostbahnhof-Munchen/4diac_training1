@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SubAppType Name="Uebung_161" Comment="Übung zu logiBUS_ENC_ID: Inkrementalgeber zählen, Taster setzt zurück">
+	<Identification Standard="61499-2" Description="Copyright (c) 2026 Meisterschulen am Ostbahnhof  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0">
+	</Identification>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2026-11-26" Remarks="initial API and implementation and/or initial documentation">
+	</VersionInfo>
+	<CompilerInfo packageName="Uebungen">
+		<Import declaration="logiBUS::io::ENC::logiBUS_ENC::Encoder_E1"/>
+		<Import declaration="logiBUS::io::DI::logiBUS_DI::Input_I9"/>
+		<Import declaration="logiBUS::io::DI::logiBUS_DI_Events::BUTTON_SINGLE_CLICK"/>
+		<Import declaration="logiBUS::io::DQ::logiBUS_DO::Output_Q1"/>
+	</CompilerInfo>
+	<SubAppInterfaceList>
+	</SubAppInterfaceList>
+	<SubAppNetwork>
+		<FB Name="Drehgeber_E1" Type="logiBUS::io::ENC::logiBUS_ENC_ID" Comment="Trainer20: A = GPIO22, B = GPIO23" x="-9000" y="0">
+			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="Encoder" Value="Encoder_E1"/>
+			<Parameter Name="Resolution" Value="1"/>
+			<Parameter Name="TimeDelta" Value="0"/>
+			<Parameter Name="TimeRateLimit" Value="50"/>
+		</FB>
+		<FB Name="Position" Type="iec61131::conversion::F_DWORD_TO_DINT" Comment="IN (DWORD) als vorzeichenbehaftete Position" x="-5000" y="0">
+		</FB>
+		<FB Name="Positiv" Type="iec61131::comparison::F_GT" Comment="Position größer 0?" x="-2000" y="0">
+			<Parameter Name="IN2" Value="DINT#0"/>
+		</FB>
+		<FB Name="DigitalOutput_Q1" Type="logiBUS::io::DQ::logiBUS_QX" Comment="an = Position größer 0" x="1000" y="0">
+			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="Output" Value="Output_Q1"/>
+		</FB>
+		<FB Name="DigitalInput_CLK_I9" Type="logiBUS::io::DI::logiBUS_IE" Comment="Taster am Drehgeber (GPIO24)" x="-13000" y="2500">
+			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="Input" Value="Input_I9"/>
+			<Parameter Name="InputEvent" Value="BUTTON_SINGLE_CLICK"/>
+		</FB>
+		<Comment Comment="Inkrementalgeber (logiBUS_ENC_ID) am Trainer20: A = GPIO22, B = GPIO23, Taster = I9.&#10;Drehen: IND mit der Position in IN (DWORD). F_DWORD_TO_DINT macht daraus die vorzeichenbehaftete Position (Watch: Position.OUT).&#10;Q1 an = Position größer 0. I9 Klick: RST setzt die Position auf 0.&#10;Resolution 1 = ein Schritt je Raste, 2 oder 4 = feiner. TimeRateLimit 50 ms: höchstens ein IND je 50 ms.&#10;Andere Boards melden STATUS 'this board has no encoder E1'." x="-13000" y="-2600" width="10000" height="2000"/>
+		<EventConnections>
+			<Connection Source="Drehgeber_E1.IND" Destination="Position.REQ"/>
+			<Connection Source="Drehgeber_E1.CNF" Destination="Position.REQ"/>
+			<Connection Source="Position.CNF" Destination="Positiv.REQ"/>
+			<Connection Source="Positiv.CNF" Destination="DigitalOutput_Q1.REQ"/>
+			<Connection Source="DigitalInput_CLK_I9.IND" Destination="Drehgeber_E1.RST"/>
+		</EventConnections>
+		<DataConnections>
+			<Connection Source="Drehgeber_E1.IN" Destination="Position.IN"/>
+			<Connection Source="Position.OUT" Destination="Positiv.IN1"/>
+			<Connection Source="Positiv.OUT" Destination="DigitalOutput_Q1.OUT"/>
+		</DataConnections>
+	</SubAppNetwork>
+</SubAppType>
