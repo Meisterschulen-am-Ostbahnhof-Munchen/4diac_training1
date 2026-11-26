@@ -256,6 +256,7 @@ PREFIX_TO_LIB = {
     "iec61131::timers": "iec61131-3",
     "isobus::TC": "isobus_TC",
     "isobus::UT": "isobus_UT",
+    "isobus::fs": "isobus_fs",
     "isobus::pgn": "isobus_pgn",
     "isobus::tecu": "isobus_tecu",
     "logiBUS::bistableElements": "logiBUS_utils",
@@ -277,6 +278,11 @@ TYPE_NAME_TO_LIB = {
     # Firmware (Modul system) - "" = kein ELF, wird in resolve_required_libs()
     # uebersprungen.
     "E_RESTART": "",
+    # isobus::UT::dialog: Drei-Segment-Paket, der Zwei-Segment-Key isobus::UT
+    # wuerde isobus_UT liefern.
+    "DLG_CTRL": "isobus_UT_dialog",
+    "DLG_MessageBox": "isobus_UT_dialog",
+    "DLG_Toast": "isobus_UT_dialog",
     # adapter::conversion: Default adapter_conversion, Ausnahme logiBUS_utils_adapter
     "AQ_TO_AX": "logiBUS_utils_adapter",
     "AX_TO_AQ": "logiBUS_utils_adapter",
@@ -486,8 +492,10 @@ LIB_VERSIONS = {
     "iec61131-3": "3.0.1",
     "iec61131-3-bool": "3.0.1",
     "isobus_TC": "3.0.0",
+    "isobus_fs": "1.0.0",
     "isobus_UT": "3.1.1",
     "isobus_UT_adapter": "3.1.1",
+    "isobus_UT_dialog": "3.0.0",
     "isobus_UT_io": "3.0.1",
     "isobus_UT_io_adapter": "3.0.0",
     "isobus_pgn": "3.0.0",
@@ -542,8 +550,10 @@ LIB_DIR_NAME = {
     "iec61131-3": "iec61131-3-3.0.0",
     "iec61131-3-bool": "iec61131-3-bool-3.0.0",
     "isobus_TC": "isobus_TC-3.0.0",
+    "isobus_fs": "isobus_fs-1.0.0",
     "isobus_UT": "isobus_UT-3.0.0",
     "isobus_UT_adapter": "isobus_UT_adapter-3.0.0",
+    "isobus_UT_dialog": "isobus_UT_dialog-3.0.0",
     "isobus_UT_io": "isobus_UT_io-3.0.0",
     "isobus_UT_io_adapter": "isobus_UT_io_adapter-3.0.0",
     "isobus_pgn": "isobus_pgn-3.0.0",
