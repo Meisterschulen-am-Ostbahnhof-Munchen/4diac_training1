@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SubAppType Name="Uebung_159" Comment="Übung zu FsServer: eigener File Server im logiBUS (Gerät B)">
+	<Identification Standard="61499-2" Description="Copyright (c) 2026 Meisterschulen am Ostbahnhof  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0">
+	</Identification>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2026-11-26" Remarks="initial API and implementation and/or initial documentation">
+	</VersionInfo>
+	<CompilerInfo packageName="Uebungen">
+		<Import declaration="logiBUS::io::DQ::logiBUS_DO::Output_Q1"/>
+		<Import declaration="logiBUS::io::DQ::logiBUS_DO::Output_Q2"/>
+	</CompilerInfo>
+	<SubAppInterfaceList>
+	</SubAppInterfaceList>
+	<SubAppNetwork>
+		<FB Name="Server" Type="isobus::fs_server::FsServer" Comment="Volume \\LOGIBUS\ = /data/fs" x="-6000" y="0">
+		</FB>
+		<FB Name="Takt" Type="iec61499::events::E_CYCLE" Comment="Status alle 2 s" x="-10000" y="0">
+			<Parameter Name="DT" Value="T#2s"/>
+		</FB>
+		<FB Name="DigitalOutput_Q1" Type="logiBUS::io::DQ::logiBUS_QX" Comment="an = Server läuft" x="-1500" y="0">
+			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="Output" Value="Output_Q1"/>
+		</FB>
+		<FB Name="Umschalten" Type="iec61499::events::E_T_FF" Comment="jede geschriebene Datei schaltet Q2 um" x="-1500" y="3000">
+		</FB>
+		<FB Name="DigitalOutput_Q2" Type="logiBUS::io::DQ::logiBUS_QX" x="2000" y="3000">
+			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="Output" Value="Output_Q2"/>
+		</FB>
+		<Comment Comment="Eigener File Server im logiBUS (FsServer), Gerät B. Gegenstück: Übung 159b auf Gerät A.&#10;Einschalten: PART_13_FS = 1 in /data/functionalities.ini, dann Neustart. Optional PART_13_FS_QUOTA_KB (1024) und PART_13_FS_BUS_SHARE (50).&#10;Volume \\LOGIBUS\ = /data/fs. Server-CF: NAME-Funktion 61, Herstellercode 1116, Adresse 0xF9.&#10;Q1 an = Server läuft (bRunning). Q2 schaltet bei jeder Datei um, die ein Client geschrieben hat (IND).&#10;Watch: u8Clients (1, solange A arbeitet), u8OpenFiles, u32UsedKB, u32QuotaKB; bei IND sPath (z. B. /data/fs/IMPORT/test.txt) und u16Lost.&#10;Voraussetzungen: Firmware mit File Server, neue isobus_fs-ELF. Nur ein FsServer pro Gerät." x="-10000" y="-2600" width="10000" height="2000"/>
+		<EventConnections>
+			<Connection Source="Server.INITO" Destination="Takt.START"/>
+			<Connection Source="Takt.EO" Destination="Server.REQ"/>
+			<Connection Source="Server.CNF" Destination="DigitalOutput_Q1.REQ"/>
+			<Connection Source="Server.IND" Destination="Umschalten.CLK"/>
+			<Connection Source="Umschalten.EO" Destination="DigitalOutput_Q2.REQ"/>
+		</EventConnections>
+		<DataConnections>
+			<Connection Source="Server.bRunning" Destination="DigitalOutput_Q1.OUT"/>
+			<Connection Source="Umschalten.Q" Destination="DigitalOutput_Q2.OUT"/>
+		</DataConnections>
+	</SubAppNetwork>
+</SubAppType>
