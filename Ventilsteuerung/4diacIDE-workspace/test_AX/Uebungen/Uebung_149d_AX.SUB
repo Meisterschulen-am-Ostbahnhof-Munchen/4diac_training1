@@ -34,7 +34,7 @@
 		</FB>
 		<FB Name="INIT_ARR_4000_BYTE" Type="eclipse4diac::convert::providers::PROVIDE_ARR_4000_BYTE" x="-6900" y="1700">
 		</FB>
-		<FB Name="F_STRING_TO_BYTES" Type="logiBUS::utils::dyn_arr::F_STRING_TO_BYTES" x="-4900" y="900">
+		<FB Name="F_STRING_TO_BYTES_TERM" Type="logiBUS::utils::dyn_arr::F_STRING_TO_BYTES_TERM" x="-4900" y="900">
 			<Parameter Name="IN" Value="STRING#'ETP-Test 4000 Byte'"/>
 		</FB>
 		<FB Name="AlPgnTxNew_TP" Type="isobus::pgn::tx::AlPgnTxNew_TP" x="-1100" y="3500">
@@ -68,8 +68,8 @@
 			<Connection Source="NmGetCfInfo_1.IND" Destination="STRUCT_DEMUX_3.REQ" dx1="493.33"/>
 			<Connection Source="NmGetCfInfo_1.IND" Destination="STRUCT_DEMUX_4.REQ" dx1="493.33"/>
 			<Connection Source="NmGetCfInfo_1.IND" Destination="STRUCT_DEMUX_5.REQ" dx1="493.33"/>
-			<Connection Source="DigitalInput_CLK_I1.IND" Destination="F_STRING_TO_BYTES.REQ" dx1="3960"/>
-			<Connection Source="F_STRING_TO_BYTES.CNF" Destination="AlPgnTxNew_TP.REQ" dx1="2420"/>
+			<Connection Source="DigitalInput_CLK_I1.IND" Destination="F_STRING_TO_BYTES_TERM.REQ" dx1="3960"/>
+			<Connection Source="F_STRING_TO_BYTES_TERM.CNF" Destination="AlPgnTxNew_TP.REQ" dx1="2420"/>
 			<Connection Source="AlPgnTxNew_TP.installO" Destination="NmGetCfInfo_1.RSP" dx1="80" dx2="80" dy="146.67">
 				<Attribute Name="Visible" Value="false"/>
 			</Connection>
@@ -94,8 +94,8 @@
 			<Connection Source="NmGetCfInfo_1.sNameField" Destination="STRUCT_DEMUX_3.IN" dx1="460"/>
 			<Connection Source="NmGetCfInfo_1.sNetEv" Destination="STRUCT_DEMUX_5.IN" dx1="560"/>
 			<Connection Source="NmGetCfInfo_1.sCfInfo" Destination="STRUCT_DEMUX_4.IN" dx1="526.67"/>
-			<Connection Source="INIT_ARR_4000_BYTE.D1" Destination="F_STRING_TO_BYTES.DATA" dx1="320"/>
-			<Connection Source="F_STRING_TO_BYTES.DATA" Destination="AlPgnTxNew_TP.Data" dx1="2353.33"/>
+			<Connection Source="INIT_ARR_4000_BYTE.D1" Destination="F_STRING_TO_BYTES_TERM.DATA" dx1="320"/>
+			<Connection Source="F_STRING_TO_BYTES_TERM.DATA" Destination="AlPgnTxNew_TP.Data" dx1="2353.33"/>
 			<Connection Source="STRUCT_DEMUX_5.eNetEvent" Destination="NetEv_Install.eNetEvent" dx1="386.67"/>
 			<Connection Source="Gedrueckt.Q" Destination="Nur_nach_Taste.PERMIT" dx1="913.33"/>
 			<Connection Source="Umschalten.Q" Destination="Laenge.G" dx1="1026.67"/>

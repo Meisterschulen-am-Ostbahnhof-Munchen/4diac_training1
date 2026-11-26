@@ -38,7 +38,7 @@
 		</FB>
 		<FB Name="F_LEN_ARRAY" Type="eclipse4diac::utils::arrays::F_LEN_ARRAY" x="-4300" y="2000">
 		</FB>
-		<FB Name="F_STRING_TO_BYTES" Type="logiBUS::utils::dyn_arr::F_STRING_TO_BYTES" x="-4900" y="900">
+		<FB Name="F_STRING_TO_BYTES_TERM" Type="logiBUS::utils::dyn_arr::F_STRING_TO_BYTES_TERM" x="-4900" y="900">
 		</FB>
 		<FB Name="AlPgnTxNew_TP" Type="isobus::pgn::tx::AlPgnTxNew_TP" x="-2400" y="3600">
 			<Parameter Name="u32Pgn" Value="PGN_PDU1_PropA"/>
@@ -54,11 +54,11 @@
 			<Connection Source="NmGetCfInfo_1.IND" Destination="STRUCT_DEMUX_3.REQ"/>
 			<Connection Source="NmGetCfInfo_1.IND" Destination="STRUCT_DEMUX_4.REQ"/>
 			<Connection Source="NmGetCfInfo_1.IND" Destination="STRUCT_DEMUX_5.REQ"/>
-			<Connection Source="InputString_S1.IND" Destination="F_STRING_TO_BYTES.REQ"/>
+			<Connection Source="InputString_S1.IND" Destination="F_STRING_TO_BYTES_TERM.REQ"/>
 			<Connection Source="INIT_ARR_0256_BYTE.INITO" Destination="F_LEN_ARRAY.REQ"/>
 			<Connection Source="F_LEN_ARRAY.CNF" Destination="AlPgnTxNew_TP.INIT"/>
 			<Connection Source="NetEv2NetEv.CNF" Destination="AlPgnTxNew_TP.install"/>
-			<Connection Source="F_STRING_TO_BYTES.CNF" Destination="AlPgnTxNew_TP.REQ"/>
+			<Connection Source="F_STRING_TO_BYTES_TERM.CNF" Destination="AlPgnTxNew_TP.REQ"/>
 			<Connection Source="AlPgnTxNew_TP.installO" Destination="NmGetCfInfo_1.RSP">
 				<Attribute Name="Visible" Value="false"/>
 			</Connection>
@@ -77,11 +77,11 @@
 			<Connection Source="NmGetCfInfo_1.sNetEv" Destination="STRUCT_DEMUX_5.IN"/>
 			<Connection Source="NmGetCfInfo_1.sCfInfo" Destination="STRUCT_DEMUX_4.IN"/>
 			<Connection Source="NmGetCfInfo_1.sNetEv" Destination="NetEv2NetEv.IN"/>
-			<Connection Source="InputString_S1.IN" Destination="F_STRING_TO_BYTES.IN"/>
+			<Connection Source="InputString_S1.IN" Destination="F_STRING_TO_BYTES_TERM.IN"/>
 			<Connection Source="NetEv2NetEv." Destination="AlPgnTxNew_TP.NmDestin"/>
 			<Connection Source="INIT_ARR_0256_BYTE.D1" Destination="F_LEN_ARRAY.ARR"/>
-			<Connection Source="INIT_ARR_0256_BYTE.D1" Destination="F_STRING_TO_BYTES.DATA"/>
-			<Connection Source="F_STRING_TO_BYTES.DATA" Destination="AlPgnTxNew_TP.Data"/>
+			<Connection Source="INIT_ARR_0256_BYTE.D1" Destination="F_STRING_TO_BYTES_TERM.DATA"/>
+			<Connection Source="F_STRING_TO_BYTES_TERM.DATA" Destination="AlPgnTxNew_TP.Data"/>
 			<Connection Source="F_LEN_ARRAY.OUT" Destination="AlPgnTxNew_TP.u16DaSize"/>
 			<Connection Source="STRUCT_DEMUX_5.eNetEvent" Destination="NetEv_Install.eNetEvent"/>
 		</DataConnections>
