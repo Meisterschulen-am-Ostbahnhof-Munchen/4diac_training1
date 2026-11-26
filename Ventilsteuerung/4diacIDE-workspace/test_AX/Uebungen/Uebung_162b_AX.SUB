@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SubAppType Name="Uebung_162b_AX" Comment="Übung zu DS18B20: zwei Sensoren, einer per ROM-Code festgehalten">
+	<Identification Standard="61499-2" Description="Copyright (c) 2026 Meisterschulen am Ostbahnhof  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0">
+	</Identification>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2026-11-26" Remarks="initial API and implementation and/or initial documentation">
+	</VersionInfo>
+	<CompilerInfo packageName="Uebungen">
+		<Import declaration="logiBUS::io::DQ::logiBUS_DO::Output_Q1"/>
+		<Import declaration="logiBUS::io::DQ::logiBUS_DO::Output_Q2"/>
+	</CompilerInfo>
+	<SubAppInterfaceList>
+	</SubAppInterfaceList>
+	<SubAppNetwork>
+		<FB Name="Sensor_1" Type="logiBUS::onewire::DS18B20" Comment="erster Sensor in Suchreihenfolge" x="-9000" y="0">
+			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="ROM" Value="LWORD#0"/>
+			<Parameter Name="Index" Value="0"/>
+		</FB>
+		<FB Name="Warm_1" Type="iec61131::comparison::F_GT" Comment="Sensor 1 über 25 °C?" x="-5000" y="0">
+			<Parameter Name="IN2" Value="REAL#25.0"/>
+		</FB>
+		<FB Name="Warm_1_AX" Type="adapter::conversion::unidirectional::AX_BOOL_TO_X" x="-2000" y="0">
+		</FB>
+		<FB Name="DigitalOutput_Q1" Type="logiBUS::io::DQ::logiBUS_QXA" Comment="an = Sensor 1 wärmer als 25 °C" x="500" y="0">
+			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="Output" Value="Output_Q1"/>
+		</FB>
+		<FB Name="Sensor_2" Type="logiBUS::onewire::DS18B20" Comment="Index 1, oder ROMO als ROM eintragen" x="-9000" y="3000">
+			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="ROM" Value="LWORD#0"/>
+			<Parameter Name="Index" Value="1"/>
+		</FB>
+		<FB Name="Warm_2" Type="iec61131::comparison::F_GT" Comment="Sensor 2 über 25 °C?" x="-5000" y="3000">
+			<Parameter Name="IN2" Value="REAL#25.0"/>
+		</FB>
+		<FB Name="Warm_2_AX" Type="adapter::conversion::unidirectional::AX_BOOL_TO_X" x="-2000" y="3000">
+		</FB>
+		<FB Name="DigitalOutput_Q2" Type="logiBUS::io::DQ::logiBUS_QXA" Comment="an = Sensor 2 wärmer als 25 °C" x="500" y="3000">
+			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="Output" Value="Output_Q2"/>
+		</FB>
+		<Comment Comment="Zwei Temperatursensoren DS18B20 am selben 1-Wire-Bus (Trainer20: GPIO3, bis zu 8 Sensoren).&#10;Sensor_1 nimmt den ersten Sensor der Suche (Index 0), Sensor_2 den zweiten (Index 1). Q1/Q2 an = wärmer als 25 °C.&#10;Die Suchreihenfolge hängt am ROM-Code. Kommt ein Sensor dazu, kann sich die Zuordnung ändern.&#10;Festhalten: Sensor_2.ROMO im Watch ablesen und als ROM (LWORD#16#...) bei Sensor_2 eintragen. Dann zählt Index nicht mehr.&#10;Watch: T, QO, STATUS, ROMO je Sensor." x="-9000" y="-2600" width="10000" height="2000"/>
+		<EventConnections>
+			<Connection Source="Sensor_1.IND" Destination="Warm_1.REQ"/>
+			<Connection Source="Warm_1.CNF" Destination="Warm_1_AX.REQ"/>
+			<Connection Source="Sensor_2.IND" Destination="Warm_2.REQ"/>
+			<Connection Source="Warm_2.CNF" Destination="Warm_2_AX.REQ"/>
+		</EventConnections>
+		<DataConnections>
+			<Connection Source="Sensor_1.T" Destination="Warm_1.IN1"/>
+			<Connection Source="Warm_1.OUT" Destination="Warm_1_AX.OUT"/>
+			<Connection Source="Sensor_2.T" Destination="Warm_2.IN1"/>
+			<Connection Source="Warm_2.OUT" Destination="Warm_2_AX.OUT"/>
+		</DataConnections>
+		<AdapterConnections>
+			<Connection Source="Warm_1_AX.AX_OUT" Destination="DigitalOutput_Q1.OUT"/>
+			<Connection Source="Warm_2_AX.AX_OUT" Destination="DigitalOutput_Q2.OUT"/>
+		</AdapterConnections>
+	</SubAppNetwork>
+</SubAppType>
