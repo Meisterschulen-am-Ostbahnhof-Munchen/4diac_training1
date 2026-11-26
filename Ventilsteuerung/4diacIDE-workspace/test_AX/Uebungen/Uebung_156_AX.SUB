@@ -71,7 +71,7 @@
 			<Parameter Name="QI" Value="TRUE"/>
 			<Parameter Name="Output" Value="Output_Q1"/>
 		</FB>
-		<Comment Comment="File Server: Datei schreiben und zurücklesen (FsWrite, FsRead)&#10;NmGetCfInfo (network, Filter FS_ADD/FS_FLT = NAME-Funktion 61) meldet den File Server, z. B. CCI 1200 mit USB-Stick.&#10;I1 Klick (nur mit Server): FS_TEXT nach FS_DATEI schreiben, danach zurücklesen und vergleichen. Q1 an = gleich, Q1 aus = Fehler.&#10;Watch bei ERR: Schreiben/Lesen.s16Status und .u16FsError (ISO 11783-13 B.9, ab 6400 Client). FS_DATEI an den Volume-Namen des Terminals anpassen.&#10;Voraussetzungen: Firmware ab LOGIBUS f6afe1e4 (File Server Client), isobus_fs-ELF, PART_13_FSC = 1 in /data/functionalities.ini.&#10;Weiter: Übung 156b (FsGet/FsPut über eine lokale Datei)." x="-12000" y="-2600" width="10000" height="2000"/>
+		<Comment Comment="File Server: Datei schreiben und zurücklesen (FsWrite, FsRead)&#10;NmGetCfInfo (network, Filter FS_ADD/FS_FLT = NAME-Funktion 61) meldet den File Server, z. B. CCI 1200 mit USB-Stick.&#10;I1 Klick (nur mit Server): FS_TEXT nach FS_DATEI schreiben, danach zurücklesen und vergleichen. Q1 an = gleich, Q1 aus = Fehler.&#10;Watch bei ERR: Schreiben/Lesen.s16Status und .u16FsError (ISO 11783-13 B.9, ab 6400 Client). FS_DATEI ohne Volume landet im aktuellen Verzeichnis des File Servers (CCI 1200: USB-Stick).&#10;Voraussetzungen: Firmware ab LOGIBUS f6afe1e4 (File Server Client), isobus_fs-ELF, PART_13_FSC = 1 in /data/functionalities.ini.&#10;Weiter: Übung 156b (FsGet/FsPut über eine lokale Datei)." x="-12000" y="-2600" width="10000" height="2000"/>
 		<EventConnections>
 			<Connection Source="NmGetCfInfo.IND" Destination="NetEv_DEMUX.REQ"/>
 			<Connection Source="NetEv_DEMUX.CNF" Destination="NetEv_Install.REQ"/>
