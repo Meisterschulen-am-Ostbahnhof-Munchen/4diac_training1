@@ -13,9 +13,6 @@
 	<SubAppNetwork>
 		<FB Name="Server" Type="isobus::fs_server::FsServer" Comment="Volume \\LOGIBUS\ = /data/fs" x="-6000" y="0">
 		</FB>
-		<FB Name="Takt" Type="iec61499::events::E_CYCLE" Comment="Status alle 2 s" x="-10000" y="0">
-			<Parameter Name="DT" Value="T#2s"/>
-		</FB>
 		<FB Name="DigitalOutput_Q1" Type="logiBUS::io::DQ::logiBUS_QX" Comment="an = Server läuft" x="-1500" y="0">
 			<Parameter Name="QI" Value="TRUE"/>
 			<Parameter Name="Output" Value="Output_Q1"/>
@@ -26,10 +23,10 @@
 			<Parameter Name="QI" Value="TRUE"/>
 			<Parameter Name="Output" Value="Output_Q2"/>
 		</FB>
-		<Comment Comment="Eigener File Server im logiBUS (FsServer), Gerät B. Gegenstück: Übung 159b auf Gerät A.&#10;Einschalten: PART_13_FS = 1 in /data/functionalities.ini, dann Neustart. Optional PART_13_FS_QUOTA_KB (1024) und PART_13_FS_BUS_SHARE (50).&#10;Volume \\LOGIBUS\ = /data/fs. Server-CF: NAME-Funktion 61, Herstellercode 1116, Adresse 0xF9.&#10;Q1 an = Server läuft (bRunning). Q2 schaltet bei jeder Datei um, die ein Client geschrieben hat (IND).&#10;Watch: u8Clients (1, solange A arbeitet), u8OpenFiles, u32UsedKB, u32QuotaKB; bei IND sPath (z. B. /data/fs/IMPORT/test.txt) und u16Lost.&#10;Voraussetzungen: Firmware mit File Server, neue isobus_fs-ELF. Nur ein FsServer pro Gerät." x="-10000" y="-2600" width="10000" height="2000"/>
+		<Comment Comment="Eigener File Server im logiBUS (FsServer), Gerät B. Gegenstück: Übung 159b auf Gerät A.&#10;Einschalten: PART_13_FS = 1 in /data/functionalities.ini, dann Neustart. Optional PART_13_FS_QUOTA_KB (1024) und PART_13_FS_BUS_SHARE (50).&#10;Volume \\LOGIBUS\ = /data/fs. Server-CF: NAME-Funktion 61, Herstellercode 1116, Adresse 0xF9.&#10;Q1 an = Server läuft (bRunning). Q2 schaltet bei jeder Datei um, die ein Client geschrieben hat (IND).&#10;Der Server läuft in der Firmware, auch ohne diesen Baustein. REQ liest nur den Status: einmal nach INITO und nach jedem IND.&#10;Watch: bei IND sPath (z. B. /data/fs/IMPORT/test.txt) und u16Lost; nach CNF u8Clients, u8OpenFiles, u32UsedKB, u32QuotaKB (Stand beim letzten REQ).&#10;Voraussetzungen: Firmware mit File Server, neue isobus_fs-ELF. Nur ein FsServer pro Gerät." x="-10000" y="-2600" width="10000" height="2000"/>
 		<EventConnections>
-			<Connection Source="Server.INITO" Destination="Takt.START"/>
-			<Connection Source="Takt.EO" Destination="Server.REQ"/>
+			<Connection Source="Server.INITO" Destination="Server.REQ"/>
+			<Connection Source="Server.IND" Destination="Server.REQ"/>
 			<Connection Source="Server.CNF" Destination="DigitalOutput_Q1.REQ"/>
 			<Connection Source="Server.IND" Destination="Umschalten.CLK"/>
 			<Connection Source="Umschalten.EO" Destination="DigitalOutput_Q2.REQ"/>
