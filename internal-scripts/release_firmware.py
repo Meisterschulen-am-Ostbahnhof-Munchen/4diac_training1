@@ -116,7 +116,7 @@ def lib_versions(tag: str) -> dict[str, str]:
     src = git('show', f'{tag}:{LIBVER_FILE}')
     block = src[src.index('LIB_VERSIONS = {'):]
     block = block[:block.index('}')]
-    return dict(re.findall(r'"(\w+)":\s*"([\d.]+)"', block))
+    return dict(re.findall(r'"([\w-]+)":\s*"([\d.]+)"', block))
 
 
 def check_script_abi(tag: str, abi: int) -> None:
