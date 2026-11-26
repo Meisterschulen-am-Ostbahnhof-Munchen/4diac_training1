@@ -34,6 +34,7 @@ from elf_libs_manifest_lib import (
     MAX_LIBS,
     is_internal_host,
     lib_requires_of,
+    query_device_info,
     resolve_elf_path,
     resolve_host,
     resolve_node_arch,
@@ -110,13 +111,55 @@ def _active_manifest(ip: str) -> tuple[str, set[str]]:
     return manifest, set()
 
 
+_SPACE_RE = re.compile(r"([\d.]+)\s*kB\s+of\s+([\d.]+)\s*kB\s+used")
+
+
+def read_space(ip: str) -> tuple[tuple[int, int] | None, tuple[int, int] | None]:
+    """Belegung von /data (LittleFS) und PSRAM, je (belegt, gesamt) in Bytes.
+    GET /space/?json (Firmware nach b-214, PSRAM nur mit psram_*), sonst die
+    erste HTML-Zeile "X kB of Y kB used" (ab b-214). Was fehlt, ist None.
+    Dauert ~1 s (laeuft das Dateisystem ab), daher nicht pollen."""
+    try:
+        code, body = _http(ip, "GET", "/space/?json", 8)
+    except OSError:
+        return None, None
+    if code != 200:
+        return None, None
+    text = body.decode("utf-8", errors="replace")
+    with contextlib.suppress(ValueError, TypeError, KeyError, AttributeError):
+        d = json.loads(text)
+        space = (int(d["used"]), int(d["total"]))
+        psram = None
+        if d.get("psram_size") and "psram_free" in d:
+            psram = (int(d["psram_size"]) - int(d["psram_free"]), int(d["psram_size"]))
+        return space, psram
+    m = _SPACE_RE.search(text)   # ankert auf "used", nicht die PSRAM-Zeile
+    if m:
+        return (round(float(m.group(1)) * 1024), round(float(m.group(2)) * 1024)), None
+    return None, None
+
+
+def read_psram(ip: str) -> tuple[int, int] | None:
+    """PSRAM als (belegt, gesamt) in Bytes aus /deviceinfo/ (Ersatz, wenn
+    /space/?json kein psram_* liefert). Dort laufen die ELFs; belegt zaehlt
+    aber auch FORTE und Puffer mit."""
+    state, info = query_device_info(ip)
+    ps = (info or {}).get("psram") or {}
+    if state != "ok" or not ps.get("size") or "free" not in ps:
+        return None
+    return ps["size"] - ps["free"], ps["size"]
+
+
 def read_node(host: str) -> dict:
-    """Knoten abfragen: IP, Architektur, Status je Lib, Libs im aktiven Manifest."""
+    """Knoten abfragen: IP, Architektur, Status je Lib, Libs im aktiven
+    Manifest, Belegung von /data und PSRAM."""
     ip, arch = _connect(host)
     hashes = http_remote_sha256_listing(ip) or {}
     status = {lib: _lib_status(lib, ver, arch, hashes) for lib, ver in LIB_VERSIONS.items()}
     manifest, active = _active_manifest(ip)
-    return {"ip": ip, "arch": arch, "status": status, "active": active, "manifest": manifest}
+    space, psram = read_space(ip)
+    return {"ip": ip, "arch": arch, "status": status, "active": active, "manifest": manifest,
+            "space": space, "psram": psram or read_psram(ip)}
 
 
 class QueueWriter:
@@ -151,6 +194,18 @@ class App:
         ttk.Button(top, text="Weboberfläche", command=self.open_web).pack(side="left", padx=4)
         self.info = tk.StringVar(value="Noch nicht verbunden")
         ttk.Label(root, textvariable=self.info, padding=(6, 0)).pack(fill="x")
+
+        meters = ttk.Frame(root, padding=(6, 4))
+        meters.pack(fill="x")
+        meters.columnconfigure(1, weight=1)
+        self.meters = {}
+        for row, (key, title) in enumerate((("space", "Speicher (/data)"), ("psram", "RAM (PSRAM)"))):
+            ttk.Label(meters, text=title, width=16).grid(row=row, column=0, sticky="w")
+            pb = ttk.Progressbar(meters, maximum=100)
+            pb.grid(row=row, column=1, sticky="ew", padx=4, pady=1)
+            txt = tk.StringVar(value="–")
+            ttk.Label(meters, textvariable=txt, width=34).grid(row=row, column=2, sticky="w")
+            self.meters[key] = (pb, txt)
 
         cols = ("sel", "lib", "ver", "node", "loaded")
         self.tree = ttk.Treeview(root, columns=cols, show="headings", height=18)
@@ -189,6 +244,18 @@ class App:
                              values=(ON if lib in self.checked else OFF, name, LIB_VERSIONS[lib], node,
                                      "ja" if lib in active else ""))
         self.update_count()
+
+    def show_meters(self) -> None:
+        for key, (pb, txt) in self.meters.items():
+            val = self.node.get(key) if self.node else None
+            if not val:
+                pb["value"] = 0
+                txt.set("keine Angabe (Firmware zu alt?)" if self.node else "–")
+                continue
+            used, total = val
+            pb["value"] = 100 * used / total
+            txt.set(f"{(total - used) / 1048576:.1f} MiB frei von {total / 1048576:.1f} MiB"
+                    f" ({100 * (total - used) / total:.0f} %)")
 
     def update_count(self) -> None:
         full = with_requires(sorted(self.checked))
@@ -258,6 +325,7 @@ class App:
             self.info.set(f"{host} ({res['ip']}), {res['arch']}, aktives Manifest: {res['manifest'] or 'keins'}"
                           f" mit {len(res['active'])} Libs")
             self.select_active()
+            self.show_meters()
             self.say("Verbunden.\n")
         self.run(lambda: read_node(host), done)
 
