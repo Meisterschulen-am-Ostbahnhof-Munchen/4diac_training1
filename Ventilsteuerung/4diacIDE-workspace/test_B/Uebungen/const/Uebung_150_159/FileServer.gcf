@@ -10,8 +10,8 @@
 	<GlobalConstants>
 		<VarDeclaration Name="FS_ADD" Type="isobus::pgn::NAMEFIELD_T" Comment="File Server: Funktion 61" InitialValue="(bSelfConf := TRUE, bIndGroup := 0, bDevClassInst := 0, bDevClass := 0, bReserved := FALSE, bFunction := 61, bFunctionInst := 0, bEcuInstance := 0, wManufCode := 0, dwIdentNumb := 0)"/>
 		<VarDeclaration Name="FS_FLT" Type="isobus::pgn::NAMEFIELD_T" Comment="prüft nur bFunction" InitialValue="(bSelfConf := FALSE, bIndGroup := 0, bDevClassInst := 0, bDevClass := 0, bReserved := FALSE, bFunction := 16#FF, bFunctionInst := 0, bEcuInstance := 0, wManufCode := 0, dwIdentNumb := 0)"/>
-		<VarDeclaration Name="FS_DATEI" Type="STRING" Comment="Testdatei auf dem File Server" InitialValue="'\\USB\logibus_test.txt'"/>
-		<VarDeclaration Name="FS_DATEI_2" Type="STRING" Comment="Kopie zurück auf den File Server" InitialValue="'\\USB\logibus_test2.txt'"/>
+		<VarDeclaration Name="FS_DATEI" Type="STRING" Comment="Testdatei, relativ zum aktuellen Volume" InitialValue="'logibus_test.txt'"/>
+		<VarDeclaration Name="FS_DATEI_2" Type="STRING" Comment="Kopie zurück auf den File Server" InitialValue="'logibus_test2.txt'"/>
 		<VarDeclaration Name="FS_LOKAL" Type="STRING" Comment="lokale Kopie im logiBUS" InitialValue="'/data/fs/logibus_test.txt'"/>
 		<VarDeclaration Name="FS_TEXT" Type="STRING" Comment="Inhalt der Testdatei" InitialValue="'logiBUS File Server Test'"/>
 	</GlobalConstants>
@@ -19,8 +19,8 @@
  * Übungen 156-156b: File Server Client (ISO 11783-13).
  * File Server im NAME: Funktion 61 (F_FILESERVER, Global_NAME_Functions),
  * unabhängig von der Industriegruppe. Filter prüft nur bFunction.
- * Volume-Namen hängen vom Terminal ab: FS_DATEI ggf. anpassen
- * (z. B. CCI 1200 mit USB-Stick: Volume-Name des Sticks).
+ * Pfade ohne Volume landen im aktuellen Verzeichnis des Servers.
+ * CCI 1200: Volume heißt nach der FAT-Seriennummer (\\E82C-0533\).
  *)
 PACKAGE Uebungen::const::Uebung_150_159;
 
@@ -30,8 +30,8 @@ GLOBALCONSTANTS FileServer
 	VAR_GLOBAL CONSTANT
 		FS_ADD : NAMEFIELD_T := (bSelfConf := TRUE, bIndGroup := 0, bDevClassInst := 0, bDevClass := 0, bReserved := FALSE, bFunction := 61, bFunctionInst := 0, bEcuInstance := 0, wManufCode := 0, dwIdentNumb := 0); // File Server: Funktion 61
 		FS_FLT : NAMEFIELD_T := (bSelfConf := FALSE, bIndGroup := 0, bDevClassInst := 0, bDevClass := 0, bReserved := FALSE, bFunction := 16#FF, bFunctionInst := 0, bEcuInstance := 0, wManufCode := 0, dwIdentNumb := 0); // prüft nur bFunction
-		FS_DATEI : STRING := '\\USB\logibus_test.txt'; // Testdatei auf dem File Server
-		FS_DATEI_2 : STRING := '\\USB\logibus_test2.txt'; // Kopie zurück auf den File Server
+		FS_DATEI : STRING := 'logibus_test.txt'; // Testdatei, relativ zum aktuellen Volume
+		FS_DATEI_2 : STRING := 'logibus_test2.txt'; // Kopie zurück auf den File Server
 		FS_LOKAL : STRING := '/data/fs/logibus_test.txt'; // lokale Kopie im logiBUS
 		FS_TEXT : STRING := 'logiBUS File Server Test'; // Inhalt der Testdatei
 	END_VAR
