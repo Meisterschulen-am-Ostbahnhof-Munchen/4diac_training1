@@ -182,7 +182,7 @@ class App:
         self.checked: set[str] = set()
         self.node: dict | None = None
         root.title("logiBUS ELF-Verwaltung")
-        root.geometry("820x640")
+        root.geometry("960x660")
 
         top = ttk.Frame(root, padding=6)
         top.pack(fill="x")
@@ -207,12 +207,16 @@ class App:
             ttk.Label(meters, textvariable=txt, width=34).grid(row=row, column=2, sticky="w")
             self.meters[key] = (pb, txt)
 
-        cols = ("sel", "lib", "ver", "node", "loaded")
+        cols = ("sel", "lib", "ver", "size", "pct", "node", "loaded")
         self.tree = ttk.Treeview(root, columns=cols, show="headings", height=18)
-        for c, t, w in (("sel", "", 30), ("lib", "Lib", 260), ("ver", "Version", 80),
-                        ("node", "Auf dem Knoten", 150), ("loaded", "Wird geladen", 110)):
-            self.tree.heading(c, text=t)
-            self.tree.column(c, width=w, anchor="w")
+        self.titles = {}
+        self.sort_col, self.sort_rev = "lib", False
+        for c, t, w, a in (("sel", "", 30, "w"), ("lib", "Lib", 250, "w"), ("ver", "Version", 70, "w"),
+                           ("size", "Größe", 80, "e"), ("pct", "% /data", 70, "e"),
+                           ("node", "Auf dem Knoten", 140, "w"), ("loaded", "Wird geladen", 100, "w")):
+            self.titles[c] = t
+            self.tree.heading(c, text=t, command=lambda c=c: self.sort_by(c))
+            self.tree.column(c, width=w, anchor=a)
         self.tree.tag_configure("missing", foreground="#b00000")
         self.tree.pack(fill="both", expand=True, padx=6)
         self.tree.bind("<Button-1>", self.toggle)
@@ -233,16 +237,52 @@ class App:
         root.after(100, self.pump)
 
     # --- Anzeige -------------------------------------------------------------
+    def elf_size(self, lib: str) -> int | None:
+        """Groesse der ELF im Repo (Architektur des Knotens, sonst Standard)."""
+        arch = self.node["arch"] if self.node else DEFAULT_ARCH
+        path = resolve_elf_path(lib, LIB_VERSIONS[lib], arch)
+        return path.stat().st_size if path else None
+
+    def data_total(self) -> int | None:
+        space = self.node.get("space") if self.node else None
+        return space[1] if space else None
+
+    def sort_key(self, lib: str):
+        col = self.sort_col
+        if col == "sel":
+            return (lib not in self.checked, lib.lower())
+        if col in ("size", "pct"):
+            return (self.elf_size(lib) or -1, lib.lower())
+        if col == "ver":
+            return (tuple(int(x) for x in LIB_VERSIONS[lib].split(".") if x.isdigit()), lib.lower())
+        if col == "node":
+            return (self.node["status"].get(lib, "") if self.node else "", lib.lower())
+        if col == "loaded":
+            return (lib not in (self.node["active"] if self.node else set()), lib.lower())
+        return lib.lower()
+
+    def sort_by(self, col: str) -> None:
+        self.sort_rev = not self.sort_rev if col == self.sort_col else False
+        self.sort_col = col
+        self.fill()
+
     def fill(self) -> None:
         self.tree.delete(*self.tree.get_children())
+        for c, t in self.titles.items():
+            arrow = (" ▼" if self.sort_rev else " ▲") if c == self.sort_col else ""
+            self.tree.heading(c, text=t + arrow)
         st = self.node["status"] if self.node else {}
         active = self.node["active"] if self.node else set()
-        for lib in sorted(LIB_VERSIONS, key=str.lower):
+        total = self.data_total()
+        for lib in sorted(LIB_VERSIONS, key=self.sort_key, reverse=self.sort_rev):
             node = st.get(lib, "?")
             name = lib + ("  (CAN2, nicht am Trainer)" if lib in PRELOAD_EXCLUDE else "")
+            size = self.elf_size(lib)
             self.tree.insert("", "end", iid=lib, tags=("missing",) if node in ("fehlt", "alte Version", "anderer Stand") else (),
-                             values=(ON if lib in self.checked else OFF, name, LIB_VERSIONS[lib], node,
-                                     "ja" if lib in active else ""))
+                             values=(ON if lib in self.checked else OFF, name, LIB_VERSIONS[lib],
+                                     f"{size / 1024:.1f} kB" if size else "",
+                                     f"{100 * size / total:.1f} %" if size and total else "",
+                                     node, "ja" if lib in active else ""))
         self.update_count()
 
     def show_meters(self) -> None:
@@ -260,8 +300,11 @@ class App:
     def update_count(self) -> None:
         full = with_requires(sorted(self.checked))
         extra = len(full) - len(self.checked)
+        size = sum(s for s in (self.elf_size(lib) for lib in full if lib in LIB_VERSIONS) if s)
+        total = self.data_total()
         self.count.set(f"{len(self.checked)} angehakt" + (f" + {extra} Abhängigkeiten" if extra else "")
-                       + f" (max. {MAX_LIBS})")
+                       + f" (max. {MAX_LIBS}), {size / 1024:.0f} kB"
+                       + (f" = {100 * size / total:.0f} % von /data" if total else ""))
 
     def toggle(self, event) -> None:
         if event.type == tk.EventType.ButtonPress and self.tree.identify_region(event.x, event.y) != "cell":
