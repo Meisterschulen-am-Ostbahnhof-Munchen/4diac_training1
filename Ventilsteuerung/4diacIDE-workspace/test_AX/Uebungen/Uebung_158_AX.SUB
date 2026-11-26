@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SubAppType Name="Uebung_158_AX" Comment="Übung zu FsMkDir/FsMove/FsDelete: Ordner anlegen, umbenennen, kopieren, löschen">
+	<Identification Standard="61499-2" Description="Copyright (c) 2026 Meisterschulen am Ostbahnhof  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0">
+	</Identification>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2026-11-26" Remarks="initial API and implementation and/or initial documentation">
+	</VersionInfo>
+	<CompilerInfo packageName="Uebungen">
+		<Import declaration="Uebungen::const::Uebung_150_159::FileServer::FS_A"/>
+		<Import declaration="Uebungen::const::Uebung_150_159::FileServer::FS_ADD"/>
+		<Import declaration="Uebungen::const::Uebung_150_159::FileServer::FS_B"/>
+		<Import declaration="Uebungen::const::Uebung_150_159::FileServer::FS_C"/>
+		<Import declaration="Uebungen::const::Uebung_150_159::FileServer::FS_FLT"/>
+		<Import declaration="Uebungen::const::Uebung_150_159::FileServer::FS_LOKAL"/>
+		<Import declaration="Uebungen::const::Uebung_150_159::FileServer::FS_ORDNER"/>
+		<Import declaration="isobus::pgn::ISOUSERHOME_e::network"/>
+		<Import declaration="isobus::pgn::ISO_CAN_NODE::NODE1"/>
+		<Import declaration="logiBUS::io::DI::logiBUS_DI::Input_I1"/>
+		<Import declaration="logiBUS::io::DI::logiBUS_DI::Input_I2"/>
+		<Import declaration="logiBUS::io::DI::logiBUS_DI_Events::BUTTON_SINGLE_CLICK"/>
+		<Import declaration="logiBUS::io::DQ::logiBUS_DO::Output_Q1"/>
+	</CompilerInfo>
+	<SubAppInterfaceList>
+	</SubAppInterfaceList>
+	<SubAppNetwork>
+		<FB Name="NmGetCfInfo" Type="isobus::pgn::NmGetCfInfo" Comment="meldet den File Server (Funktion 61)" x="-12000" y="0">
+			<Parameter Name="u8CanIdx" Value="NODE1"/>
+			<Parameter Name="member" Value="network"/>
+			<Parameter Name="address" Value="FS_ADD"/>
+			<Parameter Name="mask" Value="FS_FLT"/>
+		</FB>
+		<FB Name="NetEv_DEMUX" Type="eclipse4diac::convert::STRUCT_DEMUX" x="-9000" y="0">
+			<Attribute Name="StructuredType" Type="STRING" Value="isobus::pgn::ISONETEVENT_T"/>
+		</FB>
+		<SubApp Name="NetEv_Install" Type="MyLib::sys::NetEv_Install_Filter" x="-6500" y="0">
+		</SubApp>
+		<FB Name="Server_merken" Type="iec61131::selection::F_MOVE" Comment="eigener CF und File-Server-CF (NmDestin)" x="-3500" y="0">
+		</FB>
+		<FB Name="Server_da" Type="adapter::events::unidirectional::AX_SR" x="-1000" y="0">
+		</FB>
+		<FB Name="Server_da_SPLIT" Type="adapter::events::unidirectional::AX_SPLIT_2" x="1500" y="0">
+		</FB>
+		<FB Name="DigitalInput_CLK_I1" Type="logiBUS::io::DI::logiBUS_IE" x="-12000" y="3000">
+			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="Input" Value="Input_I1"/>
+			<Parameter Name="InputEvent" Value="BUTTON_SINGLE_CLICK"/>
+		</FB>
+		<FB Name="Nur_mit_Server" Type="adapter::events::unidirectional::AX_E_PERMIT" x="-9000" y="3000">
+		</FB>
+		<FB Name="Ordner_anlegen" Type="isobus::fs::FsMkDir" Comment="1. FS_ORDNER anlegen" x="-6000" y="3000">
+			<Parameter Name="sRemotePath" Value="FS_ORDNER"/>
+		</FB>
+		<FB Name="Hochladen" Type="isobus::fs::FsPut" Comment="2. FS_LOKAL (aus Übung 156b) nach FS_A" x="-2000" y="3000">
+			<Parameter Name="sLocalPath" Value="FS_LOKAL"/>
+			<Parameter Name="sRemotePath" Value="FS_A"/>
+			<Parameter Name="bAppend" Value="FALSE"/>
+		</FB>
+		<FB Name="Umbenennen" Type="isobus::fs::FsMove" Comment="3. FS_A in FS_B umbenennen" x="2000" y="3000">
+			<Parameter Name="sSourcePath" Value="FS_A"/>
+			<Parameter Name="sDestPath" Value="FS_B"/>
+			<Parameter Name="bCopy" Value="FALSE"/>
+			<Parameter Name="bForce" Value="FALSE"/>
+			<Parameter Name="bRecursive" Value="FALSE"/>
+		</FB>
+		<FB Name="Kopieren" Type="isobus::fs::FsMove" Comment="4. FS_B nach FS_C kopieren (kann der CCI 1200 das?)" x="6000" y="3000">
+			<Parameter Name="sSourcePath" Value="FS_B"/>
+			<Parameter Name="sDestPath" Value="FS_C"/>
+			<Parameter Name="bCopy" Value="TRUE"/>
+			<Parameter Name="bForce" Value="FALSE"/>
+			<Parameter Name="bRecursive" Value="FALSE"/>
+		</FB>
+		<FB Name="Namen" Type="eclipse4diac::convert::providers::PROVIDE_ARR_0016_STRING" x="6000" y="6000">
+		</FB>
+		<FB Name="Groessen" Type="eclipse4diac::convert::providers::PROVIDE_ARR_0016_UDINT" x="6000" y="7200">
+		</FB>
+		<FB Name="Attribute" Type="eclipse4diac::convert::providers::PROVIDE_ARR_0016_BYTE" x="6000" y="8400">
+		</FB>
+		<FB Name="Geaendert" Type="eclipse4diac::convert::providers::PROVIDE_ARR_0016_DATE_AND_TIME" x="6000" y="9600">
+		</FB>
+		<FB Name="Liste" Type="isobus::fs::FsDir" Comment="5. FS_ORDNER listen (erwartet b.txt und c.txt)" x="10000" y="3000">
+			<Parameter Name="sRemotePath" Value="FS_ORDNER"/>
+			<Parameter Name="bHidden" Value="FALSE"/>
+		</FB>
+		<FB Name="DigitalInput_CLK_I2" Type="logiBUS::io::DI::logiBUS_IE" Comment="nur Aufräumen, z. B. nach einem Fehler" x="-12000" y="11000">
+			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="Input" Value="Input_I2"/>
+			<Parameter Name="InputEvent" Value="BUTTON_SINGLE_CLICK"/>
+		</FB>
+		<FB Name="Aufraeumen_nur_mit_Server" Type="adapter::events::unidirectional::AX_E_PERMIT" x="-9000" y="11000">
+		</FB>
+		<FB Name="Loeschen" Type="isobus::fs::FsDelete" Comment="6. FS_ORDNER mit Inhalt löschen" x="14000" y="3000">
+			<Parameter Name="sRemotePath" Value="FS_ORDNER"/>
+			<Parameter Name="bRecursive" Value="TRUE"/>
+		</FB>
+		<FB Name="Ergebnis" Type="adapter::events::unidirectional::AX_SR" Comment="Q1 an = alle Schritte fertig" x="18000" y="3000">
+		</FB>
+		<FB Name="DigitalOutput_Q1" Type="logiBUS::io::DQ::logiBUS_QXA" x="20500" y="3000">
+			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="Output" Value="Output_Q1"/>
+		</FB>
+		<Comment Comment="File Server: Ordner anlegen, Datei umbenennen und kopieren, aufräumen (FsMkDir, FsPut, FsMove, FsDir, FsDelete)&#10;NmGetCfInfo (network, Filter FS_ADD/FS_FLT = NAME-Funktion 61) meldet den File Server, z. B. CCI 1200 mit USB-Stick.&#10;I1 Klick (nur mit Server): 1. FS_ORDNER anlegen, 2. FS_LOKAL nach a.txt, 3. a.txt in b.txt umbenennen, 4. b.txt nach c.txt kopieren, 5. Ordner listen, 6. Ordner löschen.&#10;Jeder Schritt startet nur nach CNF des vorigen. Bei ERR bleibt die Kette stehen: Q1 aus, s16Status und u16FsError des Schritts im Watch. I2 Klick: nur Ordner löschen.&#10;Offen am CCI 1200: Ordner anlegen (Schritt 1) und Kopieren (Schritt 4). FS_LOKAL muss es geben (Übung 156b).&#10;Voraussetzungen: Firmware mit den neuen File-Server-Bausteinen, neue isobus_fs-ELF, PART_13_FSC = 1 in /data/functionalities.ini." x="-12000" y="-2600" width="12000" height="2000"/>
+		<EventConnections>
+			<Connection Source="NmGetCfInfo.IND" Destination="NetEv_DEMUX.REQ"/>
+			<Connection Source="NetEv_DEMUX.CNF" Destination="NetEv_Install.REQ"/>
+			<Connection Source="NetEv_Install.INSTALL" Destination="Server_merken.REQ"/>
+			<Connection Source="NetEv_Install.RSP" Destination="NmGetCfInfo.RSP">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="Server_merken.CNF" Destination="NetEv_Install.SET"/>
+			<Connection Source="Server_merken.CNF" Destination="Server_da.S"/>
+			<Connection Source="Server_merken.CNF" Destination="NmGetCfInfo.RSP">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="DigitalInput_CLK_I1.IND" Destination="Nur_mit_Server.EI"/>
+			<Connection Source="Nur_mit_Server.EO" Destination="Ordner_anlegen.REQ"/>
+			<Connection Source="Ordner_anlegen.CNF" Destination="Hochladen.REQ"/>
+			<Connection Source="Hochladen.CNF" Destination="Umbenennen.REQ"/>
+			<Connection Source="Umbenennen.CNF" Destination="Kopieren.REQ"/>
+			<Connection Source="Kopieren.CNF" Destination="Liste.REQ"/>
+			<Connection Source="Liste.CNF" Destination="Loeschen.REQ"/>
+			<Connection Source="DigitalInput_CLK_I2.IND" Destination="Aufraeumen_nur_mit_Server.EI"/>
+			<Connection Source="Aufraeumen_nur_mit_Server.EO" Destination="Loeschen.REQ"/>
+			<Connection Source="Loeschen.CNF" Destination="Ergebnis.S"/>
+			<Connection Source="Ordner_anlegen.ERR" Destination="Ergebnis.R"/>
+			<Connection Source="Hochladen.ERR" Destination="Ergebnis.R"/>
+			<Connection Source="Umbenennen.ERR" Destination="Ergebnis.R"/>
+			<Connection Source="Kopieren.ERR" Destination="Ergebnis.R"/>
+			<Connection Source="Liste.ERR" Destination="Ergebnis.R"/>
+			<Connection Source="Loeschen.ERR" Destination="Ergebnis.R"/>
+		</EventConnections>
+		<DataConnections>
+			<Connection Source="NmGetCfInfo.sNetEv" Destination="NetEv_DEMUX.IN"/>
+			<Connection Source="NetEv_DEMUX.eNetEvent" Destination="NetEv_Install.eNetEvent"/>
+			<Connection Source="NmGetCfInfo.sNetEv" Destination="Server_merken.IN"/>
+			<Connection Source="Server_merken.OUT" Destination="Ordner_anlegen.NmDestin"/>
+			<Connection Source="Server_merken.OUT" Destination="Hochladen.NmDestin"/>
+			<Connection Source="Server_merken.OUT" Destination="Umbenennen.NmDestin"/>
+			<Connection Source="Server_merken.OUT" Destination="Kopieren.NmDestin"/>
+			<Connection Source="Server_merken.OUT" Destination="Liste.NmDestin"/>
+			<Connection Source="Server_merken.OUT" Destination="Loeschen.NmDestin"/>
+			<Connection Source="Namen.D1" Destination="Liste.asName"/>
+			<Connection Source="Groessen.D1" Destination="Liste.au32Size"/>
+			<Connection Source="Attribute.D1" Destination="Liste.au8Attr"/>
+			<Connection Source="Geaendert.D1" Destination="Liste.adtModified"/>
+		</DataConnections>
+		<AdapterConnections>
+			<Connection Source="Server_da.Q" Destination="Server_da_SPLIT.IN"/>
+			<Connection Source="Server_da_SPLIT.OUT1" Destination="Nur_mit_Server.PERMIT"/>
+			<Connection Source="Server_da_SPLIT.OUT2" Destination="Aufraeumen_nur_mit_Server.PERMIT"/>
+			<Connection Source="Ergebnis.Q" Destination="DigitalOutput_Q1.OUT"/>
+		</AdapterConnections>
+	</SubAppNetwork>
+</SubAppType>

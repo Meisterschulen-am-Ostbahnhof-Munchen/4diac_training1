@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<GlobalConstants Name="FileServer" Comment="Konstanten für Übungen 156-156b (File Server Client)">
+<GlobalConstants Name="FileServer" Comment="Konstanten für Übungen 156-159 (File Server)">
 	<Identification Standard="61499-1" Description="Copyright (c) 2026 Meisterschulen am Ostbahnhof  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0">
 	</Identification>
 	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2026-11-25" Remarks="File Server Filter und Testdateien">
@@ -14,9 +14,19 @@
 		<VarDeclaration Name="FS_DATEI_2" Type="STRING" Comment="Kopie zurück auf den File Server" InitialValue="'logibus_test2.txt'"/>
 		<VarDeclaration Name="FS_LOKAL" Type="STRING" Comment="lokale Kopie im logiBUS" InitialValue="'/data/fs/logibus_test.txt'"/>
 		<VarDeclaration Name="FS_TEXT" Type="STRING" Comment="Inhalt der Testdatei" InitialValue="'logiBUS File Server Test'"/>
+		<VarDeclaration Name="FS_WURZEL" Type="STRING" Comment="Wurzel des aktuellen Volumes" InitialValue="'.'"/>
+		<VarDeclaration Name="FS_ORDNER" Type="STRING" Comment="Testordner Übung 158" InitialValue="'logibus_test_dir'"/>
+		<VarDeclaration Name="FS_A" Type="STRING" Comment="Übung 158: FsPut-Ziel" InitialValue="'logibus_test_dir\a.txt'"/>
+		<VarDeclaration Name="FS_B" Type="STRING" Comment="Übung 158: umbenannt" InitialValue="'logibus_test_dir\b.txt'"/>
+		<VarDeclaration Name="FS_C" Type="STRING" Comment="Übung 158: Kopie" InitialValue="'logibus_test_dir\c.txt'"/>
+		<VarDeclaration Name="FS_ADD_LOGIBUS" Type="isobus::pgn::NAMEFIELD_T" Comment="logiBUS-Server, Hersteller 1116" InitialValue="(bSelfConf := TRUE, bIndGroup := 0, bDevClassInst := 0, bDevClass := 0, bReserved := FALSE, bFunction := 61, bFunctionInst := 0, bEcuInstance := 0, wManufCode := 1116, dwIdentNumb := 0)"/>
+		<VarDeclaration Name="FS_FLT_LOGIBUS" Type="isobus::pgn::NAMEFIELD_T" Comment="prüft Funktion und Hersteller" InitialValue="(bSelfConf := FALSE, bIndGroup := 0, bDevClassInst := 0, bDevClass := 0, bReserved := FALSE, bFunction := 16#FF, bFunctionInst := 0, bEcuInstance := 0, wManufCode := 16#07FF, dwIdentNumb := 0)"/>
+		<VarDeclaration Name="FS_LOGIBUS_ORDNER" Type="STRING" Comment="Übung 159b: Ordner am logiBUS-Server" InitialValue="'\\LOGIBUS\IMPORT'"/>
+		<VarDeclaration Name="FS_LOGIBUS_DATEI" Type="STRING" Comment="Übung 159b: Ziel am logiBUS-Server" InitialValue="'\\LOGIBUS\IMPORT\test.txt'"/>
+		<VarDeclaration Name="FS_LOKAL_ZURUECK" Type="STRING" Comment="Übung 159b: zurückgeholte Kopie" InitialValue="'/data/fs/logibus_test_zurueck.txt'"/>
 	</GlobalConstants>
 	<OriginalSource><![CDATA[(*
- * Übungen 156-156b: File Server Client (ISO 11783-13).
+ * Übungen 156-159: File Server Client und Server (ISO 11783-13).
  * File Server im NAME: Funktion 61 (F_FILESERVER, Global_NAME_Functions),
  * unabhängig von der Industriegruppe. Filter prüft nur bFunction.
  * Pfade ohne Volume landen im aktuellen Verzeichnis des Servers.
@@ -34,6 +44,16 @@ GLOBALCONSTANTS FileServer
 		FS_DATEI_2 : STRING := 'logibus_test2.txt'; // Kopie zurück auf den File Server
 		FS_LOKAL : STRING := '/data/fs/logibus_test.txt'; // lokale Kopie im logiBUS
 		FS_TEXT : STRING := 'logiBUS File Server Test'; // Inhalt der Testdatei
+		FS_WURZEL : STRING := '.'; // Wurzel des aktuellen Volumes
+		FS_ORDNER : STRING := 'logibus_test_dir'; // Testordner Übung 158
+		FS_A : STRING := 'logibus_test_dir\a.txt'; // Übung 158: FsPut-Ziel
+		FS_B : STRING := 'logibus_test_dir\b.txt'; // Übung 158: umbenannt
+		FS_C : STRING := 'logibus_test_dir\c.txt'; // Übung 158: Kopie
+		FS_ADD_LOGIBUS : NAMEFIELD_T := (bSelfConf := TRUE, bIndGroup := 0, bDevClassInst := 0, bDevClass := 0, bReserved := FALSE, bFunction := 61, bFunctionInst := 0, bEcuInstance := 0, wManufCode := 1116, dwIdentNumb := 0); // logiBUS-Server, Hersteller 1116
+		FS_FLT_LOGIBUS : NAMEFIELD_T := (bSelfConf := FALSE, bIndGroup := 0, bDevClassInst := 0, bDevClass := 0, bReserved := FALSE, bFunction := 16#FF, bFunctionInst := 0, bEcuInstance := 0, wManufCode := 16#07FF, dwIdentNumb := 0); // prüft Funktion und Hersteller
+		FS_LOGIBUS_ORDNER : STRING := '\\LOGIBUS\IMPORT'; // Übung 159b: Ordner am logiBUS-Server
+		FS_LOGIBUS_DATEI : STRING := '\\LOGIBUS\IMPORT\test.txt'; // Übung 159b: Ziel am logiBUS-Server
+		FS_LOKAL_ZURUECK : STRING := '/data/fs/logibus_test_zurueck.txt'; // Übung 159b: zurückgeholte Kopie
 	END_VAR
 END_GLOBALCONSTANTS
 ]]></OriginalSource>
